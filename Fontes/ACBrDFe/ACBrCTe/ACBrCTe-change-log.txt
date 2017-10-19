@@ -47,6 +47,336 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2017
+-- pcteCTe / ACBrCTeConhecimentos --
+[*] Inicialização dos campos indGlobalizado e indAlteraToma com o valor tiNao.
+   Por: Italo Jurisato Junior
+
+11/10/2017
+-- pcteCTeW --
+[*] Quando é uma operação onde o tomador é do exterior deve gerar a tag vInss.
+   Por: Mauricio Sareto
+
+11/10/2017
+-- ACBrCTeConfiguracoes --
+[*] Método "GetPathDownload", modificado para manter somente letras e numeros
+    do nome da empresa usado para cria o PathDownload.
+    por: Italo Jurisato Junior
+
+09/10/2017
+-- pcteCTeW --
+[*] Alterações visando gerar o campo vICMS mesmo que o mesmo tenha o valor zero.
+   Por: BSoft / Mauricio Sareto
+
+04/10/2017
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/39173-contribui%C3%A7%C3%A3o-ct-e-os-nos-estados-do-ms-e-mt/.
+   Por: bsoft
+
+02/10/2017
+-- pcteCTe --
+[*] Definido o valor tiNao como padrão para o campo indGlobalizado.
+   Por: Italo Jurisato Junior
+
+29/09/2017
+-- pcteCTeW --
+[*] Alterado a geração das TAGs de inicio e fim da prestação do serviço.
+    Para o CT-e elas são obrigatórias, mas para o CT-e OS são opcionais.
+   Por: Italo Jurisato Junior / BigWings
+-- pcteEventoCTe --
+[*] Incluido o valor MDFeCancelado2 que se refere ao evento 310611.
+   Por: Italo Jurisato Junior
+-- ACBrCTe --
+[-] Ao chamar o método Inutiliza estava fixo o modelo (57), impedindo dessa forma
+    Inutilizar um numero do modelo 67 (CTeOS), agora o modelo é lido da configuração.
+   Por: Italo Jurisato Junior
+
+04/09/2017
+-- pcteConversaoCTe --
+[-] Remoção do tipo TIndicador e suas funções.
+   Por: Italo Jurisato Junior
+
+04/09/2017
+-- pcteCTeW -- 
+[*] Incluido a chamada para gerar o grupo <cobr> para o modelo 67 - CTe OS e
+    a tag <tpNav> conforme consta na NT 2017/002.
+    por: Italo Jurisato Junior
+
+21/08/2017
+-- ACBrCTeConhecimentos --
+[*] Método "Conhecimento.Assinar", ajuste para não verificar o CNPJ, quando processo
+    de assintura ocorrer externo ao ACBr
+    http://www.projetoacbr.com.br/forum/topic/38349-problemas-com-pin-a3-assinatura-de-xml/
+
+18/08/2017
+-- pcteConversaoCTe --
+[-] Correção em tipo enumerado schconsStatServ para schconsStatServCTe, para
+    permitir encontrar o Schema correto
+    (por: DSA)
+
+16/08/2017
+-- pcteCTeW -- 
+[*] Incluido a chamada para gerar o grupo <infCTeSub> para o modelo 67 - CTe OS.
+    por: Italo Jurisato Junior
+
+07/08/2017
+-- Diversos -- 
+[*] Adicionado os campos novos do grupo <peri> versão 3.00.
+    por: Italo Jurisato Junior
+
+-- pcteEnvEventoCTe -- 
+[*] Correção do indice usado nos campos da assinatura.
+    por: Giulia Carlini
+
+31/07/2017
+-- pcteInutCTe -- 
+[*] Adicionado a leitura das tags referente a assinatura ao executar o método
+    LoadFromString ao carregar o XML de uma Inutilização de numeros.
+    por: Italo Jurisato Junior
+
+30/07/2017
+-- pcteEnvEventoCTe / pcteRetEnvEventoCTe -- 
+[*] Adicionado a leitura das tags referente a assinatura ao executar o método
+    LoadFromString ao carregar o XML de um evento.
+    por: Italo Jurisato Junior
+
+20/07/2017
+-- Diversos --
+[*] Remoção de vários hints e warnings.
+    Por: Italo Jurisato Junior
+ 
+08/07/2017
+-- ACBrCFeWebServices --
+[-] Correção nas classes "TCTeInutilizacao" e "TCTeEnvEvento", para assinar
+    corretamente, XMLs com acentos.
+    (por: DSA)
+
+19/06/2017
+-- ACBrCTeWebServices / pcteConversaoCTe --
+[*] Fim da Implementação os eventos Prestação em Desacordo e GTV.
+    por: Italo Jurisato Junior
+
+14/06/2017
+-- ACBrCTeConfiguracoes --
+[*] Método "GetPathCTe", modificado para informar a Descrição do Modelo baseada
+    no conteúdo do XML a ser Salvo.
+    por: Italo Jurisato Junior
+
+24/05/2017
+-- ACBRCTeConhecimentos --
+[*] Método "Conhecimento.Validar", modificado para não tentar assinar o XML, caso
+    o mesmo não contenha a Tag de assinatura
+   Por: Italo Jurisato Junior
+
+20/05/2017
+[*] Inclusão dos endereços do layout CTeRecepcaoOS_3.00 para os servidores SVC-RS 
+    e SVC-SP, tanto homologação quanto produção.
+   Por: Bsoft
+
+18/05/2017
+-- pcteProcCTe --
+[*] Correção, não estava obtendo de forma correta a chave do CT-e para poder pegar
+    o modelo correto.
+   Por: Italo Jurisato Junior
+
+17/05/2017
+-- Diversos --
+[*] Varias alterações visando a nova versão do CT-e bem como o novo modelo CTe OS.
+   Por: BSoft
+
+10/05/2017
+-- Diversos --
+[*] Inclusão do campo IEST bem como a constante DSC_IEST.
+   Por: Emerson Teixeira / Italo Jurisato Junior
+
+09/05/2017
+-- ACBrCteConhecimentos --
+[*] Correção no método Validar, não existe o grupo infModal no CTeOS Transporte de Valores.
+   Por: Italo Jurisato Junior
+
+08/05/2017
+-- pcteRetConsSitCTe --
+[*] Ajustes na leitura da consulta a situação visando o modelo 67.
+   Por: BigWings
+
+07/05/2017
+-- ACBrCTeWebServices --
+[*] Ajustes na montagem da mensagem de envio, é diferente entre os modelos 57 e 67.
+   Por: BigWings / Italo Jurisato Junior
+
+05/05/2017
+-- Diversos --
+[*] Condicionado a geração dos grupos <compl> e <infTribFed>.
+   Por: Italo Jurisato Junior
+
+04/05/2017
+-- Diversos --
+[*] Alterações visando o modelo 67 CT-e OS 3.00
+   Por: Italo Jurisato Junior
+
+21/04/2017
+-- pcteCTe/pcteCTeR/pcteCTeW --
+[*] Correção, remoção da tag <indIEToma> dentro do grupo <toma> CT-e OS 3.00
+
+-- pcteCTeW --
+[*] Correção na geração da tag <IE> para versões diferentes do ct-e 2.00 e 3.00
+    por: Italo Jurisato Junior
+
+18/04/2017
+[*] correção do campo cInfManu para versões diferentes do ct-e 2.00 e 3.00
+		http://www.projetoacbr.com.br/forum/topic/35607-dacte-xml-ct-e-300/?do=findComment&comment=237660
+		por Juliomar Marchetti
+		
+30/03/2017
+-- Diversos --
+[*] Correção e alteração na definição do campo cInfManu.
+   Por: José S. Simione
+		
+23/02/2017
+-- pcteCTeR --
+[*] Correção na leitura da chave de um CTe Complementado
+   Por: Nellien
+		
+21/01/2017
+-- pcteConversaoCTe --
+[*] Adicionado os novos valores de tipo de documento e documentos de transporte anterior.
+   por: Italo Jurisato Junior
+
+18/01/2017
+-- pcteEnvEventoCTe --
+[*] Criado a propriedade XML na classe TEventoCTe, com objetivo de armazenar o XML 
+    do Evento carregado através do método LerXML.
+   por: Italo Jurisato Junior
+
+16/01/2017
+-- pcteCTe, pcteCTeR, pcteCTeW --
+[*] Mudança no grupo idDocAntEle o campo chave mudou para chCTe na 3.00
+		Correção do bug
+		http://www.projetoacbr.com.br/forum/topic/34624-tag-chave-mudou-para-chcte-no-ct-e-30-na-parte-de-documentos-anteriores/
+		por: Juliomar Marchetti
+		
+07/01/2017
+-- Diversos --
+[*] Migração do tipo de navegação, funções de conversão e constantes para as 
+    units do pcnComum pois o tipo, as funções e constantes são utilizadas pelo
+    CT-e e MDF-e.
+    Por: Italo Jurisato Junior
+
+03/01/2017
+-- pcteDistDFeInt --
+[*] Correção na geração do XML para realizar a consulta a DistribucaoDFe.
+    Por: Italo Jurisato Junior
+
+27/12/2016
+-- pcteCTeW --
+[*] Evitar a duplicidade de alertas.
+    Por: Italo Jurisato Junior
+
+14/12/2016
+-- ACBrCTeServicos --
+[*] Inclusão das URLs de homologação/Produção para acessar o Web Services
+    CTeDistruicaoDFe.
+    Por: Italo Jurisato Junior
+
+13/12/2016
+-- ACBrCTe --
+[*] Descomentado os métodos DistribuicaoDFexxxx.
+    Por: Italo Jurisato Junior
+
+01/12/2016
+-- ACBrCTeDACTEFR
+[-] Adição da informação da I.E. 
+		Tratamento de produtos perigosos
+		Por: Juliomar Marchetti
+		
+29/11/2016
+-- pcteCTeW --
+[*] Ajuste no nome da tag da chave do CT-e a ser Complementado, para a versão 3.00
+    Por: Italo Jurisato Junior
+
+28/11/2016
+-- pcteCTeW --
+[*] Alterado para gerar o CST no grupo ICMSSN para a versão 3.00
+    Por: Italo Jurisato Junior
+
+22/11/2016
+--ACBrCTeDACTEFR
+[+] Adição de informações de produtos perigosos no dacte em fast report
+		http://www.projetoacbr.com.br/forum/topic/3559-transporte-de-produtos-perigosos/
+		por : Juliomar Marchetti
+		
+18/11/2016
+-- ACBrCTeWebServices --
+[*] Correção na geração do prefixo dos arquivos de envio/retorno de eventos
+    No arquivo de envio o prefixo ficava sempre zero.
+    Os mesmos arquivos estavam sendo salvos em duas pastas, ma pasta respectiva
+    do evento e na pasta CTe, alterado para salvar somente na pasta do evento.
+   Por: Italo Jurisato Junior
+
+09/11/2016
+-- Diversos --
+[*] Correção visando atender o Evento EPEC da versão 3.00.
+    Por: Italo Jurisato Junior
+
+04/11/2016
+-- pcteEnvEventoCTe --
+[*] Correção visando atender a versão 3.00, as TAG que contem Data/Hora deve possuir
+    tabém o UTC.
+    Por: Marcelo Augusto
+
+-- ACBrCTeWebServices --
+[*] Acrescentado a propriedade NomeArquivo na classe TCTeInutilizacao, com a
+    finalidade de armazenar o caminho mais o nome completo do XML: *-procInutCTe.xml.
+    Por: Italo Jurisato Junior
+
+03/11/2016
+-- pcteEventoCTe
+[-] Correção a propriedade xObs estava usando para gravar as informações na xJust
+		http://www.projetoacbr.com.br/forum/topic/33266-corre%C3%A7%C3%A3o-re-impress%C3%A3o-de-evento/
+		por : Juliomar Marchetti
+		
+26/10/2016
+-- pcteConversaoCTe --
+[*] Inclusão do Tipo de Responsável pelo Seguro e das funções de conversão.
+    por: Italo Jurisato Junior
+
+17/10/2016
+-- ACBrCTeServicos --
+[*] Inclusão dos grupos para o modelo 67 - CT-e OS (Outros Serviços).
+    por: Italo Jurisato Junior
+
+22/09/2016
+-- ACBrCTeWebServices --
+[*] Removido os status 128 e 155 e acrescentado o 134 na leitura do retorno do
+    envio de um evento.
+    O motivo é que não existe os status 128 e 155, mas existe o 134.
+    Por: Italo Jurisato Junior
+
+16/09/2016
+-- diversos --
+[*] Implementação dos 2 novos tipos de eventos a serem utilizados pela versão
+    3.00 do CT-e
+    Por: Italo Jurisato Junior
+
+08/09/2016
+-- diversos --
+[*] Correções para poder gerar, assinar e validar corretamente os modelos:
+    CTe e CTeOS versão 3.00
+    Por: Italo Jurisato Junior
+
+06/09/2016
+-- ACBrCTeDACTEFR --
+[*] Estava invertido os campos do DataSet em relação ao conteudo atribuido.
+    Por: NCC
+
+17/08/2016
+-- diversos --
+[+] Criada a unit pcteConsts que contem as constantes de mensagens usadas na
+    geração dos XML e que são apresentadas quando ocorre erro na validação.
+[*] Alteração em diversas units em virtude das novas units e para antender a nova
+    versão 3.00 do CT-e.
+    por: Italo Jurisato Junior
+
 12/08/2016
 --ACBrCTeDACTEFR
 [-] Melhoria para não ficar efetuando loop para verificar o CTe

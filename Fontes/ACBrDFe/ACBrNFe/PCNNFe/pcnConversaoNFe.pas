@@ -77,13 +77,13 @@ type
     stDownloadNFe, stAdmCSCNFCe, stDistDFeInt, stEnvioWebService);
 
   TpcnModeloDF = (moNFe, moNFCe);
-  TpcnVersaoDF = (ve200, ve300, ve310);
+  TpcnVersaoDF = (ve200, ve300, ve310, ve400);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
 
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros);
   TpcnCondicaoVeiculo = (cvAcabado, cvInacabado, cvSemiAcabado);
   TpcnTipoArma = (taUsoPermitido, taUsoRestrito);
-  TtpIntegra = (tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado);
+  TpcnIndEscala = (ieRelevante, ieNaoRelevante, ieNenhum);
 
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
@@ -121,9 +121,6 @@ function StrTocondVeic(out ok: boolean; const s: string): TpcnCondicaoVeiculo;
 function tpArmaToStr(const t: TpcnTipoArma): string;
 function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 
-function tpIntegraToStr(const t: TtpIntegra): string;
-function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
-
 function VeiculosRestricaoStr( const iRestricao :Integer ): String;
 function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
 function VeiculosCondicaoStr( const condVeic: TpcnCondicaoVeiculo ): String;
@@ -134,6 +131,9 @@ function VeiculosCombustivelStr( const sTpComb : String ): String;
 function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): String;
 
 function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
+
+function IndEscalaToStr(const t: TpcnIndEscala): String;
+function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
 
 implementation
 
@@ -275,12 +275,12 @@ end;
 
 function StrToVersaoDF(out ok: Boolean; const s: String): TpcnVersaoDF;
 begin
-  Result := StrToEnumerado(ok, s, ['2.00', '3.00', '3.10'], [ve200, ve300, ve310]);
+  Result := StrToEnumerado(ok, s, ['2.00', '3.00', '3.10', '4.00'], [ve200, ve300, ve310, ve400]);
 end;
 
 function VersaoDFToStr(const t: TpcnVersaoDF): String;
 begin
-  Result := EnumeradoToStr(t, ['2.00', '3.00', '3.10'], [ve200, ve300, ve310]);
+  Result := EnumeradoToStr(t, ['2.00', '3.00', '3.10', '4.00'], [ve200, ve300, ve310, ve400]);
 end;
 
  function DblToVersaoDF(out ok: Boolean; const d: Real): TpcnVersaoDF;
@@ -291,8 +291,10 @@ end;
      Result := ve200
    else if (d >= 3.0) and (d < 3.1) then
      Result := ve300
-   else if (d >= 3.10) then
+   else if (d >= 3.10) and (d < 4) then
      Result := ve310
+   else if (d >= 4) then
+     Result := ve400
    else
    begin
      Result := ve310;
@@ -306,6 +308,7 @@ end;
      ve200: Result := 2.00;
      ve300: Result := 3.00;
      ve310: Result := 3.10;
+     ve400: Result := 4.00;
    else
      Result := 0;
    end;
@@ -342,16 +345,6 @@ end;
 function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [taUsoPermitido, taUsoRestrito]);
-end;
-
-function tpIntegraToStr(const t: TtpIntegra): string;
-begin
-  result := EnumeradoToStr(t, ['', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
-end;
-
-function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
-begin
-  result := StrToEnumerado(ok, s, ['', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
 end;
 
 function VeiculosRestricaoStr( const iRestricao : Integer ): String;
@@ -506,6 +499,18 @@ begin
     taUsoPermitido: result := '0-USO PERMITIDO';
     taUsoRestrito : result := '1-USO RESTRITO';
   end;
+end;
+
+function IndEscalaToStr(const t: TpcnIndEscala): String;
+begin
+  result := EnumeradoToStr(t, ['S', 'N', ''],
+                              [ieRelevante, ieNaoRelevante, ieNenhum]);
+end;
+
+function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
+begin
+  result := StrToEnumerado(ok, s, ['S', 'N', ''],
+                                  [ieRelevante, ieNaoRelevante, ieNenhum]);
 end;
 
 end.

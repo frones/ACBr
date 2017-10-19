@@ -171,7 +171,13 @@ begin
          MultiplicadorToStr( MultiplicadorV ) +
          Smooth + eixoY + eixoX + Texto;
 
+  if ImprimirReverso then
+    ListaCmd.Add('A5');    // Inicio Reverso
+
   ListaCmd.Add(Cmd);
+
+  if ImprimirReverso then
+    ListaCmd.Add('A1');    // Impressão padrao (XOR)
 end;
 
 procedure TACBrETQPpla.ImprimirBarras(Orientacao: TACBrETQOrientacao; TipoBarras,

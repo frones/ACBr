@@ -79,16 +79,8 @@ var
   SL: TStringList;
   NomeSessao: String;
 begin
-  IniSedex := TMemIniFile.Create('sedex.ini');
-  SL       := TStringList.Create;
+  IniSedex := LerConverterIni(aStr);
   try
-     if (pos(#10,aStr) = 0) and FileExists(aStr) then
-        SL.LoadFromFile(aStr)
-     else
-        SL.Text := ConvertStrRecived(aStr);
-
-     IniSedex.SetStrings(SL);
-
      with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrSedex1 {$ELSE}dm.ACBrSedex1 {$ENDIF} do
      begin
         NomeSessao := 'SEDEX';

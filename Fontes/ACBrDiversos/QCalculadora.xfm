@@ -47,6 +47,7 @@ object FrCalculadora: TFrCalculadora
   Scaled = False
   ShowHint = True
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnKeyUp = FormKeyUp
   PixelsPerInch = 84

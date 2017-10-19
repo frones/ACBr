@@ -508,8 +508,7 @@
             <xsd:element name="Status" type="tsStatusRps" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="RpsSubstituido" type="tcIdentificacaoRps" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="id" type="tsIdTag"/>
-		<xsd:attribute name="Id" type="tsIdTag"/>
+	<xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
 	
 	<xsd:complexType name="tcInfDeclaracaoPrestacaoServico">
@@ -525,8 +524,7 @@
 			<xsd:element name="OptanteSimplesNacional" type="tsSimNao" minOccurs="1" maxOccurs="1"/>
 			<xsd:element name="IncentivoFiscal" type="tsSimNao" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="id" type="tsIdTag"/>
-		<xsd:attribute name="Id" type="tsIdTag"/>
+	<xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
 	
 	<xsd:complexType name="tcRps">
@@ -573,7 +571,7 @@
             <xsd:element name="OrgaoGerador" type="tcIdentificacaoOrgaoGerador" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="ContrucaoCivil" type="tcDadosConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="id" type="tsIdTag"/>
+        <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
 	
     <xsd:complexType name="tcNfse">
@@ -588,7 +586,7 @@
             <xsd:element name="IdentificacaoNfse" type="tcIdentificacaoNfse" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="CodigoCancelamento" type="tsCodigoCancelamentoNfse" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="id" type="tsIdTag"/>
+        <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
 	
     <xsd:complexType name="tcPedidoCancelamento">
@@ -603,7 +601,7 @@
             <xsd:element name="Pedido" type="tcPedidoCancelamento" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="DataHora" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="id" type="tsIdTag"/>
+        <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
 	
     <xsd:complexType name="tcCancelamentoNfse">
@@ -623,7 +621,7 @@
         <xsd:sequence>
             <xsd:element name="NfseSubstituidora" type="tsNumeroNfse" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="id" type="tsIdTag"/>
+        <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
 	
     <xsd:complexType name="tcSubstituicaoNfse">
@@ -673,8 +671,8 @@
                 </xsd:complexType>
             </xsd:element>
         </xsd:sequence>
-        <xsd:attribute name="id" type="tsIdTag"/>
-		<xsd:attribute name="versao" type="tsVersao" use="required" />
+        <xsd:attribute name="Id" type="tsIdTag"/>
+	<xsd:attribute name="versao" type="tsVersao" use="required" />
     </xsd:complexType>
 	
 	<xsd:element name="ListaMensagemRetornoLote">

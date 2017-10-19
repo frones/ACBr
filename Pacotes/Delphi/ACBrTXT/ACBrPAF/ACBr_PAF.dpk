@@ -50,7 +50,31 @@ contains
   ACBrPAF_C in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_C.pas',
   ACBrPAF_C_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_C_Class.pas',
   ACBrPAF_TITP_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_TITP_Class.pas',
-  ACBrPAF_TITP in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_TITP.pas';
+  ACBrPAF_TITP in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_TITP.pas',
+  ACBrPAF_S in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_S.pas',
+  ACBrPAF_S_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_S_Class.pas',
+  ACBrPAF_U in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_U.pas',
+  ACBrPAF_U_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_U_Class.pas',
+  ACBrPAF_V in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_V.pas',
+  ACBrPAF_V_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_V_Class.pas',
+  ACBrPAF_Z in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z.pas',
+  ACBrPAF_Z_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas',
+  ACBrPAF_A in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_A.pas',
+  ACBrPAF_A_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_A_Class.pas',
+  ACBrPAF_B in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_B.pas',
+  ACBrPAF_B_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_B_Class.pas',
+  ACBrPAF_F in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_F.pas',
+  ACBrPAF_F_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_F_Class.pas',
+  ACBrPAF_G in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_G.pas',
+  ACBrPAF_G_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_G_Class.pas',
+  ACBrPAF_H in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_H.pas',
+  ACBrPAF_H_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_H_Class.pas',
+  ACBrPAF_J in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_J.pas',
+  ACBrPAF_J_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_J_Class.pas',
+  ACBrPAF_L in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_L.pas',
+  ACBrPAF_L_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_L_Class.pas',
+  ACBrPAF_M in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_M.pas',
+  ACBrPAF_M_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_M_Class.pas';
 
 end.
 

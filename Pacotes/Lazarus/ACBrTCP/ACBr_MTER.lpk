@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_MTER"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Daniel Simoes de Almeida e Elias César Vieira"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTCP\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBrMTER - Componente Servidor de Micro Terminais TCP/IP
+http://www.projectoacbr.com.br/"/>
+    <License Value="LGPL"/>
+    <Version Minor="1"/>
+    <Files Count="6">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTer.pas"/>
+        <UnitName Value="ACBrMTer"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTERReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrMTERReg"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerClass.pas"/>
+        <UnitName Value="ACBrMTerClass"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerPMTG.pas"/>
+        <UnitName Value="ACBrMTerPMTG"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerStxEtx.pas"/>
+        <UnitName Value="ACBrMTerStxEtx"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerVT100.pas"/>
+        <UnitName Value="ACBrMTerVT100"/>
+      </Item6>
+    </Files>
+    <RequiredPkgs Count="3">
+      <Item1>
+        <PackageName Value="ACBrTCP"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrSerial"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

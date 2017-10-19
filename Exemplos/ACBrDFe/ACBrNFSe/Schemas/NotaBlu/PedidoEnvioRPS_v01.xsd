@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://nfse.blumenau.sc.gov.br" 
+           xmlns:tipos="http://nfse.blumenau.sc.gov.br/tipos" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <xs:import namespace="http://nfse.blumenau.sc.gov.br/tipos" schemaLocation="TiposNFe_v01.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+  <xs:element name="PedidoEnvioRPS">
+    <xs:annotation>
+      <xs:documentation>Schema utilizado para PEDIDO de envio de RPS.</xs:documentation>
+      <xs:documentation>Este Schema XML é utilizado pelos prestadores de serviços para substituição online e individual de RPS por NFS-e.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Cabecalho" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Cabeçalho do pedido.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CPFCNPJRemetente" type="tipos:tpCPFCNPJ" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Informe o CPF/CNPJ do Remetente autorizado a transmitir a mensagem XML.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Versao" type="tipos:tpVersao" use="required" fixed="1">
+              <xs:annotation>
+                <xs:documentation>Informe a Versão do Schema XML utilizado.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RPS" type="tipos:tpRPS" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Informe o RPS a ser substituido por NFS-e.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Assinatura digital do contribuinte que gerou o RPS contido da mensagem XML.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

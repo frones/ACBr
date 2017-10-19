@@ -2,9 +2,9 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="ACBrBlocoXDemo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -20,15 +20,23 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="24"/>
-        <CursorPos X="3" Y="32"/>
+        <TopLine Value="118"/>
+        <CursorPos X="19" Y="137"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_ReducaoZ.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="38"/>
+        <CursorPos X="14" Y="49"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit2>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
+    <JumpHistory Count="14" HistoryIndex="13">
       <Position1>
         <Filename Value="uPrincipal.pas"/>
       </Position1>
@@ -56,6 +64,33 @@
         <Filename Value="uPrincipal.pas"/>
         <Caret Line="52" Column="6" TopLine="37"/>
       </Position7>
+      <Position8>
+        <Filename Value="uPrincipal.pas"/>
+        <Caret Line="35" Column="44" TopLine="23"/>
+      </Position8>
+      <Position9>
+        <Filename Value="uPrincipal.pas"/>
+        <Caret Line="89" Column="30" TopLine="78"/>
+      </Position9>
+      <Position10>
+        <Filename Value="uPrincipal.pas"/>
+        <Caret Line="138" Column="26" TopLine="126"/>
+      </Position10>
+      <Position11>
+        <Filename Value="uPrincipal.pas"/>
+        <Caret Line="145" Column="37" TopLine="134"/>
+      </Position11>
+      <Position12>
+        <Filename Value="uPrincipal.pas"/>
+        <Caret Line="156" Column="38" TopLine="147"/>
+      </Position12>
+      <Position13>
+        <Filename Value="uPrincipal.pas"/>
+      </Position13>
+      <Position14>
+        <Filename Value="uPrincipal.pas"/>
+        <Caret Line="137" Column="19" TopLine="118"/>
+      </Position14>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

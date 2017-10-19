@@ -50,13 +50,13 @@ const
 
 type
 
-
-
   TACBrDFeOnTransmitError = procedure(const HttpError, InternalError: Integer;
     const URL, DadosEnviados, SoapAction: String; var Retentar: Boolean; var Tratado: Boolean) of object ;
 
   { TACBrDFe }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrDFe = class(TACBrComponent)
   private
     FMAIL: TACBrMail;
@@ -65,7 +65,9 @@ type
     FListaDeSchemas: TStringList;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
+    function GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
     procedure SetAbout(AValue: String);
+    procedure SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
     procedure SetMAIL(AValue: TACBrMail);
   protected
     FPConfiguracoes: TConfiguracoes;
@@ -92,7 +94,7 @@ type
       ConteudoEhUTF8: Boolean = True): Boolean;
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamNFe: TStream = nil; NomeArq: String = ''); virtual;
+      StreamNFe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); virtual;
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; virtual;
     procedure AchaArquivoSchema(NomeSchema: String; var Versao: Double;
@@ -100,9 +102,14 @@ type
 
     procedure LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
       var Versao: Double; var URL: String);
+    procedure LerDeParams(const NomeSessao, NomeServico: String;
+      var Versao: Double; var Servico: String);
     procedure LerServicoDeParams(const ModeloDFe, UF: String;
       const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
-      var Versao: Double; var URL: String);
+      var Versao: Double; var URL: String); overload;
+    procedure LerServicoDeParams(const ModeloDFe, UF: String;
+      const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
+      var Versao: Double; var URL: String; var Servico: String; var SoapAction: String);overload;
     function LerVersaoDeParams(const ModeloDFe, UF: String;
       const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
       VersaoBase: Double): Double; virtual;
@@ -120,7 +127,10 @@ type
        write FOnTransmitError;
     property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
     property About: String read GetAbout write SetAbout stored False;
+
     property OnGerarLog: TACBrGravarLog read FOnGerarLog write FOnGerarLog;
+    property OnAntesDeAssinar: TDFeSSLAntesDeAssinar read GetOnAntesDeAssinar
+       write SetAntesDeAssinar;
   end;
 
 implementation
@@ -153,12 +163,16 @@ begin
     NameSpaceURI := GetNameSpaceURI;
     NumeroSerie := Configuracoes.Certificados.NumeroSerie;
     Senha := Configuracoes.Certificados.Senha;
+
     ProxyHost := Configuracoes.WebServices.ProxyHost;
     ProxyPass := Configuracoes.WebServices.ProxyPass;
     ProxyPort := Configuracoes.WebServices.ProxyPort;
     ProxyUser := Configuracoes.WebServices.ProxyUser;
     TimeOut := Configuracoes.WebServices.TimeOut;
-    SSLLib := Configuracoes.Geral.SSLLib;
+
+    SSLCryptLib := Configuracoes.Geral.SSLCryptLib;
+    SSLHttpLib := Configuracoes.Geral.SSLHttpLib;
+    SSLXmlSignLib := Configuracoes.Geral.SSLXmlSignLib;
   end;
 
   FOnGerarLog := nil;
@@ -204,6 +218,16 @@ begin
   {nada aqui}
 end;
 
+function TACBrDFe.GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
+begin
+  Result := FSSL.AntesDeAssinar;
+end;
+
+procedure TACBrDFe.SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
+begin
+  FSSL.AntesDeAssinar := AValue;
+end;
+
 
 function TACBrDFe.Gravar(NomeArquivo: String; ConteudoXML: String;
   aPath: String; ConteudoEhUTF8: Boolean): Boolean;
@@ -246,31 +270,16 @@ begin
 end;
 
 procedure TACBrDFe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; NomeArq: String);
+  sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; NomeArq: String;
+  sReplyTo: TStrings);
 var
-  i : Integer;
-  EMails : TStringList;
-  sDelimiter : Char;
+  i: Integer;
 begin
   if not Assigned(MAIL) then
     raise EACBrDFeException.Create('Componente ACBrMail não associado');
 
-  MAIL.Clear;	
-	
-  EMails := TStringList.Create;
-  try
-    if Pos( ';', sPara) > 0 then
-       sDelimiter := ';'
-    else
-       sDelimiter := ',';
-    QuebrarLinha( sPara, EMails, '"', sDelimiter);
-
-    for i := 0 to EMails.Count -1 do
-        MAIL.AddAddress( EMails[i] );
-  finally
-    EMails.Free;
-  end;
-
+  MAIL.Clear;
+  MAIL.AddAddress(sPara);
   MAIL.Subject := sAssunto;
 
   if Assigned(sMensagem) then
@@ -293,6 +302,13 @@ begin
   begin
     for i := 0 to sCC.Count - 1 do
       MAIL.AddCC(sCC[i]);
+  end;
+
+  //ReplyTo
+  if Assigned(sReplyTo) then
+  begin
+    for i := 0 to sReplyTo.Count - 1 do
+      MAIL.AddReplyTo(sReplyTo[i]);
   end;
 
   MAIL.Send;
@@ -384,7 +400,7 @@ end;
 procedure TACBrDFe.LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
   var Versao: Double; var URL: String);
 var
-  Chave, K: String;
+  Chave, ChaveBase, K: String;
   SL: TStringList;
   I: integer;
   VersaoAtual, VersaoAchada: Double;
@@ -397,7 +413,8 @@ begin
   if not FPIniParams.SectionExists(NomeSessao) then
     exit;
 
-  Chave := NomeServico + '_' + FloatToString(VersaoAtual,'.','0.00');
+  ChaveBase := NomeServico + '_';
+  Chave := ChaveBase + FloatToString(VersaoAtual,'.','0.00');
 
   // Achou com busca exata ? (mesma versao) //
   if NaoEstaVazio(FPIniParams.ReadString(NomeSessao, Chave, '')) then
@@ -406,7 +423,6 @@ begin
   if VersaoAchada = 0 then
   begin
     // Procure por serviço com o mesmo nome, mas com versão inferior //
-    Chave := NomeServico + '_';
     SL := TStringList.Create;
     try
       FPIniParams.ReadSection(NomeSessao, SL);
@@ -414,9 +430,9 @@ begin
       begin
         K := SL[I];
 
-        if copy(K, 1, Length(Chave)) = Chave then
+        if copy(K, 1, Length(ChaveBase)) = ChaveBase then
         begin
-          VersaoAtual := StringToFloatDef(copy(K, Length(Chave) + 1, Length(K)), 0);
+          VersaoAtual := StringToFloatDef(copy(K, Length(ChaveBase) + 1, Length(K)), 0);
 
           if (VersaoAtual > VersaoAchada) and (VersaoAtual <= Versao) then
           begin
@@ -437,11 +453,27 @@ begin
     URL := FPIniParams.ReadString(NomeSessao, NomeServico, '');
 end;
 
+procedure TACBrDFe.LerDeParams(const NomeSessao, NomeServico: String;
+  var Versao: Double; var Servico: String);
+begin
+  LerServicoChaveDeParams(NomeSessao,NomeServico,Versao,Servico);
+end;
+
 procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;
   const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
   var Versao: Double; var URL: String);
 var
-  Sessao, NomeSchema, ArqSchema: String;
+  Servico, SoapAction: String;
+begin
+  LerServicoDeParams(ModeloDFe, UF, TipoAmbiente, NomeServico, Versao, URL, Servico, SoapAction);
+end;
+
+procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;
+  const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
+  var Versao: Double; var URL: String; var Servico: String;
+  var SoapAction: String);
+var
+  Sessao, ListaSessoes, NomeSchema, ArqSchema: String;
   VersaoAchada, VersaoSchema: Double;
 begin
   if EstaVazio(ModeloDFe) then
@@ -453,18 +485,32 @@ begin
   Sessao := ModeloDFe + '_' + UF + '_' + IfThen(TipoAmbiente = taProducao, 'P', 'H');
   VersaoAchada := Versao;
 
-  LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
+  LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL );
+  LerDeParams( FPIniParams.ReadString(Sessao, 'WSDL', ''), NomeServico, VersaoAchada, Servico );
+  LerDeParams( FPIniParams.ReadString(Sessao, 'SoapAction', ''), NomeServico, VersaoAchada, SoapAction );
 
   // Se não achou, verifique se está fazendo redirecionamento "Usar="
-  if EstaVazio(URL) then
+  ListaSessoes := '';  // proteção contra redirecionamento circular
+  while EstaVazio(URL) do
   begin
+    if NaoEstaVazio(Sessao) then
+    begin
+      if (Pos(Sessao, ListaSessoes) > 0) then
+        raise EACBrDFeException.Create('Redirecionamento circular detectado: Sessão "'+Sessao+'" no arquivo "'+
+          Configuracoes.WebServices.ResourceName+'"');
+
+      ListaSessoes := ListaSessoes + ';' + Sessao;
+    end;
+
     if FPIniParams.SectionExists(Sessao) then
     begin
       Sessao := FPIniParams.ReadString(Sessao, 'Usar', '');
       if NaoEstaVazio(Sessao) then
       begin
         VersaoAchada := Versao;
-        LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
+        LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL );
+        LerDeParams(  FPIniParams.ReadString(Sessao, 'WSDL', ''), NomeServico, VersaoAchada, Servico );
+        LerDeParams( FPIniParams.ReadString(Sessao, 'SoapAction', ''), NomeServico, VersaoAchada, SoapAction );
       end;
     end
     else
@@ -485,7 +531,6 @@ begin
 
   Versao := VersaoAchada;
 end;
-
 function TACBrDFe.LerVersaoDeParams(const ModeloDFe, UF: String;
   const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
   VersaoBase: Double): Double;

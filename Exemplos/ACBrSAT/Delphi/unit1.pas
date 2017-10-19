@@ -1,3 +1,4 @@
+{$I ACBr.inc}
 unit Unit1 ;
 
 interface
@@ -7,7 +8,7 @@ uses
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
   ComCtrls, Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
   ACBrSATExtratoFortesFr, ACBrBase, ACBrSATExtratoClass, OleCtrls, SHDocVw,
-  ACBrSATExtratoFortes, ACBrPosPrinter;
+  ACBrSATExtratoReportClass, ACBrPosPrinter, jpeg;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -198,8 +199,23 @@ type
     Label28: TLabel;
     Label29: TLabel;
     cbImprimir1Linha: TCheckBox;
-    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
-    procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
+    N3: TMenuItem;
+    CarregarXML1: TMenuItem;
+    tsMFE: TTabSheet;
+    Label30: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
+    edMFEInput: TEdit;
+    edMFEOutput: TEdit;
+    edMFETimeout: TEdit;
+    btMFEEnviarPagamento: TButton;
+    btMFEVerificarStatus: TButton;
+    btMFEEnviarStatusPagamento: TButton;
+    btMFERespostaFiscal: TButton;
+    Image1: TImage;
+    cbxRemoverAcentos: TCheckBox;
+    Label33: TLabel;
+    seItensVenda: TSpinEdit;
     procedure ACBrSAT1Log(const AString: String);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
@@ -247,8 +263,16 @@ type
     procedure cbxSalvarEnvioChange(Sender: TObject);
     procedure cbxSepararPorCNPJChange(Sender: TObject);
     procedure cbxSepararPorMESChange(Sender: TObject);
+    procedure CarregarXML1Click(Sender: TObject);
+    procedure btMFEEnviarPagamentoClick(Sender: TObject);
+    procedure btMFEVerificarStatusClick(Sender: TObject);
+    procedure btMFEEnviarStatusPagamentoClick(Sender: TObject);
+    procedure btMFERespostaFiscalClick(Sender: TObject);
+    procedure cbxRemoverAcentosClick(Sender: TObject);
   private
     { private declarations }
+    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
 
     procedure ConfiguraRedeSAT;
     procedure LeDadosRedeSAT;
@@ -265,8 +289,10 @@ var
 
 implementation
 
-Uses typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
-  RLPrinters, Printers;
+Uses
+  typinfo, math,
+  ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
+  RLPrinters, Printers, ACBrSATMFe_integrador, pcnVFPe;
 
 {$R *.dfm}
 
@@ -282,6 +308,10 @@ var
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;  
 begin
+  // Atribuindo evento por código, para evitar incompatibilidade de D7 com XE (String x AnsiString)
+  ACBrSAT1.OnGetcodigoDeAtivacao := ACBrSAT1GetcodigoDeAtivacao;
+  ACBrSAT1.OnGetsignAC := ACBrSAT1GetsignAC;
+
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
      cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrSATModelo), integer(I) ) ) ;
@@ -373,18 +403,15 @@ begin
     ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
     ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
     ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
+
+    if Modelo = mfe_Integrador_XML then
+    begin
+      TACBrSATMFe_integrador_XML(SAT).PastaInput  := edMFEInput.Text;
+      TACBrSATMFe_integrador_XML(SAT).PastaOutput := edMFEOutput.Text;
+      TACBrSATMFe_integrador_XML(SAT).Timeout     := StrToIntDef(edMFETimeout.Text,30);
+    end;   
   end
 end ;
-
-procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
-begin
-  Chave := edtCodigoAtivacao.Text;
-end;
-
-procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
-begin
-  Chave := edtSwHAssinatura.Text;
-end;
 
 procedure TForm1.ACBrSAT1Log(const AString: String);
 begin
@@ -430,6 +457,7 @@ begin
     sePagCod.Value         := INI.ReadInteger('SAT','PaginaDeCodigo',0);
     sfeVersaoEnt.Text      := FloatToString( INI.ReadFloat('SAT','versaoDadosEnt', cversaoDadosEnt) );
     cbxFormatXML.Checked   := INI.ReadBool('SAT','FormatarXML', True);
+    cbxRemoverAcentos.Checked:= INI.ReadBool('SAT','RetirarAcentos', True);
     cbxSalvarCFe.Checked     := INI.ReadBool('SAT','SalvarCFe', True);
     cbxSalvarCFeCanc.Checked := INI.ReadBool('SAT','SalvarCFeCanc', True);
     cbxSalvarEnvio.Checked   := INI.ReadBool('SAT','SalvarEnvio', True);
@@ -485,6 +513,10 @@ begin
     edRedeProxyUser.Text      := INI.ReadString('Rede','proxy_user','');
     edRedeProxySenha.Text     := INI.ReadString('Rede','proxy_senha','');
 
+    edMFEInput.Text    :=  INI.ReadString('MFE','Input','c:\Integrador\Input\');
+    edMFEOutput.Text   :=  INI.ReadString('MFE','Output','c:\Integrador\Output\');
+    edMFETimeout.Text  :=  IntToStr(INI.ReadInteger('MFE','Timeout',30));
+
   finally
      INI.Free ;
   end ;
@@ -509,6 +541,7 @@ begin
     INI.WriteInteger('SAT','PaginaDeCodigo',sePagCod.Value);
     INI.WriteFloat('SAT','versaoDadosEnt', StringToFloatDef(sfeVersaoEnt.Text,cversaoDadosEnt));
     INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
+    INI.WriteBool('SAT','RetirarAcentos', cbxRemoverAcentos.Checked);
     INI.WriteBool('SAT','SalvarCFe', cbxSalvarCFe.Checked);
     INI.WriteBool('SAT','SalvarCFeCanc', cbxSalvarCFeCanc.Checked);
     INI.WriteBool('SAT','SalvarEnvio', cbxSalvarEnvio.Checked);
@@ -561,7 +594,10 @@ begin
     INI.WriteInteger('Rede','proxy_porta',edRedeProxyPorta.Value);
     INI.WriteString('Rede','proxy_user',edRedeProxyUser.Text);
     INI.WriteString('Rede','proxy_senha',edRedeProxySenha.Text);
-    
+
+    INI.WriteString('MFE','Input',edMFEInput.Text);
+    INI.WriteString('MFE','Output',edMFEOutput.Text);
+    INI.WriteInteger('MFE','Timeout',StrToIntDef(edMFETimeout.Text,0));     
   finally
      INI.Free ;
   end ;
@@ -835,14 +871,16 @@ end;
 
 procedure TForm1.mGerarVendaClick(Sender : TObject) ;
 var
-  TotalItem: Double;
+  TotalItem, TotalGeral, Pagto1: Double;
   A: Integer;
-  TotalProdutos, TotalImpostoAprox: Double;
+  Loops: Integer;
 begin
+  TotalGeral := 0;
   PageControl1.ActivePage := tsGerado;
 
   ACBrSAT1.CFe.IdentarXML := cbxFormatXML.Checked;
   ACBrSAT1.CFe.TamanhoIdentacao := 3;
+  ACBrSAT1.CFe.RetirarAcentos := cbxRemoverAcentos.Checked;
 
   mVendaEnviar.Clear;
 
@@ -854,90 +892,186 @@ begin
   with ACBrSAT1.CFe do
   begin
     ide.numeroCaixa := 1;
+    ide.cNF := Random(999999);
 
-    Dest.CNPJCPF := '05481336000137';
-    Dest.xNome   := 'D.J. SYSTEM';
+    Dest.CNPJCPF := '5481336000137';
+    // NOTA: Essa Unit está em CP1252, por isso precisamos do ACBrStr()
+    Dest.xNome := ACBrStr('D.J. SYSTEM ÁÉÍÓÚáéíóúÇç teste de nome Longo');
 
-    Entrega.xLgr    := 'logradouro';
-    Entrega.nro     := '112233';
-    Entrega.xCpl    := 'complemento';
+    Entrega.xLgr := 'logradouro';
+    Entrega.nro := '112233';
+    Entrega.xCpl := 'complemento';
     Entrega.xBairro := 'bairro';
-    Entrega.xMun    := 'municipio';
-    Entrega.UF      := 'RJ';
+    Entrega.xMun := 'municipio';
+    Entrega.UF := 'RJ';
 
-    TotalProdutos     := 0;
-    TotalImpostoAprox := 0;
-    for A := 1 to 1 do
+    Loops := max(Trunc(seItensVenda.Value / 3)-1, 0);
+
+    For A := 0 to Loops do  // Ajuste aqui para vender mais itens
     begin
-      with Det.Add do
+    with Det.Add do
+    begin
+      nItem := 1 + (A * 3);
+      Prod.cProd := 'ACBR001';
+      Prod.cEAN := '6291041500213';
+      Prod.xProd := 'Assinatura SAC';
+      prod.NCM := '99';
+      Prod.CFOP := '5120';
+      Prod.uCom := 'UN';
+      Prod.qCom := 1;
+      Prod.vUnCom := 120.00;
+      Prod.indRegra := irTruncamento;
+      Prod.vDesc := 1;
+
+      with Prod.obsFiscoDet.Add do
       begin
-        nItem         := A;
-        Prod.cProd    := 'ACBR' + Format('%3.3d', [A]);
-        Prod.cEAN     := '6291041500213';
-        Prod.xProd    := 'DESCRICAO DO PRODUTO GIGANTE ' + Format('%3.3d', [A]);
-        prod.NCM      := '99';
-        Prod.CFOP     := '5120';
-        Prod.uCom     := 'UN';
-        Prod.indRegra := irTruncamento;
-        Prod.qCom     := 1;
-        Prod.vUnCom   := 10;
-        Prod.vDesc    := 0;
-        Prod.vOutro   := 0;
-
-        //with Prod.obsFiscoDet.Add do
-        //begin
-        //  xCampoDet := 'campo';
-        //  xTextoDet := 'texto';
-        //end;
-
-        Imposto.ICMS.orig  := oeNacional;
-        if ACBrSAT1.Config.emit_cRegTrib = RTRegimeNormal then
-        begin
-          Imposto.ICMS.CST   := cst00;
-          Imposto.ICMS.pICMS := 18;
-        end
-        else
-        begin
-          Imposto.ICMS.CSOSN := csosn102;
-        end;
-
-        Imposto.PIS.CST  := pis49;
-        Imposto.PIS.vBC  := 0;
-        Imposto.PIS.pPIS := 0;
-
-        Imposto.COFINS.CST     := cof49;
-        Imposto.COFINS.vBC     := 0;
-        Imposto.COFINS.pCOFINS := 0;
-
-        infAdProd := 'Informacoes adicionais';
-
-        // imposto aproximado
-        TotalItem := (Prod.qCom * Prod.vUnCom);
-        Imposto.vItem12741 := TotalItem * 0.12;
-
-        TotalProdutos     := TotalProdutos     + TotalItem;
-        TotalImpostoAprox := TotalImpostoAprox + Imposto.vItem12741;
+        xCampoDet := 'campo';
+        xTextoDet := 'texto';
       end;
+
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
+      TotalGeral := TotalGeral + TotalItem;
+      Imposto.vItem12741 := TotalItem * 0.12;
+
+      Imposto.ICMS.orig := oeNacional;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn102
+      else
+        Imposto.ICMS.CST := cst00;
+
+      Imposto.ICMS.pICMS := 18;
+
+      Imposto.PIS.CST := pis49;
+      Imposto.PIS.vBC := TotalItem;
+      Imposto.PIS.pPIS := 0.0065;
+
+      Imposto.COFINS.CST := cof49;
+      Imposto.COFINS.vBC := TotalItem;
+      Imposto.COFINS.pCOFINS := 0.0065;
+      //
+      //Imposto.COFINSST.vBC := 87206.46;
+      //Imposto.COFINSST.pCOFINS := 1.8457;
+
+      infAdProd := 'Informacoes adicionais';
     end;
 
-    Total.DescAcrEntr.vDescSubtot := 0;
-    Total.vCFeLei12741            := TotalImpostoAprox;
+    with Det.Add do
+    begin
+      nItem := 2 + (A * 3);
+      Prod.cProd := '6291041500213';
+      Prod.cEAN := '6291041500213';
+      Prod.xProd := ACBrStr('Outro produto Qualquer, com a Descrição Grande');
+      Prod.CFOP := '5529';
+      Prod.uCom := 'un';
+      Prod.qCom := 1.1205;
+      Prod.vUnCom := 1.210;
+      Prod.indRegra := irTruncamento;
+      Prod.vOutro := 2;
+
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
+      TotalGeral := TotalGeral + TotalItem;
+      Imposto.vItem12741 := TotalItem * 0.30;
+
+      Imposto.ICMS.orig := oeNacional;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn400
+      else
+        Imposto.ICMS.CST := cst40;
+
+      Imposto.PIS.CST := pis49;
+      Imposto.PIS.qBCProd := TotalItem;
+      Imposto.PIS.vAliqProd := 1.0223;
+
+      Imposto.PISST.qBCProd := TotalItem;
+      Imposto.PISST.vAliqProd := 1.0223;
+
+      Imposto.COFINS.CST := cof49;
+      Imposto.COFINS.qBCProd := TotalItem;
+      Imposto.COFINS.vAliqProd := 1.0223;
+
+      //Imposto.COFINSST.qBCProd := 503.6348;
+      //Imposto.COFINSST.vAliqProd := 779.4577;
+    end;
+
+    with Det.Add do
+    begin
+      nItem := 3 + (A * 3);
+      Prod.cProd := 'abc123';
+      Prod.cEAN := '6291041500213';
+      Prod.xProd := 'ACBrSAT rules';
+      Prod.NCM := '99';
+      Prod.CFOP := '5844';
+      Prod.uCom := 'un';
+      Prod.qCom := 1.1205;
+      Prod.vUnCom := 1.210;
+      Prod.indRegra := irTruncamento;
+
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
+      TotalGeral := TotalGeral + TotalItem;
+
+      Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn102
+      else
+        Imposto.ICMS.CST := cst60;
+
+      Imposto.PIS.CST := pis49;
+
+      Imposto.PISST.qBCProd := TotalItem;
+      Imposto.PISST.vAliqProd := 1.1826;
+
+      Imposto.COFINS.CST := cof49;
+
+      infAdProd := ACBrStr('Informações adicionais');
+    end;
+
+    end;
+    (*
+    with Det.Add do
+    begin
+      nItem := 4;
+      Prod.cProd := 'abc123';
+      Prod.cEAN := '6291041500213';
+      Prod.xProd := 'Nada';
+      Prod.CFOP := '5025';
+      Prod.uCom := 'horas';
+      Prod.qCom := 1.1205;
+      Prod.vUnCom := 1.210;
+      Prod.vProd := 8;
+      Prod.indRegra := irTruncamento;
+      Prod.vOutro := 93.31;
+
+      Imposto.ICMS.orig := oeEstrangeiraAdquiridaBrasil;
+      Imposto.ICMS.CSOSN := csosn900;
+      Imposto.ICMS.pICMS := 1.1234;
+
+      Imposto.PIS.CST := pis49;
+
+      Imposto.PISST.qBCProd := 7528.8947;
+      Imposto.PISST.vAliqProd := 296.2348;
+
+      Imposto.COFINS.CST := cof49;
+    end;
+    *)
+
+    Total.DescAcrEntr.vDescSubtot := 5;
+    Total.vCFeLei12741 := 1.23;
+
+    Pagto1 := RoundABNT(TotalGeral/2,-2);
+{    with Pagto.Add do
+    begin
+      cMP := mpCartaodeCredito;
+      vMP := Pagto1;
+    end;    }
 
     with Pagto.Add do
     begin
       cMP := mpDinheiro;
-      vMP := 100;
+      vMP := TotalGeral - Pagto1 + 100;
     end;
 
-//    with Pagto.Add do
-//    begin
-//      cMP   := mpCartaodeCredito;
-//      vMP   := 50;
-//      cAdmC := 999;
-//    end;
-
-    InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
-                      'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br'
+    InfAdic.infCpl := ACBrStr('Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
+                              'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br');
   end;
 
   mVendaEnviar.Lines.Text := ACBrSAT1.CFe.GerarXML( True );    // True = Gera apenas as TAGs da aplicação
@@ -948,6 +1082,7 @@ end;
 procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject) ;
 begin
   PrepararImpressao;
+  //ACBrSAT1.CFe.LoadFromFile('C:\temp\CFe.xml');
   ACBrSAT1.ImprimirExtrato;
 end;
 
@@ -1031,6 +1166,12 @@ begin
   edRedeProxyPorta.Enabled := edRedeProxyIP.Enabled;
   edRedeProxyUser.Enabled  := edRedeProxyIP.Enabled;
   edRedeProxySenha.Enabled := edRedeProxyIP.Enabled;
+end;
+
+procedure TForm1.cbxRemoverAcentosClick(Sender: TObject);
+begin
+  ACBrSAT1.CFe.RetirarAcentos := cbxRemoverAcentos.Checked;
+  ACBrSAT1.CFeCanc.RetirarAcentos := cbxRemoverAcentos.Checked;
 end;
 
 procedure TForm1.LerXMLinterfaceRede1Click(Sender: TObject);
@@ -1140,6 +1281,138 @@ end;
 procedure TForm1.cbxSepararPorMESChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
+end;
+
+procedure TForm1.CarregarXML1Click(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo XML|*.xml';
+  if OpenDialog1.Execute then
+  begin
+    ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
+
+    LoadXML( ACBrSAT1.CFe.AsXMLString,  mRecebido);
+    PageControl1.ActivePage := tsRecebido;
+  end ;  
+end;
+
+procedure TForm1.btMFEEnviarPagamentoClick(Sender: TObject);
+var
+  PagamentoMFe : TEnviarPagamento;
+  RespostaPagamentoMFe : TRespostaPagamento;
+begin
+  PagamentoMFe := TEnviarPagamento.Create;
+  try
+    with PagamentoMFe do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      ChaveRequisicao := '26359854-5698-1365-9856-965478231456';
+      Estabelecimento := '10';
+      SerialPOS := InputBox('SerialPOS','Informe o Serial do POS','ACBr-'+RandomName(8));
+      CNPJ := edtEmitCNPJ.Text;
+      IcmsBase := 0.23;
+      ValorTotalVenda := 1530;
+      HabilitarMultiplosPagamentos := True;
+      HabilitarControleAntiFraude := False;
+      CodigoMoeda := 'BRL';
+      EmitirCupomNFCE := False;
+      OrigemPagamento := 'Mesa 1234';
+    end;
+    RespostaPagamentoMFe := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarPagamento(PagamentoMFe);
+    ShowMessage(IntToStr(RespostaPagamentoMFe.IDPagamento));
+  finally
+    PagamentoMFe.Free;
+  end;
+end;
+
+procedure TForm1.btMFEVerificarStatusClick(Sender: TObject);
+var
+  VerificarStatusValidador : TVerificarStatusValidador;
+  RespostaVerificarStatusValidador : TRespostaVerificarStatusValidador;
+begin
+  VerificarStatusValidador := TVerificarStatusValidador.Create;
+  try
+    with VerificarStatusValidador do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      IDFila := StrToIntDef(InputBox('IDPagmento','Informe o ID do Pagamento',''),0);
+      CNPJ:= edtEmitCNPJ.Text;
+    end;
+    RespostaVerificarStatusValidador := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).VerificarStatusValidador(VerificarStatusValidador) ;
+  finally
+    VerificarStatusValidador.Free;
+  end;
+
+  ShowMessage(RespostaVerificarStatusValidador.CodigoAutorizacao);
+end;
+
+procedure TForm1.btMFEEnviarStatusPagamentoClick(Sender: TObject);
+var
+  StatusPagamentoMFe : TStatusPagamento;
+  RespostaStatusPagamento : TRespostaStatusPagamento;
+begin
+  StatusPagamentoMFe := TStatusPagamento.Create;
+  try
+    with StatusPagamentoMFe do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      CodigoAutorizacao := '20551';
+      Bin := '123456';
+      DonoCartao := 'TESTE';
+      DataExpiracao := '01/01';
+      InstituicaoFinanceira:= 'STONE';
+      Parcelas := 1;
+      CodigoPagamento := '12846';
+      ValorPagamento := 1530;
+      IDFila := 1674068;
+      Tipo := '1';
+      UltimosQuatroDigitos := 12345;
+    end;
+    RespostaStatusPagamento := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarStatusPagamento(StatusPagamentoMFe);
+    ShowMessage(RespostaStatusPagamento.Retorno);
+  finally
+    StatusPagamentoMFe.Free;
+  end;
+end;
+
+procedure TForm1.btMFERespostaFiscalClick(Sender: TObject);
+var
+ RespostaFiscal : TRespostaFiscal;
+ RetornoRespostaFiscal : TRetornoRespostaFiscal;
+Begin
+  RespostaFiscal := TRespostaFiscal.Create;
+    try
+      with RespostaFiscal do
+      begin
+        Clear;
+        ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+        IDFila := 1674068;
+        ChaveAcesso := '35170408723218000186599000113100000279731880';
+        Nsu := '1674068';
+        NumerodeAprovacao := '1234';
+        Bandeira := 'VISA';
+        Adquirente := 'STONE';
+        ImpressaoFiscal := '';
+        NumeroDocumento := '1674068';
+        CNPJ:= edtEmitCNPJ.Text;
+      end;
+      RetornoRespostaFiscal := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).RespostaFiscal(RespostaFiscal);
+      ShowMessage(RetornoRespostaFiscal.IdRespostaFiscal);
+    finally
+      RespostaFiscal.Free;
+    end;
+end;  
+
+procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+begin
+  Chave := edtCodigoAtivacao.Text;
+end;
+
+procedure TForm1.ACBrSAT1GetsignAC(var Chave: AnsiString);
+begin
+  Chave := edtSwHAssinatura.Text;
 end;
 
 end.

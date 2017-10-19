@@ -41,18 +41,15 @@ interface
 uses
   Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, pmdfeMDFe, ACBrMDFe,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
-  {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts;
 
 type
 
   { TfrlDAMDFeRL }
 
   TfrlDAMDFeRL = class(TForm)
-    dsItens: TDatasource;
     RLMDFe: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -76,10 +73,6 @@ type
     FImpressora: string;
     FMDFeCancelada: boolean;
     FMDFeEncerrado: boolean;
-
-    cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
-    procedure ConfigDataSet;
-
     procedure rllSemValorFiscalPrint(Sender: TObject; var Value: string);
   public
     { Public declarations }
@@ -132,7 +125,7 @@ uses
  {$R *.dfm}
 {$endif}
 
-class procedure TfrlDAMDFeRL.Imprimir(AOwner: TComponent; 
+class procedure TfrlDAMDFeRL.Imprimir(AOwner: TComponent;
   AMDFe: TMDFe;
   ALogo: string = '';
   AEmail: string = '';
@@ -190,7 +183,7 @@ begin
     end;
 end;
 
-class procedure TfrlDAMDFeRL.SavePDF(AOwner: TComponent; 
+class procedure TfrlDAMDFeRL.SavePDF(AOwner: TComponent;
   AFile: string;
   AMDFe: TMDFe;
   ALogo: string = '';
@@ -240,82 +233,6 @@ begin
     finally
       Free;
     end;
-end;
-
-procedure TfrlDAMDFeRL.FormCreate(Sender: TObject);
-begin
-  ConfigDataSet;
-end;
-
-procedure TfrlDAMDFeRL.ConfigDataSet;
-begin
-  if not Assigned(cdsItens) then
-    cdsItens :=
-{$IFDEF BORLAND}  TClientDataSet.create(nil)  {$ELSE}
-      TBufDataset.Create(nil)
-{$ENDIF}
-  ;
-
-  if cdsItens.Active then
-  begin
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).EmptyDataSet;
- {$ENDIF}
-    cdsItens.Active := False;
-  end;
-
- {$IFDEF BORLAND}
- if cdsItens is TClientDataSet then
-  begin
-  TClientDataSet(cdsItens).StoreDefs := False;
-  TClientDataSet(cdsItens).IndexDefs.Clear;
-  TClientDataSet(cdsItens).IndexFieldNames := '';
-  TClientDataSet(cdsItens).IndexName := '';
-  TClientDataSet(cdsItens).Aggregates.Clear;
-  TClientDataSet(cdsItens).AggFields.Clear;
-  end;
- {$ELSE}
-  if cdsItens is TBufDataset then
-  begin
-    TBufDataset(cdsItens).IndexDefs.Clear;
-    TBufDataset(cdsItens).IndexFieldNames := '';
-    TBufDataset(cdsItens).IndexName := '';
-  end;
- {$ENDIF}
-
-  with cdsItens do
-    if FieldCount = 0 then
-    begin
-      FieldDefs.Clear;
-      Fields.Clear;
-      FieldDefs.Add('CHAVE1', ftString, 84);
-      FieldDefs.Add('CHAVE2', ftString, 84);
-
-   {$IFDEF BORLAND}
-    if cdsItens is TClientDataSet then
-    TClientDataSet(cdsItens).CreateDataSet;
-   {$ELSE}
-      if cdsItens is TBufDataset then
-        TBufDataset(cdsItens).CreateDataSet;
-   {$ENDIF}
-    end;
-
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).StoreDefs := False;
- {$ENDIF}
-
-  if not cdsItens.Active then
-    cdsItens.Active := True;
-
-  {$IFDEF BORLAND}
-   if cdsItens is TClientDataSet then
-   if cdsItens.Active then
-   TClientDataSet(cdsItens).LogChanges := False;
- {$ENDIF}
-
-  dsItens.dataset := cdsItens;
 end;
 
 procedure TfrlDAMDFeRL.rllSemValorFiscalPrint(Sender: TObject; var Value: string);

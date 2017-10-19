@@ -156,6 +156,7 @@ type
     FTransfPreVenda: Boolean;
     FBarSimilarECFComum: Boolean;
     FBarSimilarBalanca: Boolean;
+    fUFContribuinte: String;
     FUsaImpressoraNaoFiscal: Boolean;
     FTransportePassageiro: Boolean;
     FRealizaDAVNaoFiscal: Boolean;
@@ -247,6 +248,9 @@ type
 
     // homologação 02.01
     property PerfilRequisitos: String read FPerfilRequisitos write FPerfilRequisitos;
+
+    // homologação 02.04
+    property UFContribuinte: String read fUFContribuinte write fUFContribuinte;
   end;
 
   TACBrECFIdentificacaoPAF = class( TPersistent )
@@ -259,6 +263,7 @@ type
     fsECFsAutorizados: TACBrAACECFs;
     fsArquivoListaAutenticados: TACBrECFArquivo;
     fsVersaoER: String;
+    fsDataLaudo: TDateTime;
   public
     constructor Create ;
     destructor Destroy; override;
@@ -267,6 +272,7 @@ type
     property ArquivoListaAutenticados: TACBrECFArquivo read fsArquivoListaAutenticados write fsArquivoListaAutenticados;
   published
     property NumeroLaudo: String read fsNumeroLaudo write fsNumeroLaudo;
+    property DataLaudo: TDateTime read fsDataLaudo write fsDataLaudo;
     property NumeroCredencimento : string read fsNumeroCredencimento write fsNumeroCredencimento;
     property VersaoER: String read fsVersaoER write fsVersaoER;
     property Empresa: TACBrECFEmpresa read fsEmpresa write fsEmpresa;

@@ -41,7 +41,8 @@ unit ACBrDFeUtil;
 interface
 
 uses
-  Classes, StrUtils, SysUtils;
+  Classes, StrUtils, SysUtils,
+  ACBrDFeSSL;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
@@ -60,14 +61,16 @@ function ValidaRECOPI(AValue: String): Boolean;
 function ValidaNVE(AValue: string): Boolean;
 
 function XmlEstaAssinado(const AXML: String): Boolean;
-function ExtraiURI(const AXML: String): String;
+function SignatureElement(const URI: String; AddX509Data: Boolean;
+    IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
+function ExtraiURI(const AXML: String; IdSignature: String = ''): String;
 
 
 implementation
 
 uses
   Variants, DateUtils,
-  ACBrConsts, ACBrDFeException, ACBrUtil, ACBrValidador ;
+  ACBrDFeException, ACBrUtil, ACBrValidador ;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 begin
@@ -153,40 +156,43 @@ end;
 
 function ValidaDIRE(AValue: String): Boolean;
 var
-  ano: integer;
+  AnoData, AnoValue: integer;
 begin
   // AValue = AANNNNNNNNNN
-  // Onde: AA Ano corrente da geração do documento
-  //       NNNNNNNNNN Número sequencial dentro do Ano ( 10 dígitos )
-  AValue := OnlyNumber(AValue);
-  ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+  // Onde: AA AnoData corrente da geração do documento
+  //       NNNNNNNNNN Número sequencial dentro do AnoData ( 10 dígitos )
 
-  if length(AValue) <> 12 then
-    Result := False
-  else
-    Result := (StrToInt(copy(Avalue, 1, 2)) >= ano - 1) and
-      (StrToInt(copy(Avalue, 1, 2)) <= ano + 1);
+  Result := StrIsNumber(AValue) and (Length(AValue) = 12);
+
+  if Result then
+  begin
+    AnoData  := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+    AnoValue := StrToInt(Copy(AValue, 1, 2));
+
+    Result := (AnoValue >= (AnoData - 1)) and (AnoValue <= (AnoData + 1));
+  end;
 end;
 
 function ValidaRE(AValue: String): Boolean;
 var
-  ano: integer;
+  AnoData, AnoValue, SerieRE: integer;
 begin
   // AValue = AANNNNNNNSSS
-  // Onde: AA Ano corrente da geração do documento
-  //       NNNNNNN Número sequencial dentro do Ano ( 7 dígitos )
+  // Onde: AA AnoData corrente da geração do documento
+  //       NNNNNNN Número sequencial dentro do AnoData ( 7 dígitos )
   //       SSS Serie do RE (001, 002, ...)
-  AValue := OnlyNumber(AValue);
-  ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
 
-  if length(AValue) <> 12 then
-    Result := False
-  else if not ((StrToInt(copy(Avalue, 1, 2)) >= ano - 1) and
-    (StrToInt(copy(Avalue, 1, 2)) <= ano + 1)) then
-    Result := False
-  else
-    Result := (StrToInt(copy(Avalue, 10, 3)) >= 1) and
-      (StrToInt(copy(Avalue, 10, 3)) <= 999);
+  Result := StrIsNumber(AValue) and (Length(AValue) = 12);
+
+  if Result then
+  begin
+    AnoData  := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+    AnoValue := StrToInt(Copy(AValue, 1, 2));
+    SerieRE  := StrToInt(Copy(AValue,10, 3));
+
+    Result := ((AnoValue >= (AnoData - 1)) and (AnoValue <= (AnoData + 1))) and
+              ((SerieRE >= 1) and (SerieRE <= 999));
+  end;
 end;
 
 function ValidaDrawback(AValue: String): Boolean;
@@ -259,14 +265,67 @@ begin
   Result := True;
 end;
 
-function ExtraiURI(const AXML: String): String;
+function XmlEstaAssinado(const AXML: String): Boolean;
+begin
+  Result := (pos('<signature', lowercase(AXML)) > 0);
+end;
+
+function SignatureElement(const URI: String; AddX509Data: Boolean;
+  IdSignature: String; const Digest: TSSLDgst): String;
+var
+  MethodAlgorithm, DigestAlgorithm: String;
+begin
+  case Digest of
+    dgstSHA256:
+      begin
+        MethodAlgorithm := 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256';
+        DigestAlgorithm := 'http://www.w3.org/2001/04/xmlenc#sha256';
+      end;
+    else
+      begin
+        MethodAlgorithm := 'http://www.w3.org/2000/09/xmldsig#rsa-sha1';
+        DigestAlgorithm := 'http://www.w3.org/2000/09/xmldsig#sha1';
+      end;
+  end;
+
+  {(*}
+  Result :=
+  '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + IdSignature + '>' +
+    '<SignedInfo>' +
+      '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
+      '<SignatureMethod Algorithm="'+MethodAlgorithm+'" />' +
+      '<Reference URI="' + IfThen(URI = '', '', '#' + URI) + '">' +
+        '<Transforms>' +
+          '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
+          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
+        '</Transforms>' +
+        '<DigestMethod Algorithm="'+DigestAlgorithm+'" />' +
+        '<DigestValue></DigestValue>' +
+      '</Reference>' +
+    '</SignedInfo>' +
+    '<SignatureValue></SignatureValue>' +
+    '<KeyInfo>' +
+    IfThen(AddX509Data,
+      '<X509Data>' +
+        '<X509Certificate></X509Certificate>'+
+      '</X509Data>',
+      '')+
+    '</KeyInfo>'+
+  '</Signature>';
+  {*)}
+end;
+
+function ExtraiURI(const AXML: String; IdSignature: String): String;
 var
   I, J: integer;
 begin
   Result := '';
-  I := PosEx('Id=', AXML, 6);
+  if IdSignature = '' then
+    IdSignature := 'Id';
+
+  I := PosEx(IdSignature+'=', AXML);
   if I = 0 then       // XML não tem URI
-    exit ;
+    Exit;
 
   I := PosEx('"', AXML, I + 2);
   if I = 0 then
@@ -279,9 +338,5 @@ begin
   Result := copy(AXML, I + 1, J - I - 1);
 end;
 
-function XmlEstaAssinado(const AXML: String): Boolean;
-begin
-  Result := (pos('<signature', lowercase(AXML)) > 0);
-end;
 
 end.

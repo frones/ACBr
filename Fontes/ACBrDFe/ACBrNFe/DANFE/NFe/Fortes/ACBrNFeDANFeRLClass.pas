@@ -45,7 +45,7 @@ uses SysUtils, Classes,
   {$ELSE}
   Forms, Dialogs,
   {$ENDIF}
-  Graphics, RLConsts, pcnNFe, ACBrNFeDANFEClass, pcnConversao;
+  Graphics, pcnNFe, ACBrNFeDANFEClass, pcnConversao;
 
 type
   TNomeFonte = (nfTimesNewRoman, nfCourierNew, nfArial);
@@ -62,8 +62,12 @@ type
   TDetMedicamentos = set of TDetMedicamento;
   TDetArmamentos = set of TDetArmamento;
   TDetCombustiveis = set of TDetCombustivel;
+  TObjectArray = array of TObject;
+  PObjectArray = ^TObjectArray;
 
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TFonte = class(TComponent)
   protected
     FNome: TNomeFonte;
@@ -81,7 +85,9 @@ type
                                               write FTamanhoFonte_RazaoSocial
                                               default 8;
   end;
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFeDANFeRL = class( TACBrNFeDANFEClass )
   private
     FMarcadagua: string;
@@ -100,6 +106,9 @@ type
     fEspacoEntreProdutos: Integer;
     fAlternaCoresProdutos: Boolean;
     fCorDestaqueProdutos: TColor;
+    fImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
+    fExibirBandInforAdicProduto : Boolean;
+    FImprimirDadosDocReferenciados: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -127,11 +136,15 @@ type
                             [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
     property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico write fQuebraLinhaEmDetalhamentoEspecifico;
     property ExibeCampoFatura: Boolean        read fExibeCampoFatura      write fExibeCampoFatura;
-    property MostraDadosISSQN: Boolean read FMostraDadosISSQN write FMostraDadosISSQN default True; // Oculta o campo ISSQN mesmo possuindo inscrição municipal
+    property MostraDadosISSQN: Boolean read FMostraDadosISSQN write FMostraDadosISSQN default False; // Oculta o campo ISSQN mesmo possuindo inscrição municipal
     property AltLinhaComun: Integer read FAltLinhaComun write FAltLinhaComun default 30; // Alturas das linhas mais comuns do Danfe
     property EspacoEntreProdutos: Integer read FEspacoEntreProdutos write FEspacoEntreProdutos default 7; // Altura dos espaços entre os produtos
     property AlternaCoresProdutos: Boolean read FAlternaCoresProdutos write FAlternaCoresProdutos default False; // Alterna as cores de fundo dos produtos para destaca-los
     property CorDestaqueProdutos: TColor read FCorDestaqueProdutos write FCorDestaqueProdutos default clWhite; // Cor usada para destacar produtos na lista alternando entre fundo coloridos e não colorido
+    property ImprimirUnQtVlComercial: TImprimirUnidQtdeValor read fImprimirUnQtVlComercial write fImprimirUnQtVlComercial;
+    property ExibirBandInforAdicProduto : Boolean  read fExibirBandInforAdicProduto write fExibirBandInforAdicProduto default False; // Exibir a banda de informação Adicionais do produto.
+    property ImprimirDadosDocReferenciados : Boolean  read FImprimirDadosDocReferenciados write FImprimirDadosDocReferenciados;
+
   end;
 
 implementation
@@ -182,12 +195,15 @@ begin
   FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];
   FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
   fQuebraLinhaEmDetalhamentoEspecifico  := True;
-  fExibeCampoFatura       := False;
-  fMostraDadosISSQN     := True;
+  fExibeCampoFatura     := False;
+  fMostraDadosISSQN     := False;
   fAltLinhaComun        := 30;
   fEspacoEntreProdutos  := 7;
   fAlternaCoresProdutos := False;
   fCorDestaqueProdutos  := clWhite;
+  fImprimirUnQtVlComercial  := iuComercial;
+  fExibirBandInforAdicProduto := False;    
+  FImprimirDadosDocReferenciados := True;
 end;
 
 destructor TACBrNFeDANFeRL.Destroy;
@@ -199,6 +215,7 @@ end;
 procedure TACBrNFeDANFeRL.ImprimirDANFE(NFE: TNFe = nil);
 var
  i : Integer;
+ ReportArray : TObjectArray; 
 begin
 try
   case TipoDANFE of
@@ -233,7 +250,17 @@ try
           fAltLinhaComun,
           fEspacoEntreProdutos,
           fAlternaCoresProdutos,
-          fCorDestaqueProdutos);
+          fCorDestaqueProdutos,
+	  fImprimirDadosDocReferenciados,
+          fTamanhoLogoHeight,
+          fTamanhoLogoWidth,
+          fRecuoEndereco,
+          fRecuoEmpresa,
+          fLogoEmCima,
+          fTamanhoFonteEndereco,
+          fRecuoLogo,
+          i = Pred(TACBrNFe(ACBrNFe).NotasFiscais.Count),
+          @ReportArray);
         end;
     end
   else
@@ -258,7 +285,17 @@ try
       fAltLinhaComun,
       fEspacoEntreProdutos,
       fAlternaCoresProdutos,
-      fCorDestaqueProdutos );
+      fCorDestaqueProdutos,
+      fImprimirDadosDocReferenciados,
+      fTamanhoLogoHeight,
+      fTamanhoLogoWidth,
+      fRecuoEndereco,
+      fRecuoEmpresa,
+      fLogoEmCima,
+      fTamanhoFonteEndereco,
+      fRecuoLogo,
+      True,
+      @ReportArray);
     end;
 
   finally
@@ -310,7 +347,15 @@ begin
           fAltLinhaComun,
           fEspacoEntreProdutos,
           fAlternaCoresProdutos,
-          fCorDestaqueProdutos );
+          fCorDestaqueProdutos,
+          fImprimirDadosDocReferenciados,
+          FTamanhoLogoHeight,
+          FTamanhoLogoWidth,
+          FRecuoEndereco,
+          FRecuoEmpresa,
+          FLogoEmCima,
+          FTamanhoFonteEndereco,
+          FRecuoLogo);
         end;
     end
   else
@@ -339,7 +384,15 @@ begin
       fAltLinhaComun,
       fEspacoEntreProdutos,
       fAlternaCoresProdutos,
-      fCorDestaqueProdutos );
+      fCorDestaqueProdutos,
+      fImprimirDadosDocReferenciados,
+      FTamanhoLogoHeight,
+      FTamanhoLogoWidth,
+      FRecuoEndereco,
+      FRecuoEmpresa,
+      FLogoEmCima,
+      FTamanhoFonteEndereco,
+      FRecuoLogo);
     end;
  finally
    FreeAndNil(frlDANFeRL);

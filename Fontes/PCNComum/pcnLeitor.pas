@@ -87,7 +87,7 @@ type
 implementation
 
 uses
-  ACBrConsts, ACBrUtil, StrUtils;
+  ACBrUtil, StrUtils;
 
 { TLeitor }
 
@@ -218,7 +218,7 @@ begin
                   end;
     tcDatVcto : begin
                   if length(ConteudoTag)>0 then
-                    result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 03, 2)), StrToInt(copy(ConteudoTag, 01, 2)))
+                    result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 04, 2)), StrToInt(copy(ConteudoTag, 01, 2)))
                   else
                     Result:= 0;
                 end;
@@ -244,6 +244,13 @@ begin
     tcHorCFe  : begin
                   if length(ConteudoTag)>0 then
                     result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 3, 2)), StrToInt(copy(ConteudoTag, 5, 2)), 0)
+                  else
+                    result:=0;
+                end;
+    tcDatHorCFe : begin
+                  if length(ConteudoTag)>0 then
+                    result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))+
+                      EncodeTime(StrToInt(copy(ConteudoTag, 09, 2)), StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 13, 2)), 0)
                   else
                     result:=0;
                 end;

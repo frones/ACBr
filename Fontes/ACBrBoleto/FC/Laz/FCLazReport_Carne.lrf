@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CONFIG>
   <LazReport>
-    <Version Value="25"/>
+    <Version Value="31"/>
     <Title Value="Boleto"/>
     <Subject Value=""/>
     <KeyWords Value=""/>
     <Comments Value=""/>
+    <ReportCreateDate Value="2016-12-19 11:27:20"/>
+    <ReportLastChange Value="2016-12-19 11:28:20"/>
     <ReportVersionBuild Value=""/>
     <ReportVersionMajor Value=""/>
     <ReportVersionMinor Value=""/>
     <ReportVersionRelease Value=""/>
     <ReportAutor Value=""/>
+    <Script Value=""/>
     <Pages>
       <PrintToDefault Value="False"/>
       <DoublePass Value="True"/>
@@ -19,9 +22,10 @@
       <Page1>
         <Name Value="Page1"/>
         <ClassName Value="TfrPageReport"/>
-        <Visible Value="1"/>
+        <Visible Value="True"/>
         <Width Value="2100"/>
-        <Height Value="2970" PageType="0"/>
+        <Height Value="2970"/>
+        <Script Value=""/>
         <PgSize Value="9"/>
         <Margins>
           <left Value="0"/>
@@ -35,11 +39,10 @@
         <ColCount Value="1"/>
         <ColGap Value="0"/>
         <LayoutOrder Value="loColumns"/>
-        <ObjectCount Value="101"/>
         <Object1>
           <Name Value="MasterData1"/>
           <ClassName Value="TfrBandView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtBand"/>
           <StreamMode Value="0"/>
           <Size>
@@ -51,15 +54,23 @@
           <Flags Value="48"/>
           <Data>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Frames>
+            <Restrictions Value=""/>
+          </Frames>
           <BandType Value="btMasterData"/>
           <Condition Value=""/>
           <DatasetStr Value="frUserDataset1"/>
+          <Child Value=""/>
         </Object1>
         <Object2>
           <Name Value="Memo1"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -75,13 +86,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
             <Memo Value="[Codbanco]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="14"/>
@@ -98,11 +120,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object2>
         <Object3>
           <Name Value="Memo3"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -118,13 +142,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Local de Pagamento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -141,11 +176,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object3>
         <Object4>
           <Name Value="Memo4"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -161,13 +198,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[LocalPagto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -184,11 +232,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object4>
         <Object5>
           <Name Value="Memo5"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -204,13 +254,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Vencimento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -227,11 +288,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object5>
         <Object6>
           <Name Value="Memo6"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -247,13 +310,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
             <Memo Value="[Vencimento]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -270,11 +344,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object6>
         <Object7>
           <Name Value="Memo7"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -290,13 +366,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Cedente&#xD;&#xA;"/>
+            <Memo Value="Beneficiario&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -313,11 +400,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object7>
         <Object8>
           <Name Value="Memo8"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -333,13 +422,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Endereco]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -356,11 +456,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object8>
         <Object9>
           <Name Value="Memo9"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -376,13 +478,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[RazaoSocial]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -399,11 +512,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object9>
         <Object10>
           <Name Value="Line7"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -417,12 +532,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="2"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object10>
         <Object11>
           <Name Value="Shape1"/>
           <ClassName Value="TfrShapeView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtAddIn"/>
           <StreamMode Value="0"/>
           <Size>
@@ -437,19 +559,26 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
           <ShapeType Value="frstDiagonal1"/>
         </Object11>
         <Object12>
           <Name Value="Memo10"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
             <Left Value="634"/>
             <Top Value="75"/>
-            <Width Value="100"/>
+            <Width Value="104"/>
             <Height Value="12"/>
           </Size>
           <Flags Value="3"/>
@@ -459,13 +588,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Agência\Código Cedente&#xD;&#xA;"/>
+            <Memo Value="Agência\Código Beneficiario&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -482,11 +622,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object12>
         <Object13>
           <Name Value="Memo11"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -502,13 +644,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Conta]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -525,11 +678,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object13>
         <Object14>
           <Name Value="Memo12"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -545,13 +700,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Data do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -568,11 +734,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object14>
         <Object15>
           <Name Value="Memo13"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -588,13 +756,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[DataDocto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -611,11 +790,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object15>
         <Object16>
           <Name Value="Memo14"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -631,13 +812,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Número do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -654,11 +846,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object16>
         <Object17>
           <Name Value="Memo15"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -674,13 +868,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[NumDocto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -697,11 +902,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object17>
         <Object18>
           <Name Value="Memo16"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -717,13 +924,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Espécie Doc.&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -740,11 +958,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object18>
         <Object19>
           <Name Value="Memo17"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -760,13 +980,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Especie]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -783,11 +1014,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object19>
         <Object20>
           <Name Value="Memo18"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -803,13 +1036,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Aceite&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -826,11 +1070,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object20>
         <Object21>
           <Name Value="Memo19"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -846,13 +1092,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Aceite]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -869,11 +1126,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object21>
         <Object22>
           <Name Value="Memo20"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -889,13 +1148,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Data de Processamento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -912,11 +1182,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object22>
         <Object23>
           <Name Value="Memo21"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -932,13 +1204,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[DataProcessamento]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -955,11 +1238,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object23>
         <Object24>
           <Name Value="Memo22"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -975,13 +1260,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Nosso Número&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -998,11 +1294,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object24>
         <Object25>
           <Name Value="Memo23"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1018,13 +1316,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[NossoNumero]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1041,11 +1350,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object25>
         <Object26>
           <Name Value="Memo24"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1061,13 +1372,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Uso do Banco&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1084,11 +1406,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object26>
         <Object27>
           <Name Value="Memo25"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1104,13 +1428,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Carteira&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1127,11 +1462,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object27>
         <Object28>
           <Name Value="Memo26"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1147,13 +1484,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Espécie&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1170,11 +1518,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object28>
         <Object29>
           <Name Value="Memo27"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1190,13 +1540,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Moeda]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1213,11 +1574,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object29>
         <Object30>
           <Name Value="Memo28"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1233,13 +1596,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Carteira]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1256,11 +1630,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object30>
         <Object31>
           <Name Value="Memo29"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1276,13 +1652,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Quantidade&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1299,11 +1686,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object31>
         <Object32>
           <Name Value="Memo30"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1319,13 +1708,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Valor&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1342,11 +1742,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object32>
         <Object33>
           <Name Value="Memo31"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1362,13 +1764,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( = ) Valor do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1385,11 +1798,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object33>
         <Object34>
           <Name Value="Memo32"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1405,13 +1820,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Valor]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1428,11 +1854,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object34>
         <Object35>
           <Name Value="Memo33"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1448,13 +1876,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Instruções (Todas as instruções deste bloqueto são de exclusiva responsabilidade do cedente.)&#xD;&#xA;"/>
+            <Memo Value="Instruções (Todas as instruções deste bloqueto são de exclusiva responsabilidade do beneficiario.)&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1471,11 +1910,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object35>
         <Object36>
           <Name Value="Memo34"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1491,13 +1932,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( - ) Desconto / Abatimento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1514,11 +1966,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object36>
         <Object37>
           <Name Value="Memo36"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1534,13 +1988,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( + ) Mora / Multa&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1557,11 +2022,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object37>
         <Object38>
           <Name Value="Memo35"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1577,13 +2044,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( = ) Valor Cobrado&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1600,11 +2078,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object38>
         <Object39>
           <Name Value="Memo37"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1620,13 +2100,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Sacado:&#xD;&#xA;"/>
+            <Memo Value="Pagador:&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1643,11 +2134,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object39>
         <Object40>
           <Name Value="Memo38"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1663,13 +2156,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Nome]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="10"/>
@@ -1686,11 +2190,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object40>
         <Object41>
           <Name Value="Memo39"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1706,13 +2212,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[EndSacado]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1729,11 +2246,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object41>
         <Object42>
           <Name Value="Memo41"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1749,13 +2268,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Docto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1772,11 +2302,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object42>
         <Object43>
           <Name Value="Memo42"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1792,13 +2324,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Código de Baixa&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1815,11 +2358,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object43>
         <Object44>
           <Name Value="Memo43"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1835,13 +2380,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Sacador \ Avalista&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1858,11 +2414,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object44>
         <Object45>
           <Name Value="Bar1"/>
-          <ClassName Value="TfrBarCodeView"/>
-          <Visible Value="1"/>
+          <ClassName Value="TfrBarcodeView"/>
+          <Visible Value="True"/>
           <Typ Value="gtAddIn"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1877,16 +2435,21 @@
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Memo Value="[Barras]&#xD;&#xA;"/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
-          <BarCode Zoom="1" BarType="bcCode_2_5_interleaved" CheckSum="0" ShowText="0"/>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <BarCode Zoom="1" Angle="0" BarType="bcCode_2_5_interleaved" CheckSum="0" ShowText="0"/>
         </Object45>
         <Object46>
           <Name Value="Memo47"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1902,13 +2465,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[LinhaDigitavel]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="10"/>
@@ -1925,11 +2499,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object46>
         <Object47>
           <Name Value="Memo88"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1945,13 +2521,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Auntenticação Mecânica  - Ficha de Compensação&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1968,11 +2555,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object47>
         <Object48>
           <Name Value="Memo89"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -1988,13 +2577,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Obs]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="7"/>
@@ -2011,11 +2611,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object48>
         <Object49>
           <Name Value="Picture1"/>
           <ClassName Value="TfrPictureView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtPicture"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2025,16 +2627,22 @@
             <Height Value="27"/>
           </Size>
           <Flags Value="5"/>
+          <FillColor Value="clWindow"/>
           <Frames>
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Memo Value=""/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Picture>
             <SharedName Value=""/>
             <Type Value="0"/>
@@ -2043,7 +2651,7 @@
         <Object50>
           <Name Value="Picture2"/>
           <ClassName Value="TfrPictureView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtPicture"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2053,16 +2661,22 @@
             <Height Value="28"/>
           </Size>
           <Flags Value="5"/>
+          <FillColor Value="clWindow"/>
           <Frames>
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Memo Value=""/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Picture>
             <SharedName Value=""/>
             <Type Value="0"/>
@@ -2071,7 +2685,7 @@
         <Object51>
           <Name Value="Picture3"/>
           <ClassName Value="TfrPictureView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtPicture"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2081,16 +2695,22 @@
             <Height Value="13"/>
           </Size>
           <Flags Value="5"/>
+          <FillColor Value="clWindow"/>
           <Frames>
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDashDotDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Memo Value=""/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Picture>
             <SharedName Value=""/>
             <Type Ext="png" Value="255"/>
@@ -2101,7 +2721,7 @@
         <Object52>
           <Name Value="Line1"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2115,12 +2735,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="2"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object52>
         <Object53>
           <Name Value="Line2"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2134,12 +2761,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object53>
         <Object54>
           <Name Value="Line3"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2153,12 +2787,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="2"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object54>
         <Object55>
           <Name Value="Line6"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2172,12 +2813,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object55>
         <Object56>
           <Name Value="Line4"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2191,12 +2839,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object56>
         <Object57>
           <Name Value="Line24"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2210,12 +2865,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object57>
         <Object58>
           <Name Value="Line25"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2229,12 +2891,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object58>
         <Object59>
           <Name Value="Line26"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2248,12 +2917,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object59>
         <Object60>
           <Name Value="Line27"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2267,12 +2943,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object60>
         <Object61>
           <Name Value="Line28"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2286,12 +2969,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object61>
         <Object62>
           <Name Value="Line29"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2305,12 +2995,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object62>
         <Object63>
           <Name Value="Line30"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2324,12 +3021,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object63>
         <Object64>
           <Name Value="Line31"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2343,12 +3047,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object64>
         <Object65>
           <Name Value="Line32"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2362,12 +3073,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object65>
         <Object66>
           <Name Value="Line33"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2381,12 +3099,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object66>
         <Object67>
           <Name Value="Line34"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2400,12 +3125,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object67>
         <Object68>
           <Name Value="Line35"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2419,12 +3151,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object68>
         <Object69>
           <Name Value="Line36"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2438,12 +3177,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object69>
         <Object70>
           <Name Value="Line38"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2457,12 +3203,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object70>
         <Object71>
           <Name Value="Line39"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2476,12 +3229,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object71>
         <Object72>
           <Name Value="Line40"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2495,12 +3255,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object72>
         <Object73>
           <Name Value="Memo91"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2516,13 +3283,24 @@
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
             <Memo Value="SoftwareHouse: [Site]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2539,11 +3317,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object73>
         <Object74>
           <Name Value="Memo122"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2559,13 +3339,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[UsoBanco]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2582,11 +3373,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object74>
         <Object75>
           <Name Value="Line37"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2600,12 +3393,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="2"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object75>
         <Object76>
           <Name Value="Line41"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2619,12 +3419,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="2"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object76>
         <Object77>
           <Name Value="Memo2"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2640,13 +3447,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Vencimento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2663,11 +3481,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object77>
         <Object78>
           <Name Value="Memo44"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2683,13 +3503,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Parcela&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2706,11 +3537,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object78>
         <Object79>
           <Name Value="Memo45"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2726,13 +3559,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
             <Memo Value="[Vencimento]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2749,11 +3593,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object79>
         <Object80>
           <Name Value="Memo46"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2769,13 +3615,24 @@
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Parcela]  /  [TotalParcelas]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2792,11 +3649,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object80>
         <Object81>
           <Name Value="Line5"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2810,18 +3669,25 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object81>
         <Object82>
           <Name Value="Memo48"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="25"/>
+            <Left Value="9"/>
             <Top Value="74"/>
-            <Width Value="100"/>
+            <Width Value="116"/>
             <Height Value="12"/>
           </Size>
           <Flags Value="3"/>
@@ -2831,13 +3697,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Agência\Código Cedente&#xD;&#xA;"/>
+            <Memo Value="Agência\Código Beneficiario&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2854,11 +3731,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object82>
         <Object83>
           <Name Value="Memo49"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2874,13 +3753,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Conta]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2897,11 +3787,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object83>
         <Object84>
           <Name Value="Memo50"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2917,13 +3809,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Espécie&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2940,11 +3843,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object84>
         <Object85>
           <Name Value="Memo51"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -2960,13 +3865,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Quantidade&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2983,11 +3899,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object85>
         <Object86>
           <Name Value="Memo52"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3003,13 +3921,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Moeda]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3026,11 +3955,13 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object86>
         <Object87>
           <Name Value="Line8"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3044,12 +3975,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object87>
         <Object88>
           <Name Value="Memo53"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3065,13 +4003,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( = ) Valor do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3088,11 +4037,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object88>
         <Object89>
           <Name Value="Memo54"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3108,13 +4059,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Valor]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3131,11 +4093,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object89>
         <Object90>
           <Name Value="Memo55"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3151,13 +4115,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( - ) Desconto / Abatimento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3174,11 +4149,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object90>
         <Object91>
           <Name Value="Line9"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3192,12 +4169,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object91>
         <Object92>
           <Name Value="Memo56"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3213,13 +4197,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( + ) Mora / Multa&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3236,11 +4231,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object92>
         <Object93>
           <Name Value="Memo57"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3256,13 +4253,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( = ) Valor Cobrado&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3279,11 +4287,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object93>
         <Object94>
           <Name Value="Line10"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3297,12 +4307,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object94>
         <Object95>
           <Name Value="Memo58"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3318,13 +4335,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Nosso Número&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3341,11 +4369,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object95>
         <Object96>
           <Name Value="Memo59"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3361,13 +4391,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[NossoNumero]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3384,11 +4425,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object96>
         <Object97>
           <Name Value="Memo61"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3404,13 +4447,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Sacado: [Nome]&#xD;&#xA;"/>
+            <Memo Value="Pagador: [Nome]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3427,11 +4481,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object97>
         <Object98>
           <Name Value="Memo62"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3447,13 +4503,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Docto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3470,11 +4537,13 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object98>
         <Object99>
           <Name Value="Memo63"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3490,13 +4559,24 @@
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Recibo do Sacado. Autenticar no verso.&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3513,11 +4593,13 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object99>
         <Object100>
           <Name Value="Line11"/>
           <ClassName Value="TfrLineView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3531,12 +4613,19 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object100>
         <Object101>
           <Name Value="Memo40"/>
           <ClassName Value="TfrMemoView"/>
-          <Visible Value="1"/>
+          <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
@@ -3552,13 +4641,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="CPF\CNPJ&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3575,7 +4675,10 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object101>
+        <ObjectCount Value="101"/>
       </Page1>
       <FVal>
         <Count Value="26"/>
@@ -3764,5 +4867,8 @@
       </FVal>
       <ParentVars Value="Sacado&#xD;&#xA; Nome&#xD;&#xA; Docto&#xD;&#xA; EndSacado&#xD;&#xA;Cedente&#xD;&#xA; RazaoSocial&#xD;&#xA; Endereco&#xD;&#xA;Banco&#xD;&#xA; Codbanco&#xD;&#xA; LocalPagto&#xD;&#xA; Conta&#xD;&#xA; Img&#xD;&#xA;Boleto&#xD;&#xA; Vencimento&#xD;&#xA; DataDocto&#xD;&#xA; Aceite&#xD;&#xA; Especie&#xD;&#xA; NumDocto&#xD;&#xA; DataProcessamento&#xD;&#xA; NossoNumero&#xD;&#xA; Moeda&#xD;&#xA; Carteira&#xD;&#xA; Valor&#xD;&#xA; Barras&#xD;&#xA; LinhaDigitavel&#xD;&#xA; Obs&#xD;&#xA; UsoBanco&#xD;&#xA; Parcela&#xD;&#xA; TotalParcelas&#xD;&#xA;Empresa&#xD;&#xA; Site&#xD;&#xA;"/>
     </Pages>
+    <DetailReports>
+      <Count Value="0"/>
+    </DetailReports>
   </LazReport>
 </CONFIG>

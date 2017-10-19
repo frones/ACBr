@@ -38,6 +38,204 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/09/2017
+-- ACBrUtil --
+[-] Correção no método "DesligarMaquina", para Linux... usando o comando
+    "shutdown"   (por: DSA)
+
+Data: 31/08/2017
+-- GZIPUtils --
+[-] Correção no método "unzipStream". Em algumas raras situações o Stream não
+    era descompatado, pois o código original da GZipUtils modificava o tamanho
+    do Stream de Entrada, o que não é esperado pot "Tdecompressionstream"
+    (por: DSA)
+
+Data: 21/08/2017
+-- ACBrCompress --
+[+] Adicionada nova Unit para centralizar todo tratamento da compactação e
+    descompactação de Strings e Streams, nos formatos ZLib, GZip e ZipFile.
+    Faz o uso nativo das classes de compactação do Lazarus/Delphi.
+    (por: DSA)
+
+-- ACBrUtil --
+[*] Métodos Zip e UnZip, modificados para usar a Unit ACBrCompress
+    (por: DSA)
+
+-- ACBr.inc --
+[*] Adicionado suporte a diretiva {$DEFINE USE_ZLibExGZ}, que permite usar as
+    Units da biblioteca ZLibExGZ ao invés das nativas do Delphi.
+    (Delphi XE e inferiores não tem suporte a GZip, nesse caso esta diretiva
+     sempre estará ligada)
+    (por: DSA)
+
+Data: 14/07/2017
+-- ACBrUtil --
+[+] Adicionado os métodos:
+    function FindDelimiterInText(const AText: String; ADelimiters: String): Char;
+      Encontra qual é o primeiro Delimitador usado, em "AText", em uma lista de
+      delimitadores, informada em "ADelimiters".
+      Se "ADelimiters" for vazio, usa como padrão ";,|"
+    function AddDelimitedTextToList(const AText: String; const ADelimiter: Char;
+       AStringList: TStrings): Integer;
+     Quebra a String "AText", em várias linhas, separando-a de acordo com a ocorrência
+     de "ADelimiter", e adiciona os Itens encontrados em "AStringList".
+     Retorna o número de Itens Inseridos
+[+] Adicionado novos testes em "ACBrComumTesteCases" para os novos métodos
+    (por: DSA)
+
+Data: 22/06/2017
+-- ACBrUtil --
+[+] Adicionado os métodos:
+    function IsWorkingDay(ADate: TDateTime): Boolean;
+      Retornar True, se a Data for de Segunda a Sexta-feira. Falso para Sábado e
+      Domingo
+    function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
+       Retornar o total de dias úteis em um período de datas, exceto feriados.
+    function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
+      Retornar uma data calculando apenas dias úteis, a partir de uma data inicial,
+      exceto feriados.
+[+] Adicionado novos testes em "ACBrComumTesteCases" para os novos métodos
+    (por: Junior Santos e DSA)
+
+Data: 08/06/2017
+-- ACBrUtil --
+[*] Ajuste no método "UTF8ToNativeString", para que não retorne vazio, caso
+    ocorra falha nas rotinas de conversão de String, nativas do Delphi
+    http://www.projetoacbr.com.br/forum/topic/36234-cancelamento-com-erro-nao-encontrei-final-elemento/
+
+Data: 06/06/2017
+-- ACBrUtil --
+[+] Adicionado os métodos:
+    function IntToBEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
+    function BEStrToInt(ABEStr: AnsiString): Integer;
+    (por: DSA)
+
+Data: 24/05/2017
+-- ACBrUtil --
+[*] Ajuste para compilação em 64bits em versões inferiores a XE2
+    http://www.projetoacbr.com.br/forum/topic/36053-instalador-n%C3%A3o-compila-pacotes-para-delphi-102-tokyo-win64/?do=findComment&comment=241530
+    (por: bsoft)
+
+Data: 19/04/2017
+-- ACBrUtil --
+[-] Método "TruncFix". Correção de A.V. "Invalid floating point operation", quando
+    informado valores muito altos
+[+] Método "SimpleRoundToEX", passou a ser público
+    (por: DSA)
+
+Data: 12/04/2017
+-- ACBr.inc --
+[+] Adicionada a diretiva "DFE_SEM_NCRYPT", para permitir a compatibilidade em
+    Windows XP  (o padrão é desligada)
+    http://www.projetoacbr.com.br/forum/topic/36219-ncryptdll-faltando-no-xp/
+    (por: DSA)
+
+Data: 19/03/2017
+-- ACBr.inc --
+[+] Adicionada a diretiva "HAS_INLINE", para FPC ou DELPHI9_UP
+[*] Definição forçada para "USE_MINGW" modificado para ficar ligado quando não for
+    Windows   (por: DSA)
+
+Data: 08/02/2017
+-- ACBrUtil --
+[*] Ajuste para que RoundABNT suporte valores várias casas decimais.
+    http://www.projetoacbr.com.br/forum/topic/35068-roundabnt-invalid-floating-point-operation/
+    (por: PauloRSA)
+
+Data: 06/01/2017
+-- ACBrUtil --
+[*] Método "FloatMask", modificado a assunatura para:
+    function FloatMask(const DecimalDigits: SmallInt; UseThousandSeparator: Boolean = True): String;
+    Se "UseThousandSeparator = False", não retornará mascara com a inclusão de
+    Separadores de Milhar
+    (por: DSA)
+
+Data: 22/12/2016
+-- ACBrUtil --
+[*] Mudança pra lazarus entender a formatação.
+    http://www.projetoacbr.com.br/forum/topic/33727-impress%C3%A3o-dos-campos-peso-aferido-kg-e-nome-do-motorista/
+    http://www.projetoacbr.com.br/forum/topic/33721-impress%C3%A3o-do-campo-da-quantidade-de-volumes-e-tipo-rodado/
+    por: Juliomar Marchetti
+		
+Data: 21/12/2016
+-- ACBrUtil --
+[+] Adicionado os métodos:
+    function Zip(S: TStream): AnsiString; overload;
+    function Zip(const ABinaryString: AnsiString): AnsiString; overload;
+    (por: DSA)
+
+Data: 20/12/2016
+-- ACBrUtil --
+[*] FormatFloatBr e FloatMask. Ajuste para usar separador de milhar, na mascara
+    padrão ',0.00'   (por: DSA)
+
+Data: 08/12/2016
+-- ACBrUtil --
+[+] Adição de mais um formatmask
+    por: Juliomar Marchetti
+
+Data: 24/10/2016
+-- ACBr.inc --
+[*] Ajuste para permitir a compilação em 32 e 64 bits com suporte a
+    Libxml2, libxslt, libxmlsec compiladas por MinGw (default em Win64)
+    ftp://ftp.zlatkovic.com/libxml/64bit/    (por: DSA)
+
+Data: 23/09/2016
+-- ACBrUtil --
+[+] Adicionado o método: function ForceForeground(AppHandle:HWND): boolean;
+    para resolver problemas de Foco na troca de aplicações  (por: DSA)
+[+] Adicionado o método:
+    procedure WriteToFile(const Arq: String; ABinaryString: AnsiString);
+    para facilitar a escrita de arquivos de qualquer Tipo  (por: DSA)
+
+Data: 02/09/2016
+-- ACBrConsts --
+[-] Ajustado cTAGS_BARRAS e cTAGS_BARRAS_HELP que estavão com o número de elementos 
+    errados ocasionando erro ao solicitar cTAGS_BARRAS_HELP[13].
+    (por: Rodrigo Frühwirth)
+[+] Adicionado enumerador QrCode para que posso ser implementado nas demais ECFs.
+    (por: Rodrigo Frühwirth)
+
+Data: 08/09/2016
+--ACBrAAC, ACBrPAFClass
+[+] Adição do campo data para guardar no arquivo criptografado e imprimir na ecf
+    do paf-ecf 02.04
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32295
+    por: Juliomar Marchetti
+
+Data: 29/08/2016
+--ACBrAAC
+[+] Adição do número do credenciamento ao arquivo para gerar o bloco X
+    por : Juliomar Marchetti
+
+Data: 29/08/2016
+-- ACBrUtil --
+[-] Correção no método "TruncTo", onde poderia ocorrer falha em valores
+    específicos... Nova Implementação, baseada em "TruncFix".
+    Novo teste adicionado em "ACBrComumTestCases"  (por: DSA)
+
+Data: 25/08/2016
+-- ACBrUtil --
+[*] Ajuste para os métodos "FunctionDetect" e "UnLoadLibrary" funcionarem
+    adequadamente em FPC 64 bits   (por: DSA)
+
+Data: 19/08/2016
+-- ACBrUtil --
+[-] Correção em PadLeft, PadRight, PadCenter, PadSpace, para considerar o tamanho
+    correto da String, com caracteres acentuados (UTF8) em FPC
+[+] Adicionado o método
+    function LenghtNativeString(const AString: String): Integer;
+[-] Correção no método "FindSubDirectories", para correto funcionamento em Linux
+    (por: DSA)
+
+Data: 18/08/2016
+-- ACBrUtil --
+[-] Correção para o método "TruncTo", que poderia falhar em alguns casos.
+[+] Adicionado o método "SimpleTruncTo", para auxiliar "TruncTo"
+[+] Adicionado Teste Unitário para TruncTo em ACBrUtilTest
+    http://www.projetoacbr.com.br/forum/topic/31778-testecase/
+    (por: Waldir Paim)
+
 Data: 16/08/2016
 -- ACBrUtil --
 [+] Adicionado o método "RemoveZerosEsquerda"   (por: DSA)

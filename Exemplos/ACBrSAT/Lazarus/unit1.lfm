@@ -1,42 +1,43 @@
 object Form1: TForm1
-  Left = 389
-  Height = 460
-  Top = 152
-  Width = 850
+  Left = 300
+  Height = 480
+  Top = 158
+  Width = 900
+  ActiveControl = PageControl1
   Caption = 'SAT Teste - Projeto ACBr'
-  ClientHeight = 440
-  ClientWidth = 850
+  ClientHeight = 460
+  ClientWidth = 900
   Constraints.MinHeight = 460
   Constraints.MinWidth = 850
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.6.4.0'
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
     Height = 6
-    Top = 202
-    Width = 850
+    Top = 242
+    Width = 900
     Align = alTop
     ResizeAnchor = akTop
   end
   object PageControl1: TPageControl
     Left = 0
-    Height = 209
-    Top = 208
-    Width = 850
-    ActivePage = tsLog
+    Height = 189
+    Top = 248
+    Width = 900
+    ActivePage = tsRecebido
     Align = alClient
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
-      ClientHeight = 181
-      ClientWidth = 842
+      ClientHeight = 116
+      ClientWidth = 846
       object mLog: TMemo
         Left = 0
-        Height = 181
+        Height = 161
         Top = 0
         Width = 842
         Align = alBottom
@@ -50,14 +51,14 @@ object Form1: TForm1
     end
     object tsGerado: TTabSheet
       Caption = 'XML Gerado'
-      ClientHeight = 222
-      ClientWidth = 785
+      ClientHeight = 116
+      ClientWidth = 846
       inline mVendaEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
-        Height = 222
+        Height = 181
         Top = 0
-        Width = 785
+        Width = 842
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -491,7 +492,9 @@ object Form1: TForm1
             ShortCut = 57379
           end>
         MouseActions = <>
+        MouseTextActions = <>
         MouseSelActions = <>
+        VisibleSpecialChars = [vscSpace, vscTabAtLast]
         SelectedColor.BackPriority = 50
         SelectedColor.ForePriority = 50
         SelectedColor.FramePriority = 50
@@ -538,14 +541,14 @@ object Form1: TForm1
     end
     object tsRecebido: TTabSheet
       Caption = 'XML Recebido'
-      ClientHeight = 222
-      ClientWidth = 791
+      ClientHeight = 161
+      ClientWidth = 892
       inline mRecebido: TSynMemo
         Cursor = crIBeam
         Left = 0
-        Height = 222
+        Height = 161
         Top = 0
-        Width = 791
+        Width = 892
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -979,7 +982,9 @@ object Form1: TForm1
             ShortCut = 57379
           end>
         MouseActions = <>
+        MouseTextActions = <>
         MouseSelActions = <>
+        VisibleSpecialChars = [vscSpace, vscTabAtLast]
         SelectedColor.BackPriority = 50
         SelectedColor.ForePriority = 50
         SelectedColor.FramePriority = 50
@@ -1026,14 +1031,14 @@ object Form1: TForm1
     end
     object tsCancelamento: TTabSheet
       Caption = 'XML Cancelamento'
-      ClientHeight = 222
-      ClientWidth = 785
+      ClientHeight = 116
+      ClientWidth = 846
       inline mCancelamentoEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
-        Height = 197
+        Height = 156
         Top = 0
-        Width = 785
+        Width = 842
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -1467,7 +1472,9 @@ object Form1: TForm1
             ShortCut = 57379
           end>
         MouseActions = <>
+        MouseTextActions = <>
         MouseSelActions = <>
+        VisibleSpecialChars = [vscSpace, vscTabAtLast]
         SelectedColor.BackPriority = 50
         SelectedColor.ForePriority = 50
         SelectedColor.FramePriority = 50
@@ -1514,11 +1521,11 @@ object Form1: TForm1
       object Panel2: TPanel
         Left = 0
         Height = 25
-        Top = 197
-        Width = 785
+        Top = 156
+        Width = 842
         Align = alBottom
         ClientHeight = 25
-        ClientWidth = 785
+        ClientWidth = 842
         TabOrder = 1
         object Label18: TLabel
           Left = 6
@@ -1535,7 +1542,7 @@ object Form1: TForm1
           Left = 127
           Height = 23
           Top = 1
-          Width = 647
+          Width = 704
           Align = alClient
           BorderSpacing.Right = 10
           TabOrder = 0
@@ -1544,8 +1551,8 @@ object Form1: TForm1
     end
     object tsRedeXML: TTabSheet
       Caption = 'XML Rede'
-      ClientHeight = 222
-      ClientWidth = 785
+      ClientHeight = 116
+      ClientWidth = 846
       inline mRede: TSynMemo
         Cursor = crIBeam
         Left = 0
@@ -1985,7 +1992,9 @@ object Form1: TForm1
             ShortCut = 57379
           end>
         MouseActions = <>
+        MouseTextActions = <>
         MouseSelActions = <>
+        VisibleSpecialChars = [vscSpace, vscTabAtLast]
         SelectedColor.BackPriority = 50
         SelectedColor.ForePriority = 50
         SelectedColor.FramePriority = 50
@@ -2033,21 +2042,21 @@ object Form1: TForm1
   end
   object Panel1: TPanel
     Left = 0
-    Height = 202
+    Height = 242
     Top = 0
-    Width = 850
+    Width = 900
     Align = alTop
-    ClientHeight = 202
-    ClientWidth = 850
+    ClientHeight = 242
+    ClientWidth = 900
     TabOrder = 2
     object gpOperacao: TGroupBox
       Left = 1
-      Height = 200
+      Height = 240
       Top = 1
       Width = 169
       Align = alLeft
       Caption = 'Inicialização'
-      ClientHeight = 180
+      ClientHeight = 220
       ClientWidth = 165
       TabOrder = 0
       object bInicializar: TButton
@@ -2079,7 +2088,7 @@ object Form1: TForm1
       object GroupBox2: TGroupBox
         Left = 5
         Height = 89
-        Top = 86
+        Top = 126
         Width = 155
         Align = alBottom
         BorderSpacing.Around = 5
@@ -2113,27 +2122,27 @@ object Form1: TForm1
     end
     object GroupBox1: TGroupBox
       Left = 170
-      Height = 200
+      Height = 240
       Top = 1
-      Width = 679
+      Width = 729
       Align = alClient
       Caption = 'Configuração'
-      ClientHeight = 180
-      ClientWidth = 675
+      ClientHeight = 220
+      ClientWidth = 725
       TabOrder = 1
       object PageControl2: TPageControl
         Left = 0
-        Height = 180
+        Height = 220
         Top = 0
-        Width = 675
-        ActivePage = Impressao
+        Width = 725
+        ActivePage = tsDadosSAT
         Align = alClient
-        TabIndex = 4
+        TabIndex = 0
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
-          ClientHeight = 152
-          ClientWidth = 667
+          ClientHeight = 192
+          ClientWidth = 717
           object Label9: TLabel
             Left = 16
             Height = 15
@@ -2173,7 +2182,7 @@ object Form1: TForm1
             Left = 217
             Height = 23
             Top = 24
-            Width = 236
+            Width = 282
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 1
           end
@@ -2229,7 +2238,7 @@ object Form1: TForm1
             Left = 280
             Height = 15
             Top = 106
-            Width = 35
+            Width = 34
             Caption = 'Versão'
             ParentColor = False
           end
@@ -2257,7 +2266,7 @@ object Form1: TForm1
             TabOrder = 7
           end
           object cbxAmbiente: TComboBox
-            Left = 502
+            Left = 548
             Height = 23
             Top = 23
             Width = 152
@@ -2286,7 +2295,7 @@ object Form1: TForm1
             TabOrder = 8
           end
           object GroupBox5: TGroupBox
-            Left = 390
+            Left = 436
             Height = 89
             Top = 56
             Width = 265
@@ -2380,7 +2389,7 @@ object Form1: TForm1
             end
           end
           object sbNomeDLL: TSpeedButton
-            Left = 457
+            Left = 503
             Height = 22
             Top = 25
             Width = 24
@@ -2388,16 +2397,42 @@ object Form1: TForm1
             Caption = '...'
             OnClick = sbNomeDLLClick
           end
+          object seItensVenda: TSpinEdit
+            Left = 639
+            Height = 23
+            Top = 153
+            Width = 61
+            Anchors = [akTop, akRight]
+            Increment = 3
+            MaxValue = 999
+            MinValue = 3
+            TabOrder = 11
+            Value = 3
+          end
+          object Label8: TLabel
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = seItensVenda
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = seItensVenda
+            Left = 558
+            Height = 15
+            Top = 157
+            Width = 76
+            Anchors = [akTop, akRight]
+            BorderSpacing.Right = 5
+            Caption = 'Itens a Vender:'
+            ParentColor = False
+          end
         end
         object tsDadosEmit: TTabSheet
           Caption = 'Dados Emitente'
-          ClientHeight = 152
-          ClientWidth = 610
+          ClientHeight = 192
+          ClientWidth = 717
           object Label11: TLabel
             Left = 12
             Height = 15
             Top = 23
-            Width = 28
+            Width = 27
             Caption = 'CNPJ'
             ParentColor = False
           end
@@ -2454,7 +2489,7 @@ object Form1: TForm1
             Left = 192
             Height = 15
             Top = 71
-            Width = 103
+            Width = 102
             Caption = 'Regime Trib. ISSQN'
             ParentColor = False
           end
@@ -2479,7 +2514,7 @@ object Form1: TForm1
             Left = 12
             Height = 15
             Top = 73
-            Width = 95
+            Width = 94
             Caption = 'Regime Tributario'
             ParentColor = False
           end
@@ -2495,13 +2530,13 @@ object Form1: TForm1
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
-          ClientHeight = 154
-          ClientWidth = 610
+          ClientHeight = 192
+          ClientWidth = 717
           object Label2: TLabel
             Left = 10
             Height = 15
             Top = 15
-            Width = 28
+            Width = 27
             Caption = 'CNPJ'
             ParentColor = False
           end
@@ -2509,7 +2544,7 @@ object Form1: TForm1
             Left = 10
             Height = 23
             Top = 31
-            Width = 312
+            Width = 358
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 0
           end
@@ -2525,15 +2560,15 @@ object Form1: TForm1
             Left = 10
             Height = 23
             Top = 89
-            Width = 577
+            Width = 623
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 1
           end
         end
         object tsRede: TTabSheet
           Caption = 'Rede'
-          ClientHeight = 154
-          ClientWidth = 610
+          ClientHeight = 192
+          ClientWidth = 717
           object gbPPPoE: TGroupBox
             Left = 160
             Height = 105
@@ -2577,11 +2612,11 @@ object Form1: TForm1
           end
           object gbIPFix: TGroupBox
             Left = 160
-            Height = 105
+            Height = 109
             Top = 48
             Width = 289
             Caption = 'IPFIX'
-            ClientHeight = 85
+            ClientHeight = 89
             ClientWidth = 285
             TabOrder = 3
             Visible = False
@@ -2688,11 +2723,11 @@ object Form1: TForm1
           end
           object gbWiFi: TGroupBox
             Left = 8
-            Height = 105
+            Height = 109
             Top = 48
             Width = 144
             Caption = 'WiFi'
-            ClientHeight = 85
+            ClientHeight = 89
             ClientWidth = 140
             TabOrder = 1
             Visible = False
@@ -2780,11 +2815,11 @@ object Form1: TForm1
           end
           object gbProxy: TGroupBox
             Left = 455
-            Height = 153
+            Height = 157
             Top = 0
             Width = 150
             Caption = 'Proxy'
-            ClientHeight = 133
+            ClientHeight = 137
             ClientWidth = 146
             TabOrder = 5
             object cbxRedeProxy: TComboBox
@@ -2842,7 +2877,7 @@ object Form1: TForm1
               Top = 80
               Width = 88
               Enabled = False
-              TabOrder = 2
+              TabOrder = 3
             end
             object lSSID12: TLabel
               Left = 8
@@ -2858,7 +2893,7 @@ object Form1: TForm1
               Top = 106
               Width = 88
               Enabled = False
-              TabOrder = 3
+              TabOrder = 4
             end
             object edRedeProxyPorta: TSpinEdit
               Left = 49
@@ -2867,28 +2902,26 @@ object Form1: TForm1
               Width = 88
               Enabled = False
               MaxValue = 999999
-              TabOrder = 4
+              TabOrder = 2
             end
           end
         end
         object Impressao: TTabSheet
           Caption = 'Impressao'
-          ClientHeight = 152
-          ClientWidth = 667
+          ClientHeight = 192
+          ClientWidth = 717
           object GroupBox3: TGroupBox
-            Left = 0
-            Height = 152
-            Top = 0
+            Left = -2
+            Height = 162
+            Top = 22
             Width = 345
-            Align = alClient
-            Caption = 'Fortes'
-            ClientHeight = 132
+            ClientHeight = 142
             ClientWidth = 341
-            TabOrder = 0
+            TabOrder = 2
             object seLargura: TSpinEdit
               Left = 8
               Height = 23
-              Top = 14
+              Top = 16
               Width = 64
               MaxValue = 9999
               TabOrder = 0
@@ -2905,14 +2938,14 @@ object Form1: TForm1
               Left = 96
               Height = 15
               Top = 0
-              Width = 28
+              Width = 27
               Caption = 'Topo'
               ParentColor = False
             end
             object seMargemTopo: TSpinEdit
               Left = 96
               Height = 23
-              Top = 14
+              Top = 16
               Width = 64
               MaxValue = 9999
               TabOrder = 1
@@ -2928,7 +2961,7 @@ object Form1: TForm1
             object seMargemFundo: TSpinEdit
               Left = 8
               Height = 23
-              Top = 62
+              Top = 66
               Width = 64
               MaxValue = 9999
               TabOrder = 2
@@ -2944,7 +2977,7 @@ object Form1: TForm1
             object seMargemEsquerda: TSpinEdit
               Left = 96
               Height = 23
-              Top = 62
+              Top = 66
               Width = 64
               MaxValue = 9999
               TabOrder = 3
@@ -2960,7 +2993,7 @@ object Form1: TForm1
             object seMargemDireita: TSpinEdit
               Left = 184
               Height = 23
-              Top = 62
+              Top = 66
               Width = 64
               MaxValue = 9999
               TabOrder = 4
@@ -2968,7 +3001,7 @@ object Form1: TForm1
             object bImpressora: TButton
               Left = 8
               Height = 25
-              Top = 96
+              Top = 102
               Width = 122
               AutoSize = True
               Caption = 'Definir Impressora'
@@ -2978,155 +3011,139 @@ object Form1: TForm1
             object lImpressora: TLabel
               Left = 136
               Height = 15
-              Top = 104
+              Top = 110
               Width = 104
               Caption = 'Impresssora Default'
               ParentColor = False
             end
-            object cbUsarFortes: TRadioButton
-              Left = 192
-              Height = 19
-              Top = 0
-              Width = 78
-              Caption = 'Usar Fortes'
-              OnClick = cbUsarFortesClick
-              TabOrder = 6
-            end
             object cbPreview: TCheckBox
               Left = 192
               Height = 19
-              Top = 24
+              Top = 26
               Width = 61
               Caption = 'Preview'
-              TabOrder = 7
+              TabOrder = 6
             end
           end
           object GroupBox4: TGroupBox
             Left = 345
-            Height = 152
-            Top = 0
+            Height = 162
+            Top = 22
             Width = 322
-            Align = alRight
-            Caption = 'EscPOS'
-            ClientHeight = 132
+            ClientHeight = 142
             ClientWidth = 318
-            TabOrder = 1
-            object cbUsarEscPos: TRadioButton
-              Left = 8
-              Height = 19
-              Top = 0
-              Width = 85
-              Caption = 'Usar EscPOS'
-              OnClick = cbUsarEscPosClick
-              TabOrder = 0
-            end
+            TabOrder = 3
             object Label25: TLabel
-              Left = 153
+              Left = 155
               Height = 30
-              Top = 73
+              Top = 58
               Width = 34
               Caption = 'Linhas'#13#10'Pular'
               ParentColor = False
             end
             object seLinhasPular: TSpinEdit
-              Left = 153
+              Left = 155
               Height = 23
-              Top = 104
+              Top = 94
               Width = 41
               MaxValue = 255
-              TabOrder = 1
+              TabOrder = 0
             end
             object Label26: TLabel
-              Left = 80
+              Left = 82
               Height = 30
-              Top = 73
+              Top = 58
               Width = 42
               Caption = 'Espaços'#13#10'Linhas'
               ParentColor = False
             end
             object seEspLinhas: TSpinEdit
-              Left = 81
+              Left = 82
               Height = 23
-              Top = 104
+              Top = 94
               Width = 41
               MaxValue = 255
-              TabOrder = 2
+              TabOrder = 1
             end
             object Label27: TLabel
-              Left = 8
+              Left = 10
               Height = 15
-              Top = 88
+              Top = 73
               Width = 43
               Caption = 'Colunas'
               ParentColor = False
             end
             object seColunas: TSpinEdit
-              Left = 8
+              Left = 10
               Height = 23
-              Top = 104
+              Top = 94
               Width = 41
               MaxValue = 999
               MinValue = 1
-              TabOrder = 3
+              TabOrder = 2
               Value = 48
             end
             object Label28: TLabel
-              Left = 10
+              Left = 8
               Height = 15
-              Top = 22
+              Top = 4
               Width = 41
               Caption = 'Modelo'
               ParentColor = False
             end
             object cbxModeloPosPrinter: TComboBox
-              Left = 8
+              Left = 6
               Height = 23
-              Top = 40
+              Top = 24
               Width = 145
               ItemHeight = 15
               OnChange = cbxModeloChange
               Style = csDropDownList
-              TabOrder = 4
+              TabOrder = 3
             end
             object Label7: TLabel
-              Left = 160
+              Left = 158
               Height = 15
-              Top = 16
+              Top = 4
               Width = 28
               Caption = 'Porta'
               ParentColor = False
             end
             object cbxPorta: TComboBox
-              Left = 160
+              Left = 158
               Height = 23
-              Top = 40
+              Top = 24
               Width = 128
               ItemHeight = 15
-              TabOrder = 5
+              TabOrder = 4
             end
             object Label29: TLabel
-              Left = 216
+              Left = 218
               Height = 15
-              Top = 88
+              Top = 73
               Width = 60
               Caption = 'Pag.codigo'
               ParentColor = False
             end
             object cbxPagCodigo: TComboBox
-              Left = 216
+              Left = 218
               Height = 23
               Hint = 'Pagina de código usada pela Impressora POS'
-              Top = 104
+              Top = 94
               Width = 93
               ItemHeight = 15
               Style = csDropDownList
-              TabOrder = 6
+              TabOrder = 5
             end
             object btSerial: TSpeedButton
-              Left = 288
-              Height = 22
-              Top = 41
-              Width = 23
+              AnchorSideTop.Control = cbxPorta
+              AnchorSideBottom.Control = cbxPorta
+              AnchorSideBottom.Side = asrBottom
+              Left = 286
+              Height = 23
+              Top = 24
+              Width = 25
+              Anchors = [akTop, akLeft, akBottom]
               Glyph.Data = {
                 36030000424D3603000000000000360000002800000010000000100000000100
                 1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -3158,13 +3175,131 @@ object Form1: TForm1
               OnClick = btSerialClick
             end
             object cbImprimir1Linha: TCheckBox
-              Left = 160
+              Left = 8
               Height = 19
-              Top = -4
+              Top = 122
               Width = 148
               Caption = 'Imprmir Item em 1 linha'
-              TabOrder = 7
+              TabOrder = 6
             end
+          end
+          object cbUsarFortes: TRadioButton
+            AnchorSideLeft.Control = GroupBox3
+            AnchorSideLeft.Side = asrCenter
+            Left = 118
+            Height = 25
+            Top = -2
+            Width = 104
+            Caption = 'Usar Fortes'
+            Font.Height = -16
+            Font.Style = [fsBold]
+            OnChange = cbUsarFortesChange
+            ParentFont = False
+            TabOrder = 0
+          end
+          object cbUsarEscPos: TRadioButton
+            AnchorSideLeft.Control = GroupBox4
+            AnchorSideLeft.Side = asrCenter
+            Left = 450
+            Height = 25
+            Top = -2
+            Width = 113
+            Caption = 'Usar EscPOS'
+            Font.Height = -16
+            Font.Style = [fsBold]
+            OnChange = cbUsarEscPosChange
+            ParentFont = False
+            TabOrder = 1
+          end
+        end
+        object tsMFe: TTabSheet
+          Caption = 'MFE'
+          ClientHeight = 192
+          ClientWidth = 717
+          object Label30: TLabel
+            Left = 8
+            Height = 15
+            Top = 8
+            Width = 71
+            Caption = 'Pasta Entrada'
+            ParentColor = False
+          end
+          object Label31: TLabel
+            Left = 8
+            Height = 15
+            Top = 48
+            Width = 78
+            Caption = 'Pasta Resposta'
+            ParentColor = False
+          end
+          object Label32: TLabel
+            Left = 8
+            Height = 15
+            Top = 88
+            Width = 45
+            Caption = 'Timeout'
+            ParentColor = False
+          end
+          object edMFEInput: TEdit
+            Left = 8
+            Height = 23
+            Top = 24
+            Width = 264
+            TabOrder = 0
+            Text = 'c:\Integrador\Input\'
+          end
+          object edMFEOutput: TEdit
+            Left = 8
+            Height = 23
+            Top = 64
+            Width = 264
+            TabOrder = 1
+            Text = 'c:\Integrador\Output\'
+          end
+          object seMFETimeout: TSpinEdit
+            Left = 8
+            Height = 23
+            Top = 104
+            Width = 82
+            MinValue = 10
+            TabOrder = 2
+            Value = 30
+          end
+          object btMFEEnviarPagamento: TButton
+            Left = 320
+            Height = 25
+            Top = 23
+            Width = 147
+            Caption = 'MFE Enviar Pagamento'
+            OnClick = btMFEEnviarPagamentoClick
+            TabOrder = 3
+          end
+          object btMFEVerificarStatus: TButton
+            Left = 320
+            Height = 25
+            Top = 51
+            Width = 147
+            Caption = 'Verificar Status Validador'
+            OnClick = btMFEVerificarStatusClick
+            TabOrder = 4
+          end
+          object btMFEEnviarStatusPagamento: TButton
+            Left = 472
+            Height = 25
+            Top = 23
+            Width = 147
+            Caption = 'Enviar Status Pagamento'
+            OnClick = btMFEEnviarStatusPagamentoClick
+            TabOrder = 5
+          end
+          object btMFERespostaFiscal: TButton
+            Left = 472
+            Height = 25
+            Top = 51
+            Width = 147
+            Caption = 'Resposta Fiscal'
+            OnClick = btMFERespostaFiscalClick
+            TabOrder = 6
           end
         end
       end
@@ -3173,8 +3308,8 @@ object Form1: TForm1
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
-    Top = 417
-    Width = 850
+    Top = 437
+    Width = 900
     Panels = <    
       item
         Width = 200
@@ -3259,6 +3394,13 @@ object Form1: TForm1
       object miImprimirExtratoCancelamento: TMenuItem
         Caption = 'Imprimir Extrato Cancelamento'
         OnClick = miImprimirExtratoCancelamentoClick
+      end
+      object MenuItem16: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem17: TMenuItem
+        Caption = 'Carregar XML de Cancelamento'
+        OnClick = MenuItem17Click
       end
     end
     object MenuItem6: TMenuItem
@@ -3347,12 +3489,17 @@ object Form1: TForm1
     Rede.proxy_porta = 0
     OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
     OnGetsignAC = ACBrSAT1GetsignAC
+    OnMensagemSEFAZ = ACBrSAT1MensagemSEFAZ
+    OnCalcPath = ACBrSAT1CalcPath
     left = 64
     top = 224
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
+    SoftwareHouse = 'Projeto ACBr'
+    Site = 'http://www.projetoacbr.com.br'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     PosPrinter = ACBrPosPrinter1
     ImprimeDescAcrescItem = False
     left = 64
@@ -3478,8 +3625,13 @@ object Form1: TForm1
     MostrarPreview = True
     NomeArquivo = 'satcfe.pdf'
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
+    Site = 'http://www.projetoacbr.com.br'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     Margens.Topo = 50
     Margens.Fundo = 400
+    EspacoFinal = 50
+    LogoWidth = 100
+    LogoHeigth = 70
     left = 64
     top = 344
   end
@@ -3495,7 +3647,7 @@ object Form1: TForm1
     Modelo = ppEscPosEpson
     PaginaDeCodigo = pcNone
     EspacoEntreLinhas = 40
-    ConfigBarras.MostrarCodigo = True
+    ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
     ConfigBarras.Margem = 0
@@ -3503,9 +3655,14 @@ object Form1: TForm1
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 7
-    CortaPapel = True
     ArqLOG = 'c:\temp\posprinter.log'
     left = 103
     top = 279
+  end
+  object RLPDFFilter1: TRLPDFFilter
+    DocumentInfo.Creator = 'FortesReport Community Edition v4.0 \251 Copyright � 1999-2016 Fortes Inform�tica'
+    DisplayName = 'Documento PDF'
+    left = 484
+    top = 179
   end
 end

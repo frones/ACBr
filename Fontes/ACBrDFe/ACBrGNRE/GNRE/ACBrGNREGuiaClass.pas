@@ -50,10 +50,13 @@ unit ACBrGNREGuiaClass;
 interface
 
 uses
- Forms, SysUtils, Classes, pcnConversao, pgnreGNRERetorno;
+ Forms, SysUtils, Classes, ACBrBase, pcnConversao, pgnreGNRERetorno;
 
 type
-  TACBrGNREGuiaClass = class( TComponent )
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
+  TACBrGNREGuiaClass = class( TACBrComponent )
    private
     procedure SetGNRE(const Value: TComponent);
     procedure ErroAbstract( NomeProcedure : String ) ;

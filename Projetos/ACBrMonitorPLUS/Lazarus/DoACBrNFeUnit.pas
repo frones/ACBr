@@ -58,13 +58,12 @@ var
   I, J, K, nNumCopias : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
   Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
-  SL     : TStringList;
-  ChavesNFe: Tstrings;
+  ChavesNFe, PathsNFe: Tstrings;
   Alertas : AnsiString;
   wDiretorioAtual : String;
 
   Lines   : TStringList ;
-  sMensagemEmail: TStringList;
+  sMensagemEmail, SL: TStringList;
   MemoTXT : TMemo;
   Files  : String ;
   dtFim  : TDateTime ;
@@ -78,12 +77,15 @@ var
 
   CC, Anexos: Tstrings;
   sTemMais,ErrosRegraNegocio: String;
+  tipoEvento: TpcnTpEvento;
+  FormaEmissao: TpcnTipoEmissao;
 begin
  with FrmACBrMonitor do
   begin
      wDiretorioAtual := GetCurrentDir;
      try
-        if Cmd.Metodo = 'statusservico' then  //NFe.StatusServico
+        //NFe.StatusServico
+        if Cmd.Metodo = 'statusservico' then
          begin
            ACBrNFe1.WebServices.StatusServico.Executar;
            Cmd.Resposta := ACBrNFe1.WebServices.StatusServico.Msg+
@@ -100,76 +102,77 @@ begin
                               'XObs='+ACBrNFe1.WebServices.StatusServico.XObs+sLineBreak;
          end
 
-        else if Cmd.Metodo = 'validarnfe' then //NFe.ValidarNFe(cArqXML)
+        //NFe.ValidarNFe(cArqXML)
+        else if Cmd.Metodo = 'validarnfe' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0), False)
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+           CarregarDFe(Cmd.Params(0), ArqNFe);
 
            ACBrNFe1.NotasFiscais.Validar;
          end
 
-       else if Cmd.Metodo = 'validarnferegranegocios' then //NFe.ValidarNfeRegraNegocios(cArqXML)
+       //NFe.ValidarNfeRegraNegocios(cArqXML)
+       else if Cmd.Metodo = 'validarnferegranegocios' then
         begin
           ACBrNFe1.NotasFiscais.Clear;
-          if FileExists(Cmd.Params(0)) then
-            ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
-          else
-            raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+          CarregarDFe(Cmd.Params(0), ArqNFe);
           ACBrNFe1.NotasFiscais.ValidarRegrasdeNegocios(ErrosRegraNegocio);
+
           if NaoEstaVazio(ErrosRegraNegocio) then
             raise Exception.Create(ErrosRegraNegocio);
         end
 
-        else if Cmd.Metodo = 'assinarnfe' then //NFe.AssinarNFe(cArqXML)
+       //NFe.AssinarNFe(cArqXML)
+        else if Cmd.Metodo = 'assinarnfe' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), ArqNFe);
            Salva := ACBrNFe1.Configuracoes.Geral.Salvar;
            if not Salva then
             begin
              ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
              ACBrNFe1.Configuracoes.Arquivos.PathSalvar := PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs';
             end;
+
            ACBrNFe1.Configuracoes.Geral.Salvar := True;
            ACBrNFe1.NotasFiscais.Assinar;
            ACBrNFe1.Configuracoes.Geral.Salvar := Salva;
+
            if NaoEstaVazio(ACBrNFe1.NotasFiscais.Items[0].NomeArq) then
               Cmd.Resposta := ACBrNFe1.NotasFiscais.Items[0].NomeArq
            else
               Cmd.Resposta := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID, 'NFe', '', [rfIgnoreCase])+'-nfe.xml';
          end
 
-        else if Cmd.Metodo = 'consultarnfe' then //NFe.ConsultarNFe(cArqXML)
+        //NFe.ConsultarNFe(cArqXML)
+        else if Cmd.Metodo = 'consultarnfe' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml') then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
-              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml') ;
 
-              ACBrNFe1.WebServices.Consulta.NFeChave := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe','',[rfIgnoreCase]);
-            end
+           PathsNFe := TStringList.Create;
+           try
+             PathsNFe.Append(Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
+
+             try
+               CarregarDFe(PathsNFe, ArqNFe);
+             except
+             end;
+           finally
+             PathsNFe.Free;
+           end;
+
+           if ACBrNFe1.NotasFiscais.Count = 0 then
+           begin
+             if ValidarChave(Cmd.Params(0)) then
+               ACBrNFe1.WebServices.Consulta.NFeChave := Cmd.Params(0)
+             else
+               raise Exception.Create('Parâmetro incorreto. Chave inválida ou arquivo não encontrado.');
+           end
            else
-            begin
-              if not ValidarChave('NFe'+Cmd.Params(0)) then
-                 raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
-              else
-                 ACBrNFe1.WebServices.Consulta.NFeChave := Cmd.Params(0);
-            end;
+             ACBrNFe1.WebServices.Consulta.NFeChave := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe','',[rfIgnoreCase]);
+
            try
               ACBrNFe1.WebServices.Consulta.Executar;
 
@@ -184,7 +187,9 @@ begin
                               'ChNFe='+ACBrNFe1.WebServices.Consulta.NFeChave+sLineBreak+
                               'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Consulta.DhRecbto)+sLineBreak+
                               'NProt='+ACBrNFe1.WebServices.Consulta.Protocolo+sLineBreak+
-                              'DigVal='+ACBrNFe1.WebServices.Consulta.protNFe.digVal+sLineBreak;
+                              'DigVal='+ACBrNFe1.WebServices.Consulta.protNFe.digVal+sLineBreak+
+                              IfThen(EstaVazio(ArqNFe),'','Arquivo='+ArqNFe+sLineBreak);
+
 
               if NaoEstaVazio(Trim(ACBrNFe1.WebServices.Consulta.retCancNFe.nProt)) then
               begin
@@ -272,19 +277,18 @@ begin
                                 end;
                               end;
               end;
-
            except
-               on E: Exception do
-                begin
-                  raise Exception.Create(ACBrNFe1.WebServices.Consulta.Msg+sLineBreak+E.Message);
-                end;
+             on E: Exception do
+             begin
+               raise Exception.Create(ACBrNFe1.WebServices.Consulta.Msg+sLineBreak+E.Message);
+             end;
            end;
          end
 
         else if Cmd.Metodo = 'cancelarnfe' then  //NFe.CancelarNFe(cChaveNFe,cJustificativa,cCNPJ,nEvento)
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if not ValidarChave('NFe'+Cmd.Params(0)) then
+           if not ValidarChave(Cmd.Params(0)) then
               raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
            else
               ACBrNFe1.WebServices.Consulta.NFeChave := Cmd.Params(0);
@@ -299,10 +303,10 @@ begin
               if Trim(infEvento.CNPJ) = '' then
                  infEvento.CNPJ   := copy(OnlyNumber(ACBrNFe1.WebServices.Consulta.NFeChave),7,14)
               else
-               begin
-                 if not ValidarCNPJ(Cmd.Params(2)) then
-                   raise Exception.Create('CNPJ '+Cmd.Params(2)+' inválido.')
-               end;
+              begin
+                if not ValidarCNPJ(Cmd.Params(2)) then
+                  raise Exception.Create('CNPJ '+Cmd.Params(2)+' inválido.')
+              end;
 
               infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(ACBrNFe1.WebServices.Consulta.NFeChave),1,2),0);
               infEvento.dhEvento := now;
@@ -330,6 +334,7 @@ begin
                               'nSeqEvento='+IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nSeqEvento)+sLineBreak+
                               'CNPJDest='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.CNPJDest+sLineBreak+
                               'emailDest='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.emailDest+sLineBreak+
+                              'Arquivo='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.NomeArquivo+sLineBreak+
                               'XML='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.XML+sLineBreak;
            except
              on E: Exception do
@@ -338,25 +343,25 @@ begin
               end;
            end;
          end
-        else if Cmd.Metodo = 'imprimirdanfe' then //NFe.ImprimirDanfe(cArqXML,cImpressora,nNumCopias,cProtocolo,bMostrarPreview,cMarcaDaqgua,bViaConsumidor,bSimplificado)
+        //NFe.ImprimirDanfe(cArqXML,cImpressora,nNumCopias,cProtocolo,bMostrarPreview,cMarcaDaqgua,bViaConsumidor,bSimplificado)
+        else if Cmd.Metodo = 'imprimirdanfe' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml') then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
-              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+
+           PathsNFe := TStringList.Create;
+           try
+             PathsNFe.Append(Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
+             try
+               CarregarDFe(PathsNFe, ArqNFe);
+             except
+             end;
+           finally
+             PathsNFe.Free;
+           end;
 
            bMostrarPreview := (Cmd.Params(4) = '1');
-
            ConfiguraDANFe(False, bMostrarPreview );
 
            if NaoEstaVazio(Cmd.Params(1)) then
@@ -386,32 +391,21 @@ begin
                 ACBrNFe1.DANFE.TipoDANFE := tiSimplificado;
             end;
 
-           //VERIFICAR
-           {
-           if (ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.tpEmis = teDPEC) and
-              EstaVazio(ACBrNFe1.DANFE.ProtocoloNFe) then
-            begin
-              ACBrNFe1.WebServices.ConsultaDPEC.NFeChave := ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID;
-              ACBrNFe1.WebServices.ConsultaDPEC.Executar;
-              ACBrNFe1.DANFE.ProtocoloNFe := ACBrNFe1.WebServices.ConsultaDPEC.nRegDPEC +' '+ DateTimeToStr(ACBrNFe1.WebServices.ConsultaDPEC.dhRegDPEC);
-            end;
-               }
+           try
+             AntesDeImprimir(bMostrarPreview);
+             ACBrNFe1.NotasFiscais.Imprimir;
+           finally
+             DepoisDeImprimir;
+           end;
 
-           ACBrNFe1.NotasFiscais.Imprimir;
            Cmd.Resposta := 'Danfe Impresso com sucesso';
-
-           if ACBrNFe1.DANFE.MostrarPreview then
-             Ocultar1.Click;
          end
 
         else if Cmd.Metodo = 'imprimirdanfepdf' then //NFe.ImprimirDANFEPDF(cArqXML,cProtocolo,cMarcaDaqgua,bViaConsumidor,bSimplificado)
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
+           CarregarDFe(Cmd.Params(0), ArqNFe);
            ConfiguraDANFe(True, False);
 
            if NaoEstaVazio(Cmd.Params(1)) then
@@ -431,18 +425,14 @@ begin
                 ACBrNFe1.DANFE.TipoDANFE := tiSimplificado;
             end;
 
-           //VERIFICAR
-           {
-           if (ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.tpEmis = teDPEC) and
-              EstaVazio(ACBrNFe1.DANFE.ProtocoloNFe) then
-            begin
-              ACBrNFe1.WebServices.ConsultaDPEC.NFeChave := ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID;
-              ACBrNFe1.WebServices.ConsultaDPEC.Executar;
-              ACBrNFe1.DANFE.ProtocoloNFe := ACBrNFe1.WebServices.ConsultaDPEC.nRegDPEC +' '+ DateTimeToStr(ACBrNFe1.WebServices.ConsultaDPEC.dhRegDPEC);
-            end;
-            }
            try
-              ACBrNFe1.NotasFiscais.ImprimirPDF;
+             try
+               AntesDeImprimir(False);
+               ACBrNFe1.NotasFiscais.ImprimirPDF;
+             finally
+               DepoisDeImprimir;
+             end;
+
               ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
 
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) + ArqPDF ;
@@ -451,111 +441,84 @@ begin
            end;
          end
 
-        else if Cmd.Metodo = 'imprimirevento' then //NFe.ImprimirEvento(cPathXMLEvento,cPathXMLNFe,cImpressora,nNumCopias,bMostrarPreview)
+        //NFe.ImprimirEvento(cPathXMLEvento,cPathXMLNFe,cImpressora,nNumCopias,bMostrarPreview)
+        //NFe.ImprimirEventoPDF(cPathXMLEvento,cPathXMLNFe)
+        else if ( Cmd.Metodo = 'imprimirevento' ) or ( Cmd.Metodo = 'imprimireventopdf' ) then
          begin
            ACBrNFe1.EventoNFe.Evento.Clear;
-           if FileExists(Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml') then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrNFe1.EventoNFe.LerXML(Cmd.Params(0))
-              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml');
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+
+           PathsNFe := TStringList.Create;
+           try
+             PathsNFe.Append(Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml');
+             try
+               CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
+             except
+             end;
+           finally
+             PathsNFe.Free;
+           end;
 
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-                 ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(1))
-              else
-                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-            end
-           else
-            begin
-              ACBrNFe1.NotasFiscais.LoadFromString(Cmd.Params(1));
-              if (ACBrNFe1.NotasFiscais.Count < 1) and NaoEstaVazio(Cmd.Params(1)) then
-                 raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
-            end;
+           if NaoEstaVazio(Cmd.Params(1)) then
+           begin
+             PathsNFe := TStringList.Create;
+             try
+               PathsNFe.Append(Cmd.Params(1));
+               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+               try
+                 CarregarDFe(PathsNFe, ArqNFe);
+               except
+               end;
+             finally
+               PathsNFe.Free;
+             end;
+           end;
 
-           bMostrarPreview := (Cmd.Params(4) = '1');
+           bMostrarPreview := (Cmd.Metodo = 'imprimirevento' ) and (Cmd.Params(4) = '1');
            ConfiguraDANFe(False, bMostrarPreview );
-
            if (rgModoImpressaoEvento.ItemIndex = 0) or (ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1) then  //Atualmente não existe impressão de eventos em Fortes para Bobina
               ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
 
-           if NaoEstaVazio(Cmd.Params(2)) then
-              ACBrNFe1.DANFE.Impressora := Cmd.Params(2)
+           if ( Cmd.Metodo = 'imprimirevento' ) then
+           begin
+             if NaoEstaVazio(Cmd.Params(2)) then
+               ACBrNFe1.DANFE.Impressora := Cmd.Params(2)
+             else
+             begin
+               if rgModoImpressaoEvento.ItemIndex = 0 then
+                 ACBrNFe1.DANFE.Impressora := cbxImpressora.Text
+               else
+                 ACBrNFe1.DANFE.Impressora := cbxImpressoraNFCe.Text;
+             end;
+
+             if NaoEstaVazio(Cmd.Params(3)) then
+               ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(3),1);
+
+             try
+               AntesDeImprimir(bMostrarPreview);
+               ACBrNFe1.ImprimirEvento;
+             finally
+               DepoisDeImprimir;
+             end;
+             Cmd.Resposta := 'Evento Impresso com sucesso';
+           end
            else
            begin
-              if rgModoImpressaoEvento.ItemIndex = 0 then
-                 ACBrNFe1.DANFE.Impressora := cbxImpressora.Text
-              else
-                 ACBrNFe1.DANFE.Impressora := cbxImpressoraNFCe.Text;
-           end;
-
-           if NaoEstaVazio(Cmd.Params(3)) then
-              ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(3),1);
-
-           ACBrNFe1.ImprimirEvento;
-           Cmd.Resposta := 'Evento Impresso com sucesso';
-
-           if ACBrNFe1.DANFE.MostrarPreview then
-              Ocultar1.Click;
-         end
-
-        else if Cmd.Metodo = 'imprimireventopdf' then //NFe.ImprimirEventoPDF(cPathXMLEvento,cPathXMLNFe)
-         begin
-           ACBrNFe1.EventoNFe.Evento.Clear;
-           if FileExists(Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml')  then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrNFe1.EventoNFe.LerXML(Cmd.Params(0))
-              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml');
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
-           ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-                 ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(1))
-              else
-                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-            end
-           else
-            begin
-              if NaoEstaVazio(Cmd.Params(1)) then
-                 raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
-            end;
-
-           ConfiguraDANFe(True, False);
-
-           if (rgModoImpressaoEvento.ItemIndex = 0) or (ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1) then  //Atualmente não existe impressão de eventos em Fortes para Bobina
-              ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
-
-           try
-              ACBrNFe1.ImprimirEventoPDF;
-              ArqPDF := OnlyNumber(ACBrNFe1.EventoNFe.Evento[0].InfEvento.id);
-              ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procEventoNFe.pdf';
-              Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
-           except
-              raise Exception.Create('Erro ao criar o arquivo PDF');
+             try
+               ACBrNFe1.ImprimirEventoPDF;
+               ArqPDF := OnlyNumber(ACBrNFe1.EventoNFe.Evento[0].InfEvento.id);
+               ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procEventoNFe.pdf';
+               Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
+             except
+               raise Exception.Create('Erro ao criar o arquivo PDF');
+             end;
            end;
          end
 
-        else if Cmd.Metodo = 'inutilizarnfe' then //NFe.InutilizarNFe(cCNPJ,cJustificativa,nAno,nModelo,nSérie,nNumInicial,nNumFinal)
+        //NFe.InutilizarNFe(cCNPJ,cJustificativa,nAno,nModelo,nSérie,nNumInicial,nNumFinal)
+        else if Cmd.Metodo = 'inutilizarnfe' then
          begin                            //CNPJ         //Justificat   //Ano                    //Modelo                 //Série                  //Num.Inicial            //Num.Final
            ACBrNFe1.WebServices.Inutiliza(Cmd.Params(0), Cmd.Params(1), StrToInt(Cmd.Params(2)), StrToInt(Cmd.Params(3)), StrToInt(Cmd.Params(4)), StrToInt(Cmd.Params(5)), StrToInt(Cmd.Params(6)));
 
@@ -568,94 +531,76 @@ begin
                            'XMotivo='+ACBrNFe1.WebServices.Inutilizacao.XMotivo+sLineBreak+
                            'CUF='+IntToStr(ACBrNFe1.WebServices.Inutilizacao.CUF)+sLineBreak+
                            'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Inutilizacao.DhRecbto)+sLineBreak+
-                           'NProt='+ACBrNFe1.WebServices.Inutilizacao.Protocolo+sLineBreak;
+                           'NProt='+ACBrNFe1.WebServices.Inutilizacao.Protocolo+sLineBreak+
+                           'Arquivo='+ACBrNFe1.WebServices.Inutilizacao.NomeArquivo+sLineBreak+
+                           'XML='+ACBrNFe1.WebServices.Inutilizacao.XML_ProcInutNFe+sLineBreak;
          end
-        else if Cmd.Metodo = 'imprimirinutilizacao' then
+        else if ( Cmd.Metodo = 'imprimirinutilizacao' ) or ( Cmd.Metodo = 'imprimirinutilizacaopdf' ) then
          begin
-           if FileExists(Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml') then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrNFe1.InutNFe.LerXML(Cmd.Params(0))
-              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                 ACBrNFe1.InutNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                 ACBrNFe1.InutNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+           PathsNFe := TStringList.Create;
+           try
+              PathsNFe.Append(Cmd.Params(0));
+              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
+              try
+                CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
+              except
+              end;
+           finally
+             PathsNFe.Free;
+           end;
 
-           bMostrarPreview := (Cmd.Params(3) = '1');
+           bMostrarPreview := (Cmd.Metodo = 'imprimirinutilizacao' ) and (Cmd.Params(3) = '1');
            ConfiguraDANFe(False, bMostrarPreview );
-
            ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
 
-           if NaoEstaVazio(Cmd.Params(1)) then
-              ACBrNFe1.DANFE.Impressora := Cmd.Params(1)
+           if Cmd.Metodo = 'imprimirinutilizacao' then
+           begin
+             if NaoEstaVazio(Cmd.Params(1)) then
+               ACBrNFe1.DANFE.Impressora := Cmd.Params(1)
+             else
+             begin
+               if rgModoImpressaoEvento.ItemIndex = 0 then
+                 ACBrNFe1.DANFE.Impressora := cbxImpressora.Text
+               else
+                 ACBrNFe1.DANFE.Impressora := cbxImpressoraNFCe.Text;
+             end;
+
+             if NaoEstaVazio(Cmd.Params(2)) then
+               ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1);
+
+             try
+               AntesDeImprimir(bMostrarPreview);
+               ACBrNFe1.ImprimirInutilizacao;
+             finally
+               DepoisDeImprimir;
+             end;
+             Cmd.Resposta := 'Inutilização Impressa com sucesso';
+           end
            else
            begin
-              if rgModoImpressaoEvento.ItemIndex = 0 then
-                 ACBrNFe1.DANFE.Impressora := cbxImpressora.Text
-              else
-                 ACBrNFe1.DANFE.Impressora := cbxImpressoraNFCe.Text;
-           end;
-
-           if NaoEstaVazio(Cmd.Params(2)) then
-              ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1);
-
-           ACBrNFe1.ImprimirInutilizacao;
-           Cmd.Resposta := 'Inutilização Impressa com sucesso';
-
-           if ACBrNFe1.DANFE.MostrarPreview then
-              Ocultar1.Click;
-
+             try
+               ACBrNFe1.ImprimirInutilizacaoPDF;
+               ArqPDF := OnlyNumber(ACBrNFe1.InutNFe.ID);
+               ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procInutNFe.pdf';
+               Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
+             except
+               raise Exception.Create('Erro ao criar o arquivo PDF');
+             end;
+           end
          end
-        else if Cmd.Metodo = 'imprimirinutilizacaopdf' then
-         begin
-           if FileExists(Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
-              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml')  then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrNFe1.InutNFe.LerXML(Cmd.Params(0))
-              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                 ACBrNFe1.InutNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                 ACBrNFe1.InutNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
 
-           ConfiguraDANFe(True, False);
-
-           ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
-
-           try
-              ACBrNFe1.ImprimirInutilizacaoPDF;
-              ArqPDF := OnlyNumber(ACBrNFe1.InutNFe.ID);
-              ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-inu.pdf';
-              Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
-           except
-              raise Exception.Create('Erro ao criar o arquivo PDF');
-           end;
-         end
-        else if Cmd.Metodo = 'enviarnfe' then //NFe.EnviarNFe(cArqXML,nLote,[bAssina],[bImprime],[cImpressora],[bSincrono])
+        //NFe.EnviarNFe(cArqXML,nLote,[bAssina],[bImprime],[cImpressora],[bSincrono])
+        else if Cmd.Metodo = 'enviarnfe' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), ArqNFe);
            ACBrNFe1.NotasFiscais.GerarNFe;
+
            if Cmd.Params(2) <> '0' then
               ACBrNFe1.NotasFiscais.Assinar;
 
            ACBrNFe1.NotasFiscais.Validar;
-
-//           if not(ACBrNFe1.WebServices.StatusServico.Executar) then
-//            raise Exception.Create(ACBrNFe1.WebServices.StatusServico.Msg);
 
            if Trim(OnlyNumber(Cmd.Params(1))) = '' then
               ACBrNFe1.WebServices.Enviar.Lote := '1'
@@ -675,7 +620,8 @@ begin
                             'CUF='+IntToStr(ACBrNFe1.WebServices.Enviar.CUF)+sLineBreak+
                             'NRec='+ACBrNFe1.WebServices.Enviar.Recibo+sLineBreak+
                             'DhRecbto='+DateTimeToStr( ACBrNFe1.WebServices.Enviar.dhRecbto)+sLineBreak+
-                            'TMed='+IntToStr( ACBrNFe1.WebServices.Enviar.tMed)+sLineBreak;
+                            'TMed='+IntToStr( ACBrNFe1.WebServices.Enviar.tMed)+sLineBreak+
+                            'Recibo='+ACBrNFe1.WebServices.Enviar.Recibo+sLineBreak;
 
            if ACBrNFe1.WebServices.Enviar.Recibo <> '' then
             begin
@@ -721,7 +667,12 @@ begin
                    if NaoEstaVazio(Cmd.Params(4)) then
                      ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
 
-                   ACBrNFe1.NotasFiscais.Items[0].Imprimir;
+                   try
+                     AntesDeImprimir(False);
+                     ACBrNFe1.NotasFiscais.Items[0].Imprimir;
+                   finally
+                     DepoisDeImprimir;
+                   end;
                  end;
                end;
             end
@@ -734,19 +685,22 @@ begin
                  if NaoEstaVazio(Cmd.Params(4)) then
                     ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
 
-                 ACBrNFe1.NotasFiscais.Items[0].Imprimir;
+                 try
+                   AntesDeImprimir(False);
+                   ACBrNFe1.NotasFiscais.Items[0].Imprimir;
+                 finally
+                   DepoisDeImprimir;
+                 end;
                end;
             end;
-
-           if ACBrNFe1.DANFE.MostrarPreview then
-             Ocultar1.Click;
          end
-        else if (Cmd.Metodo = 'recibonfe')then //NFe.ReciboNFe(nRecibo)
+
+        //NFe.ReciboNFe(nRecibo)
+        else if (Cmd.Metodo = 'recibonfe')then
          begin
            ACBrNFe1.WebServices.Recibo.Recibo := Cmd.Params(0);
            if not(ACBrNFe1.WebServices.Recibo.Executar) then
              raise Exception.Create(ACBrNFe1.WebServices.Recibo.xMotivo);
-
 
            Cmd.Resposta :=  Cmd.Resposta+
                             ACBrNFe1.WebServices.Recibo.Msg+sLineBreak+
@@ -784,7 +738,9 @@ begin
               'Arquivo='+ACBrNFe1.Configuracoes.Arquivos.PathSalvar+Cmd.Params(0)+'-pro-rec.xml';
             end;
          end
-        else if (Cmd.Metodo = 'consultacadastro')then  //NFe.ConsultaCadastro(cUF,nDocumento,[nIE])
+
+        //NFe.ConsultaCadastro(cUF,nDocumento,[nIE])
+        else if (Cmd.Metodo = 'consultacadastro')then
          begin
            ACBrNFe1.WebServices.ConsultaCadastro.UF   := Cmd.Params(0);
            if (Cmd.Params(2) = '1') then
@@ -799,6 +755,7 @@ begin
             ACBrNFe1.WebServices.ConsultaCadastro.Executar;
 
             Cmd.Resposta :=  Cmd.Resposta+
+                             '[CONSULTACADASTRO]'+sLineBreak+
                              ACBrNFe1.WebServices.ConsultaCadastro.Msg+sLineBreak+
                              'verAplic=' +ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.verAplic+sLineBreak+
                              'cStat='    +IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.cStat)+sLineBreak+
@@ -842,22 +799,12 @@ begin
                 (Cmd.Metodo = 'criarnfesefaz') or (Cmd.Metodo = 'criarenviarnfesefaz') or
                 (Cmd.Metodo = 'adicionarnfe')  or (Cmd.Metodo = 'adicionarnfesefaz') or
                 (Cmd.Metodo = 'enviarlotenfe') or (Cmd.Metodo = 'enviardpecnfe') then
-                {NFe.CriarNFe(cIniNFe,[bRetornaXML])
-                 NFe.CriarEnviarNFe(cIniNFe,nLote,[bImprimeDANFE])
-                 NFe.AdicionarNFe(cIniNFe,nLote)
-                 NFe.CriarNFeSEFAZ(cTXTSefaz,[bRetornaXML])
-                 NFe.CriarEnviarNFeSEFAZ(cTXTSefaz,nLote,[bImprimeDANFE])
-                 NFe.AdicionarNFeSEFAZ(cTXTSefaz,nLote)
-                 NFe.EnviarLoteNFe(nLote,[nAssina],[nImprime],[NomeImpressora]
-                 NFe.EnviarDPECNFe//Descontinuado
-
-                 }
          begin
            ConfiguraDANFe(False, False);
 
            if (Cmd.Metodo = 'criarnfe') or (Cmd.Metodo = 'criarenviarnfe') or
               (Cmd.Metodo = 'adicionarnfe') then
-              GerarIniNFe( Cmd.Params(0)  )
+              GerarIniNFe( Cmd.Params(0) )
            else
             begin
               if (Cmd.Metodo = 'criarnfesefaz') or (Cmd.Metodo = 'criarenviarnfesefaz') or
@@ -866,7 +813,6 @@ begin
                     if (copy(Cmd.Params(0), 1, 10) <> 'NOTAFISCAL') and (copy(Cmd.Params(0), 1, 11) <> 'NOTA FISCAL') then
                        if not FileExists(Cmd.Params(0)) then
                           raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
 
                     ACBrNFe1.NotasFiscais.Clear;
                     ACBrNFe1.NotasFiscais.Add;
@@ -884,11 +830,13 @@ begin
                     end;
                   end;
             end;
+
            if (Cmd.Metodo = 'adicionarnfe')  or (Cmd.Metodo = 'adicionarnfesefaz') then
             begin
               ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)));
               ACBrNFe1.NotasFiscais.GerarNFe;
               Alertas := ACBrNFe1.NotasFiscais.Items[0].Alertas;
+              ACBrNFe1.NotasFiscais.Assinar;
               ACBrNFe1.NotasFiscais.Validar;
               ArqNFe := PathWithDelim(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)))+StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID, 'NFe', '', [rfIgnoreCase])+'-nfe.xml';
               ACBrNFe1.NotasFiscais.GravarXML(ExtractFilePath(ArqNFe));
@@ -906,6 +854,7 @@ begin
                end;
               ACBrNFe1.NotasFiscais.GerarNFe;
               Alertas := ACBrNFe1.NotasFiscais.Items[0].Alertas;
+              ACBrNFe1.NotasFiscais.Assinar;
               ACBrNFe1.NotasFiscais.Validar;
               ArqNFe := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID, 'NFe', '', [rfIgnoreCase])+'-nfe.xml';
               ACBrNFe1.NotasFiscais.GravarXML(ArqNFe);
@@ -919,9 +868,12 @@ begin
            if ((Cmd.Metodo = 'criarnfe') or (Cmd.Metodo = 'criarnfesefaz')) and (Cmd.Params(1) = '1') then
             begin
               SL := TStringList.Create;
-              SL.LoadFromFile(ArqNFe);
-              Cmd.Resposta :=  Cmd.Resposta+sLineBreak+SL.Text;
-              SL.Free;
+              try
+                SL.LoadFromFile(ArqNFe);
+                Cmd.Resposta :=  Cmd.Resposta+sLineBreak+SL.Text;
+              finally
+                SL.Free;
+              end;
             end;
 
            if (Cmd.Metodo = 'criarenviarnfe') or (Cmd.Metodo = 'criarenviarnfesefaz') or (Cmd.Metodo = 'enviarlotenfe') or (Cmd.Metodo = 'enviardpecnfe') then
@@ -939,7 +891,7 @@ begin
                      begin
                        while RetFind = 0 do
                         begin
-                           ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+Cmd.Params(0)+PathDelim+SearchRec.Name);
+                           CarregarDFe(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+Cmd.Params(0)+PathDelim+SearchRec.Name, ArqNFe);
                            RetFind := FindNext(SearchRec);
                         end;
                         ACBrNFe1.NotasFiscais.GerarNFe;
@@ -950,7 +902,6 @@ begin
                        raise Exception.Create('Não foi encontrada nenhuma nota para o Lote: '+Cmd.Params(0) );
                   end;
                end;
-
 
               if (Cmd.Metodo = 'enviardpecnfe') then    //TENTAR MANTER A COMPATIBILIDADE
                begin
@@ -985,9 +936,6 @@ begin
                end
               else //enviarlotenfe
                begin
-//                 if not(ACBrNFe1.WebServices.StatusServico.Executar) then
-//                  raise Exception.Create(ACBrNFe1.WebServices.StatusServico.Msg);
-
                  ACBrNFe1.WebServices.Enviar.Sincrono := IIf(Cmd.Params(3)='1',True,False);
 
                  if (Cmd.Metodo = 'criarenviarnfe') or (Cmd.Metodo = 'criarenviarnfesefaz') then
@@ -1080,16 +1028,22 @@ begin
                            'PDF='+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) + ArqPDF ;
                         end;
 
-                        if nNumCopias > 0 then
-                          ACBrNFe1.DANFE.NumCopias := nNumCopias;
-
-                        if NaoEstaVazio(cImpressora) then
-                           ACBrNFe1.DANFE.Impressora := cImpressora;
-
                         if ACBrNFe1.NotasFiscais.Items[i].Confirmada and bImprimir then
                          begin
                            ConfiguraDANFe(False, bMostrarPreview);
-                           ACBrNFe1.NotasFiscais.Items[i].Imprimir;
+
+                           if nNumCopias > 0 then
+                             ACBrNFe1.DANFE.NumCopias := nNumCopias;
+
+                           if NaoEstaVazio(cImpressora) then
+                             ACBrNFe1.DANFE.Impressora := cImpressora;
+
+                           try
+                             AntesDeImprimir(bMostrarPreview);
+                             ACBrNFe1.NotasFiscais.Items[i].Imprimir;
+                           finally
+                             DepoisDeImprimir;
+                           end;
                          end;
 
                         break;
@@ -1098,17 +1052,32 @@ begin
                   end;
                end;
             end;
-
-           if ACBrNFe1.DANFE.MostrarPreview then
-             Ocultar1.Click;
          end
 
-        else if (Cmd.Metodo = 'enviarevento') or  (Cmd.Metodo = 'cartadecorrecao') then   //NFe.EnviarEvento(cIniEvento)
+        else if (Cmd.Metodo = 'enviarevento') or
+                (Cmd.Metodo = 'cartadecorrecao') or
+                (Cmd.Metodo = 'xmlenviarevento') then
          begin
            Cmd.Resposta := '';
            ACBrNFe1.EventoNFe.Evento.Clear;
 
-           GerarIniEvento( Cmd.Params(0), (Cmd.Metodo = 'cartadecorrecao') );
+           if (Cmd.Metodo = 'xmlenviarevento') then
+            begin
+              PathsNFe := TStringList.Create;
+              try
+                PathsNFe.Append(Cmd.Params(0));
+                PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+
+                try
+                  CarregarDFe(PathsNFe, ArqNFe, tDFeEventoNFe);
+                except
+                end;
+              finally
+                PathsNFe.Free;
+              end;
+            end
+           else
+             GerarIniEvento(Cmd.Params(0), (Cmd.Metodo = 'cartadecorrecao'));
 
            ACBrNFe1.EnviarEvento(ACBrNFe1.EventoNFe.idLote);
 
@@ -1122,7 +1091,6 @@ begin
 
            for I:= 0 to ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Count-1 do
             begin
-
               Cmd.Resposta := Cmd.Resposta+sLineBreak+
                '[EVENTO'+Trim(IntToStrZero(I+1,3))+']'+sLineBreak+
                'id='        +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.Id+sLineBreak+
@@ -1138,12 +1106,14 @@ begin
                'CNPJDest='  +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.CNPJDest+sLineBreak+
                'emailDest=' +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.emailDest+sLineBreak+
                'dhRegEvento='+DateTimeToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.dhRegEvento)+sLineBreak+
-               'nProt='     +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.nProt+sLineBreak;
+               'nProt='     +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.nProt+sLineBreak+
+               'Arquivo='   +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.NomeArquivo+sLineBreak+
+               'XML='       +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.XML+sLineBreak;
             end;
          end
 
-
-        else if Cmd.Metodo = 'consultanfedest' then //NFe.ConsultaNFeDest(cCNPJ,nIndicadorNFe,nIndicadorEmissor,nUltNSU)
+        //NFe.ConsultaNFeDest(cCNPJ,nIndicadorNFe,nIndicadorEmissor,nUltNSU)
+        else if Cmd.Metodo = 'consultanfedest' then
          begin
            if not ValidarCNPJ(Cmd.Params(0)) then
               raise Exception.Create('CNPJ '+Cmd.Params(0)+' inválido.');
@@ -1155,6 +1125,7 @@ begin
                                        Cmd.Params(3));
 
               Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                              '[CONSULTANFEDEST]'+sLineBreak+
                               'versao='   +ACBrNFe1.WebServices.ConsNFeDest.retConsNFeDest.versao+sLineBreak+
                               'tpAmb='    +TpAmbToStr(ACBrNFe1.WebServices.ConsNFeDest.retConsNFeDest.tpAmb)+sLineBreak+
                               'verAplic=' +ACBrNFe1.WebServices.ConsNFeDest.retConsNFeDest.verAplic+sLineBreak+
@@ -1237,128 +1208,145 @@ begin
            end;
          end
 
-
-        else if Cmd.Metodo = 'distribuicaodfe' then //NFe.DistribuicaoDFe(cUF,cCNPJ,nUltNSU)
+        else if (Cmd.Metodo = 'distribuicaodfe') or            //NFe.DistribuicaoDFe(cUF,cCNPJ,nUltNSU,nNSU,aChNFe)
+                (Cmd.Metodo = 'distribuicaodfeporchavenfe') or //NFe.DistribuicaoDFePorChaveNFe(cUF, cCNPJ, aChNFe)
+                (Cmd.Metodo = 'distribuicaodfepornsu') or      //NFe.DistribuicaoDFePorNSU(cUF, cCNPJ, nNSU)
+                (Cmd.Metodo = 'distribuicaodfeporultnsu')then  //NFe.DistribuicaoDFePorUltNSU(cUF, cCNPJ, nUltNSU)
          begin
            if not ValidarCNPJ(Cmd.Params(1)) then
               raise Exception.Create('CNPJ '+Cmd.Params(1)+' inválido.');
+
            try
-           ACBrNFe1.DistribuicaoDFe(StrToInt(Cmd.Params(0)),Cmd.Params(1),Cmd.Params(2),'');
-           if ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.cStat = 137 then
-              sTemMais := '1'
-           else
-              sTemMais := '0'; //pog para facilitar a indicacao de continuidade
+              if Cmd.Metodo = 'distribuicaodfeporchavenfe' then
+                ACBrNFe1.DistribuicaoDFePorChaveNFe(StrToIntDef(Cmd.Params(0),0),Cmd.Params(1),Cmd.Params(2))
+              else if Cmd.Metodo = 'distribuicaodfepornsu' then
+                ACBrNFe1.DistribuicaoDFePorNSU(StrToIntDef(Cmd.Params(0),0),Cmd.Params(1),Cmd.Params(2))
+              else if Cmd.Metodo = 'distribuicaodfeporultnsu' then
+                ACBrNFe1.DistribuicaoDFePorUltNSU(StrToIntDef(Cmd.Params(0),0),Cmd.Params(1),Cmd.Params(2))
+              else
+                ACBrNFe1.DistribuicaoDFe(StrToIntDef(Cmd.Params(0),0),Cmd.Params(1),Cmd.Params(2),Cmd.Params(3),Cmd.Params(4));
 
-           Cmd.Resposta:= Cmd.Resposta+sLineBreak+
-                          'versao='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.versao+sLineBreak+
-                          'tpAmb='   +TpAmbToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.tpAmb)+sLineBreak+
-                          'verAplic='+ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.verAplic+sLineBreak+
-                          'cStat='   +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.cStat)+sLineBreak+
-                          'xMotivo=' +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo+sLineBreak+
-                          'dhResp='  +DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.dhResp)+sLineBreak+
-                          'indCont=' +sTemMais+sLineBreak+
-                          'ultNSU='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU+sLineBreak;
-           J := 1;
-           for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
-           begin
-            if Trim(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.chNFe) <> '' then
-               begin
-                    Cmd.Resposta := Cmd.Resposta+sLineBreak+
-                     '[RESNFE'+Trim(IntToStrZero(J,3))+']'+sLineBreak+
-                     'NSU='     +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].NSU+sLineBreak+
-                     'chNFe='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.chNFe+sLineBreak+
-                     'CNPJ='    +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.CNPJCPF+sLineBreak+
-                     'xNome='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.xNome+sLineBreak+
-                     'IE='      +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.IE+sLineBreak+
-                     'dEmi='    +DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.dhEmi)+sLineBreak+
-                     'tpNF='    +tpNFToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.tpNF)+sLineBreak+
-                     'vNF='     +FloatToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.vNF)+sLineBreak+
-                     'digVal='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.digVal+sLineBreak+
-                     'dhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.dhRecbto)+sLineBreak+
-                     'cSitNFe=' +SituacaoDFeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.cSitNFe)+sLineBreak+
-                     'nProt='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.nProt+sLineBreak;
-                     J := J + 1;
-                  end;
-               end;
-           J := 1;
-           for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
-            begin
-              if Trim(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.chNFe) <> '' then
+              if ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.cStat = 137 then
+                sTemMais := '1'
+             else
+                sTemMais := '0'; //pog para facilitar a indicacao de continuidade
+
+             Cmd.Resposta:= Cmd.Resposta+sLineBreak+
+                            '[DISTRIBUICAODFE]'+sLineBreak+
+                            'versao='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.versao+sLineBreak+
+                            'tpAmb='   +TpAmbToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.tpAmb)+sLineBreak+
+                            'verAplic='+ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.verAplic+sLineBreak+
+                            'cStat='   +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.cStat)+sLineBreak+
+                            'xMotivo=' +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo+sLineBreak+
+                            'dhResp='  +DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.dhResp)+sLineBreak+
+                            'indCont=' +sTemMais+sLineBreak+
+                            'ultNSU='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU+sLineBreak+
+                            'NomeArq=' +ACBrNFe1.WebServices.DistribuicaoDFe.NomeArq;
+             J := 1;
+             for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
+             begin
+              if Trim(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.chNFe) <> '' then
                  begin
-                  Cmd.Resposta := Cmd.Resposta+sLineBreak+
-                   '[RESEVE'+Trim(IntToStrZero(J,3))+']'+sLineBreak+
-                   'NSU='       +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].NSU+sLineBreak+
-                   'chNFe='     +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.chNFe+sLineBreak+
-                   'dhEvento='  +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.dhEvento)+sLineBreak+
-                   'tpEvento='  +TpEventoToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.tpEvento)+sLineBreak+
-                   'nSeqEvento='+IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.nSeqEvento)+sLineBreak+
-                   'cOrgao='    +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.cOrgao)+sLineBreak+
-                   'CNPJ='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.CNPJCPF+sLineBreak+
-                   'dhRecbto='  +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.dhRecbto)+sLineBreak+
-                   'nProt='     +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.nProt+sLineBreak;
-                   J := J + 1;
+                      Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                       '[RESNFE'+Trim(IntToStrZero(J,3))+']'+sLineBreak+
+                       'NSU='     +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].NSU+sLineBreak+
+                       'chNFe='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.chNFe+sLineBreak+
+                       'CNPJ='    +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.CNPJCPF+sLineBreak+
+                       'xNome='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.xNome+sLineBreak+
+                       'IE='      +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.IE+sLineBreak+
+                       'dEmi='    +DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.dhEmi)+sLineBreak+
+                       'tpNF='    +tpNFToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.tpNF)+sLineBreak+
+                       'vNF='     +FloatToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.vNF)+sLineBreak+
+                       'digVal='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.digVal+sLineBreak+
+                       'dhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.dhRecbto)+sLineBreak+
+                       'cSitNFe=' +SituacaoDFeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.cSitNFe)+sLineBreak+
+                       'nProt='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.nProt+sLineBreak+
+                       'XML='     +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].XML;
+                       J := J + 1;
+                    end;
                  end;
-             end;
-            J := 1;
-            for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
-             begin
-               if Trim(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.versao) <> '' then
-                  begin
-                   Cmd.Resposta := Cmd.Resposta+sLineBreak+
-                    '[ProEve'     +Trim(IntToStrZero(J,3))+']'+sLineBreak+
-                    'NSU='        +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].NSU+sLineBreak+
-                    'chNFe='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.chNFe+sLineBreak+
-                    'cOrgao='     +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.cOrgao)+sLineBreak+
-                    'CNPJ='       +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.CNPJ+sLineBreak+
-                    'id='         +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.Id+sLineBreak+
-                    'dhEvento='   +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.dhEvento)+sLineBreak+
-                    'nSeqEvento=' +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.nSeqEvento)+sLineBreak+
-                    'tpAmb='      +TpAmbToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.tpAmb)+sLineBreak+
-                    'tpEvento='   +TpEventoToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.tpEvento)+sLineBreak+
-                    'verEvento='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.verEvento+sLineBreak+
-                    'desEvento='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.descEvento+sLineBreak+
-                    //descricao
-                    'xJust='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.xJust+sLineBreak+
-                    'xMotivo='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.xCorrecao+sLineBreak+
-                    //emit
-                    'EmiCnpj='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.emit.CNPJ+sLineBreak+
-                    'EmiIe='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.emit.IE+sLineBreak+
-                    'EmixNome='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.emit.xNome+sLineBreak+
-                    //cte
-                    'cteNProt='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.nProt+sLineBreak+
-                    'cteChvCte='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.chCTe+sLineBreak+
-                    'cteDhemi='   +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.dhEmi)+sLineBreak+
-                    'cteModal='   +TpModalToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.modal)+sLineBreak+
-                    'cteDhRebcto='+DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.dhRecbto)+sLineBreak;
+             J := 1;
+             for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
+              begin
+                if Trim(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.chNFe) <> '' then
+                   begin
+                    Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                     '[RESEVE'+Trim(IntToStrZero(J,3))+']'+sLineBreak+
+                     'NSU='       +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].NSU+sLineBreak+
+                     'chNFe='     +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.chNFe+sLineBreak+
+                     'dhEvento='  +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.dhEvento)+sLineBreak+
+                     'tpEvento='  +TpEventoToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.tpEvento)+sLineBreak+
+                     'nSeqEvento='+IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.nSeqEvento)+sLineBreak+
+                     'cOrgao='    +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.cOrgao)+sLineBreak+
+                     'CNPJ='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.CNPJCPF+sLineBreak+
+                     'dhRecbto='  +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.dhRecbto)+sLineBreak+
+                     'nProt='     +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.nProt+sLineBreak+
+                     'XML='       +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].XML;
+                     J := J + 1;
+                   end;
+               end;
+              J := 1;
+              for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
+               begin
+                 if Trim(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.versao) <> '' then
+                    begin
+                     Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                      '[ProEve'     +Trim(IntToStrZero(J,3))+']'+sLineBreak+
+                      'NSU='        +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].NSU+sLineBreak+
+                      'chNFe='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.chNFe+sLineBreak+
+                      'cOrgao='     +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.cOrgao)+sLineBreak+
+                      'CNPJ='       +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.CNPJ+sLineBreak+
+                      'id='         +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.Id+sLineBreak+
+                      'dhEvento='   +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.dhEvento)+sLineBreak+
+                      'nSeqEvento=' +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.nSeqEvento)+sLineBreak+
+                      'tpAmb='      +TpAmbToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.tpAmb)+sLineBreak+
+                      'tpEvento='   +TpEventoToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.tpEvento)+sLineBreak+
+                      'verEvento='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.verEvento+sLineBreak+
+                      'desEvento='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.descEvento+sLineBreak+
+                      //descricao
+                      'xJust='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.xJust+sLineBreak+
+                      'xMotivo='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.xCorrecao+sLineBreak+
+                      //emit
+                      'EmiCnpj='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.emit.CNPJ+sLineBreak+
+                      'EmiIe='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.emit.IE+sLineBreak+
+                      'EmixNome='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.emit.xNome+sLineBreak+
+                      //cte
+                      'cteNProt='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.nProt+sLineBreak+
+                      'cteChvCte='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.chCTe+sLineBreak+
+                      'cteDhemi='   +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.dhEmi)+sLineBreak+
+                      'cteModal='   +TpModalToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.modal)+sLineBreak+
+                      'cteDhRebcto='+DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.dhRecbto)+sLineBreak+
+                      'XML='        +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].XML;
 
-                   J := J + 1;
-                  end;
-              end;
-            J := 1;
-            for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
-             begin
-               if Trim(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.Id) <> '' then
-                  begin
-                   Cmd.Resposta := Cmd.Resposta+sLineBreak+
-                   '[InfEve'     +Trim(IntToStrZero(J,3))+']'+sLineBreak+
-                   'id='         +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.Id+sLineBreak+
-                   'verAplic='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.verAplic+sLineBreak+
-                   'tpAmb='      +TpAmbToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.tpAmb)+sLineBreak+
-                   'cOrgao='     +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.cOrgao)+sLineBreak+
-                   'chNfe='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.chNFe+sLineBreak+
-                   'cStat='      +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.cStat)+sLineBreak+
-                   'CnpjDest='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.CNPJDest+sLineBreak+
-                   'cOrgaoAutor='+IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.cOrgaoAutor)+sLineBreak+
-                   'tpEvento='   +TpEventoToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.tpEvento)+sLineBreak+
-                   'nSeqEvento=' +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.nSeqEvento)+sLineBreak+
-                   'xEvento='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.xEvento+sLineBreak+
-                   'xMotivo='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.xMotivo+sLineBreak+
-                   'dhRegEvento='+DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.dhRegEvento)+sLineBreak+
-                   'emailDest='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.emailDest+sLineBreak+
-                   'nProt='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.nProt+sLineBreak;
-                   J := J + 1;
-                  end;
-              end;
+                     J := J + 1;
+                    end;
+                end;
+              J := 1;
+              for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do
+               begin
+                 if Trim(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.Id) <> '' then
+                    begin
+                     Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                     '[InfEve'     +Trim(IntToStrZero(J,3))+']'+sLineBreak+
+                     'id='         +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.Id+sLineBreak+
+                     'verAplic='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.verAplic+sLineBreak+
+                     'tpAmb='      +TpAmbToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.tpAmb)+sLineBreak+
+                     'cOrgao='     +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.cOrgao)+sLineBreak+
+                     'chNfe='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.chNFe+sLineBreak+
+                     'cStat='      +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.cStat)+sLineBreak+
+                     'CnpjDest='   +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.CNPJDest+sLineBreak+
+                     'cOrgaoAutor='+IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.cOrgaoAutor)+sLineBreak+
+                     'tpEvento='   +TpEventoToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.tpEvento)+sLineBreak+
+                     'nSeqEvento=' +IntToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.nSeqEvento)+sLineBreak+
+                     'xEvento='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.xEvento+sLineBreak+
+                     'xMotivo='    +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.xMotivo+sLineBreak+
+                     'dhRegEvento='+DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.dhRegEvento)+sLineBreak+
+                     'emailDest='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.emailDest+sLineBreak+
+                     'nProt='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.nProt+sLineBreak+
+                     'XML='        +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].XML;
+                     J := J + 1;
+                    end;
+                end;
            except
              on E: Exception do
               begin
@@ -1367,38 +1355,39 @@ begin
            end;
          end
 
-
-        else if Cmd.Metodo = 'downloadnfe' then //NFe.DownloadNFe(cCNPJ,cChaves)
+        //NFe.DownloadNFe(cCNPJ,cChaves)
+        else if Cmd.Metodo = 'downloadnfe' then
          begin
            if not ValidarCNPJ(Cmd.Params(0)) then
               raise Exception.Create('CNPJ '+Cmd.Params(0)+' inválido.');
 
            with ACBrNFe1.DownloadNFe do
+           begin
+             Download.CNPJ := Cmd.Params(0);
+
+             if NaoEstaVazio(Cmd.Params(1)) then
              begin
-              Download.CNPJ := Cmd.Params(0);
+               ChavesNFe:=TstringList.Create;
+               try
+                  ChavesNFe.DelimitedText := sLineBreak;
+                  ChavesNFe.Text := StringReplace(Cmd.Params(1),';',sLineBreak,[rfReplaceAll]);
+                  Download.Chaves.Clear;
+                  for I := 0 to ChavesNFe.Count - 1 do
+                  begin
+                     if not ValidarChave(ChavesNFe.Strings[i]) then
+                        raise Exception.Create('Chave '+ChavesNFe.Strings[i]+' inválida.');
 
-              if NaoEstaVazio(Cmd.Params(1)) then
-               begin
-                 ChavesNFe:=TstringList.Create;
-                 try
-                    ChavesNFe.DelimitedText := sLineBreak;
-                    ChavesNFe.Text := StringReplace(Cmd.Params(1),';',sLineBreak,[rfReplaceAll]);
-                    Download.Chaves.Clear;
-                    for I := 0 to ChavesNFe.Count - 1 do
-                    begin
-                       if not ValidarChave('NFe'+ChavesNFe.Strings[i]) then
-                          raise Exception.Create('Chave '+ChavesNFe.Strings[i]+' inválida.');
-
-                       with Download.Chaves.Add do
-                       begin
-                         chNFe := ChavesNFe.Strings[i];
-                       end;
-                    end;
-                 finally
-                    ChavesNFe.Free;
-                 end;
+                     with Download.Chaves.Add do
+                     begin
+                       chNFe := ChavesNFe.Strings[i];
+                     end;
+                  end;
+               finally
+                  ChavesNFe.Free;
                end;
              end;
+           end;
+
            try
               ACBrNFe1.Download;
 
@@ -1411,26 +1400,28 @@ begin
                               'xMotivo='  +ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.xMotivo+sLineBreak+
                               'dhResp='   +DateTimeToStr(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.dhResp)+sLineBreak;
 
-              SL := TStringList.Create;
-              try
-                for i := 0 to ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Count -1 do
-                 begin
-                   ArqNFe := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+
-                             ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].chNFe+'-down-nfe.xml' ;
-                   SL.Clear;
-                   SL.Add(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].procNFe);
-                   SL.SaveToFile(ArqNFe);
-                   Cmd.Resposta := Cmd.Resposta+sLineBreak+
-                                   '[NFE'+Trim(IntToStrZero(I+1,3))+']'+sLineBreak+
-                                   'ChNFe='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].chNFe+sLineBreak+
-                                   'cStat='+IntToStr(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].cStat)+sLineBreak+
-                                   'xMotivo='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].xMotivo+sLineBreak+
-                                   'Arquivo='+ArqNFe+sLineBreak+
-                                   'procNFe='+SL.Text+sLineBreak;
+              for i := 0 to ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Count -1 do
+               begin
+                 ArqNFe := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+
+                           ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].chNFe+'-down-nfe.xml' ;
+
+                 try
+                   WriteToTXT( ArqNFe, ConverteXMLtoUTF8(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].procNFe), False, False);
+                 except
+                   on E: Exception do
+                   begin
+                     Cmd.Resposta := Cmd.Resposta+sLineBreak+'Erro ao escrever no arquivo: '+ArqNFe+' ['+E.Message+']';
+                   end;
                  end;
-              finally
-                SL.Free;
-              end;
+
+                 Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                                 '[NFE'+Trim(IntToStrZero(I+1,3))+']'+sLineBreak+
+                                 'ChNFe='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].chNFe+sLineBreak+
+                                 'cStat='+IntToStr(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].cStat)+sLineBreak+
+                                 'xMotivo='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].xMotivo+sLineBreak+
+                                 'Arquivo='+ArqNFe+sLineBreak+
+                                 'procNFe='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].procNFe+sLineBreak;
+               end;
            except
              on E: Exception do
               begin
@@ -1439,27 +1430,21 @@ begin
            end;
          end
 
-        else if Cmd.Metodo = 'enviaremail' then //NFe.EnviarEmail(cEmailDestino,cArqXML,cEnviaPDF,[cAssunto],[cEmailsCopias],[cAnexos])
+        //NFe.EnviarEmail(cEmailDestino,cArqXML,cEnviaPDF,[cAssunto],[cEmailsCopias],[cAnexos])
+        else if Cmd.Metodo = 'enviaremail' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-               begin
-                 ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(1));
-                 ArqNFe := Cmd.Params(1);
-               end
-              else
-               begin
-                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-                 ArqNFe := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1);
-               end;
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
-
-           if ACBrNFe1.NotasFiscais.Count = 0 then
-             raise Exception.Create('Nenhuma NFe encontrada no arquivo: '+ArqNFe);
+           PathsNFe := TStringList.Create;
+           try
+             PathsNFe.Append(Cmd.Params(1));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+             try
+               CarregarDFe(PathsNFe, ArqNFe);
+             except
+             end;
+           finally
+             PathsNFe.Free;
+           end;
 
            ConfiguraDANFe(True, False);
 
@@ -1497,44 +1482,36 @@ begin
            end;
         end
 
-        else if Cmd.Metodo = 'enviaremailevento' then //NFe.EnviarEmailEvento(cEmailDestino,cArqXMLEvento,[cArqXMLNFe],cEnviaPDF,[cAssunto],[cEmailsCopias],[cAnexos])
+        //NFe.EnviarEmailEvento(cEmailDestino,cArqXMLEvento,[cArqXMLNFe],cEnviaPDF,[cAssunto],[cEmailsCopias],[cAnexos])
+        else if Cmd.Metodo = 'enviaremailevento' then
          begin
            ACBrNFe1.EventoNFe.Evento.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-               begin
-                 ACBrNFe1.EventoNFe.LerXML(Cmd.Params(1));
-                 ArqEvento := Cmd.Params(1);
-               end
-              else
-               begin
-                 ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-                 ArqEvento := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1);
-               end;
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
+           PathsNFe := TStringList.Create;
+           try
+             PathsNFe.Append(Cmd.Params(1));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+             try
+               CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
+             except
+             end;
+           finally
+             PathsNFe.Clear;
+           end;
 
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(2)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2)) then
-            begin
-              if FileExists(Cmd.Params(2)) then
-               begin
-                 ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(2));
-                 ArqNFe := Cmd.Params(2);
-               end
-              else
-               begin
-                 ACBrNFe1.NotasFiscais.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2));
-                 ArqNFe := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2);
+           if NaoEstaVazio(Cmd.Params(2)) then
+           begin
+             try
+               PathsNFe.Append(Cmd.Params(2));
+               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2));
+               try
+                 CarregarDFe(PathsNFe, ArqNFe);
+               except
                end;
-            end
-           else
-            begin
-              if NaoEstaVazio(Cmd.Params(2)) then
-                 raise Exception.Create('Arquivo '+Cmd.Params(2)+' não encontrado.');
-            end;
+             finally
+               PathsNFe.Clear;
+             end;
+           end;
 
            ConfiguraDANFe(True, False);
 
@@ -1562,7 +1539,16 @@ begin
              Anexos.DelimitedText := sLineBreak;
              Anexos.Text := StringReplace(Cmd.Params(6),';',sLineBreak,[rfReplaceAll]);
 
+             // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
+             if ( ArqEvento = '' ) then
+             begin
+               tipoEvento := ACBrNFe1.EventoNFe.Evento[0].InfEvento.tpEvento;
+               ArqEvento  := ACBrNFe1.EventoNFe.ObterNomeArquivo(tipoEvento);
+               ArqEvento  := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
+               ACBrNFe1.EventoNFe.Gerador.SalvarArquivo(ArqEvento);
+             end;
              Anexos.Add(ArqEvento);
+
              if (Cmd.Params(3) = '1') then
                 Anexos.Add(ArqPDF);
 
@@ -1570,6 +1556,83 @@ begin
                 ACBrNFe1.EnviarEmail(
                   Cmd.Params(0),
                   SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssuntoNFe.Text) ),
+                  sMensagemEmail,
+                  CC,
+                  Anexos
+                );
+
+                Cmd.Resposta := 'Email enviado com sucesso';
+             except
+                on E: Exception do
+                 begin
+                   raise Exception.Create('Erro ao enviar email'+sLineBreak+E.Message);
+                 end;
+             end;
+
+           finally
+             CC.Free;
+             Anexos.Free;
+             sMensagemEmail.Free;
+           end;
+         end
+
+        else if Cmd.Metodo = 'enviaremailinutilizacao' then //NFe.EnviarEmailInutilizacao(cEmailDestino,cArqXMLInutilizacao,cEnviaPDF,[cAssunto],[cEmailsCopias],[cAnexos])
+         begin
+           PathsNFe := TStringList.Create;
+           try
+              PathsNFe.Append(Cmd.Params(1));
+              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)+'-inu.xml');
+              try
+                CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
+              except
+              end;
+           finally
+             PathsNFe.Free;
+           end;
+
+           ConfiguraDANFe(True, False);
+
+           if (Cmd.Params(2) = '1') then
+            begin
+              try
+                 ACBrNFe1.ImprimirInutilizacaoPDF;
+                 ArqPDF := OnlyNumber(ACBrNFe1.InutNFe.ID);
+                 ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procInutNFe.pdf';
+              except
+                 raise Exception.Create('Erro ao criar o arquivo PDF');
+              end;
+            end;
+
+           sMensagemEmail := TStringList.Create;
+           CC:=TstringList.Create;
+           Anexos:=TstringList.Create;
+           try
+             sMensagemEmail.Text := SubstituirVariaveis( mmEmailMsgNFe.Lines.Text );
+
+             CC.DelimitedText := sLineBreak;
+             CC.Text := StringReplace(Cmd.Params(4),';',sLineBreak,[rfReplaceAll]);
+
+             Anexos.DelimitedText := sLineBreak;
+             Anexos.Text := StringReplace(Cmd.Params(5),';',sLineBreak,[rfReplaceAll]);
+
+             // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
+             if ( ArqEvento = '' ) then
+             begin
+               tipoEvento := ACBrNFe1.EventoNFe.Evento[0].InfEvento.tpEvento;
+               ArqEvento  := ACBrNFe1.EventoNFe.ObterNomeArquivo(tipoEvento);
+               ArqEvento  := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
+               ACBrNFe1.EventoNFe.Gerador.SalvarArquivo(ArqEvento);
+             end;
+             Anexos.Add(ArqEvento);
+
+             if (Cmd.Params(2) = '1') then
+                Anexos.Add(ArqPDF);
+
+             try
+                ACBrNFe1.EnviarEmail(
+                  Cmd.Params(0),
+                  SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssuntoNFe.Text) ),
                   sMensagemEmail,
                   CC,
                   Anexos
@@ -1611,15 +1674,23 @@ begin
          begin
            if cbModoEmissao.checked then
              exit;
-             
-           if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
-            begin
-              ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-              rgFormaEmissao.ItemIndex := ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
-              SalvarIni;
-            end
+
+           OK := False;
+           FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+
+           if not OK then
+             raise Exception.Create('Forma de Emissão Inválida: '+TpEmisToStr(FormaEmissao))
            else
-              raise Exception.Create('Forma de Emissão Inválida.');
+           begin
+             if FormaEmissao in [teSVCSP] then
+                raise Exception.Create('Forma de Emissão Inválida para NFe/NFCe '+TpEmisToStr(FormaEmissao))
+             else
+             begin
+               ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+               cbFormaEmissaoNFe.ItemIndex := ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+               SalvarIni;
+             end
+           end;
          end
 
         else if Cmd.Metodo = 'setversaodf' then //NFe.SetVersaoDF(nVersao) 2.00 3.00 3.10
@@ -1677,20 +1748,17 @@ begin
            try
               Cmd.Resposta := GerarNFeIni( Cmd.Params(0)  )
            except
-               on E: Exception do
-                begin
-                  raise Exception.Create('Erro ao gerar INI da NFe.'+sLineBreak+E.Message);
-                end;
+           on E: Exception do
+             begin
+               raise Exception.Create('Erro ao gerar INI da NFe.'+sLineBreak+E.Message);
+             end;
            end;
          end
 
         else if Cmd.Metodo = 'nfetotxt' then  //NFe.NFetoTXT(cArqXML,cNomeArqTXT)
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrNFe1.NotasFiscais.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+           CarregarDFe(Cmd.Params(0), ArqNFe);
 
            ACBrNFe1.NotasFiscais.Items[0].GravarTXT(ChangeFileExt(ACBrNFe1.NotasFiscais.Items[0].NomeArq,'.txt'),Cmd.Params(1));
            Cmd.Resposta := ChangeFileExt(ACBrNFe1.NotasFiscais.Items[0].NomeArq,'.txt');
@@ -1788,6 +1856,9 @@ begin
         else if Cmd.Metodo = 'getpathevento' then //NFe.GetPathEvento
            Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento( TpcnTpEvento(StrToInt(Cmd.Params(0))) )
 
+        else if cmd.Metodo = 'getpathinu' then //NFe.GetPathInu
+           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathInu(Cmd.Params(0))
+
         else if Cmd.Metodo = 'imprimirrelatorio' then //NFe.ImprimirRelatorio(cTexto)
          begin
            ConfiguraDANFe(False, False);
@@ -1821,7 +1892,7 @@ begin
            Cmd.Resposta := 'Ativo'
 
         else if Cmd.Metodo = 'versao' then //NFe.Versao
-           Cmd.Resposta := Versao
+           Cmd.Resposta := sVersaoACBr
 
         else if Cmd.Metodo = 'versaonome' then //NFe.VersaoNome
            Cmd.Resposta := {$IFDEF ACBrNFeOpenSSL} 'OpenSSL' {$ELSE} 'CAPICOM' {$ENDIF}
@@ -1876,7 +1947,7 @@ begin
       i := 0;
       while (i < list.count) and (result = 0) do
       begin
-        UpMunList := UpperCase(TiraAcentos(UTF8Encode(List[i])));
+        UpMunList := UpperCase(TiraAcentos(List[i]));
         if pos(UpMun, UpMunList ) = 9 then
           result := StrToInt(Trim(copy(list[i],1,7)));
 
@@ -1894,18 +1965,9 @@ var
   versao, sSecao, sFim, sCodPro, sNumeroDI, sNumeroADI, sQtdVol,
   sNumDup, sCampoAdic, sTipo, sDia, sDeduc, sNVE : String;
   INIRec : TMemIniFile ;
-  SL     : TStringList;
   OK     : boolean;
 begin
- INIRec := TMemIniFile.create( 'nfe.ini' ) ;
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
-
- INIRec.SetStrings( SL );
- SL.Free ;
+ INIRec := LerConverterIni(AStr);
  with FrmACBrMonitor do
  begin
    try
@@ -1935,7 +1997,7 @@ begin
          Ide.idDest     := StrToDestinoOperacao(OK,INIRec.ReadString( 'Identificacao','idDest','1'));
 
          Ide.tpImp      := StrToTpImp(  OK, INIRec.ReadString( 'Identificacao','tpImp',TpImpToStr(ACBrNFe1.DANFE.TipoDANFE)));  //NFe2
-         Ide.tpEmis     := StrToTpEmis( OK,INIRec.ReadString( 'Identificacao','tpEmis',IntToStr(ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo)));
+         Ide.tpEmis     := StrToTpEmis( OK, INIRec.ReadString( 'Identificacao','tpEmis',IntToStr(ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo)));
 //         Ide.cDV
 //         Ide.tpAmb
          Ide.finNFe     := StrToFinNFe( OK,INIRec.ReadString( 'Identificacao','Finalidade',INIRec.ReadString( 'Identificacao','finNFe','0')));
@@ -1952,12 +2014,12 @@ begin
           begin
             sSecao := 'NFRef'+IntToStrZero(I,3) ;
             sFim   := INIRec.ReadString(  sSecao,'Tipo'  ,'FIM');
-            sTipo := UpperCase(INIRec.ReadString(  sSecao,'Tipo'  ,'NFe')); //NFe2 NF NFe NFP CTe ECF)            
+            sTipo := UpperCase(INIRec.ReadString( sSecao,'Tipo'  ,'NFe')); //NFe2 NF NFe NFP CTe ECF)
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
              begin
                if INIRec.ReadString(sSecao,'refNFe','') <> '' then
                   sTipo := 'NFE'
-               else if INIRec.ReadString(  sSecao,'refCTe'  ,'') <> '' then
+               else if INIRec.ReadString(  sSecao,'refCTe','') <> '' then
                   sTipo := 'CTE'
                else if INIRec.ReadString(  sSecao,'nECF'  ,'') <> '' then
                   sTipo :=  'ECF'
@@ -2070,7 +2132,7 @@ begin
          Dest.EnderDest.xPais   := INIRec.ReadString(  'Destinatario','Pais'       ,INIRec.ReadString( 'Destinatario','xPais','BRASIL'));
          Dest.EnderDest.Fone    := INIRec.ReadString(  'Destinatario','Fone'       ,'');
 
-         if INIRec.ReadString(  'Retirada','CNPJ',INIRec.ReadString(  'Entrega','CNPJCPF','')) <> '' then
+         if INIRec.ReadString(  'Retirada','CNPJ',INIRec.ReadString(  'Retirada','CNPJCPF','')) <> '' then
           begin
             Retirada.CNPJCPF := INIRec.ReadString( 'Retirada','CNPJ',INIRec.ReadString( 'Retirada','CPF',INIRec.ReadString( 'Retirada','CNPJCPF',''))); //NFe2
             Retirada.xLgr    := INIRec.ReadString( 'Retirada','xLgr','');
@@ -2139,11 +2201,15 @@ begin
 
                Prod.cProd    := INIRec.ReadString( sSecao,'Codigo'   ,INIRec.ReadString( sSecao,'cProd'   ,''));
                if (Length(INIRec.ReadString( sSecao,'EAN','')) > 0) or (Length(INIRec.ReadString( sSecao,'cEAN','')) > 0)  then
-                  Prod.cEAN      := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
+                  Prod.cEAN  := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
+
                Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
                Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
                Prod.CEST     := INIRec.ReadString( sSecao,'CEST'      ,'');
-               Prod.EXTIPI   := INIRec.ReadString( sSecao,'EXTIPI'      ,'');
+               Prod.indEscala:= StrToIndEscala(OK, INIRec.ReadString( sSecao,'indEscala' ,'') ); //NF-e 4.0
+               Prod.CNPJFab  := INIRec.ReadString( sSecao,'CNPJFab'   ,'');                      //NF-e 4.0
+               Prod.cBenef   := INIRec.ReadString( sSecao,'cBenef'    ,'');                      //NF-e 4.0
+               Prod.EXTIPI   := INIRec.ReadString( sSecao,'EXTIPI'    ,'');
                Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
                Prod.uCom     := INIRec.ReadString( sSecao,'Unidade'  ,INIRec.ReadString( sSecao,'uCom'  ,''));
                Prod.qCom     := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qCom'  ,'')) ,0) ;
@@ -2152,6 +2218,7 @@ begin
 
                if Length(INIRec.ReadString( sSecao,'cEANTrib','')) > 0 then
                   Prod.cEANTrib      := INIRec.ReadString( sSecao,'cEANTrib'      ,'');
+
                Prod.uTrib     := INIRec.ReadString( sSecao,'uTrib'  , Prod.uCom);
                Prod.qTrib     := StringToFloatDef( INIRec.ReadString(sSecao,'qTrib'  ,''), Prod.qCom);
                Prod.vUnTrib   := StringToFloatDef( INIRec.ReadString(sSecao,'vUnTrib','') ,Prod.vUnCom) ;
@@ -2184,6 +2251,27 @@ begin
                      Break;   
                   Inc(J);
                 end;
+
+               // Grupo I80. Rastreabilidade de produto - NF-e 4.0
+
+               J := 1 ;
+               while true do
+               begin
+                 sSecao  := 'rastro'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
+                 sFim    := INIRec.ReadString(sSecao,'nLote','') ;
+                 if (sFim <> '') then
+                    with Prod.rastro.Add do
+                    begin
+                      nLote    := sFim;
+                      qLote    := StringToFloatDef( INIRec.ReadString( sSecao,'qLote',''), 0 );
+                      dFab     := StringToDateTime( INIRec.ReadString( sSecao,'dFab','0') );
+                      dVal     := StringToDateTime( INIRec.ReadString( sSecao,'dVal','0') );
+                      cAgreg   := INIRec.ReadString( sSecao,'cAgreg','');
+                    end
+                 else
+                    Break;
+                 Inc(J);
+               end;
 
                J := 1 ;
                while true do
@@ -2256,7 +2344,7 @@ begin
               sFim   := INIRec.ReadString( sSecao,'pDevol','FIM') ;
               if (sFim <> 'FIM') then
                begin
-                 pDevol := StringToFloatDef( INIRec.ReadString(sSecao,'pDevol','') ,0);
+                 pDevol := StringToFloatDef( sFim ,0);
                  vIPIDevol := StringToFloatDef( INIRec.ReadString(sSecao,'vIPIDevol','') ,0);
                end;
 
@@ -2301,22 +2389,23 @@ begin
 
                J := 1 ;
                while true do
-                begin
-                  sSecao := 'Medicamento'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-                  sFim   := INIRec.ReadString(sSecao,'nLote','FIM') ;
-                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                     break;
+               begin
+                 sSecao := 'Medicamento'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
+                 sFim   := INIRec.ReadString(sSecao,'nLote',INIRec.ReadString(sSecao,'cProdANVISA','FIM')) ;
+                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                   break;
 
                  with Prod.med.Add do
-                  begin
-                    nLote := sFim;
-                    qLote := StringToFloatDef(INIRec.ReadString( sSecao,'qLote',''),0) ;
-                    dFab  := StringToDateTime(INIRec.ReadString( sSecao,'dFab','0')) ;
-                    dVal  := StringToDateTime(INIRec.ReadString( sSecao,'dVal','0')) ;
-                    vPMC  := StringToFloatDef(INIRec.ReadString( sSecao,'vPMC',''),0) ;
-                   end;
-                  Inc(J)
-                end;
+                 begin
+                   nLote :=       INIRec.ReadString( sSecao,'nLote','');
+                   cProdANVISA:=  INIRec.ReadString( sSecao,'cProdANVISA','');   //NF-e 4.0
+                   qLote := StringToFloatDef(INIRec.ReadString( sSecao,'qLote',''),0) ;
+                   dFab  := StringToDateTime(INIRec.ReadString( sSecao,'dFab','0')) ;
+                   dVal  := StringToDateTime(INIRec.ReadString( sSecao,'dVal','0')) ;
+                   vPMC  := StringToFloatDef(INIRec.ReadString( sSecao,'vPMC',''),0) ;
+                 end;
+                 Inc(J)
+               end;
 
                J := 1 ;
                while true do
@@ -2342,8 +2431,13 @@ begin
                begin
                  with Prod.comb do
                   begin
-                    cProdANP := INIRec.ReadInteger( sSecao,'cProdANP',0) ;
+                    cProdANP := StrToIntDef( sFim, 0 ) ;
                     pMixGN   := StringToFloatDef(INIRec.ReadString( sSecao,'pMixGN',''),0) ;
+                    descANP  := INIRec.ReadString(  sSecao,'descANP'   ,'');                         //NF-e 4.0
+                    pGLP     := StringToFloatDef( INIRec.ReadString( sSecao,'pGLP'   ,''), 0);       //NF-e 4.0
+                    pGNn     := StringToFloatDef( INIRec.ReadString( sSecao,'pGNn'   ,''), 0);       //NF-e 4.0
+                    pGNi     := StringToFloatDef( INIRec.ReadString( sSecao,'pGNi'   ,''), 0);       //NF-e 4.0
+                    vPart    := StringToFloatDef( INIRec.ReadString( sSecao,'vPart'  ,''), 0);       //NF-e 4.0
                     CODIF    := INIRec.ReadString(  sSecao,'CODIF'   ,'') ;
                     qTemp    := StringToFloatDef(INIRec.ReadString( sSecao,'qTemp',''),0) ;
                     UFcons   := INIRec.ReadString( sSecao,'UFCons','') ;
@@ -2401,16 +2495,26 @@ begin
                         ICMS.vBC        := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase',INIRec.ReadString(sSecao,'vBC'  ,'')) ,0);
                         ICMS.pICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota' ,INIRec.ReadString(sSecao,'pICMS','')) ,0);
                         ICMS.vICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'    ,INIRec.ReadString(sSecao,'vICMS','')) ,0);
+                        ICMS.vBCFCP     := StringToFloatDef( INIRec.ReadString( sSecao,'ValorBaseFCP', INIRec.ReadString(sSecao,'vBCFCP','')) ,0) ;          //NF-e 4.0
+                        ICMS.pFCP       := StringToFloatDef( INIRec.ReadString( sSecao,'PercentualFCP', INIRec.ReadString(sSecao,'pFCP','')) ,0) ;           //NF-e 4.0
+                        ICMS.vFCP       := StringToFloatDef( INIRec.ReadString( sSecao,'ValorFCP', INIRec.ReadString(sSecao,'vFCP','')) ,0) ;                //NF-e 4.0
                         ICMS.modBCST    := StrTomodBCST(OK, INIRec.ReadString(sSecao,'ModalidadeST',INIRec.ReadString(sSecao,'modBCST','0')));
                         ICMS.pMVAST     := StringToFloatDef( INIRec.ReadString(sSecao,'PercentualMargemST' ,INIRec.ReadString(sSecao,'pMVAST' ,'')) ,0);
                         ICMS.pRedBCST   := StringToFloatDef( INIRec.ReadString(sSecao,'PercentualReducaoST',INIRec.ReadString(sSecao,'pRedBCST','')) ,0);
                         ICMS.vBCST      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBaseST',INIRec.ReadString(sSecao,'vBCST','')) ,0);
                         ICMS.pICMSST    := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaST' ,INIRec.ReadString(sSecao,'pICMSST' ,'')) ,0);
                         ICMS.vICMSST    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorST'    ,INIRec.ReadString(sSecao,'vICMSST'    ,'')) ,0);
+                        ICMS.vBCFCPST   := StringToFloatDef( INIRec.ReadString( sSecao,'ValorBaseFCPST', INIRec.ReadString(sSecao,'vBCFCPST','')) ,0) ;      //NF-e 4.0
+                        ICMS.pFCPST     := StringToFloatDef( INIRec.ReadString( sSecao,'PercentualFCPST', INIRec.ReadString(sSecao,'pFCPST','')) ,0) ;       //NF-e 4.0
+                        ICMS.vFCPST     := StringToFloatDef( INIRec.ReadString( sSecao,'ValorFCPST', INIRec.ReadString(sSecao,'vFCPST','')) ,0) ;            //NF-e 4.0
                         ICMS.UFST       := INIRec.ReadString(sSecao,'UFST'    ,'');                           //NFe2
                         ICMS.pBCOp      := StringToFloatDef( INIRec.ReadString(sSecao,'pBCOp'    ,'') ,0);    //NFe2
                         ICMS.vBCSTRet   := StringToFloatDef( INIRec.ReadString(sSecao,'vBCSTRet','') ,0);     //NFe2
+                        ICMS.pST        := StringToFloatDef( INIRec.ReadString(sSecao,'pST','') ,0);                                                          //NF-e 4.0
                         ICMS.vICMSSTRet := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSSTRet','') ,0);   //NFe2
+                        ICMS.vBCFCPSTRet:= StringToFloatDef( INIRec.ReadString( sSecao,'ValorBaseFCPSTRes', INIRec.ReadString(sSecao,'vBCFCPSTRet','')) ,0) ; //NF-e 4.0
+                        ICMS.pFCPSTRet  := StringToFloatDef( INIRec.ReadString( sSecao,'PercentualFCPSTRet', INIRec.ReadString(sSecao,'pFCPSTRet','')) ,0) ;  //NF-e 4.0
+                        ICMS.vFCPSTRet  := StringToFloatDef( INIRec.ReadString( sSecao,'ValorFCPSTRet', INIRec.ReadString(sSecao,'vFCPSTRet','')) ,0) ;       //NF-e 4.0
                         ICMS.motDesICMS := StrTomotDesICMS(OK, INIRec.ReadString(sSecao,'motDesICMS','0'));   //NFe2
                         ICMS.pCredSN    := StringToFloatDef( INIRec.ReadString(sSecao,'pCredSN','') ,0);      //NFe2
                         ICMS.vCredICMSSN:= StringToFloatDef( INIRec.ReadString(sSecao,'vCredICMSSN','') ,0);  //NFe2
@@ -2429,7 +2533,8 @@ begin
                     begin
                       with ICMSUFDest do
                       begin
-                        vBCUFDest      := StringToFloatDef( INIRec.ReadString(sSecao,'vBCUFDest','') ,0);
+                        vBCUFDest      := StringToFloatDef( sFim ,0);
+                        vBCFCPUFDest   := StringToFloatDef( INIRec.ReadString(sSecao,'vBCFCPUFDest','') ,0);                                                  //NF-e 4.0
                         pICMSUFDest    := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSUFDest','') ,0);
                         pICMSInter     := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSInter','') ,0);
                         pICMSInterPart := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSInterPart','') ,0);
@@ -2446,7 +2551,7 @@ begin
                     begin
                      with IPI do
                       begin
-                        CST      := StrToCSTIPI(OK, INIRec.ReadString( sSecao,'CST','')) ;
+                        CST      := StrToCSTIPI(OK, sFim ) ;
                         clEnq    := INIRec.ReadString(  sSecao,'ClasseEnquadramento',INIRec.ReadString(  sSecao,'clEnq'   ,''));
                         CNPJProd := INIRec.ReadString(  sSecao,'CNPJProdutor'       ,INIRec.ReadString(  sSecao,'CNPJProd',''));
                         cSelo    := INIRec.ReadString(  sSecao,'CodigoSeloIPI'      ,INIRec.ReadString(  sSecao,'cSelo'   ,''));
@@ -2467,7 +2572,7 @@ begin
                     begin
                      with II do
                       begin
-                        vBc      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'          ,INIRec.ReadString(sSecao,'vBC'     ,'')) ,0);
+                        vBc      := StringToFloatDef( sFim ,0);
                         vDespAdu := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDespAduaneiras',INIRec.ReadString(sSecao,'vDespAdu','')) ,0);
                         vII      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorII'            ,INIRec.ReadString(sSecao,'vII'     ,'')) ,0);
                         vIOF     := StringToFloatDef( INIRec.ReadString(sSecao,'ValorIOF'           ,INIRec.ReadString(sSecao,'vIOF'    ,'')) ,0);
@@ -2480,7 +2585,7 @@ begin
                     begin
                      with PIS do
                        begin
-                        CST :=  StrToCSTPIS(OK, INIRec.ReadString( sSecao,'CST','01'));
+                        CST :=  StrToCSTPIS(OK, sFim);
 
                         PIS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
                         PIS.pPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'     ,INIRec.ReadString(sSecao,'pPIS'     ,'')) ,0);
@@ -2513,7 +2618,7 @@ begin
                     begin
                      with COFINS do
                       begin
-                        CST := StrToCSTCOFINS(OK, INIRec.ReadString( sSecao,'CST','01'));
+                        CST := StrToCSTCOFINS(OK, sFim);
 
                         COFINS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
                         COFINS.pCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'     ,INIRec.ReadString(sSecao,'pCOFINS'  ,'')) ,0);
@@ -2579,17 +2684,21 @@ begin
          Total.ICMSTot.vBC     := StringToFloatDef( INIRec.ReadString('Total','BaseICMS'     ,INIRec.ReadString('Total','vBC'     ,'')) ,0) ;
          Total.ICMSTot.vICMS   := StringToFloatDef( INIRec.ReadString('Total','ValorICMS'    ,INIRec.ReadString('Total','vICMS'   ,'')) ,0) ;
          Total.ICMSTot.vICMSDeson := StringToFloatDef( INIRec.ReadString('Total','vICMSDeson',''),0) ;
+         Total.ICMSTot.vFCP       := StringToFloatDef( INIRec.ReadString('Total','ValorFCP',  INIRec.ReadString('Total','vFCP','')) ,0) ;              //NF-e 4.0
          Total.ICMSTot.vICMSUFDest := StringToFloatDef( INIRec.ReadString('Total','vICMSUFDest',''),0) ;
          Total.ICMSTot.vICMSUFRemet := StringToFloatDef( INIRec.ReadString('Total','vICMSUFRemet',''),0) ;
          Total.ICMSTot.vFCPUFDest :=  StringToFloatDef( INIRec.ReadString('Total','vFCPUFDest',''),0) ;
          Total.ICMSTot.vBCST   := StringToFloatDef( INIRec.ReadString('Total','BaseICMSSubstituicao' ,INIRec.ReadString('Total','vBCST','')) ,0) ;
          Total.ICMSTot.vST     := StringToFloatDef( INIRec.ReadString('Total','ValorICMSSubstituicao',INIRec.ReadString('Total','vST'  ,'')) ,0) ;
+         Total.ICMSTot.vFCPST  := StringToFloatDef( INIRec.ReadString('Total','ValorFCPST',INIRec.ReadString('Total','vFCPST'  ,'')) ,0) ;            //NF-e 4.0
+         Total.ICMSTot.vFCPSTRet:= StringToFloatDef( INIRec.ReadString('Total','ValorFCPSTRet',INIRec.ReadString('Total','vFCPSTRet'  ,'')) ,0) ;     //NF-e 4.0
          Total.ICMSTot.vProd   := StringToFloatDef( INIRec.ReadString('Total','ValorProduto' ,INIRec.ReadString('Total','vProd'  ,'')) ,0) ;
          Total.ICMSTot.vFrete  := StringToFloatDef( INIRec.ReadString('Total','ValorFrete'   ,INIRec.ReadString('Total','vFrete' ,'')) ,0) ;
          Total.ICMSTot.vSeg    := StringToFloatDef( INIRec.ReadString('Total','ValorSeguro'  ,INIRec.ReadString('Total','vSeg'   ,'')) ,0) ;
          Total.ICMSTot.vDesc   := StringToFloatDef( INIRec.ReadString('Total','ValorDesconto',INIRec.ReadString('Total','vDesc'  ,'')) ,0) ;
          Total.ICMSTot.vII     := StringToFloatDef( INIRec.ReadString('Total','ValorII'      ,INIRec.ReadString('Total','vII'    ,'')) ,0) ;
          Total.ICMSTot.vIPI    := StringToFloatDef( INIRec.ReadString('Total','ValorIPI'     ,INIRec.ReadString('Total','vIPI'   ,'')) ,0) ;
+         Total.ICMSTot.vIPIDevol:= StringToFloatDef( INIRec.ReadString('Total','ValorIPIDevol',INIRec.ReadString('Total','vIPIDevol'  ,'')) ,0) ;     //NF-e 4.0
          Total.ICMSTot.vPIS    := StringToFloatDef( INIRec.ReadString('Total','ValorPIS'     ,INIRec.ReadString('Total','vPIS'   ,'')) ,0) ;
          Total.ICMSTot.vCOFINS := StringToFloatDef( INIRec.ReadString('Total','ValorCOFINS'  ,INIRec.ReadString('Total','vCOFINS','')) ,0) ;
          Total.ICMSTot.vOutro  := StringToFloatDef( INIRec.ReadString('Total','ValorOutrasDespesas',INIRec.ReadString('Total','vOutro','')) ,0) ;
@@ -2720,7 +2829,7 @@ begin
                break ;
 
             with pag.Add do
-             begin
+            begin
                tPag  := StrToFormaPagamento(OK,sFim);
                vPag  := StringToFloatDef( INIRec.ReadString(sSecao,'vPag','') ,0) ;
 
@@ -2728,9 +2837,10 @@ begin
                CNPJ  := INIRec.ReadString(sSecao,'CNPJ','');
                tBand := StrToBandeiraCartao(OK,INIRec.ReadString(sSecao,'tBand','99'));
                cAut  := INIRec.ReadString(sSecao,'cAut','');
-             end;
+            end;
+            pag.vTroco:= StringToFloatDef( INIRec.ReadString(sSecao,'vTroco','') ,0) ;  //NF-e 4.0
             Inc(I);
-          end;
+         end;
 
          InfAdic.infAdFisco :=  INIRec.ReadString( 'DadosAdicionais','Fisco'      ,INIRec.ReadString( 'DadosAdicionais','infAdFisco',''));
          InfAdic.infCpl     :=  INIRec.ReadString( 'DadosAdicionais','Complemento',INIRec.ReadString( 'DadosAdicionais','infCpl'    ,''));
@@ -2739,13 +2849,16 @@ begin
          while true do
           begin
             sSecao     := 'InfAdic'+IntToStrZero(I,3) ;
-            sCampoAdic := INIRec.ReadString(sSecao,'Campo',INIRec.ReadString(sSecao,'xCampo','FIM')) ;
-            if (sCampoAdic = 'FIM') or (Length(sCampoAdic) <= 0) then
-               break ;
+            if not INIRec.SectionExists(sSecao) then
+            begin
+              sSecao     := 'obsCont'+IntToStrZero(I,3) ;
+              if not INIRec.SectionExists(sSecao) then
+                break;
+            end;
 
             with InfAdic.obsCont.Add do
              begin
-               xCampo := sCampoAdic;
+               xCampo := INIRec.ReadString(sSecao,'Campo',INIRec.ReadString(sSecao,'xCampo','')) ;
                xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
              end;
             Inc(I);
@@ -2786,7 +2899,7 @@ begin
          sFim   := INIRec.ReadString( 'Exporta','UFembarq',INIRec.ReadString( 'Exporta','UFSaidaPais','FIM')) ;
          if (sFim <> 'FIM') then
           begin
-            exporta.UFembarq   := INIRec.ReadString( 'Exporta','UFembarq','') ;;
+            exporta.UFembarq   := INIRec.ReadString( 'Exporta','UFembarq','') ;
             exporta.xLocEmbarq := INIRec.ReadString( 'Exporta','xLocEmbarq','');
 
             exporta.UFSaidaPais := INIRec.ReadString( 'Exporta','UFSaidaPais','');
@@ -3290,17 +3403,20 @@ begin
 
                    if (IPI.vBC > 0) or
                       (IPI.qUnid > 0) or
-                      (IPI.vIPI > 0) then
+                      (IPI.vIPI > 0) or
+                      (IPI.cEnq = '999') then
                     begin
-                      sSecao := 'IPI'+IntToStrZero(I+1,3) ;
+                      sSecao := 'IPI'+IntToStrZero(I+1,3);
+
                       with IPI do
                        begin
                          INIRec.WriteString(  sSecao,'CST',CSTIPIToStr(CST)) ;
+                         INIRec.WriteString(  sSecao,'CodigoEnquadramento',cEnq);
+
                          INIRec.WriteString(  sSecao,'ClasseEnquadramento',clEnq);
                          INIRec.WriteString(  sSecao,'CNPJProdutor'       ,CNPJProd);
                          INIRec.WriteString(  sSecao,'CodigoSeloIPI'      ,cSelo);
                          INIRec.WriteInteger( sSecao,'QuantidadeSelos'    ,qSelo);
-                         INIRec.WriteString(  sSecao,'CodigoEnquadramento',cEnq);
 
                          INIRec.WriteFloat( sSecao,'ValorBase'   ,vBC);
                          INIRec.WriteFloat(sSecao,'Quantidade'  ,qUnid);
@@ -3659,19 +3775,9 @@ var
   I      : Integer;
   sSecao, sFim : String;
   INIRec : TMemIniFile ;
-  SL     : TStringList;
   ok     : Boolean;
 begin
- INIRec := TMemIniFile.create( 'evento.ini' ) ;
-
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
-
- INIRec.SetStrings( SL );
- SL.Free ;
+ INIRec := LerConverterIni(AStr);
 
  with FrmACBrMonitor do
   begin
@@ -3690,7 +3796,7 @@ begin
          begin
            infEvento.cOrgao := INIRec.ReadInteger( sSecao,'cOrgao' ,0);
            infEvento.CNPJ   := INIRec.ReadString(  sSecao,'CNPJ' ,'');
-           infEvento.chNFe  := INIRec.ReadString(  sSecao,'chNFe' ,'');
+           infEvento.chNFe  := sFim;
            infEvento.dhEvento :=  StringToDateTime(INIRec.ReadString(  sSecao,'dhEvento' ,''));
            if CCe then
             begin
@@ -3742,3 +3848,5 @@ end;
 
 
 end.
+
+

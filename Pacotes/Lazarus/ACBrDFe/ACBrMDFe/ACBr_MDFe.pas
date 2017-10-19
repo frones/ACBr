@@ -8,12 +8,12 @@ interface
 
 uses
   ACBrMDFe, ACBrMDFeConfiguracoes, ACBrMDFeManifestos, ACBrMDFeReg, 
-  ACBrMDFeWebServices, pmdfeCabecalho, pmdfeConsMDFeNaoEnc, pmdfeConsReciMDFe, 
+  ACBrMDFeWebServices, pmdfeConsMDFeNaoEnc, pmdfeConsReciMDFe, 
   pmdfeConsSitMDFe, pmdfeConsStatServ, pmdfeConversaoMDFe, pmdfeEnvEventoMDFe, 
   pmdfeEventoMDFe, pmdfeMDFe, pmdfeMDFeR, pmdfeMDFeW, pmdfeProcMDFe, 
   pmdfeRetConsMDFeNaoEnc, pmdfeRetConsReciMDFe, pmdfeRetConsSitMDFe, 
   pmdfeRetConsStatServ, pmdfeRetEnvEventoMDFe, pmdfeRetEnvMDFe, 
-  pmdfeSignature, ACBrMDFeDAMDFeClass, LazarusPackageIntf;
+  pmdfeSignature, ACBrMDFeDAMDFeClass, pmdfeConsts, LazarusPackageIntf;
 
 implementation
 

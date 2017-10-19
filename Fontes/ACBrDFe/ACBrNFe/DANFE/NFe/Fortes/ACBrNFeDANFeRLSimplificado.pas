@@ -244,7 +244,7 @@ begin
     rlmDestinatario.Lines.Add(ACBrStr('CPF/CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) +
                               ' IE: ' + IE));
   end;
-
+  rllMsgTipoEmissao.Visible := False;
   if FNFe.Ide.tpAmb = taHomologacao then
   begin
      rllMsgTipoEmissao.Caption := ACBrStr('HOMOLOGAÇÂO - SEM VALOR FISCAL');
@@ -310,8 +310,9 @@ var
  Perc: Double;
 begin
   inherited;
-
-  Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
+  Perc := 0;
+  if FNFE.Total.ICMSTot.vNF > 0 then
+    Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
   rllTributos.Caption := ACBrStr('Valor aprox. dos tributos: ' +
                          FormatFloatBr(FNFE.Total.ICMSTot.vTotTrib) +
                          '(' + FormatFloatBr(Perc) + '%)(Fonte: IBPT)');
@@ -373,7 +374,7 @@ begin
     rlmProdutoQTDE.caption      := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
     rlmProdutoValor.caption     := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
     rlmProdutoUnidade.caption   := Prod.UCom;
-    rlmProdutoTotal.caption     := FormatFloat('###,###,###,##0.00', Prod.vProd);
+    rlmProdutoTotal.caption     := FormatFloatBr(Prod.vProd);
   end;
 end;
 

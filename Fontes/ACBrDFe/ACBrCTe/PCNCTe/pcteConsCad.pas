@@ -50,7 +50,8 @@ unit pcteConsCad;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteConversaoCTe;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteConversaoCTe,
+  pcnConsts;
 
 type
 

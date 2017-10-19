@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_SATWS"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Andre Ferreira de Moraes"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrSATWS;..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\PCNSATWS"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrSATWS\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+        </CompilerMessages>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - SAT WS - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="9">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\ACBrSATWS.pas"/>
+        <UnitName Value="ACBrSATWS"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\PCNSATWS\pcnSATConsulta.pas"/>
+        <UnitName Value="pcnSATConsulta"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\PCNSATWS\pcnSATConsultaRet.pas"/>
+        <UnitName Value="pcnSATConsultaRet"/>
+      </Item3>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\ACBrSATWS_Reg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrSATWS_Reg"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\ACBrSATWS_WebServices.pas"/>
+        <UnitName Value="ACBrSATWS_WebServices"/>
+      </Item9>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

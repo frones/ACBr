@@ -173,6 +173,7 @@ TACBrECFVirtualClassAliquotaCupom = class
     fsAliqPos: Integer;
     fsAliqValor: Double;
     fsRateio: Double;
+    fsTipo: Char;
     fsTotal: Double;
     function GetAsString: String;
     procedure SetAsString(AValue: String);
@@ -181,6 +182,7 @@ TACBrECFVirtualClassAliquotaCupom = class
     property AliqValor : Double  read fsAliqValor write fsAliqValor;
     property Total     : Double  read fsTotal     write fsTotal;
     property Rateio    : Double  read fsRateio    write fsRateio;
+    property Tipo      : Char    read fsTipo      write fsTipo;
 
     property AsString  : String   read GetAsString write SetAsString;
 
@@ -209,19 +211,25 @@ TACBrECFVirtualClassCupom = class
   private
     fpECFVirtualClasse: TACBrECFVirtualClass;
 
+    fpChaveDFe : String;
+
     fpAliquotasCupom  : TACBrECFVirtualClassAliquotasCupom;
-    fpItensCupom      : TACBrECFVirtualClassItensCupom ;
-    fpPagamentosCupom : TACBrECFVirtualClassPagamentosCupom ;
-    fpCNFsCupom       : TACBrECFVirtualClassCNFsCupom ;
+    fpItensCupom      : TACBrECFVirtualClassItensCupom;
+    fpPagamentosCupom : TACBrECFVirtualClassPagamentosCupom;
+    fpCNFsCupom       : TACBrECFVirtualClassCNFsCupom;
 
-    fpSubTotal          : Currency;
-    fpTotalPago         : Currency;
-    fpDescAcresSubtotal : Currency;
+    fpTotalPago        : Currency;
+    fpSubtotalICMS     : Currency;
+    fpSubtotalISSQN    : Currency;
+    fpDescAcresSubtotalICMS : Currency;
+    fpDescAcresSubtotalISSQN: Currency;
 
+    function GetDescAcresSubtotal: Currency;
+    function GetSubtotal: Currency;
     procedure SetDescAcresSubtotal(AValue: Currency);
     procedure VerificaFaixaItem(NumItem: Integer);
 
-    function SomaAliquota( AAliqPos: Integer; AAliqValor, AValor: Currency):
+    function SomaAliquota(aAliq: TACBrECFAliquota; AValor: Currency):
        TACBrECFVirtualClassAliquotaCupom;
     procedure SubtraiAliquota(AAliqPos: Integer; AValor: Currency);
   public
@@ -232,7 +240,7 @@ TACBrECFVirtualClassCupom = class
     function VendeItem(ACodigo, ADescricao: String; AQtd, AValorUnitario: Double;
       ADescAcres: Double; AAliq: TACBrECFAliquota; AUnidade: String;
       ACodDepartamento: Integer): TACBrECFVirtualClassItemCupom;
-    procedure DescAresItem(NumItem: Integer; ADescAcres: Double);
+    procedure DescAcresItem(NumItem: Integer; ADescAcres: Double);
     procedure CancelaItem(NumItem: Integer);
 
     function EfetuaPagamento(AValor: Currency; AObservacao: String; APosFPG: Integer):
@@ -250,12 +258,19 @@ TACBrECFVirtualClassCupom = class
     property CNF        : TACBrECFVirtualClassCNFsCupom       read fpCNFsCupom;
     property Aliquotas  : TACBrECFVirtualClassAliquotasCupom  read fpAliquotasCupom;
 
-    property SubTotal  : Currency read fpSubTotal;
-    property TotalPago : Currency read fpTotalPago;
-    property DescAcresSubtotal: Currency read fpDescAcresSubtotal
+    property SubtotalICMS     : Currency read fpSubtotalICMS;
+    property SubtotalISSQN    : Currency read fpSubtotalISSQN;
+    property SubTotal         : Currency read GetSubtotal;
+    property TotalPago        : Currency read fpTotalPago;
+    property DescAcresSubtotal: Currency read GetDescAcresSubtotal
       write SetDescAcresSubtotal;
 
+    property DescAcresSubtotalICMS : Currency read fpDescAcresSubtotalICMS;
+    property DescAcresSubtotalISSQN: Currency read fpDescAcresSubtotalISSQN;
+
     property ECFVirtualClasse: TACBrECFVirtualClass read fpECFVirtualClasse;
+
+    property ChaveDFe : String read fpChaveDFe   write fpChaveDFe;
 end;
 
 TACBrECFVirtualLerGravarINI = procedure(ConteudoINI: TStrings; var Tratado: Boolean) of object;
@@ -263,7 +278,9 @@ TACBrECFVirtualQuandoCancelarCupom = procedure(const NumCOOCancelar: Integer;
   CupomVirtual: TACBrECFVirtualClassCupom; var PermiteCancelamento: Boolean) of object;
 
 { TACBrECFVirtual }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
 TACBrECFVirtual = class( TACBrComponent )
   private
     fsECF: TACBrComponent;
@@ -335,6 +352,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fsQuandoGravarArqINI: TACBrECFVirtualLerGravarINI;
     fsQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
 
+    function GetChaveCupom: String;
+    procedure SetChaveCupom(AValue: String);
     procedure SetColunas(AValue: Integer);
     procedure SetDevice(AValue: TACBrDevice);
     procedure SetNumCRO(AValue: Integer);
@@ -344,7 +363,6 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     procedure Zera ;
     procedure ZeraCupom ;
     function CalculaNomeArqINI: String ;
-
   protected
     fpCupom      : TACBrECFVirtualClassCupom;
     fpNomeArqINI : String;
@@ -359,26 +377,30 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fpReducoesZ  : Integer ;
     fpLeiturasX  : Integer ;
     fpCuponsCancelados : Integer ;
-    fpCuponsCanceladosTotal : Double;
+    fpCuponsCanceladosTotalICMS: Double;
+    fpCuponsCanceladosTotalISSQN: Double;
     fpCNFCancelados : Integer ;
     fpCNFCanceladosTotal : Double;
-    fpCuponsCanceladosEmAberto : Integer ;
-    fpCuponsCanceladosEmAbertoTotal : Double;
-    fpCOOInicial : Integer ;
-    fpCOOFinal   : Integer ;
-    fpNumCRO     : Integer ;
-    fpNumCOO     : Integer ;
-    fpChaveCupom : String;
-    fpNumGNF     : Integer ;
-    fpNumGRG     : Integer ;
-    fpNumCDC     : Integer ;
-    fpNumCER     : Integer ;
-    fpGrandeTotal: Double ;
-    fpVendaBruta : Double ;
-    fpTotalDescontos  : Double ;
-    fpTotalAcrescimos : Double ;
-    fpNumCCF     : Integer ;
-    fpEXEName    : String ;
+    fpCuponsCanceladosEmAberto: Integer;
+    fpCuponsCanceladosEmAbertoTotalICMS: Double;
+    fpCuponsCanceladosEmAbertoTotalISSQN: Double;
+    fpCOOInicial : Integer;
+    fpCOOFinal   : Integer;
+    fpNumCRO     : Integer;
+    fpNumCOO     : Integer;
+    fpNumGNF     : Integer;
+    fpNumGRG     : Integer;
+    fpNumCDC     : Integer;
+    fpNumCER     : Integer;
+    fpGrandeTotal: Double;
+    fpVendaBruta : Double;
+    fpNumCCF     : Integer;
+    fpEXEName    : String;
+
+    fpTotalDescontosICMS  : Double;
+    fpTotalAcrescimosICMS : Double;
+    fpTotalDescontosISSQN : Double;
+    fpTotalAcrescimosISSQN: Double;
 
     function GetDevice: TACBrDevice; virtual;
     function GetColunas: Integer; virtual;
@@ -387,6 +409,10 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     procedure INItoClass( ConteudoINI: TStrings ); virtual ;
     procedure ClasstoINI( ConteudoINI: TStrings ); virtual ;
     procedure CriarMemoriaInicial; virtual;
+    procedure CriarAliquotasPadrao;
+    procedure CriarFormasPagamentoPadrao;
+    procedure AtualizarAliquotasMemoria;
+    procedure AtualizarFormasPagamentoMemoria;
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; virtual;
     procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; virtual ;
 
@@ -405,6 +431,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
 
     Procedure LeituraXVirtual ; virtual ;
     Procedure ReducaoZVirtual(DataHora : TDateTime = 0 ) ; virtual ;
+    procedure GetEstadoECFVirtual; virtual;
 
     Procedure AbreRelatorioGerencialVirtual(Indice: Integer = 0) ; virtual ;
     procedure AbreCupomVinculadoVirtual(COO: String; FPG: TACBrECFFormaPagamento;
@@ -430,14 +457,22 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetGrandeTotal: Double; override ;
     function GetVendaBruta: Double; override ;
     function GetTotalSubstituicaoTributaria: Double; override ;
-    function GetTotalNaoTributado: Double; override ;
     function GetTotalIsencao: Double; override ;
+    function GetTotalNaoTributado: Double; override ;
     function GetNumReducoesZRestantes: String; override ;
     function GetTotalCancelamentosEmAberto: Double; override;
     function GetTotalCancelamentos: Double; override ;
     function GetTotalCancelamentosOPNF: Double; override;
     function GetTotalAcrescimos: Double; override ;
     function GetTotalDescontos: Double; override ;
+
+    function GetTotalAcrescimosISSQN: Double; override;
+    function GetTotalCancelamentosISSQN: Double; override;
+    function GetTotalCancelamentosEmAbertoISSQN: Double; override;
+    function GetTotalDescontosISSQN: Double; override;
+    function GetTotalIsencaoISSQN: Double; override;
+    function GetTotalNaoTributadoISSQN: Double; override;
+    function GetTotalSubstituicaoTributariaISSQN: Double; override;
 
     function GetNumECF: String; override ;
     function GetCNPJ: String; override ;
@@ -459,6 +494,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetArredonda : Boolean; override ;
 
     function GetDataMovimento: TDateTime; override;
+    function GetNumCOOInicial: String; override;
+    function GetNumUltimoItem: Integer; override;
  public
     Constructor Create( AECFVirtual : TACBrECFVirtual );
     Destructor Destroy  ; override ;
@@ -486,7 +523,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     property IE         : String read  fpIE          write fpIE;
     property IM         : String read  fpIM          write fpIM;
 
-    property ChaveCupom : String read fpChaveCupom   write fpChaveCupom;
+    property ChaveCupom : String read GetChaveCupom   write SetChaveCupom;
 
     procedure Ativar ; override ;
     procedure Desativar ; override ;
@@ -795,7 +832,7 @@ begin
   Result := IntToStr( AliqPos )     + '|' +
             FloatToStr( AliqValor ) + '|' +
             FloatToStr( Total )     + '|' +
-            FloatToStr( Rateio )    + '|';
+            FloatToStr( Rateio )    + '|' + Tipo + '|';
 end;
 
 procedure TACBrECFVirtualClassAliquotaCupom.SetAsString(AValue: String);
@@ -812,6 +849,11 @@ begin
     AliqValor := StrToFloat( SL[1] );
     Total     := StrToFloat( SL[2] );
     Rateio    := StrToFloat( SL[3] );
+
+    if (SL.Count > 4) and CharInSet(PadLeft(SL[4], 1)[1], ['T', 'S']) then
+      Tipo := PadLeft(SL[4], 1)[1]
+    else
+      Tipo := 'T';
   finally
     SL.Free;
   end;
@@ -902,14 +944,17 @@ end;
 
 procedure TACBrECFVirtualClassCupom.Clear;
 begin
-  fpItensCupom.Clear ;
-  fpPagamentosCupom.Clear ;
-  fpCNFsCupom.Clear ;
+  fpItensCupom.Clear;
+  fpPagamentosCupom.Clear;
+  fpCNFsCupom.Clear;
   fpAliquotasCupom.Clear;
 
-  fpTotalPago         := 0 ;
-  fpSubTotal          := 0 ;
-  fpDescAcresSubtotal := 0;
+  fpTotalPago              := 0;
+  fpSubtotalICMS           := 0;
+  fpSubtotalISSQN          := 0;
+  fpDescAcresSubtotalICMS  := 0;
+  fpDescAcresSubtotalISSQN := 0;
+  fpChaveDFe               := '';
 end;
 
 function TACBrECFVirtualClassCupom.VendeItem(ACodigo, ADescricao: String; AQtd,
@@ -920,6 +965,9 @@ var
 begin
   if fpCNFsCupom.Count > 0 then
     raise EACBrECFERRO.Create(ACBrStr('Cupom Não Fiscal já iniciado')) ;
+
+  if fpItensCupom.Count >= 999 then
+    raise EACBrECFERRO.Create(ACBrStr('Máximo de Itens já atingido (999)')) ;
 
   Result := fpItensCupom.New(Self);
 
@@ -937,54 +985,71 @@ begin
     TotalItem := TotalLiquido;
   end;
 
-  fpSubTotal := fpSubTotal + TotalItem;
-  SomaAliquota( Result.AliqPos, AAliq.Aliquota, TotalItem);
+  if (AAliq.Tipo = 'S') then
+    fpSubtotalISSQN := fpSubtotalISSQN + TotalItem
+  else
+    fpSubtotalICMS  := fpSubtotalICMS + TotalItem;
+
+  SomaAliquota(AAliq, TotalItem);
 end;
 
 procedure TACBrECFVirtualClassCupom.SetDescAcresSubtotal(AValue: Currency);
 var
   I, P: Integer;
+  NovoCampeao: Boolean;
   PercentualEfetivo, TotalDescAcresRateio, ValorResiduo, MaiorValorTotal,
-    AliqMaiorValorTotal: Double;
-    NovoCampeao: Boolean;
+    AliqMaiorValorTotal, wDescAcresSubtotal: Double;
 begin
-  if fpDescAcresSubtotal = AValue then Exit;
+  wDescAcresSubtotal := DescAcresSubtotal;
 
-  if fpDescAcresSubtotal <> 0 then
-    raise EACBrECFERRO.create(ACBrStr('Desconto/Acrescimo de SubTotal já foi informado')) ;
+  if (wDescAcresSubtotal = AValue) then
+    Exit;
 
-  fpDescAcresSubtotal := AValue;
+  if (wDescAcresSubtotal <> 0) then
+    raise EACBrECFERRO.Create(ACBrStr('Desconto/Acrescimo de SubTotal já foi informado'));
+
+  wDescAcresSubtotal := AValue;
 
   { Se não há Desconto ou Acrescimo no Subtotal, então tudo já foi feito... }
-  if (fpDescAcresSubtotal = 0) or (fpAliquotasCupom.Count = 0) then
+  if (wDescAcresSubtotal = 0) or (fpAliquotasCupom.Count = 0) then
     Exit;
 
   { Calculando o Rateio do Desconto ou Acrescimo, na base de calculo das aliquotas
     Exemplo: http://partners.bematech.com.br/bemacast/Paginas/post.aspx?idPost=5790 }
-  PercentualEfetivo := TruncTo( fpDescAcresSubtotal / fpSubTotal * 100, 2) ;
+  PercentualEfetivo := TruncTo(wDescAcresSubtotal / SubTotal * 100, 2);
   TotalDescAcresRateio := 0;
-  fpSubTotal := fpSubTotal + fpDescAcresSubtotal;
 
-  For I := 0 to fpAliquotasCupom.Count-1 do
+  for I := 0 to fpAliquotasCupom.Count-1 do
   begin
     with fpAliquotasCupom[I] do
     begin
-      Rateio := TruncTo(Total * (PercentualEfetivo/100), 2) ;
+      Rateio := TruncTo(Total * (PercentualEfetivo/100), 2);
       TotalDescAcresRateio := TotalDescAcresRateio + Rateio;
+
+      if (Tipo = 'S') then
+      begin
+        fpDescAcresSubtotalISSQN := fpDescAcresSubtotalISSQN + Rateio;
+        fpSubtotalISSQN := fpSubtotalISSQN + Rateio;
+      end
+      else
+      begin
+        fpDescAcresSubtotalICMS  := fpDescAcresSubtotalICMS + Rateio;
+        fpSubtotalICMS := fpSubtotalICMS + Rateio;
+      end;
     end;
   end;
 
   { Se houver resíduo, deve achar a aliquota com maior Valor Total da Venda
     e aplica o resíduo nela...  Se houve empate, usa a Aliquota com o maior
     valor em Porcentagem }
-  ValorResiduo := fpDescAcresSubtotal - TotalDescAcresRateio ;
-  if ValorResiduo <> 0 then
+  ValorResiduo := wDescAcresSubtotal - TotalDescAcresRateio;
+  if (ValorResiduo <> 0) then
   begin
      // Achando grupo de maior valor ou maior aliquota //
      MaiorValorTotal := 0;
      AliqMaiorValorTotal := 0;
      P := -1;
-     For I := 0 to fpAliquotasCupom.Count-1 do
+     for I := 0 to fpAliquotasCupom.Count-1 do
      begin
        with fpAliquotasCupom[I] do
        begin
@@ -1003,8 +1068,33 @@ begin
      if P < 0 then  // Commo assim ? Não achou um campeão ? Então use o primeiro Totalizador
        P := 0;
 
-     fpAliquotasCupom[P].Rateio := fpAliquotasCupom[P].Rateio + ValorResiduo;
+     with fpAliquotasCupom[P] do
+     begin
+       Rateio := Rateio + ValorResiduo;
+
+       if (Tipo = 'S') then
+       begin
+         fpDescAcresSubtotalISSQN := fpDescAcresSubtotalISSQN + ValorResiduo;
+         fpSubtotalISSQN := fpSubtotalISSQN + ValorResiduo;
+       end
+       else
+       begin
+         fpDescAcresSubtotalICMS  := fpDescAcresSubtotalICMS + ValorResiduo;
+         fpSubtotalICMS := fpSubtotalICMS + ValorResiduo;
+       end;
+     end;
   end;
+end;
+
+function TACBrECFVirtualClassCupom.GetSubtotal: Currency;
+begin
+  // Soma dos totalizadores ICMS e Serviço
+  Result := fpSubtotalICMS + fpSubtotalISSQN;
+end;
+
+function TACBrECFVirtualClassCupom.GetDescAcresSubtotal: Currency;
+begin
+  Result := fpDescAcresSubtotalICMS + fpDescAcresSubtotalISSQN;
 end;
 
 procedure TACBrECFVirtualClassCupom.VerificaFaixaItem(NumItem: Integer);
@@ -1013,16 +1103,20 @@ begin
     raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') fora da Faixa.')) ;
 end;
 
-function TACBrECFVirtualClassCupom.SomaAliquota(AAliqPos: Integer; AAliqValor,
+function TACBrECFVirtualClassCupom.SomaAliquota(aAliq: TACBrECFAliquota;
   AValor: Currency): TACBrECFVirtualClassAliquotaCupom;
+var
+  wAliqPos: Integer;
 begin
-  Result := fpAliquotasCupom.Find(AAliqPos);
+  wAliqPos := (aAliq.Sequencia - 1);
+  Result   := fpAliquotasCupom.Find(wAliqPos);
 
   if not Assigned(Result) then
   begin
     Result := fpAliquotasCupom.New;
-    Result.AliqPos   := AAliqPos;
-    Result.AliqValor := AAliqValor;
+    Result.AliqPos   := wAliqPos;
+    Result.AliqValor := aAliq.Aliquota;
+    Result.Tipo      := aAliq.Tipo;
   end;
 
   Result.Total := Result.Total + AValor;
@@ -1048,8 +1142,8 @@ begin
   end;
 end;
 
-procedure TACBrECFVirtualClassCupom.DescAresItem(NumItem: Integer; ADescAcres: Double
-  );
+procedure TACBrECFVirtualClassCupom.DescAcresItem(NumItem: Integer;
+  ADescAcres: Double);
 var
   ItemCupom: TACBrECFVirtualClassItemCupom;
   ALiq: TACBrECFVirtualClassAliquotaCupom;
@@ -1063,7 +1157,10 @@ begin
 
   ItemCupom.DescAcres := fpECFVirtualClasse.RoundECF( ADescAcres );
 
-  fpSubTotal := fpSubTotal + ItemCupom.DescAcres;  // Atualiza SubTotal Cupom
+  if (fpAliquotasCupom.Find(ItemCupom.AliqPos).Tipo = 'S') then
+    fpSubtotalISSQN := fpSubtotalISSQN + ItemCupom.DescAcres
+  else
+    fpSubtotalICMS := fpSubtotalICMS + ItemCupom.DescAcres;
 
   // Atualiza totais das Aliquotas
   ALiq := fpAliquotasCupom.Find(ItemCupom.AliqPos);
@@ -1078,13 +1175,18 @@ var
 begin
   VerificaFaixaItem(NumItem);
 
-  ItemCupom  := fpItensCupom[NumItem-1];
+  ItemCupom := fpItensCupom[NumItem-1];
   with ItemCupom do
   begin
     TotalItem := TotalLiquido;
     Qtd := 0;
     DescAcres := 0;
-    fpSubTotal := fpSubTotal - TotalItem;
+
+    if (fpAliquotasCupom.Find(AliqPos).Tipo = 'S') then
+      fpSubtotalISSQN := fpSubtotalISSQN - TotalItem
+    else
+      fpSubtotalICMS := fpSubtotalICMS - TotalItem;
+
     SubtraiAliquota(AliqPos, TotalItem);
   end;
 end;
@@ -1092,15 +1194,19 @@ end;
 function TACBrECFVirtualClassCupom.EfetuaPagamento(AValor: Currency;
   AObservacao: String; APosFPG: Integer): TACBrECFVirtualClassPagamentoCupom;
 begin
-  Result := fpPagamentosCupom.New;
+  if fpPagamentosCupom.Count >= 999 then
+    raise EACBrECFERRO.Create(ACBrStr('Máximo de Pagamentos já atingido (999)')) ;
 
+  AValor := fpECFVirtualClasse.RoundECF( AValor );
+
+  Result := fpPagamentosCupom.New;
   with Result do
   begin
     PosFPG     := APosFPG ;
-    ValorPago  := fpECFVirtualClasse.RoundECF( AValor ) ;
+    ValorPago  := abs(AValor) ;
     Observacao := AObservacao ;
 
-    fpTotalPago := fpTotalPago + max(ValorPago, 0);
+    fpTotalPago := fpTotalPago + max(AValor, 0);
   end;
 end;
 
@@ -1114,10 +1220,10 @@ begin
 
   with Result do
   begin
-    Valor      := fpECFVirtualClasse.RoundECF( AValor );
-    PosCNF     := APosCNF;
-    Observacao := AObservacao;
-    fpSubTotal := fpSubTotal + Valor ;      { Soma no Subtotal }
+    Valor          := fpECFVirtualClasse.RoundECF( AValor );
+    PosCNF         := APosCNF;
+    Observacao     := AObservacao;
+    fpSubtotalICMS := fpSubtotalICMS + Valor;      { Soma no Subtotal }
   end;
 end;
 
@@ -1130,7 +1236,7 @@ begin
 
   ACNF := fpCNFsCupom[NumItem-1];
 
-  fpSubTotal := fpSubTotal - ACNF.fsValor;
+  fpSubtotalICMS := fpSubtotalICMS - ACNF.fsValor;
   ACNF.Valor := 0;
 end;
 
@@ -1145,61 +1251,77 @@ var
 begin
   Clear;
 
-  fpDescAcresSubtotal := AIni.ReadFloat('Cupom', 'DescontoAcrescimo', 0) ;
+  fpChaveDFe := AIni.ReadString('Variaveis','ChaveCupom',fpChaveDFe);
+
+  fpDescAcresSubtotalICMS  := AIni.ReadFloat('Cupom', 'DescontoAcrescimo', 0);
+  fpDescAcresSubtotalISSQN := AIni.ReadFloat('Cupom', 'DescontoAcrescimoISSQN', 0);
+
+  S := 'Cupom_Aliquotas';
+  I := 0 ;
+  while (I < 100) do
+  begin
+    T := AIni.ReadString(S, IntToStrZero(I, 2), '*FIM*');
+    if T = '*FIM*' then break;
+
+    AliqCupom := fpAliquotasCupom.New;
+    AliqCupom.AsString := T;
+    Inc( I );
+  end;
 
   S := 'Cupom_Items';
   I := 0 ;
-  while true do
+  while (I < 1000) do
   begin
-    T := AIni.ReadString( S, IntToStrZero(I,3), '*FIM*') ;
-    if T = '*FIM*' then break ;
+    T := AIni.ReadString(S, IntToStrZero(I, 3), '*FIM*');
+    if T = '*FIM*' then Break;
 
     ItemCupom := fpItensCupom.New(Self);
     ItemCupom.AsString := T;
-    fpSubTotal := fpSubTotal + ItemCupom.TotalLiquido;
 
-    Inc( I );
-  end ;
+    if (ItemCupom.Qtd > 0) then // Não foi cancelado ?
+    begin
+      AliqCupom := fpAliquotasCupom.Find(ItemCupom.AliqPos);
+      if Assigned(AliqCupom) then
+      begin
+        if (AliqCupom.Tipo = 'S') then
+          fpSubtotalISSQN := fpSubtotalISSQN + ItemCupom.TotalLiquido
+        else
+          fpSubtotalICMS  := fpSubtotalICMS + ItemCupom.TotalLiquido;
+      end;
+    end;
+
+    Inc(I);
+  end;
 
   S := 'Cupom_Pagamentos';
   I := 0 ;
-  while true do
+  while (I < 1000) do
   begin
-    T := AIni.ReadString( S, IntToStrZero(I,2), '*FIM*') ;
+    T := AIni.ReadString( S, IntToStrZero(I, 3), '*FIM*') ;
     if T = '*FIM*' then break ;
 
     PagtoCupom := fpPagamentosCupom.New;
     PagtoCupom.AsString := T;
-    fpTotalPago := fpTotalPago + max(PagtoCupom.ValorPago,0);
+    if UpperCase(PagtoCupom.fsObservacao) <> 'TROCO' then
+      fpTotalPago := fpTotalPago + max(PagtoCupom.ValorPago,0);
     Inc( I );
   end ;
 
   S := 'Cupom_Comprovantes_Nao_Fiscais';
   I := 0 ;
-  while true do
+  while (I < 100) do
   begin
-    T := AIni.ReadString( S, IntToStrZero(I,2), '*FIM*') ;
+    T := AIni.ReadString( S, IntToStrZero(I, 2), '*FIM*') ;
     if T = '*FIM*' then break ;
 
     CNFCupom := fpCNFsCupom.New;
     CNFCupom.AsString := T;
-    fpSubTotal := fpSubTotal + CNFCupom.Valor;      { Soma no Subtotal }
+    fpSubtotalICMS := fpSubtotalICMS + CNFCupom.Valor;      { Soma no Subtotal }
     Inc( I );
   end ;
 
-  S := 'Cupom_Aliquotas';
-  I := 0 ;
-  while true do
-  begin
-    T := AIni.ReadString( S, IntToStrZero(I,2), '*FIM*') ;
-    if T = '*FIM*' then break ;
-
-    AliqCupom := fpAliquotasCupom.New;
-    AliqCupom.AsString := T;
-    Inc( I );
-  end ;
-
-  fpSubTotal := fpSubTotal + fpDescAcresSubtotal;
+  fpSubtotalICMS  := fpSubtotalICMS  + fpDescAcresSubtotalICMS;
+  fpSubtotalISSQN := fpSubtotalISSQN + fpDescAcresSubtotalISSQN;
 end;
 
 procedure TACBrECFVirtualClassCupom.SaveToINI(AIni: TCustomIniFile);
@@ -1207,37 +1329,41 @@ var
   S: String;
   I: Integer;
 begin
-  AIni.WriteFloat('Cupom','DescontoAcrescimo',fpDescAcresSubtotal) ;
-  AIni.WriteFloat('Cupom','Subtotal',fpSubTotal) ;
-  AIni.WriteFloat('Cupom','TotalPago',fpTotalPago) ;
+  AIni.WriteString('Variaveis', 'ChaveCupom', fpChaveDFe);
+
+  AIni.WriteFloat('Cupom', 'DescontoAcrescimo', fpDescAcresSubtotalICMS);
+  AIni.WriteFloat('Cupom', 'DescontoAcrescimoISSQN', fpDescAcresSubtotalISSQN);
+  AIni.WriteFloat('Cupom', 'Subtotal', fpSubtotalICMS);
+  AIni.WriteFloat('Cupom', 'SubTotalISSQN', fpSubtotalISSQN);
+  AIni.WriteFloat('Cupom', 'TotalPago', fpTotalPago);
 
   S := 'Cupom_Items';
   for I := 0 to Itens.Count - 1 do
   begin
     with Itens[I] do
-      AIni.WriteString( S, IntToStrZero(I,3), AsString );
-  end ;
+      AIni.WriteString(S, IntToStrZero(I, 3), AsString);
+  end;
 
   S := 'Cupom_Pagamentos';
   for I := 0 to Pagamentos.Count - 1 do
   begin
     with Pagamentos[I] do
-      AIni.WriteString( S ,IntToStrZero( I, 2), AsString ) ;
-  end ;
+      AIni.WriteString(S ,IntToStrZero(I, 3), AsString);
+  end;
 
   S := 'Cupom_Comprovantes_Nao_Fiscais';
   for I := 0 to CNF.Count - 1 do
   begin
     with CNF[I] do
-      AIni.WriteString( S ,IntToStrZero( I, 2), AsString ) ;
-  end ;
+      AIni.WriteString(S ,IntToStrZero(I, 2), AsString);
+  end;
 
   S := 'Cupom_Aliquotas';
   for I := 0 to Aliquotas.Count - 1 do
   begin
     with Aliquotas[I] do
-      AIni.WriteString( S ,IntToStrZero( I, 2), AsString ) ;
-  end ;
+      AIni.WriteString(S ,IntToStrZero(I, 2), AsString);
+  end;
 end;
 
 { ---------------------------- TACBrECFVirtual ------------------------------- }
@@ -1478,7 +1604,6 @@ begin
   fpCOOInicial := 0 ;
   fpCOOFinal   := 0 ;
   fpNumCOO     := 0 ;
-  fpChaveCupom := '';
   fpNumGNF     := 0 ;
   fpNumGRG     := 0 ;
   fpNumCDC     := 0 ;
@@ -1487,15 +1612,17 @@ begin
   fpGrandeTotal:= 0 ;
   fpVendaBruta := 0 ;
 
-  fpCuponsCancelados              := 0 ;
-  fpCuponsCanceladosTotal         := 0 ;
-  fpCNFCancelados                 := 0 ;
-  fpCNFCanceladosTotal            := 0 ;
-  fpCuponsCanceladosEmAberto      := 0 ;
-  fpCuponsCanceladosEmAbertoTotal := 0 ;
+  fpCuponsCancelados              := 0;
+  fpCuponsCanceladosTotalICMS     := 0;
+  fpCuponsCanceladosTotalISSQN    := 0;
+  fpCNFCancelados                 := 0;
+  fpCNFCanceladosTotal            := 0;
+  fpCuponsCanceladosEmAberto      := 0;
+  fpCuponsCanceladosEmAbertoTotalICMS  := 0;
+  fpCuponsCanceladosEmAbertoTotalISSQN := 0;
 
   ZeraCupom;
-end ;
+end;
 
 procedure TACBrECFVirtualClass.ZeraCupom;
 begin
@@ -1518,8 +1645,30 @@ begin
 end;
 
 procedure TACBrECFVirtualClass.AtivarVirtual;
+var
+  AtualizarAliq, AtualizarFPG: Boolean;
 begin
   fpMFD := True;
+
+  // Verificando se precisa inserir as novas aliquotas de Serviços //
+  AtualizarAliq := (fpAliquotas.Count < 6);
+  if not AtualizarAliq then
+  begin
+    AtualizarAliq := (fpAliquotas[3].Indice <> 'FS1') or
+                     (fpAliquotas[4].Indice <> 'IS1') or
+                     (fpAliquotas[5].Indice <> 'NS1');
+  end;
+
+  if AtualizarAliq then
+    AtualizarAliquotasMemoria;
+
+  // Verificando se precisa inserir 00-TROCO //
+  AtualizarFPG := (fpFormasPagamentos.Count < 2);
+  if not AtualizarFPG then
+    AtualizarFPG := (fpFormasPagamentos[0].Indice <> '00');
+
+  if AtualizarFPG then
+    AtualizarFormasPagamentoMemoria;
 end;
 
 procedure TACBrECFVirtualClass.Desativar;
@@ -1599,6 +1748,18 @@ begin
   GravaLog('GetNumCFC: '+Result);
 end;
 
+function TACBrECFVirtualClass.GetNumCOOInicial: String;
+begin
+  Result := IntToStrZero( fpCOOInicial, 6 ) ;
+  GravaLog('GetNumCOOInicial: '+Result);
+end;
+
+function TACBrECFVirtualClass.GetNumUltimoItem: Integer;
+begin
+  Result := fpCupom.Itens.Count;
+  GravaLog('GetNumUltimoItem: '+IntToStr(Result));
+end;
+
 function TACBrECFVirtualClass.GetNumGNFC: String;
 begin
   Result := IntToStrZero( fpCNFCancelados, 6 ) ;
@@ -1619,25 +1780,31 @@ end;
 
 function TACBrECFVirtualClass.GetTotalSubstituicaoTributaria: Double;
 begin
-  Result := RoundTo( fpAliquotas[0].Total, -2 ) ;
+  Result := RoundTo( fpAliquotas[0].Total, -2 ) ;   // F1
   GravaLog('GetTotalSubstituicaoTributaria: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalIsencao: Double;
+begin
+  Result := RoundTo( fpAliquotas[1].Total, -2 ) ;   // I1
+  GravaLog('GetTotalIsencao: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalNaoTributado: Double;
 begin
-  Result := RoundTo( fpAliquotas[1].Total,-2 ) ;
+  Result := RoundTo( fpAliquotas[2].Total,-2 ) ;    // N1
   GravaLog('GetTotalNaoTributado: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalAcrescimos: Double;
 begin
-   Result := RoundTo(fpTotalAcrescimos,-2);
+   Result := RoundTo(fpTotalAcrescimosICMS,-2);
    GravaLog('GetTotalAcrescimos: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalCancelamentos: Double;
 begin
-   Result := RoundTo(fpCuponsCanceladosTotal,-2);
+   Result := RoundTo(fpCuponsCanceladosTotalICMS,-2);
    GravaLog('GetTotalCancelamentos: '+FloatToStr(Result));
 end;
 
@@ -1649,20 +1816,56 @@ end;
 
 function TACBrECFVirtualClass.GetTotalCancelamentosEmAberto: Double;
 begin
-   Result := RoundTo(fpCuponsCanceladosEmAbertoTotal,-2);
+   Result := RoundTo(fpCuponsCanceladosEmAbertoTotalICMS,-2);
    GravaLog('GetTotalCancelamentosEmAberto: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalDescontos: Double;
 begin
-   Result := RoundTo(fpTotalDescontos,-2);
-   GravaLog('GetTotalDescontos: '+FloatToStr(Result));
+   Result := RoundTo(fpTotalDescontosICMS, -2);
+   GravaLog('GetTotalDescontos: ' + FloatToStr(Result));
 end;
 
-function TACBrECFVirtualClass.GetTotalIsencao: Double;
+function TACBrECFVirtualClass.GetTotalAcrescimosISSQN: Double;
 begin
-  Result := RoundTo( fpAliquotas[2].Total, -2 ) ;
-  GravaLog('GetTotalIsencao: '+FloatToStr(Result));
+  Result := RoundTo(fpTotalAcrescimosISSQN, -2);
+  GravaLog('GetTotalAcrescimosISSQN: ' + FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalCancelamentosISSQN: Double;
+begin
+   Result := RoundTo(fpCuponsCanceladosTotalISSQN,-2);
+   GravaLog('GetTotalCancelamentosISSQN: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalCancelamentosEmAbertoISSQN: Double;
+begin
+   Result := RoundTo(fpCuponsCanceladosEmAbertoTotalISSQN, -2);
+   GravaLog('GetTotalCancelamentosEmAbertoISSQN: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalDescontosISSQN: Double;
+begin
+   Result := RoundTo(fpTotalDescontosISSQN, -2);
+   GravaLog('GetTotalDescontosISSQN: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalIsencaoISSQN: Double;
+begin
+  Result := RoundTo( fpAliquotas[4].Total, -2 ) ;   // IS1
+  GravaLog('GetTotalIsencaoISSQN: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalNaoTributadoISSQN: Double;
+begin
+  Result := RoundTo( fpAliquotas[5].Total, -2 ) ;   // NS1
+  GravaLog('GetTotalNaoTributadoISSQN: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalSubstituicaoTributariaISSQN: Double;
+begin
+  Result := RoundTo( fpAliquotas[3].Total, -2 ) ;   // FS1
+  GravaLog('GetTotalSubstituicaoTributariaISSQN: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetNumReducoesZRestantes: String;
@@ -1865,27 +2068,21 @@ begin
 
     VendeItemVirtual( ItemCupom );
 
-    GravaArqINI;
+    { Se o desconto é maior que zero envia o comando de desconto/acrescimo de item anterior }
+    if ValorDescontoAcrescimo > 0 then
+       DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo,
+                                      DescontoAcrescimo,
+                                      TipoDescontoAcrescimo)    // Já chama GravaArqINI
+    else
+      GravaArqINI;
   except
     LeArqINI ;
     raise;
   end ;
-
-  { Se o desconto é maior que zero envia o comando de desconto/acrescimo de item anterior }
-  if ValorDescontoAcrescimo > 0 then
-     DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo, DescontoAcrescimo,
-        TipoDescontoAcrescimo);
 end ;
 
-procedure TACBrECFVirtualClass.VendeItemVirtual(
-  ItemCupom: TACBrECFVirtualClassItemCupom);
-begin
-  {}
-end;
-
-procedure TACBrECFVirtualClass.DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
-       DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
-       NumItem : Integer = 0 ) ;
+procedure TACBrECFVirtualClass.DescontoAcrescimoItemAnterior(ValorDescontoAcrescimo: Double;
+  DescontoAcrescimo: String; TipoDescontoAcrescimo: String; NumItem: Integer);
 var
   ValorItem, ValDescAcres, PorcDescAcres: Double;
   StrDescAcre : String ;
@@ -1939,16 +2136,26 @@ begin
     PorcDescAcres := 0;             // Preenche apenas se o Desconto for em %
 
   try
-    fpCupom.DescAresItem(NumItem, ValDescAcres);
+    fpCupom.DescAcresItem(NumItem, ValDescAcres);
 
-    if ValDescAcres < 0 then
-      fpTotalDescontos := fpTotalDescontos + (-ValDescAcres)
+    if (ValDescAcres < 0) then
+    begin
+      // Atualiza Total de Desconto
+      if (fpAliquotas[PosAliqItem].Tipo = 'S') then
+        fpTotalDescontosISSQN := Max(fpTotalDescontosISSQN - ValDescAcres, 0)
+      else
+        fpTotalDescontosICMS  := Max(fpTotalDescontosICMS  - ValDescAcres, 0);
+    end
     else
     begin
-      fpTotalAcrescimos := fpTotalAcrescimos + ValDescAcres;
+      if (fpAliquotas[PosAliqItem].Tipo = 'S') then
+        fpTotalAcrescimosISSQN := fpTotalAcrescimosISSQN + ValDescAcres
+      else
+        fpTotalAcrescimosICMS  := fpTotalAcrescimosICMS + ValDescAcres;
+
       { Se for Acréscimo, deve somar em GT e Venda Bruta }
-      fpGrandeTotal     := fpGrandeTotal     + ValDescAcres;
-      fpVendaBruta      := fpVendaBruta      + ValDescAcres;
+      fpGrandeTotal := fpGrandeTotal + ValDescAcres;
+      fpVendaBruta  := fpVendaBruta  + ValDescAcres;
     end;
 
     { Aplicando Desconto/Acrescimo no Total diário da Aliquota }
@@ -1964,6 +2171,12 @@ begin
   end ;
 end;
 
+procedure TACBrECFVirtualClass.VendeItemVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom);
+begin
+  {}
+end;
+
 procedure TACBrECFVirtualClass.DescontoAcrescimoItemAnteriorVirtual(
   ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double);
 begin
@@ -1972,8 +2185,9 @@ end;
 
 procedure TACBrECFVirtualClass.CancelaItemVendido(NumItem: Integer);
 var 
-  ValorItem, DescAcresItem, TotBruto: Double;
+  ValorItem, DescAcresItem, TotalCanc: Double;
   PosAliqItem: Integer;
+  wTipoAliq: Char;
 begin
   GravaLog( ComandoLOG );
 
@@ -1993,18 +2207,37 @@ begin
       ValorItem     := TotalLiquido;
       PosAliqItem   := AliqPos;
       DescAcresItem := DescAcres;
-      TotBruto      := TotalBruto;
+      TotalCanc     := TotalBruto;
+      wTipoAliq     := fpAliquotas[AliqPos].Tipo;
     end;
 
     fpCupom.CancelaItem( NumItem );
 
-    fpCuponsCanceladosEmAbertoTotal := fpCuponsCanceladosEmAbertoTotal + TotBruto;
+    if (DescAcresItem > 0) then
+      TotalCanc := ValorItem;
+
+    if (wTipoAliq = 'S') then
+      fpCuponsCanceladosEmAbertoTotalISSQN := fpCuponsCanceladosEmAbertoTotalISSQN + TotalCanc
+    else
+      fpCuponsCanceladosEmAbertoTotalICMS  := fpCuponsCanceladosEmAbertoTotalICMS + TotalCanc;
 
     { Estornando do total de Acréscimos/Descontos. VendaBruta e GT nunca são estornadas }
-    if DescAcresItem < 0 then
-      fpTotalDescontos := fpTotalDescontos + DescAcresItem
+    if (DescAcresItem < 0) then
+    begin
+      // Atualiza Total de Desconto
+      if (wTipoAliq = 'S') then
+        fpTotalDescontosISSQN := (fpTotalDescontosISSQN + DescAcresItem)
+      else
+        fpTotalDescontosICMS  := (fpTotalDescontosICMS  + DescAcresItem);
+    end
     else
-      fpTotalAcrescimos := fpTotalAcrescimos - DescAcresItem;
+    begin
+      // Atualiza Total de Acréscimo
+      if (wTipoAliq = 'S') then
+        fpTotalAcrescimosISSQN := fpTotalAcrescimosISSQN - DescAcresItem
+      else
+        fpTotalAcrescimosICMS  := fpTotalAcrescimosICMS - DescAcresItem;
+    end;
 
     { Estornando do Total por aliquota }
     with fpAliquotas[ PosAliqItem ] do
@@ -2044,14 +2277,19 @@ begin
 
     fpEstado := estPagamento ;
 
-    if DescontoAcrescimo < 0 then
-      fpTotalDescontos := fpTotalDescontos + (-DescontoAcrescimo)
+    if (DescontoAcrescimo < 0) then
+    begin
+      fpTotalDescontosICMS  := fpTotalDescontosICMS  - fpCupom.DescAcresSubtotalICMS;
+      fpTotalDescontosISSQN := fpTotalDescontosISSQN - fpCupom.DescAcresSubtotalISSQN;
+    end
     else
     begin
-      fpTotalAcrescimos := fpTotalAcrescimos + DescontoAcrescimo;
+      fpTotalAcrescimosICMS  := fpTotalAcrescimosICMS  + fpCupom.DescAcresSubtotalICMS;
+      fpTotalAcrescimosISSQN := fpTotalAcrescimosISSQN + fpCupom.DescAcresSubtotalISSQN;
+
       { Se for Acréscimo, deve somar em GT e Venda Bruta }
-      fpVendaBruta      := fpVendaBruta      + DescontoAcrescimo;
-      fpGrandeTotal     := fpGrandeTotal     + DescontoAcrescimo;
+      fpVendaBruta  := fpVendaBruta  + DescontoAcrescimo;
+      fpGrandeTotal := fpGrandeTotal + DescontoAcrescimo;
     end;
 
     { Recomputando Total Diário das Aliquotas. Lista fpCupom.Aliquotas,
@@ -2108,6 +2346,7 @@ Var
   FPG : TACBrECFFormaPagamento ;
   Troco : Double ;
   Pagto : TACBrECFVirtualClassPagamentoCupom ;
+  IndiceFPG: Integer;
 begin
   GravaLog( ComandoLOG );
 
@@ -2122,8 +2361,13 @@ begin
   if FPG = nil then
     raise EACBrECFERRO.create(ACBrStr('Forma de Pagamento '+CodFormaPagto+' Inválida')) ;
 
+  IndiceFPG := StrToInt( FPG.Indice );
+  if IndiceFPG < 1 then
+    raise EACBrECFERRO.create(ACBrStr('Forma de Pagamento '+FPG.Indice+'-'+FPG.Descricao+
+                                      ' não pode ser usada para Pagamentos')) ;
+
   try
-    Pagto := fpCupom.EfetuaPagamento( Valor, Observacao, StrToInt( FPG.Indice ) - 1);
+    Pagto := fpCupom.EfetuaPagamento( Valor, Observacao, IndiceFPG);
     FPG.Total := RoundTo(FPG.Total + Pagto.ValorPago,-2) ;
 
     { Se tiver Troco, remove de 01 - DINHEIRO (indice = 0) }
@@ -2136,8 +2380,8 @@ begin
 
     if Troco > 0 then
     begin
-      FPG := fpFormasPagamentos[ 0 ] ;  // 0 = 01-Dinheiro
-      FPG.Total := RoundTo(FPG.Total - Troco,-2) ;
+      FPG := fpFormasPagamentos[ 0 ] ;  // 0 = 00-TROCO
+      FPG.Total := RoundTo(FPG.Total + Troco,-2) ;
 
       { Lançando o Troco como um pagamento no Cupom, porém negativo, com isso
         o Cancelamento de Cupom conseguir desfaze-lo }
@@ -2193,7 +2437,7 @@ end;
 procedure TACBrECFVirtualClass.CancelaCupom(NumCOOCancelar: Integer);
 Var
   I, PosAliqItem, OldCOO: Integer;
-  TotalAliq, SubTotalBruto: Double;
+  TotalAliq, SubTotalBrutoICMS, SubTotalBrutoISSQN: Double;
   PermiteCancelamento, CupomEstaAberto, EhNaoFiscal, AliquotasRemovidas: Boolean;
 begin
   GravaLog( ComandoLOG );
@@ -2238,16 +2482,23 @@ begin
 
     { Aqui já temos todos os Descontos e Acrescimos. Os descontos devem ser
       revertidos, para calcularmos o SubTotalBruto }
-    SubTotalBruto := fpCupom.SubTotal;
+    SubTotalBrutoICMS  := fpCupom.SubtotalICMS;
+    SubTotalBrutoISSQN := fpCupom.SubtotalISSQN;
 
     { Removendo Desconto/Acrescimo do Subtotal, dos Totalizadores }
-    if fpCupom.DescAcresSubtotal < 0 then
+    if (fpCupom.DescAcresSubtotal < 0) then
     begin
-      fpTotalDescontos := fpTotalDescontos + fpCupom.DescAcresSubtotal;
-      SubTotalBruto    := SubTotalBruto    - fpCupom.DescAcresSubtotal;
+      fpTotalDescontosICMS  := fpTotalDescontosICMS  + fpCupom.DescAcresSubtotalICMS;
+      fpTotalDescontosISSQN := fpTotalDescontosISSQN + fpCupom.DescAcresSubtotalISSQN;
+
+      SubTotalBrutoICMS  := SubTotalBrutoICMS  - fpCupom.DescAcresSubtotalICMS;
+      SubTotalBrutoISSQN := SubTotalBrutoISSQN - fpCupom.DescAcresSubtotalISSQN;
     end
     else
-      fpTotalAcrescimos := fpTotalAcrescimos - fpCupom.DescAcresSubtotal;
+    begin
+      fpTotalAcrescimosICMS  := fpTotalAcrescimosICMS  - fpCupom.DescAcresSubtotalICMS;
+      fpTotalAcrescimosISSQN := fpTotalAcrescimosISSQN - fpCupom.DescAcresSubtotalISSQN;
+    end;
 
     { Removendo do TotalDiario por Aliquotas }
     AliquotasRemovidas := False;
@@ -2268,7 +2519,7 @@ begin
     end;
 
     { Removendo Desconto/Acrescimo dos Itens dos Totalizadores }
-    For I := 0 to fpCupom.Itens.Count - 1 do
+    for I := 0 to fpCupom.Itens.Count - 1 do
     begin
       with fpCupom.Itens[I] do
       begin
@@ -2280,13 +2531,26 @@ begin
               Total := Max( RoundTo(Total - TotalLiquido,-2), 0) ;
           end;
 
-          if DescAcres < 0 then
+          if (DescAcres < 0) then
           begin
-            fpTotalDescontos := fpTotalDescontos + DescAcres;
-            SubTotalBruto    := SubTotalBruto    - DescAcres;
+            if (fpAliquotas[AliqPos].Tipo = 'S') then
+            begin
+              fpTotalDescontosISSQN := fpTotalDescontosISSQN + DescAcres;
+              SubTotalBrutoISSQN    := SubTotalBrutoISSQN - DescAcres;
+            end
+            else
+            begin
+              fpTotalDescontosICMS := fpTotalDescontosICMS + DescAcres;
+              SubTotalBrutoICMS    := SubTotalBrutoICMS - DescAcres;
+            end;
           end
           else
-            fpTotalAcrescimos := fpTotalAcrescimos - DescAcres;
+          begin
+            if (fpAliquotas[AliqPos].Tipo = 'S') then
+              fpTotalAcrescimosISSQN := fpTotalAcrescimosISSQN - DescAcres
+            else
+              fpTotalAcrescimosICMS  := fpTotalAcrescimosICMS - DescAcres;
+          end;
         end;
       end;
     end;
@@ -2295,17 +2559,21 @@ begin
     if EhNaoFiscal then
     begin
       fpCNFCancelados      := fpCNFCancelados + 1 ;
-      fpCNFCanceladosTotal := fpCNFCanceladosTotal + SubTotalBruto
+      fpCNFCanceladosTotal := fpCNFCanceladosTotal + (SubTotalBrutoICMS + SubTotalBrutoISSQN);
     end
     else if CupomEstaAberto then
     begin
-      fpCuponsCanceladosEmAberto      := fpCuponsCanceladosEmAberto + 1 ;
-      fpCuponsCanceladosEmAbertoTotal := fpCuponsCanceladosEmAbertoTotal + SubTotalBruto
+      fpCuponsCanceladosEmAberto := fpCuponsCanceladosEmAberto + 1;
+
+      fpCuponsCanceladosEmAbertoTotalICMS  := fpCuponsCanceladosEmAbertoTotalICMS  + SubTotalBrutoICMS;
+      fpCuponsCanceladosEmAbertoTotalISSQN := fpCuponsCanceladosEmAbertoTotalISSQN + SubTotalBrutoISSQN;
     end
     else
     begin
-      fpCuponsCancelados      := fpCuponsCancelados + 1 ;
-      fpCuponsCanceladosTotal := fpCuponsCanceladosTotal + SubTotalBruto;
+      fpCuponsCancelados      := fpCuponsCancelados + 1;
+
+      fpCuponsCanceladosTotalICMS  := fpCuponsCanceladosTotalICMS  + SubTotalBrutoICMS;
+      fpCuponsCanceladosTotalISSQN := fpCuponsCanceladosTotalISSQN + SubTotalBrutoISSQN;
     end;
 
     { Removendo do TotalDiario por Pagamento }
@@ -2381,9 +2649,9 @@ begin
 
   try
     ZeraCupom;
-    ReducaoZVirtual( DataHora );
-
     fpReducoesZ := fpReducoesZ + 1 ;
+
+    ReducaoZVirtual( DataHora );
 
     if fpEstado = estRequerZ then
     begin
@@ -2393,16 +2661,20 @@ begin
     else
       fpEstado := estBloqueada ;
 
-    fpCuponsCancelados              := 0;
-    fpCuponsCanceladosTotal         := 0;
-    fpCNFCancelados                 := 0;
-    fpCNFCanceladosTotal            := 0;
-    fpCuponsCanceladosEmAberto      := 0;
-    fpCuponsCanceladosEmAbertoTotal := 0;
-    fpTotalDescontos                := 0;
-    fpTotalAcrescimos               := 0;
-    fpVendaBruta                    := 0;
-    fpNumCER                        := 0;
+    fpNumCER     := 0;
+    fpVendaBruta := 0;
+    fpTotalDescontosICMS   := 0;
+    fpTotalDescontosISSQN  := 0;
+    fpTotalAcrescimosICMS  := 0;
+    fpTotalAcrescimosISSQN := 0;
+    fpCNFCancelados        := 0;
+    fpCNFCanceladosTotal   := 0;
+    fpCuponsCancelados     := 0;
+    fpCuponsCanceladosTotalICMS  := 0;
+    fpCuponsCanceladosTotalISSQN := 0;
+    fpCuponsCanceladosEmAberto   := 0;
+    fpCuponsCanceladosEmAbertoTotalICMS  := 0;
+    fpCuponsCanceladosEmAbertoTotalISSQN := 0;
 
     For A := 0 to fpAliquotas.Count - 1 do
       fpAliquotas[A].Total := 0 ;
@@ -2411,7 +2683,13 @@ begin
       fpFormasPagamentos[A].Total := 0 ;
 
     For A := 0 to fpComprovantesNaoFiscais.Count - 1 do
+    begin
       fpComprovantesNaoFiscais[A].Total := 0 ;
+      fpComprovantesNaoFiscais[A].Contador := 0 ;
+    end;
+
+    For A := 0 to fpRelatoriosGerenciais.Count - 1 do
+        fpRelatoriosGerenciais[A].Contador := 0 ;
 
     AbreDia;
     AbreDocumento ;
@@ -2422,6 +2700,11 @@ begin
 end;
 
 procedure TACBrECFVirtualClass.ReducaoZVirtual(DataHora: TDateTime);
+begin
+  {}
+end;
+
+procedure TACBrECFVirtualClass.GetEstadoECFVirtual;
 begin
   {}
 end;
@@ -2495,6 +2778,10 @@ begin
   FPG := AchaFPGIndice( CodFormaPagto ) ;
   if FPG = Nil then
     raise EACBrECFERRO.Create(ACBrStr('Posição de Pagamento: '+CodFormaPagto+' inválida'));
+
+  if not FPG.PermiteVinculado then
+    raise EACBrECFERRO.Create(ACBrStr('Forma de Pagamento: '+FPG.Indice+'-'+FPG.Descricao+
+                                      ' não permite Vinculado'));
 
   UsouPagamento := False ;
   I := 0 ;
@@ -2754,43 +3041,47 @@ Var
   RelatGerencial     : TACBrECFRelatorioGerencial;
 begin
   GravaLog('INItoClass');
-  Ini := TMemIniFile.Create( '' ) ;
+  Ini := TMemIniFile.Create('');
   try
     Ini.Clear;
     Ini.SetStrings(ConteudoINI);
 
-    fpEstado      := TACBrECFEstado( Ini.ReadInteger('Variaveis','Estado',
-                                     Integer( fpEstado) ) ) ;
-    fpNumCOO      := Ini.ReadInteger('Variaveis','NumCupom',fpNumCOO) ;
-    fpChaveCupom  := Ini.ReadString('Variaveis','ChaveCupom',fpChaveCupom) ;
-    fpNumGNF      := Ini.ReadInteger('Variaveis','NumGNF',fpNumGNF) ;
-    fpNumGRG      := Ini.ReadInteger('Variaveis','NumGRG',fpNumGRG) ;
-    fpNumCDC      := Ini.ReadInteger('Variaveis','NumCDC',fpNumCDC) ;
-    fpNumCER      := Ini.ReadInteger('Variaveis','NumCER',fpNumCER) ;
-    fpGrandeTotal := Ini.ReadFloat('Variaveis','GrandeTotal',fpGrandeTotal) ;
-    fpVendaBruta  := Ini.ReadFloat('Variaveis','VendaBruta',fpVendaBruta) ;
-    fpNumCCF      := Ini.ReadInteger('Variaveis','NumCCF',fpNumCCF) ;
-    fpDia         := Ini.ReadDate('Variaveis','DiaMovimento',fpDia) ;
-    fpVerao       := Ini.ReadBool('Variaveis','HorarioVerao',fpVerao) ;
-    fpReducoesZ   := Ini.ReadInteger('Variaveis','ReducoesZ',fpReducoesZ) ;
-    fpLeiturasX   := Ini.ReadInteger('Variaveis','LeiturasX',fpLeiturasX) ;
-    fpCOOInicial  := Ini.ReadInteger('Variaveis','COOInicial',fpCOOInicial) ;
-    fpCOOFinal    := Ini.ReadInteger('Variaveis','COOFinal',fpCOOFinal) ;
-    Operador      := Ini.ReadString('Variaveis','Operador',Operador) ;
-    fpPAF         := Ini.ReadString('Variaveis','PAF',fpPAF) ;
-    fpCuponsCancelados := Ini.ReadInteger('Variaveis','CuponsCancelados', fpCuponsCancelados) ;
-    fpCuponsCanceladosTotal := Ini.ReadFloat('Variaveis', 'CuponsCanceladosTotal', fpCuponsCanceladosTotal);
-    fpCNFCancelados := Ini.ReadInteger('Variaveis','CNFCancelados', fpCNFCancelados) ;
+    fpEstado      := TACBrECFEstado(Ini.ReadInteger('Variaveis','Estado',Integer(fpEstado)));
+    fpNumCOO      := Ini.ReadInteger('Variaveis','NumCupom',fpNumCOO);
+    fpNumGNF      := Ini.ReadInteger('Variaveis','NumGNF',fpNumGNF);
+    fpNumGRG      := Ini.ReadInteger('Variaveis','NumGRG',fpNumGRG);
+    fpNumCDC      := Ini.ReadInteger('Variaveis','NumCDC',fpNumCDC);
+    fpNumCER      := Ini.ReadInteger('Variaveis','NumCER',fpNumCER);
+    fpGrandeTotal := Ini.ReadFloat('Variaveis','GrandeTotal',fpGrandeTotal);
+    fpVendaBruta  := Ini.ReadFloat('Variaveis','VendaBruta',fpVendaBruta);
+    fpNumCCF      := Ini.ReadInteger('Variaveis','NumCCF',fpNumCCF);
+    fpDia         := Ini.ReadDate('Variaveis','DiaMovimento',fpDia);
+    fpVerao       := Ini.ReadBool('Variaveis','HorarioVerao',fpVerao);
+    fpReducoesZ   := Ini.ReadInteger('Variaveis','ReducoesZ',fpReducoesZ);
+    fpLeiturasX   := Ini.ReadInteger('Variaveis','LeiturasX',fpLeiturasX);
+    fpCOOInicial  := Ini.ReadInteger('Variaveis','COOInicial',fpCOOInicial);
+    fpCOOFinal    := Ini.ReadInteger('Variaveis','COOFinal',fpCOOFinal);
+    Operador      := Ini.ReadString('Variaveis','Operador',Operador);
+    fpPAF         := Ini.ReadString('Variaveis','PAF',fpPAF);
+    fpCuponsCancelados   := Ini.ReadInteger('Variaveis','CuponsCancelados', fpCuponsCancelados);
+    fpCNFCancelados      := Ini.ReadInteger('Variaveis','CNFCancelados', fpCNFCancelados);
     fpCNFCanceladosTotal := Ini.ReadFloat('Variaveis', 'CNFCanceladosTotal', fpCNFCanceladosTotal);
+
+    fpCuponsCanceladosTotalICMS  := Ini.ReadFloat('Variaveis',
+       'CuponsCanceladosTotal', fpCuponsCanceladosTotalICMS);
+    fpCuponsCanceladosTotalISSQN := Ini.ReadFloat('Variaveis',
+       'CuponsCanceladosTotalISSQN', fpCuponsCanceladosTotalISSQN);
     fpCuponsCanceladosEmAberto := Ini.ReadInteger('Variaveis',
-       'CuponsCanceladosEmAberto', fpCuponsCanceladosEmAberto) ;
-    fpCuponsCanceladosEmAbertoTotal := Ini.ReadFloat('Variaveis',
-       'CuponsCanceladosEmAbertoTotal', fpCuponsCanceladosEmAbertoTotal);
+       'CuponsCanceladosEmAberto', fpCuponsCanceladosEmAberto);
+    fpCuponsCanceladosEmAbertoTotalICMS := Ini.ReadFloat('Variaveis',
+       'CuponsCanceladosEmAbertoTotal', fpCuponsCanceladosEmAbertoTotalICMS);
+    fpCuponsCanceladosEmAbertoTotalISSQN := Ini.ReadFloat('Variaveis',
+       'CuponsCanceladosEmAbertoTotalISSQN', fpCuponsCanceladosEmAbertoTotalISSQN);
 
-    fpTotalDescontos := Ini.ReadFloat('Variaveis', 'TotalDescontos', fpTotalDescontos);
-    fpTotalAcrescimos :=Ini.ReadFloat('Variaveis', 'TotalAcrescimos', fpTotalAcrescimos);
-
-    fpCupom.LoadFromINI(Ini);
+    fpTotalDescontosICMS   := Ini.ReadFloat('Variaveis', 'TotalDescontos', fpTotalDescontosICMS);
+    fpTotalAcrescimosICMS  := Ini.ReadFloat('Variaveis', 'TotalAcrescimos', fpTotalAcrescimosICMS);
+    fpTotalDescontosISSQN  := Ini.ReadFloat('Variaveis', 'TotalDescontosISSQN', fpTotalDescontosISSQN);
+    fpTotalAcrescimosISSQN := Ini.ReadFloat('Variaveis', 'TotalAcrescimosISSQN', fpTotalAcrescimosISSQN);
 
     inherited CarregaAliquotas ;   { Cria fpAliquotas }
     S := 'Aliquotas';
@@ -2851,6 +3142,8 @@ begin
       fpComprovantesNaoFiscais.Add( ComprovanteVirtual ) ;
       A := A + 1 ;
     end ;
+
+    fpCupom.LoadFromINI(Ini);
   finally
     Ini.Free ;
   end ;
@@ -2858,8 +3151,6 @@ end;
 
 procedure TACBrECFVirtualClass.CriarMemoriaInicial;
 Var
-  AliqICMS            : TACBrECFAliquota ;
-  FormaPagamento      : TACBrECFFormaPagamento ;
   ComprovanteNaoFiscal: TACBrECFComprovanteNaoFiscal;
   RG: TACBrECFRelatorioGerencial;
 begin
@@ -2870,31 +3161,9 @@ begin
   except
   end ;
 
-  FreeAndNil( fpAliquotas ) ;
-  inherited CarregaAliquotas;
+  CriarAliquotasPadrao;
 
-  AliqICMS := TACBrECFAliquota.create ;
-  AliqICMS.Indice   := 'FF' ;
-  AliqICMS.Tipo     := 'T' ;
-  fpAliquotas.Add( AliqICMS ) ;
-
-  AliqICMS := TACBrECFAliquota.create ;
-  AliqICMS.Indice   := 'II' ;
-  AliqICMS.Tipo     := 'T' ;
-  fpAliquotas.Add( AliqICMS ) ;
-
-  AliqICMS := TACBrECFAliquota.create ;
-  AliqICMS.Indice   := 'NN' ;
-  AliqICMS.Tipo     := 'T' ;
-  fpAliquotas.Add( AliqICMS ) ;
-
-  FreeAndNil( fpFormasPagamentos ) ;
-  inherited CarregaFormasPagamento;
-
-  FormaPagamento := TACBrECFFormaPagamento.create ;
-  FormaPagamento.Indice    := '01' ;
-  FormaPagamento.Descricao := 'DINHEIRO' ;
-  fpFormasPagamentos.Add( FormaPagamento ) ;
+  CriarFormasPagamentoPadrao;
 
   FreeAndNil( fpRelatoriosGerenciais ) ;
   inherited CarregaRelatoriosGerenciais;
@@ -2919,6 +3188,143 @@ begin
 
   GravaArqINI ;
 end ;
+
+procedure TACBrECFVirtualClass.CriarAliquotasPadrao;
+var
+  Aliquota : TACBrECFAliquota ;
+begin
+  FreeAndNil( fpAliquotas ) ;
+  inherited CarregaAliquotas;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'F1' ;
+  Aliquota.Tipo     := 'T' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'I1' ;
+  Aliquota.Tipo     := 'T' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'N1' ;
+  Aliquota.Tipo     := 'T' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'FS1' ;
+  Aliquota.Tipo     := 'S' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'IS1' ;
+  Aliquota.Tipo     := 'S' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'NS1' ;
+  Aliquota.Tipo     := 'S' ;
+  fpAliquotas.Add( Aliquota ) ;
+end;
+
+procedure TACBrECFVirtualClass.CriarFormasPagamentoPadrao;
+var
+  FormaPagamento: TACBrECFFormaPagamento ;
+begin
+  FreeAndNil( fpFormasPagamentos ) ;
+  inherited CarregaFormasPagamento;
+
+  FormaPagamento := TACBrECFFormaPagamento.create ;
+  FormaPagamento.Indice    := '00' ;
+  FormaPagamento.Descricao := 'TROCO' ;
+  FormaPagamento.PermiteVinculado := False;
+  fpFormasPagamentos.Add( FormaPagamento ) ;
+
+  FormaPagamento := TACBrECFFormaPagamento.create ;
+  FormaPagamento.Indice    := '01' ;
+  FormaPagamento.Descricao := 'DINHEIRO' ;
+  FormaPagamento.PermiteVinculado := False;
+  fpFormasPagamentos.Add( FormaPagamento ) ;
+end;
+
+procedure TACBrECFVirtualClass.AtualizarAliquotasMemoria;
+var
+  CopiaAliquotas: TACBrECFAliquotas;
+  Aliq: TACBrECFAliquota;
+  I: Integer;
+begin
+  CopiaAliquotas := TACBrECFAliquotas.Create(True);
+  try
+    For I := 0 to fpAliquotas.Count-1 do
+    begin
+      Aliq := TACBrECFAliquota.create;
+      Aliq.Assign(fpAliquotas[I]);
+      CopiaAliquotas.Add(Aliq);
+    end;
+
+    CriarAliquotasPadrao;
+    if CopiaAliquotas.Count > 0 then
+      fpAliquotas[0].Total := CopiaAliquotas[0].Total;
+
+    if CopiaAliquotas.Count > 1 then
+      fpAliquotas[1].Total := CopiaAliquotas[1].Total;
+
+    if CopiaAliquotas.Count > 2 then
+      fpAliquotas[2].Total := CopiaAliquotas[2].Total;
+
+    if CopiaAliquotas.Count > 3 then
+    begin
+      For I := 3 to CopiaAliquotas.Count-1 do
+      begin
+        Aliq := TACBrECFAliquota.create;
+        Aliq.Assign(CopiaAliquotas[I]);
+        Aliq.Indice := IntToStrZero(fpAliquotas.Count+1, 2);  // Reposiciona o Indice
+        fpAliquotas.Add(Aliq);
+      end;
+    end;
+
+    GravaArqINI;
+  finally
+    CopiaAliquotas.Free;
+  end;
+
+end;
+
+procedure TACBrECFVirtualClass.AtualizarFormasPagamentoMemoria;
+var
+  CopiaFPG: TACBrECFFormasPagamento;
+  FPG: TACBrECFFormaPagamento;
+  I: Integer;
+begin
+  CopiaFPG := TACBrECFFormasPagamento.Create(True);
+  try
+    For I := 0 to fpFormasPagamentos.Count-1 do
+    begin
+      FPG := TACBrECFFormaPagamento.create;
+      FPG.Assign(fpFormasPagamentos[I]);
+      CopiaFPG.Add(FPG);
+    end;
+
+    CriarFormasPagamentoPadrao;
+
+    if CopiaFPG.Count > 0 then  // Movendo total de "Dinheiro"
+      fpFormasPagamentos[1].Total := CopiaFPG[0].Total;
+
+    if CopiaFPG.Count > 1 then  // Tem outras FPGs cadastradas ?
+    begin
+      For I := 1 to CopiaFPG.Count-1 do
+      begin
+        FPG := TACBrECFFormaPagamento.create;
+        FPG.Assign(CopiaFPG[I]);
+        fpFormasPagamentos.Add(FPG);
+      end;
+    end;
+
+    GravaArqINI;
+  finally
+    CopiaFPG.Free;
+  end;
+end;
 
 procedure TACBrECFVirtualClass.GravaArqINI;
 var
@@ -2964,7 +3370,6 @@ begin
 
     Ini.WriteInteger('Variaveis','Estado',Integer( fpEstado) ) ;
     Ini.WriteInteger('Variaveis','NumCupom',fpNumCOO) ;
-    Ini.WriteString('Variaveis','ChaveCupom',fpChaveCupom) ;
     Ini.WriteInteger('Variaveis','NumGNF',fpNumGNF) ;
     Ini.WriteInteger('Variaveis','NumGRG',fpNumGRG) ;
     Ini.WriteInteger('Variaveis','NumCDC',fpNumCDC) ;
@@ -2979,45 +3384,61 @@ begin
     Ini.WriteInteger('Variaveis','COOInicial',fpCOOInicial) ;
     Ini.WriteInteger('Variaveis','COOFinal',fpCOOFinal) ;
     Ini.WriteInteger('Variaveis','CuponsCancelados',fpCuponsCancelados) ;
-    Ini.WriteFloat('Variaveis', 'CuponsCanceladosTotal', fpCuponsCanceladosTotal);
+    Ini.WriteFloat('Variaveis', 'CuponsCanceladosTotal', fpCuponsCanceladosTotalICMS);
+    Ini.WriteFloat('Variaveis', 'CuponsCanceladosTotalISSQN', fpCuponsCanceladosTotalISSQN);
     Ini.WriteInteger('Variaveis','CNFCancelados',fpCNFCancelados) ;
     Ini.WriteFloat('Variaveis', 'CNFCanceladosTotal', fpCNFCanceladosTotal);
     Ini.WriteInteger('Variaveis','CuponsCanceladosEmAberto',fpCuponsCanceladosEmAberto) ;
-    Ini.WriteFloat('Variaveis', 'CuponsCanceladosEmAbertoTotal', fpCuponsCanceladosEmAbertoTotal);
-    Ini.WriteFloat('Variaveis', 'TotalDescontos',fpTotalDescontos);
-    Ini.WriteFloat('Variaveis', 'TotalAcrescimos',fpTotalAcrescimos);
+    Ini.WriteFloat('Variaveis', 'CuponsCanceladosEmAbertoTotal', fpCuponsCanceladosEmAbertoTotalICMS);
+    Ini.WriteFloat('Variaveis', 'CuponsCanceladosEmAbertoTotalISSQN', fpCuponsCanceladosEmAbertoTotalISSQN);
+    Ini.WriteFloat('Variaveis', 'TotalDescontos',fpTotalDescontosICMS);
+    Ini.WriteFloat('Variaveis', 'TotalAcrescimos',fpTotalAcrescimosICMS);
+    Ini.WriteFloat('Variaveis', 'TotalDescontosISSQN',fpTotalDescontosISSQN);
+    Ini.WriteFloat('Variaveis', 'TotalAcrescimosISSQN',fpTotalAcrescimosISSQN);
     Ini.WriteString('Variaveis','Operador',Operador) ;
     Ini.WriteString('Variaveis','PAF',fpPAF) ;
 
     fpCupom.SaveToINI( Ini );
 
-    S := 'Formas_Pagamento';
-    for A := 0 to fpFormasPagamentos.Count - 1 do
+    if Assigned(fpFormasPagamentos) then
     begin
-      with fpFormasPagamentos[A] do
-        Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
-    end ;
+      S := 'Formas_Pagamento';
+      for A := 0 to fpFormasPagamentos.Count - 1 do
+      begin
+        with fpFormasPagamentos[A] do
+          Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
+      end ;
+    end;
 
-    S := 'Relatorios_Gerenciais';
-    for A := 0 to fpRelatoriosGerenciais.Count - 1 do
+    if Assigned(fpRelatoriosGerenciais) then
     begin
-      with fpRelatoriosGerenciais[A] do
-        Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
-    end ;
+      S := 'Relatorios_Gerenciais';
+      for A := 0 to fpRelatoriosGerenciais.Count - 1 do
+      begin
+        with fpRelatoriosGerenciais[A] do
+          Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
+      end ;
+    end;
 
-    S := 'Comprovantes_nao_Fiscais';
-    for A := 0 to fpComprovantesNaoFiscais.Count - 1 do
+    if Assigned(fpComprovantesNaoFiscais) then
     begin
-      with fpComprovantesNaoFiscais[A] do
-        Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
-    end ;
+      S := 'Comprovantes_nao_Fiscais';
+      for A := 0 to fpComprovantesNaoFiscais.Count - 1 do
+      begin
+        with fpComprovantesNaoFiscais[A] do
+          Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
+      end ;
+    end;
 
-    S := 'Aliquotas';
-    for A := 0 to fpAliquotas.Count - 1 do
+    if Assigned(fpAliquotas) then
     begin
-      with fpAliquotas[A]  do
-        Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
-    end ;
+      S := 'Aliquotas';
+      for A := 0 to fpAliquotas.Count - 1 do
+      begin
+        with fpAliquotas[A]  do
+          Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
+      end ;
+    end;
 
     ConteudoINI.Clear;
     Ini.GetStrings( ConteudoINI );
@@ -3029,7 +3450,7 @@ end;
 function TACBrECFVirtualClass.CalculaNomeArqINI : String ;
 begin
   Result := ExtractFilePath(fpEXEName)+'acbrecf'+GetNumECF+'.ini';
-end ;
+end;
 
 procedure TACBrECFVirtualClass.SetNumECF(AValue: Integer);
 begin
@@ -3064,6 +3485,16 @@ begin
   fpColunas := AValue;
 end;
 
+function TACBrECFVirtualClass.GetChaveCupom: String;
+begin
+  Result := fpCupom.ChaveDFe;
+end;
+
+procedure TACBrECFVirtualClass.SetChaveCupom(AValue: String);
+begin
+  fpCupom.ChaveDFe := AValue;
+end;
+
 function TACBrECFVirtualClass.GetColunas: Integer;
 begin
   Result := fpColunas;
@@ -3086,16 +3517,19 @@ begin
 
   if not (fpEstado in [estNaoInicializada,estDesconhecido]) then
   begin
-    if (CompareDate( now, fpDia) > 0) and
-       ( not (fpEstado in [estBloqueada,estRequerX])) then
-      fpEstado := estRequerZ ;
-
-    if (fpEstado = estBloqueada) and (CompareDate( now, fpDia) > 0) then
-      fpEstado := estRequerX ;
+    if (CompareDate(now, fpDia) > 0) then
+    begin
+       case fpEstado of
+         estLivre:     fpEstado := estRequerZ;
+         estBloqueada: fpEstado := estRequerX ;
+       end;
+    end;
   end ;
 
   if fpEstado in [estDesconhecido, estNaoInicializada] then
     fpEstado := estLivre ;
+
+  GetEstadoECFVirtual;
 
   if fpEstado <> estAnterior then
     GravaArqINI ;
@@ -3147,7 +3581,7 @@ begin
 
   try
     FPagto := TACBrECFFormaPagamento.create ;
-    FPagto.Indice           := IntToStrZero( fpFormasPagamentos.Count+1, 2 );
+    FPagto.Indice           := IntToStrZero( fpFormasPagamentos.Count, 2 );
     FPagto.Descricao        := Descricao ;
     FPagto.PermiteVinculado := PermiteVinculado ;
     fpFormasPagamentos.Add( FPagto ) ;
@@ -3221,13 +3655,6 @@ begin
   GravaLog( ComandoLOG );
 
   Result := inherited AchaICMSAliquota( AliquotaICMS );
-
-  if AliquotaICMS = 'N1' then
-    AliquotaICMS := 'NN'
-  else if AliquotaICMS = 'F1' then
-    AliquotaICMS := 'FF'
-  else if AliquotaICMS = 'I1' then
-    AliquotaICMS := 'II';
 end;
 
 procedure TACBrECFVirtualClass.ProgramaAliquota( Aliquota : Double; Tipo : Char;
@@ -3265,14 +3692,7 @@ end;
 
 procedure TACBrECFVirtualClass.CarregaTotalizadoresNaoTributados;
 begin
-  if Assigned( fpTotalizadoresNaoTributados ) then
-     fpTotalizadoresNaoTributados.Free ;
-
-  fpTotalizadoresNaoTributados := TACBrECFTotalizadoresNaoTributados.create( true ) ;
-
-  fpTotalizadoresNaoTributados.New.Indice := 'F1';
-  fpTotalizadoresNaoTributados.New.Indice := 'I1';
-  fpTotalizadoresNaoTributados.New.Indice := 'N1';
+  inherited;
 end;
 
 procedure TACBrECFVirtualClass.CarregaComprovantesNaoFiscais;

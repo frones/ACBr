@@ -53,7 +53,7 @@ uses
   {$ELSE}
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDAInutRL, ACBrUtil,
+  pcnConversao, ACBrNFeDAInutRL, ACBrUtil,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
 
@@ -135,7 +135,7 @@ type
 implementation
 
 uses
-  DateUtils, ACBrDFeUtil;
+  DateUtils;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -157,7 +157,7 @@ begin
     begin
       rllOrgao.Caption := IntToStr(RetInutNFe.cUF);
 
-      case tpAmb of
+      case RetInutNFe.tpAmb of
        taProducao:    rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
        taHomologacao: rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
       end;

@@ -1,5 +1,4 @@
 @ECHO OFF
-@ECHO OFF
 
 if "%1" == "" goto param_default
 
@@ -8,7 +7,7 @@ if NOT EXIST %1\lazarus.exe goto erro_param
 if NOT EXIST %1\tools\lazres.exe GOTO erro_lazres
 
 :Comum
-%1\tools\lazres.exe ACBrComum.lrs TACBrAAC.bmp
+%1\tools\lazres.exe ACBrComum.lrs TACBrAAC.png
 move ACBrComum.lrs ..\ACBrComum
 echo.
 echo "****************************************"
@@ -17,7 +16,7 @@ echo "****************************************"
 echo.
 
 :OpenSSL
-%1\tools\lazres.exe ACBrOpenSSL.lrs TACBrEAD.bmp
+%1\tools\lazres.exe ACBrOpenSSL.lrs TACBrEAD.png
 move ACBrOpenSSL.lrs ..\ACBrOpenSSL
 echo.
 echo "****************************************"
@@ -26,7 +25,7 @@ echo "****************************************"
 echo.
 
 :Diversos
-%1\tools\lazres.exe ACBrDiversos.lrs TACBrCalculadora.bmp TACBrExtenso.bmp TACBrValidador.bmp TACBrTroco.bmp TACBrCMC7.bmp TACBrFala.bmp TACBrGIF.bmp TACBrBarCode.bmp TACBrEnterTab.bmp TACBrCargaBal.png TACBrCotacao.bmp TACBrInStore.png
+%1\tools\lazres.exe ACBrDiversos.lrs TACBrCalculadora.png TACBrExtenso.png TACBrValidador.png TACBrTroco.png TACBrCMC7.png TACBrFala.png TACBrGIF.png TACBrBarCode.png TACBrEnterTab.png TACBrCargaBal.png TACBrCotacao.png TACBrInStore.png
 move ACBrDiversos.lrs ..\ACBrDiversos
 echo.
 echo "****************************************"
@@ -35,7 +34,7 @@ echo "****************************************"
 echo.
 
 :Serial
-%1\tools\lazres.exe ACBrSerial.lrs TACBrECF.bmp TACBrGAV.bmp TACBrCHQ.bmp TACBrLCB.bmp TACBrDIS.bmp TACBrBAL.bmp TACBrTER.bmp TACBrETQ.bmp TACBrRFD.bmp TACBrSMS.bmp TACBrPosPrinter.bmp
+%1\tools\lazres.exe ACBrSerial.lrs TACBrECF.png TACBrGAV.png TACBrCHQ.png TACBrLCB.png TACBrDIS.png TACBrBAL.png TACBrTER.png TACBrETQ.png TACBrRFD.png TACBrSMS.png TACBrPosPrinter.png TACBrECFVirtualNaoFiscal.png
 move ACBrSerial.lrs ..\ACBrSerial
 echo.
 echo "****************************************"
@@ -44,7 +43,7 @@ echo "****************************************"
 echo.
 
 :TEFD
-%1\tools\lazres.exe ACBrTEFD.lrs TACBrTEFD.bmp
+%1\tools\lazres.exe ACBrTEFD.lrs TACBrTEFD.png
 move ACBrTEFD.lrs ..\ACBrTEFD
 echo.
 echo "****************************************"
@@ -53,7 +52,7 @@ echo "****************************************"
 echo.
 
 :TCP
-%1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.bmp TACBrCEP.bmp TACBrIBGE.bmp TACBrNFPws.bmp TACBrCNIEE.bmp TACBrSuframa.bmp TACBrDownload.bmp TACBrIBPTax.bmp TACBrConsultaCNPJ.bmp TACBrMail.bmp TACBrConsultaCPF.png TACBrSpedTabelas.bmp TACBrSedex.bmp TACBrNCMs.bmp TACBrMTer.bmp
+%1\tools\lazres.exe ACBrTCP.lrs TACBrTCPServer.png TACBrCEP.png TACBrIBGE.png TACBrNFPws.png TACBrCNIEE.png TACBrSuframa.png TACBrDownload.png TACBrIBPTax.png TACBrConsultaCNPJ.png TACBrMail.png TACBrConsultaCPF.png TACBrSpedTabelas.png TACBrSedex.png TACBrNCMs.png
 move ACBrTCP.lrs ..\ACBrTCP
 echo.
 echo "****************************************"
@@ -61,26 +60,42 @@ echo "* Arquivo   ACBrTCP.lrs   gerado       *"
 echo "****************************************"
 echo.
 
-:SPED
-%1\tools\lazres.exe ACBrSpedFiscal.lrs TACBrSpedFiscal.bmp
-%1\tools\lazres.exe ACBrSpedContabil.lrs TACBrSpedContabil.bmp
-%1\tools\lazres.exe ACBrSpedPisCofins.lrs TACBrSpedPisCofins.bmp
-;;%1\tools\lazres.exe ACBrSpedECF.lrs TACBrSpedPisCofins.png
-move ACBrSpedFiscal.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDFiscal
-move ACBrSpedContabil.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDContabil
-move ACBrSpedPisCofins.lrs ..\ACBrTXT\ACBrSPED\ACBrSpedPisCofins
-move ACBrSpedECF.lrs ..\ACBrTXT\ACBrSPED\ACBrSpedECF
+:MTER
+%1\tools\lazres.exe ACBrMTER.lrs TACBrMTer.png
+move ACBrMTER.lrs ..\ACBrTCP
 echo.
 echo "****************************************"
-echo "* Arquivo  ACBrSpedFiscal.lrs   gerado *"
-echo "* Arquivo  ACBrSpedContabil.lrs gerado *"
-echo "* Arquivo  ACBrSpedPisCofins.lrs gerado*"
-echo "* Arquivo  ACBrSpedECF.lrs gerado      *"
+echo "* Arquivo   ACBrMTER.lrs   gerado       *"
 echo "****************************************"
 echo.
 
+:SPED
+%1\tools\lazres.exe ACBrSpedFiscal.lrs TACBrSpedFiscal.png
+%1\tools\lazres.exe ACBrSpedContabil.lrs TACBrSpedContabil.png
+%1\tools\lazres.exe ACBrSpedPisCofins.lrs TACBrSpedPisCofins.png
+%1\tools\lazres.exe ACBrSPEDPisCofinsImportar.lrs TACBrSpedPCImportar.png  
+%1\tools\lazres.exe ACBrSpedECF.lrs TACBrSpedECF.png  
+%1\tools\lazres.exe ACBrSpedFiscalImportar.lrs TACBrSpedFiscalImportar.png  
+
+move ACBrSpedFiscal.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDFiscal
+move ACBrSpedContabil.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDContabil
+move ACBrSpedPisCofins.lrs ..\ACBrTXT\ACBrSPED\ACBrSpedPisCofins
+move ACBrSPEDPisCofinsImportar.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDPisCofinsImportar
+move ACBrSpedECF.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDECF
+move ACBrSpedFiscalImportar.lrs ..\ACBrTXT\ACBrSPED\ACBrSpedFiscalImportar
+
+echo.
+echo "************************************************"
+echo "* Arquivo  ACBrSpedFiscal.lrs   gerado         *"
+echo "* Arquivo  ACBrSpedContabil.lrs gerado         *"
+echo "* Arquivo  ACBrSpedPisCofins.lrs gerado        *"
+echo "* Arquivo  ACBrSPEDPisCofinsImportar.lrs gerado*"
+echo "* Arquivo  ACBrSpedECF.lrs gerado              *"
+echo "************************************************"
+echo.
+
 :PAF
-%1\tools\lazres.exe ACBrPAF.lrs TACBrPAF.bmp
+%1\tools\lazres.exe ACBrPAF.lrs TACBrPAF.png
 move ACBrPAF.lrs ..\ACBrTXT\ACBrPAF
 echo.
 echo "****************************************"
@@ -89,7 +104,7 @@ echo "****************************************"
 echo.
 
 :Convenio115
-%1\tools\lazres.exe ACBrConvenio115.lrs TACBrConvenio115.bmp
+%1\tools\lazres.exe ACBrConvenio115.lrs TACBrConvenio115.png
 move ACBrConvenio115.lrs ..\ACBrTXT\ACBrConvenio115
 echo.
 echo "****************************************"
@@ -98,9 +113,9 @@ echo "****************************************"
 echo.
 
 :Boleto
-%1\tools\lazres.exe ACBrBoleto.lrs TACBrBoleto.bmp
-%1\tools\lazres.exe ACBrBoletoFCFortes.lrs TACBrBoletoFCFortes.bmp
-%1\tools\lazres.exe ACBrBoletoFCLazReport.lrs TACBrBoletoFCLazReport.bmp ..\ACBrBoleto\FC\Laz\FCLazReport_Padrao.lrf ..\ACBrBoleto\FC\Laz\FCLazReport_CompEntrega.lrf ..\ACBrBoleto\FC\Laz\FCLazReport_Carne.lrf
+%1\tools\lazres.exe ACBrBoleto.lrs TACBrBoleto.png
+%1\tools\lazres.exe ACBrBoletoFCFortes.lrs TACBrBoletoFCFortes.png
+%1\tools\lazres.exe ACBrBoletoFCLazReport.lrs TACBrBoletoFCLazReport.png ..\ACBrBoleto\FC\Laz\FCLazReport_Padrao.lrf ..\ACBrBoleto\FC\Laz\FCLazReport_CompEntrega.lrf ..\ACBrBoleto\FC\Laz\FCLazReport_Carne.lrf
 
 move ACBrBoleto.lrs ..\ACBrBoleto
 move ACBrBoletoFCFortes.lrs ..\ACBrBoleto\FC\Fortes
@@ -113,16 +128,16 @@ echo "****************************************"
 echo.
 
 :NFe
-%1\tools\lazres.exe ACBrNFe.lrs TACBrNFe.bmp 
+%1\tools\lazres.exe ACBrNFe.lrs TACBrNFe.png 
 move ACBrNFe.lrs ..\ACBrDFe\ACBrNFe
 
-%1\tools\lazres.exe ACBrNFeDANFeRL.lrs TACBrNFeDANFeRL.bmp
+%1\tools\lazres.exe ACBrNFeDANFeRL.lrs TACBrNFeDANFeRL.png
 move ACBrNFeDANFeRL.lrs ..\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes
 
-%1\tools\lazres.exe ACBrNFeDANFCeFortes.lrs TACBrNFeDANFCeFortes.bmp
+%1\tools\lazres.exe ACBrNFeDANFCeFortes.lrs TACBrNFeDANFCeFortes.png TACBrNFeDANFCeFortesA4.png
 move ACBrNFeDANFCeFortes.lrs ..\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes
 
-%1\tools\lazres.exe ACBrNFeDANFeESCPOS.lrs TACBrNFeDANFeESCPOS.bmp 
+%1\tools\lazres.exe ACBrNFeDANFeESCPOS.lrs TACBrNFeDANFeESCPOS.png 
 move ACBrNFeDANFeESCPOS.lrs ..\ACBrDFe\ACBrNFe\DANFE\NFCe\EscPos
 
 %1\tools\lazres.exe ACBrECFVirtualNFCe.lrs TACBrECFVirtualNFCe.png
@@ -135,21 +150,31 @@ echo "* Arquivos    ACBrNFe.lrs, ACBrNFeDANFeRL.lrs     gerados    *"
 echo "**************************************************************"
 echo.
 
+:BlocoX
+%1\tools\lazres.exe ACBrBlocoX.lrs TACBrBlocoX.png
+move ACBrBlocoX.lrs ..\ACBrDFe\ACBrBlocoX
+echo.
+echo "****************************************"
+echo "* Arquivo   ACBrBlocoX.lrs   gerado    *"
+echo "****************************************"
+echo.
+
 :GNRE
-%1\tools\lazres.exe ACBrGNRE.lrs TACBrGNRE.bmp 
+%1\tools\lazres.exe ACBrGNRE.lrs TACBrGNRE.png 
 move ACBrGNRE.lrs ..\ACBrDFe\ACBrGNRE
 
-%1\tools\lazres.exe ACBrGNREGuiaFR.lrs TACBrGNREGuiaFR.bmp 
+%1\tools\lazres.exe ACBrGNREGuiaFR.lrs TACBrGNREGuiaFR.png 
 move ACBrGNREGuiaFR.lrs ..\ACBrDFe\ACBrGNRE\GNRE\Fortes
 
 echo.
-echo "****************************************"
-echo "* Arquivo    ACBrGNRE.lrs     gerado    *"
-echo "****************************************"
+echo "***********************************************"
+echo "* Arquivo    ACBrGNRE.lrs     gerado          *"
+echo "* Arquivo    ACBrGNREGuiaFR.lrs     gerado    *"
+echo "***********************************************"
 echo.
 
 :NFSe
-%1\tools\lazres.exe ACBrNFSe.lrs TACBrNFSe.bmp 
+%1\tools\lazres.exe ACBrNFSe.lrs TACBrNFSe.png 
 move ACBrNFSe.lrs ..\ACBrDFe\ACBrNFSe
 
 echo.
@@ -159,17 +184,22 @@ echo "****************************************"
 echo.
 
 :CTe
-%1\tools\lazres.exe ACBrCTe.lrs TACBrCTe.bmp 
+%1\tools\lazres.exe ACBrCTe.lrs TACBrCTe.png 
 move ACBrCTe.lrs ..\ACBrDFe\ACBrCTe
 
+%1\tools\lazres.exe ACBrCTeDACTeRL.lrs TACBrCTeDACTeRL.png 
+move ACBrCTeDACTeRL.lrs ..\ACBrDFe\ACBrCTe\DACTE\Fortes
+
+
 echo.
-echo "****************************************"
-echo "* Arquivo    ACBrCTe.lrs     gerado    *"
-echo "****************************************"
+echo "***********************************************"
+echo "* Arquivo    ACBrCTe.lrs     gerado           *"
+echo "* Arquivo    ACBrCTeDACTeRL.lrs     gerado    *"
+echo "***********************************************"
 echo.
 
 :MDFe
-%1\tools\lazres.exe ACBrMDFe.lrs TACBrMDFe.bmp
+%1\tools\lazres.exe ACBrMDFe.lrs TACBrMDFe.png
 move ACBrMDFe.lrs ..\ACBrDFe\ACBrMDFe
 
 %1\tools\lazres.exe ACBrMDFeDAMDFeRL.lrs TACBrMDFeDAMDFeRL.png
@@ -182,7 +212,7 @@ echo "****************************************"
 echo.
 
 :LFD
-%1\tools\lazres.exe ACBrLFD.lrs TACBrLFD.bmp 
+%1\tools\lazres.exe ACBrLFD.lrs TACBrLFD.png 
 move ACBrLFD.lrs ..\ACBrTXT\ACBrLFD
 
 echo.
@@ -192,7 +222,7 @@ echo "****************************************"
 echo.
 
 :Sintegra
-%1\tools\lazres.exe ACBrSintegra.lrs TACBrSintegra.bmp
+%1\tools\lazres.exe ACBrSintegra.lrs TACBrSintegra.png
 move ACBrSintegra.lrs ..\ACBrTXT\ACBrSintegra
 echo.
 echo "****************************************"
@@ -200,14 +230,32 @@ echo "* Arquivo   ACBrSintegra.lrs   gerado  *"
 echo "****************************************"
 echo.
 
+:Ponto
+%1\tools\lazres.exe ACBrPonto.lrs TACBrPonto.png
+move ACBrPonto.lrs ..\ACBrTXT\ACBrPonto
+echo.
+echo "*************************************"
+echo "* Arquivo   ACBrPonto.lrs   gerado  *"
+echo "*************************************"
+echo.
+
+:DeSTDA
+%1\tools\lazres.exe ACBrDeSTDA.lrs TACBrDeSTDA.png
+move ACBrDeSTDA.lrs ..\ACBrTXT\ACBrDeSTDA
+echo.
+echo "****************************************"
+echo "* Arquivo   ACBrDeSTDA.lrs   gerado  *"
+echo "****************************************"
+echo.
+
 :SAT
-%1\tools\lazres.exe ACBrSAT.lrs TACBrSAT.bmp
+%1\tools\lazres.exe ACBrSAT.lrs TACBrSAT.png
 move ACBrSAT.lrs ..\ACBrSAT
                   
-%1\tools\lazres.exe ACBrSATExtratoESCPOS.lrs TACBrSATExtratoESCPOS.bmp
+%1\tools\lazres.exe ACBrSATExtratoESCPOS.lrs TACBrSATExtratoESCPOS.png
 move ACBrSATExtratoESCPOS.lrs ..\ACBrSAT\Extrato\EscPos
 
-%1\tools\lazres.exe ACBrSATExtratoFortes.lrs TACBrSATExtratoFortes.bmp
+%1\tools\lazres.exe ACBrSATExtratoFortes.lrs TACBrSATExtratoFortes.png
 move ACBrSATExtratoFortes.lrs ..\ACBrSAT\Extrato\Fortes
 
 %1\tools\lazres.exe ACBrECFVirtualSAT.lrs TACBrECFVirtualSAT.png
@@ -221,7 +269,7 @@ echo.
 
 
 :SEF2
-%1\tools\lazres.exe ACBrSEF2.lrs TACBrSEF2.bmp
+%1\tools\lazres.exe ACBrSEF2.lrs TACBrSEF2.png
 move ACBrSEF2.lrs ..\ACBrTXT\ACBrSEF2
 echo.
 echo "****************************************"

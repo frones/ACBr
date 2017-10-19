@@ -39,6 +39,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/05/2017
+[+] Adicionadas opções para desligar a capicom, openssl, carga tardia de dll e cast de strings
+    por Regys.Silveira
+
+22/03/2017
+[+] Suporte a Delphi 10.2 Tokyo
+	por (Isaque Pinheiro)
+
+07/11/2013
+[+] Adicionado o ACBr_MTER para o instalador e suas dependências
+	por (Juliomar Marchetti)
+	
 30/04/2016 
 [*] Adicionado recurso de selecionar quais versões do delphi, o ACBrInstall deve executar a 
     instalação, podendo assim fazer instalação em várias versões sem ter que ficar voltando

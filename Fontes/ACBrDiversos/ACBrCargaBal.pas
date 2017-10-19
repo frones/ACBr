@@ -111,6 +111,22 @@ type
   end;
 
 
+//Taras kleberson
+  TACBrCargaBalTaras = class
+  private
+    fCodigo: Integer;
+    FDescricao : String;
+    FValor : Currency;
+
+  public
+    constructor Create;
+    property Codigo: Integer read FCodigo write FCodigo;
+    property Descricao: String read FDescricao write FDescricao;
+    property Valor: Currency read FValor write FValor;
+  end;
+
+
+
   TACBrCargaBalItem = class
   private
     FTecla: Integer;
@@ -124,10 +140,12 @@ type
     FTipoValidade: TACBrCargaBalTipoValidade;
     FSetor: TACBrCargaBalSetor;
     FNutricional: TACBrCargaBalNutricional;
+    FTara: TACBrCargaBalTaras;
     FCodigoTexto1: Integer;
     FCodigoTexto2: Integer;
     FCodigoTexto3: Integer;
     FCodigoInfoNutr: Integer;
+    FCodigoTara: Integer;
   Public
     constructor Create;
     destructor Destroy; override;
@@ -142,11 +160,12 @@ type
     property Receita: String read FReceita write FReceita;
     property Tecla: Integer read FTecla write FTecla;
     property Nutricional: TACBrCargaBalNutricional Read FNutricional Write FNutricional;
+    property Tara: TACBrCargaBalTaras Read FTara Write FTara;
     property CodigoTexto1: Integer read FCodigoTexto1 write FCodigoTexto1;
     property CodigoTexto2: Integer read FCodigoTexto2 write FCodigoTexto2;
     property CodigoTexto3: Integer read FCodigoTexto3 write FCodigoTexto3;
     property CodigoInfoNutr: Integer read FCodigoInfoNutr write FCodigoInfoNutr;
-
+    property CodigoTara: Integer Read FCodigoTara Write FCodigoTara Default 0;
   end;
 
   TACBrCargaBalItens = class(TObjectList)
@@ -161,6 +180,9 @@ type
     property Items[Index: Integer]: TACBrCargaBalItem read GetItem write SetItem; Default;
   end;
 
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrCargaBal = class( TACBrComponent )
   private
     FOnProgresso: TACBrCargaBalProgresso;
@@ -178,6 +200,8 @@ type
     function GetNomeArquivoProduto: String;
     function GetNomeArquivoReceita: String;
     function GetNomeArquivoSetor: String;
+    function GetNomeArquivoTaras: String;
+
     function GetNomeArquivoRelacaoProdutoNutricional: String;
     function GetNomeArquivoRelacaoProdutoReceita: String;
 
@@ -191,7 +215,7 @@ type
     function GetTipoValidadeProdutoUranoURF32(Tipo: TACBrCargaBalTipoValidade): string;
 
     procedure PreencherFilizola(Arquivo, Setor, Nutricional, Receita: TStringList);
-    procedure PreencherToledo(Arquivo, Nutricional, Receita: TStringList; Versao: integer = 0);
+    procedure PreencherToledo(Arquivo, Nutricional, Receita, Tara: TStringList; Versao: integer = 0);
     procedure PreencherUrano(Arquivo: TStringList);
     procedure PreencherUranoS(Arquivo: TStringList);
     procedure PreencherUranoURF32(Arquivo, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita: TStringList);
@@ -216,9 +240,6 @@ uses
   ACBrConsts;
 
 { TACBrCargaBalSetor }
-
-
-
 constructor TACBrCargaBalSetor.Create;
 begin
   FCodigo    := 0;
@@ -245,8 +266,15 @@ begin
 end;
 
 
-{ TACBrCargaBalItem }
+{TACBrCargaBalTaras}
+constructor TACBrCargaBalTaras.Create;
+begin
+  fCodigo:= 0;
+  FValor := 0;
+end;
 
+
+{ TACBrCargaBalItem }
 constructor TACBrCargaBalItem.Create;
 begin
   // Criacao da propriedade Setor
@@ -262,6 +290,7 @@ begin
   FValidade        := 0;
 
   FNutricional := TACBrCargaBalNutricional.Create;
+  FTara := TACBrCargaBalTaras.Create;
 
   FCodigoTexto1    := 0;
   FCodigoTexto2    := 0;
@@ -273,6 +302,7 @@ destructor TACBrCargaBalItem.Destroy;
 begin
   FSetor.Free;
   FNutricional.Free;
+  FTara.Free;
   inherited;
 end;
 
@@ -312,7 +342,6 @@ begin
 end;
 
 { TACBrCargaBal }
-
 constructor TACBrCargaBal.Create(AOwner: TComponent);
 begin
   inherited;
@@ -362,6 +391,14 @@ begin
   Result := LFill(IntToStr(Valor), Tamanho, Caracter);
 end;
 
+function TACBrCargaBal.GetNomeArquivoTaras: String;
+begin
+  case FModelo of
+    modToledo,
+    modToledoMGV5 : Result := 'TARA.TXT';
+  end;
+end;
+
 function TACBrCargaBal.GetNomeArquivoProduto: String;
 begin
   case FModelo of
@@ -377,16 +414,16 @@ end;
 function TACBrCargaBal.GetNutriUndPorcaoToledo(Tipo: TACBrCargaBalNutriUndPorcao): String;
 begin
    case Tipo of
-    tpGramas : Result := '0';
+    tpGramas     : Result := '0';
     tpMililitros : Result := '1';
-    tpUnidades : Result := '2';
+    tpUnidades   : Result := '2';
    end;
 end;
 
 function TACBrCargaBal.GetNutriPartDecimalToledo(Tipo: TACBrCargaBalNutriPartdecimal): String;
 begin
    case Tipo of
-    tpPara0 : Result := '0';
+    tpPara0  : Result := '0';
     tpPara14 : Result := '1';
     tpPara13 : Result := '2';
     tpPara12 : Result := '3';
@@ -408,33 +445,33 @@ end;
 function TACBrCargaBal.GetNutriMedCaseiraToledo(Tipo: TACBrCargaBalNutriMedCaseira): String;
 begin
   case tipo of
-    tpColherSopa : Result := '00';
-    tpColherCafe : Result := '01';
-    tpColherCha : Result := '02';
-    tpXicara : Result := '03';
-    tpDeXicara : Result := '04';
-    tpUnidade : Result := '05';
-    tpPacote : Result := '06';
-    tpFatia : Result := '07';
-    tpFatiaFina : Result := '08';
-    tpPedaco : Result := '09';
-    tpFolha : Result := '10';
-    tpPao : Result := '11';
-    tpBiscoito : Result := '12';
+    tpColherSopa  : Result := '00';
+    tpColherCafe  : Result := '01';
+    tpColherCha   : Result := '02';
+    tpXicara      : Result := '03';
+    tpDeXicara    : Result := '04';
+    tpUnidade     : Result := '05';
+    tpPacote      : Result := '06';
+    tpFatia       : Result := '07';
+    tpFatiaFina   : Result := '08';
+    tpPedaco      : Result := '09';
+    tpFolha       : Result := '10';
+    tpPao         : Result := '11';
+    tpBiscoito    : Result := '12';
     tpBisnaguinha : Result := '13';
-    tpDisco : Result := '14';
-    tpCopo : Result := '15';
-    tpPorcao : Result := '16';
-    tpTablete : Result := '17';
-    tpSache : Result := '18';
-    tpAlmodega : Result := '19';
-    tpBife : Result := '20';
-    tpFile : Result := '21';
-    tpConcha : Result := '22';
-    tpBala : Result := '23';
-    tpPratoFundo : Result := '24';
-    tpPitada : Result := '25';
-    tpLata : Result := '26';
+    tpDisco       : Result := '14';
+    tpCopo        : Result := '15';
+    tpPorcao      : Result := '16';
+    tpTablete     : Result := '17';
+    tpSache       : Result := '18';
+    tpAlmodega    : Result := '19';
+    tpBife        : Result := '20';
+    tpFile        : Result := '21';
+    tpConcha      : Result := '22';
+    tpBala        : Result := '23';
+    tpPratoFundo  : Result := '24';
+    tpPitada      : Result := '25';
+    tpLata        : Result := '26';
     end;
 end;
 
@@ -565,10 +602,10 @@ begin
   end;
 end;
 
-procedure TACBrCargaBal.PreencherToledo(Arquivo, Nutricional, Receita: TStringList; versao:integer);
+procedure TACBrCargaBal.PreencherToledo(Arquivo, Nutricional, Receita, Tara: TStringList; versao:integer);
 var
   i, Total: Integer;
-  Anutri,areceita:string;
+  Anutri,areceita, Atara :string;
 begin
   Total := Produtos.Count;
 
@@ -606,7 +643,8 @@ begin
       lFill('0',11)+ // codigo especial
       LFIll('0',1)+ // versao do preco
       LFIll('0',4)+ // codigo do som
-      LFIll('0',4)+ // codigo da tara
+      LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
+//      LFIll('0',4)+ // codigo da tara
       LFIll('0',4)+ // codigo da fracionador
       LFIll('0',4)+ // ce1
       LFIll('0',4)+ // ce2
@@ -636,10 +674,18 @@ begin
     if (Produtos[i].Nutricional.Codigo>0) and (Nutricional.IndexOf(Anutri)<0) then
        Nutricional.Add(Anutri);
 
-    end;
 
+    Atara:= LFIll(Produtos[i].Tara.Codigo,4)+LFIll(Produtos[i].Tara.FValor,6,3)+
+            RFIll(Produtos[i].Tara.Descricao, 20);
+
+    if (Produtos[i].TARA.Codigo>0) THEN
+       Tara.Add(Atara);
+
+
+    end;
     Progresso(Format('Gerando produto %6.6d %s', [Produtos[i].Codigo, Produtos[i].Descricao]), i, Total);
   end;
+
 end;
 
 procedure TACBrCargaBal.PreencherUrano(Arquivo: TStringList);
@@ -694,8 +740,7 @@ begin
     begin
     //linha da receita
     //0x12+0x02+codigo[5]+pesagem[35]+informacoes adicionais[615]+chksum[4]+0x03+0x13+0x10
-                                    //informacoes adicionais[615]=15 linhas de 41 caracteres.
-
+                                     //informacoes adicionais[615]=15 linhas de 41 caracteres.
       xnutric:='';
 
       if Produtos[i].Nutricional.FQtd<=0 then
@@ -772,8 +817,8 @@ begin
     //linha da receita
     //0x12+0x02+codigo[5]+pesagem[35]+informacoes adicionais[615]+chksum[4]+0x03+0x13+0x10
                                     //informacoes adicionais[615]=15 linhas de 41 caracteres.
-
       xnutric:='';
+      
 
       if Produtos[i].Nutricional.FQtd<=0 then
         xnutric := RFill('', 209);
@@ -886,7 +931,7 @@ end;
 
 procedure TACBrCargaBal.GerarArquivos(const ADiretorio: String);
 var
-  Produto, Setor, Receita, Nutricional: TStringList;
+  Produto, Setor, Receita, Nutricional,Tara: TStringList;
   RelacaoProdutoNutricional, RelacaoProdutoReceita: TStringList;
   NomeArquivo: TFileName;
   Total: integer;
@@ -909,6 +954,9 @@ begin
   Receita := TStringList.Create;
   Receita.Clear;
 
+  Tara := TStringList.Create;
+  Tara.Clear;
+
   Nutricional := TStringList.Create;
   Nutricional.Clear;
 
@@ -925,10 +973,10 @@ begin
     // Varre os registros gerando o arquivo em lista
     case FModelo of
       modFilizola   : PreencherFilizola(Produto, Setor, Nutricional, Receita);
-      modToledo     : PreencherToledo(Produto, Nutricional, Receita);
+      modToledo     : PreencherToledo(Produto, Nutricional, Receita, Tara);
       modUrano      : PreencherUrano(Produto);
       modUranoS     : PreencherUranoS(Produto);
-      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita ,1);
+      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita,Tara ,1);
       modUranoURF32 : PreencherUranoURF32(Produto, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita);
     end;
 
@@ -974,12 +1022,22 @@ begin
       RelacaoProdutoReceita.SaveToFile(NomeArquivo);
     end;
 
+    //Gerar arquivo de taras(peso de embalagens)
+    if Tara.Count > 0 then
+    begin
+      NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoTaras;
+      Tara.SaveToFile(NomeArquivo);
+    end;
+
     Progresso('Terminado', Total, Total);
   finally
     FreeAndNil(Produto);
     FreeAndNil(Setor);
     FreeAndNil(Receita);
-    FreeAndNil(Nutricional);
+    FreeAndNil(Nutricional);    
+    FreeAndNil(RelacaoProdutoNutricional);
+    FreeAndNil(RelacaoProdutoReceita);
+    FreeAndNil(Tara);
   end;
 end;
 

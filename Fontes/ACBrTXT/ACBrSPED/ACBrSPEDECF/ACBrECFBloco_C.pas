@@ -81,7 +81,7 @@ type
     fDT_FIN:   TDateTime;
     fIND_ESC:  string;
     fIND_SIT_ESP: integer;
-    fNIRE:     integer;
+    fNIRE:     String;
     fNAT_LIVR: string;
     fNUM_ORD:  integer;
     fCOD_VER_LC: string;
@@ -100,7 +100,7 @@ type
     property IND_SIT_ESP: integer read fIND_SIT_ESP write fIND_SIT_ESP;
     property CNPJ: string read fCNPJ write fCNPJ;
     property NUM_ORD: integer read fNUM_ORD write fNUM_ORD;
-    property NIRE: integer read fNIRE write fNIRE;
+    property NIRE: String read fNIRE write fNIRE;
     property NAT_LIVR: string read fNAT_LIVR write fNAT_LIVR;
     property COD_VER_LC: string read fCOD_VER_LC write fCOD_VER_LC;
     property IND_ESC: string read fIND_ESC write fIND_ESC;
@@ -486,11 +486,17 @@ end;
 constructor TRegistroC040.Create(AOwner: TRegistroC001);
 begin
    FRegistroC050 := TRegistroC050List.Create;
+   FRegistroC100 := TRegistroC100List.Create;
+   FRegistroC150 := TRegistroC150List.Create;
+   FRegistroC350 := TRegistroC350List.Create;
 end;
 
 destructor TRegistroC040.Destroy;
 begin
   FRegistroC050.Free;
+  FRegistroC100.Free;
+  FRegistroC150.Free;
+  FRegistroC350.Free;
   inherited;
 end;
 

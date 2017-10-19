@@ -52,14 +52,14 @@ type
   { TACBrEscPosEpson }
 
   TACBrEscPosEpson = class(TACBrPosPrinterClass)
-  private
   public
     constructor Create(AOwner: TACBrPosPrinter);
 
+    function ComandoFonte(TipoFonte: TACBrPosTipoFonte; Ligar: Boolean): AnsiString;
+      override;
     function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
       override;
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
-    function ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString; override;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
       override;
     function ComandoLogo: AnsiString; override;
@@ -69,6 +69,11 @@ type
     function LerInfo: String; override;
   end;
 
+  function ComandoCodBarrasEscPosEpson(const ATag: String; ACodigo: AnsiString;
+    const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
+  function ComandoCodBarrasEscPosNo128ABC(const ATag: String; ACodigo: AnsiString;
+    const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
+
 
 implementation
 
@@ -76,49 +81,8 @@ uses
   strutils, math,
   ACBrConsts, ACBrUtil;
 
-{ TACBrEscPosEpson }
-
-constructor TACBrEscPosEpson.Create(AOwner: TACBrPosPrinter);
-begin
-  inherited Create(AOwner);
-
-  fpModeloStr := 'EscPosEpson';
-
-{(*}
-  with Cmd  do
-  begin
-    Zera                    := ESC + '@';
-    EspacoEntreLinhasPadrao := ESC + '2';
-    EspacoEntreLinhas       := ESC + '3';
-    FonteNormal             := ESC + '!' + #0;
-    FonteA                  := ESC + 'M' + #0;
-    FonteB                  := ESC + 'M' + #1;
-    LigaNegrito             := ESC + 'E' + #1;
-    DesligaNegrito          := ESC + 'E' + #0;
-    LigaExpandido           := GS  + '!' + #16;
-    DesligaExpandido        := GS  + '!' + #0;
-    LigaSublinhado          := ESC + '-' + #1;
-    DesligaSublinhado       := ESC + '-' + #0;
-    LigaInvertido           := GS  + 'B' + #1;
-    DesligaInvertido        := GS  + 'B' + #0;
-    LigaItalico             := '';        // Não existe ?
-    DesligaItalico          := '';        // Não existe ?
-    LigaCondensado          := FonteB;
-    DesligaCondensado       := FonteA;
-    AlinhadoEsquerda        := ESC + 'a' + #0;
-    AlinhadoCentro          := ESC + 'a' + #1;
-    AlinhadoDireita         := ESC + 'a' + #2;
-    CorteTotal              := GS  + 'V' + #0;
-    CorteParcial            := GS  + 'V' + #1;
-    Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
-  end;
-  {*)}
-
-  TagsNaoSuportadas.Add( cTagBarraMSI );
-end;
-
-function TACBrEscPosEpson.ComandoCodBarras(const ATag: String;
-  ACodigo: AnsiString): AnsiString;
+function ComandoCodBarrasEscPosEpson(const ATag: String; ACodigo: AnsiString;
+  const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
 var
   L, A, M : Integer ;
   CmdBarCode: Char;
@@ -192,17 +156,138 @@ begin
       ACodBar := Cmd128 + ACodBar;
   end;
 
-  with fpPosPrinter.ConfigBarras do
-  begin
-    L := IfThen( LarguraLinha = 0, 2, max(min(LarguraLinha,4),1) );
-    A := IfThen( Altura = 0, 50, max(min(Altura,255),1) );
-    M := IfThen( MostrarCodigo, 2, 0 );
-  end ;
+  L := IfThen( ALarguraLinha = 0, 2, max(min(ALarguraLinha,4),1) );
+  A := IfThen( AAltura = 0, 50, max(min(AAltura,255),1) );
+  M := IfThen( AMostrarCodigo, 2, 0 );
 
   Result := GS + 'w' + AnsiChr( L ) + // Largura
             GS + 'h' + AnsiChr( A ) + // Altura
             GS + 'H' + AnsiChr( M ) + // HRI (numero impresso abaixo do cod.barras)
             GS + 'k' + CmdBarCode + AnsiChr( Length(ACodBar) ) + ACodBar;
+end;
+
+function ComandoCodBarrasEscPosNo128ABC(const ATag: String; ACodigo: AnsiString;
+  const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
+var
+  P: Integer;
+  BTag: String;
+begin
+  // EscBema não suporta Code128C
+  if (ATag = cTagBarraCode128a) or
+     (ATag = cTagBarraCode128b) or
+     (ATag = cTagBarraCode128c) then
+    BTag := cTagBarraCode128
+  else
+    BTag := ATag;
+
+  Result := ComandoCodBarrasEscPosEpson(BTag, ACodigo, AMostrarCodigo, AAltura, ALarguraLinha);
+
+  // Sem suporte a notação para COD128 A, B e C do padrão EscPos
+  if (BTag = cTagBarraCode128) then
+  begin
+    P := pos('{',Result);
+    if P > 0 then
+    begin
+      Delete(Result,P,2);
+      //Alterando o caracter que contém o tamanho do código de barras
+      Result[P-1] := AnsiChr(Length(ACodigo));
+    end;
+  end;
+end;
+
+
+{ TACBrEscPosEpson }
+
+constructor TACBrEscPosEpson.Create(AOwner: TACBrPosPrinter);
+begin
+  inherited Create(AOwner);
+
+  fpModeloStr := 'EscPosEpson';
+
+{(*}
+  with Cmd  do
+  begin
+    Zera                    := ESC + '@';
+    PuloDeLinha             := LF;
+    EspacoEntreLinhasPadrao := ESC + '2';
+    EspacoEntreLinhas       := ESC + '3';
+    FonteNormal             := ESC + '!' + #0;
+    FonteA                  := ESC + 'M' + #0;
+    FonteB                  := ESC + 'M' + #1;
+    LigaNegrito             := ESC + 'E' + #1;
+    DesligaNegrito          := ESC + 'E' + #0;
+    LigaExpandido           := GS  + '!' + #16;
+    DesligaExpandido        := GS  + '!' + #0;
+    LigaSublinhado          := ESC + '-' + #1;
+    DesligaSublinhado       := ESC + '-' + #0;
+    LigaInvertido           := GS  + 'B' + #1;
+    DesligaInvertido        := GS  + 'B' + #0;
+    LigaItalico             := ESC + '4';
+    DesligaItalico          := ESC + '5';
+    LigaCondensado          := SI;
+    DesligaCondensado       := DC2;
+    AlinhadoEsquerda        := ESC + 'a' + #0;
+    AlinhadoCentro          := ESC + 'a' + #1;
+    AlinhadoDireita         := ESC + 'a' + #2;
+    CorteTotal              := GS  + 'V' + #0;
+    CorteParcial            := GS  + 'V' + #1;
+    Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
+  end;
+  {*)}
+
+  TagsNaoSuportadas.Add( cTagBarraMSI );
+end;
+
+function TACBrEscPosEpson.ComandoFonte(TipoFonte: TACBrPosTipoFonte;
+  Ligar: Boolean): AnsiString;
+var
+  NovoFonteStatus: TACBrPosFonte;
+  AByte: Byte;
+begin
+  Result := '';
+  NovoFonteStatus := fpPosPrinter.FonteStatus;
+  if Ligar then
+    NovoFonteStatus := NovoFonteStatus + [TipoFonte]
+  else
+    NovoFonteStatus := NovoFonteStatus - [TipoFonte];
+
+  if TipoFonte in [ftCondensado, ftNegrito, ftExpandido, ftSublinhado] then
+  begin
+    AByte := 0;
+
+    if ftCondensado in NovoFonteStatus then
+      AByte := AByte + 1;
+
+    if ftNegrito in NovoFonteStatus then
+      AByte := AByte + 8;
+
+    if ftExpandido in NovoFonteStatus then
+      AByte := AByte + 32;
+
+    if ftSublinhado in NovoFonteStatus then
+      AByte := AByte + 128;
+
+    Result := ESC + '!' + AnsiChr(AByte);
+
+    // ESC ! desliga Invertido, enviando o comando novamente
+    if ftInvertido in NovoFonteStatus then
+      Result := Result + Cmd.LigaInvertido;
+
+    if ftItalico in NovoFonteStatus then
+      Result := Result + Cmd.LigaItalico;
+  end
+  else
+    Result := inherited ComandoFonte(TipoFonte, Ligar);
+
+end;
+
+function TACBrEscPosEpson.ComandoCodBarras(const ATag: String;
+  ACodigo: AnsiString): AnsiString;
+begin
+  with fpPosPrinter.ConfigBarras do
+  begin
+    Result := ComandoCodBarrasEscPosEpson(ATag, ACodigo, MostrarCodigo, Altura, LarguraLinha);
+  end ;
 end;
 
 function TACBrEscPosEpson.ComandoQrCode(ACodigo: AnsiString): AnsiString;
@@ -215,14 +300,6 @@ begin
                GS + '(k' + IntToLEStr(length(ACodigo)+3)+'1P0' + ACodigo +  // Codifica
                GS + '(k' + #3 + #0 +'1Q0';  // Imprime
   end;
-end;
-
-function TACBrEscPosEpson.ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString;
-begin
-  if Espacos = 0 then
-    Result := Cmd.EspacoEntreLinhasPadrao
-  else
-    Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos);
 end;
 
 function TACBrEscPosEpson.ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo
@@ -247,12 +324,41 @@ begin
 end;
 
 function TACBrEscPosEpson.ComandoLogo: AnsiString;
+var
+  m, KeyCode: Integer;
 begin
   with fpPosPrinter.ConfigLogo do
   begin
-    Result := GS + '(L' + #6 + #0 + #48 + #69 +
-              AnsiChr(KeyCode1) + AnsiChr(KeyCode2) +
-              AnsiChr(FatorX)   + AnsiChr(FatorY);
+    {
+      Verificando se informou o KeyCode compatível com o comando Novo ou Antigo.
+
+      Nota: O Comando novo da Epson "GS + '(L'", não é compatível em alguns
+      Equipamentos (não Epson), mas que usam EscPosEpson...
+      Nesse caso, vamos usar o comando "FS + 'p'", para tal, informe:
+      KeyCode1 := 1..255; KeyCode2 := 0
+    }
+
+    if (KeyCode2 = 0) then
+    begin
+      if (KeyCode1 >= 48) and (KeyCode1 <= 57) then  // '0'..'9'
+        KeyCode := StrToInt( chr(KeyCode1) )
+      else
+        KeyCode := KeyCode1 ;
+
+      m := 0;
+      if FatorX > 1 then
+        m := m + 1;
+      if Fatory > 1 then
+        m := m + 2;
+
+      Result := FS + 'p' + AnsiChr(KeyCode) + AnsiChr(m);
+    end
+    else
+    begin
+      Result := GS + '(L' + #6 + #0 + #48 + #69 +
+                AnsiChr(KeyCode1) + AnsiChr(KeyCode2) +
+                AnsiChr(FatorX)   + AnsiChr(FatorY);
+    end;
   end;
 end;
 

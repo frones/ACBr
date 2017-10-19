@@ -73,7 +73,7 @@ type
       read FAtualizarXMLCancelado write FAtualizarXMLCancelado default False;
     property IdCSC: String read FIdCSC write SetIdCSC;
     property CSC: String read FCSC write SetCSC;
-    property IncluirQRCodeXMLNFCe: Boolean read FIncluirQRCodeXMLNFCe write FIncluirQRCodeXMLNFCe;
+    property IncluirQRCodeXMLNFCe: Boolean read FIncluirQRCodeXMLNFCe write FIncluirQRCodeXMLNFCe default True;
   end;
 
   { TDownloadConfNFe }
@@ -107,7 +107,7 @@ type
     procedure Assign(DeArquivosConfNFe: TArquivosConfNFe); reintroduce;
 
     function GetPathInu(CNPJ: String = ''): String;
-    function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
+    function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
@@ -147,7 +147,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil, ACBrNFe,
   DateUtils;
 
 { TDownloadConfNFe }
@@ -218,7 +218,7 @@ begin
   FAtualizarXMLCancelado := False;
   FIdCSC := '';
   FCSC := '';
-  FIncluirQRCodeXMLNFCe := False;
+  FIncluirQRCodeXMLNFCe := True;
 end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);
@@ -302,7 +302,7 @@ begin
      FDownloadNFe.PathDownload := PathSalvar;
 
   if (FDownloadNFe.SepararPorNome) and (NaoEstaVazio(xNome)) then
-     rPathDown := rPathDown + PathWithDelim(FDownloadNFe.PathDownload) + TiraAcentos(xNome)
+     rPathDown := rPathDown + PathWithDelim(FDownloadNFe.PathDownload) + OnlyAlphaNum(xNome)
   else
      rPathDown := FDownloadNFe.PathDownload;
 
@@ -330,15 +330,17 @@ begin
   Result := GetPath(FPathInu, 'Inu', CNPJ);
 end;
 
-function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
+function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
 var
   DescricaoModelo: String;
 begin
   case Modelo of
+     0: DescricaoModelo := TACBrNFe(fpConfiguracoes.Owner).GetNomeModeloDFe;
     55: DescricaoModelo := 'NFe';
     65: DescricaoModelo := 'NFCe';
   end;
-  Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, Data);
+
+  Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, Data, DescricaoModelo);
 end;
 
 end.

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://nfse.blumenau.sc.gov.br" 
+           xmlns:tipos="http://nfse.blumenau.sc.gov.br/tipos" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <xs:import namespace="http://nfse.blumenau.sc.gov.br/tipos" schemaLocation="TiposNFe_v01.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+  <xs:element name="RetornoConsultaCNPJ">
+    <xs:annotation>
+      <xs:documentation>Schema utilizado para RETORNO de Pedidos de Consultas de CNPJ.</xs:documentation>
+      <xs:documentation>Este Schema XML é utilizado pelo Web Service para informar aos tomadores e/ou prestadores de serviços quais Inscrições estão vinculadas a um determinado CNPJ e se estas Inscrições emitem NFS-e ou não.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Cabecalho" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Cabeçalho do retorno.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Sucesso" type="tipos:tpSucesso" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Campo indicativo do sucesso do pedido do serviço.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Versao" type="tipos:tpVersao" use="required" fixed="1">
+              <xs:annotation>
+                <xs:documentation>Versão do Schema XML utilizado.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Alerta" type="tipos:tpEvento" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Elemento que representa a ocorrência de eventos de alerta durante o processamento da mensagem XML.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Erro" type="tipos:tpEvento" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Elemento que representa a ocorrência de eventos de erro durante o processamento da mensagem XML.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Detalhe" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="InscricaoMunicipal" type="tipos:tpInscricaoMunicipal" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Inscrição Municipal vinculada ao CNPJ consultado.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="EmiteNFe" type="xs:boolean" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Campo que indica se a Inscrição vinculado ao CNPJ consultado emite NFS-e ou não.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+          </xs:sequence>            
+          </xs:complexType>            
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

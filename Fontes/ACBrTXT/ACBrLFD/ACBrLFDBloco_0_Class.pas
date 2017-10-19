@@ -451,7 +451,7 @@ begin
        Check(funChecaCEP(CEP, Registro0000.UF), '(0-0005) COMPLEMENTO DO CONTRIBUINTE "%s": O CEP "%s" digitada é inválido para a unidade de federação "%s"!', [NOMERESP, CEP, Registro0000.UF]);
        ///
        Add( LFill('0005')     +
-            LFill('TESTE')    +   // 70/05
+            LFill(NOMERESP)   +  // 70/05
             LFill(CEP, 8)     +  // 70/05
             LFill(ENDERECO)   +  // 70/05
             LFill(NUM)        +  // 70/05

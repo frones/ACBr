@@ -47,6 +47,262 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/09/2017
+-- ACBrSATExtratoFortesFr.pas --
+[-] Ajustes na Impressão do Logotipo, não estava saindo na impressão
+    http://www.projetoacbr.com.br/forum/files/file/378-acbrmonitorplus-sac/?tab=comments#comment-350.
+    (por: José M S Junior)
+
+Data: 28/08/2017
+-- ACBrSAT, ACBrSATMFe_integrador --
+[-] Ajustes nas chamadas de "IniciaComando" e "FinalizaComando", usando try/finally
+    garantindo que "FinalizaComando", sempre seja executado.
+    (por: DSA)
+
+Data 16/08/2017
+-- ACBrSAT --
+[*] Método: "TACBrSATResposta.SetRetornoStr". Ajuste para efetuar Trim, na
+    resposta de SATs que respondem com espaços em branco no texto (Exemplo: Kryptus)
+    (por: DSA)
+
+Data 26/07/2017
+-- ACBrSAT --
+[+] Adicionado o método:
+    function TACBrSAT.VerificarVersaoSAT(VersaoLayout: Double): Double;
+    que permite Detectar a versão atual do SAT, ou verificar se a versão do SAT
+    é inferior a versão desejada.
+[+] Método "Iniciar", modificado para detectar a versão do SAT, se a configuração
+    da versão em "ACBrSAT.Config.infCFe_versaoDadosEnt" estiver zerada
+    (por: DSA)
+
+Data 21/07/2017
+-- ACBrSAT --
+[+] Adicionada a propriedade "AguardandoResposta: Boolean, readonly". Ela será
+    ligada, sempre que o ACBrSAT iniciar um comando, e enviá-lo ao SAT. E será
+    desligada, quando obtiver a resposta do SAT
+[+] Adicionado o evento "OnAguardandoRespostaChange", para notificar a aplicação
+    quando o estado de "AguardandoResposta" for modificado
+    (por: DSA)
+
+Data 14/07/2017
+-- ACBrSAT --
+[*] Refatoração do método "EnviarEmail" para usar o recurso recem implementado de
+    ACBrMail, para adição de lista de Emails em um comando.
+    (por: DSA)
+
+Data 06/07/2017
+-- ACBrSAT --
+[+] Adicionada a propriedade: "ValidarNumeroSessaoResposta: Boolean default False"
+    Se a mesma estiver ativa, o ACBrSAT, passará a verificar se o número de Sessão
+    retornado pelo SAT, está de acordo com o Número de Sessão do último comando
+    enviado.
+[+] Adicionada a propriedade: "NumeroTentativasValidarSessao: Integer default 1"
+    Somente tem efeito, se "ValidarNumeroSessaoResposta = True". Define quantas
+    tentativas o ACBrSAT deve fazer, para tentar recuperar a sessão correta,
+    caso seja detectado que o Número de sessão respondido, é diferente do enviado.
+    (por: DSA)
+
+Data 14/06/2017
+-- ACBrSAT --
+[*] Método "DecodificaRetorno6000", ajuste para inserir a Declaração de XML,
+    caso o SAT não responda com a mesma... (a Especificação do SAT, prevê que
+    todo XML enviado ou retornado deva seguir "<?xml version="1.0" encoding="UTF-8"?>"
+[+] Adicionado o método "GetNomeModeloCFe"
+
+-- ACBrSATClass --
+[-] Correção em "CalcPath", para remover pontos do CNPJ, quando o mesmo é informado
+[*] Classe "TACBrSATConfigArquivos", adicionada as propriedades: "SepararPorModelo" e
+    "SepararPorAno".
+[*] Método "CalcPath", modificado para suportar as propriedades "SepararPorModelo" e
+    "SepararPorAno"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35456
+
+-- pcnCFe --
+[-] Método "GerarXML", modificado para sempre gerar o XML em UTF8, conforme a
+    Especificação técnica do SAT
+[-] Método "SetXMLString", modificado para decodificar o XML de UTF8 para a
+    String nativa da IDE (Ansi ou Unicode). Para permitir que as propriedades
+    do Objeto "CFe", sejam exibidas de forma correta.
+
+-- pcnCFeW --
+[-] Método "GerarXml" corrigido para não inserir a declaração de UTF8 em IDEs
+    que não usam UTF8 de forma nativa (Delphi)
+    (por: DSA)
+
+Data 10/06/2017
+-- ACBrSATExtratoFortesFr --
+[*] Ajuste para impressão otimizada da linha dos Itens
+    http://www.projetoacbr.com.br/forum/topic/37112-impress%C3%A3o-pulando-linha-apos-atualizar-acbr/
+    (por: DSA)
+
+Data 02/06/2017
+-- ACBrSATExtratoFortesFr --
+[*] Ajustes para correta exibição de diversos campos, em impressoras de pouca
+    largura
+    http://www.projetoacbr.com.br/forum/topic/36756-sat-na-impressora-leopardo/
+[-] Correção para impressão de Descrições com acentuação, em IDEs com Unicode
+    (por: DSA)
+
+Data 01/06/2017
+-- ACBrSATExtratoClass --
+[*] Unit movida para subdiretório "Fontes/ACBrSAT/Extrato"
+
+-- ACBrSATExtratoFortes, ACBrSATExtratoReportClass --
+[*] Unit "Fontes/ACBrSAT/Extrato/Fortes/ACBrSATExtratoFortes.pas" removida e
+    substituida por: "Fontes/ACBrSAT/Extrato/ACBrSATExtratoReportClass.pas"
+
+-- ACBrSATExtratoReportClass --
+[+] Adicionda as propriedades LogoWidth, LogoHeigth, LogoStretch, LogoAutoSize,
+    LogoCenter, LogoVisible.. Para permitir um melhor controle da exibição do
+    logotipo...
+    http://www.projetoacbr.com.br/forum/topic/36921-alterar-tamanho-do-logo-no-extrato-sat/
+
+-- ACBrSATExtratoFortesFr --
+[*] Layout de Relatórios do SAT, de Venda e Cancelamento, ajustados para fazer
+    uso das novas propriedades de "ACBrSATExtratoReportClass"
+
+Data 09/05/2017
+-- ACBrSATClass --
+[*] Ajuste para permitir nomes de DLL sem o Path (por: DSA)
+
+Data 27/03/2017
+-- ACBrSATExtratoFortesFr --
+[*] Ajuste para não exibir barra de Prrogresso, na geração do PDF
+    http://www.projetoacbr.com.br/forum/topic/35900-ajuste-para-evitar-falha-na-gera%C3%A7%C3%A3o-do-pdf/
+
+Data: 08/03/2017
+[+] Adição do separador por dia dos documentos em pastas
+    http://www.projetoacbr.com.br/forum/topic/35456-salvar-xml-em-diretório-diário/
+    por: Juliomar Marchetti
+		
+Data: 28/02/2017
+-- ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortes --
+[+] Adicionada a propriedade "ImprimeMsgOlhoNoImposto : Boolean default True"
+    Se for false não imprimirá a informação do campo "Total.vCFeLei12741"
+[+] Adicionada a propriedade "ImprimeCPFNaoInformado : Boolean default True"
+    Se for false não imprimirá a informação "CONSUMIDOR NÃO IDENTIFICADO", quando
+    o campo "Dest.CNPJCPF" for vazio
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35266
+
+Data: 22/02/2017
+-- ACBrSATExtratoESCPOS --
+[*] Ajuste para não imprimir o título "IM:" caso não exista informação em:
+    CFe.Emit.IM
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35282
+
+Data: 21//2/2017
+-- ACBrSATExtratoClass --
+[-] Correção para A.V. em "TACBrSATExtratoClass.GetNomeArquivo"   (por: DSA)
+
+Data: 17/02/2017
+-- ACBrSAT --
+[-] Correção de bug em duas functions
+    (por: Juliomar Marchetti)
+		
+Data: 12/01/2017
+-- ACBrSAT --
+[*] Função CalcCFeNomeArq, adicionado parâmetro para poder passar a extensão
+    do arquivo, util para poder gerar um arquivo PDF.
+    (por: Celso Marigo Junior)
+
+Data: 31/01/2017
+-- ACBrECFVirtualSAT --
+[*] Melhoria da função CancelaCupom, quando o XML do CFe não está carregado na
+    memória o componente tentará recuperar o XML do disco automaticamente
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=34834
+    (por: PauloHenrique)
+
+Data: 12/01/2017
+-- ACBrSAT --
+[-] Ajuste no método "EnviarEmail", para limpar o objeto TACBrMail antes do
+    envio... (por: DSA)
+
+Data: 11/01/2017
+-- ACBrSATExtratoClass --
+[*] Propriedade "SoftwareHouse" definda como default "Projeto ACBr"
+[*] Propriedade "Site" definda como default "http://www.projetoacbr.com.br"
+
+-- ACBrSATExtratoFortes --
+[+] Adicionado Memo para imprimir o conteudo das propriedades "SoftwareHouse" e
+    "Site"
+[-] Correção na impressão da Mensagem do Aplicação do QRCode, quando
+    "EspacoFinal", fosse zero.
+    (por: DSA)
+
+Data: 20/12/2016
+-- ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
+[*] Ajuste para imprimir corretamente numeros usando a formatação Brasileira
+    com pontos de milhar e decimais (por: DSA)
+
+Data: 17/10/2016
+-- ACBrECFVirtualSAT --
+[*] Acerto para que se possa cancelar um cupom que não seja o último utilizando
+    a carga do XML via XMLString e não somente por nome de arquivo.
+    por: regys.silveira
+
+Data: 03/10/2016
+-- ACBrSATClass --
+[*] TACBrSATConfigArquivos.CalcPath, Ajuste para remover por mascara do CNPJ
+    http://www.projetoacbr.com.br/forum/topic/32713-exemplo-acbrsat-e-acbrsatclass/
+
+Data: 26/09/2016
+-- ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
+[+] Adicionada a propriedade " MsgAppQRCode: String", que permite definir nova
+    mensagem obrigatória, após a impressão do QRCode. Valor padrão:
+    "Consulte o QR Code pelo aplicativo  "De olho na nota"
+     disponível na AppStore (Apple) e PlayStore (Android)"
+    (por: DSA)
+
+Data: 15/09/2016
+-- pcnRede --
+[-] Correção na tradução dos nomes de Segurança de Redes Wi-fi:
+    WPAPERSONAL, WPAENTERPRISE
+[+] Adição dos nomes de Segurança de Redes Wi-fi: WPA, WPA2
+
+Data: 13/09/2016
+-- ACBrSAT --
+[*] Método "DesInicializar" modificado para zerar os valores em memória das
+    propriedades: "Status, Resposta, Rede"  (por: DSA)
+
+-- ACBrSATClass --
+[*] Valor da Constante de valor padrão do Layout do XML modificada
+    cversaoDadosEnt = 0.07;   (por: DSA)
+
+Data: 12/09/2016
+-- pcnCFeR --
+[-] Método "LerXml". Ajuste para não chamar "CFe.Clear", caso o XML informado,
+    contenha apenas as Tags das Aplicação, pois isso apagaria os dados
+    informados previamente, por: TACBrSAT.InicializaCFe.
+[-] Método "LerXml". Ajuste para considerar valores já atribuidos caso não
+    encontre no XML informado, as Tags de "CFe.infCFe" e "CFe.Emit"
+    (por: DSA)
+
+Data: 09/09/2016
+-- ACBrSATExtratoESCPOS --
+[*] Ajuste para detectar corretamente se a impressora é capaz de imprimir o
+    CODE128 da Chave do SAT, em apenas uma linha. Exemplo: Sweda SI-300S, ou
+    Impressoras com suporte inferior a 46 colunas.
+
+Data: 01/09/2016
+-- pcnCFe, pcnCFeW, pcnCFeR --
+[-] Tag "cListServ" modificada para String, de acordo com a Especificação Técnica
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=31810
+
+Data: 29/08/2016
+-- ACBrECFVirtualSAT --
+[+] Adicionado o evento "QuandoFecharDocumento",
+[*] Modificado o tipo de evento: "TACBrECFVirtualSATQuandoAbrirDocumento" para
+    "TACBrECFVirtualSATQuandoAbrirFecharDocumento"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32025
+    (por: DSA e Amarildo)
+
+Data: 25/08/2016
+--ACBrSATExtratoFortesFr
+[-] Correção para quando é usado a diretiva NOGUI e o componente de imagem não é
+    instanciado
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=10030
+    (por : Juliomar Marchetti)
+		
 Data: 13/07/2016
 -- ACBrSAT --
 [*] Adicionada gravação de Log, no momento da gravação de Arquivos em disco

@@ -80,6 +80,8 @@ type
   TDetCollection = class;
   TDetCollectionItem = class;
   TProd = class;
+  TrastroCollection = class;
+  TrastroCollectionItem = class;
   TveicProd = class;
   TmedCollection = class;
   TmedCollectionItem = class;
@@ -150,6 +152,8 @@ type
 
   TinfNFeSupl = class;
 
+  { TNFe }
+
   TNFe = class(TPersistent)
   private
     FinfNFe: TinfNFe;
@@ -181,6 +185,7 @@ type
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
+    procedure SetXMLString(AValue : AnsiString) ;
   published
     property infNFe: TinfNFe read FinfNFe write FinfNFe;
     property Ide: TIde read FIde write FIde;
@@ -207,10 +212,12 @@ type
   TinfNFeSupl = class(TPersistent)
   private
     FqrCode: String;
+    FurlChave: String;
   public
     procedure Assign(Source: TPersistent); override;
   published
     property qrCode: String read FqrCode write FqrCode;
+    property urlChave: String read FurlChave write FurlChave;
   end;
 
   TinfNFe = class(TPersistent)
@@ -591,6 +598,8 @@ type
     property infAdProd: String read FinfAdProd write FinfAdProd;
   end;
 
+  { TProd }
+
   TProd = class(TPersistent)
   private
     FcProd: String;
@@ -618,6 +627,7 @@ type
     FxPed: String;
     FnItemPed: Integer;
     FdetExport: TdetExportCollection;
+    FRastro: TrastroCollection;
     FveicProd: TveicProd;
     Fmed: TMedCollection;
     Farma: TarmaCollection;
@@ -626,8 +636,12 @@ type
     FnFCI: String;
     FNVE: TNVECollection;
     FCEST: String;
+    FindEscala: TpcnIndEscala;
+    FCNPJFab: String;
+    FcBenef: String;
 
     procedure SetDI(Value: TDICollection);
+    procedure SetRastro(Value: TrastroCollection);
     procedure SetMed(Value: TmedCollection);
     procedure SetArma(Value: TarmaCollection);
     procedure SetdetExport(const Value: TdetExportCollection);
@@ -664,6 +678,7 @@ type
     property xPed: String read FxPed write FxPed;
     property nItemPed: Integer read FnItemPed write FnItemPed;
     property detExport: TdetExportCollection read FdetExport write SetdetExport;
+    property rastro: TrastroCollection read FRastro write SetRastro;
     property veicProd: TveicProd read FveicProd write FveicProd;
     property med: TMedCollection read Fmed write SetMed;
     property arma: TarmaCollection read Farma write SetArma;
@@ -671,6 +686,9 @@ type
     property nRECOPI: String read FnRECOPI write FnRECOPI;
     property nFCI: String read FnFCI write FnFCI;
     property CEST: String read FCEST write FCEST;
+    property indEscala: TpcnIndEscala read FindEscala write FindEscala;
+    property CNPJFab: String read FCNPJFab write FCNPJFab;
+    property cBenef: String read FcBenef write FcBenef;
   end;
 
   TveicProd = class(TPersistent)
@@ -733,6 +751,34 @@ type
     property tpRest: Integer read FtpRest write FtpRest;
   end;
 
+  TrastroCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TrastroCollectionItem;
+    procedure SetItem(Index: Integer; Value: TrastroCollectionItem);
+  public
+    constructor Create(AOwner: TProd);
+    destructor Destroy; override;
+    function Add: TrastroCollectionItem;
+    property Items[Index: Integer]: TrastroCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TrastroCollectionItem = class(TCollectionItem)
+  private
+    FnLote: String;
+    FqLote: Currency;
+    FdFab: TDateTime;
+    FdVal: TDateTime;
+    FcAgreg: String;
+  public
+    procedure Assign(Source: TPersistent); override;
+  published
+    property nLote: String read FnLote write FnLote;
+    property qLote: Currency read FqLote write FqLote;
+    property dFab: TDateTime read FdFab write FdFab;
+    property dVal: TDateTime read FdVal write FdVal;
+    property cAgreg: String read FcAgreg write FcAgreg;
+  end;
+
   TMedCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TMedCollectionItem;
@@ -746,6 +792,7 @@ type
 
   TMedCollectionItem = class(TCollectionItem)
   private
+    FcProdANVISA: String;
     FnLote: String;
     FqLote: Currency;
     FdFab: TDateTime;
@@ -754,6 +801,7 @@ type
   public
     procedure Assign(Source: TPersistent); override;
   published
+    property cProdANVISA: String read FcProdANVISA write FcProdANVISA;
     property nLote: String read FnLote write FnLote;
     property qLote: Currency read FqLote write FqLote;
     property dFab: TDateTime read FdFab write FdFab;
@@ -808,6 +856,11 @@ type
   private
     FcProdANP: Integer;
     FpMixGN: Currency;
+    FdescANP: String;
+    FpGLP: Currency;
+    FpGNn: Currency;
+    FpGNi: Currency;
+    FvPart: Currency;
     FCODIF: String;
     FqTemp: Currency;
     FUFcons: String;
@@ -824,6 +877,11 @@ type
   published
     property cProdANP: Integer read FcProdANP write FcProdANP;
     property pMixGN: Currency read FpMixGN write FpMixGN;
+    property descANP: String read FdescANP write FdescANP;
+    property pGLP: Currency read FpGLP write FpGLP;
+    property pGNn: Currency read FpGNn write FpGNn;
+    property pGNi: Currency read FpGNi write FpGNi;
+    property vPart: Currency read FvPart write FvPart;
     property CODIF: String read FCODIF write FCODIF;
     property qTemp: Currency read FqTemp write FqTemp;
     property UFcons: String read FUFcons write FUFcons;
@@ -1061,6 +1119,16 @@ type
     FvICMSOp: Currency;
     FpDif: Currency;
     FvICMSDif: Currency;
+    FvBCFCP: Currency;
+    FpFCP: Currency;
+    FvFCP: Currency;
+    FvBCFCPST: Currency;
+    FpFCPST: Currency;
+    FvFCPST: Currency;
+    FvBCFCPSTRet: Currency;
+    FpFCPSTRet: Currency;
+    FvFCPSTRet: Currency;
+    FpST: Currency;
   public
     procedure Assign(Source: TPersistent); override;
   published
@@ -1091,6 +1159,16 @@ type
     property vICMSOp: Currency read FvICMSOp write FvICMSOp;
     property pDif: Currency read FpDif write FpDif;
     property vICMSDif: Currency read FvICMSDif write FvICMSDif;
+    property vBCFCP: Currency read FvBCFCP write FvBCFCP;
+    property pFCP: Currency read FpFCP write FpFCP;
+    property vFCP: Currency read FvFCP write FvFCP;
+    property vBCFCPST: Currency read FvBCFCPST write FvBCFCPST;
+    property pFCPST: Currency read FpFCPST write FpFCPST;
+    property vFCPST: Currency read FvFCPST write FvFCPST;
+    property vBCFCPSTRet: Currency read FvBCFCPSTRet write FvBCFCPSTRet;
+    property pFCPSTRet: Currency read FpFCPSTRet write FpFCPSTRet;
+    property vFCPSTRet: Currency read FvFCPSTRet write FvFCPSTRet;
+    property pST: Currency read FpST write FpST;
   end;
 
   TIPI = class(TPersistent)
@@ -1218,14 +1296,18 @@ type
     FvFCPUFDest: Currency;
     FvICMSUFDest: Currency;
     FvICMSUFRemet: Currency;
+    FvFCP: Currency;
     FvBCST: Currency;
     FvST: Currency;
+    FvFCPST: Currency;
+    FvFCPSTRet: Currency;
     FvProd: Currency;
     FvFrete: Currency;
     FvSeg: Currency;
     FvDesc: Currency;
     FvII: Currency;
     FvIPI: Currency;
+    FvIPIDevol: Currency;
     FvPIS: Currency;
     FvCOFINS: Currency;
     FvOutro: Currency;
@@ -1240,14 +1322,18 @@ type
     property vFCPUFDest: Currency read FvFCPUFDest write FvFCPUFDest;
     property vICMSUFDest: Currency read FvICMSUFDest write FvICMSUFDest;
     property vICMSUFRemet: Currency read FvICMSUFRemet write FvICMSUFRemet;
+    property vFCP: Currency read FvFCP write FvFCP;
     property vBCST: Currency read FvBCST write FvBCST;
     property vST: Currency read FvST write FvST;
+    property vFCPST: Currency read FvFCPST write FvFCPST;
+    property vFCPSTRet: Currency read FvFCPSTRet write FvFCPSTRet;
     property vProd: Currency read FvProd write FvProd;
     property vFrete: Currency read FvFrete write FvFrete;
     property vSeg: Currency read FvSeg write FvSeg;
     property vDesc: Currency read FvDesc write FvDesc;
     property vII: Currency read FvII write FvII;
     property vIPI: Currency read FvIPI write FvIPI;
+    property vIPIDevol: Currency read FvIPIDevol write FvIPIDevol;
     property vPIS: Currency read FvPIS write FvPIS;
     property vCOFINS: Currency read FvCOFINS write FvCOFINS;
     property vOutro: Currency read FvOutro write FvOutro;
@@ -1390,6 +1476,7 @@ type
   TICMSUFDest = class(TPersistent)
   private
     FvBCUFDest: Currency;
+    FvBCFCPUFDest: Currency;
     FpFCPUFDest: Currency;
     FpICMSUFDest: Currency;
     FpICMSInter: Currency;
@@ -1401,6 +1488,7 @@ type
     procedure Assign(Source: TPersistent); override;
   published
     property vBCUFDest: Currency read FvBCUFDest write FvBCUFDest;
+    property vBCFCPUFDest: Currency read FvBCFCPUFDest write FvBCFCPUFDest;
     property pFCPUFDest: Currency read FpFCPUFDest write FpFCPUFDest;
     property pICMSUFDest: Currency read FpICMSUFDest write FpICMSUFDest;
     property pICMSInter: Currency read FpICMSInter write FpICMSInter;
@@ -1626,14 +1714,22 @@ type
     property vDup: Currency read FvDup write FvDup;
   end;
 
+  { TpagCollection }
+
   TpagCollection = class(TCollection)
   private
+    FvTroco: Currency;
+
     function GetItem(Index: Integer): TpagCollectionItem;
     procedure SetItem(Index: Integer; Value: TpagCollectionItem);
   public
     constructor Create(AOwner: TNFe);
+
     function Add: TpagCollectionItem;
+
     property Items[Index: Integer]: TpagCollectionItem read GetItem write SetItem; default;
+  published
+    property vTroco: Currency read FvTroco write FvTroco;
   end;
 
   TpagCollectionItem = class(TCollectionItem)
@@ -1879,7 +1975,7 @@ const
 
 implementation
 
-Uses ACBrUtil;
+Uses ACBrUtil, pcnNFeR;
 
 procedure TNFe.Assign(Source: TPersistent);
 begin
@@ -1908,6 +2004,19 @@ begin
   end
   else
     inherited; 
+end;
+
+procedure TNFe.SetXMLString(AValue: AnsiString);
+var
+ LocNFeR : TNFeR;
+begin
+  LocNFeR := TNFeR.Create(Self);
+  try
+    LocNFeR.Leitor.Arquivo := AValue;
+    LocNFeR.LerXml;
+  finally
+    LocNFeR.Free
+  end;
 end;
 
 constructor TNFe.Create;
@@ -2217,6 +2326,7 @@ begin
   FDI := TDICollection.Create(Self);
   FNVE := TNVECollection.Create(self);
   FdetExport := TdetExportCollection.Create(Self);
+  FRastro := TrastroCollection.Create(Self);
   FveicProd := TveicProd.Create;
   FMed := TMedCollection.Create(Self);
   Farma := TArmaCollection.Create(Self);
@@ -2228,6 +2338,7 @@ begin
   FDI.Free;
   FNVE.Free;
   FdetExport.Free;
+  FRastro.Free;
   FveicProd.Free;
   FMed.Free;
   FArma.Free;
@@ -2245,12 +2356,17 @@ begin
   FDI.Assign(Value);
 end;
 
+procedure TProd.SetRastro(Value: TrastroCollection);
+begin
+  FRastro.Assign(Value);
+end;
+
 procedure TProd.SetdetExport(const Value: TdetExportCollection);
 begin
   FdetExport := Value;
 end;
 
-procedure TProd.SetMed(Value: TMedCollection);
+procedure TProd.SetMed(Value: TmedCollection);
 begin
   FMed.Assign(Value);
 end;
@@ -2260,9 +2376,37 @@ begin
   FNVE.Assign(Value);
 end;
 
-procedure TProd.SetArma(Value: TArmaCollection);
+procedure TProd.SetArma(Value: TarmaCollection);
 begin
   FArma.Assign(Value);
+end;
+
+{ TrastroCollection }
+
+function TrastroCollection.GetItem(Index: Integer): TrastroCollectionItem;
+begin
+  Result := TrastroCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TrastroCollection.SetItem(Index: Integer; Value: TrastroCollectionItem
+  );
+begin
+  inherited SetItem(Index, Value);
+end;
+
+constructor TrastroCollection.Create(AOwner: TProd);
+begin
+  inherited Create(TrastroCollectionItem);
+end;
+
+destructor TrastroCollection.Destroy;
+begin
+  inherited;
+end;
+
+function TrastroCollection.Add: TrastroCollectionItem;
+begin
+  Result := TrastroCollectionItem(inherited Add)
 end;
 
 {MedCollection}
@@ -3048,6 +3192,7 @@ end;
 constructor TpagCollection.Create(AOwner: TNFe);
 begin
   inherited Create(TpagCollectionItem);
+  vTroco := 0;
 end;
 
 function TpagCollection.GetItem(Index: Integer): TpagCollectionItem;
@@ -3344,6 +3489,25 @@ begin
     nRECOPI := TProd(Source).nRECOPI;
     nFCI := TProd(Source).nFCI;
     CEST := TProd(Source).CEST;
+    indEscala := TProd(Source).indEscala;
+    CNPJFab := TProd(Source).CNPJFab;
+    cBenef := TProd(Source).cBenef;
+  end
+  else
+    inherited;
+end;
+
+{ TrastroCollectionItem }
+
+procedure TrastroCollectionItem.Assign(Source: TPersistent);
+begin
+  if Source is TrastroCollectionItem then
+  begin
+    nLote := TrastroCollectionItem(Source).nLote;
+    qLote := TrastroCollectionItem(Source).qLote;
+    dFab := TrastroCollectionItem(Source).dFab;
+    dVal := TrastroCollectionItem(Source).dVal;
+    cAgreg := TrastroCollectionItem(Source).cAgreg;
   end
   else
     inherited;
@@ -3970,6 +4134,7 @@ begin
   if Source is TinfNFeSupl then
   begin
     qrCode := TinfNFeSupl(Source).qrCode;
+    urlChave := TinfNFeSupl(Source).urlChave;
   end
   else
     inherited;

@@ -1,0 +1,107 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
+
+* Desenvolvedores:
+
+{******************************************************************************
+|* ACBrCTeDACTeRL
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+06/09/2017
+[+] Ajustes referente impressão Produtos Perigosos com diversos itens.
+   		http://www.projetoacbr.com.br/forum/topic/38613-erro-no-dacte/
+    		Por: José M. S. Junior
+
+18/08/2017
+[+] Adequações visando a impressão correta do DACTE do CT-e e CT-e OS versão 3.0
+    		Por: Junior Santos
+
+03/07/2017
+[+] Adicionado validador para versão 3.0 na emissão da DACTE, Retirado campo "Forma de Pagamento" baseado nas alterações da versão.
+		http://www.projetoacbr.com.br/forum/topic/37467-urgente-problema-na-forma-de-pgto-e-na-data-prev-entrega/
+		Por: José M. S. Junior
+
+09/06/2017
+[+] Adicionado validador para versão 3.0 na emissão da DACTE, Modificando os Campos referente ao Modal Rodoviario baseado nas alterações da versão.
+		http://www.projetoacbr.com.br/forum/topic/36827-cte-30-erro-na-dacte/                
+		Por: José M. S. Junior
+
+12/05/2017
+[-] Correção para evitar erros de data
+		http://www.projetoacbr.com.br/forum/topic/34759-impressao-de-cte-com-dados-do-conj-transportador-nao-xml/?do=findComment&comment=240127
+		por : Juliomar Marchetti
+		
+12/01/2017
+[-] necessário abrir e salvar no lazarus os lfm do dacte pois estavam com acentuação erradas
+		por: Juliomar Marchetti
+		
+09/01/2017
+[+] Mudanças no dacte em retrato
+		http://www.projetoacbr.com.br/forum/topic/34390-dacte-fortes/
+		por Juliomar Marchetti
+		
+21/12/2016
+[+] Adição do detalhamento de veículos novos
+		http://www.projetoacbr.com.br/forum/topic/34043-imprimir-o-detalhamento-de-ve%C3%ADculos-novos/
+		por Juliomar Marchetti
+		
+08/12/2016
+[*] Modificação para melhorar a visualização do campos de volumes
+		http://www.projetoacbr.com.br/forum/topic/33721-impress%C3%A3o-do-campo-da-quantidade-de-volumes-e-tipo-rodado/
+		http://www.projetoacbr.com.br/forum/topic/33727-impress%C3%A3o-dos-campos-peso-aferido-kg-e-nome-do-motorista/
+		por : Juliomar Marchetti
+		
+08/12/2016
+[*] Arrumado para atender as casas decimais e nome do motorista espaço
+		http://www.projetoacbr.com.br/forum/topic/33727-impress%C3%A3o-dos-campos-peso-aferido-kg-e-nome-do-motorista/
+		por: Juliomar Marchetti
+
+07/12/2016
+[+] Adição da impressão da inutilização de CT-e
+		http://www.projetoacbr.com.br/forum/topic/33618-erro-ao-imprimir-inutiliza%C3%A7%C3%A3o/
+		por : Juliomar Marchetti
+		
+03/10/2016
+-- ACBrCTeDACTeRLRetratoA5 --
+[*] Correção de impressão em A5
+		http://www.projetoacbr.com.br/forum/topic/32160-formato-impressao-ct-e-a5-com-alguns-erros/
+    Por: Juliomar Marchetti

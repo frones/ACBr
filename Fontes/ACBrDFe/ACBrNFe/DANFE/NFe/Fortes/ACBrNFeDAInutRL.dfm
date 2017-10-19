@@ -12,6 +12,7 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
   Font.Style = []
   OldCreateOrder = True
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object RLNFeInut: TRLReport
@@ -25,6 +26,9 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Style = []
+    PreviewOptions.FormStyle = fsStayOnTop
+    PreviewOptions.ShowModal = True
+    PrintDialog = False
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter

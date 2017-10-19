@@ -51,10 +51,13 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrUtil, ACBrDownloadClass,
+  ACBrDownloadClass,
   httpsend, blcksock, synautil;
 
 type
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrHTTPDownload = class(TACBrDownloadClass)
   private
     fHTTPSend: THTTPSend;

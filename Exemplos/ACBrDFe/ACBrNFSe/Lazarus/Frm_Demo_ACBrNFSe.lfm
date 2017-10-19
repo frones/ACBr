@@ -13,8 +13,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.6.0.4'
-  Visible = False
+  LCLVersion = '1.6.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 568
@@ -1565,6 +1564,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     NFSeCancelada = False
     Provedor = proNenhum
     TamanhoFonte = 6
+    FormatarNumeroDocumentoNFSe = True
     PrintDialog = True
     left = 480
     top = 320

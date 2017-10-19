@@ -6,10 +6,10 @@ unit uPrincipal;
 interface
 
 uses
-  Windows, Classes, SysUtils, strutils, IniFiles, FileUtil, Forms, Controls,
-  Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, MaskEdit, Menus, ComCtrls,
-  Spin, UtilUnit, ACBrGIF, ACBrUtil, ACBrValidador, ACBrEnterTab, ACBrDFe,
-  ACBrDFeSSL, ACBrDFeWebService, ACBrBlocoX, ACBrDFeUtil;
+  Windows, Classes, SysUtils, strutils, dateutils, IniFiles, base64, FileUtil,
+  Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, MaskEdit,
+  Menus, ComCtrls, Spin, EditBtn, UtilUnit, ACBrGIF, ACBrUtil, ACBrValidador,
+  ACBrEnterTab, ACBrDFe, ACBrDFeSSL, ACBrDFeWebService, ACBrBlocoX, ACBrDFeUtil;
 
 const
   _C = 'tYk*5W@';
@@ -48,6 +48,7 @@ type
     memArqAssinado: TMemo;
     OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
+    rgTipo: TRadioGroup;
     rbtTipoCapicom: TRadioButton;
     rbtTipoOpenSSL: TRadioButton;
     SaveDialog1: TSaveDialog;
@@ -78,6 +79,9 @@ var
   frmPrincipal: TfrmPrincipal;
 
 implementation
+
+Uses
+  ACBrBlocoX_WebServices;
 
 const
   TIPO_CAPICOM = 'CAPICOM';
@@ -166,29 +170,75 @@ var
 begin
   F := TIniFile.Create(GetPathConfig);
   try
-    edtCertificado.Text       := F.ReadString('CONFIG', 'Certificado', '');
-    edtArqBlocoX.Text := F.ReadString('CONFIG', 'UltimoArquivo', '');
-    rbtTipoCapicom.Checked    := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_CAPICOM;
-    rbtTipoOpenSSL.Checked    := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_OPENSSL;
+    edtCertificado.Text      := F.ReadString('CONFIG', 'Certificado', '');
+    edtArqBlocoX.Text        := F.ReadString('CONFIG', 'UltimoArquivo', '');
+    rbtTipoCapicom.Checked   := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_CAPICOM;
+    rbtTipoOpenSSL.Checked   := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_OPENSSL;
     edtSenhaCertificado.Text := LeINICrypt(F, 'Certificado', 'Senha', _C);
-    edProxyHost.Text       := F.ReadString('Proxy', 'Host', '');
+    edProxyHost.Text         := F.ReadString('Proxy', 'Host', '');
     edProxyPorta.Value       := F.ReadInteger('Proxy', 'Porta', 0);
-    edProxyUser.Text       := F.ReadString('Proxy', 'User', '');
-    edProxySenha.Text := LeINICrypt(F, 'Proxy', 'Senha', _C);
+    edProxyUser.Text         := F.ReadString('Proxy', 'User', '');
+    edProxySenha.Text        := LeINICrypt(F, 'Proxy', 'Senha', _C);
   finally
     F.Free;
   end;
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
+var
+  fArquivo: TStringList;
 begin
-  CarregarGifBannerACBrSAC;
-
   edtCertificado.Clear;
   edtArqBlocoX.Clear;
   memArqAssinado.Clear;
 
   LerConfiguracoes;
+
+  ConfigurarDFe;
+
+  if (UpperCase(ParamStr(2)) = '/E') or
+     (UpperCase(ParamStr(2)) = '/V') then
+  begin
+    if FilesExists(ParamStr(1)) then
+    begin
+      try
+        fArquivo := TStringList.Create;
+        fArquivo.LoadFromFile(ParamStr(1));
+        if Pos('</reducaoz>',LowerCase(fArquivo.Text)) > 0 then
+          memArqAssinado.Text := ACBrBlocoX1.SSL.Assinar(fArquivo.Text, 'ReducaoZ', 'Mensagem')
+        else if Pos('</estoque>',LowerCase(fArquivo.Text)) > 0 then
+          memArqAssinado.Text := ACBrBlocoX1.SSL.Assinar(fArquivo.Text, 'Estoque', 'Mensagem')
+        else
+          ShowMessage('Arquivo não reconhecido');
+      finally
+        fArquivo.Free;
+      end;
+
+      if (UpperCase(ParamStr(2)) = '/E') then
+        btnTransmitirClick(Self)
+      else
+        btnValidarClick(Self);
+
+      WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'-resposta.'+ExtractFileExt(ParamStr(1)),memArqAssinado.Text);
+      Application.Terminate;
+    end
+    else
+    begin
+      WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'-resposta.'+ExtractFileExt(ParamStr(1)),'Arquivo Inválido');
+      Application.Terminate;
+    end;
+  end
+  else if UpperCase(ParamStr(2)) = '/C' then
+  begin
+    ACBrBlocoX1.WebServices.ConsultarBlocoX.Recibo := ParamStr(1);
+    ACBrBlocoX1.WebServices.ConsultarBlocoX.Executar;
+
+    memArqAssinado.Text := ACBrBlocoX1.WebServices.ConsultarBlocoX.RetWS;
+    WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'consultar-resposta.'+ExtractFileExt(ParamStr(1),memArqAssinado.Text);
+    Application.Terminate;
+  end
+  else
+     CarregarGifBannerACBrSAC;;
 end;
 
 procedure TfrmPrincipal.Image2Click(Sender: TObject);
@@ -282,31 +332,48 @@ begin
 end;
 
 procedure TfrmPrincipal.btnTransmitirClick(Sender: TObject);
+var
+  wWebServiceBlocoX: TEnviarBlocoX;
 begin
   if not ValidarArquivo then
     Exit;
 
   ConfigurarDFe;
 
-  ACBrBlocoX1.WebServices.EnviarBlocoX.XML := memArqAssinado.Text;
-  ACBrBlocoX1.WebServices.EnviarBlocoX.Executar;
+  case rgTipo.ItemIndex of
+    0: wWebServiceBlocoX := ACBrBlocoX1.WebServices.EnviarReducaoZ;
+    1: wWebServiceBlocoX := ACBrBlocoX1.WebServices.EnviarEstoque;
+  end;
 
-  memArqAssinado.Text := ACBrBlocoX1.WebServices.EnviarBlocoX.RetWS;
+  wWebServiceBlocoX.XML := memArqAssinado.Text;
+
+  if wWebServiceBlocoX.Executar then
+    memArqAssinado.Text := wWebServiceBlocoX.RetWS
+  else
+    memArqAssinado.Text := 'Erro ao enviar' + sLineBreak + wWebServiceBlocoX.Msg;
 end;
 
 procedure TfrmPrincipal.btnValidarClick(Sender: TObject);
+var
+  wWebServiceBlocoX: TValidarBlocoX;
 begin
   if not ValidarArquivo then
     Exit;
 
   ConfigurarDFe;
 
-  ACBrBlocoX1.WebServices.ValidarBlocoX.XML := memArqAssinado.Text;
-  ACBrBlocoX1.WebServices.ValidarBlocoX.ValidarEcf := False;
-  ACBrBlocoX1.WebServices.ValidarBlocoX.ValidarPafEcf := False;
-  ACBrBlocoX1.WebServices.ValidarBlocoX.Executar;
+  case rgTipo.ItemIndex of
+    0: wWebServiceBlocoX := ACBrBlocoX1.WebServices.ValidarReducaoZ;
+    1: wWebServiceBlocoX := ACBrBlocoX1.WebServices.ValidarEstoque;
+  end;
 
-  memArqAssinado.Text := ACBrBlocoX1.WebServices.ValidarBlocoX.RetWS;
+  wWebServiceBlocoX.XML := memArqAssinado.Text;
+  wWebServiceBlocoX.ValidarEcf    := True;
+  wWebServiceBlocoX.ValidarPafEcf := True;
+  if wWebServiceBlocoX.Executar then
+    memArqAssinado.Text := wWebServiceBlocoX.RetWS
+  else
+    memArqAssinado.Text := 'Erro ao validar' + sLineBreak + wWebServiceBlocoX.Msg;
 end;
 
 end.

@@ -33,7 +33,6 @@ requires
 
 contains
   ACBrDiversosReg in '..\..\..\Fontes\ACBrDiversos\ACBrDiversosReg.pas',
-  ACBrCalculadora in '..\..\..\Fontes\ACBrDiversos\ACBrCalculadora.pas',
   ACBrExtenso in '..\..\..\Fontes\ACBrDiversos\ACBrExtenso.pas',
   ACBrValidador in '..\..\..\Fontes\ACBrDiversos\ACBrValidador.pas',
   ACBrTroco in '..\..\..\Fontes\ACBrDiversos\ACBrTroco.pas',
@@ -47,6 +46,9 @@ contains
   Gif1 in '..\..\..\Fontes\Terceiros\TGif\Gif1.pas',
   Gif3 in '..\..\..\Fontes\Terceiros\TGif\Gif3.pas',
   ACBrInStore in '..\..\..\Fontes\ACBrDiversos\ACBrInStore.pas',
-  ACBrCargaBal in '..\..\..\Fontes\ACBrDiversos\ACBrCargaBal.pas';
+  ACBrCargaBal in '..\..\..\Fontes\ACBrDiversos\ACBrCargaBal.pas',
+  ACBrCalculadora in '..\..\..\Fontes\ACBrDiversos\ACBrCalculadora.pas',
+  Calculadora in '..\..\..\Fontes\ACBrDiversos\Calculadora.pas' {FrCalculadora};
 
 end.
+

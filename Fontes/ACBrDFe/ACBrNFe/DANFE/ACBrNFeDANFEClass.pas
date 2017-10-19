@@ -48,11 +48,13 @@ unit ACBrNFeDANFEClass;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrBase,
   pcnNFe, pcnConversao;
 
 type
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TCasasDecimais = class(TComponent)
   private
     fFormato : TDetFormato;
@@ -75,8 +77,10 @@ type
   end;
 
   { TACBrNFeDANFEClass }
-
-  TACBrNFeDANFEClass = class( TComponent )
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
+  TACBrNFeDANFEClass = class( TACBrComponent )
    private
     procedure SetNFE(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);
@@ -101,6 +105,7 @@ type
     FEmail: String;
     FImprimeDescPorc: Boolean;
     FProtocoloNFe: String;
+    FLarguraBobina: Integer;
     FMargemInferior: Double;
     FMargemSuperior: Double;
     FMargemEsquerda: Double;
@@ -119,6 +124,7 @@ type
     FImprimeEmUmaLinha: Boolean;
     FUsaCodigoEanImpressao: Boolean;
     FImprimeDescAcrescItem: Boolean;
+    FQRCodeLateral: Boolean;
 
     FTamanhoLogoHeight: Integer;
     FTamanhoLogoWidth: Integer;
@@ -134,6 +140,7 @@ type
     FvTribMun: Currency; //total tributos municipais
     FFonteTributos: String;
     FChaveTributos: String;
+    FImprimirTributos : Boolean;
 
     FPosCanhoto: TPosRecibo;
 
@@ -143,6 +150,7 @@ type
     destructor Destroy; override;
 
     procedure ImprimirDANFE(NFE: TNFe = nil); virtual;
+    procedure ImprimirDANFECancelado(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEResumido(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEPDF(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEResumidoPDF(NFE: TNFe = nil); virtual;
@@ -155,6 +163,12 @@ type
     function ManterNomeImpresso(sXNome, sXFant: String): String;
     function FormatQuantidade(dValor: Double; dForcarDecimais: Boolean = True): String;
     function FormatValorUnitario(dValor: Double): String;
+    function ManterUnidades(sUCom, sUTrib: String): String;
+    function ManterQuantidades(dQCom, dQTrib: Double): String;
+    function ManterValoresUnitarios(dVCom, dVTrib: Double): String;
+    function ManterDocreferenciados( aNFE: TNFe;bImprimirDadosDocReferenciados: Boolean;
+      sQuebraLinha: String = ' '): String;
+
   published
     property ACBrNFe: TComponent                     read FACBrNFe                        write SetNFE;
     property Logo: String                            read FLogo                           write FLogo;
@@ -173,6 +187,7 @@ type
     property ImprimirDescPorc: Boolean               read FImprimeDescPorc                write FImprimeDescPorc;
     property ImprimirTotalLiquido: Boolean           read FImprimirTotalLiquido           write FImprimirTotalLiquido;
     property ProtocoloNFe: String                    read FProtocoloNFe                   write FProtocoloNFe;
+    property LarguraBobina : Integer                 read FLarguraBobina                  write FLarguraBobina default 302;
     property MargemInferior: Double                  read FMargemInferior                 write FMargemInferior;
     property MargemSuperior: Double                  read FMargemSuperior                 write FMargemSuperior;
     property MargemEsquerda: Double                  read FMargemEsquerda                 write FMargemEsquerda;
@@ -196,7 +211,8 @@ type
     property LogoemCima: Boolean                     read FLogoEmCima                     write FLogoEmCima;
     property TamanhoFonteEndereco: Integer           read FTamanhoFonteEndereco           write FTamanhoFonteEndereco;
     property RecuoLogo: Integer                      read FRecuoLogo                      write FRecuoLogo;
-    property TributosSeparadamente: Boolean          read FTributosSeparadamente          write FTributosSeparadamente;
+    property ImprimirTributos: Boolean               read FImprimirTributos               write FImprimirTributos default True;
+    property TributosSeparadamente: Boolean          read FTributosSeparadamente          write FTributosSeparadamente default False;
     property vTribFed: Currency                      read FvTribFed                       write FvTribFed;
     property vTribEst: Currency                      read FvTribEst                       write FvTribEst;
     property vTribMun: Currency                      read FvTribMun                       write FvTribMun;
@@ -206,19 +222,20 @@ type
     property ImprimeEmUmaLinha: Boolean              read FImprimeEmUmaLinha              write FImprimeEmUmaLinha default True;
     property ImprimeDescAcrescItem: Boolean          read FImprimeDescAcrescItem          write FImprimeDescAcrescItem default True;
     property UsaCodigoEanImpressao: Boolean          read FUsaCodigoEanImpressao          write FUsaCodigoEanImpressao default False;
+    property QRCodeLateral: Boolean                  read FQRCodeLateral                  write FQRCodeLateral default False;
   end;
 
 implementation
 
 uses
-  ACBrNFe, ACBrUtil, ACBrConsts;
+  ACBrNFe, ACBrUtil,ACBrDFeUtil,ACBrValidador;
 
 //Casas Decimais
 constructor TCasasDecimais.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
-  FMask_qCom    := '###,###,###,##0.00';
-  FMask_vUnCom  := '###,###,###,##0.00';
+  FMask_qCom    := ',0.00';
+  FMask_vUnCom  := ',0.00';
   FQCom         := 2;
   FvUnCom       := 2;
 end;
@@ -268,6 +285,7 @@ begin
   FEmail     := '';
   FImprimeDescPorc := False;
   FProtocoloNFe    := '';
+  FLarguraBobina   := 302;
   FMargemInferior  := 0.8;
   FMargemSuperior  := 0.8;
   FMargemEsquerda  := 0.6;
@@ -275,7 +293,7 @@ begin
   FExibeResumoCanhoto := false;
   FExibeResumoCanhoto_Texto := '';
   FFormularioContinuo := false;
-  FTamanhoFonte_DemaisCampos := 10;
+  FTamanhoFonte_DemaisCampos := 8;
   FProdutosPorPagina := 0;
   FImprimeNomeFantasia            := False;
   FImprimirDetalhamentoEspecifico := true;
@@ -288,7 +306,8 @@ begin
   FViaConsumidor:= True;
   FvTroco       := 0.0;
 
-  FTributosSeparadamente:= False;
+  FImprimirTributos      := True;
+  FTributosSeparadamente := False;
   FvTribFed:= 0.0;
   FvTribEst:= 0.0;
   FvTribMun:= 0.0;
@@ -297,6 +316,7 @@ begin
   FImprimeEmUmaLinha     := True;
   FImprimeDescAcrescItem := True;
   FUsaCodigoEanImpressao := False;
+  FQRCodeLateral         := False;
 
   {$IFDEF COMPILER6_UP}
       FCasasDecimais.SetSubComponent( true );{ para gravar no DFM/XFM }
@@ -312,6 +332,11 @@ end;
 procedure TACBrNFeDANFEClass.ImprimirDANFE(NFE : TNFe = nil);
 begin
   ErroAbstract('Imprimir');
+end;
+
+procedure TACBrNFeDANFEClass.ImprimirDANFECancelado(NFE: TNFe);
+begin
+  ErroAbstract('ImprimirCancelado');
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirDANFEResumido(NFE : TNFe = nil);
@@ -367,8 +392,7 @@ end;
 
 procedure TACBrNFeDANFEClass.SetPathPDF(const Value: String);
 begin
-  if Trim(Value) <> '' then
-    FPathPDF := IncludeTrailingPathDelimiter(Value);
+  FPathPDF := PathWithDelim(Value);
 end;
 
 procedure TACBrNFeDANFEClass.ErroAbstract(NomeProcedure: String);
@@ -377,11 +401,49 @@ begin
 end;
 
 function TACBrNFeDANFEClass.GetPathPDF: String;
+var
+   dhEmissao: TDateTime;
+   DescricaoModelo: String;
+   ANFe: TNFe;
 begin
-  if Trim(FPathPDF) <> '' then
-    Result := IncludeTrailingPathDelimiter(FPathPDF)
-  else
-    Result := Trim(FPathPDF)
+  if (csDesigning in ComponentState) then
+  begin
+    Result := FPathPDF;
+    Exit;
+  end;
+
+  Result := PathWithDelim(FPathPDF);
+
+  //Criar diretório conforme configurado para NF-e
+  if Assigned(ACBrNFe) then
+  begin
+    if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
+    begin
+      ANFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+      if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
+        dhEmissao := ANFe.Ide.dEmi
+      else
+        dhEmissao := Now;
+
+      DescricaoModelo := '';
+      if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.AdicionarLiteral then
+      begin
+         case ANFe.Ide.modelo of
+           0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
+           55: DescricaoModelo := 'NFe';
+           65: DescricaoModelo := 'NFCe';
+         end;
+      end;
+
+      Result := PathWithDelim(TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(
+                             Result
+                            ,DescricaoModelo
+                            ,ANFe.Emit.CNPJCPF
+                            ,dhEmissao
+                            ,DescricaoModelo
+                            ));
+    end;
+  end;
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirEVENTO(NFE: TNFe);
@@ -409,10 +471,10 @@ begin
   if (Frac(dValor) > 0) or (dForcarDecimais) then
   begin
     case CasasDecimais.Formato of
-      tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+      tdetInteger : Result := FormatFloatBr( dValor , FloatMask( CasasDecimais._qCom));
       tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_qCom);
     else
-      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+      Result := FormatFloatBr( dValor , FloatMask( CasasDecimais._qCom));
     end
   end
   else
@@ -425,10 +487,10 @@ function TACBrNFeDANFEClass.FormatValorUnitario( dValor : Double ) : String;
 begin
   // formatar conforme configurado
   case CasasDecimais.Formato of
-    tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
+    tdetInteger : Result := FormatFloatBr( dValor , FloatMask( CasasDecimais._vUnCom));
     tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_vUnCom);
     else
-      Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
+      Result := FormatFloatBr( dValor , FloatMask( CasasDecimais._vUnCom));
   end;
 end;
 
@@ -446,6 +508,101 @@ begin
     Result := sXFant
   else
     Result := sXNome;
+end;
+
+function TACBrNFeDANFEClass.ManterQuantidades(dQCom, dQTrib: Double): String;
+begin
+   Result := FormatQuantidade( dQCom );
+   if dQTrib > 0 then
+      Result := Result + #13#10 + FormatQuantidade( dQTrib );
+end;
+
+function TACBrNFeDANFEClass.ManterUnidades(sUCom, sUTrib: String): String;
+begin
+   Result := Trim( sUCom );
+   if Trim( sUTrib ) <> '' then
+      Result := Result + #13#10 + Trim( sUTrib );
+end;
+
+function TACBrNFeDANFEClass.ManterValoresUnitarios(dVCom,
+  dVTrib: Double): String;
+begin
+   Result := FormatValorUnitario ( dVCom );
+   if dVTrib > 0 then
+      Result := Result + #13#10 + FormatValorUnitario ( dVTrib );
+end;
+
+function TACBrNFeDANFEClass.ManterDocreferenciados( aNFE: TNFe;bImprimirDadosDocReferenciados : Boolean; sQuebraLinha : String = ' ' ) : String;
+// Informações de Documentos referenciados
+  function DescrModeloNFe(chave: String):String;
+  begin
+    case StrToIntDef(Copy(chave, 21, 2),0) of
+      59:   Result := 'CFe-SAT Ref.:';
+      65:   Result := 'NFCe Ref.:';
+      else  Result := 'NFe Ref.:';
+    end;
+  end;
+  Function MontaLadoALado(  bExecuta : Boolean;
+                            sResult : string;
+                            sInicio : String;
+                            sString : String ) : String;
+  begin
+    if bExecuta  then
+    begin
+      if sResult = '' then
+        Result := sInicio
+      else
+      if pos(sInicio,sResult) = 0 then
+        Result := sResult+', '+ sInicio
+      else
+        Result := sResult+', ';
+
+      Result := Result + '(' + sString +')' ;
+    end
+    else
+      Result := sResult;
+  end;
+var
+  i : Integer;
+begin
+  Result  := '';
+  if ( bImprimirDadosDocReferenciados ) and ( ANFe.Ide.NFref.Count > 0 ) then
+  begin
+    for i := 0 to (ANFe.ide.NFref.Count - 1) do
+    begin
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].refNFe <> '' ),
+                                  Result,
+                                  DescrModeloNFe(ANFe.ide.NFref[i].refNFe) ,
+                                  FormatarChaveAcesso( ANFe.ide.NFref[i].refNFe ) );
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].refCTe <> '' ),
+                                  Result,
+                                  'CTe Ref.:',
+                                  FormatarChaveAcesso( ANFe.ide.NFref[i].refCTe ));
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].RefECF.modelo <> ECFModRefVazio ) ,
+                                  Result,
+                                  'ECF Ref.:',
+                                  ACBrStr('modelo: ' + ECFModRefToStr(ANFe.ide.NFref[i].RefECF.modelo) +
+                                  ' ECF: ' +ANFe.ide.NFref[i].RefECF.nECF + ' COO: ' + ANFe.ide.NFref[i].RefECF.nCOO));
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].RefNF.CNPJ <> '' ),
+                                  Result,
+                                  'NF Ref.:',
+                                  ACBrStr('série: ' + IntTostr(ANFe.ide.NFref[i].RefNF.serie) +
+                                  ' número: ' + IntTostr(ANFe.ide.NFref[i].RefNF.nNF) +
+                                  ' emit: ' + FormatarCNPJouCPF(ANFe.ide.NFref[i].RefNF.CNPJ) +
+                                  ' modelo: ' + IntTostr(ANFe.ide.NFref[i].RefNF.modelo)));
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].RefNFP.nNF > 0 ),
+                                  Result,
+                                  'NFP Ref.:',
+                                  ACBrStr('série: ' + IntTostr(ANFe.ide.NFref[i].RefNFP.serie) +
+                                  ' número: ' + IntTostr(ANFe.ide.NFref[i].RefNFP.nNF) +
+                                  ' modelo: ' + ANFe.ide.NFref[i].RefNFP.modelo +
+                                  ' emit: ' + FormatarCNPJouCPF(ANFe.ide.NFref[i].RefNFP.CNPJCPF) +
+                                  ' IE: ' + ANFe.ide.NFref[i].RefNFP.IE +
+                                  ' UF: ' + CUFtoUF(ANFe.ide.NFref[i].RefNFP.cUF)));
+
+    end;
+    Result := Result + sQuebraLinha;
+  end;
 end;
 
 end.

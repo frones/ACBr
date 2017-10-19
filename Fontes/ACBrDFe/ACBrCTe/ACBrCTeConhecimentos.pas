@@ -95,7 +95,8 @@ type
     function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
-      EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
+      EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
+      sReplyTo: TStrings = nil);
 
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
       PathArquivo: String = ''): String;
@@ -176,13 +177,16 @@ begin
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
+    FCTe.Ide.modelo := StrToInt(ModeloCTeToStr(Configuracoes.Geral.ModeloDF));
     FCTe.infCTe.Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
 
     FCTe.Ide.tpCTe := tcNormal;
-    FCTe.Ide.modelo := '57';
     FCTe.Ide.verProc := 'ACBrCTe';
     FCTe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
     FCTe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
+    FCTe.ide.indGlobalizado := tiNao;
+    
+    FCTe.infCTeNorm.infCteSub.indAlteraToma := tiNao;
 
     if Assigned(DACTE) then
       FCTe.Ide.tpImp := DACTE.TipoDACTE;
@@ -226,7 +230,11 @@ var
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
 begin
-  TACBrCTe(TConhecimentos(Collection).ACBrCTe).SSL.ValidarCNPJCertificado( CTe.Emit.CNPJ );
+  with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
+  begin
+    if not Assigned(SSL.AntesDeAssinar) then
+      SSL.ValidarCNPJCertificado( CTe.Emit.CNPJ );
+  end;
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;
@@ -236,7 +244,11 @@ begin
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
-    FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'CTe', 'infCte');
+    if Configuracoes.Geral.ModeloDF = moCTe then
+      FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'CTe', 'infCte')
+    else
+      FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'CTeOS', 'infCte');
+      
     // SSL.Assinar() sempre responde em UTF8...
     FXMLOriginal := FXMLAssinado;
 
@@ -251,7 +263,8 @@ begin
       Leitor.Free;
     end;
 
-    if Configuracoes.Arquivos.Salvar then
+    if Configuracoes.Arquivos.Salvar and
+      (not Configuracoes.Arquivos.SalvarApenasCTeProcessados) then
     begin
       if NaoEstaVazio(NomeArq) then
         Gravar(NomeArq, FXMLAssinado)
@@ -264,10 +277,13 @@ end;
 procedure Conhecimento.Validar;
 var
   Erro, AXML, DeclaracaoXML, AXMLModal: String;
-  CTeEhValido, ModalEhValido: Boolean;
+  CTeEhValido, ModalEhValido, ok: Boolean;
   ALayout: TLayOutCTe;
+  Modelo: TModeloCTe;
 begin
-  AXML := XMLAssinado;
+  AXML := FXMLAssinado;
+  if AXML = '' then
+    AXML := XMLOriginal;
 
   AXMLModal := Trim(RetornarConteudoEntre(AXML, '<infModal', '</infModal>'));
   case TACBrCTe(TConhecimentos(Collection).ACBrCTe).IdentificaSchemaModal(AXML) of
@@ -296,6 +312,11 @@ begin
                                            Trim(RetornarConteudoEntre(AXML, '<rodo>', '</rodo>')) +
                                          '</rodo>';
                           end;
+   schcteModalRodoviarioOS: begin
+                              AXMLModal := '<rodoOS xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                                             Trim(RetornarConteudoEntre(AXML, '<rodoOS>', '</rodoOS>')) +
+                                           '</rodoOS>';
+                            end;
    schcteMultiModal: begin
                        AXMLModal := '<multimodal xmlns="' + ACBRCTE_NAMESPACE + '">' +
                                       Trim(RetornarConteudoEntre(AXML, '<multimodal>', '</multimodal>')) +
@@ -307,15 +328,27 @@ begin
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
-    ALayout := LayCTeRecepcao;
+    Modelo  := StrToModeloCTe(ok, IntToStr(FCTe.Ide.modelo));
 
     // Extraindo apenas os dados do CTe (sem cteProc)
     DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-    AXML := DeclaracaoXML + '<CTe xmlns' +
-            RetornarConteudoEntre(AXML, '<CTe xmlns', '</CTe>') +
-            '</CTe>';
 
-    if (FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto) then
+    if Modelo = moCTe then
+    begin
+      ALayout := LayCTeRecepcao;
+      AXML := DeclaracaoXML + '<CTe xmlns' +
+              RetornarConteudoEntre(AXML, '<CTe xmlns', '</CTe>') +
+              '</CTe>';
+    end
+    else begin
+      ALayout := LayCTeRecepcaoOS;
+      AXML := DeclaracaoXML + '<CTeOS xmlns' +
+              RetornarConteudoEntre(AXML, '<CTeOS xmlns', '</CTeOS>') +
+              '</CTeOS>';
+    end;
+
+    if ((FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto)) and
+        (FCTe.Ide.tpServ <> tsTranspValores) then
     begin
       ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FCTe.infCTe.Versao), Erro);
 
@@ -446,10 +479,10 @@ end;
 
 function Conhecimento.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
 begin
-  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
+
+  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
 
   Result := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Gravar(FNomeArq, FXMLOriginal);
 end;
@@ -465,7 +498,7 @@ begin
 end;
 
 procedure Conhecimento.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
   NomeArq: String;
   AnexosEmail: TStrings;
@@ -496,7 +529,7 @@ begin
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamCTe,
-                   NumID + '-cte.xml');
+                   NumID + '-cte.xml', sReplyTo);
     end;
   finally
     AnexosEmail.Free;
@@ -514,6 +547,7 @@ begin
     FCTeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FCTeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FCTeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
+    FCTeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
@@ -589,7 +623,7 @@ begin
      (Copy(CTe.infCTe.ID,  6,  2) <> Copy(FormatFloat('0000', wAno), 3, 2)) or
      (Copy(CTe.infCTe.ID,  8,  2) <> FormatFloat('00', wMes)) or
      (Copy(CTe.infCTe.ID, 10, 14) <> copy(OnlyNumber(CTe.Emit.CNPJ) + '00000000000000', 1, 14)) or
-     (Copy(CTe.infCTe.ID, 24,  2) <> CTe.ide.modelo) or
+     (Copy(CTe.infCTe.ID, 24,  2) <> IntToStr(CTe.ide.modelo)) or
      (Copy(CTe.infCTe.ID, 26,  3) <> IntToStrZero(CTe.ide.serie, 3)) or
      (Copy(CTe.infCTe.ID, 29,  9) <> IntToStrZero(CTe.ide.nCT, 9)) or
      (Copy(CTe.infCTe.ID, 38,  1) <> TpEmisToStr(CTe.ide.tpEmis)) or
@@ -820,7 +854,10 @@ var
 
   function PosCTe: integer;
   begin
-    Result := pos('</CTe>', XMLStr);
+    if TACBrCTe(ACBrCTe).Configuracoes.Geral.ModeloDF = moCTeOS then
+      Result := Pos('</CTeOS>', XMLStr)
+    else
+      Result := pos('</CTe>', XMLStr);
   end;
 
 begin
@@ -830,20 +867,41 @@ begin
   N := PosCTe;
   while N > 0 do
   begin
-    P := pos('</cteProc>', XMLStr);
-
-    if P <= 0 then
-      P := pos('</procCTe>', XMLStr);  // CTe obtido pelo Portal da Receita
-
-    if P > 0 then
+    if TACBrCTe(ACBrCTe).Configuracoes.Geral.ModeloDF = moCTeOS then
     begin
-      ACTeXML := copy(XMLStr, 1, P + 10);
-      XMLStr := Trim(copy(XMLStr, P + 10, length(XMLStr)));
+      P := pos('</cteOSProc>', XMLStr);
+
+      if P <= 0 then
+        P := pos('</procCTeOS>', XMLStr);  // CTe obtido pelo Portal da Receita
+
+      if P > 0 then
+      begin
+        ACTeXML := copy(XMLStr, 1, P + 12);
+        XMLStr := Trim(copy(XMLStr, P + 12, length(XMLStr)));
+      end
+      else
+      begin
+        ACTeXML := copy(XMLStr, 1, N + 8);
+        XMLStr := Trim(copy(XMLStr, N + 8, length(XMLStr)));
+      end;
     end
     else
     begin
-      ACTeXML := copy(XMLStr, 1, N + 6);
-      XMLStr := Trim(copy(XMLStr, N + 6, length(XMLStr)));
+      P := pos('</cteProc>', XMLStr);
+
+      if P <= 0 then
+        P := pos('</procCTe>', XMLStr);  // CTe obtido pelo Portal da Receita
+
+      if P > 0 then
+      begin
+        ACTeXML := copy(XMLStr, 1, P + 10);
+        XMLStr := Trim(copy(XMLStr, P + 10, length(XMLStr)));
+      end
+      else
+      begin
+        ACTeXML := copy(XMLStr, 1, N + 6);
+        XMLStr := Trim(copy(XMLStr, N + 6, length(XMLStr)));
+      end;
     end;
 
     with Self.Add do

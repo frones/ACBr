@@ -29,6 +29,8 @@ type
     bTagsTesteInvalidas: TButton;
     bTagsTestePagCodigo: TButton;
     bImpLinhaALinha: TButton;
+    Button1: TButton;
+    cbCortarPapel: TCheckBox;
     cbHRI: TCheckBox;
     cbGavetaSinalInvertido: TCheckBox;
     cbxModelo: TComboBox;
@@ -107,7 +109,9 @@ type
     procedure bTagsCodBarrasClick(Sender: TObject);
     procedure bTagsTestePagCodigoClick(Sender: TObject);
     procedure bImpLinhaALinhaClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure cbControlePortaChange(Sender: TObject);
+    procedure cbCortarPapelChange(Sender: TObject);
     procedure cbGavetaSinalInvertidoChange(Sender: TObject);
     procedure cbHRIChange(Sender: TObject);
     procedure cbIgnorarTagsChange(Sender: TObject);
@@ -147,7 +151,8 @@ var
 
 implementation
 
-Uses typinfo, IniFiles,
+Uses
+  typinfo, IniFiles, Printers,
   ConfiguraSerial,
   ACBrUtil, ACBrConsts;
 
@@ -159,6 +164,7 @@ procedure TFrPosPrinterTeste.FormCreate(Sender: TObject);
 var
   I: TACBrPosPrinterModelo;
   J: TACBrPosPaginaCodigo;
+  K: Integer;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
@@ -175,6 +181,10 @@ begin
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
   cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
+
+  For K := 0 to Printer.Printers.Count-1 do
+    cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
+
   cbxPorta.Items.Add('/dev/ttyS0') ;
   cbxPorta.Items.Add('/dev/ttyS1') ;
   cbxPorta.Items.Add('/dev/ttyUSB0') ;
@@ -431,9 +441,19 @@ begin
   ACBrPosPrinter1.ImprimirLinha('</corte_total>');
 end;
 
+procedure TFrPosPrinterTeste.Button1Click(Sender: TObject);
+begin
+  ACBrPosPrinter1.Imprimir('<code93>1234'+#9+'5678</code93></corte_total>');
+end;
+
 procedure TFrPosPrinterTeste.cbControlePortaChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
+end;
+
+procedure TFrPosPrinterTeste.cbCortarPapelChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.CortaPapel := cbCortarPapel.Checked;
 end;
 
 procedure TFrPosPrinterTeste.cbGavetaSinalInvertidoChange(Sender: TObject);
@@ -478,6 +498,8 @@ begin
   finally
     cbxPorta.Text := ACBrPosPrinter1.Porta ;
   end ;
+
+  btSerial.Visible := ACBrPosPrinter1.Device.IsSerialPort;
 end;
 
 procedure TFrPosPrinterTeste.SbArqLogClick(Sender: TObject);
@@ -599,10 +621,12 @@ begin
   try
      INI.WriteInteger('PosPrinter','Modelo',cbxModelo.ItemIndex);
      INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
+     INI.WriteString('PosPrinter','DeviceParams',ACBrPosPrinter1.Device.ParamsString);
      INI.WriteInteger('PosPrinter','Colunas',seColunas.Value);
      INI.WriteInteger('PosPrinter','EspacoEntreLinhas',seEspLinhas.Value);
      INI.WriteInteger('PosPrinter','LinhasBuffer',seLinhasBuffer.Value);
      INI.WriteInteger('PosPrinter','LinhasPular',seLinhasPular.Value);
+     INI.WriteBool('PosPrinter','CortarPapel',cbCortarPapel.Checked);
      INI.WriteBool('PosPrinter','ControlePorta',cbControlePorta.Checked);
      INI.WriteBool('PosPrinter','TraduzirTags',cbTraduzirTags.Checked);
      INI.WriteBool('PosPrinter','IgnorarTags',cbIgnorarTags.Checked);
@@ -638,10 +662,13 @@ begin
   try
      cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
      cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
+     cbxPortaChange(nil);
+     ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter','DeviceParams',ACBrPosPrinter1.Device.ParamsString);
      seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
      seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
      seLinhasBuffer.Value := INI.ReadInteger('PosPrinter','LinhasBuffer',ACBrPosPrinter1.LinhasBuffer);
      seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasPular',ACBrPosPrinter1.LinhasEntreCupons);
+     cbCortarPapel.Checked := INI.ReadBool('PosPrinter','CortarPapel',ACBrPosPrinter1.CortaPapel);
      cbControlePorta.Checked := INI.ReadBool('PosPrinter','ControlePorta',ACBrPosPrinter1.ControlePorta);
      cbTraduzirTags.Checked := INI.ReadBool('PosPrinter','TraduzirTags',ACBrPosPrinter1.TraduzirTags);
      cbIgnorarTags.Checked := INI.ReadBool('PosPrinter','IgnorarTags',ACBrPosPrinter1.IgnorarTags);
@@ -671,7 +698,8 @@ begin
   if bAtivar.Caption = 'Ativar' then
     bAtivar.Click;
 
-  ACBrPosPrinter1.Imprimir(mImp.Text);
+  ACBrPosPrinter1.Buffer.Text := mImp.Lines.Text;
+  ACBrPosPrinter1.Imprimir;
 end;
 
 procedure TFrPosPrinterTeste.bImpTagsValidasClick(Sender: TObject);
@@ -734,6 +762,7 @@ begin
        ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;
        ACBrPosPrinter1.ColunasFonteNormal := seColunas.Value;
        ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
+       ACBrPosPrinter1.CortaPapel := cbCortarPapel.Checked;
        ACBrPosPrinter1.TraduzirTags := cbTraduzirTags.Checked;
        ACBrPosPrinter1.IgnorarTags := cbIgnorarTags.Checked;
        ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo( cbxPagCodigo.ItemIndex );

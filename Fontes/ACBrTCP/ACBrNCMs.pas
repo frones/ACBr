@@ -54,9 +54,13 @@ type
   private
     fCodigoNcm: string;
     fDescricaoNcm: string;
+    fDescrCategoriaNcm: string;
+    fCodigoCategoriaNcm: string;
 
   public
     property CodigoNcm: string read fCodigoNcm write fCodigoNcm;
+    property CodigoCategoriaNcm: string read fCodigoCategoriaNcm write fCodigoCategoriaNcm;
+    property DescrCategoriaNcm: string read fDescrCategoriaNcm write fDescrCategoriaNcm;
     property DescricaoNcm: string read fDescricaoNcm write fDescricaoNcm;
   end;
 
@@ -72,7 +76,9 @@ type
     property Objects[Index: integer]: TACBrNCM read GetObject write SetObject; default;
     procedure SaveToFile(AFileName: String);
   end;
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrNCMs = class(TACBrHTTP)
   private
     fNcms: TACBrNCMsList;
@@ -145,15 +151,49 @@ end;
 procedure TACBrNCMs.ListarNcms(codigoCapitulo: string = '');
 var
   Buffer: string;
-  SL1: TStringList;
+  SL1, SL2: TStringList;
   Cont: integer;
+
+  function IndexOfPos(Lista : TStrings; S: string; SomenteInicio : Boolean): Integer;
+  var
+    Temp : string;
+    I : Integer;
+  begin
+    S := UpperCase(S);
+    I := Length(S);
+    for Result := 0 to Lista.Count - 1 do begin
+      Temp := UpperCase(Lista[Result]);
+      if SomenteInicio then begin
+        if S = Copy(Temp, 1, I) then
+          Exit;
+        end
+      else
+        if Pos(S, Temp) > 0 then
+          Exit;
+    end;
+    Result := -1;
+  end;
+
+
+  function CountPos(const subtext: string; Text: string): Integer;
+  begin
+    if (Length(subtext) = 0) or (Length(Text) = 0) or (Pos(subtext, Text) = 0)
+    then
+      Result := 0
+    else
+      Result := (Length(Text) - Length(StringReplace(Text, subtext, '',
+        [rfReplaceAll]))) div Length(subtext);
+  end;
+
 
   function CopyDeAte(Texto, TextIni, TextFim: string): string;
   var
-    ContIni, ContFim: integer;
+    ContIni, ContFim, iPosI, iPosF: integer;
   begin
     Result := '';
-    if (Pos(TextFim, Texto) <> 0) and (Pos(TextIni, Texto) <> 0) then
+    iPosI := Pos(TextIni, Texto);
+    iPosF := Pos(TextFim, Texto);
+    if (iPosF <> 0) and (iPosI <> 0) then
     begin
       ContIni := Pos(TextIni, Texto) + Length(TextIni);
       ContFim := Pos(TextFim, Texto);
@@ -164,11 +204,35 @@ var
   procedure CarregaResultado;
   var
     Texto: string;
-    i: integer;
+    i, idx, iIniCopy: integer;
+    bcboPosicao: Boolean;
   begin
     Buffer := Self.RespHTTP.Text;
+
     Buffer := StringReplace(Buffer, '&lt;', '<', [rfReplaceAll]);
     Buffer := StringReplace(Buffer, '&gt;', '>' + sLineBreak, [rfReplaceAll]);
+
+    try
+      SL2 := TStringList.Create;
+
+      SL1 := TStringList.Create;
+      SL1.Text := Buffer;
+      bcboPosicao := false;
+      for i := 0 to SL1.Count - 1 do
+      begin
+        if not(bcboPosicao) then begin
+          Texto := Trim(CopyDeAte(SL1[i], '<select name="codigoPosicao"', 'class="caixa_selecao">'));
+          bcboPosicao := (Copy(Texto,1,15) = 'id="cboPosicao"');
+          end
+        else begin
+          Texto := Trim(CopyDeAte(SL1[i], '>', '</option>'));
+          if (Texto <> '') and (Texto <> '* Selecione *')  then
+            SL2.Add(Trim(Copy(Texto, 1, Length(Texto))));
+        end;
+      end;
+    finally
+      SL1.Free;
+    end;
 
     try
       SL1 := TStringList.Create;
@@ -181,12 +245,25 @@ var
           with Ncms.New do
           begin
             CodigoNcm := Trim(Copy(Texto, 13, 8));
-            DescricaoNcm := Trim(Copy(Texto, 24, Length(Texto)));
+
+            iIniCopy := CountPos('-', Trim(Copy(Texto, 24, Length(Texto))));
+
+            DescricaoNcm := Trim(Copy(Texto, 24+iIniCopy, Length(Texto)));
+
+            idx := IndexOfPos(SL2, Copy(CodigoNcm,1,4), false);
+            if idx <> -1 then
+              Texto := SL2.Strings[idx]
+            else
+              Texto := Copy(CodigoNcm,1,4)+' - '+DescricaoNcm;
+
+            CodigoCategoriaNcm := Trim(Copy(Texto,1,4));
+            DescrCategoriaNcm := Trim(Copy(Texto,7, Length(Texto)));
           end;
         end;
       end;
     finally
       SL1.Free;
+      SL2.Free;
     end;
   end;
 

@@ -82,13 +82,14 @@ uses
 constructor TACBrBancoBradescoSICOOB.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 2;
-   fpNome:= 'Bradesco';
-   fpNumero := 237;
+   fpDigito                := 2;
+   fpNome                  := 'Bradesco';
+   fpNumero                := 237;
    fpTamanhoMaximoNossoNum := 6;
-   fpTamanhoAgencia := 4;
-   fpTamanhoConta   := 7;
-   fpTamanhoCarteira:= 2;
+   fpTamanhoAgencia        := 4;
+   fpTamanhoConta          := 7;
+   fpTamanhoCarteira       := 2;
+   fpNumeroCorrespondente  := 756;
 end;
 
 function TACBrBancoBradescoSICOOB.CalcularFatorVencimento(
@@ -166,7 +167,7 @@ begin
                PadLeft( Agencia + AgenciaDigito, 13, '0')         + // Código da Cooperativa
                PadLeft( CodigoCedente, 7, '0')                    + // Código de Cobrança
                PadRight( Nome, 30)                                 + // Nome da Empresa
-               IntToStr( 756 ) + PadRight('BANCOOB', 15)           + // Código e Nome do Banco(756 - Sicoob)
+               IntToStrZero( ACBrBanco.NumeroCorrespondente, 3  ) + PadRight('BANCOOB', 15)   + // Código e Nome do Banco(756 - Sicoob)
                FormatDateTime('ddmmyy',Now)  + Space(08)       + // Data de geração do arquivo + brancos
                'SX'                                            + // Identificação do Sistema
                IntToStrZero(NumeroRemessa,7) + Space(277)      + // Nr. Sequencial de Remessa + brancos
@@ -178,7 +179,7 @@ end;
 
 procedure TACBrBancoBradescoSICOOB.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  aNossoNumero, aDigitoNossoNumero, aOcorrencia, aEspecie, aConta, aAgencia, aCarteira, aProtesto,
+  aNossoNumero, aDigitoNossoNumero, aOcorrencia, aEspecie, aCarteira, aProtesto,
   aTipoSacado, aMensagemCedente,
   wLinha : String;
   TipoBoleto : Char;
@@ -234,9 +235,6 @@ begin
    begin
       aNossoNumero := MontarCampoNossoNumero(ACBrTitulo);
       aDigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
-
-      aAgencia := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia),0),5);
-      aConta   := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta),0),7);
       aCarteira:= IntToStrZero(StrToIntDef(trim(Carteira),0), 3);
 
       {Pegando Código da Ocorrencia}
@@ -373,7 +371,7 @@ var
   rConta, rDigitoConta      :String;
   Linha, rCedente, rCNPJCPF :String;
 begin
-   if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> 756 then
+   if ( StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> ACBrBanco.NumeroCorrespondente ) then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
 

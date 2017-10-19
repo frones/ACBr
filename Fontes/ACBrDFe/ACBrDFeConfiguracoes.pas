@@ -47,6 +47,8 @@ uses
 
 type
 
+  TTagOrdenacaoPath = (opNenhum, opCNPJ, opModelo, opData, opLiteral);
+
   TConfiguracoes = class;
 
   { TCertificadosConf }
@@ -153,12 +155,37 @@ type
     property TimeZoneConf: TTimeZoneConf read FTimeZoneConf write FTimeZoneConf;
   end;
 
+  TOrdenacaoPathItem = class;
+
+  TOrdenacaoPath = class(TOwnedCollection)
+  private
+    function GetItem(Index: Integer): TOrdenacaoPathItem;
+    procedure SetItem(Index: Integer; Value: TOrdenacaoPathItem);
+  public
+    function Add: TOrdenacaoPathItem;
+    property Items[Index: Integer]: TOrdenacaoPathItem read GetItem write SetItem; default;
+  end;
+
+  TOrdenacaoPathItem = class(TCollectionItem)
+  private
+    FItem: TTagOrdenacaoPath;
+  protected
+    function GetDisplayName: String; override;
+  public
+    procedure Assign(Source: TPersistent); override;
+  published
+    property Item: TTagOrdenacaoPath read FItem write FItem;
+  end;
+
   { TGeralConf }
 
   TGeralConf = class(TComponent)
   private
     FConfiguracoes: TConfiguracoes;
+    FIdentarXML: Boolean;
     FSSLLib: TSSLLib;
+    FSSLCryptLib: TSSLCryptLib;
+    FSSLHttpLib: TSSLHttpLib;
     FFormaEmissao: TpcnTipoEmissao;
     FFormaEmissaoCodigo: integer;
     FSalvar: Boolean;
@@ -166,17 +193,28 @@ type
     FFormatoAlerta: String;
     FRetirarAcentos: Boolean;
     FRetirarEspacos: Boolean;
+    FSSLXmlSignLib: TSSLXmlSignLib;
     FValidarDigest: Boolean;
+    FCalcSSLLib: Boolean;
 
     procedure SetSSLLib(AValue: TSSLLib);
+    procedure SetSSLCryptLib(AValue: TSSLCryptLib);
+    procedure SetSSLHttpLib(AValue: TSSLHttpLib);
+    procedure CalcSSLLib;
+
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetFormatoAlerta: String;
+    procedure SetSSLXmlSignLib(AValue: TSSLXmlSignLib);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
     procedure Assign(DeGeralConf: TGeralConf); reintroduce; virtual;
 
   published
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
+    property SSLCryptLib: TSSLCryptLib read FSSLCryptLib write SetSSLCryptLib;
+    property SSLHttpLib: TSSLHttpLib read FSSLHttpLib write SetSSLHttpLib;
+    property SSLXmlSignLib: TSSLXmlSignLib read FSSLXmlSignLib write SetSSLXmlSignLib;
+
     property FormaEmissao: TpcnTipoEmissao read FFormaEmissao
       write SetFormaEmissao default teNormal;
     property FormaEmissaoCodigo: integer read FFormaEmissaoCodigo;
@@ -190,6 +228,7 @@ type
       write FRetirarAcentos default True;
     property RetirarEspacos: Boolean read FRetirarEspacos
       write FRetirarEspacos default True;
+    property IdentarXML: Boolean read FIdentarXML write FIdentarXML default False;
     property ValidarDigest: Boolean
       read FValidarDigest write FValidarDigest default True;
   end;
@@ -198,8 +237,6 @@ type
 
   TArquivosConf = class(TComponent)
   private
-    FConfiguracoes: TConfiguracoes;
-
     FPathSalvar: String;
     FPathSchemas: String;
     FIniServicos: String;
@@ -208,31 +245,39 @@ type
     FAdicionarLiteral: Boolean;
     FSepararPorCNPJ: Boolean;
     FSepararPorModelo: Boolean;
+    FOrdenacaoPath: TOrdenacaoPath;
+    FSepararPorAno: Boolean;
     FSepararPorMes: Boolean;
+    FSepararPorDia: Boolean;
   private
-
     function GetIniServicos: String;
     function GetPathSalvar: String;
     function GetPathSchemas: String;
+    procedure SetSepararPorDia(const Value: Boolean);
+    procedure SetSepararPorMes(const Value: Boolean);
+    procedure SetSepararPorAno(const Value: Boolean);
+  protected
+    fpConfiguracoes: TConfiguracoes;
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
+    destructor Destroy; override;
     procedure Assign(DeArquivosConf: TArquivosConf); reintroduce; virtual;
 
     function GetPath(APath: String; ALiteral: String; CNPJ: String = '';
-      Data: TDateTime = 0): String; virtual;
+      Data: TDateTime = 0; ModeloDescr: String = ''): String; virtual;
   published
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read GetPathSchemas write FPathSchemas;
     property IniServicos: String read GetIniServicos write FIniServicos;
     // Arquivos.Salvar - trata-se de arquivos com validade jurídica.
     property Salvar: Boolean read FSalvar write FSalvar default True;
-    property AdicionarLiteral: Boolean read FAdicionarLiteral
-      write FAdicionarLiteral default False;
+    property AdicionarLiteral: Boolean read FAdicionarLiteral write FAdicionarLiteral default False;
     property SepararPorCNPJ: Boolean read FSepararPorCNPJ write FSepararPorCNPJ default False;
-    property SepararPorModelo: Boolean read FSepararPorModelo
-      write FSepararPorModelo default False;
-    property SepararPorMes: Boolean
-      read FSepararPorMes write FSepararPorMes default False;
+    property SepararPorModelo: Boolean read FSepararPorModelo write FSepararPorModelo default False;
+    property OrdenacaoPath: TOrdenacaoPath read FOrdenacaoPath write FOrdenacaoPath;
+    property SepararPorAno: Boolean read FSepararPorAno write SetSepararPorAno default False;
+    property SepararPorMes: Boolean read FSepararPorMes write SetSepararPorMes default False;
+    property SepararPorDia: Boolean read FSepararPorDia write SetSepararPorDia default False;
   end;
 
   { TConfiguracoes }
@@ -363,15 +408,9 @@ begin
   inherited Create(AConfiguracoes);
 
   FConfiguracoes := AConfiguracoes;
-  {$IFNDEF MSWINDOWS}
-   FSSLLib := libOpenSSL;
-  {$ELSE}
-   {$IFDEF FPC}
-    FSSLLib := libCapicom;
-   {$ELSE}
-    FSSLLib := libCapicomDelphiSoap;
-   {$ENDIF}
-  {$ENDIF}
+  FSSLLib := libNone;
+  FSSLCryptLib := cryNone;
+  FSSLHttpLib := httpNone;
   FFormaEmissao := teNormal;
   FFormaEmissaoCodigo := StrToInt(TpEmisToStr(FFormaEmissao));
   FSalvar := True;
@@ -385,12 +424,17 @@ begin
   // %DESCRICAO% : Representa a Descrição da TAG
   FRetirarAcentos := True;
   FRetirarEspacos := True;
+  FIdentarXML := False;
   FValidarDigest := True;
+  FCalcSSLLib := True;
 end;
 
 procedure TGeralConf.Assign(DeGeralConf: TGeralConf);
 begin
   SSLLib           := DeGeralConf.SSLLib;
+  SSLCryptLib      := DeGeralConf.SSLCryptLib;
+  SSLHttpLib       := DeGeralConf.SSLHttpLib;
+  SSLXmlSignLib    := DeGeralConf.SSLXmlSignLib;
   FormaEmissao     := DeGeralConf.FormaEmissao;
   Salvar           := DeGeralConf.Salvar;
   ExibirErroSchema := DeGeralConf.ExibirErroSchema;
@@ -419,16 +463,94 @@ end;
 
 procedure TGeralConf.SetSSLLib(AValue: TSSLLib);
 begin
-  {$IFNDEF MSWINDOWS}
-  FSSLLib := libOpenSSL;  // Linux, Mac, apenas OpenSSL é suportado
-  {$ELSE}
+  FCalcSSLLib := False;
+  try
+    case AValue of
+      libNone:
+      begin
+        SSLCryptLib := cryNone;
+        SSLHttpLib := httpNone;
+        SSLXmlSignLib := xsNone;
+      end;
+
+      libOpenSSL:
+      begin
+        SSLCryptLib := cryOpenSSL;
+        SSLHttpLib := httpOpenSSL;
+        SSLXmlSignLib := xsXmlSec;
+      end;
+
+      libCapicom:
+      begin
+        SSLCryptLib := cryCapicom;
+        SSLHttpLib := httpWinINet;
+        SSLXmlSignLib := xsMsXmlCapicom;
+      end;
+
+      libCapicomDelphiSoap:
+      begin
+        SSLCryptLib := cryCapicom;
+        SSLHttpLib := httpIndy;
+        SSLXmlSignLib := xsMsXmlCapicom;
+      end;
+
+      libWinCrypt:
+      begin
+        SSLCryptLib := cryWinCrypt;
+        SSLHttpLib := httpWinHttp;
+        SSLXmlSignLib := xsMsXml;
+      end;
+    end;
+  finally
+    FCalcSSLLib := True;
+  end;
+
   FSSLLib := AValue;
-  {$IFDEF FPC}
-  if AValue = libCapicomDelphiSoap then
-    FSSLLib := libCapicom;
-  {$ENDIF}
-  {$ENDIF}
-  TACBrDFe(FConfiguracoes.Owner).SSL.SSLLib := FSSLLib;
+end;
+
+procedure TGeralConf.SetSSLCryptLib(AValue: TSSLCryptLib);
+begin
+  TACBrDFe(FConfiguracoes.Owner).SSL.SSLCryptLib := AValue;
+  FSSLCryptLib := AValue;
+  CalcSSLLib;
+end;
+
+procedure TGeralConf.SetSSLHttpLib(AValue: TSSLHttpLib);
+begin
+  TACBrDFe(FConfiguracoes.Owner).SSL.SSLHttpLib := AValue;
+  FSSLHttpLib := AValue;
+  CalcSSLLib;
+end;
+
+procedure TGeralConf.SetSSLXmlSignLib(AValue: TSSLXmlSignLib);
+begin
+  TACBrDFe(FConfiguracoes.Owner).SSL.SSLXmlSignLib := AValue;
+  FSSLXmlSignLib := AValue;
+  CalcSSLLib;
+end;
+
+
+procedure TGeralConf.CalcSSLLib;
+begin
+  if not FCalcSSLLib then Exit;
+
+  if (SSLCryptLib = cryOpenSSL) and (SSLHttpLib = httpOpenSSL) and (SSLXmlSignLib = xsXmlSec) then
+    FSSLLib := libOpenSSL
+
+  else if (SSLCryptLib = cryNone) and (SSLHttpLib = httpNone) and (SSLXmlSignLib = xsNone)then
+    FSSLLib := libNone
+
+  else if (SSLCryptLib = cryCapicom) and (SSLHttpLib = httpWinINet) and (SSLXmlSignLib = xsMsXmlCapicom) then
+    FSSLLib := libCapicom
+
+  else if (SSLCryptLib = cryCapicom) and (SSLHttpLib = httpIndy) and (SSLXmlSignLib = xsMsXmlCapicom) then
+    FSSLLib := libCapicomDelphiSoap
+
+  else if (SSLCryptLib = cryWinCrypt) and (SSLHttpLib = httpWinHttp) and (SSLXmlSignLib = xsMsXml) then
+    FSSLLib := libWinCrypt
+
+  else
+    FSSLLib := libCustom;
 end;
 
 
@@ -678,20 +800,31 @@ end;
 constructor TArquivosConf.Create(AConfiguracoes: TConfiguracoes);
 begin
   inherited Create(AConfiguracoes);
+  FOrdenacaoPath := TOrdenacaoPath.Create(Self, TOrdenacaoPathItem);
 
-  FConfiguracoes := AConfiguracoes;
+  fpConfiguracoes := AConfiguracoes;
   FSalvar := True;
   FPathSalvar := '';
   FPathSchemas := '';
   FIniServicos := '';
 
+  FSepararPorDia := False;
   FSepararPorMes := False;
+  FSepararPorAno := False;
   FAdicionarLiteral := False;
   FSepararPorCNPJ := False;
   FSepararPorModelo := False;
 end;
 
+destructor TArquivosConf.Destroy;
+begin
+  FOrdenacaoPath.Free;
+  inherited;
+end;
+
 procedure TArquivosConf.Assign(DeArquivosConf: TArquivosConf);
+var
+  I: Integer;
 begin
   PathSalvar       := DeArquivosConf.PathSalvar;
   PathSchemas      := DeArquivosConf.PathSchemas;
@@ -701,12 +834,16 @@ begin
   SepararPorCNPJ   := DeArquivosConf.SepararPorCNPJ;
   SepararPorModelo := DeArquivosConf.SepararPorModelo;
   SepararPorMes    := DeArquivosConf.SepararPorMes;
+  SepararPorDia    := DeArquivosConf.SepararPorDia;
+  OrdenacaoPath.Clear;
+  for I := 0 to DeArquivosConf.OrdenacaoPath.Count-1 do
+    OrdenacaoPath.Add.Item := DeArquivosConf.OrdenacaoPath.Items[I].Item;
 end;
 
 function TArquivosConf.GetPathSalvar: String;
 begin
   if FPathSalvar = '' then
-    if not (csDesigning in FConfiguracoes.Owner.ComponentState) then
+    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
       FPathSalvar := ApplicationPath + 'Docs';
 
   FPathSalvar := PathWithDelim(Trim(FPathSalvar));
@@ -716,68 +853,130 @@ end;
 function TArquivosConf.GetPathSchemas: String;
 begin
   if FPathSchemas = '' then
-    if not (csDesigning in FConfiguracoes.Owner.ComponentState) then
+    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
       FPathSchemas := ApplicationPath + 'Schemas';
 
   FPathSchemas := PathWithDelim(Trim(FPathSchemas));
   Result := FPathSchemas;
 end;
 
+procedure TArquivosConf.SetSepararPorAno(const Value: Boolean);
+begin
+  FSepararPorAno := Value;
+end;
+
+procedure TArquivosConf.SetSepararPorDia(const Value: Boolean);
+begin
+  FSepararPorDia := Value;
+  if FSepararPorDia then
+    FSepararPorMes := True;
+end;
+
+procedure TArquivosConf.SetSepararPorMes(const Value: Boolean);
+begin
+  FSepararPorMes := Value;
+  if not FSepararPorMes then
+    FSepararPorDia := False;
+end;
+
 function TArquivosConf.GetIniServicos: String;
 begin
   if FIniServicos = '' then
-    if not (csDesigning in FConfiguracoes.Owner.ComponentState) then
-      FIniServicos := ApplicationPath + FConfiguracoes.WebServices.ResourceName+'.ini';
+    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
+      FIniServicos := ApplicationPath + fpConfiguracoes.WebServices.ResourceName+'.ini';
 
   Result := FIniServicos;
 end;
 
 function TArquivosConf.GetPath(APath: String; ALiteral: String; CNPJ: String;
-  Data: TDateTime): String;
+  Data: TDateTime; ModeloDescr: String): String;
+
+  procedure AddPathOrder(AAdicionar: Boolean; AItemOrdenacaoPath: TTagOrdenacaoPath);
+  begin
+    if AAdicionar then
+      FOrdenacaoPath.Add.Item := AItemOrdenacaoPath;
+  end;
+  
 var
   wDia, wMes, wAno: word;
-  Dir, Modelo, AnoMes: String;
-  LenLiteral: integer;
+  Dir, Modelo, sAno, sMes, sDia: String;
+  LenLiteral, i: integer;
 begin
   if EstaVazio(APath) then
     Dir := PathSalvar
   else
     Dir := APath;
 
-  if SepararPorCNPJ then
+  //se nao foi informada nenhuma ordenação, cria ordenação na ordem anterior (compatibilidade)
+  if (FOrdenacaoPath.Count = 0) then
   begin
-    CNPJ := OnlyNumber(CNPJ);
-
-    if EstaVazio(CNPJ) then
-      CNPJ := OnlyNumber(TACBrDFe(FConfiguracoes.Owner).SSL.CertCNPJ);
-
-    if NaoEstaVazio(CNPJ) then
-      Dir := PathWithDelim(Dir) + CNPJ;
+    AddPathOrder(SepararPorCNPJ, opCNPJ);
+    AddPathOrder(SepararPorModelo, opModelo);
+    AddPathOrder((SepararPorAno or SepararPorMes or SepararPorDia), opData);
+    AddPathOrder(AdicionarLiteral, opLiteral);
   end;
 
-  if SepararPorModelo then
+  for i := 0 to FOrdenacaoPath.Count - 1 do
   begin
-    Modelo := TACBrDFe(FConfiguracoes.Owner).GetNomeModeloDFe;
-    Dir := PathWithDelim(Dir) + Modelo;
-  end;
+    case FOrdenacaoPath[i].Item of
+      opCNPJ:
+        begin
+          CNPJ := OnlyNumber(CNPJ);
 
-  if SepararPorMes then
-  begin
-    if Data = 0 then
-      Data := Now;
+          if EstaVazio(CNPJ) then
+            CNPJ := OnlyNumber(TACBrDFe(fpConfiguracoes.Owner).SSL.CertCNPJ);
 
-    DecodeDate(Data, wAno, wMes, wDia);
-    AnoMes := IntToStr(wAno) + IntToStrZero(wMes, 2);
+          if NaoEstaVazio(CNPJ) then
+            Dir := PathWithDelim(Dir) + CNPJ;
+        end;
 
-    if Pos(AnoMes, Dir) <= 0 then
-      Dir := PathWithDelim(Dir) + AnoMes;
-  end;
+      opModelo:
+        begin
+          if ModeloDescr = '' then
+            Modelo := TACBrDFe(fpConfiguracoes.Owner).GetNomeModeloDFe
+          else
+            Modelo := ModeloDescr;
 
-  LenLiteral := Length(ALiteral);
-  if AdicionarLiteral and (LenLiteral > 0) then
-  begin
-    if RightStr(Dir, LenLiteral) <> ALiteral then
-      Dir := PathWithDelim(Dir) + ALiteral;
+          Dir := PathWithDelim(Dir) + Modelo;
+
+        end;
+
+      opData:
+        begin
+          if Data = 0 then
+            Data := Now;
+
+          DecodeDate(Data, wAno, wMes, wDia);
+          sDia := IntToStrZero(wDia, 2);
+          sMes := IntToStrZero(wMes, 2);
+          sAno := IntToStrZero(wAno, 4);
+
+          if SepararPorAno then
+            Dir := PathWithDelim(Dir) + sAno;
+
+          if SepararPorMes then
+          begin
+            if SepararPorAno then
+              Dir := PathWithDelim(Dir) + sMes
+            else
+              Dir := PathWithDelim(Dir) + sAno + sMes;
+
+            if SepararPorDia then
+              Dir := PathWithDelim(Dir) + sDia;
+          end;
+        end;
+
+      opLiteral:
+        begin
+          LenLiteral := Length(ALiteral);
+
+          if (LenLiteral > 0) then
+          begin
+            if RightStr(Dir, LenLiteral) <> ALiteral then
+              Dir := PathWithDelim(Dir) + ALiteral;
+          end;
+        end;
+    end;
   end;
 
   if not DirectoryExists(Dir) then
@@ -786,7 +985,43 @@ begin
   Result := Dir;
 end;
 
+{ TOrdenacaoPath }
+
+function TOrdenacaoPath.Add: TOrdenacaoPathItem;
+begin
+  Result := TOrdenacaoPathItem(inherited Add);
+end;
+
+function TOrdenacaoPath.GetItem(Index: Integer): TOrdenacaoPathItem;
+begin
+  Result := TOrdenacaoPathItem(inherited GetItem(Index));
+end;
+
+procedure TOrdenacaoPath.SetItem(Index: Integer; Value: TOrdenacaoPathItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TOrdenacaoPathItem }
+
+procedure TOrdenacaoPathItem.Assign(Source: TPersistent);
+begin
+  if Source is TOrdenacaoPathItem then
+    FItem := TOrdenacaoPathItem(Source).FItem
+  else
+    inherited Assign(Source);
+end;
+
+function TOrdenacaoPathItem.GetDisplayName: String;
+begin
+  case FItem of
+    opNenhum:   Result := '(nenhum)';
+    opCNPJ:     Result := 'CNPJ';
+    opModelo:   Result := 'Modelo';
+    opData:     Result := 'Data';
+    opLiteral:  Result := 'Literal';
+  end;
+end;
 
 end.
 
-// TODO: Salvar senha do Certificado na memória de forma criptograda

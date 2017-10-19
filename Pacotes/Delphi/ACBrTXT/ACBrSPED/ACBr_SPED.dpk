@@ -22,9 +22,9 @@ package ACBr_SPED;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
 {$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
+{$DEFINE DEBUG}
 
 requires
   rtl,
@@ -127,6 +127,13 @@ contains
   ACBrECFBloco_Y in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_Y.pas',
   ACBrECFBloco_Y_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_Y_Class.pas',
   ACBrECFBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBlocos.pas',
-  ACBrSpedECF in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrSpedECF.pas';
+  ACBrSpedECF in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrSpedECF.pas',
+  ACBrECFBloco_Q in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_Q.pas',
+  ACBrECFBloco_Q_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_Q_Class.pas',
+  ACBrEFDBloco_C_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_C_Events.pas',
+  ACBrEFDBloco_D_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_D_Events.pas',
+  ACBrEFDBloco_E_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_E_Events.pas',
+  ACBrEFDBloco_0_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_0_Events.pas',
+  ACBrEPCBloco_C_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_C_Events.pas';
 
 end.

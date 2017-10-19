@@ -3,12 +3,14 @@ object Form1: TForm1
   Height = 349
   Top = 191
   Width = 751
+  ActiveControl = cbUsarTXT
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Exemplo ACBrMail'
   ClientHeight = 349
   ClientWidth = 751
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.6.0.4'
+  Visible = False
   object bEnviar: TButton
     Left = 8
     Height = 25
@@ -198,11 +200,13 @@ object Form1: TForm1
     TabOrder = 13
   end
   object ACBrMail1: TACBrMail
-    Host = '127.0.0.1'
-    Port = '25'
-    SetSSL = False
-    SetTLS = False
+    Host = 'email-ssl.com.br'
+    Port = '465'
+    SetSSL = True
+    SetTLS = True
     Attempts = 3
+    From = 'celso@djsystem.com.br'
+    FromName = 'Celso Marigo Junior'
     DefaultCharset = UTF_8
     IDECharset = UTF_8
     OnBeforeMailProcess = ACBrMail1BeforeMailProcess

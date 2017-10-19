@@ -47,7 +47,7 @@ uses
 type
 
   TTipoInterface = (infETHE, infWIFI);
-  TSegSemFio = (segNONE, segWEP, segWPA_PERSONAL, segWPA_ENTERPRISE);
+  TSegSemFio = (segNONE, segWEP, segWPA, segWPA2, segWPA_PERSONAL, segWPA_ENTERPRISE);
   TTipoLan = (lanDHCP, lanPPPoE, lanIPFIX);
 
   { TRede }
@@ -125,14 +125,14 @@ end;
 
 function SegSemFioToStr(const t: TSegSemFio ): string;
 begin
-  result := EnumeradoToStr(t, ['', 'WEP', 'WPA-PERSONAL', 'WPA-ENTERPRISE'],
-                              [segNONE, segWEP, segWPA_PERSONAL, segWPA_ENTERPRISE]);
+  result := EnumeradoToStr(t, ['', 'WEP', 'WPA', 'WPA2', 'WPAPERSONAL', 'WPAENTERPRISE'],
+                              [segNONE, segWEP, segWPA, segWPA2, segWPA_PERSONAL, segWPA_ENTERPRISE]);
 end;
 
 function StrToSegSemFio(var ok: boolean; const s: string): TSegSemFio ;
 begin
-  result := StrToEnumerado(ok, s, ['', 'WEP', 'WPA-PERSONAL', 'WPA-ENTERPRISE'],
-                              [segNONE, segWEP, segWPA_PERSONAL, segWPA_ENTERPRISE]);
+  result := StrToEnumerado(ok, s, ['', 'WEP', 'WPA', 'WPA2', 'WPAPERSONAL', 'WPAENTERPRISE'],
+                              [segNONE, segWEP, segWPA, segWPA2, segWPA_PERSONAL, segWPA_ENTERPRISE]);
 end;
 
 function TipoLanToStr(const t: TTipoLan ): string;

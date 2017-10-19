@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, synautil;
+  synautil;
 
 type
   TTimeZoneModoDeteccao = (tzSistema, tzPCN, tzManual);
@@ -78,8 +78,9 @@ type
 
 function CodigoParaUF(const codigo: integer): string;
 function DateTimeTodh(DataHora: TDateTime): string;
+function DateTimeToDataHora(DataHora: TDateTime): string;
 function ExecutarAjusteTagNro(Corrigir: boolean; Nro: string): string;
-function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True): AnsiString;
+function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True; QuebraLinha: AnsiString = ';'): AnsiString;
 function IIf(const condicao: Boolean; const Verdadeiro, Falso: Variant): Variant;
 function IntToStrZero(const Numero: integer; const tamanho: integer): string;
 function GerarCodigoNumerico(numero: integer): integer;
@@ -101,7 +102,7 @@ function ValidarCodigoPais(const iPais: integer): smallint;
 function ValidarCodigoUF(const Codigo: integer): boolean;
 function ValidarCNPJ(const numero: string): boolean;
 function ValidarCPF(const numero: string): boolean;
-function ValidarMod(const modelo: integer): boolean;
+function ValidarMod(const modelo: integer; versao : Real): boolean;
 function ValidarMunicipio(const Municipio: integer): boolean;
 function ValidarNumeros(const s: string): boolean;
 function ValidarUF(const UF: string): boolean;
@@ -122,6 +123,11 @@ function GetDataDaPascoa(const ano: Integer): TDateTime;
 
 function ExtrairModeloChaveAcesso(AChaveNFE: String): String;
 function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
+function ExtrairCNPJChaveAcesso(AChaveNFE: String): String;
+function ExtrairSerieChaveAcesso(AChaveNFE: String): Integer;
+function ExtrairNumeroChaveAcesso(AChaveNFE: String): Integer;
+function ExtraircNFChaveAcesso(AChaveNFE: String): Integer;
+function ExtrairTipoEmissaoChaveAcesso(aChaveNFe: String): Integer;
 
 function TimeZoneConf: TTimeZoneConf;
 
@@ -161,6 +167,20 @@ begin
             IntToStrZero(wSeg, 2);
 end;
 
+function DateTimeToDataHora(DataHora: TDateTime): string;
+var
+  wAno, wMes, wDia, wHor, wMin, wSeg, wMil: word;
+begin
+  DecodeDate(DataHora, wAno, wMes, wDia);
+  DecodeTime(DataHora, wHor, wMin, wSeg, wMil);
+  Result := IntToStrZero(wDia, 2) +
+            IntToStrZero(wMes, 2) +
+            IntToStrZero(wAno, 4) +
+            IntToStrZero(wHor, 2) +
+            IntToStrZero(wMin, 2) +
+            IntToStrZero(wSeg, 2);
+end;
+
 function ExecutarAjusteTagNro(Corrigir: boolean; Nro: string): string;
 begin
   Nro := trim(Nro);
@@ -174,7 +194,7 @@ begin
 end;
 
 function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString;
-  RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean): AnsiString;
+  RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean; QuebraLinha: AnsiString): AnsiString;
 begin
   if RetirarAcentos then
      aTexto := AnsiString(TiraAcentos(String(aTexto)));
@@ -188,7 +208,7 @@ begin
   end;
 
   if SubstituirQuebrasLinha then
-    aTexto := ChangeLineBreak( aTexto, ';');
+    aTexto := ChangeLineBreak( aTexto, QuebraLinha);
 
   Result := Trim(aTexto);
 end;
@@ -453,24 +473,6 @@ begin
   except
     result := false;
   end;
-
-(*
-  if (copy(chave, 1, 3) <> 'NFe') and (copy(chave, 1, 3) <> 'CTe') then
-    exit;
-  try
-    i := 0;
-    if GerarDigito(i, copy(chave, 4, 43)) then
-      result := i = StrToInt(chave[length(chave)]);
-    if result then
-      result := ValidarCodigoUF(StrToInt(copy(somenteNumeros(chave), 1, 2)));
-    if result then
-      result := ValidarAAMM(copy(somenteNumeros(chave), 3, 4));
-    if result then
-      result := ValidarCNPJ(copy(somenteNumeros(chave), 7, 14));
-  except
-    result := false;
-  end;
-*)
 end;
 
 function ValidarAAMM(const AAMM: string): boolean;
@@ -571,11 +573,15 @@ begin
   result := (ACBrValidador.ValidarCPF(numero) = '');
 end;
 
-function ValidarMod(const modelo: integer): boolean;
+function ValidarMod(const modelo: integer; versao : Real): boolean;
 const
   MODELOS = '|1|';
+  MODELOSV4 = '|1|2|';
 begin
-  result := pos('|' + intToStr(modelo) + '|', MODELOS) > 0;
+  if versao < 4 then
+    result := pos('|' + intToStr(modelo) + '|', MODELOS) > 0
+  else
+    result := pos('|' + intToStr(modelo) + '|', MODELOSV4) > 0 ;
 end;
 
 function ValidarMunicipio(const Municipio: integer): boolean;
@@ -934,7 +940,51 @@ end;
 
 function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
 begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
   Result := StrToIntDef(Copy(AChaveNFE,1,2), 0);
+end;
+
+function ExtrairCNPJChaveAcesso(AChaveNFE: String): String;
+begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  Result := copy(AChaveNFE,7,14);
+end;
+
+function ExtrairSerieChaveAcesso(AChaveNFE: String): Integer;
+begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  if ExtrairModeloChaveAcesso(AChaveNFE) = '59' then  //SAT
+    Result := StrToIntDef(Copy(AChaveNFE, 23, 9), 0)
+  else
+    Result := StrToIntDef(Copy(AChaveNFE, 23, 3), 0);
+end;
+
+function ExtrairNumeroChaveAcesso(AChaveNFE: String): Integer;
+begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  if ExtrairModeloChaveAcesso(AChaveNFE) = '59' then  //SAT
+    Result := StrToIntDef(Copy(AChaveNFE, 32, 6), 0)
+  else
+    Result := StrToIntDef(Copy(AChaveNFE, 26, 9), 0);
+end;
+
+function ExtraircNFChaveAcesso(AChaveNFE: String): Integer;
+begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  if ExtrairModeloChaveAcesso(AChaveNFE) = '59' then  //SAT
+    Result := StrToIntDef(Copy(AChaveNFE, 38, 6), 0)
+  else
+    Result := StrToIntDef(Copy(AChaveNFE, 36, 8), 0);
+end;
+
+function ExtrairTipoEmissaoChaveAcesso(aChaveNFe: String): Integer;
+begin
+  aChaveNFe := OnlyNumber(aChaveNFe);
+
+  if (pos(ExtrairModeloChaveAcesso(aChaveNFe), '55,65') = 0) then
+    Result := 0
+  else
+    Result := StrToIntDef(Copy(aChaveNFe, 35, 1), 0);
 end;
 
 function TimeZoneConf: TTimeZoneConf;

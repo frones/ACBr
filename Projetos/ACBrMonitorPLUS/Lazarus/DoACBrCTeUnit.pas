@@ -37,9 +37,9 @@ interface
 Uses Classes, SysUtils, CmdUnit, Dialogs;
 
 Procedure DoACBrCTe( Cmd : TACBrCmd );
-procedure GerarIniCTe( AStr: WideString );
-function GerarCTeIni( XML : WideString ) : WideString;
-procedure GerarCTeIniEvento( AStr: WideString );
+procedure GerarIniCTe( AStr: String );
+function GerarCTeIni( XML : String ) : String;
+procedure GerarCTeIniEvento( AStr: String );
 
 implementation
 
@@ -58,12 +58,18 @@ var
 
   sMensagemEmail: TStringList;
   CC, Anexos: Tstrings;
-  Memo   : TStringList;
+  Memo   , PathsCTe: TStringList;
   Files  : String;
   dtFim  : TDateTime;
 
   RetFind   : Integer;
   SearchRec : TSearchRec;
+  bMostrarPreview : Boolean;
+  tipoEvento: TpcnTpEvento;
+  FormaEmissao: TpcnTipoEmissao;
+
+  VersaoDFCTe  : TVersaoCTe;
+  ModeloDFCTe  : TModeloCTe;
 
 begin
  with FrmACBrMonitor do
@@ -73,7 +79,6 @@ begin
          begin
            if ACBrCTe1.WebServices.StatusServico.Executar then
             begin
-
               Cmd.Resposta := ACBrCTe1.WebServices.StatusServico.Msg+
                               '[STATUS]'+sLineBreak+
                               'Versao='+ACBrCTe1.WebServices.StatusServico.verAplic+sLineBreak+
@@ -92,32 +97,27 @@ begin
         else if Cmd.Metodo = 'validarcte' then
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), ArqCTe,tDFeCTe);
            ACBrCTe1.Conhecimentos.Validar;
          end
 
         else if Cmd.Metodo = 'assinarcte' then
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), ArqCTe, tDFeCTe);
            Salva := ACBrCTe1.Configuracoes.Geral.Salvar;
+
            if not Salva then
-            begin
+           begin
              ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
-             ACBrCTe1.Configuracoes.Arquivos.PathSalvar  := PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs';
-            end;
+             ACBrCTe1.Configuracoes.Arquivos.PathSalvar := PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs';
+           end;
+
            ACBrCTe1.Configuracoes.Geral.Salvar := True;
            ACBrCTe1.Conhecimentos.Assinar;
            ACBrCTe1.Configuracoes.Geral.Salvar := Salva;
-           if ACBrUtil.NaoEstaVazio(ACBrCTe1.Conhecimentos.Items[0].NomeArq) then
+
+           if NaoEstaVazio(ACBrCTe1.Conhecimentos.Items[0].NomeArq) then
               Cmd.Resposta := ACBrCTe1.Conhecimentos.Items[0].NomeArq
            else
               Cmd.Resposta := PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+StringReplace(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID, 'CTe', '', [rfIgnoreCase])+'-cte.xml';
@@ -125,27 +125,33 @@ begin
 
         else if Cmd.Metodo = 'consultarcte' then
          begin
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-            begin
-              ACBrCTe1.Conhecimentos.Clear;
-              if FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                 ACBrCTe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                 ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(0));
+           ACBrCTe1.Conhecimentos.Clear;
 
-              ACBrCTe1.WebServices.Consulta.CTeChave := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID);
-            end
-           else
-            begin
-              if not ValidarChave('CTe'+Cmd.Params(0)) then
-                 raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
-              else
-                 ACBrCTe1.WebServices.Consulta.CTeChave := Cmd.Params(0);
-            end;
+           PathsCTe := TStringList.Create;
            try
-              ACBrCTe1.WebServices.Consulta.Executar;
+             PathsCTe.Append(Cmd.Params(0));
+             PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+             except
+             end;
+           finally
+             PathsCTe.Free;
+           end;
 
-              Cmd.Resposta := ACBrCTe1.WebServices.Consulta.Msg+sLineBreak+
+           if ACBrCTe1.Conhecimentos.Count = 0 then
+           begin
+             if ValidarChave(Cmd.Params(0)) then
+                ACBrCTe1.WebServices.Consulta.CTeChave := Cmd.Params(0)
+             else
+               raise Exception.create('Parâmetro inválido. Chave inválida ou arquivo não encontrado.');
+           end
+           else
+             ACBrCTe1.WebServices.Consulta.CTeChave := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID);
+
+           try
+             ACBrCTe1.WebServices.Consulta.Executar;
+             Cmd.Resposta := ACBrCTe1.WebServices.Consulta.Msg+sLineBreak+
                               '[CONSULTA]'+sLineBreak+
                               'Versao='+ACBrCTe1.WebServices.Consulta.verAplic+sLineBreak+
                               'TpAmb='+TpAmbToStr(ACBrCTe1.WebServices.Consulta.TpAmb)+sLineBreak+
@@ -156,7 +162,8 @@ begin
                               'ChCTe='+ACBrCTe1.WebServices.Consulta.CTeChave+sLineBreak+
                               'DhRecbto='+DateTimeToStr(ACBrCTe1.WebServices.Consulta.DhRecbto)+sLineBreak+
                               'NProt='+ACBrCTe1.WebServices.Consulta.Protocolo+sLineBreak+
-                              'DigVal='+ACBrCTe1.WebServices.Consulta.protCTe.digVal+sLineBreak;
+                              'DigVal='+ACBrCTe1.WebServices.Consulta.protCTe.digVal+sLineBreak+
+                              'XML='+StringReplace(ParseText(FiltrarTextoXML(True,ChangeLineBreak(ACBrCTe1.WebServices.Consulta.RetWS,''))),'> <', '><', [rfReplaceAll])+sLineBreak;
 
            except
               raise Exception.Create(ACBrCTe1.WebServices.Consulta.Msg);
@@ -165,25 +172,25 @@ begin
 
         else if Cmd.Metodo = 'cancelarcte' then
          begin
-           if not ValidarChave('CTe'+Cmd.Params(0)) then
-              raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
+           if not ValidarChave(Cmd.Params(0)) then
+             raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
            else
-              ACBrCTe1.WebServices.Consulta.CTeChave := Cmd.Params(0);
+             ACBrCTe1.WebServices.Consulta.CTeChave := Cmd.Params(0);
 
            if not ACBrCTe1.WebServices.Consulta.Executar then
-              raise Exception.Create(ACBrCTe1.WebServices.Consulta.Msg);
+             raise Exception.Create(ACBrCTe1.WebServices.Consulta.Msg);
 
-          ACBrCTe1.EventoCTe.Evento.Clear;
-          with ACBrCTe1.EventoCTe.Evento.Add do
+           ACBrCTe1.EventoCTe.Evento.Clear;
+           with ACBrCTe1.EventoCTe.Evento.Add do
            begin
-             infEvento.CNPJ   := Cmd.Params(2);
+             infEvento.CNPJ := Cmd.Params(2);
              if Trim(infEvento.CNPJ) = '' then
-                infEvento.CNPJ   := copy(OnlyNumber(ACBrCTe1.WebServices.Consulta.CTeChave),7,14)
+                infEvento.CNPJ := copy(OnlyNumber(ACBrCTe1.WebServices.Consulta.CTeChave),7,14)
              else
-              begin
-                if not ValidarCNPJ(Cmd.Params(2)) then
-                  raise Exception.Create('CNPJ '+Cmd.Params(2)+' inválido.')
-              end;
+             begin
+               if not ValidarCNPJ(Cmd.Params(2)) then
+                 raise Exception.Create('CNPJ '+Cmd.Params(2)+' inválido.')
+             end;
 
              infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(ACBrCTe1.WebServices.Consulta.CTeChave),1,2),0);
              infEvento.dhEvento := now;
@@ -192,7 +199,8 @@ begin
              infEvento.detEvento.nProt := ACBrCTe1.WebServices.Consulta.Protocolo;
              infEvento.detEvento.xJust := Cmd.Params(1);
            end;
-          try
+
+           try
              ACBrCTe1.EnviarEvento(StrToIntDef(Cmd.Params(3),1));
 
              Cmd.Resposta := ACBrCTe1.WebServices.EnvEvento.EventoRetorno.xMotivo+sLineBreak+
@@ -218,157 +226,132 @@ begin
          end
         else if Cmd.Metodo = 'imprimirdacte' then
          begin
-           if ACBrCTe1.DACTe.MostrarPreview then
-            begin
-              Restaurar1.Click;
-              Application.BringToFront;
-            end;
+
            ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(0))
-              else
-                 ACBrCTe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+           PathsCTe := TStringList.Create;
+           try
+             PathsCTe.Append(Cmd.Params(0));
+             PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+             except
+             end;
+           finally
+             PathsCTe.Free;
+           end;
 
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(1)) then
-              ACBrCTe1.DACTe.Impressora := Cmd.Params(1)
+           if NaoEstaVazio(Cmd.Params(1)) then
+             ACBrCTe1.DACTe.Impressora := Cmd.Params(1)
            else
-              ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
+             ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
 
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(2)) then
-              ACBrCTe1.DACTe.NumCopias := StrToIntDef(Cmd.Params(2),1)
+           if NaoEstaVazio(Cmd.Params(2)) then
+             ACBrCTe1.DACTe.NumCopias := StrToIntDef(Cmd.Params(2),1)
            else
-              ACBrCTe1.DACTe.NumCopias := StrToIntDef(edtNumCopia.Text,1);
+             ACBrCTe1.DACTe.NumCopias := StrToIntDef(edtNumCopia.Text,1);
 
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(3)) then
-              ACBrCTe1.DACTe.ProtocoloCTE := Cmd.Params(3);
+           if NaoEstaVazio(Cmd.Params(3)) then
+             ACBrCTe1.DACTe.ProtocoloCTE := Cmd.Params(3);
 			  
-		   if Cmd.Params(4) = '1' then
-		     ACBrCTe1.DACTe.CTeCancelada := True;
-			 
-           ACBrCTe1.Conhecimentos.Imprimir;
+	   if Cmd.Params(4) = '1' then
+	     ACBrCTe1.DACTe.CTeCancelada := True;
+
+           try
+             AntesDeImprimir(ACBrCTe1.DACTe.MostrarPreview);
+             ACBrCTe1.Conhecimentos.Imprimir;
+           finally
+             DepoisDeImprimir;
+           end;
+
            Cmd.Resposta := 'Dacte Impresso com sucesso';
-           if ACBrCTe1.DACTe.MostrarPreview then
-              Ocultar1.Click;
-		   
-		   ACBrCTe1.DACTe.CTeCancelada := False;
+
+	   ACBrCTe1.DACTe.CTeCancelada := False;
          end
 
         else if Cmd.Metodo = 'imprimirdactepdf' then
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+           CarregarDFe(Cmd.Params(0), ArqCTe, tDFeCTe);
 
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(1)) then
-              ACBrCTe1.DACTe.ProtocoloCTE := Cmd.Params(1);
+           if NaoEstaVazio(Cmd.Params(1)) then
+             ACBrCTe1.DACTe.ProtocoloCTE := Cmd.Params(1);
 
            try
-		      if Cmd.Params(2) = '1' then
-		        ACBrCTe1.DACTe.CTeCancelada := True;
+	     if Cmd.Params(2) = '1' then
+               ACBrCTe1.DACTe.CTeCancelada := True;
 				
-              ACBrCTe1.Conhecimentos.ImprimirPDF;
-              ArqPDF := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'-cte.pdf';
-              Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrCTe1.DACTe.PathPDF) +
-                              ArqPDF;
+             ACBrCTe1.Conhecimentos.ImprimirPDF;
+             ArqPDF := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'-cte.pdf';
+             Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF;
 							  
-			  ACBrCTe1.DACTe.CTeCancelada := False;
+	     ACBrCTe1.DACTe.CTeCancelada := False;
            except
               raise Exception.Create('Erro ao criar o arquivo PDF');
            end;
          end
 
-        else if Cmd.Metodo = 'imprimirevento' then
-         begin
-           if ACBrCTe1.DACTe.MostrarPreview then
-            begin
-              Restaurar1.Click;
-              Application.BringToFront;
-            end;
-
-           ACBrCTe1.EventoCTe.Evento.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrCTe1.EventoCTe.LerXML(Cmd.Params(0))
-              else
-                 ACBrCTe1.EventoCTe.LerXML(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
-           ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-                 ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(1))
-              else
-                 ACBrCTe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-            end
-           else
-            begin
-              if ACBrUtil.NaoEstaVazio(Cmd.Params(1)) then
-                 raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
-            end;
-
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(2)) then
-              ACBrCTe1.DACTe.Impressora := Cmd.Params(2)
-           else
-              ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
-
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(3)) then
-              ACBrCTe1.DACTe.NumCopias := StrToIntDef(Cmd.Params(3),1)
-           else
-              ACBrCTe1.DACTe.NumCopias := StrToIntDef(edtNumCopia.Text,1);
-
-           ACBrCTe1.ImprimirEvento;
-           Cmd.Resposta := 'Evento Impresso com sucesso';
-           if ACBrCTe1.DACTe.MostrarPreview then
-              Ocultar1.Click;
-         end
-
-        else if Cmd.Metodo = 'imprimireventopdf' then
+        else if ( Cmd.Metodo = 'imprimirevento' ) or ( Cmd.Metodo = 'imprimireventopdf' ) then
          begin
            ACBrCTe1.EventoCTe.Evento.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrCTe1.EventoCTe.LerXML(Cmd.Params(0))
-              else
-                 ACBrCTe1.EventoCTe.LerXML(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
-           ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-                 ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(1))
-              else
-                 ACBrCTe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-            end
-           else
-            begin
-              if ACBrUtil.NaoEstaVazio(Cmd.Params(1)) then
-                 raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
-            end;
-
+           PathsCTe := TStringList.Create;
            try
-              ACBrCTe1.ImprimirEventoPDF;
-//              ArqPDF := StringReplace(ACBrCTe1.EventoCTe.Evento[0].InfEvento.id,'ID', '', [rfIgnoreCase]);
+             PathsCTe.Append(Cmd.Params(0));
+             PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeEventoCTe);
+             except
+             end;
+           finally
+             PathsCTe.Free;
+           end;
 
-              ArqPDF := OnlyNumber(ACBrCTe1.EventoCTe.Evento[0].InfEvento.Id);
-              ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'-procEventoCTe.pdf';
-              Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
-           except
-              raise Exception.Create('Erro ao criar o arquivo PDF');
+           ACBrCTe1.Conhecimentos.Clear;
+           if NaoEstaVazio(Cmd.Params(1)) then
+           begin
+             PathsCTe := TStringList.Create;
+             try
+               PathsCTe.Append(Cmd.Params(0));
+               PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+               try
+                 CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+               except
+               end;
+             finally
+               PathsCTe.Free;
+             end;
+           end;
+
+           if Cmd.Metodo = 'imprimireventopdf' then
+           begin
+             try
+               ACBrCTe1.ImprimirEventoPDF;
+               ArqPDF := OnlyNumber(ACBrCTe1.EventoCTe.Evento[0].InfEvento.Id);
+               ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'-procEventoCTe.pdf';
+               Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
+             except
+               raise Exception.Create('Erro ao criar o arquivo PDF');
+             end;
+           end
+           else
+           begin
+             if NaoEstaVazio(Cmd.Params(2)) then
+               ACBrCTe1.DACTe.Impressora := Cmd.Params(2)
+             else
+               ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
+
+             if NaoEstaVazio(Cmd.Params(3)) then
+               ACBrCTe1.DACTe.NumCopias := StrToIntDef(Cmd.Params(3),1)
+             else
+               ACBrCTe1.DACTe.NumCopias := StrToIntDef(edtNumCopia.Text,1);
+
+             try
+               AntesDeImprimir(ACBrCTe1.DACTE.MostrarPreview);
+               ACBrCTe1.ImprimirEvento;
+             finally
+               DepoisDeImprimir;
+             end;
+
+             Cmd.Resposta := 'Evento Impresso com sucesso';
            end;
          end
 
@@ -387,16 +370,67 @@ begin
                            'DhRecbto='+DateTimeToStr(ACBrCTe1.WebServices.Inutilizacao.DhRecbto)+sLineBreak+
                            'NProt='+ACBrCTe1.WebServices.Inutilizacao.Protocolo+sLineBreak;
          end
-         
+        else if ( Cmd.Metodo = 'imprimirinutilizacao' ) or ( Cmd.Metodo = 'imprimirinutilizacaopdf' ) then
+         begin
+           PathsCTe := TStringList.Create;
+           try
+             PathsCTe.Append(Cmd.Params(0));
+             PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeInutCTe);
+             except
+             end;
+           finally
+             PathsCTe.Free;
+           end;
+
+           bMostrarPreview := ( (Cmd.Params(3) = '1') and (Cmd.Metodo <> 'imprimirinutilizacaopdf') );
+           ACBrCTe1.DACTE := ACBrCTeDACTeRL1;
+
+           if Cmd.Metodo = 'imprimirinutilizacaopdf' then
+           begin
+             try
+                ACBrCTe1.ImprimirInutilizacaoPDF;
+                ArqPDF := OnlyNumber(ACBrCTe1.InutCTe.ID);
+                ArqPDF := PathWithDelim(ACBrCTe1.DACTE.PathPDF)+ArqPDF+'-procInutCTe.pdf';
+                Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
+             except
+                raise Exception.Create('Erro ao criar o arquivo PDF');
+             end;
+           end
+           else
+           begin
+             if NaoEstaVazio(Cmd.Params(1)) then
+               ACBrCTe1.DACTE.Impressora := Cmd.Params(1)
+             else
+             begin
+               if rgModoImpressaoEvento.ItemIndex = 0 then
+                 ACBrCTe1.DACTE.Impressora := cbxImpressora.Text
+               else
+                 ACBrCTe1.DACTE.Impressora := cbxImpressoraNFCe.Text;
+             end;
+
+             if NaoEstaVazio(Cmd.Params(2)) then
+                ACBrCTe1.DACTE.NumCopias := StrToIntDef(Cmd.Params(2),1);
+
+             try
+               AntesDeImprimir(bMostrarPreview);
+               ACBrCTe1.ImprimirInutilizacao;
+             finally
+               DepoisDeImprimir;
+             end;
+
+             Cmd.Resposta := 'Inutilização Impressa com sucesso';
+           end;
+         end
+
         else if Cmd.Metodo = 'enviarcte' then
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), ArqCTe, tDFeCTe);
            ACBrCTe1.Conhecimentos.GerarCTe;
+
            if Cmd.Params(2) <> '0' then
               ACBrCTe1.Conhecimentos.Assinar;
 
@@ -460,13 +494,20 @@ begin
                 end;
               end;
 
-              if ACBrUtil.NaoEstaVazio(Cmd.Params(4)) then
+              if NaoEstaVazio(Cmd.Params(4)) then
                  ACBrCTe1.DACTe.Impressora := Cmd.Params(4)
               else
                  ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
 
               if ACBrCTe1.Conhecimentos.Items[i].Confirmado and (Cmd.Params(3) = '1') then
-                 ACBrCTe1.Conhecimentos.Items[i].Imprimir;
+              begin
+                try
+                  AntesDeImprimir(ACBrCTe1.DACTe.MostrarPreview);
+                  ACBrCTe1.Conhecimentos.Items[i].Imprimir;
+                finally
+                  DepoisDeImprimir;
+                end;
+              end;
             end;
          end
          
@@ -564,36 +605,14 @@ begin
            if (Cmd.Metodo = 'criarcte') or (Cmd.Metodo = 'criarenviarcte') or
               (Cmd.Metodo = 'adicionarcte') then
               GerarIniCTe( Cmd.Params(0)  );
-           {
-           else
-            begin
-              if (Cmd.Metodo = 'criarctesefaz') or (Cmd.Metodo = 'criarenviarctesefaz') or
-                 (Cmd.Metodo = 'adicionarctesefaz') then
-                  begin
-                    if not FileExists(Cmd.Params(0)) then
-                       raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.')
-                    else
-                     begin
-                       ACBrCTe1.Conhecimentos.Clear;
-                       ACBrCTe1.Conhecimentos.Add;
-//                       NFeRTXT := TNFeRTXT.Create(ACBrCTe1.Conhecimentos.Items[0].NFe);
-                       try
-//                          NFeRTXT.CarregarArquivo(Cmd.Params(0));
-//                          if not NFeRTXT.LerTxt then
-//                             raise Exception.Create('Arquivo inválido!');
-                       finally
-//                          NFeRTXT.Free;
-                       end;
-                     end;
-                  end;
-            end;
-            }
+
 
            if (Cmd.Metodo = 'adicionarcte')  or (Cmd.Metodo = 'adicionarctesefaz') then
             begin
               ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)));
               ACBrCTe1.Conhecimentos.GerarCTe;
               Alertas := ACBrCTe1.Conhecimentos.Items[0].Alertas;
+              ACBrCTe1.Conhecimentos.Assinar;
               ACBrCTe1.Conhecimentos.Validar;
               ArqCTe := PathWithDelim(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)))+OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'-cte.xml';
               ACBrCTe1.Conhecimentos.GravarXML(ExtractFilePath(ArqCTe));
@@ -612,6 +631,7 @@ begin
                end;
               ACBrCTe1.Conhecimentos.GerarCTe;
               Alertas := ACBrCTe1.Conhecimentos.Items[0].Alertas;
+              ACBrCTe1.Conhecimentos.Assinar;
               ACBrCTe1.Conhecimentos.Validar;
               ArqCTe := PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'-cte.xml';
               ACBrCTe1.Conhecimentos.GravarXML(ArqCTe);
@@ -722,16 +742,18 @@ begin
                                    'NProt='+ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[i].nProt+sLineBreak+
                                    'DigVal='+ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[i].digVal+sLineBreak+
                                    'Arquivo='+PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+OnlyNumber(ACBrCTe1.Conhecimentos.Items[j].CTe.infCTe.ID)+'-CTe.xml'+sLineBreak;
-                        if (Cmd.Params(2) = '1') and ACBrCTe1.DACTe.MostrarPreview then
-                         begin
-                           Restaurar1.Click;
-                           Application.BringToFront;
-                         end;
+
                         ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
                         if ACBrCTe1.Conhecimentos.Items[i].Confirmado and (Cmd.Params(2) = '1') then
-                           ACBrCTe1.Conhecimentos.Items[i].Imprimir;
-                        if (Cmd.Params(2) = '1') and ACBrCTe1.DACTe.MostrarPreview then
-                           Ocultar1.Click;
+                         begin
+                           try
+                             AntesDeImprimir((Cmd.Params(2) = '1') and ACBrCTe1.DACTe.MostrarPreview);
+                             ACBrCTe1.Conhecimentos.Items[i].Imprimir;
+                           finally
+                             DepoisDeImprimir;
+                           end;
+                         end;
+
                         break;
                       end;
                     end;
@@ -831,30 +853,23 @@ begin
         else if Cmd.Metodo = 'enviaremail' then
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-               begin
-                 ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(1));
-                 ArqCTe := Cmd.Params(1);
-               end
-              else
-               begin
-                 ACBrCTe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-                 ArqCTe := PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1);
-               end;
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
-
-           if ACBrCTe1.Conhecimentos.Count = 0 then
-             raise Exception.Create('Nenhuma CTe encontrada no arquivo: '+ ArqCTe);
+           PathsCTe := TStringList.Create;
+           try
+             PathsCTe.Append(Cmd.Params(1));
+             PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+             except
+             end;
+           finally
+             PathsCTe.Free;
+           end;
 
            sMensagemEmail := TStringList.Create;
            CC := TstringList.Create;
            Anexos := TstringList.Create;
 
-            try
+           try
              sMensagemEmail.Text := SubstituirVariaveis( mmEmailMsgCTe.Lines.Text );
 
              CC.DelimitedText := sLineBreak;
@@ -888,53 +903,46 @@ begin
         else if Cmd.Metodo = 'enviaremailevento' then
          begin
            ACBrCTe1.EventoCTe.Evento.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-               begin
-                 ACBrCTe1.EventoCTe.LerXML(Cmd.Params(1));
-                 ArqEvento := Cmd.Params(1);
-               end
-              else
-               begin
-                 ACBrCTe1.EventoCTe.LerXML(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-                 ArqEvento := PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1);
-               end;
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
+           PathsCTe := TStringList.Create;
+           try
+             PathsCTe.Append(Cmd.Params(1));
+             PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+             try
+               CarregarDFe(PathsCTe, ArqEvento, tDFeEventoCTe);
+             except
+             end;
+           finally
+             PathsCTe.Free;
+           end;
 
            ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(2)) or FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2)) then
-            begin
-              if FileExists(Cmd.Params(2)) then
-               begin
-                 ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(2));
-                 ArqCTe := Cmd.Params(2);
-               end
-              else
-               begin
-                 ACBrCTe1.Conhecimentos.LoadFromFile(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2));
-                 ArqCTe := PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2);
+           if NaoEstaVazio(Cmd.Params(2)) then
+           begin
+             PathsCTe := TStringList.Create;
+             try
+               PathsCTe.Append(Cmd.Params(2));
+               PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2));
+               try
+                 CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+               except
                end;
-            end
-           else
-            begin
-              if ACBrUtil.NaoEstaVazio(Cmd.Params(2)) then
-                 raise Exception.Create('Arquivo '+Cmd.Params(2)+' não encontrado.');
-            end;
+             finally
+               PathsCTe.Free;
+             end;
+           end;
 
            if (Cmd.Params(3) = '1') then
-            begin
-              try
-                 ACBrCTe1.ImprimirEventoPDF;
+           begin
+             try
+               ACBrCTe1.ImprimirEventoPDF;
 
-                 ArqPDF := OnlyNumber(ACBrCTe1.EventoCTe.Evento[0].InfEvento.Id);
-                 ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'-procEventoCTe.pdf';
-              except
-                 raise Exception.Create('Erro ao criar o arquivo PDF');
-              end;
-            end;
+               ArqPDF := OnlyNumber(ACBrCTe1.EventoCTe.Evento[0].InfEvento.Id);
+               ArqPDF := PathWithDelim(ACBrCTe1.DACTe.PathPDF)+ArqPDF+'-procEventoCTe.pdf';
+             except
+               raise Exception.Create('Erro ao criar o arquivo PDF');
+             end;
+           end;
+
            try
              CC:=TstringList.Create;
              CC.DelimitedText := sLineBreak;
@@ -944,26 +952,56 @@ begin
              Anexos.DelimitedText := sLineBreak;
              Anexos.Text := StringReplace(Cmd.Params(6),';',sLineBreak,[rfReplaceAll]);
 
+             if ( ArqEvento = '' ) then
+             begin
+               tipoEvento := ACBrCTe1.EventoCTe.Evento[0].InfEvento.tpEvento;
+               ArqEvento  := ACBrCTe1.EventoCTe.ObterNomeArquivo(tipoEvento);
+               ArqEvento  := PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.GetPathEvento(ACBrCTe1.EventoCTe.Evento[0].InfEvento.tpEvento))+ArqEvento;
+               ACBrCTe1.EventoCTe.Gerador.SalvarArquivo(ArqEvento);
+             end;
              Anexos.Add(ArqEvento);
+
              if (Cmd.Params(3) = '1') then
-                Anexos.Add(ArqPDF);
+               Anexos.Add(ArqPDF);
 
              try
-                ACBrCTe1.EnviarEmail(Cmd.Params(0),IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssuntoCTe.Text),mmEmailMsgCTe.Lines,CC,Anexos);
+               ACBrCTe1.EnviarEmail(Cmd.Params(0),
+                 IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssuntoCTe.Text),
+                 mmEmailMsgCTe.Lines,CC,Anexos);
 
-                Cmd.Resposta := 'Email enviado com sucesso';
+               Cmd.Resposta := 'Email enviado com sucesso';
              except
-                on E: Exception do
-                 begin
-                   raise Exception.Create('Erro ao enviar email'+sLineBreak+E.Message);
-                 end;
+               on E: Exception do
+               begin
+                 raise Exception.Create('Erro ao enviar email'+sLineBreak+E.Message);
+               end;
              end;
-
            finally
              CC.Free;
              Anexos.Free;
            end;
+         end
 
+        else if Cmd.Metodo = 'setversaodf' then //CTe.SetVersaoDF(nVersao) 2.00 3.00
+         begin
+            VersaoDFCTe := StrToVersaoCTe(OK, Cmd.Params(0));
+            if OK then
+             begin
+               ACBrCTe1.Configuracoes.Geral.VersaoDF :=  VersaoDFCTe;
+               cbVersaoWSCTe.ItemIndex := cbVersaoWSCTe.Items.IndexOf(Cmd.Params(0)) ;
+               SalvarIni;
+             end
+            else
+              raise Exception.Create('Versão Inválida.');
+         end
+
+        else if Cmd.Metodo = 'setmodelodf' then //CTe.SetModeloDF(nModeloDF) 57 67
+         begin
+            ModeloDFCTe := StrToModeloCTe(OK, Cmd.Params(0));
+            if OK then
+               ACBrCTe1.Configuracoes.Geral.ModeloDF := ModeloDFCTe
+            else
+              raise Exception.Create('Modelo Inválido(57/67).');
          end
 
         else if Cmd.Metodo = 'setcertificado' then
@@ -985,95 +1023,56 @@ begin
 
         else if Cmd.Metodo = 'setformaemissao' then 
          begin
-           if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
-            begin
-              ACBrCTe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-              rgFormaEmissao.ItemIndex := ACBrCTe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
-              SalvarIni;
-            end
+           if cbModoEmissao.checked then
+             exit;
+
+           OK := False;
+           FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+
+           if not OK then
+             raise Exception.Create('Forma de Emissão Inválida: '+TpEmisToStr(FormaEmissao))
            else
-              raise Exception.Create('Forma de Emissão Inválida.');
+           begin
+             ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+             cbFormaEmissaoCTe.ItemIndex := ACBrCTe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+             SalvarIni;
+           end;
          end
 
         else if Cmd.Metodo = 'lercte' then
          begin
            try
-              Cmd.Resposta := GerarCTeIni( Cmd.Params(0)  )
+             Cmd.Resposta := GerarCTeIni( Cmd.Params(0) );
            except
-               on E: Exception do
-                begin
-                  raise Exception.Create('Erro ao gerar INI da CTe.'+sLineBreak+E.Message);
-                end;
+             on E: Exception do
+             begin
+               raise Exception.Create('Erro ao gerar INI da CTe.'+sLineBreak+E.Message);
+             end;
            end;
          end
 
         else if Cmd.Metodo = 'ctetotxt' then  //1-Arquivo XML, 2-NomeArqTXT
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrCTe1.Conhecimentos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), ArqCTe, tDFeCTe);
            ACBrCTe1.Conhecimentos.Items[0].GravarXML(Cmd.Params(1));
            Cmd.Resposta := ChangeFileExt(ACBrCTe1.Conhecimentos.Items[0].NomeArq,'.txt');
          end
 
         else if Cmd.Metodo = 'savetofile' then
-         begin
-           Memo := TStringList.Create;
-           try
-              Memo.Clear;
-              Memo.Text := ConvertStrRecived( cmd.Params(1) );
-              Memo.SaveToFile( Cmd.Params(0) );
-           finally
-              Memo.Free;
-           end;
-         end
+          DoACBr(Cmd)
 
         else if Cmd.Metodo = 'loadfromfile' then
-         begin
-           Files := Cmd.Params(0);
-           dtFim := IncSecond(now, StrToIntDef(Cmd.Params(1),1) );
-           while now <= dtFim do
-           begin
-              if FileExists( Files ) then
-              begin
-                 Memo  := TStringList.Create;
-                 try
-                    Memo.Clear;
-                    Memo.LoadFromFile( Files );
-                    Cmd.Resposta := Memo.Text;
-                    Break;
-                 finally
-                    Memo.Free;
-                 end;
-              end;
-
-              {$IFNDEF NOGUI}
-               Application.ProcessMessages;
-              {$ENDIF}
-              sleep(100);
-           end;
-
-           if not FileExists( Cmd.Params(0) ) then
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado')
-         end
+          DoACBr(Cmd)
 
         else if Cmd.Metodo = 'fileexists' then
-         begin
-           if not FileExists( Cmd.Params(0) ) then
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado')
-         end
-
+          DoACBr(Cmd)
 
         else if Cmd.Metodo = 'certificadodatavencimento' then
-         begin
-              Cmd.Resposta := DateToStr(ACBrCTe1.SSL.CertDataVenc);
-         end
+          Cmd.Resposta := DateToStr(ACBrCTe1.SSL.CertDataVenc)
 
         else if Cmd.Metodo = 'lerini' then // Recarrega configurações do arquivo INI
-           LerIni
+          LerIni
 
         else if Cmd.Metodo = 'gerarchave' then
          begin
@@ -1101,7 +1100,7 @@ begin
         else if Cmd.Metodo = 'ativo' then
            Cmd.Resposta := 'Ativo'
         else if Cmd.Metodo = 'versao' then
-           Cmd.Resposta := Versao
+           Cmd.Resposta := sVersaoACBr
         else if Cmd.Metodo ='datahora' then
            Cmd.Resposta := FormatDateTime('dd/mm/yyyy hh:nn:ss', Now )
         else if Cmd.Metodo ='data' then
@@ -1116,8 +1115,6 @@ begin
            if Assigned( Conexao ) then
              Conexao.CloseSocket;
          end
-
-
         else //Else Final - Se chegou ate aqui, o comando é inválido
            raise Exception.Create('Comando inválido ('+Cmd.Comando+')');
      finally
@@ -1126,35 +1123,37 @@ begin
   end;
 end;
 
-procedure GerarIniCTe( AStr: WideString );
+procedure GerarIniCTe( AStr: String );
 var
   I, J, K, L : Integer;
-  sSecao, sFim, sCampoAdic : String;
+  sSecao, sFim, sCampoAdic , sKey, versao: String;
   INIRec : TMemIniFile;
-  SL     : TStringList;
   OK     : boolean;
   fsICMSUFFim : TStrings;
 begin
- INIRec := TMemIniFile.create( 'cte.ini' );
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
- INIRec.SetStrings( SL );
- SL.Free;
- with FRMACBrMonitor do
+  INIRec := LerConverterIni(AStr);
+
+  with FRMACBrMonitor do
   begin
    try
       ACBrCTe1.Conhecimentos.Clear;
       with ACBrCTe1.Conhecimentos.Add.CTe do
        begin
+          versao        := INIRec.ReadString('infCTe','versao', VersaoCTeToStr(ACBrCTe1.Configuracoes.Geral.VersaoDF));
+          infCTe.versao := StringToFloatDef( INIRec.ReadString('infCTe','versao', VersaoCTeToStr(ACBrCTe1.Configuracoes.Geral.VersaoDF)),0) ;
+
+          versao := infCTe.VersaoStr;
+          versao := StringReplace(versao,'versao="','',[rfReplaceAll,rfIgnoreCase]);
+          versao := StringReplace(versao,'"','',[rfReplaceAll,rfIgnoreCase]);
+
           Ide.cCT         := INIRec.ReadInteger('ide','cCT', 0);
           Ide.cUF         := INIRec.ReadInteger('ide','cUF', 0);
           Ide.CFOP        := INIRec.ReadInteger('ide','CFOP',0);
           Ide.natOp       := INIRec.ReadString('ide','natOp',EmptyStr);
           Ide.forPag      := StrTotpforPag(OK,INIRec.ReadString('ide','forPag','0'));
-          Ide.modelo      := INIRec.ReadString( 'ide','mod' ,'55');
+          Ide.modelo      := INIRec.ReadInteger( 'ide','mod' ,55);
+          ACBrCTe1.Configuracoes.Geral.ModeloDF := StrToModeloCTe(OK,IntToStr(Ide.modelo));
+          ACBrCTe1.Configuracoes.Geral.VersaoDF := StrToVersaoCTe(OK,versao);
           Ide.serie       := INIRec.ReadInteger( 'ide','serie'  ,1);
           Ide.nCT         := INIRec.ReadInteger( 'ide','nCT' ,0);
           Ide.dhEmi       := StringToDateTime(INIRec.ReadString( 'ide','dhEmi','0'));
@@ -1195,6 +1194,24 @@ begin
           Ide.xJust       := INIRec.ReadString(  'ide','xJust' ,'' );
 
           Ide.toma03.Toma := StrToTpTomador(OK,INIRec.ReadString('toma3','toma','0'));
+
+          Ide.indGlobalizado := StrToTIndicador(OK, INIRec.ReadString('ide','indGlobalizado','0'));
+          Ide.indIEToma      := StrToindIEDest(OK, INIRec.ReadString('ide','indIEToma','1'));
+
+          //CT-e OS
+          I := 1;
+          while true do
+          begin
+            sSecao := 'infPercurso'+IntToStrZero(I,3);
+            sFim   := INIRec.ReadString(sSecao,'UFPer','FIM');
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+               break;
+            with Ide.infPercurso.Add do
+             begin
+               UFPer   := sFim;
+             end;
+            Inc(I);
+          end;
 
           if INIRec.ReadString('toma4','xNome','') <> '' then
            begin
@@ -1370,6 +1387,29 @@ begin
           if Rem.locColeta.cMun <= 0 then
             Rem.locColeta.cMun := ObterCodigoMunicipio(Rem.locColeta.xMun, Rem.locColeta.UF);
         {$ENDIF}
+
+          //CT-e OS
+          if INIRec.ReadString('toma','CNPJCPF','') <> '' then
+          begin
+            toma.CNPJCPF:= INIRec.ReadString('toma','CNPJCPF','');
+            toma.IE     := INIRec.ReadString('toma','IE','');
+            toma.xNome  := INIRec.ReadString('toma','xNome','');
+            toma.xFant  := INIRec.ReadString('toma','xFant','');
+            toma.email  := INIRec.ReadString('toma','email','');
+            toma.fone   := INIRec.ReadString('toma','fone','');
+            toma.endertoma.xLgr     := INIRec.ReadString('toma','xLgr','');
+            toma.endertoma.nro      := INIRec.ReadString('toma','nro','');
+            toma.endertoma.xCpl     := INIRec.ReadString('toma', 'xCpl','');
+            toma.endertoma.xBairro  := INIRec.ReadString('toma','xBairro','');
+            toma.endertoma.cMun     := INIRec.ReadInteger('toma','cMun',0);
+            toma.endertoma.xMun     := INIRec.ReadString('toma','xMun','');
+            toma.endertoma.CEP      := INIRec.ReadInteger('toma','CEP',0);
+            toma.endertoma.UF       := INIRec.ReadString('toma','UF','');
+            toma.endertoma.cPais    := INIRec.ReadInteger('toma','cPais',1058);
+            toma.endertoma.xPais    := INIRec.ReadString('toma','xPais','');
+            if toma.endertoma.cMun <= 0 then
+              toma.endertoma.cMun := ObterCodigoMunicipio(toma.endertoma.xMun,toma.endertoma.UF);
+          end;
 
           I := 1;
           while true do
@@ -1921,10 +1961,58 @@ begin
             Imp.ICMSUFFim.vICMSUFIni     := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vICMSUFIni', ''), 0 );
           end;
 
+          //CT-e OS
+          Imp.infTribFed.vPIS          := StringToFloatDef( INIRec.ReadString('infTribFed', 'vPIS', ''), 0);
+          Imp.infTribFed.vCOFINS       := StringToFloatDef( INIRec.ReadString('infTribFed', 'vCOFINS', ''), 0);
+          Imp.infTribFed.vIR           := StringToFloatDef( INIRec.ReadString('infTribFed', 'vIR', ''), 0);
+          Imp.infTribFed.vINSS         := StringToFloatDef( INIRec.ReadString('infTribFed', 'vINSS', ''), 0);
+          Imp.infTribFed.vCSLL         := StringToFloatDef( INIRec.ReadString('infTribFed', 'vCSLL', ''), 0);
+
+          //CT-e OS
+          infCTeNorm.infServico.xDescServ := INIRec.ReadString('infServico','xDescServ','');
+          infCTeNorm.infServico.qCarga    := StringToFloatDef(INIRec.ReadString('infServico','qCarga',''), 0);
+
+          //CT-e OS
+          I := 1;
+          while true do
+           begin
+             sSecao := 'infDocRef'+IntToStrZero(I,3);
+             sFim   := INIRec.ReadString(sSecao,'nDoc','FIM');
+             if sFim = 'FIM' then
+                break;
+             with infCTeNorm.infDocRef.Add do
+             begin
+               nDoc              := sFim;
+               serie             := INIRec.ReadString(sSecao,'serie','');
+               subserie          := INIRec.ReadString(sSecao,'subserie','');
+               dEmi              := StringToDateTime(INIRec.ReadString(sSecao,'dEmi','0') );
+               vDoc              := StringToFloatDef(INIRec.ReadString(sSecao,'vDoc','') ,0);
+             end;
+             Inc(I);
+          end;
+
+          //CT-e OS
+          I := 1;
+          while true do
+          begin
+            sSecao := 'seg'+IntToStrZero(I,3);
+            sFim   := INIRec.ReadString(sSecao,'respSeg','FIM');
+            if sFim = 'FIM' then
+               break;
+            with infCTeNorm.seg.Add do
+            begin
+              respSeg              := StrToTpRspSeguro(OK, sFim);
+              xSeg                 := INIRec.ReadString(sSecao,'xSeg','');
+              nApol                := INIRec.ReadString(sSecao,'nApol','');
+            end;
+            Inc(I);
+          end;
+
         {$IFDEF PL_200}
           infCTeNorm.infCarga.vCarga   := StringToFloatDef( INIRec.ReadString('infCarga','vCarga','') ,0);
           infCTeNorm.infCarga.proPred  := INIRec.ReadString('infCarga','proPred','');
           infCTeNorm.infCarga.xOutCat  := INIRec.ReadString('infCarga','xOutCat','');
+          infCTeNorm.infCarga.vCargaAverb  := StringToFloatDef( INIRec.ReadString('infCarga','vCargaAverb','') ,0);
 
           I := 1;
           while true do
@@ -2015,13 +2103,13 @@ begin
                while true do
                 begin
                   sSecao := 'idDocAnt'+IntToStrZero(I,3)+IntToStrZero(J,3);
-                  sFim   := INIRec.ReadString(sSecao,'nDoc',INIRec.ReadString(sSecao,'chave','FIM'));
+                  sFim   := INIRec.ReadString(sSecao,'nDoc',INIRec.ReadString(sSecao,'chCTe','FIM'));
                   if sFim = 'FIM' then
                     break;
                   with idDocAnt.Add do
                    begin
-                     if INIRec.ReadString(sSecao,'chave','') <> '' then
-                       idDocAntEle.Add.chave := INIRec.ReadString(sSecao,'chave','')
+                     if INIRec.ReadString(sSecao,'chCTe','') <> '' then
+                       idDocAntEle.Add.chCTe := INIRec.ReadString(sSecao,'chCTe','')
                      else
                       begin
                         with idDocAntPap.Add do
@@ -2202,6 +2290,39 @@ begin
              end;
           end;
 
+          //Rodoviário CT-e OS
+          sSecao := 'RodoOS';
+          if  INIRec.ReadString(sSecao,'TAF', INIRec.ReadString(sSecao,'NroRegEstadual','') ) <> ''  then
+          begin
+            infCTeNorm.rodoOS.TAF            := INIRec.ReadString(sSecao,'TAF','');
+            infCTeNorm.rodoOS.NroRegEstadual := INIRec.ReadString(sSecao,'NroRegEstadual','');
+
+            I := 1;
+            while true do
+            begin
+              sSecao    := 'veic'+IntToStrZero(I,3);
+              sFim   := INIRec.ReadString(sSecao,'placa','FIM');
+              if sFim = 'FIM' then
+                 break;
+
+              with infCTeNorm.rodoOS.veic do
+              begin
+                placa                    := sFim;
+                RENAVAM                  := INIRec.ReadString(sSecao,'RENAVAM','');
+                UF                       := INIRec.ReadString(sSecao,'UF','');
+                prop.CNPJCPF             := INIRec.ReadString(sSecao,'CNPJCPF','');
+                prop.TAF                 := INIRec.ReadString(sSecao,'TAF','');
+                prop.NroRegEstadual      := INIRec.ReadString(sSecao,'NroRegEstadual','');
+                prop.xNome               := INIRec.ReadString(sSecao,'xNome','');
+                prop.IE                  := INIRec.ReadString(sSecao,'IE','');
+                prop.UF                  := INIRec.ReadString(sSecao,'propUF','');
+                prop.tpProp              := StrToTpProp(OK,INIRec.ReadString(sSecao,'ProptpProp',INIRec.ReadString(sSecao,'tpProp','')));
+
+              end;
+              Inc(I);
+            end;
+          end;
+
           if INIRec.ReadString('aereo','CL','') <> '' then
            begin
              sSecao := 'aereo';
@@ -2226,8 +2347,21 @@ begin
                Aereo.tarifa.vTar := StringToFloatDef( INIRec.ReadString(sSecao,'vTar','') ,0);
 
                Aereo.natCarga.xDime    := INIRec.ReadString(sSecao,'xDime','');
-               Aereo.natCarga.cInfManu := INIRec.ReadInteger(sSecao,'cInfManu',0);
                Aereo.natCarga.cIMP     := INIRec.ReadString(sSecao,'cIMP','');
+               I := 1;
+               while true do
+                begin
+                  sKey   := 'cInfManu'+IntToStrZero(I,3);
+                  sFim   := INIRec.ReadString(sSecao,sKey,'FIM');
+                  if sFim = 'FIM' then
+                     break;
+
+                  with Aereo.natCarga.cinfManu.Add do
+                    nInfManu := StrToTpInfManu(Ok, sFim);
+
+                  Inc(I);
+                end;
+
            {$IFDEF PL_200}
               end;
            {$ENDIF}
@@ -2645,7 +2779,7 @@ begin
   end;
 end;
 
-function GerarCTeIni( XML : WideString ) : WideString;
+function GerarCTeIni( XML : String ): String;
 var
   I : Integer;
   sSecao: String;
@@ -2679,7 +2813,7 @@ begin
           INIRec.WriteInteger('ide', 'CFOP', Ide.CFOP);
           INIRec.WriteString('ide', 'natOp', Ide.natOp);
           INIRec.WriteString('ide', 'forPag', tpforPagToStr(Ide.forPag));
-          INIRec.WriteString('ide', 'mod', Ide.modelo);
+          INIRec.WriteInteger('ide', 'mod', Ide.modelo);
           INIRec.WriteInteger('ide', 'serie', Ide.serie);
           INIRec.WriteInteger('ide', 'nCT', Ide.nCT);
           INIRec.WriteString('ide', 'dhEmi', DateToStr(Ide.dhEmi));
@@ -2704,9 +2838,11 @@ begin
           INIRec.WriteString('ide', 'UFFim', Ide.UFFim);
           INIRec.WriteString('ide', 'retira', TpRetiraPagToStr(Ide.retira));
           INIRec.WriteString('ide', 'xDetRetira', Ide.xDetRetira);
+          INIRec.WriteString('ide','indGlobalizado', TIndicadorToStr(Ide.indGlobalizado));
+          INIRec.WriteString('ide','indIEToma', indIEDestToStr(Ide.indIEToma));
 
           INIRec.WriteString('toma3', 'toma', TpTomadorToStr(Ide.toma03.Toma));
-          {
+
           Ide.toma4.CNPJCPF := INIRec.ReadString('toma4','CNPJCPF','');
           Ide.toma4.IE      := INIRec.ReadString('toma4','IE','');
           Ide.toma4.xNome   := INIRec.ReadString('toma4','xNome','');
@@ -2728,7 +2864,7 @@ begin
               xPais   := INIRec.ReadString('toma4','xPais','');
             end;
           Ide.toma4.email   := INIRec.ReadString('toma4','email','');
-          }
+
           INIRec.WriteString('ide', 'dhCont', DateToStr(Ide.dhCont));
           INIRec.WriteString('ide', 'xJust', Ide.xJust);
 
@@ -3038,26 +3174,16 @@ begin
 
 end;
 
-procedure GerarCTeIniEvento( AStr: WideString );
+procedure GerarCTeIniEvento( AStr: String );
 var
   I, J   : Integer;
   sSecao, sFim : String;
   INIRec : TMemIniFile;
-  SL     : TStringList;
   ok     : Boolean;
 begin
- INIRec := TMemIniFile.create( 'evento.ini' );
+  INIRec := LerConverterIni(AStr);
 
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
-
- INIRec.SetStrings( SL );
- SL.Free;
-
- with FrmACBrMonitor do
+  with FrmACBrMonitor do
   begin
    try
      ACBrCTe1.EventoCTe.idLote := INIRec.ReadInteger('EVENTO', 'idLote', 0);

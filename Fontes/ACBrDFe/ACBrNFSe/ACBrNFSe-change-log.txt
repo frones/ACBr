@@ -47,6 +47,446 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2017
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/35979-acbrnfse-para-s%C3%A3o-paulo/?do=findComment&comment=258983
+   Por: Rubenstz
+-- pnfsConversao --
+[*] Acrescentados novos tipos de Regime de tributação na classe TnfseRegimeEspecialTributacao.
+   Por: Italo Jurisato Junior
+-- pnfsLerListaNFSe --
+[*] Possível correção na leitura do retorno do método Gerar com o provedor SP.
+   Por: Italo Jurisato Junior
+
+15/10/2017
+-- pnfsNFSeG / pnfsCancNfseResposta --
+[*] https://www.projetoacbr.com.br/forum/topic/38927-cancelamento-provedor-issnet/?do=findComment&comment=257223
+   Por: Filipe Sortica
+
+13/10/2017
+-- ACBrNFSeWebServices --
+[*] Alteração para o provedor DBSeller, não estava retornando logo após o envio
+    os dados do tomador e do serviço.
+   Por: Italo Jurisato Junior
+
+12/10/2017
+-- ACBrNFSeWebServices / ACBrNFSeNotasFiscais --
+[*] Possivel correção para os casos dos provedores cujo atributo ID não é Id.
+   Por: Italo Jurisato Junior
+-- pnfsNFSeR --
+[-] Correções visando o provedor proActconv202.
+   Por: Leonard Miranda
+
+09/10/2017
+-- Diversos --
+[*] Alteração visando o provedor SmartAPD
+Por: cloudcon
+
+-- ACBrNFSeWebServices --
+[*] Incluido o provedor SafeWeb na lista de provedores que não realização a 
+    consulta após o cancelamento
+Por: mbbortolini
+
+-- Diversos --
+[+] Implementação do provedor SH3
+Por: Marcos Cesar Peixoto / Italo Jurisato Junior
+
+03/10/2017
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/36140-erro-envio-nfse-niteroi-v202/?do=findComment&comment=257160.
+   Por: Luiz Sodré
+
+20/09/2017
+-- pnfsNFSeW_SMARAPD --
+[*] https://www.projetoacbr.com.br/forum/topic/37221-servidor-smarapd/?do=findComment&comment=256044
+   Por: André Medeiros
+
+20/09/2017
+-- pnfsNFSeR --
+[-] Correções visando o provedor CONAM.
+   Por: André Medeiros
+
+-- pnfsConversao / pnfsNFSeW_SMARAPD --
+[*] https://www.projetoacbr.com.br/forum/topic/37221-servidor-smarapd/?do=findComment&comment=255098.
+   Por: André Medeiros
+
+-- ACBrNFSeWebServices --
+[*] Possível correção para realizar a assinatura no método Cancelar - Provedor
+    ISSe.
+   Por: Italo Jurisato Junior
+
+-- pnfsNFSeW_ISSDSF --
+[*] Ateração visando evitar criar os grupos Deducoes e Itens vazios.
+   Por: Italo Jurisato Junior
+
+16/09/2017
+-- ACBrNFSeNotasFiscais / pnfsNFSeW --
+[*] Ateração visando a leitura correta do grupo de cancelamento - provedor FISSLex.
+   Por: Sidnei
+
+12/09/2017
+-- pnfsNFSeW_Equiplano --
+[*] Ateração visando a possíbilidade de lançar mais de um serviço.
+   Por: Cesar Eduardo Formentão Schmitz
+
+08/09/2017
+-- ACBrNFConfiguracoes / ACBrNFSe  --
+[*] Acrescentado as propriedades LinkURL_P e LinkURL_H para melhor montagem do Link da NFS-e
+   Por: André Medeiros
+
+05/09/2017
+-- Diversos --
+[+] Inclusão do provedor SafeWeb.
+   Por: mbBortolini
+ 
+01/09/2017
+-- ACBrNFSeNotasFiscais / ACBrNFSe  --
+[*] Alterações visando os provedores EL.
+    http://www.projetoacbr.com.br/forum/topic/38558-provedor-el-inclus%C3%A3o-da-cidade-aracruzes/?do=findComment&comment=253582
+   Por:  Augusto Fontana
+
+31/08/2017
+-- ACBrNFSeNotasFiscais / pnfsNFSe / pnfsNFSeR / pnfsNFSeW_Infisc --
+[*] Alterações visando os provedores Infisc / Betha e Tecnos.
+    Sendo que este dois ultimos se refere ao cancelamento da NFS-e.
+   Por:  Felipe Mesturini e Jozimar
+
+25/08/2017
+-- ACBrNFSeWebServices --
+[*] Acrescentado mais uma condição para verificar se a nota foi cancelada ou não.
+    O provedor ISSDSF retorna o valor "True" e não "S" na tag Sucesso.
+   Por: Marcio Lopes
+
+23/08/2017
+-- ACBrNFSe / ACBrNFSeWebServices --
+[*] Acrescentado o parâmetro ANumLote (quarto) no método CAncelarNFSe, pois
+    O provedor ISSDSF necessita dessa informação ao realizar o Cancelamento.
+
+[*] Acrescentado o parâmetro ANumLote (quarto) no método ConsultarNFSePorRPS, pois
+    O provedor ISSDSF necessita dessa informação ao realizar essa consulta.
+   Por: Italo Jurisato Junior
+
+23/08/2017
+-- ACBrNFSeWebServices --
+[*] Possível correção no método Cancelar para o provedor Tecnos.
+   Por: Italo Jurisato Junior
+
+21/08/2017
+-- Diversos --
+[*] Ajustes para o provedor Infisc
+    http://www.projetoacbr.com.br/forum/topic/38408-ajustes-infisc-caxias-do-sul-e-farroupilha/
+   Por: Tiago Tecchio
+ 
+21/08/2017
+-- ACBrNFeNotasFiscais --
+[*] Método "NotaFiscal.Assinar", ajuste para não verificar o CNPJ, quando processo
+    de assintura ocorrer externo ao ACBr
+    http://www.projetoacbr.com.br/forum/topic/38349-problemas-com-pin-a3-assinatura-de-xml/
+
+08/08/2017
+-- ACBrNFSeNotasFiscais / pnfsNFSeR --
+[-] Correções na leitura do XML da NFS-e ABRASF versão 1.00 ajuste na extração
+    de grupos quando não existe o grupo <InfNfse>, neste caso é preciso retroceder
+    um nível.
+    Por: Italo Jurisato Junior
+
+04/08/2017
+-- pnfsNFSeR --
+[*] Acrescentado a leitura do grupo <Construcaocivil> e <Intermediario>.
+    Por: Léo
+
+02/08/2017
+-- pnfsNFSeR --
+[*] Correção para o provedor FIntelISS para retornar os dados do prestador.
+    Por: Fernando Damke
+-- ACBrNFSeNotasFiscais / pnfsNFSeR --
+[-] Correções em erros de sintaxe.
+    Por: Italo Jurisato Junior
+-- ACBrNFSeNotasFiscais / pnfsNFSeR --
+[*] Alterações visando a leitura correta do XML da NFS-e provedor Equiplano.
+    Por: Fernando Damke
+-- pnfsNFSeW_SP --
+[*] Alterado de 2 para 4 casas decimais o campo PercentualCargaTributaria do 
+    provedor SP.
+    Por: Rubenstz
+
+01/08/2017
+-- ACBrNFSeNotasFiscais --
+[*] Para o provedor SmarAPD não esta sendo informado corretamente o parãmetro
+    infElemento ao chamar o método Assinar para assinar o RPS.
+    Por: Italo Jurisato Junior
+
+31/07/2017
+-- ACBrNFSeWebServices --
+[*] Possível alteração, informado a tag a ser assinada em docElemento, provedor
+    SmarAPD.
+    Por: Italo Jurisato Junior
+
+28/07/2017
+-- Diversos --
+[*] Alterado o tipo da propriedade VersaoDados de Double para String, pois a 
+    versão de dados do provedor Abaco é V2010, portanto alfanumerico e não
+    numérico.
+    Por: Italo Jurisato Junior
+
+27/07/2017
+-- pnfsNFSeW_ABRASFv2 --
+[*] Ajustes visando o provedor Sigep (não estava validando).
+    Por: Renan Garcia de Oliveira
+
+26/07/2017
+-- Diversos --
+[*] Implementação do provedor Sigep.
+    Por: Renan Garcia de Oliveira
+
+24/07/2017
+-- pnfsNFSeW_ABRASFv1
+[*] Ajustes NFSe - Provedor SimplISS
+    por: Pedro Manoel
+
+21/07/2017
+-- pnfsNFSeR, pnfsNFSeW_ABRASFv1
+[*] Ajustes NFSe - Provedor Ereceita e BHISS
+		http://www.projetoacbr.com.br/forum/topic/37864-ajustes-nfse-provedor-ereceita-e-bhiss/
+		por Juliomar Marchetti
+
+20/07/2017
+-- pnfsConversao
+[-] Correções na descrição do serviço de acordo com a Lei Complementar nº 157, de 2016
+		http://www.projetoacbr.com.br/forum/topic/37856-correções-na-descrição-do-serviço-de-acordo-com-a-lei-complementar-nº-157-de-2016/
+		por Juliomar Marchetti
+		
+20/07/2017
+-- Diversos --
+[*] Remoção de vários hints e warnings.
+    Por: Italo Jurisato Junior
+
+17/07/2017
+-- pnfsConversao
+[*] Novas naturezas de operação.
+    Por: Augusto Fontana
+
+29/06/2017
+-- pnfsEnvLoteRpsResposta--
+[*] Imposto a checagem do valor do protodolo retornado, o mesmo é alterado para
+    uma string vazia quando o protocolo é igual a zero.
+    Por: Italo Jurisato Junior
+
+26/06/2017
+-- Diversos --
+[*] Simplificação de código e ajustes para diversos provedores.
+    Por: Italo Jurisato Junior
+
+19/06/2017
+-- ACBrNFSeWebServices -- 
+[*] Implementado o método TratarResposta na classe TNFSeTesteEnvioLoteRPS.
+    Por: Carlos Marian
+
+14/06/2017
+-- Diversos -- 
+[*] Implementação do provedor Smarapd.
+    Por: Renan Eustaquio
+
+14/06/2017
+-- Diversos -- 
+[*] Implementação do provedor NotaBlu.
+    Por: Carlos Marian
+
+18/05/2017
+[*] Alterações na leitura do retorno do Envio Sincrono.
+    Alguns provedores já retornam a nota outros há necessidade de realizar a consulta.
+   Por: Italo Jurisato Junior
+
+17/05/2017
+[*] Alterações visando o provedor ISSDSF - Cancelamento.
+   Por: Danny
+
+15/05/2017
+[*] Alterações visando o provedor ISSDSF.
+   Por: Danny / Italo Jurisato Junior
+
+02/05/2017
+[*] Alterações visando realizar a assinatura no RPS e no pedido de cancelamento no
+    método SubstituicaoNFSe.
+   Por: Italo Jurisato Junior
+
+14/04/2017
+[*] Adcionado o provedor WebISSv2 - versão 2.02 do layout ABRASF - provedor WebISS.
+   Por: Mauricio Andrade
+
+10/04/2017
+[-] Alteração para o provedor ISSNet para buscar a situação do RPS by Fernando Pasquetto
+		Por Juliomar Marchetti
+		
+04/04/2017
+-- Diversos -- 
+[*] http://www.projetoacbr.com.br/forum/topic/36077-numero-do-encapsulamento-nfs-e-sp/?do=findComment&comment=236010.
+    Por: Bruno
+
+27/02/2017
+-- ACBrNFSeWebServices -- 
+[*] Correção na definição da TAG para assinatura do XML de cancelamento - provedor
+    Tecnos.
+    Por: Italo Jurisato Junior
+
+26/02/2017
+-- ACBrNFSeWebServices -- 
+[*] Simplificação de código.
+    Por: Italo Jurisato Junior
+-- pnfslerListaNFSe / pnfsNFSeW_ABRASFv2 -- 
+[*] Alterações visando o provedor Coplan.
+    Por: Paulo Henrique
+-- pnfsNFSeG -- 
+[*] Incluido a cidade Pitanga/PR.
+    Por: Junior Guillen
+-- ACBrNFSeWebServices -- 
+[*] Passado o valor corredo do parâmetro infElement no CancelarNFSe ao assinar o XML
+    (provedor Fiorilli).
+    Por: bigWings
+
+10/02/2017
+-- ACBrNFSeWebServices -- 
+[*] Incluido a comdição (RetCancNFSe.InfCanc.Sucesso='S') no método TratarResposta
+    do CancelarNFSe.
+    Por: Douglas
+
+26/01/2017
+-- Diversos --
+[*] Alterações visando o provedor EL.
+    Por: Michel Ouriques
+
+21/01/2017
+-- ACBrNFSeWebServices -- 
+[*] Incluido a TAG a ser acinada ao cancelar uma NFS-e provedor Tecnos.
+    Por: Italo Jurisato Junior
+
+19/01/2017
+-- Diversos -- 
+[*] Implementação do provedor CTA.
+    Por: Roberto Godinho
+
+27/12/2016
+-- ACBrNFSe -- 
+[*] O terceiro parâmetro da function LinkNFSe incluido ontem, ficou faltando 
+    definir que por padrão é uma string vazia.
+    Problema corrigido.
+    Por: Italo Jurisato Junior
+-- Diversos --
+[*] Evitar a duplicidade de alertas.
+    Por: Italo Jurisato Junior
+
+28/11/2016
+-- Diversos --
+[*] Correções para o provedor Friburgo.
+    Por: João Batista de Oliveira
+
+23/11/2016
+-- Diversos --
+[*] Correções para o provedor Friburgo.
+    Por: Leandro
+
+18/11/2016
+-- Diversos --
+[*] Implementação do provedor próprio da cidade Nova Friburgo/RJ.
+    Por: Italo Jurisato Junior
+
+09/11/2016
+-- ACBrNFSeWebServices --
+[*] Fazer o parse da senha, pois pode ter caracteres especiais.
+    Por: Augusto Fontana
+
+25/10/2016
+-- Diversos --
+[*] Criado o valor proInfiscv11 uma vez que o provedor Infisc possui duas versões:
+    1.00 e 1.10
+    Por: Italo Jurisato Junior
+
+20/10/2016
+-- ACBrNFSeNotasFiscais / pnfsNFSeR --
+[*] Correções e melhorias na leitura do XML da NFS-e provedor SP.
+    Por: Douglaswf
+
+11/10/2016
+-- ACBrNFSeNotasFiscais --
+[*] Acrescentado a propriedade NomeArqRps que após o XML do RPS ter sido gerado
+    conterá o Path + Nome.
+    Para ler essa propriedade basta executar: ACBrNFSe1.NotasFiscais.Items[x].NomeArqRps
+    Por: Italo Jurisato Junior
+
+03/10/2016
+-- pnfsConsSitLoteRpsResposta --
+[*] Correção no nome da TAG ao ler o retorno.
+    Por: Edson
+
+30/09/2016
+-- ACBrNFSeNotasFiscais --
+[*] Melhorias na leitura e separação de varias notas contidas em lote.
+    Por: Italo Jurisato Junior
+
+23/09/2016
+[*] Acrescentado um parâmetro contendo o provedor na função RetirarPrefixos, 
+    visto que 2 prefixos são exclusivos para um determinado provedor.
+    por: Jonatas de Alencar Alves
+
+20/09/2016
+[-] Correções no método GerarLote.
+    por: Italo Jurisato Junior
+[+] Incluido as propridades Operacao e Tributacao para o provedor ISSDSF como
+    elementos de DadosServicos.
+    por: Italo Jurisato Junior
+
+12/09/2016
+[-] Correção do enconding do lfm que estava com cp1252 e não utf-8
+		http://www.projetoacbr.com.br/forum/topic/32329-nfse-lazarus/
+		por : Juliomar Marchetti
+		
+11/09/2016
+[*] Modificado para omitir a atividade se ela não existir em fortes!
+		http://www.projetoacbr.com.br/forum/topic/27676-impress%C3%A3o-nfse/?page=2
+		por: Juliomar Marchetti
+		
+05/09/2016
+[-] Correção, estava invertido a chamada as functions de leitura do XML da NFS-e
+    do provedor Infisc, pois este tem 2 versões.
+    Por: Marcos Mentz 
+[*] Alteração visando o cancelamento - provedor CONAM.
+    Por: André Medeiros
+-- ACBrNFSeWebServices / pnfsAbrirSessaoResposta --
+[*] Melhoria no tratamento do Retorno dos Web Services.
+    Por: Italo Jurisato Junior
+
+02/09/2016
+-- ACBrNFSeWebServices --
+[*] Alterado o tratamento do retorno referente ao Envio do Lote, provedor DBSeller
+    retorna o numero do protocolo mesmo o lote contendo erros.
+    Por: Italo Jurisato Junior
+
+31/08/2016
+-- ACBrNFSeWebServices / pnfsNFSeG --
+[*] Incluido o provedor na lista de provedores que não possuem a consulta a situação
+    do lote.
+    Por: Italo Jurisato Junior
+
+25/08/2016
+-- Diversos --
+[*] Incluido na geração do XML as constantes que contem as mensagens que são
+    apresentadas caso seja detectado erros de validação.
+    Por: Italo Jurisato Junior
+
+24/08/2016
+-- ACBrNFSeConfiguracoes --
+[*] Alterado a forma de ler o SoapAction, agora podem ter um SoapAction para
+    cada cidade do mesmo provedor.
+    Por: Rick
+
+23/08/2016
+-- diversos --
+[+] Criada a unit pnfsConsts que contem as constantes de mensagens usadas na
+    geração dos XML e que são apresentadas quando ocorre erro na validação.
+    por: Italo Jurisato Junior
+[+] Incluido o provedor Bethav2.
+    por: Italo Jurisato Junior
+
 15/08/2016
 [*] Melhoria para poder informar na serie quando é única em Fast Report e adição de campo
     http://www.projetoacbr.com.br/forum/topic/31793-corre%C3%A7%C3%A3o-e-inclus%C3%A3o-de-campos-na-impress%C3%A3o-do-danfse/

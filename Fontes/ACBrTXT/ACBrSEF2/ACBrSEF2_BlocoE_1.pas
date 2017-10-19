@@ -49,7 +49,10 @@ unit ACBrSEF2_BlocoE_1;
 
 interface
 
-Uses SysUtils, Classes, ACBrSEF2_BlocoE, ACBrSEF2Conversao;
+Uses
+  SysUtils, Classes,
+  ACBrSEF2_BlocoE, ACBrSEF2Conversao;
+
 type
 
   TBloco_E = class(TACBrSEFIIEDOC)
@@ -619,7 +622,7 @@ begin
                LFill(IndOperToStr(IND_OPER))                     +
                LFill(IndEmissaoToStr(IND_EMIT))                  +
                LFill(COD_PART)                                   +
-               LFill(COD_MUN_SERV)                               +
+               LFill(COD_MUN_SERV,0)                               +
                LFill(ModDocumentoToStr(COD_MOD))                 +
                LFill(CodSituacaoToStr(COD_SIT),2)                +
                LFill(SER)                                        +

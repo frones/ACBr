@@ -704,6 +704,10 @@ const
 //DES modes
   DES_ENCRYPT = 1;
   DES_DECRYPT = 0;
+
+  XN_FLAG_SEP_MASK       = 983040;  //(0xf << 16)
+  XN_FLAG_SEP_CPLUS_SPC  = 131072;  //(2 << 16) ,+ spaced: more readable
+  ASN1_STRFLGS_UTF8_CONVERT = 16;
   
 var
   SSLLibHandle: TLibHandle = 0;
@@ -732,6 +736,8 @@ var
   function SslMethodV2:PSSL_METHOD;
   function SslMethodV3:PSSL_METHOD;
   function SslMethodTLSV1:PSSL_METHOD;
+  function SslMethodTLSV11:PSSL_METHOD;
+  function SslMethodTLSV12:PSSL_METHOD;
   function SslMethodV23:PSSL_METHOD;
   function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr):cInt;
   function SslCtxUsePrivateKeyASN1(pk: cInt; ctx: PSSL_CTX; d: String; len: cLong):cInt;
@@ -768,6 +774,7 @@ var
   procedure ERR_load_crypto_strings;
   function X509New: PX509;
   procedure X509Free(x: PX509);
+  function X509NAMEprintEx(b: PBIO; x: PX509_NAME; indent: cInt; flags: cuint): cInt;
   function X509NameOneline(a: PX509_NAME; var buf: String; size: cInt):String;
   function X509GetSubjectName(a: PX509):PX509_NAME;
   function X509GetIssuerName(a: PX509):PX509_NAME;
@@ -786,10 +793,12 @@ var
   function X509SetNotBefore(x: PX509; tm: PASN1_UTCTIME): cInt;
   function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): cInt;
   function X509GetSerialNumber(x: PX509): PASN1_cInt;
-  function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION; cdecl;
+  function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION;
   function EvpPkeyNew: PEVP_PKEY;
   procedure EvpPkeyFree(pk: PEVP_PKEY);
-  function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt;
+  function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: pRSA): cInt;
+  function EvpPkeyGet1RSA(pkey: PEVP_PKEY): pRSA;
+  function EvpPkeySet1RSA(pkey: PEVP_PKEY; rsa: pRSA): cInt;
   function EvpGetDigestByName(Name: String): PEVP_MD;
   procedure EVPcleanup;
   function SSLeayversion(t: cInt): string;
@@ -805,6 +814,7 @@ var
   function Asn1UtctimeNew: PASN1_UTCTIME;
   procedure Asn1UtctimeFree(a: PASN1_UTCTIME);
   function i2dX509bio(b: PBIO; x: PX509): cInt;
+  function d2iX509bio(b: pBIO; x: pX509): pX509;
   function i2dPrivateKeyBio(b: PBIO; pkey: PEVP_PKEY): cInt;
 
   // 3DES functions
@@ -966,10 +976,16 @@ var
   function BIO_new_mem_buf(buf: pointer; len: integer): pBIO;
   
   // Big number function
+  function BN_num_bytes(const a: PBIGNUM): cint;
   function BN_print(fp: pBIO; const a: PBIGNUM): cint;
   function BN_new(): PBIGNUM;
   function BN_hex2bn(var n: PBIGNUM; const str: PChar): cint;
-  function BN_dec2bn(var n: pBIGNUM; const str: PChar): cint;
+  function BN_dec2bn(var n: PBIGNUM; const str: PChar): cint;
+  function BN_bn2hex(const n: PBIGNUM): PChar;
+  function BN_bn2dec(const n: PBIGNUM): PChar;
+
+  function BN_bn2bin(const n: PBIGNUM; _to: Pointer): cint;
+  function BN_bin2bn(const _from: Pointer; len: Integer; ret: PBIGNUM): PBIGNUM;
 
 function IsSSLloaded: Boolean;
 function Islibealoaded: Boolean;
@@ -999,6 +1015,8 @@ type
   TSslMethodV2 = function:PSSL_METHOD; cdecl;
   TSslMethodV3 = function:PSSL_METHOD; cdecl;
   TSslMethodTLSV1 = function:PSSL_METHOD; cdecl;
+  TSslMethodTLSV11 = function:PSSL_METHOD; cdecl;
+  TSslMethodTLSV12 = function:PSSL_METHOD; cdecl;
   TSslMethodV23 = function:PSSL_METHOD; cdecl;
   TSslCtxUsePrivateKey = function(ctx: PSSL_CTX; pkey: sslptr):cInt; cdecl;
   TSslCtxUsePrivateKeyASN1 = function(pk: cInt; ctx: PSSL_CTX; d: sslptr; len: cInt):cInt; cdecl;
@@ -1033,6 +1051,7 @@ type
   TX509New = function: PX509; cdecl;
   TX509Free = procedure(x: PX509); cdecl;
   TX509NameOneline = function(a: PX509_NAME; buf: PChar; size: cInt):PChar; cdecl;
+  TX509NAMEprintEx = function(b: PBIO; x: PX509_NAME; indent: cInt; flags: cuint):cInt; cdecl;
   TX509GetSubjectName = function(a: PX509):PX509_NAME; cdecl;
   TX509GetIssuerName = function(a: PX509):PX509_NAME; cdecl;
   TX509NameHash = function(x: PX509_NAME):cuLong; cdecl;
@@ -1053,6 +1072,8 @@ type
   TEvpPkeyNew = function: PEVP_PKEY; cdecl;
   TEvpPkeyFree = procedure(pk: PEVP_PKEY); cdecl;
   TEvpPkeyAssign = function(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt; cdecl;
+  TEvpPkeyGet1RSA = function(key: PEVP_PKEY): pRSA; cdecl;
+  TEvpPkeySet1RSA = function(pkey: PEVP_PKEY; rsa: pRSA): cInt; cdecl;
   TEvpGetDigestByName = function(Name: PChar): PEVP_MD; cdecl;
   TEVPcleanup = procedure; cdecl;
   TSSLeayversion = function(t: cInt): PChar; cdecl;
@@ -1076,6 +1097,8 @@ type
   TAsn1UtctimeNew = function: PASN1_UTCTIME; cdecl;
   TAsn1UtctimeFree = procedure(a: PASN1_UTCTIME); cdecl;
   Ti2dX509bio = function(b: PBIO; x: PX509): cInt; cdecl;
+  Td2iX509bio = function(b: pBIO; x: pX509): pX509; cdecl;
+
   Ti2dPrivateKeyBio= function(b: PBIO; pkey: PEVP_PKEY): cInt; cdecl;
 
   // 3DES functions
@@ -1207,10 +1230,16 @@ type
   TBIO_new_mem_buf = function(buf: pointer; len: integer): pBIO; cdecl;
 
   // Big number function
+  TBN_num_bytes = function(const a: PBIGNUM): cint; cdecl;
   TBN_print = function(fp: pBIO; const a: PBIGNUM): cint; cdecl;
   TBN_new =  function(): PBIGNUM; cdecl;
   TBN_hex2bn = function(var n: PBIGNUM; const str: PChar): cint; cdecl;
-  TBN_dec2bn = function(var n: pBIGNUM; const str: PChar): cint; cdecl;
+  TBN_dec2bn = function(var n: PBIGNUM; const str: PChar): cint; cdecl;
+  TBN_bn2hex = function(const n: PBIGNUM): PChar; cdecl;
+  TBN_bn2dec = function(const n: PBIGNUM): PChar; cdecl;
+  TBN_bn2bin = function(const n: PBIGNUM; _to: pointer): integer; cdecl;
+  TBN_bin2bn = function(const _from: pointer; len: integer; ret: PBIGNUM): PBIGNUM; cdecl;
+
 
 
 var
@@ -1227,6 +1256,8 @@ var
   _SslMethodV2: TSslMethodV2 = nil;
   _SslMethodV3: TSslMethodV3 = nil;
   _SslMethodTLSV1: TSslMethodTLSV1 = nil;
+  _SslMethodTLSV11: TSslMethodTLSV11 = nil;
+  _SslMethodTLSV12: TSslMethodTLSV12 = nil;
   _SslMethodV23: TSslMethodV23 = nil;
   _SslCtxUsePrivateKey: TSslCtxUsePrivateKey = nil;
   _SslCtxUsePrivateKeyASN1: TSslCtxUsePrivateKeyASN1 = nil;
@@ -1261,6 +1292,7 @@ var
   _X509New: TX509New = nil;
   _X509Free: TX509Free = nil;
   _X509NameOneline: TX509NameOneline = nil;
+  _X509NAMEprintEx:TX509NAMEprintEx = nil;
   _X509GetSubjectName: TX509GetSubjectName = nil;
   _X509GetIssuerName: TX509GetIssuerName = nil;
   _X509NameHash: TX509NameHash = nil;
@@ -1281,6 +1313,8 @@ var
   _EvpPkeyNew: TEvpPkeyNew = nil;
   _EvpPkeyFree: TEvpPkeyFree = nil;
   _EvpPkeyAssign: TEvpPkeyAssign = nil;
+  _EvpPkeySet1RSA: TEvpPkeySet1RSA = nil;
+  _EvpPkeyGet1RSA: TEvpPkeyGet1RSA = nil;
   _EvpGetDigestByName: TEvpGetDigestByName = nil;
   _EVPcleanup: TEVPcleanup = nil;
   _SSLeayversion: TSSLeayversion = nil;
@@ -1303,6 +1337,8 @@ var
   _Asn1UtctimeNew: TAsn1UtctimeNew = nil;
   _Asn1UtctimeFree: TAsn1UtctimeFree = nil;
   _i2dX509bio: Ti2dX509bio = nil;
+  _d2iX509bio: Td2iX509bio = nil;
+
   _i2dPrivateKeyBio: Ti2dPrivateKeyBio = nil;
   _EVP_enc_null : TEVP_CIPHERFunction = nil;
   _EVP_rc2_cbc : TEVP_CIPHERFunction = nil;
@@ -1435,12 +1471,15 @@ var
   _BIO_new_mem_buf: TBIO_new_mem_buf = nil;
 
   // Big number function
+  _BN_num_bytes: TBN_num_bytes = nil;
   _BN_print: TBN_print = nil;
   _BN_new: TBN_new = nil;
   _BN_hex2bn: TBN_hex2bn = nil ;
   _BN_dec2bn: TBN_dec2bn = nil ;
-
-
+  _BN_bn2hex: TBN_bn2hex = nil ;
+  _BN_bn2dec: TBN_bn2dec = nil ;
+  _BN_bn2bin: TBN_bn2bin = nil;
+  _BN_bin2bn: TBN_bin2bn = nil;
 
 
 var
@@ -1557,6 +1596,22 @@ function SslMethodTLSV1:PSSL_METHOD;
 begin
   if InitSSLEAInterface and Assigned(_SslMethodTLSV1) then
     Result := _SslMethodTLSV1
+  else
+    Result := nil;
+end;
+
+function SslMethodTLSV11:PSSL_METHOD;
+begin
+  if InitSSLEAInterface and Assigned(_SslMethodTLSV11) then
+    Result := _SslMethodTLSV11
+  else
+    Result := nil;
+end;
+
+function SslMethodTLSV12:PSSL_METHOD;
+begin
+  if InitSSLEAInterface and Assigned(_SslMethodTLSV12) then
+    Result := _SslMethodTLSV12
   else
     Result := nil;
 end;
@@ -1819,6 +1874,15 @@ begin
     Result := '';
 end;
 
+function X509NAMEprintEx(b: PBIO; x: PX509_NAME; indent: cInt; flags: cuint
+  ): cInt;
+begin
+  if InitlibeaInterface and Assigned(_X509NAMEprintEx) then
+    Result := _X509NAMEprintEx(b, x, indent, flags)
+  else
+    Result := 0;
+end;
+
 function X509GetSubjectName(a: PX509):PX509_NAME;
 begin
   if InitlibeaInterface and Assigned(_X509GetSubjectName) then
@@ -1958,7 +2022,7 @@ begin
     Result := -2;
 end;
 
-function BIO_reset(b: PBIO): cInt;
+function BIO_reset(b: pBIO): cint;
 begin
   if InitlibeaInterface and Assigned(_Bio_reset) then
     Result := _Bio_reset(b)
@@ -1996,10 +2060,26 @@ begin
     _PKCS12free(p12);
 end;
 
-function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt;
+function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: pRSA): cInt;
 begin
   if InitlibeaInterface and Assigned(_EvpPkeyAssign) then
     Result := _EvpPkeyAssign(pkey, _type, key)
+  else
+    Result := 0;
+end;
+
+function EvpPkeyGet1RSA(pkey: PEVP_PKEY): pRSA;
+begin
+  if InitlibeaInterface and Assigned(_EvpPkeyGet1RSA) then
+    Result := _EvpPkeyGet1RSA(pkey)
+  else
+    Result := nil;
+end;
+
+function EvpPkeySet1RSA(pkey: PEVP_PKEY; rsa: pRSA): cInt;
+begin
+  if InitlibeaInterface and Assigned(_EvpPkeySet1RSA) then
+    Result := _EvpPkeySet1RSA(pkey, rsa)
   else
     Result := 0;
 end;
@@ -2099,6 +2179,14 @@ begin
     Result := 0;
 end;
 
+function d2iX509bio(b: pBIO; x: pX509): pX509;
+begin
+  if InitlibeaInterface and Assigned(_d2iX509bio) then
+    Result := _d2iX509bio(b, x)
+  else
+    Result := Nil;
+end;
+
 function i2dPrivateKeyBio(b: PBIO; pkey: PEVP_PKEY): cInt;
 begin
   if InitlibeaInterface and Assigned(_i2dPrivateKeyBio) then
@@ -2123,7 +2211,7 @@ begin
     Result := nil;
 end;
 
-function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION; cdecl;
+function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION;
 begin
   if InitlibeaInterface and Assigned(_X509GetExt) then
     Result := _X509GetExt(x, loc)
@@ -2869,7 +2957,7 @@ begin
   Result := BIO_ctrl(b, BIO_C_SET_FILENAME, BIO_CLOSE or BIO_FP_READ, name);
 end;
 
-function BIO_s_file: PBIO_METHOD;
+function BIO_s_file: pBIO_METHOD;
 begin
   if InitlibeaInterface and Assigned(_BIO_s_file) then
     Result := _BIO_s_file
@@ -2896,6 +2984,14 @@ end;
 
 // Big number function
 
+function BN_num_bytes(const a: PBIGNUM): cint;
+begin
+  if InitlibeaInterface and Assigned(_BN_num_bytes) then
+    Result := _BN_num_bytes(a)
+  else
+    Result := -1;
+end;
+
 function BN_print(fp : pBIO ; const a : PBIGNUM) : cint ;
 begin
   if InitlibeaInterface and Assigned(_BN_print) then
@@ -2921,12 +3017,44 @@ begin
     Result := -1;
 end;
 
-function BN_dec2bn(var n: PBIGNUM; const str: PChar):  cint ;
+function BN_dec2bn(var n: PBIGNUM; const str: PChar): cint;
 begin
   if InitlibeaInterface and Assigned(_BN_dec2bn) then
     Result := _BN_dec2bn(n, str)
   else
     Result := -1;
+end;
+
+function BN_bn2hex(const n: PBIGNUM): PChar;
+begin
+  if InitlibeaInterface and Assigned(_BN_bn2hex) then
+    Result := _BN_bn2hex(n)
+  else
+    Result := Nil;
+end;
+
+function BN_bn2dec(const n: PBIGNUM): PChar;
+begin
+  if InitlibeaInterface and Assigned(_BN_bn2dec) then
+    Result := _BN_bn2dec(n)
+  else
+    Result := Nil;
+end;
+
+function BN_bn2bin(const n: PBIGNUM; _to: Pointer): cint;
+begin
+  if InitlibeaInterface and Assigned(_BN_bn2bin) then
+    Result := _BN_bn2bin(n, _to)
+  else
+    Result := -1;
+end;
+
+function BN_bin2bn(const _from: Pointer; len: Integer; ret: PBIGNUM): PBIGNUM;
+begin
+  if InitlibeaInterface and Assigned(_BN_bin2bn) then
+    Result := _BN_bin2bn(_from, len, Nil)
+  else
+    Result := Nil;
 end;
 
 {$IFNDEF WINDOWS}
@@ -3008,6 +3136,8 @@ begin
         _SslMethodV2 := GetProcAddr(SSLLibHandle, 'SSLv2_method', AVerboseLoading);
         _SslMethodV3 := GetProcAddr(SSLLibHandle, 'SSLv3_method', AVerboseLoading);
         _SslMethodTLSV1 := GetProcAddr(SSLLibHandle, 'TLSv1_method', AVerboseLoading);
+        _SslMethodTLSV11 := GetProcAddr(SSLLibHandle, 'TLSv1_1_method', AVerboseLoading);
+        _SslMethodTLSV12 := GetProcAddr(SSLLibHandle, 'TLSv1_2_method', AVerboseLoading);
         _SslMethodV23 := GetProcAddr(SSLLibHandle, 'SSLv23_method', AVerboseLoading);
         _SslCtxUsePrivateKey := GetProcAddr(SSLLibHandle, 'SSL_CTX_use_PrivateKey', AVerboseLoading);
         _SslCtxUsePrivateKeyASN1 := GetProcAddr(SSLLibHandle, 'SSL_CTX_use_PrivateKey_ASN1', AVerboseLoading);
@@ -3068,7 +3198,7 @@ begin
       Result := true;
 end;
 
-function InitlibeaInterface(AVerboseLoading: Boolean = False): Boolean;
+function InitLibeaInterface(AVerboseLoading: Boolean): Boolean;
 begin
    if not Islibealoaded then
    begin
@@ -3080,6 +3210,7 @@ begin
         _X509New := GetProcAddr(SSLUtilHandle, 'X509_new', AVerboseLoading);
         _X509Free := GetProcAddr(SSLUtilHandle, 'X509_free', AVerboseLoading);
         _X509NameOneline := GetProcAddr(SSLUtilHandle, 'X509_NAME_oneline', AVerboseLoading);
+        _X509NAMEprintEx := GetProcAddr(SSLUtilHandle, 'X509_NAME_print_ex', AVerboseLoading);
         _X509GetSubjectName := GetProcAddr(SSLUtilHandle, 'X509_get_subject_name', AVerboseLoading);
         _X509GetIssuerName := GetProcAddr(SSLUtilHandle, 'X509_get_issuer_name', AVerboseLoading);
         _X509NameHash := GetProcAddr(SSLUtilHandle, 'X509_NAME_hash', AVerboseLoading);
@@ -3099,6 +3230,8 @@ begin
         _EvpPkeyNew := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_new', AVerboseLoading);
         _EvpPkeyFree := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_free', AVerboseLoading);
         _EvpPkeyAssign := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_assign', AVerboseLoading);
+        _EvpPkeyGet1RSA := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_get1_RSA', AVerboseLoading);
+        _EvpPkeySet1RSA := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_set1_RSA', AVerboseLoading);
         _EVPCleanup := GetProcAddr(SSLUtilHandle, 'EVP_cleanup', AVerboseLoading);
         _EvpGetDigestByName := GetProcAddr(SSLUtilHandle, 'EVP_get_digestbyname', AVerboseLoading);
         _SSLeayversion := GetProcAddr(SSLUtilHandle, 'SSLeay_version', AVerboseLoading);
@@ -3121,6 +3254,7 @@ begin
         _Asn1UtctimeNew := GetProcAddr(SSLUtilHandle, 'ASN1_UTCTIME_new', AVerboseLoading);
         _Asn1UtctimeFree := GetProcAddr(SSLUtilHandle, 'ASN1_UTCTIME_free', AVerboseLoading);
         _i2dX509bio := GetProcAddr(SSLUtilHandle, 'i2d_X509_bio', AVerboseLoading);
+        _d2iX509bio := GetProcAddr(SSLUtilHandle, 'd2i_X509_bio', AVerboseLoading);
         _i2dPrivateKeyBio := GetProcAddr(SSLUtilHandle, 'i2d_PrivateKey_bio', AVerboseLoading);
         _EVP_enc_null := GetProcAddr(SSLUtilHandle, 'EVP_enc_null', AVerboseLoading);;
         _EVP_rc2_cbc := GetProcAddr(SSLUtilHandle, 'EVP_rc2_cbc', AVerboseLoading);;
@@ -3248,10 +3382,15 @@ begin
        _BIO_new_mem_buf := GetProcAddr(SSLUtilHandle, 'BIO_new_mem_buf', AVerboseLoading);
 
        // Big number function
+       _BN_num_bytes := GetProcAddr(SSLUtilHandle, 'BN_num_bytes', AVerboseLoading);
        _BN_print := GetProcAddr(SSLUtilHandle, 'BN_print', AVerboseLoading);
        _BN_new := GetProcAddr(SSLUtilHandle, 'BN_new', AVerboseLoading);
        _BN_hex2bn := GetProcAddr(SSLUtilHandle, 'BN_hex2bn', AVerboseLoading);
        _BN_dec2bn := GetProcAddr(SSLUtilHandle, 'BN_dec2bn', AVerboseLoading);
+       _BN_bn2hex := GetProcAddr(SSLUtilHandle, 'BN_bn2hex', AVerboseLoading);
+       _BN_bn2dec := GetProcAddr(SSLUtilHandle, 'BN_bn2dec', AVerboseLoading);
+       _BN_bn2bin := GetProcAddr(SSLUtilHandle, 'BN_bn2bin', AVerboseLoading);
+       _BN_bin2bn := GetProcAddr(SSLUtilHandle, 'BN_bin2bn', AVerboseLoading);
 
        // Crypto Functions
 
@@ -3311,6 +3450,8 @@ begin
     _SslMethodV2 := nil;
     _SslMethodV3 := nil;
     _SslMethodTLSV1 := nil;
+    _SslMethodTLSV11 := nil;
+    _SslMethodTLSV12 := nil;
     _SslMethodV23 := nil;
     _SslCtxUsePrivateKey := nil;
     _SslCtxUsePrivateKeyASN1 := nil;
@@ -3345,7 +3486,7 @@ begin
 end;
 
 
-function DestroylibeaInterface: Boolean;
+function DestroyLibeaInterface: Boolean;
 begin
         if IslibeaLoaded then
         begin
@@ -3384,6 +3525,8 @@ begin
     _EvpPkeyNew := nil;
     _EvpPkeyFree := nil;
     _EvpPkeyAssign := nil;
+    _EvpPkeyGet1RSA := nil;
+    _EvpPkeySet1RSA := nil;
     _EVPCleanup := nil;
     _EvpGetDigestByName := nil;
     _ErrErrorString := nil;
@@ -3405,6 +3548,7 @@ begin
     _Asn1UtctimeNew := nil;
     _Asn1UtctimeFree := nil;
     _i2dX509bio := nil;
+    _d2iX509bio := nil;
     _i2dPrivateKeyBio := nil;
 
     // 3DES functions
@@ -3536,8 +3680,6 @@ result:=false;
   result:=false;
  end;
 end;
-
-
 
 function IsSSLloaded: Boolean;
 begin

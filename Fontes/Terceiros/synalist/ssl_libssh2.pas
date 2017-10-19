@@ -179,7 +179,7 @@ begin
       if FSocket.SSL.PrivateKeyFile<>'' then
         if (not SSHCheck(libssh2_userauth_publickey_fromfile(FSession, PChar(FSocket.SSL.Username), nil, PChar(FSocket.SSL.PrivateKeyFile), PChar(FSocket.SSL.KeyPassword))))
           and (libssh2_userauth_password(FSession, PChar(FSocket.SSL.Username), PChar(FSocket.SSL.Password))<0) then
-          exit;
+            exit;
       FChannel := libssh2_channel_open_session(FSession);
       if not assigned(FChannel) then
       begin
@@ -243,7 +243,7 @@ end;
 
 initialization
   if libssh2_init(0)=0 then
-		SSLImplementation := TSSLLibSSH2;
+    SSLImplementation := TSSLLibSSH2;
  
 finalization
   libssh2_exit;

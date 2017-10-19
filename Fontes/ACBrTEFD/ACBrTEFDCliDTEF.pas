@@ -246,7 +246,9 @@ type
 
 implementation
 
-Uses dateutils, Math, strutils,
+Uses
+  {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+  DateUtils, Math, StrUtils,
   ACBrTEFD, ACBrUtil;
 
 { TACBrTEFDRespCliDTEF }
@@ -290,7 +292,7 @@ begin
            fpValorTotal := fpValorTotal + fpSaque ;
          end;
        131 : fpInstituicao                 := LinStr;
-       133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsInteger;
+       133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsString;
        134 : fpNSU                         := Linha.Informacao.AsString;
 
        135 :
@@ -453,8 +455,7 @@ begin
 end;
 
 procedure TACBrTEFDCliDTEF.Inicializar;
-Var
-  Est  : AnsiChar;
+var
   pFabricanteAutomacao, pVersaoAutomacao, pReservado: AnsiString;
 begin
   if Inicializado then exit ;
@@ -480,16 +481,7 @@ begin
   fpInicializado := True ;
   GravaLog( Name +' Inicializado CliDTEF' );
 
-  try
-     Est := TACBrTEFD(Owner).EstadoECF;
-  except
-     Est := 'O' ;
-  end ;
-
-  if (Est in ['V','P','O']) then        // Cupom Ficou aberto ?? //
-     CancelarTransacoesPendentesClass   // SIM, Cancele tudo... //
-  else
-     ConfirmarEReimprimirTransacoesPendentes ;  // NAO, Cupom Fechado, basta re-imprimir //
+  VerificarTransacoesPendentesClass(True);
 end;
 
 procedure TACBrTEFDCliDTEF.DesInicializar;
@@ -544,7 +536,7 @@ begin
            if Resp.NSU <> '' then
               NSUs := NSUs + sLineBreak + 'NSU: '+Resp.NSU ;
 
-           DeleteFile( ArquivosVerficar[ 0 ] );
+           SysUtils.DeleteFile( ArquivosVerficar[ 0 ] );
            ArquivosVerficar.Delete( 0 );
         except
         end;
@@ -792,7 +784,7 @@ begin
            if ((Funcao = 7) or (Funcao = 9)) then
             begin
               ArquivoResposta.LoadFromFile(ArqResp + 'ULTIMO.PRN');
-              DeleteFile(ArqResp + 'ULTIMO.PRN');
+              SysUtils.DeleteFile(ArqResp + 'ULTIMO.PRN');
               ImprimirComprovantes(ArquivoResposta);
               ApagaEVerifica( ArqBackup );
             end

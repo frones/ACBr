@@ -54,7 +54,8 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, pcteEventoCTe, pcteConversaoCTe;
+  pcnAuxiliar, pcnConversao, pcnLeitor, pcteEventoCTe, pcteConversaoCTe,
+  pcteSignature;
 
 type
   TRetInfEventoCollection     = class;
@@ -94,6 +95,7 @@ type
     FInfEvento: TInfEvento;
     FretEvento: TRetInfEventoCollection;
     FXML: AnsiString;
+    Fsignature: Tsignature;
   public
     constructor Create;
     destructor Destroy; override;
@@ -108,6 +110,7 @@ type
     property cStat: Integer                     read FcStat     write FcStat;
     property xMotivo: String                    read FxMotivo   write FxMotivo;
     property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
+    property signature: Tsignature              read Fsignature write Fsignature;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
     property XML: AnsiString                    read FXML       write FXML;
   end;
@@ -158,6 +161,7 @@ begin
   FLeitor    := TLeitor.Create;
   FretEvento := TRetInfEventoCollection.Create(Self);
   FInfEvento := TInfEvento.Create;
+  Fsignature := Tsignature.Create;
 end;
 
 destructor TRetEventoCTe.Destroy;
@@ -165,13 +169,14 @@ begin
   FLeitor.Free;
   FretEvento.Free;
   FInfEvento.Free;
+  Fsignature.Free;
   inherited;
 end;
 
 function TRetEventoCTe.LerXml: boolean;
 var
   ok: boolean;
-  i: Integer;
+  i, j: Integer;
 begin
   Result := False;
   i := 0;
@@ -182,7 +187,7 @@ begin
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
        begin
-         infEvento.Id         := Leitor.rAtributo('Id=', 'infEvento'); 
+         infEvento.Id         := Leitor.rAtributo('Id=', 'infEvento');
          infEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
          infEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
          infEvento.CNPJ       := Leitor.rCampo(tcStr, 'CNPJ');
@@ -207,6 +212,7 @@ begin
            infEvento.detEvento.modal      := StrToTpModal(ok, Leitor.rCampo(tcStr, 'modal'));
            infEvento.detEvento.UFIni      := Leitor.rCampo(tcStr, 'UFIni');
            infEvento.detEvento.UFFim      := Leitor.rCampo(tcStr, 'UFFim');
+           infEvento.detEvento.xOBS       := Leitor.rCampo(tcStr, 'xOBS');
 
            // Carrega os dados da informação da Correção aplicada
            i := 0;
@@ -222,8 +228,66 @@ begin
              inc(i);
            end;
 
+           // Carrega os dados da informação GTV
+           i := 0;
+           while Leitor.rExtrai(4, 'infGTV', '', i + 1) <> '' do
+           begin
+             with infEvento.detEvento.infGTV.Add do
+             begin
+               nDoc     := Leitor.rCampo(tcStr, 'nDoc');
+               id       := Leitor.rCampo(tcStr, 'id');
+               serie    := Leitor.rCampo(tcStr, 'serie');
+               subserie := Leitor.rCampo(tcStr, 'subserie');
+               dEmi     := Leitor.rCampo(tcDat, 'dEmi');
+               nDV      := Leitor.rCampo(tcInt, 'nDV');
+               qCarga   := Leitor.rCampo(tcDe4, 'qCarga');
+               placa    := Leitor.rCampo(tcStr, 'placa');
+               UF       := Leitor.rCampo(tcStr, 'UF');
+               RNTRC    := Leitor.rCampo(tcStr, 'RNTRC');
+
+               // Carrega os dados da informação de Especie
+               j := 0;
+               while Leitor.rExtrai(5, 'infEspecie', '', j + 1) <> '' do
+               begin
+                 with infEvento.detEvento.infGTV.Items[i].infEspecie.Add do
+                 begin
+                   tpEspecie := StrToTEspecie(Ok, Leitor.rCampo(tcStr, 'tpEspecie'));
+                   vEspecie  := Leitor.rCampo(tcDe2, 'vEspecie');
+                 end;
+                 inc(j);
+               end;
+
+               if Leitor.rExtrai(5, 'rem') <> '' then
+               begin
+                 rem.CNPJCPF := Leitor.rCampoCNPJCPF;
+                 rem.IE      := Leitor.rCampo(tcStr, 'IE');
+                 rem.UF      := Leitor.rCampo(tcStr, 'UF');
+                 rem.xNome   := Leitor.rCampo(tcStr, 'xNome');
+               end;
+
+               if Leitor.rExtrai(5, 'dest') <> '' then
+               begin
+                 dest.CNPJCPF := Leitor.rCampoCNPJCPF;
+                 dest.IE      := Leitor.rCampo(tcStr, 'IE');
+                 dest.UF      := Leitor.rCampo(tcStr, 'UF');
+                 dest.xNome   := Leitor.rCampo(tcStr, 'xNome');
+               end;
+
+             end;
+             inc(i);
+           end;
+
          end;
       end;
+
+      if Leitor.rExtrai(2, 'Signature', '', i + 1) <> '' then
+      begin
+        signature.URI             := Leitor.rAtributo('Reference URI=');
+        signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
+        signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
+        signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+      end;
+
     end;
 
     if (Leitor.rExtrai(1, 'retEnvEvento') <> '') or

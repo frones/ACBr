@@ -94,7 +94,8 @@ type
     function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
-      EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
+      EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
+      sReplyTo: TStrings = nil);
 
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
       PathArquivo: String = ''): String;
@@ -221,7 +222,11 @@ var
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
 begin
-  TACBrMDFe(TManifestos(Collection).ACBrMDFe).SSL.ValidarCNPJCertificado( MDFe.Emit.CNPJ );
+  with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
+  begin
+    if not Assigned(SSL.AntesDeAssinar) then
+      SSL.ValidarCNPJCertificado( MDFe.Emit.CNPJ );
+  end;
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;
@@ -246,7 +251,8 @@ begin
       Leitor.Free;
     end;
 
-    if Configuracoes.Arquivos.Salvar then
+    if Configuracoes.Arquivos.Salvar and
+      (not Configuracoes.Arquivos.SalvarApenasMDFeProcessados) then
     begin
       if NaoEstaVazio(NomeArq) then
         Gravar(NomeArq, FXMLAssinado)
@@ -262,7 +268,9 @@ var
   MDFeEhValida, ModalEhValido: Boolean;
   ALayout: TLayOutMDFe;
 begin
-  AXML := XMLAssinado;
+  AXML := FXMLAssinado;
+  if AXML = '' then
+    AXML := XMLOriginal;
 
   AXMLModal := Trim(RetornarConteudoEntre(AXML, '<infModal', '</infModal>'));
   case TACBrMDFe(TManifestos(Collection).ACBrMDFe).IdentificaSchemaModal(AXML) of
@@ -374,11 +382,36 @@ begin
   begin
     Erros := '';
 
-    GravaLog('Validar: 502-Chave de acesso');
-    if not ValidarConcatChave then  //A03-10
-      AdicionaErro(
-        '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
+    GravaLog('Regra: G001 - Validar: 252-Ambiente');
+    if (MDFe.Ide.tpAmb <> Configuracoes.WebServices.Ambiente) then
+      AdicionaErro('252-Rejeição: Tipo do ambiente do MDF-e difere do ambiente do Web Service');
 
+    GravaLog('Regra: G002 - Validar 226-UF');
+    if copy(IntToStr(MDFe.Emit.EnderEmit.cMun), 1, 2) <> IntToStr(Configuracoes.WebServices.UFCodigo) then
+      AdicionaErro('226-Rejeição: Código da UF do Emitente diverge da UF autorizadora');
+
+    GravaLog('Regra: G003 - Validar 247-UF');
+    if MDFe.Emit.EnderEmit.UF <> Configuracoes.WebServices.UF then
+      AdicionaErro('247-Rejeição: Sigla da UF do Emitente difere da UF do Web Service');
+
+    GravaLog('Regra: G004 - Validar: 227-Chave de acesso');
+    if not ValidarConcatChave then
+      AdicionaErro('227-Rejeição: Chave de Acesso do Campo Id difere da concatenação dos campos correspondentes');
+
+    GravaLog('Regra: G005 - Validar: 666-Ano da Chave');
+    if Copy(MDFe.infMDFe.ID, 7, 2) < '12' then
+      AdicionaErro('666-Rejeição: Ano da chave de acesso é inferior a 2012');
+
+    GravaLog('Regra: G018 - Validar: 458-Tipo de Transportador');
+    if (Configuracoes.Geral.VersaoDF >= ve300) and (MDFe.Ide.tpTransp <> ttNenhum) and
+        (MDFe.Ide.tpEmit = teTranspCargaPropria) and
+        (MDFe.Ide.modal = moRodoviario) and ((MDFe.Rodo.veicTracao.Prop.CNPJCPF = '') or
+        (MDFe.Rodo.veicTracao.Prop.CNPJCPF = MDFe.emit.CNPJ))  then
+      AdicionaErro('458-Rejeição: Tipo de transportador (tpTransp) não deve ser preenchido');
+
+    // *************************************************************************
+    // No total são 93 regras de validação, portanto faltam muitas para serem
+    // acrescentadas nessa rotina.
   end;
 
   Result := EstaVazio(Erros);
@@ -414,10 +447,10 @@ end;
 
 function Manifesto.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
 begin
-  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
+
+  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
 
   Result := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Gravar(FNomeArq, FXMLOriginal);
 end;
@@ -433,7 +466,7 @@ begin
 end;
 
 procedure Manifesto.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
   NomeArq : String;
   AnexosEmail:TStrings;
@@ -464,7 +497,7 @@ begin
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamMDFe,
-                   NumID + '-mdfe.xml');
+                   NumID + '-mdfe.xml', sReplyTo);
     end;
   finally
     AnexosEmail.Free;
@@ -482,6 +515,7 @@ begin
     FMDFeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FMDFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FMDFeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
+    FMDFeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 

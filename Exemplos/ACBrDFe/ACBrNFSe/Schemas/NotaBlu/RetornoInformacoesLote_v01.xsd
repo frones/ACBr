@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://nfse.blumenau.sc.gov.br" 
+           xmlns:tipos="http://nfse.blumenau.sc.gov.br/tipos" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <xs:import namespace="http://nfse.blumenau.sc.gov.br/tipos" schemaLocation="TiposNFe_v01.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+  <xs:element name="RetornoInformacoesLote">
+    <xs:annotation>
+      <xs:documentation>Schema utilizado para RETORNO de Pedidos de Informações de Lote.</xs:documentation>
+      <xs:documentation>Este Schema XML é utilizado pelo Web Service para informar aos prestadores de serviços o resultado do pedido de informações de lote.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Cabecalho" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Cabeçalho do retorno.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Sucesso" type="tipos:tpSucesso" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Campo indicativo do sucesso do pedido do serviço.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="InformacoesLote" type="tipos:tpInformacoesLote" minOccurs ="0" maxOccurs ="1">
+                <xs:annotation>
+                  <xs:documentation>Informações do lote consultado.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Versao" type="tipos:tpVersao" use="required" fixed="1">
+              <xs:annotation>
+                <xs:documentation>Versão do Schema XML utilizado.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Alerta" type="tipos:tpEvento" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Elemento que representa a ocorrência de eventos de alerta durante o processamento da mensagem XML.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Erro" type="tipos:tpEvento" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Elemento que representa a ocorrência de eventos de erro durante o processamento da mensagem XML.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

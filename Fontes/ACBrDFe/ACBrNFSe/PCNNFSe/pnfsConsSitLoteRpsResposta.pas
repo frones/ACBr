@@ -206,7 +206,7 @@ begin
   if Provedor = proISSCuritiba then
     Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
   else
-    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
+    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo, Provedor));
 
   Leitor.Grupo := Leitor.Arquivo;
 
@@ -214,10 +214,12 @@ begin
     proCONAM:      Result := LerXml_proCONAM;
     proISSDSF:     Result := LerXml_proISSDSF;
     proEquiplano:  Result := LerXML_proEquiplano;
-    proInfIsc:     Result := LerXml_proInfisc;
+    proInfisc,
+    proInfiscv11:  Result := LerXml_proInfisc;
     proEL:         Result := LerXML_proEL;
     proNFSeBrasil: Result := LerXml_proNFSeBrasil;
-    proSP:         Result := LerXml_proSP;      
+    proSP, 
+    proNotaBlu:    Result := LerXml_proSP;
   else
     Result := LerXml_ABRASF;
   end;
@@ -264,6 +266,9 @@ begin
              (trim(InfSit.FMsgRetorno[i].FCodigo) <> 'E92') then
             InfSit.FSituacao := 'Erro';
 
+          if trim(InfSit.FMsgRetorno[i].FCodigo) = 'E92' then
+            InfSit.FSituacao := '2';
+
           inc(i);
         end;
       end;
@@ -295,7 +300,7 @@ begin
     if (leitor.rExtrai(1, 'Sdt_consultaprotocoloout') <> '') or
        (leitor.rExtrai(1, 'Sdt_consultanotasprotocoloout') <> '') then
     begin
-      FInfSit.FSituacao:= Leitor.rCampo(tcStr, 'PrtXS'); {1 (Aguardando processamento)
+      FInfSit.FSituacao:= Leitor.rCampo(tcStr, 'PrtXSts'); {1 (Aguardando processamento)
                                                             2 (Em Processamento)
                                                             3 (Rejeitado)
                                                             4 (Rejeitado Parcialmente)

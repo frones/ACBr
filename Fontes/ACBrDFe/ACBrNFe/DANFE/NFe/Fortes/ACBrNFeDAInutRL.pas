@@ -53,7 +53,7 @@ uses
   {$ELSE}
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDANFeRLClass, ACBrUtil,
+  pcnNFe, ACBrNFe, ACBrUtil,
   Printers,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
@@ -164,7 +164,7 @@ begin
         if AMostrarPreview then
          begin
            RLNFeInut.Prepare;
-           RLNFeInut.Preview;
+           RLNFeInut.PreviewModal;
            Application.ProcessMessages;
          end else
          begin
@@ -310,7 +310,10 @@ begin
 end;
 
 procedure TfrmNFeDAInutRL.FormDestroy(Sender: TObject);
-begin
+begin  
+  if Assigned(cdsItens) then
+	FreeAndNil(cdsItens);
+	
   RLNFeInut.Free;
 end;
 

@@ -1,0 +1,43 @@
+package ACBr_MTER;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBrMTER - Componente Servidor de Micro Terminais TCP/IP - http://www.projectoacbr.com.br/'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  ACBr_TCP,
+  ACBr_Serial;
+
+contains
+  ACBrMTERReg in '..\..\..\Fontes\ACBrTCP\ACBrMTERReg.pas',
+  ACBrMTer in '..\..\..\Fontes\ACBrTCP\ACBrMTer.pas',
+  ACBrMTerClass in '..\..\..\Fontes\ACBrTCP\ACBrMTerClass.pas',
+  ACBrMTerVT100 in '..\..\..\Fontes\ACBrTCP\ACBrMTerVT100.pas',
+  ACBrMTerStxEtx in '..\..\..\Fontes\ACBrTCP\ACBrMTerStxEtx.pas',
+  ACBrMTerPMTG in '..\..\..\Fontes\ACBrTCP\ACBrMTerPMTG.pas';
+
+end.
+

@@ -79,6 +79,7 @@ type
     FLigaItalico: AnsiString;
     FLigaNegrito: AnsiString;
     FLigaSublinhado: AnsiString;
+    FPuloDeLinha: AnsiString;
     FZera: AnsiString;
   public
     property Zera: AnsiString read FZera write FZera;
@@ -113,6 +114,7 @@ type
     property Beep: AnsiString read FBeep write FBeep;
     property CorteTotal: AnsiString read FCorteTotal write FCorteTotal;
     property CorteParcial: AnsiString read FCorteParcial write FCorteParcial;
+    property PuloDeLinha: AnsiString read FPuloDeLinha write FPuloDeLinha;
   end;
 
   TACBrPosTipoFonte = (ftNormal, ftCondensado, ftExpandido, ftNegrito,
@@ -171,6 +173,7 @@ type
     function ComandoPuloLinhas(NLinhas: Integer): AnsiString; virtual;
     function ComandoFonte(TipoFonte: TACBrPosTipoFonte; Ligar: Boolean): AnsiString; virtual;
 
+    procedure Configurar; virtual;
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); virtual;
     function LerInfo: String; virtual;
 
@@ -242,7 +245,9 @@ type
   end;
 
   { TACBrPosPrinter }
-
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrPosPrinter = class(TACBrComponent)
   private
     FColunasFonteNormal: Integer;
@@ -268,6 +273,7 @@ type
     FTipoAlinhamento: TACBrPosTipoAlinhamento;
     FFonteStatus: TACBrPosFonte;
     FInicializada: Boolean;
+    FVerificarImpressora: Boolean;
 
     function GetAtivo: Boolean;
     function GetColunasFonteCondensada: Integer;
@@ -296,7 +302,6 @@ type
 
     procedure AtivarPorta;
     procedure DesativarPorta;
-
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -329,7 +334,6 @@ type
     function LerStatusImpressora: TACBrPosPrinterStatus;
     function LerInfoImpressora: String;
 
-    property Device: TACBrDevice read FDevice;
     property Buffer: TStringList read FBuffer;
 
     property Colunas: Integer read GetColunas;
@@ -345,6 +349,7 @@ type
   published
     property Modelo: TACBrPosPrinterModelo read FModelo write SetModelo default ppTexto;
     property Porta: String read GetPorta write SetPorta;
+    property Device: TACBrDevice read FDevice;
 
     property PaginaDeCodigo: TACBrPosPaginaCodigo
       read FPaginaDeCodigo write FPaginaDeCodigo default pc850;
@@ -360,14 +365,14 @@ type
 
     property LinhasEntreCupons: Integer read FLinhasEntreCupons
       write FLinhasEntreCupons default 21;
-    property CortaPapel: Boolean read FCortaPapel write FCortaPapel;
+    property CortaPapel: Boolean read FCortaPapel write FCortaPapel default True;
 
     property TraduzirTags: Boolean read GetTraduzirTags
       write SetTraduzirTags default True;
     property IgnorarTags: Boolean read GetIgnorarTags write SetIgnorarTags default False;
     property LinhasBuffer: Integer read FLinhasBuffer write FLinhasBuffer default 0;
-    property ControlePorta: Boolean
-      read FControlePorta write FControlePorta default False;
+    property ControlePorta: Boolean read FControlePorta write FControlePorta default False;
+    property VerificarImpressora: Boolean read FVerificarImpressora write FVerificarImpressora default False;
 
     property OnGravarLog: TACBrGravarLog read FOnGravarLog write FOnGravarLog;
     property ArqLOG: String read FArqLog write FArqLog;
@@ -477,7 +482,15 @@ end;
 
 function TACBrPosPrinterClass.ComandoEspacoEntreLinhas(Espacos: byte): AnsiString;
 begin
-  Result := '';
+  if Espacos = 0 then
+    Result := Cmd.EspacoEntreLinhasPadrao
+  else
+  begin
+    if Length(Cmd.EspacoEntreLinhas) > 0 then
+      Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos)
+    else
+      Result := '';
+  end;
 end;
 
 function TACBrPosPrinterClass.ComandoPaginaCodigo(
@@ -504,7 +517,7 @@ end;
 
 function TACBrPosPrinterClass.ComandoPuloLinhas(NLinhas: Integer): AnsiString;
 begin
-  Result := AnsiString( DupeString(' '+LF,NLinhas) );
+  Result := AnsiString( DupeString(' '+Cmd.PuloDeLinha,NLinhas) );
 end;
 
 function TACBrPosPrinterClass.ComandoFonte(TipoFonte: TACBrPosTipoFonte;
@@ -557,6 +570,11 @@ begin
   end;
 end;
 
+procedure TACBrPosPrinterClass.Configurar;
+begin
+  {nada aqui, método virtual}
+end;
+
 procedure TACBrPosPrinterClass.LerStatus(var AStatus: TACBrPosPrinterStatus);
 begin
   {nada aqui, método virtual}
@@ -585,6 +603,10 @@ begin
   inherited Create(AOwner);
 
   FDevice := TACBrDevice.Create(Self);
+  FDevice.Name := 'ACBrDevice' ;      { Apenas para aparecer no Object Inspector}
+  {$IFDEF COMPILER6_UP}
+  FDevice.SetSubComponent( true );{ para gravar no DFM/XFM }
+  {$ENDIF}
   FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
   FModelo := ppTexto;
   FTipoAlinhamento := alEsquerda;
@@ -707,6 +729,8 @@ begin
   FPaginaDeCodigo := pc850;
   FEspacoEntreLinhas := 0;
   FControlePorta := False;
+  FCortaPapel := True;
+  FVerificarImpressora := False;
 
   FArqLog := '';
   FOnGravarLog := nil;
@@ -761,6 +785,7 @@ begin
   {*)}
 
   FDevice.Ativar;
+  FPosPrinterClass.Configurar;
   FInicializada := False;
 end;
 
@@ -909,7 +934,7 @@ begin
 
     FInicializada := True;
     FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftNegrito,
-      ftSublinhado, ftItalico, ftInvertido];
+                                    ftSublinhado, ftItalico, ftInvertido];
   end
 
   else if ATag = cTagLigaInvertido then
@@ -946,10 +971,18 @@ begin
     TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons)
 
   else if ATag = cTagCorteParcial then
-    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteParcial
+  begin
+    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
+    if CortaPapel then
+      TagTraduzida := TagTraduzida + FPosPrinterClass.Cmd.CorteParcial;
+  end
 
   else if ATag = cTagCorteTotal then
-    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteTotal
+  begin
+    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
+    if CortaPapel then
+      TagTraduzida := TagTraduzida + FPosPrinterClass.Cmd.CorteTotal;
+  end
 
   else if ATag = cTagAbreGaveta then
     TagTraduzida := FPosPrinterClass.ComandoGaveta()
@@ -1167,6 +1200,7 @@ begin
   if FDevice.Ativo then
   begin
     GravarLog('Desativando a porta: ' + FDevice.Porta);
+
     FDevice.Desativar;
 
     if not FDevice.IsSerialPort then
@@ -1303,8 +1337,13 @@ begin
     begin
       FPosPrinterClass.LerStatus( Result );
 
-      if (stGavetaAberta in Result) and ConfigGaveta.SinalInvertido then
-        Result := Result - [stGavetaAberta];
+      if ConfigGaveta.SinalInvertido then
+      begin
+        if (stGavetaAberta in Result) then
+          Result := Result - [stGavetaAberta]
+        else
+          Result := Result + [stGavetaAberta];
+      end;
     end;
   finally
     Ativo := OldAtivo;
@@ -1322,7 +1361,7 @@ begin
     Ativo := True;
 
     if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
-      raise EPosPrinterException.Create('Leitura de Informações só disponivel em Portas Seriais ou TCP');
+      raise EPosPrinterException.Create(ACBrStr('Leitura de Informações só disponivel em Portas Seriais ou TCP'));
 
     Result := FPosPrinterClass.LerInfo;
   finally
@@ -1363,24 +1402,50 @@ procedure TACBrPosPrinter.Imprimir(AString: AnsiString; PulaLinha: Boolean;
 var
   i: Integer;
   StrToPrint: AnsiString;
+  PrnStatus: TACBrPosPrinterStatus;
+  MsgErro: String;
 begin
-  if not (ControlePorta or FDevice.Ativo) then
-    raise EPosPrinterException.Create('Não está Ativo');
+  try
+    if not (ControlePorta or FDevice.Ativo) then
+      raise EPosPrinterException.Create(ACBrStr('Não está Ativo'));
 
-  StrToPrint := '';
-  if FBuffer.Count > 0 then
-  begin
-    For i := 0 to FBuffer.Count-1 do
-      StrToPrint := StrToPrint + FBuffer[i] + CRLF;
+    if not Ativo then
+      Ativar;
+
+    if VerificarImpressora then
+    begin
+      MsgErro := '';
+      PrnStatus := LerStatusImpressora;
+
+      if stTampaAberta in PrnStatus then
+        MsgErro := 'com Tampa Aberta'
+      else if stSemPapel in PrnStatus then
+        MsgErro := 'Sem Papel'
+      else if stOffLine in PrnStatus then
+        MsgErro := 'Desligada'
+      else if stErro in PrnStatus then
+        MsgErro := 'em Erro';
+
+      if (MsgErro <> '') then
+        raise EPosPrinterException.Create('Impressora '+MsgErro);
+    end;
+
+    StrToPrint := '';
+    if (FBuffer.Count > 0) then
+    begin
+      For i := 0 to FBuffer.Count-1 do
+        StrToPrint := StrToPrint + FBuffer[i] + FPosPrinterClass.Cmd.PuloDeLinha;
+    end;
+  finally
+    FBuffer.Clear;
   end;
-  FBuffer.Clear;
 
   StrToPrint := StrToPrint + AString;
 
   GravarLog('Imprimir, Copias:' + IntToStr(Copias)+
             ', DecodificarTags:'+IfThen(DecodificarTags,'SIM','NAO')+
             ', TraduzirTags:'+IfThen(TraduzirTags,'SIM','NAO') );
-  GravarLog( StrToPrint );
+  GravarLog( TranslateUnprintable(StrToPrint) );
 
   if CodificarPagina then
     StrToPrint := CodificarPaginaDeCodigo(StrToPrint);
@@ -1388,11 +1453,13 @@ begin
   //DEBUG
   //WriteLog('c:\temp\teste2.txt', StrToPrint, True);
 
+  StrToPrint := ChangeLineBreak(StrToPrint, FPosPrinterClass.Cmd.PuloDeLinha);
+
   if DecodificarTags then
     StrToPrint := FTagProcessor.DecodificarTagsFormatacao(StrToPrint);
 
   if PulaLinha then
-    StrToPrint := StrToPrint + CRLF;
+    StrToPrint := StrToPrint + FPosPrinterClass.Cmd.PuloDeLinha;
 
   //DEBUG
   //WriteLog('c:\temp\teste3.txt', StrToPrint, True);
@@ -1465,7 +1532,13 @@ begin
   //GravarLog('CodificarPaginaDeCodigo: '+IntToStr(NumPagCod) );
 
   if NumPagCod > 0 then
+  begin
+    {$IfDef MSWINDOWS}
     Result := TranslateString(ACBrStrToAnsi(ATexto), NumPagCod)
+    {$Else}
+    Result := TranslateString(ATexto, NumPagCod)
+    {$EndIf}
+  end
   else
     Result := TiraAcentos(ATexto);
 end;

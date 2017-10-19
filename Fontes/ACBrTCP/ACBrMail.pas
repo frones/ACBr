@@ -104,7 +104,9 @@ type
   end;
 
   { TACBrMail }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrMail = class(TACBrComponent)
   private
     fSMTP                : TSMTPSend;
@@ -125,6 +127,7 @@ type
     fAttachments         : TMailAttachments;
     fReplyTo             : TStringList;
     fBCC                 : TStringList;
+    fTimeOut             : Integer;
     fUseThread           : boolean;
 
     fDefaultCharsetCode  : TMimeChar;
@@ -154,6 +157,7 @@ type
     procedure SmtpError(const pMsgError: string);
 
     procedure DoException(E: Exception);
+    procedure AddEmailWithDelimitersToList( aEmail: String; aList: TStrings);
 
   protected
     procedure SendMail;
@@ -166,6 +170,7 @@ type
     procedure MailProcess(const aStatus: TMailStatus);
     procedure Send(UseThreadNow: Boolean); overload;
     procedure Send; overload;
+    procedure BuildMimeMess;
     procedure Clear;
     procedure SaveToFile(const AFileName: String);
     function SaveToStream(AStream: TStream): Boolean;
@@ -203,6 +208,7 @@ type
     property ReadingConfirmation: boolean read fReadingConfirmation write fReadingConfirmation default False;
     property IsHTML: boolean read fIsHTML write fIsHTML default False;
     property UseThread: boolean read fUseThread write fUseThread default False;
+    property TimeOut: Integer read fTimeOut write fTimeOut default 0;
     property Attempts: Byte read fAttempts write fAttempts;
     property From: string read fFrom write fFrom;
     property FromName: string read fFromName write fFromName;
@@ -223,7 +229,8 @@ var
 implementation
 
 Uses
-  strutils{$IFDEF FPC}, FileUtil {$ENDIF};
+  strutils,
+  ACBrUtil;
 
 procedure SendEmailByThread(MailToClone: TACBrMail);
 var
@@ -343,10 +350,22 @@ begin
     raise E;
 end;
 
+procedure TACBrMail.AddEmailWithDelimitersToList(aEmail: String; aList: TStrings
+  );
+var
+  sDelimiter: Char;
+begin
+  sDelimiter := FindDelimiterInText(aEmail);
+
+  if (sDelimiter = ' ') then
+    aList.Add(aEmail)
+  else
+    AddDelimitedTextToList(aEmail, sDelimiter, aList);
+end;
+
 procedure TACBrMail.Clear;
 begin
   ClearAttachments;
-  fSMTP.Reset;
   fMIMEMess.Header.Clear;
   fMIMEMess.Clear;
   fReplyTo.Clear;
@@ -358,8 +377,12 @@ end;
 
 procedure TACBrMail.SaveToFile(const AFileName: String);
 begin
+  BuildMimeMess;
+  
   if AFileName <> '' then
     fArqMIMe.SaveToFile(AFileName);
+
+  Clear;
 end;
 
 procedure TACBrMail.MailProcess(const aStatus: TMailStatus);
@@ -377,6 +400,7 @@ begin
   fAltBody := TStringList.Create;
   fBody := TStringList.Create;
   fArqMIMe := TMemoryStream.Create;
+  fTimeOut := 0;
 
   fOnBeforeMailProcess := nil;
   fOnAfterMailProcess := nil;
@@ -452,6 +476,7 @@ begin
     Self.OnMailProcess := OnMailProcess;
     Self.OnAfterMailProcess := OnAfterMailProcess;
     Self.OnMailException := OnMailException;
+    Self.Tag := Tag;
 
     for i := 0 to Length(Attachments) - 1 do
     begin
@@ -488,17 +513,16 @@ begin
   Send( UseThread );
 end;
 
-procedure TACBrMail.SendMail;
+procedure TACBrMail.BuildMimeMess;
 var
-  vAttempts: Byte;
-  i, c: Integer;
+  i: Integer;
   MultiPartParent, MimePartAttach : TMimePart;
   NeedMultiPartRelated, BodyHasImage: Boolean;
 
   function InternalCharsetConversion(const Value: String; CharFrom: TMimeChar;
     CharTo: TMimeChar): String;
   begin
-   Result := string( CharsetConversion( AnsiString( Value), CharFrom, CharTo ));
+    Result := string( CharsetConversion( AnsiString( Value), CharFrom, CharTo ));
   end;
 
 begin
@@ -646,11 +670,28 @@ begin
   fArqMIMe.Clear;
   fMIMEMess.Lines.SaveToStream(fArqMIMe);
 
+end;
+
+procedure TACBrMail.SendMail;
+var
+  vAttempts: Byte;
+  c, i: Integer;
+begin
+  BuildMimeMess;
+
+  if fTimeOut > 0 then
+  begin
+    fSMTP.Timeout := fTimeOut;
+    fSMTP.Sock.ConnectionTimeout := fTimeOut;
+  end;
+
   // DEBUG //
-  //SaveToFile('.\Mail.eml');
+  // SaveToFile('c:\app\Mail.eml'); {Para debug, comentar o Clear; da linha 367}
 
   // Login in SMTP //
   MailProcess(pmsLoginSMTP);
+  if (fSMTP.TargetHost = '') then
+    SmtpError('SMTP Error: Server not informed');
 
   for vAttempts := 1 to fAttempts do
   begin
@@ -723,21 +764,21 @@ begin
   end;
 
   // Sending Copies to Reply To //
-  c := fReplyTo.Count;
-  if c > 0 then
-    MailProcess(pmsSendReplyTo);
-
-  for i := 0 to c - 1 do
-  begin
-    for vAttempts := 1 to fAttempts do
-    begin
-      if fSMTP.MailTo(GetEmailAddr(fReplyTo.Strings[I])) then
-        Break;
-
-      if vAttempts >= fAttempts then
-        SmtpError('SMTP Error: Unable to send ReplyTo list.');
-    end;
-  end;
+  //c := fReplyTo.Count;
+  //if c > 0 then
+  //  MailProcess(pmsSendReplyTo);
+  //
+  //for i := 0 to c - 1 do
+  //begin
+  //  for vAttempts := 1 to fAttempts do
+  //  begin
+  //    if fSMTP.MailTo(GetEmailAddr(fReplyTo.Strings[I])) then
+  //      Break;
+  //
+  //    if vAttempts >= fAttempts then
+  //      SmtpError('SMTP Error: Unable to send ReplyTo list.');
+  //  end;
+  //end;
 
   // Sending MIMEMess Data //
   MailProcess(pmsSendData);
@@ -793,18 +834,8 @@ var
   i: integer;
 begin
 
-  {$IFDEF FPC}
-  if not FileExistsUTF8(aFileName) then
-  begin
-    if not FileExists(aFileName) then
-      DoException( Exception.Create('Add Attachment: File not Exists.') );
-  end
-  else
-    aFileName := Utf8ToAnsi(aFileName);
-  {$ELSE}
   if not FileExists(aFileName) then
     DoException( Exception.Create('Add Attachment: File not Exists.') );
-  {$ENDIF}
 
   i := Length(fAttachments);
   SetLength(fAttachments, i + 1);
@@ -846,7 +877,7 @@ begin
   if Trim(aName) <> '' then
     fMIMEMess.Header.ToList.Add('"' + aName + '" <' + aEmail + '>')
   else
-    fMIMEMess.Header.ToList.Add(aEmail);
+    AddEmailWithDelimitersToList(aEmail, fMIMEMess.Header.ToList);
 end;
 
 procedure TACBrMail.AddReplyTo(aEmail: string; aName: string);
@@ -854,7 +885,7 @@ begin
   if Trim(aName) <> '' then
     fReplyTo.Add('"' + aName + '" <' + aEmail + '>')
   else
-    fReplyTo.Add(aEmail);
+    AddEmailWithDelimitersToList(aEmail, fReplyTo);
 end;
 
 procedure TACBrMail.AddCC(aEmail: string; aName: string);
@@ -862,12 +893,12 @@ begin
   if Trim(aName) <> '' then
     fMIMEMess.Header.CCList.Add('"' + aName + '" <' + aEmail + '>')
   else
-    fMIMEMess.Header.CCList.Add(aEmail);
+    AddEmailWithDelimitersToList(aEmail, fMIMEMess.Header.CCList);
 end;
 
 procedure TACBrMail.AddBCC(aEmail: string);
 begin
-  fBCC.Add(aEmail);
+  AddEmailWithDelimitersToList(aEmail, fBCC);
 end;
 
 function TACBrMail.SaveToStream(AStream: TStream): Boolean;

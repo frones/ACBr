@@ -1,6 +1,6 @@
 package ACBr_Comum;
 
-//{$R *.res}
+{$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -37,7 +37,6 @@ contains
   ACBrUtil in '..\..\..\Fontes\ACBrComum\ACBrUtil.pas',
   ACBrReg in '..\..\..\Fontes\ACBrComum\ACBrReg.pas',
   ACBrAAC in '..\..\..\Fontes\ACBrComum\ACBrAAC.pas',
-  ACBrPAFClass in '..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas',
-  ACBrZLibExGZ in '..\..\..\Fontes\Terceiros\ZLibExGZ\ACBrZLibExGZ.pas';
-
+  ACBrCompress in '..\..\..\Fontes\ACBrComum\ACBrCompress.pas',
+  ACBrPAFClass in '..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas';
 end.

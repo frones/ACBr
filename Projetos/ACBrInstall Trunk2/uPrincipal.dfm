@@ -1215,7 +1215,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object rdgDLL: TRadioGroup
         Left = 195
-        Top = 214
+        Top = 306
         Width = 350
         Height = 107
         Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
@@ -1229,7 +1229,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbCopiarTodasDll: TCheckBox
         Left = 195
-        Top = 191
+        Top = 283
         Width = 305
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
@@ -1270,6 +1270,40 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 8
         OnClick = clbDelphiVersionClick
       end
+      object ckbRemoveOpenSSL: TCheckBox
+        Left = 195
+        Top = 191
+        Width = 379
+        Height = 17
+        Caption = 'N'#227'o utilizar OpenSSL'
+        TabOrder = 9
+      end
+      object ckbRemoveCapicom: TCheckBox
+        Left = 195
+        Top = 214
+        Width = 379
+        Height = 17
+        Caption = 'N'#227'o utilizar Capicom'
+        TabOrder = 10
+      end
+      object ckbCargaDllTardia: TCheckBox
+        Left = 195
+        Top = 237
+        Width = 379
+        Height = 17
+        Caption = 'Usar carga de DLL tardia nas units do OpenSSL'
+        TabOrder = 11
+      end
+      object ckbRemoverCastWarnings: TCheckBox
+        Left = 195
+        Top = 260
+        Width = 379
+        Height = 17
+        Caption = 
+          'Remover Warnings de CAST causados por WideString/String/AnsiStri' +
+          'ng'
+        TabOrder = 12
+      end
     end
     object wizPgPacotes: TJvWizardInteriorPage
       Header.Visible = False
@@ -1298,28 +1332,24 @@ object frmPrincipal: TfrmPrincipal
         Height = 499
         HorzScrollBar.Range = 535
         VertScrollBar.ButtonSize = 15
-        VertScrollBar.Range = 800
-        VertScrollBar.Size = 800
+        VertScrollBar.Range = 850
+        VertScrollBar.Size = 850
         VertScrollBar.Style = ssFlat
         Align = alClient
         Color = clWhite
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
-        ExplicitWidth = 554
-        ExplicitHeight = 499
         DesignSize = (
           537
           499)
         inherited btnPacotesDesmarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
-          ExplicitTop = 465
         end
         inherited btnPacotesMarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
-          ExplicitTop = 465
         end
       end
     end
@@ -1685,7 +1715,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 5
+        FrameIndex = 4
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

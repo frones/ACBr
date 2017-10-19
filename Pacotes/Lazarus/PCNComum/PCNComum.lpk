@@ -17,12 +17,6 @@
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
-      <Other>
-        <CompilerMessages>
-          <MsgFileName Value=""/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - Projeto Cooperar - (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)"/>
     <Version Minor="1"/>
@@ -32,24 +26,24 @@
         <UnitName Value="pcnAuxiliar"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\PCNComum\pcnCabecalho.pas"/>
-        <UnitName Value="pcnCabecalho"/>
-      </Item2>
-      <Item3>
-        <Filename Value="..\..\..\Fontes\PCNComum\pcnConversao.pas"/>
-        <UnitName Value="pcnConversao"/>
-      </Item3>
-      <Item4>
         <Filename Value="..\..\..\Fontes\PCNComum\pcnGerador.pas"/>
         <UnitName Value="pcnGerador"/>
-      </Item4>
-      <Item5>
+      </Item2>
+      <Item3>
         <Filename Value="..\..\..\Fontes\PCNComum\pcnLeitor.pas"/>
         <UnitName Value="pcnLeitor"/>
-      </Item5>
-      <Item6>
+      </Item3>
+      <Item4>
         <Filename Value="..\..\..\Fontes\PCNComum\pcnSignature.pas"/>
         <UnitName Value="pcnSignature"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnConsts.pas"/>
+        <UnitName Value="pcnConsts"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnConversao.pas"/>
+        <UnitName Value="pcnConversao"/>
       </Item6>
     </Files>
     <RequiredPkgs Count="1">

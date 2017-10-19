@@ -107,6 +107,8 @@ begin
     MDFe.Ide.cUF         := Leitor.rCampo(tcInt, 'cUF');
     MDFe.Ide.tpAmb       := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
     MDFe.Ide.tpEmit      := StrToTpEmitente(ok, Leitor.rCampo(tcStr, 'tpEmit'));
+    if MDFe.infMDFe.versao = 3 then
+      MDFe.Ide.tpTransp := StrToTTransportador(ok, Leitor.rCampo(tcStr, 'tpTransp'));
     MDFe.Ide.modelo      := Leitor.rCampo(tcStr, 'mod');
     MDFe.Ide.serie       := Leitor.rCampo(tcInt, 'serie');
     MDFe.Ide.nMDF        := Leitor.rCampo(tcInt, 'nMDF');
@@ -120,6 +122,14 @@ begin
     MDFe.Ide.UFIni       := Leitor.rCampo(tcStr, 'UFIni');
     MDFe.Ide.UFFim       := Leitor.rCampo(tcStr, 'UFFim');
     MDFe.Ide.dhIniViagem := Leitor.rCampo(tcDatHor, 'dhIniViagem');
+
+    if MDFe.infMDFe.versao >= 3 then
+    begin
+      if Leitor.rCampo(tcStr, 'indCanalVerde') = '1' then
+        MDFe.ide.indCanalVerde := tiSim
+      else
+        MDFe.ide.indCanalVerde := tiNao;
+    end;
 
     i01 := 0;
     while Leitor.rExtrai(2, 'infMunCarrega', '', i01 + 1) <> '' do
@@ -167,10 +177,54 @@ begin
   if Leitor.rExtrai(1, 'infModal') <> '' then
   begin
     if Leitor.rExtrai(2, 'rodo') <> '' then
-     begin
+    begin
       MDFe.Rodo.RNTRC      := Leitor.rCampo(tcStr, 'RNTRC', 'prop');
       MDFe.Rodo.CIOT       := Leitor.rCampo(tcStr, 'CIOT');
       MDFe.Rodo.codAgPorto := Leitor.rCampo(tcStr, 'codAgPorto');
+
+      if MDFe.infMDFe.versao >= 3 then
+      begin
+        if (Leitor.rExtrai(3, 'infANTT') <> '') then
+        begin
+          MDFe.Rodo.infANTT.RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
+
+          i01 := 0;
+          while Leitor.rExtrai(4, 'infCIOT', '', i01 + 1) <> '' do
+          begin
+            MDFe.Rodo.infANTT.infCIOT.Add;
+            MDFe.Rodo.infANTT.infCIOT[i01].CIOT := Leitor.rCampo(tcStr, 'CIOT');
+            MDFe.Rodo.infANTT.infCIOT[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
+            inc(i01);
+          end;
+
+          if Leitor.rExtrai(4, 'valePed') <> '' then
+          begin
+            i01 := 0;
+            while Leitor.rExtrai(5, 'disp', '', i01 + 1) <> '' do
+            begin
+              MDFe.Rodo.infANTT.valePed.disp.Add;
+              MDFe.Rodo.infANTT.valePed.disp[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
+              MDFe.Rodo.infANTT.valePed.disp[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
+
+              if MDFe.Rodo.infANTT.valePed.disp[i01].CNPJPg = '' then
+                MDFe.Rodo.infANTT.valePed.disp[i01].CNPJPg := Leitor.rCampo(tcStr, 'CPFPg');
+
+              MDFe.Rodo.infANTT.valePed.disp[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
+              MDFe.Rodo.infANTT.valePed.disp[i01].vValePed := Leitor.rCampo(tcDe2, 'vValePed');
+
+              inc(i01);
+            end;
+          end;
+
+          i01 := 0;
+          while Leitor.rExtrai(4, 'infContratante', '', i01 + 1) <> '' do
+          begin
+            MDFe.Rodo.infANTT.infContratante.Add;
+            MDFe.Rodo.infANTT.infContratante[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
+            inc(i01);
+          end;
+        end;
+      end;
 
       if (Leitor.rExtrai(3, 'veicTracao') <> '') or (Leitor.rExtrai(3, 'veicPrincipal') <> '')then
        begin
@@ -238,42 +292,49 @@ begin
         inc(i01);
       end;
 
-      if Leitor.rExtrai(3, 'valePed') <> '' then
-       begin
-        i01 := 0;
-        while Leitor.rExtrai(4, 'disp', '', i01 + 1) <> '' do
+      if MDFe.infMDFe.versao < 3 then
+      begin
+        if Leitor.rExtrai(3, 'valePed') <> '' then
         begin
-          MDFe.Rodo.valePed.disp.Add;
-          MDFe.Rodo.valePed.disp[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
-          MDFe.Rodo.valePed.disp[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
-          MDFe.Rodo.valePed.disp[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
-          inc(i01);
-        end;
-       end;
+          i01 := 0;
+          while Leitor.rExtrai(4, 'disp', '', i01 + 1) <> '' do
+          begin
+            MDFe.Rodo.valePed.disp.Add;
+            MDFe.Rodo.valePed.disp[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
+            MDFe.Rodo.valePed.disp[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
+            MDFe.Rodo.valePed.disp[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
 
-     end; // fim das informações do modal Rodoviário
+            inc(i01);
+          end;
+        end;
+      end;
+
+    end; // fim das informações do modal Rodoviário
 
     (* Grupo da TAG <aereo> ***************************************************)
     if Leitor.rExtrai(2, 'aereo') <> '' then
-     begin
-       MDFe.Aereo.nac     := Leitor.rCampo(tcInt, 'nac');
-       MDFe.Aereo.matr    := Leitor.rCampo(tcInt, 'matr');
-       MDFe.Aereo.nVoo    := Leitor.rCampo(tcStr, 'nVoo');
-       MDFe.Aereo.cAerEmb := Leitor.rCampo(tcStr, 'cAerEmb');
-       MDFe.Aereo.cAerDes := Leitor.rCampo(tcStr, 'cAerDes');
-       MDFe.Aereo.dVoo    := Leitor.rCampo(tcDat, 'dVoo');
-     end; // fim das informações do modal Aéreo
+    begin
+      MDFe.Aereo.nac     := Leitor.rCampo(tcInt, 'nac');
+      MDFe.Aereo.matr    := Leitor.rCampo(tcInt, 'matr');
+      MDFe.Aereo.nVoo    := Leitor.rCampo(tcStr, 'nVoo');
+      MDFe.Aereo.cAerEmb := Leitor.rCampo(tcStr, 'cAerEmb');
+      MDFe.Aereo.cAerDes := Leitor.rCampo(tcStr, 'cAerDes');
+      MDFe.Aereo.dVoo    := Leitor.rCampo(tcDat, 'dVoo');
+    end; // fim das informações do modal Aéreo
 
     (* Grupo da TAG <aquav> ***************************************************)
     if Leitor.rExtrai(2, 'aquav') <> '' then
      begin
        MDFe.aquav.CNPJAgeNav := Leitor.rCampo(tcStr, 'CNPJAgeNav');
+       MDFe.aquav.irin       := Leitor.rCampo(tcStr, 'irin');
        MDFe.aquav.tpEmb      := Leitor.rCampo(tcStr, 'tpEmb');
        MDFe.aquav.cEmbar     := Leitor.rCampo(tcStr, 'cEmbar');
        MDFe.aquav.xEmbar     := Leitor.rCampo(tcStr, 'xEmbar');
        MDFe.aquav.nViagem    := Leitor.rCampo(tcStr, 'nViag');
        MDFe.aquav.cPrtEmb    := Leitor.rCampo(tcStr, 'cPrtEmb');
        MDFe.aquav.cPrtDest   := Leitor.rCampo(tcStr, 'cPrtDest');
+       MDFe.aquav.prtTrans   := Leitor.rCampo(tcStr, 'prtTrans');
+       MDFe.aquav.tpNav      := StrToTpNavegacao(ok, Leitor.rCampo(tcStr, 'tpNav'));
 
        i01 := 0;
        while Leitor.rExtrai(3, 'infTermCarreg', '', i01 + 1) <> '' do
@@ -298,6 +359,7 @@ begin
        begin
          MDFe.aquav.infEmbComb.Add;
          MDFe.aquav.infEmbComb[i01].cEmbComb := Leitor.rCampo(tcStr, 'cEmbComb');
+         MDFe.aquav.infEmbComb[i01].xBalsa   := Leitor.rCampo(tcStr, 'xBalsa');
          inc(i01);
        end;
 
@@ -307,6 +369,15 @@ begin
          MDFe.aquav.infUnidCargaVazia.Add;
          MDFe.aquav.infUnidCargaVazia[i01].idUnidCargaVazia := Leitor.rCampo(tcStr, 'idUnidCargaVazia');
          MDFe.aquav.infUnidCargaVazia[i01].tpUnidCargaVazia := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCargaVazia'));
+         inc(i01);
+       end;
+
+       i01 := 0;
+       while Leitor.rExtrai(3, 'infUnidTranspVazia', '', i01 + 1) <> '' do
+       begin
+         MDFe.aquav.infUnidTranspVazia.Add;
+         MDFe.aquav.infUnidTranspVazia[i01].idUnidTranspVazia := Leitor.rCampo(tcStr, 'idUnidTranspVazia');
+         MDFe.aquav.infUnidTranspVazia[i01].tpUnidTranspVazia := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTranspVazia'));
          inc(i01);
        end;
 
@@ -328,10 +399,13 @@ begin
        while Leitor.rExtrai(3, 'vag', '', i01 + 1) <> '' do
        begin
          MDFe.ferrov.vag.Add;
-         MDFe.ferrov.vag[i01].serie := Leitor.rCampo(tcStr, 'serie');
-         MDFe.ferrov.vag[i01].nVag  := Leitor.rCampo(tcInt, 'nVag');
-         MDFe.ferrov.vag[i01].nSeq  := Leitor.rCampo(tcInt, 'nSeq');
-         MDFe.ferrov.vag[i01].TU    := Leitor.rCampo(tcDe3, 'TU');
+         MDFe.ferrov.vag[i01].pesoBC := Leitor.rCampo(tcDe3, 'pesoBC');
+         MDFe.ferrov.vag[i01].pesoR  := Leitor.rCampo(tcDe3, 'pesoR');
+         MDFe.ferrov.vag[i01].tpVag  := Leitor.rCampo(tcStr, 'tpVag');
+         MDFe.ferrov.vag[i01].serie  := Leitor.rCampo(tcStr, 'serie');
+         MDFe.ferrov.vag[i01].nVag   := Leitor.rCampo(tcInt, 'nVag');
+         MDFe.ferrov.vag[i01].nSeq   := Leitor.rCampo(tcInt, 'nSeq');
+         MDFe.ferrov.vag[i01].TU     := Leitor.rCampo(tcDe3, 'TU');
          inc(i01);
        end;
 
@@ -355,6 +429,9 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infCTe[i02].chCTe       := Leitor.rCampo(tcStr, 'chCTe');
         MDFe.infDoc.infMunDescarga[i01].infCTe[i02].SegCodBarra := Leitor.rCampo(tcStr, 'SegCodBarra');
 
+        if MDFe.infMDFe.versao = 3 then
+          MDFe.infDoc.infMunDescarga[i01].infCTe[i02].indReentrega := Leitor.rCampo(tcStr, 'indReentrega');
+
         i03 := 0;
         while Leitor.rExtrai(4, 'infUnidTransp', '', i03 + 1) <> '' do
         begin
@@ -373,14 +450,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
@@ -414,6 +490,22 @@ begin
           inc(i03);
         end;
 
+        if MDFe.infMDFe.versao = 3 then
+        begin
+          i03 := 0;
+          while Leitor.rExtrai(4, 'peri', '', i03 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].peri.Add;
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].peri[i03].nONU      := Leitor.rCampo(tcStr, 'nONU');
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].peri[i03].xNomeAE   := Leitor.rCampo(tcStr, 'xNomeAE');
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].peri[i03].xClaRisco := Leitor.rCampo(tcStr, 'xClaRisco');
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].peri[i03].grEmb     := Leitor.rCampo(tcStr, 'grEmb');
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].peri[i03].qTotProd  := Leitor.rCampo(tcStr, 'qTotProd');
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].peri[i03].qVolTipo  := Leitor.rCampo(tcStr, 'qVolTipo');
+            inc(i03);
+          end;
+        end;
+
         inc(i02);
       end;
 
@@ -445,14 +537,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
@@ -496,6 +587,9 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infNFe[i02].chNFe       := Leitor.rCampo(tcStr, 'chNFe');
         MDFe.infDoc.infMunDescarga[i01].infNFe[i02].SegCodBarra := Leitor.rCampo(tcStr, 'SegCodBarra');
 
+        if MDFe.infMDFe.versao = 3 then
+          MDFe.infDoc.infMunDescarga[i01].infNFe[i02].indReentrega := Leitor.rCampo(tcStr, 'indReentrega');
+
         i03 := 0;
         while Leitor.rExtrai(4, 'infUnidTransp', '', i03 + 1) <> '' do
         begin
@@ -514,14 +608,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
@@ -553,6 +646,22 @@ begin
           end;
 
           inc(i03);
+        end;
+
+        if MDFe.infMDFe.versao = 3 then
+        begin
+          i03 := 0;
+          while Leitor.rExtrai(4, 'peri', '', i03 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].peri.Add;
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].peri[i03].nONU      := Leitor.rCampo(tcStr, 'nONU');
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].peri[i03].xNomeAE   := Leitor.rCampo(tcStr, 'xNomeAE');
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].peri[i03].xClaRisco := Leitor.rCampo(tcStr, 'xClaRisco');
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].peri[i03].grEmb     := Leitor.rCampo(tcStr, 'grEmb');
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].peri[i03].qTotProd  := Leitor.rCampo(tcStr, 'qTotProd');
+            MDFe.infDoc.infMunDescarga[i01].infNFe[i02].peri[i03].qVolTipo  := Leitor.rCampo(tcStr, 'qVolTipo');
+            inc(i03);
+          end;
         end;
 
         inc(i02);
@@ -588,14 +697,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
@@ -638,6 +746,9 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infMDFeTransp.Add;
         MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].chMDFe := Leitor.rCampo(tcStr, 'chMDFe');
 
+        if MDFe.infMDFe.versao = 3 then
+          MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].indReentrega := Leitor.rCampo(tcStr, 'indReentrega');
+
         i03 := 0;
         while Leitor.rExtrai(4, 'infUnidTransp', '', i03 + 1) <> '' do
         begin
@@ -656,14 +767,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
@@ -697,7 +807,55 @@ begin
           inc(i03);
         end;
 
+        if MDFe.infMDFe.versao = 3 then
+        begin
+          i03 := 0;
+          while Leitor.rExtrai(4, 'peri', '', i03 + 1) <> '' do
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].peri.Add;
+            MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].peri[i03].nONU      := Leitor.rCampo(tcStr, 'nONU');
+            MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].peri[i03].xNomeAE   := Leitor.rCampo(tcStr, 'xNomeAE');
+            MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].peri[i03].xClaRisco := Leitor.rCampo(tcStr, 'xClaRisco');
+            MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].peri[i03].grEmb     := Leitor.rCampo(tcStr, 'grEmb');
+            MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].peri[i03].qTotProd  := Leitor.rCampo(tcStr, 'qTotProd');
+            MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].peri[i03].qVolTipo  := Leitor.rCampo(tcStr, 'qVolTipo');
+            inc(i03);
+          end;
+        end;
+
         inc(i02);
+      end;
+
+      inc(i01);
+    end;
+  end;
+
+  if MDFe.infMDFe.versao = 3 then
+  begin
+    i01 := 0;
+    while Leitor.rExtrai(1, 'seg', '', i01 + 1) <> '' do
+    begin
+      MDFe.seg.Add;
+
+      MDFe.seg[i01].nApol   := Leitor.rCampo(tcStr, 'nApol');
+
+      i02 := 0;
+      while Leitor.rExtrai(2, 'nAver', '', i02 + 1) <> '' do
+      begin
+        MDFe.seg[i01].aver.Add;
+        MDFe.seg[i01].aver[i02].nAver := Leitor.rCampo(tcStr, 'nAver');
+        inc(i02);
+      end;
+
+      if (Leitor.rExtrai(2, 'infResp') <> '') then
+      begin
+        MDFe.seg[i01].respSeg := StrToRspSeguroMDFe(ok, Leitor.rCampo(tcStr, 'respSeg'));
+        MDFe.seg[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
+      end;
+      if (Leitor.rExtrai(2, 'infSeg') <> '') then
+      begin
+        MDFe.seg[i01].xSeg    := Leitor.rCampo(tcStr, 'xSeg');
+        MDFe.seg[i01].CNPJ    := Leitor.rCampo(tcStr, 'CNPJ');
       end;
 
       inc(i01);

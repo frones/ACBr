@@ -10,6 +10,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
     Top = 1
     Font.Height = -8
     Font.Name = 'Courier New'
+    PrintDialog = True
     BeforePrint = RLInutBeforePrint
     object rlb_01_Titulo: TRLBand[0]
       Left = 38

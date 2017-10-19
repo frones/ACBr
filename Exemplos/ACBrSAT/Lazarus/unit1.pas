@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, PrintersDlgs, Forms,
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
-  ComCtrls, Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
-  ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter;
+  ComCtrls, Spin, RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
+  dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -29,8 +29,12 @@ type
     bImpressora: TButton;
     bInicializar : TButton ;
     btLerParams: TButton;
+    btMFEEnviarStatusPagamento: TButton;
+    btMFEVerificarStatus: TButton;
+    btMFERespostaFiscal: TButton;
     btSalvarParams: TButton;
     btSerial: TSpeedButton;
+    btMFEEnviarPagamento: TButton;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
     cbxRemoverAcentos: TCheckBox;
@@ -54,6 +58,8 @@ type
     cbImprimir1Linha: TCheckBox;
     cbxUTF8: TCheckBox;
     edChaveCancelamento: TEdit;
+    edMFEInput: TEdit;
+    edMFEOutput: TEdit;
     edLog : TEdit ;
     edRedeIP: TEdit;
     edRedeProxyPorta: TSpinEdit;
@@ -89,8 +95,12 @@ type
     Label27: TLabel;
     Label28: TLabel;
     Label29: TLabel;
+    Label30: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    Label8: TLabel;
     lImpressora: TLabel;
     lSSID: TLabel;
     lSSID1: TLabel;
@@ -108,6 +118,8 @@ type
     mCancelamentoEnviar: TSynMemo;
     MenuItem14: TMenuItem;
     MenuItem15: TMenuItem;
+    MenuItem16: TMenuItem;
+    MenuItem17: TMenuItem;
     mRede: TSynMemo;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
@@ -121,6 +133,7 @@ type
     PrintDialog1: TPrintDialog;
     rgRedeTipoInter: TRadioGroup;
     rgRedeTipoLan: TRadioGroup;
+    RLPDFFilter1: TRLPDFFilter;
     SaveDialog1: TSaveDialog;
     sbNomeDLL: TSpeedButton;
     seColunas: TSpinEdit;
@@ -190,12 +203,15 @@ type
     PageControl2 : TPageControl ;
     Panel1 : TPanel ;
     SbArqLog : TSpeedButton ;
+    seItensVenda: TSpinEdit;
+    seMFETimeout: TSpinEdit;
     Splitter1 : TSplitter ;
     StatusBar1 : TStatusBar ;
     mVendaEnviar: TSynMemo;
     mRecebido: TSynMemo;
     SynXMLSyn1: TSynXMLSyn;
     Impressao: TTabSheet;
+    tsMFe: TTabSheet;
     tsRedeXML: TTabSheet;
     tsRede: TTabSheet;
     tsCancelamento: TTabSheet;
@@ -205,16 +221,23 @@ type
     tsRecebido : TTabSheet ;
     tsLog : TTabSheet ;
     tsGerado : TTabSheet ;
+    procedure ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
+      AData: TDateTime);
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetsignAC(var Chave : AnsiString) ;
     procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
+    procedure ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
+    procedure btMFEEnviarStatusPagamentoClick(Sender: TObject);
+    procedure btMFEEnviarPagamentoClick(Sender: TObject);
+    procedure btMFERespostaFiscalClick(Sender: TObject);
+    procedure btMFEVerificarStatusClick(Sender: TObject);
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure btSerialClick(Sender: TObject);
-    procedure cbUsarEscPosClick(Sender: TObject);
-    procedure cbUsarFortesClick(Sender: TObject);
+    procedure cbUsarEscPosChange(Sender: TObject);
+    procedure cbUsarFortesChange(Sender: TObject);
     procedure cbxFormatXMLChange(Sender: TObject);
     procedure cbxModeloChange(Sender : TObject) ;
     procedure cbxRedeProxyChange(Sender: TObject);
@@ -228,6 +251,7 @@ type
     procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem13Click(Sender: TObject);
     procedure MenuItem15Click(Sender: TObject);
+    procedure MenuItem17Click(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
     procedure miEnviarCancelamentoClick(Sender: TObject);
     procedure miImprimirExtratoCancelamentoClick(Sender: TObject);
@@ -272,8 +296,9 @@ var
 
 implementation
 
-Uses typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
-  RLPrinters, Printers;
+Uses
+  math, typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, configuraserial,
+  RLPrinters, Printers, ACBrSATExtratoClass, ACBrSATMFe_integrador, pcnVFPe;
 
 {$R *.lfm}
 
@@ -288,10 +313,15 @@ var
   M : TpcnRegTrib ;
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
+  R: pcnRede.TSegSemFio;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
      cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrSATModelo), integer(I) ) ) ;
+
+  cbxRedeSeg.Items.Clear ;
+  For R := Low(pcnRede.TSegSemFio) to High(pcnRede.TSegSemFio) do
+     cbxRedeSeg.Items.Add(GetEnumName(TypeInfo(pcnRede.TSegSemFio), Integer(R)));
 
   cbxAmbiente.Items.Clear ;
   For J := Low(TpcnTipoAmbiente) to High(TpcnTipoAmbiente) do
@@ -381,6 +411,13 @@ begin
     ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
     ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
     ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
+
+    if Modelo = mfe_Integrador_XML then
+    begin
+      TACBrSATMFe_integrador_XML(SAT).PastaInput  := edMFEInput.Text;
+      TACBrSATMFe_integrador_XML(SAT).PastaOutput := edMFEOutput.Text;
+      TACBrSATMFe_integrador_XML(SAT).Timeout     := seMFETimeout.Value;
+    end;
   end
 end ;
 
@@ -398,9 +435,20 @@ begin
   Tratado := False;
 end;
 
+procedure TForm1.ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
+begin
+  MessageDlg('Mensagem do SEFAZ', IntToStr(ACod)+'-'+AMensagem, mtWarning, [mbOK], 0);
+end;
+
 procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
   Chave := AnsiString( edtCodigoAtivacao.Text );
+end;
+
+procedure TForm1.ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
+  AData: TDateTime);
+begin
+  mLog.Lines.Add('O Path para o CNPJ: '+ACNPJ+' Data: '+DateToStr(AData)+' é: '+APath);
 end;
 
 procedure TForm1.bImpressoraClick(Sender: TObject);
@@ -423,7 +471,7 @@ end;
 
 procedure TForm1.btLerParamsClick(Sender : TObject) ;
 Var
-  ArqINI : String ;
+  ArqINI: String ;
   INI : TIniFile ;
 begin
   ArqINI := ChangeFileExt( Application.ExeName,'.ini' ) ;
@@ -475,7 +523,13 @@ begin
     seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
     cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
 
-    lImpressora.Caption := INI.ReadString('Printer','Name',Printer.PrinterName);
+    lImpressora.Caption    := INI.ReadString('Printer','Name', '');
+    if EstaVazio(lImpressora.Caption) then
+    begin
+      Printer.PrinterIndex := -1;
+      lImpressora.Caption  := Printer.Printers[Printer.PrinterIndex];
+    end;
+
     cbImprimir1Linha.Checked := INI.ReadBool('EscPos','ImprimirItemUmaLinha',cbImprimir1Linha.Checked);
 
     rgRedeTipoInter.ItemIndex := INI.ReadInteger('Rede','tipoInter',0);
@@ -496,9 +550,123 @@ begin
     edRedeProxyUser.Text      := INI.ReadString('Rede','proxy_user','');
     edRedeProxySenha.Text     := INI.ReadString('Rede','proxy_senha','');
 
+    edMFEInput.Text    :=  INI.ReadString('MFE','Input','c:\Integrador\Input\');
+    edMFEOutput.Text   :=  INI.ReadString('MFE','Output','c:\Integrador\Output\');
+    seMFETimeout.Value :=  INI.ReadInteger('MFE','Timeout',30);
+
   finally
      INI.Free ;
   end ;
+end;
+
+procedure TForm1.btMFEEnviarStatusPagamentoClick(Sender: TObject);
+var
+  StatusPagamentoMFe : TStatusPagamento;
+  RespostaStatusPagamento : TRespostaStatusPagamento;
+begin
+  StatusPagamentoMFe := TStatusPagamento.Create;
+  try
+    with StatusPagamentoMFe do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      CodigoAutorizacao := '20551';
+      Bin := '123456';
+      DonoCartao := 'TESTE';
+      DataExpiracao := '01/01';
+      InstituicaoFinanceira:= 'STONE';
+      Parcelas := 1;
+      CodigoPagamento := '12846';
+      ValorPagamento := 1530;
+      IDFila := 1674068;
+      Tipo := '1';
+      UltimosQuatroDigitos := 12345;
+    end;
+    RespostaStatusPagamento := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarStatusPagamento(StatusPagamentoMFe);
+    ShowMessage(RespostaStatusPagamento.Retorno);
+  finally
+    StatusPagamentoMFe.Free;
+  end;
+end;
+
+procedure TForm1.btMFEEnviarPagamentoClick(Sender: TObject);
+var
+  PagamentoMFe : TEnviarPagamento;
+  RespostaPagamentoMFe : TRespostaPagamento;
+begin
+  PagamentoMFe := TEnviarPagamento.Create;
+  try
+    with PagamentoMFe do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      ChaveRequisicao := '26359854-5698-1365-9856-965478231456';
+      Estabelecimento := '10';
+      SerialPOS := InputBox('SerialPOS','Informe o Serial do POS','ACBr-'+RandomName(8));
+      CNPJ := edtEmitCNPJ.Text;
+      IcmsBase := 0.23;
+      ValorTotalVenda := 1530;
+      HabilitarMultiplosPagamentos := True;
+      HabilitarControleAntiFraude := False;
+      CodigoMoeda := 'BRL';
+      EmitirCupomNFCE := False;
+      OrigemPagamento := 'Mesa 1234';
+    end;
+    RespostaPagamentoMFe := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarPagamento(PagamentoMFe);
+    ShowMessage(IntToStr(RespostaPagamentoMFe.IDPagamento));
+  finally
+    PagamentoMFe.Free;
+  end;
+end;
+
+procedure TForm1.btMFERespostaFiscalClick(Sender: TObject);
+var
+ RespostaFiscal : TRespostaFiscal;
+ RetornoRespostaFiscal : TRetornoRespostaFiscal;
+Begin
+  RespostaFiscal := TRespostaFiscal.Create;
+    try
+      with RespostaFiscal do
+      begin
+        Clear;
+        ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+        IDFila := 1674068;
+        ChaveAcesso := '35170408723218000186599000113100000279731880';
+        Nsu := '1674068';
+        NumerodeAprovacao := '1234';
+        Bandeira := 'VISA';
+        Adquirente := 'STONE';
+        ImpressaoFiscal := '';
+        NumeroDocumento := '1674068';
+        CNPJ:= edtEmitCNPJ.Text;
+      end;
+      RetornoRespostaFiscal := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).RespostaFiscal(RespostaFiscal);
+      ShowMessage(RetornoRespostaFiscal.IdRespostaFiscal);
+    finally
+      RespostaFiscal.Free;
+    end;
+end;
+
+procedure TForm1.btMFEVerificarStatusClick(Sender: TObject);
+var
+  VerificarStatusValidador : TVerificarStatusValidador;
+  RespostaVerificarStatusValidador : TRespostaVerificarStatusValidador;
+begin
+  VerificarStatusValidador := TVerificarStatusValidador.Create;
+  try
+    with VerificarStatusValidador do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      IDFila := StrToIntDef(InputBox('IDPagmento','Informe o ID do Pagamento',''),0);
+      CNPJ:= edtEmitCNPJ.Text;
+    end;
+    RespostaVerificarStatusValidador := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).VerificarStatusValidador(VerificarStatusValidador) ;
+  finally
+    VerificarStatusValidador.Free;
+  end;
+
+  ShowMessage(RespostaVerificarStatusValidador.CodigoAutorizacao);
 end;
 
 procedure TForm1.btSalvarParamsClick(Sender : TObject) ;
@@ -573,6 +741,10 @@ begin
     INI.WriteInteger('Rede','proxy_porta',edRedeProxyPorta.Value);
     INI.WriteString('Rede','proxy_user',edRedeProxyUser.Text);
     INI.WriteString('Rede','proxy_senha',edRedeProxySenha.Text);
+
+    INI.WriteString('MFE','Input',edMFEInput.Text);
+    INI.WriteString('MFE','Output',edMFEOutput.Text);
+    INI.WriteInteger('MFE','Timeout',seMFETimeout.Value);
   finally
      INI.Free ;
   end ;
@@ -597,13 +769,13 @@ begin
   end ;
 end;
 
-procedure TForm1.cbUsarEscPosClick(Sender: TObject);
+procedure TForm1.cbUsarEscPosChange(Sender: TObject);
 begin
   cbUsarFortes.Checked := False;
   ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
 end;
 
-procedure TForm1.cbUsarFortesClick(Sender: TObject);
+procedure TForm1.cbUsarFortesChange(Sender: TObject);
 begin
   cbUsarEscPos.Checked := False;
   ACBrSAT1.Extrato := ACBrSATExtratoFortes1
@@ -698,11 +870,29 @@ begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
   begin
-    ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
-
-    mRecebido.Lines.Text := ACBrSAT1.CFe.GerarXML() ;
-    PageControl1.ActivePage := tsRecebido;
+     ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
+     //mRecebido.Lines.Text := ACBrSAT1.CFe.GerarXML() ;
+     //PageControl1.ActivePage := tsRecebido;
+     mVendaEnviar.Lines.LoadFromFile(OpenDialog1.FileName);
+     PageControl1.ActivePage := tsGerado;
   end ;
+end;
+
+procedure TForm1.MenuItem17Click(Sender: TObject);
+begin
+  ACBrSAT1.CFe.Clear;
+  ACBrSAT1.CFeCanc.Clear;
+
+  ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := rSim;
+
+  mVendaEnviar.Lines.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\Vendas\11111111111111\201509\AD35150911111111111111591234567890001757849146.xml');
+  ACBrSAT1.CFe.AsXMLString := mVendaEnviar.Lines.Text;
+
+  mVendaEnviar.Lines.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\Cancelamentos\11111111111111\201509\ADC35150911111111111111591234567890001768086718.xml');
+  ACBrSAT1.CFeCanc.AsXMLString := mVendaEnviar.Lines.Text;
+
+  PrepararImpressao;
+  ACBrSAT1.ImprimirExtratoCancelamento;
 end;
 
 procedure TForm1.miGerarXMLCancelamentoClick(Sender: TObject);
@@ -747,8 +937,8 @@ end;
 
 procedure TForm1.miImprimirExtratoCancelamentoClick(Sender: TObject);
 begin
-  //ACBrSAT1.CFeCanc.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesCancelados\CFe35150511111111111111591234567890000607158269-can.xml');
-  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesEnviados\CFe35150511111111111111591234567890000607158269.xml');
+  //ACBrSAT1.CFeCanc.LoadFromFile('C:\temp\ADC35160666591991000132590000371860052583129800.xml');
+  //ACBrSAT1.CFe.LoadFromFile('C:\temp\AD35160666591991000132590000371860052570122411.xml');
   PrepararImpressao;
   ACBrSAT1.ImprimirExtratoCancelamento;
 end;
@@ -932,18 +1122,35 @@ begin
 end;
 
 procedure TForm1.mEnviarVendaClick(Sender : TObject) ;
+var
+  tini, tfim: TDateTime;
 begin
   if mVendaEnviar.Text = '' then
     mGerarVenda.Click;
 
   PageControl1.ActivePage := tsLog;
 
+  tini := now;
   ACBrSAT1.EnviarDadosVenda( mVendaEnviar.Text );
+  tfim := now;
+  mLog.Lines.Add('------------------------------------------------') ;
+  mLog.Lines.Add('Iniciado em: '+DateTimeToStr(tini)) ;
+  mLog.Lines.Add('Finalizado em: '+DateTimeToStr(tFim)) ;
+  mLog.Lines.Add('') ;
+  mLog.Lines.Add('Tempo de Envio e Recebimento: '+ FormatFloat('##0.00',SecondSpan(tini,tfim))+' segundos' ) ;
+  mLog.Lines.Add('------------------------------------------------') ;
 
   if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
   begin
     mRecebido.Lines.Text := ACBrSAT1.CFe.AsXMLString;
     PageControl1.ActivePage := tsRecebido;
+
+{    ACBrSAT1.CFe.ide.dEmi;
+    ACBrSAT1.CFe.infCFe.ID;
+    ACBrSAT1.CFe.Total.vCFe;
+    ACBrSAT1.CFe.Dest.CNPJCPF;
+    ACBrSAT1.CFe.ide.assinaturaQRCODE;      }
+
   end;
 end;
 
@@ -961,8 +1168,9 @@ end;
 
 procedure TForm1.mGerarVendaClick(Sender : TObject) ;
 var
-  TotalItem, TotalGeral: Double;
+  TotalItem, TotalGeral, Pagto1: Double;
   A: Integer;
+  Loops: Integer;
 begin
   TotalGeral := 0;
   PageControl1.ActivePage := tsGerado;
@@ -981,9 +1189,10 @@ begin
   with ACBrSAT1.CFe do
   begin
     ide.numeroCaixa := 1;
+    ide.cNF := Random(999999);
 
-    Dest.CNPJCPF := '05481336000137';
-    Dest.xNome := 'D.J. SYSTEM ÁÉÍÓÚáéíóúÇç';
+    Dest.CNPJCPF := '5481336000137';
+    Dest.xNome := 'D.J. SYSTEM ÁÉÍÓÚáéíóúÇç teste de nome Longo';
 
     Entrega.xLgr := 'logradouro';
     Entrega.nro := '112233';
@@ -992,7 +1201,9 @@ begin
     Entrega.xMun := 'municipio';
     Entrega.UF := 'RJ';
 
-    For A := 0 to 0 do  // Ajuste aqui para vender mais itens
+    Loops := max(Trunc(seItensVenda.Value / 3)-1, 0);
+
+    For A := 0 to Loops do  // Ajuste aqui para vender mais itens
     begin
     with Det.Add do
     begin
@@ -1014,19 +1225,23 @@ begin
         xTextoDet := 'texto';
       end;
 
-      TotalItem := (Prod.qCom * Prod.vUnCom);
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
       TotalGeral := TotalGeral + TotalItem;
       Imposto.vItem12741 := TotalItem * 0.12;
 
       Imposto.ICMS.orig := oeNacional;
-      Imposto.ICMS.CST := cst00;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn102
+      else
+        Imposto.ICMS.CST := cst00;
+
       Imposto.ICMS.pICMS := 18;
 
-      Imposto.PIS.CST := pis01;
+      Imposto.PIS.CST := pis49;
       Imposto.PIS.vBC := TotalItem;
       Imposto.PIS.pPIS := 0.0065;
 
-      Imposto.COFINS.CST := cof01;
+      Imposto.COFINS.CST := cof49;
       Imposto.COFINS.vBC := TotalItem;
       Imposto.COFINS.pCOFINS := 0.0065;
       //
@@ -1049,21 +1264,24 @@ begin
       Prod.indRegra := irTruncamento;
       Prod.vOutro := 2;
 
-      TotalItem := (Prod.qCom * Prod.vUnCom);
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
       TotalGeral := TotalGeral + TotalItem;
       Imposto.vItem12741 := TotalItem * 0.30;
 
       Imposto.ICMS.orig := oeNacional;
-      Imposto.ICMS.CST := cst40;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn400
+      else
+        Imposto.ICMS.CST := cst40;
 
-      Imposto.PIS.CST := pis03;
+      Imposto.PIS.CST := pis49;
       Imposto.PIS.qBCProd := TotalItem;
       Imposto.PIS.vAliqProd := 1.0223;
 
       Imposto.PISST.qBCProd := TotalItem;
       Imposto.PISST.vAliqProd := 1.0223;
 
-      Imposto.COFINS.CST := cof03;
+      Imposto.COFINS.CST := cof49;
       Imposto.COFINS.qBCProd := TotalItem;
       Imposto.COFINS.vAliqProd := 1.0223;
 
@@ -1084,18 +1302,21 @@ begin
       Prod.vUnCom := 1.210;
       Prod.indRegra := irTruncamento;
 
-      TotalItem := (Prod.qCom * Prod.vUnCom);
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
       TotalGeral := TotalGeral + TotalItem;
 
       Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
-      Imposto.ICMS.CSOSN := csosn102;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn102
+      else
+        Imposto.ICMS.CST := cst60;
 
-      Imposto.PIS.CST := pis04;
+      Imposto.PIS.CST := pis49;
 
       Imposto.PISST.qBCProd := TotalItem;
       Imposto.PISST.vAliqProd := 1.1826;
 
-      Imposto.COFINS.CST := cof06;
+      Imposto.COFINS.CST := cof49;
 
       infAdProd := 'Informacoes adicionais';
     end;
@@ -1132,16 +1353,17 @@ begin
     Total.DescAcrEntr.vDescSubtot := 5;
     Total.vCFeLei12741 := 1.23;
 
-    with Pagto.Add do
+    Pagto1 := RoundABNT(TotalGeral/2,-2);
+{    with Pagto.Add do
     begin
       cMP := mpCartaodeCredito;
-      vMP := TotalGeral/2;
-    end;
+      vMP := Pagto1;
+    end;    }
 
     with Pagto.Add do
     begin
       cMP := mpDinheiro;
-      vMP := TotalGeral/2 + 10;
+      vMP := TotalGeral - Pagto1 + 100;
     end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
@@ -1154,10 +1376,19 @@ begin
 end;
 
 procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject) ;
+var
+  tini, tfim: TDateTime;
 begin
   PrepararImpressao;
-  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesEnviados\CFe35150511111111111111591234567890000757243865.xml');
+  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\Vendas\11111111111111\201612\AD35161211111111111111591234567890001574544264.xml');
+  tini := now;
+  //ACBrSATExtratoFortes1.Filtro := fiPDF;
+  //ACBrSATExtratoFortes1.ImprimirExtrato;
   ACBrSAT1.ImprimirExtrato;
+  tfim := now;
+  mLog.Lines.Add('Inciado em: '+DateTimeToStr(tini)) ;
+  mLog.Lines.Add('Finalizado em: '+DateTimeToStr(tFim)) ;
+  mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' segundos' ) ;
 end;
 
 procedure TForm1.mImprimirExtratoVendaResumidoClick(Sender : TObject) ;

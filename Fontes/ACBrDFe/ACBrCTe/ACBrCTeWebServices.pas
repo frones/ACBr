@@ -134,6 +134,7 @@ type
     FTMed: Integer;
 
     FCTeRetorno: TretEnvCTe;
+    FCTeRetornoOS: TRetConsSitCTe;
 
     function GetLote: String;
     function GetRecibo: String;
@@ -330,12 +331,14 @@ type
     FxMotivo: String;
     FcUF: Integer;
     FdhRecbto: TDateTime;
+    FNomeArquivo: String;
 
     FXML_ProcInutCTe: String;
 
     procedure SetJustificativa(AValue: String);
     function GerarPathPorCNPJ: String;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     procedure SalvarEnvio; override;
@@ -364,6 +367,7 @@ type
     property cUF: Integer read FcUF;
     property dhRecbto: TDateTime read FdhRecbto;
     property XML_procInutCTe: String read FXML_ProcInutCTe write FXML_ProcInutCTe;
+    property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
   end;
 
   { TCTeConsultaCadastro }
@@ -466,6 +470,7 @@ type
 
     function GerarPathDistribuicao(AItem: TdocZipCollectionItem): String;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -535,6 +540,8 @@ type
 
     function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
+    function EnviaOS(ALote: Integer): Boolean; overload;
+    function EnviaOS(ALote: String): Boolean; overload;
     procedure Inutiliza(CNPJ, AJustificativa: String;
       Ano, Modelo, Serie, NumeroInicial, NumeroFinal: Integer);
 
@@ -664,6 +671,9 @@ begin
     ConsStatServ.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesCTe.WebServices.UFCodigo;
     ConsStatServ.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
+
     ConsStatServ.GerarXML;
 
     // Atribuindo o XML para propriedade interna //
@@ -744,7 +754,7 @@ end;
 destructor TCTeRecepcao.Destroy;
 begin
   FCTeRetorno.Free;
-
+  FCTeRetornoOS.Free;
   inherited Destroy;
 end;
 
@@ -774,7 +784,11 @@ begin
   if Assigned(FCTeRetorno) then
     FCTeRetorno.Free;
 
+  if Assigned(FCTeRetornoOS) then
+    FCTeRetornoOS.Free;
+
   FCTeRetorno := TretEnvCTe.Create;
+  FCTeRetornoOS := TRetConsSitCTe.Create;
 end;
 
 function TCTeRecepcao.GetLote: String;
@@ -789,13 +803,19 @@ end;
 
 procedure TCTeRecepcao.DefinirURL;
 var
-  Modelo, xUF: String;
+  xUF: String;
   VerServ: Double;
+  Modelo: TModeloCTe;
+  Ok: Boolean;
 begin
-  FPLayout := LayCTeRecepcao;
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTe then
+    FPLayout := LayCTeRecepcao
+  else
+    FPLayout := LayCTeRecepcaoOS;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
+    Modelo  := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
     FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
     VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
 
@@ -804,11 +824,11 @@ begin
   end
   else
   begin                              // Se não tem CTe, use as configurações do componente
+    Modelo  := FPConfiguracoesCTe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
     VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
-  Modelo := 'CTe';
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
@@ -821,7 +841,7 @@ begin
   end;
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    Modelo,
+    ModeloCTeToPrefixo(Modelo),
     xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
@@ -834,8 +854,16 @@ end;
 
 procedure TCTeRecepcao.DefinirServicoEAction;
 begin
-  FPServico    := GetUrlWsd + 'CteRecepcao';
-  FPSoapAction := FPServico + '/cteRecepcaoLote';
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTe then
+  begin
+    FPServico    := GetUrlWsd + 'CteRecepcao';
+    FPSoapAction := FPServico + '/cteRecepcaoLote';
+  end
+  else
+  begin
+    FPServico    := GetUrlWsd + 'CteRecepcaoOS';
+    FPSoapAction := FPServico + '/cteOSRecepcao';
+  end;
 end;
 
 procedure TCTeRecepcao.DefinirDadosMsg;
@@ -844,13 +872,30 @@ var
   vCTe: String;
 begin
   vCTe := '';
-  for I := 0 to FConhecimentos.Count - 1 do
-    vCTe := vCTe + '<CTe' + RetornarConteudoEntre(
-      FConhecimentos.Items[I].XMLAssinado, '<CTe', '</CTe>') + '</CTe>';
 
-  FPDadosMsg := '<enviCTe xmlns="' + ACBRCTE_NAMESPACE + '" versao="' +
-    FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
-    vCTe + '</enviCTe>';
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTe then
+  begin
+    // No modelo 57 podemos ter um lote contendo de 1 até 50 CT-e
+    for I := 0 to FConhecimentos.Count - 1 do
+      vCTe := vCTe + '<CTe' + RetornarConteudoEntre(
+                FConhecimentos.Items[I].XMLAssinado, '<CTe', '</CTe>') + '</CTe>';
+
+    FPDadosMsg := '<enviCTe xmlns="' + ACBRCTE_NAMESPACE + '" versao="' +
+                     FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
+                     vCTe + '</enviCTe>';
+  end
+  else
+  begin
+    // No modelo 67 só podemos ter apena UM CT-e OS, pois o seu processamento é
+    // síncrono
+    if FConhecimentos.Count > 1 then
+      GerarException(ACBrStr('ERRO: Conjunto de CT-e OS transmitidos (máximo de 1 CT-e OS)' +
+             ' excedido. Quantidade atual: ' + IntToStr(FConhecimentos.Count)));
+
+    if FConhecimentos.Count > 0 then
+      FPDadosMsg := '<CTeOS' + RetornarConteudoEntre(
+              FConhecimentos.Items[0].XMLAssinado, '<CTeOS', '</CTeOS>') + '</CTeOS>';
+  end;
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
@@ -861,37 +906,158 @@ begin
 end;
 
 function TCTeRecepcao.TratarResposta: Boolean;
+var
+  I: integer;
+  chCTe, AXML, NomeXMLSalvo: String;
+  AProcCTe: TProcCTe;
+  SalvarXML: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'cteRecepcaoLoteResult');
+  FPRetWS := SeparaDadosArray(['cteRecepcaoLoteResult'
+                              ,'cteRecepcaoOSResult'
+                              ,'cteOSRecepcaoResult'
+                              ,'cteRecepcaoOSCTResult'
+                              ]
+                             , FPRetornoWS);
 
-  FCTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
-  FCTeRetorno.LerXml;
+  if (FPConfiguracoesCTe.Geral.ModeloDF = moCTeOS) then
+  begin
+    if pos('retCTeOS', FPRetWS) > 0 then
+      AXML := StringReplace(FPRetWS, 'retCTeOS', 'retConsSitCTe',
+                                     [rfReplaceAll, rfIgnoreCase])
+    else if pos('retConsReciCTe', FPRetWS) > 0 then
+      AXML := StringReplace(FPRetWS, 'retConsReciCTe', 'retConsSitCTe',
+                                     [rfReplaceAll, rfIgnoreCase])
+    else
+      AXML := FPRetWS;
 
-  Fversao := FCTeRetorno.versao;
-  FTpAmb := FCTeRetorno.TpAmb;
-  FverAplic := FCTeRetorno.verAplic;
-  FcStat := FCTeRetorno.cStat;
-  FxMotivo := FCTeRetorno.xMotivo;
-  FdhRecbto := FCTeRetorno.infRec.dhRecbto;
-  FTMed := FCTeRetorno.infRec.tMed;
-  FcUF := FCTeRetorno.cUF;
-  FPMsg := FCTeRetorno.xMotivo;
-  FRecibo := FCTeRetorno.infRec.nRec;
+    FCTeRetornoOS.Leitor.Arquivo := ParseText(AXML);
+    FCTeRetornoOS.LerXml;
 
-  Result := (FCTeRetorno.CStat = 103);
+    Fversao := FCTeRetornoOS.versao;
+    FTpAmb := FCTeRetornoOS.TpAmb;
+    FverAplic := FCTeRetornoOS.verAplic;
+
+    // Consta no Retorno da CT-eOS
+    FRecibo := ''; // FCTeRetornoOS.nRec;
+    FcUF := FCTeRetornoOS.cUF;
+    chCTe := FCTeRetornoOS.ProtCTe.chCTe;
+
+    if (FCTeRetornoOS.protCTe.cStat > 0) then
+      FcStat := FCTeRetornoOS.protCTe.cStat
+    else
+      FcStat := FCTeRetornoOS.cStat;
+
+    if (FCTeRetornoOS.protCTe.xMotivo <> '') then
+    begin
+      FPMsg := FCTeRetornoOS.protCTe.xMotivo;
+      FxMotivo := FCTeRetornoOS.protCTe.xMotivo;
+    end
+    else
+    begin
+      FPMsg := FCTeRetornoOS.xMotivo;
+      FxMotivo := FCTeRetornoOS.xMotivo;
+    end;
+
+    // Verificar se a CT-eOS foi autorizada com sucesso
+    Result := (TACBrCTe(FPDFeOwner).CstatProcessado(FCTeRetornoOS.protCTe.cStat));
+
+    if Result then
+    begin
+      for I := 0 to TACBrCTe(FPDFeOwner).Conhecimentos.Count - 1 do
+      begin
+        with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do
+        begin
+          if OnlyNumber(chCTe) = NumID then
+          begin
+            if (FPConfiguracoesCTe.Geral.ValidarDigest) and
+               (FCTeRetornoOS.protCTe.digVal <> '') and
+               (CTe.signature.DigestValue <> FCTeRetornoOS.protCTe.digVal) then
+            begin
+              raise EACBrCTeException.Create('DigestValue do documento ' + NumID + ' não confere.');
+            end;
+
+            CTe.procCTe.cStat := FCTeRetornoOS.protCTe.cStat;
+            CTe.procCTe.tpAmb := FCTeRetornoOS.tpAmb;
+            CTe.procCTe.verAplic := FCTeRetornoOS.verAplic;
+            CTe.procCTe.chCTe := FCTeRetornoOS.ProtCTe.chCTe;
+            CTe.procCTe.dhRecbto := FCTeRetornoOS.protCTe.dhRecbto;
+            CTe.procCTe.nProt := FCTeRetornoOS.ProtCTe.nProt;
+            CTe.procCTe.digVal := FCTeRetornoOS.protCTe.digVal;
+            CTe.procCTe.xMotivo := FCTeRetornoOS.protCTe.xMotivo;
+
+            AProcCTe := TProcCTe.Create;
+            try
+              // Processando em UTF8, para poder gravar arquivo corretamente //
+              AProcCTe.XML_CTe := RemoverDeclaracaoXML(XMLAssinado);
+              AProcCTe.XML_Prot := FCTeRetornoOS.XMLprotCTe;
+              AProcCTe.Versao := FPVersaoServico;
+              AjustarOpcoes( AProcCTe.Gerador.Opcoes );
+              AProcCTe.GerarXML;
+
+              XMLOriginal := AProcCTe.Gerador.ArquivoFormatoXML;
+
+              if FPConfiguracoesCTe.Arquivos.Salvar then
+              begin
+                SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
+                             Processado;
+
+                // Salva o XML da NF-e assinado e protocolado
+                if SalvarXML then
+                begin
+                  NomeXMLSalvo := '';
+                  if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                  begin
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal ); // Atualiza o XML carregado
+                    NomeXMLSalvo := NomeArq;
+                  end;
+
+                  if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
+                    GravarXML; // Salva na pasta baseado nas configurações do PathCTe
+                end;
+              end ;
+            finally
+              AProcCTe.Free;
+            end;
+
+            Break;
+          end;
+        end;
+      end;
+    end;
+  end
+  else
+  begin
+    FCTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    FCTeRetorno.LerXml;
+
+    Fversao := FCTeRetorno.versao;
+    FTpAmb := FCTeRetorno.TpAmb;
+    FverAplic := FCTeRetorno.verAplic;
+    FcStat := FCTeRetorno.cStat;
+    FxMotivo := FCTeRetorno.xMotivo;
+    FdhRecbto := FCTeRetorno.infRec.dhRecbto;
+    FTMed := FCTeRetorno.infRec.tMed;
+    FcUF := FCTeRetorno.cUF;
+    FPMsg := FCTeRetorno.xMotivo;
+    FRecibo := FCTeRetorno.infRec.nRec;
+
+    Result := (FCTeRetorno.CStat = 103);
+  end;
 end;
 
 function TCTeRecepcao.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + sLineBreak +
-                           'Recibo: %s ' + LineBreak +
-                           'Recebimento: %s ' + LineBreak +
-                           'Tempo Médio: %s ' + LineBreak),
+  {(*}
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTe then
+    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                             'Ambiente: %s ' + LineBreak +
+                             'Versão Aplicativo: %s ' + LineBreak +
+                             'Status Código: %s ' + LineBreak +
+                             'Status Descrição: %s ' + LineBreak +
+                             'UF: %s ' + sLineBreak +
+                             'Recibo: %s ' + LineBreak +
+                             'Recebimento: %s ' + LineBreak +
+                             'Tempo Médio: %s ' + LineBreak),
                      [FCTeRetorno.versao,
                       TpAmbToStr(FCTeRetorno.TpAmb),
                       FCTeRetorno.verAplic,
@@ -901,12 +1067,45 @@ begin
                       FCTeRetorno.infRec.nRec,
                       IfThen(FCTeRetorno.InfRec.dhRecbto = 0, '',
                              FormatDateTimeBr(FCTeRetorno.InfRec.dhRecbto)),
-                      IntToStr(FCTeRetorno.InfRec.TMed)]);
+                      IntToStr(FCTeRetorno.InfRec.TMed)])
+  else
+    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                             'Ambiente: %s ' + LineBreak +
+                             'Versão Aplicativo: %s ' + LineBreak +
+                             'Status Código: %s ' + LineBreak +
+                             'Status Descrição: %s ' + LineBreak +
+                             'UF: %s ' + sLineBreak +
+                             'dhRecbto: %s ' + sLineBreak +
+                             'chCTe: %s ' + LineBreak),
+                     [FCTeRetornoOS.versao,
+                      TpAmbToStr(FCTeRetornoOS.TpAmb),
+                      FCTeRetornoOS.verAplic,
+                      IntToStr(FCTeRetornoOS.cStat),
+                      FCTeRetornoOS.xMotivo,
+                      CodigoParaUF(FCTeRetornoOS.cUF),
+                      IfThen(FCTeRetornoOS.protCTe.dhRecbto = 0, '',
+                             FormatDateTimeBr(FCTeRetornoOS.protCTe.dhRecbto)),
+                      FCTeRetornoOS.chCTe]);
+  {*)}
 end;
 
 function TCTeRecepcao.GerarPrefixoArquivo: String;
 begin
-  Result := Lote;
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTeOS then  // Esta procesando nome do Retorno Sincrono ?
+  begin
+    if FRecibo <> '' then
+    begin
+      Result := Recibo;
+      FPArqResp := 'pro-rec';
+    end
+    else
+    begin
+      Result := Lote;
+      FPArqResp := 'pro-lot';
+    end;
+  end
+  else
+    Result := Lote;
 end;
 
 { TCTeRetRecepcao }
@@ -1009,13 +1208,16 @@ end;
 
 procedure TCTeRetRecepcao.DefinirURL;
 var
-  Modelo, xUF: String;
+  xUF: String;
   VerServ: Double;
+  Modelo: TModeloCTe;
+  Ok: Boolean;
 begin
   FPLayout := LayCTeRetRecepcao;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
+    Modelo  := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
     FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
     VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
 
@@ -1024,12 +1226,12 @@ begin
   end
   else
   begin                              // Se não tem CTe, use as configurações do componente
+    Modelo  := FPConfiguracoesCTe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
     VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
-  Modelo := 'CTe';
   FPVersaoServico := '';
   FPURL := '';
 
@@ -1041,7 +1243,7 @@ begin
   end;
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    Modelo,
+    ModeloCTeToPrefixo(Modelo),
     xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
@@ -1067,6 +1269,9 @@ begin
     ConsReciCTe.tpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     ConsReciCTe.nRec := FRecibo;
     ConsReciCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsReciCTe.Gerador.Opcoes );
+
     ConsReciCTe.GerarXML;
 
     FPDadosMsg := ConsReciCTe.Gerador.ArquivoFormatoXML;
@@ -1307,13 +1512,16 @@ end;
 
 procedure TCTeRecibo.DefinirURL;
 var
-  Modelo, xUF: String;
+  xUF: String;
   VerServ: Double;
+  Modelo: TModeloCTe;
+  Ok: Boolean;
 begin
   FPLayout := LayCTeRetRecepcao;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
+    Modelo  := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
     FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
     VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
 
@@ -1322,12 +1530,12 @@ begin
   end
   else
   begin                              // Se não tem CTe, use as configurações do componente
+    Modelo  := FPConfiguracoesCTe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
     VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
-  Modelo := 'CTe';
   FPVersaoServico := '';
   FPURL := '';
 
@@ -1339,7 +1547,7 @@ begin
   end;
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    Modelo,
+    ModeloCTeToPrefixo(Modelo),
     xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
@@ -1359,6 +1567,9 @@ begin
     ConsReciCTe.tpAmb := FTpAmb;
     ConsReciCTe.nRec := FRecibo;
     ConsReciCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsReciCTe.Gerador.Opcoes );
+
     ConsReciCTe.GerarXML;
 
     FPDadosMsg := ConsReciCTe.Gerador.ArquivoFormatoXML;
@@ -1476,10 +1687,11 @@ procedure TCTeConsulta.DefinirURL;
 var
   VerServ: Double;
   Modelo, xUF: String;
+  Ok: Boolean;
 begin
   FPVersaoServico := '';
   FPURL  := '';
-  Modelo := 'CTe';
+  Modelo := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FCTeChave) ));
   FcUF   := ExtrairUFChaveAcesso(FCTeChave);
 
   if FConhecimentos.Count > 0 then
@@ -1527,6 +1739,9 @@ begin
     ConsSitCTe.TpAmb := FTpAmb;
     ConsSitCTe.chCTe := FCTeChave;
     ConsSitCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsSitCTe.Gerador.Opcoes );
+
     ConsSitCTe.GerarXML;
 
     FPDadosMsg := ConsSitCTe.Gerador.ArquivoFormatoXML;
@@ -1930,6 +2145,33 @@ begin
   Result := FPConfiguracoesCTe.Arquivos.GetPathInu(Now, CNPJ);
 end;
 
+procedure TCTeInutilizacao.DefinirURL;
+var
+  ok: Boolean;
+  VerServ: Double;
+  Modelo: String;
+begin
+  FPVersaoServico := '';
+  FPURL  := '';
+
+  Modelo := ModeloCTeToPrefixo( StrToModeloCTe(ok, IntToStr(FModelo) ));
+  if not ok then
+    raise EACBrCTeException.Create( 'Modelo Inválido: '+IntToStr(FModelo) );
+
+  VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+
+  TACBrCTe(FPDFeOwner).LerServicoDeParams(
+    Modelo,
+    FPConfiguracoesCTe.WebServices.UF,
+    FPConfiguracoesCTe.WebServices.Ambiente,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
+end;
+
 procedure TCTeInutilizacao.DefinirServicoEAction;
 begin
   FPServico    := GetUrlWsd + 'CteInutilizacao';
@@ -1952,10 +2194,13 @@ begin
     InutCTe.nCTFin := FNumeroFinal;
     InutCTe.xJust := FJustificativa;
     InutCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( InutCTe.Gerador.Opcoes );
+
     InutCTe.GerarXML;
 
-    AssinarXML(InutCTe.Gerador.ArquivoFormatoXML, 'inutCTe', 'infInut',
-      'Falha ao assinar Inutilização de numeração.');
+    AssinarXML( NativeStringToUTF8( InutCTe.Gerador.ArquivoFormatoXML ),
+                'inutCTe', 'infInut', 'Falha ao assinar Inutilização de numeração.');
 
     FID := InutCTe.ID;
   finally
@@ -2015,13 +2260,14 @@ begin
     //gerar arquivo proc de inutilizacao
     if ((CTeRetorno.cStat = 102) or (CTeRetorno.cStat = 563)) then
     begin
-      FXML_ProcInutCTe := // '<' + ENCODING_UTF8 +
+      FXML_ProcInutCTe := '<' + ENCODING_UTF8 + '>' +
                           '<ProcInutCTe versao="' + FPVersaoServico +
                               '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
                             FPDadosMsg +
                             FPRetWS +
                           '</ProcInutCTe>';
 
+      FNomeArquivo := PathWithDelim(GerarPathPorCNPJ) + GerarPrefixoArquivo + '-procInutCTe.xml';
       if FPConfiguracoesCTe.Arquivos.Salvar then
         FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutCTe.xml',
           FXML_ProcInutCTe, GerarPathPorCNPJ);
@@ -2161,6 +2407,9 @@ begin
     ConCadCTe.CNPJ := FCNPJ;
     ConCadCTe.CPF := FCPF;
     ConCadCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConCadCTe.Gerador.Opcoes );
+
     ConCadCTe.GerarXML;
 
     FPDadosMsg := ConCadCTe.Gerador.ArquivoFormatoXML;
@@ -2281,14 +2530,12 @@ procedure TCTeEnvEvento.DefinirURL;
 var
   UF, Modelo: String;
   VerServ: Double;
+  Ok: Boolean;
 begin
-  { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
-    os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
-
   VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
-  Modelo  := 'CTe';
+  Modelo  := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe) ));
 
   case FPConfiguracoesCTe.Geral.FormaEmissao of
     teSVCRS: UF := 'SVC-RS';
@@ -2297,10 +2544,15 @@ begin
     UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe));
   end;
 
-  if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, teMultiModal]) then
-    FPLayout := LayCTeEventoAN
+  { Verificação necessária pois somente os eventos de CCe, Cancelamento,
+    Multimodal, Prestação em Desacordo e GTV serão tratados pela SEFAZ do estado
+    os outros eventos como manifestação do destinatário serão tratados diretamente pela RFB }
+
+  if (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento,
+      teMultiModal, tePrestDesacordo, teGTV]) then
+    FPLayout := LayCTeEvento
   else
-    FPLayout := LayCTeEvento;
+    FPLayout := LayCTeEventoAN;
 
   FPURL := '';
 
@@ -2325,16 +2577,18 @@ end;
 procedure TCTeEnvEvento.DefinirDadosMsg;
 var
   EventoCTe: TEventoCTe;
-  I, J, F: Integer;
-  Evento, Eventos, EventosAssinados, AXMLEvento: String;
+  I, J, K, F: Integer;
+  Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
+  FErroValidacao: String;
   EventoEhValido: Boolean;
   SchemaEventoCTe: TSchemaCTe;
 begin
   EventoCTe := TEventoCTe.Create;
   try
     EventoCTe.idLote := FidLote;
+    SchemaEventoCTe := schErro;
 
-    for I := 0 to TCTeEnvEvento(Self).FEvento.Evento.Count - 1 do
+    for I := 0 to FEvento.Evento.Count - 1 do
     begin
       with EventoCTe.Evento.Add do
       begin
@@ -2393,15 +2647,68 @@ begin
             infEvento.detEvento.modal   := FEvento.Evento[i].InfEvento.detEvento.modal;
             infEvento.detEvento.UFIni   := FEvento.Evento[i].InfEvento.detEvento.UFIni;
             infEvento.detEvento.UFFim   := FEvento.Evento[i].InfEvento.detEvento.UFFim;
+            infEvento.detEvento.tpCTe   := FEvento.Evento[i].InfEvento.detEvento.tpCTe;
+            infEvento.detEvento.dhEmi   := FEvento.Evento[i].InfEvento.detEvento.dhEmi;
+          end;
+
+          tePrestDesacordo:
+          begin
+            SchemaEventoCTe := schevPrestDesacordo;
+            infEvento.detEvento.xOBS := FEvento.Evento[i].InfEvento.detEvento.xOBS;
+          end;
+
+          teGTV:
+          begin
+            SchemaEventoCTe := schevGTV;
+            for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infGTV.Count - 1 do
+            begin
+              with EventoCTe.Evento[i].InfEvento.detEvento.infGTV.Add do
+              begin
+                nDoc     := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].nDoc;
+                id       := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].id;
+                serie    := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].serie;
+                subserie := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].subserie;
+                dEmi     := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dEmi;
+                nDV      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].nDV;
+                qCarga   := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].qCarga;
+
+                for k := 0 to FEvento.Evento[i].InfEvento.detEvento.infGTV.Items[j].infEspecie.Count - 1 do
+                begin
+                  with EventoCTe.Evento[i].InfEvento.detEvento.infGTV.Items[j].infEspecie.Add do
+                  begin
+                    tpEspecie := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].infEspecie[k].tpEspecie;
+                    vEspecie  := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].infEspecie[k].vEspecie;
+                  end;
+                end;
+
+                rem.CNPJCPF := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].rem.CNPJCPF;
+                rem.IE      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].rem.IE;
+                rem.UF      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].rem.UF;
+                rem.xNome   := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].rem.xNome;
+
+                dest.CNPJCPF := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dest.CNPJCPF;
+                dest.IE      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dest.IE;
+                dest.UF      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dest.UF;
+                dest.xNome   := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dest.xNome;
+
+                placa := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].placa;
+                UF    := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].UF;
+                RNTRC := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].RNTRC;
+              end;
+            end;
           end;
         end;
       end;
     end;
 
     EventoCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( EventoCTe.Gerador.Opcoes );
+    EventoCTe.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
+
     EventoCTe.GerarXML;
 
-    Eventos := EventoCTe.Gerador.ArquivoFormatoXML;
+    Eventos := NativeStringToUTF8( EventoCTe.Gerador.ArquivoFormatoXML );
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento
@@ -2415,9 +2722,7 @@ begin
         Eventos := Copy(Eventos, F + 12, length(Eventos));
 
         AssinarXML(Evento, 'eventoCTe', 'infEvento', 'Falha ao assinar o Envio de Evento ');
-
-        EventosAssinados := EventosAssinados + StringReplace(
-          FPDadosMsg, '<?xml version="1.0"?>', '', []);
+        EventosAssinados := EventosAssinados + FPDadosMsg;
       end
       else
         Break;
@@ -2438,7 +2743,15 @@ begin
                                                              StringToFloatDef(FPVersaoServico, 0)),
                                     FPMsg);
     end;
+    (* Comentado por não estar realizando a validação corretamente
+    if not EventoEhValido then
+    begin
+      FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
+        FPMsg;
 
+      raise EACBrCTeException.CreateDef(FErroValidacao);
+    end;
+    *)
     for I := 0 to FEvento.Evento.Count - 1 do
       FEvento.Evento[I].InfEvento.id := EventoCTe.Evento[I].InfEvento.id;
   finally
@@ -2510,7 +2823,7 @@ begin
   FPMsg := EventoRetorno.xMotivo;
   FTpAmb := EventoRetorno.tpAmb;
 
-  Result := (FcStat in [128, 135, 136, 155]);
+  Result := (FcStat in [134, 135, 136]);
 
   //gerar arquivo proc de evento
   if Result then
@@ -2540,8 +2853,7 @@ begin
             VersaoEvento := TACBrCTe(FPDFeOwner).LerVersaoDeParams(LayCTeEvento);
 
             Leitor.Arquivo := FPDadosMsg;
-            Texto := // '<' + ENCODING_UTF8 + '>' +
-                     '<procEventoCTe versao="' + VersaoEvento + '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
+            Texto := '<procEventoCTe versao="' + VersaoEvento + '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
                       '<eventoCTe versao="' + VersaoEvento + '">' +
                        Leitor.rExtrai(1, 'infEvento', '', I + 1) +
                        '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
@@ -2584,20 +2896,34 @@ end;
 
 procedure TCTeEnvEvento.SalvarEnvio;
 begin
-  inherited SalvarEnvio;
+//  inherited SalvarEnvio;
+
+  if ArqEnv = '' then
+    exit;
 
   if FPConfiguracoesCTe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
       FPDadosMsg, GerarPathEvento(FCNPJ));
+
+  if FPConfiguracoesCTe.WebServices.Salvar then
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '-soap.xml',
+      FPEnvelopeSoap, GerarPathEvento(FCNPJ));
 end;
 
 procedure TCTeEnvEvento.SalvarResposta;
 begin
-  inherited SalvarResposta;
+//  inherited SalvarResposta;
+
+  if ArqResp = '' then
+    exit;
 
   if FPConfiguracoesCTe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
       FPRetWS, GerarPathEvento(FCNPJ));
+
+  if FPConfiguracoesCTe.WebServices.Salvar then
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '-soap.xml',
+      FPRetornoWS, GerarPathEvento(FCNPJ));
 end;
 
 function TCTeEnvEvento.GerarMsgLog: String;
@@ -2623,7 +2949,8 @@ end;
 
 function TCTeEnvEvento.GerarPrefixoArquivo: String;
 begin
-  Result := IntToStr(FEvento.idLote);
+//  Result := IntToStr(FEvento.idLote);
+  Result := IntToStr(FidLote);
 end;
 
 { TDistribuicaoDFe }
@@ -2657,6 +2984,31 @@ begin
   FretDistDFeInt := TRetDistDFeInt.Create;
 end;
 
+procedure TDistribuicaoDFe.DefinirURL;
+var
+  UF : String;
+  Versao: Double;
+begin
+  { Esse método é tratado diretamente pela RFB }
+
+  UF := 'AN';
+
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
+  Versao := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+
+  TACBrCTe(FPDFeOwner).LerServicoDeParams(
+    TACBrCTe(FPDFeOwner).GetNomeModeloDFe,
+    UF ,
+    FPConfiguracoesCTe.WebServices.Ambiente,
+    LayOutToServico(FPLayout),
+    Versao,
+    FPURL);
+
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+
 procedure TDistribuicaoDFe.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'CTeDistribuicaoDFe';
@@ -2675,6 +3027,9 @@ begin
     DistDFeInt.ultNSU := FultNSU;
     DistDFeInt.NSU := FNSU;
     DistDFeInt.Versao := FPVersaoServico;
+
+    AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
+
     DistDFeInt.GerarXML;
 
     FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;
@@ -2704,11 +3059,12 @@ begin
         (*
         schresCTe:
           NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-resCTe.xml';
+
         schresEvento:
           NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
-             FretDistDFeInt.docZip.Items[I].resEvento.chCTe +
-             Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
-             '-resEventoCTe.xml';
+                     FretDistDFeInt.docZip.Items[I].resEvento.chCTe +
+                     Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
+                     '-resEventoCTe.xml';
         *)
         schprocCTe:
           NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-cte.xml';
@@ -2719,7 +3075,13 @@ begin
       end;
 
       if (FPConfiguracoesCTe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
-        FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+      begin
+        if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoCTe]) then // salvar evento
+          FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+
+        if (FretDistDFeInt.docZip.Items[I].schema in [schprocCTe]) then
+          FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+      end;
     end;
   end;
 
@@ -2769,9 +3131,17 @@ begin
   else
     Data := Now;
 
-  Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resCTe.xNome,
+  case AItem.schema of
+    schprocEventoCTe:
+      Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
+                                                          AItem.resCTe.CNPJCPF,
+                                                          Data);
+
+    schprocCTe:
+      Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resCTe.xNome,
                                                         AItem.resCTe.CNPJCPF,
                                                         Data);
+  end;
 end;
 
 { TCTeEnvioWebService }
@@ -2893,6 +3263,21 @@ begin
 
   if not FRetorno.Executar then
     FRetorno.GerarException( FRetorno.Msg );
+
+  Result := True;
+end;
+
+function TWebServices.EnviaOS(ALote: Integer): Boolean;
+begin
+  Result := EnviaOS(IntToStr(ALote));
+end;
+
+function TWebServices.EnviaOS(ALote: String): Boolean;
+begin
+  FEnviar.Lote := ALote;
+
+  if not Enviar.Executar then
+    Enviar.GerarException( Enviar.Msg );
 
   Result := True;
 end;

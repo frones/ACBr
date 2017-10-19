@@ -54,13 +54,18 @@ type
 
   TACBrEscDaruma = class(TACBrPosPrinterClass)
   private
+    FConfigurado: Boolean;
+  protected
+    function ComandoConfiguraDaruma(Byte30: Char): AnsiString;
   public
     constructor Create(AOwner: TACBrPosPrinter);
+
+    procedure Configurar; override;
+    function ComandoInicializa: AnsiString; override;
 
     function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
       override;
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
-    function ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString; override;
     function ComandoLogo: AnsiString; override;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
 
@@ -77,23 +82,31 @@ Uses
 
 { TACBrEscDaruma }
 
+function TACBrEscDaruma.ComandoConfiguraDaruma(Byte30: Char): AnsiString;
+begin
+  Result := Esc + #198 + StringOfChar('X',30) +
+                         Byte30 +
+                         StringOfChar('X',9)
+end;
+
 constructor TACBrEscDaruma.Create(AOwner: TACBrPosPrinter);
 begin
   inherited Create(AOwner);
 
   fpModeloStr := 'EscDaruma';
-
+  FConfigurado := False;
   RazaoColunaFonte.Condensada := 0.8421;    // 48 / 57
 
 {(*}
   with Cmd  do
   begin
     Zera                    := ESC + '@';
+    PuloDeLinha             := LF;
     EspacoEntreLinhasPadrao := ESC + '2';
     EspacoEntreLinhas       := ESC + '3';
-    FonteNormal             := ESC + '!' + #0;
+    FonteNormal             := ESC + '!' + #0 + DC2;
     FonteA                  := DC4;
-    FonteB                  := SI;
+    FonteB                  := ESC + SI;
     LigaNegrito             := ESC + 'E';
     DesligaNegrito          := ESC + 'F';
     LigaExpandido           := ESC + 'W' + #1;
@@ -104,7 +117,7 @@ begin
     DesligaItalico          := ESC + '4' + #0;
     LigaInvertido           := '';  // Existe ?
     DesligaInvertido        := '';  // Existe ?
-    LigaCondensado          := SI;
+    LigaCondensado          := ESC + SI;
     DesligaCondensado       := DC2;
     AlinhadoEsquerda        := ESC + 'j' + #0;
     AlinhadoCentro          := ESC + 'j' + #1;
@@ -116,6 +129,57 @@ begin
   {*)}
 
   TagsNaoSuportadas.Add( cTagBarraCode128c );
+end;
+
+procedure TACBrEscDaruma.Configurar;
+var
+  SL: TStringList;
+  ColunasInfo, ModeloInfo: Integer;
+  Byte30: Char;
+begin
+  FConfigurado := False;
+
+  { Lendo as informações da Impressora, para auto configuração das colunas }
+  if (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
+  begin
+    SL := TStringList.Create;
+    try
+      SL.Text := LerInfo;
+      ColunasInfo := StrToIntDef( SL.Values['Colunas'], fpPosPrinter.ColunasFonteNormal);
+      ModeloInfo  := StrToIntDef( SL.Values['Modelo'], 0);
+    finally
+      SL.Free;
+    end;
+
+    fpPosPrinter.ColunasFonteNormal := ColunasInfo;
+
+    if ModeloInfo > 20000 then // 20001-DR800 L, 20002-DR800 H, 20003-DR800 ETH
+    begin
+      Byte30 := '0';  // '0' = 64 colunas em modo condensado
+      RazaoColunaFonte.Condensada := 0.75;    // 48 / 64
+    end
+    else
+    begin
+      Byte30 := '1';  // '1' = 57 colunas em modo condensado
+      RazaoColunaFonte.Condensada := 0.8421;    // 48 / 57
+    end;
+
+    fpPosPrinter.Device.EnviaString( ComandoConfiguraDaruma(Byte30) );
+    FConfigurado := True;
+  end;
+end;
+
+function TACBrEscDaruma.ComandoInicializa: AnsiString;
+begin
+  Result := inherited ComandoInicializa;
+
+  if not FConfigurado then
+    Result := ComandoConfiguraDaruma('1') + Result ;  // '1' = 57 colunas em modo condensado
+
+{
+  - Programando para sempre usar 48 por 57 colunas, em modo condensado.
+  - Se a porta for Serial ou Eth, a configuração será automática, em "Configurar"
+}
 end;
 
 function TACBrEscDaruma.ComandoCodBarras(const ATag: String; ACodigo: AnsiString
@@ -171,12 +235,10 @@ end;
 
 function TACBrEscDaruma.ComandoQrCode(ACodigo: AnsiString): AnsiString;
 var
-  iQtdBytes, bMenos, bMais, L: Integer;
+  L, LenQrCode: Integer;
   E: AnsiChar;
 begin
-  iQtdBytes      := Length(ACodigo);
-  bMenos         := iQtdBytes shr 8;
-  bMais          := iQtdBytes AND 255 + 2;
+  LenQrCode := Length(ACodigo);
 
   with fpPosPrinter.ConfigQRCode do
   begin
@@ -190,18 +252,19 @@ begin
       E := #0;
     end;
 
+    if LenQrCode > 256 then
+    begin
+      if LarguraModulo < 4 then
+        LarguraModulo := 4;
+
+      if E = #0 then
+        E := 'M';
+    end;
+
     Result := ESC + #129 +
-              AnsiChr(bMais) + AnsiChr(bMenos) +
+              IntToLEStr( LenQrCode+2 ) +
               AnsiChr(L) + E + ACodigo;
   end;
-end;
-
-function TACBrEscDaruma.ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString;
-begin
-  if Espacos = 0 then
-    Result := Cmd.EspacoEntreLinhasPadrao
-  else
-    Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos);
 end;
 
 function TACBrEscDaruma.ComandoLogo: AnsiString;
@@ -219,6 +282,9 @@ procedure TACBrEscDaruma.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
   B: Byte;
 begin
+  if not (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
+    exit;
+
   try
     B := Ord(fpPosPrinter.TxRx( ENQ )[1]);
     if TestBit(B, 0) then
@@ -277,7 +343,7 @@ begin
   Ret := fpPosPrinter.TxRx( ESC + #229, 13, 500, True );
   Info := Info + 'Guilhotina='+Copy(Ret,9,1) + sLineBreak ;
   B := Copy(Ret,12,1);
-  Info := Info + 'Colunas='+IntToStr(ifthen(B='0',48,ifthen(B='1',52,34))) + sLineBreak ;
+  Info := Info + 'Colunas='+IntToStr(ifthen(B='2',34,ifthen(B='1',52,48))) + sLineBreak ;
   B := Copy(Ret,40,1);
   Info := Info + 'CodPage='+B + sLineBreak ;
 

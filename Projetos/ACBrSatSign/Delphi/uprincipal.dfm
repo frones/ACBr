@@ -20,9 +20,9 @@ object frmPrincipal: TfrmPrincipal
   TextHeight = 13
   object btnBuscarCertificado: TSpeedButton
     Left = 491
-    Top = 23
+    Top = 22
     Width = 23
-    Height = 21
+    Height = 23
     Anchors = [akTop, akRight]
     Caption = '...'
     OnClick = btnBuscarCertificadoClick
@@ -42,8 +42,8 @@ object frmPrincipal: TfrmPrincipal
     Caption = 'CNPJ da Software House:'
   end
   object Label3: TLabel
-    Left = 8
-    Top = 140
+    Left = 181
+    Top = 95
     Width = 80
     Height = 13
     Caption = 'CNPJ do Cliente:'
@@ -174,7 +174,6 @@ object frmPrincipal: TfrmPrincipal
       A0A0A0A0A0A0A0A0A0A0A0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     NumGlyphs = 2
     OnClick = btnCopiarClick
-    ExplicitTop = 271
   end
   object btnCriarAssinatura: TSpeedButton
     Left = 540
@@ -296,7 +295,6 @@ object frmPrincipal: TfrmPrincipal
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     NumGlyphs = 2
     OnClick = btnCriarAssinaturaClick
-    ExplicitTop = 271
   end
   object Label5: TLabel
     Left = 8
@@ -313,26 +311,6 @@ object frmPrincipal: TfrmPrincipal
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
   end
-  object rbtTipoCapicom: TRadioButton
-    Left = 520
-    Top = 25
-    Width = 85
-    Height = 17
-    Anchors = [akTop, akRight]
-    Caption = 'Capicom'
-    Checked = True
-    TabOrder = 1
-    TabStop = True
-  end
-  object rbtTipoOpenSSL: TRadioButton
-    Left = 611
-    Top = 25
-    Width = 82
-    Height = 17
-    Anchors = [akTop, akRight]
-    Caption = 'OpenSSL'
-    TabOrder = 2
-  end
   object edtCNPJSoftwareHouse: TMaskEdit
     Left = 8
     Top = 112
@@ -344,8 +322,8 @@ object frmPrincipal: TfrmPrincipal
     Text = '  .   .   /    -  '
   end
   object edtCNPJCliente: TMaskEdit
-    Left = 8
-    Top = 157
+    Left = 181
+    Top = 112
     Width = 167
     Height = 21
     EditMask = '00.000.000/0000-00;1;_'
@@ -359,23 +337,38 @@ object frmPrincipal: TfrmPrincipal
     Width = 685
     Height = 186
     Anchors = [akLeft, akTop, akRight, akBottom]
+    ScrollBars = ssBoth
     TabOrder = 5
+    WantReturns = False
   end
   object edtSenhaCertificado: TEdit
     Left = 8
     Top = 68
-    Width = 261
+    Width = 340
     Height = 21
-    Anchors = [akLeft, akTop, akRight]
     PasswordChar = '*'
-    TabOrder = 6
+    TabOrder = 2
+  end
+  object rbtTipoCert: TRadioGroup
+    Left = 520
+    Top = 8
+    Width = 172
+    Height = 125
+    Anchors = [akTop, akRight]
+    Caption = 'Tipo'
+    ItemIndex = 0
+    Items.Strings = (
+      'Nativo'
+      'OpenSSL'
+      'Capicom')
+    TabOrder = 1
   end
   object ACBrEnterTab1: TACBrEnterTab
-    Left = 560
-    Top = 105
+    Left = 315
+    Top = 265
   end
   object OpenDialog1: TOpenDialog
-    Left = 624
-    Top = 88
+    Left = 314
+    Top = 313
   end
 end

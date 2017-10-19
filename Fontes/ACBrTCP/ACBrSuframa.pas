@@ -63,7 +63,9 @@ type
     property Codigo: Integer read FCodigo write FCodigo;
     property Descricao: string read GetDescricao;
   end;
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrSuframa = class( TACBrHTTP )
   private
     fOnBuscaEfetuada: TNotifyEvent ;

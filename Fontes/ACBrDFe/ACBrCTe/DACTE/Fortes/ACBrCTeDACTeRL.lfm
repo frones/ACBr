@@ -12,7 +12,8 @@ object frmDACTeRL: TfrmDACTeRL
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.6.2.0'
+  Visible = False
   object RLCTe: TRLReport
     Left = 2
     Height = 1123

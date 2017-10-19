@@ -169,6 +169,8 @@ begin
           Add( LFill('E2') +
                LFill(FRegistroE1.CNPJ, 14) +
                RFill(COD_MERC, 14) +
+               RFill(CEST, 7) +
+               RFill(NCM, 8) +
                RFill(DESC_MERC, 50) +
                RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
                LFill(ifThen(QTDE_EST < 0, '-', '+')) +

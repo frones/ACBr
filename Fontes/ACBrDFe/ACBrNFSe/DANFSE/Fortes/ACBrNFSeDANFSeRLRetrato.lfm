@@ -1,15 +1,20 @@
 inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
-  Left = 302
-  Top = 192
+  Left = 349
+  Height = 741
+  Top = 55
+  Width = 827
   Caption = 'frlDANFSeRLRetrato'
+  ClientHeight = 741
+  ClientWidth = 827
   inherited RLNFSe: TRLReport
-    Left = 32
-    Top = 0
+    Left = 8
+    Top = -168
     Margins.LeftMargin = 6
     Margins.TopMargin = 8
     Margins.RightMargin = 5.1
     Margins.BottomMargin = 8
     BeforePrint = RLNFSeBeforePrint
+    OnNeedData = RLNFSeNeedData
     object rlbCabecalho: TRLBand[0]
       Left = 23
       Height = 178
@@ -582,7 +587,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       end
       object RLDraw9: TRLDraw
         Left = 110
-        Height = 36
+        Height = 40
         Top = 138
         Width = 1
         Angle = 90
@@ -614,7 +619,9 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Left = 122
         Height = 15
         Top = 157
-        Width = 82
+        Width = 94
+        Alignment = taCenter
+        AutoSize = False
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
@@ -627,8 +634,8 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       end
       object RLDraw10: TRLDraw
         Left = 224
-        Height = 139
-        Top = 138
+        Height = 39
+        Top = 139
         Width = 1
         Angle = 90
         Brush.Style = bsClear
@@ -775,40 +782,51 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-			object RLDraw11: TRLDraw
+      object RLDraw11: TRLDraw
         Left = 436
+        Height = 39
         Top = 139
         Width = 1
-        Height = 35
-        Angle = 90.000000000000000000
+        Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel64: TRLLabel
         Left = 236
+        Height = 15
         Top = 139
         Width = 193
-        Height = 15
         Caption = 'Município de Prestação do Serviço:'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
       end
       object rllMunicipioPrestacaoServico: TRLLabel
         Left = 236
-        Top = 157
-        Width = 167
         Height = 15
-        Font.Charset = DEFAULT_CHARSET
+        Top = 157
+        Width = 196
+        AutoSize = False
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object rlbPrestador: TRLBand[1]
@@ -2003,7 +2021,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Top = 210
         Width = 153
         AutoSize = False
-        Caption = '(=) Base de C�lculo'
+        Caption = '(=) Base de Cálculo'
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
@@ -2517,7 +2535,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Width = 258
         Alignment = taCenter
         AutoSize = False
-        Caption = 'C�lculo do ISSQN devido no Município'
+        Caption = 'Cálculo do ISSQN devido no Município'
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
@@ -3388,9 +3406,5 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         RealBounds.Height = 0
       end
     end
-  end
-  inherited dsItens: TDataSource
-    left = 526
-    top = 183
   end
 end

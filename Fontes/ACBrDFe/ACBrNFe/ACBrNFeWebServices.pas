@@ -41,8 +41,9 @@ unit ACBrNFeWebServices;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, dateutils,
   ACBrDFe, ACBrDFeWebService,
+  blcksock, synacode,
   pcnNFe,
   pcnRetConsReciNFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, pcnConversaoNFe,
   pcnProcNFe, pcnRetCancNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe,
@@ -57,6 +58,8 @@ type
 
   TNFeWebService = class(TDFeWebService)
   private
+    FOldSSLType: TSSLType;
+    FOldHeaderElement: String;
   protected
     FPStatus: TStatusACBrNFe;
     FPLayout: TLayOut;
@@ -130,6 +133,7 @@ type
     FdhRecbto: TDateTime;
     FTMed: integer;
     FSincrono: Boolean;
+    FZipado: Boolean;
 
     FNFeRetornoSincrono: TRetConsSitNFe;
     FNFeRetorno: TretEnvNFe;
@@ -161,6 +165,7 @@ type
     property TMed: integer read FTMed;
     property Lote: String read GetLote write FLote;
     property Sincrono: Boolean read FSincrono write FSincrono;
+    property Zipado: Boolean read FZipado write FZipado;
   end;
 
   { TNFeRetRecepcao }
@@ -330,6 +335,7 @@ type
     FxMotivo: String;
     FcUF: integer;
     FdhRecbto: TDateTime;
+    FNomeArquivo: String;
 
     FXML_ProcInutNFe: String;
 
@@ -365,6 +371,7 @@ type
     property cUF: integer read FcUF;
     property dhRecbto: TDateTime read FdhRecbto;
     property XML_ProcInutNFe: String read FXML_ProcInutNFe;
+    property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
   end;
 
   { TNFeConsultaCadastro }
@@ -548,6 +555,8 @@ type
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
+    FchNFe: String;
+    FNomeArq: String;
 
     FretDistDFeInt: TretDistDFeInt;
 
@@ -569,6 +578,8 @@ type
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
+    property chNFe: String read FchNFe write FchNFe;
+    property NomeArq: String read FNomeArq;
 
     property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
   end;
@@ -624,9 +635,9 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: integer; const ASincrono: Boolean = False): Boolean;
+    function Envia(ALote: integer; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
       overload;
-    function Envia(ALote: String; const ASincrono: Boolean = False): Boolean;
+    function Envia(ALote: String; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
       overload;
     procedure Inutiliza(CNPJ, AJustificativa: String;
       Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer);
@@ -655,7 +666,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrNFe,
+  ACBrUtil, ACBrCompress, ACBrNFe,
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciNFe,
   pcnConsCad, pcnLeitor;
@@ -694,6 +705,16 @@ begin
   { Sobrescrever apenas se necessário }
   inherited InicializarServico;
 
+  FOldSSLType := FPDFeOwner.SSL.SSLType;
+  FOldHeaderElement := FPHeaderElement;
+
+  { Caso seja versão 4.0, deve certificar que está usando TLS1.2 }
+  if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
+  begin
+   // FPDFeOwner.SSL.SSLType := LT_TLSv1_2;   // Servidor da BAHIA não está funcionando com esta configuração
+    FPHeaderElement := ''; //Versão 4.00 não tem o elemento <soap12:Header>
+  end;
+
   TACBrNFe(FPDFeOwner).SetStatus(FPStatus);
 end;
 
@@ -708,8 +729,10 @@ begin
   Versao := 0;
   FPVersaoServico := '';
   FPURL := '';
+  FPServico := '';
+  FPSoapAction := '';
 
-  TACBrNFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL, FPServico, FPSoapAction);
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
@@ -727,6 +750,10 @@ end;
 procedure TNFeWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }
+
+  // Retornar configurações anteriores
+  FPDFeOwner.SSL.SSLType := FOldSSLType;
+  FPHeaderElement := FOldHeaderElement;
 
   TACBrNFe(FPDFeOwner).SetStatus(stIdle);
 end;
@@ -760,8 +787,15 @@ end;
 
 procedure TNFeStatusServico.DefinirServicoEAction;
 begin
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NFeStatusServico4';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/nfeStatusServicoNF';
+  end
   // BA usa uma notação de Serviços diferente das demais UFs
-  if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+  else if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
      (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
      (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
@@ -786,6 +820,7 @@ begin
     ConsStatServ.CUF := FPConfiguracoesNFe.WebServices.UFCodigo;
 
     ConsStatServ.Versao := FPVersaoServico;
+    AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
     ConsStatServ.GerarXML;
 
     // Atribuindo o XML para propriedade interna //
@@ -799,9 +834,9 @@ function TNFeStatusServico.TratarResposta: Boolean;
 var
   NFeRetorno: TRetConsStatServ;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeStatusServicoNF2Result');
-  if FPRetWS = '' then
-    FPRetWS := SeparaDados(FPRetornoWS, 'NfeStatusServicoNFResult');
+  FPRetWS := SeparaDadosArray(['nfeStatusServicoNF2Result',
+                               'NfeStatusServicoNFResult',
+                               'nfeResultMsg'],FPRetornoWS );
 
   NFeRetorno := TRetConsStatServ.Create;
   try
@@ -814,7 +849,16 @@ begin
     FcStat := NFeRetorno.cStat;
     FxMotivo := NFeRetorno.xMotivo;
     FcUF := NFeRetorno.cUF;
-    FdhRecbto := NFeRetorno.dhRecbto;
+    { WebService do RS retorna horário de verão mesmo pros estados que não
+      adotam esse horário, ao utilizar esta hora para basear a emissão da nota
+      acontece o erro. }
+    if (pos('svrs.rs.gov.br', FPURL) > 0) and
+       (MinutesBetween(NFeRetorno.dhRecbto, Now) > 50) and
+       (not IsHorarioDeVerao(CUFtoUF(FcUF), NFeRetorno.dhRecbto)) then
+      FdhRecbto:= IncHour(NFeRetorno.dhRecbto,-1)
+    else
+      FdhRecbto := NFeRetorno.dhRecbto;
+
     FTMed := NFeRetorno.TMed;
     FdhRetorno := NFeRetorno.dhRetorno;
     FxObs := NFeRetorno.xObs;
@@ -866,6 +910,7 @@ begin
 
   FNotasFiscais := ANotasFiscais;
   FSincrono := False;
+  FZipado := False;
 end;
 
 destructor TNFeRecepcao.Destroy;
@@ -965,8 +1010,9 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
-  );
+    FPURL,
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -974,11 +1020,37 @@ end;
 procedure TNFeRecepcao.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeAutorizacao then
-    FPServico := GetUrlWsd + 'NfeAutorizacao'
+  begin
+    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400)  then
+    begin
+      if EstaVazio(FPServico) then
+        FPServico := GetUrlWsd + 'NFeAutorizacao4';
+      if EstaVazio(FPSoapAction) then
+        FPSoapAction := FPServico + '/nfeAutorizacaoLote';
+    end
+    else
+    begin
+      FPServico := GetUrlWsd + 'NfeAutorizacao';
+      FPSoapAction := FPServico;
+    end;
+  end
   else
+  begin
     FPServico := GetUrlWsd + 'NfeRecepcao2';
+    FPSoapAction := FPServico;
+  end;
 
-  FPSoapAction := FPServico;
+  if FZipado then
+  begin
+    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+      FPSoapAction := FPSoapAction+'ZIP'
+    else
+      FPSoapAction := FPSoapAction+'LoteZip';
+
+    FPBodyElement:= 'nfeDadosMsgZip';
+  end
+  else
+    FPBodyElement := 'nfeDadosMsg';
 end;
 
 procedure TNFeRecepcao.DefinirDadosMsg;
@@ -988,7 +1060,7 @@ var
   indSinc: String;
 begin
   if (FPLayout = LayNfeAutorizacao) or (FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) or
-    (FPConfiguracoesNFe.Geral.VersaoDF = ve310) then
+    (FPConfiguracoesNFe.Geral.VersaoDF >= ve310) then
     indSinc := '<indSinc>' + IfThen(FSincrono, '1', '0') + '</indSinc>'
   else
     indSinc := '';
@@ -1001,6 +1073,9 @@ begin
   FPDadosMsg := '<enviNFe xmlns="'+ACBRNFE_NAMESPACE+'" versao="' +
     FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' + indSinc +
     vNotas + '</enviNFe>';
+
+  if FZipado then
+    FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
@@ -1017,17 +1092,14 @@ var
   AProcNFe: TProcNFe;
   SalvarXML: Boolean;
 begin
-  if FPLayout = LayNfeAutorizacao then
-  begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeAutorizacaoLoteResult');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'nfeAutorizacaoResult');
-  end
-  else
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRecepcaoLote2Result');
+  FPRetWS := SeparaDadosArray(['nfeAutorizacaoLoteResult',
+                               'nfeAutorizacaoResult',
+                               'nfeAutorizacaoLoteZipResult',
+                               'nfeResultMsg',
+                               'nfeRecepcaoLote2Result'],FPRetornoWS );
 
   if ((FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) or
-    (FPConfiguracoesNFe.Geral.VersaoDF = ve310)) and FSincrono then
+    (FPConfiguracoesNFe.Geral.VersaoDF >= ve310)) and FSincrono then
   begin
     if pos('retEnviNFe', FPRetWS) > 0 then
       AXML := StringReplace(FPRetWS, 'retEnviNFe', 'retConsSitNFe',
@@ -1100,6 +1172,7 @@ begin
               AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLAssinado);
               AProcNFe.XML_Prot := FNFeRetornoSincrono.XMLprotNFe;
               AProcNFe.Versao := FPVersaoServico;
+              AjustarOpcoes( AProcNFe.Gerador.Opcoes );
               AProcNFe.GerarXML;
 
               XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
@@ -1260,7 +1333,8 @@ begin
     FcUF := FPConfiguracoesNFe.WebServices.UFCodigo;
   end;
 
-  if Assigned(FNFeRetorno) and Assigned(FNotasFiscais) then
+  if Assigned(FNFeRetorno) and Assigned(FNotasFiscais) 
+		and Assigned(FNFeRetorno.ProtNFe) then
   begin
     // Limpa Dados dos retornos das notas Fiscais;
     for i := 0 to FNFeRetorno.ProtNFe.Count - 1 do
@@ -1360,8 +1434,9 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
-  );
+    FPURL,
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -1369,11 +1444,25 @@ end;
 procedure TNFeRetRecepcao.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeRetAutorizacao then
-    FPServico := GetUrlWsd + 'NfeRetAutorizacao'
+  begin
+    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+    begin
+      if EstaVazio(FPServico) then
+        FPServico := GetUrlWsd + 'NFeRetAutorizacao4';
+      if EstaVazio(FPSoapAction) then
+        FPSoapAction := FPServico +'/nfeRetAutorizacaoLote';
+    end
+    else
+    begin
+      FPServico := GetUrlWsd + 'NfeRetAutorizacao';
+      FPSoapAction := FPServico;
+    end;
+  end
   else
+  begin
     FPServico := GetUrlWsd + 'NfeRetRecepcao2';
-
-  FPSoapAction := FPServico;
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeRetRecepcao.DefinirDadosMsg;
@@ -1385,6 +1474,7 @@ begin
     ConsReciNFe.tpAmb := FTpAmb;
     ConsReciNFe.nRec := FRecibo;
     ConsReciNFe.Versao := FPVersaoServico;
+    AjustarOpcoes( ConsReciNFe.Gerador.Opcoes );
     ConsReciNFe.GerarXML;
 
     FPDadosMsg := ConsReciNFe.Gerador.ArquivoFormatoXML;
@@ -1395,14 +1485,10 @@ end;
 
 function TNFeRetRecepcao.TratarResposta: Boolean;
 begin
-  if FPLayout = LayNfeRetAutorizacao then
-  begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetAutorizacaoResult');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetAutorizacaoLoteResult');
-  end
-  else
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetRecepcao2Result');
+  FPRetWS := SeparaDadosArray(['nfeRetAutorizacaoResult',
+                               'nfeRetAutorizacaoLoteResult',
+                               'nfeResultMsg',
+                               'nfeRetRecepcao2Result'],FPRetornoWS );
 
   FNFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FNFeRetorno.LerXML;
@@ -1475,6 +1561,7 @@ begin
             AProcNFe.XML_NFe := RemoverDeclaracaoXML(FNotasFiscais.Items[J].XMLAssinado);
             AProcNFe.XML_Prot := AInfProt.Items[I].XMLprotNFe;
             AProcNFe.Versao := FPVersaoServico;
+            AjustarOpcoes( AProcNFe.Gerador.Opcoes );
             AProcNFe.GerarXML;
 
             with FNotasFiscais.Items[J] do
@@ -1624,11 +1711,25 @@ end;
 procedure TNFeRecibo.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeRetAutorizacao then
-    FPServico := GetUrlWsd + 'NfeRetAutorizacao'
+  begin
+    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+    begin
+      if EstaVazio(FPServico) then
+        FPServico := GetUrlWsd + 'NFeRetAutorizacao4';
+      if EstaVazio(FPSoapAction) then
+        FPSoapAction := FPServico + '/nfeRetAutorizacaoLote';
+    end
+    else
+    begin
+      FPServico := GetUrlWsd + 'NfeRetAutorizacao';
+      FPSoapAction := FPServico;
+    end;
+  end
   else
+  begin
     FPServico := GetUrlWsd + 'NfeRetRecepcao2';
-
-  FPSoapAction := FPServico;
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeRecibo.DefinirURL;
@@ -1677,8 +1778,9 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
-  );
+    FPURL,
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -1692,6 +1794,7 @@ begin
     ConsReciNFe.tpAmb := FTpAmb;
     ConsReciNFe.nRec := FRecibo;
     ConsReciNFe.Versao := FPVersaoServico;
+    AjustarOpcoes( ConsReciNFe.Gerador.Opcoes );
     ConsReciNFe.GerarXML;
 
     FPDadosMsg := ConsReciNFe.Gerador.ArquivoFormatoXML;
@@ -1702,14 +1805,10 @@ end;
 
 function TNFeRecibo.TratarResposta: Boolean;
 begin
-  if FPLayout = LayNfeRetAutorizacao then
-  begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetAutorizacaoResult');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetAutorizacaoLoteResult');
-  end
-  else
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetRecepcao2Result');
+  FPRetWS := SeparaDadosArray(['nfeRetAutorizacaoResult',
+                               'nfeRetAutorizacaoLoteResult',
+                               'nfeResultMsg',
+                               'nfeRetRecepcao2Result'],FPRetornoWS );
 
   FNFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FNFeRetorno.LerXML;
@@ -1851,24 +1950,35 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
-  );
+    FPURL,
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TNFeConsulta.DefinirServicoEAction;
 begin
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NFeConsultaProtocolo4';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/nfeConsultaNF';
+  end
   // BA usa uma notação de Serviços diferente das demais UFs
-  if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
-     (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
-     (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
-     (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
-    FPServico := GetUrlWsd + 'NfeConsulta'
   else
-    FPServico := GetUrlWsd + 'NfeConsulta2';
+  begin
+    if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+       (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
+       (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
+       (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
+      FPServico := GetUrlWsd + 'NfeConsulta'
+    else
+      FPServico := GetUrlWsd + 'NfeConsulta2';
 
-  FPSoapAction := FPServico;
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeConsulta.DefinirDadosMsg;
@@ -1880,6 +1990,7 @@ begin
     ConsSitNFe.TpAmb := FTpAmb;
     ConsSitNFe.chNFe := FNFeChave;
     ConsSitNFe.Versao := FPVersaoServico;
+    AjustarOpcoes( ConsSitNFe.Gerador.Opcoes );
     ConsSitNFe.GerarXML;
 
     FPDadosMsg := ConsSitNFe.Gerador.ArquivoFormatoXML;
@@ -1905,9 +2016,9 @@ begin
   NFeRetorno := TRetConsSitNFe.Create;
 
   try
-    FPRetWS := SeparaDados(FPRetornoWS, 'NfeConsultaNF2Result');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'NfeConsultaNFResult');
+    FPRetWS := SeparaDadosArray(['NfeConsultaNF2Result',
+                                 'NfeConsultaNFResult',
+                                 'nfeResultMsg'],FPRetornoWS );
 
     NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     NFeRetorno.LerXML;
@@ -1923,7 +2034,7 @@ begin
     FcStat := NFeRetorno.cStat;
     FXMotivo := NFeRetorno.xMotivo;
     FcUF := NFeRetorno.cUF;
-    FNFeChave := NFeRetorno.chNfe;
+//    FNFeChave := NFeRetorno.chNfe;
     FPMsg := FXMotivo;
 
     // Verifica se a nota fiscal está cancelada pelo método antigo. Se estiver,
@@ -2111,6 +2222,7 @@ begin
                 AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLOriginal);
                 AProcNFe.XML_Prot := NFeRetorno.XMLprotNFe;
                 AProcNFe.Versao := FPVersaoServico;
+                AjustarOpcoes( AProcNFe.Gerador.Opcoes );
                 AProcNFe.GerarXML;
 
                 XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
@@ -2145,10 +2257,7 @@ begin
                           '</NFeDFe>';
           end;
 
-          SalvarXML := Result and
-                       FPConfiguracoesNFe.Arquivos.Salvar and
-                       ((not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
-                         Processada);
+          SalvarXML := Result and FPConfiguracoesNFe.Arquivos.Salvar and Atualiza;
 
           if SalvarXML then
           begin
@@ -2288,8 +2397,9 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
-  );
+    FPURL,
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -2298,13 +2408,21 @@ procedure TNFeInutilizacao.DefinirServicoEAction;
 var
   ok: Boolean;
 begin
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NFeInutilizacao4';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/nfeInutilizacaoNF';
+  end
   // BA usa uma notação de Serviços diferente das demais UFs
-  if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+  else if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
      (StrToModeloDF(ok, IntToStr(FModelo)) = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
      (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
   begin
-    FPServico := GetUrlWsd + 'NfeInutilizacao';
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NfeInutilizacao';
     FPSoapAction := FPServico + '/NfeInutilizacao';
   end
   else
@@ -2334,8 +2452,8 @@ begin
     InutNFe.Versao := FPVersaoServico;
     InutNFe.GerarXML;
 
-    AssinarXML(InutNFe.Gerador.ArquivoFormatoXML, 'inutNFe', 'infInut',
-      'Falha ao assinar Inutilização Nota Fiscal Eletrônica ');
+    AssinarXML( NativeStringToUTF8( InutNFe.Gerador.ArquivoFormatoXML ),
+                'inutNFe', 'infInut', 'Falha ao assinar Inutilização Nota Fiscal Eletrônica ');
 
     FID := InutNFe.ID;
   finally
@@ -2375,9 +2493,9 @@ var
 begin
   NFeRetorno := TRetInutNFe.Create;
   try
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeInutilizacaoNF2Result');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'nfeInutilizacaoNFResult');
+    FPRetWS := SeparaDadosArray(['nfeInutilizacaoNF2Result',
+                                 'nfeInutilizacaoNFResult',
+                                 'nfeResultMsg'],FPRetornoWS );
 
     NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     NFeRetorno.LerXml;
@@ -2404,6 +2522,7 @@ begin
                            FPRetWS +
                           '</ProcInutNFe>';
 
+      FNomeArquivo := PathWithDelim(GerarPathPorCNPJ) + GerarPrefixoArquivo + '-procInutNFe.xml';
       if FPConfiguracoesNFe.Arquivos.Salvar then
         FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutNFe.xml',
           FXML_ProcInutNFe, GerarPathPorCNPJ);
@@ -2507,8 +2626,18 @@ end;
 
 procedure TNFeConsultaCadastro.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'CadConsultaCadastro2';
-  FPSoapAction := FPServico;
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'CadConsultaCadastro4';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/consultaCadastro';
+  end
+  else
+  begin
+    FPServico := GetUrlWsd + 'CadConsultaCadastro2';
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeConsultaCadastro.DefinirURL;
@@ -2528,8 +2657,9 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL
-  );
+    FPURL,
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
@@ -2545,6 +2675,7 @@ begin
     ConCadNFe.CNPJ := FCNPJ;
     ConCadNFe.CPF := FCPF;
     ConCadNFe.Versao := FPVersaoServico;
+    AjustarOpcoes( ConCadNFe.Gerador.Opcoes );
     ConCadNFe.GerarXML;
 
     FPDadosMsg := ConCadNFe.Gerador.ArquivoFormatoXML;
@@ -2555,7 +2686,8 @@ end;
 
 function TNFeConsultaCadastro.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'consultaCadastro2Result');
+  FPRetWS := SeparaDadosArray(['consultaCadastro2Result',
+                               'nfeResultMsg'],FPRetornoWS );
 
   FRetConsCad.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsCad.LerXml;
@@ -2662,7 +2794,7 @@ begin
     UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFe));
   end;
 
-  if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento]) then
+  if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2]) then
   begin
     FPLayout := LayNFeEventoAN;
     UF       := 'AN';
@@ -2682,30 +2814,41 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
-  );
+    FPURL,
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
 procedure TNFeEnvEvento.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'RecepcaoEvento';
-  FPSoapAction := FPServico;
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NFeRecepcaoEvento4';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/nfeRecepcaoEvento';
+  end
+  else
+  begin
+    FPServico := GetUrlWsd + 'RecepcaoEvento';
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeEnvEvento.DefinirDadosMsg;
 var
   EventoNFe: TEventoNFe;
   I, J, F: integer;
-  Lote, Evento, Eventos, EventosAssinados: String;
+  Lote, Evento, Eventos, EventosAssinados: AnsiString;
 begin
   EventoNFe := TEventoNFe.Create;
   try
     EventoNFe.idLote := FidLote;
 
     {(*}
-    for I := 0 to TNFeEnvEvento(Self).FEvento.Evento.Count - 1 do
+    for I := 0 to FEvento.Evento.Count - 1 do
     begin
       with EventoNFe.Evento.Add do
       begin
@@ -2781,6 +2924,7 @@ begin
     {*)}
 
     EventoNFe.Versao := FPVersaoServico;
+    AjustarOpcoes( EventoNFe.Gerador.Opcoes );
     EventoNFe.GerarXML;
 
     // Separa os grupos <evento> e coloca na variável Eventos
@@ -2788,7 +2932,7 @@ begin
     Lote := Copy(EventoNFe.Gerador.ArquivoFormatoXML, 1, I - 1);
     Eventos := SeparaDados(EventoNFe.Gerador.ArquivoFormatoXML, 'envEvento');
     I := Pos('<evento ', Eventos);
-    Eventos := Copy(Eventos, I, length(Eventos));
+    Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
 
     EventosAssinados := '';
 
@@ -2803,9 +2947,7 @@ begin
         Eventos := Copy(Eventos, F + 9, length(Eventos));
 
         AssinarXML(Evento, 'evento', 'infEvento', 'Falha ao assinar o Envio de Evento ');
-
-        EventosAssinados := EventosAssinados + StringReplace(
-          FPDadosMsg, '<?xml version="1.0"?>', '', []);
+        EventosAssinados := EventosAssinados + FPDadosMsg;
       end
       else
         Break;
@@ -2838,7 +2980,9 @@ var
 begin
   FEvento.idLote := idLote;
 
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeRecepcaoEventoResult');
+  FPRetWS := SeparaDadosArray(['nfeRecepcaoEventoResult',
+                               'nfeResultMsg'],FPRetornoWS );
+
 
   EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   EventoRetorno.LerXml;
@@ -2848,8 +2992,7 @@ begin
   FPMsg := EventoRetorno.xMotivo;
   FTpAmb := EventoRetorno.tpAmb;
 
-  Result := (EventoRetorno.cStat = 128) or (EventoRetorno.cStat = 135) or
-    (EventoRetorno.cStat = 136) or (EventoRetorno.cStat = 155);
+  Result := (FcStat = 128);
 
   //gerar arquivo proc de evento
   if Result then
@@ -2874,39 +3017,45 @@ begin
             FEvento.Evento.Items[I].RetInfEvento.xMotivo :=
               EventoRetorno.retEvento.Items[J].RetInfEvento.xMotivo;
 
-            VersaoEvento := TACBrNFe(FPDFeOwner).LerVersaoDeParams(LayNfeEvento);
+            Texto := '';
 
-            Leitor.Arquivo := FPDadosMsg;
-            Texto := // '<' + ENCODING_UTF8 + '>' +
-                     '<procEventoNFe versao="' + VersaoEvento + '" xmlns="' + ACBRNFE_NAMESPACE + '">' +
-                      '<evento versao="' + VersaoEvento + '">' +
-                       Leitor.rExtrai(1, 'infEvento', '', I + 1) +
-                       '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
-                        Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
-                        Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
-                        Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
-                       '</Signature>'+
-                      '</evento>';
-
-            Leitor.Arquivo := FPRetWS;
-            Texto := Texto +
-                       '<retEvento versao="' + VersaoEvento + '">' +
-                        Leitor.rExtrai(1, 'infEvento', '', J + 1) +
-                       '</retEvento>' +
-                      '</procEventoNFe>';
-
-            if FPConfiguracoesNFe.Arquivos.Salvar then
+            if EventoRetorno.retEvento.Items[J].RetInfEvento.cStat in [135, 136, 155] then
             begin
-              NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) + '-procEventoNFe.xml';
-              PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
+              VersaoEvento := TACBrNFe(FPDFeOwner).LerVersaoDeParams(LayNfeEvento);
 
-              FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
-              FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
-              FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
+              Leitor.Arquivo := FPDadosMsg;
+              Texto := '<procEventoNFe versao="' + VersaoEvento + '" xmlns="' + ACBRNFE_NAMESPACE + '">' +
+                        '<evento versao="' + VersaoEvento + '">' +
+                         Leitor.rExtrai(1, 'infEvento', '', I + 1) +
+                         '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
+                          Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
+                          Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
+                          Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
+                         '</Signature>'+
+                        '</evento>';
+
+              Leitor.Arquivo := FPRetWS;
+              Texto := Texto +
+                         '<retEvento versao="' + VersaoEvento + '">' +
+                          Leitor.rExtrai(1, 'infEvento', '', J + 1) +
+                         '</retEvento>' +
+                        '</procEventoNFe>';
+
+              if FPConfiguracoesNFe.Arquivos.Salvar then
+              begin
+                NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) + '-procEventoNFe.xml';
+                PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
+
+                FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
+                FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
+                FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
+              end;
+
+              { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
+              Texto := ParseText(Texto);
             end;
 
-            { Converte de UTF8 para a String nativa e Decodificar caracteres HTML Entity }
-            Texto := ParseText(Texto);
+            // Se o evento for rejeitado a propriedade XML conterá uma string vazia
             FEventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
             FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
 
@@ -2922,20 +3071,34 @@ end;
 
 procedure TNFeEnvEvento.SalvarEnvio;
 begin
-  inherited SalvarEnvio;
+//  inherited SalvarEnvio;
+
+  if ArqEnv = '' then
+    exit;
 
   if FPConfiguracoesNFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
                       FPDadosMsg, GerarPathEvento(FCNPJ));
+
+  if FPConfiguracoesNFe.WebServices.Salvar then
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '-soap.xml',
+      FPEnvelopeSoap, GerarPathEvento(FCNPJ));
 end;
 
 procedure TNFeEnvEvento.SalvarResposta;
 begin
-  inherited SalvarResposta;
+//  inherited SalvarResposta;
+
+  if ArqResp = '' then
+    exit;
 
   if FPConfiguracoesNFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
                       FPRetWS, GerarPathEvento(FCNPJ));
+
+  if FPConfiguracoesNFe.WebServices.Salvar then
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '-soap.xml',
+      FPRetornoWS, GerarPathEvento(FCNPJ));
 end;
 
 function TNFeEnvEvento.GerarMsgLog: String;
@@ -2963,7 +3126,8 @@ end;
 
 function TNFeEnvEvento.GerarPrefixoArquivo: String;
 begin
-  Result := IntToStr(FEvento.idLote);
+//  Result := IntToStr(FEvento.idLote);
+  Result := IntToStr(FidLote);
 end;
 
 { TNFeConsNFeDest }
@@ -3015,7 +3179,8 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL);
+    FPURL, FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
@@ -3038,6 +3203,7 @@ begin
     ConsNFeDest.indEmi := FindEmi;
     ConsNFeDest.ultNSU := FultNSU;
     ConsNFeDest.Versao := FPVersaoServico;
+    AjustarOpcoes( ConsNFeDest.Gerador.Opcoes );
     ConsNFeDest.GerarXML;
 
     FPDadosMsg := ConsNFeDest.Gerador.ArquivoFormatoXML;
@@ -3048,7 +3214,8 @@ end;
 
 function TNFeConsNFeDest.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeConsultaNFDestResult');
+  FPRetWS := SeparaDadosArray(['nfeConsultaNFDestResult',
+                               'nfeResultMsg'],FPRetornoWS );
 
   FretConsNFeDest.Leitor.Arquivo := ParseText(FPRetWS);
   FretConsNFeDest.LerXml;
@@ -3135,7 +3302,8 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL);
+    FPURL, FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
@@ -3165,6 +3333,7 @@ begin
     end;
 
     DownloadNFe.Versao := FPVersaoServico;
+    AjustarOpcoes( DownloadNFe.Gerador.Opcoes );
     DownloadNFe.GerarXML;
 
     FPDadosMsg := DownloadNFe.Gerador.ArquivoFormatoXML;
@@ -3178,7 +3347,9 @@ var
   I: integer;
   NomeArq: String;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeDownloadNFResult');
+  FPRetWS := SeparaDadosArray(['nfeDownloadNFResult',
+                               'nfeResultMsg'],FPRetornoWS );
+
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
   FRetDownloadNFe.Leitor.Arquivo := FPRetWS;
@@ -3291,6 +3462,7 @@ begin
     AdmCSCNFCe.codigoCsc := FCodigoCSC;
 
     AdmCSCNFCe.Versao := FPVersaoServico;
+    AjustarOpcoes( AdmCSCNFCe.Gerador.Opcoes );
     AdmCSCNFCe.GerarXML;
 
     FPDadosMsg := AdmCSCNFCe.Gerador.ArquivoFormatoXML;
@@ -3301,7 +3473,8 @@ end;
 
 function TAdministrarCSCNFCe.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'cscNFCeResult');
+  FPRetWS := SeparaDadosArray(['cscNFCeResult',
+                               'nfeResultMsg'],FPRetornoWS );
 
   FretAdmCSCNFCe.Leitor.Arquivo := ParseText(FPRetWS);
   FretAdmCSCNFCe.LerXml;
@@ -3380,7 +3553,8 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL);
+    FPURL, FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
@@ -3400,9 +3574,11 @@ begin
     DistDFeInt.TpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
     DistDFeInt.cUFAutor := FcUFAutor;
     DistDFeInt.CNPJCPF := FCNPJCPF;
-    DistDFeInt.ultNSU := FultNSU;
-    DistDFeInt.NSU := FNSU;
+    DistDFeInt.ultNSU := trim(FultNSU);
+    DistDFeInt.NSU := trim(FNSU);
+    DistDFeInt.chNFe := trim(FchNFe);
     DistDFeInt.Versao := FPVersaoServico;
+    AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
     DistDFeInt.GerarXML;
 
     FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;
@@ -3414,9 +3590,10 @@ end;
 function TDistribuicaoDFe.TratarResposta: Boolean;
 var
   I: integer;
-  AXML, NomeArq: String;
+  AXML: String;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeDistDFeInteresseResult');
+  FPRetWS := SeparaDadosArray(['nfeDistDFeInteresseResult',
+                               'nfeResultMsg'],FPRetornoWS );
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;
@@ -3425,29 +3602,36 @@ begin
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
   begin
     AXML := FretDistDFeInt.docZip.Items[I].XML;
-    NomeArq := '';
+    FNomeArq := '';
     if (AXML <> '') then
     begin
       case FretDistDFeInt.docZip.Items[I].schema of
         schresNFe:
-          NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-resNFe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-resNFe.xml';
 
         schresEvento:
-          NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
-                     FretDistDFeInt.docZip.Items[I].resEvento.chNFe +
-                     Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
-                     '-resEventoNFe.xml';
+          FNomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
+                      FretDistDFeInt.docZip.Items[I].resEvento.chNFe +
+                      Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
+                      '-resEventoNFe.xml';
 
         schprocNFe:
-          NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
 
         schprocEventoNFe:
-          NomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
-                     '-procEventoNFe.xml';
+          FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
+                      '-procEventoNFe.xml';
       end;
 
       if (FPConfiguracoesNFe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
-        FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+      begin
+        if FPConfiguracoesNFe.Arquivos.SalvarEvento then
+           if (FretDistDFeInt.docZip.Items[I].schema in [schresEvento, schprocEventoNFe]) then // salvar evento
+              FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+
+        if (FretDistDFeInt.docZip.Items[I].schema in [schresNFe, schprocNFe]) then
+           FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+      end;
     end;
   end;
 
@@ -3461,7 +3645,6 @@ begin
 
   FPMsg := FretDistDFeInt.xMotivo;
   Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
-
 end;
 
 function TDistribuicaoDFe.GerarMsgLog: String;
@@ -3499,9 +3682,19 @@ begin
   else
     Data := Now;
 
-  Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resNFe.xNome,
+  case AItem.schema of
+    schresEvento,
+    schprocEventoNFe:
+      Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
+                                                          AItem.resNFe.CNPJCPF,
+                                                          Data);
+
+    schresNFe,
+    schprocNFe:
+      Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resNFe.xNome,
                                                         AItem.resNFe.CNPJCPF,
                                                         Data);
+  end;
 end;
 
 { TNFeEnvioWebService }
@@ -3614,20 +3807,24 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: integer; const ASincrono: Boolean): Boolean;
+
+function TWebServices.Envia(ALote: integer; const ASincrono: Boolean;
+  AZipado: Boolean): Boolean;
 begin
-  Result := Envia(IntToStr(ALote), ASincrono);
+  Result := Envia(IntToStr(ALote), ASincrono, AZipado );
 end;
 
-function TWebServices.Envia(ALote: String; const ASincrono: Boolean): Boolean;
+function TWebServices.Envia(ALote: String; const ASincrono: Boolean;
+  AZipado: Boolean): Boolean;
 begin
   FEnviar.Lote := ALote;
   FEnviar.Sincrono := ASincrono;
+  FEnviar.Zipado := AZipado;
 
   if not Enviar.Executar then
     Enviar.GerarException( Enviar.Msg );
 
-  if not ASincrono then
+  if not ASincrono or ((FEnviar.Recibo <> '') and (FEnviar.cStat = 103)) then
   begin
     FRetorno.Recibo := FEnviar.Recibo;
     if not FRetorno.Executar then

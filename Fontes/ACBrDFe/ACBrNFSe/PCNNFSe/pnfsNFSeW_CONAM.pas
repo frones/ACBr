@@ -43,7 +43,7 @@ uses
   synacode, ACBrConsts,
   pnfsNFSeW,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao;
+  pnfsNFSe, pnfsConversao, pnfsConsts;
 
 type
   { TNFSeW_CONAM }
@@ -102,7 +102,7 @@ begin
   begin
     Gerador.wCampoNFSe(tcInt, '', 'TipoTrib'   , 01, 01, 0, 4 , '');
     Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN'    , 01, 10, 0, FormatDateTime('dd/mm/yyyy', NFSe.DataOptanteSimplesNacional) , ''); //data de adesao ao simples nacional
-    Gerador.wCampoNFSe(tcStr, '', 'AlqIssSN_IP', 01, 06, 0, FormatFloat('##0.00', NFSe.ValoresNfse.Aliquota) , '');
+    Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 01, 06, 0, NFSe.ValoresNfse.Aliquota, '');
   end
   else begin
     case FNFSe.Servico.ExigibilidadeISS of
@@ -139,12 +139,12 @@ begin
   else
     Gerador.wCampoNFSe(tcStr, '', 'TipoNFS', 01, 3, 1, 'RPC' , '');
 
-  Gerador.wCampoNFSe(tcStr, '', 'NumRps', 01, 9, 1, FNFSe.IdentificacaoRps.Numero , '');
+  Gerador.wCampoNFSe(tcStr, '', 'NumRps', 01, 9, 1, FNFSe.IdentificacaoRps.Numero , DSC_NUMRPS);
 
   if NFSe.IdentificacaoRps.Serie = '' then
-    Gerador.wCampoNFSe(tcStr, '', 'SerRps', 01, 03, 1, '001', '')
+    Gerador.wCampoNFSe(tcStr, '', 'SerRps', 01, 03, 1, '001', DSC_SERIERPS)
   else
-    Gerador.wCampoNFSe(tcStr, '', 'SerRps', 01, 03, 1, NFSe.IdentificacaoRps.Serie, '');
+    Gerador.wCampoNFSe(tcStr, '', 'SerRps', 01, 03, 1, NFSe.IdentificacaoRps.Serie, DSC_SERIERPS);
 
   Gerador.wCampoNFSe(tcStr, '', 'DtEmi', 01, 10, 1, FormatDateTime('dd/mm/yyyy',NFse.DataEmissaoRps), '');
 
@@ -155,13 +155,13 @@ begin
 
   Gerador.wCampoNFSe(tcStr, '', 'CodSrv'   , 01,   05, 1, NFSe.Servico.ItemListaServico, '');
   Gerador.wCampoNFSe(tcStr, '', 'DiscrSrv' , 01, 4000, 1, StringReplace( NFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), '');
-  Gerador.wCampoNFSe(tcStr, '', 'VlNFS'    , 01,   16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorServicos), '');
-  Gerador.wCampoNFSe(tcStr, '', 'VlDed'    , 01,   16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorDeducoes), '');
+  Gerador.wCampoNFSe(tcDe2, '', 'VlNFS'    , 01,   16, 2, NFSe.Servico.Valores.ValorServicos, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'VlDed'    , 01,   16, 2, NFSe.Servico.Valores.ValorDeducoes, '');
   Gerador.wCampoNFSe(tcStr, '', 'DiscrDed' , 01, 4000, 1,StringReplace( NFSe.Servico.Valores.JustificativaDeducao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), '');
-  Gerador.wCampoNFSe(tcStr, '', 'VlBasCalc', 01,   16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.BaseCalculo), '');
-  Gerador.wCampoNFSe(tcStr, '', 'AlqIss'   , 01,   05, 2, FormatFloat('############0.00', NFSe.Servico.Valores.Aliquota), '');
-  Gerador.wCampoNFSe(tcStr, '', 'VlIss'    , 01,   16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorIss), '');
-  Gerador.wCampoNFSe(tcStr, '', 'VlIssRet' , 01,   16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorIssRetido), '');
+  Gerador.wCampoNFSe(tcDe2, '', 'VlBasCalc', 01,   16, 2, NFSe.Servico.Valores.BaseCalculo, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'AlqIss'   , 01,   05, 2, NFSe.Servico.Valores.Aliquota, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'VlIss'    , 01,   16, 2, NFSe.Servico.Valores.ValorIss, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'VlIssRet' , 01,   16, 2, NFSe.Servico.Valores.ValorIssRetido, '');
 
   CpfCnpj := UpperCase(StringReplace(StringReplace(StringReplace(NFSe.Tomador.IdentificacaoTomador.CpfCnpj, '.', '', [rfReplaceAll]), '-', '', [rfReplaceAll]), '/', '', [rfReplaceAll]));
 
@@ -252,8 +252,8 @@ begin
     begin
       Gerador.wGrupoNFSe('Reg30Item');
       Gerador.wCampoNFSe(tcStr, '', 'TributoSigla'   , 01,  06, 1, 'PIS', '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoAliquota', 01,  05, 2, FormatFloat('##0.00', NFSe.Servico.Valores.AliquotaPis), '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoValor'   , 01,  16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorPis), '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoAliquota', 01,  05, 2, NFSe.Servico.Valores.AliquotaPis, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoValor'   , 01,  16, 2, NFSe.Servico.Valores.ValorPis, '');
       Gerador.wGrupoNFSe('/Reg30Item');
       QtdReg30:=QtdReg30+1;
       ValReg30:=ValReg30+NFSe.Servico.Valores.ValorPis;
@@ -263,8 +263,8 @@ begin
     begin
       Gerador.wGrupoNFSe('Reg30Item');
       Gerador.wCampoNFSe(tcStr, '', 'TributoSigla'   , 01,  06, 1, 'COFINS', '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoAliquota', 01,  05, 2, FormatFloat('##0.00', NFSe.Servico.Valores.AliquotaCofins), '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoValor'   , 01,  16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorCofins), '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoAliquota', 01,  05, 2, NFSe.Servico.Valores.AliquotaCofins, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoValor'   , 01,  16, 2, NFSe.Servico.Valores.ValorCofins, '');
       Gerador.wGrupoNFSe('/Reg30Item');
       QtdReg30:=QtdReg30+1;
       ValReg30:=ValReg30+NFSe.Servico.Valores.ValorCofins;
@@ -274,8 +274,8 @@ begin
     begin
       Gerador.wGrupoNFSe('Reg30Item');
       Gerador.wCampoNFSe(tcStr, '', 'TributoSigla'   , 01,  06, 1, 'CSLL', '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoAliquota', 01,  05, 2, FormatFloat('##0.00', NFSe.Servico.Valores.AliquotaCsll), '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoValor'   , 01,  16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorCsll), '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoAliquota', 01,  05, 2, NFSe.Servico.Valores.AliquotaCsll, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoValor'   , 01,  16, 2, NFSe.Servico.Valores.ValorCsll, '');
       Gerador.wGrupoNFSe('/Reg30Item');
       QtdReg30:=QtdReg30+1;
       ValReg30:=ValReg30+NFSe.Servico.Valores.ValorCsll;
@@ -285,8 +285,8 @@ begin
     begin
       Gerador.wGrupoNFSe('Reg30Item');
       Gerador.wCampoNFSe(tcStr, '', 'TributoSigla'   , 01,  06, 1, 'INSS', '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoAliquota', 01,  05, 2, FormatFloat('##0.00', NFSe.Servico.Valores.AliquotaInss), '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoValor'   , 01,  16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorInss), '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoAliquota', 01,  05, 2, NFSe.Servico.Valores.AliquotaInss, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoValor'   , 01,  16, 2, NFSe.Servico.Valores.ValorInss, '');
       Gerador.wGrupoNFSe('/Reg30Item');
       QtdReg30:=QtdReg30+1;
       ValReg30:=ValReg30+NFSe.Servico.Valores.ValorInss;
@@ -296,8 +296,8 @@ begin
     begin
       Gerador.wGrupoNFSe('Reg30Item');
       Gerador.wCampoNFSe(tcStr, '', 'TributoSigla'   , 01,  06, 1, 'IR', '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoAliquota', 01,  05, 2, FormatFloat('##0.00', NFSe.Servico.Valores.AliquotaIr), '');
-      Gerador.wCampoNFSe(tcStr, '', 'TributoValor'   , 01,  16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorIr), '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoAliquota', 01,  05, 2, NFSe.Servico.Valores.AliquotaIr, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'TributoValor'   , 01,  16, 2, NFSe.Servico.Valores.ValorIr, '');
       Gerador.wGrupoNFSe('/Reg30Item');
       QtdReg30:=QtdReg30+1;
       ValReg30:=ValReg30+NFSe.Servico.Valores.ValorIr;
@@ -310,13 +310,12 @@ end;
 procedure TNFSeW_CONAM.GerarValoresServico;
 begin
   Gerador.wGrupoNFSe('Reg90');
-
   Gerador.wCampoNFSe(tcStr, '', 'QtdRegNormal'  , 01, 05, 1, '1', '');
-  Gerador.wCampoNFSe(tcStr, '', 'ValorNFS'      , 01, 16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorServicos), '');
-  Gerador.wCampoNFSe(tcStr, '', 'ValorISS'      , 01, 16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorIss), '');
-  Gerador.wCampoNFSe(tcStr, '', 'ValorDed'      , 01, 16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorDeducoes), '');
-  Gerador.wCampoNFSe(tcStr, '', 'ValorIssRetTom', 01, 16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorIssRetido), '');
-  Gerador.wCampoNFSe(tcStr, '', 'ValorTributos' , 01, 16, 2, FormatFloat('############0.00', ValReg30), '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorNFS'      , 01, 16, 2, NFSe.Servico.Valores.ValorServicos, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorISS'      , 01, 16, 2, NFSe.Servico.Valores.ValorIss, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorDed'      , 01, 16, 2, NFSe.Servico.Valores.ValorDeducoes, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorIssRetTom', 01, 16, 2, NFSe.Servico.Valores.ValorIssRetido, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorTributos' , 01, 16, 2, ValReg30, '');
   Gerador.wCampoNFSe(tcStr, '', 'QtdReg30'      , 01, 05, 1, QtdReg30, '');
 
   Gerador.wGrupoNFSe('/Reg90');
@@ -324,6 +323,7 @@ end;
 
 function TNFSeW_CONAM.GerarXml: Boolean;
 begin
+  Gerador.ListaDeAlertas.Clear;
   GerarXML_CONAM;
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
@@ -333,7 +333,6 @@ procedure TNFSeW_CONAM.GerarXML_CONAM;
 begin
 (*
   Gerador.Opcoes.RetirarEspacos := False;
-  Gerador.Opcoes.DecimalChar := ',';
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
 *)
@@ -341,6 +340,7 @@ begin
 
   //Gerador.wGrupoNFSe('SDTRPS');
   //GerarIdentificacaoRPS;
+  Gerador.Opcoes.DecimalChar := ',';
   GerarListaServicos;
   //GerarValoresServico;
   //Gerador.wGrupoNFSe('/SDTRPS');

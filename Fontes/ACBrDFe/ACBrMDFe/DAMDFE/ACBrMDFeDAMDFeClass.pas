@@ -41,11 +41,14 @@ unit ACBrMDFeDAMDFeClass;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrBase,
   pmdfeMDFe, pcnConversao;
 
 type
-  TACBrMDFeDAMDFeClass = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
+  TACBrMDFeDAMDFeClass = class(TACBrComponent)
    private
     procedure SetMDFe(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);
@@ -219,17 +222,46 @@ begin
 end;
 
 function TACBrMDFeDAMDFeClass.GetPathPDF: String;
+var
+  dhEmissao: TDateTime;
+  DescricaoModelo: String;
+  AMDFe: TMDFe;
 begin
-  if Trim(FPathPDF) <> '' then
-    Result := IncludeTrailingPathDelimiter(FPathPDF)
-  else
-    Result := Trim(FPathPDF)
+  if (csDesigning in ComponentState) then
+  begin
+    Result := FPathPDF;
+    Exit;
+  end;
+
+  Result := PathWithDelim(FPathPDF);
+
+  // Criar diretório conforme configurado para MDF-e
+  if Assigned(ACBrMDFe) then
+  begin
+    if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
+    begin
+      AMDFe := TACBrMDFe(ACBrMDFe).Manifestos.Items[0].MDFe;
+      if TACBrMDFe(ACBrMDFe).Configuracoes.Arquivos.EmissaoPathMDFe then
+        dhEmissao := AMDFe.Ide.dhEmi
+      else
+        dhEmissao := Now;
+
+      DescricaoModelo := 'MDFe';
+
+      Result := PathWithDelim(TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
+                              Result
+                             ,DescricaoModelo
+                             ,AMDFe.Emit.CNPJ
+                             ,dhEmissao
+                             ,DescricaoModelo
+                             ));
+    end;
+  end;
 end;
 
 procedure TACBrMDFeDAMDFeClass.SetPathPDF(const Value: String);
 begin
-  if Trim(Value) <> '' then
-    FPathPDF := IncludeTrailingPathDelimiter(Value);
+  FPathPDF := PathWithDelim(Value);
 end;
 
 end.

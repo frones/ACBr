@@ -46,9 +46,9 @@ uses
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, ShlObj,
-  uFrameLista, System.IOUtils,
-  System.Types, JvComponentBase, JvCreateProcess, JvExControls, JvAnimatedImage,
-  JvGIFCtrl, JvWizard, JvWizardRouteMapNodes, Vcl.CheckLst;
+  uFrameLista, IOUtils,
+  Types, JvComponentBase, JvCreateProcess, JvExControls, JvAnimatedImage,
+  JvGIFCtrl, JvWizard, JvWizardRouteMapNodes, CheckLst;
 
 type
   TDestino = (tdSystem, tdDelphi, tdNone);
@@ -114,6 +114,10 @@ type
     Label22: TLabel;
     clbDelphiVersion: TCheckListBox;
     Label23: TLabel;
+    ckbRemoveOpenSSL: TCheckBox;
+    ckbRemoveCapicom: TCheckBox;
+    ckbCargaDllTardia: TCheckBox;
+    ckbRemoverCastWarnings: TCheckBox;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -177,6 +181,7 @@ type
     function RunAsAdminAndWaitForCompletion(hWnd: HWND; filename: string): Boolean;
     procedure GetDriveLetters(AList: TStrings);
     procedure MostraDadosVersao;
+    function GetPathACBrInc: TFileName;
   public
 
   end;
@@ -235,7 +240,8 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
       try
         repeat
 
-          if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history') then
+          if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history')
+          or (oDirList.Name = '__recovery')then
             Continue;
 
           //if oDirList.Attr = faDirectory then
@@ -474,11 +480,15 @@ begin
     edtDirDestino.Text          := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
     edtPlatform.ItemIndex       := edtPlatform.Items.IndexOf('Win32');//edtPlatform.Items.IndexOf(ArqIni.ReadString('CONFIG', 'Plataforma', 'Win32'));
 //    edtDelphiVersion.ItemIndex  := edtDelphiVersion.Items.IndexOf(ArqIni.ReadString('CONFIG', 'DelphiVersao', ''));
-    ckbFecharTortoise.Checked   := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
-    rdgDLL.ItemIndex            := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
-    ckbCopiarTodasDll.Checked   := ArqIni.ReadBool('CONFIG','CopiarTodasDLLs',False);
-    ckbBCB.Checked              := ArqIni.ReadBool('CONFIG','C++Builder',False);
-    chkDeixarSomenteLIB.Checked := ArqIni.ReadBool('CONFIG','DexarSomenteLib',False);
+    ckbFecharTortoise.Checked      := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
+    rdgDLL.ItemIndex               := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
+    ckbCopiarTodasDll.Checked      := ArqIni.ReadBool('CONFIG','CopiarTodasDLLs',False);
+    ckbBCB.Checked                 := ArqIni.ReadBool('CONFIG','C++Builder',False);
+    chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib',False);
+    ckbRemoveOpenSSL.Checked       := ArqIni.ReadBool('CONFIG','RemoveOpenSSL',False);
+    ckbRemoveCapicom.Checked       := ArqIni.ReadBool('CONFIG','RemoveCapicom',False);
+    ckbCargaDllTardia.Checked      := ArqIni.ReadBool('CONFIG','CargaDllTardia',False);
+    ckbRemoverCastWarnings.Checked := ArqIni.ReadBool('CONFIG','RemoverCastWarnings',False);
 
     if Trim(edtDelphiVersion.Text) = '' then
       edtDelphiVersion.ItemIndex := 0;
@@ -521,6 +531,10 @@ begin
     ArqIni.WriteBool('CONFIG','CopiarTodasDLLs',ckbCopiarTodasDll.Checked);
     ArqIni.WriteBool('CONFIG','C++Builder',ckbBCB.Checked);
     ArqIni.WriteBool('CONFIG','DexarSomenteLib', chkDeixarSomenteLIB.Checked);
+    ArqIni.WriteBool('CONFIG','RemoveOpenSSL', ckbRemoveOpenSSL.Checked);
+    ArqIni.WriteBool('CONFIG','RemoveCapicom', ckbRemoveCapicom.Checked);
+    ArqIni.WriteBool('CONFIG','CargaDllTardia', ckbCargaDllTardia.Checked);
+    ArqIni.WriteBool('CONFIG','RemoverCastWarnings', ckbRemoverCastWarnings.Checked);
 
     for I := 0 to frameDpk.Pacotes.Count - 1 do
       ArqIni.WriteBool('PACOTES', frameDpk.Pacotes[I].Caption, frameDpk.Pacotes[I].Checked);
@@ -623,8 +637,8 @@ var
 
   function EProibido(const ADir: String): Boolean;
   const
-    LISTA_PROIBIDOS: ARRAY[0..4] OF STRING = (
-      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history'
+    LISTA_PROIBIDOS: ARRAY[0..5] OF STRING = (
+      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history', '__recovery'
     );
   var
     Str: String;
@@ -802,7 +816,7 @@ begin
      if VersionNumberStr = 'd16' then
         Sender.Options.Add('-NSData.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win');
 
-     if MatchText(VersionNumberStr, ['d17','d18','d19','d20','d21','d22','d23','d24']) then
+     if MatchText(VersionNumberStr, ['d17','d18','d19','d20','d21','d22','d23','d24','d25']) then
         Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell');
 
   end;
@@ -861,7 +875,9 @@ begin
     else if oACBr.Installations[iFor].VersionNumberStr = 'd23' then
       edtDelphiVersion.Items.Add('Delphi 10 Seattle')
     else if oACBr.Installations[iFor].VersionNumberStr = 'd24' then
-      edtDelphiVersion.Items.Add('Delphi 10.1 Berlin');
+      edtDelphiVersion.Items.Add('Delphi 10.1 Berlin')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd25' then
+      edtDelphiVersion.Items.Add('Delphi 10.2 Tokyo');
 
     // -- Evento disparado antes de iniciar a execução do processo.
     oACBr.Installations[iFor].DCC32.OnBeforeExecute := BeforeExecute;
@@ -982,7 +998,7 @@ begin
     ConteudoArquivo := '@echo off' + sLineBreak;
     for I := 0 to DriverList.Count -1 do
     begin
-      ConteudoArquivo := ConteudoArquivo + DriverList[I].Replace('\', '') + sLineBreak;
+      ConteudoArquivo := ConteudoArquivo + StringReplace(DriverList[I], '\', '', []) + sLineBreak;
       ConteudoArquivo := ConteudoArquivo + 'cd\' + sLineBreak;
       ConteudoArquivo := ConteudoArquivo + 'del ACBr*.bpl ACBr*.dcp ACBr*.dcu PCN*.bpl PCN*.dcp PCN*.dcu SYNA*.bpl SYNA*.dcp SYNA*.dcu pnfs*.dcu pcte*.bpl pcte*.dcp pcte*.dcu pmdfe*.bpl pmdfe*.dcp pmdfe*.dcu /s' + sLineBreak;
       ConteudoArquivo := ConteudoArquivo + sLineBreak;
@@ -994,6 +1010,11 @@ begin
   end;
 
   RunAsAdminAndWaitForCompletion(Handle, PathBat);
+end;
+
+function TfrmPrincipal.GetPathACBrInc: TFileName;
+begin
+  Result := IncludeTrailingPathDelimiter(edtDirDestino.Text) + 'Fontes\ACBrComum\ACBr.inc';
 end;
 
 // botão de compilação e instalação dos pacotes selecionados no treeview
@@ -1048,7 +1069,39 @@ var
     Application.ProcessMessages;
   end;
 
+  procedure DesligarDefineACBrInc(const ADefineName: String; const ADesligar: Boolean);
+  var
+    F: TStringList;
+    I: Integer;
+  begin
+    F := TStringList.Create;
+    try
+      F.LoadFromFile(GetPathACBrInc);
+      for I := 0 to F.Count - 1 do
+      begin
+        if Pos(ADefineName.ToUpper, F[I].ToUpper) > 0 then
+        begin
+          if ADesligar then
+            F[I] := '{$DEFINE ' + ADefineName + '}'
+          else
+            F[I] := '{.$DEFINE ' + ADefineName + '}';
+
+          Break;
+        end;
+      end;
+      F.SaveToFile(GetPathACBrInc);
+    finally
+      F.Free;
+    end;
+  end;
+
 begin
+  DesligarDefineACBrInc('DFE_SEM_OPENSSL',  ckbRemoveOpenSSL.Checked);
+  DesligarDefineACBrInc('DFE_SEM_CAPICOM',  ckbRemoveCapicom.Checked);
+  DesligarDefineACBrInc('USE_DELAYED',      ckbCargaDllTardia.Checked);
+  DesligarDefineACBrInc('REMOVE_CAST_WARN', ckbRemoverCastWarnings.Checked);
+
+
   for iListaVer := 0 to clbDelphiVersion.Count -1 do
   begin
     // só instala as versão marcadas para instalar.
@@ -1367,7 +1420,7 @@ begin
   end;
 
   // C++ Builder a partir do D2006, versões anteriores tem IDE independentes.
-  ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24']);
+  ckbBCB.Enabled := MatchText(oACBr.Installations[iVersion].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24','d25']);
   if not ckbBCB.Enabled then
      ckbBCB.Checked := False;
 end;
@@ -1595,7 +1648,7 @@ begin
 
       // Busca diretório do pacote
       ExtrairDiretorioPacote(NomePacote);
-      if sDirPackage.Trim = '' then
+      if Trim(sDirPackage) = '' then
         raise Exception.Create('Não foi possível retornar o diretório do pacote : ' + NomePacote);
 
       if IsDelphiPackage(NomePacote) then

@@ -47,6 +47,244 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/10/2017
+-- pmdfeMDFeW --
+[*] Correção na geração do grupo de documentos, não estava gerando quanto o
+    tpEmit = 3.
+    por: Thiago
+
+11/10/2017
+-- ACBrMDFeConfiguracoes --
+[*] Método "GetPathDownload", modificado para manter somente letras e numeros
+    do nome da empresa usado para cria o PathDownload.
+    por: Italo Jurisato Junior
+
+29/09/2017
+-- pmdfeEventoMDFe --
+[*] Incluido o valor MDFeCancelado2 que se refere ao evento 310611.
+   Por: Italo Jurisato Junior
+
+05/09/2017
+-- pmdfeMDFe --
+[*] Definido o valor tiNao como padrão para a tag <indCanalVerde>.
+    Por: BigWings
+
+04/09/2017
+-- Diversos --
+[*] Acrescentado a tag <indCanalVerde> conforme NT 2017/003.
+    Por: Italo Jurisato Junior
+
+28/08/2017
+-- ACBrMDFeManifestos --
+[*] Inicio da implementação das Regras de Validação em ValidarRegrasdeNegocios.
+   Por: Italo Jurisato Junior
+
+21/08/2017
+-- ACBrMDFeManifestos --
+[*] Método "Manifesto.Assinar", ajuste para não verificar o CNPJ, quando processo
+    de assintura ocorrer externo ao ACBr
+    http://www.projetoacbr.com.br/forum/topic/38349-problemas-com-pin-a3-assinatura-de-xml/
+
+30/07/2017
+-- pmdfeEnvEventoMDFe / pmdfeRetEnvEventoMDFe -- 
+[*] Adicionado a leitura das tags referente a assinatura ao executar o método
+    LoadFromString ao carregar o XML de um evento.
+    por: Italo Jurisato Junior
+
+26/07/2017
+-- Diversos --
+[*] Inclusão de novos campos (Versão 3.00) modal Ferroviário.
+    Por: Italo Jurisato Junior
+
+20/07/2017
+-- Diversos --
+[*] Remoção de vários hints e warnings.
+    Por: Italo Jurisato Junior
+
+08/07/2017
+-- ACBrMDFFeWebServices --
+[-] Correção na classe "TMDFeEnvEvento", para assinar corretamente, XMLs com acentos.
+    (por: DSA)
+
+14/06/2017
+-- ACBrMDFeConfiguracoes --
+[*] Método "GetPathMDFe", modificado para informar a Descrição do Modelo baseada
+    no conteúdo do XML a ser Salvo.
+    por: Italo Jurisato Junior
+
+09/06/2017
+[-] correção para envio da tag tptransp com veículo próprio
+		http://www.projetoacbr.com.br/forum/topic/37149-envio-da-tag-tptransp-com-veículo-próprio/
+		Por : Juliomar Marchetti
+
+24/05/2017
+-- ACBRMDFeManifestos --
+[*] Método "Manifesto.Validar", modificado para não tentar assinar o XML, caso
+    o mesmo não contenha a Tag de assinatura
+   Por: Italo Jurisato Junior
+
+26/04/2017
+-- pmdfeMDFeR --
+[*] Correção, só estava lendo o CNPJ do pagador do vale pedário, estava faltado
+    a leitura do CPF do pagador.
+   Por: Pedro Vieira revisao por Italo Jurisato Junior
+
+04/04/2017
+-- pmdfeMDFeW --
+[*] Alterações visando resolver o problema de validação e rejeição ao informar ou
+    não o CNPJ nos grupos infResp e infSeg.
+   Por: Italo Jurisato Junior
+
+26/03/2017
+-- ACBrMDFeWebServices --
+[*] Incluido a leitura da data de encerramento do retorno.
+   Por: Rafael N. Magnus
+
+20/03/2017
+-- pmdfeConsMDFeNaoEnc.pas --
+[-] Correção de geração do XML, com o Encoding de UTF8 com acentos
+
+-- ACBrMDFeWebServices --
+[*] Método: TMDFeConsultaMDFeNaoEnc.DefinirServicoEAction, juste para remoção dos
+	pontos do CNPJ.
+[*] Ajuste para sempre gerar o XML com acentos, para evitar erros na validação do
+    Schema  (por: DSA)
+
+13/03/2017
+[-] alteração para quando o veiculo é de pessoa fisica e propria
+	http://www.projetoacbr.com.br/forum/topic/35556-tipo-de-transportador-cpf/
+	por : Juliomar Marchetti
+		
+08/03/2017
+[+] Adição da versão do MDFe no DAMDFe em FAst report
+		http://www.projetoacbr.com.br/forum/topic/35011-impressão-versão-do-mdfe-no-damdfe/
+		Por:  Juliomar Marchetti
+		
+07/03/2017
+[+] adição do renavam disponível para carregar no componente
+		http://www.projetoacbr.com.br/forum/topic/35506-compo-renavan-na-damdfe/
+		Por : Juliomar Marchetti
+		
+01/03/2017
+-- ACBrMDFeWebServices --
+[*] Comentado a linha que em alguns casos apaga a chave do documento consultado.
+    Método TratarResposta do Consultar.
+    Por: Italo Jurisato Junior
+
+10/02/2017
+-- pmdfeMDFeW --
+[*] Correção na geração do XML para versão 3.00 as condições para gerar ou não
+    tab <tpTransp> estavam incorretas.
+    Por: Italo Jurisato Junior
+
+19/01/2017
+-- pmdfeMDFeW --
+[*] Correção na geração do XML para versão 3.00.
+    Por: Italo Jurisato Junior
+
+07/01/2017
+-- Diversos --
+[*] Migração do tipo de navegação, funções de conversão e constantes para as 
+    units do pcnComum pois o tipo, as funções e constantes são utilizadas pelo
+    CT-e e MDF-e.
+    Por: Italo Jurisato Junior
+
+07/01/2017
+-- diversos --
+[*] Implementação de tags para compatibilizar com a versão 3.00
+    Por: Hugo_Inf / Italo Jurisato Junior
+
+30/12/2016
+-- diversos --
+[*] Melhorias na leitura e escrita do XML no que se refere ao grupo <valePed>.
+    Por: Emerson Teixeira / Italo Jurisato Junior
+
+27/12/2016
+-- pmdfeMDFeW --
+[*] Evitar a duplicidade de alertas.
+    Por: Italo Jurisato Junior
+
+21/12/2016
+[-] Correção tpTransp no pmdfeMDFeW
+		http://www.projetoacbr.com.br/forum/topic/33096-mdf-e-300-dados-do-seguro/?do=findComment&comment=224176
+		por: Juliomar Marchetti
+		
+20/12/2016
+[+] MDFe mudar a 0-n ocorrências da tag "nAver" e valida referente à tag "tpTransp"
+		http://www.projetoacbr.com.br/forum/topic/33096-mdf-e-300-dados-do-seguro/
+		por Juliomar Marchetti
+		
+16/12/2016
+[+] Adição das leituras do MDFe 3.00
+		http://www.projetoacbr.com.br/forum/topic/34051-lerxml-mdfe-300/
+		por: Juliomar Marchetti
+		
+01/12/2016
+[+] Adição de mudanças para o DAMDFe Aquaviario
+		http://www.projetoacbr.com.br/forum/topic/33778-mdf-e-damdfe-aquavi%C3%A1rio/
+		por : Juliomar Marchetti
+		
+29/11/2016
+--ACBrMDFeWebServices
+[-] Correção de memory leak
+		www.projetoacbr.com.br/forum/topic/33733-correção-memory-leak/
+		por : Juliomar Marchetti
+		
+16/11/2016
+-- ACBrMDFeWebServices --
+[*] Correção na geração do prefixo dos arquivos de envio/retorno de eventos
+    No arquivo de envio o prefixo ficava sempre zero.
+    Os mesmos arquivos estavam sendo salvos em duas pastas, ma pasta respectiva
+    do evento e na pasta MDFe, alterado para salvar somente na pasta do evento.
+   Por: Italo Jurisato Junior
+
+09/11/2016
+-- pmdfeMDFeR --
+[*] Correção na leitura do MDF-e versão 3.00 (novos Grupos).
+   Por: Eliezerfb
+
+04/11/2016
+-- pmdfeMDFeW --
+[*] Correção na geração da tag: dhIniViagem e dhTrem, estava faltando incluir o UTC.
+   Por: Neliodv / Italo Jurisato Junior
+
+30/10/2016
+-- Diversos --
+[+] Implementado os métodos: DistribuicaoDFePorUltNSU e DistribuicaoDFePorNSU 
+   por: Italo Jurisato Junior
+
+26/10/2016
+-- pmdfeConversaoMDFe --
+[*] Inclusão do Tipo de Responsável pelo Seguro e das funções de conversão.
+-- pmdfeMDFe / pmdfeMDFeR / pmdfeMDFeW --
+[*] Correção na geração e Leitura do Responsável pelo Seguro.
+    por: Italo Jurisato Junior
+
+17/10/2016
+-- pmdfeEnvEventoMDFe --
+[*] Correção na geração da tag: dhEvento, estava faltando incluir o UTC.
+   Por: Dinarte Moscon
+
+22/09/2016
+-- ACBrMDFeWebServices --
+[*] Removido os status 128 e 155 na leitura do retorno do envio de um evento.
+    O motivo é que não existe os status 128 e 155.
+    Por: Italo Jurisato Junior
+
+16/09/2016
+-- diversos --
+[*] Alteração em diversas units para para corrigir erros de validação ao tentar 
+    gerar o MDF-e na versão 3.00.
+    por: Italo Jurisato Junior
+
+17/08/2016
+-- diversos --
+[+] Criada a unit pmdfeConsts que contem as constantes de mensagens usadas na
+    geração dos XML e que são apresentadas quando ocorre erro na validação.
+[*] Alteração em diversas units em virtude das novas units e para antender a nova
+    versão 3.00 do MDF-e.
+    por: Italo Jurisato Junior
+
 05/08/2016
 [*] melhorias no damdfe em fast report
 		http://www.projetoacbr.com.br/forum/topic/31558-erro-ao-imprimir-mdf-e/

@@ -7,8 +7,8 @@ unit ACBr_SPED;
 interface
 
 uses
-  ACBrSped, ACBrSpedFiscal, ACBrSpedContabil, ACBrSpedPisCofins, ACBrEPCImportar, ACBrSpedECF, 
-  LazarusPackageIntf;
+  ACBrSped, ACBrSpedFiscal, ACBrSpedContabil, ACBrSpedPisCofins, 
+  ACBrEPCImportar, ACBrSpedECF, ACBrEFDImportar, LazarusPackageIntf;
 
 implementation
 
@@ -19,6 +19,7 @@ begin
   RegisterUnit('ACBrSpedPisCofins', @ACBrSpedPisCofins.Register);
   RegisterUnit('ACBrEPCImportar', @ACBrEPCImportar.Register);
   RegisterUnit('ACBrSpedECF', @ACBrSpedECF.Register);
+  RegisterUnit('ACBrEFDImportar', @ACBrEFDImportar.Register);
 end;
 
 initialization

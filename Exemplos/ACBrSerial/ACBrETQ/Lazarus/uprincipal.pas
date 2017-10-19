@@ -17,24 +17,26 @@ type
     bEtqBloco: TButton;
     bImprimirImagem : TButton;
     bCarregarImg : TButton;
+    cbBackFeed: TComboBox;
     cbModelo: TComboBox;
     cbDPI : TComboBox ;
     ckMemoria : TCheckBox;
     eTemperatura : TEdit ;
-    Edit1 : TEdit;
+    edNomeImg : TEdit;
     Image1 : TImage;
-    Label1: TLabel;
-    Label2: TLabel;
+    lbModelo: TLabel;
+    lbPorta: TLabel;
     cbPorta: TComboBox;
     eCopias: TEdit;
-    Label3: TLabel;
+    lbCopias: TLabel;
     eAvanco: TEdit;
-    Label4: TLabel;
+    lbAvanco: TLabel;
     bEtqSimples: TButton;
     bEtqCarreiras: TButton;
-    Label5 : TLabel;
-    Label6 : TLabel ;
-    Label7 : TLabel ;
+    lbNomeImg : TLabel;
+    lbDPI : TLabel ;
+    lbTemperatura : TLabel ;
+    lbBackFeed: TLabel;
     OpenPictureDialog1 : TOpenPictureDialog;
     rbStream : TRadioButton ;
     rbArquivo : TRadioButton ;
@@ -67,7 +69,7 @@ begin
   begin
      if Modelo = etqPpla then
       begin
-        ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'BISCOITO MARILAN RECH 335G');
+        ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'BISCOITO MARILAN RECH 335G', 0, True);
         ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'CHOC BRANCO');
         ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7896003701685', 90, becSIM);
         ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
@@ -75,7 +77,7 @@ begin
       end
      else
       begin
-        ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'BISCOITO MARILAN RECH 335G');
+        ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'BISCOITO MARILAN RECH 335G', 0, True);
         ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'CHOC BRANCO');
         ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7896003701685', 90, becSIM);
         ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');
@@ -197,7 +199,7 @@ begin
 
   with ACBrETQ do
   begin
-     ImprimirImagem(1,10,10,Edit1.Text);
+     ImprimirImagem(1,10,10,edNomeImg.Text);
      Imprimir(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
      Desativar;
   end ;
@@ -220,7 +222,7 @@ begin
         MS := TMemoryStream.Create;
         try
            Image1.Picture.SaveToStream( MS );
-           ACBrETQ.CarregarImagem( MS, Edit1.Text, True,
+           ACBrETQ.CarregarImagem( MS, edNomeImg.Text, True,
                                    ExtractFileExt(OpenPictureDialog1.FileName) );
         finally
            MS.Free ;
@@ -237,7 +239,7 @@ begin
          except
             Image1.Picture.Clear;
          end ;
-         ACBrETQ.CarregarImagem( OpenPictureDialog1.FileName, Edit1.Text );
+         ACBrETQ.CarregarImagem( OpenPictureDialog1.FileName, edNomeImg.Text );
       end ;
    end ;
 
@@ -256,18 +258,20 @@ begin
       Key := #0 ;
 end;
 
-procedure TFPrincipal.AtivarACBrETQ ;
+procedure TFPrincipal.AtivarACBrETQ;
 begin
   with ACBrETQ do
   begin
      DPI           := TACBrETQDPI(cbDPI.ItemIndex);
-     Modelo        := TACBrETQModelo(cbModelo.ItemIndex) ;
-     Porta         := cbPorta.Text ;
-     LimparMemoria := ckMemoria.Checked ;
+     Modelo        := TACBrETQModelo(cbModelo.ItemIndex);
+     Porta         := cbPorta.Text;
+     LimparMemoria := ckMemoria.Checked;
+     Temperatura   := StrToInt(eTemperatura.Text);
+     BackFeed      := TACBrETQBackFeed(cbBackFeed.ItemIndex);
 
-     Ativar ;
-  end ;
-end ;
+     Ativar;
+  end;
+end;
 
 end.
 

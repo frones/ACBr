@@ -45,8 +45,17 @@ uses
   pnfsConversao, ACBrDelphiZXingQRCode ;
 
 type
+
+  { TfrlDANFSeRLRetrato }
+
   TfrlDANFSeRLRetrato = class(TfrlDANFSeRL)
     rlbCabecalho: TRLBand;
+    RLDraw10: TRLDraw;
+    RLDraw2: TRLDraw;
+    RLDraw3: TRLDraw;
+    RLDraw70: TRLDraw;
+    RLDraw8: TRLDraw;
+    RLDraw9: TRLDraw;
     rllNumNF0: TRLLabel;
     RLLabel13: TRLLabel;
     RLLabel12: TRLLabel;
@@ -216,7 +225,6 @@ type
     procedure RLNFSeBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     { Private declarations }
-    procedure Itens;
     function ManterAliquota(dAliquota: Double): String;
   public
     { Public declarations }
@@ -241,19 +249,6 @@ var
   FQuebradeLinha: String;
 
 { TfrlDANFSeRLRetrato }
-
-procedure TfrlDANFSeRLRetrato.Itens;
-begin
- cdsItens.Close;
- cdsItens.CreateDataSet;
- cdsItens.Open;
-
- cdsItens.Append;
- cdsItens.FieldByName('DISCRIMINACAO').AsString := FNFSe.Servico.Discriminacao;
- cdsItens.Post;
-
- cdsItens.First;
-end;
 
 procedure TfrlDANFSeRLRetrato.QuebradeLinha(const sQuebradeLinha: String);
 begin
@@ -320,10 +315,10 @@ begin
   end;
 
   rlmDadosAdicionais.Lines.EndUpdate;
-  rllDataHoraImpressao.Caption := Format('DATA E HORA DA IMPRESSÃO: %s' , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
+  rllDataHoraImpressao.Caption := Format(ACBrStr('DATA E HORA DA IMPRESSÃO: %s') , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
 
   if FUsuario <> '' then
-    rllDataHoraImpressao.Caption := Format('%s   USUÁRIO: %s', [rllDataHoraImpressao.Caption, FUsuario]);
+    rllDataHoraImpressao.Caption := Format(ACBrStr('%s   USUÁRIO: %s'), [rllDataHoraImpressao.Caption, FUsuario]);
 
   // imprime sistema
   if FSistema <> '' then
@@ -334,6 +329,9 @@ begin
   begin
     rllSistema.Caption := '';
   end;
+
+  //Exibe canhoto
+  rlbCanhoto.Visible:= FImprimeCanhoto;
 end;
 
 procedure TfrlDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject;
@@ -415,7 +413,8 @@ begin
       If Servico.xItemListaServico <> '' Then
       Begin
         RLLabel16.Visible := True;
-        rlmCodServico.Lines.Append('Atividade: ' + FAtividade);
+        if FAtividade <> '' then
+          rlmCodServico.Lines.Append('Atividade: ' + FAtividade);
         rlmCodServico.Lines.Append( Servico.ItemListaServico + ' - '+ Servico.xItemListaServico);
       End
       Else
@@ -522,9 +521,9 @@ begin
         rllPrestEmail.Caption         := IfThen( Email <> '' , Email , FEMail_Prestador);
       end;
 
-      rllPrestNomeEnt.Caption         := FRazaoSocial;
+      rllPrestNomeEnt.Caption         := IfThen(RazaoSocial <> '', RazaoSocial, FRazaoSocial);
       rllNumNF0Ent.Caption            := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
-      rllTomadorNomeEnt.Caption       := 'Emissão:' + FormatDateTime('dd/mm/yy',DataEmissao) +
+      rllTomadorNomeEnt.Caption       := ACBrStr('Emissão:') + FormatDateTime('dd/mm/yy',DataEmissao) +
                                          '-Tomador:'+Tomador.RazaoSocial+
                                          '-Total:' + FormatFloat('##,##0.00', Servico.Valores.ValorLiquidoNfse) ;
     end;
@@ -596,9 +595,7 @@ procedure TfrlDANFSeRLRetrato.RLNFSeBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   inherited;
-  Itens;
 
-  RLNFSe.DataSource := dsItens;
   RLNFSe.Title := 'NFS-e: ' + FNFSe.Numero;
 
   RLNFSe.Margins.TopMargin    := FMargemSuperior * 10;

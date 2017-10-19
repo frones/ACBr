@@ -95,7 +95,9 @@ type
     function New: TACBrCotacaoItem;
     property Items[Index: integer]: TACBrCotacaoItem read GetItem write SetItem; default;
   end;
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrCotacao = class(TACBrHTTP)
   private
     FTabela: TACBrCotacaoItens;

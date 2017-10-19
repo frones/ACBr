@@ -3,6 +3,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
   Height = 568
   Top = 125
   Width = 871
+  ActiveControl = PageControl1
   Caption = 'Demo ACBrCTe'
   ClientHeight = 568
   ClientWidth = 871
@@ -11,7 +12,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.2.0'
+  Visible = False
   object Panel1: TPanel
     Left = 0
     Height = 568
@@ -910,7 +912,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         TabOrder = 4
       end
       object btnValidarXML: TButton
-        Left = 191
+        Left = 190
         Height = 25
         Top = 92
         Width = 177
@@ -1062,6 +1064,15 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnGerarPDFEventoClick
         TabOrder = 18
       end
+      object btnGerarPDF1: TButton
+        Left = 190
+        Height = 25
+        Top = 124
+        Width = 177
+        Caption = 'Imprimir Inutilização'
+        OnClick = btnGerarPDF1Click
+        TabOrder = 19
+      end
     end
     object PageControl2: TPageControl
       Left = 1
@@ -1104,6 +1115,10 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           PrintSettings.MarginTop = 0.5
           PrintSettings.MarginRight = 0.5
           PrintSettings.MarginBottom = 0.5
+          PrintSettings.Preview.Left = 480
+          PrintSettings.Preview.Top = 270
+          PrintSettings.Preview.Width = 1440
+          PrintSettings.Preview.Height = 810
           TabOrder = 0
         end
       end
@@ -1181,7 +1196,28 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    DACTE = ACBrCTeDACTeRL1
     left = 232
     top = 400
+  end
+  object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
+    ACBrCTE = ACBrCTe1
+    ImprimirHoraSaida = False
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDACTE = tiSemGeracao
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    CTeCancelada = False
+    ExibirResumoCanhoto = False
+    EPECEnviado = False
+    ImprimirDescPorc = False
+    PrintDialog = True
+    left = 327
+    top = 366
   end
 end

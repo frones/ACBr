@@ -185,7 +185,7 @@ begin
   if (aRecebido[1] = STX) and (aRecebido[Length(aRecebido)] = ETX) then
     Exit;
 
-  Result := inherited InterpretarResposta(aRecebido);
+  Result := aRecebido;
 end;
 
 end.

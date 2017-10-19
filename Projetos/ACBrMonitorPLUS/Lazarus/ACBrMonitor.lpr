@@ -1,6 +1,7 @@
 program ACBrMonitor;
 
 {$mode objfpc}{$H+}
+//{$IMAGEBASE $400000}
 
 uses
   {$IFDEF UNIX}
@@ -10,11 +11,12 @@ uses
   {$IFDEF MSWINDOWS}
    Windows, Dialogs,
   {$ENDIF}
-  Forms, printer4lazarus, UtilUnit, ACBrMonitor1, CmdUnit, ConfiguraSerial,
-  DoACBrUnit, DoBALUnit, DoCHQUnit, DoDISUnit, DoECFBemafi32, DoECFObserver,
-  DoECFUnit, DoETQUnit, DoGAVUnit, DoLCBUnit, Sobre, DoBoletoUnit, DoCEPUnit,
-  DoIBGEUnit, DoEmailUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrCTeUnit,
-  DoACBrMDFeUnit, DoSATUnit, DoACBRGNReUnit;
+  Forms, printer4lazarus, lhelpcontrolpkg, UtilUnit, ACBrMonitor1, CmdUnit,
+  ConfiguraSerial, DoACBrUnit, DoBALUnit, DoCHQUnit, DoDISUnit, DoECFBemafi32,
+  DoECFObserver, DoECFUnit, DoETQUnit, DoGAVUnit, DoLCBUnit, Sobre,
+  DoBoletoUnit, DoCEPUnit, DoIBGEUnit, DoEmailUnit, DoNcmUnit, DoACBrNFeUnit,
+  DoACBrCTeUnit, DoACBrMDFeUnit, DoSATUnit, DoACBrGNReUnit,
+  ACBrBoletoRelatorioRetorno, DoPosPrinterUnit, SelecionarCertificado;
 
 {$R *.res}
 var

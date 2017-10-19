@@ -347,7 +347,7 @@ type
     fPERC_CAP_TOT: variant;
     fPERC_CAP_VOT: variant;
     fQUALIF: string;
-    fQUALIF_REP_LEG: integer;
+    fQUALIF_REP_LEG: String;
     fVL_IR_RET: variant;
     fVL_JUR_CAP: variant;
     fVL_REM_TRAB: variant;
@@ -364,7 +364,7 @@ type
     property PERC_CAP_TOT: variant read fPERC_CAP_TOT write fPERC_CAP_TOT;
     property PERC_CAP_VOT: variant read fPERC_CAP_VOT write fPERC_CAP_VOT;
     property CPF_REP_LEG: string read fCPF_REP_LEG write fCPF_REP_LEG;
-    property QUALIF_REP_LEG: integer read fQUALIF_REP_LEG write fQUALIF_REP_LEG;
+    property QUALIF_REP_LEG: String read fQUALIF_REP_LEG write fQUALIF_REP_LEG;
     property VL_REM_TRAB: variant read fVL_REM_TRAB write fVL_REM_TRAB;
     property VL_LUC_DIV: variant read fVL_LUC_DIV write fVL_LUC_DIV;
     property VL_JUR_CAP: variant read fVL_JUR_CAP write fVL_JUR_CAP;
@@ -894,14 +894,22 @@ type
 
   /// Registro Y800 - Outras Informações
 
-  TRegistroY800 = class(TBlocos)
+  TRegistroY800 = class
   private
-    fARQ_RTF: string;
+    fTIPO_DOC: String; // Tipo de documento
+    fDESC_RTF: String; // Descrição do arquivo
+    fHASH_RTF: String; // Hash do arquivo
+    fARQ_RTF: String;  // Seqüência de bytes que representem um único arquivo no formato RTF (Rich Text Format).
     function GetIND_FIM_RTF: string;
+
   public
-    property ARQ_RTF: string read fARQ_RTF write fARQ_RTF;
+    property TIPO_DOC: String read fTIPO_DOC write fTIPO_DOC;
+    property DESC_RTF: String read fDESC_RTF write fDESC_RTF;
+    property HASH_RTF: String read fHASH_RTF write fHASH_RTF;
+    property ARQ_RTF: String read fARQ_RTF write fARQ_RTF;
     property IND_FIM_RTF: string read GetIND_FIM_RTF;
   end;
+
 
   /// Registro Y800 - Lista
 

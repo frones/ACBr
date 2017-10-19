@@ -149,6 +149,7 @@ TACBrECFRodapeRestaurante = class( TPersistent )
     fsCOO:  Integer;
     fsMesa: String;
     fsImprimir: Boolean;
+    fsContaCliente: Boolean;
   public
   published
     property Imprimir : Boolean read fsImprimir write fsImprimir default False;
@@ -156,6 +157,8 @@ TACBrECFRodapeRestaurante = class( TPersistent )
     property CER      : Integer read fsCER      write fsCER stored false;
     property COO      : Integer read fsCOO      write fsCOO stored false;
     property Mesa     : String  read fsMesa     write fsMesa stored false;
+    property ContaCliente: Boolean read fsContaCliente write fsContaCliente
+       stored false default False;
 end;
 
 TACBrECFRodape = class( TPersistent )
@@ -164,7 +167,10 @@ TACBrECFRodape = class( TPersistent )
     fsDavOs: String;
     fsMD5: String;
     fsDav: String;
+    fsDavFarm: String;
     fsNF: String;
+    fsPlaca: String;
+    fsQtdeKM: String;
     fsRestaurante: TACBrECFRodapeRestaurante;
     fsMinasLegal: Boolean;
     fsCupomMania: Boolean;
@@ -181,9 +187,12 @@ TACBrECFRodape = class( TPersistent )
   published
     property MD5         : String  read fsMD5         write SetMD5;
     property Dav         : String  read fsDav         write fsDav   stored False;
+    property DavFarm     : String  read fsDavFarm     write fsDavFarm stored False;
     property NF          : String  read fsNF          write fsNF stored False;
     property DavOs       : String  read fsDavOs       write fsDavOs stored False;
     property PreVenda    : String  read fsPreVenda    write fsPreVenda stored False;
+    property Placa       : String  read fsPlaca       write fsPlaca stored false;
+    property QtdeKM      : String  read fsQtdeKM      write fsQtdeKM stored false;
     property Restaurante : TACBrECFRodapeRestaurante read fsRestaurante write fsRestaurante;
     property CupomMania  : Boolean read fsCupomMania  write fsCupomMania default False;
     property MinasLegal  : Boolean read fsMinasLegal  write fsMinasLegal default False;
@@ -792,6 +801,7 @@ TACBrECFClass = class
 
     function GetTotalAcrescimosISSQN: Double; virtual ;
     function GetTotalCancelamentosISSQN: Double; virtual ;
+    function GetTotalCancelamentosEmAbertoISSQN: Double; virtual;
     function GetTotalDescontosISSQN: Double; virtual ;
     function GetTotalIsencaoISSQN: Double; virtual ;
     function GetTotalNaoTributadoISSQN: Double; virtual ;
@@ -1002,6 +1012,7 @@ TACBrECFClass = class
     Property TotalIsencao       : Double     read GetTotalIsencao ;
 
     Property TotalCancelamentosISSQN          : Double read GetTotalCancelamentosISSQN;
+    Property TotalCancelamentosEmAbertoISSQN  : Double read GetTotalCancelamentosEmAbertoISSQN;
     Property TotalDescontosISSQN              : Double read GetTotalDescontosISSQN;
     Property TotalAcrescimosISSQN             : Double read GetTotalAcrescimosISSQN;
     Property TotalSubstituicaoTributariaISSQN : Double read GetTotalSubstituicaoTributariaISSQN;
@@ -1192,7 +1203,8 @@ TACBrECFClass = class
     Procedure CancelaItemVendido( NumItem : Integer ) ; virtual ;
     procedure CancelaItemVendidoParcial( NumItem : Integer;
       Quantidade : Double) ; Virtual ;
-    procedure CancelaDescontoAcrescimoItem( NumItem : Integer) ; Virtual ;
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+      TipoAcrescimoDesconto: String = 'D') ; Virtual ;
     Property Subtotal  : Double read GetSubTotal ;
     Property TotalPago : Double read GetTotalPago ;
 
@@ -1288,11 +1300,12 @@ TACBrECFClass = class
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; overload ; virtual ;
 
-    Procedure ArquivoMF_DLL(  NomeArquivo : AnsiString  ) ; overload ; virtual ;
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); overload ; virtual ;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); virtual;
+    Procedure ArquivoMFD_Binario_DLL(Tipo:TACBrECFTipoDownloadMFD;
+       NomeArquivo, StrInicial, StrFinal: AnsiString); virtual;
 
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
-      const DirArquivos: String); virtual;
+      const DirArquivos: String; NumeroSerie: String = ''); virtual;
 
     Procedure IdentificaOperador(Nome : String); virtual;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; virtual ;
@@ -1986,7 +1999,7 @@ begin
 
   if not fpDevice.Ativo then
   begin
-     GravaLog('-- Ativando a porta: ' + fpDevice.Porta);
+     GravaLog('   Ativando a porta: ' + fpDevice.Porta);
      fpDevice.Ativar;
   end;
 end;
@@ -1995,7 +2008,7 @@ procedure TACBrECFClass.DesativarPorta;
 begin
   if not Assigned(fpDevice) then exit;
 
-  GravaLog('-- Desativando a porta: ' + fpDevice.Porta);
+  GravaLog('   Desativando a porta: ' + fpDevice.Porta);
   fpDevice.Desativar;
 end;
 
@@ -2187,6 +2200,13 @@ Var Fim : Boolean ;
 begin
   if not Assigned(fpDevice) then exit ;
 
+  {$IFNDEF FPC}
+  {$IFNDEF DELPHIXE8_UP}
+  // A linha abaixo remove Warning do Delphi (W1036 Variable 'Fim' might not have been initialized)
+  // Isso é um bug do compilador Win32 presente pelo menos da versão Delphi 6 até a XE7 (http://stackoverflow.com/a/25905266/460775)
+  Fim := True;
+  {$ENDIF}
+  {$ENDIF}
   try
      fpRespostaComando := '' ;
      {$IFNDEF NOGUI}
@@ -2610,14 +2630,15 @@ begin
   ErroAbstract('ArquivoMFD_DLL');
 end;
 
-procedure TACBrECFClass.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFClass.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
 begin
-    ErroAbstract('ArquivoMF_DLL');
+  ErroAbstract('ArquivoMF_Binario_DLL');
 end;
 
-procedure TACBrECFClass.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFClass.ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD;
+  NomeArquivo, StrInicial, StrFinal: AnsiString);
 begin
-    ErroAbstract('ArquivoMFD_DLL');
+  ErroAbstract('ArquivoMFD_Binario_DLL');
 end;
 
 
@@ -3079,6 +3100,11 @@ begin
   Result := 0;
 end;
 
+function TACBrECFClass.GetTotalCancelamentosEmAbertoISSQN: Double;
+begin
+  Result := 0;
+end;
+
 function TACBrECFClass.GetTotalCancelamentosEmAberto: Double;
 begin
   Result := 0;
@@ -3188,7 +3214,7 @@ begin
       try CancelamentoICMS  := TotalCancelamentos + TotalCancelamentosEmAberto; except end ;
       try DescontoICMS      := TotalDescontos;          except end ;
       try AcrescimoICMS     := TotalAcrescimos;         except end ;
-      try CancelamentoISSQN := TotalCancelamentosISSQN; except end ;
+      try CancelamentoISSQN := TotalCancelamentosISSQN + TotalCancelamentosEmAbertoISSQN; except end ;
       try DescontoISSQN     := TotalDescontosISSQN;     except end ;
       try AcrescimoISSQN    := TotalAcrescimosISSQN;    except end ;
       try CancelamentoOPNF  := TotalCancelamentosOPNF;  except end ;
@@ -3202,7 +3228,11 @@ begin
 
         for I := 0 to fpAliquotas.Count - 1 do
         begin
-          AliqZ := TACBrECFAliquota.Create ;
+          { Deve desconsiderar alíquotas zeradas e índice FF, II, NN (ECFVirtual) }
+          if (fpAliquotas[I].Aliquota <= 0) and (not StrIsNumber(fpAliquotas[I].Indice)) then
+            Continue;
+
+          AliqZ := TACBrECFAliquota.Create;
           AliqZ.Assign( fpAliquotas[I] );
 
           AdicionaAliquota( AliqZ );
@@ -3415,7 +3445,8 @@ begin
   ErroAbstract('DescontoAcrescimoItemAnterior');
 end ;
 
-procedure TACBrECFClass.CancelaDescontoAcrescimoItem(NumItem: Integer);
+procedure TACBrECFClass.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
 begin
   ErroAbstract('CancelaDescontoAcrescimoItem');
 end;
@@ -4934,16 +4965,18 @@ begin
 end ;
 
 procedure TACBrECFClass.PafMF_GerarCAT52(const DataInicial,
-  DataFinal: TDateTime; const DirArquivos: String);
+  DataFinal: TDateTime; const DirArquivos: String; NumeroSerie: String);
 var
-  NomeArquivo, NumSer: String;
+  NomeArquivo: String;
   DataArquivo: TDateTime;
 begin
-  NumSer      := NumSerie;
+  if NumeroSerie = '' then
+    NumeroSerie := GetNumSerie;
+
   DataArquivo := DataInicial;
   repeat
     NomeArquivo := IncludeTrailingPathDelimiter( DirArquivos ) +
-                   NomeArqCAT52( RFDID, NumSer, DataArquivo );
+                   NomeArqCAT52( RFDID, NumeroSerie, DataArquivo );
     Self.ArquivoMFD_DLL(DataArquivo, DataArquivo, NomeArquivo, [docTodos], finNFPTDM);
 
     DataArquivo := IncDay( DataArquivo, 1 );
@@ -5367,6 +5400,7 @@ end;
 procedure TACBrECFRodape.Clear;
 begin
   fsDav        := EmptyStr;
+  fsDavFarm    := EmptyStr;
   fsDavOs      := EmptyStr;
   fsPreVenda   := EmptyStr;
   fsNF         := EmptyStr;

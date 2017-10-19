@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="ACBRSedexDemo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="59" Y="10"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+    </Units>
+    <JumpHistory Count="19" HistoryIndex="18">
+      <Position1>
+        <Filename Value="frmCalculoSedex.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="138" Column="29" TopLine="136"/>
+      </Position2>
+      <Position3>
+        <Filename Value="frmCalculoSedex.pas"/>
+      </Position3>
+      <Position4>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="10" Column="35"/>
+      </Position4>
+      <Position5>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="70" Column="11" TopLine="51"/>
+      </Position5>
+      <Position6>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="71" Column="11" TopLine="52"/>
+      </Position6>
+      <Position7>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="72" Column="11" TopLine="53"/>
+      </Position7>
+      <Position8>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="73" Column="11" TopLine="54"/>
+      </Position8>
+      <Position9>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="76" Column="11" TopLine="57"/>
+      </Position9>
+      <Position10>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="138" Column="7" TopLine="118"/>
+      </Position10>
+      <Position11>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="145" Column="9" TopLine="125"/>
+      </Position11>
+      <Position12>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="147" Column="9" TopLine="127"/>
+      </Position12>
+      <Position13>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="148" Column="9" TopLine="128"/>
+      </Position13>
+      <Position14>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="149" Column="9" TopLine="129"/>
+      </Position14>
+      <Position15>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="150" Column="9" TopLine="130"/>
+      </Position15>
+      <Position16>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="88" Column="11" TopLine="79"/>
+      </Position16>
+      <Position17>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="69" Column="46"/>
+      </Position17>
+      <Position18>
+        <Filename Value="frmCalculoSedex.pas"/>
+        <Caret Line="70" Column="46" TopLine="48"/>
+      </Position18>
+      <Position19>
+        <Filename Value="frmCalculoSedex.pas"/>
+      </Position19>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

@@ -47,6 +47,120 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2017
+-- ACBrTEFD --
+[-] Verificação ao usar o evento OnAguardaResp pois o mesmo pode não existir.
+    (por: Junior Santos)
+
+21/07/2017
+-- ACBrTEFDCliSiTEF --
+[-] Correção para funcionamento de CliSiTef em Linux 64 bits
+    (por: DSA)
+
+07/06/2017
+-- ACBrTEFD --
+[+] Criada a propriedade "SuportaReajusteValor: Boolean", para informar que será
+    utilizada esta funcionalidade pelo TEF.    (por: WesleyAS)
+
+-- ACBrTEFDClass --
+[*] Alterada a rotina "AdicionarIdentificacao" para verificar a informar o flag
+    referente a propriedade "SuportaReajusteValor" no campo 706-000.
+    (por: WesleyAS)
+http://www.projetoacbr.com.br/forum/topic/36527-erro-no-roteiro-de-teste-paygo
+
+17/05/2017
+-- ACBrTEFDCliSiTEF -- 
+[*] Alteração em "ConteudoToProperty" para calcular corretamente os valores 
+    defaults das parcelas, quando elas não são informadas pelo TEF.
+    (por: Elias César)
+
+23/02/2017
+-- ACBrTEFDCliSiTEF --
+[-] Acerto para limpar corretamenta as parcelas
+    por Regys.silveira
+
+21/02/2017
+-- ACBrTEFDCliSiTEF --
+[-] Acerto para evitar problemas quando é feito desligamento durante as mensagens do Pin-Pad
+    por Regys.silveira
+
+04/01/2017
+-- ACBrTEFD --
+[+] Inclusão de nova propriedade "ConfirmarAntesDosComprovantes" para possibilitar
+	a confirmação das transações logo após a impressão do cupom. 
+	Caso a propriedade esteja ativa, a confirmação será feita na procedure 
+	"ImprimirTransacoesPendentes" antes da impressão das vias;
+	
+-- ACBrTEFDClass --
+[*] Alteração para procedure "VerificarTransacoesPendentesClass" verificar o
+	estado do ECF antes de CancelarTransacoesPendentes. 
+	Caso a propriedade "ConfirmarAntesDosComprovantes" esteja ativa, será 
+	verificado se o cupom foi finalizado e irá solicitar a re-impressão dos
+	comprovantes;
+
+-- ACBrTEFDDial --
+[*] Excluída property "InicializarConfirmandoTransacoes", pois esse controle 
+	agora será feito por "TACBrTEFD.ConfirmarAntesDosComprovantes";
+	
+-- ACBrTEFDCliSiTEF -- ACBrTEFDCliDTEF -- ACBrTEFDVeSPague --
+[*] Alteração para utilizar a procedure "VerificarTransacoesPendentesClass"
+	para consultar se o cupom foi finalizado.
+	(por: Elias César)    
+
+12/12/2016
+-- ACBrTEFDCliDTEF --
+[-] Acerto para não interromper o loop quando houver uma mensagem perguntando
+    se deseja cancelar e o usuário clicar em NÃO.
+    por: regys.silveira
+
+28/11/2016
+-- ACBrTEFDDial --
+[+] Adicionado Propriedade:
+    "ACBrTEFDDial.InicializarConfirmandoTransacoes: Boolean default True"
+    que permite configurar se as transações pendentes no momento da inicialização
+    devem ser canceladas ou confirmadas. (por:  Rodrigo Frühwirth e DSA)
+    http://www.projetoacbr.com.br/forum/topic/33611-skytef-client-modular/
+
+24/11/2016
+-- ACBrTEFDClass, ACBrTEFDBanese, ACBrTEFDCliDTEF, ACBrTEFDCliSiTef,
+   ACBrTEFDTicketCar, ACBrTEFDVeSPague --
+[*] Propriedade: "TACBrTEFDResp.CodigoAutorizacaoTransacao" modificada de
+    Integer para String
+    www.projetoacbr.com.br/forum/index.php?showtopic=33615
+
+12/11/2016
+-- ACBrTEFDClass --
+[-] Não estava preenchendo corretamento o nome da rede nos casos em
+    que no arquivo de resposta retornasse registros tipo 010-xxx 010-005
+    que não fosse o 010-000. por: Rodrigo Frühwirth e DSA
+    www.projetoacbr.com.br/forum/index.php?showtopic=33372
+
+-- ACBrTEFD, ACBrTEFDClass, ACBrTEFDCliSiTef --
+[+] Adicionado chamada da pré-autorização sem ser pelo módulo ADM
+    por: Rodrigo Frühwirth e DSA
+    www.projetoacbr.com.br/forum/index.php?showtopic=32788
+
+29/09/2016
+-- ACBrTEFDCliSiTef --
+[-] Alteração para inicializar variável Interromper como False no início do 
+    método ContinuarRequisicao. (por: Elias César)
+
+29/09/2016
+[+] Adição da validação para programar o evento OnAguardaResp quando o
+    gerenciador for o sitef.  por: Juliomar Marchetti
+		
+27/09/2016
+[*] pequeno acerto para quando a parcela não tem NSU
+    por Regys.silveira
+
+Data: 21/09/2015
+-- ACBrTEFDCliSiTef --
+[*] acerto para tratar corretamente o interromper em telas de aguardo do SITEF
+
+Data: 20/09/2015
+-- ACBrTEFDCliSiTef --
+[*] Acerto para a leitura correta de parcelas conforme nova documentação.
+
 Data: 12/07/2016
 -- ACBrTEFDClass --
 [+] Criada classe TACBrTEFDRespCB para armazenar informações de Correspondente Bancário;

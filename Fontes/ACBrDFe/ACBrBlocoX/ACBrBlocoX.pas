@@ -32,80 +32,29 @@ unit ACBrBlocoX;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
-  ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque, ACBrDFeWebService, ACBrUtil;
+  Classes, SysUtils,
+  ACBrDFe, ACBrDFeConfiguracoes, ACBrBlocoX_WebServices,
+  ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque, ACBrBlocoX_Comum,
+  ACBrUtil;
 
 const
   ACBRBLOCOX_VERSAO = '1.1.0a';
 
-  type
-
-  { TWebServiceBlocoX }
-
-  TWebServiceBlocoX = class(TDFeWebService)
-  private
-
-    procedure DefinirURL; override;
-    function GerarVersaoDadosSoap: String; override;
-  public
-    constructor Create(AOwner: TACBrDFe); override;
-  end;
-
-  { TEnviarBlocoX }
-
-  TEnviarBlocoX = class(TWebServiceBlocoX)
-    FXML : AnsiString;
-
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-  public
-
-    property XML: AnsiString read FXML write FXML;
-  end;
-
-  { TConsultarBlocoX }
-
-  TConsultarBlocoX = class(TWebServiceBlocoX)
-    FRecibo : String;
-
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-  public
-    property Recibo: String read FRecibo write FRecibo;
-  end;
-
-
-  { TValidarBlocoX }
-
-  TValidarBlocoX = class(TWebServiceBlocoX)
-    FXML : AnsiString;
-    FValidarPafEcf : Boolean;
-    FValidarEcf: Boolean;
-
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-  public
-    property XML: AnsiString read FXML write FXML;
-    property ValidarPafEcf: Boolean read FValidarPafEcf write FValidarPafEcf;
-    property ValidarEcf: Boolean read FValidarEcf write FValidarEcf;
-  end;
-
+type
+  { TConfiguracoesBlocoX }
 
   TConfiguracoesBlocoX = class(TConfiguracoes)
   public
-    constructor Create(AOwner: TComponent); override;
+    FVersaoER: TVersaoER;
     procedure Assign(DeConfiguracoesBlocoX: TConfiguracoesBlocoX); overload;
   published
+    property VersaoER: TVersaoER read FVersaoER write FVersaoER;
     property Geral;
     property WebServices;
     property Certificados;
   end;
+
+  { TACBrBlocoX_Estabelecimento }
 
   TACBrBlocoX_Estabelecimento = class(TPersistent)
   private
@@ -117,6 +66,8 @@ const
     property Cnpj: String read FCnpj write FCnpj;
     property NomeEmpresarial: String read FNomeEmpresarial write FNomeEmpresarial;
   end;
+
+  { TACBrBlocoX_PafECF }
 
   TACBrBlocoX_PafECF = class(TPersistent)
   private
@@ -133,15 +84,19 @@ const
     property NomeEmpresarialDesenvolvedor: String read FNomeEmpresarialDesenvolvedor write FNomeEmpresarialDesenvolvedor;
   end;
 
+  { TACBrBlocoX_ECF }
+
   TACBrBlocoX_ECF = class(TPersistent)
   private
     FVersao: String;
+    FNumeroCredenciamento: String;
     FNumeroFabricacao: String;
     FModelo: String;
     FMarca: String;
     FCaixa: String;
     FTipo: String;
   published
+    property NumeroCredenciamento: String read FNumeroCredenciamento write FNumeroCredenciamento;
     property NumeroFabricacao: String read FNumeroFabricacao write FNumeroFabricacao;
     property Tipo: String read FTipo write FTipo;
     property Marca: String read FMarca write FMarca;
@@ -149,24 +104,9 @@ const
     property Versao: String read FVersao write FVersao;
     property Caixa: String read FCaixa write FCaixa;
   end;
-
-  { TWebServices }
-
-  TWebServices = class
-  private
-    FEnviarBlocoX : TEnviarBlocoX;
-    FConsultarBlocoX: TConsultarBlocoX;
-    FValidarBlocoX: TValidarBlocoX;
-
-    constructor Create(AOwner: TACBrDFe); overload;
-    destructor Destroy; override;
-  public
-    property EnviarBlocoX: TEnviarBlocoX read FEnviarBlocoX write FEnviarBlocoX;
-    property ConsultarBlocoX: TConsultarBlocoX read FConsultarBlocoX write FConsultarBlocoX;
-    property ValidarBlocoX: TValidarBlocoX read FValidarBlocoX write FValidarBlocoX;
-  end;
-
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrBlocoX = class(TACBrDFe)
   private
     FPafECF: TACBrBlocoX_PafECF;
@@ -174,7 +114,7 @@ const
     FEstoque: TACBrBlocoX_Estoque;
     FReducoesZ: TACBrBlocoX_ReducaoZ;
     FECF: TACBrBlocoX_ECF;
-    FWebServices: TWebServices;
+    FWebServices: TACBrBlocoX_WebServices;
     function GetConfiguracoes: TConfiguracoesBlocoX;
     procedure SetConfiguracoes(const Value: TConfiguracoesBlocoX);
   protected
@@ -186,7 +126,7 @@ const
 
     property Estoque: TACBrBlocoX_Estoque read FEstoque write FEstoque;
     property ReducoesZ: TACBrBlocoX_ReducaoZ read FReducoesZ write FReducoesZ;
-    property WebServices: TWebServices read FWebServices write FWebServices;
+    property WebServices: TACBrBlocoX_WebServices read FWebServices write FWebServices;
   published
     property Estabelecimento: TACBrBlocoX_Estabelecimento read FEstabelecimento write FEstabelecimento;
     property PafECF: TACBrBlocoX_PafECF read FPafECF write FPafECF;
@@ -194,129 +134,15 @@ const
     property Configuracoes: TConfiguracoesBlocoX read GetConfiguracoes Write SetConfiguracoes;
   end;
 
-
 implementation
 
-uses
-  ACBrBlocoX_Comum, StrUtils;
+{ TConfiguracoesBlocoX }
 
-{ TWebServices }
-
-constructor TWebServices.Create(AOwner: TACBrDFe);
+procedure TConfiguracoesBlocoX.Assign(
+  DeConfiguracoesBlocoX: TConfiguracoesBlocoX);
 begin
-  FEnviarBlocoX := TEnviarBlocoX.Create(AOwner);
-  FConsultarBlocoX := TConsultarBlocoX.Create(AOwner);
-  FValidarBlocoX := TValidarBlocoX.Create(AOwner);
-end;
-
-destructor TWebServices.Destroy;
-begin
-  FEnviarBlocoX.Free;
-  FConsultarBlocoX.Free;
-  FValidarBlocoX.Free;
-  inherited Destroy;
-end;
-
-{ TConsultarBlocoX }
-
-procedure TConsultarBlocoX.DefinirURL;
-begin
-  inherited DefinirURL;
-  FPURL := FPURL+'?op=Consultar';
-  FPBodyElement := 'Consultar';
-end;
-
-procedure TConsultarBlocoX.DefinirServicoEAction;
-begin
-  FPServico:= 'http://tempuri.org/';
-  FPSoapAction := 'http://tempuri.org/Consultar';
-end;
-
-procedure TConsultarBlocoX.DefinirDadosMsg;
-begin
-  FPDadosMsg := '<pRecibo>'+Recibo+'</pRecibo>';
-end;
-
-function TConsultarBlocoX.TratarResposta: Boolean;
-begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarResponse')));
-
-  Result := (FPRetWS <> '');
-end;
-
-{ TEnviarBlocoX }
-
-procedure TEnviarBlocoX.DefinirURL;
-begin
-  inherited DefinirURL;
-  FPURL := FPURL+'?op=Enviar';
-  FPBodyElement := 'Enviar';
-end;
-
-procedure TEnviarBlocoX.DefinirServicoEAction;
-begin
-  FPServico:= 'http://tempuri.org/';
-  FPSoapAction := 'http://tempuri.org/Enviar';
-end;
-
-procedure TEnviarBlocoX.DefinirDadosMsg;
-begin
-  FPDadosMsg := '<pXml>'+ParseText(XML,False)+'</pXml>';
-end;
-
-function TEnviarBlocoX.TratarResposta: Boolean;
-begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarResponse')));
-
-  Result := (FPRetWS <> '');
-end;
-
-{ TWebServiceBlocoX }
-
-procedure TWebServiceBlocoX.DefinirURL;
-begin
-  FPURL := 'http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx';
-end;
-
-function TWebServiceBlocoX.GerarVersaoDadosSoap: String;
-begin
-  Result:='';
-end;
-
-constructor TWebServiceBlocoX.Create(AOwner: TACBrDFe);
-begin
-  inherited Create(AOwner);
-  FPHeaderElement := '';
-  FPBodyElement := '';
-end;
-
-{ TValidarBlocoX }
-
-procedure TValidarBlocoX.DefinirURL;
-begin
-  inherited DefinirURL;
-  FPURL := FPURL+'?op=Validar';
-  FPBodyElement := 'Validar';
-end;
-
-procedure TValidarBlocoX.DefinirServicoEAction;
-begin
-  FPServico:= 'http://tempuri.org/';
-  FPSoapAction := 'http://tempuri.org/Validar';
-end;
-
-procedure TValidarBlocoX.DefinirDadosMsg;
-begin
-  FPDadosMsg := '<pXml>'+ParseText(XML,False)+'</pXml>'+
-                '<pValidarPafEcf>'+IfThen(FValidarPafEcf, 'true', 'false')+'</pValidarPafEcf>'+
-                '<pValidarEcf>'+IfThen(FValidarEcf, 'true', 'false')+'</pValidarEcf>';
-end;
-
-function TValidarBlocoX.TratarResposta: Boolean;
-begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ValidarResponse')));
-
-  Result := (FPRetWS <> '');
+  WebServices.Assign(DeConfiguracoesBlocoX.WebServices);
+  Certificados.Assign(DeConfiguracoesBlocoX.Certificados);
 end;
 
 { TACBrBlocoX }
@@ -324,13 +150,13 @@ end;
 constructor TACBrBlocoX.Create(AOwner: TComponent);
 begin
   inherited;
-  FEstoque   := TACBrBlocoX_Estoque.Create(Self);
-  FReducoesZ := TACBrBlocoX_ReducaoZ.Create(Self);
 
-  FPafECF := TACBrBlocoX_PafECF.Create;
+  FEstoque         := TACBrBlocoX_Estoque.Create(Self);
+  FReducoesZ       := TACBrBlocoX_ReducaoZ.Create(Self);
+  FPafECF          := TACBrBlocoX_PafECF.Create;
   FEstabelecimento := TACBrBlocoX_Estabelecimento.Create;
-  FECF := TACBrBlocoX_ECF.Create;
-  FWebServices := TWebServices.Create(Self);
+  FECF             := TACBrBlocoX_ECF.Create;
+  FWebServices     := TACBrBlocoX_WebServices.Create(Self);
 end;
 
 destructor TACBrBlocoX.Destroy;
@@ -363,21 +189,6 @@ end;
 procedure TACBrBlocoX.SetConfiguracoes(const Value: TConfiguracoesBlocoX);
 begin
   FPConfiguracoes := Value;
-end;
-
-{ TConfiguracoesBlocoX }
-
-procedure TConfiguracoesBlocoX.Assign(
-  DeConfiguracoesBlocoX: TConfiguracoesBlocoX);
-begin
-  WebServices.Assign(DeConfiguracoesBlocoX.WebServices);
-  Certificados.Assign(DeConfiguracoesBlocoX.Certificados);
-end;
-
-constructor TConfiguracoesBlocoX.Create(AOwner: TComponent);
-begin
-  inherited;
-  //
 end;
 
 end.

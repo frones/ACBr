@@ -39,7 +39,704 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 27/07-2016
+Data: 06/10/2017
+-- ACBrPosPrinter --
+[+] Adicionada a propriedade: "VerificarImpressora: Boolean default False"
+    Quando "True", o ACBrPosPrinter usará o método "LerStatusImpressora",  a cada
+    execução do método "Imprimir", e interpretará as respostas da Impressora,
+    emitindo erros no caso de "Tampa Aberta, Sem Papel, OffLine, Erro".
+    IMPORTANTE: A leitura de Status da impressora, somente funciona em Portas
+                Seriais ou TCP
+[*] Método "Imprimir". Ajuste para converter todos as Quebras de Linha da
+    String recebida para impressão, para o valor definido em "Cmd.PuloDeLinha"
+[*] Método "Imprimir". Ajuste para esvaziar o Buffer interno de ACBrPosPrinter
+    mesmo quando houver falha na impressão.
+    (por: DSA)
+
+Data: 30/09/2017
+-- ACBrBALMicheletti --
+[-] Acertos para compilar corretamente em qualquer versão do Delphi mais atual.
+    por: Regys.Silveira
+
+Data: 29/09/2017
+-- ACBrBALMicheletti, ACBrBAL
+[+] Inclusão da balança Micheletti
+		https://www.projetoacbr.com.br/forum/topic/33420-balança-micheletti/
+	(por: Juliomar Marchetti)
+
+Data: 20/09/2017
+-- ACBrTER, ACBrTERClass, ACBrTERWilbor --
+[+] Inclusão do parâmetro "DuplaConfirmacao", baseado na contribuição de usuário do fórum.
+	(por: Natanael.Ribeiro)
+
+Data: 08/09/2017
+-- ACBrECFVirtual --
+[-] Ajuste para permitir mais de 100 pagamentos no Cupom.
+[*] Adicionda verificação para não permitir mais de 999 Itens e 999 Pagamentos
+[-] Ajuste em "LoadFromINI" para evitar loop Infinito e Estouro de memória
+
+Data: 04/08/2017
+-- ACBrECF, ACBrECFClass --
+[*] Modificações em "GetRodapePaf" introduzindo o campo "InfoRodapeCupom.DavFarm"
+    para Farmácias de manipulação
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=38657
+
+Data: 30/08/2017
+-- ACBrECFEscECF --
+[-] Revertida modificação implementada em: 18/07/2017.
+    http://www.projetoacbr.com.br/forum/topic/38579-ecf-epson-tm-t900f-não-fazendo-quebra-de-linha
+
+-- ACBrETQ --
+[+] Inclusão de nova propriedade "BackFeed", baseada na contribuição do usuário conforme:
+    http://www.projetoacbr.com.br/forum/topic/38559-etiqueta-pplb-da-argox-com-back-feed/
+	(por: Felippi)
+[*] Exclusão da propriedade "AdicionarComandoP", pois estava obsoleta. Os comandos 
+	utilizados por ela ('P' e 'N') já são enviados em outros momentos do código.
+	
+-- ACBrETQClass, ACBrETQPEpl2 --
+[+] Implementação da nova propriedade "BackFeed".
+[*] Exclusão da propriedade e implementação referente à "AdicionarComandoP".
+
+Data: 26/08/2017
+-- ACBrECFEscECF --
+[-] Ajuste para problema de Loop infinito em Daruma FS800I
+    http://www.projetoacbr.com.br/forum/topic/38287-daruma-fs800i-problema-redu%C3%A7%C3%A3o-z/
+
+Data: 25/08/2017
+-- ACBrDevice --
+[+] Adicionada a propriedade "NomeDocumento", que é usada apenas no modo de
+    impressão "RAW", e permite definir o nome do documento que será apresentado
+    no Spooler.
+
+-- ACBrPosPrinter --
+[*] Propriedade "Device", modificada para Published, para permitir editar em
+    tempo de projeto (Object Inspector), os valores de ACBrDevice
+    (por: DSA)
+
+Data: 14/08/2017
+-- ACBrBALDigitron --
+[-] Corrreção na leitura do valor, considerando STX e ETX
+    http://www.projetoacbr.com.br/forum/topic/38234-correção-na-classe-da-balança-digitron/
+
+Data: 04/08/2017
+-- ACBrECFEscECF --
+[*] Ajuste no método "GetNumCupom", para efetuar checagem do Retorno da Impressora.
+    (Em algumas raras situações o ECF Bematech respondeu o como o registrador errado)
+    (por: DSA)
+
+Data: 01/08/2017
+-- ACBrDevice --
+[*] Ajuste em "Ativar", para não parar por falha quando tenta fechar Socket
+    anterior
+    (por: DSA)
+
+Data: 31/07/2017
+-- ACBrECFSwedaSTX --
+[-] acerto para gera corretamente a descrição da marca da impressora sweda mesmo 
+    quando usando stx para evitar diferenças com o arquivo da SEFAZ, o que acaba 
+    atrapalhando encontrar a impressora no CNIEE;
+    por: regys.silveira
+
+Data: 27/07/2017
+-- ACBrETQPpla --
+[*] Adicionada o suporte ao atributo de impressão invertida, em PPLA
+    http://www.projetoacbr.com.br/forum/topic/37251-imprimir-texto-com-tarja-acbretq-ppla/
+
+Data: 21/07/2017
+-- ACBrPosPrinter --
+[-] Correção para impressão com acentos, no Linux
+    (por: DSA)
+
+Data: 19/07/2017
+-- ACBrBALFilizola --
+[+] Ajuste para o modelo C&F C6MT
+    http://www.projetoacbr.com.br/forum/topic/36644-integração-balança-cf-c6mt-filizola/
+    (por: Juliomar Marchetti)
+		
+Data: 18/07/2017
+-- ACBrECFEscECF --
+[*] Ajuste em "TACBrECFEscECFProtocoloEpsonDLL.EnviaComando_ECF", para modifcar
+    todas as quebras de linha para LF antes de enviar para a DLL
+    (Por: DSA)
+
+Data: 16/07/2017
+-- ACBrPosPrinter --
+[*] Correção para Sinal de Gaventa invertido adicionado verificação
+    http://www.projetoacbr.com.br/forum/topic/37180-acbrposprinter-lerstatusimpressora-sinal-invertido-da-gaveta-faltando-verificação/
+    (por : Juliomar Marchetti)
+		
+Data: 29/06/2017
+-- ACBrECFVirtual --
+[-] Correção para Zerar totalizadores de "RelatoriosGerenciais.Contador", após a
+    Redução Z.
+    http://www.projetoacbr.com.br/forum/topic/37469-contador-de-relat%C3%B3rios-gerenciais-em-acbrecfvirtual/
+
+Data: 22/06/2017
+-- ACBrECFEscECF --
+[*] Método "IdentificaOperador" modificado para verificar o Operador atual, e
+    evitar reprogramar quando for o mesmo...
+    http://www.projetoacbr.com.br/forum/topic/37303-protocolo-esc-ecf-identificar-operador/
+    (por: Filipe Natividade)
+
+Data: 07/06/2017
+-- ACBrECF --
+[*] Alteração para limpar "InfoRodapeCupom" após fechar/cancelar cupom.
+    (por: Elias César)
+
+Data: 04/06/2017
+ -- ACBrBALFilizola --
+[*] Ajuste na função "InterpretarRepostaPeso", para considerar até o primeiro ETX
+    que encontrar.
+    (por: Fabiano Cunha)
+
+Data: 19/05/2017
+-- ACBrECFVirtual --
+[-] Correção para que o contador de Reduções Z (CRZ), seja impresso na Redução Z
+    de acordo com a Redução Z atual (assim como ocorre no ECF)
+    (por: DSA)
+
+Data: 13/05/2017
+-- ACBrDevice --
+[-] Ajuste para detecção de portas USB e DLL quando existe mais de uma exemplo :
+    DLL1 ou USB2
+    http://www.projetoacbr.com.br/forum/topic/36702-erro-na-acbrdevice-quando-uso-epson-dll/
+
+-- ACBrECFEpson --
+[*] Ajuste na impressão de cheques com Epson onde estava centavos ao invés de centavo
+    http://www.projetoacbr.com.br/forum/topic/36703-ecf-epson-não-imprimia-texto-centavos-no-cheque/
+    (por: Juliomar Marchetti)
+		
+Data: 09/05/2017
+-- ACBrDevice --
+[-] Ajuste na detecção de portas Paralelas, Linux (Ex: "/dev/lp?", "/dev/usb/lp?")
+    http://www.projetoacbr.com.br/forum/topic/36617-acbrposprinter-com-epson-tm-t20-usb-no-linux
+    (por: DSA)
+
+Data: 28/04/2017
+-- ACBrECFVirtual --
+[-] Correção em "LoadFromINI", para não considerar o valor do Troco, como
+    Pagamento efetuado.
+    http://www.projetoacbr.com.br/forum/topic/36462-acbrecfvirtual-duvida-com-acbrecf1totalpago
+    (por: BigWings)
+
+Data: 27/04/2017
+-- ACBrECFNaoFiscal, ACBrECFVirtual --
+[+] Implementado suporte ao método "GetNumUltimoItem"
+    (Por: BigWings e DSA)
+
+-- ACBrECFVirtual --
+[*] Método "ClasstoINI", ajuste para não disparar exceptions quando etntar Salvar
+    e o componente não tiver sido inicializado.. (por: DSA)
+
+Data: 20/04/2017
+-- ACBrEscBematech, ACBrEscDiebold --
+[-] Correção na impressão de Cod.Barras. (bug introduzido em 12/04/2017)
+
+-- ACBrEscPosEpson --
+[*] Adicionado os métodos públicos "ComandoCodBarrasEscPosEpson" e
+    "ComandoCodBarrasEscPosNo128ABC"
+    (por: DSA)
+
+Data: 14/04/2017
+-- ACBrPosPrinter --
+[+] Classe "TACBrPosPrinterClass", adicionado o método Virtual "Configurar",
+    permitindo as classes filhas, a possibilidade de enviar comandos a impressora
+    após a chamada de "Ativar"
+[*] Método "TACBrPosPrinter.Imprimir", modificado para chamar "Ativar", caso
+    a porta ainda não esteja Ativa
+
+-- ACBrEscDaruma --
+[*] Adicionado mecanismo de autoconfiguração, do numero de colunas Normal e
+    Condensada.
+[*] Método "LerStatus", adicionda verificação do tipo de porta (Serial ou Eth)
+[*] Método "LerInfo", modificado para que a detecção de colunas Default seja 48
+
+-- ACBrEscBematech --
+[*] Método "LerStatus", adicionda verificação do tipo de porta (Serial ou Eth)
+(por: DSA)
+
+Data: 12/04/2017
+-- ACBrPosPrinter --
+[+] Adicionado o comando "TACBrPosComandos.PuloDeLinha", para permitir definir
+    qual o comando a ser enviado, para pulo de linha (Ex: CR ou CR+LF)
+[*] Método "TACBrPosPrinterClass.ComandoEspacoEntreLinhas": adicionada
+    implementação genérica, para evitar repetição nas classes filhas
+
+-- ACBrEscBematech --
+[*] Refatoração para não mais descender de TACBrEscPosEpson e sim de
+    TACBrPosPrinterClass
+
+-- ACBrEscDaruma --
+[*] propriedade "RazaoColunaFonte.Condensada", modificada para usar a proporção
+    Default (0.75)
+[-] Método "ComandoQrCode". Ajuste para correta impressão de QRCodes grandes.
+    Caso a correção de Erro não tenha sido especificada, e tamanho do código
+    seja maior do que 256 caracteres, usará 'M' como correção.
+[*] Método "ComandoEspacoEntreLinhas" removido, pois usará implementação da
+    classe mãe
+
+-- ACBrEscDiebold --
+[*] Método "ComandoFonte" removido, pois foi migrado para "TACBrEscPosEpson"
+
+-- ACBrEscPosEpson --
+[*] Método "ComandoFonte" adicionado, para melhor controle e compatibilidade das
+    fontes "Negrito, Condensado, Expandido, Sublinhado",com os diversos modelos
+    de Impressoras compatíveis com Epson EscPos
+[*] Método "ComandoEspacoEntreLinhas" removido, pois usará implementação da
+    classe mãe
+
+Data: 04/04/2017
+-- ACBrECFVirtual --
+[-] Método "VendeItem", correção para o caso do Desconto / Acrescimo falhar,
+    não ficar registrado o Item vendido na memória do ECF Virtual
+    (por: DSA)
+
+Data: 09/03/2017
+-- ACBrECFVirtual --
+[-] Correção de A.V. quando Ativando o ECFVirtual, que tinha cupom Aberto e um Item Cancelado
+    http://www.projetoacbr.com.br/forum/topic/35435-erro-ao-ativar-acbrecf-utilizando-ecf-virtual/?do=findComment&comment=232343
+    (por: DSA)
+
+Data: 22/02/2017
+-- ACBrECFEscECF --
+[*] Correção para encontrar a linha correta das informações 
+    em "BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal".
+    (por: Elias César)
+
+Data: 20/02/2017
+-- ACBrECFEscECF --
+[*] Alteração para pegar a linha de início corretamente ao ler os dados de RZ
+	pela procedure "BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal".
+    (por: Pedro E. Braga)
+
+Data: 20/02/2017
+-- ACBrECFClass --
+[-] Correção para retornar alíquotas tributadas que possuem índice alfanumérico
+	Exemplo: T01, T02, etc.
+    (por: Elias César)
+
+Data: 15/02/2017
+-- ACBrECFVirtualBuffer --
+[*] Ajuste para que as mascaras de valores do Relatório usem o "FormatFloatBr"
+    (por: DSA)
+
+Data: 14/02/2017
+-- ACBrECFVirtual --
+[*] Propriedade "TACBrECFVirtualClass.ChaveCupom", migrada para
+    "TACBrECFVirtualClassCupom.ChaveDFe"..  isso permite acessar e modificar
+    a Chave do DFe a ser cancelado em eventos como: "QuandoCancelarCupom", que
+    já recebia o parâmetro "CupomVirtual"  (por: DSA)
+
+Data: 13/02/2017
+-- ACBrECFVirtual --
+[-] Correção para atribuir corretamente os valores em "CancelaItemVendido" quando
+    o item possui acréscimo ou desconto.
+    (por: Elias César)
+
+Data: 13/02/2017
+-- ACBrECFClass --
+[-] Correção para somar os Cancelamentos ISSQN em aberto em "CancelamentoISSQN".
+    (por: Elias César)
+
+Data: 10/02/2017
+-- ACBrECFClass --
+[-] Verificado que alíquotas II, FF e NN não entram na lista de alíquotas, porém
+    a validação falhava quando o índice possuía números (exemplo: I1, F1, N2...).
+    Alterado para não considerar alíquotas zeradas ou que possuem caracteres no índice.
+    (por: Elias César)
+
+-- ACBrECFVirtual --
+[*] Adicionado registrador específico para TROCO, nas Formas de Pagamento.
+    Antes o ECFVirtual, descontava o TROCO da Forma de pagamento 01-DINHEIRO,
+    o que causava dificuldade na apuração dos resultados  (por: DSA)
+
+Data: 06/02/2017
+-- ACBrECF --
+[*] Modificado método "TACBrECF.PafMF_ArqMFD_Binario" para gerar ArquivoMFD
+    com Tipo = "tdmfdTotal" caso a data Inicial ou Final esteja zerada.
+    (por: Elias César)
+
+-- ACBrECFVirtual --
+[*] Ajuste para que ECF não fique bloqueado por Estado estRequerZ, caso exista
+    algum documento em aberto.
+    http://www.projetoacbr.com.br/forum/topic/35028-melhoria-getestado-acbrecfvirtual/
+
+Data: 03/02/2017
+-- ACBrECFClass --
+[*] Inclusão do novo método "TotalCancelamentosEmAbertoISSQN";
+
+-- ACBrECFVirtual --
+[*] Foram separados todos os Totalizadores entre ICMS e ISSQN. 
+	Ou seja, agora o desconto/acréscimo, subtotal e valores cancelados serão 
+	separados pelo tipo da alíquota ("T" ou "S").
+
+-- ACBrECFVirtualBuffer --
+[*] Foram separados os Totalizadores entre ICMS e ISSQN no relatório do
+	ECF Virtual (ReduçãoZ/LeituraX);
+	(por: Elias César)
+
+Data: 31/01/2017
+-- ACBrECFVirtual --
+[+] Implementado suporte ao método: "GetNumCOOInicial" (por: PauloHenrique)
+    http://www.projetoacbr.com.br/forum/topic/34870-tacbrecfvirtual-numcooinicial-vazio/
+
+Data: 27/01/2017
+-- ACBrECFVirtual --
+[-] Alteração para incluir também o valor dos acréscimos de itens em 
+	"fpCuponsCanceladosEmAbertoTotal".
+	(por: Elias César)
+
+-- ACBrBAL --
+[-] Correção para NÃO desativar "MonitorarBalanca" após método "LePeso"
+    (por: adenilton)
+
+Data: 26/01/2017
+-- ACBrDevice --
+[-] Correção para impressão em Modo Raw em Lazarus/FPC. Restaurando para o modo
+    anterior, para evitar problemas de impressão em outras Impressoras
+    (por: DSA)
+
+Data: 21/12/2016
+-- ACBrECFVirtualBuffer --
+[*] Melhorias em "TACBrECFVirtualBufferClass.AddBufferRelatorio", para que
+    relatório fique mais semelhante ao de um ECF do convênio 09/09.
+    - Adicionado os Contadores: NumCRO, NumCCF, NumCNF, NumCDC
+    - Adicionado os Totalizadores: FS1, IS1, NS1
+    - Separação dos Totalizadores de ICMS e ISSQN
+
+-- ACBrECFVirtual --
+[+] Adicionado suporte aos totalizadores de isenção do ISSQN: FS1, IS1, NS1
+[+] Adicionado sobrecarga aos métodos: GetTotalSubstituicaoTributariaISSQN,
+    GetTotalIsencaoISSQN, GetTotalNaoTributadoISSQN
+[+] Adicionada rotina para efetuar migração de INI do formato antigo para o novo:
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=34210
+    (por: DSA)
+
+Data: 23/12/2016
+-- ACBrECFBematech --
+  [-] Descrição só pode ter no máximo 200 caracteres (compare com linha 1887);
+  
+Data: 19/12/2016
+-- ACBrECF --
+[*] Removido e-mail do Relatório de Identificação do PAF-ECF;
+[*] Inclusão da UF no Relatório de Parâmetros de Configuração.	
+	(por: Elias César)
+
+Data: 15/12/2016
+-- ACBrDevice --
+[-] Correção na detecção de Impressora "RAW", com nome de Rede:
+	http://www.projetoacbr.com.br/forum/topic/33998-impressora-nao-encontrada-no-posprinter/
+
+Data: 13/12/2016
+-- ACBrECFEscECF --
+[-] Correção para Venda de Item com aliquota de Serviço, sendo informada por
+    Indice... Exemplo: S01, S3
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=33900
+
+-- ACBrDevice --
+[*] Ajuste para compilação em FPC inferior a 3.0  (por: DSA)
+
+Data: 30/11/2016
+-- ACBrBALMagellan --
+[-] Correção no método "InterpretarRepostaPeso" (retorno estava vazio).
+    http://www.projetoacbr.com.br/forum/topic/33744-erro-balan%C3%A7a-magellan/
+
+Data: 25/11/2016
+-- ACBrECFEscECF --
+[-] Ajuste após commit de 24/11/16, para para correto funcionamento da 
+    a leitura da CAT 52, por DLL, na Epson.   (por: Rodrigo Fruhwirth)
+
+Data: 24/11/2016
+-- ACBrECFClass, ACBrEscECF, ACBrECFBematech, ACBrECFDaruma, ACBrECFSwedaStx --
+[-] Correção para funcionamento do método "PafMF_GerarCAT52" em ACBrECFEscECF,
+    modificando a assinatura do método para receber o Número de Série como
+    parâmetro opcional:
+    procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
+      const DirArquivos: String; NumeroSerie: String = ''); override;
+    (por: DSA)
+
+Data: 21/11/2016
+-- ACBrECFEscECF --
+[-] Método "GetDadosUltimaReducaoZ", Bematech MP4200. Correção para retorno de
+    "GrandeTotal" quando CRZ for superior a 256
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=33568
+
+Data: 19/11/2016
+-- ACBrECFEscECF --
+[-] Correção de Bug quando usando Epson com porta "USB"/"DLL". Evitando A.V. na
+    execução de comandos que tenham um grande retorno de dados (Ex: LeituraXSerial)
+    (por: DSA)
+
+Data: 18/11/2016
+-- ACBrDevice --
+[+] Adicionado o tipo: TACBrECFTipoDownloadMFD = (tdmfdTotal, tdmfdData, tdmfdCOO);
+
+-- ACBrECF --
+[*] Método "ArquivoMF_DLL(NomeArquivo: AnsiString)", renomeado para:
+    "ArquivoMF_Binario_DLL(NomeArquivo: AnsiString)"
+[*] Método "ArquivoMFD_DLL(NomeArquivo: AnsiString)", renomeado para:
+    "ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString)"
+[+] Adicionado os métodos:
+   ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; DataInicial, DataFinal: TDateTime);
+   ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; COOInicial, COOFinal: Integer);
+[*] Método "PafMF_Binario(const PathArquivo: String)", removido. Use o método:
+    "PafMF_ArqMF_Binario"
+[*] Método "PafMF_ArqMF", renomeado para "PafMF_ArqMF_Binario"
+[*] Método "PafMF_ArqMFD", renomeado para "PafMF_ArqMFD_Binario", e assinatura
+    modificada para:
+    procedure PafMF_ArqMFD_Binario(const APathArquivo: String; DataInicial: TDateTime = 0;
+      DataFinal: TDateTime = 0; Assinar: Boolean = True);
+
+-- ACBrECFBematech, ACBrECFDaruma, ACBrECFEpson, ACBrECFEscECF, ACBrECFSwedaSTX --
+[*] Aplicada modificações em "ArquivoMFD_Binario_DLL", para o funcionamento por
+    Periodo de Data e Intervalo de COO
+
+-- ACBrECFEpson --
+[*] Ajuste para que métodos da DLL, para geração de MF, MFD não gravem a linha de EAD
+[*] Ajuste no Path informado para a DLL, segundo recomendações da Epson
+
+-- ACBrECFFiscNET --
+[+] Implementação inicial dos métodos: "ArquivoMF_Binario_DLL" e "ArquivoMFD_Binario_DLL"
+
+  (Por: Pedro Braga e DSA)
+  http://www.projetoacbr.com.br/forum/topic/32980-arquivo-mf-e-mfd-apos-primeira-reducao/
+
+
+Data 13/11/2016
+-- ACBrECF, ACBrECFClass --
+[*] Método "CancelaDescontoAcrescimoItem", modificado inserindo novo parâmetro:
+    "TipoAcrescimoDesconto: String = 'D'"
+[*] Método "GetRodapePaf" modificado para atender ao requisito XXXVI do PAF-ECF
+[*] TACBrECFRodape modificado inserindo as propriedades "Placa" e "QtdeKM"
+
+-- ACBrECFBematech, ACBrECFEpson, ACBrECFFiscNET, ACBrECFSwedaSTX --
+[+] Adicionado suporte ao método: "CancelaDescontoAcrescimoItem"
+
+-- ACBrECFEscECF --
+[*] Método "CancelaDescontoAcrescimoItem" modificado para suportar o parâmetro
+    "TipoAcrescimoDesconto"
+
+-- ACBrECFFiscNET --
+[*] Método "TraduzirTag", modificado para suportar modelo "URANO/1FIT LOGGER"
+
+(por: Pedro E. Braga) - http://www.projetoacbr.com.br/forum/index.php?showtopic=32980
+
+Data: 09/11/2016
+-- ACBrBal, ACBrBALLibratek
+[+] Adicionado a balança libratek wt3000-i
+    http://www.projetoacbr.com.br/forum/topic/31203-acbrbal-com-balan%C3%A7a-libratek-wt3000-i/
+    por : Juliomar Marchetti
+		
+Data: 03/11/2016
+-- ACBrECFFiscNET --
+[*] Ajuste para nunca tentar imprimir mais de 8 linhas do Rodapé
+    www.projetoacbr.com.br/forum/topic/15230-acbrecf-fiscnet-fechacupom/
+
+Data: 01/11/2016
+-- ACBrECFEpson --
+[*] Ajuste no método "LinhaRelatorioGerencial", para que o mesmo Feche o
+    Relatório Gerencial, quando o Limite máximo de linhas for atingido.
+    http://www.projetoacbr.com.br/forum/topic/32569-certificação-paygo-passo-26
+    (por: DSA)
+
+Data: 21/10/2016
+-- ACBrCHQBematech --
+[-] acerto para impressão correta de cheques na impressora Bematech
+
+Data: 18/10/2016
+-- ACBrBAL --
+[+] Inclusão de dois comandos: "SolicitarPeso" e "InterpretarResposta()" 
+    com objetivo de utilizar o ACBrBAL dentro do ACBrMTer.
+    (por: Elias César)
+	
+-- ACBrBALClass e filhas -- 
+[+] Incluídos os comandos "SolicitarPeso", "AguardarRespostaPeso" e 
+    "InterpretarRespostaPeso", dividindo o Comando "LePeso" em partes;
+[*] Refatoração nas classes para utilização dos novos comandos;
+[*] Modificação pra que ACBrBALClass implemente uma Balança Genérica. 
+    Com isso a ACBrBALGenerica foi excluída.
+    (por: Elias César)
+
+Data: 11/10/2016
+-- ACBrDevice --
+[-] Correção para suporte a portas paralelas (por: DSA e Waldir Paim)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32722
+
+Data: 07/10/2016
+-- ACBrPosPrinter --
+[*] Removido detecção de porta aberta de "TACBrPosPrinter.DesativarPorta", que
+    passou para TACBrDevice   (por: DSA)
+
+-- ACBrDevice --
+[-] Método: "DeduzirTipoPorta". Correção na detecção do tipo de porta Paralela
+    (LPT, /dev/lp)  (Por: Waldir Paim)
+[*] Método "Desativar". Ajuste para não fechar a porta Serial, enquanto a mesma
+    ainda estiver Ativa e ocupada. (por: DSA)
+[-] Método: "GetPrinterRawIndex". Correção para detecção do Nome da Impressora
+    compartilhada e remoção de Hint (Por: Waldir Paim)
+[*] Método "EnviaStringRaw", remoção de Warning (Por: Waldir Paim)
+
+
+Data: 02/10/2016
+-- ACBrDevice --
+[+] Adicionado o suporte a portas "RAW", permitindo usar o "Nome da Impressora",
+    do sistema operacional, na definição da "Porta"  Exemplo:
+    "SWEDA SI-300S"  ou  "RAW:SWEDA SI-300S"
+    Use "*" para imprimir na impressora Default
+[+] Nova sintaxe para atribuição de portas do tipo "Arquivo". Exemplo:
+    "C:\TEMP\saida.prn"  ou  "FILE:C:\TEMP\saida.prn"
+[+] Adicionada nova propriedade "DeviceType: TACBrDeviceType", sendo que
+    TACBrDeviceType = (dtFile, dtSerial, dtTCP, dtRawPrinter, dtHook)
+    Essa propriedade é detectada automaticamente, na atribuição da propriedade
+    "Porta", mas pode ser atribuida posteriormente, caso a detecção automática
+    não esteja correta.
+
+-- ACBrECF --
+[*] "FechaCupom" Ajuste para detecção de Quebra de linha com [CR]
+
+-- ACBrPosPrinter --
+[-] Ajuste para ignorar as tags </corte_parcial> e </corte_total> quanto
+    propriedade "CortaPapel" for False.
+[-] Correção na exibição de mensagens de erro com acentuação.
+[*] Ajuste para não fechar a porta da impressora, enquanto a mesma ainda estiver
+    ocupada.
+    (por: DSA)
+
+Data: 26/09/2016
+-- ACBrECFVirtual --
+[*] Incluída procedure "GetEstadoECFVirtual" para possibilitar alteração 
+	da propriedade fpEstadoECF durante "GetEstado" por parte das classes filhas.
+	(por: Elias César)
+
+Data: 22/09/2016
+-- ACBrECF --
+[-] Remoção de virgula a mais
+
+-- ACBrECFEpson --
+[*] Correção para Bug acidentalmente introduzido em 10/09/2016.
+    Erro: 0204 - Campos em falta.   (por: DSA)
+
+Data: 20/09/2016
+-- ACBrECFDaruma, ACBrECFEscECF --
+[-] Correções para impressão de Cod.Barras na Daruma FS800i  (por: DSA)
+
+Data: 19/09/2016
+-- ACBrEscDaruma --
+[-] Ajuste no comando </fn> (fonte normal), para desligar modo condensado, na
+    DR700     (por: DSA)
+
+Data: 15/09/2016
+-- ACBrECFDaruma --
+[-] Ajuste no indice da alíquota no método carregaAliquotas.
+    (por: Rodrigo Frühwirth)
+
+Data: 14/09/2016
+-- ACBrECF --
+[*] Ajuste para correta impressão da mensagem de "Paraiba Legal"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32200
+
+Data: 13/09/2016
+-- ACBrECFBematech --
+[-] Ajuste para correta verificação do Erro "Sem Papel"  (por: DSA)
+
+Data: 11/09/2016
+-- ACBrECFEscECF --
+[-] Correção para o tipo de dados de string para ansistring, pois no delphi ele
+     verifica a tipagem de dado (por: Juliomar Marchetti)
+		
+Data: 10/09/2016
+-- ACBrECFClass --
+[*] Classe "TACBrECFRodapeRestaurante", adicionado propriedade
+    "ContaCliente: Boolean" para Sinalizar o tipo de conta "Mesa" ou "Cliente"
+    (por: Rodrigo Frühwirth)
+
+-- ACBrECF --
+[*] Método "GetRodapeRestaurante", adicionado tratamento para a propriedade
+    TACBrECFRodapeRestaurante.ContaCliente, imprimndo a expressão "CONTA DE CLIENTE"
+    no lugar de "MESA" de acordo com a necessidade da aplicação.
+    (por: Rodrigo Frühwirth)
+[*] Métodos PafMF_ArqMF e PafMF_ArqMFD adicionado novo parâmetro
+    "Assinar: Boolean = True",  que permite omitir o processo de assinatura do
+    ACBr. (por: Rodrigo Frühwirth)
+[*] Troca de FormatFloat por FormatFloatBr para evitar formação errada de
+    decimais em Linux ou S.O. em Ingles (por: DSA)
+
+-- ACBrECFEpson --
+[*] Método EpsonTraduzirTagBloco implementado montagem do QrCODE.
+    (por: Rodrigo Frühwirth)
+[-] Método "GetNumUltimoItem" modificado para sempre deve ler o número do último
+    item direto do ECF para evitar leitura erronea, em casos de falta de papel
+    ou desligamento (por: Rodrigo Frühwirth)
+[-] Método "FechaNaoFiscal" estava fixo a quebra das linhas com 50 colunas e
+    deve ser pelo número de colunas da ECF. (por: Rodrigo Frühwirth)
+[-] Método "FechaPortaSerialDLL" adicionado sleep(1000) antes de tentar abrir
+    a porta novamente pelo ACBr, pois em micros muito lentos estava dando muitas
+    mensagens de retentar ao ativar a ECF. (por: Rodrigo Frühwirth)
+[-] Método "FechaCupom" ajustado para evitar perda de dados da Mensagem da
+    Observação, quando a mesma contem caracteres de controle. (por: Rodrigo Frühwirth)
+
+-- ACBrECFEscECF --
+[-] Método "Ativar". Caso o ECF seja Bematech e MaxLinhasBuffer = 0, limita em 5
+    linhas, pois a mesma congela quando recebe um buffer muito grande.
+    (por: Rodrigo Frühwirth)
+[-] Métodos "FechaNaoFiscal", "Sangria", "Suprimento" ajuste da quebra de linha
+    das observações de acordo com as Colunas e limitado a 8 linhas.
+    (por: Rodrigo Frühwirth)
+
+-- ACBrECFFiscNET --
+[*] Método "Ativar" ajustado número de colunas para o Modelo "ZPM/1FIT LOGGER".
+    (por: Rodrigo Frühwirth)
+[-] Método "GetNumSerie", retornando com espaços em branco em alguns modelos
+    (por: Rodrigo Frühwirth)
+
+Data: 09/09/2016
+-- ACBrEscPosEpson --
+[*] Ajuste no Comando de impressão de LogoTipo, para permitir informar o KeyCode
+    no formato antigo (FS+'p')... para tal, informe:
+      KeyCode1 := 1..255; KeyCode2 := 0
+
+-- ACBrEscBematech --
+[*] Ajuste para suportar KeyCodes no mesmo padrão da Epson:
+      KeyCode1 := 1..255; KeyCode2 := 0
+
+Data: 08/09/2016
+-- ACBrECF --
+[+] Tratamento no método GetEstadoClass e GetGrandeTotalClass para retornar a
+    propriedade IgnorarErroSemPapel ao estado inicial para evitar problemas
+    por: Juliomar Marchetti
+
+Data: 08/09/2016
+-- ACBrECF --
+[+] Mudança para imprimir a data do laudo
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32295
+    por: Juliomar Marchetti
+		
+Data: 24/08/2016
+-- ACBrECFEscECF --
+[-] Alteração para que os valores dos totalizadores não sejam sobrepostos caso 
+	existam alíquotas duplicadas no ECF.
+    (por: Elias César)
+
+Data: 23/08/2016
+-- ACBrECFClass --
+[-] Correção na função GetDadosReducaoZ para que não sejam criadas alíquotas zeradas
+	quando utilizado ECFVirtual.
+    (por: Elias César)
+
+Data: 22/08/2016
+-- ACBrECFEscECF --
+[-] Aplicado Workaround para problema de Leitura de Dados da Ultima Redução Z
+    em Bematech MP4200-TH FI II, versões até 01.00.02 e inferiores.
+    Caso o CRZ seja maior que 256, o ECF devolve informações da Redução Z errada.
+    (por: DSA)
+
+Data: 18/08/2016
+-- ACBrECFVirtual --
+[-] Correção nos retornos de GetTotalNaoTributado e GetTotalIsencao (estavam
+    invertidos)  (por: Amarildo Lacerda)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=31929
+
+Data: 27/07/2016
 -- ACBrECFNaoFiscal, ACBrECFVirtual, ACBrECFVirtualBuffer --
 [*] Ajustes para permitir calculos com Truncamento, quando:
     ArredondaItemMFD := False                                   (por: DSA)

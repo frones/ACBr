@@ -41,7 +41,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.IOUtils,pcnConversao,
-  ACBrNFeDANFEFRDM, ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrBase, ACBrDFe, ACBrNFe, frxClass,
+  ACBrNFeDANFEFRDM, ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrBase, ACBrDFe, ACBrNFe, frxClass,AcbrUtil,
   Vcl.ComCtrls;
 
 type
@@ -58,10 +58,36 @@ type
     Image1: TImage;
     frxReport1: TfrxReport;
     PageControl1: TPageControl;
-    TabSheet1: TTabSheet;
+    TabArquivos: TTabSheet;
     lstbxFR3: TListBox;
-    TabSheet2: TTabSheet;
+    TabCustomizacao: TTabSheet;
     RbCanhoto: TRadioGroup;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    EditMargemEsquerda: TEdit;
+    EditMargemSuperior: TEdit;
+    EditMargemDireita: TEdit;
+    EditMargemInferior: TEdit;
+    Decimais: TTabSheet;
+    RgTipodedecimais: TRadioGroup;
+    PageControl2: TPageControl;
+    TabtdetInteger: TTabSheet;
+    TabtdetMascara: TTabSheet;
+    cbtdetInteger_qtd: TComboBox;
+    Label5: TLabel;
+    Label6: TLabel;
+    cbtdetInteger_Vrl: TComboBox;
+    Label7: TLabel;
+    cbtdetMascara_qtd: TComboBox;
+    Label8: TLabel;
+    cbtdetMascara_Vrl: TComboBox;
+    rbTarjaNfeCancelada: TCheckBox;
+    Label9: TLabel;
+    CBImprimirUndQtVlComercial: TComboBox;
+    rbImprimirDadosDocReferenciados: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
@@ -69,6 +95,7 @@ type
     procedure btnCarregarEventoClick(Sender: TObject);
   private
     procedure Configuracao;
+    procedure Initializao;
     { Private declarations }
   public
     { Public declarations }
@@ -145,14 +172,75 @@ begin
   for fsFiles in TDirectory.GetFiles('..\Delphi\Report\') do
     if Pos('.fr3', LowerCase(fsFiles)) > 0 then
       lstbxFR3.AddItem(fsFiles, nil);
+
+  Initializao;
 end;
 
 procedure TfrmPrincipal.Configuracao;
 begin
   With ACBrNFeDANFEFR1 do
   begin
-    PosCanhoto := TPosRecibo(RbCanhoto.ItemIndex);
+    PosCanhoto      := TPosRecibo( RbCanhoto.ItemIndex );
 
+    // Mostra  a Tarja NFe CANCELADA
+    NFeCancelada    := rbTarjaNfeCancelada.Checked;
+    { Ajustar a propriedade ProtocoloNFe conforme a sua necessidade }
+    { ProtocoloNFe := }
+
+    // Margens
+    MargemEsquerda  := StringToFloat( EditMargemEsquerda.Text );
+    MargemSuperior  := StringToFloat( EditMargemSuperior.Text );
+    MargemDireita   := StringToFloat( EditMargemDireita.Text );
+    MargemInferior  := StringToFloat( EditMargemInferior.Text );
+
+    // Decimais
+    CasasDecimais.Formato       := TDetFormato( RgTipodedecimais.ItemIndex );
+    CasasDecimais._qCom         := cbtdetInteger_qtd.ItemIndex;
+    CasasDecimais._vUnCom       := cbtdetInteger_Vrl.ItemIndex;
+    CasasDecimais._Mask_qCom    := cbtdetMascara_qtd.Items[ cbtdetMascara_qtd.ItemIndex ] ;
+    CasasDecimais._Mask_vUnCom  := cbtdetMascara_Vrl.Items[cbtdetMascara_Vrl.ItemIndex ];
+
+    // ImprimirUndQtVlComercial
+    ImprimirUnQtVlComercial     := TImprimirUnidQtdeValor( CBImprimirUndQtVlComercial.ItemIndex );
+
+    ImprimirDadosDocReferenciados := rbImprimirDadosDocReferenciados.Checked;
+
+  end;
+end;
+
+procedure TfrmPrincipal.Initializao;
+begin
+  PageControl1.ActivePage := TabArquivos;
+
+  With ACBrNFeDANFEFR1 do
+  begin
+
+    EditMargemEsquerda.Text := FloatToString( MargemEsquerda);
+    EditMargemSuperior.Text := FloatToString( MargemSuperior);
+    EditMargemDireita.Text  := FloatToString( MargemDireita);
+    EditMargemInferior.Text := FloatToString( MargemInferior);
+
+    NFeCancelada            := False;
+
+    // Decimais
+    RgTipodedecimais.ItemIndex  := integer( CasasDecimais.Formato );
+    cbtdetInteger_qtd.ItemIndex := CasasDecimais._qCom;
+    cbtdetInteger_Vrl.ItemIndex := CasasDecimais._vUnCom;
+    cbtdetMascara_qtd.ItemIndex := CasasDecimais._qCom;
+    cbtdetMascara_Vrl.ItemIndex := CasasDecimais._vUnCom;
+
+    // ImprimirUndQtVlComercial
+    CBImprimirUndQtVlComercial.ItemIndex  := integer( ImprimirUnQtVlComercial );
+
+    rbImprimirDadosDocReferenciados.Checked := ImprimirDadosDocReferenciados;
+
+
+  end;
+
+ With frxReport1 do
+  begin
+    ShowProgress  := False;
+    StoreInDFM    := False;
   end;
 
 end;

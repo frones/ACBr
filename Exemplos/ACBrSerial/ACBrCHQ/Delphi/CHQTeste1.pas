@@ -132,7 +132,7 @@ end;
 procedure TfrCHQ.edValorKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key in [',','.'] then
-     Key := DecimalSeparator ;
+     Key := {$IFDEF HAS_FORMATSETTINGS}FormatSettings.{$ENDIF}DecimalSeparator ;
 end;
 
 procedure TfrCHQ.bImprimirClick(Sender: TObject);

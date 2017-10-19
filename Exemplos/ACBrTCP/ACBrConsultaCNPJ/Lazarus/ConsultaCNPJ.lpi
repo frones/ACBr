@@ -41,7 +41,6 @@
       <Unit0>
         <Filename Value="ConsultaCNPJ.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ConsultaCNPJ"/>
       </Unit0>
       <Unit1>
         <Filename Value="u_principal.pas"/>
@@ -49,7 +48,6 @@
         <ComponentName Value="Fprincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="u_principal"/>
       </Unit1>
     </Units>
   </ProjectOptions>
@@ -69,15 +67,9 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="5">
+    <Exceptions Count="5" IgnoreAll="True">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>

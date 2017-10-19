@@ -61,7 +61,7 @@ procedure Register;
 implementation
 
 {$IFNDEF FPC}
-   {$R ACBrNFeFortes.dcr}
+   {$R ACBrNFe.dcr}
 {$ENDIF}
 
 procedure Register;

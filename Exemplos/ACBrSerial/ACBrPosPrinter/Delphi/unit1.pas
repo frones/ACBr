@@ -1,4 +1,4 @@
-Ôªøunit Unit1;
+unit Unit1;
 
 interface
 
@@ -79,6 +79,7 @@ type
     seLogoKC1: TSpinEdit;
     tsImprimir: TTabSheet;
     tsLog: TTabSheet;
+    cbCortarPapel: TCheckBox;
     procedure ACBrPosPrinter1GravarLog(const ALogLine: String;
       var Tratado: Boolean);
     procedure bAtivarClick(Sender: TObject);
@@ -118,6 +119,7 @@ type
     procedure seQRCodeErrorLevelChange(Sender: TObject);
     procedure seQRCodeLarguraModuloChange(Sender: TObject);
     procedure seQRCodeTipoChange(Sender: TObject);
+    procedure cbCortarPapelClick(Sender: TObject);
   private
     Procedure GravarINI ;
     Procedure LerINI ;
@@ -131,7 +133,7 @@ var
 implementation
 
 Uses 
-  typinfo, IniFiles, ConfiguraSerial, ACBrUtil;
+  typinfo, IniFiles, Printers, ConfiguraSerial, ACBrUtil;
 
 {$R *.dfm}
 
@@ -141,6 +143,7 @@ procedure TFrPosPrinterTeste.FormCreate(Sender: TObject);
 var
   I: TACBrPosPrinterModelo;
   J: TACBrPosPaginaCodigo;
+  K: Integer;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
@@ -160,7 +163,10 @@ begin
   cbxPorta.Items.Add('/dev/ttyUSB1') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
-  cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
+
+  For K := 0 to Printer.Printers.Count-1 do
+    cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
 
   PageControl1.ActivePageIndex := 0;
 
@@ -228,11 +234,26 @@ procedure TFrPosPrinterTeste.bTagQRCodeClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
+  mImp.Lines.Add('<qrcode_tipo>'+IntToStr(ACBrPosPrinter1.ConfigQRCode.Tipo)+'</qrcode_tipo>');
+  mImp.Lines.Add('<qrcode_largura>'+IntToStr(ACBrPosPrinter1.ConfigQRCode.LarguraModulo)+'</qrcode_largura>');
+  mImp.Lines.Add('<qrcode_error>'+IntToStr(ACBrPosPrinter1.ConfigQRCode.ErrorLevel)+'</qrcode_error>');
   mImp.Lines.Add('<qrcode>http://projetoacbr.com.br</qrcode>');
   mImp.Lines.Add('</ce>');
   mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
   mImp.Lines.Add('</ad>');
   mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/questoes_importantes.html</qrcode>');
+  mImp.Lines.Add('</ce>');
+  mImp.Lines.Add('Exemplo de QRCode para NFCe');
+  mImp.Lines.Add('<qrcode_error>0</qrcode_error>'+
+       '<qrcode>https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx?chNFe=35150805481336000137650220000000711000001960'+
+       '&nVersao=100&tpAmb=2&dhEmi=323031352D30382D31395432323A33333A32352D30333A3030&vNF=3.00&vICMS=0.12'+
+       '&digVal=776967396F2B665861706673396878776E64594C396F61654C35493D&cIdToken=000001&cHashQRCode=9BD312D558823E1EC68CEDB338A39B6150B0480E</qrcode>');
+  mImp.Lines.Add('Exemplo de QRCode para SAT');
+  mImp.Lines.Add('<qrcode_error>0</qrcode_error>'+
+       '<qrcode>35150811111111111111591234567890001672668828|20150820201736|118.72|05481336000137|'+
+       'TCbeD81ePUpMvso4VjFqRTvs4ovqmR1ZG3bwSCumzHtW8bbMedVJjVnww103v3LxKfgckAyuizcR/9pXaKay6M4Gu8kyDef+6VH5qONIZV1cB+mFfXiaCgeZALuRDCH1PRyb6hoBeRUkUk6'+
+       'lOdXSczRW9Y83GJMXdOFroEbzFmpf4+WOhe2BZ3mEdXKKGMfl1EB0JWnAThkGT+1Er9Jh/3En5YI4hgQP3NC2BiJVJ6oCEbKb85s5915DSZAw4qB/MlESWViDsDVYEnS/FQgA2kP2A9pR4+'+
+       'agdHmgWiz30MJYqX5Ng9XEYvvOMzl1Y6+7/frzsocOxfuQyFsnfJzogw==hygljwuohmmoewarfnmighlxzke7k2bjlto4sb2vltorgm26khhangknnfvpzydt5terudyw5vuvtzlhlqs3qrzvplfnlvw==</qrcode>');
   mImp.Lines.Add('</corte_total>');
 end;
 
@@ -275,8 +296,8 @@ end;
 procedure TFrPosPrinterTeste.bTagsTesteInvalidasClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
-  mImp.Lines.Add('<CE>*** TESTE DE TAGS INV√ÅLIDAS ***</CE>');
-  mImp.Lines.Add('<ce> <>tags inv√°lidas no texto">">><<</CE>');
+  mImp.Lines.Add(ACBrStr('<CE>*** TESTE DE TAGS INV¡LIDAS ***</CE>'));
+  mImp.Lines.Add(ACBrStr('<ce> <>tags inv·lidas no texto">">><<</CE>'));
   mImp.Lines.Add('<AD><da><ec></</A Direita</ad>');
   mImp.Lines.Add('</corte_total>');
 end;
@@ -325,7 +346,7 @@ procedure TFrPosPrinterTeste.bTagsTestePagCodigoClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
-  mImp.Lines.Add('√Å√â√ç√ì√ö√°√©√≠√≥√∫√ß√á√£√µ√É√ï√ä√™√Ä√†');
+  mImp.Lines.Add(ACBrStr('¡…Õ”⁄·ÈÌÛ˙Á«„ı√’ Í¿‡'));
   mImp.Lines.Add('</corte_total>');
 end;
 
@@ -410,6 +431,8 @@ begin
   finally
     cbxPorta.Text := ACBrPosPrinter1.Porta ;
   end ;
+
+  btSerial.Visible := ACBrPosPrinter1.Device.IsSerialPort;
 end;
 
 procedure TFrPosPrinterTeste.SbArqLogClick(Sender: TObject);
@@ -525,6 +548,7 @@ begin
      INI.WriteInteger('PosPrinter','EspacoEntreLinhas',seEspLinhas.Value);
      INI.WriteInteger('PosPrinter','LinhasBuffer',seLinhasBuffer.Value);
      INI.WriteInteger('PosPrinter','LinhasPular',seLinhasPular.Value);
+     INI.WriteBool('PosPrinter','CortarPapel',cbCortarPapel.Checked);
      INI.WriteBool('PosPrinter','ControlePorta',cbControlePorta.Checked);
      INI.WriteBool('PosPrinter','TraduzirTags',cbTraduzirTags.Checked);
      INI.WriteBool('PosPrinter','IgnorarTags',cbIgnorarTags.Checked);
@@ -556,10 +580,12 @@ begin
   try
      cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
      cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
+     cbxPortaChange(nil);
      seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
      seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
      seLinhasBuffer.Value := INI.ReadInteger('PosPrinter','LinhasBuffer',ACBrPosPrinter1.LinhasBuffer);
      seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasPular',ACBrPosPrinter1.LinhasEntreCupons);
+     cbCortarPapel.Checked := INI.ReadBool('PosPrinter','CortarPapel',ACBrPosPrinter1.CortaPapel);
      cbControlePorta.Checked := INI.ReadBool('PosPrinter','ControlePorta',ACBrPosPrinter1.ControlePorta);
      cbTraduzirTags.Checked := INI.ReadBool('PosPrinter','TraduzirTags',ACBrPosPrinter1.TraduzirTags);
      cbIgnorarTags.Checked := INI.ReadBool('PosPrinter','IgnorarTags',ACBrPosPrinter1.IgnorarTags);
@@ -641,6 +667,7 @@ begin
        ACBrPosPrinter1.LinhasEntreCupons := seLinhasPular.Value;
        ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;
        ACBrPosPrinter1.ColunasFonteNormal := seColunas.Value;
+       ACBrPosPrinter1.CortaPapel := cbCortarPapel.Checked;
        ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
        ACBrPosPrinter1.TraduzirTags := cbTraduzirTags.Checked;
        ACBrPosPrinter1.IgnorarTags := cbIgnorarTags.Checked;
@@ -675,6 +702,11 @@ procedure TFrPosPrinterTeste.ACBrPosPrinter1GravarLog(const ALogLine: String;
 begin
   mLog.Lines.Add(ALogLine);
   Tratado := False;
+end;
+
+procedure TFrPosPrinterTeste.cbCortarPapelClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.CortaPapel := cbCortarPapel.Checked;
 end;
 
 end.

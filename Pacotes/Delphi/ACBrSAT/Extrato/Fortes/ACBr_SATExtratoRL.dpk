@@ -1,6 +1,5 @@
 package ACBr_SATExtratoRL;
 
-{$I ACBr.inc}
 {$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}
@@ -32,15 +31,10 @@ requires
   ACBr_Diversos,
   ACBr_DFeComum,
   frce,
-  {$ifdef DELPHI2009_UP} 
-    vclimg,
-  {$else} 
-    vcljpg,
-  {$ENDIF}
   ACBr_SAT;
 
 contains
   ACBrSATExtratoFortesFr in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortesFr.pas',
-  ACBrSATExtratoFortes in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortes.pas';
+  ACBrSATExtratoReportClass in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoReportClass.pas';
 
 end.

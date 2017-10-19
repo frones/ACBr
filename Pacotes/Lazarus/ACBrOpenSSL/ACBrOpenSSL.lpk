@@ -22,7 +22,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="1"/>
-    <Files Count="7">
+    <Files Count="5">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrOpenSSL\ACBrEAD.pas"/>
         <UnitName Value="ACBrEAD"/>
@@ -37,21 +37,13 @@
         <UnitName Value="ACBrOpenSSLReg"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libexslt.pas"/>
-        <UnitName Value="libexslt"/>
-      </Item4>
-      <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libxslt.pas"/>
-        <UnitName Value="libxslt"/>
-      </Item5>
-      <Item6>
         <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libxml2.pas"/>
         <UnitName Value="libxml2"/>
-      </Item6>
-      <Item7>
+      </Item4>
+      <Item5>
         <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libxmlsec.pas"/>
         <UnitName Value="libxmlsec"/>
-      </Item7>
+      </Item5>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

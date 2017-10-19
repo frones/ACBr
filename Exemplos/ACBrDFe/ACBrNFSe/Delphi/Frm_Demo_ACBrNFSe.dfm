@@ -1,9 +1,9 @@
 object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   Left = 209
   Top = 130
-  Width = 876
-  Height = 568
   Caption = 'Demo ACBrNFSe'
+  ClientHeight = 529
+  ClientWidth = 860
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Left = 0
     Top = 0
     Width = 297
-    Height = 530
+    Height = 529
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -291,7 +291,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Top = 264
             Width = 257
             Height = 21
-            ItemHeight = 13
             TabOrder = 12
             Text = 'Selecione uma Cidade'
             OnChange = cbCidadesChange
@@ -303,6 +302,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Aparecida de Goiania/5201405/GO'
               'Apucarana/4101408/PR'
               'Aquiraz/2301000/CE'
+              'Aragua'#237'na/1702109/TO'
               'Araraquara/3503208/SP'
               'Araras/3503307/SP'
               'Araucaria/4101804/PR'
@@ -402,6 +402,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Montes Claros/3143302/MG'
               'Muriae/3143906/MG'
               'Natal/2408102/RN'
+              'Nova Friburgo/3303401/RJ'
               'Nova Mutum/5106224/MT'
               'Novo Hamburgo/4313409/RS'
               'Niteroi/3303302/RJ'
@@ -435,6 +436,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Rondonopolis/5107602/MT'
               'Salto/3545209/SP'
               'Salvador/2927408/BA'
+              'Santa Clara do Sul/4316758/RS'
               'Santa Luzia/3157807/MG'
               'Santo Andre/3547809/SP'
               'Santos/3548500/SP'
@@ -1087,8 +1089,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1103,13 +1103,15 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
     end
   end
   object Panel2: TPanel
     Left = 297
     Top = 0
     Width = 563
-    Height = 530
+    Height = 529
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
@@ -1236,7 +1238,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         TabOrder = 12
         OnClick = btnGerarEnviarSincronoClick
       end
-      object Button1: TButton
+      object btnVerificarCidade: TButton
         Left = 8
         Top = 175
         Width = 545
@@ -1249,7 +1251,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 13
-        OnClick = Button1Click
+        OnClick = btnVerificarCidadeClick
       end
       object btnSubsNFSe: TButton
         Left = 192
@@ -1265,7 +1267,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       Left = 1
       Top = 209
       Width = 561
-      Height = 320
+      Height = 319
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -1275,7 +1277,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           Left = 0
           Top = 0
           Width = 553
-          Height = 292
+          Height = 291
           Align = alClient
           TabOrder = 0
         end
@@ -1286,12 +1288,14 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
-          Width = 564
-          Height = 368
+          Width = 553
+          Height = 291
           Align = alClient
           TabOrder = 0
+          ExplicitWidth = 564
+          ExplicitHeight = 368
           ControlData = {
-            4C0000004B3A0000092600000000000000000000000000000000000000000000
+            4C00000027390000131E00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1304,8 +1308,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object memoLog: TMemo
           Left = 0
           Top = 0
-          Width = 547
-          Height = 292
+          Width = 553
+          Height = 291
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1318,7 +1322,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           Left = 0
           Top = 0
           Width = 553
-          Height = 292
+          Height = 291
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1330,8 +1334,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object memoRespWS: TMemo
           Left = 0
           Top = 0
-          Width = 556
-          Height = 400
+          Width = 553
+          Height = 291
           Align = alClient
           TabOrder = 0
         end
@@ -1342,8 +1346,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object MemoDados: TMemo
           Left = 0
           Top = 0
-          Width = 564
-          Height = 368
+          Width = 553
+          Height = 291
           Align = alClient
           TabOrder = 0
         end
@@ -1372,27 +1376,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Configuracoes.WebServices.IntervaloTentativas = 3000
     Configuracoes.WebServices.Salvar = True
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Configuracoes.Certificados.ArquivoPFX = 'C:\Erp\Certificados\ErloPneus - Ibate - Fiorilli\erlopneus.pfx'
-    Configuracoes.Certificados.Senha = 'italo'
-    DANFSE = ACBrNFSeDANFSeQR1
+    Configuracoes.Certificados.VerificarValidade = False
+    DANFSE = ACBrNFSeDANFSeRL1
     Left = 360
-    Top = 248
-  end
-  object ACBrNFSeDANFSeQR1: TACBrNFSeDANFSeQR
-    ACBrNFSe = ACBrNFSe1
-    PathPDF = 'C:\Arquivos de programas\Borland\Delphi7\Bin\'
-    MostrarPreview = True
-    MostrarStatus = True
-    NumCopias = 1
-    MargemInferior = 0.800000000000000000
-    MargemSuperior = 0.800000000000000000
-    MargemEsquerda = 0.600000000000000000
-    MargemDireita = 0.510000000000000000
-    NFSeCancelada = False
-    ImprimeCanhoto = True
-    Provedor = proNenhum
-    TamanhoFonte = 6
-    Left = 392
     Top = 248
   end
   object ACBrMail1: TACBrMail
@@ -1405,5 +1391,22 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     IDECharset = CP1252
     Left = 430
     Top = 249
+  end
+  object ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL
+    ACBrNFSe = ACBrNFSe1
+    MostrarPreview = True
+    MostrarStatus = True
+    NumCopias = 1
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    NFSeCancelada = False
+    Provedor = proNenhum
+    TamanhoFonte = 6
+    FormatarNumeroDocumentoNFSe = True
+    PrintDialog = True
+    Left = 554
+    Top = 260
   end
 end

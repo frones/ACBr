@@ -108,7 +108,8 @@ type
     function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
-      EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
+      EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
+      sReplyTo: TStrings = nil);
 
     property NomeArq: String read FNomeArq write FNomeArq;
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
@@ -154,6 +155,7 @@ type
     function VerificarAssinatura(out Erros: String): Boolean;
     function ValidarRegrasdeNegocios(out Erros: String): Boolean;
     procedure Imprimir;
+    procedure ImprimirCancelado;
     procedure ImprimirResumido;
     procedure ImprimirPDF;
     procedure ImprimirResumidoPDF;
@@ -177,7 +179,7 @@ type
 implementation
 
 uses
-  ACBrNFe, ACBrUtil, pcnConversaoNFe, synautil;
+  ACBrNFe, ACBrUtil, pcnConversaoNFe, synautil, dateutils;
 
 { NotaFiscal }
 
@@ -247,7 +249,11 @@ var
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
 begin
-  TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.ValidarCNPJCertificado( NFe.Emit.CNPJCPF );
+  with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
+  begin
+    if not Assigned(SSL.AntesDeAssinar) then
+      SSL.ValidarCNPJCertificado( NFe.Emit.CNPJCPF );
+  end;
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;
@@ -285,7 +291,12 @@ begin
                                   onlyNumber(NFe.infNFe.ID),
                                   trim(IfThen(NFe.Dest.idEstrangeiro <> '', NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF)),
                                   NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
-                                  NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue);
+                                  NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue,
+                                  NFe.infNFe.Versao);
+
+        if NFe.infNFe.Versao >= 4 then
+          NFe.infNFeSupl.urlChave := GetURLConsultaNFCe(NFe.Ide.cUF, NFe.Ide.tpAmb, NFe.infNFe.Versao);
+
         GerarXML;
       end;
     end;
@@ -310,7 +321,9 @@ var
   Modelo: TpcnModeloDF;
   cUF: Integer;
 begin
-  AXML := XMLAssinado;
+  AXML := FXMLAssinado;
+  if AXML = '' then
+    AXML := XMLOriginal;
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
@@ -349,7 +362,9 @@ var
   Erro, AXML: String;
   AssEhValida: Boolean;
 begin
-  AXML := XMLAssinado;
+  AXML := FXMLAssinado;
+  if AXML = '' then
+    AXML := XMLOriginal;
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
@@ -369,7 +384,7 @@ function NotaFiscal.ValidarRegrasdeNegocios: Boolean;
 var
   Erros: String;
   I: Integer;
-  Agora: TDateTime;
+  Inicio, Agora: TDateTime;
   fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
   fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag : Currency;
   FaturamentoDireto, NFImportacao : Boolean;
@@ -386,7 +401,8 @@ var
   end;
 
 begin
-  Agora := Now;
+  Inicio := Now;
+  Agora := IncMinute(Now,5);  //Aceita uma tolerância de até 5 minutos, devido ao sincronismo de horário do servidor da Empresa e o servidor da SEFAZ.
   GravaLog('Inicio da Validação');
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
@@ -518,10 +534,10 @@ begin
     if not ValidarIE(NFe.Emit.IE,NFe.Emit.EnderEmit.UF) then
       AdicionaErro('209-Rejeição: IE do emitente inválida ');
 
-    GravaLog('Validar: 208-CNPJ Emitente');
+    GravaLog('Validar: 208-CNPJ destinatário');
     if (Length(Trim(OnlyNumber(NFe.Dest.CNPJCPF))) >= 14) and
       not ValidarCNPJ(NFe.Dest.CNPJCPF) then
-      AdicionaErro('208-Rejeição: CNPJ do emitente inválido');
+      AdicionaErro('208-Rejeição: CNPJ do destinatário inválido');
 
     GravaLog('Validar: 513-EX');
     if (NFe.Retirada.UF = 'EX') and
@@ -584,7 +600,7 @@ begin
     if (NFe.Ide.modelo = 65) then  //Regras válidas apenas para NFC-e - 65
     begin
       GravaLog('Validar: 704-NFCe Data atrasada');
-      if (NFe.Ide.dEmi < Agora - StrToTime('00:05:00')) and
+      if (NFe.Ide.dEmi < IncMinute(Agora,-10)) and
         (NFe.Ide.tpEmis in [teNormal, teSCAN, teSVCAN, teSVCRS]) then
         //B09-40
         AdicionaErro('704-Rejeição: NFC-e com Data-Hora de emissão atrasada');
@@ -602,7 +618,7 @@ begin
         AdicionaErro('707-NFC-e para operação interestadual ou com o exterior');
 
       GravaLog('Validar: 709-NFCe formato DANFE');
-      if (not (NFe.Ide.tpImp in [tiNFCe, tiNFCeA4, tiMsgEletronica])) then
+      if (not (NFe.Ide.tpImp in [tiNFCe, tiMsgEletronica])) then
         //B21-10
         AdicionaErro('709-Rejeição: NFC-e com formato de DANFE inválido');
 
@@ -648,7 +664,8 @@ begin
 
       GravaLog('Validar: 787-NFCe entrega e Identificação');
       if (NFe.Ide.indPres = pcEntregaDomicilio) and
-        EstaVazio(Trim(nfe.Entrega.xLgr)) then
+        EstaVazio(Trim(nfe.Entrega.xLgr)) and 
+        EstaVazio(Trim(nfe.Dest.EnderDest.xLgr)) then
         AdicionaErro('787-Rejeição: NFC-e de entrega a domicílio sem a identificação do destinatário');
 
       GravaLog('Validar: 789-NFCe e destinatário');
@@ -861,9 +878,18 @@ begin
          (NFe.Dest.indIEDest <> inNaoContribuinte) then
         AdicionaErro('790-Rejeição: Operação com Exterior para destinatário Contribuinte de ICMS');
 
-      GravaLog('Validar: 768-NFe com formas de pagamento');
-      if NFe.pag.Count > 0 then
-        AdicionaErro('768-Rejeição: NF-e não deve possuir o grupo de Formas de Pagamento');
+      if NFe.infNFe.Versao < 4 then
+      begin
+        GravaLog('Validar: 768-NFe < 4.0 com formas de pagamento');
+        if (NFe.pag.Count > 0) then
+          AdicionaErro('768-Rejeição: NF-e não deve possuir o grupo de Formas de Pagamento');
+      end
+      else
+      begin
+        GravaLog('Validar: 769-NFe >= 4.0 sem formas pagamento');
+        if (NFe.pag.Count <= 0) then
+          AdicionaErro('769-Rejeição: NF-e deve possuir o grupo de Formas de Pagamento');
+      end;
     end;
 
     for I:=0 to NFe.autXML.Count-1 do
@@ -1025,8 +1051,8 @@ begin
           fsvOutro   := fsvOutro + Prod.vOutro;
           fsvServ   := fsvServ + Imposto.ISSQN.vBC; //VERIFICAR
 
-          // quando for serviço o produto não soma do total de produtos
-          if Prod.NCM <> '00' then
+          // quando for serviço o produto não soma do total de produtos, quando for nota de ajuste também irá somar
+          if (Prod.NCM <> '00') or ((Prod.NCM = '00') and (NFe.Ide.finNFe = fnAjuste)) then
             fsvProd := fsvProd + Prod.vProd;
         end;
 
@@ -1136,7 +1162,7 @@ begin
                      Erros);
   end;
 
-  GravaLog('Fim da Validação. Tempo: '+FormatDateTime('hh:nn:ss:zzz', Now - Agora)+sLineBreak+
+  GravaLog('Fim da Validação. Tempo: '+FormatDateTime('hh:nn:ss:zzz', Now - Inicio)+sLineBreak+
            'Erros:' + Erros);
 
   //DEBUG
@@ -1192,7 +1218,7 @@ begin
 end;
 
 procedure NotaFiscal.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
   NomeArq : String;
   AnexosEmail:TStrings;
@@ -1223,7 +1249,7 @@ begin
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFe,
-                   NumID +'-nfe.xml');
+                   NumID +'-nfe.xml', sReplyTo);
     end;
   finally
     AnexosEmail.Free;
@@ -1241,6 +1267,7 @@ begin
     FNFeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FNFeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
+    FNFeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
@@ -1271,6 +1298,7 @@ begin
     FNFeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FNFeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
+    FNFeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
   end;
 
   FNFeW.Opcoes.GerarTXTSimultaneamente := True;
@@ -1475,6 +1503,12 @@ procedure TNotasFiscais.Imprimir;
 begin
   VerificarDANFE;
   TACBrNFe(FACBrNFe).DANFE.ImprimirDANFE(nil);
+end;
+
+procedure TNotasFiscais.ImprimirCancelado;
+begin
+  VerificarDANFE;
+  TACBrNFe(FACBrNFe).DANFE.ImprimirDANFECancelado(nil);
 end;
 
 procedure TNotasFiscais.ImprimirResumido;

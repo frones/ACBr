@@ -54,6 +54,9 @@ uses
   AJBarcode ;
 
 type
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrBarCode = class ( TGraphicControl )
   private
 //  fsAbout: TACBrAboutInfo;
@@ -98,8 +101,8 @@ type
     property BarCode : TAsBarcode read fsBarCode ;
     property Canvas ;
 
-    procedure DrawBarcode(Canvas:TCanvas);
-    procedure DrawText(Canvas:TCanvas);
+    procedure DrawBarcode(ACanvas:TCanvas);
+    procedure DrawText(ACanvas:TCanvas);
 
   published
     property Text : String  read GetBarCodeText write SetBarCodeText stored False;
@@ -221,14 +224,14 @@ begin
   inherited;
 end;
 
-procedure TACBrBarCode.DrawBarcode(Canvas: TCanvas);
+procedure TACBrBarCode.DrawBarcode(ACanvas: TCanvas);
 begin
-  fsBarCode.DrawBarcode(Canvas);
+  fsBarCode.DrawBarcode(ACanvas);
 end;
 
-procedure TACBrBarCode.DrawText(Canvas: TCanvas);
+procedure TACBrBarCode.DrawText(ACanvas: TCanvas);
 begin
-  fsBarCode.DrawText(Canvas);
+  fsBarCode.DrawText(ACanvas);
 end;
 
 function TACBrBarCode.GetAngle: Double;

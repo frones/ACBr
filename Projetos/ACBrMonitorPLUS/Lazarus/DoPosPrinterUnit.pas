@@ -114,7 +114,7 @@ begin
         cmd.Resposta := Porta
 
       else if cmd.Metodo = 'setporta' then
-        Porta := cmd.Params(0)
+       FrmACBrMonitor.cbxPorta.Text := cmd.Params(0)
 
       else if cmd.Metodo = 'colunas' then
         cmd.Resposta := IntToStr(Colunas)
@@ -140,6 +140,12 @@ begin
 
       else if cmd.Metodo = 'setcolunasfontenormal' then
         ColunasFonteNormal := StrToInt(cmd.Params(0))
+
+      else if cmd.Metodo = 'setcortapapel' then
+       begin
+        CortaPapel := StrToBool(cmd.Params(0));
+        FrmACBrMonitor.cbCortarPapel.Checked := CortaPapel;
+       end
 
       else
         raise Exception.Create(ACBrStr('Comando invalido (' + Cmd.Comando + ')'));

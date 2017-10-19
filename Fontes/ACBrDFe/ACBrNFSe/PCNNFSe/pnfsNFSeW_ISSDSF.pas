@@ -43,7 +43,7 @@ uses
   synacode, ACBrConsts,
   pnfsNFSeW,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao;
+  pnfsNFSe, pnfsConversao, pnfsConsts;
 
 type
   { TNFSeW_ISSDSF }
@@ -102,7 +102,7 @@ begin
   else
     Gerador.wCampoNFSe(tcStr, '', 'SerieRPS', 01, 02, 1, NFSe.IdentificacaoRps.Serie, '');
 
-  Gerador.wCampoNFSe(tcStr,    '', 'NumeroRPS',      01, 12, 1, NFSe.IdentificacaoRps.Numero, '');
+  Gerador.wCampoNFSe(tcStr,    '', 'NumeroRPS',      01, 12, 1, NFSe.IdentificacaoRps.Numero, DSC_NUMRPS);
   Gerador.wCampoNFSe(tcDatHor, '', 'DataEmissaoRPS', 01, 21, 1, NFse.DataEmissaoRps, '');
   Gerador.wCampoNFSe(tcStr,    '', 'SituacaoRPS',    01, 01, 1, Situacao, '');
 
@@ -142,7 +142,8 @@ begin
   //  Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalTomador',  01, 011, 1, '', '');
   Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJTomador',             01, 014, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
   Gerador.wCampoNFSe(tcStr, '', 'RazaoSocialTomador',         01, 120, 1, NFSe.Tomador.RazaoSocial, '');
-  Gerador.wCampoNFSe(tcStr, '', 'DocTomadorEstrangeiro',      00, 020, 1, NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, '');
+  if FProvedor = proIssDSF then
+    Gerador.wCampoNFSe(tcStr, '', 'DocTomadorEstrangeiro',      00, 020, 1, NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, '');
 
   Gerador.wCampoNFSe(tcStr, '', 'TipoLogradouroTomador',      00, 10, 1, NFSe.Tomador.Endereco.TipoLogradouro, '');
   Gerador.wCampoNFSe(tcStr, '', 'LogradouroTomador',          01, 50, 1, NFSe.Tomador.Endereco.Endereco, '');
@@ -176,59 +177,76 @@ var
   i: Integer;
   sDeducaoPor, sTipoDeducao, sTributavel: String;
 begin
-  Gerador.wGrupoNFSe('Itens');
-
-  for i := 0 to NFSe.Servico.ItemServico.Count -1 do
-  begin
-    Gerador.wGrupoNFSe('Item');
-	  sTributavel := EnumeradoToStr( NFSe.Servico.ItemServico.Items[i].Tributavel,
-                                           ['S', 'N'], [snSim, snNao]);
-
-    Gerador.wCampoNFSe(tcStr, '', 'DiscriminacaoServico', 01, 80, 1, NFSe.Servico.ItemServico.Items[i].Descricao , '');
-    Gerador.wCampoNFSe(tcDe4, '', 'Quantidade'          , 01, 15, 1, NFSe.Servico.ItemServico.Items[i].Quantidade , '');
-    Gerador.wCampoNFSe(tcDe2, '', 'ValorUnitario'       , 01, 20, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario , '');
-    Gerador.wCampoNFSe(tcDe2, '', 'ValorTotal'          , 01, 18, 1, NFSe.Servico.ItemServico.Items[i].ValorTotal , '');
-    Gerador.wCampoNFSe(tcStr, '', 'Tributavel'          , 01, 01, 0, sTributavel , '');
-    Gerador.wGrupoNFSe('/Item');
-  end;
-
-  Gerador.wGrupoNFSe('/Itens');
-
-  for i := 0 to NFSe.Servico.Deducao.Count -1 do
+  if NFSe.Servico.Deducao.Count > 0 then
   begin
     Gerador.wGrupoNFSe('Deducoes');
-    Gerador.wGrupoNFSe('Deducao');
 
-    sDeducaoPor := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
+    for i := 0 to NFSe.Servico.Deducao.Count -1 do
+    begin
+      Gerador.wGrupoNFSe('Deducao');
+
+      sDeducaoPor := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
                                            ['Percentual', 'Valor'], [dpPercentual, dpValor]);
-    Gerador.wCampoNFSe(tcStr, '', 'DeducaoPor', 01, 20, 1, sDeducaoPor , '');
+      Gerador.wCampoNFSe(tcStr, '', 'DeducaoPor', 01, 20, 1, sDeducaoPor , '');
 
-    sTipoDeducao := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
+      sTipoDeducao := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].TipoDeducao,
                                             ['', 'Despesas com Materiais', 'Despesas com Sub-empreitada'],
                                             [tdNenhum, tdMateriais, tdSubEmpreitada]);
-    Gerador.wCampoNFSe(tcStr, '', 'TipoDeducao', 00, 255, 1, sTipoDeducao , '');
+      Gerador.wCampoNFSe(tcStr, '', 'TipoDeducao', 00, 255, 1, sTipoDeducao , '');
 
-    Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJReferencia'   , 00, 14, 1, OnlyNumber(NFSe.Servico.Deducao.Items[i].CpfCnpjReferencia) , '');
-    Gerador.wCampoNFSe(tcStr, '', 'NumeroNFReferencia'  , 00, 10, 1, NFSe.Servico.Deducao.Items[i].NumeroNFReferencia, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'ValorTotalReferencia', 00, 18, 1, NFSe.Servico.Deducao.Items[i].ValorTotalReferencia, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'PercentualDeduzir'   , 00, 08, 1, NFSe.Servico.Deducao.Items[i].PercentualDeduzir, '');
+      Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJReferencia'   , 00, 14, 1, OnlyNumber(NFSe.Servico.Deducao.Items[i].CpfCnpjReferencia) , '');
+      Gerador.wCampoNFSe(tcStr, '', 'NumeroNFReferencia'  , 00, 10, 1, NFSe.Servico.Deducao.Items[i].NumeroNFReferencia, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'ValorTotalReferencia', 00, 18, 1, NFSe.Servico.Deducao.Items[i].ValorTotalReferencia, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'PercentualDeduzir', 00, 18, 1, NFSe.Servico.Deducao.Items[i].PercentualDeduzir, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'ValorDeduzir'   , 00, 08, 1, NFSe.Servico.Deducao.Items[i].ValorDeduzir, '');
 
-    Gerador.wGrupoNFSe('/Deducao');
+      Gerador.wGrupoNFSe('/Deducao');
+    end;
+
     Gerador.wGrupoNFSe('/Deducoes');
+  end;
+
+  if NFSe.Servico.ItemServico.Count > 0 then
+  begin
+    Gerador.wGrupoNFSe('Itens');
+
+    for i := 0 to NFSe.Servico.ItemServico.Count -1 do
+    begin
+      Gerador.wGrupoNFSe('Item');
+	    sTributavel := EnumeradoToStr( NFSe.Servico.ItemServico.Items[i].Tributavel,
+                                           ['S', 'N'], [snSim, snNao]);
+
+      Gerador.wCampoNFSe(tcStr, '', 'DiscriminacaoServico', 01, 80, 1, NFSe.Servico.ItemServico.Items[i].Descricao , '');
+      Gerador.wCampoNFSe(tcDe4, '', 'Quantidade'          , 01, 15, 1, NFSe.Servico.ItemServico.Items[i].Quantidade , '');
+      Gerador.wCampoNFSe(tcDe2, '', 'ValorUnitario'       , 01, 20, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario , '');
+      Gerador.wCampoNFSe(tcDe2, '', 'ValorTotal'          , 01, 18, 1, NFSe.Servico.ItemServico.Items[i].ValorTotal , '');
+      Gerador.wCampoNFSe(tcStr, '', 'Tributavel'          , 01, 01, 0, sTributavel , '');
+      Gerador.wGrupoNFSe('/Item');
+    end;
+
+    Gerador.wGrupoNFSe('/Itens');
   end;
 end;
 
 procedure TNFSeW_ISSDSF.GerarValoresServico;
 begin
-  Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividade',   01, 09,  1, NFSe.Servico.CodigoCnae, '');
-  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaAtividade', 01, 11,  1, NFSe.Servico.Valores.Aliquota, '');
+  Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividade', 01, 09, 1, NFSe.Servico.CodigoCnae, '');
+
+  if FProvedor = proCTA then
+    Gerador.wCampoNFSe(tcInt, '', 'CodigoServico', 04, 05, 1, OnlyNumber(NFSe.Servico.ItemListaServico), '');
+    
+  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaAtividade', 01, 11, 1, NFSe.Servico.Valores.Aliquota, '');
 
   // "A" a receber; "R" retido na Fonte
+  FTipoRecolhimento := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
+                                       ['A','R'], [stNormal, stRetencao]);
+
   Gerador.wCampoNFSe(tcStr, '', 'TipoRecolhimento', 01, 01,  1, TipoRecolhimento, '');
 
   Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao',          01, 10,  1, CodCidadeToCodSiafi(strtoint64(NFSe.Servico.CodigoMunicipio)), '');
   Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacaoDescricao', 01, 30,  1, CodCidadeToCidade(strtoint64(NFSe.Servico.CodigoMunicipio)), '');
 
+  (*
   case NFSe.NaturezaOperacao of
     no1: begin
            Gerador.wCampoNFSe(tcStr, '', 'Operacao',   01, 01, 1, EnumeradoToStr( NFSe.DeducaoMateriais, ['B','A'], [snSim, snNao]), '');
@@ -263,6 +281,10 @@ begin
 
   if NFse.RegimeEspecialTributacao = retMicroempresarioIndividual then
     Gerador.wCampoNFSe(tcStr, '', 'Tributacao',01, 01,  1, 'M', '');
+ *)
+
+  Gerador.wCampoNFSe(tcStr, '', 'Operacao',   01, 01, 1, OperacaoToStr(NFSe.Servico.Operacao), '');
+  Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, TributacaoToStr(NFSe.Servico.Tributacao), '');
 
   Gerador.wCampoNFSe(tcDe2, '', 'ValorPIS',    01, 02, 1, NFSe.Servico.Valores.ValorPis, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorCOFINS', 01, 02, 1, NFSe.Servico.Valores.ValorCofins, '');
@@ -291,35 +313,37 @@ end;
 
 procedure TNFSeW_ISSDSF.GerarXML_ISSDSF;
 var
-  sAssinatura, sValorServico_Assinatura,
-  sTipoRecolhimentoAssinaturaRPS: String;
+  sIEEmit, SerieRPS, NumeroRPS, sDataEmis,
+  sTributacao, sSituacaoRPS, sTipoRecolhimento,
+  sValorServico, sValorDeducao, sCodAtividade,
+  sCPFCNPJTomador, sAssinatura: String;
 begin
   Gerador.Prefixo := '';
   Gerador.wGrupoNFSe('RPS ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
 
   FSituacao := EnumeradoToStr( NFSe.Status, ['N','C'], [srNormal, srCancelado]);
 
-  FTipoRecolhimento := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
-                                       ['A','R'], [stNormal, stRetencao]);
+  sIEEmit           := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 11);
+  SerieRPS          := PadRight( NFSe.IdentificacaoRps.Serie, 5 , ' ');
+  NumeroRPS         := Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12);
+  sDataEmis         := FormatDateTime('yyyymmdd',NFse.DataEmissaoRps);
+//  sTributacao := EnumeradoToStr( NFSe.OptanteSimplesNacional, ['H','T'], [snSim, snNao]) + ' ';
+  sTributacao       := TributacaoToStr(NFSe.Servico.Tributacao) + ' ';
+  sSituacaoRPS      := FSituacao;
+  sTipoRecolhimento := EnumeradoToStr( NFSe.Servico.Valores.IssRetido, ['N','S'], [stNormal, stRetencao]);
 
-  sTipoRecolhimentoAssinaturaRPS := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
-                                    ['N','S'], [stNormal, stRetencao]);
+  sValorServico   := Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
+                                (NFSe.Servico.Valores.ValorServicos -
+                                 NFSe.Servico.Valores.ValorDeducoes) ) ), 15);
+  sValorDeducao   := Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
+                                 NFSe.Servico.Valores.ValorDeducoes)), 15 );
+  sCodAtividade   := Poem_Zeros( OnlyNumber( NFSe.Servico.CodigoCnae ), 10 );
+  sCPFCNPJTomador := Poem_Zeros( OnlyNumber( NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14);
 
-  sValorServico_Assinatura := Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
-          (NFSe.Servico.Valores.ValorServicos - NFSe.Servico.Valores.ValorDeducoes) ) ), 15);
 
-  sAssinatura := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 11) +
-                 PadRight( NFSe.IdentificacaoRps.Serie, 5 , ' ') +
-                 Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
-                 FormatDateTime('yyyymmdd',NFse.DataEmissaoRps) +
-                 EnumeradoToStr( NFSe.OptanteSimplesNacional, ['H','T'], [snSim, snNao])+
-                 ' ' +
-                 Situacao +
-                 sTipoRecolhimentoAssinaturaRPS +
-                 sValorServico_Assinatura +
-                 Poem_Zeros( OnlyNumber( FormatFloat('#0.00',NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
-                 Poem_Zeros( OnlyNumber( NFSe.Servico.CodigoCnae ), 10 ) +
-                 Poem_Zeros( OnlyNumber( NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14);
+  sAssinatura := sIEEmit + SerieRPS + NumeroRPS + sDataEmis + sTributacao +
+                 sSituacaoRPS + sTipoRecolhimento + sValorServico +
+                 sValorDeducao + sCodAtividade + sCPFCNPJTomador;
 
   sAssinatura := AsciiToHex(SHA1(sAssinatura));
   sAssinatura := LowerCase(sAssinatura);
@@ -379,6 +403,7 @@ function TNFSeW_ISSDSF.GerarXml: Boolean;
 var
   Gerar: Boolean;
 begin
+  Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
 

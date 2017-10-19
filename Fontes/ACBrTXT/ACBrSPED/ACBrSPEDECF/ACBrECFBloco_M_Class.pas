@@ -400,7 +400,7 @@ begin
              LFill(COD_CTA_B)          +
              LFill(DESC_CTA_LAL)       +
              LFill(DT_AP_LAL)          +
-             LFill(COD_LAN_ORIG)       +
+             LFill(COD_LAN_ORIG, 6)    +
              LFill(DESC_LAN_ORIG)      +
              LFill(DT_LIM_LAL)         +
              LFill(COD_TRIBUTO)        +

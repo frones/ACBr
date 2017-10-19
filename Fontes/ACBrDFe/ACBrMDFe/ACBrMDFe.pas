@@ -57,7 +57,9 @@ const
 
 type
   EACBrMDFeException = class(EACBrDFeException);
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrMDFe = class(TACBrDFe)
   private
     FDAMDFE: TACBrMDFeDAMDFEClass;
@@ -68,6 +70,8 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesMDFe;
+    function Distribuicao(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+
     procedure SetConfiguracoes(AValue: TConfiguracoesMDFe);
     procedure SetDAMDFE(const Value: TACBrMDFeDAMDFEClass);
   protected
@@ -81,7 +85,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamMDFe: TStream = nil; NomeArq: String = ''); override;
+      StreamMDFe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function Enviar(ALote: integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
@@ -122,7 +126,9 @@ type
     procedure SetStatus(const stNewStatus: TStatusACBrMDFe);
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
-    function DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+//    function DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+    function DistribuicaoDFePorUltNSU(ACNPJCPF, AultNSU: String): Boolean;
+    function DistribuicaoDFePorNSU(ACNPJCPF, ANSU: String): Boolean;
 
   published
     property Configuracoes: TConfiguracoesMDFe
@@ -169,12 +175,14 @@ begin
 end;
 
 procedure TACBrMDFe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamMDFe: TStream; NomeArq: String);
+  sCC: TStrings; Anexos: TStrings; StreamMDFe: TStream; NomeArq: String;
+  sReplyTo: TStrings);
 begin
   SetStatus( stMDFeEmail );
 
   try
-    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamMDFe, NomeArq);
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamMDFe, NomeArq,
+      sReplyTo);
   finally
     SetStatus( stMDFeIdle );
   end;
@@ -636,9 +644,8 @@ begin
      DAMDFE.ImprimirEVENTOPDF(nil);
 end;
 
-function TACBrMDFe.DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+function TACBrMDFe.Distribuicao(ACNPJCPF, AultNSU, ANSU: String): Boolean;
 begin
-//  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU := AultNSU;
   WebServices.DistribuicaoDFe.NSU := ANSU;
@@ -647,6 +654,21 @@ begin
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
+end;
+
+//function TACBrMDFe.DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+//begin
+//  Result := Distribuicao(ACNPJCPF, AultNSU, ANSU);
+//end;
+
+function TACBrMDFe.DistribuicaoDFePorUltNSU(ACNPJCPF, AultNSU: String): Boolean;
+begin
+  Result := Distribuicao(ACNPJCPF, AultNSU, '');
+end;
+
+function TACBrMDFe.DistribuicaoDFePorNSU(ACNPJCPF, ANSU: String): Boolean;
+begin
+  Result := Distribuicao(ACNPJCPF, '', ANSU);
 end;
 
 end.

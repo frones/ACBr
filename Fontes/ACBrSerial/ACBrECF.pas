@@ -110,6 +110,9 @@ TACBrECFOnChangeEstado = procedure( const EstadoAnterior, EstadoAtual :
 { Componente ACBrECF }
 
 { TACBrECF }
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
 TACBrECF = class( TACBrComponent )
   private
     fsDevice : TACBrDevice ;   { SubComponente ACBrDevice }
@@ -226,6 +229,7 @@ TACBrECF = class( TACBrComponent )
     FDAVItemCount: Integer;
     FDAVTotal: Double;
     FQuebraLinhaRodape : Boolean;
+    FVerificarApenasNumeroSerieNoAAC: Boolean;
 
     function GetArredondaItemMFD : Boolean ;
     function GetIgnorarErroSemPapel : Boolean ;
@@ -708,7 +712,8 @@ TACBrECF = class( TACBrComponent )
     Procedure CancelaCupom( NumCOOCancelar: Integer = 0) ;
     Procedure CancelaItemVendido( NumItem : Integer ) ;
     procedure CancelaItemVendidoParcial( NumItem : Integer; Quantidade : Double);
-    procedure CancelaDescontoAcrescimoItem( NumItem : Integer);
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+      TipoAcrescimoDesconto: String = 'D');
     procedure CancelaDescontoAcrescimoSubTotal(TipoAcrescimoDesconto: Char); //A -> Acrescimo D -> Desconto
 
     Property Subtotal  : Double read GetSubTotalClass ;
@@ -820,8 +825,10 @@ TACBrECF = class( TACBrComponent )
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD; TipoContador: TACBrECFTipoContador = tpcCOO) ; overload ;
 
-    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString);
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); overload;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
+    Procedure ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString); overload;
+    Procedure ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; DataInicial, DataFinal: TDateTime); overload;
+    Procedure ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; COOInicial, COOFinal: Integer); overload;
 
     Procedure IdentificaOperador( Nome : String) ;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ;
@@ -904,10 +911,9 @@ TACBrECF = class( TACBrComponent )
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
       const DirArquivos: String);
 
-    procedure PafMF_Binario(const PathArquivo: String);
-
-    procedure PafMF_ArqMF(const APathArquivo: String);
-    procedure PafMF_ArqMFD(const APathArquivo: String);
+    procedure PafMF_ArqMF_Binario(const APathArquivo: String; Assinar: Boolean = True);
+    procedure PafMF_ArqMFD_Binario(const APathArquivo: String; DataInicial: TDateTime = 0;
+      DataFinal: TDateTime = 0; Assinar: Boolean = True);
 
     procedure GerarNotaGaucha(const DataInicial, DataFinal: TDateTime;
       const PathArquivo: String);
@@ -1177,6 +1183,7 @@ TACBrECF = class( TACBrComponent )
      property ConfigBarras: TACBrECFConfigBarras read fsConfigBarras write fsConfigBarras;
 
      property InfoRodapeCupom: TACBrECFRodape read GetInfoRodapeCupom write SetInfoRodapeCupom;
+     property VerificarApenasNumeroSerieNoAAC: Boolean read FVerificarApenasNumeroSerieNoAAC write FVerificarApenasNumeroSerieNoAAC default False;
 end ;
 
 Function NomeArqCAT52( CAT52ID, NumSerie: String; DtMov : TDatetime ) : String ;
@@ -1184,7 +1191,7 @@ Function GetECFComponente( AECFClass: TACBrECFClass ): TACBrECF;
 
 implementation
 Uses {$IFDEF COMPILER6_UP} StrUtils {$ELSE}ACBrD5 ,Windows {$ENDIF},
-     Math, IniFiles,
+     Math, IniFiles, TypInfo,
      ACBrUtil, ACBrECFBematech, ACBrECFNaoFiscal, ACBrECFDaruma, ACBrECFSchalter,
      ACBrECFMecaf, ACBrECFSweda, ACBrECFDataRegis, ACBrECFUrano, ACBrECFYanco,
      ACBrECFICash, ACBrECFQuattro, ACBrECFFiscNET, ACBrECFEpson, ACBrECFNCR,
@@ -1331,6 +1338,8 @@ begin
   fsConfigBarras.LarguraLinha := 0;
   fsConfigBarras.Altura := 0;
   fsConfigBarras.MostrarCodigo := True;
+
+  FVerificarApenasNumeroSerieNoAAC := False;
 
 end;
 
@@ -2251,20 +2260,28 @@ begin
 end;
 
 function TACBrECF.GetEstadoClass: TACBrECFEstado;
+var
+  wIgnorarErroSemPapel : Boolean;
 begin
-  ComandoLOG := 'Estado' ;
-  IgnorarErroSemPapel := True;
-  Result := fsECF.Estado ;
+  wIgnorarErroSemPapel := IgnorarErroSemPapel;
+  try
+    ComandoLOG := 'Estado' ;
+    IgnorarErroSemPapel := True;
+    Result := fsECF.Estado ;
 
-  if Result <> fpUltimoEstadoObtido then
-  begin
-     try
-        if Assigned( FOnChangeEstado ) then
-           FOnChangeEstado( fpUltimoEstadoObtido, Result);
-     finally
-        fpUltimoEstadoObtido := Result;
-     end;
-  end ;
+    if Result <> fpUltimoEstadoObtido then
+    begin
+       try
+          if Assigned( FOnChangeEstado ) then
+             FOnChangeEstado( fpUltimoEstadoObtido, Result);
+       finally
+          fpUltimoEstadoObtido := Result;
+       end;
+    end ;
+  finally
+     fsECF.GravaLog('  '+GetEnumName(TypeInfo(TACBrECFEstado), Integer(Result)));
+     IgnorarErroSemPapel := wIgnorarErroSemPapel;
+  end;
 end;
 
 function TACBrECF.GetPoucoPapelClass: Boolean;
@@ -2382,11 +2399,18 @@ begin
 end;
 
 function TACBrECF.GetGrandeTotalClass: Double;
+var
+  wIgnorarErroSemPapel : Boolean;
 begin
-  IgnorarErroSemPapel := True;
-  if ComandoLOG = '' then
-     ComandoLOG := 'GrandeTotal' ;
-  Result := RoundTo( fsECF.GrandeTotal, -2) ;
+  wIgnorarErroSemPapel := IgnorarErroSemPapel;
+  try
+    IgnorarErroSemPapel := True;
+    if ComandoLOG = '' then
+       ComandoLOG := 'GrandeTotal' ;
+    Result := RoundTo( fsECF.GrandeTotal, -2) ;
+  finally
+    IgnorarErroSemPapel := wIgnorarErroSemPapel;
+  end;
 end;
 
 function TACBrECF.GetNumCOOInicialClass: String;
@@ -2558,7 +2582,7 @@ begin
   if Assigned( fOnAntesAbreCupom ) then
      fOnAntesAbreCupom( CPF_CNPJ, Nome, Endereco);
 
-  if Trim(CPF_CNPJ) + Trim(Nome) + Trim(Endereco) <> '' then
+  if Trim(CPF_CNPJ) <> '' then
      IdentificaConsumidor(CPF_CNPJ, Nome, Endereco);
 
   if fsIdentificarOperador then
@@ -2667,8 +2691,9 @@ begin
   if RFDAtivo then
      fsRFD.CancelaCupom( StrToInt(Docto) ) ;
 
-  fsMensagemRodape := '' ;
-  Consumidor.Zera ;
+  fsMensagemRodape := '';
+  Consumidor.Zera;
+  InfoRodapeCupom.Clear;
 
   {$IFNDEF NOGUI}
    if MemoAssigned then
@@ -2682,7 +2707,7 @@ begin
           if OldEstado = estVenda then
              MemoAdicionaLinha( '<table width=100%><tr>'+
               '<td align=left>TOTAL R$</td>'+
-              '<td align=right><b>'+FormatFloat('###,##0.00',SubTot)+'</b></td>'+
+              '<td align=right><b>'+FormatFloatBr(SubTot,'###,##0.00')+'</b></td>'+
               '</tr></table>') ;
 
            MemoAdicionaLinha( fsMemoRodape );
@@ -2697,7 +2722,7 @@ begin
               '</tr></table>' + sLineBreak + sLineBreak +
               '<table width=100%><tr>'+
               '<td align=left>Valor da Operacao  R$:</td>'+
-              '<td align=right><b>'+FormatFloat('#,###,##0.00',SubTot)+'</b></td>'+
+              '<td align=right><b>'+FormatFloatBr(SubTot,'#,###,##0.00')+'</b></td>'+
               '</tr></table>' + sLineBreak + sLineBreak +
               fsMemoRodape ) ;
        end ;
@@ -2913,12 +2938,12 @@ begin
      if Qtd = Round( Qtd ) then
         StrQtd := FormatFloat('#######0',Qtd )
      else
-        StrQtd := FormatFloat('###0.000',Qtd ) ;
+        StrQtd := FormatFloatBr(Qtd,'###0.000') ;
 
      if RoundTo( ValorUnitario, -2 ) = ValorUnitario then
-        StrPreco := FormatFloat('###,##0.00',ValorUnitario )
+        StrPreco := FormatFloatBr(ValorUnitario,'###,##0.00')
      else
-        StrPreco := FormatFloat('##,##0.000',ValorUnitario ) ;
+        StrPreco := FormatFloatBr(ValorUnitario,'##,##0.000') ;
 
      if self.Arredonda then
         Total := RoundABNT( Qtd * ValorUnitario, -2)
@@ -2934,7 +2959,7 @@ begin
      Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'U', Unidade ) ;
      Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'V', StrPreco ) ;
      Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'A', AliquotaICMS ) ;
-     Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'T', FormatFloat('###,##0.00', Total ), True) ;
+     Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'T', FormatFloatBr(Total,'###,##0.00'), True) ;
 
      { Quebrando a linha em várias de acordo com o tamanho das colunas }
      Buffer := '' ;
@@ -2973,9 +2998,9 @@ begin
         Total := RoundTo(Total + ValDesc, -2) ;
 
         MemoAdicionaLinha( '<table width=100%><tr>'+
-           '<td align=left>'+StrDescAcre+' '+FormatFloat('#0.00', PorcDesc)+'%</td>'+
-           '<td align=center>'+FormatFloat('##,##0.00',ValDesc)+'</td>'+
-           '<td align=right>'+FormatFloat('###,##0.00',Total)+'</td></tr></table>') ;
+           '<td align=left>'+StrDescAcre+' '+FormatFloatBr(PorcDesc,'#0.00')+'%</td>'+
+           '<td align=center>'+FormatFloatBr(ValDesc,'##,##0.00')+'</td>'+
+           '<td align=right>'+FormatFloatBr(Total,'###,##0.00')+'</td></tr></table>') ;
      end ;
    end ;
   {$ENDIF}
@@ -3065,7 +3090,7 @@ begin
          StrDescAcre := 'ACRESCIMO' ;
 
       StrDescAcre := StrDescAcre + ' ' +
-                     FormatFloat('##,##0.00',ValorDescontoAcrescimo) ;
+                     FormatFloatBr(ValorDescontoAcrescimo,'##,##0.00') ;
 
       MemoAdicionaLinha( StrDescAcre ) ;
    end ;
@@ -3076,14 +3101,15 @@ end;
 
 
 { Cancela o Acrescimo ou o Desconto do Item informado }
-procedure TACBrECF.CancelaDescontoAcrescimoItem(NumItem: Integer);
+procedure TACBrECF.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
 begin
   ComandoLOG := 'CancelaDescontoAcrescimoItem' ;
 
   if Assigned( fsAAC ) then
      fsAAC.VerificaReCarregarArquivo;
 
-  fsECF.CancelaDescontoAcrescimoItem(NumItem) ;
+  fsECF.CancelaDescontoAcrescimoItem(NumItem, TipoAcrescimoDesconto) ;
 end;
 
 procedure TACBrECF.CancelaImpressaoCheque;
@@ -3358,8 +3384,8 @@ begin
     {$ENDIF}
   end;
 
-  { Tirando os Acentos e trocando todos os #13+#10 e '|' por #10 }
-  Observacao := StringReplace(Observacao,CR+LF,#10,[rfReplaceAll]) ;
+  { Trocando todos os #13, #13+#10 e '|' por #10 }
+  Observacao := ChangeLineBreak(Observacao, #10);
   Observacao := StringReplace(Observacao,'|',#10,[rfReplaceAll]) ;
 
   { montar o rodape quando as informações de rodapé forem passadas }
@@ -3440,6 +3466,10 @@ begin
   if Trim(InfoRodapeCupom.Dav) <> EmptyStr then
     Result := Result + GetQuebraLinha('DAV' + Trim(InfoRodapeCupom.Dav));
 
+  // atende ao requisito do paf-ECF VI item 5
+  if Trim(InfoRodapeCupom.DavFarm) <> EmptyStr then
+    Result := Result + GetQuebraLinha('Fórmula manipulada conf. DAV nº : ' + Trim(InfoRodapeCupom.DavFarm));
+
   // atende ao requisito do paf-ECF LI item 1
   if Trim(InfoRodapeCupom.DavOs) <> EmptyStr then
     Result := Result + GetQuebraLinha('DAV-OS' + Trim(InfoRodapeCupom.DavOs));
@@ -3452,6 +3482,11 @@ begin
   Result := Trim(Result) + #10 + Trim(GetRodapeRestaurante);
   Result := Trim(Result) + #10 + Trim(GetRodapeUF);
   Result := Trim(Result) + #10 + Trim(GetRodapeImposto);
+
+  // atende ao requisito XXXVI do paf-ECF
+  if Trim(InfoRodapeCupom.Placa) <> '' then 
+     Result := Result + #10 + 'Placa: ' + Trim(InfoRodapeCupom.Placa);
+
   Result := Trim(Result);
   InfoRodapeCupom.PostoCombustivel.Clear;
   InfoRodapeCupom.PostoCombustivel.Imprimir := False;
@@ -3485,9 +3520,9 @@ begin
       begin
         Rodape := Rodape + #10 +
         '#CF:B' + Format('%2.2d', [ PostoCombustivel[I].Bico ] ) +
-        ' EI' + FormatFloat( '0000000.000', PostoCombustivel[I].EI ) +
-        ' EF' + FormatFloat( '0000000.000', PostoCombustivel[I].EF ) +
-        ' V' + FormatFloat( '0.000', PostoCombustivel[I].Volume ) +
+        ' EI' + FormatFloatBr( PostoCombustivel[I].EI, '0000000.000' ) +
+        ' EF' + FormatFloatBr( PostoCombustivel[I].EF, '0000000.000' ) +
+        ' V' + FormatFloatBr( PostoCombustivel[I].Volume, '0.000' ) +
         ifthen( PostoCombustivel[I].Automatico, 'A', '' );
 
         if not PostoCombustivel[I].Automatico then
@@ -3501,6 +3536,15 @@ end;
 function TACBrECF.GetRodapeRestaurante: String;
 Var
   Rodape : String ;
+
+  function DescricaoTipoConta: String;
+  begin
+    if InfoRodapeCupom.Restaurante.ContaCliente then
+       Result := 'Conta de Cliente'
+    else
+       Result := 'Mesa';
+  end;
+
 begin
   Rodape := EmptyStr;
 
@@ -3524,7 +3568,7 @@ begin
 
         Rodape := Rodape + #10 + 'ECF:'
         + Format('%3.3d', [InfoRodapeCupom.Restaurante.ECF])
-        + ' - Conf. de Mesa';
+        + ' - Conf. de ' + DescricaoTipoConta;
 
           if InfoRodapeCupom.Restaurante.CER > 0 then
           begin
@@ -3538,11 +3582,9 @@ begin
       end
       else
       begin
-
-        Rodape := Rodape + #10 + 'Mesa '
-        + InfoRodapeCupom.Restaurante.Mesa
-        + ' – SEM EMISSÃO DE CONFERÊNCIA DE MESA'
-
+        Rodape := Rodape + #10 +
+                  DescricaoTipoConta + ' ' + InfoRodapeCupom.Restaurante.Mesa +
+                  ' – SEM EMISSÃO DE CONFERÊNCIA DE ' + UpperCase(DescricaoTipoConta);
       end;
   end;
 
@@ -3586,7 +3628,8 @@ begin
     Rodape := Rodape + #10 +
       'PARAÍBA LEGAL – RECEITA CIDADÃ' + #10 +
       Format(
-        'TORPEDO PREMIADO: %s %s %s %s', [
+        'TORPEDO PREMIADO:' + #10 +
+        '%s %s %s %s', [
         OnlyNumber(Self.IE),
         FormatDateTime('ddmmyyyy', Self.DataHora),
         Self.NumCOO,
@@ -3599,13 +3642,13 @@ begin
     begin
       Rodape := Rodape + #10 +
         'ESTABELECIMENTO INCLUÍDO NO PROGRAMA DE'#10 +
-        'CONCESSÃO DE CRÉDITOS - LEI Nº 4.159/08.';
+        'CONCESSÃO DE CRÉDITOS - LEI Nº 4.159/2008.';
     end;
 
     Rodape := Rodape + #10 + '<n>NOTA LEGAL:</n>';
 
-    Rodape := Rodape + ' ICMS = ' + FormatFloat(',#0.00', InfoRodapeCupom.NotaLegalDF.ValorICMS);
-    Rodape := Rodape + ' ISS = ' + FormatFloat(',#0.00', InfoRodapeCupom.NotaLegalDF.ValorISS);
+    Rodape := Rodape + ' ICMS = ' + FormatFloatBr(InfoRodapeCupom.NotaLegalDF.ValorICMS, ',#0.00');
+    Rodape := Rodape + ' ISS = ' + FormatFloatBr(InfoRodapeCupom.NotaLegalDF.ValorISS, ',#0.00');
   end;
 
   Result := ACBrStr( Rodape );
@@ -3638,11 +3681,11 @@ begin
     end
     else
     begin
-      Result :=
-        'Val.Aprox.Impostos R$' +
-        FormatFloat(',#0.00', VlImposto) +
-        FormatFloat('(,#0.00%)', VlPercentual) +
-        IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', ' Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
+      Result := 'Val.Aprox.Impostos R$' +
+                FormatFloatBr(VlImposto, ',#0.00') +
+                FormatFloatBr(VlPercentual, '(,#0.00%)') +
+                IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '',
+                       ' Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
     end;
   end
   else
@@ -3679,18 +3722,24 @@ begin
           if InformouValorAproxEstadual and InformouValorAproxMunicipal then
           begin
             Result := 'Trib aprox R$:' +
-              FormatFloat(',#0.00', VlImpostoFederal)   + ' Fed, '+
-              FormatFloat(',#0.00', VlImpostoEstadual)  + ' Est e '+
-              FormatFloat(',#0.00', VlImpostoMunicipal) + ' Mun'+
-              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
+              FormatFloatBr(VlImpostoFederal, ',#0.00')   + ' Fed, '+
+              FormatFloatBr(VlImpostoEstadual, ',#0.00')  + ' Est e '+
+              FormatFloatBr(VlImpostoMunicipal, ',#0.00') + ' Mun'+
+              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 +
+                     'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' +
+              Trim(InfoRodapeCupom.Imposto.Chave);
           end
           else
           begin
             Result := 'Trib aprox R$:' +
-              FormatFloat(',#0.00', VlImpostoFederal) + ' Federal e '+
-              IfThen(InformouValorAproxEstadual, FormatFloat(',#0.00', VlImpostoEstadual) + ' Estadual', '') +
-              IfThen(InformouValorAproxMunicipal, FormatFloat(',#0.00', VlImpostoMunicipal) + ' Municipal', '') +
-              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
+              FormatFloatBr(VlImpostoFederal, ',#0.00') + ' Federal'+
+              IfThen(InformouValorAproxEstadual,
+                     ', '+FormatFloatBr(VlImpostoEstadual,',#0.00') + ' Estadual', '') +
+              IfThen(InformouValorAproxMunicipal,
+                     ', '+FormatFloatBr(VlImpostoMunicipal,',#0.00') + ' Municipal', '') +
+              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '',
+                     #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' +
+              Trim(InfoRodapeCupom.Imposto.Chave);
           end;
         end
         else
@@ -3699,14 +3748,15 @@ begin
           SubtotalSemImpostos := Subtotal - (VlImpostoFederal + VlImpostoEstadual + VlImpostoMunicipal);
 
           Result := 'Você pagou aproximadamente:' + #10 +
-            'R$ ' + FormatFloat(',#0.00', VlImpostoFederal) + ' de tributos federais'+
-            // FormatFloat(' (,#0.00%)', VlPercentualFederal)
-            IfThen(InformouValorAproxEstadual,  #10 + 'R$ ' + FormatFloat(',#0.00', VlImpostoEstadual) + ' de tributos estaduais', '') +
-            // FormatFloat(' (,#0.00%)', VlPercentualEstadual)
-            IfThen(InformouValorAproxMunicipal, #10 + 'R$ ' + FormatFloat(',#0.00', VlImpostoMunicipal) + ' de tributos municipais', '') +
-            // FormatFloat(' (,#0.00%)', VlPercentualMunicipal)
-            #10 + 'R$ ' + FormatFloat(',#0.00', SubtotalSemImpostos) + ' pelos produtos/serviços'+
-            IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
+            'R$ ' + FormatFloatBr(VlImpostoFederal, ',#0.00') + ' de tributos federais'+
+            IfThen(InformouValorAproxEstadual,
+                   #10 + 'R$ ' + FormatFloatBr(VlImpostoEstadual, ',#0.00') + ' de tributos estaduais', '') +
+            IfThen(InformouValorAproxMunicipal,
+                   #10 + 'R$ ' + FormatFloatBr(VlImpostoMunicipal, ',#0.00') + ' de tributos municipais', '') +
+            #10 + 'R$ ' + FormatFloatBr(SubtotalSemImpostos, ',#0.00') + ' pelos produtos/serviços'+
+            IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '',
+                   #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' +
+            Trim(InfoRodapeCupom.Imposto.Chave);
         end;
       end;
     end;
@@ -3957,7 +4007,7 @@ begin
       MemoAdicionaLinha( '<table width=100%><tr>'+
                          '<td align=left>'+IntToStrZero( fsMemoItens, 3)+'</td>'+
                          '<td align=left>'+CNF.Descricao+'</td>'+
-                         '<td align=right>'+FormatFloat('#,###,##0.00',Valor)+'</td>'+
+                         '<td align=right>'+FormatFloatBr(Valor,'#,###,##0.00')+'</td>'+
                          '</tr></table>' + Obs ) ;
    end ;
   {$ENDIF}
@@ -4012,7 +4062,7 @@ begin
           if OldEstado = estVenda then
              MemoAdicionaLinha( '<table width=100%><tr>'+
               '<td align=left>TOTAL R$</td>'+
-              '<td align=right><b>'+FormatFloat('###,##0.00',SubTot)+'</b></td>'+
+              '<td align=right><b>'+FormatFloatBr(SubTot,'###,##0.00')+'</b></td>'+
               '</tr></table>') ;
 
            MemoAdicionaLinha( fsMemoRodape );
@@ -4028,7 +4078,7 @@ begin
               '</tr></table>' + sLineBreak + sLineBreak +
               '<table width=100%><tr>'+
               '<td align=left>Valor da Operacao  R$:</td>'+
-              '<td align=right><b>'+FormatFloat('#,###,##0.00',SubTot)+'</b></td>'+
+              '<td align=right><b>'+FormatFloatBr(SubTot,'#,###,##0.00')+'</b></td>'+
               '</tr></table>' + sLineBreak + sLineBreak +
               fsMemoRodape ) ;
        end ;
@@ -4205,6 +4255,7 @@ begin
 
   fsMensagemRodape := '' ;
   Consumidor.Zera ;
+  InfoRodapeCupom.Clear;
 
   {$IFNDEF NOGUI}
    if MemoAssigned then
@@ -4546,20 +4597,52 @@ begin
   fsECF.ArquivoMFD_DLL( ContInicial, ContFinal, NomeArquivo, Documentos, Finalidade, TipoContador ) ;
 end;
 
-procedure TACBrECF.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECF.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
 begin
    TestaSeE_MFD ;
 
-   ComandoLOG := 'ArquivoMF_DLL( ' + NomeArquivo + ' ) ';
-   fsECF.ArquivoMF_DLL( NomeArquivo ) ;
+   ComandoLOG := 'ArquivoMF_Binario_DLL( ' + NomeArquivo +' ) ';
+   fsECF.ArquivoMF_Binario_DLL(NomeArquivo) ;
 end;
 
-procedure TACBrECF.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+procedure TACBrECF.ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString);
 begin
-   TestaSeE_MFD ;
+  TestaSeE_MFD ;
 
-   ComandoLOG := 'ArquivoMFD_DLL( ' + NomeArquivo + ' ) ';
-   fsECF.ArquivoMFD_DLL( NomeArquivo ) ;
+  ComandoLOG := 'ArquivoMFD_Binario_DLL( ' + NomeArquivo +' ) ';
+  fsECF.ArquivoMFD_Binario_DLL( tdmfdTotal, NomeArquivo, '', '') ;
+end;
+
+procedure TACBrECF.ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; DataInicial,
+  DataFinal: TDateTime);
+var
+  StrInicial, StrFinal: String;
+begin
+  TestaSeE_MFD ;
+
+  StrInicial :=  FormatDateTime('ddmmyyyy', DataInicial);
+  StrFinal   :=  FormatDateTime('ddmmyyyy', DataFinal);
+
+  ComandoLOG := 'ArquivoMFD_Binario_DLL( ' + NomeArquivo + ', '+
+                StrInicial+', '+StrFinal+' ) ';
+
+  fsECF.ArquivoMFD_Binario_DLL( tdmfdData, NomeArquivo, StrInicial, StrFinal) ;
+end;
+
+procedure TACBrECF.ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; COOInicial,
+  COOFinal: Integer);
+var
+  StrInicial, StrFinal: String;
+begin
+  TestaSeE_MFD ;
+
+  StrInicial :=  IntToStrZero(COOInicial, 6);
+  StrFinal   :=  IntToStrZero(COOFinal, 6);
+
+  ComandoLOG := 'ArquivoMFD_Binario_DLL( ' + NomeArquivo + ', '+
+                StrInicial+', '+StrFinal+' ) ';
+
+  fsECF.ArquivoMFD_Binario_DLL( tdmfdCOO, NomeArquivo, StrInicial, StrFinal) ;
 end;
 
 procedure TACBrECF.ImprimeCheque(Banco: String; Valor: Double; Favorecido,
@@ -5626,19 +5709,24 @@ end;
          S := 'Acrescimo' ;
 
       MemoAdicionaLinha( '<table width=100%><tr>'+
-                         '<td align=left><b>SUBTOTAL   R$</b></td>'+
-                         '<td align=right>'+FormatFloat('#,###,##0.00',
-                         fsSubTotalPagto - DescontoAcrescimo)+'</td>'+
+                          '<td align=left><b>SUBTOTAL   R$</b></td>'+
+                          '<td align=right>'+
+                            FormatFloatBr(fsSubTotalPagto - DescontoAcrescimo,'#,###,##0.00')+
+                          '</td>'+
                          '</tr></table>' ) ;
       MemoAdicionaLinha( '<table width=100%><tr>'+
-                         '<td align=left><b>'+S+'  R$</b></td>'+
-                         '<td align=right>'+FormatFloat('#,###,##0.00',DescontoAcrescimo)+'</td>'+
+                          '<td align=left><b>'+S+'  R$</b></td>'+
+                          '<td align=right>'+
+                            FormatFloatBr(DescontoAcrescimo,'#,###,##0.00')+
+                          '</td>'+
                          '</tr></table>' ) ;
    end ;
 
    MemoTitulo( '<table width=100%><tr>'+
-               '<td align=left>TOTAL  R$</td>'+
-               '<td align=right>'+FormatFloat('#,###,##0.00',fsSubTotalPagto)+'</td>'+
+                '<td align=left>TOTAL  R$</td>'+
+                '<td align=right>'+
+                  FormatFloatBr(fsSubTotalPagto,'#,###,##0.00')+
+                '</td>'+
                '</tr></table>' ) ;
 
    fsMemoItens := 0 ;  { Zera para acumular o numero de Pagamentos }
@@ -5653,8 +5741,10 @@ end;
     Inc( fsMemoItens ) ;
 
     MemoAdicionaLinha( '<table width=100%><tr>'+
-                       '<td align=left><b>'+Descricao+'</b></td>'+
-                       '<td align=right>'+FormatFloat('#,###,##0.00',Valor)+'</td>'+
+                        '<td align=left><b>'+Descricao+'</b></td>'+
+                        '<td align=right>'+
+                         FormatFloatBr(Valor,'#,###,##0.00')+
+                        '</td>'+
                        '</tr></table>' ) ;
 
     Observacao := AjustaLinhas( Observacao, fsMemoColunas, 2 ) ;
@@ -5664,16 +5754,20 @@ end;
     begin
        if fsMemoItens > 1 then
           MemoAdicionaLinha( '<table width=100%><tr>'+
-                             '<td align=left><b>S O M A  R$</b></td>'+
-                             '<td align=right>'+FormatFloat('#,###,##0.00',fsTotalPago)+'</td>'+
+                              '<td align=left><b>S O M A  R$</b></td>'+
+                              '<td align=right>'+
+                                FormatFloatBr(fsTotalPago,'#,###,##0.00')+
+                              '</td>'+
                              '</tr></table>' ) ;
 
       if fsTotalPago > fsSubTotalPagto then  { Tem TROCO ? }
       begin
          Troco  := RoundTo(fsTotalPago - fsSubTotalPagto,-2) ;
          MemoTitulo( '<table width=100%><tr>'+
-                     '<td align=left>TROCO  R$</td>'+
-                     '<td align=right>'+FormatFloat('#,###,##0.00',Troco)+'</td>'+
+                      '<td align=left>TROCO  R$</td>'+
+                      '<td align=right>'+
+                        FormatFloatBr(Troco,'#,###,##0.00')+
+                      '</td>'+
                      '</tr></table>' ) ;
       end ;
    end ;
@@ -5913,18 +6007,24 @@ end;
 
 procedure TACBrECF.DoVerificaValorGT ;
 var
-   ValorGT_AAC, ValorGT_ECF : Double ;
+   ValorGT_ECF : Double ;
    Erro : Integer ;
 begin
   if not Assigned( fsAAC ) then
-     exit ;
+     Exit ;
 
   if fsNumSerieCache = '' then
      fsNumSerieCache := NumSerie;
 
-  ValorGT_ECF := GrandeTotal ;
-  ValorGT_AAC := ValorGT_ECF;
-  Erro := fsAAC.VerificarGTECF( fsNumSerieCache, ValorGT_AAC );
+  if VerificarApenasNumeroSerieNoAAC then
+  begin
+    Erro := fsAAC.AchaIndiceECF(fsNumSerieCache);
+  end
+  else
+  begin
+    ValorGT_ECF := GrandeTotal ;
+    Erro := fsAAC.VerificarGTECF( fsNumSerieCache, ValorGT_ECF );
+  end;
 
   if Erro = -1 then
      raise EACBrAAC_NumSerieNaoEncontrado.Create( ACBrStr( Format(
@@ -5939,7 +6039,13 @@ Var
   ValorGT  : Double ;
 begin
   if not Assigned( fsAAC ) then
-     exit ;
+     Exit ;
+
+  if VerificarApenasNumeroSerieNoAAC then
+  begin
+    //Não é necessário atualizar GT se está verificando apenas o número de série;
+    Exit;
+  end;
 
   if fsNumSerieCache = '' then
      fsNumSerieCache := NumSerie;
@@ -5950,7 +6056,7 @@ begin
   except
      On E: EACBrECFSemPapel do
      begin
-        exit;
+        Exit;
      end
      else
         raise;
@@ -6244,15 +6350,6 @@ procedure TACBrECF.PafMF_LMFC_Espelho(const CRZInicial, CRZFinal: Integer;
   const PathArquivo: String);
 begin
   Self.LeituraMemoriaFiscalSerial(CRZInicial, CRZFinal, PathArquivo, False);
-  Self.AssinaArquivoComEAD(PathArquivo);
-end;
-
-procedure TACBrECF.PafMF_Binario(const PathArquivo: String);
-begin
-  if (not fsAtivo) then
-     raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
-
-  Self.ArquivoMF_DLL(PathArquivo);
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
 
@@ -6595,7 +6692,7 @@ begin
         FormatDateTime('dd/mm/yyyy', DAVsEmitidos[I].DtEmissao),
         DAVsEmitidos[I].COO_Dav,
         DAVsEmitidos[I].COO_Cupom,
-        PadLeft(FormatFloat(',#0.00', DAVsEmitidos[I].Valor), TamanhoLinha - 28, ' ')
+        PadLeft(FormatFloatBr(DAVsEmitidos[I].Valor, ',#0.00'), TamanhoLinha - 28, ' ')
       ]));
       Relatorio.Add('');
     end;
@@ -6643,6 +6740,7 @@ begin
 
     Relatorio.Add('</linha_dupla>');
     Relatorio.Add('LAUDO NUMERO: <n>' + IdentificacaoPaf.NumeroLaudo + '</n>');
+    Relatorio.Add('EMISSÃO DO LAUDO: <n>' + FormatDateTime('dd/MM/yyyy', IdentificacaoPaf.DataLaudo) + '</n>');
     Relatorio.Add('</linha_dupla>');
 
     Relatorio.Add('');
@@ -6655,7 +6753,9 @@ begin
     Relatorio.Add('CEP.........: ' + IdentificacaoPaf.Empresa.Cep);
     Relatorio.Add('Telefone....: ' + IdentificacaoPaf.Empresa.Telefone);
     Relatorio.Add('Contato.....: ' + IdentificacaoPaf.Empresa.Contato);
-    Relatorio.Add('e-mail......: ' + IdentificacaoPaf.Empresa.Email);
+
+    // Removido e-mail por solicitação da POLIMIG para homologação.
+    //Relatorio.Add('e-mail......: ' + IdentificacaoPaf.Empresa.Email);
 
     Relatorio.Add('');
     Relatorio.Add('<n>IDENTIFICACAO DO PAF-ECF</n>');
@@ -6798,8 +6898,10 @@ begin
     Relatorio.Add('</linha_dupla>');
     Relatorio.Add('');
 
+    // Incluída UF após texto, por solicitação da POLIMIG durante Homologação
     if versaoPafECF >= 201 then
-      Relatorio.Add('Perfil de Requisitos Configurado: ' + AInfoPafECF.PerfilRequisitos)
+      Relatorio.Add('Perfil de Requisitos Configurado: ' + AInfoPafECF.PerfilRequisitos +
+        ' - UF: ' + fsAAC.IdentPAF.Paf.UFContribuinte)
     else
     begin
       Relatorio.Add(QuebraLinhas(
@@ -6941,37 +7043,46 @@ begin
   end;
 end;
 
-procedure TACBrECF.PafMF_ArqMF(const APathArquivo: String);
+procedure TACBrECF.PafMF_ArqMF_Binario(const APathArquivo: String;
+  Assinar: Boolean);
 var
   EADStr: String;
 begin
   if (not fsAtivo) then
      raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
 
-  Self.ArquivoMF_DLL(APathArquivo);
+  Self.ArquivoMF_Binario_DLL(APathArquivo);
 
-  if FileExists(APathArquivo) then
+  if not FileExists(APathArquivo) then
+    raise EACBrEADException.CreateFmt('Arquivo MF: "%s" não foi gerado', [APathArquivo]);
+
+  if Assinar then
   begin
     // assinar o arquivo baixado da impressora
     EADStr := 'EAD' + GetACBrEAD.CalcularEADArquivo(APathArquivo);
 
     // gravar o arquivo texto com a assinatura EAD
     WriteToTXT(ChangeFileExt(APathArquivo, '.TXT'), EADStr, False, True);
-  end
-  else
-    raise EACBrEADException.CreateFmt('Não foi possível assinar o arquivo "%s"', [APathArquivo]);
+  end;
 end;
 
-procedure TACBrECF.PafMF_ArqMFD(const APathArquivo: String);
+procedure TACBrECF.PafMF_ArqMFD_Binario(const APathArquivo: String;
+  DataInicial: TDateTime; DataFinal: TDateTime; Assinar: Boolean);
 var
   EADStr: String;
 begin
   if (not fsAtivo) then
      raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
 
-  Self.ArquivoMFD_DLL(APathArquivo);
+  if (DataInicial = 0) or (DataFinal = 0) then
+    Self.ArquivoMFD_Binario_DLL(APathArquivo)
+  else
+    Self.ArquivoMFD_Binario_DLL(APathArquivo, DataInicial, DataFinal);
 
-  if FileExists(APathArquivo) then
+  if not FileExists(APathArquivo) then
+    raise EACBrEADException.CreateFmt('Arquivo MFD: "%s" não foi gerado', [APathArquivo]);
+
+  if Assinar then
   begin
     // assinar o arquivo baixado da impressora
     EADStr := 'EAD' + GetACBrEAD.CalcularEADArquivo(APathArquivo);
@@ -6979,8 +7090,6 @@ begin
     // gravar o arquivo texto com a assinatura EAD
     WriteToTXT(ChangeFileExt(APathArquivo, '.TXT'), EADStr, False, True);
   end
-  else
-    raise EACBrEADException.CreateFmt('Não foi possível assinar o arquivo "%s"', [APathArquivo]);
 end;
 
 procedure TACBrECF.ProgramarBitmapPromocional(const AIndice: Integer;

@@ -319,13 +319,16 @@
         <UnitName Value="ACBrSMSZTE"/>
       </Item72>
     </Files>
-    <RequiredPkgs Count="2">
+    <RequiredPkgs Count="3">
       <Item1>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item2>
+      <Item3>
+        <PackageName Value="ACBrDiversos"/>
+      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

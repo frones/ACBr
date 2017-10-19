@@ -35,7 +35,7 @@
 {******************************************************************************
 |* Historico
 |*
-|* 04/04/2013:  AndrÃ© Ferreira de Moraes
+|* 04/04/2013:  André Ferreira de Moraes
 |*   Inicio do desenvolvimento
 ******************************************************************************}
 {$I ACBr.inc}
@@ -50,8 +50,8 @@ uses Classes, SysUtils,
      Forms, Graphics,
      ACBrNFeDANFEClass, ACBrUtil,
      pcnNFe, pcnConversao, pcnAuxiliar, ACBrDFeUtil,
-     RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
-     RLFilters, RLPrinters, Controls;
+     RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
+     RLFilters, RLPrinters, RLTypes, Controls;
 
 const
   CACBrNFeDANFCeFortes_Versao = '0.1.0' ;
@@ -60,9 +60,12 @@ type
   TACBrSATExtratoFiltro = (fiNenhum, fiPDF, fiHTML ) ;
 
   { TACBrNFeDANFCeFortes }
-
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFeDANFCeFortes = class( TACBrNFeDANFEClass )
   private
+    function CalcularCaractesWidth( Canvas : TCanvas; WidthTotal : Integer ): Integer;
   protected
     FpNFe: TNFe;
 
@@ -76,27 +79,67 @@ type
     procedure ImprimirDANFEResumido(NFE : TNFe = nil); override ;
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
     procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil);override;
-    procedure ImprimirDANFECancelado(NFE : TNFe = nil);
+    procedure ImprimirDANFECancelado(NFE : TNFe = nil);override;
+    procedure ImprimirEVENTO(NFE : TNFe = nil);override;
   published
   end ;
 
   { TACBrNFeDANFCeFortesFr }
 
   TACBrNFeDANFCeFortesFr = class(TForm)
-    lFonteTributos: TRLLabel;
+    imgQRCodeLateral: TRLImage;
+    lCancelada: TRLLabel;
+    lChaveDeAcesso: TRLMemo;
+    lConsumidor: TRLMemo;
+    lConsumidor1: TRLMemo;
+    lContingencia: TRLMemo;
+    lDataAutorizacao: TRLLabel;
+    lDataAutorizacao1: TRLMemo;
+    lEnderecoConsumidor: TRLMemo;
+    lEnderecoConsumidor1: TRLMemo;
+    lMensagemFiscal: TRLMemo;
+    lMensagemFiscal1: TRLMemo;
+    lMsgContingencia: TRLMemo;
+    lMsgDANFCe: TRLLabel;
+    lNomeConsumidor: TRLMemo;
+    lNomeConsumidor1: TRLMemo;
+    lNumeroSerie: TRLLabel;
+    lNumeroSerie1: TRLMemo;
+    lContingencia1: TRLMemo;
+    lObservacoes: TRLMemo;
+    lProtocolo: TRLLabel;
+    lProtocolo1: TRLMemo;
+    lSistema: TRLLabel;
     lNomeFantasia: TRLMemo;
     lNomeFantasiaCanc: TRLMemo;
     lRazaoSocial: TRLMemo;
     lRazaoSocialCanc: TRLMemo;
-    rlVenda: TRLReport;
+    lTitFormaPagto: TRLLabel;
+    lTitLei12741: TRLMemo;
+    lTitTotalAcrescimo: TRLLabel;
+    lTitTotalAPagar: TRLLabel;
+    lTitTotalDesconto: TRLLabel;
+    lTitValorPago: TRLLabel;
+    lTotalAcrescimo: TRLLabel;
+    lTotalAPagar: TRLLabel;
+    lTotalDesconto: TRLLabel;
+    lURLConsulta: TRLMemo;
+    pGap6: TRLPanel;
+    pGap9: TRLPanel;
+    rlbConsumidor: TRLBand;
+    rlbMensagemFiscal: TRLBand;
+    rlbMsgContingencia: TRLBand;
+    rlbPagamentoTitulo: TRLBand;
+    rlbQRLateral: TRLBand;
     rlbRodape: TRLBand;
-    RLDraw2: TRLDraw;
-    lConsultaQRCode: TRLLabel;
+    rlbTotalAcrescimo: TRLBand;
+    rlbTotalAPagar: TRLBand;
+    rlbTotalDesconto: TRLBand;
+    rlpDadosQRCodeLateral: TRLPanel;
+    rlpImgQRCodeLateral: TRLPanel;
+    rlVenda: TRLReport;
+    rlbQRCode: TRLBand;
     imgQRCode: TRLImage;
-    pGap05: TRLPanel;
-    lSistema: TRLLabel;
-    lProtocolo: TRLLabel;
-    pGap8: TRLPanel;
     rlsbDetItem: TRLSubDetail;
     rlbDetItem: TRLBand;
     mLinhaItem: TRLMemo;
@@ -123,50 +166,18 @@ type
     lTotal: TRLLabel;
     lQtdItens: TRLLabel;
     lQtdTotalItensVal: TRLLabel;
-    lTitFormaPagto: TRLLabel;
-    lTitValorPago: TRLLabel;
-    RLDraw7: TRLDraw;
-    rlbLei12741: TRLBand;
-    RLDraw6: TRLDraw;
-    lTitLei12741: TRLLabel;
-    lTitLei12742: TRLLabel;
-    lValLei12741: TRLLabel;
     rlbsCabecalho: TRLSubDetail;
     rlbMsgDANFe: TRLBand;
-    lMsgDANFCe: TRLLabel;
-    lMsgDANFCe1: TRLLabel;
-    lMsgDANFCe2: TRLLabel;
     rlbDadosCliche: TRLBand;
     pLogoeCliche: TRLPanel;
-    lEmitCNPJ_IE_IM: TRLLabel;
     lEndereco: TRLMemo;
-    RLDraw1: TRLDraw;
     imgLogo: TRLImage;
     rlbLegenda: TRLBand;
-    RLDraw4: TRLDraw;
-    lCPF_CNPJ1: TRLLabel;
-    RLDraw5: TRLDraw;
-    rlbConsumidor: TRLBand;
-    RLDraw10: TRLDraw;
-    lTitConsumidor: TRLLabel;
-    lEnderecoConsumidor: TRLMemo;
-    lCPF_CNPJ_ID: TRLMemo;
-    rlbMensagemFiscal: TRLBand;
-    RLDraw12: TRLDraw;
-    lMensagemFiscal: TRLLabel;
-    lChaveDeAcesso: TRLLabel;
-    lTitChaveAcesso: TRLLabel;
-    lNumeroSerie: TRLLabel;
+    lLegendaItens: TRLLabel;
+    rlbChaveDeAcesso: TRLBand;
     lTitConsulteChave: TRLMemo;
-    rlbMensagemContribuinte: TRLBand;
-    lMensagemContribuinte: TRLLabel;
-    RLDraw3: TRLDraw;
-    lObservacoes: TRLMemo;
     RLHTMLFilter1: TRLHTMLFilter;
     RLPDFFilter1: TRLPDFFilter;
-    lEmissaoVia: TRLLabel;
-    RLDraw8: TRLDraw;
-    lCancelada: TRLLabel;
     rlCancelamento: TRLReport;
     rlbRodapeCanc: TRLBand;
     RLDraw9: TRLDraw;
@@ -211,26 +222,31 @@ type
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
-    procedure rlbConsumidorBeforePrint(Sender: TObject; var PrintIt: boolean);
-    procedure rlbMensagemFiscalBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlbChaveDeAcessoBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlbMsgContingenciaBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
+    procedure rlbQRLateralBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbRodapeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbsCabecalhoDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
     procedure rlbLegendaBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbPagamentoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbGapBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlbTotalAcrescimoBeforePrint(Sender: TObject; var PrintIt: Boolean
+      );
+    procedure rlbTotalAPagarBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTotalBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlbTotalDescontoBeforePrint(Sender: TObject; var PrintIt: Boolean
+      );
     procedure rlbTrocoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlVendaBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure FormCreate(Sender: TObject);
     procedure rlVendaDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
-    procedure rlbLei12741BeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlsbDetItemDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
     procedure rlsbPagamentosDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
-    procedure rlbMensagemContribuinteBeforePrint(Sender: TObject;
-      var PrintIt: Boolean);
     procedure lSistemaBeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure rlbDetItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -296,10 +312,17 @@ begin
   fACBrNFeDANFCeFortes          := TACBrNFeDANFCeFortes(Owner) ;  // Link para o Pai
 
   //Pega as marges que for defina na classe pai.
-  rlVenda.Margins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
-  rlVenda.Margins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
-  rlVenda.Margins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
-  rlVenda.Margins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
+  rlVenda.PageSetup.PaperWidth  := fACBrNFeDANFCeFortes.LarguraBobina/3.775;
+  rlVenda.InsideMargins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
+  rlVenda.InsideMargins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
+  rlVenda.InsideMargins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
+  rlVenda.InsideMargins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
+
+  rlCancelamento.PageSetup.PaperWidth  := fACBrNFeDANFCeFortes.LarguraBobina/3.775;
+  rlCancelamento.InsideMargins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
+  rlCancelamento.InsideMargins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
+  rlCancelamento.InsideMargins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
+  rlCancelamento.InsideMargins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlVendaDataRecord(Sender: TObject;
@@ -310,51 +333,175 @@ begin
   RecordAction := raUseIt;
 end;
 
-procedure TACBrNFeDANFCeFortesFr.rlbMensagemFiscalBeforePrint(Sender: TObject;
+procedure TACBrNFeDANFCeFortesFr.rlbChaveDeAcessoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
+var
+  Via: String;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
     PrintIt := True ;
 
-    if Ide.tpAmb = taHomologacao then
+    if EstaVazio(procNFe.nProt) then
+      Via := ' Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Empresa')
+    else
+      Via := '';
+
+    if ACBrNFeDANFCeFortes.QRCodeLateral then
     begin
-      if Ide.tpEmis <> teNormal then
-        lMensagemFiscal.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA - AMB. HOMOLOG. SEM VALOR FISCAL')
-      else
-        lMensagemFiscal.Caption := ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+      lContingencia1.Lines.Clear;
+      lMensagemFiscal1.Lines.Clear;
+
+      if Ide.tpAmb = taHomologacao then
+      begin
+        lMensagemFiscal1.Lines.Add(ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO'));
+        lMensagemFiscal1.Lines.Add(ACBrStr( 'SEM VALOR FISCAL'));
+      end;
+
+      if (Ide.tpEmis <> teNormal) and EstaVazio(procNFe.nProt) then
+      begin
+        lContingencia1.Lines.Add(ACBrStr('EMITIDA EM CONTINGÊNCIA'));
+        lContingencia1.Lines.Add(ACBrStr('Pendente de Autorização'));
+      end;
+
+      lContingencia1.Visible   := NaoEstaVazio(Trim(lContingencia1.Lines.Text));
+      lMensagemFiscal1.Visible := NaoEstaVazio(Trim(lMensagemFiscal1.Lines.Text));
+
+      lNumeroSerie1.Lines.Text := ACBrStr(
+        'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' +
+        'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
+        DateTimeToStr(Ide.dEmi)+Via );
     end
     else
     begin
-      if Ide.tpEmis <> teNormal then
-        lMensagemFiscal.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA')
-      else
-        lMensagemFiscal.Caption := ACBrStr('ÁREA DE MENSAGEM FISCAL');
+      lContingencia.Lines.Clear;
+      lMensagemFiscal.Lines.Clear;
+
+      if Ide.tpAmb = taHomologacao then
+      begin
+        lMensagemFiscal.Lines.Add(ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO'));
+        lMensagemFiscal.Lines.Add(ACBrStr( 'SEM VALOR FISCAL'));
+      end;
+
+      if (Ide.tpEmis <> teNormal) and EstaVazio(procNFe.nProt) then
+      begin
+        lContingencia.Lines.Add(ACBrStr('EMITIDA EM CONTINGÊNCIA'));
+        lContingencia.Lines.Add(ACBrStr('Pendente de Autorização'));
+      end;
+
+      lContingencia.Visible   := NaoEstaVazio(Trim(lContingencia.Lines.Text));
+      lMensagemFiscal.Visible := NaoEstaVazio(Trim(lMensagemFiscal.Lines.Text));
+
+      lNumeroSerie.Caption := ACBrStr(
+        'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' +
+        'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
+        DateTimeToStr(Ide.dEmi)+Via );
     end;
 
-    lNumeroSerie.Caption := ACBrStr(
-      'Número ' + IntToStrZero(Ide.nNF, 9) + ' - ' +
-      'Série ' + IntToStrZero(Ide.serie, 3)
-    );
+    lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em');
+    lURLConsulta.Lines.Text := TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao);
 
-    lEmissaoVia.Caption := ACBrStr(
-      'Emissão ' + DateTimeToStr(Ide.dEmi) + ' - ' +
-      'Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Estabelecimento')
-    );
-
-    lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
-       TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));
-
-    lChaveDeAcesso.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
+    lChaveDeAcesso.Lines.Text := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
 
     if (Ide.tpEmis = teNormal ) and (procNFe.cStat = 0) then
     begin
-      lChaveDeAcesso.Caption    := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
+      lChaveDeAcesso.Lines.Text := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
       lChaveDeAcesso.Font.Color := clRed;
     end;
 
+    lCancelada.Visible := ACBrNFeDANFCeFortes.NFeCancelada;
     if ACBrNFeDANFCeFortes.NFeCancelada then
-      lCancelada.Caption := ACBrStr('NF-e CANCELADA');
+      lCancelada.Caption := ACBrStr('NFC-e CANCELADA');
+  end;
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbMsgContingenciaBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  with ACBrNFeDANFCeFortes.FpNFe do
+  begin
+    PrintIt :=  (Ide.tpEmis <> teNormal) or (Ide.tpAmb = taHomologacao);
+    lMsgContingencia.Lines.Clear;
+
+    if Ide.tpAmb = taHomologacao then
+    begin
+      lMsgContingencia.Lines.Add(ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO'));
+      lMsgContingencia.Lines.Add(ACBrStr( 'SEM VALOR FISCAL'));
+    end;
+
+    if (Ide.tpEmis <> teNormal) and EstaVazio(procNFe.nProt) then
+    begin
+      lMsgContingencia.Lines.Add(ACBrStr('EMITIDA EM CONTINGÊNCIA'));
+      lMsgContingencia.Lines.Add(ACBrStr('Pendente de Autorização'));
+    end;
+  end;
+
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbQRLateralBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  HeightTotal : Integer;
+begin
+  //AutoSize não está funcionando corretamente para esta Banda
+  HeightTotal := 0;
+  HeightTotal := HeightTotal + ifthen(lConsumidor1.Visible,lConsumidor1.Height,0);
+  HeightTotal := HeightTotal + ifthen(lNomeConsumidor1.Visible,lNomeConsumidor1.Height,0);
+  HeightTotal := HeightTotal + ifthen(lEnderecoConsumidor1.Visible,lEnderecoConsumidor1.Height,0);
+  HeightTotal := HeightTotal + ifthen(lNumeroSerie1.Visible,lNumeroSerie1.Height,0);
+  HeightTotal := HeightTotal + ifthen(lProtocolo1.Visible,lProtocolo1.Height,0);
+  HeightTotal := HeightTotal + ifthen(lDataAutorizacao1.Visible,lDataAutorizacao1.Height,0);
+  HeightTotal := HeightTotal + ifthen(lMensagemFiscal1.Visible,lMensagemFiscal1.Height,0);
+  HeightTotal := HeightTotal + ifthen(lContingencia1.Visible,lContingencia1.Height,0);
+
+  rlbQRLateral.Height :=  max(rlpImgQRCodeLateral.Height, HeightTotal);
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbRodapeBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  i:integer;
+  MsgTributos: String;
+begin
+  with ACBrNFeDANFCeFortes.FpNFe do
+  begin
+    MsgTributos := '';
+
+    with ACBrNFeDANFCeFortes do
+    begin
+      if ImprimirTributos then
+      begin
+        if TributosSeparadamente and ((vTribFed+vTribEst+vTribMun) > 0) then
+        begin
+           MsgTributos := Format('Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s Federal R$ %s Estadual R$ %s Municipal R$ %s',
+                                 [FormatFloatBr(vTribFed + vTribEst + vTribMun),
+                                  FormatFloatBr(vTribFed),
+                                  FormatFloatBr(vTribEst),
+                                  FormatFloatBr(vTribMun)]);
+        end
+        else if (Total.ICMSTot.vTotTrib > 0) then
+        begin
+          MsgTributos:= Format('Tributos Totais Incidentes(Lei Federal 12.741/12): R$ %s',
+                               [FormatFloatBr(Total.ICMSTot.vTotTrib)]);
+        end;
+      end;
+    end;
+
+    if (MsgTributos = '') then
+      lTitLei12741.Visible := False
+    else
+      lTitLei12741.Lines.Text := MsgTributos;
+
+    for I := 0 to InfAdic.obsCont.Count - 1 do
+    begin
+      lObservacoes.Lines.Add( StringReplace( InfAdic.obsCont[i].xCampo + ': ' +
+                                             InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) ) ;
+    end;
+
+    if InfAdic.infCpl <> '' then
+      lObservacoes.Lines.Add( StringReplace( InfAdic.infCpl, ';', #13, [rfReplaceAll] ) );
+
+    lObservacoes.Visible := ( lObservacoes.Lines.Count > 0 );
   end;
 end;
 
@@ -374,7 +521,7 @@ begin
       if Ide.tpEmis <> teNormal then
         lMensagemFiscalCanc.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA')
       else
-        lMensagemFiscalCanc.Caption := ACBrStr('ÁREA DE MENSAGEM FISCAL');
+        lMensagemFiscalCanc.Caption := ACBrStr('');
     end;
 
     lNumeroSerieCanc.Caption := ACBrStr(
@@ -388,7 +535,7 @@ begin
     );
 
     lTitConsulteChaveCanc.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
-       TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));
+       TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao));
 
     lChaveDeAcessoCanc.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
 
@@ -399,21 +546,24 @@ begin
     end;
 
     if ACBrNFeDANFCeFortes.NFeCancelada then
-      lCanceladaCanc.Caption := ACBrStr('NF-e CANCELADA');
+      lCanceladaCanc.Caption := ACBrStr('NFC-e CANCELADA');
   end;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbOutroItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  vAcrescimos: Double;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vOutro > 0) and (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem);
+    vAcrescimos := Prod.vFrete + Prod.vSeg + Prod.vOutro;
+    PrintIt := (not Resumido) and (vAcrescimos > 0) and (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem);
 
     if PrintIt then
     begin
-      lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+#,###,##0.00');
-      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc,'#,###,##0.00');
+      lOutro.Caption       := FormatFloatBr(vAcrescimos,'+,0.00');
+      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+vAcrescimos-Prod.vDesc);
     end;
   end;
 end;
@@ -475,29 +625,28 @@ end;
 
 function TACBrNFeDANFCeFortesFr.CompoemEnderecoCFe: String;
 var
-  Endereco, CEP: String;
+  Endereco: String;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
     // Definindo dados do Cliche //
     Endereco := Emit.EnderEmit.xLgr ;
-    if (Emit.EnderEmit.nro <> '') then
+    if NaoEstaVazio(Emit.EnderEmit.nro) then
       Endereco := Endereco + ', '+Emit.EnderEmit.nro;
-    if (Emit.EnderEmit.xCpl <> '') then
-      Endereco := Endereco + ' - '+Emit.EnderEmit.xCpl;
-    if (Emit.EnderEmit.xBairro <> '') then
-      Endereco := Endereco + ' - '+Emit.EnderEmit.xBairro;
-    if (Emit.EnderEmit.xMun <> '') then
+    if NaoEstaVazio(Emit.EnderEmit.xCpl) then
+      Endereco := Endereco + ' '+Emit.EnderEmit.xCpl;
+    if NaoEstaVazio(Emit.EnderEmit.xBairro) then
+      Endereco := Endereco + ' '+Emit.EnderEmit.xBairro;
+    if NaoEstaVazio(Emit.EnderEmit.xMun) then
       Endereco := Endereco + ' - '+Emit.EnderEmit.xMun;
-    if (Emit.EnderEmit.UF <> '') then
+    if NaoEstaVazio(Emit.EnderEmit.UF) then
       Endereco := Endereco + ' - '+Emit.EnderEmit.UF;
-    if (Emit.EnderEmit.CEP <> 0) then
-    begin
-      CEP := IntToStr(Emit.EnderEmit.CEP);
-      Endereco := Endereco + ' - '+copy(CEP,1,5)+'-'+copy(CEP,6,3);
-    end;
-    if (Emit.EnderEmit.fone <> '') then
-      Endereco := Endereco + ' - FONE: '+Emit.EnderEmit.fone;
+    if (Emit.EnderEmit.CEP > 0) then
+      Endereco := Endereco + ' '+FormatarCEP(Emit.EnderEmit.CEP);
+    if NaoEstaVazio(Emit.EnderEmit.fone) then
+      Endereco := Endereco + ' Fone: '+FormatarFone(Emit.EnderEmit.fone);
+    if NaoEstaVazio(Emit.IE) then
+      Endereco := Endereco + ' I.E.: '+FormatarIE(Emit.IE,Emit.EnderEmit.UF);
   end;
 
   Result := Endereco;
@@ -525,6 +674,8 @@ var
   qrcode: String;
   TotalPaginaPixel: Integer;
   LogoStream: TStringStream;
+  I: Integer;
+  Prod: TProd;
 begin
   fNumItem  := 0;
   fNumPagto := 0;
@@ -536,9 +687,11 @@ begin
 
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
-    lNomeFantasia.Lines.Text:= Emit.xFant ;
-    lRazaoSocial.Lines.Text := Emit.xNome ;
-    lEmitCNPJ_IE_IM.Caption := CompoemCliche;
+    lNomeFantasia.Visible := ACBrNFeDANFCeFortes.ImprimeNomeFantasia;
+    if lNomeFantasia.Visible then;
+      lNomeFantasia.Lines.Text:= Emit.xFant ;
+
+    lRazaoSocial.Lines.Text := FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
 
     if ACBrNFeDANFCeFortes.Logo <> '' then
@@ -546,6 +699,9 @@ begin
       imgLogo.Height := ACBrNFeDANFCeFortes.TamanhoLogoHeight ;
       imgLogo.Width := ACBrNFeDANFCeFortes.TamanhoLogoWidth ;
       imgLogo.AutoSize := ACBrNFeDANFCeFortes.ExpandirLogoMarca ;
+
+      if (imgLogo.Width <= 0) or (imgLogo.Height <= 0) then
+        imgLogo.AutoSize := True;
 
       if FileExists (ACBrNFeDANFCeFortes.Logo) then
         imgLogo.Picture.LoadFromFile(ACBrNFeDANFCeFortes.Logo)
@@ -567,47 +723,204 @@ begin
                                      ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
                                      ide.dEmi,
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue)
+                                     signature.DigestValue,
+                                     infNFe.Versao)
     else
       qrcode := infNFeSupl.qrCode;
 
-    PintarQRCode( qrcode, imgQRCode.Picture );
+    if ACBrNFeDANFCeFortes.QRCodeLateral then
+    begin
+      rlbConsumidor.Visible := False;
+      rlbQRCode.Visible     := False;
+      rlbQRLateral.Visible  := True;
+      PintarQRCode( qrcode, imgQRCodeLateral.Picture );
 
-    if not EstaVazio(Trim(procNFe.nProt)) then
-      lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
-                              ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''))
+      if (Dest.idEstrangeiro = '') and (Dest.CNPJCPF = '') then
+      begin
+        lConsumidor1.Lines.Text  := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO');
+        lNomeConsumidor1.Visible := False;
+      end
+      else
+      begin
+        if Dest.idEstrangeiro <> '' then
+        begin
+          lConsumidor1.Lines.Text  := 'CONSUMIDOR Id. Estrangeiro: '+Dest.idEstrangeiro;
+        end
+        else
+        begin
+          if Length(trim(Dest.CNPJCPF)) > 11 then
+             lConsumidor1.Lines.Text  := 'CONSUMIDOR CNPJ: '+FormatarCNPJ(Dest.CNPJCPF)
+          else
+             lConsumidor1.Lines.Text  := 'CONSUMIDOR CPF: '+FormatarCPF(Dest.CNPJCPF);
+        end;
+
+        lNomeConsumidor1.Lines.Clear;
+        lNomeConsumidor1.Visible := NaoEstaVazio(Trim(Dest.xNome));
+        lNomeConsumidor1.Lines.Text := Dest.xNome;
+      end;
+
+      lEnderecoConsumidor1.Lines.Clear;
+      lEnderecoConsumidor1.Lines.Text := Trim(Dest.EnderDest.xLgr)+' '+
+                                         Trim(Dest.EnderDest.nro)+' '+
+                                         Trim(Dest.EnderDest.xCpl)+' '+
+                                         Trim(Dest.EnderDest.xBairro)+' '+
+                                         Trim(Dest.EnderDest.xMun);
+
+      lEnderecoConsumidor1.Visible := NaoEstaVazio(Trim(lEnderecoConsumidor1.Lines.Text));
+
+      if not EstaVazio(Trim(procNFe.nProt)) then
+      begin
+        lProtocolo1.Visible := True;
+        lProtocolo1.Lines.Text := ACBrStr('Protocolo de Autorização: '+procNFe.nProt);
+        if (procNFe.dhRecbto<>0) then
+        begin
+          lDataAutorizacao1.Visible := True;
+          lDataAutorizacao1.Lines.Text := ACBrStr('Data de Autorização '+DateTimeToStr(procNFe.dhRecbto));
+        end
+        else
+          lDataAutorizacao1.Visible := False;
+      end
+      else
+      begin
+        lProtocolo1.Lines.Text := '';
+        lProtocolo1.Visible := False;
+        lDataAutorizacao1.Lines.Text := '';
+        lDataAutorizacao1.Visible := False;
+      end;
+    end
     else
-      lProtocolo.Caption := '';
+    begin
+      rlbQRLateral.Visible  := False;
+      rlbConsumidor.Visible := True;
+      rlbQRCode.Visible     := True;
+      PintarQRCode( qrcode, imgQRCode.Picture );
 
+      if (Dest.idEstrangeiro = '') and (Dest.CNPJCPF = '') then
+      begin
+        lConsumidor.Lines.Text  := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO');
+        lNomeConsumidor.Visible := False;
+      end
+      else
+      begin
+        if Dest.idEstrangeiro <> '' then
+        begin
+          lConsumidor.Lines.Text  := 'CONSUMIDOR Id. Estrangeiro: '+Dest.idEstrangeiro;
+        end
+        else
+        begin
+          if Length(trim(Dest.CNPJCPF)) > 11 then
+             lConsumidor.Lines.Text  := 'CONSUMIDOR CNPJ: '+FormatarCNPJ(Dest.CNPJCPF)
+          else
+             lConsumidor.Lines.Text  := 'CONSUMIDOR CPF: '+FormatarCPF(Dest.CNPJCPF);
+        end;
+
+        lNomeConsumidor.Lines.Clear;
+        lNomeConsumidor.Visible := NaoEstaVazio(Trim(Dest.xNome));
+        lNomeConsumidor.Lines.Text := Dest.xNome;
+      end;
+
+      lEnderecoConsumidor.Lines.Clear;
+      lEnderecoConsumidor.Lines.Text := Trim(Dest.EnderDest.xLgr)+' '+
+                                        Trim(Dest.EnderDest.nro)+' '+
+                                        Trim(Dest.EnderDest.xCpl)+' '+
+                                        Trim(Dest.EnderDest.xBairro)+' '+
+                                        Trim(Dest.EnderDest.xMun);
+
+      lEnderecoConsumidor.Visible := NaoEstaVazio(Trim(lEnderecoConsumidor.Lines.Text));
+
+      if not EstaVazio(Trim(procNFe.nProt)) then
+      begin
+        lProtocolo.Visible := True;
+        lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt);
+        if (procNFe.dhRecbto<>0) then
+        begin
+          lDataAutorizacao.Visible := True;
+          lDataAutorizacao.Caption := ACBrStr('Data de Autorização '+DateTimeToStr(procNFe.dhRecbto));
+        end
+        else
+          lDataAutorizacao.Visible := False;
+      end
+      else
+      begin
+        lProtocolo.Caption := '';
+        lProtocolo.Visible := False;
+        lDataAutorizacao.Caption := '';
+        lDataAutorizacao.Visible := False;
+      end;
+    end;
   end;
 
 
   // Calculando o tamanho da Pagina em Pixels //
-  TotalPaginaPixel := rlbsCabecalho.Height +
-                      rlbRodape.Height +
+  TotalPaginaPixel := imgLogo.Height +
+                      rlbsCabecalho.Height +
                       rlbLegenda.Height +
-                      rlbPagamento.Height +
-                      rlbLei12741.Height +
-                      rlbMensagemContribuinte.Height +
+                      rlbTotal.Height +
+                      (rlbPagamento.Height * ACBrNFeDANFCeFortes.FpNFe.pag.Count) +
+                      rlbChaveDeAcesso.Height +
                       rlbMensagemFiscal.Height +
-                      rlbConsumidor.Height +
-                      rlsbDetItem.Height +
-                      Trunc(rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count) ;
+                      rlbRodape.Height +
+                      rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count;
+
+  if ACBrNFeDANFCeFortes.QRCodeLateral then
+    TotalPaginaPixel := TotalPaginaPixel + rlbQRLateral.Height
+  else
+    TotalPaginaPixel := TotalPaginaPixel + rlbQRCode.Height + rlbConsumidor.Height;
+
+  if (ACBrNFeDANFCeFortes.FpNFe.pag.vTroco > 0) or (ACBrNFeDANFCeFortes.vTroco > 0) then
+    TotalPaginaPixel := TotalPaginaPixel + rlbTroco.Height;
+
+  // Calcular altura das bandas variáveis
+  for I := 0 to ACBrNFeDANFCeFortes.FpNFe.Det.Count - 1 do
+  begin
+    Prod := ACBrNFeDANFCeFortes.FpNFe.Det[I].Prod;
+    // Quebra de linha na descrição do item
+    if Length(Prod.xProd) > 35 then
+      TotalPaginaPixel := TotalPaginaPixel + 12;
+    if ACBrNFeDANFCeFortes.ImprimeDescAcrescItem then
+    begin
+      if (Prod.vDesc > 0) or ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
+      begin
+        // Valor líquido
+        TotalPaginaPixel := TotalPaginaPixel + 12;
+        if (Prod.vDesc > 0) then
+          TotalPaginaPixel := TotalPaginaPixel + 12;
+        if ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
+          TotalPaginaPixel := TotalPaginaPixel + 12;
+      end;
+    end;
+  end;
+
+  for I := 0 to ACBrNFeDANFCeFortes.FpNFe.InfAdic.obsCont.Count - 1 do
+  begin
+    with ACBrNFeDANFCeFortes.FpNFe.InfAdic.obsCont.Items[I] do
+      TotalPaginaPixel := TotalPaginaPixel + lObservacoes.Height * (1 + CountStr(xCampo + xTexto, ';'));
+  end;
+
+  TotalPaginaPixel := TotalPaginaPixel + lObservacoes.Height *
+    (1 + CountStr(ACBrNFeDANFCeFortes.FpNFe.InfAdic.infCpl, ';'));
+
   // Pixel para Milimitros //
-  rlVenda.PageSetup.PaperHeight := max( 100, 10+Trunc( TotalPaginaPixel / 3.75 ));
+  rlVenda.PageSetup.PaperHeight := max(100, 20+Trunc( TotalPaginaPixel / 3.75 ));
+
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  vAcrescimos : Double;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vDesc > 0) and (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem) ;
+    PrintIt := (not Resumido) and
+               (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem) and
+               ((Prod.vDesc > 0)  or (Prod.vFrete + Prod.vSeg + Prod.vOutro >0));
 
     if PrintIt then
     begin
-      lDesconto.Caption   := FormatFloatBr(Prod.vDesc,'-#,###,##0.00');
-      if (Prod.vOutro > 0) then
+      lDesconto.Caption := FormatFloatBr(Prod.vDesc,'-,0.00');
+      vAcrescimos       := Prod.vFrete + Prod.vSeg + Prod.vOutro;
+      if (vAcrescimos > 0) then
       begin
         lTitDescValLiq.Visible := False;
         lDescValLiq.Visible := False;
@@ -618,7 +931,7 @@ begin
         rlbDescItem.Height := 24;
         lTitDescValLiq.Visible := True;
         lDescValLiq.Visible := True;
-        lDescValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc,'#,###,##0.00');
+        lDescValLiq.Caption := FormatFloatBr(Prod.vProd+vAcrescimos-Prod.vDesc);
       end;
     end;
   end;
@@ -627,31 +940,64 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlbDetItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
-  LinhaTotal : string;
-  LinhaItem : String;
+  LinhaItem, LinhaTotal, sDescricao : string;
+  nTamDescricao, maxCaracter: Integer;
+  {$IFNDEF FPC}
+    BMP : TBitmap;
+  {$ENDIF}
 begin
   PrintIt := not Resumido;
   if not PrintIt then exit;
 
   mLinhaItem.Lines.Clear ;
+  {$IFNDEF FPC}
+    BMP:=TBitMap.Create;
+    try
+      BMP.Canvas.Font.Assign(mLinhaItem.Font);
+      maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth( BMP.Canvas, mLinhaItem.Width);
+    finally
+      BMP.Free;
+    end;
+  {$ELSE}
+    maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth( mLinhaItem.Canvas, mLinhaItem.Width);
+  {$ENDIF}
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    LinhaItem := IntToStrZero(Prod.nItem,3) + ' ' +
-                             ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) + ' ' +
-                             Trim(Prod.xProd);
+    if ACBrNFeDANFCeFortes.ImprimeEmUmaLinha then
+    begin
+      LinhaItem := IntToStrZero(Prod.nItem,3) + ' ' + ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) +
+                   ' ' + '[DesProd] ' + ACBrNFeDANFCeFortes.FormatQuantidade( Prod.QCom, False ) + ' ' +
+                   Trim( Prod.uCom) + ' X ' +  ACBrNFeDANFCeFortes.FormatValorUnitario( Prod.VUnCom ) + ' ' +
+                   FormatFloatBr( Prod.vProd );
 
-    if Trim(infAdProd) <> '' then
-      LinhaItem := LinhaItem + '-'+ StringReplace( infAdProd, ';',#13,[rfReplaceAll]);
+      // acerta tamanho da descrição
+      nTamDescricao := maxCaracter - Length(LinhaItem);
+      sDescricao := PadRight(Copy(Trim(Prod.xProd), 1, nTamDescricao), nTamDescricao);
 
-    mLinhaItem.Lines.Add(LinhaItem);
+      LinhaItem := StringReplace(LinhaItem, '[DesProd]', sDescricao, [rfReplaceAll]);
 
-    //Centraliza os valores. A fonte dos itens foi mudada para Courier New, Pois esta o espaço tem o mesmo tamanho dos demais caractere.
-    LinhaTotal  := PadLeft( ACBrNFeDANFCeFortes.FormatQuantidade(Prod.qCom), 12) +
-                   PadCenter(Trim(Prod.uCom), 5) + ' X ' +
-                   PadLeft(ACBrNFeDANFCeFortes.FormatValorUnitario(Prod.vUnCom), 12) +
-                   PadLeft(FormatFloatBr(Prod.vProd, '###,###,##0.00'), 12);
+      mLinhaItem.Lines.Add(LinhaItem);
+    end
+    else
+    begin
+      LinhaItem := IntToStrZero(Prod.nItem,3) + ' ' +
+                               ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) + ' ' +
+                               Trim(Prod.xProd);
 
-    mLinhaItem.Lines.Add(LinhaTotal);
+      if Trim(infAdProd) <> '' then
+        LinhaItem := LinhaItem + '-'+ StringReplace( infAdProd, ';',#13,[rfReplaceAll]);
+
+      mLinhaItem.Lines.Add(LinhaItem);
+
+      //Centraliza os valores. A fonte dos itens foi mudada para Courier New, Pois esta o espaço tem o mesmo tamanho dos demais caractere.
+      LinhaTotal  := '|'+ACBrNFeDANFCeFortes.FormatQuantidade(Prod.qCom, False) +'|'+
+                     Trim(Prod.uCom) + ' X ' +
+                     ACBrNFeDANFCeFortes.FormatValorUnitario(Prod.vUnCom) +'|'+
+                     FormatFloatBr(Prod.vProd) ;
+      LinhaTotal  := PadSpace( ACBrStr(LinhaTotal), maxCaracter-9, '|') ;
+
+      mLinhaItem.Lines.Add(LinhaTotal);
+    end;
   end;
 end;
 
@@ -662,7 +1008,7 @@ begin
   with ACBrNFeDANFCeFortes.FpNFe.pag.Items[fNumPagto] do
   begin
     lMeioPagamento.Caption  := ACBrStr(FormaPagamentoToDescricao(tPag));
-    lPagamento.Caption      := FormatFloatBr(vPag,'#,###,##0.00');
+    lPagamento.Caption      := FormatFloatBr(vPag);
     fTotalPagto             := fTotalPagto + vPag;
   end;
 end;
@@ -673,10 +1019,59 @@ begin
   PrintIt := not Resumido;
 end;
 
+procedure TACBrNFeDANFCeFortesFr.rlbTotalAcrescimoBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  vAcrescimos: Double;
+begin
+  with ACBrNFeDANFCeFortes.FpNFe.Total do
+  begin
+    vAcrescimos := ICMSTot.vFrete + ICMSTot.vSeg + ICMSTot.vOutro;
+  end;
+  PrintIt := vAcrescimos > 0;
+
+  if PrintIt then
+    lTotalAcrescimo.Caption := '+' + FormatFloatBr(vAcrescimos);
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbTotalAPagarBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  vAcrescimos: Double;
+begin
+  with ACBrNFeDANFCeFortes.FpNFe.Total do
+  begin
+    vAcrescimos := ICMSTot.vFrete + ICMSTot.vSeg + ICMSTot.vOutro;
+  end;
+  PrintIt:= (vAcrescimos > 0) or (ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc > 0);
+
+  if PrintIt then
+    lTotalAPagar.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vNF);
+end;
+
 procedure TACBrNFeDANFCeFortesFr.rlbLegendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
+var
+  maxCaracter : Integer;
+  {$IFNDEF FPC}
+    BMP : TBitmap;
+  {$ENDIF}
 begin
   PrintIt := not Resumido;
+
+  {$IFNDEF FPC}
+    BMP:=TBitMap.Create;
+    try
+      BMP.Canvas.Font.Assign(mLinhaItem.Font);
+    maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth(BMP.Canvas, lLegendaItens.Width);
+    finally
+      BMP.Free;
+    end;
+  {$ELSE}
+    maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth(lLegendaItens.Canvas, lLegendaItens.Width);
+  {$ENDIF}
+
+  lLegendaItens.Caption := PadSpace(ACBrStr('#|Código|Descrição|Qtde|Un|Valor unit.|Valor total'),maxCaracter, '|');
 end;
 
 procedure TACBrNFeDANFCeFortesFr.FormDestroy(Sender: TObject);
@@ -688,7 +1083,7 @@ procedure TACBrNFeDANFCeFortesFr.lSistemaBeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   PrintIt := True;
-  if trim(fACBrNFeDANFCeFortes.Sistema) <> '' then
+  if NaoEstaVazio(fACBrNFeDANFCeFortes.Sistema) then
     Text := fACBrNFeDANFCeFortes.Sistema ;
 end;
 
@@ -696,37 +1091,6 @@ procedure TACBrNFeDANFCeFortesFr.pAsteriscoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   PrintIt := not Resumido;
-end;
-
-procedure TACBrNFeDANFCeFortesFr.rlbConsumidorBeforePrint(Sender: TObject;
-  var PrintIt: boolean);
-begin
-  with ACBrNFeDANFCeFortes.FpNFe do
-  begin
-    if (Dest.idEstrangeiro = '') and
-       (Dest.CNPJCPF = '') then
-     begin
-        lCPF_CNPJ_ID.Lines.Text := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO');
-     end
-    else if Dest.idEstrangeiro <> '' then
-     begin
-       lCPF_CNPJ_ID.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+Dest.idEstrangeiro+' '+Dest.xNome;
-     end
-    else
-     begin
-       if Length(trim(Dest.CNPJCPF)) > 11 then
-          lCPF_CNPJ_ID.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCNPJ(Dest.CNPJCPF)
-       else
-          lCPF_CNPJ_ID.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCPF(Dest.CNPJCPF);
-
-       lCPF_CNPJ_ID.Lines.Text  := lCPF_CNPJ_ID.Caption+' '+Dest.xNome;
-     end;
-     lEnderecoConsumidor.Lines.Text := Trim(Dest.EnderDest.xLgr)+' '+
-                                       Trim(Dest.EnderDest.nro)+' '+
-                                       Trim(Dest.EnderDest.xCpl)+' '+
-                                       Trim(Dest.EnderDest.xBairro)+' '+
-                                       Trim(Dest.EnderDest.xMun);
-  end;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbConsumidorCancBeforePrint(Sender: TObject;
@@ -741,14 +1105,14 @@ begin
      end
     else if Dest.idEstrangeiro <> '' then
      begin
-       lCPF_CNPJ_ID_Canc.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+Dest.idEstrangeiro+' '+Dest.xNome;
+       lCPF_CNPJ_ID_Canc.Lines.Text  := 'CONSUMIDOR ID Estrangeiro: '+Dest.idEstrangeiro+' '+Dest.xNome;
      end
     else
      begin
        if Length(trim(Dest.CNPJCPF)) > 11 then
-          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCNPJ(Dest.CNPJCPF)
+          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CONSUMIDOR CNPJ: '+FormatarCNPJ(Dest.CNPJCPF)
        else
-          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCPF(Dest.CNPJCPF);
+          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CONSUMIDOR CPF: '+FormatarCPF(Dest.CNPJCPF);
 
        lCPF_CNPJ_ID_Canc.Lines.Text  := lCPF_CNPJ_ID_Canc.Caption+' '+Dest.xNome;
      end;
@@ -757,38 +1121,6 @@ begin
                                            Trim(Dest.EnderDest.xCpl)+' '+
                                            Trim(Dest.EnderDest.xBairro)+' '+
                                            Trim(Dest.EnderDest.xMun);
-  end;
-end;
-
-procedure TACBrNFeDANFCeFortesFr.rlbLei12741BeforePrint(Sender: TObject;
-  var PrintIt: boolean);
-begin
-  with ACBrNFeDANFCeFortes.FpNFe do
-  begin
-    PrintIt := (Total.ICMSTot.vTotTrib > 0);
-
-    if PrintIt then
-      lValLei12741.Caption := FormatFloatBr(Total.ICMSTot.vTotTrib, '#,###,##0.00');
-  end;
-
-  if PrintIt then
-    lFonteTributos.Caption := ACBrNFeDANFCeFortes.FonteTributos;
-end;
-
-procedure TACBrNFeDANFCeFortesFr.rlbMensagemContribuinteBeforePrint(
-  Sender: TObject; var PrintIt: Boolean);
-begin
-
-  Printit := False;
-
-  with ACBrNFeDANFCeFortes.FpNFe.InfAdic do
-  begin
-    if infCpl <> '' then
-    begin
-      PrintIt := True ;
-
-      lObservacoes.Lines.Add( StringReplace( infCpl, ';', #13, [rfReplaceAll] ) );
-    end;
   end;
 end;
 
@@ -820,7 +1152,17 @@ procedure TACBrNFeDANFCeFortesFr.rlbTotalBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   lQtdTotalItensVal.Caption := IntToStrZero(ACBrNFeDANFCeFortes.FpNFe.Det.Count,3);
-  lTotal.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vNF,'#,###,##0.00');
+  lTotal.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vProd+
+                                  ACBrNFeDANFCeFortes.FpNFe.Total.ISSQNtot.vServ);
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbTotalDescontoBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc > 0;
+
+  if PrintIt then
+    lTotalDesconto.Caption := '-' + FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTrocoBeforePrint(Sender: TObject;
@@ -828,11 +1170,15 @@ procedure TACBrNFeDANFCeFortesFr.rlbTrocoBeforePrint(Sender: TObject;
 var
   Troco : Currency ;
 begin
-  Troco   := fACBrNFeDANFCeFortes.vTroco;
+  Troco := ACBrNFeDANFCeFortes.FpNFe.pag.vTroco;
+  if Troco = 0 then
+  begin
+    Troco := fACBrNFeDANFCeFortes.vTroco;
+  end;
   PrintIt := (Troco> 0);
 
   if PrintIt then
-    lTroco.Caption := FormatFloatBr(fACBrNFeDANFCeFortes.vTroco,'#,###,##0.00');;
+    lTroco.Caption := FormatFloatBr(Troco);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlCancelamentoBeforePrint(Sender: TObject;
@@ -879,7 +1225,8 @@ begin
                                      ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
                                      ide.dEmi,
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue)
+                                     signature.DigestValue,
+                                     infNFe.Versao)
     else
       qrcode := infNFeSupl.qrCode;
 
@@ -893,13 +1240,11 @@ begin
 
   // Calculando o tamanho da Pagina em Pixels //
   TotalPaginaPixel := rlbsCabecalho.Height +
-                      rlbRodape.Height +
+                      rlbQRCode.Height +
                       rlbLegenda.Height +
                       rlbPagamento.Height +
-                      rlbLei12741.Height +
-                      rlbMensagemContribuinte.Height +
-                      rlbMensagemFiscal.Height +
-                      rlbConsumidor.Height +
+                      rlbChaveDeAcesso.Height +
+                      rlbConsumidorCanc.Height +
                       rlsbDetItem.Height +
                       Trunc(rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count) ;
   // Pixel para Milimitros //
@@ -948,6 +1293,11 @@ begin
     FpNFe := NFE;
 
   ImprimirCancelado(True);
+end;
+
+procedure TACBrNFeDANFCeFortes.ImprimirEVENTO(NFE: TNFe);
+begin
+  ImprimirDANFECancelado(NFE);
 end;
 
 procedure TACBrNFeDANFCeFortes.ImprimirDANFEResumido(NFE: TNFe);
@@ -1018,6 +1368,7 @@ begin
 
       RLLayout.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
       RLLayout.PrintDialog  := not(FMostrarPreview) and (EstaVazio(FImpressora));
+      RLLayout.PageSetup.PaperSize:= fpCustom;
 
       if Filtro = fiNenhum then
       begin
@@ -1098,6 +1449,24 @@ begin
   finally
     frACBrNFeDANFCeFortesFr.Free ;
   end;
+end;
+
+function TACBrNFeDANFCeFortes.CalcularCaractesWidth(Canvas : TCanvas; WidthTotal: Integer
+  ): Integer;
+var
+  maxCaracter : Integer;
+  LinhaAjustada : String;
+begin
+  maxCaracter := 1;
+  LinhaAjustada := '*';
+
+  while (Canvas.TextWidth(LinhaAjustada) < WidthTotal) do
+  begin
+    LinhaAjustada := LinhaAjustada + '*';
+    maxCaracter := maxCaracter + 1;
+  end;
+
+  Result := maxCaracter;
 end;
 
 {$ifdef FPC}

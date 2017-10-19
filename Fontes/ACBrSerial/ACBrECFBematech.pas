@@ -555,6 +555,8 @@ TACBrECFBematech = class( TACBrECFClass )
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
+    Procedure CancelaDescontoAcrescimoItem( NumItem: Integer;
+       TipoAcrescimoDesconto: String = 'D' ) ; override;
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '') ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
@@ -647,11 +649,13 @@ TACBrECFBematech = class( TACBrECFClass )
     Procedure EspelhoMFD_DLL( COOInicial, COOFinal : Integer;
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
 
-    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
+    procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
+      StrInicial, StrFinal: AnsiString); override;
 
     Procedure ArquivoMFD_DLL( DataInicial, DataFinal : TDateTime;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]; Finalidade: TACBrECFFinalizaArqMFD = finMFD  ) ; override ;
+       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
+       Finalidade: TACBrECFFinalizaArqMFD = finMFD  ) ; override ;
     Procedure ArquivoMFD_DLL( ContInicial, ContFinal : Integer;
        NomeArquivo : AnsiString;
        Documentos : TACBrECFTipoDocumentoSet = [docTodos];
@@ -660,8 +664,8 @@ TACBrECFBematech = class( TACBrECFClass )
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
     function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
 
-    procedure PafMF_GerarCAT52(const DataInicial: TDateTime;
-      const DataFinal: TDateTime; const DirArquivos: string); override;
+    procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
+      const DirArquivos: String; NumeroSerie: String = ''); override;
 
  end ;
 
@@ -671,6 +675,7 @@ function BematechTraduzirTagBloco(const ATag, Conteudo: AnsiString;
 
 implementation
 Uses
+   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
    SysUtils, IniFiles, math,
    {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5,{$ENDIF}
    ACBrConsts, ACBrECF, ACBrECFEscECF, ACBrUtil;
@@ -1088,7 +1093,7 @@ begin
         ErroMsg := 'Erro retornado pela Impressora: ' + fpModeloStr + sLineBreak+sLineBreak+
                    ErroMsg ;
 
-        if (fsST1 = 128) or (fsST3 = 11) then
+        if TestBit(fsST1, 7) or (fsST3 = 11) then
            DoOnErrorSemPapel
         else
            raise EACBrECFSemResposta.create(ACBrStr(ErroMsg)) ;
@@ -1419,12 +1424,14 @@ Var RetCmd : AnsiString ;
     DataMov, DataHora : String ;
     B1, B2 : Byte ;
 begin
-  Result := fpEstado ;  // Suprimir Warning
-  try
-    fpEstado := estNaoInicializada ;
-    if (not fpAtivo) then
-      exit ;
+  fpEstado := estNaoInicializada ;
+  if (not fpAtivo) then
+  begin
+    Result := fpEstado ;
+    Exit ;
+  end;
 
+  try
     fpEstado := estDesconhecido ;
     RetCmd   := RetornaInfoECF( '17' ) ;
 
@@ -1843,7 +1850,7 @@ begin
 
      EnviaComando(#63 + AliquotaECF + ValorStr + QtdStr + DescontoStr +
                         AcrescimoStr + '01' + StringofChar('0',20) + Unidade +
-                        Codigo + #0 + Descricao  + #0) ;
+                        Codigo + #0 + copy(Descricao,1,200) + #0) ;
    end
   else
    begin
@@ -2005,6 +2012,21 @@ begin
   EnviaComando( #93 + DescontoAcrescimo +
                 IntToStrZero( NumItem, 3) + ValDescAcresStr ) ;
 end ;
+
+procedure TACBrECFBematech.CancelaDescontoAcrescimoItem( NumItem: Integer;
+   TipoAcrescimoDesconto: String);
+begin
+  if not fs25MFD then
+     exit ;
+
+  if NumItem = 0 then
+     NumItem := NumUltItem;
+
+  if TipoAcrescimoDesconto <> 'A' then
+     TipoAcrescimoDesconto := 'D' ;
+
+  EnviaComando(#114 + TipoAcrescimoDesconto +  IntToStrZero(NumItem,3));
+end;
 
 procedure TACBrECFBematech.CarregaAliquotas;
 Var StrRet : AnsiString ;
@@ -3775,7 +3797,7 @@ var
 begin
  //{$IFNDEF MSWINDOWS}
  // ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
- // DeleteFile( ArqTmp ) ;
+ // SysUtils.DeleteFile( ArqTmp ) ;
  //
  // DiaIni   := FormatDateTime('ddmmyy',DataInicial) ;
  // DiaFim   := FormatDateTime('ddmmyy',DataFinal) ;
@@ -3799,7 +3821,7 @@ begin
  //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
  //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
  // finally
- //    DeleteFile( ArqTmp ) ;
+ //    SysUtils.DeleteFile( ArqTmp ) ;
  //    Ativo := OldAtivo ;
  // end;
  //{$ELSE}
@@ -3807,7 +3829,7 @@ begin
   DiaFim   := FormatDateTime('dd"/"mm"/"yyyy', DataFinal) ;
   OldAtivo := Ativo ;
   try
-     DeleteFile(NomeArquivo);
+     SysUtils.DeleteFile(NomeArquivo);
      AbrePortaSerialDLL( ExtractFilePath( NomeArquivo ) ) ;
 
      Resp := xBematech_FI_EspelhoMFD( NomeArquivo, DiaIni, DiaFim, 'D',
@@ -3839,7 +3861,7 @@ begin
 
  //{$IFNDEF MSWINDOWS}
  // ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
- // DeleteFile( ArqTmp ) ;
+ // SysUtils.DeleteFile( ArqTmp ) ;
  //
  // OldAtivo := Ativo ;
  // try
@@ -3860,13 +3882,13 @@ begin
  //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
  //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
  // finally
- //    DeleteFile( ArqTmp ) ;
+ //    SysUtils.DeleteFile( ArqTmp ) ;
  //    Ativo := OldAtivo ;
  // end;
  //{$ELSE}
   OldAtivo := Ativo ;
   try
-     DeleteFile(NomeArquivo);
+     SysUtils.DeleteFile(NomeArquivo);
      AbrePortaSerialDLL( ExtractFilePath( NomeArquivo ) ) ;
 
      Resp := xBematech_FI_EspelhoMFD( NomeArquivo, CooIni, CooFim, 'C',
@@ -3885,8 +3907,8 @@ begin
  //{$ENDIF}
 end;
 
-procedure TACBrECFBematech.PafMF_GerarCAT52(const DataInicial: TDateTime;
-   const DataFinal: TDateTime; const DirArquivos: string);
+procedure TACBrECFBematech.PafMF_GerarCAT52(const DataInicial,
+  DataFinal: TDateTime; const DirArquivos: String; NumeroSerie: String);
 var
   Resp: Integer;
   FilePath, DiaIni, DiaFim: AnsiString;
@@ -3944,31 +3966,40 @@ begin
   end;
 end;
 
-procedure TACBrECFBematech.ArquivoMFD_DLL(NomeArquivo: AnsiString);
-Var
-  Resp : Integer ;
-  FilePath : AnsiString ;
-  OldAtivo : Boolean ;
+procedure TACBrECFBematech.ArquivoMFD_Binario_DLL(
+  Tipo: TACBrECFTipoDownloadMFD; NomeArquivo, StrInicial, StrFinal: AnsiString);
+var
+  Resp: Integer;
+  FilePath, TipoBema: AnsiString;
+  OldAtivo: Boolean;
 begin
+  case Tipo of
+    tdmfdData: TipoBema := '1';
+    tdmfdCOO:  TipoBema := '2';
+  else
+    TipoBema := '0';
+  end;
+
   FilePath := ExtractFilePath( NomeArquivo );
   OldAtivo := Ativo ;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
      AbrePortaSerialDLL( FilePath ) ;
 
      GravaLog( '   xBematech_FI_DownloadMFD' );
-     Resp := xBematech_FI_DownloadMFD( NomeArquivo, '0', '', '', Prop ) ;
+     Resp := xBematech_FI_DownloadMFD( NomeArquivo, TipoBema, StrInicial, StrFinal, Prop ) ;
 
      if (Resp <> 1) then
-        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMF.'+sLineBreak+
+        raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar xBematech_FI_ArquivoMFD.'+sLineBreak+
                                          AnalisarRetornoDll(Resp) )) ;
 
   finally
      FechaPortaSerialDLL( OldAtivo );
   end;
+
 end;
 
-procedure TACBrECFBematech.ArquivoMF_DLL(NomeArquivo : AnsiString) ;
+procedure TACBrECFBematech.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
 Var
   Resp : Integer ;
   FilePath : AnsiString ;
@@ -3977,7 +4008,7 @@ begin
   FilePath := ExtractFilePath( NomeArquivo );
   OldAtivo := Ativo ;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
      AbrePortaSerialDLL( FilePath ) ;
 
      GravaLog( '   xBematech_FI_DownloadMF' );
@@ -4009,7 +4040,7 @@ begin
 
  //{$IFNDEF MSWINDOWS}
  // ArqTmp := FilePath +'ACBr.mfd';
- // DeleteFile( ArqTmp ) ;
+ // SysUtils.DeleteFile( ArqTmp ) ;
  //
  // DiaIni := FormatDateTime('ddmmyy',DataInicial) ;
  // DiaFim := FormatDateTime('ddmmyy',DataFinal) ;
@@ -4033,7 +4064,7 @@ begin
  //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
  //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
  // finally
- //    DeleteFile( ArqTmp ) ;
+ //    SysUtils.DeleteFile( ArqTmp ) ;
  //    Ativo := OldAtivo ;
  // end;
  //{$ELSE}
@@ -4041,7 +4072,7 @@ begin
   DiaFim   := FormatDateTime('dd"/"mm"/"yyyy', DataFinal) ;
   OldAtivo := Ativo ;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
 
      AbrePortaSerialDLL( FilePath ) ;
 
@@ -4133,7 +4164,7 @@ begin
  // DadoFinal   := IntToStrZero( ContFinal, 6 ) ;
  //
  // ArqTmp := FilePath + 'ACBr.mfd';
- // DeleteFile( ArqTmp ) ;
+ // SysUtils.DeleteFile( ArqTmp ) ;
  //
  // OldAtivo := Ativo ;
  // try
@@ -4154,7 +4185,7 @@ begin
  //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
  //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
  // finally
- //    DeleteFile( ArqTmp ) ;
+ //    SysUtils.DeleteFile( ArqTmp ) ;
  //    Ativo := OldAtivo ;
  // end;
  //{$ELSE}
@@ -4173,7 +4204,7 @@ begin
 
   OldAtivo := Ativo ;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
 
      AbrePortaSerialDLL( FilePath ) ;
 

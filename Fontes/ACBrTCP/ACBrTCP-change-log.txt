@@ -37,6 +37,219 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2017
+-- ACBrMail --
+[-] Ajuste para evitar congelamento em TACBrMail.Clear, no Linux
+[+] Adicionada a propriedade "Timeout: Integer default 0"
+    (por: DSA)
+
+20/09/2017
+-- ACBrIBGE --
+[-] Ajuste para usar HTTPS
+    https://www.projetoacbr.com.br/forum/topic/38884-erro-ao-buscar-o-endere%C3%A7o-por-cep/
+
+23/08/2017
+-- ACBrCEP --
+[+] Implementado busca por logradouro no modelo CepAberto
+    (por regys.silveira)
+
+23/08/2017
+-- ACBrMail --
+[*] Remoção da verificação de autenticação, após o Login no SMTP
+    (alguns servidores não requerem login)
+    (por: DSA)
+
+14/04/2017
+-- ACBrMail --
+[*] Métodos "AddAddress", "AddReplyTo", "AddCC" e "AddBCC", modificados para
+    permitir a passagem de uma lista de emails, separados por ';', ',' ou '|'
+    (por: DSA)
+
+11/07/2017
+-- ACBrCEP --
+[+] Adicionado o WebService CepAberto http://www.cepaberto.com/
+    CepAberto é um repositório com edição e compartilhamento público
+    É necessário criar uma conta e inserir a Chave de Acesso que é
+    disponibilidzada na API do site em questão após a criação da conta
+    API Key (Chave de Acesso): http://www.cepaberto.com/api_key
+[+] Adicionado as variáveis Altitude, Latitude e Longitude
+    http://www.projetoacbr.com.br/forum/topic/37657-acbrcep-novo-webservice/
+    (por: Igor Bastos)
+
+08/07/2017
+-- ACBrCEP --
+[*] Modificado o endereço do webservice da devmedia
+    http://www.projetoacbr.com.br/forum/topic/11375-consulta-de-cep-pela-devmedia/?do=findComment&comment=246838
+    (por: Juliomar Marchetti)
+		
+05/07/2017
+-- ACBrMail --
+[*] Método "SendMail", adicionada verificação de "Host" vazio
+    (por: DSA)
+
+28/06/2017
+-- ACBrMail --
+[-] Não enviar cópias dos emails para endereços em "ReplyTo"
+    http://www.projetoacbr.com.br/forum/topic/37445-acbrmail-nao-consigo-limpar-lista-de-destinatarios/
+    (por: DSA)
+
+27/06/2017
+-- ACBrNCMs --
+[+] Adição de informações da categoria
+    http://www.projetoacbr.com.br/forum/topic/37401-acbrncms-capturando-dados-de-posição-categoria/
+		
+31/05/2016
+-- ACBrSocket --
+[+] "TACBrHTTP": Adicionado informação do Código de Erro do Socket, no caso de falha
+
+-- ACBrConsultaCPF --
+[-] Correção na comunicação com OpenSSL 1.0 ou superior... Forçando a
+    cryptografia da conexão para TLS 1
+    (por: DSA)
+
+25/05/2017
+-- ACBrWinReqRespClass --
+[*] Método: "GetWinInetError", modificado para exibir informações sobre os erros:
+    12002, 12007, 12029, 12030, 12031, 12045, 12057, 12157, 12175, 12185, 12186
+    (por: DSA)
+
+-- ACBrWinINetReqResp --
+[*] Adicionada constante que foi removida de "ACBrWinReqRespClass"
+
+11/05/2017
+-- ACBrSocket --
+[-] Correção para não atribuir Timeout para conexão HTTP, caso o mesmo seja 0
+    (por: DSA)
+
+27/04/2017
+-- ACBrCEP --
+[*] "TACBrWSCorreiosSIGEP", ajuste para considerar Tag "Complemento2"
+    http://www.projetoacbr.com.br/forum/topic/36218-consulta-de-cep-ws-correios
+
+24/04/2017
+-- ACBrMail --
+[+] Adicionada função para salvar .eml antes de enviar o email. Contribuição no link abaixo,
+    revisada pelo Jean Patrick
+    http://www.projetoacbr.com.br/forum/topic/36134-envio-de-e-mail-acbrmail-outlook-dúvida
+    (por: Celso Marigo Junior)
+
+12/04/2017
+-- ACBrSocket --
+[+] "TACBrHTTP", adicionada a propriedade TimeOut: Integer default 90000
+    (por: DSA)
+
+25/03/2017
+-- ACBrWinHTTPReqResp --
+[-] Correção de Erro de comunicação, causado pelo erro no tratamento de
+    "MimeTypes"
+[+] Adicionada identificação automática do Proxy do Sistema Operacional
+[-] Correção no método "UpdateErrorCodes", que não lia corretamente o valor de
+    "HTTPResultCode"
+[-] Correção para que o "HTTPResultCode" seja corretamente atribuido ao termino
+    da requisiçao
+
+-- ACBrWinINetReqResp --
+[-] Correção no método "UpdateErrorCodes", que não lia corretamente o valor de
+    "HTTPResultCode"
+[-] Correção para que o "HTTPResultCode" seja corretamente atribuido ao termino
+    da requisiçao
+
+24/03/2017
+-- ACBrWinHTTPReqResp --
+[*] Melhoria para detectar Proxy do Sistema Operacional, caso nenhum proxy tenha
+    sido informado.  (por: DSA)
+
+20/03/2017
+-- ACBrWinHTTPReqResp, ACBrWinINetReqResp --
+[-] Ajuste para que "WINHTTP_OPTION_SECURITY_FLAGS" seja ajustados, independente
+    do uso de Certificado digital na conexão.
+    (por: DSA)
+
+19/03/2017
+-- ACBrWinINetReqResp --
+[+] Nova Unit, apenas para Windows, movida de ACBrDFeCapicom.ACBrHTTPReqResp.
+    Permite efetuar um POST, com suporte a HTTPS e Certificado digital, usando
+    a API WinINet
+
+-- ACBrWinHTTPReqResp --
+[+] Nova Unit, apenas para Windows. Permite efetuar um POST, com suporte nativo
+    a SSL/TLS e Certificado digital, usando a API WinHttp
+    (por: DSA)
+
+16/02/2017
+-- ACBrConsultaCPF --
+[+] mudança do endereço do captcha mesmo funcionando no outro faz sentido
+    http://www.projetoacbr.com.br/forum/topic/34995-erro-http-404-not-found-em-acbrconsultacpf/
+    por Juliomar Marchetti
+		
+18/01/2017
+-- ACBrSedex --
+[-] Correção para não mostrar o local ao rastrear uma encomenda.
+    Veja: http://www.projetoacbr.com.br/forum/topic/32459-consulta-sedex/#comment-220633
+
+16/01/2017
+-- ACBrConsultaCPF
+[*] Mudança de endereço da receita para consulta
+    http://www.projetoacbr.com.br/forum/topic/34620-erro-consulta-cpf-unit-com-corre%C3%A7%C3%A3o-da-url/
+    por Juliomar Marchetti
+		
+07/01/2017
+-- ACBrSocket --
+[*] Refatoração em TACBrTCPServer, para não precisar criar e destruir o Daemon,
+    quando Ativar/Desativar o Servidor, a fim de evitar algumas situações de
+    Travamento ou A.V.
+[+] Adicionada a propriedade "WaitInterval: Integer defaul 200", que permite
+    definir o tempo de espera, por loop do Daemon e da conexão.
+    (por: DSA)
+
+07/11/2016
+-- ACBrMTer --
+[-] Ajuste procedure DoDesconecta o tipo AnsiString e String
+    por : Juliomar Marchetti
+	
+02/11/2016
+-- ACBrTCP, ACBrMTER --
+[*] Ajuste para separação de ACBrMTER do pacote ACBrTCP. Isso se faz necessário
+    pois agora o ACBrMTER depende de ACBrTCP e ACBrSerial. A separação evita que
+    o pacote ACBrTCP tenha dependencia de ACBrSerial.
+    Para utilizar o componente ACBrMTER, será necessário instalar o pacote
+    ACBr_MTER.dpk   (por: DSA)
+
+25/10/2016
+-- ACBrCEP --
+[*] Ajuste para que o método "TACBrWSCorreiosSIGEP.BuscarPorCEP", dispare
+    esception, caso o CEP não seja encontrado
+    http://www.projetoacbr.com.br/forum/topic/3685-acbrcep-erro-ao-pesquisar-cep-%C3%BAnico/?do=findComment&comment=218256
+
+14/10/2016
+-- ACBrSocket --
+[*] Inclusão da propriedade "UsaSynchronize" para possibilitar a chamada dos
+    eventos OnConecta, OnDesconecta e OnRecebeDados sem a necessidade da
+    função Synchronize().
+    (por: Elias César)
+
+10/08/2016
+-- ACBrCEP --
+[-] Correção em TACBrWSViaCEP para correto tratamento de UTF8 (por: DSA)
+
+05/09/2016
+-- ACBrMTerClass --
+[-] Correção de erro ao ser chamada função ComandoEco com String vazia.
+    (por: Elias César)
+
+30/08/2016
+-- ACBrMTerClass --
+[-] Alteração para retirar os caracteres de controle dos dados recebidos 
+    pelo Micro Terminal apenas no momento de enviar o eco. Dessa maneira não
+    são perdidos dados como DEL, ESC, etc.
+    (por: Elias César)
+	
+-- ACBrMTerPMTG --
+[-] Alteração para limpar conteúdo dos dados antes de enviar o "ComandoEco".
+	
+-- ACBrMTerStxEtx --
+[-] Compatibilização com alterações anteriores.	
+
 16/08/2016
 -- ACBrSocket --
 [-] Correção em "TACBrHTTP.HTTPMethod", para detectar UTF8 quando Header.
@@ -54,8 +267,8 @@ Símbolo : Significado
 -- ACBrMTer --
 [-] Exclusão da propriedade EcoAuto.
 [+] Inclusão das propriedades EchoMode e PasswordChar para possibilitar 
-	alteração no modo de exibição do texto no display de Micro Terminais. 
-	(por: Elias)
+    alteração no modo de exibição do texto no display de Micro Terminais.
+    (por: Elias)
 
 05/08/2016
 -- ACBrSocket --

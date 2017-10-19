@@ -7,7 +7,8 @@ object Form1: TForm1
   Caption = 'Form1'
   ClientHeight = 320
   ClientWidth = 588
-  LCLVersion = '1.2.6.0'
+  OnCreate = FormCreate
+  LCLVersion = '1.6.4.0'
   object Memo1: TMemo
     Left = 0
     Height = 184
@@ -27,9 +28,9 @@ object Form1: TForm1
     Height = 136
     Top = 0
     Width = 588
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alTop
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'Configuração'
@@ -42,7 +43,7 @@ object Form1: TForm1
         Width = 292
         Align = alLeft
         Caption = 'WebService'
-        ClientHeight = 90
+        ClientHeight = 88
         ClientWidth = 288
         TabOrder = 0
         object cbxWS: TComboBox
@@ -62,6 +63,9 @@ object Form1: TForm1
             'KingHost'
             'ByJG'
             'Correios'
+            'DevMedia, '
+            'ViaCep'
+            'CorreiosSIGEP'
           )
           OnChange = cbxWSChange
           Style = csDropDownList
@@ -121,7 +125,7 @@ object Form1: TForm1
         Width = 288
         Align = alClient
         Caption = 'Proxy'
-        ClientHeight = 90
+        ClientHeight = 88
         ClientWidth = 284
         TabOrder = 1
         object Label2: TLabel
@@ -138,6 +142,7 @@ object Form1: TForm1
           Top = 16
           Width = 154
           TabOrder = 0
+          Text = '192.168.92.1'
         end
         object Label3: TLabel
           Left = 191
@@ -153,6 +158,7 @@ object Form1: TForm1
           Top = 16
           Width = 56
           TabOrder = 1
+          Text = '3128'
         end
         object Label4: TLabel
           Left = 22
@@ -197,7 +203,7 @@ object Form1: TForm1
         Width = 164
         Align = alLeft
         Caption = 'Por CEP'
-        ClientHeight = 90
+        ClientHeight = 88
         ClientWidth = 160
         TabOrder = 0
         object edCEP: TEdit
@@ -225,7 +231,7 @@ object Form1: TForm1
         Width = 416
         Align = alClient
         Caption = 'Por Endereço'
-        ClientHeight = 90
+        ClientHeight = 88
         ClientWidth = 412
         TabOrder = 1
         object edLogradouro: TEdit
@@ -330,7 +336,7 @@ object Form1: TForm1
         Width = 164
         Align = alLeft
         Caption = 'Por Código'
-        ClientHeight = 90
+        ClientHeight = 88
         ClientWidth = 160
         TabOrder = 0
         object edIBGECod: TEdit
@@ -358,7 +364,7 @@ object Form1: TForm1
         Width = 416
         Align = alClient
         Caption = 'Por Nome'
-        ClientHeight = 90
+        ClientHeight = 88
         ClientWidth = 412
         TabOrder = 1
         object bBuscarLogradouro1: TButton

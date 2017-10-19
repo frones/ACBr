@@ -1,11 +1,9 @@
 object frlDAMDFeRL: TfrlDAMDFeRL
   Left = 238
   Top = 216
-  Width = 683
-  Height = 395
   Caption = 'frlDAMDFeRL'
-  ClientHeight = 339
-  ClientWidth = 650
+  ClientHeight = 604
+  ClientWidth = 830
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,7 +11,6 @@ object frlDAMDFeRL: TfrlDAMDFeRL
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object RLMDFe: TRLReport
@@ -25,7 +22,6 @@ object frlDAMDFeRL: TfrlDAMDFeRL
     Margins.TopMargin = 6.000000000000000000
     Margins.RightMargin = 6.000000000000000000
     Margins.BottomMargin = 6.000000000000000000
-    DataSource = dsItens
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -40,9 +36,5 @@ object frlDAMDFeRL: TfrlDAMDFeRL
     DisplayName = 'Documento PDF'
     Left = 388
     Top = 48
-  end
-  object dsItens: TDataSource
-    Left = 472
-    Top = 46
   end
 end

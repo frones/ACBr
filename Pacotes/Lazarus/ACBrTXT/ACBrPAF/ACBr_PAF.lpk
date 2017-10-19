@@ -14,7 +14,7 @@
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)"/>
-    <Files Count="38">
+    <Files Count="42">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAFRegistros.pas"/>
         <UnitName Value="ACBrPAFRegistros"/>
@@ -168,6 +168,22 @@
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_Z_Class.pas"/>
         <UnitName Value="ACBrPAF_Z_Class"/>
       </Item38>
+      <Item39>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_V.pas"/>
+        <UnitName Value="ACBrPAF_V"/>
+      </Item39>
+      <Item40>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_V_Class.pas"/>
+        <UnitName Value="ACBrPAF_V_Class"/>
+      </Item40>
+      <Item41>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_J.pas"/>
+        <UnitName Value="ACBrPAF_J"/>
+      </Item41>
+      <Item42>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_J_Class.pas"/>
+        <UnitName Value="ACBrPAF_J_Class"/>
+      </Item42>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

@@ -54,14 +54,18 @@
 // Descomente as linhas abaixo para usar os recursos de Collate e/ou Botão Salvar do Preview do componente Danfe com Rave Reports
 // Essas opções funcionam dependendo da sua versão do Rave Reports. Verifique se sua versão suporta o recurso para não causar erro de compilação
 //--------------------------------------------------------------------------------
-//{$DEFINE RaveCollate}
-//{$DEFINE RaveSaveFromPreview}
+{.$DEFINE RaveCollate}
+{.$DEFINE RaveSaveFromPreview}
 
 {.$DEFINE DFE_SEM_OPENSSL}
 {.$DEFINE DFE_SEM_CAPICOM}
 
 // Descomente essa linha, para usar a carga de DLL tardia, nas Units do OpenSSL  (Apenas Delphi)
 {.$DEFINE USE_DELAYED}
+
+// Descomente essa linha, para usar ZLibExGZ de \ACBr\Fontes\Terceiros\ZLibExGZ
+// ZLib de D7 contém bugs e está incompleta. Caso contrário usará compactação nativa, unit "ZLib"
+{.$DEFINE USE_ZLibExGZ}
 
 // Para Remover Warnings de CAST causados por WideString/String/AnsiString, descomente a linha abaixo. (Apenas Delphi)
 {.$DEFINE REMOVE_CAST_WARN}
@@ -75,6 +79,7 @@
   {$DEFINE COMPILER7}
   {$DEFINE HAS_FORMATSETTINGS}
   {$DEFINE HAS_REGEXPR}
+  {$DEFINE HAS_INLINE}
   {$H+}
 
   {$UnDef FPC3}
@@ -104,11 +109,6 @@
   {$DEFINE DFE_SEM_CAPICOM}
 {$ENDIF}
 
-{$IFDEF DFE_SEM_CAPICOM}
-  {$UNDEF DFE_SEM_OPENSSL}
-{$ENDIF}
-
-
 // utilizar para facilitar a manutenção do ACBr.inc, já que ele era uma cópia
 // da jedi, essa mudança permite uma evolução melhor do arquivo.
 //------------------------------------------------------------------------------
@@ -118,6 +118,9 @@
  {$UNDEF USE_DELAYED}
 {$ENDIF}
 
+{$IFDEF DELPHI9_UP}
+  {$DEFINE HAS_INLINE}
+{$ENDIF}
 {$IFDEF DELPHI12_UP}
   {$DEFINE HAS_CHARINSET}
 {$ENDIF}
@@ -233,4 +236,20 @@
 {$IFDEF NOGUI}
   {$DEFINE CONSOLE}
 {$ENDIF}
+
+// Ative a diretiva abaixo, para usar a Libxml2, libxslt, libxmlsec compilada
+// com MinGw ftp://ftp.zlatkovic.com/libxml/64bit/
+{.$DEFINE USE_MINGW}
+{$IfNDef MSWINDOWS}
+  {$DEFINE USE_MINGW}
+{$EndIf}
+
+// ZLib em D7 contem muitos bugs e não suporta GZip de forma correta
+{$IfNDef FPC}        
+ {$IfNDef DELPHIXE2_UP}
+  {$Define USE_ZLibExGZ}
+ {$EndIf}
+{$Else}
+ {$UnDef USE_ZLibExGZ} // ZLibExGZ não é compatível com FPC
+{$EndIf}
 

@@ -77,7 +77,8 @@ type
     fIND_EMP_GRD_PRT: String; /// Indicador de empresa de grande porte:
     fTIP_ECD: String;         /// Indicador do tipo de ECD: 0 – ECD de empresa não participante de SCP como sócio ostensivo. 1 – ECD de empresa participante de SCP como sócio ostensivo. 2 – ECD da SCP.
     fCOD_SCP: String;         /// Identificação da SCP.
-    fIDENT_MF: String;        /// Identificação de Moeda Funcional    
+    fIDENT_MF: String;        /// Identificação de Moeda Funcional
+    fIND_ESC_CONS: string;    /// Escriturações Contábeis Consolidadas: Deve ser preenchido pela empresa controladora obrigada, nos termos da lei, a informações demonstrações contábeis consolidadas
   public
     property DT_INI: TDateTime read FDT_INI write FDT_INI;
     property DT_FIN: TDateTime read FDT_FIN write FDT_FIN;
@@ -96,7 +97,8 @@ type
     property IND_EMP_GRD_PRT: String read fIND_EMP_GRD_PRT write fIND_EMP_GRD_PRT;
     property TIP_ECD: String read fTIP_ECD write fTIP_ECD;
     property COD_SCP: String read fCOD_SCP write fCOD_SCP;
-    property IDENT_MF: String read fIDENT_MF write fIDENT_MF;    
+    property IDENT_MF: String read fIDENT_MF write fIDENT_MF;
+    property IND_ESC_CONS: String read fIND_ESC_CONS write fIND_ESC_CONS;
   end;
 
   /// Registro 0001 - ABERTURA DO BLOCO 0

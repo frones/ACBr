@@ -127,7 +127,7 @@ type
     FCOD_MOD: String; // Código do modelo do documento fiscal
     FCOD_SIT: TACBrlSituacaoDocto; // Código da situação do documento fiscal
     FSER: String; // Série do documento fiscal
-    FNUM_DOC: Integer; // Número do documento fiscal
+    FNUM_DOC: String; // Número do documento fiscal
     FCHV_NFE: String; // Chave de acesso da Nota Fiscal Eletrônica
     FDT_EMIS: TDateTime; // Data da emissão do documento fiscal
     FDT_DOC: TDateTime; // Data da entrada ou da saída
@@ -166,7 +166,7 @@ type
     property COD_MOD: String read FCOD_MOD write FCOD_MOD;
     property COD_SIT: TACBrlSituacaoDocto read FCOD_SIT write FCOD_SIT;
     property SER: String read FSER write FSER;
-    property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
+    property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property CHV_NFE: String read FCHV_NFE write FCHV_NFE;
     property DT_EMIS: TDateTime read FDT_EMIS write FDT_EMIS;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
@@ -733,7 +733,7 @@ type
     FCOD_SIT: TACBrlSituacaoDocto; /// Código da situação do documento fiscal
     FSER: String; /// Série do documento fiscal
     FSUB: String; /// Subsérie do documento fiscal
-    FNUM_DOC: Integer; /// Número do documento fiscal
+    FNUM_DOC: String; /// Número do documento fiscal
     FDT_DOC: TDateTime; /// Data da emissão do documento fiscal
     FCOP: String; // Código da classe da operação
     FVL_DOC: Currency; /// Valor total do documento fiscal
@@ -755,7 +755,7 @@ type
     property COD_SIT: TACBrlSituacaoDocto read FCOD_SIT write FCOD_SIT;
     property SER: String read FSER write FSER;
     property SUB: String read FSUB write FSUB;
-    property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
+    property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COP: String read FCOP write FCOP;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
@@ -892,8 +892,8 @@ type
     FQTD_CANC: Integer; /// Quantidade de documentos cancelados
     FSER: String; /// Série do documento fiscal
     FSUB: String; /// Subsérie do documento fiscal
-    FNUM_DOC_INI: Integer; /// Número do primeiro documento fiscal emitido
-    FNUM_DOC_FIN: Integer; /// Número do último documento fiscal emitido
+    FNUM_DOC_INI: String; /// Número do primeiro documento fiscal emitido
+    FNUM_DOC_FIN: String; /// Número do último documento fiscal emitido
     FDT_DOC: TDateTime; /// Data da emissão dos documentos fiscais
     FCOP: String; /// Código da classe da operação
     FVL_DOC: Currency; /// Valor total acumulado
@@ -909,8 +909,8 @@ type
     property COD_MOD: String read FCOD_MOD write FCOD_MOD;
     property SER: String read FSER write FSER;
     property SUB: String read FSUB write FSUB;
-    property NUM_DOC_INI: Integer read FNUM_DOC_INI write FNUM_DOC_INI;
-    property NUM_DOC_FIN: Integer read FNUM_DOC_FIN write FNUM_DOC_FIN;
+    property NUM_DOC_INI: String read FNUM_DOC_INI write FNUM_DOC_INI;
+    property NUM_DOC_FIN: String read FNUM_DOC_FIN write FNUM_DOC_FIN;
     property QTD_CANC: Integer read FQTD_CANC write FQTD_CANC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
@@ -1031,7 +1031,7 @@ type
     fECF_FAB: String; /// Número de série de fabricação do ECF
     fCRO: Integer; /// Posição do Contador de Reinício de Operação
     fCRZ: Integer; /// Posição do Contador de Redução Z
-    fNUM_DOC: Integer; /// Número do documento fiscal
+    fNUM_DOC: String; /// Número do documento fiscal
     fDT_DOC: TDateTime; /// Data da emissão do documento fiscal
     FCOP: String; /// Código da classe da operação
     FVL_ACMO_ISS: Currency;
@@ -1063,7 +1063,7 @@ type
     property ECF_FAB: String read FECF_FAB write FECF_FAB;
     property CRO: Integer read FCRO write FCRO;
     property CRZ: Integer read FCRZ write FCRZ;
-    property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
+    property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COP: String read FCOP write FCOP;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
@@ -1262,8 +1262,8 @@ type
     FECF_FAB: String; /// Número de série de fabricação do ECF
     FCRO: Integer; /// Posição do Contador de Reinício de Operação
     FCRZ: Integer; /// Posição do Contador de Redução Z
-    FNUM_DOC_INI: Integer; /// Número do primeiro documento fiscal
-    FNUM_DOC_FIN: Integer; /// Número do último documento fiscal
+    FNUM_DOC_INI: String; /// Número do primeiro documento fiscal
+    FNUM_DOC_FIN: String; /// Número do último documento fiscal
     FDT_DOC: TDateTime; /// Data da emissão dos documentos fiscais
     FCOP: String; /// Código da classe da operação
     FVL_DOC: Currency; /// Valor acumulado dos documentos fiscais
@@ -1295,8 +1295,8 @@ type
     property ECF_FAB: String read FECF_FAB write FECF_FAB;
     property CRO: Integer read FCRO write FCRO;
     property CRZ: Integer read FCRZ write FCRZ;
-    property NUM_DOC_INI: Integer read FNUM_DOC_INI write FNUM_DOC_INI;
-    property NUM_DOC_FIN: Integer read FNUM_DOC_FIN write FNUM_DOC_FIN;
+    property NUM_DOC_INI: String read FNUM_DOC_INI write FNUM_DOC_INI;
+    property NUM_DOC_FIN: String read FNUM_DOC_FIN write FNUM_DOC_FIN;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COP: String read FCOP write FCOP;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
@@ -1459,7 +1459,7 @@ type
     FSER: String; /// Série do documento fiscal
     FSUB: String; /// Subsérie do documento fiscal
     FCOD_ASS: Integer; /// Código do tipo de consumidor ou assinante
-    FNUM_DOC: Integer; /// Número do documento fiscal
+    FNUM_DOC: String; /// Número do documento fiscal
     FDT_EMIS: TDateTime; /// Data da emissão do documento fiscal
     FDT_DOC: TDateTime; /// Data da entrada ou da saída
     FCOD_NAT: String; /// Código da natureza da operação
@@ -1489,7 +1489,7 @@ type
     property SER: String read FSER write FSER;
     property SUB: String read FSUB write FSUB;
     property COD_ASS: Integer read FCOD_ASS write FCOD_ASS;
-    property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
+    property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_EMIS: TDateTime read FDT_EMIS write FDT_EMIS;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COD_NAT: String read FCOD_NAT write FCOD_NAT;

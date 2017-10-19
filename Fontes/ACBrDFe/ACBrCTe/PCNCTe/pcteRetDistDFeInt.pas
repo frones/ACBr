@@ -479,7 +479,7 @@ begin
           begin
             FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
-            oLeitorInfZip.rExtrai(1, 'infCTe');
+            oLeitorInfZip.rExtrai(1, 'infCte');
             FdocZip.Items[i].FresCTe.chCTe := copy(oLeitorInfZip.Grupo, pos('Id="CTe', oLeitorInfZip.Grupo)+7, 44);
 
             oLeitorInfZip.rExtrai(1, 'emit');
@@ -548,7 +548,7 @@ begin
               end;
             end;
 
-            if (oLeitorInfZip.rExtrai(2, 'retEvento') <> '') then
+            if (oLeitorInfZip.rExtrai(2, 'retEventoCTe') <> '') then
             begin
               FdocZip.Items[i].FprocEvento.RetinfEvento.FId          := oLeitorInfZip.rAtributo('Id', 'retEvento');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FtpAmb       := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));

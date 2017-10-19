@@ -455,12 +455,12 @@ begin
       auths := UpperCase(s);
       if s <> '' then
       begin
-        if Pos('CRAM-MD5', auths) > 0 then
-          FAuthDone := AuthCram;
-        if (not FauthDone) and (Pos('PLAIN', auths) > 0) then
+        if (Pos('PLAIN', auths) > 0) then
           FAuthDone := AuthPlain;
         if (not FauthDone) and (Pos('LOGIN', auths) > 0) then
           FAuthDone := AuthLogin;
+        if (not FauthDone) and (Pos('CRAM-MD5', auths) > 0) then
+          FAuthDone := AuthCram;
       end;
     end;
     s := FindCap('SIZE');

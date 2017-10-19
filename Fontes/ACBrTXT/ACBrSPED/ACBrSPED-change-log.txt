@@ -47,6 +47,101 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 22/06/2017
+[-] Correção nos regystros Ya do SpedECF
+		http://www.projetoacbr.com.br/forum/topic/36760-novas-propriedades-em-tregistro0010-tregistro0020-e-tregistroy800/?do=findComment&comment=244809
+		Juliomar Marchetti
+		
+Data 13/06/2017
+[+] Adição dos registos 0021 sped ECF
+		http://www.projetoacbr.com.br/forum/topic/36848-atualização-sped-ecf-2017/
+		Juliomar Marchetti
+		
+Data 17/05/2017
+[+] Adição dregistro no sped ECF
+		http://www.projetoacbr.com.br/forum/topic/36760-novas-propriedades-em-tregistro0010-tregistro0020-e-tregistroy800/
+		Juliomar Marchetti
+		
+Data 16/05/2017
+[+] Bloco K no spedcontabil
+		http://www.projetoacbr.com.br/forum/topic/36747-ecd-v5-bloco-k/
+		Juliomar Marchetti
+		
+Data 15/05/2017
+[-] Geração do registro 900 do j800-e-j801/
+		http://www.projetoacbr.com.br/forum/topic/36701-ecd-j800-e-j801/
+		Juliomar Marchetti
+		
+Data 12/05/2017
+[-] Correção para hierarquia de blocos e registros
+		http://www.projetoacbr.com.br/forum/topic/36701-ecd-j800-e-j801/
+		Juliomar Marchetti
+		
+Data 05/04/2017
+[+] Adição de blocos.
+		http://www.projetoacbr.com.br/forum/topic/35178-sped-ecd-leiaute-5-bloco-k/?do=findComment&comment=236181
+		Juliomar Marchetti
+		
+Data 21/03/2017
+[-] Correção de enumerador no Sped contribuições
+		http://www.projetoacbr.com.br/forum/topic/35745-correção-para-svn-unit-acbrepcblocos/
+		por: Juliomar Marchetti
+		
+Data 15/03/2017
+[-] Correção sped contabil registro J
+		http://www.projetoacbr.com.br/forum/topic/35354-atualiza%C3%A7%C3%A3o-de-layout-novos-campos/?do=findComment&comment=233291
+		por: Juliomar Marchetti
+		
+Data 08/03/2017
+[+] Atualização dos campos do sped contabil
+		http://www.projetoacbr.com.br/forum/topic/35354-atualização-de-layout-novos-campos/
+		por:  Juliomar Marchetti
+		
+Data 13/02/2017
+[+] Adição de validação para a chave da nfe no registro e113
+		http://www.projetoacbr.com.br/forum/topic/35090-registro-e113-faltando-chv_nfe/
+		por: Juliomar Marchetti
+		
+Data 24/01/2017
+[+] Adição de novos campos do registro C173 manual janeiro 2017
+		http://www.projetoacbr.com.br/forum/topic/34774-novos-campos-no-registro-c176-conforme-guia-pr%C3%A1tico-da-efd-vers%C3%A3o-2020-layout-11-2017/
+		por: Juliomar Marchetti
+		
+Data 04/01/2017
+[-] Correção Sped Fiscal 
+		http://www.projetoacbr.com.br/forum/topic/34325-o-n%C3%BAmero-de-campos-informado-no-registro-difere-do-n%C3%BAmero-de-campos-especificado-no-leiaute-do-arquivo/
+		por : Juliomar Marchetti
+		
+Data 17/12/2016
+[+] Mudanças para atender nova versão em janeiro de 2017 do sped fiscal
+		http://www.projetoacbr.com.br/forum/topic/33868-obrigatoriedades-bloco-c113/
+		por : Juliomar Marchetti
+		
+Data 07/12/2016
+[+] Adição do C113 e 0200 para atender mudanças em janeiro
+		http://www.projetoacbr.com.br/forum/topic/33868-obrigatoriedades-bloco-c113/
+		por : Juliomar Marchetti
+		
+Data 31/10/2016
+[*] Modificação para o tipo de informação
+		http://www.projetoacbr.com.br/forum/topic/32345-novos-campos-no-bloco-k-do-efd-icmsipi-para-2017/?do=findComment&comment=218571
+		por : Juliomar Marchetti
+		
+Data 08/10/2016
+[+] Adição de registros no bloco e do sped icms ipi
+		http://www.projetoacbr.com.br/forum/topic/32787-novos-campos-bloco-e310/
+		por : Juliomar Marchetti
+		
+Data 05/10/2016
+[-] Correção de validações do bloco k k230
+		http://www.projetoacbr.com.br/forum/topic/32345-novos-campos-no-bloco-k-do-efd-icmsipi-para-2017/?do=findComment&comment=216233
+		por : Juliomar Marchetti
+		
+Data 29/09/2016
+[+] Adição de registro ao Bloco K
+		http://www.projetoacbr.com.br/forum/topic/32345-novos-campos-no-bloco-k-do-efd-icmsipi-para-2017/
+		por : Juliomar Marchetti
+		
 [+] Adição do registro I157 no Sped Contábil
 		http://www.projetoacbr.com.br/forum/topic/31468-registro-i157/
 		por : Juliomar Marchetti

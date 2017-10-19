@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/10/2017
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/35979-acbrnfse-para-s%C3%A3o-paulo/?do=findComment&comment=258983
+   Por: Rubenstz
 -- pnfsConversao --
 [*] Acrescentados novos tipos de Regime de tributação na classe TnfseRegimeEspecialTributacao.
    Por: Italo Jurisato Junior

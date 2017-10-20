@@ -50,16 +50,6 @@ function GerarChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASe
                            ANumero,ACodigo: Integer; AModelo:Integer=55): String;
 function FormatarChaveAcesso(AValue: String): String;
 
-function ValidaUFCidade(const UF, Cidade: integer): Boolean; overload;
-procedure ValidaUFCidade(const UF, Cidade: integer; const AMensagem: String); overload;
-function ValidaDIDSI(AValue: String): Boolean;
-function ValidaDIRE(AValue: String): Boolean;
-function ValidaRE(AValue: String): Boolean;
-function ValidaDrawback(AValue: String): Boolean;
-function ValidaSUFRAMA(AValue: String): Boolean;
-function ValidaRECOPI(AValue: String): Boolean;
-function ValidaNVE(AValue: string): Boolean;
-
 function XmlEstaAssinado(const AXML: String): Boolean;
 function SignatureElement(const URI: String; AddX509Data: Boolean;
     IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
@@ -82,17 +72,6 @@ function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
 begin
   AValue := Poem_Zeros(AValue, 15);
   Result := copy(AValue, 1, 4) + '.' + copy(AValue, 5, 12);
-end;
-
-function ValidaUFCidade(const UF, Cidade: integer): Boolean;
-begin
-  Result := (Copy(IntToStr(UF), 1, 2) = Copy(IntToStr(Cidade), 1, 2));
-end;
-
-procedure ValidaUFCidade(const UF, Cidade: integer; const AMensagem: String);
-begin
-  if not (ValidaUFCidade(UF, Cidade)) then
-    raise EACBrDFeException.Create(AMensagem);
 end;
 
 function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
@@ -125,144 +104,6 @@ begin
   end;
 
   Result := Trim(Result);
-end;
-
-function ValidaDIDSI(AValue: String): Boolean;
-var
-  ano: integer;
-  sValue: String;
-begin
-  // AValue = TAANNNNNNND
-  // Onde: T Identifica o tipo de documento ( 2 = DI e 4 = DSI )
-  //       AA Ano corrente da geração do documento
-  //       NNNNNNN Número sequencial dentro do Ano ( 7 ou 8 dígitos )
-  //       D Dígito Verificador, Módulo 11, Pesos de 2 a 9
-  AValue := OnlyNumber(AValue);
-  ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
-
-  if (length(AValue) < 11) or (length(AValue) > 12) then
-    Result := False
-  else if (copy(Avalue, 1, 1) <> '2') and (copy(Avalue, 1, 1) <> '4') then
-    Result := False
-  else if not ((StrToInt(copy(Avalue, 2, 2)) >= ano - 1) and
-    (StrToInt(copy(Avalue, 2, 2)) <= ano + 1)) then
-    Result := False
-  else
-  begin
-    sValue := copy(AValue, 1, length(AValue) - 1);
-    Result := copy(AValue, length(AValue), 1) = Modulo11(sValue);
-  end;
-end;
-
-function ValidaDIRE(AValue: String): Boolean;
-var
-  AnoData, AnoValue: integer;
-begin
-  // AValue = AANNNNNNNNNN
-  // Onde: AA AnoData corrente da geração do documento
-  //       NNNNNNNNNN Número sequencial dentro do AnoData ( 10 dígitos )
-
-  Result := StrIsNumber(AValue) and (Length(AValue) = 12);
-
-  if Result then
-  begin
-    AnoData  := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
-    AnoValue := StrToInt(Copy(AValue, 1, 2));
-
-    Result := (AnoValue >= (AnoData - 1)) and (AnoValue <= (AnoData + 1));
-  end;
-end;
-
-function ValidaRE(AValue: String): Boolean;
-var
-  AnoData, AnoValue, SerieRE: integer;
-begin
-  // AValue = AANNNNNNNSSS
-  // Onde: AA AnoData corrente da geração do documento
-  //       NNNNNNN Número sequencial dentro do AnoData ( 7 dígitos )
-  //       SSS Serie do RE (001, 002, ...)
-
-  Result := StrIsNumber(AValue) and (Length(AValue) = 12);
-
-  if Result then
-  begin
-    AnoData  := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
-    AnoValue := StrToInt(Copy(AValue, 1, 2));
-    SerieRE  := StrToInt(Copy(AValue,10, 3));
-
-    Result := ((AnoValue >= (AnoData - 1)) and (AnoValue <= (AnoData + 1))) and
-              ((SerieRE >= 1) and (SerieRE <= 999));
-  end;
-end;
-
-function ValidaDrawback(AValue: String): Boolean;
-var
-  ano: integer;
-begin
-  // AValue = AAAANNNNNND
-  // Onde: AAAA Ano corrente do registro
-  //       NNNNNN Número sequencial dentro do Ano ( 6 dígitos )
-  //       D Dígito Verificador, Módulo 11, Pesos de 2 a 9
-  AValue := OnlyNumber(AValue);
-  ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
-  if length(AValue) = 11 then
-    AValue := copy(AValue, 3, 9);
-
-  if length(AValue) <> 9 then
-    Result := False
-  else if not ((StrToInt(copy(Avalue, 1, 2)) >= ano - 1) and
-    (StrToInt(copy(Avalue, 1, 2)) <= ano + 1)) then
-    Result := False
-  else
-    Result := copy(AValue, 9, 1) = Modulo11(copy(AValue, 1, 8));
-end;
-
-function ValidaSUFRAMA(AValue: String): Boolean;
-var
-  SS, LL: integer;
-begin
-  // AValue = SSNNNNLLD
-  // Onde: SS Código do setor de atividade da empresa ( 01, 02, 10, 11, 20 e 60 )
-  //       NNNN Número sequencial ( 4 dígitos )
-  //       LL Código da localidade da Unidade Administrativa da Suframa ( 01 = Manaus, 10 = Boa Vista e 30 = Porto Velho )
-  //       D Dígito Verificador, Módulo 11, Pesos de 2 a 9
-  AValue := OnlyNumber(AValue);
-  if length(AValue) < 9 then
-    AValue := '0' + AValue;
-  if length(AValue) <> 9 then
-    Result := False
-  else
-  begin
-    SS := StrToInt(copy(Avalue, 1, 2));
-    LL := StrToInt(copy(Avalue, 7, 2));
-    if not (SS in [01, 02, 10, 11, 20, 60]) then
-      Result := False
-    else if not (LL in [01, 10, 30]) then
-      Result := False
-    else
-      Result := copy(AValue, 9, 1) = Modulo11(copy(AValue, 1, 8));
-  end;
-end;
-
-function ValidaRECOPI(AValue: String): Boolean;
-begin
-  // AValue = aaaammddhhmmssffffDD
-  // Onde: aaaammdd Ano/Mes/Dia da autorização
-  //       hhmmssffff Hora/Minuto/Segundo da autorização com mais 4 digitos da fração de segundo
-  //       DD Dígitos Verificadores, Módulo 11, Pesos de 1 a 18 e de 1 a 19
-  AValue := OnlyNumber(AValue);
-  if length(AValue) <> 20 then
-    Result := False
-  else if copy(AValue, 19, 1) <> Modulo11(copy(AValue, 1, 18), 1, 18) then
-    Result := False
-  else
-    Result := copy(AValue, 20, 1) = Modulo11(copy(AValue, 1, 19), 1, 19);
-end;
-
-function ValidaNVE(AValue: string): Boolean;
-begin
-  //TODO:
-  Result := True;
 end;
 
 function XmlEstaAssinado(const AXML: String): Boolean;

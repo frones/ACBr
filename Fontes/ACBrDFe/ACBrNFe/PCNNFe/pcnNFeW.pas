@@ -185,7 +185,7 @@ implementation
 
 Uses
   pcnConversaoNFe, pcnAuxiliar, pcnLayoutTXT,
-  ACBrDFeUtil, pcnConsts, ACBrUtil;
+  pcnConsts, ACBrUtil;
 
 { TNFeW }
 

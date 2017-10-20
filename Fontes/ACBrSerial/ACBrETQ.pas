@@ -94,6 +94,8 @@ TACBrETQ = class( TACBrComponent )
     procedure SetDPI(const AValue : TACBrETQDPI) ;
     function GetEtqFinalizada: Boolean;
     function GetEtqInicializada: Boolean;
+    function GetVelocidade: Integer;
+    procedure SetVelocidade(const Value: Integer);
   protected
 
   public
@@ -144,6 +146,8 @@ TACBrETQ = class( TACBrComponent )
       default True ;
     property BackFeed: TACBrETQBackFeed read GetBackFeed write SetBackFeed
       default bfNone;
+    property Velocidade: Integer read GetVelocidade write SetVelocidade
+      default -1;
 
    property ArqLOG: String read GetArqLOG write SetArqLOG;
    property OnGravarLog: TACBrGravarLog read GetOnGravarLog write SetOnGravarLog;
@@ -198,6 +202,7 @@ var
   wDPI: TACBrETQDPI;
   wOnGravarLog: TACBrGravarLog;
   wArqLog: String;
+  wVelocidade: Integer;
 begin
   if fsModelo = Value then Exit;
 
@@ -207,6 +212,7 @@ begin
   wDPI         := DPI;
   wOnGravarLog := OnGravarLog;
   wArqLog      := ArqLOG;
+  wVelocidade  := Velocidade;
 
   if fsAtivo then
      raise Exception.Create(ACBrStr('Não é possível mudar o Modelo com ACBrETQ Ativo'));
@@ -228,6 +234,7 @@ begin
   DPI         := wDPI;
   OnGravarLog := wOnGravarLog;
   ArqLOG      := wArqLog;
+  Velocidade  := wVelocidade;
 
   fsModelo := Value;
 end;
@@ -473,9 +480,19 @@ begin
   Result := fsETQ.Unidade ;
 end;
 
+function TACBrETQ.GetVelocidade: Integer;
+begin
+  Result := fsETQ.Velocidade;
+end;
+
 procedure TACBrETQ.SetUnidade(const AValue: TACBrETQUnidade);
 begin
   fsETQ.Unidade := AValue ;
+end;
+
+procedure TACBrETQ.SetVelocidade(const Value: Integer);
+begin
+  fsETQ.Velocidade := Value;
 end;
 
 function TACBrETQ.GetDPI : TACBrETQDPI ;

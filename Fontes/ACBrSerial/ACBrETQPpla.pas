@@ -58,6 +58,7 @@ type
   private
     function MultiplicadorToStr( Multiplicador : Integer) : String ;
     function UnidadeToStr( Unidade : TACBrETQUnidade ) : Char ;
+    function VelocidadeToStr(Velocidade: Integer): Char;
 
   protected
     function ConverterUnidade( AValue : Integer) : Integer ; reintroduce;
@@ -119,6 +120,18 @@ begin
   else
      Result := 'm' ;
 end ;
+
+function TACBrETQPpla.VelocidadeToStr(Velocidade: Integer): Char;
+begin
+  case Velocidade of
+    1: Result := 'A';
+    2: Result := 'B';
+    3: Result := 'C';		
+    4: Result := 'D';
+  else
+    Result := 'C';		
+  end;
+end;
 
 function TACBrETQPpla.ConverterUnidade(AValue : Integer) : Integer ;
 begin
@@ -346,7 +359,10 @@ var
   Temp: String;
 begin
   if (Temperatura < 0) or (Temperatura > 20) then
-    Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 20 para Temperatura'));
+    raise Exception.Create(ACBrStr('Informe um valor entre 0 e 20 para Temperatura'));
+
+  if (Velocidade < -1) or (Velocidade > 4) then
+    raise Exception.Create(ACBrStr('Informe um valor entre 1 e 4 para Velocidade'));
 
   Temp := IntToStrZero(Temperatura, 2);
 
@@ -354,6 +370,9 @@ begin
           STX + UnidadeToStr( Unidade ) + CRLF +  // Informa a Unidade utilizada
           'H' + Temp                    + CRLF +  // Ajusta a Temperatura
           'D11';                                  // Ajusta a resolução
+					
+  if (Velocidade > 0) then
+    Cmd := Cmd + CRLF + 'P' + VelocidadeToStr( Velocidade );
 end;
 
 procedure TACBrETQPpla.CalcularComandoFinaliza(Copias: Integer;

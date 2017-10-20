@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/10/2017
+-- ACBrETQ --
+[+] Inclusão de nova propriedade "Velocidade", baseada na contribuição do usuário conforme:
+    https://www.projetoacbr.com.br/forum/topic/39446-definir-velocidade-de-impressão-ppla-e-epl2/
+	(por: Marcelo A. Rodrigues)
+	
+-- ACBrETQClass, ACBrETQPpla, ACBrETQEpl2 --
+[+] Implementação da nova propriedade "Velocidade".
+	(por: Marcelo A. Rodrigues)
+
 Data: 06/10/2017
 -- ACBrPosPrinter --
 [+] Adicionada a propriedade: "VerificarImpressora: Boolean default False"

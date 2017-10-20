@@ -306,7 +306,7 @@ begin
   if (Horizontal < 0) then
      Raise Exception.Create(ACBrStr('Informe um valor positivo para Horizontal'));
 
-  Cmd := 'GG'                 +
+  Cmd := 'GG' +
          IntToStr( ConverterUnidade( etqDots, Horizontal) ) + ',' +
          IntToStr( ConverterUnidade( etqDots, Vertical) )   + ',' +
          NomeImagem ;
@@ -343,6 +343,9 @@ procedure TACBrETQEpl2.CalcularComandoAbertura;
 begin
   if (Temperatura < 0) or (Temperatura > 15) then
     raise Exception.Create(ACBrStr('Informe um valor entre 0 e 15 para Temperatura'));
+  
+  if (Velocidade < -1) or (Velocidade > 7) then
+    raise Exception.Create(ACBrStr('Informe um valor entre 0 e 7 para Velocidade'));
 
   case fpBackFeed of
     bfOn : Cmd := 'JF' + LF;
@@ -357,6 +360,9 @@ begin
   Cmd := Cmd + 'R0,0' + LF +     // Anula as margens Horizontal e Vertical
                'ZB' ;            // ZT = Printing from top of image buffer. (PADRÃO)
                                  // ZB = Printing from bottom of image buffer.
+
+  if (Velocidade >= 0) then
+    Cmd := Cmd + LF + 'S' + IntToStr(Velocidade);		
 end;
 
 procedure TACBrETQEpl2.CalcularComandoFinaliza(Copias: Integer;

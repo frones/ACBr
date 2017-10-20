@@ -66,9 +66,11 @@ TACBrETQClass = class
     FAvanco: Integer;
     FUnidade: TACBrETQUnidade;
     FDPI: TACBrETQDPI;
+    FVelocidade: Integer;
     procedure SetAtivo(const Value: Boolean);
     procedure SetTemperatura(const Value: Integer);
     procedure SetAvanco(const Value: Integer);
+    procedure SetVelocidade(const Value: Integer);
 
   protected
     fpDevice: TACBrDevice;
@@ -103,6 +105,7 @@ TACBrETQClass = class
     property DPI: TACBrETQDPI read FDPI write SetDPI;
     property LimparMemoria: Boolean read fpLimparMemoria write fpLimparMemoria;
     property BackFeed: TACBrETQBackFeed read fpBackFeed write fpBackFeed;
+    property Velocidade: Integer read fVelocidade write SetVelocidade;
 
     property ArqLOG: String read fpArqLOG write fpArqLOG;
     property OnGravarLog: TACBrGravarLog read fpOnGravarLog write fpOnGravarLog;
@@ -163,7 +166,8 @@ begin
   fpEtqFinalizada := False;
   
   FAvanco      := 0;
-  FTemperatura := 10 ;
+  FVelocidade  := -1;
+  FTemperatura := 10;
   FUnidade     := etqMilimetros;
   FDPI         := dpi203;
 end;
@@ -337,6 +341,11 @@ end;
 procedure TACBrETQClass.SetUnidade(const AValue: TACBrETQUnidade);
 begin
   FUnidade := AValue;
+end;
+
+procedure TACBrETQClass.SetVelocidade(const Value: Integer);
+begin
+  fVelocidade := Value;
 end;
 
 procedure TACBrETQClass.SetDPI(const AValue : TACBrETQDPI) ;

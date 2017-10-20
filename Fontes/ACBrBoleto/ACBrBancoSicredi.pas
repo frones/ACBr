@@ -962,7 +962,7 @@ begin
 
         toRetornoLiquidado:   //06
           case AnsiIndexStr(CodMotivo, ['A8',  'C7', 'H5', 'H6', 'H8', 'X1', 'X2', 'X3', 'X4', 'X5',
-                                        'X0', 'X6', 'X7', 'X8', 'X9', 'XA', 'XB']) of
+                                        'X0', 'X6', 'X7', 'X8', 'X9', 'XA', 'XB', 'C6']) of
             0: Result:= 'A8-Recebimento da liquidação fora da rede Sicredi - via compensação eletrônica';
             1: Result:= 'C7-Título já baixado';
             2: Result:= 'H5-Recebimento de liquidação fora da rede Sicredi - VLB Inferior - Via compensação';
@@ -980,6 +980,7 @@ begin
             14: Result:= 'X9-Pago com cheque - bloqueado 96 horas';
             15: Result:= 'XA-Pago com cheque - bloqueado 120 horas';
             16: Result:= 'XB-Pago com cheque - bloqueado 144 horas';
+            17: Result:= 'C6-Título já Liquidado';
           else
             case StrToInt(CodMotivo) of
                00: Result:= '00-Ocorrência aceita, liquidação normal';

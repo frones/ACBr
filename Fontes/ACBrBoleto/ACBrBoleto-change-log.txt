@@ -47,6 +47,56 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 20/10/2017 ver: 0.0.234
+-- ACBrBoleto
+[+] Ajuste de Validação Código Mora Alfanumerico (Sicred)
+    Adicionado Propriedade para Informa a Versão do Layout do Arquivo e do Lote
+    https://www.projetoacbr.com.br/forum/topic/37608-sicoob-arquivo-remessa-cnab-240-atualizado-julho2017/
+    por: José M. S. Junior
+
+-- ACBrBancoAmazonia
+[*] Atualizado baseado em homologação realizada
+    https://www.projetoacbr.com.br/forum/topic/21488-boleto-banco-da-amaz%C3%B4nia/
+    por: José M. S. Junior
+
+-- ACBrBancoBrasil
+[*] Ajuste no arquivo de Retorno CNAB240 - Campo Nosso Numero
+    https://www.projetoacbr.com.br/forum/topic/39126-problema-na-leitura-do-arquivo-de-retorno-banco-do-brasil/
+    por: José M. S. Junior
+
+-- ACBrBancoBanrisul / ACBrBoleto
+[*] Ajuste no arquivo de Remessa CNAB240 / Retorno CNAB240 - Ajuste método (ChecarDadosObrigatorios)
+    / Atualização Descrição Ocorrências
+    https://www.projetoacbr.com.br/forum/topic/38565-banrisul-homologa%C3%A7%C3%A3o-cnab-240-e-boleto/
+    https://www.projetoacbr.com.br/forum/topic/39186-erro-de-leitura-de-arquivo-de-retorno-banrisul/
+    http://www.projetoacbr.com.br/forum/topic/38661-atualizar-a-lista-de-tipo-de-ocorr%C3%AAncia-dos-boletos/
+    por: José M. S. Junior
+
+-- ACBrBancoCecred
+[*] Ajuste no arquivo de Remessa CNAB240 - Segmento R
+    https://www.projetoacbr.com.br/forum/topic/39235-acbrbancocecred-n%C3%A3o-gerar-segmento-r/
+    por: José M. S. Junior
+
+-- ACBrBancoBancoob
+[*] Ajuste no arquivo de Remessa Retorno CNAB240
+    https://www.projetoacbr.com.br/forum/topic/38880-arquivo-remessa-siccob/
+    https://www.projetoacbr.com.br/forum/topic/15678-erro-ao-gerar-remessa-de-boleto-sicoob/?page=2
+    https://www.projetoacbr.com.br/forum/topic/39227-acbrbancobancoob-lendo-retorno-de-pedido-de-baixa-com-erro/
+    https://www.projetoacbr.com.br/forum/topic/37608-sicoob-arquivo-remessa-cnab-240-atualizado-julho2017/
+    https://www.projetoacbr.com.br/forum/topic/36647-c%C3%B3digo-da-ag%C3%AAnciac%C3%B3digo-benefici%C3%A1rio-sicoob/
+    por: José M. S. Junior
+
+-- ACBrBancoSicred
+[*] Ajuste no arquivo de Retorno CNAB400
+    https://www.projetoacbr.com.br/forum/topic/38972-erro-na-leitura-do-retorno-sicredi-cnab400/
+    por: José M. S. Junior
+
+-- ACBrBancoCaixa
+[*] Ajuste no Arquivo Remessa CNAB400 Cód. Agência
+    https://www.projetoacbr.com.br/forum/topic/39383-problema-ao-gerar-arquivo-de-remessa-caixa-economica-federal-cnab400/
+    https://www.projetoacbr.com.br/forum/topic/39402-leitura-arquivo-retorno-caixa-economica/
+    por: José M. S. Junior
+
 Data 19/09/2017 ver: 0.0.233
 -- ACBrBancoCaixa
 [*] Ajuste no Arquivo de Remessa e Retorno CNAB240 - Validação campo CódigoMora

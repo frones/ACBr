@@ -808,12 +808,12 @@ var
                   '2'                                                            + //    1 até 1 - Identificador do Tipo de Registro do Arquivo
                   ATipoCendente                                                  + //    2 até 3 - Tipo de inscrição da empresa 01-CPF / 02-CNPJ
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF),14,'0')         + //   4 até 17 - Numero de Inscrição Empresa
-                  PadLeft(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4, '0')        + //  18 até 21 - Código da Agência
+                  RightStr(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4 )           + //  18 até 21 - Código da Agência
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CodigoCedente), 6, '0')  + //  22 até 27 - Código do Cedente
                   Space(4)                                                       + //  28 até 31 - Uso Exclusivo CAIXA
                   Space(25)                                                      + //  32 até 56 - Campo em Branco
                   PadRight(Copy(AModalidade,1,2), 2, '0')                        + //  57 até 58 - Modalidade
-                  PadLeft(Copy(ANossoNumero, 1, 15), 15, '0')                    + //  59 até 73 - Nosso Numero
+                  PadLeft(Copy(ANossoNumero, 3, 15), 15, '0')                    + //  59 até 73 - Nosso Numero
                   Space(33)                                                      + //  74 até 106 - Campos em Branco
                   '01'                                                           + // 107 até 108 - Código Carteira //PadLeft(IntToStr(RetornaCodCarteira(Carteira)),2,'0')
                   ATipoOcorrencia                                                + // 109 até 110 - Código da ocorrencia
@@ -979,7 +979,7 @@ begin
          wLinha:= wLinha                                                           + //  1 até 1   -  ID Registro
                   ATipoCendente                                                    + //  2 até 3   -  Tipo de inscrição da empresa 01-CPF / 02-CNPJ
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF),14,'0')           + //  4  até 17 - Inscrição da empresa
-                  PadLeft(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4, '0')          + // 18 até 21  - Código da Agência
+                  RightStr(OnlyNumber(ACBrBoleto.Cedente.Agencia), 4 )             + // 18 até 21  - Código da Agência
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CodigoCedente), 6, '0')    + // 22 até 27  - Código do Cedente
                   ATipoBoleto                                                      + // 28 a 29    - Quem emite e quem distribui
                   '00'                                                             + // 30 a 31    - Comissão de permanência - informar 00
@@ -1760,7 +1760,7 @@ procedure TACBrCaixaEconomica.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
   ContLinha : Integer;
-  rAgencia, rConta, Linha, rCedente , TempData:String;
+  rAgencia, rCodCedente, Linha, rCedente , TempData:String;
 begin
    fpTamanhoMaximoNossoNum := 15;
  
@@ -1770,7 +1770,7 @@ begin
 
    rCedente := trim(Copy(ARetorno[0],47,30));
    rAgencia := Copy(ARetorno[0],27,4);
-   rConta   := Copy(ARetorno[0],34,8);
+   rCodCedente := trim(Copy(ARetorno[0],31,6));
 
 
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],390,5),0);
@@ -1784,15 +1784,15 @@ begin
    with ACBrBanco.ACBrBoleto do
    begin
       if (not LeCedenteRetorno) and
-         ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-          (rConta <> OnlyNumber(Cedente.Conta))) then
+         ((rAgencia <> OnlyNumber(RightStr(Cedente.Agencia,4))) or
+          (rCodCedente <> OnlyNumber(Cedente.CodigoCedente))) then
          raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
       if LeCedenteRetorno then
       begin
         Cedente.Nome         := rCedente;
         Cedente.Agencia      := rAgencia;
-        Cedente.Conta        := rConta;
+        Cedente.CodigoCedente := rCodCedente;
       end;
 
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;

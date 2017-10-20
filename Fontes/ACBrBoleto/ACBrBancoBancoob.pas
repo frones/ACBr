@@ -86,8 +86,10 @@ begin
    fpNumero := 756;
    fpTamanhoMaximoNossoNum := 7;
    fpTamanhoCarteira   := 1;
-   fpTamanhoConta      := 8;
+   fpTamanhoConta      := 12;
    fpCodigosMoraAceitos:= '012';
+   fpLayoutVersaoArquivo := 81;
+   fpLayoutVersaoLote    := 40;
 end;
 
 function TACBrBancoob.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -197,14 +199,19 @@ end;
 
 function TACBrBancoob.MontarCampoCodigoCedente (
    const ACBrTitulo: TACBrTitulo ) : String;
+
+var
+  CodigoCedente: String;
 begin
+  CodigoCedente := ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
   Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia + '/'+
-            ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente;
+            copy(CodigoCedente,1,length(CodigoCedente)-1)+ '-'+
+            copy(CodigoCedente,length(CodigoCedente),1);
 end;
 
 function TACBrBancoob.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
 begin
-    Result := ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
+  Result := ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
 end;
 
 procedure TACBrBancoob.GerarRegistroHeader400(NumeroRemessa : Integer; aRemessa:TStringList);
@@ -339,8 +346,8 @@ begin
                   PadLeft(onlyNumber(Cedente.CNPJCPF),14,' ')             +  // Número de Inscrição do Cedente
                   PadLeft(OnlyNumber(Cedente.Agencia), 4, '0')            +  // Agência
                   PadLeft( Cedente.AgenciaDigito, 1, '0')                 +  // Agência digito
-                  PadLeft( OnlyNumber(Cedente.Conta)                      +  // Conta Corrente
-                  Cedente.ContaDigito, 9, '0')                            +  // Dígito Conta Corrente
+                  PadLeft( onlynumber(Cedente.Conta), 8, '0')             +  // Conta Corrente
+                  PadLeft( Cedente.ContaDigito, 1, ' ')                   +  // Dígito Conta Corrente
                   PadLeft( '0', 6, '0')                                   +  // Número do Convênio de Cobrança do Cedente fixo zeros: "000000"
                   PadRight(trim(SeuNumero),  25)                          +  // Seu Numero (antes etava indo Brancos)
                   PadLeft( NossoNumero + DigitoNossoNumero, 12, '0')      +  // Nosso Número + //nosso numero com digito
@@ -669,6 +676,7 @@ var
   ATipoInscricao: string;
 begin
   I := 0;
+
   with ACBrBanco.ACBrBoleto.Cedente do
     begin
       case TipoInscricao of
@@ -696,7 +704,7 @@ begin
                FormatDateTime('ddmmyyyy', Now)          + // 144 a 151 - Data do de geração do arquivo
                FormatDateTime('hhmmss', Now)            + // 152 a 157 - Hora de geração do arquivo
                '000001'                                 + // 158 a 163 - Número sequencial do arquivo retorno
-               '087'                                    + // 164 a 166 - Número da versão do layout do arquivo  //Alteração para passar no Validador
+               PadLeft(IntToStr(fpLayoutVersaoArquivo) , 3, '0')  + // 164 a 166 - Número da versão do layout do arquivo  //Alteração para passar no Validador
                '00000'                                  + // 167 a 171 - Zeros
                space(54)                                + // 172 a 225 - 54 Brancos
                space(3)                                 + // 226 a 228 - zeros
@@ -709,7 +717,7 @@ begin
                'R'                                     + //9 - Tipo de operação: R (Remessa) ou T (Retorno)
                '01'                                    + //10 a 11 - Tipo de serviço: 01 (Cobrança)
                '  '                                    + //12 a 13 - Forma de lançamento: preencher com ZEROS no caso de cobrança
-               '045'                                   + //14 a 16 - Número da versão do layout do lote
+               PadLeft(IntToStr(fpLayoutVersaoLote), 3, '0')     + //14 a 16 - Número da versão do layout do lote
                ' '                                     + //17 - Uso exclusivo FEBRABAN/CNAB
                ATipoInscricao                          + //18 - Tipo de inscrição do cedente
                PadLeft(OnlyNumber(CNPJCPF), 15, '0')   + //19 a 33 -Número de inscrição do cedente
@@ -813,10 +821,8 @@ begin
 
      if CodigoMora = '0' then
        ValorMora := PadLeft('', 15, '0')
-     else if CodigoMora = '1' then
-       ValorMora := IntToStrZero(Round(ValorMoraJuros * 100), 15)
-     else if CodigoMora = '2' then
-       ValorMora := IntToStrZero(Round(ValorMoraJuros * 10000), 15);
+     else
+       ValorMora := IntToStrZero(Round(ValorMoraJuros * 100), 15);
 
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                             + //1 a 3 - Código do banco
                '0001'                                                        + //4 a 7 - Lote de serviço
@@ -837,7 +843,7 @@ begin
                                        '02', ACBrBoleto.Cedente.Modalidade);
 
                   Result := Result+PadLeft(NossoNum, 10, '0')+ // 38 a 57 - Carteira
-                            PadLeft('01', 02, '0')+
+                            PadLeft(inttostr(ifthen(parcela=0,1,parcela)), 02, '0')+ //PadLeft('01', 02, '0')+
                             PadLeft(wModalidade, 02, '0')+
                             '4'+
                             Space(5);
@@ -858,7 +864,7 @@ begin
                          PadRight(AEspecieTitulo, 2)                      + // 107 a 108 - Espécie do documento
                          ATipoAceite                                      + // 109 - Identificação de título Aceito / Não aceito
                          FormatDateTime('ddmmyyyy', DataDocumento)        + // 110 a 117 - Data da emissão do documento
-                         CodigoMora                                       + // 118 - Codigo Mora (juros) - 1) Por dia, 2) Taxa mensal e 3) Isento
+                         PadRight(CodigoMora, 1, '0')                     + // 118 - Codigo Mora (juros) - 1) Por dia, 2) Taxa mensal e 3) Isento
                          ADataMoraJuros                                   + //119 a 126 - Data a partir da qual serão cobrados juros
                          ValorMora                                        + // 127 a 141 - Valor de juros de mora por dia
                          TipoDescontoToString(TipoDesconto)               + // 142 - "Código do Desconto 1
@@ -1077,6 +1083,7 @@ begin
       07: Result := toRetornoRecebimentoInstrucaoConcederDesconto;
       08: Result := toRetornoRecebimentoInstrucaoCancelarDesconto;
       09: Result := toRetornoBaixaSimples;
+      10: Result := toRetornoBaixaSolicitada;
       11: Result := toRetornoTituloEmSer;
       12: Result := toRetornoAbatimentoConcedido;
       13: Result := toRetornoAbatimentoCancelado;
@@ -1117,6 +1124,7 @@ begin
       toRetornoLiquidadoSemRegistro                         : Result :='05';
       toRetornoLiquidado                                    : Result :='06';
       toRetornoBaixaSimples                                 : Result :='09';
+      toRetornoBaixaSolicitada                              : Result :='10';
       toRetornoTituloEmSer                                  : Result :='11';
       toRetornoAbatimentoConcedido                          : Result :='12';
       toRetornoAbatimentoCancelado                          : Result :='13';

@@ -154,7 +154,7 @@ type
     fOPT_REFIS:   TACBrIndicador;
     fTIP_ENT:     String;
     fTIP_ESC_PRE: string;
-    fIND_REC_RECEITA: string;
+    fIND_REC_RECEITA: TACBrIndRecReceita;
   public
     property HASH_ECF_ANTERIOR: string read fHASH_ECF_ANTERIOR write fHASH_ECF_ANTERIOR;
     property OPT_REFIS: TACBrIndicador read fOPT_REFIS write fOPT_REFIS;
@@ -170,7 +170,7 @@ type
     property APUR_CSLL: string read fAPUR_CSLL write fAPUR_CSLL;
     property OPT_EXT_RTT: string read fOPT_EXT_RTT write fOPT_EXT_RTT;
     property DIF_FCONT: string read fDIF_FCONT write fDIF_FCONT;
-    property IND_REC_RECEITA: string read fIND_REC_RECEITA write fIND_REC_RECEITA;
+    property IND_REC_RECEITA: TACBrIndRecReceita read fIND_REC_RECEITA write fIND_REC_RECEITA;
   end;
 
   { TRegistro0020 }

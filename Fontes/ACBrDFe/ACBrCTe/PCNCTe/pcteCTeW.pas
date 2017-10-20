@@ -1473,7 +1473,7 @@ begin
 
     versao := GetVersaoModalCTe(VersaoDF, CTe.Ide.modal);
 
-    if (CTe.Ide.tpServ <> tsTranspValores) then
+    if (CTe.ide.modelo = 57) or ((CTe.ide.modelo = 67) and (CTe.ide.modal = mdRodoviario) and (CTe.ide.tpServ <> tsTranspValores)) then
     begin
       case StrToInt(TpModalToStr(CTe.Ide.modal)) of
        01: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');

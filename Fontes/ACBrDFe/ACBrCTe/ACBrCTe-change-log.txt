@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/10/2017
+-- pcteCTeW / ACBrCTeConhecimentos --
+[*] Correções para o CT-e OS ao gerar o grupo <infModal>.
+   Por: bSoft
+
 17/10/2017
 -- pcteCTe / ACBrCTeConhecimentos --
 [*] Inicialização dos campos indGlobalizado e indAlteraToma com o valor tiNao.

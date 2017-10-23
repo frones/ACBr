@@ -104,6 +104,11 @@ begin
     try
       // Enviando, dispara exceptions no caso de erro //
       FWinHTTPReqResp.Execute(ConteudoXML, Resp);
+      // DEBUG //
+      //Resp.SaveToFile('c:\temp\ReqResp.xml');
+
+      Resp.Position := 0;
+      Result := String( ReadStrFromStream(Resp, Resp.Size) );
 
       // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
       // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
@@ -118,11 +123,6 @@ begin
                                            E.Message ) ;
       end;
     end;
-
-    Resp.Position := 0;
-    Result := ReadStrFromStream(Resp, Resp.Size);
-    // DEBUG //
-    //Resp.SaveToFile('c:\temp\ReqResp.xml');
   finally
     Resp.Free;
   end;

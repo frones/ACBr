@@ -44,6 +44,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/20/2017
+-- ACBrDFeWebService --
+[*] Ajuste no método: "TDFeWebService.EnviarDados"... para não verificar a validade
+    do certificado dentro do Loop
+    (por: DSA)
+
+-- ACBrDFeHttpOpenSSL, ACBrDFeHttpWinApi --
+[*] Método "Enviar". Ajuste para capturar o conteúdo do retorno do Servidor,
+    antes da validaçao do HTTPResultCode.
+    https://www.projetoacbr.com.br/forum/topic/39428-obter-retorno-do-webservice-em-caso-de-erro-http-400-ou-500/
+
 08/09/2017
 -- ACBrDFeSSL, ACBrDFeXsMsXml, ACBrDFeXsXmlSec --
 [*] Método "TDFeSSLXmlSignClass.VerificarAssinatura", modificado para receber

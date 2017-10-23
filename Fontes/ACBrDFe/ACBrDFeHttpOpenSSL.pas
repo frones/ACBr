@@ -106,9 +106,8 @@ function TDFeHttpOpenSSL.Enviar(const ConteudoXML: String; const AURL: String;
   const ASoapAction: String; AMimeType: String): String;
 var
   OK: Boolean;
-  RetornoWS: AnsiString;
 begin
-  RetornoWS := '';
+  Result := '';
 
   // Configurando o THTTPSend //
   ConfigurarHTTP(AURL, ASoapAction, AMimeType);
@@ -123,21 +122,21 @@ begin
   // Transmitindo //
   OK := FHTTP.HTTPMethod('POST', AURL);
 
+  // Lendo a resposta //
+  if OK then
+  begin
+    // DEBUG //
+    //HTTP.Document.SaveToFile('c:\temp\ReqResp.xml');
+    FHTTP.Document.Position := 0;
+    Result := String( ReadStrFromStream(FHTTP.Document, FHTTP.Document.Size) );
+  end;
+
   // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
   // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
   OK := OK and (FHTTP.ResultCode in [200, 201, 202]);
   if not OK then
     raise EACBrDFeException.CreateFmt( cACBrDFeSSLEnviarException,
                                        [InternalErrorCode, HTTPResultCode] );
-
-  // Lendo a resposta //
-  FHTTP.Document.Position := 0;
-  RetornoWS := ReadStrFromStream(FHTTP.Document, FHTTP.Document.Size);
-
-  // DEBUG //
-  //HTTP.Document.SaveToFile('c:\temp\ReqResp.xml');
-
-  Result := String( RetornoWS );
 end;
 
 procedure TDFeHttpOpenSSL.ConfigurarHTTP(const AURL, ASoapAction: String;

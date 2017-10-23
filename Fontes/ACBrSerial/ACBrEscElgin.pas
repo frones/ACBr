@@ -100,7 +100,7 @@ begin
     if TestBit(B, 4) then
       AStatus := AStatus + [stPoucoPapel];
   except
-    AStatus := AStatus + [stErro];
+    AStatus := AStatus + [stErroLeitura];
   end;
 end;
 

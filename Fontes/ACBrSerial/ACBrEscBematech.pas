@@ -247,7 +247,7 @@ begin
     if not TestBit(B, 7) then
       AStatus := AStatus + [stTampaAberta];
   except
-    AStatus := AStatus + [stErro];
+    AStatus := AStatus + [stErroLeitura];
   end;
 end;
 

@@ -312,7 +312,7 @@ begin
     if TestBit(B, 7) then
       AStatus := AStatus + [stGavetaAberta];  // Impressora em falha
   except
-    AStatus := AStatus + [stErro];
+    AStatus := AStatus + [stErroLeitura];
   end;
 end;
 

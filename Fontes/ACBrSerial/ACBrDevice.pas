@@ -289,6 +289,7 @@ TACBrDevice = class( TComponent )
     function GetParamsString: String;
     function GetPrinterRawIndex: Integer;
     function GetPrinterFileName: String;
+    function GetTimeOutMilissegundos: Integer;
 
     {$IFDEF ThreadEnviaLPT}
     procedure EnviaStringThread( AString : AnsiString ) ;
@@ -313,6 +314,7 @@ TACBrDevice = class( TComponent )
     procedure SetParamsString(const Value: String);
     function GetMaxBandwidth: Integer;
     procedure SetMaxBandwidth(const Value: Integer);
+    procedure SetTimeOutMilissegundos(AValue: Integer);
     procedure TryCloseSocket;
   public
     Serial : TBlockSerial ;
@@ -326,6 +328,9 @@ TACBrDevice = class( TComponent )
     property Porta: String  read fsPorta write SetPorta ;
     property DeviceType: TACBrDeviceType read fsDeviceType write SetDeviceType;
     property TimeOut : Integer read fsTimeOut write SetTimeOut ;
+    property TimeOutMilissegundos: Integer read GetTimeOutMilissegundos
+      write SetTimeOutMilissegundos;
+
     Function EmLinha( lTimeOut : Integer = 1) : Boolean  ;
     function DeduzirTipoPorta(APorta: String): TACBrDeviceType;
 
@@ -1065,6 +1070,33 @@ begin
        Serial.DeadlockTimeout := (TimeOut * 1000) ;
   end;
 end;
+
+function TACBrDevice.GetTimeOutMilissegundos: Integer;
+begin
+  if IsTCPPort then
+    Result := Socket.ConnectionTimeout
+  else if IsSerialPort then
+    Result := Serial.DeadlockTimeout
+  else
+    Result := fsTimeOut;
+end;
+
+procedure TACBrDevice.SetTimeOutMilissegundos(AValue: Integer);
+begin
+  if IsTCPPort then
+  begin
+    Socket.ConnectionTimeout := AValue;
+    fsTimeOut := Max(Trunc(AValue / 1000),0);
+  end
+  else if IsSerialPort then
+  begin
+    Serial.DeadlockTimeout := AValue;
+    fsTimeOut := Max(Trunc(AValue / 1000),1);
+  end
+  else
+    fsTimeOut := AValue;
+end;
+
 
 function TACBrDevice.EmLinha( lTimeOut : Integer) : Boolean;
 var TempoLimite : TDateTime ;

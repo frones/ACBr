@@ -125,7 +125,8 @@ type
   TACBrPosPaginaCodigo = (pcNone, pc437, pc850, pc852, pc860, pcUTF8, pc1252);
 
   TACBrPosTipoStatus = (stErro, stNaoSerial, stPoucoPapel, stSemPapel,
-                        stGavetaAberta, stImprimindo, stOffLine, stTampaAberta);
+                        stGavetaAberta, stImprimindo, stOffLine, stTampaAberta,
+                        stErroLeitura);
   TACBrPosPrinterStatus = set of TACBrPosTipoStatus;
 
   { TACBrPosRazaoColunaFonte }
@@ -331,7 +332,7 @@ type
     procedure CortarPapel(Parcial: Boolean = False);
     procedure AbrirGaveta;
 
-    function LerStatusImpressora: TACBrPosPrinterStatus;
+    function LerStatusImpressora( Tentativas: Integer = 1): TACBrPosPrinterStatus;
     function LerInfoImpressora: String;
 
     property Buffer: TStringList read FBuffer;
@@ -1289,18 +1290,27 @@ end;
 
 function TACBrPosPrinter.TxRx(ACmd: AnsiString; BytesToRead: Byte;
   ATimeOut: Integer; WaitForTerminator: Boolean): AnsiString;
+var
+  OldTimeOut: Integer;
 begin
   FDevice.Limpar;
 
   GravarLog('TX -> '+ACmd, True);
-  FDevice.EnviaString( ACmd );
 
-  Sleep(10);  // Aguarda equipamento ficar pronto para responder
+  OldTimeOut := FDevice.TimeOutMilissegundos;
+  try
+    FDevice.TimeOutMilissegundos := ATimeOut;
+    FDevice.EnviaString( ACmd );
 
-  if WaitForTerminator then
-    Result := FDevice.LeString(ATimeOut, 0, chr(BytesToRead))
-  else
-    Result := FDevice.LeString(ATimeOut, BytesToRead);
+    Sleep(10);  // Aguarda equipamento ficar pronto para responder
+
+    if WaitForTerminator then
+      Result := FDevice.LeString(ATimeOut, 0, chr(BytesToRead))
+    else
+      Result := FDevice.LeString(ATimeOut, BytesToRead);
+  finally
+    FDevice.TimeOutMilissegundos := OldTimeOut;
+  end;
 
   GravarLog('RX <- '+Result, True);
 end;
@@ -1320,30 +1330,42 @@ begin
   Result := FPosPrinterClass.TagsNaoSuportadas;
 end;
 
-function TACBrPosPrinter.LerStatusImpressora: TACBrPosPrinterStatus;
+function TACBrPosPrinter.LerStatusImpressora(Tentativas: Integer
+  ): TACBrPosPrinterStatus;
 var
   OldAtivo: Boolean;
+  Falhas: Integer;
 begin
-  Result := [];
+  Tentativas := max(Tentativas, 1);
+
+  if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
+  begin
+    Result := [stNaoSerial];
+    Exit;
+  end;
 
   OldAtivo := Ativo;
   try
     Ativo := True;
+    Falhas := 0;
 
-    if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
-      Result := Result + [stNaoSerial];
-
-    if Result = [] then
+    while Falhas < Tentativas do
     begin
+      Result := [];
       FPosPrinterClass.LerStatus( Result );
 
-      if ConfigGaveta.SinalInvertido then
-      begin
-        if (stGavetaAberta in Result) then
-          Result := Result - [stGavetaAberta]
-        else
-          Result := Result + [stGavetaAberta];
-      end;
+      if stErroLeitura in Result then
+        Inc( Falhas )
+      else
+        Break;
+    end;
+
+    if ConfigGaveta.SinalInvertido then
+    begin
+      if (stGavetaAberta in Result) then
+        Result := Result - [stGavetaAberta]
+      else
+        Result := Result + [stGavetaAberta];
     end;
   finally
     Ativo := OldAtivo;

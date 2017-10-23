@@ -149,7 +149,7 @@ var
   AURL, Html: String;
 begin
   try
-    Self.HTTPGet('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/cnpjreva_solicitacao2.asp');
+    Self.HTTPGet('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/cnpjreva_solicitacao3.asp');
     Html := Self.RespHTTP.Text;
 
     AURL := 'http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/' +

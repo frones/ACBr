@@ -163,11 +163,14 @@ begin
       {$IfDef DEBUG_WINHTTP}
        WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Ajustando TimeOut: '+IntToStr(TimeOut));
       {$EndIf}
-      if not WinHttpSetOption( pSession,
-                               WINHTTP_OPTION_CONNECT_TIMEOUT,
-                               @TimeOut,
-                               SizeOf(TimeOut)) then
-        raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_CONNECT_TIMEOUT. Erro:' + GetWinInetError(GetLastError));
+      //if not WinHttpSetOption( pSession,
+      //                         WINHTTP_OPTION_CONNECT_TIMEOUT,
+      //                         @TimeOut,
+      //                         SizeOf(TimeOut)) then
+      //  raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_CONNECT_TIMEOUT. Erro:' + GetWinInetError(GetLastError));
+
+      if not WinHttpSetTimeouts( pSession, TimeOut, TimeOut, TimeOut, TimeOut) then
+        raise EACBrWinReqResp.Create('Falha ajustando Timeouts. Erro:' + GetWinInetError(GetLastError));
     end;
 
     if UseSSL then

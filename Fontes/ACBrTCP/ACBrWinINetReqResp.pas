@@ -133,6 +133,12 @@ begin
 
       if not InternetSetOption(pSession, INTERNET_OPTION_CONNECT_TIMEOUT, @TimeOut, SizeOf(TimeOut)) then
         raise EACBrWinReqResp.Create('Erro ao definir TimeOut de Conexão');
+
+      if not InternetSetOption(pSession, INTERNET_OPTION_SEND_TIMEOUT, @TimeOut, SizeOf(TimeOut)) then
+        raise EACBrWinReqResp.Create('Erro ao definir TimeOut de Conexão');
+
+      if not InternetSetOption(pSession, INTERNET_OPTION_RECEIVE_TIMEOUT, @TimeOut, SizeOf(TimeOut)) then
+        raise EACBrWinReqResp.Create('Erro ao definir TimeOut de Conexão');
     end;
 
     if APort = '' then

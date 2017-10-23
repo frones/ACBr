@@ -39,15 +39,34 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/10/2017
+-- ACBrDevice --
+[+] Adicionada a propriedade "TimeOutMilissegundos", para permitir definir um
+    TimeOut em milissegundos... o valor informado, será traduzido para "TimeOut"
+
+-- ACBrPosPrinter --
+[+] Adicionado em TACBrPosTipoStatus o item "stErroLeitura"
+[*] Método "LerStatusImpressora", modificado para receber como parâmetro, o número
+    de Tentativas. "Tentativas: Integer, default = 1"
+[*] Método "TxRx", modificado para definir corretamente o TimeOut de comunicação
+
+-- ACBrEscBematech, ACBrEscElgin, ACBrEscPosEpson, ACBrEscDaruma --
+[*] Método "LerStatus", modificado para retornar "stErroLeitura" e não "stErro",
+    quando houver falha na leitura da Serial
+
+-- ACBrEscPosEpson --
+[*] Método "LerStatus", modificado para não mais tentar leitura por 5 vezes.
+    (causando lentidão)
+
 Data: 20/10/2017
 -- ACBrETQ --
 [+] Inclusão de nova propriedade "Velocidade", baseada na contribuição do usuário conforme:
     https://www.projetoacbr.com.br/forum/topic/39446-definir-velocidade-de-impressão-ppla-e-epl2/
-	(por: Marcelo A. Rodrigues)
+    (por: Marcelo A. Rodrigues)
 	
 -- ACBrETQClass, ACBrETQPpla, ACBrETQEpl2 --
 [+] Implementação da nova propriedade "Velocidade".
-	(por: Marcelo A. Rodrigues)
+    (por: Marcelo A. Rodrigues)
 
 Data: 06/10/2017
 -- ACBrPosPrinter --

@@ -2363,7 +2363,7 @@ begin
   case AItem.schema of
     schprocEventoMDFe:
       Result := FPConfiguracoesMDFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
-                                                           AItem.resMDFe.CNPJCPF,
+                                                           AItem.procEvento.CNPJ,
                                                            Data);
 
     schprocMDFe:

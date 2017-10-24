@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/10/2017
+-- ACBrMDFeWebServices --
+[*] Correção, não identificava corretamente Resumo de Evento e Evento Processado.
+   Por: Italo Jurisato Junior
+
 12/10/2017
 -- pmdfeMDFeW --
 [*] Correção na geração do grupo de documentos, não estava gerando quanto o

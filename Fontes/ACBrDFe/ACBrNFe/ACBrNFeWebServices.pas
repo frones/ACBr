@@ -3683,10 +3683,14 @@ begin
     Data := Now;
 
   case AItem.schema of
-    schresEvento,
+    schresEvento:
+      Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(AItem.resEvento.tpEvento,
+                                                          AItem.resEvento.CNPJCPF,
+                                                          Data);
+
     schprocEventoNFe:
       Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
-                                                          AItem.resNFe.CNPJCPF,
+                                                          AItem.procEvento.CNPJ,
                                                           Data);
 
     schresNFe,

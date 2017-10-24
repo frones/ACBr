@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/10/2017
+-- ACBrNFeWebServices --
+[*] Correção, não identificava corretamente Resumo de Evento e Evento Processado.
+   Por: Italo Jurisato Junior
+
 04/10/2017
 -- ACBrDANFCeFortesFr/ACBrNFeDANFeESCPOS --
 [*] Compatibilizado com Manual de Especificacoes Tecnicas do DANFE NFC-e QR Code  - Versao 4.2

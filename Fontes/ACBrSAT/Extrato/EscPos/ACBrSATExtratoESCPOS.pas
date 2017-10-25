@@ -86,6 +86,7 @@ type
     procedure ImprimirExtrato(ACFe : TCFe = nil); override;
     procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
+    function GerarImpressaoFiscalMFe(ACFe : TCFe = nil) : String;
   published
     property PosPrinter : TACBrPosPrinter read FPosPrinter write SetPosPrinter;
 
@@ -100,7 +101,7 @@ implementation
 
 uses
   strutils, math,
-  ACBrValidador, ACBrUtil, ACBrConsts, ACBrDFeUtil;
+  ACBrValidador, ACBrUtil, ACBrConsts, ACBrDFeUtil, ACBrSATClass;
 
 {$IFNDEF FPC}
    {$R ACBrSATExtratoESCPOS.dcr}
@@ -649,6 +650,36 @@ begin
   GerarDadosCancelamento;
 
   ImprimirCopias;
+end;
+
+function TACBrSATExtratoESCPOS.GerarImpressaoFiscalMFe(ACFe: TCFe): String;
+var
+  OldImprimeQRCode : Boolean;
+begin
+  SetInternalCFe( ACFe );
+  fpLayOut := lCompleto;
+
+  if (CFe = nil) or (CFe.infCFe.ID = '') then
+    raise EACBrSATErro.Create( 'Nenhum CFe carregado na memória' ) ;
+
+  OldImprimeQRCode := ImprimeQRCode;
+  try
+    ImprimeQRCode := False;
+
+    GerarCabecalho;
+    GerarItens;
+    GerarTotais;
+    GerarPagamentos;
+    GerarObsFisco;
+    GerarDadosEntrega;
+    GerarObsContribuinte;
+    GerarRodape;
+
+    Result := StripHTML(FBuffer.Text);
+  finally
+    FBuffer.clear;
+    ImprimeQRCode := OldImprimeQRCode;
+  end;
 end;
 
 procedure TACBrSATExtratoESCPOS.ImprimirExtratoResumido(ACFe: TCFe);

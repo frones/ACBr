@@ -109,13 +109,13 @@ type
     {$ENDIF}
     procedure SetSAT(const Value: TComponent);
 
-    procedure SetInternalCFe(ACFe: TCFe);
     procedure SetInternalCFeCanc(ACFeCanc: TCFeCanc);
     procedure VerificaExisteACBrSAT;
   protected
     fpAbout : String ;
     fpLayOut: TACBrSATExtratoLayOut;
 
+    procedure SetInternalCFe(ACFe: TCFe);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     property PrinterName    : String   read fPrinterName    write fPrinterName;
   public

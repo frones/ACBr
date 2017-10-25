@@ -770,9 +770,9 @@ begin
     FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
     vMDFe + '</enviMDFe>';
 
-  // Lote tem mais de 500kb ? //
-  if Length(FPDadosMsg) > (500 * 1024) then
-    GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
+  // Lote tem mais de 1024kb ? //
+  if Length(FPDadosMsg) > (1024 * 1024) then
+    GerarException(ACBrStr('Tamanho do XML de Dados superior a 1024 Kbytes. Tamanho atual: ' +
       IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
 
   FRecibo := '';

@@ -2981,6 +2981,7 @@ begin
   FEvento.idLote := idLote;
 
   FPRetWS := SeparaDadosArray(['nfeRecepcaoEventoResult',
+                               'nfeRecepcaoEventoNFResult',
                                'nfeResultMsg'],FPRetornoWS );
 
 

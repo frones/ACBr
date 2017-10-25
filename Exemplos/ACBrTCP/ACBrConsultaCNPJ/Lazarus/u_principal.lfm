@@ -9,7 +9,7 @@ object Fprincipal: TFprincipal
   ClientWidth = 706
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '1.6.2.0'
+  LCLVersion = '1.6.4.0'
   object Panel2: TPanel
     Left = 9
     Height = 329
@@ -555,8 +555,6 @@ object Fprincipal: TFprincipal
     top = 288
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
-    ProxyHost = 'proxy.djsystem.local'
-    ProxyPort = '3128'
     PesquisarIBGE = False
     left = 404
     top = 196

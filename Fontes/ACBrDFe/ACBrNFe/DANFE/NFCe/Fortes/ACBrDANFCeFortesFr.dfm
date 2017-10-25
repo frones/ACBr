@@ -1,6 +1,6 @@
 object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
-  Left = 513
-  Top = 117
+  Left = 545
+  Top = 150
   Width = 796
   Height = 926
   Caption = 'ACBrNFeDANFCeFortesFr'
@@ -579,17 +579,18 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Height = 41
         AutoSize = True
         object pLogoeCliche: TRLPanel
-          Left = 0
+          Left = 64
           Top = 0
-          Width = 286
+          Width = 222
           Height = 41
-          Align = faTop
+          Align = faClientTop
           AutoExpand = True
           AutoSize = True
+          BeforePrint = pLogoeClicheBeforePrint
           object lEndereco: TRLMemo
             Left = 0
             Top = 29
-            Width = 286
+            Width = 222
             Height = 12
             Align = faTop
             Alignment = taCenter
@@ -606,18 +607,17 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object imgLogo: TRLImage
             Left = 0
             Top = 0
-            Width = 286
+            Width = 222
             Height = 1
             Align = faTop
             AutoSize = True
             Center = True
-            Scaled = True
             Transparent = False
           end
           object lNomeFantasia: TRLMemo
             Left = 0
             Top = 1
-            Width = 286
+            Width = 222
             Height = 16
             Align = faTop
             Alignment = taCenter
@@ -635,7 +635,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           object lRazaoSocial: TRLMemo
             Left = 0
             Top = 17
-            Width = 286
+            Width = 222
             Height = 12
             Align = faTop
             Alignment = taCenter
@@ -649,6 +649,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
               'Raz'#227'o Social')
             ParentFont = False
           end
+        end
+        object pLogoLateral: TRLPanel
+          Left = 0
+          Top = 0
+          Width = 64
+          Height = 41
+          Align = faLeftTop
+          BeforePrint = pLogoLateralBeforePrint
         end
       end
       object rlbLegenda: TRLBand

@@ -713,22 +713,23 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
         object pLogoeCliche: TRLPanel
-          Left = 0
+          Left = 64
           Height = 41
           Top = 0
-          Width = 286
-          Align = faTop
+          Width = 222
+          Align = faClientTop
           AutoExpand = True
           AutoSize = True
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
           RealBounds.Height = 0
+          BeforePrint = pLogoeClicheBeforePrint
           object lEndereco: TRLMemo
             Left = 0
             Height = 12
             Top = 29
-            Width = 286
+            Width = 222
             Align = faTop
             Alignment = taCenter
             Behavior = [beSiteExpander]
@@ -748,7 +749,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             Left = 0
             Height = 1
             Top = 0
-            Width = 286
+            Width = 222
             Align = faTop
             AutoSize = True
             Center = True
@@ -756,14 +757,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             RealBounds.Top = 0
             RealBounds.Width = 0
             RealBounds.Height = 0
-            Scaled = True
             Transparent = False
           end
           object lNomeFantasia: TRLMemo
             Left = 0
             Height = 16
             Top = 1
-            Width = 286
+            Width = 222
             Align = faTop
             Alignment = taCenter
             Behavior = [beSiteExpander]
@@ -785,7 +785,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             Left = 0
             Height = 12
             Top = 17
-            Width = 286
+            Width = 222
             Align = faTop
             Alignment = taCenter
             Behavior = [beSiteExpander]
@@ -801,6 +801,18 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             RealBounds.Width = 0
             RealBounds.Height = 0
           end
+        end
+        object pLogoLateral: TRLPanel
+          Left = 0
+          Height = 41
+          Top = 0
+          Width = 64
+          Align = faLeftTop
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          BeforePrint = pLogoLateralBeforePrint
         end
       end
       object rlbLegenda: TRLBand

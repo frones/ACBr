@@ -135,6 +135,7 @@ type
     rlbTotalAcrescimo: TRLBand;
     rlbTotalAPagar: TRLBand;
     rlbTotalDesconto: TRLBand;
+    pLogoLateral: TRLPanel;
     rlpDadosQRCodeLateral: TRLPanel;
     rlpImgQRCodeLateral: TRLPanel;
     rlVenda: TRLReport;
@@ -222,6 +223,8 @@ type
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure pLogoeClicheBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure pLogoLateralBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbChaveDeAcessoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbMsgContingenciaBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -683,7 +686,7 @@ begin
   fNumObs   := 0;
   fObsFisco.Clear;
 
-  imgLogo.Height:=100;
+  imgLogo.Height := 100;
 
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
@@ -696,6 +699,11 @@ begin
 
     if ACBrNFeDANFCeFortes.Logo <> '' then
     begin
+      if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
+        imgLogo.Parent := pLogoLateral
+      else
+        imgLogo.Parent := pLogoeCliche;
+
       imgLogo.Height := ACBrNFeDANFCeFortes.TamanhoLogoHeight ;
       imgLogo.Width := ACBrNFeDANFCeFortes.TamanhoLogoWidth ;
       imgLogo.AutoSize := ACBrNFeDANFCeFortes.ExpandirLogoMarca ;
@@ -1093,6 +1101,43 @@ begin
   PrintIt := not Resumido;
 end;
 
+procedure TACBrNFeDANFCeFortesFr.pLogoeClicheBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  pLogoLateral.Visible := ACBrNFeDANFCeFortes.ImprimeLogoLateral;
+  if not ACBrNFeDANFCeFortes.ImprimeLogoLateral then
+    pLogoLateral.Width := 0;
+
+{  if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
+  begin
+    pLogoLateral.Visible := True;
+    pLogoeCliche.Align := faClientTop;
+  end
+  else
+  begin
+    pLogoLateral.Visible := False;
+    pLogoeCliche.Align := faTop;
+  end;
+ }
+end;
+
+procedure TACBrNFeDANFCeFortesFr.pLogoLateralBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := ACBrNFeDANFCeFortes.ImprimeLogoLateral;
+
+  pLogoLateral.Visible := PrintIt;
+
+  if PrintIt then
+  begin
+    pLogoLateral.Height := imgLogo.Height ;
+    pLogoLateral.Width  := imgLogo.Width ;
+    imgLogo.Parent := pLogoLateral;
+  end
+  else
+    pLogoLateral.Width := 0;
+end;
+
 procedure TACBrNFeDANFCeFortesFr.rlbConsumidorCancBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
@@ -1194,7 +1239,7 @@ begin
   fNumObs   := 0;
   fObsFisco.Clear;
 
-  imgLogo.Height:=100;
+  imgLogo.Height := 100;
 
   with ACBrNFeDANFCeFortes.FpNFe do
   begin

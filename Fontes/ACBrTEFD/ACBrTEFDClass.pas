@@ -496,6 +496,7 @@ type
      fpNFCeSAT: TACBrTEFDRespNFCeSAT;
      fpIdPagamento : LongInt;
      fpIdRespostaFiscal : LongInt;
+     fpSerialPOS: String;
 
      procedure SetCNFEnviado(const AValue : Boolean);
      procedure SetIndiceFPG_ECF(const AValue : String);
@@ -598,6 +599,7 @@ type
      property NFCeSAT: TACBrTEFDRespNFCeSAT read fpNFCeSAT;
      property IdPagamento : Integer read fpIdPagamento  write fpIdPagamento ;
      property IdRespostaFiscal : Integer read fpIdRespostaFiscal  write fpIdRespostaFiscal ;
+     property SerialPOS : String read fpSerialPOS  write fpSerialPOS ;
    end;
 
    { TACBrTEFDRespTXT }
@@ -1373,6 +1375,7 @@ begin
    fpNFCeSAT.Clear;
    fpIdPagamento := 0;
    fpIdRespostaFiscal := 0;
+   fpSerialPOS := '';
 end;
 
 procedure TACBrTEFDResp.LeArquivo(const NomeArquivo : String);
@@ -1574,6 +1577,7 @@ begin
             103 : fpValorTotal       := fpValorTotal + Linha.Informacao.AsFloat;
             500 : fpIdPagamento      := Linha.Informacao.AsInteger ;
             501 : fpIdRespostaFiscal := Linha.Informacao.AsInteger ;
+            502 : fpSerialPOS        := Linha.Informacao.AsString ;
           end;
         end;
        999 : fpTrailer           := Linha.Informacao.AsString ;

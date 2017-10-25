@@ -289,7 +289,7 @@ begin
 
       // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
       // atributo URI ao realizar a assinatura.
-      if i > 0 then
+      if (i > 0) and (NFSe.InfID.ID <> '') then
         FXMLAssinado := Copy(FXMLAssinado, 1, i+4) + '#' + NFSe.InfID.ID +
                         Copy(FXMLAssinado, i+5, length(FXMLAssinado));
 

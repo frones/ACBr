@@ -314,18 +314,24 @@ begin
 
   fACBrNFeDANFCeFortes          := TACBrNFeDANFCeFortes(Owner) ;  // Link para o Pai
 
-  //Pega as marges que for defina na classe pai.
-  rlVenda.PageSetup.PaperWidth  := fACBrNFeDANFCeFortes.LarguraBobina/3.775;
-  rlVenda.InsideMargins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
-  rlVenda.InsideMargins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
-  rlVenda.InsideMargins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
-  rlVenda.InsideMargins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
+  with fACBrNFeDANFCeFortes do
+  begin
+    //Pega as marges que for defina na classe pai.
+    rlVenda.PageSetup.PaperWidth  := LarguraBobina/3.775;
+    rlVenda.Width                 := LarguraBobina;
+    rlVenda.Margins.LeftMargin    := MargemEsquerda ;
+    rlVenda.Margins.RightMargin   := MargemDireita ;
+    rlVenda.Margins.TopMargin     := MargemSuperior ;
+    rlVenda.Margins.BottomMargin  := MargemInferior ;
 
-  rlCancelamento.PageSetup.PaperWidth  := fACBrNFeDANFCeFortes.LarguraBobina/3.775;
-  rlCancelamento.InsideMargins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
-  rlCancelamento.InsideMargins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
-  rlCancelamento.InsideMargins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
-  rlCancelamento.InsideMargins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
+    rlCancelamento.PageSetup.PaperWidth  := LarguraBobina/3.775;
+    rlCancelamento.Width                 := LarguraBobina;
+    rlCancelamento.Margins.LeftMargin    := MargemEsquerda ;
+    rlCancelamento.Margins.RightMargin   := MargemDireita ;
+    rlCancelamento.Margins.TopMargin     := MargemSuperior ;
+    rlCancelamento.Margins.BottomMargin  := MargemInferior ;
+  end;
+
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlVendaDataRecord(Sender: TObject;
@@ -694,7 +700,7 @@ begin
     if lNomeFantasia.Visible then;
       lNomeFantasia.Lines.Text:= Emit.xFant ;
 
-    lRazaoSocial.Lines.Text := FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
+    lRazaoSocial.Lines.Text := 'CNPJ: '+FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
 
     if ACBrNFeDANFCeFortes.Logo <> '' then

@@ -43,6 +43,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2017
+[*] Ajuste no Retorno de Evento de NFe
+        Descrição e tipo de retorno inconsistentes (DoACBRNFe)
+	por: José M. S. Junior
+
+20/10/2017
+[*] Ajuste no metodo Encerrar MDFe Versão 3.0
+        Não esta permitindo consultar MDFe da versão anterior, assim não conseguia encerrar,
+        adicionado validações e parâmetro para campo Protocolo
+	por: José M. S. Junior
+
 20/09/2017
 [+] Adicionado Funcionalidade de chamada de Ajuda nas telas (F1). Através do .chm, utilizando lhelp do lazarus
 	por: José M. S. Junior

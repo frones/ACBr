@@ -258,8 +258,8 @@ begin
                                 'cOrgao='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.cOrgao)+sLineBreak+
                                 'cStat='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.cStat)+sLineBreak+
                                 'xMotivo='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.xMotivo+sLineBreak+
-                                'chNFe='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.NomeArquivo+sLineBreak+
-                                'tpEvento='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.chNFe+sLineBreak+
+                                'chNFe='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.chNFe+sLineBreak+
+                                'tpEvento='+TpEventoToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.tpEvento)+sLineBreak+
                                 'xEvento='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.xEvento+sLineBreak+
                                 'nSeqEvento='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.nSeqEvento)+sLineBreak+
                                 'CNPJDest='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.CNPJDest+sLineBreak+

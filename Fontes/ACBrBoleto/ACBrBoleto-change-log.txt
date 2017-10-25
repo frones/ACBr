@@ -46,6 +46,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+Data 24/10/2017 ver: 0.0.234
+-- ACBrBancoBancoob
+[*] Ajuste no arquivo de Retorno - Leitura campo Conta Corrente
+    por: José M. S. Junior
 
 Data 20/10/2017 ver: 0.0.234
 -- ACBrBoleto

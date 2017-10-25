@@ -434,7 +434,7 @@ begin
 
    rCedente := trim(Copy(ARetorno[0],73,30));
    rAgencia := trim(Copy(ARetorno[0],53,5));
-   rConta   := trim(Copy(ARetorno[0],63,08));
+   rConta   := trim(Copy(ARetorno[0],59,12));
    rDigitoConta := Copy(ARetorno[0],71,1);
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 158, 6), 0);
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2017
+-- pcteRetDistDFeInt --
+[*] Correção, para a leitura do valor da prestação.
+   Por: Cleyton
+
 23/10/2017
 -- ACBrCTeWebServices --
 [*] Correção, não identificava corretamente Resumo de Evento e Evento Processado.

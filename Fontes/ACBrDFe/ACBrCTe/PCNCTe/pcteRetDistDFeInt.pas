@@ -492,12 +492,14 @@ begin
 
             oLeitorInfZip.rExtrai(1, 'ide');
             FdocZip.Items[i].FresCTe.FdhEmi := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
+
             (*
             FdocZip.Items[i].FresCTe.FtpNF := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
-
-            oLeitorInfZip.rExtrai(1, 'total');
-            FdocZip.Items[i].FresCTe.FvNF := oLeitorInfZip.rCampo(tcDe2, 'vNF');
             *)
+
+            oLeitorInfZip.rExtrai(1, 'vPrest');
+            FdocZip.Items[i].FresCTe.FvNF := oLeitorInfZip.rCampo(tcDe2, 'vTPrest');
+
             oLeitorInfZip.rExtrai(1, 'infProt');
             FdocZip.Items[i].FresCTe.digVal    := oLeitorInfZip.rCampo(tcStr, 'digVal');
             FdocZip.Items[i].FresCTe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');

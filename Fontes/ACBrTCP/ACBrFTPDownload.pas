@@ -157,7 +157,7 @@ begin
     end;
     // FTP Login
     if not fFTPSend.Login then
-      Exit;
+      raise Exception.Create('Não foi possível efetuar o login!');
 
 //    if fProxy.ProxyHost <> '' then
 //    begin

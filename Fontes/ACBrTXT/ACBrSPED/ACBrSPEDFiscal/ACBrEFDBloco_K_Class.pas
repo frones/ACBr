@@ -536,7 +536,7 @@ begin
   FRegistroK235Count := 0;
   FRegistroK250Count := 0;
   FRegistroK255Count := 0;
-
+  FRegistroK280Count := 0;
   FRegistroK990.QTD_LIN_K := 0;
 end;
 

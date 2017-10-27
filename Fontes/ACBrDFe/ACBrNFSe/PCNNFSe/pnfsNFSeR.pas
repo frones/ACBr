@@ -1364,6 +1364,8 @@ begin
       NFSe.OutrasInformacoes := Leitor.rCampo(tcStr, 'OutrasInformacoes');
       NFSe.ValorCredito      := Leitor.rCampo(tcDe2, 'ValorCredito');
 
+      NFSe.InformacoesComplementares := Leitor.rCampo(tcStr, 'InformacoesComplementares');
+
       if FProvedor = proVitoria then
         NFSe.IncentivadorCultural := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivoFiscal'))
       else

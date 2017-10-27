@@ -768,8 +768,10 @@ type
     FFrmRec: TnfseFrmRec; //String;
     FTipoTributacaoRPS: TnfseTTributacaoRPS;
     FAssinatura: String;
+    FInformacoesComplementares: String;
 
     procedure Setemail(const Value: TemailCollection);
+    procedure SetInformacoesComplementares(const Value: String);
 
   public
     constructor Create;
@@ -806,6 +808,7 @@ type
     property Competencia: String read FCompetencia write FCompetencia;
     property NfseSubstituida: String read FNfseSubstituida write FNfseSubstituida;
     property OutrasInformacoes: String read FOutrasInformacoes write FOutrasInformacoes;
+    property InformacoesComplementares: String read FInformacoesComplementares write SetInformacoesComplementares;
     property ValorCredito: Currency read FValorCredito write FValorCredito;
     property PrestadorServico: TDadosPrestador read FPrestadorServico write FPrestadorServico;
     property OrgaoGerador: TIdentificacaoOrgaoGerador read FOrgaoGerador write FOrgaoGerador;
@@ -1047,6 +1050,7 @@ begin
  FCompetencia                  := '';
  FNfseSubstituida              := '';
  FOutrasInformacoes            := '';
+ FInformacoesComplementares    := '';
  FValorCredito                 := 0;
  FPrestadorServico             := TDadosPrestador.Create(self);
  FOrgaoGerador                 := TIdentificacaoOrgaoGerador.Create;
@@ -1097,6 +1101,11 @@ begin
  FTransportadora.Free;
 
  inherited Destroy;
+end;
+
+procedure TNFSe.SetInformacoesComplementares(const Value: String);
+begin
+  FInformacoesComplementares := Value;
 end;
 
 procedure TNFSe.Setemail(const Value: TemailCollection);

@@ -36,6 +36,10 @@
 |*
 |* 14/02/2014: Juliomar Marchetti
 |*  - Criação bloco K - alterado
+|*
+|* 26/10/2017 - (Edilson) - Validação K270, K275 e K280:
+|*  - Não enviar valor negativo, enviar somente um dos valores positivo ou
+|*    negativo.
 *******************************************************************************}
 
 unit ACBrEFDBloco_K_Class;
@@ -456,8 +460,8 @@ begin
                LFill( DT_FIN_AP ) +
                LFill( COD_OP_OS ) +
                LFill( COD_ITEM ) +
-               DFill( QTD_COR_POS , 3 ) +
-               DFill( QTD_COR_NEG , 3 ) +
+               DFill( QTD_COR_POS , 3 ,(QTD_COR_POS<=0)) +
+               DFill( QTD_COR_NEG , 3 ,(QTD_COR_NEG<=0)) +
                LFill( ORIGEM ));
 
 		      WriteRegistroK275(RegK100.RegistroK270.Items[intFor]);
@@ -481,8 +485,8 @@ begin
         begin
           Add( LFill('K275') +
                LFill( COD_ITEM  ) +
-               DFill( QTD_COR_POS , 3 ) +
-               DFill( QTD_COR_NEG , 3 ) +
+               DFill( QTD_COR_POS , 3 ,(QTD_COR_POS<=0)) +
+               DFill( QTD_COR_NEG , 3 ,(QTD_COR_NEG<=0)) +
                LFill( COD_INS_SUBST ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
@@ -508,8 +512,8 @@ begin
           Add( LFill('K280') +
                LFill( DT_EST ) +
                LFill( COD_ITEM ) +
-               DFill( QTD_COR_POS , 3 ) +
-               DFill( QTD_COR_NEG , 3 ) +
+               DFill( QTD_COR_POS , 3 ,(QTD_COR_POS<=0)) +
+               DFill( QTD_COR_NEG , 3 ,(QTD_COR_NEG<=0)) +
                LFill( Integer(IND_EST), 0 ) +
                LFill( COD_PART ));
         end;

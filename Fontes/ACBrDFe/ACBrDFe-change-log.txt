@@ -44,7 +44,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-23/20/2017
+27/10/2017
+-- ACBrDFeSSL, ACBrDFeXsMsXml, ACBrDFeXsXmlSec, ACBrDFeXsMsXmlCapicom --
+[*] Classe "TDFeSSLXmlSignClass", adicionado o parâmetro "IdAttr" nos métodos:
+    AdicionarSignatureElement, Assinar e VerificarAssinatura.
+
+-- ACBrDFeUtil --
+[*] Método "ExtraiURI", nome do parâmetro "IdSignature" modificado para "IdAttr"
+    (por: Renato Rubinho)
+    https://www.projetoacbr.com.br/forum/topic/38501-acbrreinf-fontes/?do=findComment&comment=260051
+
+
+23/10/2017
 -- ACBrDFeWebService --
 [*] Ajuste no método: "TDFeWebService.EnviarDados"... para não verificar a validade
     do certificado dentro do Loop

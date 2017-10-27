@@ -53,7 +53,7 @@ type
    public
      function Assinar(const ConteudoXML, docElement, infElement: String;
        SignatureNode: String = ''; SelectionNamespaces: String = '';
-       IdSignature: String = ''): String; override;
+       IdSignature: String = ''; IdAttr: String = ''): String; override;
    end;
 
 
@@ -68,7 +68,7 @@ uses
 
 function TDFeSSLXmlSignMsXmlCapicom.Assinar(const ConteudoXML, docElement,
   infElement: String; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String): String;
+  IdSignature: String; IdAttr: String): String;
 var
   AXml, XmlAss: AnsiString;
   xmldoc: IXMLDOMDocument3;
@@ -98,7 +98,7 @@ begin
 
     // Inserindo Template da Assinatura digital //
     if (not XmlEstaAssinado(AXml)) or (SignatureNode <> CSIGNATURE_NODE) then
-      AXml := AdicionarSignatureElement(AXml, False, docElement, IdSignature);
+      AXml := AdicionarSignatureElement(AXml, False, docElement, IdSignature, IdAttr);
 
     try
       // Criando XMLDOC //

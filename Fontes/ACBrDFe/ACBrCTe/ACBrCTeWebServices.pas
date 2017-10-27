@@ -162,6 +162,8 @@ type
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: Integer read FTMed;
     property Lote: String read GetLote write FLote;
+    
+    property CTeRetornoOS: TRetConsSitCTe read FCTeRetornoOS;
   end;
 
   { TCTeRetRecepcao }

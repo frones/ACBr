@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2017
+-- ACBrBPeWebServices --
+[*] No método Enviar estava gerando o nome da tag bpeDadosMsg com "Zip" no final,
+    foi removido pois tudo indica que alterarão o web services.
+   Por: Italo Jurisato Junior
+
 05/10/2017
 -- Diversos -- 
 [*] Alterações para deixar o componente em conformidade com a Nota Técnica

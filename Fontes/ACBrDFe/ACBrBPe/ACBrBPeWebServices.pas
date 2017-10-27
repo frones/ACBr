@@ -462,7 +462,7 @@ procedure TBPeStatusServico.DefinirDadosMsg;
 var
   ConsStatServ: TConsStatServ;
 begin
-  FPBodyElement := 'bpeDadosMsg';
+//  FPBodyElement := 'bpeDadosMsg';
 
   ConsStatServ := TConsStatServ.Create;
   try
@@ -652,7 +652,7 @@ end;
 
 procedure TBPeRecepcao.DefinirDadosMsg;
 begin
-  FPBodyElement := 'bpeDadosMsgZip';
+//  FPBodyElement := 'bpeDadosMsgZip';
 
   // No envio só podemos ter apena UM BP-e, pois o seu processamento é síncrono
   if FBilhetes.Count > 1 then
@@ -941,7 +941,7 @@ procedure TBPeConsulta.DefinirDadosMsg;
 var
   ConsSitBPe: TConsSitBPe;
 begin
-  FPBodyElement := 'bpeDadosMsg';
+//  FPBodyElement := 'bpeDadosMsg';
 
   ConsSitBPe := TConsSitBPe.Create;
   try
@@ -1348,7 +1348,7 @@ var
   I, F: Integer;
   Lote, Evento, Eventos, EventosAssinados: AnsiString;
 begin
-  FPBodyElement := 'bpeDadosMsg';
+//  FPBodyElement := 'bpeDadosMsg';
 
   EventoBPe := TEventoBPe.Create;
   try
@@ -1646,7 +1646,7 @@ procedure TDistribuicaoDFe.DefinirDadosMsg;
 var
   DistDFeInt: TDistDFeInt;
 begin
-  FPBodyElement := 'bpeDadosMsg';
+//  FPBodyElement := 'bpeDadosMsg';
 
   DistDFeInt := TDistDFeInt.Create;
   try

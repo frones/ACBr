@@ -797,30 +797,40 @@ begin
       if (Item mod 2) = 0 then
       begin
         cdsDocumentos.Append;
-        // TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdOutros);
+        // TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdCFeSAT, tdNFCe, tdOutros);
         case tpDoc of
          tdDeclaracao: begin
                         cdsDocumentos.FieldByname('TIPO_1').AsString      := 'DECLAR';
                         cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := ACBrStr( 'Declaração Doc.: ' ) + nDoc;
                        end;
+         tdCFeSAT    : begin
+                        cdsDocumentos.FieldByname('TIPO_1').AsString      := 'CF-e SAT ';
+                        cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
+                        cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := ACBrStr( 'CF-e SAT.: ' ) + nDoc;
+                       end;
+         tdNFCe      : begin
+                        cdsDocumentos.FieldByname('TIPO_1').AsString      := 'NFC-e ' + copy(trim(descOutros), 26, 9);
+                        cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarChaveAcesso(trim(descOutros));
+                       end;
          tdDutoviario: begin
                         cdsDocumentos.FieldByname('TIPO_1').AsString      := 'DUTO';
                         cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := ACBrStr( 'Dutoviário Doc.: ' ) + nDoc;
                        end;
-         tdOutros:     begin
+         tdOutros    : begin
                         cdsDocumentos.FieldByname('TIPO_1').AsString      := 'Outros';
                         cdsDocumentos.FieldByname('CNPJCPF_1').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := copy( trim(descOutros), 1, 20 ) + ' Doc.: '+ nDoc;
                        end;
+
         end;
 //        cdsDocumentos.FieldByname('TIPO_1').AsString := descOutros;
 //        cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarCNPJCPF(FCTe.Rem.CNPJCPF);
       end
       else
       begin
-        // TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdOutros);
+        // TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdCFeSAT, tdNFCe, tdOutros);
         case tpDoc of
          tdDeclaracao: begin
                         cdsDocumentos.FieldByname('TIPO_2').AsString      := 'DECLAR';
@@ -832,7 +842,16 @@ begin
                         cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := ACBrStr( 'Dutoviário Doc.: ' ) + nDoc;
                        end;
-         tdOutros:     begin
+         tdCFeSAT    : begin
+                        cdsDocumentos.FieldByname('TIPO_2').AsString      := 'CF-e SAT ';
+                        cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
+                        cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := ACBrStr( 'CF-e SAT.: ' ) + nDoc;
+                       end;
+         tdNFCe      : begin
+                        cdsDocumentos.FieldByname('TIPO_2').AsString      := 'NFC-E ' + copy(trim(descOutros), 26, 9);
+                        cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarChaveAcesso(trim(descOutros));
+                       end;
+         tdOutros    : begin
                         cdsDocumentos.FieldByname('TIPO_2').AsString      := 'Outros';
                         cdsDocumentos.FieldByname('CNPJCPF_2').AsString   := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
                         cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := copy( trim(descOutros), 1, 20 ) + ' Doc.: '+ nDoc;

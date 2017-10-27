@@ -271,6 +271,7 @@ type
     cbCryptLib: TComboBox;
     cbHttpLib: TComboBox;
     cbVersaoWSMDFe: TComboBox;
+    cbxImprimirQRCodeLateralNFCe: TCheckBox;
     cbXMLSignLib: TComboBox;
     cbSSLType: TComboBox;
     chkVerificarValidadeCertificado: TCheckBox;
@@ -4143,6 +4144,8 @@ begin
       Ini.ReadBool('NFCe', 'ImprimirDescAcresItem', True);
     cbxImpressoraNFCe.ItemIndex :=
       cbxImpressoraNFCe.Items.IndexOf(Ini.ReadString('NFCe', 'ImpressoraPadrao', '0'));
+    cbxImprimirQRCodeLateralNFCe.Checked :=
+      Ini.ReadBool('NFCe', 'QRCodeLateral', True);
 
     ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo       := edtLogoMarca.Text;
@@ -4940,6 +4943,7 @@ begin
     Ini.WriteBool('NFCe', 'ImprimirItem1Linha', cbxImprimirItem1LinhaNFCe.Checked);
     Ini.WriteBool('NFCe', 'ImprimirDescAcresItem', cbxImprimirDescAcresItemNFCe.Checked);
     Ini.WriteString('NFCe', 'ImpressoraPadrao', cbxImpressoraNFCe.Text);
+    Ini.WriteBool('NFCe', 'QRCodeLateral', cbxImprimirQRCodeLateralNFCe.Checked);
 
     Ini.WriteBool('Arquivos', 'Salvar', cbxSalvarArqs.Checked);
     Ini.WriteBool('Arquivos', 'PastaMensal', cbxPastaMensal.Checked);
@@ -7620,6 +7624,9 @@ begin
       ACBrNFeDANFCeFortes1.MargemSuperior        := fspeNFCeMargemSup.Value;
       ACBrNFeDANFCeFortes1.MargemDireita         := fspeNFCeMargemDir.Value;
       ACBrNFeDANFCeFortes1.MargemEsquerda        := fspeNFCeMargemEsq.Value;
+      ACBrNFeDANFCeFortes1.ImprimeEmUmaLinha     := cbxImprimirItem1LinhaNFCe.Checked;
+      ACBrNFEDANFCeFortes1.QRCodeLateral         := cbxImprimirQRCodeLateralNFCe.Checked;
+
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
         ACBrNFeDANFCeFortes1.Logo                := edtLogoMarcaNFCeSAT.Text
       else
@@ -7631,6 +7638,8 @@ begin
       ACBrNFeDANFeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
+      ACBrNFeDANFeESCPOS1.QRCodeLateral         := cbxImprimirQRCodeLateralNFCe.Checked;
+
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
         ACBrNFeDANFeESCPOS1.Logo                := edtLogoMarcaNFCeSAT.Text
       else

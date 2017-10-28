@@ -1262,9 +1262,10 @@ Formato ”CFOP9999”.</xs:documentation>
 															</xs:element>
 															<xs:element minOccurs="0" name="cAgreg">
 																<xs:simpleType>
-																	<xs:restriction base="xs:string">
-																		<xs:maxLength value="20"/>
-																	</xs:restriction>
+																		<xs:restriction base="xs:string">
+																			<xs:whiteSpace value="preserve"/>
+																			<xs:pattern value="[0-9]{1,20}"/>
+																		</xs:restriction>
 																</xs:simpleType>
 															</xs:element>
 														</xs:sequence>
@@ -1677,17 +1678,17 @@ N-NormalVIN</xs:documentation>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGLP" type="TDec_0302a04Max100">
+																<xs:element minOccurs="0" name="pGLP" type="TDec_0304Max100">
 																	<xs:annotation>
 																		<xs:documentation>Percentual do GLP derivado do petróleo no produto GLP (cProdANP=210203001). Informar em número decimal o percentual do GLP derivado de petróleo no produto GLP. Valores 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGNn" type="TDec_0302a04Max100">
+																<xs:element minOccurs="0" name="pGNn" type="TDec_0304Max100">
 																	<xs:annotation>
 																		<xs:documentation>Percentual de gás natural nacional - GLGNn para o produto GLP (cProdANP=210203001). Informar em número decimal o percentual do Gás Natural Nacional - GLGNn para o produto GLP. Valores de 0 a 100.</xs:documentation>
 																	</xs:annotation>
 																</xs:element>
-																<xs:element minOccurs="0" name="pGNi" type="TDec_0302a04Max100">
+																<xs:element minOccurs="0" name="pGNi" type="TDec_0304Max100">
 																	<xs:annotation>
 																		<xs:documentation>Percentual de gás natural importado GLGNi para o produto GLP (cProdANP=210203001). Informar em número deciaml o percentual do Gás Natural Importado - GLGNi para o produto GLP. Valores de 0 a 100.</xs:documentation>
 																	</xs:annotation>
@@ -4941,7 +4942,7 @@ Substituição Tributaria;</xs:documentation>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
-												<xs:element minOccurs="0" name="vPag" type="TDec_1302">
+												<xs:element name="vPag" type="TDec_1302">
 													<xs:annotation>
 														<xs:documentation>Valor do Pagamento. Esta tag poderá ser omitida quando a tag tPag=90 (Sem Pagamento), caso contrário deverá ser preenchida.</xs:documentation>
 													</xs:annotation>
@@ -6271,17 +6272,6 @@ alterado para tamanho variavel 1-4. (NT2011/004)</xs:documentation>
 			<xs:documentation>Tipo: Dados do IPI</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element minOccurs="0" name="clEnq">
-				<xs:annotation>
-					<xs:documentation>Classe de Enquadramento do IPI para Cigarros e Bebidas</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="TString">
-						<xs:minLength value="1"/>
-						<xs:maxLength value="5"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
 			<xs:element minOccurs="0" name="CNPJProd" type="TCnpj">
 				<xs:annotation>
 					<xs:documentation>CNPJ do produtor da mercadoria, quando diferente do emitente. Somente para os casos de exportação direta ou indireta.</xs:documentation>

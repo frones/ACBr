@@ -58,7 +58,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnConversaoBPe, pcnSignature, pcnProcBPe, pcnGerador;
+  pcnConversao, pcnConversaoBPe, pcnSignatureBPe, pcnProcBPe, pcnGerador;
 
 type
 

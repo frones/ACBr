@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2017
+-- ACBrBPeWebServices / pcnBPe / pcnSignatureBPe --
+[*] Adicionado a unit pcnSignatureBPe, pois o valor da URI na assinatura estava
+    errada, costava NFe em vez de BPe, trocado a unit da Signature em pcnBPe e 
+    feita correções em ACBrBPeWebServices pois estava gerando AV quando o BPe
+    é rejeitado.
+   Por: Italo Jurisato Junior
+
 26/10/2017
 -- ACBrBPeWebServices --
 [*] No método Enviar estava gerando o nome da tag bpeDadosMsg com "Zip" no final,

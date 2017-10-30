@@ -717,22 +717,16 @@ begin
   FTpAmb    := FBPeRetorno.TpAmb;
   FverAplic := FBPeRetorno.verAplic;
   FcUF      := FBPeRetorno.cUF;
-  chBPe     := FBPeRetorno.ProtBPe[0].chBPe;
+  FcStat    := FBPeRetorno.cStat;
+  FPMsg     := FBPeRetorno.xMotivo;
+  FxMotivo  := FBPeRetorno.xMotivo;
 
-  if (FBPeRetorno.protBPe[0].cStat > 0) then
-    FcStat := FBPeRetorno.protBPe[0].cStat
-  else
-    FcStat := FBPeRetorno.cStat;
-
-  if (FBPeRetorno.protBPe[0].xMotivo <> '') then
+  if FBPeRetorno.ProtBPe.Count > 0 then
   begin
-    FPMsg := FBPeRetorno.protBPe[0].xMotivo;
+    chBPe    := FBPeRetorno.ProtBPe[0].chBPe;
+    FcStat   := FBPeRetorno.protBPe[0].cStat;
+    FPMsg    := FBPeRetorno.protBPe[0].xMotivo;
     FxMotivo := FBPeRetorno.protBPe[0].xMotivo;
-  end
-  else
-  begin
-    FPMsg := FBPeRetorno.xMotivo;
-    FxMotivo := FBPeRetorno.xMotivo;
   end;
 
   // Verificar se o BP-e foi autorizado com sucesso

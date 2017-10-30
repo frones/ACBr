@@ -82,7 +82,14 @@ requires
   xmlrtl,
   inet,
   dbrtl,
-  dsnap;
+  dsnap,
+  ACBr_PCNComum,
+  ACBr_Diversos,
+  ACBr_Comum,
+  ACBr_synapse,
+  ACBr_SM,
+  ACBr_TCP,
+  ACBr_OpenSSL;
 
 contains
   ACBrBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPe.pas',
@@ -106,6 +113,7 @@ contains
   pcnRetConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsSitBPe.pas',
   pcnRetEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvEventoBPe.pas',
   pcnRetDistDFeIntBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetDistDFeIntBPe.pas',
-  ACBrBPeDABPEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas';
+  ACBrBPeDABPEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas',
+  pcnSignatureBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnSignatureBPe.pas';
 
 end.

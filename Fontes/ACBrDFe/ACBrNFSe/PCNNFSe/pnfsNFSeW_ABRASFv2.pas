@@ -750,7 +750,7 @@ begin
     end
     else
     begin
-      if FProvedor in [proActcon, proBethav2, proCoplan, proEReceita, proFiorilli,
+      if FProvedor in [proABase, proActcon, proBethav2, proCoplan, proEReceita, proFiorilli,
          proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
          proNEAInformatica, proNotaInteligente, proPronimv2,
          proProdata, proPVH, proSaatri, proSiam, proSisPMJP, proSystemPro,

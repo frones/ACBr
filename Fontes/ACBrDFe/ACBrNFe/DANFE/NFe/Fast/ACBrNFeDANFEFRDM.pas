@@ -594,7 +594,7 @@ var
 begin
   cdsDuplicatas.Close;
   cdsDuplicatas.CreateDataSet;
-  if Not ( fExibeCampoFatura and (FNFe.Ide.indPag = ipVista) ) then
+  if Not ( fExibeCampoFatura and (FNFe.Ide.indPag = ipVista) and (FNFe.infNFe.Versao <= 3.10) ) then
   Begin
 
     with cdsDuplicatas do
@@ -864,6 +864,7 @@ begin
       FieldByName('vSERV').AsFloat  := VServ;
       FieldByName('vBC').AsFloat    := VBC;
       FieldByName('vISS').AsFloat   := VISS;
+      FieldByName('vDescIncond').AsFloat := vDescIncond;
     end;
     Post;
   end;
@@ -930,6 +931,7 @@ var
   vChave_Contingencia : String;
   vStream             : TMemoryStream;
   vStringStream       : TStringStream;
+  P: Integer;
 begin
   { parâmetros }
   with cdsParametros do
@@ -1015,10 +1017,27 @@ begin
                         if EstaVazio(FNFe.procNFe.nProt) then
                           FieldByName('Contingencia_Valor').AsString := ACBrStr('NFe sem Autorização de Uso da SEFAZ')
                         else
+                        begin
                           FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                          FieldByName('nProt').AsString := FNFe.procNfe.nProt;
+                          FieldByName('dhRecbto').AsDateTime := FNFe.procNFe.dhRecbto;
+                        end;
                       end
                       else
+                      begin
                         FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
+                        P := Pos('-', FDANFEClassOwner.ProtocoloNFe);
+                        if P = 0 then
+                        begin
+                          FieldByName('nProt').AsString := Trim(FDANFEClassOwner.ProtocoloNFe);
+                          FieldByName('dhRecbto').AsDateTime := 0;
+                        end
+                        else
+                        begin
+                          FieldByName('nProt').AsString := Trim(Copy(FDANFEClassOwner.ProtocoloNFe, 1, P - 1));
+                          FieldByName('dhRecbto').AsDateTime := StringToDateTimeDef(Trim(Copy(FDANFEClassOwner.ProtocoloNFe, P + 1)), 0, 'dd/mm/yyyy hh:nn:ss');
+                        end;
+                      end;
                     end;
 
         teContingencia ,
@@ -1047,6 +1066,8 @@ begin
 
          teOffLine: begin
                       FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                      FieldByName('nProt').AsString := FNFe.procNfe.nProt;
+                      FieldByName('dhRecbto').AsDateTime := FNFe.procNFe.dhRecbto;
                     end;
       end;
 
@@ -1431,7 +1452,7 @@ begin
      begin
         DataSet := cdsDestinatario;
         OpenDataSource := False;
-        Enabled := False; 
+        Enabled := False;
         UserName := 'Destinatario';
      end;
      with cdsDestinatario do
@@ -1464,7 +1485,7 @@ begin
      begin
         DataSet := cdsDadosProdutos;
         OpenDataSource := False;
-        Enabled := False; 
+        Enabled := False;
         UserName := 'DadosProdutos';
      end;
      with cdsDadosProdutos do
@@ -1525,7 +1546,7 @@ begin
      begin
         DataSet         := cdsParametros;
         OpenDataSource  := False;
-        Enabled := False; 
+        Enabled := False;
         UserName        := 'Parametros';
      end;
      with cdsParametros do
@@ -1561,6 +1582,8 @@ begin
         FieldDefs.Add('QtdeItens', ftInteger);
         FieldDefs.Add('ExpandirDadosAdicionaisAuto', ftString, 1);
         FieldDefs.Add('ImprimeDescAcrescItem', ftInteger);
+        FieldDefs.Add('nProt', ftString, 30);
+        FieldDefs.Add('dhRecbto', ftDateTime);
         CreateDataSet;
      end;
    end;
@@ -1574,7 +1597,7 @@ begin
      begin
         DataSet := cdsDuplicatas;
         OpenDataSource := False;
-        Enabled := False; 
+        Enabled := False;
         UserName := 'Duplicatas';
      end;
      with cdsDuplicatas do
@@ -1726,6 +1749,7 @@ begin
          FieldDefs.Add('vSERV', ftFloat);
          FieldDefs.Add('vBC', ftFloat);
          FieldDefs.Add('vISS', ftFloat);
+         FieldDefs.Add('vDescIncond', ftFloat);
          CreateDataSet;
       end;
    end;

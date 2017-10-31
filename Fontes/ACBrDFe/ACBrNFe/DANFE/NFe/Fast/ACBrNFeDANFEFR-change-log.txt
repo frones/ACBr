@@ -45,6 +45,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2017
+-- ACBrNFeDANFEFRDM --
+[*] Ajuste para apresentar Dados de Fatura na versão 4.0.
+[*] Ajuste para apresentar numero de protocolo e data de recebimento
+    ( offLine /  teSVCSP )
+    	por: BigWings
+
+
 14/09/2017
 -- ACBrNFeDANFEFRDM --
 [*] Refatoração no DANFE para não mostrar a informação do pagamento na versão 4.0.

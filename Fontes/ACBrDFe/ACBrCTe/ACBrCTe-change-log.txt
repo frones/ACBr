@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2017
+-- pcteCTeW --
+[*] https://www.projetoacbr.com.br/forum/topic/39658-sugest%C3%A3o-de-ajuste-para-a-gera%C3%A7%C3%A3o-da-tag-dos-participantes-do-ct-e/
+   Por: Claudio Venancio / Italo Jurisato Junior
+
 27/10/2017
 -- ACBrCTeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/38912-cte-os-como-obter-os-dados-do-retorno-ap%C3%B3s-aprova%C3%A7%C3%A3o/?do=findComment&comment=260350

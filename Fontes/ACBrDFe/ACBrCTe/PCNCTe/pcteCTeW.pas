@@ -533,9 +533,9 @@ begin
     begin
       if (CTe.infCTe.versao >= 3) then
       begin
-        if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '4') then
+        if (CTe.ide.Toma03.Toma = tmOutros) then
         begin
-          if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+          if (CTe.ide.indIEToma <> inNaoContribuinte) then
             GeraIE;
         end
         else
@@ -827,9 +827,9 @@ begin
     begin
       if (CTe.infCTe.versao >= 3) then
       begin
-        if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '4') then
+        if (CTe.ide.Toma03.Toma = tmOutros) then
         begin
-          if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+          if (CTe.ide.indIEToma <> inNaoContribuinte) then
             GeraIE;
         end
         else
@@ -907,18 +907,21 @@ begin
       else
         Gerador.wCampo(tcStr, '#113', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-      if (CTe.infCTe.versao >= 3) then
+      if (Trim(CTe.Rem.IE) <> '') then
       begin
-        if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '0') then
+        if (CTe.infCTe.versao >= 3) then
         begin
-          if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+          if (CTe.ide.Toma03.Toma = tmRemetente) then
+          begin
+            if (CTe.ide.indIEToma <> inNaoContribuinte) then
+              GeraIE;
+          end
+          else
             GeraIE;
         end
         else
           GeraIE;
-      end
-      else
-        GeraIE;
+      end;
 
       if CTe.Ide.tpAmb = taHomologacao
        then Gerador.wCampo(tcStr, '#116', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -1013,19 +1016,22 @@ begin
     else
       Gerador.wCampo(tcStr, '#143', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    if (CTe.infCTe.versao >= 3) then
+    if (Trim(CTe.Exped.IE) <> '') then
     begin
-      if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '1') then
+      if (CTe.infCTe.versao >= 3) then
       begin
-        if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
-          GeraIE;
+        if (CTe.ide.Toma03.Toma = tmExpedidor) then
+        begin
+          if (CTe.ide.indIEToma <> inNaoContribuinte) then
+            GeraIE;
+        end
+        else
+          if (Trim(CTe.Exped.IE) <> '') then
+            GeraIE;
       end
       else
-        if (Trim(CTe.Exped.IE) <> '') then
-          GeraIE;
-    end
-    else
-      GeraIE;
+        GeraIE;
+    end;
 
     if CTe.Ide.tpAmb = taHomologacao
      then Gerador.wCampo(tcStr, '#146', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -1095,18 +1101,21 @@ begin
     else
       Gerador.wCampo(tcStr, '#161', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    if (CTe.infCTe.versao >= 3) then
+    if (Trim(CTe.Receb.IE) <> '') then
     begin
-      if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '2') then
+      if (CTe.infCTe.versao >= 3) then
       begin
-        if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+        if (CTe.ide.Toma03.Toma = tmRecebedor) then
+        begin
+          if (CTe.ide.indIEToma <> inNaoContribuinte) then
+            GeraIE;
+        end
+        else
           GeraIE;
       end
       else
         GeraIE;
-    end
-    else
-      GeraIE;
+    end;
 
     if CTe.Ide.tpAmb = taHomologacao
      then Gerador.wCampo(tcStr, '#164', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -1180,9 +1189,9 @@ begin
       begin
         if (CTe.infCTe.versao >= 3) then
         begin
-          if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '3') then
+          if (CTe.ide.Toma03.Toma = tmDestinatario) then
           begin
-            if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+            if (CTe.ide.indIEToma <> inNaoContribuinte) then
               GeraIE;
           end
           else

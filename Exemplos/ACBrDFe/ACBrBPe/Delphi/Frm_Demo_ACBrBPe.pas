@@ -343,7 +343,7 @@ Begin
    // Dados do Comprador
    //
    Comp.xNome   := 'Nome do Comprador';
-   Comp.CNPJCPF := '11111111111111';
+   Comp.CNPJCPF := '12345678901';
    Comp.IE      := '';
 
    Comp.EnderComp.xLgr    := 'Nome do Logradouro';
@@ -363,7 +363,7 @@ Begin
    // Dados da Agencia
    //
    Agencia.xNome := 'Nome da Agencia';
-   Agencia.CNPJ  := '11111111111111';
+   Agencia.CNPJ  := edtEmitCNPJ.Text;
 
    Agencia.EnderAgencia.xLgr    := 'Nome do Logradouro';
    Agencia.EnderAgencia.Nro     := 'Numero';
@@ -375,6 +375,8 @@ Begin
    Agencia.EnderAgencia.UF      := 'SP';
    Agencia.EnderAgencia.fone    := 'Telefone da Agencia';
    Agencia.enderAgencia.email   := 'endereco@provedor.com.br';
+   Agencia.EnderAgencia.cPais   := 1058;
+   Agencia.EnderAgencia.xPais   := 'BRASIL';
 
    //
    // Informações do BP-e Substituido (informar se ocorrer)
@@ -394,7 +396,7 @@ Begin
    // Informações sobre o Passageiro
    //
    infPassagem.infPassageiro.xNome := 'Nome do Passageiro';
-   infPassagem.infPassageiro.CPF   := '11111111111';
+   infPassagem.infPassageiro.CPF   := '12345679901';
    infPassagem.infPassageiro.tpDoc := tdRG;
    infPassagem.infPassageiro.nDoc  := '12345678'; // Numero do documento
 //   infPassagem.infPassageiro.dNasc := StrToDate('10/10/1970');
@@ -416,6 +418,7 @@ Begin
 //     dhConexao    := ** Informar se o tpTrecho for ttConexao
      prefixo      := 'Prefixo da linha';
      Poltrona     := 21;
+     dhViagem     := now; 
      //
      // Informações sobre a Travessia (se ocorrer)
      //
@@ -482,7 +485,7 @@ Begin
    //
    // Autorizados para o Download do XML do BPe
    //
-
+   (*
    with autXML.Add do
    begin
      CNPJCPF := '00000000000000';
@@ -492,7 +495,7 @@ Begin
    begin
      CNPJCPF := '11111111111111';
    end;
-
+   *)
    //
    // Informações Adicionais
    //
@@ -888,7 +891,7 @@ procedure Tfrm_DemoACBrBPe.btnCriarEnviarClick(Sender: TObject);
 var
  vAux, vNumLote : String;
 begin
-  if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
+  if not(InputQuery('WebServices Enviar', 'Numero do Bilhete', vAux)) then
     exit;
 
   if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
@@ -933,7 +936,7 @@ procedure Tfrm_DemoACBrBPe.btnGerarBPEClick(Sender: TObject);
 var
  vAux : String;
 begin
-if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
+if not(InputQuery('WebServices Enviar', 'Numero do Bilhete', vAux)) then
     exit;
 
   ACBrBPe1.Bilhetes.Clear;
@@ -952,14 +955,14 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnConsultarClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     ACBrBPe1.Consultar;
     ShowMessage(ACBrBPe1.WebServices.Consulta.Protocolo);
     MemoResp.Lines.Text := ACBrBPe1.WebServices.Consulta.RetWS;
@@ -991,14 +994,14 @@ var
   Ok: Boolean;
   Tempo: String;
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     Inicio := Now;
     Ok := ACBrBPe1.Bilhetes.ValidarRegrasdeNegocios(Msg);
     Tempo := FormatDateTime('hh:nn:ss:zzz', Now - Inicio);
@@ -1017,14 +1020,14 @@ procedure Tfrm_DemoACBrBPe.btnCancBPeClick(Sender: TObject);
 var
   idLote,vAux : String;
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
 
     idLote := '1';
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Identificador de controle do Lote de envio do Evento', idLote)) then
@@ -1088,7 +1091,7 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnValidarXMLClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
@@ -1100,19 +1103,19 @@ begin
   if OpenDialog1.Execute then
    begin
      ACBrBPe1.Bilhetes.Clear;
-     ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, True);
+     ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
      try
         ACBrBPe1.Bilhetes.Validar;
         if ACBrBPe1.Bilhetes.Items[0].Alertas <> '' then
           MemoDados.Lines.Add('Alertas: '+ACBrBPe1.Bilhetes.Items[0].Alertas);
-        ShowMessage('Nota Fiscal Eletrônica Valida');
+        ShowMessage('Bilhete de Passagem Eletrônico Valido');
      except
         on E: Exception do
         begin
           pgRespostas.ActivePage := Dados;
           MemoDados.Lines.Add('Exception: '+E.Message);
           MemoDados.Lines.Add('Erro: '+ACBrBPe1.Bilhetes.Items[0].ErroValidacao);
-          MemoDados.Lines.Add('Erro Completo: '+ACBrBPe1.Bilhetes.Items[0].ErroValidacaoCompleto); //Util para gravar em arquivos de LOG
+          MemoDados.Lines.Add('Erro Completo: '+ACBrBPe1.Bilhetes.Items[0].ErroValidacaoCompleto);
         end;
      end;
    end;
@@ -1123,7 +1126,7 @@ var
  CarregarMaisXML : Boolean;
 begin
 	CarregarMaisXML := true;
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
@@ -1132,7 +1135,7 @@ begin
   while CarregarMaisXML do
   begin
     if OpenDialog1.Execute then
-      ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+      ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
 
     CarregarMaisXML := MessageDlg('Carregar mais Bilhetes?', mtConfirmation, [mbYes, mbNo], 0) = mrYes;
   end;
@@ -1142,7 +1145,7 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnImprimirClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
@@ -1150,7 +1153,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName,False);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     ACBrBPe1.Bilhetes.Imprimir;
   end;
 end;
@@ -1163,14 +1166,14 @@ begin
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     CC:=TstringList.Create;
     try
       CC.Add('andrefmoraes@gmail.com'); //especifique um email valido
@@ -1202,14 +1205,14 @@ procedure Tfrm_DemoACBrBPe.btnAdicionarProtBPeClick(Sender: TObject);
 var
   NomeArq : String;
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     ACBrBPe1.Consultar;
     ShowMessage(ACBrBPe1.WebServices.Consulta.Protocolo);
     MemoResp.Lines.Text := ACBrBPe1.WebServices.Consulta.RetWS;
@@ -1226,7 +1229,7 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnCarregarXMLEnviarClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
@@ -1256,14 +1259,14 @@ procedure Tfrm_DemoACBrBPe.btnValidarAssinaturaClick(Sender: TObject);
 var
   Msg : String;
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     pgRespostas.ActivePageIndex := 0;
     MemoResp.Lines.Add('');
     MemoResp.Lines.Add('');
@@ -1285,14 +1288,14 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnImprimirEventoClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*.xml';
   OpenDialog1.Filter := 'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
   end;
 
   OpenDialog1.Title := 'Selecione o Evento';
@@ -1315,14 +1318,14 @@ begin
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*.xml';
   OpenDialog1.Filter := 'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
   end;
 
   OpenDialog1.Title := 'Selecione ao Evento';

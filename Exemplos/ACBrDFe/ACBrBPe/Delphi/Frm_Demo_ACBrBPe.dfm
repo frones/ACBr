@@ -1605,7 +1605,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     MAIL = ACBrMail1
     OnStatusChange = ACBrBPe1StatusChange
     OnGerarLog = ACBrBPe1GerarLog
-    Configuracoes.Geral.SSLLib = libCapicomDelphiSoap
+    Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

@@ -135,12 +135,14 @@ function StrTotpSubstituicao(out ok: Boolean; const s: String): TTipoSubstituica
 
 function tpDocumentoToStr(const t: TTipoDocumento): String;
 function StrTotpDocumento(out ok: Boolean; const s: String): TTipoDocumento;
+function tpDocumentoToDesc(const t: TTipoDocumento): String;
 
 function tpViagemToStr(const t: TTipoViagem): String;
 function StrTotpViagem(out ok: Boolean; const s: String): TTipoViagem;
 
 function tpServicoToStr(const t: TTipoServico): String;
 function StrTotpServico(out ok: Boolean; const s: String): TTipoServico;
+function tpServicoToDesc(const t: TTipoServico): String;
 
 function tpAcomodacaoToStr(const t: TTipoAcomodacao): String;
 function StrTotpAcomodacao(out ok: Boolean; const s: String): TTipoAcomodacao;
@@ -156,9 +158,11 @@ function StrToSitVeiculo(out ok: Boolean; const s: String): TSitVeiculo;
 
 function tpDescontoToStr(const t: TTipoDesconto): String;
 function StrTotpDesconto(out ok: Boolean; const s: String): TTipoDesconto;
+function tpDescontoToDesc(const t: TTipoDesconto): String;
 
 function tpComponenteToStr(const t: TTipoComponente): String;
 function StrTotpComponente(out ok: Boolean; const s: String): TTipoComponente;
+function tpComponenteToDesc(const t: TTipoComponente): String;
 
 implementation
 
@@ -304,6 +308,13 @@ begin
                            [tdRG, tdTituloEleitor, tdPassaporte, tdCNH, tdOutros]);
 end;
 
+function tpDocumentoToDesc(const t: TTipoDocumento): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['RG', 'Titulo de Eleitor', 'Passaporte', 'CNH', 'Outros'],
+                           [tdRG, tdTituloEleitor, tdPassaporte, tdCNH, tdOutros]);
+end;
+
 function tpViagemToStr(const t: TTipoViagem): String;
 begin
   result := EnumeradoToStr(t,
@@ -331,6 +342,17 @@ function StrTotpServico(out ok: Boolean; const s: String): TTipoServico;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+                           [tsConvencionalComSanitario, tsConvencionalSemSanitario,
+                            tsSemileito, tsLeitoComAr, tsLeitoSemAr, tsExecutivo,
+                            tsSemiurbano, tsLongitudinal, tsTravessia]);
+end;
+
+function tpServicoToDesc(const t: TTipoServico): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['Convencional com Sanitario', 'Convencional sem Sanitario',
+                            'Semileito', 'Leito com Ar', 'Leito sem Ar', 'Executivo',
+                            'Semiurbano', 'Longitudinal', 'Travessia'],
                            [tsConvencionalComSanitario, tsConvencionalSemSanitario,
                             tsSemileito, tsLeitoComAr, tsLeitoSemAr, tsExecutivo,
                             tsSemiurbano, tsLongitudinal, tsTravessia]);
@@ -434,6 +456,19 @@ begin
                             tdProfissionaldaEmpresa, tdJovem, tdOutrosDesc]);
 end;
 
+function tpDescontoToDesc(const t: TTipoDesconto): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['', 'Tarifa Promocional', 'Idoso', 'Criança',
+                            'Deficiente', 'Estudante', 'Animal Domestico',
+                            'Acordo Coletivo', 'Profissional em Deslocamento',
+                            'Profissional da Empresa', 'Jovem', 'Outros'],
+                           [tdNenhum, tdTarifaPromocional, tdIdoso, tdCrianca,
+                            tdDeficiente, tdEstudante, tdAnimalDomestico,
+                            tdAcordoColetivo, tdProfissionalemDeslocamento,
+                            tdProfissionaldaEmpresa, tdJovem, tdOutrosDesc]);
+end;
+
 function tpComponenteToStr(const t: TTipoComponente): String;
 begin
   result := EnumeradoToStr(t,
@@ -446,6 +481,15 @@ function StrTotpComponente(out ok: Boolean; const s: String): TTipoComponente;
 begin
   result := StrToEnumerado(ok, s,
                            ['01', '02', '03', '04', '05', '06', '99'],
+                           [tcTarifa, tcPedagio, tcTaxaEmbarque, tcSeguro, tcTRM,
+                            tcSVI, tcOutros]);
+end;
+
+function tpComponenteToDesc(const t: TTipoComponente): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['Tarifa', 'Pedagio', 'Taxa Embarque', 'Seguro',
+                            'TRM', 'SVI', 'Outros'],
                            [tcTarifa, tcPedagio, tcTaxaEmbarque, tcSeguro, tcTRM,
                             tcSVI, tcOutros]);
 end;

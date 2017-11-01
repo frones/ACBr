@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2017
+-- Diversos --
+[+] Impressão do DABPE em ESCPOS (não foi testado).
+   Por: Italo Jurisato Junior
+
 31/10/2017
 -- pcnBPeR --
 [*] Alterado a posição da leitura do grupo <infBPeSupl>.

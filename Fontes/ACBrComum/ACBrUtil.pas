@@ -379,14 +379,16 @@ begin
   Result := AText;
   if Trim(Result) <> '' then
   begin
-    if sLineBreak <> LF then
-      Result := StringReplace(Result, sLineBreak, LF, [rfReplaceAll]);
+    // Troca todos CR+LF para apenas LF
+    Result := StringReplace(Result, CRLF, LF, [rfReplaceAll]);
 
+    // Se existe apenas CR, também troca os mesmos para LF
+    Result := StringReplace(Result, CR, LF, [rfReplaceAll]);
+
+    { Agora temos todas quebras como LF... Se a Quebra de linha final for
+      diferente de LF, aplique a substituição }
     if NewLineBreak <> LF then
       Result := StringReplace(Result, LF, NewLineBreak, [rfReplaceAll]);
-
-    if NewLineBreak <> CR then
-      Result := StringReplace(Result, CR, NewLineBreak, [rfReplaceAll]);
   end
 end;
 

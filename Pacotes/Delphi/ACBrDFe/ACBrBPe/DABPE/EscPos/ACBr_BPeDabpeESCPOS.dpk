@@ -76,6 +76,6 @@ requires
   ACBr_BPe;
 
 contains
-  ACBrBPeDABPeESCPOS in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\EscPos\ACBrBPeDABPeESCPOS.pas';
+  ACBrBPeDABPeESCPOS in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\EscPos\ACBrBPeDABPeESCPOS.pas';
 
 end.

@@ -171,7 +171,6 @@ begin
   begin
     FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL</n>'));
   end;
-
   // se diferente de normal imprimir a emissão em contingência
   if (FpBPe.ide.tpEmis <> teNormal) and
      EstaVazio(FpBPe.procBPe.nProt) then
@@ -183,7 +182,7 @@ begin
   end;
 end;
 
-procedure TACBrBPeDABPeESCPOS.GerarCabecalhoEmitente;
+procedure TACBrBPeDABPeESCPOS.GerarCabecalhoAgencia;
 begin
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
@@ -255,7 +254,7 @@ begin
                            ' Plataforma: ' + FpBPe.infViagem.Items[i].Plataforma);
 
     FPosPrinter.Buffer.Add('</ce><c>Prefixo: ' + FpBPe.infViagem.Items[i].Prefixo +
-                           ' Linha: ' + FpBPe.infViagem.Items[i].xPercurso
+                           ' Linha: ' + FpBPe.infViagem.Items[i].xPercurso +
                            ' Tipo: ' + tpServicoToDesc(FpBPe.infViagem.Items[i].tpServ));
   end;
 end;
@@ -268,7 +267,7 @@ begin
   Total := 0.0;
   for i := 0 to FpBPe.infValorBPe.Comp.Count -1 do
   begin
-    FPosPrinter.Buffer.Add('<c>' + PadSpace(tpComponenteToDesc(FpBpe.infValorBPe.Comp.Items[i].tpComp) '|' +
+    FPosPrinter.Buffer.Add('<c>' + PadSpace(tpComponenteToDesc(FpBpe.infValorBPe.Comp.Items[i].tpComp) + '|' +
      FormatFloatBr(FpBpe.infValorBPe.Comp.Items[i].vComp), FPosPrinter.ColunasFonteCondensada, '|'));
     Total := Total + FpBpe.infValorBPe.Comp.Items[i].vComp;
   end;
@@ -299,7 +298,7 @@ begin
        FPosPrinter.ColunasFonteCondensada, '|')));
   end;
 
-  Troco := IIf(FpBPe.pag.vTroco > 0,FpBPe.pag.vTroco, vTroco);
+  Troco := IIf(FpBPe.infValorBPe.vTroco > 0,FpBPe.infValorBPe.vTroco, vTroco);
 
   if Troco > 0 then
     FPosPrinter.Buffer.Add('<c>' + PadSpace('Troco R$|' +
@@ -326,9 +325,9 @@ begin
   begin
     LinhaCmd := 'PASSAGEIRO - ' + tpDocumentoToDesc(FpBPe.infPassagem.infPassageiro.tpDoc) +
                 ' ' + FpBPe.infPassagem.infPassageiro.nDoc +
-                ' - ' + FpBPe.infPassagem.infPassageiro.xNome);
+                ' - ' + FpBPe.infPassagem.infPassageiro.xNome;
 
-    LinhaCmd := '</ce><c><n>' + LinhaCmd + '</n> ' + Trim(FpBPe.Dest.xNome);
+    LinhaCmd := '</ce><c><n>' + LinhaCmd + '</n> ' + Trim(FpBPe.Comp.xNome);
     FPosPrinter.Buffer.Add(QuebraLinhas(LinhaCmd, FPosPrinter.ColunasFonteCondensada));
 
     if FpBPe.infValorBPe.tpDesconto <> tdNenhum then
@@ -346,9 +345,9 @@ begin
     Via := '';
   // dados da nota eletronica de consumidor
   FPosPrinter.Buffer.Add('</ce><c><n>' + StringReplace(QuebraLinhas(ACBrStr(
-    'BP-e nº ' + IntToStrZero(FpBPe.Ide.nNF, 9) +
+    'BP-e nº ' + IntToStrZero(FpBPe.Ide.nBP, 9) +
     ' Série ' + IntToStrZero(FpBPe.Ide.serie, 3) +
-    ' ' + DateTimeToStr(FpBPe.ide.dEmi) +
+    ' ' + DateTimeToStr(FpBPe.ide.dhEmi) +
     Via+'</n>')
     , FPosPrinter.ColunasFonteCondensada, '|'), '|', ' ', [rfReplaceAll]));
 
@@ -387,7 +386,7 @@ begin
       FpBPe.infBPe.ID,
       FpBPe.signature.DigestValue)
   else
-    qrcode := FpBPe.infBPeSupl.qrCode;
+    qrcode := FpBPe.infBPeSupl.qrCodBPe;
 
   ConfigQRCodeErrorLevel := FPosPrinter.ConfigQRCode.ErrorLevel;
 
@@ -411,8 +410,8 @@ procedure TACBrBPeDABPeESCPOS.GerarTotalTributos;
 var
   MsgTributos: String;
 begin
-  if not ImprimirTributos then
-    Exit;
+//  if not ImprimirTributos then
+//    Exit;
 
   if FpBPe.Imp.vTotTrib > 0 then
   begin
@@ -506,7 +505,7 @@ const
 begin
   // dados da nota eletrônica
   FPosPrinter.Buffer.Add('</fn></ce><n>Bilhete de Passagem Eletrônico</n>');
-  FPosPrinter.Buffer.Add(ACBrStr('Número: ' + IntToStrZero(FpBPe.ide.nNF, 9) +
+  FPosPrinter.Buffer.Add(ACBrStr('Número: ' + IntToStrZero(FpBPe.ide.nBP, 9) +
                                  ' Série: ' + IntToStrZero(FpBPe.ide.serie, 3)));
   FPosPrinter.Buffer.Add(ACBrStr('Emissão: ' + DateTimeToStr(FpBPe.ide.dhEmi)) + '</n>');
   FPosPrinter.Buffer.Add(' ');

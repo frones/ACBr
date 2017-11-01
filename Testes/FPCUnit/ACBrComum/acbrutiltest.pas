@@ -60,6 +60,33 @@ type
     procedure FindDelimiterInTextTest_DelimitadorCustomizado;
   end;
 
+  { FindDelimiterInTextTest }
+
+  { ChangeLineBreakTest }
+
+  ChangeLineBreakTest = class(TTestCase)
+  private
+    FCRLFText: String;
+    FLFText: String;
+    FCRText: String;
+    FPipeText: String;
+  protected
+    procedure SetUp; override;
+  published
+    procedure CRLFParaPipe;
+    procedure LFParaPipe;
+    procedure CRParaPipe;
+    procedure CRLFParaLF;
+    procedure LFParaLF;
+    procedure CRParaLF;
+    procedure CRLFParaCR;
+    procedure LFParaCR;
+    procedure CRParaCR;
+    procedure CRLFParaCRLF;
+    procedure LFParaCRLF;
+    procedure CRParaCRLF;
+  end;
+
   { AddDelimitedTextToListTeste }
 
   AddDelimitedTextToListTeste = class(TTestCase)
@@ -923,6 +950,77 @@ uses
   Math, dateutils,
   synacode,
   ACBrUtil, ACBrCompress, ACBrConsts;
+
+{ ChangeLineBreakTest }
+
+procedure ChangeLineBreakTest.SetUp;
+begin
+  inherited SetUp;
+  FLFText := 'LINHA1'+LF+LF+'LINHA3'+LF+'LINHA4'+LF+LF+'LINHA6'+LF;
+  FCRText := 'LINHA1'+CR+CR+'LINHA3'+CR+'LINHA4'+CR+CR+'LINHA6'+CR;
+  FCRLFText := 'LINHA1'+CR+LF+CR+LF+'LINHA3'+CR+LF+'LINHA4'+CR+LF+CR+LF+'LINHA6'+CR+LF;
+  FPipeText := 'LINHA1||LINHA3|LINHA4||LINHA6|';
+end;
+
+procedure ChangeLineBreakTest.CRLFParaPipe;
+begin
+  CheckEquals(ChangeLineBreak(FCRLFText,'|'), FPipeText);
+end;
+
+procedure ChangeLineBreakTest.LFParaPipe;
+begin
+  CheckEquals(ChangeLineBreak(FLFText,'|'), FPipeText);
+end;
+
+procedure ChangeLineBreakTest.CRParaPipe;
+begin
+  CheckEquals(ChangeLineBreak(FCRText,'|'), FPipeText);
+end;
+
+procedure ChangeLineBreakTest.CRLFParaLF;
+begin
+  CheckEquals(ChangeLineBreak(FCRLFText,LF), FLFText);
+end;
+
+procedure ChangeLineBreakTest.LFParaLF;
+begin
+  CheckEquals(ChangeLineBreak(FLFText,LF), FLFText);
+end;
+
+procedure ChangeLineBreakTest.CRParaLF;
+begin
+  CheckEquals(ChangeLineBreak(FCRText,LF), FLFText);
+end;
+
+procedure ChangeLineBreakTest.CRLFParaCR;
+begin
+  CheckEquals(ChangeLineBreak(FCRLFText,CR), FCRText);
+end;
+
+procedure ChangeLineBreakTest.LFParaCR;
+begin
+  CheckEquals(ChangeLineBreak(FLFText,CR), FCRText);
+end;
+
+procedure ChangeLineBreakTest.CRParaCR;
+begin
+  CheckEquals(ChangeLineBreak(FCRText,CR), FCRText);
+end;
+
+procedure ChangeLineBreakTest.CRLFParaCRLF;
+begin
+  CheckEquals(ChangeLineBreak(FCRLFText,CRLF), FCRLFText);
+end;
+
+procedure ChangeLineBreakTest.LFParaCRLF;
+begin
+  CheckEquals(ChangeLineBreak(FLFText,CRLF), FCRLFText);
+end;
+
+procedure ChangeLineBreakTest.CRParaCRLF;
+begin
+  CheckEquals(ChangeLineBreak(FCRText,CRLF), FCRLFText);
+end;
 
 { AddDelimitedTextToListTeste }
 
@@ -4031,6 +4129,7 @@ initialization
 
   RegisterTest('ACBrComum.ACBrUtil', AddDelimitedTextToListTeste{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', FindDelimiterInTextTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', ChangeLineBreakTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', WorkingDaysBetweenTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', IncWorkingDayTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TiraPontosTest{$ifndef FPC}.Suite{$endif});

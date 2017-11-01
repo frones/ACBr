@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2017
+-- pcnNFeW --
+[*] A tag <VFCPUFDEST> do grupo Totais, estava como obrigatória sendo que ela é opcional.
+   Por: Thiago
+
 28/10/2017
 -- pcnNFeW --
 [*] Ajustes conforme NT 2016/002 versão 1.40.

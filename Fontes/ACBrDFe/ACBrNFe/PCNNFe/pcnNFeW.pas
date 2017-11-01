@@ -2048,7 +2048,7 @@ begin
   if NFe.infNFe.Versao >= 3.10 then
   begin
     Gerador.wCampo(tcDe2, 'W04a', 'vICMSDeson  ', 01, 15, 1, nfe.Total.ICMSTot.vICMSDeson, DSC_VICMSDESON);
-    Gerador.wCampo(tcDe2, 'W04c', 'vFCPUFDest ', 01, 15, 1, nfe.Total.ICMSTot.vFCPUFDest, DSC_VICMS);
+    Gerador.wCampo(tcDe2, 'W04c', 'vFCPUFDest  ', 01, 15, 0, nfe.Total.ICMSTot.vFCPUFDest, DSC_VICMS);
     Gerador.wCampo(tcDe2, 'W04e', 'vICMSUFDest ', 01, 15, 0, nfe.Total.ICMSTot.vICMSUFDest, DSC_VICMS);
     Gerador.wCampo(tcDe2, 'W04g', 'vICMSUFRemet', 01, 15, 0, nfe.Total.ICMSTot.vICMSUFRemet, DSC_VICMS);
   end;

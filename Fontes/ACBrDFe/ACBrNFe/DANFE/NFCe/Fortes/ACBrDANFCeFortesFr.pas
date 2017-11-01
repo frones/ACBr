@@ -1098,7 +1098,7 @@ procedure TACBrNFeDANFCeFortesFr.lSistemaBeforePrint(Sender: TObject;
 begin
   PrintIt := True;
   if NaoEstaVazio(fACBrNFeDANFCeFortes.Sistema) then
-    Text := fACBrNFeDANFCeFortes.Sistema ;
+    Text := fACBrNFeDANFCeFortes.Sistema + Space(3);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.pAsteriscoBeforePrint(Sender: TObject;
@@ -1517,7 +1517,7 @@ begin
     maxCaracter := maxCaracter + 1;
   end;
 
-  Result := maxCaracter;
+  Result := maxCaracter-2;
 end;
 
 {$ifdef FPC}

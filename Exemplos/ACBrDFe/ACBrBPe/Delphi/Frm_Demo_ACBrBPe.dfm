@@ -389,11 +389,11 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
       NumGlyphs = 2
     end
     object PageControl1: TPageControl
-      Left = 8
-      Top = 9
+      Left = 0
+      Top = 0
       Width = 283
       Height = 504
-      ActivePage = TabSheet1
+      ActivePage = TabSheet2
       TabOrder = 1
       object TabSheet1: TTabSheet
         Caption = 'Configura'#231#245'es'
@@ -998,7 +998,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 13
+                ItemHeight = 0
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1492,7 +1492,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
         object rgTipoDABPE: TRadioGroup
           Left = 8
           Top = 56
-          Width = 249
+          Width = 257
           Height = 49
           Caption = 'DABPE'
           Columns = 2
@@ -1501,6 +1501,161 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
             'Retrato'
             'Paisagem')
           TabOrder = 1
+        end
+        object GroupBox2: TGroupBox
+          Left = 8
+          Top = 112
+          Width = 257
+          Height = 233
+          Caption = 'EscPOS'
+          TabOrder = 2
+          object Label30: TLabel
+            Left = 8
+            Top = 24
+            Width = 35
+            Height = 13
+            Caption = 'Modelo'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label33: TLabel
+            Left = 8
+            Top = 72
+            Width = 25
+            Height = 13
+            Caption = 'Porta'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label34: TLabel
+            Left = 8
+            Top = 184
+            Width = 55
+            Height = 13
+            Caption = 'Pag.Codigo'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label39: TLabel
+            Left = 8
+            Top = 136
+            Width = 38
+            Height = 13
+            Caption = 'Colunas'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label40: TLabel
+            Left = 80
+            Top = 120
+            Width = 41
+            Height = 26
+            Caption = 'Espa'#231'os'#13#10'Linhas'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label41: TLabel
+            Left = 144
+            Top = 120
+            Width = 31
+            Height = 26
+            Caption = 'Linhas'#13#10'Pular'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object btSerial: TBitBtn
+            Left = 216
+            Top = 88
+            Width = 22
+            Height = 22
+            ModalResult = 1
+            TabOrder = 0
+            OnClick = btSerialClick
+            Glyph.Data = {
+              36030000424D3603000000000000360000002800000010000000100000000100
+              1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF323232
+              3232323E3E3E565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFF503200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              565656565656FFFFFFFFFFFF3232322626262626262626262626265032005032
+              000000504873FFFFFFFFFFFFFFFFFFFF6E6E6EFFFFFFFFFFFFFFFFFFFFFFFF6E
+              6E6E32323232323232323232323250320000005025AAFFFFFFFFFFFFFF565656
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5656563232323232326E6E6E5032005032
+              008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFF50320050320056
+              56564A4A4A5050003232325032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+              FFFFFF5656563E3E3E2626265032006262625656565050003232325032005032
+              008FFF6B8ED4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5050005050006E
+              6E6E5656565050003250005032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8686865656565656563250005032005032
+              008FFF6B48B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3232323E
+              3E3EA4A0A08686866E6E6E565656503200C0C0C02557FFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
+              00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+            Layout = blGlyphTop
+          end
+          object cbxModeloPosPrinter: TComboBox
+            Left = 8
+            Top = 40
+            Width = 233
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 1
+          end
+          object cbxPorta: TComboBox
+            Left = 8
+            Top = 88
+            Width = 201
+            Height = 21
+            ItemHeight = 13
+            TabOrder = 2
+          end
+          object cbxPagCodigo: TComboBox
+            Left = 8
+            Top = 200
+            Width = 101
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 3
+          end
+          object seColunas: TSpinEdit
+            Left = 8
+            Top = 152
+            Width = 49
+            Height = 22
+            MaxValue = 9999
+            MinValue = 0
+            TabOrder = 4
+            Value = 0
+          end
+          object seEspLinhas: TSpinEdit
+            Left = 80
+            Top = 152
+            Width = 49
+            Height = 22
+            MaxValue = 9999
+            MinValue = 0
+            TabOrder = 5
+            Value = 0
+          end
+          object seLinhasPular: TSpinEdit
+            Left = 144
+            Top = 152
+            Width = 49
+            Height = 22
+            MaxValue = 9999
+            MinValue = 0
+            TabOrder = 6
+            Value = 0
+          end
         end
       end
       object TabSheet14: TTabSheet
@@ -1610,6 +1765,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    DABPE = ACBrBPeDABPeESCPOS1
     Left = 336
     Top = 384
   end
@@ -1630,7 +1786,58 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
+    Left = 430
+    Top = 385
+  end
+  object ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS
+    ACBrBPe = ACBrBPe1
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDABPE = tiSemGeracao
+    NumCopias = 1
+    ImprimeNomeFantasia = False
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = True
+    MargemIBPerior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    CasasDecimais._Mask_qCom = ',0.00'
+    CasasDecimais._Mask_vUnCom = ',0.00'
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 8
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    BPeCancelada = False
+    ImprimirItens = True
+    ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
+    TributosSeparadamente = False
+    PosPrinter = ACBrPosPrinter1
     Left = 382
     Top = 385
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    CortaPapel = False
+    Left = 334
+    Top = 425
   end
 end

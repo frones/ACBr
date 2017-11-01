@@ -82,6 +82,8 @@ type
     FPuloDeLinha: AnsiString;
     FZera: AnsiString;
   public
+    constructor Create;
+
     property Zera: AnsiString read FZera write FZera;
     property EspacoEntreLinhas: AnsiString read FEspacoEntreLinhas
       write FEspacoEntreLinhas;
@@ -386,6 +388,14 @@ uses
   strutils, Math, typinfo,
   ACBrUtil, ACBrConsts,
   ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold;
+
+{ TACBrPosComandos }
+
+constructor TACBrPosComandos.Create;
+begin
+  inherited;
+  FPuloDeLinha := sLineBreak;
+end;
 
 { TACBrConfigGaveta }
 

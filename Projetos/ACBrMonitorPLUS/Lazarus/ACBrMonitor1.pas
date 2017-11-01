@@ -272,6 +272,7 @@ type
     cbHttpLib: TComboBox;
     cbVersaoWSMDFe: TComboBox;
     cbxImprimirQRCodeLateralNFCe: TCheckBox;
+    cbxImpDetEspNFe: TCheckBox;
     cbXMLSignLib: TComboBox;
     cbSSLType: TComboBox;
     chkVerificarValidadeCertificado: TCheckBox;
@@ -367,6 +368,7 @@ type
     edtEmailAssuntoNFe: TEdit;
     edTimeZoneStr: TEdit;
     edtLogoMarcaNFCeSAT: TEdit;
+    fspeLarguraNFCe: TSpinEdit;
     edtNumeroSerie: TEdit;
     edtSenha: TEdit;
     edtTimeoutWebServices: TSpinEdit;
@@ -376,6 +378,7 @@ type
     GroupBox3: TGroupBox;
     GroupBox5: TGroupBox;
     gbxConfigSSL: TGroupBox;
+    GroupBox6: TGroupBox;
     Image2: TImage;
     imgLogoBanco: TImage;
     Label109: TLabel;
@@ -460,7 +463,6 @@ type
     speFonteEndereco: TSpinEdit;
     speFonteRazao: TSpinEdit;
     speLargCodProd: TSpinEdit;
-    speProdutosPorPagina: TSpinEdit;
     fspeNFCeMargemDir: TFloatSpinEdit;
     fspeNFCeMargemEsq: TFloatSpinEdit;
     fspeNFCeMargemInf: TFloatSpinEdit;
@@ -472,7 +474,6 @@ type
     gbDFeConfDiversas: TGroupBox;
     gbDFeTimeZone: TGroupBox;
     Label187: TLabel;
-    Label189: TLabel;
     edtArquivoWebServicesMDFe: TEdit;
     edtArquivoWebServicesNFe: TEdit;
     edtArquivoWebServicesCTe: TEdit;
@@ -4104,6 +4105,7 @@ begin
     fspeNFCeMargemSup.Value := Ini.ReadFloat('DANFCe', 'MargemSup', 0.8);
     fspeNFCeMargemDir.Value := Ini.ReadFloat('DANFCe', 'MargemDir', 0.51);
     fspeNFCeMargemEsq.Value := Ini.ReadFloat('DANFCe', 'MargemEsq', 0.6);
+    fspeLarguraNFCe.Value   := Ini.ReadInteger('DANFCe', 'LarguraBobina', 302);
     edtPathPDF.Text :=
       Ini.ReadString('DANFE', 'PathPDF', PathApplication+'PDF');
     spedtCasasDecimaisQtd.Value := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
@@ -4121,7 +4123,7 @@ begin
     rgTipoFonte.ItemIndex := Ini.ReadInteger('DANFE', 'Fonte', 0);
     rgLocalCanhoto.ItemIndex := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
     cbxQuebrarLinhasDetalhesItens.Checked := ini.ReadBool('DANFE','QuebrarLinhasDetalheItens', False) ;
-    speProdutosPorPagina.Value := Ini.ReadInteger('DANFE', 'ProdutosPorPagina', 0);
+    cbxImpDetEspNFe.Checked := ini.ReadBool('DANFE','ImprimirDetalhamentoEspecifico', True) ;
 
     cbxImpDescPorcChange(nil);
 
@@ -4921,6 +4923,7 @@ begin
     Ini.WriteFloat('DANFCe', 'MargemSup', fspeNFCeMargemSup.Value);
     Ini.WriteFloat('DANFCe', 'MargemDir', fspeNFCeMargemDir.Value);
     Ini.WriteFloat('DANFCe', 'MargemEsq', fspeNFCeMargemEsq.Value);
+    Ini.WriteFloat('DANFCe', 'LarguraBobina', fspeLarguraNFCe.Value);
     Ini.WriteString('DANFE', 'PathPDF', edtPathPDF.Text);
     Ini.WriteInteger('DANFE', 'DecimaisQTD', spedtCasasDecimaisQtd.Value);
     Ini.WriteInteger('DANFE', 'DecimaisValor', spedtDecimaisVUnit.Value);
@@ -4936,7 +4939,7 @@ begin
     Ini.WriteInteger('DANFE', 'Fonte', rgTipoFonte.ItemIndex);
     Ini.WriteInteger('DANFE', 'LocalCanhoto', rgLocalCanhoto.ItemIndex);
     ini.WriteBool('DANFE','QuebrarLinhasDetalheItens', cbxQuebrarLinhasDetalhesItens.Checked) ;
-    Ini.WriteInteger('DANFE', 'ProdutosPorPagina', speProdutosPorPagina.Value);
+    ini.WriteBool('DANFE','ImprimirDetalhamentoEspecifico',cbxImpDetEspNFe.Checked);
 
     Ini.WriteInteger('NFCe', 'Modelo', rgModeloDANFeNFCE.ItemIndex);
     Ini.WriteInteger('NFCe', 'ModoImpressaoEvento', rgModoImpressaoEvento.ItemIndex);
@@ -7587,7 +7590,6 @@ begin
     ACBrNFe1.DANFE.Fax := edtFaxEmpresa.Text;
     ACBrNFe1.DANFE.ImprimirDescPorc := cbxImpDescPorc.Checked;
     ACBrNFe1.DANFE.NumCopias := edtNumCopia.Value;
-    ACBrNFe1.DANFE.ProdutosPorPagina := speProdutosPorPagina.Value;
     ACBrNFe1.DANFE.MargemInferior := fspeMargemInf.Value;
     ACBrNFe1.DANFE.MargemSuperior := fspeMargemSup.Value;
     ACBrNFe1.DANFE.MargemDireita := fspeMargemDir.Value;
@@ -7615,6 +7617,7 @@ begin
       ACBrNFeDANFeRL1.AltLinhaComun := speAlturaCampos.Value;
       ACBrNFeDANFeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
       ACBrNFeDANFeRL1.ImprimirUnQtVlComercial := TImprimirUnidQtdeValor(cbxUnComTributavel.ItemIndex);
+      ACBrNFeDANFeRL1.ImprimirDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
     begin
@@ -7624,6 +7627,7 @@ begin
       ACBrNFeDANFCeFortes1.MargemSuperior        := fspeNFCeMargemSup.Value;
       ACBrNFeDANFCeFortes1.MargemDireita         := fspeNFCeMargemDir.Value;
       ACBrNFeDANFCeFortes1.MargemEsquerda        := fspeNFCeMargemEsq.Value;
+      ACBrNFeDANFCeFortes1.LarguraBobina         := fspeLarguraNFCe.Value;
       ACBrNFeDANFCeFortes1.ImprimeEmUmaLinha     := cbxImprimirItem1LinhaNFCe.Checked;
       ACBrNFEDANFCeFortes1.QRCodeLateral         := cbxImprimirQRCodeLateralNFCe.Checked;
 

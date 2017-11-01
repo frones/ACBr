@@ -310,8 +310,8 @@ begin
            begin
              PathsCTe := TStringList.Create;
              try
-               PathsCTe.Append(Cmd.Params(0));
-               PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+               PathsCTe.Append(Cmd.Params(1));
+               PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
                try
                  CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
                except
@@ -1238,7 +1238,6 @@ begin
               end;
              Ide.toma4.email   := INIRec.ReadString('toma4','email','');
            end;
-
 
           Compl.xCaracAd := INIRec.ReadString('compl','xCaracAd', '' );
           Compl.xCaracSer:= INIRec.ReadString('compl','xCaracSer',''  );

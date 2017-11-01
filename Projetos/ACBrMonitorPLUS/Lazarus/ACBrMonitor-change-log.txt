@@ -43,6 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2017
+[+] Adicionado parametros para emissão NFCe / NFe - Campo Largura NFCe / Imprimir Detalhamento NFCe /
+        Nomenclatura do campo GTIN
+	por: José M. S. Junior
+
+[*] Ajustes na Geração de PDF de Evendo co CTe
+        https://www.projetoacbr.com.br/forum/topic/39619-impress%C3%A3o-carta-de-corre%C3%A7%C3%A3o/
+	por: José M. S. Junior
+
 26/10/2017
 [+] Adicionado parametros para emissão NFCe - Itens apenas em uma linha / QRCode na Lateral
 	por: José M. S. Junior

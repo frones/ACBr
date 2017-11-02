@@ -268,6 +268,7 @@ type
     procedure AtualizaSSLLibsCombo;
     procedure GerarBPe(NumBPe : String);
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+    procedure PrepararImpressao;
   public
     { Public declarations }
   end;
@@ -1219,6 +1220,8 @@ begin
 
   if OpenDialog1.Execute then
   begin
+    PrepararImpressao;
+
     ACBrBPe1.Bilhetes.Clear;
     ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     ACBrBPe1.Bilhetes.Imprimir;
@@ -1765,6 +1768,22 @@ begin
   finally
      FreeAndNil( frConfiguraSerial ) ;
   end ;
+end;
+
+procedure Tfrm_DemoACBrBPe.PrepararImpressao;
+begin
+  ACBrPosPrinter1.Desativar;
+
+  ACBrPosPrinter1.Modelo         := TACBrPosPrinterModelo( cbxModeloPosPrinter.ItemIndex );
+  ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo( cbxPagCodigo.ItemIndex );
+  ACBrPosPrinter1.Porta          := cbxPorta.Text;
+
+  ACBrPosPrinter1.ColunasFonteNormal := seColunas.Value;
+  ACBrPosPrinter1.LinhasEntreCupons  := seLinhasPular.Value;
+  ACBrPosPrinter1.EspacoEntreLinhas  := seEspLinhas.Value;
+
+//  ACBrBPeDABPeESCPOS1.ImprimeQRCode     := True;
+//  ACBrBPeDABPeESCPOS1.ImprimeEmUmaLinha := cbImprimir1Linha.Checked;
 end;
 
 end.

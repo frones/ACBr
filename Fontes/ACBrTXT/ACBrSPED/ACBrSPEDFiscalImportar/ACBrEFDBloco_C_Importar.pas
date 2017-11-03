@@ -663,19 +663,32 @@ procedure TACBrSpedFiscalImportar_BlocoC.RegC500;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC500New do
   begin
+    IND_OPER := StrToIndTipoOper(Valor);
+    IND_EMIT := StrToEmitente(Valor);
     COD_PART := Valor;
     COD_MOD := Valor;
     COD_SIT := StrToCodSit(Valor);
     SER := Valor;
     SUB := Valor;
+    COD_CONS := Valor;
     NUM_DOC := Valor;
     DT_DOC := ValorD;
     DT_E_S := ValorD;
     VL_DOC := ValorF;
+    VL_DESC := ValorF;
+    VL_FORN := ValorF;
+    VL_SERV_NT := ValorF;
+    VL_TERC := ValorF;
+    VL_DA := ValorF;
+    VL_BC_ICMS := ValorF;
     VL_ICMS := ValorF;
+    VL_BC_ICMS_ST := ValorF;
+    VL_ICMS_ST := ValorF;
     COD_INF := Valor;
     VL_PIS := ValorF;
     VL_COFINS := ValorF;
+    TP_LIGACAO := StrToTpLigacao(Valor);
+    COD_GRUPO_TENSAO := StrToGrupoTensao(Valor);
   end;
 end;
 
@@ -690,6 +703,16 @@ procedure TACBrSpedFiscalImportar_BlocoC.RegC590;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC590New do
   begin
+    CST_ICMS := Valor;
+    CFOP := Valor;
+    ALIQ_ICMS := ValorF;
+    VL_OPR := ValorF;
+    VL_BC_ICMS := ValorF;
+    VL_ICMS := ValorF;
+    VL_BC_ICMS_ST := ValorF;
+    VL_ICMS_ST := ValorF;
+    VL_RED_BC := ValorF;
+    COD_OBS := Valor;
   end;
 end;
 

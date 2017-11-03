@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/11/2017
+-- ACBrNFeDANFEFRDM --
+[*] Ajuste para apresentar data de recebimento em Delphi 7 
+    	por: BigWings
+
 30/10/2017
 -- ACBrNFeDANFEFRDM --
 [*] Ajuste para apresentar Dados de Fatura na versão 4.0.

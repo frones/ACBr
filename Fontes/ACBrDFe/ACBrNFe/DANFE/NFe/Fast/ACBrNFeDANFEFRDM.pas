@@ -1035,7 +1035,9 @@ begin
                         else
                         begin
                           FieldByName('nProt').AsString := Trim(Copy(FDANFEClassOwner.ProtocoloNFe, 1, P - 1));
-                          FieldByName('dhRecbto').AsDateTime := StringToDateTimeDef(Trim(Copy(FDANFEClassOwner.ProtocoloNFe, P + 1)), 0, 'dd/mm/yyyy hh:nn:ss');
+                          FieldByName('dhRecbto').AsDateTime := StringToDateTimeDef(Trim(
+                            Copy(FDANFEClassOwner.ProtocoloNFe, P + 1, Length(FDANFEClassOwner.ProtocoloNFe) - P)
+                            ), 0, 'dd/mm/yyyy hh:nn:ss');
                         end;
                       end;
                     end;

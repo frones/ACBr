@@ -118,7 +118,8 @@ function CertToDERBase64(ACertContext: PCCERT_CONTEXT): AnsiString;
 
 procedure PFXDataToCertContextWinApi( AData, APass: AnsiString; var AStore, ACertContext: Pointer);
 function ExportCertContextToPFXData( ACertContext: PCCERT_CONTEXT; APass: AnsiString): AnsiString;
-procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString);
+procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString;
+   RaiseUnknownErrors: Boolean = True);
 
 Var
   CertificadosA3ComPin: String;
@@ -740,33 +741,47 @@ begin
   end;
 end;
 
-procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString);
+procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString;
+  RaiseUnknownErrors: Boolean);
 var
   dwKeySpec: DWORD;
   pfCallerFreeProv: LongBool;
   Ret: Longint;
   ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE;
+  PPass: PBYTE;
 
-  procedure CheckPINError(WinErro: DWORD = 0; ExceptionErrosDesconhecidos: Boolean = True);
+  procedure CheckPINError(WinErro: DWORD; RaiseUnknown: Boolean);
   begin
-    if WinErro = 0 then
-      WinErro := GetLastError;
+    case WinErro of
+      NO_ERROR:
+        Exit;
 
-    if (WinErro = 0) or (WinErro = ERROR_NO_TOKEN) then
-      Exit;
+      ERROR_NO_TOKEN:
+        Exit; // https://www.projetoacbr.com.br/forum/topic/36266-falha-ao-definir-pin-do-certificado-erro-80100004/?do=findComment&comment=237860
 
-    if WinErro = SCARD_W_WRONG_CHV then
-      raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o PIN errado foi apresentado.')
-    else if WinErro = SCARD_W_CHV_BLOCKED then
-      raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o número máximo de tentativas de entrada de PIN foi atingido')
-    else if ExceptionErrosDesconhecidos then
-      raise EACBrDFeException.Create('Falha ao Definir PIN do Certificado. Erro: '+GetLastErrorAsHexaStr(WinErro));
+      //NTE_BAD_DATA:
+      //  Exit;
+
+      SCARD_W_WRONG_CHV:
+        raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o PIN errado foi apresentado.');
+
+      SCARD_W_CHV_BLOCKED:
+        raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o número máximo de tentativas de entrada de PIN foi atingido');
+    else
+      if RaiseUnknown then
+        raise EACBrDFeException.Create('Falha ao Definir PIN do Certificado. Erro: '+GetLastErrorAsHexaStr(WinErro));
+    end;
   end;
 
 begin
   ProviderOrKeyHandle := 0;
   dwKeySpec := 0;
   pfCallerFreeProv := False;
+
+  if APass = '' then
+    PPass := Nil
+  else
+    PPass := PBYTE(APass);
 
   // Obtendo o Contexto do Provedor de Criptografia do Certificado //
   if not CryptAcquireCertificatePrivateKey( ACertContext,
@@ -787,18 +802,18 @@ begin
                                 NCRYPT_PIN_PROPERTY,
                                 PBYTE(APass),
                                 Length(APass)+1, 0);
-      CheckPINError(Ret);
+      CheckPINError(Ret, RaiseUnknownErrors);
     end
     else
     begin
       if not GetCSPProviderIsHardware(ProviderOrKeyHandle) then
         Exit;
 
-      if CryptSetProvParam(ProviderOrKeyHandle, PP_KEYEXCHANGE_PIN, PBYTE(APass), 0) then
-        CheckPINError();
+      CryptSetProvParam(ProviderOrKeyHandle, PP_SIGNATURE_PIN, PPass, 0);
+      CheckPINError(GetLastError, False);
 
-      if not CryptSetProvParam(ProviderOrKeyHandle, PP_SIGNATURE_PIN, PBYTE(APass), 0) then
-        CheckPINError(GetLastError, False);
+      CryptSetProvParam(ProviderOrKeyHandle, PP_KEYEXCHANGE_PIN, PPass, 0);
+      CheckPINError(GetLastError, RaiseUnknownErrors);
     end;
   finally
     if pfCallerFreeProv then
@@ -962,7 +977,7 @@ begin
      (pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) = 0) then  // Se Atribuir novamente em outra instância causa conflito... //
   begin
     try
-      SetCertContextPassword(FpCertContext, FpDFeSSL.Senha);
+      SetCertContextPassword(FpCertContext, FpDFeSSL.Senha, False);
       CertificadosA3ComPin := CertificadosA3ComPin + FpDadosCertificado.NumeroSerie + ',';
     except
       On EACBrDFeWrongPINException do
@@ -1065,9 +1080,16 @@ end;
 
 procedure TDFeWinCrypt.DescarregarCertificado;
 begin
-  if (FpDadosCertificado.NumeroSerie <> '') then
-   if (pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) > 0) then
-     CertificadosA3ComPin := StringReplace( CertificadosA3ComPin, FpDadosCertificado.NumeroSerie + ',', '', [rfReplaceAll]);
+  if (FpDadosCertificado.NumeroSerie <> '') and
+     (pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) > 0) then
+  begin
+    try
+      SetCertContextPassword( FpCertContext, '' );
+      // Apenas Remove da lista de "CertificadosA3ComPin", se conseguiu limpar o Cache do PIN
+      CertificadosA3ComPin := StringReplace( CertificadosA3ComPin, FpDadosCertificado.NumeroSerie + ',', '', [rfReplaceAll]);
+    except
+    end;
+  end;
 
   // Limpando objetos da MS CryptoAPI //
   if Assigned(FpCertContext) then

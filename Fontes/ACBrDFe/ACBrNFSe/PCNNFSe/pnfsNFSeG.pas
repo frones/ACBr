@@ -653,7 +653,7 @@ begin
           end
   else begin
          Gerador.Prefixo := Prefixo3;
-         if Provedor in [proCoplan] then
+         if Provedor in [proCoplan, proSIAPNet] then
            Gerador.wGrupoNFSe('LoteRps' + aVersao + aIdentificador)
          else
            Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao + aNameSpace);

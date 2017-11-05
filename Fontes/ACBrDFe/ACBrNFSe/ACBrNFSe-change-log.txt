@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/11/2017
+-- Diversos --
+[+] Implementação do provedor SIAPNet.
+Por: Diego Fernandes
+
 27/10/2017
 -- pnfsNFSeR / pnfsNFSe --
 [*] https://www.projetoacbr.com.br/forum/topic/39593-corre%C3%A7%C3%A3o-nfse-itajai/

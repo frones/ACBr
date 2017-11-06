@@ -1,8 +1,6 @@
 package ACBr_BoletoRL;
 
-{$I ACBr.inc}
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -16,7 +14,7 @@ package ACBr_BoletoRL;
 {$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$REFERENCEINFO ON}
+{$DEFINITIONINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
@@ -24,16 +22,14 @@ package ACBr_BoletoRL;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Boleto Impressão em FortesReport - (http://www.projectoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  vcl,  
+  vcl,
   dbrtl,
-  vcldb,  
+  vcldb,
   frce,
   ACBr_Boleto;
 

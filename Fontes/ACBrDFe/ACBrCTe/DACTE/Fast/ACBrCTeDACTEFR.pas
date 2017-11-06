@@ -1999,6 +1999,7 @@ procedure TACBrCTeDACTEFR.CarregaDadosNotasFiscais;
 var
   i       : Integer;
   DoctoRem: string;
+  NroNota : Integer;
 begin
   { dados das Notas Fiscais }
   DoctoRem := FCTe.Rem.CNPJCPF;
@@ -2048,7 +2049,8 @@ begin
         FieldByName('Serie').AsString       := Copy(chave, 23, 3);
         FieldByName('ChaveAcesso').AsString := chave;
         FieldByName('NotaFiscal').AsString  := Copy(chave, 26, 9);
-        FieldByName('TextoImpressao').AsString := Format('NF-e   %s      %s / %.9d',[chave,FieldByName('Serie').AsString, FieldByName('NotaFiscal').AsInteger]);
+        NroNota                             := StrToInt(Copy(chave, 26, 9));
+        FieldByName('TextoImpressao').AsString := 'NF-e ' + FormatFloat('000000000', NroNota) + '      ' + chave;
       end;
       Post;
     end;
@@ -2649,15 +2651,15 @@ begin
           FieldByName('UF').AsString := Prop.UF;
           FieldByName('TAF').AsString := Prop.TAF;
           FieldByName('NroRegEstadual').AsString := prop.NroRegEstadual;
-          FieldByName('CPF/CNPJ').AsString := prop.CNPJCPF;
+          FieldByName('CPF/CNPJ').AsString := FormatarCNPJouCPF(prop.CNPJCPF);
         end
         else
         begin
           //Próprio
-          FieldByName('UF').AsString    := CTe.infCTeNorm.rodoOS.veic.UF;
+          FieldByName('UF').AsString  := CTe.infCTeNorm.rodoOS.veic.UF;
           FieldByName('TAF').AsString := CTe.infCTeNorm.rodoOS.TAF;
           FieldByName('NroRegEstadual').AsString := CTe.infCTeNorm.rodoOS.NroRegEstadual;
-          FieldByName('CPF/CNPJ').AsString := CTe.Emit.CNPJ;
+          FieldByName('CPF/CNPJ').AsString := FormatarCNPJouCPF(CTe.Emit.CNPJ);
         end;
       end;
       post;
@@ -2805,30 +2807,35 @@ begin
 
     vResumo := '';
     if DACTEClassOwner.ExibirResumoCanhoto then
-       begin
-          vResumo := 'EMIT: '+ FCTe.Emit.xNome + ' - ' +
-                     'EMISSÃO: ' + FormatDateTime('DD/MM/YYYY',FCTe.Ide.dhEmi) + '  - '+
-                     'TOMADOR: ';
-          if FCTe.Ide.Toma4.xNome = '' then
-             begin
-                case FCTe.Ide.Toma03.Toma of
-                   tmRemetente:    vResumo := vResumo + FCTe.Rem.xNome;
-    	              tmExpedidor:    vResumo := vResumo + FCTe.Exped.xNome;
-                   tmRecebedor:    vResumo := vResumo + FCTe.Receb.xNome;
-    	              tmDestinatario: vResumo := vResumo + FCTe.Dest.xNome;
-                end
-             end
-          else
-             vResumo := vResumo + FCTe.Ide.Toma4.xNome;
+    begin
+      vResumo := 'EMIT: '+ FCTe.Emit.xNome + ' - ' +
+                 'EMISSÃO: ' + FormatDateTime('DD/MM/YYYY',FCTe.Ide.dhEmi) + '  - '+
+                 'TOMADOR: ';
+      if FCTe.Ide.modelo = 67 then
+        vResumo := vResumo + FCTe.toma.xNome
+      else
+      begin
+        if FCTe.Ide.Toma4.xNome = '' then
+        begin
+          case FCTe.Ide.Toma03.Toma of
+            tmRemetente:    vResumo := vResumo + FCTe.Rem.xNome;
+            tmExpedidor:    vResumo := vResumo + FCTe.Exped.xNome;
+            tmRecebedor:    vResumo := vResumo + FCTe.Receb.xNome;
+            tmDestinatario: vResumo := vResumo + FCTe.Dest.xNome;
+          end
+        end
+        else
+          vResumo := vResumo + FCTe.Ide.Toma4.xNome;
+      end;
 
-          vResumo := vResumo + ' - VALOR A RECEBER: R$ ' + FormatFloat('###,###,###,##0.00',FCTe.vPrest.vRec);
-       end;
+      vResumo := vResumo + ' - VALOR A RECEBER: R$ ' + FormatFloat('###,###,###,##0.00',FCTe.vPrest.vRec);
+    end;
     FieldByName('ResumoCanhoto').AsString := vResumo;
 
     if DACTEClassOwner.PosCanhoto = prCabecalho then
-       FieldByName('PrintCanhoto').AsString := '0'
+      FieldByName('PrintCanhoto').AsString := '0'
     else
-       FieldByName('PrintCanhoto').AsString := '1';
+      FieldByName('PrintCanhoto').AsString := '1';
 {$IFDEF PL_103}
     FieldByName('Versao').AsString := '1.03';
 {$ENDIF}
@@ -2842,23 +2849,42 @@ begin
       FieldByName('Versao').AsString := '3.00';
 {$ENDIF}
     if (FCTe.ide.tpAmb = taHomologacao) then
-      FieldByName('Mensagem0').AsString := 'CTe sem Valor Fiscal - HOMOLOGAÇÃO'
+    begin
+      if FCTe.Ide.modelo = 67 then
+        FieldByName('Mensagem0').AsString := 'CT-e OS sem Valor Fiscal - HOMOLOGAÇÃO'
+      else
+        FieldByName('Mensagem0').AsString := 'CT-e sem Valor Fiscal - HOMOLOGAÇÃO';
+    end
     else
     begin
       if not(FCTe.ide.TpEmis in [teContingencia, teFSDA]) then
       begin
-        if ((EstaVazio(ProtocoloCTE)) and
-          (EstaVazio(FCTe.procCTe.nProt))) then
-          FieldByName('Mensagem0').AsString := 'CTe sem Autorização de Uso da SEFAZ'
+        if ((EstaVazio(ProtocoloCTE)) and (EstaVazio(FCTe.procCTe.nProt))) then
+        begin
+          if FCTe.Ide.modelo = 67 then
+            FieldByName('Mensagem0').AsString := 'CT-e OS sem Autorização de Uso da SEFAZ'
+          else
+            FieldByName('Mensagem0').AsString := 'CT-e sem Autorização de Uso da SEFAZ';
+        end
         else
           if (not((EstaVazio(ProtocoloCTE)) and
           (EstaVazio(FCTe.procCTe.nProt)))) and
           (FCTe.procCTe.cStat = 101) then
-          FieldByName('Mensagem0').AsString := 'CTe Cancelado'
+          begin
+             if FCTe.Ide.modelo = 67 then
+               FieldByName('Mensagem0').AsString := 'CT-e OS Cancelado'
+             else
+               FieldByName('Mensagem0').AsString := 'CT-e Cancelado';
+          end
         else
         begin
           if CTeCancelada then
-            FieldByName('Mensagem0').AsString := 'CTe Cancelado'
+          begin
+            if FCTe.Ide.modelo = 67 then
+              FieldByName('Mensagem0').AsString := 'CT-e OS Cancelado'
+            else
+              FieldByName('Mensagem0').AsString := 'CT-e Cancelado';
+          end
           else
             FieldByName('Mensagem0').AsString := '';
         end;
@@ -2916,7 +2942,12 @@ begin
       if EstaVazio(ProtocoloCTE) then
       begin
         if not(FCTe.ide.TpEmis in [teContingencia, teFSDA]) and EstaVazio(FCTe.procCTe.nProt) then
-          FieldByName('Contingencia_Valor').AsString := 'CTe sem Autorização de Uso da SEFAZ'
+        begin
+          if FCTe.Ide.modelo = 67 then
+            FieldByName('Contingencia_Valor').AsString := 'CT-e OS sem Autorização de Uso da SEFAZ'
+          else
+            FieldByName('Contingencia_Valor').AsString := 'CT-e sem Autorização de Uso da SEFAZ';
+        end
         else
           FieldByName('Contingencia_Valor').AsString := FCTe.procCTe.nProt + ' ' + IfThen(FCTe.procCTe.dhRecbto <> 0,
             DateTimeToStr(FCTe.procCTe.dhRecbto), '');
@@ -2932,7 +2963,11 @@ begin
 
       if ((FCTe.ide.TpEmis = teContingencia) or (FCTe.ide.TpEmis = teFSDA)) then
       begin
-        FieldByName('Contingencia_Descricao').AsString := 'DADOS DA CT-E';
+        if FCTe.Ide.modelo = 67 then
+          FieldByName('Contingencia_Descricao').AsString := 'DADOS DA CT-E OS'
+        else
+          FieldByName('Contingencia_Descricao').AsString := 'DADOS DA CT-E';
+
         FieldByName('Contingencia_Valor').AsString     := FormatarChaveAcesso(vChave_Contingencia);
       end
       else

@@ -113,7 +113,7 @@ type
 
   TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
 
-  TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
+  TnfseResponsavelRetencao = ( ptTomador, rtPrestador, rtIntermediario );
 
   TnfseTEmissao = ( teNormalNFSe, teContigenciaNFSe );
   TnfseTEmpreitadaGlobal = ( EgConstrucaoCivil, EgOutros);

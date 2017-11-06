@@ -105,7 +105,7 @@ end;
 function _RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): String;
 begin
   result := EnumeradoToStr(t,
-                           ['-1','-2','-4','-5','-6'],
+                           ['','-2','-4','-5','-6'],
                            [retNenhum, retEstimativa, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP]);
 end;
 
@@ -132,6 +132,12 @@ begin
                            [trRPS, trNFConjugada, trCupom]);
 end;
 
+function _ResponsavelRetencaoToStr(const T: TnfseResponsavelRetencao): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['-1', '-2', '-3'],
+                           [ptTomador, rtIntermediario, rtPrestador]);
+end;
 { TNFSeW_Agili }
 
 procedure TNFSeW_Agili.GerarIdentificacaoRPS;
@@ -410,10 +416,13 @@ procedure TNFSeW_Agili.GerarRegimeEspecialTributacao;
 begin
   if VersaoNFSe = ve100 then
   begin
-    Gerador.wGrupoNFSe('RegimeEspecialTributacao');
-    Gerador.wCampoNFSe(tcStr, '', 'Codigo   ', 01, 01, 1, _RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-    Gerador.wCampoNFSe(tcStr, '', 'Descricao', 01, 300, 0, '', '');
-    Gerador.wGrupoNFSe('/RegimeEspecialTributacao');
+    if _RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao) <> '' then
+    begin
+      Gerador.wGrupoNFSe('RegimeEspecialTributacao');
+      Gerador.wCampoNFSe(tcStr, '', 'Codigo   ', 01, 01, 1, _RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
+      Gerador.wCampoNFSe(tcStr, '', 'Descricao', 01, 300, 0, '', '');
+      Gerador.wGrupoNFSe('/RegimeEspecialTributacao');
+    end;
   end
   else begin
     Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 1, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '')
@@ -425,7 +434,7 @@ begin
   if VersaoNFSe = ve100 then
   begin
     Gerador.wGrupoNFSe('ResponsavelISSQN');
-    Gerador.wCampoNFSe(tcStr, '', 'Codigo   ', 01, 01, 0, '-3', '');  // -1=Tomador -2=Intermediário -3=Prestador
+    Gerador.wCampoNFSe(tcStr, '', 'Codigo   ', 01, 01, 0, _ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), ''); 
     Gerador.wCampoNFSe(tcStr, '', 'Descricao', 01, 300, 0, '', '');
     Gerador.wGrupoNFSe('/ResponsavelISSQN');
   end

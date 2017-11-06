@@ -2061,6 +2061,7 @@ var
   itemServico: TItemServicoCollectionItem;
   codCNAE: Variant;
   codLCServ: string;
+  ValorServicosTotal: Currency;
 
   function _StrToSimNao(out ok: boolean; const s: String): TnfseSimNao;
   begin
@@ -2105,6 +2106,13 @@ var
 begin
   codLCServ := '';
 
+  ValorServicosTotal := 0;
+  if (Leitor.rExtrai(1, 'InfDeclaracaoPrestacaoServico') <> '') or
+     (Leitor.rExtrai(1, 'DeclaracaoPrestacaoServico') <> '') then
+  begin
+    NFSe.Servico.Valores.ValorServicos := Leitor.rCampo(tcDe2, 'ValorServicos');
+  end;
+
   if (Leitor.rExtrai(1, 'ListaServico') <> '') then
   begin
     i := 1;
@@ -2113,11 +2121,9 @@ begin
       itemServico := NFSe.Servico.ItemServico.Add;
       itemServico.Descricao := Leitor.rCampo(tcStr, 'Discriminacao');
       itemServico.Discriminacao := itemServico.Descricao;
-      itemServico.ValorUnitario := Leitor.rCampo(tcDe2, 'ValorServico');
+      itemServico.ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
       itemServico.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'ValorDesconto');
       itemServico.Quantidade := Leitor.rCampo(tcDe6, 'Quantidade');
-      itemServico.ValorTotal := itemServico.ValorUnitario * itemServico.Quantidade;
-      itemServico.ValorServicos := itemServico.ValorTotal;
 
       if VersaoNFSe = ve100 then
         codCNAE := Leitor.rCampo(tcStr, 'CodigoCnae');
@@ -2127,14 +2133,28 @@ begin
       if codLCServ = '' then
         codLCServ := itemServico.CodLCServ;
 
+      ValorServicosTotal := ValorServicosTotal + itemServico.ValorServicos;
+      inc(i);
+    end;
+
+    for I := 0 to NFSe.Servico.ItemServico.Count - 1 do
+    begin
+      itemServico := NFSe.Servico.ItemServico.Items[I];
+      if ValorServicosTotal = NFSe.Servico.Valores.ValorServicos then
+      begin
+        itemServico.ValorTotal := itemServico.ValorServicos;
       if itemServico.Quantidade = 0 then
         itemServico.ValorUnitario := 0
       else
         itemServico.ValorUnitario := itemServico.ValorServicos / itemServico.Quantidade;
-
-      itemServico.ValorTotal := itemServico.ValorServicos;
-      inc(i);
+      end
+      else
+      begin
+        itemServico.ValorUnitario := itemServico.ValorServicos;
+        itemServico.ValorTotal := itemServico.ValorUnitario * itemServico.Quantidade;
+      end;
     end;
+
   end; // fim lista serviço
 
   if Leitor.rExtrai(1, 'Nfse') <> '' then

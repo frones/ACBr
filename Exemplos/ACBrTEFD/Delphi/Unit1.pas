@@ -94,7 +94,7 @@ type
      Panel1 : TPanel;
      Panel2 : TPanel;
      Panel3: TPanel;
-     Panel4: TPanel;
+    pnlPagamentosAFazer: TPanel;
      Panel5: TPanel;
      pMensagemOperador : TPanel;
      pMensagemCliente : TPanel;
@@ -214,8 +214,9 @@ type
       var ItemSelecionado: Integer; var VoltarMenu: Boolean);
     procedure ACBrTEFD1CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
       TamanhoMaximo, TipoCampo: Integer;
-      Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: {$IFDEF DELPHI7}String{$ELSE}AnsiString{$END};
+      Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: {$IFDEF DELPHI7}String{$ELSE}AnsiString{$ENDIF};
       var Digitado, VoltarMenu: Boolean);
+    procedure PageControl1Change(Sender: TObject);
   private
      fCancelado : Boolean ;
 
@@ -338,6 +339,12 @@ end;
 procedure TForm1.MostraSaldoRestante;
 begin
   Memo1.Lines.Add( 'Saldo Restante: '+FormatFloat('0.00',CalculaSaldoRestante)) ;
+end;
+
+procedure TForm1.PageControl1Change(Sender: TObject);
+begin
+  pnlPagamentosAFazer.Visible := PageControl1.ActivePageIndex = 1;
+  Splitter1.Visible := PageControl1.ActivePageIndex = 1;
 end;
 
 procedure TForm1.VerificaECFAtivo;
@@ -1414,7 +1421,7 @@ end;
 
 procedure TForm1.ACBrTEFD1CliSiTefObtemCampo(Titulo: String; TamanhoMinimo,
   TamanhoMaximo, TipoCampo: Integer;
-  Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: {$IFDEF DELPHI7}String{$ELSE}AnsiString{$END};
+  Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: {$IFDEF DELPHI7}String{$ELSE}AnsiString{$ENDIF};
   var Digitado, VoltarMenu: Boolean);
 Var
   AForm : TForm5 ;

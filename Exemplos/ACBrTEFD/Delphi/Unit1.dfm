@@ -33,8 +33,9 @@ object Form1: TForm1
       Width = 5
       Height = 193
       Align = alRight
+      Visible = False
     end
-    object Panel4: TPanel
+    object pnlPagamentosAFazer: TPanel
       Left = 602
       Top = 0
       Width = 170
@@ -42,6 +43,7 @@ object Form1: TForm1
       Align = alRight
       Constraints.MinWidth = 170
       TabOrder = 0
+      Visible = False
       object Label12: TLabel
         Left = 1
         Top = 1
@@ -289,6 +291,7 @@ object Form1: TForm1
     ActivePage = tsConfig
     Align = alTop
     TabOrder = 1
+    OnChange = PageControl1Change
     object tsConfig: TTabSheet
       Caption = 'Configura'#231#227'o'
       object gbConfigECF: TGroupBox

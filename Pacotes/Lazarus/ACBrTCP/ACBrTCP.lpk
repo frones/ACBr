@@ -28,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="19">
+    <Files Count="20">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -106,6 +106,10 @@
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
         <UnitName Value="ACBrWinINetReqResp"/>
       </Item19>
+      <Item20>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas"/>
+        <UnitName Value="ACBrFeriado"/>
+      </Item20>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

@@ -1,0 +1,144 @@
+object Form1: TForm1
+  Left = 351
+  Height = 370
+  Top = 162
+  Width = 566
+  Caption = 'Demo Feriados'
+  ClientHeight = 370
+  ClientWidth = 566
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  LCLVersion = '1.6.4.0'
+  WindowState = wsMaximized
+  object Label1: TLabel
+    Left = 24
+    Height = 13
+    Top = 24
+    Width = 57
+    Caption = 'WebService'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 24
+    Height = 13
+    Top = 70
+    Width = 19
+    Caption = 'Ano'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 103
+    Height = 13
+    Top = 70
+    Width = 13
+    Caption = 'UF'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 182
+    Height = 13
+    Top = 70
+    Width = 33
+    Caption = 'Cidade'
+    ParentColor = False
+  end
+  object Label5: TLabel
+    Left = 147
+    Height = 13
+    Top = 11
+    Width = 29
+    Alignment = taRightJustify
+    Caption = 'Token'
+    ParentColor = False
+  end
+  object Label6: TLabel
+    Left = 139
+    Height = 13
+    Top = 38
+    Width = 37
+    Alignment = taRightJustify
+    Caption = 'Arquivo'
+    ParentColor = False
+  end
+  object btnBuscar: TButton
+    Left = 24
+    Height = 25
+    Top = 116
+    Width = 75
+    Caption = 'Buscar'
+    OnClick = btnBuscarClick
+    TabOrder = 0
+  end
+  object cboWebService: TComboBox
+    Left = 24
+    Height = 21
+    Top = 43
+    Width = 73
+    ItemHeight = 13
+    ItemIndex = 1
+    Items.Strings = (
+      'Calendario'
+      'JSON'
+    )
+    TabOrder = 1
+    Text = 'JSON'
+  end
+  object edtAno: TEdit
+    Left = 24
+    Height = 21
+    Top = 89
+    Width = 73
+    TabOrder = 2
+  end
+  object edtUF: TEdit
+    Left = 103
+    Height = 21
+    Top = 89
+    Width = 73
+    TabOrder = 3
+  end
+  object edtCidade: TEdit
+    Left = 182
+    Height = 21
+    Top = 89
+    Width = 203
+    TabOrder = 4
+  end
+  object mmResultado: TMemo
+    Left = 24
+    Height = 206
+    Top = 147
+    Width = 521
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    TabOrder = 5
+  end
+  object edtToken: TEdit
+    Left = 182
+    Height = 21
+    Top = 8
+    Width = 363
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 6
+  end
+  object edtArquivo: TEdit
+    Left = 182
+    Height = 21
+    Top = 35
+    Width = 292
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 7
+  end
+  object Button1: TButton
+    Left = 480
+    Height = 25
+    Top = 33
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Procurar'
+    OnClick = Button1Click
+    TabOrder = 8
+  end
+end

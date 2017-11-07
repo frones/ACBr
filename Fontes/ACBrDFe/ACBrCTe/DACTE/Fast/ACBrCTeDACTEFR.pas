@@ -704,7 +704,7 @@ begin
     Add('RENAVAM', ftString, 11);
     Add('TAF', ftString, 12);
     Add('NroRegEstadual', ftString, 25);
-    Add('CPF/CNPJ', ftString, 14);
+    Add('CPF/CNPJ', ftString, 18);
     CreateDataSet;
   end;
 

@@ -98,7 +98,7 @@ type
     procedure RegC420;
     procedure RegC425;
     procedure RegC460;
-//    procedure RegC465;
+    procedure RegC465;
     procedure RegC470;
     procedure RegC490;
     procedure RegC495;
@@ -178,7 +178,7 @@ begin
   else if (vHead = 'C420') then RegC420
   else if (vHead = 'C425') then RegC425
   else if (vHead = 'C460') then RegC460
-//  else if (vHead = 'C465') then RegC465
+  else if (vHead = 'C465') then RegC465
   else if (vHead = 'C470') then RegC470
   else if (vHead = 'C490') then RegC490
   else if (vHead = 'C495') then RegC495
@@ -598,14 +598,16 @@ begin
     NOM_ADQ := Valor;
   end;
 end;
-{
+
 procedure TACBrSpedFiscalImportar_BlocoC.RegC465;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC465New do
   begin
+    CHV_CFE := Valor;
+    NUM_CCF := Valor;
   end;
 end;
-}
+
 procedure TACBrSpedFiscalImportar_BlocoC.RegC470;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC470New do

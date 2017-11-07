@@ -214,7 +214,7 @@ procedure Register;
 
 implementation
 
-uses ACBrUtil;
+uses ACBrUtil, synautil;
 
 {$IFNDEF FPC}
  {$R ACBr_SPEDFiscal.dcr}
@@ -1575,6 +1575,14 @@ begin
          begin
            REG_BLC := 'C460';
            QTD_REG_BLC := Bloco_C.RegistroC460Count;
+         end;
+       end;
+       if Bloco_C.RegistroC465Count > 0 then
+       begin
+         with New do
+         begin
+           REG_BLC := 'C465';
+           QTD_REG_BLC := Bloco_C.RegistroC465Count;
          end;
        end;
        if Bloco_C.RegistroC470Count > 0 then

@@ -105,7 +105,7 @@ type
 
   TACBrFeriadoWSClass = class;
 
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
   TACBrFeriado = class(TACBrHTTP)
@@ -550,7 +550,7 @@ begin
       Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtQuintaSanta))
     else if (Pos('Sexta-feira Santa', Evento.Values['nome']) = 1) then
       Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtSextaSanta))
-    else if (Pos('Páscoa', Evento.Values['nome']) = 1) then
+    else if (Pos(ACBrStr('Páscoa'), Evento.Values['nome']) = 1) then
       Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtPascoa))
     else if (Pos('Corpus Christi', Evento.Values['nome']) = 1) then
       Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtCorpusChristi))
@@ -577,15 +577,8 @@ end;
 
 function TACBrWSJSON.GetDataDaPascoa(const ano: Integer): TDateTime;
 var
-  x: integer;
-  y: integer;
-  a: integer;
-  b: integer;
-  c: integer;
-  d: integer;
-  e: integer;
-  dia: word;
-  mes: word;
+  x, y, a, b, c, d, e: integer;
+  dia, mes: word;
 begin
   x := 24;
   y := 5;

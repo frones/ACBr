@@ -45,7 +45,7 @@ type
     procedure ACBrLCB1LeCodigo(Sender: TObject);
   private
     { private declarations }
-    fEmVenda : Boolean ;  { Flag para indicar que est· no Loop de Venda }
+    fEmVenda : Boolean ;  { Flag para indicar que est√° no Loop de Venda }
     procedure BloqueiaVenda ;
     procedure LiberaVenda ;
     procedure VendeItem( Codigo : String ) ;
@@ -58,6 +58,8 @@ var
   Form1: TForm1; 
 
 implementation
+
+{$R *.lfm}
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
@@ -135,7 +137,7 @@ begin
   pVenda.Enabled     := False ;
   Application.ProcessMessages ;
 
-  { Est· com o ECF ocupado ? Desabilite a leitura de dados
+  { Est√° com o ECF ocupado ? Desabilite a leitura de dados
     (dados ficam no buffer da serial }
   if not fEmVenda then
      ACBrLCB1.Intervalo := 0 ;
@@ -160,9 +162,6 @@ begin
   lAtraso.Visible := False ;
   lInstr.Visible  := True ;
 end;
-
-initialization
-  {$I lcbecfteste1.lrs}
 
 end.
 

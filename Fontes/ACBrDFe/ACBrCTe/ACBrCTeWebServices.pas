@@ -926,6 +926,9 @@ begin
     if pos('retCTeOS', FPRetWS) > 0 then
       AXML := StringReplace(FPRetWS, 'retCTeOS', 'retConsSitCTe',
                                      [rfReplaceAll, rfIgnoreCase])
+    else if pos('retEnviOS', FPRetWS) > 0 then
+      AXML := StringReplace(FPRetWS, 'retEnviOS', 'retConsSitCTe',
+                                     [rfReplaceAll, rfIgnoreCase])
     else if pos('retConsReciCTe', FPRetWS) > 0 then
       AXML := StringReplace(FPRetWS, 'retConsReciCTe', 'retConsSitCTe',
                                      [rfReplaceAll, rfIgnoreCase])

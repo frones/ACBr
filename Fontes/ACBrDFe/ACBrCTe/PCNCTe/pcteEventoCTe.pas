@@ -392,37 +392,41 @@ begin
 end;
 
 function TInfEvento.getDescEvento: String;
+var
+  Desc: String;
 begin
   case FTpEvento of
-    teCCe                      : Result := 'Carta de Correcao';
-    teCancelamento             : Result := 'Cancelamento';
-    teManifDestConfirmacao     : Result := 'Confirmacao da Operacao';
-    teManifDestCiencia         : Result := 'Ciencia da Operacao';
-    teManifDestDesconhecimento : Result := 'Desconhecimento da Operacao';
-    teManifDestOperNaoRealizada: Result := 'Operação nao Realizada';
-    teEPECNFe                  : Result := 'EPEC';
-    teEPEC                     : Result := 'EPEC';
-    teMultiModal               : Result := 'Registro Multimodal';
-    teRegistroPassagem         : Result := 'Registro de Passagem';
-    teRegistroPassagemBRId     : Result := 'Registro de Passagem BRId';
-    teEncerramento             : Result := 'Encerramento';
-    teInclusaoCondutor         : Result := 'Inclusao Condutor';
-    teRegistroCTe              : Result := 'CT-e Autorizado para NF-e';
-    teRegistroPassagemNFeCancelado: Result := 'Registro de Passagem para NF-e Cancelado';
-    teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
-    teCTeAutorizado               : Result := 'CT-e Autorizado';
-    teCTeCancelado                : Result := 'CT-e Cancelado';
+    teCCe                         : Desc := 'Carta de Correção';
+    teCancelamento                : Desc := 'Cancelamento';
+    teManifDestConfirmacao        : Desc := 'Confirmação da Operação';
+    teManifDestCiencia            : Desc := 'Ciência da Operação';
+    teManifDestDesconhecimento    : Desc := 'Desconhecimento da Operação';
+    teManifDestOperNaoRealizada   : Desc := 'Operação não Realizada';
+    teEPECNFe                     : Desc := 'EPEC';
+    teEPEC                        : Desc := 'EPEC';
+    teMultiModal                  : Desc := 'Registro Multimodal';
+    teRegistroPassagem            : Desc := 'Registro de Passagem';
+    teRegistroPassagemBRId        : Desc := 'Registro de Passagem BRId';
+    teEncerramento                : Desc := 'Encerramento';
+    teInclusaoCondutor            : Desc := 'Inclusão Condutor';
+    teRegistroCTe                 : Desc := 'CT-e Autorizado para NF-e';
+    teRegistroPassagemNFeCancelado: Desc := 'Registro de Passagem para NF-e Cancelado';
+    teRegistroPassagemNFeRFID     : Desc := 'Registro de Passagem para NF-e RFID';
+    teCTeAutorizado               : Desc := 'CT-e Autorizado';
+    teCTeCancelado                : Desc := 'CT-e Cancelado';
     teMDFeAutorizado,
-    teMDFeAutorizado2             : Result := 'MDF-e Autorizado';
+    teMDFeAutorizado2             : Desc := 'MDF-e Autorizado';
     teMDFeCancelado,
-    teMDFeCancelado2              : Result := 'MDF-e Cancelado';
-    teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
-    teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
-    tePrestDesacordo           : Result := ACBrStr('Prestação do Serviço em Desacordo');
-    teGTV                      : Result := ACBrStr('Informações da GTV');
+    teMDFeCancelado2              : Desc := 'MDF-e Cancelado';
+    teVistoriaSuframa             : Desc := 'Vistoria SUFRAMA';
+    teConfInternalizacao          : Desc := 'Confirmação de Internalização da Mercadoria na SUFRAMA';
+    tePrestDesacordo              : Desc := 'Prestação do Serviço em Desacordo';
+    teGTV                         : Desc := 'Informações da GTV';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
+
+  Result := ACBrStr(Desc);
 end;
 
 function TInfEvento.getTipoEvento: String;

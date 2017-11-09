@@ -866,43 +866,57 @@ begin
 
 
   // Calculando o tamanho da Pagina em Pixels //
-  TotalPaginaPixel := imgLogo.Height +
-                      rlbsCabecalho.Height +
-                      rlbLegenda.Height +
+  TotalPaginaPixel := rlbsCabecalho.Height +
                       rlbTotal.Height +
+                      rlbPagamentoTitulo.Height +
                       (rlbPagamento.Height * ACBrNFeDANFCeFortes.FpNFe.pag.Count) +
                       rlbChaveDeAcesso.Height +
                       rlbMensagemFiscal.Height +
-                      rlbRodape.Height +
-                      rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count;
+                      rlbRodape.Height;
+
+  if not ACBrNFeDANFCeFortes.ImprimeLogoLateral and (ACBrNFeDANFCeFortes.Logo <> '') then
+    TotalPaginaPixel := TotalPaginaPixel + imgLogo.Height;
 
   if ACBrNFeDANFCeFortes.QRCodeLateral then
     TotalPaginaPixel := TotalPaginaPixel + rlbQRLateral.Height
   else
-    TotalPaginaPixel := TotalPaginaPixel + rlbQRCode.Height + rlbConsumidor.Height;
+    TotalPaginaPixel := TotalPaginaPixel + rlbConsumidor.Height + rlbQRCode.Height;
+
+  if not Resumido then
+  begin
+    TotalPaginaPixel := TotalPaginaPixel +
+                      (rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count * iif(ACBrNFeDANFCeFortes.ImprimeEmUmaLinha, 1, 2));
+    // Calcular altura das bandas variáveis
+    for I := 0 to ACBrNFeDANFCeFortes.FpNFe.Det.Count - 1 do
+    begin
+      Prod := ACBrNFeDANFCeFortes.FpNFe.Det[I].Prod;
+      // Quebra de linha na descrição do item
+      if not ACBrNFeDANFCeFortes.FImprimeEmUmaLinha and (Length(Prod.xProd) > 35) then
+        TotalPaginaPixel := TotalPaginaPixel + 12;
+      if ACBrNFeDANFCeFortes.ImprimeDescAcrescItem then
+      begin
+        if (Prod.vDesc > 0) or ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
+        begin
+          // Valor líquido
+          TotalPaginaPixel := TotalPaginaPixel + 12;
+          if (Prod.vDesc > 0) then
+            TotalPaginaPixel := TotalPaginaPixel + 12;
+          if ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
+            TotalPaginaPixel := TotalPaginaPixel + 12;
+        end;
+      end;
+    end;
+  end;
 
   if (ACBrNFeDANFCeFortes.FpNFe.pag.vTroco > 0) or (ACBrNFeDANFCeFortes.vTroco > 0) then
     TotalPaginaPixel := TotalPaginaPixel + rlbTroco.Height;
 
-  // Calcular altura das bandas variáveis
-  for I := 0 to ACBrNFeDANFCeFortes.FpNFe.Det.Count - 1 do
+  with ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot do
   begin
-    Prod := ACBrNFeDANFCeFortes.FpNFe.Det[I].Prod;
-    // Quebra de linha na descrição do item
-    if Length(Prod.xProd) > 35 then
-      TotalPaginaPixel := TotalPaginaPixel + 12;
-    if ACBrNFeDANFCeFortes.ImprimeDescAcrescItem then
-    begin
-      if (Prod.vDesc > 0) or ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
-      begin
-        // Valor líquido
-        TotalPaginaPixel := TotalPaginaPixel + 12;
-        if (Prod.vDesc > 0) then
-          TotalPaginaPixel := TotalPaginaPixel + 12;
-        if ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
-          TotalPaginaPixel := TotalPaginaPixel + 12;
-      end;
-    end;
+    if (vFrete + vSeg + vOutro ) > 0 then
+      TotalPaginaPixel := TotalPaginaPixel + rlbTotalAcrescimo.Height;
+    if (vDesc > 0) then
+      TotalPaginaPixel := TotalPaginaPixel + rlbTotalDesconto.Height;
   end;
 
   for I := 0 to ACBrNFeDANFCeFortes.FpNFe.InfAdic.obsCont.Count - 1 do
@@ -915,7 +929,7 @@ begin
     (1 + CountStr(ACBrNFeDANFCeFortes.FpNFe.InfAdic.infCpl, ';'));
 
   // Pixel para Milimitros //
-  rlVenda.PageSetup.PaperHeight := max(100, 20+Trunc( TotalPaginaPixel / 3.75 ));
+  rlVenda.PageSetup.PaperHeight := max(100, 20 + Trunc(TotalPaginaPixel / 3.75));
 
 end;
 

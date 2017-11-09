@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/11/2017
+-- ACBrDANFCeFortesFr --
+[-] Correção na função de Cálculo de Tamanho da Página na impressão NFCe em Fortes.
+    por: BigWings
+
 01/11/2017
 -- pcnNFeW --
 [*] A tag <VFCPUFDEST> do grupo Totais, estava como obrigatória sendo que ela é opcional.

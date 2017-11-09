@@ -264,6 +264,8 @@ begin
     end;
 
     case Configuracoes.Geral.Provedor of
+      proIPM:     DocElemento := 'nfse';
+      proNotaBlu: DocElemento := 'RPS';
       proSMARAPD: DocElemento := 'tbnfd';
     else
       DocElemento := 'Rps';
@@ -272,7 +274,9 @@ begin
     case Configuracoes.Geral.Provedor of
       proEGoverneISS: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'NotaFiscal';
       pro4R:          InfElemento := 'Rps';
-      proCTA:         InfElemento := 'RPS';
+      proCTA,
+      proNotaBlu:     InfElemento := 'RPS';
+      proIPM:         InfElemento := 'nfse';
       proSMARAPD:     InfElemento := 'nfd';
     else
       InfElemento := InfElemento;

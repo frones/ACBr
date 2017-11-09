@@ -106,7 +106,7 @@ type
                     proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2,
                     proBethav2, proActconv2, proInfiscv11, proFriburgo, proCTA, 
                     proNotaBlu, proSMARAPD, proActconv201, proActconv202, proSigep,
-                    proSafeWeb, proSH3, proSIAPNet);
+                    proSafeWeb, proSH3, proSIAPNet, proIPM);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -121,7 +121,8 @@ type
   TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
 
   TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
-                loInfisc, loISSDSF, loGoverna, loSP, loCONAM, loAgili, loSMARAPD);
+                loInfisc, loISSDSF, loGoverna, loSP, loCONAM, loAgili, loSMARAPD,
+                loIPM);
 
   TnfseFrete = ( tfPrestador, tfTomador );
 
@@ -486,7 +487,7 @@ begin
          'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2',
          'Bethav2', 'Actconv2', 'Infisc-v11', 'Friburgo', 'CTA', 'NotaBlu',
          'Smarapd', 'Actconv201', 'Actconv202', 'Sigep', 'SafeWeb', 'SH3',
-         'SIAPNet'],
+         'SIAPNet', 'IPM'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -501,7 +502,7 @@ begin
          proPronimv2, proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2,
          proBethav2, proActconv2, proInfiscv11, proFriburgo, proCTA, proNotaBlu,
          proSMARAPD, proActconv201, proActconv202, proSigep, proSafeWeb, proSH3,
-         proSIAPNet]);
+         proSIAPNet, proIPM]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -520,7 +521,7 @@ begin
          'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2',
          'Bethav2', 'Actconv2', 'Infisc-v11', 'Friburgo', 'CTA', 'NotaBlu',
          'Smarapd', 'Actconv201', 'Actconv202', 'Sigep', 'SafeWeb', 'SH3',
-         'SIAPNet'],
+         'SIAPNet', 'proIPM'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -535,7 +536,7 @@ begin
          proPronimv2, proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2,
          proBethav2, proActconv2, proInfiscv11, proFriburgo, proCTA, proNotaBlu,
          proSMARAPD, proActconv201, proActconv202, proSigep, proSafeWeb, proSH3,
-         proSIAPNet]);
+         proSIAPNet, proIPM]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18343,6 +18344,7 @@ begin
     proNotaBlu:     Result := loSP;
     proCONAM:       Result := loCONAM;
     proSMARAPD:     Result := loSMARAPD;
+    proIPM:         Result := loIPM;
   else
     Result := loNone;
   end;

@@ -2211,7 +2211,9 @@ begin
 
       proSMARAPD:   FTagGrupo := '';
 
-//      proTinus:     FTagGrupo := 'Arg';
+      proIPM:       FTagGrupo := '';
+
+      //      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'EnviarLoteRpsEnvio';
     end;
@@ -2225,7 +2227,9 @@ begin
       proinfiscv11: TagElemento := 'infNFSe';
 
       proSP, 
-      proNotaBlu:   TagElemento := '';
+      proNotaBlu,
+      proIPM:       TagElemento := '';
+
 
       proSMARAPD:   TagElemento := 'nfd';
 
@@ -2532,6 +2536,7 @@ begin
     case Provedor of
       proNotaBlu: FTagGrupo := 'PedidoEnvioLoteRPS';
       proSigep:   FTagGrupo := 'Rps';
+      proIPM:     FTagGrupo := '';
     else
       FTagGrupo := 'EnviarLoteRpsEnvio';
     end;
@@ -2539,7 +2544,7 @@ begin
     FTagGrupo := FPrefixo3 + FTagGrupo;
 
     case FProvedor of
-      proSP, proNotaBlu: TagElemento := '';
+      proSP, proNotaBlu, proIPM: TagElemento := '';
     else
       TagElemento := 'LoteRps';
     end;
@@ -3520,7 +3525,8 @@ begin
       proSP,
       proNotaBlu:   FTagGrupo := 'p1:PedidoConsultaLote';
 
-      proSMARAPD:   FTagGrupo := '';
+      proSMARAPD,
+      proIPM:       FTagGrupo := '';
 
 //      proTinus:     FTagGrupo := 'Arg';
     else

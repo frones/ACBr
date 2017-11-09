@@ -188,7 +188,7 @@ begin
     teManifDestConfirmacao     : Result := 'Confirmacao da Operacao';
     teManifDestCiencia         : Result := 'Ciencia da Operacao';
     teManifDestDesconhecimento : Result := 'Desconhecimento da Operacao';
-    teManifDestOperNaoRealizada: Result := 'Operação nao Realizada';
+    teManifDestOperNaoRealizada: Result := 'Operacao nao Realizada';
     teEPECNFe                  : Result := 'EPEC';
     teEPEC                     : Result := 'EPEC';
     teMultiModal               : Result := 'Registro Multimodal';

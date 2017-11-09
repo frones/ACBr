@@ -321,6 +321,9 @@ type
 
 implementation
 
+uses
+  ACBrUtil;
+
 { TInfEvento }
 
 constructor TInfEvento.Create;
@@ -396,7 +399,7 @@ begin
     teManifDestConfirmacao     : Result := 'Confirmacao da Operacao';
     teManifDestCiencia         : Result := 'Ciencia da Operacao';
     teManifDestDesconhecimento : Result := 'Desconhecimento da Operacao';
-    teManifDestOperNaoRealizada: Result := 'Operacao nao Realizada';
+    teManifDestOperNaoRealizada: Result := 'Operação nao Realizada';
     teEPECNFe                  : Result := 'EPEC';
     teEPEC                     : Result := 'EPEC';
     teMultiModal               : Result := 'Registro Multimodal';
@@ -415,8 +418,8 @@ begin
     teMDFeCancelado2              : Result := 'MDF-e Cancelado';
     teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
-    tePrestDesacordo           : Result := 'Prestação do Serviço em Desacordo';
-    teGTV                      : Result := 'Informações da GTV'
+    tePrestDesacordo           : Result := ACBrStr('Prestação do Serviço em Desacordo');
+    teGTV                      : Result := ACBrStr('Informações da GTV');
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;

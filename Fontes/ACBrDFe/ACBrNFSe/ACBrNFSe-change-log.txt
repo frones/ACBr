@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/11/2017
+-- ACBrNFSeNotasFiscais  --
+[*] Correção na assinatura (provedor SmarAPD) estava acrescentando indevidamente
+    um valor para o atributo URI.
+   Por: Goesnando
 -- pnfsEnvLoteRpsResposta  --
 [*] Acrescentado a condição que checa a tag <ListaMensagemRetornoLote> usada 
     pelo provedor Fiorilli.

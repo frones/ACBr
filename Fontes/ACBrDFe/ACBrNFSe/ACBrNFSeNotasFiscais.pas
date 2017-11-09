@@ -289,9 +289,10 @@ begin
 
       // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
       // atributo URI ao realizar a assinatura.
-      if (i > 0) and (NFSe.InfID.ID <> '') then
-        FXMLAssinado := Copy(FXMLAssinado, 1, i+4) + '#' + NFSe.InfID.ID +
-                        Copy(FXMLAssinado, i+5, length(FXMLAssinado));
+      if Configuracoes.Geral.Provedor <> proSMARAPD then
+        if (i > 0) and (NFSe.InfID.ID <> '') then
+          FXMLAssinado := Copy(FXMLAssinado, 1, i+4) + '#' + NFSe.InfID.ID +
+                          Copy(FXMLAssinado, i+5, length(FXMLAssinado));
 
       leitor.Grupo := FXMLAssinado;
       NFSe.signature.URI := Leitor.rAtributo('Reference URI=');

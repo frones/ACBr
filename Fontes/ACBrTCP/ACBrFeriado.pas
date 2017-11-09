@@ -609,8 +609,8 @@ var
   Ano: Word;
   Mes: Word;
   Dia: Word;
-  Data: TDate;
-  DataInicio: TDate;
+  Data: TDateTime;
+  DataInicio: TDateTime;
   Nome: String;
   Descricao: String;
   ListaUF: String;

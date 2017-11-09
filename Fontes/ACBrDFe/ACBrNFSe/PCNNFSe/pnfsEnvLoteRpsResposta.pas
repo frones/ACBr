@@ -316,10 +316,12 @@ begin
      else infRec.FDataRecebimento := Leitor.rCampo(tcDat, 'DataRecebimento');
 
     iNivel := 1;
-    if leitor.rExtrai(2, 'ListaMensagemRetorno') <> '' then
+    if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') or
+       (leitor.rExtrai(2, 'ListaMensagemRetornoLote') <> '') then
       iNivel := 3
     else
-      if leitor.rExtrai(1, 'ListaMensagemRetorno') <> '' then
+      if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
+         (leitor.rExtrai(1, 'ListaMensagemRetornoLote') <> '') then
         iNivel := 2;
 
     i := 0;

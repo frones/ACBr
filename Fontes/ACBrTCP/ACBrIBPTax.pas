@@ -474,7 +474,7 @@ begin
   if AExcecao < 0 then
     raise EACBrIBPTax.Create('Informe 0 quando não houver exceção ou o código da exceção.');
 
-  UrlConsulta := 'http://iws.ibpt.org.br/api/deolhonoimposto/produtos' +
+  UrlConsulta := 'https://apidoni.ibpt.org.br/api/v1/produtos' +
                    '?token='  + Self.AjustaParam(FToken) +
                    '&cnpj='   + Self.AjustaParam(OnlyNumber(FCNPJEmpresa)) +
                    '&codigo=' + Self.AjustaParam(ANCM) +
@@ -492,7 +492,7 @@ begin
     UrlConsulta := UrlConsulta + '&unidadeMedida=' + Self.AjustaParam(AUnidadeMedida);
 
   if AValorUnitario > 0 then
-    UrlConsulta := UrlConsulta + '&valor=' + Self.AjustaParam(FormatFloatBr(AValorUnitario));
+	UrlConsulta := UrlConsulta + '&valor=' + Self.AjustaParam(FormatFloatBr(AValorUnitario,'#.##'));    
 
   if Trim(AGtin) <> '' then
     UrlConsulta := UrlConsulta + '&gtin=' + Self.AjustaParam(AGtin);
@@ -538,7 +538,7 @@ begin
   if Trim(AUF) = '' then
     raise EACBrIBPTax.Create('UF não foi informado.');
 
-  UrlConsulta := 'http://iws.ibpt.org.br/api/deolhonoimposto/servico' +
+  UrlConsulta := 'https://apidoni.ibpt.org.br/api/v1/servicos' +
                    '?token='  + Self.AjustaParam(FToken) +
                    '&cnpj='   + Self.AjustaParam(OnlyNumber(FCNPJEmpresa)) +
                    '&codigo=' + Self.AjustaParam(ANBS_LC116) +
@@ -552,7 +552,7 @@ begin
     UrlConsulta := UrlConsulta + '&unidadeMedida=' + Self.AjustaParam(AUnidadeMedida);
 
   if AValorUnitario > 0 then
-    UrlConsulta := UrlConsulta + '&valor=' + Self.AjustaParam(FormatFloatBr(AValorUnitario));
+    UrlConsulta := UrlConsulta + '&valor=' + Self.AjustaParam(FormatFloatBr(AValorUnitario,'#.##'));
 
   // enviar consulta
   Self.HTTPGet(TraduzStrToAnsi(UrlConsulta));

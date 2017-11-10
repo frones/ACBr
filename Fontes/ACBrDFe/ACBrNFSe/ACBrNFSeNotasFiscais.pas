@@ -850,20 +850,21 @@ var
   Ok: Boolean;
   AXML: AnsiString;
   N, TamTAG, i: integer;
-  TagF: Array[1..9] of String;
+  TagF: Array[1..10] of String;
 
   function PosNFSe: Integer;
   begin
-    TagF[1] := '</NFS-e>';
-    TagF[2] := '</CompNfse>';
-    TagF[3] := '</Nfse>';
-    TagF[4] := '</Nota>';
-    TagF[5] := '</NFe>';
-    TagF[6] := '</tbnfd>';
-    TagF[7] := '</nfs>';
+    TagF[01] := '</NFS-e>';
+    TagF[02] := '</CompNfse>';
+    TagF[03] := '</Nfse>';
+    TagF[04] := '</Nota>';
+    TagF[05] := '</NFe>';
+    TagF[06] := '</tbnfd>';
+    TagF[07] := '</nfs>';
     // Necessários para o Provedor EL
-    TagF[8] := '</nfeRpsNotaFiscal>';
-    TagF[9] := '</notasFiscais>';
+    TagF[08] := '</nfeRpsNotaFiscal>';
+    TagF[09] := '</notasFiscais>';
+    TagF[10] := '</ComplNfse>';
 
     i := 0;
 
@@ -871,7 +872,7 @@ var
       inc(i);
       TamTAG := Length(TagF[i]) -1;
       Result := Pos(TagF[i], AXMLString);
-    until (i = 9) or (Result <> 0);
+    until (i = 10) or (Result <> 0);
 
   end;
 
@@ -880,8 +881,8 @@ var
   begin
     TamTAG := 18;
     Result := Pos('</NfseCancelamento>', AXMLString);
-    if Result=0 then
-       Result := Pos('</CancelamentoNfse>', AXMLString);
+    if Result = 0 then
+      Result := Pos('</CancelamentoNfse>', AXMLString);
   end;
 
   function PosRPS: Integer;

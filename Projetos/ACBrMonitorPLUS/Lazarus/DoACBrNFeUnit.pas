@@ -1670,6 +1670,21 @@ begin
               raise Exception.Create('Ambiente Inválido.');
          end
 
+        else if Cmd.Metodo = 'setlogomarca' then
+        begin
+          if FileExists(Cmd.Params(0)) then
+           begin
+             ACBrNFe1.DANFE.Logo       := Cmd.Params(0);
+             if (Cmd.Params(1) = '1') then
+               edtLogoMarcaNFCeSAT.Text  := ACBrNFe1.DANFE.Logo
+             else
+               edtLogoMarca.Text         := ACBrNFe1.DANFE.Logo;
+             SalvarIni;
+           end
+          else
+             raise Exception.Create('Arquivo não encontrado.');
+        end
+
         else if Cmd.Metodo = 'setformaemissao' then //NFe.SetFormaEmissao(nFormaEmissao)
          begin
            if cbModoEmissao.checked then

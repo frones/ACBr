@@ -250,6 +250,19 @@ begin
     else if Cmd.Metodo = 'setnumerosessao' then
       ACBrSAT1.Tag := StrToIntDef(Trim(cmd.Params(0)), 0)
 
+    else if Cmd.Metodo = 'setlogomarca' then
+    begin
+      if FileExists(Cmd.Params(0)) then
+       begin
+         ACBrSATExtratoFortes1.LogoVisible := True;
+         ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(Cmd.Params(0));
+         edtLogoMarcaNFCeSAT.Text := Cmd.Params(0);
+         SalvarIni;
+       end
+      else
+         raise Exception.Create('Arquivo não encontrado.');
+    end
+
     else
       raise Exception.Create(ACBrStr('Comando invalido ('+Cmd.Comando+')'));
   end;

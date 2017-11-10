@@ -1021,6 +1021,18 @@ begin
               raise Exception.Create('Ambiente Inválido.');
          end
 
+        else if Cmd.Metodo = 'setlogomarca' then
+        begin
+          if FileExists(Cmd.Params(0)) then
+          begin
+            ACBrCTe1.DACTe.Logo       := Cmd.Params(0);
+            edtLogoMarca.Text         := ACBrCTe1.DACTe.Logo;
+            SalvarIni;
+          end
+          else
+             raise Exception.Create('Arquivo não encontrado.');
+        end
+
         else if Cmd.Metodo = 'setformaemissao' then 
          begin
            if cbModoEmissao.checked then

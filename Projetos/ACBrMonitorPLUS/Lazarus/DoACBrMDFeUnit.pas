@@ -812,7 +812,7 @@ begin
          end
 
         else if Cmd.Metodo = 'setambiente' then //1-Produção 2-Homologação
-         begin
+        begin
            if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=2) then
             begin
               ACBrMDFe1.Configuracoes.WebServices.Ambiente := StrToTpAmb(OK, Cmd.Params(0));
@@ -821,7 +821,19 @@ begin
             end
            else
               raise Exception.Create('Ambiente Inválido.');
-         end
+        end
+
+        else if Cmd.Metodo = 'setlogomarca' then
+        begin
+          if FileExists(Cmd.Params(0)) then
+           begin
+             ACBrMDFe1.DAMDFE.Logo     := Cmd.Params(0);
+             edtLogoMarca.Text         := ACBrMDFe1.DAMDFE.Logo;
+             SalvarIni;
+           end
+          else
+             raise Exception.Create('Arquivo não encontrado.');
+        end
 
         else if Cmd.Metodo = 'setformaemissao' then
          begin

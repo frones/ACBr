@@ -986,7 +986,9 @@ begin
   // Remover quebras de linha //
   FPRetornoWS := StringReplace(FPRetornoWS, #10       , '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, #13       , '', [rfReplaceAll]);
-
+  FPRetornoWS := StringReplace(FPRetornoWS, '&amp;'   , '', [rfReplaceAll]);
+  FPRetornoWS := StringReplace(FPRetornoWS, 'lt;brgt;', '', [rfReplaceAll]);
+  
   FPRetornoWS := RemoverDeclaracaoXML(FPRetornoWS);
 
   if (FProvedor = proNFSeBrasil) then

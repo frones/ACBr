@@ -37,6 +37,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/11/2017
+-- ACBrMail --
+[+] Melhoria no controle de anexos, modificando o tipo de lista de Array of Record
+    para um TObjectList.
+    Introduzido os tipos: TMailAttachments e TMailAttachment.
+    Agora os anexos são carregados para TMemoryStream, no momento em que os
+    mesmos são anexados, e não apenas no momento do envio do e-mail.
+[-] Modificada a forma de construção do MimeMess, para que todos os anexos sejam
+    do tipo MP_BINARY. Evitando que XMLs sejam alterados ou convertidos para o
+    Encoding nativo.
+    https://www.projetoacbr.com.br/forum/topic/39818-problemas-em-anexar-xml-no-e-mail
+    (por: DSA)
+
 23/10/2017
 -- ACBrWinHTTPReqResp, ACBrWinINetReqResp --
 [*] Melhoria na detecção de TimeOut, na demora da resposta do Servidor

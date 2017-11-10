@@ -51,7 +51,7 @@ unit ACBrMail;
 interface
 
 uses
-  Classes, syncobjs, SysUtils,
+  Classes, syncobjs, SysUtils, contnrs,
   SSL_OpenSSL, SMTPSend, MimePart, MimeMess, SynaChar, SynaUtil,
   ACBrBase;
 
@@ -63,10 +63,36 @@ type
 
   TMailCharset = TMimeChar;
 
-  TMailAttachments = array of record
-    FileName: string;
-    Stream: TMemoryStream;
-    NameRef: string;
+  { TMailAttachment }
+
+  TMailAttachment = class
+  private
+    FFileName: String;
+    FDescription: String;
+    FStream: TMemoryStream;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear;
+    procedure Assign(Source: TMailAttachment);
+
+    property FileName: String read FFileName write FFileName;
+    property Stream: TMemoryStream read FStream;
+    property Description: String read FDescription write FDescription;
+  end;
+
+  { TMailAttachments }
+
+  TMailAttachments = class( TObjectList )
+  protected
+    procedure SetObject (Index: Integer; Item: TMailAttachment);
+    function GetObject (Index: Integer): TMailAttachment;
+    procedure Insert (Index: Integer; Obj: TMailAttachment);
+  public
+    function New: TMailAttachment;
+    function Add (Obj: TMailAttachment): Integer;
+    property Objects [Index: Integer]: TMailAttachment read GetObject write SetObject; default;
   end;
 
   TACBrMail = class;
@@ -175,9 +201,9 @@ type
     procedure SaveToFile(const AFileName: String);
     function SaveToStream(AStream: TStream): Boolean;
 
-    procedure AddAttachment(aFileName: string; aNameRef: string); overload;
+    procedure AddAttachment(aFileName: string; aDescription: string); overload;
     procedure AddAttachment(aFileName: string); overload;
-    procedure AddAttachment(aStream: TStream; aNameRef: string); overload;
+    procedure AddAttachment(aStream: TStream; aDescription: string); overload;
     procedure AddAttachment(aStream: TStream); overload;
     procedure ClearAttachments;
 
@@ -244,6 +270,65 @@ begin
 
   // Thread is FreeOnTerminate, and also will destroy "AMail"
   TACBrMailThread.Create(AMail);
+end;
+
+{ TMailAttachment }
+
+constructor TMailAttachment.Create;
+begin
+  inherited Create;
+  FStream := TMemoryStream.Create;
+  Clear;
+end;
+
+destructor TMailAttachment.Destroy;
+begin
+  FStream.Free;
+  inherited Destroy;
+end;
+
+procedure TMailAttachment.Clear;
+begin
+  FFileName := '';
+  FDescription  := '';
+  FStream.Clear;
+end;
+
+procedure TMailAttachment.Assign(Source: TMailAttachment);
+begin
+  Clear;
+  FFileName := Source.FileName;
+  FDescription  := Source.Description;
+  Source.Stream.Position := 0;
+  FStream.CopyFrom(Source.Stream, Stream.Size);
+end;
+
+{ TMailAttachments }
+
+procedure TMailAttachments.SetObject(Index: Integer; Item: TMailAttachment);
+begin
+  inherited SetItem (Index, Item) ;
+end;
+
+function TMailAttachments.GetObject(Index: Integer): TMailAttachment;
+begin
+  Result := inherited GetItem(Index) as TMailAttachment ;
+end;
+
+procedure TMailAttachments.Insert(Index: Integer; Obj: TMailAttachment);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+function TMailAttachments.New: TMailAttachment;
+begin
+  Result := TMailAttachment.Create;
+  Add(Result);
+end;
+
+function TMailAttachments.Add(Obj: TMailAttachment): Integer;
+begin
+  Result := inherited Add(Obj) ;
 end;
 
 { TACBrMail }
@@ -400,12 +485,13 @@ begin
   fAltBody := TStringList.Create;
   fBody := TStringList.Create;
   fArqMIMe := TMemoryStream.Create;
+  fAttachments := TMailAttachments.Create(True); // FreeObjects
   fTimeOut := 0;
 
   fOnBeforeMailProcess := nil;
   fOnAfterMailProcess := nil;
 
-  SetLength(fAttachments, 0);
+  fAttachments.Clear;
   SetPriority(MP_normal);
   fDefaultCharsetCode := UTF_8;
   fIDECharsetCode := {$IFDEF FPC}UTF_8{$ELSE}CP1252{$ENDIF};
@@ -443,6 +529,7 @@ begin
   fMIMEMess.Free;
   fSMTP.Free;
   fArqMIMe.Free;
+  fAttachments.Free;
   
   inherited Destroy;
 end;
@@ -450,6 +537,7 @@ end;
 procedure TACBrMail.Assign(Source: TPersistent);
 var
   i: Integer;
+  AAttachment: TMailAttachment;
 begin
   if not (Source is TACBrMail) then
     raise Exception.Create('Source must be TACBrMail');
@@ -478,12 +566,10 @@ begin
     Self.OnMailException := OnMailException;
     Self.Tag := Tag;
 
-    for i := 0 to Length(Attachments) - 1 do
+    for i := 0 to Attachments.Count-1 do
     begin
-      if Attachments[i].Stream <> Nil then
-        Self.AddAttachment(Attachments[i].Stream, Attachments[i].NameRef)
-      else
-        Self.AddAttachment(Attachments[i].FileName, Attachments[i].NameRef);
+      AAttachment := Self.Attachments.New;
+      AAttachment.Assign(Attachments[I]);
     end;
 
     Self.AltBody.Assign(AltBody);
@@ -518,6 +604,7 @@ var
   i: Integer;
   MultiPartParent, MimePartAttach : TMimePart;
   NeedMultiPartRelated, BodyHasImage: Boolean;
+  AAttachment: TMailAttachment;
 
   function InternalCharsetConversion(const Value: String; CharFrom: TMimeChar;
     CharTo: TMimeChar): String;
@@ -572,6 +659,7 @@ begin
 
   // The Root //
   MultiPartParent := fMIMEMess.AddPartMultipart( IfThen(NeedMultiPartRelated, 'alternative', 'mixed'), nil );
+  MultiPartParent.CharsetCode := fDefaultCharsetCode;
 
   // Text part //
   if fAltBody.Count > 0 then
@@ -593,7 +681,10 @@ begin
 
   // Need New branch ? //
   if NeedMultiPartRelated then
+  begin
     MultiPartParent := fMIMEMess.AddPartMultipart( 'related', MultiPartParent );
+    MultiPartParent.CharsetCode := fDefaultCharsetCode;
+  end;
 
   if fIsHTML and (fBody.Count > 0) then
   begin
@@ -614,62 +705,36 @@ begin
   end;
 
   // Adding the Attachments //
-  for i := 0 to Length(fAttachments) - 1 do
+  for i := 0 to fAttachments.Count-1 do
   begin
+    AAttachment := fAttachments[i];
 
-    if (Trim(fAttachments[i].FileName) = '') then   // Using Stream
-    begin
-      if (Trim(fAttachments[i].NameRef) = '') then
-        fAttachments[i].NameRef := 'file_' + FormatDateTime('hhnnsszzz',Now);
+    BodyHasImage := pos(':'+LowerCase(AAttachment.Description),
+                        LowerCase(fBody.Text)) > 0;
 
-      BodyHasImage := pos(':'+LowerCase(fAttachments[i].NameRef),
-                          LowerCase(fBody.Text)) > 0;
+    AAttachment.Stream.Position := 0;
 
-      if fIsHTML and BodyHasImage then
-        MimePartAttach := fMIMEMess.AddPartHTMLBinary(
-                                      fAttachments[i].Stream,
-                                      fAttachments[i].NameRef,
-                                      '<' + fAttachments[i].NameRef + '>',
-                                      MultiPartParent )
-      else
-        MimePartAttach := fMIMEMess.AddPartBinary(
-                                      fAttachments[i].Stream,
-                                      fAttachments[i].NameRef,
-                                      MultiPartParent );
+    MimePartAttach := fMIMEMess.AddPart(MultiPartParent);
+    MimePartAttach.DecodedLines.LoadFromStream(AAttachment.Stream);
+    MimePartAttach.MimeTypeFromExt(AAttachment.FileName);
+    MimePartAttach.Description := AAttachment.Description;
+    MimePartAttach.Disposition := 'inline';
+    if fIsHTML and BodyHasImage then
+      MimePartAttach.ContentID := '<' + AAttachment.Description + '>';
 
-    end
-    else
-    begin
-      if (Trim(fAttachments[i].NameRef) = '') then
-        fAttachments[i].NameRef := ExtractFileName(fAttachments[i].FileName);
+    MimePartAttach.FileName    := AAttachment.FileName;
+    MimePartAttach.EncodingCode:= ME_BASE64;
+    MimePartAttach.PrimaryCode := MP_BINARY;  // To avoid MP_TEXT internal conversion ;
+    MimePartAttach.CharsetCode := fDefaultCharsetCode;
 
-      BodyHasImage := pos(':'+LowerCase(fAttachments[i].NameRef),
-                          LowerCase(fBody.Text)) > 0;
-
-      if fIsHTML and BodyHasImage then
-        MimePartAttach := fMIMEMess.AddPartHTMLBinaryFromFile(
-                                      fAttachments[i].FileName,
-                                      '<' + fAttachments[i].NameRef + '>',
-                                      MultiPartParent )
-      else
-        MimePartAttach := fMIMEMess.AddPartBinaryFromFile(
-                                      fAttachments[i].FileName,
-                                      MultiPartParent );
-
-    end;
-
-    if Assigned(MimePartAttach) then
-    begin
-      MimePartAttach.Description := fAttachments[i].NameRef;
-      MimePartAttach.EncodePartHeader;
-    end;
+    MimePartAttach.EncodePart;
+    MimePartAttach.EncodePartHeader;
   end;
 
   fMIMEMess.EncodeMessage;
 
   fArqMIMe.Clear;
   fMIMEMess.Lines.SaveToStream(fArqMIMe);
-
 end;
 
 procedure TACBrMail.SendMail;
@@ -763,23 +828,6 @@ begin
     end;
   end;
 
-  // Sending Copies to Reply To //
-  //c := fReplyTo.Count;
-  //if c > 0 then
-  //  MailProcess(pmsSendReplyTo);
-  //
-  //for i := 0 to c - 1 do
-  //begin
-  //  for vAttempts := 1 to fAttempts do
-  //  begin
-  //    if fSMTP.MailTo(GetEmailAddr(fReplyTo.Strings[I])) then
-  //      Break;
-  //
-  //    if vAttempts >= fAttempts then
-  //      SmtpError('SMTP Error: Unable to send ReplyTo list.');
-  //  end;
-  //end;
-
   // Sending MIMEMess Data //
   MailProcess(pmsSendData);
 
@@ -816,32 +864,29 @@ begin
 end;
 
 procedure TACBrMail.ClearAttachments;
-var
-  i: Integer;
 begin
-  if Length(fAttachments) > 0 then
-  begin
-    for i := 0 to Length(fAttachments) - 1 do
-      if Assigned(fAttachments[i].Stream) then
-        fAttachments[i].Stream.Free;
-
-    SetLength(fAttachments, 0);
-  end;
+  fAttachments.Clear;
 end;
 
-procedure TACBrMail.AddAttachment(aFileName: string; aNameRef: string);
+procedure TACBrMail.AddAttachment(aFileName: string; aDescription: string);
 var
   i: integer;
+  AAttachment: TMailAttachment;
 begin
-
   if not FileExists(aFileName) then
     DoException( Exception.Create('Add Attachment: File not Exists.') );
 
-  i := Length(fAttachments);
-  SetLength(fAttachments, i + 1);
-  fAttachments[i].FileName := aFileName;
-  fAttachments[i].Stream := nil;
-  fAttachments[i].NameRef := aNameRef;
+  if (aDescription = '') then
+    aDescription := ExtractFileName(aFileName);
+
+  AAttachment := fAttachments.New;
+  AAttachment.FileName := ExtractFileName(aFileName);
+  if (aDescription = '') then
+    AAttachment.Description := AAttachment.FileName
+  else
+    AAttachment.Description := aDescription;
+
+  AAttachment.Stream.LoadFromFile(aFileName)
 end;
 
 procedure TACBrMail.AddAttachment(aFileName: string);
@@ -849,22 +894,22 @@ begin
   AddAttachment(aFileName, '');
 end;
 
-procedure TACBrMail.AddAttachment(aStream: TStream; aNameRef: string);
+procedure TACBrMail.AddAttachment(aStream: TStream; aDescription: string);
 var
   i: integer;
+  AAttachment: TMailAttachment;
 begin
   if not Assigned(aStream) then
     DoException( Exception.Create('Add Attachment: Access Violation.') );
 
-  i := Length(fAttachments);
-  SetLength(fAttachments, i + 1);
+  if (Trim(aDescription) = '') then
+    aDescription := 'file_' + FormatDateTime('hhnnsszzz',Now);
 
   aStream.Position := 0;
-  fAttachments[i].FileName := '';
-  fAttachments[i].Stream := TMemoryStream.Create;
-  fAttachments[i].Stream.Position := 0;
-  fAttachments[i].Stream.CopyFrom(aStream, aStream.Size);
-  fAttachments[i].NameRef := aNameRef;
+  AAttachment := fAttachments.New;
+  AAttachment.FileName    := aDescription;
+  AAttachment.Description := aDescription;
+  AAttachment.Stream.CopyFrom(aStream, aStream.Size);
 end;
 
 procedure TACBrMail.AddAttachment(aStream: TStream);

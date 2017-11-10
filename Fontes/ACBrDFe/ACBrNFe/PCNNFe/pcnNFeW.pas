@@ -1236,6 +1236,7 @@ begin
                nfe.Det[i].Imposto.ICMS.CST := cstRep41;
 
             if (nfe.infNFe.Versao >= 4) and
+               (nfe.Ide.modelo = 55) and
                (nfe.Det[i].Imposto.ICMS.CST = cst60) and       //Ajuste para funcionar no ACBrNFeMonitor
                ((nfe.Det[i].Imposto.ICMS.vBCSTRet <> 0) or     //Qdo passar CST 60 e algum campo de repasse de ICMS ST
                 (nfe.Det[i].Imposto.ICMS.vICMSSTRet <> 0) or   //estiver preenchido será trocado o cst para cstRep60

@@ -108,34 +108,38 @@ const
 
   cTimeout = 3 ;  { Tempo PADRAO para msg de falha de comunicacao }
 
-  cTagLigaExpandido    = '<e>';
-  cTagDesligaExpandido = '</e>';
-  cTagLigaNegrito      = '<n>';
-  cTagDesligaNegrito   = '</n>';
-  cTagLigaSublinhado   = '<s>';
-  cTagDesligaSublinhado= '</s>';
-  cTagLigaCondensado   = '<c>';
-  cTagDesligaCondensado= '</c>';
-  cTagLigaItalico      = '<i>';
-  cTagDesligaItalico   = '</i>';
-  cTagLigaInvertido    = '<in>';
-  cTagDesligaInvertido = '</in>';
-  cTagFonteNormal      = '</fn>';
-  cTagFonteA           = '</fa>';
-  cTagFonteB           = '</fb>';
-  cTagFonteAlinhadaDireita = '</ad>';
+  cTagLigaExpandido         = '<e>';
+  cTagDesligaExpandido      = '</e>';
+  cTagLigaAlturaDupla       = '<a>';
+  cTagDesligaAlturaDupla    = '</a>';
+  cTagLigaNegrito           = '<n>';
+  cTagDesligaNegrito        = '</n>';
+  cTagLigaSublinhado        = '<s>';
+  cTagDesligaSublinhado     = '</s>';
+  cTagLigaCondensado        = '<c>';
+  cTagDesligaCondensado     = '</c>';
+  cTagLigaItalico           = '<i>';
+  cTagDesligaItalico        = '</i>';
+  cTagLigaInvertido         = '<in>';
+  cTagDesligaInvertido      = '</in>';
+  cTagFonteNormal           = '</fn>';
+  cTagFonteA                = '</fa>';
+  cTagFonteB                = '</fb>';
+  cTagFonteAlinhadaDireita  = '</ad>';
   cTagFonteAlinhadaEsquerda = '</ae>';
-  cTagfonteAlinhadaCentro = '</ce>';
+  cTagfonteAlinhadaCentro   = '</ce>';
 
-  cTAGS_CARACTER: array[0..10] of String = (
+  cTAGS_CARACTER: array[0..12] of String = (
     cTagLigaExpandido, cTagDesligaExpandido,
+    cTagLigaAlturaDupla, cTagDesligaAlturaDupla,
     cTagLigaNegrito, cTagDesligaNegrito,
     cTagLigaSublinhado, cTagDesligaSublinhado,
     cTagLigaCondensado, cTagDesligaCondensado,
     cTagLigaItalico, cTagDesligaItalico,
     cTagFonteNormal);
-  cTAGS_CARACTER_HELP: array[0..10] of String = (
+  cTAGS_CARACTER_HELP: array[0..12] of String = (
     'Liga Expandido', 'Desliga Expandido',
+    'Liga Altura Dupla', 'Desliga Altura Dupla',
     'Liga Negrito', 'Desliga Negrito',
     'Liga Sublinhado', 'Desliga Sublinhado',
     'Liga Condensado', 'Desliga Condensado',

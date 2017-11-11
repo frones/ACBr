@@ -100,6 +100,8 @@ begin
     DesligaNegrito          := ESC + 'F';
     LigaExpandido           := ESC + 'W' + #1;
     DesligaExpandido        := ESC + 'W' + #0;
+    LigaAlturaDupla         := ESC + 'd' + #1;
+    DesligaAlturaDupla      := ESC + 'd' + #0;
     LigaSublinhado          := ESC + '-' + #1;
     DesligaSublinhado       := ESC + '-' + #0;
     LigaInvertido           := '';  // Modo EscBema não suporta

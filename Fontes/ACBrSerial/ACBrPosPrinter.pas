@@ -61,8 +61,10 @@ type
     FAlinhadoDireita: AnsiString;
     FAlinhadoEsquerda: AnsiString;
     FCorteParcial: AnsiString;
+    FDesligaAlturaDupla: AnsiString;
     FDesligaInvertido: AnsiString;
     FEspacoEntreLinhasPadrao: AnsiString;
+    FLigaAlturaDupla: AnsiString;
     FLigaInvertido: AnsiString;
     FFonteNormal: AnsiString;
     FLigaCondensado: AnsiString;
@@ -94,6 +96,8 @@ type
     property DesligaNegrito: AnsiString read FDesligaNegrito write FDesligaNegrito;
     property LigaExpandido: AnsiString read FLigaExpandido write FLigaExpandido;
     property DesligaExpandido: AnsiString read FDesligaExpandido write FDesligaExpandido;
+    property LigaAlturaDupla: AnsiString read FLigaAlturaDupla write FLigaAlturaDupla;
+    property DesligaAlturaDupla: AnsiString read FDesligaAlturaDupla write FDesligaAlturaDupla;
     property LigaSublinhado: AnsiString read FLigaSublinhado write FLigaSublinhado;
     property DesligaSublinhado: AnsiString read FDesligaSublinhado
       write FDesligaSublinhado;
@@ -120,7 +124,7 @@ type
   end;
 
   TACBrPosTipoFonte = (ftNormal, ftCondensado, ftExpandido, ftNegrito,
-    ftSublinhado, ftInvertido, ftItalico, ftFonteB);
+    ftSublinhado, ftInvertido, ftItalico, ftFonteB, ftAlturaDupla);
   TACBrPosFonte = set of TACBrPosTipoFonte;
 
   TACBrPosTipoAlinhamento = (alEsquerda, alCentro, alDireita);
@@ -543,6 +547,12 @@ begin
       else
         Result := Cmd.DesligaExpandido;
 
+    ftAlturaDupla:
+      if Ligar then
+        Result := Cmd.LigaAlturaDupla
+      else
+        Result := Cmd.DesligaAlturaDupla;
+
     ftCondensado:
       if Ligar then
         Result := Cmd.LigaCondensado
@@ -884,6 +894,18 @@ begin
     FFonteStatus := FFonteStatus - [ftExpandido];
   end
 
+  else if ATag = cTagLigaAlturaDupla then
+  begin
+    TagTraduzida := FPosPrinterClass.ComandoFonte(ftAlturaDupla, True);
+    FFonteStatus := FFonteStatus + [ftAlturaDupla];
+  end
+
+  else if ATag = cTagDesligaAlturaDupla then
+  begin
+    TagTraduzida := FPosPrinterClass.ComandoFonte(ftAlturaDupla, False);
+    FFonteStatus := FFonteStatus - [ftAlturaDupla];
+  end
+
   else if ATag = cTagLigaNegrito then
   begin
     TagTraduzida := FPosPrinterClass.ComandoFonte(ftNegrito, True);
@@ -935,8 +957,8 @@ begin
   else if ATag = cTagFonteNormal then
   begin
     TagTraduzida := FPosPrinterClass.Cmd.FonteNormal;
-    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftNegrito,
-      ftSublinhado, ftItalico, ftInvertido];
+    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
+                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido];
   end
 
   else if ATag = cTagZera then
@@ -944,8 +966,8 @@ begin
     TagTraduzida := FPosPrinterClass.Cmd.Zera + FPosPrinterClass.ComandoInicializa;
 
     FInicializada := True;
-    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftNegrito,
-                                    ftSublinhado, ftItalico, ftInvertido];
+    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
+                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido];
   end
 
   else if ATag = cTagLigaInvertido then
@@ -1522,8 +1544,8 @@ begin
   ImprimirCmd(FPosPrinterClass.Cmd.Zera);
 
   FInicializada := False;
-  FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftNegrito,
-      ftSublinhado, ftItalico, ftInvertido];
+  FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
+      ftNegrito, ftSublinhado, ftItalico, ftInvertido];
 
   Inicializar;
 end;

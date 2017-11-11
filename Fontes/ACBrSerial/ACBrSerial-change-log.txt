@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/11/2017
+-- ACBrPosPrinter, ACBrEscPosEpson, ACBrEscDaruma, ACBrEscBematech --
+[+] Adicionado suporte as Tags:
+    <a> - Liga Altura Dupla
+    </a> - Desliga Altura Dupla
+    (por: DSA)
+
 Data: 01/11/2017
 -- ACBrPosPrinter --
 [*] Ajuste para que Cmd.PuloDeLinha default seja "sLineBreak"

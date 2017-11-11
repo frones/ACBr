@@ -218,6 +218,8 @@ begin
     DesligaNegrito          := ESC + 'E' + #0;
     LigaExpandido           := GS  + '!' + #16;
     DesligaExpandido        := GS  + '!' + #0;
+    LigaAlturaDupla         := GS  + '!' + #1;
+    DesligaAlturaDupla      := GS  + '!' + #0;
     LigaSublinhado          := ESC + '-' + #1;
     DesligaSublinhado       := ESC + '-' + #0;
     LigaInvertido           := GS  + 'B' + #1;
@@ -251,7 +253,7 @@ begin
   else
     NovoFonteStatus := NovoFonteStatus - [TipoFonte];
 
-  if TipoFonte in [ftCondensado, ftNegrito, ftExpandido, ftSublinhado] then
+  if TipoFonte in [ftCondensado, ftNegrito, ftExpandido, ftSublinhado, ftAlturaDupla] then
   begin
     AByte := 0;
 
@@ -260,6 +262,9 @@ begin
 
     if ftNegrito in NovoFonteStatus then
       AByte := AByte + 8;
+
+    if ftAlturaDupla in NovoFonteStatus then
+      AByte := AByte + 16;
 
     if ftExpandido in NovoFonteStatus then
       AByte := AByte + 32;

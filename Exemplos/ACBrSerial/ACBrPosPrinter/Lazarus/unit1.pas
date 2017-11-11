@@ -223,18 +223,22 @@ begin
   mImp.Lines.Add('<S>LIGA SUBLINHADA');
   mImp.Lines.Add('<c>LIGA CONDENSADA');
   mImp.Lines.Add('<e>LIGA EXPANDIDA');
+  mImp.Lines.Add('<a>LIGA ALTURA DUPLA');
   mImp.Lines.Add('</fn>FONTE NORMAL');
   mImp.Lines.Add('</linha_simples>');
   mImp.Lines.Add('<e><n>NEGRITO E EXPANDIDA</n></e>');
   mImp.Lines.Add('<c><n>NEGRITO E CONDENSADA</n></c>');
+  mImp.Lines.Add('<e><a>EXPANDIDA E ALT.DUPLA</a></e>');
   mImp.Lines.Add('</fn>FONTE NORMAL');
   mImp.Lines.Add('<in><e>INVERTIDA E EXPANDIDA</e></in>');
   mImp.Lines.Add('<in><c>INVERTIDA E CONDENSADA</c></in>');
+  mImp.Lines.Add('<in><a>INVERTIDA E ALT.DUPLA</a></in>');
   mImp.Lines.Add('</fn>FONTE NORMAL');
   mImp.Lines.Add('</linha_simples>');
   mImp.Lines.Add('</FB>FONTE TIPO B');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
@@ -296,6 +300,7 @@ begin
   mImp.Lines.Add('1 2 3 TESTANDO');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<c>FONTE CONDENSADA</e>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
@@ -305,6 +310,7 @@ begin
   mImp.Lines.Add('1 2 3 TESTANDO');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<c>FONTE CONDENSADA</e>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
@@ -314,6 +320,7 @@ begin
   mImp.Lines.Add('1 2 3 TESTANDO');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<c>FONTE CONDENSADA</e>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
@@ -744,7 +751,7 @@ end;
 
 procedure TFrPosPrinterTeste.bAtivarClick(Sender: TObject);
 begin
-  if ACBrPosPrinter1.Ativo then
+  if not btSerial.Enabled then
   begin
      ACBrPosPrinter1.Desativar ;
      bAtivar.Caption := 'Ativar' ;

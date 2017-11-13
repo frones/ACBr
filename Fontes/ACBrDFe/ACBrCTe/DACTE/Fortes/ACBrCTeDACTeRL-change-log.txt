@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2017
+[*] Ajustes para imprimir o Evento de Prestação de Serviço em Desacordo
+   Por: Cleonir
+
 27/10/2017
 [+] adição dos demais documentos
 		https://www.projetoacbr.com.br/forum/topic/39577-dacte-informações-dos-demais-documentos-infoutros/

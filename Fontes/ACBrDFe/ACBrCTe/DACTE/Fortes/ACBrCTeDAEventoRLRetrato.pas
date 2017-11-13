@@ -269,6 +269,14 @@ begin
       rllLinha2.Caption := ACBrStr('Não possui valor fiscal, simples representação da EPEC indicada abaixo.');
       rllLinha3.Caption := ACBrStr('CONSULTE A AUTENTICIDADE DA EPEC NO SITE DA SEFAZ VIRTUAL DE CONTINGÊNCIA DO RS/SP.');
     end;
+    tePrestDesacordo:
+    begin
+      rllLinha1.Caption := 'PRESTAÇÃO DE SERVIÇO EM DESACORDO';
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação do evento indicado abaixo.');
+      rllLinha3.Caption := ACBrStr(
+        'CONSULTE A AUTENTICIDADE DA PRESTAÇÃO DE SERVIÇO EM DESACORDO NO SITE DA SEFAZ AUTORIZADORA.');
+    end;
   end;
 end;
 
@@ -301,6 +309,7 @@ begin
       teCCe: rllTituloEvento.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
       teCancelamento: rllTituloEvento.Caption := 'CANCELAMENTO';
       teEPEC: rllTituloEvento.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA');
+      tePrestDesacordo: rllTituloEvento.Caption := ACBrStr('PRESTAÇÃO DE SERVIÇO EM DESACORDO');
     end;
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
@@ -449,10 +458,12 @@ begin
 
   rlmCondicoes.Visible := (FEventoCTe.InfEvento.tpEvento = teCCe) or
     (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
-    (FEventoCTe.InfEvento.tpEvento = teEPEC);
+    (FEventoCTe.InfEvento.tpEvento = teEPEC) or
+    (FEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
   rlmCondicoes.Enabled := (FEventoCTe.InfEvento.tpEvento = teCCe) or
     (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
-    (FEventoCTe.InfEvento.tpEvento = teEPEC);
+    (FEventoCTe.InfEvento.tpEvento = teEPEC) or
+    (FEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
 
   case FEventoCTe.InfEvento.tpEvento of
     teCCe:
@@ -489,6 +500,12 @@ begin
         '#0.00', FEventoCTe.InfEvento.detEvento.vCarga));
       rlmCondicoes.Lines.Add(ACBrStr('UF de inicio/fim da prestação: ') + FEventoCTe.InfEvento.detEvento.UFIni + ' / ' +
         FEventoCTe.InfEvento.detEvento.UFFim);
+    end;
+    tePrestDesacordo:
+    begin
+      lblTitulo_06.Caption := ACBrStr('JUSTIFICATIVA');
+      rlmCondicoes.Lines.Clear;
+      rlmCondicoes.Lines.Add(FEventoCTe.InfEvento.detEvento.xOBS);
     end;
   end;
 end;

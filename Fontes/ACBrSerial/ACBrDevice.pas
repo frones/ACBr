@@ -110,6 +110,18 @@ TACBrECFEstado = (estNaoInicializada, { Porta Serial ainda nao foi aberta }
                                dia. Imprima uma Leitura X para poder vender}
                   estNaoFiscal  { Comprovante Nao Fiscal Aberto }
                   ) ;
+
+TACBrECFTipoBilhete = (tbRodIntermun,   //0x30 - Rodoviário Intermunicipal
+                       tbFerIntermun,   //0x31 - Ferroviário Intermunicipal
+                       tbAquIntermun,   //0x32 - Aquaviário Intermunicipal
+                       tbRodInterest,   //0x33 - Rodoviário Interestadual
+                       tbFerInterest,   //0x34 - Ferroviário Interestadual
+                       tbAquInterest,   //0x35 - Aquaviário Interestadual
+                       tbRodInternac,   //0x36 - Rodoviário Internacional
+                       tbFerInternac,   //0x37 - Ferroviário Internacional
+                       tbAquInternac    //0x38 - Aquaviário Internacional
+                       ) ;
+
 TACBrECFEstadoSet = set of TACBrECFEstado ;
 
 TACBrGAVAberturaAntecipada = ( aaIgnorar , aaException, aaAguardar ) ;

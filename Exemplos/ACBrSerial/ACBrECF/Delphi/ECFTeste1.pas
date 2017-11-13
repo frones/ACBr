@@ -519,6 +519,7 @@ type
     LeituraCMC71: TMenuItem;
     N54: TMenuItem;
     IdentificaOperador1: TMenuItem;
+    AbreBilhetePassagem1: TMenuItem;
     procedure cbxModeloChange(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure bAtivarClick(Sender: TObject);
@@ -809,6 +810,7 @@ type
     procedure EstornaCCD1Click(Sender: TObject);
     procedure LeituraCMC71Click(Sender: TObject);
     procedure IdentificaOperador1Click(Sender: TObject);
+    procedure AbreBilhetePassagem1Click(Sender: TObject);
   private
     mdsAACECF: TDataSet;
     { Private declarations }
@@ -2473,6 +2475,29 @@ begin
   if not InputQuery('Abertura de Relatório Gerencial', 'Digite o Indice do Relatório Gerencial a ser utilizado', IndiceStr) then
     exit;
   ACBrECF1.AbreRelatorioGerencial(StrToIntDef(IndiceStr, 0));
+end;
+
+procedure TForm1.AbreBilhetePassagem1Click(Sender: TObject);
+begin
+  wbBobina.Navigate('about:blank');
+  mBobina.Clear;
+
+  ACBrECF1.AbreBilhetePassagem(
+    'Origem',
+    'Destino',
+    'Linha',
+    'Agencia',
+    NOW,
+    '32',
+    'A1',
+    tbRodInterest,
+    'MG',
+    '',
+    '',
+    ''
+  );
+  mResp.Lines.Add('AbreCupom');
+  AtualizaMemos;
 end;
 
 procedure TForm1.AbreCupomVinculado1Click(Sender: TObject);

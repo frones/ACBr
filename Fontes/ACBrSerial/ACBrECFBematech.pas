@@ -491,6 +491,10 @@ TACBrECFBematech = class( TACBrECFClass )
     Function EnviaComando_ECF( cmd : AnsiString ) : AnsiString ; override ;
 
     Procedure AbreCupom ; override ;
+    procedure AbreBilhetePassagem(Origem: string; Destino: string;
+      Linha: string; Agencia: string; DataHora: TDateTime; Poltrona: string;
+      Plataforma: string; Tipo: TACBrECFTipoBilhete; UFDestino: string;
+      PassageiroRG: string; PassageiroNome: string; PassageiroEnd: string); override;
     Procedure VendeItem( Codigo, Descricao : String; AliquotaECF : String;
        Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
        Unidade : String = ''; TipoDescontoAcrescimo : String = '%';
@@ -1596,6 +1600,57 @@ begin
     Valor := 0;
 
   EnviaComando( #39 + chr( Valor ) ) ;
+end;
+
+procedure TACBrECFBematech.AbreBilhetePassagem(Origem, Destino, Linha,
+  Agencia: string; DataHora: TDateTime; Poltrona, Plataforma: string;
+  Tipo: TACBrECFTipoBilhete; UFDestino, PassageiroRG, PassageiroNome,
+  PassageiroEnd: string);
+var
+  StrComando: String;
+
+  function GetTipoStr(ATipo: TACBrECFTipoBilhete): Char;
+  begin
+    case ATipo of
+      tbRodIntermun: Result := #48; // 0x30 Rodoviário Intermunicipal;
+      tbFerIntermun: Result := #49; // 0x31 Ferroviário Intermunicipal;
+      tbAquIntermun: Result := #50; // 0x32 Aquaviário Intermunicipal;
+      tbRodInterest: Result := #51; // 0x33 Rodoviário Interestadual;
+      tbFerInterest: Result := #52; // 0x34 Ferroviário Interestadual;
+      tbAquInterest: Result := #53; // 0x35 Aquaviário Interestadual;
+      tbRodInternac: Result := #54; // 0x36 Rodoviário Internacional;
+      tbFerInternac: Result := #55; // 0x37 Ferroviário Internacional;
+      tbAquInternac: Result := #56; // 0x38 Aquaviário Internacional;
+    else
+      raise EACBrECFErro.Create('Tipo de Bilhete de passagem desconhecido!');
+    end;
+  end;
+
+begin
+  fpUltimaMsgPoucoPapel := 0 ;  { Zera tempo pra msg de pouco papel }
+  BytesResp := 0 ;
+  AguardaImpressao := True ;
+
+  StrComando := '011' +
+    PadRight(Origem, 40) +
+    PadRight(Destino, 40) +
+    PadRight(Linha, 40) +
+    PadRight('', 40) + // prefixo
+    PadRight('', 40) + // agente
+    PadRight(Agencia, 40) +
+    FormatDateTime('ddmmyy', DataHora) +
+    FormatDateTime('hhmmss', DataHora) +
+    PadRight(Poltrona, 2) +
+    PadRight(Plataforma, 3) +
+    GetTipoStr( Tipo ) +
+    PadRight(PassageiroRG, 29) +
+    PadRight(PassageiroNome, 30) +
+    PadRight(PassageiroEnd, 80) ;
+
+  EnviaComando( #37 + StrComando, 10) ;
+
+  Consumidor.Enviado := False ;
+  fsTotalPago := 0 ;
 end;
 
 procedure TACBrECFBematech.AbreCupom  ;

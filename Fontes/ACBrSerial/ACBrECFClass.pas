@@ -1118,6 +1118,10 @@ TACBrECFClass = class
     { Procedimentos de Cupom Fiscal }
     property Consumidor : TACBrECFConsumidor read fpConsumidor ;
     Procedure AbreCupom ; virtual ;
+    Procedure AbreBilhetePassagem( Origem: String; Destino: String;
+      Linha: String; Agencia: String; DataHora: TDateTime;
+      Poltrona: String; Plataforma: String; Tipo: TACBrECFTipoBilhete; UFDestino: String;
+      PassageiroRG: String; PassageiroNome: String; PassageiroEnd: String); virtual;
     procedure LegendaInmetroProximoItem ; Virtual ;
     Procedure VendeItem( Codigo, Descricao : String; AliquotaECF : String;
        Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
@@ -2726,6 +2730,14 @@ begin
         FechaRelatorio ;
      except
      end ;
+end;
+
+procedure TACBrECFClass.AbreBilhetePassagem(Origem, Destino, Linha,
+  Agencia: String; DataHora: TDateTime; Poltrona, Plataforma: String;
+  Tipo: TACBrECFTipoBilhete; UFDestino, PassageiroRG, PassageiroNome,
+  PassageiroEnd: String);
+begin
+  ErroAbstract('AbreBilhetePassagem');
 end;
 
 procedure TACBrECFClass.AbreCupom ;

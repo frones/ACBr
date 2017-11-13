@@ -76,6 +76,9 @@ TACBrECFModelo = (ecfNenhum, ecfNaoFiscal, ecfBematech, ecfSweda, ecfDaruma,
                   
 TACBrECFEventoOnError = procedure( var Tratado : Boolean) of object ;
 TACBrECFOnAbreCupom = procedure(const CPF_CNPJ, Nome, Endereco : String ) of object ;
+TACBrECFOnAbreBilhetePassagem = procedure(const Origem, Destino, Linha, Agencia: String;
+  const DataHora: TDateTime; const Poltrona, Plataforma: String; const Tipo: TACBrECFTipoBilhete;
+  const UFDestino, PassageiroRG, PassageiroNome, PassageiroEnd: String) of object;
 TACBrECFOnVendeItem = procedure(const Codigo, Descricao, AliquotaICMS : String ;
   const Qtd, ValorUnitario, ValorDescontoAcrescimo : Double;
   const Unidade, TipoDescontoAcrescimo, DescontoAcrescimo : String ) of object ;
@@ -159,6 +162,7 @@ TACBrECF = class( TACBrComponent )
     fsEAD : TACBrEAD ;       { Classe usada para AssinarArquivo com assinatura EAD. }
 
     fOnAntesAbreCupom : TACBrECFOnAbreCupom;
+    fOnAntesAbreBilhetePassagem: TACBrECFOnAbreBilhetePassagem;
     fOnDepoisAbreCupom  : TACBrECFOnAbreCupom;
     fOnErrorAbreCupom  : TACBrECFEventoOnError;
     fOnAntesVendeItem : TACBrECFOnVendeItem;
@@ -632,6 +636,10 @@ TACBrECF = class( TACBrComponent )
        Endereco : String = '') ;
     Procedure AbreCupom( CPF_CNPJ : String = ''; Nome : String = '';
        Endereco : String = ''; ModoPreVenda: Boolean = False) ;
+    Procedure AbreBilhetePassagem( Origem: String; Destino: String;
+      Linha: String; Agencia: String; DataHora: TDateTime;
+      Poltrona: String; Plataforma: String; Tipo: TACBrECFTipoBilhete; UFDestino: String;
+      PassageiroRG: String; PassageiroNome: String; PassageiroEnd: String);
     procedure LegendaInmetroProximoItem;
     Procedure VendeItem( Codigo, Descricao : String; AliquotaICMS : String;
        Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
@@ -1025,6 +1033,8 @@ TACBrECF = class( TACBrComponent )
 
     property OnAntesAbreCupom : TACBrECFOnAbreCupom
        read FOnAntesAbreCupom write FOnAntesAbreCupom;
+    property OnAntesAbreBilhetePassagem: TACBrECFOnAbreBilhetePassagem
+       read FOnAntesAbreBilhetePassagem write FOnAntesAbreBilhetePassagem;
     property OnDepoisAbreCupom : TACBrECFOnAbreCupom
        read FOnDepoisAbreCupom write FOnDepoisAbreCupom;
     property OnErrorAbreCupom : TACBrECFEventoOnError
@@ -2566,6 +2576,76 @@ begin
   Result := fsECF.DadosUltimaReducaoZ ;
 end ;
 
+
+procedure TACBrECF.AbreBilhetePassagem(Origem, Destino, Linha, Agencia: String;
+  DataHora: TDateTime; Poltrona, Plataforma: String; Tipo: TACBrECFTipoBilhete;
+  UFDestino, PassageiroRG, PassageiroNome, PassageiroEnd: String);
+var
+  Tratado   : Boolean;
+begin
+  ComandoLOG := 'AbreBilhetePassagem( ' +
+    Origem + ', ' +
+    Destino + ', ' +
+    Linha + ', ' +
+    Agencia + ', ' +
+    FormatDateTime('dd/nn/yyyy hh:mm:ss', DataHora) + ', ' +
+    Poltrona + ', ' +
+    Plataforma + ', ' +
+    IntToStr(Integer(Tipo)) + ', ' +
+    UFDestino + ', ' +
+    PassageiroRG + ', ' +
+    PassageiroNome + ', ' +
+    PassageiroEnd + ' )' ;
+
+  fsNumSerieCache := '' ;
+  DoVerificaValorGT ;
+
+  if Assigned( fOnAntesAbreBilhetePassagem ) then
+  begin
+    fOnAntesAbreBilhetePassagem(
+      Origem, Destino, Linha, Agencia,
+      DataHora, Poltrona, Plataforma, Tipo, UFDestino,
+      PassageiroRG, PassageiroNome, PassageiroEnd
+    );
+  end;
+
+  try
+    Tratado := False;
+    fsECF.AbreBilhetePassagem(
+      Origem, Destino, Linha, Agencia,
+      DataHora, Poltrona, Plataforma, Tipo, UFDestino,
+      PassageiroRG, PassageiroNome, PassageiroEnd
+    );
+  except
+     if Assigned( FOnErrorAbreCupom ) then
+        FOnErrorAbreCupom(Tratado);
+
+     if not Tratado then
+        raise;
+  end;
+
+  {$IFNDEF NOGUI}
+   if MemoAssigned then
+   begin
+      fsMemoOperacao := 'abrebilhetepassagem' ;
+      MemoAdicionaCabecalho ;
+
+      if fsModelo = ecfNaoFiscal then
+         MemoTitulo('CUPOM NAO FISCAL')
+      else
+         MemoTitulo('CUPOM FISCAL');
+
+      MemoAdicionaLinha( fsMemoCabItens );
+   end ;
+  {$ENDIF}
+
+  if RFDAtivo then
+     fsRFD.AbreCupom ;
+
+  if Assigned( FOnDepoisAbreCupom ) then
+     FOnDepoisAbreCupom(PassageiroRG, PassageiroNome, PassageiroEnd);
+end;
+
 procedure TACBrECF.AbreCupom(CPF_CNPJ: String = ''; Nome : String = '';
    Endereco : String = ''; ModoPreVenda: Boolean = False) ;
 var
@@ -2631,7 +2711,6 @@ begin
 
   if Assigned( FOnDepoisAbreCupom ) then
      FOnDepoisAbreCupom(CPF_CNPJ, Nome, Endereco);
-
 end;
 
 procedure TACBrECF.IdentificaConsumidor(CPF_CNPJ : String ; Nome : String ;

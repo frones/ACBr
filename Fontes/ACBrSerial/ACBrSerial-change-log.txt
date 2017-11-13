@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/11/2017
+-- ACBrECF --
+[+] Abertura de bilhete de passagem
+    por: regys.silveira
+
 Data: 10/11/2017
 -- ACBrPosPrinter, ACBrEscPosEpson, ACBrEscDaruma, ACBrEscBematech --
 [+] Adicionado suporte as Tags:

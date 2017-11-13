@@ -38,23 +38,18 @@ object Form1: TForm1
       item
         Width = 50
       end>
-    ExplicitWidth = 790
   end
   object pgPrincipal: TPageControl
     Left = 0
     Top = 0
     Width = 794
     Height = 375
-    ActivePage = tsCupom
+    ActivePage = tsECF
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 790
     object tsECF: TTabSheet
       Caption = 'ECF'
       ImageIndex = 3
-      ExplicitLeft = 3
-      ExplicitTop = 23
-      ExplicitWidth = 646
       DesignSize = (
         786
         347)
@@ -66,7 +61,6 @@ object Form1: TForm1
         Anchors = [akTop, akRight]
         Caption = '...'
         OnClick = SbArqLogClick
-        ExplicitLeft = 166
       end
       object Label1: TLabel
         Left = 20
@@ -126,7 +120,6 @@ object Form1: TForm1
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Mensagem Trabalhando...'
-        ExplicitLeft = 402
       end
       object Label22: TLabel
         Left = 31
@@ -168,7 +161,7 @@ object Form1: TForm1
         Width = 105
         Height = 21
         Style = csDropDownList
-        TabOrder = 3
+        TabOrder = 0
         OnChange = cbxModeloChange
         Items.Strings = (
           'Procurar'
@@ -189,7 +182,7 @@ object Form1: TForm1
         Top = 25
         Width = 105
         Height = 21
-        TabOrder = 4
+        TabOrder = 1
         Text = 'Procurar'
         OnChange = cbxPortaChange
       end
@@ -199,7 +192,7 @@ object Form1: TForm1
         Width = 121
         Height = 17
         Caption = 'Tentar Novamente'
-        TabOrder = 5
+        TabOrder = 6
         OnClick = chTentarClick
       end
       object chBloqueia: TCheckBox
@@ -210,7 +203,7 @@ object Form1: TForm1
         Caption = 'Bloqueia Mouse Teclado'
         Checked = True
         State = cbChecked
-        TabOrder = 7
+        TabOrder = 10
         OnClick = chBloqueiaClick
       end
       object chExibeMsg: TCheckBox
@@ -221,7 +214,7 @@ object Form1: TForm1
         Caption = 'Exibe Msg Aguarde...'
         Checked = True
         State = cbChecked
-        TabOrder = 10
+        TabOrder = 12
         OnClick = chExibeMsgClick
       end
       object chArredondaPorQtd: TCheckBox
@@ -230,7 +223,7 @@ object Form1: TForm1
         Width = 187
         Height = 17
         Caption = 'Arredondamento por Quantidade'
-        TabOrder = 6
+        TabOrder = 7
         OnClick = chArredondaPorQtdClick
       end
       object chGavetaSinalInvertido: TCheckBox
@@ -239,7 +232,7 @@ object Form1: TForm1
         Width = 187
         Height = 17
         Caption = 'Gaveta Sinal Invertido'
-        TabOrder = 8
+        TabOrder = 9
         OnClick = chGavetaSinalInvertidoClick
       end
       object mMsg: TMemo
@@ -257,9 +250,8 @@ object Form1: TForm1
         Font.Quality = fqClearType
         ParentFont = False
         ScrollBars = ssVertical
-        TabOrder = 12
+        TabOrder = 26
         OnChange = mMsgChange
-        ExplicitWidth = 564
       end
       object edLog: TEdit
         Left = 59
@@ -268,10 +260,9 @@ object Form1: TForm1
         Height = 21
         Cursor = crIBeam
         Anchors = [akLeft, akTop, akRight]
-        TabOrder = 14
+        TabOrder = 15
         Text = 'acbrlog.txt'
         OnChange = edLogChange
-        ExplicitWidth = 101
       end
       object seTimeOut: TSpinEdit
         Left = 267
@@ -281,7 +272,7 @@ object Form1: TForm1
         AutoSize = False
         MaxValue = 100
         MinValue = 1
-        TabOrder = 0
+        TabOrder = 2
         Value = 10
         OnChange = seTimeOutChange
       end
@@ -294,7 +285,7 @@ object Form1: TForm1
         Increment = 10
         MaxValue = 1000
         MinValue = 0
-        TabOrder = 1
+        TabOrder = 3
         Value = 100
         OnChange = seIntervaloAposComandoChange
       end
@@ -334,7 +325,7 @@ object Form1: TForm1
           00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
         ModalResult = 1
-        TabOrder = 16
+        TabOrder = 4
         OnClick = btSerialClick
       end
       object chDescricaoGrande: TCheckBox
@@ -345,7 +336,7 @@ object Form1: TForm1
         Caption = 'Descri'#231#227'o Grande'
         Checked = True
         State = cbChecked
-        TabOrder = 11
+        TabOrder = 13
         OnClick = chDescricaoGrandeClick
       end
       object edOperador: TEdit
@@ -354,7 +345,7 @@ object Form1: TForm1
         Width = 101
         Height = 21
         Cursor = crIBeam
-        TabOrder = 15
+        TabOrder = 16
         OnChange = edOperadorChange
       end
       object edMsgTrabalhando: TEdit
@@ -364,10 +355,9 @@ object Form1: TForm1
         Height = 21
         Cursor = crIBeam
         Anchors = [akTop, akRight]
-        TabOrder = 13
+        TabOrder = 25
         Text = 'Impressora est'#225' trabalhando'
         OnClick = edMsgTrabalhandoChange
-        ExplicitLeft = 400
       end
       object speLinBuf: TSpinEdit
         Left = 104
@@ -377,7 +367,7 @@ object Form1: TForm1
         AutoSize = False
         MaxValue = 1000
         MinValue = 0
-        TabOrder = 2
+        TabOrder = 19
         Value = 0
         OnChange = speLinBufChange
       end
@@ -387,7 +377,7 @@ object Form1: TForm1
         Width = 147
         Height = 19
         Caption = 'Arredondamento Item MFD'
-        TabOrder = 9
+        TabOrder = 11
         OnClick = chArredondamentoItemMFDClick
       end
       object chbCupomMania: TCheckBox
@@ -396,7 +386,7 @@ object Form1: TForm1
         Width = 187
         Height = 17
         Caption = 'Cupom Mania'
-        TabOrder = 17
+        TabOrder = 22
         OnClick = chbCupomManiaClick
       end
       object sePaginaCodigo: TSpinEdit
@@ -406,7 +396,7 @@ object Form1: TForm1
         Height = 22
         MaxValue = 9999999
         MinValue = 0
-        TabOrder = 18
+        TabOrder = 24
         Value = 0
         OnChange = sePaginaCodigoChange
       end
@@ -416,7 +406,7 @@ object Form1: TForm1
         Width = 121
         Height = 17
         Caption = 'Controle Porta'
-        TabOrder = 19
+        TabOrder = 8
         OnClick = chControlePortaClick
       end
       object cbxECFVirtual: TComboBox
@@ -426,7 +416,7 @@ object Form1: TForm1
         Height = 21
         Style = csDropDownList
         Enabled = False
-        TabOrder = 20
+        TabOrder = 14
         OnChange = cbxECFVirtualChange
         Items.Strings = (
           'N'#227'o Fiscal'
@@ -441,7 +431,7 @@ object Form1: TForm1
         Increment = 10
         MaxValue = 1000
         MinValue = 0
-        TabOrder = 21
+        TabOrder = 5
         Value = 0
         OnChange = seBandWidthChange
       end
@@ -452,9 +442,8 @@ object Form1: TForm1
         Height = 25
         Anchors = [akTop, akRight]
         Caption = 'Info'
-        TabOrder = 22
+        TabOrder = 18
         OnClick = Button3Click
-        ExplicitLeft = 541
       end
       object edInfo: TEdit
         Left = 463
@@ -463,8 +452,7 @@ object Form1: TForm1
         Height = 21
         Cursor = crIBeam
         Anchors = [akTop, akRight]
-        TabOrder = 23
-        ExplicitLeft = 459
+        TabOrder = 17
       end
       object chAACUsar: TCheckBox
         Left = 234
@@ -472,7 +460,7 @@ object Form1: TForm1
         Width = 187
         Height = 17
         Caption = 'Usar Arq.Auxiliar Criptografado'
-        TabOrder = 24
+        TabOrder = 20
         OnClick = chAACUsarClick
       end
       object chAACFlush: TCheckBox
@@ -481,7 +469,7 @@ object Form1: TForm1
         Width = 187
         Height = 17
         Caption = 'Flush'
-        TabOrder = 25
+        TabOrder = 21
         OnClick = chAACFlushClick
       end
       object chProcessMessages: TCheckBox
@@ -490,13 +478,12 @@ object Form1: TForm1
         Width = 187
         Height = 17
         Caption = 'ProcessMessages'
-        TabOrder = 26
+        TabOrder = 23
         OnClick = chProcessMessagesClick
       end
     end
     object tsCMD: TTabSheet
       Caption = 'Cmd/Resp'
-      ExplicitWidth = 782
       object Label2: TLabel
         Left = 0
         Top = 54
@@ -506,7 +493,6 @@ object Form1: TForm1
         AutoSize = False
         Caption = 'Resposta'
         Layout = tlBottom
-        ExplicitWidth = 782
       end
       object Label17: TLabel
         Left = 0
@@ -517,7 +503,6 @@ object Form1: TForm1
         AutoSize = False
         Caption = 'Comando Enviado'
         Layout = tlBottom
-        ExplicitWidth = 782
       end
       object mResp: TMemo
         Left = 0
@@ -537,7 +522,6 @@ object Form1: TForm1
         TabOrder = 1
         WantReturns = False
         WordWrap = False
-        ExplicitWidth = 782
       end
       object mEnviado: TMemo
         Left = 0
@@ -555,13 +539,11 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 0
         WantReturns = False
-        ExplicitWidth = 782
       end
     end
     object tsCupom: TTabSheet
       Caption = 'Cupom'
       ImageIndex = 1
-      ExplicitWidth = 782
       object Panel1: TPanel
         Left = 0
         Top = 41
@@ -569,8 +551,7 @@ object Form1: TForm1
         Height = 306
         Align = alClient
         BevelOuter = bvNone
-        TabOrder = 0
-        ExplicitWidth = 782
+        TabOrder = 1
         object mBobina: TMemo
           Left = 0
           Top = 0
@@ -586,10 +567,9 @@ object Form1: TForm1
           Font.Quality = fqClearType
           ParentFont = False
           ScrollBars = ssVertical
-          TabOrder = 0
+          TabOrder = 1
           Visible = False
           WordWrap = False
-          ExplicitWidth = 782
         end
         object wbBobina: TWebBrowser
           Left = 0
@@ -597,9 +577,7 @@ object Form1: TForm1
           Width = 786
           Height = 306
           Align = alClient
-          TabOrder = 1
-          ExplicitWidth = 782
-          ExplicitHeight = 260
+          TabOrder = 0
           ControlData = {
             4C0000003C510000A01F00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -615,8 +593,7 @@ object Form1: TForm1
         Height = 41
         Align = alTop
         BevelOuter = bvNone
-        TabOrder = 1
-        ExplicitWidth = 782
+        TabOrder = 0
         object cbMemoHTML: TCheckBox
           Left = 272
           Top = 9
@@ -625,7 +602,7 @@ object Form1: TForm1
           Caption = 'HTML'
           Checked = True
           State = cbChecked
-          TabOrder = 2
+          TabOrder = 0
           OnClick = cbMemoHTMLClick
         end
         object bBobinaParams: TButton
@@ -634,7 +611,7 @@ object Form1: TForm1
           Width = 75
           Height = 24
           Caption = 'Parametros'
-          TabOrder = 0
+          TabOrder = 1
           OnClick = bBobinaParamsClick
         end
         object bBobinaLimpar: TButton
@@ -643,7 +620,7 @@ object Form1: TForm1
           Width = 75
           Height = 24
           Caption = 'Limpar'
-          TabOrder = 1
+          TabOrder = 2
           OnClick = bBobinaLimparClick
         end
       end
@@ -651,7 +628,6 @@ object Form1: TForm1
     object tsRFD: TTabSheet
       Caption = 'RFD'
       ImageIndex = 2
-      ExplicitWidth = 782
       object pgRFD: TPageControl
         Left = 0
         Top = 55
@@ -660,11 +636,9 @@ object Form1: TForm1
         ActivePage = TabSheet6
         Align = alClient
         TabOrder = 1
-        ExplicitWidth = 782
         object TabSheet6: TTabSheet
           Caption = 'Sw.House'
           ImageIndex = 1
-          ExplicitWidth = 774
           object Label8: TLabel
             Left = 12
             Top = 10
@@ -759,7 +733,7 @@ object Form1: TForm1
             Width = 121
             Height = 21
             Cursor = crIBeam
-            TabOrder = 5
+            TabOrder = 2
             OnChange = edSH_CNPJChange
           end
           object edSH_IE: TEdit
@@ -768,7 +742,7 @@ object Form1: TForm1
             Width = 114
             Height = 21
             Cursor = crIBeam
-            TabOrder = 7
+            TabOrder = 3
             OnChange = edSH_IEChange
           end
           object edSH_IM: TEdit
@@ -777,7 +751,7 @@ object Form1: TForm1
             Width = 121
             Height = 21
             Cursor = crIBeam
-            TabOrder = 9
+            TabOrder = 4
             OnChange = edSH_IMChange
           end
           object edSH_Aplicativo: TEdit
@@ -786,7 +760,7 @@ object Form1: TForm1
             Width = 169
             Height = 21
             Cursor = crIBeam
-            TabOrder = 2
+            TabOrder = 5
             OnChange = edSH_AplicativoChange
           end
           object edSH_NumeroAP: TEdit
@@ -795,7 +769,7 @@ object Form1: TForm1
             Width = 65
             Height = 21
             Cursor = crIBeam
-            TabOrder = 3
+            TabOrder = 6
             OnChange = edSH_NumeroAPChange
           end
           object edSH_VersaoAP: TEdit
@@ -804,7 +778,7 @@ object Form1: TForm1
             Width = 121
             Height = 21
             Cursor = crIBeam
-            TabOrder = 4
+            TabOrder = 7
             OnChange = edSH_VersaoAPChange
           end
           object edSH_Linha1: TEdit
@@ -813,7 +787,7 @@ object Form1: TForm1
             Width = 181
             Height = 21
             Cursor = crIBeam
-            TabOrder = 6
+            TabOrder = 8
             OnChange = edSH_Linha1Change
           end
           object edSH_Linha2: TEdit
@@ -822,13 +796,12 @@ object Form1: TForm1
             Width = 189
             Height = 21
             Cursor = crIBeam
-            TabOrder = 8
+            TabOrder = 9
             OnChange = edSH_Linha2Change
           end
         end
         object TabSheet5: TTabSheet
           Caption = 'ACBrRFD.INI'
-          ExplicitWidth = 774
           object Panel4: TPanel
             Left = 0
             Top = 230
@@ -836,8 +809,7 @@ object Form1: TForm1
             Height = 34
             Align = alBottom
             BevelOuter = bvNone
-            TabOrder = 0
-            ExplicitWidth = 774
+            TabOrder = 1
             object bRFDLer: TButton
               Left = 131
               Top = 6
@@ -871,8 +843,7 @@ object Form1: TForm1
             Font.Style = []
             Font.Quality = fqClearType
             ParentFont = False
-            TabOrder = 1
-            ExplicitWidth = 774
+            TabOrder = 0
           end
         end
       end
@@ -884,7 +855,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 782
         DesignSize = (
           786
           55)
@@ -904,7 +874,6 @@ object Form1: TForm1
           Font.Quality = fqClearType
           ParentFont = False
           OnClick = sbDirRFDClick
-          ExplicitLeft = 757
         end
         object Label3: TLabel
           Left = 134
@@ -939,14 +908,12 @@ object Form1: TForm1
           ParentFont = False
           TabOrder = 1
           OnChange = edDirRFDChange
-          ExplicitWidth = 623
         end
       end
     end
     object tsTagsImpressao: TTabSheet
       Caption = 'Tags de Impress'#227'o'
       ImageIndex = 6
-      ExplicitWidth = 782
       DesignSize = (
         786
         347)
@@ -978,7 +945,6 @@ object Form1: TForm1
         Caption = 'Tags de Formata'#231#227'o de Impress'#227'o e C'#243'digo de Barras'
         Color = clBtnFace
         ParentColor = False
-        ExplicitWidth = 260
       end
       object speBarrasLargura: TSpinEdit
         Left = 12
@@ -988,7 +954,7 @@ object Form1: TForm1
         AutoSize = False
         MaxValue = 6
         MinValue = 0
-        TabOrder = 1
+        TabOrder = 2
         Value = 0
         OnChange = speBarrasLarguraChange
       end
@@ -1003,7 +969,6 @@ object Form1: TForm1
         ModalResult = 1
         TabOrder = 0
         OnClick = BitBtn6Click
-        ExplicitLeft = 550
       end
       object MemoTesteTags: TMemo
         Left = 0
@@ -1064,8 +1029,7 @@ object Form1: TForm1
           '</linha_dupla>')
         ParentFont = False
         ScrollBars = ssVertical
-        TabOrder = 5
-        ExplicitWidth = 782
+        TabOrder = 6
       end
       object chBarrasImprimeTexto: TCheckBox
         Left = 164
@@ -1075,7 +1039,7 @@ object Form1: TForm1
         Caption = 'Imprime Texto na Barra'
         Checked = True
         State = cbChecked
-        TabOrder = 3
+        TabOrder = 1
         OnClick = chBarrasImprimeTextoClick
       end
       object speBarrasAltura: TSpinEdit
@@ -1086,7 +1050,7 @@ object Form1: TForm1
         AutoSize = False
         MaxValue = 200
         MinValue = 0
-        TabOrder = 2
+        TabOrder = 3
         Value = 0
         OnChange = speBarrasAlturaChange
       end
@@ -1096,7 +1060,7 @@ object Form1: TForm1
         Width = 183
         Height = 19
         Caption = 'Ignorar TAGs de Formata'#231#227'o'
-        TabOrder = 4
+        TabOrder = 5
         OnClick = chIgnorarTagsFormatacaoClick
       end
       object Button2: TButton
@@ -1106,15 +1070,13 @@ object Form1: TForm1
         Height = 25
         Anchors = [akTop, akRight]
         Caption = '1...255'
-        TabOrder = 6
+        TabOrder = 4
         OnClick = Button2Click
-        ExplicitLeft = 608
       end
     end
     object tsDadosRedZ: TTabSheet
       Caption = 'Dados Redu'#231#227'o Z'
       ImageIndex = 6
-      ExplicitWidth = 782
       object Label37: TLabel
         Left = 0
         Top = 31
@@ -1148,10 +1110,9 @@ object Form1: TForm1
         Font.Quality = fqClearType
         ParentFont = False
         ScrollBars = ssBoth
-        TabOrder = 1
+        TabOrder = 2
         WantReturns = False
         WordWrap = False
-        ExplicitWidth = 782
       end
       object btnDadosUltimaRZ: TButton
         Left = 152
@@ -1159,14 +1120,13 @@ object Form1: TForm1
         Width = 129
         Height = 25
         Caption = 'Ler Dados '#218'ltima RZ'
-        TabOrder = 2
+        TabOrder = 1
         OnClick = btnDadosUltimaRZClick
       end
     end
     object tbsMenuFiscal: TTabSheet
       Caption = 'Menu Fiscal'
       ImageIndex = 6
-      ExplicitWidth = 782
       object grpMenuFiscalOpcoes: TGroupBox
         Left = 0
         Top = 0
@@ -1175,7 +1135,6 @@ object Form1: TForm1
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
         TabOrder = 0
-        ExplicitWidth = 782
         object Label31: TLabel
           Left = 10
           Top = 165
@@ -1206,7 +1165,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'LMFC'
-          TabOrder = 1
+          TabOrder = 3
           OnClick = btnMenuFiscalLMFCClick
         end
         object btnMenuFiscalLMFS: TButton
@@ -1215,7 +1174,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'LMFS'
-          TabOrder = 2
+          TabOrder = 6
           OnClick = btnMenuFiscalLMFSClick
         end
         object btnMenuFiscalMFDEspelho: TButton
@@ -1224,7 +1183,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'Espelho MFD'
-          TabOrder = 3
+          TabOrder = 1
           OnClick = btnMenuFiscalMFDEspelhoClick
         end
         object btnMenuFiscalMFDArq: TButton
@@ -1242,7 +1201,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'Meios Pagto.'
-          TabOrder = 5
+          TabOrder = 2
           OnClick = btnMenuFiscalRelMeiosPagtoClick
         end
         object btnMenuFiscalRelDAVEmitidos: TButton
@@ -1251,7 +1210,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'DAV Emitidos'
-          TabOrder = 6
+          TabOrder = 5
           OnClick = btnMenuFiscalRelDAVEmitidosClick
         end
         object btnMenuFiscalRelIdentPAFECF: TButton
@@ -1260,7 +1219,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'Identifica'#231#227'o PAF-ECF'
-          TabOrder = 7
+          TabOrder = 8
           OnClick = btnMenuFiscalRelIdentPAFECFClick
         end
         object btnMenuFiscalConfigPAFECF: TButton
@@ -1269,7 +1228,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'Configura'#231#245'es do PAF-ECF'
-          TabOrder = 8
+          TabOrder = 11
           OnClick = btnMenuFiscalConfigPAFECFClick
         end
         object btnMenuFiscalNotaPaulista: TButton
@@ -1278,7 +1237,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'CAT52'
-          TabOrder = 9
+          TabOrder = 7
           OnClick = btnMenuFiscalNotaPaulistaClick
         end
         object btnArqMFNovo: TButton
@@ -1287,7 +1246,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'Arq.MF (novo)'
-          TabOrder = 10
+          TabOrder = 9
           OnClick = btnArqMFNovoClick
         end
         object btnArqMFDNovo: TButton
@@ -1296,7 +1255,7 @@ object Form1: TForm1
           Width = 171
           Height = 25
           Caption = 'Arq.MFD (novo)'
-          TabOrder = 11
+          TabOrder = 10
           OnClick = btnArqMFDNovoClick
         end
       end
@@ -1308,10 +1267,8 @@ object Form1: TForm1
         ActivePage = tbsMenuFiscalTipoData
         Align = alBottom
         TabOrder = 3
-        ExplicitWidth = 782
         object tbsMenuFiscalTipoData: TTabSheet
           Caption = 'Emiss'#227'o por intervalo de data'
-          ExplicitWidth = 774
           object Label24: TLabel
             Left = 15
             Top = 15
@@ -1349,7 +1306,6 @@ object Form1: TForm1
         object tbsMenuFiscalTipoCOO: TTabSheet
           Caption = 'Emiss'#227'o por intervalo de COO'
           ImageIndex = 1
-          ExplicitWidth = 774
           object Label26: TLabel
             Left = 15
             Top = 15
@@ -1409,7 +1365,6 @@ object Form1: TForm1
     object tsArqAuxCript: TTabSheet
       Caption = 'Arq.Aux.Cript.'
       ImageIndex = 7
-      ExplicitWidth = 782
       DesignSize = (
         786
         347)
@@ -1432,7 +1387,6 @@ object Form1: TForm1
         Anchors = [akRight, akBottom]
         Caption = '...'
         OnClick = SbAACNomeArqClick
-        ExplicitLeft = 417
       end
       object Label41: TLabel
         Left = 19
@@ -1453,7 +1407,6 @@ object Form1: TForm1
         Anchors = [akRight, akBottom]
         Caption = '...'
         OnClick = SbAACArqLogClick
-        ExplicitLeft = 417
       end
       object bAACGravarArquivo: TButton
         Left = 477
@@ -1462,9 +1415,8 @@ object Form1: TForm1
         Height = 25
         Anchors = [akRight, akBottom]
         Caption = 'Gravar Arquivo'
-        TabOrder = 0
+        TabOrder = 4
         OnClick = bAACGravarArquivoClick
-        ExplicitLeft = 473
       end
       object edAACNomeArq: TEdit
         Left = 84
@@ -1475,7 +1427,6 @@ object Form1: TForm1
         Anchors = [akLeft, akRight, akBottom]
         TabOrder = 1
         Text = 'arquivo_auxiliar_criptografado.txt'
-        ExplicitWidth = 325
       end
       object edAACLog: TEdit
         Left = 84
@@ -1484,9 +1435,8 @@ object Form1: TForm1
         Height = 21
         Cursor = crIBeam
         Anchors = [akLeft, akRight, akBottom]
-        TabOrder = 2
+        TabOrder = 3
         Text = 'acbr_aac_log.txt'
-        ExplicitWidth = 325
       end
       object pgAAC: TPageControl
         Left = 0
@@ -1496,11 +1446,9 @@ object Form1: TForm1
         ActivePage = tsAACECFs
         Align = alTop
         Anchors = [akLeft, akTop, akRight, akBottom]
-        TabOrder = 4
-        ExplicitWidth = 782
+        TabOrder = 0
         object tsAACDados: TTabSheet
           Caption = 'Dados Cadastrais'
-          ExplicitWidth = 774
           object gbAAC_SH: TGroupBox
             Left = 0
             Top = 0
@@ -1509,7 +1457,6 @@ object Form1: TForm1
             Align = alTop
             Caption = 'Dados da Software House'
             TabOrder = 0
-            ExplicitWidth = 774
             object Label34: TLabel
               Left = 50
               Top = 38
@@ -1582,7 +1529,6 @@ object Form1: TForm1
             Align = alTop
             Caption = 'Dados do PAF-ECF'
             TabOrder = 1
-            ExplicitWidth = 774
             DesignSize = (
               778
               105)
@@ -1653,7 +1599,6 @@ object Form1: TForm1
         end
         object tsAACECFs: TTabSheet
           Caption = 'ECFs'
-          ExplicitWidth = 774
           DesignSize = (
             778
             185)
@@ -1690,7 +1635,7 @@ object Form1: TForm1
             Width = 778
             Height = 120
             Align = alBottom
-            TabOrder = 0
+            TabOrder = 5
             TitleFont.Charset = ANSI_CHARSET
             TitleFont.Color = clBlack
             TitleFont.Height = -11
@@ -1726,7 +1671,6 @@ object Form1: TForm1
             Anchors = [akLeft, akTop, akRight]
             DataField = 'ValorGT'
             TabOrder = 3
-            ExplicitWidth = 136
           end
           object bACCVerificarGT: TButton
             Left = 440
@@ -1734,7 +1678,7 @@ object Form1: TForm1
             Width = 83
             Height = 25
             Caption = 'GT Valido ?'
-            TabOrder = 4
+            TabOrder = 0
             OnClick = bACCVerificarGTClick
           end
           object bAACAtualizarGT: TButton
@@ -1743,13 +1687,12 @@ object Form1: TForm1
             Width = 83
             Height = 25
             Caption = 'Atualizar GT'
-            TabOrder = 5
+            TabOrder = 4
             OnClick = bAACAtualizarGTClick
           end
         end
         object tsAACParams: TTabSheet
           Caption = 'Params'
-          ExplicitWidth = 774
           object mAACParams: TMemo
             Left = 0
             Top = 0
@@ -1762,7 +1705,6 @@ object Form1: TForm1
               'ExemploParametro3 = 20110504'
               '')
             TabOrder = 0
-            ExplicitWidth = 774
           end
         end
       end
@@ -1773,15 +1715,13 @@ object Form1: TForm1
         Height = 25
         Anchors = [akRight, akBottom]
         Caption = 'Abrir Arquivo'
-        TabOrder = 3
+        TabOrder = 2
         OnClick = bAACAbrirArquivoClick
-        ExplicitLeft = 473
       end
     end
     object tsSAT: TTabSheet
       Caption = 'SAT Virtual'
       ImageIndex = 8
-      ExplicitWidth = 782
       object pgSAT: TPageControl
         Left = 0
         Top = 0
@@ -1790,10 +1730,8 @@ object Form1: TForm1
         ActivePage = tsSATImpressao
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 782
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
-          ExplicitWidth = 774
           DesignSize = (
             778
             319)
@@ -1905,7 +1843,6 @@ object Form1: TForm1
             Cursor = crIBeam
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 1
-            ExplicitWidth = 386
           end
           object edtCodigoAtivacao: TEdit
             Left = 16
@@ -1928,7 +1865,7 @@ object Form1: TForm1
             Height = 22
             MaxValue = 999
             MinValue = 1
-            TabOrder = 4
+            TabOrder = 5
             Value = 1
           end
           object cbxUTF8: TCheckBox
@@ -1937,7 +1874,7 @@ object Form1: TForm1
             Width = 47
             Height = 19
             Caption = 'UTF8'
-            TabOrder = 5
+            TabOrder = 6
           end
           object sePagCod: TSpinEdit
             Left = 152
@@ -1946,7 +1883,7 @@ object Form1: TForm1
             Height = 22
             MaxValue = 65001
             MinValue = 0
-            TabOrder = 6
+            TabOrder = 9
             Value = 0
           end
           object cbxFormatXML: TCheckBox
@@ -1957,7 +1894,7 @@ object Form1: TForm1
             Caption = 'Formatar XML'
             Checked = True
             State = cbChecked
-            TabOrder = 7
+            TabOrder = 10
           end
           object cbxAmbiente: TComboBox
             Left = 385
@@ -1966,8 +1903,7 @@ object Form1: TForm1
             Height = 21
             Style = csDropDownList
             Anchors = [akLeft, akTop, akRight]
-            TabOrder = 8
-            ExplicitWidth = 218
+            TabOrder = 4
           end
           object cbxSalvarCFe: TCheckBox
             Left = 424
@@ -1977,7 +1913,7 @@ object Form1: TForm1
             Caption = 'Salvar CFes'
             Checked = True
             State = cbChecked
-            TabOrder = 10
+            TabOrder = 7
           end
           object cbxModeloSAT: TComboBox
             Left = 17
@@ -1985,7 +1921,7 @@ object Form1: TForm1
             Width = 133
             Height = 21
             Style = csDropDownList
-            TabOrder = 9
+            TabOrder = 11
             Items.Strings = (
               'Procurar'
               'ecfNaoFiscal'
@@ -2006,13 +1942,12 @@ object Form1: TForm1
             Width = 121
             Height = 21
             Alignment = taRightJustify
-            TabOrder = 11
+            TabOrder = 8
             Text = '0,00'
           end
         end
         object tsDadosEmit: TTabSheet
           Caption = 'Dados Emitente'
-          ExplicitWidth = 774
           object Label55: TLabel
             Left = 12
             Top = 23
@@ -2118,7 +2053,6 @@ object Form1: TForm1
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
-          ExplicitWidth = 774
           DesignSize = (
             778
             319)
@@ -2147,7 +2081,6 @@ object Form1: TForm1
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
-            ExplicitWidth = 327
           end
           object edtSwHAssinatura: TEdit
             Left = 10
@@ -2156,12 +2089,10 @@ object Form1: TForm1
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 1
-            ExplicitWidth = 592
           end
         end
         object tsSATImpressao: TTabSheet
           Caption = 'Impress'#227'o'
-          ExplicitWidth = 774
           object GroupBox3: TGroupBox
             Left = 0
             Top = 0
@@ -2170,7 +2101,6 @@ object Form1: TForm1
             Align = alClient
             Caption = 'Fortes'
             TabOrder = 0
-            ExplicitWidth = 518
             object Label63: TLabel
               Left = 8
               Top = 0
@@ -2230,7 +2160,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 9999
               MinValue = 0
-              TabOrder = 0
+              TabOrder = 1
               Value = 0
             end
             object seMargemTopo: TSpinEdit
@@ -2240,7 +2170,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 9999
               MinValue = 0
-              TabOrder = 1
+              TabOrder = 2
               Value = 0
             end
             object seMargemFundo: TSpinEdit
@@ -2250,7 +2180,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 9999
               MinValue = 0
-              TabOrder = 2
+              TabOrder = 4
               Value = 0
             end
             object seMargemEsquerda: TSpinEdit
@@ -2260,7 +2190,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 9999
               MinValue = 0
-              TabOrder = 3
+              TabOrder = 5
               Value = 0
             end
             object seMargemDireita: TSpinEdit
@@ -2270,7 +2200,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 9999
               MinValue = 0
-              TabOrder = 4
+              TabOrder = 6
               Value = 0
             end
             object bImpressora: TButton
@@ -2279,7 +2209,7 @@ object Form1: TForm1
               Width = 110
               Height = 23
               Caption = 'Definir Impressora'
-              TabOrder = 5
+              TabOrder = 7
             end
             object cbUsarFortes: TRadioButton
               Left = 192
@@ -2287,7 +2217,7 @@ object Form1: TForm1
               Width = 74
               Height = 19
               Caption = 'Usar Fortes'
-              TabOrder = 6
+              TabOrder = 0
             end
             object cbPreview: TCheckBox
               Left = 192
@@ -2295,7 +2225,7 @@ object Form1: TForm1
               Width = 58
               Height = 19
               Caption = 'Preview'
-              TabOrder = 7
+              TabOrder = 3
             end
           end
           object GroupBox4: TGroupBox
@@ -2306,7 +2236,6 @@ object Form1: TForm1
             Align = alRight
             Caption = 'EscPOS'
             TabOrder = 1
-            ExplicitLeft = 518
             DesignSize = (
               256
               319)
@@ -2326,7 +2255,7 @@ object Form1: TForm1
               Width = 215
               Height = 21
               Anchors = [akTop, akRight]
-              TabOrder = 0
+              TabOrder = 2
               Text = '\\127.0.0.1\EPSON'
             end
             object btSerial1: TBitBtn
@@ -2374,7 +2303,7 @@ object Form1: TForm1
               Width = 85
               Height = 19
               Caption = 'Usar EscPOS'
-              TabOrder = 2
+              TabOrder = 0
             end
           end
         end
@@ -2383,7 +2312,6 @@ object Form1: TForm1
     object tsNFCe: TTabSheet
       Caption = 'NFCe'
       ImageIndex = 9
-      ExplicitWidth = 782
       object pgNFCe: TPageControl
         Left = 0
         Top = 0
@@ -2393,10 +2321,8 @@ object Form1: TForm1
         Align = alClient
         Anchors = []
         TabOrder = 0
-        ExplicitWidth = 782
         object tsNFCeCertificado: TTabSheet
           Caption = 'Certificado'
-          ExplicitWidth = 774
           object GroupBox2: TGroupBox
             Left = 6
             Top = 10
@@ -2542,7 +2468,6 @@ object Form1: TForm1
         object tsNFCeGeral: TTabSheet
           Caption = 'Geral'
           ImageIndex = 1
-          ExplicitWidth = 774
           object Label74: TLabel
             Left = 6
             Top = 176
@@ -2691,14 +2616,13 @@ object Form1: TForm1
         object tsNFCeWebservice: TTabSheet
           Caption = 'WebService'
           ImageIndex = 2
-          ExplicitWidth = 774
           object GroupBox6: TGroupBox
             Left = 8
             Top = 9
             Width = 265
             Height = 161
             Caption = 'WebService'
-            TabOrder = 0
+            TabOrder = 1
             object Label75: TLabel
               Left = 8
               Top = 16
@@ -2714,7 +2638,7 @@ object Form1: TForm1
               Width = 119
               Height = 19
               Caption = 'Visualizar Mensagem'
-              TabOrder = 0
+              TabOrder = 2
             end
             object cbUF: TComboBox
               Left = 8
@@ -2731,7 +2655,7 @@ object Form1: TForm1
               Font.Quality = fqClearType
               ItemIndex = 24
               ParentFont = False
-              TabOrder = 1
+              TabOrder = 0
               Text = 'SP'
               Items.Strings = (
                 'AC'
@@ -2773,7 +2697,7 @@ object Form1: TForm1
               Items.Strings = (
                 'Produ'#231#227'o'
                 'Homologa'#231#227'o')
-              TabOrder = 2
+              TabOrder = 1
             end
           end
           object gbProxy: TGroupBox
@@ -2782,7 +2706,7 @@ object Form1: TForm1
             Width = 265
             Height = 123
             Caption = 'Proxy'
-            TabOrder = 1
+            TabOrder = 0
             object Label76: TLabel
               Left = 8
               Top = 16
@@ -2853,7 +2777,6 @@ object Form1: TForm1
         object tsNFCeEmitente: TTabSheet
           Caption = 'Emitente'
           ImageIndex = 3
-          ExplicitWidth = 774
           object Label80: TLabel
             Left = 15
             Top = 18
@@ -3076,7 +2999,6 @@ object Form1: TForm1
     Align = alBottom
     TabOrder = 1
     TabStop = True
-    ExplicitWidth = 790
     DesignSize = (
       794
       40)
@@ -3287,7 +3209,6 @@ object Form1: TForm1
         FEF3FEB466C7FBCFFAD1450019B1FEF3FEB466C7FBCFFAD1450019B1FEF3FEB4
         66C7FBCFFAD145001BAC7D5FF5A3758FABFEB451401FFFD9}
       OnClick = Image1Click
-      ExplicitWidth = 788
     end
     object bAtivar: TBitBtn
       Left = 693
@@ -3328,7 +3249,6 @@ object Form1: TForm1
       ModalResult = 1
       TabOrder = 0
       OnClick = bAtivarClick
-      ExplicitLeft = 689
     end
   end
   object MainMenu1: TMainMenu
@@ -4011,6 +3931,10 @@ object Form1: TForm1
         Caption = 'Abre Cupom'
         OnClick = AbrirCupom1Click
       end
+      object AbreBilhetePassagem1: TMenuItem
+        Caption = 'Abre Bilhete Passagem'
+        OnClick = AbreBilhetePassagem1Click
+      end
       object N5: TMenuItem
         Caption = '-'
       end
@@ -4440,7 +4364,6 @@ object Form1: TForm1
     LogoemCima = False
     TamanhoFonteEndereco = 0
     RecuoLogo = 0
-    TributosSeparadamente = False
     Left = 718
     Top = 336
   end
@@ -4477,7 +4400,6 @@ object Form1: TForm1
     LogoemCima = False
     TamanhoFonteEndereco = 0
     RecuoLogo = 0
-    TributosSeparadamente = False
     Left = 757
     Top = 333
   end

@@ -1643,6 +1643,7 @@ begin
     PadRight(Poltrona, 2) +
     PadRight(Plataforma, 3) +
     GetTipoStr( Tipo ) +
+    PadRight(UFDestino, 2) +
     PadRight(PassageiroRG, 29) +
     PadRight(PassageiroNome, 30) +
     PadRight(PassageiroEnd, 80) ;

@@ -2172,8 +2172,12 @@ begin
   Gerador.wCampo(tcInt, '#02', 'nMinu     ', 09, 09, 0, CTe.infCTeNorm.aereo.nMinu, DSC_NMINU);
   Gerador.wCampo(tcStr, '#03', 'nOCA      ', 11, 11, 0, CTe.infCTeNorm.aereo.nOCA, DSC_NOCA);
   Gerador.wCampo(tcDat, '#04', 'dPrevAereo', 10, 10, 0, CTe.infCTeNorm.aereo.dPrevAereo, DSC_DPREV);
-  Gerador.wCampo(tcStr, '#05', 'xLAgEmi   ', 01, 20, 0, CTe.infCTeNorm.aereo.xLAgEmi, DSC_XLAGEMI);
-  Gerador.wCampo(tcStr, '#06', 'IdT       ', 01, 14, 0, CTe.infCTeNorm.aereo.IdT, DSC_IDT);
+
+  if CTe.infCTe.versao = 2 then
+  begin
+    Gerador.wCampo(tcStr, '#05', 'xLAgEmi', 01, 20, 0, CTe.infCTeNorm.aereo.xLAgEmi, DSC_XLAGEMI);
+    Gerador.wCampo(tcStr, '#06', 'IdT'    , 01, 14, 0, CTe.infCTeNorm.aereo.IdT, DSC_IDT);
+  end;
 
   if CTe.infCTe.versao >= 3 then
   begin

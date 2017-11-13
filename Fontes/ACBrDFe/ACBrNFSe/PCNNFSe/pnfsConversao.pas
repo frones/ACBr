@@ -18241,6 +18241,15 @@ begin
     no59 : Result := '7 - Simples Nacional (Dentro Estado)';
     no69 : Result := '8 - Simples Nacional (Fora Estado)';
     no52 : Result := '9 - Tributacao No Municipio Sem Retenção de ISS';
+    no51 : Result := '5.1 - Tributacao No Municipio com retenção de ISS';
+    no58 : Result := '5.8 - Não tributável';
+    no61 : Result := '6.1 - Tributacao No Municipio Com Retenção de ISS';
+    no62 : Result := '6.2 - Tributacao No Municipio Sem Retenção de ISS';
+    no63 : Result := '6.3 - Tributação fora do municipio com retenção de ISS';
+    no64 : Result := '6.4 - Tributacao fora do municipio sem retenção de ISS';
+    no68 : Result := '6.8 - Não tributável';
+    no78 : Result := '7.8 - Não tributável';
+    no79 : Result := '7.9 - Imposto recolhido pelo regime único de arrecadação';
     no511 : Result := '511 - Prestação de serviço no município - iss mensal sem retenção na fonte';
     no512 : Result := '512 - Prestação de serviço no município - iss mensal com retenção na fonte';
     no515 : Result := '515 - Prestação de serviço iss distribuido por rateio com retenção na fonte';

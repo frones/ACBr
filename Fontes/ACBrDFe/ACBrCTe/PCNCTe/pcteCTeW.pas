@@ -2311,7 +2311,7 @@ begin
     Gerador.wAlerta('#16', 'detCont', DSC_DETCONT, ERR_MSG_MAIOR_MAXIMO + '999');
 
   if CTe.infCTe.versao >= 3 then
-    Gerador.wCampo(tcStr, '#28', 'tpNav', 01, 01, 1, TpNavegacaoToStr(CTe.infCTeNorm.aquav.tpNav), DSC_TPNAV);
+    Gerador.wCampo(tcStr, '#28', 'tpNav', 01, 01, 0, TpNavegacaoToStr(CTe.infCTeNorm.aquav.tpNav), DSC_TPNAV);
 
   Gerador.wGrupo('/aquav');
 end;

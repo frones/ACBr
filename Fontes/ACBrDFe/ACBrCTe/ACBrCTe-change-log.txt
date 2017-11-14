@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2017
+-- pcteCTeW --
+[*] A tag tpNav é opcional e estava como obrigatória.
+   Por: Italo Jurisato Junior
+
 13/11/2017
 -- pcteCTeW --
 [*] As tags xLAgEmi e Idt só devem ser geradas na versão 2.00.

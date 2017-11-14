@@ -486,6 +486,7 @@ begin
       rlmCondicoes.Lines.Clear;
       rlmCondicoes.Lines.Add('Protocolo do CTe Cancelado: ' + FEventoCTe.InfEvento.detEvento.nProt);
       rlmCondicoes.Lines.Add('Motivo do Cancelamento    : ' + FEventoCTe.InfEvento.detEvento.xJust);
+      rlmCondicoes.Lines.Add('Chave do CTe Cancelado    : ' + FEventoCTe.InfEvento.chCTe);
     end;
     teEPEC:
     begin

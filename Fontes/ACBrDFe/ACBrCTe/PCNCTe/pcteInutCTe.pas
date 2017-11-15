@@ -85,7 +85,6 @@ type
     function GerarXML: boolean;
     function LerXML(CaminhoArquivo: String): boolean;
     function LerXMLFromString(const AXML: String): boolean;
-    function ObterNomeArquivo: String;
   published
     property Leitor: TLeitor         read FLeitor     write FLeitor;
     property Gerador: TGerador       read FGerador    write FGerador;
@@ -123,11 +122,6 @@ begin
   FLeitor.Free;
   Fsignature.Free;
   inherited;
-end;
-
-function TinutCTe.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(FIDInutilizacao) + '-ped-inu.xml';
 end;
 
 function TinutCTe.GerarXML: boolean;

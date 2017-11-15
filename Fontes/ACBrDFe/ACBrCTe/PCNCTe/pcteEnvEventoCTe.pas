@@ -121,7 +121,6 @@ type
     function GerarXML: boolean;
     function LerXML(CaminhoArquivo: string): boolean;
     function LerXMLFromString(const AXML: String): boolean;
-    function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
   published
     property Gerador: TGerador            read FGerador  write FGerador;
     property Opcoes: TGeradorOpcoes       read FOpcoes   write FOpcoes;
@@ -157,17 +156,6 @@ begin
   FOpcoes.Free;
   FEvento.Free;
   inherited;
-end;
-
-function TEventoCTe.ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
-begin
- case tpEvento of
-    teCCe         : Result := IntToStr(Self.idLote) + '-cce.xml';
-    teCancelamento: Result := Evento.Items[0].InfEvento.chCTe + '-can-eve.xml';
-    teEPEC        : Result := Evento.Items[0].InfEvento.chCTe + '-ped-epec.xml';
-  else
-    raise EventoCTeException.Create('Obter nome do arquivo de Evento não Implementado!');
- end;
 end;
 
 function TEventoCTe.GerarXML: boolean;

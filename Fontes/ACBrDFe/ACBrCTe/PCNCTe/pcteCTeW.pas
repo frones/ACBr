@@ -186,7 +186,6 @@ type
     constructor Create(AOwner: TCTe);
     destructor Destroy; override;
     function GerarXml: boolean;
-    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador      read FGerador write FGerador;
     property CTe: TCTe              read FCTe     write FCTe;
@@ -239,11 +238,6 @@ begin
   FGerador.Free;
   FOpcoes.Free;
   inherited Destroy;
-end;
-
-function TCTeW.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(CTe.infCTe.ID) + '-cte.xml';
 end;
 
 function TCTeW.GerarXml: Boolean;

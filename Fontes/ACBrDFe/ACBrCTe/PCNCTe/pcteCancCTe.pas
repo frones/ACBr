@@ -67,7 +67,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
-    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property Chave: String           read FChave   write FChave;
@@ -90,11 +89,6 @@ destructor TcancCTe.Destroy;
 begin
   FGerador.Free;
   inherited;
-end;
-
-function TcancCTe.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(FchCTe) + '-ped-can.xml';
 end;
 
 function TcancCTe.GerarXML: Boolean;

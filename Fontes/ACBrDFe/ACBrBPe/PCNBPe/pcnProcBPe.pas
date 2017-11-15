@@ -61,8 +61,6 @@ uses
 
 type
 
-  TPcnPadraoNomeProcBPe = (tpnPublico, tpnPrivado);
-
   TProcBPe = class(TPersistent)
   private
     FGerador: TGerador;
@@ -86,7 +84,6 @@ type
     destructor Destroy; override;
     procedure Assign(Source: TPersistent); override;
     function GerarXML: Boolean;
-    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcBPe = tpnPrivado): String;
   published
     property Gerador: TGerador          read FGerador;
     property PathBPe: String            read FPathBPe            write FPathBPe;
@@ -125,18 +122,6 @@ begin
   inherited;
 end;
 
-function TProcBPe.ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcBPe = tpnPrivado): String;
-var
-  s: String;
-begin
-  Result := FchBPe + '-procBPe.xml';
-  if PadraoNome = tpnPublico then
-  begin
-    s := '00' + Versao;
-    Result := FnProt + '_v' + copy(s, length(s) - 4, 5) + '-procBPe.xml';
-  end;
-end;
-
 function TProcBPe.GerarXML: Boolean;
 
   function PreencherTAG(const TAG: String; Texto: String): String;
@@ -165,7 +150,7 @@ begin
     if (FXML_BPe = '') and (FXML_prot = '') then
     begin
       ProtLido := False;
-      xProtBPe    := '';
+      xProtBPe := '';
 
       // Arquivo BPe
       if not FileExists(FPathBPe) then

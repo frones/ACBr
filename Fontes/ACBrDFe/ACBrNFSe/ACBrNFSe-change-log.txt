@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/11/2017
+-- pnfsNFSeR --
+[*] Correção visando a leitura correta da Retenção de ISS.
+Por: rlmariz
+
 10/11/2017
 -- ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/37313-tags-html-no-campo-outras-informa%C3%A7%C3%B5es/

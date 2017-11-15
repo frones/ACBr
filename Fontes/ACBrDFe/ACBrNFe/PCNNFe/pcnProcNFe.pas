@@ -54,7 +54,7 @@ uses
 
 type
 
-  TPcnPadraoNomeProcNFe = (tpnPublico, tpnPrivado);
+//  TPcnPadraoNomeProcNFe = (tpnPublico, tpnPrivado);
 
   TProcNFe = class(TPersistent)
   private
@@ -79,7 +79,7 @@ type
     destructor Destroy; override;
     procedure Assign(Source: TPersistent); override;
     function GerarXML: Boolean;
-    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcNFe = tpnPrivado): String;
+//    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcNFe = tpnPrivado): String;
   published
     property Gerador: TGerador          read FGerador;
     property PathNFe: String            read FPathNFe            write FPathNFe;
@@ -117,7 +117,7 @@ begin
   FGerador.Free;
   inherited;
 end;
-
+(*
 function TProcNFe.ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcNFe = tpnPrivado): String;
 var
   s: String;
@@ -129,7 +129,7 @@ begin
     Result := FnProt + '_v' + copy(s, length(s) - 4, 5) + '-procNFe.xml';
   end;
 end;
-
+*)
 function TProcNFe.GerarXML: Boolean;
 
   function PreencherTAG(const TAG: String; Texto: String): String;

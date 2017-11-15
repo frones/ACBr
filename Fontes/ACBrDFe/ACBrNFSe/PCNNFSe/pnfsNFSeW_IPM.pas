@@ -90,8 +90,8 @@ begin
 end;
 
 procedure TNFSeW_IPM.GerarPrestador;
-var
-  xMun: String;
+//var
+//  xMun: String;
 begin
   Gerador.wGrupoNFSe('prestador');
   Gerador.wCampoNFSe(tcStr, '#5', 'cpfcnpj'        , 11, 014, 1, OnlyNumber(NFSe.Prestador.Cnpj), '');
@@ -100,8 +100,8 @@ begin
 end;
 
 procedure TNFSeW_IPM.GerarTomador;
-var
-  xMun: String;
+//var
+//  xMun: String;
 begin
   Gerador.wGrupoNFSe('tomador');
   if Length(SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11 then
@@ -132,8 +132,8 @@ begin
 end;
 
 procedure TNFSeW_IPM.GerarListaServicos;
-var
-  i: Integer;
+//var
+//  i: Integer;
 begin
   Gerador.wGrupoNFSe('itens');
 

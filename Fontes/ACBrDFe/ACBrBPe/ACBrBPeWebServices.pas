@@ -1340,7 +1340,10 @@ procedure TBPeEnvEvento.DefinirDadosMsg;
 var
   EventoBPe: TEventoBPe;
   I, F: Integer;
-  Lote, Evento, Eventos, EventosAssinados: AnsiString;
+  Lote, Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
+  FErroValidacao: String;
+  EventoEhValido: Boolean;
+  SchemaEventoBPe: TSchemaBPe;
 begin
 //  FPBodyElement := 'bpeDadosMsg';
 
@@ -1362,14 +1365,13 @@ begin
         infEvento.nSeqEvento := FEvento.Evento[I].infEvento.nSeqEvento;
 
         case infEvento.tpEvento of
-          teCancelamento,
-          teNaoEmbarque:
-          begin
-            infEvento.detEvento.nProt := FEvento.Evento[I].infEvento.detEvento.nProt;
-            infEvento.detEvento.xJust := FEvento.Evento[I].infEvento.detEvento.xJust;
-          end;
-
+          teCancelamento: SchemaEventoBPe := schEnvEventoCancBPe;
+          teNaoEmbarque: SchemaEventoBPe := schEnvEventoNaoEmbBPe;
         end;
+
+        infEvento.detEvento.nProt := FEvento.Evento[I].infEvento.detEvento.nProt;
+        infEvento.detEvento.xJust := FEvento.Evento[I].infEvento.detEvento.xJust;
+
       end;
     end;
     {*)}
@@ -1411,9 +1413,30 @@ begin
     else
       FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
 
+    // Separa o XML especifico do Evento para ser Validado.
+    AXMLEvento := '<' + ENCODING_UTF8 + '>' +
+                  SeparaDados(FPDadosMsg, 'detEvento');
+
     with TACBrBPe(FPDFeOwner) do
     begin
-      SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico, 0)), FPMsg);
+//      SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico, 0)), FPMsg);
+
+      EventoEhValido := SSL.Validar(FPDadosMsg,
+                                    GerarNomeArqSchema(FPLayout,
+                                                       StringToFloatDef(FPVersaoServico, 0)),
+                                    FPMsg) and
+                        SSL.Validar(AXMLEvento,
+                                    GerarNomeArqSchemaEvento(SchemaEventoBPe,
+                                                             StringToFloatDef(FPVersaoServico, 0)),
+                                    FPMsg);
+    end;
+
+    if not EventoEhValido then
+    begin
+      FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
+        FPMsg;
+
+//      raise EACBrBPeException.CreateDef(FErroValidacao);
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do

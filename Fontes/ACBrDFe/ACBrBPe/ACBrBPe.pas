@@ -119,8 +119,8 @@ type
       const AChaveBPe: String; const DigestValue: String): String;
 
     function IdentificaSchema(const AXML: String): TSchemaBPe;
-    function GerarNomeArqSchema(const ALayOut: TLayOutBPe; VersaoServico: Double
-      ): String;
+    function GerarNomeArqSchema(const ALayOut: TLayOutBPe; VersaoServico: Double): String;
+    function GerarNomeArqSchemaEvento(ASchemaEventoBPe: TSchemaBPe; VersaoServico: Double): String;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Bilhetes: TBilhetes read FBilhetes write FBilhetes;
@@ -330,6 +330,17 @@ begin
   end;
 
   Result := ArqSchema;
+end;
+
+function TACBrBPe.GerarNomeArqSchemaEvento(ASchemaEventoBPe: TSchemaBPe;
+  VersaoServico: Double): String;
+begin
+  if VersaoServico = 0.0 then
+    Result := ''
+  else
+    Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
+              SchemaBPeToStr(ASchemaEventoBPe) + '_v' +
+              FloatToString(VersaoServico, '.', '0.00') + '.xsd';
 end;
 
 function TACBrBPe.GetConfiguracoes: TConfiguracoesBPe;

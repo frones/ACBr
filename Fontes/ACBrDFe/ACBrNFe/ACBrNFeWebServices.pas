@@ -2859,6 +2859,7 @@ begin
         infEvento.dhEvento := FEvento.Evento[I].InfEvento.dhEvento;
         infEvento.tpEvento := FEvento.Evento[I].InfEvento.tpEvento;
         infEvento.nSeqEvento := FEvento.Evento[I].InfEvento.nSeqEvento;
+        infEvento.versaoEvento := FEvento.Evento[I].InfEvento.versaoEvento;
 
         case InfEvento.tpEvento of
           teCCe:

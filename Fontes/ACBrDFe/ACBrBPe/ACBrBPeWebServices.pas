@@ -1364,6 +1364,7 @@ begin
         infEvento.dhEvento := FEvento.Evento[I].infEvento.dhEvento;
         infEvento.tpEvento := FEvento.Evento[I].infEvento.tpEvento;
         infEvento.nSeqEvento := FEvento.Evento[I].infEvento.nSeqEvento;
+        infEvento.versaoEvento := FEvento.Evento[I].InfEvento.versaoEvento;
 
         case infEvento.tpEvento of
           teCancelamento: SchemaEventoBPe := schEnvEventoCancBPe;
@@ -1372,7 +1373,6 @@ begin
 
         infEvento.detEvento.nProt := FEvento.Evento[I].infEvento.detEvento.nProt;
         infEvento.detEvento.xJust := FEvento.Evento[I].infEvento.detEvento.xJust;
-
       end;
     end;
     {*)}

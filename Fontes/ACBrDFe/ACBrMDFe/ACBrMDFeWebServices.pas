@@ -1849,6 +1849,7 @@ begin
         infEvento.dhEvento   := FEvento.Evento[i].InfEvento.dhEvento;
         infEvento.tpEvento   := FEvento.Evento[i].InfEvento.tpEvento;
         infEvento.nSeqEvento := FEvento.Evento[i].InfEvento.nSeqEvento;
+        infEvento.versaoEvento := FEvento.Evento[i].InfEvento.versaoEvento;
 
         case InfEvento.tpEvento of
           teCancelamento:

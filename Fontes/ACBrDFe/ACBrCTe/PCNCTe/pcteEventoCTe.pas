@@ -86,7 +86,6 @@ type
     FDetEvento: TDetEvento;
 
     function getcOrgao: Integer;
-    function getVersaoEvento: String;
     function getDescEvento: String;
     function getTipoEvento: String;
   public
@@ -102,7 +101,7 @@ type
     property dhEvento: TDateTime     read FDataEvento     write FDataEvento;
     property tpEvento: TpcnTpEvento  read FTpEvento       write FTpEvento;
     property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
-    property versaoEvento: String    read getVersaoEvento write FversaoEvento;
+    property versaoEvento: String    read FVersaoEvento   write FversaoEvento;
     property detEvento: TDetEvento   read FDetEvento      write FDetEvento;
     property DescEvento: String      read getDescEvento;
     property TipoEvento: String      read getTipoEvento;
@@ -436,11 +435,6 @@ begin
   except
     raise EventoException.Create('Tipo do Evento não Implementado!');
   end;
-end;
-
-function TInfEvento.getVersaoEvento: String;
-begin
-  Result := '2.00';
 end;
 
 function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;

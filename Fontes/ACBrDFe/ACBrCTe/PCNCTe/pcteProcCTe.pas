@@ -55,7 +55,7 @@ uses
 
 type
 
-  TPcnPadraoNomeProcCTe = (tpnPublico, tpnPrivado);
+//  TPcnPadraoNomeProcCTe = (tpnPublico, tpnPrivado);
 
   TProcCTe = class(TPersistent)
   private
@@ -79,7 +79,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcCTe = tpnPrivado): String;
+//    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcCTe = tpnPrivado): String;
   published
     property Gerador: TGerador          read FGerador            write FGerador;
     property PathCTe: String            read FPathCTe            write FPathCTe;
@@ -114,7 +114,7 @@ begin
   FGerador.Free;
   inherited;
 end;
-
+(*
 function TProcCTe.ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcCTe = tpnPrivado): String;
 begin
   Result := FchCTe + '-procCTe.xml';
@@ -123,7 +123,7 @@ begin
     Result := FnProt + '_v' + Versao + '-procCTe.xml';
   end;
 end;
-
+*)
 function TProcCTe.GerarXML: boolean;
 
 function PreencherTAG(const TAG: String; Texto: String): String;
@@ -195,7 +195,7 @@ begin
                 Gerador.ListaDeAlertas.Clear;
                 break;
               end;
-              I := I + 1;
+              inc(I);
             end;
           finally
             LocLeitor.Free;

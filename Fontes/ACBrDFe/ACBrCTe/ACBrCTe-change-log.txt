@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/11/2017
+-- pcteProcCTe / pcteEventoCTe --
+[*] Removido a function GetVersaoEvento pois este retorna sempre uma versão
+    pré-definida que pode não ser a versão atual do evento.
+    Removido também a function ObterNomeArquivo por não ter nenhuma utilidade.
+   Por: Italo Jurisato Junior
+
 14/11/2017
 -- pcteCTeW --
 [*] A tag tpNav é opcional e estava como obrigatória.

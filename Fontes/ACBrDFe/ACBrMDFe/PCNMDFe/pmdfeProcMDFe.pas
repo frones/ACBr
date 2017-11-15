@@ -46,8 +46,6 @@ uses
 
 type
 
-  TPcnPadraoNomeProcMDFe = (tpnPublico, tpnPrivado);
-
   TProcMDFe = class(TPersistent)
   private
     FGerador: TGerador;
@@ -69,7 +67,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcMDFe = tpnPrivado): String;
   published
     property Gerador: TGerador           read FGerador             write FGerador;
     property PathMDFe: String            read FPathMDFe            write FPathMDFe;
@@ -102,18 +99,6 @@ destructor TProcMDFe.Destroy;
 begin
   FGerador.Free;
   inherited;
-end;
-
-function TProcMDFe.ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcMDFe = tpnPrivado): String;
-var
-  s: String;
-begin
-  Result := FchMDFe + '-procMDFe.xml';
-  if PadraoNome = tpnPublico then
-  begin
-    s := '00' + Versao;
-    Result := FnProt + '_v' + copy(s, length(s) - 4, 5) + '-procMDFe.xml';
-  end;
 end;
 
 function TProcMDFe.GerarXML: boolean;
@@ -182,7 +167,7 @@ begin
                  Gerador.ListaDeAlertas.Clear;
                  break;
                 end;
-                I := I + 1;
+                inc(I);
              end;
            finally
              LocLeitor.Free;

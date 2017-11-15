@@ -104,7 +104,6 @@ type
     function GerarXML: Boolean;
     function LerXML(const CaminhoArquivo: String): Boolean;
     function LerXMLFromString(const AXML: String): Boolean;
-    function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
   published
     property Gerador: TGerador            read FGerador write FGerador;
     property idLote: Integer              read FidLote  write FidLote;
@@ -131,16 +130,6 @@ begin
   FGerador.Free;
   FEvento.Free;
   inherited;
-end;
-
-function TEventoBPe.ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
-begin
- case tpEvento of
-    teCancelamento: Result := IntToStr(Self.idLote) + '-can-eve.xml';
-    teNaoEmbarque : Result := IntToStr(Self.idLote) + '-emb-eve.xml';
-  else
-    raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
- end;
 end;
 
 function TEventoBPe.GerarXML: Boolean;

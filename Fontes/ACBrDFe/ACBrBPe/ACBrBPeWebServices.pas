@@ -1350,6 +1350,7 @@ begin
   EventoBPe := TEventoBPe.Create;
   try
     EventoBPe.idLote := FidLote;
+    SchemaEventoBPe  := schErro;
 
     {(*}
     for I := 0 to FEvento.Evento.Count - 1 do

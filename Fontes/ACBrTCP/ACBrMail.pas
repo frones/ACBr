@@ -870,7 +870,6 @@ end;
 
 procedure TACBrMail.AddAttachment(aFileName: string; aDescription: string);
 var
-  i: integer;
   AAttachment: TMailAttachment;
 begin
   if not FileExists(aFileName) then
@@ -896,7 +895,6 @@ end;
 
 procedure TACBrMail.AddAttachment(aStream: TStream; aDescription: string);
 var
-  i: integer;
   AAttachment: TMailAttachment;
 begin
   if not Assigned(aStream) then

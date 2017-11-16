@@ -195,7 +195,7 @@ begin
     Gerador.wCampo(tcInt,    'HP15', 'nSeqEvento', 001, 002, 1, Evento.Items[i].InfEvento.nSeqEvento);
     Gerador.wCampo(tcStr,    'HP16', 'verEvento', 001, 004,  1, Evento.Items[i].InfEvento.versaoEvento);
     Gerador.wGrupo('detEvento versao="' +  Versao + '"');
-    Gerador.wCampo(tcStr,    'HP19', 'descEvento', 005, 060, 1,  Evento.Items[i].InfEvento.DescEvento);
+    Gerador.wCampo(tcStr,    'HP19', 'descEvento', 004, 060, 1,  Evento.Items[i].InfEvento.DescEvento);
     case Evento.Items[i].InfEvento.tpEvento of
         teCCe:
           begin

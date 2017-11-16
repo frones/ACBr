@@ -1084,7 +1084,7 @@ var
   Titulo   : TACBrTitulo;
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
-  MotivoLinha, I, CodMotivo: Integer;
+  MotivoLinha, CodMotivo: Integer;
   wSeuNumero, TempData: String;
   codOcorrencia : String;
 begin

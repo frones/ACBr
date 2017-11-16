@@ -1,10 +1,12 @@
-unit ExemploReinf;
+unit uExemploReinf;
+
+{$MODE Delphi}
 
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, pcnConversaoReinf,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RxPlacemnt, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls, ACBrReinf, ACBrReinfWebServices,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, pcnConversaoReinf,
+  Controls, Forms, Dialogs, StdCtrls, ExtCtrls, ComCtrls, ACBrReinf, ACBrReinfWebServices,
   ACBrReinfEventos, ACBrBase, ACBrDFe;
 
 type
@@ -36,7 +38,6 @@ type
     Memo1: TMemo;
     TabSheet4: TTabSheet;
     Memo2: TMemo;
-    FormStorage1: TFormStorage;
     chk2099: TCheckBox;
     chk9000: TCheckBox;
     ChkRetificadora: TCheckBox;
@@ -68,9 +69,9 @@ var
 
 implementation
 
-{$R *.dfm}
+{$R *.lfm}
 
-uses ACBrDFeSSL, pcnConversao, ShellAPI, ACBrReinfEventos, ACBrReinfClasses, System.Rtti, ACBrReinfR1070, ACBrReinfR1000,
+uses ACBrDFeSSL, pcnConversao, ShellAPI, ACBrReinfClasses, ACBrReinfR1070, ACBrReinfR1000,
   ACBrReinfR2010, ACBrReinfR2020, ACBrReinfR2099, ACBrReinfR2098, ACBrReinfR9000;
 
 procedure TForm2.AntesDeEnviar(const Axml: string);
@@ -148,7 +149,7 @@ begin
   // Configuracao WebService
   AACBrReinf.Configuracoes.WebServices.UF := 'CE';
   AACBrReinf.Configuracoes.Certificados.VerificarValidade := True;
-  AACBrReinf.Configuracoes.WebServices.AguardarConsultaRet      := 5000; // tempo padr„o que vai aguardar para consultar apÛs enviar a NF-e
+  AACBrReinf.Configuracoes.WebServices.AguardarConsultaRet      := 5000; // tempo padr√£o que vai aguardar para consultar ap√≥s enviar a NF-e
   AACBrReinf.Configuracoes.WebServices.IntervaloTentativas      := 3000; // Intervalo entre as tentativas de envio
   AACBrReinf.Configuracoes.WebServices.Tentativas               := 10;   // quantidade de tentativas de envio
   AACBrReinf.Configuracoes.WebServices.AjustaAguardaConsultaRet := True; // ajustar "AguardarConsultaRet" com o valor retornado pelo webservice
@@ -160,7 +161,7 @@ begin
   AACBrReinf.Configuracoes.Certificados.NumeroSerie := '23bce65ca331e63aebe165850790c9a6';
   AACBrReinf.Configuracoes.Certificados.Senha := '789456123';
 
-  {IdentificaÁ„o}
+  {Identifica√ß√£o}
  // AACBrReinf.IdEmpregador :=  '02191905000111';
  // AACBrReinf.IdTransmissor := '02191905000111';
 
@@ -361,7 +362,7 @@ begin
 
     with R2020.infoServPrest.ideEstabPrest.ideTomadors.Items[R2020.infoServPrest.ideEstabPrest.ideTomadors.Add(TideTomador.Create)] do
     begin
-      tpInscTomador := tiCNPJ; {N„o preencher fixo}
+      tpInscTomador := tiCNPJ; {N√£o preencher fixo}
       nrInscTomador := '09473513000194';
       vlrTotalBruto := 100;
       vlrTotalBaseRet := 100;
@@ -470,19 +471,19 @@ end.
 {
 
 9.2.Eventos
-Inicialmente, o ambiente de ProduÁ„o Restrita ser· disponibilizado contendo os
-eventos abaixo que foram implementados de acordo com a vers„o 1.1 do leiaute e da vers„o
+Inicialmente, o ambiente de Produ√ß√£o Restrita ser√° disponibilizado contendo os
+eventos abaixo que foram implementados de acordo com a vers√£o 1.1 do leiaute e da vers√£o
 1_01_01 dos schemas XML:
-1. R-1000 - InformaÁıes do Empregador/Contribuinte
+1. R-1000 - Informa√ß√µes do Empregador/Contribuinte
 2. R-1070 - Tabela de Processos Administrativos/Judiciais
-3. R-2010 ñ RetenÁ„o ContribuiÁ„o Previdenci·ria - ServiÁos Tomados
-4. R-2020 ñ RetenÁ„o ContribuiÁ„o Previdenci·ria - ServiÁos Prestados
-  5. R-2030 ñ Recursos Recebidos por AssociaÁ„o Desportiva  (N„o vamos fazer)
-  6. R-2040 ñ Recursos Repassados para AssociaÁ„o Desportiva (N„o Vamos Fazer)
-7. R-2098 ñ Reabertura dos Eventos PeriÛdicos
-8. R-2099 ñ Fechamento dos Eventos PeriÛdicos
-9. R-9000 ñ Exclus„o de Eventos
-As datas para disponibilizaÁ„o de versıes futuras da EFD-REINF nos ambientes de
-ProduÁ„o Restrita e ProduÁ„o ser„o divulgadas oportunamente.
+3. R-2010 ‚Äì Reten√ß√£o Contribui√ß√£o Previdenci√°ria - Servi√ßos Tomados
+4. R-2020 ‚Äì Reten√ß√£o Contribui√ß√£o Previdenci√°ria - Servi√ßos Prestados
+  5. R-2030 ‚Äì Recursos Recebidos por Associa√ß√£o Desportiva  (N√£o vamos fazer)
+  6. R-2040 ‚Äì Recursos Repassados para Associa√ß√£o Desportiva (N√£o Vamos Fazer)
+7. R-2098 ‚Äì Reabertura dos Eventos Peri√≥dicos
+8. R-2099 ‚Äì Fechamento dos Eventos Peri√≥dicos
+9. R-9000 ‚Äì Exclus√£o de Eventos
+As datas para disponibiliza√ß√£o de vers√µes futuras da EFD-REINF nos ambientes de
+Produ√ß√£o Restrita e Produ√ß√£o ser√£o divulgadas oportunamente.
 
 }

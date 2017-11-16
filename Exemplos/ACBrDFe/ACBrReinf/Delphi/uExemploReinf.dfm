@@ -380,21 +380,4 @@ object Form2: TForm2
       end
     end
   end
-  object FormStorage1: TFormStorage
-    StoredProps.Strings = (
-      'chkClear.Checked'
-      'chk1000.Checked'
-      'chk2010.Checked'
-      'chk2020.Checked'
-      'chk2098.Checked'
-      'chk1070.Checked'
-      'rdgOperacao.ItemIndex'
-      'rdgGrupo.ItemIndex'
-      'edRecibo.Text'
-      'cbEvento.ItemIndex'
-      'chk2099.Checked')
-    StoredValues = <>
-    Left = 516
-    Top = 345
-  end
 end

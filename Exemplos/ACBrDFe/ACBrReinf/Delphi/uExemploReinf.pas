@@ -3,8 +3,8 @@ unit ExemploReinf;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, pcnConversaoReinf,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RxPlacemnt, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls, ACBrReinf, ACBrReinfWebServices,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, pcnConversaoReinf,
+  Controls, Forms, Dialogs, StdCtrls, ExtCtrls, ComCtrls, ACBrReinf, ACBrReinfWebServices,
   ACBrReinfEventos, ACBrBase, ACBrDFe;
 
 type
@@ -36,7 +36,6 @@ type
     Memo1: TMemo;
     TabSheet4: TTabSheet;
     Memo2: TMemo;
-    FormStorage1: TFormStorage;
     chk2099: TCheckBox;
     chk9000: TCheckBox;
     ChkRetificadora: TCheckBox;
@@ -70,7 +69,7 @@ implementation
 
 {$R *.dfm}
 
-uses ACBrDFeSSL, pcnConversao, ShellAPI, ACBrReinfEventos, ACBrReinfClasses, System.Rtti, ACBrReinfR1070, ACBrReinfR1000,
+uses ACBrDFeSSL, pcnConversao, ShellAPI, , ACBrReinfClasses,  ACBrReinfR1070, ACBrReinfR1000,
   ACBrReinfR2010, ACBrReinfR2020, ACBrReinfR2099, ACBrReinfR2098, ACBrReinfR9000;
 
 procedure TForm2.AntesDeEnviar(const Axml: string);

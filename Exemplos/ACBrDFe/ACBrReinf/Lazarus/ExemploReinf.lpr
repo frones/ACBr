@@ -1,7 +1,9 @@
 program ExemploReinf;
 
+{$MODE Delphi}
+
 uses
-  Vcl.Forms,
+  Forms, Interfaces,
   uExemploReinf in 'uExemploReinf.pas' {Form2};
 
 {$R *.res}

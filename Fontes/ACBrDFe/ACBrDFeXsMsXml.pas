@@ -288,6 +288,7 @@ var
   ResultInitialize: HRESULT;
   Inicializado: Boolean;
 begin
+  Result := False;
   // Usa valores default, se não foram informados //
   VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
 

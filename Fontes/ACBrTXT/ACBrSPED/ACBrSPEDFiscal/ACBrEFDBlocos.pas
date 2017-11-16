@@ -43,7 +43,7 @@ unit ACBrEFDBlocos;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, ACBrTXTUtils, ACBrSped, StrUtils;
+  SysUtils, Classes, DateUtils, ACBrTXTUtils, ACBrSped;
 
 type
 

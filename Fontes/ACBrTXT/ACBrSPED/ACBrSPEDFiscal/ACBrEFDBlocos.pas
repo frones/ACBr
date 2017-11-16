@@ -43,7 +43,7 @@ unit ACBrEFDBlocos;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, ACBrTXTUtils, ACBrSped;
+  SysUtils, Classes, DateUtils, ACBrTXTUtils, ACBrSped, StrUtils;
 
 type
 
@@ -58,7 +58,8 @@ type
   /// Perfil de apresentação do arquivo fiscal - TRegistro0000
   TACBrIndPerfil             = (pfPerfilA, // A – Perfil A
                                 pfPerfilB, // B – Perfil B
-                                pfPerfilC  // C – Perfil C
+                                pfPerfilC, // C – Perfil C
+                                pfNenhum   // Nenhum
                                 );
   TACBrPerfil = TACBrIndPerfil;
 
@@ -661,47 +662,45 @@ type
   end;
 
   // Fuções do ACBrEFDBlocos.
-  function StrToCodVer(AValue: string): TACBrCodVer;
+  function StrToCodVer(const AValue: string): TACBrCodVer;
   function CodVerToStr(AValue: TACBrCodVer): string;
 
   function IndOperToStr(AVAlue: TACBrIndOper): string;
-  function StrToIndOper(AVAlue: string): TACBrIndOper;
+  function StrToIndOper(const AValue: string): TACBrIndOper;
   function TipoItemToStr(AValue: TACBrTipoItem): string;
-  function StrToTipoItem(AValue: string): TACBrTipoItem;
+  function StrToTipoItem(const AValue: string): TACBrTipoItem;
   function IndEmitToStr(AValue: TACBrIndEmit): string;
-  function StrToIndEmit(AValue: string): TACBrIndEmit;
+  function StrToIndEmit(const AValue: string): TACBrIndEmit;
   function CodSitToStr(AValue: TACBrCodSit): string;
-  function StrToCodSit(AValue: string): TACBrCodSit;
+  function StrToCodSit(const AValue: string): TACBrCodSit;
   function IndPgtoToStr(AValue: TACBrIndPgto): string;
-  function StrToIndPgto(AValue: string): TACBrIndPgto;
+  function StrToIndPgto(const AValue: string): TACBrIndPgto;
   function IndFrtToStr(AValue: TACBrIndFrt): string;
-  function StrToIndFrt(AValue: string): TACBrIndFrt;
+  function StrToIndFrt(const AValue: string): TACBrIndFrt;
   function IndMovFisicaToStr(AValue: TACBrIndMovFisica): string;
-  function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
-//  function CstIcmsToStr(AValue: TACBrCstIcms): string;
-//  function StrToCstIcms(AValue: String): TACBrCstIcms;
-  function StrToMotInv(AValue: string): TACBrMotInv;
+  function StrToIndMovFisica(const AValue: string): TACBrIndMovFisica;
+  function StrToMotInv(const AValue: string): TACBrMotInv;
   function MotInvToStr(AValue: TACBrMotInv): string;
   function IndPropToStr(AValue: TACBrIndProp): string;
-  function StrToIndProp(AValue: string): TACBrIndProp;
+  function StrToIndProp(const AValue: string): TACBrIndProp;
   function TpLigacaoToStr(AValue: TACBrTpLigacao): string;
-  function StrToTpLigacao(AValue: string): TACBrTpLigacao;
+  function StrToTpLigacao(const AValue: string): TACBrTpLigacao;
   function GrupoTensaoToStr(AValue: TACBrGrupoTensao): string;
-  function StrToGrupoTensao(AValue: string): TACBrGrupoTensao;
+  function StrToGrupoTensao(const AValue: string): TACBrGrupoTensao;
   function IndRecToStr(AValue: TACBrIndRec): string;
-  function StrToIndRec(AValue: string): TACBrIndRec;
+  function StrToIndRec(const AValue: string): TACBrIndRec;
   function TpAssinanteToStr(AValue: TACBrTpAssinante): string;
-  function StrToTpAssinante(AValue: string): TACBrTpAssinante;
+  function StrToTpAssinante(const AValue: string): TACBrTpAssinante;
   function IndReceitaToStr(AValue: TACBrIndReceita): string;
-  function StrToIndReceita(AValue: string): TACBrIndReceita;
+  function StrToIndReceita(const AValue: string): TACBrIndReceita;
 
   // Rodrigo Buschmann | Digibyte - 04/07/2017
   function CodFinToStr(AValue: TACBrCodFin): string;
-  function StrToCodFin(AValue: string): TACBrCodFin;
+  function StrToCodFin(const AValue: string): TACBrCodFin;
   function IndPerfilToStr(AValue: TACBrIndPerfil): string;
-  function StrToIndPerfil(AValue: string): TACBrIndPerfil;
+  function StrToIndPerfil(const AValue: string): TACBrIndPerfil;
   function IndAtivToStr(AValue: TACBrIndAtiv): string;
-  function StrToIndAtiv(AValue: string): TACBrIndAtiv;
+  function StrToIndAtiv(const AValue: string): TACBrIndAtiv;
   function IndMovToStr(const AValue: TACBrIndMov): string;
   function StrToIndMov(const AValue: string): TACBrIndMov;
   function NaturezaContaToStr(AValue: TACBrNaturezaConta): string;
@@ -709,7 +708,7 @@ type
   function IndCTAToStr(AValue: TACBrIndCTA): string;
   function StrToIndCTA(const AValue: string): TACBrIndCTA;
   function IndTipoOperToStr(AVAlue: TACBrIndOper): string;
-  function StrToIndTipoOper(AVAlue: string): TACBrIndOper;
+  function StrToIndTipoOper(const AValue: string): TACBrIndOper;
   function EmitenteToStr(const AValue: TACBrEmitente): string;
   function StrToEmitente(const AValue: string): TACBrEmitente;
   function OrigemProcessoToStr(AValue: TACBrOrigemProcesso): string;
@@ -717,29 +716,29 @@ type
   function DoctoImportaToStr(const AValue: TACBrDoctoImporta): string;
   function StrToDoctoImporta(const AValue: string): TACBrDoctoImporta;
   function CstPisToStr(AValue: TACBrCstPis): string;
-  function StrToCstPis(AValue: String): TACBrCstPis;
+  function StrToCstPis(const AValue: string): TACBrCstPis;
   function CstPisCofinsToStr(AValue: TACBrCstPisCofins): string;
-  function StrToCstPisCofins(AValue: String): TACBrCstPisCofins;
+  function StrToCstPisCofins(const AValue: string): TACBrCstPisCofins;
   function CstCofinsToStr(AValue: TACBrCstCofins): string;
-  function StrToCstCofins(AValue: String): TACBrCstCofins;
+  function StrToCstCofins(const AValue: string): TACBrCstCofins;
   function CstIcmsToStr(AValue: TACBrCstIcms): string;
-  function StrToCstIcms(AValue: String): TACBrCstIcms;
+  function StrToCstIcms(const AValue: string): TACBrCstIcms;
   function CstIpiToStr(AValue: TACBrCstIpi): string;
-  function StrToCstIpi(AValue: String): TACBrCstIpi;
+  function StrToCstIpi(const AValue: string): TACBrCstIpi;
   function ApuracaoIPIToStr(const AValue: TACBrApuracaoIPI): string;
   function StrToApuracaoIPI(const AValue: string): TACBrApuracaoIPI;
   function MovimentoStToStr(AValue: TACBrMovimentoST): string;
-  function StrToMovimentoSt(AValue: string): TACBrMovimentoST;
+  function StrToMovimentoSt(const AValue: string): TACBrMovimentoST;
   function TipoAjusteToStr(AValue: TACBrIndRec): string;
-  function StrToTipoAjuste(AValue: string): TACBrTipoAjuste;
+  function StrToTipoAjuste(const AValue: string): TACBrTipoAjuste;
   function OrigemDoctoToStr(AValue: TACBrOrigemDocto): string;
-  function StrToOrigemDocto(AValue: string): TACBrOrigemDocto;
+  function StrToOrigemDocto(const AValue: string): TACBrOrigemDocto;
 
 implementation
 
 { TOpenBlocos }
 
-function StrToCodVer(AValue: string): TACBrCodVer;
+function StrToCodVer(const AValue: string): TACBrCodVer;
 begin
    if AValue = '001' then
       Result := vlVersao100
@@ -817,7 +816,7 @@ begin
    Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToIndOper(AValue: string): TACBrIndOper;
+function StrToIndOper(const AValue: string): TACBrIndOper;
 begin
    Result := TACBrIndOper( StrToIntDef( AValue, 0) );
 end;
@@ -830,7 +829,7 @@ begin
       Result := FormatFloat('00', Integer( AValue ));
 end;
 
-function StrToTipoItem(AValue: string): TACBrTipoItem;
+function StrToTipoItem(const AValue: string): TACBrTipoItem;
 begin
    if AValue = '99' then
       Result := tiOutras
@@ -843,7 +842,7 @@ begin
    Result := IntToStr( Integer( AValue ) + 1 );
 end;
 
-function StrToIndEmit(AValue: string): TACBrIndEmit;
+function StrToIndEmit(const AValue: string): TACBrIndEmit;
 begin
    Result := TACBrIndEmit( StrToIntDef( AValue, 0) );
 end;
@@ -853,7 +852,7 @@ begin
    Result := FormatFloat('00', Integer( AValue ) );
 end;
 
-function StrToCodSit(AValue: string): TACBrCodSit;
+function StrToCodSit(const AValue: string): TACBrCodSit;
 begin
    Result := TACBrCodSit( StrToIntDef( AValue, 0) );
 end;
@@ -869,7 +868,7 @@ begin
       Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToIndPgto(AValue: string): TACBrIndPgto;
+function StrToIndPgto(const AValue: string): TACBrIndPgto;
 begin
    if AValue = '9' then
       Result := tpSemPagamento
@@ -896,7 +895,7 @@ begin
    Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToIndFrt(AValue: string): TACBrIndFrt;
+function StrToIndFrt(const AValue: string): TACBrIndFrt;
 begin
    if AValue = '9' then
    begin
@@ -917,32 +916,12 @@ begin
    Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
+function StrToIndMovFisica(const AValue: string): TACBrIndMovFisica;
 begin
    Result := TACBrIndMovFisica( StrToIntDef( AValue, 0) );
 end;
-{
-function CstIcmsToStr(AValue: TACBrCstIcms): string;
-begin
-   Result := CstIcms[ Integer( AValue ) ];
-end;
 
-function StrToCstIcms(AValue: String): TACBrCstIcms;
-var
-ifor: Integer;
-begin
-   for ifor := 0 to High(CstIcms) do
-   begin
-      if AValue = CstIcms[ifor] then
-      begin
-         Result := TACBrCstIcms( ifor );
-         Break;
-      end;
-   end;
-end;
-}
-
-function StrToMotInv(AValue: string): TACBrMotInv;
+function StrToMotInv(const AValue: string): TACBrMotInv;
 begin
    if AValue = '01' then
       Result := miFinalPeriodo
@@ -985,7 +964,7 @@ begin
    Result := FormatFloat('00', Integer( AValue ) );
 end;
 
-function StrToIndProp(AValue: string): TACBrIndProp;
+function StrToIndProp(const AValue: string): TACBrIndProp;
 begin
    Result := TACBrIndProp( StrToIntDef( AValue, 0) );
 end;
@@ -995,7 +974,7 @@ begin
    Result := IntToStr( Integer( AValue ) + 1 );
 end;
 
-function StrToTpLigacao(AValue: string): TACBrTpLigacao;
+function StrToTpLigacao(const AValue: string): TACBrTpLigacao;
 begin
    Result := TACBrTpLigacao( StrToIntDef( AValue, 0) );
 end;
@@ -1008,7 +987,7 @@ begin
       Result := FormatFloat('00', Integer( AValue ) + 1 );
 end;
 
-function StrToGrupoTensao(AValue: string): TACBrGrupoTensao;
+function StrToGrupoTensao(const AValue: string): TACBrGrupoTensao;
 begin
    if AValue = '' then
       Result := gtNenhum
@@ -1021,7 +1000,7 @@ begin
    Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToIndRec(AValue: string): TACBrIndRec;
+function StrToIndRec(const AValue: string): TACBrIndRec;
 begin
    Result := TACBrIndRec( StrToIntDef( AValue, 0) );
 end;
@@ -1031,7 +1010,7 @@ begin
    Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToTpAssinante(AValue: string): TACBrTpAssinante;
+function StrToTpAssinante(const AValue: string): TACBrTpAssinante;
 begin
    if AValue = '' then
       Result := assNenhum
@@ -1047,7 +1026,7 @@ begin
       Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToIndReceita(AValue: string): TACBrIndReceita;
+function StrToIndReceita(const AValue: string): TACBrIndReceita;
 begin
    if AValue = '9' then
       Result := recTerceiroOutras
@@ -1060,23 +1039,38 @@ begin
    Result := IntToStr( Integer( AValue ) + 1 );
 end;
 
-function StrToCodFin(AValue: string): TACBrCodFin;
+function StrToCodFin(const AValue: string): TACBrCodFin;
 begin
    Result := TACBrCodFin( StrToIntDef( AValue, 0) );
 end;
 
 function IndPerfilToStr(AValue: TACBrIndPerfil): string;
 begin
-   if (AValue = pfPerfilA) then result := 'A'
-   else if (AValue = pfPerfilB) then result := 'B'
-   else if (AValue = pfPerfilC) then result := 'C';
+  case AValue of
+    pfPerfilA : result := 'A';
+    pfPerfilB : result := 'B';
+    pfPerfilC : result := 'C';
+    else
+      Result := '';
+   end;
 end;
 
-function StrToIndPerfil(AValue: string): TACBrIndPerfil;
+function StrToIndPerfil(const AValue: string): TACBrIndPerfil;
+var
+  cPerfil: Char;
 begin
-   if (AValue = 'A') then result := pfPerfilA
-   else if (AValue = 'B') then result := pfPerfilB
-   else if (AValue = 'C') then result := pfPerfilC;
+   if Length(AValue) > 0 then
+     cPerfil := UpCase(AValue[1])
+   else
+     cPerfil := ' ';
+
+   case cPerfil of
+     'A': Result := pfPerfilA;
+     'B': Result := pfPerfilB;
+     'C': Result := pfPerfilC;
+    else
+      Result := pfNenhum;
+   end;
 end;
 
 function IndAtivToStr(AValue: TACBrIndAtiv): string;
@@ -1084,7 +1078,7 @@ begin
    Result := IntToStr( Integer( AValue ) + 1 );
 end;
 
-function StrToIndAtiv(AValue: string): TACBrIndAtiv;
+function StrToIndAtiv(const AValue: string): TACBrIndAtiv;
 begin
    Result := TACBrIndAtiv( StrToIntDef( AValue, 0) );
 end;
@@ -1152,7 +1146,7 @@ begin
    Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToIndTipoOper(AValue: string): TACBrIndOper;
+function StrToIndTipoOper(const AValue: string): TACBrIndOper;
 begin
    Result := TACBrIndOper( StrToIntDef( AValue, 0) );
 end;
@@ -1206,7 +1200,7 @@ begin
    Result := CstPis[ Integer( AValue ) ];
 end;
 
-function StrToCstPis(AValue: String): TACBrCstPis;
+function StrToCstPis(const AValue: string): TACBrCstPis;
 var
    ifor: Integer;
 begin
@@ -1226,7 +1220,7 @@ begin
   Result := CstPisCofins[ Integer( AValue ) ];
 end;
 
-function StrToCstPisCofins(AValue: String): TACBrCstPisCofins;
+function StrToCstPisCofins(const AValue: string): TACBrCstPisCofins;
 var
    ifor: Integer;
 begin
@@ -1246,7 +1240,7 @@ begin
    Result := CstCofins[ Integer( AValue ) ];
 end;
 
-function StrToCstCofins(AValue: String): TACBrCstCofins;
+function StrToCstCofins(const AValue: string): TACBrCstCofins;
 var
 ifor: Integer;
 begin
@@ -1266,7 +1260,7 @@ begin
    Result := CstIcms[ Integer( AValue ) ];
 end;
 
-function StrToCstIcms(AValue: String): TACBrCstIcms;
+function StrToCstIcms(const AValue: string): TACBrCstIcms;
 var
 ifor: Integer;
 begin
@@ -1286,7 +1280,7 @@ begin
    Result := CstIpi[ Integer( AValue ) ];
 end;
 
-function StrToCstIpi(AValue: String): TACBrCstIpi;
+function StrToCstIpi(const AValue: string): TACBrCstIpi;
 var
 ifor: Integer;
 begin
@@ -1322,7 +1316,7 @@ begin
    Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToMovimentoSt(AValue: string): TACBrMovimentoST;
+function StrToMovimentoSt(const AValue: string): TACBrMovimentoST;
 begin
    Result := TACBrMovimentoSt( StrToIntDef( AValue, 0) );
 end;
@@ -1332,7 +1326,7 @@ begin
    Result := IntToStr( Integer( AValue ) );
 end;
 
-function StrToTipoAjuste(AValue: string): TACBrTipoAjuste;
+function StrToTipoAjuste(const AValue: string): TACBrTipoAjuste;
 begin
    Result := TACBrTipoAjuste( StrToIntDef( AValue, 0) );
 end;
@@ -1346,7 +1340,7 @@ begin
 end;
 
 
-function StrToOrigemDocto(AValue: string): TACBrOrigemDocto;
+function StrToOrigemDocto(const AValue: string): TACBrOrigemDocto;
 begin
    if AValue = '9' then
       Result := odOutros

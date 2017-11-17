@@ -81,7 +81,7 @@ InstallPassword
 {}
 
 InstallVersion
-{1.1.0.28}
+{1.1.0.44}
 
 Language,ca
 {No}
@@ -192,7 +192,7 @@ UpgradeApplicationID
 {}
 
 Version
-{1.1.0.28}
+{1.1.0.44}
 
 ViewReadme
 {Yes}
@@ -328,158 +328,300 @@ File ::AE02934C-B10A-0916-F2CA-3A68AA4B8254 -name ConectaACBrMonitorPLUS.lpr -pa
 File ::9EDCD903-B596-6569-89FC-BC1C3CDCAD53 -name unit1.lfm -parent F426E44E-547A-7CEA-A4BC-2DB0B2346A16
 File ::8332CD69-4B6E-4866-2E35-2052FC901935 -name unit1.pas -parent F426E44E-547A-7CEA-A4BC-2DB0B2346A16
 FileGroup ::34708C26-EE14-548D-CACD-DF451C26305A -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Schemas -parent FileGroups
-File ::AFAD99C5-5F51-8AA1-EC16-C3A85D97E1F1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cancCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::03C68347-AE38-0DF3-E9EF-C80B01357D65 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consCad_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::2E5CA5AB-E433-3D76-B8A1-9B7F2ABF91F7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consReciCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::312E49BD-66BD-81C3-C42A-FC61786018DE -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consReciCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::567E3B13-5FAA-CA7A-B9F0-C277011F2F91 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consSitCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::52B64537-B855-CCA0-5448-6DDACD8CDCBA -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consSitCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::9E79BA43-1A9C-1722-A55B-09AC504E75AB -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consStatServCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::A15082BB-7435-AFFE-3F75-C06389C85EC4 -name ../../../.././Exemplos/ACBrDFe/Schemas/CTe/consStatServTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::5A644D24-69E3-C1F7-597E-75ED6DD03773 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalAereo_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::110A94F4-5F9B-9DC1-EAAF-F232DE87F323 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalAquaviario_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::DD6959BB-A57D-F17E-A534-4BBAEF19F931 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalDutoviario_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::0EFB3334-DD12-F391-622E-252087EA568F -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalFerroviario_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::7B7DE463-2AF7-852F-4AEC-31B6438EEBE1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalRodoviario_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::C38208E6-1941-25A2-4999-997FBAE61E42 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evCCeCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::B5747CAB-F69E-ADFA-5CC5-E56DA72C7CE4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evCancCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::94971491-67AA-C729-90A2-7543CCF46EB0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evEPECCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::9B1048C6-79A8-1812-B78E-B2C5F1953D9E -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evRegMultimodal_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::B0E6BF7C-977A-CF63-F302-248642716982 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/eventoCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::C282A0FB-C7E1-D1EB-A08E-6B0F67CE8343 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/eventoCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::56F1B7E2-772F-EEC8-D7F0-AC04CD85C619 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/inutCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::F8D93C32-3537-1820-6B56-501FD1B44955 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/inutCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::86D094BF-AC35-FF7E-2890-8244B135F5B2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/leiauteConsultaCadastro_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::B8BAC55F-228D-5138-60BA-AB5C6A694A51 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::83B0658E-D011-D01B-82CA-3256A30DFC92 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procEventoCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::A78FAF32-F96F-DF97-7383-358E15AF1BE0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procInutCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::0744F38B-385D-207A-712B-0F3D198F562D -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsCad_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::AEB16B2D-47E6-3724-3185-B4597309DFD9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsReciCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::8F2733D8-7218-0AC4-204B-9D2D4D8DA02F -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsSitCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::2D540A3F-E855-7E80-61EF-75CF2A335E46 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsStatServCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::7D0D51C0-06AB-C6AA-114C-2FB1F7D52055 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retEnviCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::78D420EE-5FC5-9C9C-F420-5BCB305AF26A -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retEventoCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::EE09EEDF-1AB3-434D-FD79-588F8CB2AC72 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retInutCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::61F391F0-04A7-066C-3F3C-EE9195E15408 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/tiposBasico_v1.03.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::BB87A3C8-50C0-8102-10E5-BC221E660145 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/tiposGeralCTe_v2.00-OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::218B4BB3-9A46-94F8-2E6A-AA7B9BB387EE -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/tiposGeralCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::CF35FE8B-54F4-D81C-39A9-5D44458C1B8F -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/xmldsig-core-schema_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::3E196A72-60C6-6F40-2261-EBC6A01481C1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consMDFeNaoEncTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::6329F708-8638-BA7F-AA7E-C009F5D233E1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consMDFeNaoEnc_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::C248030A-DCC6-2A5F-24E5-CB030D9F0064 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consReciMDFeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::B32363E3-67EB-8F52-199C-4C901A98637C -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consReciMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::E5D46A56-1FFF-0A90-B7AF-571749A42FAA -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consSitMDFeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::A3880262-4384-82AA-6783-1065CB7B94F7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consSitMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::31919205-FF9E-9ABE-E9D3-04A1BE783FC7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consStatServMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::F1EC6383-6EDE-2A83-1DE2-F0F43395EFA8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consStatServTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::546EA478-B8BE-58F1-EC1B-C7C370E726D8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/distDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::DB292110-4895-FCF7-5BF7-E196ABEE3F57 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/distMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::038BEF97-1241-0419-751A-3EA902777114 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/enviMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::1C041060-7630-BD00-D6F8-FADDF09DB9C1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/evCancMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::2B9167A0-04E3-7115-19B0-2F9FCF0AD852 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/evEncMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::916720C9-1D60-824D-3A5D-B35D1C7FF629 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/evIncCondutorMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::AB394522-000E-C67F-7B67-46F75BCF9785 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/eventoMDFeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::66F389F8-FBBF-BF19-73FE-B8D2AF61C368 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/eventoMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::57735BEA-32AE-7302-E240-6C8663941C63 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/leiauteDistMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::37732DA4-90DB-5A46-A985-77E7AB5CD169 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeConsultaDFeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::4CB4AF96-F403-8BE3-31F7-D7484B043040 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeConsultaDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::C66DFCE5-B1E6-2CEB-60D9-90D4EC24D488 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalAereo_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::4FDEF841-C616-4014-CE11-41EC7C9C2A8F -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalAquaviario_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::74FBD32A-B654-991F-E476-BE5396E3CC23 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalFerroviario_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::E6EC6B3F-E11D-9C83-1FEF-586B63138E05 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalRodoviario_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::355C2FBC-EF5C-5833-0CEE-49575569AF49 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::FD5AD34B-36CF-308D-B15D-9F6318CCA4E8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::1CDDB18C-FF7B-F774-5356-A0278B2CFCBD -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/procEventoMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::AD2AF69C-C606-2CA9-DB15-E2A2B97F0BEA -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/procMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::25C9BE28-F8E2-BADC-4A1B-F9E10BCBE62C -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsMDFeNaoEnc_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::61378577-4B8E-E699-9500-064DF3C4B5C3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsReciMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::4C19187B-FFA8-5808-8756-809B9497590F -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsSitMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::2EC31F0A-C878-9549-5DE8-30565EF3DB83 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsStatServMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::0B1BBF74-24FD-0AFA-E457-D6BFF55C1CA6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retDistDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::BDFA09F1-1617-E7CA-5AD2-129DB9C1F39C -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retDistMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::008BAE83-2523-7529-6AE1-9CE6EF7B9CD2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retEnviMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::0CFDD3C3-56AF-1BAF-4CF1-0F66E53D814C -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retEventoMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::C43048FF-3AF1-C552-F92C-054D8D577C5C -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retMDFeConsultaDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::82FD8184-A61B-DAAF-6F0D-D69348965844 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/tiposDistDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::DC79832B-DC47-61B6-3EC8-27FB4C591F60 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/tiposGeralMDFe_v1.00-OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::9A146E37-407D-82EF-E144-D521411840A2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/tiposGeralMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::60A6A1A0-0383-1A7A-F436-5E027101BE61 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/xmldsig-core-schema_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::CBFD68B1-66C1-911D-BC10-903B7611B33B -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/CCe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::7C849180-BD0E-2E51-70DA-C3249FD33514 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/EPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::E3762069-8DEC-025B-2C6E-0E6938C1C7B1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/confRecebto_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::1E108655-2B1F-B5C3-2D4F-0F5A8D83D1C5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consCad_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::EF2E83F6-0F22-B1FF-C705-3F5751600901 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consNFeDest_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::E9EABEF2-FE37-AAAC-AE3B-DBCEB8889DA2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consReciNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::1711965A-6FB4-B164-B36C-52A9AE875A49 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consSitNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::0DA03CF2-B2DE-087C-0928-5F73A320A6D4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consStatServ_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::262361DE-2EA1-E8B5-5497-8237156A14A5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/distDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::22F304D2-C469-66D6-255B-8E8A20930604 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/downloadNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::F771C759-0ADB-B1EE-41D9-F4C9276A9C1A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e110110_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::1F0E7FA6-DA10-F29A-2EE5-3FCD24454675 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e110111_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::C43830D7-85CC-BC1D-DD34-F3836363A045 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e110140_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::D6550814-93EF-CF5B-2DC8-66734F77035C -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e210200_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::4140C2CE-4277-3E8F-5D06-80E121265381 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e210210_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::9455C799-B027-6652-55E5-10D8099FE2DC -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e210220_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::43D2ED3A-D4B6-F4A0-3584-AE95041114A6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e210240_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::8300401F-2BA0-70F3-999A-10F91F2ED100 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envCCe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::BFCC622B-0AE7-DACA-D212-A997B69255C3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envCancelPProrrogNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::C64BC20C-1C3D-F8B9-F5B1-08D9870E17C9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envConfRecebto_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::3268719F-548F-1AC9-1C68-9B6F90B52A14 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::F77C7A25-9A9C-025B-B844-07C5F94BA71F -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envEventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::09F0EC26-901C-8490-FEE7-2C5E08FCC48F -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envEvento_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::B74263F4-05A8-6AA3-F472-756E678CB051 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envFiscoNfe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::38AE6A8C-8B58-762A-3FD5-9B72A1CE0083 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envPProrrogNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::56240190-06BE-9FDE-8891-0359DD37E48D -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/enviNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::052486AB-06F9-E98F-0CAD-D2385255643A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/eventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::F53AB697-15CB-3CF1-D0A6-8F9E2DAAD646 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/eventoEPEC_v0.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::8C568E08-597B-D8DC-3475-566826A123E1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/eventoEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::D8B530F6-21F3-B05D-2814-64AE7CD5B4F3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/inutNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::78A20C4A-B2E9-6C86-5139-082236BE6F0B -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteCCe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::9E6E25BA-0811-BC67-11F5-25C183028E35 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConfRecebto_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::608A7F75-380F-8744-6BFD-B57E25637081 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsNFeDest_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::0C97DD37-200B-4D98-DD49-7EDB4EA0A0EE -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsSitNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::34BC7DAA-0FA2-E328-E679-19710735F28A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsStatServ_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::CC0EF23B-1FE8-92A2-B2FE-532200367C23 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsultaCadastro_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::7203D54B-3053-FA73-D44C-BDB048895CAE -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteDownloadNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::46F3E08C-7075-535F-8C00-8DA3F1E489A2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::CBBBB150-AB1D-E2E2-8E38-85D32DB52099 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteEventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::FB2676C3-2535-9D8A-704F-63859903F4E1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteEvento_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::4EE58D16-A2F6-A475-681B-8457D53EFCCF -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteInutNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::5A3C6995-2AEA-4D57-0FD6-AC12147AD371 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::D276A635-F10A-C686-70EF-57C0C9646430 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/nfe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::7F01D5EF-88FA-089C-9A94-0D4CF51C2F4A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procCCeNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::31307235-EB4B-8B66-6D60-793C0C847AD4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procConfRecebtoNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::092BB37A-B11D-48BC-15A0-144814A07DB2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::2C09B675-A1B7-2EA1-88DF-1ABD8582B6A9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procEventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::AFCBF31F-9388-AD8B-9519-9D3298DFA396 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procEventoNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::DF4F2F8D-82CB-473F-E44C-F5AD00491922 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procEventoNFe_v99.99.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::E920AAA3-1926-0044-9260-0CC7AFAF11A9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procInutNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::E2B041C6-91AF-A8E9-675E-6D1EB05FE1D8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::F43DF81E-2BCA-8148-6A3E-5F111B7289D2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/resEvento_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::9A61C9D6-4DCC-A85E-0195-867C3EDA4A5B -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/resNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::509769B4-C349-DAEA-D8B4-E5BB331D81C9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retConsReciNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::18C01EFC-1167-827D-44B7-42256A0C4E8D -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retConsSitNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::0C982B5A-E8F5-C8FC-EFAC-E8DDE53693BA -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retConsStatServ_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::FFA00BB8-CC8A-4FAD-A7FD-B51D3B82E4CF -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retDistDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::324846BA-FEDF-9AC5-B540-403B7023BB5D -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retDownloadNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::3C9D4538-0CD7-9848-94DC-6E8A6AAD5F64 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvCCe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::08A7B70B-AB84-6952-4A36-22B75F6D461E -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvCancelPProrrogNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::FE16679F-E6B2-A4C8-FC49-0BEF6682722B -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvConfRecebto_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::D45F203F-DAFE-62A7-1414-D1D0B1A0EF38 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::297AEC33-4804-FDD1-F28C-B4BFEBF153CF -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvEventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::29D62B2C-BC02-279E-728E-2C40A16FB3A8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvEvento_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::A0E7E0D0-A35F-6282-79B0-4CF60C27803A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvFiscoNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::8C409C79-2262-D30A-6C9D-34F83E423FCA -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnviNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::754F43F9-986F-75CC-D9A5-05E34A8AE50D -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEventoEPEC_v0.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::8AEA478A-282E-4C59-F2B1-649EE2145E28 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retInutNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::51840AC2-0B43-C9D1-15AC-842A72F1F759 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retPProrrogNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::C5FD3884-24CB-5484-D4E9-04ADAC9EB1E6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retconsNFeDest_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::1F4E06CC-CD70-1516-7116-C78089B2E610 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v1.03.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::E148CEA7-85A8-4A3F-05AD-E50415A408D9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v1.03_OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::2C76A86D-9AAD-BABF-2808-2280CC07AA9E -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::3786C984-8A44-A720-CA3D-F13991467728 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v3.10_OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::24135ED9-8865-9BF2-D85E-E1DECDDE8021 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposDistDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
-File ::8F3DAA96-5DEB-35F4-6C69-B765F80C4D86 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/xmldsig-core-schema_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1167390D-F32D-615B-9C96-C637E61DDD59 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/Averb_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A6317B47-A0BC-F98B-00C6-F97CD99A45B4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/CCe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CC8DA72E-5633-24E0-92AE-4A9A06A66B11 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/EPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A1728E23-349B-2221-6288-1BC0B727BC45 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/SuframaInternaliza_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E89DEE7A-B5B2-D9B2-208E-005526AB31CF -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/SuframaVistoria_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::04D97167-CF42-A957-3E6C-C58522278C83 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/confRecebto_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::ACCDF786-302C-76AE-CDF3-00ECCD65038D -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consCad_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::83FAACE4-E326-83BC-B69D-F193E7612DF4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consNFeDest_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::778D8820-3E46-833A-7AF5-9C0D34F3FA96 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consReciNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DEEE7A73-4602-9457-E3EA-97653E7C2750 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consReciNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A319DD04-D987-53F3-AA33-2E285CCF1C90 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consSitNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9B7089F3-746E-A419-7960-325591DA38D0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consSitNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9A9CCE78-9559-2781-E895-06CB9DE68620 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consStatServ_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::302E3F8B-6049-E724-4085-78442D2CB989 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/consStatServ_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F0AEB97B-3ECC-2BF0-F804-A11831C44B96 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/distDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A9AB7D97-2A24-3373-3434-334C694C18C6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/distDFeInt_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4736DA2D-C662-2A5E-FAA7-F5AD9BE3688F -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/downloadNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::870BFA28-678A-5E02-28A6-257F18D5CD3D -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e110110_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0946B83D-CB2C-B619-3CEC-A06FC317BCEE -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e110111_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::86A35CBD-D49B-003B-8C42-DE706167F7F3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e110140_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::431ABA05-260F-0E15-3A60-6F75F09FEF41 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e111500_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A9687F69-A7CD-95D3-ABFD-DF0292E2E2FD -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e111501_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F439C459-92EB-1D7F-549C-433F095523A9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e111502_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DC47A26F-CBCC-66E9-F380-538AF42F75B2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e111503_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::53E37535-C4CC-7A1E-CEAA-1043BA22C022 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e210200_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D66EE022-8F3A-87E0-96A1-5E64A84D143C -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e210210_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::774F664B-489F-99D8-A9F7-E70F6E06A9B6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e210220_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B07B007B-FBA1-4E16-ED4B-7812DC28F5F2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e210240_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9E714E71-2DF2-1998-E122-2EDC0F5E3A04 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e411500_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::EE5DBC13-3E2D-496F-4DE9-03DC4BED44B7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e411501_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::024F071E-2A85-F37B-0D03-F6A7762B9C9E -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e411502_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DE4EAB36-3FEF-6171-AAAD-884BF22F6F4E -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e411503_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A7ABDEEF-BA5A-94E3-65E6-2D6196304FD3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e790700_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B93197C7-7E9D-8704-9E66-81F3182C5F1E -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e990900_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::FB0CF6FC-841C-E5E3-2C13-481D43945791 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/e990910_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::67C32749-3223-7541-9E7D-C9F74B22A07C -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envAverb_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5259CAFE-C905-F2EE-08BC-4CE95C551188 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envCCe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1A8FE5F9-D01F-7FC1-30A5-C61256CB1AE7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envCancelPProrrogNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F0FBB011-7930-5345-A9F8-6612C0570421 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envConfRecebto_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::582C65CB-C4B4-50E4-2C8E-17A89A21B3E6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::83F0CE33-D1E9-40E0-843A-B32E888DA7F7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envEventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::AA104CE2-28B7-38ED-B3E1-E868A2D90193 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envEvento_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BA7A8795-BD70-F8B0-10F7-CDDC20703A54 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envFiscoNfe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2F00FAA4-6BD8-B9E3-E10C-F7A5F139C0B0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envPProrrogNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2B370561-B6F8-E868-B22D-19722BF09208 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envRemIndus_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B6419A90-26F6-B39D-E568-55832BA0DA3A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envSuframaInternaliza_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7010625C-3C46-482C-6944-1695C40E6C03 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/envSuframaVistoria_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0790F0F9-2DFD-3FA4-E382-8B4FA763E116 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/enviNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::81DD1892-7286-7803-ECDB-5E1E89681560 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/enviNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5BBB2809-03DF-6C77-A66F-3F2927B2C505 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/eventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7647855F-05B1-FC5C-686A-498032769B4C -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/eventoEPEC_v0.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::587C3340-621B-6DF3-CE22-2261013730E7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/eventoEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5F8EA109-8607-B088-79FF-DBFEF760479B -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/eventoRemIndus_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::31AF271A-17BB-9BAA-956F-7760F634DDCC -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/inutNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::58A5F893-0EB4-0843-404D-572C09D889C5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/inutNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::70C653B8-237D-E020-5200-8EB12F20AFB9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteAverb_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F4472CE9-EA94-E55A-56BC-1F7BC5BC543C -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteCCe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0C3D6CD4-B2C6-33CF-4C95-8998300F6080 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConfRecebto_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::993882B3-853E-6475-FCE7-38517A1590F2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsNFeDest_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8EDAA6A5-C05B-71FC-2816-EA9F92119B71 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsSitNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DBD9873B-5281-3034-5220-B27EB8CE9310 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsSitNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5DB6C7F9-A05B-FEA8-E94B-B7DA3F8AE102 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsStatServ_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::31617236-E591-D6CF-DAE8-2421CC867B53 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsStatServ_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::18A65431-D267-28B3-849E-1E476F25FF11 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteConsultaCadastro_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3418F8FE-9968-F887-7268-19C49199F79A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteDownloadNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9DCD7F20-678A-BC7B-BEE9-362147C73165 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D8B724DF-5AAA-C771-2E78-A6955704FF5E -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteEventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8206119D-2EED-CAEC-2484-89D31AD282C9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteEvento_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F18FCC71-0DD2-95A0-49AD-6AD86B733F39 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteInutNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::651EA956-BE1F-03C2-61CA-12BCDECFBFDD -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteInutNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D9E3368D-242B-3E63-58AE-5A7E211D972F -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1913B308-8C0A-917F-4781-0E5D6864AFF8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DCF74FF3-C1DD-F378-4260-189491A5428A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteRemIndus_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CAE2FBDC-8CCF-C337-A369-7F809CF80B35 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteSuframaInternaliza_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::18A1447E-1759-9FC9-D899-5EBFF5E0E81D -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/leiauteSuframaVistoria_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::61305731-A684-EF96-5F68-F601F9726AD3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/nfe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1031A5D0-7F63-2701-2B8D-BE1768B8BF8D -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/nfe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2259F6E5-A4DD-FFD4-1214-F08D92D56A7D -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procAverbNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::FD3E4D56-76ED-DEC0-92E8-EE81B7E32718 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procCCeNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1B910FEB-EFA6-5936-BCB4-B5146C56AA47 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procConfRecebtoNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4B42FEB5-A45D-6D01-207F-D29B2326999A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8B1E3D20-F25A-095C-FC47-581E3B925F01 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procEventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8900D6B4-223C-7FD0-75F4-6F2241A67FB6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procEventoNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::925894B1-1E09-C2C1-ACBA-E874046529D4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procEventoNFe_v99.99.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B4A1E8D3-D5A3-9520-92EB-A24AC0B3C45E -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procInutNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::72A9F48D-6684-B4FF-DD90-056E5F2D33BF -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procInutNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B1AE4C9C-F425-DBD0-2BBF-3EE50215E4A5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9C5F38A4-E8DE-7F7A-5242-A78D80F25118 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9A318F30-420C-12D1-EA1B-330FABE094DF -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/procRemIndus_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8244FF41-0118-364B-3315-5542EDB70C24 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/resEvento_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9D8B5ECA-5478-CC3F-EE3C-193954C458AC -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/resEvento_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::AECD6B0A-22A0-E32E-7D5B-6A7E022AA7E5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/resNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::C25C0D33-74A5-8B2E-8D8E-ABDC93BB39EE -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/resNFe_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B06D6C6C-C13B-25DE-CC1C-56BC5D9CADB7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retConsReciNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CA1813BE-E689-1EDB-F9FE-4B0E0C95B545 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retConsReciNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F865BA4E-6A32-DC16-AE1E-2C831CB15A18 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retConsSitNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::83F4EF08-1021-C493-D5CF-25AA638D918F -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retConsSitNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6F1FDBB4-A391-7569-7B8C-A3B2DC3A4214 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retConsStatServ_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::14875AF0-9473-403F-0E1A-8E198B0697C2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retConsStatServ_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5FC6CDB7-AECD-0939-7180-B9BCD1FB469C -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retDistDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5DE57FE8-CD63-AF84-C9CA-F30C47081698 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retDistDFeInt_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A8C69EE5-7ABE-5807-B9DE-BFEF99E51702 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retDownloadNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E0931DDD-1EF6-4412-786F-61881AD42EFC -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvAverb_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9CB887A8-448A-1975-9C42-D52C4B1BA8A8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvCCe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::28475D7E-732A-D16E-C334-FE9C8AE7344B -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvCancelPProrrogNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CFDFD9D0-322D-9C00-E6F4-3DE34BD367B3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvConfRecebto_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4FFDF05D-D14C-BED1-BF5B-0E80F440511B -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvEPEC_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B19834B8-321F-8BCA-33F5-76A20DFFEE54 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvEventoCancNFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6E533ED2-DC32-6CEA-626B-BC3B85257E6B -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvEvento_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A279ADC4-248E-C6FD-EC6F-EA8438B384AE -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvFiscoNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2CACD72E-D7EC-4D13-956E-513243F98404 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvRemIndus_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::72861E5E-7D9B-EFE8-201F-C0FF4823FCFB -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvSuframaInternaliza_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::587BE711-8351-3F07-6C8D-41A4BC0D9E8A -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnvSuframaVistoria_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6E5A9FFF-10ED-B21B-49B9-D60AA8D13B1C -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnviNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1B06A896-E71C-89D6-456F-B675D7FF5382 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEnviNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2D06292C-FAB0-A074-E285-CF37800C1518 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retEventoEPEC_v0.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8FEE9DE4-718D-FAEB-06D2-F08181FA1172 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retInutNFe_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B276FB2C-4D48-7030-CCEC-DC74F2C60DEA -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retInutNFe_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F8C6190D-85B6-7643-EAFA-0A24DB0277F8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retPProrrogNFe_v1.0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D46A7ABC-8353-6D73-3EBD-182FD7BC4211 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/retconsNFeDest_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6BFAD46F-6C47-5E51-FF24-721ED602AB88 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v1.03.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::26BCA7BB-032C-27B6-FC81-7C100492324F -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v1.03_OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::434CF1A7-4AC3-F5AF-2468-ED1A7478F414 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v3.10.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9B0044BE-E2FE-C1E7-C7B5-AEDA3FFA1FCA -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v3.10_OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::C5E5A7CC-8A1C-CE01-5A2A-85CD49FF8260 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v4.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A5628BB3-860D-7B23-F6DB-DBBE10D7D798 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposDistDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::C94DD40B-7139-FAC0-8342-2077FAA61245 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposDistDFe_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8B0C8169-49DE-BEA9-1163-8A273A029624 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/xmldsig-core-schema_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8AA3F034-D3C1-BB10-694F-7BCE7B55D215 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consMDFeNaoEncTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3C6BC356-DFFD-F55E-1824-C9188A98B494 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consMDFeNaoEncTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::57AED90D-BA45-D442-0C9D-B2F4B0B4A101 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consMDFeNaoEnc_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2606F375-3508-350E-09D1-4271F7FB716B -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consMDFeNaoEnc_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B45B0866-1E7F-8D19-01DB-6DD017060FBA -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consReciMDFeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::14A10617-2543-C433-26BE-EC8827AD2BA3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consReciMDFeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3BB9A106-DD6A-36EE-DE2A-FD472839E894 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consReciMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CACA3536-C1EE-4D44-46E7-BF48005AF276 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consReciMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0D00C9A7-D873-D5F4-2556-39198AC1DD92 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consSitMDFeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F59C9351-7563-6B4A-D738-FA9AC65DB64B -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consSitMDFeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::019106AA-1BFF-71F9-72FF-0B8B1505DC73 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consSitMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::FA0791AC-D0F7-EB43-4921-42D718A786E6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consSitMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A4BAD044-1D46-BD60-048A-613D5C16A739 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consStatServMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F86B3F6B-765A-7046-B2EF-D2ED7834A56E -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consStatServMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::66B2215A-2D7F-5F7C-21F8-7424104AC15F -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consStatServTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7D325009-8E55-D078-1716-429D3C190771 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/consStatServTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::EF9B8E25-F7A4-8FCC-E03E-88C6BCB1B356 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/distDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::35EDDB64-91FE-2721-7F34-D186A26DFF68 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/distMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::047DBC5C-932B-1770-3501-16F9587407C0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/distMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2635D0DD-1E9E-EF7B-C2EE-20B5C65F1D65 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/enviMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7C131A52-6218-AF71-E972-322328F93CC7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/enviMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::12808BD6-00AA-A805-D327-348041F7ED4C -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/evCancMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::AAE41CCE-07FD-13F5-E549-1156B7546126 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/evCancMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4471838C-4816-7930-AD8B-B4A2CE014473 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/evEncMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5F121BBB-5329-2C9C-0BE1-09DB9AD49479 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/evEncMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8660E112-D0E7-DE9E-2091-C65DDFABDDE5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/evIncCondutorMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7A7867B0-0177-A62E-4F4F-B2A010CB92A7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/evIncCondutorMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3666A109-8AE2-713A-D251-AA27A967D96D -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/eventoMDFeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1620401A-43DD-E4BF-50F2-8116AD953CA5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/eventoMDFeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8523C976-9CCE-9AAB-25AC-1728D887811A -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/eventoMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::81B9A2AD-BAB6-2B94-194B-AD88F92DBBE7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/eventoMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D2580B89-B29C-5A7A-134D-F21ADA84820A -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/leiauteDistMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4E5393C3-8C09-D3ED-0BBD-A9655161DF5D -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/leiauteDistMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CAC80EDB-4742-BF59-A637-3862CEEE54FF -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeConsultaDFeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2860C41C-290C-6B98-9C9F-A4CD3EC1D2B4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeConsultaDFeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::FA1964C8-DF99-5F7A-EABF-092901AA2663 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeConsultaDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::611B3AAC-CE1F-0013-C394-2A2D44505255 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeConsultaDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::53DF32CA-7FDA-73F2-86A9-F024BDE25492 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalAereo_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::22D18A64-943C-BF18-4EFC-820F1AC830CD -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalAereo_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1747DD29-CAD3-1654-6279-EA5B54177FDC -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalAquaviario_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::201C1280-676E-73F4-13F9-5862C9861979 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalAquaviario_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BC2828DC-FACA-5E9D-2D4F-E760CEC9E363 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalFerroviario_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::201E1980-A5E0-50EE-B99C-CFFB044F68A9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalFerroviario_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0E6E334E-EB54-4457-A1C6-28A7494E7A96 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalRodoviario_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BC87261F-0EDC-657D-0B79-AD96B6CF55BC -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeModalRodoviario_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::92ACB449-20E3-2958-8F84-B691DCED6012 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeTiposBasico_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5C36A819-FB6C-7EDB-ADBE-A33583A5DD35 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::12B2A21B-A97B-8826-401F-ACFCE895C564 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::719B897A-F216-1281-7AA4-1EC79001CA31 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/mdfe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::037349E9-1DB9-6378-309C-E0F1F38E2FE2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/procEventoMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::63D5B7F3-FBF9-A782-B6E4-577C9FC3B7BB -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/procEventoMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0F46131E-51A9-D502-A89E-E6F3965853FE -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/procMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BACC83A1-5F2C-CDA9-9DEB-328D7F70408F -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/procMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::251B2CE8-4CBC-8618-ACD9-BD0D96FF7BE7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsMDFeNaoEnc_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4BA42DEA-59C2-AFB7-146D-F81E7CF79ED3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsMDFeNaoEnc_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D4922FBF-9E49-CF23-96B9-35B4DE30ED8D -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsReciMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1C3A826F-EC48-B136-CF52-FB94D4E86D3E -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsReciMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A578AF85-770C-D3C8-F69B-5AD412D256AB -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsSitMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::80EB7EE2-BDC3-A6CA-D86B-037FF777DAB8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsSitMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5B486384-EACC-2B76-3EDC-21FF658D22FB -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsStatServMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0317A65B-9EA9-3634-02CF-0EBFDCB48326 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retConsStatServMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1B2BD755-A7C7-A3B9-E6DF-FCB938260A42 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retDistDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::23CAD38C-95F3-E43E-81D8-A3176E79B1CA -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retDistMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D8D37EC6-2141-EB4B-079F-0AF13A70DC36 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retDistMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1E94E3FB-AB7F-7823-B96D-51B4AE5349B9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retEnviMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::63F3CCBE-4E72-8118-5B1B-459B61FFBBB4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retEnviMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4804092D-42D7-404F-0C92-E6B78A09130E -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retEventoMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E20DC5D1-CDD5-C33C-4BF8-5B93B9E167A8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retEventoMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::40FC6594-D26C-3637-C0F6-0602FE8F1C2A -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retMDFeConsultaDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5D661EC7-719E-6517-FDA8-51BB19B72909 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/retMDFeConsultaDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9DC82CC7-6E7E-7FE6-593E-66201D8BF1CC -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/tiposDistDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5412C27D-1813-4B7D-8DD9-B13F9876EA64 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/tiposGeralMDFe_v1.00-OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1D27EE52-74BE-F736-0ADC-E1F28D6A7A3B -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/tiposGeralMDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::AC3BDD07-F5BE-9524-DA10-EB6F1C5CC3D3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/tiposGeralMDFe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2E439175-3740-EFEE-CDD9-8EB03B429AF7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/xmldsig-core-schema_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/MDFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A35F6C62-19C3-767B-3201-254795AFA8F7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cancCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::329E9FBE-FEBF-036C-0FD7-D2DCECAA90D1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cancCTeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3A75EF87-5FC4-5D0B-4A71-916108C6459D -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consCad_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F1182C4D-BF0A-CDB7-A76E-EE5040704525 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consReciCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E28F8479-8A4D-DA32-28C3-43C4A5136B80 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consReciCTeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E4500FC1-CA42-2575-341D-E2C901C2A262 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consReciCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CF6DB28F-3783-1A9E-2A6E-AE9EB1AA19D1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consReciCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2CA0B141-2F1C-D670-F35B-BB585AB1040F -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consSitCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B27BF6CF-2F55-891E-93ED-50BC9D29FC36 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consSitCTeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0AEF4E00-4BBE-73F5-590A-0891220550FB -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consSitCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::82EEC931-A00C-5A72-94B6-8FD06632C5A9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consSitCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2365B7F4-B349-F040-D0AF-BB6DCD8EED64 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consStatServCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::C0749E66-BE5B-0E42-7E34-A59D2D2FF859 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consStatServCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A9C574F0-ADF5-E297-56F1-BD7B464DCF4F -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consStatServTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::73079217-A3C0-ED0B-487B-8C0FEC16E1B0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/consStatServTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BCADD265-BB7D-2DE2-7992-F76B99346E4D -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalAereo_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::38850FA2-E584-D7EE-3F76-6FEFCAEA17D7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalAereo_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F245D6A8-BFC5-8AC2-FCC8-65A5ED4EA7E4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalAquaviario_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::74AC1CE7-6946-44C7-21F6-15BFB7928DD2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalAquaviario_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6F17C2C7-F775-4764-4247-5EF357A1AF22 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalDutoviario_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::85A9BFBB-E602-842A-4F13-52B4C9113B98 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalDutoviario_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CA0FD0D0-44E6-4B18-C43C-5C465269D967 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalFerroviario_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D2EFD5A5-79CF-B712-F529-9388BB4ECE86 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalFerroviario_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::ABAD25F4-FA3F-D304-A803-330FBF9DA6CC -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalRodoviarioOS_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::95A4482E-33D8-327C-F1F9-A72A92934AD9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalRodoviario_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F7D73DE4-CFB3-7BA3-BDCB-F0A3D9C85D9C -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteModalRodoviario_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7E3D312A-B00B-C2EC-CA62-5493F26E7681 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteMultiModal_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A54881AB-D0CB-5F35-E769-FFDECD83A180 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteMultiModal_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2CD68215-A74E-4136-25FB-213357C97B47 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteOS_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6898ED1C-B6C9-3B6C-2DC7-636024EEDF19 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::372E8F09-49CA-08D3-8FDF-3ACC942E2632 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cteTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D35AAEA0-4B5E-8BCE-668E-740460CC2246 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cte_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5C4C8D6A-ABCA-C236-1BD1-DE210609CBA2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/cte_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::28671108-8661-95DF-13F8-3865CF536030 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/distDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7E000C7C-BF79-50C9-B827-0D792DCCDD29 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/enviCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::477C0AA3-F759-7ACC-03B5-65C8F46502D8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/enviCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3EAEA7F8-ADE7-0ED5-78E7-8861574C6BDA -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evCCeCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A3273ACC-3C8B-1B41-808E-EB0431BA79AF -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evCCeCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5C01A114-738B-ED4B-23C4-CDDF34B356EC -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evCancCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6241420D-7D15-46F6-75B0-5AC0D0B1E33D -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evCancCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::66EC456C-8A57-22E7-4363-6B77A6521239 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evEPECCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::765B5206-0D0A-E469-B8F5-5D8D870135A6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evEPECCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::FA732957-9A09-E41F-133D-AC606584D348 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evGTV_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::10F01ABE-755E-5505-1A14-A50BC99FD094 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evPrestDesacordo_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2EF1A43D-866B-09FC-E15F-B176FD0E05B8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evRegMultimodal_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D1A0258E-C429-FFDB-C399-BF9D32D35FF7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/evRegMultimodal_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::656EA5B1-3EEE-CD3F-1199-FB5E74917850 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/eventoCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4CFDA0E5-AC51-BB7D-7011-3BD8FB61EE3F -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/eventoCTeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DD135628-86B5-11D4-356F-7511AB658E9A -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/eventoCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BE35EC0A-D815-CC43-01CE-F91D3BE1050A -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/eventoCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::35D81F66-92F8-8CB3-6C23-597F00624A38 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/inutCTeTiposBasico_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B26FCD8D-D926-82ED-0D74-0F4B7BB9D791 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/inutCTeTiposBasico_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6E431003-3B7A-67A6-531B-947970A8B5E1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/inutCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8983AA14-A97C-596A-CFA5-2077246BE6A7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/inutCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::092091D5-BF4B-6291-8DFA-893BD4D44203 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/leiauteConsultaCadastro_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::223DC22E-75E1-2E30-C129-692E735CF43D -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procCTeOS_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A1190BCD-45FB-BB1A-C2BF-E90A35038930 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F6078434-1F9A-351B-CFFD-D9C12E833F26 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3E7319B0-7968-148F-9D86-8A977C05DFC7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procEventoCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::AE457708-F82C-DBF5-74E1-D5405E0C0927 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procEventoCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::18004930-5E3C-D343-7674-307C9C40B952 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procInutCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::642944B5-E3AE-BC3C-D9B3-9809404089BD -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/procInutCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9EECC4B2-089D-D135-4CF8-66FB77914B96 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retCTeOS_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::563C356B-F001-789A-D96D-530F336E5BD5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsCad_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F78ACD0B-C6EE-66EE-ADE0-AF3865A35A8D -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsReciCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4EBD5D45-1BE1-AF84-968C-0D3901377382 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsReciCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E18F3D26-E160-74A9-41BB-9EA33FF5E2BC -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsSitCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1FF25C9E-CC3D-4896-76AF-CAE096E410D0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsSitCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2B737931-7508-3D46-0427-285C8509D6DF -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsStatServCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::41A12A9C-93DC-332D-3A15-AA493ABEF533 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retConsStatServCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::00B3AA2E-DE01-196A-EC81-4E77C7F0B07E -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retDistDFeInt_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::549932CB-DCB3-6130-7DF2-0AAB608BBB68 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retEnviCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1D9E8BCE-1F1C-C5EC-7DB8-295EBDDAB40C -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retEnviCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CB979CE9-4F26-6CF6-A339-6431C4F995E3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retEventoCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2C9AA106-2A1D-BE54-1593-41EEA06F24B2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retEventoCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2DE1D84A-F540-1545-290F-CB493477F89C -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retInutCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::82E985F4-80FE-B651-5AB3-52F21E50FEF9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/retInutCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D0349EB7-6B08-C899-47CE-A9525AD3EA79 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/tiposBasico_v1.03.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3FB06922-FC72-0DE5-A3BE-24A4CAF04A7C -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/tiposDistDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0CEA41BC-FBC6-B06D-1859-22278700F424 -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/tiposGeralCTe_v2.00-OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1D2A64A5-9FC0-A625-A881-975AC113426F -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/tiposGeralCTe_v2.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::AFD78826-F01E-0A81-23B5-22418006408D -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/tiposGeralCTe_v3.00-OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5FA5D62D-2BDA-8C9F-150D-DC1685BE037D -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/tiposGeralCTe_v3.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::05ED471F-15AC-0B0E-1BCA-0A93963FECDC -name ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/xmldsig-core-schema_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/CTe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DC416672-A633-CE36-8239-9DDB40CF8BA0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/config_uf_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7B0EFDAF-1695-8E48-AF16-B4287958A077 -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/consulta_config_uf_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::EB0E00DE-05D1-E5C3-A58A-4623463B5D5D -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/lote_gnre_consulta_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B8512040-6C57-68C1-3337-A77EA85DD24D -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/lote_gnre_recibo_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5352757A-0790-ECF2-A438-55A54240E25F -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/lote_gnre_result_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BED0CAD6-CEA9-0DE6-BE89-A36A2B3595BA -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/lote_gnre_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::27A9BCC4-5D59-BB59-1D44-CDF44F7C4278 -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/tiposBasicoGNRE_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
 FileGroup ::D72C857D-E06A-2F05-C239-833B1C202243 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name lhelp -parent FileGroups
 File ::1590C86F-AE05-8172-ECAA-6A04E071434C -name lhelp -location ../../lhelp -parent D72C857D-E06A-2F05-C239-833B1C202243
 Component ::1E2CC756-1740-1A0F-E382-93742C781FAC -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Programa -parent Components
@@ -644,6 +786,9 @@ array set Properties {
 05A2DAEE-5B80-1167-35E3-CC04007B18F3,Permission
 {can create}
 
+08F2C1C0-11DD-39C2-DB87-40D1B72C29BA,Conditions
+{1 condition}
+
 0A92A35B-F5B2-E638-347B-EEAEFD172FF1,CheckCondition
 {Before Action is Executed}
 
@@ -759,7 +904,7 @@ array set Properties {
 {Programas do ACBrMonitor}
 
 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2,FileSize
-{26035529}
+{26633618}
 
 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2,Name
 {Program Files}
@@ -825,7 +970,7 @@ array set Properties {
 {<%InstallDir%>/Exemplos}
 
 273C89D4-5D0E-4060-1ED2-A90A3AE647DF,FileSize
-{74488}
+{74786}
 
 273C89D4-5D0E-4060-1ED2-A90A3AE647DF,Name
 {Exemplos}
@@ -880,6 +1025,9 @@ array set Properties {
 
 32532CCE-F099-735D-1591-33A0FC26522A,String
 {<%GuiMode%>}
+
+32780FCD-4E9E-F84E-E4A3-9445757F03A1,Conditions
+{1 condition}
 
 32780FCD-4E9E-F84E-E4A3-9445757F03A1,Prompt
 {<%ConsoleSelectDestinationText%>}
@@ -1265,6 +1413,9 @@ array set Properties {
 9A16B2A6-5C4E-E9FA-1365-7FA2BA95E69C,Action
 {Install Actions}
 
+9A16B2A6-5C4E-E9FA-1365-7FA2BA95E69C,Conditions
+{0 conditions}
+
 9C4C1A01-A70D-881A-4A10-93634AB12849,Conditions
 {0 conditions}
 
@@ -1284,7 +1435,7 @@ A0AAD91A-0EEE-FEE2-D547-23427A537F3A,Destination
 {<%InstallDir%>}
 
 A0AAD91A-0EEE-FEE2-D547-23427A537F3A,FileSize
-{17448567}
+{19602874}
 
 A0AAD91A-0EEE-FEE2-D547-23427A537F3A,Name
 {Documentacao}
@@ -1330,6 +1481,9 @@ A57F74B1-0F9C-7DB3-3054-D51EA42B67BB,State
 
 A57F74B1-0F9C-7DB3-3054-D51EA42B67BB,Widget
 {NextButton; CancelButton}
+
+A5DE0E53-5456-84B9-7FB2-61B45ABEE8C7,Conditions
+{0 conditions}
 
 A5DE0E53-5456-84B9-7FB2-61B45ABEE8C7,Message,subst
 {1}
@@ -1541,6 +1695,9 @@ C43D2C74-3BD2-E96D-A127-EBF551CDCA10,Message,subst
 C43D2C74-3BD2-E96D-A127-EBF551CDCA10,NextButton,subst
 {1}
 
+C487BF78-F3E7-61C0-01B6-BE6E3828EB42,Conditions
+{0 conditions}
+
 C487BF78-F3E7-61C0-01B6-BE6E3828EB42,Message,subst
 {1}
 
@@ -1614,7 +1771,7 @@ D6299F5D-5B27-7374-6636-C4AEFA7A55B1,ExitType
 {Finish}
 
 D72C857D-E06A-2F05-C239-833B1C202243,Destination
-{<%InstallDir%>}
+{<%InstallDir%>/lhelp}
 
 D72C857D-E06A-2F05-C239-833B1C202243,Name
 {lhelp}

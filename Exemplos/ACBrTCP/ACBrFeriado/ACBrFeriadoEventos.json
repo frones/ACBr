@@ -59,7 +59,7 @@
 			},
 			{
 				"nome": "trocaDiaTipo",
-				"descricao": "Informar o tipo de troca de dia do feriado.",
+				"descricao": "Caso o feriado tenha de ser transferido de dia, pode-se informar o tipo de troca de dia do feriado.",
 				"valores": "1-Troca De-Para, 2-De Dia Útil para Segunda ou Sexta",
 				"tipo": "Integer",
 				"obrigatorio": false
@@ -503,7 +503,7 @@
 			"data": "08/12",
 			"nome": "Dia da N. S. da Conceição",
 			"tipo": 3,
-			"listaCidade": "4316907,4318705,3106200,2927408"
+			"listaCidade": "4316907,4318705,3106200,2927408,2800308"
 		},
 		{
 			"data": "24/12",
@@ -573,7 +573,7 @@
 		{
 			"nome": "Corpus Christi",
 			"tipo": 3,
-			"listaCidade": "3550308,3106200,4106902,4205407,2927408,2910800"
+			"listaCidade": "3550308,3106200,4106902,4205407,2927408,2910800,2800308"
 		},
 		{
 			"nome": "Sexta-feira de Corpus Christi",

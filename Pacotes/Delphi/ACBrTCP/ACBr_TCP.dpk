@@ -22,7 +22,7 @@ package ACBr_TCP;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail - (http://www.projectoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail, Feriado - (http://www.projectoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -55,7 +55,10 @@ contains
   ACBrWinHTTPReqResp in '..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas',
   ACBr_WinHttp in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_WinHttp.pas',
   ACBr_WinCrypt in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_WinCrypt.pas',
-  ACBrFeriado in '..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas';
+  ACBrFeriado in '..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas',
+  ACBrFeriadoWSClass in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas',
+  ACBrFeriadoWSCalendario in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas',
+  ACBrFeriadoWSJSON in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas';
 
 end.
 

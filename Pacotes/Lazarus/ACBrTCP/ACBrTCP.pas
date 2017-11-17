@@ -11,6 +11,7 @@ uses
   ACBrDownload, ACBrDownloadClass, ACBrNFPws, ACBrConsultaCNPJ, ACBrIBPTax, 
   ACBrCotacao, ACBrMail, ACBrConsultaCPF, ACBrSpedTabelas, ACBrSedex, 
   ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp, ACBrFeriado, 
+  ACBrFeriadoWSCalendario, ACBrFeriadoWSClass, ACBrFeriadoWSJSON, 
   LazarusPackageIntf;
 
 implementation

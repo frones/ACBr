@@ -42,6 +42,8 @@
 |*    Filipe de Almeida Sortica
 |* 07/11/2017: Inclusão de pesquisa no arquivo JSON
 |*    Filipe de Almeida Sortica
+|* 14/11/2017: Separação das classes em arquivos próprios
+|*    Filipe de Almeida Sortica
 ******************************************************************************}
 
 unit ACBrFeriado;
@@ -51,7 +53,7 @@ unit ACBrFeriado;
 interface
 
 uses
-  SysUtils, Contnrs, Classes, ACBrSocket;
+  SysUtils, Contnrs, Classes, ACBrSocket, ACBrFeriadoWSClass;
 
 type
   TACBrFeriadoWebService = (wsfNenhum, wsfCalendario, wsfJSON);
@@ -60,7 +62,7 @@ type
                       ftFacultativo, ftDiaConvencional);
   TACBrFeriadoTrocaDiaTipo = (fatNenhum, fatDePara, fatDeDiaUtilParaSegOuSex);
 
-  EACBrFeriadoException = class (Exception);
+  EACBrFeriadoException = class(Exception);
 
   TACBrFeriadoEvento = class
   private
@@ -103,8 +105,6 @@ type
       read GetObject write SetObject; default;
   end;
 
-  TACBrFeriadoWSClass = class;
-
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
@@ -119,7 +119,7 @@ type
     fPathArquivo: String;
 
     function GetURL: String;
-    procedure SetWebService(const AValue : TACBrFeriadoWebService);
+    procedure SetWebService(const AValue: TACBrFeriadoWebService);
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy; override;
@@ -149,57 +149,10 @@ type
        write fOnBuscaEfetuada;
   end;
 
-	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}
-  TACBrFeriadoWSClass = class
-  protected
-    fOwner: TACBrFeriado;
-    fpURL: String;
-
-    procedure BuscaEfetuada;
-    procedure ErrorAbstract;
-    procedure TestarToken;
-    procedure TestarPathArquivo;
-  public
-    constructor Create(AOwner: TACBrFeriado); virtual;
-
-    procedure Buscar(const AAno: Integer; const AUF: String = '';
-      const ACidade: String = ''); virtual;
-
-    property URL: String read fpURL;
-  end;
-
-  TACBrWSCalendario = class(TACBrFeriadoWSClass)
-  protected
-    procedure ProcessarResposta;
-  public
-    constructor Create(AOwner: TACBrFeriado); override;
-
-    procedure Buscar(const AAno: Integer; const AUF: String = '';
-      const ACidade: String = ''); override;
-  end;
-
-  TACBrWSJSON = class(TACBrFeriadoWSClass)
-  protected
-    fEventosArquivo: TObjectList;
-
-    function CarregarEventosArquivo(const AAno: Integer): TObjectList;
-    function GetDataDaPascoa(const ano: Integer): TDateTime;
-    procedure ProcessarResposta(const AAno: Integer; const AUF: String = '';
-      const ACidade: String = '');
-  public
-    constructor Create(AOwner: TACBrFeriado); override;
-    destructor Destroy; override;
-
-    procedure Buscar(const AAno: Integer; const AUF: String = '';
-      const ACidade: String = ''); override;
-  end;
-
 implementation
 
 uses
-  StrUtils, ACBrUtil, synautil;
+  ACBrUtil, ACBrFeriadoWSCalendario, ACBrFeriadoWSJSON;
 
 { TACBrFeriadoEvento }
 
@@ -292,471 +245,13 @@ begin
   fACBrFeriadoWS.Free;
 
   case AValue of
-    wsfCalendario: fACBrFeriadoWS := TACBrWSCalendario.Create(Self);
-    wsfJSON:       fACBrFeriadoWS := TACBrWSJSON.Create(Self);
+    wsfCalendario: fACBrFeriadoWS := TACBrFeriadoWSCalendario.Create(Self);
+    wsfJSON:       fACBrFeriadoWS := TACBrFeriadoWSJSON.Create(Self);
   else
     fACBrFeriadoWS := TACBrFeriadoWSClass.Create(Self);
   end;
 
   fWebService := AValue;
-end;
-
-{ TACBrFeriadoWSClass }
-
-procedure TACBrFeriadoWSClass.BuscaEfetuada;
-begin
-  if (Assigned(fOwner.OnBuscaEfetuada)) then
-    fOwner.OnBuscaEfetuada(fOwner);
-end;
-
-procedure TACBrFeriadoWSClass.Buscar(const AAno: Integer; const AUF,
-  ACidade: String);
-begin
-  ErrorAbstract;
-end;
-
-constructor TACBrFeriadoWSClass.Create(AOwner: TACBrFeriado);
-begin
-  inherited Create;
-  fOwner := AOwner;
-  fpURL  := '';
-end;
-
-procedure TACBrFeriadoWSClass.ErrorAbstract;
-begin
-  raise EACBrFeriadoException.Create(ACBrStr('Nenhum WebService selecionado'));
-end;
-
-procedure TACBrFeriadoWSClass.TestarPathArquivo;
-begin
-  if (fOwner.PathArquivo = EmptyStr) then
-    raise EACBrFeriadoException.Create(ACBrStr('Arquivo não informado'));
-  if not(FileExists(fOwner.PathArquivo)) then
-    raise EACBrFeriadoException.Create(ACBrStr('Arquivo informado não existe'));
-end;
-
-procedure TACBrFeriadoWSClass.TestarToken;
-begin
-  if (fOwner.Token = EmptyStr) then
-    raise EACBrFeriadoException.Create(ACBrStr('Token não informado'));
-end;
-
-{ TACBrWSCalendario }
-
-procedure TACBrWSCalendario.Buscar(const AAno: Integer; const AUF,
-  ACidade: String);
-var
-  sURL: String;
-  sNomeCidade: String;
-begin
-  TestarToken;
-
-  sURL := fpURL + 'api/api_feriados.php?';
-  sURL := sURL + 'token='+ fOwner.Token;
-  sURL := sURL + '&ano='+ IntToStr(AAno);
-  if (AUF <> EmptyStr) then
-    sURL := sURL + '&estado='+ AUF;
-  if (ACidade <> EmptyStr) then
-  begin
-    sNomeCidade := TiraAcentos(UpperCase(Trim(ACidade)));
-    sNomeCidade := StringReplace(sNomeCidade, ' ', '_', [rfReplaceAll]);
-    sURL := sURL + '&cidade='+ sNomeCidade;
-  end;
-
-  fOwner.HTTPGet(sURL);
-
-  ProcessarResposta;
-end;
-
-constructor TACBrWSCalendario.Create(AOwner: TACBrFeriado);
-begin
-  inherited Create(AOwner);
-  fpURL := 'http://www.calendario.com.br/';
-end;
-
-procedure TACBrWSCalendario.ProcessarResposta;
-var
-  Buffer: String;
-  XML: TStringList;
-  i: Integer;
-  sEvento: String;
-  Evento: TACBrFeriadoEvento;
-  Data: TDateTime;
-  Ano: Word;
-  Mes: Word;
-  Dia: Word;
-  Tipo: Integer;
-begin
-  Buffer := fOwner.RespHTTP.Text;
-  if (Buffer = EmptyStr) then
-    Exit;
-
-  Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
-  Buffer := StringReplace(Buffer, '</location>', '</location>' + sLineBreak, [rfReplaceAll]);
-  Buffer := StringReplace(Buffer, '</event>', '</event>' + sLineBreak, [rfReplaceAll]);
-
-  XML := TStringList.Create;
-  try
-    XML.Text := Buffer;
-
-    for i := 0 to XML.Count - 1 do
-    begin
-      sEvento := XML.Strings[i];
-
-      if (LerTagXML(sEvento, 'event') <> '') then
-      begin
-        Evento := fOwner.Eventos.New;
-
-        Data := StrToDateDef(LerTagXML(sEvento, 'date'), 0);
-        DecodeDate(Data, Ano, Mes, Dia);
-        Evento.Data      := Data;
-        Evento.Ano       := Ano;
-        Evento.Mes       := Mes;
-        Evento.Dia       := Dia;
-
-        Evento.Nome      := LerTagXML(sEvento, 'name');
-        Evento.Descricao := LerTagXML(sEvento, 'description');
-        Evento.Link      := LerTagXML(sEvento, 'link');
-
-        Tipo := StrToIntDef(LerTagXML(sEvento, 'type_code'), 0);
-        case Tipo of
-          1: Evento.Tipo := ftNacional;
-          2: Evento.Tipo := ftEstadual;
-          3: Evento.Tipo := ftMunicipal;
-          4: Evento.Tipo := ftFacultativo;
-          9: Evento.Tipo := ftDiaConvencional;
-        else
-          Evento.Tipo := ftNenhum;
-        end;
-      end;
-    end;
-  finally
-    XML.Free;
-  end;
-
-  BuscaEfetuada;
-end;
-
-{ TACBrWSJSON }
-
-procedure TACBrWSJSON.Buscar(const AAno: Integer; const AUF,
-  ACidade: String);
-begin
-  if (fEventosArquivo.Count = 0) then
-  begin
-    TestarPathArquivo;
-    CarregarEventosArquivo(AAno);
-  end;
-
-  ProcessarResposta(AAno, AUF, ACidade);
-end;
-
-function TACBrWSJSON.CarregarEventosArquivo(const AAno: Integer): TObjectList;
-var
-  MS: TMemoryStream;
-  Arquivo: String;
-
-  iPosFixos: Integer;
-  iPosMoveis: Integer;
-  iPosAtual: Integer;
-  iPosIni: Integer;
-  iPosFin: Integer;
-  sEvento: String;
-  Evento: TStringList;
-
-  dtPascoa: TDateTime;
-  dtSegundaCarnaval: TDateTime;
-  dtCarnaval: TDateTime;
-  dtQuartaCinzas: TDateTime;
-  dtQuintaSanta: TDateTime;
-  dtSextaSanta: TDateTime;
-  dtCorpusChristi: TDateTime;
-  dtSextaCorpusChristi: TDateTime;
-begin
-  MS := TMemoryStream.Create;
-  try
-    MS.LoadFromFile(fOwner.PathArquivo);
-    Arquivo := UTF8ToNativeString(ReadStrFromStream(MS, MS.Size));
-  finally
-    MS.Free;
-  end;
-
-  if (Arquivo = '') then
-    Exit;
-
-  Arquivo := StringReplace(Arquivo, #9, '', [rfReplaceAll]);
-  Arquivo := StringReplace(Arquivo, '": ', '":', [rfReplaceAll]);
-
-  iPosFixos := PosEx('"feriadosFixos":[', Arquivo) + 16;
-  iPosMoveis := PosEx('"feriadosMoveis":[', Arquivo) + 17;
-  iPosAtual := iPosFixos;
-
-  while (iPosAtual < iPosMoveis - 25) do
-  begin
-    iPosIni := PosEx('{', Arquivo, iPosAtual) + 1;
-    iPosFin := PosEx('}', Arquivo, iPosIni) - 1;
-
-    sEvento := Copy(Arquivo, iPosIni, iPosFin - iPosIni + 1);
-    sEvento := StringReplace(sEvento, ',' + sLineBreak, '|,|', [rfReplaceAll]);
-    sEvento := StringReplace(sEvento, sLineBreak, '', [rfReplaceAll]);
-    sEvento := '|' + sEvento + '|';
-    sEvento := StringReplace(sEvento, '"', '', [rfReplaceAll]);
-
-    Evento := TStringList.Create;
-    Evento.Delimiter := ',';
-    Evento.QuoteChar := '|';
-    Evento.NameValueSeparator := ':';
-    Evento.DelimitedText := sEvento;
-    Evento.Values['data'] := Evento.Values['data'] + '/' + IntToStr(AAno);
-    fEventosArquivo.Add(Evento);
-
-    iPosAtual := iPosFin + 1;
-  end;
-
-  dtPascoa := GetDataDaPascoa(AAno);
-  dtSegundaCarnaval := dtPascoa - 48;
-  dtCarnaval := dtPascoa - 47;
-  dtQuartaCinzas := dtPascoa - 46;
-  dtQuintaSanta := dtPascoa - 3;
-  dtSextaSanta := dtPascoa - 2;
-  dtCorpusChristi := dtPascoa + 60;
-  dtSextaCorpusChristi := dtPascoa + 61;
-
-  while ((iPosAtual > 0) and
-         (iPosAtual < Length(Arquivo) - 10)) do
-  begin
-    iPosIni := PosEx('{', Arquivo, iPosAtual) + 1;
-    iPosFin := PosEx('}', Arquivo, iPosIni) - 1;
-
-    sEvento := Copy(Arquivo, iPosIni, iPosFin - iPosIni + 1);
-    sEvento := StringReplace(sEvento, ',' + sLineBreak, '|,|', [rfReplaceAll]);
-    sEvento := StringReplace(sEvento, sLineBreak, '', [rfReplaceAll]);
-    sEvento := '|' + sEvento + '|';
-    sEvento := StringReplace(sEvento, '"', '', [rfReplaceAll]);
-
-    Evento := TStringList.Create;
-    Evento.Delimiter := ',';
-    Evento.QuoteChar := '|';
-    Evento.NameValueSeparator := ':';
-    Evento.DelimitedText := sEvento;
-
-    if (Pos('Segunda-feira de Carnaval', Evento.Values['nome']) = 1) then
-      Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtSegundaCarnaval))
-    else if (Pos('Carnaval', Evento.Values['nome']) = 1) then
-      Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtCarnaval))
-    else if (Pos('Quarta-feira de Cinzas', Evento.Values['nome']) = 1) then
-      Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtQuartaCinzas))
-    else if (Pos('Quinta-feira Santa', Evento.Values['nome']) = 1) then
-      Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtQuintaSanta))
-    else if (Pos('Sexta-feira Santa', Evento.Values['nome']) = 1) then
-      Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtSextaSanta))
-    else if (Pos(ACBrStr('Páscoa'), Evento.Values['nome']) = 1) then
-      Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtPascoa))
-    else if (Pos('Corpus Christi', Evento.Values['nome']) = 1) then
-      Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtCorpusChristi))
-    else if (Pos('Sexta-feira de Corpus Christi', Evento.Values['nome']) = 1) then
-      Evento.Insert(0, 'data:'+ FormatDateTime('dd/mm/yyyy', dtSextaCorpusChristi));
-
-    fEventosArquivo.Add(Evento);
-
-    iPosAtual := iPosFin + 1;
-  end;
-end;
-
-constructor TACBrWSJSON.Create(AOwner: TACBrFeriado);
-begin
-  inherited Create(AOwner);
-  fEventosArquivo := TObjectList.Create;
-end;
-
-destructor TACBrWSJSON.Destroy;
-begin
-  fEventosArquivo.Free;
-  inherited;
-end;
-
-function TACBrWSJSON.GetDataDaPascoa(const ano: Integer): TDateTime;
-var
-  x, y, a, b, c, d, e: integer;
-  dia, mes: word;
-begin
-  x := 24;
-  y := 5;
-  a := ano MOD 19;
-  b := ano MOD 4;
-  c := ano MOD 7;
-  d := (19 * a + x) MOD 30;
-  e := (2 * b + 4 * c + 6 * d + y) MOD 7;
-  if (d + e) > 9 then
-   begin
-    dia := (d + e - 9);
-    mes := 4;
-   end
-  else
-   begin
-    dia := (d + e + 22);
-    mes := 3;
-   end;
-  result :=  EncodeDate(ano, mes, dia);
-end;
-
-procedure TACBrWSJSON.ProcessarResposta(const AAno: Integer; const AUF,
-  ACidade: String);
-var
-  i: Integer;
-  j: Integer;
-  EventoArquivo: TStringList;
-  Ano: Word;
-  Mes: Word;
-  Dia: Word;
-  Data: TDateTime;
-  DataInicio: TDateTime;
-  Nome: String;
-  Descricao: String;
-  ListaUF: String;
-  ListaCidade: String;
-  Legislacao: String;
-  LegislacaoLink: String;
-  iTipo: Integer;
-  Tipo: TACBrFeriadoTipo;
-  iTrocaDiaTipo: Integer;
-  TrocaDiaTipo: TACBrFeriadoTrocaDiaTipo;
-  TrocaDiaDe: String;
-  TrocaDiaPara: Integer;
-  TrocaDiaParaSemana: Integer;
-  DiaSemanaOficial: Integer;
-  PodeIncluir: Boolean;
-  Evento: TACBrFeriadoEvento;
-begin
-  for i := 0 to fEventosArquivo.Count - 1 do
-  begin
-    EventoArquivo := TStringList(fEventosArquivo.Items[i]);
-
-    PodeIncluir := True;
-
-    Data           := StrToDateDef(EventoArquivo.Values['data'], 0);
-    DataInicio     := StrToDateDef(EventoArquivo.Values['dataInicio'], 0);
-    Nome           := EventoArquivo.Values['nome'];
-    Descricao      := EventoArquivo.Values['descricao'];
-    ListaUF        := EventoArquivo.Values['listaUF'];
-    ListaCidade    := EventoArquivo.Values['listaCidade'];
-    Legislacao     := EventoArquivo.Values['legislacao'];
-    LegislacaoLink := EventoArquivo.Values['legislacaoLink'];
-    iTipo          := StrToIntDef(EventoArquivo.Values['tipo'], 0);
-    case iTipo of
-      1: Tipo := ftNacional;
-      2: Tipo := ftEstadual;
-      3: Tipo := ftMunicipal;
-      4: Tipo := ftFacultativo;
-      9: Tipo := ftDiaConvencional;
-    else
-      Tipo := ftNenhum;
-    end;
-
-    // Verifica se o evento deve ter seu dia trocado
-    iTrocaDiaTipo := StrToIntDef(EventoArquivo.Values['trocaDiaTipo'], 0);
-    case iTrocaDiaTipo of
-      1: TrocaDiaTipo := fatDePara;
-      2: TrocaDiaTipo := fatDeDiaUtilParaSegOuSex;
-    else
-      TrocaDiaTipo := fatNenhum;
-    end;
-    case TrocaDiaTipo of
-      fatDePara:
-      begin
-        TrocaDiaDe         := EventoArquivo.Values['trocaDiaDe'];
-        TrocaDiaPara       := StrToIntDef(EventoArquivo.Values['trocaDiaPara'], 0);
-        TrocaDiaParaSemana := StrToIntDef(EventoArquivo.Values['trocaDiaParaSemana'], 0);
-
-        DiaSemanaOficial := DayOfWeek(Data);
-        if ((TrocaDiaPara > 0) and (PosEx(IntToStr(DiaSemanaOficial), TrocaDiaDe) > 0)) then
-          Data := Data + (TrocaDiaPara - DiaSemanaOficial + (TrocaDiaParaSemana * 7));
-      end;
-      fatDeDiaUtilParaSegOuSex:
-      begin
-        DiaSemanaOficial := DayOfWeek(Data);
-        if (DiaSemanaOficial in [3,4]) then
-          Data := Data - DiaSemanaOficial + 2
-        else if (DiaSemanaOficial = 5) then
-          Data := Data + 1;
-      end;
-    end;
-
-    // Verifica se o evento já foi instituído
-    if ((DataInicio > 0) and (Data < DataInicio)) then
-      PodeIncluir := False;
-
-    if ((PodeIncluir) and (Tipo <> ftNacional)) then
-    begin
-      // Verifica se o evento coincide com o estado
-      if (Tipo in [ftEstadual, ftFacultativo, ftDiaConvencional]) then
-      begin
-        j := EventoArquivo.IndexOfName('listaUF');
-        if (j > -1) then
-        begin
-          if (AUF <> '') then
-          begin
-            if (PosEx(AUF, EventoArquivo.ValueFromIndex[j]) = 0) then
-              PodeIncluir := False;
-          end
-          else
-            PodeIncluir := False;
-        end;
-      end;
-
-      // Verifica se o evento coincide com a cidade
-      if ((PodeIncluir) and (Tipo in [ftMunicipal, ftFacultativo, ftDiaConvencional])) then
-      begin
-        j := EventoArquivo.IndexOfName('listaCidade');
-        if (j > -1) then
-        begin
-          if (ACidade <> '') then
-          begin
-            if (PosEx(ACidade, EventoArquivo.ValueFromIndex[j]) = 0) then
-              PodeIncluir := False;
-          end
-          else
-            PodeIncluir := False;
-        end;
-      end;
-    end;
-
-    // Verifica se precisa manter o evento mais específico para a região
-    if (PodeIncluir) then
-    begin
-      for j := 0 to fOwner.Eventos.Count - 1 do
-        if (Pos(Nome, fOwner.Eventos.Objects[j].Nome) = 1) then
-        begin
-          PodeIncluir :=
-            ((ListaUF <> '') and ((fOwner.Eventos.Objects[j].ListaUF = '') and (fOwner.Eventos.Objects[j].ListaCidade = ''))) or
-            ((ListaCidade <> '') and (fOwner.Eventos.Objects[j].ListaCidade = ''));
-
-          if (PodeIncluir) then
-            fOwner.Eventos.Delete(j);
-
-          Break;
-        end;
-    end;
-
-    if (PodeIncluir) then
-    begin
-      Evento := fOwner.Eventos.New;
-      DecodeDate(Data, Ano, Mes, Dia);
-      Evento.Ano         := Ano;
-      Evento.Mes         := Mes;
-      Evento.Dia         := Dia;
-      Evento.Data        := Data;
-      Evento.Nome        := Nome;
-      Evento.Descricao   := Descricao;
-      Evento.Tipo        := Tipo;
-      Evento.Legislacao  := Legislacao;
-      Evento.Link        := LegislacaoLink;
-      Evento.ListaUF     := ListaUF;
-      Evento.ListaCidade := ListaCidade;
-    end;
-  end;
-
-  BuscaEfetuada;
 end;
 
 end.

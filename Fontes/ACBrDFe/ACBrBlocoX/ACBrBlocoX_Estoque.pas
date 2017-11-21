@@ -128,7 +128,12 @@ begin
       end;
 
       FGerador.wCampo(tcStr, '', 'SituacaoTributaria', 1, 1, 1, SituacaoTributariaToStr(Produtos[I].SituacaoTributaria));
-      FGerador.wCampo(tcStr, '', 'Aliquota', 4, 4, 1, FormatFloat('0.00',Produtos[I].Aliquota));
+
+      if ((Produtos[I].SituacaoTributaria in [stIsento, stNaoTributado, stSubstTributaria]) and (Produtos[I].Aliquota = 0)) then
+        FGerador.wCampo(tcStr, '', 'Aliquota', 4, 4, 1, '')
+      else
+        FGerador.wCampo(tcStr, '', 'Aliquota', 4, 4, 1, FormatFloat('0.00',Produtos[I].Aliquota));
+
       FGerador.wCampo(tcStr, '', 'IsArredondado', 1, 1, 1, IfThen(Produtos[I].IndicadorArredondamento, 'true', 'false'));
       FGerador.wCampo(tcStr, '', 'Ippt', 1, 1, 1, IpptToStr(Produtos[I].Ippt));
       FGerador.wCampo(tcStr, '', 'SituacaoEstoque', 1, 1, 1, IfThen(Produtos[I].Quantidade >= 0, 'Positivo', 'Negativo'));

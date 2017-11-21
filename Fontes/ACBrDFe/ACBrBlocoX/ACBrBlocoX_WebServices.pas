@@ -300,27 +300,24 @@ begin
      PF := Length(XML);
   wCredECF := copy(XML, PI, PF-PI);
   //
-  FPDadosMsg := '<pCnpjEstabelecimento>'+wCNPJ+'</pCnpjEstabelecimento>';
-  FPDadosMsg := FPDadosMsg + '<pDataReferencia>'+wDataRef+'</pDataReferencia>';
-  FPDadosMsg := FPDadosMsg + '<pNumeroCredenciamentoEcf>'+wCredECF+'</pNumeroCredenciamentoEcf>';
-  FPDadosMsg := FPDadosMsg + '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
+  FPDadosMsg := '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
 end;
 
 procedure TEnviarReducaoZ.DefinirServicoEAction;
 begin
   FPServico:= 'http://tempuri.org/';
-  FPSoapAction := 'http://tempuri.org/EnviarReducaoZ';
+  FPSoapAction := 'http://tempuri.org/Enviar';
 end;
 
 procedure TEnviarReducaoZ.DefinirURL;
 begin
   inherited DefinirURL;
-  FPBodyElement := 'EnviarReducaoZ';
+  FPBodyElement := 'Enviar';
 end;
 
 function TEnviarReducaoZ.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarReducaoZResult')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarResult')));
   Result := inherited TratarResposta;
 end;
 
@@ -332,28 +329,25 @@ var
 begin
   wCNPJ     := LerTagXML(XML, 'Cnpj');
   wDataRef := LerTagXML(XML, 'DataReferencia');
-
-
-  FPDadosMsg := '<pCnpjEstabelecimento>'+wCNPJ+'</pCnpjEstabelecimento>';
-  FPDadosMsg := FPDadosMsg + '<pDataReferencia>'+wDataRef+'</pDataReferencia>';
-  FPDadosMsg := FPDadosMsg + '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
+  
+  FPDadosMsg := '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
 end;
 
 procedure TEnviarEstoque.DefinirServicoEAction;
 begin
   inherited;
-  FPSoapAction := 'http://tempuri.org/EnviarEstoque';
+  FPSoapAction := 'http://tempuri.org/Enviar';
 end;
 
 procedure TEnviarEstoque.DefinirURL;
 begin
   inherited;
-  FPBodyElement := 'EnviarEstoque';
+  FPBodyElement := 'Enviar';
 end;
 
 function TEnviarEstoque.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarEstoqueResponse')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarResult')));
   Result := inherited TratarResposta;
 end;
 

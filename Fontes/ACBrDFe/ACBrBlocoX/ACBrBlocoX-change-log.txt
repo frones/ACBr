@@ -39,6 +39,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+21/11/2017
+[*] Grupo Estabelecimento: Removido os campos CNPJ e Nome Empresarial que foram removidos do layout.
+[*] Grupo PafEcf: Removido os campos NomeComercial, Versao, CNPJDesenvolvedor e NomeEmpresarialDesenvolvedor que foram removidos do layout.
+ Alterações fonte ACBrBlocoX_WebServices.pas:
+[*] Alterado a montagem dos dados da mensagem: Removido as tags pCnpjEstabelecimento, pDataReferencia e pNumeroCredenciamentoEcf que foram removidas do layout.
+[*] Alterado endereço do webservice que foi modificado.
+[*] Alteração fonte ACBrBlocoX_Estoque.pas:
+[+]Inserido controle para setar vazio a alíquota quando a alíquota for zero e a situação tributária for: Isento, Não Tributado ou Substituição Tributária, pois ocorre erro se for zero.
+ Alterações fonte ACBrBlocoX_ReducaoZ.pas:
+[*] Grupo Ecf: Removido os campos NumeroCredenciamento, Tipo, Marca, Modelo, Versao, Caixa que foram removidos do layout.
+[*] Grupo DadosReduzaoZ: Inserido controle para o tipo de convênio gerar 6 ou 9 dígitos e alterado formato dos campos VendaBrutaDiaria e GT, pois não podem ter virgula e deve ter zeros a esquerda em virtude da validação que ocorre erro.
+ Alteração fonte pcnConversao.pas:
+[*] Inserido tcNumStr no tipo de campo, utilizado na geração dos campos VendaBrutaDiaria e GT do arquivo da Redução Z.
+ Alteração fonte pcnGerador.pas:
+[*] Inserido tratamento para o tipo tcNumStr, para inserir zeros a esquerda.
+	https://www.projetoacbr.com.br/forum/topic/39376-bloco-x-altera%C3%A7%C3%B5es-no-envio/?do=findComment&comment=263302
+	por : Vanessa Mocellin
+
 09/05/2017
 [+] Mudanças para atender aos novos layouts do bloco x paf-ecf
 		http://www.projetoacbr.com.br/forum/topic/29412-bloco-x-webservice-e-validador/?page=2

@@ -36,6 +36,8 @@ uses
   ACBrBlocoX_Comum, Classes, SysUtils;
 
 type
+  TACBrBlocoX_ConvenioECF = (cecfICMS8501, cecfICMS0909);
+
   TACBrBlocoX_Totalizador = class(TCollectionItem)
   private
     FIdentificacao: String;
@@ -71,6 +73,7 @@ type
     FCRO: Integer;
     FGT: Double;
     FCRZ: Integer;
+    FConvenioECF: TACBrBlocoX_ConvenioECF;
     FCOO: Integer;
     FDataReferencia: TDateTime;
     FDhEmissaoReducaoZ  : TDateTime;
@@ -85,6 +88,7 @@ type
     property DataReferencia: TDateTime read FDataReferencia write FDataReferencia;
     property DataHoraEmissaoReducaoZ: TDateTime read FDhEmissaoReducaoZ write FDhEmissaoReducaoZ;
     property CRZ: Integer read FCRZ write FCRZ;
+    property ConvenioECF: TACBrBlocoX_ConvenioECF read FConvenioECF write FConvenioECF;
     property COO: Integer read FCOO write FCOO;
     property CRO: Integer read FCRO write FCRO;
     property VendaBrutaDiaria: Double read FVendaBrutaDiaria write FVendaBrutaDiaria;
@@ -153,13 +157,7 @@ begin
   FGerador.wGrupo('Ecf');
   with TACBrBlocoX(FACBrBlocoX).ECF do
   begin
-    FGerador.wCampo(tcStr, '', 'NumeroCredenciamento', 0, 0, 1, NumeroCredenciamento);
     FGerador.wCampo(tcStr, '', 'NumeroFabricacao', 0, 0, 1, NumeroFabricacao);
-    FGerador.wCampo(tcStr, '', 'Tipo', 0, 0, 1, Tipo);
-    FGerador.wCampo(tcStr, '', 'Marca', 0, 0, 1, Marca);
-    FGerador.wCampo(tcStr, '', 'Modelo', 0, 0, 1, Modelo);
-    FGerador.wCampo(tcStr, '', 'Versao', 0, 0, 1, Versao);
-    FGerador.wCampo(tcStr, '', 'Caixa', 0, 0, 1, Caixa);
   end;
 
   FGerador.wGrupo('DadosReducaoZ');
@@ -172,10 +170,15 @@ begin
   end;
 
   FGerador.wCampo(tcInt, '', 'CRZ', 4, 4, 1, CRZ);
-  FGerador.wCampo(tcInt, '', 'COO', 6, 6, 1, COO);
+
+  if (ConvenioECF = cecfICMS0909) then
+    FGerador.wCampo(tcInt, '', 'COO', 9, 9, 1, COO)
+  else
+    FGerador.wCampo(tcInt, '', 'COO', 6, 6, 1, COO);
+
   FGerador.wCampo(tcInt, '', 'CRO', 3, 3, 1, CRO);
-  FGerador.wCampo(tcStr, '', 'VendaBrutaDiaria', 1, 14, 1, VendaBrutaDiaria);
-  FGerador.wCampo(tcStr, '', 'GT', 1, 18, 1, GT);
+  FGerador.wCampo(tcNumStr, '', 'VendaBrutaDiaria', 14, 14, 1, OnlyNumber(CurrToStr(VendaBrutaDiaria)));
+  FGerador.wCampo(tcNumStr, '', 'GT', 18, 18, 1, OnlyNumber(CurrToStr(GT)));
 
   if TotalizadoresParciais.Count > 0 then
   begin

@@ -489,6 +489,15 @@ begin
         EstaVazio := ConteudoProcessado = '';
       end;
 
+    tcNumStr:
+      begin
+        ConteudoProcessado := Trim(VarToStr(valor));
+        EstaVazio := ConteudoProcessado = '';
+        
+        if Length(ConteudoProcessado) < TamMin then
+          ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');
+      end;
+
     tcStrOrig:
       begin
         ConteudoProcessado := VarToStr(valor);

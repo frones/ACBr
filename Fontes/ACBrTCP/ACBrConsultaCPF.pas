@@ -250,7 +250,11 @@ begin
       Result:= True;
       Resposta := TStringList.Create;
       try
+       {$IfDef DELPHI12_UP}  // delphi 2009 em diante
         Resposta.Text := StripHTML(UTF8ToString(RespHTTP.Text));
+       {$Else}
+        Resposta.Text := StripHTML(UTF8Decode(RespHTTP.Text));
+       {$EndIf}
         RemoveEmptyLines( Resposta );
 
         //DEBUG:

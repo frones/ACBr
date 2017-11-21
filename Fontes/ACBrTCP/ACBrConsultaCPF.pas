@@ -47,7 +47,7 @@ unit ACBrConsultaCPF;
 interface
 
 uses
-  SysUtils, Classes, ACBrSocket;
+  SysUtils, Classes, ACBrSocket, synacode;
 
 type
   EACBrConsultaCPFException = class ( Exception );
@@ -74,6 +74,8 @@ type
     procedure Captcha(Stream: TStream);
     function Consulta(const ACPF, DataNasc, ACaptcha: String;
       ARemoverEspacosDuplos: Boolean = False): Boolean;
+    function GetCaptchaURL : String ;
+    procedure StringToStream(const AString: string; out AStream: TStream);
   published
     property CPF: String Read FCPF Write FCPF;
     property DataNascimento : String Read FDataNascimento write FDataNascimento;
@@ -88,7 +90,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador, synautil, strutils, blcksock;
+  ACBrUtil, ACBrValidador, synautil, strutils;
 
 function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
 var
@@ -107,18 +109,53 @@ begin
     Result:= '';
 end;
 
+procedure TACBrConsultaCPF.StringToStream(const AString: string; out AStream: TStream);
+var
+  SS: TStringStream;
+begin
+  SS := TStringStream.Create(AString);
+  try
+    SS.Position := 0;
+    AStream.CopyFrom(SS, SS.Size);
+  finally
+    SS.Free;
+  end;
+end;
+
+function TACBrConsultaCPF.GetCaptchaURL : String ;
+var
+  AURL, Html: String;
+begin
+  try
+    Self.HTTPGet('https://cpf.receita.fazenda.gov.br/situacao/defaultSonoro.asp');
+    Html := UTF8ToNativeString(Self.RespHTTP.Text);
+
+    AURL := StrEntreStr(Html, '<img id="imgCaptcha" alt="Código Captcha" src="data:image/png;base64,', '">');
+    
+	Result := StringReplace(AURL, 'amp;', '', []);
+  except
+    on E: Exception do
+    begin
+      raise EACBrConsultaCPFException.Create('Erro na hora de obter a URL do captcha.'+#13#10+E.Message);
+    end;
+  end;
+end;
+
 procedure TACBrConsultaCPF.Captcha(Stream: TStream);
 begin
   try
-    HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
-    HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/captcha/gerarCaptcha.asp');
+    {HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
+    HTTPGet(GetCaptchaURL);
+
     if HTTPSend.ResultCode = 200 then
     begin
       HTTPSend.Document.Position := 0;
-      Stream.CopyFrom(HttpSend.Document, HttpSend.Document.Size);
+      Stream.CopyFrom(HTTPSend.Document, HTTPSend.Document.Size);
+      Stream.Position := 0;}
 
-      Stream.Position := 0;
-    end;
+      StringToStream(DecodeBase64(GetCaptchaURL), Stream);
+      Stream.Position:= 0;
+    {end;}
   Except
     on E: Exception do begin
       raise EACBrConsultaCPFException.Create('Erro na hora de fazer o download da imagem do captcha.'+#13#10+E.Message);
@@ -191,11 +228,11 @@ begin
     Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
     Post.WriteString('Enviar=Consultar');}
 
-    Post.WriteString('tempTxtCPF='+ACPF+'&');
-    Post.WriteString('tempTxtNascimento='+datanasc+'&');
-    Post.WriteString('temptxtToken_captcha_serpro_gov_br='+FTokenCaptcha+'&');
+    Post.WriteString('TxtCPF='+ACPF+'&');
+    Post.WriteString('txtDataNascimento='+datanasc+'&');
+    Post.WriteString('txtToken_captcha_serpro_gov_br='+FTokenCaptcha+'&');
     Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
-    Post.WriteString('temptxtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
+    //Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
     Post.WriteString('Enviar=Consultar');
 
     Post.Position:= 0;
@@ -204,7 +241,7 @@ begin
     HttpSend.Document.Position:= 0;
     HttpSend.Document.CopyFrom(Post, Post.Size);
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
-    HTTPPost('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/ConsultaPublicaExibir.asp');
+    HTTPPost('https://cpf.receita.fazenda.gov.br/situacao/ConsultaSituacao.asp');
 
     Erro := VerificarErros(RespHTTP.Text);
 
@@ -213,20 +250,20 @@ begin
       Result:= True;
       Resposta := TStringList.Create;
       try
-        Resposta.Text := StripHTML(RespHTTP.Text);
+        Resposta.Text := StripHTML(UTF8ToString(RespHTTP.Text));
         RemoveEmptyLines( Resposta );
 
         //DEBUG:
         //Resposta.SaveToFile('C:\temp\cpf.txt');
 
-        FCPF      := LerCampo(Resposta,'No do CPF:');
+        FCPF      := LerCampo(Resposta,'N&ordm; do CPF:');
         FNome     := LerCampo(Resposta,'Nome:');
-        FDataNascimento := LerCampo(Resposta,'Data de Nascimento:');
-        FSituacao := LerCampo(Resposta,'Situação Cadastral:');
-        FDataInscricao := LerCampo(Resposta,'Data da Inscrição:');
-        FEmissao  := LerCampo(Resposta,'Comprovante emitido às:');
-        FCodCtrlControle   := LerCampo(Resposta,'Código de controle do comprovante:');
-        FDigitoVerificador := LerCampo(Resposta,'Digito Verificador:');
+        FDataNascimento := LerCampo(Resposta,'Data Nascimento:');
+        FSituacao := LerCampo(Resposta,'Situa&ccedil;&atilde;o Cadastral:');
+        FDataInscricao := LerCampo(Resposta,'Data de Inscri&ccedil;&atilde;o no CPF:');
+        FEmissao  := LerCampo(Resposta,'Comprovante emitido &agrave;s:');
+        FCodCtrlControle   := LerCampo(Resposta,'C&oacute;digo de controle do comprovante:');
+        FDigitoVerificador := LerCampo(Resposta,'D&iacute;gito Verificador:');
 
         if Trim(FNome) = '' then
         begin

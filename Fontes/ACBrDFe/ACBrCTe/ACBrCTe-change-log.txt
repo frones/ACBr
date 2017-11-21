@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2017
+-- pcteCTeR --
+[*] Não estava alimentando o campo Toma03.Toma quando o tomador é outros.
+   Por: Italo Jurisato Junior
+
 15/11/2017
 -- Diversos --
 [*] Remoção de códigos não utilizados.

@@ -56,21 +56,22 @@ const
 
   TEnviarBlocoX = class(TWebServiceBlocoX)
   private
-    fEstadoProcCod: Integer;
-    fEstadoProcStr: AnsiString;
+    fSituacaoProcCod: Integer;
+    fSituacaoProcStr: AnsiString;
     fRecibo: AnsiString;
     fTipo: AnsiString;
     fVersao: AnsiString;
     FXML : AnsiString;
-
     fBlocoXRetorno: TRetEnvBlocoX;
     FXMLZipado: AnsiString;
-  private
+
     procedure SetXML(AValue: AnsiString);
     function GetXMLZipado: AnsiString;
 
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
   public
@@ -81,36 +82,22 @@ const
     property XML: AnsiString read FXML write SetXML;
     property XMLZipado: AnsiString read GetXMLZipado write FXMLZipado;
 
-    property BlocoXRetorno: TRetEnvBlocoX read fBlocoXRetorno;
-    property EstadoProcCod: Integer       read fEstadoProcCod;
-    property EstadoProcStr: AnsiString    read fEstadoProcStr;
-    property Recibo       : AnsiString    read fRecibo;
-    property Tipo         : AnsiString    read fTipo;
-    property Versao       : AnsiString    read fVersao;
-  end;
-
-  { TEnviarReducaoZ }
-
-  TEnviarReducaoZ = class(TEnviarBlocoX)
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-  end;
-
-  TEnviarEstoque = class(TEnviarBlocoX)
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
+    property BlocoXRetorno  : TRetEnvBlocoX read fBlocoXRetorno;
+    property SituacaoProcCod: Integer       read fSituacaoProcCod;
+    property SituacaoProcStr: AnsiString    read fSituacaoProcStr;
+    property Recibo         : AnsiString    read fRecibo;
+    property Tipo           : AnsiString    read fTipo;
+    property Versao         : AnsiString    read fVersao;
   end;
 
   { TConsultarBlocoX }
 
   TConsultarBlocoX = class(TWebServiceBlocoX)
-    FRecibo : String;
-    FEstadoProcessamentoCodigo: integer;
+  private
+    FRecibo: String;
+    FSituacaoProcCod: integer;
     FRetornoConsulta: TRetEnvBlocoX;
+  protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -119,61 +106,44 @@ const
     destructor Destroy; override;
     procedure Clear; override;
     property Recibo: String read FRecibo write FRecibo;
-    property EstadoProcessamentoCodigo: integer read FEstadoProcessamentoCodigo write FEstadoProcessamentoCodigo;
+    property SituacaoProcCod: integer read FSituacaoProcCod write FSituacaoProcCod;
+    property BlocoXRetorno: TRetEnvBlocoX read FRetornoConsulta write FRetornoConsulta;
   end;
 
 
   { TValidarBlocoX }
 
   TValidarBlocoX = class(TWebServiceBlocoX)
+  private
     FXML : AnsiString;
-    FValidarPafEcf : Boolean;
-    FValidarEcf: Boolean;
-
+    FValidarPafEcfEEcf: Boolean;
+    FValidarAssinaturaDigital: Boolean;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
   public
     property XML: AnsiString read FXML write FXML;
-    property ValidarPafEcf: Boolean read FValidarPafEcf write FValidarPafEcf;
-    property ValidarEcf: Boolean read FValidarEcf write FValidarEcf;
-  end;
-
-  { TValidarReducaoZ }
-
-  TValidarReducaoZ = class(TValidarBlocoX)
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    function TratarResposta: Boolean; override;
-  end;
-
-  { TValidarEstoque }
-
-  TValidarEstoque = class(TValidarBlocoX)
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    function TratarResposta: Boolean; override;
+    property ValidarPafEcfEEcf: Boolean read FValidarPafEcfEEcf write FValidarPafEcfEEcf;
+    property ValidarAssinaturaDigital: Boolean read FValidarAssinaturaDigital write FValidarAssinaturaDigital;
   end;
 
   { TACBrBlocoX_WebServices }
 
   TACBrBlocoX_WebServices = class
   private
-    FEnviarReducaoZ: TEnviarReducaoZ;
-    FEnviarEstoque: TEnviarEstoque;
+    FEnviarBlocoX: TEnviarBlocoX;
     FConsultarBlocoX: TConsultarBlocoX;
-    FValidarEstoque: TValidarEstoque;
-    FValidarReducaoZ: TValidarReducaoZ;
+    FValidarBlocoX: TValidarBlocoX;
 
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    property EnviarReducaoZ: TEnviarReducaoZ read FEnviarReducaoZ write FEnviarReducaoZ;
-    property EnviarEstoque: TEnviarEstoque read FEnviarEstoque write FEnviarEstoque;
+    property EnviarBlocoX: TEnviarBlocoX read FEnviarBlocoX write FEnviarBlocoX;
     property ConsultarBlocoX: TConsultarBlocoX read FConsultarBlocoX write FConsultarBlocoX;
-    property ValidarReducaoZ: TValidarReducaoZ read FValidarReducaoZ write fValidarReducaoZ;
-    property ValidarEstoque: TValidarEstoque read FValidarEstoque write fValidarEstoque;
+    property ValidarBlocoX: TValidarBlocoX read FValidarBlocoX write FValidarBlocoX;
   end;
 
 function ZipFile(const DadosXML: AnsiString; const NomeArquivo: String): AnsiString;
@@ -219,11 +189,11 @@ procedure TEnviarBlocoX.Clear;
 begin
   inherited Clear;
 
-  fEstadoProcCod := 0;
-  fEstadoProcStr := '';
-  fRecibo        := '';
-  fTipo          := '';
-  fVersao        := '';
+  fSituacaoProcCod := 0;
+  fSituacaoProcStr := '';
+  fRecibo          := '';
+  fTipo            := '';
+  fVersao          := '';
 
   if Assigned(fBlocoXRetorno) then
     FreeAndNil( fBlocoXRetorno );
@@ -258,21 +228,35 @@ begin
   Result := FXMLZipado;
 end;
 
+procedure TEnviarBlocoX.DefinirDadosMsg;
+begin
+  FPDadosMsg := '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
+end;
+
 procedure TEnviarBlocoX.DefinirServicoEAction;
 begin
-  FPServico:= 'http://tempuri.org/';
+  FPServico := 'http://tempuri.org/';
+  FPSoapAction := 'http://tempuri.org/Enviar';
+end;
+
+procedure TEnviarBlocoX.DefinirURL;
+begin
+  inherited DefinirURL;
+  FPBodyElement := 'Enviar';
 end;
 
 function TEnviarBlocoX.TratarResposta: Boolean;
 begin
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarResponse')));
+
   fBlocoXRetorno.Leitor.Arquivo := FPRetWS;
   fBlocoXRetorno.LerXml;
 
-  fEstadoProcCod := fBlocoXRetorno.EstadoProcCod;
-  fEstadoProcStr := fBlocoXRetorno.EstadoProcStr;
-  fRecibo        := fBlocoXRetorno.Recibo;
-  fTipo          := fBlocoXRetorno.Tipo;
-  fVersao        := fBlocoXRetorno.Versao;
+  fSituacaoProcCod := fBlocoXRetorno.SituacaoProcCod;
+  fSituacaoProcStr := fBlocoXRetorno.SituacaoProcStr;
+  fRecibo          := fBlocoXRetorno.Recibo;
+  fTipo            := fBlocoXRetorno.Tipo;
+  fVersao          := fBlocoXRetorno.Versao;
 
   Result := (FPRetWS <> '');
 end;
@@ -281,76 +265,6 @@ constructor TEnviarBlocoX.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
 end;
-
-{ TEnviarReducaoZ }
-
-procedure TEnviarReducaoZ.DefinirDadosMsg;
-var
-  wCNPJ, wCredECF, wDataRef: String;
-  PI, PF: integer;
-begin
-  wCNPJ     := LerTagXML(XML, 'Cnpj');
-  wDataRef  := LerTagXML(XML, 'DataReferencia');
-  //
-  PI := Pos('<NumeroCredenciamento>', XML);
-  PI := PosEx('<NumeroCredenciamento>', XML, PI + Length('NumeroCredenciamento'));
-  PI := PI + Length('NumeroCredenciamento') + 2;
-  PF := PosEx('</NumeroCredenciamento>', XML, PI);
-  if PF = 0 then
-     PF := Length(XML);
-  wCredECF := copy(XML, PI, PF-PI);
-  //
-  FPDadosMsg := '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
-end;
-
-procedure TEnviarReducaoZ.DefinirServicoEAction;
-begin
-  FPServico:= 'http://tempuri.org/';
-  FPSoapAction := 'http://tempuri.org/Enviar';
-end;
-
-procedure TEnviarReducaoZ.DefinirURL;
-begin
-  inherited DefinirURL;
-  FPBodyElement := 'Enviar';
-end;
-
-function TEnviarReducaoZ.TratarResposta: Boolean;
-begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarResult')));
-  Result := inherited TratarResposta;
-end;
-
-{ TEnviarEstoque }
-
-procedure TEnviarEstoque.DefinirDadosMsg;
-var
-  wCNPJ, wDataRef: String;
-begin
-  wCNPJ     := LerTagXML(XML, 'Cnpj');
-  wDataRef := LerTagXML(XML, 'DataReferencia');
-  
-  FPDadosMsg := '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
-end;
-
-procedure TEnviarEstoque.DefinirServicoEAction;
-begin
-  inherited;
-  FPSoapAction := 'http://tempuri.org/Enviar';
-end;
-
-procedure TEnviarEstoque.DefinirURL;
-begin
-  inherited;
-  FPBodyElement := 'Enviar';
-end;
-
-function TEnviarEstoque.TratarResposta: Boolean;
-begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarResult')));
-  Result := inherited TratarResposta;
-end;
-
 
 { TConsultarBlocoX }
 
@@ -363,7 +277,7 @@ end;
 procedure TConsultarBlocoX.Clear;
 begin
   inherited Clear;
-  EstadoProcessamentoCodigo := 0;
+  SituacaoProcCod := 0;
 
   if Assigned(FRetornoConsulta) then
     FRetornoConsulta.Free;
@@ -397,7 +311,7 @@ begin
   FRetornoConsulta.LerXml;
 
   Recibo := FRetornoConsulta.Recibo;
-  EstadoProcessamentoCodigo := FRetornoConsulta.EstadoProcCod;
+  SituacaoProcCod := FRetornoConsulta.SituacaoProcCod;
 
   Result := (FPRetWS <> '');
 end;
@@ -406,77 +320,44 @@ end;
 
 procedure TValidarBlocoX.DefinirServicoEAction;
 begin
-  FPServico:= 'http://tempuri.org/';
+  FPServico := 'http://tempuri.org/';
+  FPSoapAction := 'http://tempuri.org/Validar';
+end;
+
+procedure TValidarBlocoX.DefinirURL;
+begin
+  inherited DefinirURL;
+  FPURL := FPURL+'?op=Validar';
+  FPBodyElement := 'Validar';
+end;
+
+function TValidarBlocoX.TratarResposta: Boolean;
+begin
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ValidarResponse')));
+  Result  := (FPRetWS <> '');
 end;
 
 procedure TValidarBlocoX.DefinirDadosMsg;
 begin
   FPDadosMsg := '<pXml>'+ParseText(XML,False)+'</pXml>'+
-                '<pValidarPafEcf>'+IfThen(FValidarPafEcf, 'true', 'false')+'</pValidarPafEcf>'+
-                '<pValidarEcf>'+IfThen(FValidarEcf, 'true', 'false')+'</pValidarEcf>';
-end;
-
-{ TValidarReducaoZ }
-
-procedure TValidarReducaoZ.DefinirURL;
-begin
-  inherited DefinirURL;
-  FPURL := FPURL+'?op=ValidarReducaoZ';
-  FPBodyElement := 'ValidarReducaoZ';
-end;
-
-procedure TValidarReducaoZ.DefinirServicoEAction;
-begin
-  inherited DefinirServicoEAction;
-  FPSoapAction := 'http://tempuri.org/ValidarReducaoZ';
-end;
-
-function TValidarReducaoZ.TratarResposta: Boolean;
-begin
-  //WriteToTXT('_RespValidar.xml', FPRetornoWS);
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ValidarReducaoZResponse')));
-  Result  := (FPRetWS <> '');
-end;
-
-{ TValidarEstoque }
-
-procedure TValidarEstoque.DefinirURL;
-begin
-  inherited DefinirURL;
-  FPURL := FPURL+'?op=ValidarEstoque';
-  FPBodyElement := 'ValidarEstoque';
-end;
-
-procedure TValidarEstoque.DefinirServicoEAction;
-begin
-  inherited DefinirServicoEAction;
-  FPSoapAction := 'http://tempuri.org/ValidarEstoque';
-end;
-
-function TValidarEstoque.TratarResposta: Boolean;
-begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ValidarEstoqueResponse')));
-  Result  := (FPRetWS <> '');
+                '<pValidarPafEcfEEcf>'+IfThen(FValidarPafEcfEEcf, 'true', 'false')+'</pValidarPafEcfEEcf>'+
+                '<pValidarAssinaturaDigital>'+IfThen(FValidarAssinaturaDigital, 'true', 'false')+'</pValidarAssinaturaDigital>';
 end;
 
 { TACBrBlocoX_WebServices }
 
 constructor TACBrBlocoX_WebServices.Create(AOwner: TACBrDFe);
 begin
-  FEnviarReducaoZ  := TEnviarReducaoZ.Create(AOwner);
-  FEnviarEstoque   := TEnviarEstoque.Create(AOwner);
+  FEnviarBlocoX    := TEnviarBlocoX.Create(AOwner);
   FConsultarBlocoX := TConsultarBlocoX.Create(AOwner);
-  FValidarReducaoZ := TValidarReducaoZ.Create(AOwner);
-  FValidarEstoque  := TValidarEstoque.Create(AOwner);
+  FValidarBlocoX   := TValidarBlocoX.Create(AOwner);
 end;
 
 destructor TACBrBlocoX_WebServices.Destroy;
 begin
-  FEnviarReducaoZ.Free;
-  FEnviarEstoque.Free;
+  FEnviarBlocoX.Free;
   FConsultarBlocoX.Free;
-  FValidarReducaoZ.Free;
-  FValidarEstoque.Free;
+  FValidarBlocoX.Free;
   inherited Destroy;
 end;
 

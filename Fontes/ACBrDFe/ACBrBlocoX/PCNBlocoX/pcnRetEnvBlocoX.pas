@@ -40,27 +40,27 @@ type
 
   TRetEnvBlocoX = class(TPersistent)
   private
-    fLeitor       : TLeitor;
-    fVersao       : AnsiString;
-    fEstadoProcCod: Integer;
-    fEstadoProcStr: AnsiString;
-    fRecibo       : AnsiString;
-    fTipo         : AnsiString;
-    fMensagem     : AnsiString;
-    fDataRef      : AnsiString;
+    fLeitor         : TLeitor;
+    fVersao         : AnsiString;
+    fSituacaoProcCod: Integer;
+    fSituacaoProcStr: AnsiString;
+    fRecibo         : AnsiString;
+    fTipo           : AnsiString;
+    fMensagem       : AnsiString;
+    fDataRef        : AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
   published
-    property Leitor       : TLeitor    read fLeitor;
-    property Versao       : AnsiString read fVersao;
-    property EstadoProcCod: Integer    read fEstadoProcCod;
-    property EstadoProcStr: AnsiString read fEstadoProcStr;
-    property Recibo       : AnsiString read fRecibo;
-    property Tipo         : AnsiString read fTipo;
-    property Mensagem     : AnsiString read fMensagem;
-    property DataRef      : AnsiString read fDataRef;
+    property Leitor         : TLeitor    read fLeitor;
+    property Versao         : AnsiString read fVersao;
+    property SituacaoProcCod: Integer    read fSituacaoProcCod;
+    property SituacaoProcStr: AnsiString read fSituacaoProcStr;
+    property Recibo         : AnsiString read fRecibo;
+    property Tipo           : AnsiString read fTipo;
+    property Mensagem       : AnsiString read fMensagem;
+    property DataRef        : AnsiString read fDataRef;
   end;
 
 implementation
@@ -87,13 +87,13 @@ begin
     Leitor.Grupo := Leitor.Arquivo;
     if (Leitor.rExtrai(1, 'Resposta') <> '') then
     begin
-      fVersao        := Leitor.rAtributo('Versao');
-      fEstadoProcCod := Leitor.rCampo(tcInt, 'EstadoProcessamentoCodigo');
-      fEstadoProcStr := Leitor.rCampo(tcStr, 'EstadoProcessamentoDescricao');
-      fRecibo        := Leitor.rCampo(tcStr, 'Recibo');
-      fTipo          := Leitor.rCampo(tcStr, 'Tipo');
-      fMensagem      := Leitor.rCampo(tcStr, 'Mensagem');
-      fDataRef       := Leitor.rCampo(tcStr, 'DataReferencia');
+      fVersao          := Leitor.rAtributo('Versao');
+      fSituacaoProcCod := Leitor.rCampo(tcInt, 'SituacaoProcessamentoCodigo');
+      fSituacaoProcStr := Leitor.rCampo(tcStr, 'SituacaoProcessamentoDescricao');
+      fRecibo          := Leitor.rCampo(tcStr, 'Recibo');
+      fTipo            := Leitor.rCampo(tcStr, 'Tipo');
+      fMensagem        := Leitor.rCampo(tcStr, 'Mensagem');
+      fDataRef         := Leitor.rCampo(tcStr, 'DataReferencia');
       
       Result := True;
     end;

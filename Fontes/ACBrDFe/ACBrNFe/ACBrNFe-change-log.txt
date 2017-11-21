@@ -49,6 +49,11 @@ Símbolo : Significado
 
 16/11/2017
 -- pcnEnvEventoNFe --
+[*] Alteração visando resolver o problema de preenchimento da tag <verEvento>.
+   Por: Italo Jurisato Junior
+
+16/11/2017
+-- pcnEnvEventoNFe --
 [*] Correção no tamanho minimo da tag <descEvento>.
    Por: Filipe Sortica
 

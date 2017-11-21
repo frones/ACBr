@@ -193,7 +193,8 @@ begin
                                                                 GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
     Gerador.wCampo(tcInt,    'HP14', 'tpEvento', 006, 006,   1, Evento.Items[i].InfEvento.TipoEvento);
     Gerador.wCampo(tcInt,    'HP15', 'nSeqEvento', 001, 002, 1, Evento.Items[i].InfEvento.nSeqEvento);
-    Gerador.wCampo(tcStr,    'HP16', 'verEvento', 001, 004,  1, Evento.Items[i].InfEvento.versaoEvento);
+    // Alterado por Italo em 21/11/2017
+    Gerador.wCampo(tcStr,    'HP16', 'verEvento', 001, 004,  1, Versao); // Evento.Items[i].InfEvento.versaoEvento);
     Gerador.wGrupo('detEvento versao="' +  Versao + '"');
     Gerador.wCampo(tcStr,    'HP19', 'descEvento', 004, 060, 1,  Evento.Items[i].InfEvento.DescEvento);
     case Evento.Items[i].InfEvento.tpEvento of

@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/11/2017
+-- pnfsNFSeW_ABRASFv2--
+[*] A tag CodigoPais só pode ser gerada se o código da cidade for 9999999 se
+    tratando do provedor Pronimv2.
+Por: Marcio
+
 16/11/2017
 [+] Inclusão do provedor Belford (segue a versão 2 do layout da ABRASF)
 Por: Italo Jurisato Junior

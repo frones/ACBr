@@ -185,7 +185,7 @@ begin
     Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
     Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
 
-    if FProvedor <> proNFSeBrasil then
+    if not(FProvedor in [proNFSeBrasil, proPronimv2]) or (FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')then
       Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 
     Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP);

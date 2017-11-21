@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2017
+-- pmdfeEventoMDFe --
+[*] Retornado a function ObterNomeArquivo.
+   Por: Italo Jurisato Junior
+
 15/11/2017
 -- Diversos --
 [*] Remoção de códigos não utilizados.

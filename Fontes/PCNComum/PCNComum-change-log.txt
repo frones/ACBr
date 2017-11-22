@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2017
+-- pcnAuxiliar --
+[*] Método "RetornarConteudoEntre", movido para ACBrUtil
+    (por: DSA)
+
 13/11/2017
 -- pcnConversao --
 [*] Alterado a descrição do CST 90 para Simples Nacional.

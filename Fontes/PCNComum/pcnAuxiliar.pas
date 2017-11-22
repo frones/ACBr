@@ -90,7 +90,6 @@ function GerarDigito(out Digito: integer; chave: string): boolean;
 function SomenteNumeros(const s: string): string;
 function RetornarCodigoNumerico(Chave: string; Versao : real): integer;
 function RetornarCodigoNumericoCTe(Chave: string): integer;
-function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
 function RetornarDigito(const chave: string): integer;
 function RetornarModelo(const chave: string): String;
 function ReverterFiltroTextoXML(aTexto: AnsiString): AnsiString;
@@ -733,19 +732,6 @@ begin
     end;
     Result := 0;
   end;
-end;
-
-function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
-var
-  i: integer;
-  s: string;
-begin
-  result := '';
-  i := pos(Inicio, Frase);
-  if i = 0 then
-    exit;
-  s := Copy(Frase, i + length(Inicio), maxInt);
-  result := Copy(s, 1, pos(Fim, s) - 1);
 end;
 
 function DateTimeTodhUTC(DataHora: TDateTime; TZD: string): string;

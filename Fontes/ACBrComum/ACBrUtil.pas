@@ -104,6 +104,7 @@ function RemoverDeclaracaoXML(const AXML: String): String;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
+function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
@@ -3675,6 +3676,20 @@ begin
       Exit;
  end;
 end;
+
+function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
+var
+  i: integer;
+  s: string;
+begin
+  result := '';
+  i := pos(Inicio, Frase);
+  if i = 0 then
+    exit;
+  s := Copy(Frase, i + length(Inicio), maxInt);
+  result := Copy(s, 1, pos(Fim, s) - 1);
+end;
+
 
 {------------------------------------------------------------------------------
    Realiza o tratamento de uma String recebida de um Serviço Web

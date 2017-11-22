@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/11/2017
+-- ACBrUtil --
+[*] Método "RetornarConteudoEntre", movido de pcnAuxiliar para ACBrUtil
+    (por: DSA)
+
 Data: 01/11/2017
 -- ACBrUtil --
 [-] Correção no método "ChangeLineBreak". Veja Testes em:

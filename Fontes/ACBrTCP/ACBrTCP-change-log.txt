@@ -37,6 +37,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2017
+-- ACBrSocket --
+[+] Adicionada a propriedade "TACBrHTTP.IsUTF8: Boolean default False", para
+    forçar o TACBrHTTP a tratar a resposta como UTF8
+
+-- ACBrConsultaCPF --
+[-] Refatoração, e ajustes para funcionar com nova URL em Lazarus
+    (por: DSA)
+
 10/11/2017
 -- ACBrMail --
 [+] Melhoria no controle de anexos, modificando o tipo de lista de Array of Record

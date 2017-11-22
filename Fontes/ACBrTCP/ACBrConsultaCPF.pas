@@ -33,12 +33,6 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 07/08/2013: Primeira Versao - Adaptador conforme ACBRConsultaCNPJ
-|*    Daniel - schrsistemas@gmail.com
-******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -47,7 +41,7 @@ unit ACBrConsultaCPF;
 interface
 
 uses
-  SysUtils, Classes, ACBrSocket, synacode;
+  SysUtils, Classes, ACBrSocket;
 
 type
   EACBrConsultaCPFException = class ( Exception );
@@ -70,12 +64,11 @@ type
 
     function VerificarErros(Str: String): String;
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
+    function GetCaptchaURL : String ;
   public
     procedure Captcha(Stream: TStream);
     function Consulta(const ACPF, DataNasc, ACaptcha: String;
       ARemoverEspacosDuplos: Boolean = False): Boolean;
-    function GetCaptchaURL : String ;
-    procedure StringToStream(const AString: string; out AStream: TStream);
   published
     property CPF: String Read FCPF Write FCPF;
     property DataNascimento : String Read FDataNascimento write FDataNascimento;
@@ -90,37 +83,9 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador, synautil, strutils;
-
-function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
-var
-  Ini, Fim: Integer;
-begin
-  Ini:= PosEx(StrInicial, Str, ComecarDe) + Length(StrInicial);
-  if Ini > 0 then
-  begin
-    Fim:= PosEx(StrFinal, Str, Ini);
-    if Fim > 0 then
-      Result:= Copy(Str, Ini, Fim - Ini)
-    else
-      Result:= '';
-  end
-  else
-    Result:= '';
-end;
-
-procedure TACBrConsultaCPF.StringToStream(const AString: string; out AStream: TStream);
-var
-  SS: TStringStream;
-begin
-  SS := TStringStream.Create(AString);
-  try
-    SS.Position := 0;
-    AStream.CopyFrom(SS, SS.Size);
-  finally
-    SS.Free;
-  end;
-end;
+  strutils,
+  ACBrUtil, ACBrValidador,
+  synacode, synautil;
 
 function TACBrConsultaCPF.GetCaptchaURL : String ;
 var
@@ -129,10 +94,11 @@ begin
   try
     Self.HTTPGet('https://cpf.receita.fazenda.gov.br/situacao/defaultSonoro.asp');
     Html := UTF8ToNativeString(Self.RespHTTP.Text);
-
-    AURL := StrEntreStr(Html, '<img id="imgCaptcha" alt="Código Captcha" src="data:image/png;base64,', '">');
+    //Debug
+    //WriteToTXT('C:\TEMP\ACBrConsultaCPF-Captcha.TXT',Html);
+    AURL := RetornarConteudoEntre(Html, 'src="data:image/png;base64,', '">');
     
-	Result := StringReplace(AURL, 'amp;', '', []);
+    Result := StringReplace(AURL, 'amp;', '', []);
   except
     on E: Exception do
     begin
@@ -144,18 +110,9 @@ end;
 procedure TACBrConsultaCPF.Captcha(Stream: TStream);
 begin
   try
-    {HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
-    HTTPGet(GetCaptchaURL);
-
-    if HTTPSend.ResultCode = 200 then
-    begin
-      HTTPSend.Document.Position := 0;
-      Stream.CopyFrom(HTTPSend.Document, HTTPSend.Document.Size);
-      Stream.Position := 0;}
-
-      StringToStream(DecodeBase64(GetCaptchaURL), Stream);
-      Stream.Position:= 0;
-    {end;}
+    Stream.Size := 0; // Trunca o Stream
+    WriteStrToStream(Stream, DecodeBase64(GetCaptchaURL));
+    Stream.Position:= 0;
   Except
     on E: Exception do begin
       raise EACBrConsultaCPFException.Create('Erro na hora de fazer o download da imagem do captcha.'+#13#10+E.Message);
@@ -237,11 +194,15 @@ begin
 
     Post.Position:= 0;
 
+    Self.IsUTF8 := True; // Receita sempre responde em UTF8, método "HTTPPost", já devolve em String Nativa
     HttpSend.Clear;
     HttpSend.Document.Position:= 0;
     HttpSend.Document.CopyFrom(Post, Post.Size);
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
     HTTPPost('https://cpf.receita.fazenda.gov.br/situacao/ConsultaSituacao.asp');
+
+    //Debug
+    //RespHTTP.SaveToFile('C:\TEMP\ACBrConsultaCPF-1.TXT');
 
     Erro := VerificarErros(RespHTTP.Text);
 
@@ -250,15 +211,11 @@ begin
       Result:= True;
       Resposta := TStringList.Create;
       try
-       {$IfDef DELPHI12_UP}  // delphi 2009 em diante
-        Resposta.Text := StripHTML(UTF8ToString(RespHTTP.Text));
-       {$Else}
-        Resposta.Text := StripHTML(UTF8Decode(RespHTTP.Text));
-       {$EndIf}
+        Resposta.Text := StripHTML(RespHTTP.Text);
         RemoveEmptyLines( Resposta );
 
-        //DEBUG:
-        //Resposta.SaveToFile('C:\temp\cpf.txt');
+        //Debug
+        //Resposta.SaveToFile('C:\TEMP\ACBrConsultaCPF-2.TXT');
 
         FCPF      := LerCampo(Resposta,'N&ordm; do CPF:');
         FNome     := LerCampo(Resposta,'Nome:');
@@ -280,10 +237,10 @@ begin
       end ;
 
       if Trim(Erro) = 'Erro de data' then
-            raise EACBrConsultaCPFException.Create('Data de nascimento divergente da base da Receita Federal.');
+        raise EACBrConsultaCPFException.Create('Data de nascimento divergente da base da Receita Federal.');
 
       if Trim(FNome) = '' then
-        raise EACBrConsultaCPFException.Create('Não foi possível obter os dados.');
+        raise EACBrConsultaCPFException.Create(ACBrStr('Não foi possível obter os dados.'));
 
       if ARemoverEspacosDuplos then
       begin

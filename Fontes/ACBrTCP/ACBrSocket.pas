@@ -197,6 +197,7 @@ EACBrHTTPError = class( Exception ) ;
 TACBrHTTP = class( TACBrComponent )
   private
     fHTTPSend : THTTPSend ;
+    FIsUTF8: Boolean;
     fOnAntesAbrirHTTP : TACBrOnAntesAbrirHTTP ;
     fRespHTTP   : TStringList ;
     FTimeOut: Integer;
@@ -233,8 +234,9 @@ TACBrHTTP = class( TACBrComponent )
     property ProxyPort : string read GetProxyPort write SetProxyPort ;
     property ProxyUser : string read GetProxyUser write SetProxyUser ;
     property ProxyPass : string read GetProxyPass write SetProxyPass ;
-    property ParseText : Boolean read FParseText write FParseText default False;
-    property TimeOut   : Integer read FTimeOut write FTimeOut default 90000;
+    property ParseText : Boolean read FParseText  write FParseText default False;
+    property IsUTF8    : Boolean read FIsUTF8     write FIsUTF8    default False;
+    property TimeOut   : Integer read FTimeOut    write FTimeOut   default 90000;
 
     property OnAntesAbrirHTTP : TACBrOnAntesAbrirHTTP
        read fOnAntesAbrirHTTP write fOnAntesAbrirHTTP ;
@@ -807,6 +809,7 @@ begin
   fOnAntesAbrirHTTP := nil ;
   fURL := '';
   FParseText := False;
+  FIsUTF8 := False;
   FTimeOut := 90000;
 end ;
 
@@ -858,8 +861,8 @@ var
   {$IFNDEF NOGUI}
    OldCursor : TCursor ;
   {$ENDIF}
-   CT, Location : String ;
-   IsUTF8: Boolean;
+   CT, Location , HtmlHead: String ;
+   RespIsUTF8, AddUTF8InHeader: Boolean;
    ContaRedirecionamentos: Integer;
 begin
   {$IFNDEF NOGUI}
@@ -871,9 +874,13 @@ begin
     RespHTTP.Clear;
     fURL := AURL;
 
+    AddUTF8InHeader := FIsUTF8;
     {$IFDEF UNICODE}
-     HTTPSend.Headers.Add('Accept-Charset: utf-8;q=*;q=0.7') ;
+     AddUTF8InHeader := True;
     {$ENDIF}
+
+    if AddUTF8InHeader then
+      HTTPSend.Headers.Add('Accept-Charset: utf-8;q=*;q=0.7') ;
 
     if Assigned( OnAntesAbrirHTTP ) then
        OnAntesAbrirHTTP( AURL ) ;
@@ -934,20 +941,33 @@ begin
     //RespHTTP.SaveToFile('c:\temp\HttpResp.txt');
     //HTTPSend.Headers.SaveToFile('c:\temp\HeaderResp.txt');
 
-    // Verifica se a Resposta está em ANSI //
-    CT     := LowerCase( GetHeaderValue('Content-Type:') );
-    IsUTF8 := (pos('utf-8', CT) > 0);
-
-    if not IsUTF8 then
+    RespIsUTF8 := FIsUTF8;
+    if not RespIsUTF8 then
     begin
-      if (pos('xhtml+xml', CT) > 0) then
-        IsUTF8 := XmlEhUTF8(RespHTTP.Text);
+      // Verifica se a Resposta está em ANSI //
+      CT     := LowerCase( GetHeaderValue('Content-Type:') );
+      RespIsUTF8 := (pos('utf-8', CT) > 0);
+
+      if not RespIsUTF8 then
+      begin
+        if (pos('xhtml+xml', CT) > 0) then
+          RespIsUTF8 := XmlEhUTF8(RespHTTP.Text);
+      end;
+
+      if not RespIsUTF8 then
+      begin
+        if (pos('html', CT) > 0) then
+        begin
+          HtmlHead := RetornarConteudoEntre(LowerCase(RespHTTP.Text),'<head>','</head>');
+          RespIsUTF8 := (pos('<meta charset="utf-8">', HtmlHead) > 0);
+        end;
+      end;
     end;
 
     if ParseText then
-       RespHTTP.Text := ACBrUtil.ParseText( RespHTTP.Text, True, IsUTF8 )
+       RespHTTP.Text := ACBrUtil.ParseText( RespHTTP.Text, True, RespIsUTF8 )
     else
-       RespHTTP.Text := ACBrUtil.DecodeToString( RespHTTP.Text, IsUTF8 );
+       RespHTTP.Text := ACBrUtil.DecodeToString( RespHTTP.Text, RespIsUTF8 );
 
     if not OK then
        raise EACBrHTTPError.Create( 'Erro HTTP: '+IntToStr(HTTPSend.ResultCode)+' '+

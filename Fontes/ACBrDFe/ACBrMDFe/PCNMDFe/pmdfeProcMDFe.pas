@@ -42,7 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor;
+  pcnConversao, pcnGerador, pcnLeitor;
 
 type
 
@@ -87,6 +87,9 @@ type
   end;
 
 implementation
+
+uses
+  pcnAuxiliar, ACBrUtil;
 
 { TProcMDFe }
 

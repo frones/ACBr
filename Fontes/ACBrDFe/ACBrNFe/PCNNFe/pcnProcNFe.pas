@@ -102,7 +102,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnLeitor;
+  pcnAuxiliar, pcnLeitor, ACBrUtil;
 
 { TProcNFe }
 

@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcteConversaoCTe;
+  pcnConversao, pcnGerador, pcnLeitor, pcteConversaoCTe;
 
 type
 
@@ -101,6 +101,9 @@ type
   end;
 
 implementation
+
+uses
+  pcnAuxiliar, ACBrUtil;
 
 { TProcCTe }
 

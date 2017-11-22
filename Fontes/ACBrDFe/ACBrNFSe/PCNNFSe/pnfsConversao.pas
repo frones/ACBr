@@ -70,7 +70,8 @@ type
                             no107, no108, no110, no111, no121, no201, no301, no501, no511,
                             no512, no515, no521, no522, no539, no541, no549, no551, no601,
                             no611, no612, no613, no615, no621, no622, no701, no711,no712,
-                            no911, no912  );
+                            no901, no902, no911, no912, no921, no931, no951, no952, no971,
+                            no981, no991  );
 
   TnfseExigibilidadeISS = ( exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
                             exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo, exiISSFixo );
@@ -160,7 +161,7 @@ function StrToStatusNFSe(out ok: boolean; const s: String): TnfseStatusNFSe;
 
 function NaturezaOperacaoToStr(const t: TnfseNaturezaOperacao): String;
 function StrToNaturezaOperacao(out ok: boolean; const s: String): TnfseNaturezaOperacao;
-function NaturezaOperacaoDescricao( const t: TnfseNaturezaOperacao ): String;
+function NaturezaOperacaoDescricao( const t: TnfseNaturezaOperacao; AProvedor: TnfseProvedor = proNenhum): String;
 
 function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): String;
 function StrToExigibilidadeISS(out ok: boolean; const s: String): TnfseExigibilidadeISS;
@@ -308,7 +309,8 @@ begin
                             '110', '111', '121', '201', '301', '501', '511', '512',
                             '515', '521', '522', '539', '541', '549', '551', '601',
                             '611', '612', '613', '615', '621', '622', '701', '711',
-                            '712', '911', '912'
+                            '712', '901', '902', '911', '912', '921', '931', '951',
+                            '952', '971', '981', '991'
                            ],
                            [no1, no2, no3, no4, no5, no6, no7, no9, no11, no12, no14,
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
@@ -317,7 +319,9 @@ begin
                             no110, no111, no121, no201, no301, no501, no511, no512,
                             no515, no521, no522, no539, no541, no549, no551, no601,
                             no611, no612, no613, no615, no621, no622, no701, no711,
-                            no712, no911, no912]);
+                            no712, no901, no902, no911, no912, no921, no931,
+                            no951, no952, no971, no981, no991]);
+
 end;
 
 function StrToNaturezaOperacao(out ok: boolean; const s: String): TnfseNaturezaOperacao;
@@ -330,15 +334,18 @@ begin
                             '110', '111', '121', '201', '301', '501', '511', '512',
                             '515', '521', '522', '539', '541', '549', '551', '601',
                             '611', '612', '613', '615', '621', '622', '701', '711',
-                            '712', '911', '912'],
-                          [no1, no2, no3, no4, no5, no6, no7, no9, no11, no12, no14,
+                            '712', '901', '902', '911', '912', '921', '931', '951',
+                            '952', '971', '981', '991'
+                           ],
+                           [no1, no2, no3, no4, no5, no6, no7, no9, no11, no12, no14,
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
                             no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
                             no70, no71, no72, no78, no79, no101, no102, no105, no107,
                             no110, no111, no121, no201, no301, no501, no511, no512,
                             no515, no521, no522, no539, no541, no549, no551, no601,
                             no611, no612, no613, no615, no621, no622, no701, no711,
-                            no712, no911, no912]);
+                            no712, no901, no902, no911, no912, no921, no931,
+                            no951, no952, no971, no981, no991]);
 end;
 
 // Exigibilidade ISS ***********************************************************
@@ -18229,44 +18236,69 @@ begin
   end;
 end;
 
-function NaturezaOperacaoDescricao( const t: TnfseNaturezaOperacao ): String;
+function NaturezaOperacaoDescricao( const t: TnfseNaturezaOperacao; AProvedor: TnfseProvedor = proNenhum ): String;
 begin
   case t of
-    no1  : Result := '1 - Tributação no município';
-    no2  : Result := '2 - Tributação fora do município';
-    no3  : Result := '3 - Isenção';
-    no4  : Result := '4 - Imune';
-    no5  : Result := '5 - Exigibilidade susp. por decisão judicial';
-    no6  : Result := '6 - Exigibilidade susp. por proced. adm.';
-    no59 : Result := '7 - Simples Nacional (Dentro Estado)';
-    no69 : Result := '8 - Simples Nacional (Fora Estado)';
-    no52 : Result := '9 - Tributacao No Municipio Sem Retenção de ISS';
+    no1 : Result := '1 - Tributação no município';
+    no2 : Result := '2 - Tributação fora do município';
+    no3 : Result := '3 - Isenção';
+    no4 : Result := '4 - Imune';
+    no5 : Result := '5 - Exigibilidade susp. por decisão judicial';
+    no6 : Result := '6 - Exigibilidade susp. por proced. adm.';
+
     no51 : Result := '5.1 - Tributacao No Municipio com retenção de ISS';
+    no52 : Result := '9 - Tributacao No Municipio Sem Retenção de ISS';
     no58 : Result := '5.8 - Não tributável';
+    no59 : Result := '7 - Simples Nacional (Dentro Estado)';
     no61 : Result := '6.1 - Tributacao No Municipio Com Retenção de ISS';
     no62 : Result := '6.2 - Tributacao No Municipio Sem Retenção de ISS';
     no63 : Result := '6.3 - Tributação fora do municipio com retenção de ISS';
     no64 : Result := '6.4 - Tributacao fora do municipio sem retenção de ISS';
     no68 : Result := '6.8 - Não tributável';
+    no69 : Result := '8 - Simples Nacional (Fora Estado)';
     no78 : Result := '7.8 - Não tributável';
     no79 : Result := '7.9 - Imposto recolhido pelo regime único de arrecadação';
-    no511 : Result := '511 - Prestação de serviço no município - iss mensal sem retenção na fonte';
+
+    no101 : Result := '101 - ISS devido para Abelardo Luz';
+    no111 : Result := '111 - ISS devido para outro município';
+    no121 : Result := '121 - ISS Fixo (Sociedade de Profissionais)';
+    no201 : Result := '201 - ISS retido pelo tomador ou intermediário do serviço';
+    no301 : Result := '301 - Operação imune, isenta ou não tributada';
+    no501 : Result := '501 - ISS devido para Abelardo Luz (Simples Nacional)';
+
+    no511 : if AProvedor = proPublica then
+              Result := '511 - ISS devido para outro município (Simples Nacional)'
+            else
+              Result := '511 - Prestação de serviço no município - iss mensal sem retenção na fonte';
+
     no512 : Result := '512 - Prestação de serviço no município - iss mensal com retenção na fonte';
     no515 : Result := '515 - Prestação de serviço iss distribuido por rateio com retenção na fonte';
     no521 : Result := '521 - Construção civil - no município - iss mensal sem retenção na fonte';
     no522 : Result := '522 - Construção civil - no município - iss mensal com retenção na fonte';
     no539 : Result := '539 - Prestacao de serviço - recolhimento antecipado';
+    no541 : Result := '541 - MEI (Simples Nacional)';
     no549 : Result := '549 - Prestacao de serviço - isento ou imune - nao tributavel';
+    no601 : Result := '601 - ISS retido pelo tomador ou intermediário do serviço (Simples Nacional)';
     no611 : Result := '611 - Prestação de serviço em outro município - iss mensal sem retenção na fonte';
     no612 : Result := '612 - Prestação de serviço em outro município - iss mensal com retenção na fonte';
     no613 : Result := '613 - Prestação de serviço em outro município - iss mensal devido no local da prestaçâo';
     no615 : Result := '615 - Prestação de serviço em outro município - devido em outro município - semretenção na fonte';
     no621 : Result := '621 - Construção civil - outro município - iss mensal sem retenção na fonte';
     no622 : Result := '622 - Construção civil - em outro município - iss mensal com retenção na fonte';
+    no701 : Result := '701 - Operação imune, isenta ou não tributada (Simples Nacional)';
     no711 : Result := '711 - Prestação de serviço para o exterior - iss mensal sem retenção na fonte';
     no712 : Result := '712 - Prestação de serviço para o exterior - iss mensal com retenção na fonte';
+    no901 : Result := '901 - ISS retido ou sujeito à substituição tributária devido para Abelardo Luz';
+    no902 : Result := '902 - ISS retido ou sujeito à substituição tributária devido para outro município';
     no911 : Result := '911 - Prestação de serviço não enquadrada nas situações anteriores - sem retenção';
     no912 : Result := '912 - Prestação de serviço não enquadrada nas situações anteriores - com retenção';
+    no921 : Result := '921 - ISS a ser recolhido pelo prestador do serviço';
+    no931 : Result := '931 - Serviço imune, isento ou não tributado';
+    no951 : Result := '951 - ISS retido ou sujeito à substituição tributária devido para Abelardo Luz (prestador optante pelo Simples Nacional)';
+    no952 : Result := '952 - ISS retido ou sujeito à substituição tributária, devido para outro município (prestador optante pelo Simples';
+    no971 : Result := '971 - ISS a ser recolhido pelo prestador do serviço (prestador optante pelo Simples Nacional)';
+    no981 : Result := '981 - Serviço imune, isento ou não tributado (prestador optante pelo Simples Nacional)';
+    no991 : Result := '991 - Nota Fiscal de Serviços Avulsa (ISS pago antecipadamente pelo prestador)';
   end;
 end;
 

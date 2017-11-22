@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2017
+-- pnfsConversao --
+[*] Acrescentados novos tipos em Natureza da Operação.
+   Por: Jefferson Damian
 
 21/11/2017
 -- pnfsNFSeW_ABRASFv2--

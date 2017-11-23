@@ -458,6 +458,7 @@ object frmPrincipal: TfrmPrincipal
           'Estoque'
         )
         TabOrder = 11
+        Visible = False
       end
     end
     object TabSheet2: TTabSheet
@@ -557,6 +558,7 @@ object frmPrincipal: TfrmPrincipal
     top = 40
   end
   object ACBrBlocoX1: TACBrBlocoX
+    Configuracoes.VersaoER = erv0204
     Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.SSLCryptLib = cryCapicom
     Configuracoes.Geral.SSLHttpLib = httpWinINet

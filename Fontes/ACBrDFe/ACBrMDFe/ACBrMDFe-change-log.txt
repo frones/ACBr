@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2017
+-- pmdfeConversaoMDFe --
+[*] Corrigido o nome do enumerador usado na consulta ao status de serviço.
+   Por: Edilson
+
 21/11/2017
 -- pmdfeEventoMDFe --
 [*] Retornado a function ObterNomeArquivo.

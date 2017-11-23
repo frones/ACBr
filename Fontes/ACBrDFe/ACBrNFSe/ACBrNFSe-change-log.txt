@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2017
+-- pnfsNFSeW_ABRASFv1 --
+[*] Acrescentado o provedor Pronim na condição que trata se o tomador é 
+    estrangeiro ou não.
+   Por: Neto
+
 22/11/2017
 -- pnfsConversao --
 [*] Acrescentados novos tipos em Natureza da Operação.

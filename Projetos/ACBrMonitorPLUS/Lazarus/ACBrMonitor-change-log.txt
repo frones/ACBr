@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2017
+[*] Ajustes ACBrBlocoX Métodos de Assinar / Validar e Enviar
+        Adicionado Métodos (AssinarBlocoX / ValidarBlocoX / EnviarBlocoX )
+	por: José M. S. Junior
+
 10/11/2017
 [+] Adicionado Parametros para emissão Extrato Fortes SAT - Código GTIN /
         Acréscimo Desconto /Itens apenas em uma linha

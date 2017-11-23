@@ -47,6 +47,7 @@ Function PegaTotaisFormasPagamento : String ;
 Function PegaComprovantesNaoFiscais : String ;
 Function PegaTotaisComprovantesNaoFiscais : String ;
 Function PegaUnidadesMedida : String ;
+
 Procedure StringToMemo( AString : AnsiString; Memo : TStringList );
 
 implementation
@@ -1052,7 +1053,7 @@ begin
                       StringToDateTime(Cmd.Params(1)),         { Dt.Final }
                       Cmd.Params(2) )                          { Diretorio Arquivo }
           end
-					
+
         else if Cmd.Metodo = 'assinarblocoxestoque' then
           begin
             if FileExists(Cmd.Params(0)) then
@@ -1081,7 +1082,28 @@ begin
                 FXMLOriginal.SaveToFile(Cmd.Params(0));
                 Cmd.Resposta:= 'OK: '+ Cmd.Params(0);
               finally
-                FXMLOriginal.Free;;
+                FXMLOriginal.Free;
+              end;
+            end
+            else
+               Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(Cmd.Params(0), 'ReducaoZ', 'Mensagem');
+          end
+        else if Cmd.Metodo = 'assinarblocox' then
+          begin
+            if FileExists(cmd.Params(0)) then
+            begin
+              FXMLOriginal := TStringList.Create;
+              try
+                FXMLOriginal.LoadFromFile(Cmd.Params(0));
+
+                if (Pos('</reducaoz>',LowerCase(FXMLOriginal.Text)) > 0) then
+                  FXMLOriginal.Text := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'ReducaoZ', 'Mensagem')
+                else
+                  FXMLOriginal.Text := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'Estoque', 'Mensagem');
+                FXMLOriginal.SaveToFile(Cmd.Params(0));
+                Cmd.Resposta:= 'OK: '+ Cmd.Params(0);
+              finally
+                FXMLOriginal.Free;
               end;
             end
             else
@@ -1095,18 +1117,17 @@ begin
               FXMLOriginal := TStringList.Create;
               try
                 FXMLOriginal.LoadFromFile(Cmd.Params(0));
-                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarEstoque.XML := FXMLOriginal.Text;
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := FXMLOriginal.Text;
               finally
                 FXMLOriginal.Free;;
               end;
             end
             else
-               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarEstoque.XML := Cmd.Params(0);
+               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := Cmd.Params(0);
 
-            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarEstoque.ValidarEcf := False;
-            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarEstoque.ValidarPafEcf := False;
-            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarEstoque.Executar;
-            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarEstoque.RetWS;
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.ValidarPafEcfEEcf := False;
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.Executar;
+            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.RetWS;
           end
 
         else if Cmd.Metodo = 'validarblocoxreducaoz' then
@@ -1116,18 +1137,37 @@ begin
               FXMLOriginal := TStringList.Create;
               try
                 FXMLOriginal.LoadFromFile(Cmd.Params(0));
-                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarReducaoZ.XML := FXMLOriginal.Text;
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := FXMLOriginal.Text;
               finally
-                FXMLOriginal.Free;;
+                FXMLOriginal.Free;
               end;
             end
             else
-               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarReducaoZ.XML := Cmd.Params(0);
+               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := Cmd.Params(0);
 
-            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarReducaoZ.ValidarEcf := False;
-            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarReducaoZ.ValidarPafEcf := False;
-            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarReducaoZ.Executar;
-            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarReducaoZ.RetWS;
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.ValidarPafEcfEEcf := False;
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.Executar;
+            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.RetWS;
+          end
+
+        else if Cmd.Metodo = 'validarblocox' then
+          begin
+            if FileExists(cmd.Params(0)) then
+            begin
+              FXMLOriginal := TStringList.Create;
+              try
+                FXMLOriginal.LoadFromFile(Cmd.Params(0));
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := FXMLOriginal.Text;
+              finally
+                FXMLOriginal.Free;
+              end;
+            end
+            else
+               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := Cmd.Params(0);
+
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.ValidarPafEcfEEcf := False;
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.Executar;
+            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.RetWS;
           end
 
         else if Cmd.Metodo = 'enviarblocoxestoque' then
@@ -1137,16 +1177,16 @@ begin
               FXMLOriginal := TStringList.Create;
               try
                 FXMLOriginal.LoadFromFile(Cmd.Params(0));
-                FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarEstoque.XML := FXMLOriginal.Text;
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.XML := FXMLOriginal.Text;
               finally
                 FXMLOriginal.Free;
               end;
             end
             else
-               FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarEstoque.XML := Cmd.Params(0);
+               FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.XML := Cmd.Params(0);
 
-            FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarEstoque.Executar;
-            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarEstoque.RetWS;
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.Executar;
+            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.RetWS;
           end
 
         else if Cmd.Metodo = 'enviarblocoxreducaoz' then
@@ -1156,16 +1196,35 @@ begin
               FXMLOriginal := TStringList.Create;
               try
                 FXMLOriginal.LoadFromFile(Cmd.Params(0));
-                FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarReducaoZ.XML := FXMLOriginal.Text;
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := FXMLOriginal.Text;
               finally
                 FXMLOriginal.Free;
               end;
             end
             else
-               FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarReducaoZ.XML := Cmd.Params(0);
+               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := Cmd.Params(0);
 
-            FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarReducaoZ.Executar;
-            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarReducaoZ.RetWS;
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.Executar;
+            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.RetWS;
+          end
+
+        else if Cmd.Metodo = 'enviarblocox' then
+          begin
+            if FileExists(cmd.Params(0)) then
+            begin
+              FXMLOriginal := TStringList.Create;
+              try
+                FXMLOriginal.LoadFromFile(Cmd.Params(0));
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := FXMLOriginal.Text;
+              finally
+                FXMLOriginal.Free;
+              end;
+            end
+            else
+               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := Cmd.Params(0);
+
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.Executar;
+            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.RetWS;
           end
 
         else if Cmd.Metodo = 'consultarblocox' then

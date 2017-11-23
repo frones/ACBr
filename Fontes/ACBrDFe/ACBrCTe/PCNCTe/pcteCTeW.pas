@@ -1504,7 +1504,7 @@ begin
 
     if (CTe.ide.modelo = 57) then
     begin
-      if CTe.infCTe.versao >= 2 then
+      if CTe.infCTe.versao = 2 then
         GerarPeri;
 
       GerarVeicNovos;
@@ -2191,6 +2191,8 @@ begin
     Gerador.wCampo(tcStr, '#09', 'cTar', 01, 04, 0, CTe.infCTeNorm.aereo.tarifa.cTar, DSC_CTAR);
     Gerador.wCampo(tcDe2, '#10', 'vTar', 01, 15, 1, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
     Gerador.wGrupo('/tarifa');
+
+    GerarPeri;
   end
   else
   begin

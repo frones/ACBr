@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2017
+-- pcteCTeW --
+[*] Corrigido a posíção da criação do grupo <peri> na versão 3.00
+   Por: Italo Jurisato Junior
+
 14/11/2017
 -- pcteCTeR --
 [*] Não estava alimentando o campo Toma03.Toma quando o tomador é outros.

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2017
+-- ACBrANeWebServices --
+[*] Correção na mensagem da resposta de retorno.
+    Por: Italo Jurisato Junior
+
 02/10/2017
 -- ACBrANeWebServices --
 [*] Correção na montagem da resposta do retorno.

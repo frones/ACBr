@@ -47,10 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-16/11/2017
--- pcnEnvEventoNFe --
-[*] Alteração visando resolver o problema de preenchimento da tag <verEvento>.
-   Por: Italo Jurisato Junior
+23/11/2017
+-- pcnNFeW --
+[*] https://www.projetoacbr.com.br/forum/topic/40044-envio-nota-com-informa%C3%A7%C3%A3o-de-combust%C3%ADvel-nfe-40/
+   Por: Adryelle
 
 16/11/2017
 -- pcnEnvEventoNFe --

@@ -37,6 +37,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/11/2017
+-- ACBrConsultaCNPJ --
+[-] Correção e ajustes para funcionamento em novas URLs e modelo de consulta do
+    SEFAZ
+[*] Ajustes para funcionamento com HTTTPS e TLS1
+    (por: DSA)
+
 22/11/2017
 -- ACBrSocket --
 [+] Adicionada a propriedade "TACBrHTTP.IsUTF8: Boolean default False", para

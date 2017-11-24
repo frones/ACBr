@@ -60,7 +60,7 @@ type
   private
     FACBrIBGE: TACBrIBGE;
     FNaturezaJuridica : String ;
-    FViewState: String;
+    //FViewState: String;
     FEmpresaTipo: String;
     FAbertura: TDateTime;
     FRazaoSocial: String;
@@ -83,7 +83,7 @@ type
     FMotivoSituacaoCad: string;
     FPesquisarIBGE: Boolean;
     FCodigoIBGE: String;
-    Function GetCaptchaURL: String;
+    //Function GetCaptchaURL: String;
     function GetIBGE_UF : String ;
 
     function VerificarErros(Str: String): String;
@@ -125,37 +125,21 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador, strutils;
+  strutils,
+  blcksock,
+  ACBrUtil, ACBrValidador;
 
-function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
-var
-  Ini, Fim: Integer;
-begin
-  Ini:= PosEx(StrInicial, Str, ComecarDe) + Length(StrInicial);
-  if Ini > 0 then
-  begin
-    Fim:= PosEx(StrFinal, Str, Ini);
-    if Fim > 0 then
-      Result:= Copy(Str, Ini, Fim - Ini)
-    else
-      Result:= '';
-  end
-  else
-    Result:= '';
-end;
-
-function TACBrConsultaCNPJ.GetCaptchaURL : String ;
+(*function TACBrConsultaCNPJ.GetCaptchaURL : String ;
 var
   AURL, Html: String;
 begin
   try
-    Self.HTTPGet('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/cnpjreva_solicitacao3.asp');
+    Self.HTTPGet('https://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/Cnpjreva_solicitacao3.asp');
     Html := Self.RespHTTP.Text;
 
-    AURL := 'http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/' +
-           StrEntreStr(Html, '<img id="imgCaptcha" src="', '"');
+    AURL := RetornarConteudoEntre(Html, '<img id="imgCaptcha" src="', '"');
 
-    FViewState := StrEntreStr(Html, '<input type=hidden id=viewstate name=viewstate value='+'''', '''');
+    FViewState := RetornarConteudoEntre(Html, '<input type=hidden id=viewstate name=viewstate value='+'''', '''');
 
     Result := StringReplace(AURL, 'amp;', '', []);
   except
@@ -164,12 +148,12 @@ begin
       raise EACBrConsultaCNPJException.Create('Erro na hora de obter a URL do captcha.'+#13#10+E.Message);
     end;
   end;
-end;
+end;*)
 
 procedure TACBrConsultaCNPJ.Captcha(Stream: TStream);
 begin
   try
-    HTTPGet(GetCaptchaURL);
+    HTTPGet('https://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/captcha/gerarCaptcha.asp');  // GetCaptchaURL
     if HttpSend.ResultCode = 200 then
     begin
       HTTPSend.Document.Position := 0;
@@ -191,13 +175,9 @@ begin
     if Pos( ACBrStr('Imagem com os caracteres anti robô'), Str) > 0 then
       Res := 'Catpcha errado.';
 
-    if Pos( ACBrStr( 'Erro na Consulta' ), Str ) > 0  then
-       Res := 'Erro na Consulta.';
-
   if Res = '' then
-    if Pos(ACBrStr('O número do CNPJ não é válido. Verifique se o mesmo foi digitado corretamente.'), Str) > 0 then
-      Res := 'O número do CNPJ não é válido. Verifique se o mesmo foi digitado'+
-             ' corretamente.';
+    if Pos( 'Erro na Consulta', Str ) > 0  then
+       Res := 'Erro na Consulta. Atualize o Captcha';
 
   if Res = '' then
     if Pos(ACBrStr('Não existe no Cadastro de Pessoas Jurídicas o número de CNPJ informado. '+
@@ -240,7 +220,8 @@ var
   Resposta : TStringList;
   StrAux: String;
   sMun:String;
-  CountCid:Integer;
+  CountCid, Tentativas:Integer;
+  Retentar: Boolean;
 begin
   Result := False;
   Erro := ValidarCNPJ( ACNPJ ) ;
@@ -253,17 +234,29 @@ begin
     Post.WriteString('origem=comprovante&');
     Post.WriteString('cnpj='+OnlyNumber(ACNPJ)+'&');
     Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
-
-    Post.WriteString('opcao=Limpar&');
     Post.WriteString('submit1=Consultar&');
     Post.WriteString('search_type=cnpj');
-    Post.Position:= 0;
 
-    HttpSend.Clear;
-    HttpSend.Document.Position:= 0;
-    HttpSend.Document.CopyFrom(Post, Post.Size);
-    HTTPSend.MimeType := 'application/x-www-form-urlencoded';
-    HTTPPost('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/valida.asp');
+    Retentar := True;
+    Tentativas := 0;
+    while Retentar do
+    begin
+      HttpSend.Clear;
+      Post.Position:= 0;
+      HttpSend.Document.Position:= 0;
+      HttpSend.Document.CopyFrom(Post, Post.Size);
+      HTTPSend.MimeType := 'application/x-www-form-urlencoded';
+      HTTPSend.Cookies.Add('flag=1');
+      HTTPPost('https://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/valida.asp');
+
+      //DEBUG:
+      //RespHTTP.SaveToFile('c:\temp\cnpj1.txt');
+
+      Retentar := (Tentativas < 2) and
+                  (pos('Captcha Sonoro', RespHTTP.Text) > 0) and
+                  (pos(ACBrStr('Digite o número de CNPJ da empresa e clique em'), RespHTTP.Text) > 0);
+      Inc( Tentativas );
+    end;
 
     Erro := VerificarErros(RespHTTP.Text);
 
@@ -276,7 +269,7 @@ begin
         RemoveEmptyLines( Resposta );
 
         //DEBUG:
-        //Resposta.SaveToFile('d:\cnpj.txt');
+        //Resposta.SaveToFile('c:\temp\cnpj2.txt');
 
         FCNPJ         := LerCampo(Resposta,'NÚMERO DE INSCRIÇÃO');
         if FCNPJ <> '' then
@@ -342,7 +335,7 @@ begin
       end ;
 
       if Trim(FRazaoSocial) = '' then
-        raise EACBrConsultaCNPJException.Create('Não foi possível obter os dados.');
+        raise EACBrConsultaCNPJException.Create(ACBrStr('Não foi possível obter os dados.'));
 
       if ARemoverEspacosDuplos then
       begin
@@ -368,6 +361,8 @@ begin
   FCNAE2 := TStringList.Create;
   FPesquisarIBGE := False;
   fACBrIBGE := TACBrIBGE.Create(nil);
+
+  HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
 end;
 
 destructor TACBrConsultaCNPJ.Destroy;

@@ -874,10 +874,11 @@ begin
     RespHTTP.Clear;
     fURL := AURL;
 
-    AddUTF8InHeader := FIsUTF8;
-    {$IFDEF UNICODE}
+    {$IfDef UNICODE}
      AddUTF8InHeader := True;
-    {$ENDIF}
+    {$Else}
+     AddUTF8InHeader := FIsUTF8;
+    {$EndIf}
 
     if AddUTF8InHeader then
       HTTPSend.Headers.Add('Accept-Charset: utf-8;q=*;q=0.7') ;

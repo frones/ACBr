@@ -497,6 +497,7 @@ type
      fpIdPagamento : LongInt;
      fpIdRespostaFiscal : LongInt;
      fpSerialPOS: String;
+     fpCodigoBandeiraPadrao: String;
 
      procedure SetCNFEnviado(const AValue : Boolean);
      procedure SetIndiceFPG_ECF(const AValue : String);
@@ -561,6 +562,7 @@ type
      property DataHoraTransacaoComprovante: TDateTime read fpDataHoraTransacaoComprovante ;
      property Trailer                     : String    read fpTrailer ;
      property BIN                         : String    read fpBin ;
+     property CodigoBandeiraPadrao        : String    read fpCodigoBandeiraPadrao ;
 
      property CorrespBancarios: TACBrTEFDRespListaCB read fpCorrespBancarios;
 
@@ -1352,6 +1354,7 @@ begin
    fpTipoParcelamento             := 0 ;
    fpValorEntradaCDC              := 0;
    fpDataEntradaCDC               := 0;
+   fpCodigoBandeiraPadrao         := '';
 
    fpCodigoOperadoraCelular := '';
    fpNomeOperadoraCelular   := '';
@@ -1525,6 +1528,7 @@ begin
        39  : fpChequeDC              := Linha.Informacao.AsString;
        40  : fpNomeAdministradora    := Linha.Informacao.AsString;
        131 : fpInstituicao           := Linha.Informacao.AsString;
+       132 : fpCodigoBandeiraPadrao  := Linha.Informacao.AsString;
        136 : fpBin                   := Linha.Informacao.AsString;
        707 : fpValorOriginal         := Linha.Informacao.AsFloat;
        708 : fpSaque                 := Linha.Informacao.AsFloat;

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/11/2017
+-- ACBrECFEscECF --
+[-] Ajuste para evitar arredondamentos nas chamadas de TACBrECFEscECFComando.AddParamDouble
+    https://www.projetoacbr.com.br/forum/topic/39917-cnf-finalizando-com-1-centavo-a-mais/
+    (por: DSA)
+
 Data: 13/11/2017
 -- ACBrECF --
 [+] Abertura de bilhete de passagem

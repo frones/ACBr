@@ -2962,13 +2962,11 @@ Var
   PortaSerial, ModeloECF, NumFab : AnsiString;
   CooIni, CooFim, ArqTmp : AnsiString ;
   OldAtivo : Boolean ;
-  cFinalidade:AnsiString;
 begin
   NumFab      := NumSerie;
   ModeloECF   := SubModeloECF;
   CooIni      := '000001';
   CooFim      := '999999';
-  cFinalidade := 'MF';
   PortaSerial := fpDevice.Porta ;
 
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBrMF.MF' ;

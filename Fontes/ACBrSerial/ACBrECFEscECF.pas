@@ -1148,7 +1148,7 @@ end;
 
 procedure TACBrECFEscECFComando.AddParamDouble(ADouble: Double; Decimais: Byte);
 begin
-  AddParamInteger( Round( ADouble * power(10, Decimais) ) ) ;
+  AddParamInteger( TruncFix( ADouble * power(10, Decimais) ) ) ;
 end;
 
 procedure TACBrECFEscECFComando.AddParamInteger(AInteger: Integer);
@@ -1270,8 +1270,8 @@ constructor TACBrECFEscECF.create( AOwner : TComponent ) ;
 begin
   inherited create( AOwner ) ;
 
-  fsEscECFComando  := TACBrECFEscECFComando.create ;
-  fsEscECFResposta := TACBrECFEscECFResposta.create ;
+  fsEscECFComando  := TACBrECFEscECFComando.Create;
+  fsEscECFResposta := TACBrECFEscECFResposta.Create;
   fsEscECFProtocolo := TACBrECFEscECFProtocolo.Create(Self);
 
   fpDevice.HandShake := hsDTR_DSR ;

@@ -185,7 +185,8 @@ begin
     Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
     Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
 
-    if not(FProvedor in [proNFSeBrasil, proPronimv2]) or (FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')then
+    if not (FProvedor in [proNFSeBrasil, proPronimv2]) or
+       ((FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
       Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 
     Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP);
@@ -665,6 +666,7 @@ begin
     proSystemPro:
       begin
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+        Gerador.wGrupoNFSe('Rps');
       end;
 
     proTecnos:
@@ -698,30 +700,26 @@ begin
 
   GerarIdentificacaoRPS;
 
-  if not (FProvedor in [proSystemPro]) then
-  begin
-    case FProvedor of
-      proABase, proActcon, proActconv2, proAgili, proBethav2, proCoplan, proEReceita,
-      proFiorilli, proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
-      proNEAInformatica, proNotaInteligente, proProdata, proPronimv2, proPVH,
-      proSaatri, proSisPMJP, proSiam, proVirtual, proVersaTecnologia, proVitoria,
-      proWebISSv2, proActconv202, proSIAPNet, proBelford,
-      proSH3: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+  case FProvedor of
+    proABase, proActcon, proActconv2, proAgili, proBethav2, proCoplan, proEReceita,
+    proFiorilli, proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
+    proNEAInformatica, proNotaInteligente, proProdata, proPronimv2, proPVH,
+    proSaatri, proSisPMJP, proSiam, proVirtual, proVersaTecnologia, proVitoria,
+    proWebISSv2, proActconv202, proSIAPNet, proBelford, proSystemPro,
+    proSH3: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
-    else
-      Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-    end;
-
-    if FProvedor = ProSigep then
-      Gerador.wCampoNFSe(tcStr, '#9', 'Status', 01, 01, 1, 'CO', DSC_INDSTATUS)
-    else
-      Gerador.wCampoNFSe(tcStr, '#9', 'Status', 01, 01, 1, StatusRPSToStr(NFSe.Status), DSC_INDSTATUS);
+  else
+    Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
   end;
+
+  if FProvedor = ProSigep then
+    Gerador.wCampoNFSe(tcStr, '#9', 'Status', 01, 01, 1, 'CO', DSC_INDSTATUS)
+  else
+    Gerador.wCampoNFSe(tcStr, '#9', 'Status', 01, 01, 1, StatusRPSToStr(NFSe.Status), DSC_INDSTATUS);
 
   GerarRPSSubstituido;
 
-  if FProvedor <> proSystemPro then
-    Gerador.wGrupoNFSe('/Rps');
+  Gerador.wGrupoNFSe('/Rps');
 
   if FProvedor in [profintelISS, proSystemPro] then
   begin

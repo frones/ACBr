@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2017
+-- pnfsNFSeW_ABRASFv2 / pnfsNFSeG --
+[*] Ajustes visando o provedor SystemPro
+   Por: Michel Ouriques
+
 23/11/2017
 -- pnfsNFSeW_ABRASFv1 --
 [*] Acrescentado o provedor Pronim na condição que trata se o tomador é 

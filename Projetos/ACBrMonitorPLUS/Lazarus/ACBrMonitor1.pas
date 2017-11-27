@@ -271,6 +271,7 @@ type
     cbCryptLib: TComboBox;
     cbHttpLib: TComboBox;
     cbVersaoWSMDFe: TComboBox;
+    cbxImprimirNomeFantasiaNFCe: TCheckBox;
     cbxImprimirDescAcresItemSAT: TCheckBox;
     cbxImprimirCodEANitemSAT: TCheckBox;
     cbxImprimirItem1LinhaSAT: TCheckBox;
@@ -4152,6 +4153,9 @@ begin
       Ini.ReadBool('NFCe', 'QRCodeLateral', True);
     cbxImprimirCodigoEANNFCe.Checked :=
       Ini.ReadBool('NFCe', 'UsaCodigoEanImpressao', False);
+    cbxImprimirNomeFantasiaNFCe.Checked :=
+      Ini.ReadBool('NFCe', 'ImprimeNomeFantasia', False);
+
 
     ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo       := edtLogoMarca.Text;
@@ -4958,6 +4962,7 @@ begin
     Ini.WriteString('NFCe', 'ImpressoraPadrao', cbxImpressoraNFCe.Text);
     Ini.WriteBool('NFCe', 'QRCodeLateral', cbxImprimirQRCodeLateralNFCe.Checked);
     Ini.WriteBool('NFCe', 'UsaCodigoEanImpressao', cbxImprimirCodigoEANNFCe.Checked);
+    Ini.WriteBool('NFCe', 'ImprimeNomeFantasia', cbxImprimirNomeFantasiaNFCe.Checked);
 
     Ini.WriteBool('Arquivos', 'Salvar', cbxSalvarArqs.Checked);
     Ini.WriteBool('Arquivos', 'PastaMensal', cbxPastaMensal.Checked);
@@ -7648,6 +7653,7 @@ begin
       ACBrNFeDANFCeFortes1.ImprimeEmUmaLinha     := cbxImprimirItem1LinhaNFCe.Checked;
       ACBrNFEDANFCeFortes1.QRCodeLateral         := cbxImprimirQRCodeLateralNFCe.Checked;
       ACBrNFeDANFCeFortes1.UsaCodigoEanImpressao := cbxImprimirCodigoEANNFCe.Checked;
+      ACBrNFeDANFCeFortes1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
 
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
         ACBrNFeDANFCeFortes1.Logo                := edtLogoMarcaNFCeSAT.Text
@@ -7661,6 +7667,7 @@ begin
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
       ACBrNFeDANFeESCPOS1.QRCodeLateral         := cbxImprimirQRCodeLateralNFCe.Checked;
+      ACBrNFeDANFeESCPOS1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
 
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
         ACBrNFeDANFeESCPOS1.Logo                := edtLogoMarcaNFCeSAT.Text

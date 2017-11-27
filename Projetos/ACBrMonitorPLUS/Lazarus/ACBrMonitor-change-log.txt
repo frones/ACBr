@@ -43,6 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2017
+[+] Adicionado Parametros para emissão Nome Fantasia na DANFe NFCe
+	por: José M. S. Junior
+
+27/11/2017
+[-] Ajustes de Retorno no comando de geração PDF no caso de Diretório inválido.
+        Estava trazendo a excessão em tela e não atualizava o log
+	por: José M. S. Junior
+
 23/11/2017
 [*] Ajustes ACBrBlocoX Métodos de Assinar / Validar e Enviar
         Adicionado Métodos (AssinarBlocoX / ValidarBlocoX / EnviarBlocoX )

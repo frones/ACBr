@@ -455,6 +455,10 @@ begin
              try
                CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
              except
+                on E: Exception do
+                begin
+                   raise Exception.Create('Erro ao Carregar DFe: '+E.Message);
+                end;
              end;
            finally
              PathsNFe.Free;
@@ -470,6 +474,10 @@ begin
                try
                  CarregarDFe(PathsNFe, ArqNFe);
                except
+                  on E: Exception do
+                  begin
+                    raise Exception.Create('Erro ao Carregar DFe: '+E.Message);
+                  end;
                end;
              finally
                PathsNFe.Free;

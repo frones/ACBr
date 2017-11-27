@@ -385,10 +385,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 864
-        ActivePage = tsDFe
+        ActivePage = tsMonitor
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -8149,6 +8149,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Caption = 'Imprime Código GTIN'
                       TabOrder = 3
                     end
+                    object cbxImprimirNomeFantasiaNFCe: TCheckBox
+                      Left = 8
+                      Height = 21
+                      Top = 102
+                      Width = 160
+                      Caption = 'Imprimir Nome Fantasia'
+                      TabOrder = 4
+                    end
                   end
                   object cbxImpressoraNFCe: TComboBox
                     Left = 8
@@ -12918,6 +12926,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

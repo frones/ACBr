@@ -79,6 +79,7 @@ type
     fFtpPort: string;
     fFtpUser: string;
     fFtpPass: string;
+    fFtpTimeout: Integer;
   public
     constructor Create;
 
@@ -87,6 +88,7 @@ type
     property FtpPort: string read fFtpPort write fFtpPort;
     property FtpUser: string read fFtpUser write fFtpUser;
     property FtpPass: string read fFtpPass write fFtpPass;
+    property FtpTimeout: Integer read fFtpTimeout write fFtpTimeout;
   end;
 
   TACBrProxy = class(TPersistent)
@@ -95,6 +97,7 @@ type
     fProxyPort: string;
     fProxyUser: string;
     fProxyPass: string;
+    fProxyTimeout: Integer;
   public
     constructor Create;
 
@@ -103,6 +106,7 @@ type
     property ProxyPort: string read fProxyPort write fProxyPort;
     property ProxyUser: string read fProxyUser write fProxyUser;
     property ProxyPass: string read fProxyPass write fProxyPass;
+    property ProxyTimeout: Integer read fProxyTimeout write fProxyTimeout;
   end;
 
   TACBrDownloadClass = class(TPersistent)
@@ -421,6 +425,8 @@ begin
    fProxyPort := '';
    fProxyUser := '';
    fProxyPass := '';
+   // Mantém como padrão a configuração feita no Create de THTTPSend
+   fProxyTimeout := 90000;
 end;
 
 { TACBrFTP }
@@ -431,6 +437,8 @@ begin
    fFtpPort := '';
    fFtpUser := '';
    fFtpPass := '';
+   // Mantém como padrão a configuração feita no Create de TFTPSend
+   fFtpTimeout := 300000;
 end;
 
 end.

@@ -141,6 +141,7 @@ begin
        fFTPSend.TargetPort := fFTP.FtpPort;
        fFTPSend.Username   := fFTP.FtpUser;
        fFTPSend.Password   := fFTP.FtpPass;
+       fFTPSend.Timeout    := fFTP.FtpTimeout;
 
        // Definição do Proxy
 //       fFTPSend.DSock.SocksIP       := fProxy.ProxyHost;

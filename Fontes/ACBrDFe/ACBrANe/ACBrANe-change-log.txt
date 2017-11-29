@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2017
+-- ACBrANeWebServices --
+[*] Incluido a checagem se o retorno se refere a averbação de NF-e / CT-e ou
+    declaração de MDF-e.
+    Por: Filipe Natividade
+
 23/11/2017
 -- ACBrANeWebServices --
 [*] Correção na mensagem da resposta de retorno.

@@ -372,6 +372,8 @@ begin
   FANeRetorno.TpDoc := 0;
   FANeRetorno.Averbado.dhAverbacao := 0;
   FANeRetorno.Averbado.Protocolo := '';
+  FANeRetorno.Declarado.dhChancela := 0;
+  FANeRetorno.Declarado.Protocolo := '';
 
 end;
 
@@ -402,8 +404,16 @@ begin
   ANeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   ANeRetorno.LerXml;
 
-  FdhAverbacao := ANeRetorno.Averbado.dhAverbacao;
-  FProtocolo   := ANeRetorno.Averbado.Protocolo;
+  if( FPConfiguracoesANe.Geral.TipoDoc = tdMDFe )then
+  begin
+    FdhAverbacao := ANeRetorno.Declarado.dhChancela;
+    FProtocolo   := ANeRetorno.Declarado.Protocolo;
+  end
+  else
+  begin
+    FdhAverbacao := ANeRetorno.Averbado.dhAverbacao;
+    FProtocolo   := ANeRetorno.Averbado.Protocolo;
+  end;
 
   if ANeRetorno.Averbado.DadosSeguro.Count > 0 then
     FNumeroAverbacao := ANeRetorno.Averbado.DadosSeguro.Items[0].NumeroAverbacao;

@@ -138,6 +138,7 @@ type
     btnConsultarNaoEncerrados: TButton;
     ACBrMDFeDAMDFEFR1: TACBrMDFeDAMDFEFR;
     btnModeloFR: TButton;
+    btEncerramentoSemXml: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -167,6 +168,7 @@ type
     procedure sbPathSchemasClick(Sender: TObject);
     procedure btnConsultarNaoEncerradosClick(Sender: TObject);
     procedure btnModeloFRClick(Sender: TObject);
+    procedure btEncerramentoSemXmlClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -943,6 +945,49 @@ begin
    memoRespWS.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.EnvEvento.RetWS);
    LoadXML(MemoResp, WBResposta);
   end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btEncerramentoSemXmlClick(Sender: TObject);
+var
+  vChave, vProtocolo, vUF, vCodMun : String;
+begin
+ if not(InputQuery('WebServices Enviar', 'Chave do Manifesto', vChave))
+  then exit;
+
+ if not(InputQuery('WebServices Enviar', 'Número do Protocolo', vProtocolo))
+  then exit;
+
+ if not(InputQuery('WebServices Enviar', 'Estado de Encerramento', vUF))
+  then exit;
+
+ if not(InputQuery('WebServices Enviar', 'Cód. Município IBGE de Encerramento', vCodMun))
+  then exit;
+
+ ACBrMDFe1.Manifestos.Clear;
+ ACBrMDFe1.EventoMDFe.Evento.Clear;
+
+ with ACBrMDFe1.EventoMDFe.Evento.Add do
+  begin
+   infEvento.chMDFe   := vChave;
+   infEvento.CNPJ     := edtEmitCNPJ.Text;
+   infEvento.dhEvento := now;
+//  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
+//                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
+//                  teEncerramento);
+   infEvento.tpEvento   := teEncerramento;
+   infEvento.nSeqEvento := 1;
+
+   infEvento.detEvento.nProt := vProtocolo;
+   infEvento.detEvento.dtEnc := Date;
+   infEvento.detEvento.cUF   := UFtoCUF( vUF );
+   infEvento.detEvento.cMun  := vCodMun.ToInteger;
+  end;
+
+ ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote
+
+ MemoResp.Lines.Text   := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+ memoRespWS.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+ LoadXML(MemoResp, WBResposta);
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnCancelamentoClick(Sender: TObject);

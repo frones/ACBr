@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/11/2017
+-- ACBrPosPrinter --
+[+] Adicionada nova classe implementando o protocolo Epson Esc/P2, usado por
+    antigas matriciais, como LX300
+    (Por DSA, e Carlos do Nascimento)
+
 Data: 29/11/2017
 -- ACBrECFEscECF --
 [*] Ajustes para evitar exception quando ECF não responde com os campos esperados

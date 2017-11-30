@@ -152,7 +152,7 @@ type
   TACBrPosPrinter = class;
 
   TACBrPosPrinterModelo = (ppTexto, ppEscPosEpson, ppEscBematech, ppEscDaruma,
-                           ppEscElgin, ppEscDiebold);
+                           ppEscElgin, ppEscDiebold, ppEscEpsonP2);
 
   { TACBrPosPrinterClass }
 
@@ -391,7 +391,7 @@ implementation
 uses
   strutils, Math, typinfo,
   ACBrUtil, ACBrConsts,
-  ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold;
+  ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold, ACBrEscEpsonP2;
 
 { TACBrPosComandos }
 
@@ -840,6 +840,7 @@ begin
     ppEscDaruma : FPosPrinterClass := TACBrEscDaruma.Create(Self);
     ppEscElgin : FPosPrinterClass := TACBrEscElgin.Create(Self);
     ppEscDiebold : FPosPrinterClass := TACBrEscDiebold.Create(Self);
+    ppEscEpsonP2 : FPosPrinterClass := TACBrEscEpsonP2.Create(self);
   else
     FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
   end;

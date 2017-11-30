@@ -49,6 +49,9 @@ Símbolo : Significado
 
 30/11/2017
 -- ACBrNFSeWebServices --
+[*] Tratamento do Retorno imposta uma condição quando o provedor for
+    NFSeBrasil.
+Por: Adryelle
 [*] Para o provedor Fiorilli, ao cancelar uma NFS-e devemos informar o 
     código do municipio de incidencia e não o de emissão da nota.
 Por: Lenardo de Alice

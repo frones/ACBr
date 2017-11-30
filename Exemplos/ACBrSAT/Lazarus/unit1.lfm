@@ -27,19 +27,19 @@ object Form1: TForm1
     Height = 189
     Top = 248
     Width = 900
-    ActivePage = tsRecebido
+    ActivePage = tsLog
     Align = alClient
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
-      ClientHeight = 116
-      ClientWidth = 846
+      ClientHeight = 161
+      ClientWidth = 892
       object mLog: TMemo
         Left = 0
         Height = 161
         Top = 0
-        Width = 842
+        Width = 892
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         Font.Height = -11
@@ -51,14 +51,14 @@ object Form1: TForm1
     end
     object tsGerado: TTabSheet
       Caption = 'XML Gerado'
-      ClientHeight = 116
-      ClientWidth = 846
+      ClientHeight = 161
+      ClientWidth = 892
       inline mVendaEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
-        Height = 181
+        Height = 161
         Top = 0
-        Width = 842
+        Width = 892
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -2135,9 +2135,9 @@ object Form1: TForm1
         Height = 220
         Top = 0
         Width = 725
-        ActivePage = tsDadosSAT
+        ActivePage = Impressao
         Align = alClient
-        TabIndex = 0
+        TabIndex = 4
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
@@ -2296,29 +2296,55 @@ object Form1: TForm1
           end
           object GroupBox5: TGroupBox
             Left = 436
-            Height = 89
+            Height = 124
             Top = 56
             Width = 265
             Anchors = [akTop, akRight]
             Caption = 'Salvar XMLs'
-            ClientHeight = 69
+            ChildSizing.EnlargeHorizontal = crsHomogenousSpaceResize
+            ChildSizing.EnlargeVertical = crsHomogenousSpaceResize
+            ChildSizing.Layout = cclTopToBottomThenLeftToRight
+            ChildSizing.ControlsPerLine = 4
+            ClientHeight = 104
             ClientWidth = 261
             TabOrder = 10
-            object cbxSalvarCFe: TCheckBox
-              Left = 16
+            object cbxSalvarEnvio: TCheckBox
+              Left = 9
               Height = 19
-              Top = 0
-              Width = 74
+              Top = 6
+              Width = 111
+              Caption = 'Salvar Envio'
+              Checked = True
+              OnChange = cbxSalvarEnvioChange
+              State = cbChecked
+              TabOrder = 2
+            end
+            object cbxSalvarCFe: TCheckBox
+              Left = 9
+              Height = 19
+              Top = 31
+              Width = 111
               Caption = 'Salvar CFe'
               Checked = True
               OnChange = cbxSalvarCFeChange
               State = cbChecked
               TabOrder = 0
             end
-            object cbxSepararPorCNPJ: TCheckBox
-              Left = 16
+            object cbxSalvarCFeCanc: TCheckBox
+              Left = 9
               Height = 19
-              Top = 48
+              Top = 56
+              Width = 111
+              Caption = 'Salvar CFeCanc'
+              Checked = True
+              OnChange = cbxSalvarCFeCancChange
+              State = cbChecked
+              TabOrder = 1
+            end
+            object cbxSepararPorCNPJ: TCheckBox
+              Left = 9
+              Height = 19
+              Top = 81
               Width = 111
               Caption = 'Separar por CNPJ'
               Checked = True
@@ -2326,38 +2352,49 @@ object Form1: TForm1
               State = cbChecked
               TabOrder = 3
             end
-            object cbxSepararPorMES: TCheckBox
-              Left = 144
+            object cbxSepararPorModelo: TCheckBox
+              Left = 129
               Height = 19
-              Top = 48
-              Width = 105
-              Caption = 'Separar por mês'
+              Top = 6
+              Width = 124
+              Caption = 'Separar por Modelo'
               Checked = True
-              OnChange = cbxSepararPorMESChange
+              OnChange = cbxSepararPorModeloChange
+              State = cbChecked
+              TabOrder = 7
+            end
+            object cbxSepararPorDia: TCheckBox
+              Left = 129
+              Height = 19
+              Top = 31
+              Width = 124
+              Caption = 'Separar por Dia'
+              Checked = True
+              OnChange = cbxSepararPorDiaChange
+              State = cbChecked
+              TabOrder = 6
+            end
+            object cbxSepararPorMes: TCheckBox
+              Left = 129
+              Height = 19
+              Top = 56
+              Width = 124
+              Caption = 'Separar por Mês'
+              Checked = True
+              OnChange = cbxSepararPorMesChange
               State = cbChecked
               TabOrder = 4
             end
-            object cbxSalvarEnvio: TCheckBox
-              Left = 16
+            object cbxSepararPorAno: TCheckBox
+              Left = 129
               Height = 19
-              Top = 24
-              Width = 83
-              Caption = 'Salvar Envio'
+              Top = 81
+              Width = 124
+              Caption = 'Separar por Ano'
               Checked = True
-              OnChange = cbxSalvarEnvioChange
+              OnChange = cbxSepararPorAnoChange
               State = cbChecked
-              TabOrder = 2
-            end
-            object cbxSalvarCFeCanc: TCheckBox
-              Left = 144
-              Height = 19
-              Top = 0
-              Width = 101
-              Caption = 'Salvar CFeCanc'
-              Checked = True
-              OnChange = cbxSalvarCFeCancChange
-              State = cbChecked
-              TabOrder = 1
+              TabOrder = 5
             end
           end
           object GroupBox6: TGroupBox
@@ -2398,10 +2435,10 @@ object Form1: TForm1
             OnClick = sbNomeDLLClick
           end
           object seItensVenda: TSpinEdit
-            Left = 639
+            Left = 280
             Height = 23
-            Top = 153
-            Width = 61
+            Top = 160
+            Width = 90
             Anchors = [akTop, akRight]
             Increment = 3
             MaxValue = 999
@@ -2414,9 +2451,9 @@ object Form1: TForm1
             AnchorSideTop.Control = seItensVenda
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = seItensVenda
-            Left = 558
+            Left = 199
             Height = 15
-            Top = 157
+            Top = 164
             Width = 76
             Anchors = [akTop, akRight]
             BorderSpacing.Right = 5
@@ -3182,6 +3219,14 @@ object Form1: TForm1
               Caption = 'Imprmir Item em 1 linha'
               TabOrder = 6
             end
+            object cbImprimirChaveUmaLinha: TCheckBox
+              Left = 192
+              Height = 19
+              Top = 122
+              Width = 111
+              Caption = 'Chave em 1 linha'
+              TabOrder = 7
+            end
           end
           object cbUsarFortes: TRadioButton
             AnchorSideLeft.Control = GroupBox3
@@ -3361,6 +3406,10 @@ object Form1: TForm1
         Caption = 'Gerar Venda'
         OnClick = mGerarVendaClick
       end
+      object MenuItem19: TMenuItem
+        Caption = 'Validar XML'
+        OnClick = MenuItem19Click
+      end
       object mEnviarVenda: TMenuItem
         Caption = 'Enviar Venda'
         OnClick = mEnviarVendaClick
@@ -3372,6 +3421,10 @@ object Form1: TForm1
       object mImprimirExtratoVendaResumido: TMenuItem
         Caption = 'Imprimir Extrato Venda Resumido'
         OnClick = mImprimirExtratoVendaResumidoClick
+      end
+      object MenuItem18: TMenuItem
+        Caption = 'Gerar Texto Extrato Venda'
+        OnClick = MenuItem18Click
       end
       object MenuItem14: TMenuItem
         Caption = '-'
@@ -3466,6 +3519,8 @@ object Form1: TForm1
   object ACBrSAT1: TACBrSAT
     Extrato = ACBrSATExtratoFortes1
     NomeDLL = 'c:\sat\SAT.DLL'
+    ValidarNumeroSessaoResposta = True
+    NumeroTentativasValidarSessao = 2
     OnGravarLog = ACBrSAT1GravarLog
     Config.infCFe_versaoDadosEnt = 0.05
     Config.ide_numeroCaixa = 0
@@ -3475,6 +3530,14 @@ object Form1: TForm1
     Config.emit_indRatISSQN = irSim
     Config.EhUTF8 = True
     Config.PaginaDeCodigo = 65001
+    Config.SSLLib = libOpenSSL
+    Config.SSLCryptLib = cryOpenSSL
+    Config.SSLXmlSignLib = xsXmlSec
+    ConfigArquivos.SepararPorCNPJ = True
+    ConfigArquivos.SepararPorModelo = True
+    ConfigArquivos.SepararPorAno = True
+    ConfigArquivos.SepararPorMes = True
+    ConfigArquivos.SepararPorDia = True
     ConfigArquivos.PrefixoArqCFe = 'AD'
     ConfigArquivos.PrefixoArqCFeCanc = 'ADC'
     Rede.tipoInter = infETHE
@@ -3500,8 +3563,8 @@ object Form1: TForm1
     SoftwareHouse = 'Projeto ACBr'
     Site = 'http://www.projetoacbr.com.br'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
-    PosPrinter = ACBrPosPrinter1
     ImprimeDescAcrescItem = False
+    PosPrinter = ACBrPosPrinter1
     left = 64
     top = 280
   end

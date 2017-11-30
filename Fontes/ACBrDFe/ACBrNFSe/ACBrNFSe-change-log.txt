@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2017
+-- ACBrNFSeWebServices --
+[*] Para o provedor Fiorilli, ao cancelar uma NFS-e devemos informar o 
+    código do municipio de incidencia e não o de emissão da nota.
+Por: Lenardo de Alice
+
 27/11/2017
 -- pnfsNFSeW_ABRASFv2 / pnfsNFSeG --
 [*] Ajustes visando o provedor SystemPro

@@ -39,6 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/11/2017
+-- ACBrECFEscECF --
+[*] Ajustes para evitar exception quando ECF não responde com os campos esperados
+[*] Método "GetDadosUltimaReducaoZ", modificado para tentar ler 3 vezes os dados
+    da ReduçãoZ, pois Daruma FS800i, em algumas ocasiões responde ao comando com
+    String vazia
+[*] Método "VerificaFimLeitura", modificado para zerar o contador de falhas WAK,
+    quando obtiver algum retorno válido do ECF
+    https://www.projetoacbr.com.br/forum/topic/39391-daruma-fs800i-trava-quando-solicita-data-e-hora-do-softwar-b%C3%A1sico/
+    (por: DSA)
+
 Data: 24/11/2017
 -- ACBrECFEscECF --
 [-] Ajuste para evitar arredondamentos nas chamadas de TACBrECFEscECFComando.AddParamDouble

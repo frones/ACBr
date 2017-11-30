@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2017
+-- ACBrNFeServicos -- 
+[+] Adicionado URL de homologação 4.0 PR.
+    Atualizado URL de homologacao Consulta QRCode 4.0 SP
+    por: Jose M. S. Junior
+
 23/11/2017
 -- pcnNFeW --
 [*] https://www.projetoacbr.com.br/forum/topic/40044-envio-nota-com-informa%C3%A7%C3%A3o-de-combust%C3%ADvel-nfe-40/

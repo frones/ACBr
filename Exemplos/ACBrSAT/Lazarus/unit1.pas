@@ -531,8 +531,8 @@ begin
     cbxSepararPorDia.Checked := INI.ReadBool('SAT','SepararPorDIA', True);
     cbxSepararPorMes.Checked := INI.ReadBool('SAT','SepararPorMES', True);
     cbxSepararPorAno.Checked := INI.ReadBool('SAT','SepararPorANO', True);
-    edSchemaVendaAPL.Text := INI.ReadString('SAT','SchemaVendaAPL','..\Schemas\CfeDadosVendaAPL_0007.xsd');
-    edSchemaVendaSAT.Text := INI.ReadString('SAT','SchemaVendaSAT','..\Schemas\CfeDadosVendaSAT_0007.xsd');
+    edSchemaVendaAPL.Text := INI.ReadString('SAT','SchemaVendaAPL','');
+    edSchemaVendaSAT.Text := INI.ReadString('SAT','SchemaVendaSAT','');
     cbxXmlSignLib.ItemIndex := INI.ReadInteger('SAT','XMLLib',Integer(ACBrSAT1.Config.XmlSignLib));
     sePagCodChange(Sender);
 
@@ -597,6 +597,30 @@ begin
   finally
      INI.Free ;
   end ;
+
+  if edSchemaVendaAPL.Text = '' then
+  begin
+    if FileExists('CfeDadosVendaAPL_0007.xsd') then
+      edSchemaVendaAPL.Text := 'CfeDadosVendaAPL_0007.xsd'
+  end;
+
+  if edSchemaVendaAPL.Text = '' then
+  begin
+    if FileExists('..\Schemas\CfeDadosVendaAPL_0007.xsd') then
+      edSchemaVendaAPL.Text := '..\Schemas\CfeDadosVendaAPL_0007.xsd'
+  end;
+
+  if edSchemaVendaSAT.Text = '' then
+  begin
+    if FileExists('CfeDadosVendaSAT_0007.xsd') then
+      edSchemaVendaSAT.Text := 'CfeDadosVendaSAT_0007.xsd'
+  end;
+
+  if edSchemaVendaSAT.Text = '' then
+  begin
+    if FileExists('..\Schemas\CfeDadosVendaSAT_0007.xsd') then
+      edSchemaVendaSAT.Text := '..\Schemas\CfeDadosVendaSAT_0007.xsd'
+  end;
 end;
 
 procedure TForm1.btMFEEnviarStatusPagamentoClick(Sender: TObject);

@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/12/2017
+-- ACBrSAT, ACBrSATClass --
+[+] Adicionado o método "ValidarDadosVenda", que permite efetuar a validação do
+    XML a ser enviado ou recebido do SAT, contra um Schema (XSD). Isso ajudará
+    na detecção de erros de sintaxe do XML.
+    function ValidarDadosVenda( dadosVenda : AnsiString; out msgErro: String) : Boolean;
+[+] Adicionada a propriedade "Config.ArqSchema: String", para identificar o
+    Schema a ser usado em "ValidarDadosVenda"
+[+] Adicionada a propriedade: "Config.XmlSignLib: TSSLXmlSignLib", para definir
+    qual será a bibioteca a ser usada na validação do XML
+    (por: André Moraes e DSA)
+
 Data: 05/09/2017
 -- ACBrSATExtratoFortesFr.pas --
 [-] Ajustes na Impressão do Logotipo, não estava saindo na impressão

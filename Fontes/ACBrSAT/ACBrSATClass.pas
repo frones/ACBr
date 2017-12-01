@@ -45,7 +45,8 @@ unit ACBrSATClass ;
 interface
 
 uses
-  Classes, SysUtils, pcnConversao ;
+  Classes, SysUtils,
+  pcnConversao, ACBrDFeSSL;
 
 const
   cACBrSAT_Versao      = '0.2.0' ;
@@ -99,8 +100,12 @@ type
     fsinfCFe_versaoDadosEnt : Real ;
     fside_tpAmb : TpcnTipoAmbiente ;
     fsPaginaDeCodigo: Word;
+    fsArqSchema: String;
+    fsXmlSignLib: TSSLXmlSignLib;
+
     function GetEhUTF8: Boolean;
     procedure SetEhUTF8(AValue: Boolean);
+    procedure SetXmlSignLib(AValue: TSSLXmlSignLib);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -125,6 +130,9 @@ type
        write fsemit_indRatISSQN;
     property EhUTF8: Boolean read GetEhUTF8 write SetEhUTF8;
     property PaginaDeCodigo : Word read fsPaginaDeCodigo write fsPaginaDeCodigo;
+
+    property ArqSchema : String read fsArqSchema write fsArqSchema ;
+    property XmlSignLib: TSSLXmlSignLib read fsXmlSignLib write SetXmlSignLib;
   end;
 
   { TACBrSATConfigArquivos }
@@ -662,6 +670,12 @@ begin
 
 end;
 
+procedure TACBrSATConfig.SetXmlSignLib(AValue: TSSLXmlSignLib);
+begin
+  TACBrSAT(fsOwner).SSL.SSLXmlSignLib := AValue;
+  fsXmlSignLib := AValue;
+end;
+
 constructor TACBrSATConfig.Create(AOwner: TComponent);
 begin
   if not (AOwner is TACBrSAT) then
@@ -688,8 +702,11 @@ begin
   fsemit_indRatISSQN      := irSim ;
   fside_CNPJ              := '' ;
   fside_numeroCaixa       := 0 ;
-  fside_tpAmb             := taHomologacao ;
-  fsinfCFe_versaoDadosEnt := cversaoDadosEnt ;
+  fside_tpAmb             := taHomologacao;
+  fsinfCFe_versaoDadosEnt := cversaoDadosEnt;
+
+  fsArqSchema  := '';
+  fsXmlSignLib := xsNone;
 end ;
 
 { EACBrSATErro }

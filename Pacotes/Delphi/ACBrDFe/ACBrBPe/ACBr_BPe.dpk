@@ -87,7 +87,6 @@ requires
   ACBr_Diversos,
   ACBr_Comum,
   ACBr_synapse,
-  ACBr_SM,
   ACBr_TCP,
   ACBr_OpenSSL;
 

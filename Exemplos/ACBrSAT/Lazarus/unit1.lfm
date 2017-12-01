@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 300
+  Left = 412
   Height = 480
-  Top = 158
+  Top = 169
   Width = 900
   ActiveControl = PageControl1
   Caption = 'SAT Teste - Projeto ACBr'
@@ -27,9 +27,9 @@ object Form1: TForm1
     Height = 189
     Top = 248
     Width = 900
-    ActivePage = tsLog
+    ActivePage = tsRecebido
     Align = alClient
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
@@ -2135,9 +2135,9 @@ object Form1: TForm1
         Height = 220
         Top = 0
         Width = 725
-        ActivePage = Impressao
+        ActivePage = TabSheet1
         Align = alClient
-        TabIndex = 4
+        TabIndex = 6
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
@@ -3347,6 +3347,90 @@ object Form1: TForm1
             TabOrder = 6
           end
         end
+        object TabSheet1: TTabSheet
+          Caption = 'Validação'
+          ClientHeight = 192
+          ClientWidth = 717
+          object Label33: TLabel
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 132
+            Alignment = taRightJustify
+            Caption = 'Schema Venda Aplicação'
+            ParentColor = False
+          end
+          object edSchemaVendaAPL: TEdit
+            Cursor = crIBeam
+            Left = 16
+            Height = 23
+            Top = 33
+            Width = 640
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 0
+          end
+          object sbSchemaVendaAPL: TSpeedButton
+            AnchorSideLeft.Control = edSchemaVendaAPL
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = edSchemaVendaAPL
+            AnchorSideTop.Side = asrCenter
+            Left = 659
+            Height = 22
+            Top = 33
+            Width = 24
+            BorderSpacing.Left = 3
+            Caption = '...'
+            OnClick = sbSchemaVendaAPLClick
+          end
+          object sbSchemaVendaSAT: TSpeedButton
+            AnchorSideLeft.Control = edSchemaVendaSAT
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = edSchemaVendaSAT
+            AnchorSideTop.Side = asrCenter
+            Left = 659
+            Height = 22
+            Top = 81
+            Width = 24
+            BorderSpacing.Left = 3
+            Caption = '...'
+            OnClick = sbSchemaVendaSATClick
+          end
+          object edSchemaVendaSAT: TEdit
+            Cursor = crIBeam
+            Left = 16
+            Height = 23
+            Top = 81
+            Width = 640
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 1
+          end
+          object Label34: TLabel
+            Left = 16
+            Height = 15
+            Top = 64
+            Width = 100
+            Alignment = taRightJustify
+            Caption = 'Schema Venda SAT'
+            ParentColor = False
+          end
+          object Label35: TLabel
+            Left = 16
+            Height = 15
+            Top = 119
+            Width = 150
+            Caption = 'Biblioteca de analise de XML'
+            ParentColor = False
+          end
+          object cbxXmlSignLib: TComboBox
+            Left = 16
+            Height = 23
+            Top = 136
+            Width = 192
+            ItemHeight = 15
+            Style = csDropDownList
+            TabOrder = 2
+          end
+        end
       end
     end
   end
@@ -3406,13 +3490,12 @@ object Form1: TForm1
         Caption = 'Gerar Venda'
         OnClick = mGerarVendaClick
       end
-      object MenuItem19: TMenuItem
-        Caption = 'Validar XML'
-        OnClick = MenuItem19Click
-      end
       object mEnviarVenda: TMenuItem
         Caption = 'Enviar Venda'
         OnClick = mEnviarVendaClick
+      end
+      object MenuItem21: TMenuItem
+        Caption = '-'
       end
       object mImprimirExtratoVenda: TMenuItem
         Caption = 'Imprimir Extrato Venda'
@@ -3423,10 +3506,21 @@ object Form1: TForm1
         OnClick = mImprimirExtratoVendaResumidoClick
       end
       object MenuItem18: TMenuItem
-        Caption = 'Gerar Texto Extrato Venda'
+        Caption = 'Gerar Texto Extrato Venda (MFE)'
         OnClick = MenuItem18Click
       end
       object MenuItem14: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem19: TMenuItem
+        Caption = 'Validar XML Gerado Aplicação'
+        OnClick = MenuItem19Click
+      end
+      object MenuItem22: TMenuItem
+        Caption = 'Validar XML Recebido SAT'
+        OnClick = MenuItem22Click
+      end
+      object MenuItem20: TMenuItem
         Caption = '-'
       end
       object MenuItem15: TMenuItem
@@ -3530,9 +3624,7 @@ object Form1: TForm1
     Config.emit_indRatISSQN = irSim
     Config.EhUTF8 = True
     Config.PaginaDeCodigo = 65001
-    Config.SSLLib = libOpenSSL
-    Config.SSLCryptLib = cryOpenSSL
-    Config.SSLXmlSignLib = xsXmlSec
+    Config.XmlSignLib = xsMsXml
     ConfigArquivos.SepararPorCNPJ = True
     ConfigArquivos.SepararPorModelo = True
     ConfigArquivos.SepararPorAno = True

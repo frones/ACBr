@@ -61,10 +61,12 @@ type
     cbxRedeSeg: TComboBox;
     cbImprimir1Linha: TCheckBox;
     cbxUTF8: TCheckBox;
+    cbxXmlSignLib: TComboBox;
     edChaveCancelamento: TEdit;
     edMFEInput: TEdit;
     edMFEOutput: TEdit;
     edLog : TEdit ;
+    edSchemaVendaAPL: TEdit;
     edRedeIP: TEdit;
     edRedeProxyPorta: TSpinEdit;
     edRedeProxyUser: TEdit;
@@ -78,6 +80,7 @@ type
     edRedeProxyIP: TEdit;
     edRedeSSID: TEdit;
     edRedeCodigo: TEdit;
+    edSchemaVendaSAT: TEdit;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -102,6 +105,9 @@ type
     Label30: TLabel;
     Label31: TLabel;
     Label32: TLabel;
+    Label33: TLabel;
+    Label34: TLabel;
+    Label35: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
@@ -126,6 +132,9 @@ type
     MenuItem17: TMenuItem;
     MenuItem18: TMenuItem;
     MenuItem19: TMenuItem;
+    MenuItem20: TMenuItem;
+    MenuItem21: TMenuItem;
+    MenuItem22: TMenuItem;
     mRede: TSynMemo;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
@@ -142,6 +151,8 @@ type
     RLPDFFilter1: TRLPDFFilter;
     SaveDialog1: TSaveDialog;
     sbNomeDLL: TSpeedButton;
+    sbSchemaVendaAPL: TSpeedButton;
+    sbSchemaVendaSAT: TSpeedButton;
     seColunas: TSpinEdit;
     seEspLinhas: TSpinEdit;
     seLargura: TSpinEdit;
@@ -217,6 +228,7 @@ type
     mRecebido: TSynMemo;
     SynXMLSyn1: TSynXMLSyn;
     Impressao: TTabSheet;
+    TabSheet1: TTabSheet;
     tsMFe: TTabSheet;
     tsRedeXML: TTabSheet;
     tsRede: TTabSheet;
@@ -263,6 +275,7 @@ type
     procedure MenuItem17Click(Sender: TObject);
     procedure MenuItem18Click(Sender: TObject);
     procedure MenuItem19Click(Sender: TObject);
+    procedure MenuItem22Click(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
     procedure miEnviarCancelamentoClick(Sender: TObject);
     procedure miImprimirExtratoCancelamentoClick(Sender: TObject);
@@ -270,6 +283,8 @@ type
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure sbNomeDLLClick(Sender: TObject);
+    procedure sbSchemaVendaAPLClick(Sender: TObject);
+    procedure sbSchemaVendaSATClick(Sender: TObject);
     procedure sfeVersaoEntChange(Sender: TObject);
     procedure FormCreate(Sender : TObject) ;
     procedure mAssociarAssinaturaClick(Sender : TObject) ;
@@ -325,6 +340,7 @@ var
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
   R: pcnRede.TSegSemFio;
+  P: TSSLXmlSignLib;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
@@ -357,6 +373,10 @@ begin
   cbxPagCodigo.Items.Clear ;
   For O := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
      cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(O) ) ) ;
+
+  cbxXmlSignLib.Items.Clear ;
+  For P := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
+     cbxXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(P) ) ) ;
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
@@ -511,6 +531,9 @@ begin
     cbxSepararPorDia.Checked := INI.ReadBool('SAT','SepararPorDIA', True);
     cbxSepararPorMes.Checked := INI.ReadBool('SAT','SepararPorMES', True);
     cbxSepararPorAno.Checked := INI.ReadBool('SAT','SepararPorANO', True);
+    edSchemaVendaAPL.Text := INI.ReadString('SAT','SchemaVendaAPL','..\Schemas\CfeDadosVendaAPL_0007.xsd');
+    edSchemaVendaSAT.Text := INI.ReadString('SAT','SchemaVendaSAT','..\Schemas\CfeDadosVendaSAT_0007.xsd');
+    cbxXmlSignLib.ItemIndex := INI.ReadInteger('SAT','XMLLib',Integer(ACBrSAT1.Config.XmlSignLib));
     sePagCodChange(Sender);
 
     cbxModeloPosPrinter.ItemIndex := INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo));
@@ -571,7 +594,6 @@ begin
     edMFEInput.Text    :=  INI.ReadString('MFE','Input','c:\Integrador\Input\');
     edMFEOutput.Text   :=  INI.ReadString('MFE','Output','c:\Integrador\Output\');
     seMFETimeout.Value :=  INI.ReadInteger('MFE','Timeout',30);
-
   finally
      INI.Free ;
   end ;
@@ -716,6 +738,9 @@ begin
     INI.WriteBool('SAT','SepararPorDIA', cbxSepararPorDia.Checked);
     INI.WriteBool('SAT','SepararPorMES', cbxSepararPorMes.Checked);
     INI.WriteBool('SAT','SepararPorANO', cbxSepararPorAno.Checked);
+    INI.WriteString('SAT','SchemaVendaAPL',edSchemaVendaAPL.Text);
+    INI.WriteString('SAT','SchemaVendaSAT',edSchemaVendaSAT.Text);
+    INI.WriteInteger('SAT','XMLLib',cbxXmlSignLib.ItemIndex);
 
     INI.WriteInteger('PosPrinter','Modelo',cbxModeloPosPrinter.ItemIndex);
     INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
@@ -909,10 +934,16 @@ begin
   if OpenDialog1.Execute then
   begin
      ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
-     //mRecebido.Lines.Text := ACBrSAT1.CFe.GerarXML() ;
-     //PageControl1.ActivePage := tsRecebido;
-     mVendaEnviar.Lines.LoadFromFile(OpenDialog1.FileName);
-     PageControl1.ActivePage := tsGerado;
+     if (pos('<Signature', ACBrSAT1.CFe.AsXMLString) > 0) then
+     begin
+       mRecebido.Lines.Text := ACBrSAT1.CFe.AsXMLString;
+       PageControl1.ActivePage := tsRecebido;
+     end
+     else
+     begin
+       mVendaEnviar.Lines.Text := ACBrSAT1.CFe.AsXMLString;
+       PageControl1.ActivePage := tsGerado;
+     end;
   end ;
 end;
 
@@ -947,18 +978,37 @@ begin
 end;
 
 procedure TForm1.MenuItem19Click(Sender: TObject);
+var
+  Erro: String;
 begin
-  if sfeVersaoEnt.Value >= 0.07 then
-    ACBrSAT1.ArqSchema := '..\Schemas\CfeTeste_0007.xsd'
-  else if sfeVersaoEnt.Value >= 0.06 then
-    ACBrSAT1.ArqSchema := '..\Schemas\CFeRecebido.xsd'
-  else
-    raise Exception.Create('Versão não suportada');
-
+  ACBrSAT1.Config.XmlSignLib := TSSLXmlSignLib(cbxXmlSignLib.ItemIndex);
+  ACBrSAT1.Config.ArqSchema := edSchemaVendaAPL.Text;
   PageControl1.ActivePageIndex := 0;
 
-  if ACBrSAT1.ValidarDadosVenda( mVendaEnviar.Text ) then
-    mLog.Lines.Add('Validado com sucesso');
+  if ACBrSAT1.ValidarDadosVenda( mVendaEnviar.Text, Erro ) then
+    mLog.Lines.Add('XML Gerado pela aplicação, validado com sucesso')
+  else
+  begin
+    mLog.Lines.Add('Erro na Validação do XML Gerado pela aplicação.');
+    mLog.Lines.Add(Erro);
+  end;
+end;
+
+procedure TForm1.MenuItem22Click(Sender: TObject);
+var
+  Erro: String;
+begin
+  ACBrSAT1.Config.XmlSignLib := TSSLXmlSignLib(cbxXmlSignLib.ItemIndex);
+  ACBrSAT1.Config.ArqSchema := edSchemaVendaSAT.Text;
+  PageControl1.ActivePageIndex := 0;
+
+  if ACBrSAT1.ValidarDadosVenda( mRecebido.Text, Erro ) then
+    mLog.Lines.Add('XML Recebido do SAT, validado com sucesso')
+  else
+  begin
+    mLog.Lines.Add('Erro na Validação do XML Recebido do SAT.');
+    mLog.Lines.Add(Erro);
+  end;
 end;
 
 procedure TForm1.miGerarXMLCancelamentoClick(Sender: TObject);
@@ -1046,6 +1096,24 @@ begin
   OpenDialog1.FileName := edNomeDLL.Text;
   if OpenDialog1.Execute then
     edNomeDLL.Text := OpenDialog1.FileName ;
+end;
+
+procedure TForm1.sbSchemaVendaAPLClick(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo XSD|*.xsd';
+  OpenDialog1.InitialDir := ExtractFilePath(edSchemaVendaAPL.Text);
+  OpenDialog1.FileName := edSchemaVendaAPL.Text;
+  if OpenDialog1.Execute then
+    edSchemaVendaAPL.Text := OpenDialog1.FileName ;
+end;
+
+procedure TForm1.sbSchemaVendaSATClick(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo XSD|*.xsd';
+  OpenDialog1.InitialDir := ExtractFilePath(edSchemaVendaSAT.Text);
+  OpenDialog1.FileName := edSchemaVendaSAT.Text;
+  if OpenDialog1.Execute then
+    edSchemaVendaSAT.Text := OpenDialog1.FileName ;
 end;
 
 procedure TForm1.sfeVersaoEntChange(Sender: TObject);

@@ -111,6 +111,7 @@ contains
   ACBrEscDaruma in '..\..\..\Fontes\ACBrSerial\ACBrEscDaruma.pas',
   ACBrEscElgin in '..\..\..\Fontes\ACBrSerial\ACBrEscElgin.pas',
   ACBrEscDiebold in '..\..\..\Fontes\ACBrSerial\ACBrEscDiebold.pas',
+  ACBrEscEpsonP2 in '..\..\..\Fontes\ACBrSerial\ACBrEscEpsonP2.pas',
   ACBrBALLider in '..\..\..\Fontes\ACBrSerial\ACBrBALLider.pas',
   ACBrBALAFTS in '..\..\..\Fontes\ACBrSerial\ACBrBALAFTS.pas',
   ACBrBALLibratek in '..\..\..\Fontes\ACBrSerial\ACBrBALLibratek.pas',

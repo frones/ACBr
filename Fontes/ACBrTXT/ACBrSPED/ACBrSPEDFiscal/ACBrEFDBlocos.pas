@@ -734,6 +734,9 @@ type
   function OrigemDoctoToStr(AValue: TACBrOrigemDocto): string;
   function StrToOrigemDocto(const AValue: string): TACBrOrigemDocto;
 
+  function IndTipoTituloToStr(AValue: TACBrTipoTitulo): string;
+  function StrToIndTipoTitulo(AValue: string): TACBrTipoTitulo;
+
 implementation
 
 { TOpenBlocos }
@@ -1346,6 +1349,39 @@ begin
       Result := odOutros
    else
       Result := TACBrOrigemDocto( StrToIntDef( AValue, 0) );
+end;
+
+function IndTipoTituloToStr(AValue: TACBrTipoTitulo): string;
+begin
+     case AValue of
+        tcDuplicata:
+           Result:= '00';
+        tcCheque:
+           Result:= '01';
+        tcPromissoria:
+           Result:= '02';
+        tcRecibo:
+           Result:= '03';
+        tcOutros:
+           Result:= '99';
+        else
+           Result:= EmptyStr;
+     end;
+end;
+
+function StrToIndTipoTitulo(AValue: string): TACBrTipoTitulo;
+begin
+     if AValue = '00' then
+            Result:= tcDuplicata
+     else if AValue = '01' then
+            Result:= tcCheque
+     else if AValue = '02' then
+            Result:= tcPromissoria
+     else if AValue = '03' then
+            Result:= tcRecibo
+     else  if AValue = '99' then
+            Result:= tcOutros
+     else raise Exception.Create(format('Valor informado [%s] deve estar (00,01,02,03,99)',[AValue]));
 end;
 
 end.

@@ -829,6 +829,17 @@ begin
             exit;
           end;
 
+          if (not fsTentouSincronizar) and IsDaruma and
+             (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 140) then // 140-Relógio está travado
+          begin
+            GravaLog( '    Daruma Erro:140 - RX <- '+EscECFResposta.Resposta, True);
+            Sleep(200);
+            fsSincronizou       := False;  // Força a sincronização
+            fsTentouSincronizar := True;   // Evita loop infinito, no caso de ocorrer o mesmo erro
+            Self.EnviaComando_ECF();       // Gera chamada recursiva
+            exit;
+          end;
+
           ErroMsg := ACBrStr('Erro retornado pela Impressora: '+ModeloStr+
                              sLineBreak+sLineBreak + ErroMsg ) ;
 
@@ -1379,17 +1390,21 @@ begin
      begin
        if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
          MaxLinhasBuffer := 5;
+
+       if (CompareVersions(fsNumVersao, '01.00.02') >= 0) then
+       begin
+         // http://partners.bematech.com.br/bemacast/paginas/post.aspx?title=edicao-241---o-ecf-bematech-mp-4200-th-fi-ii&id=6220
+         fpNumMaxLinhasRodape := 20;
+       end;
      end
      else if IsEpson then
      begin
        fpPaginaDeCodigo := 850;
        fpColunas := 57;
-     end;
-
-     if IsBematech and (CompareVersions(fsNumVersao, '01.00.02') >= 0) then
+     end
+     else if IsDaruma then
      begin
-       // http://partners.bematech.com.br/bemacast/paginas/post.aspx?title=edicao-241---o-ecf-bematech-mp-4200-th-fi-ii&id=6220
-       fpNumMaxLinhasRodape := 20;
+       ControlePorta := False;  // Daruma não trabalha bem com Controle de Porta ativo
      end;
 
      LeRespostasMemoria;
@@ -2139,6 +2154,7 @@ begin
    end;
 
   EscECFComando.AddParamInteger(0); // Imprime no ECF
+  EscECFComando.TimeOut := max(TimeOut, 120); // TimeOut de no mínimo 2 minutos
 
   try
      EnviaComando ;

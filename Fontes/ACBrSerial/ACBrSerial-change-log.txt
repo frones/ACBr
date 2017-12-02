@@ -43,6 +43,14 @@ Data: 02/12/2017
 -- ACBrDevice --
 [+] Adicionada a propriedade "ArqLOG: String", para permitir a criação de um Log
     para Debug de ACBrDevice
+
+-- ACBrECFEscECF -
+[*] Ajuste para sempre desabilitar o Controle de Porta, quando ECF for Daruma
+    (a fim de evitar travamentos na comunicação)
+[*] Ajuste para tratamento de retorno de Erro: "140-Relógio está travado" da
+    Daruma FS800i, que ocorre quando o ECF ainda está ocupado, processando o
+    último documento
+[*] Ajuste em ReducaoZ, ,para considerar como TimeOut mínimo, 120 segundos
     (por: DSA)
 
 Data: 30/11/2017

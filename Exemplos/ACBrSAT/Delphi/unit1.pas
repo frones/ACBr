@@ -302,8 +302,6 @@ type
     procedure mLimparClick(Sender : TObject) ;
     procedure SbArqLogClick(Sender : TObject) ;
     procedure sePagCodChange(Sender: TObject);
-    procedure ACBrSAT1GetsignAC(var Chave: String);
-    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: String);
     procedure sfeVersaoEntChange(Sender: TObject);
   private
     procedure ConfiguraRedeSAT;
@@ -312,7 +310,9 @@ type
     procedure TrataErros(Sender : TObject ; E : Exception) ;
     procedure AjustaACBrSAT ;
     procedure LoadXML(AXML: String; MyWebBrowser: TWebBrowser);
-    { private declarations }
+
+    procedure GetsignAC(var Chave: AnsiString);
+    procedure GetcodigoDeAtivacao(var Chave: AnsiString);
   public
     { public declarations }
   end ;
@@ -342,6 +342,9 @@ var
   R: pcnRede.TSegSemFio;
   P: TSSLXmlSignLib;
 begin
+  ACBrSAT1.OnGetsignAC := GetsignAC;
+  ACBrSAT1.OnGetcodigoDeAtivacao := GetcodigoDeAtivacao;
+
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
      cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrSATModelo), integer(I) ) ) ;
@@ -1634,12 +1637,12 @@ begin
 end;
 
 
-procedure TForm1.ACBrSAT1GetsignAC(var Chave: String);
+procedure TForm1.GetsignAC(var Chave: AnsiString);
 begin
   Chave := AnsiString( edtSwHAssinatura.Text );
 end;
 
-procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: String);
+procedure TForm1.GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
   Chave := AnsiString( edtCodigoAtivacao.Text );
 end;

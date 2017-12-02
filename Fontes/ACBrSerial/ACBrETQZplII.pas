@@ -154,7 +154,7 @@ begin
   else
     cFonte := chr(55 + aFonte);
 
-  if not (cFonte in ['0'..'9','A'..'Z']) then
+  if not CharInSet(cFonte, ['0'..'9','A'..'Z']) then
     raise Exception.Create('Fonte deve estar entre 0 a 35');
 
   Result := '^A' + cFonte +
@@ -243,7 +243,7 @@ var
   cTipo: Char;
 begin
   cTipo := PadLeft(aTipo,1)[1];
-  if not (cTipo in ['0'..'9','A'..'Z']) then
+  if not CharInSet(cTipo, ['0'..'9','A'..'Z']) then
     raise Exception.Create('Tipo Cod.Barras deve estar "0" a "9" ou "A" a "Z"');
 
   Result := '^B' + aTipo +

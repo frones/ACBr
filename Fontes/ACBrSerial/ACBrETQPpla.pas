@@ -52,7 +52,7 @@ type
     function ConverterMultiplicador(aMultiplicador: Integer): String;
     function ConverterCoordenadas(aVertical, aHorizontal: Integer): String;
 
-    function ConverterUnidade(AValue: Integer): Integer; overload;
+    function ConverterUnidade(AValue: Integer): Integer; reintroduce; overload;
     function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
     function ConverterFonte(aFonte: Integer): String;
     function ConverterSubFonte(aFonte, aSubFonte: Integer): String;
@@ -366,7 +366,7 @@ begin
   else
     Result := UpperCase(Result);
 
-  if not (Result[1] in ['a'..'t','A'..'T']) then
+  if not CharInSet(Result[1], ['a'..'t','A'..'T']) then
     raise Exception.Create('Tipo Cod.Barras deve ser de "A" a "T"');
 end;
 

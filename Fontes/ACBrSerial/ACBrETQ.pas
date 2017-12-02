@@ -181,7 +181,9 @@ uses
 function TACBrETQCmdList.Add(const S: string): Integer;
 begin
   if NaoEstaVazio(S) then
-    Result := inherited Add(S);
+    Result := inherited Add(S)
+  else
+    Result := -1;
 end;
 
 procedure TACBrETQCmdList.Insert(Index: Integer; const S: string);

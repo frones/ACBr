@@ -32,23 +32,14 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 27/03/2007: Andrews R Bejatto/ Anderson R Bejatto/ Daniel Simões de Almeida
-|*  - Primeira Versao ACBrETQClass
-|* 17/04/2009: Alexsander da Rosa
-|*  - Parametro "SubFonte" na procedure ImprimirTexto
-|* 29/05/2010: Alexsander da Rosa
-|*  - Propriedade "Unidade" para indicar milimetros/polegadas
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrETQClass;
 
 interface
-uses ACBrDevice, ACBrBase, Classes;
+
+uses
+  ACBrDevice, Classes;
 
 type
 
@@ -60,381 +51,340 @@ type
 
 TACBrETQClass = class
   private
-    fpArqLOG: String;
-    fpOnGravarLog: TACBrGravarLog;
-    FTemperatura: Integer;
-    FAvanco: Integer;
-    FUnidade: TACBrETQUnidade;
-    FDPI: TACBrETQDPI;
-    FVelocidade: Integer;
-    procedure SetAtivo(const Value: Boolean);
-    procedure SetTemperatura(const Value: Integer);
-    procedure SetAvanco(const Value: Integer);
-    procedure SetVelocidade(const Value: Integer);
+    fUnidade: TACBrETQUnidade;
+    fTemperatura: Integer;
+    fVelocidade: Integer;
+    fDPI: TACBrETQDPI;
+    fAvanco: Integer;
+
+    procedure ErroNaoImplementado(aNomeMetodo: String);
 
   protected
-    fpDevice: TACBrDevice;
-    fpAtivo: Boolean;
     fpBackFeed: TACBrETQBackFeed;
-    fpModeloStr: String;
-    fpListaCmd: TStringList;
-    fpCmd: AnsiString;
     fpLimparMemoria : Boolean;
-    fpEtqFinalizada: Boolean;
-    fpEtqInicializada: Boolean;
+    fpOrigem: TACBrETQOrigem;
+    fpModeloStr: String;
+    fpDevice: TACBrDevice;
+    fpLimiteCopias: Integer;
 
-    procedure SetUnidade(const AValue: TACBrETQUnidade); virtual;
-    procedure SetDPI(const AValue : TACBrETQDPI) ; virtual;
+    function ConverterUnidade(UnidadeSaida: TACBrETQUnidade; AValue: Integer): Integer; virtual;
 
-    procedure IniciarImpressao(Copias: Integer = 1; AvancoEtq: Integer = 0); virtual;
-    procedure EnviarImpressao; virtual;
-    procedure FinalizarImpressao; virtual;
-    procedure CalcularComandoAbertura; virtual;
-    procedure CalcularComandoFinaliza(Copias: Integer = 1; AvancoEtq: Integer = 0); virtual;
+    procedure AdicionarComandos( ACmd: AnsiString; var ACmdList: AnsiString);
+    procedure VerificarLimiteCopias( const NumCopias: Integer);
+
+  protected
+    function ComandoAbertura: AnsiString; virtual;
+    function ComandoBackFeed: AnsiString; virtual;
+    function ComandoUnidade: AnsiString; virtual;
+    function ComandoTemperatura: AnsiString; virtual;
+    function ComandoResolucao: AnsiString; virtual;
+    function ComandoOrigemCoordenadas: AnsiString; virtual;
+    function ComandoVelocidade: AnsiString; virtual;
 
   public
-    property Ativo  : Boolean read fpAtivo write SetAtivo;
-    property ModeloStr: String read fpModeloStr;
-    property ListaCmd: TStringList read fpListaCmd write fpListaCmd;
-    property EtqInicializada: Boolean read fpEtqInicializada;
-    property EtqFinalizada: Boolean read fpEtqFinalizada;
-    property Cmd: AnsiString read fpCmd write fpCmd;
-    property Temperatura: Integer read FTemperatura write SetTemperatura;
-    property Avanco: Integer read FAvanco write SetAvanco;
-    property Unidade: TACBrETQUnidade read FUnidade write SetUnidade;
-    property DPI: TACBrETQDPI read FDPI write SetDPI;
-    property LimparMemoria: Boolean read fpLimparMemoria write fpLimparMemoria;
-    property BackFeed: TACBrETQBackFeed read fpBackFeed write fpBackFeed;
-    property Velocidade: Integer read fVelocidade write SetVelocidade;
-
-    property ArqLOG: String read fpArqLOG write fpArqLOG;
-    property OnGravarLog: TACBrGravarLog read fpOnGravarLog write fpOnGravarLog;
-
     constructor Create(AOwner: TComponent);
-    destructor Destroy  ; override;
 
-    procedure Ativar ; virtual;
-    procedure Desativar ; virtual;
+    function TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString; virtual;
 
-    procedure GravaLog(AString: AnsiString; Traduz :Boolean = False);
-    function ConverterUnidade( UnidadeSaida: TACBrETQUnidade;
-       AValue : Integer) : Integer ; virtual;
+    function ComandoLimparMemoria: AnsiString; virtual;
+    function ComandoCopias(const NumCopias: Integer): AnsiString; virtual;
+    function ComandoImprimir: AnsiString; virtual;
+    function ComandoAvancarEtiqueta(const aAvancoEtq: Integer): AnsiString; virtual;
 
-    procedure ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte, MultiplicadorH,
-      MultiplicadorV, Vertical, Horizontal: Integer;
-      Texto: String; SubFonte: Integer = 0; ImprimirReverso : Boolean = False); virtual;
-    procedure ImprimirBarras(Orientacao: TACBrETQOrientacao; TipoBarras,
-      LarguraBarraLarga, LarguraBarraFina: String; Vertical, Horizontal: Integer;
-      Texto: String; AlturaCodBarras: Integer;
-      ExibeCodigo: TACBrETQBarraExibeCodigo = becPadrao); virtual;
-    procedure ImprimirLinha(Vertical, Horizontal, Largura, Altura: Integer); virtual;
-    procedure ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
-      EspessuraVertical, EspessuraHorizontal: Integer); virtual;
-    procedure ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal: Integer;
-       NomeImagem: String); virtual;
-    procedure CarregarImagem(AStream : TStream; NomeImagem: String;
-       Flipped : Boolean = True; Tipo: String = 'BMP' ); virtual;
-    procedure IniciarEtiqueta;
-    procedure FinalizarEtiqueta(Copias: Integer = 1; AvancoEtq: Integer = 0);
-    procedure Imprimir(Copias: Integer = 1; AvancoEtq: Integer = 0);
+    function ComandosIniciarEtiqueta: AnsiString; virtual;
+    function ComandosFinalizarEtiqueta(NumCopias: Integer = 1; aAvancoEtq: Integer = 0): AnsiString; virtual;
+
+    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte,
+      aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer; aTexto: String;
+      aSubFonte: Integer = 0; aImprimirReverso: Boolean = False): AnsiString; virtual;
+
+    function ConverterTipoBarras(TipoBarras: TACBrTipoCodBarra): String; virtual;
+    function ComandoImprimirBarras(aOrientacao: TACBrETQOrientacao;
+      aTipoBarras: String; aBarraLarga, aBarraFina, aVertical,
+      aHorizontal: Integer; aTexto: String; aAlturaBarras: Integer;
+      aExibeCodigo: TACBrETQBarraExibeCodigo = becPadrao): AnsiString; virtual;
+
+    function ComandoImprimirLinha(aVertical, aHorizontal, aLargura,
+      aAltura: Integer): AnsiString; virtual;
+
+    function ComandoImprimirCaixa(aVertical, aHorizontal, aLargura, aAltura,
+      aEspVertical, aEspHorizontal: Integer): AnsiString; virtual;
+
+    function ComandoImprimirImagem(aMultImagem, aVertical, aHorizontal: Integer;
+      aNomeImagem: String): AnsiString; virtual;
+
+    function ComandoCarregarImagem(aStream: TStream; aNomeImagem: String;
+      aFlipped: Boolean; aTipo: String): AnsiString; virtual;
+
+    property ModeloStr:       String           read fpModeloStr;
+    property Temperatura:     Integer          read fTemperatura      write fTemperatura;
+    property Velocidade:      Integer          read fVelocidade       write fVelocidade;
+    property BackFeed:        TACBrETQBackFeed read fpBackFeed        write fpBackFeed;
+    property Unidade:         TACBrETQUnidade  read fUnidade          write fUnidade;
+    property Origem:          TACBrETQOrigem   read fpOrigem          write fpOrigem;
+    property Avanco:          Integer          read fAvanco           write fAvanco;
+    property DPI:             TACBrETQDPI      read fDPI              write fDPI;
 end;
 
 implementation
 
-Uses
-  ACBrETQ, ACBrUtil, 
-  SysUtils, math;
+uses
+  ACBrConsts, ACBrETQ, ACBrUtil, SysUtils, math;
 
 { TACBrBAETQClass }
 
 constructor TACBrETQClass.Create(AOwner: TComponent);
 begin
-  if not (AOwner is TACBrETQ) then
-     raise Exception.create(ACBrStr('Essa Classe deve ser instanciada por TACBrETQ'));
+  if (not (AOwner is TACBrETQ)) then
+    raise Exception.create(ACBrStr('Essa Classe deve ser instanciada por TACBrETQ'));
 
-  { Criando ponteiro interno para as Propriedade SERIAL de ACBrETQ,
-    para permitir as Classes Filhas o acesso a essas propriedades do Componente}
+  fDPI            := dpi203;
+  fpLimparMemoria := True;
+  fAvanco         := 0;
+  fTemperatura    := 10;
+  fVelocidade     := -1;
+  fUnidade        := etqMilimetros;
 
-  fpDevice    := (AOwner as TACBrETQ).Device ;
-  fpDevice.SetDefaultValues ;
-
-  fpAtivo     := false ;
-  fpModeloStr := 'Não Definida' ;
-  fpListaCmd:= TStringList.Create;
-  fpLimparMemoria := True ;
-  fpEtqInicializada := False;
-  fpEtqFinalizada := False;
-  
-  FAvanco      := 0;
-  FVelocidade  := -1;
-  FTemperatura := 10;
-  FUnidade     := etqMilimetros;
-  FDPI         := dpi203;
+  fpModeloStr     := 'Não Definida';
+  fpOrigem        := ogNone;
+  fpLimiteCopias  := 999;
 end;
 
-destructor TACBrETQClass.Destroy;
+procedure TACBrETQClass.ErroNaoImplementado(aNomeMetodo: String);
 begin
-  fpDevice := nil; { Apenas remove referencia (ponteiros internos) }
-  FreeAndNil(fpListaCmd);
-  inherited Destroy;
+  raise Exception.Create(ACBrStr('Metodo: ' + aNomeMetodo + ' não implementada em: ' + ModeloStr));
 end;
 
-procedure TACBrETQClass.SetAtivo(const Value: Boolean);
-begin
-  if Value then
-     Ativar
-  else
-     Desativar ;
-end;
-
-procedure TACBrETQClass.Ativar;
-begin
-  if fpAtivo then exit ;
-
-  GravaLog( sLineBreak + StringOfChar('-',80)+ sLineBreak +
-            'ATIVAR - '+FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now)+
-            ' - Modelo: '+ModeloStr+
-            ' - Porta: ' +fpDevice.Porta+
-            ' - Device: '+fpDevice.DeviceToString(False) + sLineBreak +
-            StringOfChar('-',80) + sLineBreak );
-
-  if fpDevice.Porta <> '' then
-     fpDevice.Ativar ;
-
-  fpAtivo := true ;
-  fpEtqInicializada := False;
-  fpEtqInicializada := False;
-end;
-
-procedure TACBrETQClass.Desativar;
-begin
-  if not fpAtivo then exit ;
-
-  if fpDevice.Porta <> '' then
-     fpDevice.Desativar ;
-
-  fpAtivo := false ;
-end;
-
-procedure TACBrETQClass.GravaLog(AString: AnsiString; Traduz: Boolean);
+function TACBrETQClass.ConverterUnidade(UnidadeSaida: TACBrETQUnidade;
+  AValue: Integer): Integer;
 var
-  Tratado: Boolean;
-begin
-  Tratado := False;
+  ValorReal, ValorFinal, DotsMM, DotsPI: Double;
 
-  if Traduz then
-    AString := TranslateUnprintable(AString);
+  procedure AtribuirDots(aDotsMM, aDotsPI: Double);
+  begin
+    DotsMM := aDotsMM;
+    DotsPI := aDotsPI;
+  end;
 
-  if Assigned( fpOnGravarLog ) then
-    fpOnGravarLog( AString, Tratado);
-
-  if not Tratado then
-    WriteLog(fpArqLOG, '-- '+FormatDateTime('dd/mm hh:nn:ss:zzz',now)+' '+ AString);
-end;
-
-function TACBrETQClass.ConverterUnidade( UnidadeSaida : TACBrETQUnidade;
-   AValue : Integer) : Integer ;
-Var
-  ValorReal, ValorFinal, DotsMM, DotsPI : Double ;
 begin
   Result     := AValue;
-  ValorFinal := AValue ;  // evita Warnings
-  ValorReal  := AValue ;
+  ValorFinal := AValue;  // Evita Warnings
+  ValorReal  := AValue;
 
-  if UnidadeSaida = Unidade then
-     exit ;
+  if (UnidadeSaida = Unidade) then
+    Exit;
 
   case DPI of
-    dpi300 :
-      begin
-        DotsMM := 12;
-        DotsPI := 300;
-      end ;
-
-    dpi600 :
-      begin
-        DotsMM := 23.5;
-        DotsPI := 600;
-      end ;
+    dpi300: AtribuirDots(12, 300);
+    dpi600: AtribuirDots(23.5, 600);
   else
-   begin
-     DotsMM := 8;
-     DotsPI := 203;
-   end ;
-  end ;
+    AtribuirDots(8, 203);
+  end;
 
   case Unidade of
-    etqMilimetros : ValorReal := AValue / 10 ;
-    etqPolegadas  : ValorReal := AValue / 100;
-  end ;
+    etqMilimetros: ValorReal := (AValue / 10);
+    etqPolegadas:  ValorReal := (AValue / 100);
+  end;
 
   case UnidadeSaida of
-    etqMilimetros :
-       begin
-         case Unidade of
-            etqPolegadas : ValorFinal := ValorReal * 25.4;
-            etqDots      : ValorFinal := ValorReal / DotsMM ;
-         end ;
+    etqMilimetros:
+    begin
+      case Unidade of
+        etqPolegadas: ValorFinal := (ValorReal * 25.4);
+        etqDots:      ValorFinal := (ValorReal / DotsMM);
+      end;
 
-         ValorFinal := ValorFinal * 10;
-       end ;
+      ValorFinal := (ValorFinal * 10);
+    end;
 
-    etqPolegadas :
-       begin
-         case Unidade of
-            etqMilimetros : ValorFinal := ValorReal / 25.4;
-            etqDots       : ValorFinal := ValorReal / DotsPI ;
-         end ;
+    etqPolegadas:
+    begin
+      case Unidade of
+        etqMilimetros: ValorFinal := (ValorReal / 25.4);
+        etqDots:       ValorFinal := (ValorReal / DotsPI);
+      end;
 
-         ValorFinal := ValorFinal * 100;
-       end ;
+      ValorFinal := (ValorFinal * 100);
+    end;
 
-    etqDots :
-       begin
-         case Unidade of
-            etqMilimetros : ValorFinal := ValorReal * DotsMM;
-            etqPolegadas  : ValorFinal := ValorReal * DotsPI ;
-         end ;
-       end ;
-  end ;
+    etqDots:
+    begin
+      case Unidade of
+        etqMilimetros: ValorFinal := (ValorReal * DotsMM);
+        etqPolegadas:  ValorFinal := (ValorReal * DotsPI);
+      end;
+    end;
+  end;
 
-  Result := trunc( RoundTo( ValorFinal, 0 ) );
-end ;
-
-procedure TACBrETQClass.ImprimirBarras(Orientacao: TACBrETQOrientacao;
-  TipoBarras, LarguraBarraLarga, LarguraBarraFina: String;
-  Vertical, Horizontal: Integer; Texto: String; AlturaCodBarras: Integer;
-  ExibeCodigo: TACBrETQBarraExibeCodigo = becPadrao);
-begin
-  raise Exception.Create(ACBrStr('Função ImprimirBarras não implementada em: ') + ModeloStr);
+  Result := trunc(RoundTo(ValorFinal, 0));
 end;
 
-procedure TACBrETQClass.ImprimirCaixa(Vertical, Horizontal, Largura,
-  Altura, EspessuraVertical, EspessuraHorizontal: Integer);
+procedure TACBrETQClass.AdicionarComandos(ACmd: AnsiString;
+  var ACmdList: AnsiString);
 begin
-  raise Exception.Create(ACBrStr('Função ImprimirCaixa não implementada em: ') + ModeloStr);
+  if EstaVazio( ACmd ) then
+    Exit;
+
+  if NaoEstaVazio(ACmdList) then
+    ACmdList := ACmdList + sLineBreak;
+
+  ACmdList := ACmdList + ACmd;
 end;
 
-procedure TACBrETQClass.ImprimirLinha(Vertical, Horizontal, Largura,
-  Altura: Integer);
+procedure TACBrETQClass.VerificarLimiteCopias(const NumCopias: Integer);
 begin
-  raise Exception.Create(ACBrStr('Função ImprimirLinha não implementada em: ') + ModeloStr);
+  if (NumCopias < 1) or (NumCopias > fpLimiteCopias) then
+    raise Exception.Create('NumCopias deve ser de 1 a '+IntToStr(fpLimiteCopias));
 end;
 
-procedure TACBrETQClass.ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte, MultiplicadorH,
-  MultiplicadorV, Vertical, Horizontal: Integer; Texto: String;
-  SubFonte: Integer = 0; ImprimirReverso : Boolean = False);
+function TACBrETQClass.ComandoAbertura: AnsiString;
 begin
-  raise Exception.Create(ACBrStr('Função ImprimirTexto não implementada em: ') + ModeloStr);
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.SetTemperatura(const Value: Integer);
+function TACBrETQClass.ComandosIniciarEtiqueta: AnsiString;
+var
+  ListaComandos: AnsiString;
 begin
-  FTemperatura := Value;
+  ListaComandos := '';
+
+  AdicionarComandos( ComandoBackFeed, ListaComandos );
+  AdicionarComandos( ComandoAbertura, ListaComandos );
+  AdicionarComandos( ComandoUnidade, ListaComandos );
+  AdicionarComandos( ComandoTemperatura, ListaComandos );
+  AdicionarComandos( ComandoResolucao, ListaComandos );
+  AdicionarComandos( ComandoOrigemCoordenadas, ListaComandos );
+  AdicionarComandos( ComandoVelocidade, ListaComandos );
+
+  Result := ListaComandos;
 end;
 
-procedure TACBrETQClass.SetAvanco(const Value: Integer);
+function TACBrETQClass.ComandosFinalizarEtiqueta(NumCopias: Integer;
+  aAvancoEtq: Integer): AnsiString;
+var
+  ListaComandos: AnsiString;
 begin
-  FAvanco := Value;
+  ListaComandos := '';
+
+  if (NumCopias <= 0) then
+    NumCopias := 1;
+
+  if (aAvancoEtq <= 0) then
+    aAvancoEtq := Avanco;
+
+  AdicionarComandos( ComandoCopias(NumCopias), ListaComandos );
+  AdicionarComandos( ComandoImprimir, ListaComandos );
+  AdicionarComandos( ComandoAvancarEtiqueta(aAvancoEtq), ListaComandos );
+
+  Result := ListaComandos;
 end;
 
-procedure TACBrETQClass.SetUnidade(const AValue: TACBrETQUnidade);
+function TACBrETQClass.ComandoLimparMemoria: AnsiString;
 begin
-  FUnidade := AValue;
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.SetVelocidade(const Value: Integer);
+function TACBrETQClass.ComandoBackFeed: AnsiString;
 begin
-  fVelocidade := Value;
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.SetDPI(const AValue : TACBrETQDPI) ;
+function TACBrETQClass.ComandoUnidade: AnsiString;
 begin
-   FDPI := AValue ;
-end ;
-
-procedure TACBrETQClass.IniciarImpressao(Copias: Integer; AvancoEtq: Integer);
-begin
-  if not (EtqInicializada or EtqFinalizada) then
-    IniciarEtiqueta;
-
-  if not EtqFinalizada then
-    FinalizarEtiqueta(Copias, AvancoEtq);
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.EnviarImpressao;
+function TACBrETQClass.ComandoTemperatura: AnsiString;
 begin
-  GravaLog(ListaCmd.Text, True);
-
-  fpDevice.EnviaString(ListaCmd.Text);
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.FinalizarImpressao;
+function TACBrETQClass.ComandoResolucao: AnsiString;
 begin
-  Cmd := '';
-  ListaCmd.Clear;
-
-  fpEtqInicializada := False;
-  fpEtqFinalizada   := False;
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.Imprimir(Copias: Integer; AvancoEtq: Integer);
+function TACBrETQClass.ComandoOrigemCoordenadas: AnsiString;
 begin
-  IniciarImpressao(Copias, AvancoEtq);
-  EnviarImpressao;
-  FinalizarImpressao;
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal
-  : Integer; NomeImagem : String);
+function TACBrETQClass.ComandoVelocidade: AnsiString;
 begin
-  raise Exception.Create(ACBrStr('Função ImprimirImagem não implementada em: ') + ModeloStr);
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.CarregarImagem(AStream : TStream; NomeImagem: String;
-   Flipped : Boolean; Tipo: String);
+function TACBrETQClass.ComandoCopias(const NumCopias: Integer): AnsiString;
 begin
-  raise Exception.Create(ACBrStr('Função CarregarImagem não implementada em: ') + ModeloStr);
+  VerificarLimiteCopias(NumCopias);
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.IniciarEtiqueta;
+function TACBrETQClass.ComandoImprimir: AnsiString;
 begin
-  Cmd := '';
-
-  { Calcula comando de Abertura e atribui à Cmd }
-  CalcularComandoAbertura;
-
-  if not (EtqInicializada or EtqFinalizada) then
-    ListaCmd.Insert(0, Cmd)      //Se Etiqueta não foi iniciada, comandos incluídos no início
-  else
-    ListaCmd.Add(Cmd);           //Se Etiqueta foi iniciada, comandos são concatenados
-
-  fpEtqInicializada := True;
-  fpEtqFinalizada   := False;
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.FinalizarEtiqueta(Copias: Integer; AvancoEtq: Integer);
+function TACBrETQClass.ComandoAvancarEtiqueta(const aAvancoEtq: Integer
+  ): AnsiString;
 begin
-  Cmd := '';
-
-  { Calcula comando de Finalização e atribui à Cmd }
-  CalcularComandoFinaliza(Copias, AvancoEtq);
-
-  ListaCmd.Add(Cmd);
-
-  fpEtqFinalizada   := True;
-  fpEtqInicializada := False;
+  Result := EmptyStr;
 end;
 
-procedure TACBrETQClass.CalcularComandoAbertura;
+function TACBrETQClass.TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString;
 begin
-  // Sem Implementação
+  Result := ChangeLineBreak( aCmd, LF );
 end;
 
-procedure TACBrETQClass.CalcularComandoFinaliza(Copias: Integer;
-  AvancoEtq: Integer);
+function TACBrETQClass.ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao;
+  aFonte, aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer;
+  aTexto: String; aSubFonte: Integer; aImprimirReverso: Boolean): AnsiString;
 begin
-  // Sem Implementação
+  Result := EmptyStr;
+  ErroNaoImplementado('ComandoImprimirTexto');
+end;
+
+function TACBrETQClass.ConverterTipoBarras(TipoBarras: TACBrTipoCodBarra
+  ): String;
+begin
+  Result := IntToStr(Integer(TipoBarras));
+end;
+
+function TACBrETQClass.ComandoImprimirBarras(aOrientacao: TACBrETQOrientacao;
+  aTipoBarras: String; aBarraLarga, aBarraFina, aVertical,
+  aHorizontal: Integer; aTexto: String; aAlturaBarras: Integer;
+  aExibeCodigo: TACBrETQBarraExibeCodigo): AnsiString;
+begin
+  Result := EmptyStr;
+  ErroNaoImplementado('ComandoImprimirBarras');
+end;
+
+function TACBrETQClass.ComandoImprimirLinha(aVertical, aHorizontal, aLargura,
+  aAltura: Integer): AnsiString;
+begin
+  Result := EmptyStr;
+  ErroNaoImplementado('ComandoImprimirLinha');
+end;
+
+function TACBrETQClass.ComandoImprimirCaixa(aVertical, aHorizontal, aLargura,
+  aAltura, aEspVertical, aEspHorizontal: Integer): AnsiString;
+begin
+  Result := EmptyStr;
+  ErroNaoImplementado('ComandoImprimirCaixa');
+end;
+
+function TACBrETQClass.ComandoImprimirImagem(aMultImagem, aVertical,
+  aHorizontal: Integer; aNomeImagem: String): AnsiString;
+begin
+  Result := EmptyStr;
+  ErroNaoImplementado('ComandoImprimirImagem');
+end;
+
+function TACBrETQClass.ComandoCarregarImagem(aStream: TStream;
+  aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
+begin
+  Result := EmptyStr;
+  ErroNaoImplementado('ComandoCarregarImagem');
 end;
 
 end.

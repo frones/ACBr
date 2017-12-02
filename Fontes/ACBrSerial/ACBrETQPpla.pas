@@ -32,381 +32,455 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 27/03/2007: Andrews R Bejatto/ Anderson R Bejatto/ Daniel Simões de Almeida
-|*  - Primeira versao ACBrETQPpla
-|* 17/04/2009: Alexsander da Rosa
-|*  - Parametro "SubFonte" na procedure ImprimirTexto
-|* 29/05/2010: Alexsander da Rosa
-|*  - Propriedade "Unidade" para indicar milimetros/polegadas
-******************************************************************************}
-
 {$I ACBr.inc}
 
 unit ACBrETQPpla;
 
 interface
-uses ACBrETQClass, ACBrUtil, ACBrDevice, Classes ;
+
+uses
+  Classes,
+  ACBrETQClass, ACBrDevice;
 
 type
 
   { TACBrETQPpla }
 
-  TACBrETQPpla = class( TACBrETQClass )
+  TACBrETQPpla = class(TACBrETQClass)
   private
-    function MultiplicadorToStr( Multiplicador : Integer) : String ;
-    function UnidadeToStr( Unidade : TACBrETQUnidade ) : Char ;
-    function VelocidadeToStr(Velocidade: Integer): Char;
+    function AjustarTipoBarras(aTipo: String; aExibeCodigo: TACBrETQBarraExibeCodigo): String;
+    function ConverterMultiplicador(aMultiplicador: Integer): String;
+    function ConverterCoordenadas(aVertical, aHorizontal: Integer): String;
+
+    function ConverterUnidade(AValue: Integer): Integer; overload;
+    function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
+    function ConverterFonte(aFonte: Integer): String;
+    function ConverterSubFonte(aFonte, aSubFonte: Integer): String;
+    function ConverterAlturaBarras(aAlturaBarras: Integer): String;
+
+    function ComandoReverso(aImprimirReverso: Boolean): String;
+    function PrefixoComandoLinhaECaixa(aOrientacao: TACBrETQOrientacao): String;
+    function ConverterDimensao(aAltura, aLargura: Integer): String;
+
+    function AjustarNomeArquivoImagem( aNomeImagem: String): String;
+
+    function ConverterVelocidade(Velocidade: Integer): Char;
+
+    function ComandoTipoImagem(aNomeImagem: String; aFlipped: Boolean; aTipo: String): String;
+    function ConverterMultiplicadorImagem(aMultiplicador: Integer): String;
+
+    function ConverterEspessura(aVertical, aHorizontal: Integer): String;
 
   protected
-    function ConverterUnidade( AValue : Integer) : Integer ; reintroduce;
+    function ComandoAbertura: AnsiString; override;
+    function ComandoUnidade: AnsiString; override;
+    function ComandoTemperatura: AnsiString; override;
+    function ComandoResolucao: AnsiString; override;
+    function ComandoVelocidade: AnsiString; override;
 
   public
     constructor Create(AOwner: TComponent);
 
-    procedure ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte, MultiplicadorH,
-      MultiplicadorV, Vertical, Horizontal: Integer; Texto: String;
-      SubFonte: Integer = 0; ImprimirReverso : Boolean = False); override;
-    procedure ImprimirBarras(Orientacao: TACBrETQOrientacao; TipoBarras,
-      LarguraBarraLarga, LarguraBarraFina: String; Vertical, Horizontal: Integer;
-      Texto: String; AlturaCodBarras: Integer = 0;
-      ExibeCodigo: TACBrETQBarraExibeCodigo = becPadrao); override;
-    procedure ImprimirLinha(Vertical, Horizontal, Largura, Altura: Integer); override;
-    procedure ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
-      EspessuraVertical, EspessuraHorizontal: Integer); override;
-    procedure ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal: Integer;
-       NomeImagem: String); override;
-    procedure CarregarImagem(AStream : TStream; NomeImagem: String;
-       Flipped : Boolean = True; Tipo: String = 'BMP' ); override;
+    function TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString; override;
 
-    procedure CalcularComandoAbertura; override;
-    procedure CalcularComandoFinaliza(Copias: Integer = 1; AvancoEtq: Integer = 0);
-      override;
-    procedure EnviarImpressao; override;
+    function ComandoLimparMemoria: AnsiString; override;
+    function ComandoCopias(const NumCopias: Integer): AnsiString; override;
+    function ComandoImprimir: AnsiString; override;
+    function ComandoAvancarEtiqueta(const aAvancoEtq: Integer): AnsiString; override;
+
+    function ComandosFinalizarEtiqueta(NumCopias: Integer = 1; aAvancoEtq: Integer = 0): AnsiString; override;
+
+    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte,
+      aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer; aTexto: String;
+      aSubFonte: Integer = 0; aImprimirReverso: Boolean = False): AnsiString; override;
+
+    function ConverterTipoBarras(TipoBarras: TACBrTipoCodBarra): String; override;
+    function ComandoImprimirBarras(aOrientacao: TACBrETQOrientacao; aTipoBarras: String;
+      aBarraLarga, aBarraFina, aVertical, aHorizontal: Integer; aTexto: String;
+      aAlturaBarras: Integer; aExibeCodigo: TACBrETQBarraExibeCodigo = becPadrao
+      ): AnsiString; override;
+
+    function ComandoImprimirLinha(aVertical, aHorizontal, aLargura,
+      aAltura: Integer): AnsiString; override;
+
+    function ComandoImprimirCaixa(aVertical, aHorizontal, aLargura, aAltura,
+      aEspVertical, aEspHorizontal: Integer): AnsiString; override;
+
+    function ComandoImprimirImagem(aMultImagem, aVertical, aHorizontal: Integer;
+      aNomeImagem: String): AnsiString; override;
+
+    function ComandoCarregarImagem(aStream: TStream; aNomeImagem: String;
+      aFlipped: Boolean; aTipo: String): AnsiString; override;
   end;
 
 implementation
-Uses  ACBrConsts,
-     {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF}
-     SysUtils, StrUtils;
+
+uses
+  math, sysutils, strutils,
+  {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF}
+  ACBrUtil, ACBrConsts, synautil;
 
 { TACBrETQPpla }
 
 constructor TACBrETQPpla.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
-  fpModeloStr := 'PPLA';
-  Temperatura := 10;
-  Unidade     := etqMilimetros;
+  Unidade := etqMilimetros;
+
+  fpModeloStr    := 'PPLA';
+  fpLimiteCopias := 9999;
 end;
 
-function TACBrETQPpla.MultiplicadorToStr(Multiplicador : Integer) : String ;
+function TACBrETQPpla.ConverterMultiplicador(aMultiplicador: Integer): String;
 begin
-  if (Multiplicador >= 0) and (Multiplicador < 10) then
-     Result := IntToStr(Multiplicador)
-  else if Multiplicador < 24 then
-     Result := chr(Multiplicador+55)   //Ex: 10 + 55 = 65 = A
+  // Multiplicador Horizontal, Multiplicador Vertical:
+  // - De 0 a 9 e de A até O representa as escalas de multiplicação (A=10, B=11, ..., O=24)
+  if (aMultiplicador >= 0) and (aMultiplicador < 10) then
+    Result := IntToStr(aMultiplicador)
+  else if (aMultiplicador < 24) then
+    Result := chr(aMultiplicador + 55)  //Ex: 10 + 55 = 65 = A
   else
-     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 24 para Multiplicador'));
-end ;
+    raise Exception.Create(ACBrStr('Informe um valor entre 0 e 24'));
+end;
 
-function TACBrETQPpla.UnidadeToStr( Unidade : TACBrETQUnidade ) : Char ;
-begin
-  if Unidade = etqPolegadas then
-     Result := 'n'
-  else
-     Result := 'm' ;
-end ;
-
-function TACBrETQPpla.VelocidadeToStr(Velocidade: Integer): Char;
+function TACBrETQPpla.ConverterVelocidade(Velocidade: Integer): Char;
 begin
   case Velocidade of
     1: Result := 'A';
     2: Result := 'B';
-    3: Result := 'C';		
+    3: Result := 'C';
     4: Result := 'D';
   else
-    Result := 'C';		
+    Result := 'C';
   end;
 end;
 
-function TACBrETQPpla.ConverterUnidade(AValue : Integer) : Integer ;
-begin
-  Result := AValue;
-  if Unidade <> etqDots then
-     exit ;
-
-  Result := inherited ConverterUnidade( etqMilimetros, AValue ) ;
-end ;
-
-procedure TACBrETQPpla.ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte, MultiplicadorH,
-  MultiplicadorV, Vertical, Horizontal: Integer; Texto: String;
-  SubFonte: Integer = 0; ImprimirReverso : Boolean = False);
+function TACBrETQPpla.ConverterCoordenadas(aVertical, aHorizontal: Integer
+  ): String;
 var
-   eixoY, eixoX, Smooth: String;
+  wAuxVert, wAuxHoriz: Integer;
 begin
+  wAuxVert  := ConverterUnidade(aVertical);
+  wAuxHoriz := ConverterUnidade(aHorizontal);
 
-  Cmd := '';
+  if (wAuxVert < 0) or (wAuxVert > 9999) then
+    raise Exception.Create('Vertical deve ser de 0 a 9999');
 
-  if (Fonte < 0) or (Fonte > 10) then
-     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 10 para Fonte'));
+  if (wAuxHoriz < 0) or (wAuxHoriz > 9999) then
+    raise Exception.Create('Horizontal deve ser de 0 a 9999');
 
-  if (SubFonte < 0) or (SubFonte > 999) then
-     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 999 para SubFonte'));
+  Result := IntToStrZero(wAuxVert,  4) + IntToStrZero(wAuxHoriz, 4);
+end;
 
-{ Multiplicador Horizontal, Multiplicador Vertical:
- De 0 a 9 e de A até O representa as escalas de multiplicação (A=10, B=11,..., O=24)}
+function TACBrETQPpla.ConverterOrientacao(aOrientacao: TACBrETQOrientacao
+  ): String;
+begin
+  Result := IntToStr(Integer(aOrientacao) + 1);
+end;
 
-  Vertical := ConverterUnidade(Vertical);
-  if (Vertical > 9999) then
-     Raise Exception.Create(ACBrStr('Vertical deve ter no máximo 4 dígitos'));
-  eixoY := IntToStrZero(Vertical, 4);
+function TACBrETQPpla.ConverterFonte(aFonte: Integer): String;
+begin
+  if (aFonte < 0) or (aFonte > 10) then
+    raise Exception.Create('Fonte deve ser de 0 a 10');
 
-  Horizontal := ConverterUnidade(Horizontal);
-  if (Horizontal > 9999) then
-     Raise Exception.Create(ACBrStr('Horizontal deve ter no máximo 4 dígitos'));
-  eixoX := IntToStrZero(Horizontal, 4);
+  Result := Chr(48 + aFonte);
+end;
 
-  if Length(Texto) > 255 then
-     Raise Exception.Create(ACBrStr('Tamanho maximo para o texto 255 caracteres'));
+function TACBrETQPpla.ConverterSubFonte(aFonte, aSubFonte: Integer): String;
+begin
+  if (aSubFonte < 0) or (aSubFonte > 999) then
+    raise Exception.Create('Subfonte deve ser de 0 a 999');
 
-  if Fonte < 9 then
-    Smooth := '000'
+  // SubFonte é utilizado para acessar fontes diferenciadas. Para mais informações
+  //  consulte os apêndices AC e AD do manual PPLA&PPLB.pdf
+  if (aFonte < 9) then
+    Result := '000'
   else
-    Smooth := IntToStrZero(SubFonte, 3);
-
-  Cmd := IntToStr(Integer(Orientacao) + 1)    +
-         Chr(48+Fonte)                        +
-         MultiplicadorToStr( MultiplicadorH ) +
-         MultiplicadorToStr( MultiplicadorV ) +
-         Smooth + eixoY + eixoX + Texto;
-
-  if ImprimirReverso then
-    ListaCmd.Add('A5');    // Inicio Reverso
-
-  ListaCmd.Add(Cmd);
-
-  if ImprimirReverso then
-    ListaCmd.Add('A1');    // Impressão padrao (XOR)
+    Result := IntToStrZero(aSubFonte, 3);
 end;
 
-procedure TACBrETQPpla.ImprimirBarras(Orientacao: TACBrETQOrientacao; TipoBarras,
-  LarguraBarraLarga, LarguraBarraFina: String; Vertical, Horizontal: Integer;
-  Texto: String; AlturaCodBarras: Integer;
-  ExibeCodigo: TACBrETQBarraExibeCodigo);
+function TACBrETQPpla.ConverterEspessura(aVertical, aHorizontal: Integer
+  ): String;
+begin
+  if (aHorizontal < 0) or (aHorizontal > 999) then
+    raise Exception.Create('Espessura Horizontal deve ser de 0 a 999');
+
+  if (aVertical < 0) or (aVertical > 999) then
+    raise Exception.Create('Espessura Vertical deve ser de 0 a 999');
+
+  Result := IntToStrZero(aHorizontal, 3) + IntToStrZero(aVertical, 3);
+end;
+
+function TACBrETQPpla.ConverterDimensao(aAltura, aLargura: Integer): String;
+begin
+  if (aLargura < 0) or (aLargura > 999) then
+    raise Exception.Create('Largura deve ser de 0 a 999');
+
+  if (aAltura < 0) or (aAltura > 999) then
+    raise Exception.Create('Altura deve ser de 0 a 999');
+
+  Result := IntToStrZero(aLargura, 3) + IntToStrZero(aAltura, 3);
+end;
+
+function TACBrETQPpla.ConverterAlturaBarras(aAlturaBarras: Integer
+  ): String;
 var
-   eixoY, eixoX, AltCodBarras: String;
+  wAlturaConv: Integer;
 begin
-  Cmd := '';
+  wAlturaConv := ConverterUnidade(aAlturaBarras);
 
-{Tipo de Código de Barras - vai de 'a' até 't' e de 'A' até 'T'
- Largura da Barra Larga, Largura da Barra Fina - De 0 a 9 e de 'A' até 'O'}
+  if (wAlturaConv < 0) or (wAlturaConv > 999) then
+    raise Exception.Create('Altura Barras deve ser de 0 a 999');
 
-  Vertical := ConverterUnidade(Vertical);
-  if (Vertical > 9999) then
-     Raise Exception.Create(ACBrStr('Vertical deve ter no máximo 4 dígitos'));
-  eixoY := IntToStrZero(Vertical, 4);
-
-  Horizontal := ConverterUnidade(Horizontal);
-  if (Horizontal > 9999) then
-     Raise Exception.Create(ACBrStr('Horizontal deve ter no máximo 4 dígitos'));
-  eixoX := IntToStrZero(Horizontal, 4);
-
-  AlturaCodBarras := ConverterUnidade(AlturaCodBarras);
-  if (AlturaCodBarras < 0) or (AlturaCodBarras > 999) then
-     Raise Exception.Create(ACBrStr('AlturaCodBarras deve ter no máximo 3 dígitos'));
-  AltCodBarras := IntToStrZero(AlturaCodBarras,3);
-
-  case ExibeCodigo of
-     becNAO : TipoBarras := LowerCase(TipoBarras);
-     becSIM : TipoBarras := UpperCase(TipoBarras);
-  end ;
-
-  Cmd := IntToStr(Integer(Orientacao) + 1) + TipoBarras + LarguraBarraLarga +
-         LarguraBarraFina + AltCodBarras + eixoY + eixoX + Texto;
-
-  ListaCmd.Add(Cmd);
+  Result := IntToStrZero(wAlturaConv, 3);
 end;
 
-procedure TACBrETQPpla.ImprimirLinha(Vertical, Horizontal, Largura,
-  Altura: Integer);
+function TACBrETQPpla.ComandoReverso(aImprimirReverso: Boolean): String;
+begin
+  Result := IfThen(aImprimirReverso, 'A5', 'A1');
+end;
+
+function TACBrETQPpla.PrefixoComandoLinhaECaixa(aOrientacao: TACBrETQOrientacao
+  ): String;
+begin
+  Result := ConverterOrientacao(aOrientacao) + 'X11000';
+end;
+
+function TACBrETQPpla.ComandoTipoImagem(aNomeImagem: String; aFlipped: Boolean;
+  aTipo: String): String;
 var
-   eixoY, eixoX, Larg, Alt: String;
+  Cmd: Char;
 begin
-  Cmd := '';
+  aTipo := UpperCase(LeftStr(aTipo,3));
 
-  if (Vertical < 0) or (Vertical > 9999) then
-     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 9999 para Vertical'));
-  eixoY := IntToStrZero(Vertical, 4);
-
-  if (Horizontal < 0) or (Horizontal > 9999) then
-     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 9999 para Horizontal'));
-  eixoX := IntToStrZero(Horizontal, 4);
-
-  if (Largura < 0) or (Largura > 999) then
-     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 999 para Largura'));
-  Larg := IntToStrZero(Largura, 3);
-
-  if (Altura < 0) or (Altura > 999) then
-     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 999 para Altura'));
-  Alt := IntToStrZero(Altura, 3);
-
-  Cmd := '1X11000' + eixoY + eixoX + 'L' + Larg + Alt;
-
-  ListaCmd.Add(Cmd);
-end;
-
-procedure TACBrETQPpla.ImprimirCaixa(Vertical, Horizontal, Largura, Altura,
-  EspessuraVertical, EspessuraHorizontal: Integer);
-var
-   eixoY, eixoX, Larg, Alt, EspH, EspV: String;
-begin
-  Cmd := '';
-
-  if (Vertical < 0) or (Vertical > 9999) then
-     Raise Exception.Create(ACBrStr('Tamanho máximo para Vertical 4 caracteres'));
-  eixoY := IntToStrZero(Vertical, 4);
-
-  if (Horizontal < 0) or (Horizontal > 9999) then
-     Raise Exception.Create(ACBrStr('Tamanho máximo para Horizontal 4 caracteres'));
-  eixoX := IntToStrZero(Horizontal, 4);
-
-  if (Largura < 0) or (Largura > 999) then
-     Raise Exception.Create(ACBrStr('Tamanho máximo para a Largura da Linha 3 caracteres'));
-  Larg := IntToStrZero(Largura, 3);
-
-  if (Altura < 0) or (Altura > 999) then
-     Raise Exception.Create(ACBrStr('Tamanho máximo para a Altura da Linha 3 caracteres'));
-  Alt := IntToStrZero(Altura, 3);
-
-  if (EspessuraHorizontal < 0) or (EspessuraHorizontal > 999) then
-     Raise Exception.Create(ACBrStr('Tamanho máximo para a Espessura das Linhas Horizontais 3 caracteres'));
-  EspH := IntToStrZero(EspessuraHorizontal, 3);
-
-  if (EspessuraVertical < 0) or (EspessuraVertical > 999) then
-     Raise Exception.Create(ACBrStr('Tamanho máximo para a Espessura das Linhas Verticais 3 caracteres'));
-  EspV := IntToStrZero(EspessuraVertical, 3);
-
-  Cmd := '1X11000' + eixoY + eixoX + 'B' + Larg + Alt + EspH + EspV;
-
-  ListaCmd.Add(Cmd);
-end;
-
-procedure TACBrETQPpla.ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal:
-  Integer; NomeImagem: String);
-var
-  Mul, Lin, Col: String;
-begin
-  if (MultiplicadorImagem < 0) or (MultiplicadorImagem > 99) then
-    Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 99 para MultiplicadorImagem'));
-  Mul := IntToStrZero(MultiplicadorImagem, 2);
-
-  if (Vertical < 0) or (Vertical > 9999) then
-    Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 9999 para Vertical'));
-  Lin := IntToStrZero(Vertical, 4);
-
-  if (Horizontal < 0) or (Horizontal > 9999) then
-    Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 9999 para Horizontal'));
-  Col := IntToStrZero(Horizontal, 4);
-
-  NomeImagem := OnlyAlphaNum(UpperCase(LeftStr(Trim(NomeImagem),16))) ;
-
-  Cmd := '1Y' + Mul + '000' + Lin + Col + NomeImagem;
-
-  ListaCmd.Add(Cmd);
-end;
-
-procedure TACBrETQPpla.CarregarImagem(AStream : TStream; NomeImagem: String;
-  Flipped : Boolean; Tipo: String);
-Var
-  TipoImagem : Char ;
-  S  : AnsiString ;
-begin
-  if Tipo = 'PCX' then
-     TipoImagem := 'p'
-  else if Tipo = 'IMG' then
-     TipoImagem := 'i'
-  else if Tipo = 'HEX' then
-     TipoImagem := 'f'
-  else if Tipo = 'BMP' then
-     TipoImagem := 'b'
+  if (aTipo = 'PCX') then
+    Cmd := 'p'
+  else if (aTipo = 'IMG') then
+    Cmd := 'i'
+  else if (aTipo = 'HEX') then
+    Cmd := 'f'
+  else if (aTipo = 'BMP') then
+    Cmd := 'b'
   else
-     raise Exception.Create( ACBrStr('Formato de Imagem deve ser MonoCromático e '+
-                                     ' do tipo: BMP, PCX, IMG ou HEX') );
+    raise Exception.Create(ACBrStr(
+      'Formato de Imagem deve ser Monocromático e do atipo: BMP, PCX, IMG ou HEX'));
 
-  if Flipped then
-     TipoImagem := UpCase( TipoImagem ) ;
+  if aFlipped then
+    Cmd := UpCase(Cmd);
 
-  NomeImagem := OnlyAlphaNum(UpperCase(LeftStr(Trim(NomeImagem),16))) ;
-
-  Cmd := STX + 'IA' + TipoImagem + NomeImagem + CRLF ;
-  S   := '' ;
-
-  AStream.Position := 0 ;
-  SetLength(S,AStream.Size);
-  AStream.ReadBuffer(PAnsiChar(S)^,AStream.Size);
-
-  Cmd := Cmd + S ;
-
-  fpDevice.EnviaString( Cmd );
+  Result := STX + 'IA' + Cmd + AjustarNomeArquivoImagem(aNomeImagem);
 end;
 
-procedure TACBrETQPpla.CalcularComandoAbertura;
-var
-  Temp: String;
+function TACBrETQPpla.AjustarNomeArquivoImagem(aNomeImagem: String): String;
+begin
+  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 16));
+end;
+
+function TACBrETQPpla.ConverterMultiplicadorImagem(aMultiplicador: Integer
+  ): String;
+begin
+  aMultiplicador := max(aMultiplicador,1);
+  if (aMultiplicador > 99) then
+    raise Exception.Create('Multiplicador Imagem deve ser de 0 a 99');
+
+  Result := IntToStrZero(aMultiplicador, 2);
+end;
+
+function TACBrETQPpla.ComandoTemperatura: AnsiString;
 begin
   if (Temperatura < 0) or (Temperatura > 20) then
-    raise Exception.Create(ACBrStr('Informe um valor entre 0 e 20 para Temperatura'));
+    raise Exception.Create('Temperatura deve ser de 0 a 20');
 
-  if (Velocidade < -1) or (Velocidade > 4) then
-    raise Exception.Create(ACBrStr('Informe um valor entre 1 e 4 para Velocidade'));
+  if (Temperatura > 0) then
+    Result := 'H' + IntToStrZero(Temperatura, 2)
+  else
+    Result := EmptyStr;
+end;
 
-  Temp := IntToStrZero(Temperatura, 2);
+function TACBrETQPpla.ComandoVelocidade: AnsiString;
+begin
+  if (Velocidade > 4) then
+    raise Exception.Create('Velocidade deve ser de 1 a 4 ');
 
-  Cmd  := STX + 'L'                     + CRLF +  // Enters label formatting state
-          STX + UnidadeToStr( Unidade ) + CRLF +  // Informa a Unidade utilizada
-          'H' + Temp                    + CRLF +  // Ajusta a Temperatura
-          'D11';                                  // Ajusta a resolução
-					
   if (Velocidade > 0) then
-    Cmd := Cmd + CRLF + 'P' + VelocidadeToStr( Velocidade );
+    Result := 'P' + ConverterVelocidade(Velocidade)
+  else
+    Result := EmptyStr;
 end;
 
-procedure TACBrETQPpla.CalcularComandoFinaliza(Copias: Integer;
-  AvancoEtq: Integer);
-var
-  NCop: String;
+function TACBrETQPpla.ComandoCopias(const NumCopias: Integer): AnsiString;
 begin
-  if (Copias < 0) or (Copias > 9999) then
-    Raise Exception.Create(ACBrStr('Tamanho máximo para o Número de Cópias 4 caracteres'));
-
-  NCop := IntToStrZero(Copias, 4);
-
-  if (AvancoEtq = 0) then
-    AvancoEtq := Avanco;
-
-  if (AvancoEtq < 0) or (AvancoEtq > 779) then
-    Raise Exception.Create(ACBrStr('O Valor máximo para o Avanço de Etiquetas é 779'));
-
-  AvancoEtq := AvancoEtq + 220;
-
-  Cmd := 'Q' + NCop + CRLF +
-         'E'        + CRLF +                    // Ends the job and exit from label formatting mode
-         STX + 'f' + IntToStrZero(AvancoEtq,3); // Ajusta o avanço para corte da etiqueta
+  inherited ComandoCopias(NumCopias);
+  Result := 'Q' + IntToStrZero(NumCopias, 4);
 end;
 
-procedure TACBrETQPpla.EnviarImpressao;
+function TACBrETQPpla.ComandoImprimir: AnsiString;
 begin
-  if LimparMemoria then
-  begin
-    Cmd := STX + 'Q' ;
-    ListaCmd.Add(Cmd);
+  Result := 'E';
+end;
+
+function TACBrETQPpla.ComandoAvancarEtiqueta(const aAvancoEtq: Integer
+  ): AnsiString;
+begin
+  if (aAvancoEtq > 0) then
+    Result := STX + 'f' + IntToStrZero(aAvancoEtq, 3)
+  else
+    Result := EmptyStr;
+end;
+
+function TACBrETQPpla.ComandoUnidade: AnsiString;
+begin
+  if (Unidade = etqPolegadas) then
+    Result := 'n'
+  else
+    Result := 'm';
+
+  Result := STX + Result;
+end;
+
+function TACBrETQPpla.ComandoResolucao: AnsiString;
+begin
+  Result := 'D11';  // Fixo em alta resolucao
+end;
+
+function TACBrETQPpla.ConverterUnidade(AValue: Integer): Integer;
+begin
+  Result := AValue;
+  if (Unidade <> etqDots) then
+    Exit;
+
+  Result := inherited ConverterUnidade(etqMilimetros, AValue);
+end;
+
+function TACBrETQPpla.AjustarTipoBarras(aTipo: String;
+  aExibeCodigo: TACBrETQBarraExibeCodigo): String;
+begin
+  // Tipo de Código de Barras:
+  // - De 'a' até 't' ... De 'A' até 'T'
+
+  Result := PadLeft(aTipo, 1, 'a');
+
+  if (aExibeCodigo = becNAO) then
+    Result := LowerCase(Result)
+  else
+    Result := UpperCase(Result);
+
+  if not (Result[1] in ['a'..'t','A'..'T']) then
+    raise Exception.Create('Tipo Cod.Barras deve ser de "A" a "T"');
+end;
+
+function TACBrETQPpla.ComandoAbertura: AnsiString;
+begin
+  Result := STX + 'L';
+end;
+
+function TACBrETQPpla.ComandosFinalizarEtiqueta(NumCopias: Integer;
+  aAvancoEtq: Integer): AnsiString;
+begin
+  if (aAvancoEtq < 0) or (aAvancoEtq > 779) then
+    raise Exception.Create('Avanço de Etiquetas deve ser de 0 a 779');
+
+  Result := Inherited ComandosFinalizarEtiqueta(NumCopias, aAvancoEtq);
+end;
+
+function TACBrETQPpla.TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString;
+begin
+  Result := ChangeLineBreak( aCmd, CR );
+end;
+
+function TACBrETQPpla.ComandoLimparMemoria: AnsiString;
+begin
+  Result :=  STX + 'Q';
+end;
+
+function TACBrETQPpla.ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao;
+  aFonte, aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer;
+  aTexto: String; aSubFonte: Integer; aImprimirReverso: Boolean): AnsiString;
+begin
+
+  if (Length(aTexto) > 255) then
+    raise Exception.Create(ACBrStr('Tamanho máximo para o texto 255 caracteres'));
+
+  Result := ComandoReverso(aImprimirReverso) + sLineBreak +
+            ConverterOrientacao(aOrientacao) +
+            ConverterFonte(aFonte) +
+            ConverterMultiplicador(aMultHorizontal) +
+            ConverterMultiplicador(aMultVertical) +
+            ConverterSubFonte(aFonte, aSubFonte) +
+            ConverterCoordenadas(aVertical, aHorizontal) +
+            LeftStr(aTexto, 255);
+end;
+
+function TACBrETQPpla.ConverterTipoBarras(TipoBarras: TACBrTipoCodBarra
+  ): String;
+begin
+  case TipoBarras of
+    barCODE39      : Result := 'A';
+    barUPCA        : Result := 'B';
+    barINTERLEAVED : Result := 'D';
+    barCODE128     : Result := 'E';
+    barEAN13       : Result := 'F';
+    barEAN8        : Result := 'G';
+    barCODABAR     : Result := 'I';
+    barCODE93      : Result := 'O';
+    barMSI         : Result := 'K';
+  else
+    Result := '';
   end;
+end;
 
-  inherited EnviarImpressao;
+function TACBrETQPpla.ComandoImprimirBarras(aOrientacao: TACBrETQOrientacao;
+  aTipoBarras: String; aBarraLarga, aBarraFina, aVertical,
+  aHorizontal: Integer; aTexto: String; aAlturaBarras: Integer;
+  aExibeCodigo: TACBrETQBarraExibeCodigo): AnsiString;
+begin
+  // Largura da Barra Larga e Largura da Barra Fina:
+  // - De 0 a 9 ... de 'A' até 'O'
+
+  Result := ConverterOrientacao(aOrientacao) +
+            AjustarTipoBarras(aTipoBarras, aExibeCodigo) +
+            ConverterMultiplicador(aBarraLarga) +
+            ConverterMultiplicador(aBarraFina) +
+            ConverterAlturaBarras(aAlturaBarras) +
+            ConverterCoordenadas(aVertical, aHorizontal) +
+            LeftStr(aTexto, 255);
+end;
+
+function TACBrETQPpla.ComandoImprimirLinha(aVertical, aHorizontal, aLargura,
+  aAltura: Integer): AnsiString;
+begin
+  Result := PrefixoComandoLinhaECaixa(orNormal) +
+            ConverterCoordenadas(aVertical, aHorizontal) +
+            'L' +
+            ConverterDimensao(aAltura, aLargura);
+end;
+
+function TACBrETQPpla.ComandoImprimirCaixa(aVertical, aHorizontal, aLargura,
+  aAltura, aEspVertical, aEspHorizontal: Integer): AnsiString;
+begin
+  Result := PrefixoComandoLinhaECaixa(orNormal) +
+            ConverterCoordenadas(aVertical, aHorizontal) +
+            'B' +
+            ConverterDimensao(aAltura, aLargura) +
+            ConverterEspessura(aEspVertical, aEspHorizontal);
+end;
+
+function TACBrETQPpla.ComandoImprimirImagem(aMultImagem, aVertical,
+  aHorizontal: Integer; aNomeImagem: String): AnsiString;
+begin
+  Result := '1Y' +
+            ConverterMultiplicadorImagem(aMultImagem) + '000' +
+            ConverterCoordenadas(aVertical, aHorizontal) +
+            AjustarNomeArquivoImagem(aNomeImagem);
+end;
+
+function TACBrETQPpla.ComandoCarregarImagem(aStream: TStream;
+  aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
+begin
+  aStream.Position := 0;
+  Result := ComandoTipoImagem(aNomeImagem, aFlipped, aTipo) + CR +
+            ReadStrFromStream(aStream, aStream.Size);
 end;
 
 end.

@@ -43,6 +43,7 @@ Data: 02/12/2017
 -- ACBrDevice --
 [+] Adicionada a propriedade "ArqLOG: String", para permitir a criação de um Log
     para Debug de ACBrDevice
+    (por: DSA)
 
 -- ACBrECFEscECF -
 [*] Ajuste para sempre desabilitar o Controle de Porta, quando ECF for Daruma
@@ -51,6 +52,15 @@ Data: 02/12/2017
     Daruma FS800i, que ocorre quando o ECF ainda está ocupado, processando o
     último documento
 [*] Ajuste em ReducaoZ, ,para considerar como TimeOut mínimo, 120 segundos
+    (por: DSA)
+
+-- ACBrETQ* --
+[*] Ampla refatoração dos fontes de todas as classes de ACBrETQ, visando buscar
+    simplificação e otimização do código
+    (por: Elias e DSA)
+
+-- ACBrETQZplII --
+[+] Implementado os métodos: "CarregarImagem", "ImprimirImagem"
     (por: DSA)
 
 Data: 30/11/2017

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/12/2017
+-- ACBrDevice --
+[+] Adicionada a propriedade "ArqLOG: String", para permitir a criação de um Log
+    para Debug de ACBrDevice
+    (por: DSA)
+
 Data: 30/11/2017
 -- ACBrPosPrinter --
 [+] Adicionada nova classe implementando o protocolo Epson Esc/P2, usado por

@@ -1,12 +1,12 @@
 object frConfiguraSerial: TfrConfiguraSerial
-  Left = 322
-  Top = 155
+  Left = 398
+  Top = 174
   ActiveControl = cmbPortaSerial
   BorderIcons = [biSystemMenu]
   BorderStyle = bsToolWindow
   Caption = 'Porta Serial'
-  ClientHeight = 350
-  ClientWidth = 187
+  ClientHeight = 429
+  ClientWidth = 180
   Color = clBtnFace
   Constraints.MinHeight = 350
   Constraints.MinWidth = 180
@@ -88,6 +88,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Top = 70
     Width = 161
     Height = 21
+    ItemHeight = 13
     TabOrder = 1
     OnChange = cmbBaudRateChange
     Items.Strings = (
@@ -111,6 +112,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     Style = csDropDownList
+    ItemHeight = 13
     ItemIndex = 3
     TabOrder = 2
     Text = '8'
@@ -127,6 +129,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     Style = csDropDownList
+    ItemHeight = 13
     ItemIndex = 0
     TabOrder = 3
     Text = 'None'
@@ -144,6 +147,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     Style = csDropDownList
+    ItemHeight = 13
     ItemIndex = 0
     TabOrder = 4
     Text = '1'
@@ -159,6 +163,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     Style = csDropDownList
+    ItemHeight = 13
     ItemIndex = 0
     TabOrder = 5
     Text = 'Nenhum'
@@ -175,6 +180,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     Width = 161
     Height = 21
     DropDownCount = 10
+    ItemHeight = 13
     ItemIndex = 0
     TabOrder = 0
     Text = 'COM1'
@@ -192,28 +198,26 @@ object frConfiguraSerial: TfrConfiguraSerial
   end
   object BitBtn1: TBitBtn
     Left = 8
-    Top = 312
+    Top = 395
     Width = 75
     Height = 25
     Caption = '&OK'
-    Kind = bkOK
-    NumGlyphs = 2
     TabOrder = 6
+    Kind = bkOK
   end
   object BitBtn2: TBitBtn
     Left = 94
-    Top = 312
+    Top = 395
     Width = 75
     Height = 25
     Caption = 'Cancelar'
-    Kind = bkCancel
-    NumGlyphs = 2
     TabOrder = 7
+    Kind = bkCancel
   end
   object chHardFlow: TCheckBox
     Left = 8
     Top = 280
-    Width = 71
+    Width = 65
     Height = 19
     Caption = 'HardFlow'
     TabOrder = 8
@@ -222,10 +226,63 @@ object frConfiguraSerial: TfrConfiguraSerial
   object chSoftFlow: TCheckBox
     Left = 96
     Top = 280
-    Width = 67
+    Width = 61
     Height = 19
     Caption = 'SoftFlow'
     TabOrder = 9
     OnClick = chSoftFlowClick
+  end
+  object gbSendBytes: TGroupBox
+    Left = 8
+    Top = 304
+    Width = 161
+    Height = 80
+    Caption = 'Envio de Dados'
+    TabOrder = 10
+    DesignSize = (
+      161
+      80)
+    object lBuffer: TLabel
+      Left = 15
+      Top = 24
+      Width = 76
+      Height = 13
+      Anchors = [akTop, akRight]
+      Caption = 'Buffer de Envio:'
+      Color = clBtnFace
+      ParentColor = False
+    end
+    object lEsperaBuffer: TLabel
+      Left = 24
+      Top = 56
+      Width = 67
+      Height = 13
+      Anchors = [akTop, akRight]
+      Caption = 'Espera Buffer:'
+      Color = clBtnFace
+      ParentColor = False
+    end
+    object seSendBytesCount: TSpinEdit
+      Left = 96
+      Top = 20
+      Width = 56
+      Height = 22
+      MaxValue = 999999
+      MinValue = 0
+      TabOrder = 0
+      Value = 0
+      OnChange = seSendBytesCountChange
+    end
+    object seSendBytesInterval: TSpinEdit
+      Left = 96
+      Top = 52
+      Width = 56
+      Height = 22
+      MaxValue = 9999
+      MinValue = 0
+      TabOrder = 1
+      Value = 0
+      OnChange = seSendBytesIntervalChange
+    end
   end
 end

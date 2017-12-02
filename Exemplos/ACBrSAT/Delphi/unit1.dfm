@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 412
   Top = 169
-  Width = 916
+  Width = 913
   Height = 519
   ActiveControl = PageControl1
   Caption = 'SAT Teste - Projeto ACBr'
@@ -22,7 +22,7 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 0
     Top = 242
-    Width = 900
+    Width = 897
     Height = 6
     Cursor = crVSplit
     Align = alTop
@@ -30,7 +30,7 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 248
-    Width = 900
+    Width = 897
     Height = 189
     ActivePage = tsLog
     Align = alClient
@@ -40,7 +40,7 @@ object Form1: TForm1
       object mLog: TMemo
         Left = 0
         Top = 0
-        Width = 892
+        Width = 889
         Height = 161
         Align = alBottom
         Anchors = [akLeft, akTop, akRight, akBottom]
@@ -157,7 +157,7 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 900
+    Width = 897
     Height = 242
     Align = alTop
     TabOrder = 2
@@ -221,7 +221,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 170
       Top = 1
-      Width = 729
+      Width = 726
       Height = 240
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -229,15 +229,15 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 725
+        Width = 722
         Height = 223
-        ActivePage = Impressao
+        ActivePage = tsDadosSAT
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           DesignSize = (
-            717
+            714
             195)
           object Label9: TLabel
             Left = 21
@@ -313,7 +313,7 @@ object Form1: TForm1
             ParentColor = False
           end
           object sbNomeDLL: TSpeedButton
-            Left = 503
+            Left = 500
             Top = 25
             Width = 24
             Height = 22
@@ -322,7 +322,7 @@ object Form1: TForm1
             OnClick = sbNomeDLLClick
           end
           object Label8: TLabel
-            Left = 199
+            Left = 196
             Top = 164
             Width = 72
             Height = 13
@@ -342,7 +342,7 @@ object Form1: TForm1
           object edNomeDLL: TEdit
             Left = 217
             Top = 24
-            Width = 282
+            Width = 279
             Height = 21
             Cursor = crIBeam
             Anchors = [akLeft, akTop, akRight]
@@ -383,7 +383,7 @@ object Form1: TForm1
             TabOrder = 7
           end
           object cbxAmbiente: TComboBox
-            Left = 548
+            Left = 545
             Top = 23
             Width = 152
             Height = 21
@@ -403,7 +403,7 @@ object Form1: TForm1
             TabOrder = 8
           end
           object GroupBox5: TGroupBox
-            Left = 436
+            Left = 433
             Top = 56
             Width = 265
             Height = 124
@@ -519,7 +519,7 @@ object Form1: TForm1
             end
           end
           object seItensVenda: TSpinEdit
-            Left = 280
+            Left = 277
             Top = 160
             Width = 90
             Height = 22
@@ -651,7 +651,7 @@ object Form1: TForm1
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            717
+            714
             195)
           object Label2: TLabel
             Left = 10
@@ -674,7 +674,7 @@ object Form1: TForm1
           object edtSwHCNPJ: TEdit
             Left = 10
             Top = 31
-            Width = 358
+            Width = 355
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
@@ -682,7 +682,7 @@ object Form1: TForm1
           object edtSwHAssinatura: TEdit
             Left = 10
             Top = 89
-            Width = 623
+            Width = 620
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 1
@@ -1438,7 +1438,7 @@ object Form1: TForm1
         object TabSheet1: TTabSheet
           Caption = 'Valida'#231#227'o'
           DesignSize = (
-            717
+            714
             195)
           object Label33: TLabel
             Left = 25
@@ -1451,18 +1451,20 @@ object Form1: TForm1
             ParentColor = False
           end
           object sbSchemaVendaAPL: TSpeedButton
-            Left = 659
+            Left = 656
             Top = 33
             Width = 24
             Height = 22
+            Anchors = [akTop, akRight]
             Caption = '...'
             OnClick = sbSchemaVendaAPLClick
           end
           object sbSchemaVendaSAT: TSpeedButton
-            Left = 659
+            Left = 656
             Top = 81
             Width = 24
             Height = 22
+            Anchors = [akTop, akRight]
             Caption = '...'
             OnClick = sbSchemaVendaSATClick
           end
@@ -1488,7 +1490,7 @@ object Form1: TForm1
           object edSchemaVendaAPL: TEdit
             Left = 16
             Top = 33
-            Width = 640
+            Width = 637
             Height = 21
             Cursor = crIBeam
             Anchors = [akLeft, akTop, akRight]
@@ -1497,7 +1499,7 @@ object Form1: TForm1
           object edSchemaVendaSAT: TEdit
             Left = 16
             Top = 81
-            Width = 640
+            Width = 637
             Height = 21
             Cursor = crIBeam
             Anchors = [akLeft, akTop, akRight]
@@ -1519,7 +1521,7 @@ object Form1: TForm1
   object StatusBar1: TStatusBar
     Left = 0
     Top = 437
-    Width = 900
+    Width = 897
     Height = 23
     Panels = <
       item

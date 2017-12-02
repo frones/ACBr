@@ -2273,6 +2273,7 @@ function TACBrECF.GetEstadoClass: TACBrECFEstado;
 var
   wIgnorarErroSemPapel : Boolean;
 begin
+  Result := estDesconhecido;
   wIgnorarErroSemPapel := IgnorarErroSemPapel;
   try
     ComandoLOG := 'Estado' ;

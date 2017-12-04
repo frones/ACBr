@@ -1178,7 +1178,7 @@ begin
   try
     md := EVP_get_digestbyname( PAnsiChar(NameDgst) );
     if md = Nil then
-      raise EACBrEADException.Create('Erro ao carregar Digest: NameDgst');
+      raise EACBrEADException.Create('Erro ao carregar Digest: '+NameDgst);
 
     EVP_DigestInit( @md_ctx, md ) ;
     if Assigned( fsOnProgress ) then

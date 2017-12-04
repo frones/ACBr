@@ -33,12 +33,6 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 07/08/2013: Primeira Versao - Adaptador conforme ACBRConsultaCNPJ
-|*    Daniel - schrsistemas@gmail.com
-******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -70,6 +64,7 @@ type
 
     function VerificarErros(Str: String): String;
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
+    function GetCaptchaURL : String ;
   public
     procedure Captcha(Stream: TStream);
     function Consulta(const ACPF, DataNasc, ACaptcha: String;
@@ -88,37 +83,36 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador, synautil, strutils, blcksock;
+  strutils,
+  ACBrUtil, ACBrValidador,
+  synacode, synautil;
 
-function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
+function TACBrConsultaCPF.GetCaptchaURL : String ;
 var
-  Ini, Fim: Integer;
+  AURL, Html: String;
 begin
-  Ini:= PosEx(StrInicial, Str, ComecarDe) + Length(StrInicial);
-  if Ini > 0 then
-  begin
-    Fim:= PosEx(StrFinal, Str, Ini);
-    if Fim > 0 then
-      Result:= Copy(Str, Ini, Fim - Ini)
-    else
-      Result:= '';
-  end
-  else
-    Result:= '';
+  try
+    Self.HTTPGet('https://cpf.receita.fazenda.gov.br/situacao/defaultSonoro.asp');
+    Html := UTF8ToNativeString(Self.RespHTTP.Text);
+    //Debug
+    //WriteToTXT('C:\TEMP\ACBrConsultaCPF-Captcha.TXT',Html);
+    AURL := RetornarConteudoEntre(Html, 'src="data:image/png;base64,', '">');
+    
+    Result := StringReplace(AURL, 'amp;', '', []);
+  except
+    on E: Exception do
+    begin
+      raise EACBrConsultaCPFException.Create('Erro na hora de obter a URL do captcha.'+#13#10+E.Message);
+    end;
+  end;
 end;
 
 procedure TACBrConsultaCPF.Captcha(Stream: TStream);
 begin
   try
-    HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
-    HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/captcha/gerarCaptcha.asp');
-    if HTTPSend.ResultCode = 200 then
-    begin
-      HTTPSend.Document.Position := 0;
-      Stream.CopyFrom(HttpSend.Document, HttpSend.Document.Size);
-
-      Stream.Position := 0;
-    end;
+    Stream.Size := 0; // Trunca o Stream
+    WriteStrToStream(Stream, DecodeBase64(GetCaptchaURL));
+    Stream.Position:= 0;
   Except
     on E: Exception do begin
       raise EACBrConsultaCPFException.Create('Erro na hora de fazer o download da imagem do captcha.'+#13#10+E.Message);
@@ -191,20 +185,24 @@ begin
     Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
     Post.WriteString('Enviar=Consultar');}
 
-    Post.WriteString('tempTxtCPF='+ACPF+'&');
-    Post.WriteString('tempTxtNascimento='+datanasc+'&');
-    Post.WriteString('temptxtToken_captcha_serpro_gov_br='+FTokenCaptcha+'&');
+    Post.WriteString('TxtCPF='+ACPF+'&');
+    Post.WriteString('txtDataNascimento='+datanasc+'&');
+    Post.WriteString('txtToken_captcha_serpro_gov_br='+FTokenCaptcha+'&');
     Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
-    Post.WriteString('temptxtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
+    //Post.WriteString('txtTexto_captcha_serpro_gov_br='+Trim(ACaptcha)+'&');
     Post.WriteString('Enviar=Consultar');
 
     Post.Position:= 0;
 
+    Self.IsUTF8 := True; // Receita sempre responde em UTF8, método "HTTPPost", já devolve em String Nativa
     HttpSend.Clear;
     HttpSend.Document.Position:= 0;
     HttpSend.Document.CopyFrom(Post, Post.Size);
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
-    HTTPPost('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/ConsultaPublicaExibir.asp');
+    HTTPPost('https://cpf.receita.fazenda.gov.br/situacao/ConsultaSituacao.asp');
+
+    //Debug
+    //RespHTTP.SaveToFile('C:\TEMP\ACBrConsultaCPF-1.TXT');
 
     Erro := VerificarErros(RespHTTP.Text);
 
@@ -216,17 +214,17 @@ begin
         Resposta.Text := StripHTML(RespHTTP.Text);
         RemoveEmptyLines( Resposta );
 
-        //DEBUG:
-        //Resposta.SaveToFile('C:\temp\cpf.txt');
+        //Debug
+        //Resposta.SaveToFile('C:\TEMP\ACBrConsultaCPF-2.TXT');
 
-        FCPF      := LerCampo(Resposta,'No do CPF:');
+        FCPF      := LerCampo(Resposta,'N&ordm; do CPF:');
         FNome     := LerCampo(Resposta,'Nome:');
-        FDataNascimento := LerCampo(Resposta,'Data de Nascimento:');
-        FSituacao := LerCampo(Resposta,'Situação Cadastral:');
-        FDataInscricao := LerCampo(Resposta,'Data da Inscrição:');
-        FEmissao  := LerCampo(Resposta,'Comprovante emitido às:');
-        FCodCtrlControle   := LerCampo(Resposta,'Código de controle do comprovante:');
-        FDigitoVerificador := LerCampo(Resposta,'Digito Verificador:');
+        FDataNascimento := LerCampo(Resposta,'Data Nascimento:');
+        FSituacao := LerCampo(Resposta,'Situa&ccedil;&atilde;o Cadastral:');
+        FDataInscricao := LerCampo(Resposta,'Data de Inscri&ccedil;&atilde;o no CPF:');
+        FEmissao  := LerCampo(Resposta,'Comprovante emitido &agrave;s:');
+        FCodCtrlControle   := LerCampo(Resposta,'C&oacute;digo de controle do comprovante:');
+        FDigitoVerificador := LerCampo(Resposta,'D&iacute;gito Verificador:');
 
         if Trim(FNome) = '' then
         begin
@@ -239,10 +237,10 @@ begin
       end ;
 
       if Trim(Erro) = 'Erro de data' then
-            raise EACBrConsultaCPFException.Create('Data de nascimento divergente da base da Receita Federal.');
+        raise EACBrConsultaCPFException.Create('Data de nascimento divergente da base da Receita Federal.');
 
       if Trim(FNome) = '' then
-        raise EACBrConsultaCPFException.Create('Não foi possível obter os dados.');
+        raise EACBrConsultaCPFException.Create(ACBrStr('Não foi possível obter os dados.'));
 
       if ARemoverEspacosDuplos then
       begin

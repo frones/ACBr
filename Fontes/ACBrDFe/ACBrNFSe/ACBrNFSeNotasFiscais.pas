@@ -264,6 +264,8 @@ begin
     end;
 
     case Configuracoes.Geral.Provedor of
+      proIPM:     DocElemento := 'nfse';
+      proNotaBlu: DocElemento := 'RPS';
       proSMARAPD: DocElemento := 'tbnfd';
     else
       DocElemento := 'Rps';
@@ -272,7 +274,9 @@ begin
     case Configuracoes.Geral.Provedor of
       proEGoverneISS: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'NotaFiscal';
       pro4R:          InfElemento := 'Rps';
-      proCTA:         InfElemento := 'RPS';
+      proCTA,
+      proNotaBlu:     InfElemento := 'RPS';
+      proIPM:         InfElemento := 'nfse';
       proSMARAPD:     InfElemento := 'nfd';
     else
       InfElemento := InfElemento;
@@ -289,9 +293,10 @@ begin
 
       // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
       // atributo URI ao realizar a assinatura.
-      if i > 0 then
-        FXMLAssinado := Copy(FXMLAssinado, 1, i+4) + '#' + NFSe.InfID.ID +
-                        Copy(FXMLAssinado, i+5, length(FXMLAssinado));
+      if Configuracoes.Geral.Provedor <> proSMARAPD then
+        if (i > 0) and (NFSe.InfID.ID <> '') then
+          FXMLAssinado := Copy(FXMLAssinado, 1, i+4) + '#' + NFSe.InfID.ID +
+                          Copy(FXMLAssinado, i+5, length(FXMLAssinado));
 
       leitor.Grupo := FXMLAssinado;
       NFSe.signature.URI := Leitor.rAtributo('Reference URI=');
@@ -845,20 +850,21 @@ var
   Ok: Boolean;
   AXML: AnsiString;
   N, TamTAG, i: integer;
-  TagF: Array[1..9] of String;
+  TagF: Array[1..10] of String;
 
   function PosNFSe: Integer;
   begin
-    TagF[1] := '</NFS-e>';
-    TagF[2] := '</CompNfse>';
-    TagF[3] := '</Nfse>';
-    TagF[4] := '</Nota>';
-    TagF[5] := '</NFe>';
-    TagF[6] := '</tbnfd>';
-    TagF[7] := '</nfs>';
+    TagF[01] := '</NFS-e>';
+    TagF[02] := '</CompNfse>';
+    TagF[03] := '</Nfse>';
+    TagF[04] := '</Nota>';
+    TagF[05] := '</NFe>';
+    TagF[06] := '</tbnfd>';
+    TagF[07] := '</nfs>';
     // Necessários para o Provedor EL
-    TagF[8] := '</nfeRpsNotaFiscal>';
-    TagF[9] := '</notasFiscais>';
+    TagF[08] := '</nfeRpsNotaFiscal>';
+    TagF[09] := '</notasFiscais>';
+    TagF[10] := '</ComplNfse>';
 
     i := 0;
 
@@ -866,7 +872,7 @@ var
       inc(i);
       TamTAG := Length(TagF[i]) -1;
       Result := Pos(TagF[i], AXMLString);
-    until (i = 9) or (Result <> 0);
+    until (i = 10) or (Result <> 0);
 
   end;
 
@@ -875,8 +881,8 @@ var
   begin
     TamTAG := 18;
     Result := Pos('</NfseCancelamento>', AXMLString);
-    if Result=0 then
-       Result := Pos('</CancelamentoNfse>', AXMLString);
+    if Result = 0 then
+      Result := Pos('</CancelamentoNfse>', AXMLString);
   end;
 
   function PosRPS: Integer;

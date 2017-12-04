@@ -90,6 +90,8 @@ uses
 
 constructor TBloco_Q.Create;
 begin
+  inherited;
+
   FRegistroQ001 := TRegistroQ001.Create;
   FRegistroQ100 := TRegistroQ100List.Create;
   FRegistroQ990 := TRegistroQ990.Create;
@@ -97,6 +99,8 @@ end;
 
 procedure TBloco_Q.CriaRegistros;
 begin
+  inherited;
+
   FRegistroQ001 := TRegistroQ001.Create;
   FRegistroQ100 := TRegistroQ100List.Create;
   FRegistroQ990 := TRegistroQ990.Create;
@@ -109,10 +113,14 @@ begin
   FRegistroQ001.Free;
   FRegistroQ100.Free;
   FRegistroQ990.Free;
+
+  inherited;
 end;
 
 procedure TBloco_Q.LiberaRegistros;
 begin
+  inherited;
+  
   FRegistroQ001.Free;
   FRegistroQ100.Free;
   FRegistroQ990.Free;

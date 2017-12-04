@@ -90,7 +90,6 @@ type
     constructor Create(AOwner: TMDFe);
     destructor Destroy; override;
     function GerarXml: boolean;
-    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador      read FGerador  write FGerador;
     property MDFe: TMDFe            read FMDFe     write FMDFe;
@@ -139,11 +138,6 @@ begin
   FGerador.Free;
   FOpcoes.Free;
   inherited Destroy;
-end;
-
-function TMDFeW.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(MDFe.infMDFe.Id) + '-mdfe.xml';
 end;
 
 function TMDFeW.GerarXml: boolean;

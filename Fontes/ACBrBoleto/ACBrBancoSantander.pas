@@ -890,9 +890,9 @@ begin
 
   case StrToIntDef(Copy(ARetorno[0],17,1),0) of
     1: rCNPJCPF := Copy(ARetorno[0],22,11);
-    2: rCNPJCPF := Copy(ARetorno[0],18,15);
+    2: rCNPJCPF := Copy(ARetorno[0],19,14);
   else
-   rCNPJCPF := Copy(ARetorno[0],18,15);
+   rCNPJCPF := Copy(ARetorno[0],19,14);
   end;
 
   with ACBrBanco.ACBrBoleto do

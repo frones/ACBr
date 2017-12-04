@@ -71,18 +71,21 @@ type
     FOnBeforeWriteRegistroC120: TWriteRegistroEvent;
     FOnBeforeWriteRegistroC170: TWriteRegistroEvent;
     FOnBeforeWriteRegistroC470: TWriteRegistroEvent;
+    FOnBeforeWriteRegistroC465: TWriteRegistroEvent;
     FOnBeforeWriteRegistroC510: TWriteRegistroEvent;
 
     FOnWriteRegistroC111: TWriteRegistroEvent;
     FOnWriteRegistroC120: TWriteRegistroEvent;
     FOnWriteRegistroC170: TWriteRegistroEvent;
     FOnWriteRegistroC470: TWriteRegistroEvent;
+    FOnWriteRegistroC465: TWriteRegistroEvent;
     FOnWriteRegistroC510: TWriteRegistroEvent;
 
     FOnAfterWriteRegistroC111: TWriteRegistroEvent;
     FOnAfterWriteRegistroC120: TWriteRegistroEvent;
     FOnAfterWriteRegistroC170: TWriteRegistroEvent;
     FOnAfterWriteRegistroC470: TWriteRegistroEvent;
+    FOnAfterWriteRegistroC465: TWriteRegistroEvent;
     FOnAfterWriteRegistroC510: TWriteRegistroEvent;
     FOnWriteRegistroC460: TWriteRegistroEvent;
 
@@ -90,33 +93,39 @@ type
     function GetOnAfterWriteRegistroC120: TWriteRegistroEvent;
     function GetOnAfterWriteRegistroC170: TWriteRegistroEvent;
     function GetOnAfterWriteRegistroC470: TWriteRegistroEvent;
+    function GetOnAfterWriteRegistroC465: TWriteRegistroEvent;
     function GetOnAfterWriteRegistroC510: TWriteRegistroEvent;
     function GetOnBeforeWriteRegistroC111: TWriteRegistroEvent;
     function GetOnBeforeWriteRegistroC120: TWriteRegistroEvent;
     function GetOnBeforeWriteRegistroC170: TWriteRegistroEvent;
     function GetOnBeforeWriteRegistroC470: TWriteRegistroEvent;
+    function GetOnBeforeWriteRegistroC465: TWriteRegistroEvent;
     function GetOnBeforeWriteRegistroC510: TWriteRegistroEvent;
     function GetOnWriteRegistroC111: TWriteRegistroEvent;
     function GetOnWriteRegistroC120: TWriteRegistroEvent;
     function GetOnWriteRegistroC170: TWriteRegistroEvent;
     function GetOnWriteRegistroC460: TWriteRegistroEvent;
     function GetOnWriteRegistroC470: TWriteRegistroEvent;
+    function GetOnWriteRegistroC465: TWriteRegistroEvent;
     function GetOnWriteRegistroC510: TWriteRegistroEvent;
     procedure SetOnAfterWriteRegistroC111(const Value: TWriteRegistroEvent);
     procedure SetOnAfterWriteRegistroC120(const Value: TWriteRegistroEvent);
     procedure SetOnAfterWriteRegistroC170(const Value: TWriteRegistroEvent);
     procedure SetOnAfterWriteRegistroC470(const Value: TWriteRegistroEvent);
+    procedure SetOnAfterWriteRegistroC465(const Value: TWriteRegistroEvent);
     procedure SetOnAfterWriteRegistroC510(const Value: TWriteRegistroEvent);
     procedure SetOnBeforeWriteRegistroC111(const Value: TWriteRegistroEvent);
     procedure SetOnBeforeWriteRegistroC120(const Value: TWriteRegistroEvent);
     procedure SetOnBeforeWriteRegistroC170(const Value: TWriteRegistroEvent);
     procedure SetOnBeforeWriteRegistroC470(const Value: TWriteRegistroEvent);
+    procedure SetOnBeforeWriteRegistroC465(const Value: TWriteRegistroEvent);
     procedure SetOnBeforeWriteRegistroC510(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC111(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC120(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC170(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC460(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC470(const Value: TWriteRegistroEvent);
+    procedure SetOnWriteRegistroC465(const Value: TWriteRegistroEvent);
     procedure SetOnWriteRegistroC510(const Value: TWriteRegistroEvent);
 
   public
@@ -127,18 +136,21 @@ type
     property OnBeforeWriteRegistroC120: TWriteRegistroEvent read GetOnBeforeWriteRegistroC120 write SetOnBeforeWriteRegistroC120;
     property OnBeforeWriteRegistroC170: TWriteRegistroEvent read GetOnBeforeWriteRegistroC170 write SetOnBeforeWriteRegistroC170;
     property OnBeforeWriteRegistroC470: TWriteRegistroEvent read GetOnBeforeWriteRegistroC470 write SetOnBeforeWriteRegistroC470;
+    property OnBeforeWriteRegistroC465: TWriteRegistroEvent read GetOnBeforeWriteRegistroC465 write SetOnBeforeWriteRegistroC465;
     property OnBeforeWriteRegistroC510: TWriteRegistroEvent read GetOnBeforeWriteRegistroC510 write SetOnBeforeWriteRegistroC510;
 
     property OnWriteRegistroC111: TWriteRegistroEvent read GetOnWriteRegistroC111 write SetOnWriteRegistroC111;
     property OnWriteRegistroC120: TWriteRegistroEvent read GetOnWriteRegistroC120 write SetOnWriteRegistroC120;
     property OnWriteRegistroC170: TWriteRegistroEvent read GetOnWriteRegistroC170 write SetOnWriteRegistroC170;
     property OnWriteRegistroC460: TWriteRegistroEvent read GetOnWriteRegistroC460 write SetOnWriteRegistroC460;
+    property OnWriteRegistroC465: TWriteRegistroEvent read GetOnWriteRegistroC465 write SetOnWriteRegistroC465;
     property OnWriteRegistroC470: TWriteRegistroEvent read GetOnWriteRegistroC470 write SetOnWriteRegistroC470;
     property OnWriteRegistroC510: TWriteRegistroEvent read GetOnWriteRegistroC510 write SetOnWriteRegistroC510;
 
     property OnAfterWriteRegistroC111: TWriteRegistroEvent read GetOnAfterWriteRegistroC111 write SetOnAfterWriteRegistroC111;
     property OnAfterWriteRegistroC120: TWriteRegistroEvent read GetOnAfterWriteRegistroC120 write SetOnAfterWriteRegistroC120;
     property OnAfterWriteRegistroC170: TWriteRegistroEvent read GetOnAfterWriteRegistroC170 write SetOnAfterWriteRegistroC170;
+    property OnAfterWriteRegistroC465: TWriteRegistroEvent read GetOnAfterWriteRegistroC465 write SetOnAfterWriteRegistroC465;
     property OnAfterWriteRegistroC470: TWriteRegistroEvent read GetOnAfterWriteRegistroC470 write SetOnAfterWriteRegistroC470;
     property OnAfterWriteRegistroC510: TWriteRegistroEvent read GetOnAfterWriteRegistroC510 write SetOnAfterWriteRegistroC510;
   end;
@@ -181,6 +193,11 @@ begin
    Result := FOnAfterWriteRegistroC470;
 end;
 
+function TEventsBloco_C.GetOnAfterWriteRegistroC465: TWriteRegistroEvent;
+begin
+   Result := FOnAfterWriteRegistroC465;
+end;
+
 function TEventsBloco_C.GetOnAfterWriteRegistroC510: TWriteRegistroEvent;
 begin
    Result := FOnAfterWriteRegistroC510;
@@ -204,6 +221,11 @@ end;
 function TEventsBloco_C.GetOnBeforeWriteRegistroC470: TWriteRegistroEvent;
 begin
    Result := FOnBeforeWriteRegistroC470;
+end;
+
+function TEventsBloco_C.GetOnBeforeWriteRegistroC465: TWriteRegistroEvent;
+begin
+   Result := FOnBeforeWriteRegistroC465;
 end;
 
 function TEventsBloco_C.GetOnBeforeWriteRegistroC510: TWriteRegistroEvent;
@@ -234,6 +256,11 @@ end;
 function TEventsBloco_C.GetOnWriteRegistroC470: TWriteRegistroEvent;
 begin
    Result := FOnWriteRegistroC470;
+end;
+
+function TEventsBloco_C.GetOnWriteRegistroC465: TWriteRegistroEvent;
+begin
+   Result := FOnWriteRegistroC465;
 end;
 
 function TEventsBloco_C.GetOnWriteRegistroC510: TWriteRegistroEvent;
@@ -271,6 +298,14 @@ begin
   FOnAfterWriteRegistroC470 := Value;
 
 //  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC470 := Value;
+end;
+
+procedure TEventsBloco_C.SetOnAfterWriteRegistroC465(
+  const Value: TWriteRegistroEvent);
+begin
+  FOnAfterWriteRegistroC465 := Value;
+
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnAfterWriteRegistroC465 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnAfterWriteRegistroC510(
@@ -311,6 +346,14 @@ begin
   FOnBeforeWriteRegistroC470 := Value;
 
 //  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC470 := Value;
+end;
+
+procedure TEventsBloco_C.SetOnBeforeWriteRegistroC465(
+  const Value: TWriteRegistroEvent);
+begin
+  FOnBeforeWriteRegistroC465 := Value;
+
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnBeforeWriteRegistroC465 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnBeforeWriteRegistroC510(
@@ -359,6 +402,14 @@ begin
   FOnWriteRegistroC470 := Value;
 
 //  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC470 := Value;
+end;
+
+procedure TEventsBloco_C.SetOnWriteRegistroC465(
+  const Value: TWriteRegistroEvent);
+begin
+  FOnWriteRegistroC465 := Value;
+
+//  TACBrSPEDFiscal(FOwner).Bloco_C.OnWriteRegistroC465 := Value;
 end;
 
 procedure TEventsBloco_C.SetOnWriteRegistroC510(

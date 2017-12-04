@@ -347,7 +347,7 @@ type
     fPERC_CAP_TOT: variant;
     fPERC_CAP_VOT: variant;
     fQUALIF: string;
-    fQUALIF_REP_LEG: String;
+    fQUALIF_REP_LEG: TACBrQualificacaoRepLegal;
     fVL_IR_RET: variant;
     fVL_JUR_CAP: variant;
     fVL_REM_TRAB: variant;
@@ -364,7 +364,7 @@ type
     property PERC_CAP_TOT: variant read fPERC_CAP_TOT write fPERC_CAP_TOT;
     property PERC_CAP_VOT: variant read fPERC_CAP_VOT write fPERC_CAP_VOT;
     property CPF_REP_LEG: string read fCPF_REP_LEG write fCPF_REP_LEG;
-    property QUALIF_REP_LEG: String read fQUALIF_REP_LEG write fQUALIF_REP_LEG;
+    property QUALIF_REP_LEG: TACBrQualificacaoRepLegal read fQUALIF_REP_LEG write fQUALIF_REP_LEG;
     property VL_REM_TRAB: variant read fVL_REM_TRAB write fVL_REM_TRAB;
     property VL_LUC_DIV: variant read fVL_LUC_DIV write fVL_LUC_DIV;
     property VL_JUR_CAP: variant read fVL_JUR_CAP write fVL_JUR_CAP;

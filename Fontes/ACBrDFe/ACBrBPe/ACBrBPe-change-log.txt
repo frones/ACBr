@@ -48,6 +48,40 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/11/2017
+-- Diversos --
+[*] Remoção de códigos não utilizados.
+   Por: Italo Jurisato Junior
+-- pcnProcBPe / pcnEventoBPe --
+[*] Removido a function GetVersaoEvento pois este retorna sempre uma versão
+    pré-definida que pode não ser a versão atual do evento.
+    Removido também a function ObterNomeArquivo por não ter nenhuma utilidade.
+   Por: Italo Jurisato Junior
+
+01/11/2017
+-- Diversos --
+[+] Impressão do DABPE em ESCPOS (não foi testado).
+   Por: Italo Jurisato Junior
+
+31/10/2017
+-- pcnBPeR --
+[*] Alterado a posição da leitura do grupo <infBPeSupl>.
+   Por: Italo Jurisato Junior
+
+30/10/2017
+-- ACBrBPeWebServices / pcnBPe / pcnSignatureBPe --
+[*] Adicionado a unit pcnSignatureBPe, pois o valor da URI na assinatura estava
+    errada, costava NFe em vez de BPe, trocado a unit da Signature em pcnBPe e 
+    feita correções em ACBrBPeWebServices pois estava gerando AV quando o BPe
+    é rejeitado.
+   Por: Italo Jurisato Junior
+
+26/10/2017
+-- ACBrBPeWebServices --
+[*] No método Enviar estava gerando o nome da tag bpeDadosMsg com "Zip" no final,
+    foi removido pois tudo indica que alterarão o web services.
+   Por: Italo Jurisato Junior
+
 05/10/2017
 -- Diversos -- 
 [*] Alterações para deixar o componente em conformidade com a Nota Técnica

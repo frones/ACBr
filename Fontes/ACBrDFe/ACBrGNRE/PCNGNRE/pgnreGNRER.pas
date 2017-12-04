@@ -148,7 +148,7 @@ begin
   begin
     GNRE.referencia.periodo := Leitor.rCampo(tcInt, 'periodo');
     GNRE.referencia.mes     := Leitor.rCampo(tcStr, 'mes');
-    GNRE.referencia.ano     := Leitor.rCampo(tcStr, 'ano');
+    GNRE.referencia.ano     := Leitor.rCampo(tcInt, 'ano');
     GNRE.referencia.parcela := Leitor.rCampo(tcInt, 'parcela');
   end;
 

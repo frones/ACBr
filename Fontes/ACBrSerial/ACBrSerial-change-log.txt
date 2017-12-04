@@ -39,6 +39,99 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/12/2017
+-- ACBrDevice --
+[+] Adicionada a propriedade "ArqLOG: String", para permitir a criação de um Log
+    para Debug de ACBrDevice
+    (por: DSA)
+
+-- ACBrECFEscECF -
+[*] Ajuste para sempre desabilitar o Controle de Porta, quando ECF for Daruma
+    (a fim de evitar travamentos na comunicação)
+[*] Ajuste para tratamento de retorno de Erro: "140-Relógio está travado" da
+    Daruma FS800i, que ocorre quando o ECF ainda está ocupado, processando o
+    último documento
+[*] Ajuste em ReducaoZ, ,para considerar como TimeOut mínimo, 120 segundos
+    (por: DSA)
+
+-- ACBrETQ* --
+[*] Ampla refatoração dos fontes de todas as classes de ACBrETQ, visando buscar
+    simplificação e otimização do código
+    (por: Elias e DSA)
+
+-- ACBrETQZplII --
+[+] Implementado os métodos: "CarregarImagem", "ImprimirImagem"
+    (por: DSA)
+
+Data: 30/11/2017
+-- ACBrPosPrinter --
+[+] Adicionada nova classe implementando o protocolo Epson Esc/P2, usado por
+    antigas matriciais, como LX300
+    (Por DSA, e Carlos do Nascimento)
+
+Data: 29/11/2017
+-- ACBrECFEscECF --
+[*] Ajustes para evitar exception quando ECF não responde com os campos esperados
+[*] Método "GetDadosUltimaReducaoZ", modificado para tentar ler 3 vezes os dados
+    da ReduçãoZ, pois Daruma FS800i, em algumas ocasiões responde ao comando com
+    String vazia
+[*] Método "VerificaFimLeitura", modificado para zerar o contador de falhas WAK,
+    quando obtiver algum retorno válido do ECF
+    https://www.projetoacbr.com.br/forum/topic/39391-daruma-fs800i-trava-quando-solicita-data-e-hora-do-softwar-b%C3%A1sico/
+    (por: DSA)
+
+Data: 24/11/2017
+-- ACBrECFEscECF --
+[-] Ajuste para evitar arredondamentos nas chamadas de TACBrECFEscECFComando.AddParamDouble
+    https://www.projetoacbr.com.br/forum/topic/39917-cnf-finalizando-com-1-centavo-a-mais/
+    (por: DSA)
+
+Data: 13/11/2017
+-- ACBrECF --
+[+] Abertura de bilhete de passagem
+    por: regys.silveira
+
+Data: 10/11/2017
+-- ACBrPosPrinter, ACBrEscPosEpson, ACBrEscDaruma, ACBrEscBematech --
+[+] Adicionado suporte as Tags:
+    <a> - Liga Altura Dupla
+    </a> - Desliga Altura Dupla
+    (por: DSA)
+
+Data: 01/11/2017
+-- ACBrPosPrinter --
+[*] Ajuste para que Cmd.PuloDeLinha default seja "sLineBreak"
+    (por: DSA)
+
+Data: 23/10/2017
+-- ACBrDevice --
+[+] Adicionada a propriedade "TimeOutMilissegundos", para permitir definir um
+    TimeOut em milissegundos... o valor informado, será traduzido para "TimeOut"
+
+-- ACBrPosPrinter --
+[+] Adicionado em TACBrPosTipoStatus o item "stErroLeitura"
+[*] Método "LerStatusImpressora", modificado para receber como parâmetro, o número
+    de Tentativas. "Tentativas: Integer, default = 1"
+[*] Método "TxRx", modificado para definir corretamente o TimeOut de comunicação
+
+-- ACBrEscBematech, ACBrEscElgin, ACBrEscPosEpson, ACBrEscDaruma --
+[*] Método "LerStatus", modificado para retornar "stErroLeitura" e não "stErro",
+    quando houver falha na leitura da Serial
+
+-- ACBrEscPosEpson --
+[*] Método "LerStatus", modificado para não mais tentar leitura por 5 vezes.
+    (causando lentidão)
+
+Data: 20/10/2017
+-- ACBrETQ --
+[+] Inclusão de nova propriedade "Velocidade", baseada na contribuição do usuário conforme:
+    https://www.projetoacbr.com.br/forum/topic/39446-definir-velocidade-de-impressão-ppla-e-epl2/
+    (por: Marcelo A. Rodrigues)
+	
+-- ACBrETQClass, ACBrETQPpla, ACBrETQEpl2 --
+[+] Implementação da nova propriedade "Velocidade".
+    (por: Marcelo A. Rodrigues)
+
 Data: 06/10/2017
 -- ACBrPosPrinter --
 [+] Adicionada a propriedade: "VerificarImpressora: Boolean default False"

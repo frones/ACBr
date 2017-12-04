@@ -258,8 +258,8 @@ begin
                                 'cOrgao='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.cOrgao)+sLineBreak+
                                 'cStat='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.cStat)+sLineBreak+
                                 'xMotivo='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.xMotivo+sLineBreak+
-                                'chNFe='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.NomeArquivo+sLineBreak+
-                                'tpEvento='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.chNFe+sLineBreak+
+                                'chNFe='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.chNFe+sLineBreak+
+                                'tpEvento='+TpEventoToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.tpEvento)+sLineBreak+
                                 'xEvento='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.xEvento+sLineBreak+
                                 'nSeqEvento='+IntToStr(ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.nSeqEvento)+sLineBreak+
                                 'CNPJDest='+ACBrNFe1.WebServices.Consulta.procEventoNFe.Items[i].RetEventoNFe.retEvento.Items[J].RetInfEvento.CNPJDest+sLineBreak+
@@ -455,6 +455,10 @@ begin
              try
                CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
              except
+                on E: Exception do
+                begin
+                   raise Exception.Create('Erro ao Carregar DFe: '+E.Message);
+                end;
              end;
            finally
              PathsNFe.Free;
@@ -470,6 +474,10 @@ begin
                try
                  CarregarDFe(PathsNFe, ArqNFe);
                except
+                  on E: Exception do
+                  begin
+                    raise Exception.Create('Erro ao Carregar DFe: '+E.Message);
+                  end;
                end;
              finally
                PathsNFe.Free;
@@ -1669,6 +1677,21 @@ begin
            else
               raise Exception.Create('Ambiente Inválido.');
          end
+
+        else if Cmd.Metodo = 'setlogomarca' then
+        begin
+          if FileExists(Cmd.Params(0)) then
+           begin
+             ACBrNFe1.DANFE.Logo       := Cmd.Params(0);
+             if (Cmd.Params(1) = '1') then
+               edtLogoMarcaNFCeSAT.Text  := ACBrNFe1.DANFE.Logo
+             else
+               edtLogoMarca.Text         := ACBrNFe1.DANFE.Logo;
+             SalvarIni;
+           end
+          else
+             raise Exception.Create('Arquivo não encontrado.');
+        end
 
         else if Cmd.Metodo = 'setformaemissao' then //NFe.SetFormaEmissao(nFormaEmissao)
          begin

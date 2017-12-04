@@ -128,6 +128,7 @@ begin
     for I := 0 to FileStr.Count - 1 do
     begin
       LinhaAtual := FileStr[I];
+      if pos('|', LinhaAtual) = 0 then continue;
 
       if Assigned(FAntesDeInserirLinha) then
         FAntesDeInserirLinha(LinhaAtual, I);

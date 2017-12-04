@@ -829,6 +829,17 @@ begin
             exit;
           end;
 
+          if (not fsTentouSincronizar) and IsDaruma and
+             (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 140) then // 140-Relógio está travado
+          begin
+            GravaLog( '    Daruma Erro:140 - RX <- '+EscECFResposta.Resposta, True);
+            Sleep(200);
+            fsSincronizou       := False;  // Força a sincronização
+            fsTentouSincronizar := True;   // Evita loop infinito, no caso de ocorrer o mesmo erro
+            Self.EnviaComando_ECF();       // Gera chamada recursiva
+            exit;
+          end;
+
           ErroMsg := ACBrStr('Erro retornado pela Impressora: '+ModeloStr+
                              sLineBreak+sLineBreak + ErroMsg ) ;
 
@@ -877,13 +888,13 @@ begin
 
       case Byte1 of
         SOH :
-           begin
-              if LenRet >= 11 then
-              begin
-                 TBR    := LEStrToInt( copy(Retorno,10,2) ) ;
-                 Result := ( LenRet >=  (11 + TBR + 1) ) ;
-              end ;
-           end;
+          begin
+            if LenRet >= 11 then
+            begin
+              TBR    := LEStrToInt( copy(Retorno,10,2) ) ;
+              Result := ( LenRet >=  (11 + TBR + 1) ) ;
+            end ;
+          end;
 
         ACK :
           begin
@@ -907,7 +918,6 @@ begin
               Result      := False;
               TempoLimite := IncSecond(now, TimeOut);
             end ;
-
           end ;
 
         NAK :
@@ -916,67 +926,71 @@ begin
 
       if Result then
       begin
-         try
-            { Esta atribuição, Já verifica o ChkSum, em caso de erro gera exception }
-            EscECFResposta.Resposta := Retorno ;
+        try
+          { Esta atribuição, Já verifica o ChkSum, em caso de erro gera exception }
+          EscECFResposta.Resposta := Retorno ;
 
-            if (Byte1 = SOH) and
-               (EscECFResposta.SEQ <> EscECFComando.SEQ) then  // Despreza esse Bloco
+          if (Byte1 = SOH) and
+             (EscECFResposta.SEQ <> EscECFComando.SEQ) then  // Despreza esse Bloco
+          begin
+            raise EACBrECFCMDInvalido.Create(
+                 'Sequencia de Resposta ('+IntToStr(EscECFResposta.SEQ)+')'+
+                 'diferente da enviada ('+IntToStr(EscECFComando.SEQ)+
+                 '). Bloco Desprezado' ) ;
+          end;
+        except
+          on E : EACBrECFCMDInvalido do
+          begin
+            GravaLog( '              Erro <- '+E.Message + ' - ' + Retorno  , True ) ;
+            Result  := False ;
+            Retorno := '' ;
+            Inc( fsFalhas ) ;
+            GravaLog('         Falha: '+IntToStr(fsFalhas));
+            if fsFalhas <= cNumFalhasMax then
             begin
-               raise EACBrECFCMDInvalido.Create(
-                  'Sequencia de Resposta ('+IntToStr(EscECFResposta.SEQ)+')'+
-                  'diferente da enviada ('+IntToStr(EscECFComando.SEQ)+
-                  '). Bloco Desprezado' ) ;
+              Device.Serial.Purge;
+              PedeStatus
             end;
-         except
-            on E : EACBrECFCMDInvalido do
-             begin
-               GravaLog( '              Erro <- '+E.Message + ' - ' + Retorno  , True ) ;
-               Result  := False ;
-               Retorno := '' ;
-               Inc( fsFalhas ) ;
-               GravaLog('         Falha: '+IntToStr(fsFalhas));
-               if fsFalhas <= cNumFalhasMax then
-               begin
-                 Device.Serial.Purge;
-                 PedeStatus
-               end;
-             end
-            else
-               raise ;
-         end ;
+          end
+          else
+            raise ;
+        end ;
       end ;
     end;
 
     if Result then
     begin
-       if (Byte1 = WAK) then // Ocupado, aguarde e solicite novo Status
+      if (Byte1 = WAK) then // Ocupado, aguarde e solicite novo Status
+      begin
+        if (fsWAKCounter > 0) and                // Já esteve ocupada antes ?
+           (EscECFComando.fsCMD in [22,26]) and  // Foi um comando de "Leitura de Informações" ?
+           (IsBematech or IsDaruma) and
+           (( fsWAKCounter * cEsperaWAK ) >= (TimeOut*1000)) then  // Atingiu o TimeOut ?
         begin
-          if (fsWAKCounter > 0) and                // Já esteve ocupada antes ?
-             (EscECFComando.fsCMD in [22,26]) and  // Foi um comando de "Leitura de Informações" ?
-             (IsBematech or IsDaruma) and
-             (( fsWAKCounter * cEsperaWAK ) >= (TimeOut*1000)) then  // Atingiu o TimeOut ?
-          begin
-             // Muitos pedidos de Status... Bematech entrou em Loop... envie o comando novamente...
-            GravaLog('*** ECF em possível loop infinito: '+IntToStr(fsWAKCounter)+
-                     ' respostas de ocupado. Reenviando o último comando');
-            GravaLog('        Reenvio TX -> ' + ComandoEnviado, True);
-            Device.EnviaString(ComandoEnviado);
-            Retorno := '';
-            fsWAKCounter := 0;
-            TempoLimite := IncSecond(Now, TimeOut);
-          end
-          else
-          begin
-            Inc( fsWAKCounter );
-            GravaLog('                RX <- '+Retorno+ ' ('+IntToStr(fsWAKCounter)+')', True);
-            Sleep( cEsperaWAK );
-            PedeStatus;
-          end;
-
-          Result := False;
+          // Muitos pedidos de Status... Bematech entrou em Loop... envie o comando novamente...
+          GravaLog('*** ECF em possível loop infinito: '+IntToStr(fsWAKCounter)+
+                   ' respostas de ocupado. Reenviando o último comando');
+          GravaLog('        Reenvio TX -> ' + ComandoEnviado, True);
+          Device.EnviaString(ComandoEnviado);
+          Retorno := '';
+          fsWAKCounter := 0;
+          TempoLimite := IncSecond(Now, TimeOut);
         end
-       else if (Byte1 = SOH) and (EscECFResposta.CAT = 0) then
+        else
+        begin
+          Inc( fsWAKCounter );
+          GravaLog('                RX <- '+Retorno+ ' ('+IntToStr(fsWAKCounter)+')', True);
+          Sleep( cEsperaWAK );
+          PedeStatus;
+        end;
+
+        Result := False;
+      end
+      else
+      begin
+        fsWAKCounter := 0;
+
+        if (Byte1 = SOH) and (EscECFResposta.CAT = 0) then
         begin
           if not TestBit( EscECFResposta.RET.ECF, 0 ) then // Existem mais dados ?
           begin
@@ -986,6 +1000,7 @@ begin
             Result := False;
           end;
         end;
+      end;
     end
     else
     begin
@@ -1148,7 +1163,7 @@ end;
 
 procedure TACBrECFEscECFComando.AddParamDouble(ADouble: Double; Decimais: Byte);
 begin
-  AddParamInteger( Round( ADouble * power(10, Decimais) ) ) ;
+  AddParamInteger( TruncFix( ADouble * power(10, Decimais) ) ) ;
 end;
 
 procedure TACBrECFEscECFComando.AddParamInteger(AInteger: Integer);
@@ -1270,8 +1285,8 @@ constructor TACBrECFEscECF.create( AOwner : TComponent ) ;
 begin
   inherited create( AOwner ) ;
 
-  fsEscECFComando  := TACBrECFEscECFComando.create ;
-  fsEscECFResposta := TACBrECFEscECFResposta.create ;
+  fsEscECFComando  := TACBrECFEscECFComando.Create;
+  fsEscECFResposta := TACBrECFEscECFResposta.Create;
   fsEscECFProtocolo := TACBrECFEscECFProtocolo.Create(Self);
 
   fpDevice.HandShake := hsDTR_DSR ;
@@ -1375,17 +1390,21 @@ begin
      begin
        if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
          MaxLinhasBuffer := 5;
+
+       if (CompareVersions(fsNumVersao, '01.00.02') >= 0) then
+       begin
+         // http://partners.bematech.com.br/bemacast/paginas/post.aspx?title=edicao-241---o-ecf-bematech-mp-4200-th-fi-ii&id=6220
+         fpNumMaxLinhasRodape := 20;
+       end;
      end
      else if IsEpson then
      begin
        fpPaginaDeCodigo := 850;
        fpColunas := 57;
-     end;
-
-     if IsBematech and (CompareVersions(fsNumVersao, '01.00.02') >= 0) then
+     end
+     else if IsDaruma then
      begin
-       // http://partners.bematech.com.br/bemacast/paginas/post.aspx?title=edicao-241---o-ecf-bematech-mp-4200-th-fi-ii&id=6220
-       fpNumMaxLinhasRodape := 20;
+       ControlePorta := False;  // Daruma não trabalha bem com Controle de Porta ativo
      end;
 
      LeRespostasMemoria;
@@ -2135,6 +2154,7 @@ begin
    end;
 
   EscECFComando.AddParamInteger(0); // Imprime no ECF
+  EscECFComando.TimeOut := max(TimeOut, 120); // TimeOut de no mínimo 2 minutos
 
   try
      EnviaComando ;
@@ -2173,10 +2193,13 @@ begin
   EnviaComando;
 
   RespostasComando.Clear;
-  RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
-  RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  if (EscECFResposta.Params.Count > 3) then
+  begin
+    RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+    RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  end;
   SalvaRespostasMemoria(False);
 end;
 
@@ -2297,14 +2320,17 @@ begin
   EnviaComando;
 
   //RespostasComando.Clear;
-  RespostasComando.AddField( 'Pagto'+IntToStr(I), APagto );
-  RespostasComando.AddField( 'COO',            EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',       EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta',     EscECFResposta.Params[2] );
-  RespostasComando.AddField( 'NumSerie',       EscECFResposta.Params[3] );
-  RespostasComando.AddField( 'SeqPagto',       EscECFResposta.Params[4] );
-  RespostasComando.AddField( 'NumParcela',     EscECFResposta.Params[5] );
-  RespostasComando.AddField( 'NumParcelaFalta',EscECFResposta.Params[6] );
+  if (EscECFResposta.Params.Count > 6) then
+  begin
+    RespostasComando.AddField( 'Pagto'+IntToStr(I), APagto );
+    RespostasComando.AddField( 'COO',            EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',       EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta',     EscECFResposta.Params[2] );
+    RespostasComando.AddField( 'NumSerie',       EscECFResposta.Params[3] );
+    RespostasComando.AddField( 'SeqPagto',       EscECFResposta.Params[4] );
+    RespostasComando.AddField( 'NumParcela',     EscECFResposta.Params[5] );
+    RespostasComando.AddField( 'NumParcelaFalta',EscECFResposta.Params[6] );
+  end;
 
   Consumidor.Enviado := True ;
   fsEmPagamento := false ;
@@ -2689,10 +2715,13 @@ begin
   EnviaComando;
 
   RespostasComando.Clear;
-  RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
-  RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  if (EscECFResposta.Params.Count > 3) then
+  begin
+    RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+    RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  end;
 
   Consumidor.Enviado := True ;
   fsEmPagamento := false ;
@@ -2726,9 +2755,13 @@ begin
 
   EnviaComando ;
 
-  RespostasComando.AddField( 'NumUltItem', EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[2] );
+  if (EscECFResposta.Params.Count > 2) then
+  begin
+    RespostasComando.AddField( 'NumUltItem', EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[2] );
+  end;
+
   fsEmPagamento := false ;
 
   SalvaRespostasMemoria(True);
@@ -2755,8 +2788,12 @@ begin
 
   EnviaComando ;
 
-  RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  if (EscECFResposta.Params.Count > 1) then
+  begin
+    RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  end;
+
   SalvaRespostasMemoria(False);
 end;
 
@@ -2860,7 +2897,9 @@ begin
   EscECFComando.AddParamInteger( NumItem );
   EnviaComando;
 
-  RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[0] );
+  if (EscECFResposta.Params.Count > 0) then
+    RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[0] );
+
   SalvaRespostasMemoria(False);
 end;
 
@@ -2876,8 +2915,12 @@ begin
 
   EnviaComando ;
 
-  RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  if (EscECFResposta.Params.Count > 1) then
+  begin
+    RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  end;
+
   SalvaRespostasMemoria(False);
 end;
 
@@ -2893,8 +2936,12 @@ begin
 
   EnviaComando ;
 
-  RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  if (EscECFResposta.Params.Count > 1) then
+  begin
+    RespostasComando.AddField( 'TotalItem',  EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  end;
+
   SalvaRespostasMemoria(False);
 end;
 
@@ -2913,10 +2960,13 @@ begin
   EnviaComando;
 
   RespostasComando.Clear;
-  RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
-  RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  if (EscECFResposta.Params.Count > 3) then
+  begin
+    RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+    RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  end;
 
   fsEmPagamento := false ;
   SalvaRespostasMemoria(False);
@@ -2930,8 +2980,12 @@ begin
   EscECFComando.AddParamDouble( Valor ) ;
   EnviaComando;
 
-  RespostasComando.AddField( 'NumUltItem', EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  if (EscECFResposta.Params.Count > 1) then
+  begin
+    RespostasComando.AddField( 'NumUltItem', EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'SubTotal',   EscECFResposta.Params[1] );
+  end;
+
   fsEmPagamento := false ;
   SalvaRespostasMemoria(True);
 end;
@@ -3005,10 +3059,14 @@ begin
 
   EnviaComando ;
 
-  RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
-  RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  if (EscECFResposta.Params.Count > 3) then
+  begin
+    RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+    RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  end;
+
   SalvaRespostasMemoria(False);
 end;
 
@@ -3028,9 +3086,13 @@ begin
   end ;
   EnviaComando ;
 
-  RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+  if (EscECFResposta.Params.Count > 2) then
+  begin
+    RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+  end;
+
   fsEmPagamento := false ;
 
   SalvaRespostasMemoria(False);
@@ -3051,7 +3113,9 @@ begin
   end ;
   EnviaComando ;
 
-  RespostasComando.AddField( 'SubTotal', EscECFResposta.Params[0] );
+  if (EscECFResposta.Params.Count > 0) then
+    RespostasComando.AddField( 'SubTotal', EscECFResposta.Params[0] );
+
   SalvaRespostasMemoria(False);
 end;
 
@@ -3065,7 +3129,9 @@ begin
   end ;
   EnviaComando ;
 
-  RespostasComando.AddField( 'SubTotal', EscECFResposta.Params[0] );
+  if (EscECFResposta.Params.Count > 0) then
+    RespostasComando.AddField( 'SubTotal', EscECFResposta.Params[0] );
+
   SalvaRespostasMemoria(False);
 end;
 
@@ -3439,9 +3505,13 @@ begin
   EscECFComando.AddParamInteger( 1 );  // Aciona a Guilhotina
   EnviaComando;
 
-  RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+  if (EscECFResposta.Params.Count > 2) then
+  begin
+    RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+  end;
+
   fsEmPagamento := false ;
   SalvaRespostasMemoria(False);
 end;
@@ -3542,7 +3612,7 @@ end;
 function TACBrECFEscECF.GetDadosUltimaReducaoZ : String ;
 var
   DataStr, Reg : String ;
-  I, J, N, ECFCRZ, RZCRZ : Integer;
+  I, J, N, ECFCRZ, RZCRZ, Tentativas: Integer;
   AliqZ : TACBrECFAliquota ;
   ValReg: Double;
 
@@ -3600,11 +3670,18 @@ begin
       raise EACBrECFERRO.Create('Erro ao obter CRZ atual') ;
   end;
 
-  RetornaInfoECF( '17|'+IntToStr(ECFCRZ) ) ;
-  // DEBUG
-  //WriteToTXT('C:\TEMP\REDZ.TXT', EscECFResposta.Params.Text, False, False);
-  if (UpperCase(copy(EscECFResposta.Params.Text, 0, 5)) = 'ERRO:')  then
-    raise EACBrECFERRO.Create(ACBrStr(EscECFResposta.Params.Text)) ;
+  Tentativas := 0;
+  repeat
+    RetornaInfoECF( '17|'+IntToStr(ECFCRZ) ) ;
+    // DEBUG
+    //WriteToTXT('C:\TEMP\REDZ.TXT', EscECFResposta.Params.Text, False, False);
+    if (UpperCase(copy(EscECFResposta.Params.Text, 0, 5)) = 'ERRO:')  then
+      raise EACBrECFERRO.Create(ACBrStr(EscECFResposta.Params.Text)) ;
+    Inc( Tentativas );
+  until (EscECFResposta.TBR > 0) or (Tentativas > 2);
+
+  if (EscECFResposta.TBR = 0) then
+    raise EACBrECFERRO.Create(ACBrStr('Erro ao obter Dados da Redução Z: '+IntToStr(ECFCRZ))) ;
 
   RZCRZ := StrToIntDef( EscECFResposta.Params[0], 0) ;
 
@@ -4192,9 +4269,13 @@ begin
   end ;
   EnviaComando ;
 
-  RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+  if (EscECFResposta.Params.Count > 2) then
+  begin
+    RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+  end;
+
   fsEmPagamento := false ;
   SalvaRespostasMemoria(False);
 end;
@@ -4216,10 +4297,14 @@ begin
   EnviaComando;
 
   RespostasComando.Clear;
-  RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
-  RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  if (EscECFResposta.Params.Count > 3) then
+  begin
+    RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+    RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  end;
+
   SalvaRespostasMemoria(False);
 end;
 
@@ -4235,10 +4320,14 @@ begin
   EnviaComando;
 
   RespostasComando.Clear;
-  RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
-  RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
-  RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
-  RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  if (EscECFResposta.Params.Count > 3) then
+  begin
+    RespostasComando.AddField( 'COO',        EscECFResposta.Params[0] );
+    RespostasComando.AddField( 'DataHora',   EscECFResposta.Params[1] );
+    RespostasComando.AddField( 'VendaBruta', EscECFResposta.Params[2] );
+    RespostasComando.AddField( 'NumSerie',   EscECFResposta.Params[3] );
+  end;
+
   SalvaRespostasMemoria(False);
 end;
 
@@ -4272,15 +4361,19 @@ begin
         AddParamString(LeftStr(Consumidor.Nome,30)) ;
         AddParamString(LeftStr(Consumidor.Endereco,79)) ;
       end;
-      EnviaComando;
 
+      EnviaComando;
       RespostasComando.Clear;
-      RespostasComando.AddField( 'COO',            EscECFResposta.Params[0] );
-      RespostasComando.AddField( 'DataHora',       EscECFResposta.Params[1] );
-      RespostasComando.AddField( 'VendaBruta',     EscECFResposta.Params[2] );
-      RespostasComando.AddField( 'NumSerie',       EscECFResposta.Params[3] );
-      RespostasComando.AddField( 'SeqPagto',       EscECFResposta.Params[4] );
-      RespostasComando.AddField( 'NumParcela',     EscECFResposta.Params[5] );
+
+      if (EscECFResposta.Params.Count > 5) then
+      begin
+        RespostasComando.AddField( 'COO',            EscECFResposta.Params[0] );
+        RespostasComando.AddField( 'DataHora',       EscECFResposta.Params[1] );
+        RespostasComando.AddField( 'VendaBruta',     EscECFResposta.Params[2] );
+        RespostasComando.AddField( 'NumSerie',       EscECFResposta.Params[3] );
+        RespostasComando.AddField( 'SeqPagto',       EscECFResposta.Params[4] );
+        RespostasComando.AddField( 'NumParcela',     EscECFResposta.Params[5] );
+      end;
 
       FechaRelatorio;
 

@@ -2859,6 +2859,7 @@ begin
         infEvento.dhEvento := FEvento.Evento[I].InfEvento.dhEvento;
         infEvento.tpEvento := FEvento.Evento[I].InfEvento.tpEvento;
         infEvento.nSeqEvento := FEvento.Evento[I].InfEvento.nSeqEvento;
+        infEvento.versaoEvento := FEvento.Evento[I].InfEvento.versaoEvento;
 
         case InfEvento.tpEvento of
           teCCe:
@@ -2981,6 +2982,7 @@ begin
   FEvento.idLote := idLote;
 
   FPRetWS := SeparaDadosArray(['nfeRecepcaoEventoResult',
+                               'nfeRecepcaoEventoNFResult',
                                'nfeResultMsg'],FPRetornoWS );
 
 
@@ -3683,10 +3685,14 @@ begin
     Data := Now;
 
   case AItem.schema of
-    schresEvento,
+    schresEvento:
+      Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(AItem.resEvento.tpEvento,
+                                                          AItem.resEvento.CNPJCPF,
+                                                          Data);
+
     schprocEventoNFe:
       Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
-                                                          AItem.resNFe.CNPJCPF,
+                                                          AItem.procEvento.CNPJ,
                                                           Data);
 
     schresNFe,

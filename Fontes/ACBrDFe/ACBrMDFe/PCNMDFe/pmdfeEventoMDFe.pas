@@ -67,7 +67,6 @@ type
     FDetEvento: TDetEvento;
 
     function getcOrgao: Integer;
-    function getVersaoEvento: String;
     function getDescEvento: String;
     function getTipoEvento: String;
   public
@@ -83,7 +82,7 @@ type
     property dhEvento: TDateTime     read FDataEvento     write FDataEvento;
     property tpEvento: TpcnTpEvento  read FTpEvento       write FTpEvento;
     property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
-    property versaoEvento: String    read getVersaoEvento write FversaoEvento;
+    property versaoEvento: String    read FVersaoEvento write FversaoEvento;
     property detEvento: TDetEvento   read FDetEvento      write FDetEvento;
     property DescEvento: String      read getDescEvento;
     property TipoEvento: String      read getTipoEvento;
@@ -152,6 +151,9 @@ type
 
 implementation
 
+uses
+  ACBrUtil;
+
 { TInfEvento }
 
 constructor TInfEvento.Create;
@@ -181,35 +183,39 @@ begin
 end;
 
 function TInfEvento.getDescEvento: String;
+var
+  Desc: String;
 begin
   case fTpEvento of
-    teCCe                      : Result := 'Carta de Correcao';
-    teCancelamento             : Result := 'Cancelamento';
-    teManifDestConfirmacao     : Result := 'Confirmacao da Operacao';
-    teManifDestCiencia         : Result := 'Ciencia da Operacao';
-    teManifDestDesconhecimento : Result := 'Desconhecimento da Operacao';
-    teManifDestOperNaoRealizada: Result := 'Operação nao Realizada';
-    teEPECNFe                  : Result := 'EPEC';
-    teEPEC                     : Result := 'EPEC';
-    teMultiModal               : Result := 'Registro Multimodal';
-    teRegistroPassagem         : Result := 'Registro de Passagem';
-    teRegistroPassagemBRId     : Result := 'Registro de Passagem BRId';
-    teEncerramento             : Result := 'Encerramento';
-    teInclusaoCondutor         : Result := 'Inclusao Condutor';
-    teRegistroCTe              : Result := 'CT-e Autorizado para NF-e';
-    teRegistroPassagemNFeCancelado: Result := 'Registro de Passagem para NF-e Cancelado';
-    teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
-    teCTeAutorizado               : Result := 'CT-e Autorizado';
-    teCTeCancelado                : Result := 'CT-e Cancelado';
+    teCCe                          : Desc := 'Carta de Correção';
+    teCancelamento                 : Desc := 'Cancelamento';
+    teManifDestConfirmacao         : Desc := 'Confirmação da Operação';
+    teManifDestCiencia             : Desc := 'Ciência da Operação';
+    teManifDestDesconhecimento     : Desc := 'Desconhecimento da Operação';
+    teManifDestOperNaoRealizada    : Desc := 'Operação não Realizada';
+    teEPECNFe                      : Desc := 'EPEC';
+    teEPEC                         : Desc := 'EPEC';
+    teMultiModal                   : Desc := 'Registro Multimodal';
+    teRegistroPassagem             : Desc := 'Registro de Passagem';
+    teRegistroPassagemBRId         : Desc := 'Registro de Passagem BRId';
+    teEncerramento                 : Desc := 'Encerramento';
+    teInclusaoCondutor             : Desc := 'Inclusão Condutor';
+    teRegistroCTe                  : Desc := 'CT-e Autorizado para NF-e';
+    teRegistroPassagemNFeCancelado : Desc := 'Registro de Passagem para NF-e Cancelado';
+    teRegistroPassagemNFeRFID      : Desc := 'Registro de Passagem para NF-e RFID';
+    teCTeAutorizado                : Desc := 'CT-e Autorizado';
+    teCTeCancelado                 : Desc := 'CT-e Cancelado';
     teMDFeAutorizado,
-    teMDFeAutorizado2             : Result := 'MDF-e Autorizado';
+    teMDFeAutorizado2              : Desc := 'MDF-e Autorizado';
     teMDFeCancelado,
-    teMDFeCancelado2              : Result := 'MDF-e Cancelado';
-    teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
-    teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
+    teMDFeCancelado2               : Desc := 'MDF-e Cancelado';
+    teVistoriaSuframa              : Desc := 'Vistoria SUFRAMA';
+    teConfInternalizacao           : Desc := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
+
+  Result := ACBrStr(Desc);
 end;
 
 function TInfEvento.getTipoEvento: String;
@@ -219,11 +225,6 @@ begin
   except
     raise EventoException.Create('Tipo do Evento não Implementado!');
   end;
-end;
-
-function TInfEvento.getVersaoEvento: String;
-begin
-  Result := '1.00';
 end;
 
 function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;

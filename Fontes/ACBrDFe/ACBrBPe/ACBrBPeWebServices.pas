@@ -462,7 +462,7 @@ procedure TBPeStatusServico.DefinirDadosMsg;
 var
   ConsStatServ: TConsStatServ;
 begin
-  FPBodyElement := 'bpeDadosMsg';
+//  FPBodyElement := 'bpeDadosMsg';
 
   ConsStatServ := TConsStatServ.Create;
   try
@@ -652,7 +652,7 @@ end;
 
 procedure TBPeRecepcao.DefinirDadosMsg;
 begin
-  FPBodyElement := 'bpeDadosMsgZip';
+//  FPBodyElement := 'bpeDadosMsgZip';
 
   // No envio só podemos ter apena UM BP-e, pois o seu processamento é síncrono
   if FBilhetes.Count > 1 then
@@ -717,22 +717,16 @@ begin
   FTpAmb    := FBPeRetorno.TpAmb;
   FverAplic := FBPeRetorno.verAplic;
   FcUF      := FBPeRetorno.cUF;
-  chBPe     := FBPeRetorno.ProtBPe[0].chBPe;
+  FcStat    := FBPeRetorno.cStat;
+  FPMsg     := FBPeRetorno.xMotivo;
+  FxMotivo  := FBPeRetorno.xMotivo;
 
-  if (FBPeRetorno.protBPe[0].cStat > 0) then
-    FcStat := FBPeRetorno.protBPe[0].cStat
-  else
-    FcStat := FBPeRetorno.cStat;
-
-  if (FBPeRetorno.protBPe[0].xMotivo <> '') then
+  if FBPeRetorno.ProtBPe.Count > 0 then
   begin
-    FPMsg := FBPeRetorno.protBPe[0].xMotivo;
+    chBPe    := FBPeRetorno.ProtBPe[0].chBPe;
+    FcStat   := FBPeRetorno.protBPe[0].cStat;
+    FPMsg    := FBPeRetorno.protBPe[0].xMotivo;
     FxMotivo := FBPeRetorno.protBPe[0].xMotivo;
-  end
-  else
-  begin
-    FPMsg := FBPeRetorno.xMotivo;
-    FxMotivo := FBPeRetorno.xMotivo;
   end;
 
   // Verificar se o BP-e foi autorizado com sucesso
@@ -941,7 +935,7 @@ procedure TBPeConsulta.DefinirDadosMsg;
 var
   ConsSitBPe: TConsSitBPe;
 begin
-  FPBodyElement := 'bpeDadosMsg';
+//  FPBodyElement := 'bpeDadosMsg';
 
   ConsSitBPe := TConsSitBPe.Create;
   try
@@ -1346,13 +1340,17 @@ procedure TBPeEnvEvento.DefinirDadosMsg;
 var
   EventoBPe: TEventoBPe;
   I, F: Integer;
-  Lote, Evento, Eventos, EventosAssinados: AnsiString;
+  Lote, Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
+  FErroValidacao: String;
+  EventoEhValido: Boolean;
+  SchemaEventoBPe: TSchemaBPe;
 begin
-  FPBodyElement := 'bpeDadosMsg';
+//  FPBodyElement := 'bpeDadosMsg';
 
   EventoBPe := TEventoBPe.Create;
   try
     EventoBPe.idLote := FidLote;
+    SchemaEventoBPe  := schErro;
 
     {(*}
     for I := 0 to FEvento.Evento.Count - 1 do
@@ -1366,16 +1364,15 @@ begin
         infEvento.dhEvento := FEvento.Evento[I].infEvento.dhEvento;
         infEvento.tpEvento := FEvento.Evento[I].infEvento.tpEvento;
         infEvento.nSeqEvento := FEvento.Evento[I].infEvento.nSeqEvento;
+        infEvento.versaoEvento := FEvento.Evento[I].InfEvento.versaoEvento;
 
         case infEvento.tpEvento of
-          teCancelamento,
-          teNaoEmbarque:
-          begin
-            infEvento.detEvento.nProt := FEvento.Evento[I].infEvento.detEvento.nProt;
-            infEvento.detEvento.xJust := FEvento.Evento[I].infEvento.detEvento.xJust;
-          end;
-
+          teCancelamento: SchemaEventoBPe := schEnvEventoCancBPe;
+          teNaoEmbarque: SchemaEventoBPe := schEnvEventoNaoEmbBPe;
         end;
+
+        infEvento.detEvento.nProt := FEvento.Evento[I].infEvento.detEvento.nProt;
+        infEvento.detEvento.xJust := FEvento.Evento[I].infEvento.detEvento.xJust;
       end;
     end;
     {*)}
@@ -1417,9 +1414,30 @@ begin
     else
       FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
 
+    // Separa o XML especifico do Evento para ser Validado.
+    AXMLEvento := '<' + ENCODING_UTF8 + '>' +
+                  SeparaDados(FPDadosMsg, 'detEvento');
+
     with TACBrBPe(FPDFeOwner) do
     begin
-      SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico, 0)), FPMsg);
+//      SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico, 0)), FPMsg);
+
+      EventoEhValido := SSL.Validar(FPDadosMsg,
+                                    GerarNomeArqSchema(FPLayout,
+                                                       StringToFloatDef(FPVersaoServico, 0)),
+                                    FPMsg) and
+                        SSL.Validar(AXMLEvento,
+                                    GerarNomeArqSchemaEvento(SchemaEventoBPe,
+                                                             StringToFloatDef(FPVersaoServico, 0)),
+                                    FPMsg);
+    end;
+
+    if not EventoEhValido then
+    begin
+      FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
+        FPMsg;
+
+//      raise EACBrBPeException.CreateDef(FErroValidacao);
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do
@@ -1646,7 +1664,7 @@ procedure TDistribuicaoDFe.DefinirDadosMsg;
 var
   DistDFeInt: TDistDFeInt;
 begin
-  FPBodyElement := 'bpeDadosMsg';
+//  FPBodyElement := 'bpeDadosMsg';
 
   DistDFeInt := TDistDFeInt.Create;
   try

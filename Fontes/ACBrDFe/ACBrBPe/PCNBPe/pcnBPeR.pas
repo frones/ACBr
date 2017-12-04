@@ -377,6 +377,13 @@ begin
     BPe.InfAdic.infCpl     := Leitor.rCampo(tcStr, 'infCpl');
   end;
 
+  leitor.Grupo := Leitor.Arquivo;
+
+  BPe.signature.URI             := Leitor.rAtributo('Reference URI=');
+  BPe.signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
+  BPe.signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
+  BPe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+
   if Leitor.rExtrai(1, 'infBPeSupl') <> '' then
   begin
     BPe.infBPeSupl.qrCodBPe := Leitor.rCampo(tcStr, 'qrCode');
@@ -385,13 +392,6 @@ begin
 
     BPe.infBPeSupl.boardPassBPe := Leitor.rCampo(tcStr, 'boardPassBPe');
   end;
-
-  leitor.Grupo := Leitor.Arquivo;
-
-  BPe.signature.URI             := Leitor.rAtributo('Reference URI=');
-  BPe.signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
-  BPe.signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
-  BPe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
 
   if Leitor.rExtrai(1, 'protBPe') <> '' then
   begin

@@ -571,7 +571,7 @@ begin
                LFill(CNPJ) +
                LFill(CPF) +
                LFill(IE) +
-               IfThen(booExterior, LFill(''), LFill(COD_MUN, 7)) +
+               IfThen(booExterior, LFill('9999999'), LFill(COD_MUN, 7)) +
                LFill(SUFRAMA) +
                LFill(ENDERECO) +
                LFill(NUM) +

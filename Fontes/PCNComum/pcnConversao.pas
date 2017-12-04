@@ -60,7 +60,7 @@ type
 
   TDetFormato   = (tdetInteger,tdetMascara);
   TpcnTipoCampo = (tcStr, tcInt, tcDat, tcDatHor, tcEsp, tcDe2, tcDe3, tcDe4, tcDe10,
-                   tcHor, tcDe6, tcDatCFe, tcHorCFe, tcDatVcto, tcDatHorCFe, tcBoolStr, tcStrOrig); // tcEsp = String: somente numeros;
+                   tcHor, tcDe6, tcDatCFe, tcHorCFe, tcDatVcto, tcDatHorCFe, tcBoolStr, tcStrOrig, tcNumStr); // tcEsp = String: somente numeros;
   TpcnFormatoGravacao = (fgXML, fgTXT);
   TpcnTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada, taSomenteParaNaoAssinada);
 
@@ -761,7 +761,7 @@ begin
     '81 - ICMS DEVIDO À OUTRA UF',
     '90 - ICMS OUTROS',
     '90 - ICMS DEVIDO A UF DE ORIGEM DA PRESTACAO, QUANDO DIFERENTE DA UF DO EMITENTE',
-    'SN - SIMPLES NACIONAL'],
+    '90 - SIMPLES NACIONAL'],
     [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
 end;
 

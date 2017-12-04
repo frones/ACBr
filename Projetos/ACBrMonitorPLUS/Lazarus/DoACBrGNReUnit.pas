@@ -169,7 +169,7 @@ begin
           raise Exception.Create('Forma de Emissão Inválida: '+TpEmisToStr(FormaEmissao))
         else
         begin
-          ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+          ACBrGNRE1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
           cbFormaEmissaoGNRe.ItemIndex := ACBrGNRE1.Configuracoes.Geral.FormaEmissaoCodigo-1;
           SalvarIni;
         end;

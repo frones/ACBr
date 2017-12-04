@@ -49,7 +49,7 @@ uses
 
 type
   TRegistroC100List = class;
-  TRegistroC101List = class; 
+  TRegistroC101List = class;
   TRegistroC105List = class;
   TRegistroC110List = class;
   TRegistroC111List = class;
@@ -57,7 +57,7 @@ type
   TRegistroC113List = class;
   TRegistroC114List = class;
   TRegistroC115List = class;
-  TRegistroC116List = class; 
+  TRegistroC116List = class;
   TRegistroC120List = class;
   TRegistroC130List = class;
   TRegistroC140List = class;
@@ -90,6 +90,7 @@ type
   TRegistroC420List = class;
   TRegistroC425List = class;
   TRegistroC460List = class;
+  TRegistroC465List = class;
   TRegistroC470List = class;
   TRegistroC490List = class;
   TRegistroC495List = class;
@@ -222,7 +223,7 @@ type
     property RegistroC110: TRegistroC110List read FRegistroC110 write FRegistroC110;
     property RegistroC120: TRegistroC120List read FRegistroC120 write FRegistroC120;
     property RegistroC130: TRegistroC130List read FRegistroC130 write FRegistroC130;
-    property RegistroC140: TRegistroC140List read FRegistroC140 write FRegistroC140; 
+    property RegistroC140: TRegistroC140List read FRegistroC140 write FRegistroC140;
     property RegistroC160: TRegistroC160List read FRegistroC160 write FRegistroC160;
     property RegistroC165: TRegistroC165List read FRegistroC165 write FRegistroC165;
     property RegistroC170: TRegistroC170List read FRegistroC170 write FRegistroC170;
@@ -266,7 +267,7 @@ type
     function New: TRegistroC101;
     property Items[Index: Integer]: TRegistroC101 read GetItem write SetItem;
   end;
- 
+
 
   /// Registro C105 - OPERAÇÕES COM ICMS ST RECOLHIDO PARA UF DIVERSA DO DESTINATÁRIO DO DOCUMENTO FISCAL (CÓDIGO 55).
 
@@ -1630,6 +1631,7 @@ type
     fNOM_ADQ: String;             /// Nome do adquirente
 
     FRegistroC470: TRegistroC470List;  /// BLOCO C - Lista de RegistroC110 (FILHO)
+    FRegistroC465: TRegistroC465List;
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -1645,6 +1647,7 @@ type
     property NOM_ADQ: String read fNOM_ADQ write fNOM_ADQ;
     /// Registros FILHOS
     property RegistroC470: TRegistroC470List read FRegistroC470 write FRegistroC470;
+    property RegistroC465: TRegistroC465List read FRegistroC465 write FRegistroC465;
   end;
 
   /// Registro C460 - Lista
@@ -1656,6 +1659,28 @@ type
   public
     function New: TRegistroC460;
     property Items[Index: Integer]: TRegistroC460 read GetItem write SetItem;
+  end;
+
+  /// Registro C465 - CUPOM FISCAL ELETRÔNICO REFERENCIADO {Alteração Versão 2.0.4 03Mar2011}
+
+  TRegistroC465 = class
+  private
+    fCHV_CFE: String;                   /// Chave do Cupom Fiscal Eletrônico
+    fNUM_CCF: String;                   /// Número do cupom fiscal eletrônico
+  public
+    property CHV_CFE: String read FCHV_CFE write FCHV_CFE;
+    property NUM_CCF: String read FNUM_CCF write FNUM_CCF;
+  end;
+
+  /// Registro C465 - Lista
+
+  TRegistroC465List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC465; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC465); /// SetItem
+  public
+    function New: TRegistroC465;
+    property Items[Index: Integer]: TRegistroC465 read GetItem write SetItem;
   end;
 
   /// Registro C470 - ITENS DO DOCUMENTO FISCAL EMITIDO POR ECF (CÓDIGO 02 E 2D)
@@ -3185,6 +3210,24 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistroC465List }
+
+function TRegistroC465List.GetItem(Index: Integer): TRegistroC465;
+begin
+  Result := TRegistroC465(Inherited Items[Index]);
+end;
+
+function TRegistroC465List.New: TRegistroC465;
+begin
+  Result := TRegistroC465.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC465List.SetItem(Index: Integer; const Value: TRegistroC465);
+begin
+  Put(Index, Value);
+end;
+
 { TRegistroC470List }
 
 function TRegistroC470List.GetItem(Index: Integer): TRegistroC470;
@@ -3565,11 +3608,13 @@ end;
 constructor TRegistroC460.Create;
 begin
   FRegistroC470 := TRegistroC470List.Create; // BLOCO C - Lista de Registro (FILHO do FILHO)
+  FRegistroC465 := TRegistroC465List.Create; // BLOCO C - Lista de Registro (FILHO do FILHO)
 end;
 
 destructor TRegistroC460.Destroy;
 begin
   FRegistroC470.Free;
+  FRegistroC465.Free;
   inherited;
 end;
 
@@ -3584,7 +3629,7 @@ end;
 destructor TRegistroC350.Destroy;
 begin
   FRegistroC370.Free;
-  FRegistroC390.Free;  
+  FRegistroC390.Free;
   inherited;
 end;
 

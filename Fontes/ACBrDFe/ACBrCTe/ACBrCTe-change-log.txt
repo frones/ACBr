@@ -47,6 +47,69 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2017
+-- pcteCTeW --
+[*] Corrigido a posíção da criação do grupo <peri> na versão 3.00
+   Por: Italo Jurisato Junior
+
+14/11/2017
+-- pcteCTeR --
+[*] Não estava alimentando o campo Toma03.Toma quando o tomador é outros.
+   Por: Italo Jurisato Junior
+
+15/11/2017
+-- Diversos --
+[*] Remoção de códigos não utilizados.
+   Por: Italo Jurisato Junior
+-- pcteProcCTe / pcteEventoCTe --
+[*] Removido a function GetVersaoEvento pois este retorna sempre uma versão
+    pré-definida que pode não ser a versão atual do evento.
+    Removido também a function ObterNomeArquivo por não ter nenhuma utilidade.
+   Por: Italo Jurisato Junior
+
+14/11/2017
+-- pcteCTeW --
+[*] A tag tpNav é opcional e estava como obrigatória.
+   Por: Italo Jurisato Junior
+
+13/11/2017
+-- pcteCTeW --
+[*] As tags xLAgEmi e Idt só devem ser geradas na versão 2.00.
+   Por: BSoft
+
+09/11/2017
+-- pcteEventoCTe  --
+[*] Descrição do evento com vogais acentuadas e cedilha tem que ser tratado com a função ACBrStr().
+   Por: Daniel Simões
+-- ACBrCTeWebServices --
+[*] Ajuste não estava previsto a leitura do grupo <retEnviOS>
+   Por: Helio
+
+31/10/2017
+-- pcteCTeW --
+[*] https://www.projetoacbr.com.br/forum/topic/39658-sugest%C3%A3o-de-ajuste-para-a-gera%C3%A7%C3%A3o-da-tag-dos-participantes-do-ct-e/
+   Por: Claudio Venancio / Italo Jurisato Junior
+
+27/10/2017
+-- ACBrCTeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/38912-cte-os-como-obter-os-dados-do-retorno-ap%C3%B3s-aprova%C3%A7%C3%A3o/?do=findComment&comment=260350
+   Por: Gabriel Bonzanini
+
+25/10/2017
+-- pcteRetDistDFeInt --
+[*] Correção, para a leitura do valor da prestação.
+   Por: Cleyton
+
+23/10/2017
+-- ACBrCTeWebServices --
+[*] Correção, não identificava corretamente Resumo de Evento e Evento Processado.
+   Por: Italo Jurisato Junior
+
+20/10/2017
+-- pcteCTeW / ACBrCTeConhecimentos --
+[*] Correções para o CT-e OS ao gerar o grupo <infModal>.
+   Por: bSoft
+
 17/10/2017
 -- pcteCTe / ACBrCTeConhecimentos --
 [*] Inicialização dos campos indGlobalizado e indAlteraToma com o valor tiNao.

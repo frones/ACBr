@@ -773,6 +773,17 @@ type
     ftlLucroPresumidoArbitrado,
     ftlImuneIRPJ,
     ftlIsentoIRPJ);
+
+  // Critério de reconhecimento de receitas para empresas tributadas pelo Lucro Presumido
+  TACBrIndRecReceita = (irrRegimeCaixa, irrRegimeCompetencia);
+
+  // Qualificação do representante legal;
+  TACBrQualificacaoRepLegal = (qrlProcurador,
+                               qrlCurador,
+                               qrlMae,
+                               qrlPai,
+                               qrlTutor,
+                               qrlOutro);
   { TBlocos }
 
   TBlocos = class

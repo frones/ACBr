@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/10/2017
+-- ACBrPaf
+[-] Correção registro E3.
+		https://www.projetoacbr.com.br/forum/topic/39589-correção-registro-e3/
+		por : Juliomar Marchetti
+		
 05/01/2017
 --ACBrPAF_R_Class
 [-] Correção de erro para quando o valor passar de mil ele adicionava um ponto como separador de milhar gerando o txt errado.

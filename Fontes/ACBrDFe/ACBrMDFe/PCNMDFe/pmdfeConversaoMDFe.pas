@@ -57,7 +57,7 @@ type
 
   TSchemaMDFe     = (schErro, schMDFe, schEventoMDFe,
                      schresMDFe, schresEvento, schprocMDFe, schprocEventoMDFe,
-                     schconsReciMDFe, schconsSitMDFe, schconsStatServ,
+                     schconsReciMDFe, schconsSitMDFe, schconsStatServMDFe,
                      schmdfeModalAereo, schmdfeModalAquaviario,
                      schmdfeModalFerroviario, schmdfeModalRodoviario,
                      schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe,
@@ -159,7 +159,7 @@ begin
     LayMDFeRecepcao:       Result := schMDFe;
     LayMDFeRetRecepcao:    Result := schconsReciMDFe;
     LayMDFeConsulta:       Result := schconsSitMDFe;
-    LayMDFeStatusServico:  Result := schconsStatServ;
+    LayMDFeStatusServico:  Result := schconsStatServMDFe;
     LayMDFeEvento:         Result := schEventoMDFe;
     LayMDFeConsNaoEnc:     Result := schconsMDFeNaoEnc;
     LayMDFeDistDFeInt:     Result := schdistDFeInt;

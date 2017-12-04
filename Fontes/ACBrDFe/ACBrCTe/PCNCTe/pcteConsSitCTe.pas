@@ -65,7 +65,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
-    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
@@ -86,11 +85,6 @@ destructor TConsSitCTe.Destroy;
 begin
   FGerador.Free;
   inherited;
-end;
-
-function TConsSitCTe.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(FchCTe) + '-ped-sit.xml';
 end;
 
 function TConsSitCTe.GerarXML: Boolean;

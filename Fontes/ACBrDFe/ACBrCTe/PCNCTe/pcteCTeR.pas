@@ -206,6 +206,7 @@ begin
     if Leitor.rExtrai(2, 'toma4') <> '' then
     begin
       (*B29*)CTe.Ide.Toma4.toma    := StrToTpTomador(ok, Leitor.rCampo(tcStr, 'toma'));
+             CTe.Ide.Toma03.Toma   := CTe.Ide.Toma4.toma;
       (*B31*)CTe.Ide.Toma4.CNPJCPF := Leitor.rCampoCNPJCPF;
       (*B33*)CTe.Ide.Toma4.IE      := Leitor.rCampo(tcStr, 'IE');
       (*B34*)CTe.Ide.Toma4.xNome   := Leitor.rCampo(tcStr, 'xNome');

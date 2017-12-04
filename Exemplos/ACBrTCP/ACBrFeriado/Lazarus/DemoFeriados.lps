@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="DemoFeriados.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="28" Y="12"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Frm_Feriados.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="122"/>
+        <CursorPos X="7" Y="131"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="Frm_Feriados.dfm"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="17" Y="27"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="D:\fpcupdeluxe\lazarus\lcl\include\control.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3651"/>
+        <CursorPos X="21" Y="3660"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+    </Units>
+    <JumpHistory Count="7" HistoryIndex="6">
+      <Position1>
+        <Filename Value="DemoFeriados.lpr"/>
+        <Caret Line="12" Column="9"/>
+      </Position1>
+      <Position2>
+        <Filename Value="DemoFeriados.lpr"/>
+        <Caret Line="11" Column="15"/>
+      </Position2>
+      <Position3>
+        <Filename Value="DemoFeriados.lpr"/>
+        <Caret Line="12" Column="29"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Frm_Feriados.pas"/>
+        <Caret Line="33" Column="22" TopLine="22"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Frm_Feriados.pas"/>
+        <Caret Line="6" Column="3" TopLine="122"/>
+      </Position5>
+      <Position6>
+        <Filename Value="DemoFeriados.lpr"/>
+        <Caret Line="12" Column="28"/>
+      </Position6>
+      <Position7>
+        <Filename Value="Frm_Feriados.pas"/>
+        <Caret Line="6" Column="3" TopLine="122"/>
+      </Position7>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

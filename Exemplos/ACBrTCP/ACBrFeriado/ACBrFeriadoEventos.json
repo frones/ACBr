@@ -1,0 +1,589 @@
+{
+	"definicao":
+	{
+		"campos": [
+			{
+				"nome": "data",
+				"descricao": "Informar a data oficial do feriado. O formato deve ser dd/mm. Somente deve ser informada para os feriados fixos, pois a data dos feriados móveis é calculada.",
+				"tipo": "String",
+				"obrigatorio": false
+			},
+			{
+				"nome": "nome",
+				"descricao": "Informar o nome do feriado.",
+				"tipo": "String",
+				"obrigatorio": true
+			},
+			{
+				"nome": "descricao",
+				"descricao": "Informar a descrição do feriado.",
+				"tipo": "String",
+				"obrigatorio": false
+			},
+			{
+				"nome": "tipo",
+				"descricao": "Informar o tipo do feriado.",
+				"valores": "1-Feriado Nacional, 2-Feriado Estadual, 3-Feriado Municipal, 4-Ponto Facultativo",
+				"tipo": "Integer",
+				"obrigatorio": true
+			},
+			{
+				"nome": "listaUF",
+				"descricao": "Para feriados estaduais ou pontos facultativos, pode-se informar a lista das UF em que o dia se aplica.",
+				"tipo": "String",
+				"obrigatorio": false
+			},
+			{
+				"nome": "listaCidade",
+				"descricao": "Para feriados municipais ou pontos facultativos, pode-se informar a lista das cidades em que o dia se aplica.",
+				"tipo": "String",
+				"obrigatorio": false
+			},
+			{
+				"nome": "dataInicio",
+				"descricao": "Informar a data de início do feriado, p. ex. a data em que o feriado foi decretado.",
+				"tipo": "Date",
+				"obrigatorio": false
+			},
+			{
+				"nome": "legislacao",
+				"descricao": "Informar a lei ou o decreto que instituiu o feriado.",
+				"tipo": "String",
+				"obrigatorio": false
+			},
+			{
+				"nome": "legislacaoLink",
+				"descricao": "Informar o link de acesso à lei ou ao decreto que instituiu o feriado.",
+				"tipo": "String",
+				"obrigatorio": false
+			},
+			{
+				"nome": "trocaDiaTipo",
+				"descricao": "Caso o feriado tenha de ser transferido de dia, pode-se informar o tipo de troca de dia do feriado.",
+				"valores": "1-Troca De-Para, 2-De Dia Útil para Segunda ou Sexta",
+				"tipo": "Integer",
+				"obrigatorio": false
+			},
+			{
+				"nome": "trocaDiaDe",
+				"descricao": "Informar a lista dos dias da semana em que, se cair o dia oficial do feriado, ocorrerá a troca.",
+				"tipo": "String",
+				"obrigatorio": false
+			},
+			{
+				"nome": "trocaDiaPara",
+				"descricao": "Informar o dia da semana para o qual será feita a troca.",
+				"tipo": "Integer",
+				"obrigatorio": false
+			},
+			{
+				"nome": "trocaDiaParaSemana",
+				"descricao": "Informar se deve haver troca na semana.",
+				"valores": "..., -1- Semana Anterior, 0-Mesma Semana, 1-Semana Seguinte, ...",
+				"tipo": "Integer",
+				"obrigatorio": false
+			}
+		]
+	},
+	"feriadosFixos": [
+		{
+			"data": "01/01",
+			"nome": "Ano Novo",
+			"tipo": 1,
+			"legislacao": "Lei nº 10607, de 19/12/2002",
+			"legislacaoLink": "http://www.planalto.gov.br/ccivil_03/leis/2002/L10607.htm",
+			"dataInicio": "06/04/1949"
+		},
+		{
+			"data": "04/01",
+			"nome": "Instalação do Estado de Rondônia",
+			"tipo": 2,
+			"listaUF": "RO"
+		},
+		{
+			"data": "20/01",
+			"nome": "Dia do Católico",
+			"tipo": 2,
+			"listaUF": "AC",
+			"dataInicio": "28/06/2016"
+		},
+		{
+			"data": "20/01",
+			"nome": "Dia de S. Sebastião",
+			"tipo": 3,
+			"listaCidade": "3304557"
+		},
+		{
+			"data": "23/01",
+			"nome": "Dia do Evangélico",
+			"tipo": 2,
+			"listaUF": "AC"
+		},
+		{
+			"data": "25/01",
+			"nome": "Aniversário do Município de São Paulo, SP",
+			"tipo": 3,
+			"listaCidade": "3550308"
+		},
+		{
+			"data": "02/02",
+			"nome": "Dia de N. S. dos Navegantes",
+			"tipo": 3,
+			"listaCidade": "4314902"
+		},
+		{
+			"data": "06/03",
+			"nome": "Data Magna do Estado do Pernambuco",
+			"tipo": 2,
+			"listaUF": "PE"
+		},
+		{
+			"data": "08/03",
+			"nome": "Dia Internacional da Mulher",
+			"tipo": 2,
+			"listaUF": "AC",
+			"trocaDiaTipo": 1,
+			"trocaDiaDe": "3,4,5",
+			"trocaDiaPara": 6,
+			"trocaDiaParaSemana": 0
+		},
+		{
+			"data": "13/03",
+			"nome": "Dia da Batalha do Jenipapo",
+			"tipo": 2,
+			"listaUF": "PI"
+		},
+		{
+			"data": "19/03",
+			"nome": "Dia de S. José",
+			"tipo": 2,
+			"listaUF": "AP"
+		},
+		{
+			"data": "19/03",
+			"nome": "Dia de S. José",
+			"tipo": 4,
+			"listaUF": "CE"
+		},
+		{
+			"data": "23/03",
+			"nome": "Emancipação Política do Município de Florianópolis",
+			"tipo": 3,
+			"listaCidade": "4205407"
+		},
+		{
+			"data": "25/03",
+			"nome": "Data Magna do Estado do Ceará",
+			"tipo": 2,
+			"listaUF": "CE"
+		},
+		{
+			"data": "29/03",
+			"nome": "Aniversário do Município de Curitiba, PR",
+			"tipo": 4,
+			"listaCidade": "4106902"
+		},
+		{
+			"data": "21/04",
+			"nome": "Tiradentes",
+			"tipo": 1,
+			"legislacao": "Lei nº 10607, de 19/12/2002",
+			"legislacaoLink": "http://www.planalto.gov.br/ccivil_03/leis/2002/L10607.htm",
+			"dataInicio": "08/12/1950"
+		},
+		{
+			"data": "21/04",
+			"nome": "Aniversário de Brasília",
+			"tipo": 2,
+			"listaUF": "DF"
+		},
+		{
+			"data": "21/04",
+			"nome": "Data Magna do Estado de Minas Gerais",
+			"tipo": 2,
+			"listaUF": "MG"
+		},
+		{
+			"data": "23/04",
+			"nome": "Dia de S. Jorge",
+			"tipo": 2,
+			"listaUF": "RJ"
+		},
+		{
+			"data": "01/05",
+			"nome": "Dia do Trabalho",
+			"tipo": 1,
+			"legislacao": "Lei nº 10607, de 19/12/2002",
+			"legislacaoLink": "http://www.planalto.gov.br/ccivil_03/leis/2002/L10607.htm",
+			"dataInicio": "06/04/1949"
+		},
+		{
+			"data": "15/05",
+			"nome": "Dia de Cabralzinho",
+			"tipo": 2,
+			"listaUF": "AP"
+		},
+		{
+			"data": "17/05",
+			"nome": "Aniversário do Município de Santa Maria, RS",
+			"tipo": 3,
+			"listaCidade": "4316907"
+		},
+		{
+			"data": "23/05",
+			"nome": "Colonização do Solo Espiritossantense",
+			"tipo": 4,
+			"listaUF": "ES"
+		},
+		{
+			"data": "15/06",
+			"nome": "Aniversário do Estado do Acre",
+			"tipo": 2,
+			"listaUF": "AC"
+		},
+		{
+			"data": "18/06",
+			"nome": "Dia do Evangélico",
+			"tipo": 2,
+			"listaUF": "RO"
+		},
+		{
+			"data": "24/06",
+			"nome": "Dia de S. João",
+			"tipo": 2,
+			"listaUF": "AL,PE"
+		},
+		{
+			"data": "24/06",
+			"nome": "Dia de S. João",
+			"tipo": 4,
+			"listaUF": "SE"
+		},
+		{
+			"data": "24/06",
+			"nome": "Dia de S. João",
+			"tipo": 3,
+			"listaCidade": "2927408,2910800"
+		},
+		{
+			"data": "29/06",
+			"nome": "Dia de S. Pedro",
+			"tipo": 2,
+			"listaUF": "AL"
+		},
+		{
+			"data": "29/06",
+			"nome": "Dia de S. Pedro",
+			"tipo": 4,
+			"listaUF": "RN,SE"
+		},
+		{
+			"data": "02/07",
+			"nome": "Independência da Bahia",
+			"tipo": 2,
+			"listaUF": "BA"
+		},
+		{
+			"data": "08/07",
+			"nome": "Independência de Sergipe",
+			"tipo": 2,
+			"listaUF": "SE"
+		},
+		{
+			"data": "09/07",
+			"nome": "Revolução Constitucionalista de 1932",
+			"tipo": 2,
+			"listaUF": "SP"
+		},
+		{
+			"data": "25/07",
+			"nome": "Dia de S. Tiago",
+			"tipo": 2,
+			"listaUF": "AP"
+		},
+		{
+			"data": "26/07",
+			"nome": "Dia de N. S. Santana",
+			"tipo": 3,
+			"listaCidade": "2910800"
+		},
+		{
+			"data": "28/07",
+			"nome": "Adesão do Maranhão à Independência do Brasil",
+			"tipo": 2,
+			"listaUF": "MA",
+			"trocaDiaTipo": 2
+		},
+		{
+			"data": "05/08",
+			"nome": "Data Magna do Estado da Paraíba",
+			"tipo": 2,
+			"listaUF": "PB"
+		},
+		{
+			"data": "06/08",
+			"nome": "Início da Revolução Acreana",
+			"tipo": 4,
+			"listaUF": "AC"
+		},
+		{
+			"data": "11/08",
+			"nome": "Data Magna do Estado de Santa Catarina",
+			"tipo": 2,
+			"listaUF": "SC",
+			"trocaDiaTipo": 1,
+			"trocaDiaDe": "2,3,4,5,6,7",
+			"trocaDiaPara": 1,
+			"trocaDiaParaSemana": 1
+		},
+		{
+			"data": "15/08",
+			"nome": "Adesão do Grão-Pará à Independência do Brasil",
+			"tipo": 2,
+			"listaUF": "PA"
+		},
+		{
+			"data": "15/08",
+			"nome": "Assunção de N. Senhora",
+			"tipo": 3,
+			"listaCidade": "3106200"
+		},
+		{
+			"data": "05/09",
+			"nome": "Dia da Amazônia",
+			"tipo": 2,
+			"listaUF": "AC",
+			"trocaDiaTipo": 1,
+			"trocaDiaDe": "3,4,5",
+			"trocaDiaPara": 6,
+			"trocaDiaParaSemana": 0
+		},
+		{
+			"data": "05/09",
+			"nome": "Elevação do Amazonas à Categoria de Província",
+			"tipo": 2,
+			"listaUF": "AM"
+		},
+		{
+			"data": "06/09",
+			"nome": "Ponto Facultativo",
+			"tipo": 2,
+			"listaUF": "AM"
+		},
+		{
+			"data": "07/09",
+			"nome": "Dia da Independência",
+			"tipo": 1,
+			"legislacao": "Lei nº 10607, de 19/12/2002",
+			"legislacaoLink": "http://www.planalto.gov.br/ccivil_03/leis/2002/L10607.htm",
+			"dataInicio": "06/04/1949"
+		},
+		{
+			"data": "08/09",
+			"nome": "Dia da N. S. da Natividade",
+			"tipo": 2,
+			"listaUF": "TO"
+		},
+		{
+			"data": "08/09",
+			"nome": "Dia da N. S. da Luz dos Pinhais",
+			"tipo": 3,
+			"listaCidade": "4106902"
+		},
+		{
+			"data": "16/09",
+			"nome": "Emancipação Política de Alagoas",
+			"tipo": 2,
+			"listaUF": "AL"
+		},
+		{
+			"data": "20/09",
+			"nome": "Revolução Farroupilha",
+			"tipo": 2,
+			"listaUF": "RS",
+			"legislacao": "Decreto nº 36180, de 18/09/1995",
+			"legislacaoLink": "http://www.al.rs.gov.br/legis/M010/M0100099.ASP?Hid_Tipo=TEXTO&Hid_TodasNormas=11624&hTexto=&Hid_IDNorma=11624"
+		},
+		{
+			"data": "03/10",
+			"nome": "Mártires de Cunhaú e Uruaçu",
+			"tipo": 2,
+			"listaUF": "RN"
+		},
+		{
+			"data": "05/10",
+			"nome": "Criação do Estado do Amapá",
+			"tipo": 2,
+			"listaUF": "AP"
+		},
+		{
+			"data": "05/10",
+			"nome": "Criação do Estado de Roraima",
+			"tipo": 2,
+			"listaUF": "RR"
+		},
+		{
+			"data": "05/10",
+			"nome": "Criação do Estado do Tocantins",
+			"tipo": 2,
+			"listaUF": "TO"
+		},
+		{
+			"data": "11/10",
+			"nome": "Criação do Estado do Mato Grosso do Sul",
+			"tipo": 2,
+			"listaUF": "MS"
+		},
+		{
+			"data": "12/10",
+			"nome": "Dia da N. S. Aparecida",
+			"tipo": 1,
+			"legislacao": "Lei nº 6802, de 30/06/1980",
+			"legislacaoLink": "http://www.planalto.gov.br/ccivil_03/leis/L6802.htm",
+			"dataInicio": "30/06/1980"
+		},
+		{
+			"data": "19/10",
+			"nome": "Dia do Piauí",
+			"tipo": 2,
+			"listaUF": "PI"
+		},
+		{
+			"data": "28/10",
+			"nome": "Dia do Servidor Público",
+			"tipo": 4
+		},
+		{
+			"data": "02/11",
+			"nome": "Dia de Finados",
+			"tipo": 1,
+			"legislacao": "Lei nº 10607, de 19/12/2002",
+			"legislacaoLink": "http://www.planalto.gov.br/ccivil_03/leis/2002/L10607.htm",
+			"dataInicio": "19/12/2002"
+		},
+		{
+			"data": "15/11",
+			"nome": "Proclamação da República",
+			"tipo": 1,
+			"legislacao": "Lei nº 10607, de 19/12/2002",
+			"legislacaoLink": "http://www.planalto.gov.br/ccivil_03/leis/2002/L10607.htm",
+			"dataInicio": "06/04/1949"
+		},
+		{
+			"data": "17/11",
+			"nome": "Assinatura do Tratado de Petrópolis",
+			"tipo": 2,
+			"listaUF": "AC"
+		},
+		{
+			"data": "20/11",
+			"nome": "Dia da Consciência Negra, Dia de Zumbi dos Palmares",
+			"tipo": 2,
+			"listaUF": "AL,AM,AP,MT,RJ"
+		},
+		{
+			"data": "20/11",
+			"nome": "Dia da Consciência Negra, Dia de Zumbi dos Palmares",
+			"tipo": 3,
+			"listaCidade": "4205407,3550308"
+		},
+		{
+			"data": "30/11",
+			"nome": "Dia do Evangélico",
+			"tipo": 2,
+			"listaUF": "DF"
+		},
+		{
+			"data": "08/12",
+			"nome": "Dia da N. S. da Conceição",
+			"tipo": 2,
+			"listaUF": "AM,MA"
+		},
+		{
+			"data": "08/12",
+			"nome": "Dia da N. S. da Conceição",
+			"tipo": 3,
+			"listaCidade": "4316907,4318705,3106200,2927408,2800308"
+		},
+		{
+			"data": "24/12",
+			"nome": "Véspera de Natal",
+			"tipo": 4,
+			"listaUF": "AL"
+		},
+		{
+			"data": "25/12",
+			"nome": "Natal",
+			"tipo": 1,
+			"legislacao": "Lei nº 10607, de 19/12/2002",
+			"legislacaoLink": "http://www.planalto.gov.br/ccivil_03/leis/2002/L10607.htm",
+			"dataInicio": "06/04/1949"
+		},
+		{
+			"data": "31/12",
+			"nome": "Véspera de Ano Novo",
+			"tipo": 4,
+			"listaUF": "AL"
+		}
+	],
+	"feriadosMoveis": [
+		{
+			"nome": "Segunda-feira de Carnaval - Dia do Comerciário",
+			"tipo": 2,
+			"listaUF": "RO"
+		},
+		{
+			"nome": "Segunda-feira de Carnaval",
+			"tipo": 4
+		},
+		{
+			"nome": "Carnaval",
+			"tipo": 4
+		},
+		{
+			"nome": "Carnaval",
+			"tipo": 2,
+			"listaUF": "RJ"
+		},
+		{
+			"nome": "Carnaval",
+			"tipo": 3,
+			"listaCidade": "3106200"
+		},
+		{
+			"nome": "Quarta-feira de Cinzas",
+			"tipo": 4
+		},
+		{
+			"nome": "Quinta-feira Santa",
+			"tipo": 4
+		},
+		{
+			"nome": "Sexta-feira Santa",
+			"tipo": 3
+		},
+		{
+			"nome": "Páscoa",
+			"tipo": 1
+		},
+		{
+			"nome": "Corpus Christi",
+			"tipo": 4
+		},
+		{
+			"nome": "Corpus Christi",
+			"tipo": 3,
+			"listaCidade": "3550308,3106200,4106902,4205407,2927408,2910800,2800308"
+		},
+		{
+			"nome": "Sexta-feira de Corpus Christi",
+			"tipo": 4,
+			"listaUF": "AM,MA"
+		},
+		{
+			"nome": "Sexta-feira de Corpus Christi - Dia do Comércio",
+			"tipo": 2,
+			"listaUF": "RJ"
+		}
+	]
+}

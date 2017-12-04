@@ -348,7 +348,7 @@ begin
     end;
 
     if ((FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto)) and
-        (FCTe.Ide.tpServ <> tsTranspValores) then
+       ((FCTe.ide.modelo = 57) or ((FCTe.ide.modelo = 67) and (FCTe.ide.modal = mdRodoviario) and (FCTe.ide.tpServ <> tsTranspValores))) then
     begin
       ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FCTe.infCTe.Versao), Erro);
 

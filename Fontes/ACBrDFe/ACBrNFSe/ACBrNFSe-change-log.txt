@@ -47,6 +47,89 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2017
+-- ACBrNFSeWebServices --
+[*] Tratamento do Retorno imposta uma condição quando o provedor for
+    NFSeBrasil.
+Por: Adryelle
+[*] Para o provedor Fiorilli, ao cancelar uma NFS-e devemos informar o 
+    código do municipio de incidencia e não o de emissão da nota.
+Por: Lenardo de Alice
+
+27/11/2017
+-- pnfsNFSeW_ABRASFv2 / pnfsNFSeG --
+[*] Ajustes visando o provedor SystemPro
+   Por: Michel Ouriques
+
+23/11/2017
+-- pnfsNFSeW_ABRASFv1 --
+[*] Acrescentado o provedor Pronim na condição que trata se o tomador é 
+    estrangeiro ou não.
+   Por: Neto
+
+22/11/2017
+-- pnfsConversao --
+[*] Acrescentados novos tipos em Natureza da Operação.
+   Por: Jefferson Damian
+
+21/11/2017
+-- pnfsNFSeW_ABRASFv2--
+[*] A tag CodigoPais só pode ser gerada se o código da cidade for 9999999 se
+    tratando do provedor Pronimv2.
+Por: Marcio
+
+16/11/2017
+[+] Inclusão do provedor Belford (segue a versão 2 do layout da ABRASF)
+Por: Italo Jurisato Junior
+
+15/11/2017
+-- pnfsNFSeR --
+[*] Correção visando a leitura correta da Retenção de ISS.
+Por: rlmariz
+
+10/11/2017
+-- ACBrNFSeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/37313-tags-html-no-campo-outras-informa%C3%A7%C3%B5es/
+Por: Lenardo Pavanello
+-- ACBrNFSeNotasFiscais --
+[*] Acrescentado a tag <ComplNfse> na rotina LoadFromString.
+Por: Italo Jurisato Junior
+
+09/11/2017
+[+] Inclusão do provedor IPM
+Por: Elias Jakubowski
+
+09/11/2017
+-- ACBrNFSeNotasFiscais  --
+[*] Correção na assinatura (provedor SmarAPD) estava acrescentando indevidamente
+    um valor para o atributo URI.
+   Por: Goesnando
+-- pnfsEnvLoteRpsResposta  --
+[*] Acrescentado a condição que checa a tag <ListaMensagemRetornoLote> usada 
+    pelo provedor Fiorilli.
+   Por: Italo Jurisato Junior
+
+06/11/2017
+-- Diversos --
+[*] Correções visando o provedor Agili.
+Por: BigWings
+
+05/11/2017
+-- Diversos --
+[+] Implementação do provedor SIAPNet.
+Por: Diego Fernandes
+
+27/10/2017
+-- pnfsNFSeR / pnfsNFSe --
+[*] https://www.projetoacbr.com.br/forum/topic/39593-corre%C3%A7%C3%A3o-nfse-itajai/
+   Por: Rauber Gabri
+
+25/10/2017
+-- ACBrNFSeNotasFiscais --
+[*] Acrescentado a condição que checa o conteudo do atributo ID antes de alterar
+    o valor do atributo URI.
+   Por: Italo Jurisato Junior
+
 18/10/2017
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/35979-acbrnfse-para-s%C3%A3o-paulo/?do=findComment&comment=258983

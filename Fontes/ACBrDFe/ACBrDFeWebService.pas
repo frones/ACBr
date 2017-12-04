@@ -302,8 +302,18 @@ Var
 begin
   { Sobrescrever apenas se necessário }
 
-  FPRetWS := '';
+  FPRetWS     := '';
   FPRetornoWS := '';
+
+  TemCertificadoConfigurado := (FPConfiguracoes.Certificados.NumeroSerie <> '') or
+                               (FPConfiguracoes.Certificados.DadosPFX <> '') or
+                               (FPConfiguracoes.Certificados.ArquivoPFX <> '');
+
+  if TemCertificadoConfigurado then
+    if FPConfiguracoes.Certificados.VerificarValidade then
+       if (FPDFeOwner.SSL.CertDataVenc < Now) then
+         raise EACBrDFeException.Create('Data de Validade do Certificado já expirou: '+
+                                            FormatDateBr(FPDFeOwner.SSL.CertDataVenc));
 
   { Verifica se precisa converter o Envelope para UTF8 antes de ser enviado.
      Entretanto o Envelope pode já ter sido convertido antes, como por exemplo,
@@ -315,18 +325,8 @@ begin
   Tentar := True;
   while Tentar do
   begin
-    Tentar := False;
+    Tentar  := False;
     Tratado := False;
-
-    TemCertificadoConfigurado := (FPConfiguracoes.Certificados.NumeroSerie <> '') or
-                                 (FPConfiguracoes.Certificados.DadosPFX <> '') or
-                                 (FPConfiguracoes.Certificados.ArquivoPFX <> '');
-
-    if TemCertificadoConfigurado then
-      if FPConfiguracoes.Certificados.VerificarValidade then
-         if (FPDFeOwner.SSL.CertDataVenc < Now) then
-           raise EACBrDFeException.Create('Data de Validade do Certificado já expirou: '+
-                                          FormatDateBr(FPDFeOwner.SSL.CertDataVenc));
 
     try
       FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);

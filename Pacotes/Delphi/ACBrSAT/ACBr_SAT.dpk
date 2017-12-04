@@ -30,7 +30,7 @@ requires
   vcl,
   designide,
   ACBr_TCP,
-  ACBr_PCNComum,
+  ACBr_DFeComum,
   ACBr_Comum,
   ACBr_synapse,
   vclactnband,

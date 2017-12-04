@@ -28,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="19">
+    <Files Count="23">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -106,6 +106,22 @@
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
         <UnitName Value="ACBrWinINetReqResp"/>
       </Item19>
+      <Item20>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas"/>
+        <UnitName Value="ACBrFeriado"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas"/>
+        <UnitName Value="ACBrFeriadoWSCalendario"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas"/>
+        <UnitName Value="ACBrFeriadoWSClass"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSJSON.pas"/>
+        <UnitName Value="ACBrFeriadoWSJSON"/>
+      </Item23>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

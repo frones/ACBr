@@ -1059,6 +1059,15 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = Button1Click
         TabOrder = 15
       end
+			object btEncerramentoSemXml: TButton
+        Left = 191
+        Top = 166
+        Width = 177
+        Height = 25
+        Caption = 'Encerramento sem xml'
+        TabOrder = 17
+        OnClick = btEncerramentoSemXmlClick
+      end
     end
     object PageControl2: TPageControl
       Left = 1

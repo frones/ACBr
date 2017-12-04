@@ -218,6 +218,8 @@ begin
     DesligaNegrito          := ESC + 'E' + #0;
     LigaExpandido           := GS  + '!' + #16;
     DesligaExpandido        := GS  + '!' + #0;
+    LigaAlturaDupla         := GS  + '!' + #1;
+    DesligaAlturaDupla      := GS  + '!' + #0;
     LigaSublinhado          := ESC + '-' + #1;
     DesligaSublinhado       := ESC + '-' + #0;
     LigaInvertido           := GS  + 'B' + #1;
@@ -251,7 +253,7 @@ begin
   else
     NovoFonteStatus := NovoFonteStatus - [TipoFonte];
 
-  if TipoFonte in [ftCondensado, ftNegrito, ftExpandido, ftSublinhado] then
+  if TipoFonte in [ftCondensado, ftNegrito, ftExpandido, ftSublinhado, ftAlturaDupla] then
   begin
     AByte := 0;
 
@@ -260,6 +262,9 @@ begin
 
     if ftNegrito in NovoFonteStatus then
       AByte := AByte + 8;
+
+    if ftAlturaDupla in NovoFonteStatus then
+      AByte := AByte + 16;
 
     if ftExpandido in NovoFonteStatus then
       AByte := AByte + 32;
@@ -380,49 +385,40 @@ end;
 procedure TACBrEscPosEpson.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
   B: Byte;
-  Falhas: Integer;
 begin
   if not (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
     exit;
 
-  Falhas := 0;
-  while Falhas < 5 do
-  begin
-    try
-      fpPosPrinter.Ativo := True;
+  try
+    fpPosPrinter.Ativo := True;
 
-      B := Ord(fpPosPrinter.TxRx( DLE + EOT + #1 )[1]);
-      if not TestBit(B, 2) then
-        AStatus := AStatus + [stGavetaAberta];
-      if TestBit(B, 3) then
-        AStatus := AStatus + [stOffLine];
-      if TestBit(B, 5) then
-        AStatus := AStatus + [stErro];  // Waiting for online recovery
-      if TestBit(B, 6) then
-        AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
+    B := Ord(fpPosPrinter.TxRx( DLE + EOT + #1 )[1]);
+    if not TestBit(B, 2) then
+      AStatus := AStatus + [stGavetaAberta];
+    if TestBit(B, 3) then
+      AStatus := AStatus + [stOffLine];
+    if TestBit(B, 5) then
+      AStatus := AStatus + [stErro];  // Waiting for online recovery
+    if TestBit(B, 6) then
+      AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
 
-      B := Ord(fpPosPrinter.TxRx( DLE + EOT + #2 )[1]);
-      if TestBit(B, 2) then
-        AStatus := AStatus + [stTampaAberta];
-      if TestBit(B, 3) then
-        AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
-      if TestBit(B, 5) then
-        AStatus := AStatus + [stSemPapel];
-      if TestBit(B, 6) then
-        AStatus := AStatus + [stErro];
+    B := Ord(fpPosPrinter.TxRx( DLE + EOT + #2 )[1]);
+    if TestBit(B, 2) then
+      AStatus := AStatus + [stTampaAberta];
+    if TestBit(B, 3) then
+      AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
+    if TestBit(B, 5) then
+      AStatus := AStatus + [stSemPapel];
+    if TestBit(B, 6) then
+      AStatus := AStatus + [stErro];
 
-      B := Ord(fpPosPrinter.TxRx( DLE + EOT + #4 )[1]);
-      if TestBit(B, 2) and TestBit(B, 3) then
-        AStatus := AStatus + [stPoucoPapel];
-      if TestBit(B, 5) and TestBit(B, 6) then
-        AStatus := AStatus + [stSemPapel];
-
-      Break;
-    except
-      Inc( Falhas );
-      if Falhas >= 5 then;
-        AStatus := AStatus + [stErro];
-    end;
+    B := Ord(fpPosPrinter.TxRx( DLE + EOT + #4 )[1]);
+    if TestBit(B, 2) and TestBit(B, 3) then
+      AStatus := AStatus + [stPoucoPapel];
+    if TestBit(B, 5) and TestBit(B, 6) then
+      AStatus := AStatus + [stSemPapel];
+  except
+    AStatus := AStatus + [stErroLeitura];
   end;
 end;
 

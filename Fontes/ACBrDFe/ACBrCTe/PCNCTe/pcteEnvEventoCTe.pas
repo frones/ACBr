@@ -159,17 +159,6 @@ begin
   inherited;
 end;
 
-function TEventoCTe.ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
-begin
- case tpEvento of
-    teCCe         : Result := IntToStr(Self.idLote) + '-cce.xml';
-    teCancelamento: Result := Evento.Items[0].InfEvento.chCTe + '-can-eve.xml';
-    teEPEC        : Result := Evento.Items[0].InfEvento.chCTe + '-ped-epec.xml';
-  else
-    raise EventoCTeException.Create('Obter nome do arquivo de Evento não Implementado!');
- end;
-end;
-
 function TEventoCTe.GerarXML: boolean;
 var
   sDoc: String;
@@ -532,6 +521,17 @@ begin
   finally
      RetEventoCTe.Free;
   end;
+end;
+
+function TEventoCTe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+begin
+ case tpEvento of
+    teCCe         : Result := IntToStr(Self.idLote) + '-cce.xml';
+    teCancelamento: Result := Evento.Items[0].InfEvento.chCTe + '-can-eve.xml';
+    teEPEC        : Result := Evento.Items[0].InfEvento.chCTe + '-ped-epec.xml';
+  else
+    raise EventoCTeException.Create('Obter nome do arquivo de Evento não Implementado!');
+ end;
 end;
 
 { TInfEventoCollection }

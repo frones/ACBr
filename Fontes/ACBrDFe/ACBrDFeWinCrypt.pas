@@ -75,6 +75,11 @@ type
        const Digest: TSSLDgst;
        const Assina: Boolean =  False): AnsiString; override;
 
+    function ValidarHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean; override;
+
     procedure CarregarCertificado; override;
     function SelecionarCertificado: String; override;
     procedure LerCertificadosStore; override;
@@ -118,7 +123,8 @@ function CertToDERBase64(ACertContext: PCCERT_CONTEXT): AnsiString;
 
 procedure PFXDataToCertContextWinApi( AData, APass: AnsiString; var AStore, ACertContext: Pointer);
 function ExportCertContextToPFXData( ACertContext: PCCERT_CONTEXT; APass: AnsiString): AnsiString;
-procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString);
+procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString;
+   RaiseUnknownErrors: Boolean = True);
 
 Var
   CertificadosA3ComPin: String;
@@ -740,33 +746,47 @@ begin
   end;
 end;
 
-procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString);
+procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString;
+  RaiseUnknownErrors: Boolean);
 var
   dwKeySpec: DWORD;
   pfCallerFreeProv: LongBool;
   Ret: Longint;
   ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE;
+  PPass: PBYTE;
 
-  procedure CheckPINError(WinErro: DWORD = 0; ExceptionErrosDesconhecidos: Boolean = True);
+  procedure CheckPINError(WinErro: DWORD; RaiseUnknown: Boolean);
   begin
-    if WinErro = 0 then
-      WinErro := GetLastError;
+    case WinErro of
+      NO_ERROR:
+        Exit;
 
-    if (WinErro = 0) or (WinErro = ERROR_NO_TOKEN) then
-      Exit;
+      ERROR_NO_TOKEN:
+        Exit; // https://www.projetoacbr.com.br/forum/topic/36266-falha-ao-definir-pin-do-certificado-erro-80100004/?do=findComment&comment=237860
 
-    if WinErro = SCARD_W_WRONG_CHV then
-      raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o PIN errado foi apresentado.')
-    else if WinErro = SCARD_W_CHV_BLOCKED then
-      raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o número máximo de tentativas de entrada de PIN foi atingido')
-    else if ExceptionErrosDesconhecidos then
-      raise EACBrDFeException.Create('Falha ao Definir PIN do Certificado. Erro: '+GetLastErrorAsHexaStr(WinErro));
+      //NTE_BAD_DATA:
+      //  Exit;
+
+      SCARD_W_WRONG_CHV:
+        raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o PIN errado foi apresentado.');
+
+      SCARD_W_CHV_BLOCKED:
+        raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o número máximo de tentativas de entrada de PIN foi atingido');
+    else
+      if RaiseUnknown then
+        raise EACBrDFeException.Create('Falha ao Definir PIN do Certificado. Erro: '+GetLastErrorAsHexaStr(WinErro));
+    end;
   end;
 
 begin
   ProviderOrKeyHandle := 0;
   dwKeySpec := 0;
   pfCallerFreeProv := False;
+
+  if APass = '' then
+    PPass := Nil
+  else
+    PPass := PBYTE(APass);
 
   // Obtendo o Contexto do Provedor de Criptografia do Certificado //
   if not CryptAcquireCertificatePrivateKey( ACertContext,
@@ -787,18 +807,18 @@ begin
                                 NCRYPT_PIN_PROPERTY,
                                 PBYTE(APass),
                                 Length(APass)+1, 0);
-      CheckPINError(Ret);
+      CheckPINError(Ret, RaiseUnknownErrors);
     end
     else
     begin
       if not GetCSPProviderIsHardware(ProviderOrKeyHandle) then
         Exit;
 
-      if CryptSetProvParam(ProviderOrKeyHandle, PP_KEYEXCHANGE_PIN, PBYTE(APass), 0) then
-        CheckPINError();
+      CryptSetProvParam(ProviderOrKeyHandle, PP_SIGNATURE_PIN, PPass, 0);
+      CheckPINError(GetLastError, False);
 
-      if not CryptSetProvParam(ProviderOrKeyHandle, PP_SIGNATURE_PIN, PBYTE(APass), 0) then
-        CheckPINError(GetLastError, False);
+      CryptSetProvParam(ProviderOrKeyHandle, PP_KEYEXCHANGE_PIN, PPass, 0);
+      CheckPINError(GetLastError, RaiseUnknownErrors);
     end;
   finally
     if pfCallerFreeProv then
@@ -962,7 +982,7 @@ begin
      (pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) = 0) then  // Se Atribuir novamente em outra instância causa conflito... //
   begin
     try
-      SetCertContextPassword(FpCertContext, FpDFeSSL.Senha);
+      SetCertContextPassword(FpCertContext, FpDFeSSL.Senha, False);
       CertificadosA3ComPin := CertificadosA3ComPin + FpDadosCertificado.NumeroSerie + ',';
     except
       On EACBrDFeWrongPINException do
@@ -1065,9 +1085,16 @@ end;
 
 procedure TDFeWinCrypt.DescarregarCertificado;
 begin
-  if (FpDadosCertificado.NumeroSerie <> '') then
-   if (pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) > 0) then
-     CertificadosA3ComPin := StringReplace( CertificadosA3ComPin, FpDadosCertificado.NumeroSerie + ',', '', [rfReplaceAll]);
+  if (FpDadosCertificado.NumeroSerie <> '') and
+     (pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) > 0) then
+  begin
+    try
+      SetCertContextPassword( FpCertContext, '' );
+      // Apenas Remove da lista de "CertificadosA3ComPin", se conseguiu limpar o Cache do PIN
+      CertificadosA3ComPin := StringReplace( CertificadosA3ComPin, FpDadosCertificado.NumeroSerie + ',', '', [rfReplaceAll]);
+    except
+    end;
+  end;
 
   // Limpando objetos da MS CryptoAPI //
   if Assigned(FpCertContext) then
@@ -1284,17 +1311,130 @@ begin
     if mHash <> 0 then
       CryptDestroyHash(mHash);
 
-    if pfCallerFreeProv then
-      CryptReleaseContext(mCryptProviderCert, 0);
-
-    if mCryptProvider <> 0 then
-      CryptReleaseContext(mCryptProvider, 0);
-
     if hRSAKey <> 0 then
       CryptDestroyKey( hRSAKey );
 
     if hExpKey <> 0 then
       CryptDestroyKey( hExpKey );
+
+    if pfCallerFreeProv then
+      CryptReleaseContext(mCryptProviderCert, 0);
+
+    if mCryptProvider <> 0 then
+      CryptReleaseContext(mCryptProvider, 0);
+  end;
+end;
+
+function TDFeWinCrypt.ValidarHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean;
+var
+  mCryptProvider: HCRYPTPROV;
+  mHash, aHashType: HCRYPTHASH;
+  hExpKey: HCRYPTKEY;
+  mTotal: Int64;
+  mBytesLen, mRead, WinErro: DWORD;
+  Memory: Pointer;
+  mHashBuffer: array [0..1023] of AnsiChar;
+  HashResult, ReverseHash: AnsiString;
+begin
+  Result := False;
+
+  case Digest of
+    dgstMD2    : aHashType := CALG_MD2;
+    dgstMD4    : aHashType := CALG_MD4;
+    dgstMD5    : aHashType := CALG_MD5;
+    dgstSHA    : aHashType := CALG_SHA;
+    dgstSHA1   : aHashType := CALG_SHA1;
+    dgstSHA256 : aHashType := CALG_SHA_256;
+    dgstSHA512 : aHashType := CALG_SHA_512;
+  else
+    raise EACBrDFeException.Create( 'Digest '+GetEnumName(TypeInfo(TSSLDgst),Integer(Digest))+
+                                    ' não suportado em '+ClassName);
+  end ;
+
+  if Assinado and (not Assigned(FpCertContext)) then
+    CarregarCertificado;
+
+  mCryptProvider := 0;
+  mHash := 0;
+  hExpKey := 0;
+
+  try
+    try
+      if not CryptAcquireContext( mCryptProvider, Nil, Nil,
+                                  PROV_RSA_AES, CRYPT_VERIFYCONTEXT) then
+        raise EACBrDFeException.Create('CryptAcquireContext: '+MsgErroGetCryptProvider);
+
+      if CryptCreateHash(mCryptProvider, aHashType, 0, 0, mHash) then
+      begin
+        Memory := Allocmem(CBufferSize);
+        try
+          mTotal := AStream.Size;
+          AStream.Position := 0;
+          repeat
+            mRead := AStream.Read(Memory^, CBufferSize);
+            if mRead > 0 then
+            begin
+              if not CryptHashData(mHash, Memory, mRead, 0) then
+                raise Exception.Create('CryptHashData');
+            end;
+
+            mTotal := mTotal - mRead;
+          until mTotal < 1;
+        finally
+          FreeMem(Memory);
+        end;
+
+        if Assinado then
+        begin
+          if not CryptImportPublicKeyInfo( mCryptProvider,
+                                           X509_ASN_ENCODING,
+                                           @FpCertContext.pCertInfo.SubjectPublicKeyInfo,
+                                           hExpKey) then
+            raise Exception.Create('CryptImportPublicKeyInfo');
+
+          // Invertendo por que MS Crypto usa litle endian
+          ReverseHash := AnsiReverseString(Hash);
+          Result := CryptVerifySignature( mHash, PBYTE(ReverseHash), Length(ReverseHash),
+                                          hExpKey, nil, 0);
+        end
+        else
+        begin
+          mBytesLen := Length(mHashBuffer);
+          // Obtendo o Hash //
+          if not CryptGetHashParam(mHash, HP_HASHVAL, @mHashBuffer, mBytesLen, 0) then
+            raise Exception.Create('CryptGetHashParam');
+
+          SetString( HashResult, mHashBuffer, mBytesLen);
+          Result := (Pos( HashResult, Hash ) > 0) ;
+        end;
+      end
+      else
+      begin
+        WinErro := GetLastError;
+         if WinErro = DWORD( NTE_BAD_ALGID  ) then
+           raise Exception.Create('O Provedor de Criptografia não suporta o algoritmo: '+
+                                  GetEnumName(TypeInfo(TSSLDgst),Integer(Digest)))
+       else
+         raise Exception.Create('CryptCreateHash');
+      end;
+    except
+      On E: Exception do
+      begin
+        raise EACBrDFeException.Create(E.Message+' , erro: $'+ GetLastErrorAsHexaStr);
+      end;
+    end;
+  finally
+    if mHash <> 0 then
+      CryptDestroyHash(mHash);
+
+    if hExpKey <> 0 then
+      CryptDestroyKey( hExpKey );
+
+    if mCryptProvider <> 0 then
+      CryptReleaseContext(mCryptProvider, 0);
   end;
 end;
 

@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, pcnCFe, pcnRede, pcnCFeCanc, ACBrBase, ACBrSATClass,
-  ACBrSATExtratoClass, synacode, ACBrMail;
+  ACBrSATExtratoClass, synacode, ACBrMail, ACBrDFeSSL;
 
 const
   CPREFIXO_CFe = 'CFe';
@@ -73,7 +73,8 @@ type
      fsRespostaComando : String ;
      fsSATClass : TACBrSATClass ;
      fsExtrato : TACBrSATExtratoClass;
-     FMAIL: TACBrMail;
+     fsMAIL: TACBrMail;
+     fsSSL: TDFeSSL;
 
      fsArqLOG: String;
      fsComandoLog: String;
@@ -125,6 +126,7 @@ type
      procedure DecodificaRetorno6000;
      procedure DecodificaRetorno7000;
      property SAT : TACBrSATClass read fsSATClass ;
+     property SSL: TDFeSSL read fsSSL;
 
      constructor Create( AOwner : TComponent ) ; override;
      destructor Destroy ; override;
@@ -183,6 +185,7 @@ type
      function TesteFimAFim( dadosVenda : AnsiString) : String ;
      function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao: Integer; novoCodigo: AnsiString): String;
+     function ValidarDadosVenda( dadosVenda : AnsiString; out msgErro: String) : Boolean;
 
     procedure ImprimirExtrato;
     procedure ImprimirExtratoResumido;
@@ -201,7 +204,7 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil); overload;
 
    published
-     property MAIL: TACBrMail read FMAIL write SetMAIL;
+     property MAIL: TACBrMail read fsMAIL write SetMAIL;
 
      property Modelo : TACBrSATModelo read fsModelo write SetModelo
                  default satNenhum ;
@@ -765,6 +768,7 @@ begin
   fsConfigArquivos.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
 
+  fsSSL     := TDFeSSL.Create;
   fsRede    := TRede.Create;
   fsCFe     := TCFe.Create;
   fsCFeCanc := TCFeCanc.Create;
@@ -784,6 +788,7 @@ begin
   fsCFeCanc.Free;
   fsResposta.Free;
   fsStatus.Free;
+  fsSSL.Free;
 
   if Assigned( fsSATClass ) then
     FreeAndNil( fsSATClass );
@@ -1415,6 +1420,25 @@ begin
   end;
 end ;
 
+function TACBrSAT.ValidarDadosVenda(dadosVenda: AnsiString; out msgErro: String
+  ): Boolean;
+begin
+  fsComandoLog := 'ValidarDadosVenda( '+dadosVenda+' )';
+
+  if EstaVazio(fsConfig.ArqSchema) then
+    raise EACBrSATErro.Create('Config.ArqSchema não informado');
+
+  dadosVenda := Trim(dadosVenda);
+
+  if dadosVenda = '' then
+     raise EACBrSATErro.Create('Parâmetro: "dadosVenda" não informado');
+
+  SSL.SSLXmlSignLib := fsConfig.XmlSignLib;
+
+  msgErro := '';
+  Result := SSL.Validar(dadosVenda, fsConfig.ArqSchema, msgErro);
+end;
+
 function TACBrSAT.GetAbout : String ;
 begin
   Result := 'ACBrSAT Ver: '+CACBrSAT_Versao;
@@ -1469,12 +1493,12 @@ end ;
 
 procedure TACBrSAT.SetMAIL(const AValue: TACBrMail);
 begin
-  if AValue <> FMAIL then
+  if AValue <> fsMAIL then
   begin
-    if Assigned(FMAIL) then
-      FMAIL.RemoveFreeNotification(Self);
+    if Assigned(fsMAIL) then
+      fsMAIL.RemoveFreeNotification(Self);
 
-    FMAIL := AValue;
+    fsMAIL := AValue;
 
     if AValue <> nil then
       AValue.FreeNotification(self);
@@ -1759,7 +1783,7 @@ var
   AnexosEmail:TStrings;
   StreamCFe : TMemoryStream;
 begin
-  if not Assigned(FMAIL) then
+  if not Assigned(fsMAIL) then
     raise EACBrSATErro.Create('Componente ACBrMail não associado');
 
   AnexosEmail := TStringList.Create;

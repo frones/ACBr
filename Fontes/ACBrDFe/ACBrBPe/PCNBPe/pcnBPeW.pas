@@ -105,7 +105,6 @@ type
     constructor Create(AOwner: TBPe);
     destructor Destroy; override;
     function GerarXml: Boolean;
-    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador      read FGerador write FGerador;
     property BPe: TBPe              read FBPe     write FBPe;
@@ -161,11 +160,6 @@ begin
   FGerador.Free;
   FOpcoes.Free;
   inherited Destroy;
-end;
-
-function TBPeW.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(BPe.infBPe.ID) + '-bpe.xml';
 end;
 
 function TBPeW.GerarXml: Boolean;

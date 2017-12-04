@@ -104,6 +104,9 @@ function RemoverDeclaracaoXML(const AXML: String): String;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
+function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
+procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
+  var PosIni, PosFim: integer);
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
@@ -379,14 +382,16 @@ begin
   Result := AText;
   if Trim(Result) <> '' then
   begin
-    if sLineBreak <> LF then
-      Result := StringReplace(Result, sLineBreak, LF, [rfReplaceAll]);
+    // Troca todos CR+LF para apenas LF
+    Result := StringReplace(Result, CRLF, LF, [rfReplaceAll]);
 
+    // Se existe apenas CR, também troca os mesmos para LF
+    Result := StringReplace(Result, CR, LF, [rfReplaceAll]);
+
+    { Agora temos todas quebras como LF... Se a Quebra de linha final for
+      diferente de LF, aplique a substituição }
     if NewLineBreak <> LF then
       Result := StringReplace(Result, LF, NewLineBreak, [rfReplaceAll]);
-
-    if NewLineBreak <> CR then
-      Result := StringReplace(Result, CR, NewLineBreak, [rfReplaceAll]);
   end
 end;
 
@@ -3673,6 +3678,37 @@ begin
       Exit;
  end;
 end;
+
+function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
+var
+  i: integer;
+  s: string;
+begin
+  result := '';
+  i := pos(Inicio, Frase);
+  if i = 0 then
+    exit;
+  s := Copy(Frase, i + length(Inicio), maxInt);
+  result := Copy(s, 1, pos(Fim, s) - 1);
+end;
+
+{------------------------------------------------------------------------------
+   Retorna a posição inicial e final da Tag do XML
+ ------------------------------------------------------------------------------}
+procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
+  var PosIni, PosFim: integer);
+begin
+  PosFim := 0;
+  PosIni := PosEx('<' + ATag + '>', aText);
+  if (PosIni > 0) then
+  begin
+    PosIni := PosIni + Length(ATag) + 1;
+    PosFim := PosLast('</' + ATag + '>', aText);
+    if PosFim < PosIni then
+      PosFim := 0;
+  end;
+end;
+
 
 {------------------------------------------------------------------------------
    Realiza o tratamento de uma String recebida de um Serviço Web

@@ -770,9 +770,9 @@ begin
     FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
     vMDFe + '</enviMDFe>';
 
-  // Lote tem mais de 500kb ? //
-  if Length(FPDadosMsg) > (500 * 1024) then
-    GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
+  // Lote tem mais de 1024kb ? //
+  if Length(FPDadosMsg) > (1024 * 1024) then
+    GerarException(ACBrStr('Tamanho do XML de Dados superior a 1024 Kbytes. Tamanho atual: ' +
       IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
 
   FRecibo := '';
@@ -1849,6 +1849,7 @@ begin
         infEvento.dhEvento   := FEvento.Evento[i].InfEvento.dhEvento;
         infEvento.tpEvento   := FEvento.Evento[i].InfEvento.tpEvento;
         infEvento.nSeqEvento := FEvento.Evento[i].InfEvento.nSeqEvento;
+        infEvento.versaoEvento := FEvento.Evento[i].InfEvento.versaoEvento;
 
         case InfEvento.tpEvento of
           teCancelamento:
@@ -1916,15 +1917,13 @@ begin
                                                              StringToFloatDef(FPVersaoServico, 0)),
                                     FPMsg);
     end;
-    (* Comentado por não estar realizando a validação corretamente
     if not EventoEhValido then
     begin
       FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
         FPMsg;
 
-      raise EACBrMDFeException.CreateDef(FErroValidacao);
+//      raise EACBrMDFeException.CreateDef(FErroValidacao);
     end;
-    *)
     for I := 0 to FEvento.Evento.Count - 1 do
       FEvento.Evento[I].InfEvento.id := EventoMDFe.Evento[I].InfEvento.id;
   finally
@@ -2363,7 +2362,7 @@ begin
   case AItem.schema of
     schprocEventoMDFe:
       Result := FPConfiguracoesMDFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
-                                                           AItem.resMDFe.CNPJCPF,
+                                                           AItem.procEvento.CNPJ,
                                                            Data);
 
     schprocMDFe:

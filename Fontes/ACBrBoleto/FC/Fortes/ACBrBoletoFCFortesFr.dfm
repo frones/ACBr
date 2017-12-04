@@ -456,7 +456,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 143
         Width = 132
         Height = 11
-        Caption = 'com as caracter#237sticas acima'
+        Caption = 'com as caracter'#237'sticas acima'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9

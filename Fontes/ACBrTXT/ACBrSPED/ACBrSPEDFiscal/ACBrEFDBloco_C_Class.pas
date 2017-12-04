@@ -117,6 +117,7 @@ type
     FRegistroC420Count: Integer;
     FRegistroC425Count: Integer;
     FRegistroC460Count: Integer;
+    FRegistroC465Count: Integer;
     FRegistroC470Count: Integer;
     FRegistroC490Count: Integer;
     FRegistroC495Count: Integer;
@@ -180,6 +181,7 @@ type
     procedure WriteRegistroC495(RegC001: TRegistroC001);
     procedure WriteRegistroC425(RegC420: TRegistroC420);
     procedure WriteRegistroC470(RegC460: TRegistroC460);
+    procedure WriteRegistroC465(RegC460: TRegistroC460);
     procedure WriteRegistroC500(RegC001: TRegistroC001);
     procedure WriteRegistroC510(RegC500: TRegistroC500);
     procedure WriteRegistroC590(RegC500: TRegistroC500);
@@ -248,6 +250,7 @@ type
     function RegistroC420New: TRegistroC420;
     function RegistroC425New: TRegistroC425;
     function RegistroC460New: TRegistroC460;
+    function RegistroC465New: TRegistroC465;
     function registroC470New: TRegistroC470;
     function RegistroC490New: TRegistroC490;
     function RegistroC495New: TRegistroC495;
@@ -317,6 +320,7 @@ type
     property RegistroC420Count: Integer read FRegistroC420Count write FRegistroC420Count;
     property RegistroC425Count: Integer read FRegistroC425Count write FRegistroC425Count;
     property RegistroC460Count: Integer read FRegistroC460Count write FRegistroC460Count;
+    property RegistroC465Count: Integer read FRegistroC465Count write FRegistroC465Count;
     property RegistroC470Count: Integer read FRegistroC470Count write FRegistroC470Count;
     property RegistroC490Count: Integer read FRegistroC490Count write FRegistroC490Count;
     property RegistroC495Count: Integer read FRegistroC495Count write FRegistroC495Count;
@@ -422,6 +426,7 @@ begin
   FRegistroC420Count := 0;
   FRegistroC425Count := 0;
   FRegistroC460Count := 0;
+  FRegistroC465Count := 0;
   FRegistroC470Count := 0;
   FRegistroC490Count := 0;
   FRegistroC495Count := 0;
@@ -812,6 +817,19 @@ begin
    C405Count := FRegistroC001.RegistroC400.Items[C400Count].RegistroC405.Count -1;
    //
    Result := FRegistroC001.RegistroC400.Items[C400Count].RegistroC405.Items[C405Count].RegistroC460.New;
+end;
+
+function TBloco_C.registroC465New: TRegistroC465;
+var
+C400Count: integer;
+C405Count: integer;
+C460Count: integer;
+begin
+   C400Count := FRegistroC001.RegistroC400.Count -1;
+   C405Count := FRegistroC001.RegistroC400.Items[C400Count].RegistroC405.Count -1;
+   C460Count := FRegistroC001.RegistroC400.Items[C400Count].RegistroC405.Items[C405Count].RegistroC460.Count -1;
+   //
+   Result := FRegistroC001.RegistroC400.Items[C400Count].RegistroC405.Items[C405Count].RegistroC460.Items[C460Count].RegistroC465.New;
 end;
 
 function TBloco_C.registroC470New: TRegistroC470;
@@ -2479,11 +2497,60 @@ begin
         end;
         /// Registros FILHOS
         WriteRegistroC470( RegC405.RegistroC460.Items[intFor] );
+        WriteRegistroC465( RegC405.RegistroC460.Items[intFor] );
 
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroC460Count := FRegistroC460Count + RegC405.RegistroC460.Count;
+  end;
+end;
+
+procedure TBloco_C.WriteRegistroC465(RegC460: TRegistroC460);
+var
+  intFor: integer;
+  strLinha: String;
+begin
+  if Assigned( RegC460.RegistroC465) then
+  begin
+     if RegC460.RegistroC465.Count > 0 then
+     begin
+        if FBloco_0.Registro0000.IND_PERFIL in [pfPerfilB] then
+           Check(False, 'O RegistroC465, não deve ser gerado em movimentações de saída, no %s, conforme ATO COTEPE 09/08', ['PerfilB']);
+     end;
+     //-- Before
+     strLinha := '';
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC465) then
+     begin
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnBeforeWriteRegistroC465(strLinha);
+        if strLinha <> EmptyStr then
+           Add(strLinha);
+     end;
+     for intFor := 0 to RegC460.RegistroC465.Count - 1 do
+     begin
+        with RegC460.RegistroC465.Items[intFor] do
+        begin
+          strLinha := LFill('C465') +
+               LFill( CHV_CFE ) +
+               LFill( NUM_CCF ) ;
+          //-- Write
+          if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC465) then
+             TACBrSPEDFiscal(FOwner).EventsBloco_C.OnWriteRegistroC465(strLinha);
+
+          Add(strLinha);
+        end;
+        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+     end;
+     //-- After
+     strLinha := '';
+     if Assigned(TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC465) then
+     begin
+        TACBrSPEDFiscal(FOwner).EventsBloco_C.OnAfterWriteRegistroC465(strLinha);
+        if strLinha <> EmptyStr then
+           Add(strLinha);
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroC465Count := FRegistroC465Count + RegC460.RegistroC465.Count;
   end;
 end;
 

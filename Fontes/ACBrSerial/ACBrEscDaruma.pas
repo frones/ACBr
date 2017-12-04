@@ -111,6 +111,8 @@ begin
     DesligaNegrito          := ESC + 'F';
     LigaExpandido           := ESC + 'W' + #1;
     DesligaExpandido        := ESC + 'W' + #0;
+    LigaAlturaDupla         := ESC + 'w' + #1;
+    DesligaAlturaDupla      := ESC + 'w' + #0;
     LigaSublinhado          := ESC + '-' + #1;
     DesligaSublinhado       := ESC + '-' + #0;
     LigaItalico             := ESC + '4' + #1;
@@ -312,7 +314,7 @@ begin
     if TestBit(B, 7) then
       AStatus := AStatus + [stGavetaAberta];  // Impressora em falha
   except
-    AStatus := AStatus + [stErro];
+    AStatus := AStatus + [stErroLeitura];
   end;
 end;
 

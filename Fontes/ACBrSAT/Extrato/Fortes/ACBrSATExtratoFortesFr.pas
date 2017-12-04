@@ -575,7 +575,7 @@ begin
     maxCaracter := maxCaracter + 1;
   end;
 
-  Result := maxCaracter;
+  Result := maxCaracter-2;
 end;
 
 procedure TACBrSATExtratoFortesFr.rlVendaBeforePrint(Sender: TObject;

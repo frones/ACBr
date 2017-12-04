@@ -66,12 +66,15 @@ uses
 
 const
   {$IfDef USE_MSCRYPO}
-   LIBXMLSEC_MSCRYPTO_SO = 'libxmlsec-mscrypto.dll';
+   {$IfDef USE_MINGW}
+    LIBXMLSEC_MSCRYPTO_SO = 'libxmlsec1-mscrypto.dll';
+   {$Else}
+    LIBXMLSEC_MSCRYPTO_SO = 'libxmlsec-mscrypto.dll';
+   {$EndIf}
   {$EndIf}
 
   cDTD = '<!DOCTYPE test [<!ATTLIST &infElement& &IdAttribute& ID #IMPLIED>]>';
 
-  cENCODING_UTF8 = '<?xml version="1.0" encoding="UTF-8"?>';
   cCryptLibMSCrypto = 'mscrypto';
   cCryptLibOpenSSL = 'openssl';
 
@@ -119,12 +122,13 @@ type
 
     function Assinar(const ConteudoXML, docElement, infElement: String;
       SignatureNode: String = ''; SelectionNamespaces: String = '';
-      IdSignature: String = ''): String; override;
+      IdSignature: String = ''; IdAttr: String = ''): String; override;
     function Validar(const ConteudoXML, ArqSchema: String;
       out MsgErro: String): Boolean; override;
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
       const infElement: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''; IdSignature: String = ''): Boolean;
+      SelectionNamespaces: String = ''; IdSignature: String = '';
+      IdAttr: String = ''): Boolean;
       override;
   end;
 
@@ -167,7 +171,7 @@ implementation
 
 Uses
   strutils, math,
-  ACBrUtil, ACBrDFeUtil,
+  ACBrUtil, ACBrDFeUtil, ACBrConsts,
   pcnAuxiliar,
   synautil, synacode;
 
@@ -612,9 +616,9 @@ end;
 
 function TDFeSSLXmlSignXmlSec.Assinar(const ConteudoXML, docElement,
   infElement: String; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String): String;
+  IdSignature: String; IdAttr: String): String;
 var
-  AXml, XmlAss, DTD, IdAttr: String;
+  AXml, XmlAss, DTD: String;
   TemDeclaracao: Boolean;
 begin
   // Nota: "ConteudoXML" já deve estar convertido para UTF8 //
@@ -623,13 +627,13 @@ begin
   // Verificando se possui a Declaração do XML, se não possuir, adiciona para OpenSSL compreender o Encoding
   TemDeclaracao := XmlEhUTF8(ConteudoXML);
   if not TemDeclaracao then
-    AXml := cENCODING_UTF8 + RemoverDeclaracaoXML(ConteudoXML)
+    AXml := CUTF8DeclaracaoXML + RemoverDeclaracaoXML(ConteudoXML)
   else
     AXml := ConteudoXML;
 
   if infElement <> '' then
   begin
-    IdAttr := IfEmptyThen(IdSignature, 'Id');
+    IdAttr := IfEmptyThen(IdAttr, 'Id');
 
     DTD := StringReplace(cDTD, '&infElement&', infElement, []);
     DTD := StringReplace( DTD, '&IdAttribute&', IdAttr, []);
@@ -639,7 +643,7 @@ begin
 
   // Inserindo Template da Assinatura digital //
   if (not XmlEstaAssinado(AXml)) or (SignatureNode <> '') then
-    AXml := AdicionarSignatureElement(AXml, True, docElement, IdSignature);
+    AXml := AdicionarSignatureElement(AXml, True, docElement, IdSignature, IdAttr);
 
   // Assinando com XMLSec //
   //DEBUG
@@ -754,13 +758,14 @@ end;
 
 function TDFeSSLXmlSignXmlSec.VerificarAssinatura(const ConteudoXML: String;
   out MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String; IdSignature: String): Boolean;
+  SelectionNamespaces: String; IdSignature: String;
+  IdAttr: String): Boolean;
 var
   doc: xmlDocPtr;
   SignNode: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   mngr: xmlSecKeysMngrPtr;
-  AXml, X509Certificate, DTD, IdAttr: String;
+  AXml, X509Certificate, DTD: String;
   asSignatureNode, asSelectionNamespaces: AnsiString;
   MS: TMemoryStream;
 begin
@@ -776,7 +781,7 @@ begin
 
   if infElement <> '' then
   begin
-    IdAttr := IfEmptyThen(IdSignature, 'Id');
+    IdAttr := IfEmptyThen(IdAttr, 'Id');
 
     DTD := StringReplace(cDTD, '&infElement&', infElement, []);
     DTD := StringReplace( DTD, '&IdAttribute&', IdAttr, []);

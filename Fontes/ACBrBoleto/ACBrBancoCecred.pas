@@ -497,37 +497,38 @@ begin
              StringOfChar(' ', 8);                                                      // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
 
     //SEGMENTO R
-    Result:= Result + #13#10 +
-             IntToStrZero(ACBrBanco.Numero, 3)                                       + // 1 a 3 - Código do banco
-             '0001'                                                                  + // 4 a 7 - Número do lote
-             '3'                                                                     + // 8 a 8 - Tipo do registro: Registro detalhe
-             IntToStrZero((3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 3 ,5) + // 9 a 13 - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
-             'R'                                                                     + // 14 a 14 - Código do segmento do registro detalhe
-             ' '                                                                     + // 15 a 15 - Uso exclusivo FEBRABAN/CNAB: Branco
-             ATipoOcorrencia                                                         + // 16 a 17 - Tipo Ocorrencia
-             '0'                                                                     + // 18 - Cód deconto 2
-             StringOfChar('0', 8)                                                    + // 19 a 26 - Data do desconto 2
-             StringOfChar('0', 15)                                                   + // 27 a 41 - Valor/Percentual de desconto 2
-             '0'                                                                     + // 42 - Cód deconto 3
-             StringOfChar('0', 8)                                                    + // 43 a 50 - Data do desconto 3
-             StringOfChar('0', 15)                                                   + // 51 a 65 - Valor/Percentual de desconto 3
-             aCodMulta                                                               + // 66 a 66 - Codigo Multa (1-Valor fixo / 2-Percentual)
-             IfThen((PercentualMulta > 0),
-                     FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000')          + // 67 a 74 - Data Multa (se nao informar será a partir do vcto)
-             aValorMulta                                                             + // 75 a 89 - valor/Percentual de multa dependando do cod da multa. Informar zeros se não cobrar
-             StringOfChar(' ', 10)                                                   + // 90 a 99 - Informacao ao sacado
-             StringOfChar(' ', 40)                                                   + // 100 a 139 - Mensagem 3
-             StringOfChar(' ', 40)                                                   + // 140 a 179 - Mensagem 4
-             StringOfChar(' ', 20)                                                   + // 180 a 199 - Uso exclusivo FEBRABAN/CNAB: Branco
-             StringOfChar('0', 8)                                                    + // 200 - 207 - Cód ocor. do sacado
-             StringOfChar('0', 3)                                                    + // 208 a 210 - Cód do Banco na Conta do Débito
-             StringOfChar('0', 5)                                                    + // 211 a 215 - Cód da Agência do Débito
-             ' '                                                                     + // 216 - Digito Conta Agência do Débito
-             StringOfChar('0', 12)                                                   + // 217 a 228 - Conta Corrente para Débito
-             ' '                                                                     + // 229 - Digito Conta Débito
-             ' '                                                                     + // 230 - Digito ag/conta debito
-             '0'                                                                     + // 231 - Aviso para débito automático
-             StringOfChar(' ', 9);                                                     // 232 a 240 - Uso exclusivo FEBRABAN/CNAB: Branco
+    if (CodigoMoraJuros <> cjIsento) then
+      Result:= Result + #13#10 +
+               IntToStrZero(ACBrBanco.Numero, 3)                                       + // 1 a 3 - Código do banco
+               '0001'                                                                  + // 4 a 7 - Número do lote
+               '3'                                                                     + // 8 a 8 - Tipo do registro: Registro detalhe
+               IntToStrZero((3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 3 ,5) + // 9 a 13 - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
+               'R'                                                                     + // 14 a 14 - Código do segmento do registro detalhe
+               ' '                                                                     + // 15 a 15 - Uso exclusivo FEBRABAN/CNAB: Branco
+               ATipoOcorrencia                                                         + // 16 a 17 - Tipo Ocorrencia
+               '0'                                                                     + // 18 - Cód deconto 2
+               StringOfChar('0', 8)                                                    + // 19 a 26 - Data do desconto 2
+               StringOfChar('0', 15)                                                   + // 27 a 41 - Valor/Percentual de desconto 2
+               '0'                                                                     + // 42 - Cód deconto 3
+               StringOfChar('0', 8)                                                    + // 43 a 50 - Data do desconto 3
+               StringOfChar('0', 15)                                                   + // 51 a 65 - Valor/Percentual de desconto 3
+               aCodMulta                                                               + // 66 a 66 - Codigo Multa (1-Valor fixo / 2-Percentual)
+               IfThen((PercentualMulta > 0),
+                       FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000')          + // 67 a 74 - Data Multa (se nao informar será a partir do vcto)
+               aValorMulta                                                             + // 75 a 89 - valor/Percentual de multa dependando do cod da multa. Informar zeros se não cobrar
+               StringOfChar(' ', 10)                                                   + // 90 a 99 - Informacao ao sacado
+               StringOfChar(' ', 40)                                                   + // 100 a 139 - Mensagem 3
+               StringOfChar(' ', 40)                                                   + // 140 a 179 - Mensagem 4
+               StringOfChar(' ', 20)                                                   + // 180 a 199 - Uso exclusivo FEBRABAN/CNAB: Branco
+               StringOfChar('0', 8)                                                    + // 200 - 207 - Cód ocor. do sacado
+               StringOfChar('0', 3)                                                    + // 208 a 210 - Cód do Banco na Conta do Débito
+               StringOfChar('0', 5)                                                    + // 211 a 215 - Cód da Agência do Débito
+               ' '                                                                     + // 216 - Digito Conta Agência do Débito
+               StringOfChar('0', 12)                                                   + // 217 a 228 - Conta Corrente para Débito
+               ' '                                                                     + // 229 - Digito Conta Débito
+               ' '                                                                     + // 230 - Digito ag/conta debito
+               '0'                                                                     + // 231 - Aviso para débito automático
+               StringOfChar(' ', 9);                                                     // 232 a 240 - Uso exclusivo FEBRABAN/CNAB: Branco
   end;
 end;
 

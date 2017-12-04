@@ -141,6 +141,7 @@ begin
        fFTPSend.TargetPort := fFTP.FtpPort;
        fFTPSend.Username   := fFTP.FtpUser;
        fFTPSend.Password   := fFTP.FtpPass;
+       fFTPSend.Timeout    := fFTP.FtpTimeout;
 
        // Definição do Proxy
 //       fFTPSend.DSock.SocksIP       := fProxy.ProxyHost;
@@ -157,7 +158,7 @@ begin
     end;
     // FTP Login
     if not fFTPSend.Login then
-      Exit;
+      raise Exception.Create('Não foi possível efetuar o login!');
 
 //    if fProxy.ProxyHost <> '' then
 //    begin

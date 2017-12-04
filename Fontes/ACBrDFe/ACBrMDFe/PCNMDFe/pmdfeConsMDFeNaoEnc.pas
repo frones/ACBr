@@ -57,7 +57,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
-    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
@@ -78,20 +77,6 @@ destructor TConsMDFeNaoEnc.Destroy;
 begin
   FGerador.Free;
   inherited;
-end;
-
-function TConsMDFeNaoEnc.ObterNomeArquivo: String;
-var
-  DataHora: TDateTime;
-  Year, Month, Day, Hour, Min, Sec, Milli: Word;
-  AAAAMMDDTHHMMSS: String;
-begin
-  Datahora:=now;
-  DecodeTime(DataHora, Hour, Min, Sec, Milli);
-  DecodeDate(DataHora, Year, Month, Day);
-  AAAAMMDDTHHMMSS := IntToStrZero(Year, 4) + IntToStrZero(Month, 2) + IntToStrZero(Day, 2) +
-    IntToStrZero(Hour, 2) + IntToStrZero(Min, 2) + IntToStrZero(Sec, 2);
-  Result := AAAAMMDDTHHMMSS + '-ped-cons.xml';
 end;
 
 function TConsMDFeNaoEnc.GerarXML: Boolean;

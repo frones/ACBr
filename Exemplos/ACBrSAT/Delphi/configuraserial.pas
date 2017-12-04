@@ -29,20 +29,23 @@
 {       Rua Coronel Aureliano de Camargo, 973 - Tatuí - SP - 18270-170         }
 {                                                                              }
 {******************************************************************************}
-unit ConfiguraSerial;
+unit configuraserial;
 
 interface
 
 uses
   ACBrDevice,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Buttons;
+  Buttons, Spin;
 
 type
 
   { TfrConfiguraSerial }
 
   TfrConfiguraSerial = class(TForm)
+    gbSendBytes: TGroupBox;
+    lEsperaBuffer: TLabel;
+    lBuffer: TLabel;
     Label5: TLabel;
     cmbBaudRate: TComboBox;
     Label6: TLabel;
@@ -59,6 +62,8 @@ type
     BitBtn2: TBitBtn;
     chHardFlow: TCheckBox;
     chSoftFlow: TCheckBox;
+    seSendBytesCount: TSpinEdit;
+    seSendBytesInterval: TSpinEdit;
     procedure FormCreate(Sender: TObject);
     procedure cmbPortaSerialChange(Sender: TObject);
     procedure cmbBaudRateChange(Sender: TObject);
@@ -70,6 +75,8 @@ type
     procedure chSoftFlowClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure seSendBytesCountChange(Sender: TObject);
+    procedure seSendBytesIntervalChange(Sender: TObject);
   private
     { Private declarations }
     procedure VerificaFlow ;
@@ -99,13 +106,25 @@ end;
 
 procedure TfrConfiguraSerial.FormShow(Sender: TObject);
 begin
-  cmbBaudRate.ItemIndex    := cmbBaudRate.Items.IndexOf(IntToStr( Device.Baud )) ;
-  cmbDataBits.ItemIndex    := cmbDataBits.Items.IndexOf(IntToStr( Device.Data )) ;
-  cmbParity.ItemIndex      := Integer( Device.Parity ) ;
-  cmbStopBits.ItemIndex    := Integer( Device.Stop ) ;
-  chHardFlow.Checked       := Device.HardFlow ;
-  chSoftFlow.Checked       := Device.SoftFlow ;
-  cmbHandShaking.ItemIndex := Integer( Device.HandShake ) ;
+  cmbBaudRate.ItemIndex     := cmbBaudRate.Items.IndexOf(IntToStr( Device.Baud )) ;
+  cmbDataBits.ItemIndex     := cmbDataBits.Items.IndexOf(IntToStr( Device.Data )) ;
+  cmbParity.ItemIndex       := Integer( Device.Parity ) ;
+  cmbStopBits.ItemIndex     := Integer( Device.Stop ) ;
+  chHardFlow.Checked        := Device.HardFlow ;
+  chSoftFlow.Checked        := Device.SoftFlow ;
+  cmbHandShaking.ItemIndex  := Integer( Device.HandShake ) ;
+  seSendBytesCount.Value    := Device.SendBytesCount;
+  seSendBytesInterval.Value := Device.SendBytesInterval;
+end;
+
+procedure TfrConfiguraSerial.seSendBytesCountChange(Sender: TObject);
+begin
+  Device.SendBytesCount := seSendBytesCount.Value;
+end;
+
+procedure TfrConfiguraSerial.seSendBytesIntervalChange(Sender: TObject);
+begin
+  Device.SendBytesInterval := seSendBytesInterval.Value;
 end;
 
 procedure TfrConfiguraSerial.cmbPortaSerialChange(Sender: TObject);

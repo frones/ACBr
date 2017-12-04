@@ -53,7 +53,7 @@ function FormatarChaveAcesso(AValue: String): String;
 function XmlEstaAssinado(const AXML: String): Boolean;
 function SignatureElement(const URI: String; AddX509Data: Boolean;
     IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
-function ExtraiURI(const AXML: String; IdSignature: String = ''): String;
+function ExtraiURI(const AXML: String; IdAttr: String = ''): String;
 
 
 implementation
@@ -156,15 +156,15 @@ begin
   {*)}
 end;
 
-function ExtraiURI(const AXML: String; IdSignature: String): String;
+function ExtraiURI(const AXML: String; IdAttr: String): String;
 var
   I, J: integer;
 begin
   Result := '';
-  if IdSignature = '' then
-    IdSignature := 'Id';
+  if IdAttr = '' then
+    IdAttr := 'Id';
 
-  I := PosEx(IdSignature+'=', AXML);
+  I := PosEx(IdAttr+'=', AXML);
   if I = 0 then       // XML não tem URI
     Exit;
 

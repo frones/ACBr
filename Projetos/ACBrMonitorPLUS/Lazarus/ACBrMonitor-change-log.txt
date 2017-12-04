@@ -43,6 +43,58 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2017
+[+] Adicionado Parametros para emissão Nome Fantasia na DANFe NFCe
+	por: José M. S. Junior
+
+27/11/2017
+[-] Ajustes de Retorno no comando de geração PDF no caso de Diretório inválido.
+        Estava trazendo a excessão em tela e não atualizava o log
+	por: José M. S. Junior
+
+23/11/2017
+[*] Ajustes ACBrBlocoX Métodos de Assinar / Validar e Enviar
+        Adicionado Métodos (AssinarBlocoX / ValidarBlocoX / EnviarBlocoX )
+	por: José M. S. Junior
+
+10/11/2017
+[+] Adicionado Parametros para emissão Extrato Fortes SAT - Código GTIN /
+        Acréscimo Desconto /Itens apenas em uma linha
+	por: José M. S. Junior
+
+07/11/2017
+[+] Adicionado Método para alterar Logomarca das DFes via Comando NFe / NFCe / SAT / CTe / MDFe
+	por: José M. S. Junior
+
+01/11/2017
+[+] Adicionado parametros para emissão NFCe / NFe - Campo Largura NFCe / Imprimir Detalhamento NFCe /
+        Nomenclatura do campo GTIN
+	por: José M. S. Junior
+
+[*] Ajustes na Geração de PDF de Evendo co CTe
+        https://www.projetoacbr.com.br/forum/topic/39619-impress%C3%A3o-carta-de-corre%C3%A7%C3%A3o/
+	por: José M. S. Junior
+
+26/10/2017
+[+] Adicionado parametros para emissão NFCe - Itens apenas em uma linha / QRCode na Lateral
+	por: José M. S. Junior
+
+[*] Ajustes na Configuração do Tipo de Emissão de DFe em tela e por linha de comando
+        DoACBrCTeUnit, DoACBrMDFe, DoACBrGNRe, ACBrMonitor1
+        https://www.projetoacbr.com.br/forum/topic/39430-forma-de-emiss%C3%A3o/
+	por: José M. S. Junior
+
+25/10/2017
+[*] Ajuste no Retorno de Evento de NFe
+        Descrição e tipo de retorno inconsistentes (DoACBRNFe)
+	por: José M. S. Junior
+
+20/10/2017
+[*] Ajuste no metodo Encerrar MDFe Versão 3.0
+        Não esta permitindo consultar MDFe da versão anterior, assim não conseguia encerrar,
+        adicionado validações e parâmetro para campo Protocolo
+	por: José M. S. Junior
+
 20/09/2017
 [+] Adicionado Funcionalidade de chamada de Ajuda nas telas (F1). Através do .chm, utilizando lhelp do lazarus
 	por: José M. S. Junior

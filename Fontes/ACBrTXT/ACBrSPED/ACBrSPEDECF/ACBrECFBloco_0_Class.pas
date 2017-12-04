@@ -263,7 +263,7 @@ end;
 
 procedure  TBloco_0.WriteRegistro0010;
 var
-  strOPT_REFIS, strOPT_PAES, strFORMA_TRIB : string;
+  strOPT_REFIS, strOPT_PAES, strFORMA_TRIB, strIND_REC_RECEITA : string;
 begin
   if Assigned(FRegistro0010) then
   begin
@@ -289,6 +289,11 @@ begin
         ftlLucroPresumidoArbitrado     : strFORMA_TRIB := '7';
         ftlImuneIRPJ                   : strFORMA_TRIB := '8';
         ftlIsentoIRPJ                  : strFORMA_TRIB := '9';
+      end;
+
+      case IND_REC_RECEITA of
+        irrRegimeCaixa       : strIND_REC_RECEITA := '1';
+        irrRegimeCompetencia : strIND_REC_RECEITA := '2';
       end;
 
       case FRegistro0000.COD_VER of
@@ -323,7 +328,7 @@ begin
                LFill(TIP_ENT) +
                LFill(FORMA_APUR_I) +
                LFill(APUR_CSLL) +
-               LFill(IND_REC_RECEITA) );
+               LFill(strIND_REC_RECEITA) );
 
       end;
 

@@ -299,10 +299,10 @@ begin
     begin
       FieldDefs.Clear;
       Fields.Clear;
-      FieldDefs.Add('TIPO_1', ftString, 14);
+      FieldDefs.Add('TIPO_1', ftString, 15);
       FieldDefs.Add('CNPJCPF_1', ftString, 70);
       FieldDefs.Add('DOCUMENTO_1', ftString, 33);
-      FieldDefs.Add('TIPO_2', ftString, 14);
+      FieldDefs.Add('TIPO_2', ftString, 15);
       FieldDefs.Add('CNPJCPF_2', ftString, 70);
       FieldDefs.Add('DOCUMENTO_2', ftString, 33);
 

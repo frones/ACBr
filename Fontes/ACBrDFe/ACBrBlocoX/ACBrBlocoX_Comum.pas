@@ -308,8 +308,6 @@ begin
   with TACBrBlocoX(FACBrBlocoX) do
   begin
     FGerador.wCampo(tcStr, '', 'Ie', 0, 0, 1, Estabelecimento.Ie);
-    FGerador.wCampo(tcStr, '', 'Cnpj', 14, 14, 1, OnlyNumber(Estabelecimento.Cnpj));
-    FGerador.wCampo(tcStr, '', 'NomeEmpresarial', 0, 0, 1, Estabelecimento.NomeEmpresarial);
   end;
   FGerador.wGrupo('/Estabelecimento');
 end;
@@ -320,10 +318,6 @@ begin
   with TACBrBlocoX(FACBrBlocoX) do
   begin
     FGerador.wCampo(tcStr, '', 'NumeroCredenciamento', 0, 0, 1, PafECF.NumeroCredenciamento);
-    FGerador.wCampo(tcStr, '', 'NomeComercial', 0, 0, 1, PafECF.NomeComercial);
-    FGerador.wCampo(tcStr, '', 'Versao', 1, 20, 1, PafECF.Versao);
-    FGerador.wCampo(tcStr, '', 'CnpjDesenvolvedor', 14, 14, 1, OnlyNumber(PafECF.CnpjDesenvolvedor));
-    FGerador.wCampo(tcStr, '', 'NomeEmpresarialDesenvolvedor', 0, 0, 1, PafECF.NomeEmpresarialDesenvolvedor);
   end;
   FGerador.wGrupo('/PafEcf');
 end;

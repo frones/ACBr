@@ -300,7 +300,7 @@ begin
                     proGovBR, proIssCuritiba, proISSNET, proLexsom, proNatal,
                     proTinus, proRecife, proRJ, proSimplISS, proThema, proTiplan,
                     proAgiliv2, proFISSLex, proSpeedGov, proPronim, proSalvador,
-                    proSJP, proWebISS] then
+                    proSJP, proWebISS, proSystemPro] then
       aVersao := '';
   end
   else
@@ -653,7 +653,7 @@ begin
           end
   else begin
          Gerador.Prefixo := Prefixo3;
-         if Provedor in [proCoplan] then
+         if Provedor in [proCoplan, proSIAPNet] then
            Gerador.wGrupoNFSe('LoteRps' + aVersao + aIdentificador)
          else
            Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao + aNameSpace);

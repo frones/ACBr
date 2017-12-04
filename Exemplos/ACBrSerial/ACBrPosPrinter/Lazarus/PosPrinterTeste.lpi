@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
@@ -14,9 +14,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="2">
       <Item1 Name="Debug" Default="True"/>
       <Item2 Name="Release">
@@ -85,7 +82,6 @@
         <ComponentName Value="frConfiguraSerial"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ConfiguraSerial"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -127,7 +123,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="4">
+    <Exceptions Count="5">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -140,6 +136,9 @@
       <Item4>
         <Name Value="ESynaSerError"/>
       </Item4>
+      <Item5>
+        <Name Value="ESynapseError"/>
+      </Item5>
     </Exceptions>
   </Debugging>
 </CONFIG>

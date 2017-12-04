@@ -384,6 +384,7 @@ begin
     begin
       NFSe.Prestador.Cnpj               := Leitor.rCampo(tcStr, 'Cnpj');
       NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
+      NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
     end; // fim Prestador
 
     if (Leitor.rExtrai(3, 'Tomador') <> '') or (Leitor.rExtrai(3, 'TomadorServico') <> '') or
@@ -1364,6 +1365,8 @@ begin
       NFSe.OutrasInformacoes := Leitor.rCampo(tcStr, 'OutrasInformacoes');
       NFSe.ValorCredito      := Leitor.rCampo(tcDe2, 'ValorCredito');
 
+      NFSe.InformacoesComplementares := Leitor.rCampo(tcStr, 'InformacoesComplementares');
+
       if FProvedor = proVitoria then
         NFSe.IncentivadorCultural := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivoFiscal'))
       else
@@ -1928,7 +1931,7 @@ begin
         if (FProvedor in [proActconv202]) then
           NFSe.Servico.Valores.Aliquota := (NFSe.Servico.Valores.Aliquota * 100);
 
-        if (FProvedor in [proActconv202, proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2]) then
+        if (FProvedor in [proActconv202, proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2, proVitoria]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')
@@ -2058,6 +2061,7 @@ var
   itemServico: TItemServicoCollectionItem;
   codCNAE: Variant;
   codLCServ: string;
+  ValorServicosTotal: Currency;
 
   function _StrToSimNao(out ok: boolean; const s: String): TnfseSimNao;
   begin
@@ -2102,6 +2106,13 @@ var
 begin
   codLCServ := '';
 
+  ValorServicosTotal := 0;
+  if (Leitor.rExtrai(1, 'InfDeclaracaoPrestacaoServico') <> '') or
+     (Leitor.rExtrai(1, 'DeclaracaoPrestacaoServico') <> '') then
+  begin
+    NFSe.Servico.Valores.ValorServicos := Leitor.rCampo(tcDe2, 'ValorServicos');
+  end;
+
   if (Leitor.rExtrai(1, 'ListaServico') <> '') then
   begin
     i := 1;
@@ -2110,11 +2121,9 @@ begin
       itemServico := NFSe.Servico.ItemServico.Add;
       itemServico.Descricao := Leitor.rCampo(tcStr, 'Discriminacao');
       itemServico.Discriminacao := itemServico.Descricao;
-      itemServico.ValorUnitario := Leitor.rCampo(tcDe2, 'ValorServico');
+      itemServico.ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
       itemServico.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'ValorDesconto');
       itemServico.Quantidade := Leitor.rCampo(tcDe6, 'Quantidade');
-      itemServico.ValorTotal := itemServico.ValorUnitario * itemServico.Quantidade;
-      itemServico.ValorServicos := itemServico.ValorTotal;
 
       if VersaoNFSe = ve100 then
         codCNAE := Leitor.rCampo(tcStr, 'CodigoCnae');
@@ -2124,14 +2133,28 @@ begin
       if codLCServ = '' then
         codLCServ := itemServico.CodLCServ;
 
+      ValorServicosTotal := ValorServicosTotal + itemServico.ValorServicos;
+      inc(i);
+    end;
+
+    for I := 0 to NFSe.Servico.ItemServico.Count - 1 do
+    begin
+      itemServico := NFSe.Servico.ItemServico.Items[I];
+      if ValorServicosTotal = NFSe.Servico.Valores.ValorServicos then
+      begin
+        itemServico.ValorTotal := itemServico.ValorServicos;
       if itemServico.Quantidade = 0 then
         itemServico.ValorUnitario := 0
       else
         itemServico.ValorUnitario := itemServico.ValorServicos / itemServico.Quantidade;
-
-      itemServico.ValorTotal := itemServico.ValorServicos;
-      inc(i);
+      end
+      else
+      begin
+        itemServico.ValorUnitario := itemServico.ValorServicos;
+        itemServico.ValorTotal := itemServico.ValorUnitario * itemServico.Quantidade;
+      end;
     end;
+
   end; // fim lista serviço
 
   if Leitor.rExtrai(1, 'Nfse') <> '' then

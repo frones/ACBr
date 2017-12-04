@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2017
+-- ACBrCTeDACTEFR --
+[*] Acrescentado a impressão do evento de Prestação de Serviço em Desacordo
+   Por : Léo
+
 Data: 22/03/2017
 [+] Limpeza de uses desnecessárias
 		http://www.projetoacbr.com.br/forum/topic/35775-sugestão-limpeza-dos-uses-de-algumas-units/

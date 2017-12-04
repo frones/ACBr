@@ -81,12 +81,11 @@ Begin
 End;
 
 Procedure TACBrTERWilbor.LeBalanca(  Terminal : Word = 0 );
-  var PesoOk : string ;
 Begin
     if TACBrTER( fpOwner ).Comutadora Then
      begin
        fpDevice.EnviaString( 'S'+Format('%2.2d', [Terminal]) + #5  );
-       PesoOk := fpDevice.LeString( 500 );
+       fpDevice.LeString( 500 );
      end
     else
      begin

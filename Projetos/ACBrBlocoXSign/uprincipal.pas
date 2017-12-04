@@ -234,7 +234,7 @@ begin
     ACBrBlocoX1.WebServices.ConsultarBlocoX.Executar;
 
     memArqAssinado.Text := ACBrBlocoX1.WebServices.ConsultarBlocoX.RetWS;
-    WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'consultar-resposta.'+ExtractFileExt(ParamStr(1),memArqAssinado.Text);
+    WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'consultar-resposta.'+ExtractFileExt(ParamStr(1)),memArqAssinado.Text);
     Application.Terminate;
   end
   else
@@ -340,10 +340,7 @@ begin
 
   ConfigurarDFe;
 
-  case rgTipo.ItemIndex of
-    0: wWebServiceBlocoX := ACBrBlocoX1.WebServices.EnviarReducaoZ;
-    1: wWebServiceBlocoX := ACBrBlocoX1.WebServices.EnviarEstoque;
-  end;
+  wWebServiceBlocoX := ACBrBlocoX1.WebServices.EnviarBlocoX;
 
   wWebServiceBlocoX.XML := memArqAssinado.Text;
 
@@ -362,14 +359,11 @@ begin
 
   ConfigurarDFe;
 
-  case rgTipo.ItemIndex of
-    0: wWebServiceBlocoX := ACBrBlocoX1.WebServices.ValidarReducaoZ;
-    1: wWebServiceBlocoX := ACBrBlocoX1.WebServices.ValidarEstoque;
-  end;
+  wWebServiceBlocoX := ACBrBlocoX1.WebServices.ValidarBlocoX;
 
   wWebServiceBlocoX.XML := memArqAssinado.Text;
-  wWebServiceBlocoX.ValidarEcf    := True;
-  wWebServiceBlocoX.ValidarPafEcf := True;
+  wWebServiceBlocoX.ValidarPafEcfEEcf    := True;
+
   if wWebServiceBlocoX.Executar then
     memArqAssinado.Text := wWebServiceBlocoX.RetWS
   else

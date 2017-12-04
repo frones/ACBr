@@ -986,7 +986,10 @@ begin
   // Remover quebras de linha //
   FPRetornoWS := StringReplace(FPRetornoWS, #10       , '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, #13       , '', [rfReplaceAll]);
-
+  if (FProvedor <> proNFSeBrasil) then
+    FPRetornoWS := StringReplace(FPRetornoWS, '&amp;'   , '', [rfReplaceAll]);
+  FPRetornoWS := StringReplace(FPRetornoWS, 'lt;brgt;', '', [rfReplaceAll]);
+  
   FPRetornoWS := RemoverDeclaracaoXML(FPRetornoWS);
 
   if (FProvedor = proNFSeBrasil) then
@@ -2211,7 +2214,9 @@ begin
 
       proSMARAPD:   FTagGrupo := '';
 
-//      proTinus:     FTagGrupo := 'Arg';
+      proIPM:       FTagGrupo := '';
+
+      //      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'EnviarLoteRpsEnvio';
     end;
@@ -2225,7 +2230,9 @@ begin
       proinfiscv11: TagElemento := 'infNFSe';
 
       proSP, 
-      proNotaBlu:   TagElemento := '';
+      proNotaBlu,
+      proIPM:       TagElemento := '';
+
 
       proSMARAPD:   TagElemento := 'nfd';
 
@@ -2532,6 +2539,7 @@ begin
     case Provedor of
       proNotaBlu: FTagGrupo := 'PedidoEnvioLoteRPS';
       proSigep:   FTagGrupo := 'Rps';
+      proIPM:     FTagGrupo := '';
     else
       FTagGrupo := 'EnviarLoteRpsEnvio';
     end;
@@ -2539,7 +2547,7 @@ begin
     FTagGrupo := FPrefixo3 + FTagGrupo;
 
     case FProvedor of
-      proSP, proNotaBlu: TagElemento := '';
+      proSP, proNotaBlu, proIPM: TagElemento := '';
     else
       TagElemento := 'LoteRps';
     end;
@@ -3520,7 +3528,8 @@ begin
       proSP,
       proNotaBlu:   FTagGrupo := 'p1:PedidoConsultaLote';
 
-      proSMARAPD:   FTagGrupo := '';
+      proSMARAPD,
+      proIPM:       FTagGrupo := '';
 
 //      proTinus:     FTagGrupo := 'Arg';
     else
@@ -4240,7 +4249,8 @@ begin
                      CodMunicipio := 999;
                      
         proBetha,
-        proBethav2: CodMunicipio := StrToIntDef(FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0);
+        proBethav2: CodMunicipio  := StrToIntDef(FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0);
+        proFiorilli: CodMunicipio := FNotasFiscais.Items[0].NFSe.Servico.MunicipioIncidencia;
       else
         CodMunicipio := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
       end;

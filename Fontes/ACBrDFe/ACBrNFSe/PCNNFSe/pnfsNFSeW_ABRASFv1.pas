@@ -145,7 +145,7 @@ begin
         ((NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
          (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') or
          (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> ''))) or
-       ((FProvedor in [proSimplISS, proISSNet])) then
+       ((FProvedor in [proSimplISS, proISSNet, proPronim])) then
     begin
       Gerador.wGrupoNFSe('IdentificacaoTomador');
       

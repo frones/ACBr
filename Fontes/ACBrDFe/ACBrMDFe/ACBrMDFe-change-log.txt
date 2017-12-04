@@ -47,6 +47,36 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2017
+-- pmdfeConversaoMDFe --
+[*] Corrigido o nome do enumerador usado na consulta ao status de serviço.
+   Por: Edilson
+
+21/11/2017
+-- pmdfeEventoMDFe --
+[*] Retornado a function ObterNomeArquivo.
+   Por: Italo Jurisato Junior
+
+15/11/2017
+-- Diversos --
+[*] Remoção de códigos não utilizados.
+   Por: Italo Jurisato Junior
+-- pmdfeProcMDFe / pmdfeEventoMDFe --
+[*] Removido a function GetVersaoEvento pois este retorna sempre uma versão
+    pré-definida que pode não ser a versão atual do evento.
+    Removido também a function ObterNomeArquivo por não ter nenhuma utilidade.
+   Por: Italo Jurisato Junior
+
+25/10/2017
+-- ACBrMDFeWebServices --
+[*] Correção do tamanho maximo do XML de envio.
+   Por: Italo Jurisato Junior
+
+23/10/2017
+-- ACBrMDFeWebServices --
+[*] Correção, não identificava corretamente Resumo de Evento e Evento Processado.
+   Por: Italo Jurisato Junior
+
 12/10/2017
 -- pmdfeMDFeW --
 [*] Correção na geração do grupo de documentos, não estava gerando quanto o

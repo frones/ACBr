@@ -52,7 +52,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function ObterNomeArquivo: string;
   published
     property Gerador: TGerador       read FGerador  write FGerador;
     property Versao: String          read FVersao   write FVersao;
@@ -78,20 +77,6 @@ destructor TDistDFeInt.Destroy;
 begin
   FGerador.Free;
   inherited;
-end;
-
-function TDistDFeInt.ObterNomeArquivo: string;
-var
-  DataHora: TDateTime;
-  Year, Month, Day, Hour, Min, Sec, Milli: Word;
-  AAAAMMDDTHHMMSS: string;
-begin
-  Datahora := now;
-  DecodeTime(DataHora, Hour, Min, Sec, Milli);
-  DecodeDate(DataHora, Year, Month, Day);
-  AAAAMMDDTHHMMSS := IntToStrZero(Year, 4) + IntToStrZero(Month, 2) + IntToStrZero(Day, 2) +
-    IntToStrZero(Hour, 2) + IntToStrZero(Min, 2) + IntToStrZero(Sec, 2);
-  Result := AAAAMMDDTHHMMSS + '-con-dist-dfe.xml';
 end;
 
 function TDistDFeInt.GerarXML: boolean;

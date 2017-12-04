@@ -186,7 +186,6 @@ type
     constructor Create(AOwner: TCTe);
     destructor Destroy; override;
     function GerarXml: boolean;
-    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador      read FGerador write FGerador;
     property CTe: TCTe              read FCTe     write FCTe;
@@ -239,11 +238,6 @@ begin
   FGerador.Free;
   FOpcoes.Free;
   inherited Destroy;
-end;
-
-function TCTeW.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(CTe.infCTe.ID) + '-cte.xml';
 end;
 
 function TCTeW.GerarXml: Boolean;
@@ -533,9 +527,9 @@ begin
     begin
       if (CTe.infCTe.versao >= 3) then
       begin
-        if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '4') then
+        if (CTe.ide.Toma03.Toma = tmOutros) then
         begin
-          if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+          if (CTe.ide.indIEToma <> inNaoContribuinte) then
             GeraIE;
         end
         else
@@ -827,9 +821,9 @@ begin
     begin
       if (CTe.infCTe.versao >= 3) then
       begin
-        if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '4') then
+        if (CTe.ide.Toma03.Toma = tmOutros) then
         begin
-          if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+          if (CTe.ide.indIEToma <> inNaoContribuinte) then
             GeraIE;
         end
         else
@@ -907,18 +901,21 @@ begin
       else
         Gerador.wCampo(tcStr, '#113', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-      if (CTe.infCTe.versao >= 3) then
+      if (Trim(CTe.Rem.IE) <> '') then
       begin
-        if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '0') then
+        if (CTe.infCTe.versao >= 3) then
         begin
-          if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+          if (CTe.ide.Toma03.Toma = tmRemetente) then
+          begin
+            if (CTe.ide.indIEToma <> inNaoContribuinte) then
+              GeraIE;
+          end
+          else
             GeraIE;
         end
         else
           GeraIE;
-      end
-      else
-        GeraIE;
+      end;
 
       if CTe.Ide.tpAmb = taHomologacao
        then Gerador.wCampo(tcStr, '#116', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -1013,19 +1010,22 @@ begin
     else
       Gerador.wCampo(tcStr, '#143', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    if (CTe.infCTe.versao >= 3) then
+    if (Trim(CTe.Exped.IE) <> '') then
     begin
-      if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '1') then
+      if (CTe.infCTe.versao >= 3) then
       begin
-        if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
-          GeraIE;
+        if (CTe.ide.Toma03.Toma = tmExpedidor) then
+        begin
+          if (CTe.ide.indIEToma <> inNaoContribuinte) then
+            GeraIE;
+        end
+        else
+          if (Trim(CTe.Exped.IE) <> '') then
+            GeraIE;
       end
       else
-        if (Trim(CTe.Exped.IE) <> '') then
-          GeraIE;
-    end
-    else
-      GeraIE;
+        GeraIE;
+    end;
 
     if CTe.Ide.tpAmb = taHomologacao
      then Gerador.wCampo(tcStr, '#146', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -1095,18 +1095,21 @@ begin
     else
       Gerador.wCampo(tcStr, '#161', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    if (CTe.infCTe.versao >= 3) then
+    if (Trim(CTe.Receb.IE) <> '') then
     begin
-      if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '2') then
+      if (CTe.infCTe.versao >= 3) then
       begin
-        if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+        if (CTe.ide.Toma03.Toma = tmRecebedor) then
+        begin
+          if (CTe.ide.indIEToma <> inNaoContribuinte) then
+            GeraIE;
+        end
+        else
           GeraIE;
       end
       else
         GeraIE;
-    end
-    else
-      GeraIE;
+    end;
 
     if CTe.Ide.tpAmb = taHomologacao
      then Gerador.wCampo(tcStr, '#164', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -1180,9 +1183,9 @@ begin
       begin
         if (CTe.infCTe.versao >= 3) then
         begin
-          if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '3') then
+          if (CTe.ide.Toma03.Toma = tmDestinatario) then
           begin
-            if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+            if (CTe.ide.indIEToma <> inNaoContribuinte) then
               GeraIE;
           end
           else
@@ -1473,7 +1476,7 @@ begin
 
     versao := GetVersaoModalCTe(VersaoDF, CTe.Ide.modal);
 
-    if (CTe.Ide.tpServ <> tsTranspValores) then
+    if (CTe.ide.modelo = 57) or ((CTe.ide.modelo = 67) and (CTe.ide.modal = mdRodoviario) and (CTe.ide.tpServ <> tsTranspValores)) then
     begin
       case StrToInt(TpModalToStr(CTe.Ide.modal)) of
        01: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
@@ -1501,7 +1504,7 @@ begin
 
     if (CTe.ide.modelo = 57) then
     begin
-      if CTe.infCTe.versao >= 2 then
+      if CTe.infCTe.versao = 2 then
         GerarPeri;
 
       GerarVeicNovos;
@@ -2163,8 +2166,12 @@ begin
   Gerador.wCampo(tcInt, '#02', 'nMinu     ', 09, 09, 0, CTe.infCTeNorm.aereo.nMinu, DSC_NMINU);
   Gerador.wCampo(tcStr, '#03', 'nOCA      ', 11, 11, 0, CTe.infCTeNorm.aereo.nOCA, DSC_NOCA);
   Gerador.wCampo(tcDat, '#04', 'dPrevAereo', 10, 10, 0, CTe.infCTeNorm.aereo.dPrevAereo, DSC_DPREV);
-  Gerador.wCampo(tcStr, '#05', 'xLAgEmi   ', 01, 20, 0, CTe.infCTeNorm.aereo.xLAgEmi, DSC_XLAGEMI);
-  Gerador.wCampo(tcStr, '#06', 'IdT       ', 01, 14, 0, CTe.infCTeNorm.aereo.IdT, DSC_IDT);
+
+  if CTe.infCTe.versao = 2 then
+  begin
+    Gerador.wCampo(tcStr, '#05', 'xLAgEmi', 01, 20, 0, CTe.infCTeNorm.aereo.xLAgEmi, DSC_XLAGEMI);
+    Gerador.wCampo(tcStr, '#06', 'IdT'    , 01, 14, 0, CTe.infCTeNorm.aereo.IdT, DSC_IDT);
+  end;
 
   if CTe.infCTe.versao >= 3 then
   begin
@@ -2184,6 +2191,8 @@ begin
     Gerador.wCampo(tcStr, '#09', 'cTar', 01, 04, 0, CTe.infCTeNorm.aereo.tarifa.cTar, DSC_CTAR);
     Gerador.wCampo(tcDe2, '#10', 'vTar', 01, 15, 1, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
     Gerador.wGrupo('/tarifa');
+
+    GerarPeri;
   end
   else
   begin
@@ -2298,7 +2307,7 @@ begin
     Gerador.wAlerta('#16', 'detCont', DSC_DETCONT, ERR_MSG_MAIOR_MAXIMO + '999');
 
   if CTe.infCTe.versao >= 3 then
-    Gerador.wCampo(tcStr, '#28', 'tpNav', 01, 01, 1, TpNavegacaoToStr(CTe.infCTeNorm.aquav.tpNav), DSC_TPNAV);
+    Gerador.wCampo(tcStr, '#28', 'tpNav', 01, 01, 0, TpNavegacaoToStr(CTe.infCTeNorm.aquav.tpNav), DSC_TPNAV);
 
   Gerador.wGrupo('/aquav');
 end;

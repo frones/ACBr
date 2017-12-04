@@ -10,7 +10,8 @@ uses
   ACBrSocket, ACBrCEP, ACBrTCPReg, ACBrIBGE, ACBrCNIEE, ACBrSuframa, 
   ACBrDownload, ACBrDownloadClass, ACBrNFPws, ACBrConsultaCNPJ, ACBrIBPTax, 
   ACBrCotacao, ACBrMail, ACBrConsultaCPF, ACBrSpedTabelas, ACBrSedex, 
-  ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp, 
+  ACBrWinReqRespClass, ACBrWinHTTPReqResp, ACBrWinINetReqResp, ACBrFeriado, 
+  ACBrFeriadoWSCalendario, ACBrFeriadoWSClass, ACBrFeriadoWSJSON, 
   LazarusPackageIntf;
 
 implementation

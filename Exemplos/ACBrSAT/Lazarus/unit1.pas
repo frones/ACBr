@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, PrintersDlgs, Forms,
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
   ComCtrls, Spin, RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
-  dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter;
+  dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -35,6 +35,7 @@ type
     btSalvarParams: TButton;
     btSerial: TSpeedButton;
     btMFEEnviarPagamento: TButton;
+    cbImprimirChaveUmaLinha: TCheckBox;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
     cbxRemoverAcentos: TCheckBox;
@@ -50,17 +51,22 @@ type
     cbxSalvarCFe: TCheckBox;
     cbxSalvarCFeCanc: TCheckBox;
     cbxSalvarEnvio: TCheckBox;
+    cbxSepararPorModelo: TCheckBox;
     cbxSepararPorCNPJ: TCheckBox;
-    cbxSepararPorMES: TCheckBox;
+    cbxSepararPorAno: TCheckBox;
+    cbxSepararPorDia: TCheckBox;
+    cbxSepararPorMes: TCheckBox;
     cbxFormatXML: TCheckBox;
     cbPreview: TCheckBox;
     cbxRedeSeg: TComboBox;
     cbImprimir1Linha: TCheckBox;
     cbxUTF8: TCheckBox;
+    cbxXmlSignLib: TComboBox;
     edChaveCancelamento: TEdit;
     edMFEInput: TEdit;
     edMFEOutput: TEdit;
     edLog : TEdit ;
+    edSchemaVendaAPL: TEdit;
     edRedeIP: TEdit;
     edRedeProxyPorta: TSpinEdit;
     edRedeProxyUser: TEdit;
@@ -74,6 +80,7 @@ type
     edRedeProxyIP: TEdit;
     edRedeSSID: TEdit;
     edRedeCodigo: TEdit;
+    edSchemaVendaSAT: TEdit;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -98,6 +105,9 @@ type
     Label30: TLabel;
     Label31: TLabel;
     Label32: TLabel;
+    Label33: TLabel;
+    Label34: TLabel;
+    Label35: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
@@ -120,6 +130,11 @@ type
     MenuItem15: TMenuItem;
     MenuItem16: TMenuItem;
     MenuItem17: TMenuItem;
+    MenuItem18: TMenuItem;
+    MenuItem19: TMenuItem;
+    MenuItem20: TMenuItem;
+    MenuItem21: TMenuItem;
+    MenuItem22: TMenuItem;
     mRede: TSynMemo;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
@@ -136,6 +151,8 @@ type
     RLPDFFilter1: TRLPDFFilter;
     SaveDialog1: TSaveDialog;
     sbNomeDLL: TSpeedButton;
+    sbSchemaVendaAPL: TSpeedButton;
+    sbSchemaVendaSAT: TSpeedButton;
     seColunas: TSpinEdit;
     seEspLinhas: TSpinEdit;
     seLargura: TSpinEdit;
@@ -211,6 +228,7 @@ type
     mRecebido: TSynMemo;
     SynXMLSyn1: TSynXMLSyn;
     Impressao: TTabSheet;
+    TabSheet1: TTabSheet;
     tsMFe: TTabSheet;
     tsRedeXML: TTabSheet;
     tsRede: TTabSheet;
@@ -245,13 +263,19 @@ type
     procedure cbxSalvarCFeCancChange(Sender: TObject);
     procedure cbxSalvarCFeChange(Sender: TObject);
     procedure cbxSalvarEnvioChange(Sender: TObject);
+    procedure cbxSepararPorAnoChange(Sender: TObject);
     procedure cbxSepararPorCNPJChange(Sender: TObject);
-    procedure cbxSepararPorMESChange(Sender: TObject);
+    procedure cbxSepararPorDiaChange(Sender: TObject);
+    procedure cbxSepararPorMesChange(Sender: TObject);
+    procedure cbxSepararPorModeloChange(Sender: TObject);
     procedure cbxUTF8Change(Sender: TObject);
     procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem13Click(Sender: TObject);
     procedure MenuItem15Click(Sender: TObject);
     procedure MenuItem17Click(Sender: TObject);
+    procedure MenuItem18Click(Sender: TObject);
+    procedure MenuItem19Click(Sender: TObject);
+    procedure MenuItem22Click(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
     procedure miEnviarCancelamentoClick(Sender: TObject);
     procedure miImprimirExtratoCancelamentoClick(Sender: TObject);
@@ -259,6 +283,8 @@ type
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure sbNomeDLLClick(Sender: TObject);
+    procedure sbSchemaVendaAPLClick(Sender: TObject);
+    procedure sbSchemaVendaSATClick(Sender: TObject);
     procedure sfeVersaoEntChange(Sender: TObject);
     procedure FormCreate(Sender : TObject) ;
     procedure mAssociarAssinaturaClick(Sender : TObject) ;
@@ -314,6 +340,7 @@ var
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
   R: pcnRede.TSegSemFio;
+  P: TSSLXmlSignLib;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
@@ -346,6 +373,10 @@ begin
   cbxPagCodigo.Items.Clear ;
   For O := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
      cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(O) ) ) ;
+
+  cbxXmlSignLib.Items.Clear ;
+  For P := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
+     cbxXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(P) ) ) ;
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
@@ -410,7 +441,10 @@ begin
     ConfigArquivos.SalvarCFeCanc := cbxSalvarCFeCanc.Checked;
     ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
     ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
-    ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
+    ConfigArquivos.SepararPorModelo := cbxSepararPorModelo.Checked;
+    ConfigArquivos.SepararPorDia := cbxSepararPorDia.Checked;
+    ConfigArquivos.SepararPorMes := cbxSepararPorMes.Checked;
+    ConfigArquivos.SepararPorAno := cbxSepararPorAno.Checked;
 
     if Modelo = mfe_Integrador_XML then
     begin
@@ -493,7 +527,13 @@ begin
     cbxSalvarCFeCanc.Checked := INI.ReadBool('SAT','SalvarCFeCanc', True);
     cbxSalvarEnvio.Checked   := INI.ReadBool('SAT','SalvarEnvio', True);
     cbxSepararPorCNPJ.Checked:= INI.ReadBool('SAT','SepararPorCNPJ', True);
-    cbxSepararPorMES.Checked := INI.ReadBool('SAT','SepararPorMES', True);
+    cbxSepararPorModelo.Checked := INI.ReadBool('SAT','SepararPorModelo', True);
+    cbxSepararPorDia.Checked := INI.ReadBool('SAT','SepararPorDIA', True);
+    cbxSepararPorMes.Checked := INI.ReadBool('SAT','SepararPorMES', True);
+    cbxSepararPorAno.Checked := INI.ReadBool('SAT','SepararPorANO', True);
+    edSchemaVendaAPL.Text := INI.ReadString('SAT','SchemaVendaAPL','');
+    edSchemaVendaSAT.Text := INI.ReadString('SAT','SchemaVendaSAT','');
+    cbxXmlSignLib.ItemIndex := INI.ReadInteger('SAT','XMLLib',Integer(ACBrSAT1.Config.XmlSignLib));
     sePagCodChange(Sender);
 
     cbxModeloPosPrinter.ItemIndex := INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo));
@@ -531,6 +571,7 @@ begin
     end;
 
     cbImprimir1Linha.Checked := INI.ReadBool('EscPos','ImprimirItemUmaLinha',cbImprimir1Linha.Checked);
+    cbImprimirChaveUmaLinha.Checked := INI.ReadBool('EscPos','ImprimirChaveUmaLinha',cbImprimirChaveUmaLinha.Checked);
 
     rgRedeTipoInter.ItemIndex := INI.ReadInteger('Rede','tipoInter',0);
     rgRedeTipoLan.ItemIndex   := INI.ReadInteger('Rede','tipoLan',0);
@@ -553,10 +594,33 @@ begin
     edMFEInput.Text    :=  INI.ReadString('MFE','Input','c:\Integrador\Input\');
     edMFEOutput.Text   :=  INI.ReadString('MFE','Output','c:\Integrador\Output\');
     seMFETimeout.Value :=  INI.ReadInteger('MFE','Timeout',30);
-
   finally
      INI.Free ;
   end ;
+
+  if edSchemaVendaAPL.Text = '' then
+  begin
+    if FileExists('CfeDadosVendaAPL_0007.xsd') then
+      edSchemaVendaAPL.Text := 'CfeDadosVendaAPL_0007.xsd'
+  end;
+
+  if edSchemaVendaAPL.Text = '' then
+  begin
+    if FileExists('..\Schemas\CfeDadosVendaAPL_0007.xsd') then
+      edSchemaVendaAPL.Text := '..\Schemas\CfeDadosVendaAPL_0007.xsd'
+  end;
+
+  if edSchemaVendaSAT.Text = '' then
+  begin
+    if FileExists('CfeDadosVendaSAT_0007.xsd') then
+      edSchemaVendaSAT.Text := 'CfeDadosVendaSAT_0007.xsd'
+  end;
+
+  if edSchemaVendaSAT.Text = '' then
+  begin
+    if FileExists('..\Schemas\CfeDadosVendaSAT_0007.xsd') then
+      edSchemaVendaSAT.Text := '..\Schemas\CfeDadosVendaSAT_0007.xsd'
+  end;
 end;
 
 procedure TForm1.btMFEEnviarStatusPagamentoClick(Sender: TObject);
@@ -636,7 +700,8 @@ Begin
         NumerodeAprovacao := '1234';
         Bandeira := 'VISA';
         Adquirente := 'STONE';
-        ImpressaoFiscal := '';
+        if Assigned(ACBrSAT1.CFe) then
+          ImpressaoFiscal := '<![CDATA['+ACBrSATExtratoESCPOS1.GerarImpressaoFiscalMFe+']]>';
         NumeroDocumento := '1674068';
         CNPJ:= edtEmitCNPJ.Text;
       end;
@@ -693,7 +758,13 @@ begin
     INI.WriteBool('SAT','SalvarCFeCanc', cbxSalvarCFeCanc.Checked);
     INI.WriteBool('SAT','SalvarEnvio', cbxSalvarEnvio.Checked);
     INI.WriteBool('SAT','SepararPorCNPJ', cbxSepararPorCNPJ.Checked);
-    INI.WriteBool('SAT','SepararPorMES', cbxSepararPorMES.Checked);
+    INI.WriteBool('SAT','SepararPorModelo', cbxSepararPorModelo.Checked);
+    INI.WriteBool('SAT','SepararPorDIA', cbxSepararPorDia.Checked);
+    INI.WriteBool('SAT','SepararPorMES', cbxSepararPorMes.Checked);
+    INI.WriteBool('SAT','SepararPorANO', cbxSepararPorAno.Checked);
+    INI.WriteString('SAT','SchemaVendaAPL',edSchemaVendaAPL.Text);
+    INI.WriteString('SAT','SchemaVendaSAT',edSchemaVendaSAT.Text);
+    INI.WriteInteger('SAT','XMLLib',cbxXmlSignLib.ItemIndex);
 
     INI.WriteInteger('PosPrinter','Modelo',cbxModeloPosPrinter.ItemIndex);
     INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
@@ -723,6 +794,7 @@ begin
 
     INI.WriteString('Printer','Name',Printer.PrinterName);
     INI.WriteBool('EscPos','ImprimirItemUmaLinha',cbImprimir1Linha.Checked);
+    INI.WriteBool('EscPos','ImprimirChaveUmaLinha',cbImprimirChaveUmaLinha.Checked);
 
     INI.WriteInteger('Rede','tipoInter',rgRedeTipoInter.ItemIndex);
     INI.WriteInteger('Rede','tipoLan',rgRedeTipoLan.ItemIndex);
@@ -826,14 +898,29 @@ begin
   ACBrSAT1.ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
 end;
 
+procedure TForm1.cbxSepararPorAnoChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorAno := cbxSepararPorAno.Checked;
+end;
+
 procedure TForm1.cbxSepararPorCNPJChange(Sender: TObject);
 begin
   ACBrSAT1.ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
 end;
 
-procedure TForm1.cbxSepararPorMESChange(Sender: TObject);
+procedure TForm1.cbxSepararPorDiaChange(Sender: TObject);
 begin
-  ACBrSAT1.ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
+  ACBrSAT1.ConfigArquivos.SepararPorDia := cbxSepararPorDia.Checked;
+end;
+
+procedure TForm1.cbxSepararPorMesChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorMes := cbxSepararPorMes.Checked;
+end;
+
+procedure TForm1.cbxSepararPorModeloChange(Sender: TObject);
+begin
+  ACBrSAT1.ConfigArquivos.SepararPorModelo := cbxSepararPorModelo.Checked;
 end;
 
 procedure TForm1.cbxUTF8Change(Sender: TObject);
@@ -871,10 +958,16 @@ begin
   if OpenDialog1.Execute then
   begin
      ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
-     //mRecebido.Lines.Text := ACBrSAT1.CFe.GerarXML() ;
-     //PageControl1.ActivePage := tsRecebido;
-     mVendaEnviar.Lines.LoadFromFile(OpenDialog1.FileName);
-     PageControl1.ActivePage := tsGerado;
+     if (pos('<Signature', ACBrSAT1.CFe.AsXMLString) > 0) then
+     begin
+       mRecebido.Lines.Text := ACBrSAT1.CFe.AsXMLString;
+       PageControl1.ActivePage := tsRecebido;
+     end
+     else
+     begin
+       mVendaEnviar.Lines.Text := ACBrSAT1.CFe.AsXMLString;
+       PageControl1.ActivePage := tsGerado;
+     end;
   end ;
 end;
 
@@ -893,6 +986,53 @@ begin
 
   PrepararImpressao;
   ACBrSAT1.ImprimirExtratoCancelamento;
+end;
+
+procedure TForm1.MenuItem18Click(Sender: TObject);
+var
+  tini, tfim: TDateTime;
+begin
+  PrepararImpressao;
+  tini := now;
+  mLog.Lines.Add(ACBrSATExtratoESCPOS1.GerarImpressaoFiscalMFe);
+  tfim := now;
+  mLog.Lines.Add('Inciado em: '+DateTimeToStr(tini)) ;
+  mLog.Lines.Add('Finalizado em: '+DateTimeToStr(tFim)) ;
+  mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' segundos' ) ;
+end;
+
+procedure TForm1.MenuItem19Click(Sender: TObject);
+var
+  Erro: String;
+begin
+  ACBrSAT1.Config.XmlSignLib := TSSLXmlSignLib(cbxXmlSignLib.ItemIndex);
+  ACBrSAT1.Config.ArqSchema := edSchemaVendaAPL.Text;
+  PageControl1.ActivePageIndex := 0;
+
+  if ACBrSAT1.ValidarDadosVenda( mVendaEnviar.Text, Erro ) then
+    mLog.Lines.Add('XML Gerado pela aplicação, validado com sucesso')
+  else
+  begin
+    mLog.Lines.Add('Erro na Validação do XML Gerado pela aplicação.');
+    mLog.Lines.Add(Erro);
+  end;
+end;
+
+procedure TForm1.MenuItem22Click(Sender: TObject);
+var
+  Erro: String;
+begin
+  ACBrSAT1.Config.XmlSignLib := TSSLXmlSignLib(cbxXmlSignLib.ItemIndex);
+  ACBrSAT1.Config.ArqSchema := edSchemaVendaSAT.Text;
+  PageControl1.ActivePageIndex := 0;
+
+  if ACBrSAT1.ValidarDadosVenda( mRecebido.Text, Erro ) then
+    mLog.Lines.Add('XML Recebido do SAT, validado com sucesso')
+  else
+  begin
+    mLog.Lines.Add('Erro na Validação do XML Recebido do SAT.');
+    mLog.Lines.Add(Erro);
+  end;
 end;
 
 procedure TForm1.miGerarXMLCancelamentoClick(Sender: TObject);
@@ -980,6 +1120,24 @@ begin
   OpenDialog1.FileName := edNomeDLL.Text;
   if OpenDialog1.Execute then
     edNomeDLL.Text := OpenDialog1.FileName ;
+end;
+
+procedure TForm1.sbSchemaVendaAPLClick(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo XSD|*.xsd';
+  OpenDialog1.InitialDir := ExtractFilePath(edSchemaVendaAPL.Text);
+  OpenDialog1.FileName := edSchemaVendaAPL.Text;
+  if OpenDialog1.Execute then
+    edSchemaVendaAPL.Text := OpenDialog1.FileName ;
+end;
+
+procedure TForm1.sbSchemaVendaSATClick(Sender: TObject);
+begin
+  OpenDialog1.Filter := 'Arquivo XSD|*.xsd';
+  OpenDialog1.InitialDir := ExtractFilePath(edSchemaVendaSAT.Text);
+  OpenDialog1.FileName := edSchemaVendaSAT.Text;
+  if OpenDialog1.Execute then
+    edSchemaVendaSAT.Text := OpenDialog1.FileName ;
 end;
 
 procedure TForm1.sfeVersaoEntChange(Sender: TObject);
@@ -1208,7 +1366,7 @@ begin
     with Det.Add do
     begin
       nItem := 1 + (A * 3);
-      Prod.cProd := 'ACBR001';
+      Prod.cProd := 'ACBR0001';
       Prod.cEAN := '6291041500213';
       Prod.xProd := 'Assinatura SAC';
       prod.NCM := '99';
@@ -1368,6 +1526,10 @@ begin
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
                       'Precisa de um PAF-ECF homologado?;Conheça o DJPDV - www.djpdv.com.br';
+
+   { InfAdic.infCpl := '</linha_simples>;'+
+                        '</ce><e><n>SENHA XXX</n></e>;'+
+                        '</linha_simples>';}
   end;
 
   mVendaEnviar.Lines.Text := ACBrSAT1.CFe.GerarXML( True );    // True = Gera apenas as TAGs da aplicação
@@ -1476,6 +1638,10 @@ begin
     ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha := cbImprimir1Linha.Checked;
+    if cbImprimirChaveUmaLinha.Checked then
+      ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := rSim
+    else
+      ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := rAuto;
   end
   else
   begin

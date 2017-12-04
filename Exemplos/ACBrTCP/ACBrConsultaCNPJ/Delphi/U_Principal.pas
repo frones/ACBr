@@ -13,6 +13,12 @@ uses
    {$IFEND}
 {$ENDIF}
 
+{.$DEFINE SUPPORT_PNG}  // Remova o Ponto, se seu Delphi suporta PNG
+
+{$IFDEF DELPHI2009_UP}
+  {$DEFINE SUPPORT_PNG}
+{$ENDIF}
+
 type
   TF_Principal = class(TForm)
     Panel2: TPanel;
@@ -78,7 +84,7 @@ implementation
 
 uses
   JPEG
-{$IFDEF DELPHI2009_UP}
+{$IFDEF SUPPORT_PNG}
   , pngimage
 {$ENDIF}
   ;
@@ -143,33 +149,20 @@ var
 //  Jpg: TJPEGImage;
 {$IFDEF DELPHI2009_UP}
   png: TPngImage;
+{$ELSE}
+  ImgArq: String;
 {$ENDIF}
 begin
-  Stream:= TMemoryStream.Create;
-  try
-    ACBrConsultaCNPJ1.Captcha(Stream);
-
-  {$IFDEF DELPHI2009_UP}
-    //Use esse código quando a imagem do site for do tipo PNG
-    png:= TPngImage.Create;
-    try
-      png.LoadFromStream(Stream);
-      Image1.Picture.Assign(png);
-
-      EditCaptcha.Clear;
-      EditCaptcha.SetFocus;
-    finally
-      png.Free;
-    end;
-  {$ELSE}
+  {$IFNDEF SUPPORT_PNG}
     ShowMessage('Atenção: Seu Delphi não dá suporte nativo a imagens PNG. Queira verificar o código fonte deste exemplo para saber como proceder.');
+    Exit;
     // COMO PROCEDER:
-    // 
-    // 1) Caso o site da receita esteja utilizando uma imagem do tipo JPG, você pode utilizar o código comentado abaixo. 
+    //
+    // 1) Caso o site da receita esteja utilizando uma imagem do tipo JPG, você pode utilizar o código comentado abaixo.
     //    * Comente ou apague o código que trabalha com PNG, incluindo o IFDEF/ENDIF;
-    //    * descomente a declaração da variável jpg 
+    //    * descomente a declaração da variável jpg
     //    * descomente o código abaixo;
-    // 2) Caso o site da receita esteja utilizando uma imagem do tipo PNG, você terá que utilizar uma biblioteca de terceiros para 
+    // 2) Caso o site da receita esteja utilizando uma imagem do tipo PNG, você terá que utilizar uma biblioteca de terceiros para
     //conseguir trabalhar com imagens PNG.
     //  Neste caso, recomendamos verificar o manual da biblioteca em como fazer a implementação. Algumas sugestões:
     //    * Procure no Fórum do ACBr sobre os erros que estiver recebendo. Uma das maneiras mais simples está no link abaixo:
@@ -181,17 +174,36 @@ begin
     //      - Várias outras: http://torry.net/quicksearchd.php?String=png&Title=Yes
   {$ENDIF}
 
-    //Use esse código quando a imagem do site for do tipo JPG
-    //Jpg:= TJPEGImage.Create;
-    //try
-    //  Jpg.LoadFromStream(Stream);
-    //  Image1.Picture.Assign(Jpg);
-    //   //    EditCaptcha.Clear;
-    //  EditCaptcha.SetFocus;
-    //finally
-    //  Jpg.Free;
-    //end;
+  Stream:= TMemoryStream.Create;
+  try
+    ACBrConsultaCNPJ1.Captcha(Stream);
 
+   {$IFDEF DELPHI2009_UP}
+    //Use esse código quando a imagem do site for do tipo PNG
+    png:= TPngImage.Create;
+    try
+      png.LoadFromStream(Stream);
+      Image1.Picture.Assign(png);
+    finally
+      png.Free;
+    end;
+    { //Use esse código quando a imagem do site for do tipo JPG
+      Jpg:= TJPEGImage.Create;
+      try
+        Jpg.LoadFromStream(Stream);
+        Image1.Picture.Assign(Jpg);
+      finally
+        Jpg.Free;
+      end;
+    }
+   {$ELSE}
+    ImgArq := ExtractFilePath(ParamStr(0))+PathDelim+'captch.png';
+    Stream.SaveToFile( ImgArq );
+    Image1.Picture.LoadFromFile( ImgArq );
+   {$ENDIF}
+
+    EditCaptcha.Clear;
+    EditCaptcha.SetFocus;
   finally
     Stream.Free;
   end;

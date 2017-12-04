@@ -271,6 +271,13 @@ type
     cbCryptLib: TComboBox;
     cbHttpLib: TComboBox;
     cbVersaoWSMDFe: TComboBox;
+    cbxImprimirNomeFantasiaNFCe: TCheckBox;
+    cbxImprimirDescAcresItemSAT: TCheckBox;
+    cbxImprimirCodEANitemSAT: TCheckBox;
+    cbxImprimirItem1LinhaSAT: TCheckBox;
+    cbxImprimirQRCodeLateralNFCe: TCheckBox;
+    cbxImpDetEspNFe: TCheckBox;
+    cbxImprimirCodigoEANNFCe: TCheckBox;
     cbXMLSignLib: TComboBox;
     cbSSLType: TComboBox;
     chkVerificarValidadeCertificado: TCheckBox;
@@ -312,9 +319,7 @@ type
     cbxImpressora: TComboBox;
     cbxImpressoraNFCe: TComboBox;
     cbxImprimirDescAcresItemNFCe: TCheckBox;
-    cbxImprimirDescAcresItemSAT: TCheckBox;
     cbxImprimirItem1LinhaNFCe: TCheckBox;
-    cbxImprimirItem1LinhaSAT: TCheckBox;
     cbxImprimirTributos: TCheckBox;
     cbxIndRatISSQN: TComboBox;
     cbxModelo: TComboBox;
@@ -366,15 +371,18 @@ type
     edtEmailAssuntoNFe: TEdit;
     edTimeZoneStr: TEdit;
     edtLogoMarcaNFCeSAT: TEdit;
+    fspeLarguraNFCe: TSpinEdit;
     edtNumeroSerie: TEdit;
     edtSenha: TEdit;
     edtTimeoutWebServices: TSpinEdit;
+    gbExtratoSAT: TGroupBox;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox5: TGroupBox;
     gbxConfigSSL: TGroupBox;
+    GroupBox6: TGroupBox;
     Image2: TImage;
     imgLogoBanco: TImage;
     Label109: TLabel;
@@ -459,7 +467,6 @@ type
     speFonteEndereco: TSpinEdit;
     speFonteRazao: TSpinEdit;
     speLargCodProd: TSpinEdit;
-    speProdutosPorPagina: TSpinEdit;
     fspeNFCeMargemDir: TFloatSpinEdit;
     fspeNFCeMargemEsq: TFloatSpinEdit;
     fspeNFCeMargemInf: TFloatSpinEdit;
@@ -471,7 +478,6 @@ type
     gbDFeConfDiversas: TGroupBox;
     gbDFeTimeZone: TGroupBox;
     Label187: TLabel;
-    Label189: TLabel;
     edtArquivoWebServicesMDFe: TEdit;
     edtArquivoWebServicesNFe: TEdit;
     edtArquivoWebServicesCTe: TEdit;
@@ -648,7 +654,6 @@ type
     gbCEPTestar: TGroupBox;
     gbCHQDados: TGroupBox;
     gbDANFeESCPOS: TGroupBox;
-    gbExtratoSAT: TGroupBox;
     gbEmailDados: TGroupBox;
     gbIPFix: TGroupBox;
     gbLog: TGroupBox;
@@ -4103,6 +4108,7 @@ begin
     fspeNFCeMargemSup.Value := Ini.ReadFloat('DANFCe', 'MargemSup', 0.8);
     fspeNFCeMargemDir.Value := Ini.ReadFloat('DANFCe', 'MargemDir', 0.51);
     fspeNFCeMargemEsq.Value := Ini.ReadFloat('DANFCe', 'MargemEsq', 0.6);
+    fspeLarguraNFCe.Value   := Ini.ReadInteger('DANFCe', 'LarguraBobina', 302);
     edtPathPDF.Text :=
       Ini.ReadString('DANFE', 'PathPDF', PathApplication+'PDF');
     spedtCasasDecimaisQtd.Value := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
@@ -4120,7 +4126,7 @@ begin
     rgTipoFonte.ItemIndex := Ini.ReadInteger('DANFE', 'Fonte', 0);
     rgLocalCanhoto.ItemIndex := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
     cbxQuebrarLinhasDetalhesItens.Checked := ini.ReadBool('DANFE','QuebrarLinhasDetalheItens', False) ;
-    speProdutosPorPagina.Value := Ini.ReadInteger('DANFE', 'ProdutosPorPagina', 0);
+    cbxImpDetEspNFe.Checked := ini.ReadBool('DANFE','ImprimirDetalhamentoEspecifico', True) ;
 
     cbxImpDescPorcChange(nil);
 
@@ -4143,6 +4149,13 @@ begin
       Ini.ReadBool('NFCe', 'ImprimirDescAcresItem', True);
     cbxImpressoraNFCe.ItemIndex :=
       cbxImpressoraNFCe.Items.IndexOf(Ini.ReadString('NFCe', 'ImpressoraPadrao', '0'));
+    cbxImprimirQRCodeLateralNFCe.Checked :=
+      Ini.ReadBool('NFCe', 'QRCodeLateral', True);
+    cbxImprimirCodigoEANNFCe.Checked :=
+      Ini.ReadBool('NFCe', 'UsaCodigoEanImpressao', False);
+    cbxImprimirNomeFantasiaNFCe.Checked :=
+      Ini.ReadBool('NFCe', 'ImprimeNomeFantasia', False);
+
 
     ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo       := edtLogoMarca.Text;
@@ -4233,9 +4246,15 @@ begin
     ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := INI.ReadString('SATExtrato','ParamsString','');
     ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem := INI.ReadBool('SATExtrato', 'ImprimeDescAcrescItem', True);
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha := INI.ReadBool('SATExtrato', 'ImprimeEmUmaLinha', False);
+    ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao := INI.ReadBool('SATExtrato', 'UsaCodigoEanImpressao', False);
+
+    ACBrSATExtratoFortes1.ImprimeDescAcrescItem := INI.ReadBool('SATExtrato', 'ImprimeDescAcrescItem', True);
+    ACBrSATExtratoFortes1.ImprimeEmUmaLinha := INI.ReadBool('SATExtrato', 'ImprimeEmUmaLinha', False);
+    ACBrSATExtratoFortes1.UsaCodigoEanImpressao := INI.ReadBool('SATExtrato', 'UsaCodigoEanImpressao', False);
 
     cbxImprimirDescAcresItemSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem;
     cbxImprimirItem1LinhaSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha;
+    cbxImprimirCodEANitemSAT.Checked := ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao;
 
     rdgImprimeChave1LinhaSAT.ItemIndex := INI.ReadInteger('SATExtrato', 'ImprimeChaveEmUmaLinha', 0);
     ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
@@ -4918,6 +4937,7 @@ begin
     Ini.WriteFloat('DANFCe', 'MargemSup', fspeNFCeMargemSup.Value);
     Ini.WriteFloat('DANFCe', 'MargemDir', fspeNFCeMargemDir.Value);
     Ini.WriteFloat('DANFCe', 'MargemEsq', fspeNFCeMargemEsq.Value);
+    Ini.WriteFloat('DANFCe', 'LarguraBobina', fspeLarguraNFCe.Value);
     Ini.WriteString('DANFE', 'PathPDF', edtPathPDF.Text);
     Ini.WriteInteger('DANFE', 'DecimaisQTD', spedtCasasDecimaisQtd.Value);
     Ini.WriteInteger('DANFE', 'DecimaisValor', spedtDecimaisVUnit.Value);
@@ -4933,13 +4953,16 @@ begin
     Ini.WriteInteger('DANFE', 'Fonte', rgTipoFonte.ItemIndex);
     Ini.WriteInteger('DANFE', 'LocalCanhoto', rgLocalCanhoto.ItemIndex);
     ini.WriteBool('DANFE','QuebrarLinhasDetalheItens', cbxQuebrarLinhasDetalhesItens.Checked) ;
-    Ini.WriteInteger('DANFE', 'ProdutosPorPagina', speProdutosPorPagina.Value);
+    ini.WriteBool('DANFE','ImprimirDetalhamentoEspecifico',cbxImpDetEspNFe.Checked);
 
     Ini.WriteInteger('NFCe', 'Modelo', rgModeloDANFeNFCE.ItemIndex);
     Ini.WriteInteger('NFCe', 'ModoImpressaoEvento', rgModoImpressaoEvento.ItemIndex);
     Ini.WriteBool('NFCe', 'ImprimirItem1Linha', cbxImprimirItem1LinhaNFCe.Checked);
     Ini.WriteBool('NFCe', 'ImprimirDescAcresItem', cbxImprimirDescAcresItemNFCe.Checked);
     Ini.WriteString('NFCe', 'ImpressoraPadrao', cbxImpressoraNFCe.Text);
+    Ini.WriteBool('NFCe', 'QRCodeLateral', cbxImprimirQRCodeLateralNFCe.Checked);
+    Ini.WriteBool('NFCe', 'UsaCodigoEanImpressao', cbxImprimirCodigoEANNFCe.Checked);
+    Ini.WriteBool('NFCe', 'ImprimeNomeFantasia', cbxImprimirNomeFantasiaNFCe.Checked);
 
     Ini.WriteBool('Arquivos', 'Salvar', cbxSalvarArqs.Checked);
     Ini.WriteBool('Arquivos', 'PastaMensal', cbxPastaMensal.Checked);
@@ -4980,6 +5003,7 @@ begin
     INI.WriteBool('SATExtrato', 'ImprimeDescAcrescItem', cbxImprimirDescAcresItemSAT.Checked);
     INI.WriteBool('SATExtrato', 'ImprimeEmUmaLinha', cbxImprimirItem1LinhaSAT.Checked);
     INI.WriteInteger('SATExtrato', 'ImprimeChaveEmUmaLinha', rdgImprimeChave1LinhaSAT.ItemIndex);
+    INI.WriteBool('SATExtrato', 'UsaCodigoEanImpressao', cbxImprimirCodEANitemSAT.Checked);
 
     INI.WriteString('SATEmit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('SATEmit','IE',edtEmitIE.Text);
@@ -7300,6 +7324,10 @@ begin
     ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
     ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
 
+    ACBrSATExtratoFortes1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemSAT.Checked;
+    ACBrSATExtratoFortes1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaSAT.Checked;
+    ACBrSATExtratoFortes1.UsaCodigoEanImpressao := cbxImprimirCodEANitemSAT.Checked;
+
     if ( GerarPDF ) then
       ACBrSATExtratoFortes1.Filtro := TACBrSATExtratoFiltro(fiPDF)
     else
@@ -7335,6 +7363,7 @@ begin
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha       := cbxImprimirItem1LinhaSAT.Checked;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
     ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha  := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
+    ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao   := cbxImprimirDescAcresItemSAT.Checked;
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
@@ -7583,7 +7612,6 @@ begin
     ACBrNFe1.DANFE.Fax := edtFaxEmpresa.Text;
     ACBrNFe1.DANFE.ImprimirDescPorc := cbxImpDescPorc.Checked;
     ACBrNFe1.DANFE.NumCopias := edtNumCopia.Value;
-    ACBrNFe1.DANFE.ProdutosPorPagina := speProdutosPorPagina.Value;
     ACBrNFe1.DANFE.MargemInferior := fspeMargemInf.Value;
     ACBrNFe1.DANFE.MargemSuperior := fspeMargemSup.Value;
     ACBrNFe1.DANFE.MargemDireita := fspeMargemDir.Value;
@@ -7611,6 +7639,7 @@ begin
       ACBrNFeDANFeRL1.AltLinhaComun := speAlturaCampos.Value;
       ACBrNFeDANFeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
       ACBrNFeDANFeRL1.ImprimirUnQtVlComercial := TImprimirUnidQtdeValor(cbxUnComTributavel.ItemIndex);
+      ACBrNFeDANFeRL1.ImprimirDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
     begin
@@ -7620,6 +7649,12 @@ begin
       ACBrNFeDANFCeFortes1.MargemSuperior        := fspeNFCeMargemSup.Value;
       ACBrNFeDANFCeFortes1.MargemDireita         := fspeNFCeMargemDir.Value;
       ACBrNFeDANFCeFortes1.MargemEsquerda        := fspeNFCeMargemEsq.Value;
+      ACBrNFeDANFCeFortes1.LarguraBobina         := fspeLarguraNFCe.Value;
+      ACBrNFeDANFCeFortes1.ImprimeEmUmaLinha     := cbxImprimirItem1LinhaNFCe.Checked;
+      ACBrNFEDANFCeFortes1.QRCodeLateral         := cbxImprimirQRCodeLateralNFCe.Checked;
+      ACBrNFeDANFCeFortes1.UsaCodigoEanImpressao := cbxImprimirCodigoEANNFCe.Checked;
+      ACBrNFeDANFCeFortes1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
+
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
         ACBrNFeDANFCeFortes1.Logo                := edtLogoMarcaNFCeSAT.Text
       else
@@ -7631,6 +7666,9 @@ begin
       ACBrNFeDANFeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
+      ACBrNFeDANFeESCPOS1.QRCodeLateral         := cbxImprimirQRCodeLateralNFCe.Checked;
+      ACBrNFeDANFeESCPOS1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
+
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
         ACBrNFeDANFeESCPOS1.Logo                := edtLogoMarcaNFCeSAT.Text
       else

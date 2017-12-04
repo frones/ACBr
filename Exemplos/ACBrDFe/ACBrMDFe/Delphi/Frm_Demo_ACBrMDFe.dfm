@@ -1000,6 +1000,15 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         TabOrder = 16
         OnClick = btnModeloFRClick
       end
+      object btEncerramentoSemXml: TButton
+        Left = 191
+        Top = 166
+        Width = 177
+        Height = 25
+        Caption = 'Encerramento sem xml'
+        TabOrder = 17
+        OnClick = btEncerramentoSemXmlClick
+      end
     end
     object PageControl2: TPageControl
       Left = 1
@@ -1108,6 +1117,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Configuracoes.Geral.SSLHttpLib = httpWinINet
     Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'

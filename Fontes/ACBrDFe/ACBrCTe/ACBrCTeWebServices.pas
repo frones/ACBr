@@ -162,6 +162,8 @@ type
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: Integer read FTMed;
     property Lote: String read GetLote write FLote;
+    
+    property CTeRetornoOS: TRetConsSitCTe read FCTeRetornoOS;
   end;
 
   { TCTeRetRecepcao }
@@ -923,6 +925,9 @@ begin
   begin
     if pos('retCTeOS', FPRetWS) > 0 then
       AXML := StringReplace(FPRetWS, 'retCTeOS', 'retConsSitCTe',
+                                     [rfReplaceAll, rfIgnoreCase])
+    else if pos('retEnviOS', FPRetWS) > 0 then
+      AXML := StringReplace(FPRetWS, 'retEnviOS', 'retConsSitCTe',
                                      [rfReplaceAll, rfIgnoreCase])
     else if pos('retConsReciCTe', FPRetWS) > 0 then
       AXML := StringReplace(FPRetWS, 'retConsReciCTe', 'retConsSitCTe',
@@ -2599,6 +2604,7 @@ begin
         infEvento.dhEvento := FEvento.Evento[I].InfEvento.dhEvento;
         infEvento.tpEvento := FEvento.Evento[I].InfEvento.tpEvento;
         infEvento.nSeqEvento := FEvento.Evento[I].InfEvento.nSeqEvento;
+        infEvento.versaoEvento := FEvento.Evento[I].InfEvento.versaoEvento;
 
         case InfEvento.tpEvento of
           teCCe:
@@ -2743,15 +2749,13 @@ begin
                                                              StringToFloatDef(FPVersaoServico, 0)),
                                     FPMsg);
     end;
-    (* Comentado por não estar realizando a validação corretamente
     if not EventoEhValido then
     begin
       FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
         FPMsg;
 
-      raise EACBrCTeException.CreateDef(FErroValidacao);
+//      raise EACBrCTeException.CreateDef(FErroValidacao);
     end;
-    *)
     for I := 0 to FEvento.Evento.Count - 1 do
       FEvento.Evento[I].InfEvento.id := EventoCTe.Evento[I].InfEvento.id;
   finally
@@ -3134,7 +3138,7 @@ begin
   case AItem.schema of
     schprocEventoCTe:
       Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
-                                                          AItem.resCTe.CNPJCPF,
+                                                          AItem.procEvento.CNPJ,
                                                           Data);
 
     schprocCTe:

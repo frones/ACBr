@@ -6,6 +6,9 @@ object Form1: TForm1
   HorzScrollBar.Page = 378
   VertScrollBar.Page = 293
   Caption = 'Form1'
+  ClientHeight = 294
+  ClientWidth = 379
+  LCLVersion = '1.6.4.0'
   object lInstr: TLabel
     Left = 16
     Height = 57
@@ -13,42 +16,39 @@ object Form1: TForm1
     Width = 337
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Esse programa demonstra o uso dos componentes ACBrLCB e ACBrECF. É necessário configurar corretamente os componentes ACBr para o modelo de equipamento que vc possui,  antes de compilar o programa'
-    Color = clNone
+    Caption = 'Esse programa demonstra o uso dos componentes ACBrLCB e ACBrECF. Ã‰ necessÃ¡rio configurar corretamente os componentes ACBr para o modelo de equipamento que vc possui,  antes de compilar o programa'
     ParentColor = False
     WordWrap = True
   end
   object Label8: TLabel
     Left = 280
-    Height = 14
+    Height = 15
     Top = 14
-    Width = 79
+    Width = 83
     Caption = 'Atraso Abertura'
-    Color = clNone
     ParentColor = False
   end
   object lAtraso: TLabel
     Left = 92
-    Height = 25
+    Height = 24
     Top = 240
-    Width = 190
+    Width = 189
     Caption = 'Simulando ATRASO'
-    Color = clNone
     Font.Color = clBlack
     Font.Height = -19
     Font.Name = 'Microsoft Sans Serif'
     Font.Pitch = fpVariable
     Font.Style = [fsBold]
     ParentColor = False
+    ParentFont = False
     Visible = False
   end
   object Label2: TLabel
     Left = 280
-    Height = 14
+    Height = 15
     Top = 51
-    Width = 66
+    Width = 69
     Caption = 'Atraso Venda'
-    Color = clNone
     ParentColor = False
   end
   object bLiberaECF: TButton
@@ -66,64 +66,60 @@ object Form1: TForm1
     Height = 193
     Top = 8
     Width = 257
+    ClientHeight = 193
+    ClientWidth = 257
     TabOrder = 1
     object Label1: TLabel
       Left = 16
-      Height = 13
+      Height = 15
       Top = 24
-      Width = 88
-      Caption = 'Código do Produto'
-      Color = clNone
+      Width = 102
+      Caption = 'CÃ³digo do Produto'
       ParentColor = False
     end
     object Label6: TLabel
       Left = 152
-      Height = 13
+      Height = 15
       Top = 24
-      Width = 17
+      Width = 21
       Caption = 'Aliq'
-      Color = clNone
       ParentColor = False
     end
     object Label7: TLabel
       Left = 200
-      Height = 13
+      Height = 15
       Top = 24
-      Width = 16
+      Width = 17
       Caption = 'UN'
-      Color = clNone
       ParentColor = False
     end
     object Label3: TLabel
       Left = 16
-      Height = 13
+      Height = 15
       Top = 68
-      Width = 48
-      Caption = 'Descrição'
-      Color = clNone
+      Width = 51
+      Caption = 'DescriÃ§Ã£o'
       ParentColor = False
     end
     object Label4: TLabel
       Left = 16
-      Height = 13
+      Height = 15
       Top = 112
-      Width = 55
+      Width = 62
       Caption = 'Quantidade'
-      Color = clNone
       ParentColor = False
     end
     object Label5: TLabel
       Left = 104
-      Height = 13
+      Height = 15
       Top = 112
-      Width = 67
-      Caption = 'Preço Unitário'
-      Color = clNone
+      Width = 75
+      Caption = 'PreÃ§o UnitÃ¡rio'
       ParentColor = False
     end
     object edCod: TEdit
       Left = 16
-      Height = 21
+      Height = 23
       Top = 40
       Width = 101
       TabOrder = 0
@@ -131,7 +127,7 @@ object Form1: TForm1
     end
     object edAliq: TEdit
       Left = 152
-      Height = 21
+      Height = 23
       Top = 40
       Width = 33
       TabOrder = 2
@@ -139,7 +135,7 @@ object Form1: TForm1
     end
     object edUN: TEdit
       Left = 200
-      Height = 21
+      Height = 23
       Top = 40
       Width = 33
       TabOrder = 5
@@ -147,7 +143,7 @@ object Form1: TForm1
     end
     object edDescricao: TEdit
       Left = 16
-      Height = 21
+      Height = 23
       Top = 84
       Width = 217
       TabOrder = 1
@@ -155,7 +151,7 @@ object Form1: TForm1
     end
     object edQtd: TEdit
       Left = 16
-      Height = 21
+      Height = 23
       Top = 128
       Width = 57
       TabOrder = 3
@@ -163,7 +159,7 @@ object Form1: TForm1
     end
     object edUnit: TEdit
       Left = 104
-      Height = 21
+      Height = 23
       Top = 128
       Width = 129
       TabOrder = 4
@@ -193,7 +189,7 @@ object Form1: TForm1
   end
   object edAtrasoAbre: TEdit
     Left = 280
-    Height = 21
+    Height = 23
     Top = 30
     Width = 57
     TabOrder = 3
@@ -201,28 +197,58 @@ object Form1: TForm1
   end
   object edAtrasoVende: TEdit
     Left = 280
-    Height = 21
+    Height = 23
     Top = 67
     Width = 57
     TabOrder = 4
     Text = '1000'
   end
   object ACBrECF1: TACBrECF
+    QuebraLinhaRodape = False
     Modelo = ecfNaoFiscal
     Porta = 'C:\TEMP\SAIDA.TXT'
     DescricaoGrande = True
     MsgAguarde = 'Aguardando a resposta da Impressora: %d segundos'
-    MsgRelatorio = 'Imprimindo %s  %dª Via '
-    MsgPausaRelatorio = 'Destaque a %dª via, <ENTER> proxima, %d seg.'
-    FormMsgFonte.Color = clWhite
-    FormMsgFonte.Height = 11
-    FormMsgFonte.Name = 'MS Shell Dlg'
-    FormMsgFonte.Pitch = fpVariable
-    FormMsgColor = clHighlight
+    MsgTrabalhando = 'Impressora trabalhando'
+    MsgRelatorio = 'Imprimindo %s  %dÂª Via '
+    MsgPausaRelatorio = 'Destaque a %dÂª via, <ENTER> proxima, %d seg.'
+    PaginaDeCodigo = 0
     OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
+    MemoParams.Strings = (
+      '[Cabecalho]'
+      'LIN000=<center><b>Nome da Empresa</b></center>'
+      'LIN001=<center>Nome da Rua , 1234  -  Bairro</center>'
+      'LIN002=<center>Cidade  -  UF  -  99999-999</center>'
+      'LIN003=<center>CNPJ: 01.234.567/0001-22    IE: 012.345.678.90</center>'
+      'LIN004=<table width=100%><tr><td align=left><code>Data</code> <code>Hora</code></td><td align=right>COO: <b><code>NumCupom</code></b></td></tr></table>'
+      'LIN005=<hr>'
+      ' '
+      '[Cabecalho_Item]'
+      'LIN000=ITEM   CODIGO      DESCRICAO'
+      'LIN001=QTD         x UNITARIO       Aliq     VALOR (R$)'
+      'LIN002=<hr>'
+      'MascaraItem=III CCCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDQQQQQQQQ UU x VVVVVVVVVVVVV AAAAAA TTTTTTTTTTTTT'
+      ' '
+      '[Rodape]'
+      'LIN000=<hr>'
+      'LIN001=<table width=100%><tr><td align=left><code>Data</code> <code>Hora</code></td><td align=right>Projeto ACBr: <b><code>ACBR</code></b></td></tr></table>'
+      'LIN002=<center>Obrigado Volte Sempre</center>'
+      'LIN003=<hr>'
+      ' '
+      '[Formato]'
+      'Colunas=48'
+      'HTML=1'
+      'HTML_Title_Size=2'
+      'HTML_Font=<font size="2" face="Lucida Console">'
+    )
     Device.HandShake = hsRTS_CTS
     Device.HardFlow = True
-    left = 200
+    ConfigBarras.MostrarCodigo = True
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    InfoRodapeCupom.Imposto.ModoCompacto = False
+    left = 184
     top = 168
   end
   object ACBrLCB1: TACBrLCB
@@ -230,6 +256,7 @@ object Form1: TForm1
     Sufixo = '#13'
     UsarFila = True
     FilaMaxItens = 100
+    Intervalo = 300
     OnLeCodigo = ACBrLCB1LeCodigo
     left = 230
     top = 168

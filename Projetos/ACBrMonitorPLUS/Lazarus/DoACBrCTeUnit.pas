@@ -310,8 +310,8 @@ begin
            begin
              PathsCTe := TStringList.Create;
              try
-               PathsCTe.Append(Cmd.Params(0));
-               PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+               PathsCTe.Append(Cmd.Params(1));
+               PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
                try
                  CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
                except
@@ -1021,6 +1021,18 @@ begin
               raise Exception.Create('Ambiente Inválido.');
          end
 
+        else if Cmd.Metodo = 'setlogomarca' then
+        begin
+          if FileExists(Cmd.Params(0)) then
+          begin
+            ACBrCTe1.DACTe.Logo       := Cmd.Params(0);
+            edtLogoMarca.Text         := ACBrCTe1.DACTe.Logo;
+            SalvarIni;
+          end
+          else
+             raise Exception.Create('Arquivo não encontrado.');
+        end
+
         else if Cmd.Metodo = 'setformaemissao' then 
          begin
            if cbModoEmissao.checked then
@@ -1033,7 +1045,7 @@ begin
              raise Exception.Create('Forma de Emissão Inválida: '+TpEmisToStr(FormaEmissao))
            else
            begin
-             ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+             ACBrCTe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
              cbFormaEmissaoCTe.ItemIndex := ACBrCTe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
              SalvarIni;
            end;
@@ -1238,7 +1250,6 @@ begin
               end;
              Ide.toma4.email   := INIRec.ReadString('toma4','email','');
            end;
-
 
           Compl.xCaracAd := INIRec.ReadString('compl','xCaracAd', '' );
           Compl.xCaracSer:= INIRec.ReadString('compl','xCaracSer',''  );

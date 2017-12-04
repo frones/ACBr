@@ -243,6 +243,7 @@ const
   DSC_VBCFCPUFDEST = 'Valor da BC FCP na UF de destino';
   //DSC_VPART = 'Valor';
   DSC_INDESCALA = 'Indicador de Escala de Produção';
+  DSC_CNPJFAB = 'CNPJ do Fabricante da Mercadoria';
   DSC_CBENEF = 'Código de Benefício Fiscal na UF aplicado ao item';
   DSC_CAGREG = 'Código de Agregação';
   DSC_URLCHAVE = 'URL de consulta por chave de acesso a ser impressa no DANFE NFC-e';

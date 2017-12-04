@@ -511,6 +511,7 @@ end;
 procedure TBloco_Y.WriteRegistroY600;
 var
   intFor: integer;
+  strQUALIF_REP_LEG : String;
 begin
   if Assigned(FRegistroY001.RegistroY600) then
   begin
@@ -518,6 +519,15 @@ begin
     begin
       with FRegistroY001.RegistroY600.Items[intFor] do
       begin
+        case QUALIF_REP_LEG of
+          qrlProcurador : strQUALIF_REP_LEG := '01';
+          qrlCurador    : strQUALIF_REP_LEG := '02';
+          qrlMae        : strQUALIF_REP_LEG := '03';
+          qrlPai        : strQUALIF_REP_LEG := '04';
+          qrlTutor      : strQUALIF_REP_LEG := '05';
+          qrlOutro      : strQUALIF_REP_LEG := '06';
+        end;
+
         if Bloco_0.Registro0000.COD_VER >= ECFVersao200 then //Lay-Out 002 (devsyspro)
         begin
           Add(LFill('Y600') +
@@ -531,7 +541,7 @@ begin
               VLFill(PERC_CAP_TOT, 4, 2) +
               VLFill(PERC_CAP_VOT, 4, 2) +
               LFill(CPF_REP_LEG) +
-              LFill(QUALIF_REP_LEG) +
+              LFill(strQUALIF_REP_LEG) +
               VLFill(VL_REM_TRAB, 19, 2) +
               VLFill(VL_LUC_DIV, 19, 2) +
               VLFill(VL_JUR_CAP, 19, 2) +
@@ -552,7 +562,7 @@ begin
               VLFill(PERC_CAP_TOT, 4, 2) +
               VLFill(PERC_CAP_VOT, 4, 2) +
               LFill(CPF_REP_LEG) +
-              LFill(QUALIF_REP_LEG)
+              LFill(strQUALIF_REP_LEG)
               );
         end;
       end;

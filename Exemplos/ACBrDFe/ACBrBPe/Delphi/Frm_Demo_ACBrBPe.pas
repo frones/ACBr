@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, IniFiles, ShellAPI, ACBrBase, ACBrDFe, ACBrBPe, Spin, ExtCtrls,
   StdCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw, ACBrMail, ACBrUtil,
-  pcnConversao;
+  pcnConversao, ACBrBPeDABPEClass, ACBrBPeDABPeESCPOS, ACBrPosPrinter;
 
 type
   Tfrm_DemoACBrBPe = class(TForm)
@@ -192,6 +192,22 @@ type
     cbEmailSSL: TCheckBox;
     mmEmailMsg: TMemo;
     ACBrMail1: TACBrMail;
+    ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS;
+    GroupBox2: TGroupBox;
+    Label30: TLabel;
+    Label33: TLabel;
+    Label34: TLabel;
+    Label39: TLabel;
+    Label40: TLabel;
+    Label41: TLabel;
+    btSerial: TBitBtn;
+    cbxModeloPosPrinter: TComboBox;
+    cbxPorta: TComboBox;
+    cbxPagCodigo: TComboBox;
+    seColunas: TSpinEdit;
+    seEspLinhas: TSpinEdit;
+    seLinhasPular: TSpinEdit;
+    ACBrPosPrinter1: TACBrPosPrinter;
 
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -244,6 +260,7 @@ type
     procedure lblDoar2Click(Sender: TObject);
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
+    procedure btSerialClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -251,6 +268,7 @@ type
     procedure AtualizaSSLLibsCombo;
     procedure GerarBPe(NumBPe : String);
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+    procedure PrepararImpressao;
   public
     { Public declarations }
   end;
@@ -263,7 +281,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, Grids, synacode, blcksock, FileCtrl,
   ufrmStatus, Unit2, ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL,
-  pcnConversaoBPe, ACBrBPeBilhetes;
+  pcnConversaoBPe, ACBrBPeBilhetes, ConfiguraSerial;
 
 const
   SELDIRHELP = 1000;
@@ -343,7 +361,7 @@ Begin
    // Dados do Comprador
    //
    Comp.xNome   := 'Nome do Comprador';
-   Comp.CNPJCPF := '11111111111111';
+   Comp.CNPJCPF := '12345678901';
    Comp.IE      := '';
 
    Comp.EnderComp.xLgr    := 'Nome do Logradouro';
@@ -363,7 +381,7 @@ Begin
    // Dados da Agencia
    //
    Agencia.xNome := 'Nome da Agencia';
-   Agencia.CNPJ  := '11111111111111';
+   Agencia.CNPJ  := edtEmitCNPJ.Text;
 
    Agencia.EnderAgencia.xLgr    := 'Nome do Logradouro';
    Agencia.EnderAgencia.Nro     := 'Numero';
@@ -375,6 +393,8 @@ Begin
    Agencia.EnderAgencia.UF      := 'SP';
    Agencia.EnderAgencia.fone    := 'Telefone da Agencia';
    Agencia.enderAgencia.email   := 'endereco@provedor.com.br';
+   Agencia.EnderAgencia.cPais   := 1058;
+   Agencia.EnderAgencia.xPais   := 'BRASIL';
 
    //
    // Informações do BP-e Substituido (informar se ocorrer)
@@ -394,7 +414,7 @@ Begin
    // Informações sobre o Passageiro
    //
    infPassagem.infPassageiro.xNome := 'Nome do Passageiro';
-   infPassagem.infPassageiro.CPF   := '11111111111';
+   infPassagem.infPassageiro.CPF   := '12345679901';
    infPassagem.infPassageiro.tpDoc := tdRG;
    infPassagem.infPassageiro.nDoc  := '12345678'; // Numero do documento
 //   infPassagem.infPassageiro.dNasc := StrToDate('10/10/1970');
@@ -416,6 +436,7 @@ Begin
 //     dhConexao    := ** Informar se o tpTrecho for ttConexao
      prefixo      := 'Prefixo da linha';
      Poltrona     := 21;
+     dhViagem     := now; 
      //
      // Informações sobre a Travessia (se ocorrer)
      //
@@ -482,7 +503,7 @@ Begin
    //
    // Autorizados para o Download do XML do BPe
    //
-
+   (*
    with autXML.Add do
    begin
      CNPJCPF := '00000000000000';
@@ -492,7 +513,7 @@ Begin
    begin
      CNPJCPF := '11111111111111';
    end;
-
+   *)
    //
    // Informações Adicionais
    //
@@ -514,78 +535,87 @@ begin
 
   Ini := TIniFile.Create( IniFile );
   try
-    Ini.WriteInteger( 'Certificado','SSLLib' , cbSSLLib.ItemIndex);
-    Ini.WriteInteger( 'Certificado','CryptLib' , cbCryptLib.ItemIndex);
-    Ini.WriteInteger( 'Certificado','HttpLib' , cbHttpLib.ItemIndex);
-    Ini.WriteInteger( 'Certificado','XmlSignLib' , cbXmlSignLib.ItemIndex);
-    Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text);
-    Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text);
-    Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text);
+    Ini.WriteInteger( 'Certificado', 'SSLLib',     cbSSLLib.ItemIndex);
+    Ini.WriteInteger( 'Certificado', 'CryptLib',   cbCryptLib.ItemIndex);
+    Ini.WriteInteger( 'Certificado', 'HttpLib',    cbHttpLib.ItemIndex);
+    Ini.WriteInteger( 'Certificado', 'XmlSignLib', cbXmlSignLib.ItemIndex);
+    Ini.WriteString(  'Certificado', 'Caminho',    edtCaminho.Text);
+    Ini.WriteString(  'Certificado', 'Senha',      edtSenha.Text);
+    Ini.WriteString(  'Certificado', 'NumSerie',   edtNumSerie.Text);
 
-    Ini.WriteBool(   'Geral','AtualizarXML'      ,ckSalvar.Checked);
-    Ini.WriteBool(   'Geral','ExibirErroSchema'      ,ckSalvar.Checked);
-    Ini.WriteString( 'Geral','FormatoAlerta'  ,edtFormatoAlerta.Text);
-    Ini.WriteInteger( 'Geral','FormaEmissao',cbFormaEmissao.ItemIndex);
-    Ini.WriteInteger( 'Geral','VersaoDF',cbVersaoDF.ItemIndex);
-    Ini.WriteBool(   'Geral','RetirarAcentos'      ,cbxRetirarAcentos.Checked);
-    Ini.WriteBool(   'Geral','Salvar'      ,ckSalvar.Checked);
-    Ini.WriteString( 'Geral','PathSalvar'  ,edtPathLogs.Text);
-    Ini.WriteString( 'Geral','PathSchemas'  ,edtPathSchemas.Text);
+    Ini.WriteBool(    'Geral', 'AtualizarXML',     ckSalvar.Checked);
+    Ini.WriteBool(    'Geral', 'ExibirErroSchema', ckSalvar.Checked);
+    Ini.WriteString(  'Geral', 'FormatoAlerta',    edtFormatoAlerta.Text);
+    Ini.WriteInteger( 'Geral', 'FormaEmissao',     cbFormaEmissao.ItemIndex);
+    Ini.WriteInteger( 'Geral', 'VersaoDF',         cbVersaoDF.ItemIndex);
+    Ini.WriteBool(    'Geral', 'RetirarAcentos',   cbxRetirarAcentos.Checked);
+    Ini.WriteBool(    'Geral', 'Salvar',           ckSalvar.Checked);
+    Ini.WriteString(  'Geral', 'PathSalvar',       edtPathLogs.Text);
+    Ini.WriteString(  'Geral', 'PathSchemas',      edtPathSchemas.Text);
 
-    Ini.WriteString( 'WebService','UF'        ,cbUF.Text);
-    Ini.WriteInteger( 'WebService','Ambiente'  ,rgTipoAmb.ItemIndex);
-    Ini.WriteBool(   'WebService','Visualizar',cbxVisualizar.Checked);
-    Ini.WriteBool(   'WebService','SalvarSOAP',cbxSalvarSOAP.Checked);
-    Ini.WriteBool(   'WebService','AjustarAut',cbxAjustarAut.Checked);
-    Ini.WriteString( 'WebService','Aguardar'    ,edtAguardar.Text);
-    Ini.WriteString( 'WebService','Tentativas'  ,edtTentativas.Text);
-    Ini.WriteString( 'WebService','Intervalo'  ,edtIntervalo.Text);
-    Ini.WriteInteger( 'WebService','TimeOut'   ,seTimeOut.Value);
-    Ini.WriteInteger( 'WebService','SSLType' , cbSSLType.ItemIndex);
+    Ini.WriteString(  'WebService', 'UF',         cbUF.Text);
+    Ini.WriteInteger( 'WebService', 'Ambiente',   rgTipoAmb.ItemIndex);
+    Ini.WriteBool(    'WebService', 'Visualizar', cbxVisualizar.Checked);
+    Ini.WriteBool(    'WebService', 'SalvarSOAP', cbxSalvarSOAP.Checked);
+    Ini.WriteBool(    'WebService', 'AjustarAut', cbxAjustarAut.Checked);
+    Ini.WriteString(  'WebService', 'Aguardar',   edtAguardar.Text);
+    Ini.WriteString(  'WebService', 'Tentativas', edtTentativas.Text);
+    Ini.WriteString(  'WebService', 'Intervalo',  edtIntervalo.Text);
+    Ini.WriteInteger( 'WebService', 'TimeOut',    seTimeOut.Value);
+    Ini.WriteInteger( 'WebService', 'SSLType',    cbSSLType.ItemIndex);
 
-    Ini.WriteString( 'Proxy','Host'   ,edtProxyHost.Text);
-    Ini.WriteString( 'Proxy','Porta'  ,edtProxyPorta.Text);
-    Ini.WriteString( 'Proxy','User'   ,edtProxyUser.Text);
-    Ini.WriteString( 'Proxy','Pass'   ,edtProxySenha.Text);
+    Ini.WriteString( 'Proxy', 'Host',  edtProxyHost.Text);
+    Ini.WriteString( 'Proxy', 'Porta', edtProxyPorta.Text);
+    Ini.WriteString( 'Proxy', 'User',  edtProxyUser.Text);
+    Ini.WriteString( 'Proxy', 'Pass',  edtProxySenha.Text);
 
-    Ini.WriteBool(   'Arquivos','Salvar'          ,cbxSalvarArqs.Checked);
-    Ini.WriteBool(   'Arquivos','PastaMensal'     ,cbxPastaMensal.Checked);
-    Ini.WriteBool(   'Arquivos','AddLiteral'      ,cbxAdicionaLiteral.Checked);
-    Ini.WriteBool(   'Arquivos','EmissaoPathBPe'  ,cbxEmissaoPathBPe.Checked);
-    Ini.WriteBool(   'Arquivos','SalvarPathEvento',cbxSalvaPathEvento.Checked);
-    Ini.WriteBool(   'Arquivos','SepararPorCNPJ'  ,cbxSepararPorCNPJ.Checked);
-    Ini.WriteBool(   'Arquivos','SepararPorModelo',cbxSepararPorModelo.Checked);
-    Ini.WriteString( 'Arquivos','PathBPe'    ,edtPathBPe.Text);
-    Ini.WriteString( 'Arquivos','PathEvento' ,edtPathEvento.Text);
+    Ini.WriteBool(   'Arquivos', 'Salvar',           cbxSalvarArqs.Checked);
+    Ini.WriteBool(   'Arquivos', 'PastaMensal',      cbxPastaMensal.Checked);
+    Ini.WriteBool(   'Arquivos', 'AddLiteral',       cbxAdicionaLiteral.Checked);
+    Ini.WriteBool(   'Arquivos', 'EmissaoPathBPe',   cbxEmissaoPathBPe.Checked);
+    Ini.WriteBool(   'Arquivos', 'SalvarPathEvento', cbxSalvaPathEvento.Checked);
+    Ini.WriteBool(   'Arquivos', 'SepararPorCNPJ',   cbxSepararPorCNPJ.Checked);
+    Ini.WriteBool(   'Arquivos', 'SepararPorModelo', cbxSepararPorModelo.Checked);
+    Ini.WriteString( 'Arquivos', 'PathBPe',          edtPathBPe.Text);
+    Ini.WriteString( 'Arquivos', 'PathEvento',       edtPathEvento.Text);
 
-    Ini.WriteString( 'Emitente','CNPJ'       ,edtEmitCNPJ.Text);
-    Ini.WriteString( 'Emitente','IE'         ,edtEmitIE.Text);
-    Ini.WriteString( 'Emitente','RazaoSocial',edtEmitRazao.Text);
-    Ini.WriteString( 'Emitente','Fantasia'   ,edtEmitFantasia.Text);
-    Ini.WriteString( 'Emitente','Fone'       ,edtEmitFone.Text);
-    Ini.WriteString( 'Emitente','CEP'        ,edtEmitCEP.Text);
-    Ini.WriteString( 'Emitente','Logradouro' ,edtEmitLogradouro.Text);
-    Ini.WriteString( 'Emitente','Numero'     ,edtEmitNumero.Text);
-    Ini.WriteString( 'Emitente','Complemento',edtEmitComp.Text);
-    Ini.WriteString( 'Emitente','Bairro'     ,edtEmitBairro.Text);
-    Ini.WriteString( 'Emitente','CodCidade'  ,edtEmitCodCidade.Text);
-    Ini.WriteString( 'Emitente','Cidade'     ,edtEmitCidade.Text);
-    Ini.WriteString( 'Emitente','UF'         ,edtEmitUF.Text);
+    Ini.WriteString( 'Emitente', 'CNPJ',        edtEmitCNPJ.Text);
+    Ini.WriteString( 'Emitente', 'IE',          edtEmitIE.Text);
+    Ini.WriteString( 'Emitente', 'RazaoSocial', edtEmitRazao.Text);
+    Ini.WriteString( 'Emitente', 'Fantasia',    edtEmitFantasia.Text);
+    Ini.WriteString( 'Emitente', 'Fone',        edtEmitFone.Text);
+    Ini.WriteString( 'Emitente', 'CEP',         edtEmitCEP.Text);
+    Ini.WriteString( 'Emitente', 'Logradouro',  edtEmitLogradouro.Text);
+    Ini.WriteString( 'Emitente', 'Numero',      edtEmitNumero.Text);
+    Ini.WriteString( 'Emitente', 'Complemento', edtEmitComp.Text);
+    Ini.WriteString( 'Emitente', 'Bairro',      edtEmitBairro.Text);
+    Ini.WriteString( 'Emitente', 'CodCidade',   edtEmitCodCidade.Text);
+    Ini.WriteString( 'Emitente', 'Cidade',      edtEmitCidade.Text);
+    Ini.WriteString( 'Emitente', 'UF',          edtEmitUF.Text);
 
-    Ini.WriteString( 'Email','Host'    ,edtSmtpHost.Text);
-    Ini.WriteString( 'Email','Port'    ,edtSmtpPort.Text);
-    Ini.WriteString( 'Email','User'    ,edtSmtpUser.Text);
-    Ini.WriteString( 'Email','Pass'    ,edtSmtpPass.Text);
-    Ini.WriteString( 'Email','Assunto' ,edtEmailAssunto.Text);
-    Ini.WriteBool(   'Email','SSL'     ,cbEmailSSL.Checked );
+    Ini.WriteString( 'Email', 'Host',    edtSmtpHost.Text);
+    Ini.WriteString( 'Email', 'Port',    edtSmtpPort.Text);
+    Ini.WriteString( 'Email', 'User',    edtSmtpUser.Text);
+    Ini.WriteString( 'Email', 'Pass',    edtSmtpPass.Text);
+    Ini.WriteString( 'Email', 'Assunto', edtEmailAssunto.Text);
+    Ini.WriteBool(   'Email', 'SSL',     cbEmailSSL.Checked );
+
     StreamMemo := TMemoryStream.Create;
     mmEmailMsg.Lines.SaveToStream(StreamMemo);
     StreamMemo.Seek(0,soFromBeginning);
-    Ini.WriteBinaryStream( 'Email','Mensagem',StreamMemo);
+    Ini.WriteBinaryStream( 'Email', 'Mensagem', StreamMemo);
     StreamMemo.Free;
 
-    Ini.WriteInteger( 'DABPE','Tipo'       ,rgTipoDaBPe.ItemIndex);
-    Ini.WriteString( 'DABPE','LogoMarca'   ,edtLogoMarca.Text);
+    Ini.WriteInteger( 'DABPE', 'Tipo',      rgTipoDaBPe.ItemIndex);
+    Ini.WriteString(  'DABPE', 'LogoMarca', edtLogoMarca.Text);
+
+    INI.WriteInteger( 'PosPrinter', 'Modelo',            cbxModeloPosPrinter.ItemIndex);
+    INI.WriteString(  'PosPrinter', 'Porta',             cbxPorta.Text);
+    INI.WriteInteger( 'PosPrinter', 'PaginaDeCodigo',    cbxPagCodigo.ItemIndex);
+    INI.WriteString(  'PosPrinter', 'ParamsString',      ACBrPosPrinter1.Device.ParamsString);
+    INI.WriteInteger( 'PosPrinter', 'Colunas',           seColunas.Value);
+    INI.WriteInteger( 'PosPrinter', 'EspacoLinhas',      seEspLinhas.Value);
+    INI.WriteInteger( 'PosPrinter', 'LinhasEntreCupons', seLinhasPular.Value);
   finally
     Ini.Free;
   end;
@@ -602,36 +632,39 @@ begin
   Ini := TIniFile.Create( IniFile );
 
   try
-    cbSSLLib.ItemIndex:= Ini.ReadInteger( 'Certificado','SSLLib' ,0);
-    cbCryptLib.ItemIndex := Ini.ReadInteger( 'Certificado','CryptLib' , 0);
-    cbHttpLib.ItemIndex := Ini.ReadInteger( 'Certificado','HttpLib' , 0);
-    cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado','XmlSignLib' , 0);
-    edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'');
-    edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'');
-    edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','');
+    cbSSLLib.ItemIndex     := Ini.ReadInteger( 'Certificado', 'SSLLib',     0);
+    cbCryptLib.ItemIndex   := Ini.ReadInteger( 'Certificado', 'CryptLib',   0);
+    cbHttpLib.ItemIndex    := Ini.ReadInteger( 'Certificado', 'HttpLib',    0);
+    cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado', 'XmlSignLib', 0);
+    edtCaminho.Text        := Ini.ReadString(  'Certificado', 'Caminho',    '');
+    edtSenha.Text          := Ini.ReadString(  'Certificado', 'Senha',      '');
+    edtNumSerie.Text       := Ini.ReadString(  'Certificado', 'NumSerie',   '');
+
     ACBrBPe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
     ACBrBPe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
     ACBrBPe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
-    cbxAtualizarXML.Checked    := Ini.ReadBool(   'Geral','AtualizarXML',True);
-    cbxExibirErroSchema.Checked    := Ini.ReadBool(   'Geral','ExibirErroSchema',True);
-    edtFormatoAlerta.Text    := Ini.ReadString( 'Geral','FormatoAlerta'  ,'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
-    cbFormaEmissao.ItemIndex := Ini.ReadInteger( 'Geral','FormaEmissao',0);
-    cbVersaoDF.ItemIndex := Ini.ReadInteger( 'Geral','VersaoDF',0);
-    ckSalvar.Checked     := Ini.ReadBool(   'Geral','Salvar'      ,True);
-    cbxRetirarAcentos.Checked := Ini.ReadBool(   'Geral','RetirarAcentos',True);
-    edtPathLogs.Text     := Ini.ReadString( 'Geral','PathSalvar'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
-    edtPathSchemas.Text  := Ini.ReadString( 'Geral','PathSchemas'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\'+GetEnumName(TypeInfo(TVersaoBPe), integer(cbVersaoDF.ItemIndex) ));
+    cbxAtualizarXML.Checked     := Ini.ReadBool(    'Geral', 'AtualizarXML',     True);
+    cbxExibirErroSchema.Checked := Ini.ReadBool(    'Geral', 'ExibirErroSchema', True);
+    edtFormatoAlerta.Text       := Ini.ReadString(  'Geral', 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
+    cbFormaEmissao.ItemIndex    := Ini.ReadInteger( 'Geral', 'FormaEmissao',     0);
+    cbVersaoDF.ItemIndex        := Ini.ReadInteger( 'Geral', 'VersaoDF',         0);
+    ckSalvar.Checked            := Ini.ReadBool(    'Geral', 'Salvar',           True);
+    cbxRetirarAcentos.Checked   := Ini.ReadBool(    'Geral', 'RetirarAcentos',   True);
+    edtPathLogs.Text            := Ini.ReadString(  'Geral', 'PathSalvar',       PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
+    edtPathSchemas.Text         := Ini.ReadString(  'Geral', 'PathSchemas',      PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\'+GetEnumName(TypeInfo(TVersaoBPe), integer(cbVersaoDF.ItemIndex) ));
 
     ACBrBPe1.SSL.DescarregarCertificado;
 
     with ACBrBPe1.Configuracoes.Geral do
     begin
-      SSLLib                := TSSLLib(cbSSLLib.ItemIndex);
-      SSLCryptLib           := TSSLCryptLib(cbCryptLib.ItemIndex);
-      SSLHttpLib            := TSSLHttpLib(cbHttpLib.ItemIndex);
-      SSLXmlSignLib         := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+      SSLLib        := TSSLLib(cbSSLLib.ItemIndex);
+      SSLCryptLib   := TSSLCryptLib(cbCryptLib.ItemIndex);
+      SSLHttpLib    := TSSLHttpLib(cbHttpLib.ItemIndex);
+      SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+
       AtualizaSSLLibsCombo;
+
       ExibirErroSchema := cbxExibirErroSchema.Checked;
       RetirarAcentos   := cbxRetirarAcentos.Checked;
       FormatoAlerta    := edtFormatoAlerta.Text;
@@ -640,20 +673,22 @@ begin
       Salvar           := ckSalvar.Checked;
     end;
 
-    cbUF.ItemIndex        := cbUF.Items.IndexOf(Ini.ReadString( 'WebService','UF','SP'));
-    rgTipoAmb.ItemIndex   := Ini.ReadInteger( 'WebService','Ambiente'  ,0);
-    cbxVisualizar.Checked  := Ini.ReadBool(    'WebService','Visualizar',False);
-    cbxSalvarSOAP.Checked := Ini.ReadBool(    'WebService','SalvarSOAP',False);
-    cbxAjustarAut.Checked  := Ini.ReadBool(   'WebService','AjustarAut' ,False);
-    edtAguardar.Text       := Ini.ReadString( 'WebService','Aguardar'  ,'0');
-    edtTentativas.Text     := Ini.ReadString( 'WebService','Tentativas','5');
-    edtIntervalo.Text      := Ini.ReadString( 'WebService','Intervalo' ,'0');
-    seTimeOut.Value        := Ini.ReadInteger('WebService','TimeOut'  ,5000);
-    cbSSLType.ItemIndex    := Ini.ReadInteger('WebService','SSLType' , 0);
-    edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host'   ,'');
-    edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'');
-    edtProxyUser.Text  := Ini.ReadString( 'Proxy','User'   ,'');
-    edtProxySenha.Text := Ini.ReadString( 'Proxy','Pass'   ,'');
+    cbUF.ItemIndex := cbUF.Items.IndexOf(Ini.ReadString( 'WebService', 'UF', 'SP'));
+
+    rgTipoAmb.ItemIndex   := Ini.ReadInteger( 'WebService', 'Ambiente',   0);
+    cbxVisualizar.Checked := Ini.ReadBool(    'WebService', 'Visualizar', False);
+    cbxSalvarSOAP.Checked := Ini.ReadBool(    'WebService', 'SalvarSOAP', False);
+    cbxAjustarAut.Checked := Ini.ReadBool(    'WebService', 'AjustarAut', False);
+    edtAguardar.Text      := Ini.ReadString(  'WebService', 'Aguardar',   '0');
+    edtTentativas.Text    := Ini.ReadString(  'WebService', 'Tentativas', '5');
+    edtIntervalo.Text     := Ini.ReadString(  'WebService', 'Intervalo',  '0');
+    seTimeOut.Value       := Ini.ReadInteger( 'WebService', 'TimeOut',    5000);
+    cbSSLType.ItemIndex   := Ini.ReadInteger( 'WebService', 'SSLType',    0);
+
+    edtProxyHost.Text  := Ini.ReadString( 'Proxy', 'Host',  '');
+    edtProxyPorta.Text := Ini.ReadString( 'Proxy', 'Porta', '');
+    edtProxyUser.Text  := Ini.ReadString( 'Proxy', 'User',  '');
+    edtProxySenha.Text := Ini.ReadString( 'Proxy', 'Pass',  '');
 
     with ACBrBPe1.Configuracoes.WebServices do
     begin
@@ -661,14 +696,16 @@ begin
       Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
       Visualizar := cbxVisualizar.Checked;
       Salvar     := cbxSalvarSOAP.Checked;
+
       AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
+
       if NaoEstaVazio(edtAguardar.Text)then
         AguardarConsultaRet := ifThen(StrToInt(edtAguardar.Text)<1000,StrToInt(edtAguardar.Text)*1000,StrToInt(edtAguardar.Text))
       else
         edtAguardar.Text := IntToStr(AguardarConsultaRet);
 
       if NaoEstaVazio(edtTentativas.Text) then
-        Tentativas          := StrToInt(edtTentativas.Text)
+        Tentativas := StrToInt(edtTentativas.Text)
       else
         edtTentativas.Text := IntToStr(Tentativas);
 
@@ -677,7 +714,7 @@ begin
       else
         edtIntervalo.Text := IntToStr(ACBrBPe1.Configuracoes.WebServices.IntervaloTentativas);
 
-      TimeOut := seTimeOut.Value;
+      TimeOut   := seTimeOut.Value;
       ProxyHost := edtProxyHost.Text;
       ProxyPort := edtProxyPorta.Text;
       ProxyUser := edtProxyUser.Text;
@@ -686,62 +723,73 @@ begin
 
     ACBrBPe1.SSL.SSLType := TSSLType( cbSSLType.ItemIndex );
 
-    cbxSalvarArqs.Checked       := Ini.ReadBool(   'Arquivos','Salvar'     ,false);
-    cbxPastaMensal.Checked      := Ini.ReadBool(   'Arquivos','PastaMensal',false);
-    cbxAdicionaLiteral.Checked  := Ini.ReadBool(   'Arquivos','AddLiteral' ,false);
-    cbxEmissaoPathBPe.Checked   := Ini.ReadBool(   'Arquivos','EmissaoPathBPe',false);
-    cbxSalvaPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarPathEvento',false);
-    cbxSepararPorCNPJ.Checked   := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
-    cbxSepararPorModelo.Checked := Ini.ReadBool(   'Arquivos','SepararPorModelo',false);
-    edtPathBPe.Text             := Ini.ReadString( 'Arquivos','PathBPe'    ,'');
-    edtPathEvento.Text          := Ini.ReadString( 'Arquivos','PathEvento','');
+    cbxSalvarArqs.Checked       := Ini.ReadBool(   'Arquivos', 'Salvar',           false);
+    cbxPastaMensal.Checked      := Ini.ReadBool(   'Arquivos', 'PastaMensal',      false);
+    cbxAdicionaLiteral.Checked  := Ini.ReadBool(   'Arquivos', 'AddLiteral',       false);
+    cbxEmissaoPathBPe.Checked   := Ini.ReadBool(   'Arquivos', 'EmissaoPathBPe',   false);
+    cbxSalvaPathEvento.Checked  := Ini.ReadBool(   'Arquivos', 'SalvarPathEvento', false);
+    cbxSepararPorCNPJ.Checked   := Ini.ReadBool(   'Arquivos', 'SepararPorCNPJ',   false);
+    cbxSepararPorModelo.Checked := Ini.ReadBool(   'Arquivos', 'SepararPorModelo', false);
+    edtPathBPe.Text             := Ini.ReadString( 'Arquivos', 'PathBPe',          '');
+    edtPathEvento.Text          := Ini.ReadString( 'Arquivos', 'PathEvento',       '');
 
     with ACBrBPe1.Configuracoes.Arquivos do
     begin
-      Salvar             := cbxSalvarArqs.Checked;
-      SepararPorMes      := cbxPastaMensal.Checked;
-      AdicionarLiteral   := cbxAdicionaLiteral.Checked;
-      EmissaoPathBPe     := cbxEmissaoPathBPe.Checked;
-      SalvarEvento       := cbxSalvaPathEvento.Checked;
-      SepararPorCNPJ     := cbxSepararPorCNPJ.Checked;
-      SepararPorModelo   := cbxSepararPorModelo.Checked;
-      PathSalvar         := edtPathLogs.Text;
-      PathSchemas        := edtPathSchemas.Text;
-      PathBPe            := edtPathBPe.Text;
-      PathEvento         := edtPathEvento.Text;
+      Salvar            := cbxSalvarArqs.Checked;
+      SepararPorMes     := cbxPastaMensal.Checked;
+      AdicionarLiteral  := cbxAdicionaLiteral.Checked;
+      EmissaoPathBPe    := cbxEmissaoPathBPe.Checked;
+      SalvarEvento      := cbxSalvaPathEvento.Checked;
+      SepararPorCNPJ    := cbxSepararPorCNPJ.Checked;
+      SepararPorModelo  := cbxSepararPorModelo.Checked;
+      PathSalvar        := edtPathLogs.Text;
+      PathSchemas       := edtPathSchemas.Text;
+      PathBPe           := edtPathBPe.Text;
+      PathEvento        := edtPathEvento.Text;
     end;
 
-    edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'');
-    edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         ,'');
-    edtEmitRazao.Text      := Ini.ReadString( 'Emitente','RazaoSocial','');
-    edtEmitFantasia.Text   := Ini.ReadString( 'Emitente','Fantasia'   ,'');
-    edtEmitFone.Text       := Ini.ReadString( 'Emitente','Fone'       ,'');
-    edtEmitCEP.Text        := Ini.ReadString( 'Emitente','CEP'        ,'');
-    edtEmitLogradouro.Text := Ini.ReadString( 'Emitente','Logradouro' ,'');
-    edtEmitNumero.Text     := Ini.ReadString( 'Emitente','Numero'     ,'');
-    edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento','');
-    edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     ,'');
-    edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  ,'');
-    edtEmitCidade.Text     :=Ini.ReadString( 'Emitente','Cidade'     ,'');
-    edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         ,'');
+    edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente', 'CNPJ',        '');
+    edtEmitIE.Text         := Ini.ReadString( 'Emitente', 'IE',          '');
+    edtEmitRazao.Text      := Ini.ReadString( 'Emitente', 'RazaoSocial', '');
+    edtEmitFantasia.Text   := Ini.ReadString( 'Emitente', 'Fantasia',    '');
+    edtEmitFone.Text       := Ini.ReadString( 'Emitente', 'Fone',        '');
+    edtEmitCEP.Text        := Ini.ReadString( 'Emitente', 'CEP',         '');
+    edtEmitLogradouro.Text := Ini.ReadString( 'Emitente', 'Logradouro',  '');
+    edtEmitNumero.Text     := Ini.ReadString( 'Emitente', 'Numero',      '');
+    edtEmitComp.Text       := Ini.ReadString( 'Emitente', 'Complemento', '');
+    edtEmitBairro.Text     := Ini.ReadString( 'Emitente', 'Bairro',      '');
+    edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente', 'CodCidade',   '');
+    edtEmitCidade.Text     := Ini.ReadString( 'Emitente', 'Cidade',      '');
+    edtEmitUF.Text         := Ini.ReadString( 'Emitente', 'UF',          '');
 
-    edtSmtpHost.Text      := Ini.ReadString( 'Email','Host'   ,'');
-    edtSmtpPort.Text      := Ini.ReadString( 'Email','Port'   ,'');
-    edtSmtpUser.Text      := Ini.ReadString( 'Email','User'   ,'');
-    edtSmtpPass.Text      := Ini.ReadString( 'Email','Pass'   ,'');
-    edtEmailAssunto.Text  := Ini.ReadString( 'Email','Assunto','');
-    cbEmailSSL.Checked    := Ini.ReadBool(   'Email','SSL'    ,False);
+    edtSmtpHost.Text     := Ini.ReadString( 'Email', 'Host',    '');
+    edtSmtpPort.Text     := Ini.ReadString( 'Email', 'Port',    '');
+    edtSmtpUser.Text     := Ini.ReadString( 'Email', 'User',    '');
+    edtSmtpPass.Text     := Ini.ReadString( 'Email', 'Pass',    '');
+    edtEmailAssunto.Text := Ini.ReadString( 'Email', 'Assunto', '');
+    cbEmailSSL.Checked   := Ini.ReadBool(   'Email', 'SSL',     False);
+
     StreamMemo := TMemoryStream.Create;
-    Ini.ReadBinaryStream( 'Email','Mensagem',StreamMemo);
+    Ini.ReadBinaryStream( 'Email', 'Mensagem', StreamMemo);
     mmEmailMsg.Lines.LoadFromStream(StreamMemo);
     StreamMemo.Free;
 
-    rgTipoDaBPe.ItemIndex     := Ini.ReadInteger( 'DABPe','Tipo'       ,0);
-    edtLogoMarca.Text         := Ini.ReadString( 'DABPe','LogoMarca'   ,'');
+    rgTipoDaBPe.ItemIndex := Ini.ReadInteger( 'DABPe', 'Tipo',      0);
+    edtLogoMarca.Text     := Ini.ReadString(  'DABPe', 'LogoMarca', '');
+
+    cbxModeloPosPrinter.ItemIndex := INI.ReadInteger( 'PosPrinter', 'Modelo',            Integer(ACBrPosPrinter1.Modelo));
+    cbxPorta.Text                 := INI.ReadString(  'PosPrinter', 'Porta',             ACBrPosPrinter1.Porta);
+    cbxPagCodigo.ItemIndex        := INI.ReadInteger( 'PosPrinter', 'PaginaDeCodigo',    Integer(ACBrPosPrinter1.PaginaDeCodigo));
+    seColunas.Value               := INI.ReadInteger( 'PosPrinter', 'Colunas',           ACBrPosPrinter1.ColunasFonteNormal);
+    seEspLinhas.Value             := INI.ReadInteger( 'PosPrinter', 'EspacoLinhas',      ACBrPosPrinter1.EspacoEntreLinhas);
+    seLinhasPular.Value           := INI.ReadInteger( 'PosPrinter', 'LinhasEntreCupons', ACBrPosPrinter1.LinhasEntreCupons);
+
+    ACBrPosPrinter1.Device.ParamsString := INI.ReadString( 'PosPrinter', 'ParamsString', '');
+
     if ACBrBPe1.DABPe <> nil then
     begin
-      ACBrBPe1.DABPe.TipoDABPe  := StrToTpImp(OK,IntToStr(rgTipoDaBPe.ItemIndex+1));
-      ACBrBPe1.DABPe.Logo       := edtLogoMarca.Text;
+      ACBrBPe1.DABPe.TipoDABPe := StrToTpImp(OK,IntToStr(rgTipoDaBPe.ItemIndex+1));
+      ACBrBPe1.DABPe.Logo      := edtLogoMarca.Text;
     end;
   finally
      Ini.Free;
@@ -803,13 +851,15 @@ end;
 
 procedure Tfrm_DemoACBrBPe.FormCreate(Sender: TObject);
 var
- T: TSSLLib;
- I: TpcnTipoEmissao;
- K: TVersaoBPe;
- U: TSSLCryptLib;
- V: TSSLHttpLib;
- X: TSSLXmlSignLib;
- Y: TSSLType;
+  T: TSSLLib;
+  I: TpcnTipoEmissao;
+  K: TVersaoBPe;
+  U: TSSLCryptLib;
+  V: TSSLHttpLib;
+  X: TSSLXmlSignLib;
+  Y: TSSLType;
+  N: TACBrPosPrinterModelo;
+  O: TACBrPosPaginaCodigo;
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
@@ -847,6 +897,27 @@ begin
      cbVersaoDF.Items.Add( GetEnumName(TypeInfo(TVersaoBPe), integer(K) ) );
   cbVersaoDF.Items[0] := 've100';
   cbVersaoDF.ItemIndex := 0;
+
+  cbxModeloPosPrinter.Items.Clear ;
+  for N := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+    cbxModeloPosPrinter.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(N) ) ) ;
+
+  cbxPagCodigo.Items.Clear ;
+  For O := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
+     cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(O) ) ) ;
+
+
+  cbxPorta.Items.Clear;
+  ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
+  cbxPorta.Items.Add('LPT1');
+  cbxPorta.Items.Add('LPT2');
+  cbxPorta.Items.Add('/dev/ttyS0');
+  cbxPorta.Items.Add('/dev/ttyS1');
+  cbxPorta.Items.Add('/dev/ttyUSB0');
+  cbxPorta.Items.Add('/dev/ttyUSB1');
+  cbxPorta.Items.Add('\\localhost\Epson');
+  cbxPorta.Items.Add('c:\temp\ecf.txt');
+  cbxPorta.Items.Add('/tmp/ecf.txt');
 
   LerConfiguracao;
   PageControl3.ActivePage := tsBPe;
@@ -888,7 +959,7 @@ procedure Tfrm_DemoACBrBPe.btnCriarEnviarClick(Sender: TObject);
 var
  vAux, vNumLote : String;
 begin
-  if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
+  if not(InputQuery('WebServices Enviar', 'Numero do Bilhete', vAux)) then
     exit;
 
   if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
@@ -933,7 +1004,7 @@ procedure Tfrm_DemoACBrBPe.btnGerarBPEClick(Sender: TObject);
 var
  vAux : String;
 begin
-if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
+if not(InputQuery('WebServices Enviar', 'Numero do Bilhete', vAux)) then
     exit;
 
   ACBrBPe1.Bilhetes.Clear;
@@ -952,14 +1023,14 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnConsultarClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     ACBrBPe1.Consultar;
     ShowMessage(ACBrBPe1.WebServices.Consulta.Protocolo);
     MemoResp.Lines.Text := ACBrBPe1.WebServices.Consulta.RetWS;
@@ -991,14 +1062,14 @@ var
   Ok: Boolean;
   Tempo: String;
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     Inicio := Now;
     Ok := ACBrBPe1.Bilhetes.ValidarRegrasdeNegocios(Msg);
     Tempo := FormatDateTime('hh:nn:ss:zzz', Now - Inicio);
@@ -1017,14 +1088,14 @@ procedure Tfrm_DemoACBrBPe.btnCancBPeClick(Sender: TObject);
 var
   idLote,vAux : String;
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
 
     idLote := '1';
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Identificador de controle do Lote de envio do Evento', idLote)) then
@@ -1088,7 +1159,7 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnValidarXMLClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
@@ -1100,19 +1171,19 @@ begin
   if OpenDialog1.Execute then
    begin
      ACBrBPe1.Bilhetes.Clear;
-     ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, True);
+     ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
      try
         ACBrBPe1.Bilhetes.Validar;
         if ACBrBPe1.Bilhetes.Items[0].Alertas <> '' then
           MemoDados.Lines.Add('Alertas: '+ACBrBPe1.Bilhetes.Items[0].Alertas);
-        ShowMessage('Nota Fiscal Eletrônica Valida');
+        ShowMessage('Bilhete de Passagem Eletrônico Valido');
      except
         on E: Exception do
         begin
           pgRespostas.ActivePage := Dados;
           MemoDados.Lines.Add('Exception: '+E.Message);
           MemoDados.Lines.Add('Erro: '+ACBrBPe1.Bilhetes.Items[0].ErroValidacao);
-          MemoDados.Lines.Add('Erro Completo: '+ACBrBPe1.Bilhetes.Items[0].ErroValidacaoCompleto); //Util para gravar em arquivos de LOG
+          MemoDados.Lines.Add('Erro Completo: '+ACBrBPe1.Bilhetes.Items[0].ErroValidacaoCompleto);
         end;
      end;
    end;
@@ -1123,7 +1194,7 @@ var
  CarregarMaisXML : Boolean;
 begin
 	CarregarMaisXML := true;
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
@@ -1132,7 +1203,7 @@ begin
   while CarregarMaisXML do
   begin
     if OpenDialog1.Execute then
-      ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+      ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
 
     CarregarMaisXML := MessageDlg('Carregar mais Bilhetes?', mtConfirmation, [mbYes, mbNo], 0) = mrYes;
   end;
@@ -1142,15 +1213,17 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnImprimirClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
   begin
+    PrepararImpressao;
+
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName,False);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     ACBrBPe1.Bilhetes.Imprimir;
   end;
 end;
@@ -1163,14 +1236,14 @@ begin
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     CC:=TstringList.Create;
     try
       CC.Add('andrefmoraes@gmail.com'); //especifique um email valido
@@ -1202,14 +1275,14 @@ procedure Tfrm_DemoACBrBPe.btnAdicionarProtBPeClick(Sender: TObject);
 var
   NomeArq : String;
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     ACBrBPe1.Consultar;
     ShowMessage(ACBrBPe1.WebServices.Consulta.Protocolo);
     MemoResp.Lines.Text := ACBrBPe1.WebServices.Consulta.RetWS;
@@ -1226,7 +1299,7 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnCarregarXMLEnviarClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
@@ -1256,14 +1329,14 @@ procedure Tfrm_DemoACBrBPe.btnValidarAssinaturaClick(Sender: TObject);
 var
   Msg : String;
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*-bpe.xml';
   OpenDialog1.Filter := 'Arquivos BPe (*-bpe.xml)|*-bpe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
     pgRespostas.ActivePageIndex := 0;
     MemoResp.Lines.Add('');
     MemoResp.Lines.Add('');
@@ -1285,14 +1358,14 @@ end;
 
 procedure Tfrm_DemoACBrBPe.btnImprimirEventoClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*.xml';
   OpenDialog1.Filter := 'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
   end;
 
   OpenDialog1.Title := 'Selecione o Evento';
@@ -1315,14 +1388,14 @@ begin
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
-  OpenDialog1.Title := 'Selecione a BPe';
+  OpenDialog1.Title := 'Selecione o BPe';
   OpenDialog1.DefaultExt := '*.xml';
   OpenDialog1.Filter := 'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrBPe1.Configuracoes.Arquivos.PathSalvar;
   if OpenDialog1.Execute then
   begin
     ACBrBPe1.Bilhetes.Clear;
-    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
+    ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName, False);
   end;
 
   OpenDialog1.Title := 'Selecione ao Evento';
@@ -1676,6 +1749,41 @@ end;
 procedure Tfrm_DemoACBrBPe.lblMouseLeave(Sender: TObject);
 begin
  TLabel(Sender).Font.Style := [fsBold];
+end;
+
+procedure Tfrm_DemoACBrBPe.btSerialClick(Sender: TObject);
+begin
+  frConfiguraSerial := TfrConfiguraSerial.Create(self);
+
+  try
+    frConfiguraSerial.Device.Porta        := ACBrPosPrinter1.Device.Porta ;
+    frConfiguraSerial.cmbPortaSerial.Text := cbxPorta.Text ;
+    frConfiguraSerial.Device.ParamsString := ACBrPosPrinter1.Device.ParamsString ;
+
+    if frConfiguraSerial.ShowModal = mrOk then
+    begin
+       cbxPorta.Text := frConfiguraSerial.Device.Porta ;
+       ACBrPosPrinter1.Device.ParamsString := frConfiguraSerial.Device.ParamsString ;
+    end ;
+  finally
+     FreeAndNil( frConfiguraSerial ) ;
+  end ;
+end;
+
+procedure Tfrm_DemoACBrBPe.PrepararImpressao;
+begin
+  ACBrPosPrinter1.Desativar;
+
+  ACBrPosPrinter1.Modelo         := TACBrPosPrinterModelo( cbxModeloPosPrinter.ItemIndex );
+  ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo( cbxPagCodigo.ItemIndex );
+  ACBrPosPrinter1.Porta          := cbxPorta.Text;
+
+  ACBrPosPrinter1.ColunasFonteNormal := seColunas.Value;
+  ACBrPosPrinter1.LinhasEntreCupons  := seLinhasPular.Value;
+  ACBrPosPrinter1.EspacoEntreLinhas  := seEspLinhas.Value;
+
+//  ACBrBPeDABPeESCPOS1.ImprimeQRCode     := True;
+//  ACBrBPeDABPeESCPOS1.ImprimeEmUmaLinha := cbImprimir1Linha.Checked;
 end;
 
 end.

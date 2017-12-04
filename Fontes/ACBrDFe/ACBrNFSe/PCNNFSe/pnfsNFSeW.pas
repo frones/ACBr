@@ -140,7 +140,7 @@ uses
   ACBrDFeException,
   pnfsNFSeW_ABRASFv1, pnfsNFSeW_ABRASFv2, pnfsNFSeW_EGoverneISS, pnfsNFSeW_EL,
   pnfsNFSeW_Equiplano, pnfsNFSeW_Infisc, pnfsNFSeW_ISSDSF, pnfsNFSeW_Governa,
-  pnfsNFSeW_SP, pnfsNFSeW_CONAM, pnfsNFSeW_Agili, pnfsNFSeW_SMARAPD;
+  pnfsNFSeW_SP, pnfsNFSeW_CONAM, pnfsNFSeW_Agili, pnfsNFSeW_SMARAPD, pnfsNFSeW_IPM;
 
 { TNFSeW }
 
@@ -197,6 +197,7 @@ begin
     loCONAM:       FNFSeWClass := TNFSeW_CONAM.Create(Self);
     loAgili:       FNFSeWClass := TNFSeW_Agili.Create(Self);
     loSMARAPD:     FNFSeWClass := TNFSeW_SMARAPD.Create(Self);
+    loIPM:         FNFSeWClass := TNFSeW_IPM.Create(Self);
   else
     FNFSeWClass := TNFSeWClass.Create(Self);
   end;

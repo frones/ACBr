@@ -57,7 +57,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcteCTe, pcteCTeW, pcteConversaoCTe;
+  pcnAuxiliar, pcnConversao, pcteCTe, pcteCTeW, pcteConversaoCTe, ACBrUtil;
 
 procedure ModeloCTe;
 
@@ -563,7 +563,7 @@ begin
 
   if CTeW.Gerador.ListaDeAlertas.Count = 0 then // Se não contiver nenhum erro, grava
   begin
-    CTeW.gerador.SalvarArquivo('C:\Meu-Caminho\' + CTeW.ObterNomeArquivo); // Não é necessário informar o parametro fpXML pois ele é default
+    CTeW.gerador.SalvarArquivo('C:\Meu-Caminho\' + OnlyNumber(CTeW.CTe.infCTe.Id) + '-cte.xml'); // Não é necessário informar o parametro fpXML pois ele é default
   end;
 
   CTeW.Free;

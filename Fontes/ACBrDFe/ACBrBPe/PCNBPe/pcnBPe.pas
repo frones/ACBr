@@ -58,7 +58,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnConversaoBPe, pcnSignature, pcnProcBPe, pcnGerador;
+  pcnConversao, pcnConversaoBPe, pcnSignatureBPe, pcnProcBPe, pcnGerador;
 
 type
 
@@ -702,9 +702,9 @@ begin
   Fpag         := TpagCollection.Create(Self);
   FautXML      := TautXMLCollection.Create(Self);
   FinfAdic     := TinfAdic.Create;
-  FinfBPeSupl := TinfBPeSupl.Create;
-  FSignature := TSignature.create;
-  FProcBPe := TProcBPe.create;
+  FinfBPeSupl  := TinfBPeSupl.Create;
+  FSignature   := TSignature.create;
+  FProcBPe     := TProcBPe.create;
 
   FinfBPe.Versao := 0;
 end;

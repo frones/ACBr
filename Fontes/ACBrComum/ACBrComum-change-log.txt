@@ -38,6 +38,31 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/12/2017
+-- ACBrUtil --
+[+] Adicionado o método:
+    procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
+       var PosIni, PosFim: integer);
+    (por: Rafael Teno)
+
+-- ACBr.inc --
+[+] Adicionada nova diretiva, que por padrão está desabilitada:
+    {.$DEFINE DFE_SEM_XMLSEC}
+    Descomente essa linha, se você quer que seu Executável NÃO dependa das DLLs
+    de LibXMLSEC, mas continue suportando a LibXML2
+    (por: DSA)
+
+Data: 22/11/2017
+-- ACBrUtil --
+[*] Método "RetornarConteudoEntre", movido de pcnAuxiliar para ACBrUtil
+    (por: DSA)
+
+Data: 01/11/2017
+-- ACBrUtil --
+[-] Correção no método "ChangeLineBreak". Veja Testes em:
+     ACBrUtilTest.ChangeLineBreakTest
+    (por: DSA)
+
 Data: 28/09/2017
 -- ACBrUtil --
 [-] Correção no método "DesligarMaquina", para Linux... usando o comando

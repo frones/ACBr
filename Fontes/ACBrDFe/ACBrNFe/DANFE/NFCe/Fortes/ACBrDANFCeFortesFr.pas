@@ -135,6 +135,7 @@ type
     rlbTotalAcrescimo: TRLBand;
     rlbTotalAPagar: TRLBand;
     rlbTotalDesconto: TRLBand;
+    pLogoLateral: TRLPanel;
     rlpDadosQRCodeLateral: TRLPanel;
     rlpImgQRCodeLateral: TRLPanel;
     rlVenda: TRLReport;
@@ -222,6 +223,8 @@ type
 
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure pLogoeClicheBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure pLogoLateralBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbChaveDeAcessoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbMsgContingenciaBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -311,18 +314,24 @@ begin
 
   fACBrNFeDANFCeFortes          := TACBrNFeDANFCeFortes(Owner) ;  // Link para o Pai
 
-  //Pega as marges que for defina na classe pai.
-  rlVenda.PageSetup.PaperWidth  := fACBrNFeDANFCeFortes.LarguraBobina/3.775;
-  rlVenda.InsideMargins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
-  rlVenda.InsideMargins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
-  rlVenda.InsideMargins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
-  rlVenda.InsideMargins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
+  with fACBrNFeDANFCeFortes do
+  begin
+    //Pega as marges que for defina na classe pai.
+    rlVenda.PageSetup.PaperWidth  := LarguraBobina/3.775;
+    rlVenda.Width                 := LarguraBobina;
+    rlVenda.Margins.LeftMargin    := MargemEsquerda ;
+    rlVenda.Margins.RightMargin   := MargemDireita ;
+    rlVenda.Margins.TopMargin     := MargemSuperior ;
+    rlVenda.Margins.BottomMargin  := MargemInferior ;
 
-  rlCancelamento.PageSetup.PaperWidth  := fACBrNFeDANFCeFortes.LarguraBobina/3.775;
-  rlCancelamento.InsideMargins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
-  rlCancelamento.InsideMargins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
-  rlCancelamento.InsideMargins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
-  rlCancelamento.InsideMargins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
+    rlCancelamento.PageSetup.PaperWidth  := LarguraBobina/3.775;
+    rlCancelamento.Width                 := LarguraBobina;
+    rlCancelamento.Margins.LeftMargin    := MargemEsquerda ;
+    rlCancelamento.Margins.RightMargin   := MargemDireita ;
+    rlCancelamento.Margins.TopMargin     := MargemSuperior ;
+    rlCancelamento.Margins.BottomMargin  := MargemInferior ;
+  end;
+
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlVendaDataRecord(Sender: TObject;
@@ -683,7 +692,7 @@ begin
   fNumObs   := 0;
   fObsFisco.Clear;
 
-  imgLogo.Height:=100;
+  imgLogo.Height := 100;
 
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
@@ -691,11 +700,16 @@ begin
     if lNomeFantasia.Visible then;
       lNomeFantasia.Lines.Text:= Emit.xFant ;
 
-    lRazaoSocial.Lines.Text := FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
+    lRazaoSocial.Lines.Text := 'CNPJ: '+FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
 
     if ACBrNFeDANFCeFortes.Logo <> '' then
     begin
+      if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
+        imgLogo.Parent := pLogoLateral
+      else
+        imgLogo.Parent := pLogoeCliche;
+
       imgLogo.Height := ACBrNFeDANFCeFortes.TamanhoLogoHeight ;
       imgLogo.Width := ACBrNFeDANFCeFortes.TamanhoLogoWidth ;
       imgLogo.AutoSize := ACBrNFeDANFCeFortes.ExpandirLogoMarca ;
@@ -852,43 +866,57 @@ begin
 
 
   // Calculando o tamanho da Pagina em Pixels //
-  TotalPaginaPixel := imgLogo.Height +
-                      rlbsCabecalho.Height +
-                      rlbLegenda.Height +
+  TotalPaginaPixel := rlbsCabecalho.Height +
                       rlbTotal.Height +
+                      rlbPagamentoTitulo.Height +
                       (rlbPagamento.Height * ACBrNFeDANFCeFortes.FpNFe.pag.Count) +
                       rlbChaveDeAcesso.Height +
                       rlbMensagemFiscal.Height +
-                      rlbRodape.Height +
-                      rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count;
+                      rlbRodape.Height;
+
+  if not ACBrNFeDANFCeFortes.ImprimeLogoLateral and (ACBrNFeDANFCeFortes.Logo <> '') then
+    TotalPaginaPixel := TotalPaginaPixel + imgLogo.Height;
 
   if ACBrNFeDANFCeFortes.QRCodeLateral then
     TotalPaginaPixel := TotalPaginaPixel + rlbQRLateral.Height
   else
-    TotalPaginaPixel := TotalPaginaPixel + rlbQRCode.Height + rlbConsumidor.Height;
+    TotalPaginaPixel := TotalPaginaPixel + rlbConsumidor.Height + rlbQRCode.Height;
+
+  if not Resumido then
+  begin
+    TotalPaginaPixel := TotalPaginaPixel +
+                      (rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count * iif(ACBrNFeDANFCeFortes.ImprimeEmUmaLinha, 1, 2));
+    // Calcular altura das bandas variáveis
+    for I := 0 to ACBrNFeDANFCeFortes.FpNFe.Det.Count - 1 do
+    begin
+      Prod := ACBrNFeDANFCeFortes.FpNFe.Det[I].Prod;
+      // Quebra de linha na descrição do item
+      if not ACBrNFeDANFCeFortes.FImprimeEmUmaLinha and (Length(Prod.xProd) > 35) then
+        TotalPaginaPixel := TotalPaginaPixel + 12;
+      if ACBrNFeDANFCeFortes.ImprimeDescAcrescItem then
+      begin
+        if (Prod.vDesc > 0) or ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
+        begin
+          // Valor líquido
+          TotalPaginaPixel := TotalPaginaPixel + 12;
+          if (Prod.vDesc > 0) then
+            TotalPaginaPixel := TotalPaginaPixel + 12;
+          if ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
+            TotalPaginaPixel := TotalPaginaPixel + 12;
+        end;
+      end;
+    end;
+  end;
 
   if (ACBrNFeDANFCeFortes.FpNFe.pag.vTroco > 0) or (ACBrNFeDANFCeFortes.vTroco > 0) then
     TotalPaginaPixel := TotalPaginaPixel + rlbTroco.Height;
 
-  // Calcular altura das bandas variáveis
-  for I := 0 to ACBrNFeDANFCeFortes.FpNFe.Det.Count - 1 do
+  with ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot do
   begin
-    Prod := ACBrNFeDANFCeFortes.FpNFe.Det[I].Prod;
-    // Quebra de linha na descrição do item
-    if Length(Prod.xProd) > 35 then
-      TotalPaginaPixel := TotalPaginaPixel + 12;
-    if ACBrNFeDANFCeFortes.ImprimeDescAcrescItem then
-    begin
-      if (Prod.vDesc > 0) or ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
-      begin
-        // Valor líquido
-        TotalPaginaPixel := TotalPaginaPixel + 12;
-        if (Prod.vDesc > 0) then
-          TotalPaginaPixel := TotalPaginaPixel + 12;
-        if ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
-          TotalPaginaPixel := TotalPaginaPixel + 12;
-      end;
-    end;
+    if (vFrete + vSeg + vOutro ) > 0 then
+      TotalPaginaPixel := TotalPaginaPixel + rlbTotalAcrescimo.Height;
+    if (vDesc > 0) then
+      TotalPaginaPixel := TotalPaginaPixel + rlbTotalDesconto.Height;
   end;
 
   for I := 0 to ACBrNFeDANFCeFortes.FpNFe.InfAdic.obsCont.Count - 1 do
@@ -901,7 +929,7 @@ begin
     (1 + CountStr(ACBrNFeDANFCeFortes.FpNFe.InfAdic.infCpl, ';'));
 
   // Pixel para Milimitros //
-  rlVenda.PageSetup.PaperHeight := max(100, 20+Trunc( TotalPaginaPixel / 3.75 ));
+  rlVenda.PageSetup.PaperHeight := max(100, 20 + Trunc(TotalPaginaPixel / 3.75));
 
 end;
 
@@ -1084,13 +1112,50 @@ procedure TACBrNFeDANFCeFortesFr.lSistemaBeforePrint(Sender: TObject;
 begin
   PrintIt := True;
   if NaoEstaVazio(fACBrNFeDANFCeFortes.Sistema) then
-    Text := fACBrNFeDANFCeFortes.Sistema ;
+    Text := fACBrNFeDANFCeFortes.Sistema + Space(3);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.pAsteriscoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   PrintIt := not Resumido;
+end;
+
+procedure TACBrNFeDANFCeFortesFr.pLogoeClicheBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  pLogoLateral.Visible := ACBrNFeDANFCeFortes.ImprimeLogoLateral;
+  if not ACBrNFeDANFCeFortes.ImprimeLogoLateral then
+    pLogoLateral.Width := 0;
+
+{  if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
+  begin
+    pLogoLateral.Visible := True;
+    pLogoeCliche.Align := faClientTop;
+  end
+  else
+  begin
+    pLogoLateral.Visible := False;
+    pLogoeCliche.Align := faTop;
+  end;
+ }
+end;
+
+procedure TACBrNFeDANFCeFortesFr.pLogoLateralBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := ACBrNFeDANFCeFortes.ImprimeLogoLateral;
+
+  pLogoLateral.Visible := PrintIt;
+
+  if PrintIt then
+  begin
+    pLogoLateral.Height := imgLogo.Height ;
+    pLogoLateral.Width  := imgLogo.Width ;
+    imgLogo.Parent := pLogoLateral;
+  end
+  else
+    pLogoLateral.Width := 0;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbConsumidorCancBeforePrint(Sender: TObject;
@@ -1194,7 +1259,7 @@ begin
   fNumObs   := 0;
   fObsFisco.Clear;
 
-  imgLogo.Height:=100;
+  imgLogo.Height := 100;
 
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
@@ -1466,7 +1531,7 @@ begin
     maxCaracter := maxCaracter + 1;
   end;
 
-  Result := maxCaracter;
+  Result := maxCaracter-2;
 end;
 
 {$ifdef FPC}

@@ -203,8 +203,7 @@ function TACBrBancoBrasil.NossoNumeroSemFormatacaoLerRetorno(const Convenio,
 begin
 
   //Utiliza Mesma Regra da Funcão FormataNossoNumero para Extrair apenas o campo Nosso Número do Retorno
-  if ( ((Carteira = '16') or (Carteira = '18')) and
-      (Length(Convenio) = 6) and (Length(trim(copy (Linha, 38, 20) )) = 17) ) then
+  if ( (Length(Convenio) = 6) and (Length(trim(copy (Linha, 38, 20) )) = 17) )  then
     Result := copy(Linha, 38, 17)  // Utiliza 17 posições correspondente Nosso Numero
   else if ( Length(Convenio) <= 4 ) then
     Result := copy(Linha, 42, 7)  // Elimina 4 posições do Convênio e utiliza 7 posições correspondente Nosso Numero

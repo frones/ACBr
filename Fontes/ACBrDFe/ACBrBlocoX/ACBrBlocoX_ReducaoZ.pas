@@ -246,9 +246,6 @@ begin
                 end;
                 erv0205 :
                 begin
-                    FGerador.wCampo(tcStr, '', 'CodigoGTIN',        0, 0, 1, Servicos[X].Codigo.CodigoGTIN);
-                    FGerador.wCampo(tcStr, '', 'CodigoCEST',    0, 0, 1,   Servicos[X].Codigo.CodigoCEST);
-                    FGerador.wCampo(tcStr, '', 'CodigoNCMSH',    0, 0, 1,  Servicos[X].Codigo.CodigoNCMSH);
                     FGerador.wCampo(tcStr, '', 'CodigoProprio',    0, 0, 1,Servicos[X].Codigo.CodigoProprio);
                 end;
             end;

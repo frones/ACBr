@@ -458,19 +458,22 @@ begin
                             'DhRecbto='+DateTimeToStr( ACBrCTe1.WebServices.Enviar.dhRecbto)+sLineBreak+
                             'TMed='+IntToStr( ACBrCTe1.WebServices.Enviar.tMed)+sLineBreak;
 
-           ACBrCTe1.WebServices.Retorno.Recibo := ACBrCTe1.WebServices.Enviar.Recibo;
-           ACBrCTe1.WebServices.Retorno.Executar;
+           if (ACBrCTe1.Configuracoes.Geral.ModeloDF <> moCTeOS) then
+           begin
+             ACBrCTe1.WebServices.Retorno.Recibo := ACBrCTe1.WebServices.Enviar.Recibo;
+             ACBrCTe1.WebServices.Retorno.Executar;
 
-           Cmd.Resposta :=  Cmd.Resposta+
-                            ACBrCTe1.WebServices.Retorno.Msg+sLineBreak+
-                            '[RETORNO]'+sLineBreak+
-                            'Versao='+ACBrCTe1.WebServices.Retorno.verAplic+sLineBreak+
-                            'TpAmb='+TpAmbToStr(ACBrCTe1.WebServices.Retorno.TpAmb)+sLineBreak+
-                            'VerAplic='+ACBrCTe1.WebServices.Retorno.VerAplic+sLineBreak+
-                            'NRec='+ACBrCTe1.WebServices.Retorno.CteRetorno.nRec+sLineBreak+
-                            'CStat='+IntToStr(ACBrCTe1.WebServices.Retorno.CStat)+sLineBreak+
-                            'XMotivo='+ACBrCTe1.WebServices.Retorno.XMotivo+sLineBreak+
-                            'CUF='+IntToStr(ACBrCTe1.WebServices.Retorno.CUF)+sLineBreak;
+             Cmd.Resposta :=  Cmd.Resposta+
+                              ACBrCTe1.WebServices.Retorno.Msg+sLineBreak+
+                              '[RETORNO]'+sLineBreak+
+                              'Versao='+ACBrCTe1.WebServices.Retorno.verAplic+sLineBreak+
+                              'TpAmb='+TpAmbToStr(ACBrCTe1.WebServices.Retorno.TpAmb)+sLineBreak+
+                              'VerAplic='+ACBrCTe1.WebServices.Retorno.VerAplic+sLineBreak+
+                              'NRec='+ACBrCTe1.WebServices.Retorno.CteRetorno.nRec+sLineBreak+
+                              'CStat='+IntToStr(ACBrCTe1.WebServices.Retorno.CStat)+sLineBreak+
+                              'XMotivo='+ACBrCTe1.WebServices.Retorno.XMotivo+sLineBreak+
+                              'CUF='+IntToStr(ACBrCTe1.WebServices.Retorno.CUF)+sLineBreak;
+           end;
 
            for I:= 0 to ACBrCTe1.WebServices.Retorno.CteRetorno.ProtCTe.Count-1 do
             begin
@@ -709,20 +712,22 @@ begin
                                  'TMed='+IntToStr(ACBrCTe1.WebServices.Enviar.TMed)+sLineBreak+
                                  'Msg='+ACBrCTe1.WebServices.Enviar.Msg+sLineBreak;
 
-                 ACBrCTe1.WebServices.Retorno.Recibo := ACBrCTe1.WebServices.Enviar.Recibo;
-                 ACBrCTe1.WebServices.Retorno.Executar;
+                 if (ACBrCTe1.Configuracoes.Geral.ModeloDF <> moCTeOS) then
+                 begin
+                   ACBrCTe1.WebServices.Retorno.Recibo := ACBrCTe1.WebServices.Enviar.Recibo;
+                   ACBrCTe1.WebServices.Retorno.Executar;
 
-                 Cmd.Resposta :=  Cmd.Resposta+
-                                  ACBrCTe1.WebServices.Retorno.Msg+sLineBreak+
-                                  '[RETORNO]'+sLineBreak+
-                                  'Versao='+ACBrCTe1.WebServices.Retorno.verAplic+sLineBreak+
-                                  'TpAmb='+TpAmbToStr(ACBrCTe1.WebServices.Retorno.TpAmb)+sLineBreak+
-                                  'VerAplic='+ACBrCTe1.WebServices.Retorno.VerAplic+sLineBreak+
-                                  'NRec='+ACBrCTe1.WebServices.Retorno.CteRetorno.nRec+sLineBreak+
-                                  'CStat='+IntToStr(ACBrCTe1.WebServices.Retorno.CStat)+sLineBreak+
-                                  'XMotivo='+ACBrCTe1.WebServices.Retorno.XMotivo+sLineBreak+
-                                  'CUF='+IntToStr(ACBrCTe1.WebServices.Retorno.CUF)+sLineBreak;
-
+                   Cmd.Resposta :=  Cmd.Resposta+
+                                    ACBrCTe1.WebServices.Retorno.Msg+sLineBreak+
+                                    '[RETORNO]'+sLineBreak+
+                                    'Versao='+ACBrCTe1.WebServices.Retorno.verAplic+sLineBreak+
+                                    'TpAmb='+TpAmbToStr(ACBrCTe1.WebServices.Retorno.TpAmb)+sLineBreak+
+                                    'VerAplic='+ACBrCTe1.WebServices.Retorno.VerAplic+sLineBreak+
+                                    'NRec='+ACBrCTe1.WebServices.Retorno.CteRetorno.nRec+sLineBreak+
+                                    'CStat='+IntToStr(ACBrCTe1.WebServices.Retorno.CStat)+sLineBreak+
+                                    'XMotivo='+ACBrCTe1.WebServices.Retorno.XMotivo+sLineBreak+
+                                    'CUF='+IntToStr(ACBrCTe1.WebServices.Retorno.CUF)+sLineBreak;
+                 end;
                  for I:= 0 to ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Count-1 do
                   begin
                    for J:= 0 to ACBrCTe1.Conhecimentos.Count-1 do

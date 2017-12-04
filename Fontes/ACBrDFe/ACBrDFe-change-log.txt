@@ -44,6 +44,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2017
+-- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeWinCrypt --
+[+] Adicionado novo método "TDFeSSL.ValidarHash".
+   function ValidarHash( const AStringList : TStringList;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean; overload;
+   Que permite verificar Hashs, Assinados ou não, gerados pelo comando "CalcHash"
+   (por: Rafael Teno)
+
+[+] Adicionada Unit: ACBrDFeXsLibXml2.pas, contendo nova classe para Assinatura
+    e verificação de XML, usando apenas a LibXML2 (não depende da LibXMLSec).
+    A classe "TDFeSSLXmlSignLibXml2", implementa os métodos de "TDFeSSLXmlSignClass":
+    "Assinar", "Validar", "VerificarAssinatura"; e será instanciada quando
+    TDFeSSL.SSLXmlSignClass = "xsLibXml2".
+    Compatível com OpenSSL e WinCrypt, poderá usar Certificados A1 e A3.
+    Eliminando em definitivo a dependencia da MSXML (TDFeSSLXmlSignMsXml)
+   (por: Rafael Teno e DSA)
+
 27/10/2017
 -- ACBrDFeSSL, ACBrDFeXsMsXml, ACBrDFeXsXmlSec, ACBrDFeXsMsXmlCapicom --
 [*] Classe "TDFeSSLXmlSignClass", adicionado o parâmetro "IdAttr" nos métodos:

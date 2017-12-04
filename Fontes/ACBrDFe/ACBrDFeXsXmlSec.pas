@@ -66,12 +66,15 @@ uses
 
 const
   {$IfDef USE_MSCRYPO}
-   LIBXMLSEC_MSCRYPTO_SO = 'libxmlsec-mscrypto.dll';
+   {$IfDef USE_MINGW}
+    LIBXMLSEC_MSCRYPTO_SO = 'libxmlsec1-mscrypto.dll';
+   {$Else}
+    LIBXMLSEC_MSCRYPTO_SO = 'libxmlsec-mscrypto.dll';
+   {$EndIf}
   {$EndIf}
 
   cDTD = '<!DOCTYPE test [<!ATTLIST &infElement& &IdAttribute& ID #IMPLIED>]>';
 
-  cENCODING_UTF8 = '<?xml version="1.0" encoding="UTF-8"?>';
   cCryptLibMSCrypto = 'mscrypto';
   cCryptLibOpenSSL = 'openssl';
 
@@ -168,7 +171,7 @@ implementation
 
 Uses
   strutils, math,
-  ACBrUtil, ACBrDFeUtil,
+  ACBrUtil, ACBrDFeUtil, ACBrConsts,
   pcnAuxiliar,
   synautil, synacode;
 
@@ -624,7 +627,7 @@ begin
   // Verificando se possui a Declaração do XML, se não possuir, adiciona para OpenSSL compreender o Encoding
   TemDeclaracao := XmlEhUTF8(ConteudoXML);
   if not TemDeclaracao then
-    AXml := cENCODING_UTF8 + RemoverDeclaracaoXML(ConteudoXML)
+    AXml := CUTF8DeclaracaoXML + RemoverDeclaracaoXML(ConteudoXML)
   else
     AXml := ConteudoXML;
 

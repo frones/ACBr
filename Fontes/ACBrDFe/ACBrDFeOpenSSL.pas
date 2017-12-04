@@ -75,6 +75,11 @@ type
        const Digest: TSSLDgst;
        const Assina: Boolean =  False): AnsiString; override;
 
+    function ValidarHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean; override;
+
     procedure CarregarCertificado; override;
     procedure DescarregarCertificado; override;
     function CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean; override;
@@ -613,6 +618,9 @@ begin
   try
     md_len := 0;
     md := EVP_get_digestbyname( NameDgst );
+    if md = Nil then
+      raise EACBrDFeException.Create('Erro ao carregar Digest: '+NameDgst);
+
     EVP_DigestInit( @md_ctx, md );
 
     while (PosStream < AStream.Size) do
@@ -632,6 +640,81 @@ begin
 
     SetString( ABinStr, md_value_bin, md_len);
     Result := ABinStr;
+  finally
+    Freemem(Memory);
+  end;
+end;
+
+function TDFeOpenSSL.ValidarHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean;
+Var
+  md : PEVP_MD ;
+  md_len: cardinal;
+  md_ctx: EVP_MD_CTX;
+  md_value_bin : array [0..1023] of AnsiChar;
+  NameDgst : PAnsiChar;
+  HashResult: AnsiString;
+  Memory: Pointer;
+  PosStream: Int64;
+  Ret, BytesRead: LongInt;
+  pubKey: pEVP_PKEY;
+begin
+  Result := False;
+
+  NameDgst := '';
+  case Digest of
+    dgstMD2    : NameDgst := 'md2';
+    dgstMD4    : NameDgst := 'md4';
+    dgstMD5    : NameDgst := 'md5';
+    dgstRMD160 : NameDgst := 'rmd160';
+    dgstSHA    : NameDgst := 'sha';
+    dgstSHA1   : NameDgst := 'sha1';
+    dgstSHA256 : NameDgst := 'sha256';
+    dgstSHA512 : NameDgst := 'sha512';
+  end ;
+
+  if Assinado and (FCert = nil) then
+    CarregarCertificado;
+
+  PosStream := 0;
+  AStream.Position := 0;
+  GetMem(Memory, CBufferSize);
+  try
+    md_len := 0;
+    md := EVP_get_digestbyname( NameDgst );
+    if md = Nil then
+      raise EACBrDFeException.Create('Erro ao carregar Digest: '+NameDgst);
+
+    EVP_DigestInit( @md_ctx, md );
+
+    while (PosStream < AStream.Size) do
+    begin
+      BytesRead := AStream.Read(Memory^, CBufferSize);
+      if BytesRead <= 0 then
+        Break;
+
+      EVP_DigestUpdate( @md_ctx, Memory, BytesRead ) ;
+      PosStream := PosStream + BytesRead;
+    end;
+
+    if Assinado then
+    begin
+      {$IfDef USE_libeay32}
+      pubKey := X509_get_pubkey(FCert);
+      {$else}
+      pubKey := X509GetPubkey(FCert);
+      {$endif}
+      Ret := EVP_VerifyFinal( @md_ctx, PAnsiChar(Hash), Length(Hash), pubKey) ;
+      Result := (Ret = 1);
+    end
+    else
+    begin
+      EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
+      SetString( HashResult, md_value_bin, md_len);
+      Result := (Pos( HashResult, Hash ) > 0) ;
+    end;
   finally
     Freemem(Memory);
   end;

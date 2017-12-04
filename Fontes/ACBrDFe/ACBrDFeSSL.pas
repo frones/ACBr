@@ -56,7 +56,7 @@ type
   TSSLLib = (libNone, libOpenSSL, libCapicom, libCapicomDelphiSoap, libWinCrypt, libCustom);
   TSSLCryptLib = (cryNone, cryOpenSSL, cryCapicom, cryWinCrypt);
   TSSLHttpLib = (httpNone, httpWinINet, httpWinHttp, httpOpenSSL, httpIndy);
-  TSSLXmlSignLib = (xsNone, xsXmlSec, xsMsXml, xsMsXmlCapicom);
+  TSSLXmlSignLib = (xsNone, xsXmlSec, xsMsXml, xsMsXmlCapicom, xsLibXml2);
 
   TSSLTipoCertificado = (tpcDesconhecido, tpcA1, tpcA3);
   TSSLDgst = (dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1, dgstSHA256, dgstSHA512) ;
@@ -149,6 +149,11 @@ type
        const Digest: TSSLDgst;
        const Assina: Boolean =  False): AnsiString; virtual;
 
+    function ValidarHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean; virtual;
+
     procedure CarregarCertificado; virtual;
     procedure DescarregarCertificado; virtual;
     function SelecionarCertificado: String; virtual;
@@ -206,7 +211,7 @@ type
     function AdicionarSignatureElement( ConteudoXML: String; AddX509Data: Boolean;
       docElement, IdSignature: String; IdAttr: String = ''): String;
     function AjustarXMLAssinado(const ConteudoXML: String; X509DER: String = ''): String;
-
+    function GetSignDigestAlgorithm(const ConteudoXML: ansistring): TSSLDgst;
   public
     constructor Create(ADFeSSL: TDFeSSL); virtual;
 
@@ -319,6 +324,19 @@ type
        const ModoSaida: TSSLHashOutput = outHexa;
        const Assina: Boolean =  False): AnsiString; overload;
 
+   function ValidarHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean; overload;
+   function ValidarHash( const SourceString : AnsiString;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean; overload;
+   function ValidarHash( const AStringList : TStringList;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean; overload;
+
     procedure CarregarCertificado;
     procedure CarregarCertificadoSeNecessario;
     procedure DescarregarCertificado;
@@ -390,7 +408,10 @@ uses
   synacode,
   ACBrDFeUtil, ACBrValidador, ACBrUtil, ACBrDFeException
   {$IfNDef DFE_SEM_OPENSSL}
-   ,ACBrDFeOpenSSL, ACBrDFeHttpOpenSSL, ACBrDFeXsXmlSec
+   ,ACBrDFeOpenSSL, ACBrDFeHttpOpenSSL, ACBrDFeXsLibXml2
+   {$IfNDef DFE_SEM_XMLSEC}
+    ,ACBrDFeXsXmlSec
+   {$EndIf}
   {$EndIf}
   {$IfNDef DFE_SEM_CAPICOM}
    ,ACBrDFeCapicom, ACBrDFeXsMsXmlCapicom
@@ -553,6 +574,15 @@ function TDFeSSLCryptClass.CalcHash(const AStream: TStream; const Digest: TSSLDg
 begin
   {$IfDef FPC}Result := '';{$EndIf}
   raise EACBrDFeException.Create('"CalcHash" não suportado em: ' + ClassName);
+end;
+
+function TDFeSSLCryptClass.ValidarHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean;
+begin
+ {$IfDef FPC}Result := False;{$EndIf}
+  raise EACBrDFeException.Create('"ValidarHash" não suportado em: ' + ClassName);
 end;
 
 function TDFeSSLCryptClass.SelecionarCertificado: String;
@@ -809,6 +839,24 @@ begin
   Result := XmlAss;
 end;
 
+function TDFeSSLXmlSignClass.GetSignDigestAlgorithm(const ConteudoXML: ansistring): TSSLDgst;
+var
+  HashAlg: string;
+begin
+  HashAlg := LowerCase(RetornarConteudoEntre(ConteudoXML, 'Algorithm="http://www.w3.org/2000/09/xmldsig#', '"/>'));
+  if HashAlg = '' then
+    raise EACBrDFeException.Create(ACBrStr('Não foi possivel recuperar o "Digest Algorithm" do XML'));
+
+  if (HashAlg = 'rsa-sha1') then
+    Result := dgstSHA1
+  else if (HashAlg = 'rsa-sha256') then
+    Result := dgstSHA256
+  else if (HashAlg = 'rsa-sha512') then
+    Result := dgstSHA512
+  else
+    raise EACBrDFeException.Create(ACBrStr('Digest Algorithm, "'+HashAlg +'" não suportado'));
+end;
+
 function TDFeSSLXmlSignClass.Assinar(const ConteudoXML, docElement,
   infElement: String; SignatureNode: String; SelectionNamespaces: String;
   IdSignature: String; IdAttr: String): String;
@@ -1047,6 +1095,55 @@ begin
   try
     AStringList.SaveToStream( MS );
     Result := CalcHash( MS, Digest, ModoSaida, Assina );
+  finally
+    MS.Free ;
+  end ;
+end;
+
+function TDFeSSL.ValidarHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean;
+begin
+ if not Assigned(AStream) then
+    raise EACBrDFeException.CreateDef('Stream inválido');
+
+  if AStream.Size <= 0 then
+    raise EACBrDFeException.CreateDef('Stream vazio');
+
+  if Hash = '' then
+    raise EACBrDFeException.CreateDef('Hash vazio');
+
+  Result := FSSLCryptClass.ValidarHash(AStream, Digest, Hash, Assinado);
+end;
+
+function TDFeSSL.ValidarHash( const SourceString : AnsiString;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean;
+Var
+   MS : TMemoryStream ;
+begin
+  MS := TMemoryStream.Create;
+  try
+    MS.Write( Pointer(SourceString)^, Length(SourceString) );
+    Result := ValidarHash( MS, Digest, Hash, Assinado );
+  finally
+    MS.Free ;
+  end ;
+end;
+
+function TDFeSSL.ValidarHash( const AStringList: TStringList;
+       const Digest: TSSLDgst;
+       const Hash: AnsiString;
+       const Assinado: Boolean =  False): Boolean;
+Var
+   MS : TMemoryStream ;
+begin
+  MS := TMemoryStream.Create;
+  try
+    AStringList.SaveToStream(MS);
+    Result := ValidarHash( MS, Digest, Hash, Assinado );
   finally
     MS.Free ;
   end ;
@@ -1339,10 +1436,10 @@ begin
 
     xsXmlSec:
     begin
-      {$IfNDef DFE_SEM_OPENSSL}
+      {$IfNDef DFE_SEM_XMLSEC}
        FSSLXmlSignClass := TDFeSSLXmlSignXmlSec.Create(Self);
       {$Else}
-       raise EACBrDFeException.Create('Suporte a "xsXmlSec" foi desativado por compilação {$DEFINE DFE_SEM_OPENSSL}');
+       raise EACBrDFeException.Create('Suporte a "xsXmlSec" foi desativado por compilação {$DEFINE DFE_SEM_OPENSSL} ou {$DEFINE DFE_SEM_XMLSEC}');
       {$EndIf}
     end;
 
@@ -1352,6 +1449,15 @@ begin
        FSSLXmlSignClass := TDFeSSLXmlSignMsXmlCapicom.Create(Self);
       {$Else}
        raise EACBrDFeException.Create('Suporte a "xsMsXmlCapicom" foi desativado por compilação {$DEFINE DFE_SEM_CAPICOM}');
+      {$EndIf}
+    end;
+
+    xsLibXml2:
+    begin
+      {$IfNDef DFE_SEM_OPENSSL}
+       FSSLXmlSignClass := TDFeSSLXmlSignLibXml2.Create(Self);
+      {$Else}
+       raise EACBrDFeException.Create('Suporte a "xsXmlSec" foi desativado por compilação {$DEFINE DFE_SEM_OPENSSL}');
       {$EndIf}
     end;
 

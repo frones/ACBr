@@ -45,6 +45,13 @@ Data: 04/12/2017
        var PosIni, PosFim: integer);
     (por: Rafael Teno)
 
+-- ACBr.inc --
+[+] Adicionada nova diretiva, que por padrão está desabilitada:
+    {.$DEFINE DFE_SEM_XMLSEC}
+    Descomente essa linha, se você quer que seu Executável NÃO dependa das DLLs
+    de LibXMLSEC, mas continue suportando a LibXML2
+    (por: DSA)
+
 Data: 22/11/2017
 -- ACBrUtil --
 [*] Método "RetornarConteudoEntre", movido de pcnAuxiliar para ACBrUtil

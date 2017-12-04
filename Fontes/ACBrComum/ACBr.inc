@@ -57,8 +57,16 @@
 {.$DEFINE RaveCollate}
 {.$DEFINE RaveSaveFromPreview}
 
+// Descomente essa linha, se você quer que seu Executável NÃO dependa das DLLs LibXML2, LibXMLSEC,
 {.$DEFINE DFE_SEM_OPENSSL}
+// Descomente essa linha, se você quer que seu Executável NÃO dependa das DLLs LibXMLSEC, mas continue suportando a LibXML2
+{.$DEFINE DFE_SEM_XMLSEC}
+// Descomente essa linha, se você não utiliza a Capicom para Criptografia (legado)
 {.$DEFINE DFE_SEM_CAPICOM}
+
+{$IfDef DFE_SEM_OPENSSL}
+  {$Define DFE_SEM_XMLSEC}
+{$EndIf}
 
 // Descomente essa linha, para usar a carga de DLL tardia, nas Units do OpenSSL  (Apenas Delphi)
 {.$DEFINE USE_DELAYED}

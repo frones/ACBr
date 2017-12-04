@@ -105,6 +105,8 @@ function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Bool
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
 function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
+procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
+  var PosIni, PosFim: integer);
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
@@ -3688,6 +3690,23 @@ begin
     exit;
   s := Copy(Frase, i + length(Inicio), maxInt);
   result := Copy(s, 1, pos(Fim, s) - 1);
+end;
+
+{------------------------------------------------------------------------------
+   Retorna a posição inicial e final da Tag do XML
+ ------------------------------------------------------------------------------}
+procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
+  var PosIni, PosFim: integer);
+begin
+  PosFim := 0;
+  PosIni := PosEx('<' + ATag + '>', aText);
+  if (PosIni > 0) then
+  begin
+    PosIni := PosIni + Length(ATag) + 1;
+    PosFim := PosLast('</' + ATag + '>', aText);
+    if PosFim < PosIni then
+      PosFim := 0;
+  end;
 end;
 
 

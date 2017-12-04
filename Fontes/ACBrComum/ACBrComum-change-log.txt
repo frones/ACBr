@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/12/2017
+-- ACBrUtil --
+[+] Adicionado o método:
+    procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
+       var PosIni, PosFim: integer);
+    (por: Rafael Teno)
+
 Data: 22/11/2017
 -- ACBrUtil --
 [*] Método "RetornarConteudoEntre", movido de pcnAuxiliar para ACBrUtil

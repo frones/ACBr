@@ -281,6 +281,11 @@ begin
         MethodAlgorithm := 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256';
         DigestAlgorithm := 'http://www.w3.org/2001/04/xmlenc#sha256';
       end;
+    dgstSHA512:
+      begin
+        MethodAlgorithm := 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha512';
+        DigestAlgorithm := 'http://www.w3.org/2001/04/xmlenc#sha512';
+      end;
     else
       begin
         MethodAlgorithm := 'http://www.w3.org/2000/09/xmldsig#rsa-sha1';

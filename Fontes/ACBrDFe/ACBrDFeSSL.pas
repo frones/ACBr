@@ -843,7 +843,7 @@ function TDFeSSLXmlSignClass.GetSignDigestAlgorithm(const ConteudoXML: ansistrin
 var
   HashAlg: string;
 begin
-  HashAlg := LowerCase(RetornarConteudoEntre(ConteudoXML, 'Algorithm="http://www.w3.org/2000/09/xmldsig#', '"/>'));
+  HashAlg := LowerCase(RetornarConteudoEntre(ConteudoXML, 'Algorithm="http://www.w3.org/2000/09/xmldsig#', '"'));
   if HashAlg = '' then
     raise EACBrDFeException.Create(ACBrStr('Não foi possivel recuperar o "Digest Algorithm" do XML'));
 

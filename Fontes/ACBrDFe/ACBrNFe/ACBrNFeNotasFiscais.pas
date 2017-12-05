@@ -52,7 +52,7 @@ unit ACBrNFeNotasFiscais;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, StrUtils,
+  Classes, SysUtils, StrUtils,
   ACBrNFeConfiguracoes,
   pcnNFe, pcnNFeR, pcnNFeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 
@@ -98,18 +98,18 @@ type
     function VerificarAssinatura: Boolean;
     function ValidarRegrasdeNegocios: Boolean;
 
-    function LerXML(AXML: String): Boolean;
+    function LerXML(const AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
 
     function GerarXML: String;
-    function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
     function GerarTXT: String;
-    function GravarTXT(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarTXT(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
     function GravarStream(AStream: TStream): Boolean;
 
-    procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
+    procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
@@ -169,13 +169,13 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarNFe que determina se após carregar os dados da NFe
     // para o componente, será gerado ou não novamente o XML da NFe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarNFe: Boolean = True): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; AGerarNFe: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarNFe: Boolean = True): Boolean;
-    function LoadFromString(AXMLString: String; AGerarNFe: Boolean = True): Boolean;
-    function LoadFromIni(AIniString: String): Boolean;
+    function LoadFromString(const AXMLString: String; AGerarNFe: Boolean = True): Boolean;
+    function LoadFromIni(const AIniString: String): Boolean;
 
-    function GravarXML(PathNomeArquivo: String = ''): Boolean;
-    function GravarTXT(PathNomeArquivo: String = ''): Boolean;
+    function GravarXML(const APathNomeArquivo: String = ''): Boolean;
+    function GravarTXT(const APathNomeArquivo: String = ''): Boolean;
 
     property ACBrNFe: TComponent read FACBrNFe;
   end;
@@ -1185,7 +1185,7 @@ begin
   FErroRegrasdeNegocios := Erros;
 end;
 
-function NotaFiscal.LerXML(AXML: String): Boolean;
+function NotaFiscal.LerXML(const AXML: String): Boolean;
 var
   XMLStr: String;
 begin
@@ -2172,7 +2172,7 @@ begin
   end;
 end;
 
-function NotaFiscal.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
+function NotaFiscal.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -2182,7 +2182,7 @@ begin
   Result := TACBrNFe(TNotasFiscais(Collection).ACBrNFe).Gravar(FNomeArq, FXMLOriginal);
 end;
 
-function NotaFiscal.GravarTXT(NomeArquivo: String; PathArquivo: String): Boolean;
+function NotaFiscal.GravarTXT(const NomeArquivo: String; const PathArquivo: String): Boolean;
 var
   ATXT: String;
 begin
@@ -2202,7 +2202,7 @@ begin
   Result := True;
 end;
 
-procedure NotaFiscal.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
+procedure NotaFiscal.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
   NomeArq : String;
@@ -2572,7 +2572,7 @@ begin
   end;
 end;
 
-function TNotasFiscais.LoadFromFile(CaminhoArquivo: String;
+function TNotasFiscais.LoadFromFile(const CaminhoArquivo: String;
   AGerarNFe: Boolean = True): Boolean;
 var
   XMLUTF8: AnsiString;
@@ -2609,7 +2609,7 @@ begin
   Result := Self.LoadFromString(String(AXML), AGerarNFe);
 end;
 
-function TNotasFiscais.LoadFromString(AXMLString: String;
+function TNotasFiscais.LoadFromString(const AXMLString: String;
   AGerarNFe: Boolean = True): Boolean;
 var
   ANFeXML, XMLStr: AnsiString;
@@ -2657,7 +2657,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TNotasFiscais.LoadFromIni(AIniString: String): Boolean;
+function TNotasFiscais.LoadFromIni(const AIniString: String): Boolean;
 begin
   with Self.Add do
     LerArqIni(AIniString);
@@ -2665,7 +2665,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TNotasFiscais.GravarXML(PathNomeArquivo: String): Boolean;
+function TNotasFiscais.GravarXML(const APathNomeArquivo: String): Boolean;
 var
   i: integer;
   NomeArq, PathArq : String;
@@ -2674,17 +2674,18 @@ begin
   i := 0;
   while Result and (i < Self.Count) do
   begin
-    PathArq := ExtractFilePath(PathNomeArquivo);
-    NomeArq := ExtractFileName(PathNomeArquivo);
+    PathArq := ExtractFilePath(APathNomeArquivo);
+    NomeArq := ExtractFileName(APathNomeArquivo);
     Result := Self.Items[i].GravarXML(NomeArq, PathArq);
     Inc(i);
   end;
 end;
 
-function TNotasFiscais.GravarTXT(PathNomeArquivo: String): Boolean;
+function TNotasFiscais.GravarTXT(const APathNomeArquivo: String): Boolean;
 var
   SL: TStringList;
   ArqTXT: String;
+  PathArq : string;
   I: integer;
 begin
   Result := False;
@@ -2712,11 +2713,12 @@ begin
           Inc(i);
       end;
 
-      if EstaVazio(PathNomeArquivo) then
-        PathNomeArquivo := PathWithDelim(
+      PathArq := APathNomeArquivo;
+      if EstaVazio(PathArq) then
+        PathArq := PathWithDelim(
           TACBrNFe(FACBrNFe).Configuracoes.Arquivos.PathSalvar) + 'NFe.TXT';
 
-      SL.SaveToFile(PathNomeArquivo);
+      SL.SaveToFile(PathArq);
       Result := True;
     end;
   finally

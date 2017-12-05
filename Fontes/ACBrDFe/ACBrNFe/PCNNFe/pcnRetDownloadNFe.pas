@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnLeitor, synacode;
+  pcnConversao, pcnLeitor, synacode;
 
 type
   TRetNFeCollection     = class;

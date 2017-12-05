@@ -89,7 +89,7 @@ uses
   {$ELSE}
      Printers, WinSpool,
   {$IFEND}
-  ACBrBase, ACBrConsts;
+  ACBrConsts;
 
 type
 

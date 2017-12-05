@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, StrUtils, SysUtils,
-  ACBrDFeSSL;
+  IniFiles, ACBrDFeSSL;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
@@ -65,12 +65,13 @@ function SignatureElement(const URI: String; AddX509Data: Boolean;
     IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
 function ExtraiURI(const AXML: String; IdAttr: String = ''): String;
 
+procedure LerIniArquivoOuString(IniArquivoOuString: AnsiString; AMemIni: TMemIniFile);
 
 implementation
 
 uses
   Variants, DateUtils,
-  ACBrDFeException, ACBrUtil, ACBrValidador ;
+  ACBrDFeException, ACBrConsts, ACBrUtil, ACBrValidador ;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 begin
@@ -343,5 +344,22 @@ begin
   Result := copy(AXML, I + 1, J - I - 1);
 end;
 
+procedure LerIniArquivoOuString(IniArquivoOuString: AnsiString;
+  AMemIni: TMemIniFile);
+var
+  SL: TStringList;
+begin
+  SL := TStringList.Create;
+  try
+    if (pos(LF, IniArquivoOuString) = 0) and FilesExists(IniArquivoOuString) then  // É um rquivo válido ?
+      SL.LoadFromFile(IniArquivoOuString)
+    else
+      SL.Text := StringToBinaryString( IniArquivoOuString );
+
+    AMemIni.SetStrings(SL);
+  finally
+    SL.Free;
+  end;
+end;
 
 end.

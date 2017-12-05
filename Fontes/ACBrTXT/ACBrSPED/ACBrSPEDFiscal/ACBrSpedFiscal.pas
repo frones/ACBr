@@ -214,7 +214,7 @@ procedure Register;
 
 implementation
 
-uses ACBrUtil, synautil;
+uses ACBrUtil;
 
 {$IFNDEF FPC}
  {$R ACBr_SPEDFiscal.dcr}

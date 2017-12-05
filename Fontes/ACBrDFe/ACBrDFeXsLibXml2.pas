@@ -318,9 +318,9 @@ var
   Digest: TSSLDgst;
 begin
   Digest := GetSignDigestAlgorithm(ConteudoXML);
-
+  doc := nil;
   try
-    doc := xmlParseDoc(PAnsiChar(ConteudoXML));
+    doc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
     if (doc = nil) then
       raise EACBrDFeException.Create('Erro ao carregar xml C14N!');
 

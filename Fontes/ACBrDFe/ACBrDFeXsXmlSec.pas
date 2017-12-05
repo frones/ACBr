@@ -172,7 +172,6 @@ implementation
 Uses
   strutils, math,
   ACBrUtil, ACBrDFeUtil, ACBrConsts,
-  pcnAuxiliar,
   synautil, synacode;
 
 var
@@ -821,7 +820,7 @@ begin
       exit;
     end;
 
-    doc := xmlParseDoc(PAnsiChar(AXml));
+    doc := xmlParseDoc(PAnsiChar(AnsiString(AXml)));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
       MsgErro := ACBrStr(cErrParseDoc);

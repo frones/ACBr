@@ -844,10 +844,11 @@ var
   HashAlg: string;
 begin
   HashAlg := LowerCase(RetornarConteudoEntre(ConteudoXML,
-          'SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig', '"'));
+          'SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#', '"'));
 
-  HashAlg := StringReplace(HashAlg, '-more', '', [rfReplaceAll]);
-  HashAlg := StringReplace(HashAlg, '#', '', [rfReplaceAll]);
+  if HashAlg = '' then
+    HashAlg := LowerCase(RetornarConteudoEntre(ConteudoXML,
+          'SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#', '"'));
 
   if HashAlg = '' then
     raise EACBrDFeException.Create(ACBrStr('Não foi possivel recuperar o "Digest Algorithm" do XML'));

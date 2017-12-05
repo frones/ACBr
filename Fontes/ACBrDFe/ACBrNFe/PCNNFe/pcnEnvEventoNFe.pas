@@ -83,6 +83,8 @@ type
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
+  { TEventoNFe }
+
   TEventoNFe = class(TPersistent)
   private
     FGerador: TGerador;
@@ -100,6 +102,7 @@ type
     function LerXML(const CaminhoArquivo: String): Boolean;
     function LerXMLFromString(const AXML: String): Boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
+    function LerFromIni(const AIniString: String; CCe: Boolean = True): Boolean;
   published
     property Gerador: TGerador            read FGerador write FGerador;
     property idLote: Integer              read FidLote  write FidLote;
@@ -110,8 +113,9 @@ type
 implementation
 
 uses
+  IniFiles,
   pcnRetEnvEventoNFe, pcnAuxiliar, pcnConversaoNFe,
-  ACBrUtil;
+  ACBrUtil, ACBrDFeUtil;
 
 { TEventoNFe }
 
@@ -429,6 +433,78 @@ begin
       end;
   finally
      RetEventoNFe.Free;
+  end;
+end;
+
+function TEventoNFe.LerFromIni(const AIniString: String; CCe: Boolean): Boolean;
+var
+  I      : Integer;
+  sSecao, sFim : String;
+  INIRec : TMemIniFile ;
+  ok     : Boolean;
+begin
+  Result := False;
+  Self.Evento.Clear;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+    idLote := INIRec.ReadInteger( 'EVENTO','idLote' ,INIRec.ReadInteger( 'CCE','idLote',0));
+
+    I := 1 ;
+    while true do
+    begin
+      sSecao := 'EVENTO'+IntToStrZero(I,3) ;
+      sFim   := INIRec.ReadString(  sSecao,'chNFe'  ,'FIM');
+      if (sFim = 'FIM') or (Length(sFim) <= 0) then
+        break ;
+
+      with Self.Evento.Add do
+      begin
+        infEvento.cOrgao := INIRec.ReadInteger( sSecao,'cOrgao' ,0);
+        infEvento.CNPJ   := INIRec.ReadString(  sSecao,'CNPJ' ,'');
+        infEvento.chNFe  := sFim;
+        infEvento.dhEvento :=  StringToDateTime(INIRec.ReadString(  sSecao,'dhEvento' ,''));
+        if CCe then
+          infEvento.tpEvento := teCCe
+        else
+          infEvento.tpEvento := StrToTpEvento(ok,INIRec.ReadString(  sSecao,'tpEvento' ,''));
+
+        infEvento.nSeqEvento   := INIRec.ReadInteger( sSecao,'nSeqEvento' ,1);
+        infEvento.versaoEvento := INIRec.ReadString(  sSecao,'versaoEvento' ,'1.00');;
+
+        if (infEvento.tpEvento = teEPECNFe) then
+        begin
+          infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);
+          infEvento.detEvento.tpAutor     := StrToTipoAutor(ok,INIRec.ReadString(sSecao, 'tpAutor', '1'));
+          infEvento.detEvento.verAplic    := INIRec.ReadString(sSecao, 'verAplic', '1.0');
+          infEvento.detEvento.dhEmi       := StringToDateTime(INIRec.ReadString(sSecao, 'dhEmi', ''));
+          infEvento.detEvento.tpNF        := StrToTpNF(ok,INIRec.ReadString(sSecao, 'tpNF', '1'));
+          infEvento.detEvento.IE          := INIRec.ReadString(sSecao, 'IE', '');
+
+          infEvento.detEvento.dest.UF      := INIRec.ReadString('DEST', 'DestUF', '');
+          infEvento.detEvento.dest.CNPJCPF := INIRec.ReadString('DEST', 'DestCNPJCPF', '');
+          infEvento.detEvento.dest.IE      := INIRec.ReadString('DEST', 'DestIE', '');
+
+          infEvento.detEvento.vNF   := StringToFloatDef(INIRec.ReadString(sSecao, 'vNF', ''), 0);
+          infEvento.detEvento.vICMS := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMS', ''), 0);
+          infEvento.detEvento.vST   := StringToFloatDef(INIRec.ReadString(sSecao, 'vST', ''), 0);
+        end
+        else
+        begin
+          infEvento.detEvento.xCorrecao := INIRec.ReadString(  sSecao,'xCorrecao' ,'');
+          infEvento.detEvento.xCondUso  := INIRec.ReadString(  sSecao,'xCondUso' ,''); //Texto fixo conforme NT 2011.003 -  http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=tsiloeZ6vBw=
+          infEvento.detEvento.nProt     := INIRec.ReadString(  sSecao,'nProt' ,'');
+          infEvento.detEvento.xJust     := INIRec.ReadString(  sSecao,'xJust' ,'');
+        end;
+      end;
+
+      Inc(I);
+    end;
+
+    Result := True;
+  finally
+     INIRec.Free;
   end;
 end;
 

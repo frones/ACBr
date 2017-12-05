@@ -47,6 +47,31 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/12/2017
+-- ACBRNFeNotasFiscais --
+[+] Classe "NotaFiscal" Adicionado o método:
+    function LerArqIni(const AIniString: String): Boolean;
+    Permite carregar uma NFe, de um Arquivo INI no Formato aceito pelo
+    ACBrMonitorPLUS
+       http://acbr.sourceforge.net/ACBrMonitor/NFECriarNFe.html
+    O Parâmetro "AIniString", pode ser o caminho para um arquivo INI em disco
+    ou ainda o conteúdo do arquivo INI.
+[+] Classe "TNotasFiscais" adicionado o método:
+    function LoadFromIni(AIniString: String): Boolean;
+[*] Método "NotaFiscal.VerificarAssinatura", modificado para conseguir validar
+    XMLs com a tag "nfeProc"
+    (por: Rafael Teno e DSA)
+
+-- pcnEnvEventoNFe --
+[+] Adicionado o método:
+    function TEventoNFe.LerFromIni(const AIniString: String; CCe: Boolean): Boolean;
+    Permite carregar um ou vários Eventos, de um Arquivo INI, no Formato aceito
+    pelo ACBrMonitorPLUS.
+       http://acbr.sourceforge.net/ACBrMonitor/NFEEnviarEvento.html
+    O Parâmetro "AIniString", pode ser o caminho para um
+    arquivo INI em disco ou ainda o conteúdo do arquivo INI.
+    (por: Rafael Teno e DSA)
+
 30/11/2017
 -- ACBrNFeServicos -- 
 [+] Adicionado URL de homologação 4.0 PR.

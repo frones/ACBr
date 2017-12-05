@@ -261,3 +261,8 @@
  {$UnDef USE_ZLibExGZ} // ZLibExGZ não é compatível com FPC
 {$EndIf}
 
+// Compatibilização de Tipos inexistentes em Delphi Linux (POSIX)
+{$IFDEF POSIX}
+  PAnsiChar = PUTF8Char;
+{$ENDIF}
+

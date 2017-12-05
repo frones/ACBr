@@ -65,7 +65,7 @@ function SignatureElement(const URI: String; AddX509Data: Boolean;
     IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
 function ExtraiURI(const AXML: String; IdAttr: String = ''): String;
 
-procedure LerIniArquivoOuString(IniArquivoOuString: AnsiString; AMemIni: TMemIniFile);
+procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString; AMemIni: TMemIniFile);
 
 implementation
 
@@ -344,7 +344,7 @@ begin
   Result := copy(AXML, I + 1, J - I - 1);
 end;
 
-procedure LerIniArquivoOuString(IniArquivoOuString: AnsiString;
+procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString;
   AMemIni: TMemIniFile);
 var
   SL: TStringList;

@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/12/2017
+-- ACBRNFeNotasFiscais --
+[*] Classe "NotaFiscal" Atualizado o método:
+    function LerArqIni(const AIniString: String): Boolean;
+    com os Campos da versão NFe 4.0
+    por: Jose M. S. Junior
+
 05/12/2017
 -- ACBRNFeNotasFiscais --
 [+] Classe "NotaFiscal" Adicionado o método:

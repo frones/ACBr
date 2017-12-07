@@ -161,7 +161,9 @@ type
 
 implementation
 
-Uses IniFiles, ACBrUtil, math ;
+Uses
+  IniFiles, math,
+  ACBrUtil;
 
 { TACBrAAC }
 
@@ -278,26 +280,24 @@ begin
   try
      // DEBUG
      // GravaLog('Arquivo Lido: '+sLineBreak+ S );
-     R := DesCriptografar( S ) ;
+     R := Trim(DesCriptografar( S )) ;
      // DEBUG
      //GravaLog('Arquivo Descriptografado: '+sLineBreak+ R );
 
-     SL.Text := R;
-     if Trim(SL.Text) <> '' then
+     if (R <> '') then
      begin
-       // Verificando o arquivo:
-       I := SL.Count-1 ;
-       Linha := SL[ I ] ;   // Pega Ultima Linha
-       if copy(Linha,1,4) = 'CRC:' then   // Ultima Linha é CRC ?
+       I := PosLast('CRC:', R);
+       if (I > 0) then
        begin
-          CRC := StrToIntDef( copy( Linha, 5, Length(Linha) ), -999) ;
-          SL.Delete( I );
+         CRC := StrToIntDef( copy( R, I+4, 20 ), -999) ;
 
-          if StringCrc16( SL.Text ) <> CRC then
-             fsDtHrArquivo := 0;
+         if StringCrc16( copy(R, 1, I-1 ) ) <> CRC then
+           fsDtHrArquivo := 0;
        end
      end;
+
      // Atribuindo para o .INI //
+     SL.Text := R;
      Ini.SetStrings( SL );
 
      if GravarDadosSH then

@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/12/2017
+-- ACBrAAC --
+[-] Ajuste para o correto calculo do CRC quando o mesmo arquivo é aberto em
+    Windows e Linux
+    (por: DSA)
+
 Data: 04/12/2017
 -- ACBrUtil --
 [+] Adicionado o método:

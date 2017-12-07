@@ -458,7 +458,7 @@ begin
 
      NumeroSerie    := SL[0] ;
      CRO            := StrToIntDef( SL[1], 0) ;
-     ValorGT        := StrToFloatDef( SL[2], 0) ;
+     ValorGT        := StringToFloatDef( SL[2], 0) ;
      DtHrAtualizado := StoD( SL[3] ) ;  
      if SL.Count > 4 then  
         CNI := StrToIntDef( SL[4], 0)

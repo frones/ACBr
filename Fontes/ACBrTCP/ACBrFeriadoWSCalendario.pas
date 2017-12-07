@@ -77,13 +77,20 @@ begin
   sURL := fpURL + 'api/api_feriados.php?';
   sURL := sURL + 'token='+ TACBrFeriado(fOwner).Token;
   sURL := sURL + '&ano='+ IntToStr(AAno);
-  if (AUF <> EmptyStr) then
-    sURL := sURL + '&estado='+ AUF;
-  if (ACidade <> EmptyStr) then
+
+  if ((ACidade <> EmptyStr) and (ACidade = OnlyNumber(ACidade))) then
+    sURL := sURL + '&ibge='+ ACidade
+  else
   begin
-    sNomeCidade := TiraAcentos(UpperCase(Trim(ACidade)));
-    sNomeCidade := StringReplace(sNomeCidade, ' ', '_', [rfReplaceAll]);
-    sURL := sURL + '&cidade='+ sNomeCidade;
+    if (AUF <> EmptyStr) then
+      sURL := sURL + '&estado='+ AUF;
+
+    if (ACidade <> EmptyStr) then
+    begin
+      sNomeCidade := TiraAcentos(UpperCase(Trim(ACidade)));
+      sNomeCidade := StringReplace(sNomeCidade, ' ', '_', [rfReplaceAll]);
+      sURL := sURL + '&cidade='+ sNomeCidade;
+    end;
   end;
 
   TACBrFeriado(fOwner).HTTPGet(sURL);

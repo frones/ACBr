@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/12/2017
+[*] Utilização da função para leitura arquivo .ini a partir das classes:
+        ACBRNFeNotasFiscais / pcnEnvEventoNFe  (métodos: TNotasFiscais.LoadFromIni,
+        TEventoNFe.LerFromIni )
+	por: José M. S. Junior
+
 04/12/2017
 [*] Validação para realização de Consulta por número de Recibo no caso de CTe-OS
 [+] Adicionado URLs para NF-e 4.0 Homologação Paraná

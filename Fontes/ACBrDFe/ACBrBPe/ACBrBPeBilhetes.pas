@@ -47,7 +47,7 @@ interface
 
 uses
   Classes, SysUtils, Dialogs, StrUtils,
-  ACBrBPeConfiguracoes, ACBrDFeUtil,
+  ACBrBPeConfiguracoes,
   pcnBPe, pcnBPeR, pcnBPeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
@@ -60,6 +60,7 @@ type
     FBPeW: TBPeW;
     FBPeR: TBPeR;
 
+    FConfiguracoes: TConfiguracoesBPe;
     FXMLAssinado: String;
     FXMLOriginal: String;
     FAlertas: String;
@@ -92,6 +93,7 @@ type
     function ValidarRegrasdeNegocios: Boolean;
 
     function LerXML(AXML: String): Boolean;
+    function LerArqIni(const AIniString: String): Boolean;
 
     function GerarXML: String;
     function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
@@ -164,6 +166,8 @@ type
     function LoadFromFile(CaminhoArquivo: String; AGerarBPe: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarBPe: Boolean = True): Boolean;
     function LoadFromString(AXMLString: String; AGerarBPe: Boolean = True): Boolean;
+    function LoadFromIni(AIniString: String): Boolean;
+
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
     function GravarTXT(PathNomeArquivo: String = ''): Boolean;
 
@@ -173,16 +177,20 @@ type
 implementation
 
 uses
-  ACBrBPe, ACBrUtil, pcnConversaoBPe, synautil;
+  dateutils, IniFiles,
+  synautil,
+  ACBrBPe, ACBrUtil, ACBrDFeUtil, pcnConversaoBPe;
 
 { Bilhete }
 
 constructor Bilhete.Create(Collection2: TCollection);
 begin
   inherited Create(Collection2);
+
   FBPe := TBPe.Create;
   FBPeW := TBPeW.Create(FBPe);
   FBPeR := TBPeR.Create(FBPe);
+  FConfiguracoes := TACBrBPe(TBilhetes(Collection).ACBrBPe).Configuracoes;
 
   with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
   begin
@@ -323,7 +331,7 @@ end;
 
 function Bilhete.VerificarAssinatura: Boolean;
 var
-  Erro, AXML: String;
+  Erro, AXML, DeclaracaoXML: String;
   AssEhValida: Boolean;
 begin
   AXML := FXMLAssinado;
@@ -332,6 +340,13 @@ begin
 
   with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
   begin
+
+    // Extraindo apenas os dados do BPe (sem bpeProc)
+    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
+    AXML := DeclaracaoXML + '<BPe xmlns' +
+            RetornarConteudoEntre(AXML, '<BPe xmlns', '</BPe>') +
+            '</BPe>';
+
     AssEhValida := SSL.VerificarAssinatura(AXML, Erro, 'infBPe');
 
     if not AssEhValida then
@@ -681,6 +696,34 @@ begin
     FXMLAssinado := '';
 end;
 
+function Bilhete.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec : TMemIniFile;
+  SL     : TStringList;
+  sSecao : String;
+  OK     : boolean;
+  I, J, K : Integer;
+  versao, sFim, sCNPJCPF : String;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with FBPe do
+    begin
+      // Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
+end;
+
 { TBilhetes }
 
 constructor TBilhetes.Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
@@ -902,6 +945,14 @@ begin
 
     N := PosBPe;
   end;
+
+  Result := Self.Count > 0;
+end;
+
+function TBilhetes.LoadFromIni(AIniString: String): Boolean;
+begin
+  with Self.Add do
+    LerArqIni(AIniString);
 
   Result := Self.Count > 0;
 end;

@@ -51,11 +51,11 @@ interface
 
 uses
   SysUtils, Classes,
-{$IFNDEF VER130}
-  Variants,
-{$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcteEventoCTe,
-  ACBrUtil, pcnConsts, pcteConsts, pcteConversaoCTe, pcteSignature;
+//{$IFNDEF VER130}
+//  Variants,
+//{$ENDIF}
+  pcnConversao, pcnGerador, pcnConsts, //pcnLeitor,
+  pcteConversaoCTe, pcteEventoCTe, pcteConsts, pcteSignature;
 
 type
   TInfEventoCollection     = class;
@@ -104,6 +104,8 @@ type
     property ValidarListaServicos: Boolean         read FValidarListaServicos  write FValidarListaServicos;
   end;
 
+  { TEventoCTe }
+
   TEventoCTe = class(TPersistent)
   private
     FGerador: TGerador;
@@ -122,6 +124,7 @@ type
     function LerXML(CaminhoArquivo: string): boolean;
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+    function LerFromIni(const AIniString: String; CCe: Boolean = True): Boolean;
   published
     property Gerador: TGerador            read FGerador  write FGerador;
     property Opcoes: TGeradorOpcoes       read FOpcoes   write FOpcoes;
@@ -135,7 +138,9 @@ type
 implementation
 
 uses
- pcteRetEnvEventoCTe;
+  IniFiles,
+  pcnAuxiliar, pcteRetEnvEventoCTe,
+  ACBrUtil, ACBrDFeUtil;
 
 { TEventoCTe }
 
@@ -532,6 +537,72 @@ begin
   else
     raise EventoCTeException.Create('Obter nome do arquivo de Evento não Implementado!');
  end;
+end;
+
+function TEventoCTe.LerFromIni(const AIniString: String;
+  CCe: Boolean): Boolean;
+var
+  I, J: Integer;
+  sSecao, sFim: String;
+  INIRec: TMemIniFile;
+  ok: Boolean;
+begin
+  Result := False;
+  Self.Evento.Clear;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    idLote := INIRec.ReadInteger('EVENTO', 'idLote', 0);
+
+    I := 1;
+    while true do
+    begin
+      sSecao := 'EVENTO'+IntToStrZero(I,3);
+      sFim   := INIRec.ReadString(sSecao, 'chCTe', 'FIM');
+      if (sFim = 'FIM') or (Length(sFim) <= 0) then
+        break;
+
+      with Self.Evento.Add do
+      begin
+        infEvento.chCTe              := INIRec.ReadString(sSecao, 'chCTe', '');
+        infEvento.cOrgao             := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
+        infEvento.CNPJ               := INIRec.ReadString(sSecao, 'CNPJ', '');
+        infEvento.dhEvento           := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
+        infEvento.tpEvento           := StrToTpEvento(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
+        infEvento.nSeqEvento         := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
+        infEvento.detEvento.xCondUso := '';
+        infEvento.detEvento.xJust    := INIRec.ReadString(sSecao, 'xJust', '');
+        infEvento.detEvento.nProt    := INIRec.ReadString(sSecao, 'nProt', '');
+
+        Self.Evento.Items[I-1].InfEvento.detEvento.infCorrecao.Clear;
+
+        J := 1;
+        while true do
+        begin
+          sSecao := 'DETEVENTO' + IntToStrZero(J, 3);
+          sFim   := INIRec.ReadString(sSecao, 'grupoAlterado', 'FIM');
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with Self.Evento.Items[I-1].InfEvento.detEvento.infCorrecao.Add do
+          begin
+            grupoAlterado   := INIRec.ReadString(sSecao, 'grupoAlterado', '');
+            campoAlterado   := INIRec.ReadString(sSecao, 'campoAlterado', '');
+            valorAlterado   := INIRec.ReadString(sSecao, 'valorAlterado', '');
+            nroItemAlterado := INIRec.ReadInteger(sSecao, 'nroItemAlterado', 0);
+          end;
+          Inc(J);
+        end;
+      end;
+      Inc(I);
+    end;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 { TInfEventoCollection }

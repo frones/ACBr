@@ -47,6 +47,29 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2017
+-- ACBRCTeConhecimentos --
+[+] Classe "Conhecimento" Adicionado o método:
+    function LerArqIni(const AIniString: String): Boolean;
+    Permite carregar um CTe, de um Arquivo INI no Formato aceito pelo
+    ACBrMonitorPLUS
+    O Parâmetro "AIniString", pode ser o caminho para um arquivo INI em disco
+    ou ainda o conteúdo do arquivo INI.
+[+] Classe "TConhecimentos" adicionado o método:
+    function LoadFromIni(AIniString: String): Boolean;
+[*] Método "Conhecimento.VerificarAssinatura", modificado para conseguir validar
+    XMLs com a tag "cteProc"
+    (por: Italo Jurisato Junior)
+
+-- pcteEnvEventoCTe --
+[+] Adicionado o método:
+    function TEventoCTe.LerFromIni(const AIniString: String): Boolean;
+    Permite carregar um ou vários Eventos, de um Arquivo INI, no Formato aceito
+    pelo ACBrMonitorPLUS.
+    O Parâmetro "AIniString", pode ser o caminho para um
+    arquivo INI em disco ou ainda o conteúdo do arquivo INI.
+    (por: Italo Jurisato Junior)
+
 23/11/2017
 -- pcteCTeW --
 [*] Corrigido a posíção da criação do grupo <peri> na versão 3.00

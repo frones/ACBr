@@ -42,11 +42,11 @@ interface
 
 uses
   SysUtils, Classes,
-{$IFNDEF VER130}
-  Variants,
-{$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pmdfeEventoMDFe,
-  ACBrUtil, pcnConsts, pmdfeSignature;
+//{$IFNDEF VER130}
+//  Variants,
+//{$ENDIF}
+  pcnConversao, pcnGerador, pcnConsts, //pcnLeitor,
+  pmdfeEventoMDFe, pmdfeSignature;
 
 type
   TInfEventoCollection     = class;
@@ -78,6 +78,8 @@ type
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
+  { TEventoMDFe }
+
   TEventoMDFe = class(TPersistent)
   private
     FGerador: TGerador;
@@ -93,6 +95,7 @@ type
     function LerXML(const CaminhoArquivo: String): Boolean;
     function LerXMLFromString(const AXML: String): Boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
+    function LerFromIni(const AIniString: String): Boolean;
   published
     property Gerador: TGerador             read FGerador write FGerador;
     property idLote: Integer               read FidLote  write FidLote;
@@ -103,7 +106,9 @@ type
 implementation
 
 uses
- pmdfeRetEnvEventoMDFe;
+  IniFiles,
+  pcnAuxiliar, pmdfeRetEnvEventoMDFe,
+  ACBrUtil, ACBrDFeUtil;
 
 { TEventoMDFe }
 
@@ -296,6 +301,28 @@ begin
     teInclusaoCondutor: Result := Evento.Items[0].InfEvento.chMDFe + '-inc-eve.xml';
   else
     raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
+  end;
+end;
+
+function TEventoMDFe.LerFromIni(const AIniString: String): Boolean;
+var
+//  I: Integer;
+//  sSecao, sFim: String;
+  INIRec: TMemIniFile;
+//  ok: Boolean;
+begin
+  Result := False;
+  Self.Evento.Clear;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    // Implementar
+
+    Result := True;
+  finally
+     INIRec.Free;
   end;
 end;
 

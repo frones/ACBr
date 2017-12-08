@@ -47,6 +47,32 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2017
+-- ACBRMDFeManifestos --
+[+] Classe "Manifesto" Adicionado o método:
+    function LerArqIni(const AIniString: String): Boolean;
+    Permite carregar um MDFe, de um Arquivo INI no Formato aceito pelo
+    ACBrMonitorPLUS
+    O Parâmetro "AIniString", pode ser o caminho para um arquivo INI em disco
+    ou ainda o conteúdo do arquivo INI.
+[+] Classe "TManifestos" adicionado o método:
+    function LoadFromIni(AIniString: String): Boolean;
+[*] Método "Manifesto.VerificarAssinatura", modificado para conseguir validar
+    XMLs com a tag "mdfeProc"
+    (por: Italo Jurisato Junior)
+
+-- pmdfeEnvEventoMDFe --
+[+] Adicionado o método:
+    function TEventoMDFe.LerFromIni(const AIniString: String): Boolean;
+    Permite carregar um ou vários Eventos, de um Arquivo INI, no Formato aceito
+    pelo ACBrMonitorPLUS.
+    O Parâmetro "AIniString", pode ser o caminho para um
+    arquivo INI em disco ou ainda o conteúdo do arquivo INI.
+
+    Ainda não foi finalizado (primeira etapa)
+
+    (por: Italo Jurisato Junior)
+
 23/11/2017
 -- pmdfeConversaoMDFe --
 [*] Corrigido o nome do enumerador usado na consulta ao status de serviço.

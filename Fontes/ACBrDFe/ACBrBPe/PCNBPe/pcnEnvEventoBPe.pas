@@ -58,7 +58,8 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnEventoBPe, pcnConsts, pcnBPeConsts, pcnSignature;
+  pcnConversao, pcnGerador, pcnConsts,
+  pcnEventoBPe, pcnBPeConsts, pcnSignatureBPe;
 
 type
   TInfEventoCollection     = class;
@@ -90,6 +91,8 @@ type
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
+  { TEventoBPe }
+
   TEventoBPe = class(TPersistent)
   private
     FGerador: TGerador;
@@ -104,6 +107,7 @@ type
     function GerarXML: Boolean;
     function LerXML(const CaminhoArquivo: String): Boolean;
     function LerXMLFromString(const AXML: String): Boolean;
+    function LerFromIni(const AIniString: String): Boolean;
   published
     property Gerador: TGerador            read FGerador write FGerador;
     property idLote: Integer              read FidLote  write FidLote;
@@ -114,8 +118,9 @@ type
 implementation
 
 uses
-  pcnRetEnvEventoBPe, pcnAuxiliar, pcnConversaoBPe,
-  ACBrUtil;
+  IniFiles,
+  pcnAuxiliar, pcnRetEnvEventoBPe, pcnConversaoBPe,
+  ACBrUtil, ACBrDFeUtil;
 
 { TEventoBPe }
 
@@ -298,6 +303,28 @@ begin
       end;
   finally
      RetEventoBPe.Free;
+  end;
+end;
+
+function TEventoBPe.LerFromIni(const AIniString: String): Boolean;
+var
+  I: Integer;
+  sSecao, sFim: String;
+  INIRec: TMemIniFile;
+  ok: Boolean;
+begin
+  Result := False;
+  Self.Evento.Clear;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    // Implementar
+
+    Result := True;
+  finally
+     INIRec.Free;
   end;
 end;
 

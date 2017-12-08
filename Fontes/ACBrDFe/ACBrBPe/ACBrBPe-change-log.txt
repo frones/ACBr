@@ -48,6 +48,35 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2017
+-- ACBRBPeBilhetes --
+[+] Classe "Bilhete" Adicionado o método:
+    function LerArqIni(const AIniString: String): Boolean;
+    Permite carregar um BPe, de um Arquivo INI no Formato aceito pelo
+    ACBrMonitorPLUS
+    O Parâmetro "AIniString", pode ser o caminho para um arquivo INI em disco
+    ou ainda o conteúdo do arquivo INI.
+
+    Ainda não foi finalizado (primeira etapa)
+
+[+] Classe "TBilhetes" adicionado o método:
+    function LoadFromIni(AIniString: String): Boolean;
+[*] Método "Bilhete.VerificarAssinatura", modificado para conseguir validar
+    XMLs com a tag "bpeProc"
+    (por: Italo Jurisato Junior)
+
+-- pcnEnvEventoBPe --
+[+] Adicionado o método:
+    function TEventoBPe.LerFromIni(const AIniString: String): Boolean;
+    Permite carregar um ou vários Eventos, de um Arquivo INI, no Formato aceito
+    pelo ACBrMonitorPLUS.
+    O Parâmetro "AIniString", pode ser o caminho para um
+    arquivo INI em disco ou ainda o conteúdo do arquivo INI.
+
+    Ainda não foi finalizado (primeira etapa)
+
+    (por: Italo Jurisato Junior)
+
 15/11/2017
 -- Diversos --
 [*] Remoção de códigos não utilizados.

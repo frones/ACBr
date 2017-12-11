@@ -46,6 +46,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+Data 11/12/2017 ver: 0.0.234
+-- ACBrBancoCaixa
+[*] Ajuste no arquivo de Remessa - CNAB 240 (Ajustes nos Totalizadores do Registro Trailler )
+    por: José M. S. Junior
+
 Data 24/10/2017 ver: 0.0.234
 -- ACBrBancoBancoob
 [*] Ajuste no arquivo de Retorno - Leitura campo Conta Corrente

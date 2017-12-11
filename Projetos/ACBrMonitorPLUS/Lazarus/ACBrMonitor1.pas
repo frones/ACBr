@@ -6073,7 +6073,7 @@ begin
   OpenDialog1.Title := 'Selecione o Logo';
   OpenDialog1.DefaultExt := '*.png';
   OpenDialog1.Filter :=
-    'Arquivos PNG (*.png)|Arquivos JPG (*.jpg)|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
+    'Arquivos PNG (*.png)|*.png|Arquivos JPG (*.jpg)|*.jpg|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
   if OpenDialog1.Execute then
   begin
@@ -6086,7 +6086,7 @@ begin
   OpenDialog1.Title := 'Selecione o Logo';
   OpenDialog1.DefaultExt := '*.png';
   OpenDialog1.Filter :=
-    'Arquivos PNG (*.png)|Arquivos JPG (*.jpg)|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
+    'Arquivos PNG (*.png)|*.png|Arquivos JPG (*.jpg)|*.jpg|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
   if OpenDialog1.Execute then
   begin
@@ -6150,7 +6150,7 @@ begin
   OpenDialog1.Title := 'Selecione o Logo';
   OpenDialog1.DefaultExt := '*.png';
   OpenDialog1.Filter :=
-    'Arquivos PNG (*.png)|Arquivos JPG (*.jpg)|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
+    'Arquivos PNG (*.png)|*.png|Arquivos JPG (*.jpg)|*.jpg|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
   if OpenDialog1.Execute then
   begin

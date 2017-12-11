@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2017
+[-] Correção no método AdicionarMDFe --DoACBrMDFeUnit--
+        https://www.projetoacbr.com.br/forum/topic/40318-falha-na-valida%C3%A7%C3%A3o-
+        do-mdfe-pelo-acbrmonitor/?tab=comments#comment-265423
+	por: José M. S. Junior
+
 07/12/2017
 [*] Utilização da função para leitura arquivo .ini a partir das classes:
         ACBRNFeNotasFiscais / pcnEnvEventoNFe  (métodos: TNotasFiscais.LoadFromIni,

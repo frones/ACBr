@@ -377,11 +377,15 @@ end;
 
 function TACBrETQPpla.ComandosFinalizarEtiqueta(NumCopias: Integer;
   aAvancoEtq: Integer): AnsiString;
+var
+  wAvanco: Integer;
 begin
   if (aAvancoEtq < 0) or (aAvancoEtq > 779) then
     raise Exception.Create('Avanço de Etiquetas deve ser de 0 a 779');
 
-  Result := Inherited ComandosFinalizarEtiqueta(NumCopias, aAvancoEtq);
+  // Valor mínimo para Back-feed é 220 (Manual "PPLA&PPLB.pdf" ... pág. 18)
+  wAvanco := aAvancoEtq + 220;
+  Result  := Inherited ComandosFinalizarEtiqueta(NumCopias, wAvanco);
 end;
 
 function TACBrETQPpla.TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString;

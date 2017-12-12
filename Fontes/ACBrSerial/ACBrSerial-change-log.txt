@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/12/2017
+-- ACBrETQPpla --
+[*] Inclusão de um valor mínimo(220) para aAvançoEtq em "ComandosFinalizarEtiqueta".
+    (por: Elias César)
+
 Data: 02/12/2017
 -- ACBrDevice --
 [+] Adicionada a propriedade "ArqLOG: String", para permitir a criação de um Log

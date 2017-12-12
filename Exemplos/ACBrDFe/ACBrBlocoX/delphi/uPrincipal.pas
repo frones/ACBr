@@ -68,8 +68,7 @@ begin
       // arquivo de Estoque
       with Estoque do
       begin
-        DataReferenciaInicial := DATE;
-        DataReferenciaFinal   := DATE;
+        DataReferencia := DATE;
 
         Produtos.Clear;
         for I := 1 to 10 do

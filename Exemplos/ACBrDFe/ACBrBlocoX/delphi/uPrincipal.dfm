@@ -68,6 +68,8 @@ object frmPrincipal: TfrmPrincipal
     OnClick = Button2Click
   end
   object ACBrBlocoX1: TACBrBlocoX
+    ECF.Convenio0909 = False
+    Configuracoes.VersaoER = erv0204
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone

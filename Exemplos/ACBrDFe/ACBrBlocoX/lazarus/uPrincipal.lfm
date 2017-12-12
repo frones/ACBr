@@ -6,7 +6,7 @@ object frmPrincipal: TfrmPrincipal
   Caption = 'ACBrBlocoX - Demonstração'
   ClientHeight = 240
   ClientWidth = 701
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.6'
   object Button1: TButton
     Left = 432
     Height = 25
@@ -65,6 +65,7 @@ object frmPrincipal: TfrmPrincipal
     TabOrder = 4
   end
   object ACBrBlocoX1: TACBrBlocoX
+    Configuracoes.VersaoER = erv0204
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone

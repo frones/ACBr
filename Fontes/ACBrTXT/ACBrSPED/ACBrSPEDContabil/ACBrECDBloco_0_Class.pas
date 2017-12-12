@@ -63,7 +63,7 @@ type
     //FRegistro0180: TRegistro0180List;  /// BLOCO 0 - Lista de Registro0180
     FRegistro0990: TRegistro0990;      /// BLOCO 0 - FRegistro0990
     FRegistro0180Count: Integer;
-    procedure SetRegistro0035(const Value: TRegistro0035List);      /// BLOCO 0 - FRegistro0990
+//    procedure SetRegistro0035(const Value: TRegistro0035List);      /// BLOCO 0 - FRegistro0990
     procedure WriteRegistro0180(Reg0150: TRegistro0150);
   protected
   public
@@ -138,10 +138,10 @@ begin
   FRegistro0180Count := 0;
 end;
 
-procedure TBloco_0.SetRegistro0035(const Value: TRegistro0035List);
-begin
-
-end;
+//procedure TBloco_0.SetRegistro0035(const Value: TRegistro0035List);
+//begin
+//
+//end;
 
 procedure TBloco_0.WriteRegistro0000;
 begin

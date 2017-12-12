@@ -239,10 +239,10 @@ type
     /////////////////////////////////////////////////////////
     // Variáveis serão preenchidas pelo conteúdo do MESTRE //
     /////////////////////////////////////////////////////////
-    FDataEmissao: TDateTime;
-    FModelo: SmallInt;
-    FSerie: string;
-    FNumeroNF: Integer;
+//    FDataEmissao: TDateTime;
+//    FModelo: SmallInt;
+//    FSerie: string;
+//    FNumeroNF: Integer;
     /////////////////////////////////////////////////////////
     FCnpjCpf: string;
     FInscricaoEstadual: string;

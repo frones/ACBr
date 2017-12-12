@@ -395,7 +395,7 @@ var
      aAgencia, aConta, aDV: String;
      wTamConvenio, wTamNossoNum: Integer;
      wCarteira, wTipoDocumento: Integer;
-     ACaracTitulo: Char;
+//     ACaracTitulo: Char;
 begin
      with ACBrTitulo do
      begin
@@ -494,20 +494,20 @@ begin
                     ATipoBoleto := '5' + '2';
           end;
 
-          ACaracTitulo := ' ';
-
-          case CaracTitulo of
-               tcSimples:
-                    ACaracTitulo := '1';
-               tcVinculada:
-                    ACaracTitulo := '2';
-               tcCaucionada:
-                    ACaracTitulo := '3';
-               tcDescontada:
-                    ACaracTitulo := '4';
-               tcVendor:
-                    ACaracTitulo := '5';
-          end;
+//          ACaracTitulo := ' ';
+//
+//          case CaracTitulo of
+//               tcSimples:
+//                    ACaracTitulo := '1';
+//               tcVinculada:
+//                    ACaracTitulo := '2';
+//               tcCaucionada:
+//                    ACaracTitulo := '3';
+//               tcDescontada:
+//                    ACaracTitulo := '4';
+//               tcVendor:
+//                    ACaracTitulo := '5';
+//          end;
 
           { Mora Juros }
           if (ValorMoraJuros > 0) and (DataMoraJuros > 0) then

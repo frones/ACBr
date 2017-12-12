@@ -187,19 +187,19 @@ var
   Desc: String;
 begin
   case fTpEvento of
-    teCCe                          : Desc := 'Carta de Correção';
+    teCCe                          : Desc := 'Carta de Correcao';
     teCancelamento                 : Desc := 'Cancelamento';
-    teManifDestConfirmacao         : Desc := 'Confirmação da Operação';
-    teManifDestCiencia             : Desc := 'Ciência da Operação';
-    teManifDestDesconhecimento     : Desc := 'Desconhecimento da Operação';
-    teManifDestOperNaoRealizada    : Desc := 'Operação não Realizada';
+    teManifDestConfirmacao         : Desc := 'Confirmacao da Operacao';
+    teManifDestCiencia             : Desc := 'Ciencia da Operacao';
+    teManifDestDesconhecimento     : Desc := 'Desconhecimento da Operacao';
+    teManifDestOperNaoRealizada    : Desc := 'Operacao nao Realizada';
     teEPECNFe                      : Desc := 'EPEC';
     teEPEC                         : Desc := 'EPEC';
     teMultiModal                   : Desc := 'Registro Multimodal';
     teRegistroPassagem             : Desc := 'Registro de Passagem';
     teRegistroPassagemBRId         : Desc := 'Registro de Passagem BRId';
     teEncerramento                 : Desc := 'Encerramento';
-    teInclusaoCondutor             : Desc := 'Inclusão Condutor';
+    teInclusaoCondutor             : Desc := 'Inclusao Condutor';
     teRegistroCTe                  : Desc := 'CT-e Autorizado para NF-e';
     teRegistroPassagemNFeCancelado : Desc := 'Registro de Passagem para NF-e Cancelado';
     teRegistroPassagemNFeRFID      : Desc := 'Registro de Passagem para NF-e RFID';

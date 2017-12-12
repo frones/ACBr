@@ -106,7 +106,7 @@ function SeparaDados( const AString : String; const Chave : String; const Mantem
 function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
 function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
 procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
-  var PosIni, PosFim: integer);
+  var PosIni, PosFim: integer;const PosOffset: integer = 0);
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
@@ -203,6 +203,8 @@ function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
 
 function IfEmptyThen( const AValue, DefaultValue: String; DoTrim: Boolean = True) : String;
 function PosAt(const SubStr, S: AnsiString; Ocorrencia : Cardinal = 1): Integer;
+function RPos(const aSubStr, aString : String; const aStartPos: Integer): Integer; overload;
+function RPos(const aSubStr, aString : String): Integer; overload;
 function PosLast(const SubStr, S: AnsiString): Integer;
 function CountStr(const AString, SubStr : String ) : Integer ;
 Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
@@ -1448,6 +1450,35 @@ begin
      Count  := Count + 1 ;
   end ;
 end ;
+
+function RPos(const aSubStr, aString : String; const aStartPos: Integer): Integer; overload;
+var
+  i: Integer;
+  pStr: PChar;
+  pSub: PChar;
+begin
+  pSub := Pointer(aSubStr);
+
+  for i := aStartPos downto 1 do
+  begin
+    pStr := @(aString[i]);
+    if (pStr^ = pSub^) then
+    begin
+      if CompareMem(pSub, pStr, Length(aSubStr)) then
+      begin
+        result := i;
+        EXIT;
+      end;
+    end;
+  end;
+
+  result := 0;
+end;
+
+function RPos(const aSubStr, aString : String): Integer; overload;
+begin
+  result := RPos(aSubStr, aString, Length(aString) - Length(aSubStr) + 1);
+end;
 
 {-----------------------------------------------------------------------------
   Acha a Ultima "Ocorrencia" de "SubStr" em "S"
@@ -3696,10 +3727,10 @@ end;
    Retorna a posição inicial e final da Tag do XML
  ------------------------------------------------------------------------------}
 procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
-  var PosIni, PosFim: integer);
+  var PosIni, PosFim: integer; const PosOffset: integer = 0);
 begin
   PosFim := 0;
-  PosIni := PosEx('<' + ATag + '>', aText);
+  PosIni := PosEx('<' + ATag + '>', aText, PosOffset);
   if (PosIni > 0) then
   begin
     PosIni := PosIni + Length(ATag) + 1;

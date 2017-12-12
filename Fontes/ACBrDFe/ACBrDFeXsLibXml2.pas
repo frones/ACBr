@@ -72,9 +72,9 @@ function TDFeSSLXmlSignLibXml2.Assinar(
   SignatureNode: String = ''; SelectionNamespaces: String = '';
   IdSignature: String = ''; IdAttr: String = ''): String;
 var
-  aXML, XmlAss: String;
+  aXML, XmlAss, TagEndDocElement: String;
   TemDeclaracao: boolean;
-  PosIni, PosFim: integer;
+  PosIni, PosFim, PosSign: integer;
   Canon, DigestXml, DigestValue, Signaturevalue: AnsiString;
   Digest: TSSLDgst;
 begin
@@ -92,13 +92,13 @@ begin
   VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
 
   // Inserindo Template da Assinatura digital
-  if (not XmlEstaAssinado(AXml)) or (SignatureNode <> '') then
+  if (not XmlEstaAssinado(AXml, docElement)) or (SignatureNode <> '') then
     AXml := AdicionarSignatureElement(AXml, False, docElement, IdSignature, IdAttr);
 
   // DEBUG
   //WriteToTXT('C:\TEMP\XmlSign.xml', AXml, False, False);
 
-  Digest := GetSignDigestAlgorithm(AXml);
+  Digest := GetSignDigestAlgorithm(AXml, docElement);
 
   // Aplica a transformação c14n no node infElement
   Canon := CanonC14n(AXml, docElement, infElement);
@@ -109,11 +109,12 @@ begin
   // gera o rsa-sha1 hash
   DigestValue := FpDFeSSL.CalcHash(Canon, Digest, outBase64);
 
-  PosIni := 0;
-  PosFim := 0;
+  TagEndDocElement := '</' + docElement + '>';
+  PosSign := PosLast(TagEndDocElement, AXML);
+  PosSign := RPos('<signature xmlns', lowercase(AXML), PosSign);
 
   // adiciona o digestvalue em SignedInfo
-  EncontrarInicioFinalTag(AXml, 'DigestValue', PosIni, PosFim);
+  EncontrarInicioFinalTag(AXml, 'DigestValue', PosIni, PosFim, PosSign);
   if (PosIni > 0) and (PosFim > 0) then
   begin
     DigestXml := copy(AXml, 1, PosIni) + DigestValue + copy(AXml, PosFim, Length(AXml));
@@ -121,8 +122,10 @@ begin
   else
     raise EACBrDFeException.Create('Node DigestValue não encontrado!');
 
-  // Aplica a transformação c14n o node SignedInfo
+  // DEBUG
+  //WriteToTXT('C:\TEMP\DigestXml.xml', Canon, False, False);
 
+  // Aplica a transformação c14n o node SignedInfo
   Canon := CanonC14n(DigestXml, docElement, 'SignedInfo');
 
   // DEBUG
@@ -132,7 +135,7 @@ begin
   Signaturevalue := FpDFeSSL.CalcHash(Canon, Digest, outBase64, True);
 
   // Adiciona o SignatureValue na Tag SignatureValue
-  EncontrarInicioFinalTag(DigestXml, 'SignatureValue', PosIni, PosFim);
+  EncontrarInicioFinalTag(DigestXml, 'SignatureValue', PosIni, PosFim, PosSign);
   if (PosIni > 0) and (PosFim > 0) then
   begin
     XmlAss := copy(DigestXml, 1, PosIni) + Signaturevalue + copy(DigestXml, PosFim, Length(DigestXml));
@@ -317,7 +320,6 @@ var
   XmlSign, docElement, AXml: AnsiString;
   Digest: TSSLDgst;
 begin
-  Digest := GetSignDigestAlgorithm(ConteudoXML);
   doc := nil;
   try
     doc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
@@ -331,6 +333,7 @@ begin
     xmlFreeDoc(doc);
   end;
 
+  Digest := GetSignDigestAlgorithm(ConteudoXML, docElement);
   XmlSign := DecodeBase64(LerTagXML(ConteudoXML, 'SignatureValue'));
   X509Certificate := LerTagXML(ConteudoXML, 'X509Certificate');
   FpDFeSSL.CarregarCertificadoPublico(X509Certificate);

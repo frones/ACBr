@@ -249,7 +249,6 @@ type
     txtEndSacado: TRLLabel;
     txtEspecieDoc: TRLLabel;
     txtLinhaDigitavelCarne: TRLLabel;
-    RLDBText17: TRLDBText;
     RLDBText18: TRLDBText;
     txtNomeCedente: TRLLabel;
     txtNossoNumeroCarne: TRLLabel;
@@ -406,6 +405,7 @@ type
     txtEndCedenteCarne: TRLLabel;
     memoEndCedenteCarne: TRLMemo;
     txtOrientacoesBancoCarne: TRLMemo;
+    txtNomeSacadorAval4: TRLLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -808,7 +808,29 @@ begin
       txtLinhaDigitavelCarne.Caption := LinhaDigitavel;
       imgBarrasCarne.Caption := CodBarras;
       txtOrientacoesBancoCarne.Lines.Text:=Banco.OrientacoesBanco.Text;
+
+      with Titulo.Sacado.SacadoAvalista do
+      begin
+        case Pessoa of
+           pFisica   : TipoDoc:= 'CPF: ';
+           pJuridica : TipoDoc:= 'CNPJ: ';
+        else
+           TipoDoc := 'DOC.: ';
+        end;
+
+        if (NomeAvalista <> '') then
+        begin
+          txtNomeSacadorAval4.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + CNPJCPF+ ' ' +
+            Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
+            Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
+        end
+        else
+        begin
+          txtNomeSacadorAval4.Caption   := '';
+        end;
+      end;
    end;
+
 end;
 
 procedure TACBrBoletoFCFortesFr.RLBand4BeforePrint(Sender: TObject;

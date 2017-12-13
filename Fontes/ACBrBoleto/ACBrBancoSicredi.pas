@@ -1665,13 +1665,13 @@ begin
              '01'                                                           + // 016 a 017 - Código de movimento de remessa
              TipoSacado                                                     + // 018 a 018 - Tipo de inscrição
              PadLeft(OnlyNumber(Sacado.CNPJCPF), 15, '0')                   + // 019 a 033 - Número de inscrição
-             PadRight(TiraAcentos(Sacado.NomeSacado), 40)                                + // 034 a 073 - Nome
+             PadRight(TiraAcentos(Sacado.NomeSacado), 40)                   + // 034 a 073 - Nome
              EndSacado                                                      + // 074 a 113 - Endereço
-             PadRight(TiraAcentos(Sacado.Bairro), 15)                                    + // 114 a 128 - Bairro
+             PadRight(TiraAcentos(Sacado.Bairro), 15)                       + // 114 a 128 - Bairro
              Copy(PadLeft(OnlyNumber(Sacado.CEP),8,'0'),1,5)                + // 129 a 133 - CEP
              Copy(PadLeft(OnlyNumber(Sacado.CEP),8,'0'),6,3)                + // 134 a 136 - Sufixo do CEP
-             PadRight(TiraAcentos(Sacado.Cidade), 15)                                    + // 137 a 151 - Cidade
-             PadLeft(UF, 2)                                                 + // 152 a 153 - Unidade da Federação
+             PadRight(TiraAcentos(Sacado.Cidade), 15)                       + // 137 a 151 - Cidade
+             PadLeft(Sacado.UF, 2)                                          + // 152 a 153 - Unidade da Federação
              TipoAvalista                                                   + // 154 a 154 - Tipo de inscrição
              PadRight(Sacado.SacadoAvalista.CNPJCPF, 15, '0')               + // 155 a 169 - Número de inscrição
              PadRight(TiraAcentos(Sacado.SacadoAvalista.NomeAvalista),40,' ')            + // 170 a 209 - Nome do sacador/avalista
@@ -1810,10 +1810,7 @@ begin
         begin
           if (trim(Copy(SegT, IdxMotivo, 2)) <> '') then begin
             MotivoRejeicaoComando.Add(Copy(SegT, IdxMotivo, 2));
-          if Length(Trim(OnlyNumber(Copy(SegT, IdxMotivo, 2))))>0 then
-            DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, '99'))
-              else
-                DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, Copy(SegT, IdxMotivo, 2)));
+            DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, Copy(SegT, IdxMotivo, 2)));
           end;
           Inc(IdxMotivo, 2);
         end;

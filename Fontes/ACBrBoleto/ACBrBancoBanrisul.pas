@@ -629,7 +629,7 @@ begin
         tcCaucionada  : ACaracTitulo  := '3';
         tcDescontada  : ACaracTitulo  := '4';
       end;
-
+      {Segmento "P"}
       Result := '04100013' +
                 DupeString('*', 5) +
                 'P ' +
@@ -658,8 +658,11 @@ begin
                 aAceite +
                 FormatDateTime('ddmmyyyy', DataProcessamento) +
                 Juros +
-                DupeString('0', 39) +
-                DupeString(' ', 15) +
+                IfThen(ValorDesconto > 0, IfThen(DataDesconto > 0, '1','3'), '0')                                                   +     // 142 - codigo desconto
+                IfThen(ValorDesconto > 0, IfThen(DataDesconto > 0, FormatDateTime('ddmmyyyy',DataDesconto),'00000000'), '00000000') +     // 143 a 150 - Data do desconto
+                IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),PadRight('', 15, '0'))                      +     // 151 a 165 - Valor do desconto por dia
+                IntToStrZero( round(ValorIOF * 100), 15)                                                                            +     // 166 a 180 - Valor do IOF a ser recolhido
+                IntToStrZero( round(ValorAbatimento * 100), 15)                                                                     +     // 181 a 195 - Valor do abatimento
                 PadRight(NumeroDocumento, 15) +
                 DupeString(' ', 10) +
                 DiasProt +
@@ -667,7 +670,7 @@ begin
                 sDiasBaixaDevol +
                 '09' +
                 DupeString('0', 10) +' ';
-
+      {Segmento "Q" }
       Result := Result + #13#10 +
                 '04100013' +
                 DupeString('*', 5) +
@@ -688,6 +691,7 @@ begin
 
       if (PercentualMulta > 0) then
         begin
+         {Segmento "R"}
          Result := Result + #13#10 +
                    '04100013' +
                    DupeString('*', 5) +

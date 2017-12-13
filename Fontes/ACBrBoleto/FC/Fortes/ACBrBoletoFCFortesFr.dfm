@@ -3338,20 +3338,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object RLDBText17: TRLDBText
-        Left = 240
-        Top = 266
-        Width = 324
-        Height = 13
-        AutoSize = False
-        DataField = 'SacadorAvalista'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
       object RLDBText18: TRLDBText
         Left = 570
         Top = 266
@@ -4051,6 +4037,20 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial Narrow'
+        Font.Style = []
+        ParentFont = False
+      end
+      object txtNomeSacadorAval4: TRLLabel
+        Left = 240
+        Top = 265
+        Width = 325
+        Height = 13
+        AutoSize = False
+        Caption = 'txtNomeSacadorAval'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
       end

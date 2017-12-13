@@ -501,6 +501,7 @@ begin
       33: Result := toRetornoRecebimentoInstrucaoAlterarDados;
       34: Result := toRetornoRetiradoDeCartorio;
       35: Result := toRetornoDesagendamentoDebitoAutomatico;
+      51: Result := toRetornoEntradaRejeitadaCarne;
       99: Result := toRetornoRegistroRecusado;
    else
       Result := toRetornoOutrasOcorrencias;

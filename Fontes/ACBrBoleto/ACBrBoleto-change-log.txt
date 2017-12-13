@@ -47,6 +47,50 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 12/12/2017 ver: 0.0.235
+-- ACBrBancoBancoob
+[*] Ajustes nos Arquivos Remessa e Retorno CNAB240 / CNAB400
+    Atualização de Ocorrências de Remessa e Retorno
+    https://www.projetoacbr.com.br/forum/topic/39990-altera%C3%A7%C3%A3o-na-remessa-do-banco-sicoob/
+    https://www.projetoacbr.com.br/forum/topic/36513-percentual-de-morajuros-no-arquivo-de-remessa-bancoobsicoob-cnab-400/
+    https://www.projetoacbr.com.br/forum/topic/39773-problema-na-gera%C3%A7%C3%A3o-de-remessa-do-acbrbancobancoob/
+    https://www.projetoacbr.com.br/forum/topic/37608-sicoob-arquivo-remessa-cnab-240-atualizado-julho2017/
+    https://www.projetoacbr.com.br/forum/topic/39612-adicionadas-descri%C3%A7%C3%B5es-dos-motivos-de-ocorr%C3%AAncia-em-acbrbancobancoobpas/
+    https://www.projetoacbr.com.br/forum/topic/39969-remessa-banco-do-brasil-e-sicoob/
+    por: José M. S. Junior
+
+-- ACBrBancoSicred
+[*] Ajustes nos Arquivos Remessa CNAB240 / Atualização Ocorrências
+    https://www.projetoacbr.com.br/forum/topic/39837-descri%C3%A7%C3%A3o-das-ocorr%C3%AAncias-no-banco-sicredi-erro/
+    https://www.projetoacbr.com.br/forum/topic/39666-acbrbancosicredi-remessa-cnab-240-sacado-uf/
+    por: José M. S. Junior
+
+-- ACBrBancoItau
+[*] Ajustes nos Arquivos Remessa CNAB240 / Adicionado Segmento R / Atualização Impressão Boleto Carne
+    https://www.projetoacbr.com.br/forum/topic/40115-sacadoravalista-layout-tipo-carn%C3%AA-n%C3%A3o-sai/
+    https://www.projetoacbr.com.br/forum/topic/39676-adicionado-segmento-r-para-o-banco-itau-cnab-240/
+    por: José M. S. Junior
+
+-- ACBrBancoBanrisul
+[*] Atualização nos Arquivos Remessa CNAB240 
+    https://www.projetoacbr.com.br/forum/topic/39556-banco-itau-cnab240/
+    por: José M. S. Junior
+
+-- ACBrBancoNordeste
+[*] Adicionado ocorrência de Retorno
+    https://www.projetoacbr.com.br/forum/topic/38533-erro-no-retorno-do-banco-do-nordeste/
+    por: José M. S. Junior
+
+-- ACBrBancoSantander
+[*] Ajustes Validação de Propriedade do Componente
+    https://www.projetoacbr.com.br/forum/topic/39867-moderador-fazer-corre%C3%A7%C3%A3o-no-arquivo-boleto-santander-linha-345/?tab=comments#comment-262240
+    por: José M. S. Junior
+
+-- ACBrBoletoFCFortesFr.pas
+[*] Ajustes Dados Sacador Avalista na emissão Boleto Carne
+    https://www.projetoacbr.com.br/forum/topic/40115-sacadoravalista-layout-tipo-carn%C3%AA-n%C3%A3o-sai/
+    por: José M. S. Junior
+
 Data 11/12/2017 ver: 0.0.234
 -- ACBrBancoCaixa
 [*] Ajuste no arquivo de Remessa - CNAB 240 (Ajustes nos Totalizadores do Registro Trailler )

@@ -1,7 +1,7 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 364
+  Left = 360
   Height = 837
-  Top = 213
+  Top = 111
   Width = 1595
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 837
@@ -233,7 +233,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 10
         Top = 46
-        Width = 42        
+        Width = 42
         Caption = 'Beneficiário'
         Font.Color = clBlack
         Font.Height = -8
@@ -264,7 +264,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 289
         Height = 10
         Top = 46
-        Width = 103        
+        Width = 103
         Caption = 'Agencia / Codigo Beneficiário'
         Font.Color = clBlack
         Font.Height = -8
@@ -343,7 +343,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 231
         Height = 10
         Top = 100
-        Width = 29        
+        Width = 29
         Caption = 'Espécie'
         Font.Color = clBlack
         Font.Height = -8
@@ -375,7 +375,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 289
         Height = 10
         Top = 73
-        Width = 53        
+        Width = 53
         Caption = 'Nosso Número'
         Font.Color = clBlack
         Font.Height = -8
@@ -579,7 +579,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 11
         Top = 143
-        Width = 132        
+        Width = 132
         Caption = 'com as caracteristícas acima'
         Font.Color = clBlack
         Font.Height = -9
@@ -762,7 +762,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 655
         Height = 10
         Top = 64
-        Width = 90        
+        Width = 90
         Caption = '[   ] Não existe nº. indicado'
         Font.Color = clBlack
         Font.Height = -8
@@ -777,7 +777,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 655
         Height = 10
         Top = 88
-        Width = 86        
+        Width = 86
         Caption = '[   ] Endereço insuficiente'
         Font.Color = clBlack
         Font.Height = -8
@@ -809,7 +809,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 187
         Width = 26
         Caption = '"'
-        Font.Charset = SYMBOL_CHARSET
+        Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Wingdings'
@@ -1184,7 +1184,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 4
         Height = 10
         Top = 69
-        Width = 44        
+        Width = 44
         Caption = 'Beneficiário'
         Font.Color = clBlack
         Font.Height = -8
@@ -1612,7 +1612,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 574
         Height = 10
         Top = 69
-        Width = 103        
+        Width = 103
         Caption = 'Agência / Código Beneficiário'
         Font.Color = clBlack
         Font.Height = -8
@@ -1804,7 +1804,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 287
         Width = 46
         Caption = 'Pagador:'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -1821,7 +1821,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 514
         AutoSize = False
         Caption = 'Nome do Pagador'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -1838,7 +1838,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 514
         AutoSize = False
         Caption = 'Logradouro / Número / Comp. / Bairro / Cidade / Estado / Cep'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -1883,7 +1883,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Left = 574
         Height = 10
         Top = 318
-        Width = 57        
+        Width = 57
         Caption = 'Código de Baixa'
         Font.Color = clBlack
         Font.Height = -8
@@ -1952,7 +1952,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 393
         Width = 26
         Caption = '"'
-        Font.Charset = SYMBOL_CHARSET
+        Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Wingdings'
@@ -1968,7 +1968,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 316
         Width = 47
         Caption = 'Sacador/'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -1985,7 +1985,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 514
         AutoSize = False
         Caption = 'Logradouro / Número / Comp. / Bairro / Cidade / Estado / Cep'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -2122,7 +2122,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 330
         Width = 45
         Caption = 'Avalista:'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -2139,7 +2139,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 514
         AutoSize = False
         Caption = 'Nome do Sacador/Avalista - Cpf/Cnpj'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -3396,7 +3396,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 514
         AutoSize = False
         Caption = 'Logradouro / Número / Comp. / Bairro / Cidade / Estado / Cep'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -3412,7 +3412,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 316
         Width = 47
         Caption = 'Sacador/'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -3428,7 +3428,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 330
         Width = 45
         Caption = 'Avalista:'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -4120,7 +4120,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 356
         Width = 26
         Caption = '"'
-        Font.Charset = SYMBOL_CHARSET
+        Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Wingdings'
@@ -4136,23 +4136,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 266
         Width = 88
         Caption = 'Sacador/Avalista:'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object RLDBText17: TRLDBText
-        Left = 240
-        Height = 13
-        Top = 266
-        Width = 324
-        AutoSize = False
-        DataField = 'SacadorAvalista'
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -4441,7 +4425,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 343
         Width = 61
         Caption = 'Recibo do Pagador'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial Narrow'
@@ -4457,7 +4441,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 343
         Width = 61
         Caption = 'Autenticar no Verso'
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial Narrow'
@@ -4611,7 +4595,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 306
         Width = 141
         AutoSize = False
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial Narrow'
@@ -4934,7 +4918,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 141
         AutoSize = False
         Behavior = [beSiteExpander]
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial Narrow'
@@ -4967,7 +4951,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 139
         AutoSize = False
         Behavior = [beSiteExpander]
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial Narrow'
@@ -4991,10 +4975,26 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 140
         AutoSize = False
         Behavior = [beSiteExpander]
-        Font.Charset = ANSI_CHARSET
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial Narrow'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object txtNomeSacadorAval4: TRLLabel
+        Left = 239
+        Height = 13
+        Top = 264
+        Width = 326
+        AutoSize = False
+        Caption = 'txtSacadorAvalista'
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -5006,13 +5006,13 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   object RLHTMLFilter1: TRLHTMLFilter
     DocumentStyle = dsCSS2
     DisplayName = 'Filtro HTML'
-    Left = 158
-    Top = 8
+    left = 158
+    top = 8
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright ® 1999-2008 Fortes Informática'
     DisplayName = 'Filtro PDF'
-    Left = 128
-    Top = 8
+    left = 128
+    top = 8
   end
 end

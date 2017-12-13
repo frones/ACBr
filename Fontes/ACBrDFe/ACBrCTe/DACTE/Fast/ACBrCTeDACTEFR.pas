@@ -2411,25 +2411,6 @@ begin
     begin
       wObs := xObs;
 
-{$IFDEF PL_200}
-      if CTE.ide.tpCTe = tcSubstituto then
-      begin
-        wSubstituto := 'Chave do CT-e a ser substituido (Original): ' + CTE.infCTeNorm.infCteSub.chCTe + ';';
-        if Length(CTE.infCTeNorm.infCteSub.tomaICMS.refNFe) > 0 then
-          wSubstituto := wSubstituto + 'Chave da NF-e emitida pelo tomador: ' + CTE.infCTeNorm.infCteSub.tomaICMS.refNFe + ';'
-        else if Length(CTE.infCTeNorm.infCteSub.tomaICMS.refCte) > 0 then
-          wSubstituto := wSubstituto + 'Chave do CT-e emitido pelo tomador: ' + CTE.infCTeNorm.infCteSub.tomaICMS.refCte + ';'
-        else if CTE.infCTeNorm.infCteSub.tomaICMS.refNF.Nro > 0 then
-          wSubstituto := wSubstituto + 'Número/Série da nota emitida pelo tomador: ' + IntToStr(CTE.infCTeNorm.infCteSub.tomaICMS.refNF.Nro) + ' / ' +
-            IntToStr(CTE.infCTeNorm.infCteSub.tomaICMS.refNF.serie) + ';'
-        else if Length(CTE.infCTeNorm.infCteSub.tomaNaoICMS.refCteAnu) > 0 then
-          wSubstituto := wSubstituto + 'Chave do CT-e de anulação: ' + CTE.infCTeNorm.infCteSub.tomaNaoICMS.refCteAnu + ';';
-
-        if Length(wObs) > 0 then
-          wObs := wObs + ';';
-        wObs   := wObs + wSubstituto;
-      end;
-{$ENDIF}
       // Contingencia
       wContingencia := '';
       if (FCTe.ide.TpEmis = teContingencia) or (FCTe.ide.TpEmis = teFSDA) or (FCTe.ide.TpEmis = teSCAN) then

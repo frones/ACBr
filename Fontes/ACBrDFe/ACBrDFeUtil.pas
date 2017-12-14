@@ -60,9 +60,7 @@ function ValidaSUFRAMA(AValue: String): Boolean;
 function ValidaRECOPI(AValue: String): Boolean;
 function ValidaNVE(AValue: string): Boolean;
 
-function XmlEstaAssinado(const AXML: String): Boolean; overload;
-function XmlEstaAssinado(const AXML, docElement: String): Boolean; overload;
-function ExtraiSignatureElement(const AXML, docElement: String): string;
+function XmlEstaAssinado(const AXML: String): Boolean;
 function SignatureElement(const URI: String; AddX509Data: Boolean;
     IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
 function ExtraiURI(const AXML: String; IdAttr: String = ''): String;
@@ -271,33 +269,6 @@ end;
 function XmlEstaAssinado(const AXML: String): Boolean;
 begin
   Result := (pos('<signature', lowercase(AXML)) > 0);
-end;
-
-function XmlEstaAssinado(const AXML, docElement: String): Boolean;
-Var
-  TagEndDocElement: String;
-  I: Integer;
-begin
-  TagEndDocElement := '</' + docElement + '>';
-  I := PosLast(TagEndDocElement, AXML);
-  if I = 0 then
-    raise EACBrDFeException.Create('Não encontrei final do elemento: ' + TagEndDocElement);
-
-  Result := (RPos('<\signature>', lowercase(AXML), I-Length(TagEndDocElement)) > 0);
-end;
-
-function ExtraiSignatureElement(const AXML, docElement: String): string;
-Var
-  TagEndDocElement: String;
-  PosIni, PosFinal: Integer;
-begin
-  TagEndDocElement := '</' + docElement + '>';
-  PosFinal := PosLast(TagEndDocElement, AXML);
-  if PosFinal = 0 then
-    raise EACBrDFeException.Create('Não encontrei final do elemento: ' + TagEndDocElement);
-
-  PosIni := RPos('<signature xmlns', lowercase(AXML), PosFinal);
-  Result := copy(AXML, PosIni, PosFinal-PosIni);
 end;
 
 function SignatureElement(const URI: String; AddX509Data: Boolean;

@@ -203,8 +203,8 @@ function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
 
 function IfEmptyThen( const AValue, DefaultValue: String; DoTrim: Boolean = True) : String;
 function PosAt(const SubStr, S: AnsiString; Ocorrencia : Cardinal = 1): Integer;
-function RPos(const aSubStr, aString : String; const aStartPos: Integer): Integer; overload;
-function RPos(const aSubStr, aString : String): Integer; overload;
+function RPos(const aSubStr, aString : AnsiString; const aStartPos: Integer): Integer; overload;
+function RPos(const aSubStr, aString : AnsiString): Integer; overload;
 function PosLast(const SubStr, S: AnsiString): Integer;
 function CountStr(const AString, SubStr : String ) : Integer ;
 Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
@@ -1451,7 +1451,7 @@ begin
   end ;
 end ;
 
-function RPos(const aSubStr, aString : String; const aStartPos: Integer): Integer; overload;
+function RPos(const aSubStr, aString : AnsiString; const aStartPos: Integer): Integer; overload;
 var
   i: Integer;
   pStr: PChar;
@@ -1475,7 +1475,7 @@ begin
   result := 0;
 end;
 
-function RPos(const aSubStr, aString : String): Integer; overload;
+function RPos(const aSubStr, aString : AnsiString): Integer; overload;
 begin
   result := RPos(aSubStr, aString, Length(aString) - Length(aSubStr) + 1);
 end;

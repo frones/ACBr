@@ -191,7 +191,7 @@ begin
   XmlAss := AjustarXMLAssinado(XmlAss, FpDFeSSL.DadosCertificado.DERBase64);
 
   // DEBUG
-  WriteToTXT('C:\TEMP\XmlSigned2.xml', XmlAss, False, False);
+  //WriteToTXT('C:\TEMP\XmlSigned2.xml', XmlAss, False, False);
 
   Result := XmlAss;
 end;

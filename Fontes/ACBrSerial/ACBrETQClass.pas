@@ -94,7 +94,7 @@ TACBrETQClass = class
     function ComandosIniciarEtiqueta: AnsiString; virtual;
     function ComandosFinalizarEtiqueta(NumCopias: Integer = 1; aAvancoEtq: Integer = 0): AnsiString; virtual;
 
-    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte,
+    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte: String;
       aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer; aTexto: String;
       aSubFonte: Integer = 0; aImprimirReverso: Boolean = False): AnsiString; virtual;
 
@@ -337,8 +337,9 @@ begin
 end;
 
 function TACBrETQClass.ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao;
-  aFonte, aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer;
-  aTexto: String; aSubFonte: Integer; aImprimirReverso: Boolean): AnsiString;
+  aFonte: String; aMultHorizontal, aMultVertical, aVertical,
+  aHorizontal: Integer; aTexto: String; aSubFonte: Integer;
+  aImprimirReverso: Boolean): AnsiString;
 begin
   Result := EmptyStr;
   ErroNaoImplementado('ComandoImprimirTexto');

@@ -54,8 +54,8 @@ type
 
     function ComandoCoordenadas(aVertical, aHorizontal: Integer): String;
     function ComandoReverso(aImprimirReverso: Boolean): String;
-    function ComandoFonte(aFonte: Integer; aOrientacao: TACBrETQOrientacao;
-      aMultVertical, aMultHorizontal: Integer): String;
+    function ComandoOrientcao(aOrientacao: TACBrETQOrientacao): String;
+    function ComandoFonte(aFonte: String; aMultVertical, aMultHorizontal: Integer): String;
 
     function ComandoBarras(aTipo: String; aOrientacao: TACBrETQOrientacao;
       aAlturaBarras: Integer; aExibeCodigo: TACBrETQBarraExibeCodigo): String;
@@ -82,7 +82,7 @@ type
     function ComandoImprimir: AnsiString; override;
     function ComandoAvancarEtiqueta(const aAvancoEtq: Integer): AnsiString; override;
 
-    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte,
+    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte: String;
       aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer; aTexto: String;
       aSubFonte: Integer = 0; aImprimirReverso: Boolean = False): AnsiString; override;
 
@@ -109,7 +109,7 @@ implementation
 
 uses
   math, {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF} sysutils, strutils,
-  ACBrUtil, synautil;
+  ACBrUtil, ACBrConsts, synautil;
 
 { TACBrETQPpla }
 
@@ -149,11 +149,10 @@ begin
     Result := '^FH\' + Result;
 end;
 
-function TACBrETQZplII.ComandoFonte(aFonte: Integer;
-  aOrientacao: TACBrETQOrientacao; aMultVertical, aMultHorizontal: Integer
-  ): String;
+function TACBrETQZplII.ComandoFonte(aFonte: String; aMultVertical,
+  aMultHorizontal: Integer): String;
 var
-  cFonte: String;
+  cFonte: Char;
 begin
   if (aMultVertical > 10) then
     raise Exception.Create('Multiplicador Vertical deve estar entre 1 e 10');
@@ -161,20 +160,11 @@ begin
   if (aMultHorizontal > 10) then
     raise Exception.Create('Multiplicador Horizontal deve estar entre 1 e 10');
 
-  //if aFonte < 10 then
-  //  cFonte := chr(48 + aFonte)
-  //else
-  //  cFonte := chr(55 + aFonte);
-  //if not CharInSet(cFonte, ['0'..'9','A'..'Z']) then
-  //  raise Exception.Create('Fonte deve estar entre 0 a 35');
+  cFonte := PadLeft(aFonte,1,'A')[1];
+  if not CharInSet(cFonte, ['0'..'9','A'..'Z']) then
+    raise Exception.Create('Fonte deve "0" a "9" e "A" a "Z"');
 
-  if aFonte = 0 then
-    cFonte := ''
-  else
-    cFonte := chr(aFonte);
-
-  Result := '^A' + cFonte +
-                   ConverterOrientacao( aOrientacao ) + ',' +
+  Result := '^CF' + cFonte +
                    IntToStr(Max(aMultVertical,1))     + ',' +
                    IntToStr(Max(aMultHorizontal,1));
 end;
@@ -197,6 +187,12 @@ begin
     Result := '^FR'
   else
     Result := '';
+end;
+
+function TACBrETQZplII.ComandoOrientcao(aOrientacao: TACBrETQOrientacao
+  ): String;
+begin
+  Result := '^FW'+ConverterOrientacao(aOrientacao);
 end;
 
 function TACBrETQZplII.ComandoLinhaCaixa(aAltura, aLargura, Espessura: Integer
@@ -275,17 +271,18 @@ begin
 end;
 
 function TACBrETQZplII.ComandoUnidade: AnsiString;
-var
-  a: Char;
+//var
+//  a: Char;
 begin
-  case Unidade of
-    etqDots       : a := 'd';
-    etqPolegadas  : a := 'i';
-  else
-    a := 'm';
-  end;
-
-  Result := '^MU'+a;
+  //case Unidade of
+  //  etqDots       : a := 'D';
+  //  etqPolegadas  : a := 'I';
+  //else
+  //  a := 'M';
+  //end;
+  //
+  //Result := '^MU'+d;
+  Result := '';  // Todos os comandos são convertidos para etqDots;
 end;
 
 function TACBrETQZplII.ComandoTemperatura: AnsiString;
@@ -297,8 +294,17 @@ begin
 end;
 
 function TACBrETQZplII.ComandoResolucao: AnsiString;
+var
+  aCmdRes: Char;
 begin
-  Result := '^JMA^FS'; // A = 24 dots/mm, 12 dots/mm, 8 dots/mm or 6 dots/mm
+
+  case DPI of
+    dpi600: aCmdRes := 'A'; // A = 24 dots/mm, 12 dots/mm, 8 dots/mm or 6 dots/mm
+  else
+    aCmdRes := 'B';
+  end;
+
+  Result := '^JM'+aCmdRes+'^FS';
 end;
 
 function TACBrETQZplII.ComandoVelocidade: AnsiString;
@@ -346,24 +352,20 @@ end;
 
 function TACBrETQZplII.TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString;
 begin
-  Result := ChangeLineBreak( aCmd, '' );
+  Result := ChangeLineBreak( aCmd, CRLF );
 end;
 
 function TACBrETQZplII.ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao;
-  aFonte, aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer;
-  aTexto: String; aSubFonte: Integer; aImprimirReverso: Boolean): AnsiString;
+  aFonte: String; aMultHorizontal, aMultVertical, aVertical,
+  aHorizontal: Integer; aTexto: String; aSubFonte: Integer;
+  aImprimirReverso: Boolean): AnsiString;
 begin
   if (Length(aTexto) > 255) then
     raise Exception.Create(ACBrStr('Tamanho máximo para o texto 255 caracteres'));
 
-
-  //ListaCmd.Add('^CF'+fnt+MultH+','+MultV);
-  //ListaCmd.Add('^FO'+EixoX+','+EixoY);
-  //ListaCmd.Add('^FW'+ wOrientacao); //Verificar s Ã© aqui mesmo que adiciona ou dentro do FD
-  //ListaCmd.Add('^FD'+Texto+'^FS');
-
-  Result := ComandoCoordenadas(aVertical, aHorizontal) +
-            ComandoFonte(aFonte, aOrientacao, aMultVertical, aMultHorizontal) +
+  Result := ComandoFonte(aFonte, aMultVertical, aMultHorizontal) + sLineBreak +
+            ComandoOrientcao(aOrientacao) + sLineBreak +
+            ComandoCoordenadas(aVertical, aHorizontal) +
             ComandoReverso(aImprimirReverso) +
             FormatarTexto(aTexto);
 end;
@@ -465,3 +467,5 @@ begin
 end;
 
 end.
+
+

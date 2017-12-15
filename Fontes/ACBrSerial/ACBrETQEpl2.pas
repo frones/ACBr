@@ -40,7 +40,7 @@ interface
 
 uses
   Classes,
-  ACBrETQClass, ACBrUtil, ACBrDevice;
+  ACBrETQClass, ACBrDevice;
 
 type
 
@@ -51,7 +51,7 @@ type
     function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
     function ConverterMultiplicador(aMultiplicador: Integer): String;
     function ConverterCoordenadas(aVertical, aHorizontal: Integer): String;
-    function ConverterFonte(aFonte: Integer; var aTexto: String): String;
+    function ConverterFonte(aFonte: String; var aTexto: String): String;
     function ConverterReverso(aImprimirReverso: Boolean): String;
     function ConverterLarguraBarras(aBarraLarga, aBarraFina: Integer): String;
     function ConverterUnidadeAlturaBarras(aAlturaBarras: Integer): String;
@@ -77,7 +77,7 @@ type
 
     function ComandoCopias(const NumCopias: Integer): AnsiString; override;
 
-    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte,
+    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte: String;
       aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer; aTexto: String;
       aSubFonte: Integer = 0; aImprimirReverso: Boolean = False): AnsiString; override;
 
@@ -105,7 +105,7 @@ implementation
 uses
   math, SysUtils,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-  ACBrConsts, synautil;
+  ACBrUtil, ACBrConsts, synautil;
 
 { TACBrETQEpl2 }
 
@@ -132,18 +132,21 @@ begin
   Result := '"' + Result + '"';
 end;
 
-function TACBrETQEpl2.ConverterFonte(aFonte: Integer; var aTexto: String
+function TACBrETQEpl2.ConverterFonte(aFonte: String; var aTexto: String
   ): String;
+var
+  cFonte: Char;
 begin
-  if (aFonte < 0) or (aFonte > 5) then
-    raise Exception.Create('Fonte deve ser de 0 a 5 ');
+  cFonte := PadLeft(aFonte,1,'3')[1];
+  if not CharInSet(cFonte, ['0'..'5']) then
+    raise Exception.Create('Fonte deve ser de "0" a "5"');
 
-  if (aFonte = 0) then
-    aFonte := 3
-  else if (aFonte = 5) then
+  if (cFonte = '0') then
+    cFonte := '3'
+  else if (cFonte = '5') then
     aTexto := UpperCase(aTexto); // Fonte 5 só funciona com caracteres maiúsculos
 
-  Result := IntToStr(aFonte);
+  Result := cFonte;
 end;
 
 function TACBrETQEpl2.ConverterMultiplicador(aMultiplicador: Integer): String;
@@ -309,8 +312,9 @@ begin
 end;
 
 function TACBrETQEpl2.ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao;
-  aFonte, aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer;
-  aTexto: String; aSubFonte: Integer; aImprimirReverso: Boolean): AnsiString;
+  aFonte: String; aMultHorizontal, aMultVertical, aVertical,
+  aHorizontal: Integer; aTexto: String; aSubFonte: Integer;
+  aImprimirReverso: Boolean): AnsiString;
 begin
   Result := 'A' +
             ConverterCoordenadas(aVertical, aHorizontal) + ',' +

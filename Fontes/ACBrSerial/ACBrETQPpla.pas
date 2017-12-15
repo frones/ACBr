@@ -54,8 +54,7 @@ type
 
     function ConverterUnidade(AValue: Integer): Integer; reintroduce; overload;
     function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
-    function ConverterFonte(aFonte: Integer): String;
-    function ConverterSubFonte(aFonte, aSubFonte: Integer): String;
+    function ConverterSubFonte(aFonte: String; aSubFonte: Integer): String;
     function ConverterAlturaBarras(aAlturaBarras: Integer): String;
 
     function ComandoReverso(aImprimirReverso: Boolean): String;
@@ -90,7 +89,7 @@ type
 
     function ComandosFinalizarEtiqueta(NumCopias: Integer = 1; aAvancoEtq: Integer = 0): AnsiString; override;
 
-    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte,
+    function ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao; aFonte: String;
       aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer; aTexto: String;
       aSubFonte: Integer = 0; aImprimirReverso: Boolean = False): AnsiString; override;
 
@@ -179,22 +178,15 @@ begin
   Result := IntToStr(Integer(aOrientacao) + 1);
 end;
 
-function TACBrETQPpla.ConverterFonte(aFonte: Integer): String;
-begin
-  if (aFonte < 0) or (aFonte > 10) then
-    raise Exception.Create('Fonte deve ser de 0 a 10');
-
-  Result := Chr(48 + aFonte);
-end;
-
-function TACBrETQPpla.ConverterSubFonte(aFonte, aSubFonte: Integer): String;
+function TACBrETQPpla.ConverterSubFonte(aFonte: String; aSubFonte: Integer
+  ): String;
 begin
   if (aSubFonte < 0) or (aSubFonte > 999) then
     raise Exception.Create('Subfonte deve ser de 0 a 999');
 
   // SubFonte é utilizado para acessar fontes diferenciadas. Para mais informações
   //  consulte os apêndices AC e AD do manual PPLA&PPLB.pdf
-  if (aFonte < 9) then
+  if (aFonte <> '9') then
     Result := '000'
   else
     Result := IntToStrZero(aSubFonte, 3);
@@ -399,16 +391,21 @@ begin
 end;
 
 function TACBrETQPpla.ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao;
-  aFonte, aMultHorizontal, aMultVertical, aVertical, aHorizontal: Integer;
-  aTexto: String; aSubFonte: Integer; aImprimirReverso: Boolean): AnsiString;
+  aFonte: String; aMultHorizontal, aMultVertical, aVertical,
+  aHorizontal: Integer; aTexto: String; aSubFonte: Integer;
+  aImprimirReverso: Boolean): AnsiString;
 begin
 
   if (Length(aTexto) > 255) then
     raise Exception.Create(ACBrStr('Tamanho máximo para o texto 255 caracteres'));
 
+  aFonte := PadLeft(aFonte,1,'0');
+  if (aFonte < '0') or (aFonte > '9') then
+    raise Exception.Create('Fonte deve ser de 0 a 9');
+
   Result := ComandoReverso(aImprimirReverso) + sLineBreak +
             ConverterOrientacao(aOrientacao) +
-            ConverterFonte(aFonte) +
+            aFonte +
             ConverterMultiplicador(aMultHorizontal) +
             ConverterMultiplicador(aMultVertical) +
             ConverterSubFonte(aFonte, aSubFonte) +

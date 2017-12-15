@@ -111,7 +111,10 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
 
     procedure ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte, MultiplicadorH,
       MultiplicadorV, Vertical, Horizontal: Integer; Texto: String;
-      SubFonte: Integer = 0; ImprimirReverso : Boolean = False);
+      SubFonte: Integer = 0; ImprimirReverso: Boolean = False); overload;
+    procedure ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte: String;
+      MultiplicadorH, MultiplicadorV, Vertical, Horizontal: Integer; Texto: String;
+      SubFonte: Integer = 0; ImprimirReverso: Boolean = False); overload;
 
     procedure ImprimirBarras(Orientacao: TACBrETQOrientacao;
       TipoBarras: TACBrTipoCodBarra;
@@ -495,11 +498,26 @@ procedure TACBrETQ.ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte,
   MultiplicadorH, MultiplicadorV, Vertical, Horizontal: Integer;
   Texto: String; SubFonte: Integer; ImprimirReverso: Boolean);
 var
+  cFonte: Char;
+begin
+  if Fonte < 10 then
+    cFonte := chr(48 + Fonte)  // '0'..'9'
+  else
+    cFonte := chr(55 + Fonte); // 'A'..'Z'
+
+  ImprimirTexto(Orientacao, cFonte, MultiplicadorH, MultiplicadorV,
+    Vertical, Horizontal, Texto, SubFonte, ImprimirReverso);
+end;
+
+procedure TACBrETQ.ImprimirTexto(Orientacao: TACBrETQOrientacao; Fonte: String;
+  MultiplicadorH, MultiplicadorV, Vertical, Horizontal: Integer; Texto: String;
+  SubFonte: Integer; ImprimirReverso: Boolean);
+var
   wCmd: AnsiString;
 begin
   GravarLog('- ImprimirTexto:'+
             '  Orientacao:'+GetEnumName(TypeInfo(TACBrETQOrientacao), Integer(Orientacao))+
-            ', Fonte:'+IntToStr(Fonte)+
+            ', Fonte:'+Fonte+
             ', MultiplicadorH:'+IntToStr(MultiplicadorH)+
             ', MultiplicadorV:'+IntToStr(MultiplicadorV)+
             ', Vertical:'+IntToStr(Vertical)+

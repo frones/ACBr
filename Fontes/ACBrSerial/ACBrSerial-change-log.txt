@@ -40,9 +40,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 15/12/2017
--- ACBrETQZplII --
-[-] Correção em "ImprimirTexto", para usar as fontes como na versao anterior
+-- ACBrETQ --
+[+] Adicionada sobrecarga no método "ImprimirTexto", que permite informar a
+    "Fonte" como uma String.
+[*] O Método "ImprimirTexto", que recebe o parâmetro "Fonte" como Integer,
+    aplicará a seguinte lógica: Valores de 0 a 9 são convertidos para String.
+    Valores de 10 a 35 são convertidos para 'A' a 'Z'
+
+-- ACBrETQClass, ACBrETQPpla, ACBrETQEpl2, ACBrETQZplII --
+[*] Método "ComandoImprimirTexto", modificado para receber a Fonte como String
     https://www.projetoacbr.com.br/forum/topic/40429-acbretq-texto-da-fonte-desconfigurado-na-imp-zebra/
+
+-- ACBrETQZplII --
+[*] Modificação em "comandoImprimirTexto", para definir as fontes e rotação,
+    como na versao anterior de ACBrETQ. (Usando os comanfos ^CF e ^FW)
+[*] Método "ComandoResolucao", modificado para levar em consideração o valor da
+    propriedade "ACBrETQ.DPI"
 
 Data: 12/12/2017
 -- ACBrETQPpla --

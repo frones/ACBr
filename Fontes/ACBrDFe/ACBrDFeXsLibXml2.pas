@@ -1,30 +1,40 @@
-Ôªø{ ****************************************************************************** }
-{ Projeto: Componente ACBrNFe }
-{ Biblioteca multiplataforma de componentes Delphi para emiss√£o de Nota Fiscal }
-{ eletr√¥nica - NFe - http://www.nfe.fazenda.gov.br }
-{ Direitos Autorais Reservados (c) 2015 Daniel Simoes de Almeida }
-{ Andr√© Ferreira de Moraes }
-{ Colaboradores nesse arquivo: }
-{ Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr }
-{ Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior. }
-{ Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor }
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT) }
-{ Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto }
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc., }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA. }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em: }
-{ http://www.opensource.org/licenses/lgpl-license.php }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br }
-{ Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410 }
-{ ****************************************************************************** }
+{******************************************************************************}
+{ Projeto: Componente ACBrNFe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emiss„o de Nota Fiscal}
+{ eletrÙnica - NFe - http://www.nfe.fazenda.gov.br                             }
+
+{ Direitos Autorais Reservados (c) 2015 Daniel Simoes de Almeida               }
+{                                       AndrÈ Ferreira de Moraes               }
+
+{ Colaboradores nesse arquivo:                                                 }
+
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+
+
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
+
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
+
+{******************************************************************************}
 
 {$I ACBr.inc}
+
 unit ACBrDFeXsLibXml2;
 
 interface
@@ -35,8 +45,8 @@ uses
 
 const
   cErrParseDoc = 'Erro: Falha ao interpretar o XML "xmlParseDoc"';
-  cErrFindSignNode = 'Erro: Falha ao localizar o n√≥ de Assinatura';
-  cErrFindRootNode = 'Erro: Falha ao localizar o n√≥ Raiz';
+  cErrFindSignNode = 'Erro: Falha ao localizar o nÛ de Assinatura';
+  cErrFindRootNode = 'Erro: Falha ao localizar o nÛ Raiz';
 
 type
 
@@ -96,7 +106,7 @@ begin
   __xmlSaveNoEmptyTags^ := 1;
 
   XmlAss := '';
-  // Verificando se possui a Declara√ß√£o do XML, se n√£o possuir,
+  // Verificando se possui a DeclaraÁ„o do XML, se n„o possuir,
   // adiciona para libXml2 compreender o Encoding
   TemDeclaracao := XmlEhUTF8(ConteudoXML);
   if not TemDeclaracao then
@@ -112,7 +122,7 @@ begin
   // DEBUG
   //WriteToTXT('C:\TEMP\XmlSign.xml', AXml, False, False);
 
-  // Aplica a transforma√ß√£o c14n no node infElement
+  // Aplica a transformaÁ„o c14n no node infElement
   Canon := CanonC14n(aXML, docElement, infElement);
 
   // DEBUG
@@ -134,7 +144,7 @@ begin
 
     XmlNode := LibXmlLookUpNode(XmlNode, 'DigestValue');
     if (XmlNode = nil) then
-      raise EACBrDFeException.Create(ACBrStr('Node DigestValue n√£o encontrado!'));
+      raise EACBrDFeException.Create(ACBrStr('Node DigestValue n„o encontrado!'));
 
     xmlNodeSetContent(XmlNode, PAnsiChar(DigestValue));
 
@@ -148,13 +158,13 @@ begin
     xmlFreeDoc(aDoc);
   end;
 
-  // Aplica a transforma√ß√£o c14n o node SignedInfo
+  // Aplica a transformaÁ„o c14n o node SignedInfo
   Canon := CanonC14n(aXML, docElement, 'SignedInfo');
 
   // DEBUG
   // WriteToTXT('C:\TEMP\CanonGeracao.xml', Canon, False, False);
 
-  // Assina o node SignedInfo j√° transformado
+  // Assina o node SignedInfo j· transformado
   Signaturevalue := FpDFeSSL.CalcHash(Canon, FpDFeSSL.SSLDgst, outBase64, True);
 
   aDoc := nil;
@@ -170,7 +180,7 @@ begin
 
     XmlNode := LibXmlLookUpNode(XmlNode, 'SignatureValue');
     if (XmlNode = nil) then
-      raise EACBrDFeException.Create(ACBrStr('Node SignatureValue n√£o encontrado!'));
+      raise EACBrDFeException.Create(ACBrStr('Node SignatureValue n„o encontrado!'));
 
     xmlNodeSetContent(XmlNode, PAnsiChar(Signaturevalue));
 
@@ -213,14 +223,14 @@ begin
     // seleciona os elementos a serem transformados e inclui os devidos namespaces
     Elements := SelectElements(doc^, infElement);
     try
-      // aplica a transforma√ß√£o C14N
+      // aplica a transformaÁ„o C14N
       buffer := nil;
       inclusive := nil;
       if xmlC14NDocDumpMemory(doc, Elements, 0, inclusive, 0, @buffer) < 0 then
-        raise EACBrDFeException.Create(ACBrStr('Erro ao aplicar transforma√ß√£o C14N!'));
+        raise EACBrDFeException.Create(ACBrStr('Erro ao aplicar transformaÁ„o C14N!'));
 
       if buffer = nil then
-        raise EACBrDFeException.Create(ACBrStr('Erro ao aplicar transforma√ß√£o C14N!'));
+        raise EACBrDFeException.Create(ACBrStr('Erro ao aplicar transformaÁ„o C14N!'));
     finally
       xmlXPathFreeNodeSet(Elements);
     end;
@@ -248,7 +258,7 @@ begin
     xpathExpr := '(//.|//@*|//namespace::*)[ancestor-or-self::*[local-name()='''
       + infElement + ''']]';
 
-    // seleciona os elementos baseados na express?o(retorna um objeto XPath com os elementos)
+    // seleciona os elementos baseados na express„o(retorna um objeto XPath com os elementos)
     xpathObj := xmlXPathEvalExpression(PAnsiChar(xpathExpr), xpathCtx);
 
     if (xpathObj = nil) then
@@ -295,7 +305,7 @@ begin
     // the schema cannot be loaded or is not well-formed
     if (schema_doc = nil) then
     begin
-      MsgErro := 'Erro: schema n√£o pode ser carregado ou est√° corrompido';
+      MsgErro := 'Erro: schema n„o pode ser carregado ou est· corrompido';
       exit;
     end;
 
@@ -303,7 +313,7 @@ begin
     // unable to create a parser context for the schema */
     if (parser_ctxt = nil) then
     begin
-      MsgErro := 'Erro: n√£o foi possivel criar um contexto para o schema';
+      MsgErro := 'Erro: n„o foi possivel criar um contexto para o schema';
       exit;
     end;
 
@@ -311,7 +321,7 @@ begin
     // the schema itself is not valid
     if (schema = nil) then
     begin
-      MsgErro := 'Erro: schema inv√°lido';
+      MsgErro := 'Erro: schema inv·lido';
       exit;
     end;
 
@@ -320,7 +330,7 @@ begin
     if (valid_ctxt = nil) then
     begin
       MsgErro :=
-        'Error: n√£o foi possivel criar um contexto de valida√ß√£o para o schema';
+        'Error: n„o foi possivel criar um contexto de validaÁ„o para o schema';
       exit;
     end;
 
@@ -445,14 +455,14 @@ begin
     infElement := copy(infElement, Pos(':', infElement) + 1,
       Length(infElement));
 
-  { Se tem InfElement, procura pelo mesmo. Isso permitir√° acharmos o n√≥ de
+  { Se tem InfElement, procura pelo mesmo. Isso permitir· acharmos o nÛ de
     assinatura, relacionado a ele (mesmo pai) }
   if (infElement <> '') then
   begin
-    { Procura InfElement em todos os n√≥s, filhos de Raiz, usando LibXml }
+    { Procura InfElement em todos os nÛs, filhos de Raiz, usando LibXml }
     infNode := LibXmlLookUpNode(rootNode, infElement);
 
-    { N√£o achei o InfElement em nenhum n√≥ :( }
+    { N„o achei o InfElement em nenhum nÛ :( }
     if (infNode = nil) then
       raise EACBrDFeException.Create(cErrFindRootNode);
 
@@ -463,22 +473,22 @@ begin
   end
   else
   begin
-    { InfElement n√£o foi informado... vamos usar o n√≥ raiz, para pesquisar pela assinatura }
+    { InfElement n„o foi informado... vamos usar o nÛ raiz, para pesquisar pela assinatura }
     infNode := rootNode;
   end;
 
   if (infNode = nil) then
     raise EACBrDFeException.Create(cErrFindRootNode);
 
-  { Procurando pelo n√≥ de assinatura...
-    Primeiro vamos verificar manualmente se √© o √∫ltimo no do nosso infNode atual };
+  { Procurando pelo nÛ de assinatura...
+    Primeiro vamos verificar manualmente se È o ˙ltimo no do nosso infNode atual };
   SignNode := infNode^.last;
   if not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces) then
   begin
-    { N√£o √© o ultimo n√≥ do infNode... ent√£o, vamos procurar por um N√≥ dentro de infNode }
+    { N„o È o ultimo nÛ do infNode... ent„o, vamos procurar por um NÛ dentro de infNode }
     SignNode := LibXmlLookUpNode(infNode, SignatureNode, SelectionNamespaces);
 
-    { Se ainda n√£o achamos, vamos procurar novamente a partir do elemento Raiz }
+    { Se ainda n„o achamos, vamos procurar novamente a partir do elemento Raiz }
     if (SignNode = nil) then
     begin
       SignNode := rootNode^.last;
@@ -536,11 +546,11 @@ begin
   if (ParentNode = Nil) or (Trim(NodeName) = '') then
     exit;
 
-  { Primeiro vamos ver se o n√≥ Raiz j√° n√£o √© o que precisamos }
+  { Primeiro vamos ver se o nÛ Raiz j· n„o È o que precisamos }
   if LibXmlNodeWasFound(ParentNode, NodeName, NameSpace) then
     exit;
 
-  { Chama fun√ß√£o auxiliar, que usa busca recursiva em todos os n√≥s filhos }
+  { Chama funÁ„o auxiliar, que usa busca recursiva em todos os nÛs filhos }
   Result := _LibXmlLookUpNode(ParentNode^.children, NodeName, NameSpace);
 end;
 

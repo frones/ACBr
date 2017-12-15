@@ -2787,6 +2787,7 @@ end;
 function TNFSeR.LerNFSe_SP: Boolean;
 var
   bOk :Boolean;
+  valorIssRetido: Double;
 begin
   Result := False;
 
@@ -2826,7 +2827,7 @@ begin
 
     SetxItemListaServico;
 
-    NFSe.Servico.Valores.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorServicos');
+    //NFSe.Servico.Valores.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorServicos');
     NFSe.Servico.Valores.ValorServicos    := Leitor.rCampo(tcDe2, 'ValorServicos');
     NFSe.Servico.Valores.BaseCalculo      := Leitor.rCampo(tcDe2, 'ValorServicos');
     NFSe.Servico.Valores.Aliquota         := Leitor.rCampo(tcDe2, 'AliquotaServicos');
@@ -2840,9 +2841,23 @@ begin
     NFSe.Servico.Valores.ValorCsll        := Leitor.rCampo(tcDe2, 'ValorCsll');
 
     if (Leitor.rCampo(tcStr, 'ISSRetido') = 'false') then
-      NFSe.Servico.Valores.IssRetido := stNormal
+    begin
+      NFSe.Servico.Valores.IssRetido := stNormal;
+      valorIssRetido := 0.00;
+    end
     else
+    begin
       NFSe.Servico.Valores.IssRetido := stRetencao;
+      valorIssRetido := Leitor.rCampo(tcDe2, 'ValorISS');
+    end;
+
+    // Como o valor líquido não esta no layout deve refazer o cálculo
+    NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos - (NFSe.Servico.Valores.ValorPis +
+                                             NFSe.Servico.Valores.ValorCofins +
+                                             NFSe.Servico.Valores.ValorInss +
+                                             NFSe.Servico.Valores.ValorIr +
+                                             NFSe.Servico.Valores.ValorCsll +
+                                             valorIssRetido);
 
     NFSe.PrestadorServico.RazaoSocial   := Leitor.rCampo(tcStr, 'RazaoSocialPrestador');
     NFSe.PrestadorServico.Contato.Email := Leitor.rCampo(tcStr, 'EmailPrestador');

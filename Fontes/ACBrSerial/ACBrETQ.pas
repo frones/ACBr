@@ -499,6 +499,7 @@ var
 begin
   GravarLog('- ImprimirTexto:'+
             '  Orientacao:'+GetEnumName(TypeInfo(TACBrETQOrientacao), Integer(Orientacao))+
+            ', Fonte:'+IntToStr(Fonte)+
             ', MultiplicadorH:'+IntToStr(MultiplicadorH)+
             ', MultiplicadorV:'+IntToStr(MultiplicadorV)+
             ', Vertical:'+IntToStr(Vertical)+

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/12/2017
+-- ACBrETQZplII --
+[-] Correção em "ImprimirTexto", para usar as fontes como na versao anterior
+    https://www.projetoacbr.com.br/forum/topic/40429-acbretq-texto-da-fonte-desconfigurado-na-imp-zebra/
+
 Data: 12/12/2017
 -- ACBrETQPpla --
 [*] Inclusão de um valor mínimo(220) para aAvançoEtq em "ComandosFinalizarEtiqueta".

@@ -127,21 +127,33 @@ begin
 end;
 
 function TACBrETQZplII.FormatarTexto(aTexto: String): String;
+var
+  ConvTexto: String;
 begin
-  Result := StringReplace(aTexto, '\', '\x5C', [rfReplaceAll]);
-  Result := StringReplace(Result, '^', '\x5E', [rfReplaceAll]);
-  Result := StringReplace(Result, '~', '\x7E', [rfReplaceAll]);
-  Result := BinaryStringToString(aTexto);
-  Result := StringReplace(Result, '\x', '\', [rfReplaceAll]);
+  ConvTexto := aTexto;
+  if (pos('\', ConvTexto) > 0) then
+    ConvTexto := StringReplace(ConvTexto, '\', '\x5C', [rfReplaceAll]);
 
-  Result := '^FH\^FD' + Result + '^FS';
+  if (pos('^', ConvTexto) > 0) then
+    ConvTexto := StringReplace(ConvTexto, '^', '\x5E', [rfReplaceAll]);
+
+  if (pos('~', ConvTexto) > 0) then
+    ConvTexto := StringReplace(ConvTexto, '~', '\x7E', [rfReplaceAll]);
+
+  ConvTexto := BinaryStringToString(ConvTexto);
+  ConvTexto := StringReplace(ConvTexto, '\x', '\', [rfReplaceAll]);
+
+  Result := '^FD' + ConvTexto + '^FS';
+
+  if (ConvTexto <> aTexto) then
+    Result := '^FH\' + Result;
 end;
 
 function TACBrETQZplII.ComandoFonte(aFonte: Integer;
   aOrientacao: TACBrETQOrientacao; aMultVertical, aMultHorizontal: Integer
   ): String;
 var
-  cFonte: Char;
+  cFonte: String;
 begin
   if (aMultVertical > 10) then
     raise Exception.Create('Multiplicador Vertical deve estar entre 1 e 10');
@@ -149,13 +161,17 @@ begin
   if (aMultHorizontal > 10) then
     raise Exception.Create('Multiplicador Horizontal deve estar entre 1 e 10');
 
-  if aFonte < 10 then
-    cFonte := chr(48 + aFonte)
-  else
-    cFonte := chr(55 + aFonte);
+  //if aFonte < 10 then
+  //  cFonte := chr(48 + aFonte)
+  //else
+  //  cFonte := chr(55 + aFonte);
+  //if not CharInSet(cFonte, ['0'..'9','A'..'Z']) then
+  //  raise Exception.Create('Fonte deve estar entre 0 a 35');
 
-  if not CharInSet(cFonte, ['0'..'9','A'..'Z']) then
-    raise Exception.Create('Fonte deve estar entre 0 a 35');
+  if aFonte = 0 then
+    cFonte := ''
+  else
+    cFonte := chr(aFonte);
 
   Result := '^A' + cFonte +
                    ConverterOrientacao( aOrientacao ) + ',' +
@@ -263,10 +279,10 @@ var
   a: Char;
 begin
   case Unidade of
-    etqDots       : a := 'D';
-    etqPolegadas  : a := 'I';
+    etqDots       : a := 'd';
+    etqPolegadas  : a := 'i';
   else
-    a := 'M';
+    a := 'm';
   end;
 
   Result := '^MU'+a;
@@ -339,6 +355,12 @@ function TACBrETQZplII.ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao;
 begin
   if (Length(aTexto) > 255) then
     raise Exception.Create(ACBrStr('Tamanho máximo para o texto 255 caracteres'));
+
+
+  //ListaCmd.Add('^CF'+fnt+MultH+','+MultV);
+  //ListaCmd.Add('^FO'+EixoX+','+EixoY);
+  //ListaCmd.Add('^FW'+ wOrientacao); //Verificar s Ã© aqui mesmo que adiciona ou dentro do FD
+  //ListaCmd.Add('^FD'+Texto+'^FS');
 
   Result := ComandoCoordenadas(aVertical, aHorizontal) +
             ComandoFonte(aFonte, aOrientacao, aMultVertical, aMultHorizontal) +

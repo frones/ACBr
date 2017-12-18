@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2017
+[-] Correção no método CriarEnviarNFe --DoACBrNFeUnit--
+        Gerando erro de duplicidade ao chamar método (LoadFromIni)
+	por: José M. S. Junior
+
 11/12/2017
 [-] Correção no método AdicionarMDFe --DoACBrMDFeUnit--
         https://www.projetoacbr.com.br/forum/topic/40318-falha-na-valida%C3%A7%C3%A3o-

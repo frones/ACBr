@@ -810,7 +810,10 @@ begin
 
            if (Cmd.Metodo = 'criarnfe') or (Cmd.Metodo = 'criarenviarnfe') or
               (Cmd.Metodo = 'adicionarnfe') then
-               ACBrNFe1.NotasFiscais.LoadFromIni( Cmd.Params(0) )
+           begin
+               ACBrNFe1.NotasFiscais.Clear;
+               ACBrNFe1.NotasFiscais.LoadFromIni( Cmd.Params(0) );
+           end
            else
             begin
               if (Cmd.Metodo = 'criarnfesefaz') or (Cmd.Metodo = 'criarenviarnfesefaz') or

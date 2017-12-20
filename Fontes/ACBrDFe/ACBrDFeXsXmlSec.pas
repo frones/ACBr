@@ -486,6 +486,8 @@ var
   AXml, XmlAss, DTD: String;
   TemDeclaracao: Boolean;
 begin
+  InitXmlSec;
+
   // Nota: "ConteudoXML" já deve estar convertido para UTF8 //
   XmlAss := '';
 

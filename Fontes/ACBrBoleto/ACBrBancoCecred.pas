@@ -51,6 +51,7 @@ type
 
   TACBrBancoCecred = class(TACBrBancoClass)
    protected
+    fCountRegR:Integer;
    private
     fValorTotalDocs : Double;
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
@@ -86,7 +87,7 @@ implementation
 uses
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
   StrUtils, Variants,
-  ACBrValidador, ACBrUtil;
+  ACBrValidador, ACBrUtil, math;
 
 constructor TACBrBancoCecred.create(AOwner: TACBrBanco);
 begin
@@ -202,6 +203,8 @@ var
   ATipoInscricao, aConta, aAgencia: String;
 
 begin
+  fCountRegR := 0;
+
   with ACBrBanco.ACBrBoleto.Cedente do
   begin
     case TipoInscricao of
@@ -498,6 +501,8 @@ begin
 
     //SEGMENTO R
     if (CodigoMoraJuros <> cjIsento) then
+    begin
+      Inc(fCountRegR);
       Result:= Result + #13#10 +
                IntToStrZero(ACBrBanco.Numero, 3)                                       + // 1 a 3 - Código do banco
                '0001'                                                                  + // 4 a 7 - Número do lote
@@ -529,6 +534,7 @@ begin
                ' '                                                                     + // 230 - Digito ag/conta debito
                '0'                                                                     + // 231 - Aviso para débito automático
                StringOfChar(' ', 9);                                                     // 232 a 240 - Uso exclusivo FEBRABAN/CNAB: Branco
+    end;
   end;
 end;
 
@@ -742,7 +748,7 @@ begin
            '9'                                                        + // 8 - Tipo do registro: Registro trailer do arquivo
            space(9)                                                   + // 9 a 17 - Uso exclusivo FEBRABAN/CNAB
            '000001'                                                   + // 18 a 23 - Quantidade de lotes do arquivo
-           IntToStrZero((wQTDTitulos * 3) + 4, 6)                     + // 24 a 29 - Quantidade de registros do arquivo
+           IntToStrZero((wQTDTitulos * 2) + fCountRegR + 4, 6)        + // 24 a 29 - Quantidade de registros do arquivo
            PadRight('', 6, '0')                                       + // 30 a 35 - Qtde de contas concil
            space(205);                                                  // 36 a 240 - Uso exclusivo FEBRABAN/CNAB
 end;

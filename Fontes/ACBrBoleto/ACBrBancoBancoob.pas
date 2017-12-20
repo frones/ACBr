@@ -473,13 +473,13 @@ begin
    begin
       Cedente.Conta := PadLeft(IntToStr(StrToInt(Cedente.Conta)), 7, '0');
 
-      if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
+      if ( (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) ) then
          raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
 
-      if (not LeCedenteRetorno) and (StrToInt(rAgencia) <> StrToInt(Cedente.Agencia)) then
+      if ( (not LeCedenteRetorno) and (StrToInt(rAgencia) <> StrToInt(Cedente.Agencia)) ) then
         raise Exception.CreateFMT('Agencia do arquivo %s inválida, config %s',[rAgencia,OnlyNumber(Cedente.Agencia)]);
 
-      if (rConta + rDigitoConta <> OnlyNumber(Cedente.Conta + Cedente.ContaDigito)) then
+      if ( (not LeCedenteRetorno) and (rConta + rDigitoConta <> OnlyNumber(Cedente.Conta + Cedente.ContaDigito)) ) then
         raise Exception.CreateFMT('Conta do arquivo %s inválida, config %s',[rConta,OnlyNumber(Cedente.Conta + Cedente.ContaDigito)]);
 
       if LeCedenteRetorno then
@@ -706,7 +706,7 @@ begin
                PadRight(AgenciaDigito, 1, '0')          + // 58 - Digito agência do cedente
                PadLeft(OnlyNumber(Conta), 12, '0')      + // 59 a 70 - Número da conta do cedente
                PadRight(ContaDigito, 1, '0')            + // 71 - Digito conta do cedente
-               ' '                                      + // 72 - Dígito verificador Ag/Conta (Brancos)
+               '0'                                      + // 72 - Dígito verificador Ag/Conta (zero)
                PadRight(Nome, 30, ' ')                  + // 73 a 102 - Nome do cedente
                PadRight('SICOOB', 30, ' ')              + // 103 a 132 - Nome do banco
                space(10)                                + // 133 A 142 - Brancos

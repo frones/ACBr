@@ -1530,7 +1530,7 @@ begin
             '0001'                                      + // 004 a 007 - Lote de serviço = "9999"
             '5'                                         + // 008 a 008 - Tipo do registro = "5" TRAILLER LOTE
             Space(9)                                    + // 009 a 017 - Uso exclusivo FEBRABAN/CNAB
-            IntToStrZero(ARemessa.Count * 2, 6)         + // 018 a 023 - Quantidade de registros no lote
+            IntToStrZero(((ARemessa.Count-1) * 3)+2, 6)     + // 018 a 023 - Quantidade de registros no lote
             StringOfChar('0',6)                         + // 024 a 029 - Quantidade de títulos em cobrança
             StringOfChar('0',17)                        + // 030 a 046 - Valor total dos títulos em carteiras
             StringOfChar('0',6)                         + // 047 a 052 - Quantidade de títulos em cobrança
@@ -1549,7 +1549,7 @@ begin
             '9'                                         + // 008 a 008 - Tipo do registro = "9" TRAILLER ARQUIVO
             Space(9)                                    + // 009 a 017 - Uso exclusivo FEBRABAN/CNAB
             '000001'                                    + // 018 a 023 - Quantidade de lotes do arquivo
-            IntToStrZero((ARemessa.Count * 2) + 2, 6)   + // 024 a 029 - Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora
+            IntToStrZero(((ARemessa.Count-1) * 3)+4, 6)   + // 024 a 029 - Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora
             StringOfChar('0', 6)                        + // 030 a 035 - Quantidade de contas para conciliação (lotes)
             Space(205);                                   // 036 a 240 - Uso exclusivo FEBRABAN/CNAB
 end;
@@ -1613,7 +1613,7 @@ begin
              '0001'                                                           + // 004 a 007 - Lote de serviço = "0001"
              '3'                                                              + // 008 a 008 - Tipo de registro = "3" DETALHE
              IntToStrZero(
-               (2 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 1 , 5)   + // 009 a 013 - Nº sequencial do registro do lote
+               (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 1 , 5)   + // 009 a 013 - Nº sequencial do registro do lote
              'P'                                                              + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                         + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              '01'                                                             + // 016 a 017 - Código de movimento remessa
@@ -1659,7 +1659,7 @@ begin
              '0001'                                                         + // 004 a 007 - Lote de serviço = "0001"
              '3'                                                            + // 008 a 008 - Tipo de registro = "3" DETALHE
              IntToStrZero(
-               (2 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 2 , 5) + // 009 a 013 - Nº sequencial do registro do lote
+               (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 2 , 5) + // 009 a 013 - Nº sequencial do registro do lote
              'Q'                                                            + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
              '01'                                                           + // 016 a 017 - Código de movimento de remessa
@@ -1677,7 +1677,57 @@ begin
              PadRight(TiraAcentos(Sacado.SacadoAvalista.NomeAvalista),40,' ')            + // 170 a 209 - Nome do sacador/avalista
              PadRight('', 3, '0')                                           + // 210 a 212 - Cód. bco corresp. na compensação
              Space(20)                                                      + // 213 a 232 - Nosso nº no banco correspondente
-             Space(8);                                                        // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
+             Space(8);
+                                                                              // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
+      {SEGMENTO R - Opcional - Exclusivo para cadastramento de multa ao título}
+      Result:= Result + #13#10 +
+               IntToStrZero(ACBrBanco.Numero, 3)                           + // Código do banco
+               '0001'                                                      + // Número do lote
+               '3'                                                         + // Tipo do registro: Registro detalhe
+               IntToStrZero(
+               (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 3 , 5)+ // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               'R'                                                         + // Código do segmento do registro detalhe
+               ' '                                                         + // Uso exclusivo FEBRABAN/CNAB: Branco
+               '01'                                                        + // 16 a 17 - Código de movimento
+               '0'                                                         + // 18  tipo de desconto 2
+               PadLeft('0', 8, '0')                                        + // 19 - 26 Numero da linha a ser impressa
+               PadLeft('0',15, '0')                                        + // 27 - 41 Valor/Percentual
+               '0'                                                         + // 42
+               PadLeft('0', 8, '0')                                        + // 43-50 data do desconto 3
+               PadLeft('0', 15, '0')                                       + // 51-65 Valor ou percentual a ser concedido
+               IfThen((PercentualMulta > 0),
+                       IfThen(MultaValorFixo,'1','2'), '0')                + // 66 Código da multa - 1 valor fixo / 2 valor percentual / 0 Sem Multa
+               IfThen((DataMulta > 0),
+                       FormatDateTime('ddmmyyyy', DataMulta),
+                                      '00000000')                          + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+               IfThen((PercentualMulta > 0),
+                      IntToStrZero(round(PercentualMulta * 100), 15),
+                      PadLeft('', 15, '0'))                                + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
+               space(10);                                                   // 90-99 Informações do sacado
+
+               if Mensagem.Count > 0 then
+               begin
+                 Result :=  Result + PadRight(Copy(Mensagem[0],1,40),40);    // 100-139 Menssagem livre
+
+                 if Mensagem.Count > 1 then
+                   Result := Result + PadRight(Copy(Mensagem[1],1,40),40)    // 140-179 Menssagem livre
+                 else
+                   Result := Result + Space(40);
+               end
+               else
+                 Result := Result + Space(80);
+
+               Result := Result +
+               space(20)                                                   + // 180-199 Uso da FEBRABAN "Brancos"
+               PadLeft('0', 08, '0')                                       + // 200-207 Código oco. sacado "0000000"
+               PadLeft('0', 3, '0')                                        + // 208-210 Código do banco na conta de débito "000"
+               PadLeft('0', 5, '0')                                        + // 211-215 Código da ag. debito
+               ' '                                                         + // 216 Digito da agencia
+               PadLeft('0', 12, '0')                                       + // 217-228 Conta corrente para debito
+               ' '                                                         + // 229 Digito conta de debito
+               ' '                                                         + // 230 Dv agencia e conta
+               '0'                                                         + // 231 Aviso debito automatico
+               space(9);                                                     // 232-240 Uso FEBRABAN
 
   end;
 

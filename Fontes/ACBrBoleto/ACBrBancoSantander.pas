@@ -709,9 +709,8 @@ begin
                   ' '+IfThen(PercentualMulta > 0,'4','0')                     +  // 77 a 78
                   IntToStrZero( round( PercentualMulta * 100 ), 4)            +  // 79 a 82
                   '00'+StringOfChar( '0', 13)+space(4)                        +  // 83 a 101
-                  IfThen(DataMoraJuros < EncodeDate(2000,01,01),
-                         '000000',
-                         FormatDateTime( 'ddmmyy', DataMoraJuros))            +  // 102 a 107
+                  IfThen((DataMulta <= 0),'000000',
+                         FormatDateTime( 'ddmmyy', DataMulta))                +  // 102 a 107
                    IntToStr(aCarteira) + Ocorrencia                           +  // 108 a 110
                   PadRight( NumeroDocumento,10,' ')                           +  // 111 a 120
                   FormatDateTime( 'ddmmyy', Vencimento)                       +  // 121 a 126

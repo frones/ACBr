@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 19/12/2017 ver: 0.0.236
+-- ACBrBancoSicred
+[*] Ajustes nos Arquivos Remessa CNAB240 - Adicionado Segmento R
+    https://www.projetoacbr.com.br/forum/topic/40374-banco-sicred-adicionado-segmento-r/
+-- ACBrBancoSantander
+[*] Ajustes nos Arquivos Remessa CNAB400 - Validar campo DataMulta
+    https://www.projetoacbr.com.br/forum/topic/40321-problema-com-data-multa-banco-santande/
+-- ACBrBancoBancoob
+[*] Ajustes nos Arquivos Remessa e Retorno CNAB240
+    https://www.projetoacbr.com.br/forum/topic/40468-alterei-leitura-de-arquivo-de-retorno-do-bancoob/
+    https://www.projetoacbr.com.br/forum/topic/39667-gera%C3%A7%C3%A3o-remessa-bancoob-cnab400/
+-- ACBrBancoCEcred
+[*] Ajustes nos Arquivos Remessa CNAB240  - Validação totalizador Segmento R
+    https://www.projetoacbr.com.br/forum/topic/39926-boletos-cecredi-cnab-240-quantidade-de-registros-no-arquivo/
+
 Data 12/12/2017 ver: 0.0.235
 -- ACBrBancoBancoob
 [*] Ajustes nos Arquivos Remessa e Retorno CNAB240 / CNAB400

@@ -7,10 +7,10 @@ interface
 uses
   IniFiles, {$IFDEF MSWINDOWS} ShellAPI,{$ENDIF} SynMemo, SynHighlighterXML,
   SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls,
-  pcnConversao, pnfsConversao,
+  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls, Spin,
+  pcnConversao, pnfsConversao, unit2,
   ACBrNFSe, ACBrNFSeDANFSeClass, ACBrNFSeDANFSeRLClass, pnfsNFSe, ACBrMail,
-  ACBrBase, ACBrDFe, ACBrUtil;
+  blcksock, ACBrDFe, ACBrUtil;
 
 type
 
@@ -18,6 +18,33 @@ type
 
   TfrmDemo_ACBrNFSe = class(TForm)
     ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL;
+    Button10: TButton;
+    Button11: TButton;
+    Button12: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Button7: TButton;
+    Button8: TButton;
+    Button9: TButton;
+    cbAssinar: TCheckBox;
+    cbCryptLib: TComboBox;
+    cbHttpLib: TComboBox;
+    cbSSLLib: TComboBox;
+    cbSSLType: TComboBox;
+    cbXmlSignLib: TComboBox;
+    ckSalvarSOAP: TCheckBox;
+    ckVisualizar: TCheckBox;
+    Edit1: TEdit;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    lCryptLib: TLabel;
+    lHttpLib: TLabel;
+    lSSLLib: TLabel;
+    lSSLLib1: TLabel;
+    lTimeOut: TLabel;
+    lXmlSign: TLabel;
     Panel1: TPanel;
     lblColaborador: TLabel;
     lblPatrocinador: TLabel;
@@ -25,7 +52,8 @@ type
     lblDoar2: TLabel;
     gbConfiguracoes: TGroupBox;
     PageControl1: TPageControl;
-    rbgTipoCertificado: TRadioGroup;
+    sbtnGetCert1: TSpeedButton;
+    seTimeOut: TSpinEdit;
     TabSheet1: TTabSheet;
     gbCertificado: TGroupBox;
     Label1: TLabel;
@@ -46,7 +74,6 @@ type
     ckSalvar: TCheckBox;
     TabSheet3: TTabSheet;
     gbWebService: TGroupBox;
-    ckVisualizar: TCheckBox;
     rgTipoAmb: TRadioGroup;
     gbProxy: TGroupBox;
     Label8: TLabel;
@@ -106,7 +133,7 @@ type
     btnGerarEnviarLote: TButton;
     btnGerarRPS: TButton;
     btnConsultarSitLote: TButton;
-    PageControl2: TPageControl;
+    pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
     TabSheet6: TTabSheet;
@@ -147,14 +174,29 @@ type
     btnGerarLoteRPS: TButton;
     btnGerarEnviarSincrono: TButton;
     Button1: TButton;
-    ckSalvarSoap: TCheckBox;
     btnSubsNFSe: TButton;
     ACBrMail1: TACBrMail;
     Label34: TLabel;
     edtArqINI: TEdit;
     sbtArqINI: TSpeedButton;
     cbEmailTLS: TCheckBox;
+    procedure Button10Click(Sender: TObject);
+    procedure Button11Click(Sender: TObject);
+    procedure Button12Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
+    procedure cbCryptLibChange(Sender: TObject);
+    procedure cbHttpLibChange(Sender: TObject);
+    procedure cbSSLLibChange(Sender: TObject);
+    procedure cbSSLTypeChange(Sender: TObject);
+    procedure cbXmlSignLibChange(Sender: TObject);
     procedure sbtnCaminhoCertClick(Sender: TObject);
+    procedure sbtnGetCert1Click(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -185,10 +227,6 @@ type
     procedure Button1Click(Sender: TObject);
     procedure btnSubsNFSeClick(Sender: TObject);
     procedure sbtArqINIClick(Sender: TObject);
-    {
-    procedure lblMouseEnter(Sender: TObject);
-    procedure lblMouseLeave(Sender: TObject);
-    }
   private
     { Private declarations }
     Ok: boolean;
@@ -198,6 +236,7 @@ type
     procedure LoadXML(MyMemo: TMemo; MyWebBrowser: TSynMemo);
     procedure AlimentaComponente(NumNFSe: string);
     procedure CarregarIniCidades;
+    procedure AtualizaSSLLibsCombo;
   public
     { Public declarations }
   end;
@@ -209,25 +248,13 @@ implementation
 
 uses
   FileCtrl, DateUtils, Math,
-  ufrmStatus,ACBrDFeSSL,
-  ACBrNFSeNotasFiscais, ACBrDFeUtil{, ACBrNFSeUtil};
+  ufrmStatus, ACBrDFeSSL, typinfo,
+  ACBrNFSeNotasFiscais, ACBrDFeUtil;
 
 const
   SELDIRHELP = 1000;
 
 {$R *.lfm}
-
-(*
-procedure TForm1.lblMouseEnter(Sender: TObject);
-begin
- TLabel(Sender).Font.Style := [fsBold,fsUnderline];
-end;
-
-procedure TForm1.lblMouseLeave(Sender: TObject);
-begin
- TLabel(Sender).Font.Style := [fsBold];
-end;
-*)
 
 procedure TfrmDemo_ACBrNFSe.GravarConfiguracao;
 var
@@ -253,10 +280,13 @@ begin
     Ini.WriteString('Emitente', 'Cidade', edtEmitCidade.Text);
     Ini.WriteString('Emitente', 'UF', edtEmitUF.Text);
 
+    Ini.WriteInteger('Certificado', 'SSLLib', cbSSLLib.ItemIndex);
+    Ini.WriteInteger('Certificado', 'CryptLib', cbCryptLib.ItemIndex);
+    Ini.WriteInteger('Certificado', 'HttpLib', cbHttpLib.ItemIndex);
+    Ini.WriteInteger('Certificado', 'XmlSignLib', cbXmlSignLib.ItemIndex);
     Ini.WriteString('Certificado', 'Caminho', edtCaminho.Text);
     Ini.WriteString('Certificado', 'Senha', edtSenha.Text);
     Ini.WriteString('Certificado', 'NumSerie', edtNumSerie.Text);
-    Ini.WriteInteger('Certificado', 'TipoCertificado', rbgTipoCertificado.ItemIndex);
 
     Ini.WriteString('Geral', 'Schemas', edtSchemas.Text);
     Ini.WriteString('Geral', 'LogoMarca', edtLogoMarca.Text);
@@ -271,6 +301,8 @@ begin
     Ini.WriteString('WebService', 'SenhaWeb', edtSenhaWeb.Text);
     Ini.WriteString('WebService', 'UserWeb', edtUserWeb.Text);
     Ini.WriteBool('WebService', 'SalvarSoap', ckSalvarSoap.Checked);
+    Ini.WriteInteger('WebService', 'TimeOut', seTimeOut.Value);
+    Ini.WriteInteger('WebService', 'SSLType', cbSSLType.ItemIndex);
 
     Ini.WriteString('Proxy', 'Host', edtProxyHost.Text);
     Ini.WriteString('Proxy', 'Porta', edtProxyPorta.Text);
@@ -307,21 +339,13 @@ begin
 
   Ini := TIniFile.Create(IniFile);
   try
-    rbgTipoCertificado.ItemIndex := Ini.ReadInteger('Certificado', 'TipoCertificado', 1);
-
-  {$IFDEF DFE_SEM_CAPICOM}
-    rbgTipoCertificado.ItemIndex := 0;
-    rbgTipoCertificado.Enabled := False;
-    edtNumSerie.Visible := False;
-    Label25.Visible := False;
-    sbtnGetCert.Visible := False;
-  {$ELSE}
-    edtNumSerie.Text := Ini.ReadString('Certificado', 'NumSerie', '');
-    sbtnCaminhoCert.Visible := False;
-  {$ENDIF}
-
+    cbSSLLib.ItemIndex := Ini.ReadInteger('Certificado', 'SSLLib', 0);
+    cbCryptLib.ItemIndex := Ini.ReadInteger('Certificado', 'CryptLib', 0);
+    cbHttpLib.ItemIndex := Ini.ReadInteger('Certificado', 'HttpLib', 0);
+    cbXmlSignLib.ItemIndex := Ini.ReadInteger('Certificado', 'XmlSignLib', 0);
     edtCaminho.Text := Ini.ReadString('Certificado', 'Caminho', '');
     edtSenha.Text := Ini.ReadString('Certificado', 'Senha', '');
+    edtNumSerie.Text := Ini.ReadString('Certificado', 'NumSerie', '');
 
     edtEmitCNPJ.Text := Ini.ReadString('Emitente', 'CNPJ', '');
     edtEmitIM.Text := Ini.ReadString('Emitente', 'IM', '');
@@ -337,8 +361,7 @@ begin
     edtEmitUF.Text := Ini.ReadString('Emitente', 'UF', '');
     edtCodCidade.Text := Ini.ReadString('Emitente', 'CodCidade', '');
     cbCidades.ItemIndex := cbCidades.Items.IndexOf(edtEmitCidade.Text +
-      '/' + edtCodCidade.Text +
-      '/' + edtEmitUF.Text);
+      '/' + edtCodCidade.Text + '/' + edtEmitUF.Text);
 
     edtSchemas.Text := Ini.ReadString('Geral', 'Schemas', '');
     edtLogoMarca.Text := Ini.ReadString('Geral', 'LogoMarca', '');
@@ -353,6 +376,8 @@ begin
     edtSenhaWeb.Text := Ini.ReadString('WebService', 'SenhaWeb', '');
     edtUserWeb.Text := Ini.ReadString('WebService', 'UserWeb', '');
     ckSalvarSoap.Checked := Ini.ReadBool('WebService', 'SalvarSoap', False);
+    seTimeOut.Value := Ini.ReadInteger('WebService', 'TimeOut', 5000);
+    cbSSLType.ItemIndex := Ini.ReadInteger('WebService', 'SSLType', 0);
 
     edtProxyHost.Text := Ini.ReadString('Proxy', 'Host', '');
     edtProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
@@ -386,16 +411,12 @@ begin
   ACBrNFSe1.Configuracoes.Certificados.Senha := edtSenha.Text;
   ACBrNFSe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
-  ACBrNFSe1.Configuracoes.Geral.SSLLib := TSSLLib(rbgTipoCertificado.ItemIndex+1);
-
   ACBrNFSe1.Configuracoes.Certificados.VerificarValidade := True;
-
   ACBrNFSe1.Configuracoes.Arquivos.AdicionarLiteral := True;
   ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe := True;
   ACBrNFSe1.Configuracoes.Arquivos.SepararPorMes := True;
   ACBrNFSe1.Configuracoes.Arquivos.SepararPorCNPJ := False;
   ACBrNFSe1.Configuracoes.Arquivos.PathGer := edtPathLogs.Text;
-  // ACBrNFSe1.Configuracoes.Arquivos.PathNFSe         := edtPathLogs.Text;
   ACBrNFSe1.Configuracoes.Arquivos.PathSchemas := edtSchemas.Text;
 
   PathMensal := ACBrNFSe1.Configuracoes.Arquivos.GetPathGer(0);
@@ -427,8 +448,16 @@ begin
   ACBrNFSe1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
   ACBrNFSe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
   ACBrNFSe1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
+  ACBrNFSe1.Configuracoes.WebServices.TimeOut := seTimeOut.Value;
 
-  ACBrNFSe1.Configuracoes.Geral.SetConfigMunicipio;
+  with ACBrNFSe1.Configuracoes.Geral do
+  begin
+    SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+    SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+    SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+    SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+    SetConfigMunicipio;
+  end;
 
   if ACBrNFSe1.DANFSe <> nil then
   begin
@@ -455,6 +484,14 @@ begin
   lblSchemas.Caption := ACBrNFSe1.Configuracoes.Geral.xProvedor;
 end;
 
+procedure TfrmDemo_ACBrNFSe.AtualizaSSLLibsCombo;
+begin
+  cbSSLLib.ItemIndex := integer(ACBrNFSe1.Configuracoes.Geral.SSLLib);
+  cbCryptLib.ItemIndex := integer(ACBrNFSe1.Configuracoes.Geral.SSLCryptLib);
+  cbHttpLib.ItemIndex := integer(ACBrNFSe1.Configuracoes.Geral.SSLHttpLib);
+  cbXmlSignLib.ItemIndex := integer(ACBrNFSe1.Configuracoes.Geral.SSLXmlSignLib);
+end;
+
 procedure TfrmDemo_ACBrNFSe.LoadXML(MyMemo: TMemo; MyWebBrowser: TSynMemo);
 var
   vText: string;
@@ -472,28 +509,28 @@ begin
   MyWebBrowser.Text := Trim(vText);
 end;
 
-procedure TfrmDemo_ACBrNFSe.AlimentaComponente(NumNFSe: String);
+procedure TfrmDemo_ACBrNFSe.AlimentaComponente(NumNFSe: string);
 var
- ValorISS: Double;
+  ValorISS: double;
 begin
- ACBrNFSe1.NotasFiscais.Clear;
+  ACBrNFSe1.NotasFiscais.Clear;
 
- with ACBrNFSe1 do
+  with ACBrNFSe1 do
   begin
-   NotasFiscais.NumeroLote:='1';
-   NotasFiscais.Transacao := True;
+    NotasFiscais.NumeroLote := '1';
+    NotasFiscais.Transacao := True;
 
-   with NotasFiscais.Add.NFSe do
+    with NotasFiscais.Add.NFSe do
     begin
-     IdentificacaoRps.Numero := FormatFloat('#########0', StrToInt(NumNFSe));
+      IdentificacaoRps.Numero := FormatFloat('#########0', StrToInt(NumNFSe));
 
-     // Para o provedor ISS.NET em ambiente de Homologação mudar a série para '8'
-     IdentificacaoRps.Serie := 'UNICA';
+      // Para o provedor ISS.NET em ambiente de Homologação mudar a série para '8'
+      IdentificacaoRps.Serie := 'UNICA';
 
-     // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
-     IdentificacaoRps.Tipo := trRPS;
+      // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
+      IdentificacaoRps.Tipo := trRPS;
 
-     DataEmissao := Now;
+      DataEmissao := Now;
 
      (*
      TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
@@ -503,159 +540,156 @@ begin
                                no101, no111, no121, no201, no301,
                                no501, no511, no541, no551, no601, no701 );
      *)
-     NaturezaOperacao := no1;
-//     NaturezaOperacao := no51; 
+      NaturezaOperacao := no1;
+      //     NaturezaOperacao := no51;
 
-     // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP );
-//     RegimeEspecialTributacao := retNenhum;
-     RegimeEspecialTributacao := retEstimativa;
+      // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP );
+      //     RegimeEspecialTributacao := retNenhum;
+      RegimeEspecialTributacao := retEstimativa;
 
-     // TnfseSimNao = ( snSim, snNao );
-     OptanteSimplesNacional := snNao;
+      // TnfseSimNao = ( snSim, snNao );
+      OptanteSimplesNacional := snNao;
 
-     // TnfseSimNao = ( snSim, snNao );
-     IncentivadorCultural := snNao;
+      // TnfseSimNao = ( snSim, snNao );
+      IncentivadorCultural := snNao;
 
-     // TnfseSimNao = ( snSim, snNao );
-     // snSim = Ambiente de Produção
-     // snNao = Ambiente de Homologação
-     Producao := snNao;
+      // TnfseSimNao = ( snSim, snNao );
+      // snSim = Ambiente de Produção
+      // snNao = Ambiente de Homologação
+      Producao := snNao;
 
-     // TnfseStatusRPS = ( srNormal, srCancelado );
-     Status := srNormal;
+      // TnfseStatusRPS = ( srNormal, srCancelado );
+      Status := srNormal;
 
-     // Somente Os provedores Betha, FISSLex e SimplISS permitem incluir no RPS
-     // a TAG: OutrasInformacoes os demais essa TAG é gerada e preenchida pelo
-     // WebService do provedor.
-     OutrasInformacoes := 'Pagamento a Vista';
+      // Somente Os provedores Betha, FISSLex e SimplISS permitem incluir no RPS
+      // a TAG: OutrasInformacoes os demais essa TAG é gerada e preenchida pelo
+      // WebService do provedor.
+      OutrasInformacoes := 'Pagamento a Vista';
 
-     // Usado quando o RPS for substituir outro
-//     RpsSubstituido.Numero := FormatFloat('#########0', i);
-//     RpsSubstituido.Serie  := 'UNICA';
-     // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
-///     RpsSubstituido.Tipo   := trRPS;
+      // Usado quando o RPS for substituir outro
+      //     RpsSubstituido.Numero := FormatFloat('#########0', i);
+      //     RpsSubstituido.Serie  := 'UNICA';
+      // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
+      ///     RpsSubstituido.Tipo   := trRPS;
 
-     Servico.Valores.ValorServicos          := 1685.50;
-     Servico.Valores.ValorDeducoes          := 0.00;
-     Servico.Valores.ValorPis               := 0.00;
-     Servico.Valores.ValorCofins            := 0.00;
-     Servico.Valores.ValorInss              := 0.00;
-     Servico.Valores.ValorIr                := 0.00;
-     Servico.Valores.ValorCsll              := 0.00;
+      Servico.Valores.ValorServicos := 1685.50;
+      Servico.Valores.ValorDeducoes := 0.00;
+      Servico.Valores.ValorPis := 0.00;
+      Servico.Valores.ValorCofins := 0.00;
+      Servico.Valores.ValorInss := 0.00;
+      Servico.Valores.ValorIr := 0.00;
+      Servico.Valores.ValorCsll := 0.00;
 
-     // TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
-     // stRetencao = snSim
-     // stNormal   = snNao
+      // TnfseSituacaoTributaria = ( stRetencao, stNormal, stSubstituicao );
+      // stRetencao = snSim
+      // stNormal   = snNao
 
-     // Neste exemplo não temos ISS Retido ( stNormal = Não )
-     // Logo o valor do ISS Retido é igual a zero.
-     Servico.Valores.IssRetido              := stNormal;
-     Servico.Valores.ValorIssRetido         := 0.00;
+      // Neste exemplo não temos ISS Retido ( stNormal = Não )
+      // Logo o valor do ISS Retido é igual a zero.
+      Servico.Valores.IssRetido := stNormal;
+      Servico.Valores.ValorIssRetido := 0.00;
 
-     Servico.Valores.OutrasRetencoes        := 0.00;
-     Servico.Valores.DescontoIncondicionado := 0.00;
-     Servico.Valores.DescontoCondicionado   := 0.00;
+      Servico.Valores.OutrasRetencoes := 0.00;
+      Servico.Valores.DescontoIncondicionado := 0.00;
+      Servico.Valores.DescontoCondicionado := 0.00;
 
-     Servico.Valores.BaseCalculo := Servico.Valores.ValorServicos -
-                                    Servico.Valores.ValorDeducoes -
-                                    Servico.Valores.DescontoIncondicionado;
-     // No caso do provedor Ginfes devemos informar a aliquota já dividida por 100
-     // para outros provedores devemos informar por exemplo 3, mas ao fazer o calculo
-     // do valor do ISS devemos dividir por 100
-     Servico.Valores.Aliquota    := 2;
+      Servico.Valores.BaseCalculo :=
+        Servico.Valores.ValorServicos - Servico.Valores.ValorDeducoes -
+        Servico.Valores.DescontoIncondicionado;
+      // No caso do provedor Ginfes devemos informar a aliquota já dividida por 100
+      // para outros provedores devemos informar por exemplo 3, mas ao fazer o calculo
+      // do valor do ISS devemos dividir por 100
+      Servico.Valores.Aliquota := 2;
 
-     // Valor do ISS calculado multiplicando-se a base de calculo pela aliquota
-     ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
+      // Valor do ISS calculado multiplicando-se a base de calculo pela aliquota
+      ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
 
-     // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
-     // parametro se refere ao numero de casas decimais.
-     // exemplos: RoundTo5(50.532, -2) ==> 50.53
-     // exemplos: RoundTo5(50.535, -2) ==> 50.54
-     // exemplos: RoundTo5(50.536, -2) ==> 50.54
+      // A função RoundTo5 é usada para arredondar valores, sendo que o segundo
+      // parametro se refere ao numero de casas decimais.
+      // exemplos: RoundTo5(50.532, -2) ==> 50.53
+      // exemplos: RoundTo5(50.535, -2) ==> 50.54
+      // exemplos: RoundTo5(50.536, -2) ==> 50.54
 
-     Servico.Valores.ValorIss := RoundTo5(ValorISS, -2);
+      Servico.Valores.ValorIss := RoundTo5(ValorISS, -2);
 
-     Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorServicos -
-                                         Servico.Valores.ValorPis -
-                                         Servico.Valores.ValorCofins -
-                                         Servico.Valores.ValorInss -
-                                         Servico.Valores.ValorIr -
-                                         Servico.Valores.ValorCsll -
-                                         Servico.Valores.OutrasRetencoes -
-                                         Servico.Valores.ValorIssRetido -
-                                         Servico.Valores.DescontoIncondicionado -
-                                         Servico.Valores.DescontoCondicionado;
+      Servico.Valores.ValorLiquidoNfse :=
+        Servico.Valores.ValorServicos - Servico.Valores.ValorPis -
+        Servico.Valores.ValorCofins - Servico.Valores.ValorInss -
+        Servico.Valores.ValorIr - Servico.Valores.ValorCsll -
+        Servico.Valores.OutrasRetencoes - Servico.Valores.ValorIssRetido -
+        Servico.Valores.DescontoIncondicionado -
+        Servico.Valores.DescontoCondicionado;
 
-     // TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
-     Servico.ResponsavelRetencao := ptTomador;
+      // TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
+      Servico.ResponsavelRetencao := ptTomador;
 
-     Servico.ItemListaServico    := '14.01';
+      Servico.ItemListaServico := '14.01';
 
-     // Para o provedor ISS.NET em ambiente de Homologação
-     // o Codigo CNAE tem que ser '6511102'
-     // Servico.CodigoCnae                := '123'; // Informação Opcional
-     Servico.CodigoTributacaoMunicipio := '3314799';
-     Servico.Discriminacao             := 'discriminacao I;discriminacao II';
+      // Para o provedor ISS.NET em ambiente de Homologação
+      // o Codigo CNAE tem que ser '6511102'
+      // Servico.CodigoCnae                := '123'; // Informação Opcional
+      Servico.CodigoTributacaoMunicipio := '3314799';
+      Servico.Discriminacao := 'discriminacao I;discriminacao II';
 
-     // Para o provedor ISS.NET em ambiente de Homologação
-     // o Codigo do Municipio tem que ser '999'
-     Servico.CodigoMunicipio := edtCodCidade.Text;
+      // Para o provedor ISS.NET em ambiente de Homologação
+      // o Codigo do Municipio tem que ser '999'
+      Servico.CodigoMunicipio := edtCodCidade.Text;
 
-     // Informar A Exigibilidade ISS para fintelISS [1/2/3/4/5/6/7]
-     Servico.ExigibilidadeISS := exiExigivel;
+      // Informar A Exigibilidade ISS para fintelISS [1/2/3/4/5/6/7]
+      Servico.ExigibilidadeISS := exiExigivel;
 
-     // Informar para Saatri
-     Servico.CodigoPais := 1058; // Brasil
-     Servico.MunicipioIncidencia := StrToIntDef(edtCodCidade.Text, 0);
+      // Informar para Saatri
+      Servico.CodigoPais := 1058; // Brasil
+      Servico.MunicipioIncidencia := StrToIntDef(edtCodCidade.Text, 0);
 
-    // Somente o provedor SimplISS permite infomar mais de 1 serviço
-     with Servico.ItemServico.Add do
+      // Somente o provedor SimplISS permite infomar mais de 1 serviço
+      with Servico.ItemServico.Add do
       begin
-       Descricao     := 'SERVICO 1';
-       Quantidade    := 1;
-       ValorUnitario := 15.00;
+        Descricao := 'SERVICO 1';
+        Quantidade := 1;
+        ValorUnitario := 15.00;
       end;
 
-     Prestador.Cnpj               := edtEmitCNPJ.Text;
-     Prestador.InscricaoMunicipal := edtEmitIM.Text;
+      Prestador.Cnpj := edtEmitCNPJ.Text;
+      Prestador.InscricaoMunicipal := edtEmitIM.Text;
 
-     // Para o provedor ISSDigital deve-se informar também:
-     Prestador.Senha        := 'senha';
-     Prestador.FraseSecreta := 'frase secreta';
-     Prestador.cUF          := 33;
+      // Para o provedor ISSDigital deve-se informar também:
+      Prestador.Senha := 'senha';
+      Prestador.FraseSecreta := 'frase secreta';
+      Prestador.cUF := 33;
 
-     PrestadorServico.Endereco.CodigoMunicipio := edtCodCidade.Text;
-     PrestadorServico.RazaoSocial := edtEmitRazao.Text;
+      PrestadorServico.Endereco.CodigoMunicipio := edtCodCidade.Text;
+      PrestadorServico.RazaoSocial := edtEmitRazao.Text;
 
-     Tomador.IdentificacaoTomador.CpfCnpj            := '99999999000191';
-     Tomador.IdentificacaoTomador.InscricaoMunicipal := '1733160024';
+      Tomador.IdentificacaoTomador.CpfCnpj := '99999999000191';
+      Tomador.IdentificacaoTomador.InscricaoMunicipal := '1733160024';
 
-     Tomador.RazaoSocial := 'INSCRICAO DE TESTE';
+      Tomador.RazaoSocial := 'INSCRICAO DE TESTE';
 
-     Tomador.Endereco.Endereco        := 'RUA PRINCIPAL';
-     Tomador.Endereco.Numero          := '100';
-     Tomador.Endereco.Complemento     := 'APTO 11';
-     Tomador.Endereco.Bairro          := 'CENTRO';
-     Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
-     Tomador.Endereco.UF              := edtEmitUF.Text;
-     Tomador.Endereco.CodigoPais      := 1058; // Brasil
-     Tomador.Endereco.CEP             := edtEmitCEP.Text;
-	 //Provedor Equiplano é obrigatório o pais e IE
-     Tomador.Endereco.xPais           := 'BRASIL';
-     Tomador.IdentificacaoTomador.InscricaoEstadual := '123456';
+      Tomador.Endereco.Endereco := 'RUA PRINCIPAL';
+      Tomador.Endereco.Numero := '100';
+      Tomador.Endereco.Complemento := 'APTO 11';
+      Tomador.Endereco.Bairro := 'CENTRO';
+      Tomador.Endereco.CodigoMunicipio := edtCodCidade.Text;
+      Tomador.Endereco.UF := edtEmitUF.Text;
+      Tomador.Endereco.CodigoPais := 1058; // Brasil
+      Tomador.Endereco.CEP := edtEmitCEP.Text;
+      //Provedor Equiplano é obrigatório o pais e IE
+      Tomador.Endereco.xPais := 'BRASIL';
+      Tomador.IdentificacaoTomador.InscricaoEstadual := '123456';
 
-     Tomador.Contato.Telefone := '1122223333';
-     Tomador.Contato.Email    := 'nome@provedor.com.br';
+      Tomador.Contato.Telefone := '1122223333';
+      Tomador.Contato.Email := 'nome@provedor.com.br';
 
-     // Usado quando houver um intermediario na prestação do serviço
-//     IntermediarioServico.RazaoSocial        := 'razao';
-//     IntermediarioServico.CpfCnpj            := '00000000000';
-//     IntermediarioServico.InscricaoMunicipal := '12547478';
+      // Usado quando houver um intermediario na prestação do serviço
+      //     IntermediarioServico.RazaoSocial        := 'razao';
+      //     IntermediarioServico.CpfCnpj            := '00000000000';
+      //     IntermediarioServico.InscricaoMunicipal := '12547478';
 
 
-     // Usado quando o serviço for uma obra
-//     ConstrucaoCivil.CodigoObra := '88888';
-//     ConstrucaoCivil.Art        := '433';
+      // Usado quando o serviço for uma obra
+      //     ConstrucaoCivil.CodigoObra := '88888';
+      //     ConstrucaoCivil.Art        := '433';
 
     end;
   end;
@@ -731,6 +765,177 @@ begin
   end;
 end;
 
+procedure TfrmDemo_ACBrNFSe.sbtnGetCert1Click(Sender: TObject);
+var
+  I: integer;
+begin
+  frSelecionarCertificado := TfrSelecionarCertificado.Create(Self);
+  try
+    ACBrNFSe1.SSL.LerCertificadosStore;
+
+    for I := 0 to ACBrNFSe1.SSL.ListaCertificados.Count - 1 do
+    begin
+      with ACBrNFSe1.SSL.ListaCertificados[I] do
+      begin
+        if (CNPJ <> '') then
+        begin
+          with frSelecionarCertificado.StringGrid1 do
+          begin
+            RowCount := RowCount + 1;
+            Cells[0, RowCount - 1] := NumeroSerie;
+            Cells[1, RowCount - 1] := RazaoSocial;
+            Cells[2, RowCount - 1] := CNPJ;
+            Cells[3, RowCount - 1] := FormatDateBr(DataVenc);
+            Cells[4, RowCount - 1] := Certificadora;
+          end;
+        end;
+      end;
+    end;
+
+    frSelecionarCertificado.ShowModal;
+
+    if frSelecionarCertificado.ModalResult = mrOk then
+      edtNumSerie.Text := frSelecionarCertificado.StringGrid1.Cells[0,
+        frSelecionarCertificado.StringGrid1.Row];
+
+  finally
+    frSelecionarCertificado.Free;
+  end;
+end;
+
+procedure TfrmDemo_ACBrNFSe.cbCryptLibChange(Sender: TObject);
+begin
+  try
+    if cbCryptLib.ItemIndex <> -1 then
+      ACBrNFSe1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button8Click(Sender: TObject);
+begin
+  ACBrNFSe1.SSL.CarregarCertificado;
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button9Click(Sender: TObject);
+var
+  Acao: string;
+  OldUseCert: boolean;
+begin
+  Acao := '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' +
+    '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
+    'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> ' +
+    ' <soapenv:Header/>' + ' <soapenv:Body>' + ' <cli:consultaCEP>' +
+    ' <cep>18270-170</cep>' + ' </cli:consultaCEP>' + ' </soapenv:Body>' +
+    ' </soapenv:Envelope>';
+
+  OldUseCert := ACBrNFSe1.SSL.UseCertificateHTTP;
+  ACBrNFSe1.SSL.UseCertificateHTTP := False;
+  try
+    WBResposta.Text := ACBrNFSe1.SSL.Enviar(Acao,
+      'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl',
+      '');
+  finally
+    ACBrNFSe1.SSL.UseCertificateHTTP := OldUseCert;
+  end;
+  pgRespostas.ActivePageIndex := 1;
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button11Click(Sender: TObject);
+begin
+  ACBrNFSe1.SSL.DescarregarCertificado;
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button12Click(Sender: TObject);
+var
+  Erro, AName: string;
+begin
+  with ACBrNFSe1.SSL do
+  begin
+    CarregarCertificadoPublico(MemoDados.Lines.Text);
+    MemoResp.Lines.Add(CertIssuerName);
+    MemoResp.Lines.Add(CertRazaoSocial);
+    MemoResp.Lines.Add(CertCNPJ);
+    MemoResp.Lines.Add(CertSubjectName);
+    MemoResp.Lines.Add(CertNumeroSerie);
+    pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button2Click(Sender: TObject);
+begin
+  ShowMessage(FormatDateBr(ACBrNFSe1.SSL.CertDataVenc));
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button10Click(Sender: TObject);
+begin
+  ShowMessage(ACBrNFSe1.SSL.CertIssuerName + sLineBreak + sLineBreak +
+    'Certificadora: ' + ACBrNFSe1.SSL.CertCertificadora);
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button3Click(Sender: TObject);
+begin
+  ShowMessage(ACBrNFSe1.SSL.CertSubjectName + sLineBreak + sLineBreak +
+    'Razão Social: ' + ACBrNFSe1.SSL.CertRazaoSocial);
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button4Click(Sender: TObject);
+begin
+  ShowMessage(ACBrNFSe1.SSL.CertCNPJ);
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button5Click(Sender: TObject);
+begin
+  ShowMessage(ACBrNFSe1.SSL.CertNumeroSerie);
+end;
+
+procedure TfrmDemo_ACBrNFSe.Button7Click(Sender: TObject);
+var
+  Ahash: ansistring;
+begin
+  Ahash := ACBrNFSe1.SSL.CalcHash(Edit1.Text, dgstSHA256, outBase64, cbAssinar.Checked);
+  MemoResp.Lines.Add(Ahash);
+  pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TfrmDemo_ACBrNFSe.cbHttpLibChange(Sender: TObject);
+begin
+  try
+    if cbHttpLib.ItemIndex <> -1 then
+      ACBrNFSe1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmDemo_ACBrNFSe.cbSSLLibChange(Sender: TObject);
+begin
+  try
+    if cbSSLLib.ItemIndex <> -1 then
+      ACBrNFSe1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmDemo_ACBrNFSe.cbSSLTypeChange(Sender: TObject);
+begin
+  if cbSSLType.ItemIndex <> -1 then
+    ACBrNFSe1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
+end;
+
+procedure TfrmDemo_ACBrNFSe.cbXmlSignLibChange(Sender: TObject);
+begin
+  try
+    if cbXmlSignLib.ItemIndex <> -1 then
+      ACBrNFSe1.Configuracoes.Geral.SSLXmlSignLib :=
+        TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
 procedure TfrmDemo_ACBrNFSe.sbtnGetCertClick(Sender: TObject);
 begin
   edtNumSerie.Text := ACBrNFSe1.SSL.SelecionarCertificado;
@@ -763,8 +968,39 @@ begin
 end;
 
 procedure TfrmDemo_ACBrNFSe.FormCreate(Sender: TObject);
+var
+  T: TSSLLib;
+  U: TSSLCryptLib;
+  V: TSSLHttpLib;
+  X: TSSLXmlSignLib;
+  Y: TSSLType;
 begin
   PageControl1.ActivePageIndex := 0;
+
+  cbSSLLib.Items.Clear;
+  for T := Low(TSSLLib) to High(TSSLLib) do
+    cbSSLLib.Items.Add(GetEnumName(TypeInfo(TSSLLib), integer(T)));
+  cbSSLLib.ItemIndex := 0;
+
+  cbCryptLib.Items.Clear;
+  for U := Low(TSSLCryptLib) to High(TSSLCryptLib) do
+    cbCryptLib.Items.Add(GetEnumName(TypeInfo(TSSLCryptLib), integer(U)));
+  cbCryptLib.ItemIndex := 0;
+
+  cbHttpLib.Items.Clear;
+  for V := Low(TSSLHttpLib) to High(TSSLHttpLib) do
+    cbHttpLib.Items.Add(GetEnumName(TypeInfo(TSSLHttpLib), integer(V)));
+  cbHttpLib.ItemIndex := 0;
+
+  cbXmlSignLib.Items.Clear;
+  for X := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
+    cbXmlSignLib.Items.Add(GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X)));
+  cbXmlSignLib.ItemIndex := 0;
+
+  cbSSLType.Items.Clear;
+  for Y := Low(TSSLType) to High(TSSLType) do
+    cbSSLType.Items.Add(GetEnumName(TypeInfo(TSSLType), integer(Y)));
+  cbSSLType.ItemIndex := 0;
 
   LerConfiguracao;
   CarregarIniCidades;
@@ -795,17 +1031,40 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnGerarEnviarLoteClick(Sender: TObject);
 var
-  vAux, vNumLote: string;
+  sQtde, sAux, vNumLote: String;
+  iQtde, iAux, I: Integer;
 begin
-  if not (InputQuery('Gerar e Enviar Lote', 'Numero do RPS', vAux)) then
+  if not(InputQuery('Gerar e Enviar Lote', 'Quantidade de RPS', sQtde)) then
     exit;
 
-  if not (InputQuery('Gerar e Enviar Lote', 'Numero do Lote', vNumLote)) then
+  if not(InputQuery('Gerar e Enviar Lote', 'Numero do RPS', sAux)) then
     exit;
+
+  if not(InputQuery('Gerar e Enviar Lote', 'Numero do Lote', vNumLote)) then
+    exit;
+
+  iQtde := StrToIntDef(sQtde, 1);
+  iAux := StrToIntDef(sAux, 1);
 
   ACBrNFSe1.NotasFiscais.Clear;
-  AlimentaComponente(vAux);
+  for I := 1 to iQtde do
+  begin
+    sAux := IntToStr(iAux);
+    AlimentaComponente(sAux);
+    inc(iAux);
+  end;
+
   ACBrNFSe1.Enviar(vNumLote);
+
+  for I := 0 to iQtde - 1 do
+  begin
+    MemoDados.Lines.Add('Nome XML: ' + ACBrNFSe1.NotasFiscais.Items[I].NomeArq);
+    MemoDados.Lines.Add('Nota Numero: ' + ACBrNFSe1.NotasFiscais.Items[I]
+      .NFSe.Numero);
+    MemoDados.Lines.Add('Código de Verificação: ' + ACBrNFSe1.NotasFiscais.Items
+      [I].NFSe.CodigoVerificacao);
+  end;
+
   ACBrNFSe1.NotasFiscais.Clear;
 end;
 
@@ -870,7 +1129,8 @@ begin
     //   ACBrNFSe1.WebServices.CancelaNFSe(Codigo, '1', '03310700000170', '0306223', '0');
     ACBrNFSe1.CancelarNFSe(Codigo);
 
-    MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
+    MemoDados.Lines.Add('Arquivo Carregado de: ' +
+      ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
     MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
     MemoDados.Lines.Add('Retorno do Cancelamento:');
 
@@ -881,7 +1141,7 @@ begin
         DateTimeToStr(ACBrNFSe1.WebServices.CancNfse.DataHora));
     LoadXML(MemoResp, WBResposta);
 
-    PageControl2.ActivePageIndex := 1;
+    pgRespostas.ActivePageIndex := 1;
   end;
 
 end;
@@ -890,7 +1150,8 @@ procedure TfrmDemo_ACBrNFSe.btnConsultarSitLoteClick(Sender: TObject);
 var
   Protocolo: string;
 begin
-  if not (InputQuery('Consultar SituaÃ§Ã£o do Lote', 'NÃºmero do Protocolo', Protocolo)) then
+  if not (InputQuery('Consultar SituaÃ§Ã£o do Lote', 'NÃºmero do Protocolo',
+    Protocolo)) then
     exit;
 
   ACBrNFSe1.ConsultarSituacao(edtEmitCNPJ.Text, edtEmitIM.Text);
@@ -916,7 +1177,7 @@ begin
   MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
   LoadXML(MemoResp, WBResposta);
 
-  PageControl2.ActivePageIndex := 1;
+  pgRespostas.ActivePageIndex := 1;
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnImprimirClick(Sender: TObject);
@@ -935,7 +1196,8 @@ begin
     ACBrNFSe1.NotasFiscais.Imprimir;
     ACBrNFSe1.NotasFiscais.ImprimirPDF;
 
-    MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
+    MemoDados.Lines.Add('Arquivo Carregado de: ' +
+      ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
     MemoDados.Lines.Add('Nota Numero: ' + ACBrNFSe1.NotasFiscais.Items[0].NFSe.Numero);
     MemoDados.Lines.Add('CÃ³digo de VerificaÃ§Ã£o: ' +
       ACBrNFSe1.NotasFiscais.Items[0].NFSe.CodigoVerificacao);
@@ -943,7 +1205,7 @@ begin
       ACBrNFSe1.NotasFiscais.Items[0].NFSe.DataEmissao));
     MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
     LoadXML(MemoResp, WBResposta);
-    PageControl2.ActivePageIndex := 1;
+    pgRespostas.ActivePageIndex := 1;
   end;
 end;
 
@@ -1037,10 +1299,8 @@ begin
 
     ACBrNFSe1.ConsultarNFSeporRps(
       ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero,
-      ACBrNFSe1.NotasFiscais.Items[
-      0].NFSe.IdentificacaoRps.Serie,
-      TipoRPSToStr(
-      ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo));
+      ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie,
+      TipoRPSToStr(ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo));
 
     MemoResp.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
     memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
@@ -1052,11 +1312,11 @@ procedure TfrmDemo_ACBrNFSe.btnConsultarNFSePeriodoClick(Sender: TObject);
 var
   DataInicial, DataFinal: string;
 begin
-  if not (InputQuery('Consultar NFSe por PerÃ­odo', 'Data Inicial (DD/MM/AAAA):',
+  if not (InputQuery('Consultar NFSe por Período', 'Data Inicial (DD/MM/AAAA):',
     DataInicial)) then
     exit;
-  if not (InputQuery('Consultar NFSe por PerÃ­odo', 'Data Final (DD/MM/AAAA):', DataFinal))
-  then
+  if not (InputQuery('Consultar NFSe por Período', 'Data Final (DD/MM/AAAA):',
+    DataFinal)) then
     exit;
 
   ACBrNFSe1.ConsultarNFSe(StrToDate(DataInicial), StrToDate(DataFinal));
@@ -1130,10 +1390,11 @@ begin
   ACBrNFSe1.NotasFiscais.LoadFromFile(sNomeArq);
   ACBrNFSe1.NotasFiscais.Imprimir;
 
-  MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
+  MemoDados.Lines.Add('Arquivo Carregado de: ' +
+    ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
   MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
   LoadXML(MemoResp, WBResposta);
-  PageControl2.ActivePageIndex := 1;
+  pgRespostas.ActivePageIndex := 1;
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnEnviaremailClick(Sender: TObject);
@@ -1152,11 +1413,11 @@ begin
     ACBrNFSe1.NotasFiscais.Clear;
     ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
-    if not (InputQuery('Enviar e-mail', 'DestinatÃ¡rio', vAux)) then
+    if not (InputQuery('Enviar e-mail', 'Destinatário', vAux)) then
       exit;
 
     sCC := TStringList.Create;
-    sCC.Clear;  // Usando para add outros e-mail como Com-CÃ³pia
+    sCC.Clear;  // Usando para add outros e-mail como Côpia
 
     ACBrNFSe1.NotasFiscais.Items[0].EnviarEmail(vAux
       , edtEmailAssunto.Text
@@ -1169,10 +1430,11 @@ begin
 
     sCC.Free;
 
-    MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
+    MemoDados.Lines.Add('Arquivo Carregado de: ' +
+      ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
     MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
     LoadXML(MemoResp, WBResposta);
-    PageControl2.ActivePageIndex := 1;
+    pgRespostas.ActivePageIndex := 1;
   end;
 end;
 
@@ -1190,7 +1452,7 @@ begin
   sLink := ACBrNFSe1.LinkNFSe(StrToIntDef(vNumNFSe, 0), sCodVerif);
 
   MemoResp.Lines.Add('Link Gerado: ' + sLink);
-  PageControl2.ActivePageIndex := 0;
+  pgRespostas.ActivePageIndex := 0;
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnGerarLoteRPSClick(Sender: TObject);
@@ -1282,7 +1544,7 @@ begin
   MemoDados.Lines.Add('CÃ³d. Cancelamento: ' +
     ACBrNFSe1.WebServices.SubNfse.CodigoCancelamento);
   LoadXML(MemoResp, WBResposta);
-  PageControl2.ActivePageIndex := 1;
+  pgRespostas.ActivePageIndex := 1;
 end;
 
 procedure TfrmDemo_ACBrNFSe.sbtArqINIClick(Sender: TObject);

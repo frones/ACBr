@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2017
+-- ACBrDFeXsLibXml2, ACBrDFeXsXmlSec --
+[*] Metodos de assinatura refatorado para usar apenas métodos da LibXml.
+[+] Adicionado o novo método "ACBrDFeXsLibXml2.LibXmlEstaAssinado" para verificar se o xml está assinado.
+[*] ACBrDFeXsXmlSec esta herdando agora de ACBrDFeXsLibXml2 para evitar código repetidos.
+
 04/12/2017
 -- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeWinCrypt --
 [+] Adicionado novo método "TDFeSSL.ValidarHash".

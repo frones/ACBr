@@ -354,6 +354,7 @@ begin
          DataAbatimento      := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataAbatimento','')),0);
          DataDesconto        := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataDesconto','')),0);
          DataMoraJuros       := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataMoraJuros','')),0);
+		 DataMulta           := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataMulta','')),0);
          DataProtesto        := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataProtesto','')),0);
          DataBaixa           := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataBaixa','')),0);
          DataLimitePagto     := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataLimitePagto','')),0);

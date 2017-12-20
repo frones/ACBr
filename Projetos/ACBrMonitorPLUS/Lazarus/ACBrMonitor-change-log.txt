@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2017
+[+] Adição de Tag --DoBoletoUnit--
+        Adicionado tag DataMulta
+	por: José M. S. Junior
+
 18/12/2017
 [-] Correção no método CriarEnviarNFe --DoACBrNFeUnit--
         Gerando erro de duplicidade ao chamar método (LoadFromIni)

@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2017
+-- pcnBPeW --
+[*] Alterado a quantidade minima da tag <plataforma> para ficar em conformidade
+    com o novo Schema.
+   Por: Italo Jurisato Junior
+
 08/12/2017
 -- ACBRBPeBilhetes --
 [+] Classe "Bilhete" Adicionado o método:

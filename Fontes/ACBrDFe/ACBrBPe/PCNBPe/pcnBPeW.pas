@@ -582,9 +582,9 @@ begin
     if BPe.infViagem[i].tpTrecho = ttConexao then
       Gerador.wCampo(tcStr, '#102', 'dhConexao', 25, 25, 0, DateTimeTodh(BPe.infViagem[i].dhConexao) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhConexao), DSC_DHCONEXAO);
 
-    Gerador.wCampo(tcStr, '#103', 'prefixo     ', 01,  20, 0, BPe.infViagem[i].Prefixo, DSC_PREFIXO);
-    Gerador.wCampo(tcInt, '#104', 'poltrona    ', 01,  03, 0, BPe.infViagem[i].Poltrona, DSC_POLTRONA);
-    Gerador.wCampo(tcStr, '#105', 'plataforma  ', 02,  10, 0, BPe.infViagem[i].Plataforma, DSC_PLATAFORMA);
+    Gerador.wCampo(tcStr, '#103', 'prefixo   ', 01, 20, 0, BPe.infViagem[i].Prefixo, DSC_PREFIXO);
+    Gerador.wCampo(tcInt, '#104', 'poltrona  ', 01, 03, 0, BPe.infViagem[i].Poltrona, DSC_POLTRONA);
+    Gerador.wCampo(tcStr, '#105', 'plataforma', 01, 10, 0, BPe.infViagem[i].Plataforma, DSC_PLATAFORMA);
 
     if BPe.infViagem[i].infTravessia.tpVeiculo <> tvNenhum then
     begin

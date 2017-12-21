@@ -44,7 +44,7 @@ uses Classes, SysUtils,
   {$IFNDEF NOGUI}
    {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
   {$ENDIF}
-  ACBrDFeConfiguracoes, ACBrDFe, pcnGerador;
+  ACBrDFeConfiguracoes, ACBrDFe, ACBrDFeIntegrador, pcnGerador;
 
 type
 
@@ -73,6 +73,12 @@ type
     FPServico: String;
     FPSoapAction: String;
     FPMimeType: String;
+    FPDFeIntegrador: TDFeIntegrador;
+    FPNomeComponente: String;
+    FPNomeMetodo: String;
+    FPNumeroSessao: Integer;
+    FPParametrosIntegrador: TStringList;
+
   protected
     procedure FazerLog(Msg: String; Exibir: Boolean = False); virtual;
     procedure GerarException(Msg: String; E: Exception = nil); virtual;
@@ -103,6 +109,7 @@ type
     function GerarPrefixoArquivo: String; virtual;
   public
     constructor Create(AOwner: TACBrDFe); virtual;
+    destructor Destroy; virtual;
     procedure Clear; virtual;
 
     function Executar: Boolean; virtual;
@@ -132,7 +139,7 @@ implementation
 
 uses
   ACBrDFeUtil, ACBrDFeException, ACBrUtil,
-  pcnAuxiliar;
+  pcnAuxiliar, pcnConversao, synacode;
 
 { TDFeWebService }
 
@@ -157,8 +164,16 @@ begin
   FPServico := '';
   FPSoapAction := '';
   FPMimeType := '';  // Vazio, usará por default: 'application/soap+xml'
+  FPDFeIntegrador := TDFeIntegrador.Create;
+  FPParametrosIntegrador := TStringList.Create;
 
   Clear;
+end;
+
+destructor TDFeWebService.Destroy;
+begin
+  FPDFeIntegrador.Free;
+  FPParametrosIntegrador.Free;
 end;
 
 procedure TDFeWebService.Clear;
@@ -167,6 +182,9 @@ begin
   FPRetornoWS := '';
   FPRetWS := '';
   FPMsg := '';
+  FPNomeMetodo := '';
+  FPNomeComponente := '';
+  FPParametrosIntegrador.Clear;
 end;
 
 function TDFeWebService.Executar: Boolean;
@@ -255,6 +273,7 @@ end;
 procedure TDFeWebService.DefinirEnvelopeSoap;
 var
   Texto: String;
+  I: Integer;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -281,6 +300,32 @@ begin
   Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
 
   FPEnvelopeSoap := Texto;
+
+  if FPConfiguracoes.WebServices.UsaIntegrador then
+  begin
+    if FPParametrosIntegrador.Count > 0 then
+    begin
+      FPDFeIntegrador.Gerador.LayoutArquivoTXT.Clear;
+
+      FPDFeIntegrador.Gerador.ArquivoFormatoXML := '';
+      FPDFeIntegrador.Gerador.ArquivoFormatoTXT := '';
+
+      FPDFeIntegrador.Metodo.GerarMetodo(FPNumeroSessao,FPNomeComponente,FPNomeMetodo);
+
+      FPDFeIntegrador.Parametro.GerarParametro( 'numeroSessao',FPNumeroSessao, tcInt);
+      for I:= 0 to FPParametrosIntegrador.Count-1 do
+      begin
+        FPDFeIntegrador.Parametro.GerarParametro( FPParametrosIntegrador.Names[I],FPParametrosIntegrador.ValueFromIndex[I],tcStr);
+      end;
+
+      FPDFeIntegrador.Parametro.GerarParametro( 'dados',EncodeBase64(FPEnvelopeSoap),tcStr);
+      FPDFeIntegrador.Metodo.FinalizarMetodo;
+
+      FPEnvelopeSoap := FPDFeIntegrador.Gerador.ArquivoFormatoXML;
+    end;
+
+    FPParametrosIntegrador.Clear;
+  end;
 end;
 
 function TDFeWebService.GerarUFSoap: String;
@@ -329,7 +374,10 @@ begin
     Tratado := False;
 
     try
-      FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);
+      if FPConfiguracoes.WebServices.UsaIntegrador then
+        FPRetornoWS := FPDFeIntegrador.Enviar(FPNumeroSessao,FPEnvelopeSoap,FPNomeMetodo)
+      else
+        FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);
     except
       if Assigned(FPDFeOwner.OnTransmitError) then
         FPDFeOwner.OnTransmitError( FPDFeOwner.SSL.HTTPResultCode,

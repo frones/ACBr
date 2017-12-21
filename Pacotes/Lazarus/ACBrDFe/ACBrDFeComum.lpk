@@ -23,7 +23,7 @@
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - Biblioteca com Métodos e Classes em comum a todos Documentos Fiscais Eletrônicos"/>
-    <Files Count="7">
+    <Files Count="8">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas"/>
         <UnitName Value="ACBrDFeConfiguracoes"/>
@@ -52,17 +52,24 @@
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas"/>
         <UnitName Value="ACBrDFeRegUtil"/>
       </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeIntegrador.pas"/>
+        <UnitName Value="ACBrDFeIntegrador"/>
+      </Item8>
     </Files>
-    <RequiredPkgs Count="3">
+    <RequiredPkgs Count="4">
       <Item1>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="ACBrIntegrador"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item2>
       <Item3>
-        <PackageName Value="PCNComum"/>
+        <PackageName Value="ACBrTCP"/>
       </Item3>
+      <Item4>
+        <PackageName Value="PCNComum"/>
+      </Item4>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

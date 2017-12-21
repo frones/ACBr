@@ -67,6 +67,8 @@ type
 
     procedure ConfigurarSoapDEPC;
 
+    procedure DefineDadosPadroesIntegrador;
+
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -700,6 +702,16 @@ begin
   FPBodyElement := 'sceDadosMsg';
 end;
 
+procedure TNFeWebService.DefineDadosPadroesIntegrador;
+begin
+  FPNomeComponente := ifthen((FPConfiguracoesNFe.Geral.ModeloDF = moNFe),'NFE','NFCE');
+  FPNumeroSessao   := FPDFeOwner.GerarnumeroSessao;
+
+  FPParametrosIntegrador.Clear;
+  FPParametrosIntegrador.Values['versaoDados'] := FPVersaoServico;
+  FPParametrosIntegrador.Values['cUF'] := IntToStr(FPConfiguracoesNFe.WebServices.UFCodigo);
+end;
+
 procedure TNFeWebService.InicializarServico;
 begin
   { Sobrescrever apenas se necessário }
@@ -827,6 +839,12 @@ begin
     FPDadosMsg := ConsStatServ.Gerador.ArquivoFormatoXML;
   finally
     ConsStatServ.Free;
+  end;
+
+  if FPConfiguracoes.WebServices.UsaIntegrador then
+  begin
+    DefineDadosPadroesIntegrador;
+    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeStatusServico2Soap12';
   end;
 end;
 
@@ -1083,6 +1101,16 @@ begin
       IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
 
   FRecibo := '';
+
+  if FPConfiguracoes.WebServices.UsaIntegrador then
+  begin
+    DefineDadosPadroesIntegrador;
+    //Atualmente não é possível enviar em LOTE com o Integrador
+    FPParametrosIntegrador.Values['NumeroNFCe'] := OnlyNumber(FNotasFiscais.Items[0].NFe.infNFe.ID);
+    FPParametrosIntegrador.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', FNotasFiscais.Items[0].NFe.Ide.dEmi);
+    FPParametrosIntegrador.Values['ValorNFCe'] := StringReplace(FormatFloat('0.00',FNotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
+    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeAutorizacaoLote12';
+  end;
 end;
 
 function TNFeRecepcao.TratarResposta: Boolean;
@@ -1481,6 +1509,12 @@ begin
   finally
     ConsReciNFe.Free;
   end;
+
+  if FPConfiguracoes.WebServices.UsaIntegrador then
+  begin
+    DefineDadosPadroesIntegrador;
+    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeRetAutorizacaoLote12';
+  end;
 end;
 
 function TNFeRetRecepcao.TratarResposta: Boolean;
@@ -1801,6 +1835,12 @@ begin
   finally
     ConsReciNFe.Free;
   end;
+
+  if FPConfiguracoes.WebServices.UsaIntegrador then
+  begin
+    DefineDadosPadroesIntegrador;
+    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeRetAutorizacaoLote12';
+  end;
 end;
 
 function TNFeRecibo.TratarResposta: Boolean;
@@ -1996,6 +2036,12 @@ begin
     FPDadosMsg := ConsSitNFe.Gerador.ArquivoFormatoXML;
   finally
     ConsSitNFe.Free;
+  end;
+
+  if FPConfiguracoes.WebServices.UsaIntegrador then
+  begin
+    DefineDadosPadroesIntegrador;
+    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeConsulta2Soap12';
   end;
 end;
 
@@ -2459,6 +2505,12 @@ begin
   finally
     InutNFe.Free;
   end;
+
+  if FPConfiguracoes.WebServices.UsaIntegrador then
+  begin
+    DefineDadosPadroesIntegrador;
+    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeInutilizacao2Soap12';
+  end;
 end;
 
 procedure TNFeInutilizacao.SalvarEnvio;
@@ -2681,6 +2733,12 @@ begin
     FPDadosMsg := ConCadNFe.Gerador.ArquivoFormatoXML;
   finally
     ConCadNFe.Free;
+  end;
+
+  if FPConfiguracoes.WebServices.UsaIntegrador then
+  begin
+    DefineDadosPadroesIntegrador;
+    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'CadConsultaCadastro2Soap12';
   end;
 end;
 
@@ -2970,6 +3028,12 @@ begin
       FEvento.Evento[I].InfEvento.id := EventoNFe.Evento[I].InfEvento.id;
   finally
     EventoNFe.Free;
+  end;
+
+  if FPConfiguracoes.WebServices.UsaIntegrador then
+  begin
+    DefineDadosPadroesIntegrador;
+    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'RecepcaoEvento';
   end;
 end;
 

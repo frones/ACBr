@@ -52,6 +52,7 @@ type
 
   TACBrDFeOnTransmitError = procedure(const HttpError, InternalError: Integer;
     const URL, DadosEnviados, SoapAction: String; var Retentar: Boolean; var Tratado: Boolean) of object ;
+  TACBrDFeGetNumeroSessao = procedure(var NumeroSessao: Integer) of object ;
 
   { TACBrDFe }
 	{$IFDEF RTL230_UP}
@@ -61,10 +62,12 @@ type
   private
     FMAIL: TACBrMail;
     FOnTransmitError: TACBrDFeOnTransmitError;
+    FGetNumeroSessao: TACBrDFeGetNumeroSessao;
     FSSL: TDFeSSL;
     FListaDeSchemas: TStringList;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
+    FNumeroSessao: Integer;
     function GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
     procedure SetAbout(AValue: String);
     procedure SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
@@ -83,6 +86,7 @@ type
 
   public
     property SSL: TDFeSSL read FSSL;
+    property NumeroSessao: Integer read FNumeroSessao;
 
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -117,6 +121,8 @@ type
       const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
       VersaoBase: Double): String; virtual;
 
+    function GerarnumeroSessao : Integer ;
+
     procedure FazerLog(const Msg: String; out Tratado: Boolean);
     procedure GerarException(const Msg: String; E: Exception = nil);
     property Configuracoes: TConfiguracoes read FPConfiguracoes write FPConfiguracoes;
@@ -125,6 +131,8 @@ type
     property MAIL: TACBrMail read FMAIL write SetMAIL;
     property OnTransmitError : TACBrDFeOnTransmitError read FOnTransmitError
        write FOnTransmitError;
+    property GetNumeroSessao : TACBrDFeGetNumeroSessao read FGetNumeroSessao
+       write FGetNumeroSessao;
     property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
     property About: String read GetAbout write SetAbout stored False;
 
@@ -177,6 +185,7 @@ begin
 
   FOnGerarLog := nil;
   FOnTransmitError := nil;
+  FGetNumeroSessao := nil;
 
   FPIniParams := TMemIniFile.Create(Configuracoes.Arquivos.IniServicos);
   FPIniParamsCarregado := False;
@@ -559,6 +568,16 @@ begin
 
   LerServicoDeParams(ModeloDFe, UF, TipoAmbiente, NomeServico, Versao, URL);
   Result := URL;
+end;
+
+function TACBrDFe.GerarnumeroSessao: Integer;
+begin
+  FNumeroSessao := Random(999999);
+
+  if Assigned( FGetNumeroSessao ) then
+     FGetNumeroSessao( FNumeroSessao ) ;
+
+  Result := FNumeroSessao;
 end;
 
 

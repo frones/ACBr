@@ -38,7 +38,7 @@ unit ACBrSATMFe_integrador ;
 interface
 
 uses
-  Classes, SysUtils, ACBrSATClass, pcnGerador, pcnMFeUtil,
+  Classes, SysUtils, ACBrSATClass, pcnGerador, ACBrIntegradorUtil,
   pcnVFPe;
 
 const
@@ -51,7 +51,7 @@ type
    TACBrSATMFe_integrador_XML = class( TACBrSATClass )
    private
      FGerador: TGerador;
-     FComandoMFE: TComandoMFe;
+     FComandoMFE: TComandoIntegrador;
      FIdentificador: TIdentificador;
      FParametro: TParametro;
      FMetodo: TMetodo;
@@ -148,7 +148,7 @@ begin
 
   fpModeloStr := 'MFe_Integrador_XML' ;
   FGerador       := TGerador.Create;
-  FComandoMFE    := TComandoMFe.Create;
+  FComandoMFE    := TComandoIntegrador.Create;
   FIdentificador := TIdentificador.Create(FGerador);
   FParametro     := TParametro.Create(FGerador);
   FMetodo        := TMetodo.Create(FGerador);
@@ -410,6 +410,9 @@ begin
   FParametro.GerarParametro('dadosVenda','<![CDATA[' +FComandoMFE.AjustaComando(dadosVenda)+ ']]>',tcStr, False);
   FParametro.GerarParametro('nrDocumento',numeroSessao,tcInt);
   FMetodo.FinalizarMetodo;
+
+  //if FComandoMFE.ErroTimeout then
+  //  ConsultarSAT;
 
   Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarDadosVenda',FGerador.ArquivoFormatoXML);
   Result := FComandoMFE.PegaResposta( Resp );

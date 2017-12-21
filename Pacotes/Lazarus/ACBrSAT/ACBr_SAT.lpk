@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)"/>
     <Version Minor="1"/>
-    <Files Count="20">
+    <Files Count="16">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -83,32 +83,20 @@
         <UnitName Value="acbrsatmfe_integrador"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPe.pas"/>
-        <UnitName Value="pcnVFPe"/>
-      </Item16>
-      <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeR.pas"/>
-        <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="pcnVFPeR"/>
-      </Item17>
-      <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeW.pas"/>
-        <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="pcnVFPeW"/>
-      </Item18>
-      <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFeUtil.pas"/>
-        <UnitName Value="pcnMFeUtil"/>
-      </Item19>
-      <Item20>
         <Filename Value="..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoClass.pas"/>
         <UnitName Value="ACBrSATExtratoClass"/>
-      </Item20>
+      </Item16>
     </Files>
-    <RequiredPkgs Count="1">
+    <RequiredPkgs Count="3">
       <Item1>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBrVFPe"/>
       </Item1>
+      <Item2>
+        <PackageName Value="ACBrIntegrador"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

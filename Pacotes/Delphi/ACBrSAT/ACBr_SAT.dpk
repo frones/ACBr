@@ -35,7 +35,9 @@ requires
   ACBr_synapse,
   vclactnband,
   vclx,
-  ACBr_Diversos;
+  ACBr_Diversos,
+  ACBrIntegrador,
+  ACBrVFPe;
 
 contains
   ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas',
@@ -54,10 +56,6 @@ contains
   pcnRedeR in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeR.pas',
   pcnRedeW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeW.pas',
   ACBrSATMFe_integrador in '..\..\..\Fontes\ACBrSAT\ACBrSATMFe_integrador.pas',
-  pcnMFeUtil in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFeUtil.pas',
-  pcnIntegradorResposta in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnIntegradorResposta.pas',
-  pcnVFPe in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPe.pas',
-  pcnVFPeR in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeR.pas',
-  pcnVFPeW in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeW.pas';
+  pcnIntegradorResposta in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnIntegradorResposta.pas';
 
 end.

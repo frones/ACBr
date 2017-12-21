@@ -2,14 +2,19 @@
   This source is only used to compile and install the package.
  }
 
-unit ACBrDFeComum;
+unit ACBrVFPe;
 
 interface
 
 uses
-  ACBrDFeConfiguracoes, ACBrDFeWebService, ACBrDFeUtil, ACBrDFe, ACBrDFeSSL, 
-  ACBrDFeException, ACBrDFeRegUtil, ACBrDFeIntegrador;
+  pcnVFPeR, LazarusPackageIntf;
 
 implementation
 
+procedure Register;
+begin
+end;
+
+initialization
+  RegisterPackage('ACBrVFPe', @Register);
 end.

@@ -105,6 +105,10 @@ type
     FSalvar: Boolean;
     FParams: TStrings;
     FQuebradeLinha: String;
+    FUsaIntegrador: Boolean;
+    FTimeoutIntegrador: Integer;
+    FPastaInput : String;
+    FPastaOutput : String;
 
     procedure SetProxyHost(AValue: String);
     procedure SetProxyPass(AValue: String);
@@ -153,6 +157,11 @@ type
     property TimeOut: Integer read FTimeOut write SetTimeOut default 5000;
     property QuebradeLinha: String read FQuebradeLinha write FQuebradeLinha;
     property TimeZoneConf: TTimeZoneConf read FTimeZoneConf write FTimeZoneConf;
+
+    property UsaIntegrador: Boolean read FUsaIntegrador write FUsaIntegrador default False;
+    property TimeoutIntegrador: Integer read FTimeoutIntegrador write FTimeoutIntegrador default 30;
+    property PastaInput: String read FPastaInput write FPastaInput;
+    property PastaOutput: String read FPastaOutput write FPastaOutput;
   end;
 
   TOrdenacaoPathItem = class;

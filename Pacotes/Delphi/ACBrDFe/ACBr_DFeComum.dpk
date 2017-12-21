@@ -34,7 +34,13 @@ requires
   soaprtl,
   ACBr_OpenSSL,
   ACBr_TCP,
-  ACBr_PCNComum;
+  ACBr_PCNComum,
+  ACBr_Diversos,
+  ACBr_Comum,
+  ACBr_synapse,
+  vclactnband,
+  vclx,
+  ACBrIntegrador;
 
 contains
   ACBrDFeConfiguracoes in '..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas',
@@ -47,6 +53,7 @@ contains
   ACBrDFeQRCodeBar in '..\..\..\Fontes\ACBrDFe\ACBrDFeQRCodeBar.pas',
   ACBRDFeWinCrypt in '..\..\..\Fontes\ACBrDFe\ACBRDFeWinCrypt.pas',
   ACBrDFeHttpWinApi in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpWinApi.pas',
-  ACBrDFeXsMsXml in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXml.pas';
+  ACBrDFeXsMsXml in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXml.pas',
+  ACBrDFeIntegrador in '..\..\..\Fontes\ACBrDFe\ACBrDFeIntegrador.pas';
 
 end.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2014 rel. 2 (http://www.altova.com) by PRIVATE (private) -->
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/bpe" targetNamespace="http://www.portalfiscal.inf.br/bpe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralBPe_v1.00.xsd"/>
@@ -697,7 +697,7 @@ Informar se tpTrecho = 3</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
 												<xs:maxLength value="10"/>
-												<xs:minLength value="2"/>
+												<xs:minLength value="1"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>

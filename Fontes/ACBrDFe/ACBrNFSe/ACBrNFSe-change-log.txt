@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2017
+-- pnfsNFSeW_ABRASFv1 --
+[*] Ajustes visando o provedor Lexsom.
+   Por: Michel Ouriques
+
 15/12/2017
 -- pnfsNFSeR --
 [*] Ajustes visando o provedor SP

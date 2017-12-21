@@ -149,7 +149,7 @@ begin
   {$IFDEF FPC}
    FRetornoLst.StrictDelimiter := True;
   {$ELSE}
-   AValue := '"' + StringReplace(AValue, FRetornoLst.Delimiter,
+   Resp := '"' + StringReplace(Resp, FRetornoLst.Delimiter,
                             '"' + FRetornoLst.Delimiter + '"', [rfReplaceAll]) +
              '"';
   {$ENDIF}

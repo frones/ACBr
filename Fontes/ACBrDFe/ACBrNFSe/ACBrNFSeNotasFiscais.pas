@@ -854,17 +854,17 @@ var
 
   function PosNFSe: Integer;
   begin
-    TagF[01] := '</NFS-e>';
-    TagF[02] := '</CompNfse>';
-    TagF[03] := '</Nfse>';
-    TagF[04] := '</Nota>';
-    TagF[05] := '</NFe>';
-    TagF[06] := '</tbnfd>';
-    TagF[07] := '</nfs>';
+    TagF[01] := '</CompNfse>';
+    TagF[02] := '</ComplNfse>';
+    TagF[03] := '</NFS-e>';
+    TagF[04] := '</Nfse>';
+    TagF[05] := '</Nota>';
+    TagF[06] := '</NFe>';
+    TagF[07] := '</tbnfd>';
+    TagF[08] := '</nfs>';
     // Necessários para o Provedor EL
-    TagF[08] := '</nfeRpsNotaFiscal>';
-    TagF[09] := '</notasFiscais>';
-    TagF[10] := '</ComplNfse>';
+    TagF[09] := '</nfeRpsNotaFiscal>';
+    TagF[10] := '</notasFiscais>';
 
     i := 0;
 

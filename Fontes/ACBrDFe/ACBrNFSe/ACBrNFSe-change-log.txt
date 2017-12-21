@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2017
+-- ACBrNFSeNotasFiscais --
+[*] Alterado a ordem de busca pela tag que identifica o inicio de uma NFS-e.
+Por: Italo Jurisato Junior
+
 20/12/2017
 -- pnfsNFSeW_ABRASFv1 --
 [*] Ajustes visando o provedor Lexsom.

@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/12/2017
+[+] Inclusão do provedor ISSjoinville.
+Por: Sandro Felipe Adad/ Maiquel / Italo Jurisato Junior
+
 -- ACBrNFSeNotasFiscais --
 [*] Alterado a ordem de busca pela tag que identifica o inicio de uma NFS-e.
 Por: Italo Jurisato Junior

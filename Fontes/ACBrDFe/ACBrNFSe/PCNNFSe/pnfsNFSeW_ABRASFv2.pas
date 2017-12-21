@@ -144,7 +144,7 @@ begin
      (NFSe.Tomador.RazaoSocial <> '') or (NFSe.Tomador.Endereco.Endereco <> '') or
      (NFSe.Tomador.Contato.Telefone <> '') or (NFSe.Tomador.Contato.Email <> '') then
   begin
-    if (FProvedor in [proActcon, proVersaTecnologia]) or
+    if (FProvedor in [proActcon, proVersaTecnologia, proISSJoinville]) or
        ((FProvedor = proActconv2) and (FVersaoDados = '2.01')) then
       Gerador.wGrupoNFSe('TomadorServico')
     else
@@ -185,7 +185,7 @@ begin
     Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
     Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
 
-    if not (FProvedor in [proNFSeBrasil, proPronimv2]) or
+    if not (FProvedor in [proNFSeBrasil, proPronimv2, proISSJoinville]) or
        ((FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
       Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 
@@ -215,7 +215,7 @@ begin
       end;
     end;
 
-    if FProvedor in [proActcon, proVersaTecnologia] then
+    if FProvedor in [proActcon, proVersaTecnologia, proISSJoinville] then
       Gerador.wGrupoNFSe('/TomadorServico')
     else
       Gerador.wGrupoNFSe('/Tomador');
@@ -370,7 +370,8 @@ begin
     proNotaInteligente,
     proPronimv2,
     proSisPMJP,
-    proVitoria: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
+    proVitoria,
+    proISSJoinville: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     proABase,
     proEReceita,
@@ -638,8 +639,8 @@ begin
 
   case FProvedor of
     proABase, proBethav2, proDigifred, proEReceita, proFiorilli, proGovDigital,
-    proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH,
-    proSisPMJP:
+    proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
+    proISSJoinville:
       begin
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
         Gerador.wGrupoNFSe('Rps');
@@ -705,8 +706,8 @@ begin
     proFiorilli, proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
     proNEAInformatica, proNotaInteligente, proProdata, proPronimv2, proPVH,
     proSaatri, proSisPMJP, proSiam, proVirtual, proVersaTecnologia, proVitoria,
-    proWebISSv2, proActconv202, proSIAPNet, proBelford, proSystemPro,
-    proSH3: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+    proWebISSv2, proActconv202, proSIAPNet, proBelford, proSystemPro, proSH3,
+    proISSJoinville: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
   else
     Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
@@ -740,8 +741,8 @@ begin
         proEReceita: Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
         proABase, proBethav2, proFriburgo, proGovDigital, proNotaInteligente, proPronimv2,
-        proVersaTecnologia, proWebISSv2, proActconv202, proBelford,
-        proSH3, proSIAPNet: Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
+        proVersaTecnologia, proWebISSv2, proActconv202, proBelford, proSH3,
+        proSIAPNet, proISSJoinville: Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
         proTecnos: Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
 
@@ -756,7 +757,7 @@ begin
          proNEAInformatica, proNotaInteligente, proPronimv2,
          proProdata, proPVH, proSaatri, proSiam, proSisPMJP, proSystemPro,
          proVirtual, proVitoria, proVersaTecnologia, proWebISSv2, proActconv202,
-         proSH3, proSIAPNet, proBelford] then
+         proSH3, proSIAPNet, proBelford, proISSJoinville] then
         Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
       else
       begin

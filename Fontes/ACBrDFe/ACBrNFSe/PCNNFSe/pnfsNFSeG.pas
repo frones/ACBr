@@ -650,7 +650,30 @@ begin
      proSMARAPD:
           begin
             Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas
-          end
+          end;
+
+     proISSJoinville:
+          begin
+            Gerador.wGrupoNFSe('LoteRps' + aVersao + aIdentificador);
+            Gerador.Prefixo := Prefixo4;
+            Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
+            Gerador.wGrupoNFSe('Prestador');
+            Gerador.wGrupoNFSe('CpfCnpj');
+            if Length(Cnpj) <= 11 then
+              Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
+            else
+              Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
+            Gerador.wGrupoNFSe('/CpfCnpj');
+            Gerador.wGrupoNFSe('/Prestador');
+            Gerador.wCampoNFSe(tcInt, '#4', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
+            Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                       '<' + Prefixo4 + 'ListaRps>' +
+                                         Notas +
+                                       '</' + Prefixo4 + 'ListaRps>';
+            Gerador.Prefixo := Prefixo3;
+            Gerador.wGrupoNFSe('/LoteRps');
+          end;
+
   else begin
          Gerador.Prefixo := Prefixo3;
          if Provedor in [proCoplan, proSIAPNet] then

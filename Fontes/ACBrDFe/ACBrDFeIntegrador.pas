@@ -149,9 +149,10 @@ begin
   {$IFDEF FPC}
    FRetornoLst.StrictDelimiter := True;
   {$ELSE}
+   Resp := StringReplace(Resp, '"','', [rfReplaceAll]);
    Resp := '"' + StringReplace(Resp, FRetornoLst.Delimiter,
                             '"' + FRetornoLst.Delimiter + '"', [rfReplaceAll]) +
-             '"';
+             '"';     
   {$ENDIF}
   FRetornoLst.DelimitedText := Resp;
 

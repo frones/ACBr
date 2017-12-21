@@ -55,7 +55,6 @@ contains
   pcnRede in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRede.pas',
   pcnRedeR in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeR.pas',
   pcnRedeW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeW.pas',
-  ACBrSATMFe_integrador in '..\..\..\Fontes\ACBrSAT\ACBrSATMFe_integrador.pas',
-  pcnIntegradorResposta in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnIntegradorResposta.pas';
+  ACBrSATMFe_integrador in '..\..\..\Fontes\ACBrSAT\ACBrSATMFe_integrador.pas';
 
 end.

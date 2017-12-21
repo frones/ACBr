@@ -126,6 +126,9 @@ type
     Label26: TLabel;
     ACBr_SATWS_dpk: TCheckBox;
     ACBr_BPe_dpk: TCheckBox;
+    ACBr_ANe_dpk: TCheckBox;
+    ACBrIntegrador_dpk: TCheckBox;
+    ACBrVFPe_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -312,11 +315,16 @@ begin
       // dependencias da NFe e CTe
       if (ACBr_NFe_dpk.Checked) or (ACBr_CTe_dpk.Checked) or
         (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) or
-        (ACBr_BlocoX_dpk.Checked) or (ACBr_SATWS_dpk.Checked) then
+        (ACBr_BlocoX_dpk.Checked) or (ACBr_SATWS_dpk.Checked) or
+        (ACBr_BPe_dpk.Checked) or (ACBr_ANe_dpk.Checked) then
       begin
         ACBr_PCNComum_dpk.Checked := True;
         ACBr_OpenSSL_dpk.Checked := True;
+        ACBr_DFeComum_dpk.Checked := True;
       end;
+
+      if ACBr_DFeComum_dpk.Checked then
+        ACBrIntegrador_dpk.Checked := True;
 
       // dependencias do ACBrTEFD
       if not(ACBr_TCP_dpk.Checked) and (ACBr_TEFD_dpk.Checked or ACBr_MTER_dpk.Checked ) then

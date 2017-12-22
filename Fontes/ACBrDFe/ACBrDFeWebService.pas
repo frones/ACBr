@@ -174,6 +174,8 @@ destructor TDFeWebService.Destroy;
 begin
   FPDFeIntegrador.Free;
   FPParametrosIntegrador.Free;
+
+  inherited Destroy;
 end;
 
 procedure TDFeWebService.Clear;

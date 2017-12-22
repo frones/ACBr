@@ -2796,7 +2796,7 @@ begin
   if Assigned(FEventoRetorno) then
     FEventoRetorno.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 procedure TNFeEnvEvento.Clear;
@@ -3033,6 +3033,15 @@ begin
   if FPConfiguracoes.WebServices.UsaIntegrador then
   begin
     DefineDadosPadroesIntegrador;
+
+    if (EventoNFe.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and //Para cancelamento é necessário informar os dados da nota
+       (TACBrNFe(FPDFeOwner).NotasFiscais.Count > 0) then
+    begin
+      FPParametrosIntegrador.Values['NumeroNFCe'] := OnlyNumber(TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.infNFe.ID);
+      FPParametrosIntegrador.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Ide.dEmi);
+      FPParametrosIntegrador.Values['ValorNFCe'] := StringReplace(FormatFloat('0.00',TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
+    end;
+
     FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'RecepcaoEvento';
   end;
 end;
@@ -3579,7 +3588,7 @@ destructor TDistribuicaoDFe.Destroy;
 begin
   FretDistDFeInt.Free;
 
-  inherited;
+  inherited Destroy;
 end;
 
 procedure TDistribuicaoDFe.Clear;

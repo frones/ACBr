@@ -51,7 +51,7 @@ type
   public
     constructor Create(AOwner: TEnviarPagamento);
     destructor Destroy; override;
-    function LerXml: boolean;
+    procedure LerXml;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property EnviarPagamento: TEnviarPagamento read FEnviarPagamento write FEnviarPagamento;
@@ -65,7 +65,7 @@ type
   public
     constructor Create(AOwner: TRespostaPagamento);
     destructor Destroy; override;
-    function LerXml: boolean;
+    procedure LerXml;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property RespostaPagamento: TRespostaPagamento read FRespostaPagamento write FRespostaPagamento;
@@ -79,7 +79,7 @@ type
   public
     constructor Create(AOwner: TRespostaVerificarStatusValidador);
     destructor Destroy; override;
-    function LerXml: boolean;
+    procedure LerXml;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property RespostaVerificarStatusValidador: TRespostaVerificarStatusValidador read FRespostaVerificarStatusValidador write FRespostaVerificarStatusValidador;
@@ -93,7 +93,7 @@ type
   public
     constructor Create(AOwner: TRetornoRespostaFiscal);
     destructor Destroy; override;
-    function LerXml: boolean;
+    procedure LerXml;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property RetornoRespostaFiscal: TRetornoRespostaFiscal read FRetornoRespostaFiscal write FRetornoRespostaFiscal;
@@ -136,7 +136,6 @@ end;
 
 function TRespostaStatusPagamentoR.LerXml: boolean;
 begin
-  Result := False;
   RespostaStatusPagamento.Clear;
 
   if Leitor.rExtrai(1, 'Integrador') <> '' then
@@ -163,9 +162,8 @@ begin
   inherited Destroy;
 end;
 
-function TRespostaVerificarStatusValidadorR.LerXml: boolean;
+procedure TRespostaVerificarStatusValidadorR.LerXml;
 begin
-  Result := False;
   RespostaVerificarStatusValidador.Clear;
 
   if Leitor.rExtrai(1, 'Integrador') <> '' then
@@ -184,8 +182,6 @@ begin
 
     RespostaVerificarStatusValidador.IntegradorResposta.LerResposta(Leitor.Grupo);
   end ;
-
-  Result := True;
 end;
 
 { TRespostaPagamentoR }
@@ -202,9 +198,8 @@ begin
   inherited Destroy;
 end;
 
-function TRespostaPagamentoR.LerXml: boolean;
+procedure TRespostaPagamentoR.LerXml;
 begin
-  Result := False;
   RespostaPagamento.Clear;
 
   if Leitor.rExtrai(1, 'Integrador') <> '' then
@@ -215,8 +210,6 @@ begin
 
     RespostaPagamento.IntegradorResposta.LerResposta(Leitor.Grupo);
   end ;
-
-  Result := True;
 end;
 
 { TEnviarPagamentoR }
@@ -233,9 +226,8 @@ begin
   inherited Destroy;
 end;
 
-function TEnviarPagamentoR.LerXml: boolean;
+procedure TEnviarPagamentoR.LerXml;
 begin
-  Result := False;
   EnviarPagamento.Clear;
 
   if Leitor.rExtrai(1, 'Integrador') <> '' then
@@ -249,8 +241,6 @@ begin
     EnviarPagamento.IcmsBase             := Leitor.rCampo(tcDe2, 'IcmsBase');
     EnviarPagamento.ValorTotalVenda      := Leitor.rCampo(tcDe2, 'ValorTotalVenda');
   end ;
-
-  Result := True;
 end;
 
 { TRetornoRespostaFiscalR }
@@ -267,9 +257,8 @@ begin
   inherited Destroy;
 end;
 
-function TRetornoRespostaFiscalR.LerXml: boolean;
+procedure TRetornoRespostaFiscalR.LerXml;
 begin
-  Result := False;
   RetornoRespostaFiscal.Clear;
 
   if Leitor.rExtrai(1, 'Integrador') <> '' then
@@ -277,8 +266,6 @@ begin
     RetornoRespostaFiscal.IdRespostaFiscal := Leitor.rCampo(tcStr, 'retorno');
     RetornoRespostaFiscal.IntegradorResposta.LerResposta(Leitor.Grupo);
   end ;
-
-  Result := True;
 end;
 
 end.

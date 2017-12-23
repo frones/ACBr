@@ -69,6 +69,7 @@ const
                                  ' não implementada para o SAT: %s'+sLineBreak + sLineBreak +
                                  'Ajude no desenvolvimento do ACBrSAT. '+ sLineBreak+
                                  'Acesse nosso Forum em: http://projetoacbr.com.br/' ;
+  cACBrSATSemIntegrador        = 'Componente ACBrIntegrador não atribuido a ACBrSAT' ;
 type
 
   TACBrSATModelo = ( satNenhum, satDinamico_cdecl, satDinamico_stdcall, mfe_Integrador_XML ) ;

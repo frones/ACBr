@@ -3,15 +3,12 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2017 André Ferreira de Moraes               }
+{ Direitos Autorais Reservados (c) 2014 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo: André Ferreira de Moraes                        }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Esse arquivo usa a classe  PCN (c) 2009 - Paulo Casagrande                  }
-{  PCN - Projeto Cooperar NFe       (Found at URL:  www.projetocooperar.org)   }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -33,73 +30,36 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-unit ACBrIntegradorResposta;
+
+{$I ACBr.inc}
+
+unit ACBrIntegradorReg;
 
 interface
 
 uses
-  Classes, SysUtils, pcnLeitor, pcnConversao;
+  Classes, SysUtils, ACBrIntegrador
+  {$IFDEF FPC}, LResources {$ENDIF} ;
 
-type
-
-  { TIntegradorResposta }
-
-  TIntegradorResposta = class
-  private
-    FLeitor: TLeitor;
-    FIdentificador: Integer;
-    FCodigo: String;
-    FValor: String;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    procedure Clear;
-
-    procedure LerResposta( XML : String );
-  published
-    property Identificador: Integer read FIdentificador write FIdentificador;
-    property Codigo: String read FCodigo write FCodigo;
-    property Valor: String read FValor write FValor;
-  end;
+procedure Register;
 
 implementation
 
-{ TIntegradorResposta }
+{$IFNDEF FPC}
+   {$R ACBrIntegrador.dcr}
+{$ENDIF}
 
-constructor TIntegradorResposta.Create;
+procedure Register;
 begin
-  FLeitor := TLeitor.Create;
+  RegisterComponents('ACBrIntegrador', [TACBrIntegrador]);
 end;
 
-destructor TIntegradorResposta.Destroy;
-begin
-  FLeitor.Free;
-  inherited Destroy;
-end;
-
-procedure TIntegradorResposta.Clear;
-begin
-  FIdentificador := 0;
-  FCodigo        := '';
-  FValor         := '';
-end;
-
-procedure TIntegradorResposta.LerResposta(XML: String);
-begin
-  FLeitor.Arquivo := XML;
-
-  if FLeitor.rExtrai(1, 'Integrador') <> '' then
-  begin
-    if FLeitor.rExtrai(2, 'Identificador') <> '' then
-      FIdentificador := FLeitor.rCampo(tcInt, 'valor');
-
-    if FLeitor.rExtrai(2, 'IntegradorResposta') <> '' then
-    begin
-      FCodigo := FLeitor.rCampo(tcStr, 'Codigo');
-      FValor  := FLeitor.rCampo(tcStr, 'Valor');
-    end;
-  end ;
-end;
+{$IFDEF FPC}
+{$IFNDEF NOGUI}
+initialization
+   {$I ACBrIntegrador.lrs}
+{$ENDIF}
+{$ENDIF}
 
 end.
 

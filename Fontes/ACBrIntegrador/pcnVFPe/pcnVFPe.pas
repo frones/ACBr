@@ -48,7 +48,7 @@ uses
 type
 
   { TEnviarPagamento }
-  TEnviarPagamento = class(TPersistent)
+  TEnviarPagamento = class
   private
     FIdentificador: Integer;
     FChaveAcessoValidador: String;
@@ -89,7 +89,7 @@ type
   end;
 
   { TRespostaPagamento }
-  TRespostaPagamento = class(TPersistent)
+  TRespostaPagamento = class
   private
     FIntegradorResposta : TIntegradorResposta;
     FIDPagamento: Integer;
@@ -114,7 +114,7 @@ type
   end;
 
   { TVerificarStatusValidador }
-  TVerificarStatusValidador = class(TPersistent)
+  TVerificarStatusValidador = class
   private
     FIdentificador: Integer;
     FChaveAcessoValidador: String;
@@ -136,7 +136,7 @@ type
   end;
 
   { TRespostaVerificarStatusValidador }
-  TRespostaVerificarStatusValidador = class(TPersistent)
+  TRespostaVerificarStatusValidador = class
   private
     FIntegradorResposta : TIntegradorResposta;
     FCodigoAutorizacao : String;
@@ -177,7 +177,7 @@ type
   end;
 
   { TRespostaFiscal }
-  TRespostaFiscal = class(TPersistent)
+  TRespostaFiscal = class
   private
     FIdentificador: Integer;
     FChaveAcessoValidador: String;
@@ -213,7 +213,7 @@ type
   end;
 
   { TRetornoRespostaFiscal }
-  TRetornoRespostaFiscal = class(TPersistent)
+  TRetornoRespostaFiscal = class
   private
     FIntegradorResposta : TIntegradorResposta;
     FIdRespostaFiscal: String;
@@ -234,7 +234,7 @@ type
   end;
 
   { TStatusPagamento }
-  TStatusPagamento = class(TPersistent)
+  TStatusPagamento = class
   private
     FIdentificador: Integer;
     FChaveAcessoValidador: String;
@@ -274,7 +274,7 @@ type
   end;
 
   { TRespostaStatusPagamento }
-  TRespostaStatusPagamento = class(TPersistent)
+  TRespostaStatusPagamento = class
   private
     FIntegradorResposta : TIntegradorResposta;
     FRetorno: String;
@@ -296,7 +296,8 @@ type
 
 implementation
 
-Uses pcnVFPeW, pcnVFPeR ;
+Uses
+  pcnVFPeW, pcnVFPeR ;
 
 { TRespostaStatusPagamento }
 

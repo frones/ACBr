@@ -38,8 +38,9 @@ unit ACBrSATMFe_integrador ;
 interface
 
 uses
-  Classes, SysUtils, ACBrSATClass, pcnGerador, ACBrIntegradorUtil,
-  pcnVFPe;
+  Classes, SysUtils,
+  pcnGerador, pcnVFPeW, pcnVFPe,
+  ACBrSATClass, ACBrIntegrador, ACBrBase;
 
 const
   cNomeComponente = 'MF-e';
@@ -50,24 +51,20 @@ type
 
    TACBrSATMFe_integrador_XML = class( TACBrSATClass )
    private
-     FGerador: TGerador;
-     FComandoMFE: TComandoIntegrador;
-     FIdentificador: TIdentificador;
-     FParametro: TParametro;
-     FMetodo: TMetodo;
+     FIntegrador: TACBrIntegrador;
+     FOldOnGetNumeroSessao: TACBrIntegradorGetNumeroSessao;
+     FOldOnGravarLog: TACBrGravarLog;
 
-     FPastaInput : String;
-     FPastaOutput : String;
-     FTimeout : Integer;
-     procedure SetPastaInput(AValue: String);
-     procedure SetPastaOutput(AValue: String);
-     procedure SetTimeout(AValue: Integer);
+     function AjustaComando(const Comando: String): String;
+
+     procedure OnGetNumeroSessaoIntegrador(var ANumeroSessao: Integer);
+     procedure OnGravarLogIntegrador(const ALogLine: String; var Tratado: Boolean);
    protected
      procedure LoadDLLFunctions ; override;
      procedure UnLoadDLLFunctions; override;
 
    public
-     constructor Create( AOwner : TComponent ) ; override;
+     constructor Create(AOwner: TComponent); override;
      destructor Destroy; override;
 
      function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ):
@@ -93,43 +90,45 @@ type
      function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao : Integer; novoCodigo: AnsiString ) : String ; override;
 
-     function EnviarPagamento( Pagamento : TEnviarPagamento ): TRespostaPagamento;
-     function VerificarStatusValidador( VerificarStatusValidador : TVerificarStatusValidador ): TRespostaVerificarStatusValidador;
-     function RespostaFiscal( RespostaFiscal : TRespostaFiscal ): TRetornoRespostaFiscal;
-     function EnviarStatusPagamento( StatusPagamento : TStatusPagamento ): TRespostaStatusPagamento;
+     function EnviarPagamento(Pagamento: TEnviarPagamento): TRespostaPagamento;
+     function EnviarStatusPagamento(StatusPagamento: TStatusPagamento):
+       TRespostaStatusPagamento;
+     function VerificarStatusValidador(AVerificarStatusValidador: TVerificarStatusValidador):
+       TRespostaVerificarStatusValidador;
+     function RespostaFiscal(ARespostaFiscal: TRespostaFiscal): TRetornoRespostaFiscal;
 
-   published
-     property PastaInput  : String  read FPastaInput  write SetPastaInput;
-     property PastaOutput : String  read FPastaOutput write SetPastaOutput;
-     property Timeout     : Integer read FTimeout     write SetTimeout default 30;
    end;
 
 implementation
 
-Uses ACBrUtil, pcnConversao, dateutils, ACBrSAT;
+Uses
+  dateutils,
+  pcnConversao,
+  ACBrUtil, ACBrSAT;
 
-procedure TACBrSATMFe_integrador_XML.SetPastaInput(AValue: String);
+constructor TACBrSATMFe_integrador_XML.Create(AOwner : TComponent) ;
 begin
-  if FPastaInput=AValue then
-    Exit;
-  FPastaInput := AValue;
-  FComandoMFE.PastaInput := FPastaInput;
-end;
+  inherited Create(AOwner) ;
 
-procedure TACBrSATMFe_integrador_XML.SetPastaOutput(AValue: String);
-begin
-  if FPastaOutput=AValue then
-    Exit;
-  FPastaOutput := AValue;
-  FComandoMFE.PastaOutput := FPastaOutput;
-end;
+  FIntegrador := TACBrSAT(AOwner).Integrador;
+  if not Assigned(FIntegrador) then
+    raise EACBrSATErro.Create( cACBrSATSemIntegrador );
 
-procedure TACBrSATMFe_integrador_XML.SetTimeout(AValue: Integer);
+  FOldOnGetNumeroSessao := FIntegrador.OnGetNumeroSessao;
+  FOldOnGravarLog := FIntegrador.OnGravarLog;
+
+  FIntegrador.OnGetNumeroSessao := OnGetNumeroSessaoIntegrador;
+  FIntegrador.OnGravarLog := OnGravarLogIntegrador;
+
+  fpModeloStr := 'MFe_Integrador_XML' ;
+end ;
+
+destructor TACBrSATMFe_integrador_XML.Destroy;
 begin
-  if FTimeout=AValue then
-    Exit;
-  FTimeout := AValue;
-  FComandoMFE.Timeout := FTimeout;
+  FIntegrador.OnGetNumeroSessao := FOldOnGetNumeroSessao;
+  FIntegrador.OnGravarLog := FOldOnGravarLog;
+
+  inherited Destroy;
 end;
 
 procedure TACBrSATMFe_integrador_XML.LoadDLLFunctions;
@@ -142,430 +141,246 @@ begin
   //Não faz nada
 end;
 
-constructor TACBrSATMFe_integrador_XML.Create(AOwner : TComponent) ;
+procedure TACBrSATMFe_integrador_XML.OnGetNumeroSessaoIntegrador(
+  var ANumeroSessao: Integer);
 begin
-  inherited Create(AOwner) ;
+  ANumeroSessao := Self.numeroSessao;
+end;
 
-  fpModeloStr := 'MFe_Integrador_XML' ;
-  FGerador       := TGerador.Create;
-  FComandoMFE    := TComandoIntegrador.Create;
-  FIdentificador := TIdentificador.Create(FGerador);
-  FParametro     := TParametro.Create(FGerador);
-  FMetodo        := TMetodo.Create(FGerador);
-
-  FPastaInput  := 'C:\Integrador\Input\';
-  FPastaOutput := 'C:\Integrador\Output\';
-  FTimeout     := 30;
-
-  FComandoMFE.PastaInput := FPastaInput;
-  FComandoMFE.PastaOutput := FPastaOutput;
-  FComandoMFE.Timeout     := FTimeout;
-end ;
-
-destructor TACBrSATMFe_integrador_XML.Destroy;
+procedure TACBrSATMFe_integrador_XML.OnGravarLogIntegrador(
+  const ALogLine: String; var Tratado: Boolean);
 begin
-  FIdentificador.Free;
-  FParametro.Free;
-  FMetodo.Free;
-  FComandoMFE.Free;
-  FGerador.Free;
-  inherited Destroy;
+  TACBrSAT(Owner).DoLog( ALogLine );
+  Tratado := True;
+end;
+
+function TACBrSATMFe_integrador_XML.AjustaComando(const Comando: String
+  ): String;
+begin
+  Result := ChangeLineBreak(Comando,'');
+
+  while pos('  ', Result) > 0 do
+    Result := StringReplace(Result, '  ', ' ', [rfReplaceAll]);
+
+  Result := StringReplace(Result, '> <', '><', [rfReplaceAll]);;
 end;
 
 function TACBrSATMFe_integrador_XML.AssociarAssinatura(CNPJvalue,
   assinaturaCNPJs : AnsiString) : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'AssociarAssinatura');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('cnpjValue',CNPJvalue,tcStr);
-  FParametro.GerarParametro('assinaturaCNPJs',assinaturaCNPJs,tcStr);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'AssociarAssinatura',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'AssociarAssinatura';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  FIntegrador.Parametros.Values['cnpjValue']        := CNPJvalue;
+  FIntegrador.Parametros.Values['assinaturaCNPJs']  := assinaturaCNPJs;
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.AtivarSAT(subComando : Integer ;
   CNPJ : AnsiString; cUF : Integer) : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'AtivarMFe');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('subComando',subComando,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('CNPJ',CNPJ,tcStr);
-  FParametro.GerarParametro('cUF',cUF,tcInt);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'AtivarMFe',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'AtivarMFe';
+  FIntegrador.Parametros.Values['subComando']       := IntToStr(subComando);
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  FIntegrador.Parametros.Values['CNPJ']             := CNPJ;
+  FIntegrador.Parametros.Values['cUF']              := IntToStr(cUF);
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.AtualizarSoftwareSAT : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'AtualizarSoftwareMFe');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'AtualizarSoftwareMFe',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'AtualizarSoftwareMFe';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.BloquearSAT : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'BloquearMFe');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'BloquearMFe',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'BloquearMFe';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.CancelarUltimaVenda(chave,
   dadosCancelamento : AnsiString) : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'CancelarUltimaVenda');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('chave',OnlyNumber(chave),tcStr);
-  FParametro.GerarParametro('dadosCancelamento','<![CDATA[' +FComandoMFE.AjustaComando(dadosCancelamento)+ ']]>',tcStr, False);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'CancelarUltimaVenda',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'CancelarUltimaVenda';
+  FIntegrador.Parametros.Values['codigoDeAtivacao']  := codigoDeAtivacao;
+  FIntegrador.Parametros.Values['chave']             := OnlyNumber(chave);
+  FIntegrador.Parametros.Values['dadosCancelamento'] := '<![CDATA[' +AjustaComando(dadosCancelamento)+ ']]>';
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.ComunicarCertificadoICPBRASIL(
   certificado : AnsiString) : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ComunicarCertificadoICPBRASIL');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('certificado',certificado,tcStr);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'ComunicarCertificadoICPBRASIL',FGerador.ArquivoFormatoXML);
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'ComunicarCertificadoICPBRASIL';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  FIntegrador.Parametros.Values['certificado']      := certificado;
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.ConfigurarInterfaceDeRede(
   dadosConfiguracao : AnsiString) : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ConfigurarInterfaceDeRede');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('dadosConfiguracao',dadosConfiguracao,tcStr);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'ConfigurarInterfaceDeRede',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'ConfigurarInterfaceDeRede';
+  FIntegrador.Parametros.Values['codigoDeAtivacao']  := codigoDeAtivacao;
+  FIntegrador.Parametros.Values['dadosConfiguracao'] := '<![CDATA[' +AjustaComando(dadosConfiguracao)+ ']]>';
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.ConsultarNumeroSessao(cNumeroDeSessao : Integer
   ) : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ConsultarNumeroSessao');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('cNumeroDeSessao',cNumeroDeSessao,tcInt);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'ConsultarNumeroSessao',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'ConsultarNumeroSessao';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  FIntegrador.Parametros.Values['cNumeroDeSessao']  := IntToStr(cNumeroDeSessao);
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.ConsultarSAT : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ConsultarMFe');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'ConsultarMFe',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'ConsultarMFe';
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.ConsultarStatusOperacional : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ConsultarStatusOperacional');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'ConsultarStatusOperacional',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'ConsultarStatusOperacional';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.DesbloquearSAT : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'DesbloquearMFe');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'DesbloquearMFe',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'DesbloquearMFe';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'EnviarDadosVenda');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('dadosVenda','<![CDATA[' +FComandoMFE.AjustaComando(dadosVenda)+ ']]>',tcStr, False);
-  FParametro.GerarParametro('nrDocumento',numeroSessao,tcInt);
-  FMetodo.FinalizarMetodo;
-
-  //if FComandoMFE.ErroTimeout then
-  //  ConsultarSAT;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarDadosVenda',FGerador.ArquivoFormatoXML);
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'EnviarDadosVenda';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  FIntegrador.Parametros.Values['dadosVenda']       := '<![CDATA[' +AjustaComando(dadosVenda)+ ']]>';
+  FIntegrador.Parametros.Values['nrDocumento']      := IntToStr(numeroSessao);
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.ExtrairLogs : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ExtrairLogs');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'ExtrairLogs',FGerador.ArquivoFormatoXML);
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'ExtrairLogs';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.TesteFimAFim(dadosVenda : AnsiString) : String ;
-Var
-  Resp : String;
 begin
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'TesteFimAFim');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('dadosVenda','<![CDATA[' +FComandoMFE.AjustaComando(dadosVenda)+ ']]>',tcStr, False);
- // FParametro.GerarParametro('nrDocumento',numeroSessao,tcInt);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'TesteFimAFim',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'TesteFimAFim';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  FIntegrador.Parametros.Values['dadosVenda']       := '<![CDATA[' +AjustaComando(dadosVenda)+ ']]>';
+  //FIntegrador.Parametros.Values['nrDocumento']      := IntToStr(numeroSessao);
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.TrocarCodigoDeAtivacao(
   codigoDeAtivacaoOuEmergencia: AnsiString; opcao: Integer; novoCodigo: AnsiString
   ): String;
-Var
-  Resp : String;
 begin
   if codigoDeAtivacaoOuEmergencia = '' then
     codigoDeAtivacaoOuEmergencia := codigoDeAtivacao;
 
-  FGerador.LayoutArquivoTXT.Clear;
-
-  FGerador.ArquivoFormatoXML := '';
-  FGerador.ArquivoFormatoTXT := '';
-
-  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'TrocarCodigoDeAtivacao');
-  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
-  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('opcao',opcao,tcInt);
-  FParametro.GerarParametro('novoCodigo',novoCodigo,tcStr);
-  FParametro.GerarParametro('confNovoCodigo',novoCodigo,tcStr);
-  FMetodo.FinalizarMetodo;
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'TrocarCodigoDeAtivacao',FGerador.ArquivoFormatoXML);
-
-  Result := FComandoMFE.PegaResposta( Resp );
+  FIntegrador.Clear;
+  FIntegrador.NomeComponente := cNomeComponente;
+  FIntegrador.NomeMetodo := 'TrocarCodigoDeAtivacao';
+  FIntegrador.Parametros.Values['codigoDeAtivacao'] := codigoDeAtivacao;
+  FIntegrador.Parametros.Values['opcao']            := IntToStr(opcao);
+  FIntegrador.Parametros.Values['novoCodigo']       := novoCodigo;
+  FIntegrador.Parametros.Values['confNovoCodigo']   := novoCodigo;
+  Result := FIntegrador.Enviar;
 end ;
 
 function TACBrSATMFe_integrador_XML.EnviarPagamento(Pagamento: TEnviarPagamento
   ): TRespostaPagamento;
-var
-  Comando, SATResp : String;
 begin
+  TACBrSAT(Owner).DoLog('EnviarPagamento');
+
   Result := Nil;
   TACBrSAT(Owner).IniciaComando;
   try
-    Pagamento.Identificador := numeroSessao;
-    Comando := Pagamento.AsXMLString;
-    TACBrSAT(Owner).DoLog('EnviarPagamento( '+Comando+' )');
-
-    SATResp := FComandoMFE.EnviaComando(numeroSessao,'EnviarPagamento',Comando);
-
-    Result := TRespostaPagamento.Create;
-    Result.AsXMLString := SATResp;
+    Result := FIntegrador.EnviarPagamento(Pagamento);
   finally
-    TACBrSAT(Owner).FinalizaComando( SATResp );
-  end;
-end;
-
-function TACBrSATMFe_integrador_XML.VerificarStatusValidador(
-  VerificarStatusValidador: TVerificarStatusValidador
-  ): TRespostaVerificarStatusValidador;
-var
-  Comando, SATResp : String;
-begin
-  Result := Nil;
-  TACBrSAT(Owner).IniciaComando;
-  try
-    VerificarStatusValidador.Identificador := numeroSessao;
-    Comando := VerificarStatusValidador.AsXMLString;
-    TACBrSAT(Owner).DoLog('VerificarStatusValidador( '+Comando+' )');
-
-    SATResp := FComandoMFE.EnviaComando(numeroSessao,'VerificarStatusValidador',Comando);
-
-    Result := TRespostaVerificarStatusValidador.Create;
-    Result.AsXMLString := SATResp;
-  finally
-    TACBrSAT(Owner).FinalizaComando( SATResp );
-  end;
-end;
-
-function TACBrSATMFe_integrador_XML.RespostaFiscal(
-  RespostaFiscal: TRespostaFiscal): TRetornoRespostaFiscal;
-var
-  Comando, SATResp : String;
-begin
-  Result := Nil;
-  TACBrSAT(Owner).IniciaComando;
-  try
-    RespostaFiscal.Identificador := numeroSessao;
-    Comando := RespostaFiscal.AsXMLString;
-    TACBrSAT(Owner).DoLog('RespostaFiscal( '+Comando+' )');
-
-    SATResp := FComandoMFE.EnviaComando(numeroSessao,'RespostaFiscal',Comando);
-
-    Result := TRetornoRespostaFiscal.Create;
-    Result.AsXMLString := SATResp;
-  finally
-    TACBrSAT(Owner).FinalizaComando( SATResp );
+    TACBrSAT(Owner).FinalizaComando( Result.XML );
   end;
 end;
 
 function TACBrSATMFe_integrador_XML.EnviarStatusPagamento(
   StatusPagamento: TStatusPagamento): TRespostaStatusPagamento;
-var
-  Comando, Resp : String;
 begin
+  TACBrSAT(Owner).DoLog('EnviarStatusPagamento');
+
   Result := Nil;
   TACBrSAT(Owner).IniciaComando;
   try
-    StatusPagamento.Identificador := numeroSessao;
-    Comando := StatusPagamento.AsXMLString;
-    TACBrSAT(Owner).DoLog('EnviarStatusPagamento( '+Comando+' )');
-
-    Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarStatusPagamento',Comando);
-
-    Result := TRespostaStatusPagamento.Create;
-    Result.AsXMLString := Resp;
+    Result := FIntegrador.EnviarStatusPagamento(StatusPagamento);
   finally
-    TACBrSAT(Owner).FinalizaComando( Resp );
+    TACBrSAT(Owner).FinalizaComando( Result.XML );
+  end;
+end;
+
+function TACBrSATMFe_integrador_XML.VerificarStatusValidador(
+  AVerificarStatusValidador: TVerificarStatusValidador
+  ): TRespostaVerificarStatusValidador;
+begin
+  TACBrSAT(Owner).DoLog('VerificarStatusValidador');
+
+  Result := Nil;
+  TACBrSAT(Owner).IniciaComando;
+  try
+    Result := FIntegrador.VerificarStatusValidador(AVerificarStatusValidador);
+  finally
+    TACBrSAT(Owner).FinalizaComando( Result.XML );
+  end;
+end;
+
+function TACBrSATMFe_integrador_XML.RespostaFiscal(
+  ARespostaFiscal: TRespostaFiscal): TRetornoRespostaFiscal;
+begin
+  TACBrSAT(Owner).DoLog('RespostaFiscal');
+
+  Result := Nil;
+  TACBrSAT(Owner).IniciaComando;
+  try
+    Result := FIntegrador.RespostaFiscal(ARespostaFiscal);
+  finally
+    TACBrSAT(Owner).FinalizaComando( Result.XML );
   end;
 end;
 

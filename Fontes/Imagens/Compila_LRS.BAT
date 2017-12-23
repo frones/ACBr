@@ -267,6 +267,15 @@ echo "*   Arquivos   ACBrSAT.lrs, ACBrSATExtratoFortes.lrs   gerados     *"
 echo "********************************************************************"
 echo.
 
+:Integrador
+%1\tools\lazres.exe ACBrIntegrador.lrs TACBrIntegrador.png
+move ACBrIntegrador.lrs ..\ACBrIntegrador
+
+echo.
+echo "********************************************************************"
+echo "*   Arquivos   ACBrIntegrador.lrs  gerado     			 *"
+echo "********************************************************************"
+echo.
 
 :SEF2
 %1\tools\lazres.exe ACBrSEF2.lrs TACBrSEF2.png

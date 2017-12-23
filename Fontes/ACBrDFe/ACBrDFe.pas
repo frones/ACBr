@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrBase, ACBrDFeConfiguracoes, ACBrMail, ACBrDFeSSL,
+  ACBrBase, ACBrDFeConfiguracoes, ACBrMail, ACBrIntegrador, ACBrDFeSSL,
   pcnConversao;
 
 const
@@ -52,7 +52,6 @@ type
 
   TACBrDFeOnTransmitError = procedure(const HttpError, InternalError: Integer;
     const URL, DadosEnviados, SoapAction: String; var Retentar: Boolean; var Tratado: Boolean) of object ;
-  TACBrDFeGetNumeroSessao = procedure(var NumeroSessao: Integer) of object ;
 
   { TACBrDFe }
 	{$IFDEF RTL230_UP}
@@ -61,17 +60,17 @@ type
   TACBrDFe = class(TACBrComponent)
   private
     FMAIL: TACBrMail;
+    FIntegrador: TACBrIntegrador;
     FOnTransmitError: TACBrDFeOnTransmitError;
-    FGetNumeroSessao: TACBrDFeGetNumeroSessao;
     FSSL: TDFeSSL;
     FListaDeSchemas: TStringList;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
-    FNumeroSessao: Integer;
     function GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
     procedure SetAbout(AValue: String);
     procedure SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
     procedure SetMAIL(AValue: TACBrMail);
+    procedure SetIntegrador(AValue: TACBrIntegrador);
   protected
     FPConfiguracoes: TConfiguracoes;
     FPIniParams: TMemIniFile;
@@ -86,7 +85,6 @@ type
 
   public
     property SSL: TDFeSSL read FSSL;
-    property NumeroSessao: Integer read FNumeroSessao;
 
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -121,18 +119,15 @@ type
       const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
       VersaoBase: Double): String; virtual;
 
-    function GerarnumeroSessao : Integer ;
-
     procedure FazerLog(const Msg: String; out Tratado: Boolean);
     procedure GerarException(const Msg: String; E: Exception = nil);
     property Configuracoes: TConfiguracoes read FPConfiguracoes write FPConfiguracoes;
 
   published
     property MAIL: TACBrMail read FMAIL write SetMAIL;
+    property Integrador: TACBrIntegrador read FIntegrador write SetIntegrador;
     property OnTransmitError : TACBrDFeOnTransmitError read FOnTransmitError
        write FOnTransmitError;
-    property GetNumeroSessao : TACBrDFeGetNumeroSessao read FGetNumeroSessao
-       write FGetNumeroSessao;
     property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
     property About: String read GetAbout write SetAbout stored False;
 
@@ -159,7 +154,9 @@ begin
   FPConfiguracoes.SetSubComponent(True);{ para gravar no DFM/XFM }
   {$ENDIF}
 
-  FMAIL := nil;
+  FMAIL := Nil;
+  FIntegrador := Nil;
+
   // Criando uma instância de FSSL e atribuindo valores de "Configuracoes" a ela;
   FSSL := TDFeSSL.Create;
   FListaDeSchemas := TStringList.Create;
@@ -185,7 +182,6 @@ begin
 
   FOnGerarLog := nil;
   FOnTransmitError := nil;
-  FGetNumeroSessao := nil;
 
   FPIniParams := TMemIniFile.Create(Configuracoes.Arquivos.IniServicos);
   FPIniParamsCarregado := False;
@@ -570,17 +566,6 @@ begin
   Result := URL;
 end;
 
-function TACBrDFe.GerarnumeroSessao: Integer;
-begin
-  FNumeroSessao := Random(999999);
-
-  if Assigned( FGetNumeroSessao ) then
-     FGetNumeroSessao( FNumeroSessao ) ;
-
-  Result := FNumeroSessao;
-end;
-
-
 procedure TACBrDFe.FazerLog(const Msg: String; out Tratado: Boolean);
 begin
   Tratado := False;
@@ -616,8 +601,22 @@ begin
 
     FMAIL := AValue;
 
-    if AValue <> nil then
-      AValue.FreeNotification(self);
+    if AValue <> Nil then
+      AValue.FreeNotification(Self);
+  end;
+end;
+
+procedure TACBrDFe.SetIntegrador(AValue: TACBrIntegrador);
+begin
+  if AValue <> FIntegrador then
+  begin
+    if Assigned(FIntegrador) then
+      FIntegrador.RemoveFreeNotification(Self);
+
+    FIntegrador := AValue;
+
+    if AValue <> Nil then
+      AValue.FreeNotification(Self);
   end;
 end;
 
@@ -625,8 +624,14 @@ procedure TACBrDFe.Notification(AComponent: TComponent; Operation: TOperation);
 begin
   inherited Notification(AComponent, Operation);
 
-  if (Operation = opRemove) and (FMAIL <> nil) and (AComponent is TACBrMail) then
-    FMAIL := nil;
+  if (Operation = opRemove) then
+  begin
+    if (FMAIL <> Nil) and (AComponent is TACBrMail) then
+      FMAIL := Nil
+
+    else if (FIntegrador <> Nil) and (AComponent is TACBrIntegrador) then
+      FIntegrador := Nil;
+  end;
 end;
 
 end.

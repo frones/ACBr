@@ -67,11 +67,10 @@ type
 
     procedure ConfigurarSoapDEPC;
 
-    procedure DefineDadosPadroesIntegrador;
-
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
+    procedure DefinirDadosIntegrador; override;
     function GerarVersaoDadosSoap: String; override;
     procedure FinalizarServico; override;
 
@@ -99,6 +98,7 @@ type
     FxObs: String;
   protected
     procedure DefinirServicoEAction; override;
+    procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
@@ -145,6 +145,7 @@ type
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
+    procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
@@ -194,6 +195,7 @@ type
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
+    procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
     procedure FinalizarServico; override;
@@ -242,6 +244,7 @@ type
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirURL; override;
+    procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
@@ -289,6 +292,7 @@ type
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
+    procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
     function GerarUFSoap: String; override;
     function TratarResposta: Boolean; override;
@@ -346,6 +350,7 @@ type
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
+    procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
     procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
@@ -399,6 +404,7 @@ type
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
+    procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
 
@@ -440,6 +446,7 @@ type
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
+    procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
     procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
@@ -702,16 +709,6 @@ begin
   FPBodyElement := 'sceDadosMsg';
 end;
 
-procedure TNFeWebService.DefineDadosPadroesIntegrador;
-begin
-  FPNomeComponente := ifthen((FPConfiguracoesNFe.Geral.ModeloDF = moNFe),'NFE','NFCE');
-  FPNumeroSessao   := FPDFeOwner.GerarnumeroSessao;
-
-  FPParametrosIntegrador.Clear;
-  FPParametrosIntegrador.Values['versaoDados'] := FPVersaoServico;
-  FPParametrosIntegrador.Values['cUF'] := IntToStr(FPConfiguracoesNFe.WebServices.UFCodigo);
-end;
-
 procedure TNFeWebService.InicializarServico;
 begin
   { Sobrescrever apenas se necessário }
@@ -746,6 +743,14 @@ begin
 
   TACBrNFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL, FPServico, FPSoapAction);
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+
+procedure TNFeWebService.DefinirDadosIntegrador;
+begin
+  inherited DefinirDadosIntegrador;
+
+  if Assigned(FPIntegrador) then
+    FPIntegrador.NomeComponente := UpperCase(ModeloDFToPrefixo(FPConfiguracoesNFe.Geral.ModeloDF));
 end;
 
 
@@ -822,6 +827,14 @@ begin
   end;
 end;
 
+procedure TNFeStatusServico.DefinirDadosIntegrador;
+begin
+  inherited DefinirDadosIntegrador;
+
+  if Assigned(FPIntegrador) then
+    FPIntegrador.SetNomeMetodo('NfeStatusServico2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+end;
+
 procedure TNFeStatusServico.DefinirDadosMsg;
 var
   ConsStatServ: TConsStatServ;
@@ -839,12 +852,6 @@ begin
     FPDadosMsg := ConsStatServ.Gerador.ArquivoFormatoXML;
   finally
     ConsStatServ.Free;
-  end;
-
-  if FPConfiguracoes.WebServices.UsaIntegrador then
-  begin
-    DefineDadosPadroesIntegrador;
-    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeStatusServico2Soap12';
   end;
 end;
 
@@ -1071,6 +1078,20 @@ begin
     FPBodyElement := 'nfeDadosMsg';
 end;
 
+procedure TNFeRecepcao.DefinirDadosIntegrador;
+begin
+  inherited DefinirDadosIntegrador;
+
+  if Assigned(FPIntegrador) then
+  begin
+    //Atualmente não é possível enviar em LOTE com o Integrador
+    FPIntegrador.Parametros.Values['NumeroNFCe']         := OnlyNumber(FNotasFiscais.Items[0].NFe.infNFe.ID);
+    FPIntegrador.Parametros.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', FNotasFiscais.Items[0].NFe.Ide.dEmi);
+    FPIntegrador.Parametros.Values['ValorNFCe']          := StringReplace(FormatFloat('0.00',FNotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
+    FPIntegrador.SetNomeMetodo('NfeAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  end;
+end;
+
 procedure TNFeRecepcao.DefinirDadosMsg;
 var
   I: integer;
@@ -1101,16 +1122,6 @@ begin
       IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
 
   FRecibo := '';
-
-  if FPConfiguracoes.WebServices.UsaIntegrador then
-  begin
-    DefineDadosPadroesIntegrador;
-    //Atualmente não é possível enviar em LOTE com o Integrador
-    FPParametrosIntegrador.Values['NumeroNFCe'] := OnlyNumber(FNotasFiscais.Items[0].NFe.infNFe.ID);
-    FPParametrosIntegrador.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', FNotasFiscais.Items[0].NFe.Ide.dEmi);
-    FPParametrosIntegrador.Values['ValorNFCe'] := StringReplace(FormatFloat('0.00',FNotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
-    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeAutorizacaoLote12';
-  end;
 end;
 
 function TNFeRecepcao.TratarResposta: Boolean;
@@ -1493,6 +1504,14 @@ begin
   end;
 end;
 
+procedure TNFeRetRecepcao.DefinirDadosIntegrador;
+begin
+  inherited DefinirDadosIntegrador;
+
+  if Assigned(FPIntegrador) then
+    FPIntegrador.SetNomeMetodo('NfeRetAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+end;
+
 procedure TNFeRetRecepcao.DefinirDadosMsg;
 var
   ConsReciNFe: TConsReciNFe;
@@ -1508,12 +1527,6 @@ begin
     FPDadosMsg := ConsReciNFe.Gerador.ArquivoFormatoXML;
   finally
     ConsReciNFe.Free;
-  end;
-
-  if FPConfiguracoes.WebServices.UsaIntegrador then
-  begin
-    DefineDadosPadroesIntegrador;
-    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeRetAutorizacaoLote12';
   end;
 end;
 
@@ -1819,6 +1832,14 @@ begin
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
 
+procedure TNFeRecibo.DefinirDadosIntegrador;
+begin
+  inherited DefinirDadosIntegrador;
+
+  if Assigned(FPIntegrador) then
+    FPIntegrador.SetNomeMetodo('NfeRetAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+end;
+
 procedure TNFeRecibo.DefinirDadosMsg;
 var
   ConsReciNFe: TConsReciNFe;
@@ -1834,12 +1855,6 @@ begin
     FPDadosMsg := ConsReciNFe.Gerador.ArquivoFormatoXML;
   finally
     ConsReciNFe.Free;
-  end;
-
-  if FPConfiguracoes.WebServices.UsaIntegrador then
-  begin
-    DefineDadosPadroesIntegrador;
-    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeRetAutorizacaoLote12';
   end;
 end;
 
@@ -2021,6 +2036,14 @@ begin
   end;
 end;
 
+procedure TNFeConsulta.DefinirDadosIntegrador;
+begin
+  inherited DefinirDadosIntegrador;
+
+  if Assigned(FPIntegrador) then
+    FPIntegrador.SetNomeMetodo('NfeConsulta2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+end;
+
 procedure TNFeConsulta.DefinirDadosMsg;
 var
   ConsSitNFe: TConsSitNFe;
@@ -2036,12 +2059,6 @@ begin
     FPDadosMsg := ConsSitNFe.Gerador.ArquivoFormatoXML;
   finally
     ConsSitNFe.Free;
-  end;
-
-  if FPConfiguracoes.WebServices.UsaIntegrador then
-  begin
-    DefineDadosPadroesIntegrador;
-    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeConsulta2Soap12';
   end;
 end;
 
@@ -2410,7 +2427,7 @@ begin
   FJustificativa := TrimValue;
 end;
 
-function TNFeInutilizacao.GerarPathPorCNPJ(): String;
+function TNFeInutilizacao.GerarPathPorCNPJ: String;
 var
   CNPJ: String;
 begin
@@ -2478,6 +2495,14 @@ begin
   end;
 end;
 
+procedure TNFeInutilizacao.DefinirDadosIntegrador;
+begin
+  inherited DefinirDadosIntegrador;
+
+  if Assigned(FPIntegrador) then
+    FPIntegrador.SetNomeMetodo('NfeInutilizacao2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+end;
+
 procedure TNFeInutilizacao.DefinirDadosMsg;
 var
   InutNFe: TinutNFe;
@@ -2504,12 +2529,6 @@ begin
     FID := InutNFe.ID;
   finally
     InutNFe.Free;
-  end;
-
-  if FPConfiguracoes.WebServices.UsaIntegrador then
-  begin
-    DefineDadosPadroesIntegrador;
-    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'NfeInutilizacao2Soap12';
   end;
 end;
 
@@ -2692,6 +2711,14 @@ begin
   end;
 end;
 
+procedure TNFeConsultaCadastro.DefinirDadosIntegrador;
+begin
+  inherited DefinirDadosIntegrador;
+
+  if Assigned(FPIntegrador) then
+    FPIntegrador.SetNomeMetodo('CadConsultaCadastro2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+end;
+
 procedure TNFeConsultaCadastro.DefinirURL;
 var
   Versao: Double;
@@ -2733,12 +2760,6 @@ begin
     FPDadosMsg := ConCadNFe.Gerador.ArquivoFormatoXML;
   finally
     ConCadNFe.Free;
-  end;
-
-  if FPConfiguracoes.WebServices.UsaIntegrador then
-  begin
-    DefineDadosPadroesIntegrador;
-    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'CadConsultaCadastro2Soap12';
   end;
 end;
 
@@ -2895,6 +2916,25 @@ begin
   end;
 end;
 
+procedure TNFeEnvEvento.DefinirDadosIntegrador;
+begin
+  inherited DefinirDadosIntegrador;
+
+  if Assigned(FPIntegrador) then
+  begin
+    // Para cancelamento é necessário informar os dados da nota //
+    if (FEvento.Evento[0].InfEvento.tpEvento = teCancelamento) and
+       (TACBrNFe(FPDFeOwner).NotasFiscais.Count > 0) then
+    begin
+      FPIntegrador.Parametros.Values['NumeroNFCe'] := OnlyNumber(TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.infNFe.ID);
+      FPIntegrador.Parametros.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Ide.dEmi);
+      FPIntegrador.Parametros.Values['ValorNFCe'] := StringReplace(FormatFloat('0.00',TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
+    end;
+
+    FPIntegrador.SetNomeMetodo('RecepcaoEvento', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  end;
+end;
+
 procedure TNFeEnvEvento.DefinirDadosMsg;
 var
   EventoNFe: TEventoNFe;
@@ -3028,21 +3068,6 @@ begin
       FEvento.Evento[I].InfEvento.id := EventoNFe.Evento[I].InfEvento.id;
   finally
     EventoNFe.Free;
-  end;
-
-  if FPConfiguracoes.WebServices.UsaIntegrador then
-  begin
-    DefineDadosPadroesIntegrador;
-
-    if (EventoNFe.Evento.Items[0].InfEvento.tpEvento = teCancelamento) and //Para cancelamento é necessário informar os dados da nota
-       (TACBrNFe(FPDFeOwner).NotasFiscais.Count > 0) then
-    begin
-      FPParametrosIntegrador.Values['NumeroNFCe'] := OnlyNumber(TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.infNFe.ID);
-      FPParametrosIntegrador.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Ide.dEmi);
-      FPParametrosIntegrador.Values['ValorNFCe'] := StringReplace(FormatFloat('0.00',TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
-    end;
-
-    FPNomeMetodo     := ifthen((FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao),'H','')+'RecepcaoEvento';
   end;
 end;
 

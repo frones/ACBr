@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, pcnCFe, pcnRede, pcnCFeCanc, ACBrBase, ACBrSATClass,
-  ACBrSATExtratoClass, synacode, ACBrMail, ACBrDFeSSL;
+  ACBrSATExtratoClass, synacode, ACBrMail, ACBrIntegrador, ACBrDFeSSL;
 
 const
   CPREFIXO_CFe = 'CFe';
@@ -74,6 +74,7 @@ type
      fsSATClass : TACBrSATClass ;
      fsExtrato : TACBrSATExtratoClass;
      fsMAIL: TACBrMail;
+     fsIntegrador: TACBrIntegrador;
      fsSSL: TDFeSSL;
 
      fsArqLOG: String;
@@ -116,8 +117,10 @@ type
 
      procedure GravaLog(AString : AnsiString ) ;
      procedure SetExtrato(const Value: TACBrSATExtratoClass);
-    procedure SetMAIL(const AValue: TACBrMail);
-    function GravarStream(AStream: TStream): Boolean;
+     procedure SetMAIL(const AValue: TACBrMail);
+     procedure SetIntegrador(AValue: TACBrIntegrador);
+
+     function GravarStream(AStream: TStream): Boolean;
    protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
    public
@@ -139,7 +142,7 @@ type
 
      Property ModeloStr : String  read GetModeloStrClass;
 
-     property numeroSessao : Integer read fsnumeroSessao write fsnumeroSessao;
+     property numeroSessao : Integer read fsnumeroSessao;
      function GerarnumeroSessao : Integer ;
 
      property codigoDeAtivacao : AnsiString read GetcodigoDeAtivacao ;
@@ -205,6 +208,7 @@ type
 
    published
      property MAIL: TACBrMail read fsMAIL write SetMAIL;
+     property Integrador: TACBrIntegrador read fsIntegrador write SetIntegrador;
 
      property Modelo : TACBrSATModelo read fsModelo write SetModelo
                  default satNenhum ;
@@ -1505,6 +1509,20 @@ begin
   end;
 end;
 
+procedure TACBrSAT.SetIntegrador(AValue: TACBrIntegrador);
+begin
+  if AValue <> fsIntegrador then
+  begin
+    if Assigned(fsIntegrador) then
+      fsIntegrador.RemoveFreeNotification(Self);
+
+    fsIntegrador := AValue;
+
+    if AValue <> nil then
+      AValue.FreeNotification(self);
+  end;
+end;
+
 procedure TACBrSAT.SetModelo(AValue : TACBrSATModelo) ;
 var
   wArqLOG : String ;
@@ -1512,7 +1530,10 @@ begin
   if fsModelo = AValue then exit ;
 
   if fsInicializado then
-     raise EACBrSATErro.Create( cACBrSATSetModeloException );
+    raise EACBrSATErro.Create( cACBrSATSetModeloException );
+
+  if (AValue = mfe_Integrador_XML) and (not Assigned(fsIntegrador)) then
+    raise EACBrSATErro.Create( cACBrSATSemIntegrador );
 
   wArqLOG := ArqLOG ;
 
@@ -1584,8 +1605,17 @@ procedure TACBrSAT.Notification(AComponent : TComponent ; Operation : TOperation
 begin
   inherited Notification(AComponent, Operation) ;
 
-  if (Operation = opRemove) and (fsExtrato <> nil) and (AComponent is TACBrSATExtratoClass) then
-     fsExtrato := nil ;
+  if (Operation = opRemove) then
+  begin
+    if (fsExtrato <> Nil) and (AComponent is TACBrSATExtratoClass) then
+      fsExtrato := Nil
+
+    else if (fsMAIL <> Nil) and (AComponent is TACBrMail) then
+      fsMAIL := Nil
+
+    else if (fsIntegrador <> Nil) and (AComponent is TACBrIntegrador) then
+      fsIntegrador := Nil;
+  end;
 end ;
 
 procedure TACBrSAT.DecodificaRetorno6000;

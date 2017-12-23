@@ -1,4 +1,4 @@
-package ACBrIntegrador;
+package ACBr_Integrador;
 
 {$R *.res}
 {$ALIGN 8}
@@ -28,16 +28,15 @@ package ACBrIntegrador;
 requires
   rtl,
   ACBr_PCNComum,
-  ACBr_Diversos,
-  ACBr_Comum,
-  ACBr_synapse,
   designide,
-  vclactnband,
-  vclx,
   vcl;
 
 contains
+  ACBrIntegradorReg in '..\..\..\Fontes\ACBrIntegrador\ACBrIntegradorReg.pas',
+  ACBrIntegrador in '..\..\..\Fontes\ACBrIntegrador\ACBrIntegrador.pas',
   ACBrIntegradorResposta in '..\..\..\Fontes\ACBrIntegrador\ACBrIntegradorResposta.pas',
-  ACBrIntegradorUtil in '..\..\..\Fontes\ACBrIntegrador\ACBrIntegradorUtil.pas';
+  pcnVFPe in '..\..\..\Fontes\ACBrIntegrador\pcnVFPe\pcnVFPe.pas',
+  pcnVFPeR in '..\..\..\Fontes\ACBrIntegrador\pcnVFPe\pcnVFPeR.pas',
+  pcnVFPeW in '..\..\..\Fontes\ACBrIntegrador\pcnVFPe\pcnVFPeW.pas';
 
 end.

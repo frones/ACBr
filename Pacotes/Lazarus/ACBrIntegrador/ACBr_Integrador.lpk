@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_Integrador"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="André Ferreira de Moraes - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrIntegrador;..\..\..\Fontes\ACBrIntegrador\pcnVFPe"/>
+        <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrIntegrador\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBrIntegrador - Métodos para comunicação com o Integrador Fiscal"/>
+    <Version Minor="1"/>
+    <Files Count="6">
+      <Item1>
+        <Filename Value="..\..\..\Fontes\ACBrIntegrador\ACBrIntegradorReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrIntegradorReg"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\Fontes\ACBrIntegrador\ACBrIntegrador.pas"/>
+        <UnitName Value="ACBrIntegrador"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrIntegrador\ACBrIntegradorResposta.pas"/>
+        <UnitName Value="ACBrIntegradorResposta"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrIntegrador\pcnVFPe\pcnVFPe.pas"/>
+        <UnitName Value="pcnVFPe"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrIntegrador\pcnVFPe\pcnVFPeR.pas"/>
+        <UnitName Value="pcnVFPeR"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrIntegrador\pcnVFPe\pcnVFPeW.pas"/>
+        <UnitName Value="pcnVFPeW"/>
+      </Item6>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="PCNComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

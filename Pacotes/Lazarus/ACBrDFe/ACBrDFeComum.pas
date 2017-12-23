@@ -4,11 +4,12 @@
 
 unit ACBrDFeComum;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrDFeConfiguracoes, ACBrDFeWebService, ACBrDFeUtil, ACBrDFe, ACBrDFeSSL, 
-  ACBrDFeException, ACBrDFeRegUtil, ACBrDFeIntegrador;
+  ACBrDFeException, ACBrDFeRegUtil;
 
 implementation
 

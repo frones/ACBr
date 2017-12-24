@@ -837,7 +837,6 @@ libXmlSecMsCryptoHandle := 0;
 
 finalization
 
-  ;
 ShutDownXmlSec;
 
 end.

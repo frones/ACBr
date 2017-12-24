@@ -127,8 +127,7 @@ type
     ACBr_SATWS_dpk: TCheckBox;
     ACBr_BPe_dpk: TCheckBox;
     ACBr_ANe_dpk: TCheckBox;
-    ACBrIntegrador_dpk: TCheckBox;
-    ACBrVFPe_dpk: TCheckBox;
+    ACBr_Integrador_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -324,7 +323,7 @@ begin
       end;
 
       if ACBr_DFeComum_dpk.Checked then
-        ACBrIntegrador_dpk.Checked := True;
+        ACBr_Integrador_dpk.Checked := True;
 
       // dependencias do ACBrTEFD
       if not(ACBr_TCP_dpk.Checked) and (ACBr_TEFD_dpk.Checked or ACBr_MTER_dpk.Checked ) then

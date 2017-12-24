@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/12/2017
+-- ACBrUtil --
+[*] Ajustes para compilação em POSIX
+[*] Otimizações no código
+[*] Método "WriteToTXT", modificado para Criar o diretório de Destino, caso o
+    mesmo não exista, e se o Parâmetro: "ForceDirectory" esriver True (default)
+    (por: Waldir Paim e DSA)
+
 Data: 07/12/2017
 -- ACBrAAC --
 [-] Ajuste para o correto calculo do CRC quando o mesmo arquivo é aberto em

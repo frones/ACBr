@@ -58,7 +58,13 @@ Uses
     ,Windows, ShellAPI
   {$Else}
     {$IfNDef FPC}
+      {$IFDEF  POSIX}
+      ,Posix.Stdlib
+      ,Posix.Unistd
+      ,Posix.Fcntl
+      {$ELSE}
       ,Libc
+      {$EndIf}
     {$Else}
       ,unix, BaseUnix {$IfNDef NOGUI}, Forms{$EndIf}
     {$EndIf}
@@ -111,8 +117,8 @@ procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
 
-function ACBrStr( AString : String ) : String ;
-function ACBrStrToAnsi( AString : String ) : String ;
+function ACBrStr( const AString : String ) : String ;
+function ACBrStrToAnsi( const AString : String ) : String ;
 
 function NativeStringToUTF8( AString : String ) : AnsiString;
 function UTF8ToNativeString( AUTF8String : AnsiString ) : String;
@@ -308,8 +314,8 @@ function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer;
    var LibHandle: TLibHandle ): boolean; overload ;
 function UnLoadLibrary(LibName: String ): Boolean ;
 
-function FlushToDisk( sFile: string): boolean;
-function FlushFileToDisk( sFile: string): boolean;
+function FlushToDisk(const sFile: string): boolean;
+function FlushFileToDisk(const sFile: string): boolean;
 
 Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
@@ -319,7 +325,8 @@ function ForceForeground(AppHandle:THandle): boolean;
 
 Procedure WriteToFile( const Arq: String; ABinaryString : AnsiString);
 Procedure WriteToTXT( const ArqTXT : String; ABinaryString : AnsiString;
-   const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True );
+   const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True;
+   const ForceDirectory : Boolean = True);
 procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
    const Traduz : Boolean = False) ;
 function TranslateUnprintable( const ABinaryString: AnsiString ): String;
@@ -465,7 +472,7 @@ end;
   usam UTF-8. A função abaixo converte a "AString" de ANSI CP1252, para UNICODE
   ou UTF8, de acordo com as diretivas do Compilador
  -----------------------------------------------------------------------------}
-function ACBrStr( AString : String ) : String ;
+function ACBrStr( const AString : String ) : String ;
 begin
 {$IFDEF UNICODE}
   {$IFDEF FPC}
@@ -484,7 +491,7 @@ end ;
   usam UTF-8. A função abaixo, Converte a AString de UTF8 ou Unicode para a página
   de código nativa do Sistema Operacional, (apenas se o Compilador usar UNICODE)
  -----------------------------------------------------------------------------}
-function ACBrStrToAnsi(AString: String): String;
+function ACBrStrToAnsi( const AString: String): String;
 begin
 {$IFDEF UNICODE}
   {$IFDEF FPC}
@@ -2132,7 +2139,7 @@ begin
   For A := 1 to Length( AnsiStr ) do
   begin
      Letra := TiraAcento( AnsiStr[A] ) ;
-     if not CharInSet(Letra, [#32..#126,#13,#10,#8]) then    {Letras / numeros / pontos / sinais}
+     if not (Byte(Letra) in [32..126,13,10,8]) then    {Letras / numeros / pontos / sinais}
         Letra := ' ' ;
      Ret := Ret + Letra ;
   end ;
@@ -2873,7 +2880,7 @@ var
    Executed : Boolean ;
    PCharStr : PChar ;
   {$endif}
-  ConnectCommand : PChar;
+  ConnectCommand : PAnsiChar;
   {$ifdef LINUX}
    FullCommand : AnsiString;
   {$endif}
@@ -2884,8 +2891,8 @@ begin
         FullCommand := FullCommand + ' &' ;  { & = Rodar em BackGround }
 
      {$IFNDEF FPC}
-       ConnectCommand := PChar(FullCommand);
-       Libc.system(ConnectCommand);
+       ConnectCommand := PAnsiChar(FullCommand);
+       {$IFDEF POSIX}_system{$ELSE}Libc.system{$ENDIF}(ConnectCommand);
      {$ELSE}
        fpSystem(FullCommand)
      {$ENDIF}
@@ -2950,9 +2957,9 @@ begin
  {$ENDIF}
 end ;
 
+ function FlushToDisk(const sFile: string): boolean;
 {$IFDEF MSWINDOWS}
  { Fonte: http://stackoverflow.com/questions/1635947/how-to-make-sure-that-a-file-was-permanently-saved-on-usb-when-user-doesnt-use }
- function FlushToDisk( sFile: string): boolean;
  var
    hDrive: THandle;
    S:      string;
@@ -2978,19 +2985,18 @@ end ;
    Result := bResult;
  end;
 {$ELSE}
- function FlushToDisk(sFile: string): boolean;
  var
    hDrive: THandle;
  begin
    hDrive := fpOpen(sFile, O_Creat or O_RDWR {$IFDEF LINUX}or O_SYNC{$ENDIF});
-   Result := (fpfsync(hDrive) = 0);
-   fpClose(hDrive);
+   Result := {$IFDEF POSIX}fsync{$ELSE}fpfsync{$ENDIF}(hDrive) = 0;
+   {$IFDEF POSIX}__close{$ELSE}fpClose{$ENDIF}(hDrive);
  end ;
 {$ENDIF}
 
-{$IFDEF MSWINDOWS}
+ function FlushFileToDisk(const sFile: string): boolean;
+ {$IFDEF MSWINDOWS}
  { Discussão em: http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=5&t=5811 }
- function FlushFileToDisk( sFile: string): boolean;
  var
    hFile: THandle;
    //bResult: boolean;
@@ -3049,13 +3055,12 @@ end ;
     CloseHandle(hFile);
  end;
 {$ELSE}
- function FlushFileToDisk(sFile: string): boolean;
  var
    hDrive: THandle;
  begin
    hDrive := fpOpen(sFile, O_Creat or O_RDWR {$IFDEF LINUX}or O_SYNC{$ENDIF});
-   Result := (fpfsync(hDrive) = 0);
-   fpClose(hDrive);
+   Result := {$IFDEF POSIX}fsync{$ELSE}fpfsync{$ENDIF}(hDrive) = 0;
+   {$IFDEF POSIX}__close{$ELSE}fpClose{$ENDIF}(hDrive);
  end ;
 {$ENDIF}
 
@@ -3233,17 +3238,26 @@ end;
  - Se arquivo "ArqTXT" não existir, será criado.  Se "ArqTXT" já existir e
    "Append" for verdadeiro adiciona "AString" no final do arquivo
  ---------------------------------------------------------------------------- }
-procedure WriteToTXT(const ArqTXT : String; ABinaryString: AnsiString;
-  const AppendIfExists: Boolean; const AddLineBreak: Boolean);
+procedure WriteToTXT(const ArqTXT: String; ABinaryString: AnsiString;
+  const AppendIfExists: Boolean; const AddLineBreak: Boolean;
+  const ForceDirectory: Boolean);
 var
   FS : TFileStream ;
   LineBreak : AnsiString ;
+  VDirectory : String;
 begin
+  if ForceDirectory then
+  begin
+    VDirectory := ExtractFileDir(ArqTXT);
+    if not DirectoryExists(VDirectory) then
+      ForceDirectories(VDirectory);
+  end;
+
   FS := TFileStream.Create( ArqTXT,
                IfThen( AppendIfExists and FileExists(ArqTXT),
                        Integer(fmOpenReadWrite), Integer(fmCreate)) or fmShareDenyWrite );
   try
-     FS.Seek(0, soFromEnd);  // vai para EOF
+     FS.Seek(0, {$IFDEF COMPILER23_UP}soEnd{$ELSE}soFromEnd{$ENDIF});  // vai para EOF
      FS.Write(Pointer(ABinaryString)^,Length(ABinaryString));
 
      if AddLineBreak then
@@ -3458,6 +3472,18 @@ end;
 http://www.experts-exchange.com/Programming/Languages/Pascal/Delphi/Q_10147769.html
  ------------------------------------------------------------------------------}
 function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word = 0): AnsiString;
+{$IFDEF POSIX}
+var
+  R: RawByteString;
+begin
+  R := S;
+  if CP_Atual = 0 then
+    SetCodePage(R, CP_Destino, True)
+  else
+    SetCodePage(R, CP_ACP, True);
+  Result := R;
+end;
+{$ELSE}
 {$IfNDef MSWINDOWS}
  Var
    AnsiStr : AnsiString ;
@@ -3536,6 +3562,7 @@ function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word =
  begin
    Result := WideStringToStringEx( StringToWideStringEx(S, CP_Atual), CP_Destino);
  end;
+{$ENDIF}
 {$ENDIF}
 
 function MatchText(const AText: String; const AValues: array of String

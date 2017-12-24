@@ -32,6 +32,7 @@ requires
   designide,
   inet,
   soaprtl,
+  ACBr_Integrador,
   ACBr_OpenSSL,
   ACBr_TCP,
   ACBr_PCNComum,
@@ -39,8 +40,7 @@ requires
   ACBr_Comum,
   ACBr_synapse,
   vclactnband,
-  vclx,
-  ACBrIntegrador;
+  vclx;
 
 contains
   ACBrDFeConfiguracoes in '..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas',
@@ -53,7 +53,6 @@ contains
   ACBrDFeQRCodeBar in '..\..\..\Fontes\ACBrDFe\ACBrDFeQRCodeBar.pas',
   ACBRDFeWinCrypt in '..\..\..\Fontes\ACBrDFe\ACBRDFeWinCrypt.pas',
   ACBrDFeHttpWinApi in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpWinApi.pas',
-  ACBrDFeXsMsXml in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXml.pas',
-  ACBrDFeIntegrador in '..\..\..\Fontes\ACBrDFe\ACBrDFeIntegrador.pas';
+  ACBrDFeXsMsXml in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXml.pas';
 
 end.

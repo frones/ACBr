@@ -36,8 +36,7 @@ requires
   vclactnband,
   vclx,
   ACBr_Diversos,
-  ACBrIntegrador,
-  ACBrVFPe;
+  ACBr_Integrador;
 
 contains
   ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas',

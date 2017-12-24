@@ -749,8 +749,8 @@ procedure TNFeWebService.DefinirDadosIntegrador;
 begin
   inherited DefinirDadosIntegrador;
 
-  if Assigned(FPIntegrador) then
-    FPIntegrador.NomeComponente := UpperCase(ModeloDFToPrefixo(FPConfiguracoesNFe.Geral.ModeloDF));
+  if Assigned(FPDFeOwner.Integrador) then
+    FPDFeOwner.Integrador.NomeComponente := UpperCase(ModeloDFToPrefixo(FPConfiguracoesNFe.Geral.ModeloDF));
 end;
 
 
@@ -831,8 +831,8 @@ procedure TNFeStatusServico.DefinirDadosIntegrador;
 begin
   inherited DefinirDadosIntegrador;
 
-  if Assigned(FPIntegrador) then
-    FPIntegrador.SetNomeMetodo('NfeStatusServico2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  if Assigned(FPDFeOwner.Integrador) then
+    FPDFeOwner.Integrador.SetNomeMetodo('NfeStatusServico2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
 end;
 
 procedure TNFeStatusServico.DefinirDadosMsg;
@@ -1082,13 +1082,13 @@ procedure TNFeRecepcao.DefinirDadosIntegrador;
 begin
   inherited DefinirDadosIntegrador;
 
-  if Assigned(FPIntegrador) then
+  if Assigned(FPDFeOwner.Integrador) then
   begin
     //Atualmente não é possível enviar em LOTE com o Integrador
-    FPIntegrador.Parametros.Values['NumeroNFCe']         := OnlyNumber(FNotasFiscais.Items[0].NFe.infNFe.ID);
-    FPIntegrador.Parametros.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', FNotasFiscais.Items[0].NFe.Ide.dEmi);
-    FPIntegrador.Parametros.Values['ValorNFCe']          := StringReplace(FormatFloat('0.00',FNotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
-    FPIntegrador.SetNomeMetodo('NfeAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+    FPDFeOwner.Integrador.Parametros.Values['NumeroNFCe']         := OnlyNumber(FNotasFiscais.Items[0].NFe.infNFe.ID);
+    FPDFeOwner.Integrador.Parametros.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', FNotasFiscais.Items[0].NFe.Ide.dEmi);
+    FPDFeOwner.Integrador.Parametros.Values['ValorNFCe']          := StringReplace(FormatFloat('0.00',FNotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
+    FPDFeOwner.Integrador.SetNomeMetodo('NfeAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
   end;
 end;
 
@@ -1508,8 +1508,8 @@ procedure TNFeRetRecepcao.DefinirDadosIntegrador;
 begin
   inherited DefinirDadosIntegrador;
 
-  if Assigned(FPIntegrador) then
-    FPIntegrador.SetNomeMetodo('NfeRetAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  if Assigned(FPDFeOwner.Integrador) then
+    FPDFeOwner.Integrador.SetNomeMetodo('NfeRetAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
 end;
 
 procedure TNFeRetRecepcao.DefinirDadosMsg;
@@ -1836,8 +1836,8 @@ procedure TNFeRecibo.DefinirDadosIntegrador;
 begin
   inherited DefinirDadosIntegrador;
 
-  if Assigned(FPIntegrador) then
-    FPIntegrador.SetNomeMetodo('NfeRetAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  if Assigned(FPDFeOwner.Integrador) then
+    FPDFeOwner.Integrador.SetNomeMetodo('NfeRetAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
 end;
 
 procedure TNFeRecibo.DefinirDadosMsg;
@@ -2040,8 +2040,8 @@ procedure TNFeConsulta.DefinirDadosIntegrador;
 begin
   inherited DefinirDadosIntegrador;
 
-  if Assigned(FPIntegrador) then
-    FPIntegrador.SetNomeMetodo('NfeConsulta2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  if Assigned(FPDFeOwner.Integrador) then
+    FPDFeOwner.Integrador.SetNomeMetodo('NfeConsulta2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
 end;
 
 procedure TNFeConsulta.DefinirDadosMsg;
@@ -2499,8 +2499,8 @@ procedure TNFeInutilizacao.DefinirDadosIntegrador;
 begin
   inherited DefinirDadosIntegrador;
 
-  if Assigned(FPIntegrador) then
-    FPIntegrador.SetNomeMetodo('NfeInutilizacao2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  if Assigned(FPDFeOwner.Integrador) then
+    FPDFeOwner.Integrador.SetNomeMetodo('NfeInutilizacao2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
 end;
 
 procedure TNFeInutilizacao.DefinirDadosMsg;
@@ -2715,8 +2715,8 @@ procedure TNFeConsultaCadastro.DefinirDadosIntegrador;
 begin
   inherited DefinirDadosIntegrador;
 
-  if Assigned(FPIntegrador) then
-    FPIntegrador.SetNomeMetodo('CadConsultaCadastro2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  if Assigned(FPDFeOwner.Integrador) then
+    FPDFeOwner.Integrador.SetNomeMetodo('CadConsultaCadastro2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
 end;
 
 procedure TNFeConsultaCadastro.DefinirURL;
@@ -2920,18 +2920,18 @@ procedure TNFeEnvEvento.DefinirDadosIntegrador;
 begin
   inherited DefinirDadosIntegrador;
 
-  if Assigned(FPIntegrador) then
+  if Assigned(FPDFeOwner.Integrador) then
   begin
     // Para cancelamento é necessário informar os dados da nota //
     if (FEvento.Evento[0].InfEvento.tpEvento = teCancelamento) and
        (TACBrNFe(FPDFeOwner).NotasFiscais.Count > 0) then
     begin
-      FPIntegrador.Parametros.Values['NumeroNFCe'] := OnlyNumber(TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.infNFe.ID);
-      FPIntegrador.Parametros.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Ide.dEmi);
-      FPIntegrador.Parametros.Values['ValorNFCe'] := StringReplace(FormatFloat('0.00',TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
+      FPDFeOwner.Integrador.Parametros.Values['NumeroNFCe'] := OnlyNumber(TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.infNFe.ID);
+      FPDFeOwner.Integrador.Parametros.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Ide.dEmi);
+      FPDFeOwner.Integrador.Parametros.Values['ValorNFCe'] := StringReplace(FormatFloat('0.00',TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
     end;
 
-    FPIntegrador.SetNomeMetodo('RecepcaoEvento', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+    FPDFeOwner.Integrador.SetNomeMetodo('RecepcaoEvento', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
   end;
 end;
 

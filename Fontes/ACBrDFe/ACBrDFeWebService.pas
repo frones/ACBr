@@ -66,7 +66,6 @@ type
     FPURL: String;
     FPVersaoServico: String;
     FPConfiguracoes: TConfiguracoes;
-    FPIntegrador: TACBrIntegrador;
     FPDFeOwner: TACBrDFe;
     FPArqEnv: String;
     FPArqResp: String;
@@ -142,7 +141,6 @@ constructor TDFeWebService.Create(AOwner: TACBrDFe);
 begin
   FPDFeOwner := AOwner;
   FPConfiguracoes := AOwner.Configuracoes;
-  FPIntegrador := AOwner.Integrador;
 
   FPSoapVersion := 'soap12';
   FPHeaderElement := 'nfeCabecMsg';
@@ -170,8 +168,8 @@ begin
   FPRetornoWS := '';
   FPRetWS := '';
   FPMsg := '';
-  if Assigned(FPIntegrador) then
-    FPIntegrador.Clear;
+  if Assigned(FPDFeOwner.Integrador) then
+    FPDFeOwner.Integrador.Clear;
 end;
 
 function TDFeWebService.Executar: Boolean;
@@ -184,7 +182,7 @@ begin
   InicializarServico;
   try
     DefinirDadosMsg;
-    if Assigned(FPIntegrador) then
+    if Assigned(FPDFeOwner.Integrador) then
       DefinirDadosIntegrador;
 
     DefinirEnvelopeSoap;
@@ -261,11 +259,11 @@ end;
 
 procedure TDFeWebService.DefinirDadosIntegrador;
 begin
-  if not Assigned(FPIntegrador) then Exit;
+  if not Assigned(FPDFeOwner.Integrador) then Exit;
 
-  FPIntegrador.Clear;
-  FPIntegrador.Parametros.Values['versaoDados'] := FPVersaoServico;
-  FPIntegrador.Parametros.Values['cUF'] := IntToStr(FPConfiguracoes.WebServices.UFCodigo);
+  FPDFeOwner.Integrador.Clear;
+  FPDFeOwner.Integrador.Parametros.Values['versaoDados'] := FPVersaoServico;
+  FPDFeOwner.Integrador.Parametros.Values['cUF'] := IntToStr(FPConfiguracoes.WebServices.UFCodigo);
 
   { Sobrescrever nas classes filhas, para informar NomeComponente, NomeMetodo }
 end;
@@ -349,10 +347,10 @@ begin
     Tratado := False;
 
     try
-      if Assigned( FPIntegrador ) then
+      if Assigned( FPDFeOwner.Integrador ) then
       begin
-        FPIntegrador.Parametros.Values['dados'] := EncodeBase64(FPEnvelopeSoap);
-        FPRetornoWS := FPIntegrador.Enviar;
+        FPDFeOwner.Integrador.Parametros.Values['dados'] := EncodeBase64(FPEnvelopeSoap);
+        FPRetornoWS := FPDFeOwner.Integrador.Enviar;
       end
       else
         FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);

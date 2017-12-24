@@ -2880,7 +2880,7 @@ var
    Executed : Boolean ;
    PCharStr : PChar ;
   {$endif}
-  ConnectCommand : PAnsiChar;
+  ConnectCommand : PChar;
   {$ifdef LINUX}
    FullCommand : AnsiString;
   {$endif}
@@ -2891,7 +2891,7 @@ begin
         FullCommand := FullCommand + ' &' ;  { & = Rodar em BackGround }
 
      {$IFNDEF FPC}
-       ConnectCommand := PAnsiChar(FullCommand);
+       ConnectCommand := PChar(FullCommand);
        {$IFDEF POSIX}_system{$ELSE}Libc.system{$ENDIF}(ConnectCommand);
      {$ELSE}
        fpSystem(FullCommand)

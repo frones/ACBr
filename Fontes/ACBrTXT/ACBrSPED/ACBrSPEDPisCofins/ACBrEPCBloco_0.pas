@@ -565,6 +565,7 @@ type
   public
     function New(AOwner: TRegistro0001): TRegistro0500;
     property Items[Index: Integer]: TRegistro0500 read GetItem write SetItem;
+    function LocalizaRegistro(const ACOD_CTA : string) : Boolean;
   end;
 
   //REGISTRO 0600: CENTRO DE CUSTOS
@@ -973,6 +974,19 @@ end;
 function TRegistro0500List.GetItem(Index: Integer): TRegistro0500;
 begin
   Result := TRegistro0500(Inherited Items[Index]);
+end;
+
+function TRegistro0500List.LocalizaRegistro(const ACOD_CTA: string): Boolean;
+var
+  I: integer;
+begin
+  for I := 0 to Pred(Count) do
+    if Items[I].COD_CTA = ACOD_CTA then
+    begin
+      Result := True;
+      Exit;
+    end;
+  Result := False;
 end;
 
 function TRegistro0500List.New(AOwner: TRegistro0001): TRegistro0500;

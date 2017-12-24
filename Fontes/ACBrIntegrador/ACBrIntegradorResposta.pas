@@ -42,6 +42,7 @@ uses
 
 type
 
+{$M+}
   { TIntegradorResposta }
 
   TIntegradorResposta = class
@@ -55,12 +56,14 @@ type
     destructor Destroy; override;
     procedure Clear;
 
-    procedure LerResposta( XML : String );
+    procedure LerResposta(const XML: AnsiString);
   published
     property Identificador: Integer read FIdentificador write FIdentificador;
     property Codigo: String read FCodigo write FCodigo;
     property Valor: String read FValor write FValor;
   end;
+
+{$M-}
 
 implementation
 
@@ -84,7 +87,7 @@ begin
   FValor         := '';
 end;
 
-procedure TIntegradorResposta.LerResposta(XML: String);
+procedure TIntegradorResposta.LerResposta(const XML: AnsiString);
 begin
   FLeitor.Arquivo := XML;
 

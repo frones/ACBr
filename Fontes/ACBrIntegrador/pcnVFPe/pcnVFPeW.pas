@@ -80,6 +80,7 @@ type
     procedure GerarParametro( Nome: String; Valor: Variant; Tipo: TpcnTipoCampo; ParseTextoXML: Boolean = True );
   end;
 
+{$M+}
   { TEnviarPagamentoW }
   TEnviarPagamentoW = class
   private
@@ -144,6 +145,7 @@ type
     property Opcoes: TGeradorOpcoes read GetOpcoes ;
   end;
 
+{$M-}
 
 implementation
 

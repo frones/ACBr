@@ -47,6 +47,7 @@ uses
 
 type
 
+{$M+}
   { TEnviarPagamento }
   TEnviarPagamento = class
   private
@@ -293,6 +294,8 @@ type
     property Retorno: String read FRetorno write FRetorno;
     property XML : AnsiString read FXML write SetXMLString;
   end;
+
+{$M-}
 
 implementation
 

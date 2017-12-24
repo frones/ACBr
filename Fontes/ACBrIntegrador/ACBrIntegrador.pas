@@ -40,6 +40,11 @@ unit ACBrIntegrador;
 interface
 
 uses
+{$IFDEF MSWINDOWS}
+ {$IFNDEF FPC}
+  Windows,
+ {$ENDIF}
+{$ENDIF}
   Classes, SysUtils,
   pcnGerador, pcnLeitor, pcnVFPe, pcnVFPeW, pcnVFPeR,
   ACBrBase;
@@ -548,7 +553,9 @@ function TACBrIntegrador.EnviarPagamento(Pagamento: TEnviarPagamento
 var
   Comando, Resp : String;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := Nil;
+{$ENDIF}
   GerarNumeroSessao;
 
   Pagamento.Identificador := numeroSessao;
@@ -566,7 +573,9 @@ function TACBrIntegrador.EnviarStatusPagamento(
 var
   Comando, Resp : String;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := Nil;
+{$ENDIF}
   GerarNumeroSessao;
 
   StatusPagamento.Identificador := numeroSessao;
@@ -585,7 +594,9 @@ function TACBrIntegrador.VerificarStatusValidador(
 var
   Comando, Resp : String;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := Nil;
+{$ENDIF}
   GerarNumeroSessao;
 
   AVerificarStatusValidador.Identificador := numeroSessao;
@@ -603,7 +614,9 @@ function TACBrIntegrador.RespostaFiscal(
 var
   Comando, Resp : String;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := Nil;
+{$ENDIF}
   GerarNumeroSessao;
 
   ARespostaFiscal.Identificador := numeroSessao;

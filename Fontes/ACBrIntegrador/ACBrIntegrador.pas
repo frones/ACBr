@@ -284,12 +284,17 @@ end;
 function TComandoIntegrador.PegaResposta(Resp: String): String;
 begin
   FLeitor.Arquivo := Resp;
-  if FLeitor.rExtrai(1, 'Resposta') <> '' then
+  if FLeitor.rExtrai(1, 'retorno') <> '' then
     Result := FLeitor.rCampo(tcStr, 'retorno')
+  else if FLeitor.rExtrai(1, 'Resposta') <> '' then
+    Result := FLeitor.rCampo(tcStr, 'Resposta')
   else if FLeitor.rExtrai(1, 'Erro') <> '' then
     Result := FLeitor.Grupo
   else
-    Result := Resp
+    Result := Resp;
+
+  if EstaVazio(Result) then
+    Result := Resp;
 end;
 
 function TComandoIntegrador.AguardaArqResposta(numeroSessao: Integer): String;

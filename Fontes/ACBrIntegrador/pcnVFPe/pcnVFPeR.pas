@@ -136,13 +136,12 @@ end;
 
 function TRespostaStatusPagamentoR.LerXml: boolean;
 begin
+  Leitor.Grupo := Leitor.Arquivo;
+
   RespostaStatusPagamento.Clear;
 
-  if Leitor.rExtrai(1, 'Integrador') <> '' then
-  begin
-    RespostaStatusPagamento.Retorno := Leitor.rCampo(tcStr, 'retorno');
-    RespostaStatusPagamento.IntegradorResposta.LerResposta(Leitor.Grupo);
-  end ;
+  RespostaStatusPagamento.Retorno := Leitor.rCampo(tcStr, 'retorno');
+  RespostaStatusPagamento.IntegradorResposta.LerResposta(Leitor.Grupo);
 
   Result := True;
 end;
@@ -164,24 +163,23 @@ end;
 
 procedure TRespostaVerificarStatusValidadorR.LerXml;
 begin
+  Leitor.Grupo := Leitor.Arquivo;
+
   RespostaVerificarStatusValidador.Clear;
 
-  if Leitor.rExtrai(1, 'Integrador') <> '' then
-  begin
-    RespostaVerificarStatusValidador.CodigoAutorizacao := Leitor.rCampo(tcStr, 'CodigoAutorizacao');
-    RespostaVerificarStatusValidador.Bin := Leitor.rCampo(tcStr, 'Bin');
-    RespostaVerificarStatusValidador.DonoCartao := Leitor.rCampo(tcStr, 'DonoCartao');
-    RespostaVerificarStatusValidador.DataExpiracao := Leitor.rCampo(tcStr, 'DataExpiracao');
-    RespostaVerificarStatusValidador.InstituicaoFinanceira := Leitor.rCampo(tcStr, 'InstituicaoFinanceira');
-    RespostaVerificarStatusValidador.Parcelas := Leitor.rCampo(tcInt, 'Parcelas');
-    RespostaVerificarStatusValidador.UltimosQuatroDigitos := Leitor.rCampo(tcInt, 'UltimosQuatroDigitos');
-    RespostaVerificarStatusValidador.CodigoPagamento := Leitor.rCampo(tcStr, 'CodigoPagamento');
-    RespostaVerificarStatusValidador.ValorPagamento := Leitor.rCampo(tcDe2, 'ValorPagamento');
-    RespostaVerificarStatusValidador.idFila := Leitor.rCampo(tcInt, 'idFila');
-    RespostaVerificarStatusValidador.Tipo := Leitor.rCampo(tcStr, 'Tipo');
+  RespostaVerificarStatusValidador.CodigoAutorizacao := Leitor.rCampo(tcStr, 'CodigoAutorizacao');
+  RespostaVerificarStatusValidador.Bin := Leitor.rCampo(tcStr, 'Bin');
+  RespostaVerificarStatusValidador.DonoCartao := Leitor.rCampo(tcStr, 'DonoCartao');
+  RespostaVerificarStatusValidador.DataExpiracao := Leitor.rCampo(tcStr, 'DataExpiracao');
+  RespostaVerificarStatusValidador.InstituicaoFinanceira := Leitor.rCampo(tcStr, 'InstituicaoFinanceira');
+  RespostaVerificarStatusValidador.Parcelas := Leitor.rCampo(tcInt, 'Parcelas');
+  RespostaVerificarStatusValidador.UltimosQuatroDigitos := Leitor.rCampo(tcInt, 'UltimosQuatroDigitos');
+  RespostaVerificarStatusValidador.CodigoPagamento := Leitor.rCampo(tcStr, 'CodigoPagamento');
+  RespostaVerificarStatusValidador.ValorPagamento := Leitor.rCampo(tcDe2, 'ValorPagamento');
+  RespostaVerificarStatusValidador.idFila := Leitor.rCampo(tcInt, 'idFila');
+  RespostaVerificarStatusValidador.Tipo := Leitor.rCampo(tcStr, 'Tipo');
 
-    RespostaVerificarStatusValidador.IntegradorResposta.LerResposta(Leitor.Grupo);
-  end ;
+  RespostaVerificarStatusValidador.IntegradorResposta.LerResposta(Leitor.Grupo);
 end;
 
 { TRespostaPagamentoR }
@@ -200,16 +198,15 @@ end;
 
 procedure TRespostaPagamentoR.LerXml;
 begin
+  Leitor.Grupo := Leitor.Arquivo;
+
   RespostaPagamento.Clear;
 
-  if Leitor.rExtrai(1, 'Integrador') <> '' then
-  begin
-    RespostaPagamento.IDPagamento     := Leitor.rCampo(tcInt, 'IDPagamento');
-    RespostaPagamento.Mensagem        := Leitor.rCampo(tcStr, 'Mensagem');
-    RespostaPagamento.StatusPagamento := Leitor.rCampo(tcStr, 'StatusPagamento');
+  RespostaPagamento.IDPagamento     := Leitor.rCampo(tcInt, 'IDPagamento');
+  RespostaPagamento.Mensagem        := Leitor.rCampo(tcStr, 'Mensagem');
+  RespostaPagamento.StatusPagamento := Leitor.rCampo(tcStr, 'StatusPagamento');
 
-    RespostaPagamento.IntegradorResposta.LerResposta(Leitor.Grupo);
-  end ;
+  RespostaPagamento.IntegradorResposta.LerResposta(Leitor.Arquivo);
 end;
 
 { TEnviarPagamentoR }
@@ -228,19 +225,18 @@ end;
 
 procedure TEnviarPagamentoR.LerXml;
 begin
+  Leitor.Grupo := Leitor.Arquivo;
+
   EnviarPagamento.Clear;
 
-  if Leitor.rExtrai(1, 'Integrador') <> '' then
-  begin
-    EnviarPagamento.Identificador        := Leitor.rCampo(tcStr, 'identificador');
-    EnviarPagamento.ChaveAcessoValidador := Leitor.rCampo(tcStr, 'chaveAcessoValidador');
-    EnviarPagamento.ChaveRequisicao      := Leitor.rCampo(tcStr, 'chaveRequisicao');
-    EnviarPagamento.Estabelecimento      := Leitor.rCampo(tcStr, 'Estabelecimento');
-    EnviarPagamento.CNPJ                 := Leitor.rCampo(tcStr, 'CNPJ');
-    EnviarPagamento.SerialPOS            := Leitor.rCampo(tcStr, 'SerialPOS');
-    EnviarPagamento.IcmsBase             := Leitor.rCampo(tcDe2, 'IcmsBase');
-    EnviarPagamento.ValorTotalVenda      := Leitor.rCampo(tcDe2, 'ValorTotalVenda');
-  end ;
+  EnviarPagamento.Identificador        := Leitor.rCampo(tcStr, 'identificador');
+  EnviarPagamento.ChaveAcessoValidador := Leitor.rCampo(tcStr, 'chaveAcessoValidador');
+  EnviarPagamento.ChaveRequisicao      := Leitor.rCampo(tcStr, 'chaveRequisicao');
+  EnviarPagamento.Estabelecimento      := Leitor.rCampo(tcStr, 'Estabelecimento');
+  EnviarPagamento.CNPJ                 := Leitor.rCampo(tcStr, 'CNPJ');
+  EnviarPagamento.SerialPOS            := Leitor.rCampo(tcStr, 'SerialPOS');
+  EnviarPagamento.IcmsBase             := Leitor.rCampo(tcDe2, 'IcmsBase');
+  EnviarPagamento.ValorTotalVenda      := Leitor.rCampo(tcDe2, 'ValorTotalVenda');
 end;
 
 { TRetornoRespostaFiscalR }
@@ -259,13 +255,12 @@ end;
 
 procedure TRetornoRespostaFiscalR.LerXml;
 begin
+  Leitor.Grupo := Leitor.Arquivo;
+
   RetornoRespostaFiscal.Clear;
 
-  if Leitor.rExtrai(1, 'Integrador') <> '' then
-  begin
-    RetornoRespostaFiscal.IdRespostaFiscal := Leitor.rCampo(tcStr, 'retorno');
-    RetornoRespostaFiscal.IntegradorResposta.LerResposta(Leitor.Grupo);
-  end ;
+  RetornoRespostaFiscal.IdRespostaFiscal := Leitor.rCampo(tcStr, 'retorno');
+  RetornoRespostaFiscal.IntegradorResposta.LerResposta(Leitor.Grupo);
 end;
 
 end.

@@ -490,6 +490,8 @@ end ;
 function TACBrIntegrador.GerarArquivo: String;
 var
   I: Integer;
+  ParseCMD : Boolean;
+  Param: String;
 begin
   Result := '';
   FGerador.LayoutArquivoTXT.Clear;
@@ -499,7 +501,11 @@ begin
   FMetodo.GerarMetodo(FNumeroSessao, FNomeComponente, FNomeMetodo);
 
   for I := 0 to FParametros.Count-1 do
-    FParametro.GerarParametro( FParametros.Names[I], FParametros.ValueFromIndex[I], tcStr);
+  begin
+    Param := FParametros.ValueFromIndex[I];
+    ParseCMD := (Pos('<![CDATA[',Param) <= 0);
+    FParametro.GerarParametro( FParametros.Names[I], Param , tcStr, ParseCMD);
+  end;
 
   FMetodo.FinalizarMetodo;
 

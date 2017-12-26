@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2017
+-- ACBrDFeXsMsXml --
+[-] Correção para assinatura de Certificados A1, quando ProviderType = 24
+    "The Cryptographic Service Provider Type 24 is not supported"
+    (por: DSA)
+
 20/12/2017
 -- ACBrDFeXsLibXml2, ACBrDFeXsXmlSec --
 [*] Metodos de assinatura refatorado para usar apenas métodos da LibXml.

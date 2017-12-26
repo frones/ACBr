@@ -104,10 +104,10 @@ var
   xmldsig: IXMLDigitalSignature;
   dsigKey: IXMLDSigKey;
   ProviderType: DWORD;
-  ProviderName, ContainerName: String;
+  ProviderName, ContainerName, Erro: String;
   { // Nova implementação usando IXMLDigitalSignatureEx. porem, falha em algumas raras situações
-  xmldsig: IXMLDigitalSignatureEx;
-  dsigKey: IXMLDSigKeyEx;}
+  xmldsigEx: IXMLDigitalSignatureEx;
+  dsigKeyEx: IXMLDSigKeyEx;}
 begin
   Result := '';
   ResultInitialize := CoInitialize(nil);
@@ -153,7 +153,7 @@ begin
       // Código Compatíval com TDFeSSLXmlSignMsXmlCapicom
       xmldsig := CreateComObject(CLASS_MXDigitalSignature50) as IXMLDigitalSignature;
       { // Nova implementação usando IXMLDigitalSignatureEx
-      xmldsig := CreateComObject(CLASS_MXDigitalSignature50) as IXMLDigitalSignatureEx;}
+      xmldsigEx := CreateComObject(CLASS_MXDigitalSignature50) as IXMLDigitalSignatureEx;}
       if (xmldsig = nil) then
         raise EACBrDFeException.Create('Erro ao criar Elemento para Assinatura');
 
@@ -173,12 +173,29 @@ begin
                        ProviderName,
                        ContainerName);
 
-      dsigKey := xmldsig.createKeyFromCSP( ProviderType,
-                                           WideString(ProviderName),
-                                           WideString(ContainerName), 0);
+      try
+        dsigKey := xmldsig.createKeyFromCSP( ProviderType,
+                                             WideString(ProviderName),
+                                             WideString(ContainerName), 0);
+      except
+        on E: Exception do
+        begin
+          Erro := LowerCase(E.Message);
+          if (pos('provider type', Erro) > 0) and
+             (pos('not supported', Erro) > 0) then
+          begin
+            ProviderType := 1;
+            ProviderName := 'Microsoft Enhanced Cryptographic Provider v1.0';
+            dsigKey := xmldsig.createKeyFromCSP( ProviderType,
+                                                 WideString(ProviderName),
+                                                 WideString(ContainerName), 0);
+          end;
+        end;
+      end;
       { // Nova implementação usando IXMLDigitalSignatureEx
-      xmldsig.setStoreHandle( PCCERT_CONTEXT(FpDFeSSL.CertContextWinApi)^.hCertStore );
-      xmldsig.createKeyFromCertContext( FpDFeSSL.CertContextWinApi, dsigKey);}
+      dsigKeyEx := Nil;
+      xmldsigEx.setStoreHandle( PCCERT_CONTEXT(FpDFeSSL.CertContextWinApi)^.hCertStore );
+      xmldsigEx.createKeyFromCertContext( FpDFeSSL.CertContextWinApi, dsigKeyEx);}
 
       if (dsigKey = nil) then
         raise EACBrDFeException.Create('Falha ao obter a Chave Privada do Certificado para Assinatura.');

@@ -350,7 +350,7 @@ begin
       if Assigned( FPDFeOwner.Integrador ) then
       begin
         FPDFeOwner.Integrador.Parametros.Values['dados'] := EncodeBase64(FPEnvelopeSoap);
-        FPRetornoWS := FPDFeOwner.Integrador.Enviar;
+        FPRetornoWS := FPDFeOwner.Integrador.Enviar(True, True);
       end
       else
         FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);

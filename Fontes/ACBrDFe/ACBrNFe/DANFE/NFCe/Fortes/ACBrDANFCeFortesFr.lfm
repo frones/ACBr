@@ -263,16 +263,17 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lOutroValLiq: TRLLabel
-          Left = 236
+          Left = 233
           Height = 10
           Top = 13
-          Width = 31
+          Width = 34
           Alignment = taRightJustify
           Anchors = [fkRight]
           Caption = '99.999,99'
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
+          Font.Style = [fsBold]
           ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0

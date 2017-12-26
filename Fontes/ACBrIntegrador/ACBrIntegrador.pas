@@ -128,7 +128,7 @@ type
     procedure Clear;
     procedure DoLog(AString : String ) ;
 
-    function Enviar(AdicionarNumeroSessao: Boolean = True): String;
+    function Enviar(AdicionarNumeroSessao: Boolean = True; Decode: Boolean = False): String;
 
     property NomeComponente: String read FNomeComponente write FNomeComponente;
     property NomeMetodo: String read FNomeMetodo write FNomeMetodo;
@@ -449,7 +449,8 @@ begin
   FComandoIntegrador.Timeout := AValue;
 end;
 
-function TACBrIntegrador.Enviar(AdicionarNumeroSessao: Boolean): String;
+function TACBrIntegrador.Enviar(AdicionarNumeroSessao: Boolean; Decode: Boolean
+  ): String;
 Var
   Resp, DadosIntegrador, NomeArq: String;
 begin
@@ -479,7 +480,7 @@ begin
   {$ENDIF}
   FRetornoLst.DelimitedText := Resp;
 
-  if (FRetornoLst.Count >= 6) then
+  if Decode and (FRetornoLst.Count >= 6) then
     Resp := DecodeBase64(FRetornoLst[6]);
 
   DoLog( 'Sessão: '+IntToStr(FNumeroSessao)+', Resposta: '+Resp);

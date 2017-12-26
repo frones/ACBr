@@ -999,7 +999,7 @@ begin
                    FormatFloatBr( Prod.vProd );
 
       // acerta tamanho da descrição
-      nTamDescricao := maxCaracter - Length(LinhaItem);
+      nTamDescricao := maxCaracter - Length(LinhaItem) + length('[DesProd]');
       sDescricao := PadRight(Copy(Trim(Prod.xProd), 1, nTamDescricao), nTamDescricao);
 
       LinhaItem := StringReplace(LinhaItem, '[DesProd]', sDescricao, [rfReplaceAll]);

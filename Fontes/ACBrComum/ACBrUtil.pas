@@ -3246,6 +3246,9 @@ var
   LineBreak : AnsiString ;
   VDirectory : String;
 begin
+  if EstaVazio(ArqTXT) or (Length(ABinaryString) = 0) then
+    Exit;
+
   if ForceDirectory then
   begin
     VDirectory := ExtractFileDir(ArqTXT);

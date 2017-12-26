@@ -38,12 +38,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/12/2017
+-- ACBrUtil --
+[*] Ajuste no método "WriteToTXT", para não tentar gravar algo, se o nome do
+    arquivo ou o conteúdo a ser gravado, não foi informado
+    (por: DSA)
+
 Data: 23/12/2017
 -- ACBrUtil --
 [*] Ajustes para compilação em POSIX
 [*] Otimizações no código
 [*] Método "WriteToTXT", modificado para Criar o diretório de Destino, caso o
-    mesmo não exista, e se o Parâmetro: "ForceDirectory" esriver True (default)
+    mesmo não exista, e se o Parâmetro: "ForceDirectory" estiver True (default)
     (por: Waldir Paim e DSA)
 
 Data: 07/12/2017

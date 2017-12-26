@@ -66,6 +66,7 @@ type
     FPastaInput: String;
     FPastaOutput: String;
     FTimeout: Integer;
+    FErro: String;
     FErroTimeout: Boolean;
     procedure SetPastaInput(AValue: String);
     procedure SetPastaOutput(AValue: String);
@@ -78,6 +79,7 @@ type
   public
     constructor Create( AOwner: TACBrIntegrador );
     destructor Destroy; override;
+    procedure Clear;
 
     function EnviaComando(numeroSessao: Integer; Nome, Comando : String; TimeOutComando : Integer = 0) : String;
   public
@@ -85,6 +87,7 @@ type
     property PastaOutput : String  read FPastaOutput write SetPastaOutput;
     property Timeout     : Integer read FTimeout     write FTimeout default 30;
     property ErroTimeout : Boolean read FErroTimeout;
+    property Erro        : String  read FErro;
   end;
 
   TACBrIntegradorGetNumeroSessao = procedure(var NumeroSessao: Integer) of object ;
@@ -102,7 +105,9 @@ type
     FParametro: TParametro;
     FMetodo: TMetodo;
     FParametros: TStringList;
-    FRetornoLst : TStringList ;
+    FRespostas: TStringList;
+    FArqLOG: String;
+    FOnGravarLog: TACBrGravarLog;
 
     function GetErroTimeout: Boolean;
     function GetPastaInput: String;
@@ -113,10 +118,9 @@ type
     procedure SetTimeout(AValue: Integer);
 
   private
-    fsArqLOG: String;
-    fsOnGravarLog: TACBrGravarLog;
     function GerarArquivo: String;
     function GetAbout: String;
+    function GetErroResposta: String;
     function GetNumeroSessao: Integer;
     procedure GravaLog(AString : AnsiString ) ;
     procedure SetAbout(AValue: String);
@@ -128,7 +132,9 @@ type
     procedure Clear;
     procedure DoLog(AString : String ) ;
 
-    function Enviar(AdicionarNumeroSessao: Boolean = True; Decode: Boolean = False): String;
+    function Enviar(AdicionarNumeroSessao: Boolean = True): String;
+    property Respostas: TStringList read FRespostas;
+    property ErroResposta: String read GetErroResposta;
 
     property NomeComponente: String read FNomeComponente write FNomeComponente;
     property NomeMetodo: String read FNomeMetodo write FNomeMetodo;
@@ -147,8 +153,8 @@ type
 
   published
     property About : String read GetAbout write SetAbout stored False ;
-    property ArqLOG : String read fsArqLOG write fsArqLOG ;
-    property OnGravarLog : TACBrGravarLog read fsOnGravarLog write fsOnGravarLog;
+    property ArqLOG : String read FArqLOG write FArqLOG ;
+    property OnGravarLog : TACBrGravarLog read FOnGravarLog write FOnGravarLog;
 
     property PastaInput  : String  read GetPastaInput    write SetPastaInput;
     property PastaOutput : String  read GetPastaOutput   write SetPastaOutput;
@@ -164,7 +170,7 @@ implementation
 
 Uses
   dateutils, strutils,
-  pcnConversao, synacode,
+  pcnConversao,
   ACBrUtil;
 
 { TComandoIntegrador }
@@ -184,6 +190,12 @@ destructor TComandoIntegrador.Destroy;
 begin
   FLeitor.Free;
   inherited Destroy;
+end;
+
+procedure TComandoIntegrador.Clear;
+begin
+  FErro := '';
+  FErroTimeout := False;
 end;
 
 procedure TComandoIntegrador.SetPastaInput(AValue: String);
@@ -225,7 +237,7 @@ var
 
 begin
   Result := '';
-  FErroTimeout := False;
+  Clear;
 
   NomeArquivoXml := CriarXml( FPastaInput + LowerCase(Nome) + '-' + IntToStr(numeroSessao),
                               Comando);
@@ -284,17 +296,17 @@ end;
 
 function TComandoIntegrador.PegaResposta(Resp: String): String;
 begin
+  Result := '';
   FLeitor.Arquivo := Resp;
   if FLeitor.rExtrai(1, 'retorno') <> '' then
     Result := FLeitor.rCampo(tcStr, 'retorno')
   else if FLeitor.rExtrai(1, 'Resposta') <> '' then
-    Result := FLeitor.rCampo(tcStr, 'Resposta')
-  else if FLeitor.rExtrai(1, 'Erro') <> '' then
-    Result := FLeitor.Grupo
-  else
-    Result := Resp;
+    Result := FLeitor.rCampo(tcStr, 'Resposta');
 
-  if EstaVazio(Result) then
+  if FLeitor.rExtrai(1, 'Erro') <> '' then
+    FErro := FLeitor.Grupo;
+
+  if EstaVazio(Result) and EstaVazio(FErro) then
     Result := Resp;
 end;
 
@@ -377,16 +389,16 @@ begin
   FComandoIntegrador := TComandoIntegrador.Create(Self);
   FParametro := TParametro.Create(FGerador);
   FMetodo := TMetodo.Create(FGerador);
-  FRetornoLst := TStringList.Create;
   FParametros := TStringList.Create;
+  FRespostas := TStringList.Create;
 
   Clear;
 end;
 
 destructor TACBrIntegrador.Destroy;
 begin
+  FRespostas.Free;
   FParametros.Free;
-  FRetornoLst.Free;
   FMetodo.Free;
   FParametro.Free;
   FComandoIntegrador.Free;
@@ -408,8 +420,8 @@ var
   Tratado: Boolean;
 begin
   Tratado := False;
-  if Assigned( fsOnGravarLog ) then
-    fsOnGravarLog( AString, Tratado );
+  if Assigned( FOnGravarLog ) then
+    FOnGravarLog( AString, Tratado );
 
   if not Tratado then
     GravaLog( AString );
@@ -450,11 +462,13 @@ begin
   FComandoIntegrador.Timeout := AValue;
 end;
 
-function TACBrIntegrador.Enviar(AdicionarNumeroSessao: Boolean; Decode: Boolean
-  ): String;
+function TACBrIntegrador.Enviar(AdicionarNumeroSessao: Boolean): String;
 Var
-  Resp, DadosIntegrador, NomeArq: String;
+  DadosIntegrador, NomeArq, ErroIntegrador: String;
 begin
+  FRespostas.Clear;
+  FComandoIntegrador.Clear;
+
   GerarNumeroSessao;
 
   if AdicionarNumeroSessao then
@@ -468,28 +482,34 @@ begin
   NomeArq := FNomeMetodo+'-'+FormatDateTime('yyyymmddhhnnss', Now);
   DoLog( 'Sessão: '+IntToStr(FNumeroSessao)+', Dados: '+DadosIntegrador);
 
-  Resp := FComandoIntegrador.EnviaComando( FNumeroSessao, NomeArq, DadosIntegrador );
+  Result := FComandoIntegrador.EnviaComando( FNumeroSessao, NomeArq, DadosIntegrador );
+  DoLog( 'Sessão: '+IntToStr(FNumeroSessao)+', Resposta: '+Result);
 
-  if Decode then
+  if EstaVazio(Result) then
   begin
-    FRetornoLst.Delimiter := '|';
-    {$IFDEF FPC}
-     FRetornoLst.StrictDelimiter := True;
-    {$ELSE}
-     Resp := StringReplace(Resp, '"','', [rfReplaceAll]);
-     Resp := '"' + StringReplace(Resp, FRetornoLst.Delimiter,
-                              '"' + FRetornoLst.Delimiter + '"', [rfReplaceAll]) +
-             '"';
-    {$ENDIF}
-    FRetornoLst.DelimitedText := Resp;
+    ErroIntegrador := FComandoIntegrador.Erro;
+    if EstaVazio(ErroIntegrador) then
+      ErroIntegrador := 'Sem resposta do Integrador';
 
-    if (FRetornoLst.Count >= 6) then
-      Resp := DecodeBase64(FRetornoLst[6]);
+    DoException(ErroIntegrador)
   end;
 
-  DoLog( 'Sessão: '+IntToStr(FNumeroSessao)+', Resposta: '+Resp);
-  Result :=  Resp;
+  FRespostas.Delimiter := '|';
+  {$IFDEF FPC}
+   FRespostas.StrictDelimiter := True;
+   FRespostas.DelimitedText   := Result;
+  {$ELSE}
+   FRespostas.DelimitedText :=
+           '"' + StringReplace(Result, FRespostas.Delimiter,
+                            '"' + FRespostas.Delimiter + '"', [rfReplaceAll]) +
+           '"';
+  {$ENDIF}
 end ;
+
+function TACBrIntegrador.GetErroResposta: String;
+begin
+  Result := FComandoIntegrador.Erro;
+end;
 
 function TACBrIntegrador.GerarArquivo: String;
 var
@@ -520,6 +540,7 @@ function TACBrIntegrador.GetAbout: String;
 begin
   Result := 'ACBrIntegrador Ver: '+cACBrIntgerador_Versao;
 end;
+
 
 procedure TACBrIntegrador.GravaLog(AString: AnsiString);
 begin

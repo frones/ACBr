@@ -593,6 +593,7 @@ TrocarCodigoDeAtivacao.......: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
   {$IFDEF FPC}
    fRetornoLst.StrictDelimiter := True;
   {$ELSE}
+   AValue := StringReplace(AValue, '"','', [rfReplaceAll]);
    AValue := '"' + StringReplace(AValue, fRetornoLst.Delimiter,
                             '"' + fRetornoLst.Delimiter + '"', [rfReplaceAll]) +
              '"';

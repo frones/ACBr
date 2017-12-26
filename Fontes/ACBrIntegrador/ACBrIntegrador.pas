@@ -143,6 +143,7 @@ type
     function VerificarStatusValidador(AVerificarStatusValidador: TVerificarStatusValidador):
       TRespostaVerificarStatusValidador;
     function RespostaFiscal(ARespostaFiscal: TRespostaFiscal): TRetornoRespostaFiscal;
+    function ConsultarNumeroSessaoIntegrador(ANumeroSessao: Integer) : String;
 
   published
     property About : String read GetAbout write SetAbout stored False ;
@@ -304,7 +305,7 @@ var
   Erro : Boolean;
   Arquivo: String;
 begin
-  FOwner.DoLog('AguardaArqResposta, sessao: '+IntToStr(numeroSessao));
+  FOwner.DoLog(DateTimeToStr(Now)+' - AguardaArqResposta, sessao: '+IntToStr(numeroSessao));
 
   Result := '';
   SL := TStringList.Create;
@@ -469,19 +470,22 @@ begin
 
   Resp := FComandoIntegrador.EnviaComando( FNumeroSessao, NomeArq, DadosIntegrador );
 
-  FRetornoLst.Delimiter := '|';
-  {$IFDEF FPC}
-   FRetornoLst.StrictDelimiter := True;
-  {$ELSE}
-   Resp := StringReplace(Resp, '"','', [rfReplaceAll]);
-   Resp := '"' + StringReplace(Resp, FRetornoLst.Delimiter,
-                            '"' + FRetornoLst.Delimiter + '"', [rfReplaceAll]) +
-           '"';
-  {$ENDIF}
-  FRetornoLst.DelimitedText := Resp;
+  if Decode then
+  begin
+    FRetornoLst.Delimiter := '|';
+    {$IFDEF FPC}
+     FRetornoLst.StrictDelimiter := True;
+    {$ELSE}
+     Resp := StringReplace(Resp, '"','', [rfReplaceAll]);
+     Resp := '"' + StringReplace(Resp, FRetornoLst.Delimiter,
+                              '"' + FRetornoLst.Delimiter + '"', [rfReplaceAll]) +
+             '"';
+    {$ENDIF}
+    FRetornoLst.DelimitedText := Resp;
 
-  if Decode and (FRetornoLst.Count >= 6) then
-    Resp := DecodeBase64(FRetornoLst[6]);
+    if (FRetornoLst.Count >= 6) then
+      Resp := DecodeBase64(FRetornoLst[6]);
+  end;
 
   DoLog( 'Sessão: '+IntToStr(FNumeroSessao)+', Resposta: '+Resp);
   Result :=  Resp;
@@ -537,11 +541,17 @@ begin
 end;
 
 function TACBrIntegrador.GerarNumeroSessao: Integer;
+var
+  Sessao : Integer;
 begin
-  FNumeroSessao := Random(999999);
+  Sessao := Random(999999);
+  FNumeroSessao := Sessao;
 
   if Assigned( FOnGetNumeroSessao ) then
      FOnGetNumeroSessao( FNumeroSessao ) ;
+
+  if FNumeroSessao <= 0 then
+    FNumeroSessao := Sessao;
 
   Result := FNumeroSessao;
 end;
@@ -639,6 +649,18 @@ begin
 
   Result := TRetornoRespostaFiscal.Create;
   Result.AsXMLString := Resp;
+end;
+
+function TACBrIntegrador.ConsultarNumeroSessaoIntegrador(ANumeroSessao: Integer
+  ): String;
+begin
+  DoLog('ConsultarNumeroSessaoIntegrador( '+IntToStr(ANumeroSessao)+' )');
+
+  Clear;
+  NomeComponente := 'ConsultaNumeroSessao';
+  NomeMetodo := 'numeroSessao';
+  Parametros.Values['numeroSessao'] := IntToStr(ANumeroSessao);
+  Result := Enviar(False);
 end;
 
 end.

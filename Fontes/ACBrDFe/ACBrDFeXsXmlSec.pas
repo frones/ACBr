@@ -115,11 +115,11 @@ type
     procedure InitXmlSec;
     procedure CreateCtx;
     procedure DestroyCtx;
-    function XmlSecSign(const ConteudoXML: AnsiString;
-      SignatureNode, SelectionNamespaces, InfElement: AnsiString): AnsiString;
+    function XmlSecSign(const ConteudoXML: String;
+      SignatureNode, SelectionNamespaces, InfElement: String): String;
   protected
-    procedure VerificarValoresPadrao(var SignatureNode: AnsiString;
-      var SelectionNamespaces: AnsiString); override;
+    procedure VerificarValoresPadrao(var SignatureNode: String;
+      var SelectionNamespaces: String); override;
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
@@ -427,8 +427,8 @@ begin
   end;
 end;
 
-function TDFeSSLXmlSignXmlSec.XmlSecSign(const ConteudoXML: AnsiString;
-  SignatureNode, SelectionNamespaces, InfElement: AnsiString): AnsiString;
+function TDFeSSLXmlSignXmlSec.XmlSecSign(const ConteudoXML: String;
+  SignatureNode, SelectionNamespaces, InfElement: String): String;
 var
   doc: xmlDocPtr;
   SignNode: xmlNodePtr;
@@ -445,7 +445,7 @@ begin
   CreateCtx;
   try
     { load template }
-    doc := xmlParseDoc(PAnsiChar(ConteudoXML));
+    doc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
     if (doc = nil) then
       raise EACBrDFeException.Create(cErrParseDoc);
 
@@ -518,8 +518,8 @@ begin
   // DEBUG
   // WriteToTXT('C:\TEMP\XmlToSign.xml', AXml, False, False);
 
-  XmlAss := XmlSecSign(AXml, AnsiString(SignatureNode),
-    AnsiString(SelectionNamespaces), AnsiString(InfElement));
+  XmlAss := XmlSecSign(AXml, SignatureNode,
+    SelectionNamespaces, InfElement);
 
   // DEBUG
   // WriteToTXT('C:\TEMP\XmlSigned1.xml', XmlAss, False, False);
@@ -544,7 +544,7 @@ var
   schema: xmlSchemaPtr;
   valid_ctxt: xmlSchemaValidCtxtPtr;
   schemError: xmlErrorPtr;
-  AXml: AnsiString;
+  AXml: String;
 begin
   InitXmlSec;
 
@@ -556,8 +556,8 @@ begin
   valid_ctxt := Nil;
 
   try
-    AXml := AnsiString(ConteudoXML);
-    doc := xmlParseDoc(PAnsiChar(AXml));
+    AXml := ConteudoXML;
+    doc := xmlParseDoc(PAnsiChar(AnsiString(AXml)));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
       MsgErro := 'Erro: unable to parse';
@@ -634,13 +634,13 @@ var
   dsigCtx: xmlSecDSigCtxPtr;
   mngr: xmlSecKeysMngrPtr;
   AXml, X509Certificate, DTD: String;
-  asSignatureNode, asSelectionNamespaces: AnsiString;
+  asSignatureNode, asSelectionNamespaces: String;
   MS: TMemoryStream;
 begin
   InitXmlSec;
 
-  asSignatureNode := AnsiString(SignatureNode);
-  asSelectionNamespaces := AnsiString(SelectionNamespaces);
+  asSignatureNode := SignatureNode;
+  asSelectionNamespaces := SelectionNamespaces;
   VerificarValoresPadrao(asSignatureNode, asSelectionNamespaces);
 
   Result := False;
@@ -805,9 +805,9 @@ begin
 end;
 
 procedure TDFeSSLXmlSignXmlSec.VerificarValoresPadrao(var SignatureNode
-  : AnsiString; var SelectionNamespaces: AnsiString);
+  : String; var SelectionNamespaces: String);
 var
-  DSigNs: AnsiString;
+  DSigNs: String;
 begin
   if SignatureNode = '' then
     SignatureNode := xmlSecNodeSignature()

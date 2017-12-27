@@ -64,8 +64,8 @@ type
   TDFeSSLXmlSignLibXml2 = class(TDFeSSLXmlSignClass)
   private
   protected
-    procedure VerificarValoresPadrao(var SignatureNode: ansistring;
-      var SelectionNamespaces: ansistring); virtual;
+    procedure VerificarValoresPadrao(var SignatureNode: String;
+      var SelectionNamespaces: String); virtual;
     function SelectElements(const aDoc: xmlDocPtr; const infElement: ansistring)
       : xmlNodeSetPtr;
     function CanonC14n(const aDoc: xmlDocPtr;
@@ -77,8 +77,8 @@ type
       NameSpace: ansistring = ''): xmlNodePtr;
     function LibXmlNodeWasFound(ANode: xmlNodePtr; NodeName: ansistring;
       NameSpace: ansistring): boolean;
-    function LibXmlEstaAssinado(const ConteudoXML: ansistring;
-      SignatureNode, SelectionNamespaces, infElement: ansistring): boolean;
+    function LibXmlEstaAssinado(const ConteudoXML: String;
+      SignatureNode, SelectionNamespaces, infElement: String): boolean;
   public
     function Assinar(const ConteudoXML, docElement, infElement: string;
       SignatureNode: string = ''; SelectionNamespaces: string = '';
@@ -166,8 +166,6 @@ begin
       IdSignature, IdAttr);
 
   aDoc := nil;
-  SignNode := nil;
-  XmlNode := nil;
 
   try
     aDoc := xmlParseDoc(PAnsiChar(ansistring(aXML)));
@@ -213,7 +211,6 @@ begin
     Signaturevalue := FpDFeSSL.CalcHash(Canon, FpDFeSSL.SSLDgst,
       outBase64, True);
 
-    XmlNode := nil;
     XmlNode := LibXmlLookUpNode(SignNode, cSignatureValueNode);
     if (XmlNode = nil) then
       raise EACBrDFeException.Create(cErrSignatureValueNode);
@@ -410,7 +407,7 @@ var
   rootNode, SignNode: xmlNodePtr;
 begin
   LibXmlInit;
-
+  signBuffer := nil;
   aDoc := nil;
 
   try
@@ -452,7 +449,7 @@ begin
 end;
 
 procedure TDFeSSLXmlSignLibXml2.VerificarValoresPadrao(var SignatureNode
-  : ansistring; var SelectionNamespaces: ansistring);
+  : String; var SelectionNamespaces: String);
 begin
   if (SignatureNode <> cSignatureNode) then
     SignatureNode := cSignatureNode;
@@ -576,11 +573,11 @@ begin
   Result := _LibXmlLookUpNode(ParentNode^.children, NodeName, NameSpace);
 end;
 
-function TDFeSSLXmlSignLibXml2.LibXmlEstaAssinado(const ConteudoXML: ansistring;
-  SignatureNode, SelectionNamespaces, infElement: ansistring): boolean;
+function TDFeSSLXmlSignLibXml2.LibXmlEstaAssinado(const ConteudoXML: String;
+  SignatureNode, SelectionNamespaces, infElement: String): boolean;
 var
   aDoc: xmlDocPtr;
-  rootNode, infNode, SignNode: xmlNodePtr;
+  SignNode: xmlNodePtr;
 begin
   LibXmlInit;
   Result := False;
@@ -589,7 +586,7 @@ begin
   SignNode := nil;
 
   try
-    aDoc := xmlParseDoc(PAnsiChar(ConteudoXML));
+    aDoc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
     if (aDoc = nil) then
       Exit;
 

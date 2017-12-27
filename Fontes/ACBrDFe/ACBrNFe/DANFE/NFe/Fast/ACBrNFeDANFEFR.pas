@@ -86,6 +86,8 @@ type
     FIncorporarBackgroundPdf: Boolean;
     FFastFileInutilizacao: String;
     FImprimirDadosDocReferenciados: Boolean;
+    FPrintMode: TfrxPrintMode;
+    FPrintOnSheet: Integer;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
 		function GetPreparedReportInutilizacao: TfrxReport;
@@ -130,6 +132,8 @@ type
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
     property ImprimirDadosDocReferenciados: Boolean read FImprimirDadosDocReferenciados write FImprimirDadosDocReferenciados;
+    property PrintMode: TfrxPrintMode read FPrintMode write FPrintMode default pmDefault;
+    property PrintOnSheet: Integer read FPrintOnSheet write FPrintOnSheet default 0;
   end;
 
 implementation
@@ -261,6 +265,8 @@ begin
 
   FdmDanfe.frxReport.PrintOptions.Copies := FNumCopias;
   FdmDanfe.frxReport.PrintOptions.ShowDialog := FShowDialog;
+  FdmDanfe.frxReport.PrintOptions.PrintMode := FPrintMode; //Precisamos dessa propriedade porque impressoras não fiscais cortam o papel quando há muitos itens. O ajuste dela deve ser necessariamente após a carga do arquivo FR3 pois, antes da carga o componente é inicializado
+  FdmDanfe.frxReport.PrintOptions.PrintOnSheet := FPrintOnSheet; //Essa propriedade pode trabalhar em conjunto com a printmode
   FdmDanfe.frxReport.ShowProgress := FMostrarStatus;
   FdmDanfe.frxReport.PreviewOptions.AllowEdit := False;
 

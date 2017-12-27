@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/12/2017
+-- ACBrNFSeNotasFiscais --
+[*] Alteração para gerar a assinatura correta quando não tem tomador.
+Por: Italo Jurisato Junior
+
 21/12/2017
 [+] Inclusão do provedor ISSjoinville.
 Por: Sandro Felipe Adad/ Maiquel / Italo Jurisato Junior

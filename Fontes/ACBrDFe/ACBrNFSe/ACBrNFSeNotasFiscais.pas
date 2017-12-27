@@ -593,11 +593,14 @@ begin
     else
       sIndTomador := '3';
 
+  sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14);
+  (*
   if sIndTomador <> '3' then
     sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14)
   else
     sTomador := '';
-
+  *)
+  
   // Prestador Intermediario
   sCPFCNPJInter := OnlyNumber(NFSe.IntermediarioServico.CpfCnpj);
 

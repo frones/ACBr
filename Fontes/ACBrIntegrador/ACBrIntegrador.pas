@@ -494,6 +494,9 @@ begin
     DoException(ErroIntegrador)
   end;
 
+  if (LeftStr(Result,2) = '\"') then
+    Delete(Result,1,2);
+    
   FRespostas.Delimiter := '|';
   {$IFDEF FPC}
    FRespostas.StrictDelimiter := True;

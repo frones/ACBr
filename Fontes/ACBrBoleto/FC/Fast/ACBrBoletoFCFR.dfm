@@ -57,7 +57,7 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     ReportOptions.LastChange = 42257.626775173600000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
-    OnBeforePrint = frxReportBeforePrint
+    OnProgressStart = frxReportProgressStart
     Left = 50
     Top = 36
   end

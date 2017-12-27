@@ -114,7 +114,8 @@ type
     cdsBanco: TClientDataSet;
     frxBanco: TfrxDBDataset;
     procedure DataModuleCreate(Sender: TObject);
-    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
+    procedure frxReportProgressStart(Sender: TfrxReport;
+      ProgressType: TfrxProgressType; Progress: Integer);
   private
     { Private declarations }
     procedure SetDataSetsToFrxReport;
@@ -131,14 +132,14 @@ implementation
 uses ACBrUtil, ACBrBancoBanestes;
 
 { TdmACBrBoletoFCFR }
-procedure TdmACBrBoletoFCFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+
+procedure TdmACBrBoletoFCFR.frxReportProgressStart(Sender: TfrxReport;
+  ProgressType: TfrxProgressType; Progress: Integer);
 begin
   ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString + '\' + cdsBanco.FieldByName('Numero').AsString + '.bmp', 'Logo_1');
   ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString + '\' + cdsBanco.FieldByName('Numero').AsString + '.bmp', 'Logo_2');
   ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString + '\' + cdsBanco.FieldByName('Numero').AsString + '.bmp', 'Logo_3');
 end;
-
-
 
 function TACBrBoletoFCFR.GetACBrTitulo: TACBrTitulo;
 begin

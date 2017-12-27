@@ -600,7 +600,7 @@ begin
       // Ignorar exception
     end;
 
-    if ((SignNode <> nil) and (SignNode^.Name = SignatureNode)) then
+    if ((SignNode <> nil) and (SignNode^.Name = cSignatureNode)) then
       Result := True;
   finally
     if (aDoc <> nil) then

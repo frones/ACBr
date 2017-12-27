@@ -71,7 +71,8 @@ type
     function CanonC14n(const aDoc: xmlDocPtr;
       const docElement, infElement: ansistring): ansistring;
     function LibXmlFindSignatureNode(aDoc: xmlDocPtr;
-      SignatureNode, SelectionNamespaces, infElement: ansistring): xmlNodePtr;
+      var SignatureNode: String; var SelectionNamespaces: String;
+      infElement: ansistring): xmlNodePtr;
     function LibXmlLookUpNode(ParentNode: xmlNodePtr; NodeName: ansistring;
       NameSpace: ansistring = ''): xmlNodePtr;
     function LibXmlNodeWasFound(ANode: xmlNodePtr; NodeName: ansistring;
@@ -424,7 +425,7 @@ begin
     SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode,
       SelectionNamespaces, infElement);
 
-    if (SignNode.Name <> cSignatureNode) then
+    if (SignNode.Name <> SignatureNode) then
       raise EACBrDFeException.Create(cErrFindSignNode);
 
     signBuffer := xmlBufferCreate();
@@ -461,7 +462,8 @@ begin
 end;
 
 function TDFeSSLXmlSignLibXml2.LibXmlFindSignatureNode(aDoc: xmlDocPtr;
-  SignatureNode, SelectionNamespaces, infElement: ansistring): xmlNodePtr;
+  var SignatureNode: String; var SelectionNamespaces: String;
+  infElement: ansistring): xmlNodePtr;
 var
   rootNode, infNode, SignNode: xmlNodePtr;
 begin
@@ -514,10 +516,8 @@ begin
     if (SignNode = nil) then
     begin
       SignNode := rootNode^.last;
-      if not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces)
-      then
-        SignNode := LibXmlLookUpNode(rootNode, SignatureNode,
-          SelectionNamespaces);
+      if not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces) then
+        SignNode := LibXmlLookUpNode(rootNode, SignatureNode, SelectionNamespaces);
     end;
   end;
 
@@ -594,13 +594,12 @@ begin
       Exit;
 
     try
-      SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode,
-        SelectionNamespaces, infElement);
+      SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
     except
       // Ignorar exception
     end;
 
-    if ((SignNode <> nil) and (SignNode^.Name = cSignatureNode)) then
+    if ((SignNode <> nil) and (SignNode^.Name = SignatureNode)) then
       Result := True;
   finally
     if (aDoc <> nil) then

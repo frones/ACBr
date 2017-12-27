@@ -588,6 +588,7 @@ begin
   Tratado := False;
   FazerLog('ERRO: ' + MsgErro, Tratado);
 
+  // MsgErro já está na String Nativa da IDE... por isso deve usar "CreateDef"
   if not Tratado then
     raise EACBrDFeException.CreateDef(MsgErro);
 end;

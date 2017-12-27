@@ -1047,10 +1047,10 @@ var
   ABinStr: AnsiString;
 begin
   if not Assigned(AStream) then
-    raise EACBrDFeException.CreateDef('Stream inválido');
+    raise EACBrDFeException.Create('Stream inválido');
 
   if AStream.Size <= 0 then
-    raise EACBrDFeException.CreateDef('Stream vazio');
+    raise EACBrDFeException.Create('Stream vazio');
 
   ABinStr := FSSLCryptClass.CalcHash(AStream, Digest, Assina);
 
@@ -1112,13 +1112,13 @@ function TDFeSSL.ValidarHash( const AStream : TStream;
        const Assinado: Boolean =  False): Boolean;
 begin
  if not Assigned(AStream) then
-    raise EACBrDFeException.CreateDef('Stream inválido');
+    raise EACBrDFeException.Create('Stream inválido');
 
   if AStream.Size <= 0 then
-    raise EACBrDFeException.CreateDef('Stream vazio');
+    raise EACBrDFeException.Create('Stream vazio');
 
   if Hash = '' then
-    raise EACBrDFeException.CreateDef('Hash vazio');
+    raise EACBrDFeException.Create('Hash vazio');
 
   Result := FSSLCryptClass.ValidarHash(AStream, Digest, Hash, Assinado);
 end;

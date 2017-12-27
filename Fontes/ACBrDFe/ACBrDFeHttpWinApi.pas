@@ -118,9 +118,9 @@ begin
     except
       On E: Exception do
       begin
-        raise EACBrDFeException.CreateDef( Format( cACBrDFeSSLEnviarException,
-                                           [InternalErrorCode, HTTPResultCode] ) + sLineBreak +
-                                           E.Message ) ;
+        raise EACBrDFeException.Create( Format( cACBrDFeSSLEnviarException,
+                                        [InternalErrorCode, HTTPResultCode] ) + sLineBreak +
+                                        E.Message ) ;
       end;
     end;
   finally

@@ -67,7 +67,7 @@ end;
 
 constructor EACBrDFeException.CreateDef(const Msg: String);
 begin
-  inherited Create(ACBrStr(Msg));
+  inherited Create(Msg);
 end;
 
 

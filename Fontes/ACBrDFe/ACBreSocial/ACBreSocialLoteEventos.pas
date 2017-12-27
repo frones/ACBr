@@ -105,7 +105,7 @@ implementation
 
 { TLoteEventos }
 
-uses ACBreSocial, System.DateUtils;
+uses ACBreSocial, DateUtils;
 
 function TLoteEventos.Add: TItemLoteEventos;
 begin
@@ -318,7 +318,7 @@ begin
   begin
     EhValido := SSL.Validar(FXML, Configuracoes.Arquivos.PathSchemas+'EnvioLoteEventos-v1_1_1.xsd', Erro);
     if not EhValido then
-      raise EACBreSocialException.CreateDef('Houve erro na validação do Lote: ' + Erro);
+      raise EACBreSocialException.CreateDef(ACBrStr('Houve erro na validação do Lote: ') + Erro);
   end;
 end;
 

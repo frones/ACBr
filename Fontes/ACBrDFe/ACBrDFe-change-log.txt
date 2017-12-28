@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2017
+-- ACBrDFeXsLibXml2 --
+[*] Diversos ajustes de String x AnsiString
+[*] Limpeza e revisão dos fontes..
+[-] Correção de Memory Leak em TDFeSSLXmlSignLibXml2.CanonC14n
+[-] Correção no método "VerificarAssinatura", para conferir se houve alterações
+    no conteúdo do XML, comparando o "DigestValue"
+    (por: DSA)
+
 26/12/2017
 -- ACBrDFeXsMsXml --
 [-] Correção para assinatura de Certificados A1, quando ProviderType = 24

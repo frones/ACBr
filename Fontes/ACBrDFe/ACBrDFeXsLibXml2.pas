@@ -50,6 +50,7 @@ const
   cErrElementsNotFound = 'Nenhum elemento encontrado';
   cErrDigestValueNode = 'Node DigestValue não encontrado';
   cErrSignatureValueNode = 'Node SignatureValue não encontrado';
+  cErrDigestValueNaoConfere = 'DigestValue não confere. Conteúdo de "%s" foi alterado';
   cSignatureNode = 'Signature';
   cSignatureNameSpace = 'http://www.w3.org/2000/09/xmldsig#';
   cDigestValueNode = 'DigestValue';
@@ -404,14 +405,15 @@ function TDFeSSLXmlSignLibXml2.VerificarAssinatura(const ConteudoXML: String;
   SelectionNamespaces: String; IdSignature: String; IdAttr: String): boolean;
 var
   aDoc: xmlDocPtr;
-  SignElement, docElement: String;
-  XmlSign, X509Certificate, CanonXML: AnsiString;
+  SignElement: String;
+  DigestXML,  DigestCalc, XmlSign, X509Certificate, CanonXML: AnsiString;
   signBuffer: xmlBufferPtr;
-  Digest: TSSLDgst;
+  DigestAlg: TSSLDgst;
   rootNode, SignNode: xmlNodePtr;
 begin
   LibXmlInit;
 
+  Result := False;
   signBuffer := nil;
   aDoc := nil;
 
@@ -430,19 +432,25 @@ begin
 
     signBuffer := xmlBufferCreate();
     xmlNodeDump(signBuffer, aDoc, SignNode, 0, 0);
-
     SignElement := String(signBuffer.content);
-    docElement  := String(rootNode.Name);
 
-    Digest := GetSignDigestAlgorithm(SignElement);
-    XmlSign := DecodeBase64( AnsiString(LerTagXML(SignElement, cSignatureValueNode)) );
+    DigestXML := AnsiString(LerTagXML(SignElement, cDigestValueNode));
+    DigestAlg := GetSignDigestAlgorithm(SignElement);
+
+    // Recalculando o DigestValue do XML e comparando com o atual
+    CanonXML := AnsiString(CanonC14n(aDoc, infElement));
+    DigestCalc := FpDFeSSL.CalcHash(CanonXML, DigestAlg, outBase64);
+
+    if (DigestCalc <> DigestXML) then
+      raise EACBrDFeException.Create(Format(cErrDigestValueNaoConfere, [infElement]));
 
     X509Certificate := AnsiString(LerTagXML(SignElement, cX509CertificateNode));
     FpDFeSSL.CarregarCertificadoPublico(X509Certificate);
 
     CanonXML := AnsiString(CanonC14n(aDoc, cSignedInfoNode));
 
-    Result := FpDFeSSL.ValidarHash(CanonXML, Digest, XmlSign, True);
+    XmlSign := DecodeBase64( AnsiString(LerTagXML(SignElement, cSignatureValueNode)) );
+    Result := FpDFeSSL.ValidarHash(CanonXML, DigestAlg, XmlSign, True);
   finally
     { cleanup }
     if (aDoc <> nil) then

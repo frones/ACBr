@@ -2527,10 +2527,11 @@ function TConhecimentos.LoadFromString(AXMLString: String;
 var
   ACTeXML, XMLStr: AnsiString;
   P, N: integer;
+  Modelo: TModeloCTe;
 
   function PosCTe: integer;
   begin
-    if TACBrCTe(ACBrCTe).Configuracoes.Geral.ModeloDF = moCTeOS then
+    if Modelo = moCTeOS then
       Result := Pos('</CTeOS>', XMLStr)
     else
       Result := pos('</CTe>', XMLStr);
@@ -2539,6 +2540,11 @@ var
 begin
   // Verifica se precisa Converter de UTF8 para a String nativa da IDE //
   XMLStr := ConverteXMLtoNativeString(AXMLString);
+
+  if Pos('</CTeOS>', XMLStr) > 0 then
+    Modelo := moCTeOS
+  else
+    Modelo := moCTe;
 
   N := PosCTe;
   while N > 0 do

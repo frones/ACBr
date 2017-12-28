@@ -49,6 +49,10 @@ Símbolo : Significado
 
 28/12/2017
 -- ACBrCTeConhecimentos --
+[*] Alterado o Método LoadFromString com o objetido de detectar automaticamente 
+    o modelo do documento fiscal, mas não atera a configuração do componente.
+   Por: Italo Jurisato Junior
+-- ACBrCTeConhecimentos --
 [*] Métodos "LoadFromFile", "LoadFromString", e "LoadFromStream" modificados para
     que o parâmetro "AGerarCTe", seja por padrão "False". Para respeitar o XML
     informado, e evitar processamento de CPU desnecessário

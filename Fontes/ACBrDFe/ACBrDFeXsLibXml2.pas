@@ -266,6 +266,8 @@ begin
       raise EACBrDFeException.Create(cErrC14NTransformation);
 
     Result := String(buffer);
+    // DEBUG
+    // WriteToTXT('C:\TEMP\CanonC14n.xml', Result, False, False);
   finally
     if (Elements <> Nil) then
       xmlXPathFreeNodeSet(Elements);

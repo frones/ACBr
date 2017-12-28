@@ -169,9 +169,9 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarNFe que determina se após carregar os dados da NFe
     // para o componente, será gerado ou não novamente o XML da NFe.
-    function LoadFromFile(const CaminhoArquivo: String; AGerarNFe: Boolean = True): Boolean;
-    function LoadFromStream(AStream: TStringStream; AGerarNFe: Boolean = True): Boolean;
-    function LoadFromString(const AXMLString: String; AGerarNFe: Boolean = True): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; AGerarNFe: Boolean = False): Boolean;
+    function LoadFromStream(AStream: TStringStream; AGerarNFe: Boolean = False): Boolean;
+    function LoadFromString(const AXMLString: String; AGerarNFe: Boolean = False): Boolean;
     function LoadFromIni(const AIniString: String): Boolean;
 
     function GravarXML(const APathNomeArquivo: String = ''): Boolean;
@@ -2617,7 +2617,7 @@ begin
 end;
 
 function TNotasFiscais.LoadFromFile(const CaminhoArquivo: String;
-  AGerarNFe: Boolean = True): Boolean;
+  AGerarNFe: Boolean): Boolean;
 var
   XMLUTF8: AnsiString;
   i, l: integer;
@@ -2643,7 +2643,7 @@ begin
 end;
 
 function TNotasFiscais.LoadFromStream(AStream: TStringStream;
-  AGerarNFe: Boolean = True): Boolean;
+  AGerarNFe: Boolean): Boolean;
 var
   AXML: AnsiString;
 begin
@@ -2654,7 +2654,7 @@ begin
 end;
 
 function TNotasFiscais.LoadFromString(const AXMLString: String;
-  AGerarNFe: Boolean = True): Boolean;
+  AGerarNFe: Boolean): Boolean;
 var
   ANFeXML, XMLStr: AnsiString;
   P, N: integer;

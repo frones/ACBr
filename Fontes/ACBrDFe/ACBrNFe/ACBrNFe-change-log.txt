@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2017
+-- ACBRNFeNotasFiscais --
+[*] Métodos "LoadFromFile", "LoadFromString", e "LoadFromStream" modificados para
+    que o parâmetro "AGerarNFe", seja por padrão "False". Para respeitar o XML
+    informado, e evitar processamento de CPU desnecessário
+    (por: DSA)
+
 07/12/2017
 -- ACBRNFeNotasFiscais --
 [*] Classe "NotaFiscal" Atualizado o método:

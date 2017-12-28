@@ -211,7 +211,7 @@ type
     function AdicionarSignatureElement( ConteudoXML: String; AddX509Data: Boolean;
       docElement, IdSignature: String; IdAttr: String = ''): String;
     function AjustarXMLAssinado(const ConteudoXML: String; X509DER: String = ''): String;
-    function GetSignDigestAlgorithm(const SignatureNode: AnsiString): TSSLDgst;
+    function GetSignDigestAlgorithm(const SignatureNode: String): TSSLDgst;
   public
     constructor Create(ADFeSSL: TDFeSSL); virtual;
 
@@ -839,7 +839,8 @@ begin
   Result := XmlAss;
 end;
 
-function TDFeSSLXmlSignClass.GetSignDigestAlgorithm(const SignatureNode: ansistring): TSSLDgst;
+function TDFeSSLXmlSignClass.GetSignDigestAlgorithm(const SignatureNode: String
+  ): TSSLDgst;
 var
   HashAlg: string;
 begin

@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2017
+-- ACBrBPeBilhetes --
+[*] Métodos "LoadFromFile", "LoadFromString", e "LoadFromStream" modificados para
+    que o parâmetro "AGerarBPe", seja por padrão "False". Para respeitar o XML
+    informado, e evitar processamento de CPU desnecessário
+   Por: Italo Jurisato Junior
+
 21/12/2017
 -- pcnBPeW --
 [*] Alterado a quantidade minima da tag <plataforma> para ficar em conformidade

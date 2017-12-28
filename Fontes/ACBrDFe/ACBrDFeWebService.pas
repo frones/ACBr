@@ -272,7 +272,6 @@ end;
 procedure TDFeWebService.DefinirEnvelopeSoap;
 var
   Texto: String;
-  I: Integer;
 begin
   { Sobrescrever apenas se necessário }
 

@@ -155,9 +155,9 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarCTe que determina se após carregar os dados do CTe
     // para o componente, será gerado ou não novamente o XML do CTe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarCTe: Boolean = True): Boolean;
-    function LoadFromStream(AStream: TStringStream; AGerarCTe: Boolean = True): Boolean;
-    function LoadFromString(AXMLString: String; AGerarCTe: Boolean = True): Boolean;
+    function LoadFromFile(CaminhoArquivo: String; AGerarCTe: Boolean = False): Boolean;
+    function LoadFromStream(AStream: TStringStream; AGerarCTe: Boolean = False): Boolean;
+    function LoadFromString(AXMLString: String; AGerarCTe: Boolean = False): Boolean;
     function LoadFromIni(AIniString: String): Boolean;
 
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
@@ -2486,7 +2486,7 @@ begin
 end;
 
 function TConhecimentos.LoadFromFile(CaminhoArquivo: String;
-  AGerarCTe: Boolean = True): Boolean;
+  AGerarCTe: Boolean): Boolean;
 var
   XMLUTF8: AnsiString;
   i, l: integer;
@@ -2512,7 +2512,7 @@ begin
 end;
 
 function TConhecimentos.LoadFromStream(AStream: TStringStream;
-  AGerarCTe: Boolean = True): Boolean;
+  AGerarCTe: Boolean): Boolean;
 var
   AXML: AnsiString;
 begin
@@ -2523,7 +2523,7 @@ begin
 end;
 
 function TConhecimentos.LoadFromString(AXMLString: String;
-  AGerarCTe: Boolean = True): Boolean;
+  AGerarCTe: Boolean): Boolean;
 var
   ACTeXML, XMLStr: AnsiString;
   P, N: integer;

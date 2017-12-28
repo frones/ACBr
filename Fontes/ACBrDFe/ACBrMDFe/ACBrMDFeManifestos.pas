@@ -155,9 +155,9 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarMDFe que determina se após carregar os dados do MDFe
     // para o componente, será gerado ou não novamente o XML do MDFe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarMDFe: Boolean = True): Boolean;
-    function LoadFromStream(AStream: TStringStream; AGerarMDFe: Boolean = True): Boolean;
-    function LoadFromString(AXMLString: String; AGerarMDFe: Boolean = True): Boolean;
+    function LoadFromFile(CaminhoArquivo: String; AGerarMDFe: Boolean = False): Boolean;
+    function LoadFromStream(AStream: TStringStream; AGerarMDFe: Boolean = False): Boolean;
+    function LoadFromString(AXMLString: String; AGerarMDFe: Boolean = False): Boolean;
     function LoadFromIni(AIniString: String): Boolean;
 
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
@@ -1612,7 +1612,7 @@ begin
 end;
 
 function TManifestos.LoadFromFile(CaminhoArquivo: String;
-  AGerarMDFe: Boolean = True): Boolean;
+  AGerarMDFe: Boolean): Boolean;
 var
   XMLUTF8: AnsiString;
   i, l: integer;
@@ -1638,7 +1638,7 @@ begin
 end;
 
 function TManifestos.LoadFromStream(AStream: TStringStream;
-  AGerarMDFe: Boolean = True): Boolean;
+  AGerarMDFe: Boolean): Boolean;
 var
   AXML: AnsiString;
 begin
@@ -1649,7 +1649,7 @@ begin
 end;
 
 function TManifestos.LoadFromString(AXMLString: String;
-  AGerarMDFe: Boolean = True): Boolean;
+  AGerarMDFe: Boolean): Boolean;
 var
   AMDFeXML, XMLStr: AnsiString;
   P, N: integer;

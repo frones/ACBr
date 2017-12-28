@@ -163,9 +163,9 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarBPe que determina se após carregar os dados da BPe
     // para o componente, será gerado ou não novamente o XML da BPe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarBPe: Boolean = True): Boolean;
-    function LoadFromStream(AStream: TStringStream; AGerarBPe: Boolean = True): Boolean;
-    function LoadFromString(AXMLString: String; AGerarBPe: Boolean = True): Boolean;
+    function LoadFromFile(CaminhoArquivo: String; AGerarBPe: Boolean = False): Boolean;
+    function LoadFromStream(AStream: TStringStream; AGerarBPe: Boolean = False): Boolean;
+    function LoadFromString(AXMLString: String; AGerarBPe: Boolean = False): Boolean;
     function LoadFromIni(AIniString: String): Boolean;
 
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
@@ -865,7 +865,7 @@ begin
 end;
 
 function TBilhetes.LoadFromFile(CaminhoArquivo: String;
-  AGerarBPe: Boolean = True): Boolean;
+  AGerarBPe: Boolean): Boolean;
 var
   XMLUTF8: AnsiString;
   i, l: integer;
@@ -891,7 +891,7 @@ begin
 end;
 
 function TBilhetes.LoadFromStream(AStream: TStringStream;
-  AGerarBPe: Boolean = True): Boolean;
+  AGerarBPe: Boolean): Boolean;
 var
   AXML: AnsiString;
 begin
@@ -902,7 +902,7 @@ begin
 end;
 
 function TBilhetes.LoadFromString(AXMLString: String;
-  AGerarBPe: Boolean = True): Boolean;
+  AGerarBPe: Boolean): Boolean;
 var
   ABPeXML, XMLStr: AnsiString;
   P, N: integer;

@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2017
+-- ACBrCTeConhecimentos --
+[*] Métodos "LoadFromFile", "LoadFromString", e "LoadFromStream" modificados para
+    que o parâmetro "AGerarCTe", seja por padrão "False". Para respeitar o XML
+    informado, e evitar processamento de CPU desnecessário
+   Por: Italo Jurisato Junior
+
 08/12/2017
 -- ACBRCTeConhecimentos --
 [+] Classe "Conhecimento" Adicionado o método:

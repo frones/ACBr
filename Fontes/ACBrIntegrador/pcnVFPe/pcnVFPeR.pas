@@ -259,8 +259,14 @@ begin
 
   RetornoRespostaFiscal.Clear;
 
-  RetornoRespostaFiscal.IdRespostaFiscal := Leitor.rCampo(tcStr, 'retorno');
-  RetornoRespostaFiscal.IntegradorResposta.LerResposta(Leitor.Grupo);
+  if (Pos(UpperCase('retorno'),UpperCase(Leitor.Arquivo)) <= 0) and
+     (Pos(UpperCase('Integrador'),UpperCase(Leitor.Arquivo)) <= 0) then
+    RetornoRespostaFiscal.IdRespostaFiscal := Leitor.Arquivo
+  else
+  begin
+    RetornoRespostaFiscal.IdRespostaFiscal := Leitor.rCampo(tcStr, 'retorno');
+    RetornoRespostaFiscal.IntegradorResposta.LerResposta(Leitor.Grupo);
+  end;
 end;
 
 end.

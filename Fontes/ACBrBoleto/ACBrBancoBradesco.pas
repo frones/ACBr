@@ -236,13 +236,18 @@ begin
       {Pegando Código da Ocorrencia}
       case OcorrenciaOriginal.Tipo of
          toRemessaBaixar                         : Ocorrencia := '02'; {Pedido de Baixa}
+         toRemessaProtestoFinsFalimentares       : Ocorrencia := '03'; {Pedido de Protesto Falimentar}
          toRemessaConcederAbatimento             : Ocorrencia := '04'; {Concessão de Abatimento}
          toRemessaCancelarAbatimento             : Ocorrencia := '05'; {Cancelamento de Abatimento concedido}
          toRemessaAlterarVencimento              : Ocorrencia := '06'; {Alteração de vencimento}
+         toRemessaAlterarControleParticipante    : Ocorrencia := '07'; {Alteração do controle do participante}
          toRemessaAlterarNumeroControle          : Ocorrencia := '08'; {Alteração de seu número}
          toRemessaProtestar                      : Ocorrencia := '09'; {Pedido de protesto}
          toRemessaCancelarInstrucaoProtestoBaixa : Ocorrencia := '18'; {Sustar protesto e baixar}
          toRemessaCancelarInstrucaoProtesto      : Ocorrencia := '19'; {Sustar protesto e manter na carteira}
+         toRemessaAlterarValorTitulo             : Ocorrencia := '20'; {Alteração de valor}
+         toRemessaTransferenciaCarteira          : Ocorrencia := '23'; {Transferência entre carteiras}
+         toRemessaDevTransferenciaCarteira       : Ocorrencia := '24'; {Dev. Transferência entre carteiras}
          toRemessaOutrasOcorrencias              : Ocorrencia := '31'; {Alteração de Outros Dados}
       else
          Ocorrencia := '01';                                           {Remessa}

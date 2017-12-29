@@ -2740,27 +2740,17 @@ begin
 end;
 
 procedure TACBrBoleto.ChecarDadosObrigatorios;
-var
-  // Indicar se algum dos dados obrigatórios não foi preenchido
-  vDadosIncompletos: boolean;
 begin
-   // Verificar o preenchimento do nome
-   vDadosIncompletos := Cedente.Nome = '';
-   // Verificar o preenchimento da conta
-   if not vDadosIncompletos then
-     vDadosIncompletos := Cedente.Conta = '';
-   // Verificar o preenchimento do dígito da conta
-   if not vDadosIncompletos then
-     vDadosIncompletos := (Cedente.ContaDigito = '') and (Banco.TipoCobranca <> cobBanestes);
-   // Verificar o preenchimento da agência
-   if not vDadosIncompletos then
-     vDadosIncompletos := Cedente.Agencia = '';
-   // Verificar o preenchimento do dígito da agência
-   if not vDadosIncompletos then
-     vDadosIncompletos := (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanrisul]));
-   // Gerar exceção caso algum dos campos obrigatórios não esteja preenchido
-   if vDadosIncompletos then
-     raise Exception.Create(ACBrStr('Informações do Cedente incompletas'));
+  if Cedente.Nome = '' then
+    Raise Exception.Create(ACBrStr('Nome do cedente não informado'));
+  if Cedente.Conta = '' then
+    Raise Exception.Create(ACBrStr('Conta não informada'));
+  if (Cedente.ContaDigito = '') and (Banco.TipoCobranca <> cobBanestes) then
+    Raise Exception.Create(ACBrStr('Dígito da conta não informado'));
+  if Cedente.Agencia = '' then
+    Raise Exception.Create(ACBrStr('Agência não informada'));
+  if (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanrisul])) then
+    Raise Exception.Create(ACBrStr('Dígito da agência não informado'));
 end;
 
 function TACBrBoleto.GetOcorrenciasRemessa: TACBrOcorrenciasRemessa;

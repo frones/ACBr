@@ -1250,6 +1250,7 @@ begin
                             'dhResp='  +DateTimeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.dhResp)+sLineBreak+
                             'indCont=' +sTemMais+sLineBreak+
                             'ultNSU='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.ultNSU+sLineBreak+
+                            'maxNSU='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.maxNSU+sLineBreak+
                             'NomeArq=' +ACBrNFe1.WebServices.DistribuicaoDFe.NomeArq;
              J := 1;
              for i:= 0 to AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count-1 do

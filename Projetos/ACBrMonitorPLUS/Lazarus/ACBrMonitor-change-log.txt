@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2017
+[*] Ajuste no Retorno do Método DistribuicaoDFe
+        https://www.projetoacbr.com.br/forum/topic/40600-comando-nfedistribuicaodfeporultnsucuf-ccnpj-nultnsu/
+	por: José M. S. Junior
+
 19/12/2017
 [+] Adição de Tag --DoBoletoUnit--
         Adicionado tag DataMulta

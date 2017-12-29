@@ -259,7 +259,7 @@ begin
     // Estamos aplicando a versão 1.0 do c14n, mas existe a versão 1.1
     // Talvez seja necessario no futuro checar a versão do c14n
     // aplica a transformação C14N
-    if xmlC14NDocDumpMemory(aDoc, Elements, xmlC14NMode.XML_C14N_1_0, nil, 0, @buffer) < 0 then
+    if xmlC14NDocDumpMemory(aDoc, Elements, 0, nil, 0, @buffer) < 0 then
       raise EACBrDFeException.Create(cErrC14NTransformation);
 
     if buffer = Nil then

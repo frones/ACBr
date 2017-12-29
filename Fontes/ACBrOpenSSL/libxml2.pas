@@ -1373,6 +1373,12 @@ type
           XPATH_USERS = 8,
           XPATH_XSLT_TREE = 9);
 
+     xmlC14NMode = (
+          XML_C14N_1_0 = 0,           // : Original C14N 1.0 spec
+          XML_C14N_EXCLUSIVE_1_0 = 1, // : Exclusive C14N 1.0 spec
+          XML_C14N_1_1 = 2            //: C14N 1.1 spec
+      );
+
        htmlElemDescPtr = ^htmlElemDesc;
        htmlEntityDescPtr = ^htmlEntityDesc;
        xlinkHRef = ^xmlChar;

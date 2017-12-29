@@ -251,6 +251,7 @@ var
 begin
   Result := '';
   buffer := Nil;
+  Elements := Nil;
 
   try
     // seleciona os elementos a serem transformados e inclui os devidos namespaces
@@ -408,13 +409,12 @@ function TDFeSSLXmlSignLibXml2.VerificarAssinatura(const ConteudoXML: String;
 var
   aDoc: xmlDocPtr;
   SignElement: String;
-  DigestXML,  DigestCalc, XmlSign, X509Certificate, CanonXML: AnsiString;
+  DigestXML,  XmlSign, X509Certificate, CanonXML: AnsiString;
   signBuffer: xmlBufferPtr;
   DigestAlg: TSSLDgst;
   rootNode, SignNode: xmlNodePtr;
 begin
   LibXmlInit;
-
   Result := False;
   signBuffer := nil;
   aDoc := nil;

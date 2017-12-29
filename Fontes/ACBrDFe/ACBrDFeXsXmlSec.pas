@@ -469,9 +469,12 @@ begin
     xmlDocDumpMemory(doc, @buffer, @bufSize);
     if (buffer <> nil) then
       { success }
-      Result := buffer;
+      Result := String(buffer);
   finally
     { cleanup }
+    if (buffer <> nil) then
+      xmlFree(buffer);
+
     if (doc <> nil) then
       xmlFreeDoc(doc);
 

@@ -248,18 +248,18 @@ function TDFeSSLXmlSignLibXml2.CanonC14n(const aDoc: xmlDocPtr;
 var
   Elements: xmlNodeSetPtr;
   buffer: PAnsiChar;
-  inclusive: xmlCharPtrPtr;
 begin
   Result := '';
   buffer := Nil;
-  inclusive := Nil;
 
   try
     // seleciona os elementos a serem transformados e inclui os devidos namespaces
     Elements := SelectElements(aDoc, infElement);
 
+    // Estamos aplicando a versão 1.0 do c14n, mas existe a versão 1.1
+    // Talvez seja necessario no futuro checar a versão do c14n
     // aplica a transformação C14N
-    if xmlC14NDocDumpMemory(aDoc, Elements, 0, inclusive, 0, @buffer) < 0 then
+    if xmlC14NDocDumpMemory(aDoc, Elements, xmlC14NMode.XML_C14N_1_0, nil, 0, @buffer) < 0 then
       raise EACBrDFeException.Create(cErrC14NTransformation);
 
     if buffer = Nil then
@@ -422,29 +422,43 @@ begin
   try
     aDoc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
     if (aDoc = nil) then
-      raise EACBrDFeException.Create(cErrParseDoc);
+    begin
+       MsgErro := cErrParseDoc;
+       Exit;
+    end;
 
     rootNode := xmlDocGetRootElement(aDoc);
     if (rootNode = nil) then
-      raise EACBrDFeException.Create(cErrFindRootNode);
+    begin
+       MsgErro := cErrFindRootNode;
+       Exit;
+    end;
 
     SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
     if (SignNode.Name <> SignatureNode) then
-      raise EACBrDFeException.Create(cErrFindSignNode);
+    if (rootNode = nil) then
+    begin
+       MsgErro := cErrFindSignNode;
+       Exit;
+    end;
 
     signBuffer := xmlBufferCreate();
     xmlNodeDump(signBuffer, aDoc, SignNode, 0, 0);
     SignElement := String(signBuffer.content);
 
-    DigestXML := AnsiString(LerTagXML(SignElement, cDigestValueNode));
+    DigestXML := DecodeBase64(AnsiString(LerTagXML(SignElement, cDigestValueNode)));
     DigestAlg := GetSignDigestAlgorithm(SignElement);
 
+    // Estamos aplicando a versão 1.0 do c14n, mas existe a versão 1.1
+    // Talvez seja necessario no futuro checar a versão do c14n
+    // para poder validar corretamente
     // Recalculando o DigestValue do XML e comparando com o atual
     CanonXML := AnsiString(CanonC14n(aDoc, infElement));
-    DigestCalc := FpDFeSSL.CalcHash(CanonXML, DigestAlg, outBase64);
-
-    if (DigestCalc <> DigestXML) then
-      raise EACBrDFeException.Create(Format(cErrDigestValueNaoConfere, [infElement]));
+    if(not FpDFeSSL.ValidarHash(CanonXML, DigestAlg, DigestXML)) then
+    begin
+       MsgErro := Format(cErrDigestValueNaoConfere, [infElement]);
+       Exit;
+    end;
 
     X509Certificate := AnsiString(LerTagXML(SignElement, cX509CertificateNode));
     FpDFeSSL.CarregarCertificadoPublico(X509Certificate);

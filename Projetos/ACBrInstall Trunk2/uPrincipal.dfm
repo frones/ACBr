@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = lbInfo
+  ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInstalacao
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1215,9 +1215,9 @@ object frmPrincipal: TfrmPrincipal
       end
       object rdgDLL: TRadioGroup
         Left = 195
-        Top = 306
+        Top = 329
         Width = 350
-        Height = 107
+        Height = 126
         Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
         ItemIndex = 0
         Items.Strings = (
@@ -1229,7 +1229,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbCopiarTodasDll: TCheckBox
         Left = 195
-        Top = 283
+        Top = 306
         Width = 305
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
@@ -1303,6 +1303,14 @@ object frmPrincipal: TfrmPrincipal
           'Remover Warnings de CAST causados por WideString/String/AnsiStri' +
           'ng'
         TabOrder = 12
+      end
+      object ckbUsarArquivoConfig: TCheckBox
+        Left = 195
+        Top = 283
+        Width = 305
+        Height = 17
+        Caption = 'Usar arquivo de configura'#231#227'o (*.cfg)'
+        TabOrder = 13
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -1715,7 +1723,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 4
+        FrameIndex = 1
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

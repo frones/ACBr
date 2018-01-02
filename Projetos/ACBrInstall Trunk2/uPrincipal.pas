@@ -118,6 +118,7 @@ type
     ckbRemoveCapicom: TCheckBox;
     ckbCargaDllTardia: TCheckBox;
     ckbRemoverCastWarnings: TCheckBox;
+    ckbUsarArquivoConfig: TCheckBox;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -153,6 +154,7 @@ type
     sDirPackage: string;
     sDestino   : TDestino;
     sPathBin   : String;
+    FPacoteAtual: TFileName;
     procedure BeforeExecute(Sender: TJclBorlandCommandLineTool);
     procedure AddLibrarySearchPath;
     procedure OutputCallLine(const Text: string);
@@ -752,12 +754,16 @@ end;
 
 // evento para setar os parâmetros do compilador antes de compilar
 procedure TfrmPrincipal.BeforeExecute(Sender: TJclBorlandCommandLineTool);
+var
+  LArquivoCfg: TFilename;
 begin
   // limpar os parâmetros do compilador
   Sender.Options.Clear;
 
   // não utilizar o dcc32.cfg
-  if oACBr.Installations[iVersion].SupportsNoConfig then
+  if (oACBr.Installations[iVersion].SupportsNoConfig)and
+     // -- Arquivo cfg agora opcional no caso de paths muito extensos
+     (not ckbUsarArquivoConfig.Checked) then
     Sender.Options.Add('--no-config');
 
   // -B = Build all units
@@ -819,6 +825,13 @@ begin
      if MatchText(VersionNumberStr, ['d17','d18','d19','d20','d21','d22','d23','d24','d25']) then
         Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell');
 
+  end;
+  
+  if (ckbUsarArquivoConfig.Checked) then
+  begin
+    LArquivoCfg := ChangeFileExt(FPacoteAtual, '.cfg');
+    Sender.Options.SaveToFile(LArquivoCfg);
+    Sender.Options.Clear;
   end;
 end;
 
@@ -1197,7 +1210,7 @@ begin
           if (IsDelphiPackage(NomePacote)) and (frameDpk.Pacotes[iDpk].Checked) then
           begin
             WriteToTXT(PathArquivoLog, '');
-
+            FPacoteAtual := sDirPackage + NomePacote;
             if oACBr.Installations[iVersion].CompilePackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
               Logar(Format('Pacote "%s" compilado com sucesso.', [NomePacote]))
             else
@@ -1234,6 +1247,7 @@ begin
 
               if IsDelphiPackage(NomePacote) then
               begin
+                FPacoteAtual := sDirPackage + NomePacote;
                 // instalar somente os pacotes de designtime
                 GetDPKFileInfo(sDirPackage + NomePacote, bRunOnly);
                 if not bRunOnly then

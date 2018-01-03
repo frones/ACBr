@@ -1249,11 +1249,9 @@ begin
 
             if (nfe.infNFe.Versao >= 4) and
                (nfe.Ide.modelo = 55) and
-               (nfe.Det[i].Imposto.ICMS.CST = cst60) and       //Ajuste para funcionar no ACBrNFeMonitor
-               ((nfe.Det[i].Imposto.ICMS.vBCSTRet <> 0) or     //Qdo passar CST 60 e algum campo de repasse de ICMS ST
-                (nfe.Det[i].Imposto.ICMS.vICMSSTRet <> 0) or   //estiver preenchido será trocado o cst para cstRep60
-                (nfe.Det[i].Imposto.ICMS.vBCSTDest <> 0) or
-                (nfe.Det[i].Imposto.ICMS.vICMSSTDest <> 0)) then
+               (nfe.Det[i].Imposto.ICMS.CST = cst60) and         //Ajuste para funcionar no ACBrNFeMonitor
+               ((nfe.Det[i].Imposto.ICMS.vBCSTDest <> 0) or      //Qdo passar CST 60 e algum campo de repasse de ICMS ST
+                (nfe.Det[i].Imposto.ICMS.vICMSSTDest <> 0)) then //estiver preenchido será trocado o cst para cstRep60
                nfe.Det[i].Imposto.ICMS.CST := cstRep60;
 
             if (nfe.Det[i].Imposto.ICMS.CST = cst10) and       //Ajuste para funcionar no ACBrNFeMonitor
@@ -1265,8 +1263,8 @@ begin
                ((nfe.Det[i].Imposto.ICMS.UFST <> '') or        //Qdo passar CST 90 e algum campo de partilha de ICMS ST
                 (nfe.Det[i].Imposto.ICMS.pBCOp <> 0)) then     //estiver preenchido será trocado o cst para cstPart90
                nfe.Det[i].Imposto.ICMS.CST := cstPart90;
-               
-	          sTagTemp := BuscaTag( nfe.Det[i].Imposto.ICMS.CST );
+
+            sTagTemp := BuscaTag( nfe.Det[i].Imposto.ICMS.CST );
 
             Gerador.wGrupo('ICMS' + sTagTemp, 'N' + CSTICMSTOStrTagPos(nfe.Det[i].Imposto.ICMS.CST));
 

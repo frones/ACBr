@@ -47,6 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 03/01/2018 ver: 0.0.237
+-- ACBrBancoBancoob
+[*] Ajustes nos Arquivos Remessa CNAB240 - Adicionado Mensagens do Segmento S
+    https://www.projetoacbr.com.br/forum/topic/40593-bancoobsicoob/
+
+-- ACBrBancoItau
+[*] Ajustes nos Arquivos Remessa CNAB240 - Atualizado contador registros do Trailler
+    https://www.projetoacbr.com.br/forum/topic/39676-adicionado-segmento-r-para-o-banco-itau-cnab-240/
+
+-- ACBrBoleto
+[+] Adicionado Layout de Impressão lReciboTopo (Fortes Report)
+    Permite a impressão de dois boletos com recibo por página
+    https://www.projetoacbr.com.br/forum/topic/39974-inclus%C3%A3o-de-um-novo-layout-em-acbrboletofcfortesfr-acbrboleto/
+
 Data 19/12/2017 ver: 0.0.236
 -- ACBrBancoSicred
 [*] Ajustes nos Arquivos Remessa CNAB240 - Adicionado Segmento R

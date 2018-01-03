@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.234';
+  CACBrBoleto_Versao = '0.0.237';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -1204,7 +1204,7 @@ type
       read GetObject write SetObject; default;
   end;
 
-  TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega) ;
+  TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega, lReciboTopo) ;  
 
   {TACBrTipoOcorrenciaRemessa}
   TACBrOcorrenciaRemessa = Record

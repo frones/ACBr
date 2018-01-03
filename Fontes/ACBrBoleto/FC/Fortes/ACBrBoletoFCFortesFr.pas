@@ -249,6 +249,7 @@ type
     txtEndSacado: TRLLabel;
     txtEspecieDoc: TRLLabel;
     txtLinhaDigitavelCarne: TRLLabel;
+    RLDBText17: TRLDBText;
     RLDBText18: TRLDBText;
     txtNomeCedente: TRLLabel;
     txtNossoNumeroCarne: TRLLabel;
@@ -406,6 +407,136 @@ type
     memoEndCedenteCarne: TRLMemo;
     txtOrientacoesBancoCarne: TRLMemo;
     txtNomeSacadorAval4: TRLLabel;
+    BoletoReciboTopo: TRLReport;
+    RLBand5: TRLBand;
+    RLDraw79: TRLDraw;
+    RLDraw80: TRLDraw;
+    RLDraw84: TRLDraw;
+    RLDraw85: TRLDraw;
+    RLDraw86: TRLDraw;
+    RLDraw87: TRLDraw;
+    RLDraw88: TRLDraw;
+    RLDraw89: TRLDraw;
+    RLDraw91: TRLDraw;
+    RLDraw92: TRLDraw;
+    RLDraw93: TRLDraw;
+    RLLabel12: TRLLabel;
+    txtNomeCedenteRecTop: TRLLabel;
+    RLLabel17: TRLLabel;
+    txtCodigoCedenteRecTop: TRLLabel;
+    RLLabel22: TRLLabel;
+    RLLabel24: TRLLabel;
+    txtNumeroDocumentoRecTop: TRLLabel;
+    RLLabel26: TRLLabel;
+    txtEspecieRecTop: TRLLabel;
+    RLLabel34: TRLLabel;
+    txtNossoNumeroRecTop: TRLLabel;
+    RLLabel53: TRLLabel;
+    txtValorDocumentoRecTop: TRLLabel;
+    imgBancoRecTop: TRLImage;
+    txtNumeroBancoRecTop: TRLLabel;
+    RLLabel58: TRLLabel;
+    RLLabel59: TRLLabel;
+    RLLabel60: TRLLabel;
+    txtDataVencimentoRecTop: TRLLabel;
+    RLLabel61: TRLLabel;
+    RLLabel62: TRLLabel;
+    RLLabel63: TRLLabel;
+    txtNomeSacadoRecTop: TRLLabel;
+    RLLabel64: TRLLabel;
+    RLLabel93: TRLLabel;
+    RLLabel100: TRLLabel;
+    RLLabel104: TRLLabel;
+    RLLabel106: TRLLabel;
+    RLLabel108: TRLLabel;
+    RLLabel110: TRLLabel;
+    RLLabel112: TRLLabel;
+    RLLabel114: TRLLabel;
+    RLLabel116: TRLLabel;
+    RLDraw95: TRLDraw;
+    RLLabel118: TRLLabel;
+    RLDraw96: TRLDraw;
+    RLDraw97: TRLDraw;
+    RLDraw98: TRLDraw;
+    RLDraw99: TRLDraw;
+    RLDraw100: TRLDraw;
+    RLDraw101: TRLDraw;
+    RLDraw102: TRLDraw;
+    RLDraw103: TRLDraw;
+    RLDraw104: TRLDraw;
+    RLDraw105: TRLDraw;
+    RLDraw106: TRLDraw;
+    RLDraw107: TRLDraw;
+    RLDraw108: TRLDraw;
+    RLDraw109: TRLDraw;
+    imgBancoRecTop1: TRLImage;
+    RLDraw110: TRLDraw;
+    txtLinhaDigitavelRecTop: TRLLabel;
+    RLDraw111: TRLDraw;
+    txtNumeroBancoRecTop1: TRLLabel;
+    RLLabel120: TRLLabel;
+    txtLocalPagamentoRecTop1: TRLMemo;
+    txtDataVencimentoRecTop1: TRLLabel;
+    RLLabel122: TRLLabel;
+    RLDraw112: TRLDraw;
+    RLLabel125: TRLLabel;
+    txtNomeCedenteRecTop1: TRLLabel;
+    RLLabel127: TRLLabel;
+    txtCodigoCedenteRecTop1: TRLLabel;
+    RLLabel129: TRLLabel;
+    txtDataDocumentoRecTop1: TRLLabel;
+    RLLabel131: TRLLabel;
+    txtNumeroDocumentoRecTop1: TRLLabel;
+    RLLabel133: TRLLabel;
+    txtEspecieDocRecTop1: TRLLabel;
+    RLLabel134: TRLLabel;
+    txtAceiteRecTop1: TRLLabel;
+    RLLabel136: TRLLabel;
+    txtDataProcessamentoRecTop1: TRLLabel;
+    RLLabel137: TRLLabel;
+    txtNossoNumeroRecTop1: TRLLabel;
+    txtUsoBancoRecTop1: TRLLabel;
+    RLLabel140: TRLLabel;
+    txtCarteiraRecTop1: TRLLabel;
+    RLLabel141: TRLLabel;
+    txtEspecieRecTop1: TRLLabel;
+    RLLabel142: TRLLabel;
+    txtQuantidadeRecTop1: TRLLabel;
+    RLLabel143: TRLLabel;
+    txtValorMoedaRecTop1: TRLLabel;
+    RLLabel144: TRLLabel;
+    txtValorDocumentoRecTop1: TRLLabel;
+    RLLabel170: TRLLabel;
+    RLLabel172: TRLLabel;
+    txtDescontoRecTop1: TRLLabel;
+    RLLabel173: TRLLabel;
+    txtMoraMultaRecTop1: TRLLabel;
+    RLLabel174: TRLLabel;
+    txtValorCobradoRecTop1: TRLLabel;
+    RLLabel176: TRLLabel;
+    txtNomeSacadoRecTop1: TRLLabel;
+    RLLabel177: TRLLabel;
+    txtCpfCnpjSacadoRecTop1: TRLLabel;
+    txtEnderecoSacadoRecTop1: TRLLabel;
+    RLLabel178: TRLLabel;
+    txtCidadeSacadoRecTop1: TRLLabel;
+    txtCodigoBaixaRecTop1: TRLLabel;
+    RLLabel179: TRLLabel;
+    RLLabel180: TRLLabel;
+    txtReferenciaRecTop1: TRLLabel;
+    txtEndCedenteRecTop1: TRLLabel;
+    txtSacadorAvalistaRecTop1: TRLLabel;
+    mIntrucoesRecTop1: TRLMemo;
+    imgBarrasRecTop1: TRLBarcode;
+    RLDraw114: TRLDraw;
+    RLDraw115: TRLDraw;
+    txtOrientacoesBancoRecTop1: TRLMemo;
+    RLDraw94: TRLDraw;
+    RLLabel65: TRLLabel;
+    txtLinhaDigitavelRecTopRecPag: TRLLabel;
+    RLDraw90: TRLDraw;
+    RLDraw113: TRLDraw;
+    RLLabel181: TRLLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -420,6 +551,7 @@ type
     procedure RLBand2BeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure RLBand3BeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure RLBand4BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLBand5BeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
      MensagemPadrao: TStringList;
      fBoletoFC: TACBrBoletoFCFortes;
@@ -478,6 +610,7 @@ begin
      begin
         case LayOut of
            lCarne : RLLayout:= BoletoCarne;
+           lReciboTopo : RLLayout := BoletoReciboTopo; 
         else
            RLLayout:= LayoutBoleto;
         end;
@@ -830,7 +963,6 @@ begin
         end;
       end;
    end;
-
 end;
 
 procedure TACBrBoletoFCFortesFr.RLBand4BeforePrint(Sender: TObject;
@@ -867,6 +999,100 @@ begin
       txtEspecie4.Caption             := 'R$';
       txtValorDocumento4.Caption      := FormatFloat(',0.00',Titulo.ValorDocumento);
       txtNomeSacado4.Caption          := Titulo.Sacado.NomeSacado;
+   end;
+end;
+
+procedure TACBrBoletoFCFortesFr.RLBand5BeforePrint(Sender: TObject; var PrintIt: Boolean);
+Var
+   // consulta tec 04/10/2017
+   NomeCed, EnderecoCed, NossoNum,LinhaDigitavel,CodBarras,CodCedente,TipoDoc: String;
+begin
+   with fBoletoFC.ACBrBoleto do
+   begin
+      NossoNum       := Banco.MontarCampoNossoNumero( Titulo );
+      CodBarras      := Banco.MontarCodigoBarras( Titulo );
+      LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras, Titulo );
+      CodCedente     := Banco.MontarCampoCodigoCedente(Titulo);
+
+      case Cedente.TipoInscricao of
+         pFisica   : TipoDoc:= 'CPF: ';
+         pJuridica : TipoDoc:= 'CNPJ: ';
+      else
+         TipoDoc := 'DOC.: ';
+      end;
+
+      MensagemPadrao.Clear;
+      MensagemPadrao.Text := Titulo.Mensagem.Text;
+      ACBrBoletoFC.ACBrBoleto.AdicionarMensagensPadroes(Titulo,MensagemPadrao);
+
+      // topo do recibo
+      fBoletoFC.CarregaLogo( imgBancoRecTop.Picture, Banco.Numero );
+      txtNumeroBancoRecTop.Caption    := IntToStrZero(Banco.Numero, 3)+ '-' +
+                                         ifthen(Banco.Digito >= 10,'X',IntToStrZero(Banco.Digito, 1));
+
+      txtNomeCedenteRecTop.Caption    := Cedente.Nome+ ' - '+TipoDoc + Cedente.CNPJCPF;
+      txtNomeSacadoRecTop.Caption     := Titulo.Sacado.NomeSacado;
+
+      with Titulo.ACBrBoleto.Cedente do
+      begin
+         EnderecoCed := Logradouro+' '+NumeroRes+' '+Complemento+' '+
+                        Bairro+' '+Cidade+' '+ UF+' '+CEP;
+
+         if(length(EnderecoCed) > 73) then
+             txtEndCedenteRecTop1.Font.Size := 8
+         else
+             txtEndCedenteRecTop1.Font.Size := 9;
+
+         txtEndCedenteRecTop1.Caption := EnderecoCed;
+      end;
+
+      txtCodigoCedenteRecTop.Caption  := CodCedente;
+      txtNossoNumeroRecTop.Caption    := NossoNum;
+      txtValorDocumentoRecTop.Caption := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
+      txtDataVencimentoRecTop.Caption := FormatDateTime('dd/mm/yyyy',Titulo.Vencimento);
+
+      txtNumeroDocumentoRecTop.Caption:= Titulo.NumeroDocumento;
+      txtEspecieRecTop.Caption        := Titulo.EspecieDoc;
+
+      // corpo do boleto rectop
+      fBoletoFC.CarregaLogo( imgBancoRecTop1.Picture, Banco.Numero );
+      txtNumeroBancoRecTop1.Caption    := IntToStrZero(Banco.Numero, 3)+ '-' +
+                                         ifthen(Banco.Digito >= 10,'X',IntToStrZero(Banco.Digito, 1));
+      txtDataVencimentoRecTop1.Caption := FormatDateTime('dd/mm/yyyy',Titulo.Vencimento);
+      txtCodigoCedenteRecTop1.Caption  := CodCedente;
+      txtValorDocumentoRecTop1.Caption := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
+      txtNossoNumeroRecTop1.Caption    := NossoNum;
+      txtNomeSacadoRecTop1.Caption     := Titulo.Sacado.NomeSacado;
+
+      txtLocalPagamentoRecTop1.Lines.Text:= Titulo.LocalPagamento;
+      txtNomeCedenteRecTop1.Caption    := Cedente.Nome+ ' - '+TipoDoc + Cedente.CNPJCPF;
+      txtSacadorAvalistaRecTop1.Caption:= Titulo.Sacado.Avalista;
+
+      txtDataDocumentoRecTop1.Caption  := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
+      txtNumeroDocumentoRecTop1.Caption:= Titulo.NumeroDocumento;
+      txtEspecieDocRecTop1.Caption     := Titulo.EspecieDoc;
+      txtAceiteRecTop1.Caption         := IfThen((atSim = Titulo.Aceite), 'S', 'N');
+      txtDataProcessamentoRecTop1.Caption := FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento);
+
+      txtUsoBancoRecTop1.Caption       := Titulo.UsoBanco;
+      txtCarteiraRecTop1.Caption       := Titulo.Carteira + IfThen( (Banco.Numero = 1) and (length(trim(Cedente.Modalidade))>0) ,'/' + IntToStr(StrToIntDef(Cedente.Modalidade,0)) );
+      txtEspecieRecTop1.Caption        := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
+      txtQuantidadeRecTop1.Caption     := '';
+      txtValorMoedaRecTop1.Caption     := '';
+
+      txtEnderecoSacadoRecTop1.Caption := Titulo.Sacado.Logradouro + ' '+
+                                          Titulo.Sacado.Numero + ' ' + Titulo.Sacado.Complemento +
+                                          ' ' + Titulo.Sacado.Bairro;
+      txtCidadeSacadoRecTop1.Caption   := Titulo.Sacado.CEP + ' '+Titulo.Sacado.Cidade +
+                                          ' '+Titulo.Sacado.UF;
+      txtCpfCnpjSacadoRecTop1.Caption  := Titulo.Sacado.CNPJCPF;
+      mIntrucoesRecTop1.Lines.Text     := MensagemPadrao.Text;
+
+      txtOrientacoesBancoRecTop1.Lines.Text  := Banco.OrientacoesBanco.Text;
+
+      txtLinhaDigitavelRecTop.Caption  := LinhaDigitavel;
+      txtLinhaDigitavelRecTopRecPag.Caption  := LinhaDigitavel;
+      imgBarrasRecTop1.Caption         := CodBarras;
    end;
 end;
 

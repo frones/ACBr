@@ -756,12 +756,25 @@ var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros
     ATipoInscricaoAvalista: Char;
     wModalidade, ValorMora: String;
     strCarteiraEnvio : Char;
+    S :string;
+    MsgBoleto: Array[1..5] of string;
+    K: Integer;
 begin
   NossoNum  := RemoveString('-', MontarCampoNossoNumero(ACBrTitulo));
   ATipoInscricaoAvalista := ' ';
   ValorMora := '';
   with ACBrTitulo do
     begin
+
+      S:= Mensagem.Text;
+      S:= RemoveString( #13, S );
+      S:= RemoveString( #10, S );
+      for K := Low(MsgBoleto) to High(MsgBoleto) do
+      begin
+        MsgBoleto[K] := Copy(S, 1, 40);
+        Delete(S, 1, 40);
+      end;
+
       {SEGMENTO P}
       {Pegando o Tipo de Ocorrencia}
       case OcorrenciaOriginal.Tipo of
@@ -826,10 +839,18 @@ begin
      else
        ProtestoBaixa:= '3';
 
-     if (ValorMoraJuros > 0) and (CodigoMora = '') then
-       CodigoMora := '1'
-     else if (ValorMoraJuros = 0) and (CodigoMora = '') then
-       CodigoMora := '0';
+     if CodigoMora = '' then
+     begin
+      CodigoMora := '0'; //assume como cjIsento
+       // cjValorDia, cjTaxaMensal, cjIsento
+      if ValorMoraJuros > 0 then // Se tem juro atribuido, mudar de acordo com o tipo que o banco processa
+      begin
+        if  CodigoMoraJuros = cjValorDia then
+          CodigoMora :='1'
+        else if  CodigoMoraJuros = cjTaxaMensal then
+          CodigoMora :='2';
+      end;
+     end;
 
      if CodigoMora = '0' then
        ValorMora := PadLeft('', 15, '0')
@@ -1004,10 +1025,15 @@ begin
                ' '                                + // Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                    + // 16 a 17 - Código de movimento
                '3'                                + // 18 tipo impressão
-               space(222);                          // 217-228 Conta corrente para debito
+               PadRight(MsgBoleto[1], 40)+ //019	a 058	040	-	Alfa	Informação 5				"Mensagem 5: Texto de observações destinado ao envio de mensagens livres, a serem impressas no campo de instruções da ficha de compensação do bloqueto.               As mensagens 5 à 9 prevalecem sobre as anteriores."
+               PadRight(MsgBoleto[2], 40)+ //059	a 098	040	-	Alfa	Informação 6				"Mensagem 6: Texto de observações destinado ao envio de mensagens livres, a serem impressas no campo de instruções da ficha de compensação do bloqueto.               As mensagens 5 à 9 prevalecem sobre as anteriores."
+               PadRight(MsgBoleto[3], 40)+ //099	a 138	040	-	Alfa	Informação 7				"Mensagem 7: Texto de observações destinado ao envio de mensagens livres, a serem impressas no campo de instruções da ficha de compensação do bloqueto.               As mensagens 5 à 9 prevalecem sobre as anteriores."
+               PadRight(MsgBoleto[4], 40)+ //139	a 178	040	-	Alfa	Informação 8				"Mensagem 8: Texto de observações destinado ao envio de mensagens livres, a serem impressas no campo de instruções da ficha de compensação do bloqueto.               As mensagens 5 à 9 prevalecem sobre as anteriores."
+               PadRight(MsgBoleto[5], 40)+ //179	a 218	040	-	Alfa	Informação 9				"Mensagem 9: Texto de observações destinado ao envio de mensagens livres, a serem impressas no campo de instruções da ficha de compensação do bloqueto.               As mensagens 5 à 9 prevalecem sobre as anteriores."
+               space(22) //219 a	240	022	-	Alfa	CNAB				Uso Exclusivo FEBRABAN/CNAB: Preencher com espaços em branco
+               ;                          // 217-228 Conta corrente para debito
                Inc(i);
   end;
-
 end;
 
 function TACBrBancoob.GerarRegistroTrailler240(

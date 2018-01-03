@@ -47,6 +47,7 @@ type
    private
      fValorTotalDocs: Double;
      fTipoOcorrenciaRemessa : String;
+     fQtRegLote: Integer;
    protected
    public
     Constructor create(AOwner: TACBrBanco);
@@ -90,6 +91,7 @@ begin
    fpTamanhoConta          := 5;
    fpTamanhoCarteira       := 3;
    fValorTotalDocs         := 0;
+   fQtRegLote              := 0;
 end;
 
 function TACBrBancoItau.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -351,7 +353,7 @@ begin
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
                '0001'                                                     + //4 a 7 - Lote de serviço
                '3'                                                        + //8 - Tipo do registro: Registro detalhe
-               IntToStrZero(2*ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)+ 1 ,5) + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero(fQtRegLote + 1 ,5) + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'P'                                                        + //14 - Código do segmento do registro detalhe
                ' '                                                        + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + //16 a 17 - Código de movimento
@@ -396,6 +398,8 @@ begin
                        PadLeft(IntToStr(DaysBetween(DataBaixa, Vencimento)), 2, '0'), '00')  + // 225 A 226 - Dias para baixa
                '0000000000000 ';
 
+      Inc(fQtRegLote);
+
       {SEGMENTO Q}
 
       {Pegando tipo de pessoa do Sacado}
@@ -421,7 +425,7 @@ begin
                IntToStrZero(ACBrBanco.Numero, 3)                          + //Código do banco
                '0001'                                                     + //Número do lote
                '3'                                                        + //Tipo do registro: Registro detalhe
-               IntToStrZero((2*ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)+1)+ 1 ,5) + //Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero(fQtRegLote + 1 ,5) + //Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'Q'                                                        + //Código do segmento do registro detalhe
                ' '                                                        + //Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + // 16 a 17
@@ -443,6 +447,8 @@ begin
                PadRight('0',3, '0')                                           + //Uso exclusivo FEBRABAN/CNAB
                space(28);                                            //Uso exclusivo FEBRABAN/CNAB
 
+      Inc(fQtRegLote);
+
       {Segmento R}
           if(MatchText(ATipoOcorrencia,['01','49','31']))then
           begin
@@ -451,7 +457,7 @@ begin
                    IntToStrZero(ACBrBanco.Numero,3)                                    + // 001 a 003 - Codigo do Banco
                    '0001'                                                              + // 004 a 007 - Lote de Serviço
                    '3'                                                                 + // 008 a 008 - Registro Detalhe
-                   IntToStrZero(2*ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)+ 3 ,5) + // 009 a 013 - Seq. Registro do Lote
+                   IntToStrZero(fQtRegLote + 1 ,5) + // 009 a 013 - Seq. Registro do Lote
                    'R'                                                                 + // 014 a 014 - Codigo do Segmento registro detalhe
                    ' '                                                                 + // 015 a 015 - Complemento de Registro
                    ATipoOcorrencia                                                     + // 016 a 017 - Identificação da Ocorrencia
@@ -479,6 +485,7 @@ begin
                    '0'                                                                 + // 231 a 231 Complemento de Registro
                    StringOfChar(' ',9);                                                  // 232 a 240 Complemento de Registro
 
+          Inc(fQtRegLote);
           end;
 
       end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2018
+-- pnfsNFSeW_ABRASFv1 --
+[*] Alteração para gerar a tag <Aliquota> com 4 casas decimais (provedor SimplISS).
+Por: Italo Jurisato Junior
+
 27/12/2017
 -- ACBrNFSeNotasFiscais --
 [*] Alteração para gerar a assinatura correta quando não tem tomador.

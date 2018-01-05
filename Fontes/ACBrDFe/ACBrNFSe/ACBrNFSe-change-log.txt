@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2018
+-- ACBrNFSeWebServices --
+[*] Acrescentado um condição para a cidade de Manaus (provedor Abaco) para a 
+    cidade de Manaus não deve constar o NameSpace nas Tag dos serviços.
+Por: Luiz Vaz
+
 04/01/2018
 -- pnfsNFSeW_ABRASFv1 --
 [*] Alteração para gerar a tag <Aliquota> com 4 casas decimais (provedor SimplISS).

@@ -1613,6 +1613,14 @@ begin
     LayNfseRecepcaoLote:
        begin
          case FProvedor of
+           proAbaco: begin
+                       // Manaus
+                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+                         FTagI := '<'+FTagGrupo+'>'
+                       else // Outros
+                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+                     end;
+
            proABase: FTagI := '<' + FTagGrupo + FNameSpaceDad +
                                 ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 

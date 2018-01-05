@@ -252,7 +252,7 @@ type
 
 implementation
 
-Uses ACBrUtil, StrUtils ;
+Uses ACBrUtil, StrUtils, pcnAuxiliar ;
 
 { TBloco_D }
 
@@ -707,7 +707,10 @@ begin
                       LFill( VL_ICMS,0,2, booConsiderarComoValorNulo ) +
                       LFill( VL_NT,0,2, booConsiderarComoValorNulo ) +
                       LFill( COD_INF ) +
-                      LFill( COD_CTA );
+                      LFill( COD_CTA ) +
+                      IIF(DT_INI >= EncodeDate(2018,01,01),
+                        LFill( COD_MUN_ORIG ) +
+                        LFill( COD_MUN_DEST),EmptyStr);
           //-- Write
           if Assigned(FOnWriteRegistroD100) then
              FOnWriteRegistroD100(strLinha);

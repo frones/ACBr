@@ -137,6 +137,8 @@ type
     fVL_NT: currency;               /// Valor não tributado
     fCOD_INF: String;               /// Valor do ICMS retido por substituição tributária
     fCOD_CTA: String;               /// Código da conta analitica contabil debitada/creditada
+    fCOD_MUN_ORIG: String;          /// Código municipio origem conf. tab IBGE
+    fCOD_MUN_DEST: String;          /// Código municipio destino conf. tab IBGE
 
     FRegistroD101: TRegistroD101List;
     FRegistroD110: TRegistroD110List;
@@ -174,6 +176,8 @@ type
     property VL_NT: currency read FVL_NT write FVL_NT;
     property COD_INF: String read FCOD_INF write FCOD_INF;
     property COD_CTA: String read FCOD_CTA write FCOD_CTA;
+    property COD_MUN_ORIG: String read FCOD_MUN_ORIG write FCOD_MUN_ORIG;
+    property COD_MUN_DEST: String read FCOD_MUN_DEST write FCOD_MUN_DEST;
 
     property RegistroD101: TRegistroD101List read FRegistroD101 write FRegistroD101;
     property RegistroD110: TRegistroD110List read FRegistroD110 write FRegistroD110;

@@ -1274,8 +1274,8 @@ begin
     end;
   end;
 
-  rllTipoCte.Caption     := tpCTToStrText(FCTe.Ide.tpCTe);
-  rllTipoServico.Caption := TpServToStrText(FCTe.Ide.tpServ);
+  rllTipoCte.Caption     := ACBrStr(tpCTToStrText(FCTe.Ide.tpCTe));
+  rllTipoServico.Caption := ACBrStr(TpServToStrText(FCTe.Ide.tpServ));
 
   // CTe 3.0 **************************************************************
 

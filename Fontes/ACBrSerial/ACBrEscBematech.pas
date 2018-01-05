@@ -118,7 +118,7 @@ begin
     FonteNormal             := ESC + '!' + #0 + DesligaCondensado + DesligaItalico;
     FonteA                  := DesligaCondensado;
     FonteB                  := LigaCondensado;
-    Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
+    Beep                    := ESC + '(A' + #4 + #0 + #1 + #2 + #1 + #0;
   end;
   {*)}
 

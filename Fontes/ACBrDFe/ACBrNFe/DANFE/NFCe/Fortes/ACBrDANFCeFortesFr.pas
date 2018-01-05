@@ -692,8 +692,7 @@ begin
   fNumObs   := 0;
   fObsFisco.Clear;
 
-  imgLogo.Height := 100;
-
+  imgLogo.Height := 70;
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
     lNomeFantasia.Visible := ACBrNFeDANFCeFortes.ImprimeNomeFantasia;
@@ -703,13 +702,12 @@ begin
     lRazaoSocial.Lines.Text := 'CNPJ: '+FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
 
+    if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
+      imgLogo.Parent := pLogoLateral
+    else
+      imgLogo.Parent := pLogoeCliche;
     if ACBrNFeDANFCeFortes.Logo <> '' then
     begin
-      if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
-        imgLogo.Parent := pLogoLateral
-      else
-        imgLogo.Parent := pLogoeCliche;
-
       imgLogo.Height := ACBrNFeDANFCeFortes.TamanhoLogoHeight ;
       imgLogo.Width := ACBrNFeDANFCeFortes.TamanhoLogoWidth ;
       imgLogo.AutoSize := ACBrNFeDANFCeFortes.ExpandirLogoMarca ;

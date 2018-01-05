@@ -664,6 +664,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Width = 64
           Height = 41
           Align = faLeftTop
+          Alignment = taCenter
           BeforePrint = pLogoLateralBeforePrint
         end
       end

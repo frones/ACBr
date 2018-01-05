@@ -817,6 +817,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Top = 0
           Width = 64
           Align = faLeftTop
+          Alignment = taCenter
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/01/2018
+-- pcnCFeW --
+[-] Correção para uso de CST diferente de 49 para empresas optantes pelo simples no SAT
+    https://www.projetoacbr.com.br/forum/topic/40036-uso-de-cst-diferente-de-49-para-empresas-optantes-pelo-simples-no-sat/
+
 Data: 01/12/2017
 -- ACBrSAT, ACBrSATClass --
 [+] Adicionado o método "ValidarDadosVenda", que permite efetuar a validação do

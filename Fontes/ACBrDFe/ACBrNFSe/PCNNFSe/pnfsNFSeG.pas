@@ -48,7 +48,6 @@ type
     aVersao: String;
     aIdentificador: String;
     aNameSpace: String;
-    IdLote: String;
 
     FGerador: TGerador;
 
@@ -91,6 +90,7 @@ type
     FCodMunicipio: Integer;
     FCodigoCanc: String;
     FMotivoCanc: String;
+    FIdLote: String;
 
     // Layout - ISSDSF
     FVersaoXML: String;
@@ -234,6 +234,8 @@ type
 
     // Layout - EL
     property HashIdent: String read FHashIdent write FHashIdent;
+
+    property IdLote: String read FIdLote write FIdLote;
    end;
 
 implementation
@@ -314,6 +316,8 @@ begin
 
   // Valor do atributo Id ======================================================
   case Provedor of
+    proAbaco: IdLote := 'LOTE' + NumeroLote;
+
     proBethav2: IdLote := 'lote' + NumeroLote;
 
     proEL: begin

@@ -566,6 +566,7 @@ begin
     Gerador.wGrupo('Rps' + Atributo);
 
   case FProvedor of
+    proAbaco,
     proRecife,
     proSalvador: FNFSe.InfID.ID := 'RPS' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
   else

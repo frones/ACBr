@@ -2385,15 +2385,19 @@ begin
     FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg, FTagGrupo, TagElemento,
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                    xSignatureNode, xDSIGNSLote, xIdSignature);
-    (*
-    i := Pos('URI=""', FPDadosMsg);
 
-    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-    // atributo URI ao realizar a assinatura.
-    if i > 0 then
-      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
-                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    *)
+    // Teste realizado para o provedor Abaco podendo ser removido a condição para
+    // atender os demais provedores que o identificador seja id em vez de Id.
+    if FProvedor = proAbaco then
+    begin
+      i := Pos('URI=""', FPDadosMsg);
+
+      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+      // atributo URI ao realizar a assinatura.
+      if (i > 0) and (GerarDadosMsg.IdLote <> '') then
+        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + GerarDadosMsg.IdLote +
+                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    end;
 
     // Incluido a linha abaixo por após realizar a assinatura esta gerando o
     // atributo xmlns vazio.

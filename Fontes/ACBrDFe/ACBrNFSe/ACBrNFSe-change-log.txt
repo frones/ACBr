@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/01/2018
+-- Diversos --
+[*] Alterado a geração do ID do RPS e do Lote para o provedor Abaco, incluido
+    a alteração do valor do atributo URI quando este for vazio e o provedor for
+    Abaco.
+Por: Italo Jurisato Junior
+
 -- ACBrNFSeWebServices --
 [*] Acrescentado um condição para a cidade de Manaus (provedor Abaco) para a 
     cidade de Manaus não deve constar o NameSpace nas Tag dos serviços.

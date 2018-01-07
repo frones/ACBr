@@ -289,12 +289,12 @@ begin
     proGINFES,
     proRJ,
     proPublica,
-    proSimplISS,
     proBHISS:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
 
     proGovBR,
     proPronim,
     proISSNet,
+    proSimplISS,
     proWebISS:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     proNFSEBrasil: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota * 100), DSC_VALIQ);

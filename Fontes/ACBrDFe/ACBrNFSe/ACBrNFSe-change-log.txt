@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/01/2018
+-- pnfsNFSeW_ABRASFv1 --
+[*] Alteração para gerar a tag <Aliquota> com 4 casas decimais (provedor SimplISS)
+    mas sem dividir por 100.
+Por: Italo Jurisato Junior
 -- Diversos --
 [*] Desfeito a Alterado do dia 5 referente ao provedor Abaco.
 Por: Italo Jurisato Junior

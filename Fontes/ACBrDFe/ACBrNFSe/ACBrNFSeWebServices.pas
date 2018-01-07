@@ -1614,10 +1614,10 @@ begin
        begin
          case FProvedor of
            proAbaco: begin
-                       // Manaus
-                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
-                         FTagI := '<'+FTagGrupo+'>'
-                       else // Outros
+//                       // Manaus
+//                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+//                         FTagI := '<'+FTagGrupo+'>'
+//                       else // Outros
                          FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
                      end;
 
@@ -2189,7 +2189,7 @@ var
   dDataInicial, dDataFinal: TDateTime;
   TotalServicos, TotalDeducoes, TotalISS,
   TotalTributos, TotalISSRetido: Double;
-  TagElemento: String;
+  TagElemento, IDLote: String;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -2366,6 +2366,7 @@ begin
     else
       FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
 
+    IDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -2388,14 +2389,14 @@ begin
 
     // Teste realizado para o provedor Abaco podendo ser removido a condição para
     // atender os demais provedores que o identificador seja id em vez de Id.
-    if FProvedor = proAbaco then
+    if FProvedor <> proAbaco then
     begin
       i := Pos('URI=""', FPDadosMsg);
 
       // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
       // atributo URI ao realizar a assinatura.
-      if (i > 0) and (GerarDadosMsg.IdLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + GerarDadosMsg.IdLote +
+      if (i > 0) and (IDLote <> '') then
+        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
                       Copy(FPDadosMsg, i+5, length(FPDadosMsg));
     end;
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2018
+-- Diversos --
+[*] Desfeito a Alterado do dia 5 referente ao provedor Abaco.
+Por: Italo Jurisato Junior
+
 05/01/2018
 -- Diversos --
 [*] Alterado a geração do ID do RPS e do Lote para o provedor Abaco, incluido

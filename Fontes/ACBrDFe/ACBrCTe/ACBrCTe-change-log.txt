@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2017
+-- ACBrCTeConfiguracoes --
+[+] Adicionado os métodos:
+    GravarIni( const AIni: TCustomIniFile );
+    LerIni( const AIni: TCustomIniFile );
+    Que permitem Gravar e Ler os valores de todas as configurações de
+    "TConfiguracoesCTe" em um arquivo INI
+    (por: Italo Jurisato Junior)
+
 28/12/2017
 -- ACBrCTeConhecimentos --
 [*] Alterado o Método LoadFromString com o objetido de detectar automaticamente 

@@ -46,7 +46,8 @@ unit ACBrBPeConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFeConfiguracoes, pcnConversao, pcnConversaoBPe;
+  Classes, SysUtils, IniFiles,
+  ACBrDFeConfiguracoes, pcnConversao, pcnConversaoBPe;
 
 type
 
@@ -60,6 +61,8 @@ type
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfBPe: TGeralConfBPe); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
   published
     property VersaoDF: TVersaoBPe read FVersaoDF write SetVersaoDF default ve100;
@@ -93,6 +96,8 @@ type
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
     procedure Assign(DeArquivosConfBPe: TArquivosConfBPe); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathBPe(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
@@ -142,6 +147,7 @@ constructor TConfiguracoesBPe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  FPSessaoIni := 'BPe';
   WebServices.ResourceName := 'ACBrBPeServicos';
 end;
 
@@ -192,6 +198,20 @@ end;
 procedure TGeralConfBPe.SetVersaoDF(const Value: TVersaoBPe);
 begin
   FVersaoDF := Value;
+end;
+
+procedure TGeralConfBPe.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+end;
+
+procedure TGeralConfBPe.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  VersaoDF := TVersaoBPe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
 end;
 
 { TDownloadConfBPe }
@@ -283,6 +303,32 @@ begin
      rPathDown := FDownloadBPe.PathDownload;
 
   Result := GetPath(rPathDown, 'Down', CNPJ, Data);
+end;
+
+procedure TArquivosConfBPe.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarApenasBPeProcessadas', SalvarApenasBPeProcessadas);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathBPe', EmissaoPathBPe);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathBPe', PathBPe);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadBPe.PathDownload);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadBPe.SepararPorNome);
+end;
+
+procedure TArquivosConfBPe.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  SalvarEvento := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
+  SalvarApenasBPeProcessadas := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarApenasBPeProcessadas', SalvarApenasBPeProcessadas);
+  EmissaoPathBPe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathBPe', EmissaoPathBPe);
+  PathBPe := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathBPe', PathBPe);
+  PathEvento := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  DownloadBPe.PathDownload := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadBPe.PathDownload);
+  DownloadBPe.SepararPorNome := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadBPe.SepararPorNome);
 end;
 
 end.

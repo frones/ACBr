@@ -42,7 +42,8 @@ unit ACBrCTeConfiguracoes;
 interface
 
 uses
-  Classes, Sysutils, ACBrDFeConfiguracoes, pcnConversao, pcteConversaoCTe;
+  Classes, Sysutils, IniFiles,
+  ACBrDFeConfiguracoes, pcnConversao, pcteConversaoCTe;
 
 type
 
@@ -59,6 +60,8 @@ type
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfCTe: TGeralConfCTe); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
   published
     property ModeloDF: TModeloCTe read FModeloDF write SetModeloDF default moCTe;
@@ -94,6 +97,8 @@ type
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); reintroduce;
     destructor Destroy; override;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
     function GetPathInu(Data: TDateTime = 0; CNPJ: String = ''): String;
@@ -140,6 +145,7 @@ constructor TConfiguracoesCTe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  FPSessaoIni := 'CTe';
   WebServices.ResourceName := 'ACBrCTeServicos';
 end;
 
@@ -188,6 +194,22 @@ begin
   FModeloDF := moCTe;
   FModeloDFCodigo := StrToInt(ModeloCTeToStr(FModeloDF));
   FVersaoDF := ve200;
+end;
+
+procedure TGeralConfCTe.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF));
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+end;
+
+procedure TGeralConfCTe.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  ModeloDF := TModeloCTe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF)));
+  VersaoDF := TVersaoCTe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
 end;
 
 procedure TGeralConfCTe.SetModeloDF(const Value: TModeloCTe);
@@ -283,6 +305,32 @@ begin
      rPathDown := FDownloadCTe.PathDownload;
 
   Result := GetPath(rPathDown, 'Down', CNPJ, Data);
+end;
+
+procedure TArquivosConfCTe.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarApenasCTeProcessados', SalvarApenasCTeProcessados);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathCTe', EmissaoPathCTe);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathCTe', PathCTe);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadCTe.PathDownload);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadCTe.SepararPorNome);
+end;
+
+procedure TArquivosConfCTe.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  SalvarApenasCTeProcessados := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarApenasCTeProcessados', SalvarApenasCTeProcessados);
+  EmissaoPathCTe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathCTe', EmissaoPathCTe);
+  PathCTe := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathCTe', PathCTe);
+  PathInu := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
+  PathEvento := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  DownloadCTe.PathDownload := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadCTe.PathDownload);
+  DownloadCTe.SepararPorNome := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadCTe.SepararPorNome);
 end;
 
 { TDownloadConfCTe }

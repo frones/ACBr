@@ -110,7 +110,7 @@ function RemoverDeclaracaoXML(const AXML: String): String;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
-function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
+function RetornarConteudoEntre(const Frase, Inicio, Fim: String; IncluiInicioFim: Boolean = False): string;
 procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
   var PosIni, PosFim: integer;const PosOffset: integer = 0);
 
@@ -2445,6 +2445,8 @@ begin
   Result        := AString;
   TamanhoString := Length(AString);
   TamanhoChave  := Length(StrChave);
+  if (TamanhoChave = 0) or (TamanhoString = 0) then
+    Exit;
 
   for i := 1 to TamanhoString do
   begin
@@ -3740,7 +3742,8 @@ begin
  end;
 end;
 
-function RetornarConteudoEntre(const Frase, Inicio, Fim: string): string;
+function RetornarConteudoEntre(const Frase, Inicio, Fim: String;
+  IncluiInicioFim: Boolean): string;
 var
   i: integer;
   s: string;
@@ -3748,9 +3751,18 @@ begin
   result := '';
   i := pos(Inicio, Frase);
   if i = 0 then
-    exit;
-  s := Copy(Frase, i + length(Inicio), maxInt);
-  result := Copy(s, 1, pos(Fim, s) - 1);
+    Exit;
+
+  if IncluiInicioFim then
+  begin
+    s := Copy(Frase, i, maxInt);
+    result := Copy(s, 1, pos(Fim, s) + Length(Fim) - 1);
+  end
+  else
+  begin
+    s := Copy(Frase, i + length(Inicio), maxInt);
+    result := Copy(s, 1, pos(Fim, s) - 1);
+  end;
 end;
 
 {------------------------------------------------------------------------------

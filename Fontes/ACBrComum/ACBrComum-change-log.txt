@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/01/2018
+-- ACBrUtil --
+[-] Ajuste em método "StrCrypt", para suportar Parâmetros vazios
+[*] Método "RetornarConteudoEntre", adicionado o parâmetro "IncluiInicioFim: Boolean
+    default False
+    (por: DSA)
+
 Data: 26/12/2017
 -- ACBrUtil --
 [*] Ajuste no método "WriteToTXT", para não tentar gravar algo, se o nome do

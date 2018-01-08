@@ -278,7 +278,8 @@ begin
                LFill( DT_MOV ) +
                LFill( COD_ITEM_ORI  ) +
                LFill( COD_ITEM_DEST  ) +
-               DFill( QTD, 3 ) );
+               DFill( QTD, 3 )+
+			         DFill( QTD_DEST, 3 ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;

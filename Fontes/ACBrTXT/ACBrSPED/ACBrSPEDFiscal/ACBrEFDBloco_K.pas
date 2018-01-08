@@ -215,6 +215,7 @@ type
     fCOD_ITEM_ORI: string;
     fDT_MOV: TDateTime;
     fQTD: Double;
+	  fQTD_DEST: Double;
   public
     constructor Create(AOwner: TRegistroK100); virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -223,6 +224,7 @@ type
     property COD_ITEM_ORI : string read fCOD_ITEM_ORI write fCOD_ITEM_ORI;
     property COD_ITEM_DEST : string read fCOD_ITEM_DEST write fCOD_ITEM_DEST;
     property QTD : Double read fQTD write fQTD;
+  	property QTD_DEST: Double read fQTD_DEST write fQTD_DEST;
   end;
 
   /// Registro K220 - Lista

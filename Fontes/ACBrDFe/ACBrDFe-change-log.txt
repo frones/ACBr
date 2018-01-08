@@ -44,6 +44,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2017
+-- ACBrDFeConfiguracoes --
+[+] Adicionado os métodos:
+    GravarIni( const AIni: TCustomIniFile );
+    LerIni( const AIni: TCustomIniFile );
+    Que permitem Gravar e Ler os valores de todas as configurações de
+    "TConfiguracoes" em um arquivo INI
+[+] Classe "TWebServicesConf", adicionada a propriedade "SSLType", que permite
+    repassar a configuração para "TACBrDFe.SSL.SSLType"
+    (por: DSA)
+
 28/12/2017
 -- ACBrDFeXsLibXml2 --
 [*] Diversos ajustes de String x AnsiString

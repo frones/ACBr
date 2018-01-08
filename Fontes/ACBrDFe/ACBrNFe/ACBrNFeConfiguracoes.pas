@@ -41,7 +41,8 @@ unit ACBrNFeConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFeConfiguracoes, pcnConversao, pcnConversaoNFe;
+  Classes, SysUtils, IniFiles,
+  ACBrDFeConfiguracoes, pcnConversao, pcnConversaoNFe;
 
 type
 
@@ -64,6 +65,8 @@ type
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfNFe: TGeralConfNFe); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
   published
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
@@ -105,6 +108,8 @@ type
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
     procedure Assign(DeArquivosConfNFe: TArquivosConfNFe); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathInu(CNPJ: String = ''): String;
     function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
@@ -175,6 +180,7 @@ constructor TConfiguracoesNFe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  FPSessaoIni := 'NFe';
   WebServices.ResourceName := 'ACBrNFeServicos';
 end;
 
@@ -230,6 +236,30 @@ begin
   IdCSC    := DeGeralConfNFe.IdCSC;
   CSC      := DeGeralConfNFe.CSC;
   IncluirQRCodeXMLNFCe := DeGeralConfNFe.IncluirQRCodeXMLNFCe;
+end;
+
+procedure TGeralConfNFe.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdCSC', IdCSC);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'CSC', CSC);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'IncluirQRCodeXMLNFCe', IncluirQRCodeXMLNFCe);
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF));
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'AtualizarXMLCancelado', AtualizarXMLCancelado);
+end;
+
+procedure TGeralConfNFe.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  IdCSC := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdCSC', IdCSC);
+  CSC := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CSC', CSC);
+  ModeloDF := TpcnModeloDF(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF)));
+  VersaoDF := TpcnVersaoDF(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+  AtualizarXMLCancelado := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'AtualizarXMLCancelado', AtualizarXMLCancelado);
+  IncluirQRCodeXMLNFCe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'IncluirQRCodeXMLNFCe', IncluirQRCodeXMLNFCe);
 end;
 
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);
@@ -293,6 +323,34 @@ begin
   FDownloadNFe.Assign(DeArquivosConfNFe.DownloadNFe);
 end;
 
+procedure TArquivosConfNFe.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarApenasNFeProcessadas', SalvarApenasNFeProcessadas);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathNFe', EmissaoPathNFe);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathNFe', PathNFe);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadNFe.PathDownload);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadNFe.SepararPorNome);
+end;
+
+procedure TArquivosConfNFe.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  SalvarEvento := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
+  SalvarApenasNFeProcessadas := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarApenasNFeProcessadas', SalvarApenasNFeProcessadas);
+  EmissaoPathNFe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathNFe', EmissaoPathNFe);
+  PathNFe := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathNFe', PathNFe);
+  PathInu := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
+  PathEvento := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  DownloadNFe.PathDownload := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadNFe.PathDownload);
+  DownloadNFe.SepararPorNome := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadNFe.SepararPorNome);
+end;
+
 function TArquivosConfNFe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
 var
   rPathDown: String;
@@ -344,3 +402,4 @@ begin
 end;
 
 end.
+

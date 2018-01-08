@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2017
+-- ACBrNFeConfiguracoes --
+[+] Adicionado os métodos:
+    GravarIni( const AIni: TCustomIniFile );
+    LerIni( const AIni: TCustomIniFile );
+    Que permitem Gravar e Ler os valores de todas as configurações de
+    "TConfiguracoesNFe" em um arquivo INI
+    (por: DSA)
+
 28/12/2017
 -- ACBRNFeNotasFiscais --
 [*] Métodos "LoadFromFile", "LoadFromString", e "LoadFromStream" modificados para

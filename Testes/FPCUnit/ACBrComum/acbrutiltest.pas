@@ -834,6 +834,9 @@ type
   StrCryptTest = class(TTestCase)
   published
     procedure CryptDecrypt;
+    procedure CryptStringVazia;
+    procedure CryptChaveVazia;
+    procedure CryptStringEChaveVazia;
   end;
 
   { SomaAscIITest }
@@ -1748,6 +1751,21 @@ begin
 
   CheckNotEquals(AStr, Resp);
   CheckEquals( AStr, StrCrypt(Resp, Chave) );
+end;
+
+procedure StrCryptTest.CryptStringVazia;
+begin
+  CheckEquals( '', StrCrypt('', '123') );
+end;
+
+procedure StrCryptTest.CryptChaveVazia;
+begin
+  CheckEquals( '123', StrCrypt('123', '') );
+end;
+
+procedure StrCryptTest.CryptStringEChaveVazia;
+begin
+  CheckEquals( '', StrCrypt('', '') );
 end;
 
 { AscToStringTest }

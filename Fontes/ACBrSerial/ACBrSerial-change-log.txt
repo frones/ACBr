@@ -45,6 +45,14 @@ Data: 09/01/2018
     por Redução Z, na Daruma FS800i
     (por: DSA)
 
+-- ACBrDISSmakTecladoLib --
+[+] Adicionado novo modelo em ACBrDIS, disSmakTecladoLib, que suporta a carga
+    dinâmica da Biblioteca da Smak 'sk_access.dll'
+
+-- ACBrDISSmakSerial --
+[+] Adicionado novo modelo em ACBrDIS, disSmakSerial, que Suporta Teclados
+    que Criam uma Porta Serial Virtual, quando conectados.
+
 Data: 15/12/2017
 -- ACBrETQ --
 [+] Adicionada sobrecarga no método "ImprimirTexto", que permite informar a

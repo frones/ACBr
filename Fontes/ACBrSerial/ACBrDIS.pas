@@ -62,7 +62,8 @@ uses ACBrBase, ACBrDevice, ACBrDISClass,  {Units da ACBr}
 type
 
 TACBrDISModelo = ( disNenhum, disGertecSerial, disGertecTeclado,
-                   disKeytecTeclado, disSmakTeclado, disGertec65Lib ) ;
+                   disKeytecTeclado, disSmakTeclado, disGertec65Lib,
+                   disSmakTecladoLib, disSmakSerial) ;
 TACBrDISAlinhamento = (alEsquerda, alDireita, alCentro, alJustificado) ;
 
 TACBrDISEfeitoExibir = (efeEsquerda_Direita, efeDireita_Esquerda) ;
@@ -128,7 +129,7 @@ TACBrDISLinhas = class(TObjectList)
 { Componente ACBrDIS }
 
 { TACBrDIS }
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
 TACBrDIS = class( TACBrComponent )
@@ -237,7 +238,8 @@ end ;
 
 implementation
 Uses ACBrUtil, ACBrDISGertecSerial, ACBrDISGertecTeclado, ACBrDISKeytecTeclado,
-     ACBrDISSmakTeclado, ACBrDISGertecTEC65lib,
+     ACBrDISSmakTeclado, ACBrDISGertecTEC65lib, ACBrDISSmakTecladoLib,
+     ACBrDISSmakSerial,
      {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
      Math;
 
@@ -398,6 +400,8 @@ begin
      disKeytecTeclado   : fsDIS := TACBrDISKeytecTeclado.Create( Self );
      disSmakTeclado     : fsDIS := TACBrDISSmakTeclado.Create( Self );
      disGertec65Lib     : fsDIS := TACBrDISGertecTEC65lib.Create( Self );
+     disSmakTecladoLib  : fsDIS := TACBrDISSmakTecladoLib.Create( Self );
+     disSmakSerial      : fsDIS := TACBrDISSmakSerial.Create( Self );
   else
      fsDIS := TACBrDISClass.create( Self ) ;
   end;

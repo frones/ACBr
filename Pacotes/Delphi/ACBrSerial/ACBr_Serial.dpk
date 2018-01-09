@@ -62,6 +62,8 @@ contains
   ACBrDISGertecTEC65lib in '..\..\..\Fontes\ACBrSerial\ACBrDISGertecTEC65lib.pas',
   ACBrDISKeytecTeclado in '..\..\..\Fontes\ACBrSerial\ACBrDISKeytecTeclado.pas',
   ACBrDISSmakTeclado in '..\..\..\Fontes\ACBrSerial\ACBrDISSmakTeclado.pas',
+  ACBrDISSmakTecladoLib in '..\..\..\Fontes\ACBrSerial\ACBrDISSmakTecladoLib.pas',
+  ACBrDISSmakSerial in '..\..\..\Fontes\ACBrSerial\ACBrDISSmakSerial.pas',
   ACBrECF in '..\..\..\Fontes\ACBrSerial\ACBrECF.pas',
   ACBrECFBematech in '..\..\..\Fontes\ACBrSerial\ACBrECFBematech.pas',
   ACBrECFClass in '..\..\..\Fontes\ACBrSerial\ACBrECFClass.pas',

@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/01/2018
+-- ACBrUtil --
+[-] Correção no método "WriteToTXT", que tentava criar diretório, mesmo quando
+    não definido
+[*] Parâmetro "ForceDirectory" do método "WriteToTXT", modificado por Default
+    para "False", por motivos de performance
+    (por: DSA)
+
 Data: 07/01/2018
 -- ACBrUtil --
 [-] Ajuste em método "StrCrypt", para suportar Parâmetros vazios

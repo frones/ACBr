@@ -326,7 +326,7 @@ function ForceForeground(AppHandle:THandle): boolean;
 Procedure WriteToFile( const Arq: String; ABinaryString : AnsiString);
 Procedure WriteToTXT( const ArqTXT : String; ABinaryString : AnsiString;
    const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True;
-   const ForceDirectory : Boolean = True);
+   const ForceDirectory : Boolean = False);
 procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
    const Traduz : Boolean = False) ;
 function TranslateUnprintable( const ABinaryString: AnsiString ): String;
@@ -3254,7 +3254,7 @@ begin
   if ForceDirectory then
   begin
     VDirectory := ExtractFileDir(ArqTXT);
-    if not DirectoryExists(VDirectory) then
+    if NaoEstaVazio(VDirectory) and (not DirectoryExists(VDirectory)) then
       ForceDirectories(VDirectory);
   end;
 

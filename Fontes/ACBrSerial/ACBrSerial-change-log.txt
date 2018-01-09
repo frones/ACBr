@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/01/2018
+-- ACBrECFEscECF --
+[-] Correção em "GetEstado", para detectar corretamente o Estado de ECF bloqueado
+    por Redução Z, na Daruma FS800i
+    (por: DSA)
+
 Data: 15/12/2017
 -- ACBrETQ --
 [+] Adicionada sobrecarga no método "ImprimirTexto", que permite informar a

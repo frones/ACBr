@@ -2016,6 +2016,20 @@ begin
       30..32 :         fpEstado := estRelatorio;
     end;
 
+    if (fpEstado = estLivre) and IsDaruma then  // Daruma sinaliza estados em Byte 3 de RET
+    begin
+      if TestBit(EscECFResposta.RET.Fabricante, 4) then
+      begin
+        fpEstado := estBloqueada;
+        Exit;
+      end
+      else if TestBit(EscECFResposta.RET.Fabricante, 5) then
+      begin
+        fpEstado := estRequerZ;
+        Exit;
+      end;
+    end;
+
     if (fpEstado = estVenda) and fsEmPagamento then   // Já Subtotalizou ?
       fpEstado := estPagamento;
 

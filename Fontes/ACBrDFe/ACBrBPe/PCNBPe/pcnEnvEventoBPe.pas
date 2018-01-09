@@ -144,6 +144,7 @@ var
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('eventoBPe ' + NAME_SPACE_BPE + ' versao="' + Versao + '"');
+
   for i := 0 to Evento.Count - 1 do
   begin
     Evento.Items[i].InfEvento.id := 'ID' +
@@ -308,10 +309,10 @@ end;
 
 function TEventoBPe.LerFromIni(const AIniString: String): Boolean;
 var
-  I: Integer;
-  sSecao, sFim: String;
   INIRec: TMemIniFile;
+  sSecao, sFim: String;
   ok: Boolean;
+  I: Integer;
 begin
   Result := False;
   Self.Evento.Clear;
@@ -320,7 +321,30 @@ begin
   try
     LerIniArquivoOuString(AIniString, INIRec);
 
-    // Implementar
+    idLote := INIRec.ReadInteger('EVENTO', 'idLote', 0);
+
+    I := 1;
+    while true do
+    begin
+      sSecao := 'EVENTO'+IntToStrZero(I,3);
+      sFim   := INIRec.ReadString(sSecao, 'chCTe', 'FIM');
+      if (sFim = 'FIM') or (Length(sFim) <= 0) then
+        break;
+
+      with Self.Evento.Add do
+      begin
+        infEvento.chBPe              := INIRec.ReadString(sSecao, 'chBPe', '');
+        infEvento.cOrgao             := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
+        infEvento.CNPJ               := INIRec.ReadString(sSecao, 'CNPJ', '');
+        infEvento.dhEvento           := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
+        infEvento.tpEvento           := StrToTpEvento(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
+        infEvento.nSeqEvento         := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
+        infEvento.detEvento.xCondUso := '';
+        infEvento.detEvento.xJust    := INIRec.ReadString(sSecao, 'xJust', '');
+        infEvento.detEvento.nProt    := INIRec.ReadString(sSecao, 'nProt', '');
+      end;
+      Inc(I);
+    end;
 
     Result := True;
   finally

@@ -48,6 +48,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2018
+-- ACBRBPeBilhetes --
+[*] Classe "Bilhete" o método:
+    function LerArqIni(const AIniString: String): Boolean;
+
+    Esta finalizado a implementação da rotina que permite carregar um BPe,
+    de um Arquivo INI.
+  Por: Italo Jurisato Junior
+-- pcnEnvEventoBPe --
+[*] O método:
+    function TEventoBPe.LerFromIni(const AIniString: String): Boolean;
+
+    Esta finalizando a implementação da rotina que permite carregar um ou 
+    vários Eventos, de um Arquivo INI.
+  Por: Italo Jurisato Junior
+
 08/01/2017
 -- ACBrBPeConfiguracoes --
 [+] Adicionado os métodos:

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2018
+-- ACBrNFeDANFeRLClass --
+[*] Adicionada o metodo ImprimirDANFECancelado.
+    (por: Rafael Teno)
+
 14/09/2017
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
 [*] Refatoração no DANFE para não mostrar a informação do pagamento na versão 4.0.

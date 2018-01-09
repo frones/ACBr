@@ -113,9 +113,10 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ImprimirDANFE(NFE : TNFe = nil); override ;
-    procedure ImprimirDANFEPDF(NFE : TNFe = nil); override ;
-    procedure ImprimirEVENTO(NFE : TNFe = nil); override ;
-    procedure ImprimirEVENTOPDF(NFE : TNFe = nil); override ;
+    procedure ImprimirDANFECancelado(NFE: TNFe = nil); override;
+    procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
+    procedure ImprimirEVENTO(NFE : TNFe = nil); override;
+    procedure ImprimirEVENTOPDF(NFE : TNFe = nil); override;
     procedure ImprimirINUTILIZACAO(NFe: TNFe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(NFe: TNFe = nil); override;
     procedure SetExibirEAN(Value: Boolean); virtual;
@@ -301,6 +302,12 @@ try
   finally
     FreeAndNil(frlDANFeRL);
   end;
+end;
+
+procedure TACBrNFeDANFeRL.ImprimirDANFECancelado(NFE: TNFe = nil);
+begin
+   NFeCancelada := True;
+   ImprimirDANFE(NFE);
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirDANFEPDF(NFE : TNFe = nil);

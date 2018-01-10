@@ -1158,7 +1158,7 @@ begin
                             ['A1', 'A2', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 'B7',
                              'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'D2', 'F3', 'F7', 'F8',
                              'F9', 'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8',
-                             'I9', 'K9', 'A3', 'C8', 'C9', 'J3', 'D1', 'K1']) of
+                             'I9', 'K9', 'A3', 'C8', 'C9', 'J3', 'D1', 'K1', 'G4']) of
             0 : Result:= 'A1-Praça do sacado não cadastrada';
             1 : Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2 : Result:= 'A4-Cedente não cadastrado ou possui CNPJ/CPF inválido';
@@ -1195,6 +1195,7 @@ begin
             33 : Result:= 'J3-Rua/Número inexistente no endereço';
             34 : Result:= 'D1-Título dentro do prazo de vencimento (em dia)';
             35 : Result:= 'K1-Título apresentado em duplicidade';
+            36 : Result:= 'G4-Título aceito: Falta título (cooperativa/ag. beneficiária deverá enviá-lo)';
           else
             case StrToInt(CodMotivo) of
               01: Result:= '01-Código do Banco inválido';

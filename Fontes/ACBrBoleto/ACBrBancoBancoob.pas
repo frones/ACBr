@@ -885,7 +885,8 @@ begin
                         '4'+
                         Space(5);
 
-               Result := Result+Carteira                                  + // 58 a 58 carteira
+               Result := Result                                           +
+                         PadRight(Carteira, 1)                            + // 58 a 58 carteira
                          '0'                                              + // 59 Forma de cadastramento no banco
                          ' '                                              + // 60 Brancos
                          ATipoBoleto                                      + // 61 Identificação da emissão do boleto

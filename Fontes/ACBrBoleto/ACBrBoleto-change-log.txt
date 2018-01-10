@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 08/01/2018 ver: 0.0.238
+-- ACBrBancoBancoob / ACBrBancoSicredi / ACBrBoleto
+[*] Ajustes referente validação do Tipo de Desconto para CNAB240 e CNAB400
+
 Data 03/01/2018 ver: 0.0.237
 -- ACBrBancoBancoob
 [*] Ajustes nos Arquivos Remessa CNAB240 - Adicionado Mensagens do Segmento S

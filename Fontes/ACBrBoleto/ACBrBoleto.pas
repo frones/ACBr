@@ -730,6 +730,7 @@ type
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; virtual;
 
+    function TipoDescontoToString(const AValue: TACBrTipoDesconto):string; virtual;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
@@ -1347,7 +1348,6 @@ type
     property PrinterName     : String          read fPrinterName      write fPrinterName;
   end;
 
-function TipoDescontoToString(const AValue: TACBrTipoDesconto):string;
 
 procedure Register;
 
@@ -1364,7 +1364,7 @@ Uses Forms, Math, dateutils, strutils,
    {$R ACBrBoleto.dcr}
 {$ENDIF}
 
-function TipoDescontoToString(const AValue: TACBrTipoDesconto):string;
+function TACBrBancoClass.TipoDescontoToString(const AValue: TACBrTipoDesconto):string;
 begin
   Result := '0';
   case AValue of

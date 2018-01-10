@@ -65,6 +65,7 @@ type
 
     function CalcularNomeArquivoRemessa : String; override;
 
+    function TipoDescontoToString(const AValue: TACBrTipoDesconto): String; override;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
@@ -200,7 +201,7 @@ end;
 procedure TACBrBancoSicredi.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   wNossoNumeroCompleto, CodProtesto, DiasProtesto: String;
-  TipoSacado, AceiteStr, wLinha, Ocorrencia   : String;
+  TipoSacado, AceiteStr, wLinha, Ocorrencia, TpDesconto   : String;
   TipoBoleto, wModalidade: Char;
   TextoRegInfo: String;
 begin
@@ -287,6 +288,8 @@ begin
 
      if (CodigoMora <> 'A') and (CodigoMora <> 'B') then
        CodigoMora := 'A';
+
+     TpDesconto := TipoDescontoToString(TipoDesconto);
      
       with ACBrBoleto do
       begin
@@ -296,7 +299,7 @@ begin
                   IfThen(TipoImpressao = tipCarne, 'B', 'A')                            +  // 004 a 004 - Tipo de impressão = "A" Normal "B" Carnê //--Anderson
                   Space(12)                                                             +  // 005 a 016 - Filler - Brancos
                   'A'                                                                   +  // 017 a 017 - Tipo de moeda = "A" Real
-                  'A'                                                                   +  // 018 a 018 - Tipo de desconto: "A" Valor "B" percentual
+                  TpDesconto                                                            +  // 018 a 018 - Tipo de desconto: "A" Valor "B" percentual
                   trim(CodigoMora)                                                      +  // 019 a 019 - Tipo de juro: "A" Valor "B" percentual
                   Space(28)                                                             +  // 020 a 047 - Filler - Brancos
                   PadLeft(wNossoNumeroCompleto,9,'0');                                     // 048 a 056 - Nosso número sem edição YYXNNNNND - YY=Ano, X-Emissao, NNNNN-Sequência, D-Dígito
@@ -1280,6 +1283,17 @@ begin
 
          Result:= NomeArq;
        end;
+   end;
+end;
+
+function TACBrBancoSicredi.TipoDescontoToString(const AValue: TACBrTipoDesconto
+  ): string;
+begin
+   case AValue of
+     tdValorFixoAteDataInformada  : Result := 'A';
+     tdPercentualAteDataInformada : Result := 'B';
+   else
+     Result := 'A';
    end;
 end;
 

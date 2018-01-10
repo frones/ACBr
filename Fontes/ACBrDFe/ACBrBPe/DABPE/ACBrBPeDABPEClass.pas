@@ -380,7 +380,7 @@ end;
 
 procedure TACBrBPeDABPEClass.ErroAbstract(NomeProcedure: String);
 begin
-  raise EACBrBPeException.Create( NomeProcedure + ' não implementado em: '+ClassName);
+  raise EACBrBPeException.Create(NomeProcedure + ' não implementado em: ' + ClassName);
 end;
 
 function TACBrBPeDABPEClass.GetPathPDF: String;
@@ -394,6 +394,38 @@ begin
     Result := FPathPDF;
     Exit;
   end;
+
+  Result := Trim(FPathPDF);
+
+  if EstaVazio(Result) then  // Se não informou o Diretório para o PDF
+  begin
+    if Assigned(ACBrBPe) then  // Se tem o componente ACBrBPe
+    begin
+      if TACBrBPe(ACBrBPe).Bilhetes.Count > 0 then  // Se tem algum Bilhete carregado
+      begin
+        ABPe := TACBrBPe(ACBrBPe).Bilhetes.Items[0].BPe;
+        if TACBrBPe(ACBrBPe).Configuracoes.Arquivos.EmissaoPathBPe then
+          dhEmissao := ABPe.Ide.dhEmi
+        else
+          dhEmissao := Now;
+
+        DescricaoModelo := 'BPe';
+
+        Result := TACBrBPe(FACBrBPe).Configuracoes.Arquivos.GetPath(
+                         Result,
+                         DescricaoModelo,
+                         ABPe.Emit.CNPJ,
+                         dhEmissao,
+                         DescricaoModelo);
+      end;
+    end;
+  end;
+
+  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    Result := ExtractFilePath(ParamStr(0));
+
+  Result := PathWithDelim( Result );
+  (*
 
   Result := PathWithDelim(FPathPDF);
 
@@ -419,6 +451,7 @@ begin
                              ));
     end;
   end;
+  *)
 end;
 
 procedure TACBrBPeDABPEClass.ImprimirEVENTO(BPe: TBPe);

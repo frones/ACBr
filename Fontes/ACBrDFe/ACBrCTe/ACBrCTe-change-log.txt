@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2018
+-- ACBrCTeDACTEClass --
+[*] Método GetPathPDF, modificado para:
+    - Se houver algum Path Definido: Usar o Path exatamente como informado
+      (sem adicionar os separadores de Diretório)
+    - Se For vazio: Calcula o Path da mesma maneira que é computado o Path onde
+      é Salvo o XML do CTe
+    - Se for Vazio, e não houver Conhecimento carregado: Usa o Path da aplicaçao
+  Por: Italo Jurisato Junior
+
 08/01/2017
 -- ACBrCTeConfiguracoes --
 [+] Adicionado os métodos:

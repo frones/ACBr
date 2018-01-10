@@ -263,6 +263,46 @@ begin
     Exit;
   end;
 
+  Result := Trim(FPathPDF);
+
+  if EstaVazio(Result) then  // Se não informou o Diretório para o PDF
+  begin
+    if Assigned(ACBrCTe) then  // Se tem o componente ACBrCTe
+    begin
+      if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then  // Se tem algum Conhecimento carregado
+      begin
+        ACTe := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
+        if TACBrCTe(ACBrCTe).Configuracoes.Arquivos.EmissaoPathCTe then
+          dhEmissao := ACTe.Ide.dhEmi
+        else
+          dhEmissao := Now;
+
+        DescricaoModelo := '';
+        if TACBrCTe(ACBrCTe).Configuracoes.Arquivos.AdicionarLiteral then
+        begin
+           case ACTe.Ide.modelo of
+             0: DescricaoModelo := TACBrCTe(FACBrCTe).GetNomeModeloDFe;
+             55: DescricaoModelo := 'CTe';
+             65: DescricaoModelo := 'CTeOS';
+           end;
+        end;
+
+        Result := TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(
+                         Result,
+                         DescricaoModelo,
+                         ACTe.Emit.CNPJ,
+                         dhEmissao,
+                         DescricaoModelo);
+      end;
+    end;
+  end;
+
+  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    Result := ExtractFilePath(ParamStr(0));
+
+  Result := PathWithDelim( Result );
+
+  (*
   Result := PathWithDelim(FPathPDF);
 
   // Criar diretório conforme configurado para CT-e
@@ -291,6 +331,7 @@ begin
                              ));
     end;
   end;
+  *)
 end;
 
 procedure TACBrCTeDACTEClass.SetPathPDF(const Value: String);

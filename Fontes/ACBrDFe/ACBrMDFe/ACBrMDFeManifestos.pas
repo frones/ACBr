@@ -766,8 +766,8 @@ begin
          //
          //*********************************************************************
 
-         rodo.RNTRC              := INIRec.ReadString('Rodo', 'RNTRC', '');
-         rodo.infANTT.RNTRC      := INIRec.ReadString('infANTT', 'RNTRC', '');
+         rodo.RNTRC         := INIRec.ReadString('Rodo', 'RNTRC', '');
+         rodo.infANTT.RNTRC := INIRec.ReadString('infANTT', 'RNTRC', '');
 
          if ( (rodo.RNTRC <> '') or (rodo.infANTT.RNTRC <> '') )  then
          begin
@@ -809,10 +809,10 @@ begin
 
                with rodo.infANTT.valePed.disp.Add do
                begin
-                 CNPJForn    := sFim;
-                 CNPJPg      := INIRec.ReadString(sSecao, 'CNPJPg', '');
-                 nCompra     := INIRec.ReadString(sSecao, 'nCompra', '');
-                 vValePed    := StringToFloatDef(INIRec.ReadString(sSecao, 'vValePed', ''), 0 );
+                 CNPJForn := sFim;
+                 CNPJPg   := INIRec.ReadString(sSecao, 'CNPJPg', '');
+                 nCompra  := INIRec.ReadString(sSecao, 'nCompra', '');
+                 vValePed := StringToFloatDef(INIRec.ReadString(sSecao, 'vValePed', ''), 0 );
                end;
                Inc(I);
              end;
@@ -923,7 +923,7 @@ begin
          //
          //*********************************************************************
 
-         Aereo.nac     := INIRec.ReadInteger('aereo', 'nac', 0);
+         Aereo.nac := INIRec.ReadInteger('aereo', 'nac', 0);
          if (Aereo.nac <> 0) then
          begin
            Aereo.matr    := INIRec.ReadInteger('aereo', 'matr', 0);
@@ -944,16 +944,16 @@ begin
 
          if ( (Aquav.CNPJAgeNav  <> '') or (Aquav.irin <> '') ) then
          begin
-           Aquav.tpEmb      := INIRec.ReadString('aquav', 'tpEmb', '');
-           Aquav.cEmbar     := INIRec.ReadString('aquav', 'cEmbar', '');
-           Aquav.xEmbar     := INIRec.ReadString('aquav', 'xEmbar', '');
-           Aquav.nViagem    := INIRec.ReadString('aquav', 'nViag', '');
-           Aquav.cPrtEmb    := INIRec.ReadString('aquav', 'cPrtEmb', '');
-           Aquav.cPrtDest   := INIRec.ReadString('aquav', 'cPrtDest', '');
+           Aquav.tpEmb    := INIRec.ReadString('aquav', 'tpEmb', '');
+           Aquav.cEmbar   := INIRec.ReadString('aquav', 'cEmbar', '');
+           Aquav.xEmbar   := INIRec.ReadString('aquav', 'xEmbar', '');
+           Aquav.nViagem  := INIRec.ReadString('aquav', 'nViag', '');
+           Aquav.cPrtEmb  := INIRec.ReadString('aquav', 'cPrtEmb', '');
+           Aquav.cPrtDest := INIRec.ReadString('aquav', 'cPrtDest', '');
 
            //Campos MDF-e 3.0
-           Aquav.prtTrans    := INIRec.ReadString('aquav', 'prtTrans', '');
-           Aquav.tpNav       := StrToTpNavegacao(OK, INIRec.ReadString('aquav', 'tpNav', '0') );
+           Aquav.prtTrans := INIRec.ReadString('aquav', 'prtTrans', '');
+           Aquav.tpNav    := StrToTpNavegacao(OK, INIRec.ReadString('aquav', 'tpNav', '0') );
 
            I := 1;
            while true do
@@ -1061,9 +1061,9 @@ begin
                TU    := StringToFloatDef(INIRec.ReadString(sSecao, 'TU', ''), 0);
 
                //Campos MDF-e 3.0
-               pesoBC   := StringToFloatDef( INIRec.ReadString(sSecao, 'pesoBC', ''), 0);
-               pesoR    := StringToFloatDef( INIRec.ReadString(sSecao, 'pesoR', ''), 0);
-               tpVag    := INIRec.ReadString(sSecao, 'tpVag', '');
+               pesoBC := StringToFloatDef( INIRec.ReadString(sSecao, 'pesoBC', ''), 0);
+               pesoR  := StringToFloatDef( INIRec.ReadString(sSecao, 'pesoR', ''), 0);
+               tpVag  := INIRec.ReadString(sSecao, 'tpVag', '');
 
              end;
              inc(I);
@@ -1104,12 +1104,12 @@ begin
 
                    with peri.Add do
                    begin
-                     nONU        := sFim;
-                     xNomeAE     := INIRec.ReadString(sSecao,'xNomeAE','');
-                     xClaRisco   := INIRec.ReadString(sSecao,'xClaRisco','');
-                     grEmb       := INIRec.ReadString(sSecao,'grEmb','');
-                     qTotProd    := INIRec.ReadString(sSecao,'qTotProd','');
-                     qVolTipo    := INIRec.ReadString(sSecao,'qVolTipo','');
+                     nONU      := sFim;
+                     xNomeAE   := INIRec.ReadString(sSecao,'xNomeAE','');
+                     xClaRisco := INIRec.ReadString(sSecao,'xClaRisco','');
+                     grEmb     := INIRec.ReadString(sSecao,'grEmb','');
+                     qTotProd  := INIRec.ReadString(sSecao,'qTotProd','');
+                     qVolTipo  := INIRec.ReadString(sSecao,'qVolTipo','');
 
                    end;
                    inc(K);
@@ -1198,9 +1198,9 @@ begin
 
                with infNFe.Add do
                begin
-                 chNFe       := sFim;
-                 SegCodBarra := INIRec.ReadString(sSecao, 'SegCodBarra', '');
-                 indReentrega:= INIRec.ReadString(sSecao, 'indReentrega', '');
+                 chNFe        := sFim;
+                 SegCodBarra  := INIRec.ReadString(sSecao, 'SegCodBarra', '');
+                 indReentrega := INIRec.ReadString(sSecao, 'indReentrega', '');
 
                  K := 1;
                  while true do
@@ -1212,12 +1212,12 @@ begin
 
                    with peri.Add do
                    begin
-                     nONU        := sFim;
-                     xNomeAE     := INIRec.ReadString(sSecao,'xNomeAE','');
-                     xClaRisco   := INIRec.ReadString(sSecao,'xClaRisco','');
-                     grEmb       := INIRec.ReadString(sSecao,'grEmb','');
-                     qTotProd    := INIRec.ReadString(sSecao,'qTotProd','');
-                     qVolTipo    := INIRec.ReadString(sSecao,'qVolTipo','');
+                     nONU      := sFim;
+                     xNomeAE   := INIRec.ReadString(sSecao,'xNomeAE','');
+                     xClaRisco := INIRec.ReadString(sSecao,'xClaRisco','');
+                     grEmb     := INIRec.ReadString(sSecao,'grEmb','');
+                     qTotProd  := INIRec.ReadString(sSecao,'qTotProd','');
+                     qVolTipo  := INIRec.ReadString(sSecao,'qVolTipo','');
 
                    end;
                    inc(K);
@@ -1318,12 +1318,12 @@ begin
 
                    with peri.Add do
                    begin
-                     nONU        := sFim;
-                     xNomeAE     := INIRec.ReadString(sSecao,'xNomeAE','');
-                     xClaRisco   := INIRec.ReadString(sSecao,'xClaRisco','');
-                     grEmb       := INIRec.ReadString(sSecao,'grEmb','');
-                     qTotProd    := INIRec.ReadString(sSecao,'qTotProd','');
-                     qVolTipo    := INIRec.ReadString(sSecao,'qVolTipo','');
+                     nONU      := sFim;
+                     xNomeAE   := INIRec.ReadString(sSecao,'xNomeAE','');
+                     xClaRisco := INIRec.ReadString(sSecao,'xClaRisco','');
+                     grEmb     := INIRec.ReadString(sSecao,'grEmb','');
+                     qTotProd  := INIRec.ReadString(sSecao,'qTotProd','');
+                     qVolTipo  := INIRec.ReadString(sSecao,'qVolTipo','');
 
                    end;
                    inc(K);
@@ -1352,7 +1352,6 @@ begin
                        if sFim = 'FIM' then
                          break;
 
-
                        with lacUnidTransp.Add do
                        begin
                          nLacre := sFim;
@@ -1374,8 +1373,8 @@ begin
                        begin
                          tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
                          idUnidCarga := sFim;
-
                          qtdRat      := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+
                          M := 1;
                          while true do
                          begin
@@ -1417,11 +1416,11 @@ begin
            break;
          with seg.Add do
          begin
-           respSeg    :=  StrToRspSeguroMDFe(OK, INIRec.ReadString(sSecao, 'respSeg', '1'));
-           CNPJCPF    := INIRec.ReadString(sSecao, 'CNPJCPF', '');
-           xSeg       := INIRec.ReadString(sSecao, 'xSeg', '');
-           CNPJ       := sFim;
-           nApol      := INIRec.ReadString(sSecao, 'nApol', '');
+           respSeg :=  StrToRspSeguroMDFe(OK, INIRec.ReadString(sSecao, 'respSeg', '1'));
+           CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+           xSeg    := INIRec.ReadString(sSecao, 'xSeg', '');
+           CNPJ    := sFim;
+           nApol   := INIRec.ReadString(sSecao, 'nApol', '');
 
            J := 1;
            while true do
@@ -1432,7 +1431,7 @@ begin
                break;
              with aver.Add do
              begin
-               nAver      := sFim;
+               nAver := sFim;
              end;
              Inc(J);
            end;

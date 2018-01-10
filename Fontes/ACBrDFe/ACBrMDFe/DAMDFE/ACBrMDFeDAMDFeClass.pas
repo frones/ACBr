@@ -233,6 +233,39 @@ begin
     Exit;
   end;
 
+  Result := Trim(FPathPDF);
+
+  if EstaVazio(Result) then  // Se não informou o Diretório para o PDF
+  begin
+    if Assigned(ACBrMDFe) then  // Se tem o componente ACBrMDFe
+    begin
+      if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then  // Se tem algum Manifesto carregado
+      begin
+        AMDFe := TACBrMDFe(ACBrMDFe).Manifestos.Items[0].MDFe;
+        if TACBrMDFe(ACBrMDFe).Configuracoes.Arquivos.EmissaoPathMDFe then
+          dhEmissao := AMDFe.Ide.dhEmi
+        else
+          dhEmissao := Now;
+
+        DescricaoModelo := 'MDFe';
+
+        Result := TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
+                         Result,
+                         DescricaoModelo,
+                         AMDFe.Emit.CNPJ,
+                         dhEmissao,
+                         DescricaoModelo);
+      end;
+    end;
+  end;
+
+  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    Result := ExtractFilePath(ParamStr(0));
+
+  Result := PathWithDelim( Result );
+
+
+  (*
   Result := PathWithDelim(FPathPDF);
 
   // Criar diretório conforme configurado para MDF-e
@@ -257,6 +290,7 @@ begin
                              ));
     end;
   end;
+  *)
 end;
 
 procedure TACBrMDFeDAMDFeClass.SetPathPDF(const Value: String);

@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/01/2018
+-- ACBrMDFeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/40818-corre%C3%A7%C3%A3o-na-inutiliza%C3%A7%C3%A3o-de-n%C3%BAmero-de-ct-e/
+   Por: BSoft / Italo Jurisato Junior
+
 -- ACBrMDFeDAMDFEClass --
 [*] Método GetPathPDF, modificado para:
     - Se houver algum Path Definido: Usar o Path exatamente como informado

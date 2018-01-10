@@ -1380,19 +1380,18 @@ var
   Modelo: String;
 begin
   FPVersaoServico := '';
-  FPURL  := '';
-  Modelo := 'MDFe';
-  FcUF   := ExtrairUFChaveAcesso(FMDFeChave);
+  FPURL   := '';
+  Modelo  := 'MDFe';
+  FcUF    := ExtrairUFChaveAcesso(FMDFeChave);
+  FTpAmb  := FPConfiguracoesMDFe.WebServices.Ambiente;
+  VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
 
   if FManifestos.Count > 0 then
   begin
-    FTpAmb  := FManifestos.Items[0].MDFe.Ide.tpAmb;
-    VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
-  end
-  else
-  begin
-    FTpAmb  := FPConfiguracoesMDFe.WebServices.Ambiente;
-    VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+    FTpAmb := FManifestos.Items[0].MDFe.Ide.tpAmb;
+
+    if VerServ < FManifestos.Items[0].MDFe.infMDFe.Versao then
+      VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
   end;
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(

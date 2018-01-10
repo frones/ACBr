@@ -1695,19 +1695,18 @@ var
   Ok: Boolean;
 begin
   FPVersaoServico := '';
-  FPURL  := '';
-  Modelo := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FCTeChave) ));
-  FcUF   := ExtrairUFChaveAcesso(FCTeChave);
+  FPURL   := '';
+  Modelo  := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FCTeChave) ));
+  FcUF    := ExtrairUFChaveAcesso(FCTeChave);
+  FTpAmb  := FPConfiguracoesCTe.WebServices.Ambiente;
+  VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
 
   if FConhecimentos.Count > 0 then
   begin
-    FTpAmb  := FConhecimentos.Items[0].CTe.Ide.tpAmb;
-    VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
-  end
-  else
-  begin
-    FTpAmb  := FPConfiguracoesCTe.WebServices.Ambiente;
-    VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+    FTpAmb := FConhecimentos.Items[0].CTe.Ide.tpAmb;
+
+    if VerServ < FConhecimentos.Items[0].CTe.infCTe.Versao then
+      VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
   end;
 
   case FPConfiguracoesCTe.Geral.FormaEmissao of
@@ -2263,7 +2262,7 @@ begin
     Result := (CTeRetorno.cStat = 102);
 
     //gerar arquivo proc de inutilizacao
-    if ((CTeRetorno.cStat = 102) or (CTeRetorno.cStat = 563)) then
+    if ((CTeRetorno.cStat = 102) or (CTeRetorno.cStat = 682)) then
     begin
       FXML_ProcInutCTe := '<' + ENCODING_UTF8 + '>' +
                           '<ProcInutCTe versao="' + FPVersaoServico +

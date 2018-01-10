@@ -393,9 +393,18 @@ var
   DescricaoModelo: String;
 begin
   case Modelo of
-     0: DescricaoModelo := TACBrNFe(fpConfiguracoes.Owner).GetNomeModeloDFe;
-    55: DescricaoModelo := 'NFe';
-    65: DescricaoModelo := 'NFCe';
+     0:
+       begin
+         if Assigned(fpConfiguracoes.Owner) then
+           DescricaoModelo := TACBrNFe(fpConfiguracoes.Owner).GetNomeModeloDFe
+         else
+           DescricaoModelo := 'NFe';
+       end;
+
+    55:
+       DescricaoModelo := 'NFe';
+    65:
+       DescricaoModelo := 'NFCe';
   end;
 
   Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, Data, DescricaoModelo);

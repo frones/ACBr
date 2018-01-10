@@ -58,6 +58,10 @@ Símbolo : Significado
     https://www.projetoacbr.com.br/forum/topic/40250-acbrnfe-problema-pathpdf/
     (por: DSA)
 
+-- ACBrNFeConfiguracoes --
+[*] Ajustes para que TConfiguracoesNFe.Owner possa ser Nulo
+    (por: DSA)
+
 08/01/2018
 -- ACBrNFeConfiguracoes --
 [+] Adicionado os métodos:

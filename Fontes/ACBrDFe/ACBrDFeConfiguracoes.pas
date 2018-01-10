@@ -339,7 +339,7 @@ uses
 
 constructor TConfiguracoes.Create(AOwner: TComponent);
 begin
-  if not (AOwner is TACBrDFe) then
+  if Assigned(AOwner) and (not (AOwner is TACBrDFe)) then
     raise EACBrDFeException.Create('Owner de TConfiguracoes deve ser do tipo TACBrDFe');
 
   inherited Create(AOwner);
@@ -586,21 +586,27 @@ end;
 
 procedure TGeralConf.SetSSLCryptLib(AValue: TSSLCryptLib);
 begin
-  TACBrDFe(fpConfiguracoes.Owner).SSL.SSLCryptLib := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.SSLCryptLib := AValue;
+
   FSSLCryptLib := AValue;
   CalcSSLLib;
 end;
 
 procedure TGeralConf.SetSSLHttpLib(AValue: TSSLHttpLib);
 begin
-  TACBrDFe(fpConfiguracoes.Owner).SSL.SSLHttpLib := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.SSLHttpLib := AValue;
+
   FSSLHttpLib := AValue;
   CalcSSLLib;
 end;
 
 procedure TGeralConf.SetSSLXmlSignLib(AValue: TSSLXmlSignLib);
 begin
-  TACBrDFe(fpConfiguracoes.Owner).SSL.SSLXmlSignLib := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.SSLXmlSignLib := AValue;
+
   FSSLXmlSignLib := AValue;
   CalcSSLLib;
 end;
@@ -821,8 +827,10 @@ end;
 procedure TWebServicesConf.SetProxyHost(AValue: String);
 begin
   if FProxyHost = AValue then Exit;
+
   FProxyHost := AValue;
-  TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyHost := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyHost := AValue;
 end;
 
 function TWebServicesConf.GetAmbienteCodigo: integer;
@@ -833,35 +841,46 @@ end;
 procedure TWebServicesConf.SetProxyPass(AValue: String);
 begin
   if FProxyPass = AValue then Exit;
+
   FProxyPass := AValue;
-  TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyPass := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyPass := AValue;
 end;
 
 procedure TWebServicesConf.SetProxyPort(AValue: String);
 begin
   if FProxyPort = AValue then Exit;
+
   FProxyPort := AValue;
-  TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyPort := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyPort := AValue;
 end;
 
 procedure TWebServicesConf.SetProxyUser(AValue: String);
 begin
   if FProxyUser = AValue then Exit;
+
   FProxyUser := AValue;
-  TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyUser := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyUser := AValue;
 end;
 
 procedure TWebServicesConf.SetSSLType(AValue: TSSLType);
 begin
-  TACBrDFe(fpConfiguracoes.Owner).SSL.SSLType := AValue;
+  if FSSLType = AValue then Exit;
+
   FSSLType := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.SSLType := AValue;
 end;
 
 procedure TWebServicesConf.SetTimeOut(AValue: Integer);
 begin
   if FTimeOut = AValue then Exit;
+
   FTimeOut := AValue;
-  TACBrDFe(fpConfiguracoes.Owner).SSL.TimeOut := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.TimeOut := AValue;
 end;
 
 { TCertificadosConf }
@@ -910,8 +929,10 @@ end;
 procedure TCertificadosConf.SetNumeroSerie(const AValue: String);
 begin
   if FNumeroSerie = AValue then Exit;
+
   FNumeroSerie := Trim(UpperCase(StringReplace(AValue, ' ', '', [rfReplaceAll])));
-  TACBrDFe(fpConfiguracoes.Owner).SSL.NumeroSerie := FNumeroSerie;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.NumeroSerie := FNumeroSerie;
 end;
 
 procedure TCertificadosConf.SetSenha(AValue: AnsiString);
@@ -922,14 +943,17 @@ begin
   FK := FormatDateTime('hhnnsszzz',Now);
   FSenha := StrCrypt(AValue, FK);  // Salva Senha de forma Criptografada, para evitar "Inspect"
 
-  TACBrDFe(fpConfiguracoes.Owner).SSL.Senha := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.Senha := AValue;
 end;
 
 procedure TCertificadosConf.SetArquivoPFX(AValue: String);
 begin
   if FArquivoPFX = AValue then Exit;
+
   FArquivoPFX := AValue;
-  TACBrDFe(fpConfiguracoes.Owner).SSL.ArquivoPFX := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.ArquivoPFX := AValue;
 end;
 
 function TCertificadosConf.GetSenha: AnsiString;
@@ -940,8 +964,10 @@ end;
 procedure TCertificadosConf.SetDadosPFX(AValue: AnsiString);
 begin
   if FDadosPFX = AValue then Exit;
+
   FDadosPFX := AValue;
-  TACBrDFe(fpConfiguracoes.Owner).SSL.DadosPFX := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.DadosPFX := AValue;
 end;
 
 
@@ -1028,8 +1054,9 @@ end;
 function TArquivosConf.GetPathSalvar: String;
 begin
   if FPathSalvar = '' then
-    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
-      FPathSalvar := ApplicationPath + 'Docs';
+    if Assigned(fpConfiguracoes.Owner) then
+      if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
+        FPathSalvar := ApplicationPath + 'Docs';
 
   FPathSalvar := PathWithDelim(Trim(FPathSalvar));
   Result := FPathSalvar;
@@ -1038,8 +1065,9 @@ end;
 function TArquivosConf.GetPathSchemas: String;
 begin
   if FPathSchemas = '' then
-    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
-      FPathSchemas := ApplicationPath + 'Schemas';
+    if Assigned(fpConfiguracoes.Owner) then
+      if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
+        FPathSchemas := ApplicationPath + 'Schemas';
 
   FPathSchemas := PathWithDelim(Trim(FPathSchemas));
   Result := FPathSchemas;
@@ -1067,8 +1095,9 @@ end;
 function TArquivosConf.GetIniServicos: String;
 begin
   if FIniServicos = '' then
-    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
-      FIniServicos := ApplicationPath + fpConfiguracoes.WebServices.ResourceName+'.ini';
+    if Assigned(fpConfiguracoes.Owner) then
+      if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
+        FIniServicos := ApplicationPath + fpConfiguracoes.WebServices.ResourceName+'.ini';
 
   Result := FIniServicos;
 end;
@@ -1109,7 +1138,8 @@ begin
           CNPJ := OnlyNumber(CNPJ);
 
           if EstaVazio(CNPJ) then
-            CNPJ := OnlyNumber(TACBrDFe(fpConfiguracoes.Owner).SSL.CertCNPJ);
+            if Assigned(fpConfiguracoes.Owner) then
+              CNPJ := OnlyNumber(TACBrDFe(fpConfiguracoes.Owner).SSL.CertCNPJ);
 
           if NaoEstaVazio(CNPJ) then
             Dir := PathWithDelim(Dir) + CNPJ;
@@ -1117,7 +1147,7 @@ begin
 
       opModelo:
         begin
-          if ModeloDescr = '' then
+          if (ModeloDescr = '') and Assigned(fpConfiguracoes.Owner) then
             Modelo := TACBrDFe(fpConfiguracoes.Owner).GetNomeModeloDFe
           else
             Modelo := ModeloDescr;

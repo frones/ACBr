@@ -2025,9 +2025,9 @@ begin
          INIRec.WriteInteger('Identificacao','Modelo'  ,Ide.modelo);
          INIRec.WriteInteger('Identificacao','Serie'   ,Ide.serie);
          INIRec.WriteInteger('Identificacao','Numero'  ,Ide.nNF);
-         INIRec.WriteString( 'Identificacao','Emissao' ,DateToStr(Ide.dEmi));
-         INIRec.WriteString( 'Identificacao','Saida'   ,DateToStr(Ide.dSaiEnt));
-         INIRec.WriteString( 'Identificacao','hSaiEnt' ,TimeToStr(Ide.hSaiEnt));
+         INIRec.WriteString( 'Identificacao','Emissao' ,DateTimeToStr(Ide.dEmi));
+         INIRec.WriteString( 'Identificacao','Saida'   ,DateTimeToStr(Ide.dSaiEnt));
+         //INIRec.WriteString( 'Identificacao','hSaiEnt' ,TimeToStr(Ide.hSaiEnt));
          INIRec.WriteString( 'Identificacao','Tipo'    ,tpNFToStr(Ide.tpNF ));
          INIRec.WriteString( 'Identificacao','idDest'  , DestinoOperacaoToStr(TpcnDestinoOperacao(Ide.idDest)));
          INIRec.WriteInteger('Identificacao','CidadeCod' ,Ide.cMunFG);
@@ -2183,6 +2183,10 @@ begin
                INIRec.WriteString(  sSecao,'Descricao',Prod.xProd);
                INIRec.WriteString(  sSecao,'NCM'      ,Prod.NCM);
                INIRec.WriteString(  sSecao,'CEST'     ,Prod.CEST);
+               INIRec.WriteString(  sSecao,'indEscala', IndEscalaToStr( Prod.indEscala ) );
+               INIRec.WriteString(  sSecao,'CNPJFab'  ,Prod.CNPJFab);
+               INIRec.WriteString(  sSecao,'cBenef'   ,Prod.cBenef);
+
                INIRec.WriteString(  sSecao,'EXTIPI'   ,Prod.EXTIPI);
                INIRec.WriteString( sSecao,'CFOP'      ,Prod.CFOP);
                INIRec.WriteString( sSecao,'Unidade'   ,Prod.uCom);
@@ -2326,6 +2330,7 @@ begin
                   with Prod.med.Items[J] do
                    begin
                      INIRec.WriteString(sSecao,'nLote',nLote) ;
+                     INIRec.WriteString(sSecao,'cProdANVISA',cProdANVISA) ;
                      INIRec.WriteFloat( sSecao,'qLote',qLote) ;
                      INIRec.WriteString(sSecao,'dFab',DateToStr(dFab)) ;
                      INIRec.WriteString(sSecao,'dVal',DateToStr(dVal)) ;
@@ -2351,6 +2356,11 @@ begin
                  with Prod.comb do
                   begin
                     INIRec.WriteInteger( sSecao,'cProdANP',cProdANP) ;
+                    INIRec.WriteFloat( sSecao,'pMixGN' ,pMixGN) ;
+                    INIRec.WriteFloat( sSecao,'pGLP' ,pGLP) ;
+                    INIRec.WriteFloat( sSecao,'pGNn' ,pGNn) ;
+                    INIRec.WriteFloat( sSecao,'pGNi' ,pGNi) ;
+                    INIRec.WriteFloat( sSecao,'vPart',vPart) ;
                     INIRec.WriteString(  sSecao,'CODIF'   ,CODIF) ;
                     INIRec.WriteFloat(   sSecao,'qTemp'   ,qTemp) ;
                     INIRec.WriteString(  sSecao,'UFCons'  ,UFcons) ;
@@ -2406,22 +2416,51 @@ begin
                       INIRec.WriteFloat( sSecao,'ValorBase',ICMS.vBC);
                       INIRec.WriteFloat( sSecao,'Aliquota' ,ICMS.pICMS);
                       INIRec.WriteFloat( sSecao,'Valor'    ,ICMS.vICMS);
+
+                      INIRec.WriteFloat( sSecao,'vBCFCP'    ,ICMS.vBCFCP);
+                      INIRec.WriteFloat( sSecao,'pFCP'    ,ICMS.pFCP);
+                      INIRec.WriteFloat( sSecao,'vFCP'    ,ICMS.vFCP);
+
                       INIRec.WriteString(sSecao,'ModalidadeST',modBCSTToStr(ICMS.modBCST));
                       INIRec.WriteFloat( sSecao,'PercentualMargemST' ,ICMS.pMVAST);
                       INIRec.WriteFloat( sSecao,'PercentualReducaoST',ICMS.pRedBCST);
                       INIRec.WriteFloat( sSecao,'ValorBaseST',ICMS.vBCST);
                       INIRec.WriteFloat( sSecao,'AliquotaST' ,ICMS.pICMSST);
                       INIRec.WriteFloat( sSecao,'ValorST'    ,ICMS.vICMSST);
+
+                      INIRec.WriteFloat( sSecao,'vBCFCPST'  ,ICMS.vBCFCPST);
+                      INIRec.WriteFloat( sSecao,'pFCPST'    ,ICMS.pFCPST);
+                      INIRec.WriteFloat( sSecao,'vFCPST'    ,ICMS.vFCPST);
+
                       INIRec.WriteString(sSecao,'UFST'       ,ICMS.UFST);
                       INIRec.WriteFloat( sSecao,'pBCOp'      ,ICMS.pBCOp);
                       INIRec.WriteFloat( sSecao,'vBCSTRet'   ,ICMS.vBCSTRet);
+                      INIRec.WriteFloat( sSecao,'pST'        ,ICMS.pST);
                       INIRec.WriteFloat( sSecao,'vICMSSTRet' ,ICMS.vICMSSTRet);
+                      INIRec.WriteFloat( sSecao,'vBCFCPSTRet',ICMS.vBCFCPSTRet);
+                      INIRec.WriteFloat( sSecao,'pFCPSTRet',ICMS.pFCPSTRet);
+                      INIRec.WriteFloat( sSecao,'vFCPSTRet',ICMS.vFCPSTRet);
                       INIRec.WriteString(sSecao,'motDesICMS' ,motDesICMSToStr(ICMS.motDesICMS));
                       INIRec.WriteFloat( sSecao,'pCredSN'    ,ICMS.pCredSN);
                       INIRec.WriteFloat( sSecao,'vCredICMSSN',ICMS.vCredICMSSN);
                       INIRec.WriteFloat( sSecao,'vBCSTDest'  ,ICMS.vBCSTDest);
                       INIRec.WriteFloat( sSecao,'vICMSSTDest',ICMS.vICMSSTDest);
+
                     end;
+
+                   sSecao := 'ICMSUFDEST'+IntToStrZero(I+1,3) ;
+                   with ICMSUFDest do
+                   begin
+                     INIRec.WriteFloat( sSecao,'vBCUFDest',       vBCUFDest);
+                     INIRec.WriteFloat( sSecao,'vBCFCPUFDest',    vBCFCPUFDest);
+                     INIRec.WriteFloat( sSecao,'pICMSUFDest',     pICMSUFDest);
+                     INIRec.WriteFloat( sSecao,'pICMSInter',      pICMSInter);
+                     INIRec.WriteFloat( sSecao,'pICMSInterPart',  pICMSInterPart);
+                     INIRec.WriteFloat( sSecao,'vICMSUFDest',     vICMSUFDest);
+                     INIRec.WriteFloat( sSecao,'vICMSUFRemet',    vICMSUFRemet);
+                     INIRec.WriteFloat( sSecao,'pFCPUFDest',      pFCPUFDest);
+                     INIRec.WriteFloat( sSecao,'vFCPUFDest',      vFCPUFDest);
+                   end;
 
                    if (IPI.vBC > 0) or
                       (IPI.qUnid > 0) or
@@ -2560,14 +2599,26 @@ begin
 
          INIRec.WriteFloat('Total','BaseICMS'     ,Total.ICMSTot.vBC) ;
          INIRec.WriteFloat('Total','ValorICMS'    ,Total.ICMSTot.vICMS) ;
+
+         INIRec.WriteFloat('Total','vICMSDeson'    ,Total.ICMSTot.vICMSDeson) ;
+         INIRec.WriteFloat('Total','vFCP'          ,Total.ICMSTot.vFCP) ;
+         INIRec.WriteFloat('Total','vICMSUFDest'   ,Total.ICMSTot.vICMSUFDest) ;
+         INIRec.WriteFloat('Total','vICMSUFRemet'  ,Total.ICMSTot.vICMSUFRemet) ;
+         INIRec.WriteFloat('Total','vFCPUFDest'    ,Total.ICMSTot.vFCPUFDest) ;
+
          INIRec.WriteFloat('Total','BaseICMSSubstituicao' ,Total.ICMSTot.vBCST) ;
          INIRec.WriteFloat('Total','ValorICMSSubstituicao',Total.ICMSTot.vST) ;
+
+         INIRec.WriteFloat('Total','vFCPST',Total.ICMSTot.vFCPST) ;
+         INIRec.WriteFloat('Total','vFCPSTRet',Total.ICMSTot.vFCPSTRet) ;
+
          INIRec.WriteFloat('Total','ValorProduto' ,Total.ICMSTot.vProd) ;
          INIRec.WriteFloat('Total','ValorFrete'   ,Total.ICMSTot.vFrete) ;
          INIRec.WriteFloat('Total','ValorSeguro'  ,Total.ICMSTot.vSeg) ;
          INIRec.WriteFloat('Total','ValorDesconto',Total.ICMSTot.vDesc) ;
          INIRec.WriteFloat('Total','ValorII'      ,Total.ICMSTot.vII) ;
          INIRec.WriteFloat('Total','ValorIPI'     ,Total.ICMSTot.vIPI) ;
+         INIRec.WriteFloat('Total','vIPIDevol'    ,Total.ICMSTot.vIPIDevol) ;
          INIRec.WriteFloat('Total','ValorPIS'     ,Total.ICMSTot.vPIS) ;
          INIRec.WriteFloat('Total','ValorCOFINS'  ,Total.ICMSTot.vCOFINS) ;
          INIRec.WriteFloat('Total','ValorOutrasDespesas',Total.ICMSTot.vOutro) ;
@@ -2579,6 +2630,14 @@ begin
          INIRec.WriteFloat('Total','ValorISSQN'   ,Total.ISSQNTot.vISS) ;
          INIRec.WriteFloat('Total','ValorPISISS'  ,Total.ISSQNTot.vPIS) ;
          INIRec.WriteFloat('Total','ValorCONFINSISS',Total.ISSQNTot.vCOFINS) ;
+
+         INIRec.WriteDateTime('Total','dCompet',Total.ISSQNTot.dCompet) ;
+         INIRec.WriteFloat('Total','vDeducao',Total.ISSQNTot.vDeducao) ;
+         INIRec.WriteFloat('Total','vOutro',Total.ISSQNTot.vOutro) ;
+         INIRec.WriteFloat('Total','vDescIncond',Total.ISSQNTot.vDescIncond) ;
+         INIRec.WriteFloat('Total','vDescCond',Total.ISSQNTot.vDescCond) ;
+         INIRec.WriteFloat('Total','vISSRet',Total.ISSQNTot.vISSRet) ;
+         INIRec.WriteString('Total','cRegTrib', RegTribISSQNToStr( Total.ISSQNTot.cRegTrib ) ) ;
 
          INIRec.WriteFloat('retTrib','vRetPIS'   ,Total.retTrib.vRetPIS) ;
          INIRec.WriteFloat('retTrib','vRetCOFINS',Total.retTrib.vRetCOFINS) ;
@@ -2656,6 +2715,21 @@ begin
                INIRec.WriteFloat( sSecao,'Valor' ,vDup) ;
              end;
           end;
+
+         for I:=0 to pag.Count-1 do
+         begin
+           sSecao    := 'pag'+IntToStrZero(I+1,3) ;
+           with pag.Items[I] do
+           begin
+             INIRec.WriteString(sSecao,'tPag', FormaPagamentoToStr( tPag ) ) ;
+             INIRec.WriteFloat(sSecao,'vPag',vPag) ;
+             INIRec.WriteString(sSecao,'tpIntegra', tpIntegraToStr( tpIntegra ) ) ;
+             INIRec.WriteString(sSecao,'CNPJ',CNPJ) ;
+             INIRec.WriteString( sSecao,'tBand' ,BandeiraCartaoToStr( tBand ) ) ;
+             INIRec.WriteString( sSecao,'cAut' ,cAut) ;
+           end;
+         end;
+         INIRec.WriteFloat( sSecao,'vTroco' ,pag.vTroco) ;
 
          INIRec.WriteString( 'DadosAdicionais','Fisco',InfAdic.infAdFisco);
          INIRec.WriteString( 'DadosAdicionais','Complemento',InfAdic.infCpl);
@@ -2739,7 +2813,7 @@ begin
           INIRec.WriteString('procNFe','tpAmb',TpAmbToStr(procNFe.tpAmb)) ;
           INIRec.WriteString('procNFe','verAplic',procNFe.verAplic) ;
           INIRec.WriteString('procNFe','chNFe',procNFe.chNFe) ;
-	      INIRec.WriteString('procNFe','dhRecbto',DateTimeToStr(procNFe.dhRecbto));
+	  INIRec.WriteString('procNFe','dhRecbto',DateTimeToStr(procNFe.dhRecbto));
           INIRec.WriteString('procNFe','nProt',procNFe.nProt) ;
           INIRec.WriteString('procNFe','digVal',procNFe.digVal) ;
           INIRec.WriteString('procNFe','cStat',IntToStr(procNFe.cStat)) ;

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2018
+[*] Atualização da Função GerarNFeIni (Leitura das tags adicionadas a versão 4.0)
+	por: José M. S. Junior
+
 28/12/2017
 [*] Ajuste no Retorno do Método DistribuicaoDFe
         https://www.projetoacbr.com.br/forum/topic/40600-comando-nfedistribuicaodfeporultnsucuf-ccnpj-nultnsu/

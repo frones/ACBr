@@ -55,6 +55,7 @@ Símbolo : Significado
     - Se For vazio: Calcula o Path da mesma maneira que é computado o Path onde
       é Salvo o XML da NFe
     - Se for Vazio, e não houver nota carregada: Usa o Path da aplicaçao
+    https://www.projetoacbr.com.br/forum/topic/40250-acbrnfe-problema-pathpdf/
     (por: DSA)
 
 08/01/2018

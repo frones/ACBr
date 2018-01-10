@@ -262,9 +262,17 @@ var
   DescricaoModelo: String;
 begin
   case Modelo of
-     0: DescricaoModelo := TACBrCTe(fpConfiguracoes.Owner).GetNomeModeloDFe;
-    57: DescricaoModelo := 'CTe';
-    67: DescricaoModelo := 'CTeOS';
+     0:
+       begin
+         if Assigned(fpConfiguracoes.Owner) then
+           DescricaoModelo := TACBrCTe(fpConfiguracoes.Owner).GetNomeModeloDFe
+         else
+           DescricaoModelo := 'CTe';
+       end;
+    57:
+      DescricaoModelo := 'CTe';
+    67:
+      DescricaoModelo := 'CTeOS';
   end;
 
   Result := GetPath(FPathCTe, DescricaoModelo, CNPJ, Data, DescricaoModelo);

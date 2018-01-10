@@ -181,9 +181,10 @@ end ;
 
 procedure TACBrDISSmakTecladoLib.UnLoadDLLFunctions;
 begin
-  if Assigned(xFree_Sk_Access) then
-    xFree_Sk_Access;
+  if not Assigned(xFree_Sk_Access) then
+    Exit;
 
+  xFree_Sk_Access;
   UnLoadLibrary( CSKLIB );
 
   xReset_Interface := Nil;

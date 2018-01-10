@@ -162,6 +162,9 @@ end ;
 
 procedure TACBrDISGertecTEC65lib.UnLoadDLLFunctions;
 begin
+  if not Assigned(xOpenTec65) then
+    Exit;
+
   UnLoadLibrary( CTEC65LIB );
 
   xOpenTec65  := Nil;

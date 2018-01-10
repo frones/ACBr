@@ -47,7 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-08/01/2017
+10/01/2018
+-- ACBrNFeDANFEClass --
+[*] Método GetPathPDF, modificado para:
+    - Se houver algum Path Definido: Usar o Path exatamente como informado
+      (sem adicionar os separadores de Diretório)
+    - Se For vazio: Calcula o Path da mesma maneira que é computado o Path onde
+      é Salvo o XML da NFe
+    - Se for Vazio, e não houver nota carregada: Usa o Path da aplicaçao
+    (por: DSA)
+
+08/01/2018
 -- ACBrNFeConfiguracoes --
 [+] Adicionado os métodos:
     GravarIni( const AIni: TCustomIniFile );

@@ -416,38 +416,44 @@ begin
     Exit;
   end;
 
-  Result := PathWithDelim(FPathPDF);
+  Result := Trim(FPathPDF);
 
-  //Criar diretório conforme configurado para NF-e
-  if Assigned(ACBrNFe) then
+  if EstaVazio(Result) then  // Se não informou o Diretório para o PDF
   begin
-    if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
+    if Assigned(ACBrNFe) then  // Se tem o componente ACBrNFe
     begin
-      ANFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
-      if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
-        dhEmissao := ANFe.Ide.dEmi
-      else
-        dhEmissao := Now;
-
-      DescricaoModelo := '';
-      if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.AdicionarLiteral then
+      if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then  // Se tem alguma Nota carregada
       begin
-         case ANFe.Ide.modelo of
-           0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
-           55: DescricaoModelo := 'NFe';
-           65: DescricaoModelo := 'NFCe';
-         end;
-      end;
+        ANFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+        if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
+          dhEmissao := ANFe.Ide.dEmi
+        else
+          dhEmissao := Now;
 
-      Result := PathWithDelim(TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(
-                             Result
-                            ,DescricaoModelo
-                            ,ANFe.Emit.CNPJCPF
-                            ,dhEmissao
-                            ,DescricaoModelo
-                            ));
+        DescricaoModelo := '';
+        if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.AdicionarLiteral then
+        begin
+           case ANFe.Ide.modelo of
+             0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
+             55: DescricaoModelo := 'NFe';
+             65: DescricaoModelo := 'NFCe';
+           end;
+        end;
+
+        Result := TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(
+                         Result,
+                         DescricaoModelo,
+                         ANFe.Emit.CNPJCPF,
+                         dhEmissao,
+                         DescricaoModelo);
+      end;
     end;
   end;
+
+  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    Result := ExtractFilePath(ParamStr(0));
+
+  Result := PathWithDelim( Result );
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirEVENTO(NFE: TNFe);

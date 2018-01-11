@@ -2152,21 +2152,29 @@ end ;
  ---------------------------------------------------------------------------- }
 function TiraAcento( const AChar : AnsiChar ) : AnsiChar ;
 begin
-  case AChar of
-    'à','á','ã','ä','â' : Result := 'a' ;
-    'À','Á','Ã','Ä','Â' : Result := 'A' ;
-    'è','é',    'ë','ê' : Result := 'e' ;
-    'È','É',    'Ë','Ê' : Result := 'E' ;
-    'ì','í',    'ï','î' : Result := 'i' ;
-    'Ì','Í',    'Ï','Î' : Result := 'I' ;
-    'ò','ó','õ','ö','ô' : Result := 'o' ;
-    'Ò','Ó','Õ','Ö','Ô' : Result := 'O' ;
-    'ù','ú',    'ü','û' : Result := 'u' ;
-    'Ù','Ú',    'Ü','Û' : Result := 'U' ;
-    'ç'                 : Result := 'c' ;
-    'Ç'                 : Result := 'C' ;
-    'ñ'                 : Result := 'n' ;
-    'Ñ'                 : Result := 'N' ;
+  case Byte(AChar) of
+    192..198 : Result := 'A' ;
+    199      : Result := 'C' ;
+    200..203 : Result := 'E' ;
+    204..207 : Result := 'I' ;
+    208      : Result := 'D' ;
+    209      : Result := 'N' ;
+    210..214 : Result := 'O' ;
+    215      : Result := 'x' ;
+    216,248  : Result := '0' ;
+    217..220 : Result := 'U' ;
+    221      : Result := 'Y' ;
+    222,254  : Result := 'b' ;
+    223      : Result := 'B' ;
+    224..230 : Result := 'a' ;
+    231      : Result := 'c' ;
+    232..235 : Result := 'e' ;
+    236..239 : Result := 'i' ;
+    240,242..246 : Result := 'o' ;
+    247      : Result := '/';
+    241      : Result := 'n' ;
+    249..252 : Result := 'u' ;
+    253,255  : Result := 'y' ;
   else
     Result := AChar ;
   end;

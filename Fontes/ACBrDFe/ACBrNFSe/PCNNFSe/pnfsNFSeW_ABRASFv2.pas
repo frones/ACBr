@@ -640,16 +640,16 @@ begin
   case FProvedor of
     proABase, proBethav2, proDigifred, proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
-    proISSJoinville:
+    proCoplan, proSIAPNet, proSystemPro:
       begin
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
         Gerador.wGrupoNFSe('Rps');
       end;
 
-    proCoplan, proSIAPNet:
+    proISSJoinville:
       begin
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
-        Gerador.wGrupoNFSe('Rps');
+        Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
       end;
 
     proPronimv2:
@@ -662,12 +662,6 @@ begin
       begin
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="Declaracao_' + OnlyNumber(NFSe.Prestador.Cnpj) + '"');
         Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
-      end;
-
-    proSystemPro:
-      begin
-        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
-        Gerador.wGrupoNFSe('Rps');
       end;
 
     proTecnos:

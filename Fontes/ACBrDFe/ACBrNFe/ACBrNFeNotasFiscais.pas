@@ -1151,7 +1151,7 @@ begin
     if (NFe.Total.ICMSTot.vTotTrib <> fsvTotTrib) then
       AdicionaErro('685-Rejeição: Total do Valor Aproximado dos Tributos difere do somatório dos itens');
 
-    if NFe.Ide.modelo = 65 then
+    if (NFe.Ide.modelo = 65) and (NFe.infNFe.Versao < 4) then
     begin
       GravaLog('Validar: 767-NFCe soma pagamentos');
       fsvTotPag := 0;

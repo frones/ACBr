@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/01/2018
+-- ACBrNFeNotasFiscais --
+[-] Acerto para não validar somatorio das formas de pagamento, conforme manual
+    para a versão 4.0 da nf-e (somente quando for versão 4.0 em diante)
+
 10/01/2018
 -- ACBrNFeDANFEClass --
 [*] Método GetPathPDF, modificado para:

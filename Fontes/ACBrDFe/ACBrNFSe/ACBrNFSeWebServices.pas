@@ -2389,7 +2389,7 @@ begin
 
     // Teste realizado para o provedor Abaco podendo ser removido a condição para
     // atender os demais provedores que o identificador seja id em vez de Id.
-    if FProvedor <> proAbaco then
+    if not (FProvedor in [proAbaco, proSP]) then
     begin
       i := Pos('URI=""', FPDadosMsg);
 

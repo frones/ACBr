@@ -1385,38 +1385,25 @@ begin
     AjustarOpcoes( EventoBPe.Gerador.Opcoes );
     EventoBPe.GerarXML;
 
-    // Separa os grupos <evento> e coloca na variável Eventos
-    I := Pos('<evento ', EventoBPe.Gerador.ArquivoFormatoXML);
-    Lote := Copy(EventoBPe.Gerador.ArquivoFormatoXML, 1, I - 1);
-    Eventos := SeparaDados(EventoBPe.Gerador.ArquivoFormatoXML, 'envEvento');
-    I := Pos('<evento ', Eventos);
-    Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
-
+    Eventos := NativeStringToUTF8( EventoBPe.Gerador.ArquivoFormatoXML );
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento
     while Eventos <> '' do
     begin
-      F := Pos('</evento>', Eventos);
+      F := Pos('</eventoBPe>', Eventos);
 
       if F > 0 then
       begin
-        Evento := Copy(Eventos, 1, F + 8);
-        Eventos := Copy(Eventos, F + 9, length(Eventos));
+        Evento := Copy(Eventos, 1, F + 12);
+        Eventos := Copy(Eventos, F + 13, length(Eventos));
 
-        AssinarXML(Evento, 'evento', 'infEvento', 'Falha ao assinar o Envio de Evento ');
+        AssinarXML(Evento, 'eventoBPe', 'infEvento', 'Falha ao assinar o Envio de Evento ');
         EventosAssinados := EventosAssinados + FPDadosMsg;
       end
       else
         Break;
     end;
-
-    F := Pos('?>', EventosAssinados);
-    if F <> 0 then
-      FPDadosMsg := copy(EventosAssinados, 1, F + 1) + Lote +
-        copy(EventosAssinados, F + 2, Length(EventosAssinados)) + '</envEvento>'
-    else
-      FPDadosMsg := Lote + EventosAssinados + '</envEvento>';
 
     // Separa o XML especifico do Evento para ser Validado.
     AXMLEvento := '<' + ENCODING_UTF8 + '>' +
@@ -1424,8 +1411,6 @@ begin
 
     with TACBrBPe(FPDFeOwner) do
     begin
-//      SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico, 0)), FPMsg);
-
       EventoEhValido := SSL.Validar(FPDadosMsg,
                                     GerarNomeArqSchema(FPLayout,
                                                        StringToFloatDef(FPVersaoServico, 0)),

@@ -50,7 +50,10 @@ Símbolo : Significado
 
 12/01/2018
 -- ACBrBPeWebServices --
-[*] Correção das URLs de Serviço e SoapACtion de envio de eventos
+[*] Correção na separação dos eventos para assinatura e validação.
+  Por: Italo Jurisato Junior
+-- ACBrBPeWebServices --
+[*] Correção das URLs de Serviço e SoapACtion de envio de eventos.
   Por: Italo Jurisato Junior
 
 10/01/2018

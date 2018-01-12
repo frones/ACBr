@@ -42,9 +42,12 @@ uses
   synachar;
 
 type
+  EConfigException = class(Exception);
+
+
   TNivelLog = (logNenhum, logSimples, logNormal, logCompleto, logParanoico);
 
-  EConfigException = class(Exception);
+  TTipoRelatorioBobina = (tpFortes, tpEscPos);
 
   { TLogConfig }
 

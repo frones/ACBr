@@ -80,6 +80,28 @@ const
   CChaveTelefone = 'Telefone';
   CChaveResponsavel = 'Responsavel';
 
+  CChavePathLogo = 'PathLogo';
+  CChavePathPDF = 'PathPDF';
+  CChaveImpressora = 'Impressora';
+  CChaveTipoRelatorioBobina = 'TipoRelatorioBobina';
+  CChaveImprimeNomeFantasia = 'ImprimeNomeFantasia';
+  CChaveMostraPreview = 'MostraPreview';
+  CChaveMostraStatus = 'MostraStatus';
+  CChaveCopias = 'Copias';
+  CChaveLarguraBobina = 'LarguraBobina';
+  CChaveMargemInferior = 'MargemInferior';
+  CChaveMargemSuperior = 'MargemSuperior';
+  CChaveMargemEsquerda = 'MargemEsquerda';
+  CChaveMargemDireita = 'MargemDireita';
+  CChaveDecimaisQtd = 'DecimaisQtd';
+  CChaveDecimaisValUnit = 'DecimaisValUnit';
+  CChaveImprimeEmUmaLinha = 'ImprimeEmUmaLinha';
+  CChaveImprimeCodigoEAN = 'ImprimeCodigoEAN';
+  CChaveImprimeDescAcrescItem = 'ImprimeDescAcrescItem';
+  CChaveExpandeLogoMarca = 'ExpandeLogoMarca';
+
+const
+  // Códigos de Erros, comuns de todas as Libs //
   ErrOK = 0;
   ErrLibNaoInicializada = -1;
   ErrLibNaoFinalizada = -2;

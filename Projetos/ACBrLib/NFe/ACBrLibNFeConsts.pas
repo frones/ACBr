@@ -41,13 +41,34 @@ uses
   Classes, SysUtils;
 
 const
-  LibName = 'ACBrLibNFe';
+  CNFeLibName = 'ACBrLibNFe';
+  CNFeLibVersion = '0.0.1';
 
-  ErrLibNotInited = -1;
+  CSessaoDANFECe = 'DANFECe';
+  CSessaoDANFE = 'DANFE';
 
+  CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';
+  CChaveQRCodeLateral = 'QRCodeLateral';
+  CChaveTipoDANFE = 'TipoDANFE';
+  CChaveImprimeTotalLiquido = 'ImprimeTotalLiquido';
+  CChaveImprimeDescPorc = 'ImprimeDescPorc';
+  CChaveFormularioContinuo = 'FormularioContinuo';
+  CChaveTamanhoFonteEndereco = 'TamanhoFonteEndereco';
+  CChaveTamanhoFonteDemaisCampos = 'TamanhoFonteDemaisCampos';
+  CChaveTamanhoFonteRazaoSocial = 'TamanhoFonteRazaoSocial';
+  CChaveProdutosPorPagina = 'ProdutosPorPagina';
+  CChaveImprimeDetalhamentoEspecifico = 'ImprimeDetalhamentoEspecifico';
+  CChaveExibeResumoCanhoto = 'ExibeResumoCanhoto';
+  CChavePosCanhoto = 'PosCanhoto';
+  CChaveNomeFonte = 'NomeFonte';
+  CChaveLarguraCodProd = 'LarguraCodProd';
+  CChaveExibeEAN = 'ExibeEAN';
+  CChaveExibeCampoFatura = 'ExibeCampoFatura';
+  CChaveQuebraLinhaEmDetalhamentoEspecifico = 'QuebraLinhaEmDetalhamentoEspecifico';
+  CChaveAlturaLinhaComun = 'AlturaLinhaComun';
+  CChaveTipoUnQtVlComercial = 'TipoUnQtVlComercial';
 
-Resourcestring
-  SErrLibAlreadyInited = LibName+' já inicializada.';
+//Resourcestring
 
 implementation
 

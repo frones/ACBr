@@ -54,12 +54,12 @@ type
     FPathPDF: String;
     FImpressora: String;
     FImprimeNomeFantasia: Boolean;
-    FImprimirTotalLiquido: Boolean;
-    FMostrarPreview: Boolean;
-    FMostrarStatus: Boolean;
+    FImprimeTotalLiquido: Boolean;
+    FMostraPreview: Boolean;
+    FMostraStatus: Boolean;
     FTipoDANFE: TpcnTipoImpressao;
     FNumCopias: Integer;
-    FExpandirLogoMarca: Boolean;
+    FExpandeLogoMarca: Boolean;
     FImprimeDescPorc: Boolean;
     FMargemInferior: Double;
     FMargemSuperior: Double;
@@ -69,63 +69,61 @@ type
     FvUnCom: Integer;
     FExibeResumoCanhoto: Boolean;
     FFormularioContinuo: Boolean;
-    FTamanhoFonte_DemaisCampos: Integer;
+    FTamanhoFonteDemaisCampos: Integer;
     FProdutosPorPagina: Integer;
-    FImprimirDetalhamentoEspecifico: Boolean;
+    FImprimeDetalhamentoEspecifico: Boolean;
     FTamanhoFonteEndereco: Integer;
     FPosCanhoto: TPosRecibo;
     FNomeFonte: TNomeFonte;
     FLarguraCodProd: Integer;
-    FExibirEAN: Boolean;
+    FExibeEAN: Boolean;
     FExibeCampoFatura: Boolean;
     FQuebraLinhaEmDetalhamentoEspecifico: Boolean;
-    FTamanhoFonte_RazaoSocial: Integer;
-    FAltLinhaComun: Integer;
-    FImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
+    FTamanhoFonteRazaoSocial: Integer;
+    FAlturaLinhaComun: Integer;
+    FTipoUnQtVlComercial: TImprimirUnidQtdeValor;
   public
     constructor Create;
     procedure DefinirValoresPadroes;
-    procedure LerIni( const AIni: TCustomIniFile );
-    procedure GravarIni( const AIni: TCustomIniFile );
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
 
     property PathLogo: String read FPathLogo write FPathLogo;
     property PathPDF: String read FPathPDF write FPathPDF;
     property Impressora: String read FImpressora write FImpressora;
-    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
-    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
+    property MostraPreview: Boolean read FMostraPreview write FMostraPreview;
+    property MostraStatus: Boolean read FMostraStatus write FMostraStatus;
     property TipoDANFE: TpcnTipoImpressao read FTipoDANFE write FTipoDANFE;
     property NumCopias: Integer read FNumCopias write FNumCopias;
     property ImprimeNomeFantasia: Boolean read FImprimeNomeFantasia write FImprimeNomeFantasia;
-    property ImprimirDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc;
-    property ImprimirTotalLiquido: Boolean read FImprimirTotalLiquido write FImprimirTotalLiquido;
+    property ImprimeDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc;
+    property ImprimeTotalLiquido: Boolean read FImprimeTotalLiquido write FImprimeTotalLiquido;
     property MargemInferior: Double read FMargemInferior write FMargemInferior;
     property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
     property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
     property MargemDireita: Double read FMargemDireita write FMargemDireita;
     property QCom: Integer read FQCom write FQCom;
     property VUnCom: Integer read FvUnCom write FvUnCom;
-    property ExibirResumoCanhoto: Boolean read FExibeResumoCanhoto write FExibeResumoCanhoto;
+    property ExibeResumoCanhoto: Boolean read FExibeResumoCanhoto write FExibeResumoCanhoto;
     property FormularioContinuo: Boolean read FFormularioContinuo write FFormularioContinuo;
-    property ExpandirLogoMarca: Boolean read FExpandirLogoMarca write FExpandirLogoMarca;
-    property TamanhoFonte_DemaisCampos: Integer read FTamanhoFonte_DemaisCampos write FTamanhoFonte_DemaisCampos;
+    property ExpandeLogoMarca: Boolean read FExpandeLogoMarca write FExpandeLogoMarca;
+    property TamanhoFonteDemaisCampos: Integer read FTamanhoFonteDemaisCampos write FTamanhoFonteDemaisCampos;
     property ProdutosPorPagina: Integer read FProdutosPorPagina write FProdutosPorPagina;
-    property ImprimirDetalhamentoEspecifico: Boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico;
+    property ImprimeDetalhamentoEspecifico: Boolean read FImprimeDetalhamentoEspecifico write FImprimeDetalhamentoEspecifico;
     property TamanhoFonteEndereco: Integer read FTamanhoFonteEndereco write FTamanhoFonteEndereco;
     property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto;
     property UsaCodigoEanImpressao: Boolean read FUsaCodigoEanImpressao write FUsaCodigoEanImpressao;
     property NomeFonte: TNomeFonte read FNomeFonte write FNomeFonte;
     property LarguraCodProd: Integer read FLarguraCodProd write FLarguraCodProd;
-    property ExibirEAN: Boolean read FExibirEAN write FExibirEAN;
+    property ExibeEAN: Boolean read FExibeEAN write FExibeEAN;
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;
     property QuebraLinhaEmDetalhamentoEspecifico: Boolean read FQuebraLinhaEmDetalhamentoEspecifico write FQuebraLinhaEmDetalhamentoEspecifico;
-    property TamanhoFonte_RazaoSocial: Integer read FTamanhoFonte_RazaoSocial write FTamanhoFonte_RazaoSocial;
-    property AltLinhaComun: Integer read FAltLinhaComun write FAltLinhaComun;
-    property ImprimirUnQtVlComercial: TImprimirUnidQtdeValor read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
+    property TamanhoFonteRazaoSocial: Integer read FTamanhoFonteRazaoSocial write FTamanhoFonteRazaoSocial;
+    property AlturaLinhaComun: Integer read FAlturaLinhaComun write FAlturaLinhaComun;
+    property TipoUnQtVlComercial: TImprimirUnidQtdeValor read FTipoUnQtVlComercial write FTipoUnQtVlComercial;
   end;
 
-  TACBrNFCeTipoRelatorio = (tpFortes, tpEscPos);
-
-  TACBrEventoNFCeRelatorio = (evA4, evBobina);
+  TEventoNFCeRelatorio = (evA4, evBobina);
 
   { TDANFeConfig }
 
@@ -136,11 +134,11 @@ type
     FPathLogo: String;
     FPathPDF: String;
     FImpressora: String;
-    FTipoRelatorio: TACBrNFCeTipoRelatorio;
-    FTipoRelatorioEvento: TACBrEventoNFCeRelatorio;
+    FTipoRelatorio: TTipoRelatorioBobina;
+    FTipoRelatorioEvento: TEventoNFCeRelatorio;
     FImprimeNomeFantasia: Boolean;
-    FMostrarPreview: Boolean;
-    FMostrarStatus: Boolean;
+    FMostraPreview: Boolean;
+    FMostraStatus: Boolean;
     FNumCopias: Integer;
     FLarguraBobina: Integer;
     FMargemInferior: Double;
@@ -156,16 +154,16 @@ type
   public
     constructor Create;
     procedure DefinirValoresPadroes;
-    procedure LerIni( const AIni: TCustomIniFile );
-    procedure GravarIni( const AIni: TCustomIniFile );
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
 
     property PathLogo: String read FPathLogo write FPathLogo;
     property PathPDF: String read FPathPDF write FPathPDF;
     property Impressora: String read FImpressora write FImpressora;
-    property TipoRelatorio: TACBrNFCeTipoRelatorio read FTipoRelatorio write FTipoRelatorio;
-    property TipoRelatorioEvento: TACBrEventoNFCeRelatorio read FTipoRelatorioEvento write FTipoRelatorioEvento;
-    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
-    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
+    property TipoRelatorio: TTipoRelatorioBobina read FTipoRelatorio write FTipoRelatorio;
+    property TipoRelatorioEvento: TEventoNFCeRelatorio read FTipoRelatorioEvento write FTipoRelatorioEvento;
+    property MostraPreview: Boolean read FMostraPreview write FMostraPreview;
+    property MostraStatus: Boolean read FMostraStatus write FMostraStatus;
     property NumCopias: Integer read FNumCopias write FNumCopias;
     property ImprimeNomeFantasia: Boolean read FImprimeNomeFantasia write FImprimeNomeFantasia;
     property LarguraBobina: Integer read FLarguraBobina write FLarguraBobina;
@@ -200,7 +198,126 @@ type
 implementation
 
 uses
-  ACBrLibNFeClass;
+  ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts;
+
+{ TDANFeConfig }
+
+constructor TDANFeConfig.Create;
+begin
+  inherited Create;
+  DefinirValoresPadroes;
+end;
+
+procedure TDANFeConfig.DefinirValoresPadroes;
+begin
+  FPathLogo := '';
+  FPathPDF := '';
+  FImpressora := '';
+  FTipoDANFE := tiRetrato;
+  FImprimeTotalLiquido := False;
+  FMostraPreview := True;
+  FMostraStatus := True;
+  FNumCopias := 1;
+  FImprimeDescPorc := False;
+  FExpandeLogoMarca := False;
+  FMargemInferior := 0.7;
+  FMargemSuperior := 0.7;
+  FMargemEsquerda := 0.7;
+  FMargemDireita := 0.7;
+  FFormularioContinuo := False;
+  FTamanhoFonteEndereco := 0;
+  FTamanhoFonteDemaisCampos := 8;
+  FProdutosPorPagina := 0;
+  FImprimeNomeFantasia := False;
+  FImprimeDetalhamentoEspecifico := True;
+  FQCom := 2;
+  FvUnCom := 2;
+  FExibeResumoCanhoto := False;
+  FPosCanhoto := prCabecalho;
+  FUsaCodigoEanImpressao := False;
+  FNomeFonte := nfTimesNewRoman;
+  FLarguraCodProd := 54;
+  FExibeEAN := False;
+  FExibeCampoFatura := True;
+  FQuebraLinhaEmDetalhamentoEspecifico := True;
+  FTamanhoFonteRazaoSocial := 8;
+  FAlturaLinhaComun := 30;
+  FTipoUnQtVlComercial := iuComercial;
+end;
+
+procedure TDANFeConfig.LerIni(const AIni: TCustomIniFile);
+begin
+  FPathLogo := AIni.ReadString(CSessaoDANFE, CChavePathLogo, FPathLogo);
+  FPathPDF := AIni.ReadString(CSessaoDANFE, CChavePathPDF, FPathPDF);
+  FImpressora := AIni.ReadString(CSessaoDANFE, CChaveImpressora, FImpressora);
+  FTipoDANFE := TpcnTipoImpressao(AIni.ReadInteger(CSessaoDANFE, CChaveTipoDANFE, Integer(FTipoDANFE)));
+  FImprimeTotalLiquido := AIni.ReadBool(CSessaoDANFE, CChaveImprimeTotalLiquido, FImprimeTotalLiquido);
+  FMostraPreview := AIni.ReadBool(CSessaoDANFE, CChaveMostraPreview, FMostraPreview);
+  FMostraStatus := AIni.ReadBool(CSessaoDANFE, CChaveMostraStatus, FMostraStatus);
+  FNumCopias := AIni.ReadInteger(CSessaoDANFE, CChaveCopias, FNumCopias);
+  FImprimeDescPorc := AIni.ReadBool(CSessaoDANFE, CChaveImprimeDescPorc, FImprimeDescPorc);
+  FExpandeLogoMarca := AIni.ReadBool(CSessaoDANFE, CChaveExpandeLogoMarca, FExpandeLogoMarca);
+  FMargemInferior := AIni.ReadFloat(CSessaoDANFE, CChaveMargemInferior, FMargemInferior);
+  FMargemSuperior := AIni.ReadFloat(CSessaoDANFE, CChaveMargemSuperior, FMargemSuperior);
+  FMargemEsquerda := AIni.ReadFloat(CSessaoDANFE, CChaveMargemEsquerda, FMargemEsquerda);
+  FMargemDireita := AIni.ReadFloat(CSessaoDANFE, CChaveMargemDireita, FMargemDireita);
+  FFormularioContinuo := AIni.ReadBool(CSessaoDANFE, CChaveFormularioContinuo, FFormularioContinuo);
+  FTamanhoFonteEndereco := AIni.ReadInteger(CSessaoDANFE, CChaveTamanhoFonteEndereco, FTamanhoFonteEndereco);
+  FTamanhoFonteDemaisCampos := AIni.ReadInteger(CSessaoDANFE, CChaveTamanhoFonteDemaisCampos, FTamanhoFonteDemaisCampos);
+  FTamanhoFonteRazaoSocial := AIni.ReadInteger(CSessaoDANFE, CChaveTamanhoFonteRazaoSocial, FTamanhoFonteRazaoSocial);
+  FProdutosPorPagina := AIni.ReadInteger(CSessaoDANFE, CChaveProdutosPorPagina, FProdutosPorPagina);
+  FImprimeNomeFantasia := AIni.ReadBool(CSessaoDANFE, CChaveImprimeNomeFantasia, FImprimeNomeFantasia);
+  FImprimeDetalhamentoEspecifico := AIni.ReadBool(CSessaoDANFE, CChaveImprimeDetalhamentoEspecifico, FImprimeDetalhamentoEspecifico);
+  FqCom := AIni.ReadInteger(CSessaoDANFE, CChaveDecimaisQtd, FqCom);
+  FvUnCom := AIni.ReadInteger(CSessaoDANFE, CChaveDecimaisValUnit, FvUnCom);
+  FExibeResumoCanhoto := AIni.ReadBool(CSessaoDANFE, CChaveExibeResumoCanhoto, FExibeResumoCanhoto);
+  FPosCanhoto := TPosRecibo(AIni.ReadInteger(CSessaoDANFE, CChavePosCanhoto, Integer(FPosCanhoto)));
+  FUsaCodigoEanImpressao := AIni.ReadBool(CSessaoDANFE, CChaveImprimeCodigoEAN, FUsaCodigoEanImpressao);
+  FNomeFonte := TNomeFonte(AIni.ReadInteger(CSessaoDANFE, CChaveNomeFonte, Integer(FNomeFonte)));
+  FLarguraCodProd := AIni.ReadInteger(CSessaoDANFE, CChaveLarguraCodProd, FLarguraCodProd);
+  FExibeEAN := AIni.ReadBool(CSessaoDANFE, CChaveExibeEAN, FExibeEAN);
+  FExibeCampoFatura := AIni.ReadBool(CSessaoDANFE, CChaveExibeCampoFatura, FExibeCampoFatura);
+  FQuebraLinhaEmDetalhamentoEspecifico := AIni.ReadBool(CSessaoDANFE, CChaveQuebraLinhaEmDetalhamentoEspecifico, FQuebraLinhaEmDetalhamentoEspecifico);
+  FAlturaLinhaComun := AIni.ReadInteger(CSessaoDANFE, CChaveAlturaLinhaComun, FAlturaLinhaComun);
+  FTipoUnQtVlComercial := TImprimirUnidQtdeValor(AIni.ReadInteger(CSessaoDANFE, CChaveTipoUnQtVlComercial, Integer(FTipoUnQtVlComercial)));
+end;
+
+procedure TDANFeConfig.GravarIni(const AIni: TCustomIniFile);
+begin
+  AIni.WriteString(CSessaoDANFE, CChavePathLogo, FPathLogo);
+  AIni.WriteString(CSessaoDANFE, CChavePathPDF, FPathPDF);
+  AIni.WriteString(CSessaoDANFE, CChaveImpressora, FImpressora);
+  AIni.WriteInteger(CSessaoDANFE, CChaveTipoDANFE, Integer(FTipoDANFE));
+  AIni.WriteBool(CSessaoDANFE, CChaveImprimeTotalLiquido, FImprimeTotalLiquido);
+  AIni.WriteBool(CSessaoDANFE, CChaveMostraPreview, FMostraPreview);
+  AIni.WriteBool(CSessaoDANFE, CChaveMostraStatus, FMostraStatus);
+  AIni.WriteInteger(CSessaoDANFE, CChaveCopias, FNumCopias);
+  AIni.WriteBool(CSessaoDANFE, CChaveImprimeDescPorc, FImprimeDescPorc);
+  AIni.WriteBool(CSessaoDANFE, CChaveExpandeLogoMarca, FExpandeLogoMarca);
+  AIni.WriteFloat(CSessaoDANFE, CChaveMargemInferior, FMargemInferior);
+  AIni.WriteFloat(CSessaoDANFE, CChaveMargemSuperior, FMargemSuperior);
+  AIni.WriteFloat(CSessaoDANFE, CChaveMargemEsquerda, FMargemEsquerda);
+  AIni.WriteFloat(CSessaoDANFE, CChaveMargemDireita, FMargemDireita);
+  AIni.WriteBool(CSessaoDANFE, CChaveFormularioContinuo, FFormularioContinuo);
+  AIni.WriteInteger(CSessaoDANFE, CChaveTamanhoFonteEndereco, FTamanhoFonteEndereco);
+  AIni.WriteInteger(CSessaoDANFE, CChaveTamanhoFonteDemaisCampos, FTamanhoFonteDemaisCampos);
+  AIni.WriteInteger(CSessaoDANFE, CChaveTamanhoFonteRazaoSocial, FTamanhoFonteRazaoSocial);
+  AIni.WriteInteger(CSessaoDANFE, CChaveProdutosPorPagina, FProdutosPorPagina);
+  AIni.WriteBool(CSessaoDANFE, CChaveImprimeNomeFantasia, FImprimeNomeFantasia);
+  AIni.WriteBool(CSessaoDANFE, CChaveImprimeDetalhamentoEspecifico, FImprimeDetalhamentoEspecifico);
+  AIni.WriteInteger(CSessaoDANFE, CChaveDecimaisQtd, FqCom);
+  AIni.WriteInteger(CSessaoDANFE, CChaveDecimaisValUnit, FvUnCom);
+  AIni.WriteBool(CSessaoDANFE, CChaveExibeResumoCanhoto, FExibeResumoCanhoto);
+  AIni.WriteInteger(CSessaoDANFE, CChavePosCanhoto, Integer(FPosCanhoto));
+  AIni.WriteBool(CSessaoDANFE, CChaveImprimeCodigoEAN, FUsaCodigoEanImpressao);
+  AIni.WriteInteger(CSessaoDANFE, CChaveNomeFonte, Integer(FNomeFonte));
+  AIni.WriteInteger(CSessaoDANFE, CChaveLarguraCodProd, FLarguraCodProd);
+  AIni.WriteBool(CSessaoDANFE, CChaveExibeEAN, FExibeEAN);
+  AIni.WriteBool(CSessaoDANFE, CChaveExibeCampoFatura, FExibeCampoFatura);
+  AIni.WriteBool(CSessaoDANFE, CChaveQuebraLinhaEmDetalhamentoEspecifico, FQuebraLinhaEmDetalhamentoEspecifico);
+  AIni.WriteInteger(CSessaoDANFE, CChaveAlturaLinhaComun, FAlturaLinhaComun);
+  AIni.WriteInteger(CSessaoDANFE, CChaveTipoUnQtVlComercial, Integer(FTipoUnQtVlComercial));
+end;
 
 { TDANFECeConfig }
 
@@ -218,16 +335,16 @@ begin
   FTipoRelatorio := tpEscPos;
   FTipoRelatorioEvento := evBobina;
   FImprimeNomeFantasia := True;
-  FMostrarPreview := False;
-  FMostrarStatus := False;
+  FMostraPreview := False;
+  FMostraStatus := False;
   FNumCopias := 1;
-  FLarguraBobina   := 302;
-  FMargemInferior  := 0.8;
-  FMargemSuperior  := 0.8;
-  FMargemEsquerda  := 0.6;
-  FMargemDireita   := 0.51;
-  FqCom         := 2;
-  FvUnCom       := 2;
+  FLarguraBobina := 302;
+  FMargemInferior := 0.8;
+  FMargemSuperior := 0.8;
+  FMargemEsquerda := 0.6;
+  FMargemDireita := 0.51;
+  FqCom := 2;
+  FvUnCom := 2;
   FImprimeEmUmaLinha := False;
   FUsaCodigoEanImpressao := True;
   FImprimeDescAcrescItem := True;
@@ -236,67 +353,50 @@ end;
 
 procedure TDANFECeConfig.LerIni(const AIni: TCustomIniFile);
 begin
-
+  FPathLogo := AIni.ReadString(CSessaoDANFECe, CChavePathLogo, FPathLogo);
+  FPathPDF := AIni.ReadString(CSessaoDANFECe, CChavePathPDF, FPathPDF);
+  FImpressora := AIni.ReadString(CSessaoDANFECe, CChaveImpressora, FImpressora);
+  FTipoRelatorio := TTipoRelatorioBobina(AIni.ReadInteger(CSessaoDANFECe, CChaveTipoRelatorioBobina, Integer(FTipoRelatorio)));
+  FTipoRelatorioEvento := TEventoNFCeRelatorio(AIni.ReadInteger(CSessaoDANFECe, CChaveTipoRelatorioEvento, Integer(FTipoRelatorioEvento)));
+  FImprimeNomeFantasia := AIni.ReadBool(CSessaoDANFECe, CChaveImprimeNomeFantasia, FImprimeNomeFantasia);
+  FMostraPreview := AIni.ReadBool(CSessaoDANFECe, CChaveMostraPreview, FMostraPreview);
+  FMostraStatus := AIni.ReadBool(CSessaoDANFECe, CChaveMostraStatus, FMostraStatus);
+  FNumCopias := AIni.ReadInteger(CSessaoDANFECe, CChaveCopias, FNumCopias);
+  FLarguraBobina := AIni.ReadInteger(CSessaoDANFECe, CChaveLarguraBobina, FLarguraBobina);
+  FMargemInferior := AIni.ReadFloat(CSessaoDANFECe, CChaveMargemInferior, FMargemInferior);
+  FMargemSuperior := AIni.ReadFloat(CSessaoDANFECe, CChaveMargemSuperior, FMargemSuperior);
+  FMargemEsquerda := AIni.ReadFloat(CSessaoDANFECe, CChaveMargemEsquerda, FMargemEsquerda);
+  FMargemDireita := AIni.ReadFloat(CSessaoDANFECe, CChaveMargemDireita, FMargemDireita);
+  FqCom := AIni.ReadInteger(CSessaoDANFECe, CChaveDecimaisQtd, FqCom);
+  FvUnCom := AIni.ReadInteger(CSessaoDANFECe, CChaveDecimaisValUnit, FvUnCom);
+  FImprimeEmUmaLinha := AIni.ReadBool(CSessaoDANFECe, CChaveImprimeEmUmaLinha, FImprimeEmUmaLinha);
+  FUsaCodigoEanImpressao := AIni.ReadBool(CSessaoDANFECe, CChaveImprimeCodigoEAN, FUsaCodigoEanImpressao);
+  FImprimeDescAcrescItem := AIni.ReadBool(CSessaoDANFECe, CChaveImprimeDescAcrescItem, FImprimeDescAcrescItem);
+  FQRCodeLateral := AIni.ReadBool(CSessaoDANFECe, CChaveQRCodeLateral, FQRCodeLateral);
 end;
 
 procedure TDANFECeConfig.GravarIni(const AIni: TCustomIniFile);
 begin
-
-end;
-
-{ TDANFeConfig }
-
-constructor TDANFeConfig.Create;
-begin
-  inherited Create;
-  DefinirValoresPadroes;
-end;
-
-procedure TDANFeConfig.DefinirValoresPadroes;
-begin
-  FPathLogo := '';
-  FPathPDF := '';
-  FImpressora := '';
-  FTipoDANFE := tiRetrato;
-  FImprimirTotalLiquido := False;
-  FMostrarPreview := True;
-  FMostrarStatus := True;
-  FNumCopias := 1;
-  FImprimeDescPorc := False;
-  FExpandirLogoMarca := False;
-  FMargemInferior := 0.7;
-  FMargemSuperior := 0.7;
-  FMargemEsquerda := 0.7;
-  FMargemDireita := 0.7;
-  FFormularioContinuo := False;
-  FTamanhoFonteEndereco := 0;
-  FTamanhoFonte_DemaisCampos := 8;
-  FProdutosPorPagina := 0;
-  FImprimeNomeFantasia := False;
-  FImprimirDetalhamentoEspecifico := True;
-  FQCom := 2;
-  FvUnCom := 2;
-  FExibeResumoCanhoto := False;
-  FPosCanhoto := prCabecalho;
-  FUsaCodigoEanImpressao := False;
-  FNomeFonte := nfTimesNewRoman;
-  FLarguraCodProd := 54;
-  FExibirEAN := False;
-  FExibeCampoFatura := True;
-  FQuebraLinhaEmDetalhamentoEspecifico := True;
-  FTamanhoFonte_RazaoSocial := 8;
-  FAltLinhaComun := 30;
-  FImprimirUnQtVlComercial := iuComercial;
-end;
-
-procedure TDANFeConfig.LerIni(const AIni: TCustomIniFile);
-begin
-
-end;
-
-procedure TDANFeConfig.GravarIni(const AIni: TCustomIniFile);
-begin
-
+  AIni.WriteString(CSessaoDANFECe, CChavePathLogo, FPathLogo);
+  AIni.WriteString(CSessaoDANFECe, CChavePathPDF, FPathPDF);
+  AIni.WriteString(CSessaoDANFECe, CChaveImpressora, FImpressora);
+  AIni.WriteInteger(CSessaoDANFECe, CChaveTipoRelatorioBobina, Integer(FTipoRelatorio));
+  AIni.WriteInteger(CSessaoDANFECe, CChaveTipoRelatorioEvento, Integer(FTipoRelatorioEvento));
+  AIni.WriteBool(CSessaoDANFECe, CChaveImprimeNomeFantasia, FImprimeNomeFantasia);
+  AIni.WriteBool(CSessaoDANFECe, CChaveMostraPreview, FMostraPreview);
+  AIni.WriteBool(CSessaoDANFECe, CChaveMostraStatus, FMostraStatus);
+  AIni.WriteInteger(CSessaoDANFECe, CChaveCopias, FNumCopias);
+  AIni.WriteInteger(CSessaoDANFECe, CChaveLarguraBobina, FLarguraBobina);
+  AIni.WriteFloat(CSessaoDANFECe, CChaveMargemInferior, FMargemInferior);
+  AIni.WriteFloat(CSessaoDANFECe, CChaveMargemSuperior, FMargemSuperior);
+  AIni.WriteFloat(CSessaoDANFECe, CChaveMargemEsquerda, FMargemEsquerda);
+  AIni.WriteFloat(CSessaoDANFECe, CChaveMargemDireita, FMargemDireita);
+  AIni.WriteInteger(CSessaoDANFECe, CChaveDecimaisQtd, FqCom);
+  AIni.WriteInteger(CSessaoDANFECe, CChaveDecimaisValUnit, FvUnCom);
+  AIni.WriteBool(CSessaoDANFECe, CChaveImprimeEmUmaLinha, FImprimeEmUmaLinha);
+  AIni.WriteBool(CSessaoDANFECe, CChaveImprimeCodigoEAN, FUsaCodigoEanImpressao);
+  AIni.WriteBool(CSessaoDANFECe, CChaveImprimeDescAcrescItem, FImprimeDescAcrescItem);
+  AIni.WriteBool(CSessaoDANFECe, CChaveQRCodeLateral, FQRCodeLateral);
 end;
 
 { TLibNFeConfig }

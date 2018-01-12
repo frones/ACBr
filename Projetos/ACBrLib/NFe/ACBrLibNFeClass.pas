@@ -41,10 +41,6 @@ uses
   Classes, SysUtils,
   ACBrLibNFeDataModule;
 
-const
-  CNFeLibName = 'ACBrLibNFe';
-  CNFeLibVersion = '0.0.1';
-
 {%region Declaração da funções}
 
 {%region Constructor/Destructor}
@@ -97,7 +93,7 @@ implementation
 
 uses
   IniFiles, typinfo, Math,
-  ACBrLibConsts, ACBrLibComum, ACBrLibConfig, ACBrLibNFeConfig,
+  ACBrLibConsts, ACBrLibNFeConsts, ACBrLibComum, ACBrLibConfig, ACBrLibNFeConfig,
   pcnConversao, pcnAuxiliar, pcnConversaoNFe,
   blcksock,
   ACBrMail, ACBrUtil, ACBrDFeSSL;

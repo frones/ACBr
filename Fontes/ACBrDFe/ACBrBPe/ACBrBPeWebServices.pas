@@ -1371,8 +1371,8 @@ begin
         infEvento.versaoEvento := FEvento.Evento[I].InfEvento.versaoEvento;
 
         case infEvento.tpEvento of
-          teCancelamento: SchemaEventoBPe := schEnvEventoCancBPe;
-          teNaoEmbarque: SchemaEventoBPe := schEnvEventoNaoEmbBPe;
+          teCancelamento: SchemaEventoBPe := schevCancBPe;
+          teNaoEmbarque: SchemaEventoBPe := schevNaoEmbBPe;
         end;
 
         infEvento.detEvento.nProt := FEvento.Evento[I].infEvento.detEvento.nProt;

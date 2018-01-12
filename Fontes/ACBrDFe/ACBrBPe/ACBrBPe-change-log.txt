@@ -49,6 +49,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/01/2018
+-- Diversos --
+[*] Correção no nome dos enumeradores referentes aos Schemas de eventos.
+  Por: Italo Jurisato Junior
 -- ACBrBPeWebServices --
 [*] Correção na separação dos eventos para assinatura e validação.
   Por: Italo Jurisato Junior

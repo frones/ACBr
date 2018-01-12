@@ -306,9 +306,9 @@ begin
     begin
       lTipoEvento := Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>'));
       if lTipoEvento = '110111' then
-        Result := schEnvEventoCancBPe // Cancelamento
+        Result := schevCancBPe // Cancelamento
       else if lTipoEvento = '110115' then
-        Result := schEnvEventoNaoEmbBPe; // Não Embarque
+        Result := schevNaoEmbBPe; // Não Embarque
     end;
   end;
 end;

@@ -184,6 +184,8 @@ type
 
   TLibNFeConfig = class(TLibConfig)
   private
+    FDANFECeConfig: TDANFECeConfig;
+    FDANFeConfig: TDANFeConfig;
     FNFeConfig: TConfiguracoesNFe;
   public
     constructor Create(ANomeArquivo: String = ''); override;
@@ -193,6 +195,8 @@ type
     procedure Gravar; override;
 
     property NFeConfig: TConfiguracoesNFe read FNFeConfig;
+    property DANFeConfig: TDANFeConfig read FDANFeConfig;
+    property DANFECeConfig: TDANFECeConfig read FDANFECeConfig;
   end;
 
 implementation
@@ -406,11 +410,15 @@ begin
   inherited Create(ANomeArquivo);
 
   FNFeConfig := TConfiguracoesNFe.Create(nil);
+  FDANFeConfig := TDANFeConfig.Create;
+  FDANFECeConfig := TDANFECeConfig.Create;
 end;
 
 destructor TLibNFeConfig.Destroy;
 begin
   FNFeConfig.Destroy;
+  FDANFeConfig.Free;
+  FDANFECeConfig.Free;
 
   inherited Destroy;
 end;
@@ -424,6 +432,8 @@ begin
     inherited Ler;
 
     FNFeConfig.LerIni(Ini);
+    FDANFeConfig.LerIni(Ini);
+    FDANFECeConfig.LerIni(Ini);
   finally
     // Ajustes pos leitura das configurações //
     if Assigned(pLibNFeDM) then
@@ -440,9 +450,11 @@ begin
     pLibNFeDM.Lock.Acquire;
 
   try
-    inherited Gravar;
-
     FNFeConfig.GravarIni(Ini);
+    FDANFeConfig.GravarIni(Ini);
+    FDANFECeConfig.GravarIni(Ini);
+
+    inherited Gravar;  // UpdateFile
   finally
     if Assigned(pLibNFeDM) then
       pLibNFeDM.Lock.Release;

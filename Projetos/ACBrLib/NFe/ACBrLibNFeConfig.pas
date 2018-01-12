@@ -38,7 +38,7 @@ unit ACBrLibNFeConfig;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, IniFiles,
   ACBrNFeConfiguracoes, ACBrNFeDANFeRLClass,
   pcnConversao,
   ACBrLibConfig;
@@ -83,8 +83,10 @@ type
     FAltLinhaComun: Integer;
     FImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
   public
-    constructor Create; overload;
+    constructor Create;
     procedure DefinirValoresPadroes;
+    procedure LerIni( const AIni: TCustomIniFile );
+    procedure GravarIni( const AIni: TCustomIniFile );
 
     property PathLogo: String read FPathLogo write FPathLogo;
     property PathPDF: String read FPathPDF write FPathPDF;
@@ -152,8 +154,10 @@ type
     FImprimeDescAcrescItem: Boolean;
     FQRCodeLateral: Boolean;
   public
-    constructor Create; overload;
+    constructor Create;
     procedure DefinirValoresPadroes;
+    procedure LerIni( const AIni: TCustomIniFile );
+    procedure GravarIni( const AIni: TCustomIniFile );
 
     property PathLogo: String read FPathLogo write FPathLogo;
     property PathPDF: String read FPathPDF write FPathPDF;
@@ -230,6 +234,16 @@ begin
   FQRCodeLateral := True;
 end;
 
+procedure TDANFECeConfig.LerIni(const AIni: TCustomIniFile);
+begin
+
+end;
+
+procedure TDANFECeConfig.GravarIni(const AIni: TCustomIniFile);
+begin
+
+end;
+
 { TDANFeConfig }
 
 constructor TDANFeConfig.Create;
@@ -273,6 +287,16 @@ begin
   FTamanhoFonte_RazaoSocial := 8;
   FAltLinhaComun := 30;
   FImprimirUnQtVlComercial := iuComercial;
+end;
+
+procedure TDANFeConfig.LerIni(const AIni: TCustomIniFile);
+begin
+
+end;
+
+procedure TDANFeConfig.GravarIni(const AIni: TCustomIniFile);
+begin
+
 end;
 
 { TLibNFeConfig }

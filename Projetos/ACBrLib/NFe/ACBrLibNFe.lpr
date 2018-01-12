@@ -6,7 +6,7 @@ uses
   Interfaces,
   Classes,
   Forms,
-  ACBrLibNFeClass, ACBrLibConsts, ACBrLibComum;
+  ACBrLibNFeClass, ACBrLibConfig, ACBrLibComum, ACBrLibConsts;
 
 {$R *.res}
 begin

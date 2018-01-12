@@ -647,7 +647,11 @@ end;
 procedure TBPeRecepcao.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'BPeRecepcao';
-  FPSoapAction := FPServico;
+
+  if FPConfiguracoesBPe.WebServices.UFCodigo = 52 then
+    FPSoapAction := FPServico + '/bpeRecepcao'
+  else
+    FPSoapAction := FPServico;
 end;
 
 procedure TBPeRecepcao.DefinirDadosMsg;
@@ -1332,8 +1336,8 @@ end;
 
 procedure TBPeEnvEvento.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'RecepcaoEvento';
-  FPSoapAction := FPServico + 'bpeRecepcaoEvento';
+  FPServico := GetUrlWsd + 'BPeRecepcaoEvento';
+  FPSoapAction := FPServico + '/bpeRecepcaoEvento';
 end;
 
 procedure TBPeEnvEvento.DefinirDadosMsg;

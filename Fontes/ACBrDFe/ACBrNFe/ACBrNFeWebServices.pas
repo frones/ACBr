@@ -646,9 +646,9 @@ type
 
     function Envia(ALote: integer; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
       overload;
-    function Envia(ALote: String; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
+    function Envia(const ALote: String; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
       overload;
-    procedure Inutiliza(CNPJ, AJustificativa: String;
+    procedure Inutiliza(const ACNPJ, AJustificativa: String;
       Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer);
 
     property ACBrNFe: TACBrDFe read FACBrNFe write FACBrNFe;
@@ -695,7 +695,8 @@ begin
   inherited Clear;
 
   FPStatus := stIdle;
-  FPDFeOwner.SSL.UseCertificateHTTP := True;
+  if Assigned(FPDFeOwner) and Assigned(FPDFeOwner.SSL) then
+    FPDFeOwner.SSL.UseCertificateHTTP := True;
 end;
 
 procedure TNFeWebService.ConfigurarSoapDEPC;
@@ -889,7 +890,9 @@ begin
     FxObs := NFeRetorno.xObs;
     FPMsg := FxMotivo + LineBreak + FxObs;
 
-    if FPConfiguracoesNFe.WebServices.AjustaAguardaConsultaRet then
+    if Assigned(FPConfiguracoesNFe) and 
+       Assigned(FPConfiguracoesNFe.WebServices) and
+       FPConfiguracoesNFe.WebServices.AjustaAguardaConsultaRet then
       FPConfiguracoesNFe.WebServices.AguardarConsultaRet := FTMed * 1000;
 
     Result := (FcStat = 107);
@@ -3918,7 +3921,7 @@ begin
   Result := Envia(IntToStr(ALote), ASincrono, AZipado );
 end;
 
-function TWebServices.Envia(ALote: String; const ASincrono: Boolean;
+function TWebServices.Envia(const ALote: String; const ASincrono: Boolean;
   AZipado: Boolean): Boolean;
 begin
   FEnviar.Lote := ALote;
@@ -3938,13 +3941,15 @@ begin
   Result := True;
 end;
 
-procedure TWebServices.Inutiliza(CNPJ, AJustificativa: String;
+procedure TWebServices.Inutiliza(const ACNPJ, AJustificativa: String;
   Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer);
+var
+  CNPJ : string;
 begin
-  CNPJ := OnlyNumber(CNPJ);
+  CNPJ := OnlyNumber(ACNPJ);
 
   if not ValidarCNPJ(CNPJ) then
-    raise EACBrNFeException.Create('CNPJ: ' + CNPJ + ', inválido.');
+    raise EACBrNFeException.Create('CNPJ: ' + CNPJ + ACBrStr(', inválido.'));
 
   FInutilizacao.CNPJ := CNPJ;
   FInutilizacao.Modelo := Modelo;

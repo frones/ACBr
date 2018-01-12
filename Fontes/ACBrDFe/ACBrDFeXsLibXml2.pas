@@ -337,7 +337,7 @@ begin
     doc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
-      MsgErro := cErrParseDoc;
+      MsgErro := ACBrStr(cErrParseDoc);
       Exit;
     end;
 
@@ -345,7 +345,7 @@ begin
     // the schema cannot be loaded or is not well-formed
     if (schema_doc = nil) then
     begin
-      MsgErro := 'Erro: Schema não pode ser carregado ou está corrompido';
+      MsgErro := ACBrStr('Erro: Schema não pode ser carregado ou está corrompido');
       Exit;
     end;
 
@@ -353,7 +353,7 @@ begin
     // unable to create a parser context for the schema */
     if (parser_ctxt = nil) then
     begin
-      MsgErro := 'Erro: Não foi possivel criar um contexto para o Schema';
+      MsgErro := ACBrStr('Erro: Não foi possivel criar um contexto para o Schema');
       Exit;
     end;
 
@@ -361,7 +361,7 @@ begin
     // the schema itself is not valid
     if (schema = nil) then
     begin
-      MsgErro := 'Erro: Schema inválido';
+      MsgErro := ACBrStr('Erro: Schema inválido');
       Exit;
     end;
 
@@ -369,7 +369,7 @@ begin
     // unable to create a validation context for the schema */
     if (valid_ctxt = nil) then
     begin
-      MsgErro := 'Error: não foi possivel criar um contexto de validação para o Schema';
+      MsgErro := ACBrStr('Error: não foi possivel criar um contexto de validação para o Schema');
       Exit;
     end;
 
@@ -379,7 +379,7 @@ begin
       if (schemError <> nil) then
         MsgErro := IntToStr(schemError^.code) + ' - ' + schemError^.message
       else
-        MsgErro := 'Erro indefinido, ao validar o Documento com o Schema';
+        MsgErro := ACBrStr('Erro indefinido, ao validar o Documento com o Schema');
     end
     else
       Result := True;
@@ -423,14 +423,14 @@ begin
     aDoc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
     if (aDoc = nil) then
     begin
-       MsgErro := cErrParseDoc;
+       MsgErro := ACBrStr(cErrParseDoc);
        Exit;
     end;
 
     rootNode := xmlDocGetRootElement(aDoc);
     if (rootNode = nil) then
     begin
-       MsgErro := cErrFindRootNode;
+       MsgErro := ACBrStr(cErrFindRootNode);
        Exit;
     end;
 
@@ -438,7 +438,7 @@ begin
     if (SignNode.Name <> SignatureNode) then
     if (rootNode = nil) then
     begin
-       MsgErro := cErrFindSignNode;
+       MsgErro := ACBrStr(cErrFindSignNode);
        Exit;
     end;
 
@@ -456,7 +456,7 @@ begin
     CanonXML := AnsiString(CanonC14n(aDoc, infElement));
     if(not FpDFeSSL.ValidarHash(CanonXML, DigestAlg, DigestXML)) then
     begin
-       MsgErro := Format(cErrDigestValueNaoConfere, [infElement]);
+       MsgErro := Format(ACBrStr(cErrDigestValueNaoConfere), [infElement]);
        Exit;
     end;
 

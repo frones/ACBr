@@ -271,6 +271,9 @@ type
     cbCryptLib: TComboBox;
     cbHttpLib: TComboBox;
     cbVersaoWSMDFe: TComboBox;
+    cbxExibirInfAdicProduto: TCheckBox;
+    cbxExibirLogoEmCima: TCheckBox;
+    cbxImpDocsReferenciados: TCheckBox;
     cbxImprimirNomeFantasiaNFCe: TCheckBox;
     cbxImprimirDescAcresItemSAT: TCheckBox;
     cbxImprimirCodEANitemSAT: TCheckBox;
@@ -4127,6 +4130,9 @@ begin
     rgLocalCanhoto.ItemIndex := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
     cbxQuebrarLinhasDetalhesItens.Checked := ini.ReadBool('DANFE','QuebrarLinhasDetalheItens', False) ;
     cbxImpDetEspNFe.Checked := ini.ReadBool('DANFE','ImprimirDetalhamentoEspecifico', True) ;
+    cbxImpDocsReferenciados.Checked := ini.ReadBool('DANFE','ImprimirDadosDocReferenciados', True) ;
+    cbxExibirInfAdicProduto.Checked := Ini.ReadBool('DANFE', 'ExibirBandInforAdicProduto', False);
+    cbxExibirLogoEmCima.Checked := Ini.ReadBool('DANFE', 'LogoEmCima', False);
 
     cbxImpDescPorcChange(nil);
 
@@ -4954,6 +4960,9 @@ begin
     Ini.WriteInteger('DANFE', 'LocalCanhoto', rgLocalCanhoto.ItemIndex);
     ini.WriteBool('DANFE','QuebrarLinhasDetalheItens', cbxQuebrarLinhasDetalhesItens.Checked) ;
     ini.WriteBool('DANFE','ImprimirDetalhamentoEspecifico',cbxImpDetEspNFe.Checked);
+    ini.WriteBool('DANFE','ImprimirDadosDocReferenciados',cbxImpDocsReferenciados.Checked);
+    ini.WriteBool('DANFE','ExibirBandInforAdicProduto',cbxExibirInfAdicProduto.Checked);
+    ini.WriteBool('DANFE','LogoEmCima',cbxExibirLogoEmCima.Checked);
 
     Ini.WriteInteger('NFCe', 'Modelo', rgModeloDANFeNFCE.ItemIndex);
     Ini.WriteInteger('NFCe', 'ModoImpressaoEvento', rgModoImpressaoEvento.ItemIndex);
@@ -7640,6 +7649,9 @@ begin
       ACBrNFeDANFeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
       ACBrNFeDANFeRL1.ImprimirUnQtVlComercial := TImprimirUnidQtdeValor(cbxUnComTributavel.ItemIndex);
       ACBrNFeDANFeRL1.ImprimirDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
+      ACBrNFeDANFeRL1.ImprimirDadosDocReferenciados := cbxImpDocsReferenciados.Checked;
+      ACBrNFeDANFeRL1.ExibirBandInforAdicProduto := cbxExibirInfAdicProduto.Checked;
+      ACBrNFeDANFeRL1.LogoemCima := cbxExibirLogoEmCima.Checked;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
     begin

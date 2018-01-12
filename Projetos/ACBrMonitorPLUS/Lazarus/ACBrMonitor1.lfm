@@ -3442,8 +3442,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/Etiqueta.htm'
           Caption = 'Etiqueta'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 15
           object Label60: TLabel
             Left = 15
@@ -3507,14 +3507,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/TerminaldeConsulta.htm'
           Caption = 'Terminal Consulta'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 13
           OnShow = tsTCShow
           object sbTCArqPrecosEdit: TSpeedButton
             AnchorSideTop.Control = edTCArqPrecos
             AnchorSideTop.Side = asrCenter
-            Left = 577
+            Left = 571
             Height = 23
             Top = 81
             Width = 23
@@ -3542,7 +3542,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideLeft.Side = asrBottom
             AnchorSideTop.Control = bTCAtivar
             AnchorSideTop.Side = asrCenter
-            Left = 355
+            Left = 352
             Height = 15
             Top = 164
             Width = 13
@@ -3553,7 +3553,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object sbTCArqPrecosFind: TSpeedButton
             AnchorSideTop.Control = edTCArqPrecos
             AnchorSideTop.Side = asrCenter
-            Left = 541
+            Left = 535
             Height = 23
             Top = 81
             Width = 23
@@ -3626,7 +3626,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object Label64: TLabel
             AnchorSideLeft.Control = mTCConexoes
             AnchorSideBottom.Control = mTCConexoes
-            Left = 608
+            Left = 602
             Height = 17
             Top = 9
             Width = 95
@@ -3635,8 +3635,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
             ParentColor = False
           end
           object mTCConexoes: TMemo
-            Left = 608
-            Height = 136
+            Left = 602
+            Height = 130
             Top = 26
             Width = 225
             Anchors = [akTop, akRight, akBottom]
@@ -3662,7 +3662,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 8
             Height = 25
             Top = 80
-            Width = 531
+            Width = 525
             Anchors = [akTop, akLeft, akRight]
             OnChange = edECFLogChange
             TabOrder = 1
@@ -3673,7 +3673,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideLeft.Side = asrCenter
             AnchorSideTop.Control = edTCNaoEncontrado
             AnchorSideTop.Side = asrBottom
-            Left = 251
+            Left = 248
             Height = 30
             Top = 156
             Width = 99
@@ -3701,7 +3701,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 8
             Height = 25
             Top = 123
-            Width = 585
+            Width = 579
             Anchors = [akTop, akLeft, akRight]
             OnChange = edECFLogChange
             TabOrder = 4
@@ -8025,9 +8025,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ParentFont = False
                   end
                   object cbxUnComTributavel: TComboBox
-                    Left = 552
+                    Left = 262
                     Height = 25
-                    Top = 188
+                    Top = 32
                     Width = 220
                     ItemHeight = 17
                     ItemIndex = 0
@@ -8040,9 +8040,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Text = 'Unidade Comercial'
                   end
                   object Label193: TLabel
-                    Left = 552
+                    Left = 262
                     Height = 17
-                    Top = 171
+                    Top = 13
                     Width = 168
                     Caption = 'Imprimir no campo Unidade:'
                     ParentColor = False
@@ -8054,6 +8054,30 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 273
                     Caption = 'Imprimir Detalhamento Específico dos Itens'
                     TabOrder = 16
+                  end
+                  object cbxImpDocsReferenciados: TCheckBox
+                    Left = 262
+                    Height = 21
+                    Top = 237
+                    Width = 275
+                    Caption = 'Imprimir Dados Documentos Referenciados'
+                    TabOrder = 17
+                  end
+                  object cbxExibirInfAdicProduto: TCheckBox
+                    Left = 555
+                    Height = 21
+                    Top = 171
+                    Width = 219
+                    Caption = 'Exibir Inf. Adicionais dos Produtos'
+                    TabOrder = 18
+                  end
+                  object cbxExibirLogoEmCima: TCheckBox
+                    Left = 555
+                    Height = 21
+                    Top = 193
+                    Width = 141
+                    Caption = 'Exibir Logo em Cima'
+                    TabOrder = 19
                   end
                 end
                 object tsImpNFCe: TTabSheet
@@ -12839,6 +12863,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrETQ1: TACBrETQ
     Porta = 'LPT1'
+    Ativo = False
     left = 589
     top = 600
   end
@@ -12926,7 +12951,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
+    Banco.LayoutVersaoArquivo = 0
+    Banco.LayoutVersaoLote = 0
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -14063,6 +14089,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Config.emit_indRatISSQN = irSim
     Config.EhUTF8 = False
     Config.PaginaDeCodigo = 0
+    Config.XmlSignLib = xsNone
     ConfigArquivos.PrefixoArqCFe = 'AD'
     ConfigArquivos.PrefixoArqCFeCanc = 'ADC'
     Rede.tipoInter = infETHE

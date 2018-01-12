@@ -241,6 +241,8 @@ TACBrECFVirtualClassCupom = class
       ADescAcres: Double; AAliq: TACBrECFAliquota; AUnidade: String;
       ACodDepartamento: Integer): TACBrECFVirtualClassItemCupom;
     procedure DescAcresItem(NumItem: Integer; ADescAcres: Double);
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+      TipoAcrescimoDesconto: String = 'D') ;
     procedure CancelaItem(NumItem: Integer);
 
     function EfetuaPagamento(AValor: Currency; AObservacao: String; APosFPG: Integer):
@@ -423,6 +425,9 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Procedure CancelaItemVendidoVirtual( NumItem : Integer ) ; virtual ;
     Procedure DescontoAcrescimoItemAnteriorVirtual(
       ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double) ; virtual ;
+    procedure CancelaDescontoAcrescimoItemVirtual(
+      ItemCupom: TACBrECFVirtualClassItemCupom;
+      TipoAcrescimoDesconto: String = 'D') ; Virtual ;
     Procedure SubtotalizaCupomVirtual( MensagemRodape : AnsiString  = '' ) ; virtual ;
     Procedure EfetuaPagamentoVirtual( Pagto  : TACBrECFVirtualClassPagamentoCupom ) ; virtual ;
     Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; virtual ;
@@ -536,6 +541,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+      TipoAcrescimoDesconto: String = 'D') ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
@@ -1152,20 +1159,48 @@ begin
 
   ItemCupom := fpItensCupom[NumItem-1];
 
-  if ItemCupom.DescAcres <> 0 then
+  if (ItemCupom.DescAcres <> 0) then
     raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') já recebeu Desconto ou Acrescimo.')) ;
 
   ItemCupom.DescAcres := fpECFVirtualClasse.RoundECF( ADescAcres );
 
-  if (fpAliquotasCupom.Find(ItemCupom.AliqPos).Tipo = 'S') then
-    fpSubtotalISSQN := fpSubtotalISSQN + ItemCupom.DescAcres
-  else
-    fpSubtotalICMS := fpSubtotalICMS + ItemCupom.DescAcres;
-
-  // Atualiza totais das Aliquotas
   ALiq := fpAliquotasCupom.Find(ItemCupom.AliqPos);
   if Assigned(ALiq) then
+  begin
+    if (ALiq.Tipo = 'S') then
+      fpSubtotalISSQN := fpSubtotalISSQN + ItemCupom.DescAcres
+    else
+      fpSubtotalICMS := fpSubtotalICMS + ItemCupom.DescAcres;
+
+    // Atualiza totais das Aliquotas
     ALiq.Total := ALiq.Total + ItemCupom.DescAcres;
+  end;
+end;
+
+procedure TACBrECFVirtualClassCupom.CancelaDescontoAcrescimoItem(
+  NumItem: Integer; TipoAcrescimoDesconto: String);
+var
+  ItemCupom: TACBrECFVirtualClassItemCupom;
+  ALiq: TACBrECFVirtualClassAliquotaCupom;
+begin
+  VerificaFaixaItem(NumItem);
+
+  ItemCupom := fpItensCupom[NumItem-1];
+
+  if (ItemCupom.DescAcres = 0) then
+    raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') não possui Desconto ou Acrescimo.'));
+
+  ALiq := fpAliquotasCupom.Find(ItemCupom.AliqPos);
+  if Assigned(ALiq) then
+  begin
+    if (ALiq.Tipo = 'S') then
+      fpSubtotalISSQN := fpSubtotalISSQN - ItemCupom.DescAcres
+    else
+      fpSubtotalICMS := fpSubtotalICMS - ItemCupom.DescAcres;
+
+    // Atualiza totais das Aliquotas
+    ALiq.Total := ALiq.Total - ItemCupom.DescAcres;
+  end;
 end;
 
 procedure TACBrECFVirtualClassCupom.CancelaItem(NumItem: Integer);
@@ -2091,7 +2126,7 @@ var
 begin
   GravaLog( ComandoLOG );
 
-  if Estado <> estVenda then
+  if (Estado <> estVenda) then
     raise EACBrECFERRO.create(ACBrStr('O Estado nao é "VENDA"')) ;
 
   if NumItem = 0 then
@@ -2101,10 +2136,10 @@ begin
 
   ItemCupom := fpCupom.Itens[NumItem-1];
 
-  if ItemCupom.DescAcres > 0 then
+  if (ItemCupom.DescAcres > 0) then
     raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') já recebeu Acréscimo.')) ;
 
-  if ItemCupom.DescAcres < 0 then
+  if (ItemCupom.DescAcres < 0) then
     raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') já recebeu Desconto.')) ;
 
   StrDescAcre := IfThen(DescontoAcrescimo = 'D', 'DESCONTO', 'ACRESCIMO');
@@ -2170,6 +2205,71 @@ begin
     raise;
   end ;
 end;
+
+ procedure TACBrECFVirtualClass.CancelaDescontoAcrescimoItem( NumItem : Integer;
+      TipoAcrescimoDesconto: String = 'D') ;
+var
+  ValDescAcres, PorcDescAcres: Double;
+  PosAliqItem: Integer;
+  ItemCupom: TACBrECFVirtualClassItemCupom;
+begin
+  GravaLog( ComandoLOG );
+
+  if (Estado <> estVenda) then
+    raise EACBrECFERRO.create(ACBrStr('O Estado nao é "VENDA"')) ;
+
+  if NumItem = 0 then
+    NumItem := fpCupom.Itens.Count;
+
+  VerificaFaixaItem(NumItem);
+
+  ItemCupom := fpCupom.Itens[NumItem-1];
+
+  if (ItemCupom.DescAcres = 0) then
+    raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') não possui Desconto ou Acréscimo.')) ;
+
+  with ItemCupom do
+  begin
+    PosAliqItem  := AliqPos;
+    ValDescAcres := DescAcres;
+  end;
+
+  try
+    fpCupom.CancelaDescontoAcrescimoItem(NumItem, TipoAcrescimoDesconto);
+    ItemCupom.DescAcres := 0;
+
+    if (ValDescAcres < 0) then
+    begin
+      // Atualiza Total de Desconto
+      if (fpAliquotas[PosAliqItem].Tipo = 'S') then
+        fpTotalDescontosISSQN := Max(fpTotalDescontosISSQN + abs(ValDescAcres ), 0)
+      else
+        fpTotalDescontosICMS  := Max(fpTotalDescontosICMS  + abs(ValDescAcres), 0);
+    end
+    else
+    begin
+      if (fpAliquotas[PosAliqItem].Tipo = 'S') then
+        fpTotalAcrescimosISSQN := fpTotalAcrescimosISSQN - ValDescAcres
+      else
+        fpTotalAcrescimosICMS  := fpTotalAcrescimosICMS - ValDescAcres;
+
+      { Se for Acréscimo, deve somar em GT e Venda Bruta }
+      fpGrandeTotal := fpGrandeTotal - ValDescAcres;
+      fpVendaBruta  := fpVendaBruta  - ValDescAcres;
+    end;
+
+    { Aplicando Desconto/Acrescimo no Total diário da Aliquota }
+    with fpAliquotas[PosAliqItem] do
+      Total := max(Total - ValDescAcres, 0) ;
+
+    CancelaDescontoAcrescimoItemVirtual( ItemCupom, TipoAcrescimoDesconto );
+
+    GravaArqINI;
+  except
+    LeArqINI ;
+    raise;
+  end ;
+ end;
 
 procedure TACBrECFVirtualClass.VendeItemVirtual(
   ItemCupom: TACBrECFVirtualClassItemCupom);
@@ -2599,6 +2699,12 @@ begin
 end;
 
 procedure TACBrECFVirtualClass.CancelaCupomVirtual;
+begin
+  {}
+end;
+
+procedure TACBrECFVirtualClass.CancelaDescontoAcrescimoItemVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom; TipoAcrescimoDesconto: String);
 begin
   {}
 end;

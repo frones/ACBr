@@ -80,6 +80,14 @@ begin
         ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
         ImprimirTexto(orNormal, 3, 4, 4, 15, 450, '20.59');
       end
+     else if Modelo = etqZPLII then
+      begin
+        ImprimirTexto(orNormal, 'Q', 1, 1, 15, 55, 'BISCOITO MARILAN RECH 335G', 0, True);
+        ImprimirTexto(orNormal, 'Q', 1, 1, 60, 55, 'CHOC BRANCO');
+        ImprimirBarras(orNormal, barEAN13, 2, 2, 95, 55, '7896003701685', 90, becSIM);
+        ImprimirTexto(orNormal, 'R', 1, 1, 100, 270, 'R$');
+        ImprimirTexto(orNormal, 'R', 1, 1, 135, 270, '20.59');
+      end
      else
       begin
         ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'BISCOITO MARILAN RECH 335G', 0, True);
@@ -177,6 +185,20 @@ begin
         ImprimirTexto(orNormal, 2, 1, 2, 180, 620, 'BISCOITO RECH 335G');
         ImprimirTexto(orNormal, 2, 1, 1, 140, 620, 'CHOC BRANCO');
         ImprimirBarras(orNormal, 'F', '2', '2', 20, 620, '7896003701685', 70);
+      end
+     else if Modelo = etqZPLII then
+      begin
+        ImprimirTexto(orNormal, 'Q', 1, 1, 15, 55, 'BISCOITO REC 335G');
+        ImprimirTexto(orNormal, 'Q', 1, 1, 60, 55, 'CHOC BRANCO');
+        ImprimirBarras(orNormal, barEAN13, 2, 2, 95, 55, '7896003701685', 90, becSIM);
+
+        ImprimirTexto(orNormal, 'Q', 1, 1, 15, 365, 'BISCOITO REC 335G');
+        ImprimirTexto(orNormal, 'Q', 1, 1, 60, 365, 'CHOC BRANCO');
+        ImprimirBarras(orNormal, barEAN13, 2, 2, 95, 365, '7896003701685', 90, becSIM);
+
+        ImprimirTexto(orNormal, 'Q', 1, 1, 15, 670, 'BISCOITO REC 335G');
+        ImprimirTexto(orNormal, 'Q', 1, 1, 60, 670, 'CHOC BRANCO');
+        ImprimirBarras(orNormal, barEAN13, 2, 2, 95, 670, '7896003701685', 90, becSIM);
       end
      else
       begin

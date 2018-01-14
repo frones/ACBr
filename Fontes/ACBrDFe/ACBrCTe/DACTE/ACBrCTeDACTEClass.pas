@@ -282,8 +282,8 @@ begin
         begin
            case ACTe.Ide.modelo of
              0: DescricaoModelo := TACBrCTe(FACBrCTe).GetNomeModeloDFe;
-             55: DescricaoModelo := 'CTe';
-             65: DescricaoModelo := 'CTeOS';
+             57: DescricaoModelo := 'CTe';
+             67: DescricaoModelo := 'CTeOS';
            end;
         end;
 

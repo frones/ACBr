@@ -133,7 +133,7 @@ end;
 procedure TACBrDISSmakTecladoLib.PosicionarCursor(Linha, Coluna: Integer);
 begin
   if Assigned(xGotoxy) then
-    xGotoxy( Linha, Coluna);
+    xGotoxy(Coluna, Linha);
 end;
 
 procedure TACBrDISSmakTecladoLib.Escrever(Texto: String);

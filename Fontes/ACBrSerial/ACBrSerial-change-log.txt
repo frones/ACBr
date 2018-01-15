@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/01/2018
+-- ACBrECFEscECF --
+[-] Correção em GetDadosUltimaReducaoZ, da Epson TM900F, quando usando "USB" na
+    porta. Não era capaz de efetuar a leitura
+    https://www.projetoacbr.com.br/forum/topic/40896-dados-%C3%BAltima-redu%C3%A7%C3%A3o-z-epson-t900f/
+
 Data: 11/01/2018
 -- ACBrECFVirtual, ACBrECFVirtualBuffer --
 [+] Adicionado o método "CancelaDescontoAcrescimoItem"

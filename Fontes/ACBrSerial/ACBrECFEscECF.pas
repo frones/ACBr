@@ -137,7 +137,7 @@ TACBrECFEscECFResposta = class
     property EXT      : Byte        read fsEXT ;
     property CAT      : Byte        read fsCAT write fsCAT;
     property RET      : TACBrECFEscECFRET read fsRET ;
-    property TBR      : Integer     read fsTBR ;
+    property TBR      : Integer     read fsTBR write fsTBR;
     property BRS      : AnsiString  read fsBRS write fsBRS;
     property CHK      : Byte        read fsCHK ;
  end ;
@@ -600,6 +600,8 @@ begin
       I := PosAt('|',CmdResp,5);
       if I > 0 then
         EscECFResposta.BRS := copy(CmdResp, I+1, Length(CmdResp));
+
+      EscECFResposta.TBR := Length(EscECFResposta.BRS);
 
       if SL.Count > 5 then
       begin

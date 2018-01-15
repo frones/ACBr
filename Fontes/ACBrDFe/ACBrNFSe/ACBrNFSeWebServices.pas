@@ -5173,7 +5173,7 @@ begin
     // Provedores que não possuem o método Consultar o Lote devem ser
     // relacionados no case abaixo.
     case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
-      proEL,
+//      proEL,
       proGoverna,
       proInfisc,
       proInfiscv11: Result := True

@@ -150,7 +150,7 @@
         <IsPartOfProject Value="True"/>
         <ComponentName Value="NFeDataModule"/>
         <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\Comum\ACBrLibConsts.pas"/>

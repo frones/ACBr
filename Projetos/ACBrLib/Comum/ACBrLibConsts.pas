@@ -41,6 +41,9 @@ uses
   Classes, SysUtils;
 
 const
+  CLibNome = 'ACBrLib';
+  CLibVersao = '0.0.1';
+
   CLibChaveCrypt = 'tYk*5W@';
 
   CNomeArqConf = 'acbrlib.ini';
@@ -100,26 +103,29 @@ const
   CChaveImprimeDescAcrescItem = 'ImprimeDescAcrescItem';
   CChaveExpandeLogoMarca = 'ExpandeLogoMarca';
 
+Resourcestring
+  SErrLibSemNome = 'Nome da Biblioteca não foi definido';
+  SErrLibDono = 'Dono de TLibConfig deve ser do tipo TACBrLib';
+
+  SErrLibJaInicializada = '%s já inicializada.';
+  SErrLibNaoInicializada = 'Biblioteca não foi inicializada';
+  SErrLibNaoFinalizada = '%s não foi finalizada';
+
+  SErrDiretorioInvalido = 'Diretório Invalido: %s';
+  SErrConfSessaoNaoExiste = 'Sessão não existe no arquuvo de configuração';
+  SErrConfChaveNaoExiste = 'Chave não existe no arquuvo de configuração';
+
+  SErrArquivoNaoExiste = 'Arquivo % não encontrado';
+
 const
   // Códigos de Erros, comuns de todas as Libs //
   ErrOK = 0;
   ErrLibNaoInicializada = -1;
   ErrLibNaoFinalizada = -2;
-  ErrConfigNaoInicializado = -3;
-  ErrConfigNaoExiste = -3;
-  ErrConfigLer = -4;
-  ErrConfigGravar = -5;
-
-Resourcestring
-  SErrLibJaInicializada = '%s já inicializada.';
-  SErrLibNaoInicializada = '%s não foi inicializada';
-  SErrLibNaoFinalizada = '%s não foi finalizada';
-
-  SErrDiretorioInvalido = 'Diretório Invalido: %s';
-  SErrConfArqNaoDefinido = 'Arquivo de configuração não definido';
-  SErrConfArqNaoEncontrado = 'Arquivo de configuração não encontrado';
-  SErrConfNaoInstanciado = 'Classe de Configuração não foi instanciada';
-
+  ErrConfigLer = -3;
+  ErrConfigGravar = -4;
+  ErrArquivoNaoExiste = -5;
+  ErrExecutandoMetodo = -10;
 
 implementation
 

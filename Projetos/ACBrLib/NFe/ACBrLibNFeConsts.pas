@@ -41,8 +41,8 @@ uses
   Classes, SysUtils;
 
 const
-  CNFeLibName = 'ACBrLibNFe';
-  CNFeLibVersion = '0.0.1';
+  CLibNFeNome = 'ACBrLibNFe';
+  CLibNFeVersao = '0.0.1';
 
   CSessaoDANFECe = 'DANFECe';
   CSessaoDANFE = 'DANFE';
@@ -68,7 +68,8 @@ const
   CChaveAlturaLinhaComun = 'AlturaLinhaComun';
   CChaveTipoUnQtVlComercial = 'TipoUnQtVlComercial';
 
-//Resourcestring
+Resourcestring
+  SErrNFeNenhumaNFeCarregada = 'Nenhuma NFe carregada';
 
 implementation
 

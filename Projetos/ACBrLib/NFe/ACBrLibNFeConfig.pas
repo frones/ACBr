@@ -188,7 +188,7 @@ type
     FDANFeConfig: TDANFeConfig;
     FNFeConfig: TConfiguracoesNFe;
   public
-    constructor Create(ANomeArquivo: String = ''); override;
+    constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
     procedure Ler; override;
@@ -405,9 +405,9 @@ end;
 
 { TLibNFeConfig }
 
-constructor TLibNFeConfig.Create(ANomeArquivo: String);
+constructor TLibNFeConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
-  inherited Create(ANomeArquivo);
+  inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FNFeConfig := TConfiguracoesNFe.Create(nil);
   FDANFeConfig := TDANFeConfig.Create;
@@ -462,6 +462,8 @@ begin
 end;
 
 end.
+
+
 
 
 

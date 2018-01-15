@@ -44,7 +44,6 @@ uses
 type
   EConfigException = class(Exception);
 
-
   TNivelLog = (logNenhum, logSimples, logNormal, logCompleto, logParanoico);
 
   TTipoRelatorioBobina = (tpFortes, tpEscPos);
@@ -59,8 +58,8 @@ type
   public
     constructor Create;
     procedure DefinirValoresPadroes;
-    procedure LerIni( const AIni: TCustomIniFile );
-    procedure GravarIni( const AIni: TCustomIniFile );
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
 
     property Nivel: TNivelLog read FNivel write FNivel;
     property Path: String read FPath write SetPath;
@@ -77,8 +76,8 @@ type
   public
     constructor Create;
     procedure DefinirValoresPadroes;
-    procedure LerIni( const AIni: TCustomIniFile );
-    procedure GravarIni( const AIni: TCustomIniFile );
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
 
     property Nome: String read FNome write FNome;
     property Versao: String read FVersao write FVersao;
@@ -94,12 +93,15 @@ type
     FSenha: String;
     FServidor: String;
     FUsuario: String;
+    FChaveCrypt: AnsiString;
+
     function GetSenha: String;
   public
-    constructor Create;
+    constructor Create(AChaveCrypt: AnsiString = ''); virtual;
+
     procedure DefinirValoresPadroes;
-    procedure LerIni( const AIni: TCustomIniFile );
-    procedure GravarIni( const AIni: TCustomIniFile );
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
 
     property Servidor: String read FServidor write FServidor;
     property Porta: Integer read FPorta write FPorta;
@@ -123,12 +125,15 @@ type
     FTimeOut: Integer;
     FTLS: Boolean;
     FUsuario: String;
+    FChaveCrypt: AnsiString;
+
     function GetSenha: String;
   public
-    constructor Create;
+    constructor Create(AChaveCrypt: AnsiString = ''); virtual;
+
     procedure DefinirValoresPadroes;
-    procedure LerIni( const AIni: TCustomIniFile );
-    procedure GravarIni( const AIni: TCustomIniFile );
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
 
     property Nome: String read FNome write FNome;
     property Servidor: String read FServidor write FServidor;
@@ -157,10 +162,10 @@ type
     FTelefone: String;
     FWebSite: String;
   public
-    constructor Create( AIdentificador: String );
+    constructor Create(AIdentificador: String);
     procedure DefinirValoresPadroes;
-    procedure LerIni( const AIni: TCustomIniFile );
-    procedure GravarIni( const AIni: TCustomIniFile );
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
 
     property Identificador: String read FIdentificador;
     property CNPJ: String read FCNPJ write FCNPJ;
@@ -176,6 +181,7 @@ type
 
   TLibConfig = class
   private
+    FOwner: TObject;
     FEmail: TEmailConfig;
     FIni: TMemIniFile;
     FLog: TLogConfig;
@@ -184,15 +190,23 @@ type
     FSistema: TSistemaConfig;
     FSoftwareHouse: TEmpresaConfig;
     FEmissor: TEmpresaConfig;
+    FChaveCrypt: AnsiString;
 
     procedure VerificarNomeEPath(Gravando: Boolean);
     procedure DefinirValoresPadroes;
+    procedure VerificarSessaoEChave(ASessao, AChave: String);
+
+  protected
+    property Owner: TObject read FOwner;
+
   public
-    constructor Create(ANomeArquivo: String = ''); virtual;
+    constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); virtual;
     destructor Destroy; override;
 
     procedure Ler; virtual;
     procedure Gravar; virtual;
+    procedure GravarValor(ASessao, AChave, AValor: String);
+    function LerValor(ASessao, AChave: String): String;
 
     property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
 
@@ -206,22 +220,11 @@ type
     property Ini: TMemIniFile read FIni;
   end;
 
-procedure VerificarLibConfigFoiInstaciado;
-
-var
-  pLibConfig: TLibConfig;
-
 implementation
 
 uses
   ACBrLibConsts, ACBrLibComum,
   ACBrUtil;
-
-procedure VerificarLibConfigFoiInstaciado;
-begin
-  if not Assigned(pLibConfig) then
-    raise Exception.Create( SErrConfNaoInstanciado );
-end;
 
 { TSistemaConfig }
 
@@ -257,9 +260,10 @@ end;
 
 { TProxyConfig }
 
-constructor TProxyConfig.Create;
+constructor TProxyConfig.Create(AChaveCrypt: AnsiString);
 begin
   inherited Create;
+  FChaveCrypt := AChaveCrypt;
   DefinirValoresPadroes;
 end;
 
@@ -273,7 +277,7 @@ end;
 
 function TProxyConfig.GetSenha: String;
 begin
-  Result := B64CryptToString( FSenha );
+  Result := B64CryptToString(FSenha, FChaveCrypt);
 end;
 
 procedure TProxyConfig.LerIni(const AIni: TCustomIniFile);
@@ -289,14 +293,15 @@ begin
   AIni.WriteString(CSessaoProxy, CChaveServidor, FServidor);
   AIni.WriteInteger(CSessaoProxy, CChavePorta, FPorta);
   AIni.WriteString(CSessaoProxy, CChaveUsuario, FUsuario);
-  AIni.WriteString(CSessaoProxy, CChaveSenha, StringToB64Crypt(FSenha));
+  AIni.WriteString(CSessaoProxy, CChaveSenha, StringToB64Crypt(FSenha, FChaveCrypt));
 end;
 
 { TEmailConfig }
 
-constructor TEmailConfig.Create;
+constructor TEmailConfig.Create(AChaveCrypt: AnsiString);
 begin
-  inherited;
+  inherited Create;
+  FChaveCrypt := AChaveCrypt;
   DefinirValoresPadroes;
 end;
 
@@ -318,7 +323,7 @@ end;
 
 function TEmailConfig.GetSenha: String;
 begin
-  Result := B64CryptToString( FSenha );
+  Result := B64CryptToString(FSenha, FChaveCrypt);
 end;
 
 procedure TEmailConfig.LerIni(const AIni: TCustomIniFile);
@@ -343,7 +348,7 @@ begin
   AIni.WriteString(CSessaoEmail, CChaveServidor, FServidor);
   AIni.WriteString(CSessaoEmail, CChaveEmailConta, FConta);
   AIni.WriteString(CSessaoEmail, CChaveUsuario, FUsuario);
-  AIni.WriteString(CSessaoEmail, CChaveSenha, StringToB64Crypt(FSenha));
+  AIni.WriteString(CSessaoEmail, CChaveSenha, StringToB64Crypt(FSenha, FChaveCrypt));
   AIni.WriteInteger(CSessaoEmail, CChaveEmailCodificacao, Integer(FCodificacao));
   AIni.WriteInteger(CSessaoEmail, CChavePorta, FPorta);
   AIni.WriteBool(CSessaoEmail, CChaveEmailSSL, FSSL);
@@ -376,13 +381,13 @@ end;
 
 procedure TEmpresaConfig.LerIni(const AIni: TCustomIniFile);
 begin
-  CNPJ         := OnlyNumber(AIni.ReadString(FIdentificador, CChaveCNPJ, CNPJ));
-  RazaoSocial  := AIni.ReadString(FIdentificador, CChaveRazaoSocial, RazaoSocial);
+  CNPJ := OnlyNumber(AIni.ReadString(FIdentificador, CChaveCNPJ, CNPJ));
+  RazaoSocial := AIni.ReadString(FIdentificador, CChaveRazaoSocial, RazaoSocial);
   NomeFantasia := AIni.ReadString(FIdentificador, CChaveNomeFantasia, NomeFantasia);
-  WebSite      := AIni.ReadString(FIdentificador, CChaveWebSite, WebSite);
-  Email        := AIni.ReadString(FIdentificador, CChaveEmail, Email);
-  Telefone     := AIni.ReadString(FIdentificador, CChaveTelefone, Telefone);
-  Responsavel  := AIni.ReadString(FIdentificador, CChaveResponsavel, Responsavel);
+  WebSite := AIni.ReadString(FIdentificador, CChaveWebSite, WebSite);
+  Email := AIni.ReadString(FIdentificador, CChaveEmail, Email);
+  Telefone := AIni.ReadString(FIdentificador, CChaveTelefone, Telefone);
+  Responsavel := AIni.ReadString(FIdentificador, CChaveResponsavel, Responsavel);
 end;
 
 procedure TEmpresaConfig.GravarIni(const AIni: TCustomIniFile);
@@ -408,13 +413,15 @@ end;
 procedure TLogConfig.DefinirValoresPadroes;
 begin
   FNivel := logNenhum;
-  FPath := ExtractFilePath( ParamStr(0) );
+  FPath := ApplicationPath;
 end;
 
 procedure TLogConfig.SetPath(AValue: String);
 begin
-  if FPath = AValue then Exit;
-  FPath := PathWithoutDelim( ExtractFilePath( AValue ) );
+  if (FPath = AValue) then
+    Exit;
+
+  FPath := PathWithoutDelim(ExtractFilePath(AValue));
 end;
 
 procedure TLogConfig.LerIni(const AIni: TCustomIniFile);
@@ -431,29 +438,38 @@ end;
 
 { TLibConfig }
 
-constructor TLibConfig.Create(ANomeArquivo: String);
+constructor TLibConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
+  if not (AOwner is TACBrLib) then
+    raise EConfigException.Create(SErrLibDono);
+
   inherited Create;
+  FOwner := AOwner;
+
+  TACBrLib(FOwner).GravarLog(ClassName + '.Create', logCompleto);
+
+  if Length(AChaveCrypt) = 0 then
+    FChaveCrypt := CLibChaveCrypt
+  else
+    FChaveCrypt := AChaveCrypt;
 
   FLog := TLogConfig.Create;
   FSistema := TSistemaConfig.Create;
-  FEmail := TEmailConfig.Create;
-  FProxyInfo := TProxyConfig.Create;
-  FSoftwareHouse := TEmpresaConfig.Create( CSessaoSwHouse );
-  FEmissor := TEmpresaConfig.Create( CSessaoEmissor );
-
-  if EstaVazio(ANomeArquivo) then
-    FNomeArquivo := CNomeArqConf
-  else
-    FNomeArquivo := ANomeArquivo;
-
+  FEmail := TEmailConfig.Create(FChaveCrypt);
+  FProxyInfo := TProxyConfig.Create(FChaveCrypt);
+  FSoftwareHouse := TEmpresaConfig.Create(CSessaoSwHouse);
+  FEmissor := TEmpresaConfig.Create(CSessaoEmissor);
   FIni := TMemIniFile.Create(FNomeArquivo);
 
   DefinirValoresPadroes;
+
+  TACBrLib(FOwner).GravarLog(ClassName + '.Create - Feito', logParanoico);
 end;
 
 destructor TLibConfig.Destroy;
 begin
+  TACBrLib(FOwner).GravarLog(ClassName + '.Destroy', logCompleto);
+
   FIni.Free;
   FLog.Free;
   FSistema.Free;
@@ -463,6 +479,8 @@ begin
   FEmail.Free;
 
   inherited Destroy;
+
+  TACBrLib(FOwner).GravarLog(ClassName + '.Destroy - Feito', logParanoico);
 end;
 
 procedure TLibConfig.VerificarNomeEPath(Gravando: Boolean);
@@ -470,18 +488,20 @@ var
   APath: String;
 begin
   if EstaVazio(FNomeArquivo) then
-    raise EConfigException.Create(SErrConfArqNaoDefinido);
+    FNomeArquivo := ApplicationPath + CNomeArqConf;
 
   APath := ExtractFilePath(FNomeArquivo);
   if NaoEstaVazio(APath) and (not DirectoryExists(APath)) then
     raise EConfigException.CreateFmt(SErrDiretorioInvalido, [APath]);
 
   if (not Gravando) and (not FileExists(FNomeArquivo)) then
-    raise EConfigException.Create(SErrConfArqNaoEncontrado);
+    raise EConfigException.Create(Format(SErrArquivoNaoExiste, [FNomeArquivo]));
 end;
 
 procedure TLibConfig.DefinirValoresPadroes;
 begin
+  TACBrLib(FOwner).GravarLog(ClassName + '.DefinirValoresPadroes', logParanoico);
+
   FLog.DefinirValoresPadroes;
   FSistema.DefinirValoresPadroes;
   FEmail.DefinirValoresPadroes;
@@ -490,40 +510,62 @@ begin
   FEmissor.DefinirValoresPadroes;
 end;
 
+procedure TLibConfig.VerificarSessaoEChave(ASessao, AChave: String);
+var
+  NaoExiste: String;
+begin
+  if not FIni.SectionExists(ASessao) then
+    raise EConfigException.Create(SErrConfSessaoNaoExiste);
+
+  NaoExiste := '*NaoExiste*';
+  if (FIni.ReadString(ASessao, AChave, NaoExiste) = NaoExiste) then
+    raise EConfigException.Create(SErrConfChaveNaoExiste);
+end;
+
 procedure TLibConfig.Ler;
 begin
+  TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
+  VerificarNomeEPath(False);
+
   DefinirValoresPadroes;
 
-  FLog.LerIni( FIni );
-  FSistema.LerIni( FIni );
-  FEmail.LerIni( FIni );
-  FProxyInfo.LerIni( FIni );
-  FSoftwareHouse.LerIni( FIni );
-  FEmissor.LerIni( FIni );
+  FLog.LerIni(FIni);
+  FSistema.LerIni(FIni);
+  FEmail.LerIni(FIni);
+  FProxyInfo.LerIni(FIni);
+  FSoftwareHouse.LerIni(FIni);
+  FEmissor.LerIni(FIni);
+
+  TACBrLib(FOwner).GravarLog(ClassName + '.Ler - Feito', logParanoico);
 end;
 
 procedure TLibConfig.Gravar;
 begin
-  FLog.GravarIni( FIni );
-  FSistema.GravarIni( FIni );
-  FEmail.GravarIni( FIni );
-  FProxyInfo.GravarIni( FIni );
-  FSoftwareHouse.GravarIni( FIni );
-  FEmissor.GravarIni( FIni );
+  TACBrLib(FOwner).GravarLog(ClassName + '.Gravar: ' + FNomeArquivo, logCompleto);
+  VerificarNomeEPath(True);
+
+  FLog.GravarIni(FIni);
+  FSistema.GravarIni(FIni);
+  FEmail.GravarIni(FIni);
+  FProxyInfo.GravarIni(FIni);
+  FSoftwareHouse.GravarIni(FIni);
+  FEmissor.GravarIni(FIni);
 
   FIni.UpdateFile;
+
+  TACBrLib(FOwner).GravarLog(ClassName + '.Gravar - Feito', logParanoico);
 end;
 
-initialization
-  pLibConfig := Nil;
+procedure TLibConfig.GravarValor(ASessao, AChave, AValor: String);
+begin
+  VerificarSessaoEChave(ASessao, AChave);
+  FIni.WriteString(ASessao, AChave, AValor);
+end;
 
-finalization
-  if Assigned(pLibConfig) then
-    FreeAndNil(pLibConfig);
+function TLibConfig.LerValor(ASessao, AChave: String): String;
+begin
+  VerificarSessaoEChave(ASessao, AChave);
+  Result := FIni.ReadString(ASessao, AChave, '');
+end;
 
 end.
-
-AIni.WriteString(CSessaoSwHouse, CChaveSistema, Sistema);
-
-Sistema := FIni.ReadString(CSessaoSwHouse, CChaveSistema, Sistema);
-

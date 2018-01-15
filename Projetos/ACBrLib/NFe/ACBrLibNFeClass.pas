@@ -39,238 +39,221 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrLibNFeDataModule;
+  ACBrLibComum, ACBrLibNFeDataModule;
+
+type
+
+  { TACBrLibNFe }
+
+  TACBrLibNFe = class( TACBrLib )
+  private
+    FNFeDM: TLibNFeDM;
+
+  protected
+    procedure Inicializar; override;
+    procedure CriarConfiguracao(ArqConfig: String = ''; ChaveCrypt: AnsiString = ''); override;
+    procedure Executar; override;
+    procedure Finalizar; override;
+  public
+    property NFeDM: TLibNFeDM read FNFeDM;
+  end;
 
 {%region Declaração da funções}
 
-{%region Constructor/Destructor}
-
-function VerificarInicializacao: Boolean;
-
-function NFE_Inicializar(const pChaveCrypt: PAnsiChar): Integer;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function NFE_Finalizar: Integer;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-{%endregion}
-
-
 {%region NFe}
-
-function NFE_CarregarXml(const ArqXml: PChar): Integer;
+function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): Integer;
   {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
 
-function NFE_CarregarIni(const ArqIni: PChar): Integer;
+function NFE_CarregarININFe(const eArquivoOuINI: PChar): Integer;
   {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
 
-function NFE_LimparColecao: Integer;
+function NFE_LimparListaNFEs: Integer;
   {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
-
 {%endregion}
 
 
 {%region Servicos}
-
 function NFE_StatusServico(const Buffer: PChar; const BufferLen: Integer): Integer;
   {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
-
 {%endregion}
 
 {%region Impressão}
-
 function NFE_Print_PDF_NFe(const ArqXml: PChar): Integer;
   {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
-
 {%endregion}
 
 {%endregion}
-
-var
-  pLibNFeDM: TNFeDataModule;
 
 implementation
 
 uses
-  IniFiles, typinfo, Math,
-  ACBrLibConsts, ACBrLibNFeConsts, ACBrLibComum, ACBrLibConfig, ACBrLibNFeConfig,
-  pcnConversao, pcnAuxiliar, pcnConversaoNFe,
+  ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig, ACBrLibNFeConfig,
+  pcnConversao, pcnAuxiliar,
   blcksock,
-  ACBrMail, ACBrUtil, ACBrDFeSSL;
+  ACBrMail, ACBrUtil;
 
-{%region Constructor/Destructor}
+{ TACBrLibNFe }
 
-function VerificarInicializacao: Boolean;
+procedure TACBrLibNFe.Inicializar;
 begin
-  if pLibNFeDM = Nil then
-    Result := (NFE_Inicializar(nil) = ErrOK)
-  else
-    Result := True;
+  inherited Inicializar;
+
+  fpNome := CLibNFeNome;
+  fpVersao := CLibNFeVersao;
+  FNFeDM := TLibNFeDM.Create(Nil);
+  pLib.GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
 end;
 
-function NFE_Inicializar(const pChaveCrypt: PAnsiChar): Integer; cdecl;
+procedure TACBrLibNFe.CriarConfiguracao(ArqConfig: String; ChaveCrypt: AnsiString);
 begin
-  try
-    if (pLibNFeDM = Nil) then
-    begin
-      // Definindo Nome e Versão da Biblioteca //
-      LIB_Inicializar(CNFeLibName, CNFeLibVersion, AnsiString(pChaveCrypt) );
-
-      // Instanciando e lendo, arquivos de Configuração da Biblioteca //
-      pLibConfig := TLibNFeConfig.Create();
-      pLibConfig.Ler;
-
-      // Criando DataModule com os Objetos da NFe //
-      pLibNFeDM := TNFeDataModule.Create(nil);
-
-      GravarLog( 'NFE_Inicializar' );
-    end;
-
-    pLibRetorno.Codigo   := ErrOK;
-    pLibRetorno.Mensagem := '';
-  except
-    on E: Exception do
-    begin
-      pLibRetorno.Codigo   := ErrLibNaoInicializada;
-      pLibRetorno.Mensagem := E.Message;
-    end
-  end;
-
-  Result := pLibRetorno.Codigo;
+  fpConfig := TLibNFeConfig.Create(Self, ArqConfig, ChaveCrypt);
+  pLib.GravarLog('TACBrLibNFe.CriarConfiguracao - Feito', logParanoico);
 end;
 
-function NFE_Finalizar: Integer;
-  {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
+procedure TACBrLibNFe.Executar;
 begin
-  try
-    if (pLibNFeDM <> Nil) then
-    begin
-      GravarLog( 'NFE_Finalizar' );
-      FreeAndNil( pLibNFeDM );
-      FreeAndNil( pLibConfig );
-    end;
-
-    pLibRetorno.Codigo := ErrOK;
-  except
-    on E: Exception do
-    begin
-      pLibRetorno.Codigo   := ErrLibNaoFinalizada;
-      pLibRetorno.Mensagem := E.Message;
-    end
-  end;
-
-  Result := pLibRetorno.Codigo;
+  inherited Executar;
+  FNFeDM.AplicarConfiguracoes;
 end;
 
-{%endregion}
+procedure TACBrLibNFe.Finalizar;
+begin
+  FNFeDM.Free;
+  inherited Finalizar;
+end;
+
 
 {%region NFe}
 
-function NFE_CarregarXml(const ArqXml: PChar): Integer;
+function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): Integer;
   {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
 var
-  Ret: Boolean;
+  Ok: Boolean;
+  ArquivoOuXml: String;
 begin
-
-  if (pLibNFeDM = nil) then
+  if not VerificarInicializacao then
   begin
-    Result := -2;
+    Result := ErrLibNaoInicializada;
     Exit;
   end;
 
-  try
+  Result := 0;
+  Ok := False;
+  ArquivoOuXml := String(eArquivoOuXML);
 
-    pLibNFeDM.Lock.Acquire;
+  if pLib.Config.Log.Nivel > logNormal then
+    pLib.GravarLog('NFE_CarregarXMLNFe(' +ArquivoOuXml+' )', logCompleto, True)
+  else
+    pLib.GravarLog('NFE_CarregarXMLNFe', logNormal);
 
+  with TACBrLibNFe(pLib) do
+  begin
+    NFeDM.Travar;
     try
+      try
+        if StringEhArquivo(ArquivoOuXml) then
+        begin
+          if not FileExists(ArquivoOuXml) then
+          begin
+            Result := pLib.SetRetorno( ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [ArquivoOuXml] ));
+            Exit;
+          end;
 
-      if FileExists(ArqXml) then
-        Ret := pLibNFeDM.ACBrNFe.NotasFiscais.LoadFromFile(string(ArqXml))
-      else
-        Ret := pLibNFeDM.ACBrNFe.NotasFiscais.LoadFromString(string(ArqXml));
+          Ok := NFeDM.ACBrNFe.NotasFiscais.LoadFromFile(ArquivoOuXml)
+        end
+        else
+          Ok := NFeDM.ACBrNFe.NotasFiscais.LoadFromString(ArquivoOuXml);
 
-      if Ret then
-        Result := pLibNFeDM.ACBrNFe.NotasFiscais.Count
-      else
-        Result := 0;
-    except
-      on E: Exception do
-      begin
-        pLibRetorno.Mensagem := E.Message;
-        Result := -1;
-      end
+        if Ok then
+          Result := NFeDM.ACBrNFe.NotasFiscais.Count
+        else
+          Result := pLib.SetRetorno( 0, SErrNFeNenhumaNFeCarregada );
+      except
+        on E: Exception do
+        begin
+          Result := pLib.SetRetorno( ErrExecutandoMetodo, E.Message );
+        end
+      end;
+    finally
+      NFeDM.Destravar;
     end;
-
-  finally
-    pLibNFeDM.Lock.Release;
   end;
-
 end;
 
-function NFE_CarregarIni(const ArqIni: PChar): Integer;
+function NFE_CarregarININFe(const eArquivoOuINI: PChar): Integer;
   {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
+var
+  ArquivoOuINI: String;
 begin
-
-  if (pLibNFeDM = nil) then
+  if not VerificarInicializacao then
   begin
-    Result := -2;
+    Result := ErrLibNaoInicializada;
     Exit;
   end;
 
-  try
+  Result := 0;
+  ArquivoOuINI := String(eArquivoOuINI);
 
-    pLibNFeDM.Lock.Acquire;
+  if pLib.Config.Log.Nivel > logNormal then
+    pLib.GravarLog('NFE_CarregarININFe(' +ArquivoOuINI+' )', logCompleto, True)
+  else
+    pLib.GravarLog('NFE_CarregarININFe', logNormal);
 
-    try
-
-      if pLibNFeDM.ACBrNFe.NotasFiscais.LoadFromIni(string(ArqIni)) then
-        Result := pLibNFeDM.ACBrNFe.NotasFiscais.Count
-      else
-        Result := 0;
-
-    except
-      on E: Exception do
-      begin
-        pLibRetorno.Mensagem := E.Message;
-        Result := -1;
-      end
-    end;
-
-  finally
-    pLibNFeDM.Lock.Release;
+  if StringEhArquivo(ArquivoOuINI) and (not FileExists(ArquivoOuINI)) then
+  begin
+    Result := pLib.SetRetorno( ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [ArquivoOuINI] ));
+    Exit;
   end;
 
+  with TACBrLibNFe(pLib) do
+  begin
+    NFeDM.Travar;
+    try
+      try
+        if NFeDM.ACBrNFe.NotasFiscais.LoadFromIni(ArquivoOuINI) then
+          Result := NFeDM.ACBrNFe.NotasFiscais.Count
+        else
+          Result := pLib.SetRetorno( 0, SErrNFeNenhumaNFeCarregada );
+      except
+        on E: Exception do
+        begin
+          Result := pLib.SetRetorno( ErrExecutandoMetodo, E.Message );
+        end
+      end;
+    finally
+      NFeDM.Destravar;
+    end;
+  end;
 end;
 
-function NFE_LimparColecao: Integer;
+function NFE_LimparListaNFEs: Integer;
   {$IfDef STDCALL}stdcall{$Else}cdecl{$EndIf};
 begin
-
-  if (pLibNFeDM = nil) then
+  if not VerificarInicializacao then
   begin
-    Result := -2;
+    Result := ErrLibNaoInicializada;
     Exit;
   end;
 
-  try
+  pLib.GravarLog('NFE_LimparListaNFEs', logNormal);
 
-    pLibNFeDM.Lock.Acquire;
-
+  with TACBrLibNFe(pLib) do
+  begin
+    NFeDM.Travar;
     try
-      pLibNFeDM.ACBrNFe.NotasFiscais.Clear;
-      Result := pLibNFeDM.ACBrNFe.NotasFiscais.Count;
-    except
-      on E: Exception do
-      begin
-        pLibRetorno.Mensagem := E.Message;
-        Result := -1;
-      end
+      try
+        NFeDM.ACBrNFe.NotasFiscais.Clear;
+        Result := NFeDM.ACBrNFe.NotasFiscais.Count;
+      except
+        on E: Exception do
+        begin
+          Result := pLib.SetRetorno( ErrExecutandoMetodo, E.Message );
+        end
+      end;
+    finally
+      NFeDM.Destravar;
     end;
-
-  finally
-    pLibNFeDM.Lock.Release;
   end;
-
 end;
 
 {%endregion}
@@ -367,31 +350,17 @@ end;
 {%endregion}
 
 exports
-  // Inicialização
-  NFE_Inicializar,
-  NFE_Finalizar,
-
   // Servicos
   NFE_StatusServico,
 
   // Arquivos
-  NFE_CarregarXml,
-  NFE_CarregarIni,
+  NFE_CarregarXMLNFe,
+  NFE_CarregarININFe,
 
   // Impressão
   NFE_Print_PDF_NFe;
 
-
-initialization
-  pLibNFeDM := Nil;
-
-finalization
-  if Assigned(pLibNFeDM) then
-    FreeAndNil(pLibNFeDM);
-
 end.
-
-
 
 
 

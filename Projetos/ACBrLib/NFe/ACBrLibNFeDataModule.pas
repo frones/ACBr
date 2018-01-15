@@ -5,14 +5,16 @@ unit ACBrLibNFeDataModule;
 interface
 
 uses
-  Classes, SysUtils, syncobjs, FileUtil, ACBrUtil, ACBrNFe, ACBrMail, IniFiles,
-  ACBrPosPrinter, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS;
+  Classes, SysUtils, syncobjs, FileUtil, IniFiles,
+  ACBrNFe, ACBrMail, ACBrPosPrinter, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr,
+  ACBrNFeDANFeESCPOS,
+  ACBrLibConfig;
 
 type
 
-  { TNFeDataModule }
+  { TLibNFeDM }
 
-  TNFeDataModule = class(TDataModule)
+  TLibNFeDM = class(TDataModule)
     ACBrMail: TACBrMail;
     ACBrNFe: TACBrNFe;
     ACBrNFeDANFCeFortes: TACBrNFeDANFCeFortes;
@@ -30,21 +32,25 @@ type
     FLock: TCriticalSection;
   public
     property StatusServico: String read FStatusServico write FStatusServico;
-    property Lock: TCriticalSection read FLock;
 
     procedure AplicarConfiguracoes;
+    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
+    procedure Travar;
+    procedure Destravar;
+
   end;
 
 implementation
 
-Uses
-  ACBrLibConfig, ACBrLibNFeConfig;
+uses
+  ACBrUtil,
+  ACBrLibNFeConfig, ACBrLibComum;
 
 {$R *.lfm}
 
-{ TNFeDataModule }
+{ TLibNFeDM }
 
-procedure TNFeDataModule.DataModuleCreate(Sender: TObject);
+procedure TLibNFeDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
   FUltimoErro := '';
@@ -52,25 +58,25 @@ begin
   FPass := 'tYk*5W@';
 end;
 
-procedure TNFeDataModule.DataModuleDestroy(Sender: TObject);
+procedure TLibNFeDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
 end;
 
-procedure TNFeDataModule.AplicarConfiguracoes;
+procedure TLibNFeDM.AplicarConfiguracoes;
 begin
   VerificarLibConfigFoiInstaciado;
 
   ACBrNFe.SSL.DescarregarCertificado;
 
-  ACBrNFe.Configuracoes.Assign( TLibNFeConfig( pLibConfig ).NFeConfig );
+  ACBrNFe.Configuracoes.Assign(TLibNFeConfig(pLibConfig).NFeConfig);
 
   with ACBrMail do
   begin
     FromName := pLibConfig.Email.Nome;
     From := pLibConfig.Email.Conta;
     Host := pLibConfig.Email.Servidor;
-    Port := IntToStr( pLibConfig.Email.Porta );
+    Port := IntToStr(pLibConfig.Email.Porta);
     Username := pLibConfig.Email.Usuario;
     Password := pLibConfig.Email.Senha;
     SetSSL := pLibConfig.Email.SSL;
@@ -80,6 +86,24 @@ begin
     DefaultCharset := pLibConfig.Email.Codificacao;
   end;
 
+end;
+
+procedure TLibNFeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
+begin
+  if Assigned(pLib) then
+    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+end;
+
+procedure TLibNFeDM.Travar;
+begin
+  GravarLog('Travar', logParanoico);
+  FLock.Acquire;
+end;
+
+procedure TLibNFeDM.Destravar;
+begin
+  GravarLog('Destravar', logParanoico);
+  FLock.Release;
 end;
 
 end.

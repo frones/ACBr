@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2018
+-- ACBrBPeWebServices --
+[*] Correção no tratamento do retorno do evento.
+  Por: Italo Jurisato Junior
+
 12/01/2018
 -- Diversos --
 [*] Correção no nome dos enumeradores referentes aos Schemas de eventos.

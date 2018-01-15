@@ -1444,7 +1444,7 @@ var
 begin
   FEvento.idLote := idLote;
 
-  FPRetWS := SeparaDados(FPRetornoWS, 'BPeRecepcaoEventoResult');
+  FPRetWS := SeparaDadosArray(['bpeResultMsg'], FPRetornoWS );
 
   EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   EventoRetorno.LerXml;
@@ -1454,7 +1454,25 @@ begin
   FPMsg := EventoRetorno.xMotivo;
   FTpAmb := EventoRetorno.tpAmb;
 
-  Result := (FcStat = 128);
+  if FcStat =0 then
+  begin
+    if EventoRetorno.retEvento.Count > 0 then
+    begin
+      FcStat   := EventoRetorno.retEvento.Items[0].RetinfEvento.cStat;
+      FxMotivo := EventoRetorno.retEvento.Items[0].RetinfEvento.xMotivo;
+      FPMsg    := EventoRetorno.retEvento.Items[0].RetinfEvento.xMotivo;
+      FTpAmb   := EventoRetorno.retEvento.Items[0].RetinfEvento.tpAmb;
+
+      FEventoRetorno.cStat    := FcStat;
+      FEventoRetorno.xMotivo  := FxMotivo;
+      FEventoRetorno.xMotivo  := FPMsg;
+      FEventoRetorno.tpAmb    := FTpAmb;
+      FEventoRetorno.verAplic := EventoRetorno.retEvento.Items[0].RetinfEvento.verAplic;
+    end;
+  end;
+
+  // 135 = Evento Registrado e vinculado ao BPe
+  Result := (FcStat = 135);
 
   //gerar arquivo proc de evento
   if Result then
@@ -1678,7 +1696,7 @@ var
   I: Integer;
   AXML: String;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'bpeDistDFeInteresseResult');
+  FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeDistDFeInteresseResult'], FPRetornoWS );
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;

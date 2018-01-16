@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2018
+-- ACBrMDFeDAMDFeRLRetrato --
+[*] Correção para ler o campo RNTRC corretamente dependendo da versão 1.00 ou 3.00
+  por: Rigotti
+
 03/10/2016
 [-] Modificações para exibir as cidades de cada documento
 		http://www.projetoacbr.com.br/forum/topic/32695-impress%C3%A3o-mdf-e-acbr-antigo-x-acbrplus/

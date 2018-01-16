@@ -359,7 +359,10 @@ begin
   if FMDFe.rodo.veicTracao.prop.RNTRC <> '' then
     rlmRNTRC.Lines.Add(FMDFe.rodo.veicTracao.prop.RNTRC)
   else
-    rlmRNTRC.Lines.Add(FMDFe.rodo.RNTRC);
+    if (FMDFe.infMDFe.versao >= 3) then
+      rlmRNTRC.Lines.Add(FMDFe.rodo.infANTT.RNTRC)
+    ELSE
+      rlmRNTRC.Lines.Add(FMDFe.rodo.RNTRC);
 
   for i := 0 to FMDFe.rodo.veicReboque.Count - 1 do
   begin

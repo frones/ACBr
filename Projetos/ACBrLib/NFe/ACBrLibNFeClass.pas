@@ -96,7 +96,7 @@ begin
 
   fpNome := CLibNFeNome;
   fpVersao := CLibNFeVersao;
-  FNFeDM := TLibNFeDM.CreateNew(nil);
+  FNFeDM := TLibNFeDM.Create(nil);
   GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
 end;
 

@@ -3,9 +3,11 @@ object NFeDataModule: TNFeDataModule
   Height = 231
   Top = 170
   Width = 491
+  ClientHeight = 231
+  ClientWidth = 491
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  LCLVersion = '1.8.0.6'
+  Visible = False
   object ACBrNFe: TACBrNFe
     MAIL = ACBrMail
     Configuracoes.Geral.SSLLib = libNone
@@ -17,6 +19,7 @@ object NFeDataModule: TNFeDataModule
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.WebServices.SSLType = LT_all
     left = 88
     top = 104
   end

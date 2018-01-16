@@ -17,6 +17,7 @@ type
 implementation
 
 uses
+  ACBrUtil,
   ACBrLibComum, ACBrLibNFeClass, ACBrLibConsts;
 
 procedure TTestACBrNFeLib.TestInicializar;

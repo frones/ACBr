@@ -463,6 +463,7 @@ begin
   FSoftwareHouse := TEmpresaConfig.Create(CSessaoSwHouse);
   FEmissor := TEmpresaConfig.Create(CSessaoEmissor);
   FIni := TMemIniFile.Create(FNomeArquivo);
+  FIni.UpdateFile;
 
   DefinirValoresPadroes;
 

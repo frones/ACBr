@@ -426,25 +426,25 @@ end;
 
 procedure TLibNFeConfig.AplicarConfiguracoes;
 begin
-  if Assigned(pLib) then
-    TACBrLibNFe(pLib).NFeDM.Travar;
+  if Assigned(Owner) then
+    TACBrLibNFe(Owner).NFeDM.Travar;
 
   try
     inherited AplicarConfiguracoes;
 
-    TACBrLibNFe(pLib).NFeDM.AplicarConfiguracoes;
+    TACBrLibNFe(Owner).NFeDM.AplicarConfiguracoes;
 
-    TACBrLib(Owner).GravarLog(ClassName + '.AplicarConfiguracoes - Feito', logParanoico);
+    TACBrLibNFe(Owner).GravarLog(ClassName + '.AplicarConfiguracoes - Feito', logParanoico);
   finally
-    if Assigned(pLib) then
-      TACBrLibNFe(pLib).NFeDM.Destravar;
+    if Assigned(Owner) then
+      TACBrLibNFe(Owner).NFeDM.Destravar;
   end;
 end;
 
 procedure TLibNFeConfig.Ler;
 begin
-  if Assigned(pLib) then
-    TACBrLibNFe(pLib).NFeDM.Travar;
+  if Assigned(Owner) then
+    TACBrLibNFe(Owner).NFeDM.Travar;
 
   try
     inherited Ler;
@@ -452,20 +452,21 @@ begin
     FNFeConfig.LerIni(Ini);
     FDANFeConfig.LerIni(Ini);
     FDANFECeConfig.LerIni(Ini);
+
+    AplicarConfiguracoes;
   finally
     // Ajustes pos leitura das configurações //
-    if Assigned(pLib) then
+    if Assigned(Owner) then
     begin
-      TACBrLibNFe(pLib).NFeDM.AplicarConfiguracoes;
-      TACBrLibNFe(pLib).NFeDM.Destravar;
+      TACBrLibNFe(Owner).NFeDM.Destravar;
     end;
   end;
 end;
 
 procedure TLibNFeConfig.Gravar;
 begin
-  if Assigned(pLib) then
-    TACBrLibNFe(pLib).NFeDM.Travar;
+  if Assigned(Owner) then
+    TACBrLibNFe(Owner).NFeDM.Travar;
 
   try
     FNFeConfig.GravarIni(Ini);
@@ -474,8 +475,8 @@ begin
 
     inherited Gravar;  // UpdateFile
   finally
-    if Assigned(pLib) then
-      TACBrLibNFe(pLib).NFeDM.Destravar;
+    if Assigned(Owner) then
+      TACBrLibNFe(Owner).NFeDM.Destravar;
   end;
 end;
 

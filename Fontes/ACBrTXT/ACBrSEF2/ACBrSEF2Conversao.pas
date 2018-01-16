@@ -497,19 +497,19 @@ end;
 function ModDocumentoToStr(const t: TSEFIIDocFiscalReferenciado): string;
 begin
   result := EnumeradoToStr(t, ['01','02','2D','2E','04','06','07','08','09','10','11','13','14','15','16','17',
-                               '18','20','21','22','23','24','25','26','27','28','29','30','31','55','57'],
+                               '18','20','21','22','23','24','25','26','27','28','29','30','31','55','57','65','98','99'],
                               [SrefNF,SrefNFVCCVC,SrefCCF,SrefCBP,SrefNFPR,SrefNFEE,SrefNFTR,SrefCTRC,SrefCTAQ,SrefCTAR,
                                SrefCTFC,SrefBPR,SrefBPAQ,SrefBPNB,SrefBPF,SrefDT,SrefRMD,SrefOCC,SrefNFSC,SrefNFST,SrefGNRE,
-                               SrefACT,SrefMC,SrefCTMC,SrefNFTF,SrefNFGC,SrefNFAC,SrefMV,SrefBRP,SrefNFe,SrefCTe]);
+                               SrefACT,SrefMC,SrefCTMC,SrefNFTF,SrefNFGC,SrefNFAC,SrefMV,SrefBRP,SrefNFe,SrefCTe,SrefNFCe,Sref98,Sref99]);
 end;
 
 function StrToModDocumento(var ok: boolean; const s: string): TSEFIIDocFiscalReferenciado;
 begin
   result := StrToEnumerado(ok, s, ['01','02','2D','2E','04','06','07','08','09','10','11','13','14','15','16','17',
-                                   '18','20','21','22','23','24','25','26','27','28','29','30','31','55','57'],
+                                   '18','20','21','22','23','24','25','26','27','28','29','30','31','55','57','65','98','99'],
                                   [SrefNF,SrefNFVCCVC,SrefCCF,SrefCBP,SrefNFPR,SrefNFEE,SrefNFTR,SrefCTRC,SrefCTAQ,SrefCTAR,
                                    SrefCTFC,SrefBPR,SrefBPAQ,SrefBPNB,SrefBPF,SrefDT,SrefRMD,SrefOCC,SrefNFSC,SrefNFST,SrefGNRE,
-                                   SrefACT,SrefMC,SrefCTMC,SrefNFTF,SrefNFGC,SrefNFAC,SrefMV,SrefBRP,SrefNFe,SrefCTe]);
+                                   SrefACT,SrefMC,SrefCTMC,SrefNFTF,SrefNFGC,SrefNFAC,SrefMV,SrefBRP,SrefNFe,SrefCTe,SrefNFCe,Sref98,Sref99]);
 end;
 
 function IndExigEscrImpostoToStr(const t: TIndicadorExigeEscrImposto): string;

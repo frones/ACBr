@@ -275,10 +275,10 @@ begin
                LFill(VL_OP_ISS,2)                                +
                LFill(VL_BC_ICMS,2)                               +
                LFill(VL_ICMS,2)                                  +
-               LFill(VL_ICMS_ST,2, 2, True)                      +
-               LFill(VL_ST_E,2)                                  +
-               LFill(VL_ST_S,2)                                  +
-               LFill(VL_AT,2, 2, True)                           +
+               LFill(VL_ICMS_ST,2, 2,True)                         +
+               LFill(VL_ST_E,2, 2,True)                            +
+               LFill(VL_ST_S,2, 2,True)                            +
+               LFill(VL_AT,2, 2, True)                              +
                LFill(VL_ISNT_ICMS,2)                             +
                LFill(VL_OUT_ICMS,2)                              +
                LFill(VL_BC_IPI,2, 2, True)                       +
@@ -315,15 +315,15 @@ begin
                  LFill(VL_BC_ICMS_P, 2)          +
                  LFill(ALIQ_ICMS, 2, 2, True)    +
                  LFill(VL_ICMS_P, 2)             +
-                 LFill(VL_BC_ST_P, 2)            +
-                 LFill(VL_ICMS_ST_P, 2)          +
-                 LFill(VL_ISNT_ICMS_P, 2)        +
-                 LFill(VL_OUT_ICMS_P, 2)         +
-                 LFill(VL_BC_IPI_P, 2)           +
-                 LFill(VL_IPI_P, 2)              +
-                 LFill(VL_ISNT_IPI_P, 2)         +
+                 LFill(VL_BC_ST_P, 2, 2,True)      +
+                 LFill(VL_ICMS_ST_P, 2, 2,True)    +
+                 LFill(VL_ISNT_ICMS_P, 2, 2,True)  +
+                 LFill(VL_OUT_ICMS_P, 2, 2,True)   +
+                 LFill(VL_BC_IPI_P, 2, 2,True)     +
+                 LFill(VL_IPI_P, 2, 2,True)        +
+                 LFill(VL_ISNT_IPI_P, 2, 2,True)   +
                  LFill(VL_OUT_IPI_P, 2, 2, True) +
-                 LFill(IND_PETR, 1)                 +
+                 LFill(IND_PETR, 1)              +
                  LFill(IND_IMUN, 1, True));
          end;
          RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;

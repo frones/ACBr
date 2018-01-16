@@ -2875,7 +2875,8 @@ begin
           TentarEstornarCCDAnteriores :=  // Erro genérico de Cancelamento //
              (not TentarEstornarCCDSeguintes) and
              ((IsBematech and (EscECFResposta.CAT = 02) and (EscECFResposta.RET.ECF = 02)) or
-              (IsEpson    and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 18)));
+              (IsEpson    and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 18)) or
+              (IsDaruma   and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 146)));
 
           if TentarEstornarCCDAnteriores then
           begin

@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/01/2018
+-- ACBrECFEscECF --
+[-] Correção no método Cancela Cupom da Daruma FS800i, quando havia um ou mais
+    CCD após o Cupom
+    https://www.projetoacbr.com.br/forum/topic/37529-daruma-fs800i-erro-ao-cancelar-cnf-e-cf-com-ccd/
+    (por: DSA)
+
 Data: 15/01/2018
 -- ACBrECFEscECF --
 [-] Correção em GetDadosUltimaReducaoZ, da Epson TM900F, quando usando "USB" na

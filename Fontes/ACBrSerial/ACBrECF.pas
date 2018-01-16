@@ -1870,7 +1870,8 @@ end;
 
 function TACBrECF.GetTipoUltimoDocumentoClass : TACBrECFTipoDocumento ;
 begin
-  ComandoLOG := 'TipoUltimoDocumento' ;
+  if ComandoLOG = '' then
+    ComandoLOG := 'TipoUltimoDocumento' ;
   Result := fsECF.TipoUltimoDocumento ;
 end;
 

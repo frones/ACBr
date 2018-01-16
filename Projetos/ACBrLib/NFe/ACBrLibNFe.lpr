@@ -3,8 +3,8 @@ library ACBrLibNFe;
 {$mode delphi}
 
 uses
-  Interfaces, Classes, ACBrLibNFeClass, ACBrLibConfig, ACBrLibComum,
-  ACBrLibConsts, ACBrLibNFeConfig;
+  Interfaces, Classes, Forms, ACBrLibNFeClass, ACBrLibConfig, ACBrLibComum,
+  ACBrLibConsts, ACBrLibNFeConfig, ACBrLibResposta, ACBrNFeRespostas;
 
 {$R *.res}
 begin

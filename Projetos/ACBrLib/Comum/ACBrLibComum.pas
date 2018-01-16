@@ -227,8 +227,8 @@ constructor TACBrLib.Create(ArqConfig: String; ChaveCrypt: AnsiString);
 begin
   inherited Create;
 
-  Inicializar;
   CriarConfiguracao(ArqConfig, ChaveCrypt);
+  Inicializar;
   Executar;
 end;
 
@@ -497,6 +497,10 @@ end;
 {%endregion}
 
 exports
+  //Inicialiar Finalizar
+  LIB_Inicializar,
+  LIB_Finalizar,
+
   // Versao Retorno
   LIB_NomeEVersao,
   LIB_UltimoRetorno,
@@ -516,7 +520,3 @@ finalization
     FreeAndNil(pLib);
 
 end.
-
-
-
-

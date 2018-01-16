@@ -125,8 +125,6 @@ type
 
   TEventoNFCeRelatorio = (evA4, evBobina);
 
-  { TDANFeConfig }
-
   { TDANFECeConfig }
 
   TDANFECeConfig = class
@@ -187,6 +185,9 @@ type
     FDANFECeConfig: TDANFECeConfig;
     FDANFeConfig: TDANFeConfig;
     FNFeConfig: TConfiguracoesNFe;
+  protected
+    procedure AplicarConfiguracoes; override;
+
   public
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
@@ -202,7 +203,7 @@ type
 implementation
 
 uses
-  ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts;
+  ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrLibComum;
 
 { TDANFeConfig }
 
@@ -423,10 +424,27 @@ begin
   inherited Destroy;
 end;
 
+procedure TLibNFeConfig.AplicarConfiguracoes;
+begin
+  if Assigned(pLib) then
+    TACBrLibNFe(pLib).NFeDM.Travar;
+
+  try
+    inherited AplicarConfiguracoes;
+
+    TACBrLibNFe(pLib).NFeDM.AplicarConfiguracoes;
+
+    TACBrLib(Owner).GravarLog(ClassName + '.AplicarConfiguracoes - Feito', logParanoico);
+  finally
+    if Assigned(pLib) then
+      TACBrLibNFe(pLib).NFeDM.Destravar;
+  end;
+end;
+
 procedure TLibNFeConfig.Ler;
 begin
-  if Assigned(pLibNFeDM) then
-    pLibNFeDM.Lock.Acquire;
+  if Assigned(pLib) then
+    TACBrLibNFe(pLib).NFeDM.Travar;
 
   try
     inherited Ler;
@@ -436,18 +454,18 @@ begin
     FDANFECeConfig.LerIni(Ini);
   finally
     // Ajustes pos leitura das configurações //
-    if Assigned(pLibNFeDM) then
+    if Assigned(pLib) then
     begin
-      pLibNFeDM.AplicarConfiguracoes;
-      pLibNFeDM.Lock.Release;
+      TACBrLibNFe(pLib).NFeDM.AplicarConfiguracoes;
+      TACBrLibNFe(pLib).NFeDM.Destravar;
     end;
   end;
 end;
 
 procedure TLibNFeConfig.Gravar;
 begin
-  if Assigned(pLibNFeDM) then
-    pLibNFeDM.Lock.Acquire;
+  if Assigned(pLib) then
+    TACBrLibNFe(pLib).NFeDM.Travar;
 
   try
     FNFeConfig.GravarIni(Ini);
@@ -456,8 +474,8 @@ begin
 
     inherited Gravar;  // UpdateFile
   finally
-    if Assigned(pLibNFeDM) then
-      pLibNFeDM.Lock.Release;
+    if Assigned(pLib) then
+      TACBrLibNFe(pLib).NFeDM.Destravar;
   end;
 end;
 

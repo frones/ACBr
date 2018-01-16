@@ -197,6 +197,8 @@ type
     procedure VerificarSessaoEChave(ASessao, AChave: String);
 
   protected
+    procedure AplicarConfiguracoes; virtual;
+
     property Owner: TObject read FOwner;
 
   public
@@ -445,6 +447,7 @@ begin
 
   inherited Create;
   FOwner := AOwner;
+  FNomeArquivo := ANomeArquivo;
 
   TACBrLib(FOwner).GravarLog(ClassName + '.Create', logCompleto);
 
@@ -522,6 +525,11 @@ begin
     raise EConfigException.Create(SErrConfChaveNaoExiste);
 end;
 
+procedure TLibConfig.AplicarConfiguracoes;
+begin
+  TACBrLib(FOwner).GravarLog(ClassName + '.AplicarConfiguracoes: ' + FNomeArquivo, logCompleto);
+end;
+
 procedure TLibConfig.Ler;
 begin
   TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
@@ -560,6 +568,7 @@ procedure TLibConfig.GravarValor(ASessao, AChave, AValor: String);
 begin
   VerificarSessaoEChave(ASessao, AChave);
   FIni.WriteString(ASessao, AChave, AValor);
+  AplicarConfiguracoes;
 end;
 
 function TLibConfig.LerValor(ASessao, AChave: String): String;

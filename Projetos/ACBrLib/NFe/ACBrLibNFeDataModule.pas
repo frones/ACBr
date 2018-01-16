@@ -5,7 +5,7 @@ unit ACBrLibNFeDataModule;
 interface
 
 uses
-  Classes, SysUtils, syncobjs, FileUtil, IniFiles,
+  Classes, SysUtils, syncobjs, FileUtil,
   ACBrNFe, ACBrMail, ACBrPosPrinter, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr,
   ACBrNFeDANFeESCPOS,
   ACBrLibConfig;
@@ -25,14 +25,8 @@ type
     procedure DataModuleDestroy(Sender: TObject);
 
   private
-    FPass: String;
-    FUltimoErro: String;
-    FStatusServico: String;
-    FACBrNFeINI: String;
     FLock: TCriticalSection;
   public
-    property StatusServico: String read FStatusServico write FStatusServico;
-
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
@@ -44,7 +38,7 @@ implementation
 
 uses
   ACBrUtil,
-  ACBrLibNFeConfig, ACBrLibComum;
+  ACBrLibNFeConfig, ACBrLibComum, ACBrLibNFeClass;
 
 {$R *.lfm}
 
@@ -53,9 +47,6 @@ uses
 procedure TLibNFeDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
-  FUltimoErro := '';
-  FACBrNFeINI := ApplicationPath + 'ACBrNFe.ini';
-  FPass := 'tYk*5W@';
 end;
 
 procedure TLibNFeDM.DataModuleDestroy(Sender: TObject);
@@ -64,12 +55,13 @@ begin
 end;
 
 procedure TLibNFeDM.AplicarConfiguracoes;
+var
+  pLibConfig: TLibNFeConfig;
 begin
-  VerificarLibConfigFoiInstaciado;
 
   ACBrNFe.SSL.DescarregarCertificado;
-
-  ACBrNFe.Configuracoes.Assign(TLibNFeConfig(pLibConfig).NFeConfig);
+  pLibConfig := TLibNFeConfig(TACBrLibNFe(pLib).Config);
+  ACBrNFe.Configuracoes.Assign(pLibConfig.NFeConfig);
 
   with ACBrMail do
   begin

@@ -18,10 +18,10 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MajorVersionNr Value="1"/>
-      <BuildNr Value="2"/>
+      <BuildNr Value="1"/>
       <Language Value="0416"/>
-      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNFe - BIblioteca para emissão e impressão de nota fiscal eletrônica" LegalCopyright="Projeto ACBr" ProductName="ACBrNFe " ProductVersion="1.0.0.0"/>
+      <Attributes pvaPreRelease="True"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNFe - BIblioteca para emissão e impressão de nota fiscal eletrônica" InternalName="ACBrLibNFE" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrNFe "/>
     </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="x86 - CDECL" Default="True"/>
@@ -100,7 +100,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dFRAMEWORK -dSTDCALL"/>
+            <CustomOptions Value="-dSTDCALL"/>
           </Other>
         </CompilerOptions>
       </Item3>
@@ -136,7 +136,7 @@
         <PackageName Value="ACBrComum"/>
       </Item7>
     </RequiredPackages>
-    <Units Count="7">
+    <Units Count="9">
       <Unit0>
         <Filename Value="ACBrLibNFe.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -168,6 +168,14 @@
         <Filename Value="ACBrLibNFeConfig.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="ACBrNFeRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\Comum\ACBrLibResposta.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

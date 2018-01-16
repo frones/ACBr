@@ -33,46 +33,51 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibNFeConsts;
+unit ACBrNFeRespostas;
 
 interface
 
 uses
-  Classes, SysUtils;
+  SysUtils, Classes, ACBrLibResposta;
 
-const
-  CLibNFeNome = 'ACBrLibNFe';
-  CLibNFeVersao = '0.0.1';
+type
 
-  CSessaoDANFECe = 'DANFECe';
-  CSessaoDANFE = 'DANFE';
+  TStatusServicoResposta = class(TACBrLibResposta)
+  private
+    FMsg: string;
+    Fversao: string;
+    FtpAmb: string;
+    FverAplic: string;
+    FcStat: integer;
+    FxMotivo: string;
+    FcUF: integer;
+    FdhRecbto: TDateTime;
+    FTMed: integer;
+    FdhRetorno: TDateTime;
+    FxObs: string;
+  public
+    constructor Create;
 
-  CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';
-  CChaveQRCodeLateral = 'QRCodeLateral';
-  CChaveTipoDANFE = 'TipoDANFE';
-  CChaveImprimeTotalLiquido = 'ImprimeTotalLiquido';
-  CChaveImprimeDescPorc = 'ImprimeDescPorc';
-  CChaveFormularioContinuo = 'FormularioContinuo';
-  CChaveTamanhoFonteEndereco = 'TamanhoFonteEndereco';
-  CChaveTamanhoFonteDemaisCampos = 'TamanhoFonteDemaisCampos';
-  CChaveTamanhoFonteRazaoSocial = 'TamanhoFonteRazaoSocial';
-  CChaveProdutosPorPagina = 'ProdutosPorPagina';
-  CChaveImprimeDetalhamentoEspecifico = 'ImprimeDetalhamentoEspecifico';
-  CChaveExibeResumoCanhoto = 'ExibeResumoCanhoto';
-  CChavePosCanhoto = 'PosCanhoto';
-  CChaveNomeFonte = 'NomeFonte';
-  CChaveLarguraCodProd = 'LarguraCodProd';
-  CChaveExibeEAN = 'ExibeEAN';
-  CChaveExibeCampoFatura = 'ExibeCampoFatura';
-  CChaveQuebraLinhaEmDetalhamentoEspecifico = 'QuebraLinhaEmDetalhamentoEspecifico';
-  CChaveAlturaLinhaComun = 'AlturaLinhaComun';
-  CChaveTipoUnQtVlComercial = 'TipoUnQtVlComercial';
-
-Resourcestring
-  SErrNFeNenhumaNFeCarregada = 'Nenhuma NFe carregada';
-  SErrNFeErroStatusServico = 'Erro ao consultar "StatusServico"';
+  published
+    property Msg: string read FMsg write FMsg;
+    property Versao: string read Fversao write Fversao;
+    property tpAmb: string read FtpAmb write FtpAmb;
+    property VerAplic: string read FverAplic write FverAplic;
+    property CStat: integer read FcStat write FcStat;
+    property XMotivo: string read FxMotivo write FxMotivo;
+    property CUF: integer read FcUF write FcUF;
+    property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
+    property TMed: integer read FTMed write FTMed;
+    property DhRetorno: TDateTime read FdhRetorno write FdhRetorno;
+    property XObs: string read FxObs write FxObs;
+  end;
 
 implementation
+
+constructor TStatusServicoResposta.Create;
+begin
+  Sessao := 'STATUS';
+end;
 
 end.
 

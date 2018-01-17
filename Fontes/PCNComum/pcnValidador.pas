@@ -57,7 +57,7 @@
 //                                                                            //
 // 3 - Parametros da função que chama o validador                             //
 //                                                                            //
-//     Mensagens: AnsiString - Variavel que recebera as mensagens de erro     //
+//     Mensagens: String - Variavel que recebera as mensagens de erro     //
 //     PathArquivoXML: string - Caminho e o nome do arquivo xml               //
 //     PathValidador: string - Caminho para pasta que esta o validador        //
 //     Schema: TpcnSchema - Schema a ser utilizado                            //
@@ -84,7 +84,7 @@ interface
 uses
   windows, SysUtils, Classes, pcnConversao;
 
-function ValidarXML(var Mensagens: AnsiString;
+function ValidarXML(var Mensagens: String;
                     PathArquivoXML,
                     PathValidador: String;
                     Schema: TpcnSchema;
@@ -93,7 +93,7 @@ function ValidarXML(var Mensagens: AnsiString;
 
 implementation
 
-function ValidarXML(var Mensagens: AnsiString; // Variavel que recebera as mensagens do validador
+function ValidarXML(var Mensagens: String; // Variavel que recebera as mensagens do validador
   PathArquivoXML, // Path e nome do arquivo xml a ser validado
   PathValidador: String; // Path aonde se encontra o .exe do validador
   Schema: TpcnSchema; // Schema que sera utilizada na validação

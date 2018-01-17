@@ -80,19 +80,19 @@ function CodigoParaUF(const codigo: integer): string;
 function DateTimeTodh(DataHora: TDateTime): string;
 function DateTimeToDataHora(DataHora: TDateTime): string;
 function ExecutarAjusteTagNro(Corrigir: boolean; Nro: string): string;
-function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True; QuebraLinha: AnsiString = ';'): AnsiString;
+function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True; const QuebraLinha: String = ';'): String;
 function IIf(const condicao: Boolean; const Verdadeiro, Falso: Variant): Variant;
 function IntToStrZero(const Numero: integer; const tamanho: integer): string;
 function GerarCodigoNumerico(numero: integer): integer;
-function GerarChave(out chave: AnsiString; const codigoUF: integer; codigoNumerico: integer; const modelo, serie, numero, tpemi: integer; const emissao: TDateTime; const CNPJ: string): boolean;
-function GerarChaveCTe(out chave: AnsiString; const codigoUF: integer; codigoNumerico: integer; const modelo, serie, numero: integer; const emissao: TDateTime; const CNPJ: string): boolean;
+function GerarChave(out chave: String; const codigoUF: integer; codigoNumerico: integer; const modelo, serie, numero, tpemi: integer; const emissao: TDateTime; const CNPJ: string): boolean;
+function GerarChaveCTe(out chave: String; const codigoUF: integer; codigoNumerico: integer; const modelo, serie, numero: integer; const emissao: TDateTime; const CNPJ: string): boolean;
 function GerarDigito(out Digito: integer; chave: string): boolean;
 function SomenteNumeros(const s: string): string;
 function RetornarCodigoNumerico(Chave: string; Versao : real): integer;
 function RetornarCodigoNumericoCTe(Chave: string): integer;
 function RetornarDigito(const chave: string): integer;
 function RetornarModelo(const chave: string): String;
-function ReverterFiltroTextoXML(aTexto: AnsiString): AnsiString;
+function ReverterFiltroTextoXML(aTexto: String): String;
 function UFparaCodigo(const UF: string): integer;
 function ValidarAAMM(const AAMM: string): boolean;
 function ValidarCListServ(const cListServ: integer): boolean;
@@ -108,8 +108,8 @@ function ValidarUF(const UF: string): boolean;
 function ValidarIE(IE, UF: string): boolean;
 function ValidarISUF(const ISUF: string): boolean;
 function SubStrEmSubStr(const SubStr1: string; SubStr2: string): boolean;
-function xml4line(texto: AnsiString): AnsiString;
-function RetornarPosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
+function xml4line(texto: String): String;
+function RetornarPosEx(const SubStr, S: String; Offset: Cardinal = 1): Integer;
 function DateTimeTodhUTC(DataHora: TDateTime; TZD: string): string;
 function GetUTC(UF: string; const dataHora: TDateTime): string;
 function GetUTCSistema: String;
@@ -192,11 +192,11 @@ begin
     Result := '0' + Nro;
 end;
 
-function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString;
-  RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean; QuebraLinha: AnsiString): AnsiString;
+function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String;
+  RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean; const QuebraLinha: String): String;
 begin
   if RetirarAcentos then
-     aTexto := AnsiString(TiraAcentos(String(aTexto)));
+     aTexto := TiraAcentos(aTexto);
 
   aTexto := ParseText(aTexto, False );
 
@@ -245,7 +245,7 @@ begin
   Result := StrToInt(copy(s, 1, 8));
 end;
 
-function GerarChave(out chave: AnsiString; const codigoUF: integer;
+function GerarChave(out chave: String; const codigoUF: integer;
   codigoNumerico: integer; const modelo, serie, numero, tpemi: integer;
   const emissao: TDateTime; const CNPJ: string): boolean;
 var
@@ -287,7 +287,7 @@ begin
   end;
 end;
 
-function GerarChaveCTe(out chave: AnsiString; const codigoUF: integer;
+function GerarChaveCTe(out chave: String; const codigoUF: integer;
   codigoNumerico: integer; const modelo, serie, numero: integer;
   const emissao: TDateTime; const CNPJ: string): boolean;
 var
@@ -399,7 +399,7 @@ begin
   Result := copy(OnlyNumber(chave), 21, 2);
 end;
 
-function ReverterFiltroTextoXML(aTexto: AnsiString): AnsiString;
+function ReverterFiltroTextoXML(aTexto: String): String;
 var p1,p2:Integer;
     vHex,vStr:String;
 begin
@@ -423,7 +423,7 @@ begin
   result := Trim(aTexto);
 end;
 
-{function ReverterFiltroTextoXML(aTexto: AnsiString): AnsiString;
+{function ReverterFiltroTextoXML(aTexto: String): String;
 begin
   aTexto := StringReplace(aTexto, '&amp;', '&', [rfReplaceAll]);
   aTexto := StringReplace(aTexto, '&lt;', '<', [rfReplaceAll]);
@@ -682,7 +682,7 @@ begin
   result := i > 0;
 end;
 
-function xml4line(texto: AnsiString): AnsiString;
+function xml4line(texto: String): String;
 var
   xml: TStringList;
   i: integer;
@@ -703,7 +703,7 @@ begin
   Xml.Free;
 end;
 
-function RetornarPosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
+function RetornarPosEx(const SubStr, S: String; Offset: Cardinal = 1): Integer;
 var
   I, X: Integer;
   Len, LenSubStr: Integer;

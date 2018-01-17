@@ -68,15 +68,15 @@ type
 
   TGerador = class(TPersistent)
   private
-    FArquivoFormatoXML: AnsiString;
-    FArquivoFormatoTXT: AnsiString;
+    FArquivoFormatoXML: String;
+    FArquivoFormatoTXT: String;
     FLayoutArquivoTXT: TstringList;
     FListaDeAlertas: TStringList;
     FTagNivel: string;
     FIDNivel: string;
     FOpcoes: TGeradorOpcoes;
     FPrefixo: string;
-    procedure addStringArquivoXML(const Value: AnsiString);
+    procedure addStringArquivoXML(const Value: String);
   public
     FIgnorarTagNivel: string;
     FIgnorarTagIdentacao: string;
@@ -96,8 +96,8 @@ type
     procedure gtCampo(const Tag, ConteudoProcessado: string);
     procedure gtAjustarRegistros(const ID: string);
   published
-    property ArquivoFormatoXML: AnsiString read FArquivoFormatoXML write FArquivoFormatoXML;
-    property ArquivoFormatoTXT: AnsiString read FArquivoFormatoTXT write FArquivoFormatoTXT;
+    property ArquivoFormatoXML: String read FArquivoFormatoXML write FArquivoFormatoXML;
+    property ArquivoFormatoTXT: String read FArquivoFormatoTXT write FArquivoFormatoTXT;
     property IDNivel: string read FIDNivel write FIDNivel;
     property ListaDeAlertas: TStringList read FListaDeAlertas write FListaDeAlertas;
     property LayoutArquivoTXT: TStringList read FLayoutArquivoTXT write FLayoutArquivoTXT;
@@ -291,7 +291,7 @@ end;
 
 { TGerador }
 
-procedure TGerador.addStringArquivoXML(const Value: AnsiString);
+procedure TGerador.addStringArquivoXML(const Value: String);
 begin
   FArquivoFormatoXML := FArquivoFormatoXML + Value;
 end;
@@ -320,7 +320,9 @@ var
   ArquivoGerado: TStringList;
 begin
   // Formato de gravação somente é válido para NFe
+{$IFNDEF COMPILER23_UP}
   Result := False;
+{$ENDIF}
   ArquivoGerado := TStringList.Create;
   try
     if FormatoGravacao = fgXML then

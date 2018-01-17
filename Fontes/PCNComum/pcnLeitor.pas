@@ -66,22 +66,22 @@ type
 
   TLeitor = class(TPersistent)
   private
-    FArquivo: AnsiString;
-    FGrupo: AnsiString;
+    FArquivo: String;
+    FGrupo: String;
     FNivel: TStringList;
   public
     constructor Create;
     destructor Destroy; override;
-    function rExtrai(const nivel: integer; const TagInicio: string; TagFim: string = ''; const item: integer = 1): AnsiString;
+    function rExtrai(const nivel: integer; const TagInicio: string; TagFim: string = ''; const item: integer = 1): String;
     function rCampo(const Tipo: TpcnTipoCampo; TAG: string; TAGparada: string = ''): variant;
     function rCampoCNPJCPF(TAGparada: string = ''): string;
     function rAtributo(Atributo: string; Tag: String = ''): variant;
     function CarregarArquivo(const CaminhoArquivo: string): boolean; overload;
     function CarregarArquivo(const Stream: TStringStream): boolean; overload;
-    function PosLast(const SubStr, S: AnsiString ): Integer;    
+    function PosLast(const SubStr, S: String ): Integer;
   published
-    property Arquivo: AnsiString read FArquivo write FArquivo;
-    property Grupo: AnsiString read FGrupo write FGrupo;
+    property Arquivo: String read FArquivo write FArquivo;
+    property Grupo: String read FGrupo write FGrupo;
   end;
 
 implementation
@@ -116,7 +116,7 @@ begin
   ArquivoXML := TStringList.Create;
   try
     ArquivoXML.LoadFromFile(CaminhoArquivo);
-    FArquivo := AnsiString( ArquivoXML.Text );
+    FArquivo := ArquivoXML.Text;
     Result := True;
   finally
     ArquivoXML.Free;
@@ -130,9 +130,9 @@ begin
   Result := True;
 end;
 
-function TLeitor.rExtrai(const nivel: integer; const TagInicio: string; TagFim: string = ''; const item: integer = 1): AnsiString;
+function TLeitor.rExtrai(const nivel: integer; const TagInicio: string; TagFim: string = ''; const item: integer = 1): String;
 var
-  Texto: AnsiString;
+  Texto: String;
   i,j: integer;
 begin
   //NOTA: Extrai um grupo de dentro do nivel informado
@@ -328,7 +328,7 @@ begin
   end ;
 end;
 
-function TLeitor.PosLast(const SubStr, S: AnsiString ): Integer;
+function TLeitor.PosLast(const SubStr, S: String ): Integer;
 Var P : Integer ;
 begin
   Result := 0 ;

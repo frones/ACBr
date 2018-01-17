@@ -142,7 +142,7 @@ end;
 
 function TMDFeW.GerarXml: boolean;
 var
-  chave: AnsiString;
+  chave: String;
   Gerar, Ok: boolean;
   xProtMDFe: String;
 begin

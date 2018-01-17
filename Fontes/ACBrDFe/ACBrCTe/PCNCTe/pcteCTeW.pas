@@ -242,7 +242,7 @@ end;
 
 function TCTeW.GerarXml: Boolean;
 var
-  chave: AnsiString;
+  chave: String;
   Gerar, Ok: Boolean;
   xProtCTe: String;
 begin

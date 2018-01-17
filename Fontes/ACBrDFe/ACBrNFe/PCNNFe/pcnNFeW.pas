@@ -220,7 +220,7 @@ end;
 
 function TNFeW.GerarXml: Boolean;
 var
-  chave: AnsiString;
+  chave: String;
   Gerar: Boolean;
   xProtNFe : String;
   xCNPJCPF : string;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2018
+-- ACBrMDFeWebServices --
+[-] Correção em "TMDFeRecepcao", "TMDFeRetRecepcao", "TMDFeConsulta", para que o
+    Numero de Versão seja mantido em todas as etapas
+    (por: DSA e BigWings e Italo Jurisato Junior)
+
 10/01/2018
 -- ACBrMDFeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/40818-corre%C3%A7%C3%A3o-na-inutiliza%C3%A7%C3%A3o-de-n%C3%BAmero-de-ct-e/

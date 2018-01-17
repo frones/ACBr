@@ -132,6 +132,7 @@ type
     FxMotivo: String;
     FdhRecbto: TDateTime;
     FTMed: Integer;
+    FVersaoDF: TVersaoCTe;
 
     FCTeRetorno: TretEnvCTe;
     FCTeRetornoOS: TRetConsSitCTe;
@@ -139,6 +140,7 @@ type
     function GetLote: String;
     function GetRecibo: String;
   protected
+    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -182,12 +184,14 @@ type
     FxMotivo: String;
     FcMsg: Integer;
     FxMsg: String;
+    FVersaoDF: TVersaoCTe;
 
     FCTeRetorno: TRetConsReciCTe;
 
     function GetRecibo: String;
     function TratarRespostaFinal: Boolean;
   protected
+    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -233,9 +237,11 @@ type
     FcUF: Integer;
     FxMsg: String;
     FcMsg: Integer;
+    FVersaoDF: TVersaoCTe;
 
     FCTeRetorno: TRetConsReciCTe;
   protected
+    procedure InicializarServico; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirURL; override;
     procedure DefinirDadosMsg; override;
@@ -803,6 +809,18 @@ begin
   Result := Trim(FRecibo);
 end;
 
+procedure TCTeRecepcao.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoCTe(ok, FConhecimentos.Items[0].CTe.infCTe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesCTe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+end;
+
 procedure TCTeRecepcao.DefinirURL;
 var
   xUF: String;
@@ -817,20 +835,19 @@ begin
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
-    Modelo  := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
-    FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
-    VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
+    Modelo := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
+    FcUF   := FConhecimentos.Items[0].CTe.Ide.cUF;
 
     if FPConfiguracoesCTe.WebServices.Ambiente <> FConhecimentos.Items[0].CTe.Ide.tpAmb then
       raise EACBrCTeException.Create( ACBRCTE_CErroAmbDiferente );
   end
   else
   begin                              // Se não tem CTe, use as configurações do componente
-    Modelo  := FPConfiguracoesCTe.Geral.ModeloDF;
-    FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
-    VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+    Modelo := FPConfiguracoesCTe.Geral.ModeloDF;
+    FcUF   := FPConfiguracoesCTe.WebServices.UFCodigo;
   end;
 
+  VerServ := VersaoCTeToDbl(FVersaoDF);
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
@@ -1129,6 +1146,18 @@ begin
   inherited Destroy;
 end;
 
+procedure TCTeRetRecepcao.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoCTe(ok, FConhecimentos.Items[0].CTe.infCTe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesCTe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+end;
+
 procedure TCTeRetRecepcao.Clear;
 var
   i, j: Integer;
@@ -1222,20 +1251,19 @@ begin
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
-    Modelo  := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
-    FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
-    VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
+    Modelo := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
+    FcUF   := FConhecimentos.Items[0].CTe.Ide.cUF;
 
     if FPConfiguracoesCTe.WebServices.Ambiente <> FConhecimentos.Items[0].CTe.Ide.tpAmb then
       raise EACBrCTeException.Create( ACBRCTE_CErroAmbDiferente );
   end
   else
-  begin                              // Se não tem CTe, use as configurações do componente
-    Modelo  := FPConfiguracoesCTe.Geral.ModeloDF;
-    FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
-    VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  begin       // Se não tem CTe, use as configurações do componente
+    Modelo := FPConfiguracoesCTe.Geral.ModeloDF;
+    FcUF   := FPConfiguracoesCTe.WebServices.UFCodigo;
   end;
 
+  VerServ := VersaoCTeToDbl(FVersaoDF);
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
@@ -1509,6 +1537,18 @@ begin
   FCTeRetorno := TRetConsReciCTe.Create;
 end;
 
+procedure TCTeRecibo.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoCTe(ok, FConhecimentos.Items[0].CTe.infCTe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesCTe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+end;
+
 procedure TCTeRecibo.DefinirServicoEAction;
 begin
   FPServico    := GetUrlWsd + 'CteRetRecepcao';
@@ -1526,20 +1566,19 @@ begin
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
-    Modelo  := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
-    FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
-    VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
+    Modelo := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
+    FcUF   := FConhecimentos.Items[0].CTe.Ide.cUF;
 
     if FPConfiguracoesCTe.WebServices.Ambiente <> FConhecimentos.Items[0].CTe.Ide.tpAmb then
       raise EACBrCTeException.Create( ACBRCTE_CErroAmbDiferente );
   end
   else
-  begin                              // Se não tem CTe, use as configurações do componente
-    Modelo  := FPConfiguracoesCTe.Geral.ModeloDF;
-    FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
-    VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  begin       // Se não tem CTe, use as configurações do componente
+    Modelo := FPConfiguracoesCTe.Geral.ModeloDF;
+    FcUF   := FPConfiguracoesCTe.WebServices.UFCodigo;
   end;
 
+  VerServ := VersaoCTeToDbl(FVersaoDF);
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
@@ -1698,16 +1737,12 @@ begin
   FPURL   := '';
   Modelo  := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FCTeChave) ));
   FcUF    := ExtrairUFChaveAcesso(FCTeChave);
-  FTpAmb  := FPConfiguracoesCTe.WebServices.Ambiente;
   VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
 
   if FConhecimentos.Count > 0 then
-  begin
-    FTpAmb := FConhecimentos.Items[0].CTe.Ide.tpAmb;
-
-    if VerServ < FConhecimentos.Items[0].CTe.infCTe.Versao then
-      VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
-  end;
+    FTpAmb := FConhecimentos.Items[0].CTe.Ide.tpAmb
+  else
+    FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
 
   case FPConfiguracoesCTe.Geral.FormaEmissao of
     teSVCRS: xUF := 'SVC-RS';

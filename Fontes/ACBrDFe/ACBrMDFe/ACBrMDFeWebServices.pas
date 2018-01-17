@@ -126,12 +126,14 @@ type
     FxMotivo: String;
     FdhRecbto: TDateTime;
     FTMed: Integer;
+    FVersaoDF: TVersaoMDFe;
 
     FMDFeRetorno: TretEnvMDFe;
 
     function GetLote: String;
     function GetRecibo: String;
   protected
+    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -173,12 +175,14 @@ type
     FxMotivo: String;
     FcMsg: Integer;
     FxMsg: String;
+    FVersaoDF: TVersaoMDFe;
 
     FMDFeRetorno: TRetConsReciMDFe;
 
     function GetRecibo: String;
     function TratarRespostaFinal: Boolean;
   protected
+    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -224,9 +228,11 @@ type
     FcUF: Integer;
     FxMsg: String;
     FcMsg: Integer;
+    FVersaoDF: TVersaoMDFe;
 
     FMDFeRetorno: TRetConsReciMDFe;
   protected
+    procedure InicializarServico; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirURL; override;
     procedure DefinirDadosMsg; override;
@@ -712,6 +718,18 @@ begin
   Result := Trim(FRecibo);
 end;
 
+procedure TMDFeRecepcao.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoMDFe(ok, FManifestos.Items[0].MDFe.infMDFe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesMDFe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+end;
+
 procedure TMDFeRecepcao.DefinirURL;
 var
   Modelo: String;
@@ -721,18 +739,17 @@ begin
 
   if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
   begin
-    FcUF    := FManifestos.Items[0].MDFe.Ide.cUF;
-    VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
+    FcUF := FManifestos.Items[0].MDFe.Ide.cUF;
 
     if FPConfiguracoesMDFe.WebServices.Ambiente <> FManifestos.Items[0].MDFe.Ide.tpAmb then
       raise EACBrMDFeException.Create( ACBRMDFE_CErroAmbDiferente );
   end
   else
   begin                              // Se não tem MDFe, use as configurações do componente
-    FcUF    := FPConfiguracoesMDFe.WebServices.UFCodigo;
-    VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+    FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end;
 
+  VerServ := VersaoMDFeToDbl(FVersaoDF);
   Modelo := 'MDFe';
   FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
   FPVersaoServico := '';
@@ -843,6 +860,18 @@ begin
   inherited Destroy;
 end;
 
+procedure TMDFeRetRecepcao.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoMDFe(ok, FManifestos.Items[0].MDFe.infMDFe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesMDFe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+end;
+
 procedure TMDFeRetRecepcao.Clear;
 var
   i, j: Integer;
@@ -934,18 +963,17 @@ begin
 
   if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
   begin
-    FcUF    := FManifestos.Items[0].MDFe.Ide.cUF;
-    VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
+    FcUF := FManifestos.Items[0].MDFe.Ide.cUF;
 
     if FPConfiguracoesMDFe.WebServices.Ambiente <> FManifestos.Items[0].MDFe.Ide.tpAmb then
       raise EACBrMDFeException.Create( ACBRMDFE_CErroAmbDiferente );
   end
   else
-  begin                              // Se não tem MDFe, use as configurações do componente
-    FcUF    := FPConfiguracoesMDFe.WebServices.UFCodigo;
-    VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  begin     // Se não tem MDFe, use as configurações do componente
+    FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end;
 
+  VerServ := VersaoMDFeToDbl(FVersaoDF);
   Modelo := 'MDFe';
   FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
   FPVersaoServico := '';
@@ -1210,6 +1238,18 @@ begin
   FMDFeRetorno := TRetConsReciMDFe.Create;
 end;
 
+procedure TMDFeRecibo.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoMDFe(ok, FManifestos.Items[0].MDFe.infMDFe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesMDFe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+end;
+
 procedure TMDFeRecibo.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'MDFeRetRecepcao';
@@ -1225,18 +1265,17 @@ begin
 
   if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
   begin
-    FcUF    := FManifestos.Items[0].MDFe.Ide.cUF;
-    VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
+    FcUF := FManifestos.Items[0].MDFe.Ide.cUF;
 
     if FPConfiguracoesMDFe.WebServices.Ambiente <> FManifestos.Items[0].MDFe.Ide.tpAmb then
       raise EACBrMDFeException.Create( ACBRMDFE_CErroAmbDiferente );
   end
   else
-  begin                              // Se não tem MDFe, use as configurações do componente
-    FcUF    := FPConfiguracoesMDFe.WebServices.UFCodigo;
-    VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
+  begin     // Se não tem MDFe, use as configurações do componente
+    FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end;
 
+  VerServ := VersaoMDFeToDbl(FVersaoDF);
   Modelo := 'MDFe';
   FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
   FPVersaoServico := '';
@@ -1383,16 +1422,12 @@ begin
   FPURL   := '';
   Modelo  := 'MDFe';
   FcUF    := ExtrairUFChaveAcesso(FMDFeChave);
-  FTpAmb  := FPConfiguracoesMDFe.WebServices.Ambiente;
   VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
 
   if FManifestos.Count > 0 then
-  begin
-    FTpAmb := FManifestos.Items[0].MDFe.Ide.tpAmb;
-
-    if VerServ < FManifestos.Items[0].MDFe.infMDFe.Versao then
-      VerServ := FManifestos.Items[0].MDFe.infMDFe.Versao;
-  end;
+    FTpAmb := FManifestos.Items[0].MDFe.Ide.tpAmb
+  else
+    FTpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,

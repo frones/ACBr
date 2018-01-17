@@ -130,11 +130,13 @@ type
     FdhRecbto: TDateTime;
     FTMed: Integer;
     FMsgUnZip: String;
+    FVersaoDF: TVersaoBPe;
 
     FBPeRetorno: TretEnvBPe;
 
     function GetLote: String;
   protected
+    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
@@ -599,6 +601,18 @@ begin
   Result := Trim(FLote);
 end;
 
+procedure TBPeRecepcao.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FBilhetes.Count > 0 then    // Tem BPe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoBPe(ok, FBilhetes.Items[0].BPe.infBPe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesBPe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+end;
+
 procedure TBPeRecepcao.DefinirURL;
 var
   xUF: String;
@@ -606,18 +620,17 @@ var
 begin
   if FBilhetes.Count > 0 then    // Tem BPe ? Se SIM, use as informações do XML
   begin
-    FcUF    := FBilhetes.Items[0].BPe.Ide.cUF;
-    VerServ := FBilhetes.Items[0].BPe.infBPe.Versao;
+    FcUF := FBilhetes.Items[0].BPe.Ide.cUF;
 
     if FPConfiguracoesBPe.WebServices.Ambiente <> FBilhetes.Items[0].BPe.Ide.tpAmb then
       raise EACBrBPeException.Create( ACBRBPE_CErroAmbienteDiferente );
   end
   else
   begin     // Se não tem BPe, use as configurações do componente
-    FcUF    := FPConfiguracoesBPe.WebServices.UFCodigo;
-    VerServ := VersaoBPeToDbl(FPConfiguracoesBPe.Geral.VersaoDF);
+    FcUF := FPConfiguracoesBPe.WebServices.UFCodigo;
   end;
 
+  VerServ := VersaoBPeToDbl(FVersaoDF);
   FTpAmb  := FPConfiguracoesBPe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
@@ -894,19 +907,14 @@ var
   xUF: String;
 begin
   FPVersaoServico := '';
-  FPURL  := '';
-  FcUF   := ExtrairUFChaveAcesso(FBPeChave);
+  FPURL   := '';
+  FcUF    := ExtrairUFChaveAcesso(FBPeChave);
+  VerServ := VersaoBPeToDbl(FPConfiguracoesBPe.Geral.VersaoDF);
 
   if FBilhetes.Count > 0 then
-  begin
-    FTpAmb  := FBilhetes.Items[0].BPe.Ide.tpAmb;
-    VerServ := FBilhetes.Items[0].BPe.infBPe.Versao;
-  end
+    FTpAmb  := FBilhetes.Items[0].BPe.Ide.tpAmb
   else
-  begin
     FTpAmb  := FPConfiguracoesBPe.WebServices.Ambiente;
-    VerServ := VersaoBPeToDbl(FPConfiguracoesBPe.Geral.VersaoDF);
-  end;
 
   // Se o bilhete foi enviado para o SVC a consulta tem que ser realizada no SVC e
   // não na SEFAZ-Autorizadora

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/01/2018
+-- ACBrECFEscECF --
+[-] Correção em  "TACBrECFEscECFComando.AddParamDouble", para evitar
+    arredondamento indevidos em valores altos...
+    https://www.projetoacbr.com.br/forum/topic/40930-venda-de-item-com-valor-99999999/
+
 Data: 16/01/2018
 -- ACBrECFEscECF --
 [-] Correção no método Cancela Cupom da Daruma FS800i, quando havia um ou mais

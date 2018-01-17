@@ -1165,7 +1165,8 @@ end;
 
 procedure TACBrECFEscECFComando.AddParamDouble(ADouble: Double; Decimais: Byte);
 begin
-  AddParamInteger( TruncFix( ADouble * power(10, Decimais) ) ) ;
+  ADouble := ADouble * power(10, Decimais);
+  AddParamInteger( TruncFix( ADouble ) ) ;
 end;
 
 procedure TACBrECFEscECFComando.AddParamInteger(AInteger: Integer);

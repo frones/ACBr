@@ -42,8 +42,7 @@ unit pcnVFPe
 interface
 
 uses
-  SysUtils, Classes,
-  pcnConversao, ACBrIntegradorResposta;
+  SysUtils, Classes, ACBrIntegradorResposta;
 
 type
 

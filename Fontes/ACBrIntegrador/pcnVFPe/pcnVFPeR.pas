@@ -118,8 +118,6 @@ type
 
 implementation
 
-uses ACBrConsts;
-
 { TRespostaStatusPagamentoR }
 
 constructor TRespostaStatusPagamentoR.Create(AOwner: TRespostaStatusPagamento);

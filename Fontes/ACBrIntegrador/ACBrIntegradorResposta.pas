@@ -56,7 +56,7 @@ type
     destructor Destroy; override;
     procedure Clear;
 
-    procedure LerResposta(const XML: AnsiString);
+    procedure LerResposta(const XML: String);
   published
     property Identificador: Integer read FIdentificador write FIdentificador;
     property Codigo: String read FCodigo write FCodigo;
@@ -87,7 +87,7 @@ begin
   FValor         := '';
 end;
 
-procedure TIntegradorResposta.LerResposta(const XML: AnsiString);
+procedure TIntegradorResposta.LerResposta(const XML: String);
 begin
   FLeitor.Arquivo := XML;
 

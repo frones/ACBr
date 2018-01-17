@@ -46,7 +46,7 @@ uses
  {$ENDIF}
 {$ENDIF}
   Classes, SysUtils,
-  pcnGerador, pcnLeitor, pcnVFPe, pcnVFPeW, pcnVFPeR,
+  pcnGerador, pcnLeitor, pcnVFPe, pcnVFPeW,
   ACBrBase;
 
 const

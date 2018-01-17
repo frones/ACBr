@@ -47,6 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2018
+-- pnfsNFSe / pnfsNFSeW_EL --
+[*] Inclusão do campo OutrasDeducoes.
+Por: Gumercino
+
+-- ACBrNFSeWebServices --
+[*] Incluido a para todos os serviços a checagem se há necessidade de incluir ou
+    não o ID no atributo URI da assinatura.
+-- ACBrNFSeConfiguracoes --
+[*] Alteração na leitura da seção [LinkNFSe] visando atender as cidades de mesmo
+    provedor mas com links diferentes.
+Por: Italo Jurisato Junior
+
+
 15/01/2018
 -- pnfsNFSeW_EL --
 [*] Correção estava pegando o valor de ISS em vez de ISS Retido.

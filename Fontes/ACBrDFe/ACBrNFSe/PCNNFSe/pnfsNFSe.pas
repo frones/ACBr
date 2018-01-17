@@ -192,6 +192,7 @@ type
     FAliquotaInss: Currency;
     FAliquotaIr: Currency;
     FAliquotaCsll: Currency;
+    FOutrosDescontos: Currency;
     FValorLiquidoNfse: Currency;
     FValorIssRetido: Currency;
     FDescontoCondicionado: Currency;
@@ -220,6 +221,9 @@ type
     property AliquotaInss: Currency read FAliquotaInss write FAliquotaInss;
     property AliquotaIr: Currency read FAliquotaIr write FAliquotaIr;
     property AliquotaCsll: Currency read FAliquotaCsll write FAliquotaCsll;
+
+    // Gumercino 16/01/2018 - Provedor EL
+    property OutrosDescontos: Currency read FOutrosDescontos write FOutrosDescontos;
 
     property ValorLiquidoNfse: Currency read FValorLiquidoNfse write FValorLiquidoNfse;
     property ValorIssRetido: Currency read FValorIssRetido write FValorIssRetido;

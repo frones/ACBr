@@ -626,7 +626,7 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -635,7 +635,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -644,7 +644,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 3
           end
         end
@@ -1275,7 +1275,7 @@ object Form1: TForm1
               Width = 145
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 3
               OnChange = cbxModeloChange
             end
@@ -1284,7 +1284,7 @@ object Form1: TForm1
               Top = 32
               Width = 128
               Height = 21
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 4
             end
             object cbxPagCodigo: TComboBox
@@ -1294,7 +1294,7 @@ object Form1: TForm1
               Height = 21
               Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 5
             end
             object cbImprimir1Linha: TCheckBox
@@ -1396,7 +1396,7 @@ object Form1: TForm1
             MaxValue = 0
             MinValue = 10
             TabOrder = 2
-            Value = 10
+            Value = 0
           end
           object btMFEEnviarPagamento: TButton
             Left = 320
@@ -1511,7 +1511,7 @@ object Form1: TForm1
             Width = 192
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 2
           end
         end
@@ -1694,10 +1694,12 @@ object Form1: TForm1
     Top = 280
   end
   object ACBrSAT1: TACBrSAT
+    Integrador = ACBrIntegrador1
     Extrato = ACBrSATExtratoFortes1
     NomeDLL = 'c:\sat\SAT.DLL'
     ValidarNumeroSessaoResposta = True
     NumeroTentativasValidarSessao = 2
+    OnGravarLog = ACBrSAT1GravarLog
     Config.infCFe_versaoDadosEnt = 0.050000000000000000
     Config.ide_numeroCaixa = 0
     Config.ide_tpAmb = taHomologacao
@@ -1792,5 +1794,12 @@ object Form1: TForm1
     DisplayName = 'Documento PDF'
     Left = 484
     Top = 179
+  end
+  object ACBrIntegrador1: TACBrIntegrador
+    OnGravarLog = ACBrSAT1GravarLog
+    PastaInput = 'C:\Integrador\Input\'
+    PastaOutput = 'C:\Integrador\Output\'
+    Left = 100
+    Top = 344
   end
 end

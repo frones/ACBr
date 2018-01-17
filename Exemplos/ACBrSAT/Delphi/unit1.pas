@@ -8,7 +8,7 @@ uses
   ComCtrls, Spin, RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
   dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL,
   RLFilters, ACBrSATExtratoReportClass, ACBrSATExtratoClass, OleCtrls,
-  SHDocVw;
+  SHDocVw, ACBrIntegrador;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -238,6 +238,7 @@ type
     tsLog : TTabSheet ;
     tsGerado : TTabSheet ;
     sfeVersaoEnt: TEdit;
+    ACBrIntegrador1: TACBrIntegrador;
     procedure ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
       AData: TDateTime);
     procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
@@ -451,9 +452,9 @@ begin
 
     if Modelo = mfe_Integrador_XML then
     begin
-      TACBrSATMFe_integrador_XML(SAT).PastaInput  := edMFEInput.Text;
-      TACBrSATMFe_integrador_XML(SAT).PastaOutput := edMFEOutput.Text;
-      TACBrSATMFe_integrador_XML(SAT).Timeout     := seMFETimeout.Value;
+      ACBrIntegrador1.PastaInput  := edMFEInput.Text;
+      ACBrIntegrador1.PastaOutput := edMFEOutput.Text;
+      ACBrIntegrador1.Timeout     := seMFETimeout.Value;
     end;
   end
 end ;

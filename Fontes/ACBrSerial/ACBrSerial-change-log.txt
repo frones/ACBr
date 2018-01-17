@@ -40,6 +40,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 17/01/2018
+-- ACBrEscDiebold --
+[-] Correção na impressão do QRCode
+    https://www.projetoacbr.com.br/forum/topic/30649-impressora-diebold-n%C3%A3o-imprime-o-qrcode/
+
 -- ACBrECFEscECF --
 [-] Correção em  "TACBrECFEscECFComando.AddParamDouble", para evitar
     arredondamento indevidos em valores altos...

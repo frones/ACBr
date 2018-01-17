@@ -104,16 +104,14 @@ function TACBrEscDiebold.ComandoQrCode(ACodigo: AnsiString): AnsiString;
 begin
   with fpPosPrinter.ConfigQRCode do
   begin
-    if fpPosPrinter.Alinhamento = alEsquerda then
-      Result := GS + '(k' + #3 + #0 + '1B0'   // A esquerda
-    else
-      Result := GS + '(k' + #3 + #0 + '1B1';  // Centralizar
+    Result := ESC + '(k' + #3 + #0 + '1B' +
+              ifthen(fpPosPrinter.Alinhamento = alEsquerda, '0', '1'); // 0 - A esquerda, 1 - Centralizar
 
-     Result := Result +
-               GS + '(k' + #3 + #0 + '1C' + AnsiChr(LarguraModulo) +   // Largura Modulo
-               GS + '(k' + #3 + #0 + '1E' + IntToStr(ErrorLevel) + // Error Level
-               GS + '(k' + IntToLEStr(length(ACodigo)+3)+'1P0' + ACodigo +  // Codifica
-               GS + '(k' + #3 + #0 +'1Q0';  // Imprime
+    Result := Result +
+              ESC + '(k' + #3 + #0 + '1C' + AnsiChr(LarguraModulo) +   // Largura Modulo
+              ESC + '(k' + #3 + #0 + '1E' + IntToStr(ErrorLevel) + // Error Level
+              ESC + '(k' + IntToLEStr(length(ACodigo)+3)+'1P0' + ACodigo +  // Codifica
+              ESC + '(k' + #3 + #0 +'1Q0';  // Imprime
   end;
 end;
 

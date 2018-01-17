@@ -164,7 +164,7 @@ end;
 
 function TBPeW.GerarXml: Boolean;
 var
-  chave: AnsiString;
+  chave: String;
   Gerar: Boolean;
   xProtBPe : String;
   xCNPJCPF : String;

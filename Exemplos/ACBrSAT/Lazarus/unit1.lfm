@@ -3820,4 +3820,10 @@ object Form1: TForm1
     left = 484
     top = 179
   end
+  object ACBrIntegrador1: TACBrIntegrador
+    PastaInput = 'C:\Integrador\Input\'
+    PastaOutput = 'C:\Integrador\Output\'
+    left = 160
+    top = 279
+  end
 end

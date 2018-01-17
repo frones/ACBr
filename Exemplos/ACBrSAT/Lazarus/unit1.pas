@@ -8,7 +8,8 @@ uses
   Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, PrintersDlgs, Forms,
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
   ComCtrls, Spin, RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
-  dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL;
+  dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL,
+  ACBrIntegrador;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -22,6 +23,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    ACBrIntegrador1: TACBrIntegrador;
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrSAT1 : TACBrSAT ;
     ACBrSATExtratoESCPOS1 : TACBrSATExtratoESCPOS ;
@@ -448,9 +450,11 @@ begin
 
     if Modelo = mfe_Integrador_XML then
     begin
-      TACBrSATMFe_integrador_XML(SAT).PastaInput  := edMFEInput.Text;
-      TACBrSATMFe_integrador_XML(SAT).PastaOutput := edMFEOutput.Text;
-      TACBrSATMFe_integrador_XML(SAT).Timeout     := seMFETimeout.Value;
+      ACBrIntegrador1.PastaInput  := edMFEInput.Text;
+      ACBrIntegrador1.PastaOutput := edMFEOutput.Text;
+      ACBrIntegrador1.Timeout     := seMFETimeout.Value;
+
+      Integrador := ACBrIntegrador1;
     end;
   end
 end ;

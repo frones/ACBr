@@ -1396,7 +1396,7 @@ object Form1: TForm1
             MaxValue = 0
             MinValue = 10
             TabOrder = 2
-            Value = 0
+            Value = 10
           end
           object btMFEEnviarPagamento: TButton
             Left = 320
@@ -1694,7 +1694,6 @@ object Form1: TForm1
     Top = 280
   end
   object ACBrSAT1: TACBrSAT
-    Integrador = ACBrIntegrador1
     Extrato = ACBrSATExtratoFortes1
     NomeDLL = 'c:\sat\SAT.DLL'
     ValidarNumeroSessaoResposta = True

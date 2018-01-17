@@ -455,6 +455,8 @@ begin
       ACBrIntegrador1.PastaInput  := edMFEInput.Text;
       ACBrIntegrador1.PastaOutput := edMFEOutput.Text;
       ACBrIntegrador1.Timeout     := seMFETimeout.Value;
+
+      Integrador := ACBrIntegrador1;        
     end;
   end
 end ;

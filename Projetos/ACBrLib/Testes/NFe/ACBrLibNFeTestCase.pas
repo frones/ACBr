@@ -17,19 +17,14 @@ type
 implementation
 
 uses
-  ACBrUtil,
-  ACBrLibComum, ACBrLibNFeClass, ACBrLibConsts;
+  ACBrLibNFeStaticImport;
 
 procedure TTestACBrNFeLib.TestInicializar;
 begin
   AssertEquals(ErrOk, LIB_Inicializar('ACBrNFe.ini', ''));
 end;
 
-
 initialization
-
-  pLibClass := TACBrLibNFe;
-
   RegisterTest(TTestACBrNFeLib);
 end.
 

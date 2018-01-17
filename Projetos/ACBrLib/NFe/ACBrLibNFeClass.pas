@@ -325,4 +325,7 @@ exports
   NFE_CarregarININFe,
   NFE_LimparListaNFEs;
 
+initialization
+  pLibClass := TACBrLibNFe;
+
 end.

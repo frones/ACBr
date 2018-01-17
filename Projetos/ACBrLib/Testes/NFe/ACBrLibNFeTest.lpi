@@ -33,39 +33,18 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="10">
+    <RequiredPackages Count="3">
       <Item1>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="fpcunittestrunner"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="LCL"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
-      </Item3>
-      <Item4>
-        <PackageName Value="ACBr_NFe"/>
-      </Item4>
-      <Item5>
-        <PackageName Value="ACBrSerial"/>
-      </Item5>
-      <Item6>
-        <PackageName Value="ACBrDFeComum"/>
-      </Item6>
-      <Item7>
-        <PackageName Value="ACBrComum"/>
-      </Item7>
-      <Item8>
-        <PackageName Value="fpcunittestrunner"/>
-      </Item8>
-      <Item9>
-        <PackageName Value="LCL"/>
-      </Item9>
-      <Item10>
         <PackageName Value="FCL"/>
-      </Item10>
+      </Item3>
     </RequiredPackages>
-    <Units Count="11">
+    <Units Count="3">
       <Unit0>
         <Filename Value="ACBrLibNFeTest.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -75,44 +54,9 @@
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\..\NFe\ACBrLibNFeClass.pas"/>
+        <Filename Value="..\..\NFe\ACBrLibNFeStaticImport.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
-      <Unit3>
-        <Filename Value="..\..\NFe\ACBrLibNFeConfig.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="..\..\NFe\ACBrLibNFeConsts.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="..\..\NFe\ACBrLibNFeDataModule.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="NFeDataModule"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="..\..\NFe\ACBrNFeRespostas.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="..\..\Comum\ACBrLibComum.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="..\..\Comum\ACBrLibConfig.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit8>
-      <Unit9>
-        <Filename Value="..\..\Comum\ACBrLibConsts.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="..\..\Comum\ACBrLibResposta.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit10>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -122,8 +66,8 @@
       <Filename Value="bin\ACBrLibNFeTest"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\NFe;..\..\Comum"/>
+      <IncludeFiles Value="$(ProjOutDir);..\..\Comum"/>
+      <OtherUnitFiles Value="..\..\Comum;..\..\NFe"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

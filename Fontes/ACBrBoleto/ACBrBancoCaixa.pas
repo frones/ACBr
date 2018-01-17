@@ -1067,7 +1067,6 @@ begin
 
    fQtRegLote := 0;
    fValorTotalDocs := 0;
-   wQTDTitulos := 0
 end;
 
 procedure TACBrCaixaEconomica.GerarRegistroTrailler400(ARemessa: TStringList);

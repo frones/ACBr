@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2018
+-- ACBrDFe --
+[*] Melhoria na tratativa de erro em "LerServicoDeParams", quando não encontrar
+    linha no INI com a URL do Serviço
+    (por: BigWings)
+
 09/01/2017
 -- ACBrDFeConfiguracoes --
 [*] Ajustes para que TConfiguracoes.Owner possa ser Nulo

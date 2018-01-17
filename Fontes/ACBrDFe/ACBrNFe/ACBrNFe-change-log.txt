@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2018
+-- ACBrNFeWebServices --
+[-] Correção em "TNFeRecepcao", "TNFeRetRecepcao", "TNFeConsulta", para que o
+    Numero de Versão seja mantido em todas as etapas
+    (por: DSA e BigWings)
+
 11/01/2018
 -- ACBrNFeNotasFiscais --
 [-] Acerto para não validar somatorio das formas de pagamento, conforme manual

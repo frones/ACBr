@@ -478,7 +478,7 @@ procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;
   var Versao: Double; var URL: String; var Servico: String;
   var SoapAction: String);
 var
-  Sessao, ListaSessoes, NomeSchema, ArqSchema: String;
+  Sessao, ListaSessoes, SessaoUsar, NomeSchema, ArqSchema: String;
   VersaoAchada, VersaoSchema: Double;
 begin
   if EstaVazio(ModeloDFe) then
@@ -509,14 +509,18 @@ begin
 
     if FPIniParams.SectionExists(Sessao) then
     begin
-      Sessao := FPIniParams.ReadString(Sessao, 'Usar', '');
-      if NaoEstaVazio(Sessao) then
+      SessaoUsar := FPIniParams.ReadString(Sessao, 'Usar', '');
+      if NaoEstaVazio(SessaoUsar) then
       begin
+        Sessao := SessaoUsar;
         VersaoAchada := Versao;
         LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL );
         LerDeParams(  FPIniParams.ReadString(Sessao, 'WSDL', ''), NomeServico, VersaoAchada, Servico );
         LerDeParams( FPIniParams.ReadString(Sessao, 'SoapAction', ''), NomeServico, VersaoAchada, SoapAction );
-      end;
+      end
+      else
+        raise EACBrDFeException.Create('URL para o serviço "' + NomeServico + '" não encontrada na sessão "'+Sessao+'" no arquivo "'+
+                                       Configuracoes.WebServices.ResourceName+'"');
     end
     else
       raise EACBrDFeException.Create('Sessão "'+Sessao+'", não encontrada no arquivo "'+

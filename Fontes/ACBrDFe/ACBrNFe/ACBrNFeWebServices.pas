@@ -136,6 +136,7 @@ type
     FTMed: integer;
     FSincrono: Boolean;
     FZipado: Boolean;
+    FVersaoDF: TpcnVersaoDF;
 
     FNFeRetornoSincrono: TRetConsSitNFe;
     FNFeRetorno: TretEnvNFe;
@@ -143,6 +144,7 @@ type
     function GetLote: String;
     function GetRecibo: String;
   protected
+    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosIntegrador; override;
@@ -187,12 +189,14 @@ type
     FxMotivo: String;
     FcMsg: integer;
     FxMsg: String;
+    FVersaoDF: TpcnVersaoDF;
 
     FNFeRetorno: TRetConsReciNFe;
 
     function GetRecibo: String;
     function TratarRespostaFinal: Boolean;
   protected
+    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosIntegrador; override;
@@ -239,9 +243,11 @@ type
     FcUF: integer;
     FxMsg: String;
     FcMsg: integer;
+    FVersaoDF: TpcnVersaoDF;
 
     FNFeRetorno: TRetConsReciNFe;
   protected
+    procedure InicializarServico; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirURL; override;
     procedure DefinirDadosIntegrador; override;
@@ -718,12 +724,8 @@ begin
   FOldSSLType := FPDFeOwner.SSL.SSLType;
   FOldHeaderElement := FPHeaderElement;
 
-  { Caso seja versão 4.0, deve certificar que está usando TLS1.2 }
   if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
-  begin
-   // FPDFeOwner.SSL.SSLType := LT_TLSv1_2;   // Servidor da BAHIA não está funcionando com esta configuração
     FPHeaderElement := ''; //Versão 4.00 não tem o elemento <soap12:Header>
-  end;
 
   TACBrNFe(FPDFeOwner).SetStatus(FPStatus);
 end;
@@ -992,18 +994,34 @@ begin
   Result := Trim(FRecibo);
 end;
 
+procedure TNFeRecepcao.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FNotasFiscais.Count > 0 then    // Tem NFe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoDF(ok, FNotasFiscais.Items[0].NFe.infNFe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesNFe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+
+  if FVersaoDF >= ve400 then
+    FPHeaderElement := ''  //Versão 4.00 não tem o elemento <soap12:Header>
+  else
+    FPHeaderElement := FOldHeaderElement;
+end;
+
 procedure TNFeRecepcao.DefinirURL;
 var
   xUF: String;
-  ok: Boolean;
   VerServ: Double;
   Modelo: TpcnModeloDF;
+  ok: Boolean;
 begin
   if FNotasFiscais.Count > 0 then    // Tem NFe ? Se SIM, use as informações do XML
   begin
     Modelo  := StrToModeloDF(ok, IntToStr(FNotasFiscais.Items[0].NFe.Ide.modelo));
     FcUF    := FNotasFiscais.Items[0].NFe.Ide.cUF;
-    VerServ := FNotasFiscais.Items[0].NFe.infNFe.Versao;
 
     if FPConfiguracoesNFe.WebServices.Ambiente <> FNotasFiscais.Items[0].NFe.Ide.tpAmb then
       raise EACBrNFeException.Create( CErroAmbienteDiferente );
@@ -1012,14 +1030,14 @@ begin
   begin                              // Se não tem NFe, use as configurações do componente
     Modelo  := FPConfiguracoesNFe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesNFe.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
   end;
 
+  VerServ := VersaoDFToDbl(FVersaoDF);
   FTpAmb  := FPConfiguracoesNFe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
 
-  if TACBrNFe(FPDFeOwner).EhAutorizacao( DblToVersaoDF(ok,VerServ), Modelo, FcUF) then
+  if TACBrNFe(FPDFeOwner).EhAutorizacao(FVersaoDF, Modelo, FcUF) then
     FPLayout := LayNfeAutorizacao
   else
     FPLayout := LayNfeRecepcao;
@@ -1049,7 +1067,7 @@ procedure TNFeRecepcao.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeAutorizacao then
   begin
-    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400)  then
+    if (FVersaoDF >= ve400)  then
     begin
       if EstaVazio(FPServico) then
         FPServico := GetUrlWsd + 'NFeAutorizacao4';
@@ -1070,7 +1088,7 @@ begin
 
   if FZipado then
   begin
-    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+    if (FVersaoDF >= ve400) then
       FPSoapAction := FPSoapAction+'ZIP'
     else
       FPSoapAction := FPSoapAction+'LoteZip';
@@ -1102,7 +1120,7 @@ var
   indSinc: String;
 begin
   if (FPLayout = LayNfeAutorizacao) or (FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) or
-    (FPConfiguracoesNFe.Geral.VersaoDF >= ve310) then
+    (FVersaoDF >= ve310) then
     indSinc := '<indSinc>' + IfThen(FSincrono, '1', '0') + '</indSinc>'
   else
     indSinc := '';
@@ -1140,8 +1158,7 @@ begin
                                'nfeResultMsg',
                                'nfeRecepcaoLote2Result'],FPRetornoWS );
 
-  if ((FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) or
-    (FPConfiguracoesNFe.Geral.VersaoDF >= ve310)) and FSincrono then
+  if ((FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) or (FVersaoDF >= ve310)) and FSincrono then
   begin
     if pos('retEnviNFe', FPRetWS) > 0 then
       AXML := StringReplace(FPRetWS, 'retEnviNFe', 'retConsSitNFe',
@@ -1351,6 +1368,23 @@ begin
   Result := Trim(FRecibo);
 end;
 
+procedure TNFeRetRecepcao.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FNotasFiscais.Count > 0 then    // Tem NFe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoDF(ok, FNotasFiscais.Items[0].NFe.infNFe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesNFe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+
+  if FVersaoDF >= ve400 then
+    FPHeaderElement := '' //Versão 4.00 não tem o elemento <soap12:Header>
+  else
+    FPHeaderElement := FOldHeaderElement;
+end;
+
 procedure TNFeRetRecepcao.Clear;
 var
   i, j: Integer;
@@ -1441,7 +1475,6 @@ begin
   begin
     Modelo  := StrToModeloDF(ok, IntToStr(FNotasFiscais.Items[0].NFe.Ide.modelo));
     FcUF    := FNotasFiscais.Items[0].NFe.Ide.cUF;
-    VerServ := FNotasFiscais.Items[0].NFe.infNFe.Versao;
 
     if FPConfiguracoesNFe.WebServices.Ambiente <> FNotasFiscais.Items[0].NFe.Ide.tpAmb then
       raise EACBrNFeException.Create( CErroAmbienteDiferente );
@@ -1450,14 +1483,14 @@ begin
   begin                              // Se não tem NFe, use as configurações do componente
     Modelo  := FPConfiguracoesNFe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesNFe.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
   end;
 
+  VerServ := VersaoDFToDbl(FVersaoDF);
   FTpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
 
-  if TACBrNFe(FPDFeOwner).EhAutorizacao( DblToVersaoDF(ok, VerServ), Modelo, FcUF) then
+  if TACBrNFe(FPDFeOwner).EhAutorizacao(FVersaoDF, Modelo, FcUF) then
     FPLayout := LayNfeRetAutorizacao
   else
     FPLayout := LayNfeRetRecepcao;
@@ -1487,7 +1520,7 @@ procedure TNFeRetRecepcao.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeRetAutorizacao then
   begin
-    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+    if (FVersaoDF >= ve400) then
     begin
       if EstaVazio(FPServico) then
         FPServico := GetUrlWsd + 'NFeRetAutorizacao4';
@@ -1758,11 +1791,28 @@ begin
   FNFeRetorno := TRetConsReciNFe.Create;
 end;
 
+procedure TNFeRecibo.InicializarServico;
+var
+  ok: Boolean;
+begin
+  if FNotasFiscais.Count > 0 then    // Tem NFe ? Se SIM, use as informações do XML
+    FVersaoDF := DblToVersaoDF(ok, FNotasFiscais.Items[0].NFe.infNFe.Versao)
+  else
+    FVersaoDF := FPConfiguracoesNFe.Geral.VersaoDF;
+
+  inherited InicializarServico;
+
+  if FVersaoDF >= ve400 then
+    FPHeaderElement := ''  //Versão 4.00 não tem o elemento <soap12:Header>
+  else
+    FPHeaderElement := FOldHeaderElement;
+end;
+
 procedure TNFeRecibo.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeRetAutorizacao then
   begin
-    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+    if (FVersaoDF >= ve400) then
     begin
       if EstaVazio(FPServico) then
         FPServico := GetUrlWsd + 'NFeRetAutorizacao4';
@@ -1793,7 +1843,6 @@ begin
   begin
     Modelo  := StrToModeloDF(ok, IntToStr(FNotasFiscais.Items[0].NFe.Ide.modelo));
     FcUF    := FNotasFiscais.Items[0].NFe.Ide.cUF;
-    VerServ := FNotasFiscais.Items[0].NFe.infNFe.Versao;
 
     if FPConfiguracoesNFe.WebServices.Ambiente <> FNotasFiscais.Items[0].NFe.Ide.tpAmb then
       raise EACBrNFeException.Create( CErroAmbienteDiferente );
@@ -1802,14 +1851,14 @@ begin
   begin                              // Se não tem NFe, use as configurações do componente
     Modelo  := FPConfiguracoesNFe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesNFe.WebServices.UFCodigo;
-    VerServ := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
   end;
 
+  VerServ := VersaoDFToDbl(FVersaoDF);
   FTpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
 
-  if TACBrNFe(FPDFeOwner).EhAutorizacao( DblToVersaoDF(ok, VerServ), Modelo, FcUF) then
+  if TACBrNFe(FPDFeOwner).EhAutorizacao(FVersaoDF, Modelo, FcUF) then
     FPLayout := LayNfeRetAutorizacao
   else
     FPLayout := LayNfeRetRecepcao;
@@ -1981,17 +2030,12 @@ begin
   FPURL  := '';
   Modelo := ModeloDFToPrefixo( StrToModeloDF(ok, ExtrairModeloChaveAcesso(FNFeChave) ));
   FcUF   := ExtrairUFChaveAcesso(FNFeChave);
-
+  VerServ:= VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
+  
   if FNotasFiscais.Count > 0 then
-  begin
-    FTpAmb  := FNotasFiscais.Items[0].NFe.Ide.tpAmb;
-    VerServ := FNotasFiscais.Items[0].NFe.infNFe.Versao;
-  end
+    FTpAmb  := FNotasFiscais.Items[0].NFe.Ide.tpAmb
   else
-  begin
     FTpAmb  := FPConfiguracoesNFe.WebServices.Ambiente;
-    VerServ := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
-  end;
 
   // Se a nota foi enviada para o SVC a consulta tem que ser realizada no SVC e
   // não na SEFAZ-Autorizadora

@@ -164,7 +164,7 @@ type
     property TimeOut: Integer read FTimeOut write SetTimeOut default 5000;
     property QuebradeLinha: String read FQuebradeLinha write FQuebradeLinha;
     property TimeZoneConf: TTimeZoneConf read FTimeZoneConf write FTimeZoneConf;
-    property SSLType: TSSLType read FSSLType write SetSSLType;
+    property SSLType: TSSLType read FSSLType write SetSSLType default LT_all;
   end;
 
   TOrdenacaoPathItem = class;
@@ -662,6 +662,7 @@ begin
   FTimeOut := 5000;
   FResourceName := 'ACBrServicos';
   FQuebradeLinha := '|';
+  FSSLType := LT_all;
 end;
 
 destructor TWebServicesConf.Destroy;

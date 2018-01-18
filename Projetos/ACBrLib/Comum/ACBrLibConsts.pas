@@ -46,7 +46,12 @@ const
 
   CLibChaveCrypt = 'tYk*5W@';
 
-  CNomeArqConf = 'acbrlib.ini';
+  {$IfDef MSWINDOWS}
+   CNomeArqConf = 'ACBrLib.ini';
+  {$Else}
+   CNomeArqConf = 'acbrlib.ini';
+  {$EndIf}
+
   CSessaoPrincipal = 'Principal';
   CChaveChave = 'Chave';
   CChaveLogNivel = 'LogNivel';

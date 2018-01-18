@@ -9,9 +9,12 @@ uses
 
 type
 
+  { TTestACBrNFeLib }
+
   TTestACBrNFeLib = class(TTestCase)
   published
-    procedure TestInicializar;
+    procedure Test_LIB_Inicializar;
+    procedure Test_LIB_Finalizar;
   end;
 
 implementation
@@ -19,9 +22,14 @@ implementation
 uses
   ACBrLibNFeStaticImport;
 
-procedure TTestACBrNFeLib.TestInicializar;
+procedure TTestACBrNFeLib.Test_LIB_Inicializar;
 begin
   AssertEquals(ErrOk, LIB_Inicializar('',''));
+end;
+
+procedure TTestACBrNFeLib.Test_LIB_Finalizar;
+begin
+  AssertEquals(ErrOk, LIB_Finalizar());
 end;
 
 initialization

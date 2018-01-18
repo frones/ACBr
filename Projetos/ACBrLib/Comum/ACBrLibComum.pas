@@ -227,6 +227,12 @@ constructor TACBrLib.Create(ArqConfig: String; ChaveCrypt: AnsiString);
 begin
   inherited Create;
 
+  FLogData := -1;
+  FLogNome := '';
+
+  fpNome := CLibNome;
+  fpVersao := CLibVersao;
+
   CriarConfiguracao(ArqConfig, ChaveCrypt);
 end;
 
@@ -238,7 +244,6 @@ end;
 
 procedure TACBrLib.Inicializar;
 begin
-  GravarLog('Inicializar', logCompleto);
   with Retorno do
   begin
     Codigo := 0;
@@ -248,20 +253,21 @@ begin
   FLogData := 0;
   FLogNome := '';
 
-  fpNome := CLibNome;
-  fpVersao := CLibVersao;
+  if not FileExists(Config.NomeArquivo) then
+    Config.Gravar
+  else
+    Config.Ler;
 end;
 
 procedure TACBrLib.Finalizar;
 begin
   GravarLog('Finalizar', logCompleto);
-  fpConfig.Free;
+  FreeAndNil(fpConfig);
 end;
 
 procedure TACBrLib.CriarConfiguracao(ArqConfig: String; ChaveCrypt: AnsiString);
 begin
   fpConfig := TLibConfig.Create(Self, ArqConfig, ChaveCrypt);
-  GravarLog('TACBrLib.CriarConfiguracao - Feito', logParanoico);
 end;
 
 procedure TACBrLib.Executar;
@@ -271,14 +277,22 @@ begin
 end;
 
 function TACBrLib.CalcularNomeArqLog: String;
+var
+  APath: String;
 begin
   if (Date <> FLogData) then
   begin
-    if EstaVazio(Nome) then
-      raise Exception.Create(SErrLibSemNome);
-
     FLogData := Date;
-    FLogNome := fpConfig.Log.Path + PathDelim + Nome + '-' + DtoS(FLogData) + '.log';
+    APath := PathWithDelim(fpConfig.Log.Path);
+    if NaoEstaVazio(APath) then
+    begin
+      if (not DirectoryExists(APath)) then
+        raise EConfigException.CreateFmt(SErrDiretorioInvalido, [APath]);
+    end
+    else
+      APath := ApplicationPath;
+
+    FLogNome := APath + fpNome + '-' + DtoS(FLogData) + '.log';
   end;
 
   Result := FLogNome;
@@ -288,7 +302,8 @@ procedure TACBrLib.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolea
 var
   NomeArq: String;
 begin
-  if (not Assigned(fpConfig)) or (NivelLog > fpConfig.Log.Nivel) then
+  if (FLogData < 0) or (fpNome = '') or
+     (not Assigned(fpConfig)) or (NivelLog > fpConfig.Log.Nivel) then
     Exit;
 
   NomeArq := CalcularNomeArqLog;
@@ -315,11 +330,12 @@ begin
     ChaveCrypt := string(eChaveCrypt);
 
     if (pLib = nil) then
-    begin
       pLib := pLibClass.Create(ArqConfig, ChaveCrypt);
-      pLib.GravarLog('LIB_Inicializar( ' + ArqConfig + ', ' + StringOfChar('*', Length(ChaveCrypt)) + ' )', logSimples);
-      pLib.GravarLog(pLib.Nome + ' - ' + pLib.Versao, logSimples);
-    end;
+
+    pLib.Inicializar;
+
+    pLib.GravarLog('LIB_Inicializar( ' + ArqConfig + ', ' + StringOfChar('*', Length(ChaveCrypt)) + ' )', logSimples);
+    pLib.GravarLog(pLib.Nome + ' - ' + pLib.Versao, logSimples);
 
     Result := pLib.SetRetorno(ErrOK);
   except

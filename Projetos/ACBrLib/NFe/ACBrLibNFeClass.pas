@@ -94,9 +94,11 @@ uses
 
 constructor TACBrLibNFe.Create(ArqConfig: String; ChaveCrypt: AnsiString);
 begin
-  FNFeDM := TLibNFeDM.Create(Nil);
-
   inherited Create(ArqConfig, ChaveCrypt);
+  fpNome := CLibNFeNome;
+  fpVersao := CLibNFeVersao;
+
+  FNFeDM := TLibNFeDM.Create(Nil);
 end;
 
 destructor TACBrLibNFe.Destroy;
@@ -109,16 +111,12 @@ procedure TACBrLibNFe.Inicializar;
 begin
   inherited Inicializar;
 
-  fpNome := CLibNFeNome;
-  fpVersao := CLibNFeVersao;
-
   GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
 end;
 
 procedure TACBrLibNFe.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   fpConfig := TLibNFeConfig.Create(Self, ArqConfig, ChaveCrypt);
-  GravarLog('TACBrLibNFe.CriarConfiguracao - Feito', logParanoico);
 end;
 
 procedure TACBrLibNFe.Executar;

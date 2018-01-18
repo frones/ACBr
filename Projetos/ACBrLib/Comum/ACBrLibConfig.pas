@@ -193,7 +193,6 @@ type
     FChaveCrypt: AnsiString;
 
     procedure VerificarNomeEPath(Gravando: Boolean);
-    procedure DefinirValoresPadroes;
     procedure VerificarSessaoEChave(ASessao, AChave: String);
 
   protected
@@ -415,7 +414,7 @@ end;
 procedure TLogConfig.DefinirValoresPadroes;
 begin
   FNivel := logNenhum;
-  FPath := ApplicationPath;
+  FPath := '';
 end;
 
 procedure TLogConfig.SetPath(AValue: String);
@@ -455,9 +454,6 @@ begin
   else
     FChaveCrypt := AChaveCrypt;
 
-  TACBrLib(FOwner).GravarLog(ClassName + '.Create(' + FNomeArquivo + ', ' +
-    StringOfChar('*', Length(FChaveCrypt)) + ' )', logCompleto);
-
   FLog := TLogConfig.Create;
   FSistema := TSistemaConfig.Create;
   FEmail := TEmailConfig.Create(FChaveCrypt);
@@ -467,11 +463,8 @@ begin
 
   FIni := TMemIniFile.Create(FNomeArquivo);
 
-  DefinirValoresPadroes;
-  if not FileExists(FNomeArquivo) then
-    Gravar;
-
-  TACBrLib(FOwner).GravarLog(ClassName + '.Create - Feito', logParanoico);
+  TACBrLib(FOwner).GravarLog(ClassName + '.Create(' + FNomeArquivo + ', ' +
+    StringOfChar('*', Length(FChaveCrypt)) + ' )', logCompleto);
 end;
 
 destructor TLibConfig.Destroy;
@@ -487,8 +480,6 @@ begin
   FEmail.Free;
 
   inherited Destroy;
-
-  TACBrLib(FOwner).GravarLog(ClassName + '.Destroy - Feito', logParanoico);
 end;
 
 procedure TLibConfig.VerificarNomeEPath(Gravando: Boolean);
@@ -511,18 +502,6 @@ begin
     raise EConfigException.Create(Format(SErrArquivoNaoExiste, [FNomeArquivo]));
 end;
 
-procedure TLibConfig.DefinirValoresPadroes;
-begin
-  TACBrLib(FOwner).GravarLog(ClassName + '.DefinirValoresPadroes', logParanoico);
-
-  FLog.DefinirValoresPadroes;
-  FSistema.DefinirValoresPadroes;
-  FEmail.DefinirValoresPadroes;
-  FProxyInfo.DefinirValoresPadroes;
-  FSoftwareHouse.DefinirValoresPadroes;
-  FEmissor.DefinirValoresPadroes;
-end;
-
 procedure TLibConfig.VerificarSessaoEChave(ASessao, AChave: String);
 var
   NaoExiste: String;
@@ -537,29 +516,24 @@ end;
 
 procedure TLibConfig.AplicarConfiguracoes;
 begin
-  TACBrLib(FOwner).GravarLog(ClassName + '.AplicarConfiguracoes: ' + FNomeArquivo, logCompleto);
+  TACBrLib(FOwner).GravarLog('TLibConfig.AplicarConfiguracoes: ' + FNomeArquivo, logCompleto);
 end;
 
 procedure TLibConfig.Ler;
 begin
   TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
-  VerificarNomeEPath(False);
-
-  DefinirValoresPadroes;
-
   FLog.LerIni(FIni);
   FSistema.LerIni(FIni);
   FEmail.LerIni(FIni);
   FProxyInfo.LerIni(FIni);
   FSoftwareHouse.LerIni(FIni);
   FEmissor.LerIni(FIni);
-
-  TACBrLib(FOwner).GravarLog(ClassName + '.Ler - Feito', logParanoico);
+  TACBrLib(FOwner).GravarLog(ClassName + '.Ler - Feito', logCompleto);
 end;
 
 procedure TLibConfig.Gravar;
 begin
-  TACBrLib(FOwner).GravarLog(ClassName + '.Gravar: ' + FNomeArquivo, logCompleto);
+  TACBrLib(FOwner).GravarLog('TLibConfig.Gravar: ' + FNomeArquivo, logCompleto);
   VerificarNomeEPath(True);
 
   FLog.GravarIni(FIni);
@@ -570,8 +544,7 @@ begin
   FEmissor.GravarIni(FIni);
 
   FIni.UpdateFile;
-
-  TACBrLib(FOwner).GravarLog(ClassName + '.Gravar - Feito', logParanoico);
+  TACBrLib(FOwner).GravarLog('TLibConfig.Gravar - Feito', logParanoico);
 end;
 
 procedure TLibConfig.GravarValor(ASessao, AChave, AValor: String);

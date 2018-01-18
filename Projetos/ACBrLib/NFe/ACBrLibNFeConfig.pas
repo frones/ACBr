@@ -408,11 +408,11 @@ end;
 
 constructor TLibNFeConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
+  inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
+
   FNFeConfig := TConfiguracoesNFe.Create(nil);
   FDANFeConfig := TDANFeConfig.Create;
   FDANFECeConfig := TDANFECeConfig.Create;
-
-  inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 end;
 
 destructor TLibNFeConfig.Destroy;
@@ -444,7 +444,13 @@ end;
 procedure TLibNFeConfig.Ler;
 begin
   if Assigned(Owner) then
-    TACBrLibNFe(Owner).NFeDM.Travar;
+  begin
+    with TACBrLibNFe(Owner) do
+    begin
+      GravarLog('TLibNFeConfig.Ler: ' + NomeArquivo, logCompleto);
+      NFeDM.Travar;
+    end;
+  end;
 
   try
     inherited Ler;
@@ -458,7 +464,11 @@ begin
     // Ajustes pos leitura das configurações //
     if Assigned(Owner) then
     begin
-      TACBrLibNFe(Owner).NFeDM.Destravar;
+      with TACBrLibNFe(Owner) do
+      begin
+        NFeDM.Destravar;
+        GravarLog('TLibNFeConfig.Ler - Feito', logParanoico);
+      end;
     end;
   end;
 end;
@@ -466,17 +476,31 @@ end;
 procedure TLibNFeConfig.Gravar;
 begin
   if Assigned(Owner) then
-    TACBrLibNFe(Owner).NFeDM.Travar;
+  begin
+    with TACBrLibNFe(Owner) do
+    begin
+      GravarLog('TLibNFeConfig.Gravar: ' + NomeArquivo, logCompleto);
+      NFeDM.Travar;
+    end;
+  end;
 
   try
+    inherited Gravar;
+
     FNFeConfig.GravarIni(Ini);
     FDANFeConfig.GravarIni(Ini);
     FDANFECeConfig.GravarIni(Ini);
 
-    inherited Gravar;  // UpdateFile
+    Ini.UpdateFile;
   finally
     if Assigned(Owner) then
-      TACBrLibNFe(Owner).NFeDM.Destravar;
+    begin
+      with TACBrLibNFe(Owner) do
+      begin
+        NFeDM.Destravar;
+        GravarLog('TLibNFeConfig.Gravar - Feito', logParanoico);
+      end;
+    end;
   end;
 end;
 

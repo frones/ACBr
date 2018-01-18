@@ -379,21 +379,30 @@ begin
 end;
 
 function TACBrBoletoFCFR.CarregaFastReportFile: Boolean;
+var
+	BoletoStreamFR3: TStringStream;
 begin
   Result := False;
   if Trim(fFastReportFile) <> '' then
   begin
-    with FdmBoleto do
-    begin
+  	if Pos('.FR3',UpperCase(fFastReportFile)) = 0 then
+  	begin
+			BoletoStreamFR3:=TStringStream.Create(fFastReportFile);
+      FdmBoleto.frxReport.FileName := '';
+      FdmBoleto.frxReport.LoadFromStream(BoletoStreamFR3);
+      BoletoStreamFR3.Free;
+   	end
+   	else
+   	begin
       if FileExists(fFastReportFile) then
-         frxReport.LoadFromFile(fFastReportFile)
+         FdmBoleto.frxReport.LoadFromFile(fFastReportFile)
       else
         raise EACBrBoletoFCFR.CreateFmt('Caminho do arquivo de impressão do boleto "%s" inválido.', [fFastReportFile]);
       Result := True;
     end;
   end
   else
-    raise EACBrBoletoFCFR.Create('Caminho do arquivo de impressão do boleto não assinalado.');
+    raise EACBrBoletoFCFR.Create('Caminho ou o arquivo de impressão do boleto não assinalado.');
 end;
 
 function TACBrBoletoFCFR.PreparaRelatorio: Boolean;

@@ -25,6 +25,8 @@ begin
   {$ENDIF}
 
   pLibClass := TACBrLibNFe; // Ajusta a classe a ser criada
+
+  MainThreadID := GetCurrentThreadId();
   Application.Initialize;
 end.
 

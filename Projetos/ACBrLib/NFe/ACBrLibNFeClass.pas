@@ -92,18 +92,25 @@ uses
 
 { TACBrLibNFe }
 
+constructor TACBrLibNFe.Create(ArqConfig: String; ChaveCrypt: AnsiString);
+begin
+  FNFeDM := TLibNFeDM.Create(Nil);
+
+  inherited Create(ArqConfig, ChaveCrypt);
+end;
+
+destructor TACBrLibNFe.Destroy;
+begin
+  FNFeDM.Free;
+  inherited Destroy;
+end;
+
 procedure TACBrLibNFe.Inicializar;
-var
-  CN: String;
-  CT: TClass;
 begin
   inherited Inicializar;
 
   fpNome := CLibNFeNome;
   fpVersao := CLibNFeVersao;
-
-  CN := SELF.ClassName;
-  CT := Self.ClassType;
 
   GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
 end;
@@ -119,20 +126,6 @@ begin
   inherited Executar;
   FNFeDM.AplicarConfiguracoes;
 end;
-
-constructor TACBrLibNFe.Create(ArqConfig: String; ChaveCrypt: AnsiString);
-begin
-  FNFeDM := TLibNFeDM.CreateNew(Nil);
-
-  inherited Create(ArqConfig, ChaveCrypt);
-end;
-
-destructor TACBrLibNFe.Destroy;
-begin
-  FNFeDM.Free;
-  inherited Destroy;
-end;
-
 
 {%region NFe}
 
@@ -171,13 +164,13 @@ begin
             Exit;
           end;
 
-          Ok := NFeDM.ACBrNFe.NotasFiscais.LoadFromFile(ArquivoOuXml);
+          Ok := NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(ArquivoOuXml);
         end
         else
-          Ok := NFeDM.ACBrNFe.NotasFiscais.LoadFromString(ArquivoOuXml);
+          Ok := NFeDM.ACBrNFe1.NotasFiscais.LoadFromString(ArquivoOuXml);
 
         if Ok then
-          Result := NFeDM.ACBrNFe.NotasFiscais.Count
+          Result := NFeDM.ACBrNFe1.NotasFiscais.Count
         else
           Result := pLib.SetRetorno(ErrOK, SErrNFeNenhumaNFeCarregada);
       except
@@ -223,8 +216,8 @@ begin
     NFeDM.Travar;
     try
       try
-        if NFeDM.ACBrNFe.NotasFiscais.LoadFromIni(ArquivoOuINI) then
-          Result := NFeDM.ACBrNFe.NotasFiscais.Count
+        if NFeDM.ACBrNFe1.NotasFiscais.LoadFromIni(ArquivoOuINI) then
+          Result := NFeDM.ACBrNFe1.NotasFiscais.Count
         else
           Result := pLib.SetRetorno(ErrOK, SErrNFeNenhumaNFeCarregada);
       except
@@ -255,8 +248,8 @@ begin
     NFeDM.Travar;
     try
       try
-        NFeDM.ACBrNFe.NotasFiscais.Clear;
-        Result := NFeDM.ACBrNFe.NotasFiscais.Count;
+        NFeDM.ACBrNFe1.NotasFiscais.Clear;
+        Result := NFeDM.ACBrNFe1.NotasFiscais.Count;
       except
         on E: Exception do
         begin
@@ -292,7 +285,7 @@ begin
     NFeDM.Travar;
     Resposta := TStatusServicoResposta.Create;
 
-    with NFeDM.ACBrNFe do
+    with NFeDM.ACBrNFe1 do
     begin
       try
         try

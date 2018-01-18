@@ -408,11 +408,11 @@ end;
 
 constructor TLibNFeConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
-  inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
-
   FNFeConfig := TConfiguracoesNFe.Create(nil);
   FDANFeConfig := TDANFeConfig.Create;
   FDANFECeConfig := TDANFECeConfig.Create;
+
+  inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 end;
 
 destructor TLibNFeConfig.Destroy;

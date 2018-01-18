@@ -468,6 +468,8 @@ begin
   FIni := TMemIniFile.Create(FNomeArquivo);
 
   DefinirValoresPadroes;
+  if not FileExists(FNomeArquivo) then
+    Gravar;
 
   TACBrLib(FOwner).GravarLog(ClassName + '.Create - Feito', logParanoico);
 end;

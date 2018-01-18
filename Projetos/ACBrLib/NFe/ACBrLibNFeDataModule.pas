@@ -14,18 +14,18 @@ type
 
   TLibNFeDM = class(TDataModule)
     ACBrMail: TACBrMail;
-    ACBrNFe: TACBrNFe;
+    ACBrNFe1: TACBrNFe;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
-    ACBrNFeDANFeESCPOS: TACBrNFeDANFeESCPOS;
+    ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
-    ACBrPosPrinter: TACBrPosPrinter;
+    ACBrPosPrinter1: TACBrPosPrinter;
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
 
   private
     FLock: TCriticalSection;
-  public
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
 
+  public
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
@@ -42,16 +42,14 @@ uses
 
 { TLibNFeDM }
 
-constructor TLibNFeDM.Create(AOwner: TComponent);
+procedure TLibNFeDM.DataModuleCreate(Sender: TObject);
 begin
-  inherited Create(AOwner);
   FLock := TCriticalSection.Create;
 end;
 
-destructor TLibNFeDM.Destroy;
+procedure TLibNFeDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
-  inherited Destroy;
 end;
 
 procedure TLibNFeDM.AplicarConfiguracoes;
@@ -59,9 +57,9 @@ var
   pLibConfig: TLibNFeConfig;
 begin
 
-  ACBrNFe.SSL.DescarregarCertificado;
+  ACBrNFe1.SSL.DescarregarCertificado;
   pLibConfig := TLibNFeConfig(TACBrLibNFe(pLib).Config);
-  ACBrNFe.Configuracoes.Assign(pLibConfig.NFeConfig);
+  ACBrNFe1.Configuracoes.Assign(pLibConfig.NFeConfig);
 
   with ACBrMail do
   begin

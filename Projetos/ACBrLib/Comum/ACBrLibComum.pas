@@ -228,9 +228,6 @@ begin
   inherited Create;
 
   CriarConfiguracao(ArqConfig, ChaveCrypt);
-
-  Inicializar;
-  Executar;
 end;
 
 destructor TACBrLib.Destroy;
@@ -264,6 +261,7 @@ end;
 procedure TACBrLib.CriarConfiguracao(ArqConfig: String; ChaveCrypt: AnsiString);
 begin
   fpConfig := TLibConfig.Create(Self, ArqConfig, ChaveCrypt);
+  GravarLog('TACBrLib.CriarConfiguracao - Feito', logParanoico);
 end;
 
 procedure TACBrLib.Executar;

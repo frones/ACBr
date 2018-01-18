@@ -38,7 +38,7 @@ unit ACBrLibComum;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Forms,
   ACBrLibConfig;
 
 type
@@ -70,7 +70,7 @@ type
 
     function CalcularNomeArqLog: String; virtual;
   public
-    constructor Create(ArqConfig: String = ''; ChaveCrypt: AnsiString = '');
+    constructor Create(ArqConfig: String = ''; ChaveCrypt: AnsiString = ''); virtual;
     destructor Destroy; override;
 
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
@@ -228,6 +228,7 @@ begin
   inherited Create;
 
   CriarConfiguracao(ArqConfig, ChaveCrypt);
+
   Inicializar;
   Executar;
 end;
@@ -496,20 +497,9 @@ end;
 
 {%endregion}
 
-exports
-  //Inicialiar Finalizar
-  LIB_Inicializar,
-  LIB_Finalizar,
+//exports
+//{$I ACBrLibExport.inc}
 
-  // Versao Retorno
-  LIB_NomeEVersao,
-  LIB_UltimoRetorno,
-
-  // Configurações
-  LIB_ConfigLer,
-  LIB_ConfigLerValor,
-  LIB_ConfigGravar,
-  LIB_ConfigGravarValor;
 
 initialization
   pLib := nil;

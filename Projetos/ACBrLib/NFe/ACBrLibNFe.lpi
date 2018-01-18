@@ -12,13 +12,14 @@
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <Title Value="ACBrLibNFe"/>
-      <UseAppBundle Value="False"/>
+      <Scaled Value="True"/>
       <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <BuildNr Value="2"/>
+      <BuildNr Value="15"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNFe - BIblioteca para emissão e impressão de nota fiscal eletrônica" InternalName="ACBrLibNFE" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrNFe " ProductVersion="0.0.0.1"/>
@@ -33,7 +34,7 @@
             <Filename Value="bin\Cdecl\ACBrNFe64"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
@@ -61,7 +62,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dFRAMEWORK"/>
+            <CustomOptions Value="-dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item2>
@@ -73,7 +74,7 @@
             <Filename Value="bin\StdCall\ACBrNFe32"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
@@ -100,19 +101,20 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dSTDCALL"/>
+            <CustomOptions Value="-dSTDCALL
+-dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item3>
-      <Item4 Name="x86 - CDECL - DEBUG">
+      <Item4 Name="x64 - STDCALL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\Testes\NFe\bin\ACBrNFe32"/>
+            <Filename Value="bin\StdCall\ACBrNFe64"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
             <OtherUnitFiles Value="..\Comum"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
@@ -123,7 +125,7 @@
           </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
-            <TargetCPU Value="i386"/>
+            <TargetCPU Value="x86_64"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -131,7 +133,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <UseHeaptrc Value="True"/>
+              <GenerateDebugInfo Value="False"/>
             </Debugging>
             <LinkSmart Value="True"/>
             <Options>
@@ -139,7 +141,8 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dFRAMEWORK"/>
+            <CustomOptions Value="-dSTDCALL
+-dNOGUI"/>
           </Other>
         </CompilerOptions>
       </Item4>
@@ -153,30 +156,33 @@
         <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\NFe\bin\ACBrLibNFeTest.exe"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="7">
+    <RequiredPackages Count="8">
       <Item1>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBrSerial"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBrTCP"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="LCL"/>
       </Item7>
+      <Item8>
+        <PackageName Value="FCL"/>
+      </Item8>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="10">
       <Unit0>
         <Filename Value="ACBrLibNFe.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -188,9 +194,9 @@
       <Unit2>
         <Filename Value="ACBrLibNFeDataModule.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="NFeDataModule"/>
+        <ComponentName Value="LibNFeDM"/>
         <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
+        <ResourceBaseClass Value="DataModule"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\Comum\ACBrLibConsts.pas"/>
@@ -216,6 +222,10 @@
         <Filename Value="..\Comum\ACBrLibResposta.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="..\Comum\ACBrLibExport.inc"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -225,7 +235,7 @@
       <Filename Value="bin\Cdecl\ACBrNFe32"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)"/>
+      <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
       <OtherUnitFiles Value="..\Comum"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
@@ -253,7 +263,7 @@
       </Options>
     </Linking>
     <Other>
-      <CustomOptions Value="-dFRAMEWORK"/>
+      <CustomOptions Value="-dNOGUI"/>
     </Other>
   </CompilerOptions>
   <Debugging>

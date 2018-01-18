@@ -5,10 +5,8 @@ unit ACBrLibNFeDataModule;
 interface
 
 uses
-  Classes, SysUtils, syncobjs, FileUtil,
-  ACBrNFe, ACBrMail, ACBrPosPrinter, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr,
-  ACBrNFeDANFeESCPOS,
-  ACBrLibConfig;
+  Classes, SysUtils, syncobjs, FileUtil, ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail,
+  ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr, ACBrLibConfig;
 
 type
 
@@ -17,21 +15,21 @@ type
   TLibNFeDM = class(TDataModule)
     ACBrMail: TACBrMail;
     ACBrNFe: TACBrNFe;
-    ACBrNFeDANFCeFortes: TACBrNFeDANFCeFortes;
+    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFeESCPOS: TACBrNFeDANFeESCPOS;
-    ACBrNFeDANFeRL: TACBrNFeDANFeRL;
+    ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
     ACBrPosPrinter: TACBrPosPrinter;
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
 
   private
     FLock: TCriticalSection;
   public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+
     procedure AplicarConfiguracoes;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
-
   end;
 
 implementation
@@ -44,14 +42,16 @@ uses
 
 { TLibNFeDM }
 
-procedure TLibNFeDM.DataModuleCreate(Sender: TObject);
+constructor TLibNFeDM.Create(AOwner: TComponent);
 begin
+  inherited Create(AOwner);
   FLock := TCriticalSection.Create;
 end;
 
-procedure TLibNFeDM.DataModuleDestroy(Sender: TObject);
+destructor TLibNFeDM.Destroy;
 begin
   FLock.Destroy;
+  inherited Destroy;
 end;
 
 procedure TLibNFeDM.AplicarConfiguracoes;

@@ -447,14 +447,16 @@ begin
 
   inherited Create;
   FOwner := AOwner;
-  FNomeArquivo := ANomeArquivo;
-
-  TACBrLib(FOwner).GravarLog(ClassName + '.Create', logCompleto);
+  FNomeArquivo := Trim(ANomeArquivo);
+  VerificarNomeEPath(True);
 
   if Length(AChaveCrypt) = 0 then
     FChaveCrypt := CLibChaveCrypt
   else
     FChaveCrypt := AChaveCrypt;
+
+  TACBrLib(FOwner).GravarLog(ClassName + '.Create(' + FNomeArquivo + ', ' +
+    StringOfChar('*', Length(FChaveCrypt)) + ' )', logCompleto);
 
   FLog := TLogConfig.Create;
   FSistema := TSistemaConfig.Create;
@@ -462,8 +464,8 @@ begin
   FProxyInfo := TProxyConfig.Create(FChaveCrypt);
   FSoftwareHouse := TEmpresaConfig.Create(CSessaoSwHouse);
   FEmissor := TEmpresaConfig.Create(CSessaoEmissor);
+
   FIni := TMemIniFile.Create(FNomeArquivo);
-  FIni.UpdateFile;
 
   DefinirValoresPadroes;
 
@@ -495,8 +497,13 @@ begin
     FNomeArquivo := ApplicationPath + CNomeArqConf;
 
   APath := ExtractFilePath(FNomeArquivo);
-  if NaoEstaVazio(APath) and (not DirectoryExists(APath)) then
-    raise EConfigException.CreateFmt(SErrDiretorioInvalido, [APath]);
+  if NaoEstaVazio(APath) then
+  begin
+    if (not DirectoryExists(APath)) then
+      raise EConfigException.CreateFmt(SErrDiretorioInvalido, [APath]);
+  end
+  else
+    FNomeArquivo := ApplicationPath + ExtractFileName(FNomeArquivo);
 
   if (not Gravando) and (not FileExists(FNomeArquivo)) then
     raise EConfigException.Create(Format(SErrArquivoNaoExiste, [FNomeArquivo]));

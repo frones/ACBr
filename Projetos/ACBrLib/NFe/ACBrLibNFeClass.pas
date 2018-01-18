@@ -38,7 +38,7 @@ unit ACBrLibNFeClass;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Forms,
   ACBrLibComum, ACBrLibNFeDataModule;
 
 type
@@ -54,8 +54,10 @@ type
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
       override;
     procedure Executar; override;
-    procedure Finalizar; override;
   public
+    constructor Create(ArqConfig: String = ''; ChaveCrypt: AnsiString = ''); override;
+    destructor Destroy; override;
+
     property NFeDM: TLibNFeDM read FNFeDM;
   end;
 
@@ -86,17 +88,23 @@ uses
   ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig, ACBrLibNFeConfig, ACBrNFeRespostas,
   pcnConversao, pcnAuxiliar,
   blcksock,
-  ACBrMail, ACBrUtil;
+  ACBrUtil;
 
 { TACBrLibNFe }
 
 procedure TACBrLibNFe.Inicializar;
+var
+  CN: String;
+  CT: TClass;
 begin
   inherited Inicializar;
 
   fpNome := CLibNFeNome;
   fpVersao := CLibNFeVersao;
-  FNFeDM := TLibNFeDM.Create(nil);
+
+  CN := SELF.ClassName;
+  CT := Self.ClassType;
+
   GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
 end;
 
@@ -112,10 +120,17 @@ begin
   FNFeDM.AplicarConfiguracoes;
 end;
 
-procedure TACBrLibNFe.Finalizar;
+constructor TACBrLibNFe.Create(ArqConfig: String; ChaveCrypt: AnsiString);
+begin
+  FNFeDM := TLibNFeDM.CreateNew(Nil);
+
+  inherited Create(ArqConfig, ChaveCrypt);
+end;
+
+destructor TACBrLibNFe.Destroy;
 begin
   FNFeDM.Free;
-  inherited Finalizar;
+  inherited Destroy;
 end;
 
 

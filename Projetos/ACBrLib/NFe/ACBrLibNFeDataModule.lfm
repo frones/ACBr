@@ -1,13 +1,13 @@
-object NFeDataModule: TNFeDataModule
-  Left = 346
+object LibNFeDM: TLibNFeDM
+  OldCreateOrder = False
+  left = 346
+  top = 174
   Height = 231
-  Top = 174
+  HorizontalOffset = 766
+  VerticalOffset = 254
   Width = 491
-  OnCreate = DataModuleCreate
-  OnDestroy = DataModuleDestroy
-  LCLVersion = '1.8.0.6'
+  PPI = 96
   object ACBrNFe: TACBrNFe
-    MAIL = ACBrMail
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
@@ -17,48 +17,8 @@ object NFeDataModule: TNFeDataModule
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Configuracoes.WebServices.SSLType = LT_all
     left = 88
     top = 104
-  end
-  object ACBrNFeDANFCeFortes: TACBrNFeDANFCeFortes
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = True
-    MargemInferior = 0.8
-    MargemSuperior = 0.8
-    MargemEsquerda = 0.6
-    MargemDireita = 0.51
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = ',0.00'
-    CasasDecimais._Mask_vUnCom = ',0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 8
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    vTroco = 0
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    vTribFed = 0
-    vTribEst = 0
-    vTribMun = 0
-    left = 88
-    top = 160
   end
   object ACBrNFeDANFeESCPOS: TACBrNFeDANFeESCPOS
     MostrarPreview = True
@@ -96,11 +56,72 @@ object NFeDataModule: TNFeDataModule
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
-    PosPrinter = ACBrPosPrinter
-    left = 232
+    left = 224
     top = 160
   end
-  object ACBrNFeDANFeRL: TACBrNFeDANFeRL
+  object ACBrMail: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = UTF_8
+    left = 88
+    top = 43
+  end
+  object ACBrPosPrinter: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    left = 352
+    top = 160
+  end
+  object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDANFE = tiSemGeracao
+    NumCopias = 1
+    ImprimeNomeFantasia = False
+    ImprimirDescPorc = False
+    ImprimirTotalLiquido = True
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais._qCom = 2
+    CasasDecimais._vUnCom = 2
+    CasasDecimais._Mask_qCom = ',0.00'
+    CasasDecimais._Mask_vUnCom = ',0.00'
+    ExibirResumoCanhoto = False
+    FormularioContinuo = False
+    TamanhoFonte_DemaisCampos = 8
+    ProdutosPorPagina = 0
+    ImprimirDetalhamentoEspecifico = True
+    NFeCancelada = False
+    ImprimirItens = True
+    vTroco = 0
+    ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
+    vTribFed = 0
+    vTribEst = 0
+    vTribMun = 0
+    left = 224
+    top = 104
+  end
+  object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
     MostrarPreview = True
     MostrarStatus = True
     TipoDANFE = tiRetrato
@@ -142,30 +163,7 @@ object NFeDataModule: TNFeDataModule
     ExibeCampoFatura = False
     ImprimirUnQtVlComercial = iuComercial
     ImprimirDadosDocReferenciados = True
-    left = 232
-    top = 104
-  end
-  object ACBrMail: TACBrMail
-    Host = '127.0.0.1'
-    Port = '25'
-    SetSSL = False
-    SetTLS = False
-    Attempts = 3
-    DefaultCharset = UTF_8
-    IDECharset = UTF_8
-    left = 88
+    left = 224
     top = 43
-  end
-  object ACBrPosPrinter: TACBrPosPrinter
-    ConfigBarras.MostrarCodigo = False
-    ConfigBarras.LarguraLinha = 0
-    ConfigBarras.Altura = 0
-    ConfigBarras.Margem = 0
-    ConfigQRCode.Tipo = 2
-    ConfigQRCode.LarguraModulo = 4
-    ConfigQRCode.ErrorLevel = 0
-    LinhasEntreCupons = 0
-    left = 352
-    top = 160
   end
 end

@@ -70,6 +70,9 @@
       <OtherUnitFiles Value="..\..\Comum;..\..\NFe"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <CodeGeneration>
+      <TargetCPU Value="i386"/>
+    </CodeGeneration>
     <Linking>
       <Options>
         <Win32>

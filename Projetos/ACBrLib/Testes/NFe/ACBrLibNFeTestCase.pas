@@ -9,7 +9,7 @@ uses
 
 type
 
-  TTestACBrNFeLib= class(TTestCase)
+  TTestACBrNFeLib = class(TTestCase)
   published
     procedure TestInicializar;
   end;
@@ -21,7 +21,7 @@ uses
 
 procedure TTestACBrNFeLib.TestInicializar;
 begin
-  AssertEquals(ErrOk, LIB_Inicializar('ACBrNFe.ini', ''));
+  AssertEquals(ErrOk, LIB_Inicializar('',''));
 end;
 
 initialization

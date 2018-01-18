@@ -5,5 +5,6 @@ ErrLibNaoFinalizada = -2;
 ErrConfigLer = -3;
 ErrConfigGravar = -4;
 ErrArquivoNaoExiste = -5;
+ErrDiretorioNaoExiste = -6;
 ErrExecutandoMetodo = -10;
 

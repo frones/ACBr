@@ -51,7 +51,7 @@ type
 
   protected
     procedure Inicializar; override;
-    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
+    procedure CriarConfiguracao(ArqConfig: String = ''; ChaveCrypt: AnsiString = '');
       override;
     procedure Executar; override;
   public
@@ -64,19 +64,19 @@ type
 {%region Declaração da funções}
 
 {%region NFe}
-function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): integer;
+function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function NFE_CarregarININFe(const eArquivoOuINI: PChar): integer;
+function NFE_CarregarININFe(const eArquivoOuINI: PChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function NFE_LimparListaNFEs: integer;
+function NFE_LimparListaNFEs: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 
 {%region Servicos}
-function NFE_StatusServico(const Buffer: PChar): integer;
+function NFE_StatusServico(const Buffer: PChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -98,7 +98,7 @@ begin
   fpNome := CLibNFeNome;
   fpVersao := CLibNFeVersao;
 
-  FNFeDM := TLibNFeDM.Create(Nil);
+  FNFeDM := TLibNFeDM.Create(nil);
 end;
 
 destructor TACBrLibNFe.Destroy;
@@ -114,7 +114,7 @@ begin
   GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
 end;
 
-procedure TACBrLibNFe.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
+procedure TACBrLibNFe.CriarConfiguracao(ArqConfig: String; ChaveCrypt: AnsiString);
 begin
   fpConfig := TLibNFeConfig.Create(Self, ArqConfig, ChaveCrypt);
 end;
@@ -127,11 +127,11 @@ end;
 
 {%region NFe}
 
-function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): integer;
+function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Ok: boolean;
-  ArquivoOuXml: string;
+  Ok: Boolean;
+  ArquivoOuXml: String;
 begin
   if not VerificarInicializacao then
   begin
@@ -157,8 +157,7 @@ begin
         begin
           if not FileExists(ArquivoOuXml) then
           begin
-            Result := pLib.SetRetorno(ErrArquivoNaoExiste,
-              Format(SErrArquivoNaoExiste, [ArquivoOuXml]));
+            Result := SetRetorno(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [ArquivoOuXml]));
             Exit;
           end;
 
@@ -170,11 +169,11 @@ begin
         if Ok then
           Result := NFeDM.ACBrNFe1.NotasFiscais.Count
         else
-          Result := pLib.SetRetorno(ErrOK, SErrNFeNenhumaNFeCarregada);
+          Result := SetRetorno(ErrOK, SErrNFeNenhumaNFeCarregada);
       except
         on E: Exception do
         begin
-          Result := pLib.SetRetorno(ErrExecutandoMetodo, E.Message);
+          Result := SetRetorno(ErrExecutandoMetodo, E.Message);
         end
       end;
     finally
@@ -183,10 +182,10 @@ begin
   end;
 end;
 
-function NFE_CarregarININFe(const eArquivoOuINI: PChar): integer;
+function NFE_CarregarININFe(const eArquivoOuINI: PChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  ArquivoOuINI: string;
+  ArquivoOuINI: String;
 begin
   if not VerificarInicializacao then
   begin
@@ -204,8 +203,7 @@ begin
 
   if StringEhArquivo(ArquivoOuINI) and (not FileExists(ArquivoOuINI)) then
   begin
-    Result := pLib.SetRetorno(ErrArquivoNaoExiste,
-      Format(SErrArquivoNaoExiste, [ArquivoOuINI]));
+    Result := SetRetorno(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [ArquivoOuINI]));
     Exit;
   end;
 
@@ -217,11 +215,11 @@ begin
         if NFeDM.ACBrNFe1.NotasFiscais.LoadFromIni(ArquivoOuINI) then
           Result := NFeDM.ACBrNFe1.NotasFiscais.Count
         else
-          Result := pLib.SetRetorno(ErrOK, SErrNFeNenhumaNFeCarregada);
+          Result := SetRetorno(ErrOK, SErrNFeNenhumaNFeCarregada);
       except
         on E: Exception do
         begin
-          Result := pLib.SetRetorno(ErrExecutandoMetodo, E.Message);
+          Result := SetRetorno(ErrExecutandoMetodo, E.Message);
         end
       end;
     finally
@@ -230,7 +228,7 @@ begin
   end;
 end;
 
-function NFE_LimparListaNFEs: integer;
+function NFE_LimparListaNFEs: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   if not VerificarInicializacao then
@@ -251,7 +249,7 @@ begin
       except
         on E: Exception do
         begin
-          Result := pLib.SetRetorno(ErrExecutandoMetodo, E.Message);
+          Result := SetRetorno(ErrExecutandoMetodo, E.Message);
         end
       end;
     finally
@@ -264,7 +262,7 @@ end;
 
 {%region Servicos}
 
-function NFE_StatusServico(const Buffer: PChar): integer;
+function NFE_StatusServico(const Buffer: PChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resposta: TStatusServicoResposta;
@@ -302,14 +300,14 @@ begin
             Resposta.XObs := WebServices.StatusServico.XObs;
 
             StrPCopy(Buffer, Resposta.GerarIni);
-            Result := pLib.SetRetorno(ErrOK, Buffer);
+            Result := SetRetorno(ErrOK, Buffer);
           end
           else
-            Result := pLib.SetRetorno(ErrOK, SErrNFeErroStatusServico);
+            Result := SetRetorno(ErrOK, SErrNFeErroStatusServico);
         except
           on E: Exception do
           begin
-            Result := pLib.SetRetorno(ErrExecutandoMetodo, E.Message);
+            Result := SetRetorno(ErrExecutandoMetodo, E.Message);
           end
         end;
       finally

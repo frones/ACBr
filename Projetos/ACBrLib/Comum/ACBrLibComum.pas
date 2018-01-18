@@ -43,6 +43,17 @@ uses
 
 type
 
+  { EACBrLibException }
+
+  EACBrLibException = class(Exception)
+  private
+    FErro: Integer;
+  public
+    constructor Create(const err: Integer; const msg: string); reintroduce;
+
+    property Erro: Integer read FErro;
+  end;
+
   { TLibRetorno }
 
   TLibRetorno = record
@@ -54,7 +65,6 @@ type
 
   TACBrLib = class
   private
-    FRetorno: TLibRetorno;
     FLogNome: String;
     FLogData: TDate;
 
@@ -74,9 +84,6 @@ type
     destructor Destroy; override;
 
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
-
-    function SetRetorno(const ACodigo: Integer; const AMensagem: String = ''): Integer;
-    property Retorno: TLibRetorno read FRetorno;
 
     property Config: TLibConfig read fpConfig;
 
@@ -120,9 +127,13 @@ function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): Integer;
 
 {%endregion}
 
-{%region Funcoes auxiliares}
+{%region Funcoes auxiliares para Funcionamento da Lib}
 function VerificarInicializacao: Boolean;
+procedure LiberarLib;
+function SetRetorno(const ACodigo: Integer; const AMensagem: String = ''): Integer;
+{%endregion}
 
+{%region Funcoes auxiliares Diversas }
 // Le um arquivo em Disco e retorna o seu conteúdo //
 function LerArquivoParaString(AArquivo: String): AnsiString;
 
@@ -131,12 +142,12 @@ function B64CryptToString(ABase64Str: String; AChave: AnsiString = ''): String;
 
 function StringEhXML(AString: String): Boolean;
 function StringEhArquivo(AString: String): Boolean;
-
 {%endregion}
 
 var
-  pLib: TACBrLib;
-  pLibClass: TACBrLibClass;
+  pLib: TACBrLib;            // Classe com a Lib
+  pLibClass: TACBrLibClass;  // Tipo de Classe a ser Instanciada (definir no LPR de cada nova Lib)
+  pLibRetorno: TLibRetorno;  // Último Retorno do método executado
 
 implementation
 
@@ -155,17 +166,31 @@ begin
     Result := (LIB_Inicializar('', '') = ErrOK)
   else
   begin
-    pLib.SetRetorno(ErrOK);
+    SetRetorno(ErrOK);
     Result := True;
   end;
 end;
+
+procedure LiberarLib;
+begin
+  if Assigned(pLib) then
+    FreeAndNil(pLib);
+end;
+
+function SetRetorno(const ACodigo: Integer; const AMensagem: String): Integer;
+begin
+  Result := ACodigo;
+  pLibRetorno.Codigo := ACodigo;
+  pLibRetorno.Mensagem := AMensagem;
+end;
+
 
 function LerArquivoParaString(AArquivo: String): AnsiString;
 var
   FS: TFileStream;
 begin
   if not FileExists(AArquivo) then
-    raise Exception.Create(Format(SErrArquivoNaoExiste, [AArquivo]));
+    raise EACBrLibException.Create(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [AArquivo]));
 
   FS := TFileStream.Create(AArquivo, fmOpenRead or fmShareExclusive);
   try
@@ -219,6 +244,14 @@ begin
     (pos('=', AString) = 0);
 end;
 
+{ EACBrLibException }
+
+constructor EACBrLibException.Create(const err: Integer; const msg: string);
+begin
+  FErro := err;
+  inherited Create(msg);
+end;
+
 {%endregion}
 
 { TACBrLib }
@@ -244,7 +277,7 @@ end;
 
 procedure TACBrLib.Inicializar;
 begin
-  with Retorno do
+  with pLibRetorno do
   begin
     Codigo := 0;
     Mensagem := '';
@@ -253,10 +286,7 @@ begin
   FLogData := 0;
   FLogNome := '';
 
-  if not FileExists(Config.NomeArquivo) then
-    Config.Gravar
-  else
-    Config.Ler;
+  Config.Ler;
 end;
 
 procedure TACBrLib.Finalizar;
@@ -287,7 +317,7 @@ begin
     if NaoEstaVazio(APath) then
     begin
       if (not DirectoryExists(APath)) then
-        raise EConfigException.CreateFmt(SErrDiretorioInvalido, [APath]);
+        raise EACBrLibException.Create(ErrDiretorioNaoExiste, Format(SErrDiretorioInvalido, [APath]));
     end
     else
       APath := ApplicationPath;
@@ -310,14 +340,6 @@ begin
   WriteLog(NomeArq, FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + ' - ' + AMsg, Traduzir);
 end;
 
-function TACBrLib.SetRetorno(const ACodigo: Integer; const AMensagem: String): Integer;
-begin
-  Result := ACodigo;
-  FRetorno.Codigo := ACodigo;
-  FRetorno.Mensagem := AMensagem;
-end;
-
-
 {%region Constructor/Destructor}
 
 function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): Integer;
@@ -333,18 +355,21 @@ begin
       pLib := pLibClass.Create(ArqConfig, ChaveCrypt);
 
     pLib.Inicializar;
-
     pLib.GravarLog('LIB_Inicializar( ' + ArqConfig + ', ' + StringOfChar('*', Length(ChaveCrypt)) + ' )', logSimples);
     pLib.GravarLog(pLib.Nome + ' - ' + pLib.Versao, logSimples);
 
-    Result := pLib.SetRetorno(ErrOK);
+    Result := SetRetorno(ErrOK);
   except
+    On E: EACBrLibException do
+    begin
+      Result := SetRetorno(E.Erro, E.Message);
+      LiberarLib;
+    end;
+
     on E: Exception do
     begin
-      if Assigned(pLib) then
-        FreeAndNil(pLib);
-
-      Result := ErrLibNaoInicializada;
+      Result := SetRetorno(ErrLibNaoInicializada, E.Message);
+      LiberarLib;
     end
   end;
 end;
@@ -397,8 +422,8 @@ begin
     Exit;
   end;
 
-  StrPCopy(sMensagem, pLib.Retorno.Mensagem);
-  Result := pLib.Retorno.Codigo;
+  StrPCopy(sMensagem, pLibRetorno.Mensagem);
+  Result := pLibRetorno.Codigo;
 end;
 
 {%endregion}
@@ -421,11 +446,11 @@ begin
   try
     pLib.Config.NomeArquivo := ArqConfig;
     pLib.Config.Ler;
-    Result := pLib.SetRetorno(ErrOK);
+    Result := SetRetorno(ErrOK);
   except
     on E: Exception do
     begin
-      Result := pLib.SetRetorno(ErrConfigLer, E.Message);
+      Result := SetRetorno(ErrConfigLer, E.Message);
     end
   end;
 end;
@@ -448,11 +473,11 @@ begin
       pLib.Config.NomeArquivo := ArqConfig;
 
     pLib.Config.Gravar;
-    Result := pLib.SetRetorno(ErrOK);
+    Result := SetRetorno(ErrOK);
   except
     on E: Exception do
     begin
-      Result := pLib.SetRetorno(ErrConfigGravar, E.Message);
+      Result := SetRetorno(ErrConfigGravar, E.Message);
     end
   end;
 end;
@@ -478,7 +503,7 @@ begin
   except
     on E: Exception do
     begin
-      Result := pLib.SetRetorno(ErrConfigLer, E.Message);
+      Result := SetRetorno(ErrConfigLer, E.Message);
     end
   end;
 end;
@@ -504,7 +529,7 @@ begin
   except
     on E: Exception do
     begin
-      Result := pLib.SetRetorno(ErrConfigGravar, E.Message);
+      Result := SetRetorno(ErrConfigGravar, E.Message);
     end
   end;
 end;
@@ -518,9 +543,10 @@ end;
 initialization
   pLib := nil;
   pLibClass := TACBrLib;
+  pLibRetorno.Codigo := 0;
+  pLibRetorno.Mensagem := '';
 
 finalization
-  if Assigned(pLib) then
-    FreeAndNil(pLib);
+  LiberarLib;
 
 end.

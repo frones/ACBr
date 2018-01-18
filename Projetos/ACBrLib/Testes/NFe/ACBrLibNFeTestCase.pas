@@ -13,6 +13,7 @@ type
 
   TTestACBrNFeLib = class(TTestCase)
   published
+    procedure Test_LIB_Inicializar_Com_DiretorioInvalido;
     procedure Test_LIB_Inicializar;
     procedure Test_LIB_Finalizar;
   end;
@@ -21,6 +22,11 @@ implementation
 
 uses
   ACBrLibNFeStaticImport;
+
+procedure TTestACBrNFeLib.Test_LIB_Inicializar_Com_DiretorioInvalido;
+begin
+  AssertEquals(ErrDiretorioNaoExiste, LIB_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
+end;
 
 procedure TTestACBrNFeLib.Test_LIB_Inicializar;
 begin

@@ -42,8 +42,6 @@ uses
   synachar;
 
 type
-  EConfigException = class(Exception);
-
   TNivelLog = (logNenhum, logSimples, logNormal, logCompleto, logParanoico);
 
   TTipoRelatorioBobina = (tpFortes, tpEscPos);
@@ -442,13 +440,11 @@ end;
 constructor TLibConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
   if not (AOwner is TACBrLib) then
-    raise EConfigException.Create(SErrLibDono);
+    raise EACBrLibException.Create(ErrLibNaoInicializada, SErrLibDono);
 
   inherited Create;
   FOwner := AOwner;
   FNomeArquivo := Trim(ANomeArquivo);
-  VerificarNomeEPath(True);
-
   if Length(AChaveCrypt) = 0 then
     FChaveCrypt := CLibChaveCrypt
   else
@@ -461,7 +457,7 @@ begin
   FSoftwareHouse := TEmpresaConfig.Create(CSessaoSwHouse);
   FEmissor := TEmpresaConfig.Create(CSessaoEmissor);
 
-  FIni := TMemIniFile.Create(FNomeArquivo);
+  FIni := TMemIniFile.Create('');
 
   TACBrLib(FOwner).GravarLog(ClassName + '.Create(' + FNomeArquivo + ', ' +
     StringOfChar('*', Length(FChaveCrypt)) + ' )', logCompleto);
@@ -493,13 +489,13 @@ begin
   if NaoEstaVazio(APath) then
   begin
     if (not DirectoryExists(APath)) then
-      raise EConfigException.CreateFmt(SErrDiretorioInvalido, [APath]);
+      raise EACBrLibException.Create(ErrDiretorioNaoExiste, Format(SErrDiretorioInvalido, [APath]));
   end
   else
     FNomeArquivo := ApplicationPath + ExtractFileName(FNomeArquivo);
 
   if (not Gravando) and (not FileExists(FNomeArquivo)) then
-    raise EConfigException.Create(Format(SErrArquivoNaoExiste, [FNomeArquivo]));
+    raise EACBrLibException.Create(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [FNomeArquivo]));
 end;
 
 procedure TLibConfig.VerificarSessaoEChave(ASessao, AChave: String);
@@ -507,11 +503,11 @@ var
   NaoExiste: String;
 begin
   if not FIni.SectionExists(ASessao) then
-    raise EConfigException.Create(SErrConfSessaoNaoExiste);
+    raise EACBrLibException.Create(ErrConfigLer, SErrConfSessaoNaoExiste);
 
   NaoExiste := '*NaoExiste*';
   if (FIni.ReadString(ASessao, AChave, NaoExiste) = NaoExiste) then
-    raise EConfigException.Create(SErrConfChaveNaoExiste);
+    raise EACBrLibException.Create(ErrConfigLer, SErrConfChaveNaoExiste);
 end;
 
 procedure TLibConfig.AplicarConfiguracoes;
@@ -522,6 +518,16 @@ end;
 procedure TLibConfig.Ler;
 begin
   TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
+
+  VerificarNomeEPath(False);
+  FIni.Rename(FNomeArquivo, True);
+
+  if not FileExists(FNomeArquivo) then
+  begin
+    Gravar;
+    Exit;
+  end;
+
   FLog.LerIni(FIni);
   FSistema.LerIni(FIni);
   FEmail.LerIni(FIni);

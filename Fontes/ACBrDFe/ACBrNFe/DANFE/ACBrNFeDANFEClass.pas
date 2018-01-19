@@ -93,6 +93,7 @@ type
     FUsuario: String;
     FPathPDF: String;
     FImpressora: String;
+    FNomeDocumento: String;
     FImprimeNomeFantasia: Boolean;
     FImprimirTotalLiquido: Boolean;
     FMostrarPreview: Boolean;
@@ -177,6 +178,7 @@ type
     property Usuario: String                         read FUsuario                        write FUsuario;
     property PathPDF: String                         read GetPathPDF                      write SetPathPDF;
     property Impressora: String                      read FImpressora                     write FImpressora;
+    property NomeDocumento: String                   read FNomeDocumento                  write FNomeDocumento;
     property MostrarPreview: Boolean                 read FMostrarPreview                 write FMostrarPreview;
     property MostrarStatus: Boolean                  read FMostrarStatus                  write FMostrarStatus;
     property TipoDANFE: TpcnTipoImpressao            read FTipoDANFE                      write FTipoDANFE;
@@ -278,7 +280,7 @@ begin
   FUsuario    := '';
   FPathPDF    := '';
   FImpressora := '';
-
+  FNomeDocumento := '';
   FImprimirTotalLiquido := False;
   FMostrarPreview       := True;
   FMostrarStatus        := True;

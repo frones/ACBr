@@ -273,7 +273,7 @@ type
     fResumido: Boolean;
     fFiltro: TACBrSATExtratoFiltro;
 
-    procedure PintarQRCode(QRCodeData: String; APict: TPicture);
+    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
     function CompoemEnderecoCFe: String ;
     function CompoemCliche: String;
   public
@@ -597,7 +597,7 @@ begin
   RecordAction := raUseIt ;
 end;
 
-procedure TACBrNFeDANFCeFortesFr.PintarQRCode(QRCodeData: String; APict: TPicture);
+procedure TACBrNFeDANFCeFortesFr.PintarQRCode(const QRCodeData: String; APict: TPicture);
 var
   QRCode: TDelphiZXingQRCode;
   QRCodeBitmap: TBitmap;
@@ -1415,6 +1415,7 @@ var
   frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
   RLLayout: TRLReport;
   RLFiltro: TRLCustomSaveFilter;
+  NFeID: String;
 begin
   frACBrNFeDANFCeFortesFr := TACBrNFeDANFCeFortesFr.Create(Self);
   try
@@ -1428,6 +1429,12 @@ begin
 
       if not EstaVazio(FImpressora) then
         RLPrinter.PrinterName := FImpressora;
+
+      NFeID := OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID);
+
+      RLLayout.JobTitle := ACBrNFeDANFCeFortes.NomeDocumento;
+      if (RLLayout.JobTitle = '') then
+        RLLayout.JobTitle := NFeID+'-nfe.xml';
 
       RLLayout.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
       RLLayout.PrintDialog  := not(FMostrarPreview) and (EstaVazio(FImpressora));
@@ -1452,7 +1459,7 @@ begin
           end ;
 
           RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
-          RLFiltro.FileName := PathWithDelim(ACBrNFeDANFCeFortes.PathPDF) + OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID) + '-nfe.pdf';
+          RLFiltro.FileName := PathWithDelim(ACBrNFeDANFCeFortes.PathPDF) + NFeID + '-nfe.pdf';
           RLFiltro.FilterPages( RLLayout.Pages );
         end;
       end;
@@ -1468,6 +1475,7 @@ var
   frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
   RLLayout: TRLReport;
   RLFiltro: TRLCustomSaveFilter;
+  NFeID: String;
 begin
   frACBrNFeDANFCeFortesFr := TACBrNFeDANFCeFortesFr.Create(Self);
   try
@@ -1481,6 +1489,12 @@ begin
 
       if ACBrNFeDANFCeFortes.Impressora <> '' then
         RLPrinter.PrinterName := ACBrNFeDANFCeFortes.Impressora;
+
+      NFeID := OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID);
+
+      RLLayout.JobTitle := ACBrNFeDANFCeFortes.NomeDocumento;
+      if (RLLayout.JobTitle = '') then
+        RLLayout.JobTitle := NFeID+'-cancelado-nfe.xml';
 
       RLLayout.PrintDialog := ACBrNFeDANFCeFortes.MostrarPreview;
       RLLayout.ShowProgress:= ACBrNFeDANFCeFortes.MostrarStatus;
@@ -1504,7 +1518,7 @@ begin
           end ;
 
           RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
-          RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF + OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID) + '-nfe.pdf';
+          RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF + NFeID + '-nfe.pdf';
           RLFiltro.FilterPages( RLLayout.Pages );
         end;
       end;

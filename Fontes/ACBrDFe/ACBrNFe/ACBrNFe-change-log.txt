@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/01/2018
+-- ACBrNFeDANFEClass, ACBrDANFCeFortesFr --
+[+] Adicionada a propriedade "NomeDocumento", para permitir determinar o título
+    a ser exibido no Spool (Por: Waldir Paim)
+
 18/01/2018
 -- ACBrNFeServicos --
 [*] Incluido a URL ambiente de produção da NF-e Ambiente Nacional, 

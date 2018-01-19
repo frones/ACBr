@@ -42,23 +42,39 @@ uses
   inifiles, fpjson, jsonparser, TypInfo, rttiutils;
 
 type
+
+  { TACBrLibResposta }
+  TACBrLibRespostaTipo = (resINI, resXML, resJSON);
+
   TACBrLibResposta = class
   private
-    FSessao: string;
+    FSessao: String;
+    FTipo: TACBrLibRespostaTipo;
   protected
-    property Sessao: string read FSessao write FSessao;
+    function GerarXml: String;
+    function GerarIni: String;
+    function GerarJson: String;
   public
-    function GerarXml: string;
-    function GerarIni: string;
-    function GerarJson: string;
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+
+    property Sessao: String read FSessao;
+
+    function Gerar: String;
   end;
 
 implementation
 
-function TACBrLibResposta.GerarXml: string;
+constructor TACBrLibResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create;
+  FSessao := ASessao;
+  FTipo := ATipo;
+end;
+
+function TACBrLibResposta.GerarXml: String;
 var
   PropList: TPropInfoList;
-  i: integer;
+  i: Integer;
   PI: PPropInfo;
   PT: PTypeInfo;
   xDoc: TXMLDocument;
@@ -106,18 +122,18 @@ begin
     SetString(Result, PChar(Stream.Memory), Stream.Size div SizeOf(char));
   finally
     if Stream <> nil then
-       Stream.Free;
+      Stream.Free;
     if PropList <> nil then
-       PropList.Free;
+      PropList.Free;
     if xDoc <> nil then
-       xDoc.Free;
+      xDoc.Free;
   end;
 end;
 
-function TACBrLibResposta.GerarIni: string;
+function TACBrLibResposta.GerarIni: String;
 var
   PropList: TPropInfoList;
-  i: integer;
+  i: Integer;
   PI: PPropInfo;
   PT: PTypeInfo;
   AIni: TMemIniFile;
@@ -157,18 +173,18 @@ begin
     Result := TList.Text;
   finally
     if PropList <> nil then
-       PropList.Free;
+      PropList.Free;
     if TList <> nil then
-       TList.Free;
+      TList.Free;
     if AIni <> nil then
-       AIni.Free;
+      AIni.Free;
   end;
 end;
 
-function TACBrLibResposta.GerarJson: string;
+function TACBrLibResposta.GerarJson: String;
 var
   PropList: TPropInfoList;
-  i: integer;
+  i: Integer;
   PI: PPropInfo;
   PT: PTypeInfo;
   JSON, JSONRoot: TJSONObject;
@@ -212,11 +228,22 @@ begin
     Result := JSON.AsJSON;
   finally
     if PropList <> nil then
-       PropList.Free;
+      PropList.Free;
     if JSON <> nil then
-       JSON.Free;
+      JSON.Free;
+  end;
+end;
+
+function TACBrLibResposta.Gerar: String;
+begin
+  case FTipo of
+    resXML: Result := GerarXml;
+    resJSON: Result := GerarJson;
+    else
+      Result := GerarIni;
   end;
 end;
 
 end.
+
 

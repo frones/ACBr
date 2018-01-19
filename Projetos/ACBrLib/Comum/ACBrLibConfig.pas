@@ -39,7 +39,8 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  synachar;
+  synachar,
+  ACBrLibResposta;
 
 type
   TNivelLog = (logNenhum, logSimples, logNormal, logCompleto, logParanoico);
@@ -59,8 +60,8 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
-    property Nivel: TNivelLog read FNivel write FNivel;
-    property Path: String read FPath write SetPath;
+    property Nivel: TNivelLog read FNivel;
+    property Path: String read FPath;
   end;
 
   { TSistemaConfig }
@@ -77,10 +78,10 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
-    property Nome: String read FNome write FNome;
-    property Versao: String read FVersao write FVersao;
-    property Data: TDateTime read FData write FData;
-    property Descricao: String read FDescricao write FDescricao;
+    property Nome: String read FNome;
+    property Versao: String read FVersao;
+    property Data: TDateTime read FData;
+    property Descricao: String read FDescricao;
   end;
 
   { TProxyConfig }
@@ -101,10 +102,10 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
-    property Servidor: String read FServidor write FServidor;
-    property Porta: Integer read FPorta write FPorta;
-    property Usuario: String read FUsuario write FUsuario;
-    property Senha: String read GetSenha write FSenha;
+    property Servidor: String read FServidor;
+    property Porta: Integer read FPorta;
+    property Usuario: String read FUsuario;
+    property Senha: String read GetSenha;
   end;
 
   { TEmailConfig }
@@ -133,25 +134,25 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
-    property Nome: String read FNome write FNome;
-    property Servidor: String read FServidor write FServidor;
-    property Conta: String read FConta write FConta;
-    property Usuario: String read FUsuario write FUsuario;
-    property Senha: String read GetSenha write FSenha;
-    property Codificacao: TMimeChar read FCodificacao write FCodificacao;
-    property Porta: Integer read FPorta write FPorta;
-    property SSL: Boolean read FSSL write FSSL;
-    property TLS: Boolean read FTLS write FTLS;
-    property Confirmacao: Boolean read FConfirmacao write FConfirmacao;
-    property SegundoPlano: Boolean read FSegundoPlano write FSegundoPlano;
-    property TimeOut: Integer read FTimeOut write FTimeOut;
+    property Nome: String read FNome;
+    property Servidor: String read FServidor;
+    property Conta: String read FConta;
+    property Usuario: String read FUsuario;
+    property Senha: String read GetSenha;
+    property Codificacao: TMimeChar read FCodificacao;
+    property Porta: Integer read FPorta;
+    property SSL: Boolean read FSSL;
+    property TLS: Boolean read FTLS;
+    property Confirmacao: Boolean read FConfirmacao;
+    property SegundoPlano: Boolean read FSegundoPlano;
+    property TimeOut: Integer read FTimeOut;
   end;
 
   { TEmpresaConfig }
 
   TEmpresaConfig = class
   private
-    FIdentificador: String;
+    FSessao: String;
     FCNPJ: String;
     FEmail: String;
     FNomeFantasia: String;
@@ -165,14 +166,14 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
-    property Identificador: String read FIdentificador;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
-    property NomeFantasia: String read FNomeFantasia write FNomeFantasia;
-    property WebSite: String read FWebSite write FWebSite;
-    property Email: String read FEmail write FEmail;
-    property Telefone: String read FTelefone write FTelefone;
-    property Responsavel: String read FResponsavel write FResponsavel;
+    property Sessao: String read FSessao;
+    property CNPJ: String read FCNPJ;
+    property RazaoSocial: String read FRazaoSocial;
+    property NomeFantasia: String read FNomeFantasia;
+    property WebSite: String read FWebSite;
+    property Email: String read FEmail;
+    property Telefone: String read FTelefone;
+    property Responsavel: String read FResponsavel;
   end;
 
   { TLibConfig }
@@ -189,7 +190,9 @@ type
     FSoftwareHouse: TEmpresaConfig;
     FEmissor: TEmpresaConfig;
     FChaveCrypt: AnsiString;
+    FTipoResposta: TACBrLibRespostaTipo;
 
+    procedure SetNomeArquivo(AValue: String);
     procedure VerificarNomeEPath(Gravando: Boolean);
     procedure VerificarSessaoEChave(ASessao, AChave: String);
 
@@ -207,8 +210,9 @@ type
     procedure GravarValor(ASessao, AChave, AValor: String);
     function LerValor(ASessao, AChave: String): String;
 
-    property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
+    property NomeArquivo: String read FNomeArquivo write SetNomeArquivo;
 
+    property TipoResposta: TACBrLibRespostaTipo read FTipoResposta;
     property Log: TLogConfig read FLog;
     property ProxyInfo: TProxyConfig read FProxyInfo;
     property Email: TEmailConfig read FEmail;
@@ -363,7 +367,7 @@ constructor TEmpresaConfig.Create(AIdentificador: String);
 begin
   inherited Create;
 
-  FIdentificador := AIdentificador;
+  FSessao := AIdentificador;
   DefinirValoresPadroes;
 end;
 
@@ -380,25 +384,25 @@ end;
 
 procedure TEmpresaConfig.LerIni(const AIni: TCustomIniFile);
 begin
-  CNPJ := OnlyNumber(AIni.ReadString(FIdentificador, CChaveCNPJ, CNPJ));
-  RazaoSocial := AIni.ReadString(FIdentificador, CChaveRazaoSocial, RazaoSocial);
-  NomeFantasia := AIni.ReadString(FIdentificador, CChaveNomeFantasia, NomeFantasia);
-  WebSite := AIni.ReadString(FIdentificador, CChaveWebSite, WebSite);
-  Email := AIni.ReadString(FIdentificador, CChaveEmail, Email);
-  Telefone := AIni.ReadString(FIdentificador, CChaveTelefone, Telefone);
-  Responsavel := AIni.ReadString(FIdentificador, CChaveResponsavel, Responsavel);
+  FCNPJ := OnlyNumber(AIni.ReadString(FSessao, CChaveCNPJ, FCNPJ));
+  FRazaoSocial := AIni.ReadString(FSessao, CChaveRazaoSocial, FRazaoSocial);
+  FNomeFantasia := AIni.ReadString(FSessao, CChaveNomeFantasia, FNomeFantasia);
+  FWebSite := AIni.ReadString(FSessao, CChaveWebSite, FWebSite);
+  FEmail := AIni.ReadString(FSessao, CChaveEmail, FEmail);
+  FTelefone := AIni.ReadString(FSessao, CChaveTelefone, FTelefone);
+  FResponsavel := AIni.ReadString(FSessao, CChaveResponsavel, FResponsavel);
 end;
 
 procedure TEmpresaConfig.GravarIni(const AIni: TCustomIniFile);
 begin
-  AIni.WriteString(FIdentificador, CChaveCNPJ, CNPJ);
-  AIni.WriteString(FIdentificador, CChaveRazaoSocial, RazaoSocial);
-  AIni.WriteString(FIdentificador, CChaveNomeFantasia, NomeFantasia);
-  AIni.WriteString(FIdentificador, CChaveWebSite, WebSite);
-  AIni.WriteString(FIdentificador, CChaveEmail, Email);
-  AIni.WriteString(FIdentificador, CChaveTelefone, Telefone);
-  AIni.WriteString(FIdentificador, CChaveRazaoSocial, RazaoSocial);
-  AIni.WriteString(FIdentificador, CChaveResponsavel, Responsavel);
+  AIni.WriteString(FSessao, CChaveCNPJ, FCNPJ);
+  AIni.WriteString(FSessao, CChaveRazaoSocial, FRazaoSocial);
+  AIni.WriteString(FSessao, CChaveNomeFantasia, FNomeFantasia);
+  AIni.WriteString(FSessao, CChaveWebSite, FWebSite);
+  AIni.WriteString(FSessao, CChaveEmail, FEmail);
+  AIni.WriteString(FSessao, CChaveTelefone, FTelefone);
+  AIni.WriteString(FSessao, CChaveRazaoSocial, FRazaoSocial);
+  AIni.WriteString(FSessao, CChaveResponsavel, FResponsavel);
 end;
 
 { TLogConfig }
@@ -431,8 +435,8 @@ end;
 
 procedure TLogConfig.GravarIni(const AIni: TCustomIniFile);
 begin
-  AIni.WriteInteger(CSessaoPrincipal, CChaveLogNivel, Integer(Nivel));
-  AIni.WriteString(CSessaoPrincipal, CChaveLogPath, Path);
+  AIni.WriteInteger(CSessaoPrincipal, CChaveLogNivel, Integer(FNivel));
+  AIni.WriteString(CSessaoPrincipal, CChaveLogPath, FPath);
 end;
 
 { TLibConfig }
@@ -450,6 +454,7 @@ begin
   else
     FChaveCrypt := AChaveCrypt;
 
+  FTipoResposta := resINI;
   FLog := TLogConfig.Create;
   FSistema := TSistemaConfig.Create;
   FEmail := TEmailConfig.Create(FChaveCrypt);
@@ -498,6 +503,22 @@ begin
     raise EACBrLibException.Create(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [FNomeArquivo]));
 end;
 
+procedure TLibConfig.SetNomeArquivo(AValue: String);
+var
+  NomeArquivoAnt: String;
+begin
+  if FNomeArquivo = AValue then Exit;
+
+  NomeArquivoAnt := FNomeArquivo;
+  try
+    FNomeArquivo := AValue;
+    VerificarNomeEPath(True);
+  except
+    FNomeArquivo := NomeArquivoAnt;
+    raise;
+  end;
+end;
+
 procedure TLibConfig.VerificarSessaoEChave(ASessao, AChave: String);
 var
   NaoExiste: String;
@@ -517,10 +538,11 @@ end;
 
 procedure TLibConfig.Ler;
 begin
-  TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
-
   VerificarNomeEPath(False);
-  FIni.Rename(FNomeArquivo, True);
+  TACBrLib(FOwner).GravarLog('TLibConfig.Ler: ' + FNomeArquivo, logCompleto);
+
+  if FIni.FileName <> FNomeArquivo then
+    FIni.Rename(FNomeArquivo, True);
 
   if not FileExists(FNomeArquivo) then
   begin
@@ -528,13 +550,14 @@ begin
     Exit;
   end;
 
+  FTipoResposta := TACBrLibRespostaTipo(FIni.ReadInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta)));
   FLog.LerIni(FIni);
   FSistema.LerIni(FIni);
   FEmail.LerIni(FIni);
   FProxyInfo.LerIni(FIni);
   FSoftwareHouse.LerIni(FIni);
   FEmissor.LerIni(FIni);
-  TACBrLib(FOwner).GravarLog(ClassName + '.Ler - Feito', logCompleto);
+  TACBrLib(FOwner).GravarLog('TLibConfig.Ler - Feito', logCompleto);
 end;
 
 procedure TLibConfig.Gravar;
@@ -542,6 +565,7 @@ begin
   TACBrLib(FOwner).GravarLog('TLibConfig.Gravar: ' + FNomeArquivo, logCompleto);
   VerificarNomeEPath(True);
 
+  FIni.WriteInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta));
   FLog.GravarIni(FIni);
   FSistema.GravarIni(FIni);
   FEmail.GravarIni(FIni);

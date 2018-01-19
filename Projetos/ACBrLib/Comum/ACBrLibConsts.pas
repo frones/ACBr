@@ -47,13 +47,14 @@ const
   CLibChaveCrypt = 'tYk*5W@';
 
   {$IfDef MSWINDOWS}
-   CNomeArqConf = 'ACBrLib.ini';
+  CNomeArqConf = 'ACBrLib.ini';
   {$Else}
-   CNomeArqConf = 'acbrlib.ini';
+  CNomeArqConf = 'acbrlib.ini';
   {$EndIf}
 
   CSessaoPrincipal = 'Principal';
   CChaveChave = 'Chave';
+  CChaveTipoResposta = 'TipoResposta';
   CChaveLogNivel = 'LogNivel';
   CChaveLogPath = 'LogPath';
   CChaveTimeOut = 'Timeout';
@@ -108,7 +109,7 @@ const
   CChaveImprimeDescAcrescItem = 'ImprimeDescAcrescItem';
   CChaveExpandeLogoMarca = 'ExpandeLogoMarca';
 
-Resourcestring
+resourcestring
   SErrLibSemNome = 'Nome da Biblioteca não foi definido';
   SErrLibDono = 'Dono de TLibConfig deve ser do tipo TACBrLib';
 
@@ -122,10 +123,21 @@ Resourcestring
 
   SErrArquivoNaoExiste = 'Arquivo % não encontrado';
 
+  SErrRetornoHttpWebService = 'WebService %s, retorno http: %d';
+
 const
 {$I ACBrLibErros.inc}
 
+function SetRetornoWebService(const CodigoHTTP: Integer; const WebServico: String): Integer;
+
 implementation
+uses
+  ACBrLibComum;
+
+function SetRetornoWebService(const CodigoHTTP: Integer; const WebServico: String): Integer;
+begin
+  Result := SetRetorno(CodigoHTTP, Format(SErrRetornoHttpWebService, [WebServico, CodigoHTTP]))
+end;
 
 end.
 

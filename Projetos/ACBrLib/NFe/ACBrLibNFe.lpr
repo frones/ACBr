@@ -5,7 +5,7 @@ library ACBrLibNFe;
 uses
   Interfaces, sysutils, Classes, Forms,
   ACBrLibNFeClass, ACBrLibConfig, ACBrLibComum,
-  ACBrLibConsts, ACBrLibNFeConfig, ACBrLibResposta, ACBrNFeRespostas;
+  ACBrLibConsts, ACBrLibNFeConfig, ACBrLibResposta, ACBrLibNFeRespostas;
 
 {$R *.res}
 

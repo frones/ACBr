@@ -68,11 +68,21 @@ const
   CChaveAlturaLinhaComun = 'AlturaLinhaComun';
   CChaveTipoUnQtVlComercial = 'TipoUnQtVlComercial';
 
+  CSessaoRespStatus = 'Status';
+
 Resourcestring
-  SErrNFeNenhumaNFeCarregada = 'Nenhuma NFe carregada';
-  SErrNFeErroStatusServico = 'Erro ao consultar "StatusServico"';
+  SInfNFeNotasCarregadas = '%d NFe(s) Carregada(s)';
+
+function SetRetornoNFesCarregadas(const NumNFe: Integer): Integer;
 
 implementation
+uses
+  ACBrLibComum;
+
+function SetRetornoNFesCarregadas(const NumNFe: Integer): Integer;
+begin
+  Result := SetRetorno( NumNFe, Format(SInfNFeNotasCarregadas, [NumNFe]));
+end;
 
 end.
 

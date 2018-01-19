@@ -128,7 +128,8 @@ function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): Integer;
 {%endregion}
 
 {%region Funcoes auxiliares para Funcionamento da Lib}
-function VerificarInicializacao: Boolean;
+procedure VerificarLibInicializada;
+procedure VerificarArquivoExiste(const NomeArquivo: String);
 procedure LiberarLib;
 function SetRetorno(const ACodigo: Integer; const AMensagem: String = ''): Integer;
 {%endregion}
@@ -160,15 +161,21 @@ uses
 
 {%region Funcoes auxiliares }
 
-function VerificarInicializacao: Boolean;
+procedure VerificarLibInicializada;
 begin
+  SetRetorno(ErrOK);
+
   if not Assigned(pLib) then
-    Result := (LIB_Inicializar('', '') = ErrOK)
-  else
   begin
-    SetRetorno(ErrOK);
-    Result := True;
+     if (LIB_Inicializar('', '') <> ErrOK) then
+       raise EACBrLibException.Create(ErrLibNaoInicializada, SErrLibNaoInicializada);
   end;
+end;
+
+procedure VerificarArquivoExiste(const NomeArquivo: String);
+begin
+  if not FileExists(NomeArquivo) then
+    raise EACBrLibException.Create(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [NomeArquivo]));
 end;
 
 procedure LiberarLib;
@@ -189,9 +196,7 @@ function LerArquivoParaString(AArquivo: String): AnsiString;
 var
   FS: TFileStream;
 begin
-  if not FileExists(AArquivo) then
-    raise EACBrLibException.Create(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [AArquivo]));
-
+  VerificarArquivoExiste(AArquivo);
   FS := TFileStream.Create(AArquivo, fmOpenRead or fmShareExclusive);
   try
     FS.Position := 0;
@@ -360,7 +365,7 @@ begin
 
     Result := SetRetorno(ErrOK);
   except
-    On E: EACBrLibException do
+    on E: EACBrLibException do
     begin
       Result := SetRetorno(E.Erro, E.Message);
       LiberarLib;
@@ -384,12 +389,13 @@ begin
       FreeAndNil(pLib);
     end;
 
-    Result := ErrOK;
+    Result := SetRetorno(ErrOK);
   except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
     on E: Exception do
-    begin
-      Result := ErrLibNaoFinalizada;
-    end
+      Result := SetRetorno(ErrLibNaoFinalizada, E.Message);
   end;
 end;
 
@@ -400,30 +406,34 @@ end;
 function LIB_NomeEVersao(const sNome, sVersao: PChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  if not VerificarInicializacao then
-  begin
-    Result := ErrLibNaoInicializada;
-    Exit;
+  try
+    VerificarLibInicializada;
+    StrPCopy(sNome, pLib.Nome);
+    StrPCopy(sVersao, pLib.Versao);
+    Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
-
-  StrPCopy(sNome, pLib.Nome);
-  StrPCopy(sVersao, pLib.Versao);
-
-  Result := ErrOK;
 end;
 
 function LIB_UltimoRetorno(const sMensagem: PChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  if not Assigned(pLib) then
-  begin
-    StrPCopy(sMensagem, SErrLibNaoInicializada);
-    Result := ErrLibNaoInicializada;
-    Exit;
-  end;
+  try
+    VerificarLibInicializada;
+    StrPCopy(sMensagem, pLibRetorno.Mensagem);
+    Result := pLibRetorno.Codigo;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
 
-  StrPCopy(sMensagem, pLibRetorno.Mensagem);
-  Result := pLibRetorno.Codigo;
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
 {%endregion}
@@ -435,23 +445,19 @@ function LIB_ConfigLer(const eArqConfig: PChar): Integer;
 var
   ArqConfig: String;
 begin
-  if not VerificarInicializacao then
-  begin
-    Result := ErrLibNaoInicializada;
-    Exit;
-  end;
-
-  ArqConfig := string(eArqConfig);
-
   try
+    VerificarLibInicializada;
+    ArqConfig := string(eArqConfig);
+
     pLib.Config.NomeArquivo := ArqConfig;
     pLib.Config.Ler;
     Result := SetRetorno(ErrOK);
   except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
     on E: Exception do
-    begin
       Result := SetRetorno(ErrConfigLer, E.Message);
-    end
   end;
 end;
 
@@ -460,25 +466,20 @@ function LIB_ConfigGravar(const eArqConfig: PChar): Integer;
 var
   ArqConfig: String;
 begin
-  if not VerificarInicializacao then
-  begin
-    Result := ErrLibNaoInicializada;
-    Exit;
-  end;
-
-  ArqConfig := string(eArqConfig);
-
   try
+    VerificarLibInicializada;
+    ArqConfig := string(eArqConfig);
     if NaoEstaVazio(ArqConfig) then
       pLib.Config.NomeArquivo := ArqConfig;
 
     pLib.Config.Gravar;
     Result := SetRetorno(ErrOK);
   except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
     on E: Exception do
-    begin
       Result := SetRetorno(ErrConfigGravar, E.Message);
-    end
   end;
 end;
 
@@ -487,24 +488,19 @@ function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): Intege
 var
   Sessao, Chave, Valor: String;
 begin
-  if not VerificarInicializacao then
-  begin
-    Result := ErrLibNaoInicializada;
-    Exit;
-  end;
-
   try
+    VerificarLibInicializada;
     Sessao := string(eSessao);
     Chave := string(eChave);
-
     Valor := pLib.Config.LerValor(Chave, Sessao);
     StrPCopy(sValor, Valor);
-    Result := ErrOK;
+    Result := SetRetorno(ErrOK);
   except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
     on E: Exception do
-    begin
       Result := SetRetorno(ErrConfigLer, E.Message);
-    end
   end;
 end;
 
@@ -513,24 +509,19 @@ function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): Integer;
 var
   Sessao, Chave, Valor: String;
 begin
-  if not VerificarInicializacao then
-  begin
-    Result := ErrLibNaoInicializada;
-    Exit;
-  end;
-
   try
+    VerificarLibInicializada;
     Sessao := string(eSessao);
     Chave := string(eChave);
     Valor := string(eValor);
-
     pLib.Config.GravarValor(Chave, Sessao, Valor);
-    Result := ErrOK;
+    Result := SetRetorno(ErrOK);
   except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
     on E: Exception do
-    begin
       Result := SetRetorno(ErrConfigGravar, E.Message);
-    end
   end;
 end;
 

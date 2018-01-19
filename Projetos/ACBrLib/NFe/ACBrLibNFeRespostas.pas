@@ -33,7 +33,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrNFeRespostas;
+unit ACBrLibNFeRespostas;
 
 interface
 
@@ -41,6 +41,8 @@ uses
   SysUtils, Classes, ACBrLibResposta;
 
 type
+
+  { TStatusServicoResposta }
 
   TStatusServicoResposta = class(TACBrLibResposta)
   private
@@ -56,7 +58,7 @@ type
     FdhRetorno: TDateTime;
     FxObs: string;
   public
-    constructor Create;
+    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -74,9 +76,12 @@ type
 
 implementation
 
-constructor TStatusServicoResposta.Create;
+uses
+  ACBrLibNFeConsts;
+
+constructor TStatusServicoResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
-  Sessao := 'STATUS';
+  inherited Create(CSessaoRespStatus, ATipo);
 end;
 
 end.

@@ -85,10 +85,9 @@ function NFE_StatusServico(const Buffer: PChar): Integer;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig, ACBrLibNFeConfig, ACBrNFeRespostas,
-  pcnConversao, pcnAuxiliar,
-  blcksock,
-  ACBrUtil;
+  ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig, ACBrLibNFeConfig,
+  ACBrLibNFeRespostas,
+  pcnConversao, pcnAuxiliar, blcksock, ACBrUtil;
 
 { TACBrLibNFe }
 
@@ -130,55 +129,42 @@ end;
 function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Ok: Boolean;
+  EhArquivo: Boolean;
   ArquivoOuXml: String;
 begin
-  if not VerificarInicializacao then
-  begin
-    Result := ErrLibNaoInicializada;
-    Exit;
-  end;
+  try
+    VerificarLibInicializada;
+    ArquivoOuXml := string(eArquivoOuXML);
 
-  Result := 0;
-  Ok := False;
-  ArquivoOuXml := string(eArquivoOuXML);
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_CarregarXMLNFe(' + ArquivoOuXml + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_CarregarXMLNFe', logNormal);
 
-  if pLib.Config.Log.Nivel > logNormal then
-    pLib.GravarLog('NFE_CarregarXMLNFe(' + ArquivoOuXml + ' )', logCompleto, True)
-  else
-    pLib.GravarLog('NFE_CarregarXMLNFe', logNormal);
+    EhArquivo := StringEhArquivo(ArquivoOuXml);
+    if EhArquivo then
+      VerificarArquivoExiste(ArquivoOuXml);
 
-  with TACBrLibNFe(pLib) do
-  begin
-    NFeDM.Travar;
-    try
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
       try
-        if StringEhArquivo(ArquivoOuXml) then
-        begin
-          if not FileExists(ArquivoOuXml) then
-          begin
-            Result := SetRetorno(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [ArquivoOuXml]));
-            Exit;
-          end;
-
-          Ok := NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(ArquivoOuXml);
-        end
+        if EhArquivo then
+          NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(ArquivoOuXml)
         else
-          Ok := NFeDM.ACBrNFe1.NotasFiscais.LoadFromString(ArquivoOuXml);
+          NFeDM.ACBrNFe1.NotasFiscais.LoadFromString(ArquivoOuXml);
 
-        if Ok then
-          Result := NFeDM.ACBrNFe1.NotasFiscais.Count
-        else
-          Result := SetRetorno(ErrOK, SErrNFeNenhumaNFeCarregada);
-      except
-        on E: Exception do
-        begin
-          Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-        end
+        Result := SetRetornoNFesCarregadas( NFeDM.ACBrNFe1.NotasFiscais.Count );
+      finally
+        NFeDM.Destravar;
       end;
-    finally
-      NFeDM.Destravar;
     end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
 
@@ -187,74 +173,60 @@ function NFE_CarregarININFe(const eArquivoOuINI: PChar): Integer;
 var
   ArquivoOuINI: String;
 begin
-  if not VerificarInicializacao then
-  begin
-    Result := ErrLibNaoInicializada;
-    Exit;
-  end;
+  try
+    VerificarLibInicializada;
+    ArquivoOuINI := string(eArquivoOuINI);
 
-  Result := 0;
-  ArquivoOuINI := string(eArquivoOuINI);
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_CarregarININFe(' + ArquivoOuINI + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_CarregarININFe', logNormal);
 
-  if pLib.Config.Log.Nivel > logNormal then
-    pLib.GravarLog('NFE_CarregarININFe(' + ArquivoOuINI + ' )', logCompleto, True)
-  else
-    pLib.GravarLog('NFE_CarregarININFe', logNormal);
+    if StringEhArquivo(ArquivoOuINI) then
+      VerificarArquivoExiste(ArquivoOuINI);
 
-  if StringEhArquivo(ArquivoOuINI) and (not FileExists(ArquivoOuINI)) then
-  begin
-    Result := SetRetorno(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [ArquivoOuINI]));
-    Exit;
-  end;
-
-  with TACBrLibNFe(pLib) do
-  begin
-    NFeDM.Travar;
-    try
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
       try
-        if NFeDM.ACBrNFe1.NotasFiscais.LoadFromIni(ArquivoOuINI) then
-          Result := NFeDM.ACBrNFe1.NotasFiscais.Count
-        else
-          Result := SetRetorno(ErrOK, SErrNFeNenhumaNFeCarregada);
-      except
-        on E: Exception do
-        begin
-          Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-        end
+        NFeDM.ACBrNFe1.NotasFiscais.LoadFromIni(ArquivoOuINI);
+        Result := SetRetornoNFesCarregadas( NFeDM.ACBrNFe1.NotasFiscais.Count );
+      finally
+        NFeDM.Destravar;
       end;
-    finally
-      NFeDM.Destravar;
     end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
 
 function NFE_LimparListaNFEs: Integer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  if not VerificarInicializacao then
-  begin
-    Result := ErrLibNaoInicializada;
-    Exit;
-  end;
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('NFE_LimparListaNFEs', logNormal);
 
-  pLib.GravarLog('NFE_LimparListaNFEs', logNormal);
-
-  with TACBrLibNFe(pLib) do
-  begin
-    NFeDM.Travar;
-    try
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
       try
         NFeDM.ACBrNFe1.NotasFiscais.Clear;
-        Result := NFeDM.ACBrNFe1.NotasFiscais.Count;
-      except
-        on E: Exception do
-        begin
-          Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-        end
+        Result := SetRetornoNFesCarregadas( NFeDM.ACBrNFe1.NotasFiscais.Count );
+      finally
+        NFeDM.Destravar;
       end;
-    finally
-      NFeDM.Destravar;
     end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
 
@@ -267,24 +239,17 @@ function NFE_StatusServico(const Buffer: PChar): Integer;
 var
   Resposta: TStatusServicoResposta;
 begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('NFE_StatusServico', logNormal);
 
-  if not VerificarInicializacao then
-  begin
-    Result := ErrLibNaoInicializada;
-    Exit;
-  end;
-
-  pLib.GravarLog('NFE_StatusServico', logNormal);
-
-  with TACBrLibNFe(pLib) do
-  begin
-    NFeDM.Travar;
-    Resposta := TStatusServicoResposta.Create;
-
-    with NFeDM.ACBrNFe1 do
+    with TACBrLibNFe(pLib) do
     begin
+      NFeDM.Travar;
+      Resposta := TStatusServicoResposta.Create( pLib.Config.TipoResposta );
       try
-        try
+        with NFeDM.ACBrNFe1 do
+        begin
           if WebServices.StatusServico.Executar then
           begin
             Resposta.Msg := WebServices.StatusServico.Msg;
@@ -299,22 +264,23 @@ begin
             Resposta.DhRetorno := WebServices.StatusServico.DhRetorno;
             Resposta.XObs := WebServices.StatusServico.XObs;
 
-            StrPCopy(Buffer, Resposta.GerarIni);
-            Result := SetRetorno(ErrOK, Buffer);
+            StrPCopy(Buffer, Resposta.Gerar);
+            Result := SetRetorno(ErrOK);
           end
           else
-            Result := SetRetorno(ErrOK, SErrNFeErroStatusServico);
-        except
-          on E: Exception do
-          begin
-            Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-          end
+            Result := SetRetornoWebService(SSL.HTTPResultCode, 'StatusServico');
         end;
       finally
         Resposta.Free;
         NFeDM.Destravar;
       end;
     end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
 

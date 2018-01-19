@@ -166,6 +166,7 @@ var
   Protesto, TipoSacado, MensagemCedente, aConta     :String;
   aCarteira, wLinha, ANossoNumero: String;
   TipoBoleto :Char;
+  aPercMulta: Double;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -295,6 +296,14 @@ begin
       else
          TipoSacado := '99';
       end;
+      { Converte valor em moeda para percentual, pois o arquivo só permite % }
+      if MultaValorFixo then
+        if ValorDocumento > 0 then
+          aPercMulta := (PercentualMulta / ValorDocumento) * 100
+        else
+          aPercMulta := 0
+      else
+        aPercMulta := PercentualMulta;
 
       with ACBrBoleto do
       begin
@@ -310,7 +319,7 @@ begin
                   Cedente.ContaDigito                                     +
                   PadRight( SeuNumero,25,' ')+'000'                       +  // 038 a 062 - Numero de Controle do Participante                                                   +  // 063 a 065 - Código do Banco
                   IfThen( PercentualMulta > 0, '2', '0')                  +  // 066 a 066 - Indica se exite Multa ou não
-                  IntToStrZero( round( PercentualMulta * 100 ), 4)        +  // 067 a 070 - Percentual de Multa formatado com 2 casas decimais
+                  IntToStrZero( round( aPercMulta * 100 ) , 4)            +  // 067 a 070 - Percentual de Multa formatado com 2 casas decimais
                   ANossoNumero + DigitoNossoNumero                        +  // 071 a 082 - Identificação do Titulo + Digito de auto conferencia de número bancário
                   IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +  // 083 a 092 - Desconto Bonificação por dia
                   TipoBoleto + ' ' + Space(10)                            +  // 093 a 104 - Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático +  Identificação Operação do Banco

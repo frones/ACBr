@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+-- ACBrBancoBradesco
+[*] Atualização Remessa CNAB400 (Conversão Valor fixo p/ percentual)
+    https://www.projetoacbr.com.br/forum/topic/40960-converter-multa-de-moeda-para-percentual-na-remessa-para-bradesco/
+
 -- ACBrBancoSicredi
 [*] Atualização Retorno CNAB400
     https://www.projetoacbr.com.br/forum/topic/40323-erro-na-leitura-do-retorno-sicredi-cnab400-motivo-g4/

@@ -140,7 +140,7 @@ var
 implementation
 
 uses
-  strutils,
+  strutils, strings,
   synacode, synautil,
   ACBrConsts, ACBrUtil,
   ACBrLibConsts;

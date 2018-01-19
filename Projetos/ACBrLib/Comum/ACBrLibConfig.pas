@@ -43,8 +43,10 @@ uses
   ACBrLibResposta;
 
 type
+  //               0           1          2           3             4
   TNivelLog = (logNenhum, logSimples, logNormal, logCompleto, logParanoico);
 
+  //                         0          1
   TTipoRelatorioBobina = (tpFortes, tpEscPos);
 
   { TLogConfig }

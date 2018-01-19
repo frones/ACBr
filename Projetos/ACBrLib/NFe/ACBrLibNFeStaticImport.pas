@@ -27,7 +27,7 @@ const
  {$EndIf}
 
 {$I ACBrLibErros.inc}
-{$I ACBrLibStaticImport.inc}
+{$I ACBrLibNFeStaticImport.inc}
 
 implementation
 

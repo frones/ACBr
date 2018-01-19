@@ -33,9 +33,6 @@ exports
   NFE_CarregarININFe,
   NFE_LimparListaNFEs;
 
-exports
-{$I ACBrLibExport.inc}
-
 begin
   {$IFDEF DEBUG}
    HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc' ;

@@ -73,7 +73,7 @@ uses
 
 procedure Register;
 begin
- RegisterComponents('ACBr', [TACBreSocial]);
+ RegisterComponents('ACBreSocial', [TACBreSocial]);
 
 // RegisterPropertyEditor(TypeInfo(TACBrAboutInfo), nil, 'AboutACBreSocial',
 //     TACBrAboutDialogProperty);
@@ -108,7 +108,7 @@ end;
 {$ifdef FPC}
 
 initialization
-   {$i ACBrNFe.lrs}
+//   {$i ACBrNFe.lrs}
 {$endif}
 
 end.

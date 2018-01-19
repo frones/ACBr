@@ -502,7 +502,7 @@ begin
       FRetProcLote.Status := StrToInt64Def(Leitor.rCampo(tcStr, 'cdResposta'), -1);
       Processamento.cdResposta := Leitor.rCampo(tcStr, 'cdResposta');
       Leitor.Grupo := Leitor.rExtrai(1, 'descResposta');
-      Processamento.FdescResposta := UTF8Decode(Leitor.rCampo(tcStr, 'descResposta'));
+      Processamento.FdescResposta := UTF8ToNativeString(Leitor.rCampo(tcStr, 'descResposta'));
       Leitor.Arquivo := Leitor.rExtrai(1, 'ocorrencias');
       Leitor.Grupo := Leitor.Arquivo;
       i:=0;
@@ -529,7 +529,7 @@ begin
 
       Leitor.Grupo := Leitor.rExtrai(1, 'status');
       FRetProcLote.Status := StrToInt64Def(Leitor.rCampo(tcStr, 'cdResposta'), -1);
-      FRetProcLote.Descricao := UTF8Decode(Leitor.rCampo(tcStr, 'descResposta'));
+      FRetProcLote.Descricao := UTF8ToNativeString(Leitor.rCampo(tcStr, 'descResposta'));
 
       Leitor.Grupo := Leitor.rExtrai(1, 'dadosRecepcaoLote');
       try
@@ -684,9 +684,9 @@ end;
 procedure TOcorrencia.LerXml;
 begin
   FCodigo := FLeitor.rCampo(tcInt, 'codigo');
-  FDescricao := UTF8Decode(FLeitor.rCampo(tcStr, 'descricao'));
+  FDescricao := UTF8ToNativeString(FLeitor.rCampo(tcStr, 'descricao'));
   FTipo := FLeitor.rCampo(tcInt, 'tipo');
-  FLocalizacao := UTF8Decode(FLeitor.rCampo(tcStr, 'localizacao'));
+  FLocalizacao := UTF8ToNativeString(FLeitor.rCampo(tcStr, 'localizacao'));
 end;
 
 { TRetEnvLote }
@@ -941,7 +941,7 @@ begin
 
     Leitor.Grupo := Leitor.rExtrai(1, 'status');
     FRetProcLote.Status := StrToInt64Def(Leitor.rCampo(tcStr, 'cdResposta'), -1);
-    FRetProcLote.Descricao := UTF8Decode(Leitor.rCampo(tcStr, 'descResposta'));
+    FRetProcLote.Descricao := UTF8ToNativeString(Leitor.rCampo(tcStr, 'descResposta'));
     if (FRetProcLote.Status in [200, 201]) then
     begin
       Leitor.Grupo := Leitor.rExtrai(1, 'dadosRecepcaoLote');
@@ -972,7 +972,7 @@ begin
           //processamento
           Reader.Grupo := Reader.rExtrai(1, 'processamento');
           retEvento.FProcessamento.FcdResposta :=  Leitor.rCampo(tcStr, 'cdResposta');
-          retEvento.FProcessamento.FdescResposta := UTF8Decode(Leitor.rCampo(tcStr, 'descResposta'));
+          retEvento.FProcessamento.FdescResposta := UTF8ToNativeString(Leitor.rCampo(tcStr, 'descResposta'));
           retEvento.FProcessamento.versaoAplicProcLote := Leitor.rCampo(tcStr, 'versaoAppProcessamento');
 //Compatibilizar          retEvento.FProcessamento.FdhProcessamento := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhProcessamento'));
           //recibo

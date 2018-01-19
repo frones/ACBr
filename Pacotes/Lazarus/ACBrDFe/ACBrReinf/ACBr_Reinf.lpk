@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_Reinf"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf;..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrReinf\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBr Escrituração Fiscal Digital de Retenções e Outras Informações Fiscais (www.projetoacbr.com.br)"/>
+    <License Value="LGPL"/>
+    <Files Count="18">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinf.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfClasses.pas"/>
+        <UnitName Value="ACBrReinfClasses"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfConfiguracoes.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfEventos.pas"/>
+        <UnitName Value="ACBrReinfEventos"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfEventosBase.pas"/>
+        <UnitName Value="ACBrReinfEventosBase"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR1000.pas"/>
+        <UnitName Value="ACBrReinfR1000"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR1070.pas"/>
+        <UnitName Value="ACBrReinfR1070"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2010.pas"/>
+        <UnitName Value="ACBrReinfR2010"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2020.pas"/>
+        <UnitName Value="ACBrReinfR2020"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2060.pas"/>
+        <UnitName Value="ACBrReinfR2060"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2098.pas"/>
+        <UnitName Value="ACBrReinfR2098"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2099.pas"/>
+        <UnitName Value="ACBrReinfR2099"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR9000.pas"/>
+        <UnitName Value="ACBrReinfR9000"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <AddToUsesPkgSection Value="False"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfRetEventos.pas"/>
+        <UnitName Value="ACBrReinfRetEventos"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfUtils.pas"/>
+        <UnitName Value="ACBrReinfUtils"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfWebServices.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnConversaoReinf.pas"/>
+        <UnitName Value="pcnConversaoReinf"/>
+      </Item18>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

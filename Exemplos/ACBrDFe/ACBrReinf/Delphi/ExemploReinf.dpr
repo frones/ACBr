@@ -2,7 +2,8 @@ program ExemploReinf;
 
 uses
   Forms,
-  uExemploReinf in 'uExemploReinf.pas' {Form2};
+  uExemploReinf in 'uExemploReinf.pas' {Form2},
+  Unit2 in 'unit2.pas' {frSelecionarCertificado};
 
 {$R *.res}
 

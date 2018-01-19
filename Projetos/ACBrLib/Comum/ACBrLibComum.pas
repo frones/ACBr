@@ -101,15 +101,15 @@ function LIB_Finalizar: longint;
 {%endregion}
 
 {%region Versao/Retorno}
-function LIB_Nome(const sNome: PChar; var esLen: longint): longint;
-function LIB_Versao(const sVersao: PChar; var esLen: longint): longint;
-function LIB_UltimoRetorno(const sMensagem: PChar; var esLen: longint): longint;
+function LIB_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function LIB_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function LIB_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
 {%endregion}
 
 {%region Ler/Gravar Config }
 function LIB_ConfigLer(const eArqConfig: PChar): longint;
 function LIB_ConfigGravar(const eArqConfig: PChar): longint;
-function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): longint;
+function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
 function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%endregion}
 
@@ -117,7 +117,7 @@ function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 
 {%region Funcoes auxiliares para Funcionamento da Lib}
 procedure VerificarLibInicializada;
-procedure RetornarStringPChar(const AString: String; sDest: PChar; var esLen: longint);
+procedure MoverStringParaPChar(const AString: String; sDest: PChar; var esTamanho: longint);
 procedure VerificarArquivoExiste(const NomeArquivo: String);
 procedure LiberarLib;
 function SetRetorno(const ACodigo: Integer; const AMensagem: String = ''): Integer;
@@ -298,15 +298,15 @@ end;
 
 {%region Versao/Retorno}
 
-function LIB_Nome(const sNome: PChar; var esLen: longint): longint;
+function LIB_Nome(const sNome: PChar; var esTamanho: longint): longint;
 begin
   try
     VerificarLibInicializada;
     pLib.GravarLog('LIB_Nome', logNormal);
-    RetornarStringPChar(pLib.Nome, sNome, esLen);
+    MoverStringParaPChar(pLib.Nome, sNome, esTamanho);
     if pLib.Config.Log.Nivel >= logCompleto then
-      pLib.GravarLog('   Nome:' + strpas(sNome) + ', len:' + IntToStr(esLen), logCompleto, True);
-    Result := SetRetorno(ErrOK);
+      pLib.GravarLog('   Nome:' + strpas(sNome) + ', len:' + IntToStr(esTamanho), logCompleto, True);
+    Result := SetRetorno(ErrOK, strpas(sNome));
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
@@ -316,17 +316,30 @@ begin
   end;
 end;
 
-function LIB_Versao(const sVersao: PChar; var esLen: longint): longint;
+function LIB_Versao(const sVersao: PChar; var esTamanho: longint): longint;
 begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('LIB_Versao', logNormal);
+    MoverStringParaPChar(pLib.Versao, sVersao, esTamanho);
+    if pLib.Config.Log.Nivel >= logCompleto then
+      pLib.GravarLog('   Versao:' + strpas(sVersao) + ', len:' + IntToStr(esTamanho), logCompleto, True);
+    Result := SetRetorno(ErrOK, strpas(sVersao));
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
 
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 
-function LIB_UltimoRetorno(const sMensagem: PChar; var esLen: longint): longint;
+function LIB_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
 begin
   try
     VerificarLibInicializada;
     pLib.GravarLog('LIB_UltimoRetorno', logNormal);
-    StrPCopy(sMensagem, pLibRetorno.Mensagem);
+    MoverStringParaPChar(pLibRetorno.Mensagem, sMensagem, esTamanho);
     Result := pLibRetorno.Codigo;
     if pLib.Config.Log.Nivel >= logCompleto then
       pLib.GravarLog('   Codigo:' + IntToStr(Result) + ', Mensagem:' + strpas(sMensagem), logCompleto, True);
@@ -389,7 +402,8 @@ begin
   end;
 end;
 
-function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): longint;
+function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+  var esTamanho: longint): longint;
 var
   Sessao, Chave, Valor: String;
 begin
@@ -400,11 +414,11 @@ begin
     pLib.GravarLog('LIB_ConfigLerValor(' + Sessao + ', ' + Chave + ')', logNormal);
 
     Valor := pLib.Config.LerValor(Chave, Sessao);
-    StrPCopy(sValor, Valor);
+    MoverStringParaPChar(Valor, sValor, esTamanho);
     if pLib.Config.Log.Nivel >= logCompleto then
-      pLib.GravarLog('   Valor:' + strpas(sValor), logCompleto, True);
+      pLib.GravarLog('   Valor:' + strpas(sValor)+ ', len:' + IntToStr(esTamanho), logCompleto, True);
 
-    Result := SetRetorno(ErrOK);
+    Result := SetRetorno(ErrOK, strpas(sValor));
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
@@ -451,18 +465,18 @@ begin
   end;
 end;
 
-procedure RetornarStringPChar(const AString: String; sDest: PChar; var esLen: longint);
+procedure MoverStringParaPChar(const AString: String; sDest: PChar; var esTamanho: longint);
 var
   AStringLen: Integer;
 begin
   AStringLen := Length(AString);
 
-  if (esLen <= 0) then
-    esLen := AStringLen
+  if (esTamanho <= 0) then
+    esTamanho := AStringLen
   else
   begin
-    StrLCopy(sDest, PChar(AString), esLen);
-    esLen := min(esLen, AStringLen);
+    StrLCopy(sDest, PChar(AString), esTamanho);
+    esTamanho := min(esTamanho, AStringLen);
   end;
 end;
 

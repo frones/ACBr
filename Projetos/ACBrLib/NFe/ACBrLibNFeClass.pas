@@ -68,17 +68,17 @@ function NFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Nome(const sNome: PChar; var esLen: longint): longint;
+function NFE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Versao(const sVersao: PChar; var esLen: longint): longint;
+function NFE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_UltimoRetorno(const sMensagem: PChar; var esLen: longint): longint;
+function NFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): longint;
+function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -97,7 +97,7 @@ function NFE_LimparListaNFEs: longint;
 
 
 {%region Servicos}
-function NFE_StatusServico(const Buffer: PChar): longint;
+function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -160,22 +160,22 @@ begin
   Result := LIB_Finalizar;
 end;
 
-function NFE_Nome(const sNome: PChar; var esLen: longint): longint;
+function NFE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Nome(sNome, esLen);
+  Result := LIB_Nome(sNome, esTamanho);
 end;
 
-function NFE_Versao(const sVersao: PChar; var esLen: longint): longint;
+function NFE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_Versao(sVersao, esLen);
+  Result := LIB_Versao(sVersao, esTamanho);
 end;
 
-function NFE_UltimoRetorno(const sMensagem: PChar; var esLen: longint): longint;
+function NFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   cdecl;
 begin
-  Result := LIB_UltimoRetorno(sMensagem, esLen);
+  Result := LIB_UltimoRetorno(sMensagem, esTamanho);
 end;
 
 function NFE_ConfigLer(const eArqConfig: PChar): longint;
@@ -190,10 +190,9 @@ begin
   Result := LIB_ConfigGravar(eArqConfig);
 end;
 
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint; cdecl;
 begin
-  Result := LIB_ConfigLerValor(eSessao, eChave, sValor);
+  Result := LIB_ConfigLerValor(eSessao, eChave, sValor, esTamanho);
 end;
 
 function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
@@ -232,7 +231,7 @@ begin
         else
           NFeDM.ACBrNFe1.NotasFiscais.LoadFromString(ArquivoOuXml);
 
-        Result := SetRetornoNFesCarregadas( NFeDM.ACBrNFe1.NotasFiscais.Count );
+        Result := SetRetornoNFesCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
       finally
         NFeDM.Destravar;
       end;
@@ -268,7 +267,7 @@ begin
       NFeDM.Travar;
       try
         NFeDM.ACBrNFe1.NotasFiscais.LoadFromIni(ArquivoOuINI);
-        Result := SetRetornoNFesCarregadas( NFeDM.ACBrNFe1.NotasFiscais.Count );
+        Result := SetRetornoNFesCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
       finally
         NFeDM.Destravar;
       end;
@@ -294,7 +293,7 @@ begin
       NFeDM.Travar;
       try
         NFeDM.ACBrNFe1.NotasFiscais.Clear;
-        Result := SetRetornoNFesCarregadas( NFeDM.ACBrNFe1.NotasFiscais.Count );
+        Result := SetRetornoNFesCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
       finally
         NFeDM.Destravar;
       end;
@@ -312,8 +311,7 @@ end;
 
 {%region Servicos}
 
-function NFE_StatusServico(const Buffer: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint; cdecl;
 var
   Resposta: TStatusServicoResposta;
 begin
@@ -324,7 +322,7 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resposta := TStatusServicoResposta.Create( pLib.Config.TipoResposta );
+      Resposta := TStatusServicoResposta.Create(pLib.Config.TipoResposta);
       try
         with NFeDM.ACBrNFe1 do
         begin
@@ -342,8 +340,8 @@ begin
             Resposta.DhRetorno := WebServices.StatusServico.DhRetorno;
             Resposta.XObs := WebServices.StatusServico.XObs;
 
-            StrPCopy(Buffer, Resposta.Gerar);
-            Result := SetRetorno(ErrOK);
+            MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
+            Result := SetRetorno(ErrOK, StrPas(sResposta));
           end
           else
             Result := SetRetornoWebService(SSL.HTTPResultCode, 'StatusServico');

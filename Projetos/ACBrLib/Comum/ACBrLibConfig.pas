@@ -199,6 +199,7 @@ type
     procedure VerificarSessaoEChave(ASessao, AChave: String);
 
   protected
+    function AtualizarArquivoConfiguracao: Boolean; virtual;
     procedure AplicarConfiguracoes; virtual;
 
     property Owner: TObject read FOwner;
@@ -209,6 +210,7 @@ type
 
     procedure Ler; virtual;
     procedure Gravar; virtual;
+
     procedure GravarValor(ASessao, AChave, AValor: String);
     function LerValor(ASessao, AChave: String): String;
 
@@ -449,6 +451,7 @@ begin
     raise EACBrLibException.Create(ErrLibNaoInicializada, SErrLibDono);
 
   inherited Create;
+
   FOwner := AOwner;
   FNomeArquivo := Trim(ANomeArquivo);
   if Length(AChaveCrypt) = 0 then
@@ -533,9 +536,19 @@ begin
     raise EACBrLibException.Create(ErrConfigLer, SErrConfChaveNaoExiste);
 end;
 
+function TLibConfig.AtualizarArquivoConfiguracao: Boolean;
+var
+  Versao: String;
+begin
+  Versao := Ini.ReadString(CSessaoVersao, CLibNome, '0');
+  Result := (CompareVersions(CLibVersao, Versao) > 0);
+end;
+
 procedure TLibConfig.AplicarConfiguracoes;
 begin
   TACBrLib(FOwner).GravarLog('TLibConfig.AplicarConfiguracoes: ' + FNomeArquivo, logCompleto);
+  if AtualizarArquivoConfiguracao then
+    Gravar;
 end;
 
 procedure TLibConfig.Ler;
@@ -547,7 +560,7 @@ begin
   TACBrLib(FOwner).GravarLog('TLibConfig.Ler: ' + FNomeArquivo, logCompleto);
 
   if FIni.FileName <> FNomeArquivo then
-    FIni.Rename(FNomeArquivo, True);
+    FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
 
   if not FileExists(FNomeArquivo) then
   begin
@@ -571,6 +584,8 @@ begin
   VerificarNomeEPath(True);
 
   FIni.WriteInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta));
+  FIni.WriteString(CSessaoVersao, CLibNome, CLibVersao);
+
   FLog.GravarIni(FIni);
   FSistema.GravarIni(FIni);
   FEmail.GravarIni(FIni);

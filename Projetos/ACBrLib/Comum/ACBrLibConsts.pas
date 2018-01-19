@@ -42,7 +42,7 @@ uses
 
 const
   CLibNome = 'ACBrLib';
-  CLibVersao = '0.0.1';
+  CLibVersao = '0.0.2';
 
   CLibChaveCrypt = 'tYk*5W@';
 
@@ -53,6 +53,7 @@ const
   {$EndIf}
 
   CSessaoPrincipal = 'Principal';
+  CSessaoVersao = 'Versao';
   CChaveChave = 'Chave';
   CChaveTipoResposta = 'TipoResposta';
   CChaveLogNivel = 'LogNivel';

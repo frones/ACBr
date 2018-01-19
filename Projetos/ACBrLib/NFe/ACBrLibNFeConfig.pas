@@ -186,6 +186,7 @@ type
     FDANFeConfig: TDANFeConfig;
     FNFeConfig: TConfiguracoesNFe;
   protected
+    function AtualizarArquivoConfiguracao: Boolean; override;
     procedure AplicarConfiguracoes; override;
 
   public
@@ -203,7 +204,8 @@ type
 implementation
 
 uses
-  ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrLibComum;
+  ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrLibComum,
+  ACBrUtil;
 
 { TDANFeConfig }
 
@@ -424,8 +426,19 @@ begin
   inherited Destroy;
 end;
 
+function TLibNFeConfig.AtualizarArquivoConfiguracao: Boolean;
+var
+  Versao: String;
+begin
+  Versao := Ini.ReadString(CSessaoVersao, CLibNFeNome, '0');
+  Result := (CompareVersions(CLibNFeVersao, Versao) > 0) or
+            (inherited AtualizarArquivoConfiguracao);
+end;
+
 procedure TLibNFeConfig.AplicarConfiguracoes;
 begin
+  inherited AplicarConfiguracoes;
+
   if Assigned(Owner) then
     TACBrLibNFe(Owner).NFeDM.Travar;
 
@@ -486,6 +499,8 @@ begin
 
   try
     inherited Gravar;
+
+    Ini.WriteString(CSessaoVersao, CLibNFeNome, CLibNFeVersao);
 
     FNFeConfig.GravarIni(Ini);
     FDANFeConfig.GravarIni(Ini);

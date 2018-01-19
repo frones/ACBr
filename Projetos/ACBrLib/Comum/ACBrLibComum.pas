@@ -38,7 +38,7 @@ unit ACBrLibComum;
 interface
 
 uses
-  Classes, SysUtils, ctypes,
+  Classes, SysUtils,
   ACBrLibConfig;
 
 type
@@ -49,7 +49,7 @@ type
   private
     FErro: Integer;
   public
-    constructor Create(const err: Integer; const msg: string); reintroduce;
+    constructor Create(const err: Integer; const msg: String); reintroduce;
 
     property Erro: Integer read FErro;
   end;
@@ -96,28 +96,28 @@ type
 {%region Declaração da funções externas}
 
 {%region Constructor/Destructor}
-function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): cint;
-function LIB_Finalizar: cint;
+function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function LIB_Finalizar: longint;
 {%endregion}
 
 {%region Versao/Retorno}
-function LIB_Nome(const sNome: PChar; var esLen: cint): cint;
-function LIB_Versao(const sVersao: PChar; var esLen: cint): cint;
-function LIB_UltimoRetorno(const sMensagem: PChar; var esLen: cint): cint;
+function LIB_Nome(const sNome: PChar; var esLen: longint): longint;
+function LIB_Versao(const sVersao: PChar; var esLen: longint): longint;
+function LIB_UltimoRetorno(const sMensagem: PChar; var esLen: longint): longint;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function LIB_ConfigLer(const eArqConfig: PChar): cint;
-function LIB_ConfigGravar(const eArqConfig: PChar): cint;
-function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): cint;
-function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): cint;
+function LIB_ConfigLer(const eArqConfig: PChar): longint;
+function LIB_ConfigGravar(const eArqConfig: PChar): longint;
+function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): longint;
+function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%endregion}
 
 {%endregion}
 
 {%region Funcoes auxiliares para Funcionamento da Lib}
 procedure VerificarLibInicializada;
-procedure RetornarStringPChar(const AString: String; sDest: PChar; var esLen: cint);
+procedure RetornarStringPChar(const AString: String; sDest: PChar; var esLen: longint);
 procedure VerificarArquivoExiste(const NomeArquivo: String);
 procedure LiberarLib;
 function SetRetorno(const ACodigo: Integer; const AMensagem: String = ''): Integer;
@@ -142,311 +142,14 @@ var
 implementation
 
 uses
-  strutils, strings, math,
+  strutils, strings, Math,
   synacode, synautil,
   ACBrConsts, ACBrUtil,
   ACBrLibConsts;
 
-{%region Constructor/Destructor}
-
-function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): cint;
-var
-  ArqConfig, ChaveCrypt: String;
-begin
-  try
-    ArqConfig := strpas(eArqConfig);
-    ChaveCrypt := strpas(eChaveCrypt);
-
-    if (pLib = nil) then
-      pLib := pLibClass.Create(ArqConfig, ChaveCrypt);
-
-    pLib.Inicializar;
-    pLib.GravarLog('LIB_Inicializar( ' + ArqConfig + ', ' + StringOfChar('*', Length(ChaveCrypt)) + ' )', logSimples);
-    pLib.GravarLog('   '+pLib.Nome + ' - ' + pLib.Versao, logSimples);
-
-    Result := SetRetorno(ErrOK);
-  except
-    on E: EACBrLibException do
-    begin
-      Result := SetRetorno(E.Erro, E.Message);
-      LiberarLib;
-    end;
-
-    on E: Exception do
-    begin
-      Result := SetRetorno(ErrLibNaoInicializada, E.Message);
-      LiberarLib;
-    end
-  end;
-end;
-
-function LIB_Finalizar: cint;
-begin
-  try
-    if (pLib <> nil) then
-    begin
-      pLib.GravarLog('LIB_Finalizar', logSimples);
-      FreeAndNil(pLib);
-    end;
-
-    Result := SetRetorno(ErrOK);
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrLibNaoFinalizada, E.Message);
-  end;
-end;
-
-{%endregion}
-
-{%region Versao/Retorno}
-
-function LIB_Nome(const sNome: PChar; var esLen: cint): cint;
-begin
-  try
-    VerificarLibInicializada;
-    pLib.GravarLog('LIB_Nome', logNormal);
-    RetornarStringPChar(pLib.Nome, sNome, esLen);
-    if pLib.Config.Log.Nivel >= logCompleto then
-      pLib.GravarLog('   Nome:'+strpas(sNome)+', len:'+IntToStr(esLen), logCompleto, True);
-    Result := SetRetorno(ErrOK);
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-  end;   end;
-
-function LIB_Versao(const sVersao: PChar; var esLen: cint): cint;
-begin
-
-end;
-
-function LIB_UltimoRetorno(const sMensagem: PChar; var esLen: cint): cint;
-begin
-  try
-    VerificarLibInicializada;
-    pLib.GravarLog('LIB_UltimoRetorno', logNormal);
-    StrPCopy(sMensagem, pLibRetorno.Mensagem);
-    Result := pLibRetorno.Codigo;
-    if pLib.Config.Log.Nivel >= logCompleto then
-      pLib.GravarLog('   Codigo:'+IntToStr(Result)+', Mensagem:'+strpas(sMensagem), logCompleto, True);
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-  end;
-end;
-
-{%endregion}
-
-{%region Ler/Gravar Config }
-
-function LIB_ConfigLer(const eArqConfig: PChar): cint;
-var
-  ArqConfig: String;
-begin
-  try
-    VerificarLibInicializada;
-    ArqConfig := strpas(eArqConfig);
-    pLib.GravarLog('LIB_ConfigLer('+ArqConfig+')', logNormal);
-
-    if NaoEstaVazio(ArqConfig) then
-      pLib.Config.NomeArquivo := ArqConfig;
-
-    pLib.Config.Ler;
-    Result := SetRetorno(ErrOK);
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrConfigLer, E.Message);
-  end;
-end;
-
-function LIB_ConfigGravar(const eArqConfig: PChar): cint;
-var
-  ArqConfig: String;
-begin
-  try
-    VerificarLibInicializada;
-    ArqConfig := strpas(eArqConfig);
-    pLib.GravarLog('LIB_ConfigGravar('+ArqConfig+')', logNormal);
-
-    if NaoEstaVazio(ArqConfig) then
-      pLib.Config.NomeArquivo := ArqConfig;
-
-    pLib.Config.Gravar;
-    Result := SetRetorno(ErrOK);
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrConfigGravar, E.Message);
-  end;
-end;
-
-function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): cint;
-var
-  Sessao, Chave, Valor: String;
-begin
-  try
-    VerificarLibInicializada;
-    Sessao := strpas(eSessao);
-    Chave := strpas(eChave);
-    pLib.GravarLog('LIB_ConfigLerValor('+Sessao+', '+Chave+')', logNormal);
-
-    Valor := pLib.Config.LerValor(Chave, Sessao);
-    StrPCopy(sValor, Valor);
-    if pLib.Config.Log.Nivel >= logCompleto then
-      pLib.GravarLog('   Valor:'+strpas(sValor), logCompleto, True);
-
-    Result := SetRetorno(ErrOK);
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrConfigLer, E.Message);
-  end;
-end;
-
-function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): cint;
-var
-  Sessao, Chave, Valor: String;
-begin
-  try
-    VerificarLibInicializada;
-    Sessao := strpas(eSessao);
-    Chave := strpas(eChave);
-    Valor := strpas(eValor);
-    pLib.GravarLog('LIB_ConfigGravarValor('+Sessao+', '+Chave+', '+Valor+')', logNormal);
-
-    pLib.Config.GravarValor(Chave, Sessao, Valor);
-    Result := SetRetorno(ErrOK);
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrConfigGravar, E.Message);
-  end;
-end;
-
-{%endregion}
-
-{%region Funcoes auxiliares }
-
-procedure VerificarLibInicializada;
-begin
-  SetRetorno(ErrOK);
-
-  if not Assigned(pLib) then
-  begin
-     if (LIB_Inicializar('', '') <> ErrOK) then
-       raise EACBrLibException.Create(ErrLibNaoInicializada, SErrLibNaoInicializada);
-  end;
-end;
-
-procedure RetornarStringPChar(const AString: String; sDest: PChar;
-  var esLen: cint);
-begin
-  if Assigned(sDest) then
-    StrPLCopy(sDest, AString, esLen);
-
-  esLen := min(esLen, Length(AString)+1);
-end;
-
-procedure VerificarArquivoExiste(const NomeArquivo: String);
-begin
-  if not FileExists(NomeArquivo) then
-    raise EACBrLibException.Create(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [NomeArquivo]));
-end;
-
-procedure LiberarLib;
-begin
-  if Assigned(pLib) then
-    FreeAndNil(pLib);
-end;
-
-function SetRetorno(const ACodigo: Integer; const AMensagem: String): Integer;
-begin
-  Result := ACodigo;
-  pLibRetorno.Codigo := ACodigo;
-  pLibRetorno.Mensagem := AMensagem;
-
-  if Assigned(pLib) then
-    pLib.GravarLog('   SetRetorno('+IntToStr(ACodigo)+', '+AMensagem+')', logParanoico);
-end;
-
-
-function LerArquivoParaString(AArquivo: String): AnsiString;
-var
-  FS: TFileStream;
-begin
-  VerificarArquivoExiste(AArquivo);
-  FS := TFileStream.Create(AArquivo, fmOpenRead or fmShareExclusive);
-  try
-    FS.Position := 0;
-    Result := ReadStrFromStream(FS, FS.Size);
-  finally
-    FS.Free;
-  end;
-end;
-
-function StringToB64Crypt(AString: String; AChave: AnsiString = ''): String;
-begin
-  if (Length(AChave) = 0) then
-    AChave := CLibChaveCrypt;
-
-  Result := EncodeBase64(StrCrypt(AString, AChave));
-end;
-
-function B64CryptToString(ABase64Str: String; AChave: AnsiString = ''): String;
-begin
-  if (Length(AChave) = 0) then
-    AChave := CLibChaveCrypt;
-
-  Result := StrCrypt(DecodeBase64(ABase64Str), AChave);
-end;
-
-function StringEhXML(AString: String): Boolean;
-var
-  p1: Integer;
-begin
-  p1 := pos('<', AString);
-  Result := (p1 > 0) and (PosEx('>', AString, p1 + 1) > 0);
-end;
-
-function StringEhINI(AString: String): Boolean;
-var
-  p1, p2, p3: Integer;
-begin
-  p1 := pos('[', AString);
-  p2 := PosEx(']', AString, p1 + 1);
-  p3 := PosEx(LF, AString, p2 + 1);
-  Result := (p1 > 0) and (p2 > 0) and (p3 > 0) and (PosEx('=', AString, p2) > 0);
-end;
-
-function StringEhArquivo(AString: String): Boolean;
-begin
-  Result := (AString <> '') and
-    (Length(AString) <= 255) and
-    (pos(LF, AString) = 0) and
-    (pos('<', AString) = 0) and
-    (pos('=', AString) = 0);
-end;
-
 { EACBrLibException }
 
-constructor EACBrLibException.Create(const err: Integer; const msg: string);
+constructor EACBrLibException.Create(const err: Integer; const msg: String);
 begin
   FErro := err;
   inherited Create(msg);
@@ -532,11 +235,315 @@ var
   NomeArq: String;
 begin
   if (FLogData < 0) or (fpNome = '') or
-     (not Assigned(fpConfig)) or (NivelLog > fpConfig.Log.Nivel) then
+    (not Assigned(fpConfig)) or (NivelLog > fpConfig.Log.Nivel) then
     Exit;
 
   NomeArq := CalcularNomeArqLog;
   WriteLog(NomeArq, FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + ' - ' + AMsg, Traduzir);
+end;
+
+{%region Constructor/Destructor}
+
+function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+var
+  ArqConfig, ChaveCrypt: String;
+begin
+  try
+    ArqConfig := strpas(eArqConfig);
+    ChaveCrypt := strpas(eChaveCrypt);
+
+    if (pLib = nil) then
+      pLib := pLibClass.Create(ArqConfig, ChaveCrypt);
+
+    pLib.Inicializar;
+    pLib.GravarLog('LIB_Inicializar( ' + ArqConfig + ', ' + StringOfChar('*', Length(ChaveCrypt)) + ' )', logSimples);
+    pLib.GravarLog('   ' + pLib.Nome + ' - ' + pLib.Versao, logSimples);
+
+    Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+    begin
+      Result := SetRetorno(E.Erro, E.Message);
+      LiberarLib;
+    end;
+
+    on E: Exception do
+    begin
+      Result := SetRetorno(ErrLibNaoInicializada, E.Message);
+      LiberarLib;
+    end
+  end;
+end;
+
+function LIB_Finalizar: longint;
+begin
+  try
+    if (pLib <> nil) then
+    begin
+      pLib.GravarLog('LIB_Finalizar', logSimples);
+      FreeAndNil(pLib);
+    end;
+
+    Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrLibNaoFinalizada, E.Message);
+  end;
+end;
+
+{%endregion}
+
+{%region Versao/Retorno}
+
+function LIB_Nome(const sNome: PChar; var esLen: longint): longint;
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('LIB_Nome', logNormal);
+    RetornarStringPChar(pLib.Nome, sNome, esLen);
+    if pLib.Config.Log.Nivel >= logCompleto then
+      pLib.GravarLog('   Nome:' + strpas(sNome) + ', len:' + IntToStr(esLen), logCompleto, True);
+    Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function LIB_Versao(const sVersao: PChar; var esLen: longint): longint;
+begin
+
+end;
+
+function LIB_UltimoRetorno(const sMensagem: PChar; var esLen: longint): longint;
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('LIB_UltimoRetorno', logNormal);
+    StrPCopy(sMensagem, pLibRetorno.Mensagem);
+    Result := pLibRetorno.Codigo;
+    if pLib.Config.Log.Nivel >= logCompleto then
+      pLib.GravarLog('   Codigo:' + IntToStr(Result) + ', Mensagem:' + strpas(sMensagem), logCompleto, True);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+{%endregion}
+
+{%region Ler/Gravar Config }
+
+function LIB_ConfigLer(const eArqConfig: PChar): longint;
+var
+  ArqConfig: String;
+begin
+  try
+    VerificarLibInicializada;
+    ArqConfig := strpas(eArqConfig);
+    pLib.GravarLog('LIB_ConfigLer(' + ArqConfig + ')', logNormal);
+
+    if NaoEstaVazio(ArqConfig) then
+      pLib.Config.NomeArquivo := ArqConfig;
+
+    pLib.Config.Ler;
+    Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrConfigLer, E.Message);
+  end;
+end;
+
+function LIB_ConfigGravar(const eArqConfig: PChar): longint;
+var
+  ArqConfig: String;
+begin
+  try
+    VerificarLibInicializada;
+    ArqConfig := strpas(eArqConfig);
+    pLib.GravarLog('LIB_ConfigGravar(' + ArqConfig + ')', logNormal);
+
+    if NaoEstaVazio(ArqConfig) then
+      pLib.Config.NomeArquivo := ArqConfig;
+
+    pLib.Config.Gravar;
+    Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrConfigGravar, E.Message);
+  end;
+end;
+
+function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): longint;
+var
+  Sessao, Chave, Valor: String;
+begin
+  try
+    VerificarLibInicializada;
+    Sessao := strpas(eSessao);
+    Chave := strpas(eChave);
+    pLib.GravarLog('LIB_ConfigLerValor(' + Sessao + ', ' + Chave + ')', logNormal);
+
+    Valor := pLib.Config.LerValor(Chave, Sessao);
+    StrPCopy(sValor, Valor);
+    if pLib.Config.Log.Nivel >= logCompleto then
+      pLib.GravarLog('   Valor:' + strpas(sValor), logCompleto, True);
+
+    Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrConfigLer, E.Message);
+  end;
+end;
+
+function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+var
+  Sessao, Chave, Valor: String;
+begin
+  try
+    VerificarLibInicializada;
+    Sessao := strpas(eSessao);
+    Chave := strpas(eChave);
+    Valor := strpas(eValor);
+    pLib.GravarLog('LIB_ConfigGravarValor(' + Sessao + ', ' + Chave + ', ' + Valor + ')', logNormal);
+
+    pLib.Config.GravarValor(Chave, Sessao, Valor);
+    Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrConfigGravar, E.Message);
+  end;
+end;
+
+{%endregion}
+
+{%region Funcoes auxiliares }
+
+procedure VerificarLibInicializada;
+begin
+  SetRetorno(ErrOK);
+
+  if not Assigned(pLib) then
+  begin
+    if (LIB_Inicializar('', '') <> ErrOK) then
+      raise EACBrLibException.Create(ErrLibNaoInicializada, SErrLibNaoInicializada);
+  end;
+end;
+
+procedure RetornarStringPChar(const AString: String; sDest: PChar; var esLen: longint);
+var
+  AStringLen: Integer;
+begin
+  AStringLen := Length(AString);
+
+  if (esLen <= 0) then
+    esLen := AStringLen
+  else
+  begin
+    StrLCopy(sDest, PChar(AString), esLen);
+    esLen := min(esLen, AStringLen);
+  end;
+end;
+
+procedure VerificarArquivoExiste(const NomeArquivo: String);
+begin
+  if not FileExists(NomeArquivo) then
+    raise EACBrLibException.Create(ErrArquivoNaoExiste, Format(SErrArquivoNaoExiste, [NomeArquivo]));
+end;
+
+procedure LiberarLib;
+begin
+  if Assigned(pLib) then
+    FreeAndNil(pLib);
+end;
+
+function SetRetorno(const ACodigo: Integer; const AMensagem: String): Integer;
+begin
+  Result := ACodigo;
+  pLibRetorno.Codigo := ACodigo;
+  pLibRetorno.Mensagem := AMensagem;
+
+  if Assigned(pLib) then
+    pLib.GravarLog('   SetRetorno(' + IntToStr(ACodigo) + ', ' + AMensagem + ')', logParanoico);
+end;
+
+
+function LerArquivoParaString(AArquivo: String): AnsiString;
+var
+  FS: TFileStream;
+begin
+  VerificarArquivoExiste(AArquivo);
+  FS := TFileStream.Create(AArquivo, fmOpenRead or fmShareExclusive);
+  try
+    FS.Position := 0;
+    Result := ReadStrFromStream(FS, FS.Size);
+  finally
+    FS.Free;
+  end;
+end;
+
+function StringToB64Crypt(AString: String; AChave: AnsiString = ''): String;
+begin
+  if (Length(AChave) = 0) then
+    AChave := CLibChaveCrypt;
+
+  Result := EncodeBase64(StrCrypt(AString, AChave));
+end;
+
+function B64CryptToString(ABase64Str: String; AChave: AnsiString = ''): String;
+begin
+  if (Length(AChave) = 0) then
+    AChave := CLibChaveCrypt;
+
+  Result := StrCrypt(DecodeBase64(ABase64Str), AChave);
+end;
+
+function StringEhXML(AString: String): Boolean;
+var
+  p1: Integer;
+begin
+  p1 := pos('<', AString);
+  Result := (p1 > 0) and (PosEx('>', AString, p1 + 1) > 0);
+end;
+
+function StringEhINI(AString: String): Boolean;
+var
+  p1, p2, p3: Integer;
+begin
+  p1 := pos('[', AString);
+  p2 := PosEx(']', AString, p1 + 1);
+  p3 := PosEx(LF, AString, p2 + 1);
+  Result := (p1 > 0) and (p2 > 0) and (p3 > 0) and (PosEx('=', AString, p2) > 0);
+end;
+
+function StringEhArquivo(AString: String): Boolean;
+begin
+  Result := (AString <> '') and
+    (Length(AString) <= 255) and
+    (pos(LF, AString) = 0) and
+    (pos('<', AString) = 0) and
+    (pos('=', AString) = 0);
 end;
 
 initialization

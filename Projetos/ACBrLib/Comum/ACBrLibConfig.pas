@@ -539,8 +539,11 @@ begin
 end;
 
 procedure TLibConfig.Ler;
+var
+  ArquivoInformado: Boolean;
 begin
-  VerificarNomeEPath(False);
+  ArquivoInformado := (FNomeArquivo <> '');
+  VerificarNomeEPath(not ArquivoInformado);
   TACBrLib(FOwner).GravarLog('TLibConfig.Ler: ' + FNomeArquivo, logCompleto);
 
   if FIni.FileName <> FNomeArquivo then

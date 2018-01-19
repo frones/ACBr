@@ -18,7 +18,8 @@ exports
   // Importadas de ACBrLibComum
   NFE_Inicializar,
   NFE_Finalizar,
-  NFE_NomeEVersao,
+  NFE_Nome,
+  NFE_Versao,
   NFE_UltimoRetorno,
   NFE_ConfigLer,
   NFE_ConfigGravar,

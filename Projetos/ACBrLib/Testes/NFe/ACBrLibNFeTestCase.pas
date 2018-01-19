@@ -18,7 +18,7 @@ type
     procedure Test_NFE_Inicializar_Ja_Inicializado;
     procedure Test_NFE_Finalizar;
     procedure Test_NFE_Finalizar_Ja_Finalizado;
-    procedure Test_NFE_NomeEVersao_Inicializacao_Automatica;
+    procedure Test_NFE_Nome_Inicializacao_Automatica;
   end;
 
 implementation
@@ -51,20 +51,21 @@ begin
   AssertEquals(ErrOk, NFE_Finalizar());
 end;
 
-procedure TTestACBrNFeLib.Test_NFE_NomeEVersao_Inicializacao_Automatica;
+procedure TTestACBrNFeLib.Test_NFE_Nome_Inicializacao_Automatica;
 var
-  ANome, AVersao: String;
-  L1, L2: Integer;
+  Bufflen: Integer;
+  AStr: String;
 begin
-  ANome := Space(255);
-  AVersao := Space(255);
+  // Obtendo o Tamanho //
+  Bufflen := 0;
+  AssertEquals(ErrOk, NFE_Nome(Nil, Bufflen));
 
-  AssertEquals(ErrOk, NFE_NomeEVersao(PChar(ANome), PChar(AVersao)));
+  // Lendo //
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, NFE_Nome(PChar(AStr), Bufflen));
 
-  ANome := TrimRight(ANome);
-  AssertEquals(CLibNFeNome, ANome);
-  AVersao := TrimRight(AVersao);
-  AssertEquals(CLibNFeVersao, AVersao);
+  AssertEquals(CLibNFeNome, AStr);
+  AssertEquals(Length(CLibNFeNome)+1, Bufflen);
 end;
 
 initialization

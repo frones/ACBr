@@ -5,8 +5,8 @@ object LibNFeDM: TLibNFeDM
   left = 346
   top = 174
   Height = 231
-  HorizontalOffset = 766
-  VerticalOffset = 254
+  HorizontalOffset = 804
+  VerticalOffset = 1526
   Width = 491
   PPI = 96
   object ACBrMail: TACBrMail

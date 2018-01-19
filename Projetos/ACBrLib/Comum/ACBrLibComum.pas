@@ -38,7 +38,7 @@ unit ACBrLibComum;
 interface
 
 uses
-  Classes, SysUtils, Forms,
+  Classes, SysUtils, ctypes,
   ACBrLibConfig;
 
 type
@@ -96,26 +96,28 @@ type
 {%region Declaração da funções externas}
 
 {%region Constructor/Destructor}
-function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): Integer;
-function LIB_Finalizar: Integer;
+function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): cint;
+function LIB_Finalizar: cint;
 {%endregion}
 
 {%region Versao/Retorno}
-function LIB_NomeEVersao(const sNome, sVersao: PChar): Integer;
-function LIB_UltimoRetorno(const sMensagem: PChar): Integer;
+function LIB_Nome(const sNome: PChar; var esLen: cint): cint;
+function LIB_Versao(const sVersao: PChar; var esLen: cint): cint;
+function LIB_UltimoRetorno(const sMensagem: PChar; var esLen: cint): cint;
 {%endregion}
 
 {%region Ler/Gravar Config }
-function LIB_ConfigLer(const eArqConfig: PChar): Integer;
-function LIB_ConfigGravar(const eArqConfig: PChar): Integer;
-function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): Integer;
-function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): Integer;
+function LIB_ConfigLer(const eArqConfig: PChar): cint;
+function LIB_ConfigGravar(const eArqConfig: PChar): cint;
+function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): cint;
+function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): cint;
 {%endregion}
 
 {%endregion}
 
 {%region Funcoes auxiliares para Funcionamento da Lib}
 procedure VerificarLibInicializada;
+procedure RetornarStringPChar(const AString: String; sDest: PChar; var esLen: cint);
 procedure VerificarArquivoExiste(const NomeArquivo: String);
 procedure LiberarLib;
 function SetRetorno(const ACodigo: Integer; const AMensagem: String = ''): Integer;
@@ -140,20 +142,20 @@ var
 implementation
 
 uses
-  strutils, strings,
+  strutils, strings, math,
   synacode, synautil,
   ACBrConsts, ACBrUtil,
   ACBrLibConsts;
 
 {%region Constructor/Destructor}
 
-function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): Integer;
+function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): cint;
 var
   ArqConfig, ChaveCrypt: String;
 begin
   try
-    ArqConfig := string(eArqConfig);
-    ChaveCrypt := string(eChaveCrypt);
+    ArqConfig := strpas(eArqConfig);
+    ChaveCrypt := strpas(eChaveCrypt);
 
     if (pLib = nil) then
       pLib := pLibClass.Create(ArqConfig, ChaveCrypt);
@@ -178,7 +180,7 @@ begin
   end;
 end;
 
-function LIB_Finalizar: Integer;
+function LIB_Finalizar: cint;
 begin
   try
     if (pLib <> nil) then
@@ -201,15 +203,14 @@ end;
 
 {%region Versao/Retorno}
 
-function LIB_NomeEVersao(const sNome, sVersao: PChar): Integer;
+function LIB_Nome(const sNome: PChar; var esLen: cint): cint;
 begin
   try
     VerificarLibInicializada;
-    pLib.GravarLog('LIB_NomeEVersao', logNormal);
-    StrPCopy(sNome, pLib.Nome);
-    StrPCopy(sVersao, pLib.Versao);
+    pLib.GravarLog('LIB_Nome', logNormal);
+    RetornarStringPChar(pLib.Nome, sNome, esLen);
     if pLib.Config.Log.Nivel >= logCompleto then
-      pLib.GravarLog('   Nome:'+String(sNome)+', Versao:'+String(sVersao), logCompleto, True);
+      pLib.GravarLog('   Nome:'+strpas(sNome)+', len:'+IntToStr(esLen), logCompleto, True);
     Result := SetRetorno(ErrOK);
   except
     on E: EACBrLibException do
@@ -217,10 +218,14 @@ begin
 
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-  end;
+  end;   end;
+
+function LIB_Versao(const sVersao: PChar; var esLen: cint): cint;
+begin
+
 end;
 
-function LIB_UltimoRetorno(const sMensagem: PChar): Integer;
+function LIB_UltimoRetorno(const sMensagem: PChar; var esLen: cint): cint;
 begin
   try
     VerificarLibInicializada;
@@ -228,7 +233,7 @@ begin
     StrPCopy(sMensagem, pLibRetorno.Mensagem);
     Result := pLibRetorno.Codigo;
     if pLib.Config.Log.Nivel >= logCompleto then
-      pLib.GravarLog('   Codigo:'+IntToStr(Result)+', Mensagem:'+String(sMensagem), logCompleto, True);
+      pLib.GravarLog('   Codigo:'+IntToStr(Result)+', Mensagem:'+strpas(sMensagem), logCompleto, True);
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
@@ -242,13 +247,13 @@ end;
 
 {%region Ler/Gravar Config }
 
-function LIB_ConfigLer(const eArqConfig: PChar): Integer;
+function LIB_ConfigLer(const eArqConfig: PChar): cint;
 var
   ArqConfig: String;
 begin
   try
     VerificarLibInicializada;
-    ArqConfig := string(eArqConfig);
+    ArqConfig := strpas(eArqConfig);
     pLib.GravarLog('LIB_ConfigLer('+ArqConfig+')', logNormal);
 
     if NaoEstaVazio(ArqConfig) then
@@ -265,13 +270,13 @@ begin
   end;
 end;
 
-function LIB_ConfigGravar(const eArqConfig: PChar): Integer;
+function LIB_ConfigGravar(const eArqConfig: PChar): cint;
 var
   ArqConfig: String;
 begin
   try
     VerificarLibInicializada;
-    ArqConfig := string(eArqConfig);
+    ArqConfig := strpas(eArqConfig);
     pLib.GravarLog('LIB_ConfigGravar('+ArqConfig+')', logNormal);
 
     if NaoEstaVazio(ArqConfig) then
@@ -288,20 +293,20 @@ begin
   end;
 end;
 
-function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): Integer;
+function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): cint;
 var
   Sessao, Chave, Valor: String;
 begin
   try
     VerificarLibInicializada;
-    Sessao := string(eSessao);
-    Chave := string(eChave);
+    Sessao := strpas(eSessao);
+    Chave := strpas(eChave);
     pLib.GravarLog('LIB_ConfigLerValor('+Sessao+', '+Chave+')', logNormal);
 
     Valor := pLib.Config.LerValor(Chave, Sessao);
     StrPCopy(sValor, Valor);
     if pLib.Config.Log.Nivel >= logCompleto then
-      pLib.GravarLog('   Valor:'+String(sValor), logCompleto, True);
+      pLib.GravarLog('   Valor:'+strpas(sValor), logCompleto, True);
 
     Result := SetRetorno(ErrOK);
   except
@@ -313,15 +318,15 @@ begin
   end;
 end;
 
-function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): Integer;
+function LIB_ConfigGravarValor(const eSessao, eChave, eValor: PChar): cint;
 var
   Sessao, Chave, Valor: String;
 begin
   try
     VerificarLibInicializada;
-    Sessao := string(eSessao);
-    Chave := string(eChave);
-    Valor := string(eValor);
+    Sessao := strpas(eSessao);
+    Chave := strpas(eChave);
+    Valor := strpas(eValor);
     pLib.GravarLog('LIB_ConfigGravarValor('+Sessao+', '+Chave+', '+Valor+')', logNormal);
 
     pLib.Config.GravarValor(Chave, Sessao, Valor);
@@ -348,6 +353,15 @@ begin
      if (LIB_Inicializar('', '') <> ErrOK) then
        raise EACBrLibException.Create(ErrLibNaoInicializada, SErrLibNaoInicializada);
   end;
+end;
+
+procedure RetornarStringPChar(const AString: String; sDest: PChar;
+  var esLen: cint);
+begin
+  if Assigned(sDest) then
+    StrPLCopy(sDest, AString, esLen);
+
+  esLen := min(esLen, Length(AString)+1);
 end;
 
 procedure VerificarArquivoExiste(const NomeArquivo: String);
@@ -489,7 +503,6 @@ end;
 procedure TACBrLib.Executar;
 begin
   GravarLog('Executar', logCompleto);
-  fpConfig.Ler;
 end;
 
 function TACBrLib.CalcularNomeArqLog: String;

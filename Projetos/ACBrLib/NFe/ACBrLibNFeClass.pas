@@ -38,7 +38,7 @@ unit ACBrLibNFeClass;
 interface
 
 uses
-  Classes, SysUtils, Forms,
+  Classes, SysUtils, Forms, ctypes,
   ACBrLibComum, ACBrLibNFeDataModule;
 
 type
@@ -64,38 +64,40 @@ type
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function NFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): Integer;
+function NFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Finalizar: Integer;
+function NFE_Finalizar: cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_NomeEVersao(const sNome, sVersao: PChar): Integer;
+function NFE_Nome(const sNome: PChar; var esLen: cint): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_UltimoRetorno(const sMensagem: PChar): Integer;
+function NFE_Versao(const sVersao: PChar; var esLen: cint): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigLer(const eArqConfig: PChar): Integer;
+function NFE_UltimoRetorno(const sMensagem: PChar; var esLen: cint): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigGravar(const eArqConfig: PChar): Integer;
+function NFE_ConfigLer(const eArqConfig: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): Integer;
+function NFE_ConfigGravar(const eArqConfig: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): Integer;
+function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): cint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region NFe}
-function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): Integer;
+function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function NFE_CarregarININFe(const eArquivoOuINI: PChar): Integer;
+function NFE_CarregarININFe(const eArquivoOuINI: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-function NFE_LimparListaNFEs: Integer;
+function NFE_LimparListaNFEs: cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 
 {%region Servicos}
-function NFE_StatusServico(const Buffer: PChar): Integer;
+function NFE_StatusServico(const Buffer: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -146,49 +148,55 @@ end;
 {%region NFe}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function NFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): Integer;
+function NFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Inicializar(eArqConfig, eChaveCrypt);
 end;
 
-function NFE_Finalizar: Integer;
+function NFE_Finalizar: cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar;
 end;
 
-function NFE_NomeEVersao(const sNome, sVersao: PChar): Integer;
+function NFE_Nome(const sNome: PChar; var esLen: cint): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_NomeEVersao(sNome, sVersao);
+  Result := LIB_Nome(sNome, esLen);
 end;
 
-function NFE_UltimoRetorno(const sMensagem: PChar): Integer;
+function NFE_Versao(const sVersao: PChar; var esLen: cint): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := LIB_UltimoRetorno(sMensagem);
+  Result := LIB_Versao(sVersao, esLen);
 end;
 
-function NFE_ConfigLer(const eArqConfig: PChar): Integer;
+function NFE_UltimoRetorno(const sMensagem: PChar; var esLen: cint): cint;
+  cdecl;
+begin
+  Result := LIB_UltimoRetorno(sMensagem, esLen);
+end;
+
+function NFE_ConfigLer(const eArqConfig: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLer(eArqConfig);
 end;
 
-function NFE_ConfigGravar(const eArqConfig: PChar): Integer;
+function NFE_ConfigGravar(const eArqConfig: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravar(eArqConfig);
 end;
 
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): Integer;
+function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(eSessao, eChave, sValor);
 end;
 
-function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): Integer;
+function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(eSessao, eChave, eValor);
@@ -196,7 +204,7 @@ end;
 
 {%endregion}
 
-function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): Integer;
+function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: Boolean;
@@ -238,7 +246,7 @@ begin
   end;
 end;
 
-function NFE_CarregarININFe(const eArquivoOuINI: PChar): Integer;
+function NFE_CarregarININFe(const eArquivoOuINI: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   ArquivoOuINI: String;
@@ -274,7 +282,7 @@ begin
   end;
 end;
 
-function NFE_LimparListaNFEs: Integer;
+function NFE_LimparListaNFEs: cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -304,7 +312,7 @@ end;
 
 {%region Servicos}
 
-function NFE_StatusServico(const Buffer: PChar): Integer;
+function NFE_StatusServico(const Buffer: PChar): cint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resposta: TStatusServicoResposta;

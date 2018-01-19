@@ -50,8 +50,11 @@ unit ACBreSocialWebServices;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFe, ACBrDFeWebService, eSocial_Conversao, eSocial_Common, pcnLeitor,
-  ACBreSocialLoteEventos,  ACBreSocialEventos, ACBreSocialConfiguracoes, ACBrUtil;
+  Classes, SysUtils,
+  ACBrUtil, ACBrDFe, ACBrDFeWebService,
+  pcnLeitor,
+  ACBreSocialLoteEventos,  ACBreSocialEventos, ACBreSocialConfiguracoes,
+  eSocial_Conversao, eSocial_Common;
 
 type
 
@@ -323,7 +326,9 @@ type
 implementation
 
 uses
-  StrUtils, Math, ACBreSocial, blcksock, System.DateUtils, pcnConversao, pcnGerador;
+  StrUtils, Math, blcksock, DateUtils,
+  pcnConversao, pcnGerador,
+  ACBreSocial;
 
 { TeSocialWebService }
 
@@ -528,7 +533,7 @@ begin
 
       Leitor.Grupo := Leitor.rExtrai(1, 'dadosRecepcaoLote');
       try
-        FRetProcLote.dadosRecLote.dhRecepcao := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhRecepcao'), False);
+//Compatibilizar        FRetProcLote.dadosRecLote.dhRecepcao := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhRecepcao'), False);
       except //'2017-07-20T22:14:51.1569524-03:00'
         FRetProcLote.dadosRecLote.dhRecepcao := 0;
       end;
@@ -866,13 +871,14 @@ begin
 
 function TConsultaLote.GerarMsgLog: String;
 begin
-  Inherited;
+  // Falta implementar
   Result := FPRetornoWS;
 end;
 
 function TConsultaLote.GerarPrefixoArquivo: String;
 begin
-  Inherited;
+  // Falta implementar
+  Result := '';
 end;
 
 procedure TConsultaLote.GerarXML;
@@ -940,7 +946,7 @@ begin
     begin
       Leitor.Grupo := Leitor.rExtrai(1, 'dadosRecepcaoLote');
       try
-        FRetProcLote.dadosRecLote.dhRecepcao := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhRecepcao'));
+//Compatibilizar        FRetProcLote.dadosRecLote.dhRecepcao := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhRecepcao'));
       except
         FRetProcLote.dadosRecLote.dhRecepcao := 0;
       end;
@@ -960,7 +966,7 @@ begin
           retEvento.IDEvento := Leitor.rAtributo('Id', 'evento');
           Reader.Grupo := Reader.rExtrai(1, 'recepcao');
           retEvento.FRecepcao.FtpAmb := TpTpAmb(Integer(Leitor.rCampo(tcInt, 'tpAmb')));
-          retEvento.FRecepcao.FdhRecepcao :=  ISO8601ToDate(Leitor.rCampo(tcStr, 'dhRecepcao',''));
+//Compatibilizar          retEvento.FRecepcao.FdhRecepcao :=  ISO8601ToDate(Leitor.rCampo(tcStr, 'dhRecepcao',''));
           retEvento.FRecepcao.FversaoAplicRecepcao := Leitor.rCampo(tcStr, 'versaoAppRecepcao');
           retEvento.FRecepcao.Fprotocolo := Leitor.rCampo(tcStr, 'protocoloEnvioLote');
           //processamento
@@ -968,7 +974,7 @@ begin
           retEvento.FProcessamento.FcdResposta :=  Leitor.rCampo(tcStr, 'cdResposta');
           retEvento.FProcessamento.FdescResposta := UTF8Decode(Leitor.rCampo(tcStr, 'descResposta'));
           retEvento.FProcessamento.versaoAplicProcLote := Leitor.rCampo(tcStr, 'versaoAppProcessamento');
-          retEvento.FProcessamento.FdhProcessamento := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhProcessamento'));
+//Compatibilizar          retEvento.FProcessamento.FdhProcessamento := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhProcessamento'));
           //recibo
           Reader.Grupo := Reader.rExtrai(1, 'recibo');
           retEvento.FRecibo.FnrRecibo := Leitor.rCampo(tcStr, 'nrRecibo');

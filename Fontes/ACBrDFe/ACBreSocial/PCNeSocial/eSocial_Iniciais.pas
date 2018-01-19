@@ -44,76 +44,109 @@
 ******************************************************************************}
 {$I ACBr.inc}
 
-
-unit ACBreSocialConfiguracoes;
+unit eSocial_Iniciais;
 
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrDFeConfiguracoes, pcnConversao,
-  eSocial_Conversao;
+  SysUtils, Classes,
+  ACBrUtil, eSocial_Conversao,
+  eSocial_S1000, eSocial_S1005, eSocial_S2100;
 
 type
-  TConfiguracoeseSocial = class(TConfiguracoes)
+
+  TIniciais = class(TComponent)
   private
-    function GetArquivos: TArquivosConf;
-    function GetGeral: TGeralConf;
-  protected
-    procedure CreateGeralConf; override;
-    procedure CreateArquivosConf; override;
+    FS1000: TS1000Collection;
+    FS1005: TS1005Collection;
+    FS2100: TS2100Collection;
+    procedure setS1000(const Value: TS1000Collection);
+    procedure setS1005(const Value: TS1005Collection);
+    procedure setS2100(const Value: TS2100Collection);
   public
-    constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial); overload;
+    constructor Create(AOwner: TComponent); reintroduce;
+    destructor Destroy; override;
+    procedure GerarXMLs;
+    procedure SaveToFiles;
+    procedure Clear;
+
   published
-    property Geral: TGeralConf read GetGeral;
-    property Arquivos: TArquivosConf read GetArquivos;
-    property WebServices;
-    property Certificados;
+    property S1000: TS1000Collection read FS1000 write setS1000;
+    property S1005: TS1005Collection read FS1005 write setS1005;
+    property S2100: TS2100Collection read FS2100 write setS2100;
   end;
 
 implementation
 
 uses
-  ACBreSocial, ACBrDFeUtil;
+  ACBreSocial;
+
+{ TIniciais }
 
 
-{ TConfiguracoeseSocial }
 
-procedure TConfiguracoeseSocial.Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial);
+procedure TIniciais.Clear;
 begin
-  Geral.Assign(DeConfiguracoeseSocial.Geral);
-  WebServices.Assign(DeConfiguracoeseSocial.WebServices);
-  Certificados.Assign(DeConfiguracoeseSocial.Certificados);
-  Arquivos.Assign(DeConfiguracoeseSocial.Arquivos);
+  FS1000.Clear;
+  FS1005.Clear;
+  FS2100.Clear;
 end;
 
-constructor TConfiguracoeseSocial.Create(AOwner: TComponent);
+constructor TIniciais.Create(AOwner: TComponent);
 begin
-  inherited Create(AOwner);
-  WebServices.ResourceName := 'ACBreSocialServices';
+  inherited;
+  FS1000 := TS1000Collection.Create(AOwner, TS1000CollectionItem);
+  FS1005 := TS1005Collection.Create(AOwner, TS1005CollectionItem);
+  FS2100 := TS2100Collection.Create(AOwner, TS2100CollectionItem);
 end;
 
-procedure TConfiguracoeseSocial.CreateArquivosConf;
+destructor TIniciais.Destroy;
 begin
-  FPArquivos := TArquivosConf.Create(self);
+  FS1000.Free;
+  FS1005.Free;
+  FS2100.Free;
+  inherited;
 end;
 
-procedure TConfiguracoeseSocial.CreateGeralConf;
+procedure TIniciais.GerarXMLs;
+var
+  i: Integer;
 begin
-  FPGeral := TGeralConf.Create(Self);
+  for I := 0 to Self.S1000.Count - 1 do
+    Self.S1000.Items[i].evtInfoEmpregador.GerarXML;
+  for I := 0 to Self.S1005.Count - 1 do
+    Self.S1005.Items[i].evtTabEstab.GerarXML;
+  for I := 0 to Self.S2100.Count - 1 do
+    Self.S2100.Items[i].evtCadInicial.GerarXML;
 end;
 
-
-function TConfiguracoeseSocial.GetArquivos: TArquivosConf;
+procedure TIniciais.SaveToFiles;
+var
+  i: integer;
+  Path : String;
 begin
-  Result := TArquivosConf(FPArquivos);
+  Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
+  for I := 0 to Self.S1000.Count - 1 do
+    Self.S1000.Items[i].evtInfoEmpregador.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1000.Items[i].TipoEvento)+'-'+IntToStr(i));
+  for I := 0 to Self.S1005.Count - 1 do
+    Self.S1005.Items[i].evtTabEstab.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1005.Items[i].TipoEvento)+'-'+IntToStr(i));
+  for I := 0 to Self.S2100.Count - 1 do
+    Self.S2100.Items[i].evtCadInicial.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2100.Items[i].TipoEvento)+'-'+IntToStr(i));
 end;
 
-
-function TConfiguracoeseSocial.GetGeral: TGeralConf;
+procedure TIniciais.setS1000(const Value: TS1000Collection);
 begin
-  Result := TGeralConf(FPGeral);
+  FS1000.Assign(Value);
+end;
+
+procedure TIniciais.setS1005(const Value: TS1005Collection);
+begin
+  FS1005.Assign(Value);
+end;
+
+procedure TIniciais.setS2100(const Value: TS2100Collection);
+begin
+  FS2100.Assign(Value);
 end;
 
 end.

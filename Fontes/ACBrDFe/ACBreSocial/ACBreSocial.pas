@@ -49,9 +49,12 @@ unit ACBreSocial;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFe, ACBrDFeException,
-  ACBrDFeConfiguracoes, pcnConversao, ACBreSocialLoteEventos, eSocial_Conversao,
-  ACBreSocialEventos, ACBreSocialConfiguracoes, ACBreSocialWebServices, ACBrUtil;
+  Classes, SysUtils,
+  ACBrUtil, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  pcnConversao,
+  ACBreSocialLoteEventos, ACBreSocialEventos, ACBreSocialConfiguracoes,
+  ACBreSocialWebServices,
+  eSocial_Conversao;
 
 const
   ACBRESOCIAL_VERSAO = '2.3.0';
@@ -106,12 +109,12 @@ type
     property OnTransmissaoEventos: TNotifyEventoseSocial read FOnTransmissaoEventos write FOnTransmissaoEventos;
   end;
 
-
 implementation
 
 { TACBreSocial }
 
-uses ACBrDFeSSL;
+uses
+  ACBrDFeSSL;
 
 procedure TACBreSocial.AssinarEventos;
 begin

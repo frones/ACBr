@@ -44,76 +44,13 @@
 ******************************************************************************}
 {$I ACBr.inc}
 
-
-unit ACBreSocialConfiguracoes;
+unit eSocial_Consts;
 
 interface
 
-uses
-  Classes, SysUtils,
-  ACBrDFeConfiguracoes, pcnConversao,
-  eSocial_Conversao;
-
-type
-  TConfiguracoeseSocial = class(TConfiguracoes)
-  private
-    function GetArquivos: TArquivosConf;
-    function GetGeral: TGeralConf;
-  protected
-    procedure CreateGeralConf; override;
-    procedure CreateArquivosConf; override;
-  public
-    constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial); overload;
-  published
-    property Geral: TGeralConf read GetGeral;
-    property Arquivos: TArquivosConf read GetArquivos;
-    property WebServices;
-    property Certificados;
-  end;
+const
+  dDataBrancoNula = '30/12/1899';
 
 implementation
-
-uses
-  ACBreSocial, ACBrDFeUtil;
-
-
-{ TConfiguracoeseSocial }
-
-procedure TConfiguracoeseSocial.Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial);
-begin
-  Geral.Assign(DeConfiguracoeseSocial.Geral);
-  WebServices.Assign(DeConfiguracoeseSocial.WebServices);
-  Certificados.Assign(DeConfiguracoeseSocial.Certificados);
-  Arquivos.Assign(DeConfiguracoeseSocial.Arquivos);
-end;
-
-constructor TConfiguracoeseSocial.Create(AOwner: TComponent);
-begin
-  inherited Create(AOwner);
-  WebServices.ResourceName := 'ACBreSocialServices';
-end;
-
-procedure TConfiguracoeseSocial.CreateArquivosConf;
-begin
-  FPArquivos := TArquivosConf.Create(self);
-end;
-
-procedure TConfiguracoeseSocial.CreateGeralConf;
-begin
-  FPGeral := TGeralConf.Create(Self);
-end;
-
-
-function TConfiguracoeseSocial.GetArquivos: TArquivosConf;
-begin
-  Result := TArquivosConf(FPArquivos);
-end;
-
-
-function TConfiguracoeseSocial.GetGeral: TGeralConf;
-begin
-  Result := TGeralConf(FPGeral);
-end;
 
 end.

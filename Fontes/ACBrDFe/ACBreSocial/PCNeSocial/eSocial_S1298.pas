@@ -39,81 +39,135 @@
 |*
 |* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
 |*  - Doação do componente para o Projeto ACBr
-|* 28/08/2017: Leivio Fontenele - leivio@yahoo.com.br
-|*  - Implementação comunicação, envelope, status e retorno do componente com webservice.
+|* 01/03/2016: Guilherme Costa
+|*  - Passado o namespace para geração do cabeçalho
 ******************************************************************************}
 {$I ACBr.inc}
 
-
-unit ACBreSocialConfiguracoes;
+unit eSocial_S1298;
 
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrDFeConfiguracoes, pcnConversao,
-  eSocial_Conversao;
+  SysUtils, Classes,
+  pcnConversao,
+  eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
-  TConfiguracoeseSocial = class(TConfiguracoes)
+  TS1298Collection = class;
+  TS1298CollectionItem = class;
+  TEvtReabreEvPer = class;
+
+  TS1298Collection = class(TOwnedCollection)
   private
-    function GetArquivos: TArquivosConf;
-    function GetGeral: TGeralConf;
-  protected
-    procedure CreateGeralConf; override;
-    procedure CreateArquivosConf; override;
+    function GetItem(Index: Integer): TS1298CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1298CollectionItem);
   public
-    constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial); overload;
+    function Add: TS1298CollectionItem;
+    property Items[Index: Integer]: TS1298CollectionItem read GetItem write SetItem; default;
+  end;
+
+  TS1298CollectionItem = class(TCollectionItem)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtReabreEvPer: TEvtReabreEvPer;
+    procedure setEvtReabreEvPer(const Value: TEvtReabreEvPer);
+  public
+    constructor Create(AOwner: TComponent); reintroduce;
+    destructor Destroy; override;
   published
-    property Geral: TGeralConf read GetGeral;
-    property Arquivos: TArquivosConf read GetArquivos;
-    property WebServices;
-    property Certificados;
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtReabreEvPer: TEvtReabreEvPer read FEvtReabreEvPer write setEvtReabreEvPer;
+  end;
+
+  TEvtReabreEvPer = class(TESocialEvento)
+  private
+    FIdeEvento: TIdeEvento4;
+    FIdeEmpregador: TIdeEmpregador;
+    {Geradores específicos da classe}
+  public
+    constructor Create(AACBreSocial: TObject);overload;
+    destructor  Destroy; override;
+
+    function GerarXML: boolean; override;
+
+    property IdeEvento: TIdeEvento4 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
   end;
 
 implementation
 
 uses
-  ACBreSocial, ACBrDFeUtil;
+  eSocial_Periodicos;
 
-
-{ TConfiguracoeseSocial }
-
-procedure TConfiguracoeseSocial.Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial);
+{ TS1298Collection }
+function TS1298Collection.Add: TS1298CollectionItem;
 begin
-  Geral.Assign(DeConfiguracoeseSocial.Geral);
-  WebServices.Assign(DeConfiguracoeseSocial.WebServices);
-  Certificados.Assign(DeConfiguracoeseSocial.Certificados);
-  Arquivos.Assign(DeConfiguracoeseSocial.Arquivos);
+  Result := TS1298CollectionItem(inherited Add);
+  Result.Create(TComponent(Self.Owner));
 end;
 
-constructor TConfiguracoeseSocial.Create(AOwner: TComponent);
+function TS1298Collection.GetItem(Index: Integer): TS1298CollectionItem;
 begin
-  inherited Create(AOwner);
-  WebServices.ResourceName := 'ACBreSocialServices';
+  Result := TS1298CollectionItem(inherited GetItem(Index));
 end;
 
-procedure TConfiguracoeseSocial.CreateArquivosConf;
+procedure TS1298Collection.SetItem(Index: Integer; Value: TS1298CollectionItem);
 begin
-  FPArquivos := TArquivosConf.Create(self);
+  inherited SetItem(Index, Value);
 end;
 
-procedure TConfiguracoeseSocial.CreateGeralConf;
+{TS1298CollectionItem}
+constructor TS1298CollectionItem.Create(AOwner: TComponent);
 begin
-  FPGeral := TGeralConf.Create(Self);
+  FTipoEvento := teS1298;
+  FEvtReabreEvPer := TEvtReabreEvPer.Create(AOwner);
 end;
 
-
-function TConfiguracoeseSocial.GetArquivos: TArquivosConf;
+destructor TS1298CollectionItem.Destroy;
 begin
-  Result := TArquivosConf(FPArquivos);
+  FEvtReabreEvPer.Free;
+  inherited;
 end;
 
-
-function TConfiguracoeseSocial.GetGeral: TGeralConf;
+procedure TS1298CollectionItem.setEvtReabreEvPer(const Value: TEvtReabreEvPer);
 begin
-  Result := TGeralConf(FPGeral);
+  FEvtReabreEvPer.Assign(Value);
+end;
+
+{ TEvtSolicTotal }
+constructor TEvtReabreEvPer.Create(AACBreSocial: TObject);
+begin
+  inherited;
+  FIdeEvento := TIdeEvento4.Create;
+  FIdeEmpregador := TIdeEmpregador.Create;
+end;
+
+destructor TEvtReabreEvPer.destroy;
+begin
+  FIdeEvento.Free;
+  FIdeEmpregador.Free;
+  inherited;
+end;
+
+function TEvtReabreEvPer.GerarXML: boolean;
+begin
+  try
+    GerarCabecalho('evtReabreEvPer');
+      Gerador.wGrupo('evtReabreEvPer Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
+        GerarIdeEvento4(self.IdeEvento);
+        gerarIdeEmpregador(self.IdeEmpregador);
+
+      Gerador.wGrupo('/evtReabreEvPer');
+    GerarRodape;
+
+    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtReabreEvPer');
+    Validar('evtReabreEvPer');
+  except on e:exception do
+    raise Exception.Create(e.Message);
+  end;
+
+  Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
 end.

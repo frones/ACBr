@@ -47,10 +47,11 @@ unit ACBreSocialLoteEventos;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, StrUtils, eSocial_Common,
-  ACBreSocialConfiguracoes, ACBrDFeUtil, ACBreSocialGerador, ACBrUtil,
-  pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador, synautil, eSocial_Conversao;
-
+  Classes, SysUtils, Dialogs, StrUtils, synautil,
+  ACBrUtil, ACBrDFeUtil,
+  pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
+  ACBreSocialConfiguracoes,
+  eSocial_Gerador, eSocial_Common, eSocial_Conversao;
 
 type
 
@@ -71,7 +72,6 @@ type
     property Leitor : TLeitor read FLeitor write FLeitor;
     property TipoEvento: TTipoEvento read FTipoEvento write FTipoEvento;
   end;
-
 
   TLoteEventos = class(TOwnedCollection)
   private
@@ -105,7 +105,8 @@ implementation
 
 { TLoteEventos }
 
-uses ACBreSocial, DateUtils;
+uses
+  ACBreSocial, DateUtils;
 
 function TLoteEventos.Add: TItemLoteEventos;
 begin

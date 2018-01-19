@@ -22,12 +22,14 @@ type
     procedure Test_NFE_Nome_Lendo_Buffer_Tamanho_Identico;
     procedure Test_NFE_Nome_Lendo_Buffer_Tamanho_Maior;
     procedure Test_NFE_Nome_Lendo_Buffer_Tamanho_Menor;
+    procedure Test_NFE_Versao;
+    procedure Test_NFE_ConfigLerValor;
   end;
 
 implementation
 
 uses
-  ACBrLibNFeStaticImport, ACBrLibNFeConsts;
+  ACBrLibNFeStaticImport, ACBrLibNFeConsts, ACBrLibConsts;
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar_Com_DiretorioInvalido;
 begin
@@ -97,11 +99,42 @@ begin
   Bufflen := 4;
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, NFE_Nome(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibNFeNome), Bufflen);
+  AssertEquals(4, Bufflen);
   AssertEquals(copy(CLibNFeNome,1,4), AStr);
+end;
+
+procedure TTestACBrNFeLib.Test_NFE_Versao;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  // Obtendo o Tamanho //
+  Bufflen := 0;
+  AssertEquals(ErrOk, NFE_Versao(Nil, Bufflen));
+  AssertEquals(Length(CLibNFeVersao), Bufflen);
+
+  // Lendo a resposta //
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, NFE_Versao(PChar(AStr), Bufflen));
+  AssertEquals(Length(CLibNFeVersao), Bufflen);
+  AssertEquals(CLibNFeVersao, AStr);
+end;
+
+procedure TTestACBrNFeLib.Test_NFE_ConfigLerValor;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  // Obtendo o Tamanho //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, NFE_ConfigLerValor(CSessaoVersao, CLibNFeNome, PChar(AStr), Bufflen));
+  AStr := copy(AStr,1,Bufflen);
+  AssertEquals(CLibNFeVersao, AStr);
 end;
 
 initialization
   RegisterTest(TTestACBrNFeLib);
+
 end.
 

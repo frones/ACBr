@@ -38,13 +38,13 @@ function NFE_Finalizar: longint;
 {%endregion}
 
 {%region Versao/Retorno}
-function NFE_Nome(const sNome: PChar; var esLen: longint): longint;
+function NFE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFE_Versao(const sVersao: PChar; var esLen: longint): longint;
+function NFE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFE_UltimoRetorno(const sMensagem: PChar; var esLen: longint): longint;
+function NFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 {%endregion}
 
@@ -55,7 +55,7 @@ function NFE_ConfigLer(const eArqConfig: PChar): longint;
 function NFE_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar): longint;
+function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
 function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
@@ -74,7 +74,7 @@ function NFE_LimparListaNFEs: longint;
 {%endregion}
 
 {%region Servicos}
-function NFE_StatusServico(const Buffer: PChar): longint;
+function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 {%endregion}
 

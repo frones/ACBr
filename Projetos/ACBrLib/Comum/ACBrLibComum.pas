@@ -413,7 +413,7 @@ begin
     Chave := strpas(eChave);
     pLib.GravarLog('LIB_ConfigLerValor(' + Sessao + ', ' + Chave + ')', logNormal);
 
-    Valor := pLib.Config.LerValor(Chave, Sessao);
+    Valor := pLib.Config.LerValor(Sessao, Chave);
     MoverStringParaPChar(Valor, sValor, esTamanho);
     if pLib.Config.Log.Nivel >= logCompleto then
       pLib.GravarLog('   Valor:' + strpas(sValor)+ ', len:' + IntToStr(esTamanho), logCompleto, True);

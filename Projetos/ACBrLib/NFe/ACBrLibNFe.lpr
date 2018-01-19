@@ -15,6 +15,25 @@ var
 {$ENDIF}
 
 exports
+  // Importadas de ACBrLibComum
+  NFE_Inicializar,
+  NFE_Finalizar,
+  NFE_NomeEVersao,
+  NFE_UltimoRetorno,
+  NFE_ConfigLer,
+  NFE_ConfigGravar,
+  NFE_ConfigLerValor,
+  NFE_ConfigGravarValor,
+
+  // Servicos
+  NFE_StatusServico,
+
+  // Arquivos
+  NFE_CarregarXMLNFe,
+  NFE_CarregarININFe,
+  NFE_LimparListaNFEs;
+
+exports
 {$I ACBrLibExport.inc}
 
 begin

@@ -62,6 +62,10 @@ type
     //  De tipicacao para String = es+ Nome da Variavel ou do campo + ToStr
     //  De String para tipicacao = esStrTo+ Nome da Variavel ou do campo
 
+  TeSocialGrupo = (egINICIAIS = 1, egPERIODICOS = 2, egNAOPERIODICOS = 3);
+
+  TeSocialEventos =(neENVIOLOTE, neRETORNOLOTE, neENVIOCONSULTA, neRETORNOCONSULTA);
+
   TModoLancamento         = (mlInclusao, mlAlteracao, mlExclusao);
 
   TeSocialSchema          = (TsEvtAdesao, TsEvtAdmissao, TsEvtAdmissaoPreliminar,
@@ -424,6 +428,7 @@ type
 
   tpCumprParcialAviso     = (cpaCumprimentoTotal, cpaCumprimentoParcialNovoEmprego, cpaCumprimentoParcialEmpregador);
 
+  TVersaoeSocial = (ve240);
 
 
 
@@ -796,7 +801,7 @@ type
   function eSModoLancamentoToStr(const t: TModoLancamento): string;
   function eSStrToModoLancamento(var ok: boolean; const s: string): TModoLancamento;
 
-function LayOutToServico(const t: TLayOut): String;
+function LayOuteSocialToServico(const t: TLayOut): String;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 
@@ -806,11 +811,18 @@ function SchemaESocialToStr(const t: TeSocialSchema): String;
 
 function StrToSchemaESocial(out ok: Boolean; const s: String): TeSocialSchema;
 
+function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
+function VersaoeSocialToStr(const t: TVersaoeSocial): String;
+
+function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
+function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
+
 implementation
 
+uses
+  pcnConversao, typinfo;
+
 const
-
-
   TTipoEventoString   : array[0..44] of String =('S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030', 'S-1035',
                                                  'S-1040', 'S-1050', 'S-1060', 'S-1070', 'S-1080',
                                                  'S-2100', 'S-1200', 'S-1202', 'S-1207', 'S-1210', 'S-1220',
@@ -819,7 +831,6 @@ const
                                                  'S-2206', 'S-2210', 'S-2220', 'S-2230', 'S-2240',
                                                  'S-2241', 'S-2250', 'S-2298', 'S-2299', 'S-2300', 'S-2305',
                                                  'S-2306', 'S-2399', 'S-2400','S-3000', 'S-4000', 'S-4999' );
-
 
   TUFString           : array[0..26] of String = ('AC','AL','AP','AM','BA','CE','DF','ES','GO',
                                                   'MA','MT','MS','MG','PA','PB','PR','PE','PI',
@@ -867,9 +878,7 @@ const
   TGenericosString01_12 : array[0..11] of string = ('01','02','03','04','05',
                                                     '06','07','08','09','10','11', '12' );
 
-
-
-function LayOutToServico(const t: TLayOut): String;
+function LayOuteSocialToServico(const t: TLayOut): String;
 begin
 
 end;
@@ -912,10 +921,10 @@ begin
         result := i;
         exit;
       end;
-  Finally
+  finally
     ok := Result <> -1;
-  End;
-End;
+  end;
+end;
 
 function TipoEventoToStr(const t: TTipoEvento ): string;
 begin
@@ -2031,6 +2040,38 @@ end;
 function eSStrToModoLancamento(var ok: boolean; const s: string): TModoLancamento;
 begin
   Result := TModoLancamento(StrToEnumerado2(ok, s, TModoLancamentoString));
+end;
+
+function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
+begin
+  Result := StrToEnumerado(ok, s, ['2.40'], [ve240]);
+end;
+
+function VersaoeSocialToStr(const t: TVersaoeSocial): String;
+begin
+  Result := EnumeradoToStr(t, ['2.40'], [ve240]);
+end;
+
+function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
+begin
+  ok := True;
+
+  if (d = 2.4)  then
+    Result := ve240
+  else
+  begin
+    Result := ve240;
+    ok := False;
+  end;
+end;
+
+function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
+begin
+  case t of
+    ve240: Result := 2.40;
+  else
+    Result := 0;
+  end;
 end;
 
 end.

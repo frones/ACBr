@@ -224,13 +224,13 @@ begin
 
   ArqXML := XMLEvento;
 
-  // XML j√° deve estar em UTF8, para poder ser assinado //
+  // XML j· deve estar em UTF8, para poder ser assinado //
   ArqXML := ConverteXMLtoUTF8(ArqXML);
   FXMLOriginal := ArqXML;
 
   with TACBreSocial(FACBreSocial) do
   begin
-    XMLAss := SSL.Assinar(ArqXML, 'eSocial', NomeEvento, '', '', 'id');
+    XMLAss := SSL.Assinar(String(ArqXML), 'eSocial', NomeEvento);
     FXMLAssinado := XMLAss;
     FXMLOriginal := XMLAss;
 
@@ -255,6 +255,7 @@ begin
     {$ENDIF}
   end;
 end;
+
 constructor TeSocialEvento.Create(AACBreSocial: TObject);
 begin
   FACBreSocial := AACBreSocial;
@@ -324,7 +325,7 @@ end;
 procedure TeSocialEvento.GerarCabecalho(Namespace: String);
 begin
   // TODO: layout antigo remover na vers„o do 2.3
-  TACBreSocial(FACBreSocial).SSL.NameSpaceURI := 'http://www.esocial.gov.br/schema/evt/'+Namespace+'/v02_02_02'; // << /v02_03_00
+  TACBreSocial(FACBreSocial).SSL.NameSpaceURI := 'http://www.esocial.gov.br/schema/evt/'+Namespace+'/v02_04_01'; // << /v02_03_00
   Gerador.wGrupo(ENCODING_UTF8, '', False);
   Gerador.wGrupo('eSocial xmlns="'+TACBreSocial(FACBreSocial).SSL.NameSpaceURI+'"');
 end;

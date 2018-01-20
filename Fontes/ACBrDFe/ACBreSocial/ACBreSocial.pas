@@ -49,28 +49,94 @@ unit ACBreSocial;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrUtil, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
-  pcnConversao,
-  ACBreSocialLoteEventos, ACBreSocialEventos, ACBreSocialConfiguracoes,
-  ACBreSocialWebServices,
-  eSocial_Conversao;
+  Classes, SysUtils, ACBrBase, ACBrUtil,
+  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  ACBreSocialConfiguracoes, ACBreSocialWebServices, ACBreSocialEventos,
+  ACBreSocialLoteEventos,
+  pcnConversao, eSocial_Conversao;
 
 const
   ACBRESOCIAL_VERSAO = '2.3.0';
   ACBRESOCIAL_NAMESPACE = ' http://www.esocial.gov.br/servicos/empregador/lote/eventos/envio/v1_1_0';
-  CErroAmbienteDiferente = 'Ambiente do XML (tpAmb) é diferente do configurado no Componente (Configuracoes.WebServices.Ambiente)';
+  ACBRESOCIAL_CErroAmbienteDiferente = 'Ambiente do XML (tpAmb) é diferente do configurado no Componente (Configuracoes.WebServices.Ambiente)';
 
 type
 
   EACBreSocialException = class(EACBrDFeException);
 
-  TTypeESocialGrupo = (egINICIAIS = 1, egPERIODICOS = 2, egNAOPERIODICOS = 3);
+//  TNotifyEventoseSocial = procedure(const AXML: AnsiString; ATipo: TTypeEventoseSocial) of object;
 
-  TTypeEventoseSocial =(neENVIOLOTE, neRETORNOLOTE, neENVIOCONSULTA, neRETORNOCONSULTA);
+  { TACBreSocial }
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBreSocial = class(TACBrDFe)
+  private
+    FEventos: TEventos;
+    FLoteEventos : TLoteEventos;
 
-  TNotifyEventoseSocial = procedure(const AXML: AnsiString; ATipo: TTypeEventoseSocial) of object;
+    FStatus : TStatusACBreSocial;
+    FWebServices: TWebServices;
 
+    FIdTransmissor: string;
+    FIdEmpregador: string;
+//    FOnTransmissaoEventos: TNotifyEventoseSocial;
+
+    function GetConfiguracoes: TConfiguracoeseSocial;
+    procedure SetConfiguracoes(AValue: TConfiguracoeseSocial);
+  protected
+    function CreateConfiguracoes: TConfiguracoes; override;
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+
+    function GetAbout: String; override;
+    procedure GerarXMLEventos; virtual;
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+
+    function Enviar(AGrupo: TeSocialGrupo): boolean;
+    function Consultar(const AProtocolo: string): boolean;
+
+    procedure AssinarEventos;
+
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
+    procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double; var URL: String); reintroduce;
+    function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
+    procedure SetStatus(const stNewStatus: TStatusACBreSocial);
+
+    function GetNomeModeloDFe: string; override;
+    function GetNameSpaceURI: string; override;
+
+//    procedure EnviarEmail(sPara, sAssunto: String;
+//      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
+//      StreameSocial: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+
+//    function EhAutorizacao(AVersao: TVersaoeSocial; AUFCodigo: Integer): Boolean;
+
+//    function CstatConfirmada(AValue: Integer): Boolean;
+//    function CstatProcessado(AValue: Integer): Boolean;
+//    function CstatCancelada(AValue: Integer): Boolean;
+
+//    function IdentificaSchema(const AXML: String): TSchemaeSocial;
+//    function GerarNomeArqSchema(const ALayOut: TLayOuteSocial; VersaoServico: Double): String;
+//    function GerarNomeArqSchemaEvento(ASchemaEventoeSocial: TSchemaeSocial; VersaoServico: Double): String;
+
+    property Eventos: TEventos read FEventos write FEventos;
+    property Status: TStatusACBreSocial read FStatus;
+    property WebServices: TWebServices read FWebServices write FWebServices;
+
+    property IdEmpregador: string read FIdEmpregador write FIdEmpregador;
+    property IdTransmissor: string read FIdTransmissor write FIdTransmissor;
+  published
+    property Configuracoes: TConfiguracoeseSocial read GetConfiguracoes write SetConfiguracoes;
+  end;
+
+
+
+
+
+
+  (*
   TACBreSocial = class(TACBrDFe)
   private
     FEventos: TEventos;
@@ -108,6 +174,9 @@ type
     property Configuracoes: TConfiguracoeseSocial read GetConfiguracoes write SetConfiguracoes;
     property OnTransmissaoEventos: TNotifyEventoseSocial read FOnTransmissaoEventos write FOnTransmissaoEventos;
   end;
+  *)
+Const
+  ModeloDF = 'eSocial';
 
 implementation
 
@@ -116,86 +185,23 @@ implementation
 uses
   ACBrDFeSSL;
 
-procedure TACBreSocial.AssinarEventos;
-begin
-  Eventos.GerarXMLs;
-  if Configuracoes.Geral.Salvar then
-    Eventos.SaveToFiles;
-end;
-
-function TACBreSocial.Consultar(const AProtocolo: string): boolean;
-begin
-  Result := WebServices.Consultar(AProtocolo);
-
-  if Assigned(FOnTransmissaoEventos) then
-    FOnTransmissaoEventos(WebServices.ConsultaLote.XMLEnvio, neENVIOLOTE);
-
-  if Assigned(FOnTransmissaoEventos) then
-    FOnTransmissaoEventos(WebServices.ConsultaLote.XMlRet, neRETORNOLOTE);
-end;
-
 constructor TACBreSocial.Create(AOwner: TComponent);
 begin
   inherited;
-  SSL.SSLDgst := dgstSHA256;
+//  SSL.SSLDgst := dgstSHA256;
   FEventos := TEventos.Create(Self);
   FWebServices := TWebServices.Create(Self);
-  FWebServicesConf := TWebServicesConf.Create(Self);
+//  FWebServicesConf := TWebServicesConf.Create(Self);
   FLoteEventos := TLoteEventos.Create(Self);
-end;
-
-function TACBreSocial.CreateConfiguracoes: TConfiguracoes;
-begin
-  Result := TConfiguracoeseSocial.Create(Self);
 end;
 
 destructor TACBreSocial.Destroy;
 begin
   FEventos.Free;
   FWebServices.Free;
-  FWebServicesConf.Free;
+//  FWebServicesConf.Free;
   FLoteEventos.Free;
   inherited;
-end;
-
-function TACBreSocial.Enviar(AGrupo: TTypeESocialGrupo): boolean;
-var
-  i: Integer;
-  ItemLoteEventos: TItemLoteEventos;
-begin
-  if SSL.SSLXmlSignLib <> xsXmlSec then
-    raise EACBreSocialException.Create('Necessário DigestMethod Algorithm = sha256 -> SSLLib = libOpenSSL');
-
-  with FLoteEventos.IdeEmpregador do
-  begin
-    TpInsc := tiCNPJ;
-    NrInsc := Self.IdEmpregador;
-  end;
-
-  with FLoteEventos.IdeTransmissor do
-  begin
-    TpInsc := tiCNPJ;
-    NrInsc := Self.IdTransmissor;
-  end;
-
-  GerarXMLEventos;
-
-  FLoteEventos.GerarXML(Inttostr(ord(AGrupo)));
-
-  if Assigned(FOnTransmissaoEventos) then
-    FOnTransmissaoEventos(FLoteEventos.XML, neENVIOCONSULTA);
-
-
-  WebServices.Envia(FLoteEventos.XML);
-
-  if Assigned(FOnTransmissaoEventos) then
-    FOnTransmissaoEventos(WebServices.EnvioLote.RetornoWS, neRETORNOCONSULTA);
-
-end;
-
-function TACBreSocial.GetAbout: String;
-begin
-  Result := 'ACBreSocial Ver: ' + ACBRESOCIAL_VERSAO;
 end;
 
 function TACBreSocial.GetConfiguracoes: TConfiguracoeseSocial;
@@ -203,50 +209,28 @@ begin
   Result := TConfiguracoeseSocial(FPConfiguracoes);
 end;
 
-
-function TACBreSocial.GetNameSpaceURI: string;
+procedure TACBreSocial.SetConfiguracoes(AValue: TConfiguracoeseSocial);
 begin
-  Result := ACBRESOCIAL_NAMESPACE;
+  FPConfiguracoes := AValue;
 end;
 
-function TACBreSocial.GetNomeModeloDFe: string;
+function TACBreSocial.CreateConfiguracoes: TConfiguracoes;
 begin
-  Result := 'eSocial';
+  Result := TConfiguracoeseSocial.Create(Self);
 end;
 
-procedure TACBreSocial.LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double; var URL: String);
+procedure TACBreSocial.Notification(AComponent: TComponent; Operation: TOperation);
 begin
- {TODO: Implementar com URI}
-  if Configuracoes.WebServices.Ambiente = taHomologacao then
-  begin
-    case LayOutServico of
-      LayEnvLoteEventos:             URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
-      LayRetEnvLoteEventos:          URL := '';
-      LayConsResultProcessamento:    URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
-      LayRetConsResultProcessamento: URL := '';
-    end;
-  end
-  else
-  begin
-    case LayOutServico of
-      LayEnvLoteEventos:             URL := 'https://webservices.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
-      LayRetEnvLoteEventos:          URL := '';
-      LayConsResultProcessamento:    URL := 'https://webservices.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
-      LayRetConsResultProcessamento: URL := '';
-    end;
-  end;
+  inherited Notification(AComponent, Operation);
+
+//  if (Operation = opRemove) and (FDABPE <> nil) and
+//    (AComponent is TACBrBPeDABPEClass) then
+//    FDABPE := nil;
 end;
 
-function TACBreSocial.NomeServicoToNomeSchema(const NomeServico: String): String;
-var
-  ok: Boolean;
-  ALayout: TLayOut;
+function TACBreSocial.GetAbout: String;
 begin
-  ALayout := ServicoToLayOut(ok, NomeServico);
-  if ok then
-    Result := SchemaESocialToStr( LayOutToSchema( ALayout ) )
-  else
-    Result := '';
+  Result := 'ACBreSocial Ver: ' + ACBRESOCIAL_VERSAO;
 end;
 
 procedure TACBreSocial.GerarXMLEventos;
@@ -382,9 +366,102 @@ begin
 {Periodicos}
 end;
 
-procedure TACBreSocial.SetConfiguracoes(AValue: TConfiguracoeseSocial);
+function TACBreSocial.Enviar(AGrupo: TeSocialGrupo): boolean;
+var
+  i: Integer;
+  ItemLoteEventos: TItemLoteEventos;
 begin
-  FPConfiguracoes := AValue;
+  if SSL.SSLXmlSignLib <> xsXmlSec then
+    raise EACBreSocialException.Create('Necessário DigestMethod Algorithm = sha256 -> SSLLib = libOpenSSL');
+
+  with FLoteEventos.IdeEmpregador do
+  begin
+    TpInsc := tiCNPJ;
+    NrInsc := Self.IdEmpregador;
+  end;
+
+  with FLoteEventos.IdeTransmissor do
+  begin
+    TpInsc := tiCNPJ;
+    NrInsc := Self.IdTransmissor;
+  end;
+
+  GerarXMLEventos;
+
+  FLoteEventos.GerarXML(Inttostr(ord(AGrupo)));
+
+//  if Assigned(FOnTransmissaoEventos) then
+//    FOnTransmissaoEventos(FLoteEventos.XML, neENVIOCONSULTA);
+
+
+  WebServices.Envia(FLoteEventos.XML);
+
+//  if Assigned(FOnTransmissaoEventos) then
+//    FOnTransmissaoEventos(WebServices.EnvioLote.RetornoWS, neRETORNOCONSULTA);
+end;
+
+function TACBreSocial.Consultar(const AProtocolo: string): boolean;
+begin
+  Result := WebServices.Consultar(AProtocolo);
+
+//  if Assigned(FOnTransmissaoEventos) then
+//    FOnTransmissaoEventos(WebServices.ConsultaLote.XMLEnvio, neENVIOLOTE);
+
+//  if Assigned(FOnTransmissaoEventos) then
+//    FOnTransmissaoEventos(WebServices.ConsultaLote.XMlRet, neRETORNOLOTE);
+end;
+
+procedure TACBreSocial.AssinarEventos;
+begin
+  Eventos.GerarXMLs;
+  if Configuracoes.Geral.Salvar then
+    Eventos.SaveToFiles;
+end;
+
+function TACBreSocial.NomeServicoToNomeSchema(const NomeServico: String): String;
+var
+  ok: Boolean;
+  ALayout: TLayOut;
+begin
+  ALayout := ServicoToLayOut(ok, NomeServico);
+  if ok then
+    Result := SchemaESocialToStr( LayOutToSchema( ALayout ) )
+  else
+    Result := '';
+end;
+
+procedure TACBreSocial.LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double; var URL: String);
+begin
+ {TODO: Implementar com URI}
+  if Configuracoes.WebServices.Ambiente = taHomologacao then
+  begin
+    case LayOutServico of
+      LayEnvLoteEventos:             URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
+      LayRetEnvLoteEventos:          URL := '';
+      LayConsResultProcessamento:    URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
+      LayRetConsResultProcessamento: URL := '';
+    end;
+  end
+  else
+  begin
+    case LayOutServico of
+      LayEnvLoteEventos:             URL := 'https://webservices.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
+      LayRetEnvLoteEventos:          URL := '';
+      LayConsResultProcessamento:    URL := 'https://webservices.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
+      LayRetConsResultProcessamento: URL := '';
+    end;
+  end;
+end;
+
+function TACBreSocial.LerVersaoDeParams(LayOutServico: TLayOut): String;
+var
+  Versao: Double;
+begin
+  Versao := LerVersaoDeParams(GetNomeModeloDFe, Configuracoes.WebServices.UF,
+    Configuracoes.WebServices.Ambiente, LayOuteSocialToServico(LayOutServico),
+    VersaoeSocialToDbl(Configuracoes.Geral.VersaoDF));
+
+  Result := FloatToString(Versao, '.', '0.00');
 end;
 
 procedure TACBreSocial.SetStatus(const stNewStatus: TStatusACBreSocial);
@@ -395,6 +472,16 @@ begin
     if Assigned(OnStatusChange) then
       OnStatusChange(Self);
   end;
+end;
+
+function TACBreSocial.GetNomeModeloDFe: string;
+begin
+  Result := 'eSocial';
+end;
+
+function TACBreSocial.GetNameSpaceURI: string;
+begin
+  Result := ACBRESOCIAL_NAMESPACE;
 end;
 
 end.

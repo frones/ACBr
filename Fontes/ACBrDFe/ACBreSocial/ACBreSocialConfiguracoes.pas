@@ -50,24 +50,64 @@ unit ACBreSocialConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, IniFiles,
   ACBrDFeConfiguracoes, pcnConversao,
   eSocial_Conversao;
 
 type
+  { TGeralConfeSocial }
+
+  TGeralConfeSocial = class(TGeralConf)
+  private
+    FVersaoDF: TVersaoeSocial;
+
+    procedure SetVersaoDF(const Value: TVersaoeSocial);
+  public
+    constructor Create(AOwner: TConfiguracoes); override;
+    procedure Assign(DeGeralConfeSocial: TGeralConfeSocial); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
+
+  published
+    property VersaoDF: TVersaoeSocial read FVersaoDF write SetVersaoDF default ve240;
+  end;
+
+  { TArquivosConfeSocial }
+
+  TArquivosConfeSocial = class(TArquivosConf)
+  private
+    FEmissaoPatheSocial: Boolean;
+    FPatheSocial: String;
+  public
+    constructor Create(AOwner: TConfiguracoes); override;
+    destructor Destroy; override;
+    procedure Assign(DeArquivosConfeSocial: TArquivosConfeSocial); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
+
+    function GetPatheSocial(Data: TDateTime = 0; CNPJ: String = ''): String;
+  published
+    property EmissaoPatheSocial: Boolean read FEmissaoPatheSocial write FEmissaoPatheSocial default False;
+    property PatheSocial: String read FPatheSocial write FPatheSocial;
+  end;
+
+  { TConfiguracoeseSocial }
+
   TConfiguracoeseSocial = class(TConfiguracoes)
   private
-    function GetArquivos: TArquivosConf;
-    function GetGeral: TGeralConf;
+    function GetArquivos: TArquivosConfeSocial;
+    function GetGeral: TGeralConfeSocial;
   protected
     procedure CreateGeralConf; override;
     procedure CreateArquivosConf; override;
+
   public
     constructor Create(AOwner: TComponent); override;
     procedure Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial); overload;
+
   published
-    property Geral: TGeralConf read GetGeral;
-    property Arquivos: TArquivosConf read GetArquivos;
+    property Geral: TGeralConfeSocial read GetGeral;
+    property Arquivos: TArquivosConfeSocial read GetArquivos;
     property WebServices;
     property Certificados;
   end;
@@ -80,6 +120,14 @@ uses
 
 { TConfiguracoeseSocial }
 
+constructor TConfiguracoeseSocial.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  FPSessaoIni := 'eSocial';
+  WebServices.ResourceName := 'ACBreSocialServicos';
+end;
+
 procedure TConfiguracoeseSocial.Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial);
 begin
   Geral.Assign(DeConfiguracoeseSocial.Geral);
@@ -88,32 +136,106 @@ begin
   Arquivos.Assign(DeConfiguracoeseSocial.Arquivos);
 end;
 
-constructor TConfiguracoeseSocial.Create(AOwner: TComponent);
+function TConfiguracoeseSocial.GetArquivos: TArquivosConfeSocial;
 begin
-  inherited Create(AOwner);
-  WebServices.ResourceName := 'ACBreSocialServices';
+  Result := TArquivosConfeSocial(FPArquivos);
 end;
 
-procedure TConfiguracoeseSocial.CreateArquivosConf;
+function TConfiguracoeseSocial.GetGeral: TGeralConfeSocial;
 begin
-  FPArquivos := TArquivosConf.Create(self);
+  Result := TGeralConfeSocial(FPGeral);
 end;
 
 procedure TConfiguracoeseSocial.CreateGeralConf;
 begin
-  FPGeral := TGeralConf.Create(Self);
+  FPGeral := TGeralConfeSocial.Create(Self);
 end;
 
-
-function TConfiguracoeseSocial.GetArquivos: TArquivosConf;
+procedure TConfiguracoeseSocial.CreateArquivosConf;
 begin
-  Result := TArquivosConf(FPArquivos);
+  FPArquivos := TArquivosConfeSocial.Create(self);
 end;
 
+{ TGeralConfeSocial }
 
-function TConfiguracoeseSocial.GetGeral: TGeralConf;
+constructor TGeralConfeSocial.Create(AOwner: TConfiguracoes);
 begin
-  Result := TGeralConf(FPGeral);
+  inherited Create(AOwner);
+
+  FVersaoDF := ve240;
+end;
+
+procedure TGeralConfeSocial.Assign(DeGeralConfeSocial: TGeralConfeSocial);
+begin
+  inherited Assign(DeGeralConfeSocial);
+
+  VersaoDF := DeGeralConfeSocial.VersaoDF;
+end;
+
+procedure TGeralConfeSocial.SetVersaoDF(const Value: TVersaoeSocial);
+begin
+  FVersaoDF := Value;
+end;
+
+procedure TGeralConfeSocial.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+end;
+
+procedure TGeralConfeSocial.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  VersaoDF := TVersaoeSocial(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+end;
+
+{ TArquivosConfeSocial }
+
+constructor TArquivosConfeSocial.Create(AOwner: TConfiguracoes);
+begin
+  inherited Create(AOwner);
+
+  FEmissaoPatheSocial := False;
+  FPatheSocial := '';
+end;
+
+destructor TArquivosConfeSocial.Destroy;
+begin
+
+  inherited;
+end;
+
+procedure TArquivosConfeSocial.Assign(
+  DeArquivosConfeSocial: TArquivosConfeSocial);
+begin
+  inherited Assign(DeArquivosConfeSocial);
+
+  EmissaoPatheSocial := DeArquivosConfeSocial.EmissaoPatheSocial;
+  PatheSocial        := DeArquivosConfeSocial.PatheSocial;
+end;
+
+function TArquivosConfeSocial.GetPatheSocial(Data: TDateTime;
+  CNPJ: String): String;
+begin
+  Result := GetPath(FPatheSocial, ModeloDF, CNPJ, Data, ModeloDF);
+end;
+
+procedure TArquivosConfeSocial.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPatheSocial', EmissaoPatheSocial);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PatheSocial', PatheSocial);
+end;
+
+procedure TArquivosConfeSocial.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  EmissaoPatheSocial := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPatheSocial', EmissaoPatheSocial);
+  PatheSocial := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PatheSocial', PatheSocial);
 end;
 
 end.

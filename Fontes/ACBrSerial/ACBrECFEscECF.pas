@@ -3183,7 +3183,7 @@ begin
        Aliquota.Aliquota  := StrToIntDef( OnlyNumber(EscECFResposta.Params[ 4*I + 2 ]), 0 ) / 100 ;
 
        { IMPORTANTE: MP4200TH-FI retorna o Valor do Imposto e não a BASE DE CALCULO, como esperado }
-       Aliquota.Total     := StrToIntDef( EscECFResposta.Params[ 4*I + 3 ], 0 ) / 100 ;
+       Aliquota.Total     := StrToFloatDef( EscECFResposta.Params[ 4*I + 3 ], 0 ) / 100 ;
 
        fpAliquotas.Add(Aliquota);
      end;
@@ -3292,7 +3292,7 @@ begin
   begin
     FPG := AchaFPGIndice( IntToStr(StrToIntDef(EscECFResposta.Params[ 2*I ], 0)) ) ;
     if Assigned( FPG ) then
-       FPG.Total := StrToIntDef( EscECFResposta.Params[ 2*I + 1 ], 0 ) / 100;
+       FPG.Total := StrToFloatDef( EscECFResposta.Params[ 2*I + 1 ], 0 ) / 100;
   end;
 end;
 
@@ -3454,7 +3454,7 @@ begin
     if Assigned( CNF ) then
     begin
        CNF.Contador := StrToIntDef( EscECFResposta.Params[ 3*I + 1 ], 0 ) ;
-       CNF.Total    := StrToIntDef( EscECFResposta.Params[ 3*I + 2 ], 0 ) / 100 ;
+       CNF.Total    := StrToFloatDef( EscECFResposta.Params[ 3*I + 2 ], 0 ) / 100 ;
     end;
   end;
 end;
@@ -3565,7 +3565,7 @@ var
 begin
   RetornaInfoECF( '4|1' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToIntDef( StrValue, 0 ) / 100;
+  Result   := StrToFloatDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetNumCCF: String;
@@ -4265,7 +4265,7 @@ var
 begin
   RetornaInfoECF( '4|2' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToIntDef( StrValue, 0 ) / 100;
+  Result   := StrToFloatDef( StrValue, 0 ) / 100;
 end;
 
 procedure TACBrECFEscECF.FechaNaoFiscal(Observacao: AnsiString;
@@ -4414,7 +4414,7 @@ var
 begin
   RetornaInfoECF( '4|8' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToIntDef( StrValue, 0 ) / 100;
+  Result   := StrToFloatDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetTotalCancelamentos: Double;
@@ -4423,7 +4423,7 @@ var
 begin
   RetornaInfoECF( '4|3' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToIntDef( StrValue, 0 ) / 100;
+  Result   := StrToFloatDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetTotalDescontos: Double;
@@ -4432,7 +4432,7 @@ var
 begin
   RetornaInfoECF( '4|4' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToIntDef( StrValue, 0 ) / 100;
+  Result   := StrToFloatDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetTotalTroco: Double;
@@ -4441,7 +4441,7 @@ var
 begin
   RetornaInfoECF( '7|21' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToIntDef( StrValue, 0 ) / 100;
+  Result   := StrToFloatDef( StrValue, 0 ) / 100;
 end;
 
 function TACBrECFEscECF.GetTotalIsencao: Double;
@@ -4456,7 +4456,7 @@ var
 begin
   RetornaInfoECF( '4|9' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToIntDef( StrValue, 0 ) / 100;
+  Result   := StrToFloatDef( StrValue, 0 ) / 100;
 end ;
 
 function TACBrECFEscECF.GetTotalCancelamentosISSQN : Double ;
@@ -4465,7 +4465,7 @@ var
 begin
   RetornaInfoECF( '4|5' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToIntDef( StrValue, 0 ) / 100;
+  Result   := StrToFloatDef( StrValue, 0 ) / 100;
 end ;
 
 function TACBrECFEscECF.GetTotalDescontosISSQN : Double ;
@@ -4474,7 +4474,7 @@ var
 begin
   RetornaInfoECF( '4|6' ) ;
   StrValue := EscECFResposta.Params[1] ;
-  Result   := StrToIntDef( StrValue, 0 ) / 100;
+  Result   := StrToFloatDef( StrValue, 0 ) / 100;
 end ;
 
 function TACBrECFEscECF.GetTotalIsencaoISSQN : Double ;

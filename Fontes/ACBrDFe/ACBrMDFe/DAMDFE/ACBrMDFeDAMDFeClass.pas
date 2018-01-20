@@ -60,6 +60,7 @@ type
     FSistema: String;
     FUsuario: String;
     FPathPDF: String;
+    FUsarSeparadorPathPDF: Boolean;
     FImpressora: String;
     FImprimirHoraSaida: Boolean;
     FImprimirHoraSaida_Hora: String;
@@ -95,6 +96,7 @@ type
     property Sistema: String                read FSistema                write FSistema;
     property Usuario: String                read FUsuario                write FUsuario;
     property PathPDF: String                read GetPathPDF              write SetPathPDF;
+    property UsarSeparadorPathPDF: Boolean  read FUsarSeparadorPathPDF   write FUsarSeparadorPathPDF default False;
     property Impressora: String             read FImpressora             write FImpressora;
     property ImprimirHoraSaida: Boolean     read FImprimirHoraSaida      write FImprimirHoraSaida;
     property ImprimirHoraSaida_Hora: String read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
@@ -130,6 +132,7 @@ begin
   FSistema    := '';
   FUsuario    := '';
   FPathPDF    := '';
+  FUsarSeparadorPathPDF := False;
   FImpressora := '';
 
   FImprimirHoraSaida      := False;
@@ -235,7 +238,10 @@ begin
 
   Result := Trim(FPathPDF);
 
-  if EstaVazio(Result) then  // Se não informou o Diretório para o PDF
+  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    Result := PathWithDelim( ExtractFilePath(ParamStr(0))) + 'pdf';
+
+  if FUsarSeparadorPathPDF then
   begin
     if Assigned(ACBrMDFe) then  // Se tem o componente ACBrMDFe
     begin
@@ -259,38 +265,7 @@ begin
     end;
   end;
 
-  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
-    Result := ExtractFilePath(ParamStr(0));
-
   Result := PathWithDelim( Result );
-
-
-  (*
-  Result := PathWithDelim(FPathPDF);
-
-  // Criar diretório conforme configurado para MDF-e
-  if Assigned(ACBrMDFe) then
-  begin
-    if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
-    begin
-      AMDFe := TACBrMDFe(ACBrMDFe).Manifestos.Items[0].MDFe;
-      if TACBrMDFe(ACBrMDFe).Configuracoes.Arquivos.EmissaoPathMDFe then
-        dhEmissao := AMDFe.Ide.dhEmi
-      else
-        dhEmissao := Now;
-
-      DescricaoModelo := 'MDFe';
-
-      Result := PathWithDelim(TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
-                              Result
-                             ,DescricaoModelo
-                             ,AMDFe.Emit.CNPJ
-                             ,dhEmissao
-                             ,DescricaoModelo
-                             ));
-    end;
-  end;
-  *)
 end;
 
 procedure TACBrMDFeDAMDFeClass.SetPathPDF(const Value: String);

@@ -70,6 +70,7 @@ type
     FSistema: String;
     FUsuario: String;
     FPathPDF: String;
+    FUsarSeparadorPathPDF: Boolean;
     FImpressora: String;
     FImprimirHoraSaida: Boolean;
     FImprimirHoraSaida_Hora: String;
@@ -110,6 +111,7 @@ type
     property Sistema: String                read FSistema                write FSistema;
     property Usuario: String                read FUsuario                write FUsuario;
     property PathPDF: String                read GetPathPDF              write SetPathPDF;
+    property UsarSeparadorPathPDF: Boolean  read FUsarSeparadorPathPDF   write FUsarSeparadorPathPDF default False;
     property Impressora: String             read FImpressora             write FImpressora;
     property ImprimirHoraSaida: Boolean     read FImprimirHoraSaida      write FImprimirHoraSaida;
     property ImprimirHoraSaida_Hora: String read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
@@ -147,6 +149,7 @@ begin
   FLogo       := '';
   FSistema    := '';
   FUsuario    := '';
+  FUsarSeparadorPathPDF := False;
   FPathPDF    := '';
   FImpressora := '';
 
@@ -265,7 +268,10 @@ begin
 
   Result := Trim(FPathPDF);
 
-  if EstaVazio(Result) then  // Se não informou o Diretório para o PDF
+  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    Result := PathWithDelim( ExtractFilePath(ParamStr(0))) + 'pdf';
+
+  if FUsarSeparadorPathPDF then
   begin
     if Assigned(ACBrCTe) then  // Se tem o componente ACBrCTe
     begin
@@ -297,41 +303,7 @@ begin
     end;
   end;
 
-  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
-    Result := ExtractFilePath(ParamStr(0));
-
   Result := PathWithDelim( Result );
-
-  (*
-  Result := PathWithDelim(FPathPDF);
-
-  // Criar diretório conforme configurado para CT-e
-  if Assigned(ACBrCTe) then
-  begin
-    if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
-    begin
-      ACTe := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
-      if TACBrCTe(ACBrCTe).Configuracoes.Arquivos.EmissaoPathCTe then
-        dhEmissao := ACTe.Ide.dhEmi
-      else
-        dhEmissao := Now;
-
-      case ACTe.Ide.modelo of
-        0: DescricaoModelo := TACBrCTe(FACBrCTe).GetNomeModeloDFe;
-        57: DescricaoModelo := 'CTe';
-        67: DescricaoModelo := 'CTeOS';
-      end;
-
-      Result := PathWithDelim(TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(
-                              Result
-                             ,DescricaoModelo
-                             ,ACTe.Emit.CNPJ
-                             ,dhEmissao
-                             ,DescricaoModelo
-                             ));
-    end;
-  end;
-  *)
 end;
 
 procedure TACBrCTeDACTEClass.SetPathPDF(const Value: String);

@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2018
+-- ACBrMDFeDAMDFeClass --
+[+] Adicionada a propriedade "UsarSeparadorPathPDF", para permitir que os PDFs
+    sejam salvos, usando a mesma estrutura de pasta de diretórios, com separação
+    por CNPJ, AnoMes, Dia, Modelo
+    (por: DSA)
+
 17/01/2018
 -- ACBrMDFeWebServices --
 [-] Correção em "TMDFeRecepcao", "TMDFeRetRecepcao", "TMDFeConsulta", para que o

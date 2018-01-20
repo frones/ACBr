@@ -90,6 +90,7 @@ type
     FSistema: String;
     FUsuario: String;
     FPathPDF: String;
+    FUsarSeparadorPathPDF: Boolean;
     FImpressora: String;
     FImprimeNomeFantasia: Boolean;
     FImprimirTotalLiquido: Boolean;
@@ -166,6 +167,7 @@ type
     property Sistema: String                         read FSistema                        write FSistema;
     property Usuario: String                         read FUsuario                        write FUsuario;
     property PathPDF: String                         read GetPathPDF                      write SetPathPDF;
+    property UsarSeparadorPathPDF: Boolean           read FUsarSeparadorPathPDF           write FUsarSeparadorPathPDF default False;
     property Impressora: String                      read FImpressora                     write FImpressora;
     property MostrarPreview: Boolean                 read FMostrarPreview                 write FMostrarPreview;
     property MostrarStatus: Boolean                  read FMostrarStatus                  write FMostrarStatus;
@@ -260,6 +262,7 @@ begin
   FSistema    := '';
   FUsuario    := '';
   FPathPDF    := '';
+  FUsarSeparadorPathPDF := False;
   FImpressora := '';
 
   FImprimirTotalLiquido := False;
@@ -397,7 +400,10 @@ begin
 
   Result := Trim(FPathPDF);
 
-  if EstaVazio(Result) then  // Se não informou o Diretório para o PDF
+  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    Result := PathWithDelim( ExtractFilePath(ParamStr(0))) + 'pdf';
+
+  if FUsarSeparadorPathPDF then
   begin
     if Assigned(ACBrBPe) then  // Se tem o componente ACBrBPe
     begin
@@ -421,37 +427,7 @@ begin
     end;
   end;
 
-  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
-    Result := ExtractFilePath(ParamStr(0));
-
   Result := PathWithDelim( Result );
-  (*
-
-  Result := PathWithDelim(FPathPDF);
-
-  // Criar diretório conforme configurado para BP-e
-  if Assigned(ACBrBPe) then
-  begin
-    if TACBrBPe(ACBrBPe).Bilhetes.Count > 0 then
-    begin
-      ABPe := TACBrBPe(ACBrBPe).Bilhetes.Items[0].BPe;
-      if TACBrBPe(ACBrBPe).Configuracoes.Arquivos.EmissaoPathBPe then
-        dhEmissao := ABPe.Ide.dhEmi
-      else
-        dhEmissao := Now;
-
-      DescricaoModelo := 'BPe';
-
-      Result := PathWithDelim(TACBrBPe(FACBrBPe).Configuracoes.Arquivos.GetPath(
-                              Result
-                             ,DescricaoModelo
-                             ,ABPe.Emit.CNPJ
-                             ,dhEmissao
-                             ,DescricaoModelo
-                             ));
-    end;
-  end;
-  *)
 end;
 
 procedure TACBrBPeDABPEClass.ImprimirEVENTO(BPe: TBPe);

@@ -92,6 +92,7 @@ type
     FSistema: String;
     FUsuario: String;
     FPathPDF: String;
+    FUsarSeparadorPathPDF: Boolean;
     FImpressora: String;
     FNomeDocumento: String;
     FImprimeNomeFantasia: Boolean;
@@ -177,6 +178,7 @@ type
     property Sistema: String                         read FSistema                        write FSistema;
     property Usuario: String                         read FUsuario                        write FUsuario;
     property PathPDF: String                         read GetPathPDF                      write SetPathPDF;
+    property UsarSeparadorPathPDF: Boolean           read FUsarSeparadorPathPDF           write FUsarSeparadorPathPDF default False;
     property Impressora: String                      read FImpressora                     write FImpressora;
     property NomeDocumento: String                   read FNomeDocumento                  write FNomeDocumento;
     property MostrarPreview: Boolean                 read FMostrarPreview                 write FMostrarPreview;
@@ -279,6 +281,7 @@ begin
   FSistema    := '';
   FUsuario    := '';
   FPathPDF    := '';
+  FUsarSeparadorPathPDF := False;
   FImpressora := '';
   FNomeDocumento := '';
   FImprimirTotalLiquido := False;
@@ -420,7 +423,10 @@ begin
 
   Result := Trim(FPathPDF);
 
-  if EstaVazio(Result) then  // Se não informou o Diretório para o PDF
+  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    Result := PathWithDelim( ExtractFilePath(ParamStr(0))) + 'pdf';
+
+  if FUsarSeparadorPathPDF then
   begin
     if Assigned(ACBrNFe) then  // Se tem o componente ACBrNFe
     begin
@@ -451,9 +457,6 @@ begin
       end;
     end;
   end;
-
-  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
-    Result := ExtractFilePath(ParamStr(0));
 
   Result := PathWithDelim( Result );
 end;

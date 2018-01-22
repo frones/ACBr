@@ -87,8 +87,9 @@ type
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
-    procedure gerarIdeCarreira();
-    procedure gerarDadosCarreira();
+    procedure GerarIdeCarreira;
+    procedure GerarDadosCarreira;
+
     property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
     property IdeEvento: TIdeEvento read fIdeEvento write fIdeEvento;
     property IdeEmpregador: TIdeEmpregador read fIdeEmpregador write fIdeEmpregador;
@@ -129,6 +130,7 @@ type
   public
     constructor create;
     destructor destroy; override;
+
     function novaValidadeInst(): Boolean;
 
     property dadosCarreira: TDadosCarreira read FDadosCarreira write FDadosCarreira;
@@ -168,6 +170,7 @@ end;
 destructor TS1035CollectionItem.Destroy;
 begin
   FEvtTabCarreira.Free;
+
   inherited;
 end;
 
@@ -191,6 +194,7 @@ begin
   FIdeCarreira.Free;
   FDadosCarreira.Free;
   FreeAndNil(FNovaValidade);
+
   inherited;
 end;
 
@@ -211,6 +215,7 @@ end;
 constructor TEvtTabCarreira.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   FInfoCarreira := TInfoCarreira.Create;
@@ -221,25 +226,30 @@ begin
   fIdeEvento.Free;
   fIdeEmpregador.Free;
   FInfoCarreira.Free;
+
   inherited;
 end;
 
-procedure TEvtTabCarreira.gerarDadosCarreira;
+procedure TEvtTabCarreira.GerarDadosCarreira;
 begin
   Gerador.wGrupo('dadosCarreira');
-    Gerador.wCampo(tcStr, '', 'dscCarreira', 0, 0, 0, InfoCarreira.dadosCarreira.dscCarreira);
-    Gerador.wCampo(tcStr, '', 'leiCarr', 0, 0, 0, InfoCarreira.dadosCarreira.leiCarr);
-    Gerador.wCampo(tcDat, '', 'dtLeiCarr', 0, 0, 0, InfoCarreira.dadosCarreira.dtLeiCarr);
-    Gerador.wCampo(tcInt, '', 'sitCarr', 0, 0, 0, eStpSitCarrToStr(InfoCarreira.dadosCarreira.sitCarr));
+
+  Gerador.wCampo(tcStr, '', 'dscCarreira',  1, 100, 1, InfoCarreira.dadosCarreira.dscCarreira);
+  Gerador.wCampo(tcStr, '', 'leiCarr',      1,  12, 0, InfoCarreira.dadosCarreira.leiCarr);
+  Gerador.wCampo(tcDat, '', 'dtLeiCarr',   10,  10, 1, InfoCarreira.dadosCarreira.dtLeiCarr);
+  Gerador.wCampo(tcInt, '', 'sitCarr',      1,   1, 1, eStpSitCarrToStr(InfoCarreira.dadosCarreira.sitCarr));
+
   Gerador.wGrupo('/dadosCarreira');
 end;
 
-procedure TEvtTabCarreira.gerarIdeCarreira;
+procedure TEvtTabCarreira.GerarIdeCarreira;
 begin
   Gerador.wGrupo('ideCarreira');
-    Gerador.wCampo(tcStr, '', 'codCarreira', 0, 0, 0, InfoCarreira.ideCarreira.codCarreira);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, InfoCarreira.ideCarreira.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, InfoCarreira.ideCarreira.fimValid);
+
+  Gerador.wCampo(tcStr, '', 'codCarreira', 1, 30, 1, InfoCarreira.ideCarreira.codCarreira);
+  Gerador.wCampo(tcStr, '', 'iniValid',    7,  7, 1, InfoCarreira.ideCarreira.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid',    7,  7, 0, InfoCarreira.ideCarreira.fimValid);
+
   Gerador.wGrupo('/ideCarreira');
 end;
 
@@ -247,26 +257,33 @@ function TEvtTabCarreira.GerarXML: boolean;
 begin
   try
     gerarCabecalho('evtTabCarreira');
-    Gerador.wGrupo('evtTabCarreira Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-      //gerarIdVersao(self);
-      gerarIdeEvento(self.IdeEvento);
-      gerarIdeEmpregador(self.IdeEmpregador);
-      Gerador.wGrupo('infoCarreira');
-      gerarModoAbertura(Self.ModoLancamento);
-        gerarIdeCarreira();
-        if Self.ModoLancamento <> mlExclusao then
-        begin
-          gerarDadosCarreira();
-          if Self.ModoLancamento = mlAlteracao then
-            if (InfoCarreira.novaValidadeInst()) then
-              GerarIdePeriodo(InfoCarreira.NovaValidade, 'novaValidade');
-        end;
-      gerarModoFechamento(Self.ModoLancamento);
-      Gerador.wGrupo('/infoCarreira');
+    Gerador.wGrupo('evtTabCarreira Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
+    Gerador.wGrupo('infoCarreira');
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeCarreira;
+
+    if Self.ModoLancamento <> mlExclusao then
+    begin
+      gerarDadosCarreira;
+
+      if Self.ModoLancamento = mlAlteracao then
+        if (InfoCarreira.novaValidadeInst()) then
+          GerarIdePeriodo(InfoCarreira.NovaValidade, 'novaValidade');
+    end;
+
+    GerarModoFechamento(Self.ModoLancamento);
+
+    Gerador.wGrupo('/infoCarreira');
     Gerador.wGrupo('/evtTabCarreira');
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabCarreira');
+
     Validar('evtTabCarreira');
   except on e:exception do
     raise Exception.Create(e.Message);

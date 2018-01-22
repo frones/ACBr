@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes, Controls,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -81,7 +81,7 @@ type
 
   TS1005CollectionItem = class(TCollectionItem)
   private
-    FIniciais : TComponent;
+//    FIniciais : TComponent;
     FTipoEvento: TTipoEvento;
     FevtTabEstab: TevtTabEstab;
   public
@@ -107,18 +107,20 @@ type
     FNrInsc: string;
   published
     constructor Create; reintroduce;
+
     property nrInsc: string read FNrInsc write FNrInsc;
   end;
 
   TInfoApr = class(TPersistent)
-    private
-      FContApr: tpContApr;
-      FNrProcJud: string;
-      FContEntEd: tpSimNao;
-      FInfoEntEduc: TInfoEntEducCollection;
+  private
+    FContApr: tpContApr;
+    FNrProcJud: string;
+    FContEntEd: tpSimNao;
+    FInfoEntEduc: TInfoEntEducCollection;
   public
     constructor Create;
     destructor Destroy; override;
+
     property contApr: tpContApr read FContApr write FContApr;
     property nrProcJud: String read FNrProcJud write FNrProcJud;
     property contEntEd: tpSimNao read FContEntEd write FContEntEd;
@@ -135,49 +137,54 @@ type
   end;
 
   TInfoTrab = class(TPersistent)
-    private
-      FRegPt: tpRegPt;
-      FInfoApr: TInfoApr;
-      FInfoPCD: TInfoPCD;
-      function getInfoPCD: TInfoPCD;
+  private
+    FRegPt: tpRegPt;
+    FInfoApr: TInfoApr;
+    FInfoPCD: TInfoPCD;
+
+    function getInfoPCD: TInfoPCD;
   public
     constructor Create;
     destructor Destroy; override;
+
     function infoPCDInst(): Boolean;
+
     property regPt: tpRegPt read FRegPt write FRegPt;
     property infoApr: TInfoApr read FInfoApr write FInfoApr;
     property infoPCD: TInfoPCD read getInfoPCD write FInfoPCD;
   end;
 
   TInfoObra = class(TPersistent)
-   private
+  private
     FIndSubstPatrObra: tpIndSubstPatronalObra;
   public
     property indSubstPatrObra: tpIndSubstPatronalObra read FIndSubstPatrObra write FIndSubstPatrObra;
   end;
 
   TinfoCaepf = class(TPersistent)
-     private
-      FtpCaepf : tpCaepf;
-    public
-      property tpCaepf : tpCaepf read FtpCaepf write FtpCaepf;
+  private
+    FtpCaepf: tpCaepf;
+  public
+    property tpCaepf: tpCaepf read FtpCaepf write FtpCaepf;
   end;
-  
+
   TDadosEstab = class(TPersistent)
-   private
+  private
     FCnaePrep: string;
     FAliqGilrat: TAliqGilRat;
     FinfoCaepf : TinfoCaepf;
     FInfoObra: TInfoObra;
     FInfoTrab: TInfoTrab;
+
     function getInfoObra: TInfoObra;
     function getinfoCaepf : TInfoCaepf;
   public
     constructor create;
     destructor destroy; override;
+
     function infoObraInst(): Boolean;
     function infoCaepfInst(): Boolean;
-    
+
     property cnaePrep: string read FCnaePrep write FCnaePrep;
     property aliqGilrat: TAliqGilRat read FAliqGilrat write FAliqGilrat;
     property infoObra: TInfoObra read getInfoObra write FInfoObra;
@@ -186,28 +193,30 @@ type
   end;
 
   TIdeEstab = class(TPersistent)
-   private
-    FTpInsc: integer;
+  private
+    FTpInsc: tpTpInsc;
     FNrInsc: string;
     FIniValid: string;
     FFimValid: string;
   public
-    property tpInsc: integer read FTpInsc write FTpInsc;
+    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
     property nrInsc: string read FNrInsc write FNrInsc;
     property iniValid: string read FIniValid write FIniValid;
     property fimValid: string read FFimValid write FFimValid;
   end;
 
   TInfoEstab = class(TPersistent)
-   private
+  private
     FIdeEstab: TIdeEstab;
     FDadosEstab: TDadosEstab;
     FNovaValidade: TidePeriodo;
+
     function getDadosEstab: TDadosEstab;
     function getNovaValidade: TidePeriodo;
   public
     constructor Create;
     destructor Destroy; override;
+
     function dadosEstabInst(): boolean;
     function NovaValidadeInst(): boolean;
 
@@ -218,22 +227,22 @@ type
 
   TEvtTabEstab = class(TeSocialEvento)
   private
-    FIniciais : TComponent;
-    FXMLAssinado: String;
+//    FIniciais: TComponent;
+//    FXMLAssinado: String;
     FModoLancamento: TModoLancamento;
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoEstab: TInfoEstab;
 
     {. Geradores especificos desta classe .}
-    procedure GerarInfoEntEduc();
-    procedure GerarInfoApr();
-    procedure GerarInfoPCD();
-    procedure GerarInfoTrab();
-    procedure GerarIdeEstab();
-    procedure GerarInfoObra();
-    procedure GerarInfoCaepf();
-    procedure GerarDadosEstab();
+    procedure GerarInfoEntEduc;
+    procedure GerarInfoApr;
+    procedure GerarInfoPCD;
+    procedure GerarInfoTrab;
+    procedure GerarIdeEstab;
+    procedure GerarInfoObra;
+    procedure GerarInfoCaepf;
+    procedure GerarDadosEstab;
   public
     constructor Create(AACBreSocial: TObject); overload;
     destructor Destroy; override;
@@ -267,6 +276,7 @@ begin
   FInfoTrab.Free;
   FreeAndNil(FInfoObra);
   FreeAndNil(FinfoCaepf);
+
   inherited;
 end;
 
@@ -299,12 +309,14 @@ end;
 constructor TInfoApr.Create;
 begin
   inherited;
+
   FInfoEntEduc := TInfoEntEducCollection.Create(Self);
 end;
 
 destructor TInfoApr.Destroy;
 begin
   FInfoEntEduc.Free;
+
   inherited;
 end;
 
@@ -313,6 +325,7 @@ end;
 constructor TInfoTrab.Create;
 begin
   inherited;
+
   FInfoApr := TInfoApr.Create;
   FInfoPCD := nil;
 end;
@@ -321,6 +334,7 @@ destructor TInfoTrab.Destroy;
 begin
   FInfoApr.Free;
   FreeAndNil(FInfoPCD);
+
   inherited;
 end;
 
@@ -355,6 +369,7 @@ begin
   FIdeEstab.Free;
   FreeAndNil(FDadosEstab);
   FNovaValidade.Free;
+
   inherited;
 end;
 
@@ -382,6 +397,7 @@ end;
 constructor TEvtTabEstab.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoEstab := TInfoEstab.Create;
@@ -392,27 +408,32 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FInfoEstab.Free;
+
   inherited;
 end;
 
 procedure TEvtTabEstab.GerarDadosEstab;
 begin
   Gerador.wGrupo('dadosEstab');
-    Gerador.wCampo(tcStr, '', 'cnaePrep', 0, 0, 0, infoEstab.DadosEstab.cnaePrep);
-    GerarAliqGilRat(infoEstab.DadosEstab.aliqGilrat, 'aliqGilrat');
-    GerarInfoCaepf();
-    GerarInfoObra();
-    GerarInfoTrab();
+
+  Gerador.wCampo(tcStr, '', 'cnaePrep', 1, 7, 1, infoEstab.DadosEstab.cnaePrep);
+
+  GerarAliqGilRat(infoEstab.DadosEstab.aliqGilrat, 'aliqGilrat');
+  GerarInfoCaepf;
+  GerarInfoObra;
+  GerarInfoTrab;
+
   Gerador.wGrupo('/dadosEstab');
 end;
 
 procedure TEvtTabEstab.GerarIdeEstab;
 begin
   Gerador.wGrupo('ideEstab');
-    Gerador.wCampo(tcInt, '', 'tpInsc', 0, 0, 0, Self.infoEstab.ideEstab.tpInsc);
-    Gerador.wCampo(tcStr, '', 'nrInsc', 0, 0, 0, Self.infoEstab.ideEstab.nrInsc);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, Self.infoEstab.IdeEstab.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, Self.infoEstab.IdeEstab.fimValid);
+
+  Gerador.wCampo(tcStr, '', 'tpInsc',   1,  1, 1, eSTpInscricaoToStr(Self.infoEstab.ideEstab.tpInsc));
+  Gerador.wCampo(tcStr, '', 'nrInsc',   1, 15, 1, Self.infoEstab.ideEstab.nrInsc);
+  Gerador.wCampo(tcStr, '', 'iniValid', 7,  7, 1, Self.infoEstab.IdeEstab.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid', 7,  7, 0, Self.infoEstab.IdeEstab.fimValid);
 
   Gerador.wGrupo('/ideEstab');
 end;
@@ -422,7 +443,9 @@ begin
   if infoEstab.DadosEstab.infoCaepfInst() then
   begin
     Gerador.wGrupo('infoCaepf');
-      Gerador.wCampo(tcStr, '', 'tpCaepf', 0, 0, 0, eStpCaepfToStr(infoEstab.DadosEstab.infoCaepf.tpCaepf));
+
+    Gerador.wCampo(tcStr, '', 'tpCaepf', 1, 1, 1, eStpCaepfToStr(infoEstab.DadosEstab.infoCaepf.tpCaepf));
+
     Gerador.wGrupo('/infoCaepf');
   end;
 end;
@@ -432,7 +455,9 @@ begin
   if infoEstab.DadosEstab.infoObraInst() then
   begin
     Gerador.wGrupo('infoObra');
-      Gerador.wCampo(tcStr, '', 'indSubstPatrObra', 0, 0, 0, eSIndSubstPatronalObraToStr(infoEstab.DadosEstab.InfoObra.indSubstPatrObra));
+
+    Gerador.wCampo(tcStr, '', 'indSubstPatrObra', 1, 1, 1, eSIndSubstPatronalObraToStr(infoEstab.DadosEstab.InfoObra.indSubstPatrObra));
+
     Gerador.wGrupo('/infoObra');
   end;
 end;
@@ -440,9 +465,12 @@ end;
 procedure TEvtTabEstab.GerarInfoTrab;
 begin
   Gerador.wGrupo('infoTrab');
-    Gerador.wCampo(tcInt, '', 'regPt', 1, 1, 1, eStpRegPtToStr(infoEstab.DadosEstab.infoTrab.regPt));
-    GerarInfoApr();
-    GerarInfoPCD();
+
+  Gerador.wCampo(tcInt, '', 'regPt', 1, 1, 1, eStpRegPtToStr(infoEstab.DadosEstab.infoTrab.regPt));
+
+  GerarInfoApr;
+  GerarInfoPCD;
+
   Gerador.wGrupo('/infoTrab');
 end;
 
@@ -451,8 +479,10 @@ begin
   if infoEstab.DadosEstab.infoTrab.infoPCDInst() then
   begin
     Gerador.wGrupo('infoPCD');
-      Gerador.wCampo(tcInt, '','contPCD', 1, 1, 1, eSTpContPCDToStr(infoEstab.DadosEstab.infoTrab.infoPCD.contPCD));
-      Gerador.wCampo(tcStr, '', 'nrProcJud', 0, 1, 1, infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud);
+
+    Gerador.wCampo(tcInt, '', 'contPCD',   1,  1, 1, eSTpContPCDToStr(infoEstab.DadosEstab.infoTrab.infoPCD.contPCD));
+    Gerador.wCampo(tcStr, '', 'nrProcJud', 0, 20, 0, infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud);
+
     Gerador.wGrupo('/infoPCD');
   end;
 end;
@@ -460,53 +490,75 @@ end;
 procedure TEvtTabEstab.GerarInfoApr;
 begin
   Gerador.wGrupo('infoApr');
-    Gerador.wCampo(tcInt, '', 'contApr', 1, 1, 1, eStpContAprToStr(infoEstab.DadosEstab.infoTrab.infoApr.contApr));
-    Gerador.wCampo(tcStr, '', 'nrProcJud', 0, 1, 0, infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud);
-    if infoEstab.DadosEstab.infoTrab.infoApr.contApr <> caDispensado then    
-      Gerador.wCampo(tcStr, '', 'contEntEd', 0, 1, 0, eSSimNaoToStr(infoEstab.DadosEstab.infoTrab.infoApr.contEntEd));
-    GerarInfoEntEduc();
+
+  Gerador.wCampo(tcStr, '', 'contApr',   1,  1, 1, eStpContAprToStr(infoEstab.DadosEstab.infoTrab.infoApr.contApr));
+  Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud);
+
+  if infoEstab.DadosEstab.infoTrab.infoApr.contApr <> caDispensado then
+    Gerador.wCampo(tcStr, '', 'contEntEd', 1, 1, 0, eSSimNaoToStr(infoEstab.DadosEstab.infoTrab.infoApr.contEntEd));
+
+  GerarInfoEntEduc;
+
   Gerador.wGrupo('/infoApr');
 end;
 
 procedure TEvtTabEstab.GerarInfoEntEduc;
-var i: Integer;
+var
+  i: Integer;
 begin
-  if ASSIGNED(infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc) then
+  if Assigned(infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc) then
+  begin
     for i := 0 to infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc.Count - 1 do
     begin
       Gerador.wGrupo('infoEntEduc');
-        Gerador.wCampo(tcStr, '', 'nrInsc', 0, 0, 0, infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc[i].nrInsc);
+
+      Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc[i].nrInsc);
+
       Gerador.wGrupo('/infoEntEduc');
     end;
+
+    if infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc.Count > 99 then
+      Gerador.wAlerta('', 'infoEntEduc', 'Lista de Informações das Entidades Educativas', ERR_MSG_MAIOR_MAXIMO + '99');
+  end;
 end;
 
 function TEvtTabEstab.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtTabEstab');
-      Gerador.wGrupo('evtTabEstab Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-      GerarIdeEvento(Self.FIdeEvento, True);
-      GerarIdeEmpregador(Self.FIdeEmpregador);
-      Gerador.wGrupo('infoEstab');
-        GerarModoAbertura(Self.ModoLancamento);
-          GerarIdeEstab();
-          if (FModoLancamento <> mlExclusao) then
-          begin
-            GerarDadosEstab();
-            if Self.ModoLancamento = mlAlteracao then
-              if (infoEstab.NovaValidadeInst()) then
-                GerarIdePeriodo(infoEstab.NovaValidade, 'novaValidade');
-          end;     
-        GerarModoFechamento(Self.ModoLancamento);
-      Gerador.wGrupo('/infoEstab');
-      Gerador.wGrupo('/evtTabEstab');
-    GerarRodape();
-    
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabEstab');//Gerador.ArquivoFormatoXML;
+    Gerador.wGrupo('evtTabEstab Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento(Self.FIdeEvento, True);
+    GerarIdeEmpregador(Self.FIdeEmpregador);
+
+    Gerador.wGrupo('infoEstab');
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeEstab;
+
+    if (FModoLancamento <> mlExclusao) then
+    begin
+      GerarDadosEstab;
+
+      if Self.ModoLancamento = mlAlteracao then
+        if (infoEstab.NovaValidadeInst()) then
+          GerarIdePeriodo(infoEstab.NovaValidade, 'novaValidade');
+    end;
+
+    GerarModoFechamento(Self.ModoLancamento);
+
+    Gerador.wGrupo('/infoEstab');
+    Gerador.wGrupo('/evtTabEstab');
+
+    GerarRodape;
+
+    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabEstab');
+
     Validar('evtTabEstab');
   except on e:exception do
     raise Exception.Create(e.Message);
-  end;   
+  end;
+
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
@@ -521,6 +573,7 @@ end;
 destructor TS1005CollectionItem.Destroy;
 begin
   FevtTabEstab.Free;
+
   inherited;
 end;
 

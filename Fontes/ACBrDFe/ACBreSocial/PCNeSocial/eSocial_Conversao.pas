@@ -83,7 +83,6 @@ type
 
   TStatusACBreSocial      = (stIdle, stEnvLoteEventos, stRetEnvLoteEventos, stConsResultProcessamento, stRetConsResultProcessamento );
 
-
   TTipoEvento             = (teS1000, teS1005, teS1010, teS1020, teS1030, teS1035, teS1040, teS1050,
                              teS1060, teS1070, teS1080, teS2100, teS1200, teS1202, teS1207, teS1210,
                              teS1220, teS1250, teS1260, teS1270, teS1280, teS1295, teS1298, teS1299,
@@ -96,7 +95,7 @@ type
 
   tpSimNao                = (tpSim, tpNao);
 
-  TpProcEmi               = (peAplicEmpregador );
+  TpProcEmi               = (peAplicEmpregador, peAplicGovernamental);
 
   tpIndSegmento           = (isNormal );
 
@@ -315,7 +314,7 @@ type
                              tdIrmaoNetoBisnetoGuardaJudicialAte21Anos, tdIrmaoNetoBisnetoAte24anosCursandoNivelSupOuEscolaTec,
                              tdIrmaoNetoBisnetoGuardaJudicialQualquerIdadeIncapFisOuMental, tdPaisAvosBisavos,
                              tdMenorPobreAte21AnosQueCrieEduqueComGuardaJudicial, tdPessoaAbsolutamenteIncapaz,
-                             tdExConjugeQueRecebaPensaoAlimentos);
+                             tdExConjugeQueRecebaPensaoAlimentos, tdAgregadoOutros);
 
   tpTpRegTrab             = (trCLT, trEstatutario);
 
@@ -429,6 +428,16 @@ type
   tpCumprParcialAviso     = (cpaCumprimentoTotal, cpaCumprimentoParcialNovoEmprego, cpaCumprimentoParcialEmpregador);
 
   TVersaoeSocial = (ve240);
+
+  tpTmpParc = (tpNaoeTempoParcial, tpLimitado25HorasSemanais, tpLimitado30HorasSemanais, tpLimitado26HorasSemanais);
+
+  TpClassTrib = (ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
+                 ct13, ct14, ct21, ct22, ct60, ct70, ct80, ct85, ct99);
+
+
+
+
+
 
 
 
@@ -817,6 +826,12 @@ function VersaoeSocialToStr(const t: TVersaoeSocial): String;
 function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
 function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
 
+function tpTmpParcToStr(const t: tpTmpParc ): string;
+function StrTotpTmpParc(var ok: boolean; const s: string): tpTmpParc;
+
+function tpClassTribToStr(const t: TpClassTrib ): string;
+function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
+
 implementation
 
 uses
@@ -875,8 +890,9 @@ const
   TGenericosString01_11 : array[0..10] of string = ('01','02','03','04','05',
                                                     '06','07','08','09','10','11' );
 
-  TGenericosString01_12 : array[0..11] of string = ('01','02','03','04','05',
-                                                    '06','07','08','09','10','11', '12' );
+  TGenericosString01_12 : array[0..12] of string = ('01', '02', '03', '04', '05',
+                                                    '06', '07', '08', '09', '10',
+                                                    '11', '12', '99');
 
 function LayOuteSocialToServico(const t: TLayOut): String;
 begin
@@ -944,13 +960,13 @@ begin
   result  := TptpAmb( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
 end;
 
-function eSProcEmiToStr(const t: TpprocEmi ): string;
+function eSProcEmiToStr(const t: TpProcEmi ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1 );
+  result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
 function eSStrToProcEmi(var ok: boolean; const s: string): TpProcEmi;
 begin
-  result := TpProcEmi( StrToEnumerado2(ok , s, TGenericosString1) );
+  result := TpProcEmi( StrToEnumerado2(ok , s, TGenericosString1_2) );
 end;
 
 function eSIndSegmentoToStr(const t: TpIndSegmento ): string;
@@ -964,7 +980,7 @@ end;
 
 function eSTpInscricaoToStr(const t:tpTpInsc ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_4 );
+  result := EnumeradoToStr2(t, TGenericosString1_4 );
 end;
 function eSStrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
 begin
@@ -2072,6 +2088,40 @@ begin
   else
     Result := 0;
   end;
+end;
+
+function tpTmpParcToStr(const t: tpTmpParc ): string;
+begin
+  Result := EnumeradoToStr(t, ['0', '1', '2', '3'],
+                           [tpNaoeTempoParcial, tpLimitado25HorasSemanais,
+                            tpLimitado30HorasSemanais, tpLimitado26HorasSemanais]);
+end;
+
+function StrTotpTmpParc(var ok: boolean; const s: string): tpTmpParc;
+begin
+  Result := StrToEnumerado(ok, s, ['0', '1', '2', '3'],
+                           [tpNaoeTempoParcial, tpLimitado25HorasSemanais,
+                            tpLimitado30HorasSemanais, tpLimitado26HorasSemanais]);
+end;
+
+function tpClassTribToStr(const t: TpClassTrib ): string;
+begin
+  Result := EnumeradoToStr(t, ['01', '02', '03', '04', '06', '07', '08', '09',
+                               '10', '11', '13', '14', '21', '22', '60', '70',
+                               '80', '85', '99'],
+                              [ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,
+                               ct10, ct11, ct13, ct14, ct21, ct22, ct60, ct70,
+                               ct80, ct85, ct99]);
+end;
+
+function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
+begin
+  Result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '06', '07', '08', '09',
+                                   '10', '11', '13', '14', '21', '22', '60', '70',
+                                   '80', '85', '99'],
+                              [ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,
+                               ct10, ct11, ct13, ct14, ct21, ct22, ct60, ct70,
+                               ct80, ct85, ct99]);
 end;
 
 end.

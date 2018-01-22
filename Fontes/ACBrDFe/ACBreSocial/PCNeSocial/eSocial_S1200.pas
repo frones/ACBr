@@ -307,13 +307,13 @@ type
   private
     FCnpjEmpregAnt: string;
     FMatricAnt: string;
-    FDtIniVinculo: TDateTime;
+    FdtAdm: TDateTime;
     FObservacao: string;
   public
 
     property cnpjEmpregAnt: string read FCnpjEmpregAnt write FCnpjEmpregAnt;
     property matricAnt: string read FMatricAnt write FMatricAnt;
-    property dtIniVinculo: TDateTime read FDtIniVinculo write FDtIniVinculo;
+    property dtAdm: TDateTime read FdtAdm write FdtAdm;
     property observacao: string read FObservacao write FObservacao;
   end;
 
@@ -753,7 +753,7 @@ begin
   Gerador.wGrupo('sucessaoVinc');
   Gerador.wCampo(tcStr, '', 'cnpjEmpregAnt', 0, 0, 0, ideTrabalhador.infoComplem.sucessaoVinc.cnpjEmpregAnt);
   Gerador.wCampo(tcStr, '', 'matricAnt', 0, 0, 0, ideTrabalhador.infoComplem.sucessaoVinc.matricAnt);
-  Gerador.wCampo(tcDat, '', 'dtIniVinculo', 0, 0, 0, ideTrabalhador.infoComplem.sucessaoVinc.dtIniVinculo);
+  Gerador.wCampo(tcDat, '', 'dtAdm', 0, 0, 0, ideTrabalhador.infoComplem.sucessaoVinc.dtAdm);
   Gerador.wCampo(tcStr, '', 'observacao', 0, 0, 0, ideTrabalhador.infoComplem.sucessaoVinc.observacao);
   Gerador.wGrupo('/sucessaoVinc');
 end;

@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2018
+-- Diversos --
+[*] Checagem dos Eventos: 1000, 1005, 1010, 1020, 1030 e 1035.
+    Foi checado se todas as tag (opcional e obrigatória) estão sendo geradas
+    bem como o tamanho minimo, máximo e ocorrências.
+   Por: Italo Jurisato Junior
+
 19/01/2018
 -- Diversos --
 [*] Inicio da compatibilização do componente com o Delphi 7.

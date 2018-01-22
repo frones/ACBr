@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -67,7 +67,7 @@ type
   TIdeProcessoSindCollection = class;
 
   TS1010Collection = class(TOwnedCollection)
-   private
+  private
     function GetItem(Index: Integer): TS1010CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1010CollectionItem);
   public
@@ -76,7 +76,7 @@ type
   end;
 
   TS1010CollectionItem = class(TCollectionItem)
-   private
+  private
     FTipoEvento: TTipoEvento;
     FEvtTabRubrica: TEvtTabRubrica;
     procedure setEvtTabRubrica(const Value: TEvtTabRubrica);
@@ -99,17 +99,17 @@ type
   end;
 
   TEvtTabRubrica = class(TeSocialEvento)
-   private
+  private
     FModoLancamento: TModoLancamento;
     FIdeEmpregador: TIdeEmpregador;
     FIdeEvento: TIdeEvento;
     FInfoRubrica: TInfoRubrica;
 
     {Geradores específicos da classe}
-    procedure gerarIdeRubrica();
-    procedure gerarDadosRubrica();
-    procedure gerarIdeProcessoCP();
-    procedure gerarProcessos(pChave: string; pProcessoCollection: TProcessoCollection);
+    procedure GerarIdeRubrica;
+    procedure GerarDadosRubrica;
+    procedure GerarIdeProcessoCP;
+    procedure GerarProcessos(pChave: string; pProcessoCollection: TProcessoCollection);
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
@@ -123,15 +123,17 @@ type
   end;
 
   TInfoRubrica = class
-   private
+  private
     FDadosRubrica: TDadosRubrica;
     FideRubrica: TideRubrica;
     FnovaValidade: TidePeriodo;
+
     function getDadosRubrica: TDadosRubrica;
     function getNovaValidade: TidePeriodo;
   public
     constructor Create;
     destructor Destroy; override;
+
     function dadosRubricaInst(): Boolean;
     function novaValidadInst(): Boolean;
 
@@ -141,7 +143,7 @@ type
   end;
 
   TDadosRubrica = class
-   private
+  private
     FDscRubr: string;
     FNatRubr: integer;
     FTpRubr: tpTpRubr;
@@ -149,15 +151,12 @@ type
     FCodIncIRRF : tpCodIncIRRF;
     FCodIncFGTS : tpCodIncFGTS;
     FCodIncSIND: tpCodIncSIND;
-    FRepDSR: tpSimNao;
-    FRep13: tpSimNao;
-    FRepFerias: tpSimNao;
-    FRepAviso: tpSimNao; //repResc na versão 2.0 alterado na 2.1 para repAviso
-    FObservacao: string;          
+    FObservacao: string;
     FIdeProcessoCP: TIdeProcessoCPCollection;
     FIdeProcessoIRRF: TIdeProcessoIRRFCollection;
     FIdeProcessoFGTS: TIdeProcessoFGTSCollection;
     FIdeProcessoSIND: TIdeProcessoSindCollection;
+
     function getIdeProcessoCP(): TIdeProcessoCPCollection;
     function getIdeProcessoIRRF(): TIdeProcessoIRRFCollection;
     function getIdeProcessoFGTS(): TIdeProcessoFGTSCollection;
@@ -165,6 +164,7 @@ type
   public
     constructor create;
     destructor Destroy; override;
+
     function ideProcessoCPInst(): Boolean;
     function ideProcessoIRRFInst(): Boolean;
     function ideProcessoFGTSInst(): Boolean;
@@ -172,16 +172,12 @@ type
 
     property dscRubr: string read FDscRubr write FDscRubr;
     property natRubr: integer read FNatRubr write FNatRubr;
-    property tpRubr: tpTpRubr read FTpRubr write FTpRubr;    
+    property tpRubr: tpTpRubr read FTpRubr write FTpRubr;
     property codIncCP: tpCodIncCP read FCodIncCP write FCodIncCP;
     property codIncIRRF: tpCodIncIRRF read FCodIncIRRF write FCodIncIRRF;
     property codIncFGTS: tpCodIncFGTS read FCodIncFGTS write FCodIncFGTS;
     property codIncSIND: tpCodIncSIND read FCodIncSIND write FCodIncSIND;
-    property RepDSR: tpSimNao read FRepDSR write FRepDSR;
-    property rep13: tpSimNao read FRep13 write FRep13;
-    property repFerias: tpSimNao read FRepFerias write FRepFerias;
-    property repAviso: tpSimNao read FRepAviso write FRepAviso;
-    property observacao: string read FObservacao write FObservacao;    
+    property observacao: string read FObservacao write FObservacao;
     property IdeProcessoCP: TIdeProcessoCPCollection read getIdeProcessoCP write FIdeProcessoCP;
     property IdeProcessoIRRF: TIdeProcessoIRRFCollection read getIdeProcessoIRRF write FIdeProcessoIRRF;
     property IdeProcessoFGTS: TIdeProcessoFGTSCollection read getIdeProcessoFGTS write FIdeProcessoFGTS;
@@ -189,7 +185,7 @@ type
   end;
 
   TIdeRubrica = class(TPersistent)
-   private
+  private
     FCodRubr: string;
     FIdeTabRubr: string;
     FIniValid: string;
@@ -213,7 +209,7 @@ type
   end;
 
   TIdeProcessoCPCollectionItem = class(TProcesso)
-   private
+  private
     FtpProc: tpTpProc;
     FExtDecisao: TpExtDecisao;
   public
@@ -267,6 +263,7 @@ end;
 destructor TS1010CollectionItem.Destroy;
 begin
   FEvtTabRubrica.Free;
+
   inherited;
 end;
 
@@ -281,6 +278,7 @@ end;
 constructor TEvtTabRubrica.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeEvento := TIdeEvento.Create;
   FInfoRubrica := TInfoRubrica.Create;
@@ -291,42 +289,44 @@ begin
   FIdeEmpregador.Free;
   FIdeEvento.Free;
   FInfoRubrica.Free;
+
   inherited;
 end;
 
-procedure TEvtTabRubrica.gerarDadosRubrica;
+procedure TEvtTabRubrica.GerarDadosRubrica;
 begin
   Gerador.wGrupo('dadosRubrica');
-    Gerador.wCampo(tcStr, '', 'dscRubr', 0, 0, 0, InfoRubrica.dadosRubrica.dscRubr);
-    Gerador.wCampo(tcStr, '', 'natRubr', 0, 0, 0, InfoRubrica.dadosRubrica.natRubr);
-    Gerador.wCampo(tcStr, '', 'tpRubr', 0, 0, 0,  eSTpRubrToStr(InfoRubrica.dadosRubrica.tpRubr));
-    Gerador.wCampo(tcStr, '', 'codIncCP', 0, 0, 0, eSCodIncCPToStr(InfoRubrica.dadosRubrica.codIncCP));
-    Gerador.wCampo(tcStr, '', 'codIncIRRF', 0, 0, 0, eSCodIncIRRFToStr(InfoRubrica.dadosRubrica.codIncIRRF));
-    Gerador.wCampo(tcStr, '', 'codIncFGTS', 0, 0, 0, eSCodIncFGTSToStr(InfoRubrica.dadosRubrica.codIncFGTS));
-    Gerador.wCampo(tcStr, '', 'codIncSIND', 0, 0, 0, eSCodIncSINDToStr(InfoRubrica.dadosRubrica.codIncSIND));
-    Gerador.wCampo(tcStr, '', 'repDSR', 0, 0, 0, eSSimNaoToStr(InfoRubrica.dadosRubrica.repDSR));
-    Gerador.wCampo(tcStr, '', 'rep13', 0, 0, 0, eSSimNaoToStr(InfoRubrica.dadosRubrica.rep13));
-    Gerador.wCampo(tcStr, '', 'repFerias', 0, 0, 0, eSSimNaoToStr(InfoRubrica.dadosRubrica.repFerias));
-    Gerador.wCampo(tcStr, '', 'repAviso', 0, 0, 0, eSSimNaoToStr(InfoRubrica.dadosRubrica.repAviso));
 
-    if (InfoRubrica.dadosRubrica.observacao <> '') then
-      Gerador.wCampo(tcStr, '', 'observacao', 0, 0, 0, InfoRubrica.dadosRubrica.observacao);
-    gerarideProcessoCP();
-    gerarProcessos('ideProcessoIRRF', InfoRubrica.dadosRubrica.IdeProcessoIRRF);
-    gerarProcessos('ideProcessoFGTS', InfoRubrica.dadosRubrica.IdeProcessoFGTS);
-    gerarProcessos('ideProcessoSIND', InfoRubrica.dadosRubrica.IdeProcessoSIND);
+  Gerador.wCampo(tcStr, '', 'dscRubr',    1, 100, 1, InfoRubrica.dadosRubrica.dscRubr);
+  Gerador.wCampo(tcInt, '', 'natRubr',    1,   4, 1, InfoRubrica.dadosRubrica.natRubr);
+  Gerador.wCampo(tcStr, '', 'tpRubr',     1,   1, 1, eSTpRubrToStr(InfoRubrica.dadosRubrica.tpRubr));
+  Gerador.wCampo(tcStr, '', 'codIncCP',   2,   2, 1, eSCodIncCPToStr(InfoRubrica.dadosRubrica.codIncCP));
+  Gerador.wCampo(tcStr, '', 'codIncIRRF', 2,   2, 1, eSCodIncIRRFToStr(InfoRubrica.dadosRubrica.codIncIRRF));
+  Gerador.wCampo(tcStr, '', 'codIncFGTS', 2,   2, 1, eSCodIncFGTSToStr(InfoRubrica.dadosRubrica.codIncFGTS));
+  Gerador.wCampo(tcStr, '', 'codIncSIND', 2,   2, 1, eSCodIncSINDToStr(InfoRubrica.dadosRubrica.codIncSIND));
+  Gerador.wCampo(tcStr, '', 'observacao', 0, 255, 0, InfoRubrica.dadosRubrica.observacao);
+
+  GerarideProcessoCP;
+
+  GerarProcessos('ideProcessoIRRF', InfoRubrica.dadosRubrica.IdeProcessoIRRF);
+  GerarProcessos('ideProcessoFGTS', InfoRubrica.dadosRubrica.IdeProcessoFGTS);
+  GerarProcessos('ideProcessoSIND', InfoRubrica.dadosRubrica.IdeProcessoSIND);
+
   Gerador.wGrupo('/dadosRubrica');
 end;
 
-procedure TEvtTabRubrica.gerarProcessos(pChave: String; pProcessoCollection: TProcessoCollection);
+procedure TEvtTabRubrica.GerarProcessos(pChave: String; pProcessoCollection: TProcessoCollection);
 var
   i: Integer;
 begin
   for i := 0 to pProcessoCollection.Count - 1 do
     GerarProcessoGenerico(pChave, pProcessoCollection[i]);
+
+  if pProcessoCollection.Count > 99 then
+    Gerador.wAlerta('', pChave, 'Lista de Processos: ' + pChave, ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
-procedure TEvtTabRubrica.gerarIdeProcessoCP;
+procedure TEvtTabRubrica.GerarIdeProcessoCP;
 var
   i: integer;
 begin
@@ -335,25 +335,34 @@ begin
     for i := 0 to InfoRubrica.DadosRubrica.IdeProcessoCP.Count - 1 do
     begin
       Gerador.wGrupo('ideProcessoCP');
-        Gerador.wCampo(tcStr, '', 'tpProc', 0, 0, 0, eSTpProcessoToStr(InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).tpProc));
-        Gerador.wCampo(tcStr, '', 'nrProc', 0, 0, 0, InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).nrProc);
-        Gerador.wCampo(tcStr, '', 'extDecisao', 0, 0, 0, eSExtDecisaoToStr(InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).extDecisao));
-        if trim(InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).codSusp) <> '' then
-           Gerador.wCampo(tcStr, '', 'codSusp', 0, 0, 0, InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).codSusp);
+
+      Gerador.wCampo(tcStr, '', 'tpProc',     1,  1, 1, eSTpProcessoToStr(InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).tpProc));
+      Gerador.wCampo(tcStr, '', 'nrProc',     1, 20, 1, InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).nrProc);
+      Gerador.wCampo(tcStr, '', 'extDecisao', 1,  1, 1, eSExtDecisaoToStr(InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).extDecisao));
+
+      if trim(InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).codSusp) <> '' then
+        Gerador.wCampo(tcStr, '', 'codSusp', 1, 14, 1, InfoRubrica.DadosRubrica.IdeProcessoCP.GetItem(i).codSusp);
+
       Gerador.wGrupo('/ideProcessoCP');
     end;
+
+    if InfoRubrica.DadosRubrica.IdeProcessoCP.Count > 99 then
+      Gerador.wAlerta('', 'ideProcessoCP', 'Lista de Processos', ERR_MSG_MAIOR_MAXIMO + '99');
   end;
 end;
 
 procedure TEvtTabRubrica.gerarIdeRubrica;
 begin
   Gerador.wGrupo('ideRubrica');
-    Gerador.wCampo(tcStr, '', 'codRubr', 0, 0, 0, InfoRubrica.IdeRubrica.CodRubr);
 
-    if (infoRubrica.ideRubrica.ideTabRubr <> '') then
-      Gerador.wCampo(tcStr, '', 'ideTabRubr', 0, 0, 0, infoRubrica.ideRubrica.ideTabRubr);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, infoRubrica.ideRubrica.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, infoRubrica.IdeRubrica.fimValid);
+  Gerador.wCampo(tcStr, '', 'codRubr', 1, 30, 1, InfoRubrica.IdeRubrica.CodRubr);
+
+  if (infoRubrica.ideRubrica.ideTabRubr <> '') then
+    Gerador.wCampo(tcStr, '', 'ideTabRubr', 1, 8, 1, infoRubrica.ideRubrica.ideTabRubr);
+
+  Gerador.wCampo(tcStr, '', 'iniValid', 7, 7, 1, infoRubrica.ideRubrica.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid', 7, 7, 0, infoRubrica.IdeRubrica.fimValid);
+
   Gerador.wGrupo('/ideRubrica');
 end;
 
@@ -361,26 +370,34 @@ function TEvtTabRubrica.GerarXML: boolean;
 begin
   try
     gerarCabecalho('evtTabRubrica');
-      Gerador.wGrupo('evtTabRubrica Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        Gerador.wGrupo('infoRubrica');
-          gerarModoAbertura(Self.ModoLancamento);
-            gerarIdeRubrica();
-            if Self.ModoLancamento <> mlExclusao then
-            begin
-              gerarDadosRubrica();
-              if (ModoLancamento = mlAlteracao) then
-                if (InfoRubrica.novaValidadInst()) then
-                  GerarIdePeriodo(InfoRubrica.novaValidade, 'novaValidade');
-            end;
-          gerarModoFechamento(Self.ModoLancamento);
-        Gerador.wGrupo('/infoRubrica');
-      Gerador.wGrupo('/evtTabRubrica');
+    Gerador.wGrupo('evtTabRubrica Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
+    Gerador.wGrupo('infoRubrica');
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeRubrica;
+
+    if Self.ModoLancamento <> mlExclusao then
+    begin
+      GerarDadosRubrica;
+
+      if (ModoLancamento = mlAlteracao) then
+        if (InfoRubrica.novaValidadInst()) then
+          GerarIdePeriodo(InfoRubrica.novaValidade, 'novaValidade');
+    end;
+
+    GerarModoFechamento(Self.ModoLancamento);
+
+    Gerador.wGrupo('/infoRubrica');
+    Gerador.wGrupo('/evtTabRubrica');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabRubrica');
+
     Validar('evtTabRubrica');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -408,6 +425,7 @@ begin
   FDadosRubrica.Free;
   FideRubrica.Free;
   FnovaValidade.Free;
+
   inherited;
 end;
 
@@ -415,6 +433,7 @@ function TInfoRubrica.getDadosRubrica: TDadosRubrica;
 begin
   if Not(Assigned(FDadosRubrica)) then
     FDadosRubrica := TDadosRubrica.create;
+
   Result := FDadosRubrica;
 end;
 
@@ -422,6 +441,7 @@ function TInfoRubrica.getNovaValidade: TidePeriodo;
 begin
   if Not(Assigned(FnovaValidade)) then
     FnovaValidade := TIdePeriodo.Create;
+
   Result := FnovaValidade;
 end;
 
@@ -434,6 +454,7 @@ end;
 
 constructor TIdeProcessoCPCollectionItem.create;
 begin
+
 end;
 
 { TIdeProcessoCPCollection }
@@ -477,6 +498,7 @@ begin
   FreeAndNil(FIdeProcessoIRRF);
   FreeAndNil(FIdeProcessoFGTS);
   FreeAndNil(FIdeProcessoSIND);
+
   inherited;
 end;
 

@@ -182,13 +182,13 @@ end;
 function TEvtAltCadastral.GerarXML: boolean;
 begin
   try
-    self.IdeTrabalhador.cpfTrab := FTrabalhador.CpfTrab;
+//    self.IdeTrabalhador.cpfTrab := FTrabalhador.CpfTrab;
     GerarCabecalho('evtAltCadastral');
       Gerador.wGrupo('evtAltCadastral Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
         //gerarIdVersao(self);
         gerarIdeEvento2(self.IdeEvento);
         gerarIdeEmpregador(self.IdeEmpregador);
-        gerarIdeTrabalhador(self.IdeTrabalhador);
+        gerarIdeTrabalhador(self.IdeTrabalhador, True);
         GerarInfoAltCadastral;
       Gerador.wGrupo('/evtAltCadastral');
     GerarRodape;

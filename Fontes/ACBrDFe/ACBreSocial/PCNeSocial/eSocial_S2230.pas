@@ -247,12 +247,12 @@ type
   TfimAfastamento = class(TPersistent)
     private
       FdtTermAfast : TDateTime;
-      FcodMotAfast : String;
-      FInfoMesmoMtv  : tpSimNao;
+//      FcodMotAfast : String;
+//      FInfoMesmoMtv  : tpSimNao;
     public
       property dtTermAfast: TDateTime read FdtTermAfast write FdtTermAfast;
-      property codMotAfast: String read FcodMotAfast write FcodMotAfast;
-      property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
+//      property codMotAfast: String read FcodMotAfast write FcodMotAfast;
+//      property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
   end;
 
 
@@ -334,7 +334,7 @@ begin
       if Assigned(objInfoAfast.iniAfastamento.infoMandSind) then
         GerarInfoMandSind(objInfoAfast.iniAfastamento.infoMandSind);
     Gerador.wGrupo('/iniAfastamento');
-    GerarAltAfast(objInfoAfast.altAfastamento);
+//    GerarAltAfast(objInfoAfast.altAfastamento);
     GerarFimAfast(objInfoAfast.fimAfastamento);
   Gerador.wGrupo('/infoAfastamento');
 end;
@@ -438,9 +438,9 @@ begin
       if objFimAfast.dtTermAfast > 0 then
       begin
         Gerador.wGrupo('fimAfastamento');
-          Gerador.wCampo(tcDat, '', 'dtTermAfast', 0,0,0, objFimAfast.dtTermAfast);
-          Gerador.wCampo(tcStr, '', 'codMotAfast', 0,0,0, objFimAfast.codMotAfast);
-          Gerador.wCampo(tcStr, '', 'infoMesmoMtv', 0,0,0, eSSimNaoToStr(objFimAfast.infoMesmoMtv));
+          Gerador.wCampo(tcDat, '', 'dtTermAfast', 10, 10, 1, objFimAfast.dtTermAfast);
+//          Gerador.wCampo(tcStr, '', 'codMotAfast', 0,0,0, objFimAfast.codMotAfast);
+//          Gerador.wCampo(tcStr, '', 'infoMesmoMtv', 0,0,0, eSSimNaoToStr(objFimAfast.infoMesmoMtv));
         Gerador.wGrupo('/fimAfastamento');
       end;
     end;

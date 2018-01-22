@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -67,7 +67,7 @@ type
   TInfoProcJudTerceiros = class;
 
   TS1020Collection = class(TOwnedCollection)
-   private
+  private
     function GetItem(Index: Integer): TS1020CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1020CollectionItem);
   public
@@ -76,7 +76,7 @@ type
   end;
 
   TS1020CollectionItem = class(TCollectionItem)
-   private
+  private
     FTipoEvento: TTipoEvento;
     FEvtTabLotacao: TevtTabLotacao;
     procedure setevtTabLotacao(const Value: TevtTabLotacao);
@@ -89,7 +89,7 @@ type
   end;
 
   TInfoProcJudTerceiros = class(TPersistent)
-   private
+  private
     FProcJudTerceiro: TProcJudTerceiroCollection;
   public
     constructor create;
@@ -99,18 +99,18 @@ type
   end;
 
   TProcJudTerceiroCollection = class(TCollection)
-   private
+  private
     function GetItem(Index: Integer): TProcJudTerceiroCollectionItem;
     procedure SetItem(Index: Integer; Value: TProcJudTerceiroCollectionItem);
   public
     constructor create(); reintroduce;
 
     function Add: TProcJudTerceiroCollectionItem;
-    property Items[Index: Integer]: TProcJudTerceiroCollectionItem read GetItem write SetItem; 
+    property Items[Index: Integer]: TProcJudTerceiroCollectionItem read GetItem write SetItem;
   end;
 
   TProcJudTerceiroCollectionItem = class(TProcesso)
-   private
+  private
     FCodTerc: string;
   public
     constructor create; reintroduce;
@@ -120,18 +120,18 @@ type
   end;
 
   TevtTabLotacao = class(TeSocialEvento)
-   private
+  private
     FModoLancamento: TModoLancamento;
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoLotacao: TInfoLotacao;
 
     {Geradores específicos da classe}
-    procedure gerarIdeLotacao();    
-    procedure gerarInfoEmprParcial();
-    procedure gerarInfoProcJudTerceiros();
-    procedure gerarFPasLotacao();
-    procedure gerarDadosLotacao();
+    procedure GerarIdeLotacao;
+    procedure GerarInfoEmprParcial;
+    procedure GerarInfoProcJudTerceiros;
+    procedure GerarFPasLotacao;
+    procedure GerarDadosLotacao;
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
@@ -145,7 +145,7 @@ type
   end;
 
   TIdeLotacao = class(TPersistent)
-   private
+  private
     FCodLotacao: string;
     FIniValid: string;
     FFimValid: string;
@@ -156,15 +156,17 @@ type
   end;
 
   TFPasLotacao = class(TPersistent)
-   private
+  private
     fFpas: string;
     FCodTercs: string;
     FCodTercsSusp: string;
     FInfoProcJudTerceiros: TInfoProcJudTerceiros;
+
     function getInfoProcJudTerceiros(): TInfoProcJudTerceiros;
   public
     constructor create;
     destructor Destroy; override;
+
     function infoProcJudTerceirosInst(): Boolean;
 
     property Fpas: string read fFpas write fFpas;
@@ -174,7 +176,7 @@ type
   end;
 
   TInfoEmprParcial = class(TPersistent)
-   private
+  private
     FTpInscContrat: TptpInscContratante;
     FNrInscContrat: string;
     FTpInscProp: TpTpInscProp;
@@ -187,15 +189,16 @@ type
   end;
 
   TDadosLotacao = class(TPersistent)
-   private
+  private
     FTpLotacao: string;
     FTpInsc: tpTpInsc;
-    FNrInsc: string;   
+    FNrInsc: string;
     fFPasLotacao: TFPasLotacao;
     fInfoEmprParcial: TinfoEmprParcial;
   public
     constructor create;
     destructor Destroy; override;
+
     property tpLotacao: string read FTpLotacao write FTpLotacao;
     property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
     property nrInsc: string read FNrInsc write FNrInsc;
@@ -204,10 +207,11 @@ type
   end;
 
   TInfoLotacao = class(TPersistent)
-   private
+  private
     fIdeLotacao: TIdeLotacao;
     fDadosLotacao: TDadosLotacao;
     fNovaValidade: TidePeriodo;
+
     function getDadosLotacao(): TDadosLotacao;
     function getNovaValidade(): TIdePeriodo;
   public
@@ -271,6 +275,7 @@ end;
 constructor TevtTabLotacao.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoLotacao := TInfoLotacao.Create;
@@ -281,77 +286,97 @@ begin
   fIdeEvento.Free;
   fIdeEmpregador.Free;
   fInfoLotacao.Free;
+
   inherited;
 end;
 
 procedure TevtTabLotacao.gerarDadosLotacao;
 begin
   Gerador.wGrupo('dadosLotacao');
-    Gerador.wCampo(tcStr, '', 'tpLotacao', 0, 0, 0, self.infoLotacao.DadosLotacao.tpLotacao);
 
-    if (StrToInt(self.infoLotacao.DadosLotacao.tpLotacao) in [3, 4, 5, 6, 8, 9, 21, 23]) then
-      Gerador.wCampo(tcStr, '', 'tpInsc', 0, 0, 0, ord(self.infoLotacao.DadosLotacao.tpInsc) + 1);
+  Gerador.wCampo(tcStr, '', 'tpLotacao', 2, 2, 1, self.infoLotacao.DadosLotacao.tpLotacao); // Criar enumerador
 
-    Gerador.wCampo(tcStr, '', 'nrInsc', 0, 0, 0, self.infoLotacao.DadosLotacao.nrInsc);    
-    gerarFPasLotacao();
-    gerarInfoEmprParcial();
+  if (StrToInt(self.infoLotacao.DadosLotacao.tpLotacao) in [3, 4, 5, 6, 8, 9, 21, 23]) then
+    Gerador.wCampo(tcStr, '', 'tpInsc', 1, 1, 0, ord(self.infoLotacao.DadosLotacao.tpInsc) + 1);
+
+  Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 0, self.infoLotacao.DadosLotacao.nrInsc);
+
+  GerarFPasLotacao;
+  GerarInfoEmprParcial;
+
   Gerador.wGrupo('/dadosLotacao');
 end;
 
-procedure TevtTabLotacao.gerarFPasLotacao;
+procedure TevtTabLotacao.GerarFPasLotacao;
 begin
   Gerador.wGrupo('fpasLotacao');
-    Gerador.wCampo(tcStr, '', 'fpas', 0, 0, 0, self.infoLotacao.DadosLotacao.fPasLotacao.Fpas);
-    Gerador.wCampo(tcStr, '', 'codTercs', 0, 0, 0, self.infoLotacao.DadosLotacao.fPasLotacao.codTercs);
-    if self.infoLotacao.DadosLotacao.fPasLotacao.codTercsSusp <> '' then
-      Gerador.wCampo(tcStr, '', 'codTercsSusp', 0, 0, 0, self.infoLotacao.DadosLotacao.fPasLotacao.codTercsSusp);
-    gerarInfoProcJudTerceiros();
+
+  Gerador.wCampo(tcStr, '', 'fpas',         1, 3, 1, self.infoLotacao.DadosLotacao.fPasLotacao.Fpas);
+  Gerador.wCampo(tcStr, '', 'codTercs',     1, 4, 1, self.infoLotacao.DadosLotacao.fPasLotacao.codTercs);
+  Gerador.wCampo(tcStr, '', 'codTercsSusp', 1, 4, 0, self.infoLotacao.DadosLotacao.fPasLotacao.codTercsSusp);
+
+  GerarInfoProcJudTerceiros;
+
   Gerador.wGrupo('/fpasLotacao');
 end;
 
-procedure TevtTabLotacao.gerarIdeLotacao;
+procedure TevtTabLotacao.GerarIdeLotacao;
 begin
   Gerador.wGrupo('ideLotacao');
-    Gerador.wCampo(tcStr, '', 'codLotacao', 0, 0, 0, self.infoLotacao.IdeLotacao.codLotacao);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, self.infoLotacao.IdeLotacao.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, self.infoLotacao.IdeLotacao.fimValid);
+
+  Gerador.wCampo(tcStr, '', 'codLotacao', 1, 30, 1, self.infoLotacao.IdeLotacao.codLotacao);
+  Gerador.wCampo(tcStr, '', 'iniValid',   7,  7, 1, self.infoLotacao.IdeLotacao.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid',   7,  7, 0, self.infoLotacao.IdeLotacao.fimValid);
+
   Gerador.wGrupo('/ideLotacao');
 end;
 
-procedure TevtTabLotacao.gerarInfoEmprParcial;
+procedure TevtTabLotacao.GerarInfoEmprParcial;
 begin
   if infoLotacao.DadosLotacao.InfoEmprParcial.nrInscContrat <> '' then
   begin
     Gerador.wGrupo('infoEmprParcial');
-      Gerador.wCampo(tcStr, '', 'tpInscContrat', 0, 0, 0, eStpInscContratanteToStr(infoLotacao.DadosLotacao.InfoEmprParcial.tpInscContrat));
-      Gerador.wCampo(tcStr, '', 'nrInscContrat', 0, 0, 0, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscContrat);
-      Gerador.wCampo(tcStr, '', 'tpInscProp', 0, 0, 0, eSTpInscPropToStr(infoLotacao.DadosLotacao.InfoEmprParcial.tpInscProp));
-      Gerador.wCampo(tcStr, '', 'nrInscProp', 0, 0, 0, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp);
+
+    Gerador.wCampo(tcStr, '', 'tpInscContrat', 1,  1, 1, eStpInscContratanteToStr(infoLotacao.DadosLotacao.InfoEmprParcial.tpInscContrat));
+    Gerador.wCampo(tcStr, '', 'nrInscContrat', 1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscContrat);
+    Gerador.wCampo(tcStr, '', 'tpInscProp',    1,  1, 1, eSTpInscPropToStr(infoLotacao.DadosLotacao.InfoEmprParcial.tpInscProp));
+    Gerador.wCampo(tcStr, '', 'nrInscProp',    1, 14, 1, infoLotacao.DadosLotacao.InfoEmprParcial.nrInscProp);
+
     Gerador.wGrupo('/infoEmprParcial');
   end;
 end;
 
-procedure TevtTabLotacao.gerarInfoProcJudTerceiros;
-  var
-      iInfoProcJudTerceiros: Integer;
-      objProcJudTer: TProcJudTerceiroCollectionItem;
+procedure TevtTabLotacao.GerarInfoProcJudTerceiros;
+var
+  i: Integer;
+  objProcJudTer: TProcJudTerceiroCollectionItem;
 begin
   if (infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Count > 0) then
   begin
     objProcJudTer := infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Items[0];
+
     if objProcJudTer.codTerc <> EmptyStr then
     begin
       Gerador.wGrupo('infoProcJudTerceiros');
-      for iInfoProcJudTerceiros := 1 to infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Count - 1 do
+
+      for i := 1 to infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Count - 1 do
       begin
-        objProcJudTer := infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Items[iInfoProcJudTerceiros];
+        objProcJudTer := infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Items[i];
+
         Gerador.wGrupo('procJudTerceiro');
-          Gerador.wCampo(tcStr, '', 'codTerc', 0, 0, 0, objProcJudTer.codTerc);
-          Gerador.wCampo(tcStr, '', 'nrProcJud', 0, 0, 0, objProcJudTer.nrProcJud);
-          if trim(objProcJudTer.codSusp) <> '' then
-            Gerador.wCampo(tcInt, '', 'codSusp', 0, 0, 0, objProcJudTer.codSusp);
+
+        Gerador.wCampo(tcStr, '', 'codTerc',   1,  4, 1, objProcJudTer.codTerc);
+        Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 1, objProcJudTer.nrProcJud);
+
+        if trim(objProcJudTer.codSusp) <> '' then
+          Gerador.wCampo(tcInt, '', 'codSusp', 1, 14, 1, objProcJudTer.codSusp);
+
         Gerador.wGrupo('/procJudTerceiro');
       end;
+
+      if infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Count > 99 then
+        Gerador.wAlerta('', 'infoProcJudTerceiros', 'Lista de Processos Judic. Terceiros', ERR_MSG_MAIOR_MAXIMO + '99');
+
       Gerador.wGrupo('/infoProcJudTerceiros');
     end;
   end;
@@ -361,26 +386,34 @@ function TevtTabLotacao.GerarXML: boolean;
 begin
   try
     gerarCabecalho('evtTabLotacao');
-      Gerador.wGrupo('evtTabLotacao Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-      //gerarIdVersao(self);
-      gerarIdeEvento(self.IdeEvento);
-      gerarIdeEmpregador(self.ideEmpregador);
-      Gerador.wGrupo('infoLotacao');
-        gerarModoAbertura(Self.ModoLancamento);
-          gerarIdeLotacao;
-          if Self.ModoLancamento <> mlExclusao then
-          begin            
-            gerarDadosLotacao;
-            if Self.ModoLancamento = mlAlteracao then
-              if (infoLotacao.novaValidadeInst()) then
-                GerarIdePeriodo(self.infoLotacao.NovaValidade, 'novaValidade');
-          end;
-        gerarModoFechamento(ModoLancamento);
-      Gerador.wGrupo('/infoLotacao');
+    Gerador.wGrupo('evtTabLotacao Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.ideEmpregador);
+
+    Gerador.wGrupo('infoLotacao');
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeLotacao;
+
+    if Self.ModoLancamento <> mlExclusao then
+    begin
+      GerarDadosLotacao;
+
+      if Self.ModoLancamento = mlAlteracao then
+        if (infoLotacao.novaValidadeInst()) then
+          GerarIdePeriodo(self.infoLotacao.NovaValidade, 'novaValidade');
+    end;
+
+    GerarModoFechamento(ModoLancamento);
+
+    Gerador.wGrupo('/infoLotacao');
     Gerador.wGrupo('/evtTabLotacao');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabLotacao');
+
     Validar('evtTabLotacao');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -401,6 +434,7 @@ destructor TDadosLotacao.destroy;
 begin
   fFPasLotacao.Free;
   FinfoEmprParcial.Free;
+
   inherited;
 end;
 
@@ -423,6 +457,7 @@ begin
   fIdeLotacao.Free;
   FreeAndNil(fDadosLotacao);
   FreeAndNil(fNovaValidade);
+
   inherited;
 end;
 
@@ -454,6 +489,7 @@ end;
 
 constructor TProcJudTerceiroCollectionItem.create;
 begin
+
 end;
 
 { TProcJudTerceiroCollection }
@@ -492,6 +528,7 @@ end;
 destructor TInfoProcJudTerceiros.destroy;
 begin
   FProcJudTerceiro.Free;
+
   inherited;
 end;
 
@@ -505,6 +542,7 @@ end;
 destructor TFPasLotacao.destroy;
 begin
   FreeAndNil(FInfoProcJudTerceiros);
+
   inherited;
 end;
 

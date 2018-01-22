@@ -60,6 +60,9 @@ const
   ACBRESOCIAL_NAMESPACE = ' http://www.esocial.gov.br/servicos/empregador/lote/eventos/envio/v1_1_0';
   ACBRESOCIAL_CErroAmbienteDiferente = 'Ambiente do XML (tpAmb) é diferente do configurado no Componente (Configuracoes.WebServices.Ambiente)';
 
+  eSocial_NameSpace = 'http://www.esocial.gov.br/schema/evt/';
+  eSocial_Versao = '/v02_04_01';
+
 type
 
   EACBreSocialException = class(EACBrDFeException);

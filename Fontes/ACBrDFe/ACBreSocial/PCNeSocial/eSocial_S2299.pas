@@ -67,6 +67,7 @@ type
   TIdeADCItem = class;
   TIdePeriodoCollection = class;
   TIdePeriodoItem = class;
+  TconsigFGTS = class;
 
   TS2299Collection = class(TOwnedCollection)
   private
@@ -104,6 +105,7 @@ type
       procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
       procedure GerarIdeADC(pIdeADC: TIdeADCCollection);
       procedure GerarIdePeriodo(pIdePeriodo: TIdePeriodoCollection);
+      procedure GerarconsigFGTS(obj: TconsigFGTS);
     public
       constructor Create(AACBreSocial: TObject);overload;
       destructor  Destroy; override;
@@ -117,7 +119,7 @@ type
   end;
 
   TInfoDeslig = class(TPersistent)
-    private
+  private
       FmtvDeslig: String;
       FdtDeslig: TDateTime;
       FindPagtoAPI : tpSimNao;
@@ -132,6 +134,7 @@ type
       FSucessaoVinc : TSucessaoVinc;
       FVerbasResc : TVerbasRescS2299;
       FQuarentena: TQuarentena;
+    FconsigFGTS: TconsigFGTS;
       FInfoASO: TInfoASO;
 
       function getVerbasResc: TVerbasRescS2299;
@@ -154,6 +157,7 @@ type
       property SucessaoVinc : TSucessaoVinc read FSucessaoVinc write FSucessaoVinc;
       property VerbasResc : TVerbasRescS2299 read getVerbasResc write FVerbasResc;
       property Quarentena: TQuarentena read FQuarentena write FQuarentena;
+      property consigFGTS: TconsigFGTS read FconsigFGTS write FconsigFGTS;
       property InfoASO : TInfoASO read FInfoASO write FInfoASO;
   end;
 
@@ -267,6 +271,17 @@ type
     property dmDev: TDmDevCollection read FDmDev write FDmDev;
   end;
 
+  TconsigFGTS = class(TPersistent)
+  private
+    FidConsig: tpSimNao;
+    FinsConsig: string;
+    FnrContr: string;
+  public
+    property idConsig: tpSimNao read FidConsig write FidConsig;
+    property insConsig: string read FinsConsig write FinsConsig;
+    property nrContr: string read FnrContr write FnrContr;
+  end;
+
 implementation
 
 uses
@@ -330,7 +345,9 @@ begin
     GerarSucessaoVinc(obj.SucessaoVinc);
     if obj.verbasRescInst then
       GerarVerbasResc(obj.VerbasResc);
-    GerarQuarentena(obj.Quarentena);
+
+  GerarQuarentena(obj.Quarentena);
+  GerarconsigFGTS(obj.consigFGTS);
   Gerador.wGrupo('/infoDeslig');
 end;
 
@@ -433,6 +450,15 @@ begin
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
+procedure TEvtDeslig.GerarconsigFGTS(obj: TconsigFGTS);
+begin
+  Gerador.wGrupo('consigFGTS');
+  Gerador.wCampo(tcStr, '', 'idConsig',  1,  1, 1, eSSimNaoToStr(obj.idConsig));
+  Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj.insConsig);
+  Gerador.wCampo(tcStr, '', 'nrContr',   0, 15, 0, obj.nrContr);
+  Gerador.wGrupo('/consigFGTS');
+end;
+
 { TInfoDeslig }
 
 constructor TInfoDeslig.Create;
@@ -441,6 +467,7 @@ begin
     FSucessaoVinc := TSucessaoVinc.Create;
     FVerbasResc := nil;
     FQuarentena := TQuarentena.Create;
+    FconsigFGTS := TconsigFGTS.Create;
     FInfoASO := TInfoASO.Create;
 end;
 
@@ -449,6 +476,7 @@ begin
   FSucessaoVinc.Free;
   FreeAndNil(FVerbasResc);
   FQuarentena.Free;
+  FconsigFGTS.Free;
   FInfoASO.Free;
   inherited;
 end;

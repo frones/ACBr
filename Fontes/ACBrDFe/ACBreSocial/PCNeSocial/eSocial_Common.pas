@@ -190,7 +190,7 @@ type
 
   TAliqGilRat = class(TPersistent)
   private
-    FAliqRat: integer;
+    FAliqRat: tpAliqRat;
     FFap: Double;
     FAliqRatAjust: Double;
     FProcAdmJudRat: TProcAdmJudRat;
@@ -203,7 +203,7 @@ type
     function procAdmJudRatInst(): Boolean;
     function procAdmJudFapInst(): Boolean;
 
-    property AliqRat: integer read FAliqRat write FAliqRat;
+    property AliqRat: tpAliqRat read FAliqRat write FAliqRat;
     property Fap: Double read FFap write FFap;
     property AliqRatAjust: Double read FAliqRatAjust write FAliqRatAjust;
     property ProcAdmJudRat: TProcAdmJudRat read getProcAdmJudRat write FProcAdmJudRat;
@@ -352,7 +352,7 @@ type
     FcpfDep: string;
     FdepIRRF: tpSimNao;
     FdepSF: tpSimNao;
-    FDepPlan: tpSimNao;
+//    FDepPlan: tpSimNao;
     FIncTrab: tpSimNao;
   published
     constructor create; reintroduce;
@@ -362,7 +362,7 @@ type
     property cpfDep: string read FcpfDep write FcpfDep;
     property depIRRF: tpSimNao read FdepIRRF write FdepIRRF;
     property depSF: tpSimNao read FdepSF write FdepSF;
-    property depPlan: tpSimNao read FDepPlan write FDepPlan;
+//    property depPlan: tpSimNao read FDepPlan write FDepPlan;
     property incTrab: tpSimNao read FIncTrab write FIncTrab;
   end;
 
@@ -525,7 +525,7 @@ type
     FQtdHrsSem: integer;
     FTpJornada: tpTpJornada;
     FDscTpJorn: string;
-    FTMPParc: tpSimNao;
+    FTMPParc: tpTmpParc;
     FHorario: THorarioCollection;
   public
     constructor Create;
@@ -534,7 +534,7 @@ type
     property QtdHrsSem: integer read FQtdHrsSem write FQtdHrsSem;
     property TpJornada: tpTpJornada read FTpJornada write FTpJornada;
     property DscTpJorn: string read FDscTpJorn write FDscTpJorn;
-    property tmpParc: tpSimNao read FTMPParc write FTMPParc;
+    property tmpParc: tpTmpParc read FTMPParc write FTMPParc;
     property horario: THorarioCollection read FHorario write FHorario;
   end;
 
@@ -810,7 +810,7 @@ type
   private
     FCnpjEmpregAnt: string;
     FMatricAnt: string;
-    FDtIniVinculo: TDateTime;
+    FdtTransf: TDateTime;
     FObservacao: string;
 
   public
@@ -819,7 +819,7 @@ type
 
     property cnpjEmpregAnt: string read FCnpjEmpregAnt write FCnpjEmpregAnt;
     property MatricAnt: string read FMatricAnt write FMatricAnt;
-    property DtIniVinculo: TDateTime read FDtIniVinculo write FDtIniVinculo;
+    property dtTransf: TDateTime read FdtTransf write FdtTransf;
     property Observacao: string read FObservacao write FObservacao;
   end;
 
@@ -1032,6 +1032,7 @@ type
     FTpRegTrab: tpTpRegTrab;
     FTpRegPrev: tpTpRegPrev;
     FNrRecInfPrelim: string;
+    FcadIni: tpSimNao;
 
     FInfoRegimeTrab: TInfoRegimeTrab;
     FInfoContrato: TInfoContrato;
@@ -1047,6 +1048,7 @@ type
     property TpRegTrab: tpTpRegTrab read FTpRegTrab write FTpRegTrab;
     property TpRegPrev: tpTpRegPrev read FTpRegPrev write FTpRegPrev;
     property NrRecInfPrelim: string read FNrRecInfPrelim write FNrRecInfPrelim;
+    property cadIni: tpSimNao read FcadIni write FcadIni;
 
     property InfoRegimeTrab: TInfoRegimeTrab read FInfoRegimeTrab write FInfoRegimeTrab;
     property InfoContrato: TInfoContrato read FInfoContrato write FInfoContrato;
@@ -1567,7 +1569,7 @@ type
 
   TDetPlanoCollectionItem = class(TCollectionItem)
    private
-    FTpDep: string;
+    FTpDep: tpTpDep;
     FCpfDep: string;
     FDtNascto: TDate;
     FNmDep: string;
@@ -1575,7 +1577,7 @@ type
   public
     constructor create; reintroduce;
 
-    property tpDep: string read FTpDep write FTpDep;
+    property tpDep: tpTpDep read FTpDep write FTpDep;
     property cpfDep: string read FCpfDep write FCpfDep;
     property dtNascto: TDate read FDtNascto write FDtNascto;
     property nmDep: string read FNmDep write FNmDep;

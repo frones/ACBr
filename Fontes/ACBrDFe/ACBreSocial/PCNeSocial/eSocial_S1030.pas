@@ -93,10 +93,10 @@ type
     fInfoCargo: TInfoCargo;
 
     {Geradores específicos da classe}
-    procedure gerarIdeCargo();
-    procedure gerarLeiCargo();
-    procedure gerarCargoPublico();
-    procedure gerarDadosCargo();
+    procedure GerarIdeCargo;
+    procedure GerarLeiCargo;
+    procedure GerarCargoPublico;
+    procedure GerarDadosCargo;
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
@@ -110,7 +110,7 @@ type
   end;
 
   TIdeCargo = class(TPersistent)
-   private
+  private
     FCodCargo : string;
     FIniValid : string;
     FFimValid : string;
@@ -121,14 +121,16 @@ type
   end;
 
   TDadosCargo = class(TPersistent)
-   private
+  private
     FNmCargo: string;
     FCodCBO: string;
     FCargoPublico: TCargoPublico;
+
     function getCargoPublico: TCargoPublico;
   public
     constructor create;
     destructor destroy; override;
+
     function cargoPublicInst(): Boolean;
 
     property nmCargo: string read FNmCargo write FNmCargo;
@@ -137,15 +139,17 @@ type
   end;
 
   TInfoCargo = class(TPersistent)
-   private
+  private
     FIdeCargo: TIdeCargo;
     FDadosCargo: TDadosCargo;
     FNovaValidade: TidePeriodo;
+
     function getDadosCargo: TDadosCargo;
     function getNovaValidade: TidePeriodo;
   public
     constructor create;
     destructor destroy; override;
+
     function dadosCargoInst(): Boolean;
     function novaValidadeInst(): Boolean;
 
@@ -155,7 +159,7 @@ type
   end;
 
   TLeiCargo = class(TPersistent)
-   private
+  private
     FNrLei: string;
     FDtLei: TDate;
     FSitCargo: tpSitCargo;
@@ -175,7 +179,7 @@ type
     constructor create;
     destructor destroy; override;
 
-    property acumCargo: tpAcumCargo read FAcumCargo write FAcumCargo; 
+    property acumCargo: tpAcumCargo read FAcumCargo write FAcumCargo;
     property contagemEsp: tpContagemEsp read FContagemEsp write FContagemEsp;
     property dedicExcl: tpSimNao read FDedicExcl write FDedicExcl;
     property leiCargo: TLeiCargo read FLeiCargo write FLeiCargo;
@@ -243,6 +247,7 @@ begin
   FIdeCargo.Free;
   FreeAndNil(FDadosCargo);
   FreeAndNil(FNovaValidade);
+
   inherited;
 end;
 
@@ -270,6 +275,7 @@ end;
 constructor TEvtTabCargo.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoCargo := TInfoCargo.Create;
@@ -280,46 +286,57 @@ begin
   fIdeEvento.Free;
   fIdeEmpregador.Free;
   fInfoCargo.Free;
+
   inherited;
 end;
 
-procedure TEvtTabCargo.gerarCargoPublico;
+procedure TEvtTabCargo.GerarCargoPublico;
 begin
   if (infoCargo.DadosCargo.cargoPublicInst()) then
   begin
     Gerador.wGrupo('cargoPublico');
-      Gerador.wCampo(tcStr, '', 'acumCargo', 0, 0, 0, eSAcumCargoToStr(infoCargo.DadosCargo.cargoPublico.acumCargo));
-      Gerador.wCampo(tcStr, '', 'contagemEsp', 0, 0, 0, eSContagemEspToStr(infoCargo.DadosCargo.cargoPublico.contagemEsp));
-      Gerador.wCampo(tcStr, '', 'dedicExcl', 0, 0, 0, eSSimNaoToStr(infoCargo.DadosCargo.cargoPublico.dedicExcl));
-      gerarLeiCargo();
+
+    Gerador.wCampo(tcStr, '', 'acumCargo',   1, 1, 1, eSAcumCargoToStr(infoCargo.DadosCargo.cargoPublico.acumCargo));
+    Gerador.wCampo(tcStr, '', 'contagemEsp', 1, 1, 1, eSContagemEspToStr(infoCargo.DadosCargo.cargoPublico.contagemEsp));
+    Gerador.wCampo(tcStr, '', 'dedicExcl',   1, 1, 1, eSSimNaoToStr(infoCargo.DadosCargo.cargoPublico.dedicExcl));
+
+    GerarLeiCargo;
+
     Gerador.wGrupo('/cargoPublico');
   end;
 end;
 
-procedure TEvtTabCargo.gerarDadosCargo;
+procedure TEvtTabCargo.GerarDadosCargo;
 begin
   Gerador.wGrupo('dadosCargo');
-    Gerador.wCampo(tcStr, '', 'nmCargo', 0, 0, 0, self.InfoCargo.dadosCargo.nmCargo);
-    Gerador.wCampo(tcStr, '', 'codCBO', 0, 0, 0, self.InfoCargo.dadosCargo.codCBO);
-    gerarCargoPublico();
+
+  Gerador.wCampo(tcStr, '', 'nmCargo', 1, 100, 1, self.InfoCargo.dadosCargo.nmCargo);
+  Gerador.wCampo(tcStr, '', 'codCBO',  1,   6, 1, self.InfoCargo.dadosCargo.codCBO);
+
+  GerarCargoPublico;
+
   Gerador.wGrupo('/dadosCargo');
 end;
 
-procedure TEvtTabCargo.gerarIdeCargo;
+procedure TEvtTabCargo.GerarIdeCargo;
 begin
   Gerador.wGrupo('ideCargo');
-    Gerador.wCampo(tcStr, '', 'codCargo', 0, 0, 0, infoCargo.ideCargo.CodCargo);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, infoCargo.ideCargo.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, infoCargo.ideCargo.fimValid);
+
+  Gerador.wCampo(tcStr, '', 'codCargo', 1, 30, 1, infoCargo.ideCargo.CodCargo);
+  Gerador.wCampo(tcStr, '', 'iniValid', 7,  7, 1, infoCargo.ideCargo.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid', 7,  7, 0, infoCargo.ideCargo.fimValid);
+
   Gerador.wGrupo('/ideCargo');
 end;
 
-procedure TEvtTabCargo.gerarLeiCargo;
+procedure TEvtTabCargo.GerarLeiCargo;
 begin
   Gerador.wGrupo('leiCargo');
-    Gerador.wCampo(tcStr, '', 'nrLei', 0, 0, 0, infoCargo.DadosCargo.cargoPublico.leiCargo.nrLei);
-    Gerador.wCampo(tcDat, '', 'dtLei', 0, 0, 0, infoCargo.DadosCargo.cargoPublico.leiCargo.dtLei);
-    Gerador.wCampo(tcStr, '', 'sitCargo', 0, 0, 0, eStpSitCargoToStr(infoCargo.DadosCargo.cargoPublico.leiCargo.sitCargo));
+
+  Gerador.wCampo(tcStr, '', 'nrLei',     1, 12, 1, infoCargo.DadosCargo.cargoPublico.leiCargo.nrLei);
+  Gerador.wCampo(tcDat, '', 'dtLei',    10, 10, 1, infoCargo.DadosCargo.cargoPublico.leiCargo.dtLei);
+  Gerador.wCampo(tcStr, '', 'sitCargo',  1,  1, 1, eStpSitCargoToStr(infoCargo.DadosCargo.cargoPublico.leiCargo.sitCargo));
+
   Gerador.wGrupo('/leiCargo');
 end;
 
@@ -328,25 +345,33 @@ begin
   try
     gerarCabecalho('evtTabCargo');
     Gerador.wGrupo('evtTabCargo Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-      //gerarIdVersao(self);
-      gerarIdeEvento(self.IdeEvento);
-      gerarIdeEmpregador(self.IdeEmpregador);
-      Gerador.wGrupo('infoCargo');
-      gerarModoAbertura(Self.ModoLancamento);
-        gerarIdeCargo();
-        if Self.ModoLancamento <> mlExclusao then
-        begin
-          gerarDadosCargo();
-          if Self.ModoLancamento = mlAlteracao then
-            if (InfoCargo.novaValidadeInst()) then
-              GerarIdePeriodo(self.InfoCargo.NovaValidade, 'novaValidade');
-        end;
-      gerarModoFechamento(Self.ModoLancamento);
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
+    Gerador.wGrupo('infoCargo');
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeCargo;
+
+    if Self.ModoLancamento <> mlExclusao then
+    begin
+      GerarDadosCargo;
+
+      if Self.ModoLancamento = mlAlteracao then
+        if (InfoCargo.novaValidadeInst()) then
+          GerarIdePeriodo(self.InfoCargo.NovaValidade, 'novaValidade');
+    end;
+
+    GerarModoFechamento(Self.ModoLancamento);
+
     Gerador.wGrupo('/infoCargo');
     Gerador.wGrupo('/evtTabCargo');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabCargo');
+
     Validar('evtTabCargo');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -365,6 +390,7 @@ end;
 destructor TCargoPublico.destroy;
 begin
   FLeiCargo.Free;
+
   inherited;
 end;
 
@@ -383,6 +409,7 @@ end;
 destructor TDadosCargo.destroy;
 begin
   FreeAndNil(FCargoPublico);
+
   inherited;
 end;
 

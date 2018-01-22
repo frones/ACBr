@@ -175,15 +175,15 @@ type
 
   TDadosBenef = class(TPersistent)
   private
-    FCpfBenef: String;
-    FNmBenefic: string;
+//    FCpfBenef: String;
+//    FNmBenefic: string;
     FDadosNasc: TNascimento;
     FEndereco: TEndereco;
   public
     constructor Create;
 
-    property cpfBenef: String read FCpfBEnef write FCpfBEnef;
-    property nmBenefic: string read FNmBenefic write FNmBenefic;
+//    property cpfBenef: String read FCpfBEnef write FCpfBEnef;
+//    property nmBenefic: string read FNmBenefic write FNmBenefic;
     property dadosNasc: TNascimento read FDadosNasc write FDadosNasc;
     property endereco: TEndereco read FEndereco write FEndereco;
   end;
@@ -266,8 +266,8 @@ end;
 procedure TEvtCdBenPrRP.GerarDadosBenef(pDadosBenef: TDadosBenef);
 begin
   Gerador.wGrupo('dadosBenef');
-    Gerador.wCampo(tcStr, '', 'cpfBenef', 0,0,0, pDadosBenef.cpfBenef);
-    Gerador.wCampo(tcStr, '', 'nmBenefic', 0,0,0, pDadosBenef.nmBenefic);
+//    Gerador.wCampo(tcStr, '', 'cpfBenef', 0,0,0, pDadosBenef.cpfBenef);
+//    Gerador.wCampo(tcStr, '', 'nmBenefic', 0,0,0, pDadosBenef.nmBenefic);
     GerarNascimento(pDadosBenef.dadosNasc, 'dadosNasc');
     GerarEndereco(pDadosBenef.endereco, Assigned(pDadosBenef.endereco.Exterior));
   Gerador.wGrupo('/dadosBenef');
@@ -276,9 +276,9 @@ end;
 procedure TEvtCdBenPrRP.GerarIdeBenef(pIdeBenef: TIdeBenef);
 begin
   Gerador.wGrupo('ideBenef');
-    Gerador.wCampo(tcStr, '', 'cpfBenef', 0,0,0, pIdeBenef.cpfBenef);
-    Gerador.wCampo(tcStr, '', 'nmBenefic', 0,0,0, pIdeBenef.nmBenefic);
-    GerarDadosBenef(pIdeBenef.dadosBenef);
+  Gerador.wCampo(tcStr, '', 'cpfBenef',  11, 11, 1, pIdeBenef.cpfBenef);
+  Gerador.wCampo(tcStr, '', 'nmBenefic',  0, 70, 1, pIdeBenef.nmBenefic);
+  GerarDadosBenef(pIdeBenef.dadosBenef);
   Gerador.wGrupo('/ideBenef');
 end;
 

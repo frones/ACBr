@@ -115,15 +115,17 @@ type
   end;
 
   TinfoTSVInicio = class(TPersistent)
-    private
-      FcodCateg : Integer;
-      FdtInicio : TDateTime;
-      FnatAtividade : tpNatAtividade;
-      FinfoComplementares : TinfoComplementares;
-    public
+  private
+    FcadIni: tpSimNao;
+    FcodCateg : Integer;
+    FdtInicio : TDateTime;
+    FnatAtividade : tpNatAtividade;
+    FinfoComplementares : TinfoComplementares;
+  public
       constructor Create;
       destructor  Destroy; override;
 
+      property cadIni: tpSimNao read FcadIni write FcadIni;
       property codCateg : Integer read FcodCateg write FcodCateg;
       property dtInicio : TDateTime read FdtInicio write FdtInicio;
       property natAtivididade : tpNatAtividade read FnatAtividade write FnatAtividade;
@@ -385,10 +387,14 @@ end;
 procedure TEvtTSVInicio.gerarInfoTSVInicio(obj: TinfoTSVInicio);
 begin
   Gerador.wGrupo('infoTSVInicio');
-    Gerador.wCampo(tcStr, '', 'codCateg', 0,0,0, obj.codCateg);
-    Gerador.wCampo(tcDat, '', 'dtInicio', 0,0,0, obj.dtInicio);
-    Gerador.wCampo(tcStr, '', 'natAtividade', 0,0,0, ord(obj.natAtivididade) + 1);
-    gerarInfoComplementares(obj.InfoComplementares);
+  
+  Gerador.wCampo(tcStr, '', 'cadIni',        1,  1, 1, eSSimNaoToStr(obj.cadIni));
+  Gerador.wCampo(tcStr, '', 'codCateg',      0,  3, 1, obj.codCateg);
+  Gerador.wCampo(tcDat, '', 'dtInicio',     10, 10, 1, obj.dtInicio);
+  Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, ord(obj.natAtivididade) + 1);
+
+  gerarInfoComplementares(obj.InfoComplementares);
+
   Gerador.wGrupo('/infoTSVInicio');
 end;
 

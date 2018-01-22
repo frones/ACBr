@@ -78,6 +78,7 @@ type
   public
     constructor Create(AACBreSocial: TObject); overload;//->recebe a instancia da classe TACBreSocial
     destructor Destroy; override;
+
     function  GerarXML: boolean; virtual; abstract;
     procedure SaveToFile(const CaminhoArquivo: string);
     function  Assinar(XMLEvento: String; NomeEvento: String): AnsiString;
@@ -91,7 +92,7 @@ type
     {Geradores de Uso Comum}
     procedure GerarCabecalho(Namespace: String);
     procedure GerarRodape;
-    procedure GerarAliqGilRat( pAliqRat: TAliqGilRat;const GroupName: string = 'aliqGilRat');
+    procedure GerarAliqGilRat(pAliqRat: TAliqGilRat; const GroupName: string = 'aliqGilRat');
     procedure GerarAlvaraJudicial(pAlvaraJudicial: TAlvaraJudicial);
     procedure GerarAposentadoria(pAposentadoria: TAposentadoria);
     procedure GerarCNH(pCnh: TCNH);
@@ -115,7 +116,7 @@ type
     procedure GerarIdeEvento3(pEvt: TIdeEvento3; IndRetif: Boolean=True);
     procedure GerarIdeEvento4(pEvt: TIdeEvento4);
     procedure GerarIdePeriodo(pIdePeriodo: TidePeriodo; const GroupName: string = 'idePeriodo');
-    procedure GerarIdeEmpregador(pEmp: TIdeEmpregador; pNumTags: integer = 2);
+    procedure GerarIdeEmpregador(pEmp: TIdeEmpregador);
     procedure GerarIdeTomadorServ(pIdeTomadorServ: TIdeTomadorServ);
     procedure GerarIdeEstabVinc(pIdeEstabVinc: TIdeEstabVinc);
     procedure GerarIdeTrabSubstituido(pIdeTrabSubstituido: TIdeTrabSubstituidoCollection);
@@ -150,23 +151,14 @@ type
     procedure GerarInfoCeletista(pInfoCeletista: TInfoCeletista);
     procedure GerarInfoDecJud(pInfoDecJud: TInfoDecJud);
     procedure GerarInfoEstatutario(pInfoEstatutario: TInfoEstatutario);
-    procedure gerarIdeTrabalhador(
-      pideTrabalhador: TideTrabalhador;
-      const GeraGrupo: boolean = True
-    );
-    procedure gerarIdeTrabalhador2(
-      pideTrabalhador: TideTrabalhador2;
-      const GeraGrupo: boolean
-    );
-    procedure gerarIdeFolhaPagto(pIdeFolhaPagto: TIdeFolhaPagto);
-    procedure gerarEmitente(pEmitente: TEmitente);
+    procedure GerarIdeTrabalhador(pideTrabalhador: TideTrabalhador; const GeraGrupo: boolean = True);
+    procedure GerarIdeTrabalhador2(pideTrabalhador: TideTrabalhador2; const GeraGrupo: boolean);
+    procedure GerarIdeFolhaPagto(pIdeFolhaPagto: TIdeFolhaPagto);
+    procedure GerarEmitente(pEmitente: TEmitente);
     procedure GerarEndExt(pEndExt: TEndExt);
     procedure GerarIdePais(pIdePais: TIdePais);
     procedure GerarInfoAgNocivo(pInfoAgNocivo: TInfoAgNocivo);
-    procedure GerarItensRemun(
-      objItensRemun: TRubricaCollection;
-      const GroupName: string = 'verbasResc'
-    );
+    procedure GerarItensRemun(objItensRemun: TRubricaCollection; const GroupName: string = 'verbasResc');
     procedure GerarProcJudTrab(objProcJudTrab: TProcJudTrabCollection);
     procedure GerarPensaoAlim(objPensaoAlim: TPensaoAlimCollection; const GroupName: String = 'pensaoAlim');
     procedure GerarInfoSaudeColet(objInfoSaudeColet: TInfoSaudeColet);
@@ -215,11 +207,9 @@ uses
 
 function TeSocialEvento.Assinar(XMLEvento, NomeEvento: String): AnsiString;
 var
-  XMLAss: String;
-  ArqXML: String;
-  Leitor: TLeitor;
-//  i: Integer;
+  XMLAss, ArqXML: String;
 begin
+  // italo
   Result := '';
 
   ArqXML := XMLEvento;
@@ -240,7 +230,7 @@ begin
     NomeEvento := NomeEvento + '.xml';
 
     if Configuracoes.Arquivos.Salvar then
-       Gravar(NomeEvento, XMLAss,Configuracoes.Arquivos.PathSalvar);
+      Gravar(NomeEvento, XMLAss,Configuracoes.Arquivos.PathSalvar);
 
     Result := XMLAss;
 
@@ -288,6 +278,7 @@ var
   Erro, AXML: String;
   EhValido: Boolean;
 begin
+  // italo
   AXML := FXMLAssinado;
 
   if EstaVazio(AXML) then
@@ -298,11 +289,12 @@ begin
 
   with TACBreSocial(FACBreSocial) do
   begin
-    EhValido := SSL.Validar(AXML, Configuracoes.Arquivos.PathSchemas+Evento+'.xsd', Erro);
+    EhValido := SSL.Validar(AXML, Configuracoes.Arquivos.PathSchemas + Evento + '.xsd', Erro);
+
     if not EhValido then
     begin
       FErroValidacao := ACBrStr('Falha na validação dos dados do evento: ') +
-        Evento + sLineBreak + FAlertas ;
+                        Evento + sLineBreak + FAlertas;
       FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
 
       {$IFDEF DEBUG}
@@ -315,6 +307,7 @@ begin
         Free;
       end;
       {$ENDIF}
+
       raise EACBreSocialException.CreateDef(
         IfThen(Configuracoes.Geral.ExibirErroSchema, ErroValidacaoCompleto,
         ErroValidacao));
@@ -324,8 +317,9 @@ end;
 
 procedure TeSocialEvento.GerarCabecalho(Namespace: String);
 begin
-  // TODO: layout antigo remover na versão do 2.3
-  TACBreSocial(FACBreSocial).SSL.NameSpaceURI := 'http://www.esocial.gov.br/schema/evt/'+Namespace+'/v02_04_01'; // << /v02_03_00
+  // Italo
+  TACBreSocial(FACBreSocial).SSL.NameSpaceURI := eSocial_NameSpace + Namespace + eSocial_Versao;
+
   Gerador.wGrupo(ENCODING_UTF8, '', False);
   Gerador.wGrupo('eSocial xmlns="'+TACBreSocial(FACBreSocial).SSL.NameSpaceURI+'"');
 end;
@@ -337,6 +331,7 @@ begin
   // Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
   if sequencial = 0 then
     sequencial := Random(99999);
+
   DecodeDate(emissao, nAno, nMes, nDia);
   DecodeTime(emissao, nHora, nMin, nSeg, nMSeg);
   Result := 'ID';
@@ -350,6 +345,7 @@ begin
     Result := Result + copy(SomenteNumeros(CNPJF) + '00000000000000', 1, 14)
   else
     Result := Result + copy(SomenteNumeros(Copy(CNPJF, 1, 8)) + '00000000000000', 1, 14);
+
   Result := Result + IntToStrZero(nAno, 4);
   Result := Result + IntToStrZero(nMes, 2);
   Result := Result + IntToStrZero(nDia, 2);
@@ -445,7 +441,7 @@ begin
 
       Gerador.wCampo(tcStr, '', 'depIRRF  ', 0, 0, 0, eSSimNaoToStr(pDependente.Items[i].DepIRRF));
       Gerador.wCampo(tcStr, '', 'depSF  ', 0, 0, 0, eSSimNaoToStr(pDependente.Items[i].DepSF));
-      Gerador.wCampo(tcStr, '', 'depPlan  ', 0, 0, 0, eSSimNaoToStr(pDependente.Items[i].depPlan));
+//      Gerador.wCampo(tcStr, '', 'depPlan  ', 0, 0, 0, eSSimNaoToStr(pDependente.Items[i].depPlan));
       Gerador.wCampo(tcStr, '', 'incTrab  ', 0, 0, 0, eSSimNaoToStr(pDependente.Items[i].incTrab));
     Gerador.wGrupo('/dependente');
   end;
@@ -614,7 +610,7 @@ begin
 
     if (eSTpJornadaToStr(pHorContratual.TpJornada) = '2') then
       Gerador.wCampo(tcStr, '', 'dscTpJorn  ', 0, 0, 0, pHorContratual.DscTpJorn);
-    Gerador.wCampo(tcStr, '', 'tmpParc  ', 0, 0, 0, eSSimNaoToStr(pHorContratual.tmpParc));
+    Gerador.wCampo(tcStr, '', 'tmpParc  ', 1, 1, 1, tpTmpParcToStr(pHorContratual.tmpParc));
     GerarHorario(pHorContratual.horario);
   Gerador.wGrupo('/horContratual');
 end;
@@ -671,22 +667,21 @@ end;
 
 procedure TeSocialEvento.GerarRodape;
 begin
+  // italo
   Gerador.wGrupo('/eSocial');
 end;
 
 procedure TeSocialEvento.GerarSucessaoVinc(pSucessaoVinc: TSucessaoVinc);
 begin
+  // italo
   if pSucessaoVinc.cnpjEmpregAnt <> EmptyStr then
   begin
-  Gerador.wGrupo('sucessaoVinc');
-    Gerador.wCampo(tcStr, '', 'cnpjEmpregAnt  ', 0, 0, 0, pSucessaoVinc.cnpjEmpregAnt);
-    Gerador.wCampo(tcStr, '', 'matricAnt  ', 0, 0, 0, pSucessaoVinc.MatricAnt);
-    Gerador.wCampo(tcDat, '', 'dtIniVinculo  ', 0, 0, 0, pSucessaoVinc.DtIniVinculo);
-
-    if (pSucessaoVinc.Observacao <> '') then
-      Gerador.wCampo(tcStr, '', 'observacao  ', 0, 0, 0, pSucessaoVinc.Observacao);
-
-  Gerador.wGrupo('/sucessaoVinc');
+    Gerador.wGrupo('sucessaoVinc');
+    Gerador.wCampo(tcStr, '', 'cnpjEmpregAnt', 14, 014, 1, pSucessaoVinc.cnpjEmpregAnt);
+    Gerador.wCampo(tcStr, '', 'matricAnt',      0, 030, 0, pSucessaoVinc.MatricAnt);
+    Gerador.wCampo(tcDat, '', 'dtTransf',      10, 010, 1, pSucessaoVinc.dtTransf);
+    Gerador.wCampo(tcStr, '', 'observacao',     0, 255, 0, pSucessaoVinc.Observacao);
+    Gerador.wGrupo('/sucessaoVinc');
   end;
 end;
 
@@ -755,25 +750,29 @@ procedure TeSocialEvento.GerarVinculo(pVinculo: TVinculo; pTipo: integer);
 begin
   Gerador.wGrupo('vinculo');
     if (pTipo <> 3) then
+    begin
       Gerador.wCampo(tcStr, '', 'matricula  ', 0, 0, 0, pVinculo.Matricula);
-    Gerador.wCampo(tcStr, '', 'tpRegTrab  ', 0, 0, 0, eSTpRegTrabToStr(pVinculo.TpRegTrab));
+      Gerador.wCampo(tcStr, '', 'tpRegTrab  ', 0, 0, 0, eSTpRegTrabToStr(pVinculo.TpRegTrab));
+    end;
     Gerador.wCampo(tcStr, '', 'tpRegPrev  ', 0, 0, 0, eSTpRegPrevToStr(pVinculo.TpRegPrev));
 
     if (pTipo <> 3) then
     begin
       if (((pVinculo.nrRecInfPrelim <> '') and (pVinculo.nrRecInfPrelim <> null)) and (pTipo = 2)) then
         Gerador.wCampo(tcStr, '', 'nrRecInfPrelim  ', 0, 0, 0, pVinculo.nrRecInfPrelim);
-  
-  
+
+      Gerador.wCampo(tcStr, '', 'cadIni', 1, 1, 1, eSSimNaoToStr(pVinculo.cadIni));
+
       GerarInfoRegimeTrab(pVinculo.InfoRegimeTrab);
       GerarInfoContrato(pVinculo.InfoContrato);
       GerarSucessaoVinc(pVinculo.SucessaoVinc);
+
       if (pTipo = 1) or (pTipo = 2) then
       begin
         GerarAfastamento(pVinculo.Afastamento);
         GerarDesligamento(pVinculo.Desligamento);
       end;
-  
+
       //if (pTipo = 2) then
       //begin
         //GerarInfoASO(pVinculo.InfoASO);
@@ -797,19 +796,18 @@ procedure TeSocialEvento.GerarAliqGilRat(pAliqRat: TAliqGilRat;
   const GroupName: string);
 begin
   Gerador.wGrupo(GroupName);
-    Gerador.wCampo(tcStr, '', 'aliqRat', 0, 0, 0, pAliqRat.AliqRat);
 
-    if (pAliqRat.Fap > 0) then
-      Gerador.wCampo(tcDe4, '', 'fap', 0, 0, 0, pAliqRat.Fap);
+  Gerador.wCampo(tcStr, '', 'aliqRat',      1, 1, 1, eSAliqRatToStr(pAliqRat.AliqRat)); 
+  Gerador.wCampo(tcDe4, '', 'fap',          1, 5, 0, pAliqRat.Fap);
+  Gerador.wCampo(tcDe4, '', 'aliqRatAjust', 1, 5, 0, pAliqRat.AliqRatAjust);
 
-    if (pAliqRat.AliqRatAjust > 0)  then
-      Gerador.wCampo(tcDe4, '', 'aliqRatAjust', 0, 0, 0, pAliqRat.AliqRatAjust);
+  if pAliqRat.procAdmJudRatInst() then
+    GerarProcessoAdmJudRat(pAliqRat.ProcAdmJudRat);
 
-    if pAliqRat.procAdmJudRatInst() then
-      GerarProcessoAdmJudRat(pAliqRat.ProcAdmJudRat);
-    if pAliqRat.procAdmJudFapInst() then
-      GerarProcessoAdmJudFap(pAliqRat.ProcAdmJudFap);
-  Gerador.wGrupo('/'+GroupName);
+  if pAliqRat.procAdmJudFapInst() then
+    GerarProcessoAdmJudFap(pAliqRat.ProcAdmJudFap);
+
+  Gerador.wGrupo('/' + GroupName);
 end;
 
 procedure TeSocialEvento.GerarAlvaraJudicial(pAlvaraJudicial: TAlvaraJudicial);
@@ -832,25 +830,30 @@ begin
   end;
 end;
 
-procedure TeSocialEvento.GerarIdeEmpregador(pEmp: TIdeEmpregador; pNumTags: integer);
+procedure TeSocialEvento.GerarIdeEmpregador(pEmp: TIdeEmpregador);
 begin
+  // Italo
   Gerador.wGrupo('ideEmpregador');
-    Gerador.wCampo(tcStr, '', 'tpInsc', 0, 0, 1, eSTpInscricaoToStr(pEmp.TpInsc));
-    if pEmp.OrgaoPublico then
-      Gerador.wCampo(tcStr, '', 'nrInsc', 0, 0, 1, pEmp.NrInsc)
-    else
-      Gerador.wCampo(tcStr, '', 'nrInsc', 0, 0, 1, Copy(pEmp.NrInsc, 1, 8));
+
+  Gerador.wCampo(tcStr, '', 'tpInsc', 1, 1, 1, eSTpInscricaoToStr(pEmp.TpInsc));
+
+  if pEmp.OrgaoPublico then
+    Gerador.wCampo(tcStr, '', 'nrInsc', 14, 14, 1, pEmp.NrInsc)
+  else
+    Gerador.wCampo(tcStr, '', 'nrInsc', 8, 8, 1, Copy(pEmp.NrInsc, 1, 8));
+
   Gerador.wGrupo('/ideEmpregador');
 end;
 
 procedure TeSocialEvento.GerarIdeEvento(pEvt: TIdeEvento; const GeraGrupo: boolean);
 begin
+  // Italo
   if GeraGrupo then
     Gerador.wGrupo('ideEvento');
 
-  Gerador.wCampo(tcStr, '', 'tpAmb', 0, 0, 1, eStpAmbToStr(pEvt.TpAmb));
-  Gerador.wCampo(tcStr, '', 'procEmi', 0, 0, 1, eSProcEmiToStr(pEvt.ProcEmi));
-  Gerador.wCampo(tcStr, '', 'verProc', 0, 0, 1, pEvt.VerProc);
+  Gerador.wCampo(tcStr, '', 'tpAmb',   1,  1, 1, eStpAmbToStr(pEvt.TpAmb));
+  Gerador.wCampo(tcStr, '', 'procEmi', 1,  1, 1, eSProcEmiToStr(pEvt.ProcEmi));
+  Gerador.wCampo(tcStr, '', 'verProc', 1, 20, 1, pEvt.VerProc);
 
   if GeraGrupo then
   	Gerador.wGrupo('/ideEvento');
@@ -909,10 +912,13 @@ end;
 procedure TeSocialEvento.GerarIdePeriodo(pIdePeriodo: TidePeriodo;
   const GroupName: string);
 begin
+  // italo
   Gerador.wGrupo(GroupName);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 1, pIdePeriodo.IniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, pIdePeriodo.FimValid);
-  Gerador.wGrupo('/'+GroupName);
+
+  Gerador.wCampo(tcStr, '', 'iniValid', 7, 7, 1, pIdePeriodo.IniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid', 7, 7, 0, pIdePeriodo.FimValid);
+
+  Gerador.wGrupo('/' + GroupName);
 end;
 
 procedure TeSocialEvento.GerarIdeEstabVinc(pIdeEstabVinc: TIdeEstabVinc);
@@ -937,7 +943,7 @@ end;
 
 procedure TeSocialEvento.GerarIdeTrabSubstituido(
   pIdeTrabSubstituido: TIdeTrabSubstituidoCollection);
-Var
+var
   I: Integer;
 begin
   for I := 0 to pIdeTrabSubstituido.Count - 1 do
@@ -957,7 +963,7 @@ begin
   Gerador.wGrupo('/ideVinculo');
 end;
 
-procedure TeSocialEvento.gerarIdVersao(pIdEsocial: TESocial);
+procedure TeSocialEvento.GerarIdVersao(pIdEsocial: TESocial);
 begin
   Gerador.wCampo(tcStr, '', 'id', 0, 0, 0, pIdEsocial.id);
 //  Gerador.wCampo(tcStr, '', 'versao', 0, 0, 0, pIdEsocial.versao);
@@ -1088,8 +1094,7 @@ begin
   begin
     Gerador.wGrupo(GroupName);
       Gerador.wCampo(tcStr, '', 'codRubr', 0, 0, 0, objItensRemun.Items[iItensRemun].codRubr);
-      if objItensRemun.Items[iItensRemun].ideTabRubr <> EmptyStr then
-        Gerador.wCampo(tcStr, '', 'ideTabRubr', 1, 1, 1, objItensRemun.Items[iItensRemun].ideTabRubr);
+      Gerador.wCampo(tcStr, '', 'ideTabRubr', 1, 8, 1, objItensRemun.Items[iItensRemun].ideTabRubr);
       Gerador.wCampo(tcDe2, '', 'qtdRubr', 0, 0, 0, objItensRemun.Items[iItensRemun].qtdRubr);
       Gerador.wCampo(tcDe2, '', 'fatorRubr', 0, 0, 0, objItensRemun.Items[iItensRemun].fatorRubr);
       Gerador.wCampo(tcDe2, '', 'vrUnit', 0, 0, 0, objItensRemun.Items[iItensRemun].vrUnit);
@@ -1144,19 +1149,23 @@ end;
 
 procedure TeSocialEvento.GerarModoAbertura(pModo: TModoLancamento);
 begin
+  // italo
   case pModo of
     mlAlteracao: Gerador.wGrupo('alteracao');
     mlExclusao: Gerador.wGrupo('exclusao');
-    else Gerador.wGrupo('inclusao');
+  else
+    Gerador.wGrupo('inclusao');
   end;
 end;
 
 procedure TeSocialEvento.GerarModoFechamento(pModo: TModoLancamento);
 begin
+  // italo
   case pModo of
     mlAlteracao: Gerador.wGrupo('/alteracao');
     mlExclusao: Gerador.wGrupo('/exclusao');
-    else Gerador.wGrupo('/inclusao');
+  else
+    Gerador.wGrupo('/inclusao');
   end;
 end;
 
@@ -1211,30 +1220,42 @@ end;
 
 procedure TeSocialEvento.GerarProcessoGenerico(pChave: string; pProcesso: TProcesso);
 begin
+  // italo
   Gerador.wGrupo(pChave);
-    Gerador.wCampo(tcStr, '', 'nrProc', 0, 0, 1, pProcesso.nrProc);
-    if trim(pProcesso.codSusp) <> '' then
-      Gerador.wCampo(tcStr, '', 'codSusp', 0, 0, 1, pProcesso.codSusp);
+
+  Gerador.wCampo(tcStr, '', 'nrProc', 1, 20, 1, pProcesso.nrProc);
+
+  if trim(pProcesso.codSusp) <> '' then
+    Gerador.wCampo(tcStr, '', 'codSusp', 1, 14, 1, pProcesso.codSusp);
+
   Gerador.wGrupo('/' + pChave);
 end;
 
 procedure TeSocialEvento.GerarProcessoAdmJudFap(pProcAdmJudFap: TProcAdmJudFap);
 begin
+  // italo
   Gerador.wGrupo('procAdmJudFap');
-    Gerador.wCampo(tcStr, '', 'tpProc', 0, 0, 1, eSTpProcessoToStr(pProcAdmJudFap.tpProc));
-    Gerador.wCampo(tcStr, '', 'nrProc', 0, 0, 1, pProcAdmJudFap.nrProc);
-    if trim(pProcAdmJudFap.codSusp) <> '' then
-      Gerador.wCampo(tcStr, '', 'codSusp', 0, 0, 1, pProcAdmJudFap.codSusp);
+
+  Gerador.wCampo(tcStr, '', 'tpProc', 1,  1, 1, eSTpProcessoToStr(pProcAdmJudFap.tpProc));
+  Gerador.wCampo(tcStr, '', 'nrProc', 1, 20, 1, pProcAdmJudFap.nrProc);
+
+  if trim(pProcAdmJudFap.codSusp) <> '' then
+    Gerador.wCampo(tcStr, '', 'codSusp', 1, 14, 1, pProcAdmJudFap.codSusp);
+
   Gerador.wGrupo('/procAdmJudFap');
 end;
 
 procedure TeSocialEvento.GerarProcessoAdmJudRat(pProcAdmJudRat: TProcAdmJudRat);
 begin
+  // italo
   Gerador.wGrupo('procAdmJudRat');
-    Gerador.wCampo(tcStr, '', 'tpProc', 0, 0, 0, eSTpProcessoToStr(pProcAdmJudRat.tpProc));
-    Gerador.wCampo(tcStr, '', 'nrProc', 0, 0, 0, pProcAdmJudRat.nrProc);
-    if trim(pProcAdmJudRat.codSusp) <> '' then
-      Gerador.wCampo(tcStr, '', 'codSusp', 0, 0, 1, pProcAdmJudRat.codSusp);
+
+  Gerador.wCampo(tcStr, '', 'tpProc', 1,  1, 1, eSTpProcessoToStr(pProcAdmJudRat.tpProc));
+  Gerador.wCampo(tcStr, '', 'nrProc', 1, 20, 1, pProcAdmJudRat.nrProc);
+
+  if trim(pProcAdmJudRat.codSusp) <> '' then
+    Gerador.wCampo(tcStr, '', 'codSusp', 1, 14, 1, pProcAdmJudRat.codSusp);
+
   Gerador.wGrupo('/procAdmJudRat');
 end;
 
@@ -1252,32 +1273,32 @@ begin
   end;
 end;
 
-procedure TeSocialEvento.gerarIdeTrabalhador(
+procedure TeSocialEvento.GerarIdeTrabalhador(
   pideTrabalhador: TideTrabalhador; const GeraGrupo: boolean);
 begin
   if GeraGrupo then
     Gerador.wGrupo('ideTrabalhador');
 
-      Gerador.wCampo(tcStr, '', 'cpfTrab  ', 0, 0, 0, pideTrabalhador.CpfTrab);
+      Gerador.wCampo(tcStr, '', 'cpfTrab', 11, 11, 1, pideTrabalhador.CpfTrab);
 
   if GeraGrupo then
     Gerador.wGrupo('/ideTrabalhador');
 end;
 
-procedure TeSocialEvento.gerarIdeTrabalhador2(
+procedure TeSocialEvento.GerarIdeTrabalhador2(
   pideTrabalhador: TideTrabalhador2; const GeraGrupo: boolean);
 begin
   if GeraGrupo then
     Gerador.wGrupo('ideTrabalhador');
 
-      gerarIdeTrabalhador(pideTrabalhador, False);
+      GerarIdeTrabalhador(pideTrabalhador, False);
       Gerador.wCampo(tcStr, '', 'nisTrab  ', 0, 0, 0, pideTrabalhador.nisTrab);
 
   if GeraGrupo then
     Gerador.wGrupo('/ideTrabalhador');
 end;
 
-procedure TeSocialEvento.gerarIdeFolhaPagto(
+procedure TeSocialEvento.GerarIdeFolhaPagto(
   pIdeFolhaPagto: TIdeFolhaPagto);
 begin
   if pIdeFolhaPagto.perApur <> EmptyStr then
@@ -1289,7 +1310,7 @@ begin
   end;
 end;
 
-procedure TeSocialEvento.gerarEmitente(pEmitente: TEmitente);
+procedure TeSocialEvento.GerarEmitente(pEmitente: TEmitente);
 begin
   Gerador.wGrupo('emitente');
     Gerador.wCampo(tcStr, '', 'nmEmit', 0, 0, 0, pEmitente.nmEmit);
@@ -1328,7 +1349,7 @@ begin
   for iDetPlano := 0 to objDetPlanoCollection.Count - 1 do
   begin
     Gerador.wGrupo('detPlano');
-      Gerador.wCampo(tcStr, '', 'tpDep', 0, 0, 0, objDetPlanoCollection.Items[iDetPlano].tpDep);
+      Gerador.wCampo(tcStr, '', 'tpDep', 0, 0, 0, eStpDepToStr(objDetPlanoCollection.Items[iDetPlano].tpDep));
       Gerador.wCampo(tcStr, '', 'cpfDep', 0, 0, 0, objDetPlanoCollection.Items[iDetPlano].cpfDep);
       Gerador.wCampo(tcStr, '', 'nmDep', 0, 0, 0, objDetPlanoCollection.Items[iDetPlano].nmDep);
       Gerador.wCampo(tcDat, '', 'dtNascto', 0, 0, 0, objDetPlanoCollection.Items[iDetPlano].dtNascto);

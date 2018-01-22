@@ -211,8 +211,8 @@ begin
 
   if length(AValue) <> 9 then
     Result := False
-  else if not ((StrToInt(copy(Avalue, 1, 2)) >= ano - 1) and
-    (StrToInt(copy(Avalue, 1, 2)) <= ano + 1)) then
+  else if not ((StrToInt(copy(Avalue, 1, 2)) >= ano - 2) and
+    (StrToInt(copy(Avalue, 1, 2)) <= ano + 2)) then
     Result := False
   else
     Result := copy(AValue, 9, 1) = Modulo11(copy(AValue, 1, 8));

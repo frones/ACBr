@@ -927,6 +927,8 @@ begin
 
       proSigep: FNameSpaceDad :=  FNameSpace;
 
+      proAbaco: FPDFeOwner.SSL.NameSpaceURI := '';
+
       else begin
         if (FSeparador = '') then
         begin
@@ -1613,14 +1615,6 @@ begin
     LayNfseRecepcaoLote:
        begin
          case FProvedor of
-           proAbaco: begin
-//                       // Manaus
-//                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
-//                         FTagI := '<'+FTagGrupo+'>'
-//                       else // Outros
-                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
-                     end;
-
            proABase: FTagI := '<' + FTagGrupo + FNameSpaceDad +
                                 ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
@@ -1629,6 +1623,7 @@ begin
                                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                     'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd">';
 
+           proAbaco,
            proCONAM,
            proEL,
            proFISSLex,

@@ -356,7 +356,6 @@ uses
   eSocial_Conversao;
 
 //  Grids,
-//  ACBrBPeBilhetes
 
 const
   SELDIRHELP = 1000;
@@ -367,7 +366,7 @@ const
 
 procedure TFExemploEsocial.GerareSocial1000;
 var
-  i: integer;
+  i: Integer;
 begin
   ACBreSocial1.Eventos.Iniciais.S1000.Clear;
 
@@ -376,53 +375,53 @@ begin
     with ACBreSocial1.Eventos.Iniciais.S1000.Add do
     begin
       evtInfoEmpregador.id := '1';
-      //      evtInfoEmpregador.Versao := '2.0';
 
-      evtInfoEmpregador.IdeEvento.TpAmb := TpTpAmb(2);
+      evtInfoEmpregador.IdeEvento.TpAmb := taProducaoRestritaDadosFicticios;
       evtInfoEmpregador.IdeEvento.ProcEmi := TpProcEmi(0);
       evtInfoEmpregador.IdeEvento.VerProc := '1.0';
 
-      evtInfoEmpregador.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtInfoEmpregador.IdeEmpregador.TpInsc := tiCPF;
       evtInfoEmpregador.IdeEmpregador.NrInsc := '0123456789';
 
       evtInfoEmpregador.ModoLancamento := TModoLancamento(i);
       evtInfoEmpregador.InfoEmpregador.IdePeriodo.IniValid := '2015-05';
       evtInfoEmpregador.InfoEmpregador.IdePeriodo.FimValid := '2099-12';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.NmRazao := 'Empresa Teste';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.ClassTrib := '01';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.NatJurid := '0001';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndCoop := TpIndCoop(1);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndConstr := TpIndConstr(2);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndDesFolha := TpIndDesFolha(1);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndOptRegEletron := TpIndOptRegEletron(1);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndEtt := tpSimNao(1);
-      evtInfoEmpregador.infoEmpregador.infoCadastro.nrRegEtt := '';
+      with evtInfoEmpregador.InfoEmpregador.InfoCadastro do
+      begin
+        NmRazao := 'Empresa Teste';
+        ClassTrib := ct01;
+        NatJurid := '0001';
+        IndCoop := TpIndCoop(1);
+        IndConstr := TpIndConstr(2);
+        IndDesFolha := TpIndDesFolha(1);
+        IndOptRegEletron := TpIndOptRegEletron(1);
+        IndEtt := tpSimNao(1);
+        nrRegEtt := '';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOp.nrSiafi := '12345';
+        InfoOp.nrSiafi := '12345';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOp.infoEnte.nmEnte := 'Ente federativo teste';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOp.infoEnte.uf := tpuf(ufSP);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOp.infoEnte.vrSubteto := 100.00;
+        InfoOp.infoEnte.nmEnte := 'Ente federativo teste';
+        InfoOp.infoEnte.uf := tpuf(ufSP);
+        InfoOp.infoEnte.vrSubteto := 100.00;
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.IdeMinLei := 'Sigla Min';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.NrCertif := '1111';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.DtEmisCertif := date;
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.DtVencCertif := date;
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.NrProtRenov := '10';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.DtProtRenov := date;
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.DtDou := date;
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.PagDou := '111';
+        dadosIsencao.IdeMinLei := 'Sigla Min';
+        dadosIsencao.NrCertif := '1111';
+        dadosIsencao.DtEmisCertif := date;
+        dadosIsencao.DtVencCertif := date;
+        dadosIsencao.NrProtRenov := '10';
+        dadosIsencao.DtProtRenov := date;
+        dadosIsencao.DtDou := date;
+        dadosIsencao.PagDou := '111';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.NmCtt := 'Contato 1';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.CpfCtt := '00000222220';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.FoneFixo := '34335856';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.FoneCel := '991524587';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.email :=
-        'testecontato@testecontato.com';
+        Contato.NmCtt := 'Contato 1';
+        Contato.CpfCtt := '00000222220';
+        Contato.FoneFixo := '34335856';
+        Contato.FoneCel := '991524587';
+        Contato.email := 'testecontato@testecontato.com';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOrgInternacional.
-        IndAcordoIsenMulta := tpIndAcordoIsencaoMulta(1);
+        InfoOrgInternacional.IndAcordoIsenMulta := tpIndAcordoIsencaoMulta(1);
+      end;
 
       evtInfoEmpregador.InfoEmpregador.InfoCadastro.SoftwareHouse.Clear;
 
@@ -435,16 +434,14 @@ begin
         email := 'teste@teste.com';
       end;
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoComplementares.
-        SituacaoPJ.IndSitPJ :=
-        tpIndSitPJ(0);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoComplementares.
-        SituacaoPF.IndSitPF :=
-        tpIndSitPF(0);
+      with evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoComplementares do
+      begin
+        SituacaoPJ.IndSitPJ := tpIndSitPJ(0);
+        SituacaoPF.IndSitPF := tpIndSitPF(0);
+      end;
 
       evtInfoEmpregador.infoEmpregador.NovaValidade.IniValid := '2014-05';
       evtInfoEmpregador.infoEmpregador.novaValidade.FimValid := '2099-12';
-
     end;
   end;
 end;
@@ -462,22 +459,22 @@ begin
       evtTabEstab.id     := '1';
 //      evtTabEstab.Versao := '2.0';
 
-      evtTabEstab.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabEstab.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabEstab.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabEstab.IdeEvento.VerProc := '1.0';
 
-      evtTabEstab.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabEstab.IdeEmpregador.TpInsc := tiCPF;
       evtTabEstab.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabEstab.ModoLancamento  := TModoLancamento( i );
-      evtTabEstab.infoEstab.IdeEstab.tpInsc   := 1;
+      evtTabEstab.infoEstab.IdeEstab.tpInsc   := tiCNPJ;
       evtTabEstab.infoEstab.IdeEstab.nrInsc   := '012345678901234';
       evtTabEstab.infoEstab.IdeEstab.iniValid := '2015-05';
       evtTabEstab.infoEstab.IdeEstab.fimValid := '2099-12';
 
       evtTabEstab.infoEstab.DadosEstab.cnaePrep := '2015';
 
-      evtTabEstab.infoEstab.DadosEstab.aliqGilrat.AliqRat      := 1;
+      evtTabEstab.infoEstab.DadosEstab.aliqGilrat.AliqRat      := arat1;
       evtTabEstab.infoEstab.DadosEstab.aliqGilrat.Fap          := 1.5;
       evtTabEstab.infoEstab.DadosEstab.aliqGilrat.AliqRatAjust := 2.5;
 
@@ -523,11 +520,11 @@ begin
       evtTabRubrica.id     := '1';
 //      evtTabRubrica.Versao := '2.0';
 
-      evtTabRubrica.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabRubrica.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabRubrica.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabRubrica.IdeEvento.VerProc := '1.0';
 
-      evtTabRubrica.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabRubrica.IdeEmpregador.TpInsc := tiCPF;
       evtTabRubrica.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabRubrica.ModoLancamento  := TModoLancamento( i );
@@ -544,10 +541,6 @@ begin
       evtTabRubrica.infoRubrica.DadosRubrica.codIncIRRF := tpCodIncIRRF(1);
       evtTabRubrica.infoRubrica.DadosRubrica.codIncFGTS := tpCodIncFGTS(1);
       evtTabRubrica.infoRubrica.DadosRubrica.codIncSIND := tpCodIncSIND(1);
-      evtTabRubrica.infoRubrica.DadosRubrica.RepDSR     := tpSimNao(1);
-      evtTabRubrica.infoRubrica.DadosRubrica.Rep13      := tpSimNao(1);
-      evtTabRubrica.infoRubrica.DadosRubrica.RepFerias  := tpSimNao(1);
-      evtTabRubrica.infoRubrica.DadosRubrica.repAviso   := tpSimNao(1);
       evtTabRubrica.infoRubrica.DadosRubrica.observacao := 'Rubrica Teste';
 
       evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoCP.Clear;
@@ -572,7 +565,6 @@ begin
       with evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoFGTS.add do
       begin
         nrProc := '50740';
-        codSusp := '3';
       end;
 
       evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoSIND.Clear;
@@ -580,7 +572,6 @@ begin
       with evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoSIND.add do
       begin
         nrProc := '50';
-        codSusp := '4';
       end;
 
       if (EvtTabRubrica.ModoLancamento = mlAlteracao) then
@@ -603,11 +594,11 @@ begin
       evtTabLotacao.id     := '1';
 //      evtTabLotacao.Versao := '2.0';
 
-      evtTabLotacao.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabLotacao.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabLotacao.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabLotacao.IdeEvento.VerProc := '1.0';
 
-      evtTabLotacao.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabLotacao.IdeEmpregador.TpInsc := tiCPF;
       evtTabLotacao.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabLotacao.ModoLancamento  := TModoLancamento( i );
@@ -660,11 +651,11 @@ begin
       evtTabCargo.id     := '1';
  //     evtTabCargo.Versao := '2.0';
 
-      evtTabCargo.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabCargo.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabCargo.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabCargo.IdeEvento.VerProc := '1.0';
 
-      evtTabCargo.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabCargo.IdeEmpregador.TpInsc := tiCPF;
       evtTabCargo.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabCargo.ModoLancamento := TModoLancamento( i );
@@ -701,11 +692,11 @@ begin
       evtTabCarreira.id := '1';
  //     evtTabCargo.Versao := '2.0';
 
-      evtTabCarreira.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabCarreira.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabCarreira.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabCarreira.IdeEvento.VerProc := '1.0';
 
-      evtTabCarreira.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabCarreira.IdeEmpregador.TpInsc := tiCPF;
       evtTabCarreira.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabCarreira.ModoLancamento := TModoLancamento( i );
@@ -736,11 +727,11 @@ begin
       evtTabFuncao.id     := '1';
 //      evtTabFuncao.Versao := '2.0';
 
-      evtTabFuncao.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabFuncao.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabFuncao.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabFuncao.IdeEvento.VerProc := '1.0';
 
-      evtTabFuncao.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabFuncao.IdeEmpregador.TpInsc := tiCPF;
       evtTabFuncao.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabFuncao.ModoLancamento := TModoLancamento( i );
@@ -769,11 +760,11 @@ begin
       evtTabHorContratual.id     := '1';
 //      evtTabHorContratual.Versao := '2.0';
 
-      evtTabHorContratual.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabHorContratual.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabHorContratual.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabHorContratual.IdeEvento.VerProc := '1.0';
 
-      evtTabHorContratual.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabHorContratual.IdeEmpregador.TpInsc := tiCPF;
       evtTabHorContratual.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabHorContratual.ModoLancamento := TModoLancamento( i );
@@ -821,11 +812,11 @@ begin
       EvtTabAmbiente.id     := '1';
 //      EvtTabAmbiente.Versao := '2.0';
 
-      EvtTabAmbiente.IdeEvento.TpAmb   := TpTpAmb(2);
+      EvtTabAmbiente.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       EvtTabAmbiente.IdeEvento.ProcEmi := TpProcEmi(0);
       EvtTabAmbiente.IdeEvento.VerProc := '1.0';
 
-      EvtTabAmbiente.IdeEmpregador.TpInsc := tpTpInsc(1);
+      EvtTabAmbiente.IdeEmpregador.TpInsc := tiCPF;
       EvtTabAmbiente.IdeEmpregador.NrInsc := '0123456789';
 
       EvtTabAmbiente.ModoLancamento := TModoLancamento( i );
@@ -866,11 +857,11 @@ begin
       evtTabProcesso.id     := '1';
 //      evtTabProcesso.Versao := '2.0';
 
-      evtTabProcesso.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabProcesso.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabProcesso.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabProcesso.IdeEvento.VerProc := '1.0';
 
-      evtTabProcesso.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabProcesso.IdeEmpregador.TpInsc := tiCPF;
       evtTabProcesso.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabProcesso.ModoLancamento := TModoLancamento( i );
@@ -913,11 +904,11 @@ begin
       evtTabOperPortuario.id     := '1';
 //      evtTabOperPortuario.Versao := '2.0';
 
-      evtTabOperPortuario.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabOperPortuario.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabOperPortuario.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabOperPortuario.IdeEvento.VerProc := '1.0';
 
-      evtTabOperPortuario.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabOperPortuario.IdeEmpregador.TpInsc := tiCPF;
       evtTabOperPortuario.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabOperPortuario.ModoLancamento := TModoLancamento( i );
@@ -945,11 +936,11 @@ begin
 
     EvtCadInicial.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtCadInicial.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtCadInicial.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtCadInicial.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtCadInicial.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtCadInicial.IdeEvento.VerProc  := '1.0';
 
-    EvtCadInicial.IdeEmpregador.TpInsc := tpTpInsc(1);
+    EvtCadInicial.IdeEmpregador.TpInsc := tiCPF;
     EvtCadInicial.IdeEmpregador.NrInsc := '0123456789';
 
     EvtCadInicial.Trabalhador.CpfTrab   := '54564654564';
@@ -1024,7 +1015,7 @@ begin
     EvtCadInicial.Trabalhador.InfoDeficiencia.DefAuditiva    := tpNao;
     EvtCadInicial.Trabalhador.InfoDeficiencia.DefMental      := tpNao;
     EvtCadInicial.Trabalhador.InfoDeficiencia.DefIntelectual := tpNao;
-    EvtCadInicial.Trabalhador.InfoDeficiencia.ReabReadap     := tpSimNao(tpSim);
+    EvtCadInicial.Trabalhador.InfoDeficiencia.ReabReadap     := tpSim;
     EvtCadInicial.Trabalhador.InfoDeficiencia.infoCota       := tpNao;
     EvtCadInicial.Trabalhador.InfoDeficiencia.Observacao     := 'sem deficiencia';
 
@@ -1041,7 +1032,7 @@ begin
 
     with EvtCadInicial.Trabalhador.Dependente.Add do
     begin
-      tpDep    := tdFilhoOuEnteadoAte21Anos; // tpTpDep(tdFilhoOuEnteado);
+      tpDep    := tdFilhoOuEnteadoAte21Anos; 
       nmDep    := 'Dependente 2';
       dtNascto := Date;
       cpfDep   := '57548758778';
@@ -1076,15 +1067,15 @@ begin
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr := 'Produção de panetones para o natal';
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.tpinclContr := tpInclContr(0);
 
-    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.TpInsc := tpTpInsc(1);
+    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.TpInsc := tiCPF;
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.NrInsc := '564564656';
-    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.TpInsc := tpTpInsc(1);
+    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.TpInsc := tiCPF;
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.NrInsc := '444564656';
 
     with EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTrabSubstituido.Add do
       CpfTrabSubst := '12345678901';
 
-    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := tpTpInsc(1);
+    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := tiCPF;
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := '233564656';
 
     //Enviar apenas um tipo de regime
@@ -1110,7 +1101,7 @@ begin
     EvtCadInicial.Vinculo.InfoContrato.Duracao.TpContr := tpTpContr(1);
     EvtCadInicial.Vinculo.InfoContrato.Duracao.dtTerm  := Date;
 
-    EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabGeral.TpInsc   := tiCNPJ;
+    EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabGeral.TpInsc   := tiCPF;
     EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabGeral.NrInsc   := '213864656';
     EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabGeral.DescComp := 'Descricao logal geral teste';
 
@@ -1127,7 +1118,7 @@ begin
     EvtCadInicial.Vinculo.InfoContrato.HorContratual.QtdHrsSem := 44;
     EvtCadInicial.Vinculo.InfoContrato.HorContratual.TpJornada := tpTpJornada(1);
     EvtCadInicial.Vinculo.InfoContrato.HorContratual.DscTpJorn := 'horario contratual';
-    EvtCadInicial.Vinculo.InfoContrato.HorContratual.tmpParc := tpNao;
+    EvtCadInicial.Vinculo.InfoContrato.HorContratual.tmpParc := tpNaoeTempoParcial;
 
     with EvtCadInicial.Vinculo.InfoContrato.HorContratual.horario.Add do
     begin
@@ -1143,10 +1134,12 @@ begin
 
     with EvtCadInicial.Vinculo.InfoContrato.FiliacaoSindical.Add do
       CnpjSindTrab := '45321452000145';
+
     EvtCadInicial.Vinculo.InfoContrato.AlvaraJudicial.NrProcJud      := '123';
+
     EvtCadInicial.Vinculo.SucessaoVinc.cnpjEmpregAnt := '12354654000155';
     EvtCadInicial.Vinculo.SucessaoVinc.MatricAnt     := '123';
-    EvtCadInicial.Vinculo.SucessaoVinc.DtIniVinculo  := Date;
+    EvtCadInicial.Vinculo.SucessaoVinc.dtTransf  := Date;
     EvtCadInicial.Vinculo.SucessaoVinc.Observacao    := 'transferido';
 
     evtCadInicial.vinculo.Afastamento.DtIniAfast := Date;
@@ -1198,8 +1191,9 @@ begin
 
     evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.cnpjEmpregAnt := '12345678987654';
     evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.matricAnt := '123';
-    evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.dtIniVinculo := now;
+    evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.dtAdm := now;
     evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.observacao := 'obs sucessao vinc';
+
     //os dados abaixo só devem ser informados em caso do processo existir e houver decisão que incida sobre as
     //  contribuições
     with evtRemun.ideTrabalhador.procJudTrab.Add do
@@ -1208,6 +1202,7 @@ begin
       nrProcJud := '95135703320156150258';
       codSusp := 1;
     end;
+
     with evtRemun.dmDev.add do
     begin
       ideDmDev := '1';
@@ -1218,6 +1213,7 @@ begin
         nrInsc     := '012345678987654';
         codLotacao := 'SACI54321';
         qtdDiasAv  := 22;
+        
         with remunPerApur.Add do
         begin
           matricula := 'A1234';
@@ -1231,6 +1227,7 @@ begin
             vrUnit  := 3296.35;
             vrRubr  := 3330.30;
           end;
+
           with infoSaudeColet.detOper.Add do
           begin
             cnpjOper := '01234567898765';
@@ -1238,7 +1235,7 @@ begin
             vrPgTit  := 1.50;
             with detPlano.Add do
             begin
-//Corrigir o tipo              tpDep    := tdConjuge;
+              tpDep    := tdConjuge;
               cpfDep   := '01234567898';
               nmDep    := 'José das Areias';
               dtNascto := Date;
@@ -1249,6 +1246,7 @@ begin
           infoAgNocivo.grauExp := ge1;
         end;
       end;
+
       with infoPerAnt.ideADC.add do
       begin
         dtAcConv := now;
@@ -1346,7 +1344,7 @@ begin
             vrPgTit  := 1.50;
             with detPlano.Add do
             begin
-//Corrigir o tipo              tpDep    := tdConjuge;
+              tpDep    := tdConjuge;
               cpfDep   := '01234567898';
               dtNascto := now;
               nmDep    := 'José das Areias';
@@ -1400,11 +1398,11 @@ begin
     evtBenPrRP.IdeEvento.NrRecibo := '65.5454.987798798798';
     evtBenPrRP.IdeEvento.IndApuracao:= iapuMensal;
     evtBenPrRP.IdeEvento.perApur := '2017-05';
-    evtBenPrRP.IdeEvento.TpAmb    := TpTpAmb(2);
+    evtBenPrRP.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     evtBenPrRP.IdeEvento.ProcEmi  := TpProcEmi(0);
     evtBenPrRP.IdeEvento.VerProc  := '1.0';
 
-    evtBenPrRP.IdeEmpregador.TpInsc := tpTpInsc(1);
+    evtBenPrRP.IdeEmpregador.TpInsc := tiCPF;
     evtBenPrRP.IdeEmpregador.NrInsc := '0123456789';
 
     evtBenPrRP.ideBenef.cpfBenef := '88888888888';
@@ -1573,14 +1571,14 @@ begin
     EvtAqProd.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtAqProd.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtAqProd.IdeEvento.perApur     := '2015-06';
-    EvtAqProd.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtAqProd.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtAqProd.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtAqProd.IdeEvento.VerProc     := '1.0';
 
-    EvtAqProd.IdeEmpregador.TpInsc := tpTpInsc(1);
+    EvtAqProd.IdeEmpregador.TpInsc := tiCPF;
     EvtAqProd.IdeEmpregador.NrInsc := '0123456789';
 
-    EvtAqProd.InfoAquisProd.IdeEstabAdquir.tpInscAdq := tpTpInsc(0);
+    EvtAqProd.InfoAquisProd.IdeEstabAdquir.tpInscAdq := tiCNPJ;
     EvtAqProd.InfoAquisProd.IdeEstabAdquir.nrInscAdq := '12345678910001';
 
     with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Add do
@@ -1590,7 +1588,7 @@ begin
 
       with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0].IdeProdutor.Add do
       begin
-        tpInscProd  := tpTpInsc(0);
+        tpInscProd  := tiCNPJ;
         nrInscProd  := '98765432100015';
         vlrBruto    := 4000.54;
         vrCPDescPR  := 3850.32;
@@ -1654,7 +1652,7 @@ begin
 
       with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0].IdeProdutor.Add do
       begin
-        tpInscProd  := tpTpInsc(0);
+        tpInscProd  := tiCNPJ;
         nrInscProd  := '98765432100015';
         vlrBruto    := 4000.54;
         vrCPDescPR  := 3850.32;
@@ -1730,11 +1728,11 @@ begin
     EvtComProd.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtComProd.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtComProd.IdeEvento.perApur     := '2015-06';
-    EvtComProd.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtComProd.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtComProd.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtComProd.IdeEvento.VerProc     := '1.0';
 
-    EvtComProd.IdeEmpregador.TpInsc := tpTpInsc(1);
+    EvtComProd.IdeEmpregador.TpInsc := tiCPF;
     EvtComProd.IdeEmpregador.NrInsc := '0123456789';
 
     EvtComProd.InfoComProd.IdeEstabel.nrInscEstabRural := '123456789';
@@ -1746,7 +1744,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1764,7 +1762,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1772,7 +1770,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1780,7 +1778,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1804,7 +1802,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[1].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1812,7 +1810,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[1].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1820,15 +1818,14 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[1].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
-        //vrRetPR  := 9999.99;--excluido na versão 2.1
       end;
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[1].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1888,16 +1885,16 @@ begin
     EvtContratAvNP.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtContratAvNP.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtContratAvNP.IdeEvento.perApur     := '2015-06';
-    EvtContratAvNP.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtContratAvNP.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtContratAvNP.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtContratAvNP.IdeEvento.VerProc     := '1.0';
 
-    EvtContratAvNP.IdeEmpregador.TpInsc := tpTpInsc(1);
+    EvtContratAvNP.IdeEmpregador.TpInsc := tiCNPJ;
     EvtContratAvNP.IdeEmpregador.NrInsc := '0123456789';
 
     with EvtContratAvNP.RemunAvNP.Add do
     begin
-      tpInsc   := tpTpInsc(0);
+      tpInsc   := tiCNPJ;
       nrInsc   := '98765432100015';
       codLotacao := '1';
       vrBcCp00 := 650.65;
@@ -1965,7 +1962,7 @@ begin
     EvtInfoComplPer.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtInfoComplPer.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtInfoComplPer.IdeEvento.perApur     := '2015-06';
-    EvtInfoComplPer.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtInfoComplPer.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtInfoComplPer.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtInfoComplPer.IdeEvento.VerProc     := '1.0';
 
@@ -2002,7 +1999,7 @@ begin
     evtTotConting.IdeEvento.NrRecibo    := '65.5454.987798798798';
     evtTotConting.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     evtTotConting.IdeEvento.perApur     := '2015-06';
-    evtTotConting.IdeEvento.TpAmb       := TpTpAmb(2);
+    evtTotConting.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     evtTotConting.IdeEvento.ProcEmi     := TpProcEmi(0);
     evtTotConting.IdeEvento.VerProc     := '1.0';
 
@@ -2026,7 +2023,7 @@ begin
 
     EvtReabreEvPer.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtReabreEvPer.IdeEvento.perApur     := '2015-06';
-    EvtReabreEvPer.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtReabreEvPer.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtReabreEvPer.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtReabreEvPer.IdeEvento.VerProc     := '1.0';
 
@@ -2046,7 +2043,7 @@ begin
     EvtFechaEvPer.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtFechaEvPer.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtFechaEvPer.IdeEvento.perApur     := '2015-06';
-    EvtFechaEvPer.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtFechaEvPer.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtFechaEvPer.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtFechaEvPer.IdeEvento.VerProc     := '1.0';
 
@@ -2079,7 +2076,7 @@ begin
     EvtContrSindPatr.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtContrSindPatr.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtContrSindPatr.IdeEvento.perApur     := '2015-06';
-    EvtContrSindPatr.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtContrSindPatr.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtContrSindPatr.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtContrSindPatr.IdeEvento.VerProc     := '1.0';
 
@@ -2102,7 +2099,7 @@ begin
     EvtAdmPrelim.id     := '1';
 //    EvtAdmPrelim.Versao := '2.0';
 
-    EvtAdmPrelim.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtAdmPrelim.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtAdmPrelim.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtAdmPrelim.IdeEvento.VerProc  := '1.0';
 
@@ -2124,11 +2121,11 @@ begin
 
  //   EvtAdmissao.IdeEvento.indRetif := tpIndRetificacao(1);
     EvtAdmissao.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtAdmissao.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtAdmissao.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtAdmissao.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtAdmissao.IdeEvento.VerProc  := '1.0';
 
-    EvtAdmissao.IdeEmpregador.TpInsc  := tpTpInsc(0);
+    EvtAdmissao.IdeEmpregador.TpInsc  := tiCNPJ;
     EvtAdmissao.IdeEmpregador.NrInsc  := '12345678901234';
 
     EvtAdmissao.Trabalhador.CpfTrab   := '54564654564';
@@ -2204,18 +2201,18 @@ begin
     EvtAdmissao.Trabalhador.InfoDeficiencia.DefAuditiva    := tpNao;
     EvtAdmissao.Trabalhador.InfoDeficiencia.DefMental      := tpNao;
     EvtAdmissao.Trabalhador.InfoDeficiencia.DefIntelectual := tpNao;
-    EvtAdmissao.Trabalhador.InfoDeficiencia.ReabReadap     := tpSimNao(tpSim);
+    EvtAdmissao.Trabalhador.InfoDeficiencia.ReabReadap     := tpSim;
     EvtAdmissao.Trabalhador.InfoDeficiencia.infoCota       := tpNao;
     EvtAdmissao.Trabalhador.InfoDeficiencia.Observacao     := 'sem deficiencia';
 
     with EvtAdmissao.Trabalhador.Dependente.Add do
     begin
-      tpDep    := tpTpDep(tdConjuge);
+      tpDep    := tdConjuge;
       nmDep    := 'Dependente 1';
       dtNascto := Date;
       cpfDep   := '12345678901';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao;
     end;
 
@@ -2225,8 +2222,8 @@ begin
       nmDep    := 'Dependente 2';
       dtNascto := Date;
       cpfDep   := '12345678901';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao;
     end;
 
@@ -2257,9 +2254,9 @@ begin
     EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr := 'teste';
     EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.tpinclContr := tpInclContr(0);
 
-    EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.TpInsc := tpTpInsc(0);
+    EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.TpInsc := tiCNPJ;
     EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.NrInsc := '12345678901234';
-    EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.TpInsc := tpTpInsc(0);
+    EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.TpInsc := tiCNPJ;
     EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.NrInsc := '12345678901234';
 
     with EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTrabSubstituido.add do
@@ -2307,7 +2304,7 @@ begin
     EvtAdmissao.Vinculo.InfoContrato.HorContratual.QtdHrsSem := 44;
     EvtAdmissao.Vinculo.InfoContrato.HorContratual.TpJornada := tpTpJornada(1);
     EvtAdmissao.Vinculo.InfoContrato.HorContratual.DscTpJorn := 'horario contratual';
-    EvtAdmissao.Vinculo.InfoContrato.HorContratual.tmpParc := tpNao;
+    EvtAdmissao.Vinculo.InfoContrato.HorContratual.tmpParc := tpNaoeTempoParcial;
 
     with EvtAdmissao.Vinculo.InfoContrato.HorContratual.horario.Add do
     begin
@@ -2323,10 +2320,12 @@ begin
 
     with EvtAdmissao.Vinculo.InfoContrato.FiliacaoSindical.add do
       CnpjSindTrab := '12345678901234';
+
     EvtAdmissao.Vinculo.InfoContrato.AlvaraJudicial.NrProcJud      := '123';
+    
     EvtAdmissao.Vinculo.SucessaoVinc.cnpjEmpregAnt                 := '12345678901234';
     EvtAdmissao.Vinculo.SucessaoVinc.MatricAnt                     := '123';
-    EvtAdmissao.Vinculo.SucessaoVinc.DtIniVinculo                  := Date;
+    EvtAdmissao.Vinculo.SucessaoVinc.dtTransf                  := Date;
     EvtAdmissao.Vinculo.SucessaoVinc.Observacao                    := 'transferido';
 
     EvtAdmissao.Vinculo.afastamento.DtIniAfast := now;
@@ -2343,7 +2342,7 @@ begin
 
     EvtAltCadastral.IdeEvento.indRetif := tpIndRetificacao(1);
     EvtAltCadastral.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtAltCadastral.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtAltCadastral.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtAltCadastral.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtAltCadastral.IdeEvento.VerProc  := '1.0';
 
@@ -2417,18 +2416,18 @@ begin
     EvtAltCadastral.Trabalhador.InfoDeficiencia.DefAuditiva    := tpNao;
     EvtAltCadastral.Trabalhador.InfoDeficiencia.DefMental      := tpNao;
     EvtAltCadastral.Trabalhador.InfoDeficiencia.DefIntelectual := tpNao;
-    EvtAltCadastral.Trabalhador.InfoDeficiencia.ReabReadap     := tpSimNao(tpSim);
+    EvtAltCadastral.Trabalhador.InfoDeficiencia.ReabReadap     := tpSim;
     EvtAltCadastral.Trabalhador.InfoDeficiencia.infoCota       := tpNao;
     EvtAltCadastral.Trabalhador.InfoDeficiencia.Observacao     := 'sem deficiencia';
 
     with EvtAltCadastral.Trabalhador.Dependente.Add do
     begin
-      tpDep    := tpTpDep(tdConjuge);
+      tpDep    := tdConjuge;
       nmDep    := 'Dependente 1';
       dtNascto := Date;
       cpfDep   := '12345678901';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao;
     end;
 
@@ -2438,8 +2437,8 @@ begin
       nmDep    := 'Dependente 2';
       dtNascto := Date;
       cpfDep   := '12345678901';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao
     end;
 
@@ -2519,7 +2518,7 @@ begin
       EvtAltContratual.AltContratual.infoContrato.HorContratual.QtdHrsSem := 44;
       EvtAltContratual.AltContratual.infoContrato.HorContratual.TpJornada := tjDemaisTiposJornada;
       EvtAltContratual.AltContratual.infoContrato.HorContratual.DscTpJorn := 'Descrição do tipo de jornada, obrigatório se tpJornada = tjDemaisTiposJornada';
-      EvtAltContratual.AltContratual.infoContrato.HorContratual.tmpParc := tpNao;
+      EvtAltContratual.AltContratual.infoContrato.HorContratual.tmpParc := tpNaoeTempoParcial;
 
 
       with EvtAltContratual.AltContratual.infoContrato.HorContratual.horario.Add do
@@ -2546,7 +2545,7 @@ begin
 
     EvtCAT.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtCAT.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtCAT.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtCAT.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtCAT.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtCAT.IdeEvento.VerProc  := '1.0';
 
@@ -2566,9 +2565,9 @@ begin
 
     EvtCAT.Cat.hrsTrabAntesAcid := '0400';
     EvtCAT.Cat.tpCat            := tpTpCat(0);
-    EvtCAT.Cat.indCatObito      := tpSimNao(tpNao);
+    EvtCAT.Cat.indCatObito      := tpNao;
     EvtCAT.Cat.dtOBito          := now;
-    EvtCAT.Cat.indComunPolicia  := tpSimNao(tpSim);
+    EvtCAT.Cat.indComunPolicia  := tpSim;
     EvtCAT.Cat.codSitGeradora   := 200004300;
     EvtCAT.Cat.iniciatCAT       := tpIniciatCAT(1);
     EvtCAT.Cat.observacao       := 'Teste';
@@ -2619,9 +2618,9 @@ begin
     EvtCAT.Cat.Atestado.codCNES       := '1234567';
     EvtCAT.Cat.Atestado.dtAtendimento := now;
     EvtCAT.Cat.Atestado.hrAtendimento := '1330';
-    EvtCAT.Cat.Atestado.indInternacao := tpSimNao(tpSim);
+    EvtCAT.Cat.Atestado.indInternacao := tpSim;
     EvtCAT.Cat.Atestado.durTrat       := 5;
-    EvtCAT.Cat.Atestado.indAfast      := tpSimNao(tpSim);
+    EvtCAT.Cat.Atestado.indAfast      := tpSim;
     EvtCAT.Cat.Atestado.dscLesao      := 1;
     EvtCAT.Cat.Atestado.dscCompLesao  := 'Descricao complementar';
     EvtCAT.Cat.Atestado.diagProvavel  := 'Diagnostico teste';
@@ -2765,8 +2764,8 @@ begin
 
       //informações de término do Afastamento
       EvtAfastTemp.infoAfastamento.fimAfastamento.dtTermAfast := now;
-      EvtAfastTemp.infoAfastamento.fimAfastamento.codMotAfast := '15';
-      EvtAfastTemp.infoAfastamento.fimAfastamento.infoMesmoMtv := tpNao;
+//      EvtAfastTemp.infoAfastamento.fimAfastamento.codMotAfast := '15';
+//      EvtAfastTemp.infoAfastamento.fimAfastamento.infoMesmoMtv := tpNao;
     end;
 end;
 
@@ -2980,7 +2979,7 @@ begin
 
     EvtAvPrevio.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtAvPrevio.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtAvPrevio.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtAvPrevio.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtAvPrevio.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtAvPrevio.IdeEvento.VerProc  := '1.0';
 
@@ -3017,7 +3016,7 @@ begin
 
     EvtReintegr.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtReintegr.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtReintegr.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtReintegr.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtReintegr.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtReintegr.IdeEvento.VerProc  := '1.0';
 
@@ -3032,7 +3031,7 @@ begin
     EvtReintegr.InfoReintegr.nrProcJud     := '999999999';
     EvtReintegr.InfoReintegr.dtEfetRetorno := Now + 20;
     EvtReintegr.InfoReintegr.dtEfeito      := Now;
-    EvtReintegr.InfoReintegr.indPagtoJuizo := tpSimNao(tpSim);
+    EvtReintegr.InfoReintegr.indPagtoJuizo := tpSim;
   end;
 end;
 
@@ -3045,7 +3044,7 @@ begin
 
     EvtDeslig.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtDeslig.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtDeslig.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtDeslig.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtDeslig.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtDeslig.IdeEvento.VerProc  := '1.0';
 
@@ -3088,7 +3087,7 @@ begin
         with detVerbas.add do
         begin
           codRubr := 'Pg123';
-          //ideTabRubr := 'A01';
+          ideTabRubr := 'A01';
           qtdRubr := 2;
           fatorRubr := 200.65;
           vrUnit := 152.35;
@@ -3128,7 +3127,7 @@ begin
             with detVerbas.add do
             begin
               codRubr := 'Pg124';
-              //ideTabRubr := 'A01';
+              ideTabRubr := 'A01';
               qtdRubr := 0.4;
               fatorRubr := 200.65;
               vrUnit := 200.35;
@@ -3159,6 +3158,9 @@ begin
 
     EvtDeslig.InfoDeslig.Quarentena.dtFimQuar := now;
 
+    EvtDeslig.InfoDeslig.consigFGTS.idConsig := tpSim;
+    EvtDeslig.InfoDeslig.consigFGTS.insConsig := '12345';
+    EvtDeslig.InfoDeslig.consigFGTS.nrContr := '123456';
   end;
 end;
 
@@ -3250,18 +3252,17 @@ begin
       EvtTSVInicio.Trabalhador.InfoDeficiencia.DefAuditiva    := tpNao;
       EvtTSVInicio.Trabalhador.InfoDeficiencia.DefMental      := tpNao;
       EvtTSVInicio.Trabalhador.InfoDeficiencia.DefIntelectual := tpNao;
-      EvtTSVInicio.Trabalhador.InfoDeficiencia.ReabReadap     := tpSimNao(tpSim);
+      EvtTSVInicio.Trabalhador.InfoDeficiencia.ReabReadap     := tpSim;
       EvtTSVInicio.Trabalhador.InfoDeficiencia.Observacao     := 'sem deficiencia';
 
       with EvtTSVInicio.Trabalhador.Dependente.Add do
         begin
-          tpDep    := tpTpDep(tdConjuge);
+          tpDep    := tdConjuge;
           nmDep    := 'Dependente 1';
           dtNascto := Date;
           cpfDep   := '99999999909';
-          depIRRF  := tpSimNao(tpSim);
-          depSF    := tpSimNao(tpNao);
-        //depRPPS  := tpSimNao(tpNao);Removido na versão 2.1
+          depIRRF  := tpSim;
+          depSF    := tpNao;
         end;
 
       with EvtTSVInicio.Trabalhador.Dependente.Add do
@@ -3270,9 +3271,8 @@ begin
           nmDep    := 'Dependente 2';
           dtNascto := Date;
           cpfDep   := '99999999909';
-          depIRRF  := tpSimNao(tpSim);
-          depSF    := tpSimNao(tpNao);
-          //depRPPS  := tpSimNao(tpNao);Removido na versão 2.1
+          depIRRF  := tpSim;
+          depSF    := tpNao;
         end;
 
       EvtTSVInicio.Trabalhador.Contato.FonePrinc     := '91067240';
@@ -3406,7 +3406,7 @@ begin
 
     EvtTSVTermino.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtTSVTermino.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtTSVTermino.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtTSVTermino.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtTSVTermino.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtTSVTermino.IdeEvento.VerProc  := '1.0';
 
@@ -3464,7 +3464,7 @@ begin
     EvtTSVTermino.InfoTSVTermino.verbasResc.infoMV.indMV := tpIndMV(0);
     with EvtTSVTermino.InfoTSVTermino.verbasResc.infoMV.remunOutrEmpr.add do
     begin
-      tpInsc := tpTpInsc(0);
+      tpInsc := tiCNPJ;
       nrInsc := '14236547000195';
       codCateg := 111;
       vlrRemunOE := 2500.12;
@@ -3482,7 +3482,7 @@ begin
 
     EvtCdBenPrRP.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtCdBenPrRP.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtCdBenPrRP.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtCdBenPrRP.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtCdBenPrRP.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtCdBenPrRP.IdeEvento.VerProc  := '1.0';
 
@@ -3491,8 +3491,8 @@ begin
 
     EvtCdBenPrRP.ideBenef.cpfBenef := '12345678910';
     EvtCdBenPrRP.ideBenef.nmBenefic := 'Nome do beneficiario';
-    EvtCdBenPrRP.ideBenef.dadosBenef.cpfBenef := '12345678910';
-    EvtCdBenPrRP.ideBenef.dadosBenef.nmBenefic := 'Nome do beneficiario';
+//    EvtCdBenPrRP.ideBenef.dadosBenef.cpfBenef := '12345678910';
+//    EvtCdBenPrRP.ideBenef.dadosBenef.nmBenefic := 'Nome do beneficiario';
 
     EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.dtNascto := Date;;
     EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.codMunic := 4153623;
@@ -3551,7 +3551,7 @@ begin
     EvtExclusao.id     := '1';
 //    EvtExclusao.Versao := '2.0';
 
-    EvtExclusao.IdeEvento.TpAmb   := TpTpAmb(2);
+    EvtExclusao.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
     EvtExclusao.IdeEvento.ProcEmi := TpProcEmi(0);
     EvtExclusao.IdeEvento.VerProc := '1.0';
 
@@ -3576,7 +3576,7 @@ begin
     EvtSolicTotal.id     := '1';
 //    EvtSolicTotal.Versao := '2.0';
 
-    EvtSolicTotal.IdeEvento.TpAmb   := TpTpAmb(2);
+    EvtSolicTotal.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
     EvtSolicTotal.IdeEvento.ProcEmi := TpProcEmi(0);
     EvtSolicTotal.IdeEvento.VerProc := '1.0';
 
@@ -3747,6 +3747,8 @@ begin
   ACBreSocial1.Eventos.GerarXMLs;
   ACBreSocial1.Eventos.SaveToFiles;
   ACBreSocial1.Eventos.Clear;
+
+  ShowMessage( 'XML de Eventos Gerados com Sucesso!' );
 end;
 
 procedure TFExemploEsocial.cbSSLLibChange(Sender: TObject);

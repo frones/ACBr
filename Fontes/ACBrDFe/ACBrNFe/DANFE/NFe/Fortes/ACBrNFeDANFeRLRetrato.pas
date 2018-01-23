@@ -698,26 +698,16 @@ begin
 
 end;
 
-
 procedure TfrlDANFeRLRetrato.rlbReciboHeaderBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-	rliCanhoto.Visible          := RLNFe.PageNumber = 1;
-	rliCanhoto1.Visible         := RLNFe.PageNumber = 1;
-	rliCanhoto2.Visible         := RLNFe.PageNumber = 1;
-	rliCanhoto3.Visible         := RLNFe.PageNumber = 1;
-  rllDataRecebimento.Visible  := RLNFe.PageNumber = 1;
-	rllIdentificacao.Visible    := RLNFe.PageNumber = 1;
-	rllNFe.Visible              := RLNFe.PageNumber = 1;
-	rllNumNF0.Visible           := RLNFe.PageNumber = 1;
-	rllRecebemosDe.Visible      := RLNFe.PageNumber = 1;
-  rllSERIE0.Visible           := RLNFe.PageNumber = 1;
+  PrintIt := (RLNFe.PageNumber = 1);
 end;
 
 procedure TfrlDANFeRLRetrato.rlbDivisaoReciboBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  rliDivisao.Visible := RLNFe.PageNumber = 1 ;
+  PrintIt := (RLNFe.PageNumber = 1);
 end;
 
 procedure TfrlDANFeRLRetrato.rlbEmitenteBeforePrint(Sender: TObject;

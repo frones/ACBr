@@ -122,8 +122,7 @@ begin
   Gerador.wGrupoNFSe('/IdentificacaoPrestador');
 
   Gerador.wCampoNFSe(tcStr, '#13', 'RazaoSocial'             , 01, 115, 0, NFSe.PrestadorServico.RazaoSocial, '');
-  Gerador.wCampoNFSe(tcStr, '#14', 'NomeFantasia'             , 01, 115, 0,
-     NFSe.PrestadorServico.NomeFantasia, '');
+  Gerador.wCampoNFSe(tcStr, '#14', 'NomeFantasia'             , 01, 115, 0, NFSe.PrestadorServico.NomeFantasia, '');
   Gerador.wCampoNFSe(tcStr, '#15', 'IncentivadorCultural  '  , 01, 001, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
   Gerador.wCampoNFSe(tcStr, '#16', 'OptanteSimplesNacional'  , 01, 001, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
   Gerador.wCampoNFSe(tcStr, '#17', 'NaturezaOperacao'        , 01, 001, 1, NaturezaOperacaoToStr(NFSe.NaturezaOperacao), '');
@@ -171,35 +170,37 @@ begin
   else
     Gerador.wCampoNFSe(tcStr, '#35', 'IndicacaoCpfCnpj', 01, 001, 1, '2', '');
 
+  // Gumercino 19/01/2018
   Gerador.wCampoNFSe(tcStr, '#36', 'InscricaoMunicipal', 01, 015, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
+  Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoEstadual', 01, 015, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
   Gerador.wGrupoNFSe('/IdentificacaoTomador');
-  Gerador.wCampoNFSe(tcStr, '#37', 'RazaoSocial', 01, 115, 0, NFSe.Tomador.RazaoSocial, '');
-  Gerador.wCampoNFSe(tcStr, '#38', 'NomeFantasia', 01, 115, 0, NFSe.Tomador.RazaoSocial, '');
+  Gerador.wCampoNFSe(tcStr, '#38', 'RazaoSocial', 01, 115, 0, NFSe.Tomador.RazaoSocial, '');
+  Gerador.wCampoNFSe(tcStr, '#39', 'NomeFantasia', 01, 115, 0, NFSe.Tomador.RazaoSocial, '');
 
   Gerador.wGrupoNFSe('Endereco');
-  Gerador.wCampoNFSe(tcStr, '#39', 'LogradouroTipo'       , 01, 125, 0, NFSe.Tomador.Endereco.TipoLogradouro, '');
-  Gerador.wCampoNFSe(tcStr, '#40', 'Logradouro'           , 01, 125, 0, NFSe.Tomador.Endereco.Endereco, '');
-  Gerador.wCampoNFSe(tcStr, '#41', 'LogradouroNumero'     , 01, 010, 0, NFSe.Tomador.Endereco.Numero, '');
-  Gerador.wCampoNFSe(tcStr, '#42', 'LogradouroComplemento', 01, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
-  Gerador.wCampoNFSe(tcStr, '#43', 'Bairro'               , 01, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
-  Gerador.wCampoNFSe(tcStr, '#44', 'CodigoMunicipio'      , 07, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
+  Gerador.wCampoNFSe(tcStr, '#40', 'LogradouroTipo'       , 01, 125, 0, NFSe.Tomador.Endereco.TipoLogradouro, '');
+  Gerador.wCampoNFSe(tcStr, '#41', 'Logradouro'           , 01, 125, 0, NFSe.Tomador.Endereco.Endereco, '');
+  Gerador.wCampoNFSe(tcStr, '#42', 'LogradouroNumero'     , 01, 010, 0, NFSe.Tomador.Endereco.Numero, '');
+  Gerador.wCampoNFSe(tcStr, '#43', 'LogradouroComplemento', 01, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
+  Gerador.wCampoNFSe(tcStr, '#44', 'Bairro'               , 01, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
+  Gerador.wCampoNFSe(tcStr, '#45', 'CodigoMunicipio'      , 07, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
 
   if (Trim(NFSe.Tomador.Endereco.xMunicipio) = '') then
   begin
     xMun := CodCidadeToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0));
     xMun := Copy(xMun,1,Length(xMun)-3);
-    Gerador.wCampoNFSe(tcStr, '#45', 'Municipio', 01, 100, 0, UpperCase(xMun), '');
+    Gerador.wCampoNFSe(tcStr, '#46', 'Municipio', 01, 100, 0, UpperCase(xMun), '');
   end
   else
-    Gerador.wCampoNFSe(tcStr, '#45', 'Municipio', 01, 100, 0, NFSe.Tomador.Endereco.xMunicipio, '');
+    Gerador.wCampoNFSe(tcStr, '#46', 'Municipio', 01, 100, 0, NFSe.Tomador.Endereco.xMunicipio, '');
 
-  Gerador.wCampoNFSe(tcStr, '#46', 'Uf', 02, 002, 0, NFSe.Tomador.Endereco.UF, '');
-  Gerador.wCampoNFSe(tcStr, '#47', 'Cep', 08, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
+  Gerador.wCampoNFSe(tcStr, '#47', 'Uf', 02, 002, 0, NFSe.Tomador.Endereco.UF, '');
+  Gerador.wCampoNFSe(tcStr, '#48', 'Cep', 08, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
   Gerador.wGrupoNFSe('/Endereco');
 
   Gerador.wGrupoNFSe('Contato');
-  Gerador.wCampoNFSe(tcStr, '#48', 'Telefone', 01, 011, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
-  Gerador.wCampoNFSe(tcStr, '#49', 'Email   ', 01, 080, 1, NFSe.Tomador.Contato.Email, '');
+  Gerador.wCampoNFSe(tcStr, '#49', 'Telefone', 01, 011, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
+  Gerador.wCampoNFSe(tcStr, '#50', 'Email   ', 01, 080, 1, NFSe.Tomador.Contato.Email, '');
   Gerador.wGrupoNFSe('/Contato');
 
   Gerador.wGrupoNFSe('/DadosTomador');
@@ -271,7 +272,7 @@ begin
   Gerador.wCampoNFSe(tcDe2, '#80', 'ValorIssRetido'      , 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
 
   // Gumercino 16/01/2018 - Provedor EL
-  Gerador.wCampoNFSe(tcDe2, '#80', 'OutrosDescontos'     , 01, 15, 0, NFSe.Servico.Valores.OutrosDescontos, '');
+  Gerador.wCampoNFSe(tcDe2, '#81', 'OutrosDescontos'     , 01, 15, 0, NFSe.Servico.Valores.OutrosDescontos, '');
 
   Gerador.wGrupoNFSe('/Valores');
 end;

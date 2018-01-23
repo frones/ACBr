@@ -96,7 +96,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
-      sReplyTo: TStrings = nil);
+      sReplyTo: TStrings = nil; ManterPDFSalvo: Boolean = True);
 
     property NomeArq: String    read FNomeArq    write FNomeArq;
     property NomeArqRps: String read FNomeArqRps write FNomeArqRps;
@@ -420,7 +420,8 @@ begin
 end;
 
 procedure NotaFiscal.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings;
+  ManterPDFSalvo: Boolean);
 var
   NomeArq: String;
   AnexosEmail:TStrings;
@@ -454,6 +455,9 @@ begin
                    NumID[FNFSe] +'-nfse.xml', sReplyTo);
     end;
   finally
+    if not ManterPDFSalvo then
+      DeleteFile(NomeArq);
+
     AnexosEmail.Free;
     StreamNFSe.Free;
   end;

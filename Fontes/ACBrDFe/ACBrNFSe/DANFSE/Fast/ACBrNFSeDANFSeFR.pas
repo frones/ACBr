@@ -339,6 +339,9 @@ begin
       Add('NFSeSubstituida', ftString, 16);
       Add('DataEmissao', ftString, 19);
       Add('CodigoVerificacao', ftString, 15);
+
+      // Gumercino 18/01/2018
+      Add('LinkNFSe', ftString, 500);
     end;
     CreateDataSet;
     LogChanges := False;
@@ -407,6 +410,9 @@ begin
       Add('TotalServicos', ftCurrency); // Nao usado - mantido por compatibilidade era calcfield
       Add('TotalNota', ftCurrency); // Nao usado - mantido por compatibilidade era calcfield
       Add('Tributacao', ftString, 1);
+
+      // Gumercino 18/01/2018
+      Add('OutrosDescontos', ftCurrency);
     end;
     CreateDataSet;
     LogChanges := False;
@@ -422,6 +428,10 @@ begin
       Add('CodigoMunicipio', ftString, 60);
       Add('MunicipioIncidencia', ftString, 60);
       Add('OutrasInformacoes', ftString, 500);
+
+      // Gumercino 18/01/2018
+      Add('InformacoesComplementares', ftString, 500);
+
       Add('CodigoObra', ftString, 60);
       Add('Art', ftString, 60);
       Add('Imagem', ftString, 256);
@@ -439,7 +449,9 @@ begin
       Add('RegimeEspecialTributacao', ftString, 50);
       Add('OptanteSimplesNacional', ftString, 10);
       Add('IncentivadorCultural', ftString, 10);
-      Add('TipoRecolhimento', ftString, 1); 
+
+      // Gumercino 18/01/2018
+      Add('TipoRecolhimento', ftString, 10);
     end;
     CreateDataSet;
     LogChanges := False;
@@ -537,6 +549,9 @@ begin
       Add('NFSeSubstituida=NFSeSubstituida');
       Add('DataEmissao=DataEmissao');
       Add('CodigoVerificacao=CodigoVerificacao');
+
+      // Gumercino 18/01/2018
+      Add('LinkNFSe=LinkNFSe');
     end;
     DataSet       := cdsIdentificacao;
     BCDToCurrency := False;
@@ -667,6 +682,9 @@ begin
         Add('DescontoIncondicionado=DescontoIncondicionado');
         Add('TotalNota=TotalNota');
         Add('Tributacao=Tributacao'); 
+
+        // Gumercino 18/01/2018
+        Add('OutrosDescontos=OutrosDescontos');
       end;
       DataSet       := cdsServicos;
       BCDToCurrency := False;
@@ -686,6 +704,10 @@ begin
         Add('CodigoMunicipio=CodigoMunicipio');
         Add('MunicipioIncidencia=MunicipioIncidencia');
         Add('OutrasInformacoes=OutrasInformacoes');
+
+        // Gumercino 18/01/2018
+        Add('InformacoesComplementares=InformacoesComplementares');
+
         Add('CodigoObra=CodigoObra');
         Add('Art=Art');
         Add('Imagem=Imagem');
@@ -778,6 +800,9 @@ begin
 			else
 				FieldByName('DataEmissao').AsString       := FormatDateBr(DataEmissao);
       FieldByName('CodigoVerificacao').AsString := CodigoVerificacao;
+
+      // Gumercino 18/01/2018
+      FieldByName('LinkNFSe').AsString := Link;
     end;
     Post;
   end;
@@ -800,7 +825,13 @@ begin
         cdsItensServico.FieldByName('ValorUnitario').AsString        := FormatFloatBr( ValorUnitario, '###,###,##0.00');
         cdsItensServico.FieldByName('ValorTotal').AsString           := FormatFloatBr( ValorTotal, '###,###,##0.00');
         cdsItensServico.FieldByName('Tributavel').AsString           := SimNaoToStr(Tributavel);
-        cdsItensServico.FieldByName('Aliquota').AsString             := FormatFloatBr( Aliquota, '0.00');
+
+        // Gumercino 19/01/2018
+        if Provedor = proEL then
+          cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr( Aliquota * 100, '0.00')
+        else
+          cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr( Aliquota, '0.00');
+
         cdsItensServico.FieldByName('Unidade').AsString              := Unidade;
         cdsItensServico.FieldByName('AliquotaISSST').AsString        := FormatFloatBr( AlicotaISSST, '0.00');
         cdsItensServico.FieldByName('ValorISSST').AsString           := FormatFloatBr( ValorISSST, '0.00');
@@ -839,18 +870,52 @@ begin
 
     with ANFSe do
     begin
-      FieldByName('OutrasInformacoes').AsString        := OutrasInformacoes;
-      FieldByName('NaturezaOperacao').AsString         := NaturezaOperacaoDescricao(NaturezaOperacao);
-      FieldByName('RegimeEspecialTributacao').AsString := nfseRegimeEspecialTributacaoDescricao(RegimeEspecialTributacao);
-      FieldByName('OptanteSimplesNacional').AsString   := SimNao(Integer(OptanteSimplesNacional));
-      FieldByName('IncentivadorCultural').AsString     := SimNao(Integer(IncentivadorCultural));
+      FieldByName('OutrasInformacoes').AsString := OutrasInformacoes;
+      FieldByName('NaturezaOperacao').AsString  := NaturezaOperacaoDescricao(NaturezaOperacao);
 
-      with Servico do
+      // Gumercino 18/01/2018
+      if Provedor = proEL then
       begin
-        FieldByName('CodigoMunicipio').AsString     := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
-        FieldByName('ExigibilidadeISS').AsString    := ExigibilidadeISSDescricao(ExigibilidadeISS);
-        FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
-        FieldByName('TipoRecolhimento').AsString    := TipoRecolhimento;
+        if RegimeEspecialTributacao = retNenhum then
+          FieldByName('RegimeEspecialTributacao').AsString := 'Tributação Normal'
+        else
+          FieldByName('RegimeEspecialTributacao').AsString := nfseRegimeEspecialTributacaoDescricao(RegimeEspecialTributacao);
+
+        if OptanteSimplesNacional = snSim then
+          FieldByName('OptanteSimplesNacional').AsString := 'Optante'
+        else
+          FieldByName('OptanteSimplesNacional').AsString := 'Não Optante';
+
+        FieldByName('IncentivadorCultural').AsString := SimNao(Integer(IncentivadorCultural));
+
+        with Servico do
+        begin
+          FieldByName('CodigoMunicipio').AsString  := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
+          FieldByName('ExigibilidadeISS').AsString := ExigibilidadeISSDescricao(ExigibilidadeISS);
+
+          if proEL = proEL then
+            FieldByName('MunicipioIncidencia').AsString := 'No Município'
+          else
+            FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+
+          if Valores.IssRetido = stRetencao then
+            FieldByName('TipoRecolhimento').AsString := 'Retido'
+          else
+            FieldByName('TipoRecolhimento').AsString := 'Não Retido';
+        end;
+      end else
+      begin
+        FieldByName('RegimeEspecialTributacao').AsString := nfseRegimeEspecialTributacaoDescricao(RegimeEspecialTributacao);
+        FieldByName('OptanteSimplesNacional').AsString   := SimNao(Integer(OptanteSimplesNacional));
+        FieldByName('IncentivadorCultural').AsString     := SimNao(Integer(IncentivadorCultural));
+
+        with Servico do
+        begin
+          FieldByName('CodigoMunicipio').AsString     := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
+          FieldByName('ExigibilidadeISS').AsString    := ExigibilidadeISSDescricao(ExigibilidadeISS);
+          FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+          FieldByName('TipoRecolhimento').AsString    := TipoRecolhimento;
+        end;
       end;
 
       with ConstrucaoCivil do
@@ -858,16 +923,25 @@ begin
         FieldByName('CodigoObra').AsString := CodigoObra;
         FieldByName('Art').AsString        := Art;
       end;
+
+      // Gumercino 18/01/2018
+      FieldByName('InformacoesComplementares').AsString := InformacoesComplementares;
     end;
 
     CarregaLogoPrefeitura;
     CarregaImagemPrestadora;
-		
+
     FieldByName('Sistema').AsString   := IfThen( DANFSeClassOwner.Sistema <> '' , DANFSeClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
     FieldByName('Usuario').AsString   := DANFSeClassOwner.Usuario;
     FieldByName('Site').AsString      := DANFSeClassOwner.Site;
     //FieldByName('Mensagem0').AsString := IfThen(DANFSeClassOwner.NFSeCancelada, 'NFSe CANCELADA', '');
-    FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'NFSe CANCELADA', '');  // LUIZ
+
+    // Gumercino 19/01/2018
+    if Provedor = proEL then
+      FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'CANCELADA', '')
+    else
+      FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'NFSe CANCELADA', '');  // LUIZ
+
     Post;
   end;
 end;
@@ -923,9 +997,17 @@ begin
 
     with ANFSe.Servico do
     begin
+      // Gumercino 19/01/2018
+      if Provedor = proEL then
+      begin
+        FieldByName('ItemListaServico').AsString  := ItemListaServico;
+        FieldByName('xItemListaServico').AsString := CodigoToDesc(ItemListaServico);
+      end else
+      begin
+        FieldByName('ItemListaServico').AsString  := ItemListaServico;
+        FieldByName('xItemListaServico').AsString := xItemListaServico;
+      end;
 
-      FieldByName('ItemListaServico').AsString          := ItemListaServico;
-      FieldByName('xItemListaServico').AsString         := xItemListaServico;
       FieldByName('CodigoCnae').AsString                := CodigoCnae;
       FieldByName('CodigoTributacaoMunicipio').AsString := CodigoTributacaoMunicipio;
       FieldByName('Discriminacao').AsString := StringReplace(Discriminacao, TACBrNFSe(DANFSeClassOwner.ACBrNFSe).Configuracoes.WebServices.QuebradeLinha, #13, [rfReplaceAll, rfIgnoreCase]);
@@ -953,6 +1035,9 @@ begin
         FieldByName('ValorIssRetido').AsFloat         := ValorIssRetido;
         FieldByName('DescontoCondicionado').AsFloat   := DescontoCondicionado;
         FieldByName('DescontoIncondicionado').AsFloat := DescontoIncondicionado;
+
+        // Gumercino 18/01/2018
+        FieldByName('OutrosDescontos').AsCurrency := OutrosDescontos;
       end;
     end;
     Post;
@@ -1107,14 +1192,18 @@ end;
 
 procedure TACBrNFSeDANFSeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 begin
-  with frxReport do
+  // Gumercino 18/01/2018
+  if Provedor <> proEL then
   begin
-    //validando se encontra cada memo no relatório (permitindo melhor personalização dos DANFSe)
-    if FindObject('Memo23') <> nil then FindObject('Memo23').Visible := DANFSeClassOwner.ImprimeCanhoto;
-    if FindObject('Memo75') <> nil then FindObject('Memo75').Visible := DANFSeClassOwner.ImprimeCanhoto;
-    if FindObject('Memo77') <> nil then FindObject('Memo77').Visible := DANFSeClassOwner.ImprimeCanhoto;
-    if FindObject('Memo68') <> nil then FindObject('Memo68').Visible := DANFSeClassOwner.ImprimeCanhoto;
-    if FindObject('Memo73') <> nil then FindObject('Memo73').Visible := DANFSeClassOwner.ImprimeCanhoto;
+    with frxReport do
+    begin
+      //validando se encontra cada memo no relatório (permitindo melhor personalização dos DANFSe)
+      if FindObject('Memo23') <> nil then FindObject('Memo23').Visible := DANFSeClassOwner.ImprimeCanhoto;
+      if FindObject('Memo75') <> nil then FindObject('Memo75').Visible := DANFSeClassOwner.ImprimeCanhoto;
+      if FindObject('Memo77') <> nil then FindObject('Memo77').Visible := DANFSeClassOwner.ImprimeCanhoto;
+      if FindObject('Memo68') <> nil then FindObject('Memo68').Visible := DANFSeClassOwner.ImprimeCanhoto;
+      if FindObject('Memo73') <> nil then FindObject('Memo73').Visible := DANFSeClassOwner.ImprimeCanhoto;
+    end;
   end;
 end;
 

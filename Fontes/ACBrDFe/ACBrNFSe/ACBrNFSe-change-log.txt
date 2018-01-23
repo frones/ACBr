@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2018
+-- Diversos --
+[*] Melhorias visando o provedor EL.
+Por: Gumercino
+
 17/01/2018
 -- pnfsNFSe / pnfsNFSeW_EL --
 [*] Inclusão do campo OutrasDeducoes.

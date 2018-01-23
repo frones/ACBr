@@ -10,7 +10,7 @@ uses ACBrECF, ACBrRFD, ACBrBase, ACBrDevice, ACBrECFClass, ACBrConsts, FileCtrl,
   Menus, Spin, jpeg, OleCtrls, SHDocVw
 {$IFDEF Delphi7}, XPMan{$ENDIF}, ACBrAAC, ACBrECFVirtual,
   ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal, ACBrECFVirtualBuffer,
-  Data.DB, ACBrPosPrinter, ACBrECFVirtualSAT, ACBrSATExtratoReportClass,
+  DB, ACBrPosPrinter, ACBrECFVirtualSAT, ACBrSATExtratoReportClass,
   ACBrSATExtratoFortesFr, ACBrSATExtratoClass, ACBrSATExtratoESCPOS,
   ACBrSAT, ACBrSATclass, ACBrDFe, ACBrNFe, ACBrECFVirtualNFCe, ACBrNFeDANFeESCPOS,
   ACBrNFeDANFEClass, ACBrDANFCeFortesFr, Mask, DBCtrls, Grids,

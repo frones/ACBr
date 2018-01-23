@@ -217,6 +217,7 @@ type
   public
     constructor create;
     destructor Destroy; override;
+    
     function ideLotacaoInst(): Boolean;
     function dadosLotacaoInst(): Boolean;
     function novaValidadeInst(): Boolean;
@@ -290,7 +291,7 @@ begin
   inherited;
 end;
 
-procedure TevtTabLotacao.gerarDadosLotacao;
+procedure TevtTabLotacao.GerarDadosLotacao;
 begin
   Gerador.wGrupo('dadosLotacao');
 
@@ -385,7 +386,7 @@ end;
 function TevtTabLotacao.GerarXML: boolean;
 begin
   try
-    gerarCabecalho('evtTabLotacao');
+    GerarCabecalho('evtTabLotacao');
     Gerador.wGrupo('evtTabLotacao Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
 
     GerarIdeEvento(self.IdeEvento);

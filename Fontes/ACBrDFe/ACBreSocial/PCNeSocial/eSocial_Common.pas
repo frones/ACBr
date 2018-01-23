@@ -623,7 +623,6 @@ type
     property ideEstabVinc: TIdeEstabVinc read FIdeEstabVinc write FIdeEstabVinc;
   end;
 
-
   TIdeTrabSubstituidoCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TIdeTrabSubstituidoCollectionItem;
@@ -812,7 +811,6 @@ type
     FMatricAnt: string;
     FdtTransf: TDateTime;
     FObservacao: string;
-
   public
     constructor Create;
     destructor Destroy;
@@ -1025,7 +1023,6 @@ type
     property DtDeslig: TDate read FDtDeslig write FDtDeslig;
   end;
 
-
   TVinculo = class
   private
     FMatricula: string;
@@ -1073,10 +1070,10 @@ type
   end;
 
   TideTrabSemVinc = class(TideTrabalhador2)
-     private
-       FcodCateg : Integer;
-     public
-       property codCateg : Integer read FcodCateg write FcodCateg;
+  private
+    FcodCateg : Integer;
+  public
+    property codCateg : Integer read FcodCateg write FcodCateg;
   end;
 
   TEmitente = class(TPersistent)
@@ -1093,7 +1090,7 @@ type
   end;
 
   TEndExt = class(TPersistent)
-   private
+  private
     FDscLograd: string;
     FNrLograd: string;
     FComplem: string;
@@ -1110,7 +1107,7 @@ type
   end;
 
   TIdePais = class(TPersistent)
-   private
+  private
     FCodPais: string;
     FIndNIF: tpIndNIF;
     FNifBenef: string;
@@ -1121,14 +1118,14 @@ type
   end;
 
   TInfoAgNocivo = class(TPersistent)
-   private
+  private
     FGrauExp: tpGrauExp;
   public
     property grauExp: tpGrauExp read FGrauExp write FGrauExp;
   end;
 
   TRubricaCollection = class(TCollection)
-   private
+  private
   public
     function GetItem(Index: Integer): TRubricaCollectionItem;
     procedure SetItem(Index: Integer; Value: TRubricaCollectionItem);
@@ -1158,7 +1155,7 @@ type
   end;
 
   TReciboPagamento = class(TCollectionItem) // s1200
-   private
+  private
     FIdeRecPgto: Integer;
     FvrRec : Double;
   public
@@ -1168,7 +1165,7 @@ type
   end;
 
   TRecPgtosCollection = class(TCollection)
-   private
+  private
     function GetItem(Index: Integer): TRecPgtosCollectionItem;
     procedure SetItem(Index: Integer; Value: TRecPgtosCollectionItem);
   public
@@ -1178,7 +1175,7 @@ type
   end;
 
   TRecPgtosCollectionItem = class(TReciboPagamento) // s2299 ; s2399
-   private
+  private
     FIdeRecPgto : Integer;
     FVlrPgto: Double;
     FideEstabLot : TIdeEstabLotCollection;
@@ -1190,77 +1187,77 @@ type
   end;
 
   TideEstabLotCollection = class(TCollection)
-     private
-      function GetItem(Index: Integer): TideEstabLotItem;
-     procedure SetItem(Index: Integer; Value: TideEstabLotItem);
-   public
-     constructor create; reintroduce;
-     function Add: TideEstabLotItem;
-     property Items[Index: Integer]: TideEstabLotItem read GetItem write SetItem; default;
+  private
+    function GetItem(Index: Integer): TideEstabLotItem;
+    procedure SetItem(Index: Integer; Value: TideEstabLotItem);
+  public
+    constructor create; reintroduce;
+    function Add: TideEstabLotItem;
+    property Items[Index: Integer]: TideEstabLotItem read GetItem write SetItem; default;
   end;
 
   TideEstabLotItem = class(TCollectionItem)
-     private
-      FtpInsc : tpTpInsc;
-      FnrInsc : String;
-      FcodLotacao : String;
-      FdetVerbas : TRubricaCollection;
-      FInfoSaudeColet: TInfoSaudeColet;
-      FinfoAgNocivo : TInfoAgNocivo;
-      FinfoSimples : TinfoSimples;
+  private
+    FtpInsc : tpTpInsc;
+    FnrInsc : String;
+    FcodLotacao : String;
+    FdetVerbas : TRubricaCollection;
+    FInfoSaudeColet: TInfoSaudeColet;
+    FinfoAgNocivo : TInfoAgNocivo;
+    FinfoSimples : TinfoSimples;
 
-      function getInfoSaudeColect: TInfoSaudeColet;
-      function getInfoAgNocivo: TInfoAgNocivo;
-      function getInfoSimples: TinfoSimples;
-    public
-      constructor Create; reintroduce;
-      function infoSaudeColetInst: boolean;
-      function infoAgNocivoInst: boolean;
-      function infoSimplesInst: Boolean;
+    function getInfoSaudeColect: TInfoSaudeColet;
+    function getInfoAgNocivo: TInfoAgNocivo;
+    function getInfoSimples: TinfoSimples;
+  public
+    constructor Create; reintroduce;
+    function infoSaudeColetInst: boolean;
+    function infoAgNocivoInst: boolean;
+    function infoSimplesInst: Boolean;
 
-      property tpInsc : tpTpInsc read FtpInsc write FtpInsc;
-      property nrInsc : string read FnrInsc write FnrInsc;
-      property codLotacao : string read FcodLotacao write FcodLotacao;
-      property detVerbas : TRubricaCollection read FdetVerbas write FdetVerbas;
-      property infoSaudeColet: TInfoSaudeColet read getInfoSaudeColect write FInfoSaudeColet;
-      property infoAgNocivo : TInfoAgNocivo read getInfoAgNocivo write FinfoAgNocivo;
-      property infoSimples : TinfoSimples read getInfoSimples write FinfoSimples;
+    property tpInsc : tpTpInsc read FtpInsc write FtpInsc;
+    property nrInsc : string read FnrInsc write FnrInsc;
+    property codLotacao : string read FcodLotacao write FcodLotacao;
+    property detVerbas : TRubricaCollection read FdetVerbas write FdetVerbas;
+    property infoSaudeColet: TInfoSaudeColet read getInfoSaudeColect write FInfoSaudeColet;
+    property infoAgNocivo : TInfoAgNocivo read getInfoAgNocivo write FinfoAgNocivo;
+    property infoSimples : TinfoSimples read getInfoSimples write FinfoSimples;
   end;
 
   TInfoAmbCollection = class(TCollection)
-    private
-      function GetItem(Index: Integer): TInfoAmbItem;
-      procedure SetItem(Index: Integer; Value: TInfoAmbItem);
-   public
-     constructor create; reintroduce;
-     function Add: TInfoAmbItem;
-     property Items[Index: Integer]: TInfoAmbItem read GetItem write SetItem;
+  private
+    function GetItem(Index: Integer): TInfoAmbItem;
+    procedure SetItem(Index: Integer; Value: TInfoAmbItem);
+  public
+    constructor create; reintroduce;
+    function Add: TInfoAmbItem;
+    property Items[Index: Integer]: TInfoAmbItem read GetItem write SetItem;
   end;
 
   TInfoAmbItem = class(TCollectionItem)
-    private
-      FcodAmb : String;
-      FInfoAtiv: TInfoAtiv;
-      FFatRisco: TFatRiscoCollection;
-      FEPI : TEpiCollection;
+  private
+    FcodAmb : String;
+    FInfoAtiv: TInfoAtiv;
+    FFatRisco: TFatRiscoCollection;
+    FEPI : TEpiCollection;
 
-      procedure setInfoAtiv(const Value: TInfoAtiv);
-      procedure setFatRisco(const Value: TFatRiscoCollection);
-      procedure setEPI(const Value: TEpiCollection);
-    public
-      constructor create; reintroduce;
+    procedure setInfoAtiv(const Value: TInfoAtiv);
+    procedure setFatRisco(const Value: TFatRiscoCollection);
+    procedure setEPI(const Value: TEpiCollection);
+  public
+    constructor create; reintroduce;
 
-      property codAmb : String read FcodAmb write FcodAmb;
-      property InfoAtiv : TInfoAtiv read FInfoAtiv write setInfoAtiv;
-      property FatRisco : TFatRiscoCollection read FFatRisco write setFatRisco;
-      property EPI : TEpiCollection read FEPI write setEPI;
+    property codAmb : String read FcodAmb write FcodAmb;
+    property InfoAtiv : TInfoAtiv read FInfoAtiv write setInfoAtiv;
+    property FatRisco : TFatRiscoCollection read FFatRisco write setFatRisco;
+    property EPI : TEpiCollection read FEPI write setEPI;
   end;
 
   TInfoAtiv = class(TPersistent)
-    private
-      FdscAtivDes : String;
-    public
-      property dscAtivDes : String read FdscAtivDes write FdscAtivDes;
+  private
+    FdscAtivDes : String;
+  public
+    property dscAtivDes : String read FdscAtivDes write FdscAtivDes;
   end;
 
   TEpcCollection = class(TCollection)
@@ -1305,40 +1302,39 @@ type
   end;
 
   TFatRiscoCollection = class(TCollection)
-    private
-      function GetItem(Index: Integer): TFatRiscoItem;
-      procedure SetItem(Index: Integer; Value: TFatRiscoItem);
-   public
-     constructor create; reintroduce;
+  private
+    function GetItem(Index: Integer): TFatRiscoItem;
+    procedure SetItem(Index: Integer; Value: TFatRiscoItem);
+  public
+    constructor create; reintroduce;
 
-     function Add: TFatRiscoItem;
-     property Items[Index: Integer]: TFatRiscoItem read GetItem write SetItem;
+    function Add: TFatRiscoItem;
+    property Items[Index: Integer]: TFatRiscoItem read GetItem write SetItem;
   end;
 
   TFatRiscoItem = class(TCollectionItem)
-    private
-      FcodFatRis : String;
-      FintConc : String;
-      FtecMedicao : String;
-      FEpcEpi: TEpcEpi;
-    public
-      constructor create; reintroduce;
+  private
+    FcodFatRis : String;
+    FintConc : String;
+    FtecMedicao : String;
+    FEpcEpi: TEpcEpi;
+  public
+    constructor create; reintroduce;
 
-      property codFatRis: String read FcodFatRis write FcodFatRis;
-      property intConc : String read FintConc write FintConc;
-      property tecMedicao: String read FtecMedicao write FtecMedicao;
-      property epcEpi: TEpcEpi read FEpcEpi write FEpcEpi;
+    property codFatRis: String read FcodFatRis write FcodFatRis;
+    property intConc : String read FintConc write FintConc;
+    property tecMedicao: String read FtecMedicao write FtecMedicao;
+    property epcEpi: TEpcEpi read FEpcEpi write FEpcEpi;
   end;
 
   TcargoFuncao = class(TPersistent)
-    private
-      FcodCargo : String;
-      FcodFuncao : String;
-    public
-      property codCargo: String read FcodCargo write FcodCargo;
-      property codFuncao: String read FcodFuncao write FcodFuncao;
+  private
+    FcodCargo : String;
+    FcodFuncao : String;
+  public
+    property codCargo: String read FcodCargo write FcodCargo;
+    property codFuncao: String read FcodFuncao write FcodFuncao;
   end;
-
 
   TProcJudTrabCollection = class(TCollection)
   private
@@ -1362,116 +1358,115 @@ type
     property codSusp: Integer read FCodSusp write FCodSusp;
   end;
 
-
   TinfoEstagiario = class(TPersistent)
-    private
-      FnatEstagio : TpNatEstagio;
-      FnivEstagio : TpNivelEstagio;
-      FareaAtuacao : String;
-      FnrApol : String;
-      FvlrBolsa : Double;
-      FdtPrevTerm : TDate;
-      FinstEnsino : TinstEnsino;
-      FageIntegracao : TageIntegracao;
-      FsupervisorEstagio : TsupervisorEstagio;
-    public
-      constructor Create;
-      destructor  Destroy; override;
+  private
+    FnatEstagio : TpNatEstagio;
+    FnivEstagio : TpNivelEstagio;
+    FareaAtuacao : String;
+    FnrApol : String;
+    FvlrBolsa : Double;
+    FdtPrevTerm : TDate;
+    FinstEnsino : TinstEnsino;
+    FageIntegracao : TageIntegracao;
+    FsupervisorEstagio : TsupervisorEstagio;
+  public
+    constructor Create;
+    destructor  Destroy; override;
 
-      property natEstagio : TpNatEstagio read FnatEstagio write FnatEstagio;
-      property nivEstagio : TpNivelEstagio read FnivEstagio write FnivEstagio;
-      property areaAtuacao : String read FareaAtuacao write FareaAtuacao;
-      property nrApol : String read FnrApol write FnrApol;
-      property vlrBolsa : Double read FvlrBolsa write FvlrBolsa;
-      property dtPrevTerm : TDate read FdtPrevTerm write FdtPrevTerm;
-      property instEnsino : TinstEnsino read FinstEnsino write FinstEnsino;
-      property ageIntegracao : TageIntegracao read FageIntegracao write FageIntegracao;
-      property supervisorEstagio : TsupervisorEstagio read FsupervisorEstagio write FsupervisorEstagio;
+    property natEstagio : TpNatEstagio read FnatEstagio write FnatEstagio;
+    property nivEstagio : TpNivelEstagio read FnivEstagio write FnivEstagio;
+    property areaAtuacao : String read FareaAtuacao write FareaAtuacao;
+    property nrApol : String read FnrApol write FnrApol;
+    property vlrBolsa : Double read FvlrBolsa write FvlrBolsa;
+    property dtPrevTerm : TDate read FdtPrevTerm write FdtPrevTerm;
+    property instEnsino : TinstEnsino read FinstEnsino write FinstEnsino;
+    property ageIntegracao : TageIntegracao read FageIntegracao write FageIntegracao;
+    property supervisorEstagio : TsupervisorEstagio read FsupervisorEstagio write FsupervisorEstagio;
   end;
 
   TinstEnsino = class(TPersistent)
-    private
-      FcnpjInstEnsino : String;
-      FnmRazao : String;
-      FdscLograd : String;
-      FnrLograd : String;
-      Fbairro : String;
-      FCep : String;
-      FcodMunic : Integer;
-      FUf : tpUf;
-    public
-      property cnpjInstEnsino : String read FcnpjInstEnsino write FcnpjInstEnsino;
-      property nmRazao : String read FnmRazao write FnmRazao;
-      property dscLograd : String read FdscLograd write FdscLograd;
-      property nrLograd : String read FnrLograd write FnrLograd;
-      property bairro : String read Fbairro write Fbairro;
-      property Cep : String read FCep write FCep;
-      property codMunic : Integer read FcodMunic write FcodMunic;
-      property Uf : tpUf read FUf write FUf;
+  private
+    FcnpjInstEnsino : String;
+    FnmRazao : String;
+    FdscLograd : String;
+    FnrLograd : String;
+    Fbairro : String;
+    FCep : String;
+    FcodMunic : Integer;
+    FUf : tpUf;
+  public
+    property cnpjInstEnsino : String read FcnpjInstEnsino write FcnpjInstEnsino;
+    property nmRazao : String read FnmRazao write FnmRazao;
+    property dscLograd : String read FdscLograd write FdscLograd;
+    property nrLograd : String read FnrLograd write FnrLograd;
+    property bairro : String read Fbairro write Fbairro;
+    property Cep : String read FCep write FCep;
+    property codMunic : Integer read FcodMunic write FcodMunic;
+    property Uf : tpUf read FUf write FUf;
   end;
 
   TageIntegracao = class(TPersistent)
-    private
-      FcnpjAgntInteg : String;
-      FnmRazao : String;
-      FdscLograd : String;
-      FnrLograd : String;
-      Fbairro : String;
-      FCep : String;
-      FcodMunic : Integer;
-      FUf : tpUf;
-    public
-      property cnpjAgntInteg : String read FcnpjAgntInteg write FcnpjAgntInteg;
-      property nmRazao : String read FnmRazao write FnmRazao;
-      property dscLograd : String read FdscLograd write FdscLograd;
-      property nrLograd : String read FnrLograd write FnrLograd;
-      property bairro : String read Fbairro write Fbairro;
-      property Cep : String read FCep write FCep;
-      property codMunic : Integer read FcodMunic write FcodMunic;
-      property Uf : tpUf read FUf write FUf;
+  private
+    FcnpjAgntInteg : String;
+    FnmRazao : String;
+    FdscLograd : String;
+    FnrLograd : String;
+    Fbairro : String;
+    FCep : String;
+    FcodMunic : Integer;
+    FUf : tpUf;
+  public
+    property cnpjAgntInteg : String read FcnpjAgntInteg write FcnpjAgntInteg;
+    property nmRazao : String read FnmRazao write FnmRazao;
+    property dscLograd : String read FdscLograd write FdscLograd;
+    property nrLograd : String read FnrLograd write FnrLograd;
+    property bairro : String read Fbairro write Fbairro;
+    property Cep : String read FCep write FCep;
+    property codMunic : Integer read FcodMunic write FcodMunic;
+    property Uf : tpUf read FUf write FUf;
   end;
 
   TsupervisorEstagio = class(TPersistent)
-    private
-      FcpfSupervisor : String;
-      FnmSuperv : String;
-    public
-      property cpfSupervisor : String read FcpfSupervisor write FcpfSupervisor;
-      property nmSuperv : String read FnmSuperv write FnmSuperv;
+  private
+    FcpfSupervisor : String;
+    FnmSuperv : String;
+  public
+    property cpfSupervisor : String read FcpfSupervisor write FcpfSupervisor;
+    property nmSuperv : String read FnmSuperv write FnmSuperv;
   end;
 
-    TQuarentena = class(TPersistent)
-    private
-      FdtFimQuar : TDate;
-    public
-      property dtFimQuar: TDate read FdtFimQuar write FdtFimQuar;
+  TQuarentena = class(TPersistent)
+  private
+    FdtFimQuar : TDate;
+  public
+    property dtFimQuar: TDate read FdtFimQuar write FdtFimQuar;
   end;
 
-    TVerbasResc = class(TPersistent)
-    private
-      FProcJudTrab : TProcJudTrabCollection;
-      FInfoMV: TInfoMV;
+  TVerbasResc = class(TPersistent)
+  private
+    FProcJudTrab : TProcJudTrabCollection;
+    FInfoMV: TInfoMV;
 
-      function getProcJudTrab: TProcJudTrabCollection;
-      function getInfoMV: TInfoMV;
-    public
-      constructor Create;
-      destructor Destroy;
-      function procJudTrabInst: boolean;
-      function infoMVInst: boolean;
+    function getProcJudTrab: TProcJudTrabCollection;
+    function getInfoMV: TInfoMV;
+  public
+    constructor Create;
+    destructor Destroy;
+    function procJudTrabInst: boolean;
+    function infoMVInst: boolean;
 
-      property procJudTrab: TProcJudTrabCollection read getProcJudTrab write FProcJudTrab;
-      property infoMV: TInfoMV read getInfoMV write FInfoMV;
-    end;
+    property procJudTrab: TProcJudTrabCollection read getProcJudTrab write FProcJudTrab;
+    property infoMV: TInfoMV read getInfoMV write FInfoMV;
+  end;
 
   TdetVerbasCollection = class(TCollection)
-     private
-      function GetItem(Index: Integer): TdetVerbasItem;
-      procedure SetItem(Index: Integer; Value: TdetVerbasItem);
-    public
-      constructor Create(AOwner: TPersistent);
-      function Add: TdetVerbasItem;
-      property Items[Index: Integer]: TdetVerbasItem read GetItem write SetItem; default;
+  private
+    function GetItem(Index: Integer): TdetVerbasItem;
+    procedure SetItem(Index: Integer; Value: TdetVerbasItem);
+  public
+    constructor Create(AOwner: TPersistent);
+    function Add: TdetVerbasItem;
+    property Items[Index: Integer]: TdetVerbasItem read GetItem write SetItem; default;
   end;
 
   TdetVerbasItem = class(TCollectionItem)
@@ -1490,21 +1485,20 @@ type
   end;
 
   TinfoSimples = class(TPersistent)
-    private
-      FindSimples : tpIndSimples;
-    public
-      property indSimples : tpIndSimples read FindSimples write FindSimples;
+  private
+    FindSimples : tpIndSimples;
+  public
+    property indSimples : tpIndSimples read FindSimples write FindSimples;
   end;
 
-
   TInfoProcJudCollection = class(TCollection)
-    private
-      function GetItem(Index: Integer): TInfoProcJudItem;
-      procedure SetItem(Index: Integer; Value: TInfoProcJudItem);
-    public
-      constructor Create(AOwner: TPersistent);
-      function Add: TInfoProcJudItem;
-      property Items[Index: Integer]: TInfoProcJudItem read GetItem write SetItem; default;
+  private
+    function GetItem(Index: Integer): TInfoProcJudItem;
+    procedure SetItem(Index: Integer; Value: TInfoProcJudItem);
+  public
+    constructor Create(AOwner: TPersistent);
+    function Add: TInfoProcJudItem;
+    property Items[Index: Integer]: TInfoProcJudItem read GetItem write SetItem; default;
   end;
 
   TInfoProcJudItem=class(TCollectionItem)
@@ -1518,7 +1512,7 @@ type
     FvrSenarNRet: Double;
     FvrCPSusp: Double;
     FvrRatSusp: Double;
-    FvrSenarSusp: Double;    
+    FvrSenarSusp: Double;
   public
     property tpProc: tpTpProc read FtpProc write FtpProc;
     property tpTrib: tpTpTributo read FtpTrib write FtpTrib;
@@ -1529,11 +1523,11 @@ type
     property vrSenarNRet: Double read FvrSenarNRet write FvrSenarNRet;
     property vrCPSusp: Double read FvrCPSusp write FvrCPSusp;
     property vrRatSusp: Double read FvrRatSusp write FvrRatSusp;
-    property vrSenarSusp: Double read FvrSenarSusp write FvrSenarSusp;    
+    property vrSenarSusp: Double read FvrSenarSusp write FvrSenarSusp;
   end;
 
   TPensaoAlimCollection = class(TCollection)
-   private
+  private
     function GetItem(Index: Integer): TPensaoAlimCollectionItem;
     procedure SetItem(Index: Integer; Value: TPensaoAlimCollectionItem);
   public
@@ -1543,7 +1537,7 @@ type
   end;
 
   TPensaoAlimCollectionItem = class(TCollectionItem)
-   private
+  private
     FCpfBenef: string;
     FDtNasctoBenef: TDate;
     FNmBenefic: string;
@@ -1558,7 +1552,7 @@ type
   end;
 
   TDetPlanoCollection = class(TCollection)
-   private
+  private
     function GetItem(Index: Integer): TDetPlanoCollectionItem;
     procedure SetItem(Index: Integer; Value: TDetPlanoCollectionItem);
   public
@@ -1568,7 +1562,7 @@ type
   end;
 
   TDetPlanoCollectionItem = class(TCollectionItem)
-   private
+  private
     FTpDep: tpTpDep;
     FCpfDep: string;
     FDtNascto: TDate;
@@ -1585,7 +1579,7 @@ type
   end;
 
   TDetOperCollection = class(TCollection)
-   private
+  private
     function GetItem(Index: Integer): TDetOperCollectionItem;
     procedure SetItem(Index: Integer; Value: TDetOperCollectionItem);
   public
@@ -1595,7 +1589,7 @@ type
   end;
 
   TDetOperCollectionItem = class(TCollectionItem)
-   private
+  private
     FCnpjOper: string;
     FRegANS: string;
     FVrPgTit: Double;
@@ -1610,7 +1604,7 @@ type
   end;
 
   TInfoSaudeColet = class(TPersistent)
-   private
+  private
     FDetOper: TDetOperCollection;
   public
     constructor Create;
@@ -2053,6 +2047,7 @@ end;
 { TRubricaCollectionItem }
 constructor TRubricaCollectionItem.create;
 begin
+
 end;
 
 { TRubricaCollection }
@@ -2081,6 +2076,7 @@ end;
 { TReciboPagamento }
 constructor TReciboPagamento.create;
 begin
+
 end;
 
 { TRecPgtosCollection }
@@ -2119,7 +2115,6 @@ begin
   FInfoEstatutario.Free;
   inherited;
 end;
-
 
 { TInfoEstatutario }
 
@@ -2328,7 +2323,6 @@ begin
   FideEstabLot := TideEstabLotCollection.Create;
 end;
 
-
 { TdetVerbasCollection }
 
 function TdetVerbasCollection.Add: TdetVerbasItem;
@@ -2505,6 +2499,7 @@ end;
 { TDetPlanoCollectionItem }
 constructor TDetPlanoCollectionItem.create;
 begin
+
 end;
 
 { TDetOperCollectionItem }
@@ -2731,6 +2726,7 @@ end;
 { TRemunOutrEmpr }
 constructor TRemunOutrEmprCollectionItem.Create;
 begin
+
 end;
 
 { TRemunOutrEmprCollection }

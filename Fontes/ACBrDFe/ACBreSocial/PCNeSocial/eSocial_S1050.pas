@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 
@@ -65,7 +65,7 @@ type
   THorarioIntervaloCollection = class;
 
   TS1050Collection = class(TOwnedCollection)
-   private
+  private
     function GetItem(Index: Integer): TS1050CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1050CollectionItem);
   public
@@ -74,7 +74,7 @@ type
   end;
 
   TS1050CollectionItem = class(TCollectionItem)
-   private
+  private
     FTipoEvento: TTipoEvento;
     FEvtTabHorContratual: TEvtTabHorTur;
     procedure setEvtTabHorContratual(const Value: TEvtTabHorTur);
@@ -87,16 +87,16 @@ type
   end;
 
   TEvtTabHorTur = class(TESocialEvento)
-   private
+  private
     FModoLancamento: TModoLancamento;
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoHorContratual: TInfoHorContratual;
 
     {Geradores específicos da classe}
-    procedure gerarDadosHorContratual();
-    procedure gerarHorarioIntervalo();
-    procedure gerarIdeHorContratual();
+    procedure GerarDadosHorContratual;
+    procedure GerarHorarioIntervalo;
+    procedure GerarIdeHorContratual;
   public
     constructor Create(AACBreSocial: TObject); overload;
     destructor  Destroy; override;
@@ -110,7 +110,7 @@ type
   end;
 
   THorarioIntervaloCollection = class(TCollection)
-   private
+  private
     function GetItem(Index: Integer): THorarioIntervaloCollectionItem;
     procedure SetItem(Index: Integer; Value: THorarioIntervaloCollectionItem);
   public
@@ -120,7 +120,7 @@ type
   end;
 
   THorarioIntervaloCollectionItem = class(TCollectionItem)
-    private
+  private
     FTpInterv : tpTpIntervalo;
     FDurInterv: integer;
     FIniInterv: string;
@@ -135,7 +135,7 @@ type
   end;
 
   TideHorContratual = class(TPersistent)
-   private
+  private
     FCodHorContrat: string;
     FIniValid: string;
     FFimValid: string;
@@ -146,7 +146,7 @@ type
   end;
 
   TDadosHorContratual = class(TPersistent)
-   private
+  private
     FHrEntr: string;
     FHrSaida: string;
     FDurJornada: integer;
@@ -164,15 +164,17 @@ type
   end;
 
   TInfoHorContratual = class(TPersistent)
-   private
+  private
     fideHorContratual: TideHorContratual;
     fdadosHorContratual: TdadosHorContratual;
     fnovaValidade : TIdePeriodo;
+
     function getDadosHorContratual: TdadosHorContratual;
     function getNovaValidade: TIdePeriodo;
   public
     constructor create;
     destructor destroy; override;
+
     function dadosHorContratualInst(): Boolean;
     function novaValidadeInst(): Boolean;
 
@@ -216,6 +218,7 @@ end;
 destructor TS1050CollectionItem.Destroy;
 begin
   FEvtTabHorContratual.Free;
+
   inherited;
 end;
 
@@ -235,6 +238,7 @@ end;
 destructor TdadosHorContratual.destroy;
 begin
   FHorarioIntervalo.Free;
+
   inherited;
 end;
 
@@ -257,6 +261,7 @@ begin
   fideHorContratual.Free;
   FreeAndNil(fdadosHorContratual);
   FreeAndNil(fnovaValidade);
+
   inherited;
 end;
 
@@ -284,6 +289,7 @@ end;
 constructor TEvtTabHorTur.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoHorContratual := TInfoHorContratual.Create;
@@ -294,75 +300,95 @@ begin
   fIdeEvento.Free;
   fIdeEmpregador.Free;
   fInfoHorContratual.Free;
+
   inherited;
 end;
 
-procedure TEvtTabHorTur.gerarDadosHorContratual;
+procedure TEvtTabHorTur.GerarDadosHorContratual;
 begin
   Gerador.wGrupo('dadosHorContratual');
-    Gerador.wCampo(tcStr, '', 'hrEntr', 0, 0, 0, self.InfoHorContratual.dadosHorContratual.hrEntr);
-    Gerador.wCampo(tcStr, '', 'hrSaida', 0, 0, 0, self.InfoHorContratual.dadosHorContratual.hrSaida);
-    Gerador.wCampo(tcStr, '', 'durJornada', 0, 0, 0, self.InfoHorContratual.dadosHorContratual.durJornada);
-    Gerador.wCampo(tcStr, '', 'perHorFlexivel', 0, 0, 0, eSSimNaoToStr(self.InfoHorContratual.dadosHorContratual.perHorFlexivel));
-    gerarHorarioIntervalo();
+
+  Gerador.wCampo(tcStr, '', 'hrEntr',         4, 4, 1, self.InfoHorContratual.dadosHorContratual.hrEntr);
+  Gerador.wCampo(tcStr, '', 'hrSaida',        4, 4, 1, self.InfoHorContratual.dadosHorContratual.hrSaida);
+  Gerador.wCampo(tcStr, '', 'durJornada',     1, 4, 1, self.InfoHorContratual.dadosHorContratual.durJornada);
+  Gerador.wCampo(tcStr, '', 'perHorFlexivel', 1, 1, 1, eSSimNaoToStr(self.InfoHorContratual.dadosHorContratual.perHorFlexivel));
+
+  GerarHorarioIntervalo;
+
   Gerador.wGrupo('/dadosHorContratual');
 end;
 
 
-procedure TEvtTabHorTur.gerarHorarioIntervalo;
-  var
-      iHorarioIntervalo: Integer;
-      objHorarioIntervalo: THorarioIntervaloCollectionItem;
+procedure TEvtTabHorTur.GerarHorarioIntervalo;
+var
+  i: Integer;
+  objHorarioIntervalo: THorarioIntervaloCollectionItem;
 begin
-  for iHorarioIntervalo := 0 to InfoHorContratual.dadosHorContratual.horarioIntervalo.Count - 1 do
+  for i := 0 to InfoHorContratual.dadosHorContratual.horarioIntervalo.Count - 1 do
   begin
-    objHorarioIntervalo := InfoHorContratual.dadosHorContratual.horarioIntervalo.Items[iHorarioIntervalo];
-    Gerador.wGrupo('horarioIntervalo');
-      Gerador.wCampo(tcStr, '', 'tpInterv', 0, 0, 0, eSTpIntervaloToStr(objHorarioIntervalo.tpInterv));
-      Gerador.wCampo(tcStr, '', 'durInterv', 0, 0, 0, objHorarioIntervalo.durInterv);
+    objHorarioIntervalo := InfoHorContratual.dadosHorContratual.horarioIntervalo.Items[i];
 
-      if (eSTpIntervaloToStr(objHorarioIntervalo.tpInterv) = '1') then
-      begin
-        Gerador.wCampo(tcStr, '', 'iniInterv', 0, 0, 0, objHorarioIntervalo.iniInterv);
-        Gerador.wCampo(tcStr, '', 'termInterv', 0, 0, 0, objHorarioIntervalo.termInterv);
-      end;
+    Gerador.wGrupo('horarioIntervalo');
+
+    Gerador.wCampo(tcStr, '', 'tpInterv',  1, 1, 1, eSTpIntervaloToStr(objHorarioIntervalo.tpInterv));
+    Gerador.wCampo(tcStr, '', 'durInterv', 1, 3, 1, objHorarioIntervalo.durInterv);
+
+    if (objHorarioIntervalo.tpInterv = tinHorarioFixo) then
+    begin
+      Gerador.wCampo(tcStr, '', 'iniInterv',  4, 4, 1, objHorarioIntervalo.iniInterv);
+      Gerador.wCampo(tcStr, '', 'termInterv', 4, 4, 1, objHorarioIntervalo.termInterv);
+    end;
+
     Gerador.wGrupo('/horarioIntervalo');
   end;
+
+  if InfoHorContratual.dadosHorContratual.horarioIntervalo.Count > 99 then
+    Gerador.wAlerta('', 'horarioIntervalo', 'Lista de Horário de Intervalo', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
-procedure TEvtTabHorTur.gerarIdeHorContratual;
+procedure TEvtTabHorTur.GerarIdeHorContratual;
 begin
   Gerador.wGrupo('ideHorContratual');
-    Gerador.wCampo(tcStr, '', 'codHorContrat', 0, 0, 0, InfoHorContratual.ideHorContratual.codHorContrat);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, InfoHorContratual.ideHorContratual.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, InfoHorContratual.ideHorContratual.fimValid);
+
+  Gerador.wCampo(tcStr, '', 'codHorContrat', 1, 30, 1, InfoHorContratual.ideHorContratual.codHorContrat);
+  Gerador.wCampo(tcStr, '', 'iniValid',      7,  7, 1, InfoHorContratual.ideHorContratual.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid',      7,  7, 0, InfoHorContratual.ideHorContratual.fimValid);
+
   Gerador.wGrupo('/ideHorContratual');
 end;
 
 function TEvtTabHorTur.GerarXML: boolean;
 begin
   try
-    gerarCabecalho('evtTabHorTur');
+    GerarCabecalho('evtTabHorTur');
     Gerador.wGrupo('evtTabHorTur Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-    //gerarIdVersao(self);
-    gerarIdeEvento(self.IdeEvento);
-    gerarIdeEmpregador(self.IdeEmpregador);
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
     Gerador.wGrupo('infoHorContratual');
-      gerarModoAbertura(Self.ModoLancamento);
-        gerarIdeHorContratual();
-        if Self.ModoLancamento <> mlExclusao then
-        begin
-          gerarDadosHorContratual();
-          if Self.ModoLancamento = mlAlteracao then
-            if (InfoHorContratual.novaValidadeInst()) then
-              GerarIdePeriodo(self.InfoHorContratual.novaValidade, 'novaValidade');
-        end;
-      gerarModoFechamento(Self.ModoLancamento);
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeHorContratual;
+
+    if Self.ModoLancamento <> mlExclusao then
+    begin
+      GerarDadosHorContratual;
+
+      if Self.ModoLancamento = mlAlteracao then
+        if (InfoHorContratual.novaValidadeInst()) then
+          GerarIdePeriodo(self.InfoHorContratual.novaValidade, 'novaValidade');
+    end;
+
+    GerarModoFechamento(Self.ModoLancamento);
+
     Gerador.wGrupo('/infoHorContratual');
     Gerador.wGrupo('/evtTabHorTur');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabHorTur');
+
     Validar('evtTabHorTur');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -375,6 +401,7 @@ end;
 
 constructor THorarioIntervaloCollectionItem.create;
 begin
+
 end;
 
 { THorarioIntervaloCollection }

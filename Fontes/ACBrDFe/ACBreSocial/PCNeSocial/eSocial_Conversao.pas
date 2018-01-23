@@ -113,7 +113,7 @@ type
 
   tpAliqRat               = (arat1, arat2, arat3 );
 
-  tpTpProc                = (tpAdministrativo, tpJudicial);
+  tpTpProc                = (tpAdministrativo, tpJudicial, tpINSS);
 
   tpSiglaMin              = (smCNAS, smMEC, smMS, smMDS, smLEI);
 
@@ -434,381 +434,376 @@ type
   TpClassTrib = (ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
                  ct13, ct14, ct21, ct22, ct60, ct70, ct80, ct85, ct99);
 
+////////////////////////////////////////////////////////////////////////////////
 
+function EnumeradoToStr2(const t: variant; const AString:
+  array of string ): variant;
 
+function StrToEnumerado2(var ok: boolean; const s: string; Const AString:
+  array of string ): variant;
 
+function TipoEventoToStr(const t: TTipoEvento ): string;
+function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 
+function eStpAmbToStr(const t: TptpAmb ): string;
+function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
 
+function eSprocEmiToStr(const t: TpprocEmi ): string;
+function eSStrToprocEmi(var ok: boolean; const s: string): TpprocEmi;
 
+function eSIndSegmentoToStr(const t: TpIndSegmento ): string;
+function eSStrToIndSegmento(var ok: boolean; const s: string): TpIndSegmento;
 
-  function EnumeradoToStr2(const t: variant; const AString:
-    array of string ): variant;
+function eSTpInscricaoToStr(const t: tpTpInsc ): string;
+function eSStrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
 
-  function StrToEnumerado2(var ok: boolean; const s: string; Const AString:
-    array of string ): variant;
+function eStpTpInscAmbTabToStr(const t: tpTpInscAmbTab ): string;
+function eSStrTotpTpInscAmbTab(var ok: boolean; const s: string): tpTpInscAmbTab;
 
-  function TipoEventoToStr(const t: TTipoEvento ): string;
-  function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function eSIndCooperativaToStr(const t: TpIndCoop ): string;
+function eSStrToIndCooperativa(var ok: boolean; const s: string): TpIndCoop;
 
-  function eStpAmbToStr(const t: TptpAmb ): string;
-  function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
+function eSIndConstrutoraToStr(const t: TpIndConstr ): string;
+function eSStrToIndConstrutora(var ok: boolean; const s: string): TpIndConstr;
 
-  function eSprocEmiToStr(const t: TpprocEmi ): string;
-  function eSStrToprocEmi(var ok: boolean; const s: string): TpprocEmi;
+function eSIndDesFolhaToStr(const t: TpIndDesFolha ): string;
+function eSStrToIndDesFolha(var ok: boolean; const s: string): TpIndDesFolha;
 
-  function eSIndSegmentoToStr(const t: TpIndSegmento ): string;
-  function eSStrToIndSegmento(var ok: boolean; const s: string): TpIndSegmento;
+function eSIndOptRegEletronicoToStr(const t: TpIndOptRegEletron ): string;
+function eSStrToIndOptRegEletronico(var ok: boolean; const s: string): TpIndOptRegEletron;
 
-  function eSTpInscricaoToStr(const t: tpTpInsc ): string;
-  function eSStrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
+function eSAliqRatToStr(const t: TpAliqRat ): string;
+function eSStrToAliqRat(var ok: boolean; const s: string): TpAliqRat;
 
-  function eStpTpInscAmbTabToStr(const t: tpTpInscAmbTab ): string;
-  function eSStrTotpTpInscAmbTab(var ok: boolean; const s: string): tpTpInscAmbTab;
+function eSTpProcessoToStr(const t: tpTpProc ): string;
+function eSStrToTpProcesso(var ok: boolean; const s: string): tpTpProc;
 
-  function eSIndCooperativaToStr(const t: TpIndCoop ): string;
-  function eSStrToIndCooperativa(var ok: boolean; const s: string): TpIndCoop;
+function eSSiglaMinToStr(const t: TpSiglaMin ): string;
+function eSStrToSiglaMin(var ok: boolean; const s: string): TpSiglaMin;
 
-  function eSIndConstrutoraToStr(const t: TpIndConstr ): string;
-  function eSStrToIndConstrutora(var ok: boolean; const s: string): TpIndConstr;
+function eSIndAcordoIsencaoMultaToStr(const t: TpIndAcordoIsencaoMulta ): string;
+function eSStrToIndAcordoIsencaoMulta(var ok: boolean; const s: string): TpIndAcordoIsencaoMulta;
 
-  function eSIndDesFolhaToStr(const t: TpIndDesFolha ): string;
-  function eSStrToIndDesFolha(var ok: boolean; const s: string): TpIndDesFolha;
+function eSufToStr(const t: Tpuf ): string;
+function eSStrTouf(var ok: boolean; const s: string): Tpuf;
 
-  function eSIndOptRegEletronicoToStr(const t: TpIndOptRegEletron ): string;
-  function eSStrToIndOptRegEletronico(var ok: boolean; const s: string): TpIndOptRegEletron;
+function eSIndSituacaoEspecialToStr(const t: TpIndSituacaoEspecial ): string;
+function eSStrToIndSituacaoEspecial(var ok: boolean; const s: string): TpIndSituacaoEspecial;
 
-  function eSAliqRatToStr(const t: TpAliqRat ): string;
-  function eSStrToAliqRat(var ok: boolean; const s: string): TpAliqRat;
+function eSIndProvDescToStr(const t: TpIndProvDesc ): string;
+function eSStrToIndProvDesc(var ok: boolean; const s: string): TpIndProvDesc;
 
-  function eSTpProcessoToStr(const t: tpTpProc ): string;
-  function eSStrToTpProcesso(var ok: boolean; const s: string): tpTpProc;
+function eSCodIncCPToStr(const t: tpCodIncCP ): string;
+function eSStrToCodIncCP(var ok: boolean; const s: string): tpCodIncCP;
 
-  function eSSiglaMinToStr(const t: TpSiglaMin ): string;
-  function eSStrToSiglaMin(var ok: boolean; const s: string): TpSiglaMin;
+function eSCodIncIRRFToStr(const t: tpCodIncIRRF ): string;
+function eSStrToCodIncIRRF(var ok: boolean; const s: string): tpCodIncIRRF;
 
-  function eSIndAcordoIsencaoMultaToStr(const t: TpIndAcordoIsencaoMulta ): string;
-  function eSStrToIndAcordoIsencaoMulta(var ok: boolean; const s: string): TpIndAcordoIsencaoMulta;
+function eSCodIncFGTSToStr(const t: TpCodIncFGTS ): string;
+function eSStrToCodIncFGTS(var ok: boolean; const s: string): TpCodIncFGTS;
 
-  function eSufToStr(const t: Tpuf ): string;
-  function eSStrTouf(var ok: boolean; const s: string): Tpuf;
+function eSCodIncSINDToStr(const t: TpCodIncSIND ): string;
+function eSStrToCodIncSIND(var ok: boolean; const s: string): TpCodIncSIND;
 
-  function eSIndSituacaoEspecialToStr(const t: TpIndSituacaoEspecial ): string;
-  function eSStrToIndSituacaoEspecial(var ok: boolean; const s: string): TpIndSituacaoEspecial;
+function eSIndSuspToStr(const t: tpIndSusp): string;
+function eSStrToIndSusp(var ok: Boolean; const s: string): tpIndSusp;
 
-  function eSIndProvDescToStr(const t: TpIndProvDesc ): string;
-  function eSStrToIndProvDesc(var ok: boolean; const s: string): TpIndProvDesc;
+function eSExtDecisaoToStr(const t: TpExtDecisao ): string;
+function eSStrToExtDecisao(var ok: boolean; const s: string): TpExtDecisao;
 
-  function eSCodIncCPToStr(const t: tpCodIncCP ): string;
-  function eSStrToCodIncCP(var ok: boolean; const s: string): tpCodIncCP;
+function eSTpInscEstabToStr(const t: TpTpInscEstab ): string;
+function eSStrToTpInscEstab(var ok: boolean; const s: string): TpTpInscEstab;
 
-  function eSCodIncIRRFToStr(const t: tpCodIncIRRF ): string;
-  function eSStrToCodIncIRRF(var ok: boolean; const s: string): tpCodIncIRRF;
+function eStpInscContratanteToStr(const t: TptpInscContratante ): string;
+function eSStrTotpInscContratante(var ok: boolean; const s: string): TptpInscContratante;
 
-  function eSCodIncFGTSToStr(const t: TpCodIncFGTS ): string;
-  function eSStrToCodIncFGTS(var ok: boolean; const s: string): TpCodIncFGTS;
+function eSTpInscPropToStr(const t: TpTpInscProp ): string;
+function eSStrToTpInscProp(var ok: boolean; const s: string): TpTpInscProp;
 
-  function eSCodIncSINDToStr(const t: TpCodIncSIND ): string;
-  function eSStrToCodIncSIND(var ok: boolean; const s: string): TpCodIncSIND;
+function eSTpIntervaloToStr(const t: TpTpIntervalo ): string;
+function eSStrToTpIntervalo(var ok: boolean; const s: string): TpTpIntervalo;
 
-  function eSIndSuspToStr(const t: tpIndSusp): string;
-  function eSStrToIndSusp(var ok: Boolean; const s: string): tpIndSusp;
+function eSIndSubstPatronalObraToStr(const t: TpIndSubstPatronalObra ): string;
+function eSStrToIndSubstPatronalObra(var ok: boolean; const s: string): TpIndSubstPatronalObra;
 
-  function eSExtDecisaoToStr(const t: TpExtDecisao ): string;
-  function eSStrToExtDecisao(var ok: boolean; const s: string): TpExtDecisao;
+function eSIndDecisaoToStr(const t: TpIndDecisao ): string;
+function eSStrToIndDecisao(var ok: boolean; const s: string): TpIndDecisao;
 
-  function eSTpInscEstabToStr(const t: TpTpInscEstab ): string;
-  function eSStrToTpInscEstab(var ok: boolean; const s: string): TpTpInscEstab;
+function eSindAutoriaToStr(const t: TpindAutoria ): string;
+function eSStrToindAutoria(var ok: boolean; const s: string): TpindAutoria;
 
-  function eStpInscContratanteToStr(const t: TptpInscContratante ): string;
-  function eSStrTotpInscContratante(var ok: boolean; const s: string): TptpInscContratante;
+function eSTpIndMatProcToStr(const t: tpIndMatProc): string;
+function eSStrToTpIndMatProc(var ok: boolean; const s: string): tpIndMatProc;
 
-  function eSTpInscPropToStr(const t: TpTpInscProp ): string;
-  function eSStrToTpInscProp(var ok: boolean; const s: string): TpTpInscProp;
+function eSIndRetificacaoToStr(const t: TpIndRetificacao ): string;
+function eSStrToIndRetificacao(var ok: boolean; const s: string): TpIndRetificacao;
 
-  function eSTpIntervaloToStr(const t: TpTpIntervalo ): string;
-  function eSStrToTpIntervalo(var ok: boolean; const s: string): TpTpIntervalo;
+function eSIndApuracaoToStr(const t: TpIndApuracao ): string;
+function eSStrToIndApuracao(var ok: boolean; const s: string): TpIndApuracao;
 
-  function eSIndSubstPatronalObraToStr(const t: TpIndSubstPatronalObra ): string;
-  function eSStrToIndSubstPatronalObra(var ok: boolean; const s: string): TpIndSubstPatronalObra;
+function eSInfoApurGrauRiscoToStr(const t: TpInfoApurGrauRisco ): string;
+function eSStrToInfoApurGrauRisco(var ok: boolean; const s: string): TpInfoApurGrauRisco;
 
-  function eSIndDecisaoToStr(const t: TpIndDecisao ): string;
-  function eSStrToIndDecisao(var ok: boolean; const s: string): TpIndDecisao;
+function eSIndApurAliqFapToStr(const t: TpIndApurAliqFap ): string;
+function eSStrToIndApurAliqFap(var ok: boolean; const s: string): TpIndApurAliqFap;
 
-  function eSindAutoriaToStr(const t: TpindAutoria ): string;
-  function eSStrToindAutoria(var ok: boolean; const s: string): TpindAutoria;
+function eSIndMVToStr(const t: TpIndMV ): string;
+function eSStrToIndMV(var ok: boolean; const s: string): TpIndMV;
 
-  function eSTpIndMatProcToStr(const t: tpIndMatProc): string;
-  function eSStrToTpIndMatProc(var ok: boolean; const s: string): tpIndMatProc;
+function eSIndSimplesToStr(const t: TpIndSimples ): string;
+function eSStrToIndSimples(var ok: boolean; const s: string): TpIndSimples;
 
-  function eSIndRetificacaoToStr(const t: TpIndRetificacao ): string;
-  function eSStrToIndRetificacao(var ok: boolean; const s: string): TpIndRetificacao;
+function eSNatAtividadeToStr(const t: TpNatAtividade ): string;
+function eSStrToNatAtividade(var ok: boolean; const s: string): TpNatAtividade;
 
-  function eSIndApuracaoToStr(const t: TpIndApuracao ): string;
-  function eSStrToIndApuracao(var ok: boolean; const s: string): TpIndApuracao;
+function eSTpTributoToStr(const t: TpTpTributo ): string;
+function eSStrToTpTributo(var ok: boolean; const s: string): TpTpTributo;
 
-  function eSInfoApurGrauRiscoToStr(const t: TpInfoApurGrauRisco ): string;
-  function eSStrToInfoApurGrauRisco(var ok: boolean; const s: string): TpInfoApurGrauRisco;
+function eSGrauExpToStr(const t: TpGrauExp ): string;
+function eSStrToGrauExp(var ok: boolean; const s: string): TpGrauExp;
 
-  function eSIndApurAliqFapToStr(const t: TpIndApurAliqFap ): string;
-  function eSStrToIndApurAliqFap(var ok: boolean; const s: string): TpIndApurAliqFap;
+function eSTpAcordoToStr(const t: TpTpAcordo ): string;
+function eSStrToTpAcordo(var ok: boolean; const s: string): TpTpAcordo;
 
-  function eSIndMVToStr(const t: TpIndMV ): string;
-  function eSStrToIndMV(var ok: boolean; const s: string): TpIndMV;
+function eSIndNIFToStr(const t: TpIndNIF ): string;
+function eSStrToIndNIF(var ok: boolean; const s: string): TpIndNIF;
 
-  function eSIndSimplesToStr(const t: TpIndSimples ): string;
-  function eSStrToIndSimples(var ok: boolean; const s: string): TpIndSimples;
+function eSIndTpDeducaoToStr(const t: TpIndTpDeducao ): string;
+function eSStrToIndTpDeducao(var ok: boolean; const s: string): TpIndTpDeducao;
 
-  function eSNatAtividadeToStr(const t: TpNatAtividade ): string;
-  function eSStrToNatAtividade(var ok: boolean; const s: string): TpNatAtividade;
+function eSTpIsencaoToStr(const t: TpTpIsencao ): string;
+function eSStrToTpIsencao(var ok: boolean; const s: string): TpTpIsencao;
 
-  function eSTpTributoToStr(const t: TpTpTributo ): string;
-  function eSStrToTpTributo(var ok: boolean; const s: string): TpTpTributo;
+function eSIndPerReferenciaToStr(const t: TpIndPerReferencia ): string;
+function eSStrToIndPerReferencia(var ok: boolean; const s: string): TpIndPerReferencia;
 
-  function eSGrauExpToStr(const t: TpGrauExp ): string;
-  function eSStrToGrauExp(var ok: boolean; const s: string): TpGrauExp;
+function eSTpProcRRAToStr(const t: TpTpProcRRA ): string;
+function eSStrToTpProcRRA(var ok: boolean; const s: string): TpTpProcRRA;
 
-  function eSTpAcordoToStr(const t: TpTpAcordo ): string;
-  function eSStrToTpAcordo(var ok: boolean; const s: string): TpTpAcordo;
+function eSTpInscAdvogadoToStr(const t: TpTpInscAdvogado ): string;
+function eSStrToTpInscAdvogado(var ok: boolean; const s: string): TpTpInscAdvogado;
 
-  function eSIndNIFToStr(const t: TpIndNIF ): string;
-  function eSStrToIndNIF(var ok: boolean; const s: string): TpIndNIF;
+function eSIndOrigemRecursosToStr(const t: TpIndOrigemRecursos ): string;
+function eSStrToIndOrigemRecursos(var ok: boolean; const s: string): TpIndOrigemRecursos;
 
-  function eSIndTpDeducaoToStr(const t: TpIndTpDeducao ): string;
-  function eSStrToIndTpDeducao(var ok: boolean; const s: string): TpIndTpDeducao;
+function eSRelDependenciaToStr(const t: TpRelDependencia ): string;
+function eSStrToRelDependencia(var ok: boolean; const s: string): TpRelDependencia;
 
-  function eSTpIsencaoToStr(const t: TpTpIsencao ): string;
-  function eSStrToTpIsencao(var ok: boolean; const s: string): TpTpIsencao;
+function eSIndObraToStr(const t: TpIndObra ): string;
+function eSStrToIndObra(var ok: boolean; const s: string): TpIndObra;
 
-  function eSIndPerReferenciaToStr(const t: TpIndPerReferencia ): string;
-  function eSStrToIndPerReferencia(var ok: boolean; const s: string): TpIndPerReferencia;
+function eSIndIncidenciaToStr(const t: TpIndIncidencia ): string;
+function eSStrToIndIncidencia(var ok: boolean; const s: string): TpIndIncidencia;
 
-  function eSTpProcRRAToStr(const t: TpTpProcRRA ): string;
-  function eSStrToTpProcRRA(var ok: boolean; const s: string): TpTpProcRRA;
+function eSIndAbrangenciaToStr(const t: TpIndAbrangencia ): string;
+function eSStrToIndAbrangencia(var ok: boolean; const s: string): TpIndAbrangencia;
 
-  function eSTpInscAdvogadoToStr(const t: TpTpInscAdvogado ): string;
-  function eSStrToTpInscAdvogado(var ok: boolean; const s: string): TpTpInscAdvogado;
+function eSIndAquisicaoToStr(const t: TpIndAquisicao ): string;
+function eSStrToIndAquisicao(var ok: boolean; const s: string): TpIndAquisicao;
 
-  function eSIndOrigemRecursosToStr(const t: TpIndOrigemRecursos ): string;
-  function eSStrToIndOrigemRecursos(var ok: boolean; const s: string): TpIndOrigemRecursos;
+function eSIndComercializacaoToStr(const t: TpIndComercializacao ): string;
+function eSStrToIndComercializacao(var ok: boolean; const s: string): TpIndComercializacao;
 
-  function eSRelDependenciaToStr(const t: TpRelDependencia ): string;
-  function eSStrToRelDependencia(var ok: boolean; const s: string): TpRelDependencia;
+function eSTpRepasseToStr(const t: TpTpRepasse ): string;
+function eSStrToTpRepasse(var ok: boolean; const s: string): TpTpRepasse;
 
-  function eSIndObraToStr(const t: TpIndObra ): string;
-  function eSStrToIndObra(var ok: boolean; const s: string): TpIndObra;
+function eSIdeSubtetoToStr(const t: tpIdeSubteto): string;
+function eSStrToIdeSubteto(var ok: Boolean; const s: string): tpIdeSubteto;
 
-  function eSIndIncidenciaToStr(const t: TpIndIncidencia ): string;
-  function eSStrToIndIncidencia(var ok: boolean; const s: string): TpIndIncidencia;
+function eSTpPublAlvoToStr(const t: tpTpPublAlvo): string;
+function eSStrToTpPublAlvo(var ok: Boolean; const s: string): tpTpPublAlvo;
 
-  function eSIndAbrangenciaToStr(const t: TpIndAbrangencia ): string;
-  function eSStrToIndAbrangencia(var ok: boolean; const s: string): TpIndAbrangencia;
+function eSIndSitPFToStr(const t: tpIndSitPF): string;
+function eSStrToTpIndSitPF(var ok: Boolean; const s: string): tpIndSitPF;
 
-  function eSIndAquisicaoToStr(const t: TpIndAquisicao ): string;
-  function eSStrToIndAquisicao(var ok: boolean; const s: string): TpIndAquisicao;
+function eSIndSitPJToStr(const t: tpIndSitPJ): string;
+function eSStrToIndSitPJ(var ok: Boolean; const s: string): tpIndSitPJ;
 
-  function eSIndComercializacaoToStr(const t: TpIndComercializacao ): string;
-  function eSStrToIndComercializacao(var ok: boolean; const s: string): TpIndComercializacao;
+function eSTpRubrToStr(const t: tpTpRubr): string;
+function eSStrToTpRubr(var ok: Boolean; const s: string): tpTpRubr;
 
-  function eSTpRepasseToStr(const t: TpTpRepasse ): string;
-  function eSStrToTpRepasse(var ok: boolean; const s: string): TpTpRepasse;
+function eStpSitCargoToStr(const t: tpSitCargo): string;
+function eSStrToSitCargo(var ok: Boolean; const s: string): tpSitCargo;
 
-  function eSIdeSubtetoToStr(const t: tpIdeSubteto): string;
-  function eSStrToIdeSubteto(var ok: Boolean; const s: string): tpIdeSubteto;
+function eStpSitCarrToStr(const t: tpSitCarr): string;
+function eSStrToSitCarr(var ok: Boolean; const s: string): tpSitCarr;
 
-  function eSTpPublAlvoToStr(const t: tpTpPublAlvo): string;
-  function eSStrToTpPublAlvo(var ok: Boolean; const s: string): tpTpPublAlvo;
+function eSAcumCargoToStr(const t: tpAcumCargo): string;
+function eSStrToAcumCargo(var ok: Boolean; const s: string): tpAcumCargo;
 
-  function eSIndSitPFToStr(const t: tpIndSitPF): string;
-  function eSStrToTpIndSitPF(var ok: Boolean; const s: string): tpIndSitPF;
+function eSContagemEspToStr(const t: tpContagemEsp): string;
+function eSStrToContagemEsp(var ok: Boolean; const s: string): tpContagemEsp;
 
-  function eSIndSitPJToStr(const t: tpIndSitPJ): string;
-  function eSStrToIndSitPJ(var ok: Boolean; const s: string): tpIndSitPJ;
+function eStpUtilizEPCToStr(const t: tpUtilizEPC): string;
+function eSStrTotpUtilizEPC(var ok: Boolean; const s: string): tpUtilizEPC;
 
-  function eSTpRubrToStr(const t: tpTpRubr): string;
-  function eSStrToTpRubr(var ok: Boolean; const s: string): tpTpRubr;
+function eStpUtilizEPIToStr(const t: tpUtilizEPI): string;
+function eSStrTotpUtilizEPI(var ok: Boolean; const s: string): tpUtilizEPI;
 
-  function eStpSitCargoToStr(const t: tpSitCargo): string;
-  function eSStrToSitCargo(var ok: Boolean; const s: string): tpSitCargo;
+function eSLocalAmbToStr(const t: tpLocalAmb): string;
+function eSStrToLocalAmb(var ok: Boolean; const s: string): tpLocalAmb;
 
-  function eStpSitCarrToStr(const t: tpSitCarr): string;
-  function eSStrToSitCarr(var ok: Boolean; const s: string): tpSitCarr;
+function eSTpAcConvToStr(const t: tpTpAcConv): string;
+function eSStrToTpAcConv(var ok: Boolean; const s: string): tpTpAcConv;
 
-  function eSAcumCargoToStr(const t: tpAcumCargo): string;
-  function eSStrToAcumCargo(var ok: Boolean; const s: string): tpAcumCargo;
+function eSCnhToStr(const t: tpCnh): string;
+function eSStrToCnh(var ok: Boolean; const s: string): tpCnh;
 
-  function eSContagemEspToStr(const t: tpContagemEsp): string;
-  function eSStrToContagemEsp(var ok: Boolean; const s: string): tpContagemEsp;
+function eSClassTrabEstrangToStr(const t: tpClassTrabEstrang): string;
+function eSStrToClassTrabEstrang(var ok: Boolean; const s: string): tpClassTrabEstrang;
 
-  function eStpUtilizEPCToStr(const t: tpUtilizEPC): string;
-  function eSStrTotpUtilizEPC(var ok: Boolean; const s: string): tpUtilizEPC;
+function eStpDepToStr(const t: tpTpDep): string;
+function eSStrToTpDep(var ok: Boolean; const s: string): tpTpDep;
 
-  function eStpUtilizEPIToStr(const t: tpUtilizEPI): string;
-  function eSStrTotpUtilizEPI(var ok: Boolean; const s: string): tpUtilizEPI;
+function eSTpRegTrabToStr(const t: tpTpRegTrab ): string;
+function eSStrToTpRegTrab(var ok: boolean; const s: string): tpTpRegTrab;
 
-  function eSLocalAmbToStr(const t: tpLocalAmb): string;
-  function eSStrToLocalAmb(var ok: Boolean; const s: string): tpLocalAmb;
+function eSTpRegPrevToStr(const t: tpTpRegPrev ): string;
+function eSStrTotpRegPrev(var ok: boolean; const s: string): tpTpRegPrev;
 
-  function eSTpAcConvToStr(const t: tpTpAcConv): string;
-  function eSStrToTpAcConv(var ok: Boolean; const s: string): tpTpAcConv;
+function eSTpAdmissaoToStr(const t: tpTpAdmissao ): string;
+function eSStrToTpAdmissao(var ok: boolean; const s: string): tpTpAdmissao;
 
-  function eSCnhToStr(const t: tpCnh): string;
-  function eSStrToCnh(var ok: Boolean; const s: string): tpCnh;
+function eSTpIndAdmissaoToStr(const t: tpTpIndAdmissao ): string;
+function eSStrToTpIndAdmissao(var ok: boolean; const s: string): tpTpIndAdmissao;
 
-  function eSClassTrabEstrangToStr(const t: tpClassTrabEstrang): string;
-  function eSStrToClassTrabEstrang(var ok: Boolean; const s: string): tpClassTrabEstrang;
+function eSTpRegJorToStr(const t: tpTpRegJor ): string;
+function eSStrToTpRegJor(var ok: boolean; const s: string): tpTpRegJor;
 
-  function eStpDepToStr(const t: tpTpDep): string;
-  function eSStrToTpDep(var ok: Boolean; const s: string): tpTpDep;
+function eSOpcFGTSToStr(const t: tpOpcFGTS ): string;
+function eSStrToOpcFGTS(var ok: boolean; const s: string): tpOpcFGTS;
 
-  function eSTpRegTrabToStr(const t: tpTpRegTrab ): string;
-  function eSStrToTpRegTrab(var ok: boolean; const s: string): tpTpRegTrab;
+function eSMtvContratToStr(const t: tpMtvContrat ): string;
+function eSStrToMtvContrat(var ok: boolean; const s: string): tpMtvContrat;
 
-  function eSTpRegPrevToStr(const t: tpTpRegPrev ): string;
-  function eSStrTotpRegPrev(var ok: boolean; const s: string): tpTpRegPrev;
+function eSIndProvimToStr(const t: tpIndProvim ): string;
+function eSStrToIndProvim(var ok: boolean; const s: string): tpIndProvim;
 
-  function eSTpAdmissaoToStr(const t: tpTpAdmissao ): string;
-  function eSStrToTpAdmissao(var ok: boolean; const s: string): tpTpAdmissao;
+function eSTpProvToStr(const t: tpTpProv ): string;
+function eSStrToTpProv(var ok: boolean; const s: string): tpTpProv;
 
-  function eSTpIndAdmissaoToStr(const t: tpTpIndAdmissao ): string;
-  function eSStrToTpIndAdmissao(var ok: boolean; const s: string): tpTpIndAdmissao;
+function eSUndSalFixoToStr(const t: tpUndSalFixo ): string;
+function eSStrToUndSalFixo(var ok: boolean; const s: string): tpUndSalFixo;
 
-  function eSTpRegJorToStr(const t: tpTpRegJor ): string;
-  function eSStrToTpRegJor(var ok: boolean; const s: string): tpTpRegJor;
+function eSTpContrToStr(const t: tpTpContr ): string;
+function eSStrToTpContr(var ok: boolean; const s: string): tpTpContr;
 
-  function eSOpcFGTSToStr(const t: tpOpcFGTS ): string;
-  function eSStrToOpcFGTS(var ok: boolean; const s: string): tpOpcFGTS;
+function eSTpJornadaToStr(const t: tpTpJornada ): string;
+function eSStrToTpJornada(var ok: boolean; const s: string): tpTpJornada;
 
-  function eSMtvContratToStr(const t: tpMtvContrat ): string;
-  function eSStrToMtvContrat(var ok: boolean; const s: string): tpMtvContrat;
+function eSTpDiaToStr(const t: tpTpDia ): string;
+function eSStrToTpDia(var ok: boolean; const s: string): tpTpDia;
 
-  function eSIndProvimToStr(const t: tpIndProvim ): string;
-  function eSStrToIndProvim(var ok: boolean; const s: string): tpIndProvim;
+function eSTpAsoToStr(const t: tpTpAso ): string;
+function eSStrToTpAso(var ok: boolean; const s: string): tpTpAso;
 
-  function eSTpProvToStr(const t: tpTpProv ): string;
-  function eSStrToTpProv(var ok: boolean; const s: string): tpTpProv;
+function eSResAsoToStr(const t: tpResAso ): string;
+function eSStrToResAso(var ok: boolean; const s: string): tpResAso;
 
-  function eSUndSalFixoToStr(const t: tpUndSalFixo ): string;
-  function eSStrToUndSalFixo(var ok: boolean; const s: string): tpUndSalFixo;
+function eSMatBiologToStr(const t: TpMatBiolog ): string;
+function eSStrToMatBiolog(var ok: boolean; const s: string): TpMatBiolog;
 
-  function eSTpContrToStr(const t: tpTpContr ): string;
-  function eSStrToTpContr(var ok: boolean; const s: string): tpTpContr;
+function eSInterprExmToStr(const t: tpInterprExm ): string;
+function eSStrToInterprExm(var ok: boolean; const s: string): tpInterprExm;
 
-  function eSTpJornadaToStr(const t: tpTpJornada ): string;
-  function eSStrToTpJornada(var ok: boolean; const s: string): tpTpJornada;
+function eSOrdExameToStr(const t: tpOrdExame ): string;
+function eSStrToOrdExame(var ok: boolean; const s: string): tpOrdExame;
 
-  function eSTpDiaToStr(const t: tpTpDia ): string;
-  function eSStrToTpDia(var ok: boolean; const s: string): tpTpDia;
+function eSIndResultToStr(const t: tpIndResult ): string;
+function eSStrToIndResult(var ok: boolean; const s: string): tpIndResult;
 
-  function eSTpAsoToStr(const t: tpTpAso ): string;
-  function eSStrToTpAso(var ok: boolean; const s: string): tpTpAso;
+function eSTpAcidToStr(const t: tpTpAcid ): string;
+function eSStrToTpAcid(var ok: boolean; const s: string): tpTpAcid;
 
-  function eSResAsoToStr(const t: tpResAso ): string;
-  function eSStrToResAso(var ok: boolean; const s: string): tpResAso;
+function eSTpCatToStr(const t: tpTpCat ): string;
+function eSStrToTpCat(var ok: boolean; const s: string): tpTpCat;
 
-  function eSMatBiologToStr(const t: TpMatBiolog ): string;
-  function eSStrToMatBiolog(var ok: boolean; const s: string): TpMatBiolog;
+function eSSimNaoToStr(const t: tpSimNao ): string;
+function eSStrToSimNao(var ok: boolean; const s: string): tpSimNao;
 
-  function eSInterprExmToStr(const t: tpInterprExm ): string;
-  function eSStrToInterprExm(var ok: boolean; const s: string): tpInterprExm;
+function eSTpRegistradorToStr(const t: tpTpRegistrador ): string;
+function eSStrToTpRegistrador(var ok: boolean; const s: string): tpTpRegistrador;
 
-  function eSOrdExameToStr(const t: tpOrdExame ): string;
-  function eSStrToOrdExame(var ok: boolean; const s: string): tpOrdExame;
+function eSIniciatCATToStr(const t: tpIniciatCAT ): string;
+function eSStrToIniciatCAT(var ok: boolean; const s: string): tpIniciatCAT;
 
-  function eSIndResultToStr(const t: tpIndResult ): string;
-  function eSStrToIndResult(var ok: boolean; const s: string): tpIndResult;
+function eSTpLocalToStr(const t: tpTpLocal ): string;
+function eSStrToTpLocal(var ok: boolean; const s: string): tpTpLocal;
 
-  function eSTpAcidToStr(const t: tpTpAcid ): string;
-  function eSStrToTpAcid(var ok: boolean; const s: string): tpTpAcid;
+function eSLateralidadeToStr(const t: tpLateralidade ): string;
+function eSStrToLateralidade(var ok: boolean; const s: string): tpLateralidade;
 
-  function eSTpCatToStr(const t: tpTpCat ): string;
-  function eSStrToTpCat(var ok: boolean; const s: string): tpTpCat;
+function eSIdeOCToStr(const t: tpIdeOC ): string;
+function eSStrToIdeOC(var ok: boolean; const s: string): tpIdeOC;
 
-  function eSSimNaoToStr(const t: tpSimNao ): string;
-  function eSStrToSimNao(var ok: boolean; const s: string): tpSimNao;
+function eSTpAvPrevioToStr(const t: tpTpAvPrevio ): string;
+function eSStrToTpAvPrevio(var ok: boolean; const s: string): tpTpAvPrevio;
 
-  function eSTpRegistradorToStr(const t: tpTpRegistrador ): string;
-  function eSStrToTpRegistrador(var ok: boolean; const s: string): tpTpRegistrador;
+function eSMtvCancAvPrevioToStr(const t: tpMtvCancAvPrevio ): string;
+function eSStrToMtvCancAvPrevio(var ok: boolean; const s: string): tpMtvCancAvPrevio;
 
-  function eSIniciatCATToStr(const t: tpIniciatCAT ): string;
-  function eSStrToIniciatCAT(var ok: boolean; const s: string): tpIniciatCAT;
+function eSTpReintToStr(const t: tpTpReint ): string;
+function eSStrToTpReint(var ok: boolean; const s: string): tpTpReint;
 
-  function eSTpLocalToStr(const t: tpTpLocal ): string;
-  function eSStrToTpLocal(var ok: boolean; const s: string): tpTpLocal;
+function eSNrLeiAnistiaToStr(const t: tpNrLeiAnistia ): string;
+function eSStrToNrLeiAnistia(var ok: boolean; const s: string): tpNrLeiAnistia;
 
-  function eSLateralidadeToStr(const t: tpLateralidade ): string;
-  function eSStrToLateralidade(var ok: boolean; const s: string): tpLateralidade;
+function eSTpContribSindToStr(const t: tpTpContribSind ): string;
+function eSStrToTpContribSind(var ok: boolean; const s: string): tpTpContribSind;
 
-  function eSIdeOCToStr(const t: tpIdeOC ): string;
-  function eSStrToIdeOC(var ok: boolean; const s: string): tpIdeOC;
+function eSIndSubstPatrOpPortStr(const t: tpIndSubstPatrOpPort ): string;
+function eSStrToIndSubstPatrOpPort(var ok: boolean; const s: string): tpIndSubstPatrOpPort;
 
-  function eSTpAvPrevioToStr(const t: tpTpAvPrevio ): string;
-  function eSStrToTpAvPrevio(var ok: boolean; const s: string): tpTpAvPrevio;
+function eSIdAquisStr(const t: tpIdAquis ): string;
+function eSStrToIdAquis(var ok: boolean; const s: string): tpIdAquis;
 
-  function eSMtvCancAvPrevioToStr(const t: tpMtvCancAvPrevio ): string;
-  function eSStrToMtvCancAvPrevio(var ok: boolean; const s: string): tpMtvCancAvPrevio;
+function eSIndComercStr(const t: tpIndComerc ): string;
+function eSStrToIndComerc(var ok: boolean; const s: string): tpIndComerc;
 
-  function eSTpReintToStr(const t: tpTpReint ): string;
-  function eSStrToTpReint(var ok: boolean; const s: string): tpTpReint;
+function eSTpNatEstagioToStr(const t: tpNatEstagio): string;
+function eSStrToTpNatEstagio(var ok: boolean; const s: string): tpNatEstagio;
 
-  function eSNrLeiAnistiaToStr(const t: tpNrLeiAnistia ): string;
-  function eSStrToNrLeiAnistia(var ok: boolean; const s: string): tpNrLeiAnistia;
+function eSTpCaepfToStr(const t: tpCaepf): string;
+function eSStrTotpCaepf(var ok: Boolean; const s: string): tpCaepf;
 
-  function eSTpContribSindToStr(const t: tpTpContribSind ): string;
-  function eSStrToTpContribSind(var ok: boolean; const s: string): tpTpContribSind;
+function eSTpTpPgtoToStr(const t: tpTpPgto): string;
+function eSStrTotpTpPgto(var ok: Boolean; const s: string): tpTpPgto;
 
-  function eSIndSubstPatrOpPortStr(const t: tpIndSubstPatrOpPort ): string;
-  function eSStrToIndSubstPatrOpPort(var ok: boolean; const s: string): tpIndSubstPatrOpPort;
-
-  function eSIdAquisStr(const t: tpIdAquis ): string;
-  function eSStrToIdAquis(var ok: boolean; const s: string): tpIdAquis;
-
-  function eSIndComercStr(const t: tpIndComerc ): string;
-  function eSStrToIndComerc(var ok: boolean; const s: string): tpIndComerc;
-
-  function eSTpNatEstagioToStr(const t: tpNatEstagio): string;
-  function eSStrToTpNatEstagio(var ok: boolean; const s: string): tpNatEstagio;
-
-  function eSTpCaepfToStr(const t: tpCaepf): string;
-  function eSStrTotpCaepf(var ok: Boolean; const s: string): tpCaepf;
-
-  function eSTpTpPgtoToStr(const t: tpTpPgto): string;
-  function eSStrTotpTpPgto(var ok: Boolean; const s: string): tpTpPgto;
-
-  function eSTpOpcConsultToStr(const t: tpOpcConsult): string;
-  function eSStrTotpOpcConsult(var ok: Boolean; const s: string): tpOpcConsult;
+function eSTpOpcConsultToStr(const t: tpOpcConsult): string;
+function eSStrTotpOpcConsult(var ok: Boolean; const s: string): tpOpcConsult;
   
-  function eSTpNivelEstagioToStr(const t: tpNivelEstagio): string;
-  function eSStrTotpNivelEstagio(var ok: Boolean; const s: string): tpNivelEstagio;
+function eSTpNivelEstagioToStr(const t: tpNivelEstagio): string;
+function eSStrTotpNivelEstagio(var ok: Boolean; const s: string): tpNivelEstagio;
 
-  function eSTpRegPtToStr(const t: tpRegPt): string;
-  function eSStrTotpRegPt(var ok: boolean; const s: string): tpRegPt;
+function eSTpRegPtToStr(const t: tpRegPt): string;
+function eSStrTotpRegPt(var ok: boolean; const s: string): tpRegPt;
 
-  function eSTpContAprToStr(const t: tpContApr): string;
-  function eSStrTotpContApr(var ok: boolean; const s: string): tpContApr;
+function eSTpContAprToStr(const t: tpContApr): string;
+function eSStrTotpContApr(var ok: boolean; const s: string): tpContApr;
 
-  function eSTpContPCDToStr(const t: tpContPCD): string;
-  function eSStrToTpContPCD(var ok: boolean; const s: string): tpContPCD;
+function eSTpContPCDToStr(const t: tpContPCD): string;
+function eSStrToTpContPCD(var ok: boolean; const s: string): tpContPCD;
 
-  function eSTpInclContrToStr(const t: tpInclContr): string;
-  function eSStrToTpInclContr(var ok: boolean; const s: string): tpInclContr;
+function eSTpInclContrToStr(const t: tpInclContr): string;
+function eSStrToTpInclContr(var ok: boolean; const s: string): tpInclContr;
 
-  function eSTpPlanRPToStr(const t: tpPlanRP): string;
-  function eSStrToTpPlanRP(var ok: boolean; const s: string): tpPlanRP;
+function eSTpPlanRPToStr(const t: tpPlanRP): string;
+function eSStrToTpPlanRP(var ok: boolean; const s: string): tpPlanRP;
 
-  function eSTpMtvAltToStr(const t: tpMtvAlt): string;
-  function eSStrToTpMtvAlt(var ok: boolean; const s: string): tpMtvAlt;
+function eSTpMtvAltToStr(const t: tpMtvAlt): string;
+function eSStrToTpMtvAlt(var ok: boolean; const s: string): tpMtvAlt;
 
-  function eSTpOrigemAltAfastToStr(const t: tpOrigemAltAfast): string;
-  function eSStrToTpOrigemAltAfast(var ok: boolean; const s: string): tpOrigemAltAfast;
+function eSTpOrigemAltAfastToStr(const t: tpOrigemAltAfast): string;
+function eSStrToTpOrigemAltAfast(var ok: boolean; const s: string): tpOrigemAltAfast;
 
-  function eSTpPensaoAlimToStr(const t: tpPensaoAlim): string;
-  function eSStrToTpPensaoAlim(var ok: boolean; const s: string): tpPensaoAlim;
+function eSTpPensaoAlimToStr(const t: tpPensaoAlim): string;
+function eSStrToTpPensaoAlim(var ok: boolean; const s: string): tpPensaoAlim;
 
-  function eSTpCumprParcialAvisoToStr(const t: tpCumprParcialAviso): string;
-  function eSStrToTpCumprParcialAviso(var ok: boolean; const s: string): tpCumprParcialAviso;
+function eSTpCumprParcialAvisoToStr(const t: tpCumprParcialAviso): string;
+function eSStrToTpCumprParcialAviso(var ok: boolean; const s: string): tpCumprParcialAviso;
 
-  function eSModoLancamentoToStr(const t: TModoLancamento): string;
-  function eSStrToModoLancamento(var ok: boolean; const s: string): TModoLancamento;
+function eSModoLancamentoToStr(const t: TModoLancamento): string;
+function eSStrToModoLancamento(var ok: boolean; const s: string): TModoLancamento;
 
 function LayOuteSocialToServico(const t: TLayOut): String;
 
@@ -817,7 +812,6 @@ function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 function LayOutToSchema(const t: TLayOut): TeSocialSchema;
 
 function SchemaESocialToStr(const t: TeSocialSchema): String;
-
 function StrToSchemaESocial(out ok: Boolean; const s: String): TeSocialSchema;
 
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
@@ -929,7 +923,7 @@ function StrToEnumerado2(var ok: boolean;  const s: string; Const AString:
 var
   i: integer;
 begin
-  Result := -1;
+  result := -1;
   try
     for i := Low(AString) to High(AString) do
       if AnsiSameText(s, AString[i]) then
@@ -938,7 +932,7 @@ begin
         exit;
       end;
   finally
-    ok := Result <> -1;
+    ok := result <> -1;
   end;
 end;
 
@@ -946,6 +940,7 @@ function TipoEventoToStr(const t: TTipoEvento ): string;
 begin
   result := EnumeradoToStr2(t,TTipoEventoString );
 end;
+
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 begin
   result  := TTipoEvento( StrToEnumerado2(ok , s, TTipoEventoString ) );
@@ -955,6 +950,7 @@ function eStpAmbToStr(const t: TptpAmb ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
 begin
   result  := TptpAmb( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -964,6 +960,7 @@ function eSProcEmiToStr(const t: TpProcEmi ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToProcEmi(var ok: boolean; const s: string): TpProcEmi;
 begin
   result := TpProcEmi( StrToEnumerado2(ok , s, TGenericosString1_2) );
@@ -973,6 +970,7 @@ function eSIndSegmentoToStr(const t: TpIndSegmento ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1 );
 end;
+
 function eSStrToIndSegmento(var ok: boolean; const s: string): TpIndSegmento;
 begin
   result := TpIndSegmento( StrToEnumerado2(ok , s, TGenericosString1 ) );
@@ -982,6 +980,7 @@ function eSTpInscricaoToStr(const t:tpTpInsc ): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString1_4 );
 end;
+
 function eSStrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
 begin
   result := tpTpInsc( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
@@ -991,6 +990,7 @@ function eStpOpcConsultToStr(const t: tpOpcConsult): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_4 );
 end;
+
 function eSStrTotpOpcConsult(var ok: Boolean; const s: string): tpOpcConsult;
 begin
   result := tpOpcConsult( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
@@ -1033,7 +1033,7 @@ end;
 
 function eSStrToTpInclContr(var ok: Boolean; const s: string): tpInclContr;
 begin
-  Result := tpInclContr( StrToEnumerado2(ok, s, TGenericosString1_3) );
+  result := tpInclContr( StrToEnumerado2(ok, s, TGenericosString1_3) );
 end;
 
 function eSTpPlanRPToStr(const t: tpPlanRP): string;
@@ -1050,6 +1050,7 @@ function eSTpRegTrabToStr(const t: tpTpRegTrab ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToTpRegTrab(var ok: boolean; const s: string): tpTpRegTrab;
 begin
   result := tpTpRegTrab( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1059,6 +1060,7 @@ function eSTpRegPrevToStr(const t: tpTpRegPrev ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrTotpRegPrev(var ok: boolean; const s: string): tpTpRegPrev;
 begin
   result := tpTpRegPrev( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1068,6 +1070,7 @@ function eSTpIndAdmissaoToStr(const t: tpTpIndAdmissao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToTpIndAdmissao(var ok: boolean; const s: string): tpTpIndAdmissao;
 begin
   result := tpTpIndAdmissao( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1077,6 +1080,7 @@ function eSTpRegJorToStr(const t: tpTpRegJor ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToTpRegJor(var ok: boolean; const s: string): tpTpRegJor;
 begin
   result := tpTpRegJor( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1086,6 +1090,7 @@ function eSOpcFGTSToStr(const t: tpOpcFGTS ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToOpcFGTS(var ok: boolean; const s: string): tpOpcFGTS;
 begin
   result := tpOpcFGTS( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1095,6 +1100,7 @@ function eSMtvContratToStr(const t: tpMtvContrat ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToMtvContrat(var ok: boolean; const s: string): tpMtvContrat;
 begin
   result := tpMtvContrat( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1104,6 +1110,7 @@ function eSIndProvimToStr(const t: tpIndProvim ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToIndProvim(var ok: boolean; const s: string): tpIndProvim;
 begin
   result := tpIndProvim( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1113,6 +1120,7 @@ function eSTpProvToStr(const t: tpTpProv ): string;
 begin
   result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '9' ] );
 end;
+
 function eSStrToTpProv(var ok: boolean; const s: string): tpTpProv;
 begin
   result := tpTpProv( StrToEnumerado2(ok , s, [ '1', '2', '3', '4', '5', '9' ] ) );
@@ -1132,6 +1140,7 @@ function eSUndSalFixoToStr(const t: tpUndSalFixo ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_7 );
 end;
+
 function eSStrToUndSalFixo(var ok: boolean; const s: string): tpUndSalFixo;
 begin
   result := tpUndSalFixo( StrToEnumerado2(ok , s, TGenericosString1_7 ) );
@@ -1141,6 +1150,7 @@ function eSTpContrToStr(const t: tpTpContr ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToTpContr(var ok: boolean; const s: string): tpTpContr;
 begin
   result := tpTpContr( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1150,6 +1160,7 @@ function eSTpJornadaToStr(const t: tpTpJornada ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToTpJornada(var ok: boolean; const s: string): tpTpJornada;
 begin
   result := tpTpJornada( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1159,6 +1170,7 @@ function eSTpDiaToStr(const t: tpTpDia ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_8 );
 end;
+
 function eSStrToTpDia(var ok: boolean; const s: string): tpTpDia;
 begin
   result := tpTpDia( StrToEnumerado2(ok , s, TGenericosString1_8 ) );
@@ -1168,6 +1180,7 @@ function eSTpAsoToStr(const t: tpTpAso ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_4 );
 end;
+
 function eSStrToTpAso(var ok: boolean; const s: string): tpTpAso;
 begin
   result := tpTpAso( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
@@ -1177,6 +1190,7 @@ function eSResAsoToStr(const t: tpResAso ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToResAso(var ok: boolean; const s: string): tpResAso;
 begin
   result := tpResAso( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1186,6 +1200,7 @@ function eSMatBiologToStr(const t: TpMatBiolog ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToMatBiolog(var ok: boolean; const s: string): TpMatBiolog;
 begin
   result := TpMatBiolog( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1195,6 +1210,7 @@ function eSInterprExmToStr(const t: tpInterprExm ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToInterprExm(var ok: boolean; const s: string): tpInterprExm;
 begin
   result := tpInterprExm( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1204,24 +1220,27 @@ function eSOrdExameToStr(const t: tpOrdExame ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToOrdExame(var ok: boolean; const s: string): tpOrdExame;
 begin
   result := tpOrdExame( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
 end;
 
-function eSIndResultToStr(const t: tpIndResult ): string;
+function eSIndresultToStr(const t: tpIndresult ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_4 );
 end;
-function eSStrToIndResult(var ok: boolean; const s: string): tpIndResult;
+
+function eSStrToIndresult(var ok: boolean; const s: string): tpIndresult;
 begin
-  result := tpIndResult( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
+  result := tpIndresult( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
 end;
 
 function eSTpAcidToStr(const t: tpTpAcid ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToTpAcid(var ok: boolean; const s: string): tpTpAcid;
 begin
   result := tpTpAcid( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1231,6 +1250,7 @@ function eSTpCatToStr(const t: tpTpCat ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToTpCat(var ok: boolean; const s: string): tpTpCat;
 begin
   result := tpTpCat( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1240,6 +1260,7 @@ function eSTpRegistradorToStr(const t: tpTpRegistrador ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_9 );
 end;
+
 function eSStrToTpRegistrador(var ok: boolean; const s: string): tpTpRegistrador;
 begin
   result := tpTpRegistrador( StrToEnumerado2(ok , s, TGenericosString1_9 ) );
@@ -1249,6 +1270,7 @@ function eSIniciatCATToStr(const t: tpIniciatCAT ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToIniciatCAT(var ok: boolean; const s: string): tpIniciatCAT;
 begin
   result := tpIniciatCAT( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1258,6 +1280,7 @@ function eSLateralidadeToStr(const t: tpLateralidade ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString0_3 );
 end;
+
 function eSStrToLateralidade(var ok: boolean; const s: string): tpLateralidade;
 begin
   result := tpLateralidade( StrToEnumerado2(ok , s, TGenericosString0_3 ) );
@@ -1267,6 +1290,7 @@ function eSIdeOCToStr(const t: tpIdeOC ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToIdeOC(var ok: boolean; const s: string): tpIdeOC;
 begin
   result := tpIdeOC( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1276,6 +1300,7 @@ function eSTpAvPrevioToStr(const t: tpTpAvPrevio ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_5 );
 end;
+
 function eSStrToTpAvPrevio(var ok: boolean; const s: string): tpTpAvPrevio;
 begin
   result := tpTpAvPrevio( StrToEnumerado2(ok , s, TGenericosString1_5 ) );
@@ -1285,6 +1310,7 @@ function eSNrLeiAnistiaToStr(const t: tpNrLeiAnistia ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_6 );
 end;
+
 function eSStrToNrLeiAnistia(var ok: boolean; const s: string): tpNrLeiAnistia;
 begin
   result := tpNrLeiAnistia( StrToEnumerado2(ok , s, TGenericosString1_6 ) );
@@ -1294,6 +1320,7 @@ function eSTpContribSindToStr(const t: tpTpContribSind ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_4 );
 end;
+
 function eSStrToTpContribSind(var ok: boolean; const s: string): tpTpContribSind;
 begin
   result := tpTpContribSind( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
@@ -1303,6 +1330,7 @@ function eSIndSubstPatrOpPortStr(const t: tpIndSubstPatrOpPort ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToIndSubstPatrOpPort(var ok: boolean; const s: string): tpIndSubstPatrOpPort;
 begin
   result := tpIndSubstPatrOpPort( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1312,6 +1340,7 @@ function eSIdAquisStr(const t: tpIdAquis ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToIdAquis(var ok: boolean; const s: string): tpIdAquis;
 begin
   result := tpIdAquis( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1331,6 +1360,7 @@ function eStpTpInscAmbTabToStr(const t: tpTpInscAmbTab ): string;
 begin
   result := EnumeradoToStr2(t,[ '1', '3' ] );
 end;
+
 function eSStrTotpTpInscAmbTab(var ok: boolean; const s: string): tpTpInscAmbTab;
 begin
   result := tpTpInscAmbTab( StrToEnumerado2(ok , s,[ '1', '3' ] ));
@@ -1340,6 +1370,7 @@ function eSIndComercStr(const t: tpIndComerc ): string;
 begin
   result := EnumeradoToStr2(t,[ '2', '3', '8', '9' ] );
 end;
+
 function eSStrToIndComerc(var ok: boolean; const s: string): tpIndComerc;
 begin
   result := tpIndComerc( StrToEnumerado2(ok , s,[ '2', '3', '8', '9' ] ));
@@ -1349,6 +1380,7 @@ function eSIndCooperativaToStr(const t:TpIndCoop ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString0_3 );
 end;
+
 function eSStrToIndCooperativa(var ok: boolean; const s: string): TpIndCoop;
 begin
   result := TpIndCoop( StrToEnumerado2(ok , s, TGenericosString0_3 ) );
@@ -1358,6 +1390,7 @@ function eSIndConstrutoraToStr(const t:TpIndConstr ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString0_1 );
 end;
+
 function eSStrToIndConstrutora(var ok: boolean; const s: string): TpIndConstr;
 begin
   result := TpIndConstr( StrToEnumerado2(ok , s, TGenericosString0_1 ) );
@@ -1367,6 +1400,7 @@ function eSIndDesFolhaToStr(const t:tpIndDesFolha ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString0_2 );
 end;
+
 function eSStrToIndDesFolha(var ok: boolean; const s: string): TpIndDesFolha;
 begin
   result := TpIndDesFolha( StrToEnumerado2(ok , s, TGenericosString0_2 ) );
@@ -1376,6 +1410,7 @@ function eSIndOptRegEletronicoToStr(const t:TpIndOptRegEletron ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString0_1 );
 end;
+
 function eSStrToIndOptRegEletronico(var ok: boolean; const s: string): TpIndOptRegEletron;
 begin
   result := TpIndOptRegEletron( StrToEnumerado2(ok , s, TGenericosString0_1 ) );
@@ -1385,6 +1420,7 @@ function eSAliqRatToStr(const t:tpAliqRat ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToAliqRat(var ok: boolean; const s: string): TpAliqRat;
 begin
   result := TpAliqRat( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
@@ -1394,6 +1430,7 @@ function eSTpProcessoToStr(const t:tpTpProc ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToTpProcesso(var ok: boolean; const s: string): tpTpProc;
 begin
   result := tpTpProc( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
@@ -1403,6 +1440,7 @@ function eSSiglaMinToStr(const t:tpSiglaMin ): string;
 begin
   result := EnumeradoToStr2(t,TSiglasMinString );
 end;
+
 function eSStrToSiglaMin(var ok: boolean; const s: string): TpSiglaMin;
 begin
   result := TpSiglaMin( StrToEnumerado2(ok , s,TSiglasMinString ) );
@@ -1412,6 +1450,7 @@ function eSIndAcordoIsencaoMultaToStr(const t:tpIndAcordoIsencaoMulta ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString0_1 );
 end;
+
 function eSStrToIndAcordoIsencaoMulta(var ok: boolean; const s: string): TpIndAcordoIsencaoMulta;
 begin
   result := TpIndAcordoIsencaoMulta( StrToEnumerado2(ok , s,TGenericosString0_1 ) );
@@ -1421,6 +1460,7 @@ function eSufToStr(const t:tpuf ): string;
 begin
   result := EnumeradoToStr2(t,TUFString );
 end;
+
 function eSStrTouf(var ok: boolean; const s: string): Tpuf;
 begin
   result := Tpuf( StrToEnumerado2(ok , s,TUFString ) );
@@ -1430,6 +1470,7 @@ function eSIndSituacaoEspecialToStr(const t:tpIndSituacaoEspecial ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString0_4 );
 end;
+
 function eSStrToIndSituacaoEspecial(var ok: boolean; const s: string): TpIndSituacaoEspecial;
 begin
   result := TpIndSituacaoEspecial( StrToEnumerado2(ok , s,TGenericosString0_4 ) );
@@ -1439,6 +1480,7 @@ function eSIndProvDescToStr(const t:tpIndProvDesc ): string;
 begin
   result := EnumeradoToStr2(t,['P','D','I'] );
 end;
+
 function eSStrToIndProvDesc(var ok: boolean; const s: string): TpIndProvDesc;
 begin
   result := TpIndProvDesc( StrToEnumerado2(ok , s,['P','D','I'] ));
@@ -1449,6 +1491,7 @@ begin
   result := EnumeradoToStr2(t,[ '00', '01', '11', '12', '13', '14', '15', '16','21', '22', '23', '24', '25', '26', '31',
                                 '32', '34', '35', '51', '61', '91', '92', '93', '94' ] );
 end;
+
 function eSStrToCodIncCP(var ok: boolean; const s: string): tpCodIncCP;
 begin
   result := tpCodIncCP( StrToEnumerado2(ok , s,[ '00', '01', '11', '12', '13', '14', '15', '16', '21', '22', '23', '24', '25', '26', '31',
@@ -1459,6 +1502,7 @@ function eSTpLocalToStr(const t: tpTpLocal ): string;
 begin
   result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '9' ] );
 end;
+
 function eSStrToTpLocal(var ok: boolean; const s: string): tpTpLocal;
 begin
   result := tpTpLocal( StrToEnumerado2(ok , s,[ '1', '2', '3', '4', '5', '9' ] ));
@@ -1468,6 +1512,7 @@ function eSMtvCancAvPrevioToStr(const t: tpMtvCancAvPrevio ): string;
 begin
   result := EnumeradoToStr2(t,[ '1', '2', '3', '9' ] );
 end;
+
 function eSStrToMtvCancAvPrevio(var ok: boolean; const s: string): tpMtvCancAvPrevio;
 begin
   result := tpMtvCancAvPrevio( StrToEnumerado2(ok , s,[ '1', '2', '3', '9' ] ));
@@ -1477,6 +1522,7 @@ function eSTpReintToStr(const t: tpTpReint ): string;
 begin
   result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '9' ] );
 end;
+
 function eSStrToTpReint(var ok: boolean; const s: string): tpTpReint;
 begin
   result := tpTpReint( StrToEnumerado2(ok , s,[ '1', '2', '3', '4', '5', '9' ] ));
@@ -1490,6 +1536,7 @@ begin
                                  '72', '73', '74', '75', '76', '77', '78', '79', '81', '82',
                                  '83','91', '92', '93', '94', '95' ] );
 end;
+
 function eSStrToCodIncIRRF(var ok: boolean; const s: string): tpCodIncIRRF;
 begin
   result := tpCodIncIRRF( StrToEnumerado2(ok , s,[  '00', '01', '09','11', '12', '13', '14', '15', '31', '32', '33', '34',
@@ -1503,6 +1550,7 @@ function eSCodIncFGTSToStr(const t:tpCodIncFGTS ): string;
 begin
   result := EnumeradoToStr2(t,[ '00', '11', '12', '21', '91' ] );
 end;
+
 function eSStrToCodIncFGTS(var ok: boolean; const s: string): tpCodIncFGTS;
 begin
   result := tpCodIncFGTS( StrToEnumerado2(ok , s,[ '00', '11', '12', '21', '91' ] ));
@@ -1512,6 +1560,7 @@ function eSCodIncSINDToStr(const t:tpCodIncSIND ): string;
 begin
   result := EnumeradoToStr2(t,[ '00', '11', '31','91' ] );
 end;
+
 function eSStrToCodIncSIND(var ok: boolean; const s: string): tpCodIncSIND;
 begin
   result := tpCodIncSIND( StrToEnumerado2(ok , s,[  '00', '11', '31','91'] ));
@@ -1522,6 +1571,7 @@ begin
   result := EnumeradoToStr2(t,[ '01', '02', '03','04', '05', '08', '09', '10',
                                 '11', '12', '13', '14', '90', '92' ] );
 end;
+
 function eSStrToIndSusp(var ok: Boolean; const s: string): tpIndSusp;
 begin
   result := tpIndSusp( StrToEnumerado2(ok , s,[ '01', '02', '03', '04', '05', '08', '09', '10',
@@ -1532,6 +1582,7 @@ function eSExtDecisaoToStr(const t: TpExtDecisao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToExtDecisao(var ok: boolean; const s: string): TpExtDecisao;
 begin
   result :=  TpExtDecisao( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1541,6 +1592,7 @@ function eSTpInscEstabToStr(const t:tpTpInscEstab ): string;
 begin
   result := EnumeradoToStr2(t,['1','3','4','']  );
 end;
+
 function eSStrToTpInscEstab(var ok: boolean; const s: string): TpTpInscEstab;
 begin
   result := TpTpInscEstab( StrToEnumerado2(ok , s,['1','3','4','']  ));
@@ -1550,6 +1602,7 @@ function eStpInscContratanteToStr(const t:tptpInscContratante ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrTotpInscContratante(var ok: boolean; const s: string): TptpInscContratante;
 begin
   result := TptpInscContratante( StrToEnumerado2(ok , s,TGenericosString1_2  ));
@@ -1559,6 +1612,7 @@ function eSTpInscPropToStr(const t:TpTpInscProp ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToTpInscProp(var ok: boolean; const s: string): TpTpInscProp;
 begin
   result := TpTpInscProp( StrToEnumerado2(ok , s,TGenericosString1_2  ));
@@ -1568,6 +1622,7 @@ function eSTpIntervaloToStr(const t:tpTpIntervalo ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToTpIntervalo(var ok: boolean; const s: string): TpTpIntervalo;
 begin
   result := TpTpIntervalo( StrToEnumerado2(ok , s,TGenericosString1_2  ));
@@ -1577,6 +1632,7 @@ function eSIndSubstPatronalObraToStr(const t:tpIndSubstPatronalObra ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToIndSubstPatronalObra(var ok: boolean; const s: string): TpIndSubstPatronalObra;
 begin
   result := TpIndSubstPatronalObra( StrToEnumerado2(ok , s,TGenericosString1_2  ));
@@ -1586,6 +1642,7 @@ function eSIndDecisaoToStr(const t:tpIndDecisao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString01_10  );
 end;
+
 function eSStrToIndDecisao(var ok: boolean; const s: string): TpIndDecisao;
 begin
   result := TpIndDecisao( StrToEnumerado2(ok , s,TGenericosString01_10  ));
@@ -1595,6 +1652,7 @@ function eSindAutoriaToStr(const t:tpindAutoria ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToindAutoria(var ok: boolean; const s: string): TpindAutoria;
 begin
   result := TpindAutoria( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1604,6 +1662,7 @@ function eSIndRetificacaoToStr(const t:tpIndRetificacao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToIndRetificacao(var ok: boolean; const s: string): TpIndRetificacao;
 begin
   result := TpIndRetificacao( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1613,6 +1672,7 @@ function eSIndApuracaoToStr(const t:tpIndApuracao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToIndApuracao(var ok: boolean; const s: string): TpIndApuracao;
 begin
   result := TpIndApuracao( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1622,6 +1682,7 @@ function eSInfoApurGrauRiscoToStr(const t:tpInfoApurGrauRisco ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToInfoApurGrauRisco(var ok: boolean; const s: string): TpInfoApurGrauRisco;
 begin
   result := TpInfoApurGrauRisco( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1631,6 +1692,7 @@ function eSIndApurAliqFapToStr(const t:tpIndApurAliqFap ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToIndApurAliqFap(var ok: boolean; const s: string): TpIndApurAliqFap;
 begin
   result := TpIndApurAliqFap( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1640,6 +1702,7 @@ function eSIndMVToStr(const t:tpIndMV ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3  );
 end;
+
 function eSStrToIndMV(var ok: boolean; const s: string): TpIndMV;
 begin
   result := TpIndMV( StrToEnumerado2(ok , s,TGenericosString1_3 ));
@@ -1649,6 +1712,7 @@ function eSIndSimplesToStr(const t:tpIndSimples ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3  );
 end;
+
 function eSStrToIndSimples(var ok: boolean; const s: string): TpIndSimples;
 begin
   result := TpIndSimples( StrToEnumerado2(ok , s,TGenericosString1_3 ));
@@ -1658,6 +1722,7 @@ function eSNatAtividadeToStr(const t:tpNatAtividade ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToNatAtividade(var ok: boolean; const s: string): TpNatAtividade;
 begin
   result := TpNatAtividade( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1667,6 +1732,7 @@ function eSTpTributoToStr(const t:tpTpTributo ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3  );
 end;
+
 function eSStrToTpTributo(var ok: boolean; const s: string): TpTpTributo;
 begin
   result := TpTpTributo( StrToEnumerado2(ok , s,TGenericosString1_3 ));
@@ -1676,6 +1742,7 @@ function eSGrauExpToStr(const t:tpGrauExp ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_4  );
 end;
+
 function eSStrToGrauExp(var ok: boolean; const s: string): TpGrauExp;
 begin
   result := TpGrauExp( StrToEnumerado2(ok , s,TGenericosString1_4 ));
@@ -1685,6 +1752,7 @@ function eSTpAdmissaoToStr(const t: tpTpAdmissao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_4  );
 end;
+
 function eSStrToTpAdmissao(var ok: boolean; const s: string): tpTpAdmissao;
 begin
   result := tpTpAdmissao( StrToEnumerado2(ok , s,TGenericosString1_4 ));
@@ -1694,6 +1762,7 @@ function eSTpAcordoToStr(const t:tpTpAcordo ): string;
 begin
   result := EnumeradoToStr2(t,[ 'A','B','C','D' ] );
 end;
+
 function eSStrToTpAcordo(var ok: boolean; const s: string): TpTpAcordo;
 begin
   result := TpTpAcordo( StrToEnumerado2(ok , s,[  'A','B','C','D'] ));
@@ -1703,6 +1772,7 @@ function eSIndNIFToStr(const t:tpIndNIF ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
+
 function eSStrToIndNIF(var ok: boolean; const s: string): TpIndNIF;
 begin
   result := TpIndNIF( StrToEnumerado2(ok , s,TGenericosString1_3 ));
@@ -1712,6 +1782,7 @@ function eSIndTpDeducaoToStr(const t:tpIndTpDeducao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_4 );
 end;
+
 function eSStrToIndTpDeducao(var ok: boolean; const s: string): TpIndTpDeducao;
 begin
   result := TpIndTpDeducao( StrToEnumerado2(ok , s,TGenericosString1_4 ));
@@ -1721,6 +1792,7 @@ function eSTpIsencaoToStr(const t:tpTpIsencao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString01_11 );
 end;
+
 function eSStrToTpIsencao(var ok: boolean; const s: string): TpTpIsencao;
 begin
   result := TpTpIsencao( StrToEnumerado2(ok , s,TGenericosString01_11 ));
@@ -1730,6 +1802,7 @@ function eSIndPerReferenciaToStr(const t:tpIndPerReferencia ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToIndPerReferencia(var ok: boolean; const s: string): TpIndPerReferencia;
 begin
   result := TpIndPerReferencia( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1739,6 +1812,7 @@ function eSTpProcRRAToStr(const t:tpTpProcRRA ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToTpProcRRA(var ok: boolean; const s: string): TpTpProcRRA;
 begin
   result := TpTpProcRRA( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1748,6 +1822,7 @@ function eSTpInscAdvogadoToStr(const t:tpTpInscAdvogado ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToTpInscAdvogado(var ok: boolean; const s: string): TpTpInscAdvogado;
 begin
   result := TpTpInscAdvogado( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1757,6 +1832,7 @@ function eSIndOrigemRecursosToStr(const t:tpIndOrigemRecursos ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
+
 function eSStrToIndOrigemRecursos(var ok: boolean; const s: string): TpIndOrigemRecursos;
 begin
   result := TpIndOrigemRecursos( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1766,6 +1842,7 @@ function eSRelDependenciaToStr(const t:tpRelDependencia ): string;
 begin
   result := EnumeradoToStr2(t,['01','02','14','17','18', '29'] );
 end;
+
 function eSStrToRelDependencia(var ok: boolean; const s: string): TpRelDependencia;
 begin
   result := TpRelDependencia( StrToEnumerado2(ok , s,['01','02','14','17','18', '29'] ));
@@ -1775,6 +1852,7 @@ function eSIndObraToStr(const t:tpIndObra ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString0_3 );
 end;
+
 function eSStrToIndObra(var ok: boolean; const s: string): TpIndObra;
 begin
   result := TpIndObra( StrToEnumerado2(ok , s,TGenericosString0_3 ));
@@ -1784,6 +1862,7 @@ function eSIndIncidenciaToStr(const t:tpIndIncidencia ): string;
 begin
   result := EnumeradoToStr2(t,[ '1','2','9']  );
 end;
+
 function eSStrToIndIncidencia(var ok: boolean; const s: string): TpIndIncidencia;
 begin
   result := TpIndIncidencia( StrToEnumerado2(ok , s,[ '1','2','9'] ));
@@ -1793,6 +1872,7 @@ function eSIndAbrangenciaToStr(const t:tpIndAbrangencia ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
+
 function eSStrToIndAbrangencia(var ok: boolean; const s: string): TpIndAbrangencia;
 begin
   result := TpIndAbrangencia( StrToEnumerado2(ok , s,TGenericosString1_2 ));
@@ -1802,6 +1882,7 @@ function eSIndAquisicaoToStr(const t:tpIndAquisicao ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_3  );
 end;
+
 function eSStrToIndAquisicao(var ok: boolean; const s: string): TpIndAquisicao;
 begin
   result := TpIndAquisicao( StrToEnumerado2(ok , s,TGenericosString1_3 ));
@@ -1811,6 +1892,7 @@ function eSIndComercializacaoToStr(const t:tpIndComercializacao ): string;
 begin
   result := EnumeradoToStr2(t,['1','2','3','8','9']  );
 end;
+
 function eSStrToIndComercializacao(var ok: boolean; const s: string): TpIndComercializacao;
 begin
   result := TpIndComercializacao( StrToEnumerado2(ok , s,['1','2','3','8','9'] ));
@@ -1820,6 +1902,7 @@ function eSCnhToStr(const t: tpCnh): string;
 begin
   result := EnumeradoToStr2(t,['A', 'B', 'C', 'D', 'E', 'AB', 'AC', 'AD', 'AE']  );
 end;
+
 function eSStrToCnh(var ok: Boolean; const s: string): tpCnh;
 begin
   result := tpCnh( StrToEnumerado2(ok , s,['A', 'B', 'C', 'D', 'E', 'AB', 'AC', 'AD', 'AE'] ));
@@ -1829,6 +1912,7 @@ function eSClassTrabEstrangToStr(const t: tpClassTrabEstrang): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString01_12  );
 end;
+
 function eSStrToClassTrabEstrang(var ok: Boolean; const s: string): tpClassTrabEstrang;
 begin
   result := tpClassTrabEstrang( StrToEnumerado2(ok , s,TGenericosString01_12 ));
@@ -1838,6 +1922,7 @@ function eStpDepToStr(const t: tpTpDep): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString01_12  );
 end;
+
 function eSStrToTpDep(var ok: Boolean; const s: string): tpTpDep;
 begin
   result := tpTpDep( StrToEnumerado2(ok , s, TGenericosString01_12 ));
@@ -1847,6 +1932,7 @@ function eSTpRepasseToStr(const t:tpTpRepasse ): string;
 begin
   result := EnumeradoToStr2(t,TGenericosString1_5 );
 end;
+
 function eSStrToTpRepasse(var ok: boolean; const s: string): TpTpRepasse;
 begin
   result := TpTpRepasse( StrToEnumerado2(ok , s,TGenericosString1_5 ));
@@ -1854,8 +1940,9 @@ end;
 
 function eSIdeSubtetoToStr(const t: tpIdeSubteto): string;
 begin
-result := EnumeradoToStr2(t,TGenericosString1_4  );
+  result := EnumeradoToStr2(t,TGenericosString1_4  );
 end;
+
 function eSStrToIdeSubteto(var ok: Boolean; const s: string): tpIdeSubteto;
 begin
   result := tpIdeSubteto( StrToEnumerado2(ok , s,TGenericosString1_4 ) );
@@ -1865,6 +1952,7 @@ function eSTpPublAlvoToStr(const t: tpTpPublAlvo): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString1_6);
 end;
+
 function eSStrToTpPublAlvo(var ok: Boolean; const s: string): tpTpPublAlvo;
 begin
   result := tpTpPublAlvo( StrToEnumerado2(ok , s, TGenericosString1_6 ) );
@@ -1874,6 +1962,7 @@ function eSIndSitPFToStr(const t: tpIndSitPF): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString0_2);
 end;
+
 function eSStrToTpIndSitPF(var ok: Boolean; const s: string): tpIndSitPF;
 begin
   result := tpIndSitPF( StrToEnumerado2(ok , s, TGenericosString0_2 ));
@@ -1883,6 +1972,7 @@ function eSIndSitPJToStr(const t: tpIndSitPJ): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString0_4);
 end;
+
 function eSStrToIndSitPJ(var ok: Boolean; const s: string): tpIndSitPJ;
 begin
   result := tpIndSitPJ( StrToEnumerado2(ok , s, TGenericosString0_4 ));
@@ -1892,6 +1982,7 @@ function eSTpRubrToStr(const t: tpTpRubr): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString1_4);
 end;
+
 function eSStrToTpRubr(var ok: Boolean; const s: string): tpTpRubr;
 begin
   result := tpTpRubr( StrToEnumerado2(ok , s, TGenericosString1_4 ));
@@ -1901,6 +1992,7 @@ function eStpSitCargoToStr(const t: tpSitCargo): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString1_3);
 end;
+
 function eSStrToSitCargo(var ok: Boolean; const s: string): tpSitCargo;
 begin
   result := tpSitCargo( StrToEnumerado2(ok , s, TGenericosString1_3 ));
@@ -1910,6 +2002,7 @@ function eStpSitCarrToStr(const t: tpSitCarr): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString1_3);
 end;
+
 function eSStrToSitCarr(var ok: Boolean; const s: string): tpSitCarr;
 begin
   result := tpSitCarr( StrToEnumerado2(ok , s, TGenericosString1_3 ));
@@ -1919,6 +2012,7 @@ function eSAcumCargoToStr(const t: tpAcumCargo): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString1_4);
 end;
+
 function eSStrToAcumCargo(var ok: Boolean; const s: string): tpAcumCargo;
 begin
   result := tpAcumCargo( StrToEnumerado2(ok , s, TGenericosString1_4 ));
@@ -1928,6 +2022,7 @@ function eSContagemEspToStr(const t: tpContagemEsp): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString1_4);
 end;
+
 function eSStrToContagemEsp(var ok: Boolean; const s: string): tpContagemEsp;
 begin
   result := tpContagemEsp( StrToEnumerado2(ok , s, TGenericosString1_4 ));
@@ -1937,6 +2032,7 @@ function eStpUtilizEPCToStr(const t: tpUtilizEPC): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString0_2);
 end;
+
 function eSStrTotpUtilizEPC(var ok: Boolean; const s: string): tpUtilizEPC;
 begin
   result := tpUtilizEPC( StrToEnumerado2(ok , s, TGenericosString0_2 ));
@@ -1946,6 +2042,7 @@ function eStpUtilizEPIToStr(const t: tpUtilizEPI): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString0_2);
 end;
+
 function eSStrTotpUtilizEPI(var ok: Boolean; const s: string): tpUtilizEPI;
 begin
   result := tpUtilizEPI( StrToEnumerado2(ok , s, TGenericosString0_2 ));
@@ -1955,6 +2052,7 @@ function eSLocalAmbToStr(const t: tpLocalAmb): string;
 begin
   result := EnumeradoToStr2(t, TGenericosString1_2);
 end;
+
 function eSStrToLocalAmb(var ok: Boolean; const s: string): tpLocalAmb;
 begin
   result := tpLocalAmb( StrToEnumerado2(ok , s, TGenericosString1_2 ));
@@ -1964,6 +2062,7 @@ function eSTpAcConvToStr(const t: tpTpAcConv): string;
 begin
   result := EnumeradoToStr2(t, TGenericosStringA_F);
 end;
+
 function eSStrToTpAcConv(var ok: Boolean; const s: string): tpTpAcConv;
 begin
   result := tpTpAcConv( StrToEnumerado2(ok , s, TGenericosStringA_F ));
@@ -1971,41 +2070,42 @@ end;
 
 function eSTpNatEstagioToStr(const t: tpNatEstagio): string;
 begin
-  Result := EnumeradoToStr2(t, TGenericosStringO_N);
+  result := EnumeradoToStr2(t, TGenericosStringO_N);
 end;
+
 function eSStrToTpNatEstagio(var ok: boolean; const s: string): tpNatEstagio;
 begin
- result  := tpNatEstagio( StrToEnumerado2(ok , s, TGenericosStringO_N ) );
+  result  := tpNatEstagio( StrToEnumerado2(ok , s, TGenericosStringO_N ) );
 end;
 
 function eStpCaepfToStr(const t: tpCaepf): string;
 begin
-  Result := EnumeradoToStr2(t, TGenericosString1_3);
+  result := EnumeradoToStr2(t, TGenericosString1_3);
 end;
 
 function eSStrTotpCaepf(var ok: boolean; const s: string): tpCaepf;
 begin
-  Result := tpCaepf(StrToEnumerado2(ok, s, TGenericosString1_3));
+  result := tpCaepf(StrToEnumerado2(ok, s, TGenericosString1_3));
 end;
 
-  function eStpTpPgtoToStr(const t: tpTpPgto): string;
+function eStpTpPgtoToStr(const t: tpTpPgto): string;
 begin
-  Result := EnumeradoToStr2(t,[ '1', '2', '3', '5' ] );
+  result := EnumeradoToStr2(t,[ '1', '2', '3', '5' ] );
 end;
 
 function eSStrTotpTpPgto(var ok:Boolean; const s: string): tpTpPgto;
 begin
-  Result := tpTpPgto(StrToEnumerado2(ok, s, ['1', '2', '3', '5']));
+  result := tpTpPgto(StrToEnumerado2(ok, s, ['1', '2', '3', '5']));
 end;
 
 function eStpNivelEstagioToStr(const t: tpNivelEstagio): string;
 begin
-  Result := EnumeradoToStr2(t, TGenericosString1_4);
+  result := EnumeradoToStr2(t, TGenericosString1_4);
 end;
 
 function eSStrTotpNivelEstagio(var ok: Boolean; const s: string): tpNivelEstagio;
 begin
-  Result := tpNivelEstagio(StrToEnumerado2(ok, s, TGenericosString1_4));
+  result := tpNivelEstagio(StrToEnumerado2(ok, s, TGenericosString1_4));
 end;
 
 function eSTpMtvAltToStr(const t: tpMtvAlt): string;
@@ -2015,7 +2115,7 @@ end;
 
 function eSStrToTpMtvAlt(var ok: boolean; const s: string): tpMtvAlt;
 begin
-  Result := tpMtvAlt(StrToEnumerado2(ok, s, TMotivoAlteracaoCargoFuncao));
+  result := tpMtvAlt(StrToEnumerado2(ok, s, TMotivoAlteracaoCargoFuncao));
 end;
 
 function eSTpOrigemAltAfastToStr(const t: tpOrigemAltAfast): string;
@@ -2025,7 +2125,7 @@ end;
 
 function eSStrToTpOrigemAltAfast(var ok: boolean; const s: string): tpOrigemAltAfast;
 begin
-  Result := tpOrigemAltAfast(StrToEnumerado2(ok, s, TGenericosString1_3));
+  result := tpOrigemAltAfast(StrToEnumerado2(ok, s, TGenericosString1_3));
 end;
 
 function eSTpPensaoAlimToStr(const t: tpPensaoAlim): string;
@@ -2035,7 +2135,7 @@ end;
 
 function eSStrToTpPensaoAlim(var ok: boolean; const s: string): tpPensaoAlim;
 begin
-  Result := tpPensaoAlim(StrToEnumerado2(ok, s, TGenericosString0_3));
+  result := tpPensaoAlim(StrToEnumerado2(ok, s, TGenericosString0_3));
 end;
 
 function eSTpCumprParcialAvisoToStr(const t: tpCumprParcialAviso): string;
@@ -2045,7 +2145,7 @@ end;
 
 function eSStrToTpCumprParcialAviso(var ok: boolean; const s: string): tpCumprParcialAviso;
 begin
-  Result := tpCumprParcialAviso(StrToEnumerado2(ok, s, TGenericosString0_2));
+  result := tpCumprParcialAviso(StrToEnumerado2(ok, s, TGenericosString0_2));
 end;
 
 function eSModoLancamentoToStr(const t: TModoLancamento): string;
@@ -2055,17 +2155,17 @@ end;
 
 function eSStrToModoLancamento(var ok: boolean; const s: string): TModoLancamento;
 begin
-  Result := TModoLancamento(StrToEnumerado2(ok, s, TModoLancamentoString));
+  result := TModoLancamento(StrToEnumerado2(ok, s, TModoLancamentoString));
 end;
 
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
 begin
-  Result := StrToEnumerado(ok, s, ['2.40'], [ve240]);
+  result := StrToEnumerado(ok, s, ['2.40'], [ve240]);
 end;
 
 function VersaoeSocialToStr(const t: TVersaoeSocial): String;
 begin
-  Result := EnumeradoToStr(t, ['2.40'], [ve240]);
+  result := EnumeradoToStr(t, ['2.40'], [ve240]);
 end;
 
 function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
@@ -2073,10 +2173,10 @@ begin
   ok := True;
 
   if (d = 2.4)  then
-    Result := ve240
+    result := ve240
   else
   begin
-    Result := ve240;
+    result := ve240;
     ok := False;
   end;
 end;
@@ -2084,29 +2184,29 @@ end;
 function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
 begin
   case t of
-    ve240: Result := 2.40;
+    ve240: result := 2.40;
   else
-    Result := 0;
+    result := 0;
   end;
 end;
 
 function tpTmpParcToStr(const t: tpTmpParc ): string;
 begin
-  Result := EnumeradoToStr(t, ['0', '1', '2', '3'],
+  result := EnumeradoToStr(t, ['0', '1', '2', '3'],
                            [tpNaoeTempoParcial, tpLimitado25HorasSemanais,
                             tpLimitado30HorasSemanais, tpLimitado26HorasSemanais]);
 end;
 
 function StrTotpTmpParc(var ok: boolean; const s: string): tpTmpParc;
 begin
-  Result := StrToEnumerado(ok, s, ['0', '1', '2', '3'],
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3'],
                            [tpNaoeTempoParcial, tpLimitado25HorasSemanais,
                             tpLimitado30HorasSemanais, tpLimitado26HorasSemanais]);
 end;
 
 function tpClassTribToStr(const t: TpClassTrib ): string;
 begin
-  Result := EnumeradoToStr(t, ['01', '02', '03', '04', '06', '07', '08', '09',
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '06', '07', '08', '09',
                                '10', '11', '13', '14', '21', '22', '60', '70',
                                '80', '85', '99'],
                               [ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,
@@ -2116,7 +2216,7 @@ end;
 
 function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
 begin
-  Result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '06', '07', '08', '09',
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '06', '07', '08', '09',
                                    '10', '11', '13', '14', '21', '22', '60', '70',
                                    '80', '85', '99'],
                               [ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,

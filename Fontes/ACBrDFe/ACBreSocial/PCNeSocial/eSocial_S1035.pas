@@ -73,7 +73,7 @@ type
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtTabCarreira: TEvtTabCarreira read FEvtTabCarreira write FEvtTabCarreira;
+    property evtTabCarreira: TEvtTabCarreira read FEvtTabCarreira write setEvtTabCarreira;
   end;
 
   TEvtTabCarreira = class(TeSocialEvento)
@@ -256,7 +256,7 @@ end;
 function TEvtTabCarreira.GerarXML: boolean;
 begin
   try
-    gerarCabecalho('evtTabCarreira');
+    GerarCabecalho('evtTabCarreira');
     Gerador.wGrupo('evtTabCarreira Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
 
     GerarIdeEvento(self.IdeEvento);
@@ -269,7 +269,7 @@ begin
 
     if Self.ModoLancamento <> mlExclusao then
     begin
-      gerarDadosCarreira;
+      GerarDadosCarreira;
 
       if Self.ModoLancamento = mlAlteracao then
         if (InfoCarreira.novaValidadeInst()) then

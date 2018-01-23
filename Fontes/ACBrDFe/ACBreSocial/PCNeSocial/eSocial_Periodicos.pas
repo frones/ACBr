@@ -72,6 +72,7 @@ type
     FS1298: TS1298Collection;
     FS1299: TS1299Collection;
     FS1300: TS1300Collection;
+
     procedure setS1200(const Value: TS1200Collection);
     procedure setS1202(const Value: TS1202Collection);
     procedure setS1207(const Value: TS1207Collection);
@@ -136,6 +137,7 @@ end;
 constructor TPeriodicos.Create(AOwner: TComponent);
 begin
   inherited;
+
   FS1200 := TS1200Collection.Create(AOwner, TS1200CollectionItem);
   FS1202 := TS1202Collection.Create(AOwner, TS1202CollectionItem);
   FS1207 := TS1207Collection.Create(AOwner, TS1207CollectionItem);
@@ -166,6 +168,7 @@ begin
   FS1298.Free;
   FS1299.Free;
   FS1300.Free;
+
   inherited;
 end;
 
@@ -219,6 +222,7 @@ var
   Path: String;
 begin
   Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
+
   for I := 0 to Self.S1200.Count - 1 do
     Self.S1200.Items[i].evtRemun.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1200.Items[i].TipoEvento)+'-'+IntToStr(i));
 

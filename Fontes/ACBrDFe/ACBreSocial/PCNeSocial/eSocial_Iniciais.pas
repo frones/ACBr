@@ -60,12 +60,14 @@ type
     FS1000: TS1000Collection;
     FS1005: TS1005Collection;
     FS2100: TS2100Collection;
+
     procedure setS1000(const Value: TS1000Collection);
     procedure setS1005(const Value: TS1005Collection);
     procedure setS2100(const Value: TS2100Collection);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
+
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
@@ -83,8 +85,6 @@ uses
 
 { TIniciais }
 
-
-
 procedure TIniciais.Clear;
 begin
   FS1000.Clear;
@@ -95,6 +95,7 @@ end;
 constructor TIniciais.Create(AOwner: TComponent);
 begin
   inherited;
+
   FS1000 := TS1000Collection.Create(AOwner, TS1000CollectionItem);
   FS1005 := TS1005Collection.Create(AOwner, TS1005CollectionItem);
   FS2100 := TS2100Collection.Create(AOwner, TS2100CollectionItem);
@@ -105,6 +106,7 @@ begin
   FS1000.Free;
   FS1005.Free;
   FS2100.Free;
+
   inherited;
 end;
 
@@ -126,6 +128,7 @@ var
   Path : String;
 begin
   Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
+  
   for I := 0 to Self.S1000.Count - 1 do
     Self.S1000.Items[i].evtInfoEmpregador.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1000.Items[i].TipoEvento)+'-'+IntToStr(i));
   for I := 0 to Self.S1005.Count - 1 do

@@ -50,129 +50,131 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
+  TS1060Collection = class;
+  TS1060CollectionItem = class;
+  TIdeAmbiente = class;
+  TFatorRiscoCollectionItem = class;
+  TFatorRiscoCollection = class;
+  TDadosAmbiente = class;
+  TInfoAmbiente = class;
+  TEvtTabAmbiente = class;
 
-    TS1060Collection = class;
-    TS1060CollectionItem = class;
-    TIdeAmbiente = class;
-    TFatorRiscoCollectionItem = class;
-    TFatorRiscoCollection = class;
-    TDadosAmbiente = class;
-    TInfoAmbiente = class;
-    TEvtTabAmbiente = class;
-                                
 
-    TS1060Collection = class(TOwnedCollection)
-    private
-      function GetItem(Index: Integer): TS1060CollectionItem;
-      procedure SetItem(Index: Integer; Value: TS1060CollectionItem);
-    public
-      function Add: TS1060CollectionItem;
-      property Items[Index: Integer]: TS1060CollectionItem read GetItem write SetItem; default;
-    end;
+  TS1060Collection = class(TOwnedCollection)
+  private
+    function GetItem(Index: Integer): TS1060CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1060CollectionItem);
+  public
+    function Add: TS1060CollectionItem;
+    property Items[Index: Integer]: TS1060CollectionItem read GetItem write SetItem; default;
+  end;
 
-    TS1060CollectionItem = class(TCollectionItem)
-    private
-      FTipoEvento: TTipoEvento;
-      FEvtTabAmbiente: TEvtTabAmbiente;
-      procedure setEvtTabAmbiente(const Value: TEvtTabAmbiente);
-    public
-      constructor Create(AOwner: TComponent); reintroduce;
-      destructor Destroy; override;
-    published
-      property TipoEvento: TTipoEvento read FTipoEvento;
-      property EvtTabAmbiente: TEvtTabAmbiente read FEvtTabAmbiente write setEvtTabAmbiente;
-    end;
+  TS1060CollectionItem = class(TCollectionItem)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtTabAmbiente: TEvtTabAmbiente;
+    procedure setEvtTabAmbiente(const Value: TEvtTabAmbiente);
+  public
+    constructor Create(AOwner: TComponent); reintroduce;
+    destructor Destroy; override;
+  published
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtTabAmbiente: TEvtTabAmbiente read FEvtTabAmbiente write setEvtTabAmbiente;
+  end;
 
-    TEvtTabAmbiente = class(TeSocialEvento)
-     private
-      FModoLancamento: TModoLancamento;
-      FIdeEvento: TIdeEvento;
-      FIdeEmpregador: TIdeEmpregador;
-      FInfoAmbiente: TInfoAmbiente;
-      procedure gerarIdeAmbiente();
-      procedure gerarFatorRisco();
-      procedure gerarDadosAmbiente();
-    public
-      constructor Create(AACBreSocial: TObject);overload;
-      destructor  Destroy; override;
+  TEvtTabAmbiente = class(TeSocialEvento)
+  private
+    FModoLancamento: TModoLancamento;
+    FIdeEvento: TIdeEvento;
+    FIdeEmpregador: TIdeEmpregador;
+    FInfoAmbiente: TInfoAmbiente;
 
-      function GerarXML: boolean; override;
+    procedure GerarIdeAmbiente;
+    procedure GerarFatorRisco;
+    procedure GerarDadosAmbiente;
+  public
+    constructor Create(AACBreSocial: TObject);overload;
+    destructor  Destroy; override;
 
-      property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
-      property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
-      property ideEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-      property infoAmbiente: TInfoAmbiente read FInfoAmbiente write FInfoAmbiente;
-    end;
+    function GerarXML: boolean; override;
 
-    TIdeAmbiente = class(TPersistent)
-     private
-      FCodAmb: string;
-      FIniValid: string;
-      FFimValid: string;
-    public
-      property codAmb: string read FCodAmb write FCodAmb;
-      property iniValid: string read FIniValid write FIniValid;
-      property fimValid: string read FFimValid write FFimValid;
-    end;
+    property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
+    property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
+    property ideEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property infoAmbiente: TInfoAmbiente read FInfoAmbiente write FInfoAmbiente;
+  end;
 
-    TFatorRiscoCollection = class(TCollection)
-     private
-      function GetItem(Index: Integer): TFatorRiscoCollectionItem;
-      procedure SetItem(Index: Integer; Value: TFatorRiscoCollectionItem);
-    public
-      constructor create; reintroduce;
-      function add: TFatorRiscoCollectionItem;
-      property Items[Index: Integer]: TFatorRiscoCollectionItem read GetItem write SetItem;
-    end;
-    
-    TFatorRiscoCollectionItem = class(TCollectionItem)
-     private
-      FCodFatRis: string;
-    public
-      constructor create; reintroduce;
-      
-      property codFatRis: string read FCodFatRis write FCodFatRis;
-    end;
+  TIdeAmbiente = class(TPersistent)
+  private
+    FCodAmb: string;
+    FIniValid: string;
+    FFimValid: string;
+  public
+    property codAmb: string read FCodAmb write FCodAmb;
+    property iniValid: string read FIniValid write FIniValid;
+    property fimValid: string read FFimValid write FFimValid;
+  end;
 
-    TDadosAmbiente = class(TPersistent)
-     private
-      FDscAmb: string;
-      FLocalAmb: tpLocalAmb;
-      FTpInsc: tpTpInscAmbTab;
-      FNrInsc: string;
-      FFatorRisco: TFatorRiscoCollection;
-    public
-      constructor create;
-      destructor destroy; override;
+  TFatorRiscoCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TFatorRiscoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TFatorRiscoCollectionItem);
+  public
+    constructor create; reintroduce;
+    function add: TFatorRiscoCollectionItem;
+    property Items[Index: Integer]: TFatorRiscoCollectionItem read GetItem write SetItem;
+  end;
 
-      property dscAmb: string read FDscAmb write FDscAmb;
-      property localAmb: tpLocalAmb read FLocalAmb write FLocalAmb;
-      property tpInsc: tpTpInscAmbTab read FTpInsc write FTpInsc;
-      property nrInsc: string read FNrInsc write FNrInsc;
-      property fatorRisco: TFatorRiscoCollection read FFatorRisco write FFatorRisco;
-    end;
+  TFatorRiscoCollectionItem = class(TCollectionItem)
+  private
+    FCodFatRis: string;
+  public
+    constructor create; reintroduce;
 
-    TInfoAmbiente = class(TPersistent)
-     private
-      FIdeAmbiente: TIdeAmbiente;
-      FDadosAmbiente: TDadosAmbiente;
-      FNovaValidade: TIdePeriodo;
-      function getDadosAmbiente: TDadosAmbiente;
-      function getNovaValidade: TIdePeriodo;
-    public
-      constructor create;
-      destructor destroy; override;
-      function dadosAmbienteInst(): Boolean;
-      function novaValidadeInst(): Boolean;
+    property codFatRis: string read FCodFatRis write FCodFatRis;
+  end;
 
-      property ideAmbiente: TIdeAmbiente read FIdeAmbiente write FIdeAmbiente;
-      property dadosAmbiente: TDadosAmbiente read getDadosAmbiente write FDadosAmbiente;
-      property novaValidade: TIdePeriodo read getNovaValidade write FNovaValidade;
-    end;
+  TDadosAmbiente = class(TPersistent)
+  private
+    FDscAmb: string;
+    FLocalAmb: tpLocalAmb;
+    FTpInsc: tpTpInscAmbTab;
+    FNrInsc: string;
+    FFatorRisco: TFatorRiscoCollection;
+  public
+    constructor create;
+    destructor destroy; override;
+
+    property dscAmb: string read FDscAmb write FDscAmb;
+    property localAmb: tpLocalAmb read FLocalAmb write FLocalAmb;
+    property tpInsc: tpTpInscAmbTab read FTpInsc write FTpInsc;
+    property nrInsc: string read FNrInsc write FNrInsc;
+    property fatorRisco: TFatorRiscoCollection read FFatorRisco write FFatorRisco;
+  end;
+
+  TInfoAmbiente = class(TPersistent)
+  private
+    FIdeAmbiente: TIdeAmbiente;
+    FDadosAmbiente: TDadosAmbiente;
+    FNovaValidade: TIdePeriodo;
+
+    function getDadosAmbiente: TDadosAmbiente;
+    function getNovaValidade: TIdePeriodo;
+  public
+    constructor create;
+    destructor destroy; override;
+
+    function dadosAmbienteInst(): Boolean;
+    function novaValidadeInst(): Boolean;
+
+    property ideAmbiente: TIdeAmbiente read FIdeAmbiente write FIdeAmbiente;
+    property dadosAmbiente: TDadosAmbiente read getDadosAmbiente write FDadosAmbiente;
+    property novaValidade: TIdePeriodo read getNovaValidade write FNovaValidade;
+  end;
 
 implementation
 
@@ -208,6 +210,7 @@ end;
 destructor TS1060CollectionItem.Destroy;
 begin
   FEvtTabAmbiente.Free;
+
   inherited;
 end;
 
@@ -215,7 +218,6 @@ procedure TS1060CollectionItem.setEvtTabAmbiente(const Value: TEvtTabAmbiente);
 begin
   FEvtTabAmbiente.Assign(Value);
 end;
-
 
 { TFatorRiscoCollectionItem }
 
@@ -259,6 +261,7 @@ end;
 destructor TDadosAmbiente.destroy;
 begin
   FFatorRisco.Free;
+
   inherited;
 end;
 
@@ -281,6 +284,7 @@ begin
   FIdeAmbiente.Free;
   FreeAndNil(FDadosAmbiente);
   FreeAndNil(FNovaValidade);
+
   inherited;
 end;
 
@@ -308,6 +312,7 @@ end;
 constructor TEvtTabAmbiente.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoAmbiente := TInfoAmbiente.create;
@@ -318,67 +323,87 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FInfoAmbiente.Free;
+
   inherited;
 end;
 
-procedure TEvtTabAmbiente.gerarDadosAmbiente;
+procedure TEvtTabAmbiente.GerarDadosAmbiente;
 begin
   Gerador.wGrupo('dadosAmbiente');
-    Gerador.wCampo(tcStr, '', 'dscAmb', 0, 0, 0, infoAmbiente.dadosAmbiente.dscAmb);
-    Gerador.wCampo(tcStr, '', 'localAmb', 0, 0, 0, eSLocalAmbToStr(infoAmbiente.dadosAmbiente.localAmb));
-    Gerador.wCampo(tcStr, '', 'tpInsc', 0, 0, 0, eStpTpInscAmbTabToStr(infoAmbiente.dadosAmbiente.tpInsc));
-    Gerador.wCampo(tcStr, '', 'nrInsc', 0, 0, 0, infoAmbiente.dadosAmbiente.nrInsc);
-    gerarFatorRisco();
+
+  Gerador.wCampo(tcStr, '', 'dscAmb',   1, 999, 1, infoAmbiente.dadosAmbiente.dscAmb);
+  Gerador.wCampo(tcStr, '', 'localAmb', 1,   1, 1, eSLocalAmbToStr(infoAmbiente.dadosAmbiente.localAmb));
+  Gerador.wCampo(tcStr, '', 'tpInsc',   1,   1, 1, eStpTpInscAmbTabToStr(infoAmbiente.dadosAmbiente.tpInsc));
+  Gerador.wCampo(tcStr, '', 'nrInsc',   1,  15, 1, infoAmbiente.dadosAmbiente.nrInsc);
+
+  GerarFatorRisco;
+
   Gerador.wGrupo('/dadosAmbiente');
 end;
 
-procedure TEvtTabAmbiente.gerarFatorRisco;
-  var
-      iFatorRisco: Integer;
-      objFatorRisco: TFatorRiscoCollectionItem;
+procedure TEvtTabAmbiente.GerarFatorRisco;
+var
+  i: Integer;
+  objFatorRisco: TFatorRiscoCollectionItem;
 begin
-  for iFatorRisco := 0 to infoAmbiente.dadosAmbiente.fatorRisco.Count - 1 do
+  for i := 0 to infoAmbiente.dadosAmbiente.fatorRisco.Count - 1 do
   begin
-    objFatorRisco := infoAmbiente.dadosAmbiente.fatorRisco.Items[iFatorRisco];
+    objFatorRisco := infoAmbiente.dadosAmbiente.fatorRisco.Items[i];
+
     Gerador.wGrupo('fatorRisco');
-      Gerador.wCampo(tcStr, '', 'codFatRis', 0, 0, 0, objFatorRisco.codFatRis);
+
+    Gerador.wCampo(tcStr, '', 'codFatRis', 1, 10, 1, objFatorRisco.codFatRis);
+
     Gerador.wGrupo('/fatorRisco');
   end;
+
+  if infoAmbiente.dadosAmbiente.fatorRisco.Count > 999 then
+    Gerador.wAlerta('', 'fatorRisco', 'Lista de Fator de Risco', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-procedure TEvtTabAmbiente.gerarIdeAmbiente;
+procedure TEvtTabAmbiente.GerarIdeAmbiente;
 begin
   Gerador.wGrupo('ideAmbiente');
-    Gerador.wCampo(tcStr, '', 'codAmb', 0, 0, 0, infoAmbiente.ideAmbiente.codAmb);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, infoAmbiente.ideAmbiente.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, infoAmbiente.ideAmbiente.fimValid);
+
+  Gerador.wCampo(tcStr, '', 'codAmb',   1, 30, 1, infoAmbiente.ideAmbiente.codAmb);
+  Gerador.wCampo(tcStr, '', 'iniValid', 7,  7, 1, infoAmbiente.ideAmbiente.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid', 7,  7, 0, infoAmbiente.ideAmbiente.fimValid);
+
   Gerador.wGrupo('/ideAmbiente');
 end;
 
 function TEvtTabAmbiente.GerarXML: boolean;
 begin
   try
-    gerarCabecalho('evtTabAmbiente');
+    GerarCabecalho('evtTabAmbiente');
     Gerador.wGrupo('evtTabAmbiente Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-    //gerarIdVersao(self);
-    gerarIdeEvento(self.IdeEvento);
-    gerarIdeEmpregador(self.IdeEmpregador);
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
     Gerador.wGrupo('infoAmbiente');
-      gerarModoAbertura(Self.ModoLancamento);
-        gerarIdeAmbiente();
-        if Self.ModoLancamento <> mlExclusao then
-        begin
-          gerarDadosAmbiente();
-          if Self.ModoLancamento = mlAlteracao then
-            if (infoAmbiente.novaValidadeInst()) then
-              GerarIdePeriodo(infoAmbiente.novaValidade, 'novaValidade');
-        end;
-      gerarModoFechamento(Self.ModoLancamento);
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeAmbiente;
+
+    if Self.ModoLancamento <> mlExclusao then
+    begin
+      GerarDadosAmbiente;
+
+      if Self.ModoLancamento = mlAlteracao then
+        if (infoAmbiente.novaValidadeInst()) then
+          GerarIdePeriodo(infoAmbiente.novaValidade, 'novaValidade');
+    end;
+
+    GerarModoFechamento(Self.ModoLancamento);
+
     Gerador.wGrupo('/infoAmbiente');
     Gerador.wGrupo('/evtTabAmbiente');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabAmbiente');
+    
     Validar('evtTabAmbiente');
   except on e:exception do
     raise Exception.Create(e.Message);

@@ -343,7 +343,7 @@ end;
 function TEvtTabCargo.GerarXML: boolean;
 begin
   try
-    gerarCabecalho('evtTabCargo');
+    GerarCabecalho('evtTabCargo');
     Gerador.wGrupo('evtTabCargo Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
 
     GerarIdeEvento(self.IdeEvento);

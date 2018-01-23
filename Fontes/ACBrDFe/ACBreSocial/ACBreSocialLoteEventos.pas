@@ -138,7 +138,7 @@ end;
 
 procedure TLoteEventos.GerarXML(const AGrupo: string);
 var
-  Xml: AnsiString;
+//  Xml: AnsiString;
   i: Integer;
   Eventosxml: AnsiString;
   Path: string;
@@ -225,15 +225,15 @@ begin
 end;
 
 function TLoteEventos.LoadFromFile(CaminhoArquivo: String): Boolean;
-var
-  ArquivoXML: TStringList;
-  XML: String;
-  XMLOriginal: AnsiString;
-  i: integer;
+//var
+//  ArquivoXML: TStringList;
+//  XML: String;
+//  XMLOriginal: AnsiString;
+//  i: integer;
 begin
   // TODO: Não usar leitura de arquivo
-  {
   Result := False;
+  {
   ArquivoXML := TStringList.Create;
   try
     ArquivoXML.LoadFromFile(CaminhoArquivo);
@@ -257,7 +257,6 @@ function TLoteEventos.LoadFromStream(AStream: TStringStream): Boolean;
 var
   XMLOriginal: AnsiString;
 begin
-  Result := False;
   AStream.Position := 0;
   XMLOriginal := ReadStrFromStream(AStream, AStream.Size);
 
@@ -321,6 +320,8 @@ begin
     if not EhValido then
       raise EACBreSocialException.CreateDef(ACBrStr('Houve erro na validação do Lote: ') + Erro);
   end;
+  
+  result := EhValido;
 end;
 
 { TItemLoteEventos }

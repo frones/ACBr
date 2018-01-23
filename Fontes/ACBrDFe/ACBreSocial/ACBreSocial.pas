@@ -370,9 +370,8 @@ begin
 end;
 
 function TACBreSocial.Enviar(AGrupo: TeSocialGrupo): boolean;
-var
-  i: Integer;
-  ItemLoteEventos: TItemLoteEventos;
+//var
+//  ItemLoteEventos: TItemLoteEventos;
 begin
   if SSL.SSLXmlSignLib <> xsXmlSec then
     raise EACBreSocialException.Create('Necessário DigestMethod Algorithm = sha256 -> SSLLib = libOpenSSL');
@@ -397,7 +396,7 @@ begin
 //    FOnTransmissaoEventos(FLoteEventos.XML, neENVIOCONSULTA);
 
 
-  WebServices.Envia(FLoteEventos.XML);
+  result := WebServices.Envia(FLoteEventos.XML);
 
 //  if Assigned(FOnTransmissaoEventos) then
 //    FOnTransmissaoEventos(WebServices.EnvioLote.RetornoWS, neRETORNOCONSULTA);

@@ -770,7 +770,7 @@ function TConsultaLote.Assinar(Axml, ANomeEvento: string): AnsiString;
 var
   XMLAss: String;
   ArqXML: String;
-  Leitor: TLeitor;
+//  Leitor: TLeitor;
 //  i: Integer;
 begin
   Result := '';

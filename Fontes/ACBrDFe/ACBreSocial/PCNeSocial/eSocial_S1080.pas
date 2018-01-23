@@ -91,8 +91,8 @@ type
     fInfoOperPortuario: TInfoOperPortuario;
 
     {Geradores específicos da classe}
-    procedure gerarIdeOperPortuario();
-    procedure gerarDadosOperPortuario();
+    procedure GerarIdeOperPortuario;
+    procedure GerarDadosOperPortuario;
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
@@ -107,11 +107,11 @@ type
 
   TDadosOperPortuario = class(TPersistent)
   private
-    FAliqRat: integer;
+    FAliqRat: tpAliqRat;
     FFap: Double;
     FAliqRatAjust: Double;
   public
-    property aliqRat: integer read FAliqRat write FAliqRat;
+    property aliqRat: tpAliqRat read FAliqRat write FAliqRat;
     property fap: Double read FFap write FFap;
     property aliqRatAjust: Double read FAliqRatAjust write FAliqRatAjust;
   end;
@@ -132,11 +132,13 @@ type
     FIdeOperPortuario: TIdeOperPortuario;
     FDadosOperPortuario: TDadosOperPortuario;
     FNovaValidade: TIdePeriodo;
+
     function getDadosOperPortuario: TDadosOperPortuario;
     function getNovaValidade: TIdePeriodo;
   public
     constructor create;
     destructor destroy; override;
+    
     function dadosOperPortuarioInst(): Boolean;
     function novaValidadeInst(): Boolean;
 
@@ -144,7 +146,6 @@ type
     property dadosOperPortuario: TDadosOperPortuario read getDadosOperPortuario write FDadosOperPortuario;
     property novaValidade: TIdePeriodo read getNovaValidade write FNovaValidade;
   end;
-
 
 implementation
 
@@ -181,6 +182,7 @@ end;
 destructor TS1080CollectionItem.Destroy;
 begin
   FEvtTabOperPortuario.Free;
+
   inherited;
 end;
 
@@ -209,6 +211,7 @@ begin
   FIdeOperPortuario.Free;
   FreeAndNil(FDadosOperPortuario);
   FreeAndNil(FNovaValidade);
+
   inherited;
 end;
 
@@ -236,6 +239,7 @@ end;
 constructor TEvtTabOperPort.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoOperPortuario := TInfoOperPortuario.Create;
@@ -246,51 +250,64 @@ begin
   fIdeEvento.Free;
   fIdeEmpregador.Free;
   fInfoOperPortuario.Free;
+
   inherited;
 end;
 
-procedure TEvtTabOperPort.gerarDadosOperPortuario;
+procedure TEvtTabOperPort.GerarDadosOperPortuario;
 begin
   Gerador.wGrupo('dadosOperPortuario');
-    Gerador.wCampo(tcStr, '', 'aliqRat', 0, 0, 0, self.InfoOperPortuario.DadosOperPortuario.aliqRat);
-    Gerador.wCampo(tcDe4, '', 'fap', 0, 0, 0, self.InfoOperPortuario.DadosOperPortuario.fap);
-    Gerador.wCampo(tcDe4, '', 'aliqRatAjust', 0, 0, 0, self.InfoOperPortuario.DadosOperPortuario.aliqRatAjust);
+
+  Gerador.wCampo(tcStr, '', 'aliqRat',      1, 1, 1, eSAliqRatToStr(self.InfoOperPortuario.DadosOperPortuario.aliqRat));
+  Gerador.wCampo(tcDe4, '', 'fap',          1, 5, 1, self.InfoOperPortuario.DadosOperPortuario.fap);
+  Gerador.wCampo(tcDe4, '', 'aliqRatAjust', 1, 5, 1, self.InfoOperPortuario.DadosOperPortuario.aliqRatAjust);
+
   Gerador.wGrupo('/dadosOperPortuario');
 end;
 
-procedure TEvtTabOperPort.gerarIdeOperPortuario;
+procedure TEvtTabOperPort.GerarIdeOperPortuario;
 begin
   Gerador.wGrupo('ideOperPortuario');
-    Gerador.wCampo(tcStr, '', 'cnpjOpPortuario', 0, 0, 0, self.InfoOperPortuario.IdeOperPortuario.cnpjOpPortuario);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, self.InfoOperPortuario.IdeOperPortuario.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, self.InfoOperPortuario.IdeOperPortuario.fimValid);
+
+  Gerador.wCampo(tcStr, '', 'cnpjOpPortuario', 14, 14, 1, self.InfoOperPortuario.IdeOperPortuario.cnpjOpPortuario);
+  Gerador.wCampo(tcStr, '', 'iniValid',         7,  7, 1, self.InfoOperPortuario.IdeOperPortuario.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid',         7,  7, 0, self.InfoOperPortuario.IdeOperPortuario.fimValid);
+
   Gerador.wGrupo('/ideOperPortuario');
 end;
 
 function TEvtTabOperPort.GerarXML: boolean;
 begin
   try
-    gerarCabecalho('evtTabOperPort');
-      Gerador.wGrupo('evtTabOperPort Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        Gerador.wGrupo('infoOperPortuario');
-          gerarModoAbertura(Self.ModoLancamento);
-            gerarIdeOperPortuario();
-            if Self.ModoLancamento <> mlExclusao then
-            begin
-              gerarDadosOperPortuario();
-              if Self.ModoLancamento = mlAlteracao then
-                if (InfoOperPortuario.novaValidadeInst()) then
-                  GerarIdePeriodo(self.InfoOperPortuario.NovaValidade, 'novaValidade');
-            end;
-          gerarModoFechamento(Self.ModoLancamento);
-        Gerador.wGrupo('/infoOperPortuario');
-      Gerador.wGrupo('/evtTabOperPort');
+    GerarCabecalho('evtTabOperPort');
+    Gerador.wGrupo('evtTabOperPort Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
+    Gerador.wGrupo('infoOperPortuario');
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeOperPortuario;
+
+    if Self.ModoLancamento <> mlExclusao then
+    begin
+      GerarDadosOperPortuario;
+
+      if Self.ModoLancamento = mlAlteracao then
+        if (InfoOperPortuario.novaValidadeInst()) then
+          GerarIdePeriodo(self.InfoOperPortuario.NovaValidade, 'novaValidade');
+    end;
+
+    GerarModoFechamento(Self.ModoLancamento);
+
+    Gerador.wGrupo('/infoOperPortuario');
+    Gerador.wGrupo('/evtTabOperPort');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabOperPort');
+
     Validar('evtTabOperPort');
   except on e:exception do
     raise Exception.Create(e.Message);

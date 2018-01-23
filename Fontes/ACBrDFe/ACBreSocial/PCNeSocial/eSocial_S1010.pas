@@ -351,7 +351,7 @@ begin
   end;
 end;
 
-procedure TEvtTabRubrica.gerarIdeRubrica;
+procedure TEvtTabRubrica.GerarIdeRubrica;
 begin
   Gerador.wGrupo('ideRubrica');
 
@@ -369,7 +369,7 @@ end;
 function TEvtTabRubrica.GerarXML: boolean;
 begin
   try
-    gerarCabecalho('evtTabRubrica');
+    GerarCabecalho('evtTabRubrica');
     Gerador.wGrupo('evtTabRubrica Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
 
     GerarIdeEvento(self.IdeEvento);

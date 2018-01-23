@@ -62,7 +62,7 @@ type
   TInfoFuncao = class;
 
   TS1040Collection = class(TOwnedCollection)
-   private
+  private
     function GetItem(Index: Integer): TS1040CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1040CollectionItem);
   public
@@ -71,7 +71,7 @@ type
   end;
 
   TS1040CollectionItem = class(TCollectionItem)
-   private
+  private
     FTipoEvento: TTipoEvento;
     FEvtTabFuncao: TEvtTabFuncao;
     procedure setEvtTabFuncao(const Value: TEvtTabFuncao);
@@ -84,15 +84,15 @@ type
   end;
 
   TEvtTabFuncao = class(TeSocialEvento)
-   private
+  private
     FModoLancamento: TModoLancamento;
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoFuncao: TInfoFuncao;
 
     {Geradores específicos da classe}
-    procedure gerarDadosFuncao();
-    procedure gerarIdeFuncao();
+    procedure GerarDadosFuncao;
+    procedure GerarIdeFuncao;
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
@@ -106,7 +106,7 @@ type
   end;
 
   TIdeFuncao = class(TPersistent)
-   private
+  private
     FCodFuncao: string;
     FIniValid: string;
     FFimValid: string;
@@ -117,7 +117,7 @@ type
   end;
 
   TDadosFuncao = class(TPersistent)
-   private
+  private
     FDscFuncao: string;
     FCodCBO: string;
   public
@@ -126,15 +126,17 @@ type
   end;
 
   TInfoFuncao = class(TPersistent)
-   private
+  private
     fIdeFuncao: TIdeFuncao;
     fDadosFuncao: TDadosFuncao;
     fNovaValidade: TIdePeriodo;
+
     function getDadosFuncao: TDadosFuncao;
     function getNovaValidade: TIdePeriodo;
   public
     constructor create;
     destructor destroy; override;
+
     function dadosFuncaoInst(): Boolean;
     function novaValidadeInst(): Boolean;
 
@@ -178,6 +180,7 @@ end;
 destructor TS1040CollectionItem.Destroy;
 begin
   FEvtTabFuncao.Free;
+
   inherited;
 end;
 
@@ -205,6 +208,7 @@ begin
   fIdeFuncao.Free;
   FreeAndNil(fDadosFuncao);
   FreeAndNil(fNovaValidade);
+
   inherited;
 end;
 
@@ -232,6 +236,7 @@ end;
 constructor TEvtTabFuncao.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoFuncao := TInfoFuncao.Create;
@@ -242,50 +247,63 @@ begin
   fIdeEvento.Free;
   fIdeEmpregador.Free;
   fInfoFuncao.Free;
+
   inherited;
 end;
 
-procedure TEvtTabFuncao.gerardadosFuncao;
+procedure TEvtTabFuncao.GerardadosFuncao;
 begin
   Gerador.wGrupo('dadosFuncao');
-    Gerador.wCampo(tcStr, '', 'dscFuncao', 0, 0, 0, self.InfoFuncao.DadosFuncao.dscFuncao);
-    Gerador.wCampo(tcStr, '', 'codCBO', 0, 0, 0, self.InfoFuncao.DadosFuncao.codCBO);
+
+  Gerador.wCampo(tcStr, '', 'dscFuncao', 1, 100, 1, self.InfoFuncao.DadosFuncao.dscFuncao);
+  Gerador.wCampo(tcStr, '', 'codCBO',    1,   6, 1, self.InfoFuncao.DadosFuncao.codCBO);
+
   Gerador.wGrupo('/dadosFuncao');
 end;
 
-procedure TEvtTabFuncao.gerarIdeFuncao;
+procedure TEvtTabFuncao.GerarIdeFuncao;
 begin
   Gerador.wGrupo('ideFuncao');
-    Gerador.wCampo(tcStr, '', 'codFuncao', 0, 0, 0, self.InfoFuncao.IdeFuncao.codFuncao);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, self.InfoFuncao.IdeFuncao.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, self.InfoFuncao.IdeFuncao.fimValid);
+
+  Gerador.wCampo(tcStr, '', 'codFuncao', 1, 30, 1, self.InfoFuncao.IdeFuncao.codFuncao);
+  Gerador.wCampo(tcStr, '', 'iniValid',  7,  7, 1, self.InfoFuncao.IdeFuncao.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid',  7,  7, 0, self.InfoFuncao.IdeFuncao.fimValid);
+
   Gerador.wGrupo('/ideFuncao');
 end;
 
 function TEvtTabFuncao.GerarXML: boolean;
 begin
   try
-    gerarCabecalho('evtTabFuncao');
-      Gerador.wGrupo('evtTabFuncao Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-      //gerarIdVersao(self);
-      gerarIdeEvento(self.IdeEvento);
-      gerarIdeEmpregador(self.IdeEmpregador);
-      Gerador.wGrupo('infoFuncao');
-      gerarModoAbertura(Self.ModoLancamento);
-        gerarIdeFuncao();
-        if Self.ModoLancamento <> mlExclusao then
-        begin
-          gerarDadosFuncao();
-          if Self.ModoLancamento = mlAlteracao then
-            if (InfoFuncao.novaValidadeInst()) then
-              GerarIdePeriodo(self.InfoFuncao.NovaValidade, 'novaValidade');
-        end;
-      gerarModoFechamento(Self.ModoLancamento);
-      Gerador.wGrupo('/infoFuncao');
-      Gerador.wGrupo('/evtTabFuncao');
+    GerarCabecalho('evtTabFuncao');
+    Gerador.wGrupo('evtTabFuncao Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
+    Gerador.wGrupo('infoFuncao');
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeFuncao;
+
+    if Self.ModoLancamento <> mlExclusao then
+    begin
+      GerarDadosFuncao;
+
+      if Self.ModoLancamento = mlAlteracao then
+        if (InfoFuncao.novaValidadeInst()) then
+          GerarIdePeriodo(self.InfoFuncao.NovaValidade, 'novaValidade');
+    end;
+
+    GerarModoFechamento(Self.ModoLancamento);
+
+    Gerador.wGrupo('/infoFuncao');
+    Gerador.wGrupo('/evtTabFuncao');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabFuncao');
+
     Validar('evtTabFuncao');
   except on e:exception do
     raise Exception.Create(e.Message);

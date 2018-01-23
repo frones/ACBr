@@ -79,6 +79,7 @@ type
     FS3000: TS3000Collection;
     FS4000: TS4000Collection;
     FS4999: TS4999Collection;
+
     procedure setS2190(const Value: TS2190Collection);
     procedure setS2200(const Value: TS2200Collection);
     procedure setS2205(const Value: TS2205Collection);
@@ -161,6 +162,7 @@ end;
 constructor TNaoPeriodicos.Create(AOwner: TComponent);
 begin
   inherited;
+
   FS2190 := TS2190Collection.Create(AOwner, TS2190CollectionItem);
   FS2200 := TS2200Collection.Create(AOwner, TS2200CollectionItem);
   FS2205 := TS2205Collection.Create(AOwner, TS2205CollectionItem);
@@ -203,6 +205,7 @@ begin
   FS3000.Free;
   FS4000.Free;
   FS4999.Free;
+
   inherited;
 end;
 
@@ -274,6 +277,7 @@ var
   Path: String;
 begin
   Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
+
   for I := 0 to Self.S2190.Count - 1 do
     Self.S2190.Items[i].EvtAdmPrelim.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2190.Items[i].TipoEvento)+'-'+IntToStr(i));
 
@@ -298,7 +302,7 @@ begin
   for I := 0 to Self.S2240.Count - 1 do
     Self.S2240.Items[i].EvtExpRisco.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2240.Items[i].TipoEvento)+'-'+IntToStr(i));
 
-    for I := 0 to Self.S2241.Count - 1 do
+  for I := 0 to Self.S2241.Count - 1 do
     Self.S2241.Items[i].EvtInsApo.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2241.Items[i].TipoEvento)+'-'+IntToStr(i));
 
   for I := 0 to Self.S2250.Count - 1 do
@@ -309,7 +313,6 @@ begin
 
   for I := 0 to Self.S2299.Count - 1 do
     Self.S2299.Items[i].EvtDeslig.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2299.Items[i].TipoEvento)+'-'+IntToStr(i));
-
 
   for I := 0 to Self.S2300.Count - 1 do
     Self.S2300.Items[i].EvtTSVInicio.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2300.Items[i].TipoEvento)+'-'+IntToStr(i));

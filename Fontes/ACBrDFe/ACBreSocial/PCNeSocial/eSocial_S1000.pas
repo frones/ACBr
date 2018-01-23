@@ -592,18 +592,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInfoEmpregador');
 
-    {$IFDEF DEBUG}
-    with TStringList.Create do
-    try
-      Text := XML;
-      SaveToFile(IncludeTrailingPathDelimiter(TACBreSocial(FACBreSocial).Configuracoes.Arquivos.PathSalvar) + 'S1000.xml');
-    finally
-      Free;
-    end;
-    {$ENDIF}
-
     Validar('evtInfoEmpregador');
-
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

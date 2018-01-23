@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 
@@ -74,7 +74,7 @@ type
   end;
 
   TS1070CollectionItem = class(TCollectionItem)
-   private
+  private
     FTipoEvento: TTipoEvento;
     FEvtTabProcesso: TEvtTabProcesso;
     procedure setEvtTabProcesso(const Value: TEvtTabProcesso);
@@ -87,7 +87,7 @@ type
   end;
 
   TIdeProcesso = class(TPersistent)
-   private
+  private
     FTpProc : tpTpProc;
     FNrProc : string;
     FIniValid: string;
@@ -100,17 +100,17 @@ type
   end;
 
   TEvtTabProcesso = class(TESocialEvento)
-   private
+  private
     FModoLancamento: TModoLancamento;
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoProcesso: TInfoProcesso;
 
     {Geradores específicos da classe}
-    procedure gerarIdeProcesso();
-    procedure gerarDadosProcJud();
-    procedure gerarDadosProc();
-    procedure gerarDadosInfoSusp();
+    procedure GerarIdeProcesso;
+    procedure GerarDadosProcJud;
+    procedure GerarDadosProc;
+    procedure GerarDadosInfoSusp;
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
@@ -125,10 +125,10 @@ type
 
   TInfoSuspCollectionItem = class(TCollectionItem)
   private
-   FCodSusp: String;
-   FIndSusp: tpIndSusp;
-   FDTDecisao: TDateTime;
-   FIndDeposito: tpSimNao;
+    FCodSusp: String;
+    FIndSusp: tpIndSusp;
+    FDTDecisao: TDateTime;
+    FIndDeposito: tpSimNao;
   public
     constructor create; reintroduce;
 
@@ -137,7 +137,6 @@ type
     property dtDecisao: TDateTime read FDTDecisao write FDTDecisao;
     property indDeposito: tpSimNao read FIndDeposito write FIndDeposito;
   end;
-
 
   TInfoSuspCollection = class(TCollection)
   private
@@ -150,7 +149,7 @@ type
   end;
 
   TDadosProcJud = class(TPersistent)
-   private
+  private
     FUfVara: string;
     FCodMunic: integer;
     FIdVara: string;
@@ -161,16 +160,18 @@ type
   end;
 
   TDadosProc = class(TPersistent)
-   private
+  private
     FIndAutoria: tpindAutoria;
     FIndMatProc:  tpIndMatProc;
     FDadosProcJud : TDadosProcJud;
     FInfoSusp: TInfoSuspCollection;
+
     function getDadosProcJud: TDadosProcJud;
     function getInfoSusp(): TInfoSuspCollection;
   public
     constructor create;
     destructor Destroy; override;
+
     function dadosProcJudInst(): Boolean;
     function infoSuspInst(): Boolean;
 
@@ -181,15 +182,17 @@ type
   end;
 
   TInfoProcesso = class
-   private
+  private
     FIdeProcesso: TIdeProcesso;
     FDadosProc: TDadosProc;
     FNovaValidade: TIdePeriodo;
+
     function getDadosProc(): TDadosProc;
     function getNovaValidade(): TIdePeriodo;
   public
     constructor create;
     destructor Destroy; override;
+
     function dadosProcsInst(): Boolean;
     function novaValidadeInst(): Boolean;
 
@@ -199,7 +202,6 @@ type
   end;
 
 implementation
-
 
 { TS1070Collection }
 
@@ -264,7 +266,6 @@ procedure TInfoSuspCollection.SetItem(Index: Integer;
 begin
   Inherited SetItem(Index, Value);
 end;
-
 
 { TInfoSuspCollectionItem }
 
@@ -371,78 +372,102 @@ begin
   inherited;
 end;
 
-procedure TEvtTabProcesso.gerarDadosInfoSusp;
+procedure TEvtTabProcesso.GerarDadosInfoSusp;
 var
   i: Integer;
 begin
   if InfoProcesso.dadosProc.infoSuspInst() then
+  begin
     for i := 0 to InfoProcesso.dadosProc.infoSusp.Count - 1 do
     begin
       Gerador.wGrupo('infoSusp');
-        Gerador.wCampo(tcStr, '', 'codSusp', 0, 0, 0, InfoProcesso.dadosProc.infoSusp.GetItem(i).codSusp);
-        Gerador.wCampo(tcStr, '', 'indSusp', 0, 0, 0, eSIndSuspToStr(InfoProcesso.dadosProc.infoSusp.GetItem(i).indSusp));
-        Gerador.wCampo(tcDat, '', 'dtDecisao', 0, 0, 0, InfoProcesso.dadosProc.infoSusp.GetItem(i).dtDecisao);
-        Gerador.wCampo(tcStr, '', 'indDeposito', 0, 0, 0, eSSimNaoToStr(InfoProcesso.dadosProc.infoSusp.GetItem(i).indDeposito));
+
+      Gerador.wCampo(tcStr, '', 'codSusp',      1, 14, 1, InfoProcesso.dadosProc.infoSusp.GetItem(i).codSusp);
+      Gerador.wCampo(tcStr, '', 'indSusp',      2,  2, 1, eSIndSuspToStr(InfoProcesso.dadosProc.infoSusp.GetItem(i).indSusp));
+      Gerador.wCampo(tcDat, '', 'dtDecisao',   10, 10, 1, InfoProcesso.dadosProc.infoSusp.GetItem(i).dtDecisao);
+      Gerador.wCampo(tcStr, '', 'indDeposito',  1,  1, 1, eSSimNaoToStr(InfoProcesso.dadosProc.infoSusp.GetItem(i).indDeposito));
+
       Gerador.wGrupo('/infoSusp');
     end;
+
+    if InfoProcesso.dadosProc.infoSusp.Count > 99 then
+      Gerador.wAlerta('', 'infoSusp', 'Lista de Informações de Suspensão', ERR_MSG_MAIOR_MAXIMO + '99');
+  end;
 end;
 
-procedure TEvtTabProcesso.gerarDadosProc;
+procedure TEvtTabProcesso.GerarDadosProc;
 begin
   Gerador.wGrupo('dadosProc');
-    Gerador.wCampo(tcInt, '', 'indAutoria', 0, 0, 0, eSindAutoriaToStr(InfoProcesso.dadosProc.indAutoria));
-    Gerador.wCampo(tcInt, '', 'indMatProc', 0, 0, 0, eSTpIndMatProcToStr(InfoProcesso.dadosProc.indMatProc));
-    gerarDadosProcJud();
-    gerarDadosInfoSusp();
+
+  if self.InfoProcesso.ideProcesso.tpProc = tpJudicial then
+    Gerador.wCampo(tcInt, '', 'indAutoria', 1, 1, 1, eSindAutoriaToStr(InfoProcesso.dadosProc.indAutoria));
+
+  Gerador.wCampo(tcInt, '', 'indMatProc', 1, 2, 1, eSTpIndMatProcToStr(InfoProcesso.dadosProc.indMatProc));
+
+  GerarDadosProcJud;
+  GerarDadosInfoSusp;
+
   Gerador.wGrupo('/dadosProc');
 end;
 
-procedure TEvtTabProcesso.gerarDadosProcJud;
+procedure TEvtTabProcesso.GerarDadosProcJud;
 begin
   if (InfoProcesso.dadosProc.dadosProcJudInst()) then
   begin
     Gerador.wGrupo('dadosProcJud');
-      Gerador.wCampo(tcStr, '', 'ufVara', 0, 0, 0, self.InfoProcesso.dadosProc.DadosProcJud.ufVara);
-      Gerador.wCampo(tcStr, '', 'codMunic', 0, 0, 0, self.InfoProcesso.dadosProc.DadosProcJud.codMunic);
-      Gerador.wCampo(tcStr, '', 'idVara', 0, 0, 0, self.InfoProcesso.dadosProc.DadosProcJud.idVara);
+
+    Gerador.wCampo(tcStr, '', 'ufVara',   2, 2, 1, self.InfoProcesso.dadosProc.DadosProcJud.ufVara);
+    Gerador.wCampo(tcStr, '', 'codMunic', 7, 7, 1, self.InfoProcesso.dadosProc.DadosProcJud.codMunic);
+    Gerador.wCampo(tcStr, '', 'idVara',   1, 4, 1, self.InfoProcesso.dadosProc.DadosProcJud.idVara);
+
     Gerador.wGrupo('/dadosProcJud');
   end;
 end;
 
-procedure TEvtTabProcesso.gerarIdeProcesso;
+procedure TEvtTabProcesso.GerarIdeProcesso;
 begin
   Gerador.wGrupo('ideProcesso');
-    Gerador.wCampo(tcStr, '', 'tpProc', 0, 0, 0, eSTpProcessoToStr(self.InfoProcesso.ideProcesso.tpProc));
-    Gerador.wCampo(tcStr, '', 'nrProc', 0, 0, 0, self.InfoProcesso.ideProcesso.nrProc);
-    Gerador.wCampo(tcStr, '', 'iniValid', 0, 0, 0, self.InfoProcesso.ideProcesso.iniValid);
-    Gerador.wCampo(tcStr, '', 'fimValid', 0, 0, 0, self.InfoProcesso.ideProcesso.fimValid);
+
+  Gerador.wCampo(tcStr, '', 'tpProc',   1,  1, 1, eSTpProcessoToStr(self.InfoProcesso.ideProcesso.tpProc));
+  Gerador.wCampo(tcStr, '', 'nrProc',   1, 20, 1, self.InfoProcesso.ideProcesso.nrProc);
+  Gerador.wCampo(tcStr, '', 'iniValid', 7,  7, 1, self.InfoProcesso.ideProcesso.iniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid', 7,  7, 0, self.InfoProcesso.ideProcesso.fimValid);
+
   Gerador.wGrupo('/ideProcesso');
 end;
 
 function TEvtTabProcesso.GerarXML: boolean;
 begin
   try
-    gerarCabecalho('evtTabProcesso');
-      Gerador.wGrupo('evtTabProcesso Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        Gerador.wGrupo('infoProcesso');
-          gerarModoAbertura(Self.ModoLancamento);
-            gerarIdeProcesso();
-            if Self.ModoLancamento <> mlExclusao then
-            begin
-              gerarDadosProc();
-              if Self.ModoLancamento = mlAlteracao then
-                if (InfoProcesso.novaValidadeInst()) then
-                  GerarIdePeriodo(self.InfoProcesso.NovaValidade,'novaValidade');
-            end;
-          gerarModoFechamento(Self.ModoLancamento);
-        Gerador.wGrupo('/infoProcesso');
-      Gerador.wGrupo('/evtTabProcesso');
+    GerarCabecalho('evtTabProcesso');
+    Gerador.wGrupo('evtTabProcesso Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
+    Gerador.wGrupo('infoProcesso');
+
+    GerarModoAbertura(Self.ModoLancamento);
+    GerarIdeProcesso;
+
+    if Self.ModoLancamento <> mlExclusao then
+    begin
+      GerarDadosProc;
+
+      if Self.ModoLancamento = mlAlteracao then
+        if (InfoProcesso.novaValidadeInst()) then
+          GerarIdePeriodo(self.InfoProcesso.NovaValidade,'novaValidade');
+    end;
+
+    GerarModoFechamento(Self.ModoLancamento);
+
+    Gerador.wGrupo('/infoProcesso');
+    Gerador.wGrupo('/evtTabProcesso');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabProcesso');
+
     Validar('evtTabProcesso');
   except on e:exception do
     raise Exception.Create(e.Message);

@@ -671,7 +671,7 @@ begin
           begin
             Add( LFill('M115')                     +
                  LFill( DET_VALOR_AJ ,0, 2 )       +
-                 LFill( CstPisToStr(CST_PIS) , 2 ) +
+                 LFill( CstPisToStr(CST_PIS) , 2,True ) +
                  LFill( DET_BC_CRED ,0,3 )         +
                  LFill( DET_ALIQ, 8, 4)            +
                  LFill( DT_OPER_AJ)                +
@@ -1224,7 +1224,7 @@ begin
         begin
           Add( LFill('M515')                          +
                LFill( DET_VALOR_AJ, 0, 2 )            +
-               LFill( CstCofinsToStr(CST_COFINS), 2 ) +
+               LFill( CstCofinsToStr(CST_COFINS), 2,True ) +
                LFill( DET_BC_CRED, 0, 3 )             +
                LFill( DET_ALIQ, 8, 4 )                +
                LFill( DT_OPER_AJ )                    +

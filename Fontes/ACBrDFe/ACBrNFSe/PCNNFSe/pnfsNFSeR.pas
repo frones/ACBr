@@ -3142,9 +3142,11 @@ begin
           NFSe.Servico.ItemServico.Items[I - 1].Aliquota      := Leitor.rCampo(tcDe2, 'Aliquota');
           NFSe.Servico.ItemServico.Items[I - 1].ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
           NFSe.Servico.ItemServico.Items[I - 1].ValorIss      := Leitor.rCampo(tcDe4, 'ValorIssqn');
-          NFSe.Servico.ItemServico.Items[I - 1].ValorTotal    := RoundTo(Double(NFSe.Servico.ItemServico.Items[I - 1].Quantidade *
-                                                                 NFSe.Servico.ItemServico.Items[I - 1].ValorUnitario), - 2);
-        end else
+          NFSe.Servico.ItemServico.Items[I - 1].ValorTotal    := NFSe.Servico.ItemServico.Items[I - 1].Quantidade *
+                                                                 NFSe.Servico.ItemServico.Items[I - 1].ValorUnitario;
+          NFSe.Servico.ItemServico.Items[I - 1].ValorTotal    := RoundTo(NFSe.Servico.ItemServico.Items[I - 1].ValorTotal, - 2);
+        end 
+	    else
           Break;
       end;
     end; // fim Servicos

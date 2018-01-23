@@ -62,9 +62,9 @@ implementation
 uses
   ACBrReg, ACBrDFeConfiguracoes, ACBrReinfConfiguracoes;
 
-{$IFNDEF FPC}
-{$R ACBrNFSe.dcr}
-{$ENDIF}
+//{$IFNDEF FPC}
+//{$R ACBrNFSe.dcr}
+//{$ENDIF}
 
 procedure Register;
 begin

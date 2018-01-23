@@ -609,7 +609,7 @@ begin
 
     infoServPrest.IdePeriodo.IniValid := '2017-01';
 
-     infoServPrest.ideEstabPrest.tpInscEstabPrest := ord(tiCNPJ); {valor somente leitura -> Valor fixo 1}
+     infoServPrest.ideEstabPrest.tpInscEstabPrest := tiCNPJ; {valor somente leitura -> Valor fixo 1}
     infoServPrest.ideEstabPrest.nrInscEstabPrest := edtEmitCNPJ.Text;
 
     with infoServPrest.ideEstabPrest.ideTomadors.New do

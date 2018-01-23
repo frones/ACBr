@@ -339,8 +339,6 @@ begin
       Add('NFSeSubstituida', ftString, 16);
       Add('DataEmissao', ftString, 19);
       Add('CodigoVerificacao', ftString, 15);
-
-      // Gumercino 18/01/2018
       Add('LinkNFSe', ftString, 500);
     end;
     CreateDataSet;
@@ -410,8 +408,6 @@ begin
       Add('TotalServicos', ftCurrency); // Nao usado - mantido por compatibilidade era calcfield
       Add('TotalNota', ftCurrency); // Nao usado - mantido por compatibilidade era calcfield
       Add('Tributacao', ftString, 1);
-
-      // Gumercino 18/01/2018
       Add('OutrosDescontos', ftCurrency);
     end;
     CreateDataSet;
@@ -428,10 +424,7 @@ begin
       Add('CodigoMunicipio', ftString, 60);
       Add('MunicipioIncidencia', ftString, 60);
       Add('OutrasInformacoes', ftString, 500);
-
-      // Gumercino 18/01/2018
       Add('InformacoesComplementares', ftString, 500);
-
       Add('CodigoObra', ftString, 60);
       Add('Art', ftString, 60);
       Add('Imagem', ftString, 256);
@@ -449,8 +442,6 @@ begin
       Add('RegimeEspecialTributacao', ftString, 50);
       Add('OptanteSimplesNacional', ftString, 10);
       Add('IncentivadorCultural', ftString, 10);
-
-      // Gumercino 18/01/2018
       Add('TipoRecolhimento', ftString, 10);
     end;
     CreateDataSet;
@@ -549,8 +540,6 @@ begin
       Add('NFSeSubstituida=NFSeSubstituida');
       Add('DataEmissao=DataEmissao');
       Add('CodigoVerificacao=CodigoVerificacao');
-
-      // Gumercino 18/01/2018
       Add('LinkNFSe=LinkNFSe');
     end;
     DataSet       := cdsIdentificacao;
@@ -682,8 +671,6 @@ begin
         Add('DescontoIncondicionado=DescontoIncondicionado');
         Add('TotalNota=TotalNota');
         Add('Tributacao=Tributacao'); 
-
-        // Gumercino 18/01/2018
         Add('OutrosDescontos=OutrosDescontos');
       end;
       DataSet       := cdsServicos;
@@ -704,10 +691,7 @@ begin
         Add('CodigoMunicipio=CodigoMunicipio');
         Add('MunicipioIncidencia=MunicipioIncidencia');
         Add('OutrasInformacoes=OutrasInformacoes');
-
-        // Gumercino 18/01/2018
         Add('InformacoesComplementares=InformacoesComplementares');
-
         Add('CodigoObra=CodigoObra');
         Add('Art=Art');
         Add('Imagem=Imagem');
@@ -800,8 +784,6 @@ begin
 			else
 				FieldByName('DataEmissao').AsString       := FormatDateBr(DataEmissao);
       FieldByName('CodigoVerificacao').AsString := CodigoVerificacao;
-
-      // Gumercino 18/01/2018
       FieldByName('LinkNFSe').AsString := Link;
     end;
     Post;
@@ -826,7 +808,6 @@ begin
         cdsItensServico.FieldByName('ValorTotal').AsString           := FormatFloatBr( ValorTotal, '###,###,##0.00');
         cdsItensServico.FieldByName('Tributavel').AsString           := SimNaoToStr(Tributavel);
 
-        // Gumercino 19/01/2018
         if Provedor = proEL then
           cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr( Aliquota * 100, '0.00')
         else
@@ -873,7 +854,6 @@ begin
       FieldByName('OutrasInformacoes').AsString := OutrasInformacoes;
       FieldByName('NaturezaOperacao').AsString  := NaturezaOperacaoDescricao(NaturezaOperacao);
 
-      // Gumercino 18/01/2018
       if Provedor = proEL then
       begin
         if RegimeEspecialTributacao = retNenhum then
@@ -924,7 +904,6 @@ begin
         FieldByName('Art').AsString        := Art;
       end;
 
-      // Gumercino 18/01/2018
       FieldByName('InformacoesComplementares').AsString := InformacoesComplementares;
     end;
 
@@ -934,9 +913,6 @@ begin
     FieldByName('Sistema').AsString   := IfThen( DANFSeClassOwner.Sistema <> '' , DANFSeClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
     FieldByName('Usuario').AsString   := DANFSeClassOwner.Usuario;
     FieldByName('Site').AsString      := DANFSeClassOwner.Site;
-    //FieldByName('Mensagem0').AsString := IfThen(DANFSeClassOwner.NFSeCancelada, 'NFSe CANCELADA', '');
-
-    // Gumercino 19/01/2018
     if Provedor = proEL then
       FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'CANCELADA', '')
     else
@@ -997,7 +973,6 @@ begin
 
     with ANFSe.Servico do
     begin
-      // Gumercino 19/01/2018
       if Provedor = proEL then
       begin
         FieldByName('ItemListaServico').AsString  := ItemListaServico;
@@ -1035,8 +1010,6 @@ begin
         FieldByName('ValorIssRetido').AsFloat         := ValorIssRetido;
         FieldByName('DescontoCondicionado').AsFloat   := DescontoCondicionado;
         FieldByName('DescontoIncondicionado').AsFloat := DescontoIncondicionado;
-
-        // Gumercino 18/01/2018
         FieldByName('OutrosDescontos').AsCurrency := OutrosDescontos;
       end;
     end;
@@ -1192,7 +1165,6 @@ end;
 
 procedure TACBrNFSeDANFSeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 begin
-  // Gumercino 18/01/2018
   if Provedor <> proEL then
   begin
     with frxReport do

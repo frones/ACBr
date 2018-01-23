@@ -303,7 +303,7 @@ begin
     with TStringList.Create do
     try
        Text := XML;
-       SaveToFile(IncludeTrailingPathDelimiter(TACBrReinf(FACBrReinf).Configuracoes.Arquivos.PathSalvar) + Copy(Self.ClassName, 2, Self.ClassName.Length)+
+       SaveToFile(IncludeTrailingPathDelimiter(TACBrReinf(FACBrReinf).Configuracoes.Arquivos.PathSalvar) + Copy(Self.ClassName, 2, Length( Self.ClassName ) ) +
                   '-'+ IntTostr(Dayof(Now)) + IntTostr(MonthOf(Now)) + IntTostr(YearOf(Now))+ '_'+ IntTostr(HourOf(Now))+ IntTostr(MinuteOf(Now))+IntTostr(SecondOf(Now)) + '_' +IntTostr(MilliSecondOf(Now)) + '.xml');
     finally
       Free;

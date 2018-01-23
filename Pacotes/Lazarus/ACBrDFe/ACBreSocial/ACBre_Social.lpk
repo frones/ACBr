@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBre_Social"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBreSocial\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+    </CompilerOptions>
+    <Description Value="ACBr e-Social
+(www.projetoacbr.com.br)"/>
+    <Files Count="60">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocial.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="ACBreSocial"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialConfiguracoes.pas"/>
+        <UnitName Value="ACBreSocialConfiguracoes"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialEventos.pas"/>
+        <UnitName Value="ACBreSocialEventos"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialLoteEventos.pas"/>
+        <UnitName Value="ACBreSocialLoteEventos"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBreSocialReg"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialWebServices.pas"/>
+        <UnitName Value="ACBreSocialWebServices"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_Common.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="eSocial_Common"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_Consts.pas"/>
+        <UnitName Value="eSocial_Consts"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_Conversao.pas"/>
+        <UnitName Value="eSocial_Conversao"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_Gerador.pas"/>
+        <UnitName Value="eSocial_Gerador"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_Iniciais.pas"/>
+        <UnitName Value="eSocial_Iniciais"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_NaoPeriodicos.pas"/>
+        <UnitName Value="eSocial_NaoPeriodicos"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_Periodicos.pas"/>
+        <UnitName Value="eSocial_Periodicos"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1000.pas"/>
+        <UnitName Value="eSocial_S1000"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1005.pas"/>
+        <UnitName Value="eSocial_S1005"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1010.pas"/>
+        <UnitName Value="eSocial_S1010"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1020.pas"/>
+        <UnitName Value="eSocial_S1020"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1030.pas"/>
+        <UnitName Value="eSocial_S1030"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1035.pas"/>
+        <UnitName Value="eSocial_S1035"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1040.pas"/>
+        <UnitName Value="eSocial_S1040"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1050.pas"/>
+        <UnitName Value="eSocial_S1050"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1060.pas"/>
+        <UnitName Value="eSocial_S1060"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1070.pas"/>
+        <UnitName Value="eSocial_S1070"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1080.pas"/>
+        <UnitName Value="eSocial_S1080"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1200.pas"/>
+        <UnitName Value="eSocial_S1200"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1202.pas"/>
+        <UnitName Value="eSocial_S1202"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1207.pas"/>
+        <UnitName Value="eSocial_S1207"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1210.pas"/>
+        <UnitName Value="eSocial_S1210"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1220.pas"/>
+        <UnitName Value="eSocial_S1220"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1250.pas"/>
+        <UnitName Value="eSocial_S1250"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1260.pas"/>
+        <UnitName Value="eSocial_S1260"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1270.pas"/>
+        <UnitName Value="eSocial_S1270"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1280.pas"/>
+        <UnitName Value="eSocial_S1280"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1295.pas"/>
+        <UnitName Value="eSocial_S1295"/>
+      </Item34>
+      <Item35>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1298.pas"/>
+        <UnitName Value="eSocial_S1298"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1299.pas"/>
+        <UnitName Value="eSocial_S1299"/>
+      </Item36>
+      <Item37>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S1300.pas"/>
+        <UnitName Value="eSocial_S1300"/>
+      </Item37>
+      <Item38>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2100.pas"/>
+        <UnitName Value="eSocial_S2100"/>
+      </Item38>
+      <Item39>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2190.pas"/>
+        <UnitName Value="eSocial_S2190"/>
+      </Item39>
+      <Item40>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2200.pas"/>
+        <UnitName Value="eSocial_S2200"/>
+      </Item40>
+      <Item41>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2205.pas"/>
+        <UnitName Value="eSocial_S2205"/>
+      </Item41>
+      <Item42>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2206.pas"/>
+        <UnitName Value="eSocial_S2206"/>
+      </Item42>
+      <Item43>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2210.pas"/>
+        <UnitName Value="eSocial_S2210"/>
+      </Item43>
+      <Item44>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2220.pas"/>
+        <UnitName Value="eSocial_S2220"/>
+      </Item44>
+      <Item45>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2230.pas"/>
+        <UnitName Value="eSocial_S2230"/>
+      </Item45>
+      <Item46>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2240.pas"/>
+        <UnitName Value="eSocial_S2240"/>
+      </Item46>
+      <Item47>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\esocial_S2241.pas"/>
+        <UnitName Value="esocial_S2241"/>
+      </Item47>
+      <Item48>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2250.pas"/>
+        <UnitName Value="eSocial_S2250"/>
+      </Item48>
+      <Item49>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2298.pas"/>
+        <UnitName Value="eSocial_S2298"/>
+      </Item49>
+      <Item50>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2299.pas"/>
+        <UnitName Value="eSocial_S2299"/>
+      </Item50>
+      <Item51>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2300.pas"/>
+        <UnitName Value="eSocial_S2300"/>
+      </Item51>
+      <Item52>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2305.pas"/>
+        <UnitName Value="eSocial_S2305"/>
+      </Item52>
+      <Item53>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2306.pas"/>
+        <UnitName Value="eSocial_S2306"/>
+      </Item53>
+      <Item54>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2399.pas"/>
+        <UnitName Value="eSocial_S2399"/>
+      </Item54>
+      <Item55>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S2400.pas"/>
+        <UnitName Value="eSocial_S2400"/>
+      </Item55>
+      <Item56>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S3000.pas"/>
+        <UnitName Value="eSocial_S3000"/>
+      </Item56>
+      <Item57>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S4000.pas"/>
+        <UnitName Value="eSocial_S4000"/>
+      </Item57>
+      <Item58>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S4999.pas"/>
+        <UnitName Value="eSocial_S4999"/>
+      </Item58>
+      <Item59>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_S5001.pas"/>
+        <UnitName Value="eSocial_S5001"/>
+      </Item59>
+      <Item60>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\eSocial_Tabelas.pas"/>
+        <UnitName Value="eSocial_Tabelas"/>
+      </Item60>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

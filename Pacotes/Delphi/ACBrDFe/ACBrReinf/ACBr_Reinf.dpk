@@ -1,0 +1,80 @@
+{$I ACBr.inc}
+package ACBr_Reinf;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Reinf - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD OFF}
+{$DEFINE DEBUG}
+
+requires
+  vcl,
+  rtl,
+  designide,
+  xmlrtl,
+  dbrtl,
+  inet,
+  soaprtl,
+  ACBr_DFeComum;
+
+contains
+  ACBrReinf in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinf.pas',
+  ACBrReinfClasses in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfClasses.pas',
+  ACBrReinfConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfConfiguracoes.pas',
+  ACBrReinfEventos in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfEventos.pas',
+  ACBrReinfEventosBase in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfEventosBase.pas',
+  ACBrReinfR1000 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR1000.pas',
+  ACBrReinfR1000_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR1000_Class.pas',
+  ACBrReinfR1070 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR1070.pas',
+  ACBrReinfR1070_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR1070_Class.pas',
+  ACBrReinfR2010 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2010.pas',
+  ACBrReinfR2010_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2010_Class.pas',
+  ACBrReinfR2020 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2020.pas',
+  ACBrReinfR2020_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2020_Class.pas',
+  ACBrReinfR2030 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2030.pas',
+  ACBrReinfR2030_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2030_Class.pas',
+  ACBrReinfR2040 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2040.pas',
+  ACBrReinfR2040_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2040_Class.pas',
+  ACBrReinfR2050 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2050.pas',
+  ACBrReinfR2050_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2050_Class.pas',
+  ACBrReinfR2060 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2060.pas',
+  ACBrReinfR2060_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2060_Class.pas',
+  ACBrReinfR2070 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2070.pas',
+  ACBrReinfR2070_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2070_Class.pas',
+  ACBrReinfR2098 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2098.pas',
+  ACBrReinfR2098_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2098_Class.pas',
+  ACBrReinfR2099 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2099.pas',
+  ACBrReinfR2099_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2099_Class.pas',
+  ACBrReinfR3010 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR3010.pas',
+  ACBrReinfR3010_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR3010_Class.pas',
+  ACBrReinfR5001 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR5001.pas',
+  ACBrReinfR5001_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR5001_Class.pas',
+  ACBrReinfR9000 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR9000.pas',
+  ACBrReinfR9000_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR9000_Class.pas',
+  ACBrReinfReg in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfReg.pas',
+  ACBrReinfRetEventos in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfRetEventos.pas',
+  ACBrReinfUtils in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfUtils.pas',
+  ACBrReinfWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfWebServices.pas',
+  pcnConversaoReinf in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnConversaoReinf.pas';
+
+end.

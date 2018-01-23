@@ -4,6 +4,7 @@
 
 unit ACBrSerial;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -12,14 +13,15 @@ uses
   ACBrCHQChronos, ACBrCHQClass, ACBrCHQImpressoraComum, ACBrCHQImpressoraECF, 
   ACBrCHQPerto, ACBrCHQSchalter, ACBrCHQSotomaq, ACBrCHQUrano, ACBrDIS, 
   ACBrDISClass, ACBrDISGertecSerial, ACBrDISGertecTeclado, 
-  ACBrDISKeytecTeclado, ACBrECF, ACBrECFClass, ACBrECFBematech, ACBrECFDaruma, 
-  ACBrECFDataRegis, ACBrECFEpson, ACBrECFFiscNET, ACBrECFICash, ACBrECFMecaf, 
-  ACBrECFNaoFiscal, ACBrECFNCR, ACBrECFQuattro, ACBrECFSchalter, ACBrECFSweda, 
-  ACBrECFSwedaSTX, ACBrECFUrano, ACBrECFYanco, ACBrECFEscECF, ACBrETQ, 
-  ACBrETQClass, ACBrETQPpla, ACBrETQZplII, ACBrGAV, ACBrGAVClass, 
-  ACBrGAVImpressoraComum, ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, 
-  ACBrGAVSerialMenno, ACBrLCB, ACBrRFD, ACBrTER, ACBrTERClass, ACBrTERWilbor, 
-  ACBrDISSmakTeclado, ACBrDISGertecTEC65lib, ACBrECFVirtual, 
+  ACBrDISGertecTEC65lib, ACBrDISKeytecTeclado, ACBrDISSmakTecladoLib, 
+  ACBrDISSmakTeclado, ACBrDISSmakSerial, ACBrECF, ACBrECFClass, 
+  ACBrECFBematech, ACBrECFDaruma, ACBrECFDataRegis, ACBrECFEpson, 
+  ACBrECFFiscNET, ACBrECFICash, ACBrECFMecaf, ACBrECFNaoFiscal, ACBrECFNCR, 
+  ACBrECFQuattro, ACBrECFSchalter, ACBrECFSweda, ACBrECFSwedaSTX, 
+  ACBrECFUrano, ACBrECFYanco, ACBrECFEscECF, ACBrETQ, ACBrETQClass, 
+  ACBrETQPpla, ACBrETQZplII, ACBrGAV, ACBrGAVClass, ACBrGAVImpressoraComum, 
+  ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, ACBrGAVSerialMenno, ACBrLCB, 
+  ACBrRFD, ACBrTER, ACBrTERClass, ACBrTERWilbor, ACBrECFVirtual, 
   ACBrECFVirtualBuffer, ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal, 
   ACBrPosPrinter, ACBrEscBematech, ACBrEscPosEpson, ACBrEscDaruma, 
   ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, ACBrSMS, ACBrSMSClass, 

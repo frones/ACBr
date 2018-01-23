@@ -3033,6 +3033,7 @@ function TNFSeR.LerRps_EL: Boolean;
 var
  ok  : Boolean;
   I: Integer;
+  AValorTotal: Double;
 begin
 
   // Gumercino 18/01/2018
@@ -3132,6 +3133,8 @@ begin
         begin
           NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
 
+          AValorTotal := NFSe.Servico.ItemServico.Items[I - 1].Quantidade *
+                         NFSe.Servico.ItemServico.Items[I - 1].ValorUnitario;
           NFSe.Servico.ItemServico.Insert(I - 1);
           NFSe.Servico.ItemServico.Items[I - 1].CodServ       := Leitor.rCampo(tcStr, 'CodigoServico116');
           NFSe.Servico.ItemServico.Items[I - 1].CodLCServ     := Leitor.rCampo(tcStr, 'CodigoServico116');
@@ -3142,9 +3145,7 @@ begin
           NFSe.Servico.ItemServico.Items[I - 1].Aliquota      := Leitor.rCampo(tcDe2, 'Aliquota');
           NFSe.Servico.ItemServico.Items[I - 1].ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
           NFSe.Servico.ItemServico.Items[I - 1].ValorIss      := Leitor.rCampo(tcDe4, 'ValorIssqn');
-          NFSe.Servico.ItemServico.Items[I - 1].ValorTotal    := NFSe.Servico.ItemServico.Items[I - 1].Quantidade *
-                                                                 NFSe.Servico.ItemServico.Items[I - 1].ValorUnitario;
-          NFSe.Servico.ItemServico.Items[I - 1].ValorTotal    := RoundTo(NFSe.Servico.ItemServico.Items[I - 1].ValorTotal, - 2);
+          NFSe.Servico.ItemServico.Items[I - 1].ValorTotal    := RoundTo(AValorTotal, - 2);
         end 
 	    else
           Break;

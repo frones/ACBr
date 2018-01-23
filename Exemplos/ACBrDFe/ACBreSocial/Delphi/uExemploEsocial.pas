@@ -917,7 +917,7 @@ begin
       evtTabOperPortuario.InfoOperPortuario.IdeOperPortuario.iniValid        := '2015-05';
       evtTabOperPortuario.InfoOperPortuario.IdeOperPortuario.fimValid        := '2099-12';
 
-      evtTabOperPortuario.InfoOperPortuario.DadosOperPortuario.aliqRat      := 5;
+      evtTabOperPortuario.InfoOperPortuario.DadosOperPortuario.aliqRat      := arat1;
       evtTabOperPortuario.InfoOperPortuario.DadosOperPortuario.fap          := 0.5;
       evtTabOperPortuario.InfoOperPortuario.DadosOperPortuario.aliqRatAjust := 5.5;
 
@@ -1430,8 +1430,8 @@ begin
 end;
 
 procedure TFExemploEsocial.GerareSocial1210;
-var
-  I : Integer;
+//var
+//  I : Integer;
 begin
   with AcbreSocial1.Eventos.Periodicos.S1210.Add do
   begin
@@ -3590,9 +3590,9 @@ begin
 end;
 
 procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
-var
-  ASerie: String;
-  i: integer;
+//var
+//  ASerie: String;
+//  i: integer;
 begin
 
   ACBreSocial1.SSL.SelecionarCertificado;
@@ -3910,9 +3910,9 @@ begin
 end;
 
 procedure TFExemploEsocial.btnHTTPSClick(Sender: TObject);
-var
-  Acao: String;
-  OldUseCert: Boolean;
+//var
+//  Acao: String;
+//  OldUseCert: Boolean;
 begin
 (*
   Acao := '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+

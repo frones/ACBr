@@ -1,8 +1,8 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 531
-  Top = 32
+  Left = 513
+  Top = 22
   Width = 805
-  Height = 1019
+  Height = 920
   Caption = 'ACBrSATExtratoFortes'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -386,7 +386,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbSubTotal: TRLBand
         Left = 0
-        Top = 84
+        Top = 91
         Width = 286
         Height = 14
         AutoSize = True
@@ -417,7 +417,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbDescontos: TRLBand
         Left = 0
-        Top = 98
+        Top = 105
         Width = 286
         Height = 14
         AutoSize = True
@@ -448,7 +448,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbAcrescimos: TRLBand
         Left = 0
-        Top = 112
+        Top = 119
         Width = 286
         Height = 14
         AutoSize = True
@@ -479,7 +479,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbTotal: TRLBand
         Left = 0
-        Top = 126
+        Top = 133
         Width = 286
         Height = 24
         AutoSize = True
@@ -510,6 +510,14 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Caption = '99.999,99'
           Layout = tlCenter
         end
+      end
+      object rlbGap: TRLBand
+        Left = 0
+        Top = 84
+        Width = 286
+        Height = 7
+        BandType = btSummary
+        BeforePrint = rlbGapBeforePrint
       end
     end
     object rlsbPagamentos: TRLSubDetail
@@ -546,7 +554,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 14
         Width = 286
-        Height = 14
+        Height = 16
         AutoSize = True
         BandType = btSummary
         Font.Charset = DEFAULT_CHARSET
@@ -559,30 +567,18 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         object lTitTroco: TRLLabel
           Left = -2
           Top = 0
-          Width = 47
-          Height = 14
+          Width = 56
+          Height = 16
           Caption = 'Troco R$'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object lTroco: TRLLabel
-          Left = 235
+          Left = 225
           Top = 0
-          Width = 51
-          Height = 14
+          Width = 61
+          Height = 16
           Align = faRight
           Alignment = taRightJustify
           Caption = '99.999,99'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
       end
     end

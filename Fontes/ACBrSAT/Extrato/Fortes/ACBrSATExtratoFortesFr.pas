@@ -171,6 +171,7 @@ type
     rlbCabecalhoCan: TRLBand;
     rlbConsumidor: TRLBand;
     rlbDadosCliche: TRLBand;
+    rlbGap: TRLBand;
     rlbLegenda: TRLBand;
     rlbNumExtrato: TRLBand;
     rlbCanRodape: TRLBand;
@@ -278,7 +279,6 @@ type
     fHeightDetItem: Integer;
     fResumido: Boolean;
 
-    function CalcularTamanhoDaPagina( AReport : TRLReport): Integer;
     procedure PintarQRCode(QRCodeData: String; APict: TPicture);
     function CompoemEnderecoCFe: String ;
     function CompoemCliche: String;
@@ -405,10 +405,10 @@ begin
       if (Entrega.xMun <> '') then
         Endereco := Endereco + ' - '+Entrega.xMun;
 
-      mEndEnt.Lines.Add( ACBrStr('Endereco: '+Endereco) );
+      mEndEnt.Lines.Add( ACBrStr('Endereço: ')+Endereco );
 
       if (Dest.xNome <> '' ) then
-        mDestEnt.Lines.Add( ACBrStr('Destinatário: '+Dest.xNome) );
+        mDestEnt.Lines.Add( ACBrStr('Destinatário: ')+Dest.xNome );
     end;
   end;
 end;
@@ -456,29 +456,6 @@ begin
 
   Eof := (RecNo > ACBrSATExtrato.CFe.Pagto.Count) ;
   RecordAction := raUseIt ;
-end;
-
-function TACBrSATExtratoFortesFr.CalcularTamanhoDaPagina(AReport: TRLReport): Integer;
-var
-  TotalPaginaPixel: Integer;
-begin
-  if AReport = rlVenda then
-    // Calculando o tamanho da Página em Pixels //
-    TotalPaginaPixel := (rlbsCabecalho.Height - IfThen(rlbConsumidor.Visible, 0, rlbConsumidor.Height)) +
-                        rlbRodape.Height +
-                        round(rlsbDetItem.Height * (ACBrSATExtrato.CFe.Det.Count * 2)) + //MULTIPLICAR P/2 AS LINHAS
-                        rlObsContrib.Height
-  else
-    TotalPaginaPixel := rlbCabecalhoCan.Height +
-                        rlbDadosCupomCancelado.Height +
-                        rlbCanRodape.Height +
-                        ifthen( (ACBrSATExtrato.CFe.ide.tpAmb = taHomologacao), rlbTeste.Height, 0 ) ;
-
-  Result := max( 100, 50 + round(TotalPaginaPixel/MMAsPixels));
-
-  // Limite do driver (Tamanho da página)
-  if (Result > 3276) then
-    Result := 3276;
 end;
 
 procedure TACBrSATExtratoFortesFr.PintarQRCode(QRCodeData: String; APict: TPicture);
@@ -729,7 +706,7 @@ begin
                      FormatFloatBr(Prod.vUnCom, IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom)) +'|'+
                      sVlrImpostos +
                      FormatFloatBr(Prod.vProd) ;
-      LinhaTotal  := PadSpace( ACBrStr(LinhaTotal), maxCaracter-9, '|') ;
+      LinhaTotal  := PadSpace(LinhaTotal, maxCaracter-9, '|') ;
 
       mLinhaItem.Lines.Add(LinhaTotal);
     end;
@@ -1079,7 +1056,11 @@ begin
       RLLayout.PageBreaking := pbNone;
       RLLayout.PageSetup.PaperSize   := fpCustom ;
       RLLayout.PageSetup.PaperWidth  := Round(LarguraBobina/MMAsPixels) ;
-      RLLayout.PageSetup.PaperHeight := CalcularTamanhoDaPagina( RLLayout );
+
+      RLLayout.UnlimitedHeight := True; // ****** ATENÇÃO ******
+      // Se você recebeu um erro de compilação na linha ACIMA
+      // Voce DEVE atualizar os fontes do seu Fortes Report CE
+      // https://github.com/fortesinformatica/fortesreport-ce
 
       if Filtro = fiNenhum then
       begin

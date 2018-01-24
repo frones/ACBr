@@ -1,10 +1,10 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 513
-  Height = 963
+  Left = 504
+  Height = 881
   Top = 25
   Width = 772
   Caption = 'ACBrSATExtratoFortes'
-  ClientHeight = 963
+  ClientHeight = 881
   ClientWidth = 772
   Color = clBtnFace
   Font.Color = clWindowText
@@ -12,7 +12,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.6'
   object rlVenda: TRLReport
     Left = 32
     Height = 1512

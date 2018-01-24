@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/01/2018
+-- ACBrSATExtratoFortesFr --
+[-] Correção de exibição de caracteres acentuados, nas informações do Contribuinte
+[*] Ajuste para que o calculo da altura da página, seja feito pelo próprio
+    Fortes Report, através da nova propriedade: "UnlimitedHeight := True"
+    (por: DSA)
+
 Data: 05/01/2018
 -- pcnCFeW --
 [-] Correção para uso de CST diferente de 49 para empresas optantes pelo simples no SAT

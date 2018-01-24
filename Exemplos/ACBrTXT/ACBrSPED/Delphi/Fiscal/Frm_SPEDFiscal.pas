@@ -11,7 +11,8 @@ uses
   Windows, Messages,
 {$ENDIF}
   SysUtils, Variants, Classes, Graphics, Controls, Forms, ACBrEFDBlocos,
-  Dialogs, StdCtrls, ACBrSpedFiscal, ExtCtrls, ComCtrls, ACBrUtil, ACBrTXTClass;
+  Dialogs, StdCtrls, ACBrSpedFiscal, ExtCtrls, ComCtrls, ACBrUtil, ACBrTXTClass,
+  DateUtils, ACBrBase;
 
 type
 
@@ -48,7 +49,12 @@ type
     ACBrSPEDFiscal1: TACBrSPEDFiscal;
     btnB_G: TButton;
     btnB_Completo: TButton;
-    btnCancelaGeração: TButton;
+    btnCancelaGeracao: TButton;
+    btnB_K: TButton;
+    Label9: TLabel;
+    DtRef: TDateTimePicker;
+    procedure ACBrSPEDFiscal1Error(const MsnError: string);
+    procedure btnB_KClick(Sender: TObject);
     procedure btnB_0Click(Sender: TObject);
     procedure btnB_9Click(Sender: TObject);
     procedure btnTXTClick(Sender: TObject);
@@ -60,12 +66,12 @@ type
     procedure btnErrorClick(Sender: TObject);
     procedure edtFileChange(Sender: TObject);
     procedure cbConcomitanteClick(Sender: TObject);
-    procedure ACBrSPEDFiscal1Error(const MsnError: AnsiString);
     procedure btnB_CompletoClick(Sender: TObject);
     procedure btnB_GClick(Sender: TObject);
-    procedure btnCancelaGeraçãoClick(Sender: TObject);
+    procedure btnCancelaGeracaoClick(Sender: TObject);
   private
     procedure LoadToMemo;
+    function AnoToVersao: TACBrCodVer; 
     { Private declarations }
   public
     { Public declarations }
@@ -76,6 +82,8 @@ var
 
 implementation
 
+uses ACBrEFDBloco_K_Class, ACBrEFDBloco_K, ACBrEFDBloco_0, ACBrEFDBloco_0_Class;
+
 {$IFDEF FPC}
 {$R *.lfm}
 {$ELSE}
@@ -84,10 +92,41 @@ implementation
 
 const
   strUNID: array [0 .. 4] of string = ('PC', 'UN', 'LT', 'PC', 'MT');
+  FCod_Item = '000001';
 
-procedure TFrmSPEDFiscal.ACBrSPEDFiscal1Error(const MsnError: AnsiString);
+procedure TFrmSPEDFiscal.ACBrSPEDFiscal1Error(const MsnError: string);
 begin
   memoError.Lines.Add(MsnError);
+end;
+
+function TFrmSPEDFiscal.AnoToVersao: TACBrCodVer;
+var
+  xVer: string;
+begin
+  if (DtRef.DateTime >= StrToDate('01/01/2009')) and (DtRef.DateTime <= StrToDate('31/12/2009')) then
+    xVer := '002'
+  else if (DtRef.DateTime >= StrToDate('01/01/2010')) and (DtRef.DateTime <= StrToDate('31/12/2010')) then
+    xVer := '003'
+  else if (DtRef.DateTime >= StrToDate('01/01/2011')) and (DtRef.DateTime <= StrToDate('31/12/2011')) then
+    xVer := '004'
+  else if (DtRef.DateTime >= StrToDate('01/01/2012')) and (DtRef.DateTime <= StrToDate('30/06/2012')) then
+    xVer := '005'
+  else if (DtRef.DateTime >= StrToDate('01/07/2012')) and (DtRef.DateTime <= StrToDate('31/12/2012')) then
+    xVer := '006'
+  else if (DtRef.DateTime >= StrToDate('01/01/2013')) and (DtRef.DateTime <= StrToDate('31/12/2013')) then
+    xVer := '007'
+  else if (DtRef.DateTime >= StrToDate('01/01/2014')) and (DtRef.DateTime <= StrToDate('31/12/2014')) then
+    xVer := '008'
+  else if (DtRef.DateTime >= StrToDate('01/01/2015')) and (DtRef.DateTime <= StrToDate('31/12/2015')) then
+    xVer := '009'
+  else if (DtRef.DateTime >= StrToDate('01/01/2016')) and (DtRef.DateTime <= StrToDate('31/12/2016')) then
+    xVer := '010'
+  else if (DtRef.DateTime >= StrToDate('01/01/2017')) and (DtRef.DateTime <= StrToDate('31/12/2017')) then
+    xVer := '011'
+  else if (DtRef.DateTime >= StrToDate('01/01/2018')) then
+    xVer := '012';
+
+  Result := StrToCodVer(xVer);
 end;
 
 procedure TFrmSPEDFiscal.btnB_0Click(Sender: TObject);
@@ -108,8 +147,8 @@ begin
   btnB_0.Enabled := False;
   btnB_C.Enabled := True;
 
-  ACBrSPEDFiscal1.DT_INI := StrToDate('01/11/2014');
-  ACBrSPEDFiscal1.DT_FIN := StrToDate('30/11/2014');
+  ACBrSPEDFiscal1.DT_INI := StrToDate('01/11/' + IntToStr(YearOf(DtRef.Date)));
+  ACBrSPEDFiscal1.DT_FIN := StrToDate('30/11/' + IntToStr(YearOf(DtRef.Date)));
 
   if cbConcomitante.Checked then
   begin
@@ -123,7 +162,7 @@ begin
     // Dados da Empresa
     with Registro0000New do
     begin
-      COD_VER := vlVersao107;
+      COD_VER := AnoToVersao;
       COD_FIN := raOriginal;
       NOME := 'RAZÃO SOCIAL DA EMPRESA EMITENTE';
       CNPJ := '11111111000191';
@@ -251,6 +290,12 @@ begin
           COD_GEN := '30';
           ALIQ_ICMS := 17.00;
 
+          with Registro0220New do
+          begin
+            UNID_CONV := strUNID[int0200 mod (High(strUNID)+1)];
+            FAT_CONV := 1;
+          end;
+
           //REGISTRO 0206: CÓDIGO DE PRODUTO CONFORME TABELA PUBLICADA PELA ANP (COMBUSTÍVEIS)
   //        With Registro0206New do
   //        begin
@@ -303,7 +348,7 @@ begin
       begin
         with Registro0500New do
         begin
-          DT_ALT := StrToDate('30/11/2014');
+          DT_ALT := ACBrSPEDFiscal1.DT_FIN;
           COD_NAT_CC := '01';
           IND_CTA := 'A';
           NIVEL := '1';
@@ -316,7 +361,7 @@ begin
       begin
         with Registro0600New do
         begin
-          DT_ALT := StrToDate('30/11/2014');
+          DT_ALT := ACBrSPEDFiscal1.DT_FIN;
           COD_CCUS := IntToStr(int0600);
           CCUS := 'CENTRO DE CUSTOS ' + IntToStr(int0600);
         end;
@@ -345,6 +390,7 @@ begin
   btnB_E.Enabled := True;
   btnB_G.Enabled := True;
   btnB_H.Enabled := True;
+  btnB_K.Enabled := True;
 
   cbConcomitante.Enabled := True;
 end;
@@ -372,7 +418,7 @@ begin
   cbConcomitante.Enabled := True;
 end;
 
-procedure TFrmSPEDFiscal.btnCancelaGeraçãoClick(Sender: TObject);
+procedure TFrmSPEDFiscal.btnCancelaGeracaoClick(Sender: TObject);
 begin
   ACBrSPEDFiscal1.CancelaGeracao;
 end;
@@ -392,6 +438,7 @@ begin
   btnB_D.Enabled := True;
   btnB_E.Enabled := True;
   btnB_H.Enabled := True;
+  btnB_K.Enabled := True;
 end;
 
 procedure TFrmSPEDFiscal.btnB_1Click(Sender: TObject);
@@ -506,7 +553,7 @@ begin
                 SER := '1';
                 SUB := '1';
                 NUM_DOC := '333';
-                DT_DOC := StrToDate('02/11/2014');
+                DT_DOC := StrToDate('02/11/' + IntToStr(YearOf(DtRef.Date)));
               end;
 //              with RegistroC114New do
 //              begin
@@ -568,18 +615,18 @@ begin
               ALIQ_ST := 0;
               VL_ICMS_ST := 0;
               IND_APUR := iaMensal;
-              CST_IPI := ipiEntradaIsenta;
+              CST_IPI := CstIpiToStr(stipiEntradaIsenta);
               COD_ENQ := '';
               VL_BC_IPI := 0;
               ALIQ_IPI := 0;
               VL_IPI := 0;
-              CST_PIS := pisOutrasOperacoes;
+              CST_PIS := CstPisToStr(stpisOutrasOperacoes);
               VL_BC_PIS := 0;
               ALIQ_PIS_PERC := 0;
               QUANT_BC_PIS := 0;
               ALIQ_PIS_R := 0;
               VL_PIS := 0;
-              CST_COFINS := cofinsOutrasOperacoes;
+              CST_COFINS := CstCofinsToStr(stcofinsOutrasOperacoes);
               VL_BC_COFINS := 0;
               ALIQ_COFINS_PERC := 0;
               QUANT_BC_COFINS := 0;
@@ -681,7 +728,7 @@ begin
             begin
               With RegistroC425New do
               begin
-                COD_ITEM := '000001';
+                COD_ITEM := FCod_Item;
                 QTD := 1;
                 UNID := 'PC';
                 VL_ITEM := 100.00;
@@ -698,7 +745,7 @@ begin
               COD_MOD := '2D';
               COD_SIT := sdRegular;
               NUM_DOC := '000001';
-              DT_DOC := StrToDate('30/11/2014');
+              DT_DOC := ACBrSPEDFiscal1.DT_FIN;
               VL_DOC := 100.00;
               VL_PIS := 0.00;
               VL_COFINS := 0.00;
@@ -707,7 +754,7 @@ begin
 
               with RegistroC470New do
               begin
-                COD_ITEM := '000001';
+                COD_ITEM := FCod_Item;
                 QTD := 1;
                 QTD_CANC := 0;
                 UNID := 'UN';
@@ -738,7 +785,7 @@ begin
             with RegistroC495New do
             begin
               ALIQ_ICMS := 17.00;
-              COD_ITEM := '000001';
+              COD_ITEM := FCod_Item;
               QTD := 1.00;
               QTD_CANC := 0.00;
               UNID := 'UN';
@@ -776,6 +823,7 @@ begin
   btnB_EClick(Self);
   btnB_GClick(Self);
   btnB_HClick(Self);
+  btnB_KClick(Self);
   btnB_1Click(Self);
 
 end;
@@ -855,8 +903,8 @@ begin
 
       with RegistroE100New do
       begin
-        DT_INI := StrToDate('01/11/2014');
-        DT_FIN := StrToDate('30/11/2014');
+        DT_INI := ACBrSPEDFiscal1.DT_INI;
+        DT_FIN := ACBrSPEDFiscal1.DT_FIN;
 
         with RegistroE110New do
         begin
@@ -927,8 +975,8 @@ begin
       begin
         with RegistroE200New do
         begin
-          DT_INI := StrToDate('01/11/2014');
-          DT_FIN := StrToDate('30/11/2014');
+          DT_INI := ACBrSPEDFiscal1.DT_INI;
+          DT_FIN := ACBrSPEDFiscal1.DT_FIN;
           UF := ESTADOS[I];
 
           with RegistroE210New do
@@ -973,7 +1021,7 @@ begin
 
             with RegistroE250New do
             begin
-              COD_OR := '000';
+              COD_OR := '001';
               VL_OR := 0;
               DT_VCTO := Now;
               COD_REC := '600016';
@@ -994,8 +1042,8 @@ begin
         with RegistroE500New do
         begin
           IND_APUR := iaMensal;
-          DT_INI := StrToDate('01/11/2014');
-          DT_FIN := StrToDate('30/11/2014');
+          DT_INI := ACBrSPEDFiscal1.DT_INI;
+          DT_FIN := ACBrSPEDFiscal1.DT_FIN;
 
           with RegistroE510New do
           begin
@@ -1053,8 +1101,8 @@ begin
 
       With RegistroG110New do
       begin
-        DT_INI := StrToDate('01/11/2014');
-        DT_FIN := StrToDate('30/11/2014');
+        DT_INI := ACBrSPEDFiscal1.DT_INI;
+        DT_FIN := ACBrSPEDFiscal1.DT_FIN;
         SALDO_IN_ICMS := 44.00;
         SOM_PARC := 4.40;
         VL_TRIB_EXP := 10.999;
@@ -1066,7 +1114,7 @@ begin
         With RegistroG125New do
         begin
           COD_IND_BEM := '000001';
-          DT_MOV := StrToDate('01/11/2014');
+          DT_MOV := ACBrSPEDFiscal1.DT_INI;
           TIPO_MOV := mbcSI;
           VL_IMOB_ICMS_OP := 10.999;
           VL_IMOB_ICMS_ST := 10.999;
@@ -1077,8 +1125,8 @@ begin
 
           With RegistroG126New do
           begin
-            DT_INI := StrToDate('01/10/2011');;
-            DT_FIN := StrToDate('30/10/2011');;
+            DT_INI := StrToDate('01/10/' + IntToStr(YearOf(DtRef.Date)));;
+            DT_FIN := StrToDate('30/10/' + IntToStr(YearOf(DtRef.Date)));;
             NUM_PARC := 1234;
             VL_PARC_PASS := 10.999;
             VL_TRIB_OC := 10.999;
@@ -1100,7 +1148,7 @@ begin
             With RegistroG140New do
             begin
               NUM_ITEM := '9999';
-              COD_ITEM := '000001';
+              COD_ITEM := FCod_Item;
             end;
           end;
         end;
@@ -1121,7 +1169,7 @@ var
   IInvent: integer;
 begin
   btnB_H.Enabled := False;
-  btnB_1.Enabled := True;
+  btnB_K.Enabled := True;
 
   // Alimenta o componente com informações para gerar todos os registros do
   // Bloco H.
@@ -1170,6 +1218,53 @@ begin
   end;
 end;
 
+procedure TFrmSPEDFiscal.btnB_KClick(Sender: TObject);
+begin
+  btnB_K.Enabled := False;
+  btnB_1.Enabled := True;
+
+
+  // Alimenta o componente com informações para gerar todos os registros do
+  // Bloco K.
+  with ACBrSPEDFiscal1.Bloco_K do
+  begin
+    with RegistroK001New do
+    begin
+      IND_MOV := imComDados;
+
+      with RegistroK100New do
+      begin
+        DT_INI := ACBrSPEDFiscal1.DT_INI;
+        DT_FIN := ACBrSPEDFiscal1.DT_FIN;
+
+        with RegistroK200New do
+        begin
+          COD_ITEM := FCod_Item;
+          QTD := 1;
+          IND_EST := estPropInformantePoder;
+          COD_PART := '';
+          DT_EST := ACBrSPEDFiscal1.DT_FIN;
+
+          with RegistroK220New do
+          begin
+            DT_MOV := ACBrSPEDFiscal1.DT_INI;
+            COD_ITEM_ORI := '000008';
+            COD_ITEM_DEST := '000010';
+            QTD := 1;
+            QTD_DEST := 1;            
+          end;
+        end;
+      end;
+    end;
+  end;
+
+  if cbConcomitante.Checked then
+  begin
+    ACBrSPEDFiscal1.WriteBloco_K;
+    LoadToMemo;
+  end;
+end;
+
 procedure TFrmSPEDFiscal.edtFileChange(Sender: TObject);
 begin
   ACBrSPEDFiscal1.Arquivo := edtFile.Text;
@@ -1196,6 +1291,7 @@ begin
     btnB_D.Enabled := False;
     btnB_E.Enabled := False;
     btnB_H.Enabled := False;
+    btnB_K.Enabled := False;
     btnB_1.Enabled := False;
     btnB_9.Enabled := False;
   end;

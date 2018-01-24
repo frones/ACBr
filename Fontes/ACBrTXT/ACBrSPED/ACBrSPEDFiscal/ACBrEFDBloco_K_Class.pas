@@ -46,7 +46,7 @@ unit ACBrEFDBloco_K_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_K, ACBrEFDBlocos,
+uses SysUtils, StrUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_K, ACBrEFDBlocos,
      ACBrEFDBloco_0_Class;
 
 type
@@ -279,7 +279,8 @@ begin
                LFill( COD_ITEM_ORI  ) +
                LFill( COD_ITEM_DEST  ) +
                DFill( QTD, 3 )+
-			         DFill( QTD_DEST, 3 ));
+               IfThen(DT_INI >= EncodeDate(2018,01,01),
+			           DFill( QTD_DEST, 3 ), EmptyStr));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;

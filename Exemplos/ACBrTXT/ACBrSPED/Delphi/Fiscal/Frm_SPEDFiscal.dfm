@@ -2,8 +2,8 @@
   Left = 356
   Top = 153
   Caption = 'ACBrSpedFiscal - Demo'
-  ClientHeight = 540
-  ClientWidth = 753
+  ClientHeight = 595
+  ClientWidth = 747
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,13 +13,13 @@
   OldCreateOrder = True
   Position = poScreenCenter
   DesignSize = (
-    753
-    540)
+    747
+    595)
   PixelsPerInch = 96
   TextHeight = 13
   object Label2: TLabel
     Left = 8
-    Top = 161
+    Top = 201
     Width = 65
     Height = 13
     Caption = 'Lista de erros'
@@ -28,7 +28,7 @@
   end
   object Label3: TLabel
     Left = 8
-    Top = 265
+    Top = 311
     Width = 75
     Height = 13
     Caption = 'Arquivo Gerado'
@@ -55,8 +55,8 @@
   end
   object memoError: TMemo
     Left = 8
-    Top = 178
-    Width = 737
+    Top = 218
+    Width = 731
     Height = 83
     TabStop = False
     Anchors = [akLeft, akTop, akRight]
@@ -66,9 +66,9 @@
   end
   object memoTXT: TMemo
     Left = 8
-    Top = 283
-    Width = 737
-    Height = 211
+    Top = 328
+    Width = 731
+    Height = 221
     TabStop = False
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = ANSI_CHARSET
@@ -84,8 +84,8 @@
     WordWrap = False
   end
   object btnError: TButton
-    Left = 541
-    Top = 507
+    Left = 535
+    Top = 562
     Width = 100
     Height = 25
     Anchors = [akRight, akBottom]
@@ -95,8 +95,8 @@
     OnClick = btnErrorClick
   end
   object btnTXT: TButton
-    Left = 647
-    Top = 507
+    Left = 641
+    Top = 562
     Width = 100
     Height = 25
     Anchors = [akRight, akBottom]
@@ -107,14 +107,14 @@
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 753
+    Width = 747
     Height = 58
     Align = alTop
     BevelOuter = bvNone
     BorderStyle = bsSingle
     TabOrder = 0
     DesignSize = (
-      749
+      743
       54)
     object Label1: TLabel
       Left = 22
@@ -128,7 +128,7 @@
     object Label5: TLabel
       Left = 0
       Top = 0
-      Width = 749
+      Width = 743
       Height = 16
       Align = alTop
       Alignment = taCenter
@@ -141,6 +141,7 @@
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
+      ExplicitWidth = 341
     end
     object Label6: TLabel
       Left = 526
@@ -151,10 +152,19 @@
       Color = clBtnFace
       ParentColor = False
     end
+    object Label9: TLabel
+      Left = 622
+      Top = 14
+      Width = 74
+      Height = 13
+      Caption = 'Ano Refer'#234'ncia'
+      Color = clBtnFace
+      ParentColor = False
+    end
     object edtFile: TEdit
       Left = 22
       Top = 28
-      Width = 291
+      Width = 269
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -163,7 +173,7 @@
       OnExit = edtFileChange
     end
     object cbConcomitante: TCheckBox
-      Left = 337
+      Left = 315
       Top = 30
       Width = 134
       Height = 19
@@ -185,19 +195,28 @@
     end
     object edNotas: TEdit
       Left = 526
-      Top = 29
-      Width = 54
+      Top = 28
+      Width = 32
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
       Text = '2'
     end
+    object DtRef: TDateTimePicker
+      Left = 622
+      Top = 28
+      Width = 90
+      Height = 21
+      Date = 43124.498320694450000000
+      Time = 43124.498320694450000000
+      TabOrder = 3
+    end
   end
   object Panel2: TPanel
     Left = 0
     Top = 58
-    Width = 753
-    Height = 87
+    Width = 747
+    Height = 126
     Align = alTop
     BevelOuter = bvNone
     BorderWidth = 1
@@ -206,7 +225,7 @@
     object Label4: TLabel
       Left = 1
       Top = 1
-      Width = 747
+      Width = 741
       Height = 16
       Align = alTop
       Alignment = taCenter
@@ -221,10 +240,11 @@
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
+      ExplicitWidth = 450
     end
     object btnB_0: TButton
       Left = 16
-      Top = 51
+      Top = 54
       Width = 100
       Height = 25
       Caption = 'Registros Bloco 0'
@@ -232,8 +252,8 @@
       OnClick = btnB_0Click
     end
     object btnB_1: TButton
-      Left = 635
-      Top = 51
+      Left = 17
+      Top = 85
       Width = 100
       Height = 25
       Caption = 'Registros Bloco 1'
@@ -243,7 +263,7 @@
     end
     object btnB_C: TButton
       Left = 118
-      Top = 51
+      Top = 54
       Width = 100
       Height = 25
       Caption = 'Registros Bloco C'
@@ -253,7 +273,7 @@
     end
     object btnB_D: TButton
       Left = 220
-      Top = 51
+      Top = 54
       Width = 100
       Height = 25
       Caption = 'Registros Bloco D'
@@ -263,7 +283,7 @@
     end
     object btnB_E: TButton
       Left = 323
-      Top = 51
+      Top = 54
       Width = 100
       Height = 25
       Caption = 'Registros Bloco E'
@@ -273,7 +293,7 @@
     end
     object btnB_H: TButton
       Left = 531
-      Top = 51
+      Top = 54
       Width = 100
       Height = 25
       Caption = 'Registros Bloco H'
@@ -283,7 +303,7 @@
     end
     object btnB_G: TButton
       Left = 427
-      Top = 51
+      Top = 54
       Width = 100
       Height = 25
       Caption = 'Registros Bloco G'
@@ -300,10 +320,20 @@
       TabOrder = 0
       OnClick = btnB_CompletoClick
     end
+    object btnB_K: TButton
+      Left = 635
+      Top = 54
+      Width = 100
+      Height = 25
+      Caption = 'Registros Bloco K'
+      Enabled = False
+      TabOrder = 8
+      OnClick = btnB_KClick
+    end
   end
   object btnB_9: TButton
-    Left = 435
-    Top = 507
+    Left = 429
+    Top = 562
     Width = 100
     Height = 25
     Anchors = [akRight, akBottom]
@@ -313,38 +343,40 @@
     OnClick = btnB_9Click
   end
   object edBufLinhas: TEdit
-    Left = 17
-    Top = 514
+    Left = 8
+    Top = 564
     Width = 80
     Height = 21
+    Anchors = [akLeft, akBottom]
     TabOrder = 4
     Text = '1000'
   end
   object edBufNotas: TEdit
-    Left = 122
-    Top = 514
+    Left = 113
+    Top = 564
     Width = 80
     Height = 21
+    Anchors = [akLeft, akBottom]
     Enabled = False
     TabOrder = 5
     Text = '1000'
   end
   object ProgressBar1: TProgressBar
     Left = 79
-    Top = 152
+    Top = 192
     Width = 348
     Height = 20
     TabOrder = 9
     Visible = False
   end
-  object btnCancelaGeração: TButton
+  object btnCancelaGeracao: TButton
     Left = 480
-    Top = 150
+    Top = 190
     Width = 102
     Height = 25
     Caption = 'Cancela Gera'#231#227'o'
     TabOrder = 10
-    OnClick = btnCancelaGeraçãoClick
+    OnClick = btnCancelaGeracaoClick
   end
   object ACBrSPEDFiscal1: TACBrSPEDFiscal
     Path = '.\'

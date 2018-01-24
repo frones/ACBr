@@ -51,6 +51,7 @@ Símbolo : Significado
 -- ACBrDANFCeFortesFr --
 [*] Ajuste para que o calculo da altura da página, seja feito pelo próprio
     Fortes Report, através da nova propriedade: "UnlimitedHeight := True"
+[*] Refactoring em "Imprimir" e "ImprimirCancelado", para usar o mesmo código
     (por: DSA)
 
 20/01/2018

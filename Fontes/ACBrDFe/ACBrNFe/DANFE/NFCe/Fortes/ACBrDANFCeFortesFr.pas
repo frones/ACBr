@@ -66,6 +66,10 @@ type
   TACBrNFeDANFCeFortes = class( TACBrNFeDANFEClass )
   private
     function CalcularCaractesWidth( Canvas : TCanvas; WidthTotal : Integer ): Integer;
+
+    procedure ImprimirInterno(const Cancelado: Boolean;
+      const DanfeResumido : Boolean = False;
+      const AFiltro : TACBrSATExtratoFiltro = fiNenhum);
   protected
     FpNFe: TNFe;
 
@@ -312,26 +316,7 @@ begin
   fObsFisco := TStringList.Create ;
   fHeightDetItem := rlbDetItem.Height;
 
-  fACBrNFeDANFCeFortes          := TACBrNFeDANFCeFortes(Owner) ;  // Link para o Pai
-
-  with fACBrNFeDANFCeFortes do
-  begin
-    //Pega as marges que for defina na classe pai.
-    rlVenda.PageSetup.PaperWidth  := LarguraBobina/3.775;
-    rlVenda.Width                 := LarguraBobina;
-    rlVenda.Margins.LeftMargin    := MargemEsquerda ;
-    rlVenda.Margins.RightMargin   := MargemDireita ;
-    rlVenda.Margins.TopMargin     := MargemSuperior ;
-    rlVenda.Margins.BottomMargin  := MargemInferior ;
-
-    rlCancelamento.PageSetup.PaperWidth  := LarguraBobina/3.775;
-    rlCancelamento.Width                 := LarguraBobina;
-    rlCancelamento.Margins.LeftMargin    := MargemEsquerda ;
-    rlCancelamento.Margins.RightMargin   := MargemDireita ;
-    rlCancelamento.Margins.TopMargin     := MargemSuperior ;
-    rlCancelamento.Margins.BottomMargin  := MargemInferior ;
-  end;
-
+  fACBrNFeDANFCeFortes := TACBrNFeDANFCeFortes(Owner) ;  // Link para o Pai
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlVendaDataRecord(Sender: TObject;
@@ -1179,7 +1164,6 @@ procedure TACBrNFeDANFCeFortesFr.rlCancelamentoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
   qrcode: String;
-  TotalPaginaPixel: Integer;
   LogoStream: TStringStream;
 begin
   fNumItem  := 0;
@@ -1230,19 +1214,6 @@ begin
                            ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''));
 
   end;
-
-
-  // Calculando o tamanho da Pagina em Pixels //
-  TotalPaginaPixel := rlbsCabecalho.Height +
-                      rlbQRCode.Height +
-                      rlbLegenda.Height +
-                      rlbPagamento.Height +
-                      rlbChaveDeAcesso.Height +
-                      rlbConsumidorCanc.Height +
-                      rlsbDetItem.Height +
-                      Trunc(rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count) ;
-  // Pixel para Milimitros //
-  rlVenda.PageSetup.PaperHeight := max( 100, 10+Trunc( TotalPaginaPixel / 3.75 ));
 end;
 
 { TACBrNFeDANFCeFortes }
@@ -1342,6 +1313,18 @@ end;
 
 procedure TACBrNFeDANFCeFortes.Imprimir(const DanfeResumido: Boolean;
   const AFiltro: TACBrSATExtratoFiltro);
+begin
+  ImprimirInterno(False, DanfeResumido, AFiltro);
+end;
+
+procedure TACBrNFeDANFCeFortes.ImprimirCancelado(const DanfeResumido: Boolean;
+  const AFiltro: TACBrSATExtratoFiltro);
+begin
+  ImprimirInterno(True, DanfeResumido, AFiltro);
+end;
+
+procedure TACBrNFeDANFCeFortes.ImprimirInterno(const Cancelado: Boolean;
+  const DanfeResumido: Boolean; const AFiltro: TACBrSATExtratoFiltro);
 var
   frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
   RLLayout: TRLReport;
@@ -1353,23 +1336,37 @@ begin
     with frACBrNFeDANFCeFortesFr do
     begin
       Filtro := AFiltro;
-      RLLayout := rlVenda;
-      Resumido := DanfeResumido;
+      if Cancelado then
+        RLLayout := rlCancelamento
+      else
+        RLLayout := rlVenda;
 
+      Resumido := DanfeResumido;
       RLPrinter.Copies := NumCopias ;
 
-      if not EstaVazio(FImpressora) then
-        RLPrinter.PrinterName := FImpressora;
+      if not EstaVazio(Impressora) then
+        RLPrinter.PrinterName := Impressora;
 
       NFeID := OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID);
 
-      RLLayout.JobTitle := ACBrNFeDANFCeFortes.NomeDocumento;
+      RLLayout.JobTitle := NomeDocumento;
       if (RLLayout.JobTitle = '') then
-        RLLayout.JobTitle := NFeID+'-nfe.xml';
+        RLLayout.JobTitle := NFeID + IfThen(Cancelado, '-cancelado', '')+'-nfe.xml';
 
-      RLLayout.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
-      RLLayout.PrintDialog  := not(FMostrarPreview) and (EstaVazio(FImpressora));
-      RLLayout.PageSetup.PaperSize:= fpCustom;
+      RLLayout.ShowProgress := MostrarStatus;
+      RLLayout.PrintDialog  := (not MostrarPreview) and EstaVazio(Impressora);
+
+      // Largura e Margens do Relatório //
+      RLLayout.Width := LarguraBobina;
+      RLLayout.Margins.LeftMargin   := MargemEsquerda;
+      RLLayout.Margins.RightMargin  := MargemDireita;
+      RLLayout.Margins.TopMargin    := MargemSuperior;
+      RLLayout.Margins.BottomMargin := MargemInferior;
+
+      // Ajustando o tamanho da página //
+      RLLayout.PageBreaking := pbNone;
+      RLLayout.PageSetup.PaperSize   := fpCustom ;
+      RLLayout.PageSetup.PaperWidth  := Round(LarguraBobina/MMAsPixels) ;
 
       RLLayout.UnlimitedHeight := True; // ****** ATENÇÃO ******
       // Se você recebeu um erro de compilação na linha ACIMA
@@ -1395,66 +1392,8 @@ begin
           end ;
 
           RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
-          RLFiltro.FileName := PathWithDelim(ACBrNFeDANFCeFortes.PathPDF) + NFeID + '-nfe.pdf';
-          RLFiltro.FilterPages( RLLayout.Pages );
-        end;
-      end;
-    end;
-  finally
-    frACBrNFeDANFCeFortesFr.Free ;
-  end;
-end;
-
-procedure TACBrNFeDANFCeFortes.ImprimirCancelado(const DanfeResumido: Boolean;
-  const AFiltro: TACBrSATExtratoFiltro);
-var
-  frACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr;
-  RLLayout: TRLReport;
-  RLFiltro: TRLCustomSaveFilter;
-  NFeID: String;
-begin
-  frACBrNFeDANFCeFortesFr := TACBrNFeDANFCeFortesFr.Create(Self);
-  try
-    with frACBrNFeDANFCeFortesFr do
-    begin
-      Filtro := AFiltro;
-      RLLayout := rlCancelamento;
-      Resumido := DanfeResumido;
-
-      RLPrinter.Copies := NumCopias ;
-
-      if ACBrNFeDANFCeFortes.Impressora <> '' then
-        RLPrinter.PrinterName := ACBrNFeDANFCeFortes.Impressora;
-
-      NFeID := OnlyNumber(ACBrNFeDANFCeFortes.FpNFe.infNFe.ID);
-
-      RLLayout.JobTitle := ACBrNFeDANFCeFortes.NomeDocumento;
-      if (RLLayout.JobTitle = '') then
-        RLLayout.JobTitle := NFeID+'-cancelado-nfe.xml';
-
-      RLLayout.PrintDialog := ACBrNFeDANFCeFortes.MostrarPreview;
-      RLLayout.ShowProgress:= ACBrNFeDANFCeFortes.MostrarStatus;
-
-      if Filtro = fiNenhum then
-      begin
-        if MostrarPreview then
-          RLLayout.PreviewModal
-        else
-          RLLayout.Print;
-      end
-      else
-      begin
-        if RLLayout.Prepare then
-        begin
-          case Filtro of
-            fiPDF  : RLFiltro := RLPDFFilter1;
-            fiHTML : RLFiltro := RLHTMLFilter1;
-          else
-            exit ;
-          end ;
-
-          RLFiltro.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
-          RLFiltro.FileName := ACBrNFeDANFCeFortes.PathPDF + NFeID + '-nfe.pdf';
+          RLFiltro.FileName := PathWithDelim(ACBrNFeDANFCeFortes.PathPDF) +
+                               ChangeFileExt( RLLayout.JobTitle, '.pdf');
           RLFiltro.FilterPages( RLLayout.Pages );
         end;
       end;

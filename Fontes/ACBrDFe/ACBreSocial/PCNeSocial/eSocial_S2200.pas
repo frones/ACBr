@@ -71,6 +71,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtAdmissao: TEvtAdmissao;
+
     procedure setEvtAdmissao(const Value: TEvtAdmissao);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -131,6 +132,7 @@ end;
 destructor TS2200CollectionItem.Destroy;
 begin
   FEvtAdmissao.Free;
+
   inherited;
 end;
 
@@ -143,6 +145,7 @@ end;
 constructor TEvtAdmissao.create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FTrabalhador := TTrabalhador.Create;
@@ -155,6 +158,7 @@ begin
   FIdeEmpregador.Free;
   FTrabalhador.Free;
   FVinculo.Free;
+
   inherited;
 end;
 
@@ -162,13 +166,16 @@ function TEvtAdmissao.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtAdmissao');
-      Gerador.wGrupo('evtAdmissao Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        gerarTrabalhador(self.Trabalhador,'trabalhador',2);
-        gerarVinculo(self.Vinculo, 2);
-      Gerador.wGrupo('/evtAdmissao');
+    Gerador.wGrupo('evtAdmissao Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
+    GerarTrabalhador(self.Trabalhador, 'trabalhador', 2);
+    GerarVinculo(self.Vinculo, 2);
+
+    Gerador.wGrupo('/evtAdmissao');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAdmissao');

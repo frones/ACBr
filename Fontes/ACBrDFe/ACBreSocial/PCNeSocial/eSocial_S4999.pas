@@ -170,6 +170,7 @@ end;
 function TEvtAdesao.GerarXML: boolean;
 begin
   try
+    (* Não é mais gerado na versão 2.4.01*)
     GerarCabecalho('');
       Gerador.wGrupo('evtAdesao Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
         //gerarIdVersao(self);

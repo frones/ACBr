@@ -173,6 +173,7 @@ end;
 function TevtCadInicial.GerarXML: boolean;
 begin
   try
+    (* Não é mais gerado na versão 2.4.01*)
     GerarCabecalho('evtCadInicial');
       Gerador.wGrupo('evtCadInicial Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
         GerarIdeEvento2(Self.ideEvento);

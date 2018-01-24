@@ -287,7 +287,7 @@ begin
   end;
 
   if pIdeAdquir.Count > 9999 then
-    Gerador.wAlerta('', 'ideAdquir', 'Lista de Adquirentes de Produção', ERR_MSG_MAIOR_MAXIMO + '99');
+    Gerador.wAlerta('', 'ideAdquir', 'Lista de Adquirentes de Produção', ERR_MSG_MAIOR_MAXIMO + '9999');
 end;
 
 procedure TEvtComProd.GerarInfoProcJud(pInfoProcJud: TInfoProcJudCollection);

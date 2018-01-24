@@ -165,6 +165,9 @@ type
   TRemunOutrEmprCollection = class;
   TInfoMV = class;
   TIdeRespInf = class;
+  TObservacoesCollectionItem = class;
+  TObservacoesCollection = class;
+  TtransfDom = class;
 
   TeSocial = class(TPersistent)
   private
@@ -305,6 +308,7 @@ type
     FInfoAtivDesemp: TInfoAtivDesemp;
     FFiliacaoSindical: TFiliacaoSindical;
     FAlvaraJudicial: TAlvaraJudicial;
+    Fobservacoes: TobservacoesCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -321,6 +325,7 @@ type
     property InfoAtivDesemp: TInfoAtivDesemp read FInfoAtivDesemp write FInfoAtivDesemp;
     property FiliacaoSindical: TFiliacaoSindical read FFiliacaoSindical write FFiliacaoSindical;
     property AlvaraJudicial: TAlvaraJudicial read FAlvaraJudicial write FAlvaraJudicial;
+    property observacoes: TobservacoesCollection read Fobservacoes write Fobservacoes;
   end;
 
   TCTPS = class
@@ -408,9 +413,11 @@ type
   private
     FTpContr: tpTpContr;
     FdtTerm: TDateTime;
+    FclauAssec: tpSimNao;
   public
     property TpContr: tpTpContr read FTpContr write FTpContr;
     property dtTerm: TDateTime read FdtTerm write FdtTerm;
+    property clauAssec: tpSimNao read FclauAssec write FclauAssec;
   end;
 
   TEndereco = class
@@ -1023,6 +1030,17 @@ type
     property DtDeslig: TDate read FDtDeslig write FDtDeslig;
   end;
 
+  TtransfDom = class
+  private
+    FcpfSubstituido: String;
+    FmatricAnt: String;
+    FdtTransf: TDate;
+  public
+    property cpfSubstituido: String read FcpfSubstituido write FcpfSubstituido;
+    property matricAnt: String read FmatricAnt write FmatricAnt;
+    property dtTransf: TDate read FdtTransf write FdtTransf;
+  end;
+
   TVinculo = class
   private
     FMatricula: string;
@@ -1034,6 +1052,7 @@ type
     FInfoRegimeTrab: TInfoRegimeTrab;
     FInfoContrato: TInfoContrato;
     FSucessaoVinc: TSucessaoVinc;
+    FtransfDom: TtransfDom;
     FAfastamento: TAfastamento;
     FDesligamento: TDesligamento;
     FInfoASO: TInfoASO;
@@ -1048,8 +1067,11 @@ type
     property cadIni: tpSimNao read FcadIni write FcadIni;
 
     property InfoRegimeTrab: TInfoRegimeTrab read FInfoRegimeTrab write FInfoRegimeTrab;
-    property InfoContrato: TInfoContrato read FInfoContrato write FInfoContrato;
+    property InfoContrato: TInfoContrato
+     read FInfoContrato write FInfoContrato;
     property SucessaoVinc: TSucessaoVinc read FSucessaoVinc write FSucessaoVinc;
+    property transfDom: TtransfDom read FtransfDom write FtransfDom;
+
     property Afastamento: TAfastamento read FAfastamento write FAfastamento;
     property Desligamento: TDesligamento read FDesligamento write FDesligamento;
     property InfoASO: TInfoASO read FInfoASO write FInfoASO;
@@ -1709,6 +1731,25 @@ type
     property email: string read Femail write Femail;
   end;
 
+  TObservacoesCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TObservacoesCollectionItem;
+    procedure SetItem(Index: Integer; Value: TObservacoesCollectionItem);
+  public
+    constructor Create(AOwner: TInfoContrato);
+    function Add: TObservacoesCollectionItem;
+    property Items[Index: Integer]: TObservacoesCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TObservacoesCollectionItem = class(TCollectionItem)
+  private
+    Fobservacao: string;
+  published
+    constructor create; reintroduce;
+
+    property observacao: string read Fobservacao write Fobservacao;
+  end;
+
 implementation
 
 uses
@@ -1951,6 +1992,7 @@ begin
   FInfoAtivDesemp:= TInfoAtivDesemp.Create;
   FFiliacaoSindical:= TFiliacaoSindical.Create;
   FAlvaraJudicial:= TAlvaraJudicial.Create;
+  Fobservacoes := TobservacoesCollection.Create(Self);
 end;
 
 destructor TInfoContrato.Destroy;
@@ -1962,6 +2004,7 @@ begin
   FInfoAtivDesemp.Free;
   FFiliacaoSindical.Free;
   FAlvaraJudicial.Free;
+  Fobservacoes.Free;
   inherited;
 end;
 
@@ -1983,6 +2026,7 @@ begin
   FInfoRegimeTrab := TInfoRegimeTrab.Create;
   FInfoContrato:= TInfoContrato.Create;
   FSucessaoVinc:= TSucessaoVinc.Create;
+  ftransfDom := TtransfDom.Create;
   FAfastamento := TAfastamento.Create;
   FDesligamento := TDesligamento.Create;
   FInfoASO := TInfoASO.Create;
@@ -1993,6 +2037,7 @@ begin
   FInfoRegimeTrab.Free;
   FInfoContrato.Free;
   FSucessaoVinc.Free;
+  FtransfDom.Free;
   FAfastamento.Free;
   FDesligamento.Free;
   FInfoASO.Free;
@@ -2771,6 +2816,37 @@ procedure TIdeEmpregador.AfterConstruction;
 begin
   inherited;
   FOrgaoPublico := False;
+end;
+
+{ TObservacoesCollectionItem }
+
+constructor TObservacoesCollectionItem.create;
+begin
+
+end;
+
+{ TObservacoesCollection }
+
+function TObservacoesCollection.Add: TObservacoesCollectionItem;
+begin
+  Result := TObservacoesCollectionItem(inherited Add);
+end;
+
+constructor TObservacoesCollection.Create(AOwner: TInfoContrato);
+begin
+  inherited Create(TObservacoesCollectionItem);
+end;
+
+function TObservacoesCollection.GetItem(
+  Index: Integer): TObservacoesCollectionItem;
+begin
+  Result := TObservacoesCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TObservacoesCollection.SetItem(Index: Integer;
+  Value: TObservacoesCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

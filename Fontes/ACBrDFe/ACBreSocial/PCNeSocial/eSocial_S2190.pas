@@ -72,6 +72,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtAdmPrelim: TEvtAdmPrelim;
+
     procedure setEvtAdmPrelim(const Value: TEvtAdmPrelim);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -87,7 +88,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FInfoRegPrelim: TInfoRegPrelim;
 
-    procedure GerarInfoRegPrelim();
+    procedure GerarInfoRegPrelim;
   public
     constructor Create(AACBreSocial: TObject);
     destructor Destroy; override;
@@ -143,6 +144,7 @@ end;
 destructor TS2190CollectionItem.Destroy;
 begin
   FEvtAdmPrelim.Free;
+
   inherited;
 end;
 
@@ -155,6 +157,7 @@ end;
 constructor TEvtAdmPrelim.create;
 begin
   inherited;
+
   FIdeEvento := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoRegPrelim := TInfoRegPrelim.Create;
@@ -165,15 +168,18 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FInfoRegPrelim.Free;
+
   inherited;
 end;
 
 procedure TEvtAdmPrelim.GerarInfoRegPrelim;
 begin
   Gerador.wGrupo('infoRegPrelim');
-    Gerador.wCampo(tcStr, '', 'cpfTrab', 0, 0, 0, InfoRegPrelim.cpfTrab);
-    Gerador.wCampo(tcDat, '', 'dtNascto', 0, 0, 0, InfoRegPrelim.dtNascto);
-    Gerador.wCampo(tcDat, '', 'dtAdm', 0, 0, 0, InfoRegPrelim.dtAdm);
+
+  Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, InfoRegPrelim.cpfTrab);
+  Gerador.wCampo(tcDat, '', 'dtNascto', 10, 10, 1, InfoRegPrelim.dtNascto);
+  Gerador.wCampo(tcDat, '', 'dtAdm',    10, 10, 1, InfoRegPrelim.dtAdm);
+
   Gerador.wGrupo('/infoRegPrelim');
 end;
 
@@ -181,15 +187,18 @@ function TEvtAdmPrelim.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtAdmPrelim');
-      Gerador.wGrupo('evtAdmPrelim Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        GerarInfoRegPrelim();
-      Gerador.wGrupo('/evtAdmPrelim');
+    Gerador.wGrupo('evtAdmPrelim Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarInfoRegPrelim;
+
+    Gerador.wGrupo('/evtAdmPrelim');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAdmPrelim');
+
     Validar('evtAdmPrelim');
   except on e:exception do
     raise Exception.Create(e.Message);

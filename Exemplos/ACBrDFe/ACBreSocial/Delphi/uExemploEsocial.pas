@@ -1207,13 +1207,14 @@ begin
     begin
       ideDmDev := '1';
       codCateg := 111;
+
       with infoPerApur.ideEstabLot.add do
       begin
         tpInsc     := tiCNPJ;
         nrInsc     := '012345678987654';
         codLotacao := 'SACI54321';
         qtdDiasAv  := 22;
-        
+
         with remunPerApur.Add do
         begin
           matricula := 'A1234';
@@ -1282,6 +1283,10 @@ begin
           end;
         end;
       end;
+
+      with infoTrabInterm.add do
+        codConv := '123456';
+
     end;
   end;
 end;
@@ -1982,8 +1987,8 @@ begin
       cnpjOpPortuario      := '98765432100014';
     end;
 
-    EvtInfoComplPer.InfoAtivConcom.fatorMes := 999.99;
-    EvtInfoComplPer.InfoAtivConcom.fator13  := 111.11;
+    EvtInfoComplPer.InfoAtivConcom.fatorMes := 9.00;
+    EvtInfoComplPer.InfoAtivConcom.fator13  := 1.00;
   end;
 end;
 

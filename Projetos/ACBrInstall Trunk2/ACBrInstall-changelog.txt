@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+24/01/2018
+[+] Adicionados os pacotes do eSocial e reinf a lista de pacotes para instalação
+    por Regys.Silveira
+
 30/05/2017
 [+] Adicionadas opções para desligar a capicom, openssl, carga tardia de dll e cast de strings
     por Regys.Silveira

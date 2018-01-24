@@ -131,6 +131,7 @@ type
     ACBr_ANe_dpk: TCheckBox;
     ACBr_Integrador_dpk: TCheckBox;
     ACBre_Social_dpk: TCheckBox;
+    ACBr_Reinf_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

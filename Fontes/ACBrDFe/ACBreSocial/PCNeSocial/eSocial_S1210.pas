@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes, Controls,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -76,54 +76,54 @@ type
   TInfoPgtoAntItem = class;
 
   TS1210Collection = class(TOwnedCollection)
-    private
-      function GetItem(Index: Integer): TS1210CollectionItem;
-      procedure SetItem(Index: Integer; Value: TS1210CollectionItem);
-    public
-      function Add: TS1210CollectionItem;
-      property Items[Index: Integer]: TS1210CollectionItem read GetItem write SetItem; default;
+  private
+    function GetItem(Index: Integer): TS1210CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1210CollectionItem);
+  public
+    function Add: TS1210CollectionItem;
+    property Items[Index: Integer]: TS1210CollectionItem read GetItem write SetItem; default;
   end;
 
   TS1210CollectionItem = class(TCollectionItem)
-    private
-      FTipoEvento: TTipoEvento;
-      FEvtPgtos: TEvtPgtos;
-      procedure setEvtPgtos(const Value: TEvtPgtos);
-    public
-      constructor Create(AOwner: TComponent); reintroduce;
-      destructor Destroy; override;
-    published
-      property TipoEvento: TTipoEvento read FTipoEvento;
-      property evtPgtos: TEvtPgtos read FEvtPgtos write setEvtPgtos;
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtPgtos: TEvtPgtos;
+    procedure setEvtPgtos(const Value: TEvtPgtos);
+  public
+    constructor Create(AOwner: TComponent); reintroduce;
+    destructor Destroy; override;
+  published
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtPgtos: TEvtPgtos read FEvtPgtos write setEvtPgtos;
   end;
 
   TEvtPgtos = class(TeSocialEvento)
-    private
-      FIdeEvento : TIdeEvento3;
-      FIdeEmpregador : TIdeEmpregador;
-      FIdeBenef : TIdeBenef;
+  private
+    FIdeEvento : TIdeEvento3;
+    FIdeEmpregador : TIdeEmpregador;
+    FIdeBenef : TIdeBenef;
 
-      {Geradores da classe}
-      procedure GerarIdeBenef(objIdeBenef: TIdeBenef);
-      procedure GerarInfoPgto(objInfoPgto: TInfoPgtoCollection; i : Integer);
-      procedure GerardetPgtoFl(objdetPgtofl: TdetPgtoFlCollection);
-      procedure GerarRubricasComPensao(pRubricasComPensao: TRubricasComPensaoCollection; const GroupName: String = 'retPgtoTot');
-      procedure GerarDetPgtoBenPr(pDetPgtoBenPr: TDetPgtoBenPr);
-      procedure GerarDetPgtoFer(pDetPgtoFer: TDetPgtoFerCollection);
-      procedure GeraridePgtoExt(objPgtoExt: TPgtoExt);
-      procedure GerarDeps(pDeps: TDeps);
-      procedure GerarCamposRubricas(pRubrica: TRubricaCollectionItem);
-      procedure GerarDetPgtoAnt(pDetPgtoAnt: TDetPgtoAntCollection);
-      procedure GerarInfoPgtoAnt(pInfoPgtoAnt: TInfoPgtoAntCollection);
-    public
-      constructor Create(AACBreSocial: TObject);overload;
-      destructor Destroy; override;
+    {Geradores da classe}
+    procedure GerarIdeBenef(objIdeBenef: TIdeBenef);
+    procedure GerarInfoPgto(objInfoPgto: TInfoPgtoCollection);
+    procedure GerardetPgtoFl(objdetPgtofl: TdetPgtoFlCollection);
+    procedure GerarRubricasComPensao(pRubricasComPensao: TRubricasComPensaoCollection; const GroupName: String = 'retPgtoTot');
+    procedure GerarDetPgtoBenPr(pDetPgtoBenPr: TDetPgtoBenPr);
+    procedure GerarDetPgtoFer(pDetPgtoFer: TDetPgtoFerCollection);
+    procedure GeraridePgtoExt(objPgtoExt: TPgtoExt);
+    procedure GerarDeps(pDeps: TDeps);
+    procedure GerarCamposRubricas(pRubrica: TRubricaCollectionItem);
+    procedure GerarDetPgtoAnt(pDetPgtoAnt: TDetPgtoAntCollection);
+    procedure GerarInfoPgtoAnt(pInfoPgtoAnt: TInfoPgtoAntCollection);
+  public
+    constructor Create(AACBreSocial: TObject);overload;
+    destructor Destroy; override;
 
-      function GerarXML: Boolean; override;
+    function GerarXML: Boolean; override;
 
-      property IdeEvento : TIdeEvento3 read FIdeEvento write FIdeEvento;
-      property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-      property IdeBenef : TIdeBenef read FIdeBenef write FIdeBenef;
+    property IdeEvento : TIdeEvento3 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeBenef : TIdeBenef read FIdeBenef write FIdeBenef;
   end;
 
   TIdeBenef = class(TPersistent)
@@ -131,11 +131,13 @@ type
     FCpfBenef : String;
     FDeps: TDeps;
     FInfoPgto : TInfoPgtoCollection;
+
     function getDeps: TDeps;
     function getInfoPgto : TInfoPgtoCollection;
   public
     constructor Create;
     destructor  Destroy; override;
+
     function depsInst: boolean;
 
     property CpfBenef : String read FCpfBenef write FCpfBenef;
@@ -151,7 +153,7 @@ type
   end;
 
   TInfoPgtoCollection = class(TCollection)
-    private
+  private
     function GetItem(Index: Integer): TInfoPgtoItem;
     procedure SetItem(Index: Integer; const Value: TInfoPgtoItem);
   public
@@ -170,6 +172,7 @@ type
     FDetPgtoFer  : TDetPgtoFerCollection;
     FDetPgtoAnt  : TDetPgtoAntCollection;
     FIdePgtoExt  : TPgtoExt;
+
     function GetdetPgtoFl : TdetPgtoFlCollection;
     function GetPgtoExt : TPgtoExt;
     function getDetPgtoBenPr: TdetPgtoBenPr;
@@ -203,11 +206,13 @@ type
     FVrLiq: Double;
     FRetPgtoTot: TRubricaCollection;
     FInfoPgtoParc: TRubricaCollection;
+
     function getRetPgtoTot: TRubricaCollection;
     function getInfoPgtoParc: TRubricaCollection;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
+
     function retPgtoTotInst: boolean;
     function infoPgtoParcInst: boolean;
 
@@ -233,11 +238,14 @@ type
   TRubricasComPensaoItem = class(TRubricaCollectionItem)
   private
     FPenAlim: TPensaoAlimCollection;
+
     function getPensaoAlim: TPensaoAlimCollection;
   public
     constructor Create;
     destructor  Destroy;
+
     function pensaoAlimInst: boolean;
+
     property penAlim: TPensaoAlimCollection read getPEnsaoAlim write FPenAlim;
   end;
 
@@ -266,6 +274,7 @@ type
   public
     constructor Create;
     destructor  Destroy;
+
     function retPagtoToInst: boolean;
     function infoPgtoFlInst: boolean;
 
@@ -279,15 +288,15 @@ type
   end;
 
   TPgtoExt = class(TPersistent)
-    private
-      FidePais : TIdePais;
-      FEndExt : TEndExt;
-    public
-      constructor create;
-      destructor  Destroy; override;
+  private
+    FidePais : TIdePais;
+    FEndExt : TEndExt;
+  public
+    constructor create;
+    destructor  Destroy; override;
 
-      property idePais: TIdePais read FIdePais write FIdePais;
-      property endExt: TEndExt read FEndExt write FEndExt;
+    property idePais: TIdePais read FIdePais write FIdePais;
+    property endExt: TEndExt read FEndExt write FEndExt;
   end;
 
   TDetPgtoFerCollection = class(TCollection)
@@ -396,6 +405,7 @@ end;
 destructor TS1210CollectionItem.Destroy;
 begin
   FEvtPgtos.Free;
+
   inherited;
 end;
 
@@ -409,6 +419,7 @@ end;
 constructor TEvtPgtos.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeBenef := TIdeBenef.Create;
@@ -419,19 +430,19 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FIdeBenef.Free;
+
   inherited;
 end;
 
 procedure TEvtPgtos.GerarCamposRubricas(pRubrica: TRubricaCollectionItem);
 begin
-  Gerador.wCampo(tcStr, '', 'codRubr', 0, 0, 0, pRubrica.codRubr);
-  Gerador.wCampo(tcStr, '', 'ideTabRubr', 0, 0, 0, pRubrica.ideTabRubr);
-  Gerador.wCampo(tcDe2, '', 'qtdRubr', 0, 0, 0, pRubrica.qtdRubr);
-  Gerador.wCampo(tcDe2, '', 'fatorRubr', 0, 0, 0, pRubrica.fatorRubr);
-  Gerador.wCampo(tcDe2, '', 'vrUnit', 0, 0, 0, pRubrica.vrUnit);
-  Gerador.wCampo(tcDe2, '', 'vrRubr', 0, 0, 0, pRubrica.vrRubr);
+  Gerador.wCampo(tcStr, '', 'codRubr',    1, 30, 1, pRubrica.codRubr);
+  Gerador.wCampo(tcStr, '', 'ideTabRubr', 1,  8, 1, pRubrica.ideTabRubr);
+  Gerador.wCampo(tcDe2, '', 'qtdRubr',    1,  6, 0, pRubrica.qtdRubr);
+  Gerador.wCampo(tcDe2, '', 'fatorRubr',  1,  5, 0, pRubrica.fatorRubr);
+  Gerador.wCampo(tcDe2, '', 'vrUnit',     1, 14, 0, pRubrica.vrUnit);
+  Gerador.wCampo(tcDe2, '', 'vrRubr',     1, 14, 1, pRubrica.vrRubr);
 end;
-
 
 procedure TEvtPgtos.GerarRubricasComPensao(
   pRubricasComPensao: TRubricasComPensaoCollection;
@@ -442,11 +453,17 @@ begin
   for i := 0 to pRubricasComPensao.Count - 1 do
   begin
     Gerador.wGrupo(GroupName);
-      GerarCamposRubricas(pRubricasComPensao[i]);
-      if pRubricasComPensao[i].pensaoAlimInst() then
-        GerarPensaoAlim(pRubricasComPensao[i].penAlim, 'penAlim');
+
+    GerarCamposRubricas(pRubricasComPensao[i]);
+
+    if pRubricasComPensao[i].pensaoAlimInst() then
+      GerarPensaoAlim(pRubricasComPensao[i].penAlim, 'penAlim');
+
     Gerador.wGrupo('/'+GroupName);
   end;
+
+  if pRubricasComPensao.Count > 99 then
+    Gerador.wAlerta('', GroupName, 'Lista de ' + GroupName, ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtPgtos.GerardetPgtoFl(objdetPgtofl: TdetPgtoFlCollection);
@@ -456,55 +473,73 @@ begin
   for i := 0 to objdetPgtofl.Count - 1 do
   begin
     Gerador.wGrupo('detPgtoFl');
-      Gerador.wCampo(tcStr, '', 'perRef', 0, 0, 0, objdetPgtofl.Items[i].perRef);
-      Gerador.wCampo(tcStr, '', 'ideDmDev', 0, 0, 0, objdetPgtofl.Items[i].ideDmDev);
-      Gerador.wCampo(tcStr, '', 'indPgtoTt', 0, 0, 0, eSSimNaoToStr(objdetPgtofl.Items[i].indPagtoTt));
-      Gerador.wCampo(tcDe2, '', 'vrLiq', 0, 0, 1, objdetPgtoFl.items[i].vrLiq);
-      Gerador.wCampo(tcStr, '', 'nrRecArq', 0, 0, 0, objdetPgtofl.Items[i].nrRecArq);
-      if objdetPgtofl.Items[i].retPagtoToInst() then
-        GerarRubricasComPensao(objdetPgtofl.Items[i].retPagtoTot);
-      if objdetPgtofl.Items[i].infoPgtoFlInst then
-        GerarItensRemun(objdetPgtofl.Items[i].infoPgtoParc, 'infoPgtoParc');
+
+    Gerador.wCampo(tcStr, '', 'perRef',    7,  7, 0, objdetPgtofl.Items[i].perRef);
+    Gerador.wCampo(tcStr, '', 'ideDmDev',  1, 30, 1, objdetPgtofl.Items[i].ideDmDev);
+    Gerador.wCampo(tcStr, '', 'indPgtoTt', 1,  1, 1, eSSimNaoToStr(objdetPgtofl.Items[i].indPagtoTt));
+    Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, objdetPgtoFl.items[i].vrLiq);
+    Gerador.wCampo(tcStr, '', 'nrRecArq',  1, 40, 0, objdetPgtofl.Items[i].nrRecArq);
+
+    if objdetPgtofl.Items[i].retPagtoToInst() then
+      GerarRubricasComPensao(objdetPgtofl.Items[i].retPagtoTot);
+
+    if objdetPgtofl.Items[i].infoPgtoFlInst then
+      GerarItensRemun(objdetPgtofl.Items[i].infoPgtoParc, 'infoPgtoParc');
+
     Gerador.wGrupo('/detPgtoFl');
   end;
+
+  if objdetPgtofl.Count > 200 then
+    Gerador.wAlerta('', 'detPgtoFl', 'Lista de Detalhamento de Pagamento', ERR_MSG_MAIOR_MAXIMO + '200');
 end;
 
 procedure TEvtPgtos.GerarDeps(pDeps: TDeps);
 begin
   Gerador.wGrupo('deps');
-    Gerador.wCampo(tcDe2, '', 'vrDedDep', 0, 0, 0, pDeps.vrDedDep);
+
+  Gerador.wCampo(tcDe2, '', 'vrDedDep', 1, 14, 1, pDeps.vrDedDep);
+
   Gerador.wGrupo('/deps');
 end;
 
 procedure TEvtPgtos.GerarIdeBenef(objIdeBenef : TIdeBenef);
 begin
   Gerador.wGrupo('ideBenef');
-    Gerador.wCampo(tcStr, '', 'cpfBenef', 0, 0, 0, objIdeBenef.cpfBenef);
-    if objIdeBenef.depsInst() then
-      GerarDeps(objIdeBenef.deps);
-    GerarInfoPgto(objIdeBenef.InfoPgto,0);
+  Gerador.wCampo(tcStr, '', 'cpfBenef', 11, 11, 1, objIdeBenef.cpfBenef);
+
+  if objIdeBenef.depsInst() then
+    GerarDeps(objIdeBenef.deps);
+
+  GerarInfoPgto(objIdeBenef.InfoPgto);
+
   Gerador.wGrupo('/ideBenef');
 end;
 
 procedure TEvtPgtos.GeraridePgtoExt(objPgtoExt: TPgtoExt);
 begin
   Gerador.wGrupo('idePgtoExt');
-    GerarIdePais(objPgtoExt.idePais);
-    GerarEndExt(objPgtoExt.endExt);
+
+  GerarIdePais(objPgtoExt.idePais);
+  GerarEndExt(objPgtoExt.endExt);
+
   Gerador.wGrupo('/idePgtoExt');
 end;
 
 procedure TEvtPgtos.GerarDetPgtoBenPr(pDetPgtoBenPr: TDetPgtoBenPr);
 begin
   Gerador.wGrupo('detPgtoBenPr');
-    Gerador.wCampo(tcStr, '', 'perRef', 0, 0, 0, pDetPgtoBenPr.perRef);
-    Gerador.wCampo(tcStr, '', 'ideDmDev', 0, 0, 0, pDetPgtoBenPr.ideDmDev);
-    Gerador.wCampo(tcStr, '', 'indPgtoTt', 0, 0, 0, eSSimNaoToStr(pDetPgtoBenPr.indPgtoTt));
-    Gerador.wCampo(tcDe2, '', 'vrLiq', 0, 0, 0, pDetPgtoBenPr.vrLiq);
-    if pDetPgtoBenPr.retPgtoTotInst() then
-      GerarItensRemun(pDetPgtoBenPr.retPgtoTot, 'retPgtoTot');
-    if pDetPgtoBenPr.infoPgtoParcInst() then
-      GerarItensRemun(pDetPgtoBenPr.retPgtoTot, 'infoPgtoParc');
+
+  Gerador.wCampo(tcStr, '', 'perRef',    7,  7, 1, pDetPgtoBenPr.perRef);
+  Gerador.wCampo(tcStr, '', 'ideDmDev',  1, 30, 1, pDetPgtoBenPr.ideDmDev);
+  Gerador.wCampo(tcStr, '', 'indPgtoTt', 1,  1, 1, eSSimNaoToStr(pDetPgtoBenPr.indPgtoTt));
+  Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, pDetPgtoBenPr.vrLiq);
+
+  if pDetPgtoBenPr.retPgtoTotInst() then
+    GerarItensRemun(pDetPgtoBenPr.retPgtoTot, 'retPgtoTot');
+
+  if pDetPgtoBenPr.infoPgtoParcInst() then
+    GerarItensRemun(pDetPgtoBenPr.retPgtoTot, 'infoPgtoParc');
+
   Gerador.wGrupo('/detPgtoBenPr');
 end;
 
@@ -515,13 +550,19 @@ begin
   for i := 0 to pDetPgtoFer.Count - 1 do
   begin
     Gerador.wGrupo('detPgtoFer');
-      Gerador.wCampo(tcInt, '', 'codCateg', 0, 0, 0, pDetPgtoFer[i].codCateg);
-      Gerador.wCampo(tcDat, '', 'dtIniGoz', 0, 0, 0, pDetPgtoFer[i].dtIniGoz);
-      Gerador.wCampo(tcInt, '', 'qtDias', 0, 0, 0, pDetPgtoFer[i].qtDias);
-      Gerador.wCampo(tcDe2, '', 'vrLiq', 0, 0, 0, pDetPgtoFer[i].vrLiq);
-      GerarRubricasComPensao(pDetPgtoFer[i].detRubrFer, 'detRubrFer');
+
+    Gerador.wCampo(tcInt, '', 'codCateg',  1,  3, 1, pDetPgtoFer[i].codCateg);
+    Gerador.wCampo(tcDat, '', 'dtIniGoz', 10, 10, 1, pDetPgtoFer[i].dtIniGoz);
+    Gerador.wCampo(tcInt, '', 'qtDias',    1,  2, 1, pDetPgtoFer[i].qtDias);
+    Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, pDetPgtoFer[i].vrLiq);
+
+    GerarRubricasComPensao(pDetPgtoFer[i].detRubrFer, 'detRubrFer');
+
     Gerador.wGrupo('/detPgtoFer');
   end;
+
+  if pDetPgtoFer.Count > 5 then
+    Gerador.wAlerta('', 'detPgtoFer', 'Lista de Detalhamento de Pagamento', ERR_MSG_MAIOR_MAXIMO + '5');
 end;
 
 procedure TEvtPgtos.GerarDetPgtoAnt(pDetPgtoAnt: TDetPgtoAntCollection);
@@ -531,10 +572,16 @@ begin
   for i := 0 to pDetPgtoAnt.Count - 1 do
   begin
     Gerador.wGrupo('detPgtoAnt');
-      Gerador.wCampo(tcInt, '', 'codCateg', 0, 0, 0, pDetPgtoAnt[i].codCateg);
-      GerarInfoPgtoAnt(pDetPgtoAnt[i].infoPgtoAnt);
+
+    Gerador.wCampo(tcInt, '', 'codCateg', 1, 3, 1, pDetPgtoAnt[i].codCateg);
+
+    GerarInfoPgtoAnt(pDetPgtoAnt[i].infoPgtoAnt);
+
     Gerador.wGrupo('/detPgtoAnt');
   end;
+
+  if pDetPgtoAnt.Count > 99 then
+    Gerador.wAlerta('', 'detPgtoAnt', 'Lista de Detalhamento de Pagamento Anterior', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtPgtos.GerarInfoPgtoAnt(pInfoPgtoAnt: TInfoPgtoAntCollection);
@@ -544,58 +591,83 @@ begin
   for i := 0 to pInfoPgtoAnt.Count - 1 do
   begin
     Gerador.wGrupo('infoPgtoAnt');
-      Gerador.wCampo(tcStr, '', 'tpBcIRRF', 0, 0, 0, eSCodIncIRRFToStr(pInfoPgtoAnt[i].tpBcIRRF));
-      Gerador.wCampo(tcDe2, '', 'vrBcIRRF', 0, 0, 0, pInfoPgtoAnt[i].vrBcIRRF);
+
+    Gerador.wCampo(tcStr, '', 'tpBcIRRF', 2,  2, 1, eSCodIncIRRFToStr(pInfoPgtoAnt[i].tpBcIRRF));
+    Gerador.wCampo(tcDe2, '', 'vrBcIRRF', 1, 14, 1, pInfoPgtoAnt[i].vrBcIRRF);
+
     Gerador.wGrupo('/infoPgtoAnt');
   end;
+
+  if pInfoPgtoAnt.Count > 99 then
+    Gerador.wAlerta('', 'infoPgtoAnt', 'Lista de Detalhamento de Pagamento', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
-procedure TEvtPgtos.GerarInfoPgto(objInfoPgto: TInfoPgtoCollection; i : Integer);
+procedure TEvtPgtos.GerarInfoPgto(objInfoPgto: TInfoPgtoCollection);
+var
+  i: integer;
 begin
-  Gerador.wGrupo('infoPgto');
-    Gerador.wCampo(tcDat, '', 'dtPgto', 0, 0, 0, objInfoPgto.Items[i].dtPgto);
-    Gerador.wCampo(tcStr, '', 'tpPgto', 0, 0, 0, eSTpTpPgtoToStr(objInfoPgto.Items[i].tpPgto));
-    Gerador.wCampo(tcStr, '', 'indResBr', 0, 0, 0, eSSimNaoToStr(objInfoPgto.Items[i].indResBr));
+  for i := 0 to objInfoPgto.Count - 1 do
+  begin
+    Gerador.wGrupo('infoPgto');
+
+    Gerador.wCampo(tcDat, '', 'dtPgto',   10, 10, 1, objInfoPgto.Items[i].dtPgto);
+    Gerador.wCampo(tcStr, '', 'tpPgto',    1,  2, 1, eSTpTpPgtoToStr(objInfoPgto.Items[i].tpPgto));
+    Gerador.wCampo(tcStr, '', 'indResBr',  1,  1, 1, eSSimNaoToStr(objInfoPgto.Items[i].indResBr));
+
     if (objInfoPgto.Items[i].tpPgto=tpPgtoFl) then
       if (objInfoPgto.Items[i].detPgtoFlInst()) then
         GerardetPgtoFl(objInfoPgto.Items[i].detPgtoFl);
+
     if objInfoPgto.Items[i].detPgtoBenPrInst() then
       GerarDetPgtoBenPr(objInfoPgto.Items[i].detPgtoBenPr);
+
     if objInfoPgto.Items[i].detPgtoFerInst() then
       GerarDetPgtoFer(objInfoPgto.Items[i].detPgtoFer);
+
     if objInfoPgto.Items[i].detPgtoAntInst() then
       GerarDetPgtoAnt(objInfoPgto.Items[i].detPgtoAnt);
+
     if (objInfoPgto.Items[i].indResBr = tpNao) then
       if (objInfoPgto.Items[i].detidePgtoExtInst) then
         GeraridePgtoExt(objInfoPgto.Items[i].idePgtoExt);
-  Gerador.wGrupo('/infoPgto');
+
+    Gerador.wGrupo('/infoPgto');
+  end;
+
+  if objInfoPgto.Count > 60 then
+    Gerador.wAlerta('', 'infoPgto', 'Lista de Informações de Pagamento', ERR_MSG_MAIOR_MAXIMO + '60');
 end;
 
 function TEvtPgtos.GerarXML: Boolean;
 begin
   try
     GerarCabecalho('evtPgtos');
-      Gerador.wGrupo('evtPgtos Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //GerarIdVersao(Self);
-        GerarIdeEvento3(Self.IdeEvento);
-        GerarIdeEmpregador(Self.ideEmpregador);
-        GerarIdeBenef(Self.IdeBenef);
-      Gerador.wGrupo('/evtPgtos');
+    Gerador.wGrupo('evtPgtos Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento3(Self.IdeEvento);
+    GerarIdeEmpregador(Self.ideEmpregador);
+    GerarIdeBenef(Self.IdeBenef);
+
+    Gerador.wGrupo('/evtPgtos');
+
     GerarRodape;
+
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtPgtos');
+
     Validar('evtPgtos');
   except on e:exception do
     raise Exception.Create(e.Message);
   end;
+
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
-
 
 { TIdeBenef }
 
 constructor TIdeBenef.create;
 begin
   inherited;
+
   FDeps := nil;
   FInfoPgto := TInfoPgtoCollection.Create;
 end;
@@ -604,6 +676,7 @@ destructor TIdeBenef.destroy;
 begin
   FreeAndNil(FDeps);
   FInfoPgto.Free;
+
   inherited;
 end;
 
@@ -625,7 +698,6 @@ begin
     Result := TInfoPgtoCollection.Create;
   Result := FInfoPgto;
 end;
-
 
 { TInfoPgtoAntCollection }
 
@@ -690,6 +762,7 @@ begin
   FreeAndNil(FdetPgtoBenPr);
   FreeAndNil(FDetPgtoFer);
   FreeAndNil(FDetPgtoAnt);
+
   inherited;
 end;
 
@@ -765,6 +838,7 @@ destructor TPgtoExt.destroy;
 begin
   FIdePais.Free;
   FEndExt.Free;
+
   inherited;
 end;
 
@@ -790,18 +864,19 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-
 { TRubricasComPensaoItem }
 
 constructor TRubricasComPensaoItem.Create;
 begin
   inherited;
+
   FPenAlim := nil;
 end;
 
 destructor TRubricasComPensaoItem.Destroy;
 begin
   FreeAndNil(FPenAlim);
+
   inherited;
 end;
 
@@ -851,6 +926,7 @@ destructor TdetPgtoFlItem.destroy;
 begin
   FreeAndNil(FRetPagtoTot);
   FreeAndNil(FInfoPgtoParc);
+
   inherited;
 end;
 
@@ -911,6 +987,7 @@ end;
 destructor TDetPgtoAntItem.Destroy;
 begin
   FInfoPgtoAnt.Free;
+
   inherited;
 end;
 
@@ -947,6 +1024,7 @@ end;
 destructor TDetPgtoFerItem.Destroy;
 begin
   inherited;
+
   FDetRubrFer.Free;
 end;
 
@@ -955,6 +1033,7 @@ end;
 constructor TDetPgtoBenPr.Create;
 begin
   inherited;
+
   FRetPgtoTot := nil;
   FInfoPgtoParc := nil;
 end;
@@ -963,6 +1042,7 @@ destructor TDetPgtoBenPr.Destroy;
 begin
   FreeAndNil(FRetPgtoTot);
   FreeAndNil(FInfoPgtoParc);
+
   inherited;
 end;
 

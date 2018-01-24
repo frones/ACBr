@@ -280,7 +280,7 @@ function TEvtTabOperPort.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtTabOperPort');
-    Gerador.wGrupo('evtTabOperPort Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+    Gerador.wGrupo('evtTabOperPort Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
 
     GerarIdeEvento(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

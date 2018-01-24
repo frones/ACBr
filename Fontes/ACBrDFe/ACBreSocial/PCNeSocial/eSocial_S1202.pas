@@ -2,36 +2,36 @@
 { Projeto: Componente ACBreSocial                                              }
 {  Biblioteca multiplataforma de componentes Delphi para envio dos eventos do  }
 { eSocial - http://www.esocial.gov.br/                                         }
-
+{                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
 {                                       André Ferreira de Moraes               }
-
+{                                                                              }
 { Colaboradores nesse arquivo:                                                 }
-
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-
-
+{                                                                              }
+{                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-
+{                                                                              }
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-
+{                                                                              }
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
-
+{                                                                              }
 { Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-
+{                                                                              }
 {******************************************************************************}
 
 {******************************************************************************
@@ -39,8 +39,8 @@
 |*
 |* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
 |*  - Doação do componente para o Projeto ACBr
-|* 01/03/2016: Guilherme Costa
-|*  - Alterações para validação com o XSD
+|* 29/02/2016: Guilherme Costa
+|*  - Alterado os atributos que não estavam de acordo com o leiaute/xsd
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes, Dialogs, Controls,
-  pcnConversao, ACBrUtil,
+  pcnConversao, pcnGerador, ACBrUtil,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -72,7 +72,6 @@ type
   TDMDevCollection = class;
   TDMDevCollectionItem = class;
 
-
   TS1202Collection = class(TOwnedCollection)
   private
     function GetItem(Index: integer): TS1202CollectionItem;
@@ -87,6 +86,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtRmnRPPS: TEvtRemunRPPS;
+
     procedure seTEvtRemunRPPS(const Value: TEvtRemunRPPS);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -102,23 +102,23 @@ type
     procedure SetItem(Index: integer; Value: TDMDevCollectionItem);
   public
     constructor Create(); reintroduce;
-
     function Add: TDMDevCollectionItem;
     property Items[Index: integer]: TDMDevCollectionItem read GetItem write SetItem;
       default;
   end;
-
 
   TDMDevCollectionItem = class(TCollectionItem)
   private
     FIdeDmDev: string;
     FInfoPerApur: TInfoPerApur;
     FInfoPerAnt: TInfoPerAnt;
+
     function getInfoPerApur: TInfoPerApur;
     function getInfoPerAnt: TInfoPerAnt;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
+
     function infoPerApurInst(): boolean;
     function infoPerAntInst(): boolean;
   published
@@ -142,8 +142,8 @@ type
     procedure GerarIdePeriodo(objIdePeriodo: TIdePeriodoCollection);
     procedure GerarIdeADC(objIdeADC: TideADCCollection);
 
-    procedure GerarIdeTrabalhador();
-    procedure GerarDmDev();
+    procedure GerarIdeTrabalhador;
+    procedure GerarDmDev;
     procedure GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
     procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
   public
@@ -162,6 +162,7 @@ type
   TRemunPer1202Collection = class(TCollection)
   private
     FNomeGrupoXML: string;
+
     function GetItem(Index: integer): TRemunPer1202CollectionItem;
     procedure SetItem(Index: integer; Value: TRemunPer1202CollectionItem);
   public
@@ -222,6 +223,7 @@ type
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
+    
     property perRef: string read FPerRef write FPerRef;
     property ideEstab: TIdeEstabCollection read FIdeEstab write FIdeEstab;
   end;
@@ -257,6 +259,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    
     property ideADC: TIdeADCCollection read FIdeADC write FIdeADC;
   end;
 
@@ -266,6 +269,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    
     property ideEstab: TIdeEstabCollection read FIdeEstab write FIdeEstab;
   end;
 
@@ -273,10 +277,12 @@ type
   private
     FQtdDepFP: integer;
     FProcJudTrab: TProcJudTrabCollection;
+
     function getProcJudTrab: TProcJudTrabCollection;
   public
     constructor Create;
     destructor Destroy; override;
+    
     function procJudTrabInst: boolean;
 
     property qtdDepFP: Integer read FQtdDepFP write FQtdDepFP;
@@ -284,7 +290,6 @@ type
   end;
 
 implementation
-
 
 { TRemunPer1202Collection }
 function TRemunPer1202Collection.Add: TRemunPer1202CollectionItem;
@@ -320,6 +325,7 @@ destructor TIdeEstabCollectionItem.Destroy;
 begin
   FRemunPerApur.Free;
   FRemunPerAnt.Free;
+
   inherited;
 end;
 
@@ -355,6 +361,7 @@ end;
 destructor TIdePeriodoCollectionItem.Destroy;
 begin
   FIdeEstab.Free;
+
   inherited;
 end;
 
@@ -387,7 +394,6 @@ begin
   FIdePeriodo := TIdePeriodoCollection.Create;
 end;
 
-
 { TIdeADCCollection }
 function TIdeADCCollection.add: TIdeADCCollectionItem;
 begin
@@ -414,12 +420,14 @@ end;
 constructor TInfoPerAnt.Create;
 begin
   inherited;
+
   FIdeADC := TIdeADCCollection.Create;
 end;
 
 destructor TInfoPerAnt.Destroy;
 begin
   FIdeADC.Free;
+
   inherited;
 end;
 
@@ -427,12 +435,14 @@ end;
 constructor TInfoPerApur.Create;
 begin
   inherited;
+
   FIdeEstab := TIdeEstabCollection.Create;
 end;
 
 destructor TInfoPerApur.Destroy;
 begin
   FIdeEstab.Free;
+
   inherited;
 end;
 
@@ -445,6 +455,7 @@ end;
 destructor TeS1202IdeTrabalhador.Destroy;
 begin
   FreeAndNil(FProcJudTrab);
+
   inherited;
 end;
 
@@ -495,6 +506,7 @@ destructor TDMDevCollectionItem.Destroy;
 begin
   FreeAndNil(FInfoPerApur);
   FreeAndNil(FInfoPerAnt);
+
   inherited;
 end;
 
@@ -517,7 +529,6 @@ begin
   Result := FInfoPerAnt;
 end;
 
-
 function TDMDevCollectionItem.infoPerAntInst: boolean;
 begin
   Result := Assigned(FInfoPerAnt);
@@ -527,6 +538,7 @@ end;
 constructor TEvtRemunRPPS.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeTrabalhador := TeS1202IdeTrabalhador.Create;
@@ -539,73 +551,93 @@ begin
   FIdeEmpregador.Free;
   FIdeTrabalhador.Free;
   FDMDev.Free;
+
   inherited;
 end;
 
 procedure TEvtRemunRPPS.GerarIdeADC(objIdeADC: TideADCCollection);
 var
-  iIdeADC: integer;
+  i: integer;
 begin
-  for iIdeADC := 0 to objIdeADC.Count - 1 do
+  for i := 0 to objIdeADC.Count - 1 do
   begin
     Gerador.wGrupo('ideADC');
-    Gerador.wCampo(tcDat, '', 'dtLei', 0, 0, 0, objIdeADC.Items[iIdeADC].DtLei);
-    Gerador.wCampo(tcStr, '', 'nrLei', 0, 0, 0, objIdeADC.Items[iIdeADC].nrLei);
-    Gerador.wCampo(tcDat, '', 'dtEf', 0, 0, 0, objIdeADC.Items[iIdeADC].DtEf);
-    GerarIdePeriodo(objIdeADC.Items[iIdeADC].idePeriodo);
+
+    Gerador.wCampo(tcDat, '', 'dtLei', 10, 10, 1, objIdeADC.Items[i].DtLei);
+    Gerador.wCampo(tcStr, '', 'nrLei',  1, 12, 1, objIdeADC.Items[i].nrLei);
+    Gerador.wCampo(tcDat, '', 'dtEf',  10, 10, 0, objIdeADC.Items[i].DtEf);
+
+    GerarIdePeriodo(objIdeADC.Items[i].idePeriodo);
+
     Gerador.wGrupo('/ideADC');
   end;
+
+  if objIdeADC.Count > 8 then
+    Gerador.wAlerta('', 'ideADC', 'Lista de Leis', ERR_MSG_MAIOR_MAXIMO + '8');
 end;
 
 procedure TEvtRemunRPPS.GerarIdeEstab(objIdeEstab: TIdeEstabCollection;
   nomeRemunPer: string = 'remunPerApur');
 var
-  iIdeEstab: integer;
+  i: integer;
 begin
-  for iIdeEstab := 0 to objIdeEstab.Count - 1 do
+  for i := 0 to objIdeEstab.Count - 1 do
   begin
     Gerador.wGrupo('ideEstab');
-    Gerador.wCampo(tcInt, '', 'tpInsc', 0, 0, 0,
-      eSTpInscricaoToStr(objIdeEstab.Items[iIdeEstab].tpInsc));
-    Gerador.wCampo(tcStr, '', 'nrInsc', 0, 0, 0,
-      objIdeEstab.Items[iIdeEstab].nrInsc);
+
+    Gerador.wCampo(tcInt, '', 'tpInsc', 1,  1, 1, eSTpInscricaoToStr(objIdeEstab.Items[i].tpInsc));
+    Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, objIdeEstab.Items[i].nrInsc);
+
     if nomeRemunPer = 'remunPerApur' then
-      GerarRemunPer(objIdeEstab.Items[iIdeEstab].remunPerApur, nomeRemunPer)
+      GerarRemunPer(objIdeEstab.Items[i].remunPerApur, nomeRemunPer)
     else
-      GerarRemunPer(objIdeEstab.Items[iIdeEstab].remunPerAnt, nomeRemunPer);
+      GerarRemunPer(objIdeEstab.Items[i].remunPerAnt, nomeRemunPer);
+
     Gerador.wGrupo('/ideEstab');
   end;
+
+  if objIdeEstab.Count > 24 then
+    Gerador.wAlerta('', 'ideEstab', 'Lista de ' + nomeRemunPer, ERR_MSG_MAIOR_MAXIMO + '24');
 end;
 
 procedure TEvtRemunRPPS.GerarIdePeriodo(objIdePeriodo: TIdePeriodoCollection);
 var
-  iIdePeriodo: integer;
+  i: integer;
 begin
-  for iIdePeriodo := 0 to objIdePeriodo.Count - 1 do
+  for i := 0 to objIdePeriodo.Count - 1 do
   begin
     Gerador.wGrupo('idePeriodo');
-    Gerador.wCampo(tcStr, '', 'perRef', 0, 0, 0,
-      objIdePeriodo.Items[iIdePeriodo].perRef);
-    GerarIdeEstab(objIdePeriodo.Items[iIdePeriodo].ideEstab, 'remunPerAnt');
+    Gerador.wCampo(tcStr, '', 'perRef', 7, 7, 1, objIdePeriodo.Items[i].perRef);
+
+    GerarIdeEstab(objIdePeriodo.Items[i].ideEstab, 'remunPerAnt');
+
     Gerador.wGrupo('/idePeriodo');
   end;
+
+  if objIdePeriodo.Count > 200 then
+    Gerador.wAlerta('', 'idePeriodo', 'Lista de Periodos', ERR_MSG_MAIOR_MAXIMO + '200');
 end;
 
 procedure TEvtRemunRPPS.GerarIdeTrabalhador;
 begin
   Gerador.wGrupo('ideTrabalhador');
-  Gerador.wCampo(tcStr, '', 'cpfTrab', 0, 0, 0, ideTrabalhador.cpfTrab);
-  Gerador.wCampo(tcStr, '', 'nisTrab', 0, 0, 0, ideTrabalhador.nisTrab);
-  Gerador.wCampo(tcInt, '', 'qtdDepFP', 0, 0, 0, ideTrabalhador.qtdDepFP);
+
+  Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, ideTrabalhador.cpfTrab);
+  Gerador.wCampo(tcStr, '', 'nisTrab',   1, 11, 0, ideTrabalhador.nisTrab);
+  Gerador.wCampo(tcInt, '', 'qtdDepFP',  1,  2, 0, ideTrabalhador.qtdDepFP);
+
   if ideTrabalhador.procJudTrabInst() then
     GerarProcJudTrab(ideTrabalhador.procJudTrab);
+
   Gerador.wGrupo('/ideTrabalhador');
 end;
 
 procedure TEvtRemunRPPS.GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
 begin
   Gerador.wGrupo('infoPerAnt');
+
   GerarIdeADC(pInfoPerAnt.ideADC);
+
   Gerador.wGrupo('/infoPerAnt');
 end;
 
@@ -616,58 +648,75 @@ begin
   for i := 0 to dmDev.Count - 1 do
   begin
     Gerador.wGrupo('dmDev');
-      Gerador.wCampo(tcStr, '', 'ideDmDev', 0, 0, 0, dmDev[i].ideDmDev);
-      if (dmDev[i].infoPerApurInst()) then
-        GerarInfoPerApur(dmDev[i].infoPerApur);
-      if (dmDev[i].infoPerAntInst()) then
-        GerarInfoPerAnt(dmDev[i].infoPerAnt);
+
+    Gerador.wCampo(tcStr, '', 'ideDmDev', 1, 30, 1, dmDev[i].ideDmDev);
+
+    if (dmDev[i].infoPerApurInst()) then
+      GerarInfoPerApur(dmDev[i].infoPerApur);
+
+    if (dmDev[i].infoPerAntInst()) then
+      GerarInfoPerAnt(dmDev[i].infoPerAnt);
+
     Gerador.wGrupo('/dmDev');
   end;
+
+  if dmDev.Count > 99 then
+    Gerador.wAlerta('', 'dmDev', 'Lista de Identificação de Demostrativos', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtRemunRPPS.GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
 begin
   Gerador.wGrupo('infoPerApur');
-    GerarIdeEstab(pInfoPerApur.ideEstab);
+
+  GerarIdeEstab(pInfoPerApur.ideEstab);
+
   Gerador.wGrupo('/infoPerApur');
 end;
 
 procedure TEvtRemunRPPS.GerarRemunPer(objRemunPer: TRemunPer1202Collection;
   nomeRemunPer: string = 'remunPerApur');
 var
-  iRemunPer: integer;
+  i: integer;
 begin
-  for iRemunPer := 0 to objRemunPer.Count - 1 do
+  for i := 0 to objRemunPer.Count - 1 do
   begin
     Gerador.wGrupo(nomeRemunPer);
-    Gerador.wCampo(tcStr, '', 'matricula', 0, 0, 0,
-      objRemunPer.Items[iRemunPer].matricula);
-    Gerador.wCampo(tcInt, '', 'codCateg', 0, 0, 0,
-      objRemunPer.Items[iRemunPer].codCateg);
-    GerarItensRemun(objRemunPer.Items[iRemunPer].itensRemun, 'itensRemun');
+
+    Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, objRemunPer.Items[i].matricula);
+    Gerador.wCampo(tcInt, '', 'codCateg',  1,  3, 1, objRemunPer.Items[i].codCateg);
+
+    GerarItensRemun(objRemunPer.Items[i].itensRemun, 'itensRemun');
+
     if (nomeRemunPer = 'remunPerApur') then
     begin
-      if objRemunPer.Items[iRemunPer].infoSaudeColetInst() then
-        GerarInfoSaudeColet(objRemunPer.Items[iRemunPer].infoSaudeColet);
+      if objRemunPer.Items[i].infoSaudeColetInst() then
+        GerarInfoSaudeColet(objRemunPer.Items[i].infoSaudeColet);
     end;
+
     Gerador.wGrupo('/' + nomeRemunPer);
   end;
+
+  if objRemunPer.Count > 10 then
+    Gerador.wAlerta('', nomeRemunPer, 'Lista de ' + nomeRemunPer, ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
 function TEvtRemunRPPS.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtRmnRPPS');
-    Gerador.wGrupo('evtRmnRPPS Id="' + GerarChaveEsocial(now,
-      self.ideEmpregador.NrInsc, 0) + '"');
+    Gerador.wGrupo('evtRmnRPPS Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
     GerarIdeEvento3(Self.IdeEvento);
     GerarIdeEmpregador(Self.ideEmpregador);
-    GerarIdeTrabalhador();
-    GerarDmDev();
+    GerarIdeTrabalhador;
+    GerarDmDev;
+
     Gerador.wGrupo('/evtRmnRPPS');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtRmnRPPS');
+
     Validar('evtRmnRPPS');
   except
     on e: Exception do
@@ -687,6 +736,7 @@ end;
 destructor TS1202CollectionItem.Destroy;
 begin
   FEvtRmnRPPS.Free;
+
   inherited;
 end;
 

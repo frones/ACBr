@@ -361,7 +361,7 @@ function TEvtTabHorTur.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtTabHorTur');
-    Gerador.wGrupo('evtTabHorTur Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+    Gerador.wGrupo('evtTabHorTur Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
 
     GerarIdeEvento(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

@@ -370,7 +370,7 @@ function TEvtTabRubrica.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtTabRubrica');
-    Gerador.wGrupo('evtTabRubrica Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+    Gerador.wGrupo('evtTabRubrica Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
 
     GerarIdeEvento(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

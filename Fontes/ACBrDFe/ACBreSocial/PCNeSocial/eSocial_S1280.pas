@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -75,6 +75,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtInfoComplPer: TEvtInfoComplPer;
+
     procedure setEvtInfoComplPer(const Value: TEvtInfoComplPer);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -93,9 +94,9 @@ type
     FInfoSubstPatrOpPort: TInfoSubstPatrOpPortColecao;
 
     {Geradores específicos da classe}
-    procedure GerarInfoSubstPatr();
-    procedure GerarInfoSubstPatrOpPort();
-    procedure GerarInfoAtivConcom();
+    procedure GerarInfoSubstPatr;
+    procedure GerarInfoSubstPatrOpPort;
+    procedure GerarInfoAtivConcom;
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
@@ -144,7 +145,6 @@ type
     property fator13: Double read Ffator13 write Ffator13;
   end;
 
-
 implementation
 
 uses
@@ -190,6 +190,7 @@ end;
 constructor TEvtInfoComplPer.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoSubstPatr := TInfoSubstPatr.Create;
@@ -204,53 +205,68 @@ begin
   FInfoSubstPatr.Free;
   FInfoSubstPatrOpPort.Free;
   FInfoAtivConcom.Free;
+
   inherited;
 end;
 
 procedure TEvtInfoComplPer.GerarInfoAtivConcom;
 begin
   Gerador.wGrupo('infoAtivConcom');
-    Gerador.wCampo(tcDe2, '', 'fatorMes', 0, 0, 0,  InfoAtivConcom.fatorMes);
-    Gerador.wCampo(tcDe2, '', 'fator13', 0, 0, 0,  InfoAtivConcom.fator13);
+
+  Gerador.wCampo(tcDe4, '', 'fatorMes', 1, 5, 1, InfoAtivConcom.fatorMes);
+  Gerador.wCampo(tcDe2, '', 'fator13',  1, 5, 1, InfoAtivConcom.fator13);
+
   Gerador.wGrupo('/infoAtivConcom');
 end;
 
 procedure TEvtInfoComplPer.GerarInfoSubstPatr;
 begin
   Gerador.wGrupo('infoSubstPatr');
-    Gerador.wCampo(tcStr, '', 'indSubstPatr', 0, 0, 0,  eSIndSubstPatrOpPortStr(InfoSubstPatr.indSubstPatr));
-    Gerador.wCampo(tcDe2, '', 'percRedContrib', 0, 0, 1,  InfoSubstPatr.percRedContrib);
+
+  Gerador.wCampo(tcStr, '', 'indSubstPatr',   1, 1, 1, eSIndSubstPatrOpPortStr(InfoSubstPatr.indSubstPatr));
+  Gerador.wCampo(tcDe2, '', 'percRedContrib', 1, 5, 1, InfoSubstPatr.percRedContrib);
+
   Gerador.wGrupo('/infoSubstPatr');
 end;
 
 procedure TEvtInfoComplPer.GerarInfoSubstPatrOpPort;
 var
-  iInfoSubstPatrOpPortItem: Integer;
+  i: Integer;
   objInfoSubstPatrOpPortItem: TInfoSubstPatrOpPortItem;
 begin
-  for iInfoSubstPatrOpPortItem := 0 to InfoSubstPatrOpPort.Count - 1 do
+  for i := 0 to InfoSubstPatrOpPort.Count - 1 do
   begin
-    objInfoSubstPatrOpPortItem := InfoSubstPatrOpPort.Items[iInfoSubstPatrOpPortItem];
+    objInfoSubstPatrOpPortItem := InfoSubstPatrOpPort.Items[i];
+
     Gerador.wGrupo('infoSubstPatrOpPort');
-      Gerador.wCampo(tcStr, '', 'cnpjOpPortuario', 0, 0, 0,  objInfoSubstPatrOpPortItem.cnpjOpPortuario);
+
+    Gerador.wCampo(tcStr, '', 'cnpjOpPortuario', 14, 14, 1, objInfoSubstPatrOpPortItem.cnpjOpPortuario);
+
     Gerador.wGrupo('/infoSubstPatrOpPort');
   end;
+
+  if InfoSubstPatrOpPort.Count > 9999 then
+    Gerador.wAlerta('', 'infoSubstPatrOpPort', 'Lista de Operadores Portuarios', ERR_MSG_MAIOR_MAXIMO + '9999');
 end;
 
 function TEvtInfoComplPer.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtInfoComplPer');
-      Gerador.wGrupo('evtInfoComplPer Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        gerarIdeEvento3(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        GerarInfoSubstPatr;
-        GerarInfoSubstPatrOpPort;
-        GerarInfoAtivConcom;
-      Gerador.wGrupo('/evtInfoComplPer');
+    Gerador.wGrupo('evtInfoComplPer Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento3(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarInfoSubstPatr;
+    GerarInfoSubstPatrOpPort;
+    GerarInfoAtivConcom;
+
+    Gerador.wGrupo('/evtInfoComplPer');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInfoComplPer');
+
     Validar('evtInfoComplPer');
   except on e:exception do
     raise Exception.Create(e.Message);

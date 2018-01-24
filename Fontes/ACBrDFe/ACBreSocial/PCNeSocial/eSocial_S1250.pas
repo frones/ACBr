@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -93,8 +93,8 @@ type
     FInfoAquisProd: TInfoAquisProd;
 
     {Geradores específicos da classe}
-    procedure GerarInfoAquisProd();
-    procedure GerarIdeEstabAdquir();
+    procedure GerarInfoAquisProd;
+    procedure GerarIdeEstabAdquir;
     procedure GerarTpAquis(pTpAquis: TTpAquisColecao);
     procedure GerarIdeProdutor(pIdeProdutor: TIdeProdutorColecao);
     procedure GerarInfoProcJud(pInfoProcJud: TInfoProcJudCollection);
@@ -156,7 +156,6 @@ type
     property vlrTotAquis: double read FvlrTotAquis write FvlrTotAquis;
     property IdeProdutor: TIdeProdutorColecao read FIdeProdutor write FIdeProdutor;
   end;
-
 
   TIdeProdutorColecao = class(TCollection)
   private
@@ -220,13 +219,14 @@ end;
 {TS1250CollectionItem}
 constructor TS1250CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento     := teS1250;
+  FTipoEvento := teS1250;
   FEvtAqProd := TEvtAqProd.Create(AOwner);
 end;
 
 destructor TS1250CollectionItem.Destroy;
 begin
   FEvtAqProd.Free;
+
   inherited;
 end;
 
@@ -239,6 +239,7 @@ end;
 constructor TEvtAqProd.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoAquisProd := TInfoAquisProd.create;
@@ -249,23 +250,28 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FInfoAquisProd.Free;
+
   inherited;
 end;
 
 procedure TEvtAqProd.GerarInfoAquisProd;
 begin
   Gerador.wGrupo('infoAquisProd');
-    GerarIdeEstabAdquir();
+
+  GerarIdeEstabAdquir;
+
   Gerador.wGrupo('/infoAquisProd');
 end;
 
 procedure TEvtAqProd.GerarIdeEstabAdquir;
 begin
   Gerador.wGrupo('ideEstabAdquir');
-    Gerador.wCampo(tcStr, '', 'tpInscAdq', 0, 0, 0, eSTpInscricaoToStr(InfoAquisProd.IdeEstabAdquir.tpInscAdq));
-    Gerador.wCampo(tcStr, '', 'nrInscAdq', 0, 0, 0, InfoAquisProd.IdeEstabAdquir.nrInscAdq);
 
-    GerarTpAquis(InfoAquisProd.IdeEstabAdquir.TpAquis);
+  Gerador.wCampo(tcStr, '', 'tpInscAdq', 1,  1, 1, eSTpInscricaoToStr(InfoAquisProd.IdeEstabAdquir.tpInscAdq));
+  Gerador.wCampo(tcStr, '', 'nrInscAdq', 1, 15, 0, InfoAquisProd.IdeEstabAdquir.nrInscAdq);
+
+  GerarTpAquis(InfoAquisProd.IdeEstabAdquir.TpAquis);
+
   Gerador.wGrupo('/ideEstabAdquir');
 end;
 
@@ -276,17 +282,22 @@ begin
   for i := 0 to pIdeProdutor.Count - 1 do
   begin
     Gerador.wGrupo('ideProdutor');
-      Gerador.wCampo(tcStr, '', 'tpInscProd',  0, 0, 0, eSTpInscricaoToStr(pIdeProdutor.Items[i].tpInscProd));
-      Gerador.wCampo(tcStr, '', 'nrInscProd',  0, 0, 0, pIdeProdutor.Items[i].nrInscProd);
-      Gerador.wCampo(tcDe2, '', 'vlrBruto',    0, 0, 0, pIdeProdutor.Items[i].vlrBruto);
-      Gerador.wCampo(tcDe2, '', 'vrCPDescPR',  0, 0, 0, pIdeProdutor.Items[i].vrCPDescPR);
-      Gerador.wCampo(tcDe2, '', 'vrRatDescPR', 0, 0, 0, pIdeProdutor.Items[i].vrRatDescPR);
-      Gerador.wCampo(tcDe2, '', 'vrSenarDesc', 0, 0, 0, pIdeProdutor.Items[i].vrSenarDesc);
 
-      GerarNfs(pIdeProdutor.Items[i].Nfs);
-      GerarInfoProcJud(pIdeProdutor.Items[i].InfoProcJud);
+    Gerador.wCampo(tcStr, '', 'tpInscProd',  1,  1, 1, eSTpInscricaoToStr(pIdeProdutor.Items[i].tpInscProd));
+    Gerador.wCampo(tcStr, '', 'nrInscProd',  1, 14, 1, pIdeProdutor.Items[i].nrInscProd);
+    Gerador.wCampo(tcDe2, '', 'vlrBruto',    1, 14, 1, pIdeProdutor.Items[i].vlrBruto);
+    Gerador.wCampo(tcDe2, '', 'vrCPDescPR',  1, 14, 1, pIdeProdutor.Items[i].vrCPDescPR);
+    Gerador.wCampo(tcDe2, '', 'vrRatDescPR', 1, 14, 1, pIdeProdutor.Items[i].vrRatDescPR);
+    Gerador.wCampo(tcDe2, '', 'vrSenarDesc', 1, 14, 1, pIdeProdutor.Items[i].vrSenarDesc);
+
+    GerarNfs(pIdeProdutor.Items[i].Nfs);
+    GerarInfoProcJud(pIdeProdutor.Items[i].InfoProcJud);
+
     Gerador.wGrupo('/ideProdutor');
   end;
+
+  if pIdeProdutor.Count > 9999 then
+    Gerador.wAlerta('', 'ideProdutor', 'Lista de Produtores', ERR_MSG_MAIOR_MAXIMO + '9999');
 end;
 
 procedure TEvtAqProd.GerarInfoProcJud(pInfoProcJud: TInfoProcJudCollection);
@@ -296,42 +307,55 @@ begin
   for i := 0 to pInfoProcJud.Count - 1 do
     begin
       Gerador.wGrupo('infoProcJud');
-        Gerador.wCampo(tcStr, '', 'nrProcJud',   0, 0, 0, pInfoProcJud.Items[i].nrProcJud);
-        Gerador.wCampo(tcInt, '', 'codSusp',   0, 0, 0, pInfoProcJud.Items[i].codSusp);
-        Gerador.wCampo(tcDe2, '', 'vrCPNRet',    0, 0, 0, pInfoProcJud.Items[i].vrCPNRet);
-        Gerador.wCampo(tcDe2, '', 'vrRatNRet',   0, 0, 0, pInfoProcJud.Items[i].vrRatNRet);
-        Gerador.wCampo(tcDe2, '', 'vrSenarNRet', 0, 0, 0,pInfoProcJud.Items[i].vrSenarNRet);
+
+      Gerador.wCampo(tcStr, '', 'nrProcJud',   1, 20, 1, pInfoProcJud.Items[i].nrProcJud);
+      Gerador.wCampo(tcInt, '', 'codSusp',     1, 14, 1, pInfoProcJud.Items[i].codSusp);
+      Gerador.wCampo(tcDe2, '', 'vrCPNRet',    1, 14, 1, pInfoProcJud.Items[i].vrCPNRet);
+      Gerador.wCampo(tcDe2, '', 'vrRatNRet',   1, 14, 1, pInfoProcJud.Items[i].vrRatNRet);
+      Gerador.wCampo(tcDe2, '', 'vrSenarNRet', 1, 14, 1, pInfoProcJud.Items[i].vrSenarNRet);
+
       Gerador.wGrupo('/infoProcJud');
     end;
+
+  if pInfoProcJud.Count > 10 then
+    Gerador.wAlerta('', 'infoProcJud', 'Lista de Processos Judiciais', ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
 procedure TEvtAqProd.GerarTpAquis(pTpAquis: TTpAquisColecao);
 var
-  iTpAquis: Integer;
+  i: Integer;
 begin
-  for iTpAquis := 0 to InfoAquisProd.IdeEstabAdquir.TpAquis.Count - 1 do
+  for i := 0 to InfoAquisProd.IdeEstabAdquir.TpAquis.Count - 1 do
   begin
     Gerador.wGrupo('tpAquis');
-      Gerador.wCampo(tcStr, '', 'indAquis',    0, 0, 0, InfoAquisProd.IdeEstabAdquir.TpAquis.Items[iTpAquis].indAquis);
-      Gerador.wCampo(tcDe2, '', 'vlrTotAquis', 0, 0, 0, InfoAquisProd.IdeEstabAdquir.TpAquis.Items[iTpAquis].vlrTotAquis);
 
-      GerarIdeProdutor(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[iTpAquis].IdeProdutor);
+    Gerador.wCampo(tcStr, '', 'indAquis',    1,  1, 1, InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].indAquis);
+    Gerador.wCampo(tcDe2, '', 'vlrTotAquis', 1, 14, 1, InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].vlrTotAquis);
+
+    GerarIdeProdutor(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].IdeProdutor);
+
     Gerador.wGrupo('/tpAquis');
   end;
+
+  if InfoAquisProd.IdeEstabAdquir.TpAquis.Count > 3 then
+    Gerador.wAlerta('', 'tpAquis', 'Lista de Aquisições', ERR_MSG_MAIOR_MAXIMO + '3');
 end;
 
 function TEvtAqProd.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtAqProd');
-      Gerador.wGrupo('evtAqProd Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        gerarIdeEvento3(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        GerarInfoAquisProd;
-      Gerador.wGrupo('/evtAqProd');
+    Gerador.wGrupo('evtAqProd Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento3(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarInfoAquisProd;
+
+    Gerador.wGrupo('/evtAqProd');
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAqProd');
+
     Validar('evtAqProd');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -366,12 +390,14 @@ end;
 constructor TInfoAquisProd.create;
 begin
   inherited;
+
   FIdeEstabAdquir := TIdeEstabAdquir.Create;
 end;
 
 destructor TInfoAquisProd.destroy;
 begin
   FIdeEstabAdquir.Free;
+
   inherited;
 end;
 
@@ -384,6 +410,7 @@ end;
 destructor TTpAquisItem.destroy;
 begin
   FIdeProdutor.Free;
+
   inherited;
 end;
 
@@ -414,12 +441,14 @@ end;
 constructor TIdeEstabAdquir.create;
 begin
   inherited;
+
   FTpAquis := TTpAquisColecao.Create(self);
 end;
 
 destructor TIdeEstabAdquir.destroy;
 begin
   FTpAquis.Free;
+
   inherited;
 end;
 
@@ -434,6 +463,7 @@ destructor TIdeProdutorItem.destroy;
 begin
   FNfs.Free;
   FInfoProcJud.Free;
+
   inherited;
 end;
 

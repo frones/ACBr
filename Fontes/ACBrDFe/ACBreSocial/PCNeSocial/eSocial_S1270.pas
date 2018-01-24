@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -59,7 +59,6 @@ type
   TEvtContratAvNP = class;
   TRemunAvNPItem = class;
   TRemunAvNPColecao = class;
-
 
   TS1270Collection = class(TOwnedCollection)
   private
@@ -74,6 +73,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtContratAvNP: TEvtContratAvNP;
+
     procedure setEvtContratAvNP(const Value: TEvtContratAvNP);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -170,6 +170,7 @@ end;
 destructor TS1270CollectionItem.Destroy;
 begin
   FEvtContratAvNP.Free;
+
   inherited;
 end;
 
@@ -182,6 +183,7 @@ end;
 constructor TEvtContratAvNP.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FRemunAvNp     := TRemunAvNPColecao.Create(FRemunAvNp);
@@ -192,6 +194,7 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FRemunAvNp.Free;
+
   inherited;
 end;
 
@@ -202,36 +205,46 @@ begin
   for i := 0 to pRemunAvNPColecao.Count - 1 do
   begin
     Gerador.wGrupo('remunAvNP');
-      Gerador.wCampo(tcInt, '', 'tpInsc',   0, 0, 0, eSTpInscricaoToStr(pRemunAvNPColecao.Items[i].tpInsc));
-      Gerador.wCampo(tcStr, '', 'nrInsc',   0, 0, 0, pRemunAvNPColecao.Items[i].nrInsc);
-      Gerador.wCampo(tcStr, '', 'codLotacao',   0, 0, 0, pRemunAvNPColecao.Items[i].codLotacao);
-      Gerador.wCampo(tcDe2, '', 'vrBcCp00', 0, 0, 0, pRemunAvNPColecao.Items[i].vrBcCp00);
-      Gerador.wCampo(tcDe2, '', 'vrBcCp15', 0, 0, 0, pRemunAvNPColecao.Items[i].vrBcCp15);
-      Gerador.wCampo(tcDe2, '', 'vrBcCp20', 0, 0, 0, pRemunAvNPColecao.Items[i].vrBcCp20);
-      Gerador.wCampo(tcDe2, '', 'vrBcCp25', 0, 0, 0, pRemunAvNPColecao.Items[i].vrBcCp25);
-      Gerador.wCampo(tcDe2, '', 'vrBcCp13', 0, 0, 0, pRemunAvNPColecao.Items[i].vrBcCp13);
-      Gerador.wCampo(tcDe2, '', 'vrBcFgts', 0, 0, 0, pRemunAvNPColecao.Items[i].vrBcFgts);
-      Gerador.wCampo(tcDe2, '', 'vrDescCP', 0, 0, 0, pRemunAvNPColecao.Items[i].vrDescCP);
+
+    Gerador.wCampo(tcInt, '', 'tpInsc',     1,  1, 1, eSTpInscricaoToStr(pRemunAvNPColecao.Items[i].tpInsc));
+    Gerador.wCampo(tcStr, '', 'nrInsc',     1, 15, 1, pRemunAvNPColecao.Items[i].nrInsc);
+    Gerador.wCampo(tcStr, '', 'codLotacao', 1, 30, 1, pRemunAvNPColecao.Items[i].codLotacao);
+    Gerador.wCampo(tcDe2, '', 'vrBcCp00',   1, 14, 1, pRemunAvNPColecao.Items[i].vrBcCp00);
+    Gerador.wCampo(tcDe2, '', 'vrBcCp15',   1, 14, 1, pRemunAvNPColecao.Items[i].vrBcCp15);
+    Gerador.wCampo(tcDe2, '', 'vrBcCp20',   1, 14, 1, pRemunAvNPColecao.Items[i].vrBcCp20);
+    Gerador.wCampo(tcDe2, '', 'vrBcCp25',   1, 14, 1, pRemunAvNPColecao.Items[i].vrBcCp25);
+    Gerador.wCampo(tcDe2, '', 'vrBcCp13',   1, 14, 1, pRemunAvNPColecao.Items[i].vrBcCp13);
+    Gerador.wCampo(tcDe2, '', 'vrBcFgts',   1, 14, 1, pRemunAvNPColecao.Items[i].vrBcFgts);
+    Gerador.wCampo(tcDe2, '', 'vrDescCP',   1, 14, 1, pRemunAvNPColecao.Items[i].vrDescCP);
+
     Gerador.wGrupo('/remunAvNP');
   end;
+
+  if pRemunAvNPColecao.Count > 999 then
+    Gerador.wAlerta('', 'remunAvNP', 'Lista de Remuneração', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 function TEvtContratAvNP.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtContratAvNP');
-      Gerador.wGrupo('evtContratAvNP Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        gerarIdeEvento3(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        GerarRemunAvNP(remunAvNp);
-      Gerador.wGrupo('/evtContratAvNP');
+    Gerador.wGrupo('evtContratAvNP Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    gerarIdeEvento3(self.IdeEvento);
+    gerarIdeEmpregador(self.IdeEmpregador);
+    GerarRemunAvNP(remunAvNp);
+
+    Gerador.wGrupo('/evtContratAvNP');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtContratAvNP');
+
     Validar('evtContratAvNP');
   except on e:exception do
     raise Exception.Create(e.Message);
   end;
+
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 

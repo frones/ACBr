@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -73,6 +73,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtContrSindPatr: TEvtContrSindPatr;
+
     procedure setEvtContrSindPatr(const Value: TEvtContrSindPatr);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -155,6 +156,7 @@ end;
 destructor TS1300CollectionItem.Destroy;
 begin
   FEvtContrSindPatr.Free;
+
   inherited;
 end;
 
@@ -167,6 +169,7 @@ end;
 constructor TEvtContrSindPatr.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FContribSind := TContribSindColecao.Create;
@@ -177,35 +180,45 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FContribSind.Free;
+
   inherited;
 end;
 
 procedure TEvtContrSindPatr.GerarContribSind;
 var
-  iContribSindItem: Integer;
+  i: Integer;
 begin
-  for iContribSindItem := 0 to ContribSind.Count - 1 do
+  for i := 0 to ContribSind.Count - 1 do
   begin
     Gerador.wGrupo('contribSind');
-      Gerador.wCampo(tcStr, '', 'cnpjSindic', 0, 0, 0, ContribSind.Items[iContribSindItem].cnpjSindic);
-      Gerador.wCampo(tcStr, '', 'tpContribSind', 0, 0, 0, eSTpContribSindToStr(ContribSind.Items[iContribSindItem].tpContribSind));
-      Gerador.wCampo(tcDe2, '', 'vlrContribSind', 0, 0, 0, ContribSind.Items[iContribSindItem].vlrContribSind);
+
+    Gerador.wCampo(tcStr, '', 'cnpjSindic',     14, 14, 1, ContribSind.Items[i].cnpjSindic);
+    Gerador.wCampo(tcStr, '', 'tpContribSind',   1,  1, 1, eSTpContribSindToStr(ContribSind.Items[i].tpContribSind));
+    Gerador.wCampo(tcDe2, '', 'vlrContribSind',  1, 14, 1, ContribSind.Items[i].vlrContribSind);
+
     Gerador.wGrupo('/contribSind');
   end;
+
+  if ContribSind.Count > 999 then
+    Gerador.wAlerta('', 'contribSind', 'Lista de Contribuição Sindical', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 function TEvtContrSindPatr.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtContrSindPatr');
-      Gerador.wGrupo('evtContrSindPatr Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        gerarIdeEvento3(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        GerarContribSind;
-      Gerador.wGrupo('/evtContrSindPatr');
+    Gerador.wGrupo('evtContrSindPatr Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento3(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarContribSind;
+
+    Gerador.wGrupo('/evtContrSindPatr');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtContrSindPatr');
+
     Validar('evtContrSindPatr');
   except on e:exception do
     raise Exception.Create(e.Message);

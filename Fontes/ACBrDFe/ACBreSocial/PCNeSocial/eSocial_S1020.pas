@@ -387,7 +387,7 @@ function TevtTabLotacao.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtTabLotacao');
-    Gerador.wGrupo('evtTabLotacao Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+    Gerador.wGrupo('evtTabLotacao Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
 
     GerarIdeEvento(self.IdeEvento);
     GerarIdeEmpregador(self.ideEmpregador);

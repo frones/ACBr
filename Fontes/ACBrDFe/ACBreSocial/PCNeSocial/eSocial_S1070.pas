@@ -440,7 +440,7 @@ function TEvtTabProcesso.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtTabProcesso');
-    Gerador.wGrupo('evtTabProcesso Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
+    Gerador.wGrupo('evtTabProcesso Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
 
     GerarIdeEvento(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
@@ -472,6 +472,7 @@ begin
   except on e:exception do
     raise Exception.Create(e.Message);
   end;
+
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 

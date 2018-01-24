@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2018
+-- Diversos --
+[*] Checagem dos Eventos: 1040 até 1300.
+    Foi checado se todas as tag (opcional e obrigatória) estão sendo geradas
+    bem como o tamanho minimo, máximo e ocorrências.
+   Por: Italo Jurisato Junior
+
 22/01/2018
 -- Diversos --
 [*] Checagem dos Eventos: 1000, 1005, 1010, 1020, 1030 e 1035.

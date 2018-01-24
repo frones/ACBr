@@ -204,6 +204,7 @@ end;
 function TEvtPgtosNI.GerarXML: boolean;
 begin
   try
+   (* Não mais gerado na versão 2.4.01 *)
     GerarCabecalho('');
       Gerador.wGrupo('evtPgtosNI Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
         gerarIdeEvento3(self.IdeEvento);

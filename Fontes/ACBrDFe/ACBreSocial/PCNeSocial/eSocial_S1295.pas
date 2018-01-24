@@ -71,6 +71,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtTotConting: TEvtTotConting;
+
     procedure setEvtTotConting(const Value: TEvtTotConting);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -130,6 +131,7 @@ end;
 destructor TS1295CollectionItem.Destroy;
 begin
   FEvtTotConting.Free;
+
   inherited;
 end;
 
@@ -142,6 +144,7 @@ end;
 constructor TEvtTotConting.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeRespInf := TIdeRespInf.Create;
@@ -152,6 +155,7 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FIdeRespInf.Free;
+
   inherited;
 end;
 
@@ -159,15 +163,18 @@ function TEvtTotConting.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtTotConting');
-      Gerador.wGrupo('evtTotConting Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //gerarIdVersao(self);
-        GerarIdeEvento3(self.IdeEvento, False);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        GerarIdeRespInf(Self.IdeRespInf);
-      Gerador.wGrupo('/evtTotConting');
+    Gerador.wGrupo('evtTotConting Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento3(self.IdeEvento, False);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeRespInf(Self.IdeRespInf);
+
+    Gerador.wGrupo('/evtTotConting');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTotConting');
+
     Validar('evtTotConting');
   except on e:exception do
     raise Exception.Create(e.Message);

@@ -2,38 +2,46 @@
 { Projeto: Componente ACBreSocial                                              }
 {  Biblioteca multiplataforma de componentes Delphi para envio dos eventos do  }
 { eSocial - http://www.esocial.gov.br/                                         }
-
+{                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
 {                                       André Ferreira de Moraes               }
-
+{                                                                              }
 { Colaboradores nesse arquivo:                                                 }
-
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-
-
+{                                                                              }
+{                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-
+{                                                                              }
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-
+{                                                                              }
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
-
+{                                                                              }
 { Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-
+{                                                                              }
 {******************************************************************************}
 
+{******************************************************************************
+|* Historico
+|*
+|* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
+|*  - Doação do componente para o Projeto ACBr
+|* 29/02/2016: Guilherme Costa
+|*  - Alterado os atributos que não estavam de acordo com o leiaute/xsd
+******************************************************************************}
 {$I ACBr.inc}
 
 unit eSocial_S1207;
@@ -42,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes, Dialogs, Controls,
-  pcnConversao, ACBrUtil,
+  pcnConversao, pcnGerador, ACBrUtil,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -55,7 +63,6 @@ type
   TIdeBenef = class;
   TItensCollection = class;
   TItensCollectionItem = class;
-
 
   TS1207Collection = class(TOwnedCollection)
   private
@@ -71,6 +78,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtBenPrRP: TEvtBenPrRP;
+
     procedure seTEvtBenPrRP(const Value: TEvtBenPrRP);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -91,7 +99,6 @@ type
     property Items[Index: integer]: TDMDevCollectionItem read GetItem write SetItem;
       default;
   end;
-
 
   TDMDevCollectionItem = class(TCollectionItem)
   private
@@ -143,8 +150,8 @@ type
     FDMDev: TDMDevCollection;
     {Geradores específicos desta classe}
 
-    procedure GerarIdeBenef();
-    procedure GerarDmDev();
+    procedure GerarIdeBenef;
+    procedure GerarDmDev;
     procedure GerarItens(pItens: TItensCollection);
   public
     constructor Create(AACBreSocial: TObject); overload;
@@ -194,6 +201,7 @@ end;
 
 constructor TItensCollectionItem.Create;
 begin
+
 end;
 
 destructor TItensCollectionItem.Destroy;
@@ -234,6 +242,7 @@ end;
 destructor TDMDevCollectionItem.Destroy;
 begin
   FItens.Free;
+
   inherited;
 end;
 
@@ -241,6 +250,7 @@ end;
 constructor TEvtBenPrRP.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeBenef := TIdeBenef.Create;
@@ -253,13 +263,16 @@ begin
   FIdeEmpregador.Free;
   FIdeBenef.Free;
   FDMDev.Free;
+
   inherited;
 end;
 
 procedure TEvtBenPrRP.GerarIdeBenef;
 begin
   Gerador.wGrupo('ideBenef');
-    Gerador.wCampo(tcStr, '', 'cpfBenef', 0, 0, 0, ideBenef.cpfBenef);
+
+  Gerador.wCampo(tcStr, '', 'cpfBenef', 11, 11, 1, ideBenef.cpfBenef);
+
   Gerador.wGrupo('/ideBenef');
 end;
 
@@ -270,11 +283,16 @@ begin
   for i := 0 to pItens.Count - 1 do
   begin
     Gerador.wGrupo('itens');
-      Gerador.wCampo(tcStr, '', 'codRubr', 0, 0, 0, pItens[i].codRubr);
-      Gerador.wCampo(tcStr, '', 'ideTabRubr', 0, 0, 0, pItens[i].ideTabRubr);
-      Gerador.wCampo(tcDe2, '', 'vrRubr', 0, 0, 0, pItens[i].vrRubr);
+
+    Gerador.wCampo(tcStr, '', 'codRubr',    1, 30, 1, pItens[i].codRubr);
+    Gerador.wCampo(tcStr, '', 'ideTabRubr', 1,  8, 1, pItens[i].ideTabRubr);
+    Gerador.wCampo(tcDe2, '', 'vrRubr',     1, 14, 1, pItens[i].vrRubr);
+
     Gerador.wGrupo('/itens');
   end;
+
+  if pItens.Count > 99 then
+    Gerador.wAlerta('', 'itens', 'Lista de Detalhamento de Valores', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtBenPrRP.GerarDmDev;
@@ -284,33 +302,43 @@ begin
   for i := 0 to dmDev.Count - 1 do
   begin
     Gerador.wGrupo('dmDev');
-      Gerador.wCampo(tcInt, '', 'tpBenef', 0, 0, 0, dmDev[i].tpBenef);
-      Gerador.wCampo(tcStr, '', 'nrBenefic', 0, 0, 0, dmDev[i].nrBenefic);
-      Gerador.wCampo(tcStr, '', 'ideDmDev', 0, 0, 0, dmDev[i].ideDmDev);
-      GerarItens(dmDev[i].itens);
+
+    Gerador.wCampo(tcInt, '', 'tpBenef',   2,   2, 1, dmDev[i].tpBenef);
+    Gerador.wCampo(tcStr, '', 'nrBenefic', 1, 200, 1, dmDev[i].nrBenefic);
+    Gerador.wCampo(tcStr, '', 'ideDmDev',  1,  30, 1, dmDev[i].ideDmDev);
+
+    GerarItens(dmDev[i].itens);
+
     Gerador.wGrupo('/dmDev');
   end;
+
+  if dmDev.Count > 99 then
+    Gerador.wAlerta('', 'dmDev', 'Lista de Demostrativos', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 function TEvtBenPrRP.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtBenPrRP');
-    Gerador.wGrupo('evtBenPrRP Id="' + GerarChaveEsocial(now,
-      self.ideEmpregador.NrInsc, 0) + '"');
+    Gerador.wGrupo('evtBenPrRP Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
     GerarIdeEvento3(Self.IdeEvento);
     GerarIdeEmpregador(Self.ideEmpregador);
-    GerarIdeBenef();
-    GerarDmDev();
+    GerarIdeBenef;
+    GerarDmDev;
+
     Gerador.wGrupo('/evtBenPrRP');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtBenPrRP');
+
     Validar('evtBenPrRP');
   except
     on e: Exception do
       raise Exception.Create(e.Message);
   end;
+
   Result := (Gerador.ArquivoFormatoXML <> '');
 end;
 
@@ -324,6 +352,7 @@ end;
 destructor TS1207CollectionItem.Destroy;
 begin
   FEvtBenPrRP.Free;
+
   inherited;
 end;
 

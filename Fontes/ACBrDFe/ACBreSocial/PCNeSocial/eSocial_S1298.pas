@@ -71,6 +71,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtReabreEvPer: TEvtReabreEvPer;
+
     procedure setEvtReabreEvPer(const Value: TEvtReabreEvPer);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -127,6 +128,7 @@ end;
 destructor TS1298CollectionItem.Destroy;
 begin
   FEvtReabreEvPer.Free;
+
   inherited;
 end;
 
@@ -139,6 +141,7 @@ end;
 constructor TEvtReabreEvPer.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento4.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
 end;
@@ -147,6 +150,7 @@ destructor TEvtReabreEvPer.destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
+
   inherited;
 end;
 
@@ -154,14 +158,17 @@ function TEvtReabreEvPer.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtReabreEvPer');
-      Gerador.wGrupo('evtReabreEvPer Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        GerarIdeEvento4(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
+    Gerador.wGrupo('evtReabreEvPer Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
 
-      Gerador.wGrupo('/evtReabreEvPer');
+    GerarIdeEvento4(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
+    Gerador.wGrupo('/evtReabreEvPer');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtReabreEvPer');
+
     Validar('evtReabreEvPer');
   except on e:exception do
     raise Exception.Create(e.Message);

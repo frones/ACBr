@@ -72,6 +72,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtFechaEvPer: TEvtFechaEvPer;
+
     procedure setEvtFechaEvPer(const Value: TEvtFechaEvPer);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -156,6 +157,7 @@ end;
 destructor TS1299CollectionItem.Destroy;
 begin
   FEvtFechaEvPer.Free;
+
   inherited;
 end;
 
@@ -168,6 +170,7 @@ end;
 constructor TEvtFechaEvPer.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeRespInf := TIdeRespInf.Create;
@@ -180,26 +183,29 @@ begin
   FIdeEmpregador.Free;
   FIdeRespInf.Free;
   FInfoFech.Free;
+
   inherited;
 end;
 
 procedure TEvtFechaEvPer.GerarInfoFech;
 begin
   Gerador.wGrupo('infoFech');
-    Gerador.wCampo(tcStr, '', 'evtRemun', 0, 0, 0, eSSimNaoToStr(self.InfoFech.evtRemun));
-    Gerador.wCampo(tcStr, '', 'evtPgtos', 0, 0, 0, eSSimNaoToStr(self.InfoFech.evtPgtos));
-    Gerador.wCampo(tcStr, '', 'evtAqProd', 0, 0, 0, eSSimNaoToStr(self.InfoFech.evtAqProd));
-    Gerador.wCampo(tcStr, '', 'evtComProd', 0, 0, 0, eSSimNaoToStr(self.InfoFech.evtComProd));
-    Gerador.wCampo(tcStr, '', 'evtContratAvNP', 0, 0, 0, eSSimNaoToStr(self.InfoFech.evtContratAvNP));
-    Gerador.wCampo(tcStr, '', 'evtInfoComplPer', 0, 0, 0, eSSimNaoToStr(self.InfoFech.evtInfoComplPer));
 
-    if ((eSSimNaoToStr(self.InfoFech.evtRemun)        = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtPgtos)        = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtAqProd)       = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtComProd)      = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtContratAvNP)  = 'N') and
-        (eSSimNaoToStr(self.InfoFech.evtInfoComplPer) = 'N')) then
-      Gerador.wCampo(tcStr, '', 'compSemMovto', 0, 0, 0, self.InfoFech.compSemMovto);
+  Gerador.wCampo(tcStr, '', 'evtRemun',        1, 1, 1, eSSimNaoToStr(self.InfoFech.evtRemun));
+  Gerador.wCampo(tcStr, '', 'evtPgtos',        1, 1, 1, eSSimNaoToStr(self.InfoFech.evtPgtos));
+  Gerador.wCampo(tcStr, '', 'evtAqProd',       1, 1, 1, eSSimNaoToStr(self.InfoFech.evtAqProd));
+  Gerador.wCampo(tcStr, '', 'evtComProd',      1, 1, 1, eSSimNaoToStr(self.InfoFech.evtComProd));
+  Gerador.wCampo(tcStr, '', 'evtContratAvNP',  1, 1, 1, eSSimNaoToStr(self.InfoFech.evtContratAvNP));
+  Gerador.wCampo(tcStr, '', 'evtInfoComplPer', 1, 1, 1, eSSimNaoToStr(self.InfoFech.evtInfoComplPer));
+
+  if ((eSSimNaoToStr(self.InfoFech.evtRemun)        = 'N') and
+      (eSSimNaoToStr(self.InfoFech.evtPgtos)        = 'N') and
+      (eSSimNaoToStr(self.InfoFech.evtAqProd)       = 'N') and
+      (eSSimNaoToStr(self.InfoFech.evtComProd)      = 'N') and
+      (eSSimNaoToStr(self.InfoFech.evtContratAvNP)  = 'N') and
+      (eSSimNaoToStr(self.InfoFech.evtInfoComplPer) = 'N')) then
+    Gerador.wCampo(tcStr, '', 'compSemMovto', 1, 7, 0, self.InfoFech.compSemMovto);
+
   Gerador.wGrupo('/infoFech');
 end;
 
@@ -207,16 +213,19 @@ function TEvtFechaEvPer.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtFechaEvPer');
-      Gerador.wGrupo('evtFechaEvPer Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //gerarIdVersao(self);
-        GerarIdeEvento3(self.IdeEvento, False);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        GerarIdeRespInf(Self.IdeRespInf);
-        GerarInfoFech;
-      Gerador.wGrupo('/evtFechaEvPer');
+    Gerador.wGrupo('evtFechaEvPer Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento3(self.IdeEvento, False);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeRespInf(Self.IdeRespInf);
+    GerarInfoFech;
+
+    Gerador.wGrupo('/evtFechaEvPer');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtFechaEvPer');
+
     Validar('evtFechaEvPer');
   except on e:exception do
     raise Exception.Create(e.Message);

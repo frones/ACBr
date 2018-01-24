@@ -2327,14 +2327,23 @@ begin
       CnpjSindTrab := '12345678901234';
 
     EvtAdmissao.Vinculo.InfoContrato.AlvaraJudicial.NrProcJud      := '123';
-    
+
+    with EvtAdmissao.Vinculo.InfoContrato.observacoes.Add do
+      observacao := 'Observacao';
+
     EvtAdmissao.Vinculo.SucessaoVinc.cnpjEmpregAnt                 := '12345678901234';
     EvtAdmissao.Vinculo.SucessaoVinc.MatricAnt                     := '123';
     EvtAdmissao.Vinculo.SucessaoVinc.dtTransf                  := Date;
     EvtAdmissao.Vinculo.SucessaoVinc.Observacao                    := 'transferido';
 
+    EvtAdmissao.Vinculo.transfDom.cpfSubstituido := '12345678901';
+    EvtAdmissao.Vinculo.transfDom.matricAnt := '123';
+    EvtAdmissao.Vinculo.transfDom.dtTransf := Date;
+
     EvtAdmissao.Vinculo.afastamento.DtIniAfast := now;
     EvtAdmissao.Vinculo.afastamento.codMotAfast := '01';
+
+    EvtAdmissao.Vinculo.Desligamento.DtDeslig := now;
   end;
 end;
 

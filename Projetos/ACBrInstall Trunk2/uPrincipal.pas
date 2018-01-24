@@ -101,7 +101,6 @@ type
     btnVisualizarLogCompilacao: TSpeedButton;
     pnlInfoCompilador: TPanel;
     wizPgPacotes: TJvWizardInteriorPage;
-    frameDpk: TframePacotes;
     rdgDLL: TRadioGroup;
     ckbCopiarTodasDll: TCheckBox;
     ckbBCB: TCheckBox;
@@ -119,6 +118,7 @@ type
     ckbCargaDllTardia: TCheckBox;
     ckbRemoverCastWarnings: TCheckBox;
     ckbUsarArquivoConfig: TCheckBox;
+    framePacotes1: TframePacotes;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -497,8 +497,8 @@ begin
 
     edtDelphiVersionChange(edtDelphiVersion);
 
-    for I := 0 to frameDpk.Pacotes.Count - 1 do
-      frameDpk.Pacotes[I].Checked := ArqIni.ReadBool('PACOTES', frameDpk.Pacotes[I].Caption, False);
+    for I := 0 to framePacotes1.Pacotes.Count - 1 do
+      framePacotes1.Pacotes[I].Checked := ArqIni.ReadBool('PACOTES', framePacotes1.Pacotes[I].Caption, False);
   finally
     ArqIni.Free;
   end;
@@ -538,8 +538,8 @@ begin
     ArqIni.WriteBool('CONFIG','CargaDllTardia', ckbCargaDllTardia.Checked);
     ArqIni.WriteBool('CONFIG','RemoverCastWarnings', ckbRemoverCastWarnings.Checked);
 
-    for I := 0 to frameDpk.Pacotes.Count - 1 do
-      ArqIni.WriteBool('PACOTES', frameDpk.Pacotes[I].Caption, frameDpk.Pacotes[I].Checked);
+    for I := 0 to framePacotes1.Pacotes.Count - 1 do
+      ArqIni.WriteBool('PACOTES', framePacotes1.Pacotes[I].Caption, framePacotes1.Pacotes[I].Checked);
   finally
     ArqIni.Free;
   end;
@@ -1151,7 +1151,7 @@ begin
 
         // setar barra de progresso
         pgbInstalacao.Position := 0;
-        pgbInstalacao.Max := (frameDpk.Pacotes.Count * 2) + 6;
+        pgbInstalacao.Max := (framePacotes1.Pacotes.Count * 2) + 6;
 
         // *************************************************************************
         // removendo arquivos antigos se configurado
@@ -1200,14 +1200,14 @@ begin
         // *************************************************************************
         Logar('');
         Logar('COMPILANDO OS PACOTES...');
-        for iDpk := 0 to frameDpk.Pacotes.Count - 1 do
+        for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
         begin
-          NomePacote := frameDpk.Pacotes[iDpk].Caption;
+          NomePacote := framePacotes1.Pacotes[iDpk].Caption;
 
           // Busca diretório do pacote
           ExtrairDiretorioPacote(NomePacote);
 
-          if (IsDelphiPackage(NomePacote)) and (frameDpk.Pacotes[iDpk].Checked) then
+          if (IsDelphiPackage(NomePacote)) and (framePacotes1.Pacotes[iDpk].Checked) then
           begin
             WriteToTXT(PathArquivoLog, '');
             FPacoteAtual := sDirPackage + NomePacote;
@@ -1238,9 +1238,9 @@ begin
             Logar('');
             Logar('INSTALANDO OS PACOTES...');
 
-            for iDpk := 0 to frameDpk.Pacotes.Count - 1 do
+            for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
             begin
-              NomePacote := frameDpk.Pacotes[iDpk].Caption;
+              NomePacote := framePacotes1.Pacotes[iDpk].Caption;
 
               // Busca diretório do pacote
               ExtrairDiretorioPacote(NomePacote);
@@ -1253,7 +1253,7 @@ begin
                 if not bRunOnly then
                 begin
                   // se o pacote estiver marcado instalar, senão desinstalar
-                  if frameDpk.Pacotes[iDpk].Checked then
+                  if framePacotes1.Pacotes[iDpk].Checked then
                   begin
                     WriteToTXT(PathArquivoLog, '');
 
@@ -1653,12 +1653,12 @@ begin
   GravarConfiguracoes;
 
   // verificar se os pacotes existem antes de seguir para o próximo paso
-  for I := 0 to frameDpk.Pacotes.Count - 1 do
+  for I := 0 to framePacotes1.Pacotes.Count - 1 do
   begin
-    if frameDpk.Pacotes[I].Checked then
+    if framePacotes1.Pacotes[I].Checked then
     begin
       sDirRoot   := IncludeTrailingPathDelimiter(edtDirDestino.Text);
-      NomePacote := frameDpk.Pacotes[I].Caption;
+      NomePacote := framePacotes1.Pacotes[I].Caption;
 
       // Busca diretório do pacote
       ExtrairDiretorioPacote(NomePacote);

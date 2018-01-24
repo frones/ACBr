@@ -1,23 +1,22 @@
 object framePacotes: TframePacotes
   Left = 0
   Top = 0
-  Width = 699
-  Height = 1500
+  Width = 727
+  Height = 1000
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
-  Align = alClient
   TabOrder = 0
   object pnlBotoesMarcar: TPanel
     Left = 0
-    Top = 1459
-    Width = 699
+    Top = 959
+    Width = 727
     Height = 41
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
     object btnPacotesDesmarcarTodos: TSpeedButton
       AlignWithMargins = True
-      Left = 649
+      Left = 677
       Top = 3
       Width = 47
       Height = 35
@@ -57,7 +56,7 @@ object framePacotes: TframePacotes
     end
     object btnPacotesMarcarTodos: TSpeedButton
       AlignWithMargins = True
-      Left = 599
+      Left = 627
       Top = 3
       Width = 47
       Height = 35
@@ -99,8 +98,8 @@ object framePacotes: TframePacotes
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 693
-    Height = 1453
+    Width = 721
+    Height = 953
     Align = alClient
     BevelOuter = bvNone
     BorderStyle = bsNone

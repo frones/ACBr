@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2018
+-- ACBrBPeServicos --
+[+] Inclusão das URLs de Homologação de MG.
+  Por: Italo Jurisato Junior
+
 20/01/2018
 -- ACBrBPeDABPEClass --
 [+] Adicionada a propriedade "UsarSeparadorPathPDF", para permitir que os PDFs

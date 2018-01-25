@@ -56,6 +56,7 @@ Símbolo : Significado
    Por: Italo Jurisato Junior
 [*] Limpeza e organização da unit do ACBreSocial. Por: Rafael Dias.
 [-] Corrigido a url de produção. Por: Rafael Dias.
+[-] Corrigido leitura das data do retorno do webservice. Por: Rafael Dias.
 
 24/01/2018
 -- ACBreSocial --

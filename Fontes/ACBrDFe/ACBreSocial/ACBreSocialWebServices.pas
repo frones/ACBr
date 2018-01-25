@@ -487,6 +487,7 @@ var
   Processamento: TProcessamento;
   retEvento: TretEvento;
 begin
+  FRetProcLote.retEventos.Clear;
   FPRetWS := SeparaDados(FPRetornoWS, 'retornoEnvioLoteEventos');
   Result := FPRetWS <> EmptyStr;
   retEvento := FRetProcLote.retEventos.Add;
@@ -505,6 +506,7 @@ begin
       Processamento.FdescResposta := UTF8ToNativeString(Leitor.rCampo(tcStr, 'descResposta'));
       Leitor.Arquivo := Leitor.rExtrai(1, 'ocorrencias');
       Leitor.Grupo := Leitor.Arquivo;
+      FRetProcLote.Descricao := Processamento.FdescResposta;
       i:=0;
       while Leitor.rExtrai(1, 'ocorrencia', '', i + 1) <> '' do
       begin
@@ -533,7 +535,7 @@ begin
 
       Leitor.Grupo := Leitor.rExtrai(1, 'dadosRecepcaoLote');
       try
-//Compatibilizar        FRetProcLote.dadosRecLote.dhRecepcao := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhRecepcao'), False);
+        FRetProcLote.dadosRecLote.dhRecepcao := Leitor.rCampo(tcDatHor, 'dhRecepcao');
       except //'2017-07-20T22:14:51.1569524-03:00'
         FRetProcLote.dadosRecLote.dhRecepcao := 0;
       end;
@@ -926,9 +928,9 @@ begin
   FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarLoteEventosResponse');
   FXMlRet := FPRetWS;
   Result := FPRetWS <> EmptyStr;
-
   Leitor := TLeitor.Create;
   try
+    FRetProcLote.retEventos.Clear;
     Leitor.Arquivo := FPRetWS;
 
     Leitor.Grupo := Leitor.rExtrai(1, 'ideEmpregador');
@@ -946,17 +948,22 @@ begin
     begin
       Leitor.Grupo := Leitor.rExtrai(1, 'dadosRecepcaoLote');
       try
-//Compatibilizar        FRetProcLote.dadosRecLote.dhRecepcao := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhRecepcao'));
+        FRetProcLote.dadosRecLote.dhRecepcao := Leitor.rCampo(tcDatHor, 'dhRecepcao');
       except
         FRetProcLote.dadosRecLote.dhRecepcao := 0;
       end;
       FRetProcLote.dadosRecLote.versaoAplicRecepcao := Leitor.rCampo(tcStr, 'versaoAplicativoRecepcao');
       FRetProcLote.dadosRecLote.Protocolo  := Leitor.rCampo(tcStr, 'protocoloEnvio');
 
-      Leitor.Arquivo := FPRetWS;
-      Leitor.Grupo := Leitor.Arquivo;
+      // Alterado Alisson 26/12/2017 O XML retorna o aplicativo de processamento do lote e o  mesmo deverá ser gravado
+      Leitor.Grupo := Leitor.rExtrai(1, 'dadosProcessamentoLote');
+      FRetProcLote.dadosProcLote.versaoAplicProcLote :=  Leitor.rCampo(tcStr, 'versaoAplicativoProcessamentoLote');
+
+      // Foi alterado por Alisson 11/12/2017 para rodar todos os eventos e não somente o cabeçalho dos eventos dentro do XML
+      // pois a assinaturá do nó raiz ocorre apenas uma única vez
+      Leitor.Arquivo := Leitor.rExtrai(1, 'retornoEventos');
       i:=0;
-      while Leitor.rExtrai(1, 'retornoEventos', '', i + 1) <> '' do
+      while Leitor.rExtrai(1, 'evento', '', i + 1) <> '' do
       begin
         //recepcao
         Reader := TLeitor.Create;
@@ -966,7 +973,7 @@ begin
           retEvento.IDEvento := Leitor.rAtributo('Id', 'evento');
           Reader.Grupo := Reader.rExtrai(1, 'recepcao');
           retEvento.FRecepcao.FtpAmb := TpTpAmb(Integer(Leitor.rCampo(tcInt, 'tpAmb')));
-//Compatibilizar          retEvento.FRecepcao.FdhRecepcao :=  ISO8601ToDate(Leitor.rCampo(tcStr, 'dhRecepcao',''));
+          retEvento.FRecepcao.FdhRecepcao :=  Leitor.rCampo(tcDatHor, 'dhRecepcao','');
           retEvento.FRecepcao.FversaoAplicRecepcao := Leitor.rCampo(tcStr, 'versaoAppRecepcao');
           retEvento.FRecepcao.Fprotocolo := Leitor.rCampo(tcStr, 'protocoloEnvioLote');
           //processamento
@@ -974,20 +981,23 @@ begin
           retEvento.FProcessamento.FcdResposta :=  Leitor.rCampo(tcStr, 'cdResposta');
           retEvento.FProcessamento.FdescResposta := UTF8ToNativeString(Leitor.rCampo(tcStr, 'descResposta'));
           retEvento.FProcessamento.versaoAplicProcLote := Leitor.rCampo(tcStr, 'versaoAppProcessamento');
-//Compatibilizar          retEvento.FProcessamento.FdhProcessamento := ISO8601ToDate(Leitor.rCampo(tcStr, 'dhProcessamento'));
+          retEvento.FProcessamento.FdhProcessamento := Leitor.rCampo(tcDatHor, 'dhProcessamento');
           //recibo
           Reader.Grupo := Reader.rExtrai(1, 'recibo');
           retEvento.FRecibo.FnrRecibo := Leitor.rCampo(tcStr, 'nrRecibo');
           retEvento.FRecibo.FHash := Leitor.rCampo(tcStr, 'hash');
-          j := 0;
-          Reader.Grupo := Reader.rExtrai(1, 'ocorrencias');
           Processamento := retEvento.FProcessamento;
+
+          // Foi alterado por Alisson 11/12/2017 pois cada ocorrência possui sua assinatura vinculada a um evento,
+          // utilizando a extração do nó raiz dentro de Leitor Faz com que todas as ocorrências sejam vinculadas a um evento
+          j := 0;
+          Reader.Arquivo := Reader.rExtrai(1, 'ocorrencias');
           while Reader.rExtrai(1, 'ocorrencia', '', j + 1) <> '' do
           begin
             Processamento.Ocorrencias.Add;
-            Processamento.Ocorrencias.Items[j].xml := Leitor.Grupo;
-            Processamento.Ocorrencias.Items[j].FLeitor.Arquivo := Leitor.Grupo;
-            Processamento.Ocorrencias.Items[j].FLeitor.Grupo := Leitor.Grupo;
+            Processamento.Ocorrencias.Items[j].xml := Reader.Grupo;
+            Processamento.Ocorrencias.Items[j].FLeitor.Arquivo := Reader.Grupo;
+            Processamento.Ocorrencias.Items[j].FLeitor.Grupo := Reader.Grupo;
             Processamento.Ocorrencias.Items[j].LerXml;
             inc(j);
           end;

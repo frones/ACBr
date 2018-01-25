@@ -68,6 +68,7 @@ type
     FTimeout: Integer;
     FErro: String;
     FErroTimeout: Boolean;
+    FResposta: String;
     procedure SetPastaInput(AValue: String);
     procedure SetPastaOutput(AValue: String);
 
@@ -88,6 +89,7 @@ type
     property Timeout     : Integer read FTimeout     write FTimeout default 30;
     property ErroTimeout : Boolean read FErroTimeout;
     property Erro        : String  read FErro;
+    property Resposta    : String  read FResposta;
   end;
 
   TACBrIntegradorGetNumeroSessao = procedure(var NumeroSessao: Integer) of object ;
@@ -122,6 +124,7 @@ type
     function GetAbout: String;
     function GetErroResposta: String;
     function GetNumeroSessao: Integer;
+    function GetUltimaResposta: String;
     procedure GravaLog(AString : AnsiString ) ;
     procedure SetAbout(AValue: String);
     procedure DoException( AMessage: String );
@@ -143,6 +146,8 @@ type
     property NumeroSessao: Integer read GetNumeroSessao;
     function GerarNumeroSessao: Integer;
     procedure SetNomeMetodo(NomeMetodo: String; Homologacao: Boolean);
+
+    property UltimaResposta: String read GetUltimaResposta;
 
     function EnviarPagamento(Pagamento: TEnviarPagamento): TRespostaPagamento;
     function EnviarStatusPagamento(StatusPagamento: TStatusPagamento): TRespostaStatusPagamento;
@@ -196,6 +201,7 @@ procedure TComandoIntegrador.Clear;
 begin
   FErro := '';
   FErroTimeout := False;
+  FResposta := '';
 end;
 
 procedure TComandoIntegrador.SetPastaInput(AValue: String);
@@ -290,7 +296,7 @@ begin
   end;
 
   FOwner.DoLog('RespostaIntegrador: '+RespostaIntegrador);
-
+  FResposta:= RespostaIntegrador;
   Result := PegaResposta(RespostaIntegrador);
 end;
 
@@ -586,6 +592,11 @@ begin
   //   FOnGetNumeroSessao( FNumeroSessao ) ;
 
   Result := FNumeroSessao;
+end;
+
+function TACBrIntegrador.GetUltimaResposta: String;
+begin
+  Result := FComandoIntegrador.Resposta;
 end;
 
 procedure TACBrIntegrador.SetNomeMetodo(NomeMetodo: String; Homologacao: Boolean

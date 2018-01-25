@@ -56,15 +56,16 @@ uses
   pcnConversao, eSocial_Conversao;
 
 resourcestring
-  ACBRESOCIAL_VERSAO = '2.4.1';
-  ACBRESOCIAL_NAMESPACE = ' http://www.esocial.gov.br/servicos/empregador/lote/eventos/envio/v1_1_0';
   ACBRESOCIAL_CErroAmbienteDiferente = 'Ambiente do XML (tpAmb) é diferente do configurado no Componente (Configuracoes.WebServices.Ambiente)';
   ACBRESOCIAL_CErroSignLib = 'Necessário DigestMethod Algorithm SHA256. use xsXmlSec ou xsLibXml2 na propriedade SSLXmlSignLib.';
   ACBRESOCIAL_CErroCryptLib = 'Necessário DigestMethod Algorithm SHA256. use cryOpenSSL ou cryWinCrypt na propriedade SSLCryptLib.';
 
-  eSocial_NameSpace = 'http://www.esocial.gov.br/schema/evt/';
-  eSocial_Versao = '/v02_04_01';
-  ModeloDF = 'eSocial';
+const
+  ACBRESOCIAL_VERSAO = '2.4.1';
+  ACBRESOCIAL_NAMESPACE = ' http://www.esocial.gov.br/servicos/empregador/lote/eventos/envio/v1_1_0';
+  ACBRESOCIAL_NAMESPACE_URI = 'http://www.esocial.gov.br/schema/evt/';
+  ACBRESOCIAL_VERSAO_URI = '/v02_04_01';
+  ACBRESOCIAL_MODELODF = 'eSocial';
 
 type
 
@@ -384,9 +385,9 @@ begin
   else
   begin
     case LayOutServico of
-      LayEnvLoteEventos:             URL := 'https://webservices.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
+      LayEnvLoteEventos:             URL := 'https://webservices.envio.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
       LayRetEnvLoteEventos:          URL := '';
-      LayConsResultProcessamento:    URL := 'https://webservices.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
+      LayConsResultProcessamento:    URL := 'https://webservices.consulta.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
       LayRetConsResultProcessamento: URL := '';
     end;
   end;

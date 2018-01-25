@@ -326,7 +326,7 @@ end;
 procedure TeSocialEvento.GerarCabecalho(Namespace: String);
 begin
   // Italo
-  TACBreSocial(FACBreSocial).SSL.NameSpaceURI := eSocial_NameSpace + Namespace + eSocial_Versao;
+  TACBreSocial(FACBreSocial).SSL.NameSpaceURI := ACBRESOCIAL_NAMESPACE_URI + Namespace + ACBRESOCIAL_VERSAO_URI;
 
   Gerador.wGrupo(ENCODING_UTF8, '', False);
   Gerador.wGrupo('eSocial xmlns="'+TACBreSocial(FACBreSocial).SSL.NameSpaceURI+'"');

@@ -49,32 +49,33 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/01/2018
--- Diversos --
+-- ACBreSocial --
 [*] Checagem dos Eventos: 2205 até 2299.
     Foi checado se todas as tag (opcional e obrigatória) estão sendo geradas
     bem como o tamanho minimo, máximo e ocorrências.
    Por: Italo Jurisato Junior
+[*] Limpeza e organização da unit do ACBreSocial. Por: Rafael Dias.
+[-] Corrigido a url de produção. Por: Rafael Dias.
 
 24/01/2018
--- Diversos --
+-- ACBreSocial --
 [*] Checagem dos Eventos: 2100 até 2200.
     Foi checado se todas as tag (opcional e obrigatória) estão sendo geradas
     bem como o tamanho minimo, máximo e ocorrências.
    Por: Italo Jurisato Junior
--- Diversos --
 [*] Checagem dos Eventos: 1040 até 1300.
     Foi checado se todas as tag (opcional e obrigatória) estão sendo geradas
     bem como o tamanho minimo, máximo e ocorrências.
    Por: Italo Jurisato Junior
 
 22/01/2018
--- Diversos --
+-- ACBreSocial --
 [*] Checagem dos Eventos: 1000, 1005, 1010, 1020, 1030 e 1035.
     Foi checado se todas as tag (opcional e obrigatória) estão sendo geradas
     bem como o tamanho minimo, máximo e ocorrências.
    Por: Italo Jurisato Junior
 
 19/01/2018
--- Diversos --
+-- ACBreSocial --
 [*] Inicio da compatibilização do componente com o Delphi 7.
    Por: Italo Jurisato Junior

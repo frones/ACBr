@@ -1691,6 +1691,13 @@ begin
               CIDE.vAliqProd := StringToFloatDef(INIRec.ReadString( sSecao,'vAliqProd',''),0) ;
               CIDE.vCIDE     := StringToFloatDef(INIRec.ReadString( sSecao,'vCIDE'    ,''),0) ;
 
+              sSecao := 'encerrante'+IntToStrZero(I,3) ;
+              encerrante.nBico    := INIRec.ReadInteger( sSecao,'nBico'  ,0) ;
+              encerrante.nBomba   := INIRec.ReadInteger( sSecao,'nBomba' ,0) ;
+              encerrante.nTanque  := INIRec.ReadInteger( sSecao,'nTanque',0) ;
+              encerrante.vEncIni  := INIRec.ReadFloat( sSecao,'vEncIni',0) ;
+              encerrante.vEncFin  := INIRec.ReadFloat( sSecao,'vEncFin',0) ;
+
               sSecao := 'ICMSComb'+IntToStrZero(I,3) ;
               ICMS.vBCICMS   := StringToFloatDef(INIRec.ReadString( sSecao,'vBCICMS'  ,''),0) ;
               ICMS.vICMS     := StringToFloatDef(INIRec.ReadString( sSecao,'vICMS'    ,''),0) ;

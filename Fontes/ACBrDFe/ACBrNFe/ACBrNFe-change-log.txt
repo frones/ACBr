@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2018
+-- ACBrNFeNotasFiscais.pas --
+[*] Atualizado Leitura do arquivo .ini com tags que faltavam na sessão Combustivel 
+    (por: Jose M. S. Junior)
+
 24/01/2018
 -- ACBrDANFCeFortesFr --
 [*] Ajuste para que o calculo da altura da página, seja feito pelo próprio

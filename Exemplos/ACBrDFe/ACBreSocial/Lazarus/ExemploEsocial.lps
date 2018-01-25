@@ -2,9 +2,9 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="69">
+    <Units Count="71">
       <Unit0>
         <Filename Value="ExemploEsocial.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -19,8 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="3321"/>
-        <CursorPos Y="3341"/>
+        <TopLine Value="40"/>
+        <CursorPos X="3" Y="52"/>
         <UsageCount Value="204"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -133,18 +133,16 @@
       </Unit16>
       <Unit17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\ACBreSocialEventos.pas"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <CursorPos Y="114"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="32"/>
         <CursorPos X="61" Y="52"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit18>
       <Unit19>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_S1202.pas"/>
@@ -483,11 +481,10 @@
       </Unit66>
       <Unit67>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_S1295.pas"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="81"/>
         <CursorPos X="98" Y="48"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit67>
       <Unit68>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXmlCapicom.pas"/>
@@ -496,8 +493,27 @@
         <CursorPos Y="112"/>
         <UsageCount Value="10"/>
       </Unit68>
+      <Unit69>
+        <Filename Value="ufrmStatus.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="2" Y="6"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit69>
+      <Unit70>
+        <Filename Value="unit2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="Unit2"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="8" Y="29"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit70>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
         <Filename Value="uExemploEsocial.pas"/>
         <Caret Line="1751" TopLine="1719"/>
@@ -551,72 +567,19 @@
         <Caret Line="3418" TopLine="3390"/>
       </Position13>
       <Position14>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="190" Column="27" TopLine="173"/>
-      </Position14>
-      <Position15>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-      </Position15>
-      <Position16>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="52" Column="61" TopLine="19"/>
-      </Position16>
-      <Position17>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="68" Column="19" TopLine="35"/>
-      </Position17>
-      <Position18>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="81" Column="43" TopLine="48"/>
-      </Position18>
-      <Position19>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="103" Column="64" TopLine="71"/>
-      </Position19>
-      <Position20>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="127" Column="9" TopLine="94"/>
-      </Position20>
-      <Position21>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="145" Column="51" TopLine="112"/>
-      </Position21>
-      <Position22>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="162" Column="9" TopLine="129"/>
-      </Position22>
-      <Position23>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="202" Column="27" TopLine="170"/>
-      </Position23>
-      <Position24>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="203" Column="15" TopLine="171"/>
-      </Position24>
-      <Position25>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="245" Column="85" TopLine="214"/>
-      </Position25>
-      <Position26>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="248" Column="27" TopLine="216"/>
-      </Position26>
-      <Position27>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="249" Column="86" TopLine="217"/>
-      </Position27>
-      <Position28>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="308" Column="51" TopLine="275"/>
-      </Position28>
-      <Position29>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial2.0\eSocial_Periodicos.pas"/>
-        <Caret Line="310" Column="9" TopLine="277"/>
-      </Position29>
-      <Position30>
         <Filename Value="uExemploEsocial.pas"/>
         <Caret Line="3401" Column="20" TopLine="3390"/>
-      </Position30>
+      </Position14>
+      <Position15>
+        <Filename Value="uExemploEsocial.pas"/>
+        <Caret Line="3346" Column="26" TopLine="3321"/>
+      </Position15>
+      <Position16>
+        <Filename Value="uExemploEsocial.pas"/>
+      </Position16>
+      <Position17>
+        <Filename Value="unit2.pas"/>
+      </Position17>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

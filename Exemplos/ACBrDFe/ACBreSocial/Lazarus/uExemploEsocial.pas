@@ -1,73 +1,293 @@
-unit uExemploEsocial;
+{******************************************************************************}
+{ Projeto: Componente ACBreSocial                                              }
+{  Biblioteca multiplataforma de componentes Delphi para envio dos eventos do  }
+{ eSocial - http://www.esocial.gov.br/                                         }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
+{                                       Daniel Simoes de Almeida               }
+{                                       Andr√© Ferreira de Moraes               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
 
-{$mode objfpc}{$H+}
+{******************************************************************************
+|* Historico
+|*
+|* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
+|*  - Doa√ß√£o do componente para o Projeto ACBr
+******************************************************************************}
+{$I ACBr.inc}
+
+unit uExemploEsocial;
 
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ACBreSocial, eSocial_Conversao;
+  SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, IniFiles, StdCtrls, Buttons, DateUtils, Spin, ExtCtrls, ComCtrls,
+  ACBrDFe, ACBrUtil, ACBreSocial, ACBrMail,
+  pcnConversao;
+
+//  OleCtrls, SHDocVw,
 
 type
-
-  { TFExemploEsocial }
-
   TFExemploEsocial = class(TForm)
     ACBreSocial1: TACBreSocial;
-    btnGerar: TButton;
-    cbAviso: TComboBox;
+    Panel1: TPanel;
+    lblColaborador: TLabel;
+    lblPatrocinador: TLabel;
+    lblDoar1: TLabel;
+    lblDoar2: TLabel;
+    btnSalvarConfig: TBitBtn;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    PageControl4: TPageControl;
+    TabSheet3: TTabSheet;
+    lSSLLib: TLabel;
+    lCryptLib: TLabel;
+    lHttpLib: TLabel;
+    lXmlSign: TLabel;
+    gbCertificado: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    sbtnCaminhoCert: TSpeedButton;
+    Label25: TLabel;
+    sbtnGetCert: TSpeedButton;
+    sbtnListaCert: TSpeedButton;
+    edtCaminho: TEdit;
+    edtSenha: TEdit;
+    edtNumSerie: TEdit;
+    btnValidadeData: TButton;
+    btnNumSerie: TButton;
+    btnSubjectName: TButton;
+    btnCNPJ: TButton;
+    btnIssuerName: TButton;
+    GroupBox5: TGroupBox;
+    Edit1: TEdit;
+    btnSHA_RSA: TButton;
+    cbAssinar: TCheckBox;
+    btnHTTPS: TButton;
+    btnX509: TButton;
+    cbSSLLib: TComboBox;
+    cbCryptLib: TComboBox;
+    cbHttpLib: TComboBox;
+    cbXmlSignLib: TComboBox;
+    TabSheet4: TTabSheet;
+    GroupBox6: TGroupBox;
+    sbtnPathSalvar: TSpeedButton;
+    Label31: TLabel;
+    Label32: TLabel;
+    Label42: TLabel;
+    spPathSchemas: TSpeedButton;
+    edtPathLogs: TEdit;
+    ckSalvar: TCheckBox;
+    cbxAtualizarXML: TCheckBox;
+    cbxExibirErroSchema: TCheckBox;
+    edtFormatoAlerta: TEdit;
+    cbxRetirarAcentos: TCheckBox;
+    cbVersaoDF: TComboBox;
+    edtPathSchemas: TEdit;
+    TabSheet7: TTabSheet;
+    GroupBox7: TGroupBox;
+    Label6: TLabel;
+    lTimeOut: TLabel;
+    lSSLLib1: TLabel;
+    cbxVisualizar: TCheckBox;
+    cbUF: TComboBox;
+    rgTipoAmb: TRadioGroup;
+    cbxSalvarSOAP: TCheckBox;
+    seTimeOut: TSpinEdit;
+    cbSSLType: TComboBox;
+    gbProxy: TGroupBox;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    edtProxyHost: TEdit;
+    edtProxyPorta: TEdit;
+    edtProxyUser: TEdit;
+    edtProxySenha: TEdit;
+    gbxRetornoEnvio: TGroupBox;
+    Label36: TLabel;
+    Label37: TLabel;
+    Label38: TLabel;
+    cbxAjustarAut: TCheckBox;
+    edtTentativas: TEdit;
+    edtIntervalo: TEdit;
+    edtAguardar: TEdit;
+    TabSheet12: TTabSheet;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
+    Label24: TLabel;
+    edtEmitCNPJ: TEdit;
+    edtEmitIE: TEdit;
+    edtEmitRazao: TEdit;
+    edtEmitFantasia: TEdit;
+    edtEmitFone: TEdit;
+    edtEmitCEP: TEdit;
+    edtEmitLogradouro: TEdit;
+    edtEmitNumero: TEdit;
+    edtEmitComp: TEdit;
+    edtEmitBairro: TEdit;
+    edtEmitCodCidade: TEdit;
+    edtEmitCidade: TEdit;
+    edtEmitUF: TEdit;
+    TabSheet13: TTabSheet;
+    sbPatheSocial: TSpeedButton;
+    Label35: TLabel;
+    Label47: TLabel;
+    sbPathEvento: TSpeedButton;
+    cbxSalvarArqs: TCheckBox;
+    cbxPastaMensal: TCheckBox;
+    cbxAdicionaLiteral: TCheckBox;
+    cbxEmissaoPatheSocial: TCheckBox;
+    cbxSalvaPathEvento: TCheckBox;
+    cbxSepararPorCNPJ: TCheckBox;
+    edtPatheSocial: TEdit;
+    edtPathEvento: TEdit;
+    cbxSepararPorModelo: TCheckBox;
+    TabSheet14: TTabSheet;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    edtSmtpHost: TEdit;
+    edtSmtpPort: TEdit;
+    edtSmtpUser: TEdit;
+    edtSmtpPass: TEdit;
+    edtEmailAssunto: TEdit;
+    cbEmailSSL: TCheckBox;
+    mmEmailMsg: TMemo;
+    Panel2: TPanel;
+    GroupBox1: TGroupBox;
     cbS1000: TCheckBox;
-    cbS1005: TCheckBox;
     cbS1010: TCheckBox;
     cbS1020: TCheckBox;
     cbS1030: TCheckBox;
     cbS1040: TCheckBox;
-    cbS1050: TCheckBox;
-    cbS1060: TCheckBox;
-    cbS1070: TCheckBox;
     cbS1080: TCheckBox;
-    cbS1200: TCheckBox;
-    cbS1202: TCheckBox;
-    cbS1210: TCheckBox;
+    cbS2100: TCheckBox;
+    cbS1070: TCheckBox;
+    cbS1060: TCheckBox;
+    cbS1050: TCheckBox;
+    cbS1005: TCheckBox;
+    cbS1035: TCheckBox;
+    GroupBox3: TGroupBox;
     cbS1220: TCheckBox;
-    cbS1250: TCheckBox;
-    cbS1260: TCheckBox;
-    cbS1270: TCheckBox;
-    cbS1280: TCheckBox;
     cbS1298: TCheckBox;
     cbS1299: TCheckBox;
     cbS1300: TCheckBox;
-    cbS2100: TCheckBox;
-    cbS2190: TCheckBox;
+    cbS1280: TCheckBox;
+    cbS1270: TCheckBox;
+    cbS1250: TCheckBox;
+    cbS1260: TCheckBox;
+    cbS1200: TCheckBox;
+    cbS1210: TCheckBox;
+    cbS1202: TCheckBox;
+    cbS1207: TCheckBox;
+    cbS1295: TCheckBox;
+    GroupBox2: TGroupBox;
     cbS2200: TCheckBox;
-    cbS2205: TCheckBox;
-    cbS2206: TCheckBox;
-    cbS2210: TCheckBox;
     cbS2220: TCheckBox;
-    cbS2230: TCheckBox;
     cbS2240: TCheckBox;
-    cbS2241: TCheckBox;
+    cbS2210: TCheckBox;
     cbS2250: TCheckBox;
     cbS2298: TCheckBox;
+    cbAviso: TComboBox;
+    cbS3000: TCheckBox;
+    cbS4000: TCheckBox;
+    cbS4999: TCheckBox;
+    cbS2190: TCheckBox;
+    cbS2205: TCheckBox;
+    cbS2206: TCheckBox;
+    cbS2230: TCheckBox;
+    cbS2241: TCheckBox;
     cbS2299: TCheckBox;
     cbS2300: TCheckBox;
     cbS2306: TCheckBox;
     cbS2399: TCheckBox;
-    cbS3000: TCheckBox;
-    cbS4000: TCheckBox;
-    cbS4999: TCheckBox;
-    cbS1035: TCheckBox;
-    cbS1207: TCheckBox;
     cbS2400: TCheckBox;
-    cbS1295: TCheckBox;
-    GroupBox1: TGroupBox;
-    GroupBox2: TGroupBox;
-    GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
+    btnGerar: TButton;
+    OpenDialog1: TOpenDialog;
+    ACBrMail1: TACBrMail;
+
+
+
     procedure btnGerarClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+
+    procedure cbSSLLibChange(Sender: TObject);
+    procedure cbCryptLibChange(Sender: TObject);
+    procedure cbHttpLibChange(Sender: TObject);
+    procedure cbXmlSignLibChange(Sender: TObject);
+    procedure cbSSLTypeChange(Sender: TObject);
+    procedure sbtnCaminhoCertClick(Sender: TObject);
+    procedure sbtnListaCertClick(Sender: TObject);
+    procedure sbtnGetCertClick(Sender: TObject);
+    procedure btnValidadeDataClick(Sender: TObject);
+    procedure btnNumSerieClick(Sender: TObject);
+    procedure btnSubjectNameClick(Sender: TObject);
+    procedure btnCNPJClick(Sender: TObject);
+    procedure btnIssuerNameClick(Sender: TObject);
+    procedure btnSHA_RSAClick(Sender: TObject);
+    procedure btnHTTPSClick(Sender: TObject);
+    procedure btnX509Click(Sender: TObject);
+    procedure sbtnPathSalvarClick(Sender: TObject);
+    procedure spPathSchemasClick(Sender: TObject);
+    procedure sbPatheSocialClick(Sender: TObject);
+    procedure sbPathEventoClick(Sender: TObject);
+    procedure ACBreSocial1StatusChange(Sender: TObject);
+    procedure ACBreSocial1GerarLog(const ALogLine: String;
+      var Tratado: Boolean);
+    procedure lblColaboradorClick(Sender: TObject);
+    procedure lblPatrocinadorClick(Sender: TObject);
+    procedure lblDoar1Click(Sender: TObject);
+    procedure lblDoar2Click(Sender: TObject);
+
+    procedure lblMouseEnter(Sender: TObject);
+    procedure lblMouseLeave(Sender: TObject);
+    procedure btnSalvarConfigClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure PathClick(Sender: TObject);
   private
-    { private declarations }
+    { Private declarations }
+    //procedures eventos de tabela
     procedure GerareSocial1000;
     procedure GerareSocial1005;
     procedure GerareSocial1010;
@@ -80,10 +300,13 @@ type
     procedure GerareSocial1070;
     procedure GerareSocial1080;
     procedure GerareSocial2100;
+
+    //procedure eventos periodicos
     procedure GerareSocial1200;
     procedure GerareSocial1202;
     procedure GerareSocial1207;
     procedure GerareSocial1210;
+//    procedure GerareSocial1220;
     procedure GerareSocial1250;
     procedure GerareSocial1260;
     procedure GerareSocial1270;
@@ -92,6 +315,8 @@ type
     procedure GerareSocial1298;
     procedure GerareSocial1299;
     procedure GerareSocial1300;
+
+    //procedures eventos n√£o peri√≥dicos
     procedure GerareSocial2190;
     procedure GerareSocial2200;
     procedure GerareSocial2205;
@@ -110,8 +335,13 @@ type
     procedure GerareSocial2400;
     procedure GerareSocial3000;
     procedure GerareSocial4000;
+//    procedure GerareSocial4999;
+
+    procedure AtualizaSSLLibsCombo;
+    procedure GravarConfiguracao;
+    procedure LerConfiguracao;
   public
-    { public declarations }
+    { Public declarations }
   end;
 
 var
@@ -119,67 +349,81 @@ var
 
 implementation
 
+uses
+  TypInfo, blcksock, Math,
+  ACBrDFeConfiguracoes, ACBrDFeSSL,
+  Unit2,
+  eSocial_Conversao;
+
+//  Grids,
+
+const
+  SELDIRHELP = 1000;
+
 {$R *.lfm}
 
 { TFExemploEsocial }
 
 procedure TFExemploEsocial.GerareSocial1000;
 var
-  i: integer;
+  i: Integer;
 begin
+  ACBreSocial1.Eventos.Iniciais.S1000.Clear;
+
   for I := 0 to 2 do
   begin
     with ACBreSocial1.Eventos.Iniciais.S1000.Add do
     begin
       evtInfoEmpregador.id := '1';
-      //      evtInfoEmpregador.Versao := '2.0';
 
-      evtInfoEmpregador.IdeEvento.TpAmb := TpTpAmb(2);
+      evtInfoEmpregador.IdeEvento.TpAmb := taProducaoRestritaDadosFicticios;
       evtInfoEmpregador.IdeEvento.ProcEmi := TpProcEmi(0);
       evtInfoEmpregador.IdeEvento.VerProc := '1.0';
 
-      evtInfoEmpregador.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtInfoEmpregador.IdeEmpregador.TpInsc := tiCPF;
       evtInfoEmpregador.IdeEmpregador.NrInsc := '0123456789';
 
       evtInfoEmpregador.ModoLancamento := TModoLancamento(i);
       evtInfoEmpregador.InfoEmpregador.IdePeriodo.IniValid := '2015-05';
       evtInfoEmpregador.InfoEmpregador.IdePeriodo.FimValid := '2099-12';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.NmRazao := 'Empresa Teste';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.ClassTrib := '01';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.NatJurid := '0001';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndCoop := TpIndCoop(1);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndConstr := TpIndConstr(2);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndDesFolha := TpIndDesFolha(1);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndOptRegEletron :=
-        TpIndOptRegEletron(1);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.IndEtt := tpSimNao(1);
+      with evtInfoEmpregador.InfoEmpregador.InfoCadastro do
+      begin
+        NmRazao := 'Empresa Teste';
+        ClassTrib := ct01;
+        NatJurid := '0001';
+        IndCoop := TpIndCoop(1);
+        IndConstr := TpIndConstr(2);
+        IndDesFolha := TpIndDesFolha(1);
+        IndOptRegEletron := TpIndOptRegEletron(1);
+        IndEtt := tpSimNao(1);
+        nrRegEtt := '';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOp.nrSiafi := '12345';
+        InfoOp.nrSiafi := '12345';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOp.infoEnte.nmEnte := 'Ente federativo teste';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOp.infoEnte.uf := tpuf(ufSP);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOp.infoEnte.vrSubteto := 100.00;
+        InfoOp.infoEnte.nmEnte := 'Ente federativo teste';
+        InfoOp.infoEnte.uf := tpuf(ufSP);
+        InfoOp.infoEnte.vrSubteto := 100.00;
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.IdeMinLei := 'Sigla Min';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.NrCertif := '1111';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.DtEmisCertif := date;
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.DtVencCertif := date;
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.NrProtRenov := '10';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.DtProtRenov := date;
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.DtDou := date;
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.dadosIsencao.PagDou := '111';
+        dadosIsencao.IdeMinLei := 'Sigla Min';
+        dadosIsencao.NrCertif := '1111';
+        dadosIsencao.DtEmisCertif := date;
+        dadosIsencao.DtVencCertif := date;
+        dadosIsencao.NrProtRenov := '10';
+        dadosIsencao.DtProtRenov := date;
+        dadosIsencao.DtDou := date;
+        dadosIsencao.PagDou := '111';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.NmCtt := 'Contato 1';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.CpfCtt := '00000222220';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.FoneFixo := '34335856';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.FoneCel := '991524587';
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.Contato.email :=
-        'testecontato@testecontato.com';
+        Contato.NmCtt := 'Contato 1';
+        Contato.CpfCtt := '00000222220';
+        Contato.FoneFixo := '34335856';
+        Contato.FoneCel := '991524587';
+        Contato.email := 'testecontato@testecontato.com';
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoOrgInternacional.
-        IndAcordoIsenMulta := tpIndAcordoIsencaoMulta(1);
+        InfoOrgInternacional.IndAcordoIsenMulta := tpIndAcordoIsencaoMulta(1);
+      end;
 
+      evtInfoEmpregador.InfoEmpregador.InfoCadastro.SoftwareHouse.Clear;
 
       with evtInfoEmpregador.InfoEmpregador.InfoCadastro.SoftwareHouse.Add do
       begin
@@ -190,16 +434,14 @@ begin
         email := 'teste@teste.com';
       end;
 
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoComplementares.
-        SituacaoPJ.IndSitPJ :=
-        tpIndSitPJ(0);
-      evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoComplementares.
-        SituacaoPF.IndSitPF :=
-        tpIndSitPF(0);
+      with evtInfoEmpregador.InfoEmpregador.InfoCadastro.InfoComplementares do
+      begin
+        SituacaoPJ.IndSitPJ := tpIndSitPJ(0);
+        SituacaoPF.IndSitPF := tpIndSitPF(0);
+      end;
 
       evtInfoEmpregador.infoEmpregador.NovaValidade.IniValid := '2014-05';
       evtInfoEmpregador.infoEmpregador.novaValidade.FimValid := '2099-12';
-
     end;
   end;
 end;
@@ -208,6 +450,8 @@ procedure TFExemploEsocial.GerareSocial1005;
 var
 i : Integer;
 begin
+  ACBreSocial1.Eventos.Iniciais.S1005.Clear;
+
   for I := 0 to 2 do
   begin
     with ACBreSocial1.Eventos.Iniciais.S1005.Add do
@@ -215,22 +459,22 @@ begin
       evtTabEstab.id     := '1';
 //      evtTabEstab.Versao := '2.0';
 
-      evtTabEstab.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabEstab.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabEstab.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabEstab.IdeEvento.VerProc := '1.0';
 
-      evtTabEstab.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabEstab.IdeEmpregador.TpInsc := tiCPF;
       evtTabEstab.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabEstab.ModoLancamento  := TModoLancamento( i );
-      evtTabEstab.infoEstab.IdeEstab.tpInsc   := 1;
+      evtTabEstab.infoEstab.IdeEstab.tpInsc   := tiCNPJ;
       evtTabEstab.infoEstab.IdeEstab.nrInsc   := '012345678901234';
       evtTabEstab.infoEstab.IdeEstab.iniValid := '2015-05';
       evtTabEstab.infoEstab.IdeEstab.fimValid := '2099-12';
 
       evtTabEstab.infoEstab.DadosEstab.cnaePrep := '2015';
 
-      evtTabEstab.infoEstab.DadosEstab.aliqGilrat.AliqRat      := 1;
+      evtTabEstab.infoEstab.DadosEstab.aliqGilrat.AliqRat      := arat1;
       evtTabEstab.infoEstab.DadosEstab.aliqGilrat.Fap          := 1.5;
       evtTabEstab.infoEstab.DadosEstab.aliqGilrat.AliqRatAjust := 2.5;
 
@@ -263,11 +507,12 @@ begin
   end;
 end;
 
-
 procedure TFExemploEsocial.GerareSocial1010;
 var
 i : Integer;
 begin
+  ACBreSocial1.Eventos.Tabelas.S1010.Clear;
+
   for I := 0 to 2 do
   begin
     with ACBreSocial1.Eventos.Tabelas.S1010.Add do
@@ -275,11 +520,11 @@ begin
       evtTabRubrica.id     := '1';
 //      evtTabRubrica.Versao := '2.0';
 
-      evtTabRubrica.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabRubrica.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabRubrica.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabRubrica.IdeEvento.VerProc := '1.0';
 
-      evtTabRubrica.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabRubrica.IdeEmpregador.TpInsc := tiCPF;
       evtTabRubrica.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabRubrica.ModoLancamento  := TModoLancamento( i );
@@ -296,11 +541,9 @@ begin
       evtTabRubrica.infoRubrica.DadosRubrica.codIncIRRF := tpCodIncIRRF(1);
       evtTabRubrica.infoRubrica.DadosRubrica.codIncFGTS := tpCodIncFGTS(1);
       evtTabRubrica.infoRubrica.DadosRubrica.codIncSIND := tpCodIncSIND(1);
-      evtTabRubrica.infoRubrica.DadosRubrica.RepDSR     := tpSimNao(1);
-      evtTabRubrica.infoRubrica.DadosRubrica.Rep13      := tpSimNao(1);
-      evtTabRubrica.infoRubrica.DadosRubrica.RepFerias  := tpSimNao(1);
-      evtTabRubrica.infoRubrica.DadosRubrica.repAviso   := tpSimNao(1);
       evtTabRubrica.infoRubrica.DadosRubrica.observacao := 'Rubrica Teste';
+
+      evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoCP.Clear;
 
       with evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoCP.add do
       begin
@@ -309,29 +552,33 @@ begin
         codSusp := '1';
       end;
 
+      evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoIRRF.Clear;
+
       with evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoIRRF.add do
       begin
         nrProc := '1020';
         codSusp := '2';
       end;
 
+      evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoFGTS.Clear;
+
       with evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoFGTS.add do
       begin
         nrProc := '50740';
-        codSusp := '3';
       end;
+
+      evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoSIND.Clear;
 
       with evtTabRubrica.infoRubrica.DadosRubrica.IdeProcessoSIND.add do
       begin
         nrProc := '50';
-        codSusp := '4';
       end;
 
       if (EvtTabRubrica.ModoLancamento = mlAlteracao) then
-        begin
-          evtTabRubrica.InfoRubrica.novaValidade.IniValid := '2015-05';
-          evtTabRubrica.InfoRubrica.novaValidade.FimValid := '2099-12';
-        end;
+      begin
+        evtTabRubrica.InfoRubrica.novaValidade.IniValid := '2015-05';
+        evtTabRubrica.InfoRubrica.novaValidade.FimValid := '2099-12';
+      end;
     end;
   end;
 end;
@@ -347,11 +594,11 @@ begin
       evtTabLotacao.id     := '1';
 //      evtTabLotacao.Versao := '2.0';
 
-      evtTabLotacao.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabLotacao.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabLotacao.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabLotacao.IdeEvento.VerProc := '1.0';
 
-      evtTabLotacao.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabLotacao.IdeEmpregador.TpInsc := tiCPF;
       evtTabLotacao.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabLotacao.ModoLancamento  := TModoLancamento( i );
@@ -404,11 +651,11 @@ begin
       evtTabCargo.id     := '1';
  //     evtTabCargo.Versao := '2.0';
 
-      evtTabCargo.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabCargo.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabCargo.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabCargo.IdeEvento.VerProc := '1.0';
 
-      evtTabCargo.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabCargo.IdeEmpregador.TpInsc := tiCPF;
       evtTabCargo.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabCargo.ModoLancamento := TModoLancamento( i );
@@ -445,11 +692,11 @@ begin
       evtTabCarreira.id := '1';
  //     evtTabCargo.Versao := '2.0';
 
-      evtTabCarreira.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabCarreira.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabCarreira.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabCarreira.IdeEvento.VerProc := '1.0';
 
-      evtTabCarreira.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabCarreira.IdeEmpregador.TpInsc := tiCPF;
       evtTabCarreira.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabCarreira.ModoLancamento := TModoLancamento( i );
@@ -480,11 +727,11 @@ begin
       evtTabFuncao.id     := '1';
 //      evtTabFuncao.Versao := '2.0';
 
-      evtTabFuncao.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabFuncao.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabFuncao.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabFuncao.IdeEvento.VerProc := '1.0';
 
-      evtTabFuncao.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabFuncao.IdeEmpregador.TpInsc := tiCPF;
       evtTabFuncao.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabFuncao.ModoLancamento := TModoLancamento( i );
@@ -513,11 +760,11 @@ begin
       evtTabHorContratual.id     := '1';
 //      evtTabHorContratual.Versao := '2.0';
 
-      evtTabHorContratual.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabHorContratual.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabHorContratual.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabHorContratual.IdeEvento.VerProc := '1.0';
 
-      evtTabHorContratual.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabHorContratual.IdeEmpregador.TpInsc := tiCPF;
       evtTabHorContratual.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabHorContratual.ModoLancamento := TModoLancamento( i );
@@ -565,11 +812,11 @@ begin
       EvtTabAmbiente.id     := '1';
 //      EvtTabAmbiente.Versao := '2.0';
 
-      EvtTabAmbiente.IdeEvento.TpAmb   := TpTpAmb(2);
+      EvtTabAmbiente.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       EvtTabAmbiente.IdeEvento.ProcEmi := TpProcEmi(0);
       EvtTabAmbiente.IdeEvento.VerProc := '1.0';
 
-      EvtTabAmbiente.IdeEmpregador.TpInsc := tpTpInsc(1);
+      EvtTabAmbiente.IdeEmpregador.TpInsc := tiCPF;
       EvtTabAmbiente.IdeEmpregador.NrInsc := '0123456789';
 
       EvtTabAmbiente.ModoLancamento := TModoLancamento( i );
@@ -610,11 +857,11 @@ begin
       evtTabProcesso.id     := '1';
 //      evtTabProcesso.Versao := '2.0';
 
-      evtTabProcesso.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabProcesso.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabProcesso.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabProcesso.IdeEvento.VerProc := '1.0';
 
-      evtTabProcesso.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabProcesso.IdeEmpregador.TpInsc := tiCPF;
       evtTabProcesso.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabProcesso.ModoLancamento := TModoLancamento( i );
@@ -657,11 +904,11 @@ begin
       evtTabOperPortuario.id     := '1';
 //      evtTabOperPortuario.Versao := '2.0';
 
-      evtTabOperPortuario.IdeEvento.TpAmb   := TpTpAmb(2);
+      evtTabOperPortuario.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
       evtTabOperPortuario.IdeEvento.ProcEmi := TpProcEmi(0);
       evtTabOperPortuario.IdeEvento.VerProc := '1.0';
 
-      evtTabOperPortuario.IdeEmpregador.TpInsc := tpTpInsc(1);
+      evtTabOperPortuario.IdeEmpregador.TpInsc := tiCPF;
       evtTabOperPortuario.IdeEmpregador.NrInsc := '0123456789';
 
       evtTabOperPortuario.ModoLancamento := TModoLancamento( i );
@@ -670,7 +917,7 @@ begin
       evtTabOperPortuario.InfoOperPortuario.IdeOperPortuario.iniValid        := '2015-05';
       evtTabOperPortuario.InfoOperPortuario.IdeOperPortuario.fimValid        := '2099-12';
 
-      evtTabOperPortuario.InfoOperPortuario.DadosOperPortuario.aliqRat      := 5;
+      evtTabOperPortuario.InfoOperPortuario.DadosOperPortuario.aliqRat      := arat1;
       evtTabOperPortuario.InfoOperPortuario.DadosOperPortuario.fap          := 0.5;
       evtTabOperPortuario.InfoOperPortuario.DadosOperPortuario.aliqRatAjust := 5.5;
 
@@ -689,11 +936,11 @@ begin
 
     EvtCadInicial.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtCadInicial.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtCadInicial.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtCadInicial.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtCadInicial.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtCadInicial.IdeEvento.VerProc  := '1.0';
 
-    EvtCadInicial.IdeEmpregador.TpInsc := tpTpInsc(1);
+    EvtCadInicial.IdeEmpregador.TpInsc := tiCPF;
     EvtCadInicial.IdeEmpregador.NrInsc := '0123456789';
 
     EvtCadInicial.Trabalhador.CpfTrab   := '54564654564';
@@ -768,31 +1015,29 @@ begin
     EvtCadInicial.Trabalhador.InfoDeficiencia.DefAuditiva    := tpNao;
     EvtCadInicial.Trabalhador.InfoDeficiencia.DefMental      := tpNao;
     EvtCadInicial.Trabalhador.InfoDeficiencia.DefIntelectual := tpNao;
-    EvtCadInicial.Trabalhador.InfoDeficiencia.ReabReadap     := tpSimNao(tpSim);
+    EvtCadInicial.Trabalhador.InfoDeficiencia.ReabReadap     := tpSim;
     EvtCadInicial.Trabalhador.InfoDeficiencia.infoCota       := tpNao;
     EvtCadInicial.Trabalhador.InfoDeficiencia.Observacao     := 'sem deficiencia';
 
     with EvtCadInicial.Trabalhador.Dependente.Add do
     begin
-      tpDep    := tpTpDep(tdConjuge);
+      tpDep    := tdConjuge;
       nmDep    := 'Dependente 1';
       dtNascto := Date;
       cpfDep   := '57548758778';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
-      depPlan  := tpSim;
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao;
     end;
 
     with EvtCadInicial.Trabalhador.Dependente.Add do
     begin
-      tpDep    := tpTpDep(tdFilhoOuEnteadoAte21Anos);
+      tpDep    := tdFilhoOuEnteadoAte21Anos; 
       nmDep    := 'Dependente 2';
       dtNascto := Date;
       cpfDep   := '57548758778';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
-      depPlan  := tpSim;
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao;
     end;
 
@@ -819,18 +1064,18 @@ begin
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.FGTS.DtOpcFGTS := Date;
 
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.hipLeg := 1;
-    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr := 'ProduÁ„o de panetones para o natal';
+    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr := 'Produ√ß√£o de panetones para o natal';
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.tpinclContr := tpInclContr(0);
 
-    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.TpInsc := tpTpInsc(1);
+    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.TpInsc := tiCPF;
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.NrInsc := '564564656';
-    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.TpInsc := tpTpInsc(1);
+    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.TpInsc := tiCPF;
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.NrInsc := '444564656';
 
     with EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTrabSubstituido.Add do
       CpfTrabSubst := '12345678901';
 
-    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := tpTpInsc(1);
+    EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := tiCPF;
     EvtCadInicial.Vinculo.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := '233564656';
 
     //Enviar apenas um tipo de regime
@@ -856,11 +1101,11 @@ begin
     EvtCadInicial.Vinculo.InfoContrato.Duracao.TpContr := tpTpContr(1);
     EvtCadInicial.Vinculo.InfoContrato.Duracao.dtTerm  := Date;
 
-    EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabGeral.TpInsc   := tiCNPJ;
+    EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabGeral.TpInsc   := tiCPF;
     EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabGeral.NrInsc   := '213864656';
     EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabGeral.DescComp := 'Descricao logal geral teste';
 
-//    Informar apenas para trabalhador domÈstico
+//    Informar apenas para trabalhador dom√©stico
 //    EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabDom.TpLograd    := '123';
 //    EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabDom.DscLograd   := 'LOCAL DOMESTICO';
 //    EvtCadInicial.Vinculo.InfoContrato.LocalTrabalho.LocalTrabDom.NrLograd    := '111';
@@ -873,7 +1118,7 @@ begin
     EvtCadInicial.Vinculo.InfoContrato.HorContratual.QtdHrsSem := 44;
     EvtCadInicial.Vinculo.InfoContrato.HorContratual.TpJornada := tpTpJornada(1);
     EvtCadInicial.Vinculo.InfoContrato.HorContratual.DscTpJorn := 'horario contratual';
-    EvtCadInicial.Vinculo.InfoContrato.HorContratual.tmpParc := tpNao;
+    EvtCadInicial.Vinculo.InfoContrato.HorContratual.tmpParc := tpNaoeTempoParcial;
 
     with EvtCadInicial.Vinculo.InfoContrato.HorContratual.horario.Add do
     begin
@@ -889,10 +1134,12 @@ begin
 
     with EvtCadInicial.Vinculo.InfoContrato.FiliacaoSindical.Add do
       CnpjSindTrab := '45321452000145';
+
     EvtCadInicial.Vinculo.InfoContrato.AlvaraJudicial.NrProcJud      := '123';
+
     EvtCadInicial.Vinculo.SucessaoVinc.cnpjEmpregAnt := '12354654000155';
     EvtCadInicial.Vinculo.SucessaoVinc.MatricAnt     := '123';
-    EvtCadInicial.Vinculo.SucessaoVinc.DtIniVinculo  := Date;
+    EvtCadInicial.Vinculo.SucessaoVinc.dtTransf  := Date;
     EvtCadInicial.Vinculo.SucessaoVinc.Observacao    := 'transferido';
 
     evtCadInicial.vinculo.Afastamento.DtIniAfast := Date;
@@ -909,7 +1156,7 @@ begin
 //      evtRemun.versao := '2.0';
 
     evtRemun.ideEvento.indRetif    := ireOriginal;
-    //evtRemun.ideEvento.NrRecibo  := '4564654'; Numero do recibo que ser· retificado.
+    //evtRemun.ideEvento.NrRecibo  := '4564654'; Numero do recibo que ser√° retificado.
     evtRemun.ideEvento.IndApuracao := tpIndApuracao(iapuMensal);
     evtRemun.ideEvento.perApur     := '052015';
     evtRemun.ideEvento.TpAmb       := taProducao;
@@ -924,8 +1171,8 @@ begin
 
     evtRemun.ideTrabalhador.infoMV.indMV := imvDescontadaempregador;
 
-    {Os Grupos abaixo s„o opcionais
-    O grupo abaixocorresponde a funcion·rios que tenham dois empregos em empresas diferentes }
+    {Os Grupos abaixo s√£o opcionais
+    O grupo abaixocorresponde a funcion√°rios que tenham dois empregos em empresas diferentes }
     with evtRemun.ideTrabalhador.infoMV.remunOutrEmpr.add do
     begin
       tpInsc     := tiCNPJ;
@@ -934,9 +1181,9 @@ begin
       vlrRemunOE := 1230.10;
     end;
 
-   //o grupo abaixo corresponde apenas a trabalhadores cuja categoria n„o est· sujeita ao evento de admiss„o
-   //   ou TSV-inÌcio
-    evtRemun.ideTrabalhador.infoComplem.nmTrab       := 'Jo„o das Neves';
+   //o grupo abaixo corresponde apenas a trabalhadores cuja categoria n√£o est√° sujeita ao evento de admiss√£o
+   //   ou TSV-in√≠cio
+    evtRemun.ideTrabalhador.infoComplem.nmTrab       := 'Jo√£o das Neves';
     evtRemun.ideTrabalhador.infoComplem.dtNascto     := Date;
     evtRemun.ideTrabalhador.infoComplem.codCBO       := '000001';
     evtRemun.ideTrabalhador.infoComplem.natAtividade := navUrbano;
@@ -944,16 +1191,18 @@ begin
 
     evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.cnpjEmpregAnt := '12345678987654';
     evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.matricAnt := '123';
-    evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.dtIniVinculo := now;
+    evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.dtAdm := now;
     evtRemun.ideTrabalhador.infoComplem.sucessaoVinc.observacao := 'obs sucessao vinc';
-    //os dados abaixo sÛ devem ser informados em caso do processo existir e houver decis„o que incida sobre as
-    //  contribuiÁıes
+
+    //os dados abaixo s√≥ devem ser informados em caso do processo existir e houver decis√£o que incida sobre as
+    //  contribui√ß√µes
     with evtRemun.ideTrabalhador.procJudTrab.Add do
     begin
-      tpTrib := tptrevidenciaria;
+      tpTrib := tptPrevidenciaria;
       nrProcJud := '95135703320156150258';
       codSusp := 1;
     end;
+
     with evtRemun.dmDev.add do
     begin
       ideDmDev := '1';
@@ -964,6 +1213,7 @@ begin
         nrInsc     := '012345678987654';
         codLotacao := 'SACI54321';
         qtdDiasAv  := 22;
+        
         with remunPerApur.Add do
         begin
           matricula := 'A1234';
@@ -977,6 +1227,7 @@ begin
             vrUnit  := 3296.35;
             vrRubr  := 3330.30;
           end;
+
           with infoSaudeColet.detOper.Add do
           begin
             cnpjOper := '01234567898765';
@@ -984,9 +1235,9 @@ begin
             vrPgTit  := 1.50;
             with detPlano.Add do
             begin
-              tpDep    := '03';
+              tpDep    := tdConjuge;
               cpfDep   := '01234567898';
-              nmDep    := 'JosÈ das Areias';
+              nmDep    := 'Jos√© das Areias';
               dtNascto := Date;
               vlrPgDep := 0.75;
             end;
@@ -995,13 +1246,14 @@ begin
           infoAgNocivo.grauExp := ge1;
         end;
       end;
+
       with infoPerAnt.ideADC.add do
       begin
         dtAcConv := now;
         tpAcConv := tacLegislacaoFederalEstadualMunicipalDistrital;
         dtEfAcConv := now;
         compAcConv := '2017-01';
-        dsc := 'DissÌdio';
+        dsc := 'Diss√≠dio';
         with idePeriodo.Add do
         begin
           perRef := '201504';
@@ -1042,7 +1294,7 @@ begin
 //      evtRemun.versao := '2.0';
 
     EvtRmnRPPS.ideEvento.indRetif    := ireOriginal;
-    //evtRemun.ideEvento.NrRecibo  := '4564654'; Numero do recibo que ser· retificado.
+    //evtRemun.ideEvento.NrRecibo  := '4564654'; Numero do recibo que ser√° retificado.
     EvtRmnRPPS.ideEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtRmnRPPS.ideEvento.perApur     := '052015';
     EvtRmnRPPS.ideEvento.TpAmb       := taProducao;
@@ -1056,10 +1308,10 @@ begin
     EvtRmnRPPS.ideTrabalhador.nisTrab := '09876543210';
     EvtRmnRPPS.ideTrabalhador.qtdDepFP := 0;
 
-    //os dados abaixo sÛ devem ser informados em caso do processo existir e houver decis„o que incida sobre as  contribuiÁıes
+    //os dados abaixo s√≥ devem ser informados em caso do processo existir e houver decis√£o que incida sobre as  contribui√ß√µes
     with EvtRmnRPPS.ideTrabalhador.procJudTrab.Add do
     begin
-      tpTrib := tptrevidenciaria;
+      tpTrib := tptPrevidenciaria;
       nrProcJud := '95135703320156150258';
       codSusp := 1;
     end;
@@ -1092,15 +1344,16 @@ begin
             vrPgTit  := 1.50;
             with detPlano.Add do
             begin
-              tpDep    := '03';
+              tpDep    := tdConjuge;
               cpfDep   := '01234567898';
               dtNascto := now;
-              nmDep    := 'JosÈ das Areias';
+              nmDep    := 'Jos√© das Areias';
               vlrPgDep := 0.75;
             end;
           end;
         end;
       end;
+
       with infoPerAnt.ideADC.add do
       begin
         dtLei := now;
@@ -1145,11 +1398,11 @@ begin
     evtBenPrRP.IdeEvento.NrRecibo := '65.5454.987798798798';
     evtBenPrRP.IdeEvento.IndApuracao:= iapuMensal;
     evtBenPrRP.IdeEvento.perApur := '2017-05';
-    evtBenPrRP.IdeEvento.TpAmb    := TpTpAmb(2);
+    evtBenPrRP.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     evtBenPrRP.IdeEvento.ProcEmi  := TpProcEmi(0);
     evtBenPrRP.IdeEvento.VerProc  := '1.0';
 
-    evtBenPrRP.IdeEmpregador.TpInsc := tpTpInsc(1);
+    evtBenPrRP.IdeEmpregador.TpInsc := tiCPF;
     evtBenPrRP.IdeEmpregador.NrInsc := '0123456789';
 
     evtBenPrRP.ideBenef.cpfBenef := '88888888888';
@@ -1177,8 +1430,8 @@ begin
 end;
 
 procedure TFExemploEsocial.GerareSocial1210;
-var
-  I : Integer;
+//var
+//  I : Integer;
 begin
   with AcbreSocial1.Eventos.Periodicos.S1210.Add do
   begin
@@ -1186,7 +1439,7 @@ begin
 //      EvtPgtos.versao := '2.0';
 
     EvtPgtos.IdeEvento.indRetif := ireOriginal;
-//    EvtPgtos.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; - obrigatÛrio se indRetif = ireRetificacao.
+//    EvtPgtos.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; - obrigat√≥rio se indRetif = ireRetificacao.
     EvtPgtos.IdeEvento.IndApuracao := iapuMensal;
     EvtPgtos.IdeEvento.perApur := '052015';
     EvtPgtos.IdeEvento.TpAmb := taProducao;
@@ -1203,8 +1456,8 @@ begin
       DtPgto := StrToDate('10/06/2015');
       tpPgto := tpPgtoFl;
       IndResBr := tpNao;
-      //-OS GRUPOS ABAIXO S√O OPCIONAIS
-      //grupo detPgtoFl agora È um collection
+      //-OS GRUPOS ABAIXO S√ÉO OPCIONAIS
+      //grupo detPgtoFl agora √© um collection
       with detPgtoFl.Add do
       begin
         perRef := '052015';
@@ -1224,7 +1477,7 @@ begin
           begin
             cpfBenef := '12345698745';
             dtNasctoBenef := now;
-            nmBenefic := 'Benefici·rio da pens„o';
+            nmBenefic := 'Benefici√°rio da pens√£o';
             vlrPensao := 556.32;
           end;
         end;
@@ -1278,7 +1531,7 @@ begin
           begin
             cpfBenef := '44455588899';
             dtNasctoBenef := now;
-            nmBenefic := 'Benefici·rio de Pens„o nas FÈrias';
+            nmBenefic := 'Benefici√°rio de Pens√£o nas F√©rias';
             vlrPensao := 250.32;
           end;
         end;
@@ -1318,14 +1571,14 @@ begin
     EvtAqProd.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtAqProd.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtAqProd.IdeEvento.perApur     := '2015-06';
-    EvtAqProd.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtAqProd.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtAqProd.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtAqProd.IdeEvento.VerProc     := '1.0';
 
-    EvtAqProd.IdeEmpregador.TpInsc := tpTpInsc(1);
+    EvtAqProd.IdeEmpregador.TpInsc := tiCPF;
     EvtAqProd.IdeEmpregador.NrInsc := '0123456789';
 
-    EvtAqProd.InfoAquisProd.IdeEstabAdquir.tpInscAdq := tpTpInsc(0);
+    EvtAqProd.InfoAquisProd.IdeEstabAdquir.tpInscAdq := tiCNPJ;
     EvtAqProd.InfoAquisProd.IdeEstabAdquir.nrInscAdq := '12345678910001';
 
     with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Add do
@@ -1335,7 +1588,7 @@ begin
 
       with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0].IdeProdutor.Add do
       begin
-        tpInscProd  := tpTpInsc(0);
+        tpInscProd  := tiCNPJ;
         nrInscProd  := '98765432100015';
         vlrBruto    := 4000.54;
         vrCPDescPR  := 3850.32;
@@ -1399,7 +1652,7 @@ begin
 
       with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0].IdeProdutor.Add do
       begin
-        tpInscProd  := tpTpInsc(0);
+        tpInscProd  := tiCNPJ;
         nrInscProd  := '98765432100015';
         vlrBruto    := 4000.54;
         vrCPDescPR  := 3850.32;
@@ -1475,11 +1728,11 @@ begin
     EvtComProd.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtComProd.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtComProd.IdeEvento.perApur     := '2015-06';
-    EvtComProd.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtComProd.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtComProd.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtComProd.IdeEvento.VerProc     := '1.0';
 
-    EvtComProd.IdeEmpregador.TpInsc := tpTpInsc(1);
+    EvtComProd.IdeEmpregador.TpInsc := tiCPF;
     EvtComProd.IdeEmpregador.NrInsc := '0123456789';
 
     EvtComProd.InfoComProd.IdeEstabel.nrInscEstabRural := '123456789';
@@ -1491,7 +1744,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1509,7 +1762,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1517,7 +1770,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1525,7 +1778,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[0].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1549,7 +1802,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[1].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1557,7 +1810,7 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[1].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1565,15 +1818,14 @@ begin
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[1].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
-        //vrRetPR  := 9999.99;--excluido na vers„o 2.1
       end;
 
       with EvtComProd.InfoComProd.IdeEstabel.TpComerc.Items[1].IdeAdquir.Add do
       begin
-        tpInsc   := tpTpInsc(0);
+        tpInsc   := tiCNPJ;
         nrInsc   := '99999999999999';
         vrComerc := 8888.88;
         vrRetPR  := 9999.99;
@@ -1633,16 +1885,16 @@ begin
     EvtContratAvNP.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtContratAvNP.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtContratAvNP.IdeEvento.perApur     := '2015-06';
-    EvtContratAvNP.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtContratAvNP.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtContratAvNP.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtContratAvNP.IdeEvento.VerProc     := '1.0';
 
-    EvtContratAvNP.IdeEmpregador.TpInsc := tpTpInsc(1);
+    EvtContratAvNP.IdeEmpregador.TpInsc := tiCNPJ;
     EvtContratAvNP.IdeEmpregador.NrInsc := '0123456789';
 
     with EvtContratAvNP.RemunAvNP.Add do
     begin
-      tpInsc   := tpTpInscEstab(0);
+      tpInsc   := tiCNPJ;
       nrInsc   := '98765432100015';
       codLotacao := '1';
       vrBcCp00 := 650.65;
@@ -1656,7 +1908,7 @@ begin
 
     with EvtContratAvNP.RemunAvNP.Add do
     begin
-      tpInsc   := tpTpInscEstab(1);
+      tpInsc   := tpTpInsc(1);
       nrInsc   := '65432198700015';
       codLotacao := '1';
       vrBcCp00 := 650.65;
@@ -1671,7 +1923,7 @@ begin
 
     with EvtContratAvNP.RemunAvNP.Add do
     begin
-      tpInsc   := tpTpInscEstab(2);
+      tpInsc   := tpTpInsc(2);
       nrInsc   := '98765432100015';
       codLotacao := '1';
       vrBcCp00 := 650.65;
@@ -1685,7 +1937,7 @@ begin
 
     with EvtContratAvNP.RemunAvNP.Add do
     begin
-      tpInsc   := tpTpInscEstab(1);
+      tpInsc   := tpTpInsc(1);
       nrInsc   := '11111111111111';
       codLotacao := '1';
       vrBcCp00 := 650.65;
@@ -1710,7 +1962,7 @@ begin
     EvtInfoComplPer.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtInfoComplPer.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtInfoComplPer.IdeEvento.perApur     := '2015-06';
-    EvtInfoComplPer.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtInfoComplPer.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtInfoComplPer.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtInfoComplPer.IdeEvento.VerProc     := '1.0';
 
@@ -1747,7 +1999,7 @@ begin
     evtTotConting.IdeEvento.NrRecibo    := '65.5454.987798798798';
     evtTotConting.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     evtTotConting.IdeEvento.perApur     := '2015-06';
-    evtTotConting.IdeEvento.TpAmb       := TpTpAmb(2);
+    evtTotConting.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     evtTotConting.IdeEvento.ProcEmi     := TpProcEmi(0);
     evtTotConting.IdeEvento.VerProc     := '1.0';
 
@@ -1771,7 +2023,7 @@ begin
 
     EvtReabreEvPer.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtReabreEvPer.IdeEvento.perApur     := '2015-06';
-    EvtReabreEvPer.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtReabreEvPer.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtReabreEvPer.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtReabreEvPer.IdeEvento.VerProc     := '1.0';
 
@@ -1791,7 +2043,7 @@ begin
     EvtFechaEvPer.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtFechaEvPer.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtFechaEvPer.IdeEvento.perApur     := '2015-06';
-    EvtFechaEvPer.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtFechaEvPer.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtFechaEvPer.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtFechaEvPer.IdeEvento.VerProc     := '1.0';
 
@@ -1824,7 +2076,7 @@ begin
     EvtContrSindPatr.IdeEvento.NrRecibo    := '65.5454.987798798798';
     EvtContrSindPatr.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtContrSindPatr.IdeEvento.perApur     := '2015-06';
-    EvtContrSindPatr.IdeEvento.TpAmb       := TpTpAmb(2);
+    EvtContrSindPatr.IdeEvento.TpAmb       := taProducaoRestritaDadosFicticios;
     EvtContrSindPatr.IdeEvento.ProcEmi     := TpProcEmi(0);
     EvtContrSindPatr.IdeEvento.VerProc     := '1.0';
 
@@ -1847,7 +2099,7 @@ begin
     EvtAdmPrelim.id     := '1';
 //    EvtAdmPrelim.Versao := '2.0';
 
-    EvtAdmPrelim.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtAdmPrelim.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtAdmPrelim.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtAdmPrelim.IdeEvento.VerProc  := '1.0';
 
@@ -1869,11 +2121,11 @@ begin
 
  //   EvtAdmissao.IdeEvento.indRetif := tpIndRetificacao(1);
     EvtAdmissao.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtAdmissao.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtAdmissao.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtAdmissao.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtAdmissao.IdeEvento.VerProc  := '1.0';
 
-    EvtAdmissao.IdeEmpregador.TpInsc  := tpTpInsc(0);
+    EvtAdmissao.IdeEmpregador.TpInsc  := tiCNPJ;
     EvtAdmissao.IdeEmpregador.NrInsc  := '12345678901234';
 
     EvtAdmissao.Trabalhador.CpfTrab   := '54564654564';
@@ -1949,31 +2201,29 @@ begin
     EvtAdmissao.Trabalhador.InfoDeficiencia.DefAuditiva    := tpNao;
     EvtAdmissao.Trabalhador.InfoDeficiencia.DefMental      := tpNao;
     EvtAdmissao.Trabalhador.InfoDeficiencia.DefIntelectual := tpNao;
-    EvtAdmissao.Trabalhador.InfoDeficiencia.ReabReadap     := tpSimNao(tpSim);
+    EvtAdmissao.Trabalhador.InfoDeficiencia.ReabReadap     := tpSim;
     EvtAdmissao.Trabalhador.InfoDeficiencia.infoCota       := tpNao;
     EvtAdmissao.Trabalhador.InfoDeficiencia.Observacao     := 'sem deficiencia';
 
     with EvtAdmissao.Trabalhador.Dependente.Add do
     begin
-      tpDep    := tpTpDep(tdConjuge);
+      tpDep    := tdConjuge;
       nmDep    := 'Dependente 1';
       dtNascto := Date;
       cpfDep   := '12345678901';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
-      depPlan  := tpNao;
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao;
     end;
 
     with EvtAdmissao.Trabalhador.Dependente.Add do
     begin
-      tpDep    := tpTpDep(tdFilhoOuEnteadoAte21Anos);
+      tpDep    := tdFilhoOuEnteadoAte21Anos;
       nmDep    := 'Dependente 2';
       dtNascto := Date;
       cpfDep   := '12345678901';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
-      depPlan  := tpNao;
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao;
     end;
 
@@ -2004,9 +2254,9 @@ begin
     EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr := 'teste';
     EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.tpinclContr := tpInclContr(0);
 
-    EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.TpInsc := tpTpInsc(0);
+    EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.TpInsc := tiCNPJ;
     EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.NrInsc := '12345678901234';
-    EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.TpInsc := tpTpInsc(0);
+    EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.TpInsc := tiCNPJ;
     EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTomadorServ.ideEstabVinc.NrInsc := '12345678901234';
 
     with EvtAdmissao.Vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTrabSubstituido.add do
@@ -2054,7 +2304,7 @@ begin
     EvtAdmissao.Vinculo.InfoContrato.HorContratual.QtdHrsSem := 44;
     EvtAdmissao.Vinculo.InfoContrato.HorContratual.TpJornada := tpTpJornada(1);
     EvtAdmissao.Vinculo.InfoContrato.HorContratual.DscTpJorn := 'horario contratual';
-    EvtAdmissao.Vinculo.InfoContrato.HorContratual.tmpParc := tpNao;
+    EvtAdmissao.Vinculo.InfoContrato.HorContratual.tmpParc := tpNaoeTempoParcial;
 
     with EvtAdmissao.Vinculo.InfoContrato.HorContratual.horario.Add do
     begin
@@ -2070,10 +2320,12 @@ begin
 
     with EvtAdmissao.Vinculo.InfoContrato.FiliacaoSindical.add do
       CnpjSindTrab := '12345678901234';
+
     EvtAdmissao.Vinculo.InfoContrato.AlvaraJudicial.NrProcJud      := '123';
+    
     EvtAdmissao.Vinculo.SucessaoVinc.cnpjEmpregAnt                 := '12345678901234';
     EvtAdmissao.Vinculo.SucessaoVinc.MatricAnt                     := '123';
-    EvtAdmissao.Vinculo.SucessaoVinc.DtIniVinculo                  := Date;
+    EvtAdmissao.Vinculo.SucessaoVinc.dtTransf                  := Date;
     EvtAdmissao.Vinculo.SucessaoVinc.Observacao                    := 'transferido';
 
     EvtAdmissao.Vinculo.afastamento.DtIniAfast := now;
@@ -2090,7 +2342,7 @@ begin
 
     EvtAltCadastral.IdeEvento.indRetif := tpIndRetificacao(1);
     EvtAltCadastral.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtAltCadastral.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtAltCadastral.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtAltCadastral.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtAltCadastral.IdeEvento.VerProc  := '1.0';
 
@@ -2164,31 +2416,29 @@ begin
     EvtAltCadastral.Trabalhador.InfoDeficiencia.DefAuditiva    := tpNao;
     EvtAltCadastral.Trabalhador.InfoDeficiencia.DefMental      := tpNao;
     EvtAltCadastral.Trabalhador.InfoDeficiencia.DefIntelectual := tpNao;
-    EvtAltCadastral.Trabalhador.InfoDeficiencia.ReabReadap     := tpSimNao(tpSim);
+    EvtAltCadastral.Trabalhador.InfoDeficiencia.ReabReadap     := tpSim;
     EvtAltCadastral.Trabalhador.InfoDeficiencia.infoCota       := tpNao;
     EvtAltCadastral.Trabalhador.InfoDeficiencia.Observacao     := 'sem deficiencia';
 
     with EvtAltCadastral.Trabalhador.Dependente.Add do
     begin
-      tpDep    := tpTpDep(tdConjuge);
+      tpDep    := tdConjuge;
       nmDep    := 'Dependente 1';
       dtNascto := Date;
       cpfDep   := '12345678901';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
-      depPlan  := tpSim;
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao;
     end;
 
     with EvtAltCadastral.Trabalhador.Dependente.Add do
     begin
-      tpDep    := tpTpDep(tdFilhoOuEnteadoAte21Anos);
+      tpDep    := tdFilhoOuEnteadoAte21Anos;
       nmDep    := 'Dependente 2';
       dtNascto := Date;
       cpfDep   := '12345678901';
-      depIRRF  := tpSimNao(tpSim);
-      depSF    := tpSimNao(tpNao);
-      depPlan  := tpSim;
+      depIRRF  := tpSim;
+      depSF    := tpNao;
       incTrab  := tpNao
     end;
 
@@ -2209,7 +2459,7 @@ begin
 //      EvtAltContratual.versao := '2.0';
 
       EvtAltContratual.IdeEvento.indRetif := ireOriginal;
-//    EvtAltContratual.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; ObrigatÛrio se indRetif = ireRetificacao;
+//    EvtAltContratual.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigat√≥rio se indRetif = ireRetificacao;
       EvtAltContratual.IdeEvento.TpAmb := taProducaoRestritaDadosFicticios;
       EvtAltContratual.IdeEvento.ProcEmi := peAplicEmpregador;
       EvtAltContratual.IdeEvento.VerProc := '1.0';
@@ -2223,7 +2473,7 @@ begin
 
       EvtAltContratual.AltContratual.dtALteracao := Date;
       EvtAltContratual.AltContratual.dtEf := now;
-      EvtAltContratual.AltContratual.dscAlt := 'descriÁ„o da alteraÁ„o';
+      EvtAltContratual.AltContratual.dscAlt := 'descri√ß√£o da altera√ß√£o';
 
       EvtAltContratual.AltContratual.Vinculo.TpRegTrab := trCLT;
       EvtAltContratual.AltContratual.Vinculo.TpRegPrev := rpRGPS;
@@ -2245,17 +2495,17 @@ begin
 
       EvtAltContratual.AltContratual.infoContrato.Remuneracao.VrSalFx := 780.00;
       EvtAltContratual.AltContratual.infoContrato.Remuneracao.UndSalFixo := sfPorMes;
-      EvtAltContratual.AltContratual.infoContrato.Remuneracao.DscSalVar := 'DescriÁ„o de sal·rio vari·vel, obrigatÛrio caso UndSalFixo for sfNaoAplicavel';
+      EvtAltContratual.AltContratual.infoContrato.Remuneracao.DscSalVar := 'Descri√ß√£o de sal√°rio vari√°vel, obrigat√≥rio caso UndSalFixo for sfNaoAplicavel';
 
       EvtAltContratual.AltContratual.infoContrato.Duracao.TpContr := PrazoIndeterminado;
-//    EvtAltContratual.AltContratual.infoContrato.Duracao.dtTerm  := Date; ObrigatÛrio se TpContr = PrazoDeterminado!
+//    EvtAltContratual.AltContratual.infoContrato.Duracao.dtTerm  := Date; Obrigat√≥rio se TpContr = PrazoDeterminado!
 
-      //LocalTrabGeral n„o deve ser preenchido no caso de trabalhador domÈstico.
+      //LocalTrabGeral n√£o deve ser preenchido no caso de trabalhador dom√©stico.
       EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabGeral.TpInsc := tiCNPJ;
       EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabGeral.NrInsc := '12345678901234';
-      EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabGeral.DescComp := 'DescriÁ„o complementar do local de trabalho.';
+      EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabGeral.DescComp := 'Descri√ß√£o complementar do local de trabalho.';
 
-      //LocalTrabDom - exclusivo para trabalhador domÈstico, indicando endereÁo onde exerce suas atividades
+      //LocalTrabDom - exclusivo para trabalhador dom√©stico, indicando endere√ßo onde exerce suas atividades
       (*EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.TpLograd    := '001';
       EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.DscLograd   := 'Rua das Hortencias';
       EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.NrLograd    := '12';
@@ -2266,9 +2516,9 @@ begin
       EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.Uf          := ufPr;*)
 
       EvtAltContratual.AltContratual.infoContrato.HorContratual.QtdHrsSem := 44;
-      EvtAltContratual.AltContratual.infoContrato.HorContratual.TpJornada := tjJornadaSemanalHorPadPorDiaSemanaFolgaFixa;
-      EvtAltContratual.AltContratual.infoContrato.HorContratual.DscTpJorn := 'DescriÁ„o do tipo de jornada, obrigatÛrio se tpJornada = tjDemaisTiposJornada';
-      EvtAltContratual.AltContratual.infoContrato.HorContratual.tmpParc := tpNao;
+      EvtAltContratual.AltContratual.infoContrato.HorContratual.TpJornada := tjDemaisTiposJornada;
+      EvtAltContratual.AltContratual.infoContrato.HorContratual.DscTpJorn := 'Descri√ß√£o do tipo de jornada, obrigat√≥rio se tpJornada = tjDemaisTiposJornada';
+      EvtAltContratual.AltContratual.infoContrato.HorContratual.tmpParc := tpNaoeTempoParcial;
 
 
       with EvtAltContratual.AltContratual.infoContrato.HorContratual.horario.Add do
@@ -2295,7 +2545,7 @@ begin
 
     EvtCAT.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtCAT.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtCAT.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtCAT.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtCAT.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtCAT.IdeEvento.VerProc  := '1.0';
 
@@ -2315,9 +2565,9 @@ begin
 
     EvtCAT.Cat.hrsTrabAntesAcid := '0400';
     EvtCAT.Cat.tpCat            := tpTpCat(0);
-    EvtCAT.Cat.indCatObito      := tpSimNao(tpNao);
+    EvtCAT.Cat.indCatObito      := tpNao;
     EvtCAT.Cat.dtOBito          := now;
-    EvtCAT.Cat.indComunPolicia  := tpSimNao(tpSim);
+    EvtCAT.Cat.indComunPolicia  := tpSim;
     EvtCAT.Cat.codSitGeradora   := 200004300;
     EvtCAT.Cat.iniciatCAT       := tpIniciatCAT(1);
     EvtCAT.Cat.observacao       := 'Teste';
@@ -2368,14 +2618,14 @@ begin
     EvtCAT.Cat.Atestado.codCNES       := '1234567';
     EvtCAT.Cat.Atestado.dtAtendimento := now;
     EvtCAT.Cat.Atestado.hrAtendimento := '1330';
-    EvtCAT.Cat.Atestado.indInternacao := tpSimNao(tpSim);
+    EvtCAT.Cat.Atestado.indInternacao := tpSim;
     EvtCAT.Cat.Atestado.durTrat       := 5;
-    EvtCAT.Cat.Atestado.indAfast      := tpSimNao(tpSim);
+    EvtCAT.Cat.Atestado.indAfast      := tpSim;
     EvtCAT.Cat.Atestado.dscLesao      := 1;
     EvtCAT.Cat.Atestado.dscCompLesao  := 'Descricao complementar';
     EvtCAT.Cat.Atestado.diagProvavel  := 'Diagnostico teste';
     EvtCAT.Cat.Atestado.codCID        := '1234';
-    EvtCAT.Cat.Atestado.observacao    := 'ObservaÁ„o teste';
+    EvtCAT.Cat.Atestado.observacao    := 'Observa√ß√£o teste';
 
     EvtCAT.Cat.Atestado.Emitente.nmEmit := 'Emitente Teste';
     EvtCAT.Cat.Atestado.Emitente.ideOC  := tpIdeOC(1);
@@ -2415,7 +2665,7 @@ begin
     begin
       DtExm := Date;
       procRealizado := 123;
-      obsProc := 'observaÁ„o do procedimento realizado';
+      obsProc := 'observa√ß√£o do procedimento realizado';
       interprExm := tpInterprExm(0);
       ordExame := tpOrdExame(0);
       dtIniMonit := now;
@@ -2431,7 +2681,7 @@ begin
     begin
       DtExm := Date + 1;
       procRealizado := 456;
-      obsProc := 'observaÁ„o do procedimento realizado';
+      obsProc := 'observa√ß√£o do procedimento realizado';
       ordExame := tpOrdExame(0);
       dtIniMonit := now;
       dtFimMonit := now;
@@ -2459,7 +2709,7 @@ begin
 //      EvtAfastTemp.versao := '2.0';
 
       EvtAfastTemp.IdeEvento.indRetif := ireOriginal;
-//    EvtAfastTemp.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; ObrigatÛrio se indRetif=ireRetificacao
+//    EvtAfastTemp.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigat√≥rio se indRetif=ireRetificacao
       EvtAfastTemp.IdeEvento.TpAmb := taProducaoRestritaDadosFicticios;
       EvtAfastTemp.IdeEvento.ProcEmi := peAplicEmpregador;
       EvtAfastTemp.IdeEvento.VerProc := '1.0';
@@ -2475,28 +2725,28 @@ begin
       EvtAfastTemp.infoAfastamento.iniAfastamento.codMotAfast := '01';
       EvtAfastTemp.infoAfastamento.iniAfastamento.infoMesmoMtv := tpNao;
       EvtAfastTemp.infoAfastamento.iniAfastamento.tpAcidTransito := tpatOutros;
-      EvtAfastTemp.infoAfastamento.iniAfastamento.Observacao := 'Campo opcional, salvo quando codMotAfast=21 aÌ È obrigatÛria';
+      EvtAfastTemp.infoAfastamento.iniAfastamento.Observacao := 'Campo opcional, salvo quando codMotAfast=21 a√≠ √© obrigat√≥ria';
 
       with EvtAfastTemp.infoAfastamento.iniAfastamento.infoAtestado.Add do
       begin
         codCID := '1234';
         qtDiasAfast := 13;
 
-        Emitente.nmEmit := 'Jo„o das Neves';
+        Emitente.nmEmit := 'Jo√£o das Neves';
         Emitente.ideOC := idCRM;
         Emitente.nrOc := '3690';
         Emitente.ufOC := ufPR;
       end;
 
-      //infoCessao opcional usado para afastamento por cess„o de funcion·rio. Ex.: Org„o P˙blico, Sindicatos, etc...
+      //infoCessao opcional usado para afastamento por cess√£o de funcion√°rio. Ex.: Org√£o P√∫blico, Sindicatos, etc...
       EvtAfastTemp.infoAfastamento.iniAfastamento.infoCessao.cnpjCess := '78945612303216';
       EvtAfastTemp.infoAfastamento.iniAfastamento.infoCessao.infOnus := ocCessionario;
 
-      //infoMandSind opcional para cess„o de funcionario para mandato sindical
+      //infoMandSind opcional para cess√£o de funcionario para mandato sindical
       EvtAfastTemp.infoAfastamento.iniAfastamento.infoMandSind.cnpjSind := '12345678901234';
       EvtAfastTemp.infoAfastamento.iniAfastamento.infoMandSind.infOnusRemun := orEmpregador;
 
-      //Apenas alteraÁ„o do MOTIVO de afastamento
+      //Apenas altera√ß√£o do MOTIVO de afastamento
       EvtAfastTemp.infoAfastamento.altAfastamento.dtAltMot := Date;
       EvtAfastTemp.infoAfastamento.altAfastamento.codMotAnt := '16';
       EvtAfastTemp.infoAfastamento.altAfastamento.codMotAfast := '15';
@@ -2507,15 +2757,15 @@ begin
 
       EvtAfastTemp.infoAfastamento.altAfastamento.altEmpr.codCID := '0123';
       EvtAfastTemp.infoAfastamento.altAfastamento.altEmpr.qtdDiasAfast := 10;
-      EvtAfastTemp.infoAfastamento.altAfastamento.altEmpr.nmEmit := 'Nome do emitente na alteraÁ„o';
+      EvtAfastTemp.infoAfastamento.altAfastamento.altEmpr.nmEmit := 'Nome do emitente na altera√ß√£o';
       EvtAfastTemp.infoAfastamento.altAfastamento.altEmpr.ideOC := tpIdeOC(0);
       EvtAfastTemp.infoAfastamento.altAfastamento.altEmpr.nrOc := '12313';
       EvtAfastTemp.infoAfastamento.altAfastamento.altEmpr.ufOC := ufSP;
 
-      //informaÁıes de tÈrmino do Afastamento
+      //informa√ß√µes de t√©rmino do Afastamento
       EvtAfastTemp.infoAfastamento.fimAfastamento.dtTermAfast := now;
-      EvtAfastTemp.infoAfastamento.fimAfastamento.codMotAfast := '15';
-      EvtAfastTemp.infoAfastamento.fimAfastamento.infoMesmoMtv := tpNao;
+//      EvtAfastTemp.infoAfastamento.fimAfastamento.codMotAfast := '15';
+//      EvtAfastTemp.infoAfastamento.fimAfastamento.infoMesmoMtv := tpNao;
     end;
 end;
 
@@ -2549,14 +2799,14 @@ begin
       begin
         codFatRis := '1234567890';
         intConc := 'N/A';
-        tecMedicao := 'TÈcnica de mediÁ„o';
+        tecMedicao := 'T√©cnica de medi√ß√£o';
 
         epcEpi.utilizEPC := uEPCUtilizado;
         epcEpi.utilizEPI := uEPIUtilizado;
 
         with epcEpi.epc.add do
         begin
-          dscEpc := 'DescriÁ„o do EPC 1';
+          dscEpc := 'Descri√ß√£o do EPC 1';
           eficEpc := tpSim;
         end;
 
@@ -2574,7 +2824,7 @@ begin
     end;
 
 
-    //alteraÁ„o das informaÁıes de condiÁıes de ambiente de trabalho, opcional
+    //altera√ß√£o das informa√ß√µes de condi√ß√µes de ambiente de trabalho, opcional
     EvtExpRisco.infoExpRisco.altExpRisco.dtCondicao := Date;
 
     with EvtExpRisco.infoExpRisco.altExpRisco.InfoAmb.Add do
@@ -2585,14 +2835,14 @@ begin
       begin
         codFatRis := '1234567890';
         intConc := 'N/A';
-        tecMedicao := 'TÈcnica de mediÁ„o';
+        tecMedicao := 'T√©cnica de medi√ß√£o';
 
         epcEpi.utilizEPC := uEPCUtilizado;
         epcEpi.utilizEPI := uEPIUtilizado;
 
         with epcEpi.epc.add do
         begin
-          dscEpc := 'DescriÁ„o do EPC 2';
+          dscEpc := 'Descri√ß√£o do EPC 2';
           eficEpc := tpSim;
         end;
 
@@ -2609,7 +2859,7 @@ begin
       end;
     end;
 
-    //fimExpRisco - opcional, informar quando o trabalhador n„o se sujeitar mais as condiÁıes de ambiente informadas anteriormente
+    //fimExpRisco - opcional, informar quando o trabalhador n√£o se sujeitar mais as condi√ß√µes de ambiente informadas anteriormente
     EvtExpRisco.infoExpRisco.fimExpRisco.dtFimCondicao := Date;
 
     with EvtExpRisco.infoExpRisco.fimExpRisco.infoAmb.Add do
@@ -2657,7 +2907,7 @@ begin
       EvtInsApo.IdeVinculo.NisTrab   := '12345678901';
       EvtInsApo.IdeVinculo.Matricula := '564545';
 
-      //InsalPeric - InformaÁıes de insalubridade e periculosidade
+      //InsalPeric - Informa√ß√µes de insalubridade e periculosidade
       EvtInsApo.InsalPeric.iniInsalPeric.DtiniCondicao := Date -60;
       with EvtInsApo.InsalPeric.iniInsalPeric.InfoAmb.Add do
       begin
@@ -2667,7 +2917,7 @@ begin
           codFatRis := '1234567890';
       end;
 
-      //Opcional - usado para alteraÁıes nas condiÁıes de trabalho previamente informadas
+      //Opcional - usado para altera√ß√µes nas condi√ß√µes de trabalho previamente informadas
       //so sera enviado posteriormente quando for alterar um registro
       (*EvtInsApo.InsalPeric.altInsalPeric.DtaltCondicao := Date;
       with EvtInsApo.InsalPeric.altInsalPeric.InfoAmb.Add do
@@ -2678,15 +2928,15 @@ begin
             begin
               codFatRis := '321';
               intConc := 'N/A';
-              tecMedicao := 'TÈcnica de mediÁ„o';
+              tecMedicao := 'T√©cnica de medi√ß√£o';
             end;
         end;*)
 
-      //Opcional - usado quando cessarem as condiÁıes de trabalho previamente informadas
+      //Opcional - usado quando cessarem as condi√ß√µes de trabalho previamente informadas
 //      EvtInsApo.InsalPeric.fimInsalPeric.DtfimCondicao := Date;
 //      EvtInsApo.InsalPeric.fimInsalPeric.InfoAmb.codAmb := '123456';
 
-      //AposentEsp - InfomaÁıes de condiÁıes que ensejam aposentadoria especial
+      //AposentEsp - Infoma√ß√µes de condi√ß√µes que ensejam aposentadoria especial
       EvtInsApo.AposentEsp.iniAposentEsp.DtiniCondicao := Date - 60;
       with EvtInsApo.AposentEsp.iniAposentEsp.InfoAmb.Add do
       begin
@@ -2696,7 +2946,7 @@ begin
           codFatRis := '1234567890';
       end;
 
-      //Opcional - usado para alteraÁıes nas condiÁıes de trabalho previamente informadas
+      //Opcional - usado para altera√ß√µes nas condi√ß√µes de trabalho previamente informadas
       //so sera enviado posteriormente quando for alterar um registro
       (*
       EvtInsApo.AposentEsp.altAposentEsp.DtaltCondicao := Date;
@@ -2708,12 +2958,12 @@ begin
             begin
               codFatRis := '321';
               intConc := 'N/A';
-              tecMedicao := 'TÈcnica de mediÁ„o';
+              tecMedicao := 'T√©cnica de medi√ß√£o';
             end;
         end;
       *)
 
-      //Opcional - usado quando cessarem as condiÁıes de trabalho previamente informadas
+      //Opcional - usado quando cessarem as condi√ß√µes de trabalho previamente informadas
 //      EvtInsApo.AposentEsp.fimAposentEsp.DtfimCondicao := Date;
 //      EvtInsApo.AposentEsp.fimAposentEsp.InfoAmb.codAmb := '654321';
     end;
@@ -2729,7 +2979,7 @@ begin
 
     EvtAvPrevio.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtAvPrevio.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtAvPrevio.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtAvPrevio.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtAvPrevio.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtAvPrevio.IdeEvento.VerProc  := '1.0';
 
@@ -2766,7 +3016,7 @@ begin
 
     EvtReintegr.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtReintegr.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtReintegr.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtReintegr.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtReintegr.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtReintegr.IdeEvento.VerProc  := '1.0';
 
@@ -2781,7 +3031,7 @@ begin
     EvtReintegr.InfoReintegr.nrProcJud     := '999999999';
     EvtReintegr.InfoReintegr.dtEfetRetorno := Now + 20;
     EvtReintegr.InfoReintegr.dtEfeito      := Now;
-    EvtReintegr.InfoReintegr.indPagtoJuizo := tpSimNao(tpSim);
+    EvtReintegr.InfoReintegr.indPagtoJuizo := tpSim;
   end;
 end;
 
@@ -2794,7 +3044,7 @@ begin
 
     EvtDeslig.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtDeslig.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtDeslig.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtDeslig.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtDeslig.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtDeslig.IdeEvento.VerProc  := '1.0';
 
@@ -2813,7 +3063,7 @@ begin
     EvtDeslig.InfoDeslig.percAliment := 25.5;
     EvtDeslig.InfoDeslig.vrAlim := 1985.65;
 
-    //Certid„o de Ûbito apenas em caso de morte quando o mtvDeslig for 09 ou 10
+    //Certid√£o de √≥bito apenas em caso de morte quando o mtvDeslig for 09 ou 10
     EvtDeslig.InfoDeslig.nrCertObito := '0123456789';
 
     //numero do processo que decidiu o desligamento mtvdeslig = 17
@@ -2821,8 +3071,8 @@ begin
 
     EvtDeslig.InfoDeslig.indCumprParc := cpaCumprimentoTotal;
 
-    //ObsercaÁ„o opcional
-    EvtDeslig.InfoDeslig.Observacao := 'AnotaÁıes relevantes sobre o desligamento que n„o tenham campo prÛprio';
+    //Obserca√ß√£o opcional
+    EvtDeslig.InfoDeslig.Observacao := 'Anota√ß√µes relevantes sobre o desligamento que n√£o tenham campo pr√≥prio';
 
     EvtDeslig.InfoDeslig.SucessaoVinc.cnpjEmpregAnt := '12345678912345';//Corrigir nome do campo ou mudar classe.
 
@@ -2837,7 +3087,7 @@ begin
         with detVerbas.add do
         begin
           codRubr := 'Pg123';
-          //ideTabRubr := 'A01';
+          ideTabRubr := 'A01';
           qtdRubr := 2;
           fatorRubr := 200.65;
           vrUnit := 152.35;
@@ -2877,7 +3127,7 @@ begin
             with detVerbas.add do
             begin
               codRubr := 'Pg124';
-              //ideTabRubr := 'A01';
+              ideTabRubr := 'A01';
               qtdRubr := 0.4;
               fatorRubr := 200.65;
               vrUnit := 200.35;
@@ -2908,6 +3158,9 @@ begin
 
     EvtDeslig.InfoDeslig.Quarentena.dtFimQuar := now;
 
+    EvtDeslig.InfoDeslig.consigFGTS.idConsig := tpSim;
+    EvtDeslig.InfoDeslig.consigFGTS.insConsig := '12345';
+    EvtDeslig.InfoDeslig.consigFGTS.nrContr := '123456';
   end;
 end;
 
@@ -2927,7 +3180,7 @@ begin
 
       EvtTSVInicio.Trabalhador.CpfTrab := '98765432123';
       EvtTSVInicio.Trabalhador.NisTrab := '54789632145';
-      EvtTSVInicio.Trabalhador.NmTrab  := 'Jo„o das Neve';
+      EvtTSVInicio.Trabalhador.NmTrab  := 'Jo√£o das Neve';
       EvtTSVInicio.Trabalhador.Sexo    := 'M';
       EvtTSVInicio.Trabalhador.RacaCor := 1;
       EvtTSVInicio.Trabalhador.EstCiv  := 1;
@@ -2947,7 +3200,7 @@ begin
       EvtTSVInicio.Trabalhador.Documentos.CTPS.UfCtps := 'PR';
 
       EvtTSVInicio.Trabalhador.Documentos.RIC.NrRic := '10203040506070';
-      EvtTSVInicio.Trabalhador.Documentos.RIC.OrgaoEmissor := 'Org„o Emissor';
+      EvtTSVInicio.Trabalhador.Documentos.RIC.OrgaoEmissor := 'Org√£o Emissor';
       EvtTSVInicio.Trabalhador.Documentos.RIC.DtExped := Date;
 
       EvtTSVInicio.Trabalhador.Documentos.RG.NrRg := '73062584';
@@ -2999,29 +3252,27 @@ begin
       EvtTSVInicio.Trabalhador.InfoDeficiencia.DefAuditiva    := tpNao;
       EvtTSVInicio.Trabalhador.InfoDeficiencia.DefMental      := tpNao;
       EvtTSVInicio.Trabalhador.InfoDeficiencia.DefIntelectual := tpNao;
-      EvtTSVInicio.Trabalhador.InfoDeficiencia.ReabReadap     := tpSimNao(tpSim);
+      EvtTSVInicio.Trabalhador.InfoDeficiencia.ReabReadap     := tpSim;
       EvtTSVInicio.Trabalhador.InfoDeficiencia.Observacao     := 'sem deficiencia';
 
       with EvtTSVInicio.Trabalhador.Dependente.Add do
         begin
-          tpDep    := tpTpDep(tdConjuge);
+          tpDep    := tdConjuge;
           nmDep    := 'Dependente 1';
           dtNascto := Date;
           cpfDep   := '99999999909';
-          depIRRF  := tpSimNao(tpSim);
-          depSF    := tpSimNao(tpNao);
-        //depRPPS  := tpSimNao(tpNao);Removido na vers„o 2.1
+          depIRRF  := tpSim;
+          depSF    := tpNao;
         end;
 
       with EvtTSVInicio.Trabalhador.Dependente.Add do
         begin
-          tpDep    := tpTpDep(tdFilhoOuEnteadoAte21Anos);
+          tpDep    := tdFilhoOuEnteadoAte21Anos;
           nmDep    := 'Dependente 2';
           dtNascto := Date;
           cpfDep   := '99999999909';
-          depIRRF  := tpSimNao(tpSim);
-          depSF    := tpSimNao(tpNao);
-          //depRPPS  := tpSimNao(tpNao);Removido na vers„o 2.1
+          depIRRF  := tpSim;
+          depSF    := tpNao;
         end;
 
       EvtTSVInicio.Trabalhador.Contato.FonePrinc     := '91067240';
@@ -3038,7 +3289,7 @@ begin
 
       EvtTSVInicio.infoTSVInicio.infoComplementares.Remuneracao.VrSalFx    := 1200.00;
       EvtTSVInicio.infoTSVInicio.infoComplementares.Remuneracao.UndSalFixo := sfPorMes;
-      EvtTSVInicio.infoTSVInicio.infoComplementares.Remuneracao.DscSalVar  := 'Comiss„o de 1,2% sobre a venda do mÍs';
+      EvtTSVInicio.infoTSVInicio.infoComplementares.Remuneracao.DscSalVar  := 'Comiss√£o de 1,2% sobre a venda do m√™s';
 
       EvtTSVInicio.infoTSVInicio.infoComplementares.Fgts.OpcFGTS   := ofOptante;
       EvtTSVInicio.infoTSVInicio.infoComplementares.Fgts.DtOpcFGTS := Date;
@@ -3049,7 +3300,7 @@ begin
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoDirSind.dtAdmOrig  := Date;
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoDirSind.matricOrig := 'A1234';
 
-      //InformaÁıes de trabalhador cedido, devem ser preenchidas exclusivamente pelo cession·rio
+      //Informa√ß√µes de trabalhador cedido, devem ser preenchidas exclusivamente pelo cession√°rio
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoTrabCedido.categOrig := 111;
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoTrabCedido.cnpjCednt := '12345678901234';
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoTrabCedido.matricCed := 'B4321';
@@ -3066,7 +3317,7 @@ begin
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoEstagiario.dtPrevTerm  := IncMonth(Date, 12);
 
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoEstagiario.instEnsino.cnpjInstEnsino := '12345678901234';
-      EvtTSVInicio.infoTSVInicio.infoComplementares.infoEstagiario.instEnsino.nmRazao        := 'Nome da InstituiÁ„o de Ensino';
+      EvtTSVInicio.infoTSVInicio.infoComplementares.infoEstagiario.instEnsino.nmRazao        := 'Nome da Institui√ß√£o de Ensino';
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoEstagiario.instEnsino.dscLograd      := 'R Pitagoras';
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoEstagiario.instEnsino.nrLograd       := '1618';
       EvtTSVInicio.infoTSVInicio.infoComplementares.infoEstagiario.instEnsino.bairro         := 'Bairro Educacional';
@@ -3114,7 +3365,7 @@ begin
 
       EvtTSVAltContr.infoTSVAlteracao.infoComplementares.Remuneracao.VrSalFx    := 1200.00;
       EvtTSVAltContr.infoTSVAlteracao.infoComplementares.Remuneracao.UndSalFixo := sfPorMes;
-      EvtTSVAltContr.infoTSVAlteracao.infoComplementares.Remuneracao.DscSalVar  := 'Comiss„o de 1,2% sobre a venda do mÍs';
+      EvtTSVAltContr.infoTSVAlteracao.infoComplementares.Remuneracao.DscSalVar  := 'Comiss√£o de 1,2% sobre a venda do m√™s';
 
       EvtTSVAltContr.infoTSVAlteracao.infoComplementares.infoEstagiario.natEstagio  := neObrigatiorio;
       EvtTSVAltContr.infoTSVAlteracao.infoComplementares.infoEstagiario.nivEstagio  := nvSuperior;
@@ -3124,7 +3375,7 @@ begin
       EvtTSVAltContr.infoTSVAlteracao.infoComplementares.infoEstagiario.dtPrevTerm  := IncMonth(Date, 12);
 
       EvtTSVAltContr.infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.cnpjInstEnsino := '12345678998765';
-      EvtTSVAltContr.infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.nmRazao        := 'Nome da InstituiÁ„o de Ensino';
+      EvtTSVAltContr.infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.nmRazao        := 'Nome da Institui√ß√£o de Ensino';
       EvtTSVAltContr.infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.dscLograd      := 'R Pitagoras';
       EvtTSVAltContr.infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.nrLograd       := '1618';
       EvtTSVAltContr.infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.bairro         := 'Bairro Educacional';
@@ -3155,7 +3406,7 @@ begin
 
     EvtTSVTermino.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtTSVTermino.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtTSVTermino.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtTSVTermino.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtTSVTermino.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtTSVTermino.IdeEvento.VerProc  := '1.0';
 
@@ -3213,7 +3464,7 @@ begin
     EvtTSVTermino.InfoTSVTermino.verbasResc.infoMV.indMV := tpIndMV(0);
     with EvtTSVTermino.InfoTSVTermino.verbasResc.infoMV.remunOutrEmpr.add do
     begin
-      tpInsc := tpTpInsc(0);
+      tpInsc := tiCNPJ;
       nrInsc := '14236547000195';
       codCateg := 111;
       vlrRemunOE := 2500.12;
@@ -3231,7 +3482,7 @@ begin
 
     EvtCdBenPrRP.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtCdBenPrRP.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtCdBenPrRP.IdeEvento.TpAmb    := TpTpAmb(2);
+    EvtCdBenPrRP.IdeEvento.TpAmb    := taProducaoRestritaDadosFicticios;
     EvtCdBenPrRP.IdeEvento.ProcEmi  := TpProcEmi(0);
     EvtCdBenPrRP.IdeEvento.VerProc  := '1.0';
 
@@ -3240,8 +3491,8 @@ begin
 
     EvtCdBenPrRP.ideBenef.cpfBenef := '12345678910';
     EvtCdBenPrRP.ideBenef.nmBenefic := 'Nome do beneficiario';
-    EvtCdBenPrRP.ideBenef.dadosBenef.cpfBenef := '12345678910';
-    EvtCdBenPrRP.ideBenef.dadosBenef.nmBenefic := 'Nome do beneficiario';
+//    EvtCdBenPrRP.ideBenef.dadosBenef.cpfBenef := '12345678910';
+//    EvtCdBenPrRP.ideBenef.dadosBenef.nmBenefic := 'Nome do beneficiario';
 
     EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.dtNascto := Date;;
     EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.codMunic := 4153623;
@@ -3300,7 +3551,7 @@ begin
     EvtExclusao.id     := '1';
 //    EvtExclusao.Versao := '2.0';
 
-    EvtExclusao.IdeEvento.TpAmb   := TpTpAmb(2);
+    EvtExclusao.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
     EvtExclusao.IdeEvento.ProcEmi := TpProcEmi(0);
     EvtExclusao.IdeEvento.VerProc := '1.0';
 
@@ -3325,7 +3576,7 @@ begin
     EvtSolicTotal.id     := '1';
 //    EvtSolicTotal.Versao := '2.0';
 
-    EvtSolicTotal.IdeEvento.TpAmb   := TpTpAmb(2);
+    EvtSolicTotal.IdeEvento.TpAmb   := taProducaoRestritaDadosFicticios;
     EvtSolicTotal.IdeEvento.ProcEmi := TpProcEmi(0);
     EvtSolicTotal.IdeEvento.VerProc := '1.0';
 
@@ -3339,9 +3590,24 @@ begin
 end;
 
 procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
+//var
+//  ASerie: String;
+//  i: integer;
 begin
 
   ACBreSocial1.SSL.SelecionarCertificado;
+
+{  ACBreSocial1.SSL.LerCertificadosStore;
+
+  For I := 0 to ACBreSocial1.SSL.ListaCertificados.Count-1 do
+    with ACBreSocial1.SSL.ListaCertificados[i] do
+    begin
+      if NumeroSerie = '70FBA57CE8B25441' then
+        ASerie := NumeroSerie;
+    end;}
+
+//  ACBreSocial1.Configuracoes.Certificados.NumeroSerie := ASerie;
+//  ACBreSocial1.Configuracoes.Certificados.Senha := '1234';
 
   if (cbS1000.Checked) then
     GerareSocial1000;
@@ -3349,7 +3615,7 @@ begin
   if (cbS1005.Checked) then
     GerareSocial1005;
 
-  if (cbS1010.checked) then
+  if (cbS1010.Checked) then
     GerareSocial1010;
 
   if (cbS1020.Checked) then
@@ -3358,126 +3624,763 @@ begin
   if (cbS1030.Checked) then
     GerareSocial1030;
 
-  if (cbS1035.checked) then
+  if (cbS1035.Checked) then
     GerareSocial1035;
 
-  if (cbS1040.checked) then
+  if (cbS1040.Checked) then
     GerareSocial1040;
 
-  if (cbS1050.checked) then
+  if (cbS1050.Checked) then
     GerareSocial1050;
 
-  if (cbS1060.checked) then
+  if (cbS1060.Checked) then
     GerareSocial1060;
 
-  if (cbS1070.checked) then
+  if (cbS1070.Checked) then
     GerareSocial1070;
 
-  if (cbS1080.checked) then
+  if (cbS1080.Checked) then
     GerareSocial1080;
 
-  if (cbS2100.checked) then
-    GerareSocial2100;
-
-  if (cbS1200.checked) then
+  if (cbS1200.Checked) then
     GerareSocial1200;
 
-  if (cbS1202.checked) then
+  if (cbS1202.Checked) then
     GerareSocial1202;
 
-  if (cbS1207.checked) then
+  if (cbS1207.Checked) then
     GerareSocial1207;
 
-  if (cbS1210.checked) then
+  if (cbS1210.Checked) then
     GerareSocial1210;
 
-  if (cbS1250.checked) then
+//  if (cbS1220.Checked) then
+//    GerareSocial1220;
+
+  if (cbS1250.Checked) then
     GerareSocial1250;
 
-  if (cbS1260.checked) then
+  if (cbS1260.Checked) then
     GerareSocial1260;
 
-  if (cbS1270.checked) then
+  if (cbS1270.Checked) then
     GerareSocial1270;
 
-  if (cbS1280.checked) then
+  if (cbS1280.Checked) then
     GerareSocial1280;
 
   if (cbS1295.checked) then
     GerareSocial1295;
 
-  if (cbS1298.checked) then
+  if (cbS1298.Checked) then
     GerareSocial1298;
 
-  if (cbS1299.checked) then
+  if (cbS1299.Checked) then
     GerareSocial1299;
 
-  if (cbS1300.checked) then
+  if (cbS1300.Checked) then
     GerareSocial1300;
 
-  if (cbS2190.checked) then
+  if (cbS2100.Checked) then
+    GerareSocial2100;
+
+  if (cbS2190.Checked) then
     GerareSocial2190;
 
-  if (cbS2200.checked) then
+  if (cbS2200.Checked) then
     GerareSocial2200;
 
-  if (cbS2205.checked) then
+  if (cbS2205.Checked) then
     GerareSocial2205;
 
-  if (cbS2206.checked) then
+  if (cbS2206.Checked) then
     GerareSocial2206;
 
-  if (cbS2210.checked) then
+  if (cbS2210.Checked) then
     GerareSocial2210;
 
-  if (cbS2220.checked) then
+  if (cbS2220.Checked) then
     GerareSocial2220;
 
-  if (cbS2230.checked) then
+  if (cbS2230.Checked) then
     GerareSocial2230;
 
-  if (cbS2240.checked) then
+  if (cbS2240.Checked) then
     GerareSocial2240;
 
-  if (cbS2241.checked) then
+  if (cbS2241.Checked) then
     GerareSocial2241;
 
-  if (cbS2250.checked) then
+  if (cbS2250.Checked) then
     GerareSocial2250;
 
-  if (cbS2298.checked) then
+  if (cbS2298.Checked) then
     GerareSocial2298;
 
-  if (cbS2299.checked) then
+  if (cbS2299.Checked) then
     GerareSocial2299;
 
-  if (cbS2300.checked) then
+  if (cbS2300.Checked) then
     GerareSocial2300;
 
-  if (cbS2306.checked) then
+//  if (cbS2305.Checked) then
+//    GerareSocial2305;
+
+  if (cbS2306.Checked) then
     GerareSocial2306;
 
-  if (cbS2399.checked) then
+  if (cbS2399.Checked) then
     GerareSocial2399;
 
-  if (cbS2400.checked) then
+  if (cbS2400.Checked) then
     GerareSocial2400;
 
-  if (cbS3000.checked) then
+  if (cbS3000.Checked) then
     GerareSocial3000;
 
-  if (cbS4000.checked) then
+  if (cbS4000.Checked) then
     GerareSocial4000;
+
+//  if (cbS4999.Checked) then
+//    GerareSocial4999;
 
   ACBreSocial1.Eventos.GerarXMLs;
   ACBreSocial1.Eventos.SaveToFiles;
   ACBreSocial1.Eventos.Clear;
+
+  ShowMessage( 'XML de Eventos Gerados com Sucesso!' );
 end;
 
-procedure TFExemploEsocial.FormClose(Sender: TObject;
-  var CloseAction: TCloseAction);
+procedure TFExemploEsocial.cbSSLLibChange(Sender: TObject);
 begin
-  Application.Terminate;
+  try
+    if cbSSLLib.ItemIndex <> -1 then
+      ACBreSocial1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TFExemploEsocial.cbCryptLibChange(Sender: TObject);
+begin
+  try
+    if cbCryptLib.ItemIndex <> -1 then
+      ACBreSocial1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TFExemploEsocial.cbHttpLibChange(Sender: TObject);
+begin
+  try
+    if cbHttpLib.ItemIndex <> -1 then
+      ACBreSocial1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TFExemploEsocial.cbXmlSignLibChange(Sender: TObject);
+begin
+  try
+    if cbXmlSignLib.ItemIndex <> -1 then
+      ACBreSocial1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TFExemploEsocial.cbSSLTypeChange(Sender: TObject);
+begin
+  if cbSSLType.ItemIndex <> -1 then
+     ACBreSocial1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
+end;
+
+procedure TFExemploEsocial.sbtnCaminhoCertClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Certificado';
+  OpenDialog1.DefaultExt := '*.pfx';
+  OpenDialog1.Filter := 'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtCaminho.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFExemploEsocial.sbtnListaCertClick(Sender: TObject);
+var
+  I: Integer;
+  ASerie: String;
+  AddRow: Boolean;
+begin
+  frSelecionarCertificado := TfrSelecionarCertificado.Create(Self);
+  try
+    ACBreSocial1.SSL.LerCertificadosStore;
+    AddRow := False;
+
+    with frSelecionarCertificado.StringGrid1 do
+    begin
+      ColWidths[0] := 220;
+      ColWidths[1] := 250;
+      ColWidths[2] := 120;
+      ColWidths[3] := 80;
+      ColWidths[4] := 150;
+      Cells[ 0, 0 ] := 'Num.S√©rie';
+      Cells[ 1, 0 ] := 'Raz√£o Social';
+      Cells[ 2, 0 ] := 'CNPJ';
+      Cells[ 3, 0 ] := 'Validade';
+      Cells[ 4, 0 ] := 'Certificadora';
+    end;
+
+    for I := 0 to ACBreSocial1.SSL.ListaCertificados.Count-1 do
+    begin
+      with ACBreSocial1.SSL.ListaCertificados[I] do
+      begin
+        ASerie := NumeroSerie;
+        if (CNPJ <> '') then
+        begin
+          with frSelecionarCertificado.StringGrid1 do
+          begin
+            if Addrow then
+              RowCount := RowCount + 1;
+
+            Cells[ 0, RowCount-1] := NumeroSerie;
+            Cells[ 1, RowCount-1] := RazaoSocial;
+            Cells[ 2, RowCount-1] := CNPJ;
+            Cells[ 3, RowCount-1] := FormatDateBr(DataVenc);
+            Cells[ 4, RowCount-1] := Certificadora;
+            AddRow := True;
+          end;
+        end;
+      end;
+    end;
+
+    frSelecionarCertificado.ShowModal;
+
+    if frSelecionarCertificado.ModalResult = mrOK then
+      edtNumSerie.Text := frSelecionarCertificado.StringGrid1.Cells[ 0,
+                            frSelecionarCertificado.StringGrid1.Row];
+
+  finally
+     frSelecionarCertificado.Free;
+  end;
+end;
+
+procedure TFExemploEsocial.sbtnGetCertClick(Sender: TObject);
+begin
+  edtNumSerie.Text := ACBreSocial1.SSL.SelecionarCertificado;
+end;
+
+procedure TFExemploEsocial.btnValidadeDataClick(Sender: TObject);
+begin
+  ShowMessage( FormatDateBr(ACBreSocial1.SSL.CertDataVenc) );
+end;
+
+procedure TFExemploEsocial.btnNumSerieClick(Sender: TObject);
+begin
+  ShowMessage( ACBreSocial1.SSL.CertNumeroSerie );
+end;
+
+procedure TFExemploEsocial.btnSubjectNameClick(Sender: TObject);
+begin
+  ShowMessage( ACBreSocial1.SSL.CertSubjectName + sLineBreak + sLineBreak +
+               'Raz√£o Social: '+ACBreSocial1.SSL.CertRazaoSocial);
+end;
+
+procedure TFExemploEsocial.btnCNPJClick(Sender: TObject);
+begin
+  ShowMessage( ACBreSocial1.SSL.CertCNPJ );
+end;
+
+procedure TFExemploEsocial.btnIssuerNameClick(Sender: TObject);
+begin
+ ShowMessage( ACBreSocial1.SSL.CertIssuerName + sLineBreak + sLineBreak +
+              'Certificadora: '+ACBreSocial1.SSL.CertCertificadora);
+end;
+
+procedure TFExemploEsocial.btnSHA_RSAClick(Sender: TObject);
+var
+  Ahash: AnsiString;
+begin
+  Ahash := ACBreSocial1.SSL.CalcHash(Edit1.Text, dgstSHA256, outBase64, cbAssinar.Checked);
+//  MemoResp.Lines.Add( Ahash );
+//  pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TFExemploEsocial.btnHTTPSClick(Sender: TObject);
+//var
+//  Acao: String;
+//  OldUseCert: Boolean;
+begin
+(*
+  Acao := '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+
+     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+     'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> '+
+     ' <soapenv:Header/>'+
+     ' <soapenv:Body>' +
+     ' <cli:consultaCEP>' +
+     ' <cep>18270-170</cep>' +
+     ' </cli:consultaCEP>' +
+     ' </soapenv:Body>' +
+     ' </soapenv:Envelope>';
+
+  OldUseCert := ACBreSocial1.SSL.UseCertificateHTTP;
+  ACBreSocial1.SSL.UseCertificateHTTP := False;
+  try
+    MemoResp.Lines.Text := ACBreSocial1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
+  finally
+    ACBreSocial1.SSL.UseCertificateHTTP := OldUseCert;
+  end;
+  pgRespostas.ActivePageIndex := 0;
+  *)
+end;
+
+procedure TFExemploEsocial.btnX509Click(Sender: TObject);
+begin
+(*
+  with ACBreSocial1.SSL do
+  begin
+     CarregarCertificadoPublico(MemoDados.Lines.Text);
+     MemoResp.Lines.Add(CertIssuerName);
+     MemoResp.Lines.Add(CertRazaoSocial);
+     MemoResp.Lines.Add(CertCNPJ);
+     MemoResp.Lines.Add(CertSubjectName);
+     MemoResp.Lines.Add(CertNumeroSerie);
+    pgRespostas.ActivePageIndex := 0;
+  end;
+*)  
+end;
+
+procedure TFExemploEsocial.sbtnPathSalvarClick(Sender: TObject);
+begin
+  PathClick(edtPathLogs);
+end;
+
+procedure TFExemploEsocial.spPathSchemasClick(Sender: TObject);
+begin
+  PathClick(edtPathSchemas);
+end;
+
+procedure TFExemploEsocial.sbPatheSocialClick(Sender: TObject);
+begin
+  PathClick(edtPatheSocial);
+end;
+
+procedure TFExemploEsocial.sbPathEventoClick(Sender: TObject);
+begin
+  PathClick(edtPathEvento);
+end;
+
+procedure TFExemploEsocial.ACBreSocial1GerarLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+// memoLog.Lines.Add(ALogLine);
+end;
+
+procedure TFExemploEsocial.ACBreSocial1StatusChange(Sender: TObject);
+begin
+(*
+  case ACBreSocial1.Status of
+    stIdleeSocial :
+    begin
+      if ( frmStatus <> nil ) then
+        frmStatus.Hide;
+    end;
+    steSocialStatusServico :
+    begin
+      if ( frmStatus = nil ) then
+        frmStatus := TfrmStatus.Create(Application);
+      frmStatus.lblStatus.Caption := 'Verificando Status do servico...';
+      frmStatus.Show;
+      frmStatus.BringToFront;
+    end;
+    steSocialRecepcao :
+    begin
+      if ( frmStatus = nil ) then
+        frmStatus := TfrmStatus.Create(Application);
+      frmStatus.lblStatus.Caption := 'Enviando dados da eSocial...';
+      frmStatus.Show;
+      frmStatus.BringToFront;
+    end;
+    steSocialRetRecepcao :
+    begin
+      if ( frmStatus = nil ) then
+        frmStatus := TfrmStatus.Create(Application);
+      frmStatus.lblStatus.Caption := 'Recebendo dados da eSocial...';
+      frmStatus.Show;
+      frmStatus.BringToFront;
+    end;
+    steSocialConsulta :
+    begin
+      if ( frmStatus = nil ) then
+        frmStatus := TfrmStatus.Create(Application);
+      frmStatus.lblStatus.Caption := 'Consultando eSocial...';
+      frmStatus.Show;
+      frmStatus.BringToFront;
+    end;
+    steSocialEmail :
+    begin
+      if ( frmStatus = nil ) then
+        frmStatus := TfrmStatus.Create(Application);
+      frmStatus.lblStatus.Caption := 'Enviando Email...';
+      frmStatus.Show;
+      frmStatus.BringToFront;
+    end;
+    steSocialEvento :
+    begin
+      if ( frmStatus = nil ) then
+        frmStatus := TfrmStatus.Create(Application);
+      frmStatus.lblStatus.Caption := 'Enviando Evento...';
+      frmStatus.Show;
+      frmStatus.BringToFront;
+    end;
+  end;
+  Application.ProcessMessages;
+  *)
+end;
+
+procedure TFExemploEsocial.lblColaboradorClick(Sender: TObject);
+begin
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5');
+end;
+
+procedure TFExemploEsocial.lblPatrocinadorClick(Sender: TObject);
+begin
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/35');
+end;
+
+procedure TFExemploEsocial.lblDoar1Click(Sender: TObject);
+begin
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
+end;
+
+procedure TFExemploEsocial.lblDoar2Click(Sender: TObject);
+begin
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
+end;
+
+procedure TFExemploEsocial.lblMouseEnter(Sender: TObject);
+begin
+  TLabel(Sender).Font.Style := [fsBold,fsUnderline];
+end;
+
+procedure TFExemploEsocial.lblMouseLeave(Sender: TObject);
+begin
+  TLabel(Sender).Font.Style := [fsBold];
+end;
+
+procedure TFExemploEsocial.btnSalvarConfigClick(Sender: TObject);
+begin
+ GravarConfiguracao;
+ LerConfiguracao;
+end;
+
+procedure TFExemploEsocial.FormCreate(Sender: TObject);
+var
+  T: TSSLLib;
+  K: TVersaoeSocial;
+  U: TSSLCryptLib;
+  V: TSSLHttpLib;
+  X: TSSLXmlSignLib;
+  Y: TSSLType;
+begin
+  cbSSLLib.Items.Clear;
+  for T := Low(TSSLLib) to High(TSSLLib) do
+    cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) );
+  cbSSLLib.ItemIndex := 0;
+
+  cbCryptLib.Items.Clear;
+  for U := Low(TSSLCryptLib) to High(TSSLCryptLib) do
+    cbCryptLib.Items.Add( GetEnumName(TypeInfo(TSSLCryptLib), integer(U) ) );
+  cbCryptLib.ItemIndex := 0;
+
+  cbHttpLib.Items.Clear;
+  for V := Low(TSSLHttpLib) to High(TSSLHttpLib) do
+    cbHttpLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(V) ) );
+  cbHttpLib.ItemIndex := 0;
+
+  cbXmlSignLib.Items.Clear;
+  for X := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
+    cbXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X) ) );
+  cbXmlSignLib.ItemIndex := 0;
+
+  cbSSLType.Items.Clear;
+  for Y := Low(TSSLType) to High(TSSLType) do
+    cbSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(Y) ) );
+  cbSSLType.ItemIndex := 0;
+
+  cbVersaoDF.Items.Clear;
+  for K := Low(TVersaoeSocial) to High(TVersaoeSocial) do
+     cbVersaoDF.Items.Add( GetEnumName(TypeInfo(TVersaoeSocial), integer(K) ) );
+//  cbVersaoDF.Items[0] := 've240';
+  cbVersaoDF.ItemIndex := 0;
+
+  LerConfiguracao;
+  ACBreSocial1.Configuracoes.WebServices.Salvar := true;
+end;
+
+procedure TFExemploEsocial.PathClick(Sender: TObject);
+var
+  Dir: string;
+begin
+  if Length(TEdit(Sender).Text) <= 0 then
+     Dir := ExtractFileDir(application.ExeName)
+  else
+     Dir := TEdit(Sender).Text;
+
+  if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt],SELDIRHELP) then
+    TEdit(Sender).Text := Dir;
+end;
+
+procedure TFExemploEsocial.AtualizaSSLLibsCombo;
+begin
+ cbSSLLib.ItemIndex := Integer( ACBreSocial1.Configuracoes.Geral.SSLLib );
+ cbCryptLib.ItemIndex := Integer( ACBreSocial1.Configuracoes.Geral.SSLCryptLib );
+ cbHttpLib.ItemIndex := Integer( ACBreSocial1.Configuracoes.Geral.SSLHttpLib );
+ cbXmlSignLib.ItemIndex := Integer( ACBreSocial1.Configuracoes.Geral.SSLXmlSignLib );
+
+ cbSSLType.Enabled := (ACBreSocial1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
+end;
+
+procedure TFExemploEsocial.GravarConfiguracao;
+var
+ IniFile: String;
+ Ini: TIniFile;
+ StreamMemo: TMemoryStream;
+begin
+  IniFile := ChangeFileExt( Application.ExeName, '.ini');
+
+  Ini := TIniFile.Create( IniFile );
+  try
+    Ini.WriteInteger( 'Certificado', 'SSLLib',     cbSSLLib.ItemIndex);
+    Ini.WriteInteger( 'Certificado', 'CryptLib',   cbCryptLib.ItemIndex);
+    Ini.WriteInteger( 'Certificado', 'HttpLib',    cbHttpLib.ItemIndex);
+    Ini.WriteInteger( 'Certificado', 'XmlSignLib', cbXmlSignLib.ItemIndex);
+    Ini.WriteString(  'Certificado', 'Caminho',    edtCaminho.Text);
+    Ini.WriteString(  'Certificado', 'Senha',      edtSenha.Text);
+    Ini.WriteString(  'Certificado', 'NumSerie',   edtNumSerie.Text);
+
+    Ini.WriteBool(    'Geral', 'AtualizarXML',     ckSalvar.Checked);
+    Ini.WriteBool(    'Geral', 'ExibirErroSchema', ckSalvar.Checked);
+    Ini.WriteString(  'Geral', 'FormatoAlerta',    edtFormatoAlerta.Text);
+    Ini.WriteInteger( 'Geral', 'VersaoDF',         cbVersaoDF.ItemIndex);
+    Ini.WriteBool(    'Geral', 'RetirarAcentos',   cbxRetirarAcentos.Checked);
+    Ini.WriteBool(    'Geral', 'Salvar',           ckSalvar.Checked);
+    Ini.WriteString(  'Geral', 'PathSalvar',       edtPathLogs.Text);
+    Ini.WriteString(  'Geral', 'PathSchemas',      edtPathSchemas.Text);
+
+    Ini.WriteString(  'WebService', 'UF',         cbUF.Text);
+    Ini.WriteInteger( 'WebService', 'Ambiente',   rgTipoAmb.ItemIndex);
+    Ini.WriteBool(    'WebService', 'Visualizar', cbxVisualizar.Checked);
+    Ini.WriteBool(    'WebService', 'SalvarSOAP', cbxSalvarSOAP.Checked);
+    Ini.WriteBool(    'WebService', 'AjustarAut', cbxAjustarAut.Checked);
+    Ini.WriteString(  'WebService', 'Aguardar',   edtAguardar.Text);
+    Ini.WriteString(  'WebService', 'Tentativas', edtTentativas.Text);
+    Ini.WriteString(  'WebService', 'Intervalo',  edtIntervalo.Text);
+    Ini.WriteInteger( 'WebService', 'TimeOut',    seTimeOut.Value);
+    Ini.WriteInteger( 'WebService', 'SSLType',    cbSSLType.ItemIndex);
+
+    Ini.WriteString( 'Proxy', 'Host',  edtProxyHost.Text);
+    Ini.WriteString( 'Proxy', 'Porta', edtProxyPorta.Text);
+    Ini.WriteString( 'Proxy', 'User',  edtProxyUser.Text);
+    Ini.WriteString( 'Proxy', 'Pass',  edtProxySenha.Text);
+
+    Ini.WriteBool(   'Arquivos', 'Salvar',           cbxSalvarArqs.Checked);
+    Ini.WriteBool(   'Arquivos', 'PastaMensal',      cbxPastaMensal.Checked);
+    Ini.WriteBool(   'Arquivos', 'AddLiteral',       cbxAdicionaLiteral.Checked);
+    Ini.WriteBool(   'Arquivos', 'EmissaoPatheSocial', cbxEmissaoPatheSocial.Checked);
+    Ini.WriteBool(   'Arquivos', 'SalvarPathEvento', cbxSalvaPathEvento.Checked);
+    Ini.WriteBool(   'Arquivos', 'SepararPorCNPJ',   cbxSepararPorCNPJ.Checked);
+    Ini.WriteBool(   'Arquivos', 'SepararPorModelo', cbxSepararPorModelo.Checked);
+    Ini.WriteString( 'Arquivos', 'PatheSocial',      edtPatheSocial.Text);
+    Ini.WriteString( 'Arquivos', 'PathEvento',       edtPathEvento.Text);
+
+    Ini.WriteString( 'Emitente', 'CNPJ',        edtEmitCNPJ.Text);
+    Ini.WriteString( 'Emitente', 'IE',          edtEmitIE.Text);
+    Ini.WriteString( 'Emitente', 'RazaoSocial', edtEmitRazao.Text);
+    Ini.WriteString( 'Emitente', 'Fantasia',    edtEmitFantasia.Text);
+    Ini.WriteString( 'Emitente', 'Fone',        edtEmitFone.Text);
+    Ini.WriteString( 'Emitente', 'CEP',         edtEmitCEP.Text);
+    Ini.WriteString( 'Emitente', 'Logradouro',  edtEmitLogradouro.Text);
+    Ini.WriteString( 'Emitente', 'Numero',      edtEmitNumero.Text);
+    Ini.WriteString( 'Emitente', 'Complemento', edtEmitComp.Text);
+    Ini.WriteString( 'Emitente', 'Bairro',      edtEmitBairro.Text);
+    Ini.WriteString( 'Emitente', 'CodCidade',   edtEmitCodCidade.Text);
+    Ini.WriteString( 'Emitente', 'Cidade',      edtEmitCidade.Text);
+    Ini.WriteString( 'Emitente', 'UF',          edtEmitUF.Text);
+
+    Ini.WriteString( 'Email', 'Host',    edtSmtpHost.Text);
+    Ini.WriteString( 'Email', 'Port',    edtSmtpPort.Text);
+    Ini.WriteString( 'Email', 'User',    edtSmtpUser.Text);
+    Ini.WriteString( 'Email', 'Pass',    edtSmtpPass.Text);
+    Ini.WriteString( 'Email', 'Assunto', edtEmailAssunto.Text);
+    Ini.WriteBool(   'Email', 'SSL',     cbEmailSSL.Checked );
+
+    StreamMemo := TMemoryStream.Create;
+    mmEmailMsg.Lines.SaveToStream(StreamMemo);
+    StreamMemo.Seek(0,soFromBeginning);
+    Ini.WriteBinaryStream( 'Email', 'Mensagem', StreamMemo);
+    StreamMemo.Free;
+
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TFExemploEsocial.LerConfiguracao;
+var
+  IniFile: String;
+  Ini: TIniFile;
+  Ok: Boolean;
+  StreamMemo: TMemoryStream;
+begin
+  IniFile := ChangeFileExt( Application.ExeName, '.ini');
+  Ini := TIniFile.Create( IniFile );
+
+  try
+    cbSSLLib.ItemIndex     := Ini.ReadInteger( 'Certificado', 'SSLLib',     0);
+    cbCryptLib.ItemIndex   := Ini.ReadInteger( 'Certificado', 'CryptLib',   0);
+    cbHttpLib.ItemIndex    := Ini.ReadInteger( 'Certificado', 'HttpLib',    0);
+    cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado', 'XmlSignLib', 0);
+    edtCaminho.Text        := Ini.ReadString(  'Certificado', 'Caminho',    '');
+    edtSenha.Text          := Ini.ReadString(  'Certificado', 'Senha',      '');
+    edtNumSerie.Text       := Ini.ReadString(  'Certificado', 'NumSerie',   '');
+
+    ACBreSocial1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
+    ACBreSocial1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+    ACBreSocial1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
+
+    cbxAtualizarXML.Checked     := Ini.ReadBool(    'Geral', 'AtualizarXML',     True);
+    cbxExibirErroSchema.Checked := Ini.ReadBool(    'Geral', 'ExibirErroSchema', True);
+    edtFormatoAlerta.Text       := Ini.ReadString(  'Geral', 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
+    cbVersaoDF.ItemIndex        := Ini.ReadInteger( 'Geral', 'VersaoDF',         0);
+    ckSalvar.Checked            := Ini.ReadBool(    'Geral', 'Salvar',           True);
+    cbxRetirarAcentos.Checked   := Ini.ReadBool(    'Geral', 'RetirarAcentos',   True);
+    edtPathLogs.Text            := Ini.ReadString(  'Geral', 'PathSalvar',       PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
+    edtPathSchemas.Text         := Ini.ReadString(  'Geral', 'PathSchemas',      PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\'+GetEnumName(TypeInfo(TVersaoeSocial), integer(cbVersaoDF.ItemIndex) ));
+
+    ACBreSocial1.SSL.DescarregarCertificado;
+
+    with ACBreSocial1.Configuracoes.Geral do
+    begin
+      SSLLib        := TSSLLib(cbSSLLib.ItemIndex);
+      SSLCryptLib   := TSSLCryptLib(cbCryptLib.ItemIndex);
+      SSLHttpLib    := TSSLHttpLib(cbHttpLib.ItemIndex);
+      SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+
+      AtualizaSSLLibsCombo;
+
+      ExibirErroSchema := cbxExibirErroSchema.Checked;
+      RetirarAcentos   := cbxRetirarAcentos.Checked;
+      FormatoAlerta    := edtFormatoAlerta.Text;
+      VersaoDF         := TVersaoeSocial(cbVersaoDF.ItemIndex);
+      Salvar           := ckSalvar.Checked;
+    end;
+
+    cbUF.ItemIndex := cbUF.Items.IndexOf(Ini.ReadString( 'WebService', 'UF', 'SP'));
+
+    rgTipoAmb.ItemIndex   := Ini.ReadInteger( 'WebService', 'Ambiente',   0);
+    cbxVisualizar.Checked := Ini.ReadBool(    'WebService', 'Visualizar', False);
+    cbxSalvarSOAP.Checked := Ini.ReadBool(    'WebService', 'SalvarSOAP', False);
+    cbxAjustarAut.Checked := Ini.ReadBool(    'WebService', 'AjustarAut', False);
+    edtAguardar.Text      := Ini.ReadString(  'WebService', 'Aguardar',   '0');
+    edtTentativas.Text    := Ini.ReadString(  'WebService', 'Tentativas', '5');
+    edtIntervalo.Text     := Ini.ReadString(  'WebService', 'Intervalo',  '0');
+    seTimeOut.Value       := Ini.ReadInteger( 'WebService', 'TimeOut',    5000);
+    cbSSLType.ItemIndex   := Ini.ReadInteger( 'WebService', 'SSLType',    0);
+
+    edtProxyHost.Text  := Ini.ReadString( 'Proxy', 'Host',  '');
+    edtProxyPorta.Text := Ini.ReadString( 'Proxy', 'Porta', '');
+    edtProxyUser.Text  := Ini.ReadString( 'Proxy', 'User',  '');
+    edtProxySenha.Text := Ini.ReadString( 'Proxy', 'Pass',  '');
+
+    with ACBreSocial1.Configuracoes.WebServices do
+    begin
+      UF         := cbUF.Text;
+      Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
+      Visualizar := cbxVisualizar.Checked;
+      Salvar     := cbxSalvarSOAP.Checked;
+
+      AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
+
+      if NaoEstaVazio(edtAguardar.Text)then
+        AguardarConsultaRet := ifThen(StrToInt(edtAguardar.Text)<1000, StrToInt(edtAguardar.Text)*1000, StrToInt(edtAguardar.Text))
+      else
+        edtAguardar.Text := IntToStr(AguardarConsultaRet);
+
+      if NaoEstaVazio(edtTentativas.Text) then
+        Tentativas := StrToInt(edtTentativas.Text)
+      else
+        edtTentativas.Text := IntToStr(Tentativas);
+
+      if NaoEstaVazio(edtIntervalo.Text) then
+        IntervaloTentativas := ifThen(StrToInt(edtIntervalo.Text)<1000,StrToInt(edtIntervalo.Text)*1000,StrToInt(edtIntervalo.Text))
+      else
+        edtIntervalo.Text := IntToStr(ACBreSocial1.Configuracoes.WebServices.IntervaloTentativas);
+
+      TimeOut   := seTimeOut.Value;
+      ProxyHost := edtProxyHost.Text;
+      ProxyPort := edtProxyPorta.Text;
+      ProxyUser := edtProxyUser.Text;
+      ProxyPass := edtProxySenha.Text;
+    end;
+
+    ACBreSocial1.SSL.SSLType := TSSLType( cbSSLType.ItemIndex );
+
+    cbxSalvarArqs.Checked         := Ini.ReadBool(   'Arquivos', 'Salvar',           false);
+    cbxPastaMensal.Checked        := Ini.ReadBool(   'Arquivos', 'PastaMensal',      false);
+    cbxAdicionaLiteral.Checked    := Ini.ReadBool(   'Arquivos', 'AddLiteral',       false);
+    cbxEmissaoPatheSocial.Checked := Ini.ReadBool(   'Arquivos', 'EmissaoPatheSocial',   false);
+    cbxSalvaPathEvento.Checked    := Ini.ReadBool(   'Arquivos', 'SalvarPathEvento', false);
+    cbxSepararPorCNPJ.Checked     := Ini.ReadBool(   'Arquivos', 'SepararPorCNPJ',   false);
+    cbxSepararPorModelo.Checked   := Ini.ReadBool(   'Arquivos', 'SepararPorModelo', false);
+    edtPatheSocial.Text           := Ini.ReadString( 'Arquivos', 'PatheSocial',          '');
+    edtPathEvento.Text            := Ini.ReadString( 'Arquivos', 'PathEvento',       '');
+
+    with ACBreSocial1.Configuracoes.Arquivos do
+    begin
+      Salvar             := cbxSalvarArqs.Checked;
+      SepararPorMes      := cbxPastaMensal.Checked;
+      AdicionarLiteral   := cbxAdicionaLiteral.Checked;
+      EmissaoPatheSocial := cbxEmissaoPatheSocial.Checked;
+      SepararPorCNPJ     := cbxSepararPorCNPJ.Checked;
+      SepararPorModelo   := cbxSepararPorModelo.Checked;
+      PathSalvar         := edtPathLogs.Text;
+      PathSchemas        := edtPathSchemas.Text;
+      PatheSocial        := edtPatheSocial.Text;
+    end;
+
+    edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente', 'CNPJ',        '');
+    edtEmitIE.Text         := Ini.ReadString( 'Emitente', 'IE',          '');
+    edtEmitRazao.Text      := Ini.ReadString( 'Emitente', 'RazaoSocial', '');
+    edtEmitFantasia.Text   := Ini.ReadString( 'Emitente', 'Fantasia',    '');
+    edtEmitFone.Text       := Ini.ReadString( 'Emitente', 'Fone',        '');
+    edtEmitCEP.Text        := Ini.ReadString( 'Emitente', 'CEP',         '');
+    edtEmitLogradouro.Text := Ini.ReadString( 'Emitente', 'Logradouro',  '');
+    edtEmitNumero.Text     := Ini.ReadString( 'Emitente', 'Numero',      '');
+    edtEmitComp.Text       := Ini.ReadString( 'Emitente', 'Complemento', '');
+    edtEmitBairro.Text     := Ini.ReadString( 'Emitente', 'Bairro',      '');
+    edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente', 'CodCidade',   '');
+    edtEmitCidade.Text     := Ini.ReadString( 'Emitente', 'Cidade',      '');
+    edtEmitUF.Text         := Ini.ReadString( 'Emitente', 'UF',          '');
+
+    edtSmtpHost.Text     := Ini.ReadString( 'Email', 'Host',    '');
+    edtSmtpPort.Text     := Ini.ReadString( 'Email', 'Port',    '');
+    edtSmtpUser.Text     := Ini.ReadString( 'Email', 'User',    '');
+    edtSmtpPass.Text     := Ini.ReadString( 'Email', 'Pass',    '');
+    edtEmailAssunto.Text := Ini.ReadString( 'Email', 'Assunto', '');
+    cbEmailSSL.Checked   := Ini.ReadBool(   'Email', 'SSL',     False);
+
+    StreamMemo := TMemoryStream.Create;
+    Ini.ReadBinaryStream( 'Email', 'Mensagem', StreamMemo);
+    mmEmailMsg.Lines.LoadFromStream(StreamMemo);
+    StreamMemo.Free;
+  finally
+     Ini.Free;
+  end;
 end;
 
 end.
+

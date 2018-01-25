@@ -701,7 +701,8 @@ begin
     proNEAInformatica, proNotaInteligente, proProdata, proPronimv2, proPVH,
     proSaatri, proSisPMJP, proSiam, proVirtual, proVersaTecnologia, proVitoria,
     proWebISSv2, proActconv202, proSIAPNet, proBelford, proSystemPro, proSH3,
-    proISSJoinville: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+    proISSJoinville,
+    proAsten: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
   else
     Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
@@ -736,7 +737,8 @@ begin
 
         proABase, proBethav2, proFriburgo, proGovDigital, proNotaInteligente, proPronimv2,
         proVersaTecnologia, proWebISSv2, proActconv202, proBelford, proSH3,
-        proSIAPNet, proISSJoinville: Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
+        proSIAPNet, proISSJoinville,
+        proAsten: Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
         proTecnos: Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
 
@@ -751,7 +753,7 @@ begin
          proNEAInformatica, proNotaInteligente, proPronimv2,
          proProdata, proPVH, proSaatri, proSiam, proSisPMJP, proSystemPro,
          proVirtual, proVitoria, proVersaTecnologia, proWebISSv2, proActconv202,
-         proSH3, proSIAPNet, proBelford, proISSJoinville] then
+         proSH3, proSIAPNet, proBelford, proISSJoinville, proAsten] then
         Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
       else
       begin

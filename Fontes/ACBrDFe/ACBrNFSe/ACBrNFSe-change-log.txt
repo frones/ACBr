@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Correções visando o provedor Asten.
+Por: Italo Jurisato Junior
+
 23/01/2018
 -- Diversos --
 [*] Melhorias visando o provedor EL.

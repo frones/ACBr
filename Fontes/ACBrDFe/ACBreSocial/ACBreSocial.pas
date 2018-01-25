@@ -191,7 +191,7 @@ uses
 constructor TACBreSocial.Create(AOwner: TComponent);
 begin
   inherited;
-//  SSL.SSLDgst := dgstSHA256;
+  SSL.SSLDgst := dgstSHA256;
   FEventos := TEventos.Create(Self);
   FWebServices := TWebServices.Create(Self);
 //  FWebServicesConf := TWebServicesConf.Create(Self);

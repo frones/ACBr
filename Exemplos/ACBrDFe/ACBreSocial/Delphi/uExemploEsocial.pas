@@ -3604,25 +3604,7 @@ begin
 end;
 
 procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
-//var
-//  ASerie: String;
-//  i: integer;
 begin
-
-  ACBreSocial1.SSL.SelecionarCertificado;
-
-{  ACBreSocial1.SSL.LerCertificadosStore;
-
-  For I := 0 to ACBreSocial1.SSL.ListaCertificados.Count-1 do
-    with ACBreSocial1.SSL.ListaCertificados[i] do
-    begin
-      if NumeroSerie = '70FBA57CE8B25441' then
-        ASerie := NumeroSerie;
-    end;}
-
-//  ACBreSocial1.Configuracoes.Certificados.NumeroSerie := ASerie;
-//  ACBreSocial1.Configuracoes.Certificados.Senha := '1234';
-
   if (cbS1000.Checked) then
     GerareSocial1000;
 

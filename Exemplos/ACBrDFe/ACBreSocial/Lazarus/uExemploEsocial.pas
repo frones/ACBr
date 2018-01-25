@@ -1207,13 +1207,14 @@ begin
     begin
       ideDmDev := '1';
       codCateg := 111;
+
       with infoPerApur.ideEstabLot.add do
       begin
         tpInsc     := tiCNPJ;
         nrInsc     := '012345678987654';
         codLotacao := 'SACI54321';
         qtdDiasAv  := 22;
-        
+
         with remunPerApur.Add do
         begin
           matricula := 'A1234';
@@ -1282,6 +1283,10 @@ begin
           end;
         end;
       end;
+
+      with infoTrabInterm.add do
+        codConv := '123456';
+
     end;
   end;
 end;
@@ -1982,8 +1987,8 @@ begin
       cnpjOpPortuario      := '98765432100014';
     end;
 
-    EvtInfoComplPer.InfoAtivConcom.fatorMes := 999.99;
-    EvtInfoComplPer.InfoAtivConcom.fator13  := 111.11;
+    EvtInfoComplPer.InfoAtivConcom.fatorMes := 9.00;
+    EvtInfoComplPer.InfoAtivConcom.fator13  := 1.00;
   end;
 end;
 
@@ -2322,14 +2327,23 @@ begin
       CnpjSindTrab := '12345678901234';
 
     EvtAdmissao.Vinculo.InfoContrato.AlvaraJudicial.NrProcJud      := '123';
-    
+
+    with EvtAdmissao.Vinculo.InfoContrato.observacoes.Add do
+      observacao := 'Observacao';
+
     EvtAdmissao.Vinculo.SucessaoVinc.cnpjEmpregAnt                 := '12345678901234';
     EvtAdmissao.Vinculo.SucessaoVinc.MatricAnt                     := '123';
     EvtAdmissao.Vinculo.SucessaoVinc.dtTransf                  := Date;
     EvtAdmissao.Vinculo.SucessaoVinc.Observacao                    := 'transferido';
 
+    EvtAdmissao.Vinculo.transfDom.cpfSubstituido := '12345678901';
+    EvtAdmissao.Vinculo.transfDom.matricAnt := '123';
+    EvtAdmissao.Vinculo.transfDom.dtTransf := Date;
+
     EvtAdmissao.Vinculo.afastamento.DtIniAfast := now;
     EvtAdmissao.Vinculo.afastamento.codMotAfast := '01';
+
+    EvtAdmissao.Vinculo.Desligamento.DtDeslig := now;
   end;
 end;
 
@@ -3590,25 +3604,7 @@ begin
 end;
 
 procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
-//var
-//  ASerie: String;
-//  i: integer;
 begin
-
-  ACBreSocial1.SSL.SelecionarCertificado;
-
-{  ACBreSocial1.SSL.LerCertificadosStore;
-
-  For I := 0 to ACBreSocial1.SSL.ListaCertificados.Count-1 do
-    with ACBreSocial1.SSL.ListaCertificados[i] do
-    begin
-      if NumeroSerie = '70FBA57CE8B25441' then
-        ASerie := NumeroSerie;
-    end;}
-
-//  ACBreSocial1.Configuracoes.Certificados.NumeroSerie := ASerie;
-//  ACBreSocial1.Configuracoes.Certificados.Senha := '1234';
-
   if (cbS1000.Checked) then
     GerareSocial1000;
 

@@ -57,6 +57,7 @@
         <Filename Value="unit2.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
+        <UnitName Value="Unit2"/>
       </Unit3>
     </Units>
   </ProjectOptions>

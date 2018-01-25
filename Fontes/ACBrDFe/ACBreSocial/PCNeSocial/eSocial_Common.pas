@@ -653,10 +653,12 @@ type
     FCpfTrab: string;
     FNisTrab: string;
     FMatricula: string;
+    FcodCateg: Integer;
   public
     property cpfTrab: string read FcpfTrab write FcpfTrab;
     property nisTrab: string read FNisTrab write FNisTrab;
     property matricula: string read FMatricula write FMatricula;
+    property codCateg: Integer read FcodCateg write FcodCateg;
   end;
 
   TInfoAtivDesemp = class(TPersistent)
@@ -1067,8 +1069,7 @@ type
     property cadIni: tpSimNao read FcadIni write FcadIni;
 
     property InfoRegimeTrab: TInfoRegimeTrab read FInfoRegimeTrab write FInfoRegimeTrab;
-    property InfoContrato: TInfoContrato
-     read FInfoContrato write FInfoContrato;
+    property InfoContrato: TInfoContrato read FInfoContrato write FInfoContrato;
     property SucessaoVinc: TSucessaoVinc read FSucessaoVinc write FSucessaoVinc;
     property transfDom: TtransfDom read FtransfDom write FtransfDom;
 

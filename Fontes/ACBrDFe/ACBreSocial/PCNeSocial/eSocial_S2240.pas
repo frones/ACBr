@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -143,33 +143,33 @@ type
   end;
 
   TinfoExpRisco = class
-    private
-      FiniExpRisco : TiniExpRisco;
-      FaltExpRisco : TaltExpRisco;
-      FfimExpRisco : TfimExpRisco;
-      FRespReg: TRespRegCollection;
-    public
-      constructor Create;
-      destructor  Destroy; override;
+  private
+    FiniExpRisco : TiniExpRisco;
+    FaltExpRisco : TaltExpRisco;
+    FfimExpRisco : TfimExpRisco;
+    FRespReg: TRespRegCollection;
+  public
+    constructor Create;
+    destructor  Destroy; override;
 
-      property iniExpRisco: TiniExpRisco read FiniExpRisco write FiniExpRisco;
-      property altExpRisco: TaltExpRisco read FaltExpRisco write FaltExpRisco;
-      property fimExpRisco: TfimExpRisco read FfimExpRisco write FfimExpRisco;
-      property respReg: TRespRegCollection read FRespReg write FRespReg;
+    property iniExpRisco: TiniExpRisco read FiniExpRisco write FiniExpRisco;
+    property altExpRisco: TaltExpRisco read FaltExpRisco write FaltExpRisco;
+    property fimExpRisco: TfimExpRisco read FfimExpRisco write FfimExpRisco;
+    property respReg: TRespRegCollection read FRespReg write FRespReg;
   end;
 
   TExpRisco = class(TPersistent)
-    private
-      FdtCondicao : TDateTime;
-      FInfoAmb : TInfoAmbCollection;
+  private
+    FdtCondicao : TDateTime;
+    FInfoAmb : TInfoAmbCollection;
 
-      procedure SetInfoAmb(const Value: TInfoAmbCollection);
-    public
-      constructor Create;
-      destructor  Destroy;
+    procedure SetInfoAmb(const Value: TInfoAmbCollection);
+  public
+    constructor Create;
+    destructor  Destroy;
 
-      property dtCondicao : TDateTime read FdtCondicao write FdtCondicao;
-      property InfoAmb : TInfoAmbCollection read FInfoAmb write SetInfoAmb;
+    property dtCondicao : TDateTime read FdtCondicao write FdtCondicao;
+    property InfoAmb : TInfoAmbCollection read FInfoAmb write SetInfoAmb;
   end;
 
   TiniExpRisco = class(TExpRisco);
@@ -177,15 +177,15 @@ type
   TaltExpRisco = class(TExpRisco);
 
   TfimExpRisco = class
-    private
-      FinfoAmb: TInfoAmbCollection;
-      FdtFimCondicao: TDateTime;
-      procedure SetinfoAmb(const Value: TInfoAmbCollection);
-    public
-      constructor create;
-      destructor  destroy; override;
-      property dtFimCondicao : TDateTime read FdtFimCondicao write FdtFimCondicao;
-      property infoAmb : TInfoAmbCollection read FinfoAmb write SetinfoAmb;
+  private
+    FinfoAmb: TInfoAmbCollection;
+    FdtFimCondicao: TDateTime;
+    procedure SetinfoAmb(const Value: TInfoAmbCollection);
+  public
+    constructor create;
+    destructor  destroy; override;
+    property dtFimCondicao : TDateTime read FdtFimCondicao write FdtFimCondicao;
+    property infoAmb : TInfoAmbCollection read FinfoAmb write SetinfoAmb;
   end;
 
 implementation
@@ -223,6 +223,7 @@ end;
 destructor TS2240CollectionItem.Destroy;
 begin
   FEvtExpRisco.Free;
+
   inherited;
 end;
 
@@ -236,6 +237,7 @@ end;
 constructor TEvtExpRisco.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -248,14 +250,18 @@ begin
   FIdeEmpregador.Free;
   FIdeVinculo.Free;
   FInfoExpRisco.Free;
+
   inherited;
 end;
 
 procedure TEvtExpRisco.GeraraltExpRisco(objaltExpRisco: TaltExpRisco);
 begin
   Gerador.wGrupo('altExpRisco');
-    Gerador.wCampo(tcDat, '', 'dtAltCondicao', 0,0,0, objAltExpRisco.dtCondicao);
-    GerarInfoAmb(objaltExpRisco.InfoAmb);
+
+  Gerador.wCampo(tcDat, '', 'dtAltCondicao', 10, 10, 1, objAltExpRisco.dtCondicao);
+
+  GerarInfoAmb(objaltExpRisco.InfoAmb);
+
   Gerador.wGrupo('/altExpRisco');
 end;
 
@@ -266,15 +272,20 @@ begin
   for i := 0 to objEPI.Count -1 do
   begin
     Gerador.wGrupo('epi');
-      Gerador.wCampo(tcStr, '', 'caEPI', 0,0,0, objEPI[i].caEPI);
-      Gerador.wCampo(tcStr, '', 'eficEpi', 0,0,0, eSSimNaoToStr(objEPI[i].eficEpi));
-      Gerador.wCampo(tcStr, '', 'medProtecao', 0,0,0, eSSimNaoToStr(objEPI[i].medProtecao));
-      Gerador.wCampo(tcStr, '', 'condFuncto', 0,0,0, eSSimNaoToStr(objEPI[i].condFuncto));
-      Gerador.wCampo(tcStr, '', 'przValid', 0,0,0, eSSimNaoToStr(objEPI[i].przValid));
-      Gerador.wCampo(tcStr, '', 'periodicTroca', 0,0,0, eSSimNaoToStr(objEPI[i].periodicTroca));
-      Gerador.wCampo(tcStr, '', 'higienizacao', 0,0,0, eSSimNaoToStr(objEPI[i].higienizacao));
+
+    Gerador.wCampo(tcStr, '', 'caEPI',         1, 20, 0, objEPI[i].caEPI);
+    Gerador.wCampo(tcStr, '', 'eficEpi',       1,  1, 1, eSSimNaoToStr(objEPI[i].eficEpi));
+    Gerador.wCampo(tcStr, '', 'medProtecao',   1,  1, 1, eSSimNaoToStr(objEPI[i].medProtecao));
+    Gerador.wCampo(tcStr, '', 'condFuncto',    1,  1, 1, eSSimNaoToStr(objEPI[i].condFuncto));
+    Gerador.wCampo(tcStr, '', 'przValid',      1,  1, 1, eSSimNaoToStr(objEPI[i].przValid));
+    Gerador.wCampo(tcStr, '', 'periodicTroca', 1,  1, 1, eSSimNaoToStr(objEPI[i].periodicTroca));
+    Gerador.wCampo(tcStr, '', 'higienizacao',  1,  1, 1, eSSimNaoToStr(objEPI[i].higienizacao));
+
     Gerador.wGrupo('/epi');
   end;
+
+  if objEPI.Count > 50 then
+    Gerador.wAlerta('', 'epi', 'Lista de EPI', ERR_MSG_MAIOR_MAXIMO + '50');
 end;
 
 procedure TEvtExpRisco.GerarEpc(pEpc: TEpcCollection);
@@ -284,21 +295,30 @@ begin
   for i := 0 to pEpc.Count - 1 do
   begin
     Gerador.wGrupo('epc');
-      Gerador.wCampo(tcStr, '', 'dscEpc', 0,0,0, pEpc[i].dscEpc);
-      Gerador.wCampo(tcStr, '', 'eficEpc', 0,0,0, eSSimNaoToStr(pEpc[i].eficEpc));
+
+    Gerador.wCampo(tcStr, '', 'dscEpc',  1, 70, 1, pEpc[i].dscEpc);
+    Gerador.wCampo(tcStr, '', 'eficEpc', 1,  1, 0, eSSimNaoToStr(pEpc[i].eficEpc));
+
     Gerador.wGrupo('/epc');
   end;
+
+  if pEpc.Count > 50 then
+    Gerador.wAlerta('', 'epc', 'Lista de EPC', ERR_MSG_MAIOR_MAXIMO + '50');
 end;
 
 procedure TEvtExpRisco.GerarEpcEpi(pEpcEpi: TEpcEpi);
 begin
   Gerador.wGrupo('epcEpi');
-    Gerador.wCampo(tcInt, '', 'utilizEPC', 0,0,0, eStpUtilizEPCToStr(pEpcEpi.utilizEPC));
-    Gerador.wCampo(tcInt, '', 'utilizEPI', 0,0,0, eStpUtilizEPIToStr(pEpcEpi.utilizEPI));
-    if pEpcEpi.epcInst then
-      GerarEpc(pEpcEpi.epc);
-    if pEpcEpi.epiInst then
-      GerarEPI(pEpcEpi.epi);
+
+  Gerador.wCampo(tcInt, '', 'utilizEPC', 1, 1, 1, eStpUtilizEPCToStr(pEpcEpi.utilizEPC));
+  Gerador.wCampo(tcInt, '', 'utilizEPI', 1, 1, 1, eStpUtilizEPIToStr(pEpcEpi.utilizEPI));
+
+  if pEpcEpi.epcInst then
+    GerarEpc(pEpcEpi.epc);
+
+  if pEpcEpi.epiInst then
+    GerarEPI(pEpcEpi.epi);
+
   Gerador.wGrupo('/epcEpi');
 end;
 
@@ -309,44 +329,66 @@ begin
   for I := 0 to objFatRisco.Count - 1 do
   begin
     Gerador.wGrupo('fatRisco');
-      Gerador.wCampo(tcStr, '', 'codFatRis', 0,0,0, objFatRisco.Items[i].codFatRis);
-      Gerador.wCampo(tcStr, '', 'intConc', 0,0,0, objFatRisco.Items[i].intConc);
-      Gerador.wCampo(tcStr, '', 'tecMedicao', 0,0,0, objFatRisco.Items[i].tecMedicao);
-      GerarEpcEpi(objFatRisco.Items[i].epcEpi);
+
+    Gerador.wCampo(tcStr, '', 'codFatRis',  1, 10, 1, objFatRisco.Items[i].codFatRis);
+    Gerador.wCampo(tcStr, '', 'intConc',    1, 15, 0, objFatRisco.Items[i].intConc);
+    Gerador.wCampo(tcStr, '', 'tecMedicao', 1, 40, 0, objFatRisco.Items[i].tecMedicao);
+
+    GerarEpcEpi(objFatRisco.Items[i].epcEpi);
+
     Gerador.wGrupo('/fatRisco');
   end;
+
+  if objFatRisco.Count > 999 then
+    Gerador.wAlerta('', 'fatRisco', 'Lista de Fatores de Riscos', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 procedure TEvtExpRisco.GerarfimExpRisco(objfimExpRisco: TfimExpRisco);
 var
   i: Integer;
 begin
-  //Gerado a parte pois pede menos campos que os demais grupos do layout.
   Gerador.wGrupo('fimExpRisco');
-    Gerador.wCampo(tcDat, '', 'dtFimCondicao', 0,0,0, objfimExpRisco.dtFimCondicao);
-    for I := 0 to objfimExpRisco.infoAmb.Count - 1 do
-    begin
-      Gerador.wGrupo('infoAmb');
-        Gerador.wCampo(tcStr, '', 'codAmb', 0,0,0, objfimExpRisco.InfoAmb.items[i].codAmb);
-      Gerador.wGrupo('/infoAmb');
-    end;
+
+  Gerador.wCampo(tcDat, '', 'dtFimCondicao', 10, 10, 1, objfimExpRisco.dtFimCondicao);
+
+  for i := 0 to objfimExpRisco.infoAmb.Count - 1 do
+  begin
+    Gerador.wGrupo('infoAmb');
+
+    Gerador.wCampo(tcStr, '', 'codAmb', 1, 30, 0, objfimExpRisco.InfoAmb.items[i].codAmb);
+
+    Gerador.wGrupo('/infoAmb');
+  end;
+
+  if objfimExpRisco.infoAmb.Count > 99 then
+    Gerador.wAlerta('', 'infoAmb', 'Lista de Informações Ambientais', ERR_MSG_MAIOR_MAXIMO + '99');
+
   Gerador.wGrupo('/fimExpRisco');
 end;
 
 procedure TEvtExpRisco.GerarInfoAmb(objInfoAmb: TinfoAmbCollection);
 var
-  j, i : integer;
+  j: integer;
 begin
   for j := 0 to objInfoAmb.Count - 1 do
   begin
     Gerador.wGrupo('infoAmb');
-      Gerador.wCampo(tcStr, '', 'codAmb', 0,0,0, objInfoAmb.items[j].codAmb);
-      Gerador.wGrupo('infoAtiv');
-        Gerador.wCampo(tcStr, '', 'dscAtivDes', 0,0,0, objInfoAmb.items[j].InfoAtiv.dscAtivDes);
-      Gerador.wGrupo('/infoAtiv');
-      GerarFatRisco(objInfoAmb.items[j].FatRisco);
+
+    Gerador.wCampo(tcStr, '', 'codAmb', 1, 30, 1, objInfoAmb.items[j].codAmb);
+
+    Gerador.wGrupo('infoAtiv');
+
+    Gerador.wCampo(tcStr, '', 'dscAtivDes', 1, 999, 1, objInfoAmb.items[j].InfoAtiv.dscAtivDes);
+
+    Gerador.wGrupo('/infoAtiv');
+
+    GerarFatRisco(objInfoAmb.items[j].FatRisco);
+
     Gerador.wGrupo('/infoAmb');
   end;
+
+  if objInfoAmb.Count > 99 then
+    Gerador.wAlerta('', 'infoAmb', 'Lista de Informações Ambientais', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtExpRisco.GerarRespReg(pRespReg: TRespRegCollection);
@@ -356,33 +398,46 @@ begin
   for i := 0 to pRespReg.Count - 1 do
   begin
     Gerador.wGrupo('respReg');
-      Gerador.wCampo(tcDat, '', 'dtIni', 0,0,0, pRespReg[i].dtIni);
-      Gerador.wCampo(tcDat, '', 'dtFim', 0,0,0, pRespReg[i].dtFim);
-      Gerador.wCampo(tcStr, '', 'nisResp', 0,0,0, pRespReg[i].nisResp);
-      Gerador.wCampo(tcStr, '', 'nrOc', 0,0,0, pRespReg[i].nrOc);
-      Gerador.wCampo(tcStr, '', 'ufOC', 0,0,0, eSufToStr(pRespReg[i].ufOC));
+
+    Gerador.wCampo(tcDat, '', 'dtIni',   10, 10, 1, pRespReg[i].dtIni);
+    Gerador.wCampo(tcDat, '', 'dtFim',   10, 10, 0, pRespReg[i].dtFim);
+    Gerador.wCampo(tcStr, '', 'nisResp',  1, 11, 1, pRespReg[i].nisResp);
+    Gerador.wCampo(tcStr, '', 'nrOc',     1, 14, 1, pRespReg[i].nrOc);
+    Gerador.wCampo(tcStr, '', 'ufOC',     2,  2, 0, eSufToStr(pRespReg[i].ufOC));
+
     Gerador.wGrupo('/respReg');
   end;
+
+  if pRespReg.Count > 9 then
+    Gerador.wAlerta('', 'respReg', 'Lista de Responsáveis pelo registro', ERR_MSG_MAIOR_MAXIMO + '9');
 end;
 
 procedure TEvtExpRisco.GerarInfoExpRisco(objInfoExpRisco: TInfoExpRisco);
 begin
   Gerador.wGrupo('infoExpRisco');
-    if (objInfoExpRisco.iniExpRisco.dtCondicao > 0) then
-      GerariniExpRisco(objInfoExpRisco.iniExpRisco);
-    if (objInfoExpRisco.altExpRisco.dtCondicao > 0) then
-      GeraraltExpRisco(objInfoExpRisco.altExpRisco);
-    if (objInfoExpRisco.fimExpRisco.dtFimCondicao > 0) then
-      GerarfimExpRisco(objInfoExpRisco.fimExpRisco);
-    GerarRespReg(objInfoExpRisco.respReg);
+
+  if (objInfoExpRisco.iniExpRisco.dtCondicao > 0) then
+    GerariniExpRisco(objInfoExpRisco.iniExpRisco);
+
+  if (objInfoExpRisco.altExpRisco.dtCondicao > 0) then
+    GeraraltExpRisco(objInfoExpRisco.altExpRisco);
+
+  if (objInfoExpRisco.fimExpRisco.dtFimCondicao > 0) then
+    GerarfimExpRisco(objInfoExpRisco.fimExpRisco);
+
+  GerarRespReg(objInfoExpRisco.respReg);
+
   Gerador.wGrupo('/infoExpRisco');
 end;
 
 procedure TEvtExpRisco.GerariniExpRisco(objiniExpRisco: TiniExpRisco);
 begin
   Gerador.wGrupo('iniExpRisco');
-    Gerador.wCampo(tcDat, '', 'dtIniCondicao', 0,0,0, objiniExpRisco.dtCondicao);
-    GerarInfoAmb(objiniExpRisco.InfoAmb);
+
+  Gerador.wCampo(tcDat, '', 'dtIniCondicao', 10, 10, 1, objiniExpRisco.dtCondicao);
+
+  GerarInfoAmb(objiniExpRisco.InfoAmb);
+
   Gerador.wGrupo('/iniExpRisco');
 end;
 
@@ -390,16 +445,19 @@ function TEvtExpRisco.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtExpRisco');
-      Gerador.wGrupo('evtExpRisco Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');//versao="'+Self.versao+'"';
-        //gerarIdVersao(self);
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        gerarIdeVinculo(self.IdeVinculo);
-        GerarInfoExpRisco(self.InfoExpRisco);
-      Gerador.wGrupo('/evtExpRisco');
+    Gerador.wGrupo('evtExpRisco Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeVinculo(self.IdeVinculo);
+    GerarInfoExpRisco(self.InfoExpRisco);
+
+    Gerador.wGrupo('/evtExpRisco');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtExpRisco');
+
     Validar('evtExpRisco');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -413,12 +471,14 @@ end;
 constructor TExpRisco.create;
 begin
   inherited;
+
   FInfoAmb := TInfoAmbCollection.Create;
 end;
 
 destructor TExpRisco.destroy;
 begin
   FinfoAmb.Free;
+
   inherited;
 end;
 
@@ -432,12 +492,14 @@ end;
 constructor TfimExpRisco.create;
 begin
   inherited;
+
   FinfoAmb := TInfoAmbCollection.Create;
 end;
 
 destructor TfimExpRisco.destroy;
 begin
   FInfoAmb.Free;
+
   inherited;
 end;
 
@@ -451,6 +513,7 @@ end;
 constructor TinfoExpRisco.create;
 begin
   inherited;
+
   FiniExpRisco := TiniExpRisco.Create;
   FaltExpRisco := TaltExpRisco.Create;
   FfimExpRisco := TfimExpRisco.Create;
@@ -463,9 +526,9 @@ begin
   FaltExpRisco.Free;
   FfimExpRisco.Free;
   FRespReg.Free;
+
   inherited;
 end;
-
 
 { TRespRegCollection }
 

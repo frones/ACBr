@@ -131,7 +131,6 @@ type
     property observacao: string read Fobservacao write Fobservacao;
   end;
 
-
   TCancAvPrevio = class
   private
     FdtCancAvPrv: TDateTime;
@@ -178,6 +177,7 @@ end;
 destructor TS2250CollectionItem.Destroy;
 begin
   FEvtAvPrevio.Free;
+
   inherited;
 end;
 
@@ -192,6 +192,7 @@ end;
 constructor TEvtAvPrevio.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -205,36 +206,43 @@ begin
   FIdeEmpregador.Free;
   FIdeVinculo.Free;
   FInfoAvPrevio.Free;
+
   inherited;
 end;
 
 procedure TEvtAvPrevio.GerarCancAvPrevio;
 begin
   Gerador.wGrupo('cancAvPrevio');
-    Gerador.wCampo(tcDat, '', 'dtCancAvPrv', 0, 0, 0, self.InfoAvPrevio.CancAvPrevio.dtCancAvPrv);
-    Gerador.wCampo(tcStr, '', 'observacao', 0, 0, 0, self.InfoAvPrevio.CancAvPrevio.observacao);
-    Gerador.wCampo(tcStr, '', 'mtvCancAvPrevio', 0, 0, 0, eSMtvCancAvPrevioToStr(self.InfoAvPrevio.CancAvPrevio.mtvCancAvPrevio));
+
+  Gerador.wCampo(tcDat, '', 'dtCancAvPrv',     10,  10, 1, self.InfoAvPrevio.CancAvPrevio.dtCancAvPrv);
+  Gerador.wCampo(tcStr, '', 'observacao',       1, 255, 0, self.InfoAvPrevio.CancAvPrevio.observacao);
+  Gerador.wCampo(tcStr, '', 'mtvCancAvPrevio',  1,   1, 1, eSMtvCancAvPrevioToStr(self.InfoAvPrevio.CancAvPrevio.mtvCancAvPrevio));
+
   Gerador.wGrupo('/cancAvPrevio');
 end;
 
 procedure TEvtAvPrevio.GerarDetAvPrevio;
 begin
   Gerador.wGrupo('detAvPrevio');
-    Gerador.wCampo(tcDat, '', 'dtAvPrv', 0, 0, 0, self.InfoAvPrevio.DetAvPrevio.dtAvPrv);
-    Gerador.wCampo(tcDat, '', 'dtPrevDeslig', 0, 0, 0, self.InfoAvPrevio.DetAvPrevio.dtPrevDeslig);
-    Gerador.wCampo(tcStr, '', 'tpAvPrevio', 0, 0, 0, eSTpAvPrevioToStr(self.InfoAvPrevio.DetAvPrevio.tpAvPrevio));
-    Gerador.wCampo(tcStr, '', 'observacao', 0, 0, 0, self.InfoAvPrevio.DetAvPrevio.observacao);
+
+  Gerador.wCampo(tcDat, '', 'dtAvPrv',      10,  10, 1, self.InfoAvPrevio.DetAvPrevio.dtAvPrv);
+  Gerador.wCampo(tcDat, '', 'dtPrevDeslig', 10,  10, 1, self.InfoAvPrevio.DetAvPrevio.dtPrevDeslig);
+  Gerador.wCampo(tcStr, '', 'tpAvPrevio',    1,   1, 1, eSTpAvPrevioToStr(self.InfoAvPrevio.DetAvPrevio.tpAvPrevio));
+  Gerador.wCampo(tcStr, '', 'observacao',    1, 255, 0, self.InfoAvPrevio.DetAvPrevio.observacao);
+
   Gerador.wGrupo('/detAvPrevio');
 end;
 
 procedure TEvtAvPrevio.GerarInfoAvPrevio;
 begin
   Gerador.wGrupo('infoAvPrevio');
-    if (DateToStr(self.InfoAvPrevio.DetAvPrevio.dtAvPrv) <> dDataBrancoNula) then
-      GerarDetAvPrevio;
 
-    if (DateToStr(self.InfoAvPrevio.CancAvPrevio.dtCancAvPrv) <> dDataBrancoNula) then
-      GerarCancAvPrevio;
+  if (DateToStr(self.InfoAvPrevio.DetAvPrevio.dtAvPrv) <> dDataBrancoNula) then
+    GerarDetAvPrevio;
+
+  if (DateToStr(self.InfoAvPrevio.CancAvPrevio.dtCancAvPrv) <> dDataBrancoNula) then
+    GerarCancAvPrevio;
+
   Gerador.wGrupo('/infoAvPrevio');
 end;
 
@@ -242,16 +250,19 @@ function TEvtAvPrevio.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtAvPrevio');
-      Gerador.wGrupo('evtAvPrevio Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        gerarIdeVinculo(self.IdeVinculo);
-        GerarInfoAvPrevio;
-      Gerador.wGrupo('/evtAvPrevio');
+    Gerador.wGrupo('evtAvPrevio Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeVinculo(self.IdeVinculo);
+    GerarInfoAvPrevio;
+
+    Gerador.wGrupo('/evtAvPrevio');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAvPrevio');
+
     Validar('evtAvPrevio');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -272,8 +283,9 @@ destructor TInfoAvPrevio.destroy;
 begin
   FDetAvPrevio.Free;
   FCancAvPrevio.Free;
+
   inherited;
 end;
 
 end.
- 
+

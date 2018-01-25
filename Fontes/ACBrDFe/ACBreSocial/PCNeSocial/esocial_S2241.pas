@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -121,77 +121,78 @@ type
   end;
 
   TInsPerApo = class(TPersistent)
-    private
-      FDtCondicao : TDateTime;
-      FInfoAmb : TInfoAmbCollection;
-      procedure setInfoAmb(const Value: TInfoAmbCollection);
-    public
-      constructor Create;
-      destructor  Destroy; override;
+  private
+    FDtCondicao : TDateTime;
+    FInfoAmb : TInfoAmbCollection;
+
+    procedure setInfoAmb(const Value: TInfoAmbCollection);
+  public
+    constructor Create;
+    destructor  Destroy; override;
   end;
 
   TiniInsalPeric = class(TInsPerApo)
-    public
-      property DtiniCondicao : TDateTime read FDtCondicao write FDtCondicao;
-      property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
+  public
+    property DtiniCondicao : TDateTime read FDtCondicao write FDtCondicao;
+    property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
   end;
 
   TaltInsalPeric = class(TInsPerApo)
-    public
-      property DtaltCondicao : TDateTime read FDtCondicao write FDtCondicao;
-      property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
+  public
+    property DtaltCondicao : TDateTime read FDtCondicao write FDtCondicao;
+    property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
   end;
 
   TfimInsalPeric = class(TInsPerApo)
-    public
-      property DtfimCondicao : TDateTime read FDtCondicao write FDtCondicao;
-      property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
+  public
+    property DtfimCondicao : TDateTime read FDtCondicao write FDtCondicao;
+    property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
   end;
 
   TInsalPeric = class(TPersistent)
-    private
-      FiniInsalPeric : TiniInsalPeric;
-      FaltInsalPeric : TaltInsalPeric;
-      FfimInsalPeric : TfimInsalPeric;
-    public
-      constructor Create;
-      destructor  Destroy; Override;
+  private
+    FiniInsalPeric : TiniInsalPeric;
+    FaltInsalPeric : TaltInsalPeric;
+    FfimInsalPeric : TfimInsalPeric;
+  public
+    constructor Create;
+    destructor  Destroy; Override;
 
-      property iniInsalPeric : TiniInsalPeric read FiniInsalPeric write FiniInsalPeric;
-      property altInsalPeric : TaltInsalPeric read FaltInsalPeric write FaltInsalPeric;
-      property fimInsalPeric : TfimInsalPeric read FfimInsalPeric write FfimInsalPeric;
+    property iniInsalPeric : TiniInsalPeric read FiniInsalPeric write FiniInsalPeric;
+    property altInsalPeric : TaltInsalPeric read FaltInsalPeric write FaltInsalPeric;
+    property fimInsalPeric : TfimInsalPeric read FfimInsalPeric write FfimInsalPeric;
   end;
 
   TiniAposentEsp = class(TInsPerApo)
-    public
-      property DtiniCondicao : TDateTime read FDtCondicao write FDtCondicao;
-      property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
+  public
+    property DtiniCondicao : TDateTime read FDtCondicao write FDtCondicao;
+    property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
   end;
 
   TaltAposentEsp = class(TInsPerApo)
-    public
-      property DtaltCondicao : TDateTime read FDtCondicao write FDtCondicao;
-      property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
+  public
+    property DtaltCondicao : TDateTime read FDtCondicao write FDtCondicao;
+    property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
   end;
 
   TfimAposentEsp = class(TInsPerApo)
-    public
-      property DtfimCondicao : TDateTime read FDtCondicao write FDtCondicao;
-      property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
+  public
+    property DtfimCondicao : TDateTime read FDtCondicao write FDtCondicao;
+    property InfoAmb : TInfoAmbCollection read FInfoAmb write setInfoAmb;
   end;
 
   TAposentEsp = class(TPersistent)
-    private
-      FiniAposentEsp : TiniAposentEsp;
-      FaltAposentEsp : TaltAposentEsp;
-      FfimAposentEsp : TfimAposentEsp;
-    public
-      constructor Create;
-      destructor  Destroy; Override;
+  private
+    FiniAposentEsp : TiniAposentEsp;
+    FaltAposentEsp : TaltAposentEsp;
+    FfimAposentEsp : TfimAposentEsp;
+  public
+    constructor Create;
+    destructor  Destroy; Override;
 
-      property iniAposentEsp : TiniAposentEsp read FiniAposentEsp write FiniAposentEsp;
-      property altAposentEsp : TaltAposentEsp read FaltAposentEsp write FaltAposentEsp;
-      property fimAposentEsp : TfimAposentEsp read FfimAposentEsp write FfimAposentEsp;
+    property iniAposentEsp : TiniAposentEsp read FiniAposentEsp write FiniAposentEsp;
+    property altAposentEsp : TaltAposentEsp read FaltAposentEsp write FaltAposentEsp;
+    property fimAposentEsp : TfimAposentEsp read FfimAposentEsp write FfimAposentEsp;
   end;
 
 implementation
@@ -210,6 +211,7 @@ end;
 destructor TS2241CollectionItem.Destroy;
 begin
   FEvtInsApo.Free;
+
   inherited;
 end;
 
@@ -223,12 +225,14 @@ end;
 constructor TInsPerApo.create;
 begin
   inherited;
+
   FInfoAmb := TInfoAmbCollection.create;
 end;
 
 destructor TInsPerApo.destroy;
 begin
   FInfoAmb.Free;
+
   inherited;
 end;
 
@@ -242,6 +246,7 @@ end;
 constructor TInsalPeric.Create;
 begin
   inherited;
+
   FiniInsalperic := TiniInsalPeric.create;
   FaltInsalPeric := TaltInsalPeric.create;
   FfimInsalPeric := TfimInsalPeric.create;
@@ -252,6 +257,7 @@ begin
   FiniInsalPeric.Free;
   FaltInsalPeric.Free;
   FfimInsalPeric.Free;
+
   inherited;
 end;
 
@@ -260,6 +266,7 @@ end;
 constructor TAposentEsp.Create;
 begin
   inherited;
+
   FiniAposentEsp := TiniAposentEsp.create;
   FaltAposentEsp := TaltAposentEsp.create;
   FfimAposentEsp := TfimAposentEsp.create;
@@ -270,6 +277,7 @@ begin
   FiniAposentEsp.Free;
   FaltAposentEsp.Free;
   FfimAposentEsp.Free;
+
   inherited;
 end;
 
@@ -278,6 +286,7 @@ end;
 constructor TEvtInsApo.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -292,34 +301,45 @@ begin
   FIdeVinculo.Free;
   FInsalPeric.Free;
   FAposentEsp.Free;
+
   inherited;
 end;
 
 procedure TEvtInsApo.GerarAltAposentEsp(objAltApoEsp: TaltAposentEsp);
 begin
   Gerador.wGrupo('altAposentEsp');
-    Gerador.wCampo(tcDat, '', 'dtaltCondicao', 0,0,0, objAltApoEsp.dtAltCondicao);
-    GerarInfoAmb(objAltApoEsp, objAltApoEsp.InfoAmb);
+
+  Gerador.wCampo(tcDat, '', 'dtaltCondicao', 10, 10, 1, objAltApoEsp.dtAltCondicao);
+
+  GerarInfoAmb(objAltApoEsp, objAltApoEsp.InfoAmb);
+
   Gerador.wGrupo('/altAposentEsp');
 end;
 
 procedure TEvtInsApo.GerarAltInsalPeric(objAltInsPer: TaltInsalPeric);
 begin
   Gerador.wGrupo('altInsalPeric');
-    Gerador.wCampo(tcDat, '', 'dtaltCondicao', 0,0,0, objAltInsPer.dtAltCondicao);
-    GerarInfoAmb(objAltInsPer, objAltInsPer.InfoAmb);
+
+  Gerador.wCampo(tcDat, '', 'dtaltCondicao', 10, 10, 1, objAltInsPer.dtAltCondicao);
+
+  GerarInfoAmb(objAltInsPer, objAltInsPer.InfoAmb);
+
   Gerador.wGrupo('/altInsalPeric');
 end;
 
 procedure TEvtInsApo.GerarAposentEsp(objAposentEsp: TAposentEsp);
 begin
   Gerador.wGrupo('aposentEsp');
-    if objAposentEsp.iniAposentEsp.DtiniCondicao > 0 then
-      GerariniAposentEsp(objAposentEsp.iniAposentEsp);
-    if objAposentEsp.altAposentEsp.DtaltCondicao > 0 then  
-      GeraraltAposentEsp(objAposentEsp.altAposentEsp);
-    if objAposentEsp.fimAposentEsp.DtfimCondicao > 0 then  
-      GerarfimAposentEsp(objAposentEsp.fimAposentEsp);
+
+  if objAposentEsp.iniAposentEsp.DtiniCondicao > 0 then
+    GerariniAposentEsp(objAposentEsp.iniAposentEsp);
+
+  if objAposentEsp.altAposentEsp.DtaltCondicao > 0 then
+    GeraraltAposentEsp(objAposentEsp.altAposentEsp);
+
+  if objAposentEsp.fimAposentEsp.DtfimCondicao > 0 then
+    GerarfimAposentEsp(objAposentEsp.fimAposentEsp);
+
   Gerador.wGrupo('/aposentEsp');
 end;
 
@@ -327,27 +347,38 @@ procedure TEvtInsApo.GerarFatRisco(objFatRisco: TFatRiscoCollection);
 var
   i: Integer;
 begin
-  for I := 0 to objFatRisco.count - 1 do
+  for i := 0 to objFatRisco.count - 1 do
   begin
     Gerador.wGrupo('fatRisco');
-      Gerador.wCampo(tcStr, '', 'codFatRis', 0,0,0, objFatRisco.items[i].codFatRis);
+
+    Gerador.wCampo(tcStr, '', 'codFatRis', 1, 10, 1, objFatRisco.items[i].codFatRis);
+
     Gerador.wGrupo('/fatRisco');
   end;
+
+  if objFatRisco.Count > 999 then
+    Gerador.wAlerta('', 'fatRisco', 'Lista de Fatores de Riscos', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 procedure TEvtInsApo.GerarFimAposentEsp(objFimApoEsp: TfimAposentEsp);
 begin
   Gerador.wGrupo('fimAposentEsp');
-    Gerador.wCampo(tcDat, '', 'dtFimCondicao', 0,0,0, objFimApoEsp.dtfimCondicao);
-    GerarInfoAmb(objFimApoEsp, objFimApoEsp.InfoAmb);
+
+  Gerador.wCampo(tcDat, '', 'dtFimCondicao', 10, 10, 1, objFimApoEsp.dtfimCondicao);
+
+  GerarInfoAmb(objFimApoEsp, objFimApoEsp.InfoAmb);
+
   Gerador.wGrupo('/fimAposentEsp');
 end;
 
 procedure TEvtInsApo.GerarFimInsalPeric(objFimInsPer: TfimInsalPeric);
 begin
   Gerador.wGrupo('fimInsalPeric');
-    Gerador.wCampo(tcDat, '', 'dtFimCondicao', 0,0,0, objFimInsPer.dtfimCondicao);
-    GerarInfoAmb(objFimInsPer, objFimInsPer.InfoAmb);
+
+  Gerador.wCampo(tcDat, '', 'dtFimCondicao', 10, 10, 1, objFimInsPer.dtfimCondicao);
+
+  GerarInfoAmb(objFimInsPer, objFimInsPer.InfoAmb);
+
   Gerador.wGrupo('/fimInsalPeric');
 end;
 
@@ -358,38 +389,54 @@ begin
   for i := 0 to objInfoAmb.count - 1 do
   begin
     Gerador.wGrupo('infoAmb');
-      Gerador.wCampo(tcStr, '', 'codAmb', 0,0,0, objInfoAmb.items[i].codAmb);
-      if (not ((Sender is TfimAposentEsp) or (Sender is TfimInsalPeric))) then
-        GerarFatRisco(objInfoAmb.items[i].FatRisco);
+
+    Gerador.wCampo(tcStr, '', 'codAmb', 1, 30, 1, objInfoAmb.items[i].codAmb);
+
+    if (not ((Sender is TfimAposentEsp) or (Sender is TfimInsalPeric))) then
+      GerarFatRisco(objInfoAmb.items[i].FatRisco);
+
     Gerador.wGrupo('/infoAmb');
   end;
+
+  if objInfoAmb.Count > 99 then
+    Gerador.wAlerta('', 'infoAmb', 'Lista de Informações Ambientais', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtInsApo.GerarIniAposentEsp(objIniApoEsp: TiniAposentEsp);
 begin
   Gerador.wGrupo('iniAposentEsp');
-    Gerador.wCampo(tcDat, '', 'dtIniCondicao', 0,0,0, objIniApoEsp.dtIniCondicao);
-    GerarInfoAmb(objIniApoEsp, objIniApoEsp.InfoAmb);
+
+  Gerador.wCampo(tcDat, '', 'dtIniCondicao', 10, 10, 1, objIniApoEsp.dtIniCondicao);
+
+  GerarInfoAmb(objIniApoEsp, objIniApoEsp.InfoAmb);
+
   Gerador.wGrupo('/iniAposentEsp');
 end;
 
 procedure TEvtInsApo.GerarIniInsalPeric(objIniInsPer: TiniInsalPeric);
 begin
   Gerador.wGrupo('iniInsalPeric');
-    Gerador.wCampo(tcDat, '', 'dtIniCondicao', 0,0,0, objIniInsPer.dtIniCondicao);
-    GerarInfoAmb(objIniInsPer, objIniInsPer.InfoAmb);
+
+  Gerador.wCampo(tcDat, '', 'dtIniCondicao', 10, 10, 1, objIniInsPer.dtIniCondicao);
+
+  GerarInfoAmb(objIniInsPer, objIniInsPer.InfoAmb);
+
   Gerador.wGrupo('/iniInsalPeric');
 end;
 
 procedure TEvtInsApo.GerarInsalPeric(objInsalPeric: TInsalPeric);
 begin
   Gerador.wGrupo('insalPeric');
-    if objInsalPeric.iniInsalPeric.DtiniCondicao > 0 then
-      GerariniInsalPeric(objInsalPeric.iniInsalPeric);
-    if objInsalPeric.altInsalPeric.DtaltCondicao > 0 then  
-      GeraraltInsalPeric(objInsalPeric.altInsalPeric);
-    if objInsalPeric.fimInsalPeric.DtfimCondicao > 0 then  
-      GerarfimInsalPeric(objInsalPeric.fimInsalPeric);
+
+  if objInsalPeric.iniInsalPeric.DtiniCondicao > 0 then
+    GerariniInsalPeric(objInsalPeric.iniInsalPeric);
+
+  if objInsalPeric.altInsalPeric.DtaltCondicao > 0 then
+    GeraraltInsalPeric(objInsalPeric.altInsalPeric);
+
+  if objInsalPeric.fimInsalPeric.DtfimCondicao > 0 then
+    GerarfimInsalPeric(objInsalPeric.fimInsalPeric);
+
   Gerador.wGrupo('/insalPeric');
 end;
 
@@ -397,19 +444,24 @@ function TEvtInsApo.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtInsApo');
-      Gerador.wGrupo('evtInsApo Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');//versao="'+Self.versao+'"
-        //gerarIdVersao(self);
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        gerarIdeVinculo(self.IdeVinculo);
-        if Assigned(FInsalPeric) then
-          GerarInsalPeric(self.InsalPeric);
-        if Assigned(FAposentEsp) then
-          GerarAposentEsp(self.AposentEsp);
-      Gerador.wGrupo('/evtInsApo');
+    Gerador.wGrupo('evtInsApo Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeVinculo(self.IdeVinculo);
+
+    if Assigned(FInsalPeric) then
+      GerarInsalPeric(self.InsalPeric);
+
+    if Assigned(FAposentEsp) then
+      GerarAposentEsp(self.AposentEsp);
+
+    Gerador.wGrupo('/evtInsApo');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInsApo');
+
     Validar('evtInsApo');
   except on e:exception do
     raise Exception.Create(e.Message);

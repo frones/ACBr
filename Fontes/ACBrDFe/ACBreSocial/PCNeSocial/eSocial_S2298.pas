@@ -152,6 +152,7 @@ end;
 destructor TS2298CollectionItem.Destroy;
 begin
   FEvtReintegr.Free;
+
   inherited;
 end;
 
@@ -164,6 +165,7 @@ end;
 constructor TEvtReintegr.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo    := TIdeVinculo.Create;
@@ -176,23 +178,26 @@ begin
   FIdeEmpregador.Free;
   FIdeVinculo.Free;
   FInfoReintegr.Free;
+
   inherited;
 end;
 
 procedure TEvtReintegr.GerarInfoReintegr;
 begin
   Gerador.wGrupo('infoReintegr');
-    Gerador.wCampo(tcStr, '', 'tpReint', 0, 0, 0, eSTpReintToStr(self.InfoReintegr.tpReint));
 
-    if eSTpReintToStr(self.InfoReintegr.tpReint) = '1' then
-      Gerador.wCampo(tcStr, '', 'nrProcJud', 0, 0, 0, self.InfoReintegr.nrProcJud);
+  Gerador.wCampo(tcStr, '', 'tpReint', 1, 1, 1, eSTpReintToStr(self.InfoReintegr.tpReint));
 
-    if eSTpReintToStr(self.InfoReintegr.tpReint) = '2' then
-      Gerador.wCampo(tcStr, '', 'nrLeiAnistia', 0, 0, 0, eSNrLeiAnistiaToStr(self.InfoReintegr.nrLeiAnistia));
+  if eSTpReintToStr(self.InfoReintegr.tpReint) = '1' then
+    Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, self.InfoReintegr.nrProcJud);
 
-    Gerador.wCampo(tcDat, '', 'dtEfetRetorno', 0, 0, 0, self.InfoReintegr.dtEfetRetorno);
-    Gerador.wCampo(tcDat, '', 'dtEfeito', 0, 0, 0, self.InfoReintegr.dtEfeito);
-    Gerador.wCampo(tcStr, '', 'indPagtoJuizo', 0, 0, 0, eSSimNaoToStr(self.InfoReintegr.indPagtoJuizo));
+  if eSTpReintToStr(self.InfoReintegr.tpReint) = '2' then
+    Gerador.wCampo(tcStr, '', 'nrLeiAnistia', 1, 13, 0, eSNrLeiAnistiaToStr(self.InfoReintegr.nrLeiAnistia));
+
+  Gerador.wCampo(tcDat, '', 'dtEfetRetorno', 10, 10, 1, self.InfoReintegr.dtEfetRetorno);
+  Gerador.wCampo(tcDat, '', 'dtEfeito',      10, 10, 1, self.InfoReintegr.dtEfeito);
+  Gerador.wCampo(tcStr, '', 'indPagtoJuizo',  1,  1, 1, eSSimNaoToStr(self.InfoReintegr.indPagtoJuizo));
+
   Gerador.wGrupo('/infoReintegr');
 end;
 
@@ -200,16 +205,19 @@ function TEvtReintegr.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtReintegr');
-      Gerador.wGrupo('evtReintegr Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        gerarIdeVinculo(self.IdeVinculo);
-        GerarInfoReintegr;
-      Gerador.wGrupo('/evtReintegr');
+    Gerador.wGrupo('evtReintegr Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeVinculo(self.IdeVinculo);
+    GerarInfoReintegr;
+
+    Gerador.wGrupo('/evtReintegr');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtReintegr');
+
     Validar('evtReintegr');
   except on e:exception do
     raise Exception.Create(e.Message);

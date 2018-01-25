@@ -203,7 +203,7 @@ type
 implementation
 
 uses
-  ACBreSocial, pcnLeitor;
+  ACBreSocial, ACBrDFeSSL, pcnLeitor;
 
 {TeSocialEvento}
 
@@ -222,6 +222,12 @@ begin
 
   with TACBreSocial(FACBreSocial) do
   begin
+    if not (SSL.SSLCryptLib in ([cryOpenSSL, cryWinCrypt])) then
+      raise EACBreSocialException.Create(ACBRESOCIAL_CErroCryptLib);
+
+    if not (SSL.SSLXmlSignLib in ([xsXmlSec, xsLibXml2])) then
+      raise EACBreSocialException.Create(ACBRESOCIAL_CErroSignLib);
+
     XMLAss := SSL.Assinar(String(ArqXML), 'eSocial', NomeEvento);
     FXMLAssinado := XMLAss;
     FXMLOriginal := XMLAss;
@@ -1045,10 +1051,14 @@ end;
 
 procedure TeSocialEvento.GerarIdeVinculo(pIdeVinculo: TIdeVinculo);
 begin
+  // italo
   Gerador.wGrupo('ideVinculo');
-    Gerador.wCampo(tcStr, '', 'cpfTrab  ', 0, 0, 0, pIdeVinculo.cpfTrab);
-    Gerador.wCampo(tcStr, '', 'nisTrab  ', 0, 0, 0, pIdeVinculo.nisTrab);
-    Gerador.wCampo(tcStr, '', 'matricula  ', 0, 0, 0, pIdeVinculo.matricula);
+
+  Gerador.wCampo(tcStr, '', 'cpfTrab',   11, 11, 1, pIdeVinculo.cpfTrab);
+  Gerador.wCampo(tcStr, '', 'nisTrab',    1, 11, 1, pIdeVinculo.nisTrab);
+  Gerador.wCampo(tcStr, '', 'matricula',  1, 30, 1, pIdeVinculo.matricula);
+  Gerador.wCampo(tcInt, '', 'codCateg',   1,  3, 0, pIdeVinculo.codCateg);
+
   Gerador.wGrupo('/ideVinculo');
 end;
 
@@ -1409,10 +1419,11 @@ end;
 procedure TeSocialEvento.GerarIdeTrabalhador(
   pideTrabalhador: TideTrabalhador; const GeraGrupo: boolean);
 begin
+  // italo
   if GeraGrupo then
     Gerador.wGrupo('ideTrabalhador');
 
-      Gerador.wCampo(tcStr, '', 'cpfTrab', 11, 11, 1, pideTrabalhador.CpfTrab);
+  Gerador.wCampo(tcStr, '', 'cpfTrab', 11, 11, 1, pideTrabalhador.CpfTrab);
 
   if GeraGrupo then
     Gerador.wGrupo('/ideTrabalhador');
@@ -1421,11 +1432,13 @@ end;
 procedure TeSocialEvento.GerarIdeTrabalhador2(
   pideTrabalhador: TideTrabalhador2; const GeraGrupo: boolean);
 begin
+  // italo
   if GeraGrupo then
     Gerador.wGrupo('ideTrabalhador');
 
-      GerarIdeTrabalhador(pideTrabalhador, False);
-      Gerador.wCampo(tcStr, '', 'nisTrab  ', 0, 0, 0, pideTrabalhador.nisTrab);
+  GerarIdeTrabalhador(pideTrabalhador, False);
+
+  Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 0, pideTrabalhador.nisTrab);
 
   if GeraGrupo then
     Gerador.wGrupo('/ideTrabalhador');
@@ -1445,11 +1458,14 @@ end;
 
 procedure TeSocialEvento.GerarEmitente(pEmitente: TEmitente);
 begin
+  //italo
   Gerador.wGrupo('emitente');
-    Gerador.wCampo(tcStr, '', 'nmEmit', 0, 0, 0, pEmitente.nmEmit);
-    Gerador.wCampo(tcStr, '', 'ideOC', 0, 0, 0, eSIdeOCToStr(pEmitente.ideOC));
-    Gerador.wCampo(tcStr, '', 'nrOc', 0, 0, 0, pEmitente.nrOc);
-    Gerador.wCampo(tcStr, '', 'ufOC', 0, 0, 0, eSufToStr(pEmitente.ufOC));
+
+  Gerador.wCampo(tcStr, '', 'nmEmit', 1, 70, 1, pEmitente.nmEmit);
+  Gerador.wCampo(tcStr, '', 'ideOC',  1,  1, 1, eSIdeOCToStr(pEmitente.ideOC));
+  Gerador.wCampo(tcStr, '', 'nrOc',   1, 14, 1, pEmitente.nrOc);
+  Gerador.wCampo(tcStr, '', 'ufOC',   2,  2, 0, eSufToStr(pEmitente.ufOC));
+
   Gerador.wGrupo('/emitente');
 end;
 
@@ -1570,8 +1586,11 @@ end;
 
 procedure TeSocialEvento.GerarInfoSimples(obj: TinfoSimples);
 begin
+  // italo
   Gerador.wGrupo('infoSimples');
-    Gerador.wCampo(tcStr, '', 'indSimples', 0,0,0, obj.indSimples);
+
+  Gerador.wCampo(tcStr, '', 'indSimples', 1, 1, 1, obj.indSimples);
+
   Gerador.wGrupo('/infoSimples');
 end;
 
@@ -1579,29 +1598,42 @@ procedure TeSocialEvento.GerarIdeEstabLot(pIdeEstabLot: TideEstabLotCollection);
 var
   i: integer;
 begin
+  // italo
   for i := 0 to pIdeEstabLot.Count - 1 do
   begin
     Gerador.wGrupo('ideEstabLot');
-      Gerador.wCampo(tcInt, '', 'tpInsc', 0,0,0, eSTpInscricaoToStr(pIdeEstabLot[i].tpInsc));
-      Gerador.wCampo(tcStr, '', 'nrInsc', 0,0,0, pIdeEstabLot[i].nrInsc);
-      Gerador.wCampo(tcStr, '', 'codLotacao', 0,0,0, pIdeEstabLot[i].codLotacao);
-      GerarItensRemun(pIdeEstabLot[i].detVerbas, 'detVerbas');
-      if pIdeEstabLot[i].infoSaudeColetInst then
-        GerarInfoSaudeColet(pIdeEstabLot[i].infoSaudeColet);
-      if pIdeEstabLot[i].infoAgNocivoInst then
-        GerarInfoAgNocivo(pIdeEstabLot[i].infoAgNocivo);
-      if pIdeEstabLot[i].infoSimplesInst then
-        GerarInfoSimples(pIdeEstabLot[i].infoSimples);
+
+    Gerador.wCampo(tcInt, '', 'tpInsc',     1,  1, 1, eSTpInscricaoToStr(pIdeEstabLot[i].tpInsc));
+    Gerador.wCampo(tcStr, '', 'nrInsc',     1, 15, 1, pIdeEstabLot[i].nrInsc);
+    Gerador.wCampo(tcStr, '', 'codLotacao', 1, 30, 1, pIdeEstabLot[i].codLotacao);
+
+    GerarItensRemun(pIdeEstabLot[i].detVerbas, 'detVerbas');
+
+    if pIdeEstabLot[i].infoSaudeColetInst then
+      GerarInfoSaudeColet(pIdeEstabLot[i].infoSaudeColet);
+
+    if pIdeEstabLot[i].infoAgNocivoInst then
+      GerarInfoAgNocivo(pIdeEstabLot[i].infoAgNocivo);
+
+    if pIdeEstabLot[i].infoSimplesInst then
+      GerarInfoSimples(pIdeEstabLot[i].infoSimples);
+
     Gerador.wGrupo('/ideEstabLot');
   end;
+
+  if pIdeEstabLot.Count > 24 then
+    Gerador.wAlerta('', 'ideEstabLot', 'Lista de Identificação de Estabecimentos/Lotação', ERR_MSG_MAIOR_MAXIMO + '24');
 end;
 
 procedure TeSocialEvento.GerarQuarentena(obj: TQuarentena);
 begin
+  // italo
   if obj.dtFimQuar > 0 then
   begin
     Gerador.wGrupo('quarentena');
-      Gerador.wCampo(tcDat, '', 'dtFimQuar', 0,0,0, obj.dtFimQuar);
+
+    Gerador.wCampo(tcDat, '', 'dtFimQuar', 10, 10, 1, obj.dtFimQuar);
+
     Gerador.wGrupo('/quarentena');
   end;
 end;

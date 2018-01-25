@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -68,6 +68,9 @@ type
   TIdePeriodoCollection = class;
   TIdePeriodoItem = class;
   TconsigFGTS = class;
+  TtransfTit = class;
+  TInfoTrabIntermCollection = class;
+  TInfoTrabIntermItem = class;
 
   TS2299Collection = class(TOwnedCollection)
   private
@@ -92,73 +95,79 @@ type
   end;
 
   TEvtDeslig = class(TeSocialEvento)
-    private
-      FIdeEvento: TIdeEvento2;
-      FIdeEmpregador: TIdeEmpregador;
-      FIdeVinculo: TIdeVinculo;
-      FInfoDeslig: TInfoDeslig;
-      procedure GerarInfoDeslig(obj: TInfoDeslig);
-      procedure GerarSucessaoVinc(obj: TSucessaoVinc);
-      procedure GerarVerbasResc(obj: TVerbasRescS2299);
-      procedure GerarDmDev(pDmDev: TDmDevCollection);
-      procedure GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
-      procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
-      procedure GerarIdeADC(pIdeADC: TIdeADCCollection);
-      procedure GerarIdePeriodo(pIdePeriodo: TIdePeriodoCollection);
-      procedure GerarconsigFGTS(obj: TconsigFGTS);
-    public
-      constructor Create(AACBreSocial: TObject);overload;
-      destructor  Destroy; override;
+  private
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeVinculo: TIdeVinculo;
+    FInfoDeslig: TInfoDeslig;
 
-      function GerarXML: boolean; override;
+    procedure GerarInfoDeslig(obj: TInfoDeslig);
+    procedure GerarSucessaoVinc(obj: TSucessaoVinc);
+    procedure GerarVerbasResc(obj: TVerbasRescS2299);
+    procedure GerarDmDev(pDmDev: TDmDevCollection);
+    procedure GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
+    procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
+    procedure GerarIdeADC(pIdeADC: TIdeADCCollection);
+    procedure GerarIdePeriodo(pIdePeriodo: TIdePeriodoCollection);
+    procedure GerarconsigFGTS(obj: TconsigFGTS);
+    procedure GerarTransfTit(obj: TtransfTit);
+    procedure GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
+  public
+    constructor Create(AACBreSocial: TObject);overload;
+    destructor  Destroy; override;
 
-      property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-      property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-      property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
-      property InfoDeslig: TInfoDeslig read FInfoDeslig write FInfoDeslig;
+    function GerarXML: boolean; override;
+
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
+    property InfoDeslig: TInfoDeslig read FInfoDeslig write FInfoDeslig;
   end;
 
   TInfoDeslig = class(TPersistent)
   private
-      FmtvDeslig: String;
-      FdtDeslig: TDateTime;
-      FindPagtoAPI : tpSimNao;
-      FdtProjFimAPI : TDateTime;
-      FPensAlim: tpPensaoAlim;
-      FpercAliment: Double;
-      FVrAlim: Double;
-      FnrCertObito : String;
-      FnrProcTrab : String;
-      FIndCumprParc: tpCumprParcialAviso;
-      FObservacao : String;
-      FSucessaoVinc : TSucessaoVinc;
-      FVerbasResc : TVerbasRescS2299;
-      FQuarentena: TQuarentena;
+    FmtvDeslig: String;
+    FdtDeslig: TDateTime;
+    FindPagtoAPI : tpSimNao;
+    FdtProjFimAPI : TDateTime;
+    FPensAlim: tpPensaoAlim;
+    FpercAliment: Double;
+    FVrAlim: Double;
+    FnrCertObito : String;
+    FnrProcTrab : String;
+    FIndCumprParc: tpCumprParcialAviso;
+    FObservacao : String;
+    FSucessaoVinc : TSucessaoVinc;
+    FVerbasResc : TVerbasRescS2299;
+    FQuarentena: TQuarentena;
     FconsigFGTS: TconsigFGTS;
-      FInfoASO: TInfoASO;
+    FInfoASO: TInfoASO;
+    FtransfTit: TtransfTit;
 
-      function getVerbasResc: TVerbasRescS2299;
-    public
-      constructor Create;
-      destructor  Destroy; override;
-      function verbasRescInst: boolean;
+    function getVerbasResc: TVerbasRescS2299;
+  public
+    constructor Create;
+    destructor  Destroy; override;
 
-      property mtvDeslig: String read FmtvDeslig write FmtvDeslig;
-      property dtDeslig: TDateTime read FdtDeslig write FdtDeslig;
-      property indPagtoAPI : tpSimNao read FindPagtoAPI write FindPagtoAPI;
-      property dtProjFimAPI : TDateTime read FdtProjFimAPI write FdtProjFimAPI;
-      property percAliment : Double read FpercAliment write FpercAliment;
-      property vrAlim: Double read FVrAlim write FVrAlim;
-      property pensAlim: tpPensaoAlim read FPensAlim write FPensAlim;
-      property nrCertObito : String read FnrCertObito write FnrCertObito;
-      property nrProcTrab : String read FnrProcTrab write FnrProcTrab;
-      property indCumprParc: tpCumprParcialAviso read FIndCumprParc write FIndCumprParc;
-      property Observacao : String read FObservacao write FObservacao;
-      property SucessaoVinc : TSucessaoVinc read FSucessaoVinc write FSucessaoVinc;
-      property VerbasResc : TVerbasRescS2299 read getVerbasResc write FVerbasResc;
-      property Quarentena: TQuarentena read FQuarentena write FQuarentena;
-      property consigFGTS: TconsigFGTS read FconsigFGTS write FconsigFGTS;
-      property InfoASO : TInfoASO read FInfoASO write FInfoASO;
+    function verbasRescInst: boolean;
+
+    property mtvDeslig: String read FmtvDeslig write FmtvDeslig;
+    property dtDeslig: TDateTime read FdtDeslig write FdtDeslig;
+    property indPagtoAPI : tpSimNao read FindPagtoAPI write FindPagtoAPI;
+    property dtProjFimAPI : TDateTime read FdtProjFimAPI write FdtProjFimAPI;
+    property percAliment : Double read FpercAliment write FpercAliment;
+    property vrAlim: Double read FVrAlim write FVrAlim;
+    property pensAlim: tpPensaoAlim read FPensAlim write FPensAlim;
+    property nrCertObito : String read FnrCertObito write FnrCertObito;
+    property nrProcTrab : String read FnrProcTrab write FnrProcTrab;
+    property indCumprParc: tpCumprParcialAviso read FIndCumprParc write FIndCumprParc;
+    property Observacao : String read FObservacao write FObservacao;
+    property SucessaoVinc : TSucessaoVinc read FSucessaoVinc write FSucessaoVinc;
+    property VerbasResc : TVerbasRescS2299 read getVerbasResc write FVerbasResc;
+    property Quarentena: TQuarentena read FQuarentena write FQuarentena;
+    property consigFGTS: TconsigFGTS read FconsigFGTS write FconsigFGTS;
+    property InfoASO : TInfoASO read FInfoASO write FInfoASO;
+    property transfTit: TtransfTit read FtransfTit write FtransfTit;
   end;
 
   TIdePeriodoCollection = class(TCollection)
@@ -198,6 +207,7 @@ type
   private
     FDtAcConv: TDateTime;
     FTpAcConv: tpTpAcConv;
+    FcompAcConv: String;
     FDtEfAcConv: TDateTime;
     FDsc: String;
     FIdePeriodo: TIdePeriodoCollection;
@@ -207,7 +217,8 @@ type
 
     property dtAcConv: TDateTime read FDtAcConv write FDtAcConv;
     property tpAcConv: tpTpAcConv read FTpAcConv write FTpAcConv;
-    property dtEfAcConv: TDateTime read FDtAcConv write FDtAcConv;
+    property compAcConv: String read FcompAcConv write FcompAcConv;
+    property dtEfAcConv: TDateTime read FdtEfAcConv write FdtEfAcConv;
     property dsc: string read FDsc write FDsc;
     property idePeriodo: TIdePeriodoCollection read FIdePeriodo write FIdePeriodo;
   end;
@@ -248,18 +259,21 @@ type
     FIdeDmDev: string;
     FInfoPerApur: TInfoPerApur;
     FInfoPerAnt: TInfoPerAnt;
+    FinfoTrabInterm: TinfoTrabIntermCollection;
 
     function getInfoPerApur: TInfoPerApur;
     function getInfoPerAnt: TInfoPerAnt;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
+
     function infoPerApurInst: boolean;
     function infoPerAntInst: boolean;
 
     property ideDmDev: string read FIdeDmDev write FIdeDmDev;
     property infoPerApur: TInfoPerApur read getInfoPerApur write FInfoPerApur;
     property infoPerAnt: TInfoPerAnt read getInfoPerAnt write FInfoPerAnt;
+    property infoTrabInterm: TinfoTrabIntermCollection read FinfoTrabInterm write FinfoTrabInterm;
   end;
 
   TVerbasRescS2299 = class(TVerbasResc)
@@ -280,6 +294,32 @@ type
     property idConsig: tpSimNao read FidConsig write FidConsig;
     property insConsig: string read FinsConsig write FinsConsig;
     property nrContr: string read FnrContr write FnrContr;
+  end;
+
+  TtransfTit = class(TPersistent)
+  private
+    FcpfSubstituto: string;
+    FdtNascto: TDateTime;
+  public
+    property cpfSubstituto: string read FcpfSubstituto write FcpfSubstituto;
+    property dtNascto: TDateTime read FdtNascto write FdtNascto;
+  end;
+
+  TInfoTrabIntermCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TInfoTrabIntermItem;
+    procedure SetItem(Index: Integer; Value: TInfoTrabIntermItem);
+  public
+    constructor Create; reintroduce;
+    function Add: TInfoTrabIntermItem;
+    property Items[Index: Integer]: TInfoTrabIntermItem read GetItem write SetItem; default;
+  end;
+
+  TInfoTrabIntermItem = class(TCollectionItem)
+  private
+    FcodConv: string;
+  public
+    property codConv: string read FcodConv write FcodConv;
   end;
 
 implementation
@@ -310,6 +350,7 @@ end;
 constructor TEvtDeslig.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVInculo := TIdeVinculo.Create;
@@ -322,32 +363,43 @@ begin
   FIdeEmpregador.Free;
   FIdeVinculo.Free;
   FInfoDeslig.Free;
+
   inherited;
 end;
 
 procedure TEvtDeslig.GerarInfoDeslig(obj: TInfoDeslig);
 begin
   Gerador.wGrupo('infoDeslig');
-    Gerador.wCampo(tcStr, '', 'mtvDeslig', 0,0,0, obj.mtvDeslig);
-    Gerador.wCampo(tcDat, '', 'dtDeslig', 0,0,0, obj.dtDeslig);
-    Gerador.wCampo(tcStr, '', 'indPagtoAPI', 0,0,0, eSSimNaoToStr(obj.indPagtoAPI));
-    if (obj.indPagtoAPI=tpSim) then
-      Gerador.wCampo(tcDat, '', 'dtProjFimAPI', 0,0,0, obj.dtProjFimAPI);
-    Gerador.wCampo(tcStr, '', 'pensAlim', 0, 0, 0, obj.pensAlim);
-    Gerador.wCampo(tcDe2, '', 'percAliment', 0, 0, 0, obj.percAliment);
-    Gerador.wCampo(tcDe2, '', 'vrAlim', 0, 0, 0, obj.vrAlim);
-    if ((obj.mtvDeslig='09') or (obj.mtvDeslig='10')) then
-      Gerador.wCampo(tcStr, '', 'nrCertObito', 0,0,0, obj.nrCertObito);
-    if (obj.mtvDeslig='17') then
-      Gerador.wCampo(tcStr, '', 'nrProcTrab', 0,0,0, obj.nrProcTrab);
-    Gerador.wCampo(tcStr, '', 'indCumprParc', 0, 0, 0, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
-    Gerador.wCampo(tcStr, '', 'observacao', 0,0,0, obj.Observacao);
-    GerarSucessaoVinc(obj.SucessaoVinc);
-    if obj.verbasRescInst then
-      GerarVerbasResc(obj.VerbasResc);
+
+  Gerador.wCampo(tcStr, '', 'mtvDeslig',    1,  2, 1, obj.mtvDeslig);
+  Gerador.wCampo(tcDat, '', 'dtDeslig',    10, 10, 1, obj.dtDeslig);
+  Gerador.wCampo(tcStr, '', 'indPagtoAPI',  1,  1, 1, eSSimNaoToStr(obj.indPagtoAPI));
+
+  if (obj.indPagtoAPI=tpSim) then
+    Gerador.wCampo(tcDat, '', 'dtProjFimAPI', 10, 10, 0, obj.dtProjFimAPI);
+
+  Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 1, obj.pensAlim);
+  Gerador.wCampo(tcDe2, '', 'percAliment', 1,  5, 0, obj.percAliment);
+  Gerador.wCampo(tcDe2, '', 'vrAlim',      1, 14, 0, obj.vrAlim);
+
+  if ((obj.mtvDeslig='09') or (obj.mtvDeslig='10')) then
+    Gerador.wCampo(tcStr, '', 'nrCertObito', 1, 32, 0, obj.nrCertObito);
+
+  if (obj.mtvDeslig='17') then
+    Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
+
+  Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
+  Gerador.wCampo(tcStr, '', 'observacao',   1, 255, 0, obj.Observacao);
+
+  GerarSucessaoVinc(obj.SucessaoVinc);
+  GerarTransfTit(obj.transfTit);
+
+  if obj.verbasRescInst then
+    GerarVerbasResc(obj.VerbasResc);
 
   GerarQuarentena(obj.Quarentena);
   GerarconsigFGTS(obj.consigFGTS);
+
   Gerador.wGrupo('/infoDeslig');
 end;
 
@@ -356,7 +408,9 @@ begin
   if obj.cnpjEmpregAnt <> EmptyStr then
   begin
     Gerador.wGrupo('sucessaoVinc');
-      Gerador.wCampo(tcStr, '', 'cnpjSucessora', 0,0,0, obj.cnpjEmpregAnt);
+
+    Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.cnpjEmpregAnt);
+
     Gerador.wGrupo('/sucessaoVinc');
   end;
 end;
@@ -364,7 +418,9 @@ end;
 procedure TEvtDeslig.GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
 begin
   Gerador.wGrupo('infoPerApur');
-    GerarIdeEstabLot(pInfoPerApur.ideEstabLot);
+
+  GerarIdeEstabLot(pInfoPerApur.ideEstabLot);
+
   Gerador.wGrupo('/infoPerApur');
 end;
 
@@ -375,10 +431,16 @@ begin
   for i := 0 to pIdePeriodo.Count -1 do
   begin
     Gerador.wGrupo('idePeriodo');
-      Gerador.wCampo(tcStr, '', 'perRef', 0,0,0, pIdePeriodo[i].perRef);
-      GerarIdeEstabLot(pIdePeriodo[i].ideEstabLot);
+
+    Gerador.wCampo(tcStr, '', 'perRef', 7, 7, 1, pIdePeriodo[i].perRef);
+
+    GerarIdeEstabLot(pIdePeriodo[i].ideEstabLot);
+
     Gerador.wGrupo('/idePeriodo');
   end;
+
+  if pIdePeriodo.Count > 180 then
+    Gerador.wAlerta('', 'idePeriodo', 'Lista de Identificação de Periodos', ERR_MSG_MAIOR_MAXIMO + '180');
 end;
 
 procedure TEvtDeslig.GerarIdeADC(pIdeADC: TIdeADCCollection);
@@ -388,19 +450,28 @@ begin
   for i := 0 to pIdeADC.Count - 1 do
   begin
     Gerador.wGrupo('ideADC');
-      Gerador.wCampo(tcDat, '', 'dtAcConv', 0,0,0, pIdeADC[i].dtAcConv);
-      Gerador.wCampo(tcStr, '', 'tpAcConv', 0,0,0, eSTpAcConvToStr(pIdeADC[i].tpAcConv));
-      Gerador.wCampo(tcDat, '', 'dtEfAcConv', 0,0,0, pIdeADC[i].dtEfAcConv);
-      Gerador.wCampo(tcStr, '', 'dsc', 0,0,0, pIdeADC[i].dsc);
-      GerarIdePeriodo(pIdeADC[i].idePeriodo);
+
+    Gerador.wCampo(tcDat, '', 'dtAcConv',   10,  10, 1, pIdeADC[i].dtAcConv);
+    Gerador.wCampo(tcStr, '', 'tpAcConv',    1,   1, 1, eSTpAcConvToStr(pIdeADC[i].tpAcConv));
+    Gerador.wCampo(tcStr, '', 'compAcConv',  7,   7, 0, pIdeADC[i].compAcConv);
+    Gerador.wCampo(tcDat, '', 'dtEfAcConv', 10,  10, 1, pIdeADC[i].dtEfAcConv);
+    Gerador.wCampo(tcStr, '', 'dsc',         1, 255, 1, pIdeADC[i].dsc);
+
+    GerarIdePeriodo(pIdeADC[i].idePeriodo);
+
     Gerador.wGrupo('/ideADC');
   end;
+
+  if pIdeADC.Count > 8 then
+    Gerador.wAlerta('', 'ideADC', 'Lista de Identificação de ADC', ERR_MSG_MAIOR_MAXIMO + '8');
 end;
 
 procedure TEvtDeslig.GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
 begin
   Gerador.wGrupo('infoPerAnt');
-    GerarIdeADC(pInfoPerAnt.ideADC);
+
+  GerarIdeADC(pInfoPerAnt.ideADC);
+
   Gerador.wGrupo('/infoPerAnt');
 end;
 
@@ -411,22 +482,34 @@ begin
   for i := 0 to pDmDev.Count - 1 do
   begin
     Gerador.wGrupo('dmDev');
-      Gerador.wCampo(tcStr, '', 'ideDmDev', 0,0,0, pDmDev[i].ideDmDev);
-      if pDmDev[i].infoPerAntInst then
-        GerarInfoPerApur(pDmDev[i].infoPerApur);
-      if pDmDev[i].infoPerAntInst then
-        GerarInfoPerAnt(pDmDev[i].infoPerAnt);
+
+    Gerador.wCampo(tcStr, '', 'ideDmDev', 1, 30, 1, pDmDev[i].ideDmDev);
+
+    if pDmDev[i].infoPerAntInst then
+      GerarInfoPerApur(pDmDev[i].infoPerApur);
+
+    if pDmDev[i].infoPerAntInst then
+      GerarInfoPerAnt(pDmDev[i].infoPerAnt);
+
+    GerarInfoTrabInterm(pDmDev[i].infoTrabInterm);
+
     Gerador.wGrupo('/dmDev');
   end;
+
+  if pDmDev.Count > 50 then
+    Gerador.wAlerta('', 'dmDev', 'Lista de Demonstrativos', ERR_MSG_MAIOR_MAXIMO + '50');
 end;
 
 procedure TEvtDeslig.GerarVerbasResc(obj: TVerbasRescS2299);
 begin
   Gerador.wGrupo('verbasResc');
-    GerarDmDev(obj.dmDev);
-    GerarProcJudTrab(obj.ProcJudTrab);
-    if obj.infoMVInst then
-      GerarInfoMV(obj.infoMV);
+
+  GerarDmDev(obj.dmDev);
+  GerarProcJudTrab(obj.ProcJudTrab);
+
+  if obj.infoMVInst then
+    GerarInfoMV(obj.infoMV);
+
   Gerador.wGrupo('/verbasResc');
 end;
 
@@ -434,19 +517,24 @@ function TEvtDeslig.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtDeslig');
-      Gerador.wGrupo('evtDeslig Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');//versao="'+Self.versao+'"
-        //gerarIdVersao(self);
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        gerarIdeVinculo(self.IdeVinculo);
-        GerarInfoDeslig(Self.InfoDeslig);
-      Gerador.wGrupo('/evtDeslig');
+    Gerador.wGrupo('evtDeslig Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeVinculo(self.IdeVinculo);
+    GerarInfoDeslig(Self.InfoDeslig);
+
+    Gerador.wGrupo('/evtDeslig');
+
     GerarRodape;
+
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtDeslig');
+
     Validar('evtDeslig');
   except on e:exception do
     raise Exception.Create(e.Message);
   end;
+
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
@@ -459,16 +547,44 @@ begin
   Gerador.wGrupo('/consigFGTS');
 end;
 
+procedure TEvtDeslig.GerarTransfTit(obj: TtransfTit);
+begin
+  Gerador.wGrupo('transfTit');
+
+  Gerador.wCampo(tcStr, '', 'cpfSubstituto', 11, 11, 1, obj.cpfSubstituto);
+  Gerador.wCampo(tcDat, '', 'dtNascto',      10, 10, 1, obj.dtNascto);
+
+  Gerador.wGrupo('/transfTit');
+end;
+
+procedure TEvtDeslig.GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
+var
+  i: integer;
+begin
+  for i := 0 to obj.Count - 1 do
+  begin
+    Gerador.wGrupo('infoTrabInterm');
+
+    Gerador.wCampo(tcStr, '', 'codConv', 1, 30, 1, obj[i].codConv);
+
+    Gerador.wGrupo('/infoTrabInterm');
+  end;
+
+  if obj.Count > 99 then
+    Gerador.wAlerta('', 'infoTrabInterm', 'Lista de Trabalhos Intermitente', ERR_MSG_MAIOR_MAXIMO + '99');
+end;
+
 { TInfoDeslig }
 
 constructor TInfoDeslig.Create;
 begin
   inherited;
-    FSucessaoVinc := TSucessaoVinc.Create;
-    FVerbasResc := nil;
-    FQuarentena := TQuarentena.Create;
-    FconsigFGTS := TconsigFGTS.Create;
-    FInfoASO := TInfoASO.Create;
+
+  FSucessaoVinc := TSucessaoVinc.Create;
+  FVerbasResc := nil;
+  FQuarentena := TQuarentena.Create;
+  FconsigFGTS := TconsigFGTS.Create;
+  FInfoASO := TInfoASO.Create;
 end;
 
 destructor TInfoDeslig.destroy;
@@ -478,6 +594,7 @@ begin
   FQuarentena.Free;
   FconsigFGTS.Free;
   FInfoASO.Free;
+
   inherited;
 end;
 
@@ -504,6 +621,7 @@ end;
 destructor TS2299CollectionItem.Destroy;
 begin
   FEvtDeslig.Free;
+
   inherited;
 end;
 
@@ -511,7 +629,6 @@ procedure TS2299CollectionItem.setEvtDeslig(const Value: TEvtDeslig);
 begin
   FEvtDeslig.Assign(Value);
 end;
-
 
 { TDmDevCollection }
 
@@ -542,12 +659,15 @@ constructor TDMDevCollectionItem.Create;
 begin
   FInfoPerApur := nil;
   FInfoPerAnt := nil;
+  FInfoTrabInterm := TInfoTrabIntermCollection.Create;
 end;
 
 destructor TDMDevCollectionItem.Destroy;
 begin
   FreeAndNil(FInfoPerApur);
   FreeAndNil(FInfoPerAnt);
+  FInfoTrabInterm.Free;
+
   inherited;
 end;
 
@@ -632,6 +752,7 @@ end;
 destructor TIdeADCItem.Destroy;
 begin
   FIdePeriodo.Free;
+
   inherited;
 end;
 
@@ -668,6 +789,7 @@ end;
 destructor TIdePeriodoItem.Destroy;
 begin
   FIdeEstabLot.Free;
+
   inherited;
 end;
 
@@ -676,8 +798,33 @@ end;
 constructor TVerbasRescS2299.Create;
 begin
   inherited;
+
   FDmDev := TDmDevCollection.Create;
 end;
 
+{ TInfoTrabIntermCollection }
+
+function TInfoTrabIntermCollection.Add: TInfoTrabIntermItem;
+begin
+  Result := TInfoTrabIntermItem(inherited Add);
+//  Result.Create;
+end;
+
+constructor TInfoTrabIntermCollection.Create;
+begin
+  inherited Create(TInfoTrabIntermItem);
+end;
+
+function TInfoTrabIntermCollection.GetItem(
+  Index: Integer): TInfoTrabIntermItem;
+begin
+  Result := TInfoTrabIntermItem(inherited GetItem(Index));
+end;
+
+procedure TInfoTrabIntermCollection.SetItem(Index: Integer;
+  Value: TInfoTrabIntermItem);
+begin
+  inherited SetItem(Index, Value);
+end;
 
 end.

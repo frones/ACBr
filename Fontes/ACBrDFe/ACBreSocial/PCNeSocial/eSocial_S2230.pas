@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Consts, eSocial_Gerador;
 
 type
@@ -66,6 +66,7 @@ type
   TinfoAtestadoItem = class;
   TinfoCessao = class;
   TinfoMandSind = class;
+  TinfoRetif = class;
 
   TS2230Collection = class(TOwnedCollection)
   private
@@ -91,67 +92,70 @@ type
   end;
 
   TEvtAfastTemp = class(TeSocialEvento)
-    private
-      FIdeEvento : TIdeEvento2;
-      FIdeEmpregador : TIdeEmpregador;
-      FIdeVinculo : TIdeVinculo;
-      FinfoAfastamento : TinfoAfastamento;
+  private
+    FIdeEvento : TIdeEvento2;
+    FIdeEmpregador : TIdeEmpregador;
+    FIdeVinculo : TIdeVinculo;
+    FinfoAfastamento : TinfoAfastamento;
 
-      procedure GerarInfoAfastamento(objInfoAfast: TinfoAfastamento);
-      procedure GerarInfoAtestado(objInfoAtestado: TinfoAtestado);
-      procedure GerarInfoCessao(objInfoCessao: TinfoCessao);
-      procedure GerarInfoMandSind(objInfoMandSind: TInfoMandSind);
-      procedure GerarAltAfast(objAltAfast: TaltAfastamento);
-      procedure GerarAltEmpr(pAltEmpr: TAltEmpr);
-      procedure GerarFimAfast(objFimAfast: TfimAfastamento);
-    public
-      constructor Create(AACBreSocial: TObject);overload;
-      destructor  Destroy; override;
+    procedure GerarInfoAfastamento(objInfoAfast: TinfoAfastamento);
+    procedure GerarInfoAtestado(objInfoAtestado: TinfoAtestado);
+    procedure GerarInfoCessao(objInfoCessao: TinfoCessao);
+    procedure GerarInfoMandSind(objInfoMandSind: TInfoMandSind);
+    procedure GerarAltAfast(objAltAfast: TaltAfastamento);
+    procedure GerarAltEmpr(pAltEmpr: TAltEmpr);
+    procedure GerarInfoRetif(objInfoRetif: TInfoRetif);
+    procedure GerarFimAfast(objFimAfast: TfimAfastamento);
+  public
+    constructor Create(AACBreSocial: TObject);overload;
+    destructor  Destroy; override;
 
-      function GerarXML: boolean; override;
+    function GerarXML: boolean; override;
 
-      property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-      property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-      property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
-      property infoAfastamento: TinfoAfastamento read FinfoAfastamento write FinfoAfastamento;
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
+    property infoAfastamento: TinfoAfastamento read FinfoAfastamento write FinfoAfastamento;
   end;
 
   TinfoAfastamento = class(TPersistent)
-    private
-      FiniAfastamento : TiniAfastamento;
-      FaltAfastamento : TaltAfastamento;
-      FfimAfastamento : TfimAfastamento;
-    public
-      constructor create;
-      destructor  destroy; override;
+  private
+    FiniAfastamento : TiniAfastamento;
+    FaltAfastamento : TaltAfastamento;
+    FinfoRetif: TinfoRetif;
+    FfimAfastamento : TfimAfastamento;
+  public
+    constructor create;
+    destructor  destroy; override;
 
-      property iniAfastamento: TiniAfastamento read FiniAfastamento write FiniAfastamento;
-      property altAfastamento: TaltAfastamento read FaltAfastamento write FaltAfastamento;
-      property fimAfastamento: TfimAfastamento read FfimAfastamento write FfimAfastamento;
+    property iniAfastamento: TiniAfastamento read FiniAfastamento write FiniAfastamento;
+    property altAfastamento: TaltAfastamento read FaltAfastamento write FaltAfastamento;
+    property infoRetif: TinfoRetif read FinfoRetif write FinfoRetif;
+    property fimAfastamento: TfimAfastamento read FfimAfastamento write FfimAfastamento;
   end;
 
   tiniAfastamento = class(TAfastamento)
-    private
-      FInfoMesmoMtv: tpSimNao;
-      FtpAcidTransito: tpTpAcidTransito;
-      FObservacao: String;
-      FinfoAtestado: TinfoAtestado;
-      FinfoCessao: TinfoCessao;
-      FinfoMandSind: TinfoMandSind;
+  private
+    FInfoMesmoMtv: tpSimNao;
+    FtpAcidTransito: tpTpAcidTransito;
+    FObservacao: String;
+    FinfoAtestado: TinfoAtestado;
+    FinfoCessao: TinfoCessao;
+    FinfoMandSind: TinfoMandSind;
 
-      function getInfoAtestado: TinfoAtestado;
-    public
-      constructor create;
-      destructor  destroy; override;
+    function getInfoAtestado: TinfoAtestado;
+  public
+    constructor create;
+    destructor  destroy; override;
 
-      function infoAtestadoInst: boolean;
+    function infoAtestadoInst: boolean;
 
-      property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
-      property tpAcidTransito: tpTpAcidTransito read FtpAcidTransito write FtpAcidTransito;
-      property Observacao: String read FObservacao write FObservacao;
-      property infoAtestado: TinfoAtestado read getInfoAtestado write FinfoAtestado;
-      property infoCessao: TinfoCessao read FinfoCessao write FinfoCessao;
-      property infoMandSind : TinfoMandSind read FinfoMandSind write FinfoMandSind;
+    property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
+    property tpAcidTransito: tpTpAcidTransito read FtpAcidTransito write FtpAcidTransito;
+    property Observacao: String read FObservacao write FObservacao;
+    property infoAtestado: TinfoAtestado read getInfoAtestado write FinfoAtestado;
+    property infoCessao: TinfoCessao read FinfoCessao write FinfoCessao;
+    property infoMandSind : TinfoMandSind read FinfoMandSind write FinfoMandSind;
   end;
 
   TinfoAtestado = class(TCollection)
@@ -165,39 +169,39 @@ type
   end;
 
   TinfoAtestadoItem = class(TCollectionItem)
-    private
-      FcodCID : String;
-      FqtDiasAfast : Integer;
-      FEmitente : TEmitente;
+  private
+    FcodCID : String;
+    FqtDiasAfast : Integer;
+    FEmitente : TEmitente;
 
-      function getEmitente: TEmitente;
-    public
-      constructor create;
-      destructor  destroy; override;
+    function getEmitente: TEmitente;
+  public
+    constructor create;
+    destructor  destroy; override;
 
-      function emitenteInst: boolean;
+    function emitenteInst: boolean;
 
-      property codCID: String read FCodCId write FcodCID;
-      property qtDiasAfast: Integer read FqtDiasAfast write FqtDiasAfast;
-      property Emitente: TEmitente read getEmitente write FEmitente;
+    property codCID: String read FCodCId write FcodCID;
+    property qtDiasAfast: Integer read FqtDiasAfast write FqtDiasAfast;
+    property Emitente: TEmitente read getEmitente write FEmitente;
   end;
 
   TinfoCessao = class(TPersistent)
-    private
-      FcnpjCess : String;
-      FinfOnus : tpInfOnus;
-    public
-      property cnpjCess: String read FcnpjCess write FcnpjCess;
-      property infOnus: tpInfOnus read FinfOnus write FinfOnus;
+  private
+    FcnpjCess : String;
+    FinfOnus : tpInfOnus;
+  public
+    property cnpjCess: String read FcnpjCess write FcnpjCess;
+    property infOnus: tpInfOnus read FinfOnus write FinfOnus;
   end;
 
   TinfoMandSind = class(TPersistent)
-    private
-      FcnpjSind : String;
-      FinfOnusRemun: tpOnusRemun;
-    public
-      property cnpjSind: String read FcnpjSind write FcnpjSind;
-      property infOnusRemun: tpOnusRemun read FinfOnusRemun write FinfOnusRemun;
+  private
+    FcnpjSind : String;
+    FinfOnusRemun: tpOnusRemun;
+  public
+    property cnpjSind: String read FcnpjSind write FcnpjSind;
+    property infOnusRemun: tpOnusRemun read FinfOnusRemun write FinfOnusRemun;
   end;
 
   TAltEmpr = class(TPersistent)
@@ -218,43 +222,50 @@ type
   end;
 
   TaltAfastamento = class(TPersistent) //alteração do motivo do afastamento
-    private
-      FdtAltMot: TDateTime;
-      FcodMotAnt : String;
-      FcodMotAfast: String;
-      FInfoMesmoMtv: tpSimNao;
-      FindEfRetroativo: tpSimNao;
-      FOrigAlt: tpOrigemAltAfast;
-      FNrProcJud: string;
-      FAltEmpr: TAltEmpr;
+  private
+    FdtAltMot: TDateTime;
+    FcodMotAnt : String;
+    FcodMotAfast: String;
+    FInfoMesmoMtv: tpSimNao;
+    FindEfRetroativo: tpSimNao;
+    FOrigAlt: tpOrigemAltAfast;
+    FNrProcJud: string;
+    FAltEmpr: TAltEmpr;
 
-      function getAltEmpr: TAltEmpr;
-    public
-      constructor Create; reintroduce;
-      destructor Destroy; override;
-      function altEmprInst: boolean;
+    function getAltEmpr: TAltEmpr;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
 
-      property dtAltMot: TDateTime read FdtAltMot write FdtAltMot;
-      property codMotAnt: String read FcodMotAnt write FcodMotAnt;
-      property codMotAfast: String read FcodMotAfast write FcodMotAfast;
-      property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
-      property indEfRetroativo: tpSimNao read FindEfRetroativo write FindEfRetroativo;
-      property origAlt: tpOrigemAltAfast read FOrigAlt write FOrigAlt;
-      property nrProcJud: string read FNrProcJud write FNrProcJud;
-      property altEmpr: TAltEmpr read getAltEmpr write FAltEmpr;
+    function altEmprInst: boolean;
+
+    property dtAltMot: TDateTime read FdtAltMot write FdtAltMot;
+    property codMotAnt: String read FcodMotAnt write FcodMotAnt;
+    property codMotAfast: String read FcodMotAfast write FcodMotAfast;
+    property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
+    property indEfRetroativo: tpSimNao read FindEfRetroativo write FindEfRetroativo;
+    property origAlt: tpOrigemAltAfast read FOrigAlt write FOrigAlt;
+    property nrProcJud: string read FNrProcJud write FNrProcJud;
+    property altEmpr: TAltEmpr read getAltEmpr write FAltEmpr;
   end;
 
   TfimAfastamento = class(TPersistent)
-    private
-      FdtTermAfast : TDateTime;
-//      FcodMotAfast : String;
-//      FInfoMesmoMtv  : tpSimNao;
-    public
-      property dtTermAfast: TDateTime read FdtTermAfast write FdtTermAfast;
-//      property codMotAfast: String read FcodMotAfast write FcodMotAfast;
-//      property infoMesmoMtv: tpSimNao read FInfoMesmoMtv write FInfoMesmoMtv;
+  private
+    FdtTermAfast : TDateTime;
+  public
+    property dtTermAfast: TDateTime read FdtTermAfast write FdtTermAfast;
   end;
 
+  TinfoRetif = class(TPersistent)
+  private
+    ForigRetif: Integer;
+    FTpProc: tpTpProc;
+    FnrProc: String;
+  public
+    property origRetif: Integer read ForigRetif write ForigRetif;
+    property tpProc: tpTpProc read FTpProc write FTpProc;
+    property nrProc: String read FnrProc write FnrProc;
+  end;
 
 implementation
 
@@ -290,6 +301,7 @@ end;
 destructor TS2230CollectionItem.Destroy;
 begin
   FEvtAfastTemp.Free;
+
   inherited;
 end;
 
@@ -303,6 +315,7 @@ end;
 constructor TEvtAfastTemp.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -315,27 +328,37 @@ begin
   FIdeEmpregador.Free;
   FideVinculo.Free;
   FinfoAfastamento.Free;
+
   inherited;
 end;
 
 procedure TEvtAfastTemp.GerarInfoAfastamento(objInfoAfast: TinfoAfastamento);
 begin
   Gerador.wGrupo('infoAfastamento');
-    Gerador.wGrupo('iniAfastamento');
-      Gerador.wCampo(tcDat, '', 'dtIniAfast', 0,0,0, objInfoAfast.iniAfastamento.DtIniAfast);
-      Gerador.wCampo(tcStr, '', 'codMotAfast', 0,0,0, objInfoAfast.iniAfastamento.codMotAfast);
-      Gerador.wCampo(tcStr, '', 'infoMesmoMtv', 0,0,0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMesmoMtv));
-      Gerador.wCampo(tcStr, '', 'tpAcidTransito', 0,0,0, objInfoAfast.iniAfastamento.tpAcidTransito);
-      Gerador.wCampo(tcStr, '', 'observacao', 0,0,0, objInfoAfast.iniAfastamento.Observacao);
-      if objInfoAfast.iniAfastamento.infoAtestadoInst then
-        GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);
-      if Assigned(objInfoAfast.iniAfastamento.infoCessao) then
-        GerarInfoCessao(objInfoAfast.iniAfastamento.infoCessao);
-      if Assigned(objInfoAfast.iniAfastamento.infoMandSind) then
-        GerarInfoMandSind(objInfoAfast.iniAfastamento.infoMandSind);
-    Gerador.wGrupo('/iniAfastamento');
-//    GerarAltAfast(objInfoAfast.altAfastamento);
-    GerarFimAfast(objInfoAfast.fimAfastamento);
+
+  Gerador.wGrupo('iniAfastamento');
+
+  Gerador.wCampo(tcDat, '', 'dtIniAfast',     10,  10, 1, objInfoAfast.iniAfastamento.DtIniAfast);
+  Gerador.wCampo(tcStr, '', 'codMotAfast',     1,   2, 1, objInfoAfast.iniAfastamento.codMotAfast);
+  Gerador.wCampo(tcStr, '', 'infoMesmoMtv',    1,   1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMesmoMtv));
+  Gerador.wCampo(tcStr, '', 'tpAcidTransito',  1,   1, 0, objInfoAfast.iniAfastamento.tpAcidTransito);
+  Gerador.wCampo(tcStr, '', 'observacao',      1, 255, 0, objInfoAfast.iniAfastamento.Observacao);
+
+  if objInfoAfast.iniAfastamento.infoAtestadoInst then
+    GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);
+
+  if Assigned(objInfoAfast.iniAfastamento.infoCessao) then
+    GerarInfoCessao(objInfoAfast.iniAfastamento.infoCessao);
+
+  if Assigned(objInfoAfast.iniAfastamento.infoMandSind) then
+    GerarInfoMandSind(objInfoAfast.iniAfastamento.infoMandSind);
+
+  Gerador.wGrupo('/iniAfastamento');
+
+  //    GerarAltAfast(objInfoAfast.altAfastamento);
+  GerarInfoRetif(objInfoAfast.FinfoRetif);
+  GerarFimAfast(objInfoAfast.fimAfastamento);
+
   Gerador.wGrupo('/infoAfastamento');
 end;
 
@@ -346,12 +369,18 @@ begin
   for i := 0 to objInfoAtestado.Count - 1 do
   begin
     Gerador.wGrupo('infoAtestado');
-      Gerador.wCampo(tcStr, '', 'codCID', 0,0,0, objInfoAtestado[i].codCID);
-      Gerador.wCampo(tcInt, '', 'qtdDiasAfast', 0,0,0, objInfoAtestado[i].qtDiasAfast);
-      if objInfoAtestado[i].emitenteInst then
-        gerarEmitente(objInfoAtestado[i].Emitente);
+
+    Gerador.wCampo(tcStr, '', 'codCID',       1, 4, 0, objInfoAtestado[i].codCID);
+    Gerador.wCampo(tcInt, '', 'qtdDiasAfast', 1, 3, 1, objInfoAtestado[i].qtDiasAfast);
+
+    if objInfoAtestado[i].emitenteInst then
+      GerarEmitente(objInfoAtestado[i].Emitente);
+
     Gerador.wGrupo('/infoAtestado');
   end;
+
+  if objInfoAtestado.Count > 9 then
+    Gerador.wAlerta('', 'infoAtestado', 'Lista de Informações de Atestados', ERR_MSG_MAIOR_MAXIMO + '9');
 end;
 
 procedure TEvtAfastTemp.GerarInfoCessao(objInfoCessao: TinfoCessao);
@@ -359,8 +388,10 @@ begin
   if objInfoCessao.cnpjCess <> EmptyStr then
   begin
     Gerador.wGrupo('infoCessao');
-      Gerador.wCampo(tcStr, '', 'cnpjCess', 0,0,0, objInfoCessao.cnpjCess);
-      Gerador.wCampo(tcStr, '', 'infOnus', 0,0,0, objInfoCessao.infOnus);
+
+    Gerador.wCampo(tcStr, '', 'cnpjCess', 14, 14, 1, objInfoCessao.cnpjCess);
+    Gerador.wCampo(tcStr, '', 'infOnus',   1,  1, 1, objInfoCessao.infOnus);
+
     Gerador.wGrupo('/infoCessao');
   end;
 end;
@@ -370,8 +401,10 @@ begin
   if objInfoMandSind.cnpjSind <> '' then
   begin
     Gerador.wGrupo('infoMandSind');
-      Gerador.wCampo(tcStr, '', 'cnpjSind', 0,0,0, objInfoMandSind.cnpjSind);
-      Gerador.wCampo(tcStr, '', 'infOnusRemun', 0,0,0, objInfoMandSind.infOnusRemun);
+
+    Gerador.wCampo(tcStr, '', 'cnpjSind',     14, 14, 1, objInfoMandSind.cnpjSind);
+    Gerador.wCampo(tcStr, '', 'infOnusRemun',  1,  1, 1, objInfoMandSind.infOnusRemun);
+
     Gerador.wGrupo('/infoMandSind');
   end;
 end;
@@ -380,16 +413,19 @@ function TEvtAfastTemp.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtAfastTemp');
-      Gerador.wGrupo('evtAfastTemp Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        gerarIdeVinculo(self.IdeVinculo);
-        GerarInfoAfastamento(FinfoAfastamento);
-      Gerador.wGrupo('/evtAfastTemp');
+    Gerador.wGrupo('evtAfastTemp Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeVinculo(self.IdeVinculo);
+    GerarInfoAfastamento(FinfoAfastamento);
+
+    Gerador.wGrupo('/evtAfastTemp');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAfastTemp');
+
     Validar('evtAfastTemp');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -400,6 +436,7 @@ end;
 
 procedure TEvtAfastTemp.GerarAltEmpr(pAltEmpr: TAltEmpr);
 begin
+(*  Não é mais gerado na versão 2.4.01
   Gerador.wGrupo('altEmpr');
     Gerador.wCampo(tcStr, '', 'codCID', 0,0,0, pAltEmpr.codCID);
     Gerador.wCampo(tcInt, '', 'qtdDiasAfast', 0,0,0, pAltEmpr.qtdDiasAfast);
@@ -408,10 +445,12 @@ begin
     Gerador.wCampo(tcStr, '', 'nrOc', 0,0,0, pAltEmpr.nrOc);
     Gerador.wCampo(tcStr, '', 'ufOC', 0,0,0, eSufToStr(pAltEmpr.ufOC));
   Gerador.wGrupo('/altEmpr');
+*)
 end;
 
 procedure TEvtAfastTemp.GerarAltAfast(objAltAfast: TaltAfastamento);
 begin
+  (* Não é mais gerado na versão 2.4.01
   if (Assigned(objAltAfast)) then
   begin
     if objAltAfast.dtAltMot > 0 then
@@ -429,21 +468,39 @@ begin
       Gerador.wGrupo('/altAfastamento');
     end;
   end;
+ *)
 end;
 
 procedure TEvtAfastTemp.GerarFimAfast(objFimAfast: TfimAfastamento);
 begin
   if (Assigned(objFimAfast)) then
+  begin
+    if objFimAfast.dtTermAfast > 0 then
     begin
-      if objFimAfast.dtTermAfast > 0 then
-      begin
-        Gerador.wGrupo('fimAfastamento');
-          Gerador.wCampo(tcDat, '', 'dtTermAfast', 10, 10, 1, objFimAfast.dtTermAfast);
-//          Gerador.wCampo(tcStr, '', 'codMotAfast', 0,0,0, objFimAfast.codMotAfast);
-//          Gerador.wCampo(tcStr, '', 'infoMesmoMtv', 0,0,0, eSSimNaoToStr(objFimAfast.infoMesmoMtv));
-        Gerador.wGrupo('/fimAfastamento');
-      end;
+      Gerador.wGrupo('fimAfastamento');
+
+      Gerador.wCampo(tcDat, '', 'dtTermAfast', 10, 10, 1, objFimAfast.dtTermAfast);
+
+      Gerador.wGrupo('/fimAfastamento');
     end;
+  end;
+end;
+
+procedure TEvtAfastTemp.GerarInfoRetif(objInfoRetif: TInfoRetif);
+begin
+  if (Assigned(objInfoRetif)) then
+  begin
+    if objInfoRetif.origRetif > 0 then
+    begin
+      Gerador.wGrupo('infoRetif');
+
+      Gerador.wCampo(tcInt, '', 'origRetif', 1,  1, 1, objInfoRetif.origRetif);
+      Gerador.wCampo(tcStr, '', 'tpProc',    1,  1, 0, eSTpProcessoToStr(objInfoRetif.tpProc));
+      Gerador.wCampo(tcStr, '', 'nrProc',    1, 20, 0, objInfoRetif.nrProc);
+
+      Gerador.wGrupo('/infoRetif');
+    end;
+  end;
 end;
 
 { TinfoAfastamento }
@@ -451,17 +508,21 @@ end;
 constructor TinfoAfastamento.create;
 begin
   inherited;
+
   FiniAfastamento := TiniAfastamento.Create;
   FaltAfastamento := TaltAfastamento.Create;
+  FinfoRetif := TinfoRetif.Create;
   FfimAfastamento := TfimAfastamento.Create;
 end;
 
 destructor TinfoAfastamento.destroy;
 begin
-   FiniAfastamento.Free;
-   FaltAfastamento.Free;
-   FfimAfastamento.Free;
-   inherited;
+  FiniAfastamento.Free;
+  FaltAfastamento.Free;
+  FinfoRetif.Free;
+  FfimAfastamento.Free;
+
+  inherited;
 end;
 
 { tiniAfastamento }
@@ -469,6 +530,7 @@ end;
 constructor tiniAfastamento.create;
 begin
   inherited;
+
   FinfoAtestado := nil;
   FinfoCessao := TinfoCessao.Create;
   FinfoMandSind := TinfoMandSind.Create;
@@ -479,6 +541,7 @@ begin
   FreeAndNil(FInfoAtestado);
   FinfoCessao.Free;
   FinfoMandSind.Free;
+
   inherited;
 end;
 
@@ -529,6 +592,7 @@ end;
 destructor TinfoAtestadoItem.destroy;
 begin
   FreeAndNil(FEmitente);
+
   inherited;
 end;
 
@@ -549,12 +613,14 @@ end;
 constructor TaltAfastamento.Create;
 begin
   inherited;
+
   FAltEmpr := nil;
 end;
 
 destructor TaltAfastamento.Destroy;
 begin
   FreeAndNil(FAltEmpr);
+
   inherited;
 end;
 

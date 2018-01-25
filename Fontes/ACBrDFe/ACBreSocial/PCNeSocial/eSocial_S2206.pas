@@ -62,53 +62,55 @@ type
   TInfoContratoS2206 = class;
 
   TS2206Collection = class(TOwnedCollection)
-    private
-      function GetItem(Index: Integer): TS2206CollectionItem;
-      procedure SetItem(Index: Integer; Value: TS2206CollectionItem);
-    public
-      function Add: TS2206CollectionItem;
-      property Items[Index: Integer]: TS2206CollectionItem read GetItem write SetItem; default;
+  private
+    function GetItem(Index: Integer): TS2206CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS2206CollectionItem);
+  public
+    function Add: TS2206CollectionItem;
+    property Items[Index: Integer]: TS2206CollectionItem read GetItem write SetItem; default;
   end;
 
   TS2206CollectionItem = class(TCollectionItem)
-    private
-      FTipoEvento : TTipoEvento;
-      FEvtAltContratual: TEvtAltContratual;
-      procedure setEvtAltContratual(const Value: TEvtAltContratual);
-    public
-      constructor Create(AOwner: TComponent); reintroduce;
-      destructor  Destroy; override;
-    published
-      property TipoEvento : TTipoEvento read FTipoEvento;
-      property EvtAltContratual : TEvtAltContratual read FEvtAltContratual write setEvtAltContratual;
+  private
+    FTipoEvento : TTipoEvento;
+    FEvtAltContratual: TEvtAltContratual;
+
+    procedure setEvtAltContratual(const Value: TEvtAltContratual);
+  public
+    constructor Create(AOwner: TComponent); reintroduce;
+    destructor  Destroy; override;
+  published
+    property TipoEvento : TTipoEvento read FTipoEvento;
+    property EvtAltContratual : TEvtAltContratual read FEvtAltContratual write setEvtAltContratual;
   end;
 
   TEvtAltContratual = class(TeSocialEvento)
-    private
-      FIdeEvento: TIdeEvento2;
-      FIdeEmpregador: TIdeEmpregador;
-      FIdeVinculo : TIdeVinculo;
-      FAltContratual: TAltContratual;
-      function  GetAltContratual : TAltContratual;
+  private
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeVinculo : TIdeVinculo;
+    FAltContratual: TAltContratual;
 
-      {Geradores da Classe - Necessários pois os geradores de ACBreSocialGerador
-       possuem campos excedentes que não se aplicam ao S2206}
-      procedure GerarAltContratual(objAltContratual: TAltContratual);
-      procedure GerarInfoCeletista(objInfoCeletista : TInfoCeletista);
-      procedure GerarInfoEstaturario(pInfoEstatutario: TInfoEstatutario);
-      procedure GerarInfoContrato(ObjInfoContrato : TInfoContratoS2206);
-      procedure GerarTrabTemp(pTrabTemp: TTrabTemporario);
-      procedure GerarServPubl(pServPubl: TServPubl);
-    public
-      constructor Create(AACBreSocial: TObject);overload;
-      destructor destroy; override;
 
-      function GerarXML: boolean; override;
+    {Geradores da Classe - Necessários pois os geradores de ACBreSocialGerador
+     possuem campos excedentes que não se aplicam ao S2206}
+    procedure GerarAltContratual(objAltContratual: TAltContratual);
+    procedure GerarInfoCeletista(objInfoCeletista : TInfoCeletista);
+    procedure GerarInfoEstaturario(pInfoEstatutario: TInfoEstatutario);
+    procedure GerarInfoContrato(ObjInfoContrato : TInfoContratoS2206);
+    procedure GerarTrabTemp(pTrabTemp: TTrabTemporario);
+    procedure GerarServPubl(pServPubl: TServPubl);
+    function  GetAltContratual : TAltContratual;
+  public
+    constructor Create(AACBreSocial: TObject);overload;
+    destructor destroy; override;
 
-      property IdeEvento : TIdeEvento2 read FIdeEvento write FIdeEvento;
-      property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-      property IdeVinculo : TIdeVinculo read FIdeVinculo write FIdeVInculo;
-      property AltContratual : TAltContratual read GetAltContratual write FAltContratual;
+    function GerarXML: boolean; override;
+
+    property IdeEvento : TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeVinculo : TIdeVinculo read FIdeVinculo write FIdeVInculo;
+    property AltContratual : TAltContratual read GetAltContratual write FAltContratual;
   end;
 
   TServPubl = class(TPersistent)
@@ -132,23 +134,23 @@ type
   end;
 
   TAltContratual = class(TPersistent)
-    private
-      FdtAlteracao : TDateTime;
-      FDtEf: TDateTime;
-      FDscAlt: string;
-      FVinculo     : TVinculo;
-      FinfoRegimeTrab : TinfoRegimeTrab;
-      FinfoContrato   : TInfoContratoS2206;
-    public
-      constructor Create;
-      destructor  destroy; override;
-    published
-      property dtALteracao : TDateTime read FdtAlteracao write FdtAlteracao;
-      property dtEf: TDateTime read FDtEf write FDtEf;
-      property dscAlt: string read FDscAlt write FDscAlt;
-      property Vinculo : TVInculo read FVinculo write FVinculo;
-      property infoRegimeTrab : TinfoRegimeTrab read FinfoRegimeTrab write FinfoRegimeTrab;
-      property infoContrato : TInfoContratoS2206 read FinfoContrato write FinfoContrato;
+  private
+    FdtAlteracao : TDateTime;
+    FDtEf: TDateTime;
+    FDscAlt: string;
+    FVinculo     : TVinculo;
+    FinfoRegimeTrab : TinfoRegimeTrab;
+    FinfoContrato   : TInfoContratoS2206;
+  public
+    constructor Create;
+    destructor  destroy; override;
+  published
+    property dtALteracao : TDateTime read FdtAlteracao write FdtAlteracao;
+    property dtEf: TDateTime read FDtEf write FDtEf;
+    property dscAlt: string read FDscAlt write FDscAlt;
+    property Vinculo : TVInculo read FVinculo write FVinculo;
+    property infoRegimeTrab : TinfoRegimeTrab read FinfoRegimeTrab write FinfoRegimeTrab;
+    property infoContrato : TInfoContratoS2206 read FinfoContrato write FinfoContrato;
   end;
 
 implementation
@@ -185,6 +187,7 @@ end;
 destructor TS2206CollectionItem.Destroy;
 begin
   FEvtAltContratual.Free;
+
   inherited;
 end;
 
@@ -195,10 +198,10 @@ end;
 
 { TEvtAltContratual }
 
-
 constructor TEvtAltContratual.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -210,28 +213,40 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FAltContratual.Free;
+
   inherited;
 end;
 
 procedure TEvtAltContratual.GerarInfoEstaturario(pInfoEstatutario: TInfoEstatutario);
 begin
   Gerador.wGrupo('infoEstaturario');
-    Gerador.wCampo(tcInt, '', 'tpPlanRP', 0, 0, 0, eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
+
+  Gerador.wCampo(tcInt, '', 'tpPlanRP', 1, 1, 1, eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
+
   Gerador.wGrupo('/infoEstaturario');
 end;
 
 procedure TEvtAltContratual.GerarAltContratual(objAltContratual: TAltContratual);
 begin
   Gerador.wGrupo('altContratual');
-    Gerador.wCampo(tcDat, '', 'dtAlteracao', 0, 0, 0, objAltContratual.dtALteracao);
-    GerarVinculo(objAltContratual.Vinculo, 3);
-    Gerador.wGrupo('infoRegimeTrab');
-      if objAltContratual.infoRegimeTrab.InfoCeletista.cnpjSindCategProf <> '' then
-        GerarInfoCeletista(objAltContratual.infoRegimeTrab.InfoCeletista)
-      else
-        GerarInfoEstaturario(objAltContratual.infoRegimeTrab.InfoEstatutario);
-    Gerador.wGrupo('/infoRegimeTrab');
-    GerarInfoContrato(objAltContratual.InfoContrato);
+
+  Gerador.wCampo(tcDat, '', 'dtAlteracao', 10,  10, 1, objAltContratual.dtALteracao);
+  Gerador.wCampo(tcDat, '', 'dtEf',        10,  10, 0, objAltContratual.dtEf);
+  Gerador.wCampo(tcStr, '', 'dscAlt',       1, 150, 0, objAltContratual.dtEf);
+
+  GerarVinculo(objAltContratual.Vinculo, 3);
+
+  Gerador.wGrupo('infoRegimeTrab');
+
+  if objAltContratual.infoRegimeTrab.InfoCeletista.cnpjSindCategProf <> '' then
+    GerarInfoCeletista(objAltContratual.infoRegimeTrab.InfoCeletista)
+  else
+    GerarInfoEstaturario(objAltContratual.infoRegimeTrab.InfoEstatutario);
+
+  Gerador.wGrupo('/infoRegimeTrab');
+
+  GerarInfoContrato(objAltContratual.InfoContrato);
+
   Gerador.wGrupo('/altContratual');
 end;
 
@@ -240,7 +255,9 @@ begin
   if pTrabTemp.justProrr <> '' then
   begin
     Gerador.wGrupo('trabTemp');
-      Gerador.wCampo(tcStr, '', 'justProrr', 0,0,0, pTrabTemp.justProrr);
+
+    Gerador.wCampo(tcStr, '', 'justProrr', 1, 999, 1, pTrabTemp.justProrr);
+
     Gerador.wGrupo('/trabTemp');
   end;
 end;
@@ -248,41 +265,48 @@ end;
 procedure TEvtAltContratual.GerarInfoCeletista(objInfoCeletista: TInfoCeletista);
 begin
   Gerador.wGrupo('infoCeletista');
-    Gerador.wCampo(tcStr, '', 'tpRegJor', 0,0,0, ord(objInfoCeletista.TpRegJor) + 1);
-    Gerador.wCampo(tcStr, '', 'natAtividade', 0,0,0, ord(objInfoCeletista.NatAtividade) + 1);
-    Gerador.wCampo(tcStr, '', 'dtBase', 0,0,0, objInfoCeletista.dtBase);
-    Gerador.wCampo(tcStr, '', 'cnpjSindCategProf', 0,0,0, objInfoCeletista.cnpjSindCategProf);
-    GerarTrabTemp(objInfoCeletista.TrabTemporario);
+
+  Gerador.wCampo(tcStr, '', 'tpRegJor',           1,  1, 1, ord(objInfoCeletista.TpRegJor) + 1);
+  Gerador.wCampo(tcStr, '', 'natAtividade',       1,  1, 1, ord(objInfoCeletista.NatAtividade) + 1);
+  Gerador.wCampo(tcStr, '', 'dtBase',             1,  2, 0, objInfoCeletista.dtBase);
+  Gerador.wCampo(tcStr, '', 'cnpjSindCategProf', 14, 14, 1, objInfoCeletista.cnpjSindCategProf);
+
+  GerarTrabTemp(objInfoCeletista.TrabTemporario);
+  GerarInfoAprend(objInfoCeletista.aprend);
+
   Gerador.wGrupo('/infoCeletista');
 end;
 
 procedure TEvtAltContratual.GerarServPubl(pServPubl: TServPubl);
 begin
   Gerador.wGrupo('servPubl');
-    Gerador.wCampo(tcInt, '', 'mtvAlter', 0, 0, 0, eSTpMtvAltToStr(pServPubl.mtvAlter));
+
+  Gerador.wCampo(tcInt, '', 'mtvAlter', 1, 1, 1, eSTpMtvAltToStr(pServPubl.mtvAlter));
+
   Gerador.wGrupo('/servPubl');
 end;
 
 procedure TEvtAltContratual.GerarInfoContrato(ObjInfoContrato: TInfoContratoS2206);
 begin
   Gerador.wGrupo('infoContrato');
-    if (objInfoContrato.CodCargo <> '')  then
-      Gerador.wCampo(tcStr, '', 'codCargo  ', 0, 0, 0, objInfoContrato.CodCargo);
 
-    if (objInfoContrato.CodFuncao <> '') then
-      Gerador.wCampo(tcStr, '', 'codFuncao  ', 0, 0, 0, objInfoContrato.CodFuncao);
+  Gerador.wCampo(tcStr, '', 'codCargo',     1, 30, 0, objInfoContrato.CodCargo);
+  Gerador.wCampo(tcStr, '', 'codFuncao',    1, 30, 0, objInfoContrato.CodFuncao);
+  Gerador.wCampo(tcInt, '', 'codCateg',     1,  3, 1, objInfoContrato.CodCateg);
+  Gerador.wCampo(tcStr, '', 'codCarreira',  1, 30, 0, objInfoContrato.codCarreira);
+  Gerador.wCampo(tcDat, '', 'dtIngrCarr',  10, 10, 0, objInfoContrato.dtIngrCarr);
 
-    Gerador.wCampo(tcInt, '', 'codCateg  ', 0, 0, 0, objInfoContrato.CodCateg);
-    Gerador.wCampo(tcStr, '', 'codCarreira  ', 0, 0, 0, objInfoContrato.codCarreira);
-    Gerador.wCampo(tcDat, '', 'dtIngrCarr  ', 0, 0, 0, objInfoContrato.dtIngrCarr);
-    GerarRemuneracao(objInfoContrato.Remuneracao);
-    GerarDuracao(objInfoContrato.Duracao);
-    GerarLocalTrabalho(objInfoContrato.LocalTrabalho);
-    GerarHorContratual(objInfoContrato.HorContratual);
-    GerarFiliacaoSindical(objInfoContrato.FiliacaoSindical);
-    GerarAlvaraJudicial(objInfoContrato.AlvaraJudicial);
-    if objInfoContrato.servPublInst then
-       GerarServPubl(objInfoContrato.servPubl);
+  GerarRemuneracao(objInfoContrato.Remuneracao);
+  GerarDuracao(objInfoContrato.Duracao);
+  GerarLocalTrabalho(objInfoContrato.LocalTrabalho);
+  GerarHorContratual(objInfoContrato.HorContratual);
+  GerarFiliacaoSindical(objInfoContrato.FiliacaoSindical);
+  GerarAlvaraJudicial(objInfoContrato.AlvaraJudicial);
+  GerarObservacoes(objInfoContrato.observacoes);
+
+  if objInfoContrato.servPublInst then
+    GerarServPubl(objInfoContrato.servPubl);
+
   Gerador.wGrupo('/infoContrato');
 end;
 
@@ -290,16 +314,19 @@ function TEvtAltContratual.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtAltContratual');
-      Gerador.wGrupo('evtAltContratual Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //GerarIdVersao(Self);
-        GerarIdeEvento2(self.IdeEvento);
-        GerarIdeEmpregador(self.IdeEmpregador);
-        GerarIdeVinculo(Self.IdeVinculo);
-        GerarAltContratual(FAltContratual);
-      Gerador.wGrupo('/evtAltContratual');
+    Gerador.wGrupo('evtAltContratual Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeVinculo(Self.IdeVinculo);
+    GerarAltContratual(FAltContratual);
+
+    Gerador.wGrupo('/evtAltContratual');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAltContratual');
+
     Validar('evtAltContratual');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -320,6 +347,7 @@ end;
 constructor TAltContratual.Create;
 begin
   inherited;
+
   FVinculo := TVinculo.Create;
   FinfoRegimeTrab := TinfoRegimeTrab.Create;
   FinfoContrato   := TInfoContratoS2206.Create;
@@ -330,6 +358,7 @@ begin
   FVinculo.Free;
   FinfoRegimeTrab.Free;
   FinfoContrato.Free;
+
   inherited;
 end;
 
@@ -338,12 +367,14 @@ end;
 constructor TInfoContratoS2206.Create;
 begin
   inherited;
+
   FServPubl := nil;
 end;
 
 destructor TInfoContratoS2206.Destroy;
 begin
   FreeAndNil(FServPubl);
+
   inherited;
 end;
 

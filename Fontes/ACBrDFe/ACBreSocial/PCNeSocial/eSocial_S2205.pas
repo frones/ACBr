@@ -83,7 +83,6 @@ type
   TEvtAltCadastral = class(TeSocialEvento)
   private
     FdtAlteracao: TDateTime;
-
     FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
     FTrabalhador: TTrabalhador;
@@ -140,6 +139,7 @@ end;
 destructor TS2205CollectionItem.Destroy;
 begin
   FEvtAltCadastral.Free;
+
   inherited;
 end;
 
@@ -154,6 +154,7 @@ end;
 constructor TEvtAltCadastral.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FTrabalhador := TTrabalhador.Create;
@@ -168,38 +169,44 @@ begin
   FTrabalhador.Free;
   FVinculo.Free;
   FIdeTrabalhador.Free;
+
   inherited;
 end;
 
 procedure TEvtAltCadastral.GerarInfoAltCadastral;
 begin
-  gerarModoAbertura(mlAlteracao);
-    Gerador.wCampo(tcDat, '', 'dtAlteracao  ', 0, 0, 0, self.dtAlteracao);
-    gerarTrabalhador(self.Trabalhador, 'dadosTrabalhador');
-  gerarModoFechamento(mlAlteracao);
+  GerarModoAbertura(mlAlteracao);
+
+  Gerador.wCampo(tcDat, '', 'dtAlteracao', 10, 10, 1, self.dtAlteracao);
+
+  GerarTrabalhador(self.Trabalhador, 'dadosTrabalhador');
+
+  GerarModoFechamento(mlAlteracao);
 end;
 
 function TEvtAltCadastral.GerarXML: boolean;
 begin
   try
-//    self.IdeTrabalhador.cpfTrab := FTrabalhador.CpfTrab;
     GerarCabecalho('evtAltCadastral');
-      Gerador.wGrupo('evtAltCadastral Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        gerarIdeTrabalhador(self.IdeTrabalhador, True);
-        GerarInfoAltCadastral;
-      Gerador.wGrupo('/evtAltCadastral');
+    Gerador.wGrupo('evtAltCadastral Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeTrabalhador(self.IdeTrabalhador, True);
+    GerarInfoAltCadastral;
+
+    Gerador.wGrupo('/evtAltCadastral');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAltCadastral');
+
     Validar('evtAltCadastral');
   except on e:exception do
     raise Exception.Create(e.Message);
   end;
 
-  Result := (Gerador.ArquivoFormatoXML <> '') 
+  Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
 end.

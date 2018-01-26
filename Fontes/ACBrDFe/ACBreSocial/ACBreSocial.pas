@@ -250,6 +250,9 @@ begin
   {S2250}
   for i := 0 to FEventos.NaoPeriodicos.S2250.Count - 1 do
     FLoteEventos.LoadFromString(FEventos.NaoPeriodicos.S2250[i].EvtAvPrevio.XML);
+  {S2260}
+  for i := 0 to FEventos.NaoPeriodicos.S2260.Count - 1 do
+    FLoteEventos.LoadFromString(FEventos.NaoPeriodicos.S2260[i].EvtConvInterm.XML);
   {S2298}
   for i := 0 to FEventos.NaoPeriodicos.S2298.Count - 1 do
     FLoteEventos.LoadFromString(FEventos.NaoPeriodicos.S2298[i].EvtReintegr.XML);

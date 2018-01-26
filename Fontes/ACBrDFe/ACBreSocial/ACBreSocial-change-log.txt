@@ -50,6 +50,8 @@ Símbolo : Significado
 
 26/01/2018
 -- ACBreSocial --
+[*] Incluido a geração do XML do evento S-2260 na procedure: GerarXMLEventos
+   Por: Italo Jurisato Junior
 [*] Checagem dos Eventos: 2300 até 3000.
     Foi checado se todas as tag (opcional e obrigatória) estão sendo geradas
     bem como o tamanho minimo, máximo e ocorrências.

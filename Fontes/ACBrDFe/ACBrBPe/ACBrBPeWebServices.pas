@@ -661,7 +661,7 @@ procedure TBPeRecepcao.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'BPeRecepcao';
 
-  if FPConfiguracoesBPe.WebServices.UFCodigo = 52 then
+  if FPConfiguracoesBPe.WebServices.UFCodigo in [31, 52] then
     FPSoapAction := FPServico + '/bpeRecepcao'
   else
     FPSoapAction := FPServico;

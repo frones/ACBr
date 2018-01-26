@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2018
+-- ACBreSocial --
+[-] Ajustado o metodo de assinatura do evento pois o 
+	webservice espera o atributo Uri da assinatura vazio. Por: Rafael Dias.
+[*] Limpeza da unit do ACBreSocialWebServices. Por: Rafael Dias.
+
 25/01/2018
 -- ACBreSocial --
 [*] Checagem dos Eventos: 2205 até 2299.

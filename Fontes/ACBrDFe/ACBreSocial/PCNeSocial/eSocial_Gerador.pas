@@ -228,7 +228,7 @@ begin
     if not (SSL.SSLXmlSignLib in ([xsXmlSec, xsLibXml2])) then
       raise EACBreSocialException.Create(ACBRESOCIAL_CErroSignLib);
 
-    XMLAss := SSL.Assinar(String(ArqXML), 'eSocial', NomeEvento);
+    XMLAss := SSL.Assinar(String(ArqXML), 'eSocial', NomeEvento, '', '', '', 'ID');
     FXMLAssinado := XMLAss;
     FXMLOriginal := XMLAss;
 

@@ -955,12 +955,9 @@ begin
       FRetProcLote.dadosRecLote.versaoAplicRecepcao := Leitor.rCampo(tcStr, 'versaoAplicativoRecepcao');
       FRetProcLote.dadosRecLote.Protocolo  := Leitor.rCampo(tcStr, 'protocoloEnvio');
 
-      // Alterado Alisson 26/12/2017 O XML retorna o aplicativo de processamento do lote e o  mesmo deverá ser gravado
       Leitor.Grupo := Leitor.rExtrai(1, 'dadosProcessamentoLote');
       FRetProcLote.dadosProcLote.versaoAplicProcLote :=  Leitor.rCampo(tcStr, 'versaoAplicativoProcessamentoLote');
 
-      // Foi alterado por Alisson 11/12/2017 para rodar todos os eventos e não somente o cabeçalho dos eventos dentro do XML
-      // pois a assinaturá do nó raiz ocorre apenas uma única vez
       Leitor.Arquivo := Leitor.rExtrai(1, 'retornoEventos');
       i:=0;
       while Leitor.rExtrai(1, 'evento', '', i + 1) <> '' do
@@ -988,8 +985,6 @@ begin
           retEvento.FRecibo.FHash := Leitor.rCampo(tcStr, 'hash');
           Processamento := retEvento.FProcessamento;
 
-          // Foi alterado por Alisson 11/12/2017 pois cada ocorrência possui sua assinatura vinculada a um evento,
-          // utilizando a extração do nó raiz dentro de Leitor Faz com que todas as ocorrências sejam vinculadas a um evento
           j := 0;
           Reader.Arquivo := Reader.rExtrai(1, 'ocorrencias');
           while Reader.rExtrai(1, 'ocorrencia', '', j + 1) <> '' do

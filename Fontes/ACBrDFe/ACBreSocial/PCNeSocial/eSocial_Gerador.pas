@@ -106,7 +106,7 @@ type
     procedure GerarDocumentos(pDocumentos: TDocumentos);
     procedure GerarDuracao(pDuracao: TDuracao);
     procedure GerarEndereco(pEndereco: TEndereco; pExterior: boolean = false);
-    procedure GerarEnderecoBrasil(pEndereco: TBrasil);
+    procedure GerarEnderecoBrasil(pEndereco: TBrasil; const GroupName: string = 'brasil');
     procedure GerarEnderecoExterior(pEndereco: TExterior);
     procedure GerarEpi(pEpi: TEpiCollection);
     procedure GerarFGTS(pFgts: TFGTS);
@@ -522,10 +522,10 @@ begin
   Gerador.wGrupo('/endereco');
 end;
 
-procedure TeSocialEvento.GerarEnderecoBrasil(pEndereco: TBrasil);
+procedure TeSocialEvento.GerarEnderecoBrasil(pEndereco: TBrasil; const GroupName: string);
 begin
   // italo
-  Gerador.wGrupo('brasil');
+  Gerador.wGrupo(GroupName);
 
   Gerador.wCampo(tcStr, '', 'tpLograd',    1,  4, 1, pEndereco.TpLograd);
   Gerador.wCampo(tcStr, '', 'dscLograd',   1, 80, 1, pEndereco.DscLograd);
@@ -536,7 +536,7 @@ begin
   Gerador.wCampo(tcStr, '', 'codMunic',    7,  7, 1, pEndereco.CodMunic);
   Gerador.wCampo(tcStr, '', 'uf',          2,  2, 1, eSufToStr(pEndereco.UF));
 
-  Gerador.wGrupo('/brasil');
+  Gerador.wGrupo('/' + GroupName);
 end;
 
 procedure TeSocialEvento.GerarEnderecoExterior(pEndereco: TExterior);

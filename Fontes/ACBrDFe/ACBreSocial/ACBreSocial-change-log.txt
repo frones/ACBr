@@ -60,6 +60,10 @@ Símbolo : Significado
 [*] Atualização do tpIndMatProc. Por: Alisson Souza Pereira.
 	https://www.projetoacbr.com.br/forum/topic/41088-os-fontes-oficiais-j%C3%A1-est%C3%A3o-transmitindo-os-arquivos/?page=2&tab=comments#comment-270969
 
+-- eSocial_S2260 --
+[+] Implementado o evento S-2260 - Convocação para Trabalho Intermitente
+   Por: Italo Jurisato Junior
+
 25/01/2018
 -- ACBreSocial --
 [*] Checagem dos Eventos: 2205 até 2299.

@@ -53,8 +53,8 @@ uses
   ACBrUtil, eSocial_Conversao,
   eSocial_S2190, eSocial_S2200, eSocial_S2220, eSocial_S2230, eSocial_S2240,
   eSocial_S2241, eSocial_S2205, eSocial_S2206, eSocial_S2210, eSocial_S2250,
-  eSocial_S2298, eSocial_S2299, eSocial_S2300, eSocial_S2306, eSocial_S2399,
-  eSocial_S2400, eSocial_S3000, eSocial_S4000, eSocial_S4999;
+  eSocial_S2260, eSocial_S2298, eSocial_S2299, eSocial_S2300, eSocial_S2306,
+  eSocial_S2399, eSocial_S2400, eSocial_S3000, eSocial_S4000, eSocial_S4999;
 
 type
 
@@ -70,6 +70,7 @@ type
     FS2240: TS2240Collection;
     FS2241: TS2241Collection;
     FS2250: TS2250Collection;
+    FS2260: TS2260Collection;
     FS2298: TS2298Collection;
     FS2299: TS2299Collection;
     FS2300: TS2300Collection;
@@ -90,6 +91,7 @@ type
     procedure setS2240(const Value: TS2240Collection);
     procedure setS2241(const Value: TS2241Collection);
     procedure setS2250(const Value: TS2250Collection);
+    procedure setS2260(const Value: TS2260Collection);
     procedure setS2298(const Value: TS2298Collection);
     procedure setS2299(const Value: TS2299Collection);
     procedure setS2300(const Value: TS2300Collection);
@@ -118,6 +120,7 @@ type
     property S2240: TS2240Collection read FS2240 write setS2240;
     property S2241: TS2241Collection read FS2241 write setS2241;
     property S2250: TS2250Collection read FS2250 write setS2250;
+    property S2260: TS2260Collection read FS2260 write setS2260;
     property S2298: TS2298Collection read FS2298 write setS2298;
     property S2299: TS2299Collection read FS2299 write setS2299;
     property S2300: TS2300Collection read FS2300 write setS2300;
@@ -148,6 +151,7 @@ begin
   FS2240.Clear;
   FS2241.Clear;
   FS2250.Clear;
+  FS2260.Clear;
   FS2298.Clear;
   FS2299.Clear;
   FS2300.Clear;
@@ -173,6 +177,7 @@ begin
   FS2240 := TS2240Collection.Create(AOwner, TS2240CollectionItem);
   FS2241 := TS2241Collection.Create(AOwner, TS2241CollectionItem);
   FS2250 := TS2250Collection.Create(AOwner, TS2250CollectionItem);
+  FS2260 := TS2260Collection.Create(AOwner, TS2260CollectionItem);
   FS2298 := TS2298Collection.Create(AOwner, TS2298CollectionItem);
   FS2299 := TS2299Collection.Create(AOwner, TS2299CollectionItem);
   FS2300 := TS2300Collection.Create(AOwner, TS2300CollectionItem);
@@ -196,6 +201,7 @@ begin
   FS2240.Free;
   FS2241.Free;
   FS2250.Free;
+  FS2260.Free;
   FS2298.Free;
   FS2299.Free;
   FS2300.Free;
@@ -242,6 +248,9 @@ begin
 
   for I := 0 to Self.S2250.Count - 1 do
     Self.S2250.Items[i].EvtAvPrevio.GerarXML;
+
+  for I := 0 to Self.S2260.Count - 1 do
+    Self.S2260.Items[i].EvtConvInterm.GerarXML;
 
   for I := 0 to Self.S2298.Count - 1 do
     Self.S2298.Items[i].EvtReintegr.GerarXML;
@@ -307,6 +316,9 @@ begin
 
   for I := 0 to Self.S2250.Count - 1 do
     Self.S2250.Items[i].EvtAvPrevio.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2250.Items[i].TipoEvento)+'-'+IntToStr(i));
+
+  for I := 0 to Self.S2260.Count - 1 do
+    Self.S2260.Items[i].EvtConvInterm.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2260.Items[i].TipoEvento)+'-'+IntToStr(i));
 
   for I := 0 to Self.S2298.Count - 1 do
     Self.S2298.Items[i].EvtReintegr.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2298.Items[i].TipoEvento)+'-'+IntToStr(i));
@@ -384,6 +396,11 @@ end;
 procedure TNaoPeriodicos.setS2250(const Value: TS2250Collection);
 begin
   FS2250.Assign(Value);
+end;
+
+procedure TNaoPeriodicos.setS2260(const Value: TS2260Collection);
+begin
+  FS2260.Assign(Value);
 end;
 
 procedure TNaoPeriodicos.setS2298(const Value: TS2298Collection);

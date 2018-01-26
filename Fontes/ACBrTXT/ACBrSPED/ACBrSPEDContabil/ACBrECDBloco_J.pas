@@ -123,6 +123,7 @@ type
     fIND_DC_BAL: String;     /// Indicador da situação do saldo informado no campo anterior: D - Devedor; C - Credor.
     fVL_CTA_INI: Currency;   /// Valor inicial do código de aglutinação no Balanço Patrimonial no exercício informado, ou de período definido em norma específica.
     fIND_DC_BAL_INI: string; /// Indicador da situação do saldo inicial informado no campo anterior: D - Devedor; C – Credor.
+    fNOTAS_EXP_REF: String;  /// Notas explicativas relativas às demonstrações contábeis.
   public
     property COD_AGL: String read fCOD_AGL write fCOD_AGL;
     property NIVEL_AGL: String read fNIVEL_AGL write fNIVEL_AGL;
@@ -132,6 +133,7 @@ type
     property IND_DC_BAL: String read fIND_DC_BAL write fIND_DC_BAL;
     property VL_CTA_INI: Currency read fVL_CTA_INI write fVL_CTA_INI;
     property IND_DC_BAL_INI: String read fIND_DC_BAL_INI write fIND_DC_BAL_INI;
+    property NOTAS_EXP_REF: String read fNOTAS_EXP_REF write fNOTAS_EXP_REF;
   end;
 
   /// Registro J100 - Lista
@@ -157,6 +159,7 @@ type
     fIND_VL: String;             /// Indicador da situação do valor informado no campo anterior: D - Despesa ou valor que represente parcela redutora do lucro;R - Receita ou valor que represente incremento do lucro;P - Subtotal ou total positivo;N - Subtotal ou total negativo.
     fVL_CTA_ULT_DRE: Currency;   /// Valor inicial total constante na Demonstração do Resultado do Exercício do último período informado.
     fIND_VL_ULT_DRE: String;     /// Indicador da situação do valor informado no campo anterior: D - Despesa ou valor que represente parcela redutora do lucro;R - Receita ou valor que represente incremento do lucro;P - Subtotal ou total positivo;N - Subtotal ou total negativo.
+    fNOTAS_EXP_REF: String;      /// Notas explicativas relativas às demonstrações contábeis.    
   public
     property COD_AGL: String read fCOD_AGL write fCOD_AGL;
     property NIVEL_AGL: String read fNIVEL_AGL write fNIVEL_AGL;
@@ -165,6 +168,7 @@ type
     property IND_VL: String read fIND_VL write fIND_VL;
     property VL_CTA_ULT_DRE: Currency read fVL_CTA_ULT_DRE write fVL_CTA_ULT_DRE;    
     property IND_VL_ULT_DRE: String read fIND_VL_ULT_DRE write fIND_VL_ULT_DRE;
+    property NOTAS_EXP_REF: String read fNOTAS_EXP_REF write fNOTAS_EXP_REF;
   end;
 
   /// Registro J150 - Lista
@@ -213,6 +217,7 @@ type
     fIND_DC_CTA: String;     /// Indicador da situação do saldo FINAL informado no campo anterior: D - Devedor; C - Credor.
     fVL_CTA_INI: Currency;   /// Saldo inicial do código de aglutinação na demonstração do período informado
     fIND_DC_CTA_INI: String; /// Indicador da situação do saldo inicial informado no campo anterior: D – Devedor C – Credor
+    fNOTAS_EXP_REF: String;  /// Notas explicativas relativas às demonstrações contábeis.    
     ///
     FRegistroJ215: TRegistroJ215List;  /// BLOCO J - Lista de RegistroJ215 (FILHO)
   public
@@ -226,6 +231,7 @@ type
     property IND_DC_CTA: String read fIND_DC_CTA write fIND_DC_CTA;
     property VL_CTA_INI: Currency read fVL_CTA_INI write fVL_CTA_INI;
     property IND_DC_CTA_INI: String read fIND_DC_CTA_INI write fIND_DC_CTA_INI;
+    property NOTAS_EXP_REF: String read fNOTAS_EXP_REF write fNOTAS_EXP_REF;
     /// Registros FILHOS
     property RegistroJ215: TRegistroJ215List read FRegistroJ215 write FRegistroJ215;
   end;

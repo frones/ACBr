@@ -241,8 +241,8 @@ begin
            if DT_INI >= EncodeDate(2013,01,01) then
               Check(((IND_DC_BAL_INI = 'D') or (IND_DC_BAL_INI = 'C')), '(J-J100) No Indicador da situação do saldo inicial do código de aglutinação no Balança Patrimonial, deve ser informado: D ou C!');
            ///
-           /// Layout 2 a partir da escrituração ano calendário 2013
-           if DT_INI >= EncodeDate(2013,01,01) then
+           /// Layout 6 a partir da escrituração ano calendário 2017
+           if DT_INI >= EncodeDate(2017,01,01) then
            begin
              Add( LFill('J100') +
                   LFill(COD_AGL) +
@@ -252,10 +252,13 @@ begin
                   LFill(VL_CTA, 19, 2) +
                   LFill(IND_DC_BAL, 1) +
                   LFill(VL_CTA_INI, 19, 2) +
-                  LFill(IND_DC_BAL_INI) 
+                  LFill(IND_DC_BAL_INI) +
+                  LFill(NOTAS_EXP_REF)
                   );
            end
             else
+             /// Layout 2 a partir da escrituração ano calendário 2013
+             if DT_INI >= EncodeDate(2013,01,01) then
              begin
                Add( LFill('J100') +
                     LFill(COD_AGL) +
@@ -263,9 +266,22 @@ begin
                     LFill(IND_GRP_BAL, 1) +
                     LFill(DESCR_COD_AGL) +
                     LFill(VL_CTA, 19, 2) +
-                    LFill(IND_DC_BAL, 1) 
+                    LFill(IND_DC_BAL, 1) +
+                    LFill(VL_CTA_INI, 19, 2) +
+                    LFill(IND_DC_BAL_INI)
                     );
-             end;
+             end
+              else
+               begin
+                 Add( LFill('J100') +
+                      LFill(COD_AGL) +
+                      LFill(NIVEL_AGL) +
+                      LFill(IND_GRP_BAL, 1) +
+                      LFill(DESCR_COD_AGL) +
+                      LFill(VL_CTA, 19, 2) +
+                      LFill(IND_DC_BAL, 1)
+                      );
+               end;
         end;
         FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
      end;
@@ -288,16 +304,32 @@ begin
            Check(((IND_VL_ULT_DRE = 'D') or (IND_VL_ULT_DRE = 'R') or (IND_VL_ULT_DRE = 'P') or (IND_VL_ULT_DRE = 'N') or (IND_VL_ULT_DRE = '') ), '(J-J150) No Indicador da situação do saldo valor inicial, deve ser informado: D ou R ou P ou N!');
 
            ///
-           Add( LFill('J150') +
-                LFill(COD_AGL) +
-                LFill(NIVEL_AGL) +
-                LFill(DESCR_COD_AGL) +
-                LFill(VL_CTA, 19, 2) +
-                LFill(IND_VL, 1) +
-                LFill(VL_CTA_ULT_DRE, 19, 2, True) +
-                LFill(IND_VL_ULT_DRE, 1, True)
-                );
-
+           /// Layout 6 a partir da escrituração ano calendário 2017
+           if DT_INI >= EncodeDate(2017,01,01) then
+           begin
+             Add( LFill('J150') +
+                  LFill(COD_AGL) +
+                  LFill(NIVEL_AGL) +
+                  LFill(DESCR_COD_AGL) +
+                  LFill(VL_CTA, 19, 2) +
+                  LFill(IND_VL, 1) +
+                  LFill(VL_CTA_ULT_DRE, 19, 2, True) +
+                  LFill(IND_VL_ULT_DRE, 1, True) +
+                  LFill(NOTAS_EXP_REF)
+                  );
+           end
+             else
+             begin
+               Add( LFill('J150') +
+                    LFill(COD_AGL) +
+                    LFill(NIVEL_AGL) +
+                    LFill(DESCR_COD_AGL) +
+                    LFill(VL_CTA, 19, 2) +
+                    LFill(IND_VL, 1) +
+                    LFill(VL_CTA_ULT_DRE, 19, 2, True) +
+                    LFill(IND_VL_ULT_DRE, 1, True)
+                    );
+             end;
         end;
         FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
      end;
@@ -321,7 +353,7 @@ begin
            Check(((DESC_FAT <> '')), '(J-J200) Descrição do fato contábil deve ser informado!');
            Add( LFill('J200') +
                 LFill(COD_HIST_FAT) +
-                LFill(DESC_FAT) 
+                LFill(DESC_FAT)
                 );
 
         end;
@@ -347,15 +379,32 @@ begin
            Check(((IND_DC_CTA = 'D') or (IND_DC_CTA = 'C')), '(J-J210) No Indicador da situação do saldo final informado no campo anterior, deve ser informado: D ou C!');
            Check(((IND_DC_CTA_INI = 'D') or (IND_DC_CTA_INI = 'C')), '(J-J210) Indicador da situação do saldo inicial informado no campo anterior, deve ser informado: D ou C!');
            ///
-           Add( LFill('J210') +
-                LFill(IND_TIP) +
-                LFill(COD_AGL) +
-                LFill(DESCR_COD_AGL) +
-                LFill(VL_CTA, 19, 2) +
-                LFill(IND_DC_CTA) +
-                LFill(VL_CTA_INI, 19, 2) +
-                LFill(IND_DC_CTA_INI) 
-                );
+           /// Layout 6 a partir da escrituração ano calendário 2017
+           if DT_INI >= EncodeDate(2017,01,01) then
+           begin
+             Add( LFill('J210') +
+                  LFill(IND_TIP) +
+                  LFill(COD_AGL) +
+                  LFill(DESCR_COD_AGL) +
+                  LFill(VL_CTA, 19, 2) +
+                  LFill(IND_DC_CTA) +
+                  LFill(VL_CTA_INI, 19, 2) +
+                  LFill(IND_DC_CTA_INI) +
+                  LFill(NOTAS_EXP_REF)
+                  );
+           end
+             else
+             begin
+               Add( LFill('J210') +
+                    LFill(IND_TIP) +
+                    LFill(COD_AGL) +
+                    LFill(DESCR_COD_AGL) +
+                    LFill(VL_CTA, 19, 2) +
+                    LFill(IND_DC_CTA) +
+                    LFill(VL_CTA_INI, 19, 2) +
+                    LFill(IND_DC_CTA_INI)
+                    );
+             end;
         end;
         WriteRegistroJ215(RegJ005.RegistroJ210.Items[intFor]);
 

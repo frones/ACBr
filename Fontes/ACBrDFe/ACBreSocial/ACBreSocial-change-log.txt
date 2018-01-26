@@ -59,6 +59,8 @@ Símbolo : Significado
 [*] Limpeza da unit do ACBreSocialWebServices. Por: Rafael Dias.
 [*] Atualização do tpIndMatProc. Por: Alisson Souza Pereira.
 	https://www.projetoacbr.com.br/forum/topic/41088-os-fontes-oficiais-j%C3%A1-est%C3%A3o-transmitindo-os-arquivos/?page=2&tab=comments#comment-270969
+[-] Limpar os xml do lote antes de gerar os novos. Por: juuninho.
+	https://www.projetoacbr.com.br/forum/topic/41088-os-fontes-oficiais-j%C3%A1-est%C3%A3o-transmitindo-os-arquivos/?do=findComment&comment=271026
 
 -- eSocial_S2260 --
 [+] Implementado o evento S-2260 - Convocação para Trabalho Intermitente

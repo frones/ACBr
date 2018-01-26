@@ -177,6 +177,9 @@ procedure TACBreSocial.GerarXMLEventos;
 var
   i: Integer;
 begin
+  //Limpando
+  FLoteEventos.Clear;
+
 {Iniciais}
   {S1000}
   for i := 0 to FEventos.Iniciais.S1000.Count - 1 do

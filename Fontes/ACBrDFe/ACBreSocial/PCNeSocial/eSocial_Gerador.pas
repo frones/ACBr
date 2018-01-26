@@ -163,7 +163,7 @@ type
     procedure GerarIdePais(pIdePais: TIdePais);
     procedure GerarInfoAgNocivo(pInfoAgNocivo: TInfoAgNocivo);
     procedure GerarItensRemun(objItensRemun: TRubricaCollection; const GroupName: string = 'verbasResc');
-    procedure GerarProcJudTrab(objProcJudTrab: TProcJudTrabCollection; tpTrip: Boolean = True);
+    procedure GerarProcJudTrab(objProcJudTrab: TProcJudTrabCollection; tpTrib: Boolean = True);
     procedure GerarPensaoAlim(objPensaoAlim: TPensaoAlimCollection; const GroupName: String = 'pensaoAlim');
     procedure GerarInfoSaudeColet(objInfoSaudeColet: TInfoSaudeColet);
     procedure GerarDetPlano(objDetPlanoCollection: TDetPlanoCollection);
@@ -1417,7 +1417,7 @@ begin
 end;
 
 procedure TeSocialEvento.GerarProcJudTrab(objProcJudTrab: TProcJudTrabCollection;
-  tpTrip: Boolean);
+  tpTrib: Boolean);
 var
   i: Integer;
 begin

@@ -608,6 +608,17 @@ type
     property perApur: string read FPerApur write FPerApur;
   end;
 
+  TIdeEvento5 = class(TPersistent)
+  private
+    FnrRecArqBase: string;
+    FIndApuracao: tpIndApuracao;
+    FPerApur: string;
+  public
+    property nrRecArqBase: string read FnrRecArqBase write FnrRecArqBase;
+    property IndApuracao: tpIndApuracao read FIndApuracao write FIndApuracao;
+    property perApur: string read FPerApur write FPerApur;
+  end;
+
   TIdePeriodo = class(TPersistent)
   private
     FIniValid: string;
@@ -1090,6 +1101,16 @@ type
     FNisTrab: string;
   public
     property nisTrab: string read FNisTrab write FNisTrab;
+  end;
+
+  TideTrabalhador3 = class(TideTrabalhador) 
+  private
+    FprocJudTrab: TprocJudTrabCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property procJudTrab: TprocJudTrabCollection read FprocJudTrab write FprocJudTrab;
   end;
 
   TideTrabSemVinc = class(TideTrabalhador2)
@@ -2848,6 +2869,20 @@ procedure TObservacoesCollection.SetItem(Index: Integer;
   Value: TObservacoesCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+{ TideTrabalhador3 }
+
+constructor TideTrabalhador3.Create;
+begin
+  FprocJudTrab := TprocJudTrabCollection.create;
+end;
+
+destructor TideTrabalhador3.Destroy;
+begin
+  FprocJudTrab.Free;
+
+  inherited;
 end;
 
 end.

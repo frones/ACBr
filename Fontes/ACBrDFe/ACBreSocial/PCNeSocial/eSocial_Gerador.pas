@@ -117,6 +117,7 @@ type
     procedure GerarIdeEvento2(pEvt: TIdeEvento2; const GeraGrupo: boolean = True; GeraRetif: Boolean = True);
     procedure GerarIdeEvento3(pEvt: TIdeEvento3; IndRetif: Boolean=True);
     procedure GerarIdeEvento4(pEvt: TIdeEvento4);
+    procedure GerarIdeEvento5(pEvt: TIdeEvento5; nrRecArqBase: Boolean = True; IndApuracao: Boolean = True);
     procedure GerarIdePeriodo(pIdePeriodo: TidePeriodo; const GroupName: string = 'idePeriodo');
     procedure GerarIdeEmpregador(pEmp: TIdeEmpregador);
     procedure GerarIdeTomadorServ(pIdeTomadorServ: TIdeTomadorServ);
@@ -155,13 +156,14 @@ type
     procedure GerarInfoEstatutario(pInfoEstatutario: TInfoEstatutario);
     procedure GerarIdeTrabalhador(pideTrabalhador: TideTrabalhador; const GeraGrupo: boolean = True);
     procedure GerarIdeTrabalhador2(pideTrabalhador: TideTrabalhador2; const GeraGrupo: boolean);
+    procedure GerarIdeTrabalhador3(pideTrabalhador: TideTrabalhador3; const tpTrib: boolean = True);
     procedure GerarIdeFolhaPagto(pIdeFolhaPagto: TIdeFolhaPagto);
     procedure GerarEmitente(pEmitente: TEmitente);
     procedure GerarEndExt(pEndExt: TEndExt);
     procedure GerarIdePais(pIdePais: TIdePais);
     procedure GerarInfoAgNocivo(pInfoAgNocivo: TInfoAgNocivo);
     procedure GerarItensRemun(objItensRemun: TRubricaCollection; const GroupName: string = 'verbasResc');
-    procedure GerarProcJudTrab(objProcJudTrab: TProcJudTrabCollection);
+    procedure GerarProcJudTrab(objProcJudTrab: TProcJudTrabCollection; tpTrip: Boolean = True);
     procedure GerarPensaoAlim(objPensaoAlim: TPensaoAlimCollection; const GroupName: String = 'pensaoAlim');
     procedure GerarInfoSaudeColet(objInfoSaudeColet: TInfoSaudeColet);
     procedure GerarDetPlano(objDetPlanoCollection: TDetPlanoCollection);
@@ -980,6 +982,23 @@ begin
   Gerador.wGrupo('/ideEvento');
 end;
 
+procedure TeSocialEvento.GerarIdeEvento5(pEvt: TIdeEvento5; nrRecArqBase,
+  IndApuracao: Boolean);
+begin
+  // italo
+  Gerador.wGrupo('ideEvento');
+
+  if nrRecArqBase then
+    Gerador.wCampo(tcStr, '', 'nrRecArqBase', 1, 40, 0, pEvt.nrRecArqBase);
+
+  if IndApuracao then
+    Gerador.wCampo(tcStr, '', 'indApuracao', 1,  1, 1, eSIndApuracaoToStr(pEvt.IndApuracao));
+
+  Gerador.wCampo(tcStr, '', 'perApur',     7,  7, 1, pEvt.perApur);
+
+  Gerador.wGrupo('/ideEvento');
+end;
+
 procedure TeSocialEvento.GerarIdePais(pIdePais: TIdePais);
 begin
   // italo
@@ -1397,7 +1416,8 @@ begin
   Gerador.wGrupo('/procAdmJudRat');
 end;
 
-procedure TeSocialEvento.GerarProcJudTrab(objProcJudTrab: TProcJudTrabCollection);
+procedure TeSocialEvento.GerarProcJudTrab(objProcJudTrab: TProcJudTrabCollection;
+  tpTrip: Boolean);
 var
   i: Integer;
 begin
@@ -1406,7 +1426,9 @@ begin
   begin
     Gerador.wGrupo('procJudTrab');
 
-    Gerador.wCampo(tcStr, '', 'tpTrib',    1,  1, 1, eSTpTributoToStr(objProcJudTrab.Items[i].tpTrib));
+    if tpTrib then
+      Gerador.wCampo(tcStr, '', 'tpTrib', 1, 1, 1, eSTpTributoToStr(objProcJudTrab.Items[i].tpTrib));
+
     Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 1, objProcJudTrab.Items[i].nrProcJud);
     Gerador.wCampo(tcStr, '', 'codSusp',   1, 14, 1, objProcJudTrab.Items[i].codSusp);
 
@@ -1443,6 +1465,19 @@ begin
 
   if GeraGrupo then
     Gerador.wGrupo('/ideTrabalhador');
+end;
+
+procedure TeSocialEvento.GerarIdeTrabalhador3(
+  pideTrabalhador: TideTrabalhador3; const tpTrib: boolean);
+begin
+  // italo
+  Gerador.wGrupo('ideTrabalhador');
+
+  Gerador.wCampo(tcStr, '', 'cpfTrab', 11, 11, 1, pideTrabalhador.CpfTrab);
+
+  GerarProcJudTrab(pideTrabalhador.procJudTrab, False);
+
+  Gerador.wGrupo('/ideTrabalhador');
 end;
 
 procedure TeSocialEvento.GerarIdeFolhaPagto(

@@ -860,6 +860,7 @@ end;
 procedure TeSocialEvento.GerarAliqGilRat(pAliqRat: TAliqGilRat;
   const GroupName: string);
 begin
+  // italo
   Gerador.wGrupo(GroupName);
 
   Gerador.wCampo(tcStr, '', 'aliqRat',      1, 1, 1, eSAliqRatToStr(pAliqRat.AliqRat)); 
@@ -1447,11 +1448,14 @@ end;
 procedure TeSocialEvento.GerarIdeFolhaPagto(
   pIdeFolhaPagto: TIdeFolhaPagto);
 begin
+  // italo
   if pIdeFolhaPagto.perApur <> EmptyStr then
   begin
     Gerador.wGrupo('ideFolhaPagto');
-      Gerador.wCampo(tcStr, '', 'indApuracao', 0, 0, 0, eSIndApuracaoToStr(pIdeFolhaPagto.indApuracao));
-      Gerador.wCampo(tcStr, '', 'perApur', 0, 0, 0, pIdeFolhaPagto.perApur);
+
+    Gerador.wCampo(tcStr, '', 'indApuracao', 1, 1, 1, eSIndApuracaoToStr(pIdeFolhaPagto.indApuracao));
+    Gerador.wCampo(tcStr, '', 'perApur',     7, 7, 1, pIdeFolhaPagto.perApur);
+
     Gerador.wGrupo('/ideFolhaPagto');
   end;
 end;

@@ -59,7 +59,6 @@ type
   TEvtExclusao = class;
   TInfoExclusao = class;
 
-
   TS3000Collection = class(TOwnedCollection)
   private
     function GetItem(Index: Integer): TS3000CollectionItem;
@@ -104,7 +103,6 @@ type
   private
     FtpEvento: TTipoEvento;
     FnrRecEvt: string;
-
     FIdeTrabalhador: TideTrabalhador2;
     FIdeFolhaPagto: TIdeFolhaPagto;
   public
@@ -116,7 +114,6 @@ type
     property IdeTrabalhador: TideTrabalhador2 read FIdeTrabalhador write FIdeTrabalhador;
     property IdeFolhaPagto: TIdeFolhaPagto read FIdeFolhaPagto write FIdeFolhaPagto;
   end;
-
 
 implementation
 
@@ -153,6 +150,7 @@ end;
 destructor TS3000CollectionItem.Destroy;
 begin
   FEvtExclusao.Free;
+
   inherited;
 end;
 
@@ -161,12 +159,12 @@ begin
   FEvtExclusao.Assign(Value);
 end;
 
-
 { TInfoExclusao }
 
 constructor TInfoExclusao.Create;
 begin
   inherited;
+
   FIdeTrabalhador := TideTrabalhador2.Create;
   FIdeFolhaPagto := TIdeFolhaPagto.Create;
 end;
@@ -175,6 +173,7 @@ destructor TInfoExclusao.destroy;
 begin
   FIdeTrabalhador.Free;
   FIdeFolhaPagto.Free;
+
   inherited;
 end;
 
@@ -183,6 +182,7 @@ end;
 constructor TEvtExclusao.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoExclusao := TInfoExclusao.Create;
@@ -193,6 +193,7 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FInfoExclusao.Free;
+
   inherited;
 end;
 
@@ -200,20 +201,26 @@ function TEvtExclusao.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtExclusao');
-      Gerador.wGrupo('evtExclusao Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
-        //gerarIdVersao(self);
-        gerarIdeEvento(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        Gerador.wGrupo('infoExclusao');
-          Gerador.wCampo(tcStr, '', 'tpEvento', 0, 0, 0, TipoEventoToStr(self.InfoExclusao.tpEvento));
-          Gerador.wCampo(tcStr, '', 'nrRecEvt', 0, 0, 0, self.InfoExclusao.nrRecEvt);
-          gerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True);
-          gerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto);
-        Gerador.wGrupo('/infoExclusao');
-      Gerador.wGrupo('/evtExclusao');
+    Gerador.wGrupo('evtExclusao Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+
+    Gerador.wGrupo('infoExclusao');
+
+    Gerador.wCampo(tcStr, '', 'tpEvento', 1,  6, 1, TipoEventoToStr(self.InfoExclusao.tpEvento));
+    Gerador.wCampo(tcStr, '', 'nrRecEvt', 1, 40, 1, self.InfoExclusao.nrRecEvt);
+
+    GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True);
+    GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto);
+
+    Gerador.wGrupo('/infoExclusao');
+    Gerador.wGrupo('/evtExclusao');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtExclusao');
+
     Validar('evtExclusao');
   except on e:exception do
     raise Exception.Create(e.Message);

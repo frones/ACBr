@@ -286,6 +286,7 @@ end;
 function TEvtTSVAltContr.GerarXML: boolean;
 begin
   try
+    (* Não é mais gerado na versão 2.4.01 *)
     GerarCabecalho('');
       Gerador.wGrupo('evtTSVAlteracao Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');//versao="'+self.versao+'"
         gerarIdeEvento2(self.IdeEvento);

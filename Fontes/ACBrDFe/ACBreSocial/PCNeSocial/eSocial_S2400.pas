@@ -175,15 +175,11 @@ type
 
   TDadosBenef = class(TPersistent)
   private
-//    FCpfBenef: String;
-//    FNmBenefic: string;
     FDadosNasc: TNascimento;
     FEndereco: TEndereco;
   public
     constructor Create;
 
-//    property cpfBenef: String read FCpfBEnef write FCpfBEnef;
-//    property nmBenefic: string read FNmBenefic write FNmBenefic;
     property dadosNasc: TNascimento read FDadosNasc write FDadosNasc;
     property endereco: TEndereco read FEndereco write FEndereco;
   end;
@@ -235,6 +231,7 @@ end;
 destructor TS2400CollectionItem.Destroy;
 begin
   FEvtCdBenPrRP.Free;
+
   inherited;
 end;
 
@@ -248,6 +245,7 @@ end;
 constructor TEvtCdBenPrRP.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeBenef := TIdeBenef.Create;
@@ -260,68 +258,85 @@ begin
   FIdeEmpregador.Free;
   FIdeBenef.Free;
   FInfoBeneficio.Free;
+
   inherited;
 end;
 
 procedure TEvtCdBenPrRP.GerarDadosBenef(pDadosBenef: TDadosBenef);
 begin
   Gerador.wGrupo('dadosBenef');
-//    Gerador.wCampo(tcStr, '', 'cpfBenef', 0,0,0, pDadosBenef.cpfBenef);
-//    Gerador.wCampo(tcStr, '', 'nmBenefic', 0,0,0, pDadosBenef.nmBenefic);
-    GerarNascimento(pDadosBenef.dadosNasc, 'dadosNasc');
-    GerarEndereco(pDadosBenef.endereco, Assigned(pDadosBenef.endereco.Exterior));
+
+  GerarNascimento(pDadosBenef.dadosNasc, 'dadosNasc');
+
+  GerarEndereco(pDadosBenef.endereco, Assigned(pDadosBenef.endereco.Exterior));
+
   Gerador.wGrupo('/dadosBenef');
 end;
 
 procedure TEvtCdBenPrRP.GerarIdeBenef(pIdeBenef: TIdeBenef);
 begin
   Gerador.wGrupo('ideBenef');
+
   Gerador.wCampo(tcStr, '', 'cpfBenef',  11, 11, 1, pIdeBenef.cpfBenef);
   Gerador.wCampo(tcStr, '', 'nmBenefic',  0, 70, 1, pIdeBenef.nmBenefic);
+
   GerarDadosBenef(pIdeBenef.dadosBenef);
+
   Gerador.wGrupo('/ideBenef');
 end;
 
 procedure TEvtCdBenPrRP.GerarInfoPenMorte(pInfoPenMorte: TInfoPenMorte);
 begin
   Gerador.wGrupo('infoPenMorte');
-    Gerador.wCampo(tcStr, '', 'idQuota', 0,0,0, pInfoPenMorte.idQuota);
-    Gerador.wCampo(tcStr, '', 'cpfInst', 0,0,0, pInfoPenMorte.cpfInst);
+
+  Gerador.wCampo(tcStr, '', 'idQuota',  1, 30, 1, pInfoPenMorte.idQuota);
+  Gerador.wCampo(tcStr, '', 'cpfInst', 11, 11, 1, pInfoPenMorte.cpfInst);
+
   Gerador.wGrupo('/infoPenMorte');
 end;
 
 procedure TEvtCdBenPrRP.GerarBeneficio(pBeneficio: TBeneficio; pGroupName: String);
 begin
   Gerador.wGrupo(pGroupName);
-    Gerador.wCampo(tcInt, '', 'tpBenef', 0,0,0, pBeneficio.tpBenef);
-    Gerador.wCampo(tcStr, '', 'nrBenefic', 0,0,0, pBeneficio.nrBenefic);
-    Gerador.wCampo(tcDat, '', 'dtIniBenef', 0,0,0, pBeneficio.dtIniBenef);
-    Gerador.wCampo(tcDe2, '', 'vrBenef', 0,0,0, pBeneficio.vrBenef);
-    if pBeneficio.infoPenMorteInst then
-      GerarInfoPenMorte(pBeneficio.infoPenMorte);
+
+  Gerador.wCampo(tcInt, '', 'tpBenef',     1,  2, 1, pBeneficio.tpBenef);
+  Gerador.wCampo(tcStr, '', 'nrBenefic',   1, 20, 1, pBeneficio.nrBenefic);
+  Gerador.wCampo(tcDat, '', 'dtIniBenef', 10, 10, 1, pBeneficio.dtIniBenef);
+  Gerador.wCampo(tcDe2, '', 'vrBenef',     1, 14, 1, pBeneficio.vrBenef);
+
+  if pBeneficio.infoPenMorteInst then
+    GerarInfoPenMorte(pBeneficio.infoPenMorte);
+
   Gerador.wGrupo('/' + pGroupName);
 end;
 
 procedure TEvtCdBenPrRP.GerarFimBeneficio(pFimBeneficio: TFimBeneficio);
 begin
   Gerador.wGrupo('fimBeneficio');
-    Gerador.wCampo(tcInt, '', 'tpBenef', 0,0,0, pFimBeneficio.tpBenef);
-    Gerador.wCampo(tcStr, '', 'nrBenefic', 0,0,0, pFimBeneficio.nrBenefic);
-    Gerador.wCampo(tcDat, '', 'dtFimBenef', 0,0,0, pFimBeneficio.dtFimBenef);
-    Gerador.wCampo(tcInt, '', 'mtvFim', 0,0,0, pFimBeneficio.mtvFim);
+
+  Gerador.wCampo(tcInt, '', 'tpBenef',     1,  2, 1, pFimBeneficio.tpBenef);
+  Gerador.wCampo(tcStr, '', 'nrBenefic',   1, 20, 1, pFimBeneficio.nrBenefic);
+  Gerador.wCampo(tcDat, '', 'dtFimBenef', 10, 10, 1, pFimBeneficio.dtFimBenef);
+  Gerador.wCampo(tcInt, '', 'mtvFim',      1,  2, 1, pFimBeneficio.mtvFim);
+
   Gerador.wGrupo('/fimBeneficio');
 end;
 
 procedure TEvtCdBenPrRP.GerarInfoBeneficio(pInfoBeneficio: TInfoBeneficio);
 begin
   Gerador.wGrupo('infoBeneficio');
-    Gerador.wCampo(tcStr, '', 'tpPlanRP', 0,0,0, eSTpPlanRPToStr(pInfoBeneficio.tpPlanRP));
-    if pInfoBeneficio.iniBeneficioInst then
-      GerarBeneficio(pInfoBeneficio.iniBeneficio, 'iniBeneficio');
-    if pInfoBeneficio.altBeneficioInst then
-      GerarBeneficio(pInfoBeneficio.altBeneficio, 'altBeneficio');
-    if pInfoBeneficio.fimBeneficioInst then
-      GerarFimBeneficio(pInfoBeneficio.fimBeneficio);
+
+  Gerador.wCampo(tcStr, '', 'tpPlanRP', 1, 1, 1, eSTpPlanRPToStr(pInfoBeneficio.tpPlanRP));
+
+  if pInfoBeneficio.iniBeneficioInst then
+    GerarBeneficio(pInfoBeneficio.iniBeneficio, 'iniBeneficio');
+
+  if pInfoBeneficio.altBeneficioInst then
+    GerarBeneficio(pInfoBeneficio.altBeneficio, 'altBeneficio');
+
+  if pInfoBeneficio.fimBeneficioInst then
+    GerarFimBeneficio(pInfoBeneficio.fimBeneficio);
+
   Gerador.wGrupo('/infoBeneficio');
 end;
 
@@ -329,19 +344,24 @@ function TEvtCdBenPrRP.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtCdBenPrRP');
-      Gerador.wGrupo('evtCdBenPrRP Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');//versao="'+Self.versao+'"
-        //gerarIdVersao(self);
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        GerarIdeBenef(ideBenef);
-        GerarInfoBeneficio(infoBeneficio);
-      Gerador.wGrupo('/evtCdBenPrRP');
+    Gerador.wGrupo('evtCdBenPrRP Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeBenef(ideBenef);
+    GerarInfoBeneficio(infoBeneficio);
+
+    Gerador.wGrupo('/evtCdBenPrRP');
+
     GerarRodape;
+
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtCdBenPrRP');
+
     Validar('evtCdBenPrRP');
   except on e:exception do
     raise Exception.Create(e.Message);
   end;
+
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 

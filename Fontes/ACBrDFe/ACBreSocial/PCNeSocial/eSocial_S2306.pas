@@ -60,7 +60,6 @@ type
   TinfoTSVAlteracao = class;
   TinfoComplementares = class;
 
-
   TS2306Collection = class(TOwnedCollection)
   private
     function GetItem(Index: Integer): TS2306CollectionItem;
@@ -74,6 +73,7 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtTSVAltContr: TEvtTSVAltContr;
+
     procedure setEvtTSVAltContr(const Value: TEvtTSVAltContr);
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -84,57 +84,58 @@ type
   end;
 
   TEvtTSVAltContr = class(TeSocialEvento)
-    private
-      FIdeEvento: TIdeEvento2;
-      FIdeEmpregador: TIdeEmpregador;
-      FideTrabSemVinc: TideTrabSemVinc;
-      FinfoTSVAlteracao : TinfoTSVAlteracao;
+  private
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FideTrabSemVinc: TideTrabSemVinc;
+    FinfoTSVAlteracao : TinfoTSVAlteracao;
 
-      procedure gerarideTrabSemVinc(obj : TideTrabSemVinc);
-      procedure gerarInfoTSVAlteracao(obj: TinfoTSVAlteracao);
-      procedure gerarinfoComplementares(obj: TinfoComplementares);
-      procedure gerarinfoEstagiario(obj: TinfoEstagiario);
-      procedure gerarInstEnsino(obj: TinstEnsino);
-      procedure gerarageIntegracao(obj: TageIntegracao);
-      procedure gerarsupervisorEstagio(obj: TsupervisorEstagio);
-      procedure gerarcargoFuncao(obj: TcargoFuncao);
-    public
-      constructor Create(AACBreSocial: TObject);overload;
-      destructor  Destroy;
+    procedure GerarideTrabSemVinc(obj : TideTrabSemVinc);
+    procedure GerarInfoTSVAlteracao(obj: TinfoTSVAlteracao);
+    procedure GerarinfoComplementares(obj: TinfoComplementares);
+    procedure GerarinfoEstagiario(obj: TinfoEstagiario);
+    procedure GerarInstEnsino(obj: TinstEnsino);
+    procedure GerarageIntegracao(obj: TageIntegracao);
+    procedure GerarsupervisorEstagio(obj: TsupervisorEstagio);
+    procedure GerarcargoFuncao(obj: TcargoFuncao);
+  public
+    constructor Create(AACBreSocial: TObject);overload;
+    destructor  Destroy;
 
-      function GerarXML: boolean; override;
+    function GerarXML: boolean; override;
 
-      property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-      property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-      property IdeTrabSemVinc: TideTrabSemVinc read FideTrabSemVinc write FideTrabSemVinc;
-      property infoTSVAlteracao : TinfoTSVAlteracao read FinfoTSVAlteracao write FinfoTSVAlteracao;
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeTrabSemVinc: TideTrabSemVinc read FideTrabSemVinc write FideTrabSemVinc;
+    property infoTSVAlteracao : TinfoTSVAlteracao read FinfoTSVAlteracao write FinfoTSVAlteracao;
   end;
 
   TinfoTSVAlteracao = class(TPersistent)
-    private
-      FdtAlteracao : TDateTime;
-      FnatAtividade: tpNatAtividade;
-      FinfoComplementares : TinfoComplementares;
-    public
-      constructor Create;
-      destructor  Destroy; override;
-      property dtAlteracao : TDateTime read FdtAlteracao write FdtAlteracao;
-      property natAtivididade : tpNatAtividade read FnatAtividade write FnatAtividade;
-      property infoComplementares : TinfoComplementares read FinfoComplementares write FinfoComplementares;
+  private
+    FdtAlteracao : TDateTime;
+    FnatAtividade: tpNatAtividade;
+    FinfoComplementares : TinfoComplementares;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    property dtAlteracao : TDateTime read FdtAlteracao write FdtAlteracao;
+    property natAtivididade : tpNatAtividade read FnatAtividade write FnatAtividade;
+    property infoComplementares : TinfoComplementares read FinfoComplementares write FinfoComplementares;
   end;
 
   TinfoComplementares = class(TPersistent)
-    private
-      FcargoFuncao : TcargoFuncao;
-      FRemuneracao : TRemuneracao;
-      FinfoEstagiario : TinfoEstagiario;
-    public
-      constructor Create;
-      destructor  Destroy; override;
+  private
+    FcargoFuncao : TcargoFuncao;
+    FRemuneracao : TRemuneracao;
+    FinfoEstagiario : TinfoEstagiario;
+  public
+    constructor Create;
+    destructor  Destroy; override;
 
-      property cargoFuncao: TcargoFuncao read FcargoFuncao write FcargoFuncao;
-      property Remuneracao: TRemuneracao read FRemuneracao write FRemuneracao;
-      property infoEstagiario: TinfoEstagiario read FinfoEstagiario write FinfoEstagiario;
+    property cargoFuncao: TcargoFuncao read FcargoFuncao write FcargoFuncao;
+    property Remuneracao: TRemuneracao read FRemuneracao write FRemuneracao;
+    property infoEstagiario: TinfoEstagiario read FinfoEstagiario write FinfoEstagiario;
   end;
 
 implementation
@@ -171,6 +172,7 @@ end;
 destructor TS2306CollectionItem.Destroy;
 begin
   FEvtTSVAltContr.Free;
+
   inherited;
 end;
 
@@ -184,6 +186,7 @@ end;
 constructor TEvtTSVAltContr.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FideTrabSemVinc := TideTrabSemVinc.Create;
@@ -196,109 +199,128 @@ begin
   FIdeEmpregador.Free;
   FIdeTrabSemVinc.Free;
   FinfoTSVAlteracao.Free;
+
   inherited;
 end;
 
-procedure TEvtTSVAltContr.gerarageIntegracao(obj: TageIntegracao);
+procedure TEvtTSVAltContr.GerarageIntegracao(obj: TageIntegracao);
 begin
   if obj.cnpjAgntInteg <> EmptyStr then
   begin
     Gerador.wGrupo('ageIntegracao');
-      Gerador.wCampo(tcStr, '', 'cnpjAgntInteg', 0,0,0, obj.cnpjAgntInteg);
-      Gerador.wCampo(tcStr, '', 'nmRazao', 0,0,0, obj.nmRazao);
-      Gerador.wCampo(tcStr, '', 'dscLograd', 0,0,0, obj.dscLograd);
-      Gerador.wCampo(tcStr, '', 'nrLograd', 0,0,0, obj.nrLograd);
-      Gerador.wCampo(tcStr, '', 'bairro', 0,0,0, obj.bairro);
-      Gerador.wCampo(tcStr, '', 'cep', 0,0,0, obj.cep);
-      Gerador.wCampo(tcStr, '', 'codMunic', 0,0,0, obj.codMunic);
-      Gerador.wCampo(tcStr, '', 'uf', 0,0,0, eSufToStr(obj.uf));
+
+    Gerador.wCampo(tcStr, '', 'cnpjAgntInteg', 14,  14, 1, obj.cnpjAgntInteg);
+    Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, obj.nmRazao);
+    Gerador.wCampo(tcStr, '', 'dscLograd',      1,  80, 1, obj.dscLograd);
+    Gerador.wCampo(tcStr, '', 'nrLograd',       1,  10, 1, obj.nrLograd);
+    Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
+    Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
+    Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
+    Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, eSufToStr(obj.uf));
+
     Gerador.wGrupo('/ageIntegracao');
   end;
 end;
 
-procedure TEvtTSVAltContr.gerarcargoFuncao(obj: TcargoFuncao);
+procedure TEvtTSVAltContr.GerarcargoFuncao(obj: TcargoFuncao);
 begin
   if obj.codCargo <> '' then
   begin
     Gerador.wGrupo('cargoFuncao');
-      Gerador.wCampo(tcStr, '', 'codCargo', 0,0,0, obj.codCargo);
-      Gerador.wCampo(tcStr, '', 'codFuncao', 0,0,0, obj.codFuncao);
+
+    Gerador.wCampo(tcStr, '', 'codCargo',  1, 30, 1, obj.codCargo);
+    Gerador.wCampo(tcStr, '', 'codFuncao', 1, 30, 0, obj.codFuncao);
+
     Gerador.wGrupo('/cargoFuncao');
   end;
 end;
 
-procedure TEvtTSVAltContr.gerarideTrabSemVinc(obj: TideTrabSemVinc);
+procedure TEvtTSVAltContr.GerarideTrabSemVinc(obj: TideTrabSemVinc);
 begin
   Gerador.wGrupo('ideTrabSemVinculo');
-    Gerador.wCampo(tcStr, '', 'cpfTrab', 0,0,0, obj.cpfTrab);
-    Gerador.wCampo(tcStr, '', 'nisTrab', 0,0,0, obj.nisTrab);
-    Gerador.wCampo(tcStr, '', 'codCateg', 0,0,0, obj.codCateg);
+
+  Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, obj.cpfTrab);
+  Gerador.wCampo(tcStr, '', 'nisTrab',   1, 11, 0, obj.nisTrab);
+  Gerador.wCampo(tcStr, '', 'codCateg',  1,  3, 1, obj.codCateg);
+
   Gerador.wGrupo('/ideTrabSemVinculo');
 end;
 
-procedure TEvtTSVAltContr.gerarinfoComplementares(obj: TinfoComplementares);
+procedure TEvtTSVAltContr.GerarinfoComplementares(obj: TinfoComplementares);
 begin
   if (obj.cargoFuncao.codCargo <> EmptyStr) or (obj.Remuneracao.VrSalFx > 0) or (obj.infoEstagiario.dtPrevTerm > 0) then
   begin
     Gerador.wGrupo('infoComplementares');
-      gerarcargoFuncao(obj.cargoFuncao);
-      GerarRemuneracao(obj.Remuneracao);
-      gerarinfoEstagiario(obj.infoEstagiario);
+
+    GerarcargoFuncao(obj.cargoFuncao);
+    GerarRemuneracao(obj.Remuneracao);
+    GerarinfoEstagiario(obj.infoEstagiario);
+
     Gerador.wGrupo('/infoComplementares');
   end;
 end;
 
-procedure TEvtTSVAltContr.gerarinfoEstagiario(obj: TinfoEstagiario);
+procedure TEvtTSVAltContr.GerarinfoEstagiario(obj: TinfoEstagiario);
 begin
   if obj.dtPrevTerm > 0 then
   begin
     Gerador.wGrupo('infoEstagiario');
-      Gerador.wCampo(tcStr, '', 'natEstagio', 0,0,0, eSTpNatEstagioToStr(obj.natEstagio));
-      Gerador.wCampo(tcStr, '', 'nivEstagio', 0,0,0, eStpNivelEstagioToStr(obj.nivEstagio));
-      Gerador.wCampo(tcStr, '', 'areaAtuacao', 0,0,0, obj.areaAtuacao);
-      Gerador.wCampo(tcStr, '', 'nrApol', 0,0,0, obj.nrApol);
-      Gerador.wCampo(tcDe2, '', 'vlrBolsa', 0,0,0, obj.vlrBolsa);
-      Gerador.wCampo(tcDat, '', 'dtPrevTerm', 0,0,0, obj.dtPrevTerm);
-      gerarInstEnsino(obj.instEnsino);
-      gerarageIntegracao(obj.ageIntegracao);
-      gerarsupervisorEstagio(obj.supervisorEstagio);
+
+    Gerador.wCampo(tcStr, '', 'natEstagio',   1,  1, 1, eSTpNatEstagioToStr(obj.natEstagio));
+    Gerador.wCampo(tcStr, '', 'nivEstagio',   1,  1, 1, eStpNivelEstagioToStr(obj.nivEstagio));
+    Gerador.wCampo(tcStr, '', 'areaAtuacao',  1, 50, 0, obj.areaAtuacao);
+    Gerador.wCampo(tcStr, '', 'nrApol',       1, 30, 0, obj.nrApol);
+    Gerador.wCampo(tcDe2, '', 'vlrBolsa',     1, 14, 0, obj.vlrBolsa);
+    Gerador.wCampo(tcDat, '', 'dtPrevTerm',  10, 10, 1, obj.dtPrevTerm);
+
+    GerarInstEnsino(obj.instEnsino);
+    GerarageIntegracao(obj.ageIntegracao);
+    GerarsupervisorEstagio(obj.supervisorEstagio);
+
     Gerador.wGrupo('/infoEstagiario');
   end;
 end;
 
-procedure TEvtTSVAltContr.gerarInfoTSVAlteracao(obj: TinfoTSVAlteracao);
+procedure TEvtTSVAltContr.GerarInfoTSVAlteracao(obj: TinfoTSVAlteracao);
 begin
   Gerador.wGrupo('infoTSVAlteracao');
-    Gerador.wCampo(tcDat, '', 'dtAlteracao', 0,0,0, obj.dtAlteracao);
-    Gerador.wCampo(tcStr, '', 'natAtividade', 0,0,0, ord(obj.natAtivididade) + 1);
-    gerarinfoComplementares(obj.infoComplementares);
+
+  Gerador.wCampo(tcDat, '', 'dtAlteracao',  10, 10, 1, obj.dtAlteracao);
+  Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, ord(obj.natAtivididade) + 1);
+
+  GerarinfoComplementares(obj.infoComplementares);
+
   Gerador.wGrupo('/infoTSVAlteracao');
 end;
 
-procedure TEvtTSVAltContr.gerarInstEnsino(obj: TinstEnsino);
+procedure TEvtTSVAltContr.GerarInstEnsino(obj: TinstEnsino);
 begin
   if obj.cnpjInstEnsino <> EmptyStr then
   begin
     Gerador.wGrupo('instEnsino');
-      Gerador.wCampo(tcStr, '', 'cnpjInstEnsino', 0,0,0, obj.cnpjInstEnsino);
-      Gerador.wCampo(tcStr, '', 'nmRazao', 0,0,0, obj.nmRazao);
-      Gerador.wCampo(tcStr, '', 'dscLograd', 0,0,0, obj.dscLograd);
-      Gerador.wCampo(tcStr, '', 'nrLograd', 0,0,0, obj.nrLograd);
-      Gerador.wCampo(tcStr, '', 'bairro', 0,0,0, obj.bairro);
-      Gerador.wCampo(tcStr, '', 'cep', 0,0,0, obj.cep);
-      Gerador.wCampo(tcStr, '', 'codMunic', 0,0,0, obj.codMunic);
-      Gerador.wCampo(tcStr, '', 'uf', 0,0,0, eSufToStr(obj.uf));
+
+    Gerador.wCampo(tcStr, '', 'cnpjInstEnsino', 14,  14, 0, obj.cnpjInstEnsino);
+    Gerador.wCampo(tcStr, '', 'nmRazao',         1, 100, 1, obj.nmRazao);
+    Gerador.wCampo(tcStr, '', 'dscLograd',       1,  80, 0, obj.dscLograd);
+    Gerador.wCampo(tcStr, '', 'nrLograd',        1,  10, 0, obj.nrLograd);
+    Gerador.wCampo(tcStr, '', 'bairro',          1,  60, 0, obj.bairro);
+    Gerador.wCampo(tcStr, '', 'cep',             1,   8, 0, obj.cep);
+    Gerador.wCampo(tcStr, '', 'codMunic',        7,   7, 0, obj.codMunic);
+    Gerador.wCampo(tcStr, '', 'uf',              2,   2, 0, eSufToStr(obj.uf));
+
     Gerador.wGrupo('/instEnsino');
   end;
 end;
 
-procedure TEvtTSVAltContr.gerarsupervisorEstagio(obj: TsupervisorEstagio);
+procedure TEvtTSVAltContr.GerarsupervisorEstagio(obj: TsupervisorEstagio);
 begin
   if obj.cpfSupervisor <> EmptyStr then
   begin
     Gerador.wGrupo('supervisorEstagio');
-      Gerador.wCampo(tcStr, '', 'cpfSupervisor', 0,0,0, obj.cpfSupervisor);
-      Gerador.wCampo(tcStr, '', 'nmSuperv', 0,0,0, obj.nmSuperv);
+
+    Gerador.wCampo(tcStr, '', 'cpfSupervisor', 11, 11, 1, obj.cpfSupervisor);
+    Gerador.wCampo(tcStr, '', 'nmSuperv',      1,  70, 1, obj.nmSuperv);
+
     Gerador.wGrupo('/supervisorEstagio');
   end;
 end;
@@ -307,15 +329,19 @@ function TEvtTSVAltContr.GerarXML: boolean;
 begin
   try
     GerarCabecalho('evtTSVAltContr');
-      Gerador.wGrupo('evtTSVAltContr Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');//versao="'+self.versao+'"
-        gerarIdeEvento2(self.IdeEvento);
-        gerarIdeEmpregador(self.IdeEmpregador);
-        gerarideTrabSemVinc(self.IdeTrabSemVinc);
-        gerarInfoTSVAlteracao(self.infoTSVAlteracao);
-      Gerador.wGrupo('/evtTSVAltContr');
+    Gerador.wGrupo('evtTSVAltContr Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarideTrabSemVinc(self.IdeTrabSemVinc);
+    GerarInfoTSVAlteracao(self.infoTSVAlteracao);
+
+    Gerador.wGrupo('/evtTSVAltContr');
+
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVAltContr');
+
     Validar('evtTSVAltContr');
   except on e:exception do
     raise Exception.Create(e.Message);
@@ -329,6 +355,7 @@ end;
 constructor TinfoComplementares.Create;
 begin
   inherited;
+
   FcargoFuncao := TcargoFuncao.Create;
   FRemuneracao := TRemuneracao.Create;
   FinfoEstagiario := TinfoEstagiario.Create;
@@ -339,6 +366,7 @@ begin
   FcargoFuncao.Free;
   FRemuneracao.Free;
   FinfoEstagiario.Free;
+
   inherited;
 end;
 
@@ -347,12 +375,14 @@ end;
 constructor TinfoTSVAlteracao.Create;
 begin
   inherited;
+
   FinfoComplementares := TinfoComplementares.Create;
 end;
 
 destructor TinfoTSVAlteracao.Destroy;
 begin
   FinfoComplementares.Free;
+
   inherited;
 end;
 

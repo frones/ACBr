@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, pcnGerador,
   eSocial_Common, eSocial_Conversao, eSocial_Gerador;
 
 type
@@ -61,7 +61,6 @@ type
   TVerbasRescS2399 = class;
   TDmDevCollectionItem = class;
   TDmDevCollection = class;
-
 
   TS2399Collection = class(TOwnedCollection)
   private
@@ -86,41 +85,42 @@ type
   end;
 
   TEvtTSVTermino = class(TeSocialEvento)
-    private
-      FIdeEvento: TIdeEvento2;
-      FIdeEmpregador: TIdeEmpregador;
-      FIdeTrabSemVInc : TideTrabSemVinc;
-      FInfoTSVTermino: TInfoTSVTermino;
-      procedure GerarInfoTSVTermino(obj: TInfoTSVTermino);
-      procedure GerarVerbasResc(obj: TVerbasRescS2399);
-      procedure GerarIdeTrabSemVinc(obj: TIdeTrabSemVinc);
-      procedure GerarDmDev(pDmDev: TDmDevCollection);
-     public
-      constructor Create(AACBreSocial: TObject);overload;
-      destructor Destroy; override;
+  private
+    FIdeEvento: TIdeEvento2;
+    FIdeEmpregador: TIdeEmpregador;
+    FIdeTrabSemVInc : TideTrabSemVinc;
+    FInfoTSVTermino: TInfoTSVTermino;
 
-      function GerarXML: boolean; override;
+    procedure GerarInfoTSVTermino(obj: TInfoTSVTermino);
+    procedure GerarVerbasResc(obj: TVerbasRescS2399);
+    procedure GerarIdeTrabSemVinc(obj: TIdeTrabSemVinc);
+    procedure GerarDmDev(pDmDev: TDmDevCollection);
+   public
+    constructor Create(AACBreSocial: TObject);overload;
+    destructor Destroy; override;
 
-      property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-      property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-      property IdeTrabSemVInc: TideTrabSemVinc read FIdeTrabSemVInc write FIdeTrabSemVInc;
-      property InfoTSVTermino: TInfoTSVTermino read FInfoTSVTermino write FInfoTSVTermino;
+    function GerarXML: boolean; override;
+
+    property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeTrabSemVInc: TideTrabSemVinc read FIdeTrabSemVInc write FIdeTrabSemVInc;
+    property InfoTSVTermino: TInfoTSVTermino read FInfoTSVTermino write FInfoTSVTermino;
   end;
 
   TinfoTSVTermino = class(TPersistent)
-    private
-      FdtTerm : TDateTime;
-      FmtvDesligTSV : string;
-      FverbasResc : TVerbasRescS2399;
-      Fquarentena : TQuarentena;
-    public
-      constructor Create;
-      destructor  Destroy; override;
+  private
+    FdtTerm : TDateTime;
+    FmtvDesligTSV : string;
+    FverbasResc : TVerbasRescS2399;
+    Fquarentena : TQuarentena;
+  public
+    constructor Create;
+    destructor  Destroy; override;
 
-      property dtTerm : TDateTime read FdtTerm write FdtTerm;
-      property mtvDesligTSV : string read FmtvDesligTSV write FmtvDesligTSV;
-      property verbasResc : TVerbasRescS2399 read FverbasResc write FverbasResc;
-      property quarentena : TQuarentena read Fquarentena write Fquarentena;
+    property dtTerm : TDateTime read FdtTerm write FdtTerm;
+    property mtvDesligTSV : string read FmtvDesligTSV write FmtvDesligTSV;
+    property verbasResc : TVerbasRescS2399 read FverbasResc write FverbasResc;
+    property quarentena : TQuarentena read Fquarentena write Fquarentena;
   end;
 
   TDmDevCollection = class(TCollection)
@@ -188,6 +188,7 @@ end;
 destructor TS2399CollectionItem.Destroy;
 begin
   FEvtTSVTermino.Free;
+
   inherited;
 end;
 
@@ -201,6 +202,7 @@ end;
 constructor TEvtTSVTermino.Create(AACBreSocial: TObject);
 begin
   inherited;
+
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeTrabSemVInc := TideTrabSemVinc.Create;
@@ -213,25 +215,32 @@ begin
   FIdeEmpregador.Free;
   FIdeTrabSemVInc.Free;
   FInfoTSVTermino.Free;
+
   inherited;
 end;
 
 procedure TEvtTSVTermino.GerarIdeTrabSemVinc(obj: TIdeTrabSemVinc);
 begin
   Gerador.wGrupo('ideTrabSemVinculo');
-    Gerador.wCampo(tcStr, '', 'cpfTrab', 0,0,0, obj.cpfTrab);
-    Gerador.wCampo(tcStr, '', 'nisTrab', 0,0,0, obj.nisTrab);
-    Gerador.wCampo(tcStr, '', 'codCateg', 0,0,0, obj.codCateg);
+
+  Gerador.wCampo(tcStr, '', 'cpfTrab',  11, 11, 1, obj.cpfTrab);
+  Gerador.wCampo(tcStr, '', 'nisTrab',   1, 11, 0, obj.nisTrab);
+  Gerador.wCampo(tcStr, '', 'codCateg',  1,  3, 1, obj.codCateg);
+
   Gerador.wGrupo('/ideTrabSemVinculo');
 end;
 
 procedure TEvtTSVTermino.GerarInfoTSVTermino(obj: TInfoTSVTermino);
 begin
   Gerador.wGrupo('infoTSVTermino');
-    Gerador.wCampo(tcDat, '', 'dtTerm', 0,0,0, obj.dtTerm);
-    Gerador.wCampo(tcStr, '', 'mtvDesligTSV', 0,0,0, obj.mtvDesligTSV);
-    GerarVerbasResc(obj.verbasResc);
-    GerarQuarentena(obj.quarentena);
+
+  Gerador.wCampo(tcDat, '', 'dtTerm',       10, 10, 1, obj.dtTerm);
+  Gerador.wCampo(tcStr, '', 'mtvDesligTSV',  1,  2, 0, obj.mtvDesligTSV);
+
+  GerarVerbasResc(obj.verbasResc);
+  GerarRemunOutrEmpr(obj.verbasResc.infoMV.remunOutrEmpr);
+  GerarQuarentena(obj.quarentena);
+
   Gerador.wGrupo('/infoTSVTermino');
 end;
 
@@ -242,10 +251,16 @@ begin
   for i := 0 to pDmDev.Count - 1 do
   begin
     Gerador.wGrupo('dmDev');
-      Gerador.wCampo(tcStr, '', 'ideDmDev', 0,0,0, pDmDev[i].ideDmDev);
-      GerarIdeEstabLot(pDmDev[i].ideEstabLot);
+
+    Gerador.wCampo(tcStr, '', 'ideDmDev', 1, 30, 1, pDmDev[i].ideDmDev);
+
+    GerarIdeEstabLot(pDmDev[i].ideEstabLot);
+
     Gerador.wGrupo('/dmDev');
   end;
+
+  if pDmDev.Count > 50 then
+    Gerador.wAlerta('', 'dmDev', 'Lista de Demonstrativos', ERR_MSG_MAIOR_MAXIMO + '50');
 end;
 
 procedure TEvtTSVTermino.GerarVerbasResc(obj: TVerbasRescS2399);
@@ -253,10 +268,13 @@ begin
   if (obj.dmDev.Count > 0) or (obj.ProcJudTrab.Count > 0) then
   begin
     Gerador.wGrupo('verbasResc');
-      GerarDmDev(obj.dmDev);
-      GerarProcJudTrab(obj.ProcJudTrab);
-      if obj.infoMVInst then
-        GerarInfoMV(obj.infoMV);
+
+    GerarDmDev(obj.dmDev);
+    GerarProcJudTrab(obj.ProcJudTrab);
+
+    if obj.infoMVInst then
+      GerarInfoMV(obj.infoMV);
+
     Gerador.wGrupo('/verbasResc');
   end;
 end;
@@ -264,21 +282,26 @@ end;
 function TEvtTSVTermino.GerarXML: boolean;
 begin
   try
-  GerarCabecalho('evtTSVTermino');
-    Gerador.wGrupo('evtTSVTermino Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');//versao="'+Self.versao+'"
-      //gerarIdVersao(self);
-      gerarIdeEvento2(self.IdeEvento);
-      gerarIdeEmpregador(self.IdeEmpregador);
-      GerarIdeTrabSemVinc(self.IdeTrabSemVInc);
-      GerarInfoTSVTermino(Self.InfoTSVTermino);
+    GerarCabecalho('evtTSVTermino');
+    Gerador.wGrupo('evtTSVTermino Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+
+    GerarIdeEvento2(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeTrabSemVinc(self.IdeTrabSemVInc);
+    GerarInfoTSVTermino(Self.InfoTSVTermino);
+
     Gerador.wGrupo('/evtTSVTermino');
-  GerarRodape;
-  XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVTermino');
-  Validar('evtTSVTermino');
-except on e:exception do
-  raise Exception.Create(e.Message);
-end;
-Result := (Gerador.ArquivoFormatoXML <> '')
+
+    GerarRodape;
+
+    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVTermino');
+
+    Validar('evtTSVTermino');
+  except on e:exception do
+    raise Exception.Create(e.Message);
+  end;
+
+  Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
 { TinfoTSVTermino }
@@ -286,6 +309,7 @@ end;
 constructor TinfoTSVTermino.Create;
 begin
   inherited;
+
   FverbasResc := TVerbasRescS2399.Create;
   Fquarentena := TQuarentena.Create;
 end;
@@ -294,6 +318,7 @@ destructor TinfoTSVTermino.Destroy;
 begin
   FverbasResc.Free;
   Fquarentena.Free;
+
   inherited;
 end;
 
@@ -332,6 +357,7 @@ end;
 constructor TVerbasRescS2399.Create;
 begin
   inherited;
+
   FDmDev := TDmDevCollection.Create;
 end;
 

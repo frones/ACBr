@@ -2702,11 +2702,24 @@ procedure TCTeW.GerarautXML;
 var
   i: Integer;
 begin
-  for i := 0 to CTe.autXML.Count - 1 do
+  i := 0;
+  while i < CTe.autXML.Count do
   begin
+    if (trim(CTe.autXML[i].CNPJCPF) = trim(CTe.Rem.CNPJCPF)) or
+       (trim(CTe.autXML[i].CNPJCPF) = trim(CTe.Dest.CNPJCPF)) or
+       (trim(CTe.autXML[i].CNPJCPF) = trim(CTe.Exped.CNPJCPF)) or
+       (trim(CTe.autXML[i].CNPJCPF) = trim(CTe.Receb.CNPJCPF)) or
+       (trim(CTe.autXML[i].CNPJCPF) = trim(CTe.toma.CNPJCPF)) then
+    begin
+      CTe.autXML.Delete(i);
+      Continue;
+    end;
+
     Gerador.wGrupo('autXML', '#415');
     Gerador.wCampoCNPJCPF('#416', '#417', CTe.autXML[i].CNPJCPF);
     Gerador.wGrupo('/autXML');
+
+    Inc(i);
   end;
   if CTe.autXML.Count > 10 then
     Gerador.wAlerta('#415', 'autXML', DSC_AUTXML, ERR_MSG_MAIOR_MAXIMO + '10');

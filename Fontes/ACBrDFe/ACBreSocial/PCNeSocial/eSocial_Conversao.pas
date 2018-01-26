@@ -196,9 +196,9 @@ type
 
   tpindAutoria            = (iaProprioContribuinte, iaOutraEntidade);
 
-  tpIndMatProc            = (impTributariaouRelativaFGTS, impAutorizacaoTrabalhadorMenor, impDispensaPCD,
+  tpIndMatProc            = (impTributaria, impAutorizacaoTrabalhadorMenor, impDispensaPCD,
                              impDispensaAprendiz, impSegurancaoeSaudeTrabalhador, impConversaoLicencaSaudeAcidenteTrabalho,
-                             impOutros);
+                             impFGTS,impContribuicaoSindical, impOutros);
 
   tpIndRetificacao        = (ireOriginal, ireRetificacao);
 
@@ -1128,12 +1128,12 @@ end;
 
 function eSTpIndMatProcToStr(const t: tpIndMatProc): string;
 begin
-  result := EnumeradoToStr2(t, [ '1', '2', '3', '4', '5', '6', '99']);
+  result := EnumeradoToStr2(t, [ '1', '2', '3', '4', '5', '6', '7', '8', '99']);
 end;
 
 function eSStrToTpIndMatProc(var ok: boolean; const s: string): tpIndMatProc;
 begin
-  result := tpIndMatProc( StrToEnumerado2(ok, s, [ '1', '2', '3', '4', '5', '6', '99']) );
+  result := tpIndMatProc( StrToEnumerado2(ok, s, [ '1', '2', '3', '4', '5', '6', '7', '8', '99']) );
 end;
 
 function eSUndSalFixoToStr(const t: tpUndSalFixo ): string;

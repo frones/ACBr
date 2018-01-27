@@ -103,7 +103,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial); overload;
+    procedure Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial); reintroduce; //overload;
 
   published
     property Geral: TGeralConfeSocial read GetGeral;

@@ -64,7 +64,7 @@ type
     FPLayout: TLayOut;
     FPConfiguracoeseSocial: TConfiguracoeseSocial;
     procedure ConfigurarSoapDEPC;
-    function ExtrairModeloChaveAcesso(AChaveeSocial: String): String;
+//    function ExtrairModeloChaveAcesso(AChaveeSocial: String): String;
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -255,11 +255,11 @@ type
     FACBreSocial : TACBrDFe;
     FProtocolo : string;
     FXMLEnvio: AnsiString;
-    FXMLAssinado: AnsiString;
-    FXMLOriginal: AnsiString;
+//    FXMLAssinado: AnsiString;
+//    FXMLOriginal: AnsiString;
     FXMlRet: AnsiString;
     FRetProcLote: TRetProcLote;
-    function Assinar(Axml: string; ANomeEvento: string): AnsiString;
+//    function Assinar(Axml: string; ANomeEvento: string): AnsiString;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -286,11 +286,11 @@ type
   TEnvioLote = class(TeSocialWebService)
   private
     FVersao : String;
-    FGrupo : Integer;
-    FIdeEmpregador : TIdeEmpregador;
-    FIdeTransmissor : TIdeTransmissor;
+//    FGrupo : Integer;
+//    FIdeEmpregador : TIdeEmpregador;
+//    FIdeTransmissor : TIdeTransmissor;
     FLote : TLoteEventos;
-    FPURLEnvio : string;
+//    FPURLEnvio : string;
     FXMLEnvio : string;
     FRetProcLote: TRetProcLote;
   protected
@@ -366,12 +366,12 @@ begin
     ' xmlns:v1="http://www.esocial.gov.br/schema/lote/eventos/envio/v1_1_1"';
   FPBodyElement := 'Body';
 end;
-
+(*
 function TeSocialWebService.ExtrairModeloChaveAcesso(AChaveeSocial: String): String;
 begin
   Result := '';
 end;
-
+*)
 procedure TeSocialWebService.DefinirURL ;
 var
   Versao: Double;
@@ -776,6 +776,7 @@ end;
 
 { TConsultaLote }
 
+(*
 function TConsultaLote.Assinar(Axml, ANomeEvento: string): AnsiString;
 var
   XMLAss: String;
@@ -805,7 +806,7 @@ begin
     Result := XMLAss;
   end;
 end;
-
+*)
 procedure TConsultaLote.BeforeDestruction;
 begin
   inherited;
@@ -892,16 +893,16 @@ begin
 end;
 
 procedure TConsultaLote.GerarXML;
-var  XML: AnsiString;
+var
+  XML: AnsiString;
 begin
-  XML :=
-              '<?xml version="1.0" encoding="utf-8"?>' +
-              '<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0">' +
-              '  <consultaLoteEventos>' +
-              '    <protocoloEnvio>' + FProtocolo + '</protocoloEnvio>' +
-              '  </consultaLoteEventos>'+
-              '</eSocial>';
- FXMLEnvio := XML; //Assinar(XML, 'consultaLoteEventos');
+  XML := '<?xml version="1.0" encoding="utf-8"?>' +
+         '<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0">' +
+          '<consultaLoteEventos>' +
+           '<protocoloEnvio>' + FProtocolo + '</protocoloEnvio>' +
+          '</consultaLoteEventos>'+
+         '</eSocial>';
+  FXMLEnvio := XML;
 end;
 
 

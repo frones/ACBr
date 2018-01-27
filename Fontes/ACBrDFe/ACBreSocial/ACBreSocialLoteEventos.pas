@@ -63,10 +63,12 @@ type
     FTipoEvento : TTipoEvento;
     FXML : AnsiString;
     FLeitor : TLeitor;
+
     procedure SetXML(const Value: AnsiString);
     function GetIDEvento: string;
   public
-    constructor Create(AOwner: TComponent); overload;
+    constructor Create(AOwner: TComponent); reintroduce; //overload;
+
     property IDEvento: string read GetIDEvento;
     property XML : AnsiString read FXML write SetXML;
     property Leitor : TLeitor read FLeitor write FLeitor;
@@ -80,6 +82,7 @@ type
     FIdeTransmissor: TIdeTransmissor;
     FGerador: TGerador;
     FXML: string;
+
     function GetItem(Index: integer): TItemLoteEventos;
     procedure SetItem(Index: integer; const Value: TItemLoteEventos);
   protected
@@ -88,17 +91,18 @@ type
     function Validar: Boolean;
   public
     constructor Create(AOwner: TComponent); reintroduce;
+
     function Add : TItemLoteEventos;
     function LoadFromFile(CaminhoArquivo: String): Boolean;
     function LoadFromStream(AStream: TStringStream): Boolean;
     function LoadFromString(AXMLString: String): Boolean;
     procedure GerarXML(const AGrupo: string);
     procedure AfterConstruction; override;
+
     property Items[Index: Integer] : TItemLoteEventos read GetItem write SetItem;
     property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeTransmissor : TIdeTransmissor read FIdeTransmissor write FIdeTransmissor;
     property XML : String read FXML write FXML;
-
   end;
 
 implementation
@@ -116,6 +120,7 @@ end;
 procedure TLoteEventos.AfterConstruction;
 begin
   inherited;
+
   FIdeEmpregador  := TIdeEmpregador.Create;
   FIdeTransmissor := TIdeTransmissor.Create;
   FGerador        := TGerador.Create;
@@ -129,6 +134,7 @@ end;
 
 procedure TLoteEventos.GerarCabecalho(Namespace: String);
 begin
+
 end;
 
 procedure TLoteEventos.GerarRodape;
@@ -158,9 +164,11 @@ begin
     '</ideTransmissor>'+
     '<eventos>';
 
-
    for i := 0 to Self.Count - 1 do
-     Eventosxml := Eventosxml + '<evento Id="'+ Self.Items[i].IDEvento +'"> ' +  StringReplace(Self.Items[i].XML, '<' + ENCODING_UTF8 + '>', '', []) + '</evento>';
+     Eventosxml := Eventosxml +
+                   '<evento Id="' + Self.Items[i].IDEvento +'"> ' +
+                    StringReplace(Self.Items[i].XML, '<' + ENCODING_UTF8 + '>', '', []) +
+                   '</evento>';
 
   FXML := FXML + Eventosxml;
   FXML := FXML +
@@ -181,12 +189,15 @@ begin
     with TStringList.Create do
     try
       Text := FXml;
-      SaveToFile(Path+'\'+'EnvioLoteEventos'+'-'+ IntTostr(Dayof(Now)) + IntTostr(MonthOf(Now)) + IntTostr(YearOf(Now))+ '_'+ IntTostr(HourOf(Now))+ IntTostr(MinuteOf(Now))+IntTostr(SecondOf(Now)) + '_' +IntTostr(MilliSecondOf(Now)) + '.xml');
+      SaveToFile(Path + '\' + 'EnvioLoteEventos' + '-' + IntTostr(Dayof(Now)) +
+                 IntTostr(MonthOf(Now)) + IntTostr(YearOf(Now)) + '_' +
+                 IntTostr(HourOf(Now)) + IntTostr(MinuteOf(Now)) +
+                 IntTostr(SecondOf(Now)) + '_' + IntTostr(MilliSecondOf(Now)) +
+                 '.xml');
     finally
       Free;
     end;
   end;
-
 
   {
   FGerador.wGrupo('');
@@ -275,31 +286,33 @@ var
 
 begin
   N := PoseSocial;
-  while N > 0 do
-    begin
-      P := pos('</eSocial>', AXMLString);
-      if P > 0 then
-      begin
-        AXML := copy(AXMLString, 1, P + 10);
-        AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
-      end
-      else
-      begin
-        AXML := copy(AXMLString, 1, N + 6);
-        AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
-      end;
 
-      with Self.Add do
-      begin
-        FXML := AXML;
+  while N > 0 do
+  begin
+    P := pos('</eSocial>', AXMLString);
+
+    if P > 0 then
+    begin
+      AXML := copy(AXMLString, 1, P + 10);
+      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
+    end
+    else
+    begin
+      AXML := copy(AXMLString, 1, N + 6);
+      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
+    end;
+
+    with Self.Add do
+    begin
+      FXML := AXML;
 //        LerXML(AXML);//está na classe NotaFiscal - verificar implementação!
 
   //      if AGerarNFe then // Recalcula o XML
   //        GerarXML;
-      end;
-
-      N := PoseSocial;
     end;
+
+    N := PoseSocial;
+  end;
 
   Result := Self.Count > 0;
 end;

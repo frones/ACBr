@@ -692,7 +692,7 @@ end;
 function TIdeBenef.getInfoPgto: TInfoPgtoCollection;
 begin
   if (not Assigned(FInfoPgto)) then
-    Result := TInfoPgtoCollection.Create;
+    FInfoPgto := TInfoPgtoCollection.Create;
   Result := FInfoPgto;
 end;
 

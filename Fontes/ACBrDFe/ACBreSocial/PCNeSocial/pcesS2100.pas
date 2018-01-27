@@ -62,7 +62,7 @@ type
 
   TS2100Collection = class(TOwnedCollection)
   private
-    FIniciais : TComponent;
+//    FIniciais : TComponent;
     function GetItem(Index: Integer): TS2100CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2100CollectionItem);
   public
@@ -72,12 +72,12 @@ type
 
   TS2100CollectionItem = class(TCollectionItem)
   private
-    FIniciais : TComponent;
+//    FIniciais : TComponent;
     FTipoEvento: TTipoEvento;
     FevtCadInicial: TevtCadInicial;
     procedure setevtCadInicial(const Value: TevtCadInicial);
   public
-    constructor Create(AIniciais: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
@@ -87,7 +87,7 @@ type
 
   TevtCadInicial = class(TeSocialEvento)
   private
-    FIniciais : TComponent;
+//    FIniciais : TComponent;
     FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
     FTrabalhador: TTrabalhador;
@@ -129,11 +129,11 @@ end;
 
 { TS2100CollectionItem }
 
-constructor TS2100CollectionItem.Create(AIniciais: TComponent);
+constructor TS2100CollectionItem.Create(AOwner: TComponent);
 begin
-  FIniciais := AIniciais;
+//  FIniciais := AIniciais;
   FTipoEvento := teS2100;
-  FevtCadInicial := TevtCadInicial.Create(FIniciais);
+  FevtCadInicial := TevtCadInicial.Create(AOwner);
 end;
 
 destructor TS2100CollectionItem.Destroy;

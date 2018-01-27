@@ -102,8 +102,8 @@ type
     procedure GerarInfoAtestado(objInfoAtestado: TinfoAtestado);
     procedure GerarInfoCessao(objInfoCessao: TinfoCessao);
     procedure GerarInfoMandSind(objInfoMandSind: TInfoMandSind);
-    procedure GerarAltAfast(objAltAfast: TaltAfastamento);
-    procedure GerarAltEmpr(pAltEmpr: TAltEmpr);
+//    procedure GerarAltAfast(objAltAfast: TaltAfastamento);
+//    procedure GerarAltEmpr(pAltEmpr: TAltEmpr);
     procedure GerarInfoRetif(objInfoRetif: TInfoRetif);
     procedure GerarFimAfast(objFimAfast: TfimAfastamento);
   public
@@ -430,10 +430,10 @@ begin
 
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
-
+(*
 procedure TEvtAfastTemp.GerarAltEmpr(pAltEmpr: TAltEmpr);
 begin
-(*  Não é mais gerado na versão 2.4.01
+  //  Não é mais gerado na versão 2.4.01
   Gerador.wGrupo('altEmpr');
     Gerador.wCampo(tcStr, '', 'codCID', 0,0,0, pAltEmpr.codCID);
     Gerador.wCampo(tcInt, '', 'qtdDiasAfast', 0,0,0, pAltEmpr.qtdDiasAfast);
@@ -442,12 +442,13 @@ begin
     Gerador.wCampo(tcStr, '', 'nrOc', 0,0,0, pAltEmpr.nrOc);
     Gerador.wCampo(tcStr, '', 'ufOC', 0,0,0, eSufToStr(pAltEmpr.ufOC));
   Gerador.wGrupo('/altEmpr');
-*)
 end;
+*)
 
+(*
 procedure TEvtAfastTemp.GerarAltAfast(objAltAfast: TaltAfastamento);
 begin
-  (* Não é mais gerado na versão 2.4.01
+  // Não é mais gerado na versão 2.4.01
   if (Assigned(objAltAfast)) then
   begin
     if objAltAfast.dtAltMot > 0 then
@@ -465,8 +466,8 @@ begin
       Gerador.wGrupo('/altAfastamento');
     end;
   end;
- *)
 end;
+ *)
 
 procedure TEvtAfastTemp.GerarFimAfast(objFimAfast: TfimAfastamento);
 begin

@@ -353,7 +353,7 @@ uses
   TypInfo, synacode, blcksock, FileCtrl, StrUtils, Math,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL,
   ufrmStatus, Unit2,
-  eSocial_Conversao;
+  pcesConversaoeSocial;
 
 //  Grids,
 

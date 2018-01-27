@@ -39,118 +39,139 @@
 |*
 |* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
 |*  - Doação do componente para o Projeto ACBr
-|* 28/08/2017: Leivio Fontenele - leivio@yahoo.com.br
-|*  - Implementação comunicação, envelope, status e retorno do componente com webservice.
+|* 01/03/2016: Guilherme Costa
+|*  - Passado o namespace para geração do cabeçalho
 ******************************************************************************}
 {$I ACBr.inc}
 
-unit ACBreSocialEventos;
+unit pcesS1298;
 
 interface
 
 uses
   SysUtils, Classes,
-  pcesIniciais, pcesTabelas, pcesNaoPeriodicos, pcesPeriodicos;
+  pcnConversao,
+  pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TEventos = class(TComponent)
+  TS1298Collection = class;
+  TS1298CollectionItem = class;
+  TEvtReabreEvPer = class;
+
+  TS1298Collection = class(TOwnedCollection)
   private
-    FIniciais: TIniciais;
-    FTabelas: TTabelas;
-    FNaoPeriodicos: TNaoPeriodicos;
-    FPeriodicos: TPeriodicos;
-    procedure SetIniciais(const Value: TIniciais);
-    procedure SetNaoPeriodicos(const Value: TNaoPeriodicos);
-    procedure SetPeriodicos(const Value: TPeriodicos);
-    procedure SetTabelas(const Value: TTabelas);
-    function GetCount: integer;
-
+    function GetItem(Index: Integer): TS1298CollectionItem;
+    procedure SetItem(Index: Integer; Value: TS1298CollectionItem);
   public
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;//verificar se será necessário, se TIniciais for TComponent;
+    function Add: TS1298CollectionItem;
+    property Items[Index: Integer]: TS1298CollectionItem read GetItem write SetItem; default;
+  end;
 
-    procedure GerarXMLs;
-    procedure SaveToFiles;
-    procedure Clear;
-    property Count: integer read GetCount;
-    property Iniciais:      TIniciais      read FIniciais      write SetIniciais;
-    property Tabelas:       TTabelas       read FTabelas       write SetTabelas;
-    property NaoPeriodicos: TNaoPeriodicos read FNaoPeriodicos write SetNaoPeriodicos;
-    property Periodicos:    TPeriodicos    read FPeriodicos    write SetPeriodicos;
+  TS1298CollectionItem = class(TCollectionItem)
+  private
+    FTipoEvento: TTipoEvento;
+    FEvtReabreEvPer: TEvtReabreEvPer;
+
+    procedure setEvtReabreEvPer(const Value: TEvtReabreEvPer);
+  public
+    constructor Create(AOwner: TComponent); reintroduce;
+    destructor Destroy; override;
+  published
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property EvtReabreEvPer: TEvtReabreEvPer read FEvtReabreEvPer write setEvtReabreEvPer;
+  end;
+
+  TEvtReabreEvPer = class(TESocialEvento)
+  private
+    FIdeEvento: TIdeEvento4;
+    FIdeEmpregador: TIdeEmpregador;
+    {Geradores específicos da classe}
+  public
+    constructor Create(AACBreSocial: TObject);overload;
+    destructor  Destroy; override;
+
+    function GerarXML: boolean; override;
+
+    property IdeEvento: TIdeEvento4 read FIdeEvento write FIdeEvento;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
   end;
 
 implementation
 
-{ TEventos }
-
-procedure TEventos.Clear;
+{ TS1298Collection }
+function TS1298Collection.Add: TS1298CollectionItem;
 begin
-  FIniciais.Clear;
-  FTabelas.Clear;
-  FNaoPeriodicos.Clear;
-  FPeriodicos.Clear;
+  Result := TS1298CollectionItem(inherited Add);
+  Result.Create(TComponent(Self.Owner));
 end;
 
-constructor TEventos.Create(AOwner: TComponent);
+function TS1298Collection.GetItem(Index: Integer): TS1298CollectionItem;
+begin
+  Result := TS1298CollectionItem(inherited GetItem(Index));
+end;
+
+procedure TS1298Collection.SetItem(Index: Integer; Value: TS1298CollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{TS1298CollectionItem}
+constructor TS1298CollectionItem.Create(AOwner: TComponent);
+begin
+  FTipoEvento := teS1298;
+  FEvtReabreEvPer := TEvtReabreEvPer.Create(AOwner);
+end;
+
+destructor TS1298CollectionItem.Destroy;
+begin
+  FEvtReabreEvPer.Free;
+
+  inherited;
+end;
+
+procedure TS1298CollectionItem.setEvtReabreEvPer(const Value: TEvtReabreEvPer);
+begin
+  FEvtReabreEvPer.Assign(Value);
+end;
+
+{ TEvtSolicTotal }
+constructor TEvtReabreEvPer.Create(AACBreSocial: TObject);
 begin
   inherited;
-  FIniciais := TIniciais.Create(AOwner);
-  FTabelas := TTabelas.Create(AOwner);
-  FNaoPeriodicos := TNaoPeriodicos.Create(AOwner);
-  FPeriodicos := TPeriodicos.Create(AOwner);
+
+  FIdeEvento := TIdeEvento4.Create;
+  FIdeEmpregador := TIdeEmpregador.Create;
 end;
 
-destructor TEventos.Destroy;
+destructor TEvtReabreEvPer.destroy;
 begin
-  FIniciais.Free;
-  FTabelas.Free;
-  FNaoPeriodicos.Free;
-  FPeriodicos.Free;
+  FIdeEvento.Free;
+  FIdeEmpregador.Free;
+
   inherited;
 end;
 
-procedure TEventos.GerarXMLs;
+function TEvtReabreEvPer.GerarXML: boolean;
 begin
-  Self.Iniciais.GerarXMLs;
-  Self.Tabelas.GerarXMLs;
-  Self.NaoPeriodicos.GerarXMLs;
-  Self.Periodicos.GerarXMLs;
-end;
+  try
+    GerarCabecalho('evtReabreEvPer');
+    Gerador.wGrupo('evtReabreEvPer Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
 
-function TEventos.GetCount: integer;
-begin
-  Result :=  Self.Iniciais.Count +
-             Self.Tabelas.Count +
-             Self.NaoPeriodicos.Count +
-             Self.Periodicos.Count;
-end;
+    GerarIdeEvento4(self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
 
-procedure TEventos.SaveToFiles;
-begin
-  Self.Iniciais.SaveToFiles;
-  Self.Tabelas.SaveToFiles;
-  Self.NaoPeriodicos.SaveToFiles;
-  Self.Periodicos.SaveToFiles;
-end;
+    Gerador.wGrupo('/evtReabreEvPer');
 
-procedure TEventos.SetIniciais(const Value: TIniciais);
-begin
-  FIniciais.Assign(Value);
-end;
+    GerarRodape;
 
-procedure TEventos.SetTabelas(const Value: TTabelas);
-begin
-  FTabelas.Assign(Value);
-end;
+    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtReabreEvPer');
 
-procedure TEventos.SetNaoPeriodicos(const Value: TNaoPeriodicos);
-begin
-  FNaoPeriodicos.Assign(Value);
-end;
+    Validar('evtReabreEvPer');
+  except on e:exception do
+    raise Exception.Create(e.Message);
+  end;
 
-procedure TEventos.SetPeriodicos(const Value: TPeriodicos);
-begin
-  FPeriodicos.Assign(Value);
+  Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
 end.

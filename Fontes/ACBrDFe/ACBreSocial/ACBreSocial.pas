@@ -49,11 +49,11 @@ unit ACBreSocial;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase, ACBrUtil,
+  Classes, SysUtils, ACBrUtil,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBreSocialConfiguracoes, ACBreSocialWebServices, ACBreSocialEventos,
   ACBreSocialLoteEventos,
-  pcnConversao, eSocial_Conversao;
+  pcnConversao, pcesConversaoeSocial;
 
 resourcestring
   ACBRESOCIAL_CErroAmbienteDiferente = 'Ambiente do XML (tpAmb) é diferente do configurado no Componente (Configuracoes.WebServices.Ambiente)';
@@ -337,24 +337,24 @@ begin
   FLoteEventos.GerarXML(Inttostr(ord(AGrupo)));
 
   if Assigned(FOnTransmissaoEventos) then
-    FOnTransmissaoEventos(FLoteEventos.XML, neENVIOLOTE);
+    FOnTransmissaoEventos(FLoteEventos.XML, eseEnvioLote);
 
 
   result := WebServices.Envia(FLoteEventos.XML);
 
   if Assigned(FOnTransmissaoEventos) then
-    FOnTransmissaoEventos(WebServices.EnvioLote.RetornoWS, neRETORNOLOTE);
+    FOnTransmissaoEventos(WebServices.EnvioLote.RetornoWS, eseRetornoLote);
 end;
 
 function TACBreSocial.Consultar(const AProtocolo: string): boolean;
 begin
   if Assigned(FOnTransmissaoEventos) then
-     FOnTransmissaoEventos(WebServices.ConsultaLote.XMLEnvio, neENVIOCONSULTA);
+     FOnTransmissaoEventos(WebServices.ConsultaLote.XMLEnvio, eseEnvioConsulta);
 
   Result := WebServices.Consultar(AProtocolo);
 
   if Assigned(FOnTransmissaoEventos) then
-    FOnTransmissaoEventos(WebServices.ConsultaLote.XMlRet, neRETORNOCONSULTA);
+    FOnTransmissaoEventos(WebServices.ConsultaLote.XMlRet, eseRetornoConsulta);
 end;
 
 procedure TACBreSocial.AssinarEventos;

@@ -48,7 +48,7 @@ interface
 
 uses
  SysUtils, Classes,
-  {$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs, FileCtrl {$ENDIF},
+  {$IFDEF VisualCLX} QDialogs {$ELSE} Dialogs {$ENDIF},
   {$IFDEF FPC}
      LResources, LazarusPackageIntf, PropEdits, componenteditors,
   {$ELSE}
@@ -66,7 +66,7 @@ procedure Register;
 implementation
 
 uses
- ACBreSocialConfiguracoes, ACBrBase, ACBrDFeConfiguracoes, ACBrReg, ACBrDFeRegUtil;
+ ACBreSocialConfiguracoes, ACBrDFeConfiguracoes, ACBrReg, ACBrDFeRegUtil;
 //{$IFNDEF FPC}
 //   {$R ACBreSocial.dcr}
 //{$ENDIF}
@@ -75,14 +75,6 @@ procedure Register;
 begin
  RegisterComponents('ACBreSocial', [TACBreSocial]);
 
-// RegisterPropertyEditor(TypeInfo(TACBrAboutInfo), nil, 'AboutACBreSocial',
-//     TACBrAboutDialogProperty);
-// RegisterPropertyEditor(TypeInfo(TConfiguracoeseSocial), TACBreSocial, 'Configuracoes',
-//    TClassProperty);
-//// RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoeseSocial, 'Geral',
-////    TClassProperty);
-//// RegisterPropertyEditor(TypeInfo(String), TGeralConf, 'PathSalvar',
-////     TACBreSocialDirProperty);
   RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoeseSocial, 'Certificados',
     TClassProperty);
 

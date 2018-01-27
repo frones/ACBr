@@ -48,10 +48,10 @@ interface
 
 uses
   Classes, SysUtils, Dialogs, StrUtils, synautil,
-  ACBrUtil, ACBrDFeUtil,
+  ACBrUtil,
   pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
   ACBreSocialConfiguracoes,
-  eSocial_Gerador, eSocial_Common, eSocial_Conversao;
+  pcesCommon, pcesConversaoeSocial;
 
 type
 
@@ -66,7 +66,7 @@ type
     procedure SetXML(const Value: AnsiString);
     function GetIDEvento: string;
   public
-    constructor Create(AOwner: TComponent);
+    constructor Create(AOwner: TComponent); overload;
     property IDEvento: string read GetIDEvento;
     property XML : AnsiString read FXML write SetXML;
     property Leitor : TLeitor read FLeitor write FLeitor;

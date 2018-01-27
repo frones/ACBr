@@ -53,8 +53,8 @@ uses
   Classes, SysUtils,
   ACBrUtil, ACBrDFe, ACBrDFeWebService,
   pcnLeitor,
-  ACBreSocialLoteEventos,  ACBreSocialEventos, ACBreSocialConfiguracoes,
-  eSocial_Conversao, eSocial_Common;
+  ACBreSocialLoteEventos,  ACBreSocialConfiguracoes,
+  pcesConversaoeSocial, pcesCommon;
 
 type
 
@@ -231,12 +231,15 @@ type
   	FretEventos : TretEventos;
   protected
   	procedure LerXML(const AXml: string);
+
   public
-  	constructor Create(AOwner : TACBrDFe);
-    procedure BeforeDestruction; override;
-    procedure AfterConstruction; override;
-    destructor Destroy; override;
-  	property IdeEmpregador : TIdeEmpregador read FIdeEmpregador;
+  	constructor Create(AOwner : TACBrDFe); override;
+        destructor Destroy; override;
+
+        procedure BeforeDestruction; override;
+        procedure AfterConstruction; override;
+
+        property IdeEmpregador : TIdeEmpregador read FIdeEmpregador;
   	property IdeTransmissor : TIdeTransmissor read FIdeTransmissor;
   	property Status : Integer read FStatus write FStatus;
     property Descricao: string read FDescricao write FDescricao;
@@ -267,9 +270,11 @@ type
     procedure DefinirEnvelopeSoap; override;
     procedure SalvarResposta; override;
   public
-    constructor Create(AOwner : TACBrDFe);
+    constructor Create(AOwner : TACBrDFe); override;
+
     procedure GerarXML;
     procedure BeforeDestruction; override;
+
     property Protocolo: string read FProtocolo write FProtocolo;
     property XMLEnvio: AnsiString read FXMLEnvio;
     property XMlRet: AnsiString read FXMlRet;
@@ -297,11 +302,12 @@ type
     procedure SalvarResposta; override;
     function GerarMsgLog: String; override;
     function GerarPrefixoArquivo: String; override;
-    function GerarMsgErro(E: Exception): String;
-    function GerarVersaoDadosSoap: String;
+    function GerarMsgErro(E: Exception): String; override;
+    function GerarVersaoDadosSoap: String; override;
     procedure DefinirEnvelopeSoap; override;
   public
-    constructor Create(AOwner: TACBrDFe);
+    constructor Create(AOwner: TACBrDFe); override;
+
     property RetProcLote: TRetProcLote read FRetProcLote;
   end;
 
@@ -326,7 +332,7 @@ type
 implementation
 
 uses
-  StrUtils, Math, blcksock, DateUtils,
+  StrUtils, blcksock, DateUtils,
   pcnConversao, pcnGerador,
   ACBreSocial;
 
@@ -555,10 +561,12 @@ end;
 
 function TEnvioLote.GerarMsgLog: String;
 begin
+  Result := '';
 end;
 
 function TEnvioLote.GerarPrefixoArquivo: String;
 begin
+  Result := '';
 end;
 
 function TEnvioLote.GerarVersaoDadosSoap: String;

@@ -63,8 +63,9 @@ Símbolo : Significado
 	https://www.projetoacbr.com.br/forum/topic/41088-os-fontes-oficiais-j%C3%A1-est%C3%A3o-transmitindo-os-arquivos/?page=2&tab=comments#comment-270969
 [-] Limpar os xml do lote antes de gerar os novos. Por: juuninho.
 	https://www.projetoacbr.com.br/forum/topic/41088-os-fontes-oficiais-j%C3%A1-est%C3%A3o-transmitindo-os-arquivos/?do=findComment&comment=271026
+[*] Rename das units para ficar de acordo com o padrão do projeto. Por: Rafael Dias.
 
--- eSocial_S2260 --
+-- pcesS2260 --
 [+] Implementado o evento S-2260 - Convocação para Trabalho Intermitente
    Por: Italo Jurisato Junior
 

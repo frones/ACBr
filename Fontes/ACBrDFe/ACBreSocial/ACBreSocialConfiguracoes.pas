@@ -52,7 +52,7 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   ACBrDFeConfiguracoes, pcnConversao,
-  eSocial_Conversao;
+  pcesConversaoeSocial;
 
 type
   { TGeralConfeSocial }
@@ -115,7 +115,7 @@ type
 implementation
 
 uses
-  ACBreSocial, ACBrDFeUtil;
+  ACBreSocial;
 
 
 { TConfiguracoeseSocial }

@@ -44,113 +44,123 @@
 ******************************************************************************}
 {$I ACBr.inc}
 
-unit ACBreSocialEventos;
+unit pcesIniciais;
 
 interface
 
 uses
   SysUtils, Classes,
-  pcesIniciais, pcesTabelas, pcesNaoPeriodicos, pcesPeriodicos;
+  ACBrUtil, pcesConversaoeSocial,
+  pcesS1000, pcesS1005, pcesS2100;
 
 type
-  TEventos = class(TComponent)
+
+  TIniciais = class(TComponent)
   private
-    FIniciais: TIniciais;
-    FTabelas: TTabelas;
-    FNaoPeriodicos: TNaoPeriodicos;
-    FPeriodicos: TPeriodicos;
-    procedure SetIniciais(const Value: TIniciais);
-    procedure SetNaoPeriodicos(const Value: TNaoPeriodicos);
-    procedure SetPeriodicos(const Value: TPeriodicos);
-    procedure SetTabelas(const Value: TTabelas);
+    FS1000: TS1000Collection;
+    FS1005: TS1005Collection;
+    FS2100: TS2100Collection;
+
     function GetCount: integer;
+    procedure setS1000(const Value: TS1000Collection);
+    procedure setS1005(const Value: TS1005Collection);
+    procedure setS2100(const Value: TS2100Collection);
 
   public
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;//verificar se será necessário, se TIniciais for TComponent;
+    constructor Create(AOwner: TComponent); reintroduce;
+    destructor Destroy; override;
 
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
-    property Count: integer read GetCount;
-    property Iniciais:      TIniciais      read FIniciais      write SetIniciais;
-    property Tabelas:       TTabelas       read FTabelas       write SetTabelas;
-    property NaoPeriodicos: TNaoPeriodicos read FNaoPeriodicos write SetNaoPeriodicos;
-    property Periodicos:    TPeriodicos    read FPeriodicos    write SetPeriodicos;
+
+  published
+    property Count: Integer read GetCount;
+    property S1000: TS1000Collection read FS1000 write setS1000;
+    property S1005: TS1005Collection read FS1005 write setS1005;
+    property S2100: TS2100Collection read FS2100 write setS2100;
+
   end;
 
 implementation
 
-{ TEventos }
+uses
+  ACBreSocial;
 
-procedure TEventos.Clear;
+{ TIniciais }
+
+procedure TIniciais.Clear;
 begin
-  FIniciais.Clear;
-  FTabelas.Clear;
-  FNaoPeriodicos.Clear;
-  FPeriodicos.Clear;
+  FS1000.Clear;
+  FS1005.Clear;
+  FS2100.Clear;
 end;
 
-constructor TEventos.Create(AOwner: TComponent);
+constructor TIniciais.Create(AOwner: TComponent);
 begin
   inherited;
-  FIniciais := TIniciais.Create(AOwner);
-  FTabelas := TTabelas.Create(AOwner);
-  FNaoPeriodicos := TNaoPeriodicos.Create(AOwner);
-  FPeriodicos := TPeriodicos.Create(AOwner);
+
+  FS1000 := TS1000Collection.Create(AOwner, TS1000CollectionItem);
+  FS1005 := TS1005Collection.Create(AOwner, TS1005CollectionItem);
+  FS2100 := TS2100Collection.Create(AOwner, TS2100CollectionItem);
 end;
 
-destructor TEventos.Destroy;
+destructor TIniciais.Destroy;
 begin
-  FIniciais.Free;
-  FTabelas.Free;
-  FNaoPeriodicos.Free;
-  FPeriodicos.Free;
+  FS1000.Free;
+  FS1005.Free;
+  FS2100.Free;
+
   inherited;
 end;
 
-procedure TEventos.GerarXMLs;
+function TIniciais.GetCount: Integer;
 begin
-  Self.Iniciais.GerarXMLs;
-  Self.Tabelas.GerarXMLs;
-  Self.NaoPeriodicos.GerarXMLs;
-  Self.Periodicos.GerarXMLs;
+  Result := self.S1000.Count +
+            self.S1005.Count +
+            self.S2100.Count;
 end;
 
-function TEventos.GetCount: integer;
+procedure TIniciais.GerarXMLs;
+var
+  i: Integer;
 begin
-  Result :=  Self.Iniciais.Count +
-             Self.Tabelas.Count +
-             Self.NaoPeriodicos.Count +
-             Self.Periodicos.Count;
+  for I := 0 to Self.S1000.Count - 1 do
+    Self.S1000.Items[i].evtInfoEmpregador.GerarXML;
+  for I := 0 to Self.S1005.Count - 1 do
+    Self.S1005.Items[i].evtTabEstab.GerarXML;
+  for I := 0 to Self.S2100.Count - 1 do
+    Self.S2100.Items[i].evtCadInicial.GerarXML;
 end;
 
-procedure TEventos.SaveToFiles;
+procedure TIniciais.SaveToFiles;
+var
+  i: integer;
+  Path : String;
 begin
-  Self.Iniciais.SaveToFiles;
-  Self.Tabelas.SaveToFiles;
-  Self.NaoPeriodicos.SaveToFiles;
-  Self.Periodicos.SaveToFiles;
+  Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
+  
+  for I := 0 to Self.S1000.Count - 1 do
+    Self.S1000.Items[i].evtInfoEmpregador.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1000.Items[i].TipoEvento)+'-'+IntToStr(i));
+  for I := 0 to Self.S1005.Count - 1 do
+    Self.S1005.Items[i].evtTabEstab.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1005.Items[i].TipoEvento)+'-'+IntToStr(i));
+  for I := 0 to Self.S2100.Count - 1 do
+    Self.S2100.Items[i].evtCadInicial.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2100.Items[i].TipoEvento)+'-'+IntToStr(i));
 end;
 
-procedure TEventos.SetIniciais(const Value: TIniciais);
+procedure TIniciais.setS1000(const Value: TS1000Collection);
 begin
-  FIniciais.Assign(Value);
+  FS1000.Assign(Value);
 end;
 
-procedure TEventos.SetTabelas(const Value: TTabelas);
+procedure TIniciais.setS1005(const Value: TS1005Collection);
 begin
-  FTabelas.Assign(Value);
+  FS1005.Assign(Value);
 end;
 
-procedure TEventos.SetNaoPeriodicos(const Value: TNaoPeriodicos);
+procedure TIniciais.setS2100(const Value: TS2100Collection);
 begin
-  FNaoPeriodicos.Assign(Value);
-end;
-
-procedure TEventos.SetPeriodicos(const Value: TPeriodicos);
-begin
-  FPeriodicos.Assign(Value);
+  FS2100.Assign(Value);
 end;
 
 end.

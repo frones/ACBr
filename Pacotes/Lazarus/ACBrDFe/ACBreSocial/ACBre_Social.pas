@@ -9,18 +9,18 @@ interface
 
 uses
   ACBreSocialConfiguracoes, ACBreSocialEventos, ACBreSocialLoteEventos, 
-  ACBreSocialReg, ACBreSocialWebServices, eSocial_Consts, eSocial_Conversao, 
-  eSocial_Gerador, eSocial_Iniciais, eSocial_NaoPeriodicos, 
-  eSocial_Periodicos, eSocial_S1000, eSocial_S1005, eSocial_S1010, 
-  eSocial_S1020, eSocial_S1030, eSocial_S1035, eSocial_S1040, eSocial_S1050, 
-  eSocial_S1060, eSocial_S1070, eSocial_S1080, eSocial_S1200, eSocial_S1202, 
-  eSocial_S1207, eSocial_S1210, eSocial_S1220, eSocial_S1250, eSocial_S1260, 
-  eSocial_S1270, eSocial_S1280, eSocial_S1295, eSocial_S1298, eSocial_S1299, 
-  eSocial_S1300, eSocial_S2100, eSocial_S2190, eSocial_S2200, eSocial_S2205, 
-  eSocial_S2206, eSocial_S2210, eSocial_S2220, eSocial_S2230, eSocial_S2240, 
-  esocial_S2241, eSocial_S2250, eSocial_S2298, eSocial_S2299, eSocial_S2300, 
-  eSocial_S2305, eSocial_S2306, eSocial_S2399, eSocial_S2400, eSocial_S3000, 
-  eSocial_S4000, eSocial_S4999, eSocial_S5001, eSocial_Tabelas, 
+  ACBreSocialReg, ACBreSocialWebServices, pcesConsts, pcesConversaoeSocial, 
+  pcesGerador, pcesIniciais, pcesNaoPeriodicos, 
+  pcesPeriodicos, pcesS1000, pcesS1005, pcesS1010, 
+  pcesS1020, pcesS1030, pcesS1035, pcesS1040, pcesS1050, 
+  pcesS1060, pcesS1070, pcesS1080, pcesS1200, pcesS1202, 
+  pcesS1207, pcesS1210, pcesS1220, pcesS1250, pcesS1260, 
+  pcesS1270, pcesS1280, pcesS1295, pcesS1298, pcesS1299, 
+  pcesS1300, pcesS2100, pcesS2190, pcesS2200, pcesS2205, 
+  pcesS2206, pcesS2210, pcesS2220, pcesS2230, pcesS2240, 
+  pcesS2241, pcesS2250, pcesS2298, pcesS2299, pcesS2300, 
+  pcesS2305, pcesS2306, pcesS2399, pcesS2400, pcesS3000, 
+  pcesS4000, pcesS4999, pcesS5001, pcesTabelas, 
   LazarusPackageIntf;
 
 implementation

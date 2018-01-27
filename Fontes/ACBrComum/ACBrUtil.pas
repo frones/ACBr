@@ -87,7 +87,6 @@ const
 type
   TSetOfChars = set of AnsiChar;
   TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, msk6x4, mskAliq);
-
   {$IfNDef FPC}
    TLibHandle = THandle;
 
@@ -241,6 +240,9 @@ Function StringToDateTimeDef( const DateTimeString : String ;
 function StoD( YYYYMMDDhhnnss: String) : TDateTime;
 function DtoS( ADate : TDateTime) : String;
 function DTtoS( ADateTime : TDateTime) : String;
+
+function Iso8601ToDateTime(const AISODate: string): TDateTime;
+function DateTimeToIso8601(ADate: TDateTime; ATimeZone: string = ''): string;
 
 function StrIsAlpha(const S: String): Boolean;
 function StrIsAlphaNum(const S: String): Boolean;
@@ -1845,6 +1847,34 @@ function DTtoS( ADateTime : TDateTime) : String;
 begin
   Result := FormatDateTime('yyyymmddhhnnss', ADateTime ) ;
 end ;
+
+
+function Iso8601ToDateTime(const AISODate: string): TDateTime;
+var
+  y, m, d, h, n, s: word;
+begin
+  y := StrToInt(Copy(AISODate, 1, 4));
+  m := StrToInt(Copy(AISODate, 6, 2));
+  d := StrToInt(Copy(AISODate, 9, 2));
+  h := StrToInt(Copy(AISODate, 12, 2));
+  n := StrToInt(Copy(AISODate, 15, 2));
+  s := StrToInt(Copy(AISODate, 18, 2));
+
+  Result := EncodeDateTime(y,m,d, h,n,s,0);
+end;
+
+function DateTimeToIso8601(ADate: TDateTime; ATimeZone: string = ''): string;
+const
+  SDateFormat: string = 'yyyy''-''mm''-''dd''T''hh'':''nn'':''ss''.''zzz''Z''';
+begin
+  Result := FormatDateTime(SDateFormat, ADate);
+  if ATimeZone <> '' then
+  begin ;
+    // Remove the Z, in order to add the UTC_Offset to the string.
+    SetLength(Result, Result.Length - 1);
+    Result := Result + ATimeZone;
+  end;
+end;
 
 {-----------------------------------------------------------------------------
  *** Extraido de JclStrings.pas  - Project JEDI Code Library (JCL) ***

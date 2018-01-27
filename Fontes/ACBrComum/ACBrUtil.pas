@@ -1871,7 +1871,7 @@ begin
   if ATimeZone <> '' then
   begin ;
     // Remove the Z, in order to add the UTC_Offset to the string.
-    SetLength(Result, Result.Length - 1);
+    SetLength(Result, Length(Result) - 1);
     Result := Result + ATimeZone;
   end;
 end;

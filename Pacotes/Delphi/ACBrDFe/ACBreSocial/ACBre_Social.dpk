@@ -87,7 +87,6 @@ contains
   ACBreSocialLoteEventos in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialLoteEventos.pas',
   ACBreSocialReg in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialReg.pas',
   ACBreSocialWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialWebServices.pas',
-  pcesConsts in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesConsts.pas',
   pcesGerador in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesGerador.pas',
   pcesCommon in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesCommon.pas',
   pcesConversaoeSocial in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesConversaoeSocial.pas',

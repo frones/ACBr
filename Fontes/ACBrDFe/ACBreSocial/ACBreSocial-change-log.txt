@@ -48,6 +48,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2018
+-- pcesGerador --
+[-] Campo transfDom é opcional, checar se tem dados disponivel para então colocar no xml.
+	Por: EdmarFrazao 
+	https://www.projetoacbr.com.br/forum/topic/41164-altera%C3%A7%C3%B5es-svn-esocial/?tab=comments#comment-271230
+
+-- pcesConversaoeSocial --
+[-] Adicionado o valor 00 TpClassTrib este valor é usado em ambiente de homologação 
+	para zerar a base de dados, vide Pagina 85 do Manual do Desenvolvedor.
+	Por: EdmarFrazao 
+	https://www.projetoacbr.com.br/forum/topic/41164-altera%C3%A7%C3%B5es-svn-esocial/?tab=comments#comment-271230
+
 26/01/2018
 -- ACBreSocial --
 [*] Incluido a geração do XML do evento S-2260 na procedure: GerarXMLEventos

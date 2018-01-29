@@ -420,7 +420,8 @@ type
 
   tpTmpParc = (tpNaoeTempoParcial, tpLimitado25HorasSemanais, tpLimitado30HorasSemanais, tpLimitado26HorasSemanais);
 
-  TpClassTrib = (ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
+  // ct00 não consta no manual mas consta no manual do desenvolvedor pg 85, é usado para zerar a base de teste.
+  TpClassTrib = (ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
                  ct13, ct14, ct21, ct22, ct60, ct70, ct80, ct85, ct99);
 
 function TipoEventoToStr(const t: TTipoEvento ): string;
@@ -2194,10 +2195,10 @@ end;
 
 function tpClassTribToStr(const t: TpClassTrib ): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '06', '07', '08', '09',
+  result := EnumeradoToStr(t, ['00', '01', '02', '03', '04', '06', '07', '08', '09',
                                '10', '11', '13', '14', '21', '22', '60', '70',
                                '80', '85', '99'],
-                              [ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,
+                              [ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,
                                ct10, ct11, ct13, ct14, ct21, ct22, ct60, ct70,
                                ct80, ct85, ct99]);
 end;

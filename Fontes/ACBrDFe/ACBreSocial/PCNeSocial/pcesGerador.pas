@@ -1711,6 +1711,9 @@ end;
 
 procedure TeSocialEvento.GerarTransfDom(pTransfDom: TTransfDom);
 begin
+
+  if pTransfDom.cpfSubstituido = '' then Exit;
+
   // italo
   Gerador.wGrupo('transfDom');
 

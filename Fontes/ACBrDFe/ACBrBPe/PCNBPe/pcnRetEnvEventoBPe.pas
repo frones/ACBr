@@ -242,7 +242,7 @@ begin
     end;
 
     if (Leitor.rExtrai(1, 'retEnvEvento') <> '') or
-       (Leitor.rExtrai(1, 'retEventoBPe') <> '') then
+       (Leitor.rExtrai(1, 'retEvento') <> '') then
     begin
       Fversao   := Leitor.rAtributo('versao');
       FidLote   := Leitor.rCampo(tcInt, 'idLote');

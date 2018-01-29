@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2018
+-- pcnRetEnvEventoBPe --
+[*] Alteração no nome da tag a ser lida no XML de retorno de envio de evento.
+  Por: Italo Jurisato Junior
+
 25/01/2018
 -- ACBrBPeServicos --
 [+] Inclusão das URLs de Homologação de MG.

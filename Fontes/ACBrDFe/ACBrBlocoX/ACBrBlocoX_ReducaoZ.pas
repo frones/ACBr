@@ -177,8 +177,8 @@ begin
     FGerador.wCampo(tcInt, '', 'COO', 6, 6, 1, COO);
 
   FGerador.wCampo(tcInt, '', 'CRO', 3, 3, 1, CRO);
-  FGerador.wCampo(tcNumStr, '', 'VendaBrutaDiaria', 14, 14, 1, OnlyNumber(CurrToStr(VendaBrutaDiaria)));
-  FGerador.wCampo(tcNumStr, '', 'GT', 18, 18, 1, OnlyNumber(CurrToStr(GT)));
+  FGerador.wCampo(tcNumStr, '', 'VendaBrutaDiaria', 14, 14, 1, OnlyNumber(FormatFloat('0.00', VendaBrutaDiaria)));
+  FGerador.wCampo(tcNumStr, '', 'GT', 18, 18, 1, OnlyNumber(FormatFloat('0.00', GT)));
 
   if TotalizadoresParciais.Count > 0 then
   begin

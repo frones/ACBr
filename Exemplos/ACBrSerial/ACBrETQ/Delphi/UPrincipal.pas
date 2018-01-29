@@ -12,30 +12,37 @@ type
 
   TFPrincipal = class(TForm)
     ACBrETQ: TACBrETQ;
+    bCarregarImg: TButton;
     bEtqBloco: TButton;
-    bImprimirImagem : TButton;
-    bCarregarImg : TButton;
-    cbModelo: TComboBox;
-    cbDPI : TComboBox ;
-    ckMemoria : TCheckBox;
-    eTemperatura : TEdit ;
-    Edit1 : TEdit;
-    Image1 : TImage;
-    Label1: TLabel;
-    Label2: TLabel;
-    cbPorta: TComboBox;
-    eCopias: TEdit;
-    Label3: TLabel;
-    eAvanco: TEdit;
-    Label4: TLabel;
-    bEtqSimples: TButton;
     bEtqCarreiras: TButton;
-    Label5 : TLabel;
-    Label6 : TLabel ;
-    Label7 : TLabel ;
-    OpenPictureDialog1 : TOpenPictureDialog;
-    rbStream : TRadioButton ;
-    rbArquivo : TRadioButton ;
+    bEtqSimples: TButton;
+    bImprimirImagem: TButton;
+    cbBackFeed: TComboBox;
+    cbDPI: TComboBox;
+    cbModelo: TComboBox;
+    cbPorta: TComboBox;
+    ckMemoria: TCheckBox;
+    eAvanco: TEdit;
+    eCopias: TEdit;
+    edNomeImg: TEdit;
+    eTemperatura: TEdit;
+    eVelocidade: TEdit;
+    gbConfiguracao: TGroupBox;
+    gbImagem: TGroupBox;
+    gbImpressao: TGroupBox;
+    Image1: TImage;
+    lbAvanco: TLabel;
+    lbBackFeed: TLabel;
+    lbCopias: TLabel;
+    lbDPI: TLabel;
+    lbModelo: TLabel;
+    lbNomeImg: TLabel;
+    lbPorta: TLabel;
+    lbTemperatura: TLabel;
+    lbTemperatura1: TLabel;
+    OpenPictureDialog1: TOpenPictureDialog;
+    rbArquivo: TRadioButton;
+    rbStream: TRadioButton;
     procedure bEtqBlocoClick(Sender: TObject);
     procedure bEtqSimplesClick(Sender: TObject);
     procedure bEtqCarreirasClick(Sender: TObject);
@@ -43,8 +50,10 @@ type
     procedure bCarregarImgClick(Sender : TObject);
     procedure cbModeloChange(Sender : TObject) ;
     procedure eCopiasKeyPress(Sender : TObject ; var Key : char) ;
+    procedure FormCreate(Sender: TObject);
   private
      procedure AtivarACBrETQ ;
+     procedure ImprimirEtiquetaComCopiasEAvanco;
     { private declarations }
   public
     { public declarations }
@@ -54,8 +63,45 @@ var
   FPrincipal: TFPrincipal;
 
 implementation
+uses
+  typinfo;
 
 {$R *.dfm}
+
+procedure TFPrincipal.FormCreate(Sender: TObject);
+var
+  I : TACBrETQModelo ;
+  J: TACBrETQDPI;
+  K: TACBrETQUnidade;
+  L: TACBrETQBackFeed;
+begin
+  cbModelo.Items.Clear ;
+  For I := Low(TACBrETQModelo) to High(TACBrETQModelo) do
+     cbModelo.Items.Add( GetEnumName(TypeInfo(TACBrETQModelo), integer(I) ) ) ;
+
+  cbDPI.Items.Clear ;
+  For J := Low(TACBrETQDPI) to High(TACBrETQDPI) do
+     cbDPI.Items.Add( GetEnumName(TypeInfo(TACBrETQDPI), integer(J) ) ) ;
+
+  cbBackFeed.Items.Clear ;
+  For L := Low(TACBrETQBackFeed) to High(TACBrETQBackFeed) do
+     cbBackFeed.Items.Add( GetEnumName(TypeInfo(TACBrETQBackFeed), integer(L) ) ) ;
+
+  ACBrETQ.Device.AcharPortasSeriais( cbPorta.Items );
+  cbPorta.Items.Add('LPT1') ;
+  cbPorta.Items.Add('LPT2') ;
+  cbPorta.Items.Add('LPT3') ;
+  cbPorta.Items.Add('/dev/ttyS0') ;
+  cbPorta.Items.Add('/dev/ttyS1') ;
+  cbPorta.Items.Add('/dev/ttyUSB0') ;
+  cbPorta.Items.Add('/dev/ttyUSB1') ;
+  cbPorta.Items.Add('c:\temp\etq.txt') ;
+  cbPorta.Items.Add('/tmp/etq.txt') ;
+
+  cbDPI.ItemIndex := 0;
+  cbModelo.ItemIndex := 1;
+  cbPorta.ItemIndex := 0;
+end;
 
 procedure TFPrincipal.bEtqSimplesClick(Sender: TObject);
 begin
@@ -63,96 +109,99 @@ begin
 
   with ACBrETQ do
   begin
-     if Modelo = etqPpla then
+     if Modelo in [etqPpla, etqPplb] then
       begin
-        ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'BISCOITO MARILAN RECH 335G', 0, True);
-        ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7896003701685', 90, becSIM);
-        ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
-        ImprimirTexto(orNormal, 3, 4, 4, 15, 450, '20.59');
+        ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
+        ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'CHOC BRANCO');
+        ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
+        ImprimirTexto(orNormal, 3, 3, 2, 18, 32, 'R$');
+        ImprimirTexto(orNormal, 3, 4, 4, 15, 50, '20,59');
       end
-     else if Modelo = etqZPLII then
+     else  //if Modelo = etqZPLII then
       begin
-        ImprimirTexto(orNormal, 'Q', 1, 1, 15, 55, 'BISCOITO MARILAN RECH 335G', 0, True);
-        ImprimirTexto(orNormal, 'Q', 1, 1, 60, 55, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, barEAN13, 2, 2, 95, 55, '7896003701685', 90, becSIM);
-        ImprimirTexto(orNormal, 'R', 1, 1, 100, 270, 'R$');
-        ImprimirTexto(orNormal, 'R', 1, 1, 135, 270, '20.59');
-      end
-     else
-      begin
-        ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'BISCOITO MARILAN RECH 335G', 0, True);
-        ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7896003701685', 90, becSIM);
-        ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');
-        ImprimirTexto(orNormal, 3, 4, 5, 85, 515, '20.59');
-      end ;
+        ImprimirTexto(orNormal, '0', 60, 60, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
+        ImprimirTexto(orNormal, '0', 60, 60, 8, 3, 'CHOC BRANCO');
+        ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
+        ImprimirTexto(orNormal, 'A', 100, 100, 18, 32, 'R$');
+        ImprimirTexto(orNormal, 'A', 120, 120, 15, 50, '20,59');
+      end;
 
-     Imprimir(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+     ImprimirEtiquetaComCopiasEAvanco;
      Desativar;
   end;
 end;
 
+procedure TFPrincipal.ImprimirEtiquetaComCopiasEAvanco;
+begin
+  ACBrETQ.Imprimir(StrToIntDef(eCopias.Text, 1), StrToIntDef(eAvanco.Text, 0));
+end;
+
 procedure TFPrincipal.bEtqBlocoClick(Sender: TObject);
+
+  procedure FinalizarEtiquetaComCopiasEAvanco;
+  begin
+    ACBrETQ.FinalizarEtiqueta(StrToIntDef(eCopias.Text, 1), StrToIntDef(eAvanco.Text, 0));
+  end;
+
 begin
   AtivarACBrETQ;
 
   with ACBrETQ do
   begin
-     if Modelo = etqPpla then
+     if Modelo in [etqPpla, etqPplb] then
      begin
        IniciarEtiqueta;
-       ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'BISCOITO MARILAN RECH 335G');
-       ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'CHOC BRANCO');
-       ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7896003701685', 90, becSIM);
-       ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
-       ImprimirTexto(orNormal, 3, 4, 4, 15, 450, '20.59');
-       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+       ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
+       ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'CHOC BRANCO');
+       ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
+       ImprimirTexto(orNormal, 3, 3, 2, 18, 32, 'R$');
+       ImprimirTexto(orNormal, 3, 4, 4, 15, 50, '20,59');
+       FinalizarEtiquetaComCopiasEAvanco;
 
        IniciarEtiqueta;
-       ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'SABAO EM PO FLASH 1KG');
-       ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'ADVANCED - UNIDADE');
-       ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7898903097042', 90, becSIM);
-       ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
-       ImprimirTexto(orNormal, 3, 4, 4, 15, 450, '3.18');
-       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+       ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'SABAO EM PO FLASH 1KG');
+       ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'ADVANCED - UNIDADE');
+       ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7898903097042', 10, becSIM);
+       ImprimirTexto(orNormal, 3, 3, 2, 18, 32, 'R$');
+       ImprimirTexto(orNormal, 3, 4, 4, 15, 50, '3,18');
+       FinalizarEtiquetaComCopiasEAvanco;
 
        IniciarEtiqueta;
-       ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'AMACIANTE AMACIEX 5 LTS');
-       ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'MACIO MATRIX FIX');
-       ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7898237690230', 90, becSIM);
-       ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
-       ImprimirTexto(orNormal, 3, 4, 4, 15, 450, '8.60');
-       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+       ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'AMACIANTE AMACIEX 5 LTS');
+       ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'MACIO MATRIX FIX');
+       ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7898237690230', 10, becSIM);
+       ImprimirTexto(orNormal, 3, 3, 2, 18, 32, 'R$');
+       ImprimirTexto(orNormal, 3, 4, 4, 15, 50, '8,60');
+       FinalizarEtiquetaComCopiasEAvanco;
      end
-     else
+     else //if Modelo = etqZPLII then
      begin
        IniciarEtiqueta;
-       ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'BISCOITO MARILAN RECH 335G');
-       ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'CHOC BRANCO');
-       ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7896003701685', 90, becSIM);
-       ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');
-       ImprimirTexto(orNormal, 3, 4, 5, 85, 515, '20.59');
-       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+       ImprimirTexto(orNormal, '0', 60, 60, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
+       ImprimirTexto(orNormal, '0', 60, 60, 8, 3, 'CHOC BRANCO');
+       ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
+       ImprimirTexto(orNormal, 'A', 100, 100, 18, 32, 'R$');
+       ImprimirTexto(orNormal, 'A', 120, 120, 15, 50, '20,59');
+       FinalizarEtiquetaComCopiasEAvanco;
 
        IniciarEtiqueta;
-       ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'SABAO EM PO FLASH 1KG');
-       ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'ADVANCED - UNIDADE');
-       ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7898903097042', 90, becSIM);
-       ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');
-       ImprimirTexto(orNormal, 3, 4, 5, 85, 515, '3.18');
-       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+       ImprimirTexto(orNormal, '0', 60, 60, 3, 3, 'SABAO EM PO FLASH 1KG', 0, True);
+       ImprimirTexto(orNormal, '0', 60, 60, 8, 3, 'ADVANCED - UNIDADE');
+       ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7898903097042', 10, becSIM);
+       ImprimirTexto(orNormal, 'A', 100, 100, 18, 32, 'R$');
+       ImprimirTexto(orNormal, 'A', 120, 120, 15, 50, '3,18');
+       FinalizarEtiquetaComCopiasEAvanco;
 
        IniciarEtiqueta;
-       ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'AMACIANTE AMACIEX 5 LTS');
-       ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'MACIO MATRIX FIX');
-       ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7898237690230', 90, becSIM);
-       ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');
-       ImprimirTexto(orNormal, 3, 4, 5, 85, 515, '8.60');
-       FinalizarEtiqueta(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+       ImprimirTexto(orNormal, '0', 60, 60, 3, 3, 'AMACIANTE AMACIEX 5 LTS', 0, True);
+       ImprimirTexto(orNormal, '0', 60, 60, 8, 3, 'MACIO MATRIX FIX');
+       ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7898237690230', 10, becSIM);
+       ImprimirTexto(orNormal, 'A', 100, 100, 18, 32, 'R$');
+       ImprimirTexto(orNormal, 'A', 120, 120, 15, 50, '8,60');
+       FinalizarEtiquetaComCopiasEAvanco;
      end;
 
-     Imprimir(1, StrToInt(eAvanco.Text));
+     Imprimir(1, StrToIntDef(eAvanco.Text, 0));
      Desativar;
   end;
 end;
@@ -163,51 +212,37 @@ begin
 
   with ACBrETQ do
   begin
-     if Modelo = etqPpla then
+     if Modelo in [etqPpla, etqPplb] then
       begin
-        ImprimirTexto(orNormal, 2, 1, 2, 180, 15, 'BISCOITO REC 335G');
-        ImprimirTexto(orNormal, 2, 1, 1, 140, 15, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, 'F', '2', '2', 20, 10, '7896003701685', 70);
+        ImprimirTexto(orNormal, 2, 1, 2, 2, 3, 'BISCOITO REC 33G');
+        ImprimirTexto(orNormal, 2, 1, 1, 6, 3, 'CHOC BRANCO');
+        ImprimirBarras(orNormal, barEAN13, 2, 2, 8, 3, '7896003701685', 10);
 
-        ImprimirTexto(orNormal, 2, 1, 2, 180, 315, 'BISCOITO RECH 335G');
-        ImprimirTexto(orNormal, 2, 1, 1, 140, 315, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, 'F', '2', '2', 20, 315, '7896003701685', 70);
+        ImprimirTexto(orNormal, 2, 1, 2, 2, 28, 'BISCOITO RECH 33G');
+        ImprimirTexto(orNormal, 2, 1, 1, 6, 28, 'CHOC BRANCO');
+        ImprimirBarras(orNormal, barEAN13, 2, 2, 8, 28, '7896003701685', 10);
 
-        ImprimirTexto(orNormal, 2, 1, 2, 180, 620, 'BISCOITO RECH 335G');
-        ImprimirTexto(orNormal, 2, 1, 1, 140, 620, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, 'F', '2', '2', 20, 620, '7896003701685', 70);
+        ImprimirTexto(orNormal, 2, 1, 2, 2, 53, 'BISCOITO RECH 33G');
+        ImprimirTexto(orNormal, 2, 1, 1, 6, 53, 'CHOC BRANCO');
+        ImprimirBarras(orNormal, barEAN13, 2, 2, 8, 53, '7896003701685', 10);
       end
-     else if Modelo = etqZPLII then
+     else // if Modelo = etqZPLII then
       begin
-        ImprimirTexto(orNormal, 'Q', 1, 1, 15, 55, 'BISCOITO REC 335G');
-        ImprimirTexto(orNormal, 'Q', 1, 1, 60, 55, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, barEAN13, 2, 2, 95, 55, '7896003701685', 90, becSIM);
+         ImprimirTexto(orNormal, '0', 30, 40, 2, 3, 'BISCOITO REC 33G');
+         ImprimirTexto(orNormal, '0', 20, 20, 6, 3, 'CHOC BRANCO');
+         ImprimirBarras(orNormal, barEAN13, 2, 2, 8, 3, '7896003701685', 10);
 
-        ImprimirTexto(orNormal, 'Q', 1, 1, 15, 365, 'BISCOITO REC 335G');
-        ImprimirTexto(orNormal, 'Q', 1, 1, 60, 365, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, barEAN13, 2, 2, 95, 365, '7896003701685', 90, becSIM);
+         ImprimirTexto(orNormal, '0', 30, 40, 2, 28, 'BISCOITO RECH 33G');
+         ImprimirTexto(orNormal, '0', 20, 20, 6, 28, 'CHOC BRANCO');
+         ImprimirBarras(orNormal, barEAN13, 2, 2, 8, 28, '7896003701685', 10);
 
-        ImprimirTexto(orNormal, 'Q', 1, 1, 15, 670, 'BISCOITO REC 335G');
-        ImprimirTexto(orNormal, 'Q', 1, 1, 60, 670, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, barEAN13, 2, 2, 95, 670, '7896003701685', 90, becSIM);
-      end
-     else
-      begin
-        ImprimirTexto(orNormal, 2, 1, 3, 15, 55, 'BISCOITO REC 335G');
-        ImprimirTexto(orNormal, 2, 1, 1, 80, 55, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, 'E30', '2', '2', 120, 55, '7896003701685', 080, becSIM);
+         ImprimirTexto(orNormal, '0', 30, 40, 2, 53, 'BISCOITO RECH 33G');
+         ImprimirTexto(orNormal, '0', 20, 20, 6, 53, 'CHOC BRANCO');
+         ImprimirBarras(orNormal, barEAN13, 2, 2, 8, 53, '7896003701685', 10);
+      end;
 
-        ImprimirTexto(orNormal, 2, 1, 3, 15, 365, 'BISCOITO RECH 335G');
-        ImprimirTexto(orNormal, 2, 1, 1, 80, 365, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, 'E30', '2', '2', 120, 365, '7896003701685', 080, becSIM);
-
-        ImprimirTexto(orNormal, 2, 1, 3, 15, 670, 'BISCOITO RECH 335G');
-        ImprimirTexto(orNormal, 2, 1, 1, 80, 670, 'CHOC BRANCO');
-        ImprimirBarras(orNormal, 'E30', '2', '2', 120, 670, '7896003701685', 080, becSIM);
-      end ;
-
-     Imprimir(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
-     Desativar;
+      ImprimirEtiquetaComCopiasEAvanco;
+      Desativar;
   end;
 end;
 
@@ -217,8 +252,8 @@ begin
 
   with ACBrETQ do
   begin
-     ImprimirImagem(1,10,10,Edit1.Text);
-     Imprimir(StrToInt(eCopias.Text), StrToInt(eAvanco.Text));
+     ImprimirImagem(1,10,10,edNomeImg.Text);
+     ImprimirEtiquetaComCopiasEAvanco;
      Desativar;
   end ;
 end;
@@ -240,7 +275,7 @@ begin
         MS := TMemoryStream.Create;
         try
            Image1.Picture.Bitmap.SaveToStream( MS );
-           ACBrETQ.CarregarImagem( MS, Edit1.Text, True,
+           ACBrETQ.CarregarImagem( MS, edNomeImg.Text, True,
                                    ExtractFileExt(OpenPictureDialog1.FileName) );
         finally
            MS.Free ;
@@ -257,7 +292,7 @@ begin
          except
             Image1.Picture := nil;
          end ;
-         ACBrETQ.CarregarImagem( OpenPictureDialog1.FileName, Edit1.Text );
+         ACBrETQ.CarregarImagem( OpenPictureDialog1.FileName, edNomeImg.Text );
       end ;
    end ;
 
@@ -276,18 +311,24 @@ begin
       Key := #0 ;
 end;
 
-procedure TFPrincipal.AtivarACBrETQ ;
+procedure TFPrincipal.AtivarACBrETQ;
 begin
   with ACBrETQ do
   begin
-     DPI           := TACBrETQDPI(cbDPI.ItemIndex);
-     Modelo        := TACBrETQModelo(cbModelo.ItemIndex) ;
-     Porta         := cbPorta.Text ;
-     LimparMemoria := ckMemoria.Checked ;
+     Desativar;
 
-     Ativar ;
-  end ;
-end ;
+     DPI           := TACBrETQDPI(cbDPI.ItemIndex);
+     Modelo        := TACBrETQModelo(cbModelo.ItemIndex);
+     Porta         := cbPorta.Text;
+     LimparMemoria := ckMemoria.Checked;
+     Temperatura   := StrToInt(eTemperatura.Text);
+     Velocidade    := StrToInt(eVelocidade.Text);
+     BackFeed      := TACBrETQBackFeed(cbBackFeed.ItemIndex);
+     Unidade       := etqMilimetros;
+
+     Ativar;
+  end;
+end;
 
 end.
 

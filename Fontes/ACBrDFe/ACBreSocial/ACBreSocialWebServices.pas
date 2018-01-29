@@ -54,7 +54,8 @@ uses
   ACBrUtil, ACBrDFe, ACBrDFeWebService,
   pcnLeitor,
   ACBreSocialLoteEventos,  ACBreSocialConfiguracoes,
-  pcesConversaoeSocial, pcesCommon;
+  pcesConversaoeSocial, pcesCommon,
+  pcesS5001, pcesS5002{, pcesS5011, pcesS5012};
 
 type
 

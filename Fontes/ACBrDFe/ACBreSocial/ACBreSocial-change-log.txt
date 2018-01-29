@@ -49,6 +49,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/01/2018
+-- ACBreSocial --
+[*] Implementado as Units responsaveis pela leitura dos XMLs
+    dos eventos S-5001 e S-5002.
+   Por: Italo Jurisato Junior
 -- pcesGerador --
 [-] Campo transfDom é opcional, checar se tem dados disponivel para então colocar no xml.
 	Por: EdmarFrazao 

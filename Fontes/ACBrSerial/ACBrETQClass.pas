@@ -176,6 +176,7 @@ begin
 
   // 1 Inch = 2.54 cm = 25.4 mm
   DotsMM := DotsPI / CInchCM / 10;
+  ADouble := AValue;
 
   case UnidadeSaida of
     etqMilimetros:

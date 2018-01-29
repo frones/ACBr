@@ -338,11 +338,13 @@ end;
 
 function TACBrETQPpla.ConverterUnidade(AValue: Integer): Integer;
 begin
-  Result := AValue;
-  if (Unidade <> etqDots) then
-    Exit;
+  if (Unidade = etqDots) then
+    Result := inherited ConverterUnidade(etqMilimetros, AValue);
 
-  Result := inherited ConverterUnidade(etqMilimetros, AValue);
+  Result := AValue * 10;
+
+  if (Unidade = etqPolegadas) then
+    Result := Result * 10;
 end;
 
 function TACBrETQPpla.AjustarTipoBarras(aTipo: String;

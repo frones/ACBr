@@ -41,6 +41,9 @@ interface
 uses
   ACBrDevice, Classes;
 
+const
+  CInchCM = 2.54;
+
 type
 
 { Classe generica de ETIQUETA, nao implementa nenhum modelo especifico, apenas
@@ -158,65 +161,49 @@ end;
 function TACBrETQClass.ConverterUnidade(UnidadeSaida: TACBrETQUnidade;
   AValue: Integer): Integer;
 var
-  ValorReal, ValorFinal, DotsMM, DotsPI: Double;
-
-  procedure AtribuirDots(aDotsMM, aDotsPI: Double);
-  begin
-    DotsMM := aDotsMM;
-    DotsPI := aDotsPI;
-  end;
-
+  DotsMM, DotsPI, ADouble: Double;
 begin
-  Result     := AValue;
-  ValorFinal := AValue;  // Evita Warnings
-  ValorReal  := AValue;
-
+  Result := AValue;
   if (UnidadeSaida = Unidade) then
     Exit;
 
   case DPI of
-    dpi300: AtribuirDots(12, 300);
-    dpi600: AtribuirDots(23.5, 600);
+    dpi300: DotsPI := 300;
+    dpi600: DotsPI := 600;
   else
-    AtribuirDots(8, 203);
+    DotsPI := 203;
   end;
 
-  case Unidade of
-    etqMilimetros: ValorReal := (AValue / 10);
-    etqPolegadas:  ValorReal := (AValue / 100);
-  end;
+  // 1 Inch = 2.54 cm = 25.4 mm
+  DotsMM := DotsPI / CInchCM / 10;
 
   case UnidadeSaida of
     etqMilimetros:
     begin
       case Unidade of
-        etqPolegadas: ValorFinal := (ValorReal * 25.4);
-        etqDots:      ValorFinal := (ValorReal / DotsMM);
+        etqPolegadas: ADouble := (AValue*10) * CInchCM;
+        etqDots:      ADouble := AValue / DotsMM;
       end;
-
-      ValorFinal := (ValorFinal * 10);
     end;
 
     etqPolegadas:
     begin
       case Unidade of
-        etqMilimetros: ValorFinal := (ValorReal / 25.4);
-        etqDots:       ValorFinal := (ValorReal / DotsPI);
+        etqMilimetros: ADouble := ((AValue/10) / CInchCM);
+        etqDots:       ADouble := AValue / DotsPI;
       end;
-
-      ValorFinal := (ValorFinal * 100);
     end;
 
     etqDots:
     begin
       case Unidade of
-        etqMilimetros: ValorFinal := (ValorReal * DotsMM);
-        etqPolegadas:  ValorFinal := (ValorReal * DotsPI);
+        etqMilimetros: ADouble := (AValue * DotsMM);
+        etqPolegadas:  ADouble := (AValue * DotsPI);
       end;
     end;
   end;
 
-  Result := trunc(RoundTo(ValorFinal, 0));
+  Result := trunc(RoundTo(ADouble, 0));
 end;
 
 procedure TACBrETQClass.AdicionarComandos(ACmd: AnsiString;

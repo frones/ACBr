@@ -154,11 +154,11 @@ function TACBrETQZplII.ComandoFonte(aFonte: String; aMultVertical,
 var
   cFonte: Char;
 begin
-  if (aMultVertical > 10) then
-    raise Exception.Create('Multiplicador Vertical deve estar entre 1 e 10');
+  if (aMultVertical > 32000) then
+    raise Exception.Create('Multiplicador Vertical deve estar entre 0 e 32000');
 
-  if (aMultHorizontal > 10) then
-    raise Exception.Create('Multiplicador Horizontal deve estar entre 1 e 10');
+  if (aMultHorizontal > 32000) then
+    raise Exception.Create('Multiplicador Horizontal deve estar entre 0 e 32000');
 
   cFonte := PadLeft(aFonte,1,'A')[1];
   if not CharInSet(cFonte, ['0'..'9','A'..'Z']) then
@@ -178,7 +178,8 @@ begin
   if (aHorizontal < 0) or (aHorizontal > 32000) then
     raise Exception.Create('Horizontal deve estar entre 0 e 32000');
 
-  Result := '^FO' + IntToStr(aHorizontal) + ',' + IntToStr(aVertical);
+  Result := '^FO' + IntToStr(ConverterUnidade(etqDots, aHorizontal)) + ',' +
+                    IntToStr(ConverterUnidade(etqDots, aVertical));
 end;
 
 function TACBrETQZplII.ComandoReverso(aImprimirReverso: Boolean): String;
@@ -294,17 +295,16 @@ begin
 end;
 
 function TACBrETQZplII.ComandoResolucao: AnsiString;
-var
-  aCmdRes: Char;
+//var
+//  aCmdRes: Char;
 begin
-
-  case DPI of
-    dpi600: aCmdRes := 'A'; // A = 24 dots/mm, 12 dots/mm, 8 dots/mm or 6 dots/mm
-  else
-    aCmdRes := 'B';
-  end;
-
-  Result := '^JM'+aCmdRes+'^FS';
+  //if (DPI = dpi600) then
+  //  aCmdRes := 'A'  // A = 24 dots/mm, 12 dots/mm, 8 dots/mm or 6 dots/mm
+  //else
+  //  aCmdRes := 'B';
+  //
+  //Result := '^JM'+aCmdRes+'^FS';
+  Result := '';  // Usa a resolução definida na Impressora (configure ACBrETQ.DPI de acordo com a impressora)
 end;
 
 function TACBrETQZplII.ComandoVelocidade: AnsiString;

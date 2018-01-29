@@ -39,6 +39,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/01/2018
+-- ACBrETQClass, ACBrETQPpla --
+[-] Correção em TACBrETQClass.ConverterUnidade, para correta conversão de
+    Milímetros para Dots
+
+-- ACBrETQZplII --
+[-] Método: TACBrETQZplII.ComandoFonte. Correção na verificação dos limimtes de
+    multiplicador Horizontal e Vertical
+[*] Método: TACBrETQZplII.ComandoResolucao, modificado para não tentar mudar a
+    resulução da Impressora
+    (por: DSA)
+
 Data: 20/01/2018
 -- ACBrECFEscECF --
 [-] Correção em métodos que retornavam altos valores, estourando o limite de

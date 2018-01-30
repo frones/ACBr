@@ -3,11 +3,11 @@
   <Datasets>
     <item DataSetName="Identificacao"/>
     <item DataSetName="Emitente"/>
-		<item DataSetName="Destinatario"/>
-		<item DataSetName="DadosProdutos"/>
+    <item DataSetName="Destinatario"/>
+    <item DataSetName="DadosProdutos"/>
     <item DataSetName="Parametros"/>
     <item DataSetName="Duplicatas"/>
-		<item DataSetName="CalculoImposto"/>
+    <item DataSetName="CalculoImposto"/>
     <item DataSetName="Transportador"/>
     <item DataSetName="Veiculo"/>
     <item DataSetName="Volumes"/>
@@ -18,7 +18,7 @@
     <item DataSetName="LocalEntrega"/>
     <item DataSetName="InformacoesAdicionais"/>
     <item DataSetName="Pagamento"/>
-		<item DataSetName="Inutilizacao"/>
+    <item DataSetName="Inutilizacao"/>
   </Datasets>
   <Variables>
     <item Name=" User"/>

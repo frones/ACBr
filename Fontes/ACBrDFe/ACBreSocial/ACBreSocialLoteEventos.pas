@@ -144,7 +144,6 @@ end;
 
 procedure TLoteEventos.GerarXML(const AGrupo: string);
 var
-//  Xml: AnsiString;
   i: Integer;
   Eventosxml: AnsiString;
   Path: string;
@@ -198,36 +197,6 @@ begin
       Free;
     end;
   end;
-
-  {
-  FGerador.wGrupo('');
-  try
-    GerarCabecalho('evtInfoEmpregador');
-      Gerador.wGrupo('evtInfoEmpregador Id="'+ GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) +'"');
-        GerarIdeEvento(Self.IdeEvento);
-        GerarIdeEmpregador(Self.IdeEmpregador);
-        Gerador.wGrupo('infoEmpregador');
-          GerarModoAbertura(Self.ModoLancamento);
-          GerarIdePeriodo(Self.infoEmpregador.idePeriodo);
-          if (Self.ModoLancamento <> mlExclusao) then
-          begin
-            GerarInfoCadastro;
-            if ModoLancamento = mlAlteracao then
-              if (InfoEmpregador.novaValidadeInst()) then
-                GerarIdePeriodo(InfoEmpregador.novaValidade,'novaValidade');
-          end;
-          GerarModoFechamento(Self.ModoLancamento);
-        Gerador.wGrupo('/infoEmpregador');
-      Gerador.wGrupo('/evtInfoEmpregador');
-    GerarRodape;
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInfoEmpregador');//Gerador.ArquivoFormatoXML;
-    Validar('evtInfoEmpregador');
-
-  except on e:exception do
-    raise Exception.Create(e.Message);
-  end;
-  Result := (Gerador.ArquivoFormatoXML <> '');
-  }
 end;
 
 function TLoteEventos.GetItem(Index: integer): TItemLoteEventos;
@@ -305,10 +274,6 @@ begin
     with Self.Add do
     begin
       FXML := AXML;
-//        LerXML(AXML);//está na classe NotaFiscal - verificar implementação!
-
-  //      if AGerarNFe then // Recalcula o XML
-  //        GerarXML;
     end;
 
     N := PoseSocial;

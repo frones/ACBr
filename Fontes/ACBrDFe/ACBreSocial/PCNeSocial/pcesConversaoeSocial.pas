@@ -97,7 +97,7 @@ type
                              teS2306, teS2399, teS2400, teS3000, teS4000, teS4999, teS5001, teS5002,
                              teS5011, teS5012);
 
-  TpTpAmb                 = (taProducao, taProducaoRestritaDadosReais, taProducaoRestritaDadosFicticios);
+  TpTpAmb                 = (taProducao, taProducaoRestrita);
 
   tpSimNao                = (tpSim, tpNao);
 
@@ -938,12 +938,12 @@ end;
 
 function eStpAmbToStr(const t: TptpAmb ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_3 );
+  result := EnumeradoToStr2(t, TGenericosString1_2 );
 end;
 
 function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
 begin
-  result  := TptpAmb( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
+  result  := TptpAmb( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
 end;
 
 function eSProcEmiToStr(const t: TpProcEmi ): string;

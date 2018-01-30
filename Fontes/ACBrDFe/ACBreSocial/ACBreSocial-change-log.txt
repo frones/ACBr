@@ -48,13 +48,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2018
+-- pcesConversaoeSocial --
+[-] Arrumado os enum TpAmbiente para refletir as novas mudanças do Layout eSocial.
+	Por: Digibyte.
+	https://www.projetoacbr.com.br/forum/topic/41199-poss%C3%ADvel-altera%C3%A7%C3%A3o-necess%C3%A1ria-unit-pcesconversaoesocial/
+	
+-- pcesGerador --
+[-] Tag CTPS é opcional, checar se tem dados disponivel para então colocar no xml.
+	Por: EdmarFrazao.	
+	https://www.projetoacbr.com.br/forum/topic/41185-alterar-svn-evento-2300-categorias-contribuinte-individual-ctps-opcional/
+[-] Arrumado pasta que estava fixa quando em modo de debug.
+	Por: EdmarFrazao.
+	https://www.projetoacbr.com.br/forum/topic/41191-alterar-svn-quando-em-debug-usa-pasta-docs-fixa/
+
 29/01/2018
 -- ACBreSocial --
 [*] Implementado as Units responsaveis pela leitura dos XMLs
     dos eventos S-5001 e S-5002.
    Por: Italo Jurisato Junior
 -- pcesGerador --
-[-] Campo transfDom é opcional, checar se tem dados disponivel para então colocar no xml.
+[-] Tag transfDom é opcional, checar se tem dados disponivel para então colocar no xml.
 	Por: EdmarFrazao 
 	https://www.projetoacbr.com.br/forum/topic/41164-altera%C3%A7%C3%B5es-svn-esocial/?tab=comments#comment-271230
 

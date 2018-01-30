@@ -70,7 +70,6 @@ const
 type
 
   EACBreSocialException = class(EACBrDFeException);
-
   TNotifyEventoseSocial = procedure(const AXML: AnsiString; ATipo: TeSocialEventos) of object;
 
   { TACBreSocial }
@@ -100,19 +99,17 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    function Enviar(AGrupo: TeSocialGrupo): boolean;
-    function Consultar(const AProtocolo: string): boolean;
-
     procedure AssinarEventos;
-
-    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double; var URL: String); reintroduce;
-    function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
     procedure SetStatus(const stNewStatus: TStatusACBreSocial);
 
     function GetNomeModeloDFe: string; override;
     function GetNameSpaceURI: string; override;
+    function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
 
+    function Enviar(AGrupo: TeSocialGrupo): boolean;
+    function Consultar(const AProtocolo: string): boolean;
 
     property Eventos: TEventos read FEventos write FEventos;
     property Status: TStatusACBreSocial read FStatus;
@@ -125,7 +122,6 @@ type
     property OnTransmissaoEventos: TNotifyEventoseSocial read FOnTransmissaoEventos write FOnTransmissaoEventos;
 
   end;
-
 
 implementation
 

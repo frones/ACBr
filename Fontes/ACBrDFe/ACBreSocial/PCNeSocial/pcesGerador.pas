@@ -248,7 +248,8 @@ begin
       With TStringList.Create do
       try
         Text := XMLAss;
-        SaveToFile(IncludeTrailingPathDelimiter(ExtractFileDir(ParamStr(0))) + 'Docs\' + NomeEvento);
+        SaveToFile(IncludeTrailingPathDelimiter(Configuracoes.Arquivos.PathSalvar) + NomeEvento);
+
       finally
         Free;
       end;
@@ -420,6 +421,9 @@ end;
 
 procedure TeSocialEvento.GerarCTPS(pCTPS: TCTPS);
 begin
+
+  if pCTPS.NrCtps = '' then Exit;
+
   // italo
   Gerador.wGrupo('CTPS');
 

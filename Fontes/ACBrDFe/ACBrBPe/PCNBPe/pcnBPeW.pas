@@ -751,7 +751,7 @@ begin
     if(BPe.pag[i].tPag in [fpCartaoDebito,fpCartaoCredito]) and
       ((BPe.pag[i].CNPJ <> '') or (BPe.pag[i].tpIntegra <> tiNaoInformado))then
     begin
-      Gerador.wGrupo('Card', '#164');
+      Gerador.wGrupo('card', '#164');
       Gerador.wCampo(tcStr, '#165', 'tpIntegra', 01, 01, 1, tpIntegraToStr(BPe.pag[i].tpIntegra), DSC_TPINTEGRA);
 
       if BPe.pag[i].CNPJ <> '' then
@@ -761,7 +761,7 @@ begin
         Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, BPe.pag[i].cAut, DSC_CAUT);
       end;
 
-      Gerador.wGrupo('/Card');
+      Gerador.wGrupo('/card');
     end;
 
     Gerador.wGrupo('/pag');

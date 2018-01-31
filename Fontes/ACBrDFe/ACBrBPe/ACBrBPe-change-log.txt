@@ -50,6 +50,8 @@ Símbolo : Significado
 
 
 31/01/2018
+-- pcnBPeW --
+[*] Correção no nome da TAG card.
 -- ACBrBPeWebServices --
 [*] Correção nos nomes das TAGs na montagem do arquivo *-procEventoBPe.xml.
   Por: Italo Jurisato Junior

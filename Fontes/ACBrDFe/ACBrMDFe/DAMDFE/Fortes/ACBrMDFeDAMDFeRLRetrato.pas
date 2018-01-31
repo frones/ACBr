@@ -170,6 +170,9 @@ type
     RLDraw13: TRLDraw;
     RLDraw14: TRLDraw;
     rlbNumcipio: TRLLabel;
+    RLDraw15: TRLDraw;
+    RLLabel27: TRLLabel;
+    rllValorMercadoria: TRLLabel;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -343,6 +346,8 @@ begin
     rllPesoTotal.Caption := FormatFloatBr(FMDFe.tot.qCarga, ',#0.000')
   else
     rllPesoTotal.Caption := FormatFloatBr(FMDFe.tot.qCarga, ',#0');
+
+  rllValorMercadoria.Caption := FormatFloatBr(FMDFe.tot.vCarga, ',#0.00')
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);

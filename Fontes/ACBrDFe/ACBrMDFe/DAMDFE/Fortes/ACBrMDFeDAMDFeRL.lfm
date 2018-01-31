@@ -1,21 +1,20 @@
 object frlDAMDFeRL: TfrlDAMDFeRL
-  Left = 238
-  Height = 604
-  Top = 216
-  Width = 830
+  Left = 291
+  Height = 643
+  Top = 210
+  Width = 863
   Caption = 'frlDAMDFeRL'
-  ClientHeight = 604
-  ClientWidth = 830
+  ClientHeight = 643
+  ClientWidth = 863
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  LCLVersion = '1.6.0.4'
-  Visible = False
+  LCLVersion = '1.8.0.6'
   object RLMDFe: TRLReport
     Left = 16
     Height = 1123
-    Top = 8
+    Top = 16
     Width = 794
     Font.Color = clWindowText
     Font.Height = -13
@@ -31,7 +30,7 @@ object frlDAMDFeRL: TfrlDAMDFeRL
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright ® 1999-2008 Fortes Informática'
+    DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-2008 Fortes Informática'
     DisplayName = 'Documento PDF'
     left = 388
     top = 48

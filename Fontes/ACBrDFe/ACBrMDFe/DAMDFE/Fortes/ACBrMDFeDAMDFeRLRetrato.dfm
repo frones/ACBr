@@ -1,9 +1,7 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 244
-  Top = 56
-  Width = 863
-  VertScrollBar.Position = 519
-  AutoScroll = True
+  Left = 236
+  Top = 13
+  Height = 1063
   Caption = 'Manifesto - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -13,13 +11,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   inherited RLMDFe: TRLReport
     Tag = 1
     Left = 30
-    Top = -519
+    Top = 0
+    Font.Height = -8
+    Font.Name = 'Courier New'
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
-    Font.Height = -8
-    Font.Name = 'Courier New'
     BeforePrint = rlMDFeBeforePrint
     OnDataRecord = RLMDFeDataRecord
     object rlb_2_Rodo: TRLBand
@@ -965,7 +963,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       ParentColor = False
       BeforePrint = rlb_3_AereoBeforePrint
       object RLDraw2: TRLDraw
-        Left = 200
+        Left = 136
         Top = -2
         Width = 1
         Height = 44
@@ -975,7 +973,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         DrawKind = dkLine
       end
       object RLDraw3: TRLDraw
-        Left = 400
+        Left = 264
         Top = -2
         Width = 1
         Height = 44
@@ -985,7 +983,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         DrawKind = dkLine
       end
       object RLDraw4: TRLDraw
-        Left = 580
+        Left = 400
         Top = -2
         Width = 1
         Height = 44
@@ -995,7 +993,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         DrawKind = dkLine
       end
       object rlLabel12: TRLLabel
-        Left = 587
+        Left = 407
         Top = 6
         Width = 96
         Height = 14
@@ -1010,7 +1008,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rllPesoTotal: TRLLabel
-        Left = 585
+        Left = 405
         Top = 22
         Width = 147
         Height = 16
@@ -1026,7 +1024,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rllqMDFe: TRLLabel
-        Left = 408
+        Left = 272
         Top = 22
         Width = 88
         Height = 16
@@ -1042,7 +1040,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rllqNFe: TRLLabel
-        Left = 208
+        Left = 144
         Top = 22
         Width = 88
         Height = 16
@@ -1074,7 +1072,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rlLabel23: TRLLabel
-        Left = 410
+        Left = 274
         Top = 6
         Width = 87
         Height = 15
@@ -1090,7 +1088,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rlLabel10: TRLLabel
-        Left = 210
+        Left = 146
         Top = 6
         Width = 87
         Height = 15
@@ -1116,6 +1114,47 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLDraw15: TRLDraw
+        Left = 580
+        Top = -2
+        Width = 1
+        Height = 44
+        Align = faBottomOnly
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel27: TRLLabel
+        Left = 587
+        Top = 6
+        Width = 152
+        Height = 14
+        Caption = 'VALOR DA MERCADORIA R$'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllValorMercadoria: TRLLabel
+        Left = 585
+        Top = 22
+        Width = 148
+        Height = 16
+        Alignment = taCenter
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = []
         ParentColor = False
@@ -1747,11 +1786,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
             Top = 21
             Width = 357
             Height = 57
-            Margins.LeftMargin = 1.000000000000000000
-            Margins.RightMargin = 1.000000000000000000
             Alignment = taCenter
             AutoSize = False
             BarcodeType = bcCode128C
+            Margins.LeftMargin = 1.000000000000000000
+            Margins.RightMargin = 1.000000000000000000
           end
           object rlLabel74: TRLLabel
             Left = 113

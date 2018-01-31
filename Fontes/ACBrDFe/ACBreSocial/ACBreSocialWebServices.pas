@@ -55,7 +55,7 @@ uses
   pcnLeitor,
   ACBreSocialLoteEventos,  ACBreSocialConfiguracoes,
   pcesConversaoeSocial, pcesCommon,
-  pcesS5001, pcesS5002{, pcesS5011, pcesS5012};
+  pcesS5001, pcesS5002, pcesS5011, pcesS5012;
 
 type
 

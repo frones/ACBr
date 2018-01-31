@@ -285,6 +285,7 @@ end;
 function TInfEvento.getDescEvento: String;
 begin
   case fTpEvento of
+    teCCe         : Result := 'Carta de Correcao';
     teCancelamento: Result := 'Cancelamento';
     teNaoEmbarque : Result := 'Nao Embarque';
   else
@@ -304,6 +305,7 @@ end;
 function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;
 begin
   case TipoEvento of
+    teCCe         : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
     teCancelamento: Result := 'CANCELAMENTO DE BP-e';
     teNaoEmbarque : Result := 'NAO EMBARQUE';
   else

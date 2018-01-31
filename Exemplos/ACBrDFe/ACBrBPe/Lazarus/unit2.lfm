@@ -1,0 +1,60 @@
+object frSelecionarCertificado: TfrSelecionarCertificado
+  Left = 359
+  Height = 276
+  Top = 229
+  Width = 674
+  ActiveControl = StringGrid1
+  Caption = 'frSelecionarCertificado'
+  ClientHeight = 276
+  ClientWidth = 674
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Position = poOwnerFormCenter
+  LCLVersion = '1.8.0.6'
+  object StringGrid1: TStringGrid
+    Left = 0
+    Height = 231
+    Top = 0
+    Width = 674
+    Align = alClient
+    FixedCols = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goColSizing]
+    RowCount = 2
+    TabOrder = 0
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'MS Sans Serif'
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 45
+    Top = 231
+    Width = 674
+    Align = alBottom
+    ClientHeight = 45
+    ClientWidth = 674
+    TabOrder = 1
+    object BitBtn1: TBitBtn
+      Left = 452
+      Height = 30
+      Top = 5
+      Width = 88
+      Anchors = [akTop, akRight]
+      Kind = bkCancel
+      ModalResult = 2
+      TabOrder = 0
+    end
+    object BitBtn2: TBitBtn
+      Left = 564
+      Height = 30
+      Top = 5
+      Width = 88
+      Anchors = [akTop, akRight]
+      Kind = bkOK
+      ModalResult = 1
+      TabOrder = 1
+    end
+  end
+end

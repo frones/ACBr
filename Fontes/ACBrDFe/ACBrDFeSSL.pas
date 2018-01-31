@@ -337,6 +337,10 @@ type
        const Hash: AnsiString;
        const Assinado: Boolean =  False): Boolean; overload;
 
+   function CalcHMAC( const BinaryString: AnsiString;
+      const AKey: AnsiString;
+      const Digest: TSSLDgst): AnsiString;
+
     procedure CarregarCertificado;
     procedure CarregarCertificadoSeNecessario;
     procedure DescarregarCertificado;
@@ -1154,6 +1158,30 @@ begin
   finally
     MS.Free ;
   end ;
+end;
+
+// Baseado no método synacode.HMAC_SHA1 //
+function TDFeSSL.CalcHMAC(const BinaryString: AnsiString;
+  const AKey: AnsiString; const Digest: TSSLDgst): AnsiString;
+var
+  ipad, opad, s, k: AnsiString;
+  n: Integer;
+begin
+  if Length(AKey) > 64 then
+    k := CalcHash(AKey, Digest, outBinary, False)
+  else
+    k := AKey;
+
+  ipad := StringOfChar(#$36, 64);
+  opad := StringOfChar(#$5C, 64);
+  for n := 1 to Length(k) do
+  begin
+    ipad[n] := AnsiChar(Byte(ipad[n]) xor Byte(k[n]));
+    opad[n] := AnsiChar(Byte(opad[n]) xor Byte(k[n]));
+  end;
+
+  s      := CalcHash(ipad + BinaryString, Digest, outBinary, False);
+  Result := CalcHash(opad + s, Digest, outBinary, False);
 end;
 
 procedure TDFeSSL.CarregarCertificado;

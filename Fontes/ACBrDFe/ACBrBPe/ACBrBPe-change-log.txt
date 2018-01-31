@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+31/01/2018
+-- ACBrBPeWebServices --
+[*] Correção nos nomes das TAGs na montagem do arquivo *-procEventoBPe.xml.
+  Por: Italo Jurisato Junior
+
 29/01/2018
 -- pcnRetEnvEventoBPe --
 [*] Alteração no nome da tag a ser lida no XML de retorno de envio de evento.

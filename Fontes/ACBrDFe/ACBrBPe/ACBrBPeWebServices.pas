@@ -1352,7 +1352,7 @@ procedure TBPeEnvEvento.DefinirDadosMsg;
 var
   EventoBPe: TEventoBPe;
   I, F: Integer;
-  Lote, Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
+  Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
   FErroValidacao: String;
   EventoEhValido: Boolean;
   SchemaEventoBPe: TSchemaBPe;
@@ -1513,20 +1513,20 @@ begin
 
               Leitor.Arquivo := FPDadosMsg;
               Texto := '<procEventoBPe versao="' + VersaoEvento + '" xmlns="' + ACBRBPe_NAMESPACE + '">' +
-                        '<evento versao="' + VersaoEvento + '">' +
+                        '<eventoBPe versao="' + VersaoEvento + '">' +
                          Leitor.rExtrai(1, 'infEvento', '', I + 1) +
                          '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +
                           Leitor.rExtrai(1, 'SignedInfo', '', I + 1) +
                           Leitor.rExtrai(1, 'SignatureValue', '', I + 1) +
                           Leitor.rExtrai(1, 'KeyInfo', '', I + 1) +
                          '</Signature>'+
-                        '</evento>';
+                        '</eventoBPe>';
 
               Leitor.Arquivo := FPRetWS;
               Texto := Texto +
-                         '<retEvento versao="' + VersaoEvento + '">' +
+                         '<retEventoBPe versao="' + VersaoEvento + '">' +
                           Leitor.rExtrai(1, 'infEvento', '', J + 1) +
-                         '</retEvento>' +
+                         '</retEventoBPe>' +
                         '</procEventoBPe>';
 
               if FPConfiguracoesBPe.Arquivos.Salvar then

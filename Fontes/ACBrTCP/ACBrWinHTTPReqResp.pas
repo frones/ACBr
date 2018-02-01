@@ -89,7 +89,7 @@ var
   aBuffer: array[0..4096] of AnsiChar;
   BytesRead, BytesWrite: cardinal;
   UseSSL, UseCertificate: Boolean;
-  ANone, AHost, AProt, APort, APath, AMethod, AHeader, AMimeType: String;
+  ANone, AHost, AProt, APort, APath, AParam, AMethod, AHeader, AMimeType: String;
   wHeader: WideString;
   ConnectPort: WORD;
   AccessType, RequestFlags, flags, flagsLen: DWORD;
@@ -108,11 +108,15 @@ begin
   AHost := '';
   APort := '';
   APath := '';
+  AParam:= '';
   ANone := '';
   AMethod := 'POST';
   AMimeType := Self.MimeType;
 
-  ParseURL(Url, AProt, ANone, ANone, AHost, APort, APath, ANone);
+  ParseURL(Url, AProt, ANone, ANone, AHost, APort, APath, AParam);
+
+  if (AParam <> '') then
+    APath := APath + '?' + AParam;
 
   UseSSL := (UpperCase(AProt) = 'HTTPS');
   UseCertificate := UseSSL and Assigned( CertContext );

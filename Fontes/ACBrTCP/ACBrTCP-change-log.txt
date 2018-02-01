@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/01/2018
+-- ACBrWinHTTPReqResp, ACBrWinINetReqResp --
+[-] Correção para considerar os Parâmetros na URL, quando efetuar a conexão http
+    https://www.projetoacbr.com.br/forum/topic/39786-nfse-provedor-ipm-guaramirim-e-massaranduba-sc/?do=findComment&comment=271489
+    (por: DSA)
+
 24/11/2017
 -- ACBrConsultaCNPJ --
 [-] Correção e ajustes para funcionamento em novas URLs e modelo de consulta do

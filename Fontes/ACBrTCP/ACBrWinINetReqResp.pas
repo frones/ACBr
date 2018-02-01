@@ -93,15 +93,19 @@ var
   flags, flagsLen: longword;
   Ok, UseSSL, UseCertificate: Boolean;
   AccessType: Integer;
-  ANone, AHost, AProt, APort, APath, pProxy, Header: String;
+  ANone, AHost, AProt, APort, APath, AParam, pProxy, Header: String;
 begin
 
   AProt := '';
   AHost := '';
   APort := '';
   APath := '';
+  AParam:= '';
   ANone := '';
-  ParseURL(Url, AProt, ANone, ANone, AHost, APort, APath, ANone);
+  ParseURL(Url, AProt, ANone, ANone, AHost, APort, APath, AParam);
+
+  if (AParam <> '') then
+    APath := APath + '?' + AParam;
 
   UseSSL := (UpperCase(AProt) = 'HTTPS');
   UseCertificate := UseSSL and Assigned( CertContext );

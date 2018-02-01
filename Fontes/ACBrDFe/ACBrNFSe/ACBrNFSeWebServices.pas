@@ -927,8 +927,6 @@ begin
 
       proSigep: FNameSpaceDad :=  FNameSpace;
 
-      proAbaco: FPDFeOwner.SSL.NameSpaceURI := '';
-
       else begin
         if (FSeparador = '') then
         begin
@@ -937,6 +935,11 @@ begin
         end
         else
           FNameSpaceDad := xmlns3 + FNameSpace + '"';
+
+        // Para Manaus
+        if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603 then
+          FPDFeOwner.SSL.NameSpaceURI := '';
+
       end;
     end;
   end
@@ -1615,6 +1618,14 @@ begin
     LayNfseRecepcaoLote:
        begin
          case FProvedor of
+           proAbaco: begin
+//                       // Manaus
+//                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+//                         FTagI := '<'+FTagGrupo+'>'
+//                       else // Outros
+                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+                     end;
+
            proABase: FTagI := '<' + FTagGrupo + FNameSpaceDad +
                                 ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
@@ -1623,7 +1634,6 @@ begin
                                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                     'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd">';
 
-           proAbaco,
            proCONAM,
            proEL,
            proFISSLex,
@@ -1635,18 +1645,22 @@ begin
                                     'xsi:schemaLocation="http://localhost:8080/WsNFe2/lote '+
                                     'http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd">';
 
+
+           proGoverna,
+           proInfisc,
+           proInfiscv11,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
-
-         if FProvedor in [proInfisc, proInfiscv11, proGoverna] then
-           FTagI := '';
        end;
 
     LayNfseConsultaSitLoteRps:
        begin
         case FProvedor of
+           proDBSeller: FTagI := '<ConsultarSituacaoLoteRps>' +
+                                  '<' + FTagGrupo + FNameSpaceDad + '>';
+
            proEquiplano: FTagI := '<' + FTagGrupo +
                                     ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -1663,16 +1677,11 @@ begin
            proNotaBlu: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
-           proSMARAPD: FTagI := '';
+          proFISSLex,
+          proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
-
-         if FProvedor = proFISSLex then
-           FTagI := '';
-
-         if FProvedor in [proDBSeller] then
-           FTagI := '<ConsultarSituacaoLoteRps>' + FTagI;
        end;
 
     LayNfseConsultaLote:
@@ -1699,18 +1708,19 @@ begin
            proNotaBlu: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
+           proFISSLex,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
-
-         if FProvedor = proFISSLex then
-           FTagI := '';
        end;
 
     LayNfseConsultaNfseRps:
        begin
          case FProvedor of
+           proDBSeller: FTagI := '<ConsultarNfsePorRps>' +
+                                  '<' + FTagGrupo + FNameSpaceDad + '>';
+
            proEquiplano: FTagI := '<' + FTagGrupo +
                                     ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -1725,16 +1735,12 @@ begin
            proNotaBlu: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
+           proGoverna,
+           proFISSLex,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
-
-         if FProvedor in [proGoverna, proFISSLex] then
-           FTagI := '';
-
-         if FProvedor in [proDBSeller] then
-           FTagI := '<ConsultarNfsePorRps>' + FTagI;
        end;
 
     LayNfseConsultaNfse:
@@ -1747,13 +1753,11 @@ begin
            proSP, 
            proNotaBlu: FTagI := '<' + FTagGrupo + '>';
 
+           proFISSLex,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
-
-         if FProvedor = proFISSLex then
-           FTagI := '';
        end;
 
     LayNfseCancelaNfse:
@@ -1852,7 +1856,10 @@ begin
          end;
        end;
 
-    LayNfseRecepcaoLoteSincrono: FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad + '>';
+    LayNfseRecepcaoLoteSincrono:
+       begin
+         FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad + '>';
+       end;
 
     LayNfseSubstituiNfse:
        begin
@@ -1882,19 +1889,29 @@ begin
          end;
        end;
 
-    LayNfseAbrirSessao: FTagI := '';
+    LayNfseAbrirSessao:
+       begin
+         FTagI := '';
+       end;
 
-    LayNfseFecharSessao: FTagI := '';
+    LayNfseFecharSessao:
+       begin
+         FTagI := '';
+       end;
   end;
 
   // Inicializa a TagF
   case FPLayout of
     LayNfseRecepcaoLote:
        begin
-         FTagF := '</' + FTagGrupo + '>';
-
-         if FProvedor in [proInfisc, proInfiscv11, proGoverna, proSMARAPD] then
-           FTagF := '';
+         case FProvedor of
+           proInfisc,
+           proInfiscv11,
+           proGoverna,
+           proSMARAPD: FTagF := '';
+         else
+           FTagF := '</' + FTagGrupo + '>';
+         end;
        end;
 
     LayNfseConsultaSitLoteRps:
@@ -1974,9 +1991,15 @@ begin
            FTagF := FTagF + '</CancelarNfse>';
        end;
 
-    LayNfseGerar: FTagF := '</' + FTagGrupo + '>';
+    LayNfseGerar:
+       begin
+         FTagF := '</' + FTagGrupo + '>';
+       end;
 
-    LayNfseRecepcaoLoteSincrono: FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+    LayNfseRecepcaoLoteSincrono:
+       begin
+        FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+       end;
 
     LayNfseSubstituiNfse:
        begin
@@ -1991,9 +2014,15 @@ begin
          end;
        end;
 
-    LayNfseAbrirSessao: FTagF := '';
+    LayNfseAbrirSessao:
+       begin
+         FTagF := '';
+       end;
 
-    LayNfseFecharSessao: FTagF := '';
+    LayNfseFecharSessao:
+       begin
+         FTagF := '';
+       end;  
   end;
 end;
 

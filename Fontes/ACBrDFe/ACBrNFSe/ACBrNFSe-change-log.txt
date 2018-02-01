@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/02/2018
+-- ACBrNFSeWebServices --
+[*] Alterações visando o provedor Abaco.
+Por: Italo Jurisato Junior
+
 25/01/2018
 -- pnfsNFSeW_ABRASFv2 --
 [*] Correções visando o provedor Asten.

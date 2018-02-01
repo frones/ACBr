@@ -2175,6 +2175,12 @@ begin
         TemIdentificacao := True;
      end;
 
+     if (Identificacao.RegistroCertificacao <> '') then
+     begin
+        Req.Conteudo.GravaInformacao(738,000, Identificacao.RegistroCertificacao) ;
+        TemIdentificacao := True;
+     end;
+
      if (Identificacao.RazaoSocial <> '') then
      begin
         Req.Conteudo.GravaInformacao(716,000, Identificacao.RazaoSocial ) ;

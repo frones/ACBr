@@ -74,8 +74,10 @@ type
       FRazaoSocial: String;
       FSoftwareHouse: String;
       FVersaoAplicacao: String;
+      FRegistroCertificacao : String;
       procedure SetNomeAplicacao(AValue: String);
       procedure SetRazaoSocial(AValue: String);
+      procedure SetRegistroCertificacao(AValue: String);
       procedure SetSoftwareHouse(AValue: String);
       procedure SetVersaoAplicacao(AValue: String);
    published
@@ -83,6 +85,8 @@ type
      property VersaoAplicacao : String read FVersaoAplicacao write SetVersaoAplicacao ;
      property SoftwareHouse   : String read FSoftwareHouse   write SetSoftwareHouse ;
      property RazaoSocial     : String read FRazaoSocial     write SetRazaoSocial ;
+     property RegistroCertificacao : String read FRegistroCertificacao write SetRegistroCertificacao;
+
    end ;
 
 
@@ -397,6 +401,12 @@ procedure TACBrTEFDIdentificacao.SetRazaoSocial(AValue: String);
 begin
    if FRazaoSocial=AValue then Exit;
    FRazaoSocial := Trim(AValue);
+end;
+
+procedure TACBrTEFDIdentificacao.SetRegistroCertificacao(AValue: String);
+begin
+  if FRegistroCertificacao = AValue then Exit;
+  FRegistroCertificacao := Trim(AValue);
 end;
 
 procedure TACBrTEFDIdentificacao.SetVersaoAplicacao(AValue: String);

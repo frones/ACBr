@@ -453,7 +453,8 @@ begin
             ((Provedor in [proCTA]) and (Leitor.rExtrai(Nivel, 'Nota', '', i + 1) <> '')) or
             ((Provedor in [proEL]) and (Leitor.rExtrai(Nivel, 'notasFiscais', '', i + 1) <> '')) or // ConsultaLote
             ((Provedor in [proEL]) and (Leitor.rExtrai(Nivel, 'nfeRpsNotaFiscal', '', i + 1) <> '')) or // ConsultaNFSePorRPS
-            ((Provedor in [proSMARAPD]) and (Leitor.rExtrai(Nivel, 'nfdok', '', i + 1) <> '')) do
+            ((Provedor in [proSMARAPD]) and (Leitor.rExtrai(Nivel, 'nfdok', '', i + 1) <> '')) or
+            ((Provedor in [proIPM]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) do
       begin
         NFSe := TNFSe.Create;
         NFSeLida := TNFSeR.Create(NFSe);
@@ -1012,6 +1013,82 @@ begin
         ListaNFSe.FMsgRetorno.Add;
         ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'mensagens');
         Inc(i);
+      end;
+    end;
+
+    if FProvedor in [proIPM] then
+    begin
+      try
+        if( Leitor.rExtrai( 1, 'retorno' ) <> '' )then
+        begin
+          if( Leitor.rExtrai( 2, 'mensagem' ) <> '' )then
+          begin
+            if( Copy( Leitor.rCampo( tcStr, 'codigo' ), 1, 5 ) <> '00001' )then
+            begin
+              i := 0;
+              while Leitor.rExtrai(3, 'codigo', '', i + 1 ) <> '' do
+              begin
+                ListaNfse.FMsgRetorno.Add;
+                ListaNfse.FMsgRetorno[i].FCodigo   := Copy( Leitor.rCampo( tcStr, 'codigo' ), 1, 5 );
+                ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo( tcStr, 'codigo' );
+
+                Inc(i);
+              end;
+            end;
+          end;
+        end;
+
+        if( ListaNfse.FMsgRetorno.Count = 0 )then
+        begin
+          if (Leitor.rExtrai(1, 'retorno') <> '') then
+          begin
+            ListaNFSe.FChaveNFeRPS.Numero            := Leitor.rCampo(tcStr, 'numero_nfse');
+            ListaNFSe.FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
+
+            //ListaNFSe.FCompNFSe.Items[0].FNFSe.XML;
+            if (ListaNFSe.CompNFSe.Count = 0) then
+              lNFSe := ListaNFSe.CompNFSe.Add
+            else
+              lNFSe := ListaNFSe.CompNFSe.Items[0];
+
+            lNFSe.NFSe.InfID.ID                := Leitor.rCampo( tcStr, 'numero_nfse' );
+            lNFSe.NFSe.Numero                  := Leitor.rCampo( tcStr, 'numero_nfse' );
+            lNFSe.NFSe.DataEmissao             := StrToDateDef(Leitor.rCampo(tcStr, 'data_nfse'), 0) + StrToTimeDef(Leitor.rCampo(tcStr, 'hora_nfse'), 0);
+            lNFSe.NFSe.Competencia             := DateToStr( lNFSe.NFSe.DataEmissao );
+            lNFSe.NFSe.dhRecebimento           := lNFSe.NFSe.DataEmissao;
+            lNFSe.NFSe.Protocolo               := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
+            lNFSe.NFSe.Link                    := Leitor.rCampo(tcStr, 'link_nfse');
+            lNFSe.NFSe.CodigoVerificacao       := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
+            lNFSe.NFSe.XML                     := Leitor.Arquivo;// FListaNFSe.FCompNFSe.Items[0].FNFSe.XML;
+
+            if (Leitor.rCampo(tcStr, 'situacao_descricao_nfse') = 'Emitida') then
+            begin
+              lNFSe.NFSe.Cancelada := snNao;
+              lNFSe.NFSe.Status := srNormal;
+            end
+            else
+            begin
+              if (Leitor.rCampo(tcStr, 'situacao_descricao_nfse') = 'Cancelada') then
+              begin
+                lNFSe.NFSe.Cancelada := snSim;
+                lNFSe.NFSe.Status := srCancelado;
+              end;
+            end;
+
+            Result := True;
+          end;
+
+          if (leitor.rExtrai(2, 'rps') <> '') then
+          begin
+            lNFSe.NFSe.IdentificacaoRps.Numero := Leitor.rCampo( tcStr, 'nro_recibo_provisorio' );
+            lNFSe.NFSe.IdentificacaoRps.Serie  := Leitor.rCampo( tcStr, 'serie_recibo_provisorio' );
+
+            ListaNFSe.FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'nro_recibo_provisorio');
+            ListaNFSe.FChaveNFeRPS.SerieRPS  := Leitor.rCampo(tcStr, 'serie_recibo_provisorio');
+          end;
+        end;
+      except
+          Result := False;
       end;
     end;
   except

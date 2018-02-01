@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/02/2018
+-- Diversos --
+[*] Alterações visando o provedor IPM.
+Por: Elias LS Tech
+
+01/02/2018
 -- ACBrNFSeWebServices --
 [*] Alterações visando o provedor Abaco.
 Por: Italo Jurisato Junior

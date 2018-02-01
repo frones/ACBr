@@ -651,7 +651,8 @@ begin
              Gerador.Opcoes.SuprimirDecimais := False;
            end;
 
-     proSMARAPD:
+     proSMARAPD,
+     proIPM:
           begin
             Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas
           end;
@@ -929,6 +930,16 @@ begin
                   Gerador.ArquivoFormatoXML := '<recibo><codrecibo>'+ Protocolo +'</codrecibo></recibo>';
                end;
 
+    proIPM: begin
+              Gerador.wGrupoNFSe('nfse');
+              Gerador.wGrupoNFSe('pesquisa');
+              Gerador.wCampoNFSe(tcStr, '', 'codigo_autenticidade', 01, 16, 0, Protocolo, '');
+              Gerador.wCampoNFSe(tcStr, '', 'numero', 0, 9, 1, '', '');
+              Gerador.wCampoNFSe(tcStr, '', 'serie', 0, 1, 1, '', '');
+              Gerador.wCampoNFSe(tcStr, '', 'cadastro', 0, 9, 1, '', '');
+              Gerador.wGrupoNFSe('/pesquisa');
+              Gerador.wGrupoNFSe('/nfse');
+            end;
   else begin
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('Prestador' + aNameSpace);

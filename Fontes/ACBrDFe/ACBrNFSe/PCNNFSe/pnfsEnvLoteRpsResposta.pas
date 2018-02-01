@@ -140,6 +140,7 @@ type
     function LerXML_proFriburgo: Boolean;
     function LerXml_proCTA: Boolean;
     Function LerXML_proSmarapd: Boolean;
+    function LerXML_proIPM: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -293,6 +294,7 @@ begin
    proFriburgo:   Result := LerXML_proFriburgo;
    proCTA:        Result := LerXml_proCTA;
    proSMARAPD:    Result := LerXML_proSmarapd;
+   proIPM:        Result := LerXML_proIPM;
  else
    Result := LerXml_ABRASF;
  end;
@@ -1017,6 +1019,34 @@ begin
     Result := True;
   except
     Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXML_proIPM: Boolean;
+var
+  I : Integer;
+begin
+  try
+    if Leitor.rExtrai(1, 'retorno') <> ''then
+    begin
+      if Leitor.rExtrai(2, 'mensagem') <> '' then
+      begin
+        if Copy(Leitor.rCampo(tcStr, 'codigo'), 1, 5) <> '00001' then
+        begin
+          I := 0;
+          while Leitor.rExtrai(3, 'codigo', '', I + 1 ) <> '' do
+          begin
+            FInfRec.MsgRetorno.Add;
+            FInfRec.FMsgRetorno[i].FCodigo   := Copy(Leitor.rCampo( tcStr, 'codigo' ), 1, 5);
+            FInfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'codigo');
+            Inc(I);
+          end;
+        end;
+      end;
+      Result := True;
+    end;
+    except
+      Result := False;
   end;
 end;
 

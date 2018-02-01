@@ -857,7 +857,7 @@ var
   Ok: Boolean;
   AXML: AnsiString;
   N, TamTAG, i: integer;
-  TagF: Array[1..10] of String;
+  TagF: Array[1..11] of String;
 
   function PosNFSe: Integer;
   begin
@@ -865,13 +865,14 @@ var
     TagF[02] := '</ComplNfse>';
     TagF[03] := '</NFS-e>';
     TagF[04] := '</Nfse>';
-    TagF[05] := '</Nota>';
-    TagF[06] := '</NFe>';
-    TagF[07] := '</tbnfd>';
-    TagF[08] := '</nfs>';
+    TagF[05] := '</nfse>'; //IPM
+    TagF[06] := '</Nota>';
+    TagF[07] := '</NFe>';
+    TagF[08] := '</tbnfd>';
+    TagF[09] := '</nfs>';
     // Necessários para o Provedor EL
-    TagF[09] := '</nfeRpsNotaFiscal>';
-    TagF[10] := '</notasFiscais>';
+    TagF[10] := '</nfeRpsNotaFiscal>';
+    TagF[11] := '</notasFiscais>';
 
     i := 0;
 

@@ -89,7 +89,7 @@ var
   aBuffer: array[0..4096] of AnsiChar;
   BytesRead, BytesWrite: cardinal;
   UseSSL, UseCertificate: Boolean;
-  ANone, AHost, AProt, APort, APath, AParam, AMethod, AHeader, AMimeType: String;
+  ANone, AURI, AHost, AProt, APort, AMethod, AHeader, AMimeType: String;
   wHeader: WideString;
   ConnectPort: WORD;
   AccessType, RequestFlags, flags, flagsLen: DWORD;
@@ -104,19 +104,15 @@ begin
   LogFile := 'c:\temp\winhttpreqresp.log';
   {$EndIf}
 
+  AURI  := '';
   AProt := '';
   AHost := '';
   APort := '';
-  APath := '';
-  AParam:= '';
   ANone := '';
   AMethod := 'POST';
   AMimeType := Self.MimeType;
 
-  ParseURL(Url, AProt, ANone, ANone, AHost, APort, APath, AParam);
-
-  if (AParam <> '') then
-    APath := APath + '?' + AParam;
+  AURI := ParseURL(Url, AProt, ANone, ANone, AHost, APort, ANone, ANone);
 
   UseSSL := (UpperCase(AProt) = 'HTTPS');
   UseCertificate := UseSSL and Assigned( CertContext );
@@ -231,11 +227,11 @@ begin
         RequestFlags := 0;
 
       {$IfDef DEBUG_WINHTTP}
-       WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APath);
+       WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+AURI);
       {$EndIf}
       pRequest := WinHttpOpenRequest( pConnection,
                                       LPCWSTR(WideString(AMethod)),
-                                      LPCWSTR(WideString(APath)),
+                                      LPCWSTR(WideString(AURI)),
                                       Nil,
                                       WINHTTP_NO_REFERER,
                                       WINHTTP_DEFAULT_ACCEPT_TYPES,
@@ -282,7 +278,7 @@ begin
         wHeader := WideString(AHeader);
 
         {$IfDef DEBUG_WINHTTP}
-         WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo Requisição: '+APath);
+         WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo Requisição: '+AURI);
          WriteToTXT(LogFile, AHeader);
         {$EndIf}
         Resp.Size := 0;

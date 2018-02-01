@@ -93,19 +93,16 @@ var
   flags, flagsLen: longword;
   Ok, UseSSL, UseCertificate: Boolean;
   AccessType: Integer;
-  ANone, AHost, AProt, APort, APath, AParam, pProxy, Header: String;
+  ANone, AURI, AHost, AProt, APort, pProxy, Header: String;
 begin
 
+  AURI  := '';
   AProt := '';
   AHost := '';
   APort := '';
-  APath := '';
-  AParam:= '';
   ANone := '';
-  ParseURL(Url, AProt, ANone, ANone, AHost, APort, APath, AParam);
 
-  if (AParam <> '') then
-    APath := APath + '?' + AParam;
+  AURI := ParseURL(Url, AProt, ANone, ANone, AHost, APort, ANone, ANone);
 
   UseSSL := (UpperCase(AProt) = 'HTTPS');
   UseCertificate := UseSSL and Assigned( CertContext );
@@ -181,10 +178,10 @@ begin
         flags := INTERNET_SERVICE_HTTP;
 
       //DEBUG
-      //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APath);
+      //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+AURI);
 
       pRequest := HttpOpenRequest(pConnection, PChar('POST'),
-                                  PChar(APath), nil, nil, nil, flags, 0);
+                                  PChar(AURI), nil, nil, nil, flags, 0);
 
       if not Assigned(pRequest) then
         raise EACBrWinReqResp.Create('Erro: Open Request');
@@ -238,7 +235,7 @@ begin
           Data := UTF8Encode(Data);
 
         //DEBUG
-        //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Enviando Dados: '+APath);
+        //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Enviando Dados: '+AURI);
         //WriteToTXT('c:\temp\httpreqresp.log', FData);
 
         Ok := False;

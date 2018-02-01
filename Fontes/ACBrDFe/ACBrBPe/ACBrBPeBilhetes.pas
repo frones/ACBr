@@ -273,8 +273,7 @@ begin
     begin
       BPe.infBPeSupl.qrCodBPe := GetURLQRCode(BPe.Ide.cUF,
                                               BPe.Ide.tpAmb,
-                                              BPe.infBPe.ID,
-                                              BPe.signature.DigestValue);
+                                              BPe.infBPe.ID);
 
 //      BPe.infBPeSupl.boardPassBPe := GetURLConsultaNFCe(BPe.Ide.cUF, BPe.Ide.tpAmb);
 

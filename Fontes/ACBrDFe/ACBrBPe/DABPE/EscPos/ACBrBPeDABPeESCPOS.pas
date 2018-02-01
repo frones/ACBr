@@ -383,8 +383,7 @@ begin
     qrcode := TACBrBPe(ACBrBPe).GetURLQRCode(
       FpBPe.ide.cUF,
       FpBPe.ide.tpAmb,
-      FpBPe.infBPe.ID,
-      FpBPe.signature.DigestValue)
+      FpBPe.infBPe.ID)
   else
     qrcode := FpBPe.infBPeSupl.qrCodBPe;
 

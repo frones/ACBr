@@ -116,7 +116,7 @@ type
     function GetURLConsultaBPe(const CUF: Integer;
       const TipoAmbiente: TpcnTipoAmbiente): String;
     function GetURLQRCode(const CUF: Integer; const TipoAmbiente: TpcnTipoAmbiente;
-      const AChaveBPe: String; const DigestValue: String): String;
+      const AChaveBPe: String): String;
 
     function IdentificaSchema(const AXML: String): TSchemaBPe;
     function GerarNomeArqSchema(const ALayOut: TLayOutBPe; VersaoServico: Double): String;
@@ -158,7 +158,7 @@ implementation
 
 uses
   strutils, dateutils,
-  pcnAuxiliar, synacode;
+  pcnAuxiliar, synacode, ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$IFDEF CPU64}
@@ -390,10 +390,10 @@ begin
   Result := LerURLDeParams('BPe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaBPe', 0);
 end;
 
-function TACBrBPe.GetURLQRCode(const CUF: Integer; const TipoAmbiente: TpcnTipoAmbiente;
-  const AChaveBPe: String; const DigestValue: String): String;
+function TACBrBPe.GetURLQRCode(const CUF: Integer;
+  const TipoAmbiente: TpcnTipoAmbiente; const AChaveBPe: String): String;
 var
-  Passo1, Passo2, urlUF, idBPe, tpEmis, Sign: String;
+  Passo1, Passo2, Passo3, urlUF, idBPe, tpEmis, jwt, fp: String;
 begin
   urlUF := LerURLDeParams('BPe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
   idBPe := OnlyNumber(AChaveBPe);
@@ -412,10 +412,19 @@ begin
   else
   begin
     // Tipo de Emissão em Contingência
-    Sign := AsciiToHex(SHA1(idBPe));
-    Passo2 := '&sign=' + Sign;
+    SSL.CarregarCertificadoSeNecessario;
+    fp := SSL.DadosCertificado.ThumbPrint;
+    if EstaVazio(fp) then
+      raise EACBrBPeException.CreateDef('Erro ao obter o FingerPrint do Certificado');
 
-    Result := Passo1 + Passo2;
+    jwt := EncodeBase64('{"alg":"HS256","typ":"JWT"}') + '.' +
+           EncodeBase64('{"chBpe":"'+idBPe+'","tpAmb":'+TpAmbToStr(TipoAmbiente)+'}');
+    jwt := jwt + '.' + EncodeBase64( SSL.CalcHMAC(jwt, fp, dgstSHA256) );
+
+    Passo2 := '&jwt=' + jwt;
+    Passo3 := '&fprint='+fp;
+
+    Result := Passo1 + Passo2 + Passo3;
   end;
 end;
 

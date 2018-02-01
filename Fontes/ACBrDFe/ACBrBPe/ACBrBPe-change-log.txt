@@ -50,6 +50,9 @@ Símbolo : Significado
 
 
 31/01/2018
+-- ACBrBPe --
+[-] Correção no método "GetURLQRCode", para calcular corretamente a URL, quando
+    emitido em modo off-line  (por: DSA)
 -- pcnEventoBPe --
 [*] Corrigido a leitura do tipo de evento.
 -- pcnBPeW --

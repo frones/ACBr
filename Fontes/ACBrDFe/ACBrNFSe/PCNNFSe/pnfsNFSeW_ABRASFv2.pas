@@ -763,7 +763,10 @@ begin
     end;
 
     if FProvedor in [proTecnos] then
-      Gerador.wCampoNFSe(tcStr, '#4', 'IdCidade', 7, 7, 1, NFSe.PrestadorServico.Endereco.CodigoMunicipio, DSC_CMUN);
+      if NFSe.PrestadorServico.Endereco.CodigoMunicipio <> '' then
+        Gerador.wCampoNFSe(tcStr, '#4', 'IdCidade', 7, 7, 1, NFSe.PrestadorServico.Endereco.CodigoMunicipio, DSC_CMUN)
+      else
+        Gerador.wCampoNFSe(tcStr, '#4', 'IdCidade', 7, 7, 1, NFSe.Servico.CodigoMunicipio, DSC_CMUN);
 
     GerarServicoValores;
   end;

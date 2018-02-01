@@ -994,7 +994,9 @@ begin
       txtNumeroDocto.Caption          := Titulo.NumeroDocumento;
       txtEspecieDoc.Caption           := Titulo.EspecieDoc;
       txtAceite.Caption               := IfThen((atSim = Titulo.Aceite), 'S', 'N');
-      txtDataProces.Caption           := FormatDateTime('dd/mm/yyyy',Now);
+      txtDataProces.Caption           := IfThen(Titulo.DataProcessamento = 0,
+                                                FormatDateTime('dd/mm/yyyy',Now),
+                                                FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
 
       txtUsoBanco2.Caption            := Titulo.UsoBanco;
       txtCarteira.Caption             := Carteira;

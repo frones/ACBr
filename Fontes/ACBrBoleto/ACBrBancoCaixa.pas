@@ -684,7 +684,8 @@ begin
                IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0), '1', '3') + //221 - Código de protesto: Protestar em XX dias corridos
                IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0),
                     PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00') + //222 a 223 - Prazo para protesto (em dias corridos)
-               IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento), '1', '2') + //224 - Código para baixa/devolução: Não baixar/não devolver
+               IfThen(((DataProtesto = 0) or (DataProtesto <= Vencimento))
+                      or ((DataBaixa <> 0) and (DataBaixa > Vencimento)), '1', '2') + //224 - Código para baixa/devolução: Não baixar/não devolver
                IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento),
                  PadLeft(IntToStr(DaysBetween(DataBaixa, Vencimento)), 3, '0'), '000') + //225 a 227 - Prazo para baixa/devolução (em dias corridos)
 

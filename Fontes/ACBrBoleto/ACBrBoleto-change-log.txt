@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 01/02/2018 ver: 0.0.239
+ -- ACBrBoletoFCFortesFr.pas
+[*] Atualização na Emissão Boleto (Data Processamento)
+    https://www.projetoacbr.com.br/forum/topic/39974-inclus%C3%A3o-de-um-novo-layout-em-acbrboletofcfortesfr-acbrboleto/
+
+ -- ACBrBancoBancoob
+[*] Atualização no arquivo Retorno CNAB240 (Atualização Ocorrências)
+    https://www.projetoacbr.com.br/forum/topic/40994-sicoob-retorno/
+
+-- ACBrCaixaEconomica
+[*] Atualização no arquivo Remessa CNAB240 (Validar Data Protesto)
+    https://www.projetoacbr.com.br/forum/topic/40273-ajuste-remessa-caixa-econ%C3%B4mica-sigcb-240/
+
 -- ACBrBancoBradesco
 [*] Atualização Remessa CNAB400 (Conversão Valor fixo p/ percentual)
     https://www.projetoacbr.com.br/forum/topic/40960-converter-multa-de-moeda-para-percentual-na-remessa-para-bradesco/

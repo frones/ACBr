@@ -1270,6 +1270,7 @@ begin
       12: Result := toRetornoAbatimentoConcedido;
       13: Result := toRetornoAbatimentoCancelado;
       14: Result := toRetornoVencimentoAlterado;
+      15: Result := toRetornoLiquidadoEmCartorio;
       17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
       19: Result := toRetornoRecebimentoInstrucaoProtestar;
       20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;

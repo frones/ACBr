@@ -285,7 +285,7 @@ begin
   try
     (* Não é mais gerado na versão 2.4.01 *)
     GerarCabecalho('');
-      Gerador.wGrupo('evtTSVAlteracao Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');//versao="'+self.versao+'"
+      Gerador.wGrupo('evtTSVAlteracao Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador)+'"');//versao="'+self.versao+'"
         gerarIdeEvento2(self.IdeEvento);
         gerarIdeEmpregador(self.IdeEmpregador);
         gerarideTrabSemVinc(self.IdeTrabSemVinc);

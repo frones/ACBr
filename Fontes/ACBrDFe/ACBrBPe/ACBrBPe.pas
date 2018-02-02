@@ -393,38 +393,27 @@ end;
 function TACBrBPe.GetURLQRCode(const CUF: Integer;
   const TipoAmbiente: TpcnTipoAmbiente; const AChaveBPe: String): String;
 var
-  Passo1, Passo2, Passo3, urlUF, idBPe, tpEmis, jwt, fp: String;
+  Passo1, Passo2, urlUF, idBPe, tpEmis, sign: String;
 begin
   urlUF := LerURLDeParams('BPe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
   idBPe := OnlyNumber(AChaveBPe);
   tpEmis := Copy(idBPe, 35, 1);
 
-  if Pos('?', urlUF) > 0 then
-    Passo1 := urlUF + 'chBPe=' + idBPe + '&tpAmb=' + TpAmbToStr(TipoAmbiente)
-  else
-    Passo1 := urlUF + '?' + 'chBPe=' + idBPe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
+  Passo1 := urlUF;
+  if Pos('?', urlUF) = 0 then
+    Passo1 := Passo1 + '?';
 
-  if tpEmis = '1' then
-  begin
-    // Tipo de Emissão Normal
-    Result := Passo1;
-  end
-  else
+  Passo1 := Passo1 + 'chBPe=' + idBPe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
+  Result := Passo1;
+
+  if tpEmis <> '1' then
   begin
     // Tipo de Emissão em Contingência
     SSL.CarregarCertificadoSeNecessario;
-    fp := SSL.DadosCertificado.ThumbPrint;
-    if EstaVazio(fp) then
-      raise EACBrBPeException.CreateDef('Erro ao obter o FingerPrint do Certificado');
+    sign := SSL.CalcHash(idBPe, dgstSHA1, outBase64, True);
+    Passo2 := '&sign='+sign;
 
-    jwt := EncodeBase64('{"alg":"HS256","typ":"JWT"}') + '.' +
-           EncodeBase64('{"chBpe":"'+idBPe+'","tpAmb":'+TpAmbToStr(TipoAmbiente)+'}');
-    jwt := jwt + '.' + EncodeBase64( SSL.CalcHMAC(jwt, fp, dgstSHA256) );
-
-    Passo2 := '&jwt=' + jwt;
-    Passo3 := '&fprint='+fp;
-
-    Result := Passo1 + Passo2 + Passo3;
+    Result := Result + Passo2;
   end;
 end;
 

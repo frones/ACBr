@@ -126,11 +126,14 @@ var
   i: Integer;
 begin
   for I := 0 to Self.S1000.Count - 1 do
-    Self.S1000.Items[i].evtInfoEmpregador.GerarXML;
+    Self.S1000.Items[i].evtInfoEmpregador.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
+                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
   for I := 0 to Self.S1005.Count - 1 do
-    Self.S1005.Items[i].evtTabEstab.GerarXML;
+    Self.S1005.Items[i].evtTabEstab.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
+                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
   for I := 0 to Self.S2100.Count - 1 do
-    Self.S2100.Items[i].evtCadInicial.GerarXML;
+    Self.S2100.Items[i].evtCadInicial.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
+                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 end;
 
 procedure TIniciais.SaveToFiles;

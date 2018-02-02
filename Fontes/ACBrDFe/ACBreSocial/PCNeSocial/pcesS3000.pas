@@ -92,7 +92,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML: boolean; override;
+    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -194,11 +194,12 @@ begin
   inherited;
 end;
 
-function TEvtExclusao.GerarXML: boolean;
+function TEvtExclusao.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
 begin
   try
     GerarCabecalho('evtExclusao');
-    Gerador.wGrupo('evtExclusao Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+    Gerador.wGrupo('evtExclusao Id="' +
+      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
 
     GerarIdeEvento(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

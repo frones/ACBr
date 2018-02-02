@@ -92,7 +92,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML: boolean; override;
+    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -198,12 +198,13 @@ begin
   end;
 end;
 
-function TEvtPgtosNI.GerarXML: boolean;
+function TEvtPgtosNI.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
 begin
   try
    (* Não mais gerado na versão 2.4.01 *)
     GerarCabecalho('');
-      Gerador.wGrupo('evtPgtosNI Id="'+GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0)+'"');
+      Gerador.wGrupo('evtPgtosNI Id="' +
+      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
         gerarIdeEvento3(self.IdeEvento);
         gerarIdeEmpregador(self.IdeEmpregador);
         GerarInfoPgto;

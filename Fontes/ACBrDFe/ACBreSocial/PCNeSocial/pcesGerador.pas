@@ -79,10 +79,13 @@ type
     constructor Create(AACBreSocial: TObject); overload;//->recebe a instancia da classe TACBreSocial
     destructor Destroy; override;
 
-    function  GerarXML: boolean; virtual; abstract;
+    function  GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; virtual; abstract;
     procedure SaveToFile(const CaminhoArquivo: string);
     function  Assinar(XMLEvento: String; NomeEvento: String): AnsiString;
-    function  GerarChaveEsocial(const emissao: TDateTime; const CNPJF: string; sequencial: Integer; AOrgaoPublico: Boolean = False): String;
+    function  GerarChaveEsocial(const emissao: TDateTime;
+                                const CNPJF: string;
+                                sequencial: Integer;
+                                ATipoEmpregador: TEmpregador): String;
     procedure Validar(Evento: String);
 
     property Alertas: String read FAlertas;
@@ -332,13 +335,16 @@ begin
   Gerador.wGrupo('eSocial xmlns="'+TACBreSocial(FACBreSocial).SSL.NameSpaceURI+'"');
 end;
 
-function TeSocialEvento.GerarChaveEsocial(const emissao: TDateTime; const CNPJF: string; sequencial: Integer; AOrgaoPublico: Boolean): String;
+function TeSocialEvento.GerarChaveEsocial(const emissao: TDateTime;
+                                          const CNPJF: string;
+                                          sequencial: Integer;
+                                          ATipoEmpregador: TEmpregador): String;
 var
   nAno, nMes, nDia, nHora, nMin, nSeg, nMSeg: Word;
 begin
   // Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
-  if sequencial = 0 then
-    sequencial := Random(99999);
+//  if sequencial = 0 then
+//    sequencial := Random(99999);
 
   DecodeDate(emissao, nAno, nMes, nDia);
   DecodeTime(emissao, nHora, nMin, nSeg, nMSeg);
@@ -349,7 +355,7 @@ begin
   else
     Result := Result + IntToStr(2);
 
-  if AOrgaoPublico then
+  if ATipoEmpregador  = teOrgaoPublico then
     Result := Result + copy(SomenteNumeros(CNPJF) + '00000000000000', 1, 14)
   else
     Result := Result + copy(SomenteNumeros(Copy(CNPJF, 1, 8)) + '00000000000000', 1, 14);

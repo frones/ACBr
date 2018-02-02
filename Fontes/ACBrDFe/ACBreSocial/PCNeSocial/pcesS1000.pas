@@ -118,7 +118,7 @@ type
     constructor Create(AACBreSocial: TObject); overload;
     destructor  Destroy; override;
 
-    function  GerarXML: Boolean; override;
+    function  GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): Boolean; override;
 
     property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
     property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
@@ -558,11 +558,12 @@ begin
     Gerador.wAlerta('', 'softwareHouse', 'Lista de Software House', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
-function TevtInfoEmpregador.GerarXML: Boolean;
+function TevtInfoEmpregador.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): Boolean;
 begin
   try
     GerarCabecalho('evtInfoEmpregador');
-    Gerador.wGrupo('evtInfoEmpregador Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+    Gerador.wGrupo('evtInfoEmpregador Id="' +
+      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
 
     GerarIdeEvento(Self.IdeEvento);
     GerarIdeEmpregador(Self.IdeEmpregador);

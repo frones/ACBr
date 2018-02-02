@@ -50,7 +50,8 @@ interface
 
 uses
   SysUtils, Classes,
-  pcesIniciais, pcesTabelas, pcesNaoPeriodicos, pcesPeriodicos;
+  pcesIniciais, pcesTabelas, pcesNaoPeriodicos, pcesPeriodicos,
+  pcesConversaoeSocial;
 
 type
   TEventos = class(TComponent)
@@ -59,11 +60,15 @@ type
     FTabelas: TTabelas;
     FNaoPeriodicos: TNaoPeriodicos;
     FPeriodicos: TPeriodicos;
+    FSequencial: Integer;
+    FTipoEmpregador: TEmpregador;
+
     procedure SetIniciais(const Value: TIniciais);
     procedure SetNaoPeriodicos(const Value: TNaoPeriodicos);
     procedure SetPeriodicos(const Value: TPeriodicos);
     procedure SetTabelas(const Value: TTabelas);
     function GetCount: integer;
+    procedure SetSequencial(const Value: Integer);
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -72,11 +77,14 @@ type
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
-    property Count: integer read GetCount;
-    property Iniciais:      TIniciais      read FIniciais      write SetIniciais;
-    property Tabelas:       TTabelas       read FTabelas       write SetTabelas;
-    property NaoPeriodicos: TNaoPeriodicos read FNaoPeriodicos write SetNaoPeriodicos;
-    property Periodicos:    TPeriodicos    read FPeriodicos    write SetPeriodicos;
+
+    property Count:          Integer        read GetCount;
+    property Iniciais:       TIniciais      read FIniciais       write SetIniciais;
+    property Tabelas:        TTabelas       read FTabelas        write SetTabelas;
+    property NaoPeriodicos:  TNaoPeriodicos read FNaoPeriodicos  write SetNaoPeriodicos;
+    property Periodicos:     TPeriodicos    read FPeriodicos     write SetPeriodicos;
+    property Sequencial:     Integer        read FSequencial     write SetSequencial;
+    property TipoEmpregador: TEmpregador    read FTipoEmpregador write FTipoEmpregador;
   end;
 
 implementation
@@ -151,6 +159,13 @@ end;
 procedure TEventos.SetPeriodicos(const Value: TPeriodicos);
 begin
   FPeriodicos.Assign(Value);
+end;
+
+procedure TEventos.SetSequencial(const Value: Integer);
+begin
+  FSequencial := Value;
+  if Value = 0 then
+    FSequencial := 1;
 end;
 
 end.

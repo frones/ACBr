@@ -62,6 +62,8 @@ type
     //  De tipicacao para String = es+ Nome da Variavel ou do campo + ToStr
     //  De String para tipicacao = esStrTo+ Nome da Variavel ou do campo
 
+  TEmpregador = (tePessoaJuridica, teOrgaoPublico);
+
   TeSocialGrupo = (egIniciais = 1, egPeriodicos = 2, egNaoPeriodicos = 3);
 
   TeSocialEventos =(eseEnvioLote, eseRetornoLote, eseEnvioConsulta, eseRetornoConsulta);

@@ -84,7 +84,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
 
-    function GerarXML: boolean; override;
+    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
     procedure GerarIdeCarreira;
     procedure GerarDadosCarreira;
 
@@ -251,11 +251,12 @@ begin
   Gerador.wGrupo('/ideCarreira');
 end;
 
-function TEvtTabCarreira.GerarXML: boolean;
+function TEvtTabCarreira.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
 begin
   try
     GerarCabecalho('evtTabCarreira');
-    Gerador.wGrupo('evtTabCarreira Id="' + GerarChaveEsocial(now, self.ideEmpregador.NrInsc, 0) + '"');
+    Gerador.wGrupo('evtTabCarreira Id="' +
+      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
 
     GerarIdeEvento(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

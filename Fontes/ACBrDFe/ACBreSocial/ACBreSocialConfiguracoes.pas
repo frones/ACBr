@@ -61,8 +61,10 @@ type
     FVersaoDF: TVersaoeSocial;
     FIdTransmissor: string;
     FIdEmpregador: string;
+    FTipoEmpregador: TEmpregador;
 
     procedure SetVersaoDF(const Value: TVersaoeSocial);
+    procedure SetTipoEmpregador(const Value: TEmpregador);
 
   public
     constructor Create(AOwner: TConfiguracoes); override;
@@ -74,7 +76,7 @@ type
     property VersaoDF: TVersaoeSocial read FVersaoDF write SetVersaoDF default ve240;
     property IdEmpregador: string read FIdEmpregador write FIdEmpregador;
     property IdTransmissor: string read FIdTransmissor write FIdTransmissor;
-
+    property TipoEmpregador: TEmpregador read FTipoEmpregador write SetTipoEmpregador default tePessoaJuridica;
   end;
 
   { TArquivosConfeSocial }
@@ -174,6 +176,7 @@ begin
   FVersaoDF := ve240;
   FIdTransmissor := '';
   FIdEmpregador := '';
+  FTipoEmpregador := tePessoaJuridica;
 end;
 
 procedure TGeralConfeSocial.Assign(DeGeralConfeSocial: TGeralConfeSocial);
@@ -183,6 +186,7 @@ begin
   VersaoDF := DeGeralConfeSocial.VersaoDF;
   IdTransmissor := DeGeralConfeSocial.IdTransmissor;
   IdEmpregador := DeGeralConfeSocial.IdEmpregador;
+  TipoEmpregador := DeGeralConfeSocial.TipoEmpregador;
 end;
 
 procedure TGeralConfeSocial.SetVersaoDF(const Value: TVersaoeSocial);
@@ -197,6 +201,7 @@ begin
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdTransmissor', IdTransmissor);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdEmpregador', IdEmpregador);
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'TipoEmpregador', Integer(TipoEmpregador));
 end;
 
 procedure TGeralConfeSocial.LerIni(const AIni: TCustomIniFile);
@@ -206,6 +211,12 @@ begin
   VersaoDF := TVersaoeSocial(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
   IdTransmissor := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdTransmissor', IdTransmissor);
   IdEmpregador := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdEmpregador', IdEmpregador);
+  TipoEmpregador := TEmpregador(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'TipoEmpregador', Integer(TipoEmpregador)));
+end;
+
+procedure TGeralConfeSocial.SetTipoEmpregador(const Value: TEmpregador);
+begin
+  FTipoEmpregador := Value;
 end;
 
 { TArquivosConfeSocial }

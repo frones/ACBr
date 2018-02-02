@@ -158,7 +158,7 @@ type
     constructor Create(AACBreSocial: TObject); overload;
     destructor Destroy; override;
 
-    function GerarXML: boolean; override;
+    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
 
     property ideEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property ideEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -938,11 +938,12 @@ begin
     Gerador.wAlerta('', nomeRemunPer, 'Lista de ' + nomeRemunPer, ERR_MSG_MAIOR_MAXIMO + '8');
 end;
 
-function TEvtRemun.GerarXML: boolean;
+function TEvtRemun.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
 begin
   try
     GerarCabecalho('evtRemun');
-    Gerador.wGrupo('evtRemun Id="' + GerarChaveEsocial(now, self.ideEmpregador.nrInsc, 0) + '"');
+    Gerador.wGrupo('evtRemun Id="' +
+      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
 
     GerarIdeEvento3(self.ideEvento);
     GerarIdeEmpregador(self.ideEmpregador);

@@ -887,10 +887,11 @@ begin
       end;
     end;
 
-    if FProvedor in [proSP, proNotaBlu] then
+    if FProvedor in [proSP, proNotaBlu, proISSDSF] then
     begin
       try
         if (Leitor.rExtrai(1, 'RetornoConsulta') <> '') or
+           (Leitor.rExtrai(1, 'RetornoConsultaLote') <> '') or
            (Leitor.rExtrai(1, 'RetornoEnvioRPS') <> '') then
         begin
           ListaNFSe.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');

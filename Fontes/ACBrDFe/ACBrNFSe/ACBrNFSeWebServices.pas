@@ -1093,6 +1093,7 @@ var
   i, l, ii: Integer;
   xData: TDateTime;
   NovoRetorno, CondicaoNovoRetorno: Boolean;
+  Alerta203: Boolean;
 begin
   FRetornoNFSe := TRetornoNFSe.Create;
 
@@ -1358,6 +1359,7 @@ begin
   // Lista de Mensagem de Retorno
   FPMsg := '';
   FaMsg := '';
+
   if FRetornoNFSe.ListaNFSe.MsgRetorno.Count > 0 then
   begin
     for i := 0 to FRetornoNFSe.ListaNFSe.MsgRetorno.Count - 1 do
@@ -1365,6 +1367,8 @@ begin
       if (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'L000') and
          (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'A0000') then
       begin
+        Alerta203 := (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo = '203');
+
         FPMsg := FPMsg + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Mensagem + LineBreak +
                          FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Correcao + LineBreak;
 
@@ -1389,11 +1393,15 @@ begin
                'Protocolo..... : ' + FProtocolo + LineBreak +
                'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
   end;
+
   // Validação de sucesso para provedores que não retornam data de recebimento
-  if FProvedor in [ProNotaBlu] then
+  if FProvedor in [proNotaBlu] then
     Result := UpperCase(FRetornoNFSe.ListaNFSe.Sucesso) = UpperCase('true')
   else // Validação através da data de recebimento
     Result := (FDataRecebimento <> 0);
+
+  if (FProvedor = proISSDSF) and Alerta203 then
+    Result := True;
 end;
 
 function TNFSeWebService.GerarRetornoNFSe(ARetNFSe: String): String;

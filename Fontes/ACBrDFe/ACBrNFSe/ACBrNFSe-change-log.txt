@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2018
+-- Diversos --
+[*] Alterações visando o provedor ISSDSF.
+-- ACBrNFSeWebServices --
+[*] Alterações visando o provedor Actcon - cidade Sete Lagoas/MG.
+Por: Italo Jurisato Junior
+
 01/02/2018
 -- Diversos --
 [*] Alterações visando o provedor IPM.

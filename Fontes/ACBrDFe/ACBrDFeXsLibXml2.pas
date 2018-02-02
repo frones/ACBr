@@ -42,7 +42,7 @@ uses
   Classes, SysUtils,
   ACBrDFeSSL, libxml2;
 
-const
+resourcestring
   cErrParseDoc = 'Erro: Falha ao interpretar o XML "xmlParseDoc"';
   cErrFindSignNode = 'Erro: Falha ao localizar o nó de Assinatura';
   cErrFindRootNode = 'Erro: Falha ao localizar o nó Raiz';
@@ -51,6 +51,8 @@ const
   cErrDigestValueNode = 'Node DigestValue não encontrado';
   cErrSignatureValueNode = 'Node SignatureValue não encontrado';
   cErrDigestValueNaoConfere = 'DigestValue não confere. Conteúdo de "%s" foi alterado';
+
+const
   cSignatureNode = 'Signature';
   cSignatureNameSpace = 'http://www.w3.org/2000/09/xmldsig#';
   cDigestValueNode = 'DigestValue';

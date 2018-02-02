@@ -211,7 +211,7 @@ uses
 
 function TeSocialEvento.Assinar(XMLEvento, NomeEvento: String): AnsiString;
 var
-  XMLAss, ArqXML: String;
+  XMLAss, ArqXML: string;
 begin
   Result := '';
 
@@ -241,7 +241,7 @@ begin
     if Configuracoes.Arquivos.Salvar then
       Gravar(NomeEvento, XMLAss,Configuracoes.Arquivos.PathSalvar);
 
-    Result := XMLAss;
+    Result := AnsiString(XMLAss);
 
     {$IFDEF DEBUG}
       With TStringList.Create do
@@ -276,7 +276,7 @@ begin
   lFileName := CaminhoArquivo;
   lStr:= TStringList.Create;
   try
-    lStr.Text := XML;
+    lStr.Text := string(XML);
     lStr.SaveToFile(ChangeFileExt(lFileName,'.xml'));
   finally
     lStr.Free;

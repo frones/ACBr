@@ -40,6 +40,7 @@
 |* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
 |*  - Doação do componente para o Projeto ACBr
 ******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBreSocialReg;
@@ -67,9 +68,9 @@ implementation
 
 uses
  ACBreSocialConfiguracoes, ACBrDFeConfiguracoes, ACBrReg, ACBrDFeRegUtil;
-//{$IFNDEF FPC}
-//   {$R ACBreSocial.dcr}
-//{$ENDIF}
+{$IFNDEF FPC}
+   {$R ACBreSocial.dcr}
+{$ENDIF}
 
 procedure Register;
 begin
@@ -98,9 +99,8 @@ begin
 end;
 
 {$ifdef FPC}
-
 initialization
-//   {$i ACBrNFe.lrs}
+   {$i ACBreSocial.lrs}
 {$endif}
 
 end.

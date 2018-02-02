@@ -87,7 +87,7 @@ type
 
   TLayOut                 = (LayEnvLoteEventos, LayRetEnvLoteEventos, LayConsResultProcessamento, LayRetConsResultProcessamento);
 
-  TStatusACBreSocial      = (stIdle, stEnvLoteEventos, stRetEnvLoteEventos, stConsResultProcessamento, stRetConsResultProcessamento );
+  TStatusACBreSocial      = (stIdle, stEnvLoteEventos, stConsultaLote );
 
   TTipoEvento             = (teS1000, teS1005, teS1010, teS1020, teS1030, teS1035, teS1040, teS1050,
                              teS1060, teS1070, teS1080, teS2100, teS1200, teS1202, teS1207, teS1210,

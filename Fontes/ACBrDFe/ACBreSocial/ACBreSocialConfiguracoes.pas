@@ -56,12 +56,14 @@ uses
 
 type
   { TGeralConfeSocial }
-
   TGeralConfeSocial = class(TGeralConf)
   private
     FVersaoDF: TVersaoeSocial;
+    FIdTransmissor: string;
+    FIdEmpregador: string;
 
     procedure SetVersaoDF(const Value: TVersaoeSocial);
+
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfeSocial: TGeralConfeSocial); reintroduce;
@@ -70,46 +72,53 @@ type
 
   published
     property VersaoDF: TVersaoeSocial read FVersaoDF write SetVersaoDF default ve240;
+    property IdEmpregador: string read FIdEmpregador write FIdEmpregador;
+    property IdTransmissor: string read FIdTransmissor write FIdTransmissor;
+
   end;
 
   { TArquivosConfeSocial }
-
   TArquivosConfeSocial = class(TArquivosConf)
   private
     FEmissaoPatheSocial: Boolean;
     FPatheSocial: String;
+
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    destructor Destroy; override;
+
     procedure Assign(DeArquivosConfeSocial: TArquivosConfeSocial); reintroduce;
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPatheSocial(Data: TDateTime = 0; CNPJ: String = ''): String;
+
   published
     property EmissaoPatheSocial: Boolean read FEmissaoPatheSocial write FEmissaoPatheSocial default False;
     property PatheSocial: String read FPatheSocial write FPatheSocial;
+
   end;
 
   { TConfiguracoeseSocial }
-
   TConfiguracoeseSocial = class(TConfiguracoes)
   private
     function GetArquivos: TArquivosConfeSocial;
     function GetGeral: TGeralConfeSocial;
+
   protected
     procedure CreateGeralConf; override;
     procedure CreateArquivosConf; override;
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial); reintroduce; //overload;
+
+    procedure Assign(DeConfiguracoeseSocial: TConfiguracoeseSocial); reintroduce;
 
   published
     property Geral: TGeralConfeSocial read GetGeral;
     property Arquivos: TArquivosConfeSocial read GetArquivos;
     property WebServices;
     property Certificados;
+
   end;
 
 implementation
@@ -163,6 +172,8 @@ begin
   inherited Create(AOwner);
 
   FVersaoDF := ve240;
+  FIdTransmissor := '';
+  FIdEmpregador := '';
 end;
 
 procedure TGeralConfeSocial.Assign(DeGeralConfeSocial: TGeralConfeSocial);
@@ -170,6 +181,8 @@ begin
   inherited Assign(DeGeralConfeSocial);
 
   VersaoDF := DeGeralConfeSocial.VersaoDF;
+  IdTransmissor := DeGeralConfeSocial.IdTransmissor;
+  IdEmpregador := DeGeralConfeSocial.IdEmpregador;
 end;
 
 procedure TGeralConfeSocial.SetVersaoDF(const Value: TVersaoeSocial);
@@ -182,6 +195,8 @@ begin
   inherited GravarIni(AIni);
 
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdTransmissor', IdTransmissor);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdEmpregador', IdEmpregador);
 end;
 
 procedure TGeralConfeSocial.LerIni(const AIni: TCustomIniFile);
@@ -189,6 +204,8 @@ begin
   inherited LerIni(AIni);
 
   VersaoDF := TVersaoeSocial(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+  IdTransmissor := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdTransmissor', IdTransmissor);
+  IdEmpregador := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdEmpregador', IdEmpregador);
 end;
 
 { TArquivosConfeSocial }
@@ -199,12 +216,6 @@ begin
 
   FEmissaoPatheSocial := False;
   FPatheSocial := '';
-end;
-
-destructor TArquivosConfeSocial.Destroy;
-begin
-
-  inherited;
 end;
 
 procedure TArquivosConfeSocial.Assign(
@@ -219,7 +230,7 @@ end;
 function TArquivosConfeSocial.GetPatheSocial(Data: TDateTime;
   CNPJ: String): String;
 begin
-  Result := GetPath(FPatheSocial, ACBRESOCIAL_MODELODF, CNPJ, Data, ACBRESOCIAL_MODELODF);
+  Result := GetPath(PatheSocial, ACBRESOCIAL_MODELODF, CNPJ, Data, ACBRESOCIAL_MODELODF);
 end;
 
 procedure TArquivosConfeSocial.GravarIni(const AIni: TCustomIniFile);

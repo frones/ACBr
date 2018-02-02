@@ -707,6 +707,8 @@ begin
 end;
 
 procedure TNFSeWebService.DefinirServicoEAction;
+var
+  Ambiente: String;
 begin
   if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
   begin
@@ -718,10 +720,15 @@ begin
 
   if FProvedor = proActconv202 then
   begin
+    if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 3167202 then
+      Ambiente := 'nfse'
+    else
+      Ambiente := 'nfseserv';
+
     if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
       FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'homologacao', [rfReplaceAll])
     else
-      FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'nfseserv', [rfReplaceAll]);
+      FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', Ambiente, [rfReplaceAll]);
   end;
 end;
 

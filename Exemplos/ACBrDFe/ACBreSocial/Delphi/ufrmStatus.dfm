@@ -33,7 +33,7 @@ object frmStatus: TfrmStatus
       Height = 17
       Align = alTop
       AutoSize = False
-      Caption = 'Status do componente ACBrNFe'
+      Caption = 'Status do componente ACBreSocial'
       Color = clSilver
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -54,6 +54,8 @@ object frmStatus: TfrmStatus
       Color = clGray
       ParentColor = False
       Layout = tlCenter
+      ExplicitWidth = 3
+      ExplicitHeight = 13
     end
   end
 end

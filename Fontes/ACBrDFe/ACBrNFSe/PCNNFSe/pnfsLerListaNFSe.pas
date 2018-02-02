@@ -34,10 +34,9 @@ unit pnfsLerListaNFSe;
 interface
 
 uses
-  SysUtils, Classes, Forms,
-  ACBrUtil,
+  SysUtils, Classes, Forms, variants,
   pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe, pnfsNFSeR;
+  pnfsConversao, pnfsNFSe, pnfsNFSeR, ACBrUtil;
 
 type
 
@@ -1053,7 +1052,8 @@ begin
 
             lNFSe.NFSe.InfID.ID                := Leitor.rCampo( tcStr, 'numero_nfse' );
             lNFSe.NFSe.Numero                  := Leitor.rCampo( tcStr, 'numero_nfse' );
-            lNFSe.NFSe.DataEmissao             := StrToDateDef(Leitor.rCampo(tcStr, 'data_nfse'), 0) + StrToTimeDef(Leitor.rCampo(tcStr, 'hora_nfse'), 0);
+            lNFSe.NFSe.DataEmissao             := StrToDateDef( VarToStr(Leitor.rCampo(tcStr, 'data_nfse')), 0) +
+                                                  StrToTimeDef( VarToStr(Leitor.rCampo(tcStr, 'hora_nfse')), 0);
             lNFSe.NFSe.Competencia             := DateToStr( lNFSe.NFSe.DataEmissao );
             lNFSe.NFSe.dhRecebimento           := lNFSe.NFSe.DataEmissao;
             lNFSe.NFSe.Protocolo               := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');

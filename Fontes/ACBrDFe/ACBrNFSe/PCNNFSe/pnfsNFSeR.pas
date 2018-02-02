@@ -34,9 +34,9 @@ unit pnfsNFSeR;
 interface
 
 uses
-  SysUtils, Classes, Forms, DateUtils, Variants, IniFiles,
+  SysUtils, Classes, Forms, DateUtils, Variants, IniFiles, Math, StrUtils,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsNFSe, pnfsConversao,
-  ACBrUtil, Math, StrUtils;
+  ACBrUtil;
 
 type
 
@@ -2946,7 +2946,9 @@ begin
     begin
       NFSe.IdentificacaoRps.Numero := Leitor.rCampo( tcStr, 'nro_recibo_provisorio' );
       NFSe.IdentificacaoRps.Serie  := Leitor.rCampo( tcStr, 'serie_recibo_provisorio' );
-      NFSe.DataEmissaoRps          := StrToDateTimeDef( Leitor.rCampo( tcStr, 'data_emissao_recibo_provisorio' ) + ' ' + Leitor.rCampo( tcStr, 'hora_emissao_recibo_provisorio' ), 0 );
+      NFSe.DataEmissaoRps          := StrToDateTimeDef(
+                                        VarToStr(Leitor.rCampo( tcStr, 'data_emissao_recibo_provisorio' )) + ' ' +
+                                        VarToStr(Leitor.rCampo( tcStr, 'hora_emissao_recibo_provisorio' )), 0 );
     end;
 
     if( Leitor.rExtrai( 2, 'nf' ) <> '' )then

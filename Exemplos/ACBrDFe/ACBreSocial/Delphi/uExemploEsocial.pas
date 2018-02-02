@@ -2,7 +2,7 @@
 { Projeto: Componente ACBreSocial }
 { Biblioteca multiplataforma de componentes Delphi para envio dos eventos do }
 { eSocial - http://www.esocial.gov.br/ }
-{ }
+{  }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto }
 { Daniel Simoes de Almeida }
 { André Ferreira de Moraes }
@@ -222,6 +222,8 @@ type
     tsDados: TTabSheet;
     MemoDados: TMemo;
     memoLog: TMemo;
+    Label7: TLabel;
+    cbTEmpregador: TComboBox;
 
     procedure btnGerarClick(Sender: TObject);
 
@@ -329,9 +331,7 @@ implementation
 uses
   TypInfo, synacode, blcksock, FileCtrl, StrUtils, Math,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL,
-  ACBreSocialWebServices, System.Rtti, unit2;
-
-// Grids,
+  ACBreSocialWebServices, unit2;
 
 const
   SELDIRHELP = 1000;
@@ -3757,8 +3757,18 @@ begin
 end;
 
 procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
+var
+  Sequencial: string;
 begin
+  Sequencial := '';
+  if not(InputQuery('Geral: Gerar Arquivos', 'Sequencial', Sequencial)) then
+    Exit;
+
   SelecionaEventos;
+  // Número sequencial da chave. Incrementar somente quando ocorrer geração de
+  // eventos na mesma data/hora.
+  ACBreSocial1.Eventos.Sequencial := StrToIntDef(Sequencial, 1);
+  ACBreSocial1.Eventos.TipoEmpregador := ACBreSocial1.Configuracoes.Geral.TipoEmpregador;
   ACBreSocial1.Eventos.GerarXMLs;
   ACBreSocial1.Eventos.SaveToFiles;
   ACBreSocial1.Eventos.Clear;
@@ -3769,9 +3779,7 @@ end;
 
 procedure TFExemploEsocial.btnEnviarClick(Sender: TObject);
 var
-  ASerie: String;
-  i, J: Integer;
-  Index: Integer;
+  Index, J: Integer;
   retEvento: TretEvento;
 begin
   if chkClear.Checked then
@@ -3796,15 +3804,13 @@ begin
       then
       begin
         Add('ideEmpregador');
-        Add(' - TpInsc: ' + TRttiEnumerationType.GetName
-          (ACBreSocial1.WebServices.EnvioLote.RetProcLote.
-          IdeEmpregador.TpInsc));
+        Add(' - TpInsc: ' + eSTpInscricaoToStr(
+          ACBreSocial1.WebServices.EnvioLote.RetProcLote.IdeEmpregador.TpInsc));
         Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetProcLote.
           IdeEmpregador.NrInsc);
         Add('ideTransmissor');
-        Add(' - TpInsc: ' + TRttiEnumerationType.GetName
-          (ACBreSocial1.WebServices.EnvioLote.RetProcLote.
-          IdeTransmissor.TpInsc));
+        Add(' - TpInsc: ' + eSTpInscricaoToStr(
+          ACBreSocial1.WebServices.EnvioLote.RetProcLote.IdeTransmissor.TpInsc));
         Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetProcLote.
           IdeTransmissor.NrInsc);
         Add('dadosRecepcaoLote');
@@ -3850,13 +3856,11 @@ end;
 procedure TFExemploEsocial.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
-  i, J: Integer;
-  Index: Integer;
+  Index, J: Integer;
   retEvento: TretEvento;
 begin
   Protocolo := '';
-  if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo))
-  then
+  if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo)) then
     Exit;
 
   if ACBreSocial1.Consultar(Protocolo) then
@@ -3880,9 +3884,8 @@ begin
         Add(' - NrInsc: ' + ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
           IdeEmpregador.NrInsc);
         Add('ideTransmissor');
-        Add(' - TpInsc: ' + TRttiEnumerationType.GetName
-          (ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
-          IdeTransmissor.TpInsc));
+        Add(' - TpInsc: ' + eSTpInscricaoToStr(
+          ACBreSocial1.WebServices.ConsultaLote.RetProcLote.IdeTransmissor.TpInsc));
         Add(' - NrInsc: ' + ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
           IdeTransmissor.NrInsc);
         Add('dadosRecepcaoLote');
@@ -4214,7 +4217,6 @@ begin
   end;
   Application.ProcessMessages;
 end;
-
 procedure TFExemploEsocial.ACBreSocial1TransmissaoEventos
   (const AXML: AnsiString; ATipo: TeSocialEventos);
 begin
@@ -4274,6 +4276,7 @@ var
   V: TSSLHttpLib;
   X: TSSLXmlSignLib;
   Y: TSSLType;
+  L: TEmpregador;
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
@@ -4305,6 +4308,11 @@ begin
     cbVersaoDF.Items.Add(GetEnumName(TypeInfo(TVersaoeSocial), Integer(K)));
   // cbVersaoDF.Items[0] := 've240';
   cbVersaoDF.ItemIndex := 0;
+
+  cbTEmpregador.Items.Clear;
+  for L := Low(TEmpregador) to High(TEmpregador) do
+    cbTEmpregador.Items.Add(GetEnumName(TypeInfo(TEmpregador), Integer(L)));
+  cbTEmpregador.ItemIndex := 0;
 
   LerConfiguracao;
   ACBreSocial1.Configuracoes.WebServices.Salvar := True;
@@ -4340,7 +4348,6 @@ procedure TFExemploEsocial.GravarConfiguracao;
 var
   IniFile: String;
   Ini: TIniFile;
-  StreamMemo: TMemoryStream;
 begin
   IniFile := ChangeFileExt(Application.ExeName, '.ini');
 
@@ -4364,6 +4371,7 @@ begin
     Ini.WriteString('Geral', 'PathSchemas', edtPathSchemas.Text);
     Ini.WriteString('Geral', 'IdEmpregador', edtIdEmpregador.Text);
     Ini.WriteString('Geral', 'IdTransmissor', edtIdTransmissor.Text);
+    Ini.WriteInteger('Geral', 'TipoEmpregador', cbTEmpregador.ItemIndex);
 
     Ini.WriteInteger('WebService', 'Ambiente', rgTipoAmb.ItemIndex);
     Ini.WriteBool('WebService', 'Visualizar', cbxVisualizar.Checked);
@@ -4398,8 +4406,6 @@ procedure TFExemploEsocial.LerConfiguracao;
 var
   IniFile: String;
   Ini: TIniFile;
-  Ok: Boolean;
-  StreamMemo: TMemoryStream;
 begin
   IniFile := ChangeFileExt(Application.ExeName, '.ini');
   Ini := TIniFile.Create(IniFile);
@@ -4426,6 +4432,7 @@ begin
     cbxRetirarAcentos.Checked := Ini.ReadBool('Geral', 'RetirarAcentos', True);
     edtIdEmpregador.Text := Ini.ReadString('Geral', 'IdEmpregador', '');
     edtIdTransmissor.Text := Ini.ReadString('Geral', 'IdTransmissor', '');
+    cbTEmpregador.ItemIndex := Ini.ReadInteger('Geral', 'TipoEmpregador', 0);
 
     ACBreSocial1.SSL.DescarregarCertificado;
 
@@ -4446,6 +4453,7 @@ begin
 
       IdEmpregador := edtIdEmpregador.Text;
       IdTransmissor := edtIdTransmissor.Text;
+      TipoEmpregador := TEmpregador(cbTEmpregador.ItemIndex);
     end;
 
     rgTipoAmb.ItemIndex := Ini.ReadInteger('WebService', 'Ambiente', 0);

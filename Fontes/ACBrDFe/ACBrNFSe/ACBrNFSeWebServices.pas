@@ -1359,6 +1359,7 @@ begin
   // Lista de Mensagem de Retorno
   FPMsg := '';
   FaMsg := '';
+  Alerta203 := False;
 
   if FRetornoNFSe.ListaNFSe.MsgRetorno.Count > 0 then
   begin
@@ -5364,6 +5365,7 @@ begin
       // a Situação do Lote devem ser relacionados no case abaixo.
       case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
         proGoverna,
+        proIPM,
         proIssDSF: Result := True
       else
         Result := FConsSitLoteRPS.Executar;
@@ -5378,6 +5380,7 @@ begin
     case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
 //      proEL,
       proGoverna,
+      proIPM,
       proInfisc,
       proInfiscv11: Result := True
     else

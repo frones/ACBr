@@ -1081,6 +1081,11 @@ begin
 
           if (leitor.rExtrai(2, 'rps') <> '') then
           begin
+            if (ListaNFSe.CompNFSe.Count = 0) then
+              lNFSe := ListaNFSe.CompNFSe.Add
+            else
+              lNFSe := ListaNFSe.CompNFSe.Items[0];
+
             lNFSe.NFSe.IdentificacaoRps.Numero := Leitor.rCampo( tcStr, 'nro_recibo_provisorio' );
             lNFSe.NFSe.IdentificacaoRps.Serie  := Leitor.rCampo( tcStr, 'serie_recibo_provisorio' );
 

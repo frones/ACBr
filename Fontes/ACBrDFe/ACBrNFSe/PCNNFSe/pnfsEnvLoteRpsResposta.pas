@@ -1024,29 +1024,50 @@ end;
 
 function TretEnvLote.LerXML_proIPM: Boolean;
 var
-  I : Integer;
+  i: Integer;
 begin
   try
-    if Leitor.rExtrai(1, 'retorno') <> ''then
+    Result := False;
+
+    if (Leitor.rExtrai(1, 'retorno') <> '') then
     begin
-      if Leitor.rExtrai(2, 'mensagem') <> '' then
+      if (Leitor.rExtrai(2, 'mensagem') <> '') then
       begin
-        if Copy(Leitor.rCampo(tcStr, 'codigo'), 1, 5) <> '00001' then
+        if (copy(Leitor.rCampo(tcStr, 'codigo'), 1, 5) <> '00001') then
         begin
-          I := 0;
-          while Leitor.rExtrai(3, 'codigo', '', I + 1 ) <> '' do
+          i := 0;
+          while Leitor.rExtrai(3, 'codigo', '', i + 1) <> '' do
           begin
             FInfRec.MsgRetorno.Add;
-            FInfRec.FMsgRetorno[i].FCodigo   := Copy(Leitor.rCampo( tcStr, 'codigo' ), 1, 5);
+            FInfRec.FMsgRetorno[i].FCodigo   := Copy(Leitor.rCampo(tcStr, 'codigo'), 1, 5);
             FInfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'codigo');
-            Inc(I);
+            Inc(i);
+          end;
+        end
+        else
+        begin
+          if (Leitor.rExtrai(1, 'retorno') <> '') then
+          begin
+            FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'numero_nfse');
+            FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
+            FInfRec.FDataRecebimento := StrToDateDef(Leitor.rCampo(tcStr, 'data_nfse'), 0) +
+                                        StrToTimeDef(Leitor.rCampo(tcStr, 'hora_nfse'), 0);
+
+            with FInfRec.FListaChaveNFeRPS.Add do
+            begin
+              ChaveNFeRPS.Numero            := Leitor.rCampo(tcStr, 'numero_nfse');
+              ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
+              ChaveNFeRPS.SerieRPS          := Leitor.rCampo(tcStr, 'serie_nfse');
+              ChaveNFeRPS.NumeroRPS         := Leitor.rCampo(tcStr, 'numero_nfse');
+            end;
+            
+            Result := True;
           end;
         end;
       end;
-      Result := True;
     end;
-    except
-      Result := False;
+  except
+    Result := False;
   end;
 end;
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/02/2018
+-- Diversos --
+[*] Alterações visando o provedor IPM.
+Por: Elias LS Tech
+
 02/02/2018
 -- Diversos --
 [*] Alterações visando o provedor ISSDSF.

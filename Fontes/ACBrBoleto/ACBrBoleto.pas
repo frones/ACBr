@@ -1382,41 +1382,42 @@ end;
 { TACBrCedente }
 procedure TACBrCedente.SetCNPJCPF ( const AValue: String ) ;
 var
-   ACbrValidador: TACBrValidador;
+  ACBrVal: TACBrValidador;
+  ADocto: String;
 begin
-   if trim(AValue) = '' then
+   if fCNPJCPF = AValue then
+     Exit;
+
+   ADocto := OnlyNumber(AValue);
+   if EstaVazio(ADocto) then
    begin
-      fCNPJCPF:= AValue;
-      exit;
+      fCNPJCPF:= ADocto;
+      Exit;
    end;
 
-   if fCNPJCPF = AValue then
-      exit;
-
-   ACbrValidador := TACBrValidador.Create(Self);
+   ACBrVal := TACBrValidador.Create(Self);
    try
-     with ACbrValidador do
+     with ACBrVal do
      begin
-        if TipoInscricao = pFisica then
-         begin
-           TipoDocto := docCPF;
-           Documento := RightStr(AValue,11);
-         end
-        else
-        begin
-           TipoDocto := docCNPJ;
-           Documento := AValue;
-        end;
+       if TipoInscricao = pFisica then
+       begin
+         TipoDocto := docCPF;
+         Documento := RightStr(ADocto,11);
+       end
+       else
+       begin
+         TipoDocto := docCNPJ;
+         Documento := RightStr(ADocto,14);
+       end;
 
-        IgnorarChar := './-';
-        RaiseExcept := True;
-        Documento   := AValue;
-        Validar;    // Dispara Exception se Documento estiver errado
+       IgnorarChar := './-';
+       RaiseExcept := True;
+       Validar;    // Dispara Exception se Documento estiver errado
 
-        fCNPJCPF := Formatar;
+       fCNPJCPF := Formatar;
      end;
    finally
-      ACbrValidador.Free;
+     ACBrVal.Free;
    end;
 end;
 

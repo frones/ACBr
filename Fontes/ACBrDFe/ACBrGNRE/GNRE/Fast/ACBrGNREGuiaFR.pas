@@ -153,11 +153,20 @@ end;
 function TACBrGNREGuiaFR.PrepareReport(GNRE: TGNRERetorno): boolean;
 var
   i: Integer;
+  Stream: TStringStream;
 begin
   Result := False;
 
   if Trim(FastFile) <> '' then
   begin
+    if not (UpperCase(Copy(FastFile, Length(FastFile)-3, 4)) = '.FR3') then
+    begin
+      Stream := TStringStream.Create(FastFile);
+      dmGuia.frxReport.FileName := '';
+      dmGuia.frxReport.LoadFromStream(Stream);
+      Stream.Free;
+    end
+    else
     if FileExists(FastFile) then
       dmGuia.frxReport.LoadFromFile(FastFile)
     else

@@ -693,7 +693,7 @@ begin
   SL := TStringList.Create;
   SL.Clear;
   for I := 0 to GNRERetorno.resRejeicaGuia.Count - 1 do
-   SL.Add(GNRERetorno.resRejeicaGuia.Items[I].DescMotivoRejeicao+#13);
+   SL.Add(Trim(GNRERetorno.resRejeicaGuia.Items[I].DescMotivoRejeicao)+#13);
   FPMsg      := FGNRERetorno.descricao + #13 + Trim(SL.Text);
   SL.Free;
   //
@@ -761,10 +761,13 @@ begin
           SLAux.Add(SL.Strings[i]);
           Inc(GuiasOk);
           RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
-          if not DirectoryExists(FPConfiguracoesGNRE.Arquivos.PathArqTXT) then
-            ForceDirectories(FPConfiguracoesGNRE.Arquivos.PathArqTXT);
           if FPConfiguracoesGNRE.Arquivos.SalvarTXT then
+          begin
+            if not DirectoryExists(FPConfiguracoesGNRE.Arquivos.PathArqTXT) then
+              ForceDirectories(FPConfiguracoesGNRE.Arquivos.PathArqTXT);
+
             SLAux.SaveToFile(PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathArqTXT)+RepresentacaoNumerica+'-gnre.txt');
+          end;
         end;
       end;
 

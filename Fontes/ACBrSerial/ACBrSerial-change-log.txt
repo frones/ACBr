@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/02/2018
+-- ACBrCHQPerto --
+[-] Correção na impressão de Cheques Perto. Suporte para multiplos modos de
+    impressão (por: Pedro E. Braga)
+    https://www.projetoacbr.com.br/forum/topic/22521-erro-comunica%C3%A7%C3%A3o-impressora-de-cheques-perto/
+
 Data: 29/01/2018
 -- ACBrETQClass, ACBrETQPpla --
 [-] Correção em TACBrETQClass.ConverterUnidade, para correta conversão de

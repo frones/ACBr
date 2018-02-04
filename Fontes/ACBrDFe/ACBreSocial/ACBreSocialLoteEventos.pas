@@ -327,14 +327,12 @@ begin
 
   FXML := AnsiToUtf8(FXML);
 
-  Validar;
-
   if TACBreSocial(Self.Owner).Configuracoes.Geral.Salvar then
   begin
     Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
     if (Path <> EmptyStr) and not DirectoryExists(Path) then
       ForceDirectories(Path);
-    
+
     with TStringList.Create do
     try
       Text := FXml;
@@ -347,6 +345,8 @@ begin
       Free;
     end;
   end;
+
+  Validar;
 end;
 
 function TLoteEventos.GetItem(Index: integer): TItemLoteEventos;

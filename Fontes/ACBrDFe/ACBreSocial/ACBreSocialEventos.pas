@@ -164,8 +164,6 @@ end;
 procedure TEventos.SetSequencial(const Value: Integer);
 begin
   FSequencial := Value;
-  if Value = 0 then
-    FSequencial := 1;
 end;
 
 end.

@@ -342,9 +342,9 @@ function TeSocialEvento.GerarChaveEsocial(const emissao: TDateTime;
 var
   nAno, nMes, nDia, nHora, nMin, nSeg, nMSeg: Word;
 begin
-  // Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
-//  if sequencial = 0 then
-//    sequencial := Random(99999);
+// Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
+ if sequencial = 0 then
+   sequencial := Random(99999);
 
   DecodeDate(emissao, nAno, nMes, nDia);
   DecodeTime(emissao, nHora, nMin, nSeg, nMSeg);

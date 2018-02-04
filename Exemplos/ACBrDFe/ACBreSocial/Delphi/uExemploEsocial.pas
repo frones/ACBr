@@ -3757,17 +3757,11 @@ begin
 end;
 
 procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
-var
-  Sequencial: string;
 begin
-  Sequencial := '';
-  if not(InputQuery('Geral: Gerar Arquivos', 'Sequencial', Sequencial)) then
-    Exit;
-
   SelecionaEventos;
   // Número sequencial da chave. Incrementar somente quando ocorrer geração de
   // eventos na mesma data/hora.
-  ACBreSocial1.Eventos.Sequencial := StrToIntDef(Sequencial, 1);
+  ACBreSocial1.Eventos.Sequencial := 0;
   ACBreSocial1.Eventos.TipoEmpregador := ACBreSocial1.Configuracoes.Geral.TipoEmpregador;
   ACBreSocial1.Eventos.GerarXMLs;
   ACBreSocial1.Eventos.SaveToFiles;

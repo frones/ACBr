@@ -4,7 +4,7 @@ object frmStatus: TfrmStatus
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'frmStatus'
-  ClientHeight = 45
+  ClientHeight = 53
   ClientWidth = 481
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +20,7 @@ object frmStatus: TfrmStatus
     Left = 0
     Top = 0
     Width = 481
-    Height = 45
+    Height = 53
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 2
@@ -49,13 +49,11 @@ object frmStatus: TfrmStatus
       Left = 2
       Top = 19
       Width = 477
-      Height = 24
+      Height = 32
       Align = alClient
       Color = clGray
       ParentColor = False
       Layout = tlCenter
-      ExplicitWidth = 3
-      ExplicitHeight = 13
     end
   end
 end

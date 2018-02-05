@@ -347,7 +347,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Iniciais.S1000.Add do
     begin
-      evtInfoEmpregador.id := '1';
+      evtInfoEmpregador.Sequencial := 0;
 
       evtInfoEmpregador.IdeEvento.TpAmb := taProducaoRestrita;
       // So tem na Versão 2.4.1
@@ -439,8 +439,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Iniciais.S1005.Add do
     begin
-      evtTabEstab.id := '1';
-      // evtTabEstab.Versao := '2.0';
+      evtTabEstab.Sequencial := 0;
 
       evtTabEstab.IdeEvento.TpAmb := taProducaoRestrita;
       evtTabEstab.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -503,8 +502,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Tabelas.S1010.Add do
     begin
-      evtTabRubrica.id := '1';
-      // evtTabRubrica.Versao := '2.0';
+      evtTabRubrica.Sequencial := 0;
 
       evtTabRubrica.IdeEvento.TpAmb := taProducaoRestrita;
       evtTabRubrica.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -577,8 +575,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Tabelas.S1020.Add do
     begin
-      evtTabLotacao.id := '1';
-      // evtTabLotacao.Versao := '2.0';
+      evtTabLotacao.Sequencial := 0;
 
       evtTabLotacao.IdeEvento.TpAmb := taProducaoRestrita;
       evtTabLotacao.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -640,8 +637,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Tabelas.S1030.Add do
     begin
-      evtTabCargo.id := '1';
-      // evtTabCargo.Versao := '2.0';
+      evtTabCargo.Sequencial := 0;
 
       evtTabCargo.IdeEvento.TpAmb := taProducaoRestrita;
       evtTabCargo.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -683,8 +679,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Tabelas.S1035.Add do
     begin
-      evtTabCarreira.id := '1';
-      // evtTabCargo.Versao := '2.0';
+      evtTabCarreira.Sequencial := 0;
 
       evtTabCarreira.IdeEvento.TpAmb := taProducaoRestrita;
       evtTabCarreira.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -718,8 +713,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Tabelas.S1040.Add do
     begin
-      evtTabFuncao.id := '1';
-      // evtTabFuncao.Versao := '2.0';
+      evtTabFuncao.Sequencial := 0;
 
       evtTabFuncao.IdeEvento.TpAmb := taProducaoRestrita;
       evtTabFuncao.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -751,8 +745,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Tabelas.S1050.Add do
     begin
-      evtTabHorContratual.id := '1';
-      // evtTabHorContratual.Versao := '2.0';
+      evtTabHorContratual.Sequencial := 0;
 
       evtTabHorContratual.IdeEvento.TpAmb := taProducaoRestrita;
       evtTabHorContratual.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -810,8 +803,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Tabelas.S1060.Add do
     begin
-      EvtTabAmbiente.id := '1';
-      // EvtTabAmbiente.Versao := '2.0';
+      EvtTabAmbiente.Sequencial := 0;
 
       EvtTabAmbiente.IdeEvento.TpAmb := taProducaoRestrita;
       EvtTabAmbiente.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -854,8 +846,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Tabelas.S1070.Add do
     begin
-      evtTabProcesso.id := '1';
-      // evtTabProcesso.Versao := '2.0';
+      evtTabProcesso.Sequencial := 0;
 
       evtTabProcesso.IdeEvento.TpAmb := taProducaoRestrita;
       evtTabProcesso.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -900,8 +891,7 @@ begin
   begin
     with ACBreSocial1.Eventos.Tabelas.S1080.Add do
     begin
-      evtTabOperPortuario.id := '1';
-      // evtTabOperPortuario.Versao := '2.0';
+      evtTabOperPortuario.Sequencial := 0;
 
       evtTabOperPortuario.IdeEvento.TpAmb := taProducaoRestrita;
       evtTabOperPortuario.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -934,8 +924,7 @@ procedure TFExemploEsocial.GerareSocial2100;
 begin
   with ACBreSocial1.Eventos.Iniciais.S2100.Add do
   begin
-    EvtCadInicial.id := '1';
-    // EvtCadInicial.Versao := '2.0';
+    EvtCadInicial.Sequencial := 0;
 
     EvtCadInicial.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtCadInicial.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -1178,8 +1167,7 @@ procedure TFExemploEsocial.GerareSocial1200;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1200.Add do
   begin
-    evtRemun.id := '1';
-    // evtRemun.versao := '2.0';
+    evtRemun.Sequencial := 0;
 
     evtRemun.IdeEvento.indRetif := ireOriginal;
     // evtRemun.ideEvento.NrRecibo  := '4564654'; Numero do recibo que será retificado.
@@ -1323,8 +1311,7 @@ procedure TFExemploEsocial.GerareSocial1202;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1202.Add do
   begin
-    EvtRmnRPPS.id := '1';
-    // evtRemun.versao := '2.0';
+    EvtRmnRPPS.Sequencial := 0;
 
     EvtRmnRPPS.IdeEvento.indRetif := ireOriginal;
     // evtRemun.ideEvento.NrRecibo  := '4564654'; Numero do recibo que será retificado.
@@ -1424,8 +1411,7 @@ procedure TFExemploEsocial.GerareSocial1207;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1207.Add do
   begin
-    evtBenPrRP.id := '1';
-    // EvtCadInicial.Versao := '2.0';
+    evtBenPrRP.Sequencial := 0;
 
     evtBenPrRP.IdeEvento.indRetif := tpIndRetificacao(0);
     evtBenPrRP.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -1468,8 +1454,7 @@ procedure TFExemploEsocial.GerareSocial1210;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1210.Add do
   begin
-    EvtPgtos.id := '1';
-    // EvtPgtos.versao := '2.0';
+    EvtPgtos.Sequencial := 0;
 
     EvtPgtos.IdeEvento.indRetif := ireOriginal;
     // EvtPgtos.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; - obrigatório se indRetif = ireRetificacao.
@@ -1597,8 +1582,7 @@ procedure TFExemploEsocial.GerareSocial1250;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1250.Add do
   begin
-    EvtAqProd.id := '1';
-    // EvtAqProd.Versao := '2.0';
+    EvtAqProd.Sequencial := 0;
 
     EvtAqProd.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtAqProd.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -1765,8 +1749,7 @@ procedure TFExemploEsocial.GerareSocial1260;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1260.Add do
   begin
-    EvtComProd.id := '1';
-    // EvtComProd.Versao := '2.0';
+    EvtComProd.Sequencial := 0;
 
     EvtComProd.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtComProd.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -1923,8 +1906,7 @@ procedure TFExemploEsocial.GerareSocial1270;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1270.Add do
   begin
-    EvtContratAvNP.id := '1';
-    // EvtContratAvNP.Versao := '2.0';
+    EvtContratAvNP.Sequencial := 0;
 
     EvtContratAvNP.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtContratAvNP.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -1999,8 +1981,7 @@ procedure TFExemploEsocial.GerareSocial1280;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1280.Add do
   begin
-    EvtInfoComplPer.id := '1';
-    // EvtInfoComplPer.Versao := '2.0';
+    EvtInfoComplPer.Sequencial := 0;
 
     EvtInfoComplPer.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtInfoComplPer.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -2036,8 +2017,7 @@ begin
   with ACBreSocial1.Eventos.Periodicos.S1295.Add do
   begin
 
-    evtTotConting.id := '1';
-    // EvtFechaEvPer.Versao := '2.0';
+    evtTotConting.Sequencial := 0;
 
     evtTotConting.IdeEvento.indRetif := tpIndRetificacao(0);
     evtTotConting.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -2062,8 +2042,7 @@ procedure TFExemploEsocial.GerareSocial1298;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1298.Add do
   begin
-    EvtReabreEvPer.id := '1';
-    // EvtReabreEvPer.Versao := '2.0';
+    EvtReabreEvPer.Sequencial := 0;
 
     EvtReabreEvPer.IdeEvento.IndApuracao := tpIndApuracao(iapuMensal);
     EvtReabreEvPer.IdeEvento.perApur := '2015-06';
@@ -2080,8 +2059,7 @@ procedure TFExemploEsocial.GerareSocial1299;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1299.Add do
   begin
-    EvtFechaEvPer.id := '1';
-    // EvtFechaEvPer.Versao := '2.0';
+    EvtFechaEvPer.Sequencial := 0;
 
     EvtFechaEvPer.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtFechaEvPer.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -2113,8 +2091,7 @@ procedure TFExemploEsocial.GerareSocial1300;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1300.Add do
   begin
-    EvtContrSindPatr.id := '1';
-    // EvtContrSindPatr.Versao := '2.0';
+    EvtContrSindPatr.Sequencial := 0;
 
     EvtContrSindPatr.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtContrSindPatr.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -2140,8 +2117,7 @@ procedure TFExemploEsocial.GerareSocial2190;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2190.Add do
   begin
-    EvtAdmPrelim.id := '1';
-    // EvtAdmPrelim.Versao := '2.0';
+    EvtAdmPrelim.Sequencial := 0;
 
     EvtAdmPrelim.IdeEvento.TpAmb := taProducaoRestrita;
     EvtAdmPrelim.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -2160,8 +2136,7 @@ procedure TFExemploEsocial.GerareSocial2200;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2200.Add do
   begin
-    EvtAdmissao.id := '1';
-    // EvtAdmissao.Versao := '2.0';
+    EvtAdmissao.Sequencial := 0;
 
     // EvtAdmissao.IdeEvento.indRetif := tpIndRetificacao(1);
     EvtAdmissao.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -2410,8 +2385,7 @@ procedure TFExemploEsocial.GerareSocial2205;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2205.Add do
   begin
-    EvtAltCadastral.id := '1';
-    // EvtAltCadastral.Versao := '2.0';
+    EvtAltCadastral.Sequencial := 0;
 
     EvtAltCadastral.IdeEvento.indRetif := tpIndRetificacao(1);
     EvtAltCadastral.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -2529,8 +2503,7 @@ procedure TFExemploEsocial.GerareSocial2206;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2206.Add do
   begin
-    EvtAltContratual.id := '1';
-    // EvtAltContratual.versao := '2.0';
+    EvtAltContratual.Sequencial := 0;
 
     EvtAltContratual.IdeEvento.indRetif := ireOriginal;
     // EvtAltContratual.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigatório se indRetif = ireRetificacao;
@@ -2628,8 +2601,7 @@ procedure TFExemploEsocial.GerareSocial2210;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2210.Add do
   begin
-    EvtCAT.id := '1';
-    // EvtCAT.Versao := '2.0';
+    EvtCAT.Sequencial := 0;
 
     EvtCAT.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtCAT.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -2729,8 +2701,7 @@ procedure TFExemploEsocial.GerareSocial2220;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2220.Add do
   begin
-    EvtASO.id := '1';
-    // EvtASO.Versao := '2.0';
+    EvtASO.Sequencial := 0;
 
     EvtASO.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtASO.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -2793,8 +2764,7 @@ procedure TFExemploEsocial.GerareSocial2230;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2230.Add do
   begin
-    EvtAfastTemp.id := '1';
-    // EvtAfastTemp.versao := '2.0';
+    EvtAfastTemp.Sequencial := 0;
 
     EvtAfastTemp.IdeEvento.indRetif := ireOriginal;
     // EvtAfastTemp.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigatório se indRetif=ireRetificacao
@@ -2867,8 +2837,7 @@ procedure TFExemploEsocial.GerareSocial2240;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2240.Add do
   begin
-    EvtExpRisco.id := 'Id123';
-    // EvtExpRisco.Versao := '1.2';
+    EvtExpRisco.Sequencial := 0;
 
     EvtExpRisco.IdeEvento.indRetif := ireOriginal;
     EvtExpRisco.IdeEvento.NrRecibo := '654654865656';
@@ -2984,8 +2953,7 @@ procedure TFExemploEsocial.GerareSocial2241;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2241.Add do
   begin
-    EvtInsApo.id := '1';
-    // EvtInsApo.Versao := '1.2';
+    EvtInsApo.Sequencial := 0;
 
     EvtInsApo.IdeEvento.indRetif := ireOriginal;
     EvtInsApo.IdeEvento.NrRecibo := '654654865656';
@@ -3066,8 +3034,7 @@ procedure TFExemploEsocial.GerareSocial2250;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2250.Add do
   begin
-    EvtAvPrevio.id := '1';
-    // EvtAvPrevio.Versao := '2.0';
+    EvtAvPrevio.Sequencial := 0;
 
     EvtAvPrevio.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtAvPrevio.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -3106,8 +3073,7 @@ procedure TFExemploEsocial.GerareSocial2298;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2298.Add do
   begin
-    EvtReintegr.id := '1';
-    // EvtReintegr.Versao := '2.0';
+    EvtReintegr.Sequencial := 0;
 
     EvtReintegr.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtReintegr.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -3134,8 +3100,7 @@ procedure TFExemploEsocial.GerareSocial2299;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2299.Add do
   begin
-    EvtDeslig.id := '1';
-    // EvtDeslig.Versao := '2.0';
+    EvtDeslig.Sequencial := 0;
 
     EvtDeslig.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtDeslig.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -3265,8 +3230,7 @@ procedure TFExemploEsocial.GerareSocial2300;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2300.Add do
   begin
-    EvtTSVInicio.id := '1';
-    // EvtTSVInicio.versao := '2.0';
+    EvtTSVInicio.Sequencial := 0;
 
     EvtTSVInicio.IdeEvento.TpAmb := taProducaoRestrita;
     EvtTSVInicio.IdeEvento.ProcEmi := peAplicEmpregador;
@@ -3478,8 +3442,7 @@ procedure TFExemploEsocial.GerareSocial2306;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2306.Add do
   begin
-    EvtTSVAltContr.id := '1';
-    // EvtTSVAltContr.versao := '2.0';
+    EvtTSVAltContr.Sequencial := 0;
 
     EvtTSVAltContr.IdeEvento.TpAmb := taProducaoRestrita;
     EvtTSVAltContr.IdeEvento.ProcEmi := peAplicEmpregador;
@@ -3565,8 +3528,7 @@ procedure TFExemploEsocial.GerareSocial2399;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2399.Add do
   begin
-    EvtTSVTermino.id := '1';
-    // EvtTSVTermino.Versao := '2.0';
+    EvtTSVTermino.Sequencial := 0;
 
     EvtTSVTermino.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtTSVTermino.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -3642,7 +3604,7 @@ procedure TFExemploEsocial.GerareSocial2400;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2400.Add do
   begin
-    EvtCdBenPrRP.id := '1';
+    EvtCdBenPrRP.Sequencial := 0;
 
     EvtCdBenPrRP.IdeEvento.indRetif := tpIndRetificacao(0);
     EvtCdBenPrRP.IdeEvento.NrRecibo := '65.5454.987798798798';
@@ -3717,7 +3679,7 @@ procedure TFExemploEsocial.GerareSocial3000;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S3000.Add do
   begin
-    EvtExclusao.id := '1';
+    EvtExclusao.Sequencial := 0;
 
     EvtExclusao.IdeEvento.TpAmb := taProducaoRestrita;
     EvtExclusao.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -3741,7 +3703,7 @@ procedure TFExemploEsocial.GerareSocial4000;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S4000.Add do
   begin
-    EvtSolicTotal.id := '1';
+    EvtSolicTotal.Sequencial := 0;
 
     EvtSolicTotal.IdeEvento.TpAmb := taProducaoRestrita;
     EvtSolicTotal.IdeEvento.ProcEmi := TpProcEmi(0);
@@ -3759,9 +3721,7 @@ end;
 procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
 begin
   SelecionaEventos;
-  // Número sequencial da chave. Incrementar somente quando ocorrer geração de
-  // eventos na mesma data/hora.
-  ACBreSocial1.Eventos.Sequencial := 0;
+
   ACBreSocial1.Eventos.TipoEmpregador := ACBreSocial1.Configuracoes.Geral.TipoEmpregador;
   ACBreSocial1.Eventos.GerarXMLs;
   ACBreSocial1.Eventos.SaveToFiles;

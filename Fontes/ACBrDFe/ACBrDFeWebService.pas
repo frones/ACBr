@@ -335,9 +335,19 @@ begin
   { Verifica se precisa converter o Envelope para UTF8 antes de ser enviado.
      Entretanto o Envelope pode já ter sido convertido antes, como por exemplo,
      para assinatura.
-     Se o XML está assinado, não deve modificar o conteúdo }
-  if not XmlEstaAssinado(FPEnvelopeSoap) then
+     Se o XML está assinado, não deve modificar o conteúdo
+
+     Quando FPMimeType = multipart/form-data é binário e não deve sofrer encoding
+                         Apenas se MimeType for do tipo XML deve tentar converter
+
+     https://www.w3schools.com/tags/att_form_enctype.asp
+  }
+
+  if (EstaVazio(FPMimeType) or (Pos('xml',LowerCase(FPMimeType)) > 0 )) and
+     ( not XmlEstaAssinado(FPEnvelopeSoap)) then
+  begin
     FPEnvelopeSoap := ConverteXMLtoUTF8(FPEnvelopeSoap);
+  end;
 
   Tentar := True;
   while Tentar do

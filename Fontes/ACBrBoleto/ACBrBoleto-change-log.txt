@@ -48,6 +48,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data 01/02/2018 ver: 0.0.239
+
+ -- ACBrUniprime
+[+] Adicionado Banco Uniprime
+    https://www.projetoacbr.com.br/forum/topic/40898-adicionado-banco-099-uniprime-aos-fontes/
+
+ -- ACBrBancoBancoob
+[*] Atualização na validação arquivo Retorno CNAB240 (Validação Pessoa Fisica/Juridica)
+    https://www.projetoacbr.com.br/forum/topic/41273-validacao-de-documento-cpf-em-retorno-pessoa-fisica/
+
  -- ACBrBoletoFCFortesFr.pas
 [*] Atualização na Emissão Boleto (Data Processamento)
     https://www.projetoacbr.com.br/forum/topic/39974-inclus%C3%A3o-de-um-novo-layout-em-acbrboletofcfortesfr-acbrboleto/

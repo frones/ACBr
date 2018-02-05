@@ -34,7 +34,7 @@ unit pnfsEnvLoteRpsResposta;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Variants, Math, StrUtils,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 
 type
@@ -1050,8 +1050,8 @@ begin
           begin
             FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'numero_nfse');
             FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
-            FInfRec.FDataRecebimento := StrToDateDef(Leitor.rCampo(tcStr, 'data_nfse'), 0) +
-                                        StrToTimeDef(Leitor.rCampo(tcStr, 'hora_nfse'), 0);
+            FInfRec.FDataRecebimento := StrToDateDef(VarToStr(Leitor.rCampo(tcStr, 'data_nfse')), 0) +
+                                        StrToTimeDef(VarToStr(Leitor.rCampo(tcStr, 'hora_nfse')), 0);
 
             with FInfRec.FListaChaveNFeRPS.Add do
             begin

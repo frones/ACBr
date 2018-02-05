@@ -332,7 +332,7 @@ type
 
   tpTpContr               = (PrazoIndeterminado, PrazoDeterminado);
 
-  tpTpJornada             = (tjJornadaSemanalHorPadPorDiaSemanaFolgaFixa, tjDemaisTiposJornada);
+  tpTpJornada             = (tjJornadaComHorarioDiarioFolgaFixos, tjJornada12x36, tjJornadaComHorarioDiarioFixoFolgaVariavel, tjDemaisTiposJornada);
 
   tpTpDia                 = (diSegundaFeira, diTercaFeira, diQuartaFeira, diQuintaFeira, diSextaFeira, diSabado, diDomingo, diDiaVariavel);
 
@@ -1144,12 +1144,12 @@ end;
 
 function eSTpJornadaToStr(const t: tpTpJornada ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_2 );
+  result := EnumeradoToStr2(t,[ '1', '2', '3', '9' ] );
 end;
 
 function eSStrToTpJornada(var ok: boolean; const s: string): tpTpJornada;
 begin
-  result := tpTpJornada( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
+  result := tpTpJornada( StrToEnumerado2(ok , s, [ '1', '2', '3', '9' ] ) );
 end;
 
 function eSTpDiaToStr(const t: tpTpDia ): string;

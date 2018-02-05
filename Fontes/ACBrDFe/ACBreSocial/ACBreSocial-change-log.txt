@@ -59,13 +59,17 @@ Símbolo : Significado
     Se o Sequencial for zero ao gerar a chave, o componente se encarrega de gerar um numero
     aleatório.
 [+] Implementado a unit pcesRetEnvioLote que passa a ser responsável pela leitura do XML de
-    retorno referente ao envio de um Lote de Eventos.
-[*] Por conta disso, a unit ACBreSocialWebServices ficou mais enxuta.
-   Por: Italo Jurisato Junior
+    retorno referente ao envio de um Lote de Eventos. Por conta disso, a unit ACBreSocialWebServices ficou mais enxuta.
+	Por: Italo Jurisato Junior
    
 -- ACBreSocialWebServices --
 [-] Corrigido erro na geração do envelope SOAP do EnvioLote.
 	Por: Rafael Dias
+	
+-- pcesConversaoeSocial --
+[-] Ajustado enum tpJornada para ficar de acordo com o Layout 2.4.1.
+	Por: Joceandro Perin
+	https://www.projetoacbr.com.br/forum/topic/41334-ajuste-no-registro-s2200-campo-tpjornada/
 
 02/02/2018
 -- ACBreSocial --

@@ -54,7 +54,7 @@ uses
   ACBrUtil, ACBrDFe, ACBrDFeWebService,
   pcnLeitor,
   ACBreSocialLoteEventos, ACBreSocialConfiguracoes,
-  pcesConversaoeSocial, pcesCommon,
+  pcesConversaoeSocial, pcesCommon, pcesRetEnvioLote,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012;
 
 type
@@ -83,72 +83,21 @@ type
 
   end;
 
-  { TOcorrencia }
-  TOcorrencia = class(TCollectionItem)
-  private
-    FCodigo: Integer;
-    FDescricao: String;
-    FTipo: Byte;
-    FLocalizacao: String;
-    Fxml: AnsiString;
-    FLeitor: TLeitor;
-
-  public
-    constructor Create; reintroduce;
-    procedure BeforeDestruction; override;
-    property Codigo: Integer read FCodigo write FCodigo;
-    property Descricao: String read FDescricao write FDescricao;
-    property Tipo: Byte read FTipo write FTipo;
-    property Localizacao: String read FLocalizacao write FLocalizacao;
-    property xml: AnsiString read Fxml write Fxml;
-    property Leitor: TLeitor read FLeitor;
-    procedure LerXml;
-
-  end;
-
-  { TOcorrencias }
-  TOcorrencias = class(TOwnedCollection)
-  private
-    function GetItem(Index: Integer): TOcorrencia;
-    procedure SetItem(Index: Integer; Value: TOcorrencia);
-
-  public
-    function Add: TOcorrencia;
-    property Items[Index: Integer]: TOcorrencia read GetItem
-      write SetItem; default;
-
-  end;
-
   { TStatusEnvLote }
   TStatusRetorno = class
   private
     FcdResposta: Integer;
     FdescResposta: String;
-    FOcorrencias: TOcorrencias;
+//    FOcorrencias: TOcorrencias;
 
   public
     property cdResposta: Integer read FcdResposta write FcdResposta;
     property descResposta: String read FdescResposta write FdescResposta;
-    property Ocorrencias: TOcorrencias read FOcorrencias write FOcorrencias;
+//    property Ocorrencias: TOcorrencias read FOcorrencias write FOcorrencias;
 
   end;
 
   TStatusEnvLote = class(TStatusRetorno);
-
-  { TDadosRecepcaoLote }
-  TDadosRecepcaoLote = class
-  private
-    FdhRecepcao: TDateTime;
-    FversaoAplicRecepcao: String;
-    FProtocolo: String;
-
-  public
-    property dhRecepcao: TDateTime read FdhRecepcao write FdhRecepcao;
-    property versaoAplicRecepcao: String read FversaoAplicRecepcao
-      write FversaoAplicRecepcao;
-    property Protocolo: String read FProtocolo write FProtocolo;
-
-  end;
 
   TStatusProcLote = class(TStatusRetorno)
   private
@@ -156,16 +105,6 @@ type
 
   public
     property TmpConclusao: Integer read FTmpConclusao write FTmpConclusao;
-
-  end;
-
-  TdadosProcLote = class
-  private
-    FversaoAplicProcLote: String;
-
-  public
-    property versaoAplicProcLote: String read FversaoAplicProcLote
-      write FversaoAplicProcLote;
 
   end;
 
@@ -178,91 +117,10 @@ type
 
   end;
 
-  TProcessamento = class
-  private
-    FcdResposta: string;
-    FdescResposta: string;
-    FversaoAplicProcLote: string;
-    FdhProcessamento: TDateTime;
-    FOcorrencias: TOcorrencias;
-
-  public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-    property cdResposta: string read FcdResposta write FcdResposta;
-    property descResposta: string read FdescResposta write FdescResposta;
-    property versaoAplicProcLote: string read FversaoAplicProcLote
-      write FversaoAplicProcLote;
-    property dhProcessamento: TDateTime read FdhProcessamento
-      write FdhProcessamento;
-    property Ocorrencias: TOcorrencias read FOcorrencias write FOcorrencias;
-
-  end;
-
   TRecibo = class
   public
     FnrRecibo: String;
     FHash: String;
-
-  end;
-
-  TretEvento = class(TCollectionItem)
-  private
-    FIDEvento: string;
-    FRecepcao: TRecepcao;
-    FProcessamento: TProcessamento;
-    FRecibo: TRecibo;
-    FSignature: AnsiString;
-
-  public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-    property Processamento: TProcessamento read FProcessamento;
-    property IDEvento: string read FIDEvento write FIDEvento;
-    property Recibo: TRecibo read FRecibo;
-
-  end;
-
-  TretEventos = class(TOwnedCollection)
-  private
-    function GetItem(Index: Integer): TretEvento;
-    procedure SetItem(Index: Integer; Value: TretEvento);
-
-  public
-    function Add: TretEvento;
-    property Items[Index: Integer]: TretEvento read GetItem
-      write SetItem; default;
-
-  end;
-
-  TRetProcLote = class(TeSocialWebService)
-  private
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeTransmissor: TIdeTransmissor;
-    FStatus: Integer;
-    FDescricao: string;
-    FdadosRecLote: TDadosRecepcaoLote;
-    FdadosProcLote: TdadosProcLote;
-    FretEventos: TretEventos;
-
-  protected
-    procedure LerXml(const AXml: string);
-
-  public
-    constructor Create(AOwner: TACBrDFe); override;
-    destructor Destroy; override;
-
-    procedure BeforeDestruction; override;
-    procedure AfterConstruction; override;
-
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador;
-    property IdeTransmissor: TIdeTransmissor read FIdeTransmissor;
-    property Status: Integer read FStatus write FStatus;
-    property Descricao: string read FDescricao write FDescricao;
-    property dadosRecLote: TDadosRecepcaoLote read FdadosRecLote;
-    property dadosProcLote: TdadosProcLote read FdadosProcLote;
-    property retEventos: TretEventos read FretEventos;
-
   end;
 
   { TeSocialConsulta }
@@ -306,14 +164,14 @@ type
   private
     FVersao: String;
     FLote: TLoteEventos;
-    FRetProcLote: TRetProcLote;
+    FRetEnvioLote: TRetEnvioLote;
 
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
-    procedure SalvarEnvio; override;
-    procedure SalvarResposta; override;
+//    procedure SalvarEnvio; override;
+//    procedure SalvarResposta; override;
     procedure DefinirEnvelopeSoap; override;
     procedure Clear; override;
 
@@ -322,12 +180,10 @@ type
     function GerarPrefixoArquivo: String; override;
     function GerarMsgErro(E: Exception): String; override;
     function GerarVersaoDadosSoap: String; override;
-
-
   public
     constructor Create(AOwner: TACBrDFe); override;
 
-    property RetProcLote: TRetProcLote read FRetProcLote;
+    property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
   end;
 
   { TWebServices }
@@ -446,12 +302,7 @@ constructor TEnvioLote.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
 
-  FPLayout := LayEnvioLoteEventos;
   FLote := TLoteEventos.Create(AOwner);
-  FRetProcLote := TRetProcLote.Create(AOwner);
-  FPStatus := stIdle;
-  FVersao := '';
-  ConfigurarSoapDEPC;
 end;
 
 procedure TEnvioLote.Clear;
@@ -459,6 +310,16 @@ begin
   inherited Clear;
 
   FPStatus := stEnvLoteEventos;
+  FPLayout := LayEnvioLoteEventos;
+  FPArqEnv := 'env-lot';
+  FPArqResp := 'rec';
+  FVersao := '';
+  ConfigurarSoapDEPC;
+
+  if Assigned(FRetEnvioLote) then
+    FRetEnvioLote.Free;
+
+  FRetEnvioLote := TRetEnvioLote.Create;
 end;
 
 procedure TEnvioLote.DefinirURL;
@@ -481,7 +342,7 @@ end;
 
 procedure TEnvioLote.DefinirDadosMsg;
 begin
-  FPDadosMsg :=  FLote.Xml;
+  FPDadosMsg := FLote.Xml;
 end;
 
 procedure TEnvioLote.DefinirEnvelopeSoap;
@@ -495,6 +356,7 @@ begin
 {$ELSE}
   Texto := ''; // Isso forçará a conversão para UTF8, antes do envio
 {$ENDIF}
+
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
@@ -506,84 +368,18 @@ begin
   Texto := Texto + '</' + FPSoapVersion + ':Body>';
   Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
 
-  Texto := '<?xml version="1.0" encoding="utf-8"?>' + Texto;
+//  Texto := '<?xml version="1.0" encoding="utf-8"?>' + Texto;
   FPEnvelopeSoap := Texto;
 end;
 
 function TEnvioLote.TratarResposta: Boolean;
-var
-  Leitor: TLeitor;
-  i: Integer;
-  Processamento: TProcessamento;
-  retEvento: TretEvento;
 begin
-  FRetProcLote.retEventos.Clear;
-  FPRetWS := SeparaDados(FPRetornoWS, 'retornoEnvioLoteEventos');
-  Result := FPRetWS <> EmptyStr;
-  retEvento := FRetProcLote.retEventos.Add;
-  Processamento := retEvento.FProcessamento;
+  FPRetWS := SeparaDados(FPRetornoWS, 'EnviarLoteEventosResult');
 
-  Leitor := TLeitor.Create;
-  try
-    Leitor.Arquivo := FPRetWS;
-    if Leitor.rExtrai(1, 'ideEmpregador') = EmptyStr then { msg de errs }
-    begin
-      Leitor.Arquivo := FPRetWS;
-      Leitor.Grupo := Leitor.rExtrai(1, 'cdResposta');
-      FRetProcLote.Status :=
-        StrToInt64Def(Leitor.rCampo(tcStr, 'cdResposta'), -1);
-      Processamento.cdResposta := Leitor.rCampo(tcStr, 'cdResposta');
-      Leitor.Grupo := Leitor.rExtrai(1, 'descResposta');
-      Processamento.FdescResposta :=
-        UTF8ToNativeString(Leitor.rCampo(tcStr, 'descResposta'));
-      Leitor.Arquivo := Leitor.rExtrai(1, 'ocorrencias');
-      Leitor.Grupo := Leitor.Arquivo;
-      FRetProcLote.Descricao := Processamento.FdescResposta;
-      i := 0;
-      while Leitor.rExtrai(1, 'ocorrencia', '', i + 1) <> '' do
-      begin
-        Processamento.Ocorrencias.Add;
-        Processamento.Ocorrencias.Items[i].xml := Leitor.Grupo;
-        Processamento.Ocorrencias.Items[i].FLeitor.Arquivo := Leitor.Grupo;
-        Processamento.Ocorrencias.Items[i].FLeitor.Grupo := Leitor.Grupo;
-        Processamento.Ocorrencias.Items[i].LerXml;
-        inc(i);
-      end;
-    end
-    else
-    begin
-      Leitor.Arquivo := FPRetWS;
-      Leitor.Grupo := Leitor.rExtrai(1, 'ideEmpregador');
-      FRetProcLote.FIdeEmpregador.TpInsc :=
-        tpTpInsc(Leitor.rCampo(tcInt, 'tpInsc') - 1);
-      FRetProcLote.FIdeEmpregador.NrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+  FRetEnvioLote.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetEnvioLote.LerXml;
 
-      Leitor.Grupo := Leitor.rExtrai(1, 'ideTransmissor');
-      FRetProcLote.FIdeTransmissor.TpInsc :=
-        tpTpInsc(Leitor.rCampo(tcInt, 'tpInsc') - 1);
-      FRetProcLote.FIdeTransmissor.NrInsc := Leitor.rCampo(tcStr, 'nrInsc');
-
-      Leitor.Grupo := Leitor.rExtrai(1, 'status');
-      FRetProcLote.Status :=
-        StrToInt64Def(Leitor.rCampo(tcStr, 'cdResposta'), -1);
-      FRetProcLote.Descricao := UTF8ToNativeString
-        (Leitor.rCampo(tcStr, 'descResposta'));
-
-      Leitor.Grupo := Leitor.rExtrai(1, 'dadosRecepcaoLote');
-      try
-        FRetProcLote.dadosRecLote.dhRecepcao :=
-          Leitor.rCampo(tcDatHor, 'dhRecepcao');
-      except // '2017-07-20T22:14:51.1569524-03:00'
-        FRetProcLote.dadosRecLote.dhRecepcao := 0;
-      end;
-      FRetProcLote.dadosRecLote.versaoAplicRecepcao :=
-        Leitor.rCampo(tcStr, 'versaoAplicativoRecepcao');
-      FRetProcLote.dadosRecLote.Protocolo :=
-        Leitor.rCampo(tcStr, 'protocoloEnvio');
-    end;
-  finally
-    Leitor.Free;
-  end;
+  Result := True; //(FRetEnvioLote.cdResposta in [201, 202]);
 end;
 
 function TEnvioLote.GerarMsgErro(E: Exception): String;
@@ -593,20 +389,38 @@ begin
 end;
 
 function TEnvioLote.GerarMsgLog: String;
+var
+  aMsg: String;
 begin
-  Result := '';
+  aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+//                         'Ambiente: %s ' + LineBreak +
+                         'Versão Aplicativo: %s ' + LineBreak +
+                         'Status Código: %s ' + LineBreak +
+                         'Status Descrição: %s ' + LineBreak),
+                 ['2.4.01',
+//                  TpAmbToStr(FEventoRetorno.tpAmb),
+                  FRetEnvioLote.RetProcLote.dadosRecLote.versaoAplicRecepcao,
+                  IntToStr(FRetEnvioLote.cdResposta),
+                  FRetEnvioLote.descResposta]);
+
+//  if FEventoRetorno.retEvento.Count > 0 then
+//    aMsg := aMsg + Format(ACBrStr('Recebimento: %s ' + LineBreak),
+//       [IfThen(FEventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento = 0, '',
+//               FormatDateTimeBr(FEventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento))]);
+
+  Result := aMsg;
 end;
 
 function TEnvioLote.GerarPrefixoArquivo: String;
 begin
-  Result := '';
+  Result := FormatDateTime('yyyymmddhhnnss', Now);
 end;
 
 function TEnvioLote.GerarVersaoDadosSoap: String;
 begin
   Result := ''; // '<versaoDados>' + FVersao + '</versaoDados>';
 end;
-
+(*
 procedure TEnvioLote.SalvarEnvio;
 var
   Path: string;
@@ -626,7 +440,8 @@ begin
       end;
   end;
 end;
-
+*)
+(*
 procedure TEnvioLote.SalvarResposta;
 var
   Path: string;
@@ -650,7 +465,7 @@ begin
       end;
   end;
 end;
-
+*)
 { TWebServices }
 
 function TWebServices.Consultar(const AProtocolo: string): Boolean;
@@ -721,99 +536,6 @@ begin
   Result := True;
 end;
 
-{ TOcorrencias }
-
-function TOcorrencias.Add: TOcorrencia;
-begin
-  Result := TOcorrencia(inherited Add);
-  Result.Create;
-end;
-
-function TOcorrencias.GetItem(Index: Integer): TOcorrencia;
-begin
-  Result := TOcorrencia(inherited GetItem(Index));
-end;
-
-procedure TOcorrencias.SetItem(Index: Integer; Value: TOcorrencia);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TOcorrencia }
-
-procedure TOcorrencia.BeforeDestruction;
-begin
-  inherited;
-  FLeitor.Free;
-end;
-
-constructor TOcorrencia.Create;
-begin
-  FLeitor := TLeitor.Create;
-end;
-
-procedure TOcorrencia.LerXml;
-begin
-  FCodigo := FLeitor.rCampo(tcInt, 'codigo');
-  FDescricao := UTF8ToNativeString(FLeitor.rCampo(tcStr, 'descricao'));
-  FTipo := FLeitor.rCampo(tcInt, 'tipo');
-  FLocalizacao := UTF8ToNativeString(FLeitor.rCampo(tcStr, 'localizacao'));
-end;
-
-{ TretEventos }
-
-function TretEventos.Add: TretEvento;
-begin
-  Result := TretEvento(inherited Add);
-end;
-
-function TretEventos.GetItem(Index: Integer): TretEvento;
-begin
-  Result := TretEvento(inherited GetItem(Index));
-end;
-
-procedure TretEventos.SetItem(Index: Integer; Value: TretEvento);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TRetProcLote }
-
-procedure TRetProcLote.AfterConstruction;
-begin
-  inherited;
-  FStatus := 0;
-  FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeTransmissor := TIdeTransmissor.Create;
-  FdadosRecLote := TDadosRecepcaoLote.Create;
-  FdadosProcLote := TdadosProcLote.Create;
-  FretEventos := TretEventos.Create(nil, TretEvento);
-end;
-
-procedure TRetProcLote.BeforeDestruction;
-begin
-  inherited;
-  FIdeEmpregador.Free;
-  FIdeTransmissor.Free;
-  FdadosRecLote.Free;
-  FdadosProcLote.Free;
-  FretEventos.Free;
-end;
-
-constructor TRetProcLote.Create(AOwner: TACBrDFe);
-begin
-  Inherited Create(AOwner);
-end;
-
-destructor TRetProcLote.Destroy;
-begin
-
-end;
-
-procedure TRetProcLote.LerXml(const AXml: string);
-begin
-end;
-
 { TConsultaLote }
 
 constructor TConsultaLote.Create(AOwner: TACBrDFe);
@@ -824,7 +546,7 @@ begin
   FPStatus := stIdle;
   ConfigurarSoapDEPC;
   FPArqEnv := 'Consul';
-  FRetProcLote := TRetProcLote.Create(AOwner);
+//  FRetProcLote := TRetProcLote.Create(AOwner);
 end;
 
 procedure TConsultaLote.Clear;
@@ -837,7 +559,7 @@ end;
 procedure TConsultaLote.BeforeDestruction;
 begin
   inherited;
-  FRetProcLote.Free;
+//  FRetProcLote.Free;
 end;
 
 procedure TConsultaLote.DefinirDadosMsg;
@@ -865,6 +587,7 @@ begin
 {$ELSE}
   Texto := ''; // Isso forçará a conversão para UTF8, antes do envio
 {$ENDIF}
+
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
@@ -877,7 +600,7 @@ begin
   Texto := Texto + '</' + FPSoapVersion + ':Body>';
   Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
 
-  Texto := '<?xml version="1.0" encoding="utf-8"?>' + Texto;
+//  Texto := '<?xml version="1.0" encoding="utf-8"?>' + Texto;
   FPEnvelopeSoap := Texto;
 end;
 
@@ -916,9 +639,12 @@ var
   xml: AnsiString;
 begin
   xml := '<?xml version="1.0" encoding="utf-8"?>' +
-    '<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0">'
-    + '<consultaLoteEventos>' + '<protocoloEnvio>' + FProtocolo +
-    '</protocoloEnvio>' + '</consultaLoteEventos>' + '</eSocial>';
+         '<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0">' +
+          '<consultaLoteEventos>' +
+           '<protocoloEnvio>' + FProtocolo + '</protocoloEnvio>' +
+          '</consultaLoteEventos>' +
+         '</eSocial>';
+
   FXMLEnvio := xml;
 end;
 
@@ -950,14 +676,15 @@ function TConsultaLote.TratarResposta: Boolean;
 var
   Leitor: TLeitor;
   i, j: Integer;
-  Processamento: TProcessamento;
-  retEvento: TretEvento;
+//  Processamento: TProcessamento;
+//  retEvento: TretEvento;
   Reader: TLeitor;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarLoteEventosResponse');
   FXMlRet := FPRetWS;
   Result := FPRetWS <> EmptyStr;
   Leitor := TLeitor.Create;
+  (*
   try
     FRetProcLote.retEventos.Clear;
     Leitor.Arquivo := FPRetWS;
@@ -1067,40 +794,7 @@ begin
   finally
     Leitor.Free;
   end;
-end;
-
-{ TProcessamento }
-
-procedure TProcessamento.AfterConstruction;
-begin
-  inherited;
-  FOcorrencias := TOcorrencias.Create(nil, TOcorrencia);
-end;
-
-procedure TProcessamento.BeforeDestruction;
-begin
-  inherited;
-  FOcorrencias.Free;
-end;
-
-{ TretEvento }
-
-procedure TretEvento.AfterConstruction;
-begin
-  inherited;
-  FIDEvento := '';
-  FRecepcao := TRecepcao.Create;
-  FProcessamento := TProcessamento.Create;
-  FRecibo := TRecibo.Create;
-  FSignature := '';
-end;
-
-procedure TretEvento.BeforeDestruction;
-begin
-  inherited;
-  FRecepcao.Free;
-  FProcessamento.Free;
-  FRecibo.Free;
+  *)
 end;
 
 end.

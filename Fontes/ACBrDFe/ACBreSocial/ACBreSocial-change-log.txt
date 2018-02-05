@@ -58,6 +58,9 @@ Símbolo : Significado
     de cada evento, esse numero é utilizado ao gerar a chave do evento.
     Se o Sequencial for zero ao gerar a chave, o componente se encarrega de gerar um numero
     aleatório.
+[+] Implementado a unit pcesRetEnvioLote que passa a ser responsável pela leitura do XML de
+    retorno referente ao envio de um Lote de Eventos.
+[*] Por conta disso, a unit ACBreSocialWebServices ficou mais enxuta.
    Por: Italo Jurisato Junior
    
 -- ACBreSocialWebServices --

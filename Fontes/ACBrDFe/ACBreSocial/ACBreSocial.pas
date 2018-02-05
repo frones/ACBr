@@ -194,14 +194,14 @@ begin
   if Configuracoes.WebServices.Ambiente = taHomologacao then
   begin
     case LayOutServico of
-      LayEnvioLoteEventos:      URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
+      LayEnvioLoteEventos:    URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
       LayConsultaLoteEventos: URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
     end;
   end
   else
   begin
     case LayOutServico of
-      LayEnvioLoteEventos:      URL := 'https://webservices.envio.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
+      LayEnvioLoteEventos:    URL := 'https://webservices.envio.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
       LayConsultaLoteEventos: URL := 'https://webservices.consulta.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
     end;
   end;

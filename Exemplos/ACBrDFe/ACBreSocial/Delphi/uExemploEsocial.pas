@@ -3750,27 +3750,27 @@ begin
     with MemoDados.Lines do
     begin
       Add('');
-      Add('Código Retorno: ' + IntToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.cdResposta));
-      Add('Mensagem: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.descResposta);
+      Add('Código Retorno: ' + IntToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.cdResposta));
+      Add('Mensagem: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.descResposta);
       
-      if ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.cdResposta in [201, 202] then
+      if ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.cdResposta in [201, 202] then
       begin
         Add('ideEmpregador');
-        Add(' - TpInsc: ' + eSTpInscricaoToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.IdeEmpregador.TpInsc));
-        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.IdeEmpregador.NrInsc);
+        Add(' - TpInsc: ' + eSTpInscricaoToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.IdeEmpregador.TpInsc));
+        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.IdeEmpregador.NrInsc);
         Add('ideTransmissor');
-        Add(' - TpInsc: ' + eSTpInscricaoToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.IdeTransmissor.TpInsc));
-        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.IdeTransmissor.NrInsc);
+        Add(' - TpInsc: ' + eSTpInscricaoToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.IdeTransmissor.TpInsc));
+        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.IdeTransmissor.NrInsc);
         Add('dadosRecepcaoLote');
-        Add(' - dhRecepcao..............: ' + DateTimeToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.dadosRecLote.dhRecepcao));
-        Add(' - versaoAplicativoRecepcao: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.dadosRecLote.versaoAplicRecepcao);
-        Add(' - protocoloEnvio..........: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.dadosRecLote.Protocolo);
+        Add(' - dhRecepcao..............: ' + DateTimeToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.dadosRecLote.dhRecepcao));
+        Add(' - versaoAplicativoRecepcao: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.dadosRecLote.versaoAplicRecepcao);
+        Add(' - protocoloEnvio..........: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.dadosRecLote.Protocolo);
       end
       else
       begin
-        for I := 0 to ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Ocorrencias.Count - 1 do
+        for I := 0 to ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Count - 1 do
         begin
-          with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Ocorrencias.Items[I] do
+          with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Items[I] do
           begin
             Add(' Ocorrencia ' + IntToStr(I));
             Add('   Código.....: ' + IntToStr(Codigo));

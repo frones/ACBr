@@ -1186,7 +1186,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 9
           OnChange = cbSSLLibChange
         end
@@ -1196,7 +1196,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 10
           OnChange = cbCryptLibChange
         end
@@ -1206,7 +1206,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 11
           OnChange = cbHttpLibChange
         end
@@ -1216,7 +1216,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 12
           OnChange = cbXmlSignLibChange
         end
@@ -1303,7 +1303,7 @@ object FExemploEsocial: TFExemploEsocial
             Height = 21
             Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 4
             OnChange = cbSSLTypeChange
           end

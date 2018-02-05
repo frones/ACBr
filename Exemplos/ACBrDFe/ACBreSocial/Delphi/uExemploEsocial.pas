@@ -337,7 +337,8 @@ const
   SELDIRHELP = 1000;
 
 {$R *.dfm}
-  { TFExemploEsocial }
+
+{ TFExemploEsocial }
 
 procedure TFExemploEsocial.GerareSocial1000;
 var
@@ -3733,8 +3734,7 @@ end;
 
 procedure TFExemploEsocial.btnEnviarClick(Sender: TObject);
 var
-  Index, J: Integer;
-  retEvento: TretEvento;
+  I: Integer;
 begin
   if chkClear.Checked then
     LimparDocsPasta;
@@ -3750,38 +3750,37 @@ begin
     with MemoDados.Lines do
     begin
       Add('');
-      Add('Código Retorno: ' +
-        IntToStr(ACBreSocial1.WebServices.EnvioLote.RetProcLote.Status));
-      Add('Mensagem: ' + ACBreSocial1.WebServices.EnvioLote.RetProcLote.
-        Descricao);
-      if ACBreSocial1.WebServices.EnvioLote.RetProcLote.Status in ([201, 202])
-      then
+      Add('Código Retorno: ' + IntToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.cdResposta));
+      Add('Mensagem: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.descResposta);
+      
+      if ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.cdResposta in [201, 202] then
       begin
         Add('ideEmpregador');
-        Add(' - TpInsc: ' + eSTpInscricaoToStr(
-          ACBreSocial1.WebServices.EnvioLote.RetProcLote.IdeEmpregador.TpInsc));
-        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetProcLote.
-          IdeEmpregador.NrInsc);
+        Add(' - TpInsc: ' + eSTpInscricaoToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.IdeEmpregador.TpInsc));
+        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.IdeEmpregador.NrInsc);
         Add('ideTransmissor');
-        Add(' - TpInsc: ' + eSTpInscricaoToStr(
-          ACBreSocial1.WebServices.EnvioLote.RetProcLote.IdeTransmissor.TpInsc));
-        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetProcLote.
-          IdeTransmissor.NrInsc);
+        Add(' - TpInsc: ' + eSTpInscricaoToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.IdeTransmissor.TpInsc));
+        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.IdeTransmissor.NrInsc);
         Add('dadosRecepcaoLote');
-        Add(' - dhRecepcao: ' + DateTimeToStr
-          (ACBreSocial1.WebServices.EnvioLote.RetProcLote.dadosRecLote.
-          dhRecepcao));
-        Add(' - versaoAplicativoRecepcao: ' +
-          ACBreSocial1.WebServices.EnvioLote.RetProcLote.dadosRecLote.
-          versaoAplicRecepcao);
-        Add(' - protocoloEnvio: ' + ACBreSocial1.WebServices.EnvioLote.
-          RetProcLote.dadosRecLote.Protocolo);
+        Add(' - dhRecepcao..............: ' + DateTimeToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.dadosRecLote.dhRecepcao));
+        Add(' - versaoAplicativoRecepcao: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.dadosRecLote.versaoAplicRecepcao);
+        Add(' - protocoloEnvio..........: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.RetProcLote.dadosRecLote.Protocolo);
       end
       else
       begin
-        for Index := 0 to ACBreSocial1.WebServices.EnvioLote.RetProcLote.
-          retEventos.Count - 1 do
+        for I := 0 to ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Ocorrencias.Count - 1 do
         begin
+          with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Ocorrencias.Items[I] do
+          begin
+            Add(' Ocorrencia ' + IntToStr(I));
+            Add('   Código.....: ' + IntToStr(Codigo));
+            Add('   Descrição..: ' + Descricao);
+            Add('   Tipo.......: ' + IntToStr(Tipo));
+            Add('   Localização: ' + Localizacao);
+          end;
+
+
+          (*
           retEvento := ACBreSocial1.WebServices.EnvioLote.RetProcLote.
             retEventos.Items[Index];
           Add('Ocorrencias');
@@ -3797,6 +3796,7 @@ begin
             Add('   Localização:' + retEvento.Processamento.Ocorrencias.Items[J]
               .Localizacao);
           end;
+          *)
         end;
       end;
     end;
@@ -3811,7 +3811,7 @@ procedure TFExemploEsocial.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
   Index, J: Integer;
-  retEvento: TretEvento;
+//  retEvento: TretEvento;
 begin
   Protocolo := '';
   if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo)) then
@@ -3821,6 +3821,7 @@ begin
   begin
 
     MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaLote.RetWS;
+    (*
     with MemoDados.Lines do
     begin
       Add('');
@@ -3911,7 +3912,7 @@ begin
         end;
       end;
     end;
-
+    *)
     pgWebservice.ActivePageIndex := 3;
   end;
 end;
@@ -4269,7 +4270,6 @@ begin
   cbTEmpregador.ItemIndex := 0;
 
   LerConfiguracao;
-  ACBreSocial1.Configuracoes.WebServices.Salvar := True;
 end;
 
 procedure TFExemploEsocial.PathClick(Sender: TObject);
@@ -4358,7 +4358,7 @@ end;
 
 procedure TFExemploEsocial.LerConfiguracao;
 var
-  IniFile: String;
+  IniFile, PathMensal: String;
   Ini: TIniFile;
 begin
   IniFile := ChangeFileExt(Application.ExeName, '.ini');
@@ -4489,6 +4489,9 @@ begin
       PatheSocial := edtPatheSocial.Text;
     end;
 
+    PathMensal := ACBreSocial1.Configuracoes.Arquivos.GetPatheSocial(0);
+
+    ACBreSocial1.Configuracoes.Arquivos.PathSalvar := PathMensal;
   finally
     Ini.Free;
   end;

@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.239';
+  CACBrBoleto_Versao = '0.0.240';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -368,7 +368,8 @@ type
     cobBancoCECRED,
     cobBancoDaAmazonia,
     cobBancoDoBrasilSICOOB,
-    cobUniprime
+    cobUniprime,
+    cobUnicredRS
     );
 
   TACBrTitulo = class;
@@ -1360,7 +1361,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
-     ACBrUniprime;
+     ACBrUniprime, ACBrBancoUnicredRS;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2207,6 +2208,7 @@ begin
      cobSantander           : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}
      cobBanrisul            : fBancoClass := TACBrBanrisul.create(Self);            {041}
      cobBRB                 : fBancoClass := TACBrBancoBRB.create(Self);            {070}
+     cobUnicredRS           : fBancoClass := TACbrBancoUnicredRS.Create(Self);      {091}
      cobBancoCECRED         : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
      cobUniprime            : fBancoClass := TACBrUniprime.create(Self);            {099}
      cobCaixaEconomica      : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}

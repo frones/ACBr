@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 05/02/2018 ver: 0.0.240
+
+ -- ACBrBancoUnicredRS
+[+] Adicionado Banco Unicred com layout próprio
+    https://www.projetoacbr.com.br/forum/topic/28788-boleto-unicred/?do=findComment&comment=238188
+
+
 Data 01/02/2018 ver: 0.0.239
 
  -- ACBrUniprime

@@ -95,7 +95,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -140,6 +140,7 @@ type
 implementation
 
 { TS1270Collection }
+
 function TS1270Collection.Add: TS1270CollectionItem;
 begin
   Result := TS1270CollectionItem(inherited Add);
@@ -221,12 +222,14 @@ begin
     Gerador.wAlerta('', 'remunAvNP', 'Lista de Remuneração', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-function TEvtContratAvNP.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtContratAvNP.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtContratAvNP');
-    Gerador.wGrupo('evtContratAvNP Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtContratAvNP Id="' + Self.Id + '"');
 
     gerarIdeEvento3(self.IdeEvento);
     gerarIdeEmpregador(self.IdeEmpregador);

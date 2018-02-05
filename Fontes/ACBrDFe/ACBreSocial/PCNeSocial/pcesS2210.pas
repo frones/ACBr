@@ -109,7 +109,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeRegistrador: TIdeRegistrador read FIdeRegistrador write FIdeRegistrador;
@@ -520,12 +520,14 @@ begin
     Gerador.wAlerta('', 'parteAtingida', 'Lista de Partes Atingidas', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
-function TEvtCAT.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtCAT.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtCAT');
-    Gerador.wGrupo('evtCAT Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtCAT Id="' + Self.Id + '"');
 
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeRegistrador;

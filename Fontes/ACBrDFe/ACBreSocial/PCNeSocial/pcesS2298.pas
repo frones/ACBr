@@ -94,7 +94,7 @@ type
     constructor Create(AACBreSocial: TObject); overload;
     destructor  Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -122,6 +122,7 @@ type
 implementation
 
 { TS2298Collection }
+
 function TS2298Collection.Add: TS2298CollectionItem;
 begin
   Result := TS2298CollectionItem(inherited Add);
@@ -198,12 +199,14 @@ begin
   Gerador.wGrupo('/infoReintegr');
 end;
 
-function TEvtReintegr.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtReintegr.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtReintegr');
-    Gerador.wGrupo('evtReintegr Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtReintegr Id="' + Self.Id + '"');
 
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

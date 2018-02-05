@@ -157,7 +157,7 @@ type
     constructor Create(AACBreSocial: TObject); overload;
     destructor Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property ideEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property ideEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -316,12 +316,14 @@ begin
     Gerador.wAlerta('', 'dmDev', 'Lista de Demostrativos', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
-function TEvtBenPrRP.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtBenPrRP.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtBenPrRP');
-    Gerador.wGrupo('evtBenPrRP Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtBenPrRP Id="' + Self.Id + '"');
 
     GerarIdeEvento3(Self.IdeEvento);
     GerarIdeEmpregador(Self.ideEmpregador);

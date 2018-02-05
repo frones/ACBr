@@ -116,7 +116,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -510,12 +510,14 @@ begin
   Gerador.wGrupo('/verbasResc');
 end;
 
-function TEvtDeslig.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtDeslig.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtDeslig');
-    Gerador.wGrupo('evtDeslig Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtDeslig Id="' + Self.Id + '"');
 
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

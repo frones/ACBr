@@ -94,7 +94,7 @@ type
     constructor Create(AACBreSocial: TObject);
     destructor destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property dtAlteracao: TDateTime read FdtAlteracao write FdtAlteracao;
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
@@ -181,12 +181,14 @@ begin
   GerarModoFechamento(mlAlteracao);
 end;
 
-function TEvtAltCadastral.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtAltCadastral.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtAltCadastral');
-    Gerador.wGrupo('evtAltCadastral Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtAltCadastral Id="' + Self.Id + '"');
 
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

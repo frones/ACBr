@@ -247,7 +247,7 @@ type
     constructor Create(AACBreSocial: TObject); overload;
     destructor Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
     property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
@@ -519,12 +519,14 @@ begin
   end;
 end;
 
-function TEvtTabEstab.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtTabEstab.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtTabEstab');
-    Gerador.wGrupo('evtTabEstab Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtTabEstab Id="' + Self.Id + '"');
 
     GerarIdeEvento(Self.FIdeEvento, True);
     GerarIdeEmpregador(Self.FIdeEmpregador);

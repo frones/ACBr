@@ -175,10 +175,10 @@ type
   TeSocial = class(TPersistent)
   private
     FId: string;
-//    FVersao: string; - removido na versão 2.1
+    FSequencial: Integer;
   published
     property Id: string read FId write FId;
-//    property versao: string read FVersao write FVersao;
+    property Sequencial: Integer read FSequencial write FSequencial;
   end;
 
   TIdeFolhaPagto = class(TPersistent)

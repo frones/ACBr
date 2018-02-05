@@ -92,7 +92,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -102,6 +102,7 @@ type
 implementation
 
 { TS1295Collection }
+
 function TS1295Collection.Add: TS1295CollectionItem;
 begin
   Result := TS1295CollectionItem(inherited Add);
@@ -156,12 +157,14 @@ begin
   inherited;
 end;
 
-function TEvtTotConting.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtTotConting.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtTotConting');
-    Gerador.wGrupo('evtTotConting Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtTotConting Id="' + Self.Id + '"');
 
     GerarIdeEvento3(self.IdeEvento, False);
     GerarIdeEmpregador(self.IdeEmpregador);

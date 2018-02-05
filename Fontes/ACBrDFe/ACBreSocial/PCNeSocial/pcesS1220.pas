@@ -92,7 +92,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -124,10 +124,10 @@ type
     property Items[Index: Integer]: TInfoPgtoItem read GetItem write SetItem;
   end;
 
-
 implementation
 
 { TS1220Collection }
+
 function TS1220Collection.Add: TS1220CollectionItem;
 begin
   Result := TS1220CollectionItem(inherited Add);
@@ -198,13 +198,15 @@ begin
   end;
 end;
 
-function TEvtPgtosNI.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtPgtosNI.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
    (* Não mais gerado na versão 2.4.01 *)
     GerarCabecalho('');
-      Gerador.wGrupo('evtPgtosNI Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+      Gerador.wGrupo('evtPgtosNI Id="' + Self.Id + '"');
         gerarIdeEvento3(self.IdeEvento);
         gerarIdeEmpregador(self.IdeEmpregador);
         GerarInfoPgto;

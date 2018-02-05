@@ -60,7 +60,6 @@ type
     FTabelas: TTabelas;
     FNaoPeriodicos: TNaoPeriodicos;
     FPeriodicos: TPeriodicos;
-    FSequencial: Integer;
     FTipoEmpregador: TEmpregador;
 
     procedure SetIniciais(const Value: TIniciais);
@@ -68,8 +67,6 @@ type
     procedure SetPeriodicos(const Value: TPeriodicos);
     procedure SetTabelas(const Value: TTabelas);
     function GetCount: integer;
-    procedure SetSequencial(const Value: Integer);
-
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;//verificar se será necessário, se TIniciais for TComponent;
@@ -83,11 +80,14 @@ type
     property Tabelas:        TTabelas       read FTabelas        write SetTabelas;
     property NaoPeriodicos:  TNaoPeriodicos read FNaoPeriodicos  write SetNaoPeriodicos;
     property Periodicos:     TPeriodicos    read FPeriodicos     write SetPeriodicos;
-    property Sequencial:     Integer        read FSequencial     write SetSequencial;
     property TipoEmpregador: TEmpregador    read FTipoEmpregador write FTipoEmpregador;
   end;
 
 implementation
+
+uses
+  dateutils,
+  ACBrUtil, ACBrDFeUtil, ACBreSocial;
 
 { TEventos }
 
@@ -159,11 +159,6 @@ end;
 procedure TEventos.SetPeriodicos(const Value: TPeriodicos);
 begin
   FPeriodicos.Assign(Value);
-end;
-
-procedure TEventos.SetSequencial(const Value: Integer);
-begin
-  FSequencial := Value;
 end;
 
 end.

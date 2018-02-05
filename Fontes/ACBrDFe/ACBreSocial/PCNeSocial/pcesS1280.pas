@@ -101,7 +101,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -148,6 +148,7 @@ type
 implementation
 
 { TS1280Collection }
+
 function TS1280Collection.Add: TS1280CollectionItem;
 begin
   Result := TS1280CollectionItem(inherited Add);
@@ -246,12 +247,14 @@ begin
     Gerador.wAlerta('', 'infoSubstPatrOpPort', 'Lista de Operadores Portuarios', ERR_MSG_MAIOR_MAXIMO + '9999');
 end;
 
-function TEvtInfoComplPer.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtInfoComplPer.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtInfoComplPer');
-    Gerador.wGrupo('evtInfoComplPer Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtInfoComplPer Id="' + Self.Id + '"');
 
     GerarIdeEvento3(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

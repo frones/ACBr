@@ -95,7 +95,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -126,6 +126,7 @@ type
 implementation
 
 { TS1300Collection }
+
 function TS1300Collection.Add: TS1300CollectionItem;
 begin
   Result := TS1300CollectionItem(inherited Add);
@@ -200,12 +201,14 @@ begin
     Gerador.wAlerta('', 'contribSind', 'Lista de Contribuição Sindical', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-function TEvtContrSindPatr.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtContrSindPatr.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtContrSindPatr');
-    Gerador.wGrupo('evtContrSindPatr Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtContrSindPatr Id="' + Self.Id + '"');
 
     GerarIdeEvento3(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

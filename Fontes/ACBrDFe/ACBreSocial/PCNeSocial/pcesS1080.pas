@@ -97,7 +97,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
     property IdeEvento: TIdeEvento read fIdeEvento write fIdeEvento;
@@ -273,12 +273,14 @@ begin
   Gerador.wGrupo('/ideOperPortuario');
 end;
 
-function TEvtTabOperPort.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtTabOperPort.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtTabOperPort');
-    Gerador.wGrupo('evtTabOperPort Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtTabOperPort Id="' + Self.Id + '"');
 
     GerarIdeEvento(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);

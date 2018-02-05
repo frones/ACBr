@@ -95,7 +95,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -128,6 +128,7 @@ type
 implementation
 
 { TS1299Collection }
+
 function TS1299Collection.Add: TS1299CollectionItem;
 begin
   Result := TS1299CollectionItem(inherited Add);
@@ -206,12 +207,14 @@ begin
   Gerador.wGrupo('/infoFech');
 end;
 
-function TEvtFechaEvPer.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean;
+function TEvtFechaEvPer.GerarXML(ATipoEmpregador: TEmpregador): boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtFechaEvPer');
-    Gerador.wGrupo('evtFechaEvPer Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtFechaEvPer Id="' + Self.Id + '"');
 
     GerarIdeEvento3(self.IdeEvento, False);
     GerarIdeEmpregador(self.IdeEmpregador);

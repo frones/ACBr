@@ -48,6 +48,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2018
+-- ACBreSocial --
+[*] Realizado ajustes para que os XMLs sejam salvos conforme configurações estabelecidas
+    no componente, tais como separação por Ano/Mes, etc.
+    Agora a propriedade Id de cada evento vai conter a chave completa gerada automaticamente
+    ao gerar o XML.
+    Foi adicionado uma propriedade chamada Sequencial onde devemos passar o numero sequencial
+    de cada evento, esse numero é utilizado ao gerar a chave do evento.
+    Se o Sequencial for zero ao gerar a chave, o componente se encarrega de gerar um numero
+    aleatório.
+   Por: Italo Jurisato Junior
+
 02/02/2018
 -- ACBreSocial --
 [*] Incluido a propriedade de configuração TipoEmpregador (tePessoaFisica, teOrgaoPublico).

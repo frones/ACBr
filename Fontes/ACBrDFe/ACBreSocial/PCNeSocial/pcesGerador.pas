@@ -66,20 +66,21 @@ type
 
   TeSocialEvento = class(TeSocial)
   private
+    FACBreSocial: TObject; //alimenta no create
     FXMLAssinado: String;
     FXMLOriginal: String;
     FErroValidacao: String;
     FErroValidacaoCompleto: String;
     FAlertas: String;
-    FXML: AnsiString;
+
     FGerador: TGerador;
     FSchema: TeSocialSchema;
-    FACBreSocial : TObject;//alimenta no create
+    FXML: AnsiString;
   public
     constructor Create(AACBreSocial: TObject); overload;//->recebe a instancia da classe TACBreSocial
     destructor Destroy; override;
 
-    function  GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): boolean; virtual; abstract;
+    function  GerarXML(ATipoEmpregador: TEmpregador): boolean; virtual; abstract;
     procedure SaveToFile(const CaminhoArquivo: string);
     function  Assinar(XMLEvento: String; NomeEvento: String): AnsiString;
     function  GerarChaveEsocial(const emissao: TDateTime;
@@ -208,7 +209,7 @@ type
 implementation
 
 uses
-  ACBreSocial, ACBrDFeSSL;
+  ACBreSocial, ACBreSocialEventos, ACBrDFeSSL;
 
 {TeSocialEvento}
 
@@ -241,8 +242,8 @@ begin
 
     NomeEvento := NomeEvento + '.xml';
 
-    if Configuracoes.Arquivos.Salvar then
-      Gravar(NomeEvento, XMLAss,Configuracoes.Arquivos.PathSalvar);
+//    if Configuracoes.Arquivos.Salvar then
+//      Gravar(NomeEvento, XMLAss, Configuracoes.Arquivos.PathSalvar);
 
     Result := AnsiString(XMLAss);
 

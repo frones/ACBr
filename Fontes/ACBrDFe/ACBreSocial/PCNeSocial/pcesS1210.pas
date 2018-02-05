@@ -119,7 +119,7 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
 
-    function GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): Boolean; override;
+    function GerarXML(ATipoEmpregador: TEmpregador): Boolean; override;
 
     property IdeEvento : TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -635,12 +635,14 @@ begin
     Gerador.wAlerta('', 'infoPgto', 'Lista de Informações de Pagamento', ERR_MSG_MAIOR_MAXIMO + '60');
 end;
 
-function TEvtPgtos.GerarXML(ASequencial: Integer; ATipoEmpregador: TEmpregador): Boolean;
+function TEvtPgtos.GerarXML(ATipoEmpregador: TEmpregador): Boolean;
 begin
   try
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
+     self.Sequencial, ATipoEmpregador);
+
     GerarCabecalho('evtPgtos');
-    Gerador.wGrupo('evtPgtos Id="' +
-      GerarChaveEsocial(now, self.ideEmpregador.NrInsc, ASequencial, ATipoEmpregador) + '"');
+    Gerador.wGrupo('evtPgtos Id="' + Self.Id + '"');
 
     GerarIdeEvento3(Self.IdeEvento);
     GerarIdeEmpregador(Self.ideEmpregador);

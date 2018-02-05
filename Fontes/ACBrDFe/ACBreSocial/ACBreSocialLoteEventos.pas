@@ -329,7 +329,10 @@ begin
 
   if TACBreSocial(Self.Owner).Configuracoes.Geral.Salvar then
   begin
-    Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
+//    Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
+    with TACBreSocial(Self.Owner) do
+      Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
+
     if (Path <> EmptyStr) and not DirectoryExists(Path) then
       ForceDirectories(Path);
 

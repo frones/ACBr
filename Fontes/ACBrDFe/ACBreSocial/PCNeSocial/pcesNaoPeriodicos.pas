@@ -53,7 +53,7 @@ uses
   ACBrUtil, pcesConversaoeSocial,
   pcesS2190, pcesS2200, pcesS2220, pcesS2230, pcesS2240,
   pcesS2241, pcesS2205, pcesS2206, pcesS2210, pcesS2250,
-  pcesS2260, pcesS2298, pcesS2299, pcesS2300, pcesS2306,
+  pcesS2260, pcesS2298, pcesS2299, pcesS2300, pcesS2306, pcesS2305,
   pcesS2399, pcesS2400, pcesS3000, pcesS4000, pcesS4999;
 
 type
@@ -248,84 +248,64 @@ var
   i: Integer;
 begin
   for I := 0 to Self.S2190.Count - 1 do
-    Self.S2190.Items[i].EvtAdmPrelim.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2190.Items[i].EvtAdmPrelim.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2200.Count - 1 do
-    Self.S2200.Items[i].EvtAdmissao.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2200.Items[i].EvtAdmissao.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2205.Count - 1 do
-    Self.S2205.Items[i].EvtAltCadastral.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2205.Items[i].EvtAltCadastral.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2206.Count - 1 do
-    Self.S2206.Items[i].EvtAltContratual.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2206.Items[i].EvtAltContratual.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2210.Count - 1 do
-    Self.S2210.Items[i].EvtCAT.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2210.Items[i].EvtCAT.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2220.Count - 1 do
-    Self.S2220.Items[i].EvtASO.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2220.Items[i].EvtASO.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2230.Count - 1 do
-    Self.S2230.Items[i].EvtAfastTemp.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2230.Items[i].EvtAfastTemp.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2240.Count - 1 do
-    Self.S2240.Items[i].EvtExpRisco.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2240.Items[i].EvtExpRisco.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2241.Count - 1 do
-    Self.S2241.Items[i].EvtInsApo.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2241.Items[i].EvtInsApo.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2250.Count - 1 do
-    Self.S2250.Items[i].EvtAvPrevio.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2250.Items[i].EvtAvPrevio.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2260.Count - 1 do
-    Self.S2260.Items[i].EvtConvInterm.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2260.Items[i].EvtConvInterm.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2298.Count - 1 do
-    Self.S2298.Items[i].EvtReintegr.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2298.Items[i].EvtReintegr.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2299.Count - 1 do
-    Self.S2299.Items[i].EvtDeslig.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2299.Items[i].EvtDeslig.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2300.Count - 1 do
-    Self.S2300.Items[i].EvtTSVInicio.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2300.Items[i].EvtTSVInicio.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2306.Count - 1 do
-    Self.S2306.Items[i].EvtTSVAltContr.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2306.Items[i].EvtTSVAltContr.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2399.Count - 1 do
-      Self.S2399.Items[i].EvtTSVTermino.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+      Self.S2399.Items[i].EvtTSVTermino.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S2400.Count - 1 do
-      Self.S2400.Items[i].EvtCdBenPrRP.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+      Self.S2400.Items[i].EvtCdBenPrRP.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S3000.Count - 1 do
-    Self.S3000.Items[i].EvtExclusao.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S3000.Items[i].EvtExclusao.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S4000.Count - 1 do
-    Self.S4000.Items[i].EvtSolicTotal.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S4000.Items[i].EvtSolicTotal.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S4999.Count - 1 do
-    Self.S4999.Items[i].EvtAdesao.GerarXML(TACBreSocial(Self.Owner).Eventos.Sequencial,
-                                                   TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S4999.Items[i].EvtAdesao.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 end;
 
 procedure TNaoPeriodicos.SaveToFiles;
@@ -333,7 +313,9 @@ var
   i: integer;
   Path: String;
 begin
-  Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
+//  Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
+  with TACBreSocial(Self.Owner) do
+    Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
   for I := 0 to Self.S2190.Count - 1 do
     Self.S2190.Items[i].EvtAdmPrelim.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2190.Items[i].TipoEvento)+'-'+IntToStr(i));

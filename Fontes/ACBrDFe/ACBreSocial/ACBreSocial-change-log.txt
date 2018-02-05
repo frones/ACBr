@@ -59,6 +59,10 @@ Símbolo : Significado
     Se o Sequencial for zero ao gerar a chave, o componente se encarrega de gerar um numero
     aleatório.
    Por: Italo Jurisato Junior
+   
+-- ACBreSocialWebServices --
+[-] Corrigido erro na geração do envelope SOAP do EnvioLote.
+	Por: Rafael Dias
 
 02/02/2018
 -- ACBreSocial --

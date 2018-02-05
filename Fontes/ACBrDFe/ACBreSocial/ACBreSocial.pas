@@ -194,19 +194,15 @@ begin
   if Configuracoes.WebServices.Ambiente = taHomologacao then
   begin
     case LayOutServico of
-      LayEnvLoteEventos:             URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
-      LayRetEnvLoteEventos:          URL := '';
-      LayConsResultProcessamento:    URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
-      LayRetConsResultProcessamento: URL := '';
+      LayEnvioLoteEventos:      URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
+      LayConsultaLoteEventos: URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
     end;
   end
   else
   begin
     case LayOutServico of
-      LayEnvLoteEventos:             URL := 'https://webservices.envio.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
-      LayRetEnvLoteEventos:          URL := '';
-      LayConsResultProcessamento:    URL := 'https://webservices.consulta.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
-      LayRetConsResultProcessamento: URL := '';
+      LayEnvioLoteEventos:      URL := 'https://webservices.envio.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
+      LayConsultaLoteEventos: URL := 'https://webservices.consulta.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
     end;
   end;
 end;

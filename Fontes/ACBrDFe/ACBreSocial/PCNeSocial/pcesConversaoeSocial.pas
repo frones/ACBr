@@ -87,7 +87,7 @@ type
                              schevtTSVInicio, schevtTSVTermino, schRetornoEnvioLoteEventos,
                              schRetornoEvento, schRetornoProcessamentoLote);
 
-  TLayOut                 = (LayEnvLoteEventos, LayRetEnvLoteEventos, LayConsResultProcessamento, LayRetConsResultProcessamento);
+  TLayOut                 = (LayEnvioLoteEventos, LayConsultaLoteEventos);
 
   TStatusACBreSocial      = (stIdle, stEnvLoteEventos, stConsultaLote );
 
@@ -878,28 +878,22 @@ const
 function LayOuteSocialToServico(const t: TLayOut): String;
 begin
    Result := EnumeradoToStr(t,
-    ['EnvLoteEventos', 'RetEnvLoteEventos',
-     'ConsResultProcessamento', 'RetConsResultProcessamento'],
-    [ LayEnvLoteEventos, LayRetEnvLoteEventos,
-      LayConsResultProcessamento, LayRetConsResultProcessamento ] );
+    ['EnvioLoteEventos', 'ConsultaLoteEventos'],
+    [ LayEnvioLoteEventos, LayConsultaLoteEventos ] );
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 begin
    Result := StrToEnumerado(ok, s,
-    ['EnvLoteEventos', 'RetEnvLoteEventos',
-     'ConsResultProcessamento', 'RetConsResultProcessamento'],
-    [ LayEnvLoteEventos, LayRetEnvLoteEventos,
-      LayConsResultProcessamento, LayRetConsResultProcessamento ] );
+    ['EnvioLoteEventos', 'ConsultaLoteEventos'],
+    [ LayEnvioLoteEventos, LayConsultaLoteEventos ] );
 end;
 
 function LayOutToSchema(const t: TLayOut): TeSocialSchema;
 begin
    case t of
-    LayEnvLoteEventos:             Result := schEnvioLoteEventos;
-    LayRetEnvLoteEventos:          Result := schRetornoEnvioLoteEventos;
-    LayConsResultProcessamento:    Result := schConsultaLoteEventos;
-    LayRetConsResultProcessamento: Result := schRetornoProcessamentoLote;
+    LayEnvioLoteEventos:    Result := schEnvioLoteEventos;
+    LayConsultaLoteEventos: Result := schConsultaLoteEventos;
   else
     Result := schErro;
   end;

@@ -375,7 +375,7 @@ begin
     LoadFromString(XML);
 
     for i := 0 to Self.Count - 1 do
-      Self.Items[i].NomeArq := CaminhoArquivo; //NomeArq deve pertencer à classe TItemLoteEventos!!!!
+      Self.Items[i].NomeArq := CaminhoArquivo;
 
     Result := True;
   finally

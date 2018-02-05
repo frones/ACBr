@@ -44,6 +44,7 @@
   ****************************************************************************** }
 
 {$I ACBr.inc}
+
 unit ACBreSocialWebServices;
 
 interface
@@ -305,7 +306,6 @@ type
   private
     FVersao: String;
     FLote: TLoteEventos;
-    FXMLEnvio: string;
     FRetProcLote: TRetProcLote;
 
   protected
@@ -446,7 +446,7 @@ constructor TEnvioLote.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
 
-  FPLayout := LayEnvLoteEventos;
+  FPLayout := LayEnvioLoteEventos;
   FLote := TLoteEventos.Create(AOwner);
   FRetProcLote := TRetProcLote.Create(AOwner);
   FPStatus := stIdle;
@@ -480,18 +480,8 @@ begin
 end;
 
 procedure TEnvioLote.DefinirDadosMsg;
-var
-  LeitorXML: TLeitor;
 begin
-  LeitorXML := TLeitor.Create;
-  try
-    LeitorXML.Arquivo := FXMLEnvio;
-    LeitorXML.Grupo := FXMLEnvio;
-    FVersao := LeitorXML.rAtributo('versao')
-  finally
-    LeitorXML.Free;
-  end;
-  FPDadosMsg := FXMLEnvio;
+  FPDadosMsg :=  FLote.Xml;
 end;
 
 procedure TEnvioLote.DefinirEnvelopeSoap;
@@ -830,7 +820,7 @@ constructor TConsultaLote.Create(AOwner: TACBrDFe);
 begin
   Inherited Create(AOwner);
   FACBreSocial := AOwner;
-  FPLayout := LayConsResultProcessamento;
+  FPLayout := LayConsultaLoteEventos;
   FPStatus := stIdle;
   ConfigurarSoapDEPC;
   FPArqEnv := 'Consul';

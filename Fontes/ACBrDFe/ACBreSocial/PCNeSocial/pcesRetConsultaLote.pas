@@ -45,7 +45,7 @@
 
 {$I ACBr.inc}
 
-unit pcesRetEnvioLote;
+unit pcesRetConsultaLote;
 
 interface
 
@@ -58,6 +58,9 @@ type
   TOcorrenciasCollection = class;
   TOcorrenciasCollectionItem = class;
   TStatus = class;
+  TRetEventosCollection = class;
+  TRetEventosCollectionItem = class;
+  TRetConsultaLote = class;
 
   TOcorrenciasCollection = class(TCollection)
   private
@@ -87,6 +90,7 @@ type
   private
     FcdResposta: Integer;
     FdescResposta: string;
+    FtempoEstimadoConclusao: Integer;
     FOcorrencias: TOcorrenciasCollection;
   public
     constructor Create;
@@ -94,6 +98,7 @@ type
 
     property cdResposta: Integer read FcdResposta write FcdResposta;
     property descResposta: string read FdescResposta write FdescResposta;
+    property tempoEstimadoConclusao: Integer read FtempoEstimadoConclusao write FtempoEstimadoConclusao;
     property Ocorrencias: TOcorrenciasCollection read FOcorrencias write FOcorrencias;
   end;
 
@@ -109,13 +114,41 @@ type
     property Protocolo: String read FProtocolo write FProtocolo;
   end;
 
-  TRetEnvioLote = class(TPersistent)
+  TdadosProcLote = class
+  private
+    FversaoAplicProcLote: String;
+  public
+    property versaoAplicProcLote: String read FversaoAplicProcLote
+      write FversaoAplicProcLote;
+  end;
+
+  TRetEventosCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TRetEventosCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRetEventosCollectionItem);
+  public
+    constructor create(AOwner: TRetConsultaLote);
+
+    function Add: TRetEventosCollectionItem;
+    property Items[Index: Integer]: TRetEventosCollectionItem read GetItem write SetItem;
+  end;
+
+  TRetEventosCollectionItem = class(TCollectionItem)
+  private
+    FIDEvento: string;
+  public
+    property IDEvento: string read FIDEvento write FIDEvento;
+  end;
+
+  TRetConsultaLote = class(TPersistent)
   private
     FLeitor: TLeitor;
     FIdeEmpregador: TIdeEmpregador;
     FIdeTransmissor: TIdeTransmissor;
     FStatus: TStatus;
     FDadosRecLote: TDadosRecepcaoLote;
+    FDadosProcLote: TDadosProcLote;
+    FRetEventos: TRetEventosCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -127,6 +160,8 @@ type
     property IdeTransmissor: TIdeTransmissor read FIdeTransmissor;
     property Status: TStatus read FStatus;
     property DadosRecLote: TDadosRecepcaoLote read FDadosRecLote;
+    property DadosProcLote: TDadosProcLote read FDadosProcLote;
+    property RetEventos: TRetEventosCollection read FRetEventos;
   end;
 
 implementation
@@ -169,9 +204,33 @@ begin
   inherited;
 end;
 
-{ TRetEnvioLote }
+{ TRetEventosCollection }
 
-constructor TRetEnvioLote.Create;
+function TRetEventosCollection.Add: TRetEventosCollectionItem;
+begin
+  Result := TRetEventosCollectionItem(inherited Add());
+end;
+
+constructor TRetEventosCollection.create(AOwner: TRetConsultaLote);
+begin
+  inherited create(TRetEventosCollectionItem);
+end;
+
+function TRetEventosCollection.GetItem(
+  Index: Integer): TRetEventosCollectionItem;
+begin
+  Result := TRetEventosCollectionItem(Inherited GetItem(Index));
+end;
+
+procedure TRetEventosCollection.SetItem(Index: Integer;
+  Value: TRetEventosCollectionItem);
+begin
+  Inherited SetItem(Index, Value);
+end;
+
+{ TRetConsultaLote }
+
+constructor TRetConsultaLote.Create;
 begin
   FLeitor := TLeitor.Create;
 
@@ -179,20 +238,24 @@ begin
   FIdeTransmissor := TIdeTransmissor.Create;
   FStatus         := TStatus.Create;
   FDadosRecLote   := TDadosRecepcaoLote.Create;
+  FDadosProcLote  := TDadosProcLote.Create;
+  FRetEventos     := TRetEventosCollection.create(Self);
 end;
 
-destructor TRetEnvioLote.Destroy;
+destructor TRetConsultaLote.Destroy;
 begin
   FLeitor.Free;
   FIdeEmpregador.Free;
   FIdeTransmissor.Free;
   FStatus.Free;
   FDadosRecLote.Free;
+  FDadosProcLote.Free;
+  FRetEventos.Free;
 
   inherited;
 end;
 
-function TRetEnvioLote.LerXml: boolean;
+function TRetConsultaLote.LerXml: boolean;
 var
   ok: boolean;
   i: Integer;
@@ -218,6 +281,7 @@ begin
       begin
         Status.cdResposta   := Leitor.rCampo(tcInt, 'cdResposta');
         Status.descResposta := Leitor.rCampo(tcStr, 'descResposta');
+        Status.tempoEstimadoConclusao := Leitor.rCampo(tcInt, 'tempoEstimadoConclusao');
 
         if leitor.rExtrai(3, 'ocorrencias') <> '' then
         begin
@@ -242,6 +306,21 @@ begin
         dadosRecLote.Protocolo           := FLeitor.rCampo(tcStr, 'protocoloEnvio');
       end;
 
+      if leitor.rExtrai(2, 'dadosProcessamentoLote') <> '' then
+        dadosProcLote.versaoAplicProcLote := FLeitor.rCampo(tcStr, 'versaoAplicativoProcessamentoLote');
+
+      if leitor.rExtrai(2, 'retornoEventos') <> '' then
+      begin
+        i := 0;
+        while Leitor.rExtrai(3, 'eventos', '', i + 1) <> '' do
+        begin
+          RetEventos.Add;
+          RetEventos.Items[i].IDEvento := FLeitor.rAtributo('Id=');
+          // Falta terminar a implementação
+          inc(i);
+        end;
+      end;
+
       Result := True;
     end;
   except
@@ -249,5 +328,68 @@ begin
   end;
 end;
 
+  (*
+  try
+    FRetProcLote.retEventos.Clear;
+    Leitor.Arquivo := FPRetWS;
+
+    if (FRetProcLote.Status in [200, 201]) then
+    begin
+      Leitor.Arquivo := Leitor.rExtrai(1, 'retornoEventos');
+      i := 0;
+      while Leitor.rExtrai(1, 'evento', '', i + 1) <> '' do
+      begin
+        // recepcao
+        Reader := TLeitor.Create;
+        try
+          Reader.Arquivo := Leitor.Grupo;
+          retEvento := FRetProcLote.retEventos.Add;
+          retEvento.IDEvento := Leitor.rAtributo('Id', 'evento');
+          Reader.Grupo := Reader.rExtrai(1, 'recepcao');
+          retEvento.FRecepcao.FtpAmb :=
+            TptpAmb(Integer(Leitor.rCampo(tcInt, 'tpAmb')));
+          retEvento.FRecepcao.FdhRecepcao :=
+            Leitor.rCampo(tcDatHor, 'dhRecepcao', '');
+          retEvento.FRecepcao.FversaoAplicRecepcao :=
+            Leitor.rCampo(tcStr, 'versaoAppRecepcao');
+          retEvento.FRecepcao.FProtocolo :=
+            Leitor.rCampo(tcStr, 'protocoloEnvioLote');
+          // processamento
+          Reader.Grupo := Reader.rExtrai(1, 'processamento');
+          retEvento.FProcessamento.FcdResposta :=
+            Leitor.rCampo(tcStr, 'cdResposta');
+          retEvento.FProcessamento.FdescResposta :=
+            UTF8ToNativeString(Leitor.rCampo(tcStr, 'descResposta'));
+          retEvento.FProcessamento.versaoAplicProcLote :=
+            Leitor.rCampo(tcStr, 'versaoAppProcessamento');
+          retEvento.FProcessamento.FdhProcessamento :=
+            Leitor.rCampo(tcDatHor, 'dhProcessamento');
+          // recibo
+          Reader.Grupo := Reader.rExtrai(1, 'recibo');
+          retEvento.FRecibo.FnrRecibo := Leitor.rCampo(tcStr, 'nrRecibo');
+          retEvento.FRecibo.FHash := Leitor.rCampo(tcStr, 'hash');
+          Processamento := retEvento.FProcessamento;
+
+          j := 0;
+          Reader.Arquivo := Reader.rExtrai(1, 'ocorrencias');
+          while Reader.rExtrai(1, 'ocorrencia', '', j + 1) <> '' do
+          begin
+            Processamento.Ocorrencias.Add;
+            Processamento.Ocorrencias.Items[j].xml := Reader.Grupo;
+            Processamento.Ocorrencias.Items[j].FLeitor.Arquivo := Reader.Grupo;
+            Processamento.Ocorrencias.Items[j].FLeitor.Grupo := Reader.Grupo;
+            Processamento.Ocorrencias.Items[j].LerXml;
+            inc(j);
+          end;
+          inc(i);
+        finally
+          Reader.Free;
+        end;
+      end;
+    end;
+  finally
+    Leitor.Free;
+  end;
+  *)
 end.
 

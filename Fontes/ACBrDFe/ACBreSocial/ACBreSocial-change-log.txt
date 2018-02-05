@@ -1,3 +1,5 @@
+[+] Implementado (parcial) a unit pcesRetConsultaLote que passa a ser responsável pela leitura 
+    do XML de retorno referente a consulta de um Lote de Eventos.
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 { Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
@@ -60,6 +62,8 @@ Símbolo : Significado
     aleatório.
 [+] Implementado a unit pcesRetEnvioLote que passa a ser responsável pela leitura do XML de
     retorno referente ao envio de um Lote de Eventos. Por conta disso, a unit ACBreSocialWebServices ficou mais enxuta.
+[+] Implementado (parcial) a unit pcesRetConsultaLote que passa a ser responsável pela leitura 
+    do XML de retorno referente a consulta de um Lote de Eventos.
 	Por: Italo Jurisato Junior
    
 -- ACBreSocialWebServices --

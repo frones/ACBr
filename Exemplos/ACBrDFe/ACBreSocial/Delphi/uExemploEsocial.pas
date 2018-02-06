@@ -3749,54 +3749,55 @@ begin
     MemoResp.Lines.Text := ACBreSocial1.WebServices.EnvioLote.RetWS;
     with MemoDados.Lines do
     begin
-      Add('');
-      Add('Código Retorno: ' + IntToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.cdResposta));
-      Add('Mensagem: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.descResposta);
-      
-      if ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.cdResposta in [201, 202] then
+      with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote do
       begin
-        Add('ideEmpregador');
-        Add(' - TpInsc: ' + eSTpInscricaoToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.IdeEmpregador.TpInsc));
-        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.IdeEmpregador.NrInsc);
-        Add('ideTransmissor');
-        Add(' - TpInsc: ' + eSTpInscricaoToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.IdeTransmissor.TpInsc));
-        Add(' - NrInsc: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.IdeTransmissor.NrInsc);
-        Add('dadosRecepcaoLote');
-        Add(' - dhRecepcao..............: ' + DateTimeToStr(ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.dadosRecLote.dhRecepcao));
-        Add(' - versaoAplicativoRecepcao: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.dadosRecLote.versaoAplicRecepcao);
-        Add(' - protocoloEnvio..........: ' + ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.dadosRecLote.Protocolo);
-      end
-      else
-      begin
-        for I := 0 to ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Count - 1 do
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+
+        if Status.cdResposta in [201, 202] then
         begin
-          with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Items[I] do
+          Add('ideEmpregador');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeEmpregador.TpInsc));
+          Add(' - NrInsc: ' + IdeEmpregador.NrInsc);
+          Add('ideTransmissor');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
+          Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
+          Add('dadosRecepcaoLote');
+          Add(' - dhRecepcao..............: ' + DateTimeToStr(dadosRecLote.dhRecepcao));
+          Add(' - versaoAplicativoRecepcao: ' + dadosRecLote.versaoAplicRecepcao);
+          Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
+        end
+        else
+        begin
+          for I := 0 to Status.Ocorrencias.Count - 1 do
           begin
-            Add(' Ocorrencia ' + IntToStr(I));
-            Add('   Código.....: ' + IntToStr(Codigo));
-            Add('   Descrição..: ' + Descricao);
-            Add('   Tipo.......: ' + IntToStr(Tipo));
-            Add('   Localização: ' + Localizacao);
+            with Status.Ocorrencias.Items[I] do
+            begin
+              Add(' Ocorrencia ' + IntToStr(I));
+              Add('   Código.....: ' + IntToStr(Codigo));
+              Add('   Descrição..: ' + Descricao);
+              Add('   Tipo.......: ' + IntToStr(Tipo));
+              Add('   Localização: ' + Localizacao);
+            end;
+            (*
+            retEvento := ACBreSocial1.WebServices.EnvioLote.RetProcLote.
+              retEventos.Items[Index];
+            Add('Ocorrencias');
+            for J := 0 to retEvento.Processamento.Ocorrencias.Count - 1 do
+            begin
+             Add(' Ocorrencia ' + IntToStr(J));
+              Add('   Código:' +
+                IntToStr(retEvento.Processamento.Ocorrencias.Items[J].Codigo));
+              Add('   Descrição: ' + retEvento.Processamento.Ocorrencias.Items[J]
+                .Descricao);
+              Add('   Tipo: ' + IntToStr(retEvento.Processamento.Ocorrencias.Items
+                [J].Tipo));
+              Add('   Localização:' + retEvento.Processamento.Ocorrencias.Items[J]
+                .Localizacao);
+            end;
+            *)
           end;
-
-
-          (*
-          retEvento := ACBreSocial1.WebServices.EnvioLote.RetProcLote.
-            retEventos.Items[Index];
-          Add('Ocorrencias');
-          for J := 0 to retEvento.Processamento.Ocorrencias.Count - 1 do
-          begin
-            Add(' Ocorrencia ' + IntToStr(J));
-            Add('   Código:' +
-              IntToStr(retEvento.Processamento.Ocorrencias.Items[J].Codigo));
-            Add('   Descrição: ' + retEvento.Processamento.Ocorrencias.Items[J]
-              .Descricao);
-            Add('   Tipo: ' + IntToStr(retEvento.Processamento.Ocorrencias.Items
-              [J].Tipo));
-            Add('   Localização:' + retEvento.Processamento.Ocorrencias.Items[J]
-              .Localizacao);
-          end;
-          *)
         end;
       end;
     end;
@@ -3810,8 +3811,7 @@ end;
 procedure TFExemploEsocial.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
-  Index, J: Integer;
-//  retEvento: TretEvento;
+  I, J: Integer;
 begin
   Protocolo := '';
   if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo)) then
@@ -3821,43 +3821,31 @@ begin
   begin
 
     MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaLote.RetWS;
-    (*
+
     with MemoDados.Lines do
     begin
-      Add('');
-      Add('Código Retorno: ' +
-        IntToStr(ACBreSocial1.WebServices.ConsultaLote.RetProcLote.Status));
-      Add('Mensagem: ' + ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
-        Descricao);
-      if ACBreSocial1.WebServices.ConsultaLote.RetProcLote.Status in ([201, 202])
-      then
+      with ACBreSocial1.WebServices.ConsultaLote.RetConsultaLote do
       begin
-        Add('ideEmpregador');
-        Add(' - TpInsc: ' +
-          IntToStr(ord(ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
-          IdeEmpregador.TpInsc)));
-        Add(' - NrInsc: ' + ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
-          IdeEmpregador.NrInsc);
-        Add('ideTransmissor');
-        Add(' - TpInsc: ' + eSTpInscricaoToStr(
-          ACBreSocial1.WebServices.ConsultaLote.RetProcLote.IdeTransmissor.TpInsc));
-        Add(' - NrInsc: ' + ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
-          IdeTransmissor.NrInsc);
-        Add('dadosRecepcaoLote');
-        Add(' - dhRecepcao: ' + DateTimeToStr
-          (ACBreSocial1.WebServices.ConsultaLote.RetProcLote.dadosRecLote.
-          dhRecepcao));
-        Add(' - versaoAplicativoRecepcao: ' +
-          ACBreSocial1.WebServices.ConsultaLote.RetProcLote.dadosRecLote.
-          versaoAplicRecepcao);
-        Add(' - protocoloEnvio: ' + ACBreSocial1.WebServices.ConsultaLote.
-          RetProcLote.dadosRecLote.Protocolo);
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
 
-        for Index := 0 to ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
-          retEventos.Count - 1 do
+        if Status.cdResposta in [201, 202] then
         begin
-          retEvento := ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
-            retEventos.Items[Index];
+          Add('ideEmpregador');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeEmpregador.TpInsc));
+          Add(' - NrInsc: ' + IdeEmpregador.NrInsc);
+          Add('ideTransmissor');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
+          Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
+          Add('dadosRecepcaoLote');
+          Add(' - dhRecepcao..............: ' + DateTimeToStr(dadosRecLote.dhRecepcao));
+          Add(' - versaoAplicativoRecepcao: ' + dadosRecLote.versaoAplicRecepcao);
+          Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
+        (*
+        for Index := 0 to ACBreSocial1.WebServices.ConsultaLote.RetProcLote.retEventos.Count - 1 do
+        begin
+          retEvento := ACBreSocial1.WebServices.ConsultaLote.RetProcLote.retEventos.Items[Index];
           if retEvento.Processamento.cdResposta <> EmptyStr then
           begin
             Add('Processamento');
@@ -3888,31 +3876,25 @@ begin
             end;
           end;
         end;
-      end
-      else
-      begin
-        for Index := 0 to ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
-          retEventos.Count - 1 do
+        *)
+        end
+        else
         begin
-          retEvento := ACBreSocial1.WebServices.ConsultaLote.RetProcLote.
-            retEventos.Items[Index];
-          Add('Ocorrencias');
-          for J := 0 to retEvento.Processamento.Ocorrencias.Count - 1 do
+          for I := 0 to Status.Ocorrencias.Count - 1 do
           begin
-            Add(' Ocorrencia ' + IntToStr(J));
-            Add('   Código:' +
-              IntToStr(retEvento.Processamento.Ocorrencias.Items[J].Codigo));
-            Add('   Descrição: ' + retEvento.Processamento.Ocorrencias.Items[J]
-              .Descricao);
-            Add('   Tipo: ' + IntToStr(retEvento.Processamento.Ocorrencias.Items
-              [J].Tipo));
-            Add('   Localização:' + retEvento.Processamento.Ocorrencias.Items[J]
-              .Localizacao);
+            with Status.Ocorrencias.Items[I] do
+            begin
+              Add(' Ocorrencia ' + IntToStr(I));
+              Add('   Código.....: ' + IntToStr(Codigo));
+              Add('   Descrição..: ' + Descricao);
+              Add('   Tipo.......: ' + IntToStr(Tipo));
+              Add('   Localização: ' + Localizacao);
+            end;
           end;
         end;
       end;
     end;
-    *)
+
     pgWebservice.ActivePageIndex := 3;
   end;
 end;

@@ -61,6 +61,20 @@ type
   TOcorrenciasProcCollection = class;
   TOcorrenciasProcCollectionItem = class;
   TProcessamento = class;
+  TTrabalhadorConsulta = class;
+  TInfoDeficienciaConsulta = class;
+  TVinculoConsulta = class;
+  TInfoCeletistaConsulta = class;
+  TInfoEstatutarioConsulta = class;
+  TCargo = class;
+  TFuncao = class;
+  TinfoContratoConsulta = class;
+  TLocalTrabGeralConsulta = class;
+  THorarioConsultaCollectionItem = class;
+  THorarioConsultaCollection = class;
+  THorContratualConsulta = class;
+  TContrato = class;
+  TRecibo = class;
 
   TOcorrenciasCollection = class(TCollection)
   private
@@ -177,13 +191,192 @@ type
     property Ocorrencias: TOcorrenciasProcCollection read FOcorrencias write FOcorrencias;
   end;
 
+  TTrabalhadorConsulta = class
+  private
+    FCpfTrab: string;
+    FNisTrab: string;
+    FNmTrab: string;
+  public
+    property CpfTrab: string read FCpfTrab write FCpfTrab;
+    property NisTrab: string read FNisTrab write FNisTrab;
+    property NmTrab: string read FNmTrab write FNmTrab;
+  end;
+
+  TInfoDeficienciaConsulta = class
+  private
+    FinfoCota: string;
+  public
+    property InfoCota: string read FinfoCota write FinfoCota;
+  end;
+
+  TVinculoConsulta = class
+  private
+    FMatricula: string;
+  public
+    property Matricula: string read FMatricula write FMatricula;
+  end;
+
+  TInfoCeletistaConsulta = class
+  private
+    FDtAdm: TDateTime;
+    FTpRegJor: tpTpRegJor;
+    FdtBase: TDateTime;
+    FcnpjSindCategProf: string;
+  public
+    property DtAdm: TDateTime read FDtAdm write FDtAdm;
+    property TpRegJor: tpTpRegJor read FTpRegJor write FTpRegJor;
+    property dtBase: TDateTime read FdtBase write FdtBase;
+    property  cnpjSindCategProf: string read FcnpjSindCategProf write FcnpjSindCategProf;
+  end;
+
+  TInfoEstatutarioConsulta = class
+  private
+    FDtPosse: TDateTime;
+    FDtExercicio: TDateTime;
+  public
+    property DtPosse: TDateTime read FDtPosse write FDtPosse;
+    property DtExercicio: TDateTime read FDtExercicio write FDtExercicio;
+  end;
+
+  TCargo = class
+  private
+    FcodCargo: string;
+    FnmCargo: string;
+    FcodCBO: string;
+  public
+    property codCargo: string read FcodCargo write FcodCargo;
+    property nmCargo: string read FnmCargo write FnmCargo;
+    property codCBO: string read FcodCBO write FcodCBO;
+  end;
+
+  TFuncao = class
+  private
+    FcodFuncao: string;
+    FnmFuncao: string;
+    FcodCBO: string;
+  public
+    property codFuncao: string read FcodFuncao write FcodFuncao;
+    property nmFuncao: string read FnmFuncao write FnmFuncao;
+    property codCBO: string read FcodCBO write FcodCBO;
+  end;
+
+  TinfoContratoConsulta = class
+  private
+    FCargo: TCargo;
+    FFuncao: TFuncao;
+    FcodCateg: string;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property Cargo: TCargo read FCargo write FCargo;
+    property Funcao: TFuncao read FFuncao write FFuncao;
+    property codCateg: string read FcodCateg write FcodCateg;
+  end;
+
+  TLocalTrabGeralConsulta = class
+  private
+    FTpInsc: tpTpInsc;
+    FNrInsc: string;
+    FCnae: string;
+  public
+    property TpInsc: tpTpInsc read FTpInsc write FTpInsc;
+    property NrInsc: string read FNrInsc write FNrInsc;
+    property Cnae: string read FCnae write FCnae;
+  end;
+
+  THorarioConsultaCollectionItem = class(TCollectionItem)
+  private
+    Fdia: tpTpDia;
+    FcodHorContrat: string;
+    FhrEntr: string;
+    FhrSaida: string;
+    FdurJornada: integer;
+    FperHorFlexivel: string;
+    FhorarioIntervalo: THorarioIntervaloCollection;
+  public
+    constructor create; reintroduce;
+    destructor destroy; overload;
+
+    property dia: tpTpDia read Fdia write Fdia;
+    property codHorContrat: string read FcodHorContrat write FcodHorContrat;
+    property hrEntr: string read FhrEntr write FhrEntr;
+    property hrSaida: string read FhrSaida write FhrSaida;
+    property durJornada: integer read FdurJornada write FdurJornada;
+    property perHorFlexivel: string read FperHorFlexivel write FperHorFlexivel;
+    property horarioIntervalo: THorarioIntervaloCollection read FhorarioIntervalo;
+  end;
+
+  THorarioConsultaCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): THorarioConsultaCollectionItem;
+    procedure SetItem(Index: Integer; Value: THorarioConsultaCollectionItem);
+  public
+    constructor Create(AOwner: TPersistent);
+    function Add: THorarioConsultaCollectionItem;
+    property Items[Index: Integer]: THorarioConsultaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  THorContratualConsulta = class(TPersistent)
+  private
+    FQtdHrsSem: integer;
+    FTpJornada: tpTpJornada;
+    FDscTpJorn: string;
+    FTMPParc: tpTmpParc;
+    FHorario: THorarioConsultaCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property QtdHrsSem: integer read FQtdHrsSem write FQtdHrsSem;
+    property TpJornada: tpTpJornada read FTpJornada write FTpJornada;
+    property DscTpJorn: string read FDscTpJorn write FDscTpJorn;
+    property tmpParc: tpTmpParc read FTMPParc write FTMPParc;
+    property horario: THorarioConsultaCollection read FHorario write FHorario;
+  end;
+
+  TContrato = class
+  private
+    FideEmpregador: TInscricao;
+    Ftrabalhador: TTrabalhadorConsulta;
+    FInfoDeficiencia: TInfoDeficienciaConsulta;
+    Fvinculo: TVinculoConsulta;
+    FInfoCeletistaConsulta: TInfoCeletistaConsulta;
+    FInfoEstatutarioConsulta: TInfoEstatutarioConsulta;
+    FinfoContratoConsulta: TinfoContratoConsulta;
+    FRemuneracao: TRemuneracao;
+    FDuracao: TDuracao;
+    FLocalTrabGeralConsulta: TLocalTrabGeralConsulta;
+    FHorContratual: THorContratualConsulta;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property IdeEmpregador: TInscricao read FideEmpregador write FideEmpregador;
+    property Trabalhador: TTrabalhadorConsulta read Ftrabalhador write Ftrabalhador;
+    property InfoDeficiencia: TInfoDeficienciaConsulta read FInfoDeficiencia write FInfoDeficiencia;
+    property Vinculo: TVinculoConsulta read Fvinculo write Fvinculo;
+    property InfoCeletistaConsulta: TInfoCeletistaConsulta read FInfoCeletistaConsulta write FInfoCeletistaConsulta;
+    property InfoEstatutarioConsulta: TInfoEstatutarioConsulta read FInfoEstatutarioConsulta write FInfoEstatutarioConsulta;
+    property InfoContratoConsulta: TinfoContratoConsulta read FinfoContratoConsulta write FinfoContratoConsulta;
+    property Remuneracao: TRemuneracao read FRemuneracao write FRemuneracao;
+    property Duracao: TDuracao read FDuracao write FDuracao;
+    property LocalTrabGeral: TLocalTrabGeralConsulta read FLocalTrabGeralConsulta write FLocalTrabGeralConsulta;
+    property HorContratual: THorContratualConsulta read FHorContratual write FHorContratual;
+  end;
+
   TRecibo = class
   private
     FnrRecibo: String;
     FHash: String;
+    FContrato: TContrato;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     property nrRecibo: string read FnrRecibo write FnrRecibo;
     property Hash: string read FHash write FHash;
+    property Contrato: TContrato read FContrato write FContrato;
   end;
 
   //////////////////////// Classes a serem checadas
@@ -283,6 +476,128 @@ destructor TProcessamento.Destroy;
 begin
   FOcorrencias.Free;
   
+  inherited;
+end;
+
+{ TinfoContratoConsulta }
+constructor TinfoContratoConsulta.Create;
+begin
+  inherited;
+
+  FCargo    := TCargo.Create;
+  FFuncao   := TFuncao.Create;
+  FcodCateg := '';
+end;
+
+destructor TinfoContratoConsulta.Destroy;
+begin
+  FCargo.Free;
+  FFuncao.Free;
+
+  inherited;
+end;
+
+{ THorarioConsultaCollectionItem }
+
+constructor THorarioConsultaCollectionItem.create;
+begin
+//  inherited;
+
+  FhorarioIntervalo := THorarioIntervaloCollection.Create;
+end;
+
+destructor THorarioConsultaCollectionItem.destroy;
+begin
+  FhorarioIntervalo.Free;
+
+  inherited;
+end;
+
+{ THorarioConsultaCollection }
+function THorarioConsultaCollection.Add: THorarioConsultaCollectionItem;
+begin
+  Result := THorarioConsultaCollectionItem(inherited Add);
+  Result.Create;
+end;
+
+constructor THorarioConsultaCollection.Create(AOwner: TPersistent);
+begin
+  inherited Create(THorarioConsultaCollectionItem);
+end;
+
+function THorarioConsultaCollection.GetItem(Index: Integer): THorarioConsultaCollectionItem;
+begin
+  Result := THorarioConsultaCollectionItem(inherited GetItem(Index));
+end;
+
+procedure THorarioConsultaCollection.SetItem(Index: Integer;
+  Value: THorarioConsultaCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ THorContratualConsulta }
+constructor THorContratualConsulta.Create;
+begin
+  inherited;
+
+  FHorario := THorarioConsultaCollection.Create(self);
+end;
+
+destructor THorContratualConsulta.Destroy;
+begin
+  FHorario.Free;
+
+  inherited;
+end;
+
+{ TContrato }
+constructor TContrato.Create;
+begin
+  inherited;
+
+  FideEmpregador := TInscricao.Create;
+  Ftrabalhador := TTrabalhadorConsulta.Create;
+  FInfoDeficiencia := TInfoDeficienciaConsulta.Create;
+  Fvinculo := TVinculoConsulta.Create;
+  FInfoCeletistaConsulta := TInfoCeletistaConsulta.Create;
+  FInfoEstatutarioConsulta := TInfoEstatutarioConsulta.Create;
+  FinfoContratoConsulta := TinfoContratoConsulta.Create;
+  FRemuneracao := TRemuneracao.Create;
+  FDuracao := TDuracao.Create;
+  FLocalTrabGeralConsulta := TLocalTrabGeralConsulta.Create;
+  FHorContratual := THorContratualConsulta.Create;
+end;
+
+destructor TContrato.Destroy;
+begin
+  FideEmpregador.Free;
+  Ftrabalhador.Free;
+  FInfoDeficiencia.Free;
+  Fvinculo.Free;
+  FInfoCeletistaConsulta.Free;
+  FInfoEstatutarioConsulta.Free;
+  FinfoContratoConsulta.Free;
+  FRemuneracao.Free;
+  FDuracao.Free;
+  FLocalTrabGeralConsulta.Free;;
+  FHorContratual.Free;
+
+  inherited;
+end;
+
+{ TRecibo }
+constructor TRecibo.Create;
+begin
+ inherited;
+
+ FContrato := TContrato.Create;
+end;
+
+destructor TRecibo.Destroy;
+begin
+  FContrato.Free;
+
   inherited;
 end;
 

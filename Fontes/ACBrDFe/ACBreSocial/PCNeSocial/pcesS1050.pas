@@ -61,8 +61,6 @@ type
   TideHorContratual = class;
   TDadosHorContratual = class;
   TInfoHorContratual = class;
-  THorarioIntervaloCollectionItem = class;
-  THorarioIntervaloCollection = class;
 
   TS1050Collection = class(TOwnedCollection)
   private
@@ -107,31 +105,6 @@ type
     property IdeEvento: TIdeEvento read fIdeEvento write fIdeEvento;
     property IdeEmpregador: TIdeEmpregador read fIdeEmpregador write fIdeEmpregador;
     property InfoHorContratual: TInfoHorContratual read fInfoHorContratual write fInfoHorContratual;
-  end;
-
-  THorarioIntervaloCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): THorarioIntervaloCollectionItem;
-    procedure SetItem(Index: Integer; Value: THorarioIntervaloCollectionItem);
-  public
-    constructor Create; reintroduce;
-    function Add: THorarioIntervaloCollectionItem;
-    property Items[Index: Integer]: THorarioIntervaloCollectionItem read GetItem write SetItem;
-  end;
-
-  THorarioIntervaloCollectionItem = class(TCollectionItem)
-  private
-    FTpInterv : tpTpIntervalo;
-    FDurInterv: integer;
-    FIniInterv: string;
-    FTermInterv : string;
-  public
-    constructor create; reintroduce;
-
-    property tpInterv: tpTpIntervalo read FTpInterv write FTpInterv;
-    property durInterv: integer read FDurInterv write FDurInterv;
-    property iniInterv: string read FIniInterv write FIniInterv;
-    property termInterv: string read FTermInterv write FTermInterv;
   end;
 
   TideHorContratual = class(TPersistent)
@@ -395,38 +368,6 @@ begin
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '') 
-end;
-
-{ THorarioIntervaloCollectionItem }
-
-constructor THorarioIntervaloCollectionItem.create;
-begin
-
-end;
-
-{ THorarioIntervaloCollection }
-
-function THorarioIntervaloCollection.Add: THorarioIntervaloCollectionItem;
-begin
-  Result := THorarioIntervaloCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor THorarioIntervaloCollection.Create;
-begin
-  inherited create(THorarioIntervaloCollectionItem);
-end;
-
-function THorarioIntervaloCollection.GetItem(
-  Index: Integer): THorarioIntervaloCollectionItem;
-begin
-  Result := THorarioIntervaloCollectionItem(inherited GetItem(Index));
-end;
-
-procedure THorarioIntervaloCollection.SetItem(Index: Integer;
-  Value: THorarioIntervaloCollectionItem);
-begin
-  inherited SetItem(Index, Value);
 end;
 
 end.

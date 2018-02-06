@@ -55,6 +55,8 @@ Símbolo : Significado
 [+] Adicionado a unit pcesRetornoClass para centralizar as classes usadas nas units de retorno
     de envio e consulta.
    Por: Italo Jurisato Junior
+[+] Impementado as classes necessárias para finalizar a leitura do XML retornado pela consulta.
+	Por: Rafael Dias
 
 05/02/2018
 -- ACBreSocial --

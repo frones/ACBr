@@ -289,8 +289,7 @@ begin
         Reader.Arquivo := Reader.rExtrai(1, 'retornoEvento');
         Reader.Grupo := Reader.rExtrai(1, 'status');
         Evento.Status.cdRetorno := Reader.rCampo(tcInt, 'cdRetorno');
-
-        Evento.Status.descRetorno := NativeStringToUTF8(Reader.rCampo(tcStr, 'descRetorno'));
+        Evento.Status.descRetorno := UTF8ToNativeString((Reader.rCampo(tcStr, 'descRetorno')));
 
         if Evento.Status.cdRetorno = 0 then
         begin
@@ -310,7 +309,7 @@ begin
               Ocorrencia.tipo := Reader.rCampo(tcInt, 'tipo');
               Ocorrencia.localizacaoErroAviso := Reader.rCampo(tcStr, 'localizacaoErroAviso');
               Ocorrencia.codigo := Reader.rCampo(tcStr, 'codigo');
-              Ocorrencia.descricao := NativeStringToUTF8(Reader.rCampo(tcStr, 'descricao'));
+              Ocorrencia.descricao := UTF8ToNativeString(Reader.rCampo(tcStr, 'descricao'));
 
               inc(k);
             end;

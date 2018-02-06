@@ -66,6 +66,7 @@ type
     FPStatus: TStatusACBreSocial;
     FPLayout: TLayOut;
     FPConfiguracoeseSocial: TConfiguracoeseSocial;
+
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -85,6 +86,7 @@ type
 
   TEnvioLote = class(TeSocialWebService)
   private
+    AGrupo: TeSocialGrupo;
     FVersao: String;
     FLote: TLoteEventos;
     FRetEnvioLote: TRetEnvioLote;
@@ -105,6 +107,7 @@ type
 
     procedure Clear; override;
 
+    property Grupo: TeSocialGrupo read AGrupo write AGrupo;
     property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
   end;
 
@@ -112,11 +115,7 @@ type
 
   TConsultaLote = class(TeSocialWebService)
   private
-    FACBreSocial: TACBrDFe;
     FProtocolo: string;
-    FXMLEnvio: AnsiString;
-    FXMlRet: AnsiString;
-
     FRetConsultaLote: TRetConsultaLote;
 
   protected
@@ -133,12 +132,9 @@ type
     constructor Create(AOwner: TACBrDFe); override;
 
     procedure Clear; override;
-    procedure GerarXML;
     procedure BeforeDestruction; override;
 
     property Protocolo: string read FProtocolo write FProtocolo;
-    property XMLEnvio: AnsiString read FXMLEnvio;
-    property XMlRet: AnsiString read FXMlRet;
     property RetConsultaLote: TRetConsultaLote read FRetConsultaLote;
 
   end;
@@ -154,7 +150,7 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(AGrupo: TeSocialGrupo): Boolean; reintroduce;
+    function Envia(AGrupo: TeSocialGrupo): Boolean;
     function Consultar(const AProtocolo: string): Boolean;
 
     property ACBreSocial: TACBrDFe read FACBreSocial write FACBreSocial;
@@ -231,7 +227,6 @@ begin
   { Sobrescrever apenas se necessário }
   inherited InicializarServico;
 
-  // FPDFeOwner.SSL.SSLType := LT_TLSv1;
   TACBreSocial(FPDFeOwner).SetStatus(FPStatus);
 end;
 
@@ -287,7 +282,25 @@ end;
 
 procedure TEnvioLote.DefinirDadosMsg;
 begin
+
+  with FLote.IdeEmpregador do
+  begin
+    TpInsc := tiCNPJ;
+    NrInsc := TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdEmpregador;
+  end;
+
+  with FLote.IdeTransmissor do
+  begin
+    TpInsc := tiCNPJ;
+    NrInsc := TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdTransmissor;
+  end;
+
+  FLote.GerarXML(AGrupo);
+
   FPDadosMsg := FLote.Xml;
+
+  if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
+    TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioLote);
 end;
 
 procedure TEnvioLote.DefinirEnvelopeSoap;
@@ -322,6 +335,9 @@ begin
 
   FRetEnvioLote.Leitor.Arquivo := ParseText(FPRetWS);
   FRetEnvioLote.LerXml;
+
+  if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
+    TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPRetWS, eseRetornoLote);
 
   Result := True; //(FRetEnvioLote.cdResposta in [201, 202]);
 end;
@@ -369,7 +385,6 @@ end;
 constructor TConsultaLote.Create(AOwner: TACBrDFe);
 begin
   Inherited Create(AOwner);
-  FACBreSocial := AOwner;
 end;
 
 procedure TConsultaLote.Clear;
@@ -401,6 +416,9 @@ begin
            '<protocoloEnvio>' + FProtocolo + '</protocoloEnvio>' +
           '</consultaLoteEventos>' +
          '</eSocial>';
+
+  if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
+    TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioConsulta);
 end;
 
 procedure TConsultaLote.DefinirEnvelopeSoap;
@@ -474,25 +492,15 @@ begin
   Result := FormatDateTime('yyyymmddhhnnss', Now);
 end;
 
-procedure TConsultaLote.GerarXML;
-var
-  xml: AnsiString;
-begin
-  xml := '<eSocial xmlns="' + ACBRESOCIAL_NAMESPACE_CON + '">' +
-          '<consultaLoteEventos>' +
-           '<protocoloEnvio>' + FProtocolo + '</protocoloEnvio>' +
-          '</consultaLoteEventos>' +
-         '</eSocial>';
-
-  FXMLEnvio := xml;
-end;
-
 function TConsultaLote.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarLoteEventosResult');
 
   FRetConsultaLote.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsultaLote.LerXml;
+
+  if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
+    TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPRetWS, eseRetornoConsulta);
 
   Result := True; //(FRetEnvioLote.cdResposta in [201, 202]);
 end;
@@ -517,57 +525,30 @@ end;
 
 function TWebServices.Envia(AGrupo: TeSocialGrupo): Boolean;
 begin
+{$IFDEF FPC}
+  Result := False;
+{$ENDIF}
 
-  with EnvioLote.FLote.IdeEmpregador do
-  begin
-    TpInsc := tiCNPJ;
-    NrInsc := TACBreSocial(FACBreSocial).Configuracoes.Geral.IdEmpregador;
-  end;
-
-  with EnvioLote.FLote.IdeTransmissor do
-  begin
-    TpInsc := tiCNPJ;
-    NrInsc := TACBreSocial(FACBreSocial).Configuracoes.Geral.IdTransmissor;
-  end;
-
-  EnvioLote.FLote.GerarXML(AGrupo);
-
-  if Assigned(TACBreSocial(FACBreSocial).OnTransmissaoEventos) then
-    TACBreSocial(FACBreSocial).OnTransmissaoEventos(EnvioLote.FLote.xml,
-      eseEnvioLote);
+  EnvioLote.Grupo := AGrupo;
 
   if not EnvioLote.Executar then
     EnvioLote.GerarException(EnvioLote.Msg);
-
-  if Assigned(TACBreSocial(FACBreSocial).OnTransmissaoEventos) then
-    TACBreSocial(FACBreSocial).OnTransmissaoEventos(EnvioLote.RetornoWS,
-      eseRetornoLote);
 
   Result := True;
 end;
 
 function TWebServices.Consultar(const AProtocolo: string): Boolean;
 begin
+{$IFDEF FPC}
+  Result := False;
+{$ENDIF}
+
   FConsultaLote.FProtocolo := AProtocolo;
-//  FConsultaLote.GerarXML;
 
-  if Assigned(TACBreSocial(FACBreSocial).OnTransmissaoEventos) then
-    TACBreSocial(FACBreSocial).OnTransmissaoEventos(ConsultaLote.XMLEnvio,
-      eseEnvioConsulta);
-
-//  try
-    if not FConsultaLote.Executar then
+  if not FConsultaLote.Executar then
       FConsultaLote.GerarException(FConsultaLote.Msg);
-//    Result := True;
-//  except
-//    raise;
-//  end;
 
-  if Assigned(TACBreSocial(FACBreSocial).OnTransmissaoEventos) then
-    TACBreSocial(FACBreSocial).OnTransmissaoEventos(ConsultaLote.XMlRet,
-      eseRetornoConsulta);
-
-    Result := True;
+  Result := True;
 end;
 
 end.

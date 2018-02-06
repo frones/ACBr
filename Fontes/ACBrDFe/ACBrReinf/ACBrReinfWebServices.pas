@@ -268,7 +268,8 @@ begin
     // Eventos
     Leitor.Arquivo := Ansistring(FPRetWS);
     i := 0;
-    while Leitor.rExtrai(1, 'retornoEventos', '', i + 1) <> '' do
+
+    while Leitor.rExtrai(1, 'retornoEvento', '', i + 1) <> '' do
     begin
       //recepcao
       Reader := TLeitor.Create;

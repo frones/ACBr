@@ -439,7 +439,7 @@ end;
 // B21 - Formato de Impressão do DANFE *****************************************
 function TpImpToStr(const t: TpcnTipoImpressao): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '4'],
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'],
                               [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
                                tiNFCe, tiMsgEletronica]);
 end;

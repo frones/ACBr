@@ -52,63 +52,9 @@ interface
 uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pcesCommon, pcesConversaoeSocial;
+  pcesCommon, pcesRetornoClass, pcesConversaoeSocial;
 
 type
-  TOcorrenciasCollection = class;
-  TOcorrenciasCollectionItem = class;
-  TStatus = class;
-
-  TOcorrenciasCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TOcorrenciasCollectionItem;
-    procedure SetItem(Index: Integer; Value: TOcorrenciasCollectionItem);
-  public
-    constructor create(AOwner: TStatus);
-
-    function Add: TOcorrenciasCollectionItem;
-    property Items[Index: Integer]: TOcorrenciasCollectionItem read GetItem write SetItem;
-  end;
-
-  TOcorrenciasCollectionItem = class(TCollectionItem)
-  private
-    FCodigo: Integer;
-    FDescricao: String;
-    FTipo: Byte;
-    FLocalizacao: String;
-  public
-    property Codigo: Integer read FCodigo write FCodigo;
-    property Descricao: String read FDescricao write FDescricao;
-    property Tipo: Byte read FTipo write FTipo;
-    property Localizacao: String read FLocalizacao write FLocalizacao;
-  end;
-
-  TStatus = class
-  private
-    FcdResposta: Integer;
-    FdescResposta: string;
-    FOcorrencias: TOcorrenciasCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property cdResposta: Integer read FcdResposta write FcdResposta;
-    property descResposta: string read FdescResposta write FdescResposta;
-    property Ocorrencias: TOcorrenciasCollection read FOcorrencias write FOcorrencias;
-  end;
-
-  TDadosRecepcaoLote = class
-  private
-    FdhRecepcao: TDateTime;
-    FversaoAplicRecepcao: String;
-    FProtocolo: String;
-  public
-    property dhRecepcao: TDateTime read FdhRecepcao write FdhRecepcao;
-    property versaoAplicRecepcao: String read FversaoAplicRecepcao
-      write FversaoAplicRecepcao;
-    property Protocolo: String read FProtocolo write FProtocolo;
-  end;
-
   TRetEnvioLote = class(TPersistent)
   private
     FLeitor: TLeitor;
@@ -130,44 +76,6 @@ type
   end;
 
 implementation
-
-{ TOcorrenciasCollection }
-
-function TOcorrenciasCollection.Add: TOcorrenciasCollectionItem;
-begin
-  Result := TOcorrenciasCollectionItem(inherited Add());
-end;
-
-constructor TOcorrenciasCollection.create(AOwner: TStatus);
-begin
-  inherited create(TOcorrenciasCollectionItem);
-end;
-
-function TOcorrenciasCollection.GetItem(
-  Index: Integer): TOcorrenciasCollectionItem;
-begin
-  Result := TOcorrenciasCollectionItem(Inherited GetItem(Index));
-end;
-
-procedure TOcorrenciasCollection.SetItem(Index: Integer;
-  Value: TOcorrenciasCollectionItem);
-begin
-  Inherited SetItem(Index, Value);
-end;
-
-{ TStatus }
-
-constructor TStatus.Create;
-begin
-  FOcorrencias := TOcorrenciasCollection.create(Self);
-end;
-
-destructor TStatus.Destroy;
-begin
-  FOcorrencias.Free;
-
-  inherited;
-end;
 
 { TRetEnvioLote }
 

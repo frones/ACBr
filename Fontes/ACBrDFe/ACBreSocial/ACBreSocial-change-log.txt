@@ -50,6 +50,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2018
+-- ACBreSocial --
+[+] Adicionado a unit pcesRetornoClass para centralizar as classes usadas nas units de retorno
+    de envio e consulta.
+   Por: Italo Jurisato Junior
+
 05/02/2018
 -- ACBreSocial --
 [*] Realizado ajustes para que os XMLs sejam salvos conforme configurações estabelecidas

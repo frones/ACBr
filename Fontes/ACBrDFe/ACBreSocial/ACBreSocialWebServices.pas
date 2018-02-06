@@ -59,6 +59,8 @@ uses
 
 type
 
+  { TeSocialWebService }
+
   TeSocialWebService = class(TDFeWebService)
   private
     FPStatus: TStatusACBreSocial;
@@ -79,46 +81,6 @@ type
     property Layout: TLayOut read FPLayout;
   end;
 
-  { TStatusEnvLote }
-  TStatusRetorno = class
-  private
-    FcdResposta: Integer;
-    FdescResposta: String;
-//    FOcorrencias: TOcorrencias;
-
-  public
-    property cdResposta: Integer read FcdResposta write FcdResposta;
-    property descResposta: String read FdescResposta write FdescResposta;
-//    property Ocorrencias: TOcorrencias read FOcorrencias write FOcorrencias;
-
-  end;
-
-  TStatusEnvLote = class(TStatusRetorno);
-
-  TStatusProcLote = class(TStatusRetorno)
-  private
-    FTmpConclusao: Integer;
-
-  public
-    property TmpConclusao: Integer read FTmpConclusao write FTmpConclusao;
-
-  end;
-
-  TRecepcao = class
-  private
-    FtpAmb: TptpAmb;
-    FdhRecepcao: TDateTime;
-    FversaoAplicRecepcao: String;
-    FProtocolo: String;
-
-  end;
-
-  TRecibo = class
-  public
-    FnrRecibo: String;
-    FHash: String;
-  end;
-
   { TEnvioLote }
 
   TEnvioLote = class(TeSocialWebService)
@@ -132,7 +94,6 @@ type
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     procedure DefinirEnvelopeSoap; override;
-    procedure Clear; override;
 
     function TratarResposta: Boolean; override;
     function GerarMsgLog: String; override;
@@ -142,10 +103,12 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
 
+    procedure Clear; override;
+
     property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
   end;
 
-  { TeSocialConsulta }
+  { TConsultaLote }
 
   TConsultaLote = class(TeSocialWebService)
   private
@@ -161,7 +124,6 @@ type
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     procedure DefinirEnvelopeSoap; override;
-    procedure Clear; override;
 
     function TratarResposta: Boolean; override;
     function GerarMsgLog: String; override;
@@ -170,6 +132,7 @@ type
   public
     constructor Create(AOwner: TACBrDFe); override;
 
+    procedure Clear; override;
     procedure GerarXML;
     procedure BeforeDestruction; override;
 
@@ -433,7 +396,7 @@ end;
 procedure TConsultaLote.DefinirDadosMsg;
 begin
   FPDadosMsg :=
-         '<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0">' +
+         '<eSocial xmlns="' + ACBRESOCIAL_NAMESPACE_CON + '">' +
           '<consultaLoteEventos>' +
            '<protocoloEnvio>' + FProtocolo + '</protocoloEnvio>' +
           '</consultaLoteEventos>' +
@@ -515,7 +478,7 @@ procedure TConsultaLote.GerarXML;
 var
   xml: AnsiString;
 begin
-  xml := '<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0">' +
+  xml := '<eSocial xmlns="' + ACBRESOCIAL_NAMESPACE_CON + '">' +
           '<consultaLoteEventos>' +
            '<protocoloEnvio>' + FProtocolo + '</protocoloEnvio>' +
           '</consultaLoteEventos>' +
@@ -586,23 +549,25 @@ end;
 function TWebServices.Consultar(const AProtocolo: string): Boolean;
 begin
   FConsultaLote.FProtocolo := AProtocolo;
-  FConsultaLote.GerarXML;
+//  FConsultaLote.GerarXML;
 
   if Assigned(TACBreSocial(FACBreSocial).OnTransmissaoEventos) then
     TACBreSocial(FACBreSocial).OnTransmissaoEventos(ConsultaLote.XMLEnvio,
       eseEnvioConsulta);
 
-  try
+//  try
     if not FConsultaLote.Executar then
       FConsultaLote.GerarException(FConsultaLote.Msg);
-    Result := True;
-  except
-    raise;
-  end;
+//    Result := True;
+//  except
+//    raise;
+//  end;
 
   if Assigned(TACBreSocial(FACBreSocial).OnTransmissaoEventos) then
     TACBreSocial(FACBreSocial).OnTransmissaoEventos(ConsultaLote.XMlRet,
       eseRetornoConsulta);
+
+    Result := True;
 end;
 
 end.

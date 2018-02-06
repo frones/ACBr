@@ -62,6 +62,7 @@ resourcestring
 const
   ACBRESOCIAL_VERSAO = '2.4.1';
   ACBRESOCIAL_NAMESPACE = ' http://www.esocial.gov.br/servicos/empregador/lote/eventos/envio/v1_1_0';
+  ACBRESOCIAL_NAMESPACE_CON = 'http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0';
   ACBRESOCIAL_NAMESPACE_URI = 'http://www.esocial.gov.br/schema/evt/';
   ACBRESOCIAL_VERSAO_URI = '/v02_04_01';
   ACBRESOCIAL_MODELODF = 'eSocial';

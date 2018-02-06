@@ -112,10 +112,10 @@ type
 
 implementation
 
-{ TLoteEventos }
-
 uses
   ACBreSocial, DateUtils;
+
+{ TLoteEventos }
 
 function TLoteEventos.Add: TItemLoteEventos;
 begin
@@ -293,7 +293,7 @@ procedure TLoteEventos.GerarXML(const AGrupo: TeSocialGrupo);
 var
   i: Integer;
   Eventosxml: AnsiString;
-  Path: string;
+//  Path: string;
 begin
   CarregarXmlEventos;
 
@@ -326,10 +326,9 @@ begin
           '</eSocial>';
 
   FXML := AnsiToUtf8(FXML);
-
+  (*
   if TACBreSocial(Self.Owner).Configuracoes.Geral.Salvar then
   begin
-//    Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
     with TACBreSocial(Self.Owner) do
       Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
@@ -348,7 +347,7 @@ begin
       Free;
     end;
   end;
-
+  *)
   Validar;
 end;
 

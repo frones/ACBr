@@ -1,9 +1,9 @@
 object FExemploEsocial: TFExemploEsocial
   Left = 198
   Top = 86
-  Width = 1037
-  Height = 643
   Caption = 'Exemplo eSocial'
+  ClientHeight = 604
+  ClientWidth = 1021
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FExemploEsocial: TFExemploEsocial
     Left = 281
     Top = 0
     Width = 740
-    Height = 605
+    Height = 604
     Align = alClient
     TabOrder = 0
     object pgcEventos: TPageControl
@@ -380,7 +380,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 145
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 9
           Text = 'Aviso'
@@ -486,7 +485,7 @@ object FExemploEsocial: TFExemploEsocial
     end
     object pgWebservice: TPageControl
       Left = 1
-      Top = 339
+      Top = 338
       Width = 738
       Height = 265
       ActivePage = tsComandos
@@ -646,7 +645,7 @@ object FExemploEsocial: TFExemploEsocial
     Left = 0
     Top = 0
     Width = 281
-    Height = 605
+    Height = 604
     Align = alLeft
     TabOrder = 1
     object lblColaborador: TLabel
@@ -715,8 +714,6 @@ object FExemploEsocial: TFExemploEsocial
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -731,6 +728,8 @@ object FExemploEsocial: TFExemploEsocial
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl1: TPageControl
       Left = 1
@@ -863,7 +862,6 @@ object FExemploEsocial: TFExemploEsocial
             Top = 93
             Width = 248
             Height = 21
-            ItemHeight = 13
             TabOrder = 5
           end
           object edtPathSchemas: TEdit
@@ -921,7 +919,6 @@ object FExemploEsocial: TFExemploEsocial
             Top = 117
             Width = 248
             Height = 21
-            ItemHeight = 13
             TabOrder = 2
           end
         end
@@ -1186,7 +1183,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
           TabOrder = 9
           OnChange = cbSSLLibChange
         end
@@ -1196,7 +1192,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
           TabOrder = 10
           OnChange = cbCryptLibChange
         end
@@ -1206,7 +1201,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
           TabOrder = 11
           OnChange = cbHttpLibChange
         end
@@ -1216,7 +1210,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
           TabOrder = 12
           OnChange = cbXmlSignLibChange
         end
@@ -1303,7 +1296,6 @@ object FExemploEsocial: TFExemploEsocial
             Height = 21
             Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
             Style = csDropDownList
-            ItemHeight = 0
             TabOrder = 4
             OnChange = cbSSLTypeChange
           end
@@ -1565,13 +1557,18 @@ object FExemploEsocial: TFExemploEsocial
   object ACBreSocial1: TACBreSocial
     OnStatusChange = ACBreSocial1StatusChange
     OnGerarLog = ACBreSocial1GerarLog
-    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Arquivos.PathSalvar = 'C:\teste_esocial\'
     Configuracoes.Arquivos.PathSchemas = '..\..\schemas\eSocial\'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    OnTransmissaoEventos = ACBreSocial1TransmissaoEventos
     Left = 760
     Top = 280
   end

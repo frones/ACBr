@@ -69,10 +69,10 @@ type
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
 
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador;
-    property IdeTransmissor: TIdeTransmissor read FIdeTransmissor;
-    property Status: TStatus read FStatus;
-    property DadosRecLote: TDadosRecepcaoLote read FDadosRecLote;
+    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
+    property IdeTransmissor: TIdeTransmissor read FIdeTransmissor write FIdeTransmissor;
+    property Status: TStatus read FStatus write FStatus;
+    property DadosRecLote: TDadosRecepcaoLote read FDadosRecLote write FDadosRecLote;
   end;
 
 implementation

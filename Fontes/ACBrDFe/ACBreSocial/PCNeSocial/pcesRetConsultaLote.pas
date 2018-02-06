@@ -34,30 +34,51 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
+{ ******************************************************************************
 |* Historico
 |*
 |* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
 |*  - Doação do componente para o Projeto ACBr
 |* 29/02/2015: Guilherme Costa
 |*  - não estava sendo gerada a tag "tpProc"
-******************************************************************************}
+****************************************************************************** }
 
 {$I ACBr.inc}
-
 unit pcesRetConsultaLote;
 
 interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnLeitor,
+  ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial;
 
 type
+  TtotCollection = class;
+  TtotCollectionItem = class;
   TRetEventosCollection = class;
   TRetEventosCollectionItem = class;
   TRetConsultaLote = class;
+
+  TtotCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TtotCollectionItem;
+    procedure SetItem(Index: Integer; Value: TtotCollectionItem);
+  public
+    constructor create(AOwner: TRetEventosCollectionItem);
+
+    function Add: TtotCollectionItem;
+    property Items[Index: Integer]: TtotCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TtotCollectionItem = class(TCollectionItem)
+  private
+    Ftipo: String;
+    FXML: AnsiString;
+  public
+    property tipo: String read Ftipo write Ftipo;
+    property XML: AnsiString read FXML write FXML;
+  end;
 
   TRetEventosCollection = class(TCollection)
   private
@@ -67,57 +88,93 @@ type
     constructor create(AOwner: TRetConsultaLote);
 
     function Add: TRetEventosCollectionItem;
-    property Items[Index: Integer]: TRetEventosCollectionItem read GetItem write SetItem;
+    property Items[Index: Integer]: TRetEventosCollectionItem read GetItem
+      write SetItem; default;
   end;
 
   TRetEventosCollectionItem = class(TCollectionItem)
   private
     FIDEvento: string;
+    FevtDupl: boolean;
+    FIdeEmpregador: TInscricao;
     FRecepcao: TRecepcao;
     FProcessamento: TProcessamento;
     FRecibo: TRecibo;
+    Ftot: TtotCollection;
+
+    procedure Settot(const Value: TtotCollection);
   public
-    constructor Create; reintroduce;
+    constructor create; reintroduce;
     destructor Destroy; override;
 
-    property IDEvento: string read FIDEvento write FIDEvento;
+    property Id: string read FIDEvento write FIDEvento;
+    property evtDupl: boolean read FevtDupl write FevtDupl;
+    property IdeEmpregador: TInscricao read FIdeEmpregador write FIdeEmpregador;
     property Recepcao: TRecepcao read FRecepcao write FRecepcao;
     property Processamento: TProcessamento read FProcessamento write FProcessamento;
     property Recibo: TRecibo read FRecibo write FRecibo;
+    property tot: TtotCollection read Ftot write Settot;
   end;
 
   TRetConsultaLote = class(TPersistent)
   private
     FLeitor: TLeitor;
-    FIdeEmpregador: TIdeEmpregador;
-    FIdeTransmissor: TIdeTransmissor;
+    FIdeEmpregador: TInscricao;
+    FIdeTransmissor: TInscricao;
     FStatus: TStatus;
     FDadosRecLote: TDadosRecepcaoLote;
     FDadosProcLote: TDadosProcLote;
     FRetEventos: TRetEventosCollection;
+
+    procedure SetEventos(const Value: TRetEventosCollection);
   public
-    constructor Create;
+    constructor create;
     destructor Destroy; override;
 
     function LerXml: boolean;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
 
-    property IdeEmpregador: TIdeEmpregador read FIdeEmpregador;
-    property IdeTransmissor: TIdeTransmissor read FIdeTransmissor;
-    property Status: TStatus read FStatus;
-    property DadosRecLote: TDadosRecepcaoLote read FDadosRecLote;
-    property DadosProcLote: TDadosProcLote read FDadosProcLote;
-    property RetEventos: TRetEventosCollection read FRetEventos;
+    property IdeEmpregador: TInscricao read FIdeEmpregador write FIdeEmpregador;
+    property IdeTransmissor: TInscricao read FIdeTransmissor write FIdeTransmissor;
+    property Status: TStatus read FStatus write FStatus;
+    property DadosRecLote: TDadosRecepcaoLote read FDadosRecLote write FDadosRecLote;
+    property DadosProcLote: TDadosProcLote read FDadosProcLote write FDadosProcLote;
+    property RetEventos: TRetEventosCollection read FRetEventos write SetEventos;
   end;
 
 implementation
+
+{ TtotCollection }
+
+function TtotCollection.Add: TtotCollectionItem;
+begin
+  Result := TtotCollectionItem(inherited Add());
+//  Result.create;
+end;
+
+constructor TtotCollection.create(AOwner: TRetEventosCollectionItem);
+begin
+  inherited create(TtotCollectionItem);
+end;
+
+function TtotCollection.GetItem(Index: Integer): TtotCollectionItem;
+begin
+  Result := TtotCollectionItem(Inherited GetItem(Index));
+end;
+
+procedure TtotCollection.SetItem(Index: Integer;
+  Value: TtotCollectionItem);
+begin
+  Inherited SetItem(Index, Value);
+end;
 
 { TRetEventosCollection }
 
 function TRetEventosCollection.Add: TRetEventosCollectionItem;
 begin
   Result := TRetEventosCollectionItem(inherited Add());
+  Result.create;
 end;
 
 constructor TRetEventosCollection.create(AOwner: TRetConsultaLote);
@@ -125,8 +182,8 @@ begin
   inherited create(TRetEventosCollectionItem);
 end;
 
-function TRetEventosCollection.GetItem(
-  Index: Integer): TRetEventosCollectionItem;
+function TRetEventosCollection.GetItem(Index: Integer)
+  : TRetEventosCollectionItem;
 begin
   Result := TRetEventosCollectionItem(Inherited GetItem(Index));
 end;
@@ -139,34 +196,43 @@ end;
 
 { TRetEventosCollectionItem }
 
-constructor TRetEventosCollectionItem.Create;
+constructor TRetEventosCollectionItem.create;
 begin
-  FRecepcao := TRecepcao.Create;
-  FProcessamento := TProcessamento.Create;
-  FRecibo := TRecibo.Create;
+  FIdeEmpregador := TInscricao.Create;
+  FRecepcao := TRecepcao.create;
+  FProcessamento := TProcessamento.create;
+  FRecibo := TRecibo.create;
+  Ftot := TtotCollection.create(Self);
 end;
 
 destructor TRetEventosCollectionItem.Destroy;
 begin
+  FIdeEmpregador.Free;
   FRecepcao.Free;
   FProcessamento.Free;
   FRecibo.Free;
+  Ftot.Free;
 
   inherited;
 end;
 
+procedure TRetEventosCollectionItem.Settot(const Value: TtotCollection);
+begin
+  Ftot := Value;
+end;
+
 { TRetConsultaLote }
 
-constructor TRetConsultaLote.Create;
+constructor TRetConsultaLote.create;
 begin
-  FLeitor := TLeitor.Create;
+  FLeitor := TLeitor.create;
 
-  FIdeEmpregador  := TIdeEmpregador.Create;
-  FIdeTransmissor := TIdeTransmissor.Create;
-  FStatus         := TStatus.Create;
-  FDadosRecLote   := TDadosRecepcaoLote.Create;
-  FDadosProcLote  := TDadosProcLote.Create;
-  FRetEventos     := TRetEventosCollection.create(Self);
+  FIdeEmpregador := TInscricao.create;
+  FIdeTransmissor := TInscricao.create;
+  FStatus := TStatus.create;
+  FDadosRecLote := TDadosRecepcaoLote.create;
+  FDadosProcLote := TDadosProcLote.create;
+  FRetEventos := TRetEventosCollection.create(Self);
 end;
 
 destructor TRetConsultaLote.Destroy;
@@ -182,6 +248,11 @@ begin
   inherited;
 end;
 
+procedure TRetConsultaLote.SetEventos(const Value: TRetEventosCollection);
+begin
+  FRetEventos := Value;
+end;
+
 function TRetConsultaLote.LerXml: boolean;
 var
   ok: boolean;
@@ -190,35 +261,36 @@ begin
   Result := False;
   try
     Leitor.Grupo := Leitor.Arquivo;
-    if leitor.rExtrai(1, 'retornoProcessamentoLoteEventos') <> '' then
+    if Leitor.rExtrai(1, 'retornoProcessamentoLoteEventos') <> '' then
     begin
-      if leitor.rExtrai(2, 'ideEmpregador') <> '' then
+      if Leitor.rExtrai(2, 'ideEmpregador') <> '' then
       begin
-        IdeEmpregador.TpInsc := eSStrToTpInscricao(Ok, FLeitor.rCampo(tcStr, 'tpInsc'));
+        IdeEmpregador.TpInsc := eSStrToTpInscricao(ok, FLeitor.rCampo(tcStr, 'tpInsc'));
         IdeEmpregador.NrInsc := FLeitor.rCampo(tcStr, 'nrInsc');
       end;
 
-      if leitor.rExtrai(2, 'ideTransmissor') <> '' then
+      if Leitor.rExtrai(2, 'ideTransmissor') <> '' then
       begin
-        IdeTransmissor.TpInsc := eSStrToTpInscricao(Ok, FLeitor.rCampo(tcStr, 'tpInsc'));
+        IdeTransmissor.TpInsc := eSStrToTpInscricao(ok, FLeitor.rCampo(tcStr, 'tpInsc'));
         IdeTransmissor.NrInsc := FLeitor.rCampo(tcStr, 'nrInsc');
       end;
 
-      if leitor.rExtrai(2, 'status') <> '' then
+      if Leitor.rExtrai(2, 'status') <> '' then
       begin
-        Status.cdResposta   := Leitor.rCampo(tcInt, 'cdResposta');
+        Status.cdResposta := Leitor.rCampo(tcInt, 'cdResposta');
         Status.descResposta := Leitor.rCampo(tcStr, 'descResposta');
-        Status.tempoEstimadoConclusao := Leitor.rCampo(tcInt, 'tempoEstimadoConclusao');
+        Status.tempoEstimadoConclusao :=
+          Leitor.rCampo(tcInt, 'tempoEstimadoConclusao');
 
-        if leitor.rExtrai(3, 'ocorrencias') <> '' then
+        if Leitor.rExtrai(3, 'ocorrencias') <> '' then
         begin
           i := 0;
           while Leitor.rExtrai(4, 'ocorrencia', '', i + 1) <> '' do
           begin
             Status.Ocorrencias.Add;
-            Status.Ocorrencias.Items[i].Codigo      := FLeitor.rCampo(tcInt, 'codigo');
-            Status.Ocorrencias.Items[i].Descricao   := FLeitor.rCampo(tcStr, 'descricao');
-            Status.Ocorrencias.Items[i].Tipo        := FLeitor.rCampo(tcInt, 'tipo');
+            Status.Ocorrencias.Items[i].Codigo := FLeitor.rCampo(tcInt, 'codigo');
+            Status.Ocorrencias.Items[i].Descricao := FLeitor.rCampo(tcStr, 'descricao');
+            Status.Ocorrencias.Items[i].Tipo := FLeitor.rCampo(tcInt, 'tipo');
             Status.Ocorrencias.Items[i].Localizacao := FLeitor.rCampo(tcStr, 'localizacao');
             inc(i);
           end;
@@ -226,60 +298,88 @@ begin
 
       end;
 
-      if leitor.rExtrai(2, 'dadosRecepcaoLote') <> '' then
+      if Leitor.rExtrai(2, 'dadosRecepcaoLote') <> '' then
       begin
-        dadosRecLote.dhRecepcao          := Leitor.rCampo(tcDatHor, 'dhRecepcao');
-        dadosRecLote.versaoAplicRecepcao := FLeitor.rCampo(tcStr, 'versaoAplicativoRecepcao');
-        dadosRecLote.Protocolo           := FLeitor.rCampo(tcStr, 'protocoloEnvio');
+        DadosRecLote.dhRecepcao := Leitor.rCampo(tcDatHor, 'dhRecepcao');
+        DadosRecLote.versaoAplicRecepcao :=
+          FLeitor.rCampo(tcStr, 'versaoAplicativoRecepcao');
+        DadosRecLote.Protocolo := FLeitor.rCampo(tcStr, 'protocoloEnvio');
       end;
 
-      if leitor.rExtrai(2, 'dadosProcessamentoLote') <> '' then
-        dadosProcLote.versaoAplicProcLote := FLeitor.rCampo(tcStr, 'versaoAplicativoProcessamentoLote');
+      if Leitor.rExtrai(2, 'dadosProcessamentoLote') <> '' then
+        DadosProcLote.versaoAplicProcLote :=
+          FLeitor.rCampo(tcStr, 'versaoAplicativoProcessamentoLote');
 
-      if leitor.rExtrai(2, 'retornoEventos') <> '' then
+      if Leitor.rExtrai(2, 'retornoEventos') > '' then
       begin
         i := 0;
         while Leitor.rExtrai(3, 'evento', '', i + 1) <> '' do
         begin
           RetEventos.Add;
-          RetEventos.Items[i].IDEvento := FLeitor.rAtributo('Id=', 'evento');
+          RetEventos.Items[i].Id := FLeitor.rAtributo('Id=', 'evento');
 
-          if leitor.rExtrai(4, 'recepcao') <> '' then
+          if (FLeitor.rAtributo('evtDupl=', 'evento') <> '') then
+            RetEventos.Items[i].evtDupl := StrToBool(FLeitor.rAtributo('evtDupl=', 'evento'));
+
+          if Leitor.rExtrai(4, 'eSocial') <> '' then
           begin
-            RetEventos.Items[i].Recepcao.tpAmb               := eSStrTotpAmb(Ok, Leitor.rCampo(tcStr, 'tpAmb'));
-            RetEventos.Items[i].Recepcao.dhRecepcao          := Leitor.rCampo(tcDatHor, 'dhRecepcao', '');
-            RetEventos.Items[i].Recepcao.versaoAplicRecepcao := Leitor.rCampo(tcStr, 'versaoAppRecepcao');
-            RetEventos.Items[i].Recepcao.Protocolo           := Leitor.rCampo(tcStr, 'protocoloEnvioLote');
-          end;
-
-          if leitor.rExtrai(4, 'processamento') <> '' then
-          begin
-            RetEventos.Items[i].Processamento.cdResposta          := Leitor.rCampo(tcInt, 'cdResposta');
-            RetEventos.Items[i].Processamento.descResposta        := Leitor.rCampo(tcStr, 'descResposta');
-            RetEventos.Items[i].Processamento.versaoAplicProcLote := Leitor.rCampo(tcStr, 'versaoAppProcessamento');
-            RetEventos.Items[i].Processamento.dhProcessamento     := Leitor.rCampo(tcDatHor, 'dhProcessamento');
-
-            if leitor.rExtrai(5, 'ocorrencias') <> '' then
+            if Leitor.rExtrai(5, 'retornoEvento') <> '' then
             begin
-              j := 0;
-              while Leitor.rExtrai(6, 'ocorrencia', '', j + 1) <> '' do
+
+              if Leitor.rExtrai(6, 'ideEmpregador') <> '' then
               begin
-                RetEventos.Items[i].Processamento.Ocorrencias.Add;
-                RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Codigo      := FLeitor.rCampo(tcInt, 'codigo');
-                RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Descricao   := FLeitor.rCampo(tcStr, 'descricao');
-                RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Tipo        := FLeitor.rCampo(tcInt, 'tipo');
-                RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Localizacao := FLeitor.rCampo(tcStr, 'localizacao');
-                inc(j);
+                RetEventos.Items[i].IdeEmpregador.TpInsc := eSStrToTpInscricao(ok, Leitor.rCampo(tcStr, 'tpInsc'));
+                RetEventos.Items[i].IdeEmpregador.NrInsc := Leitor.rCampo(tcStr, 'nrInsc');
               end;
+
+              if Leitor.rExtrai(6, 'recepcao') <> '' then
+              begin
+                RetEventos.Items[i].Recepcao.tpAmb := eSStrTotpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+                RetEventos.Items[i].Recepcao.dhRecepcao := Leitor.rCampo(tcDatHor, 'dhRecepcao', '');
+                RetEventos.Items[i].Recepcao.versaoAplicRecepcao := Leitor.rCampo(tcStr, 'versaoAppRecepcao');
+                RetEventos.Items[i].Recepcao.Protocolo := Leitor.rCampo(tcStr, 'protocoloEnvioLote');
+              end;
+
+              if Leitor.rExtrai(6, 'processamento') <> '' then
+              begin
+                RetEventos.Items[i].Processamento.cdResposta := Leitor.rCampo(tcInt, 'cdResposta');
+                RetEventos.Items[i].Processamento.descResposta := Leitor.rCampo(tcStr, 'descResposta');
+                RetEventos.Items[i].Processamento.versaoAplicProcLote := Leitor.rCampo(tcStr, 'versaoAppProcessamento');
+                RetEventos.Items[i].Processamento.dhProcessamento := Leitor.rCampo(tcDatHor, 'dhProcessamento');
+
+                if Leitor.rExtrai(7, 'ocorrencias') <> '' then
+                begin
+                  j := 0;
+                  while Leitor.rExtrai(8, 'ocorrencia', '', j + 1) <> '' do
+                  begin
+                    RetEventos.Items[i].Processamento.Ocorrencias.Add;
+                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Codigo := FLeitor.rCampo(tcInt, 'codigo');
+                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Descricao := FLeitor.rCampo(tcStr, 'descricao');
+                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Tipo := FLeitor.rCampo(tcInt, 'tipo');
+                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Localizacao := FLeitor.rCampo(tcStr, 'localizacao');
+                    inc(j);
+                  end;
+                end;
+              end;
+
+              if Leitor.rExtrai(6, 'recibo') <> '' then
+              begin
+                RetEventos.Items[i].Recibo.nrRecibo := Leitor.rCampo(tcStr, 'nrRecibo');
+                RetEventos.Items[i].Recibo.Hash := Leitor.rCampo(tcStr, 'hash');
+
+                // Falta Implementar a estrutura do elemento Contrato.
+              end;
+
             end;
           end;
 
-          if leitor.rExtrai(4, 'recibo') <> '' then
+          j := 0;
+          while Leitor.rExtrai(4, 'tot', '', j + 1) <> '' do
           begin
-            RetEventos.Items[i].Recibo.nrRecibo := Leitor.rCampo(tcStr, 'nrRecibo');
-            RetEventos.Items[i].Recibo.Hash     := Leitor.rCampo(tcStr, 'hash');
-
-            // Falta Implementar a estrutura do elemento Contrato.
+            RetEventos.Items[i].tot.Add;
+            RetEventos.Items[i].tot.Items[j].tipo := FLeitor.rAtributo('tipo=', 'tot');
+            RetEventos.Items[i].tot.Items[j].XML := RetornarConteudoEntre(Leitor.Grupo, '>', '</tot');
+            inc(j);
           end;
 
           inc(i);
@@ -294,4 +394,3 @@ begin
 end;
 
 end.
-

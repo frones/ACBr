@@ -489,7 +489,7 @@ end;
 
 function TConsultaLote.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarLoteEventosResponse');
+  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarLoteEventosResult');
 
   FRetConsultaLote.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsultaLote.LerXml;

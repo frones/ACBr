@@ -3780,23 +3780,6 @@ begin
               Add('   Tipo.......: ' + IntToStr(Tipo));
               Add('   Localização: ' + Localizacao);
             end;
-            (*
-            retEvento := ACBreSocial1.WebServices.EnvioLote.RetProcLote.
-              retEventos.Items[Index];
-            Add('Ocorrencias');
-            for J := 0 to retEvento.Processamento.Ocorrencias.Count - 1 do
-            begin
-             Add(' Ocorrencia ' + IntToStr(J));
-              Add('   Código:' +
-                IntToStr(retEvento.Processamento.Ocorrencias.Items[J].Codigo));
-              Add('   Descrição: ' + retEvento.Processamento.Ocorrencias.Items[J]
-                .Descricao);
-              Add('   Tipo: ' + IntToStr(retEvento.Processamento.Ocorrencias.Items
-                [J].Tipo));
-              Add('   Localização:' + retEvento.Processamento.Ocorrencias.Items[J]
-                .Localizacao);
-            end;
-            *)
           end;
         end;
       end;
@@ -3842,41 +3825,33 @@ begin
           Add(' - dhRecepcao..............: ' + DateTimeToStr(dadosRecLote.dhRecepcao));
           Add(' - versaoAplicativoRecepcao: ' + dadosRecLote.versaoAplicRecepcao);
           Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
-        (*
-        for Index := 0 to ACBreSocial1.WebServices.ConsultaLote.RetProcLote.retEventos.Count - 1 do
-        begin
-          retEvento := ACBreSocial1.WebServices.ConsultaLote.RetProcLote.retEventos.Items[Index];
-          if retEvento.Processamento.cdResposta <> EmptyStr then
+
+          for I := 0 to retEventos.Count - 1 do
           begin
             Add('Processamento');
-            Add(' - cdResposta: ' + retEvento.Processamento.cdResposta);
-            Add(' - descResposta: ' + retEvento.Processamento.descResposta);
-            Add(' - versaoAplicProcLote: ' +
-              retEvento.Processamento.versaoAplicProcLote);
-            Add(' - dhProcessamento: ' +
-              DateTimeToStr(retEvento.Processamento.dhProcessamento));
-            Add('Recibo');
-            Add(' - nrRecibo: ' + retEvento.Recibo.FnrRecibo);
-            Add(' - hash: ' + retEvento.Recibo.Fhash);
-          end;
-          if retEvento.Processamento.Ocorrencias.Count > 0 then
-          begin
-            Add('Ocorrencias');
-            for J := 0 to retEvento.Processamento.Ocorrencias.Count - 1 do
+            Add(' - cdResposta.........: ' + IntToStr(retEventos.Items[I].Processamento.cdResposta));
+            Add(' - descResposta.......: ' + retEventos.Items[I].Processamento.descResposta);
+            Add(' - versaoAplicProcLote: ' + retEventos.Items[I].Processamento.versaoAplicProcLote);
+            Add(' - dhProcessamento....: ' + DateTimeToStr(retEventos.Items[I].Processamento.dhProcessamento));
+
+            if retEventos.Items[I].Processamento.Ocorrencias.Count > 0 then
             begin
-              Add(' Ocorrencia ' + IntToStr(J));
-              Add('   Código:' +
-                IntToStr(retEvento.Processamento.Ocorrencias.Items[J].Codigo));
-              Add('   Descrição: ' + retEvento.Processamento.Ocorrencias.Items
-                [J].Descricao);
-              Add('   Tipo: ' +
-                IntToStr(retEvento.Processamento.Ocorrencias.Items[J].Tipo));
-              Add('   Localização:' + retEvento.Processamento.Ocorrencias.Items
-                [J].Localizacao);
+              Add('Ocorrencias do Processamento');
+              for J := 0 to retEventos.Items[I].Processamento.Ocorrencias.Count - 1 do
+              begin
+                Add(' Ocorrencia ' + IntToStr(J));
+                Add('   Código.....: ' + IntToStr(retEventos.Items[I].Processamento.Ocorrencias.Items[J].Codigo));
+                Add('   Descrição..: ' + retEventos.Items[I].Processamento.Ocorrencias.Items[J].Descricao);
+                Add('   Tipo.......: ' + IntToStr(retEventos.Items[I].Processamento.Ocorrencias.Items[J].Tipo));
+                Add('   Localização: ' + retEventos.Items[I].Processamento.Ocorrencias.Items[J].Localizacao);
+              end;
             end;
+
+            Add('Recibo');
+            Add(' - nrRecibo: ' + retEventos.Items[I].Recibo.nrRecibo);
+            Add(' - hash....: ' + retEventos.Items[I].Recibo.hash);
           end;
-        end;
-        *)
+
         end
         else
         begin

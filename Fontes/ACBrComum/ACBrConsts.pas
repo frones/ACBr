@@ -169,13 +169,14 @@ const
   cTagAbreGavetaEsp = '<abre_gaveta>';
   cTagBeep = '</beep>';
   cTagZera = '</zera>';
+  cTagReset = '</reset>';
   cTagPulodeLinha = '</lf>';
   cTagRetornoDeCarro = '</cr>';
 
-  cTAGS_FUNCOES: array[0..7] of String = (
+  cTAGS_FUNCOES: array[0..8] of String = (
     cTagLogotipo, cTagCorteParcial, cTagCorteTotal, cTagAbreGaveta,
-    cTagBeep, CTagZera, cTagPulodeLinha, cTagRetornoDeCarro);
-  cTAGS_FUNCOES_HELP: array[0..7] of String = (
+    cTagBeep, CTagZera, cTagPulodeLinha, cTagRetornoDeCarro, cTagReset);
+  cTAGS_FUNCOES_HELP: array[0..8] of String = (
     'Imprime Logotipo já gravado na Impressora (use utilitário do fabricante)',
     'Efetua Corte Parcial no Papel (não disponivel em alguns modelos)',
     'Efetua Corte Total no papel',
@@ -183,7 +184,8 @@ const
     'Emite um Beep na Impressora (não disponivel em alguns modelos)',
     'Reseta as configurações de Fonte Alinhamento.<LF>Ajusta Página de Código e Espaço entre Linhas',
     'Pula para a própxima linha',
-    'Retorna para o Inicio da Linha');
+    'Retorna para o Inicio da Linha',
+    'Reseta as configurações de Fonte Alinhamento');
 
   cTagAlinhadoDireita = '<ad>';
   cTagAlinhadoEsquerda = '<ae>';

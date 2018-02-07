@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2018
+-- Diversos --
+[*] Alterações visando o provedor SmarAPDABRASF.
+Por: Italo Jurisato Junior
+
 03/02/2018
 -- Diversos --
 [*] Alterações visando o provedor IPM.

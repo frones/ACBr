@@ -2225,10 +2225,10 @@ end;
 
 function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '06', '07', '08', '09',
+  result := StrToEnumerado(ok, s, ['00', '01', '02', '03', '04', '06', '07', '08', '09',
                                    '10', '11', '13', '14', '21', '22', '60', '70',
                                    '80', '85', '99'],
-                              [ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,
+                              [ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,
                                ct10, ct11, ct13, ct14, ct21, ct22, ct60, ct70,
                                ct80, ct85, ct99]);
 end;

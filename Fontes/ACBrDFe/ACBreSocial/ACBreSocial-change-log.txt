@@ -54,9 +54,13 @@ Símbolo : Significado
    Por: arce
 [*] Finalizado a leitura do XML de retorno da Consulta.
    Por: Italo Jurisato Junior
+[*] Adicionado leitura das url do eSocial a partir do ini.
+   Por: Rafael Dias.
+   
 -- ACBreSocialWebServices --
 [*] Acrescentado a rotina para salvar o XML retornado no grupo <tot>.
    Por: Italo Jurisato Junior
+   
 -- pcesConversaoeSocial --
 [+] Adicionado o enum tpMotivosAfastamento correspondente a Tabela 18 do eSocial.
 	Por: Rafael Dias.

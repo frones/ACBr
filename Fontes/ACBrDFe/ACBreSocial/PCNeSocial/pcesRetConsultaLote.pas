@@ -256,7 +256,7 @@ end;
 function TRetConsultaLote.LerXml: boolean;
 var
   ok: boolean;
-  i, j: Integer;
+  i, j, k: Integer;
 begin
   Result := False;
   try
@@ -353,10 +353,10 @@ begin
                   while Leitor.rExtrai(8, 'ocorrencia', '', j + 1) <> '' do
                   begin
                     RetEventos.Items[i].Processamento.Ocorrencias.Add;
-                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Codigo := FLeitor.rCampo(tcInt, 'codigo');
-                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Descricao := FLeitor.rCampo(tcStr, 'descricao');
-                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Tipo := FLeitor.rCampo(tcInt, 'tipo');
-                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Localizacao := FLeitor.rCampo(tcStr, 'localizacao');
+                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Codigo := Leitor.rCampo(tcInt, 'codigo');
+                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Descricao := Leitor.rCampo(tcStr, 'descricao');
+                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Tipo := Leitor.rCampo(tcInt, 'tipo');
+                    RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Localizacao := Leitor.rCampo(tcStr, 'localizacao');
                     inc(j);
                   end;
                 end;
@@ -367,10 +367,118 @@ begin
                 RetEventos.Items[i].Recibo.nrRecibo := Leitor.rCampo(tcStr, 'nrRecibo');
                 RetEventos.Items[i].Recibo.Hash := Leitor.rCampo(tcStr, 'hash');
 
-                // Falta Implementar a estrutura do elemento Contrato.
-              end;
+                if Leitor.rExtrai(7, 'contrato') <> '' then
+                begin
+                  if Leitor.rExtrai(8, 'ideEmpregador') <> '' then
+                  begin
+                    RetEventos.Items[i].Recibo.Contrato.IdeEmpregador.TpInsc := eSStrToTpInscricao(ok, Leitor.rCampo(tcStr, 'tpInsc'));
+                    RetEventos.Items[i].Recibo.Contrato.IdeEmpregador.NrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+                  end;
 
+                  if Leitor.rExtrai(8, 'trabalhador') <> '' then
+                  begin
+                    RetEventos.Items[i].Recibo.Contrato.trabalhador.CpfTrab := Leitor.rCampo(tcStr, 'cpfTrab');
+                    RetEventos.Items[i].Recibo.Contrato.trabalhador.NisTrab := Leitor.rCampo(tcStr, 'nisTrab');
+                    RetEventos.Items[i].Recibo.Contrato.trabalhador.NmTrab  := Leitor.rCampo(tcStr, 'nmTrab');
+                  end;
+
+                  if Leitor.rExtrai(8, 'infoDeficiencia') <> '' then
+                    RetEventos.Items[i].Recibo.Contrato.infoDeficiencia.InfoCota := Leitor.rCampo(tcStr, 'infoCota');
+
+                  if Leitor.rExtrai(8, 'vinculo') <> '' then
+                    RetEventos.Items[i].Recibo.Contrato.vinculo.Matricula := Leitor.rCampo(tcStr, 'matricula');
+
+                  if Leitor.rExtrai(8, 'infoCeletista') <> '' then
+                  begin
+                    RetEventos.Items[i].Recibo.Contrato.infoCeletista.DtAdm    := Leitor.rCampo(tcDat, 'dtAdm');
+                    RetEventos.Items[i].Recibo.Contrato.infoCeletista.TpRegJor := eSStrToTpRegJor(ok, Leitor.rCampo(tcStr, 'tpRegJor'));
+                    RetEventos.Items[i].Recibo.Contrato.infoCeletista.dtBase   := Leitor.rCampo(tcDat, 'dtBase');
+                    RetEventos.Items[i].Recibo.Contrato.infoCeletista.cnpjSindCategProf := Leitor.rCampo(tcStr, 'cnpjSindCategProf');
+                  end;
+
+                  if Leitor.rExtrai(8, 'infoEstatutario') <> '' then
+                  begin
+                    RetEventos.Items[i].Recibo.Contrato.infoEstatutario.DtPosse     := Leitor.rCampo(tcDat, 'dtPosse');
+                    RetEventos.Items[i].Recibo.Contrato.infoEstatutario.DtExercicio := Leitor.rCampo(tcDat, 'dtExercicio');
+                  end;
+
+                  if Leitor.rExtrai(8, 'infoContrato') <> '' then
+                  begin
+                    RetEventos.Items[i].Recibo.Contrato.infoContrato.codCateg := Leitor.rCampo(tcStr, 'codCateg');
+
+                    if Leitor.rExtrai(9, 'cargo') <> '' then
+                    begin
+                      RetEventos.Items[i].Recibo.Contrato.infoContrato.Cargo.codCargo := Leitor.rCampo(tcStr, 'codCargo');
+                      RetEventos.Items[i].Recibo.Contrato.infoContrato.Cargo.nmCargo  := Leitor.rCampo(tcStr, 'nmCargo');
+                      RetEventos.Items[i].Recibo.Contrato.infoContrato.Cargo.codCBO   := Leitor.rCampo(tcStr, 'codCBO');
+                    end;
+
+                    if Leitor.rExtrai(9, 'funcao') <> '' then
+                    begin
+                      RetEventos.Items[i].Recibo.Contrato.infoContrato.funcao.codFuncao := Leitor.rCampo(tcStr, 'codFuncao');
+                      RetEventos.Items[i].Recibo.Contrato.infoContrato.funcao.nmFuncao  := Leitor.rCampo(tcStr, 'nmFuncao');
+                      RetEventos.Items[i].Recibo.Contrato.infoContrato.funcao.codCBO    := Leitor.rCampo(tcStr, 'codCBO');
+                    end;
+                  end;
+
+                  if Leitor.rExtrai(8, 'remuneracao') <> '' then
+                  begin
+                    RetEventos.Items[i].Recibo.Contrato.remuneracao.VrSalFx    := Leitor.rCampo(tcDe2, 'vrSalFx');
+                    RetEventos.Items[i].Recibo.Contrato.remuneracao.UndSalFixo := eSStrToUndSalFixo(ok, Leitor.rCampo(tcStr, 'undSalFixo'));
+                    RetEventos.Items[i].Recibo.Contrato.remuneracao.DscSalVar  := Leitor.rCampo(tcStr, 'dscSalVar');
+                  end;
+
+                  if Leitor.rExtrai(8, 'duracao') <> '' then
+                  begin
+                    RetEventos.Items[i].Recibo.Contrato.duracao.TpContr   := eSStrToTpContr(ok, Leitor.rCampo(tcDe2, 'tpContr'));
+                    RetEventos.Items[i].Recibo.Contrato.duracao.dtTerm    := Leitor.rCampo(tcDat, 'dtTerm');
+                    RetEventos.Items[i].Recibo.Contrato.duracao.clauAssec := eSStrToSimNao(ok, Leitor.rCampo(tcStr, 'clauAssec'));
+                  end;
+
+                  if Leitor.rExtrai(8, 'localTrabGeral') <> '' then
+                  begin
+                    RetEventos.Items[i].Recibo.Contrato.localTrabGeral.TpInsc := eSStrToTpInscricao(ok, Leitor.rCampo(tcDe2, 'tpInsc'));
+                    RetEventos.Items[i].Recibo.Contrato.localTrabGeral.NrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+                    RetEventos.Items[i].Recibo.Contrato.localTrabGeral.Cnae   := Leitor.rCampo(tcStr, 'cnae');
+                  end;
+
+                  if Leitor.rExtrai(8, 'horContratual') <> '' then
+                  begin
+                    RetEventos.Items[i].Recibo.Contrato.horContratual.QtdHrsSem := Leitor.rCampo(tcInt, 'qtdHrsSem');
+                    RetEventos.Items[i].Recibo.Contrato.horContratual.TpJornada := eSStrToTpJornada(ok, Leitor.rCampo(tcStr, 'tpJornada'));
+                    RetEventos.Items[i].Recibo.Contrato.horContratual.DscTpJorn := Leitor.rCampo(tcStr, 'dscTpJorn');
+                    RetEventos.Items[i].Recibo.Contrato.horContratual.tmpParc   := StrTotpTmpParc(ok, Leitor.rCampo(tcStr, 'tmpParc'));
+
+                    j := 0;
+                    while Leitor.rExtrai(9, 'horario', '', j + 1) <> '' do
+                    begin
+                      RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Add;
+                      RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].dia            := eSStrToTpDia(ok, FLeitor.rCampo(tcStr, 'dia'));
+                      RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].codHorContrat  := FLeitor.rCampo(tcStr, 'codHorContrat');
+                      RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].hrEntr         := FLeitor.rCampo(tcStr, 'hrEntr');
+                      RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].hrSaida        := FLeitor.rCampo(tcStr, 'hrSaida');
+                      RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].durJornada     := FLeitor.rCampo(tcInt, 'durJornada');
+                      RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].perHorFlexivel := FLeitor.rCampo(tcStr, 'perHorFlexivel');
+
+                      k := 0;
+                      while Leitor.rExtrai(10, 'horarioIntervalo', '', j + 1) <> '' do
+                      begin
+                        RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Add;
+                        RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].tpInterv   := eSStrToTpIntervalo(ok, FLeitor.rCampo(tcStr, 'tpInterv'));
+                        RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].durInterv  := FLeitor.rCampo(tcInt, 'durInterv');
+                        RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].iniInterv  := FLeitor.rCampo(tcStr, 'iniInterv');
+                        RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].termInterv := FLeitor.rCampo(tcStr, 'termInterv');
+
+                        inc(k);
+                      end;
+
+                      inc(j);
+                    end;
+                  end;
+                end;
+              end;
             end;
+            // Verifica se a necessidade da leitura do grupo <Signature>
           end;
 
           j := 0;

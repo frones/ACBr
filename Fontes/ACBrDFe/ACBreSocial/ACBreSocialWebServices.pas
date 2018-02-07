@@ -493,11 +493,30 @@ begin
 end;
 
 function TConsultaLote.TratarResposta: Boolean;
+var
+  I, J: Integer;
+  AXML, NomeArq: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarLoteEventosResult');
 
   FRetConsultaLote.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsultaLote.LerXml;
+
+  for I := 0 to FRetConsultaLote.RetEventos.Count - 1 do
+  begin
+    for J := 0 to FRetConsultaLote.RetEventos.Items[I].tot.Count -1 do
+    begin
+      AXML := FRetConsultaLote.RetEventos.Items[I].tot.Items[J].XML;
+
+      if AXML <> '' then
+      begin
+        NomeArq := FRetConsultaLote.RetEventos.Items[I].tot.Items[J].tipo + '.xml';
+
+        if (FPConfiguracoeseSocial.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
+          FPDFeOwner.Gravar(NomeArq, AXML);
+      end;
+    end;
+  end;
 
   if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
     TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPRetWS, eseRetornoConsulta);

@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/02/2018
+-- ACBrPosPrinter --
+[+] Adicionado suporte a Tag </reset>, que permite restaurar as configurações de
+    fábrica da Impressora.
+    https://www.projetoacbr.com.br/forum/topic/27499-impress%C3%A3o-escpos/
+    (por: DSA)
+
 Data: 03/02/2018
 -- ACBrCHQPerto --
 [-] Correção na impressão de Cheques Perto. Suporte para multiplos modos de

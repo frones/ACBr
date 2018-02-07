@@ -333,6 +333,7 @@ type
 
     procedure Zerar;
     procedure Inicializar;
+    procedure Reset;
 
     procedure PularLinhas(NumLinhas: Integer = 0);
     procedure CortarPapel(Parcial: Boolean = False);
@@ -971,6 +972,15 @@ begin
                                     ftNegrito, ftSublinhado, ftItalico, ftInvertido];
   end
 
+  else if ATag = cTagReset then
+  begin
+    TagTraduzida := FPosPrinterClass.Cmd.Zera;
+
+    FInicializada := False;
+    FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
+                                    ftNegrito, ftSublinhado, ftItalico, ftInvertido];
+  end
+
   else if ATag = cTagLigaInvertido then
   begin
     TagTraduzida := FPosPrinterClass.ComandoFonte(ftInvertido, True);
@@ -1557,6 +1567,16 @@ begin
   ImprimirCmd(FPosPrinterClass.ComandoInicializa);
 
   FInicializada := True;
+end;
+
+procedure TACBrPosPrinter.Reset;
+begin
+  GravarLog('Reset');
+  ImprimirCmd(FPosPrinterClass.Cmd.Zera);
+
+  FInicializada := False;
+  FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftAlturaDupla,
+      ftNegrito, ftSublinhado, ftItalico, ftInvertido];
 end;
 
 function TACBrPosPrinter.GetNumeroPaginaDeCodigo(APagCod: TACBrPosPaginaCodigo): word;

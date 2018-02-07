@@ -1016,9 +1016,4 @@ begin
 
 end;
 
-{$ifdef FPC}
-initialization
-   {$I ACBrNFeDANFCeFortes.lrs}
-{$endif}
-
 end.

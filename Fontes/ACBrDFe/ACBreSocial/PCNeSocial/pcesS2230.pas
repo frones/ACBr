@@ -335,11 +335,16 @@ begin
 
   Gerador.wGrupo('iniAfastamento');
 
-  Gerador.wCampo(tcDat, '', 'dtIniAfast',     10,  10, 1, objInfoAfast.iniAfastamento.DtIniAfast);
-  Gerador.wCampo(tcStr, '', 'codMotAfast',     1,   2, 1, objInfoAfast.iniAfastamento.codMotAfast);
-  Gerador.wCampo(tcStr, '', 'infoMesmoMtv',    1,   1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMesmoMtv));
-  Gerador.wCampo(tcStr, '', 'tpAcidTransito',  1,   1, 0, objInfoAfast.iniAfastamento.tpAcidTransito);
-  Gerador.wCampo(tcStr, '', 'observacao',      1, 255, 0, objInfoAfast.iniAfastamento.Observacao);
+  Gerador.wCampo(tcDat, '', 'dtIniAfast',  10,  10, 1, objInfoAfast.iniAfastamento.DtIniAfast);
+  Gerador.wCampo(tcStr, '', 'codMotAfast',  1,   2, 1, objInfoAfast.iniAfastamento.codMotAfast);
+
+  if StrToInt(objInfoAfast.iniAfastamento.codMotAfast) in [01, 03] then
+  begin
+    Gerador.wCampo(tcStr, '', 'infoMesmoMtv',   1, 1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMesmoMtv));
+    Gerador.wCampo(tcStr, '', 'tpAcidTransito', 1, 1, 0, eStpTpAcidTransitoToStr(objInfoAfast.iniAfastamento.tpAcidTransito));
+  end;
+
+  Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, objInfoAfast.iniAfastamento.Observacao);
 
   if objInfoAfast.iniAfastamento.infoAtestadoInst then
     GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);

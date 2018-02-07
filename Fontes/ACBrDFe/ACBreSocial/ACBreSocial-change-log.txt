@@ -52,6 +52,18 @@ Símbolo : Significado
 -- ACBreSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/41373-vlr-default-evento-s-2230/?do=findComment&comment=272710
    Por: arce
+   
+-- pcesConversaoeSocial --
+[+] Adicionado o enum tpMotivosAfastamento correspondente a Tabela 18 do eSocial.
+	Por: Rafael Dias.
+	
+-- pcesCommon --
+[*] Mudado o tipo da propriedade codMotAfast da classe TAfastamento para o enum tpMotivosAfastamento.
+	Por: Rafael Dias.
+	
+-- pcesS2230 --
+[*] Ajustado a geração do xml para utilizar o enum tpMotivosAfastamento.
+	Por: Rafael Dias.
 
 06/02/2018
 -- ACBreSocial --

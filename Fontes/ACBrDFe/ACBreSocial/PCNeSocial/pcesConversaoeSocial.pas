@@ -386,6 +386,16 @@ type
 
   tpTpPgto                = (tpPgtoFl, tpPgtoResc2299, tpPgtoResc2399, tpPgtoFlRPPS);//tpPgto numeral 0 CORRIGIR!!!!!!
 
+  tpMotivosAfastamento    = ( mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho, mtvAfastLicencaRegimeProprioSemRemuneracao,
+                              mtvAposentadoriaInvalidez, mtvAcompanhamentoFamiliaEnfermo, mtvAfastamentoEmpregadoConCuradorFGTS,
+                              mtvAfastLicencaRegimeProprioComRemuneracao, mtvCarcere, mtvCargoEletivoCeletistasGeral,
+                              mtvCargoEletivoServidorPublico, mtvCessaoRequisicao, mtvGozoFeriasRecesso, mtvLicençaRemunerada,
+                              mtvLicençaMaternidade120Dias, mtvLicençaMaternidadeEmpresaCidada, mtvLicençaMaternidadeAbortoNaoCriminoso,
+                              mtvLicençaMaternidadeAdocaoGuardaJudicial, mtvLicencaNaoRemunerada, mtvMandatoEleitoralSemRemuneracao,
+                              mtvMandatoEleitoralComRemuneracao, mtvMandatoSindical, mtvMulherVitimaViolencia, mtvParticipacaoCNPS,
+                              mtvQualificacao, mtvRepresentanteSindical, mtvServicoMilitar, mtvSuspensaoDisciplinar, mtvServidorPublicoDisponibilidade,
+                              mtvLicençaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias);
+
   tpTpAcidTransito        = (tpatAtropelamento, tpatColisao, tpatOutros);
 
   tpInfOnus               = (ocCedente, ocCessionario, ocCedenteCessionario);
@@ -814,6 +824,9 @@ function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
 function eStpTpAcidTransitoToStr(const t: tpTpAcidTransito ): string;
 function eSStrTotpTpAcidTransito(var ok: boolean; const s: string): tpTpAcidTransito;
 
+function eStpMotivosAfastamentoToStr(const t: tpMotivosAfastamento ): string;
+function eSStrTotpMotivosAfastamento(var ok: boolean; const s: string): tpMotivosAfastamento;
+
 implementation
 
 uses
@@ -844,6 +857,13 @@ const
   TIndicativoContratacaoPCD : array[0..3] of string = ('0', '1', '2', '9' );
 
   TMotivoAlteracaoCargoFuncao: array[0..3] of string = ('1', '2', '3', '9');
+
+  TMotivoAfastamento: array[0..29] of string = ('01', '03', '05', '06', '07',
+                                                '08', '10', '11', '12', '13',
+                                                '14', '15', '16', '17', '18',
+                                                '19', '20', '21', '22', '23',
+                                                '24', '25', '26', '27', '28',
+                                                '29', '30', '31', '33', '34');
 
   TGenericosString0_1 : array[0..1] of string = ('0','1' );
   TGenericosString0_2 : array[0..2] of string = ('0','1','2' );
@@ -2221,6 +2241,16 @@ end;
 function eSStrTotpTpAcidTransito(var ok: boolean; const s: string): tpTpAcidTransito;
 begin
   result := tpTpAcidTransito( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
+end;
+
+function eStpMotivosAfastamentoToStr(const t: tpMotivosAfastamento ): string;
+begin
+  result := EnumeradoToStr2(t, TMotivoAfastamento);
+end;
+
+function eSStrTotpMotivosAfastamento(var ok: boolean; const s: string): tpMotivosAfastamento;
+begin
+   result := tpMotivosAfastamento(StrToEnumerado2(ok , s, TMotivoAfastamento));
 end;
 
 end.

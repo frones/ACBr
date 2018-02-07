@@ -336,9 +336,9 @@ begin
   Gerador.wGrupo('iniAfastamento');
 
   Gerador.wCampo(tcDat, '', 'dtIniAfast',  10,  10, 1, objInfoAfast.iniAfastamento.DtIniAfast);
-  Gerador.wCampo(tcStr, '', 'codMotAfast',  1,   2, 1, objInfoAfast.iniAfastamento.codMotAfast);
+  Gerador.wCampo(tcStr, '', 'codMotAfast',  1,   2, 1, eStpMotivosAfastamentoToStr(objInfoAfast.iniAfastamento.codMotAfast));
 
-  if StrToInt(objInfoAfast.iniAfastamento.codMotAfast) in [01, 03] then
+  if (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho]) then
   begin
     Gerador.wCampo(tcStr, '', 'infoMesmoMtv',   1, 1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMesmoMtv));
     Gerador.wCampo(tcStr, '', 'tpAcidTransito', 1, 1, 0, eStpTpAcidTransitoToStr(objInfoAfast.iniAfastamento.tpAcidTransito));

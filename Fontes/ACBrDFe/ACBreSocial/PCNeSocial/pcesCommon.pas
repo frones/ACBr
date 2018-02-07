@@ -1060,10 +1060,10 @@ type
   TAfastamento = class
   private
     FDtIniAfast: TDate;
-    FcodMotAfast: String;
+    FcodMotAfast: tpMotivosAfastamento;
   public
     property DtIniAfast: TDate read FDtIniAfast write FDtIniAfast;
-    property codMotAfast : String read FcodMotAfast write FcodMotAfast;
+    property codMotAfast : tpMotivosAfastamento read FcodMotAfast write FcodMotAfast;
   end;
 
   TDesligamento = class

@@ -95,7 +95,7 @@ type
     destructor Destroy; override;
 
     procedure AssinarEventos;
-    procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double; var URL: String); reintroduce;
+    procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double; var URL: String); overload;
     procedure SetStatus(const stNewStatus: TStatusACBreSocial);
 
     function GetNomeModeloDFe: string; override;
@@ -117,6 +117,16 @@ type
   end;
 
 implementation
+
+{$IFDEF FPC}
+ {$IFDEF CPU64}
+  {$R ACBreSocialServicos.res}  // Dificuldades de compilar Recurso em 64 bits
+ {$ELSE}
+  {$R ACBreSocialServicos.rc}
+ {$ENDIF}
+{$ELSE}
+ {$R ACBreSocialServicos.res}
+{$ENDIF}
 
 { TACBreSocial }
 
@@ -190,22 +200,16 @@ begin
 end;
 
 procedure TACBreSocial.LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double; var URL: String);
+Var
+  Sessao: string;
 begin
- {TODO: Implementar com URI}
   if Configuracoes.WebServices.Ambiente = taHomologacao then
-  begin
-    case LayOutServico of
-      LayEnvioLoteEventos:    URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
-      LayConsultaLoteEventos: URL := 'https://webservices.producaorestrita.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
-    end;
-  end
+    Sessao := 'eSocial_H'
   else
-  begin
-    case LayOutServico of
-      LayEnvioLoteEventos:    URL := 'https://webservices.envio.esocial.gov.br/servicos/empregador/enviarloteeventos/WsEnviarLoteEventos.svc';
-      LayConsultaLoteEventos: URL := 'https://webservices.consulta.esocial.gov.br/servicos/empregador/consultarloteeventos/WsConsultarLoteEventos.svc';
-    end;
-  end;
+    Sessao := 'eSocial_P';
+
+  LerServicoChaveDeParams(Sessao, LayOuteSocialToServico(LayOutServico), Versao, URL);
+  Versao := VersaoeSocialToDbl(Configuracoes.Geral.VersaoDF);
 end;
 
 function TACBreSocial.LerVersaoDeParams(LayOutServico: TLayOut): String;

@@ -389,12 +389,12 @@ type
   tpMotivosAfastamento    = ( mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho, mtvAfastLicencaRegimeProprioSemRemuneracao,
                               mtvAposentadoriaInvalidez, mtvAcompanhamentoFamiliaEnfermo, mtvAfastamentoEmpregadoConCuradorFGTS,
                               mtvAfastLicencaRegimeProprioComRemuneracao, mtvCarcere, mtvCargoEletivoCeletistasGeral,
-                              mtvCargoEletivoServidorPublico, mtvCessaoRequisicao, mtvGozoFeriasRecesso, mtvLicençaRemunerada,
-                              mtvLicençaMaternidade120Dias, mtvLicençaMaternidadeEmpresaCidada, mtvLicençaMaternidadeAbortoNaoCriminoso,
-                              mtvLicençaMaternidadeAdocaoGuardaJudicial, mtvLicencaNaoRemunerada, mtvMandatoEleitoralSemRemuneracao,
+                              mtvCargoEletivoServidorPublico, mtvCessaoRequisicao, mtvGozoFeriasRecesso, mtvLicencaRemunerada,
+                              mtvLicencaMaternidade120Dias, mtvLicencaMaternidadeEmpresaCidada, mtvLicencaMaternidadeAbortoNaoCriminoso,
+                              mtvLicencaMaternidadeAdocaoGuardaJudicial, mtvLicencaNaoRemunerada, mtvMandatoEleitoralSemRemuneracao,
                               mtvMandatoEleitoralComRemuneracao, mtvMandatoSindical, mtvMulherVitimaViolencia, mtvParticipacaoCNPS,
                               mtvQualificacao, mtvRepresentanteSindical, mtvServicoMilitar, mtvSuspensaoDisciplinar, mtvServidorPublicoDisponibilidade,
-                              mtvLicençaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias);
+                              mtvLicencaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias);
 
   tpTpAcidTransito        = (tpatAtropelamento, tpatColisao, tpatOutros);
 

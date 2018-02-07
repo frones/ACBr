@@ -1159,7 +1159,7 @@ begin
     EvtCadInicial.Vinculo.SucessaoVinc.observacao := 'transferido';
 
     EvtCadInicial.Vinculo.Afastamento.DtIniAfast := date;
-    EvtCadInicial.Vinculo.Afastamento.codMotAfast := '15';
+    EvtCadInicial.Vinculo.Afastamento.codMotAfast := mtvGozoFeriasRecesso;
     EvtCadInicial.Vinculo.Desligamento.DtDeslig := date;
   end;
 end;
@@ -2376,7 +2376,7 @@ begin
     EvtAdmissao.Vinculo.transfDom.dtTransf := date;
 
     EvtAdmissao.Vinculo.Afastamento.DtIniAfast := Now;
-    EvtAdmissao.Vinculo.Afastamento.codMotAfast := '01';
+    EvtAdmissao.Vinculo.Afastamento.codMotAfast := mtvAcidenteDoencaTrabalho;
 
     EvtAdmissao.Vinculo.Desligamento.DtDeslig := Now;
   end;
@@ -2781,7 +2781,7 @@ begin
     EvtAfastTemp.IdeVinculo.Matricula := 'A123';
 
     EvtAfastTemp.infoAfastamento.iniAfastamento.DtIniAfast := Now;
-    EvtAfastTemp.infoAfastamento.iniAfastamento.codMotAfast := '01';
+    EvtAfastTemp.infoAfastamento.iniAfastamento.codMotAfast := mtvAcidenteDoencaTrabalho;
     EvtAfastTemp.infoAfastamento.iniAfastamento.infoMesmoMtv := tpNao;
     EvtAfastTemp.infoAfastamento.iniAfastamento.tpAcidTransito := tpatOutros;
     EvtAfastTemp.infoAfastamento.iniAfastamento.observacao :=

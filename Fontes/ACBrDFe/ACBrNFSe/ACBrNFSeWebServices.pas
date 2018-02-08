@@ -878,7 +878,13 @@ begin
       FNameSpace := StringReplace(FNameSpace, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll]);
 
       if FProvedor in [proActcon, proActconv202] then
-        FNameSpace := StringReplace(FNameSpace, '/nfseserv/', '/homologacao/', [rfReplaceAll])
+      begin
+        if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 3167202 then
+          FNameSpace := StringReplace(FNameSpace, '//nfse', '//homologacao', [rfReplaceAll])
+        else
+          FNameSpace := StringReplace(FNameSpace, '/nfseserv/', '/homologacao/', [rfReplaceAll]);
+      end;
+
     end
     else
       FNameSpace := StringReplace(FNameSpace, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/02/2018
+-- ACBrNFSeWebServices --
+[*] Correção na montagem do NameSpace para a cidade de Sete Lagoas.
+Por: Italo Jurisato Junior
+
 07/02/2018
 -- Diversos --
 [*] Alterações visando o provedor SmarAPDABRASF.

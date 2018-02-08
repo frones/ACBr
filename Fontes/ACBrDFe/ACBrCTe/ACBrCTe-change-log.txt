@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/02/2018
+-- ACBrCTeWebServices --
+[*] Ficou faltando informar o CTeOS para definir o nome e salvar o XML.
+   Por: Italo Jurisato Junior
 -- Diversos --
 [*] Alterações visando a leitura correta do DistribuicaoDFe quando no retorno 
     deste conter o XML do CTeOS.

@@ -3129,7 +3129,8 @@ begin
                      Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
                      '-resEventoCTe.xml';
         *)
-        schprocCTe:
+        schprocCTe,
+        schprocCTeOS:
           NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-cte.xml';
 
         schprocEventoCTe:
@@ -3142,7 +3143,7 @@ begin
         if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoCTe]) then // salvar evento
           FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
 
-        if (FretDistDFeInt.docZip.Items[I].schema in [schprocCTe]) then
+        if (FretDistDFeInt.docZip.Items[I].schema in [schprocCTe, schprocCTeOS]) then
           FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
       end;
     end;

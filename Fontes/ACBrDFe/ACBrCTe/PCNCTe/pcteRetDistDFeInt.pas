@@ -475,7 +475,8 @@ begin
             FdocZip.Items[i].FresEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
           end;
           *)
-          if (oLeitorInfZip.rExtrai(1, 'cteProc') <> '') then
+          if (oLeitorInfZip.rExtrai(1, 'cteProc') <> '') or
+             (oLeitorInfZip.rExtrai(1, 'cteOSProc') <> '') then
           begin
             FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 

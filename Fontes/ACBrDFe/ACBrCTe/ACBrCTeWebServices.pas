@@ -1798,7 +1798,7 @@ function TCTeConsulta.TratarResposta: Boolean;
 var
   CTeRetorno: TRetConsSitCTe;
   SalvarXML, CTCancelado, Atualiza: Boolean;
-  aEventos, sPathCTe, NomeXMLSalvo: String;
+  aEventos, sPathCTe, NomeXMLSalvo, aEvento, aProcEvento, aIDEvento: String;
   AProcCTe: TProcCTe;
   I, J, K, Inicio, Fim: Integer;
   dhEmissao: TDateTime;
@@ -2030,6 +2030,7 @@ begin
                 XMLOriginal := AProcCTe.Gerador.ArquivoFormatoXML;
 
                 FRetCTeDFe := '';
+                aEventos := '';
 
                 if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
                 begin
@@ -2081,6 +2082,30 @@ begin
                 // Salva na pasta baseado nas configurações do PathCTe
                 if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
                   GravarXML;
+
+                // Salva o XML de eventos retornados ao consultar um CT-e
+                while aEvento <> '' do
+                begin
+                  Inicio := Pos('<procEventoCTe', aEventos);
+                  Fim    := Pos('</procEventoCTe', aEventos) -1;
+
+                  aEvento := Copy(aEventos, Inicio, Fim - Inicio + 1);
+
+                  aEventos := Copy(aEventos, Fim + 16, Length(aEventos));
+
+                  aProcEvento := '<procEventoCTe versao="' + FVersao + '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                                   SeparaDados(aEvento, 'procEventoCTe') +
+                                 '</procEventoCTe>';
+
+                  Inicio := Pos('Id=', aProcEvento) + 6;
+                  Fim    := Inicio + 51;
+
+                  aIDEvento := Copy(aProcEvento, Inicio, Fim);
+
+                  if (aProcEvento <> '') then
+                    FPDFeOwner.Gravar( aIDEvento + '-procEventoCTe.xml', aProcEvento, sPathCTe);
+                end;
+
                 (*
                 // Salva o XML do CT-e assinado e protocolado
                 if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
@@ -3175,7 +3200,8 @@ begin
                                                           AItem.procEvento.CNPJ,
                                                           Data);
 
-    schprocCTe:
+    schprocCTe,
+    schprocCTeOS:
       Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resCTe.xNome,
                                                         AItem.resCTe.CNPJCPF,
                                                         Data);

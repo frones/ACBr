@@ -66,7 +66,7 @@ type
                  schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
                  schevEPECCTe, schevCancCTe, schevRegMultimodal, schevCCeCTe,
                  schdistDFeInt, schcteModalRodoviarioOS, schevPrestDesacordo,
-                 schevGTV );
+                 schevGTV, schprocCTeOS );
 
   TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
                     stCTeConsulta, stCTeCancelamento, stCTeInutilizacao,

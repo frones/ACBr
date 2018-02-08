@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/02/2018
+-- Diversos --
+[*] Alterações visando a leitura correta do DistribuicaoDFe quando no retorno 
+    deste conter o XML do CTeOS.
+   Por: Italo Jurisato Junior
+
 26/01/2018
 -- pcteCTeW --
 [*] https://www.projetoacbr.com.br/forum/topic/41117-verifica%C3%A7%C3%A3o-no-preenchimento-do-autxml/

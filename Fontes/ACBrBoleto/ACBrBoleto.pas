@@ -2775,9 +2775,13 @@ function TACBrBoleto.GetTipoCobranca(NumeroBanco: Integer): TACBrTipoCobranca;
 begin
   case NumeroBanco of
     001: Result := cobBancoDoBrasil;
+    003: Result := cobBancoDaAmazonia;
+    004: Result := cobBancoDoNordeste;
     008,033,353: Result := cobSantander;
     021: Result := cobBanestes;
     041: Result := cobBanrisul;
+    070: Result := cobBRB;
+    091: Result := cobUnicredRS;
     099: Result := cobUniprime;
     104: Result := cobCaixaEconomica;
     237: Result := cobBradesco;

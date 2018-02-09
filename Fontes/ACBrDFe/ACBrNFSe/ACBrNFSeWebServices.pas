@@ -4302,6 +4302,7 @@ begin
     end;
 
     case FProvedor of
+      proBetha,
       proISSe,
       proFiorilli,
       proTecnos: FinfElemento := 'InfPedidoCancelamento';

@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/02/2018
+-- ACBrNFSeWebServices --
+[*] Correção na classe de cancelamento para o provedor Betha.
+Por: Filipe Natividade
 -- pnfsCancNfseResposta --
 [*] Correção no nome da tag.
 Por: Wanderson Paiva

@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2018
+-- ACBreSocial --
+[*] Alteração visando resolver Memory Leak
+   Por: Italo Jurisato Junior
+
 07/02/2018
 -- ACBreSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/41373-vlr-default-evento-s-2230/?do=findComment&comment=272710

@@ -106,6 +106,7 @@ type
     constructor Create(AOwner: TACBrDFe); override;
 
     procedure Clear; override;
+    procedure BeforeDestruction; override;
 
     property Grupo: TeSocialGrupo read AGrupo write AGrupo;
     property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
@@ -262,6 +263,13 @@ begin
   FRetEnvioLote := TRetEnvioLote.Create;
 end;
 
+procedure TEnvioLote.BeforeDestruction;
+begin
+  inherited;
+
+  FRetEnvioLote.Free;
+end;
+
 procedure TEnvioLote.DefinirURL;
 var
   Versao: Double;
@@ -405,7 +413,8 @@ end;
 procedure TConsultaLote.BeforeDestruction;
 begin
   inherited;
-//  FRetProcLote.Free;
+  
+  FRetConsultaLote.Free;
 end;
 
 procedure TConsultaLote.DefinirDadosMsg;

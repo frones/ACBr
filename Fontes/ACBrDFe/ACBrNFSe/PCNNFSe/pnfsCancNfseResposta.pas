@@ -351,7 +351,7 @@ begin
     end
     else if Provedor = proISSNET then
     begin
-      if (Leitor.rExtrai(1, 'NfseCancelamento') <> '') then
+	  if (Leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then      
       begin
         if (Leitor.rExtrai(2, 'Confirmacao') <> '') then
         begin

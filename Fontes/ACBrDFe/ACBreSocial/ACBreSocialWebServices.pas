@@ -266,7 +266,7 @@ end;
 procedure TEnvioLote.BeforeDestruction;
 begin
   inherited;
-
+  FLote.Free;
   FRetEnvioLote.Free;
 end;
 

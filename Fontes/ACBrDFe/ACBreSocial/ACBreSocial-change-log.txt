@@ -52,9 +52,18 @@ Símbolo : Significado
 -- pcesGerador --
 [*] https://www.projetoacbr.com.br/forum/topic/38499-esocial/?do=findComment&comment=273018
    Por: Leondro LJM
+   
 -- ACBreSocial --
 [*] Alteração visando resolver Memory Leak
    Por: Italo Jurisato Junior
+[*] Alteração visando resolver Memory Leak
+	https://www.projetoacbr.com.br/forum/topic/41444-execut%C3%A1vel-preso-em-mem%C3%B3ria/
+	Por: Joceandro Perin
+
+-- ACBreSocialWebServices --	
+[*] Alteração visando resolver Memory Leak
+	https://www.projetoacbr.com.br/forum/topic/41444-execut%C3%A1vel-preso-em-mem%C3%B3ria/
+	Por: Joceandro Perin
 
 07/02/2018
 -- ACBreSocial --

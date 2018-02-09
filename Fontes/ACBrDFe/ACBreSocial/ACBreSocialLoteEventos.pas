@@ -103,6 +103,7 @@ type
     function LoadFromString(AXMLString: String): Boolean;
     procedure GerarXML(const AGrupo: TeSocialGrupo);
     procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
 
     property Items[Index: Integer] : TItemLoteEventos read GetItem write SetItem;
     property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -129,6 +130,14 @@ begin
   FIdeEmpregador  := TIdeEmpregador.Create;
   FIdeTransmissor := TIdeTransmissor.Create;
   FGerador        := TGerador.Create;
+end;
+
+procedure TLoteEventos.BeforeDestruction;
+begin
+  inherited;
+  FIdeEmpregador.Free;
+  FIdeTransmissor.Free;
+  FGerador.Free;
 end;
 
 constructor TLoteEventos.Create(AOwner: TComponent);

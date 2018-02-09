@@ -89,9 +89,11 @@ type
   private
     FEmissaoPathCTe: Boolean;
     FSalvarApenasCTeProcessados: Boolean;
+    FNormatizarMunicipios: Boolean;
     FPathCTe: String;
     FPathInu: String;
     FPathEvento: String;
+    FPathArquivoMunicipios: String;
     FDownloadCTe: TDownloadConfCTe;
   public
     constructor Create(AOwner: TConfiguracoes); override;
@@ -107,9 +109,11 @@ type
   published
     property EmissaoPathCTe: Boolean     read FEmissaoPathCte write FEmissaoPathCTe default False;
     property SalvarApenasCTeProcessados: Boolean read FSalvarApenasCTeProcessados write FSalvarApenasCTeProcessados default False;
+    property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios default False;
     property PathCTe: String             read FPathCTe        write FPathCTe;
     property PathInu: String             read FPathInu        write FPathInu;
     property PathEvento: String          read FPathEvento     write FPathEvento;
+    property PathArquivoMunicipios: String read FPathArquivoMunicipios write FPathArquivoMunicipios;
     property DownloadCTe: TDownloadConfCTe read FDownloadCTe write FDownloadCTe;
   end;
 
@@ -231,9 +235,11 @@ begin
 
   FEmissaoPathCTe := DeArquivosConfCTe.EmissaoPathCTe;
   FSalvarApenasCTeProcessados := DeArquivosConfCTe.SalvarApenasCTeProcessados;
+  FNormatizarMunicipios        := DeArquivosConfCTe.NormatizarMunicipios;
   FPathCTe := DeArquivosConfCTe.PathCTe;
   FPathInu := DeArquivosConfCTe.PathInu;
   FPathEvento := DeArquivosConfCTe.PathEvento;
+  FPathArquivoMunicipios := DeArquivosConfCTe.PathArquivoMunicipios;
 
   FDownloadCTe.Assign(DeArquivosConfCTe.DownloadCTe);
 end;
@@ -245,9 +251,11 @@ begin
   FDownloadCTe := TDownloadConfCTe.Create;
   FEmissaoPathCTe := False;
   FSalvarApenasCTeProcessados := False;
+  FNormatizarMunicipios := False;
   FPathCTe := '';
   FPathInu := '';
   FPathEvento := '';
+  FPathArquivoMunicipios := '';
 end;
 
 destructor TArquivosConfCTe.Destroy;
@@ -321,9 +329,11 @@ begin
 
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarApenasCTeProcessados', SalvarApenasCTeProcessados);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathCTe', EmissaoPathCTe);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathCTe', PathCTe);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadCTe.PathDownload);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadCTe.SepararPorNome);
 end;
@@ -334,9 +344,11 @@ begin
 
   SalvarApenasCTeProcessados := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarApenasCTeProcessados', SalvarApenasCTeProcessados);
   EmissaoPathCTe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathCTe', EmissaoPathCTe);
+  NormatizarMunicipios := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);
   PathCTe := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathCTe', PathCTe);
   PathInu := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
   PathEvento := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  PathArquivoMunicipios := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
   DownloadCTe.PathDownload := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadCTe.PathDownload);
   DownloadCTe.SepararPorNome := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadCTe.SepararPorNome);
 end;

@@ -89,8 +89,10 @@ type
     FEmissaoPathBPe: Boolean;
     FSalvarEvento: Boolean;
     FSalvarApenasBPeProcessadas: Boolean;
+    FNormatizarMunicipios: Boolean;
     FPathBPe: String;
     FPathEvento: String;
+    FPathArquivoMunicipios: String
     FDownloadBPe: TDownloadConfBPe;
   public
     constructor Create(AOwner: TConfiguracoes); override;
@@ -109,8 +111,11 @@ type
       write FSalvarEvento default False;
     property SalvarApenasBPeProcessadas: Boolean
       read FSalvarApenasBPeProcessadas write FSalvarApenasBPeProcessadas default False;
+    property NormatizarMunicipios: boolean read FNormatizarMunicipios
+      write FNormatizarMunicipios default False;
     property PathBPe: String read FPathBPe write FPathBPe;
     property PathEvento: String read FPathEvento write FPathEvento;
+    property PathArquivoMunicipios: String read FPathArquivoMunicipios write FPathArquivoMunicipios;
     property DownloadBPe: TDownloadConfBPe read FDownloadBPe write FDownloadBPe;
   end;
 
@@ -243,8 +248,10 @@ begin
   FEmissaoPathBPe := False;
   FSalvarEvento := False;
   FSalvarApenasBPeProcessadas := False;
+  FNormatizarMunicipios := False;
   FPathBPe := '';
   FPathEvento := '';
+  FPathArquivoMunicipios := '';
 end;
 
 destructor TArquivosConfBPe.Destroy;
@@ -258,11 +265,13 @@ procedure TArquivosConfBPe.Assign(DeArquivosConfBPe: TArquivosConfBPe);
 begin
   inherited Assign(DeArquivosConfBPe);
 
-  EmissaoPathBPe             := DeArquivosConfBPe.EmissaoPathBPe;
-  SalvarEvento               := DeArquivosConfBPe.SalvarEvento;
-  SalvarApenasBPeProcessadas := DeArquivosConfBPe.SalvarApenasBPeProcessadas;
-  PathBPe                    := DeArquivosConfBPe.PathBPe;
-  PathEvento                 := DeArquivosConfBPe.PathEvento;
+  FEmissaoPathBPe               := DeArquivosConfBPe.EmissaoPathBPe;
+  FSalvarEvento                 := DeArquivosConfBPe.SalvarEvento;
+  FSalvarApenasBPeProcessadas   := DeArquivosConfBPe.SalvarApenasBPeProcessadas;
+  FNormatizarMunicipios         := DeArquivosConfMDFe.NormatizarMunicipios;
+  FPathBPe                      := DeArquivosConfBPe.PathBPe;
+  FPathEvento                   := DeArquivosConfBPe.PathEvento;
+  FPathArquivoMunicipios        := DeArquivosConfMDFe.PathArquivoMunicipios;
 
   FDownloadBPe.Assign(DeArquivosConfBPe.DownloadBPe);
 end;
@@ -312,8 +321,10 @@ begin
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarApenasBPeProcessadas', SalvarApenasBPeProcessadas);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathBPe', EmissaoPathBPe);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathBPe', PathBPe);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadBPe.PathDownload);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadBPe.SepararPorNome);
 end;
@@ -325,8 +336,10 @@ begin
   SalvarEvento := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarEvento', SalvarEvento);
   SalvarApenasBPeProcessadas := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarApenasBPeProcessadas', SalvarApenasBPeProcessadas);
   EmissaoPathBPe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathBPe', EmissaoPathBPe);
+  NormatizarMunicipios := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'NormatizarMunicipios', NormatizarMunicipios);
   PathBPe := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathBPe', PathBPe);
   PathEvento := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
+  PathArquivoMunicipios := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
   DownloadBPe.PathDownload := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadBPe.PathDownload);
   DownloadBPe.SepararPorNome := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadBPe.SepararPorNome);
 end;

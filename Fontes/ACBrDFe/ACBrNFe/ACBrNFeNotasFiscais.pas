@@ -1334,8 +1334,6 @@ begin
       Emit.EnderEmit.xMun    := INIRec.ReadString(  sSecao,'Cidade'     ,INIRec.ReadString(  sSecao,'xMun'   ,''));
       Emit.EnderEmit.UF      := INIRec.ReadString(  sSecao,'UF'         ,'');
       Emit.EnderEmit.CEP     := INIRec.ReadInteger( sSecao,'CEP'        ,0);
-   // if Emit.EnderEmit.cMun <= 0 then
-   //   Emit.EnderEmit.cMun := ObterCodigoMunicipio(Emit.EnderEmit.xMun,Emit.EnderEmit.UF);
       Emit.EnderEmit.cPais   := INIRec.ReadInteger( sSecao,'PaisCod'    ,INIRec.ReadInteger( sSecao,'cPais'    ,1058));
       Emit.EnderEmit.xPais   := INIRec.ReadString(  sSecao,'Pais'       ,INIRec.ReadString(  sSecao,'xPais'    ,'BRASIL'));
       Emit.EnderEmit.fone    := INIRec.ReadString(  sSecao,'Fone'       ,'');
@@ -1379,8 +1377,6 @@ begin
       Dest.EnderDest.xMun    := INIRec.ReadString(  sSecao,'Cidade'     ,INIRec.ReadString(  sSecao,'xMun'   ,''));
       Dest.EnderDest.UF      := INIRec.ReadString(  sSecao,'UF'         ,'');
       Dest.EnderDest.CEP     := INIRec.ReadInteger( sSecao,'CEP'       ,0);
-    //if Dest.EnderDest.cMun <= 0 then
-    //  Dest.EnderDest.cMun := ObterCodigoMunicipio(Dest.EnderDest.xMun,Dest.EnderDest.UF);
       Dest.EnderDest.cPais   := INIRec.ReadInteger( sSecao,'PaisCod'    ,INIRec.ReadInteger(sSecao,'cPais',1058));
       Dest.EnderDest.xPais   := INIRec.ReadString(  sSecao,'Pais'       ,INIRec.ReadString( sSecao,'xPais','BRASIL'));
       Dest.EnderDest.Fone    := INIRec.ReadString(  sSecao,'Fone'       ,'');
@@ -1396,8 +1392,6 @@ begin
         Retirada.cMun    := INIRec.ReadInteger('Retirada','cMun',0);
         Retirada.xMun    := INIRec.ReadString( 'Retirada','xMun','');
         Retirada.UF      := INIRec.ReadString( 'Retirada','UF'  ,'');
-      //if Retirada.cMun <= 0 then
-      //  Retirada.cMun := ObterCodigoMunicipio(Retirada.xMun,Retirada.UF);
       end;
 
       sCNPJCPF := INIRec.ReadString(  'Entrega','CNPJ',INIRec.ReadString(  'Entrega','CPF',INIRec.ReadString(  'Entrega','CNPJCPF','')));
@@ -1411,8 +1405,6 @@ begin
         Entrega.cMun    := INIRec.ReadInteger( 'Entrega','cMun',0);
         Entrega.xMun    := INIRec.ReadString(  'Entrega','xMun','');
         Entrega.UF      := INIRec.ReadString(  'Entrega','UF','');
-      //if Entrega.cMun <= 0 then
-      //  Entrega.cMun := ObterCodigoMunicipio(Entrega.xMun,Entrega.UF);
       end;
 
       I := 1 ;
@@ -1695,8 +1687,8 @@ begin
               encerrante.nBico    := INIRec.ReadInteger( sSecao,'nBico'  ,0) ;
               encerrante.nBomba   := INIRec.ReadInteger( sSecao,'nBomba' ,0) ;
               encerrante.nTanque  := INIRec.ReadInteger( sSecao,'nTanque',0) ;
-              encerrante.vEncIni  := INIRec.ReadFloat( sSecao,'vEncIni',0) ;
-              encerrante.vEncFin  := INIRec.ReadFloat( sSecao,'vEncFin',0) ;
+              encerrante.vEncIni  := StringToFloatDef(INIRec.ReadString( sSecao,'vEncIni',''),0) ;
+              encerrante.vEncFin  := StringToFloatDef(INIRec.ReadString( sSecao,'vEncFin',''),0) ;
 
               sSecao := 'ICMSComb'+IntToStrZero(I,3) ;
               ICMS.vBCICMS   := StringToFloatDef(INIRec.ReadString( sSecao,'vBCICMS'  ,''),0) ;
@@ -2304,6 +2296,8 @@ begin
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FNFeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
     FNFeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FNFeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
+    FNFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
@@ -2335,6 +2329,8 @@ begin
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FNFeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
     FNFeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FNFeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
+    FNFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
   end;
 
   FNFeW.Opcoes.GerarTXTSimultaneamente := True;

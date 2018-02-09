@@ -516,7 +516,9 @@ begin
     FBPeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FBPeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FBPeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
-    FBPeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FBPeW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
+    FBPeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
+    FBPeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
@@ -547,7 +549,9 @@ begin
     FBPeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FBPeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FBPeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
-    FBPeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FBPeW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
+    FBPeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
+    FBPeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
   end;
 
   FBPeW.Opcoes.GerarTXTSimultaneamente := True;

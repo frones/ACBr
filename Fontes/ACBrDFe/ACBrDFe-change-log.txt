@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2018
+-- ACBrDFeUtil --
+[*] Método: "ObterCodigoMunicipio" / "ObterNomeMunicipio" Ajustes nas classes ACBrDFe para validação e utilização 
+    desta funcionalidade na Geração do XML. Validando a propriedade "NormatizarMunicipios" e o path com os arquivos de Municípios IBGE.
+
 04/02/2018
 -- ACBrDFeWebService --
 [-] Método: "TDFeWebService.EnviarDados": Correção para não tentar converter para

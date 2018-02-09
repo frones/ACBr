@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, StrUtils, SysUtils,
-  IniFiles, ACBrDFeSSL;
+  IniFiles, ACBrDFeSSL, pcnAuxiliar;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
@@ -64,6 +64,9 @@ function XmlEstaAssinado(const AXML: String): Boolean;
 function SignatureElement(const URI: String; AddX509Data: Boolean;
     IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
 function ExtraiURI(const AXML: String; IdAttr: String = ''): String;
+function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
+                              const APathArqMun: String): String;
+function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String ): Integer;
 
 procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString; AMemIni: TMemIniFile);
 
@@ -342,6 +345,83 @@ begin
     raise EACBrDFeException.Create('Não encontrei inicio do URI: aspas final');
 
   Result := copy(AXML, I + 1, J - I - 1);
+end;
+
+function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
+  const APathArqMun: String): String;
+var
+  i: Integer;
+  PathArqMun, Codigo: String;
+  List: TStringList;
+begin
+  result := '';
+  if EstaVazio(APathArqMun) then
+    PathArqMun := ApplicationPath + 'MunIBGE'
+  else
+    PathArqMun := APathArqMun;
+
+  PathArqMun := PathWithDelim(PathArqMun) + 'MunIBGE-UF' +
+             InttoStr(UFparaCodigo(AxUF)) + '.txt';
+
+  if FileExists(PathArqMun) then
+  begin
+    try
+      List := TStringList.Create;
+      List.LoadFromFile(PathArqMun);
+      Codigo := IntToStr(AcMun);
+      i := 0;
+      while (i < list.count) and (result = '') do
+      begin
+        if pos(Codigo, List[i]) > 0 then
+          result := Trim(StringReplace(list[i], codigo, '', []));
+        inc(i);
+      end;
+
+    finally
+      List.free;
+    end;
+
+  end;
+
+end;
+
+function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String): Integer;
+var
+  i: integer;
+  PathArquivo: string;
+  List: TstringList;
+  UpMun, UpMunList: String;
+begin
+  result := 0;
+  if EstaVazio(APathArqMun) then
+    PathArquivo := ApplicationPath + 'MunIBGE'
+  else
+    PathArquivo := APathArqMun;
+
+  PathArquivo := PathWithDelim(PathArquivo) + 'MunIBGE-UF' +
+               InttoStr(UFparaCodigo(AxUF)) + '.txt';
+
+  if FileExists(PathArquivo) then
+  begin
+    UpMun := UpperCase(TiraAcentos(AxMun));
+    List := TstringList.Create;
+    try
+      List.LoadFromFile(PathArquivo);
+      i := 0;
+      while (i < list.count) and (result = 0) do
+      begin
+        UpMunList := UpperCase(TiraAcentos(List[i]));
+        if pos(UpMun, UpMunList ) = 9 then
+          result := StrToInt(Trim(copy(list[i],1,7)));
+
+        inc(i);
+      end;
+    finally
+      List.free;
+    end;
+
+  end;
+
 end;
 
 procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString;

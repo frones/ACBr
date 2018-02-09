@@ -145,8 +145,9 @@ type
     procedure GerarforDia;
     procedure GerarDeduc;
 
-    procedure AjustarMunicipioUF(out xUF: String; out xMun: String; out cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
-    function ObterNomeMunicipio(const xMun, xUF: String; const cMun: Integer): String;
+    procedure AjustarMunicipioUF(out xUF: String; out xMun: String; out cMun: Integer;
+      cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+
   public
     constructor Create(AOwner: TNFe);
     destructor Destroy; override;
@@ -169,14 +170,14 @@ type
     FValidarInscricoes: Boolean;
     FValidarListaServicos: Boolean;
   published
-    property AjustarTagNro: Boolean read FAjustarTagNro write FAjustarTagNro;
-    property GerarTagIPIparaNaoTributado: Boolean read FGerarTagIPIparaNaoTributado write FGerarTagIPIparaNaoTributado;
+    property AjustarTagNro: Boolean read FAjustarTagNro;
+    property GerarTagIPIparaNaoTributado: Boolean read FGerarTagIPIparaNaoTributado;
     property GerarTXTSimultaneamente: Boolean read FGerarTXTSimultaneamente write FGerarTXTSimultaneamente;
     property NormatizarMunicipios: Boolean read FNormatizarMunicipios write FNormatizarMunicipios;
-    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
+    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura;
     property PathArquivoMunicipios: String read FPathArquivoMunicipios write FPathArquivoMunicipios;
-    property ValidarInscricoes: Boolean read FValidarInscricoes write FValidarInscricoes;
-    property ValidarListaServicos: Boolean read FValidarListaServicos write FValidarListaServicos;
+    property ValidarInscricoes: Boolean read FValidarInscricoes;
+    property ValidarListaServicos: Boolean read FValidarListaServicos;
   end;
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -199,6 +200,7 @@ begin
   FOpcoes.FGerarTXTSimultaneamente := False;
   FOpcoes.FGerarTagIPIparaNaoTributado := True;
   FOpcoes.FNormatizarMunicipios := False;
+  FOpcoes.FPathArquivoMunicipios:= '';
   FOpcoes.FGerarTagAssinatura := taSomenteSeAssinada;
   FOpcoes.FValidarInscricoes := False;
   FOpcoes.FValidarListaServicos := False;
@@ -2549,37 +2551,14 @@ begin
   PaisBrasil := cPais = CODIGO_BRASIL;
   cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
   xMun := IIf(PaisBrasil, vxMun, XMUN_EXTERIOR);
-  xUF := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
-  xMun := ObterNomeMunicipio(xMun, xUF, cMun);
-end;
+  xUF :=  IIf(PaisBrasil, vxUF, UF_EXTERIOR);
 
-function TNFeW.ObterNomeMunicipio(const xMun, xUF: String; const cMun: Integer): String;
-var
-  i: Integer;
-  PathArquivo, Codigo: String;
-  List: TStringList;
-begin
-  result := '';
-  if (FOpcoes.NormatizarMunicipios) and (cMun <> CMUN_EXTERIOR) then
-  begin
-    PathArquivo := FOpcoes.FPathArquivoMunicipios + 'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
-    if FileExists(PathArquivo) then
-    begin
-      List := TStringList.Create;
-      List.LoadFromFile(PathArquivo);
-      Codigo := IntToStr(cMun);
-      i := 0;
-      while (i < list.count) and (result = '') do
-      begin
-        if pos(Codigo, List[i]) > 0 then
-          result := Trim(StringReplace(list[i], codigo, '', []));
-        inc(i);
-      end;
-      List.free;
-    end;
-  end;
-  if result = '' then
-    result := xMun;
+  if FOpcoes.NormatizarMunicipios then
+    if ( ( EstaZerado(cMun)) and (xMun <> XMUN_EXTERIOR) ) then
+      cMun := ObterCodigoMunicipio(xMun, xUF, FOpcoes.FPathArquivoMunicipios)
+    else if ( ( EstaVazio(xMun)) and (cMun <> CMUN_EXTERIOR) ) then
+      xMun := ObterNomeMunicipio(xUF, cMun, FOpcoes.FPathArquivoMunicipios);
+
 end;
 
 end.

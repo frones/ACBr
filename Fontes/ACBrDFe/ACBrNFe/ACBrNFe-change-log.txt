@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2018
+-- ACBrNFeNotasFiscais, ACBrNFeConfiguracoes, pcnNFeW  --
+[*] Método: "ObterCodigoMunicipio" / "ObterNomeMunicipio" Ajustes nas classes ACBrDFe para validação e utilização 
+    desta funcionalidade na Geração do XML. Validando a propriedade "NormatizarMunicipios" e o path com os arquivos de Municípios IBGE.
+    (por: Jose M. S. Junior)
+
 25/01/2018
 -- ACBrNFeNotasFiscais.pas --
 [*] Atualizado Leitura do arquivo .ini com tags que faltavam na sessão Combustivel 

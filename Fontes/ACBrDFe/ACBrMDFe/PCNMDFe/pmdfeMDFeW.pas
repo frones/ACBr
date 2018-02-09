@@ -43,7 +43,7 @@ interface
 uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pmdfeConversaoMDFe, pmdfeMDFe, ACBrUtil, pcnConsts, pmdfeConsts;
+  pmdfeConversaoMDFe, pmdfeMDFe, ACBrUtil, pcnConsts, pmdfeConsts, ACBrDFeUtil;
 
 type
   TGeradorOpcoes = class;
@@ -85,7 +85,7 @@ type
     procedure GerarInfAdic;       // Nivel 1
 
     procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
-    function ObterNomeMunicipio(const xMun, xUF: String; const cMun: Integer): String;
+
   public
     constructor Create(AOwner: TMDFe);
     destructor Destroy; override;
@@ -106,12 +106,12 @@ type
     FValidarInscricoes: boolean;
     FValidarListaServicos: boolean;
   published
-    property AjustarTagNro: boolean                read FAjustarTagNro         write FAjustarTagNro;
-    property NormatizarMunicipios: boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
-    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
-    property PathArquivoMunicipios: String         read FPathArquivoMunicipios write FPathArquivoMunicipios;
-    property ValidarInscricoes: boolean            read FValidarInscricoes     write FValidarInscricoes;
-    property ValidarListaServicos: boolean         read FValidarListaServicos  write FValidarListaServicos;
+    property AjustarTagNro: boolean                read FAjustarTagNro;
+    property NormatizarMunicipios: boolean         read FNormatizarMunicipios    write FNormatizarMunicipios;
+    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura;
+    property PathArquivoMunicipios: String         read FPathArquivoMunicipios   write FPathArquivoMunicipios;
+    property ValidarInscricoes: boolean            read FValidarInscricoes;
+    property ValidarListaServicos: boolean         read FValidarListaServicos;
   end;
 
 implementation
@@ -1219,41 +1219,13 @@ begin
   cMun := IIf(PaisBrasil, vcMun, CMUN_EXTERIOR);
   xMun := IIf(PaisBrasil, vxMun, XMUN_EXTERIOR);
   xUF  := IIf(PaisBrasil, vxUF, UF_EXTERIOR);
-  
-  xMun := ObterNomeMunicipio(xMun, xUF, cMun);
-end;
 
-function TMDFeW.ObterNomeMunicipio(const xMun, xUF: String;
-  const cMun: Integer): String;
-var
-  i: Integer;
-  PathArquivo, Codigo: String;
-  List: TStringList;
-begin
-  result := '';
-  if (FOpcoes.NormatizarMunicipios) and (cMun <> CMUN_EXTERIOR) then
-  begin
-    PathArquivo := FOpcoes.FPathArquivoMunicipios + 'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
-    if FileExists(PathArquivo) then
-    begin
-      List := TStringList.Create;
-      try
-        List.LoadFromFile(PathArquivo);
-        Codigo := IntToStr(cMun);
-        i := 0;
-        while (i < list.count) and (result = '') do
-        begin
-          if pos(Codigo, List[i]) > 0 then
-            result := Trim(StringReplace(list[i], codigo, '', []));
-          inc(i);
-        end;
-      finally
-        List.free;
-      end;
-    end;
-  end;
-  if result = '' then
-    result := xMun;
+  if FOpcoes.NormatizarMunicipios then
+    if ( ( EstaZerado(cMun)) and (xMun <> XMUN_EXTERIOR) ) then
+      cMun := ObterCodigoMunicipio(xMun, xUF, FOpcoes.FPathArquivoMunicipios)
+    else if ( ( EstaVazio(xMun)) and (cMun <> CMUN_EXTERIOR) ) then
+      xMun := ObterNomeMunicipio(xUF, cMun, FOpcoes.FPathArquivoMunicipios);
+
 end;
 
 end.

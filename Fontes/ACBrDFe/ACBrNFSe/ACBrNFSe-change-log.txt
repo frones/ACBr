@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/02/2018
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/41396-enviar-nfs-e-sarandi-rs-erro/?do=findComment&comment=273121
+Por: Felipe Mesturini
 -- ACBrNFSeWebServices --
 [*] Correção na classe de cancelamento para o provedor Betha.
 Por: Filipe Natividade

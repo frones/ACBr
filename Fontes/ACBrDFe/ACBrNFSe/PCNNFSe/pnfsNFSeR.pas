@@ -1992,7 +1992,11 @@ begin
         NFSe.Prestador.Cnpj := NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;
       end
       else
+      begin
         NFSe.Prestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
+        NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := NFSe.Prestador.Cnpj;
+        NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := NFSe.Prestador.InscricaoMunicipal;
+      end;
     end; // fim Prestador
 
     if (Leitor.rExtrai(Nivel, 'TomadorServico') <> '') or

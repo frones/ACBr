@@ -439,7 +439,7 @@ begin
       Add('Usuario', ftString, 50);
       Add('Site', ftString, 50);
       Add('NaturezaOperacao', ftString, 50);
-      Add('RegimeEspecialTributacao', ftString, 50);
+      Add('RegimeEspecialTributacao', ftString, 80);
       Add('OptanteSimplesNacional', ftString, 10);
       Add('IncentivadorCultural', ftString, 10);
       Add('TipoRecolhimento', ftString, 10);

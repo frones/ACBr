@@ -211,6 +211,16 @@ echo "* Arquivo    ACBrMDFe.lrs     gerado    *"
 echo "****************************************"
 echo.
 
+:eSocial
+%1\tools\lazres.exe ACBreSocial.lrs TACBreSocial.png 
+move ACBreSocial.lrs ..\ACBrDFe\ACBreSocial
+
+echo.
+echo "****************************************"
+echo "* Arquivo    ACBreSocial.lrs     gerado    *"
+echo "****************************************"
+echo.
+
 :LFD
 %1\tools\lazres.exe ACBrLFD.lrs TACBrLFD.png 
 move ACBrLFD.lrs ..\ACBrTXT\ACBrLFD

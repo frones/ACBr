@@ -2577,19 +2577,29 @@ begin
     begin
       FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
       FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
-      if FProvedor = proGoverna then
-        FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
- 
-      if FProvedor in [proCTA, proSP, ProNotaBlu] then
-      if (FProvedor in [proCTA, proSP]) or
-         ( (FProvedor = ProNotaBlu) and
-           (RetEnvLote.InfRec.InformacoesLote.QtdNotasProcessadas > 0) ) then
-      begin
-        FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
-        FNotasFiscais.Items[i].NFSe.CodigoVerificacao := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.CodigoVerificacao;
-        FNotasFiscais.Items[i].NFSe.NumeroLote := RetEnvLote.InfRec.NumeroLote;
+
+      case FProvedor of
+        proGoverna: FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
+
+        proIPM: begin
+                  FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
+                  FNotasFiscais.Items[i].NFSe.CodigoVerificacao := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.CodigoVerificacao;
+                end;
+
+        proCTA,
+        proSP,
+        ProNotaBlu: begin
+                      if (FProvedor in [proCTA, proSP]) or
+                         ((FProvedor = ProNotaBlu) and (RetEnvLote.InfRec.InformacoesLote.QtdNotasProcessadas > 0)) then
+                      begin
+                        FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
+                        FNotasFiscais.Items[i].NFSe.CodigoVerificacao := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.CodigoVerificacao;
+                        FNotasFiscais.Items[i].NFSe.NumeroLote := RetEnvLote.InfRec.NumeroLote;
+                      end;
+                    end;
       end;
     end;
+
     FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
              'Numero do Lote : ' + RetEnvLote.InfRec.NumeroLote + LineBreak +
              'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +

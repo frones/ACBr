@@ -384,6 +384,10 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'nfdok') <> '');
 
+    //IPM
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'retorno') <> '');
+
    if Nivel1 then
     begin
       // =======================================================================

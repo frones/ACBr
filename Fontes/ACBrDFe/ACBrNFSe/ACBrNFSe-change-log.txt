@@ -49,6 +49,9 @@ Símbolo : Significado
 
 09/02/2018
 -- Diversos --
+[*] Ajustes para o provedor IPM.
+Por: Léo
+-- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/41396-enviar-nfs-e-sarandi-rs-erro/?do=findComment&comment=273121
 Por: Felipe Mesturini
 -- ACBrNFSeWebServices --

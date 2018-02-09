@@ -102,7 +102,7 @@ begin
     Gerador.wCampoNFSe(tcStr, '', 'nro_recibo_provisorio', 1, 12, 1, NFSe.IdentificacaoRps.Numero, DSC_NUMRPS);
     Gerador.wCampoNFSe(tcStr, '', 'serie_recibo_provisorio', 1, 02, 1, NFSe.IdentificacaoRps.Serie, DSC_SERIERPS);
     Gerador.wCampoNFSe(tcStr, '', 'data_emissao_recibo_provisorio', 1, 10, 1, FormatDateTimeBr(NFSe.DataEmissaoRps, 'dd/mm/yyyy'), DSC_DEMI);
-    Gerador.wCampoNFSe(tcHor, '', 'hora_emissao_recibo_provisorio', 1, 8, 1, NFSe.DataEmissaoRps, DSC_HEMI);
+    Gerador.wCampoNFSe(tcStr, '', 'hora_emissao_recibo_provisorio', 1, 8, 1, FormatDateTimeBr(NFSe.DataEmissaoRps, 'hh:mm:ss'), DSC_HEMI);
 
     Gerador.wGrupoNFSe('/rps');
   end;

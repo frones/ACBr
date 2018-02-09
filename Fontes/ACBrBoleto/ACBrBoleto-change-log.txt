@@ -49,6 +49,10 @@ Símbolo : Significado
 
 Data 05/02/2018 ver: 0.0.240
 
+ -- ACBrBancoCaixa
+[*] Ajuste Calculo Multa na geração de Remessa CNAB400
+    https://www.projetoacbr.com.br/forum/topic/41411-erro-no-valor-da-multa-na-remessa-cnab400-da-cef/
+
  -- ACBrBancoUnicredRS
 [+] Adicionado Banco Unicred com layout próprio
     https://www.projetoacbr.com.br/forum/topic/28788-boleto-unicred/?do=findComment&comment=238188

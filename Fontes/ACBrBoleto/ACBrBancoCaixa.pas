@@ -1017,7 +1017,7 @@ begin
                   PadRight(trim(Sacado.Cidade), 15)                                + // 335 até 349  - Cidade do sacado
                   PadRight(Sacado.UF, 2 )                                          + // 350 até 351  - UF da cidade do sacado
                   ADataMoraJuros                                                   + //352 até 357  - Data Multa
-                  IntToStrZero(round((ValorDocumento*PercentualMulta)/100), 10)    + //358 até 367 - Valor nominal da multa
+                  IntToStrZero(round((ValorDocumento* (PercentualMulta*100) )/100), 10)    + //358 até 367 - Valor nominal da multa
                   PadRight(Sacado.NomeSacado, 22)                                  + // 368 até 389 - Nome do Sacador Avalista
                   '00'                                                             + // 390  391 - Terceira instrução de Cobrança Default '00'
                    IfThen((DataProtesto <> null) and

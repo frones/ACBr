@@ -252,7 +252,6 @@ begin
       try
         Text := XMLAss;
         SaveToFile(IncludeTrailingPathDelimiter(Configuracoes.Arquivos.PathSalvar) + NomeEvento);
-
       finally
         Free;
       end;
@@ -343,8 +342,14 @@ function TeSocialEvento.GerarChaveEsocial(const emissao: TDateTime;
 var
   nAno, nMes, nDia, nHora, nMin, nSeg, nMSeg: Word;
 begin
-// Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
- if sequencial = 0 then
+  // já foi carregado, não é necessário gerar novamente
+  if (Length(Self.Id)=36) then
+  begin
+    Result := Self.Id;
+    Exit;
+  end;
+  // Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
+  if sequencial = 0 then
    sequencial := Random(99999);
 
   DecodeDate(emissao, nAno, nMes, nDia);

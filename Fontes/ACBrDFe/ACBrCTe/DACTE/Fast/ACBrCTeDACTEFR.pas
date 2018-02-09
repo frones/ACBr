@@ -1513,11 +1513,20 @@ end;
 function TACBrCTeDACTEFR.PrepareReport(ACTE: TCTe): Boolean;
 var
   i: Integer;
+  Stream: TStringStream;
 begin
   Result := False;
 
   if Trim(FastFile) <> '' then
   begin
+    if not (UpperCase(Copy(FastFile, Length(FastFile)-3, 4)) = '.FR3') then
+    begin
+      Stream := TStringStream.Create(FastFile);
+      frxReport.FileName := '';
+      frxReport.LoadFromStream(Stream);
+      Stream.Free;
+    end
+    else
     if FileExists(FastFile) then
       frxReport.LoadFromFile(FastFile)
     else
@@ -1553,9 +1562,18 @@ begin
 end;
 
 function TACBrCTeDACTEFR.PrepareReportEvento: Boolean;
+var Stream: TStringStream;
 begin
   if Trim(FastFileEvento) <> '' then
   begin
+    if not (UpperCase(Copy(FastFileEvento, Length(FastFileEvento)-3, 4)) = '.FR3') then
+    begin
+      Stream := TStringStream.Create(FastFileEvento);
+      frxReport.FileName := '';
+      frxReport.LoadFromStream(Stream);
+      Stream.Free;
+    end
+    else
     if FileExists(FastFileEvento) then
       frxReport.LoadFromFile(FastFileEvento)
     else
@@ -2050,7 +2068,7 @@ begin
       begin
         Append;
         FieldByName('tpDoc').AsString       := 'NF';
-        FieldByName('CNPJCPF').AsString     := FCTe.Rem.CNPJCPF;
+        FieldByName('CNPJCPF').AsString     := DoctoRem;
         FieldByName('Serie').AsString       := serie;
         FieldByName('ChaveAcesso').AsString := '';
         FieldByName('NotaFiscal').AsString  := nDoc;
@@ -2357,7 +2375,7 @@ begin
         tsSubcontratacao: FieldByName('tpServ').AsString := 'Subcontratação';
         tsRedespacho: FieldByName('tpServ').AsString     := 'Redespacho';
         tsIntermediario: FieldByName('tpServ').AsString  := 'Intermediário';
-        tsMultimodal: FieldByName('tpServ').AsString  := 'Vinc. Multimodal';
+        tsMultimodal: FieldByName('tpServ').AsString  := 'Vinc. a Multimodal';
         tsTranspPessoas: FieldByName('tpServ').AsString  := 'Transporte de Pessoas';
         tsTranspValores: FieldByName('tpServ').AsString  := 'Transporte de Valores';
         tsExcessoBagagem: FieldByName('tpServ').AsString  := 'Excesso de Bagagem';
@@ -2926,7 +2944,7 @@ begin
     end;
 
     FieldByName('Sistema').AsString := Ifthen(Sistema <> '', Sistema, 'Projeto ACBr - http://acbr.sf.net');
-    FieldByName('Usuario').AsString := Ifthen(Usuario <> '', ' - ' + Usuario,'');
+    FieldByName('Usuario').AsString := Ifthen(Usuario <> '', Usuario,'');
     FieldByName('Fax').AsString := Ifthen(Fax <> '',' - FAX ' + Fax,'');
 
     FieldByName('Site').AsString  := Site;
@@ -2937,13 +2955,15 @@ begin
     else
       FieldByName('Desconto').AsString := 'V.DESC.';
 
-    if ((FCTe.ide.TpEmis = teNormal) or (FCTe.ide.TpEmis = teSCAN)) then
+    if ((FCTe.ide.TpEmis = teNormal) or (FCTe.ide.TpEmis = teSCAN)) or (FCTe.procCTe.cStat in [100, 101, 110]) then
     begin
       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
       FieldByName('Contingencia_ID').AsString       := '';
 
       if ((CTeCancelada) or (FCTe.procCTe.cStat = 101)) then
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE HOMOLOGAÇÃO DO CANCELAMENTO'
+      else if FCTe.procCTe.cStat = 110 then
+        FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE DENEGAÇÃO DE USO'
       else
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
 
@@ -2972,9 +2992,9 @@ begin
       if ((FCTe.ide.TpEmis = teContingencia) or (FCTe.ide.TpEmis = teFSDA)) then
       begin
         if FCTe.Ide.modelo = 67 then
-          FieldByName('Contingencia_Descricao').AsString := 'DADOS DA CT-E OS'
+          FieldByName('Contingencia_Descricao').AsString := 'DADOS DO CT-E OS'
         else
-          FieldByName('Contingencia_Descricao').AsString := 'DADOS DA CT-E';
+          FieldByName('Contingencia_Descricao').AsString := 'DADOS DO CT-E';
 
         FieldByName('Contingencia_Valor').AsString     := FormatarChaveAcesso(vChave_Contingencia);
       end

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2018
+-- ACBrCTeDACTEFR --
+[*] https://www.projetoacbr.com.br/forum/topic/41428-carregamento-do-conte%C3%BAdo-do-fr3-no-dacte/
+   Por: BSoft
+
 08/02/2018
 -- ACBrCTeWebServices --
 [*] Ficou faltando informar o CTeOS para definir o nome e salvar o XML.

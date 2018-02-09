@@ -271,6 +271,7 @@ type
     cbCryptLib: TComboBox;
     cbHttpLib: TComboBox;
     cbVersaoWSMDFe: TComboBox;
+    cbxUsarSeparadorPathPDF: TCheckBox;
     cbxExibirInfAdicProduto: TCheckBox;
     cbxExibirLogoEmCima: TCheckBox;
     cbxImpDocsReferenciados: TCheckBox;
@@ -283,6 +284,7 @@ type
     cbxImprimirCodigoEANNFCe: TCheckBox;
     cbXMLSignLib: TComboBox;
     cbSSLType: TComboBox;
+    cbxNormatizarMunicipios: TCheckBox;
     chkVerificarValidadeCertificado: TCheckBox;
     chkMostraLogNaTela: TCheckBox;
     cbRFDModelo: TComboBox;
@@ -442,6 +444,7 @@ type
     lblFonteEndereco: TLabel;
     LHelpConnector1: TLHelpConnector;
     lsvArqsRetorno: TListView;
+    MainMenu1: TMainMenu;
     mBOLRelatorio: TMemo;
     meUSUHoraCadastro: TMaskEdit;
     mmEmailMsgCTe: TMemo;
@@ -4056,6 +4059,8 @@ begin
     cbxSalvarNFesProcessadas.Checked :=
       Ini.ReadBool('Arquivos', 'SalvarApenasNFesAutorizadas', False);
     cbxAtualizarXMLCancelado.Checked := Ini.ReadBool('Arquivos', 'AtualizarXMLCancelado', True);
+    cbxNormatizarMunicipios.Checked := Ini.ReadBool('Arquivos', 'NormatizarMunicipios', True);
+    cbxUsarSeparadorPathPDF.Checked := Ini.ReadBool('Arquivos', 'UsarSeparadorPathPDF', True);
 
     edtPathNFe.Text := Ini.ReadString('Arquivos', 'PathNFe', PathApplication+'Arqs');
     edtPathInu.Text := Ini.ReadString('Arquivos', 'PathInu', PathApplication+'Arqs');
@@ -4180,6 +4185,7 @@ begin
     ACBrCTe1.DACTe.PathPDF     := edtPathPDF.Text;
     ACBrCTe1.DACTe.MostrarStatus        := cbxMostraStatus.Checked;
     ACBrCTe1.DACTe.ExpandirLogoMarca    := cbxExpandirLogo.Checked;
+    ACBrCTe1.DACTE.UsarSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
     ACBrCTeDACTeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
 
     ACBrMDFe1.DAMDFe.TipoDAMDFe        := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
@@ -4198,6 +4204,7 @@ begin
     ACBrMDFe1.DAMDFe.PathPDF           := edtPathPDF.Text;
     ACBrMDFe1.DAMDFe.MostrarStatus     := cbxMostraStatus.Checked;
     ACBrMDFe1.DAMDFe.ExpandirLogoMarca := cbxExpandirLogo.Checked;
+    ACBrMDFe1.DAMDFe.UsarSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
 
     ACBrGNRE1.GNREGuia.Sistema         := edSH_RazaoSocial.Text;
     ACBrGNRE1.GNREGuia.Site            := edtSiteEmpresa.Text;
@@ -4985,6 +4992,8 @@ begin
       cbxSalvarNFesProcessadas.Checked);
     Ini.WriteBool('Arquivos', 'AtualizarXMLCancelado',
       cbxAtualizarXMLCancelado.Checked);
+    Ini.WriteBool('Arquivos', 'NormatizarMunicipios', cbxNormatizarMunicipios.Checked);
+    Ini.WriteBool('Arquivos', 'UsarSeparadorPathPDF', cbxUsarSeparadorPathPDF.Checked);
     Ini.WriteString('Arquivos', 'PathNFe', edtPathNFe.Text);
     Ini.WriteString('Arquivos', 'PathInu', edtPathInu.Text);
     Ini.WriteString('Arquivos', 'PathDPEC', edtPathDPEC.Text);
@@ -7636,6 +7645,7 @@ begin
     ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := speFonteCampos.Value;
     ACBrNFe1.DANFE.TamanhoFonteEndereco:= speFonteEndereco.Value;
     ACBrNFe1.DANFE.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
+    ACBrNFe1.DANFE.UsarSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
 
     if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
     begin
@@ -8050,7 +8060,9 @@ end;
 procedure TFrmACBrMonitor.SetComumConfig(Configuracoes: TConfiguracoes);
 var
   OK: boolean;
+  PathMunIBGE: String;
 begin
+  PathMunIBGE := PathWithDelim(ExtractFilePath(Application.ExeName)) + 'MunIBGE' + PathDelim ;
   with Configuracoes do
   begin
     with Geral do
@@ -8130,6 +8142,8 @@ begin
     TConfiguracoesNFe(Configuracoes).Arquivos.PathInu        := edtPathInu.Text;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
     TConfiguracoesNFe(Configuracoes).Arquivos.SalvarApenasNFeProcessadas := cbxSalvarNFesProcessadas.Checked;
+    TConfiguracoesNFe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
+    TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
   end
   else if Configuracoes is TConfiguracoesCTe then
   begin
@@ -8142,6 +8156,8 @@ begin
     TConfiguracoesCTe(Configuracoes).Arquivos.PathInu        := edtPathInu.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.SalvarApenasCTeProcessados := cbxSalvarNFesProcessadas.Checked;
+    TConfiguracoesCTe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
+    TConfiguracoesCTe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
   end
   else if Configuracoes is TConfiguracoesMDFe then
   begin
@@ -8153,6 +8169,8 @@ begin
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathMDFe        := edtPathNFe.Text;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathEvento      := edtPathEvento.Text;
     TConfiguracoesMDFe(Configuracoes).Arquivos.SalvarApenasMDFeProcessados := cbxSalvarNFesProcessadas.Checked;
+    TConfiguracoesMDFe(Configuracoes).Arquivos.NormatizarMunicipios := cbxNormatizarMunicipios.Checked;
+    TConfiguracoesMDFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
   end
   else if Configuracoes is TConfiguracoesGNRE then
   begin
@@ -8763,6 +8781,7 @@ begin
      end;
    end;
    TPanel(Sender).Font.Bold := True;
+
 end;
 
 end.

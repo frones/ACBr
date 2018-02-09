@@ -39,7 +39,6 @@ Uses Classes, TypInfo, SysUtils, CmdUnit,  StdCtrls;
 
 Procedure DoACBrNFe( Cmd : TACBrCmd ) ;
 function UFparaCodigo(const UF: string): integer;
-function ObterCodigoMunicipio(const xMun, xUF: string): integer;
 function GerarNFeIni( XML : String ) : String;
 function SubstituirVariaveis(const ATexto: String): String;
 
@@ -77,6 +76,7 @@ var
   sTemMais,ErrosRegraNegocio: String;
   tipoEvento: TpcnTpEvento;
   FormaEmissao: TpcnTipoEmissao;
+
 begin
  with FrmACBrMonitor do
   begin
@@ -1953,37 +1953,6 @@ begin
     result := 0;
   end;
 end;
-
-function ObterCodigoMunicipio(const xMun, xUF: string): integer;
-var
-  i: integer;
-  PathArquivo: string;
-  List: TstringList;
-  UpMun, UpMunList: String;
-begin
-  result := 0;
-  PathArquivo :=  PathWithDelim(ExtractFilePath(Application.ExeName))+ 'MunIBGE'+PathDelim+'MunIBGE-UF' + InttoStr(UFparaCodigo(xUF)) + '.txt';
-  if FileExists(PathArquivo) then
-  begin
-    UpMun := UpperCase(TiraAcentos(xMun));
-    List := TstringList.Create;
-    try
-      List.LoadFromFile(PathArquivo);
-      i := 0;
-      while (i < list.count) and (result = 0) do
-      begin
-        UpMunList := UpperCase(TiraAcentos(List[i]));
-        if pos(UpMun, UpMunList ) = 9 then
-          result := StrToInt(Trim(copy(list[i],1,7)));
-
-        inc(i);
-      end;
-    finally
-      List.free;
-    end;
-  end;
-end;
-
 
 function GerarNFeIni(XML: String): String;
 var

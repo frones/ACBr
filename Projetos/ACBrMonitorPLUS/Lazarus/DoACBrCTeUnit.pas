@@ -46,7 +46,7 @@ implementation
 Uses IniFiles, DateUtils, strutils,
   Forms, ACBrUtil, ACBrMonitor1,
   pcnConversao, pcteConversaoCTe,
-  pcteCTeR, pcnAuxiliar, DoACBrUnit, DoACBrNFeUnit;
+  pcteCTeR, pcnAuxiliar, DoACBrUnit, DoACBrNFeUnit, ACBrDFeUtil;
 
 Procedure DoACBrCTe( Cmd : TACBrCmd );
 var
@@ -1185,8 +1185,6 @@ begin
           Ide.cMunEnv     := INIRec.ReadInteger('ide','cMunEnv',0);
           Ide.xMunEnv     := INIRec.ReadString('ide','xMunEnv','');
           Ide.UFEnv       := INIRec.ReadString('ide','UFEnv','');
-          if Ide.cMunEnv <= 0 then
-            Ide.cMunEnv := ObterCodigoMunicipio(Ide.xMunEnv,Ide.UFEnv);
 
           Ide.modal       := StrToTpModal(OK, INIRec.ReadString('ide','modal','01'));
           Ide.tpServ      := StrToTpServ(OK,INIRec.ReadString('ide','tpServ','0'));
@@ -1194,14 +1192,10 @@ begin
           Ide.cMunIni     := INIRec.ReadInteger('ide','cMunIni',0);
           Ide.xMunIni     := INIRec.ReadString('ide','xMunIni','');
           Ide.UFIni       := INIRec.ReadString('ide','UFIni','');
-          if Ide.cMunIni <= 0 then
-            Ide.cMunIni := ObterCodigoMunicipio(Ide.xMunIni,Ide.UFIni);
 
           Ide.cMunFim     := INIRec.ReadInteger('ide','cMunFim',0);
           Ide.xMunFim     := INIRec.ReadString('ide','xMunFim','');
           Ide.UFFim       := INIRec.ReadString('ide','UFFim','');
-          if Ide.cMunFim <= 0 then
-            Ide.cMunFim := ObterCodigoMunicipio(Ide.xMunFim,Ide.UFFim);
 
           Ide.retira      := StrToTpRetira(OK,INIRec.ReadString('ide','retira','0'));
           if INIRec.ReadString('ide','xDetRetira','') <> '' then
@@ -1248,8 +1242,6 @@ begin
                 xMun    := INIRec.ReadString('toma4','xMun','');
                 CEP     := INIRec.ReadInteger('toma4','CEP',0);
                 UF      := INIRec.ReadString('toma4','UF','');
-                if cMun <= 0 then
-                  cMun := ObterCodigoMunicipio(xMun,UF);
                 cPais   := INIRec.ReadInteger('toma4','cPais',0);
                 xPais   := INIRec.ReadString('toma4','xPais','');
               end;
@@ -1364,8 +1356,6 @@ begin
           Emit.enderEmit.xMun     := INIRec.ReadString('emit','xMun','');
           Emit.enderEmit.CEP      := INIRec.ReadInteger('emit','CEP',0);
           Emit.enderEmit.UF       := INIRec.ReadString('emit','UF','');
-          if Emit.enderEmit.cMun <= 0 then
-            Emit.enderEmit.cMun := ObterCodigoMunicipio(Emit.enderEmit.xMun,Emit.enderEmit.UF);
           Emit.enderEmit.fone     := INIRec.ReadString('emit','fone','');
 
           ide.cUF   := INIRec.ReadInteger('ide','cUF', UFparaCodigo(Emit.enderEmit.UF));
@@ -1384,8 +1374,6 @@ begin
           Rem.enderReme.xMun      := INIRec.ReadString('rem','xMun','');
           Rem.enderReme.CEP       := INIRec.ReadInteger('rem','CEP',0);
           Rem.enderReme.UF        := INIRec.ReadString('rem','UF','');
-          if Rem.enderReme.cMun <= 0 then
-            Rem.enderReme.cMun    := ObterCodigoMunicipio(Rem.enderReme.xMun,Rem.enderReme.UF);
           Rem.enderReme.cPais      := INIRec.ReadInteger( 'rem','cPais'    ,1058);
           Rem.enderReme.xPais      := INIRec.ReadString(  'rem','xPais'    ,'BRASIL');
           Rem.email                := INIRec.ReadString(  'rem','email' ,'');
@@ -1400,8 +1388,6 @@ begin
           Rem.locColeta.cMun     := INIRec.ReadInteger('locColeta','cMun',0);
           Rem.locColeta.xMun     := INIRec.ReadString('locColeta','xMun','');
           Rem.locColeta.uf       := INIRec.ReadString('locColeta','UF','');
-          if Rem.locColeta.cMun <= 0 then
-            Rem.locColeta.cMun := ObterCodigoMunicipio(Rem.locColeta.xMun, Rem.locColeta.UF);
         {$ENDIF}
 
           //CT-e OS
@@ -1423,8 +1409,6 @@ begin
             toma.endertoma.UF       := INIRec.ReadString('toma','UF','');
             toma.endertoma.cPais    := INIRec.ReadInteger('toma','cPais',1058);
             toma.endertoma.xPais    := INIRec.ReadString('toma','xPais','');
-            if toma.endertoma.cMun <= 0 then
-              toma.endertoma.cMun := ObterCodigoMunicipio(toma.endertoma.xMun,toma.endertoma.UF);
           end;
 
           I := 1;
@@ -1468,8 +1452,6 @@ begin
                 locRet.cMun     := INIRec.ReadInteger(sSecao,'cMun',0);
                 locRet.xMun     := INIRec.ReadString(sSecao,'xMun','');
                 locRet.uf       := INIRec.ReadString(sSecao,'UF','');
-                if locRet.cMun <= 0 then
-                  locRet.cMun := ObterCodigoMunicipio(locRet.xMun,locRet.UF);
               {$ENDIF}
 
               {$IFDEF PL_200}
@@ -1824,8 +1806,6 @@ begin
           Exped.enderExped.xMun     := INIRec.ReadString('Exped','xMun','');
           Exped.enderExped.CEP      := INIRec.ReadInteger('Exped', 'CEP',0);
           Exped.enderExped.UF       := INIRec.ReadString('Exped','UF','');
-          if Exped.enderExped.cMun <= 0 then
-            Exped.enderExped.cMun :=ObterCodigoMunicipio(Exped.enderExped.xMun,Exped.enderExped.UF);
           Exped.enderExped.cPais    := INIRec.ReadInteger('Exped','cPais',1058);
           Exped.enderExped.xPais    := INIRec.ReadString('Exped', 'xPais', 'BRASIL');
 
@@ -1843,8 +1823,6 @@ begin
           Receb.enderReceb.xMun     := INIRec.ReadString('Receb','xMun','');
           Receb.enderReceb.CEP      := INIRec.ReadInteger('Receb', 'CEP',0);
           Receb.enderReceb.UF       := INIRec.ReadString('Receb','UF','');
-          if Receb.enderReceb.cMun <= 0 then
-            Receb.enderReceb.cMun :=ObterCodigoMunicipio(Receb.enderReceb.xMun,Receb.enderReceb.UF);
           Receb.enderReceb.cPais    := INIRec.ReadInteger('Receb','cPais',1058);
           Receb.enderReceb.xPais    := INIRec.ReadString('Receb', 'xPais', 'BRASIL');
 
@@ -1865,8 +1843,6 @@ begin
           Dest.enderDest.xMun     := INIRec.ReadString('Dest','xMun','');
           Dest.enderDest.CEP      := INIRec.ReadInteger('Dest', 'CEP',0);
           Dest.enderDest.UF       := INIRec.ReadString('Dest','UF','');
-          if Dest.enderDest.cMun <= 0 then
-            Dest.enderDest.cMun :=ObterCodigoMunicipio(Dest.enderDest.xMun,Dest.enderDest.UF);
           Dest.enderDest.cPais    := INIRec.ReadInteger('Dest','cPais',1058);
           Dest.enderDest.xPais    := INIRec.ReadString('Dest', 'xPais', 'BRASIL');
 
@@ -2874,8 +2850,6 @@ begin
               xMun    := INIRec.ReadString('toma4','xMun','');
               CEP     := INIRec.ReadInteger('toma4','CEP',0);
               UF      := INIRec.ReadString('toma4','UF','');
-              if cMun <= 0 then
-                cMun := ObterCodigoMunicipio(xMun,UF);
               cPais   := INIRec.ReadInteger('toma4','cPais',0);
               xPais   := INIRec.ReadString('toma4','xPais','');
             end;

@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 419
+  Left = 384
   Height = 689
-  Top = 127
+  Top = 130
   Width = 1064
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -14,6 +14,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   Constraints.MinWidth = 590
   Font.Height = -13
   KeyPreview = True
+  Menu = MainMenu1
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -6597,9 +6598,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 297
                 Top = 0
                 Width = 848
-                ActivePage = tsWSNFCe
+                ActivePage = tsWSNFe
                 Align = alClient
-                TabIndex = 1
+                TabIndex = 0
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e'
@@ -8347,7 +8348,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathNFe: TSpeedButton
                 Left = 258
                 Height = 25
-                Top = 128
+                Top = 139
                 Width = 23
                 Enabled = False
                 Glyph.Data = {
@@ -8370,7 +8371,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label158: TLabel
                 Left = 6
                 Height = 17
-                Top = 112
+                Top = 123
                 Width = 113
                 Caption = 'Pasta Arquivos NFe'
                 ParentColor = False
@@ -8378,7 +8379,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label160: TLabel
                 Left = 288
                 Height = 17
-                Top = 112
+                Top = 123
                 Width = 154
                 Caption = 'Pasta Arquivos Inutilização'
                 ParentColor = False
@@ -8386,7 +8387,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathInu: TSpeedButton
                 Left = 532
                 Height = 25
-                Top = 128
+                Top = 139
                 Width = 23
                 Enabled = False
                 Glyph.Data = {
@@ -8409,7 +8410,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label161: TLabel
                 Left = 288
                 Height = 17
-                Top = 155
+                Top = 166
                 Width = 119
                 Caption = 'Pasta Arquivos EPEC'
                 ParentColor = False
@@ -8417,7 +8418,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathDPEC: TSpeedButton
                 Left = 532
                 Height = 25
-                Top = 171
+                Top = 182
                 Width = 23
                 Enabled = False
                 Glyph.Data = {
@@ -8440,7 +8441,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label162: TLabel
                 Left = 6
                 Height = 17
-                Top = 200
+                Top = 211
                 Width = 140
                 Caption = 'Salvar arquivos PDF em:'
                 ParentColor = False
@@ -8448,7 +8449,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathPDF: TSpeedButton
                 Left = 258
                 Height = 25
-                Top = 216
+                Top = 227
                 Width = 23
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
@@ -8470,7 +8471,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object Label164: TLabel
                 Left = 6
                 Height = 17
-                Top = 155
+                Top = 166
                 Width = 129
                 Caption = 'Pasta Arquivos Evento'
                 ParentColor = False
@@ -8478,7 +8479,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbPathEvento: TSpeedButton
                 Left = 258
                 Height = 25
-                Top = 171
+                Top = 182
                 Width = 23
                 Enabled = False
                 Glyph.Data = {
@@ -8501,7 +8502,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathNFe: TEdit
                 Left = 6
                 Height = 25
-                Top = 128
+                Top = 139
                 Width = 252
                 Enabled = False
                 TabOrder = 9
@@ -8509,7 +8510,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathInu: TEdit
                 Left = 288
                 Height = 25
-                Top = 128
+                Top = 139
                 Width = 244
                 Enabled = False
                 TabOrder = 10
@@ -8517,7 +8518,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathDPEC: TEdit
                 Left = 288
                 Height = 25
-                Top = 171
+                Top = 182
                 Width = 244
                 Enabled = False
                 TabOrder = 12
@@ -8525,14 +8526,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object edtPathPDF: TEdit
                 Left = 6
                 Height = 25
-                Top = 216
+                Top = 227
                 Width = 252
                 TabOrder = 13
               end
               object edtPathEvento: TEdit
                 Left = 6
                 Height = 25
-                Top = 171
+                Top = 182
                 Width = 252
                 Enabled = False
                 TabOrder = 11
@@ -8618,6 +8619,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 165
                 Caption = 'Atualizar XML Cancelado'
                 TabOrder = 4
+              end
+              object cbxNormatizarMunicipios: TCheckBox
+                Left = 288
+                Height = 21
+                Top = 72
+                Width = 325
+                Caption = 'Normatizar Municípios utilizando Diretório MunIBGE'
+                TabOrder = 14
+              end
+              object cbxUsarSeparadorPathPDF: TCheckBox
+                Left = 6
+                Height = 21
+                Top = 91
+                Width = 212
+                Caption = 'Utilizar Separador para Path PDF'
+                TabOrder = 15
               end
             end
             object tsTestesDFe: TTabSheet
@@ -12953,6 +12970,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -14272,5 +14290,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     AutoRegister = True
     left = 844
     top = 455
+  end
+  object MainMenu1: TMainMenu
+    left = 228
+    top = 44
   end
 end

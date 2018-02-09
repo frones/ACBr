@@ -43,6 +43,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2018
+[+] Adicionado Parâmetro "Utilizar Separador para Path PDF" em DFe / Diretórios
+        Define se utiliza a mesma Estrutura de diretório definida para XML, se não
+        informar o path PDF, cria estrutura a partir do path raiz do ACBrMonitor
+	por: José M. S. Junior
+
+[+] Adicionado Parâmetro "Normatizar Municípios utilizando Diretório MunIBGE" em DFe / Diretórios
+        Define a utilização do Diretorio MunIBGE juntos ao path raiz do ACBrMonitor
+        para atualizar Cod. Município ou Nome Município na geração do XML, caso o mesmo não
+        esteja preenchido.
+	por: José M. S. Junior
+
 12/01/2018
 [*] Atualização das Propriedades de impressão da DANFE
 	por: José M. S. Junior

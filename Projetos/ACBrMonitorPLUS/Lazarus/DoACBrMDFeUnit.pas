@@ -35,7 +35,7 @@ unit DoACBrMDFeUnit;
 
 interface
 Uses Classes, SysUtils, CmdUnit,
-     ACBrUtil;
+     ACBrUtil, ACBrDFeUtil;
 
 Procedure DoACBrMDFe( Cmd : TACBrCmd );
 procedure GerarIniMDFe( AStr: String );
@@ -1040,8 +1040,6 @@ begin
          Emit.enderEmit.UF      := INIRec.ReadString('emit', 'UF', '');
          Emit.enderEmit.fone    := INIRec.ReadString('emit', 'fone', '');
          Emit.enderEmit.email   := INIRec.ReadString('emit', 'email', '');
-         if Emit.enderEmit.cMun <= 0 then
-           Emit.enderEmit.cMun := ObterCodigoMunicipio(Emit.enderEmit.xMun, Emit.enderEmit.UF);
 
          ide.cUF := INIRec.ReadInteger('ide', 'cUF', UFparaCodigo(Emit.enderEmit.UF));
 

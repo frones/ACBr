@@ -51,6 +51,10 @@ Símbolo : Significado
 -- pnfsCancNfseResposta --
 [*] Correção no nome da tag.
 Por: Wanderson Paiva
+-- pnfsNFSeW_ABRASFv1 --
+[*] Correção na geração da tag aliquota
+Por: Adriano Teodorico
+
 
 08/02/2018
 -- ACBrNFSeWebServices --

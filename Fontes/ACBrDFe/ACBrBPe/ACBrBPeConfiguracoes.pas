@@ -92,7 +92,7 @@ type
     FNormatizarMunicipios: Boolean;
     FPathBPe: String;
     FPathEvento: String;
-    FPathArquivoMunicipios: String
+    FPathArquivoMunicipios: String;
     FDownloadBPe: TDownloadConfBPe;
   public
     constructor Create(AOwner: TConfiguracoes); override;
@@ -268,10 +268,10 @@ begin
   FEmissaoPathBPe               := DeArquivosConfBPe.EmissaoPathBPe;
   FSalvarEvento                 := DeArquivosConfBPe.SalvarEvento;
   FSalvarApenasBPeProcessadas   := DeArquivosConfBPe.SalvarApenasBPeProcessadas;
-  FNormatizarMunicipios         := DeArquivosConfMDFe.NormatizarMunicipios;
+  FNormatizarMunicipios         := DeArquivosConfBPe.NormatizarMunicipios;
   FPathBPe                      := DeArquivosConfBPe.PathBPe;
   FPathEvento                   := DeArquivosConfBPe.PathEvento;
-  FPathArquivoMunicipios        := DeArquivosConfMDFe.PathArquivoMunicipios;
+  FPathArquivoMunicipios        := DeArquivosConfBPe.PathArquivoMunicipios;
 
   FDownloadBPe.Assign(DeArquivosConfBPe.DownloadBPe);
 end;

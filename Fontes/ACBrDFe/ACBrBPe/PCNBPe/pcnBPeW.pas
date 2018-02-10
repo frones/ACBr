@@ -123,13 +123,13 @@ type
     FValidarListaServicos: Boolean;
   published
     property AjustarTagNro: Boolean read FAjustarTagNro;
-    property GerarTagIPIparaNaoTributado: Boolean read FGerarTagIPIparaNaoTributado;
-    property GerarTXTSimultaneamente: Boolean read FGerarTXTSimultaneamente;
-    property NormatizarMunicipios: Boolean read FNormatizarMunicipios;
-    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura;
-    property PathArquivoMunicipios: String read FPathArquivoMunicipios;
-    property ValidarInscricoes: Boolean read FValidarInscricoes write;
-    property ValidarListaServicos: Boolean read FValidarListaServicos write;
+    property GerarTagIPIparaNaoTributado: Boolean read FGerarTagIPIparaNaoTributado write FGerarTagIPIparaNaoTributado;
+    property GerarTXTSimultaneamente: Boolean read FGerarTXTSimultaneamente write FGerarTXTSimultaneamente;
+    property NormatizarMunicipios: Boolean read FNormatizarMunicipios write FNormatizarMunicipios;
+    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
+    property PathArquivoMunicipios: String read FPathArquivoMunicipios write FPathArquivoMunicipios;
+    property ValidarInscricoes: Boolean read FValidarInscricoes write FValidarInscricoes;
+    property ValidarListaServicos: Boolean read FValidarListaServicos write FValidarListaServicos;
   end;
 
 implementation

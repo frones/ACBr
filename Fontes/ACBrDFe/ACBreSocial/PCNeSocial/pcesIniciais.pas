@@ -51,7 +51,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrUtil, pcesConversaoeSocial,
-  pcesS1000, pcesS1005, pcesS2100;
+  pcesS1000, pcesS1005;
 
 type
 
@@ -59,12 +59,10 @@ type
   private
     FS1000: TS1000Collection;
     FS1005: TS1005Collection;
-    FS2100: TS2100Collection;
 
     function GetCount: integer;
     procedure setS1000(const Value: TS1000Collection);
     procedure setS1005(const Value: TS1005Collection);
-    procedure setS2100(const Value: TS2100Collection);
 
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -78,7 +76,6 @@ type
     property Count: Integer read GetCount;
     property S1000: TS1000Collection read FS1000 write setS1000;
     property S1005: TS1005Collection read FS1005 write setS1005;
-    property S2100: TS2100Collection read FS2100 write setS2100;
 
   end;
 
@@ -93,7 +90,6 @@ procedure TIniciais.Clear;
 begin
   FS1000.Clear;
   FS1005.Clear;
-  FS2100.Clear;
 end;
 
 constructor TIniciais.Create(AOwner: TComponent);
@@ -102,14 +98,12 @@ begin
 
   FS1000 := TS1000Collection.Create(AOwner, TS1000CollectionItem);
   FS1005 := TS1005Collection.Create(AOwner, TS1005CollectionItem);
-  FS2100 := TS2100Collection.Create(AOwner, TS2100CollectionItem);
 end;
 
 destructor TIniciais.Destroy;
 begin
   FS1000.Free;
   FS1005.Free;
-  FS2100.Free;
 
   inherited;
 end;
@@ -117,8 +111,7 @@ end;
 function TIniciais.GetCount: Integer;
 begin
   Result := self.S1000.Count +
-            self.S1005.Count +
-            self.S2100.Count;
+            self.S1005.Count;
 end;
 
 procedure TIniciais.GerarXMLs;
@@ -129,8 +122,6 @@ begin
     Self.S1000.Items[i].evtInfoEmpregador.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
   for I := 0 to Self.S1005.Count - 1 do
     Self.S1005.Items[i].evtTabEstab.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
-  for I := 0 to Self.S2100.Count - 1 do
-    Self.S2100.Items[i].evtCadInicial.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 end;
 
 procedure TIniciais.SaveToFiles;
@@ -146,8 +137,6 @@ begin
     Self.S1000.Items[i].evtInfoEmpregador.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1000.Items[i].TipoEvento)+'-'+IntToStr(i));
   for I := 0 to Self.S1005.Count - 1 do
     Self.S1005.Items[i].evtTabEstab.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1005.Items[i].TipoEvento)+'-'+IntToStr(i));
-  for I := 0 to Self.S2100.Count - 1 do
-    Self.S2100.Items[i].evtCadInicial.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2100.Items[i].TipoEvento)+'-'+IntToStr(i));
 end;
 
 procedure TIniciais.setS1000(const Value: TS1000Collection);
@@ -158,11 +147,6 @@ end;
 procedure TIniciais.setS1005(const Value: TS1005Collection);
 begin
   FS1005.Assign(Value);
-end;
-
-procedure TIniciais.setS2100(const Value: TS2100Collection);
-begin
-  FS2100.Assign(Value);
 end;
 
 end.

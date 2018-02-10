@@ -173,9 +173,6 @@ begin
   {S1005}
   for i := 0 to FEventos.Iniciais.S1005.Count - 1 do
     LoadFromString(FEventos.Iniciais.S1005[i].evtTabEstab.XML);
-  {S2100}
-  for i := 0 to FEventos.Iniciais.S2100.Count - 1 do
-    LoadFromString(FEventos.Iniciais.S2100[i].evtCadInicial.XML);
 {Iniciais}
 
 {Tabelas}

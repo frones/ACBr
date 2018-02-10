@@ -257,15 +257,9 @@ begin
   {S2400}
   for i := 0 to FEventos.NaoPeriodicos.S2400.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2400[i].evtCdBenPrRP.XML);
-  {S2400}
+  {S3000}
   for i := 0 to FEventos.NaoPeriodicos.S3000.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S3000[i].EvtExclusao.XML);
-  {S4000}
-  for i := 0 to FEventos.NaoPeriodicos.S4000.Count - 1 do
-    LoadFromString(FEventos.NaoPeriodicos.S4000[i].EvtSolicTotal.XML);
-  {S4999}
-  for i := 0 to FEventos.NaoPeriodicos.S4999.Count - 1 do
-    LoadFromString(FEventos.NaoPeriodicos.S4999[i].EvtAdesao.XML);
 {NaoPeriodicos}
 
 {Periodicos}
@@ -277,8 +271,6 @@ begin
     LoadFromString(FEventos.Periodicos.S1207[i].evtBenPrRP.XML);
   for i := 0 to FEventos.Periodicos.S1210.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1210[i].evtPgtos.XML);
-  for i := 0 to FEventos.Periodicos.S1220.Count - 1 do
-    LoadFromString(FEventos.Periodicos.S1220[i].EvtPgtosNI.XML);
   for i := 0 to FEventos.Periodicos.S1250.Count - 1 do
     LoadFromString(FEventos.Periodicos.S1250[i].EvtAqProd.XML);
   for i := 0 to FEventos.Periodicos.S1260.Count - 1 do
@@ -335,28 +327,6 @@ begin
           '</eSocial>';
 
   FXML := AnsiToUtf8(FXML);
-  (*
-  if TACBreSocial(Self.Owner).Configuracoes.Geral.Salvar then
-  begin
-    with TACBreSocial(Self.Owner) do
-      Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
-
-    if (Path <> EmptyStr) and not DirectoryExists(Path) then
-      ForceDirectories(Path);
-
-    with TStringList.Create do
-    try
-      Text := FXml;
-      SaveToFile(Path + '\' + 'EnvioLoteEventos' + '-' + IntTostr(Dayof(Now)) +
-                 IntTostr(MonthOf(Now)) + IntTostr(YearOf(Now)) + '_' +
-                 IntTostr(HourOf(Now)) + IntTostr(MinuteOf(Now)) +
-                 IntTostr(SecondOf(Now)) + '_' + IntTostr(MilliSecondOf(Now)) +
-                 '.xml');
-    finally
-      Free;
-    end;
-  end;
-  *)
   Validar;
 end;
 

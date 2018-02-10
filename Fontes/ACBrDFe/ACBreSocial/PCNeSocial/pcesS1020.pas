@@ -415,7 +415,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabLotacao');
 
-    Validar('evtTabLotacao');
+    Validar(schevtTabLotacao);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

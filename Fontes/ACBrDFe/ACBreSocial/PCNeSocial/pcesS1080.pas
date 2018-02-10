@@ -308,7 +308,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabOperPort');
 
-    Validar('evtTabOperPort');
+    Validar(schevtTabOperPort);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;
@@ -317,4 +317,4 @@ begin
 end;
 
 end.
- 
+

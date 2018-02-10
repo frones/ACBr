@@ -200,7 +200,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAdmPrelim');
 
-    Validar('evtAdmPrelim');
+    Validar(schevtAdmPrelim);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

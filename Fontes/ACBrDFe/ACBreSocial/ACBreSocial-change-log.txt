@@ -54,11 +54,17 @@ Símbolo : Significado
    Por: Leondro LJM
    
 -- ACBreSocial --
+[*] Removido eventos que não são mais gerados.
+	Por: Rafael Dias.
 [*] Alteração visando resolver Memory Leak
    Por: Italo Jurisato Junior
 [*] Alteração visando resolver Memory Leak
 	https://www.projetoacbr.com.br/forum/topic/41444-execut%C3%A1vel-preso-em-mem%C3%B3ria/
 	Por: Joceandro Perin
+	
+-- pcesGerador --
+[*] Alteração no metodo de validação do Xml do eventos receba um enum TeSocialSchema.
+	Por: Rafael Dias.
 
 -- ACBreSocialWebServices --	
 [*] Alteração visando resolver Memory Leak

@@ -342,7 +342,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVAltContr');
 
-    Validar('evtTSVAltContr');
+    Validar(schevtTSVAltContr);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

@@ -592,7 +592,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInfoEmpregador');
 
-    Validar('evtInfoEmpregador');
+    Validar(schevtInfoEmpregador);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

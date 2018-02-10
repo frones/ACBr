@@ -357,7 +357,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtCdBenPrRP');
 
-    Validar('evtCdBenPrRP');
+    Validar(schevtCdBenPrRP);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

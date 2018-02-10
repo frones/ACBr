@@ -268,7 +268,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInfoComplPer');
 
-    Validar('evtInfoComplPer');
+    Validar(schevtInfoComplPer);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

@@ -362,7 +362,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabHorTur');
 
-    Validar('evtTabHorTur');
+    Validar(schevtTabHorTur);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

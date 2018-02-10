@@ -654,7 +654,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtPgtos');
 
-    Validar('evtPgtos');
+    Validar(schevtPgtos);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

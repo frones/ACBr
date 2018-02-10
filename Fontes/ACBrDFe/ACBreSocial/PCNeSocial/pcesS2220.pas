@@ -441,7 +441,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtMonit');
 
-    Validar('evtMonit');
+    Validar(schevtMonit);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

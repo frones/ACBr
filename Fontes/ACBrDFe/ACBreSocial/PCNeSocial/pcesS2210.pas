@@ -541,7 +541,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtCAT');
 
-    Validar('evtCAT');
+    Validar(schevtCAT);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

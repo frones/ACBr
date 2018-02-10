@@ -285,7 +285,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabCarreira');
 
-    Validar('evtTabCarreira');
+    Validar(schevtTabCarreira);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

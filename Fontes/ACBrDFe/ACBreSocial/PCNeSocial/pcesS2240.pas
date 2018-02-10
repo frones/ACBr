@@ -458,7 +458,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtExpRisco');
 
-    Validar('evtExpRisco');
+    Validar(schevtExpRisco);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

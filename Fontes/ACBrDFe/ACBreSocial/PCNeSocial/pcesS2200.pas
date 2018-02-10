@@ -180,7 +180,7 @@ begin
     GerarRodape;
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAdmissao');
-    Validar('evtAdmissao');
+    Validar(schevtAdmissao);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

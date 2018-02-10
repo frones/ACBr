@@ -357,7 +357,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAqProd');
 
-    Validar('evtAqProd');
+    Validar(schevtAqProd);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

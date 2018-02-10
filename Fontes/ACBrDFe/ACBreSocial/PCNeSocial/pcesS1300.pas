@@ -220,7 +220,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtContrSindPatr');
 
-    Validar('evtContrSindPatr');
+    Validar(schevtContrSindPatr);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

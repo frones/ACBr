@@ -513,7 +513,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVInicio');
 
-    Validar('evtTSVInicio');
+    Validar(schevtTSVInicio);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

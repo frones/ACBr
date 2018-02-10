@@ -170,7 +170,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtReabreEvPer');
 
-    Validar('evtReabreEvPer');
+    Validar(schevtReabreEvPer);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

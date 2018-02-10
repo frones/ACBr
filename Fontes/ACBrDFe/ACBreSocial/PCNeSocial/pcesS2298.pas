@@ -219,7 +219,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtReintegr');
 
-    Validar('evtReintegr');
+    Validar(schevtReintegr);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

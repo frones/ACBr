@@ -431,7 +431,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAfastTemp');
 
-    Validar('evtAfastTemp');
+    Validar(schevtAfastTemp);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

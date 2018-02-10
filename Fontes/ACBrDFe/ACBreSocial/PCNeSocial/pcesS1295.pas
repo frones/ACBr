@@ -176,7 +176,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTotConting');
 
-    Validar('evtTotConting');
+    Validar(schevtTotConting);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

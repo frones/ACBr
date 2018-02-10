@@ -201,7 +201,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAltCadastral');
 
-    Validar('evtAltCadastral');
+    Validar(schevtAltCadastral);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

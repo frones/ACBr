@@ -398,7 +398,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabRubrica');
 
-    Validar('evtTabRubrica');
+    Validar(schevtTabRubrica);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

@@ -241,7 +241,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtContratAvNP');
 
-    Validar('evtContratAvNP');
+    Validar(schevtContratAvNP);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

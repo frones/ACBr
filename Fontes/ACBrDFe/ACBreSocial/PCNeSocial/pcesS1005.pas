@@ -554,7 +554,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabEstab');
 
-    Validar('evtTabEstab');
+    Validar(schevtTabEstab);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

@@ -327,7 +327,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAltContratual');
 
-    Validar('evtAltContratual');
+    Validar(schevtAltContratual);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

@@ -304,7 +304,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabFuncao');
 
-    Validar('evtTabFuncao');
+    Validar(schevtTabFuncao);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;
@@ -313,4 +313,4 @@ begin
 end;
 
 end.
- 
+

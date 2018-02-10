@@ -372,7 +372,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabCargo');
 
-    Validar('evtTabCargo');
+    Validar(schevtTabCargo);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

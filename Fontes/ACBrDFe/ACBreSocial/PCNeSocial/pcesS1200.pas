@@ -958,7 +958,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtRemun');
 
-    Validar('evtRemun');
+    Validar(schevtRemun);
   except
     on e: Exception do
       raise Exception.Create(e.Message);

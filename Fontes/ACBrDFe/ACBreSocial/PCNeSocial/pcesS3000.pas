@@ -221,7 +221,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtExclusao');
 
-    Validar('evtExclusao');
+    Validar(schevtExclusao);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

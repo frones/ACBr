@@ -530,7 +530,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtDeslig');
 
-    Validar('evtDeslig');
+    Validar(schevtDeslig);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

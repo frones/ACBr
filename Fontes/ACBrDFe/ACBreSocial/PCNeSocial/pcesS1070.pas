@@ -471,7 +471,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabProcesso');
 
-    Validar('evtTabProcesso');
+    Validar(schevtTabProcesso);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

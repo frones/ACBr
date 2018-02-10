@@ -263,7 +263,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAvPrevio');
 
-    Validar('evtAvPrevio');
+    Validar(schevtAvPrevio);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

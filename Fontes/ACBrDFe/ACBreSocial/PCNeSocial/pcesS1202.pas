@@ -721,7 +721,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtRmnRPPS');
 
-    Validar('evtRmnRPPS');
+    Validar(schevtRmnRPPS);
   except
     on e: Exception do
       raise Exception.Create(e.Message);

@@ -87,7 +87,7 @@ type
                                 const CNPJF: string;
                                 sequencial: Integer;
                                 ATipoEmpregador: TEmpregador): String;
-    procedure Validar(Evento: String);
+    procedure Validar(Schema: TeSocialSchema);
 
     property Alertas: String read FAlertas;
     property ErroValidacao: String read FErroValidacao;
@@ -286,12 +286,14 @@ begin
   end;
 end;
 
-procedure TeSocialEvento.Validar(Evento: String);
+procedure TeSocialEvento.Validar(Schema: TeSocialSchema);
 var
   Erro, AXML: String;
   EhValido: Boolean;
+  Evento: string;
 begin
   AXML := FXMLAssinado;
+  Evento := SchemaESocialToStr(Schema);
 
   if EstaVazio(AXML) then
   begin

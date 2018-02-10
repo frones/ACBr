@@ -53,8 +53,8 @@ uses
   ACBrUtil, pcesConversaoeSocial,
   pcesS2190, pcesS2200, pcesS2220, pcesS2230, pcesS2240,
   pcesS2241, pcesS2205, pcesS2206, pcesS2210, pcesS2250,
-  pcesS2260, pcesS2298, pcesS2299, pcesS2300, pcesS2306, pcesS2305,
-  pcesS2399, pcesS2400, pcesS3000, pcesS4000, pcesS4999;
+  pcesS2260, pcesS2298, pcesS2299, pcesS2300, pcesS2306,
+  pcesS2399, pcesS2400, pcesS3000;
 
 type
 
@@ -78,8 +78,6 @@ type
     FS2399: TS2399Collection;
     FS2400: TS2400Collection;
     FS3000: TS3000Collection;
-    FS4000: TS4000Collection;
-    FS4999: TS4999Collection;
 
     function GetCount: integer;
     procedure setS2190(const Value: TS2190Collection);
@@ -100,8 +98,6 @@ type
     procedure setS2306(const Value: TS2306Collection);
     procedure setS2400(const Value: TS2400Collection);
     procedure setS3000(const Value: TS3000Collection);
-    procedure setS4000(const Value: TS4000Collection);
-    procedure setS4999(const Value: TS4999Collection);
 
   public
     constructor Create(AOwner: TComponent); reintroduce;
@@ -131,8 +127,6 @@ type
     property S2399: TS2399Collection read FS2399 write setS2399;
     property S2400: TS2400Collection read FS2400 write setS2400;
     property S3000: TS3000Collection read FS3000 write setS3000;
-    property S4000: TS4000Collection read FS4000 write setS4000;
-    property S4999: TS4999Collection read FS4999 write setS4999;
 
   end;
 
@@ -163,8 +157,6 @@ begin
   FS2399.Clear;
   FS2400.Clear;
   FS3000.Clear;
-  FS4000.Clear;
-  FS4999.Clear;
 end;
 
 constructor TNaoPeriodicos.Create(AOwner: TComponent);
@@ -189,8 +181,6 @@ begin
   FS2399 := TS2399Collection.Create(AOwner, TS2399CollectionItem);
   FS2400 := TS2400Collection.Create(AOwner, TS2400CollectionItem);
   FS3000 := TS3000Collection.Create(AOwner, TS3000CollectionItem);
-  FS4000 := TS4000Collection.Create(AOwner, TS4000CollectionItem);
-  FS4999 := TS4999Collection.Create(AOwner, TS4999CollectionItem);
 end;
 
 destructor TNaoPeriodicos.Destroy;
@@ -213,8 +203,6 @@ begin
   FS2399.Free;
   FS2400.Free;
   FS3000.Free;
-  FS4000.Free;
-  FS4999.Free;
 
   inherited;
 end;
@@ -238,9 +226,7 @@ begin
             self.S2306.Count +
             self.S2399.Count +
             self.S2400.Count +
-            self.S3000.Count +
-            self.S4000.Count +
-            self.S4999.Count;
+            self.S3000.Count;
 end;
 
 procedure TNaoPeriodicos.GerarXMLs;
@@ -300,12 +286,6 @@ begin
 
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
-
-  for I := 0 to Self.S4000.Count - 1 do
-    Self.S4000.Items[i].EvtSolicTotal.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
-
-  for I := 0 to Self.S4999.Count - 1 do
-    Self.S4999.Items[i].EvtAdesao.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 end;
 
 procedure TNaoPeriodicos.SaveToFiles;
@@ -370,12 +350,6 @@ begin
 
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.SaveToFile(Path+'\'+TipoEventoToStr(Self.S3000.Items[i].TipoEvento)+'-'+IntToStr(i));
-
-  for I := 0 to Self.S4000.Count - 1 do
-    Self.S4000.Items[i].EvtSolicTotal.SaveToFile(Path+'\'+TipoEventoToStr(Self.S4000.Items[i].TipoEvento)+'-'+IntToStr(i));
-
-  for I := 0 to Self.S4999.Count - 1 do
-    Self.S4999.Items[i].EvtAdesao.SaveToFile(Path+'\'+TipoEventoToStr(Self.S4999.Items[i].TipoEvento)+'-'+IntToStr(i));
 end;
 
 procedure TNaoPeriodicos.setS2190(const Value: TS2190Collection);
@@ -466,16 +440,6 @@ end;
 procedure TNaoPeriodicos.setS3000(const Value: TS3000Collection);
 begin
   FS3000.Assign(Value);
-end;
-
-procedure TNaoPeriodicos.setS4000(const Value: TS4000Collection);
-begin
-  FS4000.Assign(Value);
-end;
-
-procedure TNaoPeriodicos.setS4999(const Value: TS4999Collection);
-begin
-  FS4999.Assign(Value);
 end;
 
 end.

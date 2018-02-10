@@ -296,7 +296,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVTermino');
 
-    Validar('evtTSVTermino');
+    Validar(schevtTSVTermino);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

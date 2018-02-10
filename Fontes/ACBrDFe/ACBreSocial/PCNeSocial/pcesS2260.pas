@@ -265,7 +265,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtConvInterm');
 
-    Validar('evtConvInterm');
+    Validar(schevtConvInterm);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

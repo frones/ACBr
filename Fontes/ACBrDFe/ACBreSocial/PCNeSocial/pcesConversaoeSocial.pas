@@ -72,7 +72,7 @@ type
 
   TeSocialSchema          = (schErro, schConsultaLoteEventos, schEnvioLoteEventos,
                              schevtAdesao, schevtAdmissao, schevtAdmPrelim,
-                             schevtAfasTemp, schevtAltCadastral, schEetAltContratual,
+                             schevtAfastTemp, schevtAltCadastral, schevtAltContratual,
                              schevtAqProd, schevtAvPrevio, schevtBasesTrab, schevtBenPrRP,
                              schevtCadInicial, schevtCAT, schevtCdBenPrRP,
                              schevtComProd, schevtContratAvNP, schevtContrSindPatr,
@@ -81,7 +81,7 @@ type
                              schevtInfoEmpregador, schevtInsApo, schevtIrrf,
                              schevtIrrfBenef, schevtMonit, schevtPgtos,
                              schevtReabreEvper, schevtReintegr, schevtRemun, schevtRmnRPPS,
-                             schevtTabAmbTrabalho, schevtTabCargo, schevtTabCarreira, schevtTabEstab,
+                             schevtTabAmbiente, schevtTabCargo, schevtTabCarreira, schevtTabEstab,
                              schevtTabFuncao, schevtTabHorTur, schevtTabLotacao, schevtTabOperPort,
                              schevtTabProcesso, schevtTabRubrica, schevtTotConting, schevtTSVAltContr,
                              schevtTSVInicio, schevtTSVTermino, schRetornoEnvioLoteEventos,

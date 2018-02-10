@@ -51,7 +51,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrUtil, pcesConversaoeSocial,
-  pcesS1200, pcesS1202, pcesS1207, pcesS1210, pcesS1220,
+  pcesS1200, pcesS1202, pcesS1207, pcesS1210,
   pcesS1250, pcesS1260, pcesS1270, pcesS1280, pcesS1295,
   pcesS1298, pcesS1299, pcesS1300;
 
@@ -63,7 +63,6 @@ type
     FS1202: TS1202Collection;
     FS1207: TS1207Collection;
     FS1210: TS1210Collection;
-    FS1220: TS1220Collection;
     FS1250: TS1250Collection;
     FS1260: TS1260Collection;
     FS1270: TS1270Collection;
@@ -78,7 +77,6 @@ type
     procedure setS1202(const Value: TS1202Collection);
     procedure setS1207(const Value: TS1207Collection);
     procedure setS1210(const Value: TS1210Collection);
-    procedure setS1220(const Value: TS1220Collection);
     procedure setS1250(const Value: TS1250Collection);
     procedure setS1260(const Value: TS1260Collection);
     procedure setS1270(const Value: TS1270Collection);
@@ -102,7 +100,6 @@ type
     property S1202: TS1202Collection read FS1202 write setS1202;
     property S1207: TS1207Collection read FS1207 write setS1207;
     property S1210: TS1210Collection read FS1210 write setS1210;
-    property S1220: TS1220Collection read FS1220 write setS1220;
     property S1250: TS1250Collection read FS1250 write setS1250;
     property S1260: TS1260Collection read FS1260 write setS1260;
     property S1270: TS1270Collection read FS1270 write setS1270;
@@ -127,7 +124,6 @@ begin
   FS1202.Clear;
   FS1207.Clear;
   FS1210.Clear;
-  FS1220.Clear;
   FS1250.Clear;
   FS1260.Clear;
   FS1270.Clear;
@@ -146,7 +142,6 @@ begin
   FS1202 := TS1202Collection.Create(AOwner, TS1202CollectionItem);
   FS1207 := TS1207Collection.Create(AOwner, TS1207CollectionItem);
   FS1210 := TS1210Collection.Create(AOwner, TS1210CollectionItem);
-  FS1220 := TS1220Collection.Create(AOwner, TS1220CollectionItem);
   FS1250 := TS1250Collection.Create(AOwner, TS1250CollectionItem);
   FS1260 := TS1260Collection.Create(AOwner, TS1260CollectionItem);
   FS1270 := TS1270Collection.Create(AOwner, TS1270CollectionItem);
@@ -163,7 +158,6 @@ begin
   FS1202.Free;
   FS1207.Free;
   FS1210.Free;
-  FS1220.Free;
   FS1250.Free;
   FS1260.Free;
   FS1270.Free;
@@ -182,7 +176,6 @@ begin
             self.S1202.Count +
             self.S1207.Count +
             self.S1210.Count +
-            self.S1220.Count +
             self.S1250.Count +
             self.S1260.Count +
             self.S1270.Count +
@@ -208,9 +201,6 @@ begin
 
   for I := 0 to Self.S1210.Count - 1 do
     Self.S1210.Items[i].evtPgtos.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
-
-  for I := 0 to Self.S1220.Count - 1 do
-    Self.S1220.Items[i].EvtPgtosNI.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
 
   for I := 0 to Self.S1250.Count - 1 do
     Self.S1250.Items[i].EvtAqProd.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
@@ -258,9 +248,6 @@ begin
   for I := 0 to Self.S1210.Count - 1 do
     Self.S1210.Items[i].evtPgtos.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1210.Items[i].TipoEvento)+'-'+IntToStr(i));
 
-  for I := 0 to Self.S1220.Count - 1 do
-    Self.S1220.Items[i].EvtPgtosNI.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1220.Items[i].TipoEvento)+'-'+IntToStr(i));
-
   for I := 0 to Self.S1250.Count - 1 do
     Self.S1250.Items[i].EvtAqProd.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1250.Items[i].TipoEvento)+'-'+IntToStr(i));
 
@@ -304,11 +291,6 @@ end;
 procedure TPeriodicos.setS1210(const Value: TS1210Collection);
 begin
   FS1210.Assign(Value);
-end;
-
-procedure TPeriodicos.setS1220(const Value: TS1220Collection);
-begin
-  FS1220.Assign(Value);
 end;
 
 procedure TPeriodicos.setS1250(const Value: TS1250Collection);

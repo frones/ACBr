@@ -462,7 +462,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInsApo');
 
-    Validar('evtInsApo');
+    Validar(schevtInsApo);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

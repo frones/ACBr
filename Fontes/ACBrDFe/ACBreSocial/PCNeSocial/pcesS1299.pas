@@ -227,7 +227,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtFechaEvPer');
 
-    Validar('evtFechaEvPer');
+    Validar(schevtFechaEvPer);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

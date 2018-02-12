@@ -419,7 +419,7 @@ begin
     teMDFeCancelado2              : Desc := 'MDF-e Cancelado';
     teVistoriaSuframa             : Desc := 'Vistoria SUFRAMA';
     teConfInternalizacao          : Desc := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
-    tePrestDesacordo              : Desc := 'Prestação do Serviço em Desacordo';
+    tePrestDesacordo              : Desc := 'Prestacao do Servico em Desacordo';
     teGTV                         : Desc := 'Informacoes da GTV';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2018
+-- pcteEventoCTe  --
+[*] Removido os acentos e cedilha conforme os novos Schemas mensionados na 
+    Nota Ténica 2017/003 versão 1.03.
+   Por: Italo Jurisato Junior
+
 09/02/2018
 -- ACBrCTeConhecimentos, ACBrCTeConfiguracoes, pcnCTeCTeW  --
 [*] Método: "ObterCodigoMunicipio" / "ObterNomeMunicipio" Ajustes nas classes ACBrDFe para validação e utilização 

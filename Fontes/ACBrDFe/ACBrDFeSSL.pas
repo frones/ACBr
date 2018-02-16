@@ -418,13 +418,19 @@ uses
    {$EndIf}
   {$EndIf}
   {$IfNDef DFE_SEM_CAPICOM}
-   ,ACBrDFeCapicom, ACBrDFeXsMsXmlCapicom
+   ,ACBrDFeCapicom
+   {$IfNDef DFE_SEM_MSXML}
+    ,ACBrDFeXsMsXmlCapicom
+   {$EndIf}
   {$EndIf}
-  {$IfNDef FPC}
+  {$IfNDef DFE_SEM_INDY}
    ,ACBrDFeHttpIndy
   {$EndIf}
   {$IfDef MSWINDOWS}
-   ,ACBRDFeWinCrypt, ACBrDFeHttpWinApi, ACBrDFeXsMsXml
+   ,ACBRDFeWinCrypt, ACBrDFeHttpWinApi
+   {$IfNDef DFE_SEM_MSXML}
+    ,ACBrDFeXsMsXml
+   {$EndIf}
   {$EndIf};
 
 { TDadosCertificado }
@@ -1428,10 +1434,10 @@ begin
 
     httpIndy:
     begin
-      {$IfNDef FPC}
+      {$IfNDef DFE_SEM_INDY}
        FSSLHttpClass := TDFeHttpIndy.Create(Self);
       {$Else}
-       raise EACBrDFeException.Create('Suporte a "httpIndy" disponível apenas Delphi');
+       raise EACBrDFeException.Create('Suporte a "httpIndy" disponível quando: Delphi, MSWINDOWS, e sem a diretiva {$DEFINE DFE_SEM_INDY}');
       {$EndIf}
     end;
 
@@ -1462,10 +1468,14 @@ begin
   case ASSLXmlSignLib of
     xsMsXml:
     begin
-      {$IfDef MSWINDOWS}
+      {$IfNDef DFE_SEM_MSXML}
        FSSLXmlSignClass := TDFeSSLXmlSignMsXml.Create(Self);
       {$Else}
-       raise EACBrDFeException.Create('Suporte a "xsMsXml" disponível apenas em MSWINDOWS');
+       {$IfDef MSWINDOWS}
+        raise EACBrDFeException.Create('Suporte a "xsMsXml" foi desativado por compilação {$DEFINE DFE_SEM_MSXML}');
+       {$Else}
+        raise EACBrDFeException.Create('Suporte a "xsMsXml" disponível apenas em MSWINDOWS');
+       {$EndIf}
       {$EndIf}
     end;
 
@@ -1480,10 +1490,14 @@ begin
 
     xsMsXmlCapicom:
     begin
-      {$IfNDef DFE_SEM_CAPICOM}
-       FSSLXmlSignClass := TDFeSSLXmlSignMsXmlCapicom.Create(Self);
+      {$IfNDef DFE_SEM_MSXML}
+       {$IfNDef DFE_SEM_CAPICOM}
+        FSSLXmlSignClass := TDFeSSLXmlSignMsXmlCapicom.Create(Self);
+       {$Else}
+        raise EACBrDFeException.Create('Suporte a "xsMsXmlCapicom" disponível apenas em MSWINDOWS, e sem a diretiva de compilação {$DEFINE DFE_SEM_CAPICOM}');
+       {$EndIf}
       {$Else}
-       raise EACBrDFeException.Create('Suporte a "xsMsXmlCapicom" foi desativado por compilação {$DEFINE DFE_SEM_CAPICOM}');
+       raise EACBrDFeException.Create('Suporte a "xsMsXmlCapicom" disponível apenas em MSWINDOWS, e sem a diretiva de compilação {$DEFINE DFE_SEM_MSXML}');
       {$EndIf}
     end;
 

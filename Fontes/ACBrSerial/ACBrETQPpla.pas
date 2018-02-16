@@ -341,7 +341,8 @@ begin
   if (Unidade = etqDots) then
     Result := inherited ConverterUnidade(etqMilimetros, AValue);
 
-  Result := AValue * 10;
+  if (Unidade <> etqDecimoDeMilimetros) then
+    Result := AValue * 10;
 
   if (Unidade = etqPolegadas) then
     Result := Result * 10;

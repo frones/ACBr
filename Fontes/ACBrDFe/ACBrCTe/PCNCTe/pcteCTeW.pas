@@ -254,19 +254,25 @@ begin
 
 
   VersaoDF := DblToVersaoCTe(Ok, CTe.infCTe.versao);
+  (*
   chave := '';
-
   if not GerarChave(Chave, CTe.ide.cUF, CTe.ide.cCT, CTe.ide.modelo,
                     CTe.ide.serie, CTe.ide.nCT, StrToInt(TpEmisToStr(CTe.ide.tpEmis)),
                     CTe.ide.dhEmi, CTe.emit.CNPJ) then
     Gerador.wAlerta('#001', 'infCte', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
 
   chave := StringReplace(chave,'NFe','CTe',[rfReplaceAll]);
+  *)
+  chave := GerarChaveAcesso(CTe.ide.cUF, CTe.ide.dhEmi, CTe.emit.CNPJ, CTe.ide.serie,
+                            CTe.ide.nCT, StrToInt(TpEmisToStr(CTe.ide.tpEmis)),
+                            CTe.ide.cCT, CTe.ide.modelo);
+  CTe.infCTe.Id := 'CTe' + chave;
 
-  CTe.infCTe.Id := chave;
+//  CTe.ide.cDV := RetornarDigito(CTe.infCTe.ID);
+//  CTe.Ide.cCT := RetornarCodigoNumerico(CTe.infCTe.ID, 2);
 
-  CTe.ide.cDV := RetornarDigito(CTe.infCTe.ID);
-  CTe.Ide.cCT := RetornarCodigoNumerico(CTe.infCTe.ID, 2);
+  CTe.ide.cDV := ExtrairDigitoChaveAcesso(CTe.infCTe.ID);
+  CTe.Ide.cCT := ExtrairCodigoChaveAcesso(CTe.infCTe.ID);
 
   {$IfDef FPC}
    Gerador.wGrupo(ENCODING_UTF8, '', False);
@@ -378,7 +384,7 @@ begin
   if not ValidarCodigoUF(CTe.ide.cUF) then
     Gerador.wAlerta('#005', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#006', 'cCT     ', 08, 08, 1, IntToStrZero(RetornarCodigoNumerico(CTe.infCTe.ID, 2), 8), DSC_CNF);
+  Gerador.wCampo(tcStr, '#006', 'cCT     ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(CTe.infCTe.ID), 8), DSC_CNF);
   Gerador.wCampo(tcInt, '#007', 'CFOP    ', 04, 04, 1, CTe.ide.CFOP, DSC_CFOP);
   Gerador.wCampo(tcStr, '#008', 'natOp   ', 01, 60, 1, CTe.ide.natOp, DSC_NATOP);
 
@@ -1471,7 +1477,7 @@ end;
 procedure TCTeW.GerarinfTribFed;
   function InformarINSS: Integer;
   begin
-    if ((Length(SomenteNumeros(Trim(CTe.toma.CNPJCPF))) = 14) or (CTe.toma.EnderToma.cPais <> 1058))
+    if ((Length(OnlyNumber(Trim(CTe.toma.CNPJCPF))) = 14) or (CTe.toma.EnderToma.cPais <> 1058))
       and (CTe.Ide.tpServ in [tsTranspPessoas, tsExcessoBagagem]) then
       Result := 1
     else

@@ -172,7 +172,7 @@ begin
   Gerador.ListaDeAlertas.Clear;
 
   Versao := Copy(BPe.infBPe.VersaoStr, 9, 4);
-
+  (*
   chave := '';
   xCNPJCPF := BPe.emit.CNPJ;
 
@@ -181,11 +181,18 @@ begin
     Gerador.wAlerta('A01', 'infBPe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
 
   chave := StringReplace(chave, 'NFe', 'BPe', [rfReplaceAll]);
+  *)
+  xCNPJCPF := BPe.emit.CNPJ;
+  chave := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, xCNPJCPF, BPe.ide.serie,
+                            BPe.ide.nBP, StrToInt(TpEmisToStr(BPe.ide.tpEmis)),
+                            BPe.ide.cBP, BPe.ide.modelo);
+  BPe.infBPe.ID := 'BPe' + chave;
 
-  BPe.infBPe.ID := chave;
+//  BPe.ide.cDV := RetornarDigito(BPe.infBPe.ID);
+//  BPe.Ide.cBP := RetornarCodigoNumerico(BPe.infBPe.ID, 2);
 
-  BPe.ide.cDV := RetornarDigito(BPe.infBPe.ID);
-  BPe.Ide.cBP := RetornarCodigoNumerico(BPe.infBPe.ID, 2);
+  BPe.ide.cDV := ExtrairDigitoChaveAcesso(BPe.infBPe.ID);
+  BPe.Ide.cBP := ExtrairCodigoChaveAcesso(BPe.infBPe.ID);
 
   // Carrega Layout que sera utilizado para gera o txt
   Gerador.LayoutArquivoTXT.Clear;
@@ -295,7 +302,7 @@ begin
   Gerador.wCampo(tcInt, '#007', 'mod    ', 02, 02, 1, BPe.ide.modelo, DSC_MOD);
   Gerador.wCampo(tcInt, '#008', 'serie  ', 01, 03, 1, BPe.ide.serie, DSC_SERIE);
   Gerador.wCampo(tcInt, '#009', 'nBP    ', 01, 09, 1, BPe.ide.nBP, DSC_NNF);
-  Gerador.wCampo(tcStr, '#010', 'cBP    ', 08, 08, 1, IntToStrZero(RetornarCodigoNumerico(BPe.infBPe.ID, 2), 8), DSC_CNF);
+  Gerador.wCampo(tcStr, '#010', 'cBP    ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(BPe.infBPe.ID), 8), DSC_CNF);
   Gerador.wCampo(tcInt, '#011', 'cDV    ', 01, 01, 1, BPe.Ide.cDV, DSC_CDV);
   Gerador.wCampo(tcStr, '#012', 'modal  ', 01, 01, 1, ModalBPeToStr(BPe.ide.modal), DSC_MODALBPE);
   Gerador.wCampo(tcStr, '#013', 'dhEmi  ', 25, 25, 1, DateTimeTodh(BPe.ide.dhEmi) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.ide.dhEmi), DSC_DEMI);

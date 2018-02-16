@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2018
+-- pcnCFeCancW / pcnCFeW --
+[*] Remção de funções em duplicidade e a troca das chamadas das funções antigas
+    pelas novas
+   Por: Italo Jurisato Junior
+
 Data: 24/01/2018
 -- ACBrSATExtratoFortesFr --
 [-] Correção de exibição de caracteres acentuados, nas informações do Contribuinte

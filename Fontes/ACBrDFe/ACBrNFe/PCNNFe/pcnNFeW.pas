@@ -232,13 +232,14 @@ begin
   Usar_tcDe4 := (NFe.infNFe.Versao >= 3.10);
   Versao     := Copy(NFe.infNFe.VersaoStr, 9, 4);
 
+  (*
   chave := '';
   if NFe.infNFe.Versao >= 2 then
    begin
-     xCNPJCPF := nfe.emit.CNPJCPF;  
-     if not EstaVazio(nfe.Avulsa.CNPJ) then  
-       xCNPJCPF := nfe.Avulsa.CNPJ;    
-   
+     xCNPJCPF := nfe.emit.CNPJCPF;
+     if not EstaVazio(nfe.Avulsa.CNPJ) then
+       xCNPJCPF := nfe.Avulsa.CNPJ;
+
      if not GerarChave(Chave, nfe.ide.cUF, nfe.ide.cNF, nfe.ide.modelo, nfe.ide.serie,
        nfe.ide.nNF, StrToInt(TpEmisToStr(nfe.ide.tpEmis)), nfe.ide.dEmi, xCNPJCPF) then
        Gerador.wAlerta('A01', 'infNFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
@@ -249,11 +250,20 @@ begin
        nfe.ide.nNF, nfe.ide.dEmi, nfe.emit.CNPJCPF) then
        Gerador.wAlerta('A01', 'infNFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
    end;
+  *)
 
-  nfe.infNFe.ID := chave;
+  xCNPJCPF := nfe.emit.CNPJCPF;
+  chave := GerarChaveAcesso(nfe.ide.cUF, nfe.ide.dEmi, xCNPJCPF, nfe.ide.serie,
+                            nfe.ide.nNF, StrToInt(TpEmisToStr(nfe.ide.tpEmis)),
+                            nfe.ide.cNF, nfe.ide.modelo);
+  nfe.infNFe.ID := 'NFe' + chave;
 
-  nfe.ide.cDV := RetornarDigito(nfe.infNFe.ID);
-  nfe.Ide.cNF := RetornarCodigoNumerico(nfe.infNFe.ID, NFe.infNFe.Versao);
+//  nfe.ide.cDV := RetornarDigito(nfe.infNFe.ID);
+//  nfe.Ide.cNF := RetornarCodigoNumerico(nfe.infNFe.ID, NFe.infNFe.Versao);
+
+  nfe.ide.cDV := ExtrairDigitoChaveAcesso(nfe.infNFe.ID);
+  nfe.Ide.cNF := ExtrairCodigoChaveAcesso(nfe.infNFe.ID);
+
   // Carrega Layout que sera utilizado para gera o txt
   Gerador.LayoutArquivoTXT.Clear;
   if FOpcoes.GerarTXTSimultaneamente then
@@ -361,11 +371,17 @@ procedure TNFeW.GerarIde;
 begin
   Gerador.wGrupo('ide', 'B01');
   Gerador.wCampo(tcInt, 'B02', 'cUF    ', 02, 02, 1, nfe.ide.cUF, DSC_CUF);
-  if not ValidarCodigoUF(nfe.ide.cUF) then Gerador.wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
+  if not ValidarCodigoUF(nfe.ide.cUF) then
+    Gerador.wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
+
+  Gerador.wCampo(tcStr, 'B03', 'cNF    ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(nfe.infNFe.ID), 8), DSC_CNF);
+  (*
   if nfe.infNFe.Versao < 2 then
-     Gerador.wCampo(tcStr, 'B03', 'cNF    ', 09, 09, 1, IntToStrZero(RetornarCodigoNumerico(nfe.infNFe.ID,nfe.infNFe.Versao), 9), DSC_CNF)          
+     Gerador.wCampo(tcStr, 'B03', 'cNF    ', 09, 09, 1, IntToStrZero(RetornarCodigoNumerico(nfe.infNFe.ID,nfe.infNFe.Versao), 9), DSC_CNF)
   else
-     Gerador.wCampo(tcStr, 'B03', 'cNF    ', 08, 08, 1, IntToStrZero(RetornarCodigoNumerico(nfe.infNFe.ID,nfe.infNFe.Versao), 8), DSC_CNF);     
+     Gerador.wCampo(tcStr, 'B03', 'cNF    ', 08, 08, 1, IntToStrZero(RetornarCodigoNumerico(nfe.infNFe.ID,nfe.infNFe.Versao), 8), DSC_CNF);
+  *)
+
   Gerador.wCampo(tcStr, 'B04', 'natOp  ', 01, 60, 1, nfe.ide.natOp, DSC_NATOP);
   if nfe.infNFe.Versao < 4 then
     Gerador.wCampo(tcStr, 'B05', 'indPag ', 01, 01, 1, IndpagToStr(nfe.ide.indPag), DSC_INDPAG);

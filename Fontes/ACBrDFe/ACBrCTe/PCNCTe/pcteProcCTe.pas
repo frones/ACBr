@@ -271,7 +271,7 @@ begin
     begin
       FchCTe := RetornarConteudoEntre(FXML_CTe, 'Id="CTe', '"');
 
-      Modelo := StrToIntDef(RetornarModelo(FchCTe), 57);
+      Modelo := StrToIntDef(ExtrairModeloChaveAcesso(FchCTe), 57);
 
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);

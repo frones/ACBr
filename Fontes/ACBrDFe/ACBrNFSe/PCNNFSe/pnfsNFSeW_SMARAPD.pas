@@ -105,9 +105,9 @@ begin
   begin
     Gerador.wGrupoNFSe('IntermediarioServico');
     Gerador.wCampoNFSe(tcStr, '', 'RazaoSocial', 001, 115, 0, NFSe.IntermediarioServico.RazaoSocial, '');
-    Gerador.wCampoNFSe(tcStr, '', 'CpfCnpj'    , 14, 14, 1, SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj), '');
+    Gerador.wCampoNFSe(tcStr, '', 'CpfCnpj'    , 14, 14, 1, OnlyNumber(NFSe.IntermediarioServico.CpfCnpj), '');
 
-    if Length(SomenteNumeros(NFSe.IntermediarioServico.CpfCnpj)) <= 11 then
+    if Length(OnlyNumber(NFSe.IntermediarioServico.CpfCnpj)) <= 11 then
       Gerador.wCampoNFSe(tcStr, '', 'IndicacaoCpfCnpj', 01, 01, 1, '1', '')
     else
       Gerador.wCampoNFSe(tcStr, '', 'IndicacaoCpfCnpj', 01, 01, 1, '2', '');
@@ -164,7 +164,7 @@ end;
 procedure TNFSeW_SMARAPD.GerarTomador;
 begin
   Gerador.wCampoNFSe(tcStr, '', 'razaotomador',              01, 120, 1, FNFSe.Tomador.RazaoSocial, '');
-  if length(SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.CpfCnpj)) = 11 then
+  if length(OnlyNumber(FNFSe.Tomador.IdentificacaoTomador.CpfCnpj)) = 11 then
     Gerador.wCampoNFSe(tcStr, '', 'tppessoa',                01, 120, 1, 'F', '')
   else
     Gerador.wCampoNFSe(tcStr, '', 'tppessoa',                01, 120, 1, 'J', '');
@@ -176,19 +176,19 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'paistomador',               01,  50, 1, FNFSe.Tomador.Endereco.xPais, '');
   Gerador.wCampoNFSe(tcStr, '', 'fonetomador',               01,  60, 1, FNFSe.Tomador.Contato.Telefone, '');
   Gerador.wCampoNFSe(tcStr, '', 'faxtomador',                01,  60, 1, '', '');
-  Gerador.wCampoNFSe(tcStr, '', 'ceptomador',                01,  08, 1, SomenteNumeros(FNFSe.Tomador.Endereco.CEP), '');
+  Gerador.wCampoNFSe(tcStr, '', 'ceptomador',                01,  08, 1, OnlyNumber(FNFSe.Tomador.Endereco.CEP), '');
   Gerador.wCampoNFSe(tcStr, '', 'bairrotomador',             01,  50, 1, FNFSe.Tomador.Endereco.Bairro, '');
   Gerador.wCampoNFSe(tcStr, '', 'emailtomador',              01,  60, 1, FNFSe.Tomador.Contato.Email, '');
-  Gerador.wCampoNFSe(tcStr, '', 'cpfcnpjtomador',            01,  14, 1, SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
-  Gerador.wCampoNFSe(tcStr, '', 'inscricaoestadualtomador',  01,  14, 1, SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), '');
-  Gerador.wCampoNFSe(tcStr, '', 'inscricaomunicipaltomador', 01,  14, 1, SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal), '');
+  Gerador.wCampoNFSe(tcStr, '', 'cpfcnpjtomador',            01,  14, 1, OnlyNumber(FNFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
+  Gerador.wCampoNFSe(tcStr, '', 'inscricaoestadualtomador',  01,  14, 1, OnlyNumber(FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), '');
+  Gerador.wCampoNFSe(tcStr, '', 'inscricaomunicipaltomador', 01,  14, 1, OnlyNumber(FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal), '');
   Gerador.wCampoNFSe(tcStr, '', 'observacao',                01, 500, 1, FNFSe.OutrasInformacoes,'');
 end;
 
 procedure TNFSeW_SMARAPD.GerarTransportadora;
 begin
   Gerador.wCampoNFSe(tcStr, '', 'razaotransportadora',    01, 255, 1, FNFSe.Transportadora.xNomeTrans, '');
-  Gerador.wCampoNFSe(tcStr, '', 'cpfcnpjtransportadora',  01,  20, 1, SomenteNumeros(FNFSe.Transportadora.xCpfCnpjTrans), '');
+  Gerador.wCampoNFSe(tcStr, '', 'cpfcnpjtransportadora',  01,  20, 1, OnlyNumber(FNFSe.Transportadora.xCpfCnpjTrans), '');
   Gerador.wCampoNFSe(tcStr, '', 'enderecotransportadora', 01, 255, 1, FNFSe.Transportadora.xEndTrans, '');
   Gerador.wCampoNFSe(tcStr, '', 'tipofrete',              01, 255, 1, 2, '');
   Gerador.wCampoNFSe(tcStr, '', 'quantidade',             01, 255, 1, '', '');
@@ -210,7 +210,7 @@ Begin
   Gerador.Opcoes.DecimalChar := ',';
   Atributo := '';
   Gerador.wGrupo('tbnfd');
-  FNFSe.InfID.ID := SomenteNumeros(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
+  FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
   GerarXML_Smarapd;
   If FOpcoes.GerarTagAssinatura <> taNunca
     Then Begin

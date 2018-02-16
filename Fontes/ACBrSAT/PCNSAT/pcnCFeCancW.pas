@@ -38,9 +38,11 @@
 
 unit pcnCFeCancW;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
+  ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnGerador, pcnCFeCanc;
 
 type
@@ -170,7 +172,7 @@ begin
     Gerador.wCampo(tcStr, 'C03', 'xNome  ', 01, 60, 1, CFeCanc.Emit.xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, 'C04', 'xFant  ', 01, 60, 0, CFeCanc.Emit.xFant, DSC_XNOME);
     (**)GerarEmitEnderEmit;
-    Gerador.wCampo(tcStr, 'C12', 'IE      ', 12, 12, 1, SomenteNumeros(CFeCanc.Emit.IE), DSC_IE);
+    Gerador.wCampo(tcStr, 'C12', 'IE      ', 12, 12, 1, OnlyNumber(CFeCanc.Emit.IE), DSC_IE);
     Gerador.wCampo(tcStr, 'C13', 'IM      ', 01, 15, 0, CFeCanc.Emit.IM, DSC_IM);
   end;
 
@@ -285,7 +287,7 @@ begin
       Gerar := ((CFeCanc.signature.DigestValue = '') and (CFeCanc.signature.SignatureValue = '') and (CFeCanc.signature.X509Certificate = ''));
     if Gerar then
     begin
-      FCFeCanc.signature.URI := somenteNumeros(CFeCanc.infCFe.ID);
+      FCFeCanc.signature.URI := OnlyNumber(CFeCanc.infCFe.ID);
       FCFeCanc.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FCFeCanc.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FCFeCanc.signature.Gerador.ArquivoFormatoXML;
@@ -298,7 +300,7 @@ end;
 
 function TCFeCancW.ObterNomeArquivo: string;
 begin
-  Result := SomenteNumeros(CFeCanc.infCFe.ID) + '-can-cfe.xml';
+  Result := OnlyNumber(CFeCanc.infCFe.ID) + '-can-cfe.xml';
 end;
 
 end.

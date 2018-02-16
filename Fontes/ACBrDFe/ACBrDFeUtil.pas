@@ -46,8 +46,10 @@ uses
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
-function GerarChaveAcesso(AUF:Integer; ADataEmissao:TDateTime; ACNPJ:String; ASerie:Integer;
-                           ANumero,ACodigo: Integer; AModelo:Integer=55): String;
+
+function GerarCodigoNumerico(numero: integer): integer;
+function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ:String;
+                          ASerie, ANumero, AtpEmi, ACodigo: Integer; AModelo: Integer = 55): String;
 function FormatarChaveAcesso(AValue: String): String;
 
 function ValidaUFCidade(const UF, Cidade: integer): Boolean; overload;
@@ -74,7 +76,7 @@ implementation
 
 uses
   Variants, DateUtils,
-  ACBrDFeException, ACBrConsts, ACBrUtil, ACBrValidador ;
+  ACBrDFeException, ACBrConsts, ACBrUtil, ACBrValidador;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 begin
@@ -99,19 +101,56 @@ begin
     raise EACBrDFeException.Create(AMensagem);
 end;
 
-function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
-  ASerie: Integer; ANumero, ACodigo: Integer; AModelo: Integer): String;
+function GerarCodigoNumerico(numero: integer): integer;
 var
-  vUF, vDataEmissao, vSerie, vNumero, vCodigo, vModelo: String;
+  s: string;
+  i, j, k: integer;
 begin
+  // Essa função gera um código numerico atravéz de calculos realizados sobre o parametro numero
+  s := intToStr(numero);
+  for i := 1 to 9 do
+    s := s + intToStr(numero);
+  for i := 1 to 9 do
+  begin
+    k := 0;
+    for j := 1 to 9 do
+      k := k + StrToInt(s[j]) * (j + 1);
+    s := IntToStr((k mod 11)) + s;
+  end;
+  Result := StrToInt(copy(s, 1, 8));
+end;
+
+function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+                          ASerie, ANumero, AtpEmi, ACodigo: Integer; AModelo: Integer): String;
+var
+  vUF, vDataEmissao, vSerie, vNumero, vCodigo, vModelo, vCNPJ, vtpEmi: String;
+begin
+  // Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
+  while ACodigo = 0 do
+  begin
+    Randomize;
+    ACodigo := Random(99999999);
+  end;
+
+  // se o usuario informar -1 o código numerico será gerado atravéz da função
+  // GerarCódigoNumerico baseado no numero do documento fiscal.
+  if ACodigo = -1 then
+    ACodigo := GerarCodigoNumerico(ANumero)
+  else
+    if ACodigo = -2 then
+      ACodigo := 0;
+  //
+
   vUF          := Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
+  vCNPJ        := copy(OnlyNumber(ACNPJ) + '00000000000000', 1, 14);
   vModelo      := Poem_Zeros(AModelo, 2);
   vSerie       := Poem_Zeros(ASerie, 3);
   vNumero      := Poem_Zeros(ANumero, 9);
-  vCodigo      := Poem_Zeros(ACodigo, 9);
+  vtpEmi       := Poem_Zeros(AtpEmi, 1);
+  vCodigo      := Poem_Zeros(ACodigo, 8);
 
-  Result := vUF + vDataEmissao + ACNPJ + vModelo + vSerie + vNumero + vCodigo;
+  Result := vUF + vDataEmissao + vCNPJ + vModelo + vSerie + vNumero + vtpEmi + vCodigo;
   Result := Result + Modulo11(Result);
 end;
 

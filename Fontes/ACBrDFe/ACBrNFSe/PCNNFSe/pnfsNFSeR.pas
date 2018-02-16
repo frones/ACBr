@@ -1279,6 +1279,14 @@ begin
 
     if FProvedor = proNenhum then
     begin
+      // tags do xml baixado do provedor
+      if (Pos('<numero_nfse>', Leitor.Arquivo) > 0) and
+         (Pos('<serie_nfse>', Leitor.Arquivo) > 0) then 
+        FProvedor := proIPM;
+    end;
+
+    if FProvedor = proNenhum then
+    begin
       if (Pos('<nfs', Leitor.Arquivo) > 0) then
         FProvedor := proEquiplano;
     end;
@@ -2689,7 +2697,7 @@ begin
 
     IdentificacaoRps.Numero := Leitor.rCampo(tcStr,'NumeroRps');
     IdentificacaoRps.Tipo   := trRPS;
-    InfID.ID                := SomenteNumeros(FNFSe.Numero);// + NFSe.IdentificacaoRps.Serie;
+    InfID.ID                := OnlyNumber(FNFSe.Numero);// + NFSe.IdentificacaoRps.Serie;
     with PrestadorServico do
     begin
      RazaoSocial                               := Trim(Leitor.rCampo(tcStr, 'TimbreContribuinteLinha1'));
@@ -2959,6 +2967,16 @@ begin
     begin
       NFSe.Numero := Leitor.rCampo( tcStr, 'numero');
 
+      // campos presentes ao baixar do site da prefeitura
+      if (NFSe.Numero = '') then 
+      begin
+        NFSe.Numero         := Leitor.rCampo( tcStr, 'numero_nfse');
+        NFSe.SeriePrestacao := Leitor.rCampo( tcStr, 'serie_nfse');
+        NFSe.DataEmissao    := StrToDateTimeDef(
+                                 VarToStr(Leitor.rCampo( tcStr, 'data_nfse' )) + ' ' +
+                                 VarToStr(Leitor.rCampo( tcStr, 'hora_nfse' )), 0 );
+      end;
+
       if Leitor.rCampo( tcStr, 'situacao' ) = 'C' then
       begin
         NFSe.Status := srCancelado;
@@ -2970,6 +2988,7 @@ begin
         NFSe.Cancelada := snNao;
       end;
 
+      NFSe.Servico.Valores.ValorServicos          := Leitor.rCampo( tcDe2, 'valor_total' );
       NFSe.Servico.Valores.ValorLiquidoNfse       := Leitor.rCampo( tcDe2, 'valor_total' );
       NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo( tcDe2, 'valor_desconto' );
       NFSe.Servico.Valores.ValorIr                := Leitor.rCampo( tcDe2, 'valor_ir' );
@@ -3577,7 +3596,7 @@ begin
     NFSe.ChaveNFSe               := Leitor.rCampo(tcStr, 'refNF');
 
     NFSe.Status      := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'anulada'), ['N','S'], [srNormal, srCancelado]);
-    NFSe.InfID.ID    := SomenteNumeros(NFSe.CodigoVerificacao);
+    NFSe.InfID.ID    := OnlyNumber(NFSe.CodigoVerificacao);
 
     NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Servico.CodigoMunicipio, 0);
   end;
@@ -3760,7 +3779,7 @@ begin
     NFSe.Status := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'anulada'), ['N','S'], [srNormal, srCancelado]);
     NFSe.Cancelada := StrToSimNaoInFisc(ok, Leitor.rCampo(tcStr, 'cancelada')); {Jozimar}
     NFSe.MotivoCancelamento := Leitor.rCampo(tcStr, 'motCanc');                   {Jozimar}
-    NFSe.InfID.ID := SomenteNumeros(NFSe.CodigoVerificacao);
+    NFSe.InfID.ID := OnlyNumber(NFSe.CodigoVerificacao);
     NFSe.ChaveNFSe := Leitor.rCampo(tcStr, 'refNF');
     NFSe.Producao  := StrToSimNao(ok, Leitor.rCampo(tcStr, 'ambienteEmi'));
   end;

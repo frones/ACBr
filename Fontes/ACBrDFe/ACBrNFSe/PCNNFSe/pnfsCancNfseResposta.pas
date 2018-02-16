@@ -34,9 +34,9 @@ unit pnfsCancNfseResposta;
 interface
 
 uses
-  SysUtils, Classes, Forms, 
-  pcnAuxiliar, pcnConversao, pcnLeitor,
-  pnfsConversao, pnfsNFSe;
+  SysUtils, Classes, Forms,
+  ACBrUtil,
+  pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 
 type
 
@@ -601,7 +601,7 @@ begin
         InfCanc.Protocolo := Leitor.rCampo(tcStr, 'nProt');
         sMotDes := Leitor.rCampo(tcStr, 'mot');
         if Pos('Error', sMotDes) > 0 then
-          sMotCod := SomenteNumeros(copy(sMotDes, 1, Pos(' ', sMotDes)))
+          sMotCod := OnlyNumber(copy(sMotDes, 1, Pos(' ', sMotDes)))
         else
           sMotCod := '';
         InfCanc.MsgRetorno.Add;

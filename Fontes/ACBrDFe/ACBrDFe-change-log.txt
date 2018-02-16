@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2018
+-- ACBrDFeUtil --
+[*] Remção de funções em duplicidade e a troca das chamadas das funções antigas
+    pelas novas
+   Por: Italo Jurisato Junior
+
 09/02/2018
 -- ACBrDFeUtil --
 [*] Método: "ObterCodigoMunicipio" / "ObterNomeMunicipio" Ajustes nas classes ACBrDFe para validação e utilização 

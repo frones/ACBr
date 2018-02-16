@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2018
+-- pcteProcCTe / pcteCTeW --
+[*] Remção de funções em duplicidade e a troca das chamadas das funções antigas
+    pelas novas
+   Por: Italo Jurisato Junior
+
 12/02/2018
 -- pcteEventoCTe  --
 [*] Removido os acentos e cedilha conforme os novos Schemas mensionados na 

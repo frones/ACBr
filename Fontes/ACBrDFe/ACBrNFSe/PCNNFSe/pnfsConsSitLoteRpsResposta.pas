@@ -35,6 +35,7 @@ interface
 
 uses
   SysUtils, Classes,
+  ACBrUtil, 
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 
 type
@@ -414,7 +415,7 @@ begin
           begin
             sMotDes := Leitor.rCampo(tcStr, 'mot');
             if Pos('Error', sMotDes) > 0 then
-              sMotCod := SomenteNumeros(copy(sMotDes, 1, Pos(' ', sMotDes)))
+              sMotCod := OnlyNumber(copy(sMotDes, 1, Pos(' ', sMotDes)))
             else
               sMotCod := '';
             InfSit.FMsgRetorno.Add;

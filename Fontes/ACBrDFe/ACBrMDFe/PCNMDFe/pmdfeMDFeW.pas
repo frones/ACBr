@@ -154,18 +154,26 @@ begin
 
 
   VersaoDF := DblToVersaoMDFe(Ok, MDFe.infMDFe.versao);
+  (*
   chave := '';
-
   if not GerarChave(Chave, MDFe.ide.cUF, MDFe.ide.cMDF, StrToInt(MDFe.ide.modelo),
                     MDFe.ide.serie, MDFe.ide.nMDF, StrToInt(TpEmisToStr(MDFe.ide.tpEmis)),
                     MDFe.ide.dhEmi, MDFe.emit.CNPJ) then
     Gerador.wAlerta('#001', 'infMDFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
 
   chave := StringReplace(chave,'NFe','MDFe',[rfReplaceAll]);
+  *)
 
-  MDFe.infMDFe.Id := chave;
-  MDFe.ide.cDV  := RetornarDigito(MDFe.infMDFe.Id);
-  MDFe.Ide.cMDF := RetornarCodigoNumerico(MDFe.infMDFe.Id, 2);
+  chave := GerarChaveAcesso(MDFe.ide.cUF, MDFe.ide.dhEmi, MDFe.emit.CNPJ, MDFe.ide.serie,
+                            MDFe.ide.nMDF, StrToInt(TpEmisToStr(MDFe.ide.tpEmis)),
+                            MDFe.ide.cMDF, StrToInt(MDFe.ide.modelo));
+  MDFe.infMDFe.ID := 'MDFe' + chave;
+
+//  MDFe.ide.cDV  := RetornarDigito(MDFe.infMDFe.Id);
+//  MDFe.Ide.cMDF := RetornarCodigoNumerico(MDFe.infMDFe.Id, 2);
+
+  MDFe.ide.cDV  := ExtrairDigitoChaveAcesso(MDFe.infMDFe.ID);
+  MDFe.Ide.cMDF := ExtrairCodigoChaveAcesso(MDFe.infMDFe.ID);
 
   {$IfDef FPC}
    Gerador.wGrupo(ENCODING_UTF8, '', False);
@@ -263,7 +271,7 @@ begin
   Gerador.wCampo(tcInt, '#008', 'mod     ', 02, 02, 1, MDFe.ide.modelo, DSC_MOD);
   Gerador.wCampo(tcInt, '#009', 'serie   ', 01, 03, 1, MDFe.ide.serie, DSC_SERIE);
   Gerador.wCampo(tcInt, '#010', 'nMDF    ', 01, 09, 1, MDFe.ide.nMDF, DSC_NMDF);
-  Gerador.wCampo(tcStr, '#011', 'cMDF    ', 08, 08, 1, IntToStrZero(RetornarCodigoNumerico(MDFe.infMDFe.ID, 2), 8), DSC_CMDF);
+  Gerador.wCampo(tcStr, '#011', 'cMDF    ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(MDFe.infMDFe.ID), 8), DSC_CMDF);
   Gerador.wCampo(tcInt, '#012', 'cDV     ', 01, 01, 1, MDFe.Ide.cDV, DSC_CDV);
   Gerador.wCampo(tcStr, '#013', 'modal   ', 02, 02, 1, ModalToStr(MDFe.Ide.modal), DSC_MODAL);
 

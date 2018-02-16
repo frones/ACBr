@@ -116,6 +116,11 @@ var
                   ( nfe.Det[i].Imposto.ICMS.vBCSTDest   > 0) or
                   ( nfe.Det[i].Imposto.ICMS.vICMSSTDest > 0) )
       then Result := cstRep41;
+    cst60 : if (	( nfe.Det[i].Imposto.ICMS.vBCSTRet    > 0) or
+                  ( nfe.Det[i].Imposto.ICMS.vICMSSTRet  > 0) or
+                  ( nfe.Det[i].Imposto.ICMS.vBCSTDest   > 0) or
+                  ( nfe.Det[i].Imposto.ICMS.vICMSSTDest > 0) )
+      then Result := cstRep60;
     end;
   end;
 begin

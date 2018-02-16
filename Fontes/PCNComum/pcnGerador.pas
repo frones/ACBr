@@ -395,7 +395,7 @@ var
   Tamanho: Integer;
   Ocorrencia: Integer;
 begin
-  CNPJCPF    := SomenteNumeros(trim(CNPJCPF));
+  CNPJCPF    := OnlyNumber(trim(CNPJCPF));
   Tamanho    := length(CNPJCPF);
   Ocorrencia := Integer(obrigatorio);
 
@@ -435,7 +435,7 @@ begin
     wCampo(tcStr, ID, 'CNPJ', 00, 00, 1, '');
     exit;
   end;
-  CNPJ := SomenteNumeros(Trim(CNPJ));
+  CNPJ := OnlyNumber(Trim(CNPJ));
   if obrigatorio then
     wCampo(tcEsp, ID, 'CNPJ', 14, 14, 1, CNPJ, DSC_CNPJ)
   else
@@ -451,7 +451,7 @@ begin
     wCampo(tcStr, ID, 'CPF', 00, 00, 1, '');
     exit;
   end;
-  CPF := SomenteNumeros(Trim(CPF));
+  CPF := OnlyNumber(Trim(CPF));
   if obrigatorio then
     wCampo(tcEsp, ID, 'CPF', 11, 11, 1, CPF, DSC_CPF)
   else
@@ -511,7 +511,7 @@ begin
         DecodeDate(VarToDateTime(valor), wAno, wMes, wDia);
         ConteudoProcessado := FormatFloat('0000', wAno) + '-' + FormatFloat('00', wMes) + '-' + FormatFloat('00', wDia);
         if Tipo = tcDatCFe then
-          ConteudoProcessado := SomenteNumeros(ConteudoProcessado);
+          ConteudoProcessado := OnlyNumber(ConteudoProcessado);
 
         EstaVazio := IsEmptyDate(wAno, wMes, wDia);
       end;
@@ -528,7 +528,7 @@ begin
         DecodeTime( VarToDateTime(valor), wHor, wMin, wSeg, wMse);
         ConteudoProcessado := FormatFloat('00', wHor) + ':' + FormatFloat('00', wMin) + ':' + FormatFloat('00', wSeg);
         if Tipo = tcHorCFe then
-          ConteudoProcessado := SomenteNumeros(ConteudoProcessado);
+          ConteudoProcessado := OnlyNumber(ConteudoProcessado);
 
         EstaVazio := (wHor = 0) and (wMin = 0) and (wSeg = 0);
       end;
@@ -779,7 +779,7 @@ begin
       idLocal := copy(ListCorrigido[i],1,pos('|',ListCorrigido[i])-1);
 
       if (length(idLocal) > 2) and (UpperCase(idLocal) <> 'NOTA FISCAL') and
-         (copy(idLocal,length(idLocal),1) <> SomenteNumeros(copy(idLocal,length(idLocal),1))) then
+         (copy(idLocal,length(idLocal),1) <> OnlyNumber(copy(idLocal,length(idLocal),1))) then
        begin
          idLocal := copy(idLocal,1,length(idLocal)-1)+LowerCase(copy(idLocal,length(idLocal),1));
          ListCorrigido[i] := StringReplace(ListCorrigido[i],idLocal,idLocal,[rfIgnoreCase]);

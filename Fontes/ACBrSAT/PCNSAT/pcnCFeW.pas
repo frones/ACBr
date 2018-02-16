@@ -200,7 +200,7 @@ begin
 
   (**)GerarEmitEnderEmit;
 
-  InscEst := Trim(SomenteNumeros(CFe.Emit.IE));
+  InscEst := Trim(OnlyNumber(CFe.Emit.IE));
   if Length(InscEst) < 12 then  //Caso a IE possua menos do que 12 dígitos, o AC deve preencher com espaços à direita. ER 2.21.08
     InscEst := PadRight(InscEst,12,' ');
   Gerador.wCampo(tcStrOrig, 'C12', 'IE      ', 2, 14, 1, InscEst, DSC_IE);
@@ -304,7 +304,7 @@ begin
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08, 0, CFe.Det[i].Prod.NCM, DSC_NCM);
   if CFe.infCFe.versaoDadosEnt >= 0.08 then
      Gerador.wCampo(tcStr, 'I05w ', 'CEST    ', 02, 07, 0, CFe.Det[i].Prod.CEST, DSC_CEST);
-  Gerador.wCampo(tcEsp, 'I06 ', 'CFOP    ', 04, 04, 1, somenteNumeros(CFe.Det[i].Prod.CFOP), DSC_CFOP);
+  Gerador.wCampo(tcEsp, 'I06 ', 'CFOP    ', 04, 04, 1, OnlyNumber(CFe.Det[i].Prod.CFOP), DSC_CFOP);
   Gerador.wCampo(tcStr, 'I07 ', 'uCom    ', 01, 06, 1, CFe.Det[i].Prod.uCom, DSC_UCOM);
   Gerador.wCampo(tcDe4, 'I08 ', 'qCom    ', 05, 15, 1, CFe.Det[i].Prod.qCom, DSC_QCOM);
   Gerador.wCampo(DecQtd,'I09 ', 'vUnCom  ', 03, 15, 1, CFe.Det[i].Prod.vUnCom, DSC_VUNCOM);
@@ -792,7 +792,7 @@ begin
 
     if Gerar then
     begin
-      FCFe.signature.URI := somenteNumeros(CFe.infCFe.ID);
+      FCFe.signature.URI := OnlyNumber(CFe.infCFe.ID);
       FCFe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FCFe.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FCFe.signature.Gerador.ArquivoFormatoXML;
@@ -805,7 +805,7 @@ end;
 
 function TCFeW.ObterNomeArquivo: string;
 begin
-  Result := SomenteNumeros(CFe.infCFe.ID) + '-cfe.xml';
+  Result := OnlyNumber(CFe.infCFe.ID) + '-cfe.xml';
 end;
 
 end.

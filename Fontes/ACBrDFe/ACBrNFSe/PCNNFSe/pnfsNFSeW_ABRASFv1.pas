@@ -346,7 +346,7 @@ begin
   if FProvedor = proNFSeBrasil then
   begin
     Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN);
-    Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 0007, 1, SomenteNumeros(NFSe.Servico.CodigoCnae), DSC_CNAE);
+    Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 0007, 1, OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE);
   end;
 
   if not (FProvedor in [proPublica, proNFSeBrasil]) then

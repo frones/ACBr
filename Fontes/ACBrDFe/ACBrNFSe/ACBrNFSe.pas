@@ -60,7 +60,7 @@ type
   { TACBrNFSe }
 	{$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}	
+  {$ENDIF RTL230_UP}
   TACBrNFSe = class(TACBrDFe)
   private
     FDANFSE: TACBrNFSeDANFSEClass;
@@ -245,7 +245,7 @@ end;
 
 function TACBrNFSe.GetNameSpaceURI: String;
 begin
-  Result := ''; // ACBRNFSE_NAMESPACE; 
+  Result := ''; // ACBRNFSE_NAMESPACE;
 end;
 
 function TACBrNFSe.cStatConfirmada(AValue: integer): Boolean;
@@ -524,11 +524,7 @@ end;
 
 function TACBrNFSe.ConsultarSituacao(AProtocolo: String; const ANumLote: String): Boolean;
 begin
-  try
-    Result := WebServices.ConsultaSituacao(AProtocolo, ANumLote);
-  except
-    Result := False;
-  end;
+  Result := WebServices.ConsultaSituacao(AProtocolo, ANumLote);
 end;
 
 function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: string): Boolean;
@@ -625,7 +621,8 @@ begin
     xNomeMunic := Configuracoes.Geral.xNomeURL_P;
     xLink := Configuracoes.Geral.xLinkURL_P;
   end
-  else begin
+  else
+  begin
     Texto := Configuracoes.Geral.ConfigGeral.HomLinkNFSe;
     xNomeMunic := Configuracoes.Geral.xNomeURL_H;
     xLink := Configuracoes.Geral.xLinkURL_H;
@@ -650,4 +647,3 @@ begin
 end;
 
 end.
-

@@ -267,7 +267,7 @@ begin
     tcEsp     : result := ConteudoTag;
     tcInt     : begin
                   if length(ConteudoTag)>0 then
-                    result := StrToIntDef(Trim(SomenteNumeros(ConteudoTag)),0)
+                    result := StrToIntDef(Trim(OnlyNumber(ConteudoTag)),0)
                   else
                     result := 0;
                 end;

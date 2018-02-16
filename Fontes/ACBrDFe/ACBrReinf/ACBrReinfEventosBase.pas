@@ -407,9 +407,9 @@ begin
     Result := Result + IntToStr(2);
 
   if AOrgaoPublico then
-    Result := Result + copy(SomenteNumeros(ACNPJF) + '00000000000000', 1, 14)
+    Result := Result + copy(OnlyNumber(ACNPJF) + '00000000000000', 1, 14)
   else
-    Result := Result + copy(SomenteNumeros(Copy(ACNPJF, 1, 8)) + '00000000000000', 1, 14);
+    Result := Result + copy(OnlyNumber(Copy(ACNPJF, 1, 8)) + '00000000000000', 1, 14);
   Result := Result + IntToStrZero(nAno, 4);
   Result := Result + IntToStrZero(nMes, 2);
   Result := Result + IntToStrZero(nDia, 2);

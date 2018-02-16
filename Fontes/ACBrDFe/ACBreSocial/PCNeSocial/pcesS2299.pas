@@ -41,6 +41,8 @@
 |*  - Doação do componente para o Projeto ACBr
 |* 01/03/2016: Guilherme Costa
 |*  - Alterações para validação com o XSD
+|* 15/02/2018 - EdmarFrazão
+|*  Alterações  Declaração e Campo Opcional ftransfTit
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -389,7 +391,8 @@ begin
   Gerador.wCampo(tcStr, '', 'observacao',   1, 255, 0, obj.Observacao);
 
   GerarSucessaoVinc(obj.SucessaoVinc);
-  GerarTransfTit(obj.transfTit);
+  if obj.transfTit.cpfSubstituto <> '' then
+    GerarTransfTit(obj.transfTit);
 
   if obj.verbasRescInst then
     GerarVerbasResc(obj.VerbasResc);
@@ -585,6 +588,7 @@ begin
   FQuarentena := TQuarentena.Create;
   FconsigFGTS := TconsigFGTS.Create;
   FInfoASO := TInfoASO.Create;
+  FtransfTit := TtransfTit.Create;
 end;
 
 destructor TInfoDeslig.destroy;
@@ -594,6 +598,7 @@ begin
   FQuarentena.Free;
   FconsigFGTS.Free;
   FInfoASO.Free;
+  FtransfTit.Free;
 
   inherited;
 end;

@@ -364,9 +364,9 @@ begin
     Result := Result + IntToStr(2);
 
   if ATipoEmpregador  = teOrgaoPublico then
-    Result := Result + copy(SomenteNumeros(CNPJF) + '00000000000000', 1, 14)
+    Result := Result + copy(OnlyNumber(CNPJF) + '00000000000000', 1, 14)
   else
-    Result := Result + copy(SomenteNumeros(Copy(CNPJF, 1, 8)) + '00000000000000', 1, 14);
+    Result := Result + copy(OnlyNumber(Copy(CNPJF, 1, 8)) + '00000000000000', 1, 14);
 
   Result := Result + IntToStrZero(nAno, 4);
   Result := Result + IntToStrZero(nMes, 2);

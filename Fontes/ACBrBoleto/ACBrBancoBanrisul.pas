@@ -727,7 +727,7 @@ begin
   rConvenio      := trim(Copy(ARetorno.Strings[1], 34, 13));
   rAgencia       := trim(Copy(ARetorno.Strings[1], 55,  4));
   rAgenciaDigito := trim(Copy(ARetorno.Strings[1], 59,  1));
-  rConta         := trim(Copy(ARetorno.Strings[1], 65,  7));
+  rConta         := trim(Copy(ARetorno.Strings[1], 64,  7));
   rContaDigito   := trim(Copy(ARetorno.Strings[1], 72,  1));
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 158, 6), 0);

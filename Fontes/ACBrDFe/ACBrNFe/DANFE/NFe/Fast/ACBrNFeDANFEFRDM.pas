@@ -268,50 +268,21 @@ end;
 
 function TACBrNFeFRClass.Split(const ADelimiter, AString: string): TSplitResult;
 var
-  Step: ^String;
-  Chr: PChar;
-  iPos, iLast, iDelLen, iLen, x: integer;
-label
-  EndLoop;
+  vRows: TStrings;
+  vI: Integer;
 begin
-  SetLength(Result, SubstrCount(ADelimiter, AString) + 1);
-  if High(Result) = 0 then
-    Result[0] := AString
-  else
-  begin
-    iDelLen := Length(ADelimiter);
-    iLen := Length(AString);
-    Step := @Result[0];
-    iLast := 0;
-    iPos := 0;
-    repeat
-      if iPos + iDelLen > iLen then
-      begin
-        if iLast <> iPos then
-          iPos := iLen;
-      end else
-        for x := 1 to iDelLen do
-          if AString[iPos + x] <> ADelimiter[x] then
-            goto EndLoop;
+  vRows := TStringList.Create;
+  try
+    vRows.Delimiter := ADelimiter[1];
+    vRows.StrictDelimiter := True;
+    vRows.DelimitedText := AString;
+    SetLength(Result, vRows.Count);
 
-      if iPos - iLast > 0 then
-      begin
-        SetLength(Step^, iPos - iLast);
-        Chr := PChar(Step^);
-        for x := 1 to PCardinal(NativeUInt(Step^) - SizeOf(NativeUInt))^ do
-        begin
-          Chr^ := AString[iLast + x];
-          Inc(Chr);
-        end;
-      end else
-        Step^ := '';
+    for vI := 0 to vRows.Count - 1 do
+      Result[vI] := vRows.Strings[vI];
 
-      NativeUInt(Step) := NativeUInt(Step) + SizeOf(NativeUInt);
-      iLast := iPos + iDelLen;
-
-      EndLoop:
-        Inc(iPos);
-    until iLast >= iLen;
+  finally
+    FreeAndNil(vRows);
   end;
 end;
 

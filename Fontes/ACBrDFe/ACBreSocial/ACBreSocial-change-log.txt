@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/02/2018
+-- pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/41529-ajuste-no-campo-tpdep-conforme-tabela-7/
+   Por: Joceandro Perin
+
 14/02/2018
 -- pcesGerador --
 [*] Remção de funções em duplicidade e a troca das chamadas das funções antigas

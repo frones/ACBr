@@ -301,12 +301,10 @@ type
                              ctPermanenciaBrasilRazaoFilhosOuConjugeBras, ctBeneficiadoAcordoPaisesMercosul,
                              ctDependenteAgenteDiplomaticoOuConsular, ctBeneficiadoTratadoAmizade);
 
-  tpTpDep                 = (tdConjuge, tdCompanheiroComFilhoOuVivaMais5Anos, tdFilhoOuEnteadoAte21Anos,
-                             tdFilhoOuEnteadoUniverOuCursandoEscolaTecAte24Anos, tdFilhoOuEnteadoEmQualquerIdadeIncapFisicaOuMentalmente,
-                             tdIrmaoNetoBisnetoGuardaJudicialAte21Anos, tdIrmaoNetoBisnetoAte24anosCursandoNivelSupOuEscolaTec,
-                             tdIrmaoNetoBisnetoGuardaJudicialQualquerIdadeIncapFisOuMental, tdPaisAvosBisavos,
-                             tdMenorPobreAte21AnosQueCrieEduqueComGuardaJudicial, tdPessoaAbsolutamenteIncapaz,
-                             tdExConjugeQueRecebaPensaoAlimentos, tdAgregadoOutros);
+  tpTpDep                 = (tdConjuge, tdCompanheiroComFilhoOuVivaMais5Anos, tdFilhoOuEnteado, tdFilhoOuEnteadoUniverOuEscolaTec,
+                             tdIrmaoNetoBisnetoGuardaJudicial, tdIrmaoNetoBisnetoUniverOuEscolaTecGuardaJudicial,
+                             tdPaisAvosBisavos, tdMenorPobreGuardaJudicial, tdPessoaIncapazTutorOuCurador, tdExConjuge,
+                             tdAgregadoOutros);
 
   tpTpRegTrab             = (trCLT, trEstatutario);
 
@@ -1929,12 +1927,12 @@ end;
 
 function eStpDepToStr(const t: tpTpDep): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString01_12  );
+  result := EnumeradoToStr2(t,['01', '02', '03', '04', '06', '07', '09', '10', '11', '12', '99'] );
 end;
 
 function eSStrToTpDep(var ok: Boolean; const s: string): tpTpDep;
 begin
-  result := tpTpDep( StrToEnumerado2(ok , s, TGenericosString01_12 ));
+  result := tpTpDep( StrToEnumerado2(ok , s, ['01', '02', '03', '04', '06', '07', '09', '10', '11', '12', '99'] ));
 end;
 
 function eSTpRepasseToStr(const t:tpTpRepasse ): string;

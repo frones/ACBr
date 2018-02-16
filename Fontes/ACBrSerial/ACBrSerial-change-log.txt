@@ -41,7 +41,7 @@ Símbolo : Significado
 
 Data: 16/02/2018
 -- ACBrETQClass --
-[+] Adicionado suporte a Unidde "etqDecimoDeMilimetros".
+[+] Adicionado suporte a Unidade "etqDecimoDeMilimetros".
     (por: DSA)
 
 Data: 07/02/2018

@@ -427,7 +427,7 @@ uses
    ,ACBrDFeHttpIndy
   {$EndIf}
   {$IfDef MSWINDOWS}
-   ,ACBRDFeWinCrypt, ACBrDFeHttpWinApi
+   ,ACBrDFeWinCrypt, ACBrDFeHttpWinApi
    {$IfNDef DFE_SEM_MSXML}
     ,ACBrDFeXsMsXml
    {$EndIf}

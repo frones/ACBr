@@ -57,12 +57,16 @@
 {.$DEFINE RaveCollate}
 {.$DEFINE RaveSaveFromPreview}
 
-// Descomente essa linha, se você quer que seu Executável NÃO dependa das DLLs LibXML2, LibXMLSEC,
+// Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2, LibXMLSEC,
 {.$DEFINE DFE_SEM_OPENSSL}
-// Descomente essa linha, se você quer que seu Executável NÃO dependa das DLLs LibXMLSEC, mas continue suportando a LibXML2
+// Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXMLSEC, mas continue suportando a LibXML2
 {.$DEFINE DFE_SEM_XMLSEC}
-// Descomente essa linha, se você não utiliza a Capicom para Criptografia (legado)
+// Descomente a linha abaixo, se você não utiliza a obsoleta Capicom para Criptografia (recomendado)
 {.$DEFINE DFE_SEM_CAPICOM}
+// Descomente a linha abaixo, se você não utiliza a obsoleta MSXML para Assinatura de XML(recomendado)
+{.$DEFINE DFE_SEM_MSXML}
+// Descomente a linha abaixo, se você não deseja adicionar a Dependência da INDY nos seus Projetos
+{.$DEFINE DFE_SEM_INDY}
 
 {$IfDef DFE_SEM_OPENSSL}
   {$Define DFE_SEM_XMLSEC}
@@ -81,6 +85,7 @@
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
 {$IFDEF FPC}
+  {$DEFINE DFE_SEM_INDY}
   {$DEFINE VCL}
   {$DEFINE UNICODE} // Lazarus 0.9.26 usa UnicodeString como default para String
   {$DEFINE DELPHI7}
@@ -112,11 +117,15 @@
   {$WARN SYMBOL_DEPRECATED OFF}
   {$WARN SYMBOL_PLATFORM OFF}
   {$WARN DUPLICATE_CTOR_DTOR OFF}
+  {$WARN CVT_ACHAR_TO_WCHAR OFF}
 {$ENDIF}
 
 
 {$IFNDEF MSWINDOWS}   // Linux, apenas OpenSSL, sem Capicom
   {$DEFINE DFE_SEM_CAPICOM}
+  {$DEFINE DFE_SEM_MSXML}
+  {$DEFINE DFE_SEM_INDY}
+  {$UnDef STDCALL}
 {$ENDIF}
 
 // utilizar para facilitar a manutenção do ACBr.inc, já que ele era uma cópia
@@ -265,6 +274,9 @@
 
 // Compatibilização de Tipos inexistentes em Delphi Linux (POSIX)
 {$IFDEF POSIX}
+  AnsiString = UTF8String;
+  AnsiChar = UTF8Char;
   PAnsiChar = PUTF8Char;
+  PPAnsiChar = ^PUTF8Char;
 {$ENDIF}
 

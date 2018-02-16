@@ -92,7 +92,6 @@ type
   private
     FMarcadagua: string;
     FLarguraCodProd: Integer;
-    FPosCanhoto: TPosRecibo;
     fExibeCampoFatura: Boolean;
     FFonte: TFonte;
     FExibirEAN: Boolean;
@@ -124,7 +123,6 @@ type
   published
     property MarcadAgua : String read FMarcadagua write FMarcadagua ;
     property LarguraCodProd: Integer read FLarguraCodProd write FLarguraCodProd;
-    property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto default prCabecalho;
     property Fonte: TFonte read FFonte;
     property ExibirEAN: Boolean read FExibirEAN write SetExibirEAN;
     property DetVeiculos: TDetVeiculos read FDetVeiculos write FDetVeiculos default
@@ -190,7 +188,6 @@ begin
   FProdutosPorPagina := 0;
   FExibirEAN := False;
   FTipoDANFE := tiRetrato;
-  FPosCanhoto := prCabecalho;
   FDetVeiculos := [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
   FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
   FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];

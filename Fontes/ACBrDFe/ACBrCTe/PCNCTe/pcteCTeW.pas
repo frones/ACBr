@@ -211,13 +211,7 @@ type
   end;
 
 implementation
-(*
-const
- xRazao = 'CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 
- DSC_NCONT   = 'Identificação do Container';
- DSC_DETCONT = 'Detalhamento dos Containers';
-*)
 { TCTeW }
 
 constructor TCTeW.Create(AOwner: TCTe);
@@ -254,22 +248,11 @@ begin
 
 
   VersaoDF := DblToVersaoCTe(Ok, CTe.infCTe.versao);
-  (*
-  chave := '';
-  if not GerarChave(Chave, CTe.ide.cUF, CTe.ide.cCT, CTe.ide.modelo,
-                    CTe.ide.serie, CTe.ide.nCT, StrToInt(TpEmisToStr(CTe.ide.tpEmis)),
-                    CTe.ide.dhEmi, CTe.emit.CNPJ) then
-    Gerador.wAlerta('#001', 'infCte', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
 
-  chave := StringReplace(chave,'NFe','CTe',[rfReplaceAll]);
-  *)
   chave := GerarChaveAcesso(CTe.ide.cUF, CTe.ide.dhEmi, CTe.emit.CNPJ, CTe.ide.serie,
                             CTe.ide.nCT, StrToInt(TpEmisToStr(CTe.ide.tpEmis)),
                             CTe.ide.cCT, CTe.ide.modelo);
   CTe.infCTe.Id := 'CTe' + chave;
-
-//  CTe.ide.cDV := RetornarDigito(CTe.infCTe.ID);
-//  CTe.Ide.cCT := RetornarCodigoNumerico(CTe.infCTe.ID, 2);
 
   CTe.ide.cDV := ExtrairDigitoChaveAcesso(CTe.infCTe.ID);
   CTe.Ide.cCT := ExtrairCodigoChaveAcesso(CTe.infCTe.ID);
@@ -2633,11 +2616,6 @@ begin
      end;
     end;
 
-    //**************************************************************************
-    // Tag (indAlteraToma) com efeito e utilização aguardando legislação, 
-    // NT 2017/002
-    //**************************************************************************
-
    if (CTe.infCTe.versao >= 3) and (CTe.infCTeNorm.infCteSub.indAlteraToma = tiSim) then
      Gerador.wCampo(tcStr, '#385', 'indAlteraToma', 01, 01, 0, TindicadorToStr(CTe.infCTeNorm.infCteSub.indAlteraToma), DSC_INDALTERATOMA);
 
@@ -2731,6 +2709,20 @@ begin
     Gerador.wAlerta('#415', 'autXML', DSC_AUTXML, ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
+procedure TCTeW.GerarinfPercurso;
+var
+  i: Integer;
+begin
+  for i := 0 to CTe.Ide.infPercurso.Count - 1 do
+  begin
+    Gerador.wGrupo('infPercurso', '#023');
+    Gerador.wCampo(tcStr, '#024', 'UFPer', 2, 2, 1, CTe.Ide.infPercurso[i].UFPer, DSC_UFPER);
+    Gerador.wGrupo('/infPercurso');
+  end;
+  if CTe.Ide.infPercurso.Count > 25 then
+   Gerador.wAlerta('#023', 'infPercurso', '', ERR_MSG_MAIOR_MAXIMO + '25');
+end;
+
 procedure TCTeW.AjustarMunicipioUF(var xUF, xMun: String;
   var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 var
@@ -2748,21 +2740,6 @@ begin
     else if ( ( EstaVazio(xMun)) and (cMun <> CMUN_EXTERIOR) ) then
       xMun := ObterNomeMunicipio(xUF, cMun, FOpcoes.FPathArquivoMunicipios);
 
-end;
-
-
-procedure TCTeW.GerarinfPercurso;
-var
-  i: Integer;
-begin
-  for i := 0 to CTe.Ide.infPercurso.Count - 1 do
-  begin
-    Gerador.wGrupo('infPercurso', '#023');
-    Gerador.wCampo(tcStr, '#024', 'UFPer', 2, 2, 1, CTe.Ide.infPercurso[i].UFPer, DSC_UFPER);
-    Gerador.wGrupo('/infPercurso');
-  end;
-  if CTe.Ide.infPercurso.Count > 25 then
-   Gerador.wAlerta('#023', 'infPercurso', '', ERR_MSG_MAIOR_MAXIMO + '25');
 end;
 {$ENDIF}
 

@@ -125,21 +125,22 @@ function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
 var
   vUF, vDataEmissao, vSerie, vNumero, vCodigo, vModelo, vCNPJ, vtpEmi: String;
 begin
-  // Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
+  // Se o usuario informar um código inferior a -2 a chave não será gerada //
+  if ACodigo < -2 then
+    raise EACBrDFeException.Create('Código Numérico inválido, Chave não Gerada');
+
+  // Se o usuario informar 0 ou -1; o código numerico sera gerado de maneira aleatória //
+  if ACodigo = -1 then
+    ACodigo := 0;
+
   while ACodigo = 0 do
   begin
-    Randomize;
     ACodigo := Random(99999999);
   end;
 
-  // se o usuario informar -1 o código numerico será gerado atravéz da função
-  // GerarCódigoNumerico baseado no numero do documento fiscal.
-  if ACodigo = -1 then
-    ACodigo := GerarCodigoNumerico(ANumero)
-  else
-    if ACodigo = -2 then
-      ACodigo := 0;
-  //
+  // Se o usuario informar -2; o código numerico sera ZERO //
+  if ACodigo = -2 then
+    ACodigo := 0;
 
   vUF          := Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
@@ -404,8 +405,8 @@ begin
 
   if FileExists(PathArqMun) then
   begin
+    List := TStringList.Create;
     try
-      List := TStringList.Create;
       List.LoadFromFile(PathArqMun);
       Codigo := IntToStr(AcMun);
       i := 0;
@@ -419,9 +420,7 @@ begin
     finally
       List.free;
     end;
-
   end;
-
 end;
 
 function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String): Integer;
@@ -458,9 +457,7 @@ begin
     finally
       List.free;
     end;
-
   end;
-
 end;
 
 procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString;
@@ -470,7 +467,7 @@ var
 begin
   SL := TStringList.Create;
   try
-    if (pos(LF, IniArquivoOuString) = 0) and FilesExists(IniArquivoOuString) then  // É um rquivo válido ?
+    if (pos(LF, IniArquivoOuString) = 0) and FilesExists(IniArquivoOuString) then  // É um Arquivo válido ?
       SL.LoadFromFile(IniArquivoOuString)
     else
       SL.Text := StringToBinaryString( IniArquivoOuString );
@@ -480,5 +477,9 @@ begin
     SL.Free;
   end;
 end;
+
+initialization
+
+  Randomize;
 
 end.

@@ -154,23 +154,11 @@ begin
 
 
   VersaoDF := DblToVersaoMDFe(Ok, MDFe.infMDFe.versao);
-  (*
-  chave := '';
-  if not GerarChave(Chave, MDFe.ide.cUF, MDFe.ide.cMDF, StrToInt(MDFe.ide.modelo),
-                    MDFe.ide.serie, MDFe.ide.nMDF, StrToInt(TpEmisToStr(MDFe.ide.tpEmis)),
-                    MDFe.ide.dhEmi, MDFe.emit.CNPJ) then
-    Gerador.wAlerta('#001', 'infMDFe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
-
-  chave := StringReplace(chave,'NFe','MDFe',[rfReplaceAll]);
-  *)
 
   chave := GerarChaveAcesso(MDFe.ide.cUF, MDFe.ide.dhEmi, MDFe.emit.CNPJ, MDFe.ide.serie,
                             MDFe.ide.nMDF, StrToInt(TpEmisToStr(MDFe.ide.tpEmis)),
                             MDFe.ide.cMDF, StrToInt(MDFe.ide.modelo));
   MDFe.infMDFe.ID := 'MDFe' + chave;
-
-//  MDFe.ide.cDV  := RetornarDigito(MDFe.infMDFe.Id);
-//  MDFe.Ide.cMDF := RetornarCodigoNumerico(MDFe.infMDFe.Id, 2);
 
   MDFe.ide.cDV  := ExtrairDigitoChaveAcesso(MDFe.infMDFe.ID);
   MDFe.Ide.cMDF := ExtrairCodigoChaveAcesso(MDFe.infMDFe.ID);
@@ -252,19 +240,6 @@ begin
   Gerador.wCampo(tcStr, '#006', 'tpAmb ', 01, 01, 1, tpAmbToStr(MDFe.Ide.tpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, '#007', 'tpEmit', 01, 01, 1, TpEmitenteToStr(MDFe.Ide.tpEmit), DSC_TPEMIT);
 
-  // tpTransp não deve ser gerada no XML
-  // se tpEmit = teTranspCargaPropria e modal = moRodoviario e
-  // veículo de tração for de propriedade do emitente
-  (*
-  if (VersaoDF >= ve300) and
-     ((MDFe.Rodo.veicTracao.Prop.CNPJCPF = '') or (Length(MDFe.Rodo.veicTracao.Prop.CNPJCPF) >= 11)) and
-     (MDFe.Ide.tpTransp <> ttNenhum) and
-     not ( (MDFe.Ide.tpEmit = teTranspCargaPropria) and
-           (MDFe.Ide.modal = moRodoviario) and
-           ((MDFe.Rodo.veicTracao.Prop.CNPJCPF = '') or
-            (MDFe.Rodo.veicTracao.Prop.CNPJCPF = MDFe.emit.CNPJ)) ) then
-    Gerador.wCampo(tcStr, '#007', 'tpTransp', 01, 01, 0, TTransportadorToStr(MDFe.Ide.tpTransp), DSC_TPTRANSP);
-  *)
   if (VersaoDF >= ve300) and (MDFe.Ide.tpTransp <> ttNenhum) then
     Gerador.wCampo(tcStr, '#007', 'tpTransp', 01, 01, 0, TTransportadorToStr(MDFe.Ide.tpTransp), DSC_TPTRANSP);
 

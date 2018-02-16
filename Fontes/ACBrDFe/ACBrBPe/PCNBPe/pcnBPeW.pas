@@ -167,29 +167,15 @@ var
   chave: String;
   Gerar: Boolean;
   xProtBPe : String;
-  xCNPJCPF : String;
 begin
   Gerador.ListaDeAlertas.Clear;
 
   Versao := Copy(BPe.infBPe.VersaoStr, 9, 4);
-  (*
-  chave := '';
-  xCNPJCPF := BPe.emit.CNPJ;
 
-  if not GerarChave(Chave, BPe.ide.cUF, BPe.ide.cBP, BPe.ide.modelo, BPe.ide.serie,
-      BPe.ide.nBP, StrToInt(TpEmisToStr(BPe.ide.tpEmis)), BPe.ide.dhEmi, xCNPJCPF) then
-    Gerador.wAlerta('A01', 'infBPe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
-
-  chave := StringReplace(chave, 'NFe', 'BPe', [rfReplaceAll]);
-  *)
-  xCNPJCPF := BPe.emit.CNPJ;
-  chave := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, xCNPJCPF, BPe.ide.serie,
+  chave := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, BPe.emit.CNPJ, BPe.ide.serie,
                             BPe.ide.nBP, StrToInt(TpEmisToStr(BPe.ide.tpEmis)),
                             BPe.ide.cBP, BPe.ide.modelo);
   BPe.infBPe.ID := 'BPe' + chave;
-
-//  BPe.ide.cDV := RetornarDigito(BPe.infBPe.ID);
-//  BPe.Ide.cBP := RetornarCodigoNumerico(BPe.infBPe.ID, 2);
 
   BPe.ide.cDV := ExtrairDigitoChaveAcesso(BPe.infBPe.ID);
   BPe.Ide.cBP := ExtrairCodigoChaveAcesso(BPe.infBPe.ID);

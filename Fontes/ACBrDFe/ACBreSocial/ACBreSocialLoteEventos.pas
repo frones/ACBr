@@ -387,7 +387,7 @@ begin
 
     if P > 0 then
     begin
-      AXML := copy(AXMLString, 1, P + 10);
+      AXML := copy(AXMLString, 1, P + 9);
       AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
     end
     else

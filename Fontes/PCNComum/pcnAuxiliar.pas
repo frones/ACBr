@@ -83,15 +83,7 @@ function ExecutarAjusteTagNro(Corrigir: boolean; Nro: string): string;
 function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True; const QuebraLinha: String = ';'): String;
 function IIf(const condicao: Boolean; const Verdadeiro, Falso: Variant): Variant;
 function IntToStrZero(const Numero: integer; const tamanho: integer): string;
-//function GerarCodigoNumerico(numero: integer): integer;
-//function GerarChave(out chave: String; const codigoUF: integer; codigoNumerico: integer; const modelo, serie, numero, tpemi: integer; const emissao: TDateTime; const CNPJ: string): boolean;
-//function GerarChaveCTe(out chave: String; const codigoUF: integer; codigoNumerico: integer; const modelo, serie, numero: integer; const emissao: TDateTime; const CNPJ: string): boolean;
 function GerarDigito(out Digito: integer; chave: string): boolean;
-//function SomenteNumeros(const s: string): string;
-//function RetornarCodigoNumerico(Chave: string; Versao : real): integer;
-//function RetornarCodigoNumericoCTe(Chave: string): integer;
-//function RetornarDigito(const chave: string): integer;
-//function RetornarModelo(const chave: string): String;
 function ReverterFiltroTextoXML(aTexto: String): String;
 function UFparaCodigo(const UF: string): integer;
 function ValidarAAMM(const AAMM: string): boolean;
@@ -226,107 +218,7 @@ begin
   result := StringOfChar('0', tamanho) + IntToStr(Numero);
   result := copy(result, length(result) - tamanho + 1, tamanho);
 end;
-(*
-function GerarCodigoNumerico(numero: integer): integer;
-var
-  s: string;
-  i, j, k: integer;
-begin
-  // Essa função gera um código numerico atravéz de calculos realizados sobre o parametro numero
-  s := intToStr(numero);
-  for i := 1 to 9 do
-    s := s + intToStr(numero);
-  for i := 1 to 9 do
-  begin
-    k := 0;
-    for j := 1 to 9 do
-      k := k + StrToInt(s[j]) * (j + 1);
-    s := IntToStr((k mod 11)) + s;
-  end;
-  Result := StrToInt(copy(s, 1, 8));
-end;
 
-function GerarChave(out chave: String; const codigoUF: integer;
-  codigoNumerico: integer; const modelo, serie, numero, tpemi: integer;
-  const emissao: TDateTime; const CNPJ: string): boolean;
-var
-  digito: integer;
-  wAno, wMes, wDia: Word;
-begin
-  result := true;
-  try
-    // Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
-    while codigoNumerico = 0 do
-    begin
-      Randomize;
-      codigoNumerico := Random(99999999);
-    end;
-    // se o usuario informar -1 o código numerico será gerado atravéz da função
-    // GerarCódigoNumerico baseado no numero do documento fiscal.
-    if codigoNumerico = -1 then
-      codigoNumerico := GerarCodigoNumerico(Numero)
-    else if codigoNumerico = -2 then
-      codigoNumerico := 0;
-    //
-    DecodeDate(emissao, wAno, wMes, wDia);
-    chave := 'NFe' +
-      IntToStrZero(codigoUF, 2) +
-      Copy(FormatFloat('0000', wAno), 3, 2) +
-      FormatFloat('00', wMes) +
-      copy(SomenteNumeros(CNPJ) + '00000000000000', 1, 14) +
-      IntToStrZero(modelo, 2) +
-      IntToStrZero(serie, 3) +
-      IntToStrZero(Numero, 9) +
-      IntToStrZero(TPEmi, 1) +
-      IntToStrZero(codigoNumerico, 8);
-    GerarDigito(digito, chave);
-    chave := chave + IntToStr(digito);
-  except
-    chave := '';
-    result := false;
-    exit;
-  end;
-end;
-
-function GerarChaveCTe(out chave: String; const codigoUF: integer;
-  codigoNumerico: integer; const modelo, serie, numero: integer;
-  const emissao: TDateTime; const CNPJ: string): boolean;
-var
-  digito: integer;
-  wAno, wMes, wDia: Word;
-begin
-  result := true;
-  try
-    // Se o usuario informar 0; o código numerico sera gerado de maneira aleatória //
-    while codigoNumerico = 0 do
-    begin
-      Randomize;
-      codigoNumerico := Random(999999999);
-    end;
-    // se o usuario informar -1 o código numerico será gerado atravéz da função
-    // GerarCódigoNumerico baseado no numero do documento fiscal.
-    if codigoNumerico = -1 then
-      codigoNumerico := GerarCodigoNumerico(Numero);
-    //
-    DecodeDate(emissao, wAno, wMes, wDia);
-    chave := 'CTe' +
-      IntToStrZero(codigoUF, 2) +
-      Copy(FormatFloat('0000', wAno), 3, 2) +
-      FormatFloat('00', wMes) +
-      copy(SomenteNumeros(CNPJ) + '00000000000000', 1, 14) +
-      IntToStrZero(modelo, 2) +
-      IntToStrZero(serie, 3) +
-      IntToStrZero(Numero, 9) +
-      IntToStrZero(codigoNumerico, 9);
-    GerarDigito(digito, chave);
-    chave := chave + IntToStr(digito);
-  except
-    chave := '';
-    result := false;
-    exit;
-  end;
-end;
-*)
 function GerarDigito(out Digito: integer; chave: string): boolean;
 var
   i, j: integer;
@@ -350,37 +242,7 @@ begin
   if length(chave) <> 43 then
     result := False;
 end;
-(*
-function SomenteNumeros(const s: string): string;
-var
-  i: integer;
-begin
-  result := '';
-  for i := 1 to length(s) do
-    if pos(s[i], '0123456789') > 0 then
-      result := result + s[i];
-end;
 
-function RetornarCodigoNumerico(Chave: string; Versao: real): integer;
-begin
-  chave := SomenteNumeros(chave);
-
-  if versao < 2 then
-     result := StrToInt(copy(chave, 35, 9))
-  else
-     result := StrToInt(copy(chave, 36, 8));
-end;
-
-function RetornarCodigoNumericoCTe(Chave: string): integer;
-begin
-  result := RetornarCodigoNumerico(chave, 1);
-end;
-
-function RetornarDigito(const chave: string): integer;
-begin
-  result := StrToInt(chave[length(chave)]);
-end;
-*)
 function HexToAscii(Texto: string): String;
 var i : integer;
    function HexToInt(Hex: string): integer;
@@ -394,12 +256,7 @@ begin
        result := result + chr(HexToInt(copy(texto,i,2)));
   end;
 end;
-(*
-function RetornarModelo(const chave: string): String;
-begin
-  Result := copy(OnlyNumber(chave), 21, 2);
-end;
-*)
+
 function ReverterFiltroTextoXML(aTexto: String): String;
 var p1,p2:Integer;
     vHex,vStr:String;
@@ -423,16 +280,6 @@ begin
   end;
   result := Trim(aTexto);
 end;
-
-{function ReverterFiltroTextoXML(aTexto: String): String;
-begin
-  aTexto := StringReplace(aTexto, '&amp;', '&', [rfReplaceAll]);
-  aTexto := StringReplace(aTexto, '&lt;', '<', [rfReplaceAll]);
-  aTexto := StringReplace(aTexto, '&gt;', '>', [rfReplaceAll]);
-  aTexto := StringReplace(aTexto, '&quot;', '"', [rfReplaceAll]);
-  aTexto := StringReplace(aTexto, '&#39;', #39, [rfReplaceAll]);
-  result := Trim(aTexto);
-end;}
 
 function UFparaCodigo(const UF: string): integer;
 const

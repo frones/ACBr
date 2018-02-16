@@ -126,7 +126,7 @@ TACBrECFEstadoSet = set of TACBrECFEstado ;
 
 TACBrGAVAberturaAntecipada = ( aaIgnorar , aaException, aaAguardar ) ;
 
-TACBrETQUnidade = (etqMilimetros, etqPolegadas, etqDots);
+TACBrETQUnidade = (etqMilimetros, etqPolegadas, etqDots, etqDecimoDeMilimetros );
 
 TACBrETQDPI = (dpi203, dpi300, dpi600) ;
 

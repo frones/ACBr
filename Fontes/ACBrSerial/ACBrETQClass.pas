@@ -182,24 +182,27 @@ begin
     etqMilimetros:
     begin
       case Unidade of
-        etqPolegadas: ADouble := (AValue*10) * CInchCM;
-        etqDots:      ADouble := AValue / DotsMM;
+        etqPolegadas:          ADouble := (AValue*10) * CInchCM;
+        etqDots:               ADouble := AValue / DotsMM;
+        etqDecimoDeMilimetros: ADouble := AValue * 10;
       end;
     end;
 
     etqPolegadas:
     begin
       case Unidade of
-        etqMilimetros: ADouble := ((AValue/10) / CInchCM);
-        etqDots:       ADouble := AValue / DotsPI;
+        etqMilimetros:         ADouble := ((AValue/10) / CInchCM);
+        etqDots:               ADouble := AValue / DotsPI;
+        etqDecimoDeMilimetros: ADouble := ((AValue/100) / CInchCM);
       end;
     end;
 
     etqDots:
     begin
       case Unidade of
-        etqMilimetros: ADouble := (AValue * DotsMM);
-        etqPolegadas:  ADouble := (AValue * DotsPI);
+        etqMilimetros:         ADouble := (AValue * DotsMM);
+        etqPolegadas:          ADouble := (AValue * DotsPI);
+        etqDecimoDeMilimetros: ADouble := ((AValue/10) * DotsMM);
       end;
     end;
   end;

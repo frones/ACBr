@@ -198,9 +198,13 @@ type
 const
 {$IFDEF UNIX}
   {$IFDEF BSD}
-  MaxRates = 18;  //MAC
+    MaxRates = 18;  //MAC
   {$ELSE}
-   MaxRates = 30; //UNIX
+    {$if defined(cpumips) or defined(cpumipsel)}
+      MaxRates = 30; //UNIX
+    {$Else}
+      MaxRates = 19;  //WIN
+    {$IfEnd}
   {$ENDIF}
 {$ELSE}
   MaxRates = 19;  //WIN
@@ -229,6 +233,8 @@ const
 {$IFNDEF BSD}
     ,(460800, B460800)
   {$IFDEF UNIX}
+   {$if defined(cpumips) or defined(cpumipsel)}
+
     ,(500000, B500000),
     (576000, B576000),
     (921600, B921600),
@@ -240,6 +246,7 @@ const
     (3000000, B3000000),
     (3500000, B3500000),
     (4000000, B4000000)
+    {$IfEnd}
   {$ENDIF}
 {$ENDIF}
     );

@@ -51,7 +51,7 @@ uses
 type
   EACBrCargaBal = class(Exception);
   TACBrCargaBalTipoVenda = (tpvPeso, tpvUnidade, tpvEAN13);
-  TACBrCargaBalModelo = (modFilizola, modToledo, modUrano, modUranoS, modToledoMGV5, modUranoURF32);
+  TACBrCargaBalModelo = (modFilizola, modToledo, modUrano, modUranoS, modToledoMGV5, modToledoMGV6, modUranoURF32);
   TACBrCargaBalProgresso = procedure(Mensagem: String; ProgressoAtual, ProgressoTotal: Integer) of object;
   TACBrCargaBalTipoValidade = (tpvDias, tpvMeses);
 
@@ -420,7 +420,7 @@ function TACBrCargaBal.GetNomeArquivoTaras: String;
 begin
   case FModelo of
     modToledo,
-    modToledoMGV5 : Result := 'TARA.TXT';
+    modToledoMGV5, modToledoMGV6 : Result := 'TARA.TXT';
   end;
 end;
 
@@ -431,7 +431,8 @@ begin
     modToledo     : Result := 'TXITENS.TXT';
     modUrano      : Result := 'PRODUTOS.TXT';
     modUranoS     : Result := 'PRODUTOS.TXT';
-    modToledoMGV5 : Result := 'ITENSMGV.TXT';
+    modToledoMGV5,
+    modToledoMGV6 : Result := 'ITENSMGV.TXT';
     modUranoURF32 : Result := 'PRODUTOS.TXT';
   end;
 end;
@@ -529,7 +530,8 @@ begin
   // Toledo e Urano nao possuem arquivo de setor a parte
   case FModelo of
     modFilizola : Result := 'SETORTXT.TXT';
-    modToledoMGV5 : Result := 'DEPTO.TXT';
+    modToledoMGV5,
+    modToledoMGV6 : Result := 'DEPTO.TXT';
   end;
 end;
 
@@ -538,7 +540,8 @@ begin
   // Urano nao possue arquivo de Receita a parte. EXCETO URANO URF32
   case FModelo of
     modFilizola : Result := 'REC_ASS.TXT';
-    modToledoMGV5: Result := 'TXINFO.TXT';
+    modToledoMGV5,
+    modToledoMGV6: Result := 'TXINFO.TXT';
     modUranoURF32: Result := 'RECEITAS.TXT';
   end;
 end;
@@ -546,7 +549,8 @@ end;
 function TACBrCargaBal.GetNomeArquivoFornecedor: String;
 begin
   case FModelo of
-    modToledoMGV5 : Result := 'TXFORN.TXT';
+    modToledoMGV5,
+    modToledoMGV6 : Result := 'TXFORN.TXT';
   end;
 end;
 
@@ -555,7 +559,8 @@ begin
   // A urano nao possuem arquivo nutricional a parte das informações
   // são incluídas no mesmo arquivo de itens.
   case FModelo of
-    modToledoMGV5 : Result := 'INFNUTRI.TXT';
+    modToledoMGV5,
+    modToledoMGV6 : Result := 'INFNUTRI.TXT';
     modFilizola : Result := 'NUTRI.TXT';
     modUranoURF32: Result := 'INFORMACOESNUTRICIONAIS.TXT';
   end;
@@ -658,33 +663,76 @@ begin
       );
     end else
     begin
-      // ITENSMGV.TXT - VERSÃO 2
-      Arquivo.Add(
-        LFIll(Produtos[i].Setor.Codigo, 2) +
-        GetTipoProdutoToledo(Produtos[i].Tipo) +
-        LFIll(Produtos[i].Codigo, 6) +
-        LFIll(Produtos[i].ValorVenda, 6, 2) +
-        LFIll(Produtos[i].Validade, 3) +
-        RFIll(Produtos[i].Descricao, 50) +
-        LFIll(Produtos[i].Codigo, 6)+ // codigo inf extra
-        LFIll('0', 4)+ // codigo imagem
-        LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
-        RFill('1', 1)+ // imprime data de validade
-        RFill('1', 1)+ // imprime data embalagem
-        LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
-        //LFIll('0', 4)+ // codigo fornecedor
-        lFill('0', 12)+ // lote
-        lFill('0', 11)+ // codigo especial
-        LFIll('0', 1)+ // versao do preco
-        LFIll('0', 4)+ // codigo do som
-        LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
-        //LFIll('0', 4)+ // codigo da tara
-        LFIll('0', 4)+ // codigo da fracionador
-        LFIll('0', 4)+ // Código do Campo Extra 1
-        LFIll('0', 4)+ // Código do Campo Extra 2
-        LFIll('0', 4)+ // Código da Conservação
-        LFIll('0', 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
-      );
+      if Modelo = modToledoMGV5 then
+      begin
+        // ITENSMGV.TXT - VERSÃO 2
+        Arquivo.Add(
+          LFIll(Produtos[i].Setor.Codigo, 2) +
+          GetTipoProdutoToledo(Produtos[i].Tipo) +
+          LFIll(Produtos[i].Codigo, 6) +
+          LFIll(Produtos[i].ValorVenda, 6, 2) +
+          LFIll(Produtos[i].Validade, 3) +
+          RFIll(Produtos[i].Descricao, 50) +
+          LFIll(Produtos[i].Codigo, 6)+ // codigo inf extra
+          LFIll('0', 4)+ // codigo imagem
+          LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
+          RFill('1', 1)+ // imprime data de validade
+          RFill('1', 1)+ // imprime data embalagem
+          LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
+          //LFIll('0', 4)+ // codigo fornecedor
+          lFill('0', 12)+ // lote
+          lFill('0', 11)+ // codigo especial
+          LFIll('0', 1)+ // versao do preco
+          LFIll('0', 4)+ // codigo do som
+          LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
+          //LFIll('0', 4)+ // codigo da tara
+          LFIll('0', 4)+ // codigo da fracionador
+          LFIll('0', 4)+ // Código do Campo Extra 1
+          LFIll('0', 4)+ // Código do Campo Extra 2
+          LFIll('0', 4)+ // Código da Conservação
+          LFIll('0', 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
+        );
+      end else
+      begin
+        // ITENSMGV.TXT - VERSÃO 3
+        Arquivo.Add(
+          LFIll(Produtos[i].Setor.Codigo, 2) +
+          GetTipoProdutoToledo(Produtos[i].Tipo) +
+          LFIll(Produtos[i].Codigo, 6) +
+          LFIll(Produtos[i].ValorVenda, 6, 2) +
+          LFIll(Produtos[i].Validade, 3) +
+          RFIll(Produtos[i].Descricao, 50) +
+          LFIll(Produtos[i].Codigo, 6)+ // codigo inf extra
+          LFIll('0', 4)+ // codigo imagem
+          LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
+          RFill('1', 1)+ // imprime data de validade
+          RFill('1', 1)+ // imprime data embalagem
+          LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
+          //LFIll('0', 4)+ // codigo fornecedor
+          lFill('0', 12)+ // lote
+          lFill('0', 11)+ // codigo especial
+          LFIll('0', 1)+ // versao do preco
+          LFIll('0', 4)+ // codigo do som
+          LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
+          //LFIll('0', 4)+ // codigo da tara
+          LFIll('0', 4)+ // codigo da fracionador
+          LFIll('0', 4)+ // Código do Campo Extra 1
+          LFIll('0', 4)+ // Código do Campo Extra 2
+          LFIll('0', 4)+ // Código da Conservação
+          LFIll('0', 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
+
+          (* Novos campos para o arquivo do MGV6 - De acordo com a observação
+            eles podem estar inexistentes no arquivo, pois serão considerados como não associados.*)
+
+          {LFIll('0', 6)+ // Percentual de Glaciamento
+          LFIll('0', 2)+ // Sequencia de departamentos Associados. Ex: Para associar departamentos 2 e 5: |0205|
+          LFIll('', 35)+ // Descritivo do Item – Terceira Linha
+          LFIll('', 35)+ // Descritivo do Item – Quarta Linha
+          LFIll('0', 4)+ // Código do Campo Extra 3
+          LFIll('0', 4)+ // Código do Campo Extra 4
+          LFIll('0', 6) // Código da mídia (Prix 6 Touch)}
+        );
+      end;
 
       // receita
       AReceita:=LFIll(Produtos[i].Codigo, 6) + RFill('', 100) + RFill(Produtos[i].Receita, 840);
@@ -1028,7 +1076,8 @@ begin
       modToledo     : PreencherToledo(Produto, Nutricional, Receita, Tara, nil, nil);
       modUrano      : PreencherUrano(Produto);
       modUranoS     : PreencherUranoS(Produto);
-      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 1);
+      modToledoMGV5,
+      modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 1);
       modUranoURF32 : PreencherUranoURF32(Produto, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita);
     end;
 

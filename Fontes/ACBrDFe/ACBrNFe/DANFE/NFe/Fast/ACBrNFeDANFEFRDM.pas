@@ -274,7 +274,6 @@ begin
   vRows := TStringList.Create;
   try
     vRows.Delimiter := ADelimiter[1];
-    vRows.StrictDelimiter := True;
     vRows.DelimitedText := AString;
     SetLength(Result, vRows.Count);
 

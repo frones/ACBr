@@ -1157,7 +1157,8 @@ begin
    modToledo     : result := 'Toledo';
    modUrano      : result := 'Urano';
    modUranoS     : result := 'Urano (S)';
-   modToledoMGV5 : result := 'ToledoMGV5';
+   modToledoMGV5 : result := 'Toledo MGV5';
+   modToledoMGV6 : result := 'Toledo MGV6';
    modUranoURF32 : result := 'Urano URF32';
  end;
 end;

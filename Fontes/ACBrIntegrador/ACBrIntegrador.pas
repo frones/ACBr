@@ -47,7 +47,7 @@ uses
 {$ENDIF}
   Classes, SysUtils,
   pcnGerador, pcnLeitor, pcnVFPe, pcnVFPeW,
-  ACBrBase;
+  ACBrBase, ACBrIntegradorResposta;
 
 const
   cACBrIntgerador_Versao = '0.1.0' ;
@@ -69,6 +69,8 @@ type
     FErro: String;
     FErroTimeout: Boolean;
     FResposta: String;
+    FIntegradorResposta : TIntegradorResposta;
+
     procedure SetPastaInput(AValue: String);
     procedure SetPastaOutput(AValue: String);
 
@@ -90,6 +92,7 @@ type
     property ErroTimeout : Boolean read FErroTimeout;
     property Erro        : String  read FErro;
     property Resposta    : String  read FResposta;
+    property IntegradorResposta: TIntegradorResposta read FIntegradorResposta;
   end;
 
   TACBrIntegradorGetNumeroSessao = procedure(var NumeroSessao: Integer) of object ;
@@ -168,6 +171,7 @@ type
        write FOnGetNumeroSessao;
 
     property ErroTimeout : Boolean read GetErroTimeout;
+    property ComandoIntegrador: TComandoIntegrador read FComandoIntegrador;
   end;
 
 
@@ -189,11 +193,13 @@ begin
   FPastaOutput := 'C:\Integrador\Output\';
   FTimeout     := 30;
   FErroTimeout := False;
+  FIntegradorResposta := TIntegradorResposta.Create;
 end;
 
 destructor TComandoIntegrador.Destroy;
 begin
   FLeitor.Free;
+  FIntegradorResposta.Free;
   inherited Destroy;
 end;
 
@@ -202,6 +208,7 @@ begin
   FErro := '';
   FErroTimeout := False;
   FResposta := '';
+  FIntegradorResposta.Clear;
 end;
 
 procedure TComandoIntegrador.SetPastaInput(AValue: String);
@@ -297,6 +304,7 @@ begin
 
   FOwner.DoLog('RespostaIntegrador: '+RespostaIntegrador);
   FResposta:= RespostaIntegrador;
+  FIntegradorResposta.LerResposta(RespostaIntegrador);
   Result := PegaResposta(RespostaIntegrador);
 end;
 
@@ -610,9 +618,8 @@ function TACBrIntegrador.EnviarPagamento(Pagamento: TEnviarPagamento
 var
   Comando, Resp : String;
 begin
-{$IFNDEF COMPILER23_UP}
-  Result := Nil;
-{$ENDIF}
+  Result := TRespostaPagamento.Create;
+
   GerarNumeroSessao;
 
   Pagamento.Identificador := numeroSessao;
@@ -621,7 +628,6 @@ begin
 
   Resp := FComandoIntegrador.EnviaComando( numeroSessao, 'EnviarPagamento', Comando);
 
-  Result := TRespostaPagamento.Create;
   Result.AsXMLString := Resp;
 end;
 
@@ -630,9 +636,8 @@ function TACBrIntegrador.EnviarStatusPagamento(
 var
   Comando, Resp : String;
 begin
-{$IFNDEF COMPILER23_UP}
-  Result := Nil;
-{$ENDIF}
+  Result := TRespostaStatusPagamento.Create;
+
   GerarNumeroSessao;
 
   StatusPagamento.Identificador := numeroSessao;
@@ -641,7 +646,6 @@ begin
 
   Resp := FComandoIntegrador.EnviaComando(numeroSessao,'EnviarStatusPagamento',Comando);
 
-  Result := TRespostaStatusPagamento.Create;
   Result.AsXMLString := Resp;
 end;
 
@@ -651,9 +655,8 @@ function TACBrIntegrador.VerificarStatusValidador(
 var
   Comando, Resp : String;
 begin
-{$IFNDEF COMPILER23_UP}
-  Result := Nil;
-{$ENDIF}
+  Result := TRespostaVerificarStatusValidador.Create;
+
   GerarNumeroSessao;
 
   AVerificarStatusValidador.Identificador := numeroSessao;
@@ -662,7 +665,6 @@ begin
 
   Resp := FComandoIntegrador.EnviaComando(numeroSessao,'VerificarStatusValidador',Comando);
 
-  Result := TRespostaVerificarStatusValidador.Create;
   Result.AsXMLString := Resp;
 end;
 
@@ -671,9 +673,8 @@ function TACBrIntegrador.RespostaFiscal(
 var
   Comando, Resp : String;
 begin
-{$IFNDEF COMPILER23_UP}
-  Result := Nil;
-{$ENDIF}
+  Result := TRetornoRespostaFiscal.Create;
+
   GerarNumeroSessao;
 
   ARespostaFiscal.Identificador := numeroSessao;
@@ -682,7 +683,6 @@ begin
 
   Resp := FComandoIntegrador.EnviaComando(numeroSessao,'RespostaFiscal',Comando);
 
-  Result := TRetornoRespostaFiscal.Create;
   Result.AsXMLString := Resp;
 end;
 

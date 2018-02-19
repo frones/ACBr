@@ -294,7 +294,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'tpLotacao', 2, 2, 1, self.infoLotacao.DadosLotacao.tpLotacao); // Criar enumerador
 
-  if (StrToInt(self.infoLotacao.DadosLotacao.tpLotacao) in [3, 4, 5, 6, 8, 9, 21, 23]) then
+  if (StrToInt(self.infoLotacao.DadosLotacao.tpLotacao) in [2, 3, 4, 5, 6, 7, 8, 9]) then
     Gerador.wCampo(tcStr, '', 'tpInsc', 1, 1, 0, ord(self.infoLotacao.DadosLotacao.tpInsc) + 1);
 
   Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 0, self.infoLotacao.DadosLotacao.nrInsc);

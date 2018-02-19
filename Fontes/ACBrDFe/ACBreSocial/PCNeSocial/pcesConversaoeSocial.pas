@@ -425,7 +425,8 @@ type
   tpPensaoAlim            = (paNaoExistePensaoAlimenticia, paPercentualDePensaoAlimenticia, paValorDePensaoAlimenticia,
                              paPercentualeValordePensaoAlimenticia);
 
-  tpCumprParcialAviso     = (cpaCumprimentoTotal, cpaCumprimentoParcialNovoEmprego, cpaCumprimentoParcialEmpregador);
+  tpCumprParcialAviso     = (cpaCumprimentoTotal, cpaCumprimentoParcialNovoEmprego, cpaCumprimentoParcialEmpregador,
+                             cpaOutrasCumprimentoParcial, cpaAvisoprevioIndenizadoNaoExigivel );
 
   TVersaoeSocial = (ve240);
 
@@ -2147,12 +2148,12 @@ end;
 
 function eSTpCumprParcialAvisoToStr(const t: tpCumprParcialAviso): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosString0_2);
+  result := EnumeradoToStr2(t, TGenericosString0_4);
 end;
 
 function eSStrToTpCumprParcialAviso(var ok: boolean; const s: string): tpCumprParcialAviso;
 begin
-  result := tpCumprParcialAviso(StrToEnumerado2(ok, s, TGenericosString0_2));
+  result := tpCumprParcialAviso(StrToEnumerado2(ok, s, TGenericosString0_4));
 end;
 
 function eSModoLancamentoToStr(const t: TModoLancamento): string;

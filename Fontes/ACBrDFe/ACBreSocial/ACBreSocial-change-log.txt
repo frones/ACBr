@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2018
+-- pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/41531-alterar-s-2299-desligamento-indicador-cumprimento-de-aviso/?do=findComment&comment=273743
+   Por: Edmar Frazao
+-- pcesS1020 --
+[*] https://www.projetoacbr.com.br/forum/topic/41545-ajuste-em-tipo-de-inscri%C3%A7%C3%A3o-da-lota%C3%A7%C3%A3o-evento-s-1020-tabela-de-lota%C3%A7%C3%B5es-tribut%C3%A1rias/
+   Por: Luri
+
 16/02/2018
 -- pcesConversaoeSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/41529-ajuste-no-campo-tpdep-conforme-tabela-7/

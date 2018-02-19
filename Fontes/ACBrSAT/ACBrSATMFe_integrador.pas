@@ -236,7 +236,7 @@ function TACBrSATMFe_integrador_XML.ConfigurarInterfaceDeRede(
 begin
   FIntegrador.Clear;
   FIntegrador.NomeComponente := cNomeComponente;
-  FIntegrador.NomeMetodo := 'ConfigurarInterfaceDeRede';
+  FIntegrador.NomeMetodo := 'ConfigurarInterfaceDeRedeMFE';
   FIntegrador.Parametros.Values['codigoDeAtivacao']  := codigoDeAtivacao;
   FIntegrador.Parametros.Values['dadosConfiguracao'] := '<![CDATA[' +AjustaComando(dadosConfiguracao)+ ']]>';
   Result := FIntegrador.Enviar;

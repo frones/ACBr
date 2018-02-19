@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2018
+-- ACBrNFSeWebServices --
+[*] Simplificação de código.
+   Por: Italo Jurisato Junior
+
 14/02/2018
 -- Diversos --
 [*] Remção de funções em duplicidade e a troca das chamadas das funções antigas

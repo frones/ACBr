@@ -89,6 +89,7 @@ type
     FTagGrupo: String;
     FdocElemento: String;
     FinfElemento: String;
+    FIDLote: String;
 
     FCabecalhoStr: Boolean;
     FDadosStr: Boolean;
@@ -120,6 +121,7 @@ type
     procedure InicializarTagITagF;
     procedure InicializarGerarDadosMsg;
     function ExtrairGrupoMsgRet(AGrupo: String): String;
+    procedure AlterarURIAssinatura;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -154,6 +156,7 @@ type
     property TagGrupo: String        read FTagGrupo;
     property docElemento: String     read FdocElemento;
     property infElemento: String     read FinfElemento;
+    property IDLote: String          read FIDLote;
 
     property vNotas: String   read FvNotas;
     property XML_NFSe: String read FXML_NFSe;
@@ -2179,6 +2182,23 @@ begin
     FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 end;
 
+procedure TNFSeWebService.AlterarURIAssinatura;
+var
+  i: Integer;
+begin
+  // Se URI for True significa que devemos incluir o ID do Lote no
+  // atributo URI da assinatura.
+  if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
+  begin
+    i := Pos('URI=""', FPDadosMsg);
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if (i > 0) and (FIDLote <> '') then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + FIDLote +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+  end;
+end;
+
 { TNFSeGerarLoteRPS }
 
 constructor TNFSeGerarLoteRPS.Create(AOwner: TACBrDFe;
@@ -2308,7 +2328,7 @@ var
   dDataInicial, dDataFinal: TDateTime;
   TotalServicos, TotalDeducoes, TotalISS,
   TotalTributos, TotalISSRetido: Double;
-  TagElemento, IDLote: String;
+  TagElemento: String;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -2484,7 +2504,7 @@ begin
     else
       FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -2505,18 +2525,7 @@ begin
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                    xSignatureNode, xDSIGNSLote, xIdSignature);
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
 
     // Incluido a linha abaixo por após realizar a assinatura esta gerando o
     // atributo xmlns vazio.
@@ -2661,7 +2670,7 @@ var
   dDataInicial, dDataFinal: TDateTime;
   TotalServicos, TotalDeducoes, TotalISS,
   TotalTributos, TotalISSRetido: Double;
-  TagElemento, IDLote: String;
+  TagElemento: String;
 begin
 
   if FNotasFiscais.Count <= 0 then
@@ -2795,7 +2804,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -2810,18 +2819,7 @@ begin
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                    xSignatureNode, xDSIGNSLote, xIdSignature);
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -2960,7 +2958,7 @@ end;
 procedure TNFSeEnviarSincrono.DefinirDadosMsg;
 var
   I: Integer;
-  TagElemento, IDLote: String;
+  TagElemento: String;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -3011,7 +3009,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarSincrono + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -3028,18 +3026,7 @@ begin
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                   xSignatureNode, xDSIGNSLote, xIdSignature);
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarSincrono(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -3200,7 +3187,7 @@ end;
 procedure TNFSeGerarNFSe.DefinirDadosMsg;
 var
   I: Integer;
-  TagElemento, IDLote: String;
+  TagElemento: String;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
@@ -3284,7 +3271,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgGerarNFSe + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -3307,18 +3294,7 @@ begin
                               FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
                               xSignatureNode, xDSIGNSLote, xIdSignature);
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
 
    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -3411,9 +3387,6 @@ begin
 end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirDadosMsg;
-var
-  i: Integer;
-  IDLote: String;
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_DadosStr;
@@ -3459,7 +3432,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsSitLote + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -3470,18 +3443,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Situação do Lote: ');
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
   end;
   
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingDados);
@@ -3682,9 +3644,6 @@ begin
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
-var
-  i: Integer;
-  IDLote: String;
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_DadosStr;
@@ -3733,7 +3692,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsLote + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -3747,20 +3706,9 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Lote de RPS: ');
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
   end;
-    
+
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote;
@@ -3845,7 +3793,6 @@ procedure TNFSeConsultarNfseRPS.DefinirDadosMsg;
 var
   i: Integer;
   Gerador: TGerador;
-  IDLote: String;
 begin
   if (FNotasFiscais.Count <= 0) and (FProvedor in [proGoverna,proIssDSF]) then
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
@@ -3959,7 +3906,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsNFSeRPS + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -3973,18 +3920,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe por RPS: ');
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
   end;
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingDados);
@@ -4068,9 +4004,6 @@ begin
 end;
 
 procedure TNFSeConsultarNfse.DefinirDadosMsg;
-var
-  i: Integer;
-  IDLote: String;
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_DadosStr;
@@ -4133,7 +4066,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsNFSe + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -4147,18 +4080,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe: ');
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
   end;
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingDados);
@@ -4248,7 +4170,7 @@ procedure TNFSeCancelarNfse.DefinirDadosMsg;
 var
   i: Integer;
   Gerador: TGerador;
-  sAssinatura, IDLote: String;
+  sAssinatura: String;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
@@ -4489,7 +4411,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -4503,18 +4425,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
   end;
 
   if FProvedor = proBetha then
@@ -4654,7 +4565,6 @@ procedure TNFSeSubstituirNFSe.DefinirDadosMsg;
 var
   i: Integer;
   Gerador: TGerador;
-  IDLote: String;
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_DadosStr;
@@ -4756,7 +4666,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgSubstituirNFSe + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -4767,18 +4677,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
   end;
     
   FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
@@ -4911,9 +4810,6 @@ begin
 end;
 
 procedure TNFSeAbrirSessao.DefinirDadosMsg;
-var
-  i: Integer;
-  IDLote: String;
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_DadosStr;
@@ -4935,7 +4831,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgAbrirSessao + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -4946,18 +4842,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Abrir Sessão: ');
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
   end;
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_IncluiEncodingDados);
@@ -5074,9 +4959,6 @@ begin
 end;
 
 procedure TNFSeFecharSessao.DefinirDadosMsg;
-var
-  i: Integer;
-  IDLote: String;
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_DadosStr;
@@ -5103,7 +4985,7 @@ begin
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgFecharSessao + FTagF;
 
-    IDLote := GerarDadosMsg.IdLote;
+    FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
@@ -5114,20 +4996,9 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Fechar Sessão: ');
 
-    // Se URI for True significa que devemos incluir o ID do Lote no
-    // atributo URI da assinatura.
-    if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-    begin
-      i := Pos('URI=""', FPDadosMsg);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if (i > 0) and (IDLote <> '') then
-        FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + IDLote +
-                      Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-    end;
+    AlterarURIAssinatura;
   end;
-    
+
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao;

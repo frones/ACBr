@@ -444,7 +444,6 @@ type
     lblFonteEndereco: TLabel;
     LHelpConnector1: TLHelpConnector;
     lsvArqsRetorno: TListView;
-    MainMenu1: TMainMenu;
     mBOLRelatorio: TMemo;
     meUSUHoraCadastro: TMaskEdit;
     mmEmailMsgCTe: TMemo;

@@ -43,6 +43,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2018
+[*] Ajuste no Método "GerarChave", conforme alterações do ACBrDFe
+       por: José M. S. Junior
+
+16/02/2018
+[+] Adicionado Métodos de Distribuição para CTe e MDFe
+        CTe.DistribuicaoDFePorNSU(cUF, cCNPJ, nNSU)
+        CTe.DistribuicaoDFePorUltNSU(cUF, cCNPJ, nUltNSU)
+        MDFe.DistribuicaoDFePorNSU(cUF, cCNPJ, nNSU)
+        MDFe.DistribuicaoDFePorUltNSU(cUF, cCNPJ, nUltNSU)
+	por: Italo Jurissato Junior
+
 05/02/2018
 [+] Adicionado Parâmetro "Utilizar Separador para Path PDF" em DFe / Diretórios
         Define se utiliza a mesma Estrutura de diretório definida para XML, se não

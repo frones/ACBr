@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 384
+  Left = -1080
   Height = 689
-  Top = 130
+  Top = 0
   Width = 1064
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -14,7 +14,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
   Constraints.MinWidth = 590
   Font.Height = -13
   KeyPreview = True
-  Menu = MainMenu1
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -386,10 +385,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 864
-        ActivePage = tsMonitor
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 0
+        TabIndex = 16
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -14290,9 +14289,5 @@ object FrmACBrMonitor: TFrmACBrMonitor
     AutoRegister = True
     left = 844
     top = 455
-  end
-  object MainMenu1: TMainMenu
-    left = 228
-    top = 44
   end
 end

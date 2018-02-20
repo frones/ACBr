@@ -45,7 +45,7 @@ function SubstituirVariaveis(const ATexto: String): String;
 implementation
 
 Uses IniFiles, StrUtils, DateUtils, Forms,
-  ACBrUtil, ACBrMonitor1 ,
+  ACBrUtil, ACBrDFeUtil, ACBrMonitor1 ,
   ACBrNFeDANFEClass, DoACBrUnit,
   pcnNFe, pcnConversao, pcnConversaoNFe,
   pcnAuxiliar, pcnNFeRTXT,  pcnNFeR;
@@ -1852,15 +1852,16 @@ begin
 
         else if Cmd.Metodo = 'gerarchave' then //NFe.GerarChave(codigoUF,codigoNumerico,modelo,serie,numero,tpemi,emissao,CNPJ)
          begin
-           GerarChave(Chave,
+           Chave := GerarChaveAcesso(
                       StrToInt(Cmd.Params(0)), //codigoUF
-                      StrToInt(Cmd.Params(1)), //codigoNumerico
-                      StrToInt(Cmd.Params(2)), //modelo
+                      StringToDateTime(Cmd.Params(6)), //emissao
+                      Cmd.Params(7), //CNPJ
                       StrToInt(Cmd.Params(3)), //serie
                       StrToInt(Cmd.Params(4)), //numero
                       StrToInt(Cmd.Params(5)), //tpemi
-                      StringToDateTime(Cmd.Params(6)), //emissao
-                      Cmd.Params(7)); //CNPJ
+                      StrToInt(Cmd.Params(1)), //codigoNumerico
+                      StrToInt(Cmd.Params(2)) ); //modelo
+
            Cmd.Resposta := Chave;
          end
 

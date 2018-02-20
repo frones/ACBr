@@ -274,7 +274,8 @@ begin
   vRows := TStringList.Create;
   try
     vRows.Delimiter := ADelimiter[1];
-    vRows.DelimitedText := AString;
+    vRows.DelimitedText :=  '"' + StringReplace(AString, ADelimiter, '"' + ADelimiter + '"', [rfReplaceAll]) + '"' ;
+
     SetLength(Result, vRows.Count);
 
     for vI := 0 to vRows.Count - 1 do

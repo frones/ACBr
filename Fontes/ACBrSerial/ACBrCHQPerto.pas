@@ -196,10 +196,12 @@ begin
   TravarCheque;
 
   { Favorecido }
-  VerificaErro(EnviaComando('%' + Trim(UpperCase(fpFavorecido))));
+  if (Trim(fpFavorecido) <> EmptyStr) then
+    VerificaErro(EnviaComando('%' + Trim(UpperCase(fpFavorecido))));
 
   { Cidade }
-  VerificaErro(EnviaComando('#' + Trim(UpperCase(fpCidade))));
+  if (Trim(fpCidade) <> EmptyStr) then
+    VerificaErro(EnviaComando('#' + Trim(UpperCase(fpCidade))));
 
   { Data }
   DataStr := FormatDateTime('ddmmyy', fpData);

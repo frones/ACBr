@@ -53,7 +53,7 @@ Símbolo : Significado
         CTe.DistribuicaoDFePorUltNSU(cUF, cCNPJ, nUltNSU)
         MDFe.DistribuicaoDFePorNSU(cUF, cCNPJ, nNSU)
         MDFe.DistribuicaoDFePorUltNSU(cUF, cCNPJ, nUltNSU)
-	por: Italo Jurissato Junior
+	por: Italo Jurisato Junior
 
 05/02/2018
 [+] Adicionado Parâmetro "Utilizar Separador para Path PDF" em DFe / Diretórios

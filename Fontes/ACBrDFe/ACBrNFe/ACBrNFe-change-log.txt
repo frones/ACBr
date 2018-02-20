@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2018
+-- ACBrNFeServicos --
+[*] Incluido as URLs NFCe ambiente de produção RS - versão 4.0 
+   (por: Jose M. S. Junior)
+
+
 14/02/2018
 -- pcnNFeRTXT / pcnNFeW / pcnNFeR --
 [*] Remção de funções em duplicidade e a troca das chamadas das funções antigas

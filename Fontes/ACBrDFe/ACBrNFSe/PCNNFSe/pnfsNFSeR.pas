@@ -3040,12 +3040,12 @@ begin
           NFSe.Servico.Valores.IssRetido      := StrToSituacaoTributaria( vOk, IntToStr( AnsiIndexStr( Leitor.rCampo( tcStr, 'situacao_tributaria' ), [ '1', '0', '2' ] ) + 1 ) );
           ValorServicos                       := Leitor.rCampo( tcDe2, 'valor_tributavel');
           ValorDeducoes                       := Leitor.rCampo( tcDe2, 'valor_deducao');
-          ValorIss                            := Leitor.rCampo( tcDe2, 'valor_issrf');
           BaseCalculo                         := Leitor.rCampo( tcDe2, 'valor_tributavel');
-          NFSe.Servico.Valores.ValorIssRetido := NFSe.Servico.Valores.ValorIssRetido + ValorIss;
+          ValorIss                            := BaseCalculo * Aliquota / 100;
+          NFSe.Servico.Valores.ValorIssRetido := NFSe.Servico.Valores.ValorIssRetido + Leitor.rCampo( tcDe2, 'valor_issrf');
           NFSe.Servico.Valores.BaseCalculo    := NFSe.Servico.Valores.BaseCalculo + BaseCalculo;
+          NFSe.Servico.Valores.ValorIss       := NFSe.Servico.Valores.ValorIss + ValorIss;
         end;
-
         Inc( I );
       end;
     end;

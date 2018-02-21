@@ -179,7 +179,12 @@ begin
   begin
     Gerador.wGrupoNFSe('lista');
 
-    Gerador.wCampoNFSe(tcStr, '', 'tributa_municipio_prestador', 1, 1, 1, AnsiIndexStr( NaturezaOperacaoToStr( NFSe.NaturezaOperacao ), [ '2', '1' ] ), '');
+    if (NFSe.PrestadorServico.Endereco.CodigoMunicipio <> IntToStr(NFSe.Servico.MunicipioIncidencia)) then
+       Gerador.wCampoNFSe(tcStr, '', 'tributa_municipio_prestador', 1, 1, 1, '0', '')   // Não Tributa no Municipio do prestador
+    else
+       Gerador.wCampoNFSe(tcStr, '', 'tributa_municipio_prestador', 1, 1, 1, '1', '');  // Tributa no Municipio do Prestador
+//    Gerador.wCampoNFSe(tcStr, '', 'tributa_municipio_prestador', 1, 1, 1, AnsiIndexStr( NaturezaOperacaoToStr( NFSe.NaturezaOperacao ), [ '2', '1' ] ), '');
+
     Gerador.wCampoNFSe(tcStr, '', 'codigo_local_prestacao_servico', 1, 9, 1, NFSe.Servico.CodigoMunicipio, '');
     Gerador.wCampoNFSe(tcStr, '', 'unidade_codigo', 1, 9, 0, '1', ''); //1 - UN, 2 - HORA
     Gerador.wCampoNFSe(tcDe3, '', 'unidade_quantidade', 1, 15, 0, NFSe.Servico.ItemServico[I].Quantidade, '');
@@ -190,7 +195,10 @@ begin
       Gerador.wCampoNFSe(tcDe2, '', 'aliquota_item_lista_servico', 1, 15, 1, NFSe.Servico.Valores.Aliquota, '')
     else
       Gerador.wCampoNFSe(tcDe2, '', 'aliquota_item_lista_servico', 1, 15, 1, NFSe.Servico.ItemServico[I].Aliquota, '');
-    Gerador.wCampoNFSe(tcStr, '', 'situacao_tributaria', 1, 4, 1, AnsiIndexStr( SituacaoTributariaToStr( NFSe.Servico.Valores.IssRetido ), [ '2', '1', '3' ] ), '');
+
+//    Gerador.wCampoNFSe(tcStr, '', 'situacao_tributaria', 1, 4, 1, AnsiIndexStr( SituacaoTributariaToStr( NFSe.Servico.Valores.IssRetido ), [ '2', '1', '3' ] ), '');
+    Gerador.wCampoNFSe(tcStr, '', 'situacao_tributaria', 1, 4, 1, NaturezaOperacaoToStr( NFSe.NaturezaOperacao), '');
+
     Gerador.wCampoNFSe(tcDe2, '', 'valor_tributavel', 1, 15, 1, NFSe.Servico.ItemServico[I].ValorServicos, '');
     Gerador.wCampoNFSe(tcDe2, '', 'valor_deducao', 1, 15, 0, NFSe.Servico.ItemServico[I].ValorDeducoes, '');
 

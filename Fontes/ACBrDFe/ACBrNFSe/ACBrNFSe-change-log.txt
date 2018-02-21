@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2018
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/39786-nfse-provedor-ipm-guaramirim-e-massaranduba-sc/?do=findComment&comment=274208
+   Por: Léo
+
 19/02/2018
 -- ACBrNFSeWebServices --
 [*] Simplificação de código.

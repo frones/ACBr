@@ -108,7 +108,8 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -189,6 +190,10 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
 
 { TS2240Collection }
 
@@ -438,11 +443,10 @@ begin
   Gerador.wGrupo('/iniExpRisco');
 end;
 
-function TEvtExpRisco.GerarXML(ATipoEmpregador: TEmpregador): boolean;
+function TEvtExpRisco.GerarXML: boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtExpRisco');
     Gerador.wGrupo('evtExpRisco Id="' + Self.Id + '"');
@@ -552,6 +556,32 @@ procedure TRespRegCollection.SetItem(Index: Integer;
   Value: TRespRegItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TEvtExpRisco.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 end.

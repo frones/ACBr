@@ -49,7 +49,7 @@ unit pcesPeriodicos;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, synautil,
   ACBrUtil, pcesConversaoeSocial,
   pcesS1200, pcesS1202, pcesS1207, pcesS1210,
   pcesS1250, pcesS1260, pcesS1270, pcesS1280, pcesS1295,
@@ -93,6 +93,8 @@ type
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
+    function LoadFromString(AXMLString: String): Boolean;
+    function LoadFromIni(AIniString: String): Boolean;
 
   published
     property Count: Integer read GetCount;
@@ -191,40 +193,40 @@ var
   i: Integer;
 begin
   for I := 0 to Self.S1200.Count - 1 do
-    Self.S1200.Items[i].evtRemun.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1200.Items[i].evtRemun.GerarXML;
 
   for I := 0 to Self.S1202.Count - 1 do
-    Self.S1202.Items[i].EvtRmnRPPS.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1202.Items[i].EvtRmnRPPS.GerarXML;
 
   for I := 0 to Self.S1207.Count - 1 do
-    Self.S1207.Items[i].evtBenPrRP.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1207.Items[i].evtBenPrRP.GerarXML;
 
   for I := 0 to Self.S1210.Count - 1 do
-    Self.S1210.Items[i].evtPgtos.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1210.Items[i].evtPgtos.GerarXML;
 
   for I := 0 to Self.S1250.Count - 1 do
-    Self.S1250.Items[i].EvtAqProd.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1250.Items[i].EvtAqProd.GerarXML;
 
   for I := 0 to Self.S1260.Count - 1 do
-    Self.S1260.Items[i].EvtComProd.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1260.Items[i].EvtComProd.GerarXML;
 
   for I := 0 to Self.S1270.Count - 1 do
-    Self.S1270.Items[i].EvtContratAvNP.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1270.Items[i].EvtContratAvNP.GerarXML;
 
   for I := 0 to Self.S1280.Count - 1 do
-    Self.S1280.Items[i].EvtInfoComplPer.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1280.Items[i].EvtInfoComplPer.GerarXML;
 
   for I := 0 to Self.S1295.Count - 1 do
-    Self.S1295.Items[i].evtTotConting.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1295.Items[i].evtTotConting.GerarXML;
 
   for I := 0 to Self.S1298.Count - 1 do
-    Self.S1298.Items[i].EvtReabreEvPer.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1298.Items[i].EvtReabreEvPer.GerarXML;
 
   for I := 0 to Self.S1299.Count - 1 do
-    Self.S1299.Items[i].EvtFechaEvPer.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1299.Items[i].EvtFechaEvPer.GerarXML;
 
   for I := 0 to Self.S1300.Count - 1 do
-    Self.S1300.Items[i].EvtContrSindPatr.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1300.Items[i].EvtContrSindPatr.GerarXML;
 end;
 
 procedure TPeriodicos.SaveToFiles;
@@ -232,7 +234,6 @@ var
   i: integer;
   Path: String;
 begin
-//  Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
   with TACBreSocial(Self.Owner) do
     Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
@@ -331,6 +332,50 @@ end;
 procedure TPeriodicos.setS1300(const Value: TS1300Collection);
 begin
   FS1300.Assign(Value);
+end;
+
+function TPeriodicos.LoadFromString(AXMLString: String): Boolean;
+var
+  Ok: Boolean;
+begin
+  case StrEventoToTipoEvento(Ok, AXMLString) of
+    teS1200: Self.S1200.Add.evtRemun.XML := AXMLString;
+    teS1202: Self.S1202.Add.EvtRmnRPPS.XML := AXMLString;
+    teS1207: Self.S1207.Add.evtBenPrRP.XML := AXMLString;
+    teS1210: Self.S1210.Add.evtPgtos.XML := AXMLString;
+    teS1250: Self.S1250.Add.EvtAqProd.XML := AXMLString;
+    teS1260: Self.S1260.Add.EvtComProd.XML := AXMLString;
+    teS1270: Self.S1270.Add.EvtContratAvNP.XML := AXMLString;
+    teS1280: Self.S1280.Add.EvtInfoComplPer.XML := AXMLString;
+    teS1295: Self.S1295.Add.evtTotConting.XML := AXMLString;
+    teS1298: Self.S1298.Add.EvtReabreEvPer.XML := AXMLString;
+    teS1299: Self.S1299.Add.EvtFechaEvPer.XML := AXMLString;
+    teS1300: Self.S1300.Add.EvtContrSindPatr.XML := AXMLString;
+  end;
+
+  Result := (GetCount > 0);
+end;
+
+function TPeriodicos.LoadFromIni(AIniString: String): Boolean;
+var
+  Ok: Boolean;
+begin
+  case StrEventoToTipoEvento(Ok, AIniString) of
+    teS1200: Self.S1200.Add.evtRemun.LerArqIni(AIniString);
+    teS1202: Self.S1202.Add.EvtRmnRPPS.LerArqIni(AIniString);
+    teS1207: Self.S1207.Add.evtBenPrRP.LerArqIni(AIniString);
+    teS1210: Self.S1210.Add.evtPgtos.LerArqIni(AIniString);
+    teS1250: Self.S1250.Add.EvtAqProd.LerArqIni(AIniString);
+    teS1260: Self.S1260.Add.EvtComProd.LerArqIni(AIniString);
+    teS1270: Self.S1270.Add.EvtContratAvNP.LerArqIni(AIniString);
+    teS1280: Self.S1280.Add.EvtInfoComplPer.LerArqIni(AIniString);
+    teS1295: Self.S1295.Add.evtTotConting.LerArqIni(AIniString);
+    teS1298: Self.S1298.Add.EvtReabreEvPer.LerArqIni(AIniString);
+    teS1299: Self.S1299.Add.EvtFechaEvPer.LerArqIni(AIniString);
+    teS1300: Self.S1300.Add.EvtContrSindPatr.LerArqIni(AIniString);
+  end;
+
+  Result := (GetCount > 0);
 end;
 
 end.

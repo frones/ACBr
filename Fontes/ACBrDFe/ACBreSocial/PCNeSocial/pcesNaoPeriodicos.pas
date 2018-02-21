@@ -49,7 +49,7 @@ unit pcesNaoPeriodicos;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, synautil,
   ACBrUtil, pcesConversaoeSocial,
   pcesS2190, pcesS2200, pcesS2220, pcesS2230, pcesS2240,
   pcesS2241, pcesS2205, pcesS2206, pcesS2210, pcesS2250,
@@ -106,6 +106,8 @@ type
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
+    function LoadFromString(AXMLString: String): Boolean;
+    function LoadFromIni(AIniString: String): Boolean;
 
   published
     property Count: Integer read GetCount;
@@ -234,58 +236,58 @@ var
   i: Integer;
 begin
   for I := 0 to Self.S2190.Count - 1 do
-    Self.S2190.Items[i].EvtAdmPrelim.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2190.Items[i].EvtAdmPrelim.GerarXML;
 
   for I := 0 to Self.S2200.Count - 1 do
-    Self.S2200.Items[i].EvtAdmissao.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2200.Items[i].EvtAdmissao.GerarXML;
 
   for I := 0 to Self.S2205.Count - 1 do
-    Self.S2205.Items[i].EvtAltCadastral.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2205.Items[i].EvtAltCadastral.GerarXML;
 
   for I := 0 to Self.S2206.Count - 1 do
-    Self.S2206.Items[i].EvtAltContratual.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2206.Items[i].EvtAltContratual.GerarXML;
 
   for I := 0 to Self.S2210.Count - 1 do
-    Self.S2210.Items[i].EvtCAT.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2210.Items[i].EvtCAT.GerarXML;
 
   for I := 0 to Self.S2220.Count - 1 do
-    Self.S2220.Items[i].EvtASO.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2220.Items[i].EvtASO.GerarXML;
 
   for I := 0 to Self.S2230.Count - 1 do
-    Self.S2230.Items[i].EvtAfastTemp.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2230.Items[i].EvtAfastTemp.GerarXML;
 
   for I := 0 to Self.S2240.Count - 1 do
-    Self.S2240.Items[i].EvtExpRisco.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2240.Items[i].EvtExpRisco.GerarXML;
 
   for I := 0 to Self.S2241.Count - 1 do
-    Self.S2241.Items[i].EvtInsApo.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2241.Items[i].EvtInsApo.GerarXML;
 
   for I := 0 to Self.S2250.Count - 1 do
-    Self.S2250.Items[i].EvtAvPrevio.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2250.Items[i].EvtAvPrevio.GerarXML;
 
   for I := 0 to Self.S2260.Count - 1 do
-    Self.S2260.Items[i].EvtConvInterm.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2260.Items[i].EvtConvInterm.GerarXML;
 
   for I := 0 to Self.S2298.Count - 1 do
-    Self.S2298.Items[i].EvtReintegr.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2298.Items[i].EvtReintegr.GerarXML;
 
   for I := 0 to Self.S2299.Count - 1 do
-    Self.S2299.Items[i].EvtDeslig.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2299.Items[i].EvtDeslig.GerarXML;
 
   for I := 0 to Self.S2300.Count - 1 do
-    Self.S2300.Items[i].EvtTSVInicio.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2300.Items[i].EvtTSVInicio.GerarXML;
 
   for I := 0 to Self.S2306.Count - 1 do
-    Self.S2306.Items[i].EvtTSVAltContr.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S2306.Items[i].EvtTSVAltContr.GerarXML;
 
   for I := 0 to Self.S2399.Count - 1 do
-      Self.S2399.Items[i].EvtTSVTermino.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+      Self.S2399.Items[i].EvtTSVTermino.GerarXML;
 
   for I := 0 to Self.S2400.Count - 1 do
-      Self.S2400.Items[i].EvtCdBenPrRP.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+      Self.S2400.Items[i].EvtCdBenPrRP.GerarXML;
 
   for I := 0 to Self.S3000.Count - 1 do
-    Self.S3000.Items[i].EvtExclusao.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S3000.Items[i].EvtExclusao.GerarXML;
 end;
 
 procedure TNaoPeriodicos.SaveToFiles;
@@ -293,7 +295,6 @@ var
   i: integer;
   Path: String;
 begin
-//  Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
   with TACBreSocial(Self.Owner) do
     Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
@@ -440,6 +441,62 @@ end;
 procedure TNaoPeriodicos.setS3000(const Value: TS3000Collection);
 begin
   FS3000.Assign(Value);
+end;
+
+function TNaoPeriodicos.LoadFromString(AXMLString: String): Boolean;
+var
+ Ok: Boolean;
+begin
+  case StrEventoToTipoEvento(Ok, AXMLString) of
+    teS2190: Self.S2190.Add.EvtAdmPrelim.XML := AXMLString;
+    teS2200: Self.S2200.Add.EvtAdmissao.XML := AXMLString;
+    teS2205: Self.S2205.Add.EvtAltCadastral.XML := AXMLString;
+    teS2206: Self.S2206.Add.EvtAltContratual.XML := AXMLString;
+    teS2210: Self.S2210.Add.EvtCAT.XML := AXMLString;
+    teS2220: Self.S2220.Add.EvtASO.XML := AXMLString;
+    teS2230: Self.S2230.Add.EvtAfastTemp.XML := AXMLString;
+    teS2240: Self.S2240.Add.EvtExpRisco.XML := AXMLString;
+    teS2241: Self.S2241.Add.EvtInsApo.XML := AXMLString;
+    teS2250: Self.S2250.Add.EvtAvPrevio.XML := AXMLString;
+    teS2260: Self.S2260.Add.EvtConvInterm.XML := AXMLString;
+    teS2298: Self.S2298.Add.EvtReintegr.XML := AXMLString;
+    teS2299: Self.S2299.Add.EvtDeslig.XML := AXMLString;
+    teS2300: Self.S2300.Add.EvtTSVInicio.XML := AXMLString;
+    teS2306: Self.S2306.Add.EvtTSVAltContr.XML := AXMLString;
+    teS2399: Self.S2399.Add.EvtTSVTermino.XML := AXMLString;
+    teS2400: Self.S2400.Add.EvtCdBenPrRP.XML := AXMLString;
+    teS3000: Self.S3000.Add.EvtExclusao.XML := AXMLString;
+  end;
+
+  Result := (GetCount > 0);
+end;
+
+function TNaoPeriodicos.LoadFromIni(AIniString: String): Boolean;
+var
+  Ok: Boolean;
+begin
+  case StrEventoToTipoEvento(Ok, AIniString) of
+    teS2190: Self.S2190.Add.EvtAdmPrelim.LerArqIni(AIniString);
+    teS2200: Self.S2200.Add.EvtAdmissao.LerArqIni(AIniString);
+    teS2205: Self.S2205.Add.EvtAltCadastral.LerArqIni(AIniString);
+    teS2206: Self.S2206.Add.EvtAltContratual.LerArqIni(AIniString);
+    teS2210: Self.S2210.Add.EvtCAT.LerArqIni(AIniString);
+    teS2220: Self.S2220.Add.EvtASO.LerArqIni(AIniString);
+    teS2230: Self.S2230.Add.EvtAfastTemp.LerArqIni(AIniString);
+    teS2240: Self.S2240.Add.EvtExpRisco.LerArqIni(AIniString);
+    teS2241: Self.S2241.Add.EvtInsApo.LerArqIni(AIniString);
+    teS2250: Self.S2250.Add.EvtAvPrevio.LerArqIni(AIniString);
+    teS2260: Self.S2260.Add.EvtConvInterm.LerArqIni(AIniString);
+    teS2298: Self.S2298.Add.EvtReintegr.LerArqIni(AIniString);
+    teS2299: Self.S2299.Add.EvtDeslig.LerArqIni(AIniString);
+    teS2300: Self.S2300.Add.EvtTSVInicio.LerArqIni(AIniString);
+    teS2306: Self.S2306.Add.EvtTSVAltContr.LerArqIni(AIniString);
+    teS2399: Self.S2399.Add.EvtTSVTermino.LerArqIni(AIniString);
+    teS2400: Self.S2400.Add.EvtCdBenPrRP.LerArqIni(AIniString);
+    teS3000: Self.S3000.Add.EvtExclusao.LerArqIni(AIniString);
+  end;
+
+  Result := (GetCount > 0);
 end;
 
 end.

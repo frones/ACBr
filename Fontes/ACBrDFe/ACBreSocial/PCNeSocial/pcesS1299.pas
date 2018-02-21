@@ -95,7 +95,8 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -126,6 +127,10 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
 
 { TS1299Collection }
 
@@ -207,11 +212,10 @@ begin
   Gerador.wGrupo('/infoFech');
 end;
 
-function TEvtFechaEvPer.GerarXML(ATipoEmpregador: TEmpregador): boolean;
+function TEvtFechaEvPer.GerarXML: boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtFechaEvPer');
     Gerador.wGrupo('evtFechaEvPer Id="' + Self.Id + '"');
@@ -245,6 +249,32 @@ end;
 destructor TInfoFech.destroy;
 begin
   inherited;
+end;
+
+function TEvtFechaEvPer.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 end.

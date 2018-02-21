@@ -49,7 +49,7 @@ unit pcesIniciais;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, synautil,
   ACBrUtil, pcesConversaoeSocial,
   pcesS1000, pcesS1005;
 
@@ -71,6 +71,8 @@ type
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
+    function LoadFromString(AXMLString: String): Boolean;
+    function LoadFromIni(AIniString: String): Boolean;
 
   published
     property Count: Integer read GetCount;
@@ -119,22 +121,23 @@ var
   i: Integer;
 begin
   for I := 0 to Self.S1000.Count - 1 do
-    Self.S1000.Items[i].evtInfoEmpregador.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1000.Items[i].evtInfoEmpregador.GerarXML;
+
   for I := 0 to Self.S1005.Count - 1 do
-    Self.S1005.Items[i].evtTabEstab.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1005.Items[i].evtTabEstab.GerarXML;
 end;
 
 procedure TIniciais.SaveToFiles;
 var
   i: integer;
-  Path : String;
+  Path: String;
 begin
-//  Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
   with TACBreSocial(Self.Owner) do
     Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
   for I := 0 to Self.S1000.Count - 1 do
     Self.S1000.Items[i].evtInfoEmpregador.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1000.Items[i].TipoEvento)+'-'+IntToStr(i));
+    
   for I := 0 to Self.S1005.Count - 1 do
     Self.S1005.Items[i].evtTabEstab.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1005.Items[i].TipoEvento)+'-'+IntToStr(i));
 end;
@@ -147,6 +150,30 @@ end;
 procedure TIniciais.setS1005(const Value: TS1005Collection);
 begin
   FS1005.Assign(Value);
+end;
+
+function TIniciais.LoadFromString(AXMLString: String): Boolean;
+var
+  Ok: Boolean;
+begin
+  case StrEventoToTipoEvento(Ok, AXMLString) of
+    teS1000: Self.S1000.Add.evtInfoEmpregador.XML := AXMLString;
+    teS1005: Self.S1005.Add.evtTabEstab.XML := AXMLString;
+  end;
+
+  Result := (GetCount > 0);
+end;
+
+function TIniciais.LoadFromIni(AIniString: String): Boolean;
+var
+  Ok: Boolean;
+begin
+  case StrEventoToTipoEvento(Ok, AIniString) of
+    teS1000: Self.S1000.Add.evtInfoEmpregador.LerArqIni(AIniString);
+    teS1005: Self.S1005.Add.evtTabEstab.LerArqIni(AIniString);
+  end;
+
+  Result := (GetCount > 0);
 end;
 
 end.

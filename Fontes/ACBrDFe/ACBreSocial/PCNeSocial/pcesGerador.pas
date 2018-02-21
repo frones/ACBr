@@ -80,13 +80,12 @@ type
     constructor Create(AACBreSocial: TObject); overload;//->recebe a instancia da classe TACBreSocial
     destructor Destroy; override;
 
-    function  GerarXML(ATipoEmpregador: TEmpregador): boolean; virtual; abstract;
+    function  GerarXML: boolean; virtual; abstract;
     procedure SaveToFile(const CaminhoArquivo: string);
     function  Assinar(XMLEvento: String; NomeEvento: String): AnsiString;
     function  GerarChaveEsocial(const emissao: TDateTime;
                                 const CNPJF: string;
-                                sequencial: Integer;
-                                ATipoEmpregador: TEmpregador): String;
+                                sequencial: Integer): String;
     procedure Validar(Schema: TeSocialSchema);
 
     property Alertas: String read FAlertas;
@@ -339,8 +338,7 @@ end;
 
 function TeSocialEvento.GerarChaveEsocial(const emissao: TDateTime;
                                           const CNPJF: string;
-                                          sequencial: Integer;
-                                          ATipoEmpregador: TEmpregador): String;
+                                          sequencial: Integer): String;
 var
   nAno, nMes, nDia, nHora, nMin, nSeg, nMSeg: Word;
 begin
@@ -363,7 +361,7 @@ begin
   else
     Result := Result + IntToStr(2);
 
-  if ATipoEmpregador  = teOrgaoPublico then
+  if TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico then
     Result := Result + copy(OnlyNumber(CNPJF) + '00000000000000', 1, 14)
   else
     Result := Result + copy(OnlyNumber(Copy(CNPJF, 1, 8)) + '00000000000000', 1, 14);

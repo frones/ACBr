@@ -95,7 +95,8 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -138,6 +139,10 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
 
 { TS1270Collection }
 
@@ -222,11 +227,10 @@ begin
     Gerador.wAlerta('', 'remunAvNP', 'Lista de Remuneração', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-function TEvtContratAvNP.GerarXML(ATipoEmpregador: TEmpregador): boolean;
+function TEvtContratAvNP.GerarXML: boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtContratAvNP');
     Gerador.wGrupo('evtContratAvNP Id="' + Self.Id + '"');
@@ -247,6 +251,32 @@ begin
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
+end;
+
+function TEvtContratAvNP.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 { TRemunAvNPColecao }

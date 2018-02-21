@@ -47,7 +47,7 @@ unit pcesTabelas;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, synautil,
   ACBrUtil, pcesConversaoeSocial,
   pcesS1010, pcesS1020, pcesS1030, pcesS1035, pcesS1040,
   pcesS1050, pcesS1070, pcesS1080, pcesS1060;
@@ -84,6 +84,8 @@ type
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
+    function LoadFromString(AXMLString: String): Boolean;
+    function LoadFromIni(AIniString: String): Boolean;
 
   published
     property Count: Integer read GetCount;
@@ -165,31 +167,31 @@ var
   i: Integer;
 begin
   for I := 0 to Self.S1010.Count - 1 do
-    Self.S1010.Items[i].EvtTabRubrica.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1010.Items[i].EvtTabRubrica.GerarXML;
 
   for I := 0 to Self.S1020.Count - 1 do
-    Self.S1020.Items[i].EvtTabLotacao.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1020.Items[i].EvtTabLotacao.GerarXML;
 
   for I := 0 to Self.S1030.Count - 1 do
-    Self.S1030.Items[i].EvtTabCargo.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1030.Items[i].EvtTabCargo.GerarXML;
 
   for I := 0 to Self.S1035.Count - 1 do
-    Self.S1035.Items[i].evtTabCarreira.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1035.Items[i].evtTabCarreira.GerarXML;
 
   for I := 0 to Self.S1040.Count - 1 do
-    Self.S1040.Items[i].EvtTabFuncao.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1040.Items[i].EvtTabFuncao.GerarXML;
 
   for I := 0 to Self.S1050.Count - 1 do
-    Self.S1050.Items[i].EvtTabHorContratual.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1050.Items[i].EvtTabHorContratual.GerarXML;
 
   for I := 0 to Self.S1060.Count - 1 do
-    Self.S1060.Items[i].EvtTabAmbiente.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1060.Items[i].EvtTabAmbiente.GerarXML;
 
   for I := 0 to Self.S1070.Count - 1 do
-    Self.S1070.Items[i].EvtTabProcesso.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1070.Items[i].EvtTabProcesso.GerarXML;
 
   for I := 0 to Self.S1080.Count - 1 do
-    Self.S1080.Items[i].EvtTabOperPortuario.GerarXML(TACBreSocial(Self.Owner).Eventos.TipoEmpregador);
+    Self.S1080.Items[i].EvtTabOperPortuario.GerarXML;
 end;
 
 procedure TTabelas.SaveToFiles;
@@ -197,7 +199,6 @@ var
   i: integer;
   Path: String;
 begin
-//  Path := TACBreSocial(Self.Owner).Configuracoes.Arquivos.PathSalvar;
   with TACBreSocial(Self.Owner) do
     Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
@@ -272,6 +273,44 @@ end;
 procedure TTabelas.setS1080(const Value: TS1080Collection);
 begin
   FS1080.Assign(Value);
+end;
+
+function TTabelas.LoadFromString(AXMLString: String): Boolean;
+var
+  Ok: Boolean;
+begin
+  case StrEventoToTipoEvento(Ok, AXMLString) of
+    teS1010: Self.S1010.Add.EvtTabRubrica.XML := AXMLString;
+    teS1020: Self.S1020.Add.EvtTabLotacao.XML := AXMLString;
+    teS1030: Self.S1030.Add.EvtTabCargo.XML := AXMLString;
+    teS1035: Self.S1035.Add.evtTabCarreira.XML := AXMLString;
+    teS1040: Self.S1040.Add.EvtTabFuncao.XML := AXMLString;
+    teS1050: Self.S1050.Add.EvtTabHorContratual.XML := AXMLString;
+    teS1060: Self.S1060.Add.EvtTabAmbiente.XML := AXMLString;
+    teS1070: Self.S1070.Add.EvtTabProcesso.XML := AXMLString;
+    teS1080: Self.S1080.Add.EvtTabOperPortuario.XML := AXMLString;
+  end;
+
+  Result := (GetCount > 0);
+end;
+
+function TTabelas.LoadFromIni(AIniString: String): Boolean;
+var
+  Ok: Boolean;
+begin
+  case StrEventoToTipoEvento(Ok, AIniString) of
+    teS1010: Self.S1010.Add.EvtTabRubrica.LerArqIni(AIniString);
+    teS1020: Self.S1020.Add.EvtTabLotacao.LerArqIni(AIniString);
+    teS1030: Self.S1030.Add.EvtTabCargo.LerArqIni(AIniString);
+    teS1035: Self.S1035.Add.evtTabCarreira.LerArqIni(AIniString);
+    teS1040: Self.S1040.Add.EvtTabFuncao.LerArqIni(AIniString);
+    teS1050: Self.S1050.Add.EvtTabHorContratual.LerArqIni(AIniString);
+    teS1060: Self.S1060.Add.EvtTabAmbiente.LerArqIni(AIniString);
+    teS1070: Self.S1070.Add.EvtTabProcesso.LerArqIni(AIniString);
+    teS1080: Self.S1080.Add.EvtTabOperPortuario.LerArqIni(AIniString);
+  end;
+
+  Result := (GetCount > 0);
 end;
 
 end.

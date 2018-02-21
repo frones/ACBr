@@ -49,7 +49,7 @@ unit ACBreSocialEventos;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, synautil,
   pcesIniciais, pcesTabelas, pcesNaoPeriodicos, pcesPeriodicos,
   pcesConversaoeSocial;
 
@@ -74,6 +74,11 @@ type
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
+
+    function LoadFromFile(CaminhoArquivo: String): Boolean;
+    function LoadFromStream(AStream: TStringStream): Boolean;
+    function LoadFromString(AXMLString: String): Boolean;
+    function LoadFromIni(AIniString: String): Boolean;
 
     property Count:          Integer        read GetCount;
     property Iniciais:       TIniciais      read FIniciais       write SetIniciais;
@@ -102,6 +107,7 @@ end;
 constructor TEventos.Create(AOwner: TComponent);
 begin
   inherited;
+
   FIniciais := TIniciais.Create(AOwner);
   FTabelas := TTabelas.Create(AOwner);
   FNaoPeriodicos := TNaoPeriodicos.Create(AOwner);
@@ -114,11 +120,13 @@ begin
   FTabelas.Free;
   FNaoPeriodicos.Free;
   FPeriodicos.Free;
+  
   inherited;
 end;
 
 procedure TEventos.GerarXMLs;
 begin
+  FTipoEmpregador := TACBreSocial(Self.Owner).Configuracoes.Geral.TipoEmpregador;
   Self.Iniciais.GerarXMLs;
   Self.Tabelas.GerarXMLs;
   Self.NaoPeriodicos.GerarXMLs;
@@ -159,6 +167,84 @@ end;
 procedure TEventos.SetPeriodicos(const Value: TPeriodicos);
 begin
   FPeriodicos.Assign(Value);
+end;
+
+function TEventos.LoadFromFile(CaminhoArquivo: String): Boolean;
+var
+  ArquivoXML: TStringList;
+  XML: String;
+  XMLOriginal: AnsiString;
+begin
+  Result := False;
+  
+  ArquivoXML := TStringList.Create;
+  try
+    ArquivoXML.LoadFromFile(CaminhoArquivo);
+    XMLOriginal := ArquivoXML.Text;
+
+    // Converte de UTF8 para a String nativa da IDE //
+    XML := DecodeToString(XMLOriginal, True);
+
+    Result := LoadFromString(XML);
+  finally
+    ArquivoXML.Free;
+  end;
+end;
+
+function TEventos.LoadFromStream(AStream: TStringStream): Boolean;
+var
+  XMLOriginal: AnsiString;
+begin
+  AStream.Position := 0;
+  XMLOriginal := ReadStrFromStream(AStream, AStream.Size);
+
+  Result := Self.LoadFromString(String(XMLOriginal));
+end;
+
+function TEventos.LoadFromString(AXMLString: String): Boolean;
+var
+  AXML: AnsiString;
+  P, N: integer;
+
+  function PoseSocial: integer;
+  begin
+    Result := pos('</eSocial>', AXMLString);
+  end;
+
+begin
+  Result := False;
+  N := PoseSocial;
+
+  while N > 0 do
+  begin
+    P := pos('</eSocial>', AXMLString);
+
+    if P > 0 then
+    begin
+      AXML := copy(AXMLString, 1, P + 9);
+      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
+    end
+    else
+    begin
+      AXML := copy(AXMLString, 1, N + 6);
+      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
+    end;
+
+    Result := Self.Iniciais.LoadFromString(AXML) or
+              Self.Tabelas.LoadFromString(AXML) or
+              Self.NaoPeriodicos.LoadFromString(AXML) or
+              Self.Periodicos.LoadFromString(AXML);
+
+    N := PoseSocial;
+  end;
+end;
+
+function TEventos.LoadFromIni(AIniString: String): Boolean;
+begin
+  Result := Self.Iniciais.LoadFromIni(AIniString) or
+            Self.Tabelas.LoadFromIni(AIniString) or
+            Self.NaoPeriodicos.LoadFromIni(AIniString) or
+            Self.Periodicos.LoadFromIni(AIniString);
 end;
 
 end.

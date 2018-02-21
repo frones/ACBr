@@ -84,7 +84,9 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
     procedure GerarIdeCarreira;
     procedure GerarDadosCarreira;
 
@@ -137,6 +139,10 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
 
 { TS1035Collection }
 
@@ -251,11 +257,10 @@ begin
   Gerador.wGrupo('/ideCarreira');
 end;
 
-function TEvtTabCarreira.GerarXML(ATipoEmpregador: TEmpregador): boolean;
+function TEvtTabCarreira.GerarXML: boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabCarreira');
     Gerador.wGrupo('evtTabCarreira Id="' + Self.Id + '"');
@@ -293,5 +298,31 @@ begin
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
+
+function TEvtTabCarreira.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
+end;
 
 end.

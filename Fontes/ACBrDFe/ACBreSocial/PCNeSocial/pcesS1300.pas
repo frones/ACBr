@@ -95,7 +95,8 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -124,6 +125,10 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
 
 { TS1300Collection }
 
@@ -201,11 +206,10 @@ begin
     Gerador.wAlerta('', 'contribSind', 'Lista de Contribuição Sindical', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-function TEvtContrSindPatr.GerarXML(ATipoEmpregador: TEmpregador): boolean;
+function TEvtContrSindPatr.GerarXML: boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtContrSindPatr');
     Gerador.wGrupo('evtContrSindPatr Id="' + Self.Id + '"');
@@ -246,6 +250,32 @@ end;
 procedure TContribSindColecao.SetItem(Index: Integer; const Value: TContribSindItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TEvtContrSindPatr.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 end.

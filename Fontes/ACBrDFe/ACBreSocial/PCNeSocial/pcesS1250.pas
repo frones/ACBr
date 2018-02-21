@@ -102,7 +102,8 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -194,6 +195,10 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
 
 { TS1250Collection }
 
@@ -339,11 +344,10 @@ begin
     Gerador.wAlerta('', 'tpAquis', 'Lista de Aquisições', ERR_MSG_MAIOR_MAXIMO + '3');
 end;
 
-function TEvtAqProd.GerarXML(ATipoEmpregador: TEmpregador): boolean;
+function TEvtAqProd.GerarXML: boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAqProd');
     Gerador.wGrupo('evtAqProd Id="' + Self.Id + '"');
@@ -466,6 +470,32 @@ begin
   FInfoProcJud.Free;
 
   inherited;
+end;
+
+function TEvtAqProd.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 end.

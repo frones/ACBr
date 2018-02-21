@@ -119,7 +119,8 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): Boolean; override;
+    function GerarXML: Boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento : TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -372,6 +373,10 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
 
 { TS1210Collection }
 
@@ -635,11 +640,10 @@ begin
     Gerador.wAlerta('', 'infoPgto', 'Lista de Informações de Pagamento', ERR_MSG_MAIOR_MAXIMO + '60');
 end;
 
-function TEvtPgtos.GerarXML(ATipoEmpregador: TEmpregador): Boolean;
+function TEvtPgtos.GerarXML: Boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtPgtos');
     Gerador.wGrupo('evtPgtos Id="' + Self.Id + '"');
@@ -660,6 +664,32 @@ begin
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
+end;
+
+function TEvtPgtos.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 { TIdeBenef }

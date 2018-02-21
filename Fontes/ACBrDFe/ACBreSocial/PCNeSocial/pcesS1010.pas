@@ -114,7 +114,8 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
     property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
     property IdeEvento: TIdeEvento read FIdeEvento write FIdeEvento;
@@ -229,6 +230,10 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
 
 { TS1010Collection }
 
@@ -363,11 +368,10 @@ begin
   Gerador.wGrupo('/ideRubrica');
 end;
 
-function TEvtTabRubrica.GerarXML(ATipoEmpregador: TEmpregador): boolean;
+function TEvtTabRubrica.GerarXML: boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabRubrica');
     Gerador.wGrupo('evtTabRubrica Id="' + Self.Id + '"');
@@ -404,6 +408,32 @@ begin
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
+end;
+
+function TEvtTabRubrica.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 { TInfoRubrica }

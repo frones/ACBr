@@ -110,7 +110,8 @@ type
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -269,6 +270,10 @@ type
 
 implementation
 
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
+
 { TS2230Collection }
 
 function TS2230Collection.Add: TS2230CollectionItem;
@@ -411,11 +416,10 @@ begin
   end;
 end;
 
-function TEvtAfastTemp.GerarXML(ATipoEmpregador: TEmpregador): boolean;
+function TEvtAfastTemp.GerarXML: boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAfastTemp');
     Gerador.wGrupo('evtAfastTemp Id="' + Self.Id + '"');
@@ -506,6 +510,32 @@ begin
 
       Gerador.wGrupo('/infoRetif');
     end;
+  end;
+end;
+
+function TEvtAfastTemp.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
   end;
 end;
 

@@ -316,7 +316,7 @@ type
   tpTpIndAdmissao         = (iaNormal, iaDecorrenteAcaoFiscal, iaDecorrenteDecisaoJudicial);
 
   tpTpRegJor              = (rjSubmetidosHorarioTrabalho, rjAtividadeExtEspecificadaIncisoIArt62CLT,
-                             rjFuncoesEspecificadasIncisoIIArt62CLT);
+                             rjFuncoesEspecificadasIncisoIIArt62CLT, rjTeletrabalhoPrevistoIncisoIIIArt62CLT);
 
   tpOpcFGTS               = (ofOptante, ofNaoOptante);
 
@@ -438,6 +438,7 @@ type
 
 function TipoEventoToStr(const t: TTipoEvento ): string;
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 
 function eStpAmbToStr(const t: TptpAmb ): string;
 function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
@@ -1086,12 +1087,12 @@ end;
 
 function eSTpRegJorToStr(const t: tpTpRegJor ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_3 );
+  result := EnumeradoToStr2(t,TGenericosString1_4 );
 end;
 
 function eSStrToTpRegJor(var ok: boolean; const s: string): tpTpRegJor;
 begin
-  result := tpTpRegJor( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
+  result := tpTpRegJor( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
 end;
 
 function eSOpcFGTSToStr(const t: tpOpcFGTS ): string;
@@ -2250,6 +2251,23 @@ end;
 function eSStrTotpMotivosAfastamento(var ok: boolean; const s: string): tpMotivosAfastamento;
 begin
    result := tpMotivosAfastamento(StrToEnumerado2(ok , s, TMotivoAfastamento));
+end;
+
+function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+const
+  EventoString: array[0..49] of String =('evtInfoEmpregador', 'evtTabEstab',
+       'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
+       'evtTabFuncao', 'evtTabHorContratual', 'evtTabAmbiente', 'evtTabProcesso',
+       'evtTabOperPortuario', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP',
+       'evtPgtos', 'S-1220', 'evtAqProd', 'evtComProd', 'evtContratAvNP',
+       'evtInfoComplPer', 'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer',
+       'evtContrSindPatr', 'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral',
+       'evtAltContratual', 'evtCAT', 'evtASO', 'evtAfastTemp', 'evtExpRisco',
+       'evtInsApo', 'evtAvPrevio', 'evtConvInterm', 'evtReintegr', 'evtDeslig',
+       'evtTSVInicio', 'S-2305', 'evtTSVAltContr', 'evtTSVTermino', 'evtCdBenPrRP',
+       'evtExclusao', 'S-4000', 'S-4999', 'S-5001', 'S-5002', 'S-5011', 'S-5012');
+begin
+  result := TTipoEvento( StrToEnumerado2(ok , s, EventoString ) );
 end;
 
 end.

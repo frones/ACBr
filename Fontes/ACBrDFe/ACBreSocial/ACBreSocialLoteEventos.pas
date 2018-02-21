@@ -340,6 +340,7 @@ var
   i: integer;
 begin
   Result := False;
+  
   ArquivoXML := TStringList.Create;
   try
     ArquivoXML.LoadFromFile(CaminhoArquivo);

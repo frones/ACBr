@@ -94,7 +94,8 @@ type
     constructor Create(AACBreSocial: TObject);
     destructor destroy; override;
 
-    function GerarXML(ATipoEmpregador: TEmpregador): boolean; override;
+    function GerarXML: boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
 
     property dtAlteracao: TDateTime read FdtAlteracao write FdtAlteracao;
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
@@ -105,6 +106,10 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles,
+  ACBreSocial, ACBrDFeUtil;
 
 { TS2205Collection }
 
@@ -181,11 +186,10 @@ begin
   GerarModoFechamento(mlAlteracao);
 end;
 
-function TEvtAltCadastral.GerarXML(ATipoEmpregador: TEmpregador): boolean;
+function TEvtAltCadastral.GerarXML: boolean;
 begin
   try
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc,
-     self.Sequencial, ATipoEmpregador);
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAltCadastral');
     Gerador.wGrupo('evtAltCadastral Id="' + Self.Id + '"');
@@ -207,6 +211,32 @@ begin
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
+end;
+
+function TEvtAltCadastral.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      // Falta Implementar
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 end.

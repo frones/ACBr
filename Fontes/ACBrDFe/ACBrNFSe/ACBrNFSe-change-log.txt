@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2018
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/39857-provedor-issdsf-sorocaba-sp/?do=findComment&comment=274318
+   Por: Rubenstz
+
 21/02/2018
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/39786-nfse-provedor-ipm-guaramirim-e-massaranduba-sc/?do=findComment&comment=274208

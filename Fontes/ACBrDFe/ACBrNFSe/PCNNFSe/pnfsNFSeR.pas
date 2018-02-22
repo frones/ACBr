@@ -2650,11 +2650,27 @@ begin
     end;
   end;
 
+  (**** calculo anterior
   FNFSe.Servico.Valores.ValorLiquidoNfse := (FNfse.Servico.Valores.ValorServicos -
                                             (FNfse.Servico.Valores.ValorDeducoes +
                                              FNfse.Servico.Valores.DescontoCondicionado+
                                              FNfse.Servico.Valores.DescontoIncondicionado+
                                              FNFSe.Servico.Valores.ValorIssRetido));
+  *)
+
+  // Correção para o cálculo de VALOR LIQUIDO da NFSE - estavam faltando PIS, COFINS, INSS, IR e CSLL
+  NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
+                                            (NFSe.Servico.Valores.ValorPis +
+                                             NFSe.Servico.Valores.ValorCofins +
+                                             NFSe.Servico.Valores.ValorInss +
+                                             NFSe.Servico.Valores.ValorIr +
+                                             NFSe.Servico.Valores.ValorCsll +
+                                             FNfse.Servico.Valores.ValorDeducoes +
+                                             FNfse.Servico.Valores.DescontoCondicionado+
+                                             FNfse.Servico.Valores.DescontoIncondicionado+
+                                             FNFSe.Servico.Valores.ValorIssRetido);
+
+
   FNfse.Servico.Valores.BaseCalculo := NFSe.Servico.Valores.ValorLiquidoNfse;
 
   Result := True;
@@ -2866,12 +2882,27 @@ begin
     end;
 
     // Como o valor líquido não esta no layout deve refazer o cálculo
+    (*
     NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos - (NFSe.Servico.Valores.ValorPis +
                                              NFSe.Servico.Valores.ValorCofins +
                                              NFSe.Servico.Valores.ValorInss +
                                              NFSe.Servico.Valores.ValorIr +
                                              NFSe.Servico.Valores.ValorCsll +
                                              valorIssRetido);
+    *)
+
+    NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
+                                              (NFSe.Servico.Valores.ValorPis +
+                                               NFSe.Servico.Valores.ValorCofins +
+                                               NFSe.Servico.Valores.ValorInss +
+                                               NFSe.Servico.Valores.ValorIr +
+                                               NFSe.Servico.Valores.ValorCsll +
+                                               FNfse.Servico.Valores.ValorDeducoes +
+                                               FNfse.Servico.Valores.DescontoCondicionado+
+                                               FNfse.Servico.Valores.DescontoIncondicionado+
+                                               FNFSe.Servico.Valores.ValorIssRetido);
+
+
 
     NFSe.PrestadorServico.RazaoSocial   := Leitor.rCampo(tcStr, 'RazaoSocialPrestador');
     NFSe.PrestadorServico.Contato.Email := Leitor.rCampo(tcStr, 'EmailPrestador');

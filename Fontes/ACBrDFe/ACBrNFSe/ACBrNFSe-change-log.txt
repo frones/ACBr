@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/02/2018
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/41623-adicionamos-c%C3%B3digos-de-cidade-no-padr%C3%A3o-siaf-%C3%A0-emiss%C3%A3o-de-nf-de-servi%C3%A7o/
+   Por: Renato Henrique
+
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/39857-provedor-issdsf-sorocaba-sp/?do=findComment&comment=274318
    Por: Rubenstz

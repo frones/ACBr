@@ -7339,7 +7339,7 @@ var
       2200707: CodSiafi := '1013'; // Anisio De Abreu/PI';
       2200806: CodSiafi := '1015'; // Antonio Almeida/PI';
       2200905: CodSiafi := '1017'; // Aroazes/PI';
-      2200954: CodSiafi := '';     // Aroeiras Do Itaim/PI';
+      2200954: CodSiafi := '1188'; // Aroeiras Do Itaim/PI';
       2201002: CodSiafi := '1019'; // Arraial/PI';
       2201051: CodSiafi := '0270'; // Assuncao Do Piaui/PI';
       2201101: CodSiafi := '1021'; // Avelino Lopes/PI';
@@ -8207,7 +8207,7 @@ var
       2605202: CodSiafi := '2403'; // Escada/PE';
       2605301: CodSiafi := '2405'; // Exu/PE';
       2605400: CodSiafi := '2407'; // Feira Nova/PE';
-      2605459: CodSiafi := '';     // Fernando De Noronha/PE';
+      2605459: CodSiafi := '3001'; // Fernando De Noronha/PE';
       2605509: CodSiafi := '2409'; // Ferreiros/PE';
       2605608: CodSiafi := '2411'; // Flores/PE';
       2605707: CodSiafi := '2413'; // Floresta/PE';
@@ -11882,7 +11882,7 @@ var
       5003702: CodSiafi := '9073'; // Dourados/MS';
       5003751: CodSiafi := '9173'; // Eldorado/MS';
       5003801: CodSiafi := '9075'; // Fatima Do Sul/MS';
-      5003900: CodSiafi := '';     // Figueirao/MS';
+      5003900: CodSiafi := '1178'; // Figueirao/MS';
       5004007: CodSiafi := '9079'; // Gloria De Dourados/MS';
       5004106: CodSiafi := '9081'; // Guia Lopes Da Laguna/MS';
       5004304: CodSiafi := '9085'; // Iguatemi/MS';
@@ -11982,8 +11982,8 @@ var
       5104104: CodSiafi := '9887'; // Guaranta Do Norte/MT';
       5104203: CodSiafi := '9083'; // Guiratinga/MT';
       5104500: CodSiafi := '9877'; // Indiavai/MT';
-      5104526: CodSiafi := '';     // Ipiranga Do Norte/MT';
-      5104542: CodSiafi := '';     // Itanhanga/MT';
+      5104526: CodSiafi := '1184'; // Ipiranga Do Norte/MT';
+      5104542: CodSiafi := '1186'; // Itanhanga/MT';
       5104559: CodSiafi := '9901'; // Itauba/MT';
       5104609: CodSiafi := '9091'; // Itiquira/MT';
       5104807: CodSiafi := '9095'; // Jaciara/MT';
@@ -12268,8 +12268,8 @@ var
       5217609: CodSiafi := '9595'; // Planaltina/GO';
       5217708: CodSiafi := '9549'; // Pontalina/GO';
       5218003: CodSiafi := '9555'; // Porangatu/GO';
-      5218052: CodSiafi := '9557'; // Porteirao/GO';
-      5218102: CodSiafi := '';     // Portelandia/GO';
+      5218052: CodSiafi := '1060'; // Porteirao/GO';
+      5218102: CodSiafi := '9557'; // Portelandia/GO';
       5218300: CodSiafi := '9561'; // Posse/GO';
       5218391: CodSiafi := '0051'; // Professor Jamil/GO';
       5218508: CodSiafi := '9563'; // Quirinopolis/GO';

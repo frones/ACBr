@@ -220,6 +220,8 @@ type
     memoLog: TMemo;
     Label7: TLabel;
     cbTEmpregador: TComboBox;
+    btnCarregarXML: TButton;
+    btnCarregarINI: TButton;
 
     procedure btnGerarClick(Sender: TObject);
 
@@ -258,8 +260,10 @@ type
     procedure PathClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
-    procedure ACBreSocial1TransmissaoEventos(const AXML: AnsiString;
+    procedure ACBreSocial1TransmissaoEventos(const AXML: String;
       ATipo: TeSocialEventos);
+    procedure btnCarregarXMLClick(Sender: TObject);
+    procedure btnCarregarINIClick(Sender: TObject);
   private
     { Private declarations }
     // procedures eventos de tabela
@@ -1990,7 +1994,7 @@ begin
 
     with EvtAdmissao.Trabalhador.Dependente.Add do
     begin
-      tpDep := tdFilhoOuEnteadoAte21Anos;
+      tpDep := tdFilhoOuEnteado;
       nmDep := 'Dependente 2';
       DtNascto := date;
       cpfDep := '12345678901';
@@ -2233,7 +2237,7 @@ begin
 
     with EvtAltCadastral.Trabalhador.Dependente.Add do
     begin
-      tpDep := tdFilhoOuEnteadoAte21Anos;
+      tpDep := tdFilhoOuEnteado;
       nmDep := 'Dependente 2';
       DtNascto := date;
       cpfDep := '12345678901';
@@ -3081,7 +3085,7 @@ begin
 
     with EvtTSVInicio.Trabalhador.Dependente.Add do
     begin
-      tpDep := tdFilhoOuEnteadoAte21Anos;
+      tpDep := tdFilhoOuEnteado;
       nmDep := 'Dependente 2';
       DtNascto := date;
       cpfDep := '99999999909';
@@ -3455,10 +3459,8 @@ procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
 begin
   SelecionaEventos;
 
-  ACBreSocial1.Eventos.TipoEmpregador := ACBreSocial1.Configuracoes.Geral.TipoEmpregador;
   ACBreSocial1.Eventos.GerarXMLs;
   ACBreSocial1.Eventos.SaveToFiles;
-  ACBreSocial1.Eventos.Clear;
 
   MemoResp.Lines.Add('XML de Eventos Gerados com Sucesso!');
   pgWebservice.ActivePageIndex := 3;
@@ -3472,8 +3474,8 @@ begin
     LimparDocsPasta;
 
   try
-    SelecionaEventos;
-    ACBreSocial1.AssinarEventos;
+//    SelecionaEventos;
+//    ACBreSocial1.AssinarEventos;
 
     ACBreSocial1.Enviar(TESocialGrupo(rdgGrupo.ItemIndex + 1));
     Sleep(3000);
@@ -3861,8 +3863,9 @@ begin
   end;
   Application.ProcessMessages;
 end;
-procedure TFExemploEsocial.ACBreSocial1TransmissaoEventos
-  (const AXML: AnsiString; ATipo: TeSocialEventos);
+
+procedure TFExemploEsocial.ACBreSocial1TransmissaoEventos(
+  const AXML: String; ATipo: TeSocialEventos);
 begin
   case ATipo of
     eseEnvioLote:
@@ -4287,6 +4290,34 @@ begin
     GerareSocial2400;
   if (cbS3000.Checked) then
     GerareSocial3000;
+end;
+
+procedure TFExemploEsocial.btnCarregarXMLClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Evento (Arquivo XML)';
+  OpenDialog1.DefaultExt := '*.xml';
+  OpenDialog1.Filter := 'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+    ACBreSocial1.Eventos.LoadFromFile(OpenDialog1.FileName);
+
+  MemoResp.Lines.Add('XML de Eventos Carregado com Sucesso!');
+  pgWebService.ActivePageIndex := 3;
+end;
+
+procedure TFExemploEsocial.btnCarregarINIClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Evento (Arquivo INI)';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter := 'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+    ACBreSocial1.Eventos.LoadFromINI(OpenDialog1.FileName);
+
+  MemoResp.Lines.Add('INI de Eventos Carregado com Sucesso!');
+  pgWebService.ActivePageIndex := 3;
 end;
 
 end.

@@ -128,11 +128,13 @@ type
   TACBrTipoPagamento = TACBrIndPgto;
 
   /// Indicador do tipo do frete
-  TACBrIndFrt = (tfPorContaEmitente,      // 0 - Por conta do emitente
-                 tfPorContaDestinatario,  // 1 - Por conta do destinatário
-                 tfPorContaTerceiros,     // 2 - Por conta de terceiros
-                 tfSemCobrancaFrete,      // 9 - Sem cobrança de frete
-                 tfNenhum                 // Preencher vazio
+  TACBrIndFrt = (tfPorContaEmitente,            // 0 - Contratação do Frete por conta do Remetente (CIF)
+                 tfPorContaDestinatario,        // 1 - Contratação do Frete por conta do Destinatário (FOB)
+                 tfPorContaTerceiros,           // 2 - Contratação do Frete por conta de Terceiros
+                 tfProprioPorContaRemetente,    // 3 - Transporte Próprio por conta do Remetente
+                 tfProprioPorContaDestinatario, // 4 - Transporte Próprio por conta do Destinatário
+                 tfSemCobrancaFrete,            // 9 - Sem Ocorrência de Transporte
+                 tfNenhum                       // Preencher vazio
                  );
   TACBrTipoFrete = TACBrIndFrt;
 

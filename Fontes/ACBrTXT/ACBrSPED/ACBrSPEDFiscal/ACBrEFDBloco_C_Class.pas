@@ -992,176 +992,188 @@ begin
 
   if Assigned( RegC001.RegistroC100 ) then
   begin
-     for intFor := 0 to RegC001.RegistroC100.Count - 1 do
-     begin
-        if Assigned(TACBrSPEDFiscal(FOwner).ChecksBloco_C.OnCheckRegistroC100) then
-           TACBrSPEDFiscal(FOwner).ChecksBloco_C.OnCheckRegistroC100(RegC001.RegistroC100.Items[intFor], booAborta);
+    for intFor := 0 to RegC001.RegistroC100.Count - 1 do
+    begin
+      if Assigned(TACBrSPEDFiscal(FOwner).ChecksBloco_C.OnCheckRegistroC100) then
+         TACBrSPEDFiscal(FOwner).ChecksBloco_C.OnCheckRegistroC100(RegC001.RegistroC100.Items[intFor], booAborta);
 
-        if not booAborta then
+      if not booAborta then
+      begin
+        with RegC001.RegistroC100.Items[intFor] do
         begin
-           with RegC001.RegistroC100.Items[intFor] do
-           begin
-             Check(not((COD_MOD = '55') and (COD_SIT <> sdDoctoNumInutilizada) and (Trim(CHV_NFE) = '')),
-                                                                   '(C-C100) Nota: %s' +sLineBreak+
-                                                                   '         Série: %s'+sLineBreak+
-                                                                   '         Emitida no dia: %s'+sLineBreak+
-                                                                   '         Modelo: %s'        +sLineBreak+
-                                                                   '         ChaveNF: %s'+sLineBreak, [NUM_DOC, SER, FormatDateTime('dd/mm/yyyy', DT_DOC), COD_MOD, CHV_NFE]);
+          Check(not((COD_MOD = '55') and (COD_SIT <> sdDoctoNumInutilizada) and (Trim(CHV_NFE) = '')),
+                                                               '(C-C100) Nota: %s' +sLineBreak+
+                                                               '         Série: %s'+sLineBreak+
+                                                               '         Emitida no dia: %s'+sLineBreak+
+                                                               '         Modelo: %s'        +sLineBreak+
+                                                               '         ChaveNF: %s'+sLineBreak, [NUM_DOC, SER, FormatDateTime('dd/mm/yyyy', DT_DOC), COD_MOD, CHV_NFE]);
 
-             case COD_SIT of
-              sdRegular:               strCOD_SIT := '00';
-              sdExtempRegular:         strCOD_SIT := '01';
-              sdCancelado:             strCOD_SIT := '02';
-              sdCanceladoExtemp:       strCOD_SIT := '03';
-              sdDoctoDenegado:         strCOD_SIT := '04';
-              sdDoctoNumInutilizada:   strCOD_SIT := '05';
-              sdFiscalCompl:           strCOD_SIT := '06';
-              sdExtempCompl:           strCOD_SIT := '07';
-              sdRegimeEspecNEsp:       strCOD_SIT := '08';
-             end;
+          case COD_SIT of
+            sdRegular:               strCOD_SIT := '00';
+            sdExtempRegular:         strCOD_SIT := '01';
+            sdCancelado:             strCOD_SIT := '02';
+            sdCanceladoExtemp:       strCOD_SIT := '03';
+            sdDoctoDenegado:         strCOD_SIT := '04';
+            sdDoctoNumInutilizada:   strCOD_SIT := '05';
+            sdFiscalCompl:           strCOD_SIT := '06';
+            sdExtempCompl:           strCOD_SIT := '07';
+            sdRegimeEspecNEsp:       strCOD_SIT := '08';
+          end;
 
-             /// Tratamento NFs canceladas 02/03, denegada 04 ou inutilizada 05
-             /// Invertido a posição do teste condicional pois o ACBr por padrão adiciona IND_FRT=2
-             if Pos(strCOD_SIT,'02, 03, 04, 05') > 0 then
-             begin
-               DT_DOC   := 0;
-               DT_E_S   := 0;
-               IND_FRT  := tfNenhum;
-               IND_PGTO := tpNenhum;
-               booNFCancelada := true
-             end
-             else
-               booNFCancelada := false;
+          /// Tratamento NFs canceladas 02/03, denegada 04 ou inutilizada 05
+          /// Invertido a posição do teste condicional pois o ACBr por padrão adiciona IND_FRT=2
+          if Pos(strCOD_SIT,'02, 03, 04, 05') > 0 then
+          begin
+            DT_DOC   := 0;
+            DT_E_S   := 0;
+            IND_FRT  := tfNenhum;
+            IND_PGTO := tpNenhum;
+            booNFCancelada := true
+          end
+          else
+            booNFCancelada := false;
 
-             //Obs.: A partir de 01/01/2012 passará a ser:
-             //Indicador do tipo do frete:
-             //0- Por conta do emitente;
-             //1- Por conta do destinatário/remetente;
-             //2- Por conta de terceiros;
-             //9- Sem cobrança de frete.
-             if DT_INI >= EncodeDate(2012,01,01) then
-             begin
-               strIND_FRT := IndFrtToStr(IND_FRT);
-             end
-             else
-             begin
-               case IND_FRT of
-                tfPorContaTerceiros:    strIND_FRT := '0';
-                tfPorContaEmitente:     strIND_FRT := '1';
-                tfPorContaDestinatario: strIND_FRT := '2';
-                tfSemCobrancaFrete:     strIND_FRT := '9';
-                tfNenhum:               strIND_FRT := '';
-               end;
-             end;
+          if DT_INI < EncodeDate(2012,01,01) then
+          begin
+            case IND_FRT of
+              tfPorContaTerceiros:                                   strIND_FRT := '0';
+              tfPorContaEmitente, tfProprioPorContaRemetente:        strIND_FRT := '1';
+              tfPorContaDestinatario, tfProprioPorContaDestinatario: strIND_FRT := '2';
+              tfSemCobrancaFrete:                                    strIND_FRT := '9';
+              tfNenhum:                                              strIND_FRT := '';
+            end
+          end
+          else if DT_INI < EncodeDate(2018,01,01) then
+          begin
+            case IND_FRT of
+              tfPorContaEmitente, tfProprioPorContaRemetente:        strIND_FRT := '0';
+              tfPorContaDestinatario, tfProprioPorContaDestinatario: strIND_FRT := '1';
+              tfPorContaTerceiros:                                   strIND_FRT := '2';
+              tfSemCobrancaFrete:                                    strIND_FRT := '9';
+              tfNenhum:                                              strIND_FRT := '';
+            end;
+          end
+          else
+          begin
+            case IND_FRT of
+              tfPorContaEmitente:            strIND_FRT := '0';
+              tfPorContaDestinatario:        strIND_FRT := '1';
+              tfPorContaTerceiros:           strIND_FRT := '2';
+              tfProprioPorContaRemetente:    strIND_FRT := '3';
+              tfProprioPorContaDestinatario: strIND_FRT := '4';
+              tfSemCobrancaFrete:            strIND_FRT := '9';
+              tfNenhum:                      strIND_FRT := '';
+            end;
+          end;
 
-             if DT_INI >= EncodeDate(2012,07,01) then
-             begin
-               case IND_PGTO of
-                tpVista:        strIND_PGTO := '0';
-                tpPrazo:        strIND_PGTO := '1';
-                tpOutros:       strIND_PGTO := '2';
-                tpNenhum:       strIND_PGTO := '';
-               end
-             end
-             else
-             begin
-               case IND_PGTO of
-                tpVista:        strIND_PGTO := '0';
-                tpPrazo:        strIND_PGTO := '1';
-                tpSemPagamento: strIND_PGTO := '9';
-                tpNenhum:       strIND_PGTO := '';
-               end;
-             end;
+          if DT_INI >= EncodeDate(2012,07,01) then
+          begin
+            case IND_PGTO of
+              tpVista:        strIND_PGTO := '0';
+              tpPrazo:        strIND_PGTO := '1';
+              tpOutros:       strIND_PGTO := '2';
+              tpNenhum:       strIND_PGTO := '';
+            end
+          end
+          else
+          begin
+            case IND_PGTO of
+              tpVista:        strIND_PGTO := '0';
+              tpPrazo:        strIND_PGTO := '1';
+              tpSemPagamento: strIND_PGTO := '9';
+              tpNenhum:       strIND_PGTO := '';
+            end;
+          end;
 
-             /// Para nota fiscal de consumidor final (COD_MOD = '65') não devem ser
-             /// informafo os campo:
-             /// COD_PAR, VL_BC_ICMS_ST, VL_ICMS_ST, VL_IPI, VL_PIS, VL_COFINS, VL_PIS_ST, VL_COFINS_ST.
-             if COD_MOD = '65' then
-             begin
-                Add( LFill('C100') +
-                     LFill( Integer(IND_OPER), 0 ) +
-                     LFill( Integer(IND_EMIT), 0 ) +
-                     LFill( COD_PART ) +
-                     LFill( COD_MOD  ) +
-                     LFill( strCOD_SIT  ) +
-                     LFill( SER  ) +
-                     LFill( NUM_DOC  ) +
-                     LFill( CHV_NFE  ) +
-                     LFill( DT_DOC, 'ddmmyyyy' ) +
-                     LFill( DT_E_S, 'ddmmyyyy' ) +
-                     LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
-                     LFill( strIND_PGTO ) +
-                     LFill( VL_DESC,0,2, booNFCancelada ) +
-                     LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
-                     LFill( VL_MERC,0,2, booNFCancelada ) +
-                     LFill( strIND_FRT ) +
-                     LFill( VL_FRT,0,2, booNFCancelada ) +
-                     LFill( VL_SEG,0,2, booNFCancelada ) +
-                     LFill( VL_OUT_DA,0,2, booNFCancelada ) +
-                     LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
-                     LFill( VL_ICMS,0,2, booNFCancelada ) +
-                     LFill( VL_BC_ICMS_ST,0,2, true ) +
-                     LFill( VL_ICMS_ST,0,2, true ) +
-                     LFill( VL_IPI,0,2, true ) +
-                     LFill( VL_PIS,0,2, true ) +
-                     LFill( VL_COFINS,0,2, true ) +
-                     LFill( VL_PIS_ST,0,2, true ) +
-                     LFill( VL_COFINS_ST,0,2, true ) ) ;
-             end
-             else
-             begin
-                Add( LFill('C100') +
-                     LFill( Integer(IND_OPER), 0 ) +
-                     LFill( Integer(IND_EMIT), 0 ) +
-                     LFill( COD_PART ) +
-                     LFill( COD_MOD  ) +
-                     LFill( strCOD_SIT  ) +
-                     LFill( SER  ) +
-                     LFill( NUM_DOC  ) +
-                     LFill( CHV_NFE  ) +
-                     LFill( DT_DOC, 'ddmmyyyy' ) +
-                     LFill( DT_E_S, 'ddmmyyyy' ) +
-                     LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
-                     LFill( strIND_PGTO ) +
-                     LFill( VL_DESC,0,2, booNFCancelada ) +
-                     LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
-                     LFill( VL_MERC,0,2, booNFCancelada ) +
-                     LFill( strIND_FRT ) +
-                     LFill( VL_FRT,0,2, booNFCancelada ) +
-                     LFill( VL_SEG,0,2, booNFCancelada ) +
-                     LFill( VL_OUT_DA,0,2, booNFCancelada ) +
-                     LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
-                     LFill( VL_ICMS,0,2, booNFCancelada ) +
-                     LFill( VL_BC_ICMS_ST,0,2, booNFCancelada ) +
-                     LFill( VL_ICMS_ST,0,2, booNFCancelada ) +
-                     LFill( VL_IPI,0,2, booNFCancelada ) +
-                     LFill( VL_PIS,0,2,True ) +
-                     LFill( VL_COFINS,0,2,True) +
-                     LFill( VL_PIS_ST,0,2,True ) +
-                     LFill( VL_COFINS_ST,0,2, True) ) ;
-             end;
-           end;
-           /// Registros FILHOS
-
-           WriteRegistroC101( RegC001.RegistroC100.Items[intFor] ) ; // EC 87/2015 - Marcio Meneguzzi 06jan2016
-           WriteRegistroC105( RegC001.RegistroC100.Items[intFor] ) ;
-           WriteRegistroC110( RegC001.RegistroC100.Items[intFor] ) ;
-           WriteRegistroC120( RegC001.RegistroC100.Items[intFor] ) ;
-           WriteRegistroC130( RegC001.RegistroC100.Items[intFor] ) ;
-           WriteRegistroC140( RegC001.RegistroC100.Items[intFor] ) ;
-           WriteRegistroC160( RegC001.RegistroC100.Items[intFor] ) ;
-           WriteRegistroC165( RegC001.RegistroC100.Items[intFor] ) ;
-           WriteRegistroC170( RegC001.RegistroC100.Items[intFor] ) ;
-           WriteRegistroC190( RegC001.RegistroC100.Items[intFor] ) ;
-           WriteRegistroC195( RegC001.RegistroC100.Items[intFor] ) ;
-
-           RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+          /// Para nota fiscal de consumidor final (COD_MOD = '65') não devem ser
+          /// informafo os campo:
+          /// COD_PAR, VL_BC_ICMS_ST, VL_ICMS_ST, VL_IPI, VL_PIS, VL_COFINS, VL_PIS_ST, VL_COFINS_ST.
+          if COD_MOD = '65' then
+          begin
+            Add( LFill('C100') +
+                 LFill( Integer(IND_OPER), 0 ) +
+                 LFill( Integer(IND_EMIT), 0 ) +
+                 LFill( COD_PART ) +
+                 LFill( COD_MOD  ) +
+                 LFill( strCOD_SIT  ) +
+                 LFill( SER  ) +
+                 LFill( NUM_DOC  ) +
+                 LFill( CHV_NFE  ) +
+                 LFill( DT_DOC, 'ddmmyyyy' ) +
+                 LFill( DT_E_S, 'ddmmyyyy' ) +
+                 LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
+                 LFill( strIND_PGTO ) +
+                 LFill( VL_DESC,0,2, booNFCancelada ) +
+                 LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
+                 LFill( VL_MERC,0,2, booNFCancelada ) +
+                 LFill( strIND_FRT ) +
+                 LFill( VL_FRT,0,2, booNFCancelada ) +
+                 LFill( VL_SEG,0,2, booNFCancelada ) +
+                 LFill( VL_OUT_DA,0,2, booNFCancelada ) +
+                 LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
+                 LFill( VL_ICMS,0,2, booNFCancelada ) +
+                 LFill( VL_BC_ICMS_ST,0,2, true ) +
+                 LFill( VL_ICMS_ST,0,2, true ) +
+                 LFill( VL_IPI,0,2, true ) +
+                 LFill( VL_PIS,0,2, true ) +
+                 LFill( VL_COFINS,0,2, true ) +
+                 LFill( VL_PIS_ST,0,2, true ) +
+                 LFill( VL_COFINS_ST,0,2, true ) ) ;
+          end
+          else
+          begin
+            Add( LFill('C100') +
+                 LFill( Integer(IND_OPER), 0 ) +
+                 LFill( Integer(IND_EMIT), 0 ) +
+                 LFill( COD_PART ) +
+                 LFill( COD_MOD  ) +
+                 LFill( strCOD_SIT  ) +
+                 LFill( SER  ) +
+                 LFill( NUM_DOC  ) +
+                 LFill( CHV_NFE  ) +
+                 LFill( DT_DOC, 'ddmmyyyy' ) +
+                 LFill( DT_E_S, 'ddmmyyyy' ) +
+                 LFill( VL_DOC , 0 , 2 , booNFCancelada ) +
+                 LFill( strIND_PGTO ) +
+                 LFill( VL_DESC,0,2, booNFCancelada ) +
+                 LFill( VL_ABAT_NT,0,2, booNFCancelada ) +
+                 LFill( VL_MERC,0,2, booNFCancelada ) +
+                 LFill( strIND_FRT ) +
+                 LFill( VL_FRT,0,2, booNFCancelada ) +
+                 LFill( VL_SEG,0,2, booNFCancelada ) +
+                 LFill( VL_OUT_DA,0,2, booNFCancelada ) +
+                 LFill( VL_BC_ICMS,0,2, booNFCancelada ) +
+                 LFill( VL_ICMS,0,2, booNFCancelada ) +
+                 LFill( VL_BC_ICMS_ST,0,2, booNFCancelada ) +
+                 LFill( VL_ICMS_ST,0,2, booNFCancelada ) +
+                 LFill( VL_IPI,0,2, booNFCancelada ) +
+                 LFill( VL_PIS,0,2,True ) +
+                 LFill( VL_COFINS,0,2,True) +
+                 LFill( VL_PIS_ST,0,2,True ) +
+                 LFill( VL_COFINS_ST,0,2, True) ) ;
+          end;
         end;
-     end;
-     /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistroC100Count := FRegistroC100Count + RegC001.RegistroC100.Count;
+        /// Registros FILHOS
 
-     RegC001.RegistroC100.Clear;
+        WriteRegistroC101( RegC001.RegistroC100.Items[intFor] ) ; // EC 87/2015 - Marcio Meneguzzi 06jan2016
+        WriteRegistroC105( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC110( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC120( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC130( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC140( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC160( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC165( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC170( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC190( RegC001.RegistroC100.Items[intFor] ) ;
+        WriteRegistroC195( RegC001.RegistroC100.Items[intFor] ) ;
+
+        RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+      end;
+    end;
+    /// Variavél para armazenar a quantidade de registro do tipo.
+    FRegistroC100Count := FRegistroC100Count + RegC001.RegistroC100.Count;
+
+    RegC001.RegistroC100.Clear;
   end;
 end;
 

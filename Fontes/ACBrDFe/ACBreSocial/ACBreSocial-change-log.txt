@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2018
+-- pceS1005 --
+[+] Implementado o método LerArqIni que permite ler os dados pertinentes ao evento 
+    contidos em um arquivo INI, esse recurso será útil no futuro caso o componente 
+    venha ser adicionado no ACBrMonitor.
+    Com o passar do tempo iremos implementar para os demais eventos.
+  Por: Italo Jurisato Junior
+
 21/02/2018
 -- ACBreSocial --
 [+] Implementado os métodos: LoadFromFile, LoadFromStream e LoadFromString na classe TEventos.

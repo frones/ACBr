@@ -51,7 +51,7 @@ interface
 uses
   SysUtils, Classes,
   pcnConversao, pcnGerador, ACBrUtil,
-  pcesCommon, pcesConversaoeSocial, pcesGerador{, ACBreSocialConfiguracoes};
+  pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
   TS1000Collection = class;
@@ -96,8 +96,6 @@ type
 
   TevtInfoEmpregador = class(TeSocialEvento) //Classe do elemento principal do XML do evento!
   private
-//    FConfiguracoes: TConfiguracoeseSocial;
-
     FModoLancamento: TModoLancamento;
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
@@ -378,8 +376,6 @@ constructor TevtInfoEmpregador.Create(AACBreSocial: TObject);
 begin
   inherited;
 
-//  FConfiguracoes := TACBreSocial(FACBreSocial).Configuracoes;
-
   FACBreSocial := AACBreSocial;
   FIdeEmpregador:= TIdeEmpregador.create;
   FIdeEvento:= TIdeEvento.create;
@@ -398,6 +394,7 @@ end;
 procedure TevtInfoEmpregador.GerarContato;
 begin
   Gerador.wGrupo('contato');
+
   Gerador.wCampo(tcStr, '', 'nmCtt',     1, 70, 1, Self.infoEmpregador.infoCadastro.Contato.NmCtt);
   Gerador.wCampo(tcStr, '', 'cpfCtt',   11, 11, 1, Self.infoEmpregador.infoCadastro.Contato.CpfCtt);
   Gerador.wCampo(tcStr, '', 'foneFixo',  1, 13, 0, Self.infoEmpregador.infoCadastro.Contato.FoneFixo);
@@ -554,6 +551,7 @@ begin
   for i := 0 to infoEmpregador.infoCadastro.SoftwareHouse.Count - 1 do
   begin
     Gerador.wGrupo('softwareHouse');
+    
     Gerador.wCampo(tcStr, '', 'cnpjSoftHouse', 14,  14, 1, infoEmpregador.infoCadastro.SoftwareHouse[i].CnpjSoftHouse);
     Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, infoEmpregador.infoCadastro.SoftwareHouse[i].NmRazao);
     Gerador.wCampo(tcStr, '', 'nmCont',         1,  70, 1, infoEmpregador.infoCadastro.SoftwareHouse[i].NmCont);

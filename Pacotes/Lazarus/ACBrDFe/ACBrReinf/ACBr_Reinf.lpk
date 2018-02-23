@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
@@ -15,14 +15,14 @@
     </CompilerOptions>
     <Description Value="ACBr Escrituração Fiscal Digital de Retenções e Outras Informações Fiscais (www.projetoacbr.com.br)"/>
     <License Value="LGPL"/>
-    <Files Count="18">
+    <Files Count="17">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinf.pas"/>
         <AddToUsesPkgSection Value="False"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfClasses.pas"/>
-        <UnitName Value="ACBrReinfClasses"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfClasses.pas"/>
+        <UnitName Value="pcnReinfClasses"/>
       </Item2>
       <Item3>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfConfiguracoes.pas"/>
@@ -37,36 +37,36 @@
         <UnitName Value="ACBrReinfEventosBase"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR1000.pas"/>
-        <UnitName Value="ACBrReinfR1000"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR1000.pas"/>
+        <UnitName Value="pcnReinfR1000"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR1070.pas"/>
-        <UnitName Value="ACBrReinfR1070"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR1070.pas"/>
+        <UnitName Value="pcnReinfR1070"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2010.pas"/>
-        <UnitName Value="ACBrReinfR2010"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2010.pas"/>
+        <UnitName Value="pcnReinfR2010"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2020.pas"/>
-        <UnitName Value="ACBrReinfR2020"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2020.pas"/>
+        <UnitName Value="pcnReinfR2020"/>
       </Item9>
       <Item10>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2060.pas"/>
-        <UnitName Value="ACBrReinfR2060"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2060.pas"/>
+        <UnitName Value="pcnReinfR2060"/>
       </Item10>
       <Item11>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2098.pas"/>
-        <UnitName Value="ACBrReinfR2098"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2098.pas"/>
+        <UnitName Value="pcnReinfR2098"/>
       </Item11>
       <Item12>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR2099.pas"/>
-        <UnitName Value="ACBrReinfR2099"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2099.pas"/>
+        <UnitName Value="pcnReinfR2099"/>
       </Item12>
       <Item13>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfR9000.pas"/>
-        <UnitName Value="ACBrReinfR9000"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR9000.pas"/>
+        <UnitName Value="pcnReinfR9000"/>
       </Item13>
       <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfReg.pas"/>
@@ -74,21 +74,17 @@
         <AddToUsesPkgSection Value="False"/>
       </Item14>
       <Item15>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfRetEventos.pas"/>
-        <UnitName Value="ACBrReinfRetEventos"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfRetEventos.pas"/>
+        <UnitName Value="pcnReinfRetEventos"/>
       </Item15>
       <Item16>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfUtils.pas"/>
-        <UnitName Value="ACBrReinfUtils"/>
-      </Item16>
-      <Item17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfWebServices.pas"/>
         <AddToUsesPkgSection Value="False"/>
-      </Item17>
-      <Item18>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnConversaoReinf.pas"/>
         <UnitName Value="pcnConversaoReinf"/>
-      </Item18>
+      </Item17>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

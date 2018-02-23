@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2018
+-- pcesConversaoeSocial --
+[*] Acrescentado o valor idRMS ao enum: tpIdeOC
+   Por:  Edmar Frazao
+
 22/02/2018
 -- pceS1005 --
 [+] Implementado o método LerArqIni que permite ler os dados pertinentes ao evento 

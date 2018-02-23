@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -37,23 +37,23 @@
 |*  - Implementados registros que faltavam e isoladas as respectivas classes 
 *******************************************************************************}
 
-unit ACBrReinfR2040;
-
+unit pcnReinfR2030;
 
 interface
 
-uses Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
-  ACBrReinfClasses, ACBrReinfR2040_Class;
+uses
+  Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
+  pcnReinfClasses, pcnReinfR2030_Class;
 
 type
 
-  TR2040 = class(TEventoReinfRet)
+  TR2030 = class(TEventoReinfRet)
   private
     FideEstab : TideEstab;
   protected
     procedure GerarEventoXML; override;
     procedure GerarinfoideEstab;
-    procedure GerarrecursosRep(Items: TrecursosReps);
+    procedure GerarrecursosRec(Items: TrecursosRecs);
     procedure GerarinfoRecurso(Items: TinfoRecursos);
     procedure GerarinfoProc(Items: TinfoProcs);
   public
@@ -64,57 +64,58 @@ type
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil, ACBrReinfUtils, pcnConversao, DateUtils;
+uses
+  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
 
 
-{ TR2040 }
+{ TR2030 }
 
-procedure TR2040.AfterConstruction;
+procedure TR2030.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtAssocDespRep);
+  SetSchema(rsevtAssocDespRec);
   FideEstab := TideEstab.Create;
 end;
 
-procedure TR2040.BeforeDestruction;
+procedure TR2030.BeforeDestruction;
 begin
   inherited;
   FideEstab.Free;
 end;
 
-procedure TR2040.GerarEventoXML;
+procedure TR2030.GerarEventoXML;
 begin
   GerarinfoideEstab;
 end;
 
-procedure TR2040.GerarinfoideEstab;
+procedure TR2030.GerarinfoideEstab;
 begin
   Gerador.wGrupo('ideEstab');
   Gerador.wCampo(tcInt, '', 'tpInscEstab', 0, 0, 1, Ord( Self.FideEstab.tpInscEstab ));
   Gerador.wCampo(tcStr, '', 'nrInscEstab', 0, 0, 1, Self.FideEstab.nrInscEstab);
-  GerarrecursosRep(Self.FideEstab.recursosReps);
+  GerarrecursosRec(Self.FideEstab.recursosRecs);
   Gerador.wGrupo('/ideEstab');
 end;
 
-procedure TR2040.GerarrecursosRep(Items: TrecursosReps);
+procedure TR2030.GerarrecursosRec(Items: TrecursosRecs);
 var
   i: Integer;
 begin
   for i:=0 to Items.Count - 1 do
     with Items.Items[i] do
     begin
-      Gerador.wGrupo('recursosRep');
-      Gerador.wCampo(tcStr, '', 'cnpjAssocDesp', 0, 0, 1, cnpjAssocDesp);
-      Gerador.wCampo(tcDe2, '', 'vlrTotalRep',   0, 0, 1, vlrTotalRep);
-      Gerador.wCampo(tcDe2, '', 'vlrTotalRet',   0, 0, 1, vlrTotalRet);
-      Gerador.wCampo(tcDe2, '', 'vlrTotalNRet',  0, 0, 0, vlrTotalNRet);
+      Gerador.wGrupo('recursosRec');
+      Gerador.wCampo(tcStr, '', 'cnpjOrigRecurso', 0, 0, 1, cnpjOrigRecurso);
+      Gerador.wCampo(tcDe2, '', 'vlrTotalRec',     0, 0, 1, vlrTotalRec);
+      Gerador.wCampo(tcDe2, '', 'vlrTotalRet',     0, 0, 1, vlrTotalRet);
+      Gerador.wCampo(tcDe2, '', 'vlrTotalNRet',    0, 0, 0, vlrTotalNRet);
       GerarinfoRecurso(infoRecursos);
       GerarinfoProc(infoProcs);
-      Gerador.wGrupo('/recursosRep');
+      Gerador.wGrupo('/recursosRec');
     end;
 end;
 
-procedure TR2040.GerarinfoRecurso(Items: TinfoRecursos);
+procedure TR2030.GerarinfoRecurso(Items: TinfoRecursos);
 var
   i: Integer;
 begin
@@ -130,7 +131,7 @@ begin
     end;
 end;
 
-procedure TR2040.GerarinfoProc(Items: TinfoProcs);
+procedure TR2030.GerarinfoProc(Items: TinfoProcs);
 var
   i: Integer;
 begin

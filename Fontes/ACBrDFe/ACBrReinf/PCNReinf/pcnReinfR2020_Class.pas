@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -37,12 +37,13 @@
 |*  - Implementados registros que faltavam e isoladas as respectivas classes 
 *******************************************************************************}
 
-unit ACBrReinfR2020_Class;
+unit pcnReinfR2020_Class;
 
 interface
 
-uses Classes, Sysutils, pcnConversaoReinf, Controls, Contnrs, ACBrReinfClasses,
-  ACBrReinfR2010_Class;
+uses
+  Classes, Sysutils, pcnConversaoReinf, Controls, Contnrs, pcnReinfClasses,
+  pcnReinfR2010_Class;
 
 type
   TideTomadors = class;

@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -37,26 +37,55 @@
 |*  - Implementados registros que faltavam e isoladas as respectivas classes 
 *******************************************************************************}
 
-unit ACBrReinfR9000_Class;
+unit pcnReinfR9000;
 
 interface
 
-uses Classes, Sysutils, pcnConversaoReinf, Controls, Contnrs;
+uses
+  Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
+  pcnReinfClasses, pcnReinfR9000_Class;
 
 type
-  { TinfoExclusao }
-  TinfoExclusao = class
+
+  TR9000 = class(TEventoReinf)
   private
-    FtpEvento: string;
-    FnrRecEvt: string;
-    FperApu: string;
+    FinfoExclusao: TinfoExclusao;
+  protected
+    procedure GerarEventoXML; override;
   public
-    property tpEvento: string read FtpEvento write FtpEvento;
-    property nrRecEvt: string read FnrRecEvt write FnrRecEvt;
-    property perApur: string read FperApu write FperApu;
+    property infoExclusao: TinfoExclusao read FinfoExclusao;
+    procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
   end;
 
 implementation
 
-end.
+uses
+  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
 
+
+{ TR9000 }
+
+procedure TR9000.AfterConstruction;
+begin
+  inherited;
+  SetSchema(rsevtExclusao);
+  FinfoExclusao := TinfoExclusao.Create;
+end;
+
+procedure TR9000.BeforeDestruction;
+begin
+  inherited;
+  FinfoExclusao.Free;
+end;
+
+procedure TR9000.GerarEventoXML;
+begin
+  Gerador.wGrupo('infoExclusao');
+  Gerador.wCampo(tcStr, '', 'tpEvento', 0, 0, 1, FinfoExclusao.tpEvento);
+  Gerador.wCampo(tcStr, '', 'nrRecEvt', 0, 0, 1, FinfoExclusao.nrRecEvt);
+  Gerador.wCampo(tcStr, '', 'perApur', 0, 0, 1, FinfoExclusao.perApur);
+  Gerador.wGrupo('/infoExclusao');
+end;
+
+end.

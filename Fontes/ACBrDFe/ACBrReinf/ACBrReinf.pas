@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -43,8 +43,10 @@ unit ACBrReinf;
 
 interface
 
-uses Classes, SysUtils, TypInfo, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes, ACBrReinfConfiguracoes,
-  pcnConversao, ACBrUtil, pcnConversaoReinf, ACBrReinfClasses, ACBrReinfEventos, ACBrReinfWebServices;
+uses
+  Classes, SysUtils, TypInfo, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  ACBrReinfConfiguracoes, pcnConversao, ACBrUtil, pcnConversaoReinf,
+  pcnReinfClasses, ACBrReinfEventos, ACBrReinfWebServices;
 
 const
   REINF_NAMESPACE = 'http://sped.fazenda.gov.br/RecepcaoLoteReinf';

@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -37,92 +37,94 @@
 |*  - Compatibilizado Fonte com Delphi 7
 *******************************************************************************}
 
-unit ACBrReinfR2020;
+unit pcnReinfR2010;
 
 interface
 
-uses Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
-  ACBrReinfClasses, ACBrReinfR2010_Class, ACBrReinfR2020_Class;
+uses
+  Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
+  pcnReinfClasses, pcnReinfR2010_Class;
 
 type
-  TR2020 = class(TEventoReinfRet)
+
+  TR2010 = class(TEventoReinfRet)
   private
-    FinfoServPrest: TinfoServPrest;
+    FinfoServTom: TinfoServTom;
   protected
     procedure GerarEventoXML; override;
-    procedure GerarideEstabPrest;
-    procedure GerarideTomador(Items: TideTomadors);
+    procedure GerarideEstabObra;
+    procedure GeraridePrestServ;
     procedure GerarinfoProcRetPr(Items: TinfoProcRetPrs);
     procedure GerarNFs(Items: Tnfss);
     procedure GerarinfoTpServ(Items: TinfoTpServs);
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property infoServPrest: TinfoServPrest read FinfoServPrest;
+    property infoServTom: TinfoServTom read FinfoServTom;
   end;
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil, ACBrReinfUtils, pcnConversao,
-  DateUtils;
+uses
+  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
 
-{ TR2020 }
+{ TR2010 }
 
-procedure TR2020.AfterConstruction;
+procedure TR2010.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtServPrest);
-  FinfoServPrest := TinfoServPrest.Create;
+  SetSchema(rsevtServTom);
+  FinfoServTom := TinfoServTom.Create;
 end;
 
-procedure TR2020.BeforeDestruction;
+procedure TR2010.BeforeDestruction;
 begin
   inherited;
-  FinfoServPrest.Free;
+  FinfoServTom.Free;
 end;
 
-procedure TR2020.GerarEventoXML;
+procedure TR2010.GerarEventoXML;
 begin
-  Gerador.wGrupo('infoServPrest');
-  GerarideEstabPrest;
-  Gerador.wGrupo('/infoServPrest');
+  Gerador.wGrupo('infoServTom');
+  GerarideEstabObra;
+  Gerador.wGrupo('/infoServTom');
 end;
 
-procedure TR2020.GerarideEstabPrest;
+procedure TR2010.GerarideEstabObra;
 begin
-  Gerador.wGrupo('ideEstabPrest');
-  Gerador.wCampo(tcInt, '', 'tpInscEstabPrest', 0, 0, 1, Ord( Self.FinfoServPrest.ideEstabPrest.tpInscEstabPrest ) );
-  Gerador.wCampo(tcStr, '', 'nrInscEstabPrest', 0, 0, 1, Self.FinfoServPrest.ideEstabPrest.nrInscEstabPrest);
-  GerarideTomador(Self.FinfoServPrest.ideEstabPrest.ideTomadors);
-  Gerador.wGrupo('/ideEstabPrest');
+  Gerador.wGrupo('ideEstabObra');
+  Gerador.wCampo(tcInt, '', 'tpInscEstab', 0, 0, 1, ord(Self.FinfoServTom.ideEstabObra.tpInscEstab));
+  Gerador.wCampo(tcStr, '', 'nrInscEstab', 0, 0, 1, Self.FinfoServTom.ideEstabObra.nrInscEstab);
+  Gerador.wCampo(tcInt, '', 'indObra', 0, 0, 1, ord(Self.FinfoServTom.ideEstabObra.indObra));
+  GeraridePrestServ;
+  Gerador.wGrupo('/ideEstabObra');
 end;
 
-procedure TR2020.GerarideTomador(Items: TideTomadors);
+procedure TR2010.GeraridePrestServ;
 var
-  item: TideTomador;
+  idePrestServ: TidePrestServ;
   i: Integer;
 begin
-  for i:=0 to Items.Count - 1 do
+  for i:=0 to FinfoServTom.ideEstabObra.idePrestServs.Count - 1 do
   begin
-    Item := Items.Items[i];
+    idePrestServ := FinfoServTom.ideEstabObra.idePrestServs.Items[i];
 
-    Gerador.wGrupo('ideTomador');
-    Gerador.wCampo(tcInt, '', 'tpInscTomador', 0, 0, 1, ord(item.tpInscTomador));
-    Gerador.wCampo(tcStr, '', 'nrInscTomador', 0, 0, 1, item.nrInscTomador);
-    Gerador.wCampo(tcInt, '', 'indObra', 0, 0, 1, ord(item.indObra));
-    Gerador.wCampo(tcDe2, '', 'vlrTotalBruto', 0, 0, 1 , item.vlrTotalBruto);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalBaseRet', 0, 0, 1, item.vlrTotalBaseRet);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalRetPrinc', 0, 0, 1, item.vlrTotalRetPrinc);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalRetAdic', 0, 0, 0, item.vlrTotalRetAdic);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetPrinc', 0, 0, 0, item.vlrTotalNRetPrinc);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetAdic', 0, 0, 0, item.vlrTotalNRetAdic);
-    GerarNFs(item.nfss);
-    GerarinfoProcRetPr(item.infoProcRetPrs);
-    Gerador.wGrupo('/ideTomador');
+    Gerador.wGrupo('idePrestServ');
+    Gerador.wCampo(tcStr, '', 'cnpjPrestador', 0, 0, 1, idePrestServ.cnpjPrestador);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalBruto', 0, 0, 1 , idePrestServ.vlrTotalBruto);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalBaseRet', 0, 0, 1, idePrestServ.vlrTotalBaseRet);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalRetPrinc', 0, 0, 1, idePrestServ.vlrTotalRetPrinc);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalRetAdic', 0, 0, 0, idePrestServ.vlrTotalRetAdic);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetPrinc', 0, 0, 0, idePrestServ.vlrTotalNRetPrinc);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetAdic', 0, 0, 0, idePrestServ.vlrTotalNRetAdic);
+    Gerador.wCampo(tcInt, '', 'indCPRB', 0, 0, 1, idePrestServ.indCPRB);
+    GerarNFs(idePrestServ.nfss);
+    GerarinfoProcRetPr(idePrestServ.infoProcRetPrs);
+    Gerador.wGrupo('/idePrestServ');
   end;
 end;
 
-procedure TR2020.GerarinfoProcRetPr(Items: TinfoProcRetPrs);
+procedure TR2010.GerarinfoProcRetPr(Items: TinfoProcRetPrs);
 var
   Item: TinfoProcRetPr;
   i: Integer;
@@ -140,7 +142,7 @@ begin
   end;
 end;
 
-procedure TR2020.GerarinfoTpServ(Items: TinfoTpServs);
+procedure TR2010.GerarinfoTpServ(Items: TinfoTpServs);
 var
   Item: TinfoTpServ;
   i: Integer;
@@ -164,7 +166,7 @@ begin
   end;
 end;
 
-procedure TR2020.GerarNFs(Items: Tnfss);
+procedure TR2010.GerarNFs(Items: Tnfss);
 var
   item: TNFs;
   i: Integer;

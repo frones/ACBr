@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -30,47 +30,58 @@
 {                                                                              }
 { Leivio Ramos de Fontenele  -  leivio@yahoo.com.br                            }
 {******************************************************************************}
+{******************************************************************************
+|* Historico
+|*
+|* 04/12/2017: Renato Rubinho
+|*  - Implementados registros que faltavam e isoladas as respectivas classes 
+*******************************************************************************}
 
-unit ACBrReinfR2098;
-
+unit pcnReinfR2099_Class;
 
 interface
 
-uses Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
-  ACBrReinfClasses, ACBrReinfR2098_Class;
+uses
+ Classes, Sysutils, pcnConversaoReinf, Controls, Contnrs, pcnReinfClasses;
 
 type
-
-  TR2098 = class(TEventoReinfR)
+  { TideRespInf }
+  TideRespInf = class
   private
-  protected
-    procedure GerarEventoXML; override;
+    FnmResp: string;
+    FcpfResp: string;
+    Ftelefone: string;
+    Femail: string;
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
+    property nmResp: string read FnmResp write FnmResp;
+    property cpfResp: string read FcpfResp write FcpfResp;
+    property telefone: string read Ftelefone write Ftelefone;
+    property email: string read Femail write Femail;
+  end;
+
+  { TinfoFech }
+  TinfoFech = class
+  private
+    FevtServTm: tpSimNao;
+    FevtServPr: tpSimNao;
+    FevtAssDespRec: tpSimNao;
+    FevtAssDespRep: tpSimNao;
+    FevtComProd: tpSimNao;
+    FevtCPRB: tpSimNao;
+    FevtPgtos: tpSimNao;
+    FcompSemMovto: string;
+  public
+    property evtServTm: tpSimNao read FevtServTm write FevtServTm;
+    property evtServPr: tpSimNao read FevtServPr write FevtServPr;
+    property evtAssDespRec: tpSimNao read FevtAssDespRec write FevtAssDespRec;
+    property evtAssDespRep: tpSimNao read FevtAssDespRep write FevtAssDespRep;
+    property evtComProd: tpSimNao read FevtComProd write FevtComProd;
+    property evtCPRB: tpSimNao read FevtCPRB write FevtCPRB;
+    property evtPgtos: tpSimNao read FevtPgtos write FevtPgtos;
+    property compSemMovto: string read FcompSemMovto write FcompSemMovto;
   end;
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil, ACBrReinfUtils, pcnConversao, DateUtils;
-
-
-{ TR2098 }
-
-procedure TR2098.AfterConstruction;
-begin
-  inherited;
-  SetSchema(RSevtReabreEvPer);
-end;
-
-procedure TR2098.BeforeDestruction;
-begin
-  inherited;
-end;
-
-procedure TR2098.GerarEventoXML;
-begin
-
-end;
-
 end.
+

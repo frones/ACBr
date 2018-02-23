@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -37,12 +37,13 @@
 |*  - Compatibilizado Fonte com Delphi 7
 *******************************************************************************}
 
-unit ACBrReinfR1070;
+unit pcnReinfR1070;
 
 interface
 
-uses Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
-  ACBrReinfClasses, ACBrReinfR1070_Class;
+uses
+  Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
+  pcnReinfClasses, pcnReinfR1070_Class;
 
 type
 
@@ -62,8 +63,8 @@ type
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil, ACBrReinfUtils, pcnConversao,
-  DateUtils;
+uses
+  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
 
 { TR1070 }
 
@@ -125,8 +126,8 @@ begin
 
     Gerador.wGrupo('infoSusp');
     if StrToInt64Def(InfoSusp.codSusp, -1) > 0 then    
-      Gerador.wCampo(tcStr, '', 'codSusp', 0, 0, 0, TReinfUtils.StrToZero(InfoSusp.codSusp, 14));
-    Gerador.wCampo(tcStr, '', 'indSusp', 0, 0, 1, TReinfUtils.StrToZero(Inttostr(ord(InfoSusp.indSusp)), 2));
+      Gerador.wCampo(tcStr, '', 'codSusp', 0, 0, 0, Poem_Zeros(InfoSusp.codSusp, 14));
+    Gerador.wCampo(tcStr, '', 'indSusp', 0, 0, 1, Poem_Zeros(Inttostr(ord(InfoSusp.indSusp)), 2));
     Gerador.wCampo(tcDat, '', 'dtDecisao', 0, 0, 1, InfoSusp.dtDecisao);
     Gerador.wCampo(tcStr, '', 'indDeposito', 0, 0, 1, eSSimNaoToStr(InfoSusp.indDeposito));
     Gerador.wGrupo('/infoSusp');
@@ -138,7 +139,7 @@ begin
   Gerador.wGrupo('dadosProcJud');
   Gerador.wCampo(tcStr, '', 'ufVara', 0, 0, 1, FinfoProcesso.IdeProcesso.DadosProcJud.UfVara);
   Gerador.wCampo(tcInt, '', 'codMunic', 0, 0, 1, FinfoProcesso.IdeProcesso.DadosProcJud.codMunic);
-  Gerador.wCampo(tcStr, '', 'idVara', 0, 0, 1, TReinfUtils.StrToZero(FinfoProcesso.IdeProcesso.DadosProcJud.idVara, 2));
+  Gerador.wCampo(tcStr, '', 'idVara', 0, 0, 1, Poem_Zeros(FinfoProcesso.IdeProcesso.DadosProcJud.idVara, 2));
   Gerador.wGrupo('/dadosProcJud');
 end;
 

@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -37,14 +37,15 @@
 |*  - Implementados registros que faltavam e isoladas as respectivas classes 
 *******************************************************************************}
 
-unit ACBrReinfR2030_Class;
+unit pcnReinfR2040_Class;
 
 interface
 
-uses Classes, Sysutils, pcnConversaoReinf, Controls, Contnrs;
+uses
+  Classes, Sysutils, pcnConversaoReinf, Controls, Contnrs;
 
 type
-  TrecursosRecs = class;
+  TrecursosReps = class;
   TinfoRecursos = class;
   TinfoProcs = class;
 
@@ -98,11 +99,11 @@ type
     property Items[Index: Integer]: TinfoRecurso read GetItem write SetItem;
   end;
 
-  { TrecursosRec }
-  TrecursosRec = class
+  { TrecursosRep }
+  TrecursosRep = class
   private
-    FcnpjOrigRecurso : String;
-    FvlrTotalRec     : double;
+    FcnpjAssocDesp : String;
+    FvlrTotalRep     : double;
     FvlrTotalRet     : double;
     FvlrTotalNRet    : double;
     FinfoRecursos    : TinfoRecursos;
@@ -110,23 +111,23 @@ type
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property cnpjOrigRecurso : String read FcnpjOrigRecurso write FcnpjOrigRecurso;
-    property vlrTotalRec : double read FvlrTotalRec write FvlrTotalRec;
+    property cnpjAssocDesp : String read FcnpjAssocDesp write FcnpjAssocDesp;
+    property vlrTotalRep : double read FvlrTotalRep write FvlrTotalRep;
     property vlrTotalRet : double read FvlrTotalRet write FvlrTotalRet;
     property vlrTotalNRet : double read FvlrTotalNRet write FvlrTotalNRet;
     property infoRecursos : TinfoRecursos read FinfoRecursos;
     property infoProcs : TinfoProcs read FinfoProcs;
   end;
 
-  { TrecursosRecs }
-  TrecursosRecs = class(TObjectList)
+  { TrecursosReps }
+  TrecursosReps = class(TObjectList)
   private
-    function GetItem(Index: Integer): TrecursosRec;
-    procedure SetItem(Index: Integer; const Value: TrecursosRec);
+    function GetItem(Index: Integer): TrecursosRep;
+    procedure SetItem(Index: Integer; const Value: TrecursosRep);
   public
-    function New: TrecursosRec;
+    function New: TrecursosRep;
 
-    property Items[Index: Integer]: TrecursosRec read GetItem write SetItem;
+    property Items[Index: Integer]: TrecursosRep read GetItem write SetItem;
   end;
 
   { TideEstab }
@@ -134,13 +135,13 @@ type
   private
     FtpInscEstab  : tpTpInsc;
     FnrInscEstab  : String;
-    FrecursosRecs : TrecursosRecs;
+    FrecursosReps : TrecursosReps;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
     property tpInscEstab : tpTpInsc read FtpInscEstab write FtpInscEstab;
     property nrInscEstab : String read FnrInscEstab write FnrInscEstab;
-    property recursosRecs : TrecursosRecs read FrecursosRecs;
+    property recursosReps : TrecursosReps read FrecursosReps;
   end;
 
 implementation
@@ -150,45 +151,45 @@ implementation
 procedure TideEstab.AfterConstruction;
 begin
   inherited;
-  FrecursosRecs := TrecursosRecs.Create;
+  FrecursosReps := TrecursosReps.Create;
 end;
 
 procedure TideEstab.BeforeDestruction;
 begin
   inherited;
-  FrecursosRecs.Free;
+  FrecursosReps.Free;
 end;
 
-{ TrecursosRec }
+{ TrecursosRep }
 
-procedure TrecursosRec.AfterConstruction;
+procedure TrecursosRep.AfterConstruction;
 begin
   inherited;
   FinfoRecursos := TinfoRecursos.Create;
   FinfoProcs    := TinfoProcs.Create;
 end;
 
-procedure TrecursosRec.BeforeDestruction;
+procedure TrecursosRep.BeforeDestruction;
 begin
   inherited;
   FinfoRecursos.Free;
   FinfoProcs.Free;
 end;
 
-{ TrecursosRecs }
+{ TrecursosReps }
 
-function TrecursosRecs.GetItem(Index: Integer): TrecursosRec;
+function TrecursosReps.GetItem(Index: Integer): TrecursosRep;
 begin
-  Result := TrecursosRec(Inherited Items[Index]);
+  Result := TrecursosRep(Inherited Items[Index]);
 end;
 
-function TrecursosRecs.New: TrecursosRec;
+function TrecursosReps.New: TrecursosRep;
 begin
-  Result := TrecursosRec.Create;
+  Result := TrecursosRep.Create;
   Add(Result);
 end;
 
-procedure TrecursosRecs.SetItem(Index: Integer; const Value: TrecursosRec);
+procedure TrecursosReps.SetItem(Index: Integer; const Value: TrecursosRep);
 begin
   Put(Index, Value);
 end;

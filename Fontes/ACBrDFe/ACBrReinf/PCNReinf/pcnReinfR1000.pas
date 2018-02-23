@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -37,12 +37,13 @@
 |*  - Compatibilizado Fonte com Delphi 7
 *******************************************************************************}
 
-unit ACBrReinfR1000;
+unit pcnReinfR1000;
 
 interface
 
-uses Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfClasses, ACBrReinfEventosBase,
-  ACBrReinfR1000_Class;
+uses
+  Classes, Sysutils, pcnGerador, pcnConversaoReinf, pcnReinfClasses,
+  ACBrReinfEventosBase, pcnReinfR1000_Class;
 
 type
 
@@ -65,8 +66,8 @@ implementation
 
 { TR1000 }
 
-uses pcnAuxiliar, ACBrUtil, ACBrReinfUtils, pcnConversao,
-  DateUtils;
+uses
+  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
 
 procedure TR1000.AfterConstruction;
 begin

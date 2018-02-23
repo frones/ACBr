@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -41,7 +41,9 @@ unit ACBrReinfEventosBase;
 
 interface
 
-uses Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfClasses, ACBrDFe, Contnrs, TypInfo;
+uses
+  Classes, Sysutils, Contnrs, TypInfo,
+  pcnGerador, pcnConversaoReinf, pcnReinfClasses, ACBrDFe;
 
 type
 
@@ -126,7 +128,9 @@ type
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil, pcnLeitor, ACBrReinf, ACBrReinfUtils, pcnConversao, ACBrDFeUtil, DateUtils;
+uses
+  pcnAuxiliar, ACBrUtil, pcnLeitor, ACBrReinf, pcnConversao,
+  ACBrDFeUtil, DateUtils;
 
 procedure TEventoReinf.AfterConstruction;
 begin

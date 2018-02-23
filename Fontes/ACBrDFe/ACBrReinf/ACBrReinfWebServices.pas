@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -44,7 +44,8 @@ unit ACBrReinfWebServices;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFe, ACBrDFeWebService, pcnLeitor, ACBrUtil, pcnConversaoReinf, ACBrReinfRetEventos, pcnGerador;
+  Classes, SysUtils, ACBrDFe, ACBrDFeWebService, pcnLeitor, ACBrUtil,
+  pcnConversaoReinf, pcnReinfRetEventos, pcnGerador;
 
 type
 
@@ -115,9 +116,10 @@ type
 
 implementation
 
-{ TReinfWebService }
+uses
+  blcksock, ACBrReinf, DateUtils, pcnConversao, pcnReinfClasses;
 
-uses blcksock, ACBrReinf, DateUtils, pcnConversao, ACBrReinfClasses;
+{ TReinfWebService }
 
 procedure TReinfWebService.ConfigurarSoapDEPC;
 begin
@@ -190,6 +192,7 @@ begin
   {$ELSE}
    Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
   {$ENDIF}
+
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
   Texto := Texto + '<' + 'v1:ReceberLoteEventos>';
@@ -200,7 +203,7 @@ begin
   Texto := Texto + '</' + FPSoapVersion + ':Body>';
   Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
 
-  Texto := '<?xml version="1.0" encoding="utf-8"?>' + Texto;
+//  Texto := '<?xml version="1.0" encoding="utf-8"?>' + Texto;
   FPEnvelopeSoap := Texto;
 end;
 
@@ -220,7 +223,9 @@ begin
     with TStringList.Create do
     try
       Text := FPEnvelopeSoap;
-      SaveToFile(Path+'\'+'E_Reinf_Soap'+'-'+ IntTostr(HourOf(Now))+ IntTostr(MinuteOf(Now))+IntTostr(SecondOf(Now)) + '_' +IntTostr(MilliSecondOf(Now)) + '.xml');
+      SaveToFile(Path+'\'+'E_Reinf_Soap'+'-'+ IntTostr(HourOf(Now))+
+                 IntTostr(MinuteOf(Now))+IntTostr(SecondOf(Now)) + '_' +
+                 IntTostr(MilliSecondOf(Now)) + '.xml');
     finally
       Free;
     end;
@@ -237,9 +242,13 @@ begin
     with TStringList.Create do
     try
       Text := FPRetornoWS;
-      SaveToFile(Path+'\'+'R_Reinf_Soap'+'-' + IntTostr(HourOf(Now))+ IntTostr(MinuteOf(Now))+IntTostr(SecondOf(Now)) + '_' +IntTostr(MilliSecondOf(Now)) + '.xml');
+      SaveToFile(Path+'\'+'R_Reinf_Soap'+'-' + IntTostr(HourOf(Now))+
+                 IntTostr(MinuteOf(Now))+IntTostr(SecondOf(Now)) + '_' +
+                 IntTostr(MilliSecondOf(Now)) + '.xml');
       Text := FPRetWS;
-      SaveToFile(Path+'\'+'RReinf'+'-'+ IntTostr(HourOf(Now))+ IntTostr(MinuteOf(Now))+IntTostr(SecondOf(Now)) + '_' +IntTostr(MilliSecondOf(Now)) + '.xml');
+      SaveToFile(Path+'\'+'RReinf'+'-'+ IntTostr(HourOf(Now))+
+                 IntTostr(MinuteOf(Now))+IntTostr(SecondOf(Now)) + '_' +
+                 IntTostr(MilliSecondOf(Now)) + '.xml');
     finally
       Free;
     end;

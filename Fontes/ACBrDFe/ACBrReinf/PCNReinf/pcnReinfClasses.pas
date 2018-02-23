@@ -39,7 +39,7 @@
 |*  - Implementados registros que faltavam e isoladas as respectivas classes
 *******************************************************************************}
 
-unit ACBrReinfClasses;
+unit pcnReinfClasses;
 
 interface
 

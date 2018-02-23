@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -30,60 +30,55 @@
 {                                                                              }
 { Leivio Ramos de Fontenele  -  leivio@yahoo.com.br                            }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 04/12/2017: Renato Rubinho
-|*  - Implementados registros que faltavam e isoladas as respectivas classes 
-*******************************************************************************}
 
-unit ACBrReinfR9000;
+unit pcnReinfRetEventos;
 
 interface
 
-uses Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
-  ACBrReinfClasses, ACBrReinfR9000_Class;
+uses
+  pcnReinfClasses;
 
 type
 
-  TR9000 = class(TEventoReinf)
+  TRetornoLoteEventos = class
   private
-    FinfoExclusao: TinfoExclusao;
-  protected
-    procedure GerarEventoXML; override;
+    FACBrReinf: TObject;
+    FIdeTransmissor: TIdeTransmissor;
+    FStatus: TStatus;
+    FEventos: TRetEventos;
   public
-    property infoExclusao: TinfoExclusao read FinfoExclusao;
+    constructor Create(AOwner: TObject); reintroduce;
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
+  	property IdeTransmissor : TIdeTransmissor read FIdeTransmissor;
+    property Status: TStatus read FStatus;
+    property Eventos: TRetEventos read FEventos write FEventos;
   end;
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil, ACBrReinfUtils, pcnConversao, DateUtils;
+{ TRetornoLoteEventos }
 
-
-{ TR9000 }
-
-procedure TR9000.AfterConstruction;
+procedure TRetornoLoteEventos.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtExclusao);
-  FinfoExclusao := TinfoExclusao.Create;
+  FIdeTransmissor := TIdeTransmissor.Create;
+  FStatus := TStatus.Create;
+  FEventos := TRetEventos.Create;
 end;
 
-procedure TR9000.BeforeDestruction;
+procedure TRetornoLoteEventos.BeforeDestruction;
 begin
   inherited;
-  FinfoExclusao.Free;
+  FEventos.Free;
+  FIdeTransmissor.Free;
+  FStatus.Free;
 end;
 
-procedure TR9000.GerarEventoXML;
+constructor TRetornoLoteEventos.Create(AOwner: TObject);
 begin
-  Gerador.wGrupo('infoExclusao');
-  Gerador.wCampo(tcStr, '', 'tpEvento', 0, 0, 1, FinfoExclusao.tpEvento);
-  Gerador.wCampo(tcStr, '', 'nrRecEvt', 0, 0, 1, FinfoExclusao.nrRecEvt);
-  Gerador.wCampo(tcStr, '', 'perApur', 0, 0, 1, FinfoExclusao.perApur);
-  Gerador.wGrupo('/infoExclusao');
+  Inherited Create;
+  FACBrReinf := AOwner;
 end;
 
 end.

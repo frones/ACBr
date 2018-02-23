@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -37,71 +37,51 @@
 |*  - Implementados registros que faltavam e isoladas as respectivas classes 
 *******************************************************************************}
 
-unit ACBrReinfR2099;
+unit pcnReinfR5001;
+
 
 interface
 
-uses Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
-  ACBrReinfClasses, ACBrReinfR2099_Class;
+uses
+  Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
+  pcnReinfClasses, pcnReinfR5001_Class;
 
 type
 
-  TR2099 = class(TEventoReinfR)
+  TR5001 = class(TEventoReinfR)
   private
-    FideRespInf: TideRespInf;
-    FinfoFech: TinfoFech;
   protected
     procedure GerarEventoXML; override;
   public
-    property ideRespInf: TideRespInf read FideRespInf;
-    property infoFech: TinfoFech read FinfoFech;
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
   end;
 
 implementation
 
-uses pcnAuxiliar, ACBrUtil, ACBrReinfUtils, pcnConversao, DateUtils;
+uses
+  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
 
-{ TR2099 }
 
-procedure TR2099.AfterConstruction;
+{ TR5001 }
+
+procedure TR5001.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtFechaEvPer);
-  FideRespInf := TideRespInf.Create;
-  FinfoFech := TinfoFech.Create;
+  SetSchema(rsevtTotal);
 end;
 
-procedure TR2099.BeforeDestruction;
+procedure TR5001.BeforeDestruction;
 begin
   inherited;
-  FideRespInf.Free;
-  FinfoFech.Free;
 end;
 
-procedure TR2099.GerarEventoXML;
+procedure TR5001.GerarEventoXML;
 begin
-  if (FideRespInf.nmResp <> EmptyStr) and (FideRespInf.cpfResp <> EmptyStr) then
-  begin
-    Gerador.wGrupo('ideRespInf');
-    Gerador.wCampo(tcStr, '', 'nmResp',   0, 0, 1, FideRespInf.nmResp);
-    Gerador.wCampo(tcStr, '', 'cpfResp',  0, 0, 1, FideRespInf.cpfResp);
-    Gerador.wCampo(tcStr, '', 'telefone', 0, 0, 0, FideRespInf.telefone);
-    Gerador.wCampo(tcStr, '', 'email',    0, 0, 0, FideRespInf.email);
-    Gerador.wGrupo('/ideRespInf');
-  end;
-
-  Gerador.wGrupo('infoFech');
-  Gerador.wCampo(tcStr, '', 'evtServTm',     0, 0, 1, eSSimNaoToStr(FinfoFech.evtServTm));
-  Gerador.wCampo(tcStr, '', 'evtServPr',     0, 0, 1, eSSimNaoToStr(FinfoFech.evtServPr));
-  Gerador.wCampo(tcStr, '', 'evtAssDespRec', 0, 0, 1, eSSimNaoToStr(FinfoFech.evtAssDespRec));
-  Gerador.wCampo(tcStr, '', 'evtAssDespRep', 0, 0, 1, eSSimNaoToStr(FinfoFech.evtAssDespRep));
-  Gerador.wCampo(tcStr, '', 'evtComProd',    0, 0, 1, eSSimNaoToStr(FinfoFech.evtComProd));
-  Gerador.wCampo(tcStr, '', 'evtCPRB',       0, 0, 1, eSSimNaoToStr(FinfoFech.evtCPRB));
-  Gerador.wCampo(tcStr, '', 'evtPgtos',      0, 0, 1, eSSimNaoToStr(FinfoFech.evtPgtos));
-  Gerador.wCampo(tcStr, '', 'evtServTm',     0, 0, 0, FinfoFech.compSemMovto);
-  Gerador.wGrupo('/infoFech');
+  inherited;
+  
+  Gerador.wGrupo('ideRecRetorno');
+  Gerador.wGrupo('/ideRecRetorno');
 end;
 
 end.

@@ -1,7 +1,7 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
-{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{ Projeto: Componente ACBrReinf                                                }
+{  Biblioteca multiplataforma de componentes Delphi para envio de eventos do   }
+{ Reinf                                                                        }
 
 { Direitos Autorais Reservados (c) 2017 Leivio Ramos de Fontenele              }
 {                                                                              }
@@ -31,48 +31,48 @@
 { Leivio Ramos de Fontenele  -  leivio@yahoo.com.br                            }
 {******************************************************************************}
 
-unit ACBrReinfUtils;
+unit pcnReinfR2098;
+
 
 interface
 
 uses
-  SysUtils, TypInfo, pcnConversaoReinf;
+  Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
+  pcnReinfClasses, pcnReinfR2098_Class;
 
 type
 
-  TReinfUtils = class
+  TR2098 = class(TEventoReinfR)
+  private
+  protected
+    procedure GerarEventoXML; override;
   public
-    class function StrToZero(const AString: string; ATamanho : Integer; AEsquerda: Boolean = true): string;
+    procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
   end;
-
-function eSSimNaoToStr(AValue: tpSimNao): string;
 
 implementation
 
-function eSSimNaoToStr(AValue: tpSimNao): string;
+uses
+  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
+
+
+{ TR2098 }
+
+procedure TR2098.AfterConstruction;
 begin
-  if AValue = tpSim then
-    Result := 'S'
-  else
-    Result := 'N';
+  inherited;
+  SetSchema(RSevtReabreEvPer);
 end;
 
-{ TReinfUtils }
-
-class function TReinfUtils.StrToZero(const AString: string; ATamanho: Integer; AEsquerda: Boolean): string;
-var
-  Str: string;
+procedure TR2098.BeforeDestruction;
 begin
-  Str := AString;
-  while Length(Str) < ATamanho do
-  begin
-    if AEsquerda then
-      Str := '0' + Str
-    Else
-      Str := Str + '0';
-  end;
-  Result := Str;
+  inherited;
+end;
+
+procedure TR2098.GerarEventoXML;
+begin
+
 end;
 
 end.
-

@@ -299,7 +299,11 @@ begin
 
   with FLote.IdeTransmissor do
   begin
-    TpInsc := tiCNPJ;
+    if Length(TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdTransmissor) = 14 then
+      TpInsc := tiCNPJ
+    else
+      TpInsc := tiCPF;
+
     NrInsc := TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdTransmissor;
   end;
 

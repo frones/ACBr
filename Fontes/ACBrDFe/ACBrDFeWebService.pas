@@ -363,7 +363,12 @@ begin
         if (FPDFeOwner.Integrador.Respostas.Count >= 6) then
           FPRetornoWS := DecodeBase64(FPDFeOwner.Integrador.Respostas[6])
         else
-          raise EACBrDFeException.Create('Resposta do Integrador inválida');
+        begin
+          if (FPDFeOwner.Integrador.Respostas.Count >= 2) then
+            raise EACBrDFeException.Create(FPDFeOwner.Integrador.Respostas[2])
+          else
+            raise EACBrDFeException.Create('Resposta do Integrador inválida');
+        end;
       end
       else
         FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);

@@ -6,19 +6,20 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, ExtCtrls, ComCtrls, rxPlacemnt,
+  Controls, Forms, Dialogs, StdCtrls, ExtCtrls, ComCtrls,
   ACBrReinf, ACBrReinfWebServices, pcnConversaoReinf, ACBrReinfEventos, ACBrBase,
-  ACBrDFe, Spin, Buttons, ACBrUtil, IniFiles, Math, blcksock, StrUtils, TypInfo, FileCtrl,
-  ACBrReinfR1000, ACBrReinfR1070, ACBrReinfR2010, ACBrReinfR2020,
-  ACBrReinfR2030, ACBrReinfR2040, ACBrReinfR2050, ACBrReinfR3010,
-  ACBrReinfR2099, ACBrReinfR2098, ACBrReinfR9000, ACBrDFeConfiguracoes,
-  ACBrReinfR1000_Class, ACBrReinfR1070_Class, ACBrReinfR2010_Class, ACBrReinfR2020_Class,
-  ACBrReinfR2030_Class, ACBrReinfR2040_Class, ACBrReinfR2050_Class, ACBrReinfR3010_Class,
-  ACBrReinfR2099_Class, ACBrReinfR2098_Class, ACBrReinfR9000_Class;
+  ACBrDFe, Spin, Buttons, ACBrUtil, IniFiles, Math, blcksock, StrUtils, TypInfo,
+  FileCtrl, pcnReinfR2010_Class;
+
+//  ACBrReinfR1000, ACBrReinfR1070, ACBrReinfR2010, ACBrReinfR2020,
+//  ACBrReinfR2030, ACBrReinfR2040, ACBrReinfR2050, ACBrReinfR3010,
+//  ACBrReinfR2099, ACBrReinfR2098, ACBrReinfR9000, ACBrDFeConfiguracoes,
+//  ACBrReinfR1000_Class, ACBrReinfR1070_Class, ACBrReinfR2010_Class, ACBrReinfR2020_Class,
+//  ACBrReinfR2030_Class, ACBrReinfR2040_Class, ACBrReinfR2050_Class, ACBrReinfR3010_Class,
+//  ACBrReinfR2099_Class, ACBrReinfR2098_Class, ACBrReinfR9000_Class;
 
 type
   TForm2 = class(TForm)
-    FormStorage1: TFormStorage;
     Panel2: TPanel;
     lblColaborador: TLabel;
     lblPatrocinador: TLabel;
@@ -209,6 +210,7 @@ type
     chk2040: TCheckBox;
     chk2050: TCheckBox;
     rdgOperacao: TRadioGroup;
+    ACBrReinf1: TACBrReinf;
     procedure btnGerarClick(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
     procedure lblPatrocinadorClick(Sender: TObject);
@@ -216,7 +218,6 @@ type
     procedure lblColaboradorMouseEnter(Sender: TObject);
     procedure lblColaboradorMouseLeave(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -243,7 +244,6 @@ type
     procedure Button11Click(Sender: TObject);
     procedure chk1000Click(Sender: TObject);
   private
-    FACBrReinf: TACBrReinf;
     { Private declarations }
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
@@ -279,7 +279,7 @@ implementation
 {$R *.dfm}
 
 uses
-  ACBrDFeSSL, pcnConversao, ShellAPI, ACBrReinfClasses, Unit2,
+  ACBrDFeSSL, pcnConversao, ShellAPI, pcnReinfClasses, Unit2,
   ACBrReinfEventosBase;
 
 const
@@ -302,31 +302,31 @@ var
 begin
   mmoRet.Clear;
   edProtocolo.Text := '';
-  FACBrReinf.Configuracoes.VersaoReinf := TpcnVersaoReinf(cbVersaoDF.ItemIndex);
+  ACBrReinf1.Configuracoes.VersaoReinf := TpcnVersaoReinf(cbVersaoDF.ItemIndex);
 
   {IdeEvento}
-  FACBrReinf.IdeEvento.TpAmb := TpTpAmb( rgTipoAmb.ItemIndex + 1 );
-  FACBrReinf.IdeEvento.ProcEmi := peAplicEmpregador;
-  FACBrReinf.IdeEvento.VerProc := '1.0';
+  ACBrReinf1.IdeEvento.TpAmb := TpTpAmb( rgTipoAmb.ItemIndex + 1 );
+  ACBrReinf1.IdeEvento.ProcEmi := peAplicEmpregador;
+  ACBrReinf1.IdeEvento.VerProc := '1.0';
   {IdeEvento}
-  FACBrReinf.ideContri.TpInsc := tiCNPJ;
-  FACBrReinf.ideContri.NrInsc := edtEmitCNPJ.Text;
+  ACBrReinf1.ideContri.TpInsc := tiCNPJ;
+  ACBrReinf1.ideContri.NrInsc := edtEmitCNPJ.Text;
 
-  FACBrReinf.OnBeforeEnviar := AntesDeEnviar;
-  FACBrReinf.OnAfterEnviar := DepoisDeEnviar;
+  ACBrReinf1.OnBeforeEnviar := AntesDeEnviar;
+  ACBrReinf1.OnAfterEnviar := DepoisDeEnviar;
   try
-    FACBrReinf.Eventos.Items.Clear;
+    ACBrReinf1.Eventos.Items.Clear;
     PreencherXMLEventos;
 
-    if FACBrReinf.Enviar then
+    if ACBrReinf1.Enviar then
     begin
-      mmoRet.Lines.Add('ideTransmissor: '+ FACBrReinf.WebServices.RetEventos.IdeTransmissor.IdTransmissor);
-      mmoRet.Lines.Add('cdStatus: '+ IntToStr(FACBrReinf.WebServices.RetEventos.Status.cdStatus));
+      mmoRet.Lines.Add('ideTransmissor: '+ ACBrReinf1.WebServices.RetEventos.IdeTransmissor.IdTransmissor);
+      mmoRet.Lines.Add('cdStatus: '+ IntToStr(ACBrReinf1.WebServices.RetEventos.Status.cdStatus));
       mmoRet.Lines.Add('retornoEventos');
       Retorno := '';
-      for i:=0 to FACBrReinf.WebServices.RetEventos.Eventos.Count - 1 do
+      for i:=0 to ACBrReinf1.WebServices.RetEventos.Eventos.Count - 1 do
       begin
-        Evento := FACBrReinf.WebServices.RetEventos.Eventos.Items[i];
+        Evento := ACBrReinf1.WebServices.RetEventos.Eventos.Items[i];
 
         mmoRet.Lines.Add('Evento Id: ' + Evento.Id);
         mmoRet.Lines.Add('*ideContrib ');
@@ -369,8 +369,8 @@ begin
         sAux1 := Copy( Memo2.Lines.Text, 1, Pos('</dadosRegistroOcorrenciaLote>', Memo2.Lines.Text ) - 1 );
         if ( sAux1 <> '' ) then
         begin
-          Retorno := IntToStr( FACBrReinf.WebServices.RetEventos.Status.cdStatus ) + ' - ' +
-                     FACBrReinf.WebServices.RetEventos.Status.descRetorno;
+          Retorno := IntToStr( ACBrReinf1.WebServices.RetEventos.Status.cdStatus ) + ' - ' +
+                     ACBrReinf1.WebServices.RetEventos.Status.descRetorno;
 
           sAux2 := Copy( sAux1, 1, Pos('</descricao>', sAux1 ) - 1 );
           if ( sAux2 <> '' ) then
@@ -452,7 +452,7 @@ end;
 
 procedure TForm2.GerarReinf1000;
 begin
-  with FACBrReinf.Eventos.AddR1000 do
+  with ACBrReinf1.Eventos.AddR1000 do
   begin
     TipoOperacao := GetTipoOperacao;
 
@@ -500,7 +500,7 @@ end;
 
 procedure TForm2.GerarReinf1070;
 begin
-  with FACBrReinf.Eventos.AddR1070 do
+  with ACBrReinf1.Eventos.AddR1070 do
   begin
     TipoOperacao := GetTipoOperacao;
     InfoProcesso.IdePeriodo.IniValid := '2017-01';
@@ -533,7 +533,7 @@ end;
 
 procedure TForm2.GerarReinf2010;
 begin
-  with FACBrReinf.Eventos.AddR2010 do
+  with ACBrReinf1.Eventos.AddR2010 do
   begin
     indRetif := trOriginal;
 
@@ -595,7 +595,7 @@ end;
 
 procedure TForm2.GerarReinf2020;
 begin
-  with FACBrReinf.Eventos.AddR2020 do
+  with ACBrReinf1.Eventos.AddR2020 do
   begin
     indRetif := trOriginal;
 
@@ -654,7 +654,7 @@ end;
 
 procedure TForm2.GerarReinf2030;
 begin
-  with FACBrReinf.Eventos.AddR2030 do
+  with ACBrReinf1.Eventos.AddR2030 do
   begin
     indRetif := trOriginal;
 
@@ -701,7 +701,7 @@ end;
 
 procedure TForm2.GerarReinf2040;
 begin
-  with FACBrReinf.Eventos.AddR2040 do
+  with ACBrReinf1.Eventos.AddR2040 do
   begin
     indRetif := trOriginal;
 
@@ -748,7 +748,7 @@ end;
 
 procedure TForm2.GerarReinf2050;
 begin
-  with FACBrReinf.Eventos.AddR2050 do
+  with ACBrReinf1.Eventos.AddR2050 do
   begin
     indRetif := trOriginal;
 
@@ -798,7 +798,7 @@ end;
 
 procedure TForm2.GerarReinf2060;
 begin
-  with FACBrReinf.Eventos.AddR2060 do
+  with ACBrReinf1.Eventos.AddR2060 do
   begin
     indRetif := trOriginal;
 
@@ -855,7 +855,7 @@ begin
 
   EXIT;
 
-  with FACBrReinf.Eventos.AddR2070 do
+  with ACBrReinf1.Eventos.AddR2070 do
   begin
     perApur := FormatDateTime( 'yyyy-mm', Now );
   end;
@@ -863,7 +863,7 @@ end;
 
 procedure TForm2.GerarReinf2098;
 begin
-  with FACBrReinf.Eventos.AddR2098 do
+  with ACBrReinf1.Eventos.AddR2098 do
   begin
     perApur := FormatDateTime( 'yyyy-mm', Now );
   end;
@@ -871,7 +871,7 @@ end;
 
 procedure TForm2.GerarReinf2099;
 begin
-  with FACBrReinf.Eventos.AddR2099 do
+  with ACBrReinf1.Eventos.AddR2099 do
   begin
     perApur := FormatDateTime( 'yyyy-mm', Now );
     with ideRespInf do
@@ -899,7 +899,7 @@ end;
 
 procedure TForm2.GerarReinf3010;
 begin
-  with FACBrReinf.Eventos.AddR3010 do
+  with ACBrReinf1.Eventos.AddR3010 do
   begin
     indRetif := trOriginal;
 
@@ -977,7 +977,7 @@ end;
 
 procedure TForm2.GerarReinf9000;
 begin
-  with FACBrReinf.Eventos.AddR9000 do
+  with ACBrReinf1.Eventos.AddR9000 do
   begin
     infoExclusao.tpEvento := cbEvento.Items.Strings[cbEvento.ItemIndex];
     infoExclusao.nrRecEvt := Trim(edRecibo.Text);
@@ -1124,10 +1124,10 @@ begin
       edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
       edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
 
-      FACBrReinf.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
-      FACBrReinf.Configuracoes.Certificados.Senha       := edtSenha.Text;
-      FACBrReinf.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-      FACBrReinf.Configuracoes.Certificados.VerificarValidade := True;
+      ACBrReinf1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
+      ACBrReinf1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+      ACBrReinf1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
+      ACBrReinf1.Configuracoes.Certificados.VerificarValidade := True;
 
       cbxAtualizarXML.Checked    := Ini.ReadBool(   'Geral','AtualizarXML',True) ;
       cbxExibirErroSchema.Checked    := Ini.ReadBool(   'Geral','ExibirErroSchema',True) ;
@@ -1142,9 +1142,9 @@ begin
       edtPathLogs.Text     := Ini.ReadString( 'Geral','PathSalvar'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs') ;
       edtPathSchemas.Text  := Ini.ReadString( 'Geral','PathSchemas'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\Reinf') ;
 
-      FACBrReinf.Configuracoes.VersaoReinf := TpcnVersaoReinf(cbVersaoDF.ItemIndex);
+      ACBrReinf1.Configuracoes.VersaoReinf := TpcnVersaoReinf(cbVersaoDF.ItemIndex);
 
-      with FACBrReinf.Configuracoes.Geral do
+      with ACBrReinf1.Configuracoes.Geral do
        begin
          SSLLib                := TSSLLib(cbSSLLib.ItemIndex);
          SSLCryptLib           := TSSLCryptLib(cbCryptLib.ItemIndex);
@@ -1173,14 +1173,14 @@ begin
       edtProxyUser.Text  := Ini.ReadString( 'Proxy','User'   ,'') ;
       edtProxySenha.Text := Ini.ReadString( 'Proxy','Pass'   ,'') ;
 
-      with FACBrReinf.SSL do
+      with ACBrReinf1.SSL do
       begin
         DescarregarCertificado;
         SSLDgst := dgstSHA256;
         SSLType := TSSLType( cbSSLType.ItemIndex );
       end;  
 
-      with FACBrReinf.Configuracoes.WebServices do
+      with ACBrReinf1.Configuracoes.WebServices do
        begin
          if ( rgTipoAmb.ItemIndex = 0 ) then
            Ambiente := taProducao
@@ -1205,7 +1205,7 @@ begin
          if NaoEstaVazio(edtIntervalo.Text) then
             IntervaloTentativas := ifThen(StrToInt(edtIntervalo.Text)<1000,StrToInt(edtIntervalo.Text)*1000,StrToInt(edtIntervalo.Text))
          else
-            edtIntervalo.Text := IntToStr(FACBrReinf.Configuracoes.WebServices.IntervaloTentativas);
+            edtIntervalo.Text := IntToStr(ACBrReinf1.Configuracoes.WebServices.IntervaloTentativas);
 
          TimeOut := seTimeOut.Value;
          ProxyHost := edtProxyHost.Text;
@@ -1222,7 +1222,7 @@ begin
       edtPathReinf.Text           := Ini.ReadString( 'Arquivos','PathReinf' ,'') ;
       edtPathEvento.Text          := Ini.ReadString( 'Arquivos','PathEvento','') ;
 
-      with FACBrReinf.Configuracoes.Arquivos do
+      with ACBrReinf1.Configuracoes.Arquivos do
        begin
          SepararPorCNPJ     := cbxSepararPorCNPJ.Checked;
          Salvar             := cbxSalvarArqs.Checked;
@@ -1273,8 +1273,6 @@ var
  Y: TSSLType;
  R: TpcnVersaoReinf;
 begin
-  FACBrReinf := TACBrReinf.Create(nil);
-
   cbSSLLib.Items.Clear ;
   For T := Low(TSSLLib) to High(TSSLLib) do
     cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) ) ;
@@ -1315,22 +1313,17 @@ begin
   LerConfiguracao;
   PageControl1.ActivePageIndex := 0;
 
-  FACBrReinf.Configuracoes.WebServices.Salvar := true;
-end;
-
-procedure TForm2.FormDestroy(Sender: TObject);
-begin
-  FreeAndNil( FACBrReinf );
+  ACBrReinf1.Configuracoes.WebServices.Salvar := true;
 end;
 
 procedure TForm2.AtualizaSSLLibsCombo;
 begin
- cbSSLLib.ItemIndex := Integer( FACBrReinf.Configuracoes.Geral.SSLLib );
- cbCryptLib.ItemIndex := Integer( FACBrReinf.Configuracoes.Geral.SSLCryptLib );
- cbHttpLib.ItemIndex := Integer( FACBrReinf.Configuracoes.Geral.SSLHttpLib );
- cbXmlSignLib.ItemIndex := Integer( FACBrReinf.Configuracoes.Geral.SSLXmlSignLib );
+ cbSSLLib.ItemIndex := Integer( ACBrReinf1.Configuracoes.Geral.SSLLib );
+ cbCryptLib.ItemIndex := Integer( ACBrReinf1.Configuracoes.Geral.SSLCryptLib );
+ cbHttpLib.ItemIndex := Integer( ACBrReinf1.Configuracoes.Geral.SSLHttpLib );
+ cbXmlSignLib.ItemIndex := Integer( ACBrReinf1.Configuracoes.Geral.SSLXmlSignLib );
 
- cbSSLType.Enabled := (FACBrReinf.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]) ;
+ cbSSLType.Enabled := (ACBrReinf1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]) ;
 end;
 
 procedure TForm2.btnSalvarConfigClick(Sender: TObject);
@@ -1359,7 +1352,7 @@ var
 begin
   frSelecionarCertificado := TfrSelecionarCertificado.Create(Self);
   try
-    FACBrReinf.SSL.LerCertificadosStore;
+    ACBrReinf1.SSL.LerCertificadosStore;
     AddRow := False;
 
     with frSelecionarCertificado.StringGrid1 do
@@ -1376,9 +1369,9 @@ begin
       Cells[ 4, 0 ] := 'Certificadora';
     end;
 
-    For I := 0 to FACBrReinf.SSL.ListaCertificados.Count-1 do
+    For I := 0 to ACBrReinf1.SSL.ListaCertificados.Count-1 do
     begin
-      with FACBrReinf.SSL.ListaCertificados[I] do
+      with ACBrReinf1.SSL.ListaCertificados[I] do
       begin
         ASerie := NumeroSerie;
         if (CNPJ <> '') then
@@ -1412,41 +1405,41 @@ end;
 
 procedure TForm2.sbtnGetCertClick(Sender: TObject);
 begin
-  edtNumSerie.Text := FACBrReinf.SSL.SelecionarCertificado;
+  edtNumSerie.Text := ACBrReinf1.SSL.SelecionarCertificado;
 end;
 
 procedure TForm2.Button2Click(Sender: TObject);
 begin
-  ShowMessage( FormatDateBr(FACBrReinf.SSL.CertDataVenc) );
+  ShowMessage( FormatDateBr(ACBrReinf1.SSL.CertDataVenc) );
 end;
 
 procedure TForm2.Button3Click(Sender: TObject);
 begin
-  ShowMessage( FACBrReinf.SSL.CertNumeroSerie );
+  ShowMessage( ACBrReinf1.SSL.CertNumeroSerie );
 end;
 
 procedure TForm2.Button4Click(Sender: TObject);
 begin
-  ShowMessage( FACBrReinf.SSL.CertSubjectName + sLineBreak + sLineBreak +
-               'Razão Social: '+FACBrReinf.SSL.CertRazaoSocial);   
+  ShowMessage( ACBrReinf1.SSL.CertSubjectName + sLineBreak + sLineBreak +
+               'Razão Social: '+ACBrReinf1.SSL.CertRazaoSocial);   
 end;
 
 procedure TForm2.Button5Click(Sender: TObject);
 begin
-  ShowMessage( FACBrReinf.SSL.CertCNPJ );
+  ShowMessage( ACBrReinf1.SSL.CertCNPJ );
 end;
 
 procedure TForm2.Button10Click(Sender: TObject);
 begin
- ShowMessage( FACBrReinf.SSL.CertIssuerName + sLineBreak + sLineBreak +
-              'Certificadora: '+FACBrReinf.SSL.CertCertificadora);
+ ShowMessage( ACBrReinf1.SSL.CertIssuerName + sLineBreak + sLineBreak +
+              'Certificadora: '+ACBrReinf1.SSL.CertCertificadora);
 end;
 
 procedure TForm2.Button6Click(Sender: TObject);
 var
   Ahash: AnsiString;
 begin
-  Ahash := FACBrReinf.SSL.CalcHash(edHash.Text, dgstSHA256, outBase64, cbAssinar.Checked);
+  Ahash := ACBrReinf1.SSL.CalcHash(edHash.Text, dgstSHA256, outBase64, cbAssinar.Checked);
   mmoRet.Lines.Add( Ahash );
   PageControl1.ActivePageIndex := 1;
 end;
@@ -1467,12 +1460,12 @@ begin
      ' </soapenv:Body>' +
      ' </soapenv:Envelope>';
 
-  OldUseCert := FACBrReinf.SSL.UseCertificateHTTP;
-  FACBrReinf.SSL.UseCertificateHTTP := False;
+  OldUseCert := ACBrReinf1.SSL.UseCertificateHTTP;
+  ACBrReinf1.SSL.UseCertificateHTTP := False;
   try
-    mmoRet.Lines.Text := FACBrReinf.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
+    mmoRet.Lines.Text := ACBrReinf1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
   finally
-    FACBrReinf.SSL.UseCertificateHTTP := OldUseCert;
+    ACBrReinf1.SSL.UseCertificateHTTP := OldUseCert;
   end;
   PageControl1.ActivePageIndex := 1;
 end;
@@ -1481,7 +1474,7 @@ procedure TForm2.Button9Click(Sender: TObject);
 var
   Erro, AName: String;
 begin
-  with FACBrReinf.SSL do
+  with ACBrReinf1.SSL do
   begin
      CarregarCertificadoPublico(mmoRet.Lines.Text);
      mmoRet.Lines.Add(CertIssuerName);
@@ -1537,7 +1530,7 @@ procedure TForm2.cbSSLLibChange(Sender: TObject);
 begin
   try
     if cbSSLLib.ItemIndex <> -1 then
-      FACBrReinf.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+      ACBrReinf1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
   finally
     AtualizaSSLLibsCombo;
   end;
@@ -1547,7 +1540,7 @@ procedure TForm2.cbCryptLibChange(Sender: TObject);
 begin
   try
     if cbCryptLib.ItemIndex <> -1 then
-      FACBrReinf.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+      ACBrReinf1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
   finally
     AtualizaSSLLibsCombo;
   end;
@@ -1557,7 +1550,7 @@ procedure TForm2.cbHttpLibChange(Sender: TObject);
 begin
   try
     if cbHttpLib.ItemIndex <> -1 then
-      FACBrReinf.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+      ACBrReinf1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
   finally
     AtualizaSSLLibsCombo;
   end;
@@ -1567,7 +1560,7 @@ procedure TForm2.cbXmlSignLibChange(Sender: TObject);
 begin
   try
     if cbXmlSignLib.ItemIndex <> -1 then
-      FACBrReinf.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+      ACBrReinf1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
   finally
     AtualizaSSLLibsCombo;
   end;
@@ -1576,7 +1569,7 @@ end;
 procedure TForm2.cbSSLTypeChange(Sender: TObject);
 begin
   if cbSSLType.ItemIndex <> -1 then
-    FACBrReinf.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
+    ACBrReinf1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
 end;
 
 procedure TForm2.Button8Click(Sender: TObject);
@@ -1601,7 +1594,7 @@ begin
   if not OpenDialog1.Execute then
     exit;
 
-  FACBrReinf.SSL.Validar(tsAux1.Text, // Copy( tsAux1.Text, 1, Length(tsAux1.Text) - 2 ),
+  ACBrReinf1.SSL.Validar(tsAux1.Text, // Copy( tsAux1.Text, 1, Length(tsAux1.Text) - 2 ),
                          OpenDialog1.FileName,
                          Erro);
   FreeAndNil( tsAux1 );
@@ -1623,7 +1616,7 @@ begin
   tsAux1 := TStringList.Create;
   tsAux1.LoadFromFile( OpenDialog1.FileName );
 
-  if FACBrReinf.SSL.VerificarAssinatura(Copy( tsAux1.Text, 1, Length(tsAux1.Text) - 2 ),
+  if ACBrReinf1.SSL.VerificarAssinatura(Copy( tsAux1.Text, 1, Length(tsAux1.Text) - 2 ),
                                      Erro,
                                      '',
                                      'Signature') then
@@ -1661,11 +1654,9 @@ begin
   lblRecibo.Visible       := edRecibo.Visible;
 
   cbEvento.Visible        := ( chk9000.Checked );
-                               
+
   lblEvento.Visible       := cbEvento.Visible;
 end;
-
-end.
 
 {
 
@@ -1686,3 +1677,7 @@ As datas para disponibilização de versões futuras da EFD-REINF nos ambientes de
 Produção Restrita e Produção serão divulgadas oportunamente.
 
 }
+
+end.
+
+

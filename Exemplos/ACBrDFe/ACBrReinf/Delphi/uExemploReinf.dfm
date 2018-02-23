@@ -1,6 +1,6 @@
 object Form2: TForm2
-  Left = -3
-  Top = 114
+  Left = 205
+  Top = 130
   Width = 904
   Height = 647
   Caption = 'Exemplo Reinf'
@@ -12,14 +12,13 @@ object Form2: TForm2
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel
     Left = 0
     Top = 0
     Width = 297
-    Height = 608
+    Height = 609
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -390,7 +389,7 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -400,7 +399,7 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -410,7 +409,7 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -420,7 +419,7 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -766,7 +765,7 @@ object Form2: TForm2
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 0
+                ItemHeight = 13
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1365,15 +1364,15 @@ object Form2: TForm2
     Left = 297
     Top = 0
     Width = 591
-    Height = 608
+    Height = 609
     Align = alClient
     TabOrder = 1
     object PageControl1: TPageControl
       Left = 1
       Top = 48
       Width = 589
-      Height = 559
-      ActivePage = TabSheet1
+      Height = 560
+      ActivePage = TabSheet4
       Align = alClient
       TabOrder = 0
       object TabSheet1: TTabSheet
@@ -1382,7 +1381,7 @@ object Form2: TForm2
           Left = 0
           Top = 0
           Width = 581
-          Height = 395
+          Height = 396
           Align = alClient
           Caption = ' Eventos de Tabela '
           TabOrder = 0
@@ -1626,7 +1625,7 @@ object Form2: TForm2
         end
         object GroupBox4: TGroupBox
           Left = 0
-          Top = 395
+          Top = 396
           Width = 581
           Height = 136
           Align = alBottom
@@ -1729,7 +1728,7 @@ object Form2: TForm2
           Left = 0
           Top = 0
           Width = 581
-          Height = 531
+          Height = 532
           Align = alClient
           Lines.Strings = (
             'mmoRet')
@@ -1743,7 +1742,7 @@ object Form2: TForm2
           Left = 0
           Top = 0
           Width = 581
-          Height = 531
+          Height = 532
           Align = alClient
           Lines.Strings = (
             'Memo1')
@@ -1758,7 +1757,7 @@ object Form2: TForm2
           Left = 0
           Top = 0
           Width = 581
-          Height = 531
+          Height = 532
           Align = alClient
           Lines.Strings = (
             'Memo1')
@@ -1803,18 +1802,15 @@ object Form2: TForm2
       end
     end
   end
-  object FormStorage1: TFormStorage
-    Active = False
-    UseRegistry = False
-    StoredValues = <>
-    Left = 516
-    Top = 345
-  end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*.XML'
     Filter = 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
     Title = 'Selecione o Arquivo'
     Left = 578
     Top = 343
+  end
+  object ACBrReinf1: TACBrReinf
+    Left = 486
+    Top = 176
   end
 end

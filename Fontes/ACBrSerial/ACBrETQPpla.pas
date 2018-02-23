@@ -339,7 +339,9 @@ end;
 function TACBrETQPpla.ConverterUnidade(AValue: Integer): Integer;
 begin
   if (Unidade = etqDots) then
-    Result := inherited ConverterUnidade(etqMilimetros, AValue);
+    Result := inherited ConverterUnidade(etqMilimetros, AValue)
+  else
+    Result := AValue;
 
   if (Unidade <> etqDecimoDeMilimetros) then
     Result := AValue * 10;

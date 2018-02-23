@@ -41,6 +41,8 @@
 |*  - Doação do componente para o Projeto ACBr
 |* 01/03/2016: Guilherme Costa
 |*  - Alterações para validação com o XSD
+|* 23/02/2018:Edmar Frazão
+|   - Alteração natAtividade campo opcional para categorias  linha 437
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -432,7 +434,13 @@ begin
   Gerador.wCampo(tcStr, '', 'cadIni',        1,  1, 1, eSSimNaoToStr(obj.cadIni));
   Gerador.wCampo(tcStr, '', 'codCateg',      0,  3, 1, obj.codCateg);
   Gerador.wCampo(tcDat, '', 'dtInicio',     10, 10, 1, obj.dtInicio);
-  Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, ord(obj.natAtivididade) + 1);
+  if      obj.codCateg=305 Then  //Servidor Publico Indicado a Conselho
+  else if obj.codCateg=721 Then  //Diretor não empregado com FGTS
+  else if obj.codCateg=722 Then  //Diretor não empregado sem FGTS
+  else if obj.codCateg=771 Then  //Membro conselho tutelar
+  else if obj.codCateg=901 Then  //Estagiario
+  else
+   Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, ord(obj.natAtivididade) + 1);
 
   GerarInfoComplementares(obj.InfoComplementares);
 

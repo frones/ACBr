@@ -489,8 +489,7 @@ begin
     Gerador.wGrupo('dmDev');
 
     Gerador.wCampo(tcStr, '', 'ideDmDev', 1, 30, 1, pDmDev[i].ideDmDev);
-
-    if pDmDev[i].infoPerAntInst then
+    if pDmDev[i].infoPerApurInst then
       GerarInfoPerApur(pDmDev[i].infoPerApur);
 
     if pDmDev[i].infoPerAntInst then

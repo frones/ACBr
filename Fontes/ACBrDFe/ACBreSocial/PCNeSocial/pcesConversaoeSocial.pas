@@ -64,7 +64,7 @@ type
 
   TEmpregador = (tePessoaJuridica, teOrgaoPublico);
 
-  TeSocialGrupo = (egIniciais = 1, egPeriodicos = 2, egNaoPeriodicos = 3);
+  TeSocialGrupo = (egIniciais = 1, egNaoPeriodicos = 2, egPeriodicos = 3);
 
   TeSocialEventos =(eseEnvioLote, eseRetornoLote, eseEnvioConsulta, eseRetornoConsulta);
 

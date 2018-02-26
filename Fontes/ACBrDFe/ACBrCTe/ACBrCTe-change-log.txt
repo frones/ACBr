@@ -47,9 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2018
+-- ACBrCTeWebServices --
+[*] Comentado a linha que permite gerar um XML de evento com acentos.
+   Por: Italo Jurisato Junior
+
 14/02/2018
 -- pcteProcCTe / pcteCTeW --
-[*] Remção de funções em duplicidade e a troca das chamadas das funções antigas
+[*] Remoção de funções em duplicidade e a troca das chamadas das funções antigas
     pelas novas
    Por: Italo Jurisato Junior
 

@@ -2769,7 +2769,7 @@ begin
     EventoCTe.Versao := FPVersaoServico;
 
     AjustarOpcoes( EventoCTe.Gerador.Opcoes );
-    EventoCTe.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
+//    EventoCTe.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
 
     EventoCTe.GerarXML;
 

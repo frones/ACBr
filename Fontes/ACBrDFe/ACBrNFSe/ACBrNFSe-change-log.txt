@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2018
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/39786-nfse-provedor-ipm-guaramirim-e-massaranduba-sc/?do=findComment&comment=274585
+   Por: Léo
+
 22/02/2018
 -- pnfsConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/41623-adicionamos-c%C3%B3digos-de-cidade-no-padr%C3%A3o-siaf-%C3%A0-emiss%C3%A3o-de-nf-de-servi%C3%A7o/

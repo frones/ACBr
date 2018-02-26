@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/01/2018
+-- ACBrBase --
+[+] Adidciona a classe "TACBrObjectList", que implementa uma TObjectTist
+    (por: DSA)
+
 Data: 15/01/2018
 -- ACBr.Inc --
 [+] Adicionado suporte as diretivas {$DEFINE DFE_SEM_MSXML} e {$DEFINE DFE_SEM_INDY}

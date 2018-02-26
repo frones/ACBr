@@ -34,36 +34,6 @@
 {                                                                              }
 {******************************************************************************}
 
-{******************************************************************************
-|* Historico
-|*
-|* 26/05/2004: Primeira Versao
-|*    Daniel Simoes de Almeida
-|*    Criaçao do componente ACBrDevice, que implementa comunicaçao com portas
-|*    Seriais e Paralela e deverá ser usado por outros componentes ACBr*
-|* 26/09/2004: Criaçao da classe: TACBrThreadTimer
-|*    Daniel e Alexandre
-|*    Essa classe emula um TTimer, porem em uma Thread, evitando sobrecarregar
-|*    o Application. Usada por ACBrLCB e ACBrDIS
-|* 01/02/2005: Criaçao da classe: TACBrThreadEnviaLPT
-|*    Daniel Simoes de Almeida
-|*    Essa classe é usada pela funçao EnviaStrThread para detectar se os Dados
-|*    estao sendo "gravados" com sucesso na porta paralela ou arquivo.
-|* 07/10/2005: Removido o TACBrThreadTimer,  Daniel Simões de Almeida
-|*    Não apresenta vantagens em relação ao TTimer (Delphi), problemas quando
-|*    o componente está dentro de DLLs
-|* 27/10/2005: Daniel Simoes de Almeida
-|*    Desativada a TACBrThreadEnviaLPT, comentando o  $DEFINE ThreadEnviaLPT
-|*    devido a Problemas como "Erro gravando em LPTx"....  TODO: Corrigir...
-|* 22/11/2005: Daniel Simoes de Almeida
-|*    modificado gravação em Arquivos Texto para verificar se o arquivo já
-|*    existe e adcionar dados no final, ao inves de sempre sobrescreve-lo
-|* 13/03/2006: Daniel Simoes de Almeida
-|* - Permite modificar alguns parametros da porta serial mesmo com ela aberta.
-|* - Modificaçoes em run-time nos parametros da serial não eram efetivadas na
-|*   Synaser
-******************************************************************************}
-
 {$I ACBr.inc}
 
 //{$DEFINE ThreadEnviaLPT}  { Use // no inicio dessa linha para desabilitar a Thread}
@@ -112,10 +82,25 @@ TACBrComponent = class( TComponent )
 
 TACBrGravarLog = procedure(const ALogLine: String; var Tratado: Boolean) of object ;
 
-{ Essa classe emula um TTimer, porem em uma Thread, evitando sobrecarregar
-  o Application. Usada por ACBrLCB e ACBrDIS quando em modo CONSOLE, ou NOGUI }
+{ TACBrObjectList }
+
+TACBrObjectList = class(TObjectList)
+  protected
+    fIsSorted: Boolean;
+  public
+    constructor Create(FreeObjects: boolean);
+
+    Function Add(AObject: TObject): Integer;
+    Procedure Insert(Index: Integer; AObject: TObject);
+    procedure Sort(Compare: TListSortCompare);
+
+    function FindObject(Item: Pointer; Compare: TListSortCompare; Nearest: Boolean = False): Integer;
+  end;
 
 { TACBrThreadTimer }
+
+{ Essa classe emula um TTimer, porem em uma Thread, evitando sobrecarregar
+  o Application. Usada por ACBrLCB e ACBrDIS quando em modo CONSOLE, ou NOGUI }
 
 TACBrThreadTimer = class(TThread)
   private
@@ -224,6 +209,62 @@ begin
      MessageDlg(Msg ,mtInformation ,[mbOk],0) ;
     {$ENDIF}
  {$ENDIF}
+end;
+
+{ TACBrObjectList }
+
+constructor TACBrObjectList.Create(FreeObjects: boolean);
+begin
+  inherited Create(FreeObjects);
+  fIsSorted := False;
+end;
+
+function TACBrObjectList.Add(AObject: TObject): Integer;
+begin
+  Result := inherited Add(AObject);
+  fIsSorted := False;
+end;
+
+procedure TACBrObjectList.Insert(Index: Integer; AObject: TObject);
+begin
+  inherited Insert(Index, AObject);
+  fIsSorted := False;
+end;
+
+procedure TACBrObjectList.Sort(Compare: TListSortCompare);
+begin
+  inherited Sort(Compare);
+  fIsSorted := True;
+end;
+
+{ Inspirado de http://www.avdf.com/mar97/delf_sortlist.html }
+
+function TACBrObjectList.FindObject(Item: Pointer; Compare: TListSortCompare;
+  Nearest: Boolean): Integer;
+var
+  nLow, nHigh, nCompare, nCheckPos : Integer;
+begin
+  if not fIsSorted then
+    raise Exception.Create('Lista de Objetos não foi ordanada por chamada ao método "Sort"');
+
+  nLow := 0;
+  nHigh := Count-1;
+  Result := -1;
+  // keep searching until found or
+  // no more items to search
+  while (Result = -1) and (nLow <= nHigh) do
+  begin
+    nCheckPos := (nLow + nHigh) div 2;
+    nCompare := Compare(Item,Pointer(Items[nCheckPos]));
+    if (nCompare = -1) then                // less than
+      nHigh := nCheckPos - 1
+    else if (nCompare = 1) then            // greater than
+      nLow := nCheckPos + 1
+    else                                   // equal to
+      Result := nCheckPos;
+  end;
+   if (Result = -1) and Nearest then
+    Result := nLow;
 end;
 
 

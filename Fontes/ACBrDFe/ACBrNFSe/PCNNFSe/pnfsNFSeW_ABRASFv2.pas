@@ -368,12 +368,12 @@ begin
     proFriburgo,
     proNEAInformatica,
     proNotaInteligente,
-    proPronimv2,
     proSisPMJP,
     proVitoria,
     proSmarAPDABRASF,
     proISSJoinville: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
+    proPronimv2,
     proABase,
     proEReceita,
     proProdata,

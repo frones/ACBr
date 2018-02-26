@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/02/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/26039-abrasf-202-provedor-pronim-guarapuava-pr/?do=findComment&comment=274463
+   Por: Henrique Sandri Zimermam
 -- pnfsConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/39786-nfse-provedor-ipm-guaramirim-e-massaranduba-sc/?do=findComment&comment=274585
    Por: Léo

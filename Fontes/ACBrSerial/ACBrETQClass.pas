@@ -146,7 +146,7 @@ begin
   fAvanco         := 0;
   fTemperatura    := 10;
   fVelocidade     := -1;
-  fUnidade        := etqMilimetros;
+  fUnidade        := etqDecimoDeMilimetros;
 
   fpModeloStr     := 'Não Definida';
   fpOrigem        := ogNone;

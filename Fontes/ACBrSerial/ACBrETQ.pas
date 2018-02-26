@@ -154,7 +154,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     property EtqInicializada: Boolean          read fsEtqInicializada;
 
   published
-    property Unidade:         TACBrETQUnidade  read GetUnidade       write SetUnidade default etqMilimetros;
+    property Unidade:         TACBrETQUnidade  read GetUnidade       write SetUnidade default etqDecimoDeMilimetros;
     property Modelo:          TACBrETQModelo   read fsModelo         write SetModelo default etqNenhum;
     property BackFeed:        TACBrETQBackFeed read GetBackFeed      write SetBackFeed default bfNone;
     property LimparMemoria:   Boolean          read fsLimparMemoria  write fsLimparMemoria default True;

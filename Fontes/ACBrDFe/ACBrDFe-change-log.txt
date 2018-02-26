@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2018
+-- ACBrDFeXsLibXml2 --
+[-] Corrigido bug de assinatura do xml quando a URI é vazia.
+	https://www.projetoacbr.com.br/forum/topic/41682-assinatura-a3-e-a1-instalado-na-m%C3%A1quina/
+    (por Rafael Dias e Paulo Aguiar Junior)
+
 15/01/2018
 -- ACBrDFeSSL --
 [+] Adicionado suporte as diretivas {$DEFINE DFE_SEM_MSXML} e {$DEFINE DFE_SEM_INDY}
@@ -125,7 +131,7 @@ Símbolo : Significado
        const Hash: AnsiString;
        const Assinado: Boolean =  False): Boolean; overload;
    Que permite verificar Hashs, Assinados ou não, gerados pelo comando "CalcHash"
-   (por: Rafael Teno)
+   (por: Rafael Dias)
 
 [+] Adicionada Unit: ACBrDFeXsLibXml2.pas, contendo nova classe para Assinatura
     e verificação de XML, usando apenas a LibXML2 (não depende da LibXMLSec).
@@ -134,7 +140,7 @@ Símbolo : Significado
     TDFeSSL.SSLXmlSignClass = "xsLibXml2".
     Compatível com OpenSSL e WinCrypt, poderá usar Certificados A1 e A3.
     Eliminando em definitivo a dependencia da MSXML (TDFeSSLXmlSignMsXml)
-   (por: Rafael Teno e DSA)
+   (por: Rafael Dias e DSA)
 
 27/10/2017
 -- ACBrDFeSSL, ACBrDFeXsMsXml, ACBrDFeXsXmlSec, ACBrDFeXsMsXmlCapicom --

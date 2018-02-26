@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/02/2018
+-- pnfsNFSeW_EL --
+[*] https://www.projetoacbr.com.br/forum/topic/38558-provedor-el-inclus%C3%A3o-da-cidade-aracruzes/?do=findComment&comment=274415
+   Por: Henrique Sandri Zimermam
 -- pnfsNFSeW_ABRASFv2 --
 [*] https://www.projetoacbr.com.br/forum/topic/26039-abrasf-202-provedor-pronim-guarapuava-pr/?do=findComment&comment=274463
    Por: Henrique Sandri Zimermam

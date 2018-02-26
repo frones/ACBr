@@ -54,8 +54,7 @@ uses
   pcesCommon, pcesConversaoeSocial;
 
 type
-  TS5011Collection = class;
-  TS5011CollectionItem = class;
+  TS5011 = class;
 
   TInfoCS = class;
   TInfoCPSeg = class;
@@ -81,27 +80,25 @@ type
 
   TEvtCS = class;
 
-  TS5011Collection = class(TOwnedCollection)
-  private
-    function GetItem(Index: Integer): TS5011CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS5011CollectionItem);
-  public
-    function Add: TS5011CollectionItem;
-    property Items[Index: Integer]: TS5011CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS5011CollectionItem = class(TCollectionItem)
+  TS5011 = class(TInterfacedObject, IEventoeSocial)
   private
     FTipoEvento: TTipoEvento;
     FEvtCS: TEvtCS;
 
-    procedure setEvtCS(const Value: TEvtCS);
+    function GetXml : string;
+    procedure SetXml(const Value: string);
+    function GetTipoEvento : TTipoEvento;
+    procedure SetEvtCS(const Value: TEvtCS);
+
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create;
     destructor Destroy; override;
+
   published
-    property TipoEvento: TTipoEvento read FTipoEvento;
+    property Xml: String read GetXml write SetXml;
+    property TipoEvento: TTipoEvento read GetTipoEvento;
     property EvtCS: TEvtCS read FEvtCS write setEvtCS;
+
   end;
 
   TInfoCPSeg = class(TPersistent)
@@ -518,7 +515,7 @@ type
     FIdeTrabalhador: TIdeTrabalhador3;
     FInfoCS: TInfoCS;
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create;
     destructor  Destroy; override;
 
     function LerXML: boolean;
@@ -535,49 +532,48 @@ type
 
 implementation
 
-{ TS5011Collection }
+{ TS5011 }
 
-function TS5011Collection.Add: TS5011CollectionItem;
-begin
-  Result := TS5011CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
-end;
-
-function TS5011Collection.GetItem(Index: Integer): TS5011CollectionItem;
-begin
-  Result := TS5011CollectionItem(inherited GetItem(Index));
-end;
-
-procedure TS5011Collection.SetItem(Index: Integer;
-  Value: TS5011CollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TS5011CollectionItem }
-
-constructor TS5011CollectionItem.Create(AOwner: TComponent);
+constructor TS5011.Create;
 begin
   FTipoEvento := teS5011;
-  FEvtCS := TEvtCS.Create(AOwner);
+  FEvtCS := TEvtCS.Create;
 end;
 
-destructor TS5011CollectionItem.Destroy;
+destructor TS5011.Destroy;
 begin
   FEvtCS.Free;
 
   inherited;
 end;
 
-procedure TS5011CollectionItem.setEvtCS(
-  const Value: TEvtCS);
+function TS5011.GetXml : string;
+begin
+  Result := FEvtCS.XML;
+end;
+
+procedure TS5011.SetXml(const Value: string);
+begin
+  if Value = FEvtCS.XML then Exit;
+
+  FEvtCS.XML := Value;
+  FEvtCS.LerXML;
+
+end;
+
+function TS5011.GetTipoEvento : TTipoEvento;
+begin
+  Result := FTipoEvento;
+end;
+
+procedure TS5011.SetEvtCS(const Value: TEvtCS);
 begin
   FEvtCS.Assign(Value);
 end;
 
 { TEvtCS }
 
-constructor TEvtCS.Create(AACBreSocial: TObject);
+constructor TEvtCS.Create;
 begin
   FLeitor := TLeitor.Create;
 

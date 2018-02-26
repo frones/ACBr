@@ -526,7 +526,7 @@ begin
         NomeArq := FRetConsultaLote.RetEventos.Items[I].tot.Items[J].tipo + '.xml';
 
         if (FPConfiguracoeseSocial.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
-          FPDFeOwner.Gravar(NomeArq, AXML);
+          FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + NomeArq, AXML);
       end;
     end;
   end;

@@ -51,7 +51,8 @@ interface
 uses
   SysUtils, Classes,
   ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
-  pcesCommon, pcesRetornoClass, pcesConversaoeSocial;
+  pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
+  pcesS5001, pcesS5002, pcesS5011, pcesS5012;
 
 type
   TtotCollection = class;
@@ -75,9 +76,13 @@ type
   private
     Ftipo: String;
     FXML: AnsiString;
+    FEvento: IEventoeSocial;
+
   public
     property tipo: String read Ftipo write Ftipo;
     property XML: AnsiString read FXML write FXML;
+    property Evento: IEventoeSocial read FEvento write FEvento;
+
   end;
 
   TRetEventosCollection = class(TCollection)
@@ -487,6 +492,31 @@ begin
             RetEventos.Items[i].tot.Add;
             RetEventos.Items[i].tot.Items[j].tipo := FLeitor.rAtributo('tipo=', 'tot');
             RetEventos.Items[i].tot.Items[j].XML := RetornarConteudoEntre(Leitor.Grupo, '>', '</tot');
+
+            if RetEventos.Items[i].tot.Items[j].tipo = 'S5001' then
+            begin
+              RetEventos.Items[i].tot.Items[j].Evento := TS5001.Create;
+              RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
+            end;
+
+            if RetEventos.Items[i].tot.Items[j].tipo = 'S5002' then
+            begin
+              RetEventos.Items[i].tot.Items[j].Evento := TS5002.Create;
+              RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
+            end;
+
+            if RetEventos.Items[i].tot.Items[j].tipo = 'S5011' then
+            begin
+              RetEventos.Items[i].tot.Items[j].Evento := TS5011.Create;
+              RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
+            end;
+
+            if RetEventos.Items[i].tot.Items[j].tipo = 'S5012' then
+            begin
+              RetEventos.Items[i].tot.Items[j].Evento := TS5012.Create;
+              RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
+            end;
+
             inc(j);
           end;
 

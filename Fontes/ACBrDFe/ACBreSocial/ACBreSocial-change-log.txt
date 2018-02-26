@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2018
+[+] Implementado a leitura dos eventos S5001, S5002, S50011 e S5012 após obter
+   o retorno da consulta.
+   Por: Rafael Dias e Italo Jurisato Junior.
+ 
 23/02/2018
 -- ACBreSocialWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/41683-ajuste-em-rotina-de-envio-com-transmissor-utilizando-ecpf-com-procura%C3%A7%C3%A3o/

@@ -173,6 +173,7 @@ type
   TObservacoesCollectionItem = class;
   TObservacoesCollection = class;
   TtransfDom = class;
+  IEventoeSocial = Interface;
 
   TeSocial = class(TPersistent)
   private
@@ -1802,6 +1803,15 @@ type
     constructor create; reintroduce;
 
     property observacao: string read Fobservacao write Fobservacao;
+  end;
+
+  IEventoeSocial = Interface(IInterface)
+    function GetXml : string;
+    procedure SetXml(const Value: string);
+    function GetTipoEvento : TTipoEvento;
+
+    property Xml: String read GetXml write SetXml;
+    property TipoEvento: TTipoEvento read GetTipoEvento;
   end;
 
 implementation

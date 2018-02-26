@@ -54,8 +54,7 @@ uses
   pcesCommon, pcesConversaoeSocial;
 
 type
-  TS5002Collection = class;
-  TS5002CollectionItem = class;
+  TS5002 = class;
   TInfoDep = class;
 
   TInfoIrrfCollection = class;
@@ -79,27 +78,25 @@ type
 
   TEvtIrrfBenef = class;
 
-  TS5002Collection = class(TOwnedCollection)
-  private
-    function GetItem(Index: Integer): TS5002CollectionItem;
-    procedure SetItem(Index: Integer; Value: TS5002CollectionItem);
-  public
-    function Add: TS5002CollectionItem;
-    property Items[Index: Integer]: TS5002CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TS5002CollectionItem = class(TCollectionItem)
+  TS5002 = class(TInterfacedObject, IEventoeSocial)
   private
     FTipoEvento: TTipoEvento;
-    FEvtIrrfBenef: TEvtIrrfBenef;
+    FEvtirrfBenef: TEvtirrfBenef;
 
-    procedure setEvtIrrfBenef(const Value: TEvtIrrfBenef);
+    function GetXml : string;
+    procedure SetXml(const Value: string);
+    function GetTipoEvento : TTipoEvento;
+    procedure SetEvtirrfBenef(const Value: TEvtirrfBenef);
+
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create;
     destructor Destroy; override;
+
   published
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtIrrfBenef: TEvtIrrfBenef read FEvtIrrfBenef write setEvtIrrfBenef;
+    property Xml: String read GetXml write SetXml;
+    property TipoEvento: TTipoEvento read GetTipoEvento;
+    property EvtirrfBenef: TEvtirrfBenef read FEvtirrfBenef write setEvtirrfBenef;
+
   end;
 
   TInfoDep = class(TPersistent)
@@ -199,7 +196,7 @@ type
     FInfoDep: TInfoDep;
     FInfoIrrf: TInfoIrrfCollection;
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create;
     destructor  Destroy; override;
 
     function LerXML: boolean;
@@ -217,49 +214,48 @@ type
 
 implementation
 
-{ TS5002Collection }
+{ TS5002 }
 
-function TS5002Collection.Add: TS5002CollectionItem;
-begin
-  Result := TS5002CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
-end;
-
-function TS5002Collection.GetItem(Index: Integer): TS5002CollectionItem;
-begin
-  Result := TS5002CollectionItem(inherited GetItem(Index));
-end;
-
-procedure TS5002Collection.SetItem(Index: Integer;
-  Value: TS5002CollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TS5002CollectionItem }
-
-constructor TS5002CollectionItem.Create(AOwner: TComponent);
+constructor TS5002.Create;
 begin
   FTipoEvento := teS5002;
-  FEvtIrrfBenef := TEvtIrrfBenef.Create(AOwner);
+  FEvtIrrfBenef := TEvtIrrfBenef.Create;
 end;
 
-destructor TS5002CollectionItem.Destroy;
+destructor TS5002.Destroy;
 begin
   FEvtIrrfBenef.Free;
 
   inherited;
 end;
 
-procedure TS5002CollectionItem.setEvtIrrfBenef(
-  const Value: TEvtIrrfBenef);
+function TS5002.GetXml : string;
+begin
+  Result := FEvtIrrfBenef.XML;
+end;
+
+procedure TS5002.SetXml(const Value: string);
+begin
+  if Value = FEvtIrrfBenef.XML then Exit;
+
+  FEvtIrrfBenef.XML := Value;
+  FEvtIrrfBenef.LerXML;
+
+end;
+
+function TS5002.GetTipoEvento : TTipoEvento;
+begin
+  Result := FTipoEvento;
+end;
+
+procedure TS5002.SetEvtIrrfBenef(const Value: TEvtIrrfBenef);
 begin
   FEvtIrrfBenef.Assign(Value);
 end;
 
 { TEvtIrrfBenef }
 
-constructor TEvtIrrfBenef.Create(AACBreSocial: TObject);
+constructor TEvtIrrfBenef.Create;
 begin
   FLeitor := TLeitor.Create;
 

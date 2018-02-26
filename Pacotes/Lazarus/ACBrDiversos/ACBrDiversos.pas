@@ -4,13 +4,14 @@
 
 unit ACBrDiversos;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrBarCode, ACBrCalculadora, ACBrCMC7, ACBrDiversosReg, ACBrEnterTab, 
   ACBrExtenso, ACBrFala, ACBrGIF, ACBrTroco, ACBrValidador, AJBarcode, 
   ACBrDelphiZXingQRCode, Gif1, Gif3, LCalculadora, ACBrInStore, ACBrCargaBal, 
-  LazarusPackageIntf;
+  Jsons, LazarusPackageIntf;
 
 implementation
 

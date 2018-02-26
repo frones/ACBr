@@ -42,6 +42,7 @@ contains
   ACBrEnterTab in '..\..\..\Fontes\ACBrDiversos\ACBrEnterTab.pas',
   AJBarcode in '..\..\..\Fontes\Terceiros\AJBarcode\AJBarcode.pas',
   ACBrDelphiZXingQRCode in '..\..\..\Fontes\Terceiros\DelphiZXingQRCode\ACBrDelphiZXingQRCode.pas',
+  Jsons in '..\..\..\Fontes\Terceiros\json4delphi\src\Jsons.pas',
   ACBrGIF in '..\..\..\Fontes\ACBrDiversos\ACBrGIF.pas',
   Gif1 in '..\..\..\Fontes\Terceiros\TGif\Gif1.pas',
   Gif3 in '..\..\..\Fontes\Terceiros\TGif\Gif3.pas',

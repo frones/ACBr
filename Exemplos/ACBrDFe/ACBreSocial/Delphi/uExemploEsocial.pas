@@ -3584,10 +3584,10 @@ begin
                 Add('   Tipo.......: ' + IntToStr(retEventos.Items[I].Processamento.Ocorrencias.Items[J].Tipo));
                 Add('   Localização: ' + retEventos.Items[I].Processamento.Ocorrencias.Items[J].Localizacao);
               end;
-               for J := 0 to retEventos.Items[I].tot.Count - 1 do
+              for J := 0 to retEventos.Items[I].tot.Count - 1 do
               begin
                 Add(' Tot ' + IntToStr(J));
-                Add('   Tipo.....: ' + retEventos.Items[I].tot[j].tipo);
+                Add('   Tipo.........: ' + retEventos.Items[I].tot[j].tipo);
                 case retEventos.Items[I].tot[j].Evento.TipoEvento of
                   teS5001:
                   begin

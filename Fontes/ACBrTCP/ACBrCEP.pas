@@ -1290,12 +1290,12 @@ begin
             begin
               if (sMun <> Municipio) then  // Evita buscar municipio já encontrado
               begin
-                fACBrIBGE.BuscarPorNome( Municipio, UF, True, False ) ;
+                fACBrIBGE.BuscarPorNome( Municipio, UF, True);
                 sMun := Municipio;
               end ;
 
               if fACBrIBGE.Cidades.Count > 0 then  // Achou ?
-                 IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicio );
+                 IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicipio );
             end ;
           end ;
         end ;
@@ -1575,12 +1575,12 @@ begin
           begin
             if (sMun <> Municipio) then  // Evita buscar municipio já encontrado
             begin
-              fACBrIBGE.BuscarPorNome( Municipio, UF, True, False ) ;
+              fACBrIBGE.BuscarPorNome( Municipio, UF, True) ;
               sMun := Municipio;
             end ;
 
             if fACBrIBGE.Cidades.Count > 0 then  // Achou ?
-               IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicio );
+               IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicipio );
           end ;
 
         end;

@@ -318,7 +318,7 @@ begin
       begin
         if (sMun <> FCidade) then  // Evita buscar municipio já encontrado
         begin
-          FACBrIBGE.BuscarPorNome( FCidade, FUF, False, False ) ;
+          FACBrIBGE.BuscarPorNome( FCidade, FUF, False);
           sMun := FCidade;
         end ;
 
@@ -328,7 +328,7 @@ begin
            if (TiraAcentos(FCidade)  = TiraAcentos(FACBrIBGE.Cidades[CountCid].Municipio)) And
            (FUF =  FACBrIBGE.Cidades[CountCid].UF) then
 		   Begin
-             FCodigoIBGE := IntToStr( FACBrIBGE.Cidades[CountCid].CodMunicio );
+             FCodigoIBGE := IntToStr( FACBrIBGE.Cidades[CountCid].CodMunicipio );
              Break;
 		   End;
         End;

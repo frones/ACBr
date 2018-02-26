@@ -37,6 +37,65 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2018
+-- ACBrIBGE --
+[+] Amplo refactoring aplicado, para compatibilizar o ACBrIBGE, com os WebServices
+    oficiais.
+[-] Propriedade "TACBrIBGECidade.CodMunicio", corrigida para: "TACBrIBGECidade.CodMunicipio"
+[+] Adicionada a propriedade "IgnorarCaixaEAcentos", para instruir ao ACBrIBGE,
+    se a Busca por Nome do município, deve ignorar Acentos e Caixa Alta/Baixa
+[*] Método "BuscarPorNome", teve sua assinatura alterada, removendo o último parâmetro:
+    function BuscarPorNome( const ACidade : String; const AUF: String = '';
+      const Exata: Boolean = False) : Integer ;
+[+] Adicionada mecanismo de Cache, para agilizar as consultas:
+    Propriedade CacheArquivo: String default "ACBrIBGE.txt".
+                  Arquivo TXT que servirá de cache (memória), para a lista de
+                  Cidades já consultadas nos WebServices
+                  O uso do cache, economiza consultas HTTP, e acelera o processo de busca.
+                  Se valor for Vazio, nenhum cache será efetuado
+    Propriedade CacheDiasValidade: Integer default 0
+                       Número de dias para considerar o arquivo de Cache ainda
+                       válido, até deseprezá-lo e obter novamente a lista de
+                       cidades pelos WebServices. Se valor for 0, nunca despreza o cache
+    Evento OnGravarCache: procedure(ConteudoCache: TStrings; var Tratado: Boolean) of object;
+                          Será chamado sempre que o ACBrIBGE, for efetuar a gravação do Cache
+    Evento OnLerCache: procedure(ConteudoCache: TStrings; var Tratado: Boolean) of object;
+                       Será chamado sempre que o ACBrIBGE, for carregar o Cache
+    Notas: O uso dos eventos de leitura e gravação do Cache, permitem grava-lo em BD ou outro local.
+           O Cache será atualizado após a execução de cada chamada aos métodos "ObterCidades"
+[+] Adicionada a propriedade: "ListaUFs", que retorna uma Lista de Objetos com
+    todas as UFs carregadas no Cache
+[+] Adicionada a propriedade: "ListaCidades", que retorna uma Lista de Objetos com
+    todas as Cidades carregadas no Cache
+[+] Adicionado o método: "ObterUFs", para obter no Cache todas as UFs do Brasil
+[+] Adicionado o método: "ObterEstatisticasUF". Para obter no Cache, as informações de
+    Área a População de todas as UFs carregadas
+[+] Adicionado o método: "ObterCidades". para obter no Cache todas as cidades do
+    Brasil.
+[+] Adicionado os métodos:
+    ObterCidades(const ACodUF: Integer) e ObterCidades(const AUF: String).
+    Para obter do Webservice para o Cache, todas as Cidades de uma determinada UF
+[+] Adicionado os métodos:
+    ObterEstatisticasCidade(const ACodMunicipio: Integer),
+    ObterEstatisticasCidadesUF(const ACodUF: Integer),
+    ObterEstatisticasCidadesUF(const AUF: String),
+    ObterEstatisticasCidades(const ListaMunicipios: String)
+    Para obter do Webservice, as estatísticas de Área e População, das Cidades
+    carregadas no Cache
+[+] Adicionado o método "SalvarCache", para descarregar Cache da memória para o
+    disco, chamando o evento OnGravarCache
+[+] Adicionado o método "CarregarCache", para Ler do Disco o Cache, para a memória,
+    chamando o evento OnLerCache
+[+] Adicionado os eventos:
+    SalvarCidades(AStream: TStream);
+    SalvarCidades(AStringList: TStrings);
+    SalvarCidades(AFile: String; Overwrite: Boolean = False);
+    Para permitir salvar o conteúdo do Cache em outras ocasiões e locais
+
+-- ACBrCEP, ACBrConsultaCNPJ --
+[*] Ajuste após refactoring de ACBrIBGE
+    (por: DSA)
+
 31/01/2018
 -- ACBrWinHTTPReqResp, ACBrWinINetReqResp --
 [-] Correção para considerar os Parâmetros na URL, quando efetuar a conexão http

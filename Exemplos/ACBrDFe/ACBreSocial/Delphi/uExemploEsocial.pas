@@ -49,7 +49,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, IniFiles, ShellAPI, StdCtrls, Buttons, DateUtils, Spin, ExtCtrls,
   ComCtrls,
-  ACBrBase, ACBrDFe, ACBrUtil, ACBreSocial, ACBrMail, pcesConversaoeSocial,
+  ACBrBase, ACBrDFe, ACBrUtil, ACBreSocial, ACBrMail,
+  pcesConversaoeSocial, pcesS5001, pcesS5002, pcesS5011, pcesS5012,
   pcnConversao,
   ufrmStatus;
 
@@ -260,7 +261,7 @@ type
     procedure PathClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
-    procedure ACBreSocial1TransmissaoEventos(const AXML: String;
+    procedure ACBreSocial1TransmissaoEventos(const AXML: AnsiString;
       ATipo: TeSocialEventos);
     procedure btnCarregarXMLClick(Sender: TObject);
     procedure btnCarregarINIClick(Sender: TObject);
@@ -3474,8 +3475,8 @@ begin
     LimparDocsPasta;
 
   try
-//    SelecionaEventos;
-//    ACBreSocial1.AssinarEventos;
+    SelecionaEventos;
+    ACBreSocial1.AssinarEventos;
 
     ACBreSocial1.Enviar(TESocialGrupo(rdgGrupo.ItemIndex + 1));
     Sleep(3000);
@@ -3529,6 +3530,10 @@ procedure TFExemploEsocial.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
   I, J: Integer;
+  evtS5001: TS5001;
+  evtS5002: TS5002;
+  evtS5011: TS5011;
+  evtS5012: TS5012;
 begin
   Protocolo := '';
   if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo)) then
@@ -3578,6 +3583,37 @@ begin
                 Add('   Descrição..: ' + retEventos.Items[I].Processamento.Ocorrencias.Items[J].Descricao);
                 Add('   Tipo.......: ' + IntToStr(retEventos.Items[I].Processamento.Ocorrencias.Items[J].Tipo));
                 Add('   Localização: ' + retEventos.Items[I].Processamento.Ocorrencias.Items[J].Localizacao);
+              end;
+               for J := 0 to retEventos.Items[I].tot.Count - 1 do
+              begin
+                Add(' Tot ' + IntToStr(J));
+                Add('   Tipo.....: ' + retEventos.Items[I].tot[j].tipo);
+                case retEventos.Items[I].tot[j].Evento.TipoEvento of
+                  teS5001:
+                  begin
+                   evtS5001 := TS5001(retEventos.Items[I].tot[j].Evento);
+                   Add('   Id...........: ' + evtS5001.EvtBasesTrab.Id);
+                   Add('   nrRecArqBase.: ' + evtS5001.EvtBasesTrab.IdeEvento.nrRecArqBase);
+                  end;
+                  teS5002:
+                  begin
+                   evtS5002 := TS5002(retEventos.Items[I].tot[j].Evento);
+                   Add('   Id...........: ' + evtS5002.EvtirrfBenef.Id);
+                   Add('   nrRecArqBase.: ' + evtS5002.EvtirrfBenef.IdeEvento.nrRecArqBase);
+                  end;
+                  teS5011:
+                  begin
+                   evtS5011 := TS5011(retEventos.Items[I].tot[j].Evento);
+                   Add('   Id...........: ' + evtS5011.EvtCS.Id);
+                   Add('   nrRecArqBase.: ' + evtS5011.EvtCS.IdeEvento.nrRecArqBase);
+                  end;
+                  teS5012:
+                  begin
+                   evtS5012 := TS5012(retEventos.Items[I].tot[j].Evento);
+                   Add('   Id...........: ' + evtS5012.EvtIrrf.Id);
+                   Add('   nrRecArqBase.: ' + evtS5012.EvtIrrf.IdeEvento.nrRecArqBase);
+                  end;
+                end;
               end;
             end;
 
@@ -3865,7 +3901,7 @@ begin
 end;
 
 procedure TFExemploEsocial.ACBreSocial1TransmissaoEventos(
-  const AXML: String; ATipo: TeSocialEventos);
+  const AXML: AnsiString; ATipo: TeSocialEventos);
 begin
   case ATipo of
     eseEnvioLote:

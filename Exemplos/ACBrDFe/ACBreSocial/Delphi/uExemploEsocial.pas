@@ -223,6 +223,7 @@ type
     cbTEmpregador: TComboBox;
     btnCarregarXML: TButton;
     btnCarregarINI: TButton;
+    btnGerarEnviar: TButton;
 
     procedure btnGerarClick(Sender: TObject);
 
@@ -265,6 +266,7 @@ type
       ATipo: TeSocialEventos);
     procedure btnCarregarXMLClick(Sender: TObject);
     procedure btnCarregarINIClick(Sender: TObject);
+    procedure btnGerarEnviarClick(Sender: TObject);
   private
     { Private declarations }
     // procedures eventos de tabela
@@ -3467,7 +3469,7 @@ begin
   pgWebservice.ActivePageIndex := 3;
 end;
 
-procedure TFExemploEsocial.btnEnviarClick(Sender: TObject);
+procedure TFExemploEsocial.btnGerarEnviarClick(Sender: TObject);
 var
   I: Integer;
 begin
@@ -3478,6 +3480,62 @@ begin
     SelecionaEventos;
     ACBreSocial1.AssinarEventos;
 
+    ACBreSocial1.Enviar(TESocialGrupo(rdgGrupo.ItemIndex + 1));
+    Sleep(3000);
+
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.EnvioLote.RetWS;
+    with MemoDados.Lines do
+    begin
+      with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+
+        if Status.cdResposta in [201, 202] then
+        begin
+          Add('ideEmpregador');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeEmpregador.TpInsc));
+          Add(' - NrInsc: ' + IdeEmpregador.NrInsc);
+          Add('ideTransmissor');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
+          Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
+          Add('dadosRecepcaoLote');
+          Add(' - dhRecepcao..............: ' + DateTimeToStr(dadosRecLote.dhRecepcao));
+          Add(' - versaoAplicativoRecepcao: ' + dadosRecLote.versaoAplicRecepcao);
+          Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
+        end
+        else
+        begin
+          for I := 0 to Status.Ocorrencias.Count - 1 do
+          begin
+            with Status.Ocorrencias.Items[I] do
+            begin
+              Add(' Ocorrencia ' + IntToStr(I));
+              Add('   Código.....: ' + IntToStr(Codigo));
+              Add('   Descrição..: ' + Descricao);
+              Add('   Tipo.......: ' + IntToStr(Tipo));
+              Add('   Localização: ' + Localizacao);
+            end;
+          end;
+        end;
+      end;
+    end;
+
+    pgWebservice.ActivePageIndex := 3;
+  finally
+    ACBreSocial1.Eventos.Clear;
+  end;
+end;
+
+procedure TFExemploEsocial.btnEnviarClick(Sender: TObject);
+var
+  I: Integer;
+begin
+  if chkClear.Checked then
+    LimparDocsPasta;
+
+  try
     ACBreSocial1.Enviar(TESocialGrupo(rdgGrupo.ItemIndex + 1));
     Sleep(3000);
 

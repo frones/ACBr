@@ -1,9 +1,9 @@
 object FExemploEsocial: TFExemploEsocial
   Left = 201
   Top = 130
-  Width = 1037
-  Height = 642
   Caption = 'Exemplo eSocial'
+  ClientHeight = 603
+  ClientWidth = 1021
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FExemploEsocial: TFExemploEsocial
     Left = 281
     Top = 0
     Width = 740
-    Height = 604
+    Height = 603
     Align = alClient
     TabOrder = 0
     object pgcEventos: TPageControl
@@ -358,7 +358,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 145
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 9
           Text = 'Aviso'
@@ -440,7 +439,7 @@ object FExemploEsocial: TFExemploEsocial
     end
     object pgWebservice: TPageControl
       Left = 1
-      Top = 338
+      Top = 337
       Width = 738
       Height = 265
       ActivePage = tsComandos
@@ -459,8 +458,8 @@ object FExemploEsocial: TFExemploEsocial
           OnClick = btnGerarClick
         end
         object btnConsultar: TButton
-          Left = 184
-          Top = 60
+          Left = 250
+          Top = 43
           Width = 109
           Height = 25
           Caption = 'Consultar'
@@ -468,8 +467,8 @@ object FExemploEsocial: TFExemploEsocial
           OnClick = btnConsultarClick
         end
         object btnEnviar: TButton
-          Left = 69
-          Top = 60
+          Left = 12
+          Top = 43
           Width = 109
           Height = 25
           Caption = 'Enviar'
@@ -493,6 +492,15 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'Carregar INI'
           TabOrder = 4
           OnClick = btnCarregarINIClick
+        end
+        object btnGerarEnviar: TButton
+          Left = 130
+          Top = 43
+          Width = 109
+          Height = 25
+          Caption = 'Gerar e Enviar'
+          TabOrder = 5
+          OnClick = btnGerarEnviarClick
         end
       end
       object tsFormaEnvio: TTabSheet
@@ -618,7 +626,7 @@ object FExemploEsocial: TFExemploEsocial
     Left = 0
     Top = 0
     Width = 281
-    Height = 604
+    Height = 603
     Align = alLeft
     TabOrder = 1
     object lblColaborador: TLabel
@@ -687,8 +695,6 @@ object FExemploEsocial: TFExemploEsocial
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -703,6 +709,8 @@ object FExemploEsocial: TFExemploEsocial
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl1: TPageControl
       Left = 1
@@ -835,7 +843,6 @@ object FExemploEsocial: TFExemploEsocial
             Top = 93
             Width = 248
             Height = 21
-            ItemHeight = 13
             TabOrder = 5
           end
           object edtPathSchemas: TEdit
@@ -893,7 +900,6 @@ object FExemploEsocial: TFExemploEsocial
             Top = 117
             Width = 248
             Height = 21
-            ItemHeight = 13
             TabOrder = 2
           end
         end
@@ -1158,7 +1164,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           TabOrder = 9
           OnChange = cbSSLLibChange
         end
@@ -1168,7 +1173,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           TabOrder = 10
           OnChange = cbCryptLibChange
         end
@@ -1178,7 +1182,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           TabOrder = 11
           OnChange = cbHttpLibChange
         end
@@ -1188,7 +1191,6 @@ object FExemploEsocial: TFExemploEsocial
           Width = 160
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           TabOrder = 12
           OnChange = cbXmlSignLibChange
         end
@@ -1275,7 +1277,6 @@ object FExemploEsocial: TFExemploEsocial
             Height = 21
             Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
             Style = csDropDownList
-            ItemHeight = 13
             TabOrder = 4
             OnChange = cbSSLTypeChange
           end

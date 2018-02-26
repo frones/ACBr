@@ -334,7 +334,7 @@ type
 
   tpTpDia                 = (diSegundaFeira, diTercaFeira, diQuartaFeira, diQuintaFeira, diSextaFeira, diSabado, diDomingo, diDiaVariavel);
 
-  tpTpAso                 = (taPeriodico, taRetornoAoTrabalho, taMudancaDeFuncao, taMonitoracaoPontual);
+  tpTpAso                 = (taAdmissional, taPeriodico, taRetornoAoTrabalho, taMudancaDeFuncao, taMonitoracaoPontual, taDemissional);
 
   tpResAso                = (raApto, raInapto);
 
@@ -1187,12 +1187,12 @@ end;
 
 function eSTpAsoToStr(const t: tpTpAso ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_4 );
+  result := EnumeradoToStr2(t,[ '0', '1', '2', '3', '4', '8' ] );
 end;
 
 function eSStrToTpAso(var ok: boolean; const s: string): tpTpAso;
 begin
-  result := tpTpAso( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
+  result := tpTpAso( StrToEnumerado2(ok , s, [ '0', '1', '2', '3', '4', '8' ] ) );
 end;
 
 function eSResAsoToStr(const t: tpResAso ): string;

@@ -53,6 +53,10 @@ Símbolo : Significado
 [-] Corrigido o nome do arquivo dos eventos S5001, S5002, S50011 e S5012 na hora de salvar.
    (Por: Rafael Dias).
 
+-- PCN --
+[-] Corrigido erro na leitura do xml dos eventos S5001, S5002, S50011 e S5012.
+   (Por: Rafael Dias).
+
 26/02/2018
 -- pcesConversaoeSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/41710-ajuste-pcesconversaoesocial/?do=findComment&comment=274982

@@ -208,7 +208,7 @@ type
 implementation
 
 uses
-  ACBreSocial, ACBreSocialEventos, ACBrDFeSSL;
+  ACBreSocial, ACBrDFeSSL;
 
 {TeSocialEvento}
 

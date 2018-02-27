@@ -483,7 +483,7 @@ begin
                 end;
               end;
             end;
-            // Verifica se a necessidade da leitura do grupo <Signature>
+            // ToDo: Verifica se a necessidade da leitura do grupo <Signature>
           end;
 
           j := 0;

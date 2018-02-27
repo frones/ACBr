@@ -239,6 +239,7 @@ begin
   if Value = FEvtIrrfBenef.XML then Exit;
 
   FEvtIrrfBenef.XML := Value;
+  FEvtIrrfBenef.Leitor.Arquivo := Value;
   FEvtIrrfBenef.LerXML;
 
 end;

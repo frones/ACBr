@@ -274,6 +274,7 @@ begin
   if Value = FEvtBasesTrab.XML then Exit;
 
   FEvtBasesTrab.XML := Value;
+  FEvtBasesTrab.Leitor.Arquivo := Value;
   FEvtBasesTrab.LerXML;
 
 end;

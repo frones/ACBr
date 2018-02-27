@@ -163,6 +163,7 @@ begin
   if Value = FEvtIrrf.XML then Exit;
 
   FEvtIrrf.XML := Value;
+  FEvtIrrf.Leitor.Arquivo := Value;
   FEvtIrrf.LerXML;
 
 end;
@@ -268,3 +269,4 @@ begin
 end;
 
 end.
+

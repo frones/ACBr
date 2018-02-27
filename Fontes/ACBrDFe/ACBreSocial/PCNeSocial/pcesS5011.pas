@@ -557,6 +557,7 @@ begin
   if Value = FEvtCS.XML then Exit;
 
   FEvtCS.XML := Value;
+  FEvtCS.Leitor.Arquivo := Value;
   FEvtCS.LerXML;
 
 end;

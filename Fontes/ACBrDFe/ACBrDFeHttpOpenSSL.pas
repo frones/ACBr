@@ -159,8 +159,15 @@ begin
   FHTTP.Sock.SSL.SSLType := FpDFeSSL.SSLType;
 
   FHTTP.Timeout := FpDFeSSL.TimeOut;
-  FHTTP.Sock.ConnectionTimeout := FpDFeSSL.TimeOut;
-  //FHTTP.Sock.SSL.Ciphers := 'DEFAULT:AES128-SHA';
+  with FHTTP.Sock do
+  begin
+    SetTimeout(FpDFeSSL.TimeOut);
+    ConnectionTimeout := FpDFeSSL.TimeOut;
+    InterPacketTimeout := False;
+    NonblockSendTimeout := FpDFeSSL.TimeOut;
+    SocksTimeout := FpDFeSSL.TimeOut;
+    HTTPTunnelTimeout := FpDFeSSL.TimeOut;
+  end;
 
   FHTTP.ProxyHost := FpDFeSSL.ProxyHost;
   FHTTP.ProxyPort := FpDFeSSL.ProxyPort;

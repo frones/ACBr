@@ -44,10 +44,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2018
+-- ACBrDFeHttpOpenSSL --
+[-] Melhorias na definição de TimeOut de Conexão
+    (por: André Moraes e DSA)
+-- ACBrDFeWinCrypt --
+[*] Remoção de constantes não necessárias
+    (por: DSA)
+
 26/02/2018
 -- ACBrDFeXsLibXml2 --
 [-] Corrigido bug de assinatura do xml quando a URI é vazia.
-	https://www.projetoacbr.com.br/forum/topic/41682-assinatura-a3-e-a1-instalado-na-m%C3%A1quina/
+    https://www.projetoacbr.com.br/forum/topic/41682-assinatura-a3-e-a1-instalado-na-m%C3%A1quina/
     (por Rafael Dias e Paulo Aguiar Junior)
 
 15/01/2018

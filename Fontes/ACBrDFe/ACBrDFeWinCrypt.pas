@@ -1137,12 +1137,6 @@ end;
 
 function TDFeWinCrypt.CalcHash(const AStream: TStream; const Digest: TSSLDgst;
   const Assina: Boolean): AnsiString;
-const
-  CALG_SHA_256 = $0000800c;
-  CALG_SHA_512 = $0000800e;
-  PROV_RSA_AES = 24;
-  //MS_ENH_RSA_AES_PROV = 'Microsoft Enhanced RSA and AES Cryptographic Provider';
-
 var
   mCryptProvider, mCryptProviderCert: HCRYPTPROV;
   mHash, aHashType: HCRYPTHASH;

@@ -1060,6 +1060,7 @@ begin
               ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
               ChaveNFeRPS.SerieRPS          := Leitor.rCampo(tcStr, 'serie_nfse');
               ChaveNFeRPS.NumeroRPS         := Leitor.rCampo(tcStr, 'numero_nfse');
+              ChaveNFeRPS.Link              := Leitor.rCampo(tcStr, 'link_nfse');
             end;
             
             Result := True;

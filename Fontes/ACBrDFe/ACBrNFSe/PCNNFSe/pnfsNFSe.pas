@@ -115,6 +115,7 @@ type
     FInscricaoPrestador: String;
     FNumero: String;
     FCodigoVerificacao: String;
+    FLink: String;
     FNumeroRPS: String;
     FSerieRPS: String;
   public
@@ -122,6 +123,7 @@ type
     // NFS-e
     property Numero: String             read FNumero             write FNumero;
     property CodigoVerificacao: String  read FCodigoVerificacao  write FCodigoVerificacao;
+    property Link: String               read FLink               write FLink;
     // RPS
     property SerieRPS: String           read FSerieRPS           write FSerieRPS;
     property NumeroRPS: String          read FNumeroRPS          write FNumeroRPS;

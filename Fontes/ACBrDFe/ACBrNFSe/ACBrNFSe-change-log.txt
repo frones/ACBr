@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2018
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/41744-altera%C3%A7%C3%A3o-de-provedor-no-munic%C3%ADpio-de-alvoradars/
+   Por: Marciost
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/41748-provedor-actconv201governador-valadares-mg-3127701/
+   Por: Hugo Vinicius
+
 26/02/2018
 -- pnfsNFSeW_EL --
 [*] https://www.projetoacbr.com.br/forum/topic/38558-provedor-el-inclus%C3%A3o-da-cidade-aracruzes/?do=findComment&comment=274415

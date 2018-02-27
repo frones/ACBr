@@ -145,7 +145,7 @@ begin
      (NFSe.Tomador.Contato.Telefone <> '') or (NFSe.Tomador.Contato.Email <> '') then
   begin
     if (FProvedor in [proActcon, proVersaTecnologia, proISSJoinville, proSmarAPDABRASF]) or
-       ((FProvedor = proActconv2) and (FVersaoDados = '2.01')) then
+       ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupoNFSe('TomadorServico')
     else
       Gerador.wGrupoNFSe('Tomador');
@@ -215,7 +215,7 @@ begin
       end;
     end;
 
-    if FProvedor in [proActcon, proVersaTecnologia, proISSJoinville, proSmarAPDABRASF] then
+    if (FProvedor in [proActcon, proVersaTecnologia, proISSJoinville, proSmarAPDABRASF]) or ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupoNFSe('/TomadorServico')
     else
       Gerador.wGrupoNFSe('/Tomador');
@@ -697,7 +697,7 @@ begin
   GerarIdentificacaoRPS;
 
   case FProvedor of
-    proABase, proActcon, proActconv2, proAgili, proBethav2, proCoplan, proEReceita,
+    proABase, proActcon, proActconv201, proActconv2, proAgili, proBethav2, proCoplan, proEReceita,
     proFiorilli, proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
     proNEAInformatica, proNotaInteligente, proProdata, proPronimv2, proPVH,
     proSaatri, proSisPMJP, proSiam, proVirtual, proVersaTecnologia, proVitoria,

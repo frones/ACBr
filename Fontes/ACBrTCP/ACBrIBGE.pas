@@ -52,6 +52,7 @@ uses
   ACBrSocket, ACBrBase;
 
 const
+  CIBGE_UF_COUNT    = 27;
   CIBGE_URL_UF      = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/';
   CIBGE_URL_MUN_UF  = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/{idUF}/municipios';
   CIBGE_URL_MUN     = 'https://servicodados.ibge.gov.br/api/v1/localidades/municipios';
@@ -1234,7 +1235,7 @@ begin
   if not fCacheLido then
     CarregarCache;
 
-  if (fListaUFs.Count > 0) then  // Já fez a carga ?
+  if (fListaUFs.Count >= CIBGE_UF_COUNT) then  // Já fez a carga ?
     Exit;
 
   fListaUFs.Clear;

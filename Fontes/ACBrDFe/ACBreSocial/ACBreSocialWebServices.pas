@@ -127,7 +127,6 @@ type
 
     function TratarResposta: Boolean; override;
     function GerarMsgLog: String; override;
-    function GerarPrefixoArquivo: String; override;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -365,12 +364,12 @@ var
   aMsg: String;
 begin
   aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-//                         'Ambiente: %s ' + LineBreak +
+                         'Ambiente: %s ' + LineBreak +
                          'Versão Aplicativo: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
                          'Status Descrição: %s ' + LineBreak),
                  ['2.4.01',
-//                  TpAmbToStr(FEventoRetorno.tpAmb),
+                  TpAmbToStr(TACBreSocial(FPDFeOwner).Configuracoes.WebServices.Ambiente),
                   FRetEnvioLote.dadosRecLote.versaoAplicRecepcao,
                   IntToStr(FRetEnvioLote.Status.cdResposta),
                   FRetEnvioLote.Status.descResposta]);
@@ -483,12 +482,12 @@ var
   aMsg: String;
 begin
   aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-//                         'Ambiente: %s ' + LineBreak +
+                         'Ambiente: %s ' + LineBreak +
                          'Versão Aplicativo: %s ' + LineBreak +
                          'Status Código: %s ' + LineBreak +
                          'Status Descrição: %s ' + LineBreak),
                  ['2.4.01',
-//                  TpAmbToStr(FEventoRetorno.tpAmb),
+                  TpAmbToStr(TACBreSocial(FPDFeOwner).Configuracoes.WebServices.Ambiente),
                   FRetConsultaLote.dadosRecLote.versaoAplicRecepcao,
                   IntToStr(FRetConsultaLote.Status.cdResposta),
                   FRetConsultaLote.Status.descResposta]);
@@ -498,11 +497,6 @@ begin
                FormatDateTimeBr(FRetConsultaLote.dadosRecLote.dhRecepcao))]);
 
   Result := aMsg;
-end;
-
-function TConsultaLote.GerarPrefixoArquivo: String;
-begin
-  Result := FormatDateTime('yyyymmddhhnnss', Now);
 end;
 
 function TConsultaLote.TratarResposta: Boolean;
@@ -523,10 +517,11 @@ begin
 
       if AXML <> '' then
       begin
-        NomeArq := FRetConsultaLote.RetEventos.Items[I].tot.Items[J].tipo + '.xml';
+        NomeArq := FRetConsultaLote.RetEventos.Items[I].Id + '-' +
+                   FRetConsultaLote.RetEventos.Items[I].tot.Items[J].tipo + '.xml';
 
         if (FPConfiguracoeseSocial.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
-          FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + NomeArq, AXML);
+          FPDFeOwner.Gravar(NomeArq, AXML);
       end;
     end;
   end;
@@ -534,7 +529,7 @@ begin
   if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
     TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPRetWS, eseRetornoConsulta);
 
-  Result := True; //(FRetEnvioLote.cdResposta in [201, 202]);
+  Result := True;
 end;
 
 { TWebServices }

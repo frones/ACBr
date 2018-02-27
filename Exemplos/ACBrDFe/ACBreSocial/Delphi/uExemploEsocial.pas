@@ -2,7 +2,7 @@
 { Projeto: Componente ACBreSocial }
 { Biblioteca multiplataforma de componentes Delphi para envio dos eventos do }
 { eSocial - http://www.esocial.gov.br/ }
-{  }
+{ }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto }
 { Daniel Simoes de Almeida }
 { André Ferreira de Moraes }
@@ -338,8 +338,7 @@ const
   SELDIRHELP = 1000;
 
 {$R *.dfm}
-
-{ TFExemploEsocial }
+  { TFExemploEsocial }
 
 procedure TFExemploEsocial.GerareSocial1000;
 var
@@ -2539,7 +2538,8 @@ begin
     EvtAfastTemp.IdeVinculo.Matricula := 'A123';
 
     EvtAfastTemp.infoAfastamento.iniAfastamento.DtIniAfast := Now;
-    EvtAfastTemp.infoAfastamento.iniAfastamento.codMotAfast := mtvAcidenteDoencaTrabalho;
+    EvtAfastTemp.infoAfastamento.iniAfastamento.codMotAfast :=
+      mtvAcidenteDoencaTrabalho;
     EvtAfastTemp.infoAfastamento.iniAfastamento.infoMesmoMtv := tpNao;
     EvtAfastTemp.infoAfastamento.iniAfastamento.tpAcidTransito := tpatOutros;
     EvtAfastTemp.infoAfastamento.iniAfastamento.observacao :=
@@ -3471,7 +3471,7 @@ end;
 
 procedure TFExemploEsocial.btnGerarEnviarClick(Sender: TObject);
 var
-  I: Integer;
+  i: Integer;
 begin
   if chkClear.Checked then
     LimparDocsPasta;
@@ -3501,17 +3501,19 @@ begin
           Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
           Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
           Add('dadosRecepcaoLote');
-          Add(' - dhRecepcao..............: ' + DateTimeToStr(dadosRecLote.dhRecepcao));
-          Add(' - versaoAplicativoRecepcao: ' + dadosRecLote.versaoAplicRecepcao);
+          Add(' - dhRecepcao..............: ' +
+            DateTimeToStr(dadosRecLote.dhRecepcao));
+          Add(' - versaoAplicativoRecepcao: ' +
+            dadosRecLote.versaoAplicRecepcao);
           Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
         end
         else
         begin
-          for I := 0 to Status.Ocorrencias.Count - 1 do
+          for i := 0 to Status.Ocorrencias.Count - 1 do
           begin
-            with Status.Ocorrencias.Items[I] do
+            with Status.Ocorrencias.Items[i] do
             begin
-              Add(' Ocorrencia ' + IntToStr(I));
+              Add(' Ocorrencia ' + IntToStr(i));
               Add('   Código.....: ' + IntToStr(Codigo));
               Add('   Descrição..: ' + Descricao);
               Add('   Tipo.......: ' + IntToStr(Tipo));
@@ -3530,7 +3532,7 @@ end;
 
 procedure TFExemploEsocial.btnEnviarClick(Sender: TObject);
 var
-  I: Integer;
+  i: Integer;
 begin
   if chkClear.Checked then
     LimparDocsPasta;
@@ -3557,17 +3559,19 @@ begin
           Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
           Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
           Add('dadosRecepcaoLote');
-          Add(' - dhRecepcao..............: ' + DateTimeToStr(dadosRecLote.dhRecepcao));
-          Add(' - versaoAplicativoRecepcao: ' + dadosRecLote.versaoAplicRecepcao);
+          Add(' - dhRecepcao..............: ' +
+            DateTimeToStr(dadosRecLote.dhRecepcao));
+          Add(' - versaoAplicativoRecepcao: ' +
+            dadosRecLote.versaoAplicRecepcao);
           Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
         end
         else
         begin
-          for I := 0 to Status.Ocorrencias.Count - 1 do
+          for i := 0 to Status.Ocorrencias.Count - 1 do
           begin
-            with Status.Ocorrencias.Items[I] do
+            with Status.Ocorrencias.Items[i] do
             begin
-              Add(' Ocorrencia ' + IntToStr(I));
+              Add(' Ocorrencia ' + IntToStr(i));
               Add('   Código.....: ' + IntToStr(Codigo));
               Add('   Descrição..: ' + Descricao);
               Add('   Tipo.......: ' + IntToStr(Tipo));
@@ -3587,14 +3591,15 @@ end;
 procedure TFExemploEsocial.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
-  I, J: Integer;
+  i, J: Integer;
   evtS5001: TS5001;
   evtS5002: TS5002;
   evtS5011: TS5011;
   evtS5012: TS5012;
 begin
   Protocolo := '';
-  if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo)) then
+  if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo))
+  then
     Exit;
 
   if ACBreSocial1.Consultar(Protocolo) then
@@ -3619,75 +3624,93 @@ begin
           Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
           Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
           Add('dadosRecepcaoLote');
-          Add(' - dhRecepcao..............: ' + DateTimeToStr(dadosRecLote.dhRecepcao));
-          Add(' - versaoAplicativoRecepcao: ' + dadosRecLote.versaoAplicRecepcao);
+          Add(' - dhRecepcao..............: ' +
+            DateTimeToStr(dadosRecLote.dhRecepcao));
+          Add(' - versaoAplicativoRecepcao: ' +
+            dadosRecLote.versaoAplicRecepcao);
           Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
 
-          for I := 0 to retEventos.Count - 1 do
+          for i := 0 to retEventos.Count - 1 do
           begin
             Add('Processamento');
-            Add(' - cdResposta.........: ' + IntToStr(retEventos.Items[I].Processamento.cdResposta));
-            Add(' - descResposta.......: ' + retEventos.Items[I].Processamento.descResposta);
-            Add(' - versaoAplicProcLote: ' + retEventos.Items[I].Processamento.versaoAplicProcLote);
-            Add(' - dhProcessamento....: ' + DateTimeToStr(retEventos.Items[I].Processamento.dhProcessamento));
+            Add(' - cdResposta.........: ' +
+              IntToStr(retEventos.Items[i].Processamento.cdResposta));
+            Add(' - descResposta.......: ' + retEventos.Items[i]
+              .Processamento.descResposta);
+            Add(' - versaoAplicProcLote: ' + retEventos.Items[i]
+              .Processamento.versaoAplicProcLote);
+            Add(' - dhProcessamento....: ' + DateTimeToStr(retEventos.Items[i]
+              .Processamento.dhProcessamento));
 
-            if retEventos.Items[I].Processamento.Ocorrencias.Count > 0 then
+            if retEventos.Items[i].Processamento.Ocorrencias.Count > 0 then
             begin
               Add('Ocorrencias do Processamento');
-              for J := 0 to retEventos.Items[I].Processamento.Ocorrencias.Count - 1 do
+              for J := 0 to retEventos.Items[i].Processamento.Ocorrencias.
+                Count - 1 do
               begin
                 Add(' Ocorrencia ' + IntToStr(J));
-                Add('   Código.....: ' + IntToStr(retEventos.Items[I].Processamento.Ocorrencias.Items[J].Codigo));
-                Add('   Descrição..: ' + retEventos.Items[I].Processamento.Ocorrencias.Items[J].Descricao);
-                Add('   Tipo.......: ' + IntToStr(retEventos.Items[I].Processamento.Ocorrencias.Items[J].Tipo));
-                Add('   Localização: ' + retEventos.Items[I].Processamento.Ocorrencias.Items[J].Localizacao);
+                Add('   Código.....: ' +
+                  IntToStr(retEventos.Items[i].Processamento.Ocorrencias.Items
+                  [J].Codigo));
+                Add('   Descrição..: ' + retEventos.Items[i]
+                  .Processamento.Ocorrencias.Items[J].Descricao);
+                Add('   Tipo.......: ' +
+                  IntToStr(retEventos.Items[i].Processamento.Ocorrencias.Items
+                  [J].Tipo));
+                Add('   Localização: ' + retEventos.Items[i]
+                  .Processamento.Ocorrencias.Items[J].Localizacao);
               end;
-              for J := 0 to retEventos.Items[I].tot.Count - 1 do
-              begin
-                Add(' Tot ' + IntToStr(J));
-                Add('   Tipo.........: ' + retEventos.Items[I].tot[j].tipo);
-                case retEventos.Items[I].tot[j].Evento.TipoEvento of
-                  teS5001:
+            end;
+
+            for J := 0 to retEventos.Items[i].tot.Count - 1 do
+            begin
+              Add(' Tot ' + IntToStr(J));
+              Add('   Tipo.........: ' + retEventos.Items[i].tot[J].Tipo);
+              case retEventos.Items[i].tot[J].Evento.TipoEvento of
+                teS5001:
                   begin
-                   evtS5001 := TS5001(retEventos.Items[I].tot[j].Evento);
-                   Add('   Id...........: ' + evtS5001.EvtBasesTrab.Id);
-                   Add('   nrRecArqBase.: ' + evtS5001.EvtBasesTrab.IdeEvento.nrRecArqBase);
+                    evtS5001 := TS5001(retEventos.Items[i].tot[J].Evento);
+                    Add('   Id...........: ' + evtS5001.EvtBasesTrab.Id);
+                    Add('   nrRecArqBase.: ' +
+                      evtS5001.EvtBasesTrab.IdeEvento.nrRecArqBase);
                   end;
-                  teS5002:
+                teS5002:
                   begin
-                   evtS5002 := TS5002(retEventos.Items[I].tot[j].Evento);
-                   Add('   Id...........: ' + evtS5002.EvtirrfBenef.Id);
-                   Add('   nrRecArqBase.: ' + evtS5002.EvtirrfBenef.IdeEvento.nrRecArqBase);
+                    evtS5002 := TS5002(retEventos.Items[i].tot[J].Evento);
+                    Add('   Id...........: ' + evtS5002.EvtirrfBenef.Id);
+                    Add('   nrRecArqBase.: ' +
+                      evtS5002.EvtirrfBenef.IdeEvento.nrRecArqBase);
                   end;
-                  teS5011:
+                teS5011:
                   begin
-                   evtS5011 := TS5011(retEventos.Items[I].tot[j].Evento);
-                   Add('   Id...........: ' + evtS5011.EvtCS.Id);
-                   Add('   nrRecArqBase.: ' + evtS5011.EvtCS.IdeEvento.nrRecArqBase);
+                    evtS5011 := TS5011(retEventos.Items[i].tot[J].Evento);
+                    Add('   Id...........: ' + evtS5011.EvtCS.Id);
+                    Add('   nrRecArqBase.: ' +
+                      evtS5011.EvtCS.IdeEvento.nrRecArqBase);
                   end;
-                  teS5012:
+                teS5012:
                   begin
-                   evtS5012 := TS5012(retEventos.Items[I].tot[j].Evento);
-                   Add('   Id...........: ' + evtS5012.EvtIrrf.Id);
-                   Add('   nrRecArqBase.: ' + evtS5012.EvtIrrf.IdeEvento.nrRecArqBase);
+                    evtS5012 := TS5012(retEventos.Items[i].tot[J].Evento);
+                    Add('   Id...........: ' + evtS5012.EvtIrrf.Id);
+                    Add('   nrRecArqBase.: ' +
+                      evtS5012.EvtIrrf.IdeEvento.nrRecArqBase);
                   end;
-                end;
               end;
             end;
 
             Add('Recibo');
-            Add(' - nrRecibo: ' + retEventos.Items[I].Recibo.nrRecibo);
-            Add(' - hash....: ' + retEventos.Items[I].Recibo.hash);
+            Add(' - nrRecibo: ' + retEventos.Items[i].Recibo.NrRecibo);
+            Add(' - hash....: ' + retEventos.Items[i].Recibo.hash);
           end;
 
         end
         else
         begin
-          for I := 0 to Status.Ocorrencias.Count - 1 do
+          for i := 0 to Status.Ocorrencias.Count - 1 do
           begin
-            with Status.Ocorrencias.Items[I] do
+            with Status.Ocorrencias.Items[i] do
             begin
-              Add(' Ocorrencia ' + IntToStr(I));
+              Add(' Ocorrencia ' + IntToStr(i));
               Add('   Código.....: ' + IntToStr(Codigo));
               Add('   Descrição..: ' + Descricao);
               Add('   Tipo.......: ' + IntToStr(Tipo));
@@ -3958,8 +3981,8 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TFExemploEsocial.ACBreSocial1TransmissaoEventos(
-  const AXML: AnsiString; ATipo: TeSocialEventos);
+procedure TFExemploEsocial.ACBreSocial1TransmissaoEventos
+  (const AXML: AnsiString; ATipo: TeSocialEventos);
 begin
   case ATipo of
     eseEnvioLote:
@@ -4390,28 +4413,30 @@ procedure TFExemploEsocial.btnCarregarXMLClick(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione o Evento (Arquivo XML)';
   OpenDialog1.DefaultExt := '*.xml';
-  OpenDialog1.Filter := 'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.Filter :=
+    'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
     ACBreSocial1.Eventos.LoadFromFile(OpenDialog1.FileName);
 
   MemoResp.Lines.Add('XML de Eventos Carregado com Sucesso!');
-  pgWebService.ActivePageIndex := 3;
+  pgWebservice.ActivePageIndex := 3;
 end;
 
 procedure TFExemploEsocial.btnCarregarINIClick(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione o Evento (Arquivo INI)';
   OpenDialog1.DefaultExt := '*.ini';
-  OpenDialog1.Filter := 'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
 
   if OpenDialog1.Execute then
     ACBreSocial1.Eventos.LoadFromINI(OpenDialog1.FileName);
 
   MemoResp.Lines.Add('INI de Eventos Carregado com Sucesso!');
-  pgWebService.ActivePageIndex := 3;
+  pgWebservice.ActivePageIndex := 3;
 end;
 
 end.

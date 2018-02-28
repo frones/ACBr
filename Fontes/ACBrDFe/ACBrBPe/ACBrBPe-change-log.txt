@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2018
+-- ACBrBPeServicos --
+[+] Inclusão das URLs do ambiente de Produção de MG.
+   Por: Italo Jurisato Junior
+
 14/02/2018
 -- pcnBPeW --
 [*] Remção de funções em duplicidade e a troca das chamadas das funções antigas

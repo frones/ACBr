@@ -95,7 +95,7 @@ type
     {Geradores de Uso Comum}
     procedure GerarCabecalho(Namespace: String);
     procedure GerarRodape;
-    procedure GerarAliqGilRat(pAliqRat: TAliqGilRat; const GroupName: string = 'aliqGilRat');
+    procedure GerarAliqGilRat(pEmp: TIdeEmpregador; pAliqRat: TAliqGilRat; const GroupName: string = 'aliqGilRat');
     procedure GerarAlvaraJudicial(pAlvaraJudicial: TAlvaraJudicial);
     procedure GerarAposentadoria(pAposentadoria: TAposentadoria);
     procedure GerarCNH(pCnh: TCNH);
@@ -853,14 +853,18 @@ begin
   end;
 end;
 
-procedure TeSocialEvento.GerarAliqGilRat(pAliqRat: TAliqGilRat;
+procedure TeSocialEvento.GerarAliqGilRat(pEmp: TIdeEmpregador; pAliqRat: TAliqGilRat;
   const GroupName: string);
 begin
   Gerador.wGrupo(GroupName);
 
-  Gerador.wCampo(tcStr, '', 'aliqRat',      1, 1, 1, eSAliqRatToStr(pAliqRat.AliqRat)); 
-  Gerador.wCampo(tcDe4, '', 'fap',          1, 5, 0, pAliqRat.Fap);
-  Gerador.wCampo(tcDe4, '', 'aliqRatAjust', 1, 5, 0, pAliqRat.AliqRatAjust);
+  Gerador.wCampo(tcStr, '', 'aliqRat',      1, 1, 1, eSAliqRatToStr(pAliqRat.AliqRat));
+
+  if (pEmp.TpInsc = tpTpInsc.tiCNPJ) then
+  begin
+    Gerador.wCampo(tcDe4, '', 'fap',          1, 5, 0, pAliqRat.Fap);
+    Gerador.wCampo(tcDe4, '', 'aliqRatAjust', 1, 5, 0, pAliqRat.AliqRatAjust);
+  end;
 
   if pAliqRat.procAdmJudRatInst() then
     GerarProcessoAdmJudRat(pAliqRat.ProcAdmJudRat);

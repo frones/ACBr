@@ -419,7 +419,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'cnaePrep', 1, 7, 1, infoEstab.DadosEstab.cnaePrep);
 
-  GerarAliqGilRat(infoEstab.DadosEstab.aliqGilrat, 'aliqGilrat');
+  GerarAliqGilRat(FIdeEmpregador, infoEstab.DadosEstab.aliqGilrat, 'aliqGilrat');
   GerarInfoCaepf;
   GerarInfoObra;
   GerarInfoTrab;

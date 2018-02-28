@@ -53,6 +53,9 @@ Símbolo : Significado
 [-] Corrigido geração do identificação do empregador quando é pessoa fisica.
 	https://www.projetoacbr.com.br/forum/topic/41753-c%C3%B3digo-inv%C3%A1lido-utilizando-ecpf/
    (Por: Rafael Dias e Joceandro Perin).
+[-] Corrigido geração do evento S-1005 quando é pessoa fisica.
+	https://www.projetoacbr.com.br/forum/topic/41784-ajuste-no-evento-s-1005-campos-exclusivos-para-pj/
+   (Por: Joceandro Perin). 
    
 -- ACBreSocialLoteEventos --
 [-] Corrigido geração do lote quando é pessoa fisica.
@@ -67,6 +70,11 @@ Símbolo : Significado
 -- pcesS1000 --
 [-] Corrigido geração do evento S-1000 quando é pessoa fisica.
 	https://www.projetoacbr.com.br/forum/topic/41753-c%C3%B3digo-inv%C3%A1lido-utilizando-ecpf/
+   (Por: Joceandro Perin).
+   
+-- pcesS1005 --
+[-] Corrigido geração do evento S-1005 quando é pessoa fisica.
+	https://www.projetoacbr.com.br/forum/topic/41784-ajuste-no-evento-s-1005-campos-exclusivos-para-pj/
    (Por: Joceandro Perin).
    
 -- ACBreSocialLoteEventos --

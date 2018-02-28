@@ -152,7 +152,7 @@ type
   TACBrPosPrinter = class;
 
   TACBrPosPrinterModelo = (ppTexto, ppEscPosEpson, ppEscBematech, ppEscDaruma,
-                           ppEscElgin, ppEscDiebold, ppEscEpsonP2);
+                           ppEscVox, ppEscDiebold, ppEscEpsonP2);
 
   { TACBrPosPrinterClass }
 
@@ -839,7 +839,7 @@ begin
     ppEscPosEpson: FPosPrinterClass := TACBrEscPosEpson.Create(Self);
     ppEscBematech: FPosPrinterClass := TACBrEscBematech.Create(Self);
     ppEscDaruma : FPosPrinterClass := TACBrEscDaruma.Create(Self);
-    ppEscElgin : FPosPrinterClass := TACBrEscElgin.Create(Self);
+    ppEscVox : FPosPrinterClass := TACBrEscElgin.Create(Self);
     ppEscDiebold : FPosPrinterClass := TACBrEscDiebold.Create(Self);
     ppEscEpsonP2 : FPosPrinterClass := TACBrEscEpsonP2.Create(self);
   else

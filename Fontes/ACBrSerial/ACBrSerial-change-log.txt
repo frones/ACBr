@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/02/2018
+-- ACBrPosPrinter --
+[*] Modelo "ppEscElgin", modificado para "ppEscVox", a pedido do Fabricante Elgin
+    (por: DSA)
+
 Data: 16/02/2018
 -- ACBrETQClass --
 [+] Adicionado suporte a Unidade "etqDecimoDeMilimetros".

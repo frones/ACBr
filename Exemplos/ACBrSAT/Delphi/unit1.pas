@@ -252,8 +252,6 @@ type
     procedure btMFEVerificarStatusClick(Sender: TObject);
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure btSerialClick(Sender: TObject);
-    procedure cbUsarEscPosChange(Sender: TObject);
-    procedure cbUsarFortesChange(Sender: TObject);
     procedure cbxFormatXMLChange(Sender: TObject);
     procedure cbxModeloChange(Sender : TObject) ;
     procedure cbxRedeProxyChange(Sender: TObject);
@@ -304,6 +302,8 @@ type
     procedure SbArqLogClick(Sender : TObject) ;
     procedure sePagCodChange(Sender: TObject);
     procedure sfeVersaoEntChange(Sender: TObject);
+    procedure cbUsarEscPosClick(Sender: TObject);
+    procedure cbUsarFortesClick(Sender: TObject);
   private
     procedure ConfiguraRedeSAT;
     procedure LeDadosRedeSAT;
@@ -823,18 +823,6 @@ begin
   finally
      FreeAndNil( frConfiguraSerial ) ;
   end ;
-end;
-
-procedure TForm1.cbUsarEscPosChange(Sender: TObject);
-begin
-  cbUsarFortes.Checked := False;
-  ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
-end;
-
-procedure TForm1.cbUsarFortesChange(Sender: TObject);
-begin
-  cbUsarEscPos.Checked := False;
-  ACBrSAT1.Extrato := ACBrSATExtratoFortes1
 end;
 
 procedure TForm1.cbxFormatXMLChange(Sender: TObject);
@@ -1491,11 +1479,11 @@ begin
     Total.vCFeLei12741 := 1.23;
 
     Pagto1 := RoundABNT(TotalGeral/2,-2);
-{    with Pagto.Add do
+    with Pagto.Add do
     begin
       cMP := mpCartaodeCredito;
       vMP := Pagto1;
-    end;    }
+    end;    
 
     with Pagto.Add do
     begin
@@ -1521,7 +1509,8 @@ var
   tini, tfim: TDateTime;
 begin
   PrepararImpressao;
-  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\Vendas\11111111111111\201612\AD35161211111111111111591234567890001574544264.xml');
+  //ACBrSAT1.CFe.LoadFromFile('C:\temp\AD35180111111111111111591234567890001128242021.xml');
+  //ACBrSAT1.CFe.LoadFromFile('C:\temp\AD35180111111111111111591234567890001185486520.xml');
   tini := now;
   //ACBrSATExtratoFortes1.Filtro := fiPDF;
   //ACBrSATExtratoFortes1.ImprimirExtrato;
@@ -1660,6 +1649,18 @@ begin
   WriteToTXT( PathWithDelim(ExtractFileDir(application.ExeName))+MyWebBrowser.Name+'-temp.xml',
               AXML, False, False);
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName))+MyWebBrowser.Name+'-temp.xml');
+end;
+
+procedure TForm1.cbUsarEscPosClick(Sender: TObject);
+begin
+  cbUsarFortes.Checked := False;
+  ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
+end;
+
+procedure TForm1.cbUsarFortesClick(Sender: TObject);
+begin
+  cbUsarEscPos.Checked := False;
+  ACBrSAT1.Extrato := ACBrSATExtratoFortes1
 end;
 
 end.

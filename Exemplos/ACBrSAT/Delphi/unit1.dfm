@@ -231,7 +231,7 @@ object Form1: TForm1
         Top = 15
         Width = 739
         Height = 223
-        ActivePage = tsDadosSAT
+        ActivePage = Impressao
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
@@ -1327,6 +1327,7 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
+            OnClick = cbUsarFortesClick
           end
           object cbUsarEscPos: TRadioButton
             Left = 450
@@ -1341,6 +1342,7 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 1
+            OnClick = cbUsarEscPosClick
           end
         end
         object tsMFe: TTabSheet
@@ -1396,7 +1398,7 @@ object Form1: TForm1
             MaxValue = 0
             MinValue = 10
             TabOrder = 2
-            Value = 10
+            Value = 0
           end
           object btMFEEnviarPagamento: TButton
             Left = 320

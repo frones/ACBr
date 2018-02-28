@@ -1617,12 +1617,12 @@ begin
     end;
     if (Bloco_P.RegistroP001.IND_DAD = idComDados) then
     begin
-      if Bloco_P.RegistroP030.Count > 0 then
+      if Bloco_P.RegistroP001.RegistroP030.Count > 0 then
       begin
         with New do
         begin
           REG_BLC := 'P030';
-          QTD_REG_BLC := Bloco_P.RegistroP030.Count;
+          QTD_REG_BLC := Bloco_P.RegistroP001.RegistroP030.Count;
         end;
       end;
       if Bloco_P.RegistroP100Count > 0 then

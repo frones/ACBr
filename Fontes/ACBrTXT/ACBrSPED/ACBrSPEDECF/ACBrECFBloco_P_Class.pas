@@ -132,7 +132,7 @@ begin
   inherited;
 
   FRegistroP001 := TRegistroP001.Create;
-  FRegistroP030 := TRegistroP030List.Create;
+  FRegistroP001.RegistroP030 := TRegistroP030List.Create;
   FRegistroP990 := TRegistroP990.Create;
 
   FRegistroP230Count := 0;

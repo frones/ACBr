@@ -1,13 +1,13 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = -1080
-  Height = 689
-  Top = 0
+  Left = 351
+  Height = 688
+  Top = 101
   Width = 1064
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 689
+  ClientHeight = 688
   ClientWidth = 1064
   Color = clBlack
   Constraints.MinHeight = 480
@@ -25,7 +25,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
-    Top = 623
+    Top = 622
     Width = 1064
     Panels = <    
       item
@@ -42,7 +42,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object pBotoes: TPanel
     Left = 0
     Height = 43
-    Top = 646
+    Top = 645
     Width = 1064
     Align = alBottom
     ClientHeight = 43
@@ -252,22 +252,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object pCentral: TPanel
     Left = 196
-    Height = 593
+    Height = 592
     Top = 30
     Width = 868
     Align = alClient
-    ClientHeight = 593
+    ClientHeight = 592
     ClientWidth = 868
     Color = clBtnFace
     ParentColor = False
     TabOrder = 1
     object pComandos: TPanel
       Left = 1
-      Height = 232
+      Height = 231
       Top = 360
       Width = 866
       Align = alClient
-      ClientHeight = 232
+      ClientHeight = 231
       ClientWidth = 866
       TabOrder = 0
       object Splitter1: TSplitter
@@ -326,18 +326,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
       end
       object pRespostas: TPanel
         Left = 1
-        Height = 123
+        Height = 122
         Top = 108
         Width = 864
         Align = alClient
         Caption = 'pRespostas'
-        ClientHeight = 123
+        ClientHeight = 122
         ClientWidth = 864
         Constraints.MinHeight = 70
         TabOrder = 2
         object mResp: TMemo
           Left = 1
-          Height = 104
+          Height = 103
           Top = 18
           Width = 862
           HelpType = htKeyword
@@ -385,10 +385,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 864
-        ActivePage = tsDFe
+        ActivePage = tsMonitor
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -1452,8 +1452,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/ECF.htm'
           Caption = '&ECF'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 1
           object sbECFSerial: TSpeedButton
             AnchorSideLeft.Control = cbECFPorta
@@ -1881,8 +1881,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/ImpressaodeCheque.htm'
           Caption = 'Imp.&Cheque'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 2
           object sbCHQBemafiINI: TSpeedButton
             AnchorSideLeft.Control = edCHQBemafiINI
@@ -2142,8 +2142,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/Gaveta1.htm'
           Caption = '&Gaveta'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 3
           OnShow = tsGAVShow
           object Bevel1: TBevel
@@ -2378,8 +2378,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/Display.htm'
           Caption = '&Display'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 4
           object Label17: TLabel
             Left = 192
@@ -2623,8 +2623,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/LeitorSerial.htm'
           Caption = 'Leitor Serial'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 10
           OnShow = tsLCBShow
           object Bevel2: TBevel
@@ -2913,8 +2913,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/Geral.htm'
           Caption = 'RFD'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 13
           OnShow = tsRFDShow
           object pgConRFD: TPageControl
@@ -3238,8 +3238,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/Balanca.htm'
           Caption = 'Balança'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 14
           object Label56: TLabel
             AnchorSideLeft.Control = cbBALModelo
@@ -3710,8 +3710,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsACBrBoleto: TTabSheet
           Caption = 'Boleto'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 16
           OnShow = tsACBrBoletoShow
           object pgBoleto: TPageControl
@@ -4964,8 +4964,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/ConsultasCEPIBGE.htm'
           Caption = 'Consultas'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 17
           object gbCEP: TGroupBox
             Left = 267
@@ -5205,18 +5205,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/EMail.htm'
           Caption = 'E-mail'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 23
           object gbEmailDados: TGroupBox
             Left = 0
-            Height = 295
+            Height = 289
             Top = 4
-            Width = 856
+            Width = 850
             Anchors = [akTop, akLeft, akRight, akBottom]
             Caption = 'Dados da Conta'
-            ClientHeight = 273
-            ClientWidth = 852
+            ClientHeight = 267
+            ClientWidth = 846
             TabOrder = 0
             object Label33: TLabel
               Left = 19
@@ -5248,7 +5248,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 32
-              Width = 584
+              Width = 578
               Anchors = [akTop, akLeft, akRight]
               OnExit = edEmailEnderecoExit
               TabOrder = 1
@@ -5297,7 +5297,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 89
-              Width = 473
+              Width = 467
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 3
             end
@@ -5382,7 +5382,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 19
               Height = 10
               Top = 179
-              Width = 852
+              Width = 846
               Anchors = [akTop, akLeft, akRight]
               Max = 11
               Step = 1
@@ -5390,7 +5390,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Visible = False
             end
             object cbEmailCodificacao: TComboBox
-              Left = 732
+              Left = 726
               Height = 25
               Top = 88
               Width = 100
@@ -5512,7 +5512,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Text = 'ISO_8859_1'
             end
             object Label39: TLabel
-              Left = 732
+              Left = 726
               Height = 17
               Top = 70
               Width = 68
@@ -5542,8 +5542,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/Sedex.htm'
           Caption = 'Sedex'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 24
           object Label42: TLabel
             Left = 15
@@ -5853,8 +5853,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/NCM.htm'
           Caption = 'NCM'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 25
           object Label106: TLabel
             Left = 8
@@ -5887,7 +5887,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 25
             Hint = 'Diretorio onde salvar a lista'
             Top = 78
-            Width = 712
+            Width = 706
             ShowHidden = False
             ButtonWidth = 23
             NumGlyphs = 1
@@ -5904,7 +5904,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             ParentColor = False
           end
           object bDownloadLista: TButton
-            Left = 728
+            Left = 722
             Height = 25
             Top = 78
             Width = 120
@@ -7133,6 +7133,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     State = cbChecked
                     TabOrder = 2
                   end
+                  object ckNFCeUsarIntegrador: TCheckBox
+                    AnchorSideLeft.Side = asrCenter
+                    AnchorSideTop.Side = asrBottom
+                    Left = 8
+                    Height = 22
+                    Top = 119
+                    Width = 184
+                    AutoSize = False
+                    BorderSpacing.Top = 6
+                    Caption = 'Usar Integrador Fiscal'
+                    TabOrder = 3
+                  end
                 end
               end
             end
@@ -7349,9 +7361,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 297
                 Top = 0
                 Width = 848
-                ActivePage = tsImpGeralDFe
+                ActivePage = tsImpNFCe
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 3
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -9600,6 +9612,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   'satNenhum'
                   'satDinamico_cdecl'
                   'satDinamico_stdcall'
+                  'mfe_Integrador_XML'
+                  ''
                 )
                 OnChange = cbxModeloSATChange
                 Style = csDropDownList
@@ -10467,21 +10481,76 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
           end
         end
+        object tsIntegrador: TTabSheet
+          Caption = 'Integrador'
+          ClientHeight = 327
+          ClientWidth = 856
+          ImageIndex = 28
+          object Label189: TLabel
+            Left = 8
+            Height = 17
+            Top = 16
+            Width = 80
+            Caption = 'Pasta Entrada'
+            ParentColor = False
+          end
+          object edMFEInput: TEdit
+            Left = 8
+            Height = 25
+            Top = 32
+            Width = 264
+            TabOrder = 0
+            Text = 'c:\Integrador\Input\'
+          end
+          object Label196: TLabel
+            Left = 8
+            Height = 17
+            Top = 56
+            Width = 89
+            Caption = 'Pasta Resposta'
+            ParentColor = False
+          end
+          object edMFEOutput: TEdit
+            Left = 8
+            Height = 25
+            Top = 72
+            Width = 264
+            TabOrder = 1
+            Text = 'c:\Integrador\Output\'
+          end
+          object Label197: TLabel
+            Left = 8
+            Height = 17
+            Top = 96
+            Width = 47
+            Caption = 'Timeout'
+            ParentColor = False
+          end
+          object seMFETimeout: TSpinEdit
+            Left = 8
+            Height = 25
+            Top = 112
+            Width = 82
+            MinValue = 10
+            TabOrder = 2
+            Value = 30
+          end
+        end
         object tsEscPos: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/PosPrinter.htm'
           Caption = 'PosPrinter'
-          ClientHeight = 333
-          ClientWidth = 862
+          ClientHeight = 327
+          ClientWidth = 856
           ImageIndex = 1
           object gbConfiguracao: TGroupBox
             Left = 0
-            Height = 333
+            Height = 327
             Top = 0
             Width = 856
             Align = alClient
             Caption = 'Configuração'
-            ClientHeight = 311
+            ClientHeight = 305
             ClientWidth = 852
             TabOrder = 0
             object gbCodBarras: TGroupBox
@@ -10495,7 +10564,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               TabOrder = 0
               object seCodBarrasLargura: TSpinEdit
                 Left = 8
-                Height = 21
+                Height = 25
                 Top = 24
                 Width = 50
                 TabOrder = 0
@@ -10503,7 +10572,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object seCodBarrasAltura: TSpinEdit
                 Left = 77
-                Height = 21
+                Height = 25
                 Top = 24
                 Width = 50
                 TabOrder = 1
@@ -10512,7 +10581,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 15
                 Top = 8
-                Width = 49
+                Width = 40
                 Caption = 'Largura'
                 ParentColor = False
                 ParentFont = False
@@ -10521,7 +10590,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 77
                 Height = 15
                 Top = 8
-                Width = 38
+                Width = 32
                 Caption = 'Altura'
                 ParentColor = False
                 ParentFont = False
@@ -10530,7 +10599,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 137
                 Height = 21
                 Top = 25
-                Width = 114
+                Width = 103
                 Caption = 'Exibe Número'
                 OnChange = cbHRIChange
                 TabOrder = 2
@@ -10547,7 +10616,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               TabOrder = 1
               object seQRCodeTipo: TSpinEdit
                 Left = 8
-                Height = 21
+                Height = 25
                 Top = 24
                 Width = 50
                 TabOrder = 0
@@ -10555,7 +10624,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object seQRCodeLargMod: TSpinEdit
                 Left = 96
-                Height = 21
+                Height = 25
                 Top = 24
                 Width = 50
                 TabOrder = 1
@@ -10563,7 +10632,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object seQRCodeErrorLevel: TSpinEdit
                 Left = 183
-                Height = 21
+                Height = 25
                 Top = 24
                 Width = 50
                 TabOrder = 2
@@ -10572,7 +10641,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 15
                 Top = 6
-                Width = 26
+                Width = 24
                 Caption = 'Tipo'
                 ParentColor = False
                 ParentFont = False
@@ -10581,7 +10650,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 88
                 Height = 15
                 Top = 6
-                Width = 84
+                Width = 71
                 Caption = 'Largura Mod.'
                 ParentColor = False
                 ParentFont = False
@@ -10590,7 +10659,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 183
                 Height = 15
                 Top = 6
-                Width = 68
+                Width = 55
                 Caption = 'Error Level'
                 ParentColor = False
                 ParentFont = False
@@ -10607,7 +10676,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               TabOrder = 2
               object seLogoKC1: TSpinEdit
                 Left = 8
-                Height = 21
+                Height = 25
                 Top = 41
                 Width = 50
                 TabOrder = 1
@@ -10615,7 +10684,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object seLogoKC2: TSpinEdit
                 Left = 71
-                Height = 21
+                Height = 25
                 Top = 41
                 Width = 50
                 TabOrder = 2
@@ -10623,7 +10692,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object seLogoFatorY: TSpinEdit
                 Left = 196
-                Height = 21
+                Height = 25
                 Top = 41
                 Width = 50
                 TabOrder = 3
@@ -10631,7 +10700,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object seLogoFatorX: TSpinEdit
                 Left = 133
-                Height = 21
+                Height = 25
                 Top = 41
                 Width = 50
                 TabOrder = 4
@@ -10641,7 +10710,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 15
                 Top = 24
-                Width = 24
+                Width = 21
                 Caption = 'KC1'
                 ParentColor = False
                 ParentFont = False
@@ -10650,7 +10719,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 71
                 Height = 15
                 Top = 24
-                Width = 24
+                Width = 21
                 Caption = 'KC2'
                 ParentColor = False
                 ParentFont = False
@@ -10659,7 +10728,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 133
                 Height = 15
                 Top = 24
-                Width = 40
+                Width = 34
                 Caption = 'FatorX'
                 ParentColor = False
                 ParentFont = False
@@ -10668,7 +10737,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 196
                 Height = 15
                 Top = 24
-                Width = 39
+                Width = 34
                 Caption = 'FatorY'
                 ParentColor = False
                 ParentFont = False
@@ -10677,10 +10746,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideLeft.Control = gbLogotipo
                 AnchorSideLeft.Side = asrCenter
                 AnchorSideTop.Control = gbLogotipo
-                Left = 69
+                Left = 73
                 Height = 21
                 Top = 0
-                Width = 112
+                Width = 103
                 Caption = 'Imprimir Logo'
                 Checked = True
                 State = cbChecked
@@ -10747,7 +10816,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               TabOrder = 4
               object lbModelo: TLabel
                 Left = 8
-                Height = 15
+                Height = 17
                 Top = 3
                 Width = 46
                 Caption = 'Modelo'
@@ -10764,9 +10833,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object lbPorta: TLabel
                 Left = 164
-                Height = 15
+                Height = 17
                 Top = 3
-                Width = 34
+                Width = 31
                 Caption = 'Porta'
                 ParentColor = False
               end
@@ -10825,15 +10894,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object lbPorPrinterLog: TLabel
                 Left = 8
-                Height = 15
+                Height = 17
                 Top = 56
-                Width = 53
+                Width = 50
                 Caption = 'Arq. Log'
                 ParentColor = False
               end
               object edPosPrinterLog: TEdit
                 Left = 8
-                Height = 21
+                Height = 25
                 Top = 72
                 Width = 160
                 TabOrder = 2
@@ -10850,14 +10919,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 15
                 Top = 103
-                Width = 51
+                Width = 43
                 Caption = 'Colunas'
                 ParentColor = False
                 ParentFont = False
               end
               object seColunas: TSpinEdit
                 Left = 8
-                Height = 21
+                Height = 25
                 Top = 119
                 Width = 50
                 TabOrder = 3
@@ -10867,14 +10936,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 78
                 Height = 15
                 Top = 103
-                Width = 53
+                Width = 42
                 Caption = 'Espaços'
                 ParentColor = False
                 ParentFont = False
               end
               object seEspacosLinhas: TSpinEdit
                 Left = 78
-                Height = 21
+                Height = 25
                 Top = 119
                 Width = 50
                 TabOrder = 4
@@ -10883,14 +10952,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 150
                 Height = 15
                 Top = 103
-                Width = 38
+                Width = 32
                 Caption = 'Buffer'
                 ParentColor = False
                 ParentFont = False
               end
               object seBuffer: TSpinEdit
                 Left = 150
-                Height = 21
+                Height = 25
                 Top = 119
                 Width = 50
                 TabOrder = 5
@@ -10899,23 +10968,23 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 222
                 Height = 15
                 Top = 103
-                Width = 77
+                Width = 64
                 Caption = 'Linhas Pular'
                 ParentColor = False
                 ParentFont = False
               end
               object seLinhasPular: TSpinEdit
                 Left = 222
-                Height = 21
+                Height = 25
                 Top = 119
                 Width = 50
                 TabOrder = 6
               end
               object Label136: TLabel
                 Left = 211
-                Height = 15
+                Height = 16
                 Top = 56
-                Width = 75
+                Width = 71
                 Caption = 'Pag. Código'
                 Font.Height = -13
                 Font.Name = 'Default'
@@ -10935,7 +11004,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 21
                 Top = 152
-                Width = 116
+                Width = 105
                 Caption = 'Controle Porta'
                 OnChange = cbControlePortaChange
                 TabOrder = 8
@@ -10944,7 +11013,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 133
                 Height = 21
                 Top = 152
-                Width = 105
+                Width = 100
                 Caption = 'Traduzir Tags'
                 Checked = True
                 OnChange = cbTraduzirTagsChange
@@ -10955,7 +11024,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 21
                 Top = 181
-                Width = 101
+                Width = 95
                 Caption = 'Ignorar Tags'
                 OnChange = cbIgnorarTagsChange
                 TabOrder = 10
@@ -10964,7 +11033,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 133
                 Height = 21
                 Top = 181
-                Width = 102
+                Width = 93
                 Caption = 'Cortar Papel'
                 OnChange = cbCortarPapelChange
                 TabOrder = 11
@@ -11010,38 +11079,38 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object PanelMenu: TPanel
     Left = 0
-    Height = 593
+    Height = 592
     Top = 30
     Width = 196
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 593
+    ClientHeight = 592
     ClientWidth = 196
     Color = clBtnFace
     ParentColor = False
     TabOrder = 4
     object PanelScroll: TPanel
       Left = 0
-      Height = 493
+      Height = 492
       Top = 100
       Width = 196
       Align = alClient
       BevelOuter = bvNone
-      ClientHeight = 493
+      ClientHeight = 492
       ClientWidth = 196
       TabOrder = 0
       object ScrollBox: TScrollBox
         Left = 0
-        Height = 493
+        Height = 492
         Top = 0
         Width = 196
         HorzScrollBar.Page = 1
-        VertScrollBar.Page = 493
+        VertScrollBar.Page = 492
         Align = alLeft
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoSize = True
         BorderStyle = bsNone
-        ClientHeight = 493
+        ClientHeight = 492
         ClientWidth = 179
         TabOrder = 0
         OnMouseWheelDown = ScrollBoxMouseWheelDown
@@ -11932,12 +12001,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object btnPosPrinter: TPanel
           Left = 0
           Height = 30
-          Top = 980
+          Top = 1010
           Width = 179
           Align = alTop
           BevelOuter = bvNone
           Caption = 'PosPrinter'
-          TabOrder = 18
+          TabOrder = 19
           TabStop = True
           OnClick = btnPosPrinterClick
           OnMouseEnter = ACT_ButtonMouseEnter
@@ -11958,6 +12027,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
           TabOrder = 0
           TabStop = True
           OnClick = btnMonitorClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnIntegrador: TPanel
+          Left = 0
+          Height = 30
+          Top = 980
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Integrador Fiscal'
+          TabOrder = 18
+          TabStop = True
+          OnClick = btnIntegradorClick
           OnMouseEnter = ACT_ButtonMouseEnter
           OnMouseLeave = ACT_ButtonMouseLeave
           OnMouseWheelDown = ScrollBoxMouseWheelDown
@@ -12969,7 +13054,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -13194,7 +13278,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     left = 206
     top = 554
     Bitmap = {
-      4C691C0000001000000010000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      4C691D0000001000000010000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FEFEFEFFFFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FEFEFEFFFFFFFF00FFFF
@@ -14090,7 +14174,39 @@ object FrmACBrMonitor: TFrmACBrMonitor
       0322010003000100030001000300010003000100030001000300000000000000
       0000000000000000000000000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FCFDFEFFCDE8F7FFB2DE
+      F4FFD2EAF8FFC8E6F7FF77C8EEFF7ECAEFFFC8E6F7FFD2EBF8FFB3DFF5FFCDE8
+      F7FFFCFDFEFFFFFFFF00FFFFFF00FFFFFF00FFFFFF00CFE7F5FF80CFF0FF7ADB
+      F7FF90DBF4FF86DBF5FF70DEFAFF6FDEFAFF86DBF5FF91DCF4FF7BDCF7FF80CF
+      F0FFCFE7F5FFFFFFFF00FFFFFF00FFFFFF00FFFEFCFF53B7E5FF71E2FDFF3ED3
+      FEFF45D6FEFF49D7FEFF4DD8FEFF4DD8FEFF49D7FEFF45D6FEFF3ED3FEFF71E2
+      FDFF54B7E5FFFFFEFCFFFFFFFF00FFFFFF00FFFEFCFF8EBFD9FF6FD5F5FF45D4
+      FEFF6BDCFDFF78DEFCFF78DEFCFF78DEFCFF78DEFCFF6BDCFDFF45D4FEFF6FD5
+      F5FF8EBFD9FFFFFDFCFFFFFFFF00FFFFFF00FFFFFF00CFE2ECFF82D3F0FF3CD0
+      FCFF34C0F4FF2AB8F0FF2FBAF0FF2FBAF0FF2AB8F0FF34C0F4FF3CD0FCFF82D3
+      EFFFCEE1ECFFFFFFFF00FFFFFF00FFFFFF00FFFFFF00BFDFF0FF75D4F3FF3ED0
+      FCFF47D3FDFF44D3FDFF74E2FDFF74E2FDFF44D3FDFF47D3FDFF3ED0FCFF77D4
+      F3FFC2E0F0FFFFFFFF00FFFFFF00FFFFFF00FFFFFEFF6CC1EAFF53D2FBFF3ECC
+      FBFF3ECDFCFF48D1FBFF8BE5FCFF8BE5FCFF48D1FBFF3ECDFCFF3ECCFCFF52D1
+      FAFF6BC2EBFFFFFFFEFFFFFFFF00FFFFFF00ECF2F5FF3AB9EFFF48D0FCFF68DD
+      FDFF6FDFFDFF76DFFDFF90E5FCFF90E5FCFF76DFFDFF6FDFFDFF68DDFDFF48D0
+      FCFF3CBBF1FFEBF2F5FFFFFFFF00FFFFFDFF86C4E8FF53D2FCFF3FCDFBFF4AC2
+      F2FF7BD8F7FF8BE3FCFF87E2FCFF87E2FCFF8BE3FCFF7BD8F7FF4AC2F2FF3FCD
+      FBFF52D2FBFF86C4E8FFFFFFFDFFFFFEFCFF77BDE5FF52D5FDFF3DCAFAFF37C4
+      F6FF29ACEAFF87E2FDFF82E0FBFF82E0FBFF87E2FDFF29ACEAFF37C4F6FF3DCA
+      FAFF51D5FDFF77BEE5FFFFFEFCFFFFFEFBFF7FBFE3FF43CDFCFF3CC8F8FF3BC9
+      F9FF3FC3F4FF82E2FDFF79DCFBFF79DCFBFF82E2FDFF3FC3F4FF3BC9F9FF3CC8
+      F8FF43CDFCFF7FBFE3FFFFFEFBFFFFFEFDFFBCD3DFFF27B9F7FF3CC8F9FF3AC6
+      F8FF5CD3FAFF76DBFBFF49BEF0FF49BEF0FF76DBFBFF5CD3FAFF3AC6F8FF3CC8
+      F9FF27B9F7FFBCD3DFFFFFFEFDFFFFFFFF00FFF8F4FF4EAEDCFF29BCF7FF37C5
+      FAFF47C3F5FF2DB2EDFF34C1F6FF34C1F6FF2DB2EDFF47C2F5FF37C5FAFF29BC
+      F7FF4EAEDCFFFFF8F4FFFFFFFF00FFFFFF00FFFEFEFFC6D5DCFF53ACD8FF12AC
+      F3FF17B2F6FF23C1FCFF2FC3FBFF2FC3FBFF23C1FCFF17B3F6FF12ACF3FF53AC
+      D8FFC6D5DCFFFFFEFEFFFFFFFF00FFFFFF00FFFFFF00FEFDFDFFF3EEEBFFD0CF
+      CFFF99BBCFFF69ADD2FF3FAADFFF3FAADFFF69ADD2FF99BBCFFFD0CFCFFFF3EE
+      EBFFFEFDFDFFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FEFEFEFFFBFB
+      FAFFF8F5F4FFF1EDEBFFD3DBE0FFD3DBE0FFF1EDEBFFF8F5F4FFFBFBFAFFFEFE
+      FEFFFFFFFF00FFFFFF00FFFFFF00
     }
   end
   object ACBrSAT1: TACBrSAT
@@ -14289,5 +14405,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
     AutoRegister = True
     left = 844
     top = 455
+  end
+  object ACBrIntegrador1: TACBrIntegrador
+    PastaInput = 'C:\Integrador\Input\'
+    PastaOutput = 'C:\Integrador\Output\'
+    left = 680
+    top = 556
   end
 end

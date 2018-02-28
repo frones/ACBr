@@ -85,6 +85,7 @@ begin
         //NFe.StatusServico
         if Cmd.Metodo = 'statusservico' then
          begin
+           ValidarIntegradorNFCe();
            ACBrNFe1.WebServices.StatusServico.Executar;
            Cmd.Resposta := ACBrNFe1.WebServices.StatusServico.Msg+
                               '[STATUS]'+sLineBreak+
@@ -171,6 +172,7 @@ begin
            else
              ACBrNFe1.WebServices.Consulta.NFeChave := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe','',[rfIgnoreCase]);
 
+           ValidarIntegradorNFCe(Cmd.Params(0));
            try
               ACBrNFe1.WebServices.Consulta.Executar;
 
@@ -313,6 +315,8 @@ begin
               infEvento.detEvento.nProt := ACBrNFe1.WebServices.Consulta.Protocolo;
               infEvento.detEvento.xJust := Cmd.Params(1);
             end;
+
+           ValidarIntegradorNFCe(Cmd.Params(0));
            try
               ACBrNFe1.EnviarEvento(StrToIntDef(Cmd.Params(3),1));
 
@@ -525,7 +529,9 @@ begin
 
         //NFe.InutilizarNFe(cCNPJ,cJustificativa,nAno,nModelo,nSérie,nNumInicial,nNumFinal)
         else if Cmd.Metodo = 'inutilizarnfe' then
-         begin                            //CNPJ         //Justificat   //Ano                    //Modelo                 //Série                  //Num.Inicial            //Num.Final
+         begin
+           ValidarIntegradorNFCe( IntToStrZero(0,20) + Cmd.Params(3));
+                                          //CNPJ         //Justificat   //Ano                    //Modelo                 //Série                  //Num.Inicial            //Num.Final
            ACBrNFe1.WebServices.Inutiliza(Cmd.Params(0), Cmd.Params(1), StrToInt(Cmd.Params(2)), StrToInt(Cmd.Params(3)), StrToInt(Cmd.Params(4)), StrToInt(Cmd.Params(5)), StrToInt(Cmd.Params(6)));
 
            Cmd.Resposta := ACBrNFe1.WebServices.Inutilizacao.Msg+sLineBreak+
@@ -613,6 +619,7 @@ begin
            else
               ACBrNFe1.WebServices.Enviar.Lote := OnlyNumber(Cmd.Params(1));
 
+           ValidarIntegradorNFCe();
            ACBrNFe1.WebServices.Enviar.Sincrono := (Cmd.Params(5)='1');
            ACBrNFe1.WebServices.Enviar.Executar;
 
@@ -705,6 +712,8 @@ begin
         else if (Cmd.Metodo = 'recibonfe')then
          begin
            ACBrNFe1.WebServices.Recibo.Recibo := Cmd.Params(0);
+
+           ValidarIntegradorNFCe();
            if not(ACBrNFe1.WebServices.Recibo.Executar) then
              raise Exception.Create(ACBrNFe1.WebServices.Recibo.xMotivo);
 
@@ -758,6 +767,8 @@ begin
               else
                  ACBrNFe1.WebServices.ConsultaCadastro.CPF := Cmd.Params(1);
             end;
+
+            ValidarIntegradorNFCe();
             ACBrNFe1.WebServices.ConsultaCadastro.Executar;
 
             Cmd.Resposta :=  Cmd.Resposta+
@@ -961,6 +972,8 @@ begin
                     else
                        ACBrNFe1.WebServices.Enviar.Lote := OnlyNumber(Cmd.Params(0));
                   end;
+
+                 ValidarIntegradorNFCe();
                  ACBrNFe1.WebServices.Enviar.Executar ;
 
                  Cmd.Resposta :=  ACBrNFe1.WebServices.Enviar.Msg+sLineBreak+
@@ -1088,6 +1101,7 @@ begin
            else
              ACBrNFe1.EventoNFe.LerFromIni( Cmd.Params(0), (Cmd.Metodo = 'cartadecorrecao') );
 
+           ValidarIntegradorNFCe();
            ACBrNFe1.EnviarEvento(ACBrNFe1.EventoNFe.idLote);
 
            Cmd.Resposta := Cmd.Resposta+sLineBreak+
@@ -1127,6 +1141,7 @@ begin
            if not ValidarCNPJ(Cmd.Params(0)) then
               raise Exception.Create('CNPJ '+Cmd.Params(0)+' inválido.');
 
+           ValidarIntegradorNFCe();
            try
               ACBrNFe1.ConsultaNFeDest(Cmd.Params(0),
                                        StrToIndicadorNFe(ok,Cmd.Params(1)),
@@ -1225,6 +1240,7 @@ begin
            if not ValidarCNPJ(Cmd.Params(1)) then
               raise Exception.Create('CNPJ '+Cmd.Params(1)+' inválido.');
 
+           ValidarIntegradorNFCe();
            try
               if Cmd.Metodo = 'distribuicaodfeporchavenfe' then
                 ACBrNFe1.DistribuicaoDFePorChaveNFe(StrToIntDef(Cmd.Params(0),0),Cmd.Params(1),Cmd.Params(2))
@@ -1735,7 +1751,10 @@ begin
          begin
             ModeloDF := StrToModeloDF(OK, Cmd.Params(0));
             if OK then
-               ACBrNFe1.Configuracoes.Geral.ModeloDF := ModeloDF
+            begin
+               ACBrNFe1.Configuracoes.Geral.ModeloDF := ModeloDF;
+               ValidarIntegradorNFCe();
+            end
             else
               raise Exception.Create('Modelo Inválido(55/65).');
          end

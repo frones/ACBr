@@ -44,12 +44,12 @@ uses
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo, PrintersDlgs,
-  IpHtml, pcnConversao, pcnConversaoNFe, pcteConversaoCTe, ACBrSAT,
+  Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo, PrintersDlgs, IpHtml,
+  pcnConversao, pcnConversaoNFe, pcteConversaoCTe, ACBrSAT,
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
-  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types,
-  fileinfo, ACBrDFeConfiguracoes, LazHelpCHM, pmdfeConversaoMDFe;
+  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types, fileinfo,
+  ACBrDFeConfiguracoes, ACBrIntegrador, LazHelpCHM, pmdfeConversaoMDFe;
 
 const
   //{$I versao.txt}
@@ -95,6 +95,7 @@ type
     ACBrGNRE1: TACBrGNRE;
     ACBrGNREGuiaRL1: TACBrGNREGuiaRL;
     ACBrIBGE1: TACBrIBGE;
+    ACBrIntegrador1: TACBrIntegrador;
     ACBrMail1: TACBrMail;
     ACBrMDFe1: TACBrMDFe;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
@@ -128,6 +129,7 @@ type
     Bevel2: TBevel;
     Bevel3: TBevel;
     btnBoletoRelatorioRetorno: TPanel;
+    btnIntegrador: TPanel;
     bvCadastro: TBevel;
     bExecECFTeste: TBitBtn;
     bGAVAbrir: TBitBtn;
@@ -363,8 +365,11 @@ type
     chkExibeRazaoSocial: TCheckBox;
     cbSSLLib: TComboBox;
     CHMHelpDatabase1: TCHMHelpDatabase;
+    ckNFCeUsarIntegrador: TCheckBox;
     deBolDirRetornoRel: TDirectoryEdit;
     deUSUDataCadastro: TDateEdit;
+    edMFEInput: TEdit;
+    edMFEOutput: TEdit;
     edtArquivoPFX: TEdit;
     edtArquivoWebServicesGNRe: TEdit;
     edtBOLEmailAssunto: TEdit;
@@ -402,12 +407,15 @@ type
     Label179: TLabel;
     Label180: TLabel;
     Label181: TLabel;
+    Label189: TLabel;
     Label190: TLabel;
     Label191: TLabel;
     Label192: TLabel;
     Label193: TLabel;
     Label194: TLabel;
     Label195: TLabel;
+    Label196: TLabel;
+    Label197: TLabel;
     Label198: TLabel;
     Label199: TLabel;
     Label200: TLabel;
@@ -461,6 +469,7 @@ type
     sbLogoMarcaNFCeSAT: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
     ScrollBox: TScrollBox;
+    seMFETimeout: TSpinEdit;
     seUSUCROCadastro: TSpinEdit;
     seUSUGTCadastro: TFloatSpinEdit;
     seUSUNumeroCadastro: TSpinEdit;
@@ -505,6 +514,7 @@ type
     sbArquivoWebServicesNFe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
     TabSheet1: TTabSheet;
+    tsIntegrador: TTabSheet;
     tsRelatorio: TTabSheet;
     tsImpCTe: TTabSheet;
     tsTesteMDFe: TTabSheet;
@@ -1145,6 +1155,7 @@ type
     procedure btnImprimirClick(Sender: TObject);
     procedure btnImprimirCTeClick(Sender: TObject);
     procedure btnImprimirMDFeClick(Sender: TObject);
+    procedure btnIntegradorClick(Sender: TObject);
     procedure btnInutilizarClick(Sender: TObject);
     procedure btnInutilizarCTeClick(Sender: TObject);
     procedure btnLeitorSerialClick(Sender: TObject);
@@ -1477,6 +1488,7 @@ type
     procedure AntesDeImprimir(ShowPreview: Boolean = true);
     procedure DepoisDeImprimir;
     procedure HelptabSheet;
+    procedure ValidarIntegradorNFCe(ChaveNFe: String = '');
   end;
 
 var
@@ -2140,7 +2152,7 @@ begin
         with Cidades[I] do
         begin
           AMsg := AMsg + 'Cod UF: ' + IntToStr(CodUF) + sLineBreak +
-            'UF: ' + UF + sLineBreak + 'Cod.Município: ' + IntToStr(CodMunicio) +
+            'UF: ' + UF + sLineBreak + 'Cod.Município: ' + IntToStr(CodMunicipio) +
             sLineBreak + 'Município: ' + Municipio + sLineBreak +
             'Área: ' + FormatFloat('0.00', Area) + sLineBreak + sLineBreak;
         end;
@@ -2853,6 +2865,12 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.btnIntegradorClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsIntegrador;
+end;
+
 procedure TFrmACBrMonitor.btnInutilizarClick(Sender: TObject);
 var
   CNPJ, Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa: string;
@@ -3183,6 +3201,10 @@ end;
 procedure TFrmACBrMonitor.cbxModeloSATChange(Sender: TObject);
 begin
   try
+    if (cbxModeloSAT.ItemIndex = 3) then
+      ACBrSAT1.Integrador:= ACBrIntegrador1
+    else
+      ACBrSAT1.Integrador:= nil;
     ACBrSAT1.Modelo := TACBrSATModelo( cbxModeloSAT.ItemIndex ) ;
   except
     cbxModeloSAT.ItemIndex := Integer( ACBrSAT1.Modelo ) ;
@@ -3979,6 +4001,7 @@ begin
     edtIdToken.Text := Ini.ReadString('NFCe', 'IdToken', '');
     edtToken.Text := Ini.ReadString('NFCe', 'Token', '');
     chbTagQrCode.Checked := Ini.ReadBool('NFCe', 'TagQrCode', True);
+    ckNFCeUsarIntegrador.Checked := Ini.ReadBool('NFCe', 'UsarIntegrador', False);
 
         {Parametros NFe}
     ACBrNFeDANFeESCPOS1.PosPrinter.Device.Desativar;
@@ -4148,6 +4171,11 @@ begin
       ACBrGNRE1.GNREGuia       :=ACBrGNREGuiaRL1;
     end;
 
+    if ckNFCeUsarIntegrador.Checked then
+      ACBrNFe1.Integrador := ACBrIntegrador1
+    else
+      ACBrNFe1.Integrador := nil;
+
     ACBrCTeDACTeRL1.TamanhoPapel := TpcnTamanhoPapel(rgTamanhoPapelDacte.ItemIndex);
 
     rgModeloDANFeNFCE.ItemIndex := Ini.ReadInteger('NFCe', 'Modelo', 0);
@@ -4309,6 +4337,10 @@ begin
     edRedeProxyPorta.Value    := INI.ReadInteger('SATRede','proxy_porta',0);
     edRedeProxyUser.Text      := INI.ReadString('SATRede','proxy_user','');
     edRedeProxySenha.Text     := INI.ReadString('SATRede','proxy_senha','');
+
+    edMFEInput.Text           := INI.ReadString('SATIntegrador','Input','c:\Integrador\Input\');
+    edMFEOutput.Text          := INI.ReadString('SATIntegrador','Output','c:\Integrador\Output\');
+    seMFETimeout.Value        := INI.ReadInteger('SATIntegrador','Timeout',30);
 
     AjustaACBrSAT;
 
@@ -4917,6 +4949,7 @@ begin
     Ini.WriteString('NFCe', 'IdToken', edtIdToken.Text);
     Ini.WriteString('NFCe', 'Token', edtToken.Text);
     Ini.WriteBool('NFCe', 'TagQrCode', chbTagQrCode.Checked);
+    Ini.WriteBool('NFCe', 'UsarIntegrador', ckNFCeUsarIntegrador.Checked );
 
     Ini.WriteString('NFe', 'CNPJContador', edtCNPJContador.Text);
 
@@ -5059,6 +5092,10 @@ begin
     INI.WriteInteger('SATRede','proxy_porta',edRedeProxyPorta.Value);
     INI.WriteString('SATRede','proxy_user',edRedeProxyUser.Text);
     INI.WriteString('SATRede','proxy_senha',edRedeProxySenha.Text);
+
+    INI.WriteString('SATIntegrador','Input',edMFEInput.Text);
+    INI.WriteString('SATIntegrador','Output',edMFEOutput.Text);
+    INI.WriteInteger('SATIntegrador','Timeout',seMFETimeout.Value);
 
     {Parâmetros PosPrinter}
     INI.WriteInteger('PosPrinter', 'Modelo', cbxModelo.ItemIndex);
@@ -7291,6 +7328,17 @@ procedure TFrmACBrMonitor.AjustaACBrSAT;
 begin
   with ACBrSAT1 do
   begin
+    if (cbxModeloSAT.ItemIndex = 3) then
+    begin
+      ACBrIntegrador1.PastaInput  := edMFEInput.Text;
+      ACBrIntegrador1.PastaOutput := edMFEOutput.Text;
+      ACBrIntegrador1.Timeout     := seMFETimeout.Value;
+
+      Integrador := ACBrIntegrador1;
+    end
+    else
+      Integrador := Nil;
+
     Modelo  := TACBrSATModelo( cbxModeloSAT.ItemIndex ) ;
     ArqLOG  := edSATLog.Text;
     NomeDLL := edNomeDLL.Text;
@@ -7315,6 +7363,7 @@ begin
     ConfigArquivos.SalvarEnvio := cbxSATSalvarEnvio.Checked;
     ConfigArquivos.SepararPorCNPJ := cbxSATSepararPorCNPJ.Checked;
     ConfigArquivos.SepararPorMes := cbxSATSepararPorMES.Checked;
+
   end;
 
   ConfiguraRedeSAT;
@@ -8143,6 +8192,7 @@ begin
     TConfiguracoesNFe(Configuracoes).Arquivos.SalvarApenasNFeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
+
   end
   else if Configuracoes is TConfiguracoesCTe then
   begin
@@ -8498,6 +8548,21 @@ begin
     FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Monitor.htm';
   end;
 
+end;
+
+procedure TFrmACBrMonitor.ValidarIntegradorNFCe(ChaveNFe: String = '');
+var
+  Modelo: Integer;
+begin
+  if (FrmACBrMonitor.ckNFCeUsarIntegrador.Checked) then
+  begin
+    if NaoEstaVazio(ChaveNFe) then
+      Modelo:= StrToIntDef(copy(OnlyNumber(ChaveNFe),21,2),55);
+    if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFe) or (Modelo = 55) then
+      ACBrNFe1.Integrador := nil
+    else
+      ACBrNFe1.Integrador := ACBrIntegrador1;
+  end;
 end;
 
 procedure TFrmACBrMonitor.sbSerialClick(Sender: TObject);

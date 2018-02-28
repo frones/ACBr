@@ -91,7 +91,7 @@ begin
           Ini.WriteString(Secao,'UF',         Cidades[I].UF);
           Ini.WriteString(Secao,'CodUF',      IntToStr(Cidades[I].CodUF) );
           Ini.WriteString(Secao,'Municipio',  Cidades[I].Municipio);
-          Ini.WriteString(Secao,'CodMunicio', IntToStr(Cidades[I].CodMunicio) );
+          Ini.WriteString(Secao,'CodMunicio', IntToStr(Cidades[I].CodMunicipio) );
           Ini.WriteString(Secao,'Area',       FloatToStr( Cidades[I].Area) );
        end ;
 

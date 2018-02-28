@@ -43,6 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2018
+[*] Adicionado Menu de Configurações - Integrador Fiscal
+       Adicionado flag em DFe / WebService / NFCe (Usar Integrador Fiscal)
+       Para utilização da NFCe com Integrador Fiscal
+       por: José M. S. Junior
+
+[*] Ajuste Métodos Componente IBGE
+       por: José M. S. Junior
+
 20/02/2018
 [*] Ajuste no Método "GerarChave", conforme alterações do ACBrDFe
        por: José M. S. Junior
@@ -53,7 +62,7 @@ Símbolo : Significado
         CTe.DistribuicaoDFePorUltNSU(cUF, cCNPJ, nUltNSU)
         MDFe.DistribuicaoDFePorNSU(cUF, cCNPJ, nNSU)
         MDFe.DistribuicaoDFePorUltNSU(cUF, cCNPJ, nUltNSU)
-	por: Italo Jurisato Junior
+	por: Italo Jurissato Junior
 
 05/02/2018
 [+] Adicionado Parâmetro "Utilizar Separador para Path PDF" em DFe / Diretórios

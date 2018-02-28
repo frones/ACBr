@@ -364,8 +364,9 @@ function TACBrIBGEUFs.Find(ACodUF: Integer): Integer;
 var
   oUF: TACBrIBGEUF;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := -1;
-
+{$ENDIF}
   SortCodUF;
 
   oUF := TACBrIBGEUF.Create;
@@ -636,7 +637,7 @@ end;
 
 function TACBrIBGECidades.Find(AMunicipio: String; Exact: Boolean): Integer;
 var
-  I, C: Integer;
+  I: Integer;
   oCidadeFind: TACBrIBGECidade;
 begin
   Result := -1;
@@ -879,7 +880,7 @@ end ;
 function TACBrIBGE.BuscarPorNome(const ACidade: String; const AUF: String;
   const Exata: Boolean): Integer;
 var
-  I , CodUF, C: Integer ;
+  I , CodUF: Integer ;
   CidadeEncontrar, CidadeAtual: String;
 begin
   RespHTTP.Clear;
@@ -1016,7 +1017,6 @@ end;
 procedure TACBrIBGE.SalvarCidades(AStringList: TStrings);
 var
   CodUF, I, J: Integer;
-  SL: TStringList;
 begin
   CodUF := 0;
   fListaCidades.SortByCodMunicipio;

@@ -9,7 +9,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   ClientWidth = 841
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.8.0.4'
+  LCLVersion = '1.8.0.6'
   object Panel1: TPanel
     Left = 256
     Height = 521

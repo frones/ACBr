@@ -48,6 +48,32 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2018
+-- pcesGerador --
+[-] Corrigido geração do identificação do empregador quando é pessoa fisica.
+	https://www.projetoacbr.com.br/forum/topic/41753-c%C3%B3digo-inv%C3%A1lido-utilizando-ecpf/
+   (Por: Rafael Dias e Joceandro Perin).
+   
+-- ACBreSocialLoteEventos --
+[-] Corrigido geração do lote quando é pessoa fisica.
+	https://www.projetoacbr.com.br/forum/topic/41753-c%C3%B3digo-inv%C3%A1lido-utilizando-ecpf/
+   (Por: Joceandro Perin).
+   
+-- ACBreSocialWebServices --
+[-] Corrigido geração do lote quando é pessoa fisica.
+	https://www.projetoacbr.com.br/forum/topic/41753-c%C3%B3digo-inv%C3%A1lido-utilizando-ecpf/
+   (Por: Joceandro Perin).
+   
+-- pcesS1000 --
+[-] Corrigido geração do evento S-1000 quando é pessoa fisica.
+	https://www.projetoacbr.com.br/forum/topic/41753-c%C3%B3digo-inv%C3%A1lido-utilizando-ecpf/
+   (Por: Joceandro Perin).
+   
+-- ACBreSocialLoteEventos --
+[-] Corrigido geração do identificação do empregador quando é pessoa fisica.
+	https://www.projetoacbr.com.br/forum/topic/41776-ajuste-no-evento-s-1000-campos-exclusivos-para-pj/
+   (Por: Joceandro Perin).
+
 27/02/2018
 -- pcesGerador --
 [-] Corrigido geração da chave quando o empregador é pessoa fisica.

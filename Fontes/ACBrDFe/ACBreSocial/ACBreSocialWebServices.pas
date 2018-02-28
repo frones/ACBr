@@ -292,7 +292,11 @@ begin
 
   with FLote.IdeEmpregador do
   begin
-    TpInsc := tiCNPJ;
+    if Length(TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdEmpregador) = 14 then
+      TpInsc := tiCNPJ
+    else
+      TpInsc := tiCPF;
+
     NrInsc := TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdEmpregador;
   end;
 

@@ -479,12 +479,20 @@ begin
 
   Gerador.wCampo(tcStr, '', 'nmRazao',          1, 100, 1, Self.infoEmpregador.infoCadastro.NmRazao);
   Gerador.wCampo(tcStr, '', 'classTrib',        2, 002, 1, tpClassTribToStr(Self.infoEmpregador.infoCadastro.ClassTrib));
-  Gerador.wCampo(tcStr, '', 'natJurid',         4, 004, 0, Self.infoEmpregador.infoCadastro.NatJurid); // criar enumerador
-  Gerador.wCampo(tcStr, '', 'indCoop',          1, 001, 0, eSIndCooperativaToStr(Self.infoEmpregador.infoCadastro.IndCoop));
-  Gerador.wCampo(tcStr, '', 'indConstr',        1, 001, 0, eSIndConstrutoraToStr(Self.infoEmpregador.infoCadastro.IndConstr));
+
+  if (Self.ideEmpregador.TpInsc = tpTpInsc.tiCNPJ) then
+  begin
+    Gerador.wCampo(tcStr, '', 'natJurid',       4, 004, 0, Self.infoEmpregador.infoCadastro.NatJurid); // criar enumerador
+    Gerador.wCampo(tcStr, '', 'indCoop',        1, 001, 0, eSIndCooperativaToStr(Self.infoEmpregador.infoCadastro.IndCoop));
+    Gerador.wCampo(tcStr, '', 'indConstr',      1, 001, 0, eSIndConstrutoraToStr(Self.infoEmpregador.infoCadastro.IndConstr));
+  end;
+
   Gerador.wCampo(tcStr, '', 'indDesFolha',      1, 001, 1, eSIndDesFolhaToStr(Self.infoEmpregador.infoCadastro.IndDesFolha));
   Gerador.wCampo(tcStr, '', 'indOptRegEletron', 1, 001, 1, eSIndOptRegEletronicoToStr(Self.infoEmpregador.infoCadastro.IndOptRegEletron));
-  Gerador.wCampo(tcStr, '', 'indEntEd',         1, 001, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndEntEd));
+
+  if (Self.ideEmpregador.TpInsc = tpTpInsc.tiCNPJ) then
+    Gerador.wCampo(tcStr, '', 'indEntEd',       1, 001, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndEntEd));
+
   Gerador.wCampo(tcStr, '', 'indEtt',           1, 001, 1, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndEtt));
   Gerador.wCampo(tcStr, '', 'nrRegEtt',         0, 030, 0, Self.infoEmpregador.infoCadastro.nrRegEtt);
 

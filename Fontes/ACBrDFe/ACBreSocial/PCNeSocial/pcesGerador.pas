@@ -901,7 +901,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'tpInsc', 1, 1, 1, eSTpInscricaoToStr(pEmp.TpInsc));
 
-  if pEmp.OrgaoPublico then
+  if (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador in [teOrgaoPublico, tePessoaFisica]) then
     Gerador.wCampo(tcStr, '', 'nrInsc', 14, 14, 1, pEmp.NrInsc)
   else
     Gerador.wCampo(tcStr, '', 'nrInsc', 8, 8, 1, Copy(pEmp.NrInsc, 1, 8));

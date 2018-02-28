@@ -49,6 +49,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/02/2018
+-- pcesGerador --
+[-] Corrigido geração da chave quando o empregador é pessoa fisica.
+   (Por: Rafael Dias).
+[-] S-2206 - Correção (clauAssec).
+	https://www.projetoacbr.com.br/forum/topic/41760-s-2206-corre%C3%A7%C3%A3o-clauassec/
+   (Por: Alisson Souza Pereira).
+
 -- ACBreSocialWebServices --
 [-] Corrigido o nome do arquivo dos eventos S5001, S5002, S50011 e S5012 na hora de salvar.
    (Por: Rafael Dias).

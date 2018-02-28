@@ -97,7 +97,7 @@ type
     procedure GerarAltContratual(objAltContratual: TAltContratual);
     procedure GerarInfoCeletista(objInfoCeletista : TInfoCeletista);
     procedure GerarInfoEstaturario(pInfoEstatutario: TInfoEstatutario);
-    procedure GerarInfoContrato(ObjInfoContrato : TInfoContratoS2206);
+    procedure GerarInfoContrato(ObjInfoContrato : TInfoContratoS2206; pTipo: Integer);
     procedure GerarTrabTemp(pTrabTemp: TTrabTemporario);
     procedure GerarServPubl(pServPubl: TServPubl);
     function  GetAltContratual : TAltContratual;
@@ -247,7 +247,7 @@ begin
 
   Gerador.wGrupo('/infoRegimeTrab');
 
-  GerarInfoContrato(objAltContratual.InfoContrato);
+  GerarInfoContrato(objAltContratual.InfoContrato, 3 );
 
   Gerador.wGrupo('/altContratual');
 end;
@@ -270,7 +270,10 @@ begin
 
   Gerador.wCampo(tcStr, '', 'tpRegJor',           1,  1, 1, ord(objInfoCeletista.TpRegJor) + 1);
   Gerador.wCampo(tcStr, '', 'natAtividade',       1,  1, 1, ord(objInfoCeletista.NatAtividade) + 1);
-  Gerador.wCampo(tcStr, '', 'dtBase',             1,  2, 0, objInfoCeletista.dtBase);
+
+  if objInfoCeletista.dtBase > 0  then
+    Gerador.wCampo(tcStr, '', 'dtBase',             1,  2, 0, objInfoCeletista.dtBase);
+
   Gerador.wCampo(tcStr, '', 'cnpjSindCategProf', 14, 14, 1, objInfoCeletista.cnpjSindCategProf);
 
   GerarTrabTemp(objInfoCeletista.TrabTemporario);
@@ -288,7 +291,7 @@ begin
   Gerador.wGrupo('/servPubl');
 end;
 
-procedure TEvtAltContratual.GerarInfoContrato(ObjInfoContrato: TInfoContratoS2206);
+procedure TEvtAltContratual.GerarInfoContrato(ObjInfoContrato: TInfoContratoS2206; pTipo: Integer);
 begin
   Gerador.wGrupo('infoContrato');
 
@@ -299,7 +302,7 @@ begin
   Gerador.wCampo(tcDat, '', 'dtIngrCarr',  10, 10, 0, objInfoContrato.dtIngrCarr);
 
   GerarRemuneracao(objInfoContrato.Remuneracao);
-  GerarDuracao(objInfoContrato.Duracao);
+  GerarDuracao(objInfoContrato.Duracao, pTipo);
   GerarLocalTrabalho(objInfoContrato.LocalTrabalho);
   GerarHorContratual(objInfoContrato.HorContratual);
   GerarFiliacaoSindical(objInfoContrato.FiliacaoSindical);
@@ -318,6 +321,7 @@ begin
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAltContratual');
+
     Gerador.wGrupo('evtAltContratual Id="' + Self.Id + '"');
 
     GerarIdeEvento2(self.IdeEvento);
@@ -333,7 +337,7 @@ begin
 
     Validar(schevtAltContratual);
   except on e:exception do
-    raise Exception.Create(e.Message);
+    raise Exception.Create(Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')

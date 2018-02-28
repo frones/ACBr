@@ -100,14 +100,14 @@ type
     procedure GerarAposentadoria(pAposentadoria: TAposentadoria);
     procedure GerarCNH(pCnh: TCNH);
     procedure GerarContatoTrabalhador(pContato: TContatoTrabalhador);
-    procedure GerarInfoContrato(pInfoContrato: TInfoContrato);
+    procedure GerarInfoContrato(pInfoContrato: TInfoContrato; pTipo : Integer);
     procedure GerarObservacoes(pObservacoes: TObservacoesCollection);
     procedure GerarTransfDom(pTransfDom: TTransfDom);
     procedure GerarCTPS(pCTPS: TCTPS);
     procedure GerarDependente(pDependente: TDependenteCollection);
     procedure GerarDescAtividade(pDescAtividade: TDescAtividadeCollection);
     procedure GerarDocumentos(pDocumentos: TDocumentos);
-    procedure GerarDuracao(pDuracao: TDuracao);
+    procedure GerarDuracao(pDuracao: TDuracao; pTipo: Integer);
     procedure GerarEndereco(pEndereco: TEndereco; pExterior: boolean = false);
     procedure GerarEnderecoBrasil(pEndereco: TBrasil; const GroupName: string = 'brasil');
     procedure GerarEnderecoExterior(pEndereco: TExterior);
@@ -208,7 +208,7 @@ type
 implementation
 
 uses
-  ACBreSocial, ACBrDFeSSL;
+  ACBreSocial, ACBreSocialEventos, ACBrDFeSSL;
 
 {TeSocialEvento}
 
@@ -247,6 +247,8 @@ begin
     Result := AnsiString(XMLAss);
 
     {$IFDEF DEBUG}
+    if Configuracoes.Arquivos.Salvar then
+    begin
       With TStringList.Create do
       try
         Text := XMLAss;
@@ -254,6 +256,7 @@ begin
       finally
         Free;
       end;
+    end;
     {$ENDIF}
   end;
 end;
@@ -311,13 +314,16 @@ begin
       FErroValidacaoCompleto := FErroValidacao + sLineBreak + Erro;
 
       {$IFDEF DEBUG}
-      with TStringList.Create do
-      try
-        Add(AXML);
-        Add('<!--' + FErroValidacaoCompleto + '-->');
-        SaveToFile(Configuracoes.Arquivos.PathSalvar+Evento+'_error' +'.xml');
-      finally
-        Free;
+      if Configuracoes.Arquivos.Salvar then
+      begin
+        with TStringList.Create do
+        try
+          Add(AXML);
+          Add('<!--' + FErroValidacaoCompleto + '-->');
+          SaveToFile(Configuracoes.Arquivos.PathSalvar+Evento+'_error' +'.xml');
+        finally
+          Free;
+        end;
       end;
       {$ENDIF}
 
@@ -361,7 +367,7 @@ begin
   else
     Result := Result + IntToStr(2);
 
-  if TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico then
+  if TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador in [teOrgaoPublico, tePessoaFisica] then
     Result := Result + copy(OnlyNumber(CNPJF) + '00000000000000', 1, 14)
   else
     Result := Result + copy(OnlyNumber(Copy(CNPJF, 1, 8)) + '00000000000000', 1, 14);
@@ -404,7 +410,7 @@ begin
   Gerador.wGrupo('/contato');
 end;
 
-procedure TeSocialEvento.GerarInfoContrato(pInfoContrato: TInfoContrato);
+procedure TeSocialEvento.GerarInfoContrato(pInfoContrato: TInfoContrato; pTipo: Integer);
 begin
   Gerador.wGrupo('infoContrato');
 
@@ -415,7 +421,7 @@ begin
   Gerador.wCampo(tcDat, '', 'dtIngrCarr',  0, 10, 0, pInfoContrato.dtIngrCarr);
 
   GerarRemuneracao(pInfoContrato.Remuneracao);
-  GerarDuracao(pInfoContrato.Duracao);
+  GerarDuracao(pInfoContrato.Duracao, pTipo);
   GerarLocalTrabalho(pInfoContrato.LocalTrabalho);
   GerarHorContratual(pInfoContrato.HorContratual);
   GerarFiliacaoSindical(pInfoContrato.FiliacaoSindical);
@@ -500,7 +506,7 @@ begin
   Gerador.wGrupo('/documentos');
 end;
 
-procedure TeSocialEvento.GerarDuracao(pDuracao: TDuracao);
+procedure TeSocialEvento.GerarDuracao(pDuracao: TDuracao; pTipo: Integer);
 begin
   Gerador.wGrupo('duracao');
 
@@ -509,7 +515,9 @@ begin
   if (eSTpContrToStr(pDuracao.TpContr) = '2') then
   begin
     Gerador.wCampo(tcDat, '', 'dtTerm',    10, 10, 0, pDuracao.dtTerm);
-    Gerador.wCampo(tcStr, '', 'clauAssec',  1,  1, 0, eSSimNaoToStr(pDuracao.clauAssec));
+
+    if pTipo in  [1,2] then
+      Gerador.wCampo(tcStr, '', 'clauAssec',  1,  1, 0, eSSimNaoToStr(pDuracao.clauAssec));
   end;
 
   Gerador.wGrupo('/duracao');
@@ -818,7 +826,7 @@ begin
     Gerador.wCampo(tcStr, '', 'cadIni', 1, 1, 1, eSSimNaoToStr(pVinculo.cadIni));
 
     GerarInfoRegimeTrab(pVinculo.InfoRegimeTrab);
-    GerarInfoContrato(pVinculo.InfoContrato);
+    GerarInfoContrato(pVinculo.InfoContrato, pTipo);
     GerarSucessaoVinc(pVinculo.SucessaoVinc);
     GerarTransfDom(pVinculo.transfDom);
 

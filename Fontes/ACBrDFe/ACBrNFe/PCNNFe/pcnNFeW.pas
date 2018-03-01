@@ -186,7 +186,7 @@ implementation
 
 Uses
   pcnConversaoNFe, pcnAuxiliar, pcnLayoutTXT,
-  ACBrDFeUtil, pcnConsts, ACBrUtil;
+  ACBrDFeUtil, pcnConsts, ACBrUtil, ACBrValidador;
 
 { TNFeW }
 
@@ -511,7 +511,7 @@ begin
       Gerador.wAlerta('C17', 'IE', DSC_IE, ERR_MSG_VAZIO)
     else
     begin
-      if not ValidarIE(nfe.Emit.IE, CodigoParaUF(nfe.Ide.cUF)) then
+      if not pcnAuxiliar.ValidarIE(nfe.Emit.IE, CodigoParaUF(nfe.Ide.cUF)) then
         Gerador.wAlerta('C17', 'IE', DSC_IE, ERR_MSG_INVALIDO);
     end;
   end;
@@ -544,7 +544,7 @@ begin
     Gerador.wAlerta('C10', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcStr, 'C11', 'xMun   ', 02, 60, 1, xMun, DSC_XMUN);
   Gerador.wCampo(tcStr, 'C12', 'UF     ', 02, 02, 1, xUF, DSC_UF);
-  if not ValidarUF(xUF) then
+  if not pcnAuxiliar.ValidarUF(xUF) then
     Gerador.wAlerta('C12', 'UF', DSC_UF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcInt, 'C13', 'CEP    ', 08, 08, 1, nfe.Emit.enderEmit.CEP, DSC_CEP);
   Gerador.wCampo(tcInt, 'C14', 'cPais  ', 04, 04, 0, CODIGO_BRASIL, DSC_CPAIS); // Conforme NT-2009/01
@@ -564,7 +564,7 @@ begin
     Gerador.wCampo(tcStr, 'D05', 'xAgente', 01, 60, 1, nfe.Avulsa.xAgente, DSC_XAGENTE);
     Gerador.wCampo(tcStr, 'D06', 'fone   ', 06, 14, 0, OnlyNumber(nfe.Avulsa.fone), DSC_FONE);
     Gerador.wCampo(tcStr, 'D07', 'UF     ', 02, 02, 1, nfe.Avulsa.UF, DSC_UF);
-    if not ValidarUF(nfe.Avulsa.UF) then
+    if not pcnAuxiliar.ValidarUF(nfe.Avulsa.UF) then
       Gerador.wAlerta('D07', 'UF', DSC_UF, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, 'D08', 'nDAR   ', 01, 60, 0, nfe.Avulsa.nDAR, DSC_nDAR);
     Gerador.wCampo(tcDat, 'D09', 'dEmi   ', 10, 10, 0, nfe.Avulsa.dEmi, DSC_DEMI);
@@ -630,7 +630,7 @@ begin
         Gerador.wCampo(tcStr, 'E17', 'IE     ', 00, 14, 1, OnlyNumber(nfe.Dest.IE), DSC_IE);
 
         if (FOpcoes.ValidarInscricoes) and (nfe.Dest.IE <> '') and (nfe.Dest.IE <> 'ISENTO') then
-          if not ValidarIE(nfe.Dest.IE, UF) then
+          if not pcnAuxiliar.ValidarIE(nfe.Dest.IE, UF) then
             Gerador.wAlerta('E17', 'IE', DSC_IE, ERR_MSG_INVALIDO);
       end;
    end;
@@ -662,7 +662,7 @@ begin
     Gerador.wAlerta('E10', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcStr, 'E11', 'xMun   ', 02, 60, 1, xMun, DSC_XMUN);
   Gerador.wCampo(tcStr, 'E12', 'UF     ', 02, 02, 1, xUF, DSC_UF);
-  if not ValidarUF(xUF) then
+  if not pcnAuxiliar.ValidarUF(xUF) then
     Gerador.wAlerta('E12', 'UF', DSC_UF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcInt, 'E13', 'CEP    ', 08, 08, 0, nfe.Dest.enderDest.CEP, DSC_CEP);
   Gerador.wCampo(tcStr, 'E14', 'cPais ', 01, 04, 0, IIf(nfe.Dest.enderDest.cPais <> 0, IntToStrZero(nfe.Dest.enderDest.cPais,4), ''), DSC_CPAIS);
@@ -693,7 +693,7 @@ begin
       Gerador.wAlerta('F07', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, 'F08', 'xMun   ', 02, 60, 1, xMun, DSC_XMUN);
     Gerador.wCampo(tcStr, 'F09', 'UF     ', 02, 02, 1, xUF, DSC_UF);
-    if not ValidarUF(xUF) then
+    if not pcnAuxiliar.ValidarUF(xUF) then
       Gerador.wAlerta('F09', 'UF', DSC_UF, ERR_MSG_INVALIDO);
     Gerador.wGrupo('/retirada');
   end;
@@ -714,7 +714,7 @@ begin
       Gerador.wAlerta('F07', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, 'G08', 'xMun   ', 02, 60, 1, nfe.Entrega.xMun, DSC_XMUN);
     Gerador.wCampo(tcStr, 'G09', 'UF     ', 02, 02, 1, nfe.Entrega.UF, DSC_UF);
-    if not ValidarUF(nfe.Entrega.UF) then
+    if not pcnAuxiliar.ValidarUF(nfe.Entrega.UF) then
       Gerador.wAlerta('G09', 'UF', DSC_UF, ERR_MSG_INVALIDO);
     Gerador.wGrupo('/entrega');
   end;
@@ -759,10 +759,20 @@ end;
 procedure TNFeW.GerarDetProd(const i: Integer);
 const
   HOM_XPROD = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
+var
+  ErroValidarGTIN: String;
 begin
   Gerador.wGrupo('prod', 'I01');
   Gerador.wCampo(tcStr, 'I02 ', 'cProd   ', 01, 60, 1, nfe.Det[i].Prod.cProd, DSC_CPROD);
+
+  if (trim(nfe.Det[i].Prod.cEAN) = '') and  (NFe.infNFe.Versao >= 4) then
+    nfe.Det[i].Prod.cEAN := 'SEM GTIN';
+
   Gerador.wCampo(tcStr, 'I03 ', 'cEAN    ', 00, 14, 1, nfe.Det[i].Prod.cEAN, DSC_CEAN);
+  ErroValidarGTIN := ValidarGTIN(nfe.Det[i].Prod.cEAN);
+  if ErroValidarGTIN <> '' then
+      Gerador.wAlerta('I03', 'cEAN', DSC_CEAN, ErroValidarGTIN);
+
   if (NFe.Det[i].Prod.nItem = 1) and (NFe.Ide.tpAmb = taHomologacao) and (NFe.ide.modelo = 65) then
     Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, HOM_XPROD, DSC_XPROD)
   else
@@ -790,7 +800,15 @@ begin
   Gerador.wCampo(tcDe4, 'I10 ', 'qCom    ', 00, 15, 1, nfe.Det[i].Prod.qCom, DSC_QCOM);
   Gerador.wCampo(IIf(NFe.infNFe.Versao >= 2,tcDe10,tcDe4),'I10a', 'vUnCom  ', 00, 21, 1, nfe.Det[i].Prod.vUnCom, DSC_VUNCOM);
   Gerador.wCampo(tcDe2, 'I11 ', 'vProd   ', 00, 15, 1, nfe.Det[i].Prod.vProd, DSC_VPROD);
+
+  if (trim(nfe.Det[i].Prod.cEANTrib) = '') and  (NFe.infNFe.Versao >= 4) then
+    nfe.Det[i].Prod.cEANTrib := 'SEM GTIN';
+
   Gerador.wCampo(tcStr, 'I12 ', 'cEANTrib', 00, 14, 1, nfe.Det[i].Prod.cEANTrib, DSC_CEANTRIB);
+  ErroValidarGTIN := ValidarGTIN(nfe.Det[i].Prod.cEANTrib);
+  if ErroValidarGTIN <> '' then
+      Gerador.wAlerta('I12', 'cEANTrib', DSC_CEANTRIB, ErroValidarGTIN);
+
   Gerador.wCampo(tcStr, 'I13 ', 'uTrib   ', 01, 06, 1, nfe.Det[i].Prod.uTrib, DSC_UTRIB);
   Gerador.wCampo(tcDe4, 'I14 ', 'qTrib   ', 00, 15, 1, nfe.Det[i].Prod.qTrib, DSC_QTRIB);
   Gerador.wCampo(IIf(NFe.infNFe.Versao >= 2,tcDe10,tcDe4), 'I14a', 'vUnTrib ', 00, 21, 1, nfe.Det[i].Prod.vUnTrib, DSC_VUNTRIB);
@@ -833,7 +851,7 @@ begin
     Gerador.wCampo(tcDat, 'I20', 'dDI        ', 10, 10, 1, nfe.Det[i].Prod.DI[j].dDI, DSC_DDi);
     Gerador.wCampo(tcStr, 'I21', 'xLocDesemb ', 01, 60, 1, nfe.Det[i].Prod.DI[j].xLocDesemb, DSC_XLOCDESEMB);
     Gerador.wCampo(tcStr, 'I22', 'UFDesemb   ', 02, 02, 1, nfe.Det[i].Prod.DI[j].UFDesemb, DSC_UFDESEMB);
-    if not ValidarUF(nfe.Det[i].Prod.DI[j].UFDesemb) then
+    if not pcnAuxiliar.ValidarUF(nfe.Det[i].Prod.DI[j].UFDesemb) then
       Gerador.wAlerta('I22', 'UFDesemb', DSC_UFDESEMB, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcDat, 'I23', 'dDesemb    ', 10, 10, 1, nfe.Det[i].Prod.DI[j].dDesemb, DSC_DDESEMB);
 
@@ -852,7 +870,7 @@ begin
 
       Gerador.wCampo(tcStr, 'I23e', 'UFTerceiro  ', 02, 02, 0, nfe.Det[i].Prod.DI[j].UFTerceiro, DSC_UF);
       if nfe.Det[i].Prod.DI[j].UFTerceiro <> '' then
-        if not ValidarUF(nfe.Det[i].Prod.DI[j].UFTerceiro) then
+        if not pcnAuxiliar.ValidarUF(nfe.Det[i].Prod.DI[j].UFTerceiro) then
           Gerador.wAlerta('I23e', 'UFTerceiro', DSC_UF, ERR_MSG_INVALIDO);
     end;
 
@@ -1095,7 +1113,7 @@ begin
       begin
        //  versao 4.01
         Gerador.wCampo(tcStr, 'L120', 'UFCons       ', 02, 02, 1, nfe.Det[i].Prod.comb.UFcons, DSC_UFCONS);
-        if not ValidarUF(nfe.Det[i].Prod.comb.UFcons) then Gerador.wAlerta('L120', 'UFcons', DSC_UFCONS, ERR_MSG_INVALIDO);
+        if not pcnAuxiliar.ValidarUF(nfe.Det[i].Prod.comb.UFcons) then Gerador.wAlerta('L120', 'UFcons', DSC_UFCONS, ERR_MSG_INVALIDO);
         (**)GerarDetProdCombCIDE(i);
 
         if nfe.Det[i].Prod.comb.encerrante.nBico > 0 then
@@ -1163,7 +1181,7 @@ begin
     Gerador.wCampo(tcDe2, 'L118', 'vBCICMSSTCons', 01, 15, 1, nfe.Det[i].Prod.comb.ICMSCons.vBCICMSSTCons, DSC_VBCICMSSTCONS);
     Gerador.wCampo(tcDe2, 'L119', 'vICMSSTCons  ', 01, 15, 1, nfe.Det[i].Prod.comb.ICMSCons.vICMSSTCons, DSC_VICMSSTCONS);
     Gerador.wCampo(tcStr, 'L120', 'UFCons       ', 02, 02, 1, nfe.Det[i].Prod.comb.ICMSCons.UFcons, DSC_UFCONS);
-    if not ValidarUF(nfe.Det[i].Prod.comb.ICMSCons.UFcons) then
+    if not pcnAuxiliar.ValidarUF(nfe.Det[i].Prod.comb.ICMSCons.UFcons) then
       Gerador.wAlerta('L120', 'UFcons', DSC_UFCONS, ERR_MSG_INVALIDO);
     Gerador.wGrupo('/ICMSCons');
   end;
@@ -2211,7 +2229,7 @@ begin
      begin
        Gerador.wCampo(tcStr, 'X07', 'IE      ', 02, 14, 0, OnlyNumber(nfe.Transp.Transporta.IE), DSC_IE);
        if (FOpcoes.ValidarInscricoes) and (nfe.Transp.Transporta.IE <> '') then
-         if not ValidarIE(nfe.Transp.Transporta.IE, nfe.Transp.Transporta.UF) then
+         if not pcnAuxiliar.ValidarIE(nfe.Transp.Transporta.IE, nfe.Transp.Transporta.UF) then
            Gerador.wAlerta('X07', 'IE', DSC_IE, ERR_MSG_INVALIDO);
      end;
     Gerador.wCampo(tcStr, 'X08', 'xEnder  ', 01, 60, 0, nfe.Transp.Transporta.xEnder, DSC_XENDER);
@@ -2219,7 +2237,7 @@ begin
     if trim(nfe.Transp.Transporta.UF) <> '' then
      begin
        Gerador.wCampo(tcStr, 'X10', 'UF      ', 01, 02, 0, nfe.Transp.Transporta.UF, DSC_UF);
-       if not ValidarUF(nfe.Transp.Transporta.UF) then
+       if not pcnAuxiliar.ValidarUF(nfe.Transp.Transporta.UF) then
          Gerador.wAlerta('X10', 'UF', DSC_UF, ERR_MSG_INVALIDO);
      end;
     Gerador.wGrupo('/transporta');
@@ -2257,7 +2275,7 @@ begin
     Gerador.wGrupo('veicTransp', 'X18');
     Gerador.wCampo(tcStr, 'X19', 'placa   ', 06, 07, 1, nfe.Transp.veicTransp.placa, DSC_PLACA);
     Gerador.wCampo(tcStr, 'X20', 'UF      ', 02, 02, 1, nfe.Transp.veicTransp.UF, DSC_UF);
-    if not ValidarUF(nfe.Transp.veicTransp.UF) then
+    if not pcnAuxiliar.ValidarUF(nfe.Transp.veicTransp.UF) then
       Gerador.wAlerta('X20', 'UF', DSC_UF, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, 'X21', 'RNTC    ', 01, 20, 0, nfe.Transp.veicTransp.RNTC, DSC_RNTC);
     Gerador.wGrupo('/veicTransp');
@@ -2275,7 +2293,7 @@ begin
     Gerador.wGrupo('reboque', 'X22');
     Gerador.wCampo(tcStr, 'X23', 'placa ', 06, 07, 1, nfe.Transp.Reboque[i].placa, DSC_PLACA);
     Gerador.wCampo(tcStr, 'X24', 'UF    ', 02, 02, 1, nfe.Transp.Reboque[i].UF, DSC_UF);
-    if not ValidarUF(nfe.Transp.Reboque[i].UF) then
+    if not pcnAuxiliar.ValidarUF(nfe.Transp.Reboque[i].UF) then
       Gerador.wAlerta('X24', 'UF', DSC_UF, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, 'X25', 'RNTC  ', 01, 20, 0, nfe.Transp.Reboque[i].RNTC, DSC_RNTC);
     Gerador.wGrupo('/reboque');
@@ -2390,7 +2408,7 @@ begin
     begin
       Gerador.wGrupo('exporta', 'ZA01');
       Gerador.wCampo(tcStr, 'ZA02', 'UFSaidaPais', 02, 02, 1, nfe.exporta.UFSaidaPais, DSC_UFEMBARQ);
-      if not ValidarUF(nfe.exporta.UFSaidaPais) then
+      if not pcnAuxiliar.ValidarUF(nfe.exporta.UFSaidaPais) then
         Gerador.wAlerta('ZA02', 'UFSaidaPais', DSC_UFEMBARQ, ERR_MSG_INVALIDO);
       Gerador.wCampo(tcStr, 'ZA03', 'xLocExporta ', 01, 60, 1, nfe.exporta.xLocExporta, DSC_XLOCEMBARQ);
       Gerador.wCampo(tcStr, 'ZA04', 'xLocDespacho', 01, 60, 0, nfe.exporta.xLocDespacho, DSC_XLOCDESP);
@@ -2403,7 +2421,7 @@ begin
     begin
       Gerador.wGrupo('exporta', 'ZA01');
       Gerador.wCampo(tcStr, 'ZA02', 'UFEmbarq', 02, 02, 1, nfe.exporta.UFembarq, DSC_UFEMBARQ);
-      if not ValidarUF(nfe.exporta.UFembarq) then
+      if not pcnAuxiliar.ValidarUF(nfe.exporta.UFembarq) then
         Gerador.wAlerta('ZA02', 'UFEmbarq', DSC_UFEMBARQ, ERR_MSG_INVALIDO);
       Gerador.wCampo(tcStr, 'ZA03', 'xLocEmbarq', 01, 60, 1, nfe.exporta.xLocEmbarq, DSC_XLOCEMBARQ);
       Gerador.wGrupo('/exporta');

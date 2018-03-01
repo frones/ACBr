@@ -47,11 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+01/03/2018
+-- pcnNFeW --
+[*] Incluido uma condição para a versão 4.00 se o produto não possuir o codigo
+    de barras deve ser informado "SEM GTIN" nos campos cEAN e cEANTrib.
+   Por: Italo Jurisato Junior
+
 20/02/2018
 -- ACBrNFeServicos --
 [*] Incluido as URLs NFCe ambiente de produção RS - versão 4.0 
    (por: Jose M. S. Junior)
-
 
 14/02/2018
 -- pcnNFeRTXT / pcnNFeW / pcnNFeR --

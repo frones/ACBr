@@ -72,6 +72,7 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
     function GetAbout: String; override;
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -94,7 +95,6 @@ type
     function cStatConfirmado(AValue: integer): Boolean;
     function cStatProcessado(AValue: integer): Boolean;
 
-    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     procedure LerServicoDeParams(LayOutServico: TLayOutANe; var Versao: Double;
       var URL: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOutANe): String; reintroduce; overload;

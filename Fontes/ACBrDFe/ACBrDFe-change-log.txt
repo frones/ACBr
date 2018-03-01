@@ -44,6 +44,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2018
+-- ACBrDFe --
+[*] Visibilidade dos métodos: "NomeServicoToNomeSchema" e "AchaArquivoSchema",
+    modificada de Public para Protected
+[*] Método "AchaArquivoSchema", modificado para Zerar a lista de Schemas carregados
+    na memória, sempre que detectar mudanças em: "Configuracoes.Arquivos.PathSchemas"
+[+] Adicionados os métodos Protected
+    function ExtrairVersaoNomeArquivoSchema(ArqSchema: String): String; virtual;
+    function VersaoSchemaDoubleToString(AVersao: Double): String; virtual;
+    function VersaoSchemaStringToDouble(AVersao: String): Double; virtual;
+    Para permitir a sobrecarga em classes que usem uma numeração de Schema
+    diferente do padrão
+
+-- ACBreSocial --
+[+] Implementado sobrecarga nos métodos "VersaoSchemaDoubleToString" e
+    "VersaoSchemaStringToDouble" para conseguir encontrar corretamente as
+    versões nos arquivos de Schema do eSocial
+    (por: DSA)
+
 27/02/2018
 -- ACBrDFeHttpOpenSSL --
 [-] Melhorias na definição de TimeOut de Conexão

@@ -47,6 +47,8 @@ uses
 
 const
   ACBRDFE_VERSAO = '0.1.0a';
+  CSCHEMA_EXT = '.xsd';
+  CSCHEMA_SeparadorVersao = '_v';
 
 type
 
@@ -64,6 +66,7 @@ type
     FOnTransmitError: TACBrDFeOnTransmitError;
     FSSL: TDFeSSL;
     FListaDeSchemas: TStringList;
+    FPathSchemas: String;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
     function GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
@@ -75,6 +78,7 @@ type
     FPConfiguracoes: TConfiguracoes;
     FPIniParams: TMemIniFile;
     FPIniParamsCarregado: Boolean;
+    FPSeparadorVersaoSchema: String;
 
     function GetAbout: String; virtual;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -82,6 +86,12 @@ type
     function CreateConfiguracoes: TConfiguracoes; virtual;
 
     procedure LerParamsIni( ApenasSeNaoLido: Boolean = False); virtual;
+
+    function NomeServicoToNomeSchema(const NomeServico: String): String; virtual;
+    function ExtrairVersaoNomeArquivoSchema(ArqSchema: String): String; virtual;
+    function VersaoSchemaDoubleToString(AVersao: Double): String; virtual;
+    function VersaoSchemaStringToDouble(AVersao: String): Double; virtual;
+    procedure AchaArquivoSchema(NomeSchema: String; var AVersao: Double; var ArqSchema: String); virtual;
 
   public
     property SSL: TDFeSSL read FSSL;
@@ -97,10 +107,6 @@ type
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamNFe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); virtual;
-
-    function NomeServicoToNomeSchema(const NomeServico: String): String; virtual;
-    procedure AchaArquivoSchema(NomeSchema: String; var Versao: Double;
-      var ArqSchema: String);
 
     procedure LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
       var Versao: Double; var URL: String);
@@ -148,6 +154,7 @@ constructor TACBrDFe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  FPSeparadorVersaoSchema := CSCHEMA_SeparadorVersao;
   FPConfiguracoes := CreateConfiguracoes;
   FPConfiguracoes.Name := 'Configuracoes';
   {$IFDEF COMPILER6_UP}
@@ -160,6 +167,7 @@ begin
   // Criando uma instância de FSSL e atribuindo valores de "Configuracoes" a ela;
   FSSL := TDFeSSL.Create;
   FListaDeSchemas := TStringList.Create;
+  FPathSchemas := '';
 
   with FSSL do
   begin
@@ -196,7 +204,6 @@ destructor TACBrDFe.Destroy;
 begin
   FSSL.Free;
   FListaDeSchemas.Free;
-
   FPConfiguracoes.Free;
   FPIniParams.Free;
 
@@ -324,23 +331,57 @@ begin
   Result := '';
 end;
 
-procedure TACBrDFe.AchaArquivoSchema(NomeSchema: String; var Versao: Double;
+function TACBrDFe.ExtrairVersaoNomeArquivoSchema(ArqSchema: String): String;
+var
+  P1, P2: Integer;
+begin
+  Result := '';
+  P1 := pos(FPSeparadorVersaoSchema, ArqSchema );
+  if (P1 > 0) then
+  begin
+    P1 := P1 + Length(FPSeparadorVersaoSchema);
+    P2 := PosEx(CSCHEMA_EXT, ArqSchema, P1);
+    if (P2 = 0) then
+      P2 := Length(ArqSchema);
+
+    Result := copy(ArqSchema, P1, P2-P1);
+  end;
+end;
+
+function TACBrDFe.VersaoSchemaDoubleToString(AVersao: Double): String;
+begin
+  if (AVersao > 0) then
+    Result := FloatToString(AVersao,'.','0.00')
+  else
+    Result := '';
+end;
+
+function TACBrDFe.VersaoSchemaStringToDouble(AVersao: String): Double;
+begin
+  Result := StringToFloatDef(AVersao, 0);
+end;
+
+procedure TACBrDFe.AchaArquivoSchema(NomeSchema: String; var AVersao: Double;
   var ArqSchema: String);
 Var
   VersaoMaisProxima, VersaoArq: Double;
-  Arq, VersaoStr: String;
+  ArqAtual: String;
   I, P, LenNome: Integer;
-const
-  CSeparadorVersao = '_v';
 begin
   if NomeSchema = '' then exit;
 
   VersaoMaisProxima := 0;
   ArqSchema := '';
 
-  if FListaDeSchemas.Count = 0 then   // Carrega todos arquivos de Schema
+  if (FPathSchemas <> Configuracoes.Arquivos.PathSchemas) then
   begin
-    FindFiles(Configuracoes.Arquivos.PathSchemas +'*.xsd', FListaDeSchemas, False );
+    FListaDeSchemas.Clear;
+    FPathSchemas := Configuracoes.Arquivos.PathSchemas;
+  end;
+
+  if (FListaDeSchemas.Count = 0) then   // Carrega todos arquivos de Schema
+  begin
+    FindFiles(FPathSchemas +'*'+CSCHEMA_EXT, FListaDeSchemas, False );
 
     if FListaDeSchemas.Count = 0 then
       raise EACBrDFeException.Create('Nenhum arquivo de Schema encontrado na pasta: '+sLineBreak+
@@ -349,43 +390,42 @@ begin
     FListaDeSchemas.Sort;
   end;
 
-  if Versao = 0 then
-    P := FListaDeSchemas.IndexOf(NomeSchema+'.xsd')
+  if (AVersao = 0) then
+    ArqAtual := NomeSchema + CSCHEMA_EXT
   else
-    P := FListaDeSchemas.IndexOf(NomeSchema + CSeparadorVersao + FloatToString(Versao,'.','0.00')+'.xsd');
+    ArqAtual := NomeSchema + FPSeparadorVersaoSchema + VersaoSchemaDoubleToString(AVersao) + CSCHEMA_EXT ;
+
+  P := FListaDeSchemas.IndexOf(ArqAtual);
 
   if P >= 0 then
   begin
     ArqSchema := FListaDeSchemas[P];
-    VersaoMaisProxima := Versao;
+    VersaoMaisProxima := AVersao;
   end
-  else if Versao > 0 then
+  else if AVersao > 0 then
   begin
-    NomeSchema := NomeSchema + CSeparadorVersao;
+    NomeSchema := NomeSchema + FPSeparadorVersaoSchema;
     LenNome := Length(NomeSchema);
 
     For I := 0 to FListaDeSchemas.Count-1 do
     begin
-      Arq := FListaDeSchemas[I];
+      ArqAtual := FListaDeSchemas[I];
 
-      if copy(Arq, 1, LenNome) = NomeSchema then
+      if (copy(ArqAtual, 1, LenNome) = NomeSchema) then
       begin
-        VersaoStr := copy( Arq, LenNome+1, Length(Arq));
-        VersaoStr := copy( VersaoStr, 1, Length(VersaoStr)-4);  // Remove '.xsd'
-        VersaoArq := StringToFloatDef(VersaoStr, 0);
-
+        VersaoArq := VersaoSchemaStringToDouble(ExtrairVersaoNomeArquivoSchema(ArqAtual));
         if (VersaoArq > 0) and
            (VersaoArq > VersaoMaisProxima) and
-           (VersaoArq <= Versao) then
+           (VersaoArq <= AVersao) then
         begin
           VersaoMaisProxima := VersaoArq;
-          ArqSchema := Arq;
+          ArqSchema := ArqAtual;
         end;
       end;
     end;
   end;
 
-  Versao := VersaoMaisProxima;
+  AVersao := VersaoMaisProxima;
   if NaoEstaVazio(ArqSchema) then
     ArqSchema := Configuracoes.Arquivos.PathSchemas + ArqSchema;
 end;

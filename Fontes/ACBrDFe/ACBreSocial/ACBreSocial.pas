@@ -89,7 +89,9 @@ type
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
     function GetAbout: String; override;
-
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
+    function VersaoSchemaDoubleToString(AVersao: Double): String; virtual;
+    function VersaoSchemaStringToDouble(AVersao: String): Double; virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -101,7 +103,6 @@ type
     function GetNomeModeloDFe: string; override;
     function GetNameSpaceURI: string; override;
     function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
-    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
 
     function Enviar(AGrupo: TeSocialGrupo): boolean;
     function Consultar(const AProtocolo: string): boolean;
@@ -197,6 +198,33 @@ begin
     Result := SchemaESocialToStr( LayOutToSchema( ALayout ) )
   else
     Result := '';
+end;
+
+function TACBreSocial.VersaoSchemaDoubleToString(AVersao: Double): String;
+var
+  StrVer: String;
+begin
+  Result := '';
+
+  if (AVersao > 0) then
+  begin
+    StrVer := FloatToString(AVersao, '.', '0.00');
+    StrVer := StringReplace(StrVer,'.','',[rfReplaceAll]);
+    Result := StrVer[1] + '_' + StrVer[2] + '_' + StrVer[3];
+  end;
+end;
+
+function TACBreSocial.VersaoSchemaStringToDouble(AVersao: String): Double;
+var
+  StrVer: String;
+begin
+  Result := 0;
+  if (AVersao <> '') then
+  begin
+    StrVer := StringReplace(AVersao,'_','',[rfReplaceAll]);
+    StrVer := PadRight(StrVer, 3, '0');
+    Result := StringToFloatDef(StrVer[1]+'.'+StrVer[2]+StrVer[3], 0);
+  end;
 end;
 
 procedure TACBreSocial.LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double; var URL: String);

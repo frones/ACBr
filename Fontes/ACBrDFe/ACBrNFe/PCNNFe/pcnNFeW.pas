@@ -759,19 +759,24 @@ end;
 procedure TNFeW.GerarDetProd(const i: Integer);
 const
   HOM_XPROD = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
+  SEMGTIN = 'SEM GTIN';
 var
   ErroValidarGTIN: String;
 begin
   Gerador.wGrupo('prod', 'I01');
   Gerador.wCampo(tcStr, 'I02 ', 'cProd   ', 01, 60, 1, nfe.Det[i].Prod.cProd, DSC_CPROD);
 
-  if (trim(nfe.Det[i].Prod.cEAN) = '') and  (NFe.infNFe.Versao >= 4) then
-    nfe.Det[i].Prod.cEAN := 'SEM GTIN';
+  if (NFe.infNFe.Versao >= 4) and (trim(nfe.Det[i].Prod.cEAN) = '') then
+    nfe.Det[i].Prod.cEAN := SEMGTIN;
 
-  Gerador.wCampo(tcStr, 'I03 ', 'cEAN    ', 00, 14, 1, nfe.Det[i].Prod.cEAN, DSC_CEAN);
-  ErroValidarGTIN := ValidarGTIN(nfe.Det[i].Prod.cEAN);
-  if ErroValidarGTIN <> '' then
+  Gerador.wCampo(tcStr, 'I03 ', 'cEAN', 00, 14, 1, nfe.Det[i].Prod.cEAN, DSC_CEAN);
+
+  if (nfe.Det[i].Prod.cEAN <> SEMGTIN) and (nfe.Det[i].Prod.cEAN <> '') then
+  begin
+    ErroValidarGTIN := ValidarGTIN(nfe.Det[i].Prod.cEAN);
+    if ErroValidarGTIN <> '' then
       Gerador.wAlerta('I03', 'cEAN', DSC_CEAN, ErroValidarGTIN);
+  end;
 
   if (NFe.Det[i].Prod.nItem = 1) and (NFe.Ide.tpAmb = taHomologacao) and (NFe.ide.modelo = 65) then
     Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, HOM_XPROD, DSC_XPROD)
@@ -801,13 +806,17 @@ begin
   Gerador.wCampo(IIf(NFe.infNFe.Versao >= 2,tcDe10,tcDe4),'I10a', 'vUnCom  ', 00, 21, 1, nfe.Det[i].Prod.vUnCom, DSC_VUNCOM);
   Gerador.wCampo(tcDe2, 'I11 ', 'vProd   ', 00, 15, 1, nfe.Det[i].Prod.vProd, DSC_VPROD);
 
-  if (trim(nfe.Det[i].Prod.cEANTrib) = '') and  (NFe.infNFe.Versao >= 4) then
-    nfe.Det[i].Prod.cEANTrib := 'SEM GTIN';
+  if (NFe.infNFe.Versao >= 4) and (trim(nfe.Det[i].Prod.cEANTrib) = '') then
+    nfe.Det[i].Prod.cEANTrib := SEMGTIN;
 
   Gerador.wCampo(tcStr, 'I12 ', 'cEANTrib', 00, 14, 1, nfe.Det[i].Prod.cEANTrib, DSC_CEANTRIB);
-  ErroValidarGTIN := ValidarGTIN(nfe.Det[i].Prod.cEANTrib);
-  if ErroValidarGTIN <> '' then
+
+  if (nfe.Det[i].Prod.cEANTrib <> SEMGTIN) and (nfe.Det[i].Prod.cEAN <> '') then
+  begin
+    ErroValidarGTIN := ValidarGTIN(nfe.Det[i].Prod.cEANTrib);
+    if ErroValidarGTIN <> '' then
       Gerador.wAlerta('I12', 'cEANTrib', DSC_CEANTRIB, ErroValidarGTIN);
+  end;
 
   Gerador.wCampo(tcStr, 'I13 ', 'uTrib   ', 01, 06, 1, nfe.Det[i].Prod.uTrib, DSC_UTRIB);
   Gerador.wCampo(tcDe4, 'I14 ', 'qTrib   ', 00, 15, 1, nfe.Det[i].Prod.qTrib, DSC_QTRIB);

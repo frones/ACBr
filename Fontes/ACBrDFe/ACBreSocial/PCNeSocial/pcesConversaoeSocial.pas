@@ -220,7 +220,7 @@ type
 
   tpIndSimples            = (idsIntegralmente, idsNaosubstituida, idsConcomitante);
 
-  tpNatAtividade          = (navUrbano, navRural );
+  tpNatAtividade          = (navNaoInformar, navUrbano, navRural );
 
   tpTpTributo             = (tptIRRF, tptPrevidenciaria);
 
@@ -1729,12 +1729,12 @@ end;
 
 function eSNatAtividadeToStr(const t:tpNatAtividade ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_2  );
+  result := EnumeradoToStr2(t,TGenericosString0_2  );
 end;
 
 function eSStrToNatAtividade(var ok: boolean; const s: string): TpNatAtividade;
 begin
-  result := TpNatAtividade( StrToEnumerado2(ok , s,TGenericosString1_2 ));
+  result := TpNatAtividade( StrToEnumerado2(ok , s,TGenericosString0_2 ));
 end;
 
 function eSTpTributoToStr(const t:tpTpTributo ): string;

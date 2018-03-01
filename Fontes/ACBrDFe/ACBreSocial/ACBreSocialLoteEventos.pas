@@ -303,7 +303,7 @@ begin
     '<envioLoteEventos grupo="' + Inttostr(ord(AGrupo)) + '">'+
       '<ideEmpregador>'+
         '<tpInsc>' + Inttostr(ord(FIdeEmpregador.TpInsc) + 1) + '</tpInsc>'+
-        '<nrInsc>' + IIf(FIdeEmpregador.TpInsc <> tpTpInsc.tiCNPJ, FIdeEmpregador.NrInsc, Copy(FIdeEmpregador.NrInsc, 1, 8)) +'</nrInsc>'+
+        '<nrInsc>' + IIf(FIdeEmpregador.TpInsc <> tiCNPJ, FIdeEmpregador.NrInsc, Copy(FIdeEmpregador.NrInsc, 1, 8)) +'</nrInsc>'+
       '</ideEmpregador>'+
       '<ideTransmissor>'+
         '<tpInsc>' + Inttostr(ord(FIdeTransmissor.TpInsc) + 1) +'</tpInsc>'+

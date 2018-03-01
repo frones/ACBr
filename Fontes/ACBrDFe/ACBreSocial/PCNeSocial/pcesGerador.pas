@@ -860,7 +860,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'aliqRat',      1, 1, 1, eSAliqRatToStr(pAliqRat.AliqRat));
 
-  if (pEmp.TpInsc = tpTpInsc.tiCNPJ) then
+  if (pEmp.TpInsc = tiCNPJ) then
   begin
     Gerador.wCampo(tcDe4, '', 'fap',          1, 5, 0, pAliqRat.Fap);
     Gerador.wCampo(tcDe4, '', 'aliqRatAjust', 1, 5, 0, pAliqRat.AliqRatAjust);
@@ -1119,7 +1119,9 @@ begin
     Gerador.wCampo(tcStr, '', 'tpAdmissao',    1,  1, 1, eSTpAdmissaoToStr(pInfoCeletista.TpAdmissao));
     Gerador.wCampo(tcStr, '', 'indAdmissao',   1,  1, 1, eSTpIndAdmissaoToStr(pInfoCeletista.IndAdmissao));
     Gerador.wCampo(tcStr, '', 'tpRegJor',      1,  1, 1, eSTpRegJorToStr(pInfoCeletista.TpRegJor));
-    Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 1, eSNatAtividadeToStr(pInfoCeletista.NatAtividade));
+
+    if pInfoCeletista.NatAtividade <> navNaoInformar then
+      Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 1, eSNatAtividadeToStr(pInfoCeletista.NatAtividade));
 
     if ((pInfoCeletista.dtBase >= 1) and (pInfoCeletista.dtBase <= 12)) then
       Gerador.wCampo(tcStr, '', 'dtBase', 0, 2, 0, pInfoCeletista.dtBase);

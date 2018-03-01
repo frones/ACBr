@@ -49,10 +49,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/03/2018
+-- pcesRetConsultaLote / pcesRetornoClass --
+[*] Correção no tipo da tag <dtBase> de TDateTime para Integer, pois essa tag
+   só contem o mês.
+   Por: Italo Jurisato Junior
 -- ACBreSocial --
 [*] Acrescentado o valor navNaoInformar para o campo natAtividade.
    Por: Italo Jurisato Junior
-
 -- pcesRetConsultaLote --
 [*] Correção na variável usada para a leitura da lista do grupo <horarioIntervalo>
    Por: Italo Jurisato Junior

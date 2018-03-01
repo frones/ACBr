@@ -397,7 +397,7 @@ begin
                   begin
                     RetEventos.Items[i].Recibo.Contrato.infoCeletista.DtAdm    := Leitor.rCampo(tcDat, 'dtAdm');
                     RetEventos.Items[i].Recibo.Contrato.infoCeletista.TpRegJor := eSStrToTpRegJor(ok, Leitor.rCampo(tcStr, 'tpRegJor'));
-                    RetEventos.Items[i].Recibo.Contrato.infoCeletista.dtBase   := Leitor.rCampo(tcDat, 'dtBase');
+                    RetEventos.Items[i].Recibo.Contrato.infoCeletista.dtBase   := Leitor.rCampo(tcInt, 'dtBase');
                     RetEventos.Items[i].Recibo.Contrato.infoCeletista.cnpjSindCategProf := Leitor.rCampo(tcStr, 'cnpjSindCategProf');
                   end;
 

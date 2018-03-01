@@ -220,12 +220,12 @@ type
   private
     FDtAdm: TDateTime;
     FTpRegJor: tpTpRegJor;
-    FdtBase: TDateTime;
+    FdtBase: Integer;
     FcnpjSindCategProf: string;
   public
     property DtAdm: TDateTime read FDtAdm write FDtAdm;
     property TpRegJor: tpTpRegJor read FTpRegJor write FTpRegJor;
-    property dtBase: TDateTime read FdtBase write FdtBase;
+    property dtBase: Integer read FdtBase write FdtBase;
     property  cnpjSindCategProf: string read FcnpjSindCategProf write FcnpjSindCategProf;
   end;
 

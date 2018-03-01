@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2018
+-- pcesRetConsultaLote --
+[*] Correção na variável usada para a leitura da lista do grupo <horarioIntervalo>
+   Por: Italo Jurisato Junior
+
 28/02/2018
 -- pcesGerador --
 [-] Corrigido geração do identificação do empregador quando é pessoa fisica.

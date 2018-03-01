@@ -466,7 +466,7 @@ begin
                       RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].perHorFlexivel := FLeitor.rCampo(tcStr, 'perHorFlexivel');
 
                       k := 0;
-                      while Leitor.rExtrai(10, 'horarioIntervalo', '', j + 1) <> '' do
+                      while Leitor.rExtrai(10, 'horarioIntervalo', '', k + 1) <> '' do
                       begin
                         RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Add;
                         RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].tpInterv   := eSStrToTpIntervalo(ok, FLeitor.rCampo(tcStr, 'tpInterv'));

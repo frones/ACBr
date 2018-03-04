@@ -843,7 +843,10 @@ begin
   Gerador.wCampo(tcStr, '', 'nmTrab',        1, 70, 1, ideTrabalhador.infoComplem.nmTrab);
   Gerador.wCampo(tcDat, '', 'dtNascto',     10, 10, 1, ideTrabalhador.infoComplem.dtNascto);
   Gerador.wCampo(tcStr, '', 'codCBO',        1,  6, 1, ideTrabalhador.infoComplem.codCBO);
-  Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(ideTrabalhador.infoComplem.natAtividade));
+
+  if ideTrabalhador.infoComplem.natAtividade <> navNaoInformar then
+    Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(ideTrabalhador.infoComplem.natAtividade));
+
   Gerador.wCampo(tcInt, '', 'qtdDiasTrab',   1,  2, 0, ideTrabalhador.infoComplem.qtdDiasTrab);
 
   if ideTrabalhador.infoComplem.sucessaoVincInst() then

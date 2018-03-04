@@ -49,6 +49,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/03/2018
+-- pcesS1200 --
+[*] https://www.projetoacbr.com.br/forum/topic/41795-analisar-para-alterar-s1200-natatividade/?do=findComment&comment=275608
+   Por: Edmar Frazao
+-- pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/41816-ajuste-no-campo-tpavprevio-do-evento-s-2250/
+   Por: Joceandro Perin
 -- pcesRetConsultaLote / pcesRetornoClass --
 [*] Correção no tipo da tag <dtBase> de TDateTime para Integer, pois essa tag
    só contem o mês.

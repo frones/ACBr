@@ -3716,7 +3716,7 @@ begin
     vRows.DelimitedText := AString;
     {$ELSE}
     vRows.DelimitedText := '"' + StringReplace(AString, ADelimiter, '"' + ADelimiter + '"', [rfReplaceAll]) + '"';
-    {$IFEND}
+    {$ENDIF}
 
     SetLength(Result, vRows.Count);
 

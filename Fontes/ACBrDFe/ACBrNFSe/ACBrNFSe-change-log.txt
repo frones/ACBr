@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/03/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Estava gerando a tag <aliquota> mesmo com o valor zero, neste caso não é para gerar.
+   Por: Italo Jurisato Junior
+-- ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/41822-mudan%C3%A7a-em-c%C3%B3digos-de-servi%C3%A7o-prefeitura-sp/
    Por: drsmoreira
 

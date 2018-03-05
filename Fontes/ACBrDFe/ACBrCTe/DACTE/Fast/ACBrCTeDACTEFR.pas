@@ -201,7 +201,7 @@ type
     property EspessuraBorda      : Integer read FEspessuraBorda write FEspessuraBorda;
     property PreparedReport      : TfrxReport read GetPreparedReport;
     property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
-		property PreparedReportInutilizacao: TfrxReport read GetPreparedReportInutilizacao;
+    property PreparedReportInutilizacao: TfrxReport read GetPreparedReportInutilizacao;
   end;
 
 var
@@ -211,86 +211,6 @@ implementation
 
 uses
   pcteConversaoCTe, ACBrDFeUtil, ACBrValidador;
-
-type
-  ArrOfStr     = array of string;
-  TSplitResult = array of string;
-
-function SubstrCount(const ASubString, AString: string): Integer;
-var
-  i: Integer;
-begin
-  Result := -1;
-  i      := 0;
-  repeat
-    Inc(Result);
-    i := PosEx(ASubString, AString, i + 1);
-  until i = 0;
-end;
-
-function Split(const ADelimiter, AString: string): TSplitResult;
-var
-  Step                         : ^string;
-  Chr                          : PChar;
-  iPos, iLast, iDelLen, iLen, x: Integer;
-label
-  EndLoop;
-begin
-  SetLength(Result, SubstrCount(ADelimiter, AString) + 1);
-  if High(Result) = 0 then
-    Result[0] := AString
-  else
-  begin
-    iDelLen := PCardinal(NativeUInt(ADelimiter) - SizeOf(NativeUInt))^;
-    iLen    := PCardinal(NativeUInt(AString) - SizeOf(NativeUInt))^;
-    Step    := @Result[0];
-    iLast   := 0;
-    iPos    := 0;
-    repeat
-      if iPos + iDelLen > iLen then
-      begin
-        if iLast <> iPos then
-          iPos := iLen;
-      end
-      else
-        for x := 1 to iDelLen do
-          if AString[iPos + x] <> ADelimiter[x] then
-            goto EndLoop;
-
-      if iPos - iLast > 0 then
-      begin
-        SetLength(Step^, iPos - iLast);
-        Chr   := PChar(Step^);
-        for x := 1 to PCardinal(NativeUInt(Step^) - SizeOf(NativeUInt))^ do
-        begin
-          Chr^ := AString[iLast + x];
-          Inc(Chr);
-        end;
-      end
-      else
-        Step^ := '';
-
-      NativeUInt(Step) := NativeUInt(Step) + SizeOf(NativeUInt);
-      iLast          := iPos + iDelLen;
-
-    EndLoop:
-      Inc(iPos);
-    until iLast >= iLen;
-  end;
-end;
-
-function Explode(sPart, sInput: string): ArrOfStr;
-begin
-  while Pos(sPart, sInput) <> 0 do
-  begin
-    SetLength(Result, Length(Result) + 1);
-    Result[Length(Result) - 1] := Copy(sInput, 0, Pos(sPart, sInput) - 1);
-    Delete(sInput, 1, Pos(sPart, sInput));
-  end;
-
-  SetLength(Result, Length(Result) + 1);
-  Result[Length(Result) - 1] := sInput;
-end;
 
 function CollateBr(Str: string): string;
 var
@@ -2419,7 +2339,6 @@ var
   TmpStr       : string;
   wContingencia: string;
   wObs         : string;
-  wSubstituto  : string;
   i            : Integer;
 begin
   with cdsInformacoesAdicionais do

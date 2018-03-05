@@ -78,9 +78,6 @@ uses
   ACBrDelphiZXingQrCode, Graphics;
 
 type
-  ArrOfStr = Array of String;
-  TSplitResult = array of string;
-
   TACBrNFeFRClass = class
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
@@ -164,10 +161,7 @@ type
     procedure CarregaInformacoesAdicionais;
     function QuebraLinha: String;
 
-    function SubstrCount(const ASubString, AString: string): Integer;
-    function Split(const ADelimiter, AString: string): TSplitResult;
     function CollateBr(Str: String): String;
-    function Explode(sPart, sInput: String): ArrOfStr;
     function ManterVprod(dVProd, dvDesc: Double): String;
     function ManterdvTotTrib(dvTotTrib: Double):  String;
     function ManterVDesc(dvDesc: Currency; dVUnCom , dQCom : double ) : Double;
@@ -231,18 +225,6 @@ uses ACBrNFe, ACBrDFeUtil, StrUtils, Math, DateUtils, pcnConversaoNFe,
 
 { TACBrNFeFRClass }
 
-function TACBrNFeFRClass.SubstrCount(const ASubString, AString: string): Integer;
-var
-  i: integer;
-begin
-  Result := -1;
-  i := 0;
-  repeat
-    Inc(Result);
-    i := PosEx(ASubString, AString, i + 1);
-  until i = 0;
-end;
-
 procedure TACBrNFeFRClass.SetDataSetsToFrxReport;
 begin
   frxReport.EnabledDataSets.Clear;
@@ -264,39 +246,6 @@ begin
   frxReport.EnabledDataSets.Add(FfrxParametros);
   frxReport.EnabledDataSets.Add(FfrxDuplicatas);
   frxReport.EnabledDataSets.Add(FfrxInutilizacao);
-end;
-
-function TACBrNFeFRClass.Split(const ADelimiter, AString: string): TSplitResult;
-var
-  vRows: TStrings;
-  vI: Integer;
-begin
-  vRows := TStringList.Create;
-  try
-    vRows.Delimiter := ADelimiter[1];
-    vRows.DelimitedText :=  '"' + StringReplace(AString, ADelimiter, '"' + ADelimiter + '"', [rfReplaceAll]) + '"' ;
-
-    SetLength(Result, vRows.Count);
-
-    for vI := 0 to vRows.Count - 1 do
-      Result[vI] := vRows.Strings[vI];
-
-  finally
-    FreeAndNil(vRows);
-  end;
-end;
-
-function TACBrNFeFRClass.Explode(sPart, sInput: String): ArrOfStr;
-begin
-  while Pos(sPart, sInput) <> 0 do
-    begin
-      SetLength(Result, Length(Result) + 1);
-      Result[Length(Result) - 1] := Copy(sInput, 0, Pos(sPart, sInput) - 1);
-      Delete(sInput, 1, Pos(sPart, sInput));
-    end;
-
-  SetLength(Result, Length(Result) + 1);
-  Result[Length(Result) - 1] := sInput;
 end;
 
 function TACBrNFeFRClass.CollateBr(Str: String): String;

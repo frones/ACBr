@@ -159,73 +159,9 @@ type
     property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
   end;
 
-type
-  TSplitResult = array of string;
-
 implementation
 
 uses ACBrMDFe, ACBrUtil, StrUtils, pmdfeConversaoMDFe, ACBrValidador;
-
-function SubstrCount(const ASubString, AString: string): Integer;
-var
-  i: integer;
-begin
-  Result := -1;
-  i := 0;
-  repeat
-    Inc(Result);
-    i := PosEx(ASubString, AString, i + 1);
-  until i = 0;
-end;
-
-function Split(const ADelimiter, AString: string): TSplitResult;
-var
-  Step: ^string;
-  Chr: PChar;
-  iPos, iLast, iDelLen, iLen, x: integer;
-label
-  EndLoop;
-begin
-  SetLength(Result, SubstrCount(ADelimiter, AString) + 1);
-  if High(Result) = 0 then
-    Result[0] := AString
-  else
-  begin
-    iDelLen := PCardinal(NativeUInt(ADelimiter) - SizeOf(NativeUInt))^;
-    iLen := PCardinal(NativeUInt(AString) - SizeOf(NativeUInt))^;
-    Step := @Result[0];
-    iLast := 0;
-    iPos := 0;
-    repeat
-      if iPos + iDelLen > iLen then
-      begin
-        if iLast <> iPos then
-          iPos := iLen;
-      end else
-        for x := 1 to iDelLen do
-          if AString[iPos + x] <> ADelimiter[x] then
-            goto EndLoop;
-
-      if iPos - iLast > 0 then
-      begin
-        SetLength(Step^, iPos - iLast);
-        Chr := PChar(Step^);
-        for x := 1 to PCardinal(NativeUInt(Step^) - SizeOf(NativeUInt))^ do
-        begin
-          Chr^ := AString[iLast + x];
-          Inc(Chr);
-        end;
-      end else
-        Step^ := '';
-
-      NativeUInt(Step) := NativeUInt(Step) + SizeOf(NativeUInt);
-      iLast := iPos + iDelLen;
-
-      EndLoop:
-      Inc(iPos);
-    until iLast >= iLen;
-  end;
-end;
 
 function CollateBr(Str: string): string;
 var

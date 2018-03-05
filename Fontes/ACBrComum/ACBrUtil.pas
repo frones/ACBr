@@ -87,6 +87,7 @@ const
 type
   TSetOfChars = set of AnsiChar;
   TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, msk6x4, mskAliq);
+  TSplitResult = array of string;
   {$IfNDef FPC}
    TLibHandle = THandle;
 
@@ -106,6 +107,7 @@ function ConverteXMLtoNativeString(const AXML: String): String;
 function ObtemDeclaracaoXML(const AXML: String): String;
 function RemoverDeclaracaoXML(const AXML: String): String;
 
+function Split(const ADelimiter, AString: string): TSplitResult;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
@@ -3698,6 +3700,31 @@ end;
 function Zip(const ABinaryString: AnsiString): AnsiString;
 begin
  Result := ACBrCompress.ZLibCompress(ABinaryString);
+end;
+
+function Split(const ADelimiter, AString: string): TSplitResult;
+var
+  i: Integer;
+  vRows: TStrings;
+begin
+  vRows := TStringList.Create;
+  try
+    vRows.Delimiter := ADelimiter[1];
+
+    {$IFDEF CompilerVersion >= 18} //Delphi 2006+
+    vRows.StrictDelimiter := True;
+    vRows.DelimitedText := AString;
+    {$ELSE}
+    vRows.DelimitedText := '"' + StringReplace(AString, ADelimiter, '"' + ADelimiter + '"', [rfReplaceAll]) + '"';
+    {$IFEND}
+
+    SetLength(Result, vRows.Count);
+
+    for i := 0 to vRows.Count - 1 do
+      Result[i] := vRows.Strings[i];
+  finally
+    FreeAndNil(vRows);
+  end;
 end;
 
 {------------------------------------------------------------------------------

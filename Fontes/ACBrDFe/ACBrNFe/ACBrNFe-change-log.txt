@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+05/03/2018
+-- ACBrNFeServicos --
+[-] Remoção do ajuste do SoapAction para webservices da NFe BA homologação.
+   Por: BigWings
+
 01/03/2018
 -- pcnNFeW --
 [*] Incluido uma condição para a versão 4.00 se o produto não possuir o codigo

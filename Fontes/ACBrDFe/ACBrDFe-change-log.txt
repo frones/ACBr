@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/03/2018
+-- ACBrDFeXsLibXml2 --
+[-] Remoção de warnings.
+    (por Waldir)
+
 01/03/2018
 -- ACBrDFe --
 [*] Visibilidade dos métodos: "NomeServicoToNomeSchema" e "AchaArquivoSchema",

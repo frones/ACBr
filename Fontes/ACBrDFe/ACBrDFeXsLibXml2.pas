@@ -476,7 +476,7 @@ begin
       SignNode.last := nil;
       xmlFreeNode(SignNode);
       CanonXML := AnsiString(CanonC14n(aDoc, rootNode.name));
-      SignNode := AdicionarNode(aDoc, SignElement);
+      AdicionarNode(aDoc, SignElement);
     end
     else
       CanonXML := AnsiString(CanonC14n(aDoc, infElement));
@@ -671,8 +671,11 @@ Var
   memDoc: xmlDocPtr;
   SignXml: String;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := nil;
-
+{$ENDIF}
+  NewNode := nil;
+  memDoc := nil;
   try
       SignXml := '<a>' + ConteudoXML + '</a>';
       memDoc := xmlReadMemory(PAnsiChar(AnsiString(SignXml)), Length(SignXml), nil, nil, 0);

@@ -109,7 +109,7 @@ implementation
 
 uses
   math, {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF} sysutils, strutils,
-  ACBrUtil, ACBrConsts, synautil;
+  ACBrUtil, ACBrConsts, synautil, synacode;
 
 { TACBrETQPpla }
 

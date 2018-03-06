@@ -107,7 +107,7 @@ function ConverteXMLtoNativeString(const AXML: String): String;
 function ObtemDeclaracaoXML(const AXML: String): String;
 function RemoverDeclaracaoXML(const AXML: String): String;
 
-function Split(const ADelimiter, AString: string): TSplitResult;
+function Split(const ADelimiter: Char; const AString: string): TSplitResult;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
@@ -3669,9 +3669,14 @@ begin
      SL.StrictDelimiter := True;
      ADelimitedText := AText;
     {$ELSE}
-     ADelimitedText := '"' + StringReplace(AText, ADelimiter,
-                            '"' + ADelimiter + '"', [rfReplaceAll]) +
-                       '"';
+     {$IFDEF DELPHI2006_UP}
+      SL.StrictDelimiter := True;
+      ADelimitedText := AText;
+     {$ELSE}
+      ADelimitedText := '"' + StringReplace(AText, ADelimiter,
+                           '"' + ADelimiter + '"', [rfReplaceAll]) +
+                      '"';
+     {$ENDIF}
     {$ENDIF}
     SL.DelimitedText := ADelimitedText;
     Result := SL.Count;
@@ -3702,25 +3707,16 @@ begin
  Result := ACBrCompress.ZLibCompress(ABinaryString);
 end;
 
-function Split(const ADelimiter, AString: string): TSplitResult;
+function Split(const ADelimiter: Char; const AString: string): TSplitResult;
 var
-  i: Integer;
+  i, ACount: Integer;
   vRows: TStrings;
 begin
   vRows := TStringList.Create;
   try
-    vRows.Delimiter := ADelimiter[1];
-
-    {$IFDEF CompilerVersion >= 18} //Delphi 2006+
-    vRows.StrictDelimiter := True;
-    vRows.DelimitedText := AString;
-    {$ELSE}
-    vRows.DelimitedText := '"' + StringReplace(AString, ADelimiter, '"' + ADelimiter + '"', [rfReplaceAll]) + '"';
-    {$ENDIF}
-
-    SetLength(Result, vRows.Count);
-
-    for i := 0 to vRows.Count - 1 do
+    ACount := AddDelimitedTextToList(AString, ADelimiter, vRows);
+    SetLength(Result, ACount);
+    for i := 0 to ACount - 1 do
       Result[i] := vRows.Strings[i];
   finally
     FreeAndNil(vRows);

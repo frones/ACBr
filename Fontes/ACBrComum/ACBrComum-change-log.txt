@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/03/2018
+-- ACBrUtil --
+[*] Refactoring no método "Split" para utilizar método já implementado "AddDelimitedTextToList"
+[*] Ajuste no método "AddDelimitedTextToList" para utilizar propriedade "StrictDelimiter" do
+    Delphi 2006 ou superior
+    (por: BigWings)
+
+
 Data: 26/01/2018
 -- ACBrBase --
 [+] Adidciona a classe "TACBrObjectList", que implementa uma TObjectTist

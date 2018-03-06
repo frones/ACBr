@@ -48,6 +48,8 @@ type
 
   TACBrETQPpla = class(TACBrETQClass)
   private
+    fImprimirReverso: Boolean;
+
     function AjustarTipoBarras(aTipo: String; aExibeCodigo: TACBrETQBarraExibeCodigo): String;
     function ConverterMultiplicador(aMultiplicador: Integer): String;
     function ConverterCoordenadas(aVertical, aHorizontal: Integer): String;
@@ -129,6 +131,7 @@ begin
 
   fpModeloStr    := 'PPLA';
   fpLimiteCopias := 9999;
+  fImprimirReverso := False;
 end;
 
 function TACBrETQPpla.ConverterMultiplicador(aMultiplicador: Integer): String;
@@ -400,7 +403,6 @@ function TACBrETQPpla.ComandoImprimirTexto(aOrientacao: TACBrETQOrientacao;
   aHorizontal: Integer; aTexto: String; aSubFonte: Integer;
   aImprimirReverso: Boolean): AnsiString;
 begin
-
   if (Length(aTexto) > 255) then
     raise Exception.Create(ACBrStr('Tamanho máximo para o texto 255 caracteres'));
 
@@ -408,7 +410,15 @@ begin
   if (aFonte < '0') or (aFonte > '9') then
     raise Exception.Create('Fonte deve ser de 0 a 9');
 
-  Result := ComandoReverso(aImprimirReverso) + sLineBreak +
+  if aImprimirReverso <> fImprimirReverso then
+  begin
+    fImprimirReverso := aImprimirReverso;
+    Result := ComandoReverso(aImprimirReverso) + sLineBreak
+  end
+  else
+    Result := '';
+
+  Result := Result +
             ConverterOrientacao(aOrientacao) +
             aFonte +
             ConverterMultiplicador(aMultHorizontal) +
@@ -484,6 +494,11 @@ end;
 function TACBrETQPpla.ComandoCarregarImagem(aStream: TStream;
   aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
 begin
+  if (aTipo = '') then
+     aTipo := 'BMP'
+  else
+    aTipo := UpperCase(RightStr(aTipo, 3));
+
   aStream.Position := 0;
   Result := ComandoTipoImagem(aNomeImagem, aFlipped, aTipo) + CR +
             ReadStrFromStream(aStream, aStream.Size);

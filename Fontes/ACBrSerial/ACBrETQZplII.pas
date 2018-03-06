@@ -48,14 +48,14 @@ type
 
   TACBrETQZplII = class(TACBrETQClass)
   private
-    function FormatarTexto(aTexto: String): String;
+    function ComandoCampo(aTexto: String): String;
 
     function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
 
     function ComandoCoordenadas(aVertical, aHorizontal: Integer): String;
     function ComandoReverso(aImprimirReverso: Boolean): String;
-    function ComandoOrientcao(aOrientacao: TACBrETQOrientacao): String;
-    function ComandoFonte(aFonte: String; aMultVertical, aMultHorizontal: Integer): String;
+    function ComandoFonte(aFonte: String; aMultVertical, aMultHorizontal: Integer;
+      aOrientacao: TACBrETQOrientacao): String;
 
     function ComandoBarras(aTipo: String; aOrientacao: TACBrETQOrientacao;
       aAlturaBarras: Integer; aExibeCodigo: TACBrETQBarraExibeCodigo): String;
@@ -126,7 +126,7 @@ begin
   Result := '^MCY';
 end;
 
-function TACBrETQZplII.FormatarTexto(aTexto: String): String;
+function TACBrETQZplII.ComandoCampo(aTexto: String): String;
 var
   ConvTexto: String;
 begin
@@ -150,21 +150,22 @@ begin
 end;
 
 function TACBrETQZplII.ComandoFonte(aFonte: String; aMultVertical,
-  aMultHorizontal: Integer): String;
+  aMultHorizontal: Integer; aOrientacao: TACBrETQOrientacao): String;
 var
   cFonte: Char;
 begin
   if (aMultVertical > 32000) then
-    raise Exception.Create('Multiplicador Vertical deve estar entre 0 e 32000');
+    raise Exception.Create('Multiplicador Vertical deve estar entre 10 e 32000');
 
   if (aMultHorizontal > 32000) then
-    raise Exception.Create('Multiplicador Horizontal deve estar entre 0 e 32000');
+    raise Exception.Create('Multiplicador Horizontal deve estar entre 10 e 32000');
 
   cFonte := PadLeft(aFonte,1,'A')[1];
   if not CharInSet(cFonte, ['0'..'9','A'..'Z']) then
     raise Exception.Create('Fonte deve "0" a "9" e "A" a "Z"');
 
-  Result := '^CF' + cFonte +
+  Result := '^A' + cFonte +
+                   ConverterOrientacao(aOrientacao)   + ',' +
                    IntToStr(Max(aMultVertical,1))     + ',' +
                    IntToStr(Max(aMultHorizontal,1));
 end;
@@ -190,12 +191,6 @@ begin
     Result := '';
 end;
 
-function TACBrETQZplII.ComandoOrientcao(aOrientacao: TACBrETQOrientacao
-  ): String;
-begin
-  Result := '^FW'+ConverterOrientacao(aOrientacao);
-end;
-
 function TACBrETQZplII.ComandoLinhaCaixa(aAltura, aLargura, Espessura: Integer
   ): String;
 var
@@ -215,7 +210,7 @@ end;
 
 function TACBrETQZplII.AjustarNomeArquivoImagem(aNomeImagem: String): String;
 begin
-  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 8));
+  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 8))+'.GRF';
 end;
 
 function TACBrETQZplII.ConverterMultiplicadorImagem(aMultiplicador: Integer
@@ -321,7 +316,7 @@ end;
 function TACBrETQZplII.ComandoBackFeed: AnsiString;
 begin
   case fpBackFeed of
-    bfOn : Result := '~JSN';
+    bfOn : Result := '~JSA';
     bfOff: Result := '~JSO';
   else
     Result := EmptyStr;
@@ -363,11 +358,10 @@ begin
   if (Length(aTexto) > 255) then
     raise Exception.Create(ACBrStr('Tamanho máximo para o texto 255 caracteres'));
 
-  Result := ComandoFonte(aFonte, aMultVertical, aMultHorizontal) + sLineBreak +
-            ComandoOrientcao(aOrientacao) + sLineBreak +
-            ComandoCoordenadas(aVertical, aHorizontal) +
+  Result := ComandoCoordenadas(aVertical, aHorizontal) +
+            ComandoFonte(aFonte, aMultVertical, aMultHorizontal, aOrientacao) +
             ComandoReverso(aImprimirReverso) +
-            FormatarTexto(aTexto);
+            ComandoCampo(aTexto);
 end;
 
 function TACBrETQZplII.ConverterTipoBarras(TipoBarras: TACBrTipoCodBarra
@@ -397,7 +391,7 @@ function TACBrETQZplII.ComandoImprimirBarras(aOrientacao: TACBrETQOrientacao;
 begin
   Result := ComandoCoordenadas(aVertical, aHorizontal) +
             ComandoBarras(aTipoBarras, aOrientacao, aAlturaBarras, aExibeCodigo ) +
-            FormatarTexto(aTexto);
+            ComandoCampo(aTexto);
 end;
 
 function TACBrETQZplII.ComandoImprimirLinha(aVertical, aHorizontal, aLargura,
@@ -419,9 +413,8 @@ function TACBrETQZplII.ComandoImprimirImagem(aMultImagem, aVertical,
   aHorizontal: Integer; aNomeImagem: String): AnsiString;
 begin
   Result := ComandoCoordenadas(aVertical, aHorizontal) +
-            '^XGR:'                                    +
-            AjustarNomeArquivoImagem(aNomeImagem)      +
-            '.GRF'                                     + ',' +
+            '^XGE:'                                    +
+            AjustarNomeArquivoImagem(aNomeImagem)      + ',' +
             ConverterMultiplicadorImagem(aMultImagem)  + ',' +
             ConverterMultiplicadorImagem(aMultImagem);
 end;
@@ -432,7 +425,10 @@ var
   b, x: Char;
   Data: AnsiString;
 begin
-  aTipo := UpperCase(LeftStr(aTipo,3));
+  if (aTipo = '') then
+     aTipo := 'BMP'
+  else
+    aTipo := UpperCase(RightStr(aTipo, 3));
 
   b := 'B';
 
@@ -455,15 +451,15 @@ begin
   Data := ReadStrFromStream(aStream, aStream.Size);
 
   if b <> 'B' then
-    Data := AsciiToHex(Data);
+    Data := EncodeBase64mod(Data);
 
   aStream.Position := 0;
-  Result := '~DYR:' +
+  Result := '~DYE:' +
             AjustarNomeArquivoImagem(aNomeImagem) + ',' +
             b                                     + ',' +
             x                                     + ',' +
-            IntToStr(aStream.Size)                + ',' +
-            '0,' + Data;
+            IntToStr(aStream.Size)                + ',,' +
+            Data;
 end;
 
 end.

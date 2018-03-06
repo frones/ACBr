@@ -39,6 +39,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/03/2018
+-- ACBrETQ --
+[+] Adicionada a propriedade: "MargemEsquerda: Integer default 0", que permite
+    deslocar toda a etiqueta para a uma Margem mínima.
+    Útil para impressoras que ajustam a Etiqueta no meio da baia de impressão.
+
+-- ACBrETQEpl2 --
+[-] Correção nos métodos: "ImprimirLinha" e "ImprimirCaixa", para considerar
+    corretamente as coordenadas informadas.
+[*] Ajuste no método "ComandoCarregarImagem", para considerar o PCX como padrão
+
+-- ACBrETQPpla --
+[*] Ajuste em "ComandoImprimirTexto", para não enviar o comando de "reverso", se
+    não houver necessidade
+
+-- ACBrETQZplII --
+[*] Método "ComandoFonte", modificado para usar o comando '^A' e não '^CF',
+    incorporando o envio da Orientação da Fonte
+[*] Comando "ComandoBackFeed", modificado para enviar BackFeed a 100% quando
+    ligado
+    (por: DSA)
+
 Data: 28/02/2018
 -- ACBrPosPrinter --
 [*] Modelo "ppEscElgin", modificado para "ppEscVox", a pedido do Fabricante Elgin

@@ -65,6 +65,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
 
   TACBrETQ = class(TACBrComponent)
   private
+    fsMargemEsquerda: Integer;
     fsEtqFinalizada: Boolean;
     fsEtqInicializada: Boolean;
     fsLimparMemoria: Boolean;
@@ -140,7 +141,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
       NomeImagem: String);
 
     procedure CarregarImagem(aStream: TStream; NomeImagem: String;
-      Flipped: Boolean = True; Tipo: String = 'BMP'); overload;
+      Flipped: Boolean = True; Tipo: String = ''); overload;
 
     procedure CarregarImagem(ArquivoImagem, NomeImagem: String;
       Flipped: Boolean = True); overload;
@@ -163,6 +164,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     property Origem:          TACBrETQOrigem   read GetOrigem        write SetOrigem default ogNone;
     property DPI:             TACBrETQDPI      read GetDPI           write SetDPI default dpi203;
     property Avanco:          Integer          read GetAvanco        write SetAvanco default 0;
+    property MargemEsquerda:  Integer          read fsMargemEsquerda  write fsMargemEsquerda default 0;
     property OnGravarLog:     TACBrGravarLog   read fsOnGravarLog    write fsOnGravarLog;
     property ArqLOG:          String           read fsArqLOG         write fsArqLOG;
     property Porta:           String           read GetPorta         write SetPorta;
@@ -222,6 +224,7 @@ begin
   fsOnGravarLog     := Nil;
   fsEtqFinalizada   := False;
   fsEtqInicializada := False;
+  fsMargemEsquerda  := 0;
 end;
 
 destructor TACBrETQ.Destroy;
@@ -527,7 +530,7 @@ begin
             ', ImprimirReverso:'+BoolToStr(ImprimirReverso, True));
 
   wCmd := fsETQ.ComandoImprimirTexto(Orientacao, Fonte, MultiplicadorH, MultiplicadorV,
-    Vertical, Horizontal, Texto, SubFonte, ImprimirReverso);
+    Vertical, (Horizontal+MargemEsquerda), Texto, SubFonte, ImprimirReverso);
 
   fsListaCmd.Add(wCmd);
 end;
@@ -593,7 +596,8 @@ begin
             ', ExibeCodigo:'+GetEnumName(TypeInfo(TACBrETQBarraExibeCodigo), Integer(ExibeCodigo)));
 
   wCmd := fsETQ.ComandoImprimirBarras(Orientacao, TipoBarras, LarguraBarraLarga,
-    LarguraBarraFina, Vertical, Horizontal, Texto, AlturaCodBarras, ExibeCodigo);
+    LarguraBarraFina, Vertical, (Horizontal+MargemEsquerda), Texto,
+    AlturaCodBarras, ExibeCodigo);
 
   fsListaCmd.Add(wCmd);
 end;
@@ -608,7 +612,7 @@ begin
             ', Largura:'+IntToStr(Largura)+
             ', Altura:'+IntToStr(Altura));
 
-  wCmd := fsETQ.ComandoImprimirLinha(Vertical, Horizontal, Largura, Altura);
+  wCmd := fsETQ.ComandoImprimirLinha(Vertical, (Horizontal+MargemEsquerda), Largura, Altura);
 
   fsListaCmd.Add(wCmd);
 end;
@@ -626,8 +630,8 @@ begin
             ', EspessuraVertical:'+IntToStr(EspessuraVertical)+
             ', EspessuraHorizontal:'+IntToStr(EspessuraHorizontal));
 
-  wCmd := fsETQ.ComandoImprimirCaixa(Vertical, Horizontal, Largura, Altura,
-    EspessuraVertical, EspessuraHorizontal);
+  wCmd := fsETQ.ComandoImprimirCaixa(Vertical, (Horizontal+MargemEsquerda),
+       Largura, Altura, EspessuraVertical, EspessuraHorizontal);
 
   fsListaCmd.Add(wCmd);
 end;
@@ -643,8 +647,8 @@ begin
             ', Horizontal:'+IntToStr(Horizontal)+
             ', NomeImagem:'+NomeImagem);
 
-  wCmd := fsETQ.ComandoImprimirImagem(MultiplicadorImagem, Vertical, Horizontal,
-    NomeImagem);
+  wCmd := fsETQ.ComandoImprimirImagem(MultiplicadorImagem, Vertical,
+     (Horizontal+MargemEsquerda), NomeImagem);
 
   fsListaCmd.Add(wCmd);
 end;
@@ -656,12 +660,11 @@ var
 begin
   GravarLog('- CarregarImagem:'+
             '  AStream.Size: '+IntToStr(aStream.Size)+
-            ', NomeImagem:'+NomeImagem+
-            ', Flipped:'+BoolToStr(Flipped, True));
+            ', NomeImagem: '+NomeImagem+
+            ', Flipped: '+BoolToStr(Flipped, True)+
+            ', Tipo: '+Tipo);
 
   AtivarSeNecessario;
-
-  Tipo := UpperCase(RightStr(Tipo, 3));
 
   wCmd := fsETQ.ComandoCarregarImagem(aStream, NomeImagem, Flipped, Tipo);
   GravarLog(wCmd, True);

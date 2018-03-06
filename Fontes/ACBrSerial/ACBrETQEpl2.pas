@@ -60,7 +60,6 @@ type
 
     procedure VerificarTipoBarras(aTipo: String; aBarraFina: Integer);
     function ConverterExibeCodigo(aExibeCodigo: TACBrETQBarraExibeCodigo): String;
-    function ConverterDimensao(aAltura, aLargura: Integer): String;
 
     function CalcularEspessuraLinha(aVertical, aHorizontal: Integer): String;
 
@@ -178,12 +177,6 @@ end;
 function TACBrETQEpl2.AjustarNomeArquivoImagem(aNomeImagem: String): String;
 begin
   Result := '"' + UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 16)) + '"';
-end;
-
-function TACBrETQEpl2.ConverterDimensao(aAltura, aLargura: Integer): String;
-begin
-  Result := IntToStr(ConverterUnidade(etqDots, aLargura)) + ',' +
-            IntToStr(ConverterUnidade(etqDots, aAltura));
 end;
 
 function TACBrETQEpl2.ConverterUnidadeAlturaBarras(aAlturaBarras: Integer
@@ -366,7 +359,7 @@ function TACBrETQEpl2.ComandoImprimirLinha(aVertical, aHorizontal, aLargura,
 begin
   Result := 'LO' +
             ConverterCoordenadas(aVertical, aHorizontal) + ',' +
-            ConverterDimensao(aAltura, aLargura);
+            ConverterCoordenadas(aVertical+aAltura, aHorizontal+aLargura);
 end;
 
 function TACBrETQEpl2.ComandoImprimirCaixa(aVertical, aHorizontal, aLargura,
@@ -375,7 +368,7 @@ begin
   Result := 'X' +
             ConverterCoordenadas(aVertical, aHorizontal)     + ',' +
             CalcularEspessuraLinha(aEspVertical, aEspHorizontal) + ',' +
-            ConverterDimensao(aAltura, aLargura);
+            ConverterCoordenadas(aVertical+aAltura, aHorizontal+aLargura);
 end;
 
 function TACBrETQEpl2.ComandoImprimirImagem(aMultImagem, aVertical,
@@ -390,6 +383,11 @@ function TACBrETQEpl2.ComandoCarregarImagem(aStream: TStream;
   aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
 begin
   Result := EmptyStr;
+
+  if (aTipo = '') then
+     aTipo := 'PCX'
+  else
+    aTipo := UpperCase(RightStr(aTipo, 3));
 
   if (aTipo <> 'PCX') then
     raise Exception.Create(ModeloStr+' suporta apenas Imagens no formato PCX');

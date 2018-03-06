@@ -68,6 +68,7 @@ type
     function ComandoAbertura: AnsiString; override;
     function ComandoUnidade: AnsiString; override;
     function ComandoTemperatura: AnsiString; override;
+    function ComandoOrigemCoordenadas: AnsiString; override;
     function ComandoResolucao: AnsiString; override;
     function ComandoVelocidade: AnsiString; override;
     function ComandoBackFeed: AnsiString; override;
@@ -287,6 +288,14 @@ begin
     raise Exception.Create('Temperatura deve ser de 0 a 30');
 
   Result := '~SD' + IntToStrZero(Temperatura, 2);
+end;
+
+function TACBrETQZplII.ComandoOrigemCoordenadas: AnsiString;
+begin
+  if (fpOrigem = ogBottom) then
+    Result := '^POI'
+  else
+    Result := '^PON';
 end;
 
 function TACBrETQZplII.ComandoResolucao: AnsiString;

@@ -59,6 +59,7 @@ Data: 06/03/2018
     incorporando o envio da Orientação da Fonte
 [*] Comando "ComandoBackFeed", modificado para enviar BackFeed a 100% quando
     ligado
+[+] Implementado suporte a propriedade: "Origem = ogBottom"
     (por: DSA)
 
 Data: 28/02/2018

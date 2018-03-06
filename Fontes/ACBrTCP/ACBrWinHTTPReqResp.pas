@@ -48,10 +48,15 @@ type
   { TACBrWinHTTPReqResp }
 
   TACBrWinHTTPReqResp = class(TACBrWinReqResp)
+  private
+    fSession, fConnection, fRequest: HINTERNET;
   protected
     procedure UpdateErrorCodes(ARequest: HINTERNET); override;
+    procedure CheckNotAborted;
+    procedure CloseConnection;
   public
     procedure Execute(Resp: TStream); override;
+    procedure Abort; override;
   end;
 
 implementation
@@ -80,7 +85,36 @@ begin
                             WINHTTP_HEADER_NAME_BY_INDEX,
                             @AStatusCode, @ASize,
                             WINHTTP_NO_HEADER_INDEX ) then
+    begin
       FpHTTPResultCode := AStatusCode;
+    end;
+  end;
+end;
+
+procedure TACBrWinHTTPReqResp.CheckNotAborted;
+begin
+  if not Assigned(fSession) then
+    raise EACBrWinReqResp.Create('Conexão foi abortada');
+end;
+
+procedure TACBrWinHTTPReqResp.CloseConnection;
+begin
+  if Assigned(fRequest) then
+  begin
+    WinHttpCloseHandle(fRequest);
+    fRequest := Nil
+  end;
+
+  if Assigned(fConnection) then
+  begin
+    WinHttpCloseHandle(fConnection);
+    fConnection := Nil
+  end;
+
+  if Assigned(fSession) then
+  begin
+    WinHttpCloseHandle(fSession);
+    fSession := Nil
   end;
 end;
 
@@ -93,7 +127,6 @@ var
   wHeader: WideString;
   ConnectPort: WORD;
   AccessType, RequestFlags, flags, flagsLen: DWORD;
-  pSession, pConnection, pRequest: HINTERNET;
   HttpProxyName, HttpProxyPass: LPCWSTR;
   pProxyConfig: TWinHttpCurrentUserIEProxyConfig;
   {$IfDef DEBUG_WINHTTP}
@@ -145,14 +178,14 @@ begin
    WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo sessão');
   {$EndIf}
 
-  pSession := WinHttpOpen( 'WinHTTP ACBr/1.0',
+  fSession := WinHttpOpen( 'WinHTTP ACBr/1.0',
                            AccessType,
                            HttpProxyName,
                            HttpProxyPass,
                            0 );
 
   try
-    if not Assigned(pSession) then
+    if not Assigned(fSession) then
     begin
       UpdateErrorCodes(nil);
       raise EACBrWinReqResp.Create('Falha abrindo HTTP ou Proxy. Erro:' + GetWinInetError(FpInternalErrorCode));
@@ -169,7 +202,8 @@ begin
       //                         SizeOf(TimeOut)) then
       //  raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_CONNECT_TIMEOUT. Erro:' + GetWinInetError(GetLastError));
 
-      if not WinHttpSetTimeouts( pSession, TimeOut, TimeOut, TimeOut, TimeOut) then
+      CheckNotAborted;
+      if not WinHttpSetTimeouts( fSession, TimeOut, TimeOut, TimeOut, TimeOut) then
         raise EACBrWinReqResp.Create('Falha ajustando Timeouts. Erro:' + GetWinInetError(GetLastError));
     end;
 
@@ -191,7 +225,8 @@ begin
       end;
 
       flagsLen := SizeOf(flags);
-      if not WinHttpSetOption(pSession, WINHTTP_OPTION_SECURE_PROTOCOLS, @flags, flagsLen) then
+      CheckNotAborted;
+      if not WinHttpSetOption(fSession, WINHTTP_OPTION_SECURE_PROTOCOLS, @flags, flagsLen) then
         raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_SECURE_PROTOCOLS. Erro:' + GetWinInetError(GetLastError));
     end;
 
@@ -212,148 +247,155 @@ begin
     {$IfDef DEBUG_WINHTTP}
      WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo Conexão: '+AHost+':'+APort);
     {$EndIf}
-    pConnection := WinHttpConnect( pSession,
+    CheckNotAborted;
+    fConnection := WinHttpConnect( fSession,
                                    LPCWSTR(WideString(AHost)),
                                    ConnectPort,
                                    0);
     UpdateErrorCodes(Nil);
-    if not Assigned(pConnection) then
+    CheckNotAborted;
+    if not Assigned(fConnection) then
       raise EACBrWinReqResp.Create('Falha ao conectar no Host. Erro:' + GetWinInetError(GetLastError));
 
-    try
-      if UseSSL then
-        RequestFlags := WINHTTP_FLAG_SECURE
-      else
-        RequestFlags := 0;
+    if UseSSL then
+      RequestFlags := WINHTTP_FLAG_SECURE
+    else
+      RequestFlags := 0;
+
+    {$IfDef DEBUG_WINHTTP}
+     WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+AURI);
+    {$EndIf}
+    CheckNotAborted;
+    fRequest := WinHttpOpenRequest( fConnection,
+                                    LPCWSTR(WideString(AMethod)),
+                                    LPCWSTR(WideString(AURI)),
+                                    Nil,
+                                    WINHTTP_NO_REFERER,
+                                    WINHTTP_DEFAULT_ACCEPT_TYPES,
+                                    RequestFlags);
+    UpdateErrorCodes(fRequest);
+
+    if not Assigned(fRequest) then
+      raise EACBrWinReqResp.Create('Falha ao fazer requisição POST. Erro:' + GetWinInetError(GetLastError));
+
+    if (UseCertificate) then
+    begin
+      CheckNotAborted;
+      if not WinHttpSetOption(fRequest, WINHTTP_OPTION_CLIENT_CERT_CONTEXT,
+                               CertContext, SizeOf(CERT_CONTEXT)) then
+        raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_CLIENT_CERT_CONTEXT. Erro:' + GetWinInetError(GetLastError))
+    end;
+
+    // Ignorando alguns erros de conexão //
+    flags := 0;
+    flagsLen := SizeOf(flags);
+    CheckNotAborted;
+    if not WinHttpQueryOption(fRequest, WINHTTP_OPTION_SECURITY_FLAGS, @flags, @flagsLen) then
+      raise EACBrWinReqResp.Create('Falha lendo WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));
+
+    flags := flags or SECURITY_FLAG_IGNORE_UNKNOWN_CA or
+                      SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
+                      SECURITY_FLAG_IGNORE_CERT_CN_INVALID;
+    CheckNotAborted;
+    if not WinHttpSetOption(fRequest, WINHTTP_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
+      raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));
+
+    if EncodeDataToUTF8 then
+      Self.Data := UTF8Encode(Self.Data);
+
+    if ( (APort <> IntToStr(INTERNET_DEFAULT_HTTP_PORT)) and (not UseSSL) ) or
+       ( (APort <> IntToStr(INTERNET_DEFAULT_HTTPS_PORT)) and (UseSSL) ) then
+      AHost := AHost +':'+ APort;
+
+    AHeader := 'Host: ' + AHost + sLineBreak +
+              'Content-Type: ' + AMimeType + '; charset='+Charsets + SLineBreak +
+              'Accept-Charset: ' + Charsets + SLineBreak;
+
+    if Self.SOAPAction <> '' then
+      AHeader := AHeader +'SOAPAction: "' + Self.SOAPAction + '"' +SLineBreak;
+
+    wHeader := WideString(AHeader);
+
+    {$IfDef DEBUG_WINHTTP}
+     WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo Requisição: '+AURI);
+     WriteToTXT(LogFile, AHeader);
+    {$EndIf}
+    Resp.Size := 0;
+    CheckNotAborted;
+    if not WinHttpSendRequest( fRequest,
+                               LPCWSTR(wHeader), Length(wHeader),
+                               WINHTTP_NO_REQUEST_DATA, 0,
+                               Length(Self.Data), 0) then
+    begin
+      UpdateErrorCodes(fRequest);
+      raise EACBrWinReqResp.Create('Falha no Envio da Requisição.'+sLineBreak+
+                                   GetWinInetError(FpInternalErrorCode));
+    end;
+
+    {$IfDef DEBUG_WINHTTP}
+     WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Escrevendo Dados.');
+     WriteToTXT(LogFile, Self.Data);
+    {$EndIf}
+    BytesWrite := 0;
+    CheckNotAborted;
+    if not WinHttpWriteData(fRequest, PAnsiChar(Self.Data), Length(Self.Data), @BytesWrite) then
+    begin
+      UpdateErrorCodes(fRequest);
+      raise EACBrWinReqResp.Create('Falha Enviando Dados. Erro:' + GetWinInetError(FpInternalErrorCode));
+    end;
+
+    {$IfDef DEBUG_WINHTTP}
+     WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Lendo Dados');
+    {$EndIf}
+    CheckNotAborted;
+    if not WinHttpReceiveResponse(fRequest, nil) then
+    begin
+      UpdateErrorCodes(fRequest);
+      raise EACBrWinReqResp.Create('Falha Recebendo Dados. Erro:' + GetWinInetError(FpInternalErrorCode));
+    end;
+
+    repeat
+      BytesRead := 0;
+      CheckNotAborted;
+      if not WinHttpReadData(fRequest, @aBuffer, SizeOf(aBuffer), @BytesRead) then
+      begin
+        UpdateErrorCodes(fRequest);
+        raise EACBrWinReqResp.Create('Falha Lendo dados. Erro:' + GetWinInetError(FpInternalErrorCode));
+      end;
 
       {$IfDef DEBUG_WINHTTP}
-       WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+AURI);
+       WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Bytes Lido: '+IntToStr(BytesRead));
       {$EndIf}
-      pRequest := WinHttpOpenRequest( pConnection,
-                                      LPCWSTR(WideString(AMethod)),
-                                      LPCWSTR(WideString(AURI)),
-                                      Nil,
-                                      WINHTTP_NO_REFERER,
-                                      WINHTTP_DEFAULT_ACCEPT_TYPES,
-                                      RequestFlags);
-      UpdateErrorCodes(pRequest);
+      if (BytesRead > 0) then
+        Resp.Write(aBuffer, BytesRead);
+    until (BytesRead <= 0);
 
-      if not Assigned(pRequest) then
-        raise EACBrWinReqResp.Create('Falha ao fazer requisição POST. Erro:' + GetWinInetError(GetLastError));
+    UpdateErrorCodes(fRequest);
 
-      try
-        if (UseCertificate) then
-        begin
-          if not WinHttpSetOption(pRequest, WINHTTP_OPTION_CLIENT_CERT_CONTEXT,
-                                   CertContext, SizeOf(CERT_CONTEXT)) then
-            raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_CLIENT_CERT_CONTEXT. Erro:' + GetWinInetError(GetLastError))
-        end;
-
-        // Ignorando alguns erros de conexão //
-        flags := 0;
-        flagsLen := SizeOf(flags);
-        if not WinHttpQueryOption(pRequest, WINHTTP_OPTION_SECURITY_FLAGS, @flags, @flagsLen) then
-          raise EACBrWinReqResp.Create('Falha lendo WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));
-
-        flags := flags or SECURITY_FLAG_IGNORE_UNKNOWN_CA or
-                          SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
-                          SECURITY_FLAG_IGNORE_CERT_CN_INVALID;
-        if not WinHttpSetOption(pRequest, WINHTTP_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
-          raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));
-
-        if EncodeDataToUTF8 then
-          Self.Data := UTF8Encode(Self.Data);
-
-        if ( (APort <> IntToStr(INTERNET_DEFAULT_HTTP_PORT)) and (not UseSSL) ) or
-           ( (APort <> IntToStr(INTERNET_DEFAULT_HTTPS_PORT)) and (UseSSL) ) then
-          AHost := AHost +':'+ APort;
-
-        AHeader := 'Host: ' + AHost + sLineBreak +
-                  'Content-Type: ' + AMimeType + '; charset='+Charsets + SLineBreak +
-                  'Accept-Charset: ' + Charsets + SLineBreak;
-
-        if Self.SOAPAction <> '' then
-          AHeader := AHeader +'SOAPAction: "' + Self.SOAPAction + '"' +SLineBreak;
-
-        wHeader := WideString(AHeader);
-
-        {$IfDef DEBUG_WINHTTP}
-         WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo Requisição: '+AURI);
-         WriteToTXT(LogFile, AHeader);
-        {$EndIf}
-        Resp.Size := 0;
-        if not WinHttpSendRequest( pRequest,
-                                   LPCWSTR(wHeader), Length(wHeader),
-                                   WINHTTP_NO_REQUEST_DATA, 0,
-                                   Length(Self.Data), 0) then
-        begin
-          UpdateErrorCodes(pRequest);
-          raise EACBrWinReqResp.Create('Falha no Envio da Requisição.'+sLineBreak+
-                                       GetWinInetError(FpInternalErrorCode));
-        end;
-
-        {$IfDef DEBUG_WINHTTP}
-         WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Escrevendo Dados.');
-         WriteToTXT(LogFile, Self.Data);
-        {$EndIf}
-        BytesWrite := 0;
-        if not WinHttpWriteData( pRequest, PAnsiChar(Self.Data), Length(Self.Data), @BytesWrite) then
-        begin
-          UpdateErrorCodes(pRequest);
-          raise EACBrWinReqResp.Create('Falha Enviando Dados. Erro:' + GetWinInetError(FpInternalErrorCode));
-        end;
-
-        {$IfDef DEBUG_WINHTTP}
-         WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Lendo Dados');
-        {$EndIf}
-        if not WinHttpReceiveResponse( pRequest, nil) then
-        begin
-          UpdateErrorCodes(pRequest);
-          raise EACBrWinReqResp.Create('Falha Recebendo Dados. Erro:' + GetWinInetError(FpInternalErrorCode));
-        end;
-
-        repeat
-          BytesRead := 0;
-          if not WinHttpReadData(pRequest, @aBuffer, SizeOf(aBuffer), @BytesRead) then
-          begin
-            UpdateErrorCodes(pRequest);
-            raise EACBrWinReqResp.Create('Falha Lendo dados. Erro:' + GetWinInetError(FpInternalErrorCode));
-          end;
-
-          {$IfDef DEBUG_WINHTTP}
-           WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Bytes Lido: '+IntToStr(BytesRead));
-          {$EndIf}
-          if (BytesRead > 0) then
-            Resp.Write(aBuffer, BytesRead);
-        until (BytesRead <= 0);
-
-        UpdateErrorCodes(pRequest);
-
-        if Resp.Size > 0 then
-        begin
-          Resp.Position := 0;
-          {$IfDef DEBUG_WINHTTP}
-           WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Total Lido: '+IntToStr(Resp.Size));
-           Resp.Position := 0;
-           Data := ReadStrFromStream(Resp, Resp.Size);
-           Resp.Position := 0;
-           WriteToTXT(LogFile, Data);
-          {$EndIf}
-        end;
-
-        {$IfDef DEBUG_WINHTTP}
-         WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+
-            ' - Erro WinHTTP: '+IntToStr(InternalErrorCode)+' HTTP: '+IntToStr(HTTPResultCode));
-        {$EndIf}
-      finally
-        WinHttpCloseHandle(pRequest);
-      end;
-    finally
-      WinHttpCloseHandle(pConnection);
+    if Resp.Size > 0 then
+    begin
+      Resp.Position := 0;
+      {$IfDef DEBUG_WINHTTP}
+       WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Total Lido: '+IntToStr(Resp.Size));
+       Resp.Position := 0;
+       Data := ReadStrFromStream(Resp, Resp.Size);
+       Resp.Position := 0;
+       WriteToTXT(LogFile, Data);
+      {$EndIf}
     end;
+
+    {$IfDef DEBUG_WINHTTP}
+     WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+
+        ' - Erro WinHTTP: '+IntToStr(InternalErrorCode)+' HTTP: '+IntToStr(HTTPResultCode));
+    {$EndIf}
   finally
-    WinHttpCloseHandle(pSession);
+    CloseConnection;
   end;
+end;
+
+procedure TACBrWinHTTPReqResp.Abort;
+begin
+  CloseConnection;
 end;
 
 {$Else}

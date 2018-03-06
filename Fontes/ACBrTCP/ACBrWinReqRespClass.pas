@@ -81,6 +81,7 @@ type
 
   public
     constructor Create;
+    destructor Destroy; override;
 
     property CertContext: PCCERT_CONTEXT read FCertContext write FCertContext;
     property SOAPAction: String read FSOAPAction write FSOAPAction;
@@ -101,6 +102,8 @@ type
 
     procedure Execute(Resp: TStream); overload; virtual;
     procedure Execute(const DataMsg: String; Resp: TStream); overload;
+
+    procedure Abort; virtual;
   end;
 
 implementation
@@ -129,6 +132,12 @@ begin
 
   FpHTTPResultCode := 0;
   FpInternalErrorCode := 0;
+end;
+
+destructor TACBrWinReqResp.Destroy;
+begin
+  Abort;
+  inherited Destroy;
 end;
 
 function TACBrWinReqResp.GetWinInetError(ErrorCode: DWORD): String;
@@ -195,6 +204,11 @@ procedure TACBrWinReqResp.Execute(const DataMsg: String; Resp: TStream);
 begin
   Data := DataMsg;
   Execute(Resp);
+end;
+
+procedure TACBrWinReqResp.Abort;
+begin
+  {}
 end;
 
 procedure TACBrWinReqResp.Execute(Resp: TStream);

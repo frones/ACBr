@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2018
+-- ACBrWinHTTPReqResp, ACBrWinINetReqResp, ACBrWinReqRespClass --
+[+] Adicionado o método "Abort". Para permitir interromper uma requisição em
+    andamento
+    (por: DSA)
+
 26/02/2018
 -- ACBrIBGE --
 [+] Amplo refactoring aplicado, para compatibilizar o ACBrIBGE, com os WebServices

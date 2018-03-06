@@ -1046,7 +1046,6 @@ begin
 
       // Largura e Margens do Relatório //
       RLLayout.Width := LarguraBobina;
-      RLLayout.PageSetup.PaperWidth := LarguraBobina/3.775;
       RLLayout.Margins.LeftMargin   := Margens.Esquerda;
       RLLayout.Margins.RightMargin  := Margens.Direita;
       RLLayout.Margins.TopMargin    := Margens.Topo;

@@ -62,6 +62,7 @@ type
 
     function Enviar(const ConteudoXML: String; const AURL: String;
       const ASoapAction: String; AMimeType: String = ''): String; override;
+    procedure Abortar; override;
   end;
 
 
@@ -126,6 +127,11 @@ begin
   finally
     Resp.Free;
   end;
+end;
+
+procedure TDFeHttpWinHttp.Abortar;
+begin
+  FWinHTTPReqResp.Abort;
 end;
 
 procedure TDFeHttpWinHttp.ConfigurarHTTP(const AURL, ASoapAction: String;

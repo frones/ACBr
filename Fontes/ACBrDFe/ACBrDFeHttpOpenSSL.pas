@@ -70,6 +70,7 @@ type
 
     function Enviar(const ConteudoXML: String; const AURL: String;
       const ASoapAction: String; AMimeType: String = ''): String; override;
+    procedure Abortar; override;
   end;
 
 implementation
@@ -137,6 +138,11 @@ begin
   if not OK then
     raise EACBrDFeException.CreateFmt( cACBrDFeSSLEnviarException,
                                        [InternalErrorCode, HTTPResultCode] );
+end;
+
+procedure TDFeHttpOpenSSL.Abortar;
+begin
+  FHTTP.Sock.CloseSocket;
 end;
 
 procedure TDFeHttpOpenSSL.ConfigurarHTTP(const AURL, ASoapAction: String;

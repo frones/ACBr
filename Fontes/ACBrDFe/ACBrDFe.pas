@@ -182,6 +182,7 @@ begin
     ProxyPort := Configuracoes.WebServices.ProxyPort;
     ProxyUser := Configuracoes.WebServices.ProxyUser;
     TimeOut := Configuracoes.WebServices.TimeOut;
+    TimeOutPorThread := Configuracoes.WebServices.TimeOutPorThread;
 
     SSLCryptLib := Configuracoes.Geral.SSLCryptLib;
     SSLHttpLib := Configuracoes.Geral.SSLHttpLib;
@@ -578,7 +579,8 @@ begin
       VersaoAchada := VersaoSchema;
   end;
 
-  Versao := VersaoAchada;
+  if VersaoAchada > 0 then
+    Versao := VersaoAchada;
 end;
 function TACBrDFe.LerVersaoDeParams(const ModeloDFe, UF: String;
   const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;

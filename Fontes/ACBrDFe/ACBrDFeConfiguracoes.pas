@@ -96,6 +96,7 @@ type
     FResourceName: String;
     FSSLType: TSSLType;
     FTimeOut: Integer;
+    FTimeOutPorThread: Boolean;
     FTimeZoneConf: TTimeZoneConf;
     FVisualizar: Boolean;
     FUF: String;
@@ -120,6 +121,7 @@ type
     procedure SetProxyUser(AValue: String);
     procedure SetSSLType(AValue: TSSLType);
     procedure SetTimeOut(AValue: Integer);
+    procedure SetTimeOutPorThread(AValue: Boolean);
     procedure SetUF(AValue: String);
     procedure SetTentativas(const Value: integer);
     procedure SetIntervaloTentativas(const Value: cardinal);
@@ -162,6 +164,7 @@ type
     property Salvar: Boolean read FSalvar write FSalvar default False;
     property Params: TStrings read FParams write SetParams;
     property TimeOut: Integer read FTimeOut write SetTimeOut default 5000;
+    property TimeOutPorThread: Boolean read FTimeOutPorThread write SetTimeOutPorThread default False;
     property QuebradeLinha: String read FQuebradeLinha write FQuebradeLinha;
     property TimeZoneConf: TTimeZoneConf read FTimeZoneConf write FTimeZoneConf;
     property SSLType: TSSLType read FSSLType write SetSSLType default LT_all;
@@ -660,6 +663,7 @@ begin
   FAjustaAguardaConsultaRet := False;
   FSalvar := False;
   FTimeOut := 5000;
+  FTimeOutPorThread := False;
   FResourceName := 'ACBrServicos';
   FQuebradeLinha := '|';
   FSSLType := LT_all;
@@ -687,7 +691,13 @@ begin
   IntervaloTentativas      := DeWebServicesConf.IntervaloTentativas;
   AjustaAguardaConsultaRet := DeWebServicesConf.AjustaAguardaConsultaRet;
   Salvar                   := DeWebServicesConf.Salvar;
+  QuebradeLinha            := DeWebServicesConf.QuebradeLinha;
+  SSLType                  := DeWebServicesConf.SSLType;
+  TimeOut                  := DeWebServicesConf.TimeOut;
+  TimeOutPorThread         := DeWebServicesConf.TimeOutPorThread;
+
   Params.Assign(DeWebServicesConf.Params);
+  TimeZoneConf.Assign(DeWebServicesConf.TimeZoneConf);
 end;
 
 procedure TWebServicesConf.GravarIni(const AIni: TCustomIniFile);
@@ -705,6 +715,7 @@ begin
     AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'Ambiente', Integer(Ambiente));
     AIni.WriteBool(fpConfiguracoes.SessaoIni, 'Salvar', Salvar);
     AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'Timeout', TimeOut);
+    AIni.WriteBool(fpConfiguracoes.SessaoIni, 'TimeoutPorThread', TimeOutPorThread);
     AIni.WriteBool(fpConfiguracoes.SessaoIni, 'Visualizar', Visualizar);
     AIni.WriteBool(fpConfiguracoes.SessaoIni, 'AjustaAguardaConsultaRet', AjustaAguardaConsultaRet);
     AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'AguardarConsultaRet', AguardarConsultaRet);
@@ -730,6 +741,7 @@ begin
     Ambiente := TpcnTipoAmbiente( AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Ambiente', Integer(Ambiente)));
     Salvar := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Salvar', Salvar);
     TimeOut := AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Timeout', TimeOut);
+    TimeOutPorThread := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'TimeoutPorThread', TimeOutPorThread);
     Visualizar := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Visualizar', Visualizar);
     AjustaAguardaConsultaRet := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'AjustaAguardaConsultaRet', AjustaAguardaConsultaRet);
     AguardarConsultaRet := AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'AguardarConsultaRet', AguardarConsultaRet);
@@ -882,6 +894,15 @@ begin
   FTimeOut := AValue;
   if Assigned(fpConfiguracoes.Owner) then
     TACBrDFe(fpConfiguracoes.Owner).SSL.TimeOut := AValue;
+end;
+
+procedure TWebServicesConf.SetTimeOutPorThread(AValue: Boolean);
+begin
+  if FTimeOutPorThread = AValue then Exit;
+
+  FTimeOutPorThread := AValue;
+  if Assigned(fpConfiguracoes.Owner) then
+    TACBrDFe(fpConfiguracoes.Owner).SSL.TimeOutPorThread := AValue;
 end;
 
 { TCertificadosConf }

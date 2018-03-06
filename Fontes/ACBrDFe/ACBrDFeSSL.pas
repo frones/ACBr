@@ -41,7 +41,7 @@ interface
 
 uses
   Classes, SysUtils, Contnrs,
-  blcksock;
+  blcksock, syncobjs;
 
 Const
   CBufferSize = 32768;
@@ -193,6 +193,7 @@ type
 
     function Enviar(const ConteudoXML: String; const AURL: String;
       const ASoapAction: String; AMimeType: String = ''): String; virtual;
+    procedure Abortar; virtual;
 
     property HTTPResultCode: Integer read GetHTTPResultCode;
     property InternalErrorCode: Integer read GetInternalErrorCode;
@@ -230,6 +231,29 @@ type
      const docElement, infElement, SignatureNode, SelectionNamespaces,
      IdSignature: String) of object;
 
+  { TDFeSendThread }
+
+  TDFeSendThread = class(TThread)
+  private
+    FSSLHttpClass: TDFeSSLHttpClass;
+    FConteudoXML: String;
+    FURL: String;
+    FSoapAction: String;
+    FMimeType: String;
+    FResponse: String;
+
+    function GetActive: Boolean;
+  protected
+    procedure Execute; override;
+  public
+    constructor Create( SSLHttpClass: TDFeSSLHttpClass; AConteudoXML, AURL,
+       ASoapAction, AMimeType: String); reintroduce;
+    destructor Destroy; override;
+
+    property Response: String read FResponse;
+    property Active: Boolean read GetActive;
+  end;
+
   { TDFeSSL }
 
   TDFeSSL = class(TPersistent)
@@ -255,6 +279,7 @@ type
     FStoreLocation: TSSLStoreLocation;
     FStoreName: String;
     FTimeOut: Integer;
+    FTimeOutPorThread: Boolean;
     FUseCertificateHTTP: Boolean;
     FSSLDgst: TSSLDgst;
 
@@ -397,6 +422,7 @@ type
     property ProxyPass: String read FProxyPass write FProxyPass;
 
     property TimeOut: Integer read FTimeOut write FTimeOut default 5000;
+    property TimeOutPorThread: Boolean read FTimeOutPorThread write FTimeOutPorThread default False;
     property NameSpaceURI: String read FNameSpaceURI write FNameSpaceURI;
 
     property UseCertificateHTTP: Boolean read FUseCertificateHTTP write FUseCertificateHTTP default True;
@@ -408,7 +434,7 @@ type
 implementation
 
 uses
-  strutils,
+  strutils, dateutils,
   synacode,
   ACBrDFeUtil, ACBrValidador, ACBrUtil, ACBrDFeException
   {$IfNDef DFE_SEM_OPENSSL}
@@ -432,6 +458,48 @@ uses
     ,ACBrDFeXsMsXml
    {$EndIf}
   {$EndIf};
+
+{ TDFeSendThread }
+
+constructor TDFeSendThread.Create(SSLHttpClass: TDFeSSLHttpClass; AConteudoXML,
+  AURL, ASoapAction, AMimeType: String);
+begin
+  FreeOnTerminate := False ;
+  Priority := tpNormal;
+
+  FSSLHttpClass := SSLHttpClass;
+  FConteudoXML  := AConteudoXML;
+  FURL          := AURL;
+  FSoapAction   := ASoapAction;
+  FMimeType     := AMimeType;
+  FResponse     := '';
+
+  inherited Create(False);  // Run Now
+end;
+
+destructor TDFeSendThread.Destroy;
+begin
+  if not Terminated then
+  begin
+    FSSLHttpClass.Abortar;
+    Terminate;
+  end;
+
+  inherited Destroy;
+end;
+
+function TDFeSendThread.GetActive: Boolean;
+begin
+  Result := not Terminated;
+end;
+
+procedure TDFeSendThread.Execute;
+begin
+  if NaoEstaVazio(FConteudoXML) and NaoEstaVazio(FURL) then
+    FResponse := FSSLHttpClass.Enviar(FConteudoXML, FURL, FSoapAction, FMimeType);
+
+  Terminate;
+end;
 
 { TDadosCertificado }
 
@@ -731,6 +799,11 @@ begin
   raise EACBrDFeException.Create('Método "Enviar" não implementado em: '+ClassName);
 end;
 
+procedure TDFeSSLHttpClass.Abortar;
+begin
+  {}
+end;
+
 
 { TDFeSSLXmlSignClass }
 
@@ -927,6 +1000,7 @@ begin
   FSSLCryptLib := cryNone;
   FSSLHttpLib  := httpNone;
   FTimeOut     := 5000;
+  FTimeOutPorThread := False;
   FNameSpaceURI:= '';
 
   FSSLType       := LT_all;
@@ -1018,6 +1092,9 @@ end;
 
 function TDFeSSL.Enviar(var ConteudoXML: String; const AURL: String;
   const ASoapAction: String; AMimeType: String): String;
+var
+  SendThread : TDFeSendThread;
+  EndTime : TDateTime ;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
   if UseCertificateHTTP then
@@ -1026,7 +1103,30 @@ begin
   if AMimeType = '' then
     AMimeType := 'application/soap+xml; charset=utf-8';
 
-  Result := FSSLHttpClass.Enviar(ConteudoXML, AURL, ASoapAction, AMimeType);
+  if TimeOutPorThread then
+  begin
+    EndTime := IncSecond(now,TruncFix(TimeOut/1000));
+    SendThread := TDFeSendThread.Create(FSSLHttpClass, ConteudoXML, AURL, ASoapAction, AMimeType);
+    try
+      while SendThread.Active and (Now <= EndTime) do
+        Sleep(50);
+    finally
+      Result := SendThread.Response;
+      if SendThread.Active then
+      begin
+        SendThread.FreeOnTerminate := True;
+        SendThread.Terminate;
+        FSSLHttpClass.Abortar;
+      end
+      else
+        SendThread.Free;
+
+      if EstaVazio(Result) then
+        raise EACBrDFeException.Create('Timeout - Não foi possível obter a resposta do servidor');
+    end ;
+  end
+  else
+    Result := FSSLHttpClass.Enviar(ConteudoXML, AURL, ASoapAction, AMimeType);
 end;
 
 function TDFeSSL.Validar(const ConteudoXML: String; ArqSchema: String;

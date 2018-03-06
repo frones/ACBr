@@ -374,7 +374,7 @@ begin
   FRTom := TRTom.Create;
   FRPrest := TRPrest.Create;
   FRRecRepAD := TRRecRepADCollection.Create;
-  FRComl := FRComl.Create;
+  FRComl := TRComl.Create;
   FRCPRB := TRCPRBCollection.Create(Self);
   FRRecEspetDest := TRRecEspetDest.Create;
 end;

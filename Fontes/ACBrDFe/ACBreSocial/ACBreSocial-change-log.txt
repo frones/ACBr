@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2018
+-- pcesGerador --
+[-] https://www.projetoacbr.com.br/forum/topic/41891-s-2230-afastamento-tsv-alterar-svn/
+   Por: Edmar Frazao
+
 01/03/2018
 -- pcesS1200 --
 [*] https://www.projetoacbr.com.br/forum/topic/41795-analisar-para-alterar-s1200-natatividade/?do=findComment&comment=275608

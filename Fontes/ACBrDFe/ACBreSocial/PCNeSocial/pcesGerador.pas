@@ -1059,7 +1059,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'cpfTrab',   11, 11, 1, pIdeVinculo.cpfTrab);
   Gerador.wCampo(tcStr, '', 'nisTrab',    1, 11, 1, pIdeVinculo.nisTrab);
-  Gerador.wCampo(tcStr, '', 'matricula',  1, 30, 1, pIdeVinculo.matricula);
+  Gerador.wCampo(tcStr, '', 'matricula',  1, 30, 0, pIdeVinculo.matricula);
   Gerador.wCampo(tcInt, '', 'codCateg',   1,  3, 0, pIdeVinculo.codCateg);
 
   Gerador.wGrupo('/ideVinculo');

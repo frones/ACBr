@@ -78,7 +78,7 @@ type
     property IdCSC: String read FIdCSC write SetIdCSC;
     property CSC: String read FCSC write SetCSC;
     property IncluirQRCodeXMLNFCe: Boolean read FIncluirQRCodeXMLNFCe write FIncluirQRCodeXMLNFCe default True;
-    property VersaoQRCode: Integer read FVersaoQRCode write FVersaoQRCode;
+    property VersaoQRCode: Integer read FVersaoQRCode write FVersaoQRCode default 0;
   end;
 
   { TDownloadConfNFe }

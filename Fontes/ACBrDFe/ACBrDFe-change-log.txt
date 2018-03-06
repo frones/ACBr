@@ -44,6 +44,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2018
+-- ACBrDFeConfiguracoes --
+[+] Adicionada a propriedade: "TWebServicesConf.TimeOutPorThread: Boolean default False".
+    Se ativa o ACBrDFe, usará uma Thread para medir o Tempo total de transmissão
+    e abandonará a conexão quando o TimeOut ocorrer... Isso pode ajudar em uma
+    medição mais acurada, do tempo de Timeout...
+
+[-] Método: "TWebServicesConf.Assign", corrigido para copiar todas as propriedades
+[*] Métodos "LerIni" e "GravarIni", modificados para salvar o valor de "TimeOutPorThread"
+
+-- ACBrDFeSSL --
+[+] Classe "TDFeSSLHttpClass", adicionado o método "Abortar". Que permite
+    interromper uma conexão HTTP em andamento...
+[+] Adicionada a classe "TDFeSendThread", para permitir o funcionamento da
+    propriedade "TWebServicesConf.TimeOutPorThread"
+[*] Método "TDFeSSL.Enviar", modificado para funcionar de acordo com o valor de
+    "TWebServicesConf.TimeOutPorThread"
+
+-- ACBrDFeHttpOpenSSL, ACBrDFeHttpWinApi, ACBrDFeHttpIndy --
+[+] Implementado suporte ao método "Abortar"
+    (Por André Moraes e DSA)
+
 05/03/2018
 -- ACBrDFeXsLibXml2 --
 [-] Remoção de warnings.

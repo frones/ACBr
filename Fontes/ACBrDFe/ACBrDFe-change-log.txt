@@ -46,6 +46,14 @@ Símbolo : Significado
 
 06/03/2018
 -- ACBrDFeConfiguracoes --
+[*] TGeralConf.SSLLib, modificado para que quando tiver o valor "libWinCrypt",
+    assuma a seguinte configuração:
+        SSLCryptLib := cryWinCrypt;
+        SSLHttpLib := httpWinHttp;
+        SSLXmlSignLib := xsLibXml2;
+    Modificando o uso de xsMsXml para xsLibXml2
+    (por: DSA)
+
 [+] Adicionada a propriedade: "TWebServicesConf.TimeOutPorThread: Boolean default False".
     Se ativa o ACBrDFe, usará uma Thread para medir o Tempo total de transmissão
     e abandonará a conexão quando o TimeOut ocorrer... Isso pode ajudar em uma

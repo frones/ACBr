@@ -572,7 +572,7 @@ begin
       begin
         SSLCryptLib := cryWinCrypt;
         SSLHttpLib := httpWinHttp;
-        SSLXmlSignLib := xsMsXml;
+        SSLXmlSignLib := xsLibXml2;
       end;
     end;
   finally

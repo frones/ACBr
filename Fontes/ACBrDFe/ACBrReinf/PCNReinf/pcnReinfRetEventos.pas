@@ -36,49 +36,116 @@ unit pcnReinfRetEventos;
 interface
 
 uses
-  pcnReinfClasses;
+  SysUtils, Classes,
+  pcnAuxiliar, pcnConversao, pcnLeitor,
+  pcnReinfClasses, pcnConversaoReinf, pcnReinfR5001;
 
 type
 
-  TRetornoLoteEventos = class
+  TRetEnvioLote = class(TPersistent)
   private
-    FACBrReinf: TObject;
+    FLeitor: TLeitor;
     FIdeTransmissor: TIdeTransmissor;
     FStatus: TStatus;
-    FEventos: TRetEventos;
+    Fevento: TeventoCollection;
   public
-    constructor Create(AOwner: TObject); reintroduce;
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  	property IdeTransmissor : TIdeTransmissor read FIdeTransmissor;
-    property Status: TStatus read FStatus;
-    property Eventos: TRetEventos read FEventos write FEventos;
+    constructor Create;
+    destructor Destroy; override;
+
+    function LerXml: boolean;
+  published
+    property Leitor: TLeitor read FLeitor write FLeitor;
+
+    property IdeTransmissor: TIdeTransmissor read FIdeTransmissor write FIdeTransmissor;
+    property Status: TStatus read FStatus write FStatus;
+    property evento: TeventoCollection read Fevento write Fevento;
   end;
 
 implementation
 
-{ TRetornoLoteEventos }
+uses
+  ACBrUtil;
 
-procedure TRetornoLoteEventos.AfterConstruction;
+{ TRetEnvioLote }
+
+constructor TRetEnvioLote.Create;
 begin
-  inherited;
+  FLeitor := TLeitor.Create;
+
   FIdeTransmissor := TIdeTransmissor.Create;
-  FStatus := TStatus.Create;
-  FEventos := TRetEventos.Create;
+  FStatus         := TStatus.Create;
+  Fevento         := TeventoCollection.create(Self);
 end;
 
-procedure TRetornoLoteEventos.BeforeDestruction;
+destructor TRetEnvioLote.Destroy;
 begin
-  inherited;
-  FEventos.Free;
+  FLeitor.Free;
+
   FIdeTransmissor.Free;
   FStatus.Free;
+  Fevento.Free;
+
+  inherited;
 end;
 
-constructor TRetornoLoteEventos.Create(AOwner: TObject);
+function TRetEnvioLote.LerXml: boolean;
+var
+  i: Integer;
 begin
-  Inherited Create;
-  FACBrReinf := AOwner;
+  Result := False;
+
+  try
+    Leitor.Grupo := Leitor.Arquivo;
+    if leitor.rExtrai(1, 'retornoLoteEventos') <> '' then
+    begin
+      if leitor.rExtrai(2, 'ideTransmissor') <> '' then
+        IdeTransmissor.IdTransmissor := FLeitor.rCampo(tcStr, 'IdTransmissor');
+
+      if leitor.rExtrai(2, 'status') <> '' then
+      begin
+        Status.cdStatus    := Leitor.rCampo(tcInt, 'cdStatus');
+        Status.descRetorno := Leitor.rCampo(tcStr,'descRetorno');
+
+        if leitor.rExtrai(3, 'dadosRegistroOcorrenciaLote') <> '' then
+        begin
+          i := 0;
+          while Leitor.rExtrai(4, 'ocorrencias', '', i + 1) <> '' do
+          begin
+            Status.Ocorrencias.Add;
+            Status.Ocorrencias.Items[i].Tipo        := FLeitor.rCampo(tcInt, 'tipo');
+            Status.Ocorrencias.Items[i].Localizacao := FLeitor.rCampo(tcStr, 'localizacaoErroAviso');
+            Status.Ocorrencias.Items[i].Codigo      := FLeitor.rCampo(tcInt, 'codigo');
+            Status.Ocorrencias.Items[i].Descricao   := FLeitor.rCampo(tcStr, 'descricao');
+            inc(i);
+          end;
+        end;
+      end;
+
+      if leitor.rExtrai(2, 'retornoEventos') <> '' then
+      begin
+        i := 0;
+        while Leitor.rExtrai(3, 'evento', '', i + 1) <> '' do
+        begin
+          evento.Add;
+          evento.Items[i].Id           := FLeitor.rAtributo('id', 'evento');
+          evento.Items[i].ArquivoReinf := RetornarConteudoEntre(Leitor.Grupo, '>', '</evento');
+
+          if pos('evtTotal', evento.Items[i].ArquivoReinf) > 0 then
+          begin
+            evento.Items[i].Tipo       := 'R5001';
+            evento.Items[i].Evento     := TR5001.Create;
+            evento.Items[i].Evento.Xml := evento.Items[i].ArquivoReinf;
+          end;
+
+          inc(i);
+        end;
+      end;
+
+      Result := True;
+    end;
+  except
+    Result := False;
+  end;
 end;
 
 end.

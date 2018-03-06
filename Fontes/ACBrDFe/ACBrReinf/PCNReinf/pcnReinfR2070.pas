@@ -89,7 +89,7 @@ uses
 procedure TR2070.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtPgtosDivs);
+  SetSchema(schevtPgtosDivs);
   FideBenef := TideBenef.Create;
 end;
 

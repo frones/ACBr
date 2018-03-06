@@ -76,7 +76,7 @@ uses
 procedure TR3010.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtEspDesportivo);
+  SetSchema(schevtEspDesportivo);
   FideEstabs := TideEstabs.Create;
 end;
 

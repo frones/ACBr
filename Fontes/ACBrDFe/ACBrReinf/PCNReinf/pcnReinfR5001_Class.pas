@@ -42,7 +42,9 @@ unit pcnReinfR5001_Class;
 interface
 
 uses
-  Classes, Sysutils, pcnConversaoReinf, Controls, Contnrs;
+  Classes, Sysutils, Controls, Contnrs, pcnConversaoReinf, pcnReinfClasses;
+
+type
 
 implementation
 

@@ -100,10 +100,12 @@ type
     FcodAnaCont: string;
     FvlrTotalBaseRet: Extended;
     Fnfss: Tnfss;
-    FinfoProcRetPrs: TinfoProcRetPrs;
+    FinfoProcRetPr: TinfoProcRetPrs;
+    FinfoProcRetAd: TinfoProcRetPrs;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
+
     property vlrTotalBruto: Extended read FvlrTotalBruto write FvlrTotalBruto;
     property vlrTotalBaseRet: Extended read FvlrTotalBaseRet write FvlrTotalBaseRet;
     property vlrTotalRetPrinc: Extended read FvlrTotalRetPrinc write FvlrTotalRetPrinc;
@@ -112,8 +114,9 @@ type
     property vlrTotalNRetAdic: Extended read FvlrTotalNRetAdic write FvlrTotalNRetAdic;
     property codAnaCont: string read FcodAnaCont write FcodAnaCont;
     property nfss: Tnfss read Fnfss write Fnfss;
-    property infoProcRetPrs: TinfoProcRetPrs read FinfoProcRetPrs;
-  end;
+    property infoProcRetPr: TinfoProcRetPrs read FinfoProcRetPr write FinfoProcRetPr;
+    property infoProcRetAd: TinfoProcRetPrs read FinfoProcRetAd write FinfoProcRetAd;
+  end;
 
   { TidePrestServ }
   TidePrestServ = class(TideServico)
@@ -168,12 +171,12 @@ type
   { TinfoProcRetPr }
   TinfoProcRetPr = class
   private
-    FtpProcRetPrinc: TtpProcRetPrinc;
+    FtpProcRetPrinc: tpTpProc;
     FnrProcRetPrinc: string;
     FcodSuspPrinc: integer;
     FvalorPrinc: Extended;
   public
-    property tpProcRetPrinc: TtpProcRetPrinc read  FtpProcRetPrinc write FtpProcRetPrinc;
+    property tpProcRetPrinc: tpTpProc read  FtpProcRetPrinc write FtpProcRetPrinc;
     property nrProcRetPrinc: string read FnrProcRetPrinc write FnrProcRetPrinc;
     property codSuspPrinc: integer read FcodSuspPrinc write FcodSuspPrinc;
     property valorPrinc: Extended read FvalorPrinc write FvalorPrinc;
@@ -357,14 +360,16 @@ procedure TideServico.AfterConstruction;
 begin
   inherited;
   Fnfss := Tnfss.Create;
-  FinfoProcRetPrs := TinfoProcRetPrs.Create;
+  FinfoProcRetPr := TinfoProcRetPrs.Create;
+  FinfoProcRetAd := TinfoProcRetPrs.Create;
 end;
 
 procedure TideServico.BeforeDestruction;
 begin
   inherited;
   Fnfss.Free;
-  FinfoProcRetPrs.Free;
+  FinfoProcRetPr.Free;
+  FinfoProcRetAd.Free;
 end;
 
 { TinfoTpServs }

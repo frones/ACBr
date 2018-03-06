@@ -58,6 +58,7 @@ type
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
+
     property infoProcesso: TinfoProcesso read FinfoProcesso write FinfoProcesso;
   end;
 
@@ -71,7 +72,7 @@ uses
 procedure TR1070.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtTabProcesso);
+  SetSchema(schevtTabProcesso);
   FinfoProcesso := TinfoProcesso.Create;
 end;
 
@@ -84,30 +85,30 @@ end;
 procedure TR1070.GerarEventoXML;
 begin
   Gerador.wGrupo('infoProcesso');
-    GerarModoAbertura(Self.TipoOperacao);
-    GerarinfoProcesso;
-    if (Self.TipoOperacao = toAlteracao) and (Self.NovaValidade.IniValid <> EmptyStr) then
-      GerarIdePeriodo(novaValidade,'novaValidade');
-    GerarModoFechamento(Self.TipoOperacao);
+
+  GerarModoAbertura(Self.TipoOperacao);
+  GerarinfoProcesso;
+
+  if (Self.TipoOperacao = toAlteracao) and (Self.NovaValidade.IniValid <> EmptyStr) then
+    GerarIdePeriodo(novaValidade,'novaValidade');
+
+  GerarModoFechamento(Self.TipoOperacao);
+
   Gerador.wGrupo('/infoProcesso');
 end;
 
 procedure TR1070.GerarinfoProcesso;
 begin
   Gerador.wGrupo('ideProcesso');
-  Gerador.wCampo(tcInt, '', 'tpProc',     0, 0, 0, ord(Self.FinfoProcesso.IdeProcesso.tpProc));
-  Gerador.wCampo(tcStr, '', 'nrProc',     0, 0, 0, Self.FinfoProcesso.IdeProcesso.nrProc);
-  Gerador.wCampo(tcStr, '', 'iniValid',   0, 0, 1, Self.FinfoProcesso.IdePeriodo.IniValid);
-  Gerador.wCampo(tcStr, '', 'fimValid',   0, 0, 0, Self.FinfoProcesso.IdePeriodo.FimValid);
 
-  // OBS: O xsd da versão 1.2 C:/Siecon2001/lib7/ACBr/Exemplos/ACBrDFe/Schemas/Reinf/evtTabProcesso-v1_02_00.xsd
-  //      disponibilizado pela está em desacordo com as validações do webservice.
-  //      A tag indAutoria (apenas no grupo de alteração do XSD) foi adicionada antes de iniValid, gerando erro no schema
-  //      O XSD original foi corrigido manualmente e validado com o webservice
+  Gerador.wCampo(tcStr, '', 'tpProc',   1,  1, 1, TpProcToStr(Self.FinfoProcesso.IdeProcesso.tpProc));
+  Gerador.wCampo(tcStr, '', 'nrProc',   1, 21, 1, Self.FinfoProcesso.IdeProcesso.nrProc);
+  Gerador.wCampo(tcStr, '', 'iniValid', 7,  7, 1, Self.FinfoProcesso.IdePeriodo.IniValid);
+  Gerador.wCampo(tcStr, '', 'fimValid', 7,  7, 0, Self.FinfoProcesso.IdePeriodo.FimValid);
 
   if ( Self.TipoOperacao <> toExclusao ) then
   begin
-    Gerador.wCampo(tcInt, '', 'indAutoria', 0, 0, 1, ord(FinfoProcesso.IdeProcesso.DadosProcJud.indAutoria));
+    Gerador.wCampo(tcStr, '', 'indAutoria', 1, 1, 1, indAutoriaToStr(FinfoProcesso.IdeProcesso.DadosProcJud.indAutoria));
     GerarInfoSusp;
     GerarDadosProcJud;
   end;
@@ -125,11 +126,14 @@ begin
     InfoSusp := FinfoProcesso.IdeProcesso.infoSusps.Items[i];
 
     Gerador.wGrupo('infoSusp');
-    if StrToInt64Def(InfoSusp.codSusp, -1) > 0 then    
-      Gerador.wCampo(tcStr, '', 'codSusp', 0, 0, 0, Poem_Zeros(InfoSusp.codSusp, 14));
-    Gerador.wCampo(tcStr, '', 'indSusp', 0, 0, 1, Poem_Zeros(Inttostr(ord(InfoSusp.indSusp)), 2));
-    Gerador.wCampo(tcDat, '', 'dtDecisao', 0, 0, 1, InfoSusp.dtDecisao);
-    Gerador.wCampo(tcStr, '', 'indDeposito', 0, 0, 1, eSSimNaoToStr(InfoSusp.indDeposito));
+
+    if StrToInt64Def(InfoSusp.codSusp, -1) > 0 then
+      Gerador.wCampo(tcStr, '', 'codSusp', 14, 14, 0, Poem_Zeros(InfoSusp.codSusp, 14));
+
+    Gerador.wCampo(tcStr, '', 'indSusp',      2,  2, 1, IndSuspToStr(InfoSusp.indSusp));
+    Gerador.wCampo(tcDat, '', 'dtDecisao',   10, 10, 1, InfoSusp.dtDecisao);
+    Gerador.wCampo(tcStr, '', 'indDeposito',  1,  1, 1, SimNaoToStr(InfoSusp.indDeposito));
+
     Gerador.wGrupo('/infoSusp');
   end;
 end;
@@ -137,9 +141,11 @@ end;
 procedure TR1070.GerarDadosProcJud;
 begin
   Gerador.wGrupo('dadosProcJud');
-  Gerador.wCampo(tcStr, '', 'ufVara', 0, 0, 1, FinfoProcesso.IdeProcesso.DadosProcJud.UfVara);
-  Gerador.wCampo(tcInt, '', 'codMunic', 0, 0, 1, FinfoProcesso.IdeProcesso.DadosProcJud.codMunic);
-  Gerador.wCampo(tcStr, '', 'idVara', 0, 0, 1, Poem_Zeros(FinfoProcesso.IdeProcesso.DadosProcJud.idVara, 2));
+
+  Gerador.wCampo(tcStr, '', 'ufVara',   2, 2, 1, FinfoProcesso.IdeProcesso.DadosProcJud.UfVara);
+  Gerador.wCampo(tcInt, '', 'codMunic', 7, 7, 1, FinfoProcesso.IdeProcesso.DadosProcJud.codMunic);
+  Gerador.wCampo(tcStr, '', 'idVara',   2, 2, 1, Poem_Zeros(FinfoProcesso.IdeProcesso.DadosProcJud.idVara, 2));
+
   Gerador.wGrupo('/dadosProcJud');
 end;
 

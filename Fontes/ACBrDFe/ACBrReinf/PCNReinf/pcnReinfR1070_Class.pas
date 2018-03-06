@@ -80,12 +80,12 @@ type
     FUfVara: string;
     FCodMunic: integer;
     FIdVara: string;
-    FindAutoria: TTypeAutoria;
+    FindAutoria: TindAutoria;
   public
     property UfVara: string read FUfVara write FUfVara;
     property codMunic: integer read FCodMunic write FCodMunic;
     property idVara: string read FIdVara write FIdVara;
-    property indAutoria: TTypeAutoria read FindAutoria write FindAutoria;
+    property indAutoria: TindAutoria read FindAutoria write FindAutoria;
   end;
 
   { TinfoSusp }

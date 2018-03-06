@@ -72,7 +72,7 @@ uses
 procedure TR1000.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtInfoContri);
+  SetSchema(schevtInfoContri);
   FinfoContri := TinfoContri.Create;
 end;
 
@@ -85,44 +85,48 @@ end;
 procedure TR1000.GerarContato;
 begin
   Gerador.wGrupo('contato');
-    Gerador.wCampo(tcStr, '', 'nmCtt', 0, 0, 0, Self.infoContri.InfoCadastro.Contato.NmCtt);
-    Gerador.wCampo(tcStr, '', 'cpfCtt', 0, 0, 0, Self.infoContri.infoCadastro.Contato.CpfCtt);
 
-    if (Self.infoContri.infoCadastro.Contato.FoneFixo <> '') then
-      Gerador.wCampo(tcStr, '', 'foneFixo', 0, 0, 0, Self.infoContri.infoCadastro.Contato.FoneFixo);
+  Gerador.wCampo(tcStr, '', 'nmCtt',     1, 70, 1, Self.infoContri.InfoCadastro.Contato.NmCtt);
+  Gerador.wCampo(tcStr, '', 'cpfCtt',   11, 11, 1, Self.infoContri.infoCadastro.Contato.CpfCtt);
+  Gerador.wCampo(tcStr, '', 'foneFixo',  1, 13, 0, Self.infoContri.infoCadastro.Contato.FoneFixo);
+  Gerador.wCampo(tcStr, '', 'foneCel',   1, 13, 0, Self.infoContri.infoCadastro.Contato.FoneCel);
+  Gerador.wCampo(tcStr, '', 'email',     1, 60, 0, Self.infoContri.infoCadastro.Contato.email);
 
-    if (Self.infoContri.infoCadastro.Contato.FoneCel <> '') then
-      Gerador.wCampo(tcStr, '', 'foneCel', 0, 0, 0, Self.infoContri.infoCadastro.Contato.FoneCel);
-
-    if (Self.infoContri.infoCadastro.Contato.email <> '') then
-      Gerador.wCampo(tcStr, '', 'email', 0, 0, 0, Self.infoContri.infoCadastro.Contato.email);
   Gerador.wGrupo('/contato');
 end;
 
 procedure TR1000.GerarEventoXML;
 begin
   Gerador.wGrupo('infoContri');
-    GerarModoAbertura(Self.TipoOperacao);
-    GerarIdePeriodo(Self.infoContri.idePeriodo);
-    if (Self.TipoOperacao <> toExclusao) then
-      GerarInfoCadastro;
-    if (Self.TipoOperacao = toAlteracao) and (Self.NovaValidade.IniValid <> EmptyStr) then
-      GerarIdePeriodo(novaValidade,'novaValidade');
-    GerarModoFechamento(Self.TipoOperacao);
+
+  GerarModoAbertura(Self.TipoOperacao);
+  GerarIdePeriodo(Self.infoContri.idePeriodo);
+
+  if (Self.TipoOperacao <> toExclusao) then
+    GerarInfoCadastro;
+
+  if (Self.TipoOperacao = toAlteracao) and (Self.NovaValidade.IniValid <> EmptyStr) then
+    GerarIdePeriodo(novaValidade,'novaValidade');
+
+  GerarModoFechamento(Self.TipoOperacao);
+
   Gerador.wGrupo('/infoContri');
 end;
 
 procedure TR1000.GerarInfoCadastro;
 begin
   Gerador.wGrupo('infoCadastro');
-    Gerador.wCampo(tcStr, '', 'classTrib', 0, 0, 0, Self.infoContri.infoCadastro.ClassTrib);
-    Gerador.wCampo(tcStr, '', 'indEscrituracao', 0, 0, 0, ord(Self.infoContri.infoCadastro.indEscrituracao));
-    Gerador.wCampo(tcStr, '', 'indDesoneracao', 0, 0, 0, ord(Self.infoContri.infoCadastro.indDesoneracao));
-    Gerador.wCampo(tcStr, '', 'indAcordoIsenMulta', 0, 0, 0, ord(Self.infoContri.infoCadastro.indAcordoIsenMulta));
-    Gerador.wCampo(tcStr, '', 'indSitPJ', 0, 0, 0, Self.infoContri.infoCadastro.indSitPJ);
-    GerarContato;
-    GerarSoftwareHouse;
-    GerarInfoEFR;
+
+  Gerador.wCampo(tcStr, '', 'classTrib',          1, 2, 1, Self.infoContri.infoCadastro.ClassTrib);
+  Gerador.wCampo(tcStr, '', 'indEscrituracao',    1, 1, 1, indEscrituracaoToStr(Self.infoContri.infoCadastro.indEscrituracao));
+  Gerador.wCampo(tcStr, '', 'indDesoneracao',     1, 1, 1, indDesoneracaoToStr(Self.infoContri.infoCadastro.indDesoneracao));
+  Gerador.wCampo(tcStr, '', 'indAcordoIsenMulta', 1, 1, 1, indAcordoIsenMultaToStr(Self.infoContri.infoCadastro.indAcordoIsenMulta));
+  Gerador.wCampo(tcStr, '', 'indSitPJ',           1, 1, 0, indSitPJToStr(Self.infoContri.infoCadastro.indSitPJ));
+
+  GerarContato;
+  GerarSoftwareHouse;
+  GerarInfoEFR;
+
   Gerador.wGrupo('/infoCadastro');
 end;
 
@@ -131,8 +135,10 @@ begin
   if (infoContri.infoCadastro.infoEFR.cnpjEFR <> EmptyStr) then
   begin
     Gerador.wGrupo('infoEFR');
-      Gerador.wCampo(tcStr, '', 'ideEFR', 1, 1, 0, eSSimNaoToStr(infoContri.infoCadastro.infoEFR.ideEFR));
-      Gerador.wCampo(tcStr, '', 'cnpjEFR', 0, 1, 0, infoContri.infoCadastro.infoEFR.cnpjEFR);
+
+    Gerador.wCampo(tcStr, '', 'ideEFR',   1,  1, 1, SimNaoToStr(infoContri.infoCadastro.infoEFR.ideEFR));
+    Gerador.wCampo(tcStr, '', 'cnpjEFR', 14, 14, 0, infoContri.infoCadastro.infoEFR.cnpjEFR);
+
     Gerador.wGrupo('/infoEFR');
   end;
 end;
@@ -140,12 +146,13 @@ end;
 procedure TR1000.GerarSoftwareHouse;
 begin
   Gerador.wGrupo('softHouse');
-    Gerador.wCampo(tcStr, '', 'cnpjSoftHouse', 0, 0, 0, infoContri.infoCadastro.SoftwareHouse.CnpjSoftHouse);
-    Gerador.wCampo(tcStr, '', 'nmRazao', 0, 0, 0, infoContri.infoCadastro.SoftwareHouse.NmRazao);
-    Gerador.wCampo(tcStr, '', 'nmCont', 0, 0, 0, infoContri.infoCadastro.SoftwareHouse.NmCont);
-    Gerador.wCampo(tcStr, '', 'telefone', 0, 0, 0, infoContri.infoCadastro.SoftwareHouse.Telefone);
-    if (infoContri.infoCadastro.SoftwareHouse.email <> '') then
-      Gerador.wCampo(tcStr, '', 'email', 0, 0, 0,  infoContri.infoCadastro.SoftwareHouse.email);
+
+  Gerador.wCampo(tcStr, '', 'cnpjSoftHouse', 14,  14, 1, infoContri.infoCadastro.SoftwareHouse.CnpjSoftHouse);
+  Gerador.wCampo(tcStr, '', 'nmRazao',        1, 115, 1, infoContri.infoCadastro.SoftwareHouse.NmRazao);
+  Gerador.wCampo(tcStr, '', 'nmCont',         1,  70, 1, infoContri.infoCadastro.SoftwareHouse.NmCont);
+  Gerador.wCampo(tcStr, '', 'telefone',       1,  13, 0, infoContri.infoCadastro.SoftwareHouse.Telefone);
+  Gerador.wCampo(tcStr, '', 'email',          1,  60, 0, infoContri.infoCadastro.SoftwareHouse.email);
+
   Gerador.wGrupo('/softHouse');
 end;
 

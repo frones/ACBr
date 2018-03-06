@@ -1,9 +1,9 @@
 object Form2: TForm2
-  Left = 205
-  Top = 130
-  Width = 904
-  Height = 647
+  Left = 193
+  Top = 126
   Caption = 'Exemplo Reinf'
+  ClientHeight = 608
+  ClientWidth = 888
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object Form2: TForm2
     Left = 0
     Top = 0
     Width = 297
-    Height = 609
+    Height = 608
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -95,8 +95,6 @@ object Form2: TForm2
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -111,6 +109,8 @@ object Form2: TForm2
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl2: TPageControl
       Left = 8
@@ -389,7 +389,6 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -399,7 +398,6 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -409,7 +407,6 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -419,7 +416,6 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -469,33 +465,12 @@ object Form2: TForm2
                 Height = 13
                 Caption = 'Formato Alerta'
               end
-              object Label30: TLabel
-                Left = 8
-                Top = 126
-                Width = 120
-                Height = 13
-                Caption = 'Modelo Documento Fiscal'
-              end
               object Label32: TLabel
                 Left = 8
-                Top = 165
+                Top = 131
                 Width = 119
                 Height = 13
                 Caption = 'Vers'#227'o Documento Fiscal'
-              end
-              object Label33: TLabel
-                Left = 8
-                Top = 203
-                Width = 73
-                Height = 13
-                Caption = 'IdToken/IdCSC'
-              end
-              object Label34: TLabel
-                Left = 8
-                Top = 241
-                Width = 53
-                Height = 13
-                Caption = 'Token/CSC'
               end
               object Label42: TLabel
                 Left = 8
@@ -551,7 +526,6 @@ object Form2: TForm2
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -577,50 +551,27 @@ object Form2: TForm2
                 Height = 21
                 TabOrder = 5
               end
-              object cbModeloDF: TComboBox
-                Left = 8
-                Top = 142
-                Width = 248
-                Height = 21
-                ItemHeight = 13
-                TabOrder = 6
-              end
               object cbxRetirarAcentos: TCheckBox
                 Left = 8
                 Top = 281
                 Width = 193
                 Height = 17
                 Caption = 'Retirar Acentos dos XMLs enviados'
-                TabOrder = 7
+                TabOrder = 6
               end
               object cbVersaoDF: TComboBox
                 Left = 8
-                Top = 181
+                Top = 147
                 Width = 248
                 Height = 21
-                ItemHeight = 13
-                TabOrder = 8
-              end
-              object edtIdToken: TEdit
-                Left = 8
-                Top = 219
-                Width = 248
-                Height = 21
-                TabOrder = 9
-              end
-              object edtToken: TEdit
-                Left = 8
-                Top = 257
-                Width = 248
-                Height = 21
-                TabOrder = 10
+                TabOrder = 7
               end
               object edtPathSchemas: TEdit
                 Left = 8
                 Top = 352
                 Width = 228
                 Height = 21
-                TabOrder = 11
+                TabOrder = 8
               end
             end
           end
@@ -691,7 +642,6 @@ object Form2: TForm2
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -765,7 +715,6 @@ object Form2: TForm2
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 13
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1364,15 +1313,15 @@ object Form2: TForm2
     Left = 297
     Top = 0
     Width = 591
-    Height = 609
+    Height = 608
     Align = alClient
     TabOrder = 1
     object PageControl1: TPageControl
       Left = 1
       Top = 48
       Width = 589
-      Height = 560
-      ActivePage = TabSheet4
+      Height = 559
+      ActivePage = TabSheet1
       Align = alClient
       TabOrder = 0
       object TabSheet1: TTabSheet
@@ -1381,7 +1330,7 @@ object Form2: TForm2
           Left = 0
           Top = 0
           Width = 581
-          Height = 396
+          Height = 395
           Align = alClient
           Caption = ' Eventos de Tabela '
           TabOrder = 0
@@ -1625,7 +1574,7 @@ object Form2: TForm2
         end
         object GroupBox4: TGroupBox
           Left = 0
-          Top = 396
+          Top = 395
           Width = 581
           Height = 136
           Align = alBottom
@@ -1676,7 +1625,6 @@ object Form2: TForm2
             Top = 66
             Width = 87
             Height = 21
-            ItemHeight = 13
             TabOrder = 2
             Visible = False
             Items.Strings = (
@@ -1728,7 +1676,7 @@ object Form2: TForm2
           Left = 0
           Top = 0
           Width = 581
-          Height = 532
+          Height = 531
           Align = alClient
           Lines.Strings = (
             'mmoRet')
@@ -1742,7 +1690,7 @@ object Form2: TForm2
           Left = 0
           Top = 0
           Width = 581
-          Height = 532
+          Height = 531
           Align = alClient
           Lines.Strings = (
             'Memo1')
@@ -1757,7 +1705,7 @@ object Form2: TForm2
           Left = 0
           Top = 0
           Width = 581
-          Height = 532
+          Height = 531
           Align = alClient
           Lines.Strings = (
             'Memo1')
@@ -1806,11 +1754,20 @@ object Form2: TForm2
     DefaultExt = '*.XML'
     Filter = 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
     Title = 'Selecione o Arquivo'
-    Left = 578
-    Top = 343
+    Left = 394
+    Top = 399
   end
   object ACBrReinf1: TACBrReinf
-    Left = 486
-    Top = 176
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    Left = 326
+    Top = 400
   end
 end

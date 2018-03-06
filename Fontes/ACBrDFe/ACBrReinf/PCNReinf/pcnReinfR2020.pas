@@ -54,6 +54,7 @@ type
     procedure GerarideEstabPrest;
     procedure GerarideTomador(Items: TideTomadors);
     procedure GerarinfoProcRetPr(Items: TinfoProcRetPrs);
+    procedure GerarinfoProcRetAd(Items: TinfoProcRetPrs);
     procedure GerarNFs(Items: Tnfss);
     procedure GerarinfoTpServ(Items: TinfoTpServs);
   public
@@ -72,7 +73,7 @@ uses
 procedure TR2020.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtServPrest);
+  SetSchema(schevtServPrest);
   FinfoServPrest := TinfoServPrest.Create;
 end;
 
@@ -85,16 +86,21 @@ end;
 procedure TR2020.GerarEventoXML;
 begin
   Gerador.wGrupo('infoServPrest');
+
   GerarideEstabPrest;
+
   Gerador.wGrupo('/infoServPrest');
 end;
 
 procedure TR2020.GerarideEstabPrest;
 begin
   Gerador.wGrupo('ideEstabPrest');
-  Gerador.wCampo(tcInt, '', 'tpInscEstabPrest', 0, 0, 1, Ord( Self.FinfoServPrest.ideEstabPrest.tpInscEstabPrest ) );
-  Gerador.wCampo(tcStr, '', 'nrInscEstabPrest', 0, 0, 1, Self.FinfoServPrest.ideEstabPrest.nrInscEstabPrest);
+
+  Gerador.wCampo(tcStr, '', 'tpInscEstabPrest', 1,  1, 1, TpInscricaoToStr( Self.FinfoServPrest.ideEstabPrest.tpInscEstabPrest ) );
+  Gerador.wCampo(tcStr, '', 'nrInscEstabPrest', 1, 14, 1, Self.FinfoServPrest.ideEstabPrest.nrInscEstabPrest);
+
   GerarideTomador(Self.FinfoServPrest.ideEstabPrest.ideTomadors);
+
   Gerador.wGrupo('/ideEstabPrest');
 end;
 
@@ -108,18 +114,42 @@ begin
     Item := Items.Items[i];
 
     Gerador.wGrupo('ideTomador');
-    Gerador.wCampo(tcInt, '', 'tpInscTomador', 0, 0, 1, ord(item.tpInscTomador));
-    Gerador.wCampo(tcStr, '', 'nrInscTomador', 0, 0, 1, item.nrInscTomador);
-    Gerador.wCampo(tcInt, '', 'indObra', 0, 0, 1, ord(item.indObra));
-    Gerador.wCampo(tcDe2, '', 'vlrTotalBruto', 0, 0, 1 , item.vlrTotalBruto);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalBaseRet', 0, 0, 1, item.vlrTotalBaseRet);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalRetPrinc', 0, 0, 1, item.vlrTotalRetPrinc);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalRetAdic', 0, 0, 0, item.vlrTotalRetAdic);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetPrinc', 0, 0, 0, item.vlrTotalNRetPrinc);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetAdic', 0, 0, 0, item.vlrTotalNRetAdic);
+
+    Gerador.wCampo(tcStr, '', 'tpInscTomador',     1,  1, 1, TpInscricaoToStr(item.tpInscTomador));
+    Gerador.wCampo(tcStr, '', 'nrInscTomador',     1, 14, 1, item.nrInscTomador);
+    Gerador.wCampo(tcStr, '', 'indObra',           1,  1, 1, indObraToStr(item.indObra));
+    Gerador.wCampo(tcDe2, '', 'vlrTotalBruto',     1, 14, 1, item.vlrTotalBruto);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalBaseRet',   1, 14, 1, item.vlrTotalBaseRet);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalRetPrinc',  1, 14, 1, item.vlrTotalRetPrinc);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalRetAdic',   1, 14, 0, item.vlrTotalRetAdic);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetPrinc', 1, 14, 0, item.vlrTotalNRetPrinc);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetAdic',  1, 14, 0, item.vlrTotalNRetAdic);
+
     GerarNFs(item.nfss);
-    GerarinfoProcRetPr(item.infoProcRetPrs);
+    GerarinfoProcRetPr(item.infoProcRetPr);
+    GerarinfoProcRetAd(item.infoProcRetAd);
+
     Gerador.wGrupo('/ideTomador');
+  end;
+end;
+
+procedure TR2020.GerarinfoProcRetAd(Items: TinfoProcRetPrs);
+var
+  Item: TinfoProcRetPr;
+  i: Integer;
+begin
+  for i:=0 to Items.Count - 1 do
+  begin
+    Item := Items.Items[i];
+
+    Gerador.wGrupo('infoProcRetAd');
+
+    Gerador.wCampo(tcStr, '', 'tpProcRetPrinc', 1,  1, 1, TpProcToStr(item.tpProcRetPrinc));
+    Gerador.wCampo(tcStr, '', 'nrProcRetPrinc', 1, 21, 1, item.nrProcRetPrinc);
+    Gerador.wCampo(tcInt, '', 'codSuspPrinc',   1, 14, 0, item.codSuspPrinc);
+    Gerador.wCampo(tcDe2, '', 'valorPrinc',     1, 14, 1, item.valorPrinc);
+
+    Gerador.wGrupo('/infoProcRetAd');
   end;
 end;
 
@@ -132,12 +162,14 @@ begin
   begin
     Item := Items.Items[i];
 
-    Gerador.wGrupo('infoTpServ');
-    Gerador.wCampo(tcInt, '', 'tpProcRetPrinc', 0, 0, 1, ord(item.tpProcRetPrinc));
-    Gerador.wCampo(tcStr, '', 'nrProcRetPrinc', 0, 0, 1, item.nrProcRetPrinc);
-    Gerador.wCampo(tcInt, '', 'codSuspPrinc', 0, 0, 0, item.codSuspPrinc);
-    Gerador.wCampo(tcDe2, '', 'valorPrinc', 0, 0, 1, item.valorPrinc);
-    Gerador.wGrupo('/infoTpServ');
+    Gerador.wGrupo('infoProcRetPr');
+
+    Gerador.wCampo(tcStr, '', 'tpProcRetPrinc', 1,  1, 1, TpProcToStr(item.tpProcRetPrinc));
+    Gerador.wCampo(tcStr, '', 'nrProcRetPrinc', 1, 21, 1, item.nrProcRetPrinc);
+    Gerador.wCampo(tcInt, '', 'codSuspPrinc',   1, 14, 0, item.codSuspPrinc);
+    Gerador.wCampo(tcDe2, '', 'valorPrinc',     1, 14, 1, item.valorPrinc);
+
+    Gerador.wGrupo('/infoProcRetPr');
   end;
 end;
 
@@ -151,16 +183,18 @@ begin
     Item := Items.Items[i];
 
     Gerador.wGrupo('infoTpServ');
-    Gerador.wCampo(tcStr, '', 'tpServico', 0, 0, 1, item.tpServico);
-    Gerador.wCampo(tcDe2, '', 'vlrBaseRet', 0, 0, 1, item.vlrBaseRet);
-    Gerador.wCampo(tcDe2, '', 'vlrRetencao', 0, 0, 1, item.vlrRetencao);
-    Gerador.wCampo(tcDe2, '', 'vlrRetSub', 0, 0, 0, item.vlrRetSub);
-    Gerador.wCampo(tcDe2, '', 'vlrNRetPrinc', 0, 0, 0, item.vlrNRetPrinc);
-    Gerador.wCampo(tcDe2, '', 'vlrServicos15', 0, 0, 0, item.vlrServicos15);
-    Gerador.wCampo(tcDe2, '', 'vlrServicos20', 0, 0, 0, item.vlrServicos20);
-    Gerador.wCampo(tcDe2, '', 'vlrServicos25', 0, 0, 0, item.vlrServicos25);
-    Gerador.wCampo(tcDe2, '', 'vlrAdicional', 0, 0, 0, item.vlrAdicional);
-    Gerador.wCampo(tcDe2, '', 'vlrNRetAdic', 0, 0, 0, item.vlrNRetAdic);
+
+    Gerador.wCampo(tcStr, '', 'tpServico',     1,  9, 1, item.tpServico);
+    Gerador.wCampo(tcDe2, '', 'vlrBaseRet',    1, 14, 1, item.vlrBaseRet);
+    Gerador.wCampo(tcDe2, '', 'vlrRetencao',   1, 14, 1, item.vlrRetencao);
+    Gerador.wCampo(tcDe2, '', 'vlrRetSub',     1, 14, 0, item.vlrRetSub);
+    Gerador.wCampo(tcDe2, '', 'vlrNRetPrinc',  1, 14, 0, item.vlrNRetPrinc);
+    Gerador.wCampo(tcDe2, '', 'vlrServicos15', 1, 14, 0, item.vlrServicos15);
+    Gerador.wCampo(tcDe2, '', 'vlrServicos20', 1, 14, 0, item.vlrServicos20);
+    Gerador.wCampo(tcDe2, '', 'vlrServicos25', 1, 14, 0, item.vlrServicos25);
+    Gerador.wCampo(tcDe2, '', 'vlrAdicional',  1, 14, 0, item.vlrAdicional);
+    Gerador.wCampo(tcDe2, '', 'vlrNRetAdic',   1, 14, 0, item.vlrNRetAdic);
+
     Gerador.wGrupo('/infoTpServ');
   end;
 end;
@@ -175,12 +209,15 @@ begin
     Item := Items.Items[i];
 
     Gerador.wGrupo('nfs');
-    Gerador.wCampo(tcStr, '', 'serie', 0, 0, 1, item.serie);
-    Gerador.wCampo(tcStr, '', 'numDocto', 0, 0, 1, item.numDocto);
-    Gerador.wCampo(tcDat, '', 'dtEmissaoNF', 0, 0,1, item.dtEmissaoNF);
-    Gerador.wCampo(tcDe2, '', 'vlrBruto', 0, 0, 1, item.vlrBruto);
-    Gerador.wCampo(tcStr, '', 'obs', 0, 0, 0, item.obs);
+
+    Gerador.wCampo(tcStr, '', 'serie',        1,   5, 1, item.serie);
+    Gerador.wCampo(tcStr, '', 'numDocto',     1,  15, 1, item.numDocto);
+    Gerador.wCampo(tcDat, '', 'dtEmissaoNF', 10,  10, 1, item.dtEmissaoNF);
+    Gerador.wCampo(tcDe2, '', 'vlrBruto',     1,  14, 1, item.vlrBruto);
+    Gerador.wCampo(tcStr, '', 'obs',          1, 250, 0, item.obs);
+
     GerarinfoTpServ(item.infoTpServs);
+
     Gerador.wGrupo('/nfs');
   end;
 end;

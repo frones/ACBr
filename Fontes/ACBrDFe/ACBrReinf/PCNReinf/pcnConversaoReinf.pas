@@ -48,13 +48,15 @@ uses
 
 type
 
-  tpTpInsc                = (tiCNPJ = 1, tiCPF = 2, tiCNO = 4);
+  tpTpInsc                = (tiCNPJ, tiCPF, tiCNO);
 
   TpTpInscProp            = (tpCNPJ, tpCPF);
 
-  TLayReinf = (orLayENVIO, orLayConsulta);
+  TLayOutReinf            = (LayEnvioLoteEventos, LayConsultaLoteEventos);
 
-  TTypeOperacao         = (toInclusao, toAlteracao, toExclusao);
+  TStatusReinf            = (stIdle, stEnvLoteEventos, stConsultaLote);
+
+  TTypeOperacao           = (toInclusao, toAlteracao, toExclusao);
 
   TpTpAmb                 = (taNenhum, taProducao, taProducaoRestritaDadosReais, taProducaoRestritaDadosFicticios);
 
@@ -64,50 +66,57 @@ type
 
   TpIndCoop               = (icNaoecooperativa, icCooperativadeTrabalho, icCooperativadeProducao, icOutrasCooperativas );
 
-  tpTpProc                = (tpAdministrativo = 1, tpJudicial = 2);
+  tpTpProc                = (tpAdministrativo, tpJudicial);
 
-  tpIndSusp               = (siLiminarMandadoSeguranca = 1,
-                             siAntecipacaoTutela = 4,
-                             siLiminarMedidaCautelar = 5,
-                             siSentencaMandadoSegurancaFavoravelContribuinte = 8,
-                             siSentencaAcaoOrdinariaFavContribuinteConfirmadaPeloTRF = 9,
-                             siAcordaoTRFFavoravelContribuinte = 10,
-                             siAcordaoSTJRecursoEspecialFavoravelContribuinte = 11,
-                             siAcordaoSTFRecursoExtraordinarioFavoravelContribuinte = 12,
-                             siSentenca1instanciaNaoTransitadaJulgadoEfeitoSusp = 13,
-                             siDecisaoDefinitivaAFavorDoContribuinte = 90,
-                             siSemSuspensaoDaExigibilidade = 92);
+  tpIndSusp               = (siLiminarMandadoSeguranca,
+                             siAntecipacaoTutela,
+                             siLiminarMedidaCautelar,
+                             siSentencaMandadoSegurancaFavoravelContribuinte ,
+                             siSentencaAcaoOrdinariaFavContribuinteConfirmadaPeloTRF,
+                             siAcordaoTRFFavoravelContribuinte,
+                             siAcordaoSTJRecursoEspecialFavoravelContribuinte,
+                             siAcordaoSTFRecursoExtraordinarioFavoravelContribuinte,
+                             siSentenca1instanciaNaoTransitadaJulgadoEfeitoSusp,
+                             siDecisaoDefinitivaAFavorDoContribuinte,
+                             siSemSuspensaoDaExigibilidade);
 
+  TTipoEvento             = (teR1000, teR1070, teR2010, teR2020, teR2030,
+                             teR2040, teR2050, teR2060, teR2070, teR2098,
+                             teR2099, teR3010, teR5001, teR5011, teR9000);
 
   TindSitPJ               = (spNormal, spExtincao, spFusao, spCisao, spIncorporacao);
 
-  TTypeAutoria            = (taContribuinte = 1, taOutraEntidade = 2);
+  TindAutoria             = (taContribuinte, taOutraEntidade);
 
-  TIndRetificacao         = (trOriginal = 1, trRetificacao = 2);
+  TIndRetificacao         = (trOriginal, trRetificacao);
 
-  TpindObra               = (ioNaoeObraDeConstrucaoCivil = 0, ioObradeConstrucaoCivilTotal = 1, ioObradeConstrucaoCivilParcial = 2);
+  TpindObra               = (ioNaoeObraDeConstrucaoCivil,
+                             ioObradeConstrucaoCivilTotal,
+                             ioObradeConstrucaoCivilParcial);
 
-  TpindCPRB               = (icNaoContribuintePrevidenciariaReceitaBruta = 0, icContribuintePrevidenciaReceitaBruta = 1);
+  TpindCPRB               = (icNaoContribuintePrevidenciariaReceitaBruta,
+                             icContribuintePrevidenciaReceitaBruta);
 
-  TtpProcRetPrinc         = (tprAdministrativoTomador = 1, tprJudicialTomador = 2, tprJudicialPrestador = 3);
-
+  TtpProcRetPrinc         = (tprAdministrativoTomador, tprJudicialTomador,
+                             tprJudicialPrestador);
 
   TReinfSchema            = (
-                            rsevtInfoContri,         // R-1000 - Informações do Contribuinte
-                            rsevtTabProcesso,        // R-1070 - Tabela de Processos Administrativos/Judiciais
-                            rsevtServTom,            // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
-                            rsevtServPrest,          // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
-                            rsevtAssocDespRec,       // R-2030 - Recursos Recebidos por Associação Desportiva
-                            rsevtAssocDespRep,       // R-2040 - Recursos Repassados para Associação Desportiva
-                            rsevtComProd,            // R-2050 - Comercialização da Produção por Produtor Rural PJ/Agroindústria
-                            rsevtCPRB,               // R-2060 - Contribuição Previdenciária sobre a Receita Bruta - CPRB
-                            rsevtPgtosDivs,          // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
-                            rsevtReabreEvPer,        // R-2098 - Reabertura dos Eventos Periódicos
-                            rsevtFechaEvPer,         // R-2099 - Fechamento dos Eventos Periódicos
-                            rsevtEspDesportivo,      // R-3010 - Receita de Espetáculo Desportivo
-                            rsevtTotal,              // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
-                            rsevtTotalConsolid,      // R-5011 - Informações de bases e tributos consolidadas por período de apuração
-                            rsevtExclusao            // R-9000 - Exclusão de Eventos
+                            schevtInfoContri,         // R-1000 - Informações do Contribuinte
+                            schevtTabProcesso,        // R-1070 - Tabela de Processos Administrativos/Judiciais
+                            schevtServTom,            // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
+                            schevtServPrest,          // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
+                            schevtAssocDespRec,       // R-2030 - Recursos Recebidos por Associação Desportiva
+                            schevtAssocDespRep,       // R-2040 - Recursos Repassados para Associação Desportiva
+                            schevtComProd,            // R-2050 - Comercialização da Produção por Produtor Rural PJ/Agroindústria
+                            schevtCPRB,               // R-2060 - Contribuição Previdenciária sobre a Receita Bruta - CPRB
+                            schevtPgtosDivs,          // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
+                            schevtReabreEvPer,        // R-2098 - Reabertura dos Eventos Periódicos
+                            schevtFechaEvPer,         // R-2099 - Fechamento dos Eventos Periódicos
+                            schevtEspDesportivo,      // R-3010 - Receita de Espetáculo Desportivo
+                            schevtTotal,              // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
+                            schevtTotalConsolid,      // R-5011 - Informações de bases e tributos consolidadas por período de apuração
+                            schevtExclusao,           // R-9000 - Exclusão de Eventos
+                            schErro, schConsultaLoteEventos, schEnvioLoteEventos
                             );
 
   TtpAjuste               = (taReducao, taAcrescimo);
@@ -178,16 +187,16 @@ type
                               iorTerceiros = 2 // 2 - Recursos de terceiros - Declarante é a Instituição Financeira responsável apenas pelo repasse dos valores
                             );
 
-  TtpRepasse              = ( trPatrocinio = 1,    // 1 - Patrocínio
-                              trLicenciamento = 2, // 2 - Licenciamento de marcas e símbolos
-                              trPublicidade = 3,   // 3 - Publicidade
-                              trPropaganda = 4,    // 4 - Propaganda
-                              trTransmissao = 5    // 5 - Transmissão de espetáculos
+  TtpRepasse              = ( trPatrocinio,    // 1 - Patrocínio
+                              trLicenciamento, // 2 - Licenciamento de marcas e símbolos
+                              trPublicidade,   // 3 - Publicidade
+                              trPropaganda,    // 4 - Propaganda
+                              trTransmissao    // 5 - Transmissão de espetáculos
                             );
 
-  TindCom                 = ( icProdRural = 1,  // 1 - Comercialização da Produção por Prod. Rural PJ/Agroindústria, exceto para entidades executoras do PAA
-                              icPAA = 2,        // 8 - Comercialização da Produção para Entidade do Programa de Aquisição de Alimentos - PAA
-                              icMercExterno = 3 // 9 - Comercialização direta da Produção no Mercado Externo
+  TindCom                 = ( icProdRural,  // 1 - Comercialização da Produção por Prod. Rural PJ/Agroindústria, exceto para entidades executoras do PAA
+                              icPAA,        // 8 - Comercialização da Produção para Entidade do Programa de Aquisição de Alimentos - PAA
+                              icMercExterno // 9 - Comercialização direta da Produção no Mercado Externo
                             );
 
   TtpCompeticao           = ( ttcOficial = 1,   // 1 - Oficial
@@ -213,7 +222,7 @@ type
                               ttrOutros = 5       // 5 - Outros
                             );
 
-   TpcnVersaoReinf        = ( v1_02_00, // v1.2
+   TVersaoReinf           = ( v1_02_00, // v1.2
                               v1_03_00  // v1.3
                             );
 
@@ -253,16 +262,288 @@ const
                                                    'R-9000'  // rsevtExclusao      - Exclusão de Eventos
                                                    );
 
-function eSSimNaoToStr(AValue: tpSimNao): string;
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
+function SchemaReinfToStr(const t: TReinfSchema): String;
+function LayOutToSchema(const t: TLayOutReinf): TReinfSchema;
+function LayOutReinfToServico(const t: TLayOutReinf): String;
+function VersaoReinfToDbl(const t: TVersaoReinf): Real;
+function VersaoReinfToStr(const t: TVersaoReinf): String;
 
-implementation
+function TpInscricaoToStr(const t: tpTpInsc ): string;
+function StrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
+
+function tpAmbReinfToStr(const t: TptpAmb ): string;
+function StrTotpAmbReinf(var ok: boolean; const s: string): TptpAmb;
+
+function procEmiReinfToStr(const t: TpprocEmi ): string;
+function StrToprocEmiReinf(var ok: boolean; const s: string): TpprocEmi;
+
+function indEscrituracaoToStr(const t: TindEscrituracao ): string;
+function StrToindEscrituracao(var ok: boolean; const s: string): TindEscrituracao;
+
+function indDesoneracaoToStr(const t: TindDesoneracao ): string;
+function StrToindDesoneracao(var ok: boolean; const s: string): TindDesoneracao;
+
+function indAcordoIsenMultaToStr(const t: TindAcordoIsenMulta ): string;
+function StrToindAcordoIsenMulta(var ok: boolean; const s: string): TindAcordoIsenMulta;
+
+function indSitPJToStr(const t: TindSitPJ ): string;
+function StrToindSitPJ(var ok: boolean; const s: string): TindSitPJ;
+
+function SimNaoToStr(const t: tpSimNao): string;
+function StrToSimNao(var ok: boolean; const s: string): tpSimNao;
+
+function TpProcToStr(const t: tpTpProc ): string;
+function StrToTpProc(var ok: boolean; const s: string): tpTpProc;
+
+function indAutoriaToStr(const t: TindAutoria ): string;
+function StrToindAutoria(var ok: boolean; const s: string): TindAutoria;
+
+function IndSuspToStr(const t: tpIndSusp ): string;
+function StrToIndSusp(var ok: boolean; const s: string): tpIndSusp;
+
+function IndRetificacaoToStr(const t: TIndRetificacao ): string;
+function StrToIndRetificacao(var ok: boolean; const s: string): TIndRetificacao;
+
+function indObraToStr(const t: TpindObra ): string;
+function StrToindObra(var ok: boolean; const s: string): TpindObra;
+
+function indCPRBToStr(const t: TpindCPRB ): string;
+function StrToindCPRB(var ok: boolean; const s: string): TpindCPRB;
+
+function tpProcRetPrincToStr(const t: TtpProcRetPrinc ): string;
+function StrTotpProcRetPrinc(var ok: boolean; const s: string): TtpProcRetPrinc;
+
+function tpRepasseToStr(const t: TtpRepasse ): string;
+function StrTotpRepasse(var ok: boolean; const s: string): TtpRepasse;
+
+function indComToStr(const t: TindCom ): string;
+function StrToindCom(var ok: boolean; const s: string): TindCom;
+
+
+
+implementation
+
+uses
+  pcnConversao, typinfo;
 
-function eSSimNaoToStr(AValue: tpSimNao): string;
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
 begin
-  if AValue = tpSim then
-    Result := 'S'
-  else
-    Result := 'N';
+   Result := StrToEnumerado(ok, s,
+    ['EnviarLoteEventos', 'ConsultarLoteEventos'],
+    [ LayEnvioLoteEventos, LayConsultaLoteEventos ] );
 end;
+
+function SchemaReinfToStr(const t: TReinfSchema): String;
+begin
+  Result := GetEnumName(TypeInfo(TReinfSchema), Integer( t ) );
+  Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
+end;
+
+function LayOutToSchema(const t: TLayOutReinf): TReinfSchema;
+begin
+   case t of
+    LayEnvioLoteEventos:    Result := schEnvioLoteEventos;
+    LayConsultaLoteEventos: Result := schConsultaLoteEventos;
+  else
+    Result := schErro;
+  end;
+end;
+
+function LayOutReinfToServico(const t: TLayOutReinf): String;
+begin
+   Result := EnumeradoToStr(t,
+    ['EnviarLoteEventos', 'ConsultarLoteEventos'],
+    [ LayEnvioLoteEventos, LayConsultaLoteEventos ] );
+end;
+
+function VersaoReinfToDbl(const t: TVersaoReinf): Real;
+begin
+  case t of
+    v1_02_00: result := 1.02;
+    v1_03_00: result := 1.03;
+  else
+    result := 0;
+  end;
+end;
+
+function VersaoReinfToStr(const t: TVersaoReinf): String;
+begin
+  result := EnumeradoToStr(t, ['1_02_00', '1_03_00'], [v1_02_00, v1_03_00]);
+end;
+
+function TpInscricaoToStr(const t:tpTpInsc ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '4'] );
+end;
+
+function StrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
+begin
+  result := tpTpInsc( StrToEnumerado2(ok , s, ['1', '2', '4'] ) );
+end;
+
+function tpAmbReinfToStr(const t: TptpAmb ): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1', '2', '3']);
+end;
+
+function StrTotpAmbReinf(var ok: boolean; const s: string): TptpAmb;
+begin
+  result := TptpAmb( StrToEnumerado2(ok , s, ['0', '1', '2', '3']) );
+end;
+
+function ProcEmiReinfToStr(const t: TpProcEmi ): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1', '2']);
+end;
+
+function StrToProcEmiReinf(var ok: boolean; const s: string): TpProcEmi;
+begin
+  result := TpProcEmi( StrToEnumerado2(ok , s, ['0', '1', '2']) );
+end;
+
+function indEscrituracaoToStr(const t: TindEscrituracao ): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1']);
+end;
+
+function StrToindEscrituracao(var ok: boolean; const s: string): TindEscrituracao;
+begin
+  result := TindEscrituracao( StrToEnumerado2(ok , s, ['0', '1']) );
+end;
+
+function indDesoneracaoToStr(const t: TindDesoneracao ): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1']);
+end;
+
+function StrToindDesoneracao(var ok: boolean; const s: string): TindDesoneracao;
+begin
+  result := TindDesoneracao( StrToEnumerado2(ok , s, ['0', '1']) );
+end;
+
+function indAcordoIsenMultaToStr(const t: TindAcordoIsenMulta ): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1']);
+end;
+
+function StrToindAcordoIsenMulta(var ok: boolean; const s: string): TindAcordoIsenMulta;
+begin
+  result := TindAcordoIsenMulta( StrToEnumerado2(ok , s, ['0', '1']) );
+end;
+
+function indSitPJToStr(const t: TindSitPJ ): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1', '2', '3', '4']);
+end;
+
+function StrToindSitPJ(var ok: boolean; const s: string): TindSitPJ;
+begin
+  result := TindSitPJ( StrToEnumerado2(ok , s, ['0', '1', '2', '3', '4']) );
+end;
+
+function SimNaoToStr(const t: tpSimNao): string;
+begin
+  result := EnumeradoToStr2(t, ['S', 'N']);
+end;
+
+function StrToSimNao(var ok: boolean; const s: string): tpSimNao;
+begin
+  result := tpSimNao( StrToEnumerado2(ok , s, ['S', 'N']) );
+end;
+
+function TpProcToStr(const t: tpTpProc ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2']);
+end;
+
+function StrToTpProc(var ok: boolean; const s: string): tpTpProc;
+begin
+  result := tpTpProc( StrToEnumerado2(ok , s, ['1', '2']) );
+end;
+
+function indAutoriaToStr(const t: TindAutoria ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2']);
+end;
+
+function StrToindAutoria(var ok: boolean; const s: string): TindAutoria;
+begin
+  result := TindAutoria( StrToEnumerado2(ok , s, ['1', '2']) );
+end;
+
+function IndSuspToStr(const t: tpIndSusp ): string;
+begin
+  result := EnumeradoToStr2(t, ['01', '04', '05', '08', '09', '10', '11', '12',
+                                '13', '90', '92']);
+end;
+
+function StrToIndSusp(var ok: boolean; const s: string): tpIndSusp;
+begin
+  result := tpIndSusp( StrToEnumerado2(ok , s, ['01', '04', '05', '08', '09',
+                                                '10', '11', '12', '13', '90',
+                                                '92']) );
+end;
+
+function IndRetificacaoToStr(const t: TIndRetificacao ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2']);
+end;
+
+function StrToIndRetificacao(var ok: boolean; const s: string): TIndRetificacao;
+begin
+  result := TIndRetificacao( StrToEnumerado2(ok , s, ['1', '2']) );
+end;
+
+function indObraToStr(const t: TpindObra ): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1', '2']);
+end;
+
+function StrToindObra(var ok: boolean; const s: string): TpindObra;
+begin
+  result := TpindObra( StrToEnumerado2(ok , s, ['0', '1', '2']) );
+end;
+
+function indCPRBToStr(const t: TpindCPRB ): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1']);
+end;
+
+function StrToindCPRB(var ok: boolean; const s: string): TpindCPRB;
+begin
+  result := TpindCPRB( StrToEnumerado2(ok , s, ['0', '1']) );
+end;
+
+function tpProcRetPrincToStr(const t: TtpProcRetPrinc ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3']);
+end;
+
+function StrTotpProcRetPrinc(var ok: boolean; const s: string): TtpProcRetPrinc;
+begin
+  result := TtpProcRetPrinc( StrToEnumerado2(ok , s, ['1', '2', '3']) );
+end;
+
+function tpRepasseToStr(const t: TtpRepasse ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5']);
+end;
+
+function StrTotpRepasse(var ok: boolean; const s: string): TtpRepasse;
+begin
+  result := TtpRepasse( StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5']) );
+end;
+
+function indComToStr(const t: TindCom ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '8', '9']);
+end;
+
+function StrToindCom(var ok: boolean; const s: string): TindCom;
+begin
+  result := TindCom( StrToEnumerado2(ok , s, ['1', '8', '9']) );
+end;
+
 
 end.

@@ -70,7 +70,7 @@ uses
 procedure TR2099.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtFechaEvPer);
+  SetSchema(schevtFechaEvPer);
   FideRespInf := TideRespInf.Create;
   FinfoFech := TinfoFech.Create;
 end;
@@ -95,13 +95,13 @@ begin
   end;
 
   Gerador.wGrupo('infoFech');
-  Gerador.wCampo(tcStr, '', 'evtServTm',     0, 0, 1, eSSimNaoToStr(FinfoFech.evtServTm));
-  Gerador.wCampo(tcStr, '', 'evtServPr',     0, 0, 1, eSSimNaoToStr(FinfoFech.evtServPr));
-  Gerador.wCampo(tcStr, '', 'evtAssDespRec', 0, 0, 1, eSSimNaoToStr(FinfoFech.evtAssDespRec));
-  Gerador.wCampo(tcStr, '', 'evtAssDespRep', 0, 0, 1, eSSimNaoToStr(FinfoFech.evtAssDespRep));
-  Gerador.wCampo(tcStr, '', 'evtComProd',    0, 0, 1, eSSimNaoToStr(FinfoFech.evtComProd));
-  Gerador.wCampo(tcStr, '', 'evtCPRB',       0, 0, 1, eSSimNaoToStr(FinfoFech.evtCPRB));
-  Gerador.wCampo(tcStr, '', 'evtPgtos',      0, 0, 1, eSSimNaoToStr(FinfoFech.evtPgtos));
+  Gerador.wCampo(tcStr, '', 'evtServTm',     0, 0, 1, SimNaoToStr(FinfoFech.evtServTm));
+  Gerador.wCampo(tcStr, '', 'evtServPr',     0, 0, 1, SimNaoToStr(FinfoFech.evtServPr));
+  Gerador.wCampo(tcStr, '', 'evtAssDespRec', 0, 0, 1, SimNaoToStr(FinfoFech.evtAssDespRec));
+  Gerador.wCampo(tcStr, '', 'evtAssDespRep', 0, 0, 1, SimNaoToStr(FinfoFech.evtAssDespRep));
+  Gerador.wCampo(tcStr, '', 'evtComProd',    0, 0, 1, SimNaoToStr(FinfoFech.evtComProd));
+  Gerador.wCampo(tcStr, '', 'evtCPRB',       0, 0, 1, SimNaoToStr(FinfoFech.evtCPRB));
+  Gerador.wCampo(tcStr, '', 'evtPgtos',      0, 0, 1, SimNaoToStr(FinfoFech.evtPgtos));
   Gerador.wCampo(tcStr, '', 'evtServTm',     0, 0, 0, FinfoFech.compSemMovto);
   Gerador.wGrupo('/infoFech');
 end;

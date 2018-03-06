@@ -72,6 +72,7 @@ type
     function AddR9000: TR9000;
     function GetXml: AnsiString;
     constructor Create(AACBrReinf: TACBrDFe); reintroduce;
+
     property Items: TEventoReinfs read FEventos;
   end;
 
@@ -178,37 +179,40 @@ begin
       Items.Items[J].GerarXML(True, J + 1);
 
     Eventosxml := EmptyStr;
-    Xml := '<Reinf xmlns="http://www.reinf.esocial.gov.br/schemas/envioLoteEventos/' +
-              TACBrReinf( FACBrReinf ).Versao +'">' +
-      '<loteEventos>';
+    Xml := '<Reinf xmlns="http://www.reinf.esocial.gov.br/schemas/envioLoteEventos/v' +
+              VersaoReinfToStr(TACBrReinf( FACBrReinf ).Configuracoes.Geral.VersaoDF) +'">' +
+             '<loteEventos>';
 
-     for i := 0 to Items.Count - 1 do
-       Eventosxml := Eventosxml + '<evento id="' + Items.Items[i].Id(i + 1) + '"> ' +
-                     StringReplace(string(Items.Items[i].XML), '<' + ENCODING_UTF8 + '>', '', []) +
-                     '</evento>';
+    for i := 0 to Items.Count - 1 do
+      Eventosxml := Eventosxml +
+                    '<evento id="' + Items.Items[i].Id(i + 1) + '"> ' +
+                      StringReplace(string(Items.Items[i].XML), '<' + ENCODING_UTF8 + '>', '', []) +
+                    '</evento>';
 
     Xml := Xml + AnsiString(Eventosxml);
-    Xml := Xml +
-      '</loteEventos>' +
-    '</Reinf>';
+    Xml := Xml + '</loteEventos>' +
+              '</Reinf>';
 
     FXML := string(AnsiToUtf8(Xml));
     result := Xml;
-    if TACBrReinf(FACBrReinf).Configuracoes.Geral.Salvar then
-    begin
-      Path := TACBrReinf(FACBrReinf).Configuracoes.Arquivos.PathSalvar;
-      if (Path <> EmptyStr) and not DirectoryExists(Path) then
-        ForceDirectories(Path);
 
-      with TStringList.Create do
-      try
-        Text := FXml;
-        SaveToFile(Path + '\' + 'ReinfLoteEventos' + '-' + IntTostr(Dayof(Now)) +
+    with TACBrReinf(FACBrReinf) do
+    begin
+      if Configuracoes.Geral.Salvar then
+      begin
+        Path := PathWithDelim(Configuracoes.Arquivos.GetPathReinf(Now, ''{Configuracoes.Geral.IdEmpregador}));
+
+        with TStringList.Create do
+        try
+          Text := FXml;
+          
+          SaveToFile(Path + '\' + 'ReinfLoteEventos' + '-' + IntTostr(Dayof(Now)) +
                    IntTostr(MonthOf(Now)) + IntTostr(YearOf(Now)) + '_' +
                    IntTostr(HourOf(Now)) + IntTostr(MinuteOf(Now)) +
                    IntTostr(SecondOf(Now)) + '_' + IntTostr(MilliSecondOf(Now)) + '.xml');
-      finally
-        Free;
+        finally
+          Free;
+        end;
       end;
     end;
   end

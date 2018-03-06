@@ -67,13 +67,12 @@ implementation
 uses
   pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
 
-
 { TR2030 }
 
 procedure TR2030.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtAssocDespRec);
+  SetSchema(schevtAssocDespRec);
   FideEstab := TideEstab.Create;
 end;
 
@@ -91,9 +90,12 @@ end;
 procedure TR2030.GerarinfoideEstab;
 begin
   Gerador.wGrupo('ideEstab');
-  Gerador.wCampo(tcInt, '', 'tpInscEstab', 0, 0, 1, Ord( Self.FideEstab.tpInscEstab ));
-  Gerador.wCampo(tcStr, '', 'nrInscEstab', 0, 0, 1, Self.FideEstab.nrInscEstab);
+
+  Gerador.wCampo(tcStr, '', 'tpInscEstab', 1,  1, 1, TpInscricaoToStr( Self.FideEstab.tpInscEstab ));
+  Gerador.wCampo(tcStr, '', 'nrInscEstab', 1, 14, 1, Self.FideEstab.nrInscEstab);
+
   GerarrecursosRec(Self.FideEstab.recursosRecs);
+
   Gerador.wGrupo('/ideEstab');
 end;
 
@@ -105,12 +107,15 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('recursosRec');
-      Gerador.wCampo(tcStr, '', 'cnpjOrigRecurso', 0, 0, 1, cnpjOrigRecurso);
-      Gerador.wCampo(tcDe2, '', 'vlrTotalRec',     0, 0, 1, vlrTotalRec);
-      Gerador.wCampo(tcDe2, '', 'vlrTotalRet',     0, 0, 1, vlrTotalRet);
-      Gerador.wCampo(tcDe2, '', 'vlrTotalNRet',    0, 0, 0, vlrTotalNRet);
+
+      Gerador.wCampo(tcStr, '', 'cnpjOrigRecurso', 14, 14, 1, cnpjOrigRecurso);
+      Gerador.wCampo(tcDe2, '', 'vlrTotalRec',      1, 14, 1, vlrTotalRec);
+      Gerador.wCampo(tcDe2, '', 'vlrTotalRet',      1, 14, 1, vlrTotalRet);
+      Gerador.wCampo(tcDe2, '', 'vlrTotalNRet',     1, 14, 0, vlrTotalNRet);
+
       GerarinfoRecurso(infoRecursos);
       GerarinfoProc(infoProcs);
+
       Gerador.wGrupo('/recursosRec');
     end;
 end;
@@ -123,10 +128,12 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('infoRecurso');
-      Gerador.wCampo(tcInt, '', 'tpRepasse',   0, 0, 1, Ord( tpRepasse ));
-      Gerador.wCampo(tcStr, '', 'descRecurso', 0, 0, 1, descRecurso);
-      Gerador.wCampo(tcDe2, '', 'vlrBruto',    0, 0, 1, vlrBruto);
-      Gerador.wCampo(tcDe2, '', 'vlrRetApur',  0, 0, 1, vlrRetApur);
+
+      Gerador.wCampo(tcStr, '', 'tpRepasse',   1,  1, 1, tpRepasseToStr( tpRepasse ));
+      Gerador.wCampo(tcStr, '', 'descRecurso', 1, 20, 1, descRecurso);
+      Gerador.wCampo(tcDe2, '', 'vlrBruto',    1, 14, 1, vlrBruto);
+      Gerador.wCampo(tcDe2, '', 'vlrRetApur',  1, 14, 1, vlrRetApur);
+
       Gerador.wGrupo('/infoRecurso');
     end;
 end;
@@ -139,10 +146,12 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('infoProc');
-      Gerador.wCampo(tcInt, '', 'tpProc',  0, 0, 1, Ord( tpProc ));
-      Gerador.wCampo(tcStr, '', 'nrProc',  0, 0, 1, nrProc);
-      Gerador.wCampo(tcStr, '', 'codSusp', 0, 0, 0, codSusp);
-      Gerador.wCampo(tcDe2, '', 'vlrNRet', 0, 0, 1, vlrNRet);
+
+      Gerador.wCampo(tcStr, '', 'tpProc',  1,  1, 1, TpProcToStr( tpProc ));
+      Gerador.wCampo(tcStr, '', 'nrProc',  1, 21, 1, nrProc);
+      Gerador.wCampo(tcStr, '', 'codSusp', 1, 14, 0, codSusp);
+      Gerador.wCampo(tcDe2, '', 'vlrNRet', 1, 14, 1, vlrNRet);
+
       Gerador.wGrupo('/infoProc');
     end;
 end;

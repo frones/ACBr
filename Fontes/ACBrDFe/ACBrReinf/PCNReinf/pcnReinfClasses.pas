@@ -47,6 +47,10 @@ uses
   Classes, Sysutils, pcnConversaoReinf, Controls, Contnrs;
 
 type
+  TStatus = class;
+  IEventoReinf = Interface;
+  TregOcorrsCollection = class;
+
   { TInscricao }
   TInscricao = class(TPersistent)
   protected
@@ -68,14 +72,43 @@ type
     property IdTransmissor: string read FIdTransmissor write FIdTransmissor;
   end;
 
+  TOcorrenciasCollectionItem = class(TCollectionItem)
+  private
+    FCodigo: Integer;
+    FDescricao: String;
+    FTipo: Byte;
+    FLocalizacao: String;
+  public
+    property Codigo: Integer read FCodigo write FCodigo;
+    property Descricao: String read FDescricao write FDescricao;
+    property Tipo: Byte read FTipo write FTipo;
+    property Localizacao: String read FLocalizacao write FLocalizacao;
+  end;
+
+  TOcorrenciasCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TOcorrenciasCollectionItem;
+    procedure SetItem(Index: Integer; Value: TOcorrenciasCollectionItem);
+  public
+    constructor create(AOwner: TStatus);
+
+    function Add: TOcorrenciasCollectionItem;
+    property Items[Index: Integer]: TOcorrenciasCollectionItem read GetItem write SetItem;
+  end;
+
   { TStatus }
   TStatus = class
   private
     FcdStatus: Integer;
     FdescRetorno: string;
+    FOcorrencias: TOcorrenciasCollection;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     property cdStatus: Integer read FcdStatus write FcdStatus;
     property descRetorno: string read FdescRetorno write FdescRetorno;
+    property Ocorrencias: TOcorrenciasCollection read FOcorrencias write FOcorrencias;
   end;
 
   { TIdeContribuinte }
@@ -96,6 +129,14 @@ type
     property TpAmb: TpTpAmb read FTpAmb write FTpAmb;
     property ProcEmi: TpProcEmi read FProcEmi write FProcEmi;
     property VerProc: string read FVerProc write FVerProc;
+  end;
+
+  { TIdeEvento1 }
+  TIdeEvento1 = class(TPersistent)
+  private
+    FperApur: string;
+  public
+    property perApur: string read FperApur write FperApur;
   end;
 
   { TIdePeriodo }
@@ -121,7 +162,7 @@ type
     property IDEvento: string read FIDEvento write FIDEvento;
     property Hash: string read FHash write FHash;
   end;
-
+  (*
   { TOcorrencia }
   TOcorrencia = class
   private
@@ -145,19 +186,45 @@ type
     function New: TOcorrencia;
     property Items[Index: Integer]: TOcorrencia read GetItem write SetItem;
   end;
+  *)
 
-  { TStatusEvento }
-  TStatusEvento = class
+  TregOcorrsCollectionItem = class(TCollectionItem)
   private
-    FcdRetorno: Integer;
-    FdescRetorno: string;
-    FOcorrencias: TOcorrencias;
+    FtpOcorr: Integer;
+    FlocalErroAviso: String;
+    FcodResp: String;
+    FdscResp: String;
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-    property cdRetorno: Integer read FcdRetorno write FcdRetorno;
+    property tpOcorr: Integer read FtpOcorr write FtpOcorr;
+    property localErroAviso: String read FlocalErroAviso write FlocalErroAviso;
+    property codResp: String read FcodResp write FcodResp;
+    property dscResp: String read FdscResp write FdscResp;
+  end;
+
+  { TideStatus }
+  TideStatus = class(TPersistent)
+  private
+    FcdRetorno: String;
+    FdescRetorno: string;
+    FregOcorrs: TregOcorrsCollection;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+
+    property cdRetorno: String read FcdRetorno write FcdRetorno;
     property descRetorno: string read FdescRetorno write FdescRetorno;
-    property Ocorrencias: TOcorrencias read FOcorrencias write FOcorrencias;
+    property regOcorrs: TregOcorrsCollection read FregOcorrs write FregOcorrs;
+  end;
+
+  TregOcorrsCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TregOcorrsCollectionItem;
+    procedure SetItem(Index: Integer; Value: TregOcorrsCollectionItem);
+  public
+    constructor create(AOwner: TideStatus);
+
+    function Add: TregOcorrsCollectionItem;
+    property Items[Index: Integer]: TregOcorrsCollectionItem read GetItem write SetItem;
   end;
 
   { TdadosReciboEntrega }
@@ -167,8 +234,7 @@ type
   public
     property numeroRecibo: string read FnumeroRecibo write FnumeroRecibo;
   end;
-
-  { TEvento }
+  (*
   TEvento = class
   private
     FideContrib: TideContrib;
@@ -195,9 +261,46 @@ type
     function New: TEvento;
     property Items[Index: Integer]: TEvento read GetItem write SetItem;
   end;
+  *)
+  IEventoReinf = Interface(IInterface)
+    function GetXml : string;
+    procedure SetXml(const Value: string);
+    function GetTipoEvento : TTipoEvento;
+
+    property Xml: String read GetXml write SetXml;
+    property TipoEvento: TTipoEvento read GetTipoEvento;
+  end;
+
+  TeventoCollectionItem = class(TCollectionItem)
+  private
+    FId: string;
+    FArquivoReinf: string;
+    FTipo: string;
+    FEvento: IEventoReinf;
+  public
+    constructor create; reintroduce;
+    destructor destroy; overload;
+
+    property Id: string read FId write FId;
+    property ArquivoReinf: string read FArquivoReinf write FArquivoReinf;
+    property Tipo: string read FTipo write FTipo;
+    property Evento: IEventoReinf read FEvento write FEvento;
+  end;
+
+  { TEvento }
+  TeventoCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TeventoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TeventoCollectionItem);
+  public
+    constructor create(AOwner: TPersistent);
+
+    function Add: TeventoCollectionItem;
+    property Items[Index: Integer]: TeventoCollectionItem read GetItem write SetItem;
+  end;
 
 implementation
-
+(*
 { TStatusEvento }
 
 procedure TStatusEvento.AfterConstruction;
@@ -267,6 +370,125 @@ end;
 procedure TRetEventos.SetItem(Index: Integer; const Value: TEvento);
 begin
   Put(Index, Value);
+end;
+*)
+{ TeventoCollection }
+
+function TeventoCollection.Add: TeventoCollectionItem;
+begin
+  Result := TeventoCollectionItem(inherited Add());
+end;
+
+constructor TeventoCollection.create(AOwner: TPersistent);
+begin
+  inherited create(TeventoCollectionItem);
+end;
+
+function TeventoCollection.GetItem(
+  Index: Integer): TeventoCollectionItem;
+begin
+  Result := TeventoCollectionItem(Inherited GetItem(Index));
+end;
+
+procedure TeventoCollection.SetItem(Index: Integer;
+  Value: TeventoCollectionItem);
+begin
+  Inherited SetItem(Index, Value);
+end;
+
+{ TeventoCollectionItem }
+
+constructor TeventoCollectionItem.create;
+begin
+  FId                  := EmptyStr;
+//  FideContrib          := TideContrib.Create;
+//  FdadosRecepcaoEvento := TdadosRecepcaoEvento.Create;
+//  FStatus              := TStatusEvento.Create;
+//  FdadosReciboEntrega  := TdadosReciboEntrega.Create;
+end;
+
+destructor TeventoCollectionItem.destroy;
+begin
+//  FideContrib.Free;
+//  FdadosRecepcaoEvento.Free;
+//  FStatus.Free;
+//  FdadosReciboEntrega.Free;
+end;
+
+{ TOcorrenciasCollection }
+
+function TOcorrenciasCollection.Add: TOcorrenciasCollectionItem;
+begin
+  Result := TOcorrenciasCollectionItem(inherited Add());
+end;
+
+constructor TOcorrenciasCollection.create(AOwner: TStatus);
+begin
+  inherited create(TOcorrenciasCollectionItem);
+end;
+
+function TOcorrenciasCollection.GetItem(
+  Index: Integer): TOcorrenciasCollectionItem;
+begin
+  Result := TOcorrenciasCollectionItem(Inherited GetItem(Index));
+end;
+
+procedure TOcorrenciasCollection.SetItem(Index: Integer;
+  Value: TOcorrenciasCollectionItem);
+begin
+  Inherited SetItem(Index, Value);
+end;
+
+{ TStatus }
+
+constructor TStatus.Create;
+begin
+  FOcorrencias := TOcorrenciasCollection.create(Self);
+end;
+
+destructor TStatus.Destroy;
+begin
+  FOcorrencias.Free;
+
+  inherited;
+end;
+
+{ TideStatus }
+
+constructor TideStatus.Create;
+begin
+  FregOcorrs := TregOcorrsCollection.create(Self);
+end;
+
+destructor TideStatus.Destroy;
+begin
+  FregOcorrs.Free;
+  
+  inherited;
+end;
+
+{ TregOcorrsCollection }
+
+function TregOcorrsCollection.Add: TregOcorrsCollectionItem;
+begin
+  Result := TregOcorrsCollectionItem(inherited Add());
+end;
+
+constructor TregOcorrsCollection.create(AOwner: TideStatus);
+begin
+  inherited create(TregOcorrsCollectionItem);
+end;
+
+function TregOcorrsCollection.GetItem(
+  Index: Integer): TregOcorrsCollectionItem;
+begin
+  Result := TregOcorrsCollectionItem(Inherited GetItem(Index));
+end;
+
+procedure TregOcorrsCollection.SetItem(Index: Integer;
+  Value: TregOcorrsCollectionItem);
+begin
+  Inherited SetItem(Index, Value);
 end;
 
 end.

@@ -139,6 +139,7 @@ type
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
+
     property tpInscEstab : tpTpInsc read FtpInscEstab write FtpInscEstab;
     property nrInscEstab : String read FnrInscEstab write FnrInscEstab;
     property recursosRecs : TrecursosRecs read FrecursosRecs;

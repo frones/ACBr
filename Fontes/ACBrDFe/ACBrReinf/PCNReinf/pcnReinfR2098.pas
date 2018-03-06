@@ -62,7 +62,7 @@ uses
 procedure TR2098.AfterConstruction;
 begin
   inherited;
-  SetSchema(RSevtReabreEvPer);
+  SetSchema(schevtReabreEvPer);
 end;
 
 procedure TR2098.BeforeDestruction;

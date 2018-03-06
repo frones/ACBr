@@ -74,7 +74,7 @@ uses
 procedure TR2060.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtCPRB);
+  SetSchema(schevtCPRB);
   FinfoCPRB := TinfoCPRB.Create;
 end;
 

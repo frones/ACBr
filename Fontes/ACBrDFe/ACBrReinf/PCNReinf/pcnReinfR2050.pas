@@ -67,13 +67,12 @@ implementation
 uses
   pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
 
-
 { TR2050 }
 
 procedure TR2050.AfterConstruction;
 begin
   inherited;
-  SetSchema(rsevtComProd);
+  SetSchema(schevtComProd);
   FinfoComProd := TinfoComProd.Create;
 end;
 
@@ -91,23 +90,28 @@ end;
 procedure TR2050.GerarinfoComProd;
 begin
   Gerador.wGrupo('infoComProd');
+
   GerarideEstab;
+
   Gerador.wGrupo('/infoComProd');
 end;
 
 procedure TR2050.GerarideEstab;
 begin
   Gerador.wGrupo('ideEstab');
-  Gerador.wCampo(tcInt, '', 'tpInscEstab',       0, 0, 1, Ord( Self.FinfoComProd.ideEstab.tpInscEstab ));
-  Gerador.wCampo(tcStr, '', 'nrInscEstab',       0, 0, 1, Self.FinfoComProd.ideEstab.nrInscEstab);
-  Gerador.wCampo(tcDe2, '', 'vlrRecBrutaTotal',  0, 0, 1, Self.FinfoComProd.ideEstab.vlrRecBrutaTotal);
-  Gerador.wCampo(tcDe2, '', 'vlrCPApur',         0, 0, 1, Self.FinfoComProd.ideEstab.vlrCPApur);
-  Gerador.wCampo(tcDe2, '', 'vlrRatApur',        0, 0, 1, Self.FinfoComProd.ideEstab.vlrRatApur);
-  Gerador.wCampo(tcDe2, '', 'vlrSenarApur',      0, 0, 1, Self.FinfoComProd.ideEstab.vlrSenarApur);
-  Gerador.wCampo(tcDe2, '', 'vlrCPSuspTotal',    0, 0, 0, Self.FinfoComProd.ideEstab.vlrCPSuspTotal);
-  Gerador.wCampo(tcDe2, '', 'vlrRatSuspTotal',   0, 0, 0, Self.FinfoComProd.ideEstab.vlrRatSuspTotal);
-  Gerador.wCampo(tcDe2, '', 'vlrSenarSuspTotal', 0, 0, 0, Self.FinfoComProd.ideEstab.vlrSenarSuspTotal);
+
+  Gerador.wCampo(tcStr, '', 'tpInscEstab',       1,  1, 1, TpInscricaoToStr( Self.FinfoComProd.ideEstab.tpInscEstab ));
+  Gerador.wCampo(tcStr, '', 'nrInscEstab',       1, 14, 1, Self.FinfoComProd.ideEstab.nrInscEstab);
+  Gerador.wCampo(tcDe2, '', 'vlrRecBrutaTotal',  1, 14, 1, Self.FinfoComProd.ideEstab.vlrRecBrutaTotal);
+  Gerador.wCampo(tcDe2, '', 'vlrCPApur',         1, 14, 1, Self.FinfoComProd.ideEstab.vlrCPApur);
+  Gerador.wCampo(tcDe2, '', 'vlrRatApur',        1, 14, 1, Self.FinfoComProd.ideEstab.vlrRatApur);
+  Gerador.wCampo(tcDe2, '', 'vlrSenarApur',      1, 14, 1, Self.FinfoComProd.ideEstab.vlrSenarApur);
+  Gerador.wCampo(tcDe2, '', 'vlrCPSuspTotal',    1, 14, 0, Self.FinfoComProd.ideEstab.vlrCPSuspTotal);
+  Gerador.wCampo(tcDe2, '', 'vlrRatSuspTotal',   1, 14, 0, Self.FinfoComProd.ideEstab.vlrRatSuspTotal);
+  Gerador.wCampo(tcDe2, '', 'vlrSenarSuspTotal', 1, 14, 0, Self.FinfoComProd.ideEstab.vlrSenarSuspTotal);
+
   GerartipoCom(Self.FinfoComProd.ideEstab.tipoComs);
+
   Gerador.wGrupo('/ideEstab');
 end;
 
@@ -119,9 +123,12 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('tipoCom');
-      Gerador.wCampo(tcInt, '', 'indCom',      0, 0, 1, Ord( indCom ));
-      Gerador.wCampo(tcDe2, '', 'vlrRecBruta', 0, 0, 1, vlrRecBruta);
+
+      Gerador.wCampo(tcStr, '', 'indCom',      1,  1, 1, indComToStr( indCom ));
+      Gerador.wCampo(tcDe2, '', 'vlrRecBruta', 1, 14, 1, vlrRecBruta);
+
       GerarinfoProc(infoProcs);
+
       Gerador.wGrupo('/tipoCom');
     end;
 end;
@@ -134,12 +141,14 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('infoProc');
-      Gerador.wCampo(tcInt, '', 'tpProc',       0, 0, 1, Ord( tpProc ));
-      Gerador.wCampo(tcStr, '', 'nrProc',       0, 0, 1, nrProc);
-      Gerador.wCampo(tcStr, '', 'codSusp',      0, 0, 0, codSusp);
-      Gerador.wCampo(tcDe2, '', 'vlrCPSusp',    0, 0, 0, vlrCPSusp);
-      Gerador.wCampo(tcDe2, '', 'vlrRatSusp',   0, 0, 0, vlrRatSusp);
-      Gerador.wCampo(tcDe2, '', 'vlrSenarSusp', 0, 0, 0, vlrSenarSusp);
+
+      Gerador.wCampo(tcStr, '', 'tpProc',       1,  1, 1, TpProcToStr( tpProc ));
+      Gerador.wCampo(tcStr, '', 'nrProc',       1, 21, 1, nrProc);
+      Gerador.wCampo(tcStr, '', 'codSusp',      1, 14, 0, codSusp);
+      Gerador.wCampo(tcDe2, '', 'vlrCPSusp',    1, 14, 0, vlrCPSusp);
+      Gerador.wCampo(tcDe2, '', 'vlrRatSusp',   1, 14, 0, vlrRatSusp);
+      Gerador.wCampo(tcDe2, '', 'vlrSenarSusp', 1, 14, 0, vlrSenarSusp);
+
       Gerador.wGrupo('/infoProc');
     end;
 end;

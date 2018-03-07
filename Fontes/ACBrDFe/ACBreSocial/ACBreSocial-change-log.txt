@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2018
+-- pcesGerador / pcesS2260 --
+[-] Correção na geração do endereço do local de trabalho intermitente
+   Por: Italo Jurisato Junior
+
 06/03/2018
 -- pcesGerador --
 [-] https://www.projetoacbr.com.br/forum/topic/41891-s-2230-afastamento-tsv-alterar-svn/

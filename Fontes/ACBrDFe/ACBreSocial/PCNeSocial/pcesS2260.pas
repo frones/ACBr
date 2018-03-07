@@ -219,9 +219,9 @@ procedure TEvtConvInterm.GerarlocalTrab;
 begin
   Gerador.wGrupo('localTrab');
 
-  Gerador.wCampo(tcStr, '', 'indLocal',  1, 1, 1, self.InfoConvInterm.localTrab.indLocal);
+  Gerador.wCampo(tcStr, '', 'indLocal', 1, 1, 1, self.InfoConvInterm.localTrab.indLocal);
 
-  GerarEnderecoBrasil(self.InfoConvInterm.localTrab.localTrabInterm, 'localTrabInterm');
+  GerarEnderecoLocalTrabInterm(self.InfoConvInterm.localTrab.localTrabInterm);
 
   Gerador.wGrupo('/localTrab');
 end;
@@ -238,7 +238,7 @@ end;
 
 procedure TEvtConvInterm.GerarInfoConvInterm;
 begin
-  Gerador.wGrupo('InfoConvInterm');
+  Gerador.wGrupo('infoConvInterm');
 
   Gerador.wCampo(tcStr, '', 'codConv',   1, 30, 1, self.InfoConvInterm.codConv);
   Gerador.wCampo(tcDat, '', 'dtInicio', 10, 10, 1, self.InfoConvInterm.dtInicio);
@@ -247,7 +247,7 @@ begin
   Gerarjornada;
   GerarlocalTrab;
 
-  Gerador.wGrupo('/InfoConvInterm');
+  Gerador.wGrupo('/infoConvInterm');
 end;
 
 function TEvtConvInterm.GerarXML: boolean;

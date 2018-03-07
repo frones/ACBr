@@ -111,6 +111,7 @@ type
     procedure GerarEndereco(pEndereco: TEndereco; pExterior: boolean = false);
     procedure GerarEnderecoBrasil(pEndereco: TBrasil; const GroupName: string = 'brasil');
     procedure GerarEnderecoExterior(pEndereco: TExterior);
+    procedure GerarEnderecoLocalTrabInterm(pEndereco: TBrasil);
     procedure GerarEpi(pEpi: TEpiCollection);
     procedure GerarFGTS(pFgts: TFGTS);
     procedure GerarFiliacaoSindical(pFiliacaoSindical: TFiliacaoSindical);
@@ -1252,7 +1253,7 @@ begin
     Gerador.wCampo(tcStr, '', 'uf',          2,  2, 1, eSufToStr(pLocalTrabDom.Uf));
 
     Gerador.wGrupo('/localTrabDom');
-  end;    
+  end;
 end;
 
 procedure TeSocialEvento.GerarLocalTrabGeral(pLocalTrabGeral: TLocalTrabGeral);
@@ -1668,6 +1669,25 @@ begin
   Gerador.wCampo(tcDat, '', 'dtTransf',       10, 10, 1, pTransfDom.dtTransf);
 
   Gerador.wGrupo('/transfDom');
+end;
+
+procedure TeSocialEvento.GerarEnderecoLocalTrabInterm(pEndereco: TBrasil);
+begin
+  if NaoEstaVazio(pEndereco.TpLograd) then
+  begin
+    Gerador.wGrupo('localTrabInterm');
+
+    Gerador.wCampo(tcStr, '', 'tpLograd',  1,  4, 1, pEndereco.TpLograd);
+    Gerador.wCampo(tcStr, '', 'dscLograd', 1, 80, 1, pEndereco.DscLograd);
+    Gerador.wCampo(tcStr, '', 'nrLograd',  1, 10, 1, pEndereco.NrLograd);
+    Gerador.wCampo(tcStr, '', 'complem',   0, 30, 0,  pEndereco.Complemento);
+    Gerador.wCampo(tcStr, '', 'bairro',    0, 60, 0, pEndereco.Bairro);
+    Gerador.wCampo(tcStr, '', 'cep',       1,  8, 1, pEndereco.Cep);
+    Gerador.wCampo(tcStr, '', 'codMunic',  7,  7, 1,  pEndereco.CodMunic);
+    Gerador.wCampo(tcStr, '', 'uf',        2,  2, 1, eSufToStr(pEndereco.Uf));
+
+    Gerador.wGrupo('/localTrabInterm');
+  end;
 end;
 
 end.

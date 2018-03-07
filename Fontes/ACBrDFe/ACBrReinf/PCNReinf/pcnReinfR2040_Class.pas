@@ -52,12 +52,12 @@ type
   { TinfoProc }
   TinfoProc = class
   private
-    FtpProc  : tpTpProc;
+    FtpProc  : TtpProc;
     FnrProc  : String;
     FcodSusp : String;
     FvlrNRet : double;
   public
-    property tpProc : tpTpProc read FtpProc write FtpProc;
+    property tpProc : TtpProc read FtpProc write FtpProc;
     property nrProc : String read FnrProc write FnrProc;
     property codSusp : String read FcodSusp write FcodSusp;
     property vlrNRet : double read FvlrNRet write FvlrNRet;
@@ -133,13 +133,14 @@ type
   { TideEstab }
   TideEstab = class
   private
-    FtpInscEstab  : tpTpInsc;
+    FtpInscEstab  : TtpInsc;
     FnrInscEstab  : String;
     FrecursosReps : TrecursosReps;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property tpInscEstab : tpTpInsc read FtpInscEstab write FtpInscEstab;
+    
+    property tpInscEstab : TtpInsc read FtpInscEstab write FtpInscEstab;
     property nrInscEstab : String read FnrInscEstab write FnrInscEstab;
     property recursosReps : TrecursosReps read FrecursosReps;
   end;

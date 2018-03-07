@@ -88,7 +88,7 @@ type
 
   TRPrest = class(TPersistent)
   private
-    FtpInscTomador: tpTpInsc;
+    FtpInscTomador: TtpInsc;
     FnrInscTomador: String;
     FvlrTotalBaseRet: Double;
     FvlrTotalRetPrinc: Double;
@@ -96,7 +96,7 @@ type
     FvlrTotalNRetPrinc: Double;
     FvlrTotalNRetAdic: Double;
   public
-    property tpInscTomador: tpTpInsc read FtpInscTomador write FtpInscTomador;
+    property tpInscTomador: TtpInsc read FtpInscTomador write FtpInscTomador;
     property nrInscTomador: String read FnrInscTomador write FnrInscTomador;
     property vlrTotalBaseRet: Double read FvlrTotalBaseRet write FvlrTotalBaseRet;
     property vlrTotalRetPrinc: Double read FvlrTotalRetPrinc write FvlrTotalRetPrinc;

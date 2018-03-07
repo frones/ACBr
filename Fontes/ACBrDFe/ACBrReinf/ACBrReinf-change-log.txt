@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2018
+-- ACBrReinf --
+[*] Segunda etapa de revisões e melhorias no componente.
+   Por: Italo Jurisato Junior
+
 06/03/2018
 -- ACBrReinf --
 [*] Primeira etapa de revisões e melhorias no componente.

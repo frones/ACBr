@@ -62,22 +62,22 @@ type
   { TinfoFech }
   TinfoFech = class
   private
-    FevtServTm: tpSimNao;
-    FevtServPr: tpSimNao;
-    FevtAssDespRec: tpSimNao;
-    FevtAssDespRep: tpSimNao;
-    FevtComProd: tpSimNao;
-    FevtCPRB: tpSimNao;
-    FevtPgtos: tpSimNao;
+    FevtServTm: TtpSimNao;
+    FevtServPr: TtpSimNao;
+    FevtAssDespRec: TtpSimNao;
+    FevtAssDespRep: TtpSimNao;
+    FevtComProd: TtpSimNao;
+    FevtCPRB: TtpSimNao;
+    FevtPgtos: TtpSimNao;
     FcompSemMovto: string;
   public
-    property evtServTm: tpSimNao read FevtServTm write FevtServTm;
-    property evtServPr: tpSimNao read FevtServPr write FevtServPr;
-    property evtAssDespRec: tpSimNao read FevtAssDespRec write FevtAssDespRec;
-    property evtAssDespRep: tpSimNao read FevtAssDespRep write FevtAssDespRep;
-    property evtComProd: tpSimNao read FevtComProd write FevtComProd;
-    property evtCPRB: tpSimNao read FevtCPRB write FevtCPRB;
-    property evtPgtos: tpSimNao read FevtPgtos write FevtPgtos;
+    property evtServTm: TtpSimNao read FevtServTm write FevtServTm;
+    property evtServPr: TtpSimNao read FevtServPr write FevtServPr;
+    property evtAssDespRec: TtpSimNao read FevtAssDespRec write FevtAssDespRec;
+    property evtAssDespRep: TtpSimNao read FevtAssDespRep write FevtAssDespRep;
+    property evtComProd: TtpSimNao read FevtComProd write FevtComProd;
+    property evtCPRB: TtpSimNao read FevtCPRB write FevtCPRB;
+    property evtPgtos: TtpSimNao read FevtPgtos write FevtPgtos;
     property compSemMovto: string read FcompSemMovto write FcompSemMovto;
   end;
 

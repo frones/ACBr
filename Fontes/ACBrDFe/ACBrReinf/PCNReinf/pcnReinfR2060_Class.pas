@@ -53,12 +53,12 @@ type
   TinfoProc = class
   private
     FvlrCPRBSusp: double;
-    FtpProc: tpTpProc;
+    FtpProc: TtpProc;
     FnrProc: string;
     FcodSusp: string;
   public
     property vlrCPRBSusp: double read FvlrCPRBSusp write FvlrCPRBSusp;
-    property tpProc: tpTpProc read FtpProc write FtpProc;
+    property tpProc: TtpProc read FtpProc write FtpProc;
     property nrProc: string read FnrProc write FnrProc;
     property codSusp: string read FcodSusp write FcodSusp;
   end;
@@ -138,7 +138,7 @@ type
   { TideEstab }
   TideEstab = class
   private
-    FtpInscEstab: tpTpInsc;
+    FtpInscEstab: TtpInsc;
     FnrInscEstab: string;
     FvlrRecBrutaTotal: Double;
     FvlrCPApurTotal: Double;
@@ -149,7 +149,7 @@ type
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
 
-    property tpInscEstab: tpTpInsc read FtpInscEstab write FtpInscEstab;
+    property tpInscEstab: TtpInsc read FtpInscEstab write FtpInscEstab;
     property nrInscEstab: string read FnrInscEstab write FnrInscEstab;
     property vlrRecBrutaTotal: Double read FvlrRecBrutaTotal write FvlrRecBrutaTotal;
     property vlrCPApurTotal: Double read FvlrCPApurTotal write FvlrCPApurTotal;

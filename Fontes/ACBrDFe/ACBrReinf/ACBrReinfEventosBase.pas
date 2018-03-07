@@ -67,7 +67,7 @@ type
     FXML: AnsiString;
     FSchema: TReinfSchema;
     FErros: string;
-    FTipoOperacao: TTypeOperacao;
+    FTipoOperacao: TindOperacao;
     FNovaValidade: TIdePeriodo;
     function GetXML: AnsiString;
   protected
@@ -77,8 +77,8 @@ type
     procedure GerarIdeEvento(ApEvt: TIdeEvento; const AGeraGrupo: boolean = True);
     procedure GerarIdeContribuinte(AContribuinte: TIdeContribuinte);
     procedure GerarEventoXML; virtual; abstract; {Geração do conteudo do evento}
-    procedure GerarModoFechamento(AOperacao: TTypeOperacao);
-    procedure GerarModoAbertura(AOperacao: TTypeOperacao);
+    procedure GerarModoFechamento(AOperacao: TindOperacao);
+    procedure GerarModoAbertura(AOperacao: TindOperacao);
     procedure GerarIdePeriodo(AIdePeriodo: TidePeriodo; const GroupName: string = 'idePeriodo');
   public
     procedure AfterConstruction; override;
@@ -92,7 +92,7 @@ type
     property Gerador: TGerador  read FGerador write FGerador;
     property Schema: TReinfSchema read FSchema;
     property XML: AnsiString read GetXML write FXML;
-    property TipoOperacao: TTypeOperacao read FTipoOperacao write FTipoOperacao;
+    property TipoOperacao: TindOperacao read FTipoOperacao write FTipoOperacao;
     property NovaValidade: TIdePeriodo read FNovaValidade write FNovaValidade;
   end;
 
@@ -237,7 +237,7 @@ begin
   if Self.InheritsFrom(TEventoReinfR) then
   begin
     if ( TEventoReinfRet(Self).dtApuracao > 0 ) then
-      Gerador.wCampo(tcDat, '', 'dtApuracao', 0, 0, 1, TEventoReinfRet(Self).dtApuracao)
+      Gerador.wCampo(tcDat, '', 'dtApuracao', 10, 10, 1, TEventoReinfRet(Self).dtApuracao)
     else
       Gerador.wCampo(tcStr, '', 'perApur', 7, 7, 1, TEventoReinfRet(Self).perApur);
   end;
@@ -260,7 +260,7 @@ begin
   Gerador.wGrupo('/'+GroupName);
 end;
 
-procedure TEventoReinf.GerarModoAbertura(AOperacao: TTypeOperacao);
+procedure TEventoReinf.GerarModoAbertura(AOperacao: TindOperacao);
 begin
   case AOperacao of
     toAlteracao: Gerador.wGrupo('alteracao');
@@ -270,7 +270,7 @@ begin
   end;
 end;
 
-procedure TEventoReinf.GerarModoFechamento(AOperacao: TTypeOperacao);
+procedure TEventoReinf.GerarModoFechamento(AOperacao: TindOperacao);
 begin
   case AOperacao of
     toAlteracao: Gerador.wGrupo('/alteracao');

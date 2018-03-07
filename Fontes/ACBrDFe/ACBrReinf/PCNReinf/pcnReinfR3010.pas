@@ -99,10 +99,13 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('ideEstab');
-      Gerador.wCampo(tcInt, '', 'tpInscEstab',  0, 0, 1, Ord( tpInscEstab ));
-      Gerador.wCampo(tcStr, '', 'nrInscEstab',  0, 0, 1, nrInscEstab);
+
+      Gerador.wCampo(tcStr, '', 'tpInscEstab', 1,  1, 1, TpInscricaoToStr( tpInscEstab ));
+      Gerador.wCampo(tcStr, '', 'nrInscEstab', 1, 14, 1, nrInscEstab);
+
       Gerarboletim(boletins);
       GerarreceitaTotal(receitaTotal);
+
       Gerador.wGrupo('/ideEstab');
     end;
 end;
@@ -115,21 +118,24 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('boletim');
-      Gerador.wCampo(tcStr, '', 'nrBoletim',       0, 0, 1, nrBoletim);
-      Gerador.wCampo(tcInt, '', 'tpCompeticao',    0, 0, 1, Ord( tpCompeticao ));
-      Gerador.wCampo(tcInt, '', 'categEvento',     0, 0, 1, Ord( categEvento ));
-      Gerador.wCampo(tcStr, '', 'modDesportiva',   0, 0, 1, modDesportiva);
-      Gerador.wCampo(tcStr, '', 'nomeCompeticao',  0, 0, 1, nomeCompeticao);
-      Gerador.wCampo(tcStr, '', 'cnpjMandante',    0, 0, 1, cnpjMandante);
-      Gerador.wCampo(tcStr, '', 'cnpjVisitante',   0, 0, 0, cnpjVisitante);
-      Gerador.wCampo(tcStr, '', 'nomeVisitante',   0, 0, 0, nomeVisitante);
-      Gerador.wCampo(tcStr, '', 'pracaDesportiva', 0, 0, 1, pracaDesportiva);
-      Gerador.wCampo(tcStr, '', 'codMunic',        0, 0, 0, codMunic);
-      Gerador.wCampo(tcStr, '', 'uf',              0, 0, 1, uf);
-      Gerador.wCampo(tcInt, '', 'qtdePagantes',    0, 0, 1, qtdePagantes);
-      Gerador.wCampo(tcInt, '', 'qtdeNaoPagantes', 0, 0, 1, qtdeNaoPagantes);
+
+      Gerador.wCampo(tcStr, '', 'nrBoletim',        1,   4, 1, nrBoletim);
+      Gerador.wCampo(tcStr, '', 'tpCompeticao',     1,   1, 1, tpCompeticaoToStr( tpCompeticao ));
+      Gerador.wCampo(tcStr, '', 'categEvento',      1,   1, 1, categEventoToStr( categEvento ));
+      Gerador.wCampo(tcStr, '', 'modDesportiva',    1, 100, 1, modDesportiva);
+      Gerador.wCampo(tcStr, '', 'nomeCompeticao',   1, 100, 1, nomeCompeticao);
+      Gerador.wCampo(tcStr, '', 'cnpjMandante',    14,  14, 1, cnpjMandante);
+      Gerador.wCampo(tcStr, '', 'cnpjVisitante',   14,  14, 0, cnpjVisitante);
+      Gerador.wCampo(tcStr, '', 'nomeVisitante',    1,  80, 0, nomeVisitante);
+      Gerador.wCampo(tcStr, '', 'pracaDesportiva',  1, 100, 1, pracaDesportiva);
+      Gerador.wCampo(tcStr, '', 'codMunic',         7,   7, 0, codMunic);
+      Gerador.wCampo(tcStr, '', 'uf',               2,   2, 1, uf);
+      Gerador.wCampo(tcInt, '', 'qtdePagantes',     1,   6, 1, qtdePagantes);
+      Gerador.wCampo(tcInt, '', 'qtdeNaoPagantes',  1,   6, 1, qtdeNaoPagantes);
+
       GerarreceitaIngressos(receitaIngressoss);
       GeraroutrasReceitas(outrasReceitass);
+
       Gerador.wGrupo('/boletim');
     end;
 end;
@@ -142,13 +148,15 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('receitaIngressos');
-      Gerador.wCampo(tcInt, '', 'tpIngresso',       0, 0, 1, Ord( tpIngresso ));
-      Gerador.wCampo(tcStr, '', 'descIngr',         0, 0, 1, descIngr);
-      Gerador.wCampo(tcInt, '', 'qtdeIngrVenda',    0, 0, 1, qtdeIngrVenda);
-      Gerador.wCampo(tcInt, '', 'qtdeIngrVendidos', 0, 0, 1, qtdeIngrVendidos);
-      Gerador.wCampo(tcInt, '', 'qtdeIngrDev',      0, 0, 1, qtdeIngrDev);
-      Gerador.wCampo(tcDe2, '', 'precoIndiv',       0, 0, 1, precoIndiv);
-      Gerador.wCampo(tcDe2, '', 'vlrTotal',         0, 0, 1, vlrTotal);
+
+      Gerador.wCampo(tcStr, '', 'tpIngresso',       1,  1, 1, tpIngressoToStr( tpIngresso ));
+      Gerador.wCampo(tcStr, '', 'descIngr',         1, 30, 1, descIngr);
+      Gerador.wCampo(tcInt, '', 'qtdeIngrVenda',    1,  6, 1, qtdeIngrVenda);
+      Gerador.wCampo(tcInt, '', 'qtdeIngrVendidos', 1,  6, 1, qtdeIngrVendidos);
+      Gerador.wCampo(tcInt, '', 'qtdeIngrDev',      1,  6, 1, qtdeIngrDev);
+      Gerador.wCampo(tcDe2, '', 'precoIndiv',       1, 14, 1, precoIndiv);
+      Gerador.wCampo(tcDe2, '', 'vlrTotal',         1, 14, 1, vlrTotal);
+
       Gerador.wGrupo('/receitaIngressos');
     end;
 end;
@@ -161,9 +169,11 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('outrasReceitas');
-      Gerador.wCampo(tcInt, '', 'tpReceita',   0, 0, 1, Ord( tpReceita ));
-      Gerador.wCampo(tcDe2, '', 'vlrReceita',  0, 0, 1, vlrReceita);
-      Gerador.wCampo(tcStr, '', 'descReceita', 0, 0, 1, descReceita);
+
+      Gerador.wCampo(tcStr, '', 'tpReceita',   1,  1, 1, tpReceitaToStr( tpReceita ));
+      Gerador.wCampo(tcDe2, '', 'vlrReceita',  1, 14, 1, vlrReceita);
+      Gerador.wCampo(tcStr, '', 'descReceita', 1, 20, 1, descReceita);
+
       Gerador.wGrupo('/outrasReceitas');
     end;
 end;
@@ -171,12 +181,15 @@ end;
 procedure TR3010.GerarreceitaTotal(Item: TreceitaTotal);
 begin
   Gerador.wGrupo('receitaTotal');
-  Gerador.wCampo(tcDe2, '', 'vlrReceitaTotal',  0, 0, 1, Item.vlrReceitaTotal);
-  Gerador.wCampo(tcDe2, '', 'vlrCP',            0, 0, 1, Item.vlrCP);
-  Gerador.wCampo(tcDe2, '', 'vlrCPSuspTotal',   0, 0, 0, Item.vlrCPSuspTotal);
-  Gerador.wCampo(tcDe2, '', 'vlrReceitaClubes', 0, 0, 1, Item.vlrReceitaClubes);
-  Gerador.wCampo(tcDe2, '', 'vlrRetParc',       0, 0, 1, Item.vlrRetParc);
+
+  Gerador.wCampo(tcDe2, '', 'vlrReceitaTotal',  1, 14, 1, Item.vlrReceitaTotal);
+  Gerador.wCampo(tcDe2, '', 'vlrCP',            1, 14, 1, Item.vlrCP);
+  Gerador.wCampo(tcDe2, '', 'vlrCPSuspTotal',   1, 14, 0, Item.vlrCPSuspTotal);
+  Gerador.wCampo(tcDe2, '', 'vlrReceitaClubes', 1, 14, 1, Item.vlrReceitaClubes);
+  Gerador.wCampo(tcDe2, '', 'vlrRetParc',       1, 14, 1, Item.vlrRetParc);
+
   GerarinfoProc(item.infoProcs);
+
   Gerador.wGrupo('/receitaTotal');
 end;
 
@@ -188,10 +201,12 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('infoProc');
-      Gerador.wCampo(tcInt, '', 'tpProc',    0, 0, 1, Ord( tpProc ));
-      Gerador.wCampo(tcStr, '', 'nrProc',    0, 0, 1, nrProc);
-      Gerador.wCampo(tcStr, '', 'codSusp',   0, 0, 0, codSusp);
-      Gerador.wCampo(tcDe2, '', 'vlrCPSusp', 0, 0, 1, vlrCPSusp);
+
+      Gerador.wCampo(tcStr, '', 'tpProc',    1,  1, 1, TpProcToStr( tpProc ));
+      Gerador.wCampo(tcStr, '', 'nrProc',    1, 21, 1, nrProc);
+      Gerador.wCampo(tcStr, '', 'codSusp',   1, 14, 0, codSusp);
+      Gerador.wCampo(tcDe2, '', 'vlrCPSusp', 1, 14, 1, vlrCPSusp);
+
       Gerador.wGrupo('/infoProc');
     end;
 end;

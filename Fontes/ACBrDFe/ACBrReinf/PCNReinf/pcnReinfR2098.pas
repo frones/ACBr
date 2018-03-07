@@ -72,7 +72,9 @@ end;
 
 procedure TR2098.GerarEventoXML;
 begin
-
+  // Não existe nada a ser implementado o evento R-2098
+  // só possui so grupos ideEvento, e ideContri que são gerados pela unit
+  // ACBrReinfEventosBase
 end;
 
 end.

@@ -73,21 +73,7 @@ type
     property Layout: TLayOutReinf read FPLayout;
     property XMLEnvio: string read FXMLEnvio write FXMLEnvio;
   end;
-  (*
-  TEnvioLote = class(TReinfWebService)
-  private
-    FVersao : String;
-  protected
-    procedure DefinirServicoEAction; override;
-    procedure SalvarEnvio; override;
-    function TratarResposta: Boolean; override;
-    procedure SalvarResposta; override;
-    procedure DefinirEnvelopeSoap; override;
-    procedure DefinirDadosMsg; override;
-  public
-    constructor Create(AOwner: TACBrDFe); reintroduce;
-  end;
-  *)
+
   { TEnvioLote }
 
   TEnvioLote = class(TReinfWebService)

@@ -102,7 +102,6 @@ type
 //    procedure AfterConstruction; override;
 //    procedure BeforeDestruction; override;
 
-    procedure AssinarEventos;
     procedure LerServicoDeParams(LayOutServico: TLayOutReinf; var Versao: Double; var URL: String); overload;
     procedure SetStatus(const stNewStatus: TStatusReinf);
 
@@ -243,13 +242,7 @@ end;
 function TACBrReinf.Consultar(const AProtocolo: string): boolean;
 begin
 //Não implementado ainda  Result := WebServices.Consultar(AProtocolo);
-end;
-
-procedure TACBrReinf.AssinarEventos;
-begin
-//  Eventos.GerarXMLs;
-//  if Configuracoes.Geral.Salvar then
-//    Eventos.SaveToFiles;
+  Result := True;
 end;
 
 function TACBrReinf.NomeServicoToNomeSchema(const NomeServico: String): String;
@@ -259,7 +252,7 @@ var
 begin
   ALayout := ServicoToLayOut(ok, NomeServico);
   if ok then
-    Result := SchemaReinfToStr( LayOutToSchema( ALayout ) )
+    Result := SchemaReinfToStr( LayOutReinfToSchema( ALayout ) )
   else
     Result := '';
 end;

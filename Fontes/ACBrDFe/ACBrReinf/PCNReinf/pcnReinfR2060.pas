@@ -92,20 +92,25 @@ end;
 procedure TR2060.GerarinfoCPRB;
 begin
   Gerador.wGrupo('infoCPRB');
+
   GerarideEstab;
+
   Gerador.wGrupo('/infoCPRB');
 end;
 
 procedure TR2060.GerarideEstab;
 begin
   Gerador.wGrupo('ideEstab');
-  Gerador.wCampo(tcInt, '', 'tpInscEstab',      0, 0, 1, Self.FinfoCPRB.ideEstab.tpInscEstab);
-  Gerador.wCampo(tcStr, '', 'nrInscEstab',      0, 0, 1, Self.FinfoCPRB.ideEstab.nrInscEstab);
-  Gerador.wCampo(tcDe2, '', 'vlrRecBrutaTotal', 0, 0, 1, Self.FinfoCPRB.ideEstab.vlrRecBrutaTotal);
-  Gerador.wCampo(tcDe2, '', 'vlrCPApurTotal',   0, 0, 1, Self.FinfoCPRB.ideEstab.vlrCPApurTotal);
-  Gerador.wCampo(tcDe2, '', 'vlrCPRBSuspTotal', 0, 0, 0, Self.FinfoCPRB.ideEstab.vlrCPRBSuspTotal);
+
+  Gerador.wCampo(tcStr, '', 'tpInscEstab',      1,  1, 1, TpInscricaoToStr(Self.FinfoCPRB.ideEstab.tpInscEstab));
+  Gerador.wCampo(tcStr, '', 'nrInscEstab',      1, 14, 1, Self.FinfoCPRB.ideEstab.nrInscEstab);
+  Gerador.wCampo(tcDe2, '', 'vlrRecBrutaTotal', 1, 14, 1, Self.FinfoCPRB.ideEstab.vlrRecBrutaTotal);
+  Gerador.wCampo(tcDe2, '', 'vlrCPApurTotal',   1, 14, 1, Self.FinfoCPRB.ideEstab.vlrCPApurTotal);
+  Gerador.wCampo(tcDe2, '', 'vlrCPRBSuspTotal', 1, 14, 0, Self.FinfoCPRB.ideEstab.vlrCPRBSuspTotal);
+
   GerartipoCod(Self.FinfoCPRB.ideEstab.tipoCods);
   GerarinfoProc(Self.FinfoCPRB.ideEstab.infoProcs);
+
   Gerador.wGrupo('/ideEstab');
 end;
 
@@ -117,13 +122,16 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('tipoCod');
-      Gerador.wCampo(tcStr, '', 'codAtivEcon',     0, 0, 1, codAtivEcon);
-      Gerador.wCampo(tcDe2, '', 'vlrRecBrutaAtiv', 0, 0, 1, vlrRecBrutaAtiv);
-      Gerador.wCampo(tcDe2, '', 'vlrExcRecBruta',  0, 0, 1, vlrExcRecBruta);
-      Gerador.wCampo(tcDe2, '', 'vlrAdicRecBruta', 0, 0, 1, vlrAdicRecBruta);
-      Gerador.wCampo(tcDe2, '', 'vlrBcCPRB',       0, 0, 1, vlrBcCPRB);
-      Gerador.wCampo(tcDe2, '', 'vlrCPRBapur',     0, 0, 0, vlrCPRBapur);
+
+      Gerador.wCampo(tcStr, '', 'codAtivEcon',     1,  8, 1, codAtivEcon);
+      Gerador.wCampo(tcDe2, '', 'vlrRecBrutaAtiv', 1, 14, 1, vlrRecBrutaAtiv);
+      Gerador.wCampo(tcDe2, '', 'vlrExcRecBruta',  1, 14, 1, vlrExcRecBruta);
+      Gerador.wCampo(tcDe2, '', 'vlrAdicRecBruta', 1, 14, 1, vlrAdicRecBruta);
+      Gerador.wCampo(tcDe2, '', 'vlrBcCPRB',       1, 14, 1, vlrBcCPRB);
+      Gerador.wCampo(tcDe2, '', 'vlrCPRBapur',     1, 14, 0, vlrCPRBapur);
+
       GerartipoAjustes(tipoAjustes);
+
       Gerador.wGrupo('/tipoCod');
     end;
 end;
@@ -136,11 +144,13 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('tipoAjuste');
-      Gerador.wCampo(tcInt, '', 'tpAjuste',   0, 0, 1, ord(tpAjuste));
-      Gerador.wCampo(tcInt, '', 'codAjuste',  0, 0, 1, ord(codAjuste));
-      Gerador.wCampo(tcDe2, '', 'vlrAjuste',  0, 0, 1, vlrAjuste);
-      Gerador.wCampo(tcStr, '', 'descAjuste', 0, 0, 1, descAjuste);
-      Gerador.wCampo(tcStr, '', 'dtAjuste',   0, 0, 1, dtAjuste);
+
+      Gerador.wCampo(tcStr, '', 'tpAjuste',   1,  1, 1, tpAjusteToStr(tpAjuste));
+      Gerador.wCampo(tcStr, '', 'codAjuste',  1,  2, 1, codAjusteToStr(codAjuste));
+      Gerador.wCampo(tcDe2, '', 'vlrAjuste',  1, 14, 1, vlrAjuste);
+      Gerador.wCampo(tcStr, '', 'descAjuste', 1, 20, 1, descAjuste);
+      Gerador.wCampo(tcStr, '', 'dtAjuste',   7,  7, 1, dtAjuste);
+
       Gerador.wGrupo('/tipoAjuste');
     end;
 end;
@@ -153,10 +163,12 @@ begin
     with Items.Items[i] do
     begin
       Gerador.wGrupo('infoProc');
-      Gerador.wCampo(tcDe2, '', 'vlrCPRBSusp', 0, 0, 1, vlrCPRBSusp);
-      Gerador.wCampo(tcInt, '', 'tpProc',      0, 0, 1, ord(tpProc));
-      Gerador.wCampo(tcStr, '', 'nrProc',      0, 0, 1, nrProc);
-      Gerador.wCampo(tcStr, '', 'codSusp',     0, 0, 0, codSusp);
+
+      Gerador.wCampo(tcInt, '', 'tpProc',      1,  1, 1, TpProcToStr(tpProc));
+      Gerador.wCampo(tcStr, '', 'nrProc',      1, 21, 1, nrProc);
+      Gerador.wCampo(tcStr, '', 'codSusp',     1, 14, 0, codSusp);
+      Gerador.wCampo(tcDe2, '', 'vlrCPRBSusp', 1, 14, 1, vlrCPRBSusp);
+
       Gerador.wGrupo('/infoProc');
     end;
 end;

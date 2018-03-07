@@ -48,27 +48,27 @@ uses
 
 type
 
-  tpTpInsc                = (tiCNPJ, tiCPF, tiCNO);
+  TtpInsc                 = (tiCNPJ, tiCPF, tiCNO);
 
-  TpTpInscProp            = (tpCNPJ, tpCPF);
+  TtpInscProp             = (tpCNPJ, tpCPF);
 
   TLayOutReinf            = (LayEnvioLoteEventos, LayConsultaLoteEventos);
 
   TStatusReinf            = (stIdle, stEnvLoteEventos, stConsultaLote);
 
-  TTypeOperacao           = (toInclusao, toAlteracao, toExclusao);
+  TindOperacao            = (toInclusao, toAlteracao, toExclusao);
 
-  TpTpAmb                 = (taNenhum, taProducao, taProducaoRestritaDadosReais, taProducaoRestritaDadosFicticios);
+  TtpAmb                  = (taNenhum, taProducao, taProducaoRestritaDadosReais, taProducaoRestritaDadosFicticios);
 
-  tpSimNao                = (tpSim, tpNao);
+  TtpSimNao               = (tpSim, tpNao);
 
-  TpProcEmi               = (peNenhum, peAplicEmpregador, peAplicGoverno);
+  TprocEmi                = (peNenhum, peAplicEmpregador, peAplicGoverno);
 
   TpIndCoop               = (icNaoecooperativa, icCooperativadeTrabalho, icCooperativadeProducao, icOutrasCooperativas );
 
-  tpTpProc                = (tpAdministrativo, tpJudicial);
+  TtpProc                 = (tpAdministrativo, tpJudicial);
 
-  tpIndSusp               = (siLiminarMandadoSeguranca,
+  TindSusp                = (siLiminarMandadoSeguranca,
                              siAntecipacaoTutela,
                              siLiminarMedidaCautelar,
                              siSentencaMandadoSegurancaFavoravelContribuinte ,
@@ -122,23 +122,23 @@ type
   TtpAjuste               = (taReducao, taAcrescimo);
 
   TcodAjuste              = (
-                            caRegimeCaixa = 1,           // Ajuste da CPRB: Adoção do Regime de Caixa
-                            caDifValRecPer = 2,          // Ajuste da CPRB: Diferimento de Valores a recolher no período
-                            caAdiValDif = 3,             // Adição de valores Diferidos em Período(s) Anteriores(es)
-                            caExpDiretas = 4,            // Exportações diretas
-                            caTransInternacional = 5,    // Transporte internacional de cargas
-                            caVendasCanceladas = 6,      // Vendas canceladas e os descontos incondicionais concedidos
-                            caIPI = 7,                   // IPI, se incluído na receita bruta
-                            caICMS = 8,                  // ICMS, quando cobrado pelo vendedor dos bens ou prestador dos serviços na condição de substituto tributário
-                            caReceBruta = 9,             // Receita bruta reconhecida pela construção, recuperação, reforma, ampliação ou melhoramento da infraestrutura, cuja contrapartida seja ativo intangível representativo de direito de exploração, no caso de contratos de concessão de serviços públicos
-                            caValAporte = 10,            // O valor do aporte de recursos realizado nos termos do art 6 §3 inciso III da Lei 11.079/2004
-                            caOutras = 11                // Demais ajustes oriundos da Legislação Tributária, estorno ou outras situações
+                            caRegimeCaixa,          // Ajuste da CPRB: Adoção do Regime de Caixa
+                            caDifValRecPer,         // Ajuste da CPRB: Diferimento de Valores a recolher no período
+                            caAdiValDif,            // Adição de valores Diferidos em Período(s) Anteriores(es)
+                            caExpDiretas,           // Exportações diretas
+                            caTransInternacional,   // Transporte internacional de cargas
+                            caVendasCanceladas,     // Vendas canceladas e os descontos incondicionais concedidos
+                            caIPI,                  // IPI, se incluído na receita bruta
+                            caICMS,                 // ICMS, quando cobrado pelo vendedor dos bens ou prestador dos serviços na condição de substituto tributário
+                            caReceBruta,            // Receita bruta reconhecida pela construção, recuperação, reforma, ampliação ou melhoramento da infraestrutura, cuja contrapartida seja ativo intangível representativo de direito de exploração, no caso de contratos de concessão de serviços públicos
+                            caValAporte,            // O valor do aporte de recursos realizado nos termos do art 6 §3 inciso III da Lei 11.079/2004
+                            caOutras                // Demais ajustes oriundos da Legislação Tributária, estorno ou outras situações
                             );
 
   TindExistInfo           = (
-                            eiComMovComInfo = 1,    // Há informações de bases e/ou de tributos
-                            eiComMovSemInfo = 2,    // Há movimento, porém não há informações de bases ou de tributos
-                            eiSemMov = 3            // Não há movimento na competência
+                            eiComMovComInfo,    // Há informações de bases e/ou de tributos
+                            eiComMovSemInfo,    // Há movimento, porém não há informações de bases ou de tributos
+                            eiSemMov            // Não há movimento na competência
                             );
 
   TindEscrituracao        = ( ieNaoObrig,  // 0 - Não é obrigada
@@ -153,38 +153,38 @@ type
                               aiComAcordo  // 1 - Com acordo
                             );
 
-  TindNIF                 = ( nifCom = 1,        // 1 - Beneficiário com NIF;
-                              nifDispensado = 2, // 2 - Beneficiário dispensado do NIF
-                              nifNaoExige = 3    // 3 - País não exige NIF
+  TindNIF                 = ( nifCom,        // 1 - Beneficiário com NIF;
+                              nifDispensado, // 2 - Beneficiário dispensado do NIF
+                              nifNaoExige    // 3 - País não exige NIF
                             );
 
-  TindTpDeducao           = ( itdOficial = 1,    // 1 - Previdência Oficial
-                              itdPrivada = 2,    // 2 - Previdência Privada
-                              itdFapi = 3,       // 3 - Fapi
-                              itdFunpresp = 4,   // 4 - Funpresp
-                              itdPensao = 5,     // 5 - Pensão Alimentícia
-                              itdDependentes = 6 // 6 - Dependentes
+  TindTpDeducao           = ( itdOficial,    // 1 - Previdência Oficial
+                              itdPrivada,    // 2 - Previdência Privada
+                              itdFapi,       // 3 - Fapi
+                              itdFunpresp,   // 4 - Funpresp
+                              itdPensao,     // 5 - Pensão Alimentícia
+                              itdDependentes // 6 - Dependentes
                             );
 
-  TtpIsencao              = ( tiIsenta = 1,              // 1 - Parcela Isenta 65 anos
-                              tiAjudaCusto = 2,          // 2 - Diária e Ajuda de Custo
-                              tiIndenizaRescisao = 3,    // 3 - Indenização e rescisão de contrato, inclusive a título de PDV
-                              tiAbono = 4,               // 4 - Abono pecuniário
-                              tiOutros = 5,              // 5 - Outros (especificar)
-                              tiLucros = 6,              // 6 - Lucros e dividendos pagos a partir de 1996
-                              tiSocioMicroempresa = 7,   // 7 - Valores pagos a titular ou sócio de microempresa ou empresa de pequeno porte, exceto pró-labore e alugueis
-                              tiPensaoAposentadoria = 8, // 8 - Pensão, aposentadoria ou reforma por moléstia grave ou acidente em serviço
-                              tiBeneficiosIndiretos = 9, // 9 - Benefícios indiretos e/ou reembolso de despesas recebidas por voluntário da copa do mundo ou da copa das confederações
-                              tiBolsaEstudo = 10,        // 10 - Bolsa de estudo recebida por médico-residente
-                              tiComplAposentadoria = 11  // 11 - Complementação de aposentadoria, correspondente às contribuições efetuadas no período de 01/01/1989 a 31/12/1995
+  TtpIsencao              = ( tiIsenta,              // 1 - Parcela Isenta 65 anos
+                              tiAjudaCusto,          // 2 - Diária e Ajuda de Custo
+                              tiIndenizaRescisao,    // 3 - Indenização e rescisão de contrato, inclusive a título de PDV
+                              tiAbono,               // 4 - Abono pecuniário
+                              tiOutros,              // 5 - Outros (especificar)
+                              tiLucros,              // 6 - Lucros e dividendos pagos a partir de 1996
+                              tiSocioMicroempresa,   // 7 - Valores pagos a titular ou sócio de microempresa ou empresa de pequeno porte, exceto pró-labore e alugueis
+                              tiPensaoAposentadoria, // 8 - Pensão, aposentadoria ou reforma por moléstia grave ou acidente em serviço
+                              tiBeneficiosIndiretos, // 9 - Benefícios indiretos e/ou reembolso de despesas recebidas por voluntário da copa do mundo ou da copa das confederações
+                              tiBolsaEstudo,         // 10 - Bolsa de estudo recebida por médico-residente
+                              tiComplAposentadoria   // 11 - Complementação de aposentadoria, correspondente às contribuições efetuadas no período de 01/01/1989 a 31/12/1995
                             );
 
-  TindPerReferencia       = ( iprMensal = 1,     // 1 - Folha de Pagamento Mensal
-                              iprDecTerceiro = 2 // 2 - Folha do Décimo Terceiro Salário
+  TindPerReferencia       = ( iprMensal,     // 1 - Folha de Pagamento Mensal
+                              iprDecTerceiro // 2 - Folha do Décimo Terceiro Salário
                             );
 
-  TindOrigemRecursos      = ( iorProprios = 1, // 1 - Recursos do próprio declarante
-                              iorTerceiros = 2 // 2 - Recursos de terceiros - Declarante é a Instituição Financeira responsável apenas pelo repasse dos valores
+  TindOrigemRecursos      = ( iorProprios, // 1 - Recursos do próprio declarante
+                              iorTerceiros // 2 - Recursos de terceiros - Declarante é a Instituição Financeira responsável apenas pelo repasse dos valores
                             );
 
   TtpRepasse              = ( trPatrocinio,    // 1 - Patrocínio
@@ -199,35 +199,36 @@ type
                               icMercExterno // 9 - Comercialização direta da Produção no Mercado Externo
                             );
 
-  TtpCompeticao           = ( ttcOficial = 1,   // 1 - Oficial
-                              ttcnaoOficial = 2 // 2 - Não Oficial
+  TtpCompeticao           = ( ttcOficial,   // 1 - Oficial
+                              ttcnaoOficial // 2 - Não Oficial
                             );
 
-  TcategEvento            = ( tceInternacional = 1,  // 1 - Internacional
-                              tceInterestadual = 2,  // 2 - Interestadual
-                              tceEstadual = 3,       // 3 - Estadual
-                              tceLocal = 4           // 4 - Local
+  TcategEvento            = ( tceInternacional,  // 1 - Internacional
+                              tceInterestadual,  // 2 - Interestadual
+                              tceEstadual,       // 3 - Estadual
+                              tceLocal           // 4 - Local
                             );
 
-  TtpIngresso             = ( ttiArquibancada = 1, // 1 - Arquibancada
-                              ttiGeral = 2,        // 2 - Geral
-                              ttiCadeiras = 3,     // 3 - Cadeiras
-                              ttiCamarote = 4      // 4 - Camarote
+  TtpIngresso             = ( ttiArquibancada, // 1 - Arquibancada
+                              ttiGeral,        // 2 - Geral
+                              ttiCadeiras,     // 3 - Cadeiras
+                              ttiCamarote      // 4 - Camarote
                             );
 
-  TtpReceita              = ( ttrTransmissso = 1, // 1 - Transmissão
-                              ttrPropaganda = 2,  // 2 - Propaganda
-                              ttrPublicidade = 3, // 3 - Publicidade
-                              ttrSorteio = 4,     // 4 - Sorteio
-                              ttrOutros = 5       // 5 - Outros
+  TtpReceita              = ( ttrTransmissso, // 1 - Transmissão
+                              ttrPropaganda,  // 2 - Propaganda
+                              ttrPublicidade, // 3 - Publicidade
+                              ttrSorteio,     // 4 - Sorteio
+                              ttrOutros       // 5 - Outros
                             );
 
-   TVersaoReinf           = ( v1_02_00, // v1.2
+  TVersaoReinf            = ( v1_02_00, // v1.2
                               v1_03_00  // v1.3
                             );
 
 const
   PrefixVersao = '-v';
+
   TReinfSchemaStr : array[0..14] of string = ('evtInfoContribuinte',                 // R-1000 - Informações do Contribuinte
                                               'evtTabProcesso',                      // R-1070 - Tabela de Processos Administrativos/Judiciais
                                               'evtTomadorServicos',                  // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
@@ -263,20 +264,23 @@ const
                                                    );
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
+
 function SchemaReinfToStr(const t: TReinfSchema): String;
-function LayOutToSchema(const t: TLayOutReinf): TReinfSchema;
+
+function LayOutReinfToSchema(const t: TLayOutReinf): TReinfSchema;
 function LayOutReinfToServico(const t: TLayOutReinf): String;
+
 function VersaoReinfToDbl(const t: TVersaoReinf): Real;
 function VersaoReinfToStr(const t: TVersaoReinf): String;
 
-function TpInscricaoToStr(const t: tpTpInsc ): string;
-function StrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
+function TpInscricaoToStr(const t: TtpInsc ): string;
+function StrToTpInscricao(var ok: boolean; const s: string): TtpInsc;
 
-function tpAmbReinfToStr(const t: TptpAmb ): string;
-function StrTotpAmbReinf(var ok: boolean; const s: string): TptpAmb;
+function tpAmbReinfToStr(const t: TtpAmb ): string;
+function StrTotpAmbReinf(var ok: boolean; const s: string): TtpAmb;
 
-function procEmiReinfToStr(const t: TpprocEmi ): string;
-function StrToprocEmiReinf(var ok: boolean; const s: string): TpprocEmi;
+function procEmiReinfToStr(const t: TprocEmi ): string;
+function StrToprocEmiReinf(var ok: boolean; const s: string): TprocEmi;
 
 function indEscrituracaoToStr(const t: TindEscrituracao ): string;
 function StrToindEscrituracao(var ok: boolean; const s: string): TindEscrituracao;
@@ -290,17 +294,17 @@ function StrToindAcordoIsenMulta(var ok: boolean; const s: string): TindAcordoIs
 function indSitPJToStr(const t: TindSitPJ ): string;
 function StrToindSitPJ(var ok: boolean; const s: string): TindSitPJ;
 
-function SimNaoToStr(const t: tpSimNao): string;
-function StrToSimNao(var ok: boolean; const s: string): tpSimNao;
+function SimNaoToStr(const t: TtpSimNao): string;
+function StrToSimNao(var ok: boolean; const s: string): TtpSimNao;
 
-function TpProcToStr(const t: tpTpProc ): string;
-function StrToTpProc(var ok: boolean; const s: string): tpTpProc;
+function TpProcToStr(const t: TtpProc ): string;
+function StrToTpProc(var ok: boolean; const s: string): TtpProc;
 
 function indAutoriaToStr(const t: TindAutoria ): string;
 function StrToindAutoria(var ok: boolean; const s: string): TindAutoria;
 
-function IndSuspToStr(const t: tpIndSusp ): string;
-function StrToIndSusp(var ok: boolean; const s: string): tpIndSusp;
+function IndSuspToStr(const t: TindSusp ): string;
+function StrToIndSusp(var ok: boolean; const s: string): TindSusp;
 
 function IndRetificacaoToStr(const t: TIndRetificacao ): string;
 function StrToIndRetificacao(var ok: boolean; const s: string): TIndRetificacao;
@@ -320,7 +324,41 @@ function StrTotpRepasse(var ok: boolean; const s: string): TtpRepasse;
 function indComToStr(const t: TindCom ): string;
 function StrToindCom(var ok: boolean; const s: string): TindCom;
 
+function tpAjusteToStr(const t: TtpAjuste ): string;
+function StrTotpAjuste(var ok: boolean; const s: string): TtpAjuste;
 
+function codAjusteToStr(const t: TcodAjuste ): string;
+function StrTocodAjuste(var ok: boolean; const s: string): TcodAjuste;
+
+function indNIFToStr(const t: TindNIF ): string;
+function StrToindNIF(var ok: boolean; const s: string): TindNIF;
+
+function indTpDeducaoToStr(const t: TindTpDeducao ): string;
+function StrToindTpDeducao(var ok: boolean; const s: string): TindTpDeducao;
+
+function tpIsencaoToStr(const t: TtpIsencao ): string;
+function StrTotpIsencao(var ok: boolean; const s: string): TtpIsencao;
+
+function indPerReferenciaToStr(const t: TindPerReferencia ): string;
+function StrToindPerReferencia(var ok: boolean; const s: string): TindPerReferencia;
+
+function indOrigemRecursosToStr(const t: TindOrigemRecursos ): string;
+function StrToindOrigemRecursos(var ok: boolean; const s: string): TindOrigemRecursos;
+
+function tpCompeticaoToStr(const t: TtpCompeticao ): string;
+function StrTotpCompeticao(var ok: boolean; const s: string): TtpCompeticao;
+
+function categEventoToStr(const t: TcategEvento ): string;
+function StrTocategEvento(var ok: boolean; const s: string): TcategEvento;
+
+function tpIngressoToStr(const t: TtpIngresso ): string;
+function StrTotpIngresso(var ok: boolean; const s: string): TtpIngresso;
+
+function tpReceitaToStr(const t: TtpReceita ): string;
+function StrTotpReceita(var ok: boolean; const s: string): TtpReceita;
+
+function indExistInfoToStr(const t: TindExistInfo ): string;
+function StrToindExistInfo(var ok: boolean; const s: string): TindExistInfo;
 
 implementation
 
@@ -340,7 +378,7 @@ begin
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
-function LayOutToSchema(const t: TLayOutReinf): TReinfSchema;
+function LayOutReinfToSchema(const t: TLayOutReinf): TReinfSchema;
 begin
    case t of
     LayEnvioLoteEventos:    Result := schEnvioLoteEventos;
@@ -372,34 +410,34 @@ begin
   result := EnumeradoToStr(t, ['1_02_00', '1_03_00'], [v1_02_00, v1_03_00]);
 end;
 
-function TpInscricaoToStr(const t:tpTpInsc ): string;
+function TpInscricaoToStr(const t:TtpInsc ): string;
 begin
   result := EnumeradoToStr2(t, ['1', '2', '4'] );
 end;
 
-function StrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
+function StrToTpInscricao(var ok: boolean; const s: string): TtpInsc;
 begin
-  result := tpTpInsc( StrToEnumerado2(ok , s, ['1', '2', '4'] ) );
+  result := TtpInsc( StrToEnumerado2(ok , s, ['1', '2', '4'] ) );
 end;
 
-function tpAmbReinfToStr(const t: TptpAmb ): string;
+function tpAmbReinfToStr(const t: TtpAmb ): string;
 begin
   result := EnumeradoToStr2(t, ['0', '1', '2', '3']);
 end;
 
-function StrTotpAmbReinf(var ok: boolean; const s: string): TptpAmb;
+function StrTotpAmbReinf(var ok: boolean; const s: string): TtpAmb;
 begin
-  result := TptpAmb( StrToEnumerado2(ok , s, ['0', '1', '2', '3']) );
+  result := TtpAmb( StrToEnumerado2(ok , s, ['0', '1', '2', '3']) );
 end;
 
-function ProcEmiReinfToStr(const t: TpProcEmi ): string;
+function ProcEmiReinfToStr(const t: TprocEmi ): string;
 begin
   result := EnumeradoToStr2(t, ['0', '1', '2']);
 end;
 
-function StrToProcEmiReinf(var ok: boolean; const s: string): TpProcEmi;
+function StrToProcEmiReinf(var ok: boolean; const s: string): TprocEmi;
 begin
-  result := TpProcEmi( StrToEnumerado2(ok , s, ['0', '1', '2']) );
+  result := TprocEmi( StrToEnumerado2(ok , s, ['0', '1', '2']) );
 end;
 
 function indEscrituracaoToStr(const t: TindEscrituracao ): string;
@@ -442,24 +480,24 @@ begin
   result := TindSitPJ( StrToEnumerado2(ok , s, ['0', '1', '2', '3', '4']) );
 end;
 
-function SimNaoToStr(const t: tpSimNao): string;
+function SimNaoToStr(const t: TtpSimNao): string;
 begin
   result := EnumeradoToStr2(t, ['S', 'N']);
 end;
 
-function StrToSimNao(var ok: boolean; const s: string): tpSimNao;
+function StrToSimNao(var ok: boolean; const s: string): TtpSimNao;
 begin
-  result := tpSimNao( StrToEnumerado2(ok , s, ['S', 'N']) );
+  result := TtpSimNao( StrToEnumerado2(ok , s, ['S', 'N']) );
 end;
 
-function TpProcToStr(const t: tpTpProc ): string;
+function TpProcToStr(const t: TtpProc ): string;
 begin
   result := EnumeradoToStr2(t, ['1', '2']);
 end;
 
-function StrToTpProc(var ok: boolean; const s: string): tpTpProc;
+function StrToTpProc(var ok: boolean; const s: string): TtpProc;
 begin
-  result := tpTpProc( StrToEnumerado2(ok , s, ['1', '2']) );
+  result := TtpProc( StrToEnumerado2(ok , s, ['1', '2']) );
 end;
 
 function indAutoriaToStr(const t: TindAutoria ): string;
@@ -472,15 +510,15 @@ begin
   result := TindAutoria( StrToEnumerado2(ok , s, ['1', '2']) );
 end;
 
-function IndSuspToStr(const t: tpIndSusp ): string;
+function IndSuspToStr(const t: TindSusp ): string;
 begin
   result := EnumeradoToStr2(t, ['01', '04', '05', '08', '09', '10', '11', '12',
                                 '13', '90', '92']);
 end;
 
-function StrToIndSusp(var ok: boolean; const s: string): tpIndSusp;
+function StrToIndSusp(var ok: boolean; const s: string): TindSusp;
 begin
-  result := tpIndSusp( StrToEnumerado2(ok , s, ['01', '04', '05', '08', '09',
+  result := TindSusp( StrToEnumerado2(ok , s, ['01', '04', '05', '08', '09',
                                                 '10', '11', '12', '13', '90',
                                                 '92']) );
 end;
@@ -545,5 +583,128 @@ begin
   result := TindCom( StrToEnumerado2(ok , s, ['1', '8', '9']) );
 end;
 
+function tpAjusteToStr(const t: TtpAjuste ): string;
+begin
+  result := EnumeradoToStr2(t, ['0', '1']);
+end;
+
+function StrTotpAjuste(var ok: boolean; const s: string): TtpAjuste;
+begin
+  result := TtpAjuste( StrToEnumerado2(ok , s, ['0', '1']) );
+end;
+
+function codAjusteToStr(const t: TcodAjuste ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+                                '10', '11']);
+end;
+
+function StrTocodAjuste(var ok: boolean; const s: string): TcodAjuste;
+begin
+  result := TcodAjuste( StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5', '6',
+                                                 '7', '8', '9', '10', '11']) );
+end;
+
+function indNIFToStr(const t: TindNIF ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3']);
+end;
+
+function StrToindNIF(var ok: boolean; const s: string): TindNIF;
+begin
+  result := TindNIF( StrToEnumerado2(ok , s, ['1', '2', '3']) );
+end;
+
+function indTpDeducaoToStr(const t: TindTpDeducao ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '6']);
+end;
+
+function StrToindTpDeducao(var ok: boolean; const s: string): TindTpDeducao;
+begin
+  result := TindTpDeducao( StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5', '6']) );
+end;
+
+function tpIsencaoToStr(const t: TtpIsencao ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+                                '10', '11']);
+end;
+
+function StrTotpIsencao(var ok: boolean; const s: string): TtpIsencao;
+begin
+  result := TtpIsencao( StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5', '6',
+                                                 '7', '8', '9', '10', '11']) );
+end;
+
+function indPerReferenciaToStr(const t: TindPerReferencia ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2']);
+end;
+
+function StrToindPerReferencia(var ok: boolean; const s: string): TindPerReferencia;
+begin
+  result := TindPerReferencia( StrToEnumerado2(ok , s, ['1', '2']) );
+end;
+
+function indOrigemRecursosToStr(const t: TindOrigemRecursos ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2']);
+end;
+
+function StrToindOrigemRecursos(var ok: boolean; const s: string): TindOrigemRecursos;
+begin
+  result := TindOrigemRecursos( StrToEnumerado2(ok , s, ['1', '2']) );
+end;
+
+function tpCompeticaoToStr(const t: TtpCompeticao ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2']);
+end;
+
+function StrTotpCompeticao(var ok: boolean; const s: string): TtpCompeticao;
+begin
+  result := TtpCompeticao( StrToEnumerado2(ok , s, ['1', '2']) );
+end;
+
+function categEventoToStr(const t: TcategEvento ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4']);
+end;
+
+function StrTocategEvento(var ok: boolean; const s: string): TcategEvento;
+begin
+  result := TcategEvento( StrToEnumerado2(ok , s, ['1', '2', '3', '4']) );
+end;
+
+function tpIngressoToStr(const t: TtpIngresso ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4']);
+end;
+
+function StrTotpIngresso(var ok: boolean; const s: string): TtpIngresso;
+begin
+  result := TtpIngresso( StrToEnumerado2(ok , s, ['1', '2', '3', '4']) );
+end;
+
+function tpReceitaToStr(const t: TtpReceita ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '5']);
+end;
+
+function StrTotpReceita(var ok: boolean; const s: string): TtpReceita;
+begin
+  result := TtpReceita( StrToEnumerado2(ok , s, ['1', '2', '3', '4', '5']) );
+end;
+
+function indExistInfoToStr(const t: TindExistInfo ): string;
+begin
+  result := EnumeradoToStr2(t, ['1', '2', '3']);
+end;
+
+function StrToindExistInfo(var ok: boolean; const s: string): TindExistInfo;
+begin
+  result := TindExistInfo( StrToEnumerado2(ok , s, ['1', '2', '3']) );
+end;
 
 end.

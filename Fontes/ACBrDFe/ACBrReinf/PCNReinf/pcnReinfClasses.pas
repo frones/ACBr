@@ -54,10 +54,10 @@ type
   { TInscricao }
   TInscricao = class(TPersistent)
   protected
-    FTpInsc: tpTpInsc;
+    FTpInsc: TtpInsc;
     FNrInsc: string;
   public
-    property TpInsc: tpTpInsc read FTpInsc write FTpInsc;
+    property TpInsc: TtpInsc read FTpInsc write FTpInsc;
     property NrInsc: string read FNrInsc write FNrInsc;
   end;
 
@@ -122,12 +122,12 @@ type
   { TIdeEvento }
   TIdeEvento = class(TPersistent)
   private
-    FTpAmb: TpTpAmb;
-    FProcEmi: TpProcEmi;
+    FTpAmb: TtpAmb;
+    FProcEmi: TprocEmi;
     FVerProc: string;
   public
-    property TpAmb: TpTpAmb read FTpAmb write FTpAmb;
-    property ProcEmi: TpProcEmi read FProcEmi write FProcEmi;
+    property TpAmb: TtpAmb read FTpAmb write FTpAmb;
+    property ProcEmi: TprocEmi read FProcEmi write FProcEmi;
     property VerProc: string read FVerProc write FVerProc;
   end;
 

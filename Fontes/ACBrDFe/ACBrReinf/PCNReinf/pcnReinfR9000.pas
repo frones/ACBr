@@ -82,9 +82,11 @@ end;
 procedure TR9000.GerarEventoXML;
 begin
   Gerador.wGrupo('infoExclusao');
-  Gerador.wCampo(tcStr, '', 'tpEvento', 0, 0, 1, FinfoExclusao.tpEvento);
-  Gerador.wCampo(tcStr, '', 'nrRecEvt', 0, 0, 1, FinfoExclusao.nrRecEvt);
-  Gerador.wCampo(tcStr, '', 'perApur',  0, 0, 1, FinfoExclusao.perApur);
+
+  Gerador.wCampo(tcStr, '', 'tpEvento', 6,  6, 1, FinfoExclusao.tpEvento);
+  Gerador.wCampo(tcStr, '', 'nrRecEvt', 1, 52, 1, FinfoExclusao.nrRecEvt);
+  Gerador.wCampo(tcStr, '', 'perApur',  7, 10, 1, FinfoExclusao.perApur);
+
   Gerador.wGrupo('/infoExclusao');
 end;
 

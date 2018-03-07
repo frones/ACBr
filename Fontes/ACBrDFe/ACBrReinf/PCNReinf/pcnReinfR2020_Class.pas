@@ -52,12 +52,12 @@ type
   TideEstabPrest = class
   private
     FnrInscEstabPrest: string;
-    FtpInscEstabPrest: tpTpInsc;
+    FtpInscEstabPrest: TtpInsc;
     FideTomador: TideTomadors;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property tpInscEstabPrest: tpTpInsc read FtpInscEstabPrest write FtpInscEstabPrest default tiCNPJ;
+    property tpInscEstabPrest: TtpInsc read FtpInscEstabPrest write FtpInscEstabPrest default tiCNPJ;
     property nrInscEstabPrest: string read  FnrInscEstabPrest write FnrInscEstabPrest;
     property ideTomadors: TideTomadors read FideTomador;
   end;
@@ -78,11 +78,11 @@ type
   TideTomador = class(TideServico)
   private
     FnrInscTomador: string;
-    FtpInscTomador: tpTpInsc;
+    FtpInscTomador: TtpInsc;
     FindObra: TpindObra;
   public
     property nrInscTomador: string read FnrInscTomador write FnrInscTomador;
-    property tpInscTomador: tpTpInsc read FtpInscTomador write FtpInscTomador default tiCNPJ;
+    property tpInscTomador: TtpInsc read FtpInscTomador write FtpInscTomador default tiCNPJ;
     property indObra: TpindObra read FindObra write FindObra;
   end;
 

@@ -116,10 +116,10 @@ type
 
   TinfoEFR = class
   private
-    FideEFR: tpSimNao;
+    FideEFR: TtpSimNao;
     FcnpjEFR: string;
   public
-    property ideEFR: tpSimNao read FideEFR write FideEFR;
+    property ideEFR: TtpSimNao read FideEFR write FideEFR;
     property cnpjEFR: string read FcnpjEFR write FcnpjEFR;
   end;
 

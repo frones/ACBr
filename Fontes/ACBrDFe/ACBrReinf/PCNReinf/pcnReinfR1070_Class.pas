@@ -62,14 +62,14 @@ type
 
   TIdeProcesso = class
    private
-    FTpProc : tpTpProc;
+    FTpProc : TtpProc;
     FNrProc : string;
     FDadosProcJud: TDadosProcJud;
     FinfoSusps: TinfoSusps;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property tpProc: tpTpProc read FTpProc write FTpProc;
+    property tpProc: TtpProc read FTpProc write FTpProc;
     property nrProc: string read FNrProc write FNrProc;
     property DadosProcJud: TDadosProcJud read FDadosProcJud;
     property infoSusps: TinfoSusps read FinfoSusps;
@@ -92,14 +92,14 @@ type
   TinfoSusp = class
   private
     FcodSusp: string;
-    FIndDeposito: tpSimNao;
+    FIndDeposito: TtpSimNao;
     FDTDecisao: TDate;
-    FIndSusp: tpIndSusp;
+    FIndSusp: TIndSusp;
   public
     property codSusp: string read FcodSusp write FcodSusp;
-    property indSusp: tpIndSusp read FIndSusp write FIndSusp;
+    property indSusp: TIndSusp read FIndSusp write FIndSusp;
     property dtDecisao: TDate read FDTDecisao write FDTDecisao;
-    property indDeposito: tpSimNao read FIndDeposito write FIndDeposito;
+    property indDeposito: TtpSimNao read FIndDeposito write FIndDeposito;
   end;
 
   { TinfoSusps }

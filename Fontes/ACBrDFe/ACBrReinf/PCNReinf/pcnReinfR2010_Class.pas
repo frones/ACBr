@@ -66,14 +66,14 @@ type
   { TideEstabObra }
   TideEstabObra = class
   private
-    FtpInscEstab: tpTpInsc;
+    FtpInscEstab: TtpInsc;
     FnrInscEstab: string;
     FindObra: TpindObra;
     FidePrestServs: TidePrestServs;
   public
     procedure BeforeDestruction; override;
     procedure AfterConstruction; override;
-    property tpInscEstab: tpTpInsc read FtpInscEstab write FtpInscEstab default tiCNPJ;
+    property tpInscEstab: TtpInsc read FtpInscEstab write FtpInscEstab default tiCNPJ;
     property nrInscEstab: string read FnrInscEstab write FnrInscEstab;
     property indObra: TpindObra read FindObra write FindObra;
     property idePrestServs: TidePrestServs read FidePrestServs;
@@ -171,12 +171,12 @@ type
   { TinfoProcRetPr }
   TinfoProcRetPr = class
   private
-    FtpProcRetPrinc: tpTpProc;
+    FtpProcRetPrinc: TtpProc;
     FnrProcRetPrinc: string;
     FcodSuspPrinc: integer;
     FvalorPrinc: Extended;
   public
-    property tpProcRetPrinc: tpTpProc read  FtpProcRetPrinc write FtpProcRetPrinc;
+    property tpProcRetPrinc: TtpProc read  FtpProcRetPrinc write FtpProcRetPrinc;
     property nrProcRetPrinc: string read FnrProcRetPrinc write FnrProcRetPrinc;
     property codSuspPrinc: integer read FcodSuspPrinc write FcodSuspPrinc;
     property valorPrinc: Extended read FvalorPrinc write FvalorPrinc;

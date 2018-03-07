@@ -146,11 +146,11 @@ type
   { TideAdvogado }
   TideAdvogado = class
   private
-    FtpInscAdvogado : tpTpInsc;
+    FtpInscAdvogado : TtpInsc;
     FnrInscAdvogado : String;
     FvlrAdvogado    : double;
   public
-    property tpInscAdvogado : tpTpInsc read FtpInscAdvogado write FtpInscAdvogado;
+    property tpInscAdvogado : TtpInsc read FtpInscAdvogado write FtpInscAdvogado;
     property nrInscAdvogado : String read FnrInscAdvogado write FnrInscAdvogado;
     property vlrAdvogado : double read FvlrAdvogado write FvlrAdvogado;
   end;
@@ -183,14 +183,15 @@ type
   { TinfoRRA }
   TinfoRRA = class
   private
-    FtpProcRRA   : tpTpProc;
+    FtpProcRRA   : TtpProc;
     FnrProcRRA   : String;
     FcodSusp     : String;
     FnatRRA      : String;
     FqtdMesesRRA : Integer;    FdespProcJud : TdespProcJud;  public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property tpProcRRA : tpTpProc read FtpProcRRA write FtpProcRRA;
+
+    property tpProcRRA : TtpProc read FtpProcRRA write FtpProcRRA;
     property nrProcRRA : String read FnrProcRRA write FnrProcRRA;
     property codSusp : String read FcodSusp write FcodSusp;
     property natRRA : String read FnatRRA write FnatRRA;
@@ -288,8 +289,8 @@ type
   TpgtoPF = class
   private
     FdtPgto            : TDateTime;
-    FindSuspExig       : String;
-    FindDecTerceiro    : String;
+    FindSuspExig       : TtpSimNao;
+    FindDecTerceiro    : TtpSimNao;
     FvlrRendTributavel : double;
     FvlrIRRF           : double;
     FdetDeducoes       : TdetDeducoes;
@@ -302,9 +303,10 @@ type
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
+
     property dtPgto : TDateTime read FdtPgto write FdtPgto;
-    property indSuspExig : String read FindSuspExig write FindSuspExig;
-    property indDecTerceiro : String read FindDecTerceiro write FindDecTerceiro;
+    property indSuspExig : TtpSimNao read FindSuspExig write FindSuspExig;
+    property indDecTerceiro : TtpSimNao read FindDecTerceiro write FindDecTerceiro;
     property vlrRendTributavel : double read FvlrRendTributavel write FvlrRendTributavel;
     property vlrIRRF : double read FvlrIRRF write FvlrIRRF;
     property detDeducoes : TdetDeducoes read FdetDeducoes;
@@ -342,7 +344,7 @@ type
   { TideEstab }
   TideEstab = class
   private
-    FtpInsc : tpTpInsc;
+    FtpInsc : TtpInsc;
     FnrInsc : String;
 
     FpgtoResidBR  : TpgtoResidBR;
@@ -350,7 +352,8 @@ type
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property tpInsc : tpTpInsc read FtpInsc write FtpInsc;
+
+    property tpInsc : TtpInsc read FtpInsc write FtpInsc;
     property nrInsc : String read FnrInsc write FnrInsc;
     property pgtoResidBR: TpgtoResidBR read FpgtoResidBR write FpgtoResidBR;
     property pgtoResidExt: TpgtoResidExt read FpgtoResidExt write FpgtoResidExt;
@@ -441,7 +444,7 @@ type
   TideBenef = class
   private
     FcodPgto      : String;
-    FtpInscBenef  : tpTpInsc;
+    FtpInscBenef  : TtpInsc;
     FnrInscBenef  : String;
     FnmRazaoBenef : String;
     FinfoResidExt : TinfoResidExt;
@@ -451,7 +454,7 @@ type
     procedure BeforeDestruction; override;
 
     property codPgto: String read FcodPgto write FcodPgto;
-    property tpInscBenef: tpTpInsc read FtpInscBenef write FtpInscBenef;
+    property tpInscBenef: TtpInsc read FtpInscBenef write FtpInscBenef;
     property nrInscBenef: String read FnrInscBenef write FnrInscBenef;
     property nmRazaoBenef: String read FnmRazaoBenef write FnmRazaoBenef;
     property infoResidExt : TinfoResidExt read FinfoResidExt write FinfoResidExt;

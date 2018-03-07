@@ -102,6 +102,16 @@ type
     procedure AddDelimitedTextToListTeste_DelimitadorEspaco;
   end;
 
+  { Split }
+
+  SplitTeste = class(TTestCase)
+  published
+    procedure Split_StringVazia;
+    procedure Split_DoisItens;
+    procedure Split_SemDelimitador;
+    procedure Split_DelimitadorEspaco;
+  end;
+
   { TiraPontosTest }
 
   TiraPontosTest = class(TTestCase)
@@ -4143,9 +4153,47 @@ begin
   CheckEquals(-430000.8001, TruncTo(-430000.80016 , 4 ), 0.0001);
 end;
 
+{ SplitTeste }
+
+procedure SplitTeste.Split_DelimitadorEspaco;
+var
+  SR: TSplitResult;
+begin
+  SR := Split(' ', 'PROJETO ACBR www.projetoacbr.com.br');
+  CheckEquals(3, Length(SR));
+  CheckEquals('PROJETO', SR[0]);
+  CheckEquals('ACBR', SR[1]);
+  CheckEquals('www.projetoacbr.com.br', SR[2]);
+end;
+
+procedure SplitTeste.Split_DoisItens;
+var
+  SR: TSplitResult;
+begin
+  SR := Split(';', 'comercial@djpdv.com.br;financeiro@djpdv.com.br');
+  CheckEquals(2, Length(SR));
+  CheckEquals('comercial@djpdv.com.br', SR[0]);
+  CheckEquals('financeiro@djpdv.com.br', SR[1]);
+end;
+
+procedure SplitTeste.Split_SemDelimitador;
+var
+  SR: TSplitResult;
+begin
+  SR := Split(';', 'comercial@djpdv.com.br');
+  CheckEquals(1, Length(SR));
+  CheckEquals('comercial@djpdv.com.br', SR[0]);
+end;
+
+procedure SplitTeste.Split_StringVazia;
+begin
+  CheckEquals(0, Length(Split(';','')));
+end;
+
 initialization
 
   RegisterTest('ACBrComum.ACBrUtil', AddDelimitedTextToListTeste{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', SplitTeste{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', FindDelimiterInTextTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ChangeLineBreakTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', WorkingDaysBetweenTest{$ifndef FPC}.Suite{$endif});

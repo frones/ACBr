@@ -238,7 +238,7 @@ type
 
     procedure PreencherXMLEventos;
     procedure LimparDocsPasta;
-    function GetTipoOperacao: TTypeOperacao;
+    function GetTipoOperacao: TindOperacao;
     {Eventos}
     procedure GerarReinf1000;
     procedure GerarReinf1070;
@@ -286,7 +286,7 @@ begin
   ACBrReinf1.Configuracoes.Geral.VersaoDF := TVersaoReinf(cbVersaoDF.ItemIndex);
 
   {IdeEvento}
-  ACBrReinf1.IdeEvento.TpAmb := TpTpAmb( rgTipoAmb.ItemIndex + 1 );
+  ACBrReinf1.IdeEvento.TpAmb := TtpAmb( rgTipoAmb.ItemIndex + 1 );
   ACBrReinf1.IdeEvento.ProcEmi := peAplicEmpregador;
   ACBrReinf1.IdeEvento.VerProc := '1.0';
   {IdeEvento}
@@ -794,7 +794,7 @@ begin
 
     perApur := FormatDateTime( 'yyyy-mm', Now );
 
-    infoCPRB.ideEstab.tpInscEstab := tpTpInsc(1);
+    infoCPRB.ideEstab.tpInscEstab := TtpInsc(1);
     infoCPRB.ideEstab.nrInscEstab := edtEmitCNPJ.Text;
     infoCPRB.ideEstab.vlrRecBrutaTotal := 100;
     infoCPRB.ideEstab.vlrCPApurTotal   := 0;
@@ -973,7 +973,7 @@ begin
   end;
 end;
 
-function TForm2.GetTipoOperacao: TTypeOperacao;
+function TForm2.GetTipoOperacao: TindOperacao;
 begin
   case rdgOperacao.ItemIndex of
     1: Result := toAlteracao;
@@ -1452,8 +1452,6 @@ begin
 end;
 
 procedure TForm2.Button9Click(Sender: TObject);
-var
-  Erro, AName: String;
 begin
   with ACBrReinf1.SSL do
   begin
@@ -1463,13 +1461,6 @@ begin
      mmoRet.Lines.Add(CertCNPJ);
      mmoRet.Lines.Add(CertSubjectName);
      mmoRet.Lines.Add(CertNumeroSerie);
-    //mmoRet.Lines.LoadFromFile('c:\temp\teste2.xml');
-    //mmoRet.Lines.Text := Assinar(mmoRet.Lines.Text, 'Entrada', 'Parametros');
-    //Erro := '';
-    //if VerificarAssinatura(mmoRet.Lines.Text, Erro, 'Parametros' ) then
-    //  ShowMessage('OK')
-    //else
-    //  ShowMessage('ERRO: '+Erro)
     PageControl1.ActivePageIndex := 1;
   end;
 end;

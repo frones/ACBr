@@ -160,7 +160,11 @@ type
                              cicIncidsuspensajudicialBCSCMensal,
                              cicIncidsuspensajudicialBC13oSalario,
                              cicIncidsuspensajudicialBCSalMaternidade,
-                             cicIncidsuspensajudicialBCSalMaternidade13oSalario);
+                             cicIncidsuspensajudicialBCSalMaternidade13oSalario,
+                             cicIncidExclusivaEmpregadorMensal,
+                             cicIncidExclusivaEmpregador13osalario,
+                             cicIncidExclusivaEmpregadorSalMaternidade,
+                             cicIncidExclusivaEmpregadorSalMaternidade13oSalario);
 
   tpCodIncIRRF            = (ciiNaoeBasedeCalculo, ciiNaoeBasedeCalculoAcordoInternacional,
                              ciiOutrasVerbasNaoConsideradas,
@@ -1496,14 +1500,14 @@ end;
 
 function eSCodIncCPToStr(const t:tpCodIncCP ): string;
 begin
-  result := EnumeradoToStr2(t,[ '00', '01', '11', '12', '13', '14', '15', '16','21', '22', '23', '24', '25', '26', '31',
-                                '32', '34', '35', '51', '61', '91', '92', '93', '94' ] );
+  result := EnumeradoToStr2(t,[ '00', '01', '11', '12', '13', '14', '15', '16', '21', '22', '23', '24', '25', '26', '31',
+                                '32', '34', '35', '51', '61', '91', '92', '93', '94', '95', '96', '97', '98'] );
 end;
 
 function eSStrToCodIncCP(var ok: boolean; const s: string): tpCodIncCP;
 begin
   result := tpCodIncCP( StrToEnumerado2(ok , s,[ '00', '01', '11', '12', '13', '14', '15', '16', '21', '22', '23', '24', '25', '26', '31',
-                                                 '32', '34', '35', '51', '61', '91', '92', '93', '94' ] ));
+                                                 '32', '34', '35', '51', '61', '91', '92', '93', '94', '95', '96', '97', '98' ] ));
 end;
 
 function eSTpLocalToStr(const t: tpTpLocal ): string;

@@ -130,29 +130,12 @@ begin
      if Modelo in [etqPpla, etqPplb] then
       begin
         ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
-        ImprimirTexto(or180, 2, 2, 1, 8, 3, 'CHOC BRANCO');
+        ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'CHOC BRANCO');
         ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
         ImprimirCaixa(13,32,56,17,1,1);
         ImprimirTexto(orNormal, 3, 3, 2, 18, 35, 'R$');
         ImprimirTexto(orNormal, 3, 4, 4, 15, 50, '20,59');
       end
-     // Antigo, usando "etqDecimoDeMilimetros"
-     //if Modelo = etqPpla then
-     // begin
-     //   ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'BISCOITO MARILAN RECH 335G', 0, True);
-     //   ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'CHOC BRANCO');
-     //   ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7896003701685', 90, becSIM);
-     //   ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
-     //   ImprimirTexto(orNormal, 3, 4, 4, 15, 450, '20.59');
-     // end
-     //else if Modelo = etqPplb then
-     // begin
-     //   ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'BISCOITO MARILAN RECH 335G', 0, True);
-     //   ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'CHOC BRANCO');
-     //   ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7896003701685', 90, becSIM);
-     //   ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');
-     //   ImprimirTexto(orNormal, 3, 4, 5, 85, 515, '20.59');
-     // end
       else  //if Modelo = etqZPLII then
       begin
         ImprimirCaixa(3,3,90,5,5,0);

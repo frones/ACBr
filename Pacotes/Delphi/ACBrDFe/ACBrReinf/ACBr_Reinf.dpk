@@ -70,6 +70,7 @@ contains
   pcnReinfR3010 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR3010.pas',
   pcnReinfR3010_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR3010_Class.pas',
   pcnReinfR5001 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR5001.pas',
+  pcnReinfR5011 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR5011.pas',
   pcnReinfR9000 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR9000.pas',
   pcnReinfR9000_Class in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR9000_Class.pas',
   pcnReinfRetEventos in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfRetEventos.pas',

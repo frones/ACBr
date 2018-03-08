@@ -213,12 +213,12 @@ type
   TRCPRBCollectionItem = class(TCollectionItem)
   private
     FcodRec: Integer;
-    FvlrCPAPApurTotal: Double;
-    FvlrCPPRBSusp: Double;
+    FvlrCPApurTotal: Double;
+    FvlrCPRBSusp: Double;
   public
     property codRec: Integer read FcodRec write FcodRec;
-    property vlrCPAPApurTotal: Double read FvlrCPAPApurTotal write FvlrCPAPApurTotal;
-    property vlrCPPRBSusp: Double read FvlrCPPRBSusp write FvlrCPPRBSusp;
+    property vlrCPApurTotal: Double read FvlrCPApurTotal write FvlrCPApurTotal;
+    property vlrCPRBSusp: Double read FvlrCPRBSusp write FvlrCPRBSusp;
   end;
 
   TEvtTotal = class(TPersistent)
@@ -417,7 +417,7 @@ begin
       if leitor.rExtrai(2, 'ideEvento') <> '' then
         IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
 
-      if leitor.rExtrai(2, 'ideContrib') <> '' then
+      if leitor.rExtrai(2, 'ideContri') <> '' then
       begin
         IdeContrib.TpInsc := StrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
         IdeContrib.NrInsc := leitor.rCampo(tcStr, 'nrInsc');
@@ -502,9 +502,9 @@ begin
         while Leitor.rExtrai(3, 'RCPRB', '', i + 1) <> '' do
         begin
           infoTotal.RCPRB.Add;
-          infoTotal.RCPRB.Items[i].codRec           := leitor.rCampo(tcInt, 'codRec');
-          infoTotal.RCPRB.Items[i].vlrCPAPApurTotal := leitor.rCampo(tcDe2, 'vlrCPAPApurTotal');
-          infoTotal.RCPRB.Items[i].vlrCPPRBSusp     := leitor.rCampo(tcDe2, 'vlrCPPRBSusp');
+          infoTotal.RCPRB.Items[i].codRec         := leitor.rCampo(tcInt, 'codRec');
+          infoTotal.RCPRB.Items[i].vlrCPApurTotal := leitor.rCampo(tcDe2, 'vlrCPApurTotal');
+          infoTotal.RCPRB.Items[i].vlrCPRBSusp    := leitor.rCampo(tcDe2, 'vlrCPRBSusp');
           inc(i);
         end;
 

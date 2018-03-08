@@ -38,7 +38,7 @@ interface
 uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pcnReinfClasses, pcnConversaoReinf, pcnReinfR5001;
+  pcnReinfClasses, pcnConversaoReinf, pcnReinfR5001, pcnReinfR5011;
 
 type
 
@@ -134,6 +134,13 @@ begin
           begin
             evento.Items[i].Tipo       := 'R5001';
             evento.Items[i].Evento     := TR5001.Create;
+            evento.Items[i].Evento.Xml := evento.Items[i].ArquivoReinf;
+          end;
+
+          if pos('evtTotalContrib', evento.Items[i].ArquivoReinf) > 0 then
+          begin
+            evento.Items[i].Tipo       := 'R5011';
+            evento.Items[i].Evento     := TR5011.Create;
             evento.Items[i].Evento.Xml := evento.Items[i].ArquivoReinf;
           end;
 

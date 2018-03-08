@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2018
+-- ACBrReinf --
+[+] Implementado a leitura do evento de retorno R5011.
+   Por: Italo Jurisato Junior
+
 07/03/2018
 -- ACBrReinf --
 [*] Segunda etapa de revisões e melhorias no componente.

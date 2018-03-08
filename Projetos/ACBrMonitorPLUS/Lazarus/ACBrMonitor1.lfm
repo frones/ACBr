@@ -3445,62 +3445,245 @@ object FrmACBrMonitor: TFrmACBrMonitor
           ClientHeight = 327
           ClientWidth = 856
           ImageIndex = 15
-          object Label60: TLabel
+          object gbConfigImp: TGroupBox
             Left = 15
-            Height = 17
-            Top = 8
-            Width = 49
-            Caption = 'Modelo:'
-            ParentColor = False
-          end
-          object cbETQModelo: TComboBox
-            Left = 15
-            Height = 25
-            Top = 24
-            Width = 202
-            ItemHeight = 17
-            ItemIndex = 1
-            Items.Strings = (
-              'etqNenhum'
-              'etqPpla'
-              'etqPplb'
-              'etqZPLII'
-              'etqEpl2'
-            )
-            OnChange = cbETQModeloChange
-            TabOrder = 1
-            Text = 'etqPpla'
-          end
-          object cbETQPorta: TComboBox
-            AnchorSideTop.Control = cbETQModelo
-            AnchorSideTop.Side = asrCenter
-            Left = 231
-            Height = 25
-            Top = 24
-            Width = 90
-            ItemHeight = 17
-            ItemIndex = 0
-            Items.Strings = (
-              'LPT1'
-              'LPT2'
-              'LPT3'
-              'COM1'
-              'COM2'
-              'COM3'
-              'COM4'
-              'COM5'
-            )
-            OnChange = cbETQPortaChange
+            Height = 299
+            Top = 16
+            Width = 315
+            Caption = 'Configurações Impressora'
+            ClientHeight = 277
+            ClientWidth = 311
             TabOrder = 0
-            Text = 'LPT1'
+            object Label61: TLabel
+              Left = 14
+              Height = 17
+              Top = 17
+              Width = 34
+              Caption = 'Porta:'
+              ParentColor = False
+            end
+            object cbETQPorta: TComboBox
+              AnchorSideTop.Side = asrCenter
+              Left = 14
+              Height = 25
+              Top = 33
+              Width = 157
+              ItemHeight = 17
+              ItemIndex = 0
+              Items.Strings = (
+                'LPT1'
+                'LPT2'
+                'LPT3'
+                'COM1'
+                'COM2'
+                'COM3'
+                'COM4'
+                'COM5'
+              )
+              OnChange = cbETQPortaChange
+              TabOrder = 0
+              Text = 'LPT1'
+            end
+            object Label60: TLabel
+              Left = 184
+              Height = 17
+              Top = 17
+              Width = 49
+              Caption = 'Modelo:'
+              ParentColor = False
+            end
+            object cbETQModelo: TComboBox
+              Left = 181
+              Height = 25
+              Top = 33
+              Width = 118
+              ItemHeight = 17
+              ItemIndex = 1
+              Items.Strings = (
+                'etqNenhum'
+                'etqPpla'
+                'etqPplb'
+                'etqZPLII'
+                'etqEpl2'
+              )
+              OnChange = cbETQModeloChange
+              TabOrder = 1
+              Text = 'etqPpla'
+            end
+            object lbTemperatura: TLabel
+              AnchorSideLeft.Control = eTemperatura
+              AnchorSideBottom.Control = eTemperatura
+              Left = 14
+              Height = 17
+              Top = 62
+              Width = 78
+              Anchors = [akLeft, akBottom]
+              Caption = 'Temperatura:'
+              ParentColor = False
+            end
+            object eTemperatura: TEdit
+              Left = 14
+              Height = 25
+              Top = 79
+              Width = 157
+              TabOrder = 2
+              Text = '10'
+            end
+            object cbDPI: TComboBox
+              Left = 181
+              Height = 25
+              Top = 79
+              Width = 118
+              ItemHeight = 17
+              TabOrder = 3
+            end
+            object lbDPI: TLabel
+              AnchorSideLeft.Control = cbDPI
+              AnchorSideBottom.Control = cbDPI
+              Left = 181
+              Height = 17
+              Top = 62
+              Width = 92
+              Anchors = [akLeft, akBottom]
+              Caption = 'DPI Impressora:'
+              ParentColor = False
+            end
+            object lbMargem: TLabel
+              AnchorSideLeft.Control = eMargemEsquerda
+              AnchorSideBottom.Control = eMargemEsquerda
+              Left = 14
+              Height = 17
+              Hint = 'Utilize ''-1'' para usar velocidade padrão da impressora'
+              Top = 112
+              Width = 112
+              Anchors = [akLeft, akBottom]
+              Caption = 'Margem Esquerda:'
+              ParentColor = False
+            end
+            object eMargemEsquerda: TEdit
+              Left = 14
+              Height = 25
+              Top = 129
+              Width = 157
+              TabOrder = 4
+              Text = '10'
+            end
+            object lbTemperatura2: TLabel
+              AnchorSideLeft.Control = eVelocidade
+              AnchorSideBottom.Control = eVelocidade
+              Left = 181
+              Height = 17
+              Hint = 'Utilize ''-1'' para usar velocidade padrão da impressora'
+              Top = 112
+              Width = 68
+              Anchors = [akLeft, akBottom]
+              Caption = 'Velocidade:'
+              ParentColor = False
+            end
+            object eVelocidade: TEdit
+              Left = 181
+              Height = 25
+              Hint = 'Utilize ''-1'' para usar velocidade padrão da impressora'
+              Top = 129
+              Width = 118
+              TabOrder = 5
+              Text = '-1'
+            end
+            object eAvanco: TEdit
+              Left = 14
+              Height = 25
+              Top = 177
+              Width = 157
+              TabOrder = 6
+            end
+            object lbAvanco: TLabel
+              AnchorSideLeft.Control = eAvanco
+              AnchorSideBottom.Control = eAvanco
+              Left = 14
+              Height = 17
+              Top = 160
+              Width = 68
+              Anchors = [akLeft, akBottom]
+              Caption = 'Avanço Etq:'
+              ParentColor = False
+            end
+            object lbBackFeed: TLabel
+              AnchorSideLeft.Control = cbBackFeed
+              AnchorSideBottom.Control = cbBackFeed
+              Left = 181
+              Height = 17
+              Top = 160
+              Width = 57
+              Anchors = [akLeft, akBottom]
+              Caption = 'BackFeed:'
+              ParentColor = False
+            end
+            object cbBackFeed: TComboBox
+              Left = 181
+              Height = 25
+              Top = 177
+              Width = 118
+              ItemHeight = 17
+              TabOrder = 7
+            end
+            object lbBackFeed1: TLabel
+              AnchorSideLeft.Control = cbOrigem
+              AnchorSideBottom.Control = cbOrigem
+              Left = 181
+              Height = 17
+              Top = 208
+              Width = 47
+              Anchors = [akLeft, akBottom]
+              Caption = 'Origem:'
+              ParentColor = False
+            end
+            object cbOrigem: TComboBox
+              Left = 181
+              Height = 25
+              Top = 225
+              Width = 118
+              ItemHeight = 17
+              TabOrder = 8
+            end
+            object ckMemoria: TCheckBox
+              Left = 19
+              Height = 21
+              Top = 219
+              Width = 117
+              Caption = 'Limpar Memória'
+              Checked = True
+              State = cbChecked
+              TabOrder = 9
+            end
           end
-          object Label61: TLabel
-            Left = 231
-            Height = 17
-            Top = 8
-            Width = 34
-            Caption = 'Porta:'
-            ParentColor = False
+          object gbImpressao: TGroupBox
+            Left = 341
+            Height = 299
+            Top = 16
+            Width = 185
+            Caption = 'Impressão'
+            ClientHeight = 277
+            ClientWidth = 181
+            TabOrder = 1
+            object lbCopias: TLabel
+              AnchorSideLeft.Control = eCopias
+              AnchorSideBottom.Control = eCopias
+              Left = 16
+              Height = 17
+              Top = 16
+              Width = 60
+              Anchors = [akLeft, akBottom]
+              Caption = 'Nº Copias'
+              ParentColor = False
+            end
+            object eCopias: TEdit
+              Left = 16
+              Height = 25
+              Top = 33
+              Width = 94
+              TabOrder = 0
+              Text = '1'
+            end
           end
         end
         object tsTC: TTabSheet

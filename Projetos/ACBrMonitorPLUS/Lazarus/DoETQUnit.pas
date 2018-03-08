@@ -35,7 +35,7 @@
 unit DoETQUnit ;
 
 interface
-Uses Classes, TypInfo, SysUtils, CmdUnit,
+Uses Classes, TypInfo, SysUtils, CmdUnit, math,
   {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
 
@@ -56,14 +56,19 @@ begin
   begin
      {$IFNDEF NOGUI}FrmACBrMonitor.{$ELSE}dm.{$ENDIF}DISWorking := True ;
      try
+
         if Cmd.Metodo = 'ativar' then  { Ativa o componente ETQ }
            Ativar
 
         else if Cmd.Metodo = 'desativar' then
            Desativar
 
-        else if Cmd.Metodo = 'ativo' then
-           Cmd.Resposta := BoolToStr(Ativo, true)
+        else if Cmd.Metodo = 'iniciaretiqueta' then
+           IniciarEtiqueta
+
+        else if Cmd.Metodo = 'finalizaretiqueta' then
+           FinalizarEtiqueta(StrToIntDef(Cmd.Params(0),1),
+                             StrToIntDef(Cmd.Params(1),0) )
 
         else if Cmd.Metodo = 'modelostr' then
            Cmd.Resposta := ModeloStr
@@ -89,30 +94,68 @@ begin
         else if Cmd.Metodo = 'setavanco' then
            Avanco := StrToInt( Cmd.Params(0) )
 
+        else if Cmd.Metodo = 'unidade' then
+           Cmd.Resposta := GetEnumName(TypeInfo(TACBrETQUnidade),Integer(Unidade))
+
+        else if Cmd.Metodo = 'setunidade' then
+           Unidade := TACBrETQUnidade( StrToInt( Cmd.Params(0)))
+
+        else if Cmd.Metodo = 'dpi' then
+           Cmd.Resposta := GetEnumName(TypeInfo(TACBrETQDPI),Integer(DPI))
+
+        else if Cmd.Metodo = 'setdpi' then
+           DPI :=  TACBrETQDPI(StrToInt( Cmd.Params(0)))
+
+        else if Cmd.Metodo = 'origem' then
+           Cmd.Resposta := GetEnumName(TypeInfo(TACBrETQOrigem),Integer(Origem))
+
+        else if Cmd.Metodo = 'setorigem' then
+           Origem :=  TACBrETQOrigem(StrToInt( Cmd.Params(0)))
+
+        else if Cmd.Metodo = 'backfeed' then
+           Cmd.Resposta := GetEnumName(TypeInfo(TACBrETQBackFeed),Integer(BackFeed))
+
+        else if Cmd.Metodo = 'setbackfeed' then
+           BackFeed :=  TACBrETQBackFeed(StrToInt( Cmd.Params(0)))
+
+        else if Cmd.Metodo = 'velocidade' then
+           Cmd.Resposta := IntToStr( Velocidade )
+
+        else if Cmd.Metodo = 'setvelocidade' then
+           Velocidade := StrToInt( Cmd.Params(0) )
+
+        else if Cmd.Metodo = 'margemesquerda' then
+           Cmd.Resposta := IntToStr( MargemEsquerda )
+
+        else if Cmd.Metodo = 'setmargemesquerda' then
+           MargemEsquerda := StrToInt( Cmd.Params(0) )
+
         else if Cmd.Metodo = 'imprimirtexto' then
         begin
            ImprimirTexto(
-                         TACBrETQOrientacao(StrToInt(Cmd.Params(0))), { Orientacao }
+                         TACBrETQOrientacao(StrToInt(Cmd.Params(0))),  { Orientacao }
                          StrToInt(Trim(Cmd.Params(1))),                { Fonte }
                          StrToInt(Trim(Cmd.Params(2))),                { MultiplicadorH }
                          StrToInt(Trim(Cmd.Params(3))),                { MultiplicadorV }
                          StrToInt(Trim(Cmd.Params(4))),                { Vertical }
                          StrToInt(Trim(Cmd.Params(5))),                { Horizontal }
                          Cmd.Params(6),                                { Texto }
-                         StrToIntDef(Cmd.Params(7), 0)                 { Subfonte }
+                         StrToIntDef(Cmd.Params(7), 0),                { Subfonte }
+                         StrToBoolDef(Cmd.Params(8), False)            { ImprimirReverso }
                          );
         end
 
        else if Cmd.Metodo = 'imprimirbarras' then
            ImprimirBarras(
                          TACBrETQOrientacao(StrToInt(Cmd.Params(0))), { Orientacao }
-                         StrToChr(Trim(Cmd.Params(1)),1),        { TipoBarras }
-                         StrToChr(Trim(Cmd.Params(2)),1),        { LarguraBarraLarga }
-                         StrToChr(Trim(Cmd.Params(3)),1),        { LarguraBarraFina }
-                         StrToInt(Cmd.Params(4)),                { Vertical }
-                         StrToInt(Cmd.Params(5)),                { Horizontal }
-                         Cmd.Params(6),                          { Texto }
-                         StrToInt(Cmd.Params(7)))                { AlturaCodBarras }
+                         TACBrTipoCodBarra(StrToInt(Cmd.Params(1))),  { TipoBarras }
+                         StrToInt(Cmd.Params(2)),                     { LarguraBarraLarga }
+                         StrToInt(Cmd.Params(3)),                     { LarguraBarraFina }
+                         StrToInt(Cmd.Params(4)),                     { Vertical }
+                         StrToInt(Cmd.Params(5)),                     { Horizontal }
+                         Cmd.Params(6),                               { Texto }
+                         StrToInt(Cmd.Params(7)),                     { AlturaCodBarras }
+                         TACBrETQBarraExibeCodigo(StrToInt(Cmd.Params(8)))) { Exibe Codigo Barras }
 
         else if Cmd.Metodo = 'imprimirlinha' then
            ImprimirLinha(StrToInt(Cmd.Params(0)),   {Vertical}
@@ -129,8 +172,10 @@ begin
                          StrToInt(Cmd.Params(5)))   {EspessuraHorizontal}
 
         else if Cmd.Metodo = 'imprimir' then
-           Imprimir(StrToInt(Cmd.Params(0)),   {Copias}
-                    StrToInt(Cmd.Params(1)))   {AvancoEtq}
+           Imprimir( IfThen( NaoEstaVazio( Cmd.Params(0) ), StrToInt(Cmd.Params(0)) ,
+                             StrToIntDef(FrmACBrMonitor.eCopias.Text,1) ),   {Copias}
+                     IfThen( NaoEstaVazio( Cmd.Params(1) ), StrToInt(Cmd.Params(1)) ,
+                             StrToIntDef(FrmACBrMonitor.eAvanco.Text,0) ) )  {AvancoEtq}
 
         else if Cmd.Metodo = 'setlimparmemoria' then
            LimparMemoria := StrToBool( Trim(Cmd.Params(0)))

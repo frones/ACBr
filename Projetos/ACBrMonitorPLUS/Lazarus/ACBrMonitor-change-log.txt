@@ -44,6 +44,21 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/02/2018
+[+] Atualização Componente Etiqueta
+       Adicionado Campos para configurações Etiqueta em tela
+       Adicionado Parâmetros: ImprimirReverso / ExibeCodigo (Consultar Manual)
+       Adicionado os métodos:
+       IniciarEtiqueta / FinalizarEtiqueta
+       Unidade / SetUnidade
+       DPI / SetDPI
+       Origem / SetOrigem
+       BackFeed / SetBackFeed
+       Velodicade / SetVelocidade
+       MargemEsquerda / SetMargemEsquerda
+
+       por: José M. S. Junior
+
+27/02/2018
 [*] Adicionado Menu de Configurações - Integrador Fiscal
        Adicionado flag em DFe / WebService / NFCe (Usar Integrador Fiscal)
        Para utilização da NFCe com Integrador Fiscal

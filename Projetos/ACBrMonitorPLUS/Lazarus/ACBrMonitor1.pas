@@ -231,6 +231,10 @@ type
     bvCadastro3: TBevel;
     bvCadastro4: TBevel;
     bvCadastro5: TBevel;
+    cbBackFeed: TComboBox;
+    cbDPI: TComboBox;
+    cbETQModelo: TComboBox;
+    cbETQPorta: TComboBox;
     cbFormaEmissaoCTe: TComboBox;
     cbFormaEmissaoMDFe: TComboBox;
     cbFormaEmissaoGNRe: TComboBox;
@@ -251,8 +255,6 @@ type
     cbEmailThread: TCheckBox;
     cbEmailSsl: TCheckBox;
     cbEmailTls: TCheckBox;
-    cbETQModelo: TComboBox;
-    cbETQPorta: TComboBox;
     cbGAVAcaoAberturaAntecipada: TComboBox;
     cbGAVModelo: TComboBox;
     cbGAVPorta: TComboBox;
@@ -267,6 +269,7 @@ type
     cbModoEmissao: TCheckBox;
     cbModoXML: TCheckBox;
     cbMonitorarPasta: TCheckBox;
+    cbOrigem: TComboBox;
     cbRetirarAcentosNaResposta: TCheckBox;
     cbPreview: TCheckBox;
     cbRetirarAcentos: TCheckBox;
@@ -365,9 +368,12 @@ type
     chkExibeRazaoSocial: TCheckBox;
     cbSSLLib: TComboBox;
     CHMHelpDatabase1: TCHMHelpDatabase;
+    ckMemoria: TCheckBox;
     ckNFCeUsarIntegrador: TCheckBox;
     deBolDirRetornoRel: TDirectoryEdit;
     deUSUDataCadastro: TDateEdit;
+    eAvanco: TEdit;
+    eCopias: TEdit;
     edMFEInput: TEdit;
     edMFEOutput: TEdit;
     edtArquivoPFX: TEdit;
@@ -381,6 +387,9 @@ type
     edtEmailAssuntoNFe: TEdit;
     edTimeZoneStr: TEdit;
     edtLogoMarcaNFCeSAT: TEdit;
+    eMargemEsquerda: TEdit;
+    eTemperatura: TEdit;
+    eVelocidade: TEdit;
     fspeLarguraNFCe: TSpinEdit;
     edtNumeroSerie: TEdit;
     edtSenha: TEdit;
@@ -388,11 +397,13 @@ type
     gbExtratoSAT: TGroupBox;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
+    gbImpressao: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox5: TGroupBox;
     gbxConfigSSL: TGroupBox;
     GroupBox6: TGroupBox;
+    gbConfigImp: TGroupBox;
     Image2: TImage;
     imgLogoBanco: TImage;
     Label109: TLabel;
@@ -428,6 +439,13 @@ type
     Label209: TLabel;
     Label210: TLabel;
     Label211: TLabel;
+    Label60: TLabel;
+    Label61: TLabel;
+    lbAvanco: TLabel;
+    lbBackFeed: TLabel;
+    lbBackFeed1: TLabel;
+    lbCopias: TLabel;
+    lbDPI: TLabel;
     lblBOLLogoEmpresa: TLabel;
     Label205: TLabel;
     Label206: TLabel;
@@ -442,6 +460,9 @@ type
     lblArquivoPFX: TLabel;
     lblNumeroSerie: TLabel;
     lblSenha: TLabel;
+    lbMargem: TLabel;
+    lbTemperatura: TLabel;
+    lbTemperatura2: TLabel;
     LCaption: TLabel;
     Label141: TLabel;
     Label142: TLabel;
@@ -824,8 +845,6 @@ type
     Label58: TLabel;
     Label59: TLabel;
     Label6: TLabel;
-    Label60: TLabel;
-    Label61: TLabel;
     Label62: TLabel;
     Label63: TLabel;
     Label64: TLabel;
@@ -1552,6 +1571,12 @@ var
   Y: TSSLType;
   IFormaEmissaoNFe, IFormaEmissaoCTe, IFormaEmissaoGNRe,
     IFormaEmissaoMDFe: TpcnTipoEmissao;
+  iETQModelo : TACBrETQModelo ;
+  iETQDPI: TACBrETQDPI;
+  iETQUnidade: TACBrETQUnidade;
+  iETQBackFeed: TACBrETQBackFeed;
+  iETQOrigem: TACBrETQOrigem;
+  M: Integer;
 begin
   {$IFDEF MSWINDOWS}
   WindowState := wsMinimized;
@@ -1742,6 +1767,44 @@ begin
      cbxRegTributario.Items.Add( GetEnumName(TypeInfo(TpcnRegTrib), integer(iRegTrib) ) ) ;
 
   Application.OnException := @TrataErrosSAT ;
+
+  {ETQ}
+  cbETQModelo.Items.Clear ;
+  For iETQModelo := Low(TACBrETQModelo) to High(TACBrETQModelo) do
+     cbETQModelo.Items.Add( GetEnumName(TypeInfo(TACBrETQModelo), integer(iETQModelo) ) ) ;
+
+  cbDPI.Items.Clear ;
+  For iETQDPI := Low(TACBrETQDPI) to High(TACBrETQDPI) do
+     cbDPI.Items.Add( GetEnumName(TypeInfo(TACBrETQDPI), integer(iETQDPI) ) ) ;
+
+  cbBackFeed.Items.Clear ;
+  For iETQBackFeed := Low(TACBrETQBackFeed) to High(TACBrETQBackFeed) do
+     cbBackFeed.Items.Add( GetEnumName(TypeInfo(TACBrETQBackFeed), integer(iETQBackFeed) ) ) ;
+
+  cbOrigem.Items.Clear ;
+  For iETQOrigem := Low(TACBrETQOrigem) to High(TACBrETQOrigem) do
+     cbOrigem.Items.Add( GetEnumName(TypeInfo(TACBrETQOrigem), integer(iETQOrigem) ) ) ;
+
+  cbETQPorta.Items.Clear;
+  ACBrETQ1.Device.AcharPortasSeriais( cbETQPorta.Items );
+  cbETQPorta.Items.Add('LPT1') ;
+  cbETQPorta.Items.Add('LPT2') ;
+  cbETQPorta.Items.Add('\\localhost\L42') ;
+  cbETQPorta.Items.Add('c:\temp\ecf.txt') ;
+  cbETQPorta.Items.Add('TCP:192.168.0.31:9100') ;
+
+  For M := 0 to Printer.Printers.Count-1 do
+    cbETQPorta.Items.Add('RAW:'+Printer.Printers[M]);
+
+  cbETQPorta.Items.Add('/dev/ttyS0') ;
+  cbETQPorta.Items.Add('/dev/ttyS1') ;
+  cbETQPorta.Items.Add('/dev/ttyUSB0') ;
+  cbETQPorta.Items.Add('/dev/ttyUSB1') ;
+  cbETQPorta.Items.Add('/tmp/ecf.txt') ;
+
+  cbDPI.ItemIndex := 0;
+  cbETQModelo.ItemIndex := 3;
+  cbETQPorta.ItemIndex := 0;
 
   {PosPrinter}
   cbxModelo.Items.Clear;
@@ -3909,6 +3972,14 @@ begin
     cbETQModelo.ItemIndex := Ini.ReadInteger('ETQ', 'Modelo', 0);
     cbETQModeloChange(Self);
     cbETQPorta.Text := Ini.ReadString('ETQ', 'Porta', '');
+    cbDPI.ItemIndex := Ini.ReadInteger('ETQ', 'DPI', 0);
+    ckMemoria.Checked:= Ini.ReadBool('ETQ', 'LimparMemoria', True);
+    eTemperatura.Text:= IntToStr(Ini.ReadInteger('ETQ', 'Temperatura', 10));
+    eVelocidade.Text := IntToStr(Ini.ReadInteger('ETQ', 'Velocidade', -1));
+    cbBackFeed.ItemIndex:= Ini.ReadInteger('ETQ', 'BackFeed', -1);
+    eMargemEsquerda.Text:= IntToStr(Ini.ReadInteger('ETQ', 'MargemEsquerda', 10));
+    cbOrigem.ItemIndex  := Ini.ReadInteger('ETQ', 'Origem', -1);
+    eCopias.Text  := IntToStr(Ini.ReadInteger('ETQ', 'Copias', 1));
 
     { Parametros do TC }
     cbxTCModelo.ItemIndex := Ini.ReadInteger('TC', 'Modelo', 0);
@@ -4496,8 +4567,19 @@ begin
   with ACBrETQ1 do
   begin
     Desativar;
-    Modelo := TACBrETQModelo(cbETQModelo.ItemIndex);
-    Porta := cbETQPorta.Text;
+
+    DPI           := TACBrETQDPI(cbDPI.ItemIndex);
+    Modelo        := TACBrETQModelo(cbETQModelo.ItemIndex);
+    Porta         :=  cbETQPorta.Text;
+    LimparMemoria := ckMemoria.Checked;
+    Temperatura   := StrToIntDef(eTemperatura.Text,10);
+    Velocidade    := StrToIntDef(eVelocidade.Text,-1);
+    BackFeed      := TACBrETQBackFeed(cbBackFeed.ItemIndex);
+    Unidade       := etqMilimetros;
+    MargemEsquerda:= StrToIntDef(eMargemEsquerda.Text, 0);
+    Origem        := TACBrETQOrigem(cbOrigem.ItemIndex);
+
+
     Ativo := ETQAtivado;
   end;
 
@@ -4856,6 +4938,14 @@ begin
     { Parametros do ETQ }
     Ini.WriteInteger('ETQ', 'Modelo', cbETQModelo.ItemIndex);
     Ini.WriteString('ETQ', 'Porta', cbETQPorta.Text);
+    Ini.WriteInteger('ETQ', 'DPI', cbDPI.ItemIndex);
+    Ini.WriteBool('ETQ', 'LimparMemoria', ckMemoria.Checked);
+    Ini.WriteInteger('ETQ', 'Temperatura', StrToIntDef(eTemperatura.Text, 10));
+    Ini.WriteInteger('ETQ', 'Velocidade', StrToIntDef(eVelocidade.Text, -1));
+    Ini.WriteInteger('ETQ', 'BackFeed', cbBackFeed.ItemIndex);
+    Ini.WriteInteger('ETQ', 'MargemEsquerda', StrToIntDef(eMargemEsquerda.Text, 10));
+    Ini.WriteInteger('ETQ', 'Origem', cbOrigem.ItemIndex);
+    Ini.WriteInteger('ETQ', 'Copias', StrToIntDef(eCopias.Text, 1));
 
     { Parametros do CEP }
     Ini.WriteInteger('CEP', 'WebService', cbCEPWebService.ItemIndex);

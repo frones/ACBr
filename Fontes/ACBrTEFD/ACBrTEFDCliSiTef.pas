@@ -457,7 +457,9 @@ begin
        951: fpNFCeSAT.Bandeira          := Linha.Informacao.AsString;
        952: fpNFCeSAT.Autorizacao       := Linha.Informacao.AsString;
        953: fpNFCeSAT.CodCredenciadora  := Linha.Informacao.AsString;
-
+      1002: fpNFCeSAT.DataExpiracao     := Linha.Informacao.AsString;
+      1003: fpNFCeSAT.DonoCartao        := Linha.Informacao.AsString;
+      1190: fpNFCeSAT.UltimosQuatroDigitos := Linha.Informacao.AsString;
        4029 :
         begin
           fpDesconto   := Linha.Informacao.AsFloat;

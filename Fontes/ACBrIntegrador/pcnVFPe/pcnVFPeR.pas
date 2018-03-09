@@ -138,8 +138,14 @@ begin
 
   RespostaStatusPagamento.Clear;
 
-  RespostaStatusPagamento.Retorno := Leitor.rCampo(tcStr, 'retorno');
-  RespostaStatusPagamento.IntegradorResposta.LerResposta(Leitor.Grupo);
+  if (Pos(UpperCase('retorno'),UpperCase(Leitor.Arquivo)) <= 0) and
+     (Pos(UpperCase('Integrador'),UpperCase(Leitor.Arquivo)) <= 0) then
+    RespostaStatusPagamento.Retorno := Leitor.Arquivo
+  else
+  begin
+    RespostaStatusPagamento.Retorno := Leitor.rCampo(tcStr, 'retorno');
+    RespostaStatusPagamento.IntegradorResposta.LerResposta(Leitor.Grupo);
+  end;
 
   Result := True;
 end;

@@ -409,6 +409,10 @@ type
     FAutorizacao: String;
     FBandeira: String;
     FCNPJCredenciadora: String;
+    FDonoCartao : string;
+    FDataExpiracao : string;
+    FUltimosQuatroDigitos : string;
+
    public
     procedure Clear;
 
@@ -416,6 +420,10 @@ type
     property CNPJCredenciadora: String read FCNPJCredenciadora write FCNPJCredenciadora;
     property Bandeira: String read FBandeira write FBandeira;
     property Autorizacao: String read FAutorizacao write FAutorizacao;
+    property DonoCartao : string read FDonoCartao write FDonoCartao;
+    property DataExpiracao : string read FDataExpiracao write FDataExpiracao;
+    property UltimosQuatroDigitos : string read FUltimosQuatroDigitos write FUltimosQuatroDigitos;
+
    end;
 
 
@@ -3119,6 +3127,9 @@ begin
   FAutorizacao       := '';
   FBandeira          := '';
   FCNPJCredenciadora := '';
+  FDonoCartao        := '';
+  FDataExpiracao     := '';
+  FUltimosQuatroDigitos := '';
 end;
 
 end.

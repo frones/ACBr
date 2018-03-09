@@ -92,6 +92,7 @@ type
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FInfoComProd: TInfoComProd;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarInfoComProd;
@@ -237,6 +238,7 @@ constructor TEvtComProd.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoComProd   := TInfoComProd.create;
@@ -339,6 +341,8 @@ end;
 function TEvtComProd.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtComProd');

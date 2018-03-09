@@ -85,6 +85,8 @@ type
   private
     FIdeEvento: TIdeEvento4;
     FIdeEmpregador: TIdeEmpregador;
+    FACBreSocial: TObject;
+
     {Geradores específicos da classe}
   public
     constructor Create(AACBreSocial: TObject);overload;
@@ -145,6 +147,7 @@ constructor TEvtReabreEvPer.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento4.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
 end;
@@ -160,6 +163,8 @@ end;
 function TEvtReabreEvPer.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtReabreEvPer');

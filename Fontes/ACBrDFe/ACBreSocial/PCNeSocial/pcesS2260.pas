@@ -90,6 +90,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FInfoConvInterm: TInfoConvInterm;
+    FACBreSocial: TObject;
 
     procedure GerarInfoConvInterm;
     procedure Gerarjornada;
@@ -199,6 +200,7 @@ constructor TEvtConvInterm.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -253,6 +255,8 @@ end;
 function TEvtConvInterm.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtConvInterm');

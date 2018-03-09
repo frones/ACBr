@@ -125,6 +125,7 @@ type
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoLotacao: TInfoLotacao;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarIdeLotacao;
@@ -279,6 +280,7 @@ constructor TevtTabLotacao.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoLotacao := TInfoLotacao.Create;
@@ -388,6 +390,8 @@ end;
 function TevtTabLotacao.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabLotacao');

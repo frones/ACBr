@@ -92,6 +92,7 @@ type
     FInfoSubstPatr: TInfoSubstPatr;
     FInfoAtivConcom: TInfoAtivConcom;
     FInfoSubstPatrOpPort: TInfoSubstPatrOpPortColecao;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarInfoSubstPatr;
@@ -194,6 +195,7 @@ constructor TEvtInfoComplPer.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoSubstPatr := TInfoSubstPatr.Create;
@@ -255,6 +257,8 @@ end;
 function TEvtInfoComplPer.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtInfoComplPer');

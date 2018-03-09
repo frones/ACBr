@@ -148,8 +148,9 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeBenef: TIdeBenef;
     FDMDev: TDMDevCollection;
-    {Geradores específicos desta classe}
+    FACBreSocial: TObject;
 
+    {Geradores específicos desta classe}
     procedure GerarIdeBenef;
     procedure GerarDmDev;
     procedure GerarItens(pItens: TItensCollection);
@@ -256,6 +257,7 @@ constructor TEvtBenPrRP.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeBenef := TIdeBenef.Create;
@@ -324,6 +326,8 @@ end;
 function TEvtBenPrRP.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtBenPrRP');

@@ -90,6 +90,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeTrabSemVInc : TideTrabSemVinc;
     FInfoTSVTermino: TInfoTSVTermino;
+    FACBreSocial: TObject;
 
     procedure GerarInfoTSVTermino(obj: TInfoTSVTermino);
     procedure GerarVerbasResc(obj: TVerbasRescS2399);
@@ -205,6 +206,7 @@ constructor TEvtTSVTermino.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeTrabSemVInc := TideTrabSemVinc.Create;
@@ -284,6 +286,8 @@ end;
 function TEvtTSVTermino.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTSVTermino');

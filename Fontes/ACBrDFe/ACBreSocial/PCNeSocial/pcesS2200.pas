@@ -87,6 +87,8 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FTrabalhador: TTrabalhador;
     FVinculo: TVinculo;
+    FACBreSocial: TObject;
+
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor destroy; override;
@@ -149,6 +151,7 @@ constructor TEvtAdmissao.create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FTrabalhador := TTrabalhador.Create;
@@ -168,6 +171,8 @@ end;
 function TEvtAdmissao.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAdmissao');

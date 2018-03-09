@@ -105,6 +105,7 @@ type
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoProcesso: TInfoProcesso;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarIdeProcesso;
@@ -163,7 +164,8 @@ type
   TDadosProc = class(TPersistent)
   private
     FIndAutoria: tpindAutoria;
-    FIndMatProc:  tpIndMatProc;
+    FIndMatProc: tpIndMatProc;
+    Fobservacao: String;
     FDadosProcJud : TDadosProcJud;
     FInfoSusp: TInfoSuspCollection;
 
@@ -178,6 +180,8 @@ type
 
     property indAutoria: tpindAutoria read FIndAutoria write FIndAutoria;
     property indMatProc: tpIndMatProc read FIndMatProc write FIndMatProc;
+    property observacao: String read Fobservacao write Fobservacao;
+
     property DadosProcJud: TDadosProcJud read getDadosProcJud write FDadosProcJud;
     property infoSusp: TInfoSuspCollection read getInfoSusp write FInfoSusp;
   end;
@@ -364,6 +368,8 @@ end;
 constructor TEvtTabProcesso.Create(AACBreSocial: TObject);
 begin
   inherited;
+
+  FACBreSocial := AACBreSocial;
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoProcesso := TInfoProcesso.Create;
@@ -409,6 +415,9 @@ begin
 
   Gerador.wCampo(tcInt, '', 'indMatProc', 1, 2, 1, eSTpIndMatProcToStr(InfoProcesso.dadosProc.indMatProc));
 
+  if VersaoDF = ve02_04_02 then
+    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, InfoProcesso.dadosProc.observacao);
+
   GerarDadosProcJud;
   GerarDadosInfoSusp;
 
@@ -434,7 +443,7 @@ begin
   Gerador.wGrupo('ideProcesso');
 
   Gerador.wCampo(tcStr, '', 'tpProc',   1,  1, 1, eSTpProcessoToStr(self.InfoProcesso.ideProcesso.tpProc));
-  Gerador.wCampo(tcStr, '', 'nrProc',   1, 20, 1, self.InfoProcesso.ideProcesso.nrProc);
+  Gerador.wCampo(tcStr, '', 'nrProc',   1, 21, 1, self.InfoProcesso.ideProcesso.nrProc);
   Gerador.wCampo(tcStr, '', 'iniValid', 7,  7, 1, self.InfoProcesso.ideProcesso.iniValid);
   Gerador.wCampo(tcStr, '', 'fimValid', 7,  7, 0, self.InfoProcesso.ideProcesso.fimValid);
 
@@ -444,6 +453,8 @@ end;
 function TEvtTabProcesso.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabProcesso');

@@ -96,6 +96,7 @@ type
     FIdeVinculo: TIdeVinculo;
     FInsalPeric: TInsalPeric;
     FAposentEsp: TAposentEsp;
+    FACBreSocial: TObject;
 
     procedure GerarInsalPeric(objInsalPeric: TInsalPeric);
     procedure GerarIniInsalPeric(objIniInsPer: TiniInsalPeric);
@@ -289,6 +290,7 @@ constructor TEvtInsApo.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -445,6 +447,8 @@ end;
 function TEvtInsApo.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtInsApo');

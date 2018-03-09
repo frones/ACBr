@@ -88,6 +88,7 @@ type
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FRemunAvNp: TRemunAvNPColecao;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarRemunAvNP(pRemunAvNPColecao: TRemunAvNPColecao);
@@ -187,6 +188,7 @@ constructor TEvtContratAvNP.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FRemunAvNp     := TRemunAvNPColecao.Create(FRemunAvNp);
@@ -230,6 +232,8 @@ end;
 function TEvtContratAvNP.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtContratAvNP');

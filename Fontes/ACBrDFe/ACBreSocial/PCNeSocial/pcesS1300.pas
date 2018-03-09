@@ -88,6 +88,7 @@ type
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FContribSind: TContribSindColecao;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarContribSind();
@@ -173,6 +174,7 @@ constructor TEvtContrSindPatr.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FContribSind := TContribSindColecao.Create;
@@ -209,6 +211,8 @@ end;
 function TEvtContrSindPatr.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtContrSindPatr');

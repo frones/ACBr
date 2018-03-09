@@ -93,6 +93,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FinfoExpRisco: TinfoExpRisco;
+    FACBreSocial: TObject;
 
     procedure GerarInfoExpRisco(objInfoExpRisco: TInfoExpRisco);
     procedure GerariniExpRisco(objiniExpRisco: TiniExpRisco);
@@ -240,6 +241,7 @@ constructor TEvtExpRisco.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -446,6 +448,8 @@ end;
 function TEvtExpRisco.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtExpRisco');

@@ -97,6 +97,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeTrabalhador: TideTrabalhador2;
     FCat: TCat;
+    FACBreSocial: TObject;
 
     procedure GerarIdeRegistrador;
     procedure GerarCAT;
@@ -382,6 +383,7 @@ constructor TEvtCAT.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeRegistrador := TIdeRegistrador.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
@@ -528,6 +530,8 @@ end;
 function TEvtCAT.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtCAT');

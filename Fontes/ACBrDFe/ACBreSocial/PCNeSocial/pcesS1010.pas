@@ -104,6 +104,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeEvento: TIdeEvento;
     FInfoRubrica: TInfoRubrica;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarIdeRubrica;
@@ -281,6 +282,7 @@ constructor TEvtTabRubrica.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeEvento := TIdeEvento.Create;
   FInfoRubrica := TInfoRubrica.Create;
@@ -371,6 +373,8 @@ end;
 function TEvtTabRubrica.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabRubrica');

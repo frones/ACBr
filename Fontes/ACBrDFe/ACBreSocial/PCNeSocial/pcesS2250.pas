@@ -90,6 +90,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FInfoAvPrevio: TInfoAvPrevio;
+    FACBreSocial: TObject;
 
     procedure GerarInfoAvPrevio;
     procedure GerarDetAvPrevio;
@@ -195,6 +196,7 @@ constructor TEvtAvPrevio.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -251,6 +253,8 @@ end;
 function TEvtAvPrevio.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAvPrevio');

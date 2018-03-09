@@ -97,6 +97,7 @@ type
     FIdeEmpregador : TIdeEmpregador;
     FIdeVinculo : TIdeVinculo;
     FinfoAfastamento : TinfoAfastamento;
+    FACBreSocial: TObject;
 
     procedure GerarInfoAfastamento(objInfoAfast: TinfoAfastamento);
     procedure GerarInfoAtestado(objInfoAtestado: TinfoAtestado);
@@ -318,6 +319,7 @@ constructor TEvtAfastTemp.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -419,6 +421,8 @@ end;
 function TEvtAfastTemp.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAfastTemp');

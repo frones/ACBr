@@ -90,6 +90,7 @@ type
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoHorContratual: TInfoHorContratual;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarDadosHorContratual;
@@ -265,6 +266,7 @@ constructor TEvtTabHorTur.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoHorContratual := TInfoHorContratual.Create;
@@ -335,6 +337,8 @@ end;
 function TEvtTabHorTur.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabHorTur');

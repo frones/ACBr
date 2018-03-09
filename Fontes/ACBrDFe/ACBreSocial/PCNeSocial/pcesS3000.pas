@@ -41,6 +41,8 @@
 |*  - Doação do componente para o Projeto ACBr
 |* 01/03/2016: Guilherme Costa
 |*  - Passado o namespace para geração do cabeçalho
+|* 07/03/2018:Edmar Frazão
+|* Linha 220 Somente pode enviar CPF ou Periodo não os dois ao mesmo tempo
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -86,6 +88,7 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoExclusao: TInfoExclusao;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
   public
@@ -185,6 +188,7 @@ constructor TEvtExclusao.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoExclusao := TInfoExclusao.Create;
@@ -202,6 +206,8 @@ end;
 function TEvtExclusao.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtExclusao');
@@ -215,8 +221,10 @@ begin
     Gerador.wCampo(tcStr, '', 'tpEvento', 1,  6, 1, TipoEventoToStr(self.InfoExclusao.tpEvento));
     Gerador.wCampo(tcStr, '', 'nrRecEvt', 1, 40, 1, self.InfoExclusao.nrRecEvt);
 
-    GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True);
-    GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto);
+    if self.InfoExclusao.IdeFolhaPagto.perApur = '' then
+      GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True)
+    else
+      GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto);
 
     Gerador.wGrupo('/infoExclusao');
     Gerador.wGrupo('/evtExclusao');

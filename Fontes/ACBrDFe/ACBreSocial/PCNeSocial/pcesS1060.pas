@@ -92,6 +92,7 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoAmbiente: TInfoAmbiente;
+    FACBreSocial: TObject;
 
     procedure GerarIdeAmbiente;
     procedure GerarFatorRisco;
@@ -315,6 +316,7 @@ constructor TEvtTabAmbiente.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoAmbiente := TInfoAmbiente.create;
@@ -377,6 +379,8 @@ end;
 function TEvtTabAmbiente.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabAmbiente');

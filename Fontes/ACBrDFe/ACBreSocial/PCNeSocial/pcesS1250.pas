@@ -41,6 +41,8 @@
 |*  - Doação do componente para o Projeto ACBr
 |* 01/03/2016: Guilherme Costa
 |*  - Alterações para validação com o XSD
+|* 07/03/2018:Edmar Frazão
+|*  Linha 335 conversão eSIdAquisStr para string
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -91,6 +93,7 @@ type
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FInfoAquisProd: TInfoAquisProd;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarInfoAquisProd;
@@ -243,6 +246,7 @@ constructor TEvtAqProd.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoAquisProd := TInfoAquisProd.create;
@@ -332,7 +336,7 @@ begin
   begin
     Gerador.wGrupo('tpAquis');
 
-    Gerador.wCampo(tcStr, '', 'indAquis',    1,  1, 1, InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].indAquis);
+    Gerador.wCampo(tcStr, '', 'indAquis',    1,  1, 1, eSIdAquisStr(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].indAquis));
     Gerador.wCampo(tcDe2, '', 'vlrTotAquis', 1, 14, 1, InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].vlrTotAquis);
 
     GerarIdeProdutor(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].IdeProdutor);
@@ -347,6 +351,8 @@ end;
 function TEvtAqProd.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAqProd');

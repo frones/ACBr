@@ -93,6 +93,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FTrabalhador: TTrabalhador;
     FinfoTSVInicio : TinfoTSVInicio;
+    FACBreSocial: TObject;
 
     procedure GerarInfoTSVInicio(obj : TinfoTSVInicio);
     procedure GerarInfoComplementares(obj: TinfoComplementares);
@@ -296,6 +297,7 @@ constructor TEvtTSVInicio.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FTrabalhador := TTrabalhador.Create;
@@ -394,8 +396,8 @@ begin
   begin
     Gerador.wGrupo('infoEstagiario');
 
-    Gerador.wCampo(tcStr, '', 'natEstagio',   1,  1, 1, obj.natEstagio);
-    Gerador.wCampo(tcStr, '', 'nivEstagio',   1,  1, 1, obj.nivEstagio);
+    Gerador.wCampo(tcStr, '', 'natEstagio',   1,  1, 1, eSTpNatEstagioToStr(obj.natEstagio));
+    Gerador.wCampo(tcStr, '', 'nivEstagio',   1,  1, 1, eStpNivelEstagioToStr(obj.nivEstagio));
     Gerador.wCampo(tcStr, '', 'areaAtuacao',  1, 50, 0, obj.areaAtuacao);
     Gerador.wCampo(tcStr, '', 'nrApol',       1, 30, 0, obj.nrApol);
     Gerador.wCampo(tcDe2, '', 'vlrBolsa',     1, 14, 0, obj.vlrBolsa);
@@ -508,6 +510,8 @@ end;
 function TEvtTSVInicio.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTSVInicio');

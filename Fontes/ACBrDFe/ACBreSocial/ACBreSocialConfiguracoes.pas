@@ -73,7 +73,7 @@ type
     procedure LerIni(const AIni: TCustomIniFile); override;
 
   published
-    property VersaoDF: TVersaoeSocial read FVersaoDF write SetVersaoDF default ve240;
+    property VersaoDF: TVersaoeSocial read FVersaoDF write SetVersaoDF default ve02_04_01;
     property IdEmpregador: string read FIdEmpregador write FIdEmpregador;
     property IdTransmissor: string read FIdTransmissor write FIdTransmissor;
     property TipoEmpregador: TEmpregador read FTipoEmpregador write SetTipoEmpregador default tePessoaJuridica;
@@ -173,7 +173,7 @@ constructor TGeralConfeSocial.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
-  FVersaoDF := ve240;
+  FVersaoDF := ve02_04_01;
   FIdTransmissor := '';
   FIdEmpregador := '';
   FTipoEmpregador := tePessoaJuridica;

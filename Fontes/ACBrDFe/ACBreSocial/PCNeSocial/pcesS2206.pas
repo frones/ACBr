@@ -90,14 +90,14 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo : TIdeVinculo;
     FAltContratual: TAltContratual;
-
+    FACBreSocial: TObject;
 
     {Geradores da Classe - Necessários pois os geradores de ACBreSocialGerador
      possuem campos excedentes que não se aplicam ao S2206}
     procedure GerarAltContratual(objAltContratual: TAltContratual);
     procedure GerarInfoCeletista(objInfoCeletista : TInfoCeletista);
     procedure GerarInfoEstaturario(pInfoEstatutario: TInfoEstatutario);
-    procedure GerarInfoContrato(ObjInfoContrato : TInfoContratoS2206; pTipo: Integer);
+    procedure GerarInfoContrato(ObjInfoContrato : TInfoContratoS2206; pTipo: Integer; pInfoCeletista: TInfoCeletista);
     procedure GerarTrabTemp(pTrabTemp: TTrabTemporario);
     procedure GerarServPubl(pServPubl: TServPubl);
     function  GetAltContratual : TAltContratual;
@@ -204,6 +204,7 @@ constructor TEvtAltContratual.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
@@ -247,7 +248,7 @@ begin
 
   Gerador.wGrupo('/infoRegimeTrab');
 
-  GerarInfoContrato(objAltContratual.InfoContrato, 3 );
+  GerarInfoContrato(objAltContratual.InfoContrato, 3, objAltContratual.infoRegimeTrab.InfoCeletista);
 
   Gerador.wGrupo('/altContratual');
 end;
@@ -291,7 +292,7 @@ begin
   Gerador.wGrupo('/servPubl');
 end;
 
-procedure TEvtAltContratual.GerarInfoContrato(ObjInfoContrato: TInfoContratoS2206; pTipo: Integer);
+procedure TEvtAltContratual.GerarInfoContrato(ObjInfoContrato: TInfoContratoS2206; pTipo: Integer; pInfoCeletista: TInfoCeletista);
 begin
   Gerador.wGrupo('infoContrato');
 
@@ -304,7 +305,11 @@ begin
   GerarRemuneracao(objInfoContrato.Remuneracao);
   GerarDuracao(objInfoContrato.Duracao, pTipo);
   GerarLocalTrabalho(objInfoContrato.LocalTrabalho);
-  GerarHorContratual(objInfoContrato.HorContratual);
+
+  //Informações do Horário Contratual do Trabalhador. O preenchimento é obrigatório se {tpRegJor} = [1]
+  if (pInfoCeletista.TpRegJor = tpTpRegJor.rjSubmetidosHorarioTrabalho) then
+    GerarHorContratual(objInfoContrato.HorContratual);
+
   GerarFiliacaoSindical(objInfoContrato.FiliacaoSindical);
   GerarAlvaraJudicial(objInfoContrato.AlvaraJudicial);
   GerarObservacoes(objInfoContrato.observacoes);
@@ -318,6 +323,8 @@ end;
 function TEvtAltContratual.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAltContratual');

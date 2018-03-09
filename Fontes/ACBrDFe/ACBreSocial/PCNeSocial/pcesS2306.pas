@@ -89,6 +89,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FideTrabSemVinc: TideTrabSemVinc;
     FinfoTSVAlteracao : TinfoTSVAlteracao;
+    FACBreSocial: TObject;
 
     procedure GerarideTrabSemVinc(obj : TideTrabSemVinc);
     procedure GerarInfoTSVAlteracao(obj: TinfoTSVAlteracao);
@@ -189,6 +190,7 @@ constructor TEvtTSVAltContr.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FideTrabSemVinc := TideTrabSemVinc.Create;
@@ -330,6 +332,8 @@ end;
 function TEvtTSVAltContr.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTSVAltContr');

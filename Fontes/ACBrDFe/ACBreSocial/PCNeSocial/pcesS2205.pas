@@ -88,6 +88,7 @@ type
     FTrabalhador: TTrabalhador;
     FVinculo: TVinculo;
     FIdeTrabalhador: TideTrabalhador;
+    FACBreSocial: TObject;
 
     procedure GerarInfoAltCadastral;
   public
@@ -157,6 +158,7 @@ constructor TEvtAltCadastral.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FTrabalhador := TTrabalhador.Create;
@@ -189,6 +191,8 @@ end;
 function TEvtAltCadastral.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAltCadastral');

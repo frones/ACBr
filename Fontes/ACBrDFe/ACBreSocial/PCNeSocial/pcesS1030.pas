@@ -91,6 +91,7 @@ type
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoCargo: TInfoCargo;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarIdeCargo;
@@ -278,6 +279,7 @@ constructor TEvtTabCargo.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoCargo := TInfoCargo.Create;
@@ -345,6 +347,8 @@ end;
 function TEvtTabCargo.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabCargo');

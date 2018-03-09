@@ -88,6 +88,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeRespInf : TIdeRespInf;
     FInfoFech: TInfoFech;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarInfoFech;
@@ -174,6 +175,7 @@ constructor TEvtFechaEvPer.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeRespInf := TIdeRespInf.Create;
@@ -215,6 +217,8 @@ end;
 function TEvtFechaEvPer.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtFechaEvPer');

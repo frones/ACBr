@@ -87,10 +87,11 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoRegPrelim: TInfoRegPrelim;
+    FACBreSocial: TObject;
 
     procedure GerarInfoRegPrelim;
   public
-    constructor Create(AACBreSocial: TObject);
+    constructor Create(AACBreSocial: TObject); overload;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -157,10 +158,11 @@ begin
 end;
 
 { TEvtAdmissao }
-constructor TEvtAdmPrelim.create;
+constructor TEvtAdmPrelim.create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoRegPrelim := TInfoRegPrelim.Create;
@@ -189,6 +191,8 @@ end;
 function TEvtAdmPrelim.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAdmPrelim');

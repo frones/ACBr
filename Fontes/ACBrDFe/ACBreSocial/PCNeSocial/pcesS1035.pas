@@ -80,6 +80,8 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoCarreira: TInfoCarreira;
+    FACBreSocial: TObject;
+
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
@@ -220,6 +222,7 @@ constructor TEvtTabCarreira.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   FInfoCarreira := TInfoCarreira.Create;
@@ -260,6 +263,8 @@ end;
 function TEvtTabCarreira.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabCarreira');

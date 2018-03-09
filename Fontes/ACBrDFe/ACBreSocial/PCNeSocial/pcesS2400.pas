@@ -90,6 +90,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeBenef: TIdeBenef;
     FInfoBeneficio: TInfoBeneficio;
+    FACBreSocial: TObject;
 
     procedure GerarIdeBenef(pIdeBenef: TIdeBenef);
     procedure GerarDadosBenef(pDadosBenef: TDadosBenef);
@@ -248,6 +249,7 @@ constructor TEvtCdBenPrRP.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeBenef := TIdeBenef.Create;
@@ -345,6 +347,8 @@ end;
 function TEvtCdBenPrRP.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtCdBenPrRP');

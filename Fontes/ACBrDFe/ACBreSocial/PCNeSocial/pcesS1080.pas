@@ -89,6 +89,7 @@ type
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoOperPortuario: TInfoOperPortuario;
+    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarIdeOperPortuario;
@@ -242,6 +243,7 @@ constructor TEvtTabOperPort.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   fIdeEvento := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
   fInfoOperPortuario := TInfoOperPortuario.Create;
@@ -281,6 +283,8 @@ end;
 function TEvtTabOperPort.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtTabOperPort');

@@ -102,6 +102,7 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FInfoDeslig: TInfoDeslig;
+    FACBreSocial: TObject;
 
     procedure GerarInfoDeslig(obj: TInfoDeslig);
     procedure GerarSucessaoVinc(obj: TSucessaoVinc);
@@ -355,6 +356,7 @@ constructor TEvtDeslig.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVInculo := TIdeVinculo.Create;
@@ -520,6 +522,8 @@ end;
 function TEvtDeslig.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtDeslig');

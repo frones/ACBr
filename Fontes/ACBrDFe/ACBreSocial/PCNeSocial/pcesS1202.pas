@@ -133,8 +133,9 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeTrabalhador: TeS1202IdeTrabalhador;
     FDMDev: TDMDevCollection;
-    {Geradores específicos desta classe}
+    FACBreSocial: TObject;
 
+    {Geradores específicos desta classe}
     procedure GerarIdeEstab(objIdeEstab: TIdeEstabCollection;
       nomeRemunPer: string = 'remunPerApur');
     procedure GerarRemunPer(objRemunPer: TRemunPer1202Collection;
@@ -545,6 +546,7 @@ constructor TEvtRemunRPPS.Create(AACBreSocial: TObject);
 begin
   inherited;
 
+  FACBreSocial := AACBreSocial;
   FIdeEvento := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeTrabalhador := TeS1202IdeTrabalhador.Create;
@@ -709,6 +711,8 @@ end;
 function TEvtRemunRPPS.GerarXML: boolean;
 begin
   try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtRmnRPPS');

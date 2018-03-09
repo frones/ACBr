@@ -121,7 +121,7 @@ type
 
   tpAliqRat               = (arat1, arat2, arat3 );
 
-  tpTpProc                = (tpAdministrativo, tpJudicial, tpINSS);
+  tpTpProc                = (tpAdministrativo, tpJudicial, tpINSS, tpFAP);
 
   tpSiglaMin              = (smCNAS, smMEC, smMS, smMDS, smLEI);
 
@@ -208,9 +208,11 @@ type
 
   tpindAutoria            = (iaProprioContribuinte, iaOutraEntidade);
 
-  tpIndMatProc            = (impTributaria, impAutorizacaoTrabalhadorMenor, impDispensaPCD,
-                             impDispensaAprendiz, impSegurancaoeSaudeTrabalhador, impConversaoLicencaSaudeAcidenteTrabalho,
-                             impFGTS,impContribuicaoSindical, impOutros);
+  tpIndMatProc            = (impTributaria, impAutorizacaoTrabalhadorMenor,
+                             impDispensaPCD, impDispensaAprendiz,
+                             impSegurancaoeSaudeTrabalhador,
+                             impConversaoLicencaSaudeAcidenteTrabalho,
+                             impFGTS, impContribuicaoSindical, impOutros);
 
   tpIndRetificacao        = (ireOriginal, ireRetificacao);
 
@@ -405,7 +407,7 @@ type
 
   tpNatEstagio            = (neObrigatiorio, neNaoObrigatorio);
 
-  tpNivelEstagio          = (nvFundamental, nvMedio, nvEnsinoProfis, nvSuperior);
+  tpNivelEstagio          = (nvFundamental, nvMedio, nvEnsinoProfis, nvSuperior, nvEspecial, nvMaeSocial);
 
   tpCaepf                 = (tcContrIndividual, tcProdRural, tcSegEspecial);//layout 2.1
 
@@ -431,7 +433,7 @@ type
   tpCumprParcialAviso     = (cpaCumprimentoTotal, cpaCumprimentoParcialNovoEmprego, cpaCumprimentoParcialEmpregador,
                              cpaOutrasCumprimentoParcial, cpaAvisoprevioIndenizadoNaoExigivel );
 
-  TVersaoeSocial = (ve240);
+  TVersaoeSocial = (ve02_04_01, ve02_04_02);
 
   tpTmpParc = (tpNaoeTempoParcial, tpLimitado25HorasSemanais, tpLimitado30HorasSemanais, tpLimitado26HorasSemanais);
 
@@ -1440,12 +1442,12 @@ end;
 
 function eSTpProcessoToStr(const t:tpTpProc ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_2 );
+  result := EnumeradoToStr2(t,TGenericosString1_4 );
 end;
 
 function eSStrToTpProcesso(var ok: boolean; const s: string): tpTpProc;
 begin
-  result := tpTpProc( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
+  result := tpTpProc( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
 end;
 
 function eSSiglaMinToStr(const t:tpSiglaMin ): string;
@@ -2112,12 +2114,12 @@ end;
 
 function eStpNivelEstagioToStr(const t: tpNivelEstagio): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosString1_4);
+  result := EnumeradoToStr2(t, ['1', '2', '3', '4', '8', '9']);
 end;
 
 function eSStrTotpNivelEstagio(var ok: Boolean; const s: string): tpNivelEstagio;
 begin
-  result := tpNivelEstagio(StrToEnumerado2(ok, s, TGenericosString1_4));
+  result := tpNivelEstagio(StrToEnumerado2(ok, s, ['1', '2', '3', '4', '8', '9']));
 end;
 
 function eSTpMtvAltToStr(const t: tpMtvAlt): string;
@@ -2172,23 +2174,26 @@ end;
 
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
 begin
-  result := StrToEnumerado(ok, s, ['2.40'], [ve240]);
+  result := StrToEnumerado(ok, s, ['02_04_01', '02_04_02'], [ve02_04_01, ve02_04_02]);
 end;
 
 function VersaoeSocialToStr(const t: TVersaoeSocial): String;
 begin
-  result := EnumeradoToStr(t, ['2.40'], [ve240]);
+  result := EnumeradoToStr(t, ['02_04_01', '02_04_02'], [ve02_04_01, ve02_04_02]);
 end;
 
 function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
 begin
   ok := True;
 
-  if (d = 2.4)  then
-    result := ve240
+  if (d = 2.0401)  then
+    result := ve02_04_01
+  else
+  if (d = 2.0402)  then
+    result := ve02_04_02
   else
   begin
-    result := ve240;
+    result := ve02_04_01;
     ok := False;
   end;
 end;
@@ -2196,7 +2201,8 @@ end;
 function VersaoeSocialToDbl(const t: TVersaoeSocial): Real;
 begin
   case t of
-    ve240: result := 2.40;
+    ve02_04_01: result := 2.0401;
+    ve02_04_02: result := 2.0402;
   else
     result := 0;
   end;

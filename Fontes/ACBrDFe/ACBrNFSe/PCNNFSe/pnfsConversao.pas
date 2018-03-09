@@ -86,7 +86,7 @@ type
 
   TnfseSimNao = ( snSim, snNao );
   TnfseCondicaoPagamento = (cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoCredito, cpCartaoDebito);
-  TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
+  TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom, trNone );
   TnfseIndicacaoCpfCnpj = ( iccCPF, iccCNPJ, iccNaoInformado );
   TnfseSituacaoLoteRPS = ( slrNaoRecibo, slrNaoProcessado, slrProcessadoErro, slrProcessadoSucesso );
 
@@ -437,15 +437,15 @@ end;
 function TipoRPSToStr(const t: TnfseTipoRPS): String;
 begin
   result := EnumeradoToStr(t,
-                           ['1','2','3'],
-                           [trRPS, trNFConjugada, trCupom]);
+                           ['1', '2', '3', '0'],
+                           [trRPS, trNFConjugada, trCupom, trNone]);
 end;
 
 function StrToTipoRPS(out ok: boolean; const s: String): TnfseTipoRPS;
 begin
   result := StrToEnumerado(ok, s,
-                           ['1','2','3'],
-                           [trRPS, trNFConjugada, trCupom]);
+                           ['1', '2', '3', '0'],
+                           [trRPS, trNFConjugada, trCupom, trNone]);
 end;
 
 // Indicacao CPF/CNPJ **********************************************************

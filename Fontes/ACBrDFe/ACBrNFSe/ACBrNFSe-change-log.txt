@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/03/2018
+-- pnfsNFSeW_ABRASFv2 / pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/41020-rps-n%C3%A3o-obrigat%C3%B3rio-systempro/
+   Por: Augusto Fontana
+  
 05/03/2018
 -- pnfsNFSeW_ABRASFv2 --
 [*] Estava gerando a tag <aliquota> mesmo com o valor zero, neste caso não é para gerar.

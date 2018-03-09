@@ -1363,8 +1363,7 @@ begin
       indAquis := tpIdAquis(0);
       vlrTotAquis := 520000.80;
 
-      with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-        .IdeProdutor.Add do
+      with IdeProdutor.Add do
       begin
         tpInscProd := tiCNPJ;
         nrInscProd := '98765432100015';
@@ -1373,8 +1372,7 @@ begin
         vrRatDescPR := 500.30;
         vrSenarDesc := 2500.30;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[0].Nfs.Add do
+        with Nfs.Add do
         begin
           serie := '00004';
           nrDocto := '64896549898789';
@@ -1385,8 +1383,7 @@ begin
           vrSenarDesc := 2500.30;
         end;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[0].Nfs.Add do
+        with Nfs.Add do
         begin
           serie := '00004';
           nrDocto := '648965498987894';
@@ -1397,8 +1394,7 @@ begin
           vrSenarDesc := 2500.30;
         end;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[0].Nfs.Add do
+        with Nfs.Add do
         begin
           serie := '00004';
           nrDocto := '648965498987894';
@@ -1409,8 +1405,7 @@ begin
           vrSenarDesc := 2500.30;
         end;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[0].Nfs.Add do
+        with Nfs.Add do
         begin
           serie := '00004';
           nrDocto := '648965498987894';
@@ -1421,8 +1416,7 @@ begin
           vrSenarDesc := 2500.30;
         end;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[0].InfoProcJud.Add do
+        with InfoProcJud.Add do
         begin
           nrProcJud := '56464897';
           codSusp := 333;
@@ -1432,8 +1426,7 @@ begin
         end;
       end;
 
-      with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-        .IdeProdutor.Add do
+      with IdeProdutor.Add do
       begin
         tpInscProd := tiCNPJ;
         nrInscProd := '98765432100015';
@@ -1442,8 +1435,7 @@ begin
         vrRatDescPR := 500.30;
         vrSenarDesc := 2500.30;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[1].Nfs.Add do
+        with Nfs.Add do
         begin
           serie := '00004';
           nrDocto := '648965498987894';
@@ -1454,8 +1446,7 @@ begin
           vrSenarDesc := 2500.30;
         end;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[1].Nfs.Add do
+        with Nfs.Add do
         begin
           serie := '00004';
           nrDocto := '648965498987894';
@@ -1466,8 +1457,7 @@ begin
           vrSenarDesc := 2500.30;
         end;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[1].Nfs.Add do
+        with Nfs.Add do
         begin
           serie := '00004';
           nrDocto := '648965498987894';
@@ -1478,8 +1468,7 @@ begin
           vrSenarDesc := 2500.30;
         end;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[1].Nfs.Add do
+        with Nfs.Add do
         begin
           serie := '00004';
           nrDocto := '648965498987894';
@@ -1490,8 +1479,7 @@ begin
           vrSenarDesc := 2500.30;
         end;
 
-        with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
-          .IdeProdutor.Items[0].InfoProcJud.Add do
+        with InfoProcJud.Add do
         begin
           nrProcJud := '56464897';
           codSusp := 222;
@@ -1502,6 +1490,153 @@ begin
       end;
 
     end;
+
+    with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Add do
+    begin
+      indAquis := tpIdAquis(1);
+      vlrTotAquis := 520000.80;
+
+      with IdeProdutor.Add do
+      begin
+        tpInscProd := tiCPF;
+        nrInscProd := '74913476653';
+        vlrBruto := 4000.54;
+        vrCPDescPR := 3850.32;
+        vrRatDescPR := 500.30;
+        vrSenarDesc := 2500.30;
+
+
+        with Nfs.Add do
+        begin
+          serie := '00004';
+          nrDocto := '64896549898789';
+          dtEmisNF := Now;
+          vlrBruto := 4000.54;
+          vrCPDescPR := 3850.32;
+          vrRatDescPR := 500.30;
+          vrSenarDesc := 2500.30;
+        end;
+
+        with Nfs.Add do
+        begin
+          serie := '00004';
+          nrDocto := '648965498987894';
+          dtEmisNF := Now;
+          vlrBruto := 4000.54;
+          vrCPDescPR := 3850.32;
+          vrRatDescPR := 500.30;
+          vrSenarDesc := 2500.30;
+        end;
+
+
+        with InfoProcJud.Add do
+        begin
+          nrProcJud := '00000002';
+          codSusp := 222;
+          vrCPNRet := 22222.22;
+          vrRatNRet := 22222.22;
+          vrSenarNRet := 22222.22;
+        end;
+      end;
+
+      with IdeProdutor.Add do
+      begin
+        tpInscProd := tiCPF;
+        nrInscProd := '00003476653';
+        vlrBruto := 4000.54;
+        vrCPDescPR := 3850.32;
+        vrRatDescPR := 500.30;
+        vrSenarDesc := 2500.30;
+
+
+
+        with IdeProdutor.Items[0].InfoProcJud.Add do
+        begin
+          nrProcJud := '33333333';
+          codSusp := 333;
+          vrCPNRet := 33333.99;
+          vrRatNRet := 33333.88;
+          vrSenarNRet := 33333.77;
+        end;
+      end;
+
+    end;
+
+
+
+    //3o
+    with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Add do
+    begin
+      indAquis := tpIdAquis(2);
+      vlrTotAquis := 33300.80;
+
+      with EvtAqProd.InfoAquisProd.IdeEstabAdquir.TpAquis.Items[0]
+        .IdeProdutor.Add do
+      begin
+        tpInscProd := tiCPF;
+        nrInscProd := '74913476653';
+        vlrBruto := 4000.54;
+        vrCPDescPR := 3850.32;
+        vrRatDescPR := 500.30;
+        vrSenarDesc := 2500.30;
+
+
+        with Nfs.Add do
+        begin
+          serie := '00004';
+          nrDocto := '64896549898789';
+          dtEmisNF := Now;
+          vlrBruto := 4000.54;
+          vrCPDescPR := 3850.32;
+          vrRatDescPR := 500.30;
+          vrSenarDesc := 2500.30;
+        end;
+
+        with Nfs.Add do
+        begin
+          serie := '00004';
+          nrDocto := '648965498987894';
+          dtEmisNF := Now;
+          vlrBruto := 4000.54;
+          vrCPDescPR := 3850.32;
+          vrRatDescPR := 500.30;
+          vrSenarDesc := 2500.30;
+        end;
+
+
+        with InfoProcJud.Add do
+        begin
+          nrProcJud := '00000002';
+          codSusp := 222;
+          vrCPNRet := 22222.22;
+          vrRatNRet := 22222.22;
+          vrSenarNRet := 22222.22;
+        end;
+      end;
+
+      with IdeProdutor.Add do
+      begin
+        tpInscProd := tiCPF;
+        nrInscProd := '00003476653';
+        vlrBruto := 4000.54;
+        vrCPDescPR := 3850.32;
+        vrRatDescPR := 500.30;
+        vrSenarDesc := 2500.30;
+
+
+
+        with InfoProcJud.Add do
+        begin
+          nrProcJud := '33333333';
+          codSusp := 333;
+          vrCPNRet := 33333.99;
+          vrRatNRet := 33333.88;
+          vrSenarNRet := 33333.77;
+        end;
+      end;
+
+    end;
+
   end;
 end;
 

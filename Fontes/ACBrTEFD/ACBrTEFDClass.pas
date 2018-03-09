@@ -498,6 +498,7 @@ type
      fpIdRespostaFiscal : LongInt;
      fpSerialPOS: String;
      fpCodigoBandeiraPadrao: String;
+     fpEstabelecimento: String;
 
      procedure SetCNFEnviado(const AValue : Boolean);
      procedure SetIndiceFPG_ECF(const AValue : String);
@@ -602,6 +603,7 @@ type
      property IdPagamento : Integer read fpIdPagamento  write fpIdPagamento ;
      property IdRespostaFiscal : Integer read fpIdRespostaFiscal  write fpIdRespostaFiscal ;
      property SerialPOS : String read fpSerialPOS  write fpSerialPOS ;
+     property Estabelecimento : String read fpEstabelecimento  write fpEstabelecimento ;
    end;
 
    { TACBrTEFDRespTXT }
@@ -1379,6 +1381,7 @@ begin
    fpIdPagamento := 0;
    fpIdRespostaFiscal := 0;
    fpSerialPOS := '';
+   fpEstabelecimento := '';
 end;
 
 procedure TACBrTEFDResp.LeArquivo(const NomeArquivo : String);
@@ -1582,6 +1585,7 @@ begin
             500 : fpIdPagamento      := Linha.Informacao.AsInteger ;
             501 : fpIdRespostaFiscal := Linha.Informacao.AsInteger ;
             502 : fpSerialPOS        := Linha.Informacao.AsString ;
+            503 : fpEstabelecimento  := Linha.Informacao.AsString ;
           end;
         end;
        999 : fpTrailer           := Linha.Informacao.AsString ;

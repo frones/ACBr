@@ -53,6 +53,17 @@ Símbolo : Significado
 [*] Inicio da adquação do componente para a versão 2.04.02
    Por: Italo Jurisato Junior
 
+08/03/2018
+-- pcesS3000 --
+[*] https://www.projetoacbr.com.br/forum/topic/41930-alterar-s-3000-campo-opcional/
+   Por: Edmar Frazao
+-- pcesGerador --
+[*] https://www.projetoacbr.com.br/forum/topic/41934-campo-codmotafast-do-registro-s-2200/
+   Por: Joceandro Perin
+-- pcesS1250 --
+[*] https://www.projetoacbr.com.br/forum/topic/41938-alterar-s-1250-convers%C3%A3o-indaquis/
+   Por: Edmar Frazao
+
 07/03/2018
 -- pcesConversaoeSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/41915-s1010-adicionar/

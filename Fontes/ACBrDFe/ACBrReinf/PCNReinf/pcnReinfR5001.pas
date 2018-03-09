@@ -170,6 +170,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    function GetEvento: TObject;
 
   published
     property Xml: String read GetXml write SetXml;
@@ -291,6 +292,11 @@ end;
 procedure TR5001.SetEvtTotal(const Value: TEvtTotal);
 begin
   FEvtTotal.Assign(Value);
+end;
+
+function TR5001.GetEvento: TObject;
+begin
+  Result := Self;
 end;
 
 { TRRecRepADCollection }

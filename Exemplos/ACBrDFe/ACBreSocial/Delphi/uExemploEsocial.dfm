@@ -27,7 +27,7 @@ object FExemploEsocial: TFExemploEsocial
       Top = 1
       Width = 738
       Height = 332
-      ActivePage = tbsEventosTabela
+      ActivePage = tbsEventosNaoPeriodicos
       Align = alTop
       TabOrder = 0
       object tbsEventosTabela: TTabSheet
@@ -434,6 +434,14 @@ object FExemploEsocial: TFExemploEsocial
           Ctl3D = False
           ParentCtl3D = False
           TabOrder = 17
+        end
+        object cbs2260: TCheckBox
+          Left = 12
+          Top = 246
+          Width = 332
+          Height = 17
+          Caption = 'S-2260 Convoca'#231#227'o para Trabalho Intermitente'
+          TabOrder = 18
         end
       end
     end
@@ -1559,7 +1567,7 @@ object FExemploEsocial: TFExemploEsocial
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 816
+    Left = 832
     Top = 280
   end
 end

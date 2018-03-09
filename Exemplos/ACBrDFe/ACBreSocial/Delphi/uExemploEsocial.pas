@@ -224,6 +224,7 @@ type
     btnCarregarXML: TButton;
     btnCarregarINI: TButton;
     btnGerarEnviar: TButton;
+    cbs2260: TCheckBox;
 
     procedure btnGerarClick(Sender: TObject);
 
@@ -307,6 +308,7 @@ type
     procedure GerareSocial2240;
     procedure GerareSocial2241;
     procedure GerareSocial2250;
+    procedure GerareSocial2260;
     procedure GerareSocial2298;
     procedure GerareSocial2299;
     procedure GerareSocial2300;
@@ -2828,6 +2830,49 @@ begin
   end;
 end;
 
+procedure TFExemploEsocial.GerareSocial2260;
+begin
+ with ACBreSocial1.Eventos.NaoPeriodicos.S2260.Add do
+  begin
+
+    EvtConvInterm.id                    := '1';
+    EvtConvInterm.IdeEvento.indRetif    := tpIndRetificacao(0);
+    //EvtConvInterm.IdeEvento.NrRecibo := '65.5454.987798798798';
+    EvtConvInterm.IdeEvento.TpAmb       := taProducaoRestrita;
+    EvtConvInterm.IdeEvento.ProcEmi     := TpProcEmi(0);
+    EvtConvInterm.IdeEvento.VerProc     := '1.0';
+
+
+    EvtConvInterm.IdeEmpregador.TpInsc := tpTpInsc(1);
+    EvtConvInterm.IdeEmpregador.NrInsc := '12345678901234';
+
+
+
+    EvtConvInterm.IdeVinculo.CpfTrab      := '04855800392';
+    EvtConvInterm.IdeVinculo.NisTrab      := '16179749354';
+    EvtConvInterm.IdeVinculo.matricula    := '54546';
+
+    EvtConvInterm.InfoConvInterm.codConv  := '1';
+    EvtConvInterm.InfoConvInterm.dtInicio := now;
+    EvtConvInterm.InfoConvInterm.dtFim    := now+3;
+
+    EvtConvInterm.InfoConvInterm.jornada.codHorContrat := '1';
+    EvtConvInterm.InfoConvInterm.jornada.dscJornada    := 'Descrição da Jornada';
+
+
+    EvtConvInterm.InfoConvInterm.localTrab.indLocal                    := '1';
+    EvtConvInterm.InfoConvInterm.localTrab.localTrabInterm.TpLograd    := 'Rua';
+    EvtConvInterm.InfoConvInterm.localTrab.localTrabInterm.DscLograd   := '1o Abril';
+    EvtConvInterm.InfoConvInterm.localTrab.localTrabInterm.NrLograd    := '10';
+    EvtConvInterm.InfoConvInterm.localTrab.localTrabInterm.Complemento := 'compl';
+    EvtConvInterm.InfoConvInterm.localTrab.localTrabInterm.Bairro      := 'Bairro';
+    EvtConvInterm.InfoConvInterm.localTrab.localTrabInterm.Cep         := '35570000';
+    EvtConvInterm.InfoConvInterm.localTrab.localTrabInterm.CodMunic    := 3126109;
+    EvtConvInterm.InfoConvInterm.localTrab.localTrabInterm.UF          := ufMG
+  end;
+
+end;
+
 procedure TFExemploEsocial.GerareSocial2298;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2298.Add do
@@ -4393,6 +4438,9 @@ begin
     GerareSocial2241;
   if (cbS2250.Checked) then
     GerareSocial2250;
+  if (cbS2260.Checked) then
+    GerareSocial2260;
+
   if (cbS2298.Checked) then
     GerareSocial2298;
   if (cbS2299.Checked) then

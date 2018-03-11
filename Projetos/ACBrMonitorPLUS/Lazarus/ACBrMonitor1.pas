@@ -238,6 +238,7 @@ type
     cbFormaEmissaoCTe: TComboBox;
     cbFormaEmissaoMDFe: TComboBox;
     cbFormaEmissaoGNRe: TComboBox;
+    cbGavetaSinalInvertido: TCheckBox;
     cbMostrarNaBarraDeTarefas: TCheckBox;
     cbBALModelo: TComboBox;
     cbBALPorta: TComboBox;
@@ -395,6 +396,7 @@ type
     edtSenha: TEdit;
     edtTimeoutWebServices: TSpinEdit;
     gbExtratoSAT: TGroupBox;
+    gbGavetaConfig: TGroupBox;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     gbImpressao: TGroupBox;
@@ -439,6 +441,8 @@ type
     Label209: TLabel;
     Label210: TLabel;
     Label211: TLabel;
+    Label212: TLabel;
+    Label213: TLabel;
     Label60: TLabel;
     Label61: TLabel;
     lbAvanco: TLabel;
@@ -490,6 +494,8 @@ type
     sbLogoMarcaNFCeSAT: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
     ScrollBox: TScrollBox;
+    seGavetaTempoOFF: TSpinEdit;
+    seGavetaTempoON: TSpinEdit;
     seMFETimeout: TSpinEdit;
     seUSUCROCadastro: TSpinEdit;
     seUSUGTCadastro: TFloatSpinEdit;
@@ -1577,6 +1583,7 @@ var
   iETQBackFeed: TACBrETQBackFeed;
   iETQOrigem: TACBrETQOrigem;
   M: Integer;
+  K: Integer;
 begin
   {$IFDEF MSWINDOWS}
   WindowState := wsMinimized;
@@ -1817,7 +1824,22 @@ begin
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais(cbxPorta.Items);
-  cbxPorta.Items.Add('LPT1');
+  cbxPorta.Items.Add('LPT1') ;
+  cbxPorta.Items.Add('LPT2') ;
+  cbxPorta.Items.Add('\\localhost\Epson') ;
+  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
+  cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
+
+  For K := 0 to Printer.Printers.Count-1 do
+    cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
+
+  cbxPorta.Items.Add('/dev/ttyS0') ;
+  cbxPorta.Items.Add('/dev/ttyS1') ;
+  cbxPorta.Items.Add('/dev/ttyUSB0') ;
+  cbxPorta.Items.Add('/dev/ttyUSB1') ;
+  cbxPorta.Items.Add('/tmp/ecf.txt') ;
+
+  {cbxPorta.Items.Add('LPT1');
   cbxPorta.Items.Add('LPT2');
   cbxPorta.Items.Add('/dev/ttyS0');
   cbxPorta.Items.Add('/dev/ttyS1');
@@ -1825,7 +1847,7 @@ begin
   cbxPorta.Items.Add('/dev/ttyUSB1');
   cbxPorta.Items.Add('\\localhost\Epson');
   cbxPorta.Items.Add('c:\temp\ecf.txt');
-  cbxPorta.Items.Add('/temp/ecf.txt');
+  cbxPorta.Items.Add('/temp/ecf.txt');  }
 
   cbFormaEmissaoNFe.Items.Clear;
   for IFormaEmissaoNFe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
@@ -4445,6 +4467,10 @@ begin
     seLogoFatorX.Value := INI.ReadInteger('Logo', 'FatorX', ACBrPosPrinter1.ConfigLogo.FatorX);
     seLogoFatorY.Value := INI.ReadInteger('Logo', 'FatorY', ACBrPosPrinter1.ConfigLogo.FatorY);
 
+    seGavetaTempoON.Value   := INI.ReadInteger('Gaveta', 'TempoON', ACBrPosPrinter1.ConfigGaveta.TempoON);
+    seGavetaTempoOFF.Value  := INI.ReadInteger('Gaveta', 'TempoOFF', ACBrPosPrinter1.ConfigGaveta.TempoOFF);
+    cbGavetaSinalInvertido.Checked  := INI.ReadBool('Gaveta', 'SinalInvertido', ACBrPosPrinter1.ConfigGaveta.SinalInvertido);
+
     DefineTextoTrayTitulo;
 
     ConfiguraPosPrinter(POSPrDeviceParams);
@@ -5215,6 +5241,10 @@ begin
     INI.WriteInteger('Logo', 'KC2', seLogoKC2.Value);
     INI.WriteInteger('Logo', 'FatorX', seLogoFatorX.Value);
     INI.WriteInteger('Logo', 'FatorY', seLogoFatorY.Value);
+
+    INI.WriteInteger('Gaveta', 'TempoON', seGavetaTempoON.Value);
+    INI.WriteInteger('Gaveta', 'TempoOFF', seGavetaTempoOFF.Value);
+    INI.WriteBool('Gaveta', 'SinalInvertido', cbGavetaSinalInvertido.Checked);
 
   finally
     Ini.Free;
@@ -8184,6 +8214,10 @@ begin
     ACBrPosPrinter1.ConfigLogo.FatorY   := seLogoFatorY.Value;
     ACBrPosPrinter1.ConfigLogo.KeyCode1 := seLogoKC1.Value;
     ACBrPosPrinter1.ConfigLogo.KeyCode2 := seLogoKC2.Value;
+
+    ACBrPosPrinter1.ConfigGaveta.TempoON := seGavetaTempoON.Value;
+    ACBrPosPrinter1.ConfigGaveta.TempoOFF:= seGavetaTempoOFF.Value;
+    ACBrPosPrinter1.ConfigGaveta.SinalInvertido:= cbGavetaSinalInvertido.Checked;
 
     if NaoEstaVazio(SerialParams) then
       ACBrPosPrinter1.Device.ParamsString := SerialParams;

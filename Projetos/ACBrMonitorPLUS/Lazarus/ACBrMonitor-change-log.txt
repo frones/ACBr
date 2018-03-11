@@ -43,7 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-27/02/2018
+09/03/2018
+[+] Atualização Componente PosPrinter
+       Adicionado Campos para configurações Gaveta em tela
+       Atualização metodos ESCPOS (Consultar Manual)
+       por: José M. S. Junior
+
+09/03/2018
 [+] Atualização Componente Etiqueta
        Adicionado Campos para configurações Etiqueta em tela
        Adicionado Parâmetros: ImprimirReverso / ExibeCodigo (Consultar Manual)
@@ -55,7 +61,6 @@ Símbolo : Significado
        BackFeed / SetBackFeed
        Velodicade / SetVelocidade
        MargemEsquerda / SetMargemEsquerda
-
        por: José M. S. Junior
 
 27/02/2018

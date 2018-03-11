@@ -114,10 +114,31 @@ begin
         cmd.Resposta := Porta
 
       else if cmd.Metodo = 'setporta' then
-       FrmACBrMonitor.cbxPorta.Text := cmd.Params(0)
+      begin
+        Porta := cmd.Params(0);
+        FrmACBrMonitor.cbxPorta.Text := cmd.Params(0);
+      end
 
       else if cmd.Metodo = 'colunas' then
         cmd.Resposta := IntToStr(Colunas)
+
+      else if cmd.Metodo = 'espacoentrelinhas' then
+        cmd.Resposta := IntToStr(EspacoEntreLinhas)
+
+      else if cmd.Metodo = 'setespacoentrelinhas' then
+        EspacoEntreLinhas:= StrToInt(cmd.Params(0))
+
+      else if cmd.Metodo = 'linhasentrecupons' then
+        cmd.Resposta := IntToStr(LinhasEntreCupons)
+
+      else if cmd.Metodo = 'setlinhasentrecupons' then
+       linhasentrecupons:= StrToInt(cmd.Params(0))
+
+      else if cmd.Metodo = 'linhasbuffer' then
+        cmd.Resposta := IntToStr(LinhasBuffer)
+
+      else if cmd.Metodo = 'setlinhasbuffer' then
+       LinhasBuffer:= StrToInt(cmd.Params(0))
 
       else if cmd.Metodo = 'colunasfonteexpandida' then
         cmd.Resposta := IntToStr(ColunasFonteExpandida)
@@ -125,27 +146,27 @@ begin
       else if cmd.Metodo = 'colunasfontecondensada' then
         cmd.Resposta := IntToStr(ColunasFonteCondensada)
 
-      else if cmd.Metodo = 'colunasfontenormal' then
-        cmd.Resposta := IntToStr(ColunasFonteNormal)
-
       else if cmd.Metodo = 'paginadecodigo' then
         cmd.Resposta := GetEnumName(TypeInfo(TACBrPosPaginaCodigo),
           integer(PaginaDeCodigo))
 
-      else if cmd.Metodo = 'linhasentrecupons' then
-        cmd.Resposta := IntToStr(LinhasEntreCupons)
+      else if cmd.Metodo = 'setpaginadecodigo' then
+       PaginaDeCodigo:= TACBrPosPaginaCodigo( StrToInt(cmd.Params(0)) )
 
-      else if cmd.Metodo = 'cortapapel' then
-        cmd.Resposta := BoolToStr(CortaPapel, True)
+      else if cmd.Metodo = 'colunasfontenormal' then
+        cmd.Resposta := IntToStr(ColunasFonteNormal)
 
       else if cmd.Metodo = 'setcolunasfontenormal' then
         ColunasFonteNormal := StrToInt(cmd.Params(0))
 
+      else if cmd.Metodo = 'cortapapel' then
+        cmd.Resposta := BoolToStr(CortaPapel, True)
+
       else if cmd.Metodo = 'setcortapapel' then
-       begin
-        CortaPapel := StrToBool(cmd.Params(0));
-        FrmACBrMonitor.cbCortarPapel.Checked := CortaPapel;
-       end
+      begin
+       CortaPapel := StrToBool(cmd.Params(0));
+       FrmACBrMonitor.cbCortarPapel.Checked := CortaPapel;
+      end
 
       else
         raise Exception.Create(ACBrStr('Comando invalido (' + Cmd.Comando + ')'));

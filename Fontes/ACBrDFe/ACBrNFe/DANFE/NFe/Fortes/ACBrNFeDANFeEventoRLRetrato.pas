@@ -310,6 +310,23 @@ begin
             rllTitulo.Caption := 'CANCELAMENTO DE NF-E';
             rllJustificativa.Caption := InfEvento.detEvento.xJust;
           end;
+        teManifDestConfirmacao:
+          begin
+            rllTitulo.Caption := ACBrStr('CONFIRMAÇÃO DA OPERAÇÃO');
+          end;
+        teManifDestCiencia:
+          begin
+            rllTitulo.Caption := ACBrStr('CIÊNCIA DA EMISSÃO/OPERAÇÃO');
+          end;
+        teManifDestDesconhecimento:
+          begin
+            rllTitulo.Caption := ACBrStr('DESCONHECIMENTO DA OPERAÇÃO');
+          end;
+        teManifDestOperNaoRealizada:
+          begin
+            rllTitulo.Caption := ACBrStr('OPERAÇÃO NÃO REALIZADA');
+            rllJustificativa.Caption := InfEvento.detEvento.xJust;
+          end;
       end; // case InfEvento.tpEvento
 
       rllNomeEvento.Caption := rllTitulo.Caption;
@@ -447,7 +464,7 @@ begin
         rliMarcaDagua1.Top := ((rlbCorrecao.Top + rlbCorrecao.Height) div 2) - (rliMarcaDagua1.Height div 2);
       end;
 
-    teCancelamento:
+    teCancelamento,teManifDestConfirmacao,teManifDestCiencia, teManifDestDesconhecimento, teManifDestOperNaoRealizada:
       begin
         rlbJustificativa.Visible := True;
         rlbCondUso.Visible := False;

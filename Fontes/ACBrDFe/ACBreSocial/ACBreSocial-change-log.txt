@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/03/2018
+-- ACBreSocial --
+[*] Corrigido erros de compilação com o D7.
+    https://www.projetoacbr.com.br/forum/topic/42062-erro-na-instala%C3%A7%C3%A3o/?tab=comments#comment-276975
+   Por: arce
+
 09/03/2018
 -- ACBreSocial --
 [*] Inicio da adquação do componente para a versão 2.04.02

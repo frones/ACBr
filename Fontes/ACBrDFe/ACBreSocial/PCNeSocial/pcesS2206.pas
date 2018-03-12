@@ -235,7 +235,7 @@ begin
 
   Gerador.wCampo(tcDat, '', 'dtAlteracao', 10,  10, 1, objAltContratual.dtALteracao);
   Gerador.wCampo(tcDat, '', 'dtEf',        10,  10, 0, objAltContratual.dtEf);
-  Gerador.wCampo(tcStr, '', 'dscAlt',       1, 150, 0, objAltContratual.dtEf);
+  Gerador.wCampo(tcStr, '', 'dscAlt',       1, 150, 0, objAltContratual.dscAlt);
 
   GerarVinculo(objAltContratual.Vinculo, 3);
 
@@ -304,10 +304,10 @@ begin
 
   GerarRemuneracao(objInfoContrato.Remuneracao);
   GerarDuracao(objInfoContrato.Duracao, pTipo);
-  GerarLocalTrabalho(objInfoContrato.LocalTrabalho);
+  GerarLocalTrabalho(objInfoContrato.LocalTrabalho); 
 
   //Informações do Horário Contratual do Trabalhador. O preenchimento é obrigatório se {tpRegJor} = [1]
-  if (pInfoCeletista.TpRegJor = tpTpRegJor.rjSubmetidosHorarioTrabalho) then
+  if (pInfoCeletista.TpRegJor = rjSubmetidosHorarioTrabalho) then
     GerarHorContratual(objInfoContrato.HorContratual);
 
   GerarFiliacaoSindical(objInfoContrato.FiliacaoSindical);

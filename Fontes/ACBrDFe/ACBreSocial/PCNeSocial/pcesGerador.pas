@@ -100,7 +100,7 @@ type
     procedure GerarAliqGilRat(pEmp: TIdeEmpregador; pAliqRat: TAliqGilRat; const GroupName: string = 'aliqGilRat');
     procedure GerarAlvaraJudicial(pAlvaraJudicial: TAlvaraJudicial);
     procedure GerarAposentadoria(pAposentadoria: TAposentadoria);
-    procedure GerarCNH(pCnh: TCNH);
+    procedure GerarCNH(pCnh: TCNH);                                   
     procedure GerarContatoTrabalhador(pContato: TContatoTrabalhador);
     procedure GerarInfoContrato(pInfoContrato: TInfoContrato; pTipo: Integer; pInfoRegimeTrab: TInfoRegimeTrab);
     procedure GerarObservacoes(pObservacoes: TObservacoesCollection);
@@ -432,7 +432,7 @@ begin
   GerarLocalTrabalho(pInfoContrato.LocalTrabalho);
 
   //Informações do Horário Contratual do Trabalhador. O preenchimento é obrigatório se {tpRegJor} = [1]
-  if (pInfoRegimeTrab.InfoCeletista.TpRegJor = tpTpRegJor.rjSubmetidosHorarioTrabalho) then
+  if (pInfoRegimeTrab.InfoCeletista.TpRegJor = rjSubmetidosHorarioTrabalho) then
     GerarHorContratual(pInfoContrato.HorContratual);
 
   GerarFiliacaoSindical(pInfoContrato.FiliacaoSindical);
@@ -656,7 +656,7 @@ procedure TeSocialEvento.GerarHorContratual(pHorContratual: THorContratual);
 begin
   Gerador.wGrupo('horContratual');
 
-  Gerador.wCampo(tcde2, '', 'qtdHrsSem', 0, 4, 0, pHorContratual.QtdHrsSem);
+  Gerador.wCampo(tcde2, '', 'qtdHrsSem', 0, 4, 0, IntToStr(pHorContratual.QtdHrsSem));
   Gerador.wCampo(tcStr, '', 'tpJornada', 1, 1, 1, eSTpJornadaToStr(pHorContratual.TpJornada));
 
   if (eSTpJornadaToStr(pHorContratual.TpJornada) = '9') then

@@ -4028,6 +4028,7 @@ begin
       proAgiliv2,
       proPVH,
       proTecnos,
+      proSmarAPDABRASF,
       proSystemPro: FTagGrupo := 'ConsultarNfseFaixaEnvio';
 
       proSP, 

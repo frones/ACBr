@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2018
+-- ACBrNFSeWebServices --
+[*] Corrigido o nome da tag para realizar a consulta da NFSe para o provedor SmarAPDABRASF.
+   Por: Italo Jurisato Junior
+
 09/03/2018
 -- pnfsNFSeW_ABRASFv2 / pnfsConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/41020-rps-n%C3%A3o-obrigat%C3%B3rio-systempro/

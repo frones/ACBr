@@ -49,7 +49,7 @@ unit pcesS1080;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrUtil,
   pcnConversao,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -339,7 +339,39 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtTabOperPort';
+      Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+      ModoLancamento := eSStrToModoLancamento(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
+
+      sSecao := 'ideEvento';
+      ideEvento.TpAmb   := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideOperPortuario';
+      infoOperPortuario.ideOperPortuario.cnpjOpPortuario := INIRec.ReadString(sSecao, 'cnpjOpPortuario', EmptyStr);
+      infoOperPortuario.ideOperPortuario.IniValid        := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+      infoOperPortuario.ideOperPortuario.FimValid        := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+
+      if (ModoLancamento <> mlExclusao) then
+      begin
+        sSecao := 'dadosOperPortuario';
+        infoOperPortuario.dadosOperPortuario.aliqRat      := eSStrToAliqRat(Ok, INIRec.ReadString(sSecao, 'aliqRat', '1'));
+        infoOperPortuario.dadosOperPortuario.fap          := INIRec.ReadFloat(sSecao, 'fap', 0.0);
+        infoOperPortuario.dadosOperPortuario.aliqRatAjust := INIRec.ReadFloat(sSecao, 'aliqRatAjust', 0.0);
+
+        if ModoLancamento = mlAlteracao then
+        begin
+          sSecao := 'novaValidade';
+          infoOperPortuario.novaValidade.IniValid := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+          infoOperPortuario.novaValidade.FimValid := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+        end;
+      end;
     end;
 
     GerarXML;

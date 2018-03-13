@@ -49,7 +49,7 @@ unit pcesS1070;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrUtil,
   pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -509,7 +509,65 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtTabProcesso';
+      Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+      ModoLancamento := eSStrToModoLancamento(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
+
+      sSecao := 'ideEvento';
+      ideEvento.TpAmb   := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideProcesso';
+      infoProcesso.ideProcesso.tpProc   := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
+      infoProcesso.ideProcesso.nrProc   := INIRec.ReadString(sSecao, 'nrProc', EmptyStr);
+      infoProcesso.ideProcesso.IniValid := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+      infoProcesso.ideProcesso.FimValid := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+
+      if (ModoLancamento <> mlExclusao) then
+      begin
+        sSecao := 'dadosProc';
+        infoProcesso.dadosProc.indAutoria := eSStrToindAutoria(Ok, INIRec.ReadString(sSecao, 'indAutoria', '1'));
+        infoProcesso.dadosProc.indMatProc := eSStrToTpIndMatProc(Ok, INIRec.ReadString(sSecao, 'indMatProc', '1'));
+
+        sSecao := 'dadosProcJud';
+        infoProcesso.dadosProc.DadosProcJud.UfVara   := INIRec.ReadString(sSecao, 'UfVara', '');
+        infoProcesso.dadosProc.DadosProcJud.codMunic := INIRec.ReadInteger(sSecao, 'codMunic', 0);
+        infoProcesso.dadosProc.DadosProcJud.idVara   := INIRec.ReadString(sSecao, 'idVara', '');
+
+        I := 1;
+        while true do
+        begin
+          // de 01 até 99
+          sSecao := 'infoSusp' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'codSusp', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with infoProcesso.dadosProc.infoSusp.Add do
+          begin
+            codSusp     := sFim;
+            indSusp     := eSStrToIndSusp(Ok, INIRec.ReadString(sSecao, 'indSusp', '01'));
+            dtDecisao   := StringToDateTime(INIRec.ReadString(sSecao, 'dtDecisao', '0'));
+            indDeposito := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indDeposito', 'S'));
+          end;
+
+          Inc(I);
+        end;
+
+        if ModoLancamento = mlAlteracao then
+        begin
+          sSecao := 'novaValidade';
+          infoProcesso.novaValidade.IniValid := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+          infoProcesso.novaValidade.FimValid := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+        end;
+      end;
     end;
 
     GerarXML;

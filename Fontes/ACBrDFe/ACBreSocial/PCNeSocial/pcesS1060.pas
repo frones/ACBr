@@ -49,7 +49,7 @@ unit pcesS1060;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrUtil,
   pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -435,7 +435,58 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtTabAmbiente';
+      Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+      ModoLancamento := eSStrToModoLancamento(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
+
+      sSecao := 'ideEvento';
+      ideEvento.TpAmb   := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideAmbiente';
+      infoAmbiente.ideAmbiente.codAmb   := INIRec.ReadString(sSecao, 'codAmb', EmptyStr);
+      infoAmbiente.ideAmbiente.IniValid := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+      infoAmbiente.ideAmbiente.FimValid := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+
+      if (ModoLancamento <> mlExclusao) then
+      begin
+        sSecao := 'dadosAmbiente';
+        infoAmbiente.dadosAmbiente.dscAmb   := INIRec.ReadString(sSecao, 'dscAmb', EmptyStr);
+        infoAmbiente.dadosAmbiente.localAmb := eSStrToLocalAmb(Ok, INIRec.ReadString(sSecao, 'localAmb', '1'));
+        infoAmbiente.dadosAmbiente.tpInsc   := eSStrTotpTpInscAmbTab(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        infoAmbiente.dadosAmbiente.nrInsc   := INIRec.ReadString(sSecao, 'nrInsc', '');
+
+        I := 1;
+        while true do
+        begin
+          // de 001 até 999
+          sSecao := 'fatorRisco' + IntToStrZero(I, 3);
+          sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with infoAmbiente.dadosAmbiente.fatorRisco.Add do
+          begin
+            codFatRis := sFim;
+          end;
+
+          Inc(I);
+        end;
+
+        if ModoLancamento = mlAlteracao then
+        begin
+          sSecao := 'novaValidade';
+          infoAmbiente.novaValidade.IniValid := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+          infoAmbiente.novaValidade.FimValid := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+        end;
+      end;
     end;
 
     GerarXML;

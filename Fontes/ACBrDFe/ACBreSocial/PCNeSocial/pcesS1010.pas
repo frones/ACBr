@@ -49,7 +49,7 @@ unit pcesS1010;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrUtil,
   pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -124,7 +124,7 @@ type
     property InfoRubrica: TInfoRubrica read FInfoRubrica write FInfoRubrica;
   end;
 
-  TInfoRubrica = class
+  TInfoRubrica = class(TPersistent)
   private
     FDadosRubrica: TDadosRubrica;
     FideRubrica: TideRubrica;
@@ -144,7 +144,7 @@ type
     property novaValidade: TidePeriodo read getNovaValidade write FnovaValidade;
   end;
 
-  TDadosRubrica = class
+  TDadosRubrica = class(TPersistent)
   private
     FDscRubr: string;
     FNatRubr: integer;
@@ -429,7 +429,121 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtTabRubrica';
+      Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+      ModoLancamento := eSStrToModoLancamento(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
+
+      sSecao := 'ideEvento';
+      ideEvento.TpAmb   := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideRubrica';
+      infoRubrica.ideRubrica.codRubr    := INIRec.ReadString(sSecao, 'codRubr', EmptyStr);
+      infoRubrica.ideRubrica.ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
+      infoRubrica.ideRubrica.IniValid   := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+      infoRubrica.ideRubrica.FimValid   := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+
+      if (ModoLancamento <> mlExclusao) then
+      begin
+        sSecao := 'dadosRubrica';
+        infoRubrica.dadosRubrica.dscRubr    := INIRec.ReadString(sSecao, 'dscRubr', EmptyStr);
+        infoRubrica.dadosRubrica.natRubr    := INIRec.ReadInteger(sSecao, 'natRubr', 0);
+        infoRubrica.dadosRubrica.tpRubr     := eSStrToTpRubr(Ok, INIRec.ReadString(sSecao, 'tpRubr', '1'));
+        infoRubrica.dadosRubrica.codIncCP   := eSStrToCodIncCP(Ok, INIRec.ReadString(sSecao, 'codIncCP', '00'));
+        infoRubrica.dadosRubrica.codIncIRRF := eSStrToCodIncIRRF(Ok, INIRec.ReadString(sSecao, 'codIncIRRF', '00'));
+        infoRubrica.dadosRubrica.codIncFGTS := eSStrToCodIncFGTS(Ok, INIRec.ReadString(sSecao, 'codIncFGTS', '00'));
+        infoRubrica.dadosRubrica.codIncSIND := eSStrToCodIncSIND(Ok, INIRec.ReadString(sSecao, 'codIncSIND', '00'));
+        infoRubrica.dadosRubrica.observacao := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+
+        I := 1;
+        while true do
+        begin
+          // de 01 até 99
+          sSecao := 'ideProcessoCP' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'tpProc', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with infoRubrica.dadosRubrica.ideProcessoCP.Add do
+          begin
+            tpProc     := eSStrToTpProcesso(Ok, sFim);
+            nrProc     := INIRec.ReadString(sSecao, 'nrProc', '');
+            extDecisao := eSStrToExtDecisao(Ok, INIRec.ReadString(sSecao, 'extDecisao', '1'));
+            codSusp    := INIRec.ReadString(sSecao, 'codSusp', '');
+          end;
+
+          Inc(I);
+        end;
+
+        I := 1;
+        while true do
+        begin
+          // de 01 até 99
+          sSecao := 'ideProcessoIRRF' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'nrProc', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with infoRubrica.dadosRubrica.ideProcessoIRRF.Add do
+          begin
+            nrProc  := INIRec.ReadString(sSecao, 'nrProc', '');
+            codSusp := INIRec.ReadString(sSecao, 'codSusp', '');
+          end;
+
+          Inc(I);
+        end;
+
+        I := 1;
+        while true do
+        begin
+          // de 01 até 99
+          sSecao := 'ideProcessoFGTS' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'nrProc', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with infoRubrica.dadosRubrica.ideProcessoFGTS.Add do
+          begin
+            nrProc := INIRec.ReadString(sSecao, 'nrProc', '');
+          end;
+
+          Inc(I);
+        end;
+
+        I := 1;
+        while true do
+        begin
+          // de 01 até 99
+          sSecao := 'ideProcessoSIND' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'nrProc', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with infoRubrica.dadosRubrica.ideProcessoSIND.Add do
+          begin
+            nrProc := INIRec.ReadString(sSecao, 'nrProc', '');
+          end;
+
+          Inc(I);
+        end;
+
+        if ModoLancamento = mlAlteracao then
+        begin
+          sSecao := 'novaValidade';
+          infoRubrica.novaValidade.IniValid := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+          infoRubrica.novaValidade.FimValid := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+        end;
+      end;
     end;
 
     GerarXML;

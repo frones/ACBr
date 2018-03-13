@@ -40,7 +40,7 @@ unit pcesS1035;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, Controls,
+  SysUtils, Classes, DateUtils, Controls, ACBrUtil,
   pcnConversao,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -319,7 +319,40 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtTabCarreira';
+      Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+      ModoLancamento := eSStrToModoLancamento(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
+
+      sSecao := 'ideEvento';
+      ideEvento.TpAmb   := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideCarreira';
+      infoCarreira.ideCarreira.codCarreira := INIRec.ReadString(sSecao, 'codCarreira', EmptyStr);
+      infoCarreira.ideCarreira.IniValid    := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+      infoCarreira.ideCarreira.FimValid    := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+
+      if (ModoLancamento <> mlExclusao) then
+      begin
+        sSecao := 'dadosCarreira';
+        infoCarreira.dadosCarreira.dscCarreira := INIRec.ReadString(sSecao, 'dscCarreira', EmptyStr);
+        infoCarreira.dadosCarreira.leiCarr     := INIRec.ReadString(sSecao, 'leiCarr', EmptyStr);
+        infoCarreira.dadosCarreira.dtleiCarr   := StringToDateTime(INIRec.ReadString(sSecao, 'dtleiCarr', '0'));
+        infoCarreira.dadosCarreira.sitCarr     := eSStrToSitCarr(Ok, INIRec.ReadString(sSecao, 'sitCarr', '1'));
+
+        if ModoLancamento = mlAlteracao then
+        begin
+          sSecao := 'novaValidade';
+          infoCarreira.novaValidade.IniValid := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+          infoCarreira.novaValidade.FimValid := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+        end;
+      end;
     end;
 
     GerarXML;

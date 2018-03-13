@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2018
+-- pcesS1010 / pcesS1020 / pcesS1030 / pcesS1035 --
+[+] Implementação da leitura do arquivo INI referente aos eventos S-1010, S-1020, S-1030, S-1035.
+   Por: Italo Jurisato Junior
+
 12/03/2018
 -- ACBreSocial --
 [-] Corrigido erros de compilação com o D7.

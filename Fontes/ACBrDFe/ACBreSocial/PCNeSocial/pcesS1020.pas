@@ -49,7 +49,7 @@ unit pcesS1020;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrUtil,
   pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -446,7 +446,70 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtTabLotacao';
+      Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+      ModoLancamento := eSStrToModoLancamento(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
+
+      sSecao := 'ideEvento';
+      ideEvento.TpAmb   := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideLotacao';
+      infoLotacao.ideLotacao.codLotacao := INIRec.ReadString(sSecao, 'codLotacao', EmptyStr);
+      infoLotacao.ideLotacao.IniValid   := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+      infoLotacao.ideLotacao.FimValid   := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+
+      if (ModoLancamento <> mlExclusao) then
+      begin
+        sSecao := 'dadosLotacao';
+        infoLotacao.dadosLotacao.tpLotacao := INIRec.ReadString(sSecao, 'tpLotacao', EmptyStr);
+        infoLotacao.dadosLotacao.tpInsc    := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        infoLotacao.dadosLotacao.nrInsc    := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+        sSecao := 'fpasLotacao';
+        infoLotacao.dadosLotacao.fpasLotacao.fpas         := INIRec.ReadString(sSecao, 'fpas', EmptyStr);
+        infoLotacao.dadosLotacao.fpasLotacao.codTercs     := INIRec.ReadString(sSecao, 'codTercs', EmptyStr);
+        infoLotacao.dadosLotacao.fpasLotacao.codTercsSusp := INIRec.ReadString(sSecao, 'codTercsSusp', EmptyStr);
+
+        I := 1;
+        while true do
+        begin
+          // de 01 até 99
+          sSecao := 'procJudTerceiro' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'codTerc', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with infoLotacao.dadosLotacao.fpasLotacao.infoProcJudTerceiros.procJudTerceiro.Add do
+          begin
+            codTerc   := sFim;
+            nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', '');
+            codSusp   := INIRec.ReadString(sSecao, 'codSusp', '');
+          end;
+
+          Inc(I);
+        end;
+
+        sSecao := 'infoEmprParcial';
+        infoLotacao.dadosLotacao.infoEmprParcial.tpInscContrat := eSStrTotpInscContratante(Ok, INIRec.ReadString(sSecao, 'tpInscContrat', '1'));
+        infoLotacao.dadosLotacao.infoEmprParcial.nrInscContrat := INIRec.ReadString(sSecao, 'nrInscContrat', EmptyStr);
+        infoLotacao.dadosLotacao.infoEmprParcial.tpInscProp    := eSStrToTpInscProp(Ok, INIRec.ReadString(sSecao, 'tpInscProp', '1'));
+        infoLotacao.dadosLotacao.infoEmprParcial.nrInscProp    := INIRec.ReadString(sSecao, 'nrInscProp', EmptyStr);
+
+        if ModoLancamento = mlAlteracao then
+        begin
+          sSecao := 'novaValidade';
+          infoLotacao.novaValidade.IniValid := INIRec.ReadString(sSecao, 'iniValid', EmptyStr);
+          infoLotacao.novaValidade.FimValid := INIRec.ReadString(sSecao, 'fimValid', EmptyStr);
+        end;
+      end;
     end;
 
     GerarXML;

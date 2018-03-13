@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/03/2018
+-- ACBrReinf --
+[-] Ajustes nas leituras dos eventos S5001 e S5011.
+   Por: Rafael Dias.
+
 09/03/2018
 -- ACBrReinf --
 [*] https://www.projetoacbr.com.br/forum/topic/41925-acbrreinf-v1_03_00/?do=findComment&comment=276587

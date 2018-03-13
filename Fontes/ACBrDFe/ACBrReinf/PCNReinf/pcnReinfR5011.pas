@@ -374,7 +374,7 @@ begin
 
     if leitor.rExtrai(1, 'evtTotalContrib') <> '' then
     begin
-      FId := Leitor.rAtributo('Id=');
+      FId := Leitor.rAtributo('id=');
 
       if leitor.rExtrai(2, 'ideEvento') <> '' then
         IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
@@ -409,7 +409,7 @@ begin
       if leitor.rExtrai(2, 'infoRecEv') <> '' then
       begin
         infoRecEv.nrProtEntr := leitor.rCampo(tcStr, 'nrProtEntr');
-        infoRecEv.dhProcess  := leitor.rCampo(tcDatHor, 'dhProcess');
+        infoRecEv.dhProcess  := leitor.rCampo(tcDat, 'dhProcess');
         infoRecEv.tpEv       := leitor.rCampo(tcStr, 'tpEv');
         infoRecEv.idEv       := leitor.rCampo(tcStr, 'idEv');
         infoRecEv.hash       := leitor.rCampo(tcStr, 'hash');

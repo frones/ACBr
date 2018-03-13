@@ -3849,28 +3849,28 @@ begin
               case retEventos.Items[i].tot[J].Evento.TipoEvento of
                 teS5001:
                   begin
-                    evtS5001 := TS5001(retEventos.Items[i].tot[J].Evento);
+                    evtS5001 := TS5001(retEventos.Items[i].tot[J].Evento.GetEvento);
                     Add('   Id...........: ' + evtS5001.EvtBasesTrab.Id);
                     Add('   nrRecArqBase.: ' +
                       evtS5001.EvtBasesTrab.IdeEvento.nrRecArqBase);
                   end;
                 teS5002:
                   begin
-                    evtS5002 := TS5002(retEventos.Items[i].tot[J].Evento);
+                    evtS5002 := TS5002(retEventos.Items[i].tot[J].Evento.GetEvento);
                     Add('   Id...........: ' + evtS5002.EvtirrfBenef.Id);
                     Add('   nrRecArqBase.: ' +
                       evtS5002.EvtirrfBenef.IdeEvento.nrRecArqBase);
                   end;
                 teS5011:
                   begin
-                    evtS5011 := TS5011(retEventos.Items[i].tot[J].Evento);
+                    evtS5011 := TS5011(retEventos.Items[i].tot[J].Evento.GetEvento);
                     Add('   Id...........: ' + evtS5011.EvtCS.Id);
                     Add('   nrRecArqBase.: ' +
                       evtS5011.EvtCS.IdeEvento.nrRecArqBase);
                   end;
                 teS5012:
                   begin
-                    evtS5012 := TS5012(retEventos.Items[i].tot[J].Evento);
+                    evtS5012 := TS5012(retEventos.Items[i].tot[J].Evento.GetEvento);
                     Add('   Id...........: ' + evtS5012.EvtIrrf.Id);
                     Add('   nrRecArqBase.: ' +
                       evtS5012.EvtIrrf.IdeEvento.nrRecArqBase);

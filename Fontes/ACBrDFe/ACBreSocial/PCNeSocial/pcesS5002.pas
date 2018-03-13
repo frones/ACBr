@@ -92,6 +92,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    function GetEvento : TObject;
+
   published
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
@@ -227,6 +229,11 @@ begin
   FEvtIrrfBenef.Free;
 
   inherited;
+end;
+
+function TS5002.GetEvento : TObject;
+begin
+  Result := self;
 end;
 
 function TS5002.GetXml : string;

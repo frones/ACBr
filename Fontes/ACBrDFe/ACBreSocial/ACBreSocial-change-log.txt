@@ -50,9 +50,12 @@ Símbolo : Significado
 
 12/03/2018
 -- ACBreSocial --
-[*] Corrigido erros de compilação com o D7.
+[-] Corrigido erros de compilação com o D7.
     https://www.projetoacbr.com.br/forum/topic/42062-erro-na-instala%C3%A7%C3%A3o/?tab=comments#comment-276975
-   Por: arce
+    Por: arce
+
+[-] Correção para usar interfaces em delphi abaixo do 2010, foi adicionado o metodo GetEvento que retorna a instancia do objeto para fazer cast.
+    Por: Rafael Dias.
 
 09/03/2018
 -- ACBreSocial --

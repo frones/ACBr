@@ -340,33 +340,38 @@ procedure TEvtAfastTemp.GerarInfoAfastamento(objInfoAfast: TinfoAfastamento);
 begin
   Gerador.wGrupo('infoAfastamento');
 
-  Gerador.wGrupo('iniAfastamento');
-
-  Gerador.wCampo(tcDat, '', 'dtIniAfast',  10,  10, 1, objInfoAfast.iniAfastamento.DtIniAfast);
-  Gerador.wCampo(tcStr, '', 'codMotAfast',  1,   2, 1, eStpMotivosAfastamentoToStr(objInfoAfast.iniAfastamento.codMotAfast));
-
-  if (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho]) then
+  if (DateToStr(objInfoAfast.iniAfastamento.DtIniAfast) <> dDataBrancoNula) then
   begin
-    Gerador.wCampo(tcStr, '', 'infoMesmoMtv',   1, 1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMesmoMtv));
-    Gerador.wCampo(tcStr, '', 'tpAcidTransito', 1, 1, 0, eStpTpAcidTransitoToStr(objInfoAfast.iniAfastamento.tpAcidTransito));
+    Gerador.wGrupo('iniAfastamento');
+
+    Gerador.wCampo(tcDat, '', 'dtIniAfast',  10,  10, 1, objInfoAfast.iniAfastamento.DtIniAfast);
+    Gerador.wCampo(tcStr, '', 'codMotAfast',  1,   2, 1, eStpMotivosAfastamentoToStr(objInfoAfast.iniAfastamento.codMotAfast));
+
+    if (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho]) then
+    begin
+      Gerador.wCampo(tcStr, '', 'infoMesmoMtv',   1, 1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMesmoMtv));
+      Gerador.wCampo(tcStr, '', 'tpAcidTransito', 1, 1, 0, eStpTpAcidTransitoToStr(objInfoAfast.iniAfastamento.tpAcidTransito));
+    end;
+
+    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, objInfoAfast.iniAfastamento.Observacao);
+
+    if objInfoAfast.iniAfastamento.infoAtestadoInst then
+      GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);
+
+    if Assigned(objInfoAfast.iniAfastamento.infoCessao) then
+      GerarInfoCessao(objInfoAfast.iniAfastamento.infoCessao);
+
+    if Assigned(objInfoAfast.iniAfastamento.infoMandSind) then
+      GerarInfoMandSind(objInfoAfast.iniAfastamento.infoMandSind);
+
+    Gerador.wGrupo('/iniAfastamento');
   end;
-
-  Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, objInfoAfast.iniAfastamento.Observacao);
-
-  if objInfoAfast.iniAfastamento.infoAtestadoInst then
-    GerarInfoAtestado(objInfoAfast.iniAfastamento.infoAtestado);
-
-  if Assigned(objInfoAfast.iniAfastamento.infoCessao) then
-    GerarInfoCessao(objInfoAfast.iniAfastamento.infoCessao);
-
-  if Assigned(objInfoAfast.iniAfastamento.infoMandSind) then
-    GerarInfoMandSind(objInfoAfast.iniAfastamento.infoMandSind);
-
-  Gerador.wGrupo('/iniAfastamento');
 
   //    GerarAltAfast(objInfoAfast.altAfastamento);
   GerarInfoRetif(objInfoAfast.FinfoRetif);
-  GerarFimAfast(objInfoAfast.fimAfastamento);
+
+  if (DateToStr(objInfoAfast.fimAfastamento.dtTermAfast) <> dDataBrancoNula) then
+    GerarFimAfast(objInfoAfast.fimAfastamento);
 
   Gerador.wGrupo('/infoAfastamento');
 end;

@@ -1791,7 +1791,7 @@ type
     function GetItem(Index: Integer): TObservacoesCollectionItem;
     procedure SetItem(Index: Integer; Value: TObservacoesCollectionItem);
   public
-    constructor Create(AOwner: TInfoContrato);
+    constructor Create; reintroduce;
     function Add: TObservacoesCollectionItem;
     property Items[Index: Integer]: TObservacoesCollectionItem read GetItem write SetItem; default;
   end;
@@ -2086,7 +2086,7 @@ begin
   FInfoAtivDesemp:= TInfoAtivDesemp.Create;
   FFiliacaoSindical:= TFiliacaoSindical.Create;
   FAlvaraJudicial:= TAlvaraJudicial.Create;
-  Fobservacoes := TobservacoesCollection.Create(Self);
+  Fobservacoes := TobservacoesCollection.Create;
 end;
 
 destructor TInfoContrato.Destroy;
@@ -2926,7 +2926,7 @@ begin
   Result := TObservacoesCollectionItem(inherited Add);
 end;
 
-constructor TObservacoesCollection.Create(AOwner: TInfoContrato);
+constructor TObservacoesCollection.Create();
 begin
   inherited Create(TObservacoesCollectionItem);
 end;

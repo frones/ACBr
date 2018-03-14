@@ -103,7 +103,7 @@ type
     procedure GerarCNH(pCnh: TCNH);                                   
     procedure GerarContatoTrabalhador(pContato: TContatoTrabalhador);
     procedure GerarInfoContrato(pInfoContrato: TInfoContrato; pTipo: Integer; pInfoRegimeTrab: TInfoRegimeTrab);
-    procedure GerarObservacoes(pObservacoes: TObservacoesCollection);
+    procedure GerarObservacoes(pObservacoes: TObservacoesCollection; GerarGrupo: Boolean = True);
     procedure GerarTransfDom(pTransfDom: TTransfDom);
     procedure GerarCTPS(pCTPS: TCTPS);
     procedure GerarDependente(pDependente: TDependenteCollection);
@@ -767,7 +767,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'nmSoc', 1, 70, 0, pTrabalhador.nmSoc);
 
-  if (GroupName = 'trabalhador') then
+  if (GroupName = 'trabalhador') or (GroupName = 'dadosTrabalhador') then
     GerarNascimento(pTrabalhador.Nascimento);
 
   GerarDocumentos(pTrabalhador.Documentos);
@@ -1649,22 +1649,26 @@ begin
   Gerador.wGrupo('/ideRespInf');
 end;
 
-procedure TeSocialEvento.GerarObservacoes(
-  pObservacoes: TObservacoesCollection);
+procedure TeSocialEvento.GerarObservacoes(pObservacoes: TObservacoesCollection; GerarGrupo: Boolean = True);
 var
   i: integer;
 begin
-  for i := 0 to pObservacoes.Count - 1 do
+  if GerarGrupo then
   begin
-    Gerador.wGrupo('observacoes');
+    for i := 0 to pObservacoes.Count - 1 do
+    begin
+      Gerador.wGrupo('observacoes');
 
-    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 1, pObservacoes.Items[i].observacao);
+      Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 1, pObservacoes.Items[i].observacao);
 
-    Gerador.wGrupo('/observacoes');
-  end;
+      Gerador.wGrupo('/observacoes');
+    end;
 
-  if pObservacoes.Count > 99 then
-    Gerador.wAlerta('', 'observacoes', 'Lista de Observações', ERR_MSG_MAIOR_MAXIMO + '99');
+    if pObservacoes.Count > 99 then
+      Gerador.wAlerta('', 'observacoes', 'Lista de Observações', ERR_MSG_MAIOR_MAXIMO + '99');
+  end
+  else
+    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 1, pObservacoes.Items[0].observacao);
 end;
 
 procedure TeSocialEvento.GerarTransfDom(pTransfDom: TTransfDom);

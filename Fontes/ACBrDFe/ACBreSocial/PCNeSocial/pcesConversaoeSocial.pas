@@ -368,7 +368,8 @@ type
   tpIdeOC                 = (idCRM, idCRO, idRMS);
 
   tpTpAvPrevio            = (tpAvPrevTrabDadoPeloEmpregadorAoEmpregadoRed2horasDiarias, tpAvPrevTrabDadoPeloEmpregadorAoEmpregadoRedDiasCorridos,
-                             tpAvPrevPeloEmpregadoNaoDispensadoDeSeuCumprimento, tpAvPrevTrabDadoPeloEmpregadorRuralComRed1DiaporSemana);
+                             tpAvPrevPeloEmpregadoNaoDispensadoDeSeuCumprimento, tpAvPrevTrabDadoPeloEmpregadorRuralComRed1DiaporSemana,
+                             tpAvPrevTrabDecorrenteDeAcordoEmpregadoEmpregador);
 
   tpMtvCancAvPrevio       = (mcReconsideracaoPrevistaArt489CLT, mcDeterminacaoJudicial, mcCumprimentoNormaLegal, mcOutros);
 
@@ -1312,12 +1313,12 @@ end;
 
 function eSTpAvPrevioToStr(const t: tpTpAvPrevio ): string;
 begin
-  result := EnumeradoToStr2(t,[ '1', '2', '4', '5' ] );
+  result := EnumeradoToStr2(t,[ '1', '2', '4', '5', '6' ] );
 end;
 
 function eSStrToTpAvPrevio(var ok: boolean; const s: string): tpTpAvPrevio;
 begin
-  result := tpTpAvPrevio( StrToEnumerado2(ok , s, [ '1', '2', '4', '5' ] ) );
+  result := tpTpAvPrevio( StrToEnumerado2(ok , s, [ '1', '2', '4', '5', '6' ] ) );
 end;
 
 function eSNrLeiAnistiaToStr(const t: tpNrLeiAnistia ): string;

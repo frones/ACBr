@@ -316,18 +316,21 @@ end;
 
 procedure TEvtTSVInicio.GerarageIntegracao(obj: TageIntegracao);
 begin
-  Gerador.wGrupo('ageIntegracao');
+  if obj.cnpjAgntInteg <> EmptyStr then
+  begin
+	Gerador.wGrupo('ageIntegracao');
 
-  Gerador.wCampo(tcStr, '', 'cnpjAgntInteg', 14,  14, 1, obj.cnpjAgntInteg);
-  Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, obj.nmRazao);
-  Gerador.wCampo(tcStr, '', 'dscLograd',      1,  80, 1, obj.dscLograd);
-  Gerador.wCampo(tcStr, '', 'nrLograd',       1,  10, 1, obj.nrLograd);
-  Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
-  Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
-  Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
-  Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, eSufToStr(obj.uf));
+    Gerador.wCampo(tcStr, '', 'cnpjAgntInteg', 14,  14, 1, obj.cnpjAgntInteg);
+	Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, obj.nmRazao);
+	Gerador.wCampo(tcStr, '', 'dscLograd',      1,  80, 1, obj.dscLograd);
+	Gerador.wCampo(tcStr, '', 'nrLograd',       1,  10, 1, obj.nrLograd);
+	Gerador.wCampo(tcStr, '', 'bairro',         1,  60, 0, obj.bairro);
+	Gerador.wCampo(tcStr, '', 'cep',            1,   8, 1, obj.cep);
+	Gerador.wCampo(tcStr, '', 'codMunic',       7,   7, 0, obj.codMunic);
+	Gerador.wCampo(tcStr, '', 'uf',             2,   2, 1, eSufToStr(obj.uf));
 
-  Gerador.wGrupo('/ageIntegracao');
+	Gerador.wGrupo('/ageIntegracao');
+  end;
 end;
 
 procedure TEvtTSVInicio.GerarCargoFuncao(obj: TcargoFuncao);
@@ -349,7 +352,7 @@ begin
   begin
     Gerador.wGrupo('fgts');
 
-    Gerador.wCampo(tcStr, '', 'opcFGTS',    1,  1, 1, obj.opcFGTS);
+    Gerador.wCampo(tcStr, '', 'opcFGTS',    1,  1, 1, eSOpcFGTSToStr(obj.OpcFGTS));
     Gerador.wCampo(tcDat, '', 'dtOpcFGTS', 10, 10, 0, obj.dtOpcFGTS);
 
     Gerador.wGrupo('/fgts');
@@ -436,11 +439,14 @@ begin
   Gerador.wCampo(tcStr, '', 'cadIni',        1,  1, 1, eSSimNaoToStr(obj.cadIni));
   Gerador.wCampo(tcStr, '', 'codCateg',      0,  3, 1, obj.codCateg);
   Gerador.wCampo(tcDat, '', 'dtInicio',     10, 10, 1, obj.dtInicio);
-  if      obj.codCateg=305 Then  //Servidor Publico Indicado a Conselho
-  else if obj.codCateg=721 Then  //Diretor não empregado com FGTS
-  else if obj.codCateg=722 Then  //Diretor não empregado sem FGTS
-  else if obj.codCateg=771 Then  //Membro conselho tutelar
-  else if obj.codCateg=901 Then  //Estagiario
+  if      obj.codCateg = 305 Then //Servidor Publico Indicado a Conselho
+  else if obj.codCateg = 201 Then // Trabalhador Avulso Portuário
+  else if obj.codCateg = 202 Then // Trabalhador Avulso Não Portuário
+  else if obj.codCateg = 401 Then // Dirigente Sindical    
+  else if obj.codCateg = 721 Then //Diretor não empregado com FGTS
+  else if obj.codCateg = 722 Then //Diretor não empregado sem FGTS
+  else if obj.codCateg = 771 Then //Membro conselho tutelar
+  else if obj.codCateg = 901 Then //Estagiario
   else
    Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, ord(obj.natAtivididade) + 1);
 

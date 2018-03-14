@@ -140,7 +140,7 @@ type
     FnrCertObito : String;
     FnrProcTrab : String;
     FIndCumprParc: tpCumprParcialAviso;
-    FObservacao : String;
+    Fobservacoes: TobservacoesCollection;
     FSucessaoVinc : TSucessaoVinc;
     FVerbasResc : TVerbasRescS2299;
     FQuarentena: TQuarentena;
@@ -165,7 +165,7 @@ type
     property nrCertObito : String read FnrCertObito write FnrCertObito;
     property nrProcTrab : String read FnrProcTrab write FnrProcTrab;
     property indCumprParc: tpCumprParcialAviso read FIndCumprParc write FIndCumprParc;
-    property Observacao : String read FObservacao write FObservacao;
+    property observacoes: TobservacoesCollection read Fobservacoes write Fobservacoes;
     property SucessaoVinc : TSucessaoVinc read FSucessaoVinc write FSucessaoVinc;
     property VerbasResc : TVerbasRescS2299 read getVerbasResc write FVerbasResc;
     property Quarentena: TQuarentena read FQuarentena write FQuarentena;
@@ -395,7 +395,8 @@ begin
     Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
 
   Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
-  Gerador.wCampo(tcStr, '', 'observacao',   1, 255, 0, obj.Observacao);
+
+  GerarObservacoes(obj.observacoes, (VersaoDF = ve02_04_02));
 
   GerarSucessaoVinc(obj.SucessaoVinc);
   if obj.transfTit.cpfSubstituto <> '' then
@@ -533,7 +534,7 @@ begin
     GerarIdeEmpregador(self.IdeEmpregador);
     GerarIdeVinculo(self.IdeVinculo);
     GerarInfoDeslig(Self.InfoDeslig);
-
+              
     Gerador.wGrupo('/evtDeslig');
 
     GerarRodape;
@@ -551,9 +552,12 @@ end;
 procedure TEvtDeslig.GerarconsigFGTS(obj: TconsigFGTS);
 begin
   Gerador.wGrupo('consigFGTS');
-  Gerador.wCampo(tcStr, '', 'idConsig',  1,  1, 1, eSSimNaoToStr(obj.idConsig));
+
+  if (VersaoDF = ve02_04_01) then
+    Gerador.wCampo(tcStr, '', 'idConsig',  1,  1, 1, eSSimNaoToStr(obj.idConsig));
+
   Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj.insConsig);
-  Gerador.wCampo(tcStr, '', 'nrContr',   0, 15, 0, obj.nrContr);
+  Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj.nrContr);
   Gerador.wGrupo('/consigFGTS');
 end;
 
@@ -617,11 +621,12 @@ begin
   inherited;
 
   FSucessaoVinc := TSucessaoVinc.Create;
-  FVerbasResc := nil;
-  FQuarentena := TQuarentena.Create;
-  FconsigFGTS := TconsigFGTS.Create;
-  FInfoASO := TInfoASO.Create;
-  FtransfTit := TtransfTit.Create;
+  FVerbasResc   := nil;
+  FQuarentena   := TQuarentena.Create;
+  FconsigFGTS   := TconsigFGTS.Create;
+  FInfoASO      := TInfoASO.Create;
+  FtransfTit    := TtransfTit.Create;
+  Fobservacoes  := TobservacoesCollection.Create;
 end;
 
 destructor TInfoDeslig.destroy;
@@ -632,6 +637,7 @@ begin
   FconsigFGTS.Free;
   FInfoASO.Free;
   FtransfTit.Free;
+  Fobservacoes.Free;
 
   inherited;
 end;

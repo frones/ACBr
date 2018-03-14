@@ -3070,7 +3070,10 @@ begin
 
     EvtDeslig.InfoDeslig.indCumprParc := cpaCumprimentoTotal;
 
-    // Obsercação opcional
+    // Obsercação opcional - versão 2.04.01
+    EvtDeslig.InfoDeslig.observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
+
+    // Obsercação opcional - versão 2.04.02
     with EvtDeslig.InfoDeslig.observacoes.Add do
      observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
 

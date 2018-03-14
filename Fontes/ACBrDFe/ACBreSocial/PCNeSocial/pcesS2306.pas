@@ -290,7 +290,16 @@ begin
   Gerador.wGrupo('infoTSVAlteracao');
 
   Gerador.wCampo(tcDat, '', 'dtAlteracao',  10, 10, 1, obj.dtAlteracao);
-  Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, ord(obj.natAtivididade) + 1);
+  if      Self.FideTrabSemVinc.codCateg = 305 Then // Servidor Publico Indicado a Conselho
+  else if Self.FideTrabSemVinc.codCateg = 201 Then // Trabalhador Avulso Portuário
+  else if Self.FideTrabSemVinc.codCateg = 202 Then // Trabalhador Avulso Não Portuário
+  else if Self.FideTrabSemVinc.codCateg = 401 Then // Dirigente Sindical
+  else if Self.FideTrabSemVinc.codCateg = 721 Then // Diretor não empregado com FGTS
+  else if Self.FideTrabSemVinc.codCateg = 722 Then // Diretor não empregado sem FGTS
+  else if Self.FideTrabSemVinc.codCateg = 771 Then // Membro conselho tutelar
+  else if Self.FideTrabSemVinc.codCateg = 901 Then // Estagiario
+  else
+    Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, ord(obj.natAtivididade) + 1);
 
   GerarinfoComplementares(obj.infoComplementares);
 

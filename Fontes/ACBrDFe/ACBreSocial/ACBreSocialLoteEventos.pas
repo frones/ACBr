@@ -291,7 +291,6 @@ procedure TLoteEventos.GerarXML(const AGrupo: TeSocialGrupo);
 var
   i: Integer;
   Eventosxml: AnsiString;
-//  Path: string;
 begin
   CarregarXmlEventos;
 
@@ -441,17 +440,10 @@ function TItemLoteEventos.GetIDEvento: string;
 var
   Ini: Integer;
 begin
-  // 	<evtInfoEmpregador Id="ID1012345678900002017071908065532932">
   Result := EmptyStr;
   Ini := pos('Id=', XML);
   if ini > 0 then
-  begin
-    Result := Copy(XML, Ini + 4, 38);
-    Result := StringReplace(Result, '"', '', []);
-    Result := StringReplace(Result, '>', '', []);
-    Result := StringReplace(Result, '<', '', []);
-    Result := StringReplace(Result, '=', '', []);
-  end;
+    Result := OnlyNumber(Copy(XML, Ini + 4, 38));
 end;
 
 procedure TItemLoteEventos.SetXML(const Value: AnsiString);

@@ -140,6 +140,7 @@ type
     FnrCertObito : String;
     FnrProcTrab : String;
     FIndCumprParc: tpCumprParcialAviso;
+    FObservacao : String; // Descontinuado na versão 2.4.02
     Fobservacoes: TobservacoesCollection;
     FSucessaoVinc : TSucessaoVinc;
     FVerbasResc : TVerbasRescS2299;
@@ -165,6 +166,7 @@ type
     property nrCertObito : String read FnrCertObito write FnrCertObito;
     property nrProcTrab : String read FnrProcTrab write FnrProcTrab;
     property indCumprParc: tpCumprParcialAviso read FIndCumprParc write FIndCumprParc;
+    property Observacao : String read FObservacao write FObservacao;
     property observacoes: TobservacoesCollection read Fobservacoes write Fobservacoes;
     property SucessaoVinc : TSucessaoVinc read FSucessaoVinc write FSucessaoVinc;
     property VerbasResc : TVerbasRescS2299 read getVerbasResc write FVerbasResc;
@@ -395,8 +397,10 @@ begin
     Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
 
   Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
-
-  GerarObservacoes(obj.observacoes, (VersaoDF = ve02_04_02));
+  if (VersaoDF = ve02_04_01) then  
+    Gerador.wCampo(tcStr, '', 'observacao',   1, 255, 0, obj.Observacao)
+  else
+    GerarObservacoes(obj.observacoes);
 
   GerarSucessaoVinc(obj.SucessaoVinc);
   if obj.transfTit.cpfSubstituto <> '' then
@@ -552,10 +556,8 @@ end;
 procedure TEvtDeslig.GerarconsigFGTS(obj: TconsigFGTS);
 begin
   Gerador.wGrupo('consigFGTS');
-
   if (VersaoDF = ve02_04_01) then
     Gerador.wCampo(tcStr, '', 'idConsig',  1,  1, 1, eSSimNaoToStr(obj.idConsig));
-
   Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj.insConsig);
   Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj.nrContr);
   Gerador.wGrupo('/consigFGTS');

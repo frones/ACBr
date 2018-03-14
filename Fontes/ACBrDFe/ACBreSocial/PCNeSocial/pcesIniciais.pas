@@ -136,10 +136,14 @@ begin
     Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
   for I := 0 to Self.S1000.Count - 1 do
-    Self.S1000.Items[i].evtInfoEmpregador.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1000.Items[i].TipoEvento)+'-'+IntToStr(i));
-    
+    Self.S1000.Items[i].evtInfoEmpregador.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1000.Items[i].evtInfoEmpregador.Id) + '-' +
+     TipoEventoToStr(Self.S1000.Items[i].TipoEvento)+'-'+IntToStr(i));
+
   for I := 0 to Self.S1005.Count - 1 do
-    Self.S1005.Items[i].evtTabEstab.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1005.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1005.Items[i].evtTabEstab.SaveToFile(Path +'\' +
+     OnlyNumber(Self.S1005.Items[i].evtTabEstab.Id) + '-' +
+     TipoEventoToStr(Self.S1005.Items[i].TipoEvento)+'-'+IntToStr(i));
 end;
 
 procedure TIniciais.setS1000(const Value: TS1000Collection);

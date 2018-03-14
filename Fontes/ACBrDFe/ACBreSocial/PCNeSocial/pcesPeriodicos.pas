@@ -238,40 +238,64 @@ begin
     Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
   for I := 0 to Self.S1200.Count - 1 do
-    Self.S1200.Items[i].evtRemun.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1200.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1200.Items[i].evtRemun.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1200.Items[i].evtRemun.Id) + '-' +
+     TipoEventoToStr(Self.S1200.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1202.Count - 1 do
-    Self.S1202.Items[i].EvtRmnRPPS.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1202.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1202.Items[i].EvtRmnRPPS.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1202.Items[i].EvtRmnRPPS.Id) + '-' +
+     TipoEventoToStr(Self.S1202.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1207.Count - 1 do
-    Self.S1207.Items[i].evtBenPrRP.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1207.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1207.Items[i].evtBenPrRP.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1207.Items[i].evtBenPrRP.Id) + '-' +
+     TipoEventoToStr(Self.S1207.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1210.Count - 1 do
-    Self.S1210.Items[i].evtPgtos.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1210.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1210.Items[i].evtPgtos.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1210.Items[i].evtPgtos.Id) + '-' +
+     TipoEventoToStr(Self.S1210.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1250.Count - 1 do
-    Self.S1250.Items[i].EvtAqProd.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1250.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1250.Items[i].EvtAqProd.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1250.Items[i].EvtAqProd.Id) + '-' +
+     TipoEventoToStr(Self.S1250.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1260.Count - 1 do
-    Self.S1260.Items[i].EvtComProd.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1260.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1260.Items[i].EvtComProd.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1260.Items[i].EvtComProd.Id) + '-' +
+     TipoEventoToStr(Self.S1260.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1270.Count - 1 do
-    Self.S1270.Items[i].EvtContratAvNP.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1270.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1270.Items[i].EvtContratAvNP.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1270.Items[i].EvtContratAvNP.Id) + '-' +
+     TipoEventoToStr(Self.S1270.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1280.Count - 1 do
-    Self.S1280.Items[i].EvtInfoComplPer.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1280.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1280.Items[i].EvtInfoComplPer.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1280.Items[i].EvtInfoComplPer.Id) + '-' +
+     TipoEventoToStr(Self.S1280.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1295.Count - 1 do
-    Self.S1295.Items[i].evtTotConting.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1295.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1295.Items[i].evtTotConting.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1295.Items[i].evtTotConting.Id) + '-' +
+     TipoEventoToStr(Self.S1295.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1298.Count - 1 do
-    Self.S1298.Items[i].EvtReabreEvPer.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1298.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1298.Items[i].EvtReabreEvPer.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1298.Items[i].EvtReabreEvPer.Id) + '-' +
+     TipoEventoToStr(Self.S1298.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1299.Count - 1 do
-    Self.S1299.Items[i].EvtFechaEvPer.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1299.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1299.Items[i].EvtFechaEvPer.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1299.Items[i].EvtFechaEvPer.Id) + '-' +
+     TipoEventoToStr(Self.S1299.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1300.Count - 1 do
-    Self.S1300.Items[i].EvtContrSindPatr.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1300.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1300.Items[i].EvtContrSindPatr.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1300.Items[i].EvtContrSindPatr.Id) + '-' +
+     TipoEventoToStr(Self.S1300.Items[i].TipoEvento) + '-' + IntToStr(i));
 end;
 
 procedure TPeriodicos.setS1200(const Value: TS1200Collection);

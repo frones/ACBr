@@ -103,7 +103,7 @@ type
     procedure GerarCNH(pCnh: TCNH);                                   
     procedure GerarContatoTrabalhador(pContato: TContatoTrabalhador);
     procedure GerarInfoContrato(pInfoContrato: TInfoContrato; pTipo: Integer; pInfoRegimeTrab: TInfoRegimeTrab);
-    procedure GerarObservacoes(pObservacoes: TObservacoesCollection; GerarGrupo: Boolean = True);
+    procedure GerarObservacoes(pObservacoes: TObservacoesCollection);
     procedure GerarTransfDom(pTransfDom: TTransfDom);
     procedure GerarCTPS(pCTPS: TCTPS);
     procedure GerarDependente(pDependente: TDependenteCollection);
@@ -767,7 +767,8 @@ begin
 
   Gerador.wCampo(tcStr, '', 'nmSoc', 1, 70, 0, pTrabalhador.nmSoc);
 
-  if (GroupName = 'trabalhador') or (GroupName = 'dadosTrabalhador') then
+  if (GroupName = 'trabalhador') or
+     ((GroupName = 'dadosTrabalhador') and (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF = ve02_04_02)) then
     GerarNascimento(pTrabalhador.Nascimento);
 
   GerarDocumentos(pTrabalhador.Documentos);
@@ -1649,26 +1650,22 @@ begin
   Gerador.wGrupo('/ideRespInf');
 end;
 
-procedure TeSocialEvento.GerarObservacoes(pObservacoes: TObservacoesCollection; GerarGrupo: Boolean = True);
+procedure TeSocialEvento.GerarObservacoes(
+  pObservacoes: TObservacoesCollection);
 var
   i: integer;
 begin
-  if GerarGrupo then
+  for i := 0 to pObservacoes.Count - 1 do
   begin
-    for i := 0 to pObservacoes.Count - 1 do
-    begin
-      Gerador.wGrupo('observacoes');
+    Gerador.wGrupo('observacoes');
 
-      Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 1, pObservacoes.Items[i].observacao);
+    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 1, pObservacoes.Items[i].observacao);
 
-      Gerador.wGrupo('/observacoes');
-    end;
+    Gerador.wGrupo('/observacoes');
+  end;
 
-    if pObservacoes.Count > 99 then
-      Gerador.wAlerta('', 'observacoes', 'Lista de Observações', ERR_MSG_MAIOR_MAXIMO + '99');
-  end
-  else
-    Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 1, pObservacoes.Items[0].observacao);
+  if pObservacoes.Count > 99 then
+    Gerador.wAlerta('', 'observacoes', 'Lista de Observações', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TeSocialEvento.GerarTransfDom(pTransfDom: TTransfDom);

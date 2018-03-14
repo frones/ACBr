@@ -203,31 +203,49 @@ begin
     Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
   for I := 0 to Self.S1010.Count - 1 do
-    Self.S1010.Items[i].EvtTabRubrica.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1010.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1010.Items[i].EvtTabRubrica.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1010.Items[i].EvtTabRubrica.Id) + '-' +
+     TipoEventoToStr(Self.S1010.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1020.Count - 1 do
-    Self.S1020.Items[i].EvtTabLotacao.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1020.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1020.Items[i].EvtTabLotacao.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1020.Items[i].EvtTabLotacao.Id) + '-' +
+     TipoEventoToStr(Self.S1020.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1030.Count - 1 do
-    Self.S1030.Items[i].EvtTabCargo.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1030.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1030.Items[i].EvtTabCargo.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1030.Items[i].EvtTabCargo.Id) + '-' +
+     TipoEventoToStr(Self.S1030.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1035.Count - 1 do
-    Self.S1035.Items[i].evtTabCarreira.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1035.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1035.Items[i].evtTabCarreira.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1035.Items[i].evtTabCarreira.Id) + '-' +
+     TipoEventoToStr(Self.S1035.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1040.Count - 1 do
-    Self.S1040.Items[i].EvtTabFuncao.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1040.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1040.Items[i].EvtTabFuncao.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1040.Items[i].EvtTabFuncao.Id) + '-' +
+     TipoEventoToStr(Self.S1040.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1050.Count - 1 do
-    Self.S1050.Items[i].EvtTabHorContratual.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1050.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1050.Items[i].EvtTabHorContratual.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1050.Items[i].EvtTabHorContratual.Id) + '-' +
+     TipoEventoToStr(Self.S1050.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1060.Count - 1 do
-    Self.S1060.Items[i].EvtTabAmbiente.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1060.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1060.Items[i].EvtTabAmbiente.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1060.Items[i].EvtTabAmbiente.Id) + '-' +
+     TipoEventoToStr(Self.S1060.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1070.Count - 1 do
-    Self.S1070.Items[i].EvtTabProcesso.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1070.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1070.Items[i].EvtTabProcesso.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1070.Items[i].EvtTabProcesso.Id) + '-' +
+     TipoEventoToStr(Self.S1070.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S1080.Count - 1 do
-    Self.S1080.Items[i].EvtTabOperPortuario.SaveToFile(Path+'\'+TipoEventoToStr(Self.S1080.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S1080.Items[i].EvtTabOperPortuario.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S1080.Items[i].EvtTabOperPortuario.Id) + '-' +
+     TipoEventoToStr(Self.S1080.Items[i].TipoEvento) + '-' + IntToStr(i));
 end;
 
 procedure TTabelas.setS1010(const Value: TS1010Collection);

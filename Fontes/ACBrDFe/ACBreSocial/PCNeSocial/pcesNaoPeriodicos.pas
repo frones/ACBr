@@ -299,58 +299,94 @@ begin
     Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
   for I := 0 to Self.S2190.Count - 1 do
-    Self.S2190.Items[i].EvtAdmPrelim.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2190.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2190.Items[i].EvtAdmPrelim.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2190.Items[i].EvtAdmPrelim.Id) + '-' +
+     TipoEventoToStr(Self.S2190.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2200.Count - 1 do
-    Self.S2200.Items[i].EvtAdmissao.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2200.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2200.Items[i].EvtAdmissao.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2200.Items[i].EvtAdmissao.Id) + '-' +
+     TipoEventoToStr(Self.S2200.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2205.Count - 1 do
-    Self.S2205.Items[i].EvtAltCadastral.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2205.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2205.Items[i].EvtAltCadastral.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2205.Items[i].EvtAltCadastral.Id) + '-' +
+     TipoEventoToStr(Self.S2205.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2206.Count - 1 do
-    Self.S2206.Items[i].EvtAltContratual.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2206.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2206.Items[i].EvtAltContratual.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2206.Items[i].EvtAltContratual.Id) + '-' +
+     TipoEventoToStr(Self.S2206.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2210.Count - 1 do
-    Self.S2210.Items[i].EvtCAT.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2210.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2210.Items[i].EvtCAT.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2210.Items[i].EvtCAT.Id) + '-' +
+     TipoEventoToStr(Self.S2210.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2220.Count - 1 do
-    Self.S2220.Items[i].EvtASO.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2220.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2220.Items[i].EvtASO.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2220.Items[i].EvtASO.Id) + '-' +
+     TipoEventoToStr(Self.S2220.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2230.Count - 1 do
-    Self.S2230.Items[i].EvtAfastTemp.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2230.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2230.Items[i].EvtAfastTemp.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2230.Items[i].EvtAfastTemp.Id) + '-' +
+     TipoEventoToStr(Self.S2230.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2240.Count - 1 do
-    Self.S2240.Items[i].EvtExpRisco.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2240.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2240.Items[i].EvtExpRisco.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2240.Items[i].EvtExpRisco.Id) + '-' +
+     TipoEventoToStr(Self.S2240.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2241.Count - 1 do
-    Self.S2241.Items[i].EvtInsApo.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2241.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2241.Items[i].EvtInsApo.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2241.Items[i].EvtInsApo.Id) + '-' +
+     TipoEventoToStr(Self.S2241.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2250.Count - 1 do
-    Self.S2250.Items[i].EvtAvPrevio.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2250.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2250.Items[i].EvtAvPrevio.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2250.Items[i].EvtAvPrevio.Id) + '-' +
+     TipoEventoToStr(Self.S2250.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2260.Count - 1 do
-    Self.S2260.Items[i].EvtConvInterm.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2260.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2260.Items[i].EvtConvInterm.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2260.Items[i].EvtConvInterm.Id) + '-' +
+     TipoEventoToStr(Self.S2260.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2298.Count - 1 do
-    Self.S2298.Items[i].EvtReintegr.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2298.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2298.Items[i].EvtReintegr.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2298.Items[i].EvtReintegr.Id) + '-' +
+     TipoEventoToStr(Self.S2298.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2299.Count - 1 do
-    Self.S2299.Items[i].EvtDeslig.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2299.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2299.Items[i].EvtDeslig.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2299.Items[i].EvtDeslig.Id) + '-' +
+     TipoEventoToStr(Self.S2299.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2300.Count - 1 do
-    Self.S2300.Items[i].EvtTSVInicio.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2300.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2300.Items[i].EvtTSVInicio.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2300.Items[i].EvtTSVInicio.Id) + '-' +
+     TipoEventoToStr(Self.S2300.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2306.Count - 1 do
-      Self.S2306.Items[i].EvtTSVAltContr.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2306.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2306.Items[i].EvtTSVAltContr.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2306.Items[i].EvtTSVAltContr.Id) + '-' +
+     TipoEventoToStr(Self.S2306.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2399.Count - 1 do
-    Self.S2399.Items[i].EvtTSVTermino.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2399.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2399.Items[i].EvtTSVTermino.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2399.Items[i].EvtTSVTermino.Id) + '-' +
+     TipoEventoToStr(Self.S2399.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S2400.Count - 1 do
-    Self.S2400.Items[i].EvtCdBenPrRP.SaveToFile(Path+'\'+TipoEventoToStr(Self.S2400.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S2400.Items[i].EvtCdBenPrRP.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S2400.Items[i].EvtCdBenPrRP.Id) + '-' +
+     TipoEventoToStr(Self.S2400.Items[i].TipoEvento) + '-' + IntToStr(i));
 
   for I := 0 to Self.S3000.Count - 1 do
-    Self.S3000.Items[i].EvtExclusao.SaveToFile(Path+'\'+TipoEventoToStr(Self.S3000.Items[i].TipoEvento)+'-'+IntToStr(i));
+    Self.S3000.Items[i].EvtExclusao.SaveToFile(Path + '\' +
+     OnlyNumber(Self.S3000.Items[i].EvtExclusao.Id) + '-' +
+     TipoEventoToStr(Self.S3000.Items[i].TipoEvento) + '-' + IntToStr(i));
 end;
 
 procedure TNaoPeriodicos.setS2190(const Value: TS2190Collection);

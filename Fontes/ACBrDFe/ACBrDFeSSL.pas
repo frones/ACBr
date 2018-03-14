@@ -438,9 +438,12 @@ uses
   synacode,
   ACBrDFeUtil, ACBrValidador, ACBrUtil, ACBrDFeException
   {$IfNDef DFE_SEM_OPENSSL}
-   ,ACBrDFeOpenSSL, ACBrDFeHttpOpenSSL, ACBrDFeXsLibXml2
+   ,ACBrDFeOpenSSL, ACBrDFeHttpOpenSSL
    {$IfNDef DFE_SEM_XMLSEC}
     ,ACBrDFeXsXmlSec
+   {$EndIf}
+   {$IfNDef DFE_SEM_LIBXML2}
+    ,ACBrDFeXsLibXml2
    {$EndIf}
   {$EndIf}
   {$IfNDef DFE_SEM_CAPICOM}
@@ -1603,10 +1606,10 @@ begin
 
     xsLibXml2:
     begin
-      {$IfNDef DFE_SEM_OPENSSL}
+      {$IfNDef DFE_SEM_LIBXML2}
        FSSLXmlSignClass := TDFeSSLXmlSignLibXml2.Create(Self);
       {$Else}
-       raise EACBrDFeException.Create('Suporte a "xsXmlSec" foi desativado por compilação {$DEFINE DFE_SEM_OPENSSL}');
+       raise EACBrDFeException.Create('Suporte a "xsLibXml2" foi desativado por compilação {$DEFINE DFE_SEM_OPENSSL} ou {$DEFINE DFE_SEM_LIBXML2}');
       {$EndIf}
     end;
 

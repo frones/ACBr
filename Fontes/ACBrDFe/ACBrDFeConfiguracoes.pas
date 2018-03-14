@@ -572,7 +572,12 @@ begin
       begin
         SSLCryptLib := cryWinCrypt;
         SSLHttpLib := httpWinHttp;
-        SSLXmlSignLib := xsLibXml2;
+        {$IfNDef DFE_SEM_LIBXML2}
+         SSLXmlSignLib := xsLibXml2;
+        {$Else}
+         SSLXmlSignLib := xsMsXml;
+        {$EndIf}
+
       end;
     end;
   finally

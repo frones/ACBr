@@ -213,7 +213,7 @@ end;
 
 destructor TdadosHorContratual.destroy;
 begin
-  FHorarioIntervalo.Free;
+  FreeAndNil(FHorarioIntervalo);
 
   inherited;
 end;
@@ -304,19 +304,22 @@ begin
   for i := 0 to InfoHorContratual.dadosHorContratual.horarioIntervalo.Count - 1 do
   begin
     objHorarioIntervalo := InfoHorContratual.dadosHorContratual.horarioIntervalo.Items[i];
+    try
+      Gerador.wGrupo('horarioIntervalo');
 
-    Gerador.wGrupo('horarioIntervalo');
+      Gerador.wCampo(tcStr, '', 'tpInterv',  1, 1, 1, eSTpIntervaloToStr(objHorarioIntervalo.tpInterv));
+      Gerador.wCampo(tcStr, '', 'durInterv', 1, 3, 1, objHorarioIntervalo.durInterv);
 
-    Gerador.wCampo(tcStr, '', 'tpInterv',  1, 1, 1, eSTpIntervaloToStr(objHorarioIntervalo.tpInterv));
-    Gerador.wCampo(tcStr, '', 'durInterv', 1, 3, 1, objHorarioIntervalo.durInterv);
+      if (objHorarioIntervalo.tpInterv = tinHorarioFixo) then
+      begin
+        Gerador.wCampo(tcStr, '', 'iniInterv',  4, 4, 1, objHorarioIntervalo.iniInterv);
+        Gerador.wCampo(tcStr, '', 'termInterv', 4, 4, 1, objHorarioIntervalo.termInterv);
+      end;
 
-    if (objHorarioIntervalo.tpInterv = tinHorarioFixo) then
-    begin
-      Gerador.wCampo(tcStr, '', 'iniInterv',  4, 4, 1, objHorarioIntervalo.iniInterv);
-      Gerador.wCampo(tcStr, '', 'termInterv', 4, 4, 1, objHorarioIntervalo.termInterv);
+      Gerador.wGrupo('/horarioIntervalo');
+    finally
+      FreeAndNil(objHorarioIntervalo);
     end;
-
-    Gerador.wGrupo('/horarioIntervalo');
   end;
 
   if InfoHorContratual.dadosHorContratual.horarioIntervalo.Count > 99 then

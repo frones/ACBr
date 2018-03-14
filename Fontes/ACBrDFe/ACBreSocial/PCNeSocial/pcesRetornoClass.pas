@@ -508,7 +508,7 @@ end;
 
 destructor THorarioConsultaCollectionItem.destroy;
 begin
-  FhorarioIntervalo.Free;
+  FreeAndNil(FhorarioIntervalo);
 
   inherited;
 end;

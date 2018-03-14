@@ -3071,8 +3071,8 @@ begin
     EvtDeslig.InfoDeslig.indCumprParc := cpaCumprimentoTotal;
 
     // Obsercação opcional
-    EvtDeslig.InfoDeslig.observacao :=
-      'Anotações relevantes sobre o desligamento que não tenham campo próprio';
+    with EvtDeslig.InfoDeslig.observacoes.Add do
+     observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
 
     EvtDeslig.InfoDeslig.SucessaoVinc.cnpjEmpregAnt := '12345678912345';
     // Corrigir nome do campo ou mudar classe.

@@ -49,12 +49,11 @@ type
   TGeralConfReinf = class(TGeralConf)
   private
     FVersaoDF: TVersaoReinf;
-//    FIdTransmissor: string;
-//    FIdEmpregador: string;
-//    FTipoEmpregador: TEmpregador;
+    FIdContribuinte: string;
+    FTipoContribuinte: TtpInsc;
 
     procedure SetVersaoDF(const Value: TVersaoReinf);
-//    procedure SetTipoEmpregador(const Value: TEmpregador);
+    procedure SetTipoContribuinte(const Value: TtpInsc);
 
   public
     constructor Create(AOwner: TConfiguracoes); override;
@@ -64,9 +63,8 @@ type
 
   published
     property VersaoDF: TVersaoReinf read FVersaoDF write SetVersaoDF default v1_02_00;
-//    property IdEmpregador: string read FIdEmpregador write FIdEmpregador;
-//    property IdTransmissor: string read FIdTransmissor write FIdTransmissor;
-//    property TipoEmpregador: TEmpregador read FTipoEmpregador write SetTipoEmpregador default tePessoaJuridica;
+    property IdContribuinte: string read FIdContribuinte write FIdContribuinte;
+    property TipoContribuinte: TtpInsc read FTipoContribuinte write SetTipoContribuinte default tiCNPJ;
   end;
 
   { TArquivosConfReinf }
@@ -157,9 +155,8 @@ begin
   inherited Create(AOwner);
 
   FVersaoDF := v1_02_00;
-//  FIdTransmissor := '';
-//  FIdEmpregador := '';
-//  FTipoEmpregador := tePessoaJuridica;
+  FIdContribuinte := '';
+  FTipoContribuinte := tiCNPJ;
 end;
 
 procedure TGeralConfReinf.Assign(DeGeralConfReinf: TGeralConfReinf);
@@ -167,9 +164,13 @@ begin
   inherited Assign(DeGeralConfReinf);
 
   VersaoDF := DeGeralConfReinf.VersaoDF;
-//  IdTransmissor := DeGeralConfReinf.IdTransmissor;
-//  IdEmpregador := DeGeralConfReinf.IdEmpregador;
-//  TipoEmpregador := DeGeralConfReinf.TipoEmpregador;
+  IdContribuinte := DeGeralConfReinf.IdContribuinte;
+  TipoContribuinte := DeGeralConfReinf.TipoContribuinte;
+end;
+
+procedure TGeralConfReinf.SetTipoContribuinte(const Value: TtpInsc);
+begin
+  FTipoContribuinte := Value;
 end;
 
 procedure TGeralConfReinf.SetVersaoDF(const Value: TVersaoReinf);
@@ -182,9 +183,8 @@ begin
   inherited GravarIni(AIni);
 
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
-//  AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdTransmissor', IdTransmissor);
-//  AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdEmpregador', IdEmpregador);
-//  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'TipoEmpregador', Integer(TipoEmpregador));
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdContribuinte', IdContribuinte);
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'TipoContribuinte', Integer(TipoContribuinte));
 end;
 
 procedure TGeralConfReinf.LerIni(const AIni: TCustomIniFile);
@@ -192,15 +192,9 @@ begin
   inherited LerIni(AIni);
 
   VersaoDF := TVersaoReinf(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
-//  IdTransmissor := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdTransmissor', IdTransmissor);
-//  IdEmpregador := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdEmpregador', IdEmpregador);
-//  TipoEmpregador := TEmpregador(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'TipoEmpregador', Integer(TipoEmpregador)));
+  IdContribuinte := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdContribuinte', IdContribuinte);
+  TipoContribuinte := TtpInsc(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'TipoContribuinte', Integer(TipoContribuinte)));
 end;
-
-//procedure TGeralConfReinf.SetTipoEmpregador(const Value: TEmpregador);
-//begin
-//  FTipoEmpregador := Value;
-//end;
 
 { TArquivosConfReinf }
 

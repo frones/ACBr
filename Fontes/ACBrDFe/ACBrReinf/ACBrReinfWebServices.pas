@@ -102,39 +102,53 @@ type
     property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
   end;
 
-  { Não Liberado }
-  {
+  { TConsultarLote }
+
   TConsultarLote = class(TReinfWebService)
   private
-    FVersao : string;
-    FGrupo : Integer;
-    FPURLEnvio : string;
+    FVersao: String;
+    FProtocolo: String;
+//    FGrupo : Integer;
+//    FPURLEnvio : string;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
-    procedure SalvarEnvio; override;
-    function TratarResposta: Boolean; override;
-    procedure SalvarResposta; override;
-    procedure DefinirEnvelopeSoap; override;
     procedure DefinirDadosMsg; override;
+    procedure DefinirEnvelopeSoap; override;
+
+    function TratarResposta: Boolean; override;
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+    function GerarMsgErro(E: Exception): String; override;
+    function GerarVersaoDadosSoap: String; override;
+
+//    procedure SalvarEnvio; override;
+//    procedure SalvarResposta; override;
   public
-    constructor Create(AOwner: TACBrDFe);
+    constructor Create(AOwner: TACBrDFe); override;
+
+    procedure Clear; override;
+    procedure BeforeDestruction; override;
+
+    property Protocolo: String read FProtocolo;
+//    property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
   end;
-  }
+
   TWebServices = class
   private
     FACBrReinf: TACBrDFe;
     FEnvioLote : TEnvioLote;
-    //FConsultaLote: TConsultaLote;
+    FConsultarLote: TConsultarLote;
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
     function Enviar(const AXML: string): Boolean;
-    function Consultar(const AXML: string): Boolean;
+    function Consultar(const AProtocolo: string): Boolean;
 
     property ACBrReinf: TACBrDFe read FACBrReinf write FACBrReinf;
-    property EnvioLote : TEnvioLote read FEnvioLote write FEnvioLote;
-//    property ConsultaLote: TConsultaLote read FConsultaLote write FConsultaLote;
+    property EnvioLote: TEnvioLote read FEnvioLote write FEnvioLote;
+    property ConsultarLote: TConsultarLote read FConsultarLote write FConsultarLote;
 //    property RetEventos: TRetEnvioLote read FRetEventos;
   end;
 
@@ -432,7 +446,7 @@ begin
         FPDFeOwner.Gravar(NomeArq, AXML, '',False);
     end;
   end;
-  
+
   Result := True;
 end;
 
@@ -471,53 +485,174 @@ end;
 
 function TEnvioLote.GerarVersaoDadosSoap: String;
 begin
-  Result := ''; // '<versaoDados>' + FVersao + '</versaoDados>';
+  Result := '';
 end;
 
 { TConsultarLote }
-(*
+
 constructor TConsultarLote.Create(AOwner: TACBrDFe);
 begin
+  inherited Create(AOwner);
 
+end;
+
+procedure TConsultarLote.Clear;
+begin
+  inherited Clear;
+
+  FPLayout := LayEnvioLoteEventos;
+  FPStatus := stEnvLoteEventos;
+  FPArqEnv := 'sit-lot';
+  FPArqResp := 'sit';
+  FVersao := '';
+
+//  if Assigned(FRetConsultarLote) then
+//    FRetConsultarLote.Free;
+
+//  FRetConsultarLote := TRetConsultarLote.Create;
+end;
+
+procedure TConsultarLote.BeforeDestruction;
+begin
+  inherited;
+
+//  FRetConsultarLote.Free;
 end;
 
 procedure TConsultarLote.DefinirDadosMsg;
+var
+  tpInsc, nrInsc: String;
 begin
-  inherited;
+  if Length(TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte) = 14 then
+    tpInsc := '1'
+  else
+    tpInsc := '2';
 
+  nrInsc := TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte;
+
+  FPDadosMsg :=
+         '<Reinf xmlns="' + 'http://sped.fazenda.gov.br/' + '">' +
+          '<ConsultaInformacoesConsolidadas>' +
+           '<tipoInscricaoContribuinte>' + tpInsc + '</tipoInscricaoContribuinte>' +
+           '<numeroInscricaoContribuinte>' + nrInsc + '</numeroInscricaoContribuinte>' +
+           '<numeroReciboFechamento>' + FProtocolo + '</numeroReciboFechamento>' +
+          '</ConsultaInformacoesConsolidadas>' +
+         '</Reinf>';
+
+//  if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
+//    TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioLote);
 end;
 
 procedure TConsultarLote.DefinirEnvelopeSoap;
+var
+  Texto: String;
 begin
-  inherited;
+  {$IFDEF FPC}
+   Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
+  {$ELSE}
+   Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
+  {$ENDIF}
 
+  Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
+  Texto := Texto + '<' + FPSoapVersion + ':Body>';
+//  Texto := Texto + '<' + 'v1:ConsultaInformacoesConsolidadas>';
+//  Texto := Texto + '<' +  'v1:loteEventos>';
+  Texto := Texto + DadosMsg;
+//  Texto := Texto + '<' +  '/v1:loteEventos>';
+//  Texto := Texto + '<' +  '/v1:ConsultaInformacoesConsolidadas>';
+  Texto := Texto + '</' + FPSoapVersion + ':Body>';
+  Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
+
+  FPEnvelopeSoap := Texto;
 end;
 
 procedure TConsultarLote.DefinirServicoEAction;
 begin
-  inherited;
-  FPServico := FPDFeOwner.GetNameSpaceURI + '/';
+  FPServico := 'http://sped.fazenda.gov.br/ConsultasReinf' + '/ConsultaInformacoesConsolidadas';
   FPSoapAction := Trim(FPServico);
 end;
 
-procedure TConsultarLote.SalvarEnvio;
+procedure TConsultarLote.DefinirURL;
+var
+  Versao: Double;
 begin
-  inherited;
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
 
+  TACBrReinf(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
-procedure TConsultarLote.SalvarResposta;
+function TConsultarLote.GerarMsgErro(E: Exception): String;
 begin
-  inherited;
+  Result := ACBrStr('WebService: ' + FPServico + #13#10 +
+    '- Inativo ou Inoperante tente novamente.');
+end;
 
+function TConsultarLote.GerarMsgLog: String;
+var
+  aMsg: String;
+begin
+  aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                         'Ambiente: %s ' + LineBreak
+//                         'Versão Aplicativo: %s ' + LineBreak +
+//                         'Status Código: %s ' + LineBreak +
+//                         'Status Descrição: %s ' + LineBreak
+                        ),
+                 ['2.4.01',
+                  TpAmbToStr(TACBrReinf(FPDFeOwner).Configuracoes.WebServices.Ambiente)
+//                  FRetEnvioLote.dadosRecLote.versaoAplicRecepcao,
+//                  IntToStr(FRetConsultarLote.Status.cdStatus),
+//                  FRetConsultarLote.Status.descRetorno
+                  ]);
+
+//    aMsg := aMsg + Format(ACBrStr('Recebimento: %s ' + LineBreak),
+//       [IfThen(FRetEnvioLote.dadosRecLote.dhRecepcao = 0, '',
+//               FormatDateTimeBr(FRetEnvioLote.dadosRecLote.dhRecepcao))]);
+
+  Result := aMsg;
+end;
+
+function TConsultarLote.GerarPrefixoArquivo: String;
+begin
+  Result := FormatDateTime('yyyymmddhhnnss', Now);
+end;
+
+function TConsultarLote.GerarVersaoDadosSoap: String;
+begin
+  Result := '';
 end;
 
 function TConsultarLote.TratarResposta: Boolean;
+var
+  i: Integer;
+  AXML, NomeArq: String;
 begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultaInformacoesConsolidadasResult');
 
+//  FRetConsultarLote.Leitor.Arquivo := ParseText(FPRetWS);
+//  FRetConsultarLote.LerXml;
+
+  if Assigned(TACBrReinf(FPDFeOwner).OnAfterEnviar) then
+    TACBrReinf(FPDFeOwner).OnAfterEnviar(FPRetWS);
+  (*
+  for i := 0 to FRetConsultarLote.evento.Count - 1 do
+  begin
+    AXML := FRetConsultarLote.evento.Items[i].ArquivoReinf;
+
+    if AXML <> '' then
+    begin
+      NomeArq := FRetConsultarLote.evento.Items[i].Id + '-' +
+                 FRetConsultarLote.evento.Items[i].Tipo + '.xml';
+
+      if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
+        FPDFeOwner.Gravar(NomeArq, AXML, '',False);
+    end;
+  end;
+  *)
+  Result := True;
 end;
-*)
-
 
 { TWebServices }
 
@@ -526,13 +661,13 @@ begin
   FACBrReinf := TACBrDFe(AOwner);
 
   FEnvioLote := TEnvioLote.Create(FACBrReinf);
-  //FConsultaLote := TConsultaLote.Create(FACBrReinf);
+  FConsultarLote := TConsultarLote.Create(FACBrReinf);
 end;
 
 destructor TWebServices.Destroy;
 begin
   FEnvioLote.Free;
-//  FConsultaLote.Free;
+  FConsultarLote.Free;
 
   inherited Destroy;
 end;
@@ -551,9 +686,14 @@ begin
   Result := True;
 end;
 
-function TWebServices.Consultar(const AXML: string): Boolean;
+function TWebServices.Consultar(const AProtocolo: string): Boolean;
 begin
-  raise Exception.Create('Consulta ainda não Liberado');
+  ConsultarLote.FProtocolo := AProtocolo;
+
+  if not ConsultarLote.Executar then
+    ConsultarLote.GerarException(ConsultarLote.Msg);
+
+  Result := True;
 end;
 
 end.

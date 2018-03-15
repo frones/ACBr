@@ -54,6 +54,10 @@ Símbolo : Significado
    https://www.projetoacbr.com.br/forum/topic/40618-nfc-e-40-amazonas
    Por: BigWings / Afranio Lucas
 
+-- ACBrNFeServicos --
+[*] Atualização de URLs NFe 4.00 CE.
+  Por: BigWings
+
 13/03/2018
 -- pcnNFeW --
 [*] Comentado a alteração que atribui a string "SEM GTIN" quando os campos

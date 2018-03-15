@@ -153,7 +153,7 @@ end;*)
 procedure TACBrConsultaCNPJ.Captcha(Stream: TStream);
 begin
   try
-    HTTPGet('https://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/captcha/gerarCaptcha.asp');  // GetCaptchaURL
+    HTTPGet('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/captcha/gerarCaptcha.asp');  // GetCaptchaURL
     if HttpSend.ResultCode = 200 then
     begin
       HTTPSend.Document.Position := 0;

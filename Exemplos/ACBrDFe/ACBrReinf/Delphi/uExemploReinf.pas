@@ -9,7 +9,7 @@ uses
   Controls, Forms, Dialogs, StdCtrls, ExtCtrls, ComCtrls,
   ACBrReinf, ACBrReinfWebServices, pcnConversaoReinf, ACBrReinfEventos, ACBrBase,
   ACBrDFe, Spin, Buttons, ACBrUtil, IniFiles, Math, blcksock, StrUtils, TypInfo,
-  FileCtrl, pcnReinfR2010_Class;
+  FileCtrl, pcnReinfR2010_Class, pcnReinfR5001, pcnReinfR5011;
 
 type
   TForm2 = class(TForm)
@@ -148,7 +148,7 @@ type
     chk9000: TCheckBox;
     chk2060: TCheckBox;
     chk2070: TCheckBox;
-    Button1: TButton;
+    btnConsultaFechamento: TButton;
     TabSheet2: TTabSheet;
     mmoRet: TMemo;
     TabSheet3: TTabSheet;
@@ -190,14 +190,15 @@ type
     Label45: TLabel;
     edSoftContato: TEdit;
     edHash: TEdit;
-    Button8: TButton;
-    Button11: TButton;
+    btnValidarSchema: TButton;
+    btnValidarAssinatura: TButton;
     chk3010: TCheckBox;
     chk2030: TCheckBox;
     chk2040: TCheckBox;
     chk2050: TCheckBox;
     rdgOperacao: TRadioGroup;
     ACBrReinf1: TACBrReinf;
+    btnConsultar: TButton;
     procedure btnGerarClick(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
     procedure lblPatrocinadorClick(Sender: TObject);
@@ -227,9 +228,10 @@ type
     procedure cbHttpLibChange(Sender: TObject);
     procedure cbXmlSignLibChange(Sender: TObject);
     procedure cbSSLTypeChange(Sender: TObject);
-    procedure Button8Click(Sender: TObject);
-    procedure Button11Click(Sender: TObject);
+    procedure btnValidarSchemaClick(Sender: TObject);
+    procedure btnValidarAssinaturaClick(Sender: TObject);
     procedure chk1000Click(Sender: TObject);
+    procedure btnConsultarClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -275,6 +277,129 @@ const
 procedure TForm2.AntesDeEnviar(const Axml: string);
 begin
   Memo1.Lines.Text := Axml;
+end;
+
+procedure TForm2.btnConsultarClick(Sender: TObject);
+var
+  Protocolo: string;
+  i, J: Integer;
+  evtR5001: TR5001;
+  evtR5002: TR5011;
+begin
+  Protocolo := '';
+  if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo))
+  then
+    Exit;
+
+  if ACBrReinf1.Consultar(Protocolo) then
+  begin
+
+    MmoRet.Lines.Text := ACBrReinf1.WebServices.ConsultarLote.RetWS;
+
+    with Memo2.Lines do
+    begin
+      (*
+      with ACBrReinf1.WebServices.ConsultarLote.RetConsultarLote do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+
+        if Status.cdResposta in [201, 202] then
+        begin
+          Add('ideEmpregador');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeEmpregador.TpInsc));
+          Add(' - NrInsc: ' + IdeEmpregador.NrInsc);
+          Add('ideTransmissor');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
+          Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
+          Add('dadosRecepcaoLote');
+          Add(' - dhRecepcao..............: ' +
+            DateTimeToStr(dadosRecLote.dhRecepcao));
+          Add(' - versaoAplicativoRecepcao: ' +
+            dadosRecLote.versaoAplicRecepcao);
+          Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
+
+          for i := 0 to retEventos.Count - 1 do
+          begin
+            Add('Processamento');
+            Add(' - cdResposta.........: ' +
+              IntToStr(retEventos.Items[i].Processamento.cdResposta));
+            Add(' - descResposta.......: ' + retEventos.Items[i]
+              .Processamento.descResposta);
+            Add(' - versaoAplicProcLote: ' + retEventos.Items[i]
+              .Processamento.versaoAplicProcLote);
+            Add(' - dhProcessamento....: ' + DateTimeToStr(retEventos.Items[i]
+              .Processamento.dhProcessamento));
+
+            if retEventos.Items[i].Processamento.Ocorrencias.Count > 0 then
+            begin
+              Add('Ocorrencias do Processamento');
+              for J := 0 to retEventos.Items[i].Processamento.Ocorrencias.
+                Count - 1 do
+              begin
+                Add(' Ocorrencia ' + IntToStr(J));
+                Add('   Código.....: ' +
+                  IntToStr(retEventos.Items[i].Processamento.Ocorrencias.Items
+                  [J].Codigo));
+                Add('   Descrição..: ' + retEventos.Items[i]
+                  .Processamento.Ocorrencias.Items[J].Descricao);
+                Add('   Tipo.......: ' +
+                  IntToStr(retEventos.Items[i].Processamento.Ocorrencias.Items
+                  [J].Tipo));
+                Add('   Localização: ' + retEventos.Items[i]
+                  .Processamento.Ocorrencias.Items[J].Localizacao);
+              end;
+            end;
+
+            for J := 0 to retEventos.Items[i].tot.Count - 1 do
+            begin
+              Add(' Tot ' + IntToStr(J));
+              Add('   Tipo.........: ' + retEventos.Items[i].tot[J].Tipo);
+              case retEventos.Items[i].tot[J].Evento.TipoEvento of
+                teR5001:
+                  begin
+                    evtR5001 := TR5001(retEventos.Items[i].tot[J].Evento.GetEvento);
+                    Add('   Id...........: ' + evtR5001.EvtBasesTrab.Id);
+                    Add('   nrRecArqBase.: ' +
+                      evtR5001.EvtBasesTrab.IdeEvento.nrRecArqBase);
+                  end;
+                teR5002:
+                  begin
+                    evtR5011 := TR5011(retEventos.Items[i].tot[J].Evento.GetEvento);
+                    Add('   Id...........: ' + evtR5011.EvtirrfBenef.Id);
+                    Add('   nrRecArqBase.: ' +
+                      evtR5011.EvtirrfBenef.IdeEvento.nrRecArqBase);
+                  end;
+              end;
+            end;
+
+            Add('Recibo');
+            Add(' - nrRecibo: ' + retEventos.Items[i].Recibo.NrRecibo);
+            Add(' - hash....: ' + retEventos.Items[i].Recibo.hash);
+          end;
+
+        end
+        else
+        begin
+          for i := 0 to Status.Ocorrencias.Count - 1 do
+          begin
+            with Status.Ocorrencias.Items[i] do
+            begin
+              Add(' Ocorrencia ' + IntToStr(i));
+              Add('   Código.....: ' + IntToStr(Codigo));
+              Add('   Descrição..: ' + Descricao);
+              Add('   Tipo.......: ' + IntToStr(Tipo));
+              Add('   Localização: ' + Localizacao);
+            end;
+          end;
+        end;
+      end;
+      *)
+    end;
+
+    PageControl1.ActivePageIndex := 1;
+  end;
 end;
 
 procedure TForm2.btnGerarClick(Sender: TObject);
@@ -1237,6 +1362,8 @@ begin
     edSoftFone.Text        := Ini.ReadString( 'SofHouse', 'Fone'       ,'');
     edSoftContato.Text     := Ini.ReadString( 'SofHouse', 'Contato'    ,'');
 
+    ACBrReinf1.Configuracoes.Geral.IdContribuinte := edtEmitCNPJ.Text;
+
     PathMensal := ACBrReinf1.Configuracoes.Arquivos.GetPathReinf(0);
 
     ACBrReinf1.Configuracoes.Arquivos.PathSalvar := PathMensal;
@@ -1544,7 +1671,7 @@ begin
     ACBrReinf1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
 end;
 
-procedure TForm2.Button8Click(Sender: TObject);
+procedure TForm2.btnValidarSchemaClick(Sender: TObject);
 var
   tsAux1: TStringList;
   Erro: String;
@@ -1573,7 +1700,7 @@ begin
   ShowMessage(Erro);
 end;
 
-procedure TForm2.Button11Click(Sender: TObject);
+procedure TForm2.btnValidarAssinaturaClick(Sender: TObject);
 var
   tsAux1: TStringList;
   Erro: String;

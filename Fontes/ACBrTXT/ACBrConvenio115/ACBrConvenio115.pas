@@ -970,14 +970,37 @@ begin
     SRec := SRec +
           {16} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeContratada)), 12, '0') +
           {17} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdePrestada)), 12, '0');
+
+    if ValorTotal < 0 then
+      SRec := SRec + '-' +
+        {18} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 10, '0')
+    else
+      SRec := SRec +
+            {18} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 11, '0');
+
+
     SRec := SRec +
-          {18} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 11, '0') +
           {19} PadLeft(TiraPontos(FormatFloat('#,##0.00', Desconto)), 11, '0') +
-          {20} PadLeft(TiraPontos(FormatFloat('#,##0.00', AcrescimosDespAcessorias)), 11, '0') +
+          {20} PadLeft(TiraPontos(FormatFloat('#,##0.00', AcrescimosDespAcessorias)), 11, '0');
+
+    if ICMSBaseCalculo < 0 then
+      begin
+        SRec := SRec +
+          {21} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSBaseCalculo)), 10, '0') +
+          {22} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSValor)), 10, '0') +
+          {23} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentoNaoTributados)), 10, '0') +
+          {24} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 10, '0');
+      end
+    else
+      begin
+        SRec := SRec +
           {21} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSBaseCalculo)), 11, '0') +
           {22} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSValor)), 11, '0') +
           {23} PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentoNaoTributados)), 11, '0') +
-          {24} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 11, '0') +
+          {24} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 11, '0');
+      end;
+
+    SRec := SRec +
           {25} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSAliquota)), 4, '0') +
           {26} TSituacaoNFConv115ID[Ord(Situacao)] +
           {27} AnoMesApuracao;

@@ -85,7 +85,7 @@ type
     procedure BeforeDestruction; override;
     function  GerarXML(AValidar: Boolean = True; ASequencial: integer = 0): boolean; virtual;
     procedure SaveToFile(const ACaminhoArquivo: string);
-    function  Assinar(AXMLEvento, ANomeEvento: AnsiString): AnsiString;
+    function  Assinar(AXMLEvento, ANomeEvento: String): AnsiString;
     procedure ValidarEventos(AEvento: string);
 
     property Erros: string read FErros;
@@ -145,22 +145,24 @@ begin
   FGerador.Opcoes.DecimalChar := ',';
 end;
 
-function TEventoReinf.Assinar(AXMLEvento, ANomeEvento: AnsiString): AnsiString;
+function TEventoReinf.Assinar(AXMLEvento, ANomeEvento: String): AnsiString;
 var
   XMLAss, ArqXML, Path: String;
 begin
   Result := '';
 
-  ArqXML := string(AXMLEvento);
+  ArqXML := AXMLEvento;
 
   ArqXML := ConverteXMLtoUTF8(ArqXML);
   FXMLOriginal := ArqXML;
 
   with TACBrReinf(FACBrReinf) do
   begin
-    Path := PathWithDelim(Configuracoes.Arquivos.GetPathReinf(Now, ''{Configuracoes.Geral.IdEmpregador}));
+    Path := Configuracoes.Arquivos.PathSalvar;
+    if trim(Path) = '' then
+      Path := PathWithDelim(Configuracoes.Arquivos.GetPathReinf(Now, Configuracoes.Geral.IdContribuinte));
 
-    XMLAss := SSL.Assinar(ArqXML, 'Reinf', String(ANomeEvento), '', '', '', 'id');
+    XMLAss := SSL.Assinar(ArqXML, 'Reinf', ANomeEvento, '', '', '', 'id');
 
     FXMLAssinado := XMLAss;
     FXMLOriginal := XMLAss;
@@ -171,19 +173,9 @@ begin
     ANomeEvento := FId + '-' + ANomeEvento + '.xml';
 
     if Configuracoes.Arquivos.Salvar then
-       Gravar(string(ANomeEvento), XMLAss, Path);
+       Gravar(ANomeEvento, XMLAss, Path);
 
     Result := AnsiString(XMLAss);
-
-    {$IFDEF DEBUG}
-      With TStringList.Create do
-      try
-        Text := XMLAss;
-        SaveToFile(IncludeTrailingPathDelimiter(ExtractFileDir(ParamStr(0))) + 'Docs\' + ANomeEvento);
-      finally
-        Free;
-      end;
-    {$ENDIF}
   end;
 end;
 
@@ -315,17 +307,6 @@ begin
     {Assinar XML}
     XML := Assinar(Gerador.ArquivoFormatoXML, AnsiString(SchemaStr));
 
-    {$IFDEF DEBUG}
-    with TStringList.Create do
-    try
-       Text := XML;
-       SaveToFile(IncludeTrailingPathDelimiter(TACBrReinf(FACBrReinf).Configuracoes.Arquivos.PathSalvar) + Copy(Self.ClassName, 2, Length( Self.ClassName ) ) +
-                  '-'+ IntTostr(Dayof(Now)) + IntTostr(MonthOf(Now)) + IntTostr(YearOf(Now))+ '_'+ IntTostr(HourOf(Now))+ IntTostr(MinuteOf(Now))+IntTostr(SecondOf(Now)) + '_' +IntTostr(MilliSecondOf(Now)) + '.xml');
-    finally
-      Free;
-    end;
-    {$ENDIF}
-
     if AValidar then
     begin
       Versao := VersaoReinfToStr(TACBrReinf( FACBrReinf ).Configuracoes.Geral.VersaoDF);
@@ -387,7 +368,7 @@ begin
     begin
       FErros := ACBrStr('Falha na validação dos dados do evento: ') + AEvento + sLineBreak;
       FErros := FErros + sLineBreak + Erro;
-
+      (*
       {$IFDEF DEBUG}
       with TStringList.Create do
       try
@@ -398,6 +379,7 @@ begin
         Free;
       end;
       {$ENDIF}
+      *)
       raise EACBReinfException.Create(FErros);
     end;
   end;

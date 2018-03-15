@@ -171,7 +171,7 @@ var
   Xml: AnsiString;
   J, i: Integer;
   Eventosxml: string;
-  Path: string;
+//  Path: string;
 begin
   if Items.Count >  0 then
   begin
@@ -185,7 +185,7 @@ begin
 
     for i := 0 to Items.Count - 1 do
       Eventosxml := Eventosxml +
-                    '<evento id="' + Items.Items[i].Id(i + 1) + '"> ' +
+                    '<evento id="' + Items.Items[i].Id(i + 1) + '">' +
                       StringReplace(string(Items.Items[i].XML), '<' + ENCODING_UTF8 + '>', '', []) +
                     '</evento>';
 
@@ -195,17 +195,17 @@ begin
 
     FXML := string(AnsiToUtf8(Xml));
     result := Xml;
-
+    (*
     with TACBrReinf(FACBrReinf) do
     begin
       if Configuracoes.Geral.Salvar then
       begin
-        Path := PathWithDelim(Configuracoes.Arquivos.GetPathReinf(Now, ''{Configuracoes.Geral.IdEmpregador}));
+        Path := PathWithDelim(Configuracoes.Arquivos.GetPathReinf(Now, Configuracoes.Geral.IdContribuinte));
 
         with TStringList.Create do
         try
           Text := FXml;
-          
+
           SaveToFile(Path + '\' + 'ReinfLoteEventos' + '-' + IntTostr(Dayof(Now)) +
                    IntTostr(MonthOf(Now)) + IntTostr(YearOf(Now)) + '_' +
                    IntTostr(HourOf(Now)) + IntTostr(MinuteOf(Now)) +
@@ -215,6 +215,7 @@ begin
         end;
       end;
     end;
+    *)
   end
   else
     raise EACBReinfException.Create('Nenhum evento adicionado.');

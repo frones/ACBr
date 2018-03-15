@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2018
+-- ACBrReinf --
+[*] Ajustes para não criar sub-pastas ao salvar os eventos.
+   Por: Italo Jurisato Junior.
+
 14/03/2018
 -- ACBrReinf --
 [+] Implementado o método Consultar.

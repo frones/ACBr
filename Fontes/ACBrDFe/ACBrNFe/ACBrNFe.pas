@@ -348,7 +348,7 @@ function TACBrNFe.EhAutorizacao( AVersao: TpcnVersaoDF; AModelo: TpcnModeloDF;
 begin
   Result := (AVersao >= ve310);
 
-  if AModelo = moNFCe then
+  if (AModelo = moNFCe) and (AVersao = ve310) then
     Result := not (AUFCodigo in [13]); // AM
 end;
 

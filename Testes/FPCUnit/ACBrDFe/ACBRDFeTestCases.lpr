@@ -3,7 +3,8 @@ program ACBrDiversosTestCase;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, fpcunittestrunner, ACBrDFeUtilTest;
+  Interfaces, Forms, GuiTestRunner, fpcunittestrunner, ACBrDFeUtilTest,
+  LibXml2TestCases;
 
 {$R *.res}
 

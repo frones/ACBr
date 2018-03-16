@@ -446,7 +446,6 @@ begin
   inherited AtivarVirtual;
 
   fsACBrNFCe.Configuracoes.Geral.ModeloDF := moNFCe;
-  fsACBrNFCe.Configuracoes.Geral.VersaoDF := ve310;
 
   fsNomeArqTempXML := ChangeFileExt(NomeArqINI, '.xml');
 end;

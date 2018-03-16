@@ -317,7 +317,7 @@ type
   tpTpRegPrev             = (rpRGPS, rpRPPS, rpRPPE);
 
   tpTpAdmissao            = (taAdmissao, taTransfEmpresaMesmoGrupoEconomico, taTransfEmpresaConsorciadaOuDeConsorcio,
-                             taTransfPorMotivoSucessaoIncorporacaoCisaoOuFuso);
+                             taTransfPorMotivoSucessaoIncorporacaoCisaoOuFuso, taTransfEmpregadoDomesticoParaOutroRepresentanteMesmaFamiliar);
 
   tpTpIndAdmissao         = (iaNormal, iaDecorrenteAcaoFiscal, iaDecorrenteDecisaoJudicial);
 
@@ -1765,12 +1765,12 @@ end;
 
 function eSTpAdmissaoToStr(const t: tpTpAdmissao ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_4  );
+  result := EnumeradoToStr2(t,TGenericosString1_5  );
 end;
 
 function eSStrToTpAdmissao(var ok: boolean; const s: string): tpTpAdmissao;
 begin
-  result := tpTpAdmissao( StrToEnumerado2(ok , s,TGenericosString1_4 ));
+  result := tpTpAdmissao( StrToEnumerado2(ok , s,TGenericosString1_5 ));
 end;
 
 function eSTpAcordoToStr(const t:tpTpAcordo ): string;

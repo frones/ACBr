@@ -531,13 +531,11 @@ begin
   nrInsc := TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte;
 
   FPDadosMsg :=
-         '<Reinf xmlns="' + 'http://sped.fazenda.gov.br/' + '">' +
-          '<ConsultaInformacoesConsolidadas>' +
-           '<tipoInscricaoContribuinte>' + tpInsc + '</tipoInscricaoContribuinte>' +
-           '<numeroInscricaoContribuinte>' + nrInsc + '</numeroInscricaoContribuinte>' +
-           '<numeroReciboFechamento>' + FProtocolo + '</numeroReciboFechamento>' +
-          '</ConsultaInformacoesConsolidadas>' +
-         '</Reinf>';
+          '<v1:ConsultaInformacoesConsolidadas>' +
+            '<tipoInscricaoContribuinte>' + tpInsc + '</tipoInscricaoContribuinte>' +
+            '<numeroInscricaoContribuinte>' + nrInsc + '</numeroInscricaoContribuinte>' +
+            '<numeroReciboFechamento>' + FProtocolo + '</numeroReciboFechamento>' +
+          '</v1:ConsultaInformacoesConsolidadas>';
 
 //  if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
 //    TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioLote);
@@ -568,7 +566,8 @@ end;
 
 procedure TConsultarLote.DefinirServicoEAction;
 begin
-  FPServico := 'http://sped.fazenda.gov.br/ConsultasReinf' + '/ConsultaInformacoesConsolidadas';
+  FPServico := ACBRREINF_NAMESPACE_CON +
+               '/ConsultaInformacoesConsolidadas';
   FPSoapAction := Trim(FPServico);
 end;
 

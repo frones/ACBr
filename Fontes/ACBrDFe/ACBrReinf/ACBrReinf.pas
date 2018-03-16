@@ -55,16 +55,9 @@ resourcestring
 
 const
   ACBRREINF_VERSAO = '1.2';
-  ACBRREINF_NAMESPACE = 'http://sped.fazenda.gov.br/RecepcaoLoteReinf';
-  ACBRREINF_NAMESPACE_CON = ' ';
-  ACBRREINF_NAMESPACE_URI = ' http://sped.fazenda.gov.br/RecepcaoLoteReinf';
-  ACBRREINF_VERSAO_URI = '/v02_04_01';
+  ACBRREINF_NAMESPACE_ENV = 'http://sped.fazenda.gov.br/RecepcaoLoteReinf';
+  ACBRREINF_NAMESPACE_CON = 'http://sped.fazenda.gov.br/ConsultasReinf';
   ACBRREINF_MODELODF = 'Reinf';
-
-//const
-//  REINF_NAMESPACE = 'http://sped.fazenda.gov.br/RecepcaoLoteReinf';
-//  URL_REINF_ENVIO = 'https://preprodefdreinf.receita.fazenda.gov.br/RecepcaoLoteReinf.svc';
-//  URL_REINF_CONSULTA = 'https://preprodefdreinf.receita.fazenda.gov.br/ConsultasReinf.svc';
 
 type
 
@@ -297,7 +290,11 @@ end;
 
 function TACBrReinf.GetNameSpaceURI: string;
 begin
-  Result := ACBRREINF_NAMESPACE;
+//  case LayOutServico of
+//    LayEnvioLoteEventos:    Result := ACBRREINF_NAMESPACE_ENV;
+//    LayConsultaLoteEventos: Result := ACBRREINF_NAMESPACE_CON;
+//  end;
+  Result := ACBRREINF_NAMESPACE_ENV;
 end;
 
 end.

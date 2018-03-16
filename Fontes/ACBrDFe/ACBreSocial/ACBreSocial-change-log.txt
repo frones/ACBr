@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2018
+-- pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/42199-s2200-adicionando-parametro/
+   Por: Renato E
+
 15/03/2018
 -- ACBreSocialLoteEventos --
 [-] Com o refactoring na função GetIDEvento foi removido o prefixo ID indevidamente.

@@ -173,6 +173,9 @@ begin
     TemAssinatura := LibXmlEstaAssinado(aXML, SignatureNode, SelectionNamespaces, infElement);
     URI := ExtraiURI(aXML, IdAttr);
 
+    // DEBUG
+    //WriteToTXT('C:\TEMP\XmlOriginal.xml', aXML, False, False, True);
+
     if TemAssinatura then
     begin
       SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
@@ -184,7 +187,7 @@ begin
     end;
 
     // DEBUG
-    // WriteToTXT('C:\TEMP\XmlSign.xml', aXML, False, False);
+    // WriteToTXT('C:\TEMP\XmlSign.xml', aXML, False, False, True);
 
     // Aplica a transformação c14n no node infElement/docElement
     if URI = '' then
@@ -193,7 +196,7 @@ begin
       Canon := AnsiString(CanonC14n(aDoc, infElement));
 
     // DEBUG
-    // WriteToTXT('C:\TEMP\CanonDigest.xml', Canon, False, False);
+    //WriteToTXT('C:\TEMP\CanonDigest.xml', Canon, False, False, True);
 
     // gerar o hash
     DigestValue := FpDFeSSL.CalcHash(Canon, FpDFeSSL.SSLDgst, outBase64);
@@ -210,13 +213,13 @@ begin
     // DEBUG
     // buffer := nil;
     // xmlDocDumpMemory(aDoc, @buffer, @XmlLength);
-    // WriteToTXT('C:\TEMP\DigestXml.xml', buffer, False, False);
+    //WriteToTXT('C:\TEMP\DigestXml.xml', buffer, False, False, True);
 
     // Aplica a transformação c14n o node SignedInfo
     Canon := AnsiString(CanonC14n(aDoc, cSignedInfoNode));
 
     // DEBUG
-    // WriteToTXT('C:\TEMP\CanonGeracao.xml', Canon, False, False);
+    //WriteToTXT('C:\TEMP\CanonGeracao.xml', Canon, False, False, True);
 
     // Assina o node SignedInfo já transformado
     Signaturevalue := FpDFeSSL.CalcHash(Canon, FpDFeSSL.SSLDgst, outBase64, True);
@@ -237,7 +240,7 @@ begin
     XmlAss := String(buffer);
 
     // DEBUG
-    // WriteToTXT('C:\TEMP\XmlSigned.xml', XmlAss, False, False);
+    //WriteToTXT('C:\TEMP\XmlSigned.xml', XmlAss, False, False, True);
   finally
     if (buffer <> nil) then
       xmlFree(buffer);
@@ -253,7 +256,7 @@ begin
   XmlAss := ChangeLineBreak(XmlAss, '');
 
   // DEBUG
-  // WriteToTXT('C:\TEMP\XmlSigned2.xml', XmlAss, False, False);
+  //WriteToTXT('C:\TEMP\XmlSigned2.xml', XmlAss, False, False, True);
 
   Result := XmlAss;
 end;
@@ -331,7 +334,7 @@ end;
 function TDFeSSLXmlSignLibXml2.Validar(const ConteudoXML, ArqSchema: String;
   out MsgErro: String): boolean;
 var
-  doc, schema_doc: xmlDocPtr;
+  doc: xmlDocPtr;
   parser_ctxt: xmlSchemaParserCtxtPtr;
   schema: xmlSchemaPtr;
   valid_ctxt: xmlSchemaValidCtxtPtr;
@@ -343,7 +346,6 @@ begin
   MsgErro := '';
 
   doc := nil;
-  schema_doc := nil;
   parser_ctxt := nil;
   schema := nil;
   valid_ctxt := nil;
@@ -356,15 +358,7 @@ begin
       Exit;
     end;
 
-    schema_doc := xmlReadFile(PAnsiChar(ansistring(ArqSchema)), nil, XML_DETECT_IDS);
-    // the schema cannot be loaded or is not well-formed
-    if (schema_doc = nil) then
-    begin
-      MsgErro := ACBrStr('Erro: Schema não pode ser carregado ou está corrompido');
-      Exit;
-    end;
-
-    parser_ctxt := xmlSchemaNewDocParserCtxt(schema_doc);
+    parser_ctxt := xmlSchemaNewParserCtxt(PAnsiChar(ansistring(ArqSchema)));
     // unable to create a parser context for the schema */
     if (parser_ctxt = nil) then
     begin
@@ -403,9 +397,6 @@ begin
     { cleanup }
     if (doc <> nil) then
       xmlFreeDoc(doc);
-
-    if (schema_doc <> nil) then
-      xmlFreeDoc(schema_doc);
 
     if (parser_ctxt <> nil) then
       xmlSchemaFreeParserCtxt(parser_ctxt);
@@ -568,14 +559,25 @@ begin
   if not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces) then
   begin
     { Não é o ultimo nó do infNode... então, vamos procurar por um Nó dentro de infNode }
-    SignNode := LibXmlLookUpNode(infNode, SignatureNode, SelectionNamespaces);
+    SignNode := infNode^.next;
+    while (SignNode <> nil)  and
+      (not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces)) do
+    begin
+      SignNode := SignNode^.next;
+    end;
 
     { Se ainda não achamos, vamos procurar novamente a partir do elemento Raiz }
     if (SignNode = nil) then
     begin
       SignNode := rootNode^.last;
       if not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces) then
-        SignNode := LibXmlLookUpNode(rootNode, SignatureNode, SelectionNamespaces);
+      begin
+        SignNode := rootNode^.next;
+        while (SignNode <> nil)  and (not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces)) do
+        begin
+          SignNode := SignNode^.next;
+        end;
+      end;
     end;
   end;
 
@@ -611,6 +613,7 @@ function TDFeSSLXmlSignLibXml2.LibXmlLookUpNode(ParentNode: xmlNodePtr;
     begin
       ChildNode := FoundNode^.children;
       NextNode := FoundNode^.Next;
+
       { Faz Chamada recursiva para o novo Filho }
       FoundNode := _LibXmlLookUpNode(ChildNode, NodeName, NameSpace);
 
@@ -669,7 +672,7 @@ function TDFeSSLXmlSignLibXml2.AdicionarNode(var aDoc: xmlDocPtr; ConteudoXML: S
 Var
   NewNode: xmlNodePtr;
   memDoc: xmlDocPtr;
-  SignXml: String;
+  NewNodeXml: String;
 begin
 {$IFNDEF COMPILER23_UP}
   Result := nil;
@@ -677,8 +680,8 @@ begin
   NewNode := nil;
   memDoc := nil;
   try
-      SignXml := '<a>' + ConteudoXML + '</a>';
-      memDoc := xmlReadMemory(PAnsiChar(AnsiString(SignXml)), Length(SignXml), nil, nil, 0);
+      NewNodeXml := '<a>' + ConteudoXML + '</a>';
+      memDoc := xmlReadMemory(PAnsiChar(AnsiString(NewNodeXml)), Length(NewNodeXml), nil, nil, 0);
       NewNode := xmlDocCopyNode(xmlDocGetRootElement(memDoc), aDoc.doc, 1);
       Result := xmlAddChildList(xmlDocGetRootElement(aDoc), NewNode.children);
   finally

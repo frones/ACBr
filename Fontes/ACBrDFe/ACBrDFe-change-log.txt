@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2018
+-- ACBrDFeXsLibXml2 --
+[-] Correção da assinatura do lote das NFSe.
+    (por Rafael Dias)
+[+] Melhoria no carregamento dos schemas para validação da Xml.
+    (por Rafael Dias)
+
 14/03/2018
 -- ACBrDFeConfiguracoes, ACBrDFeSSL --
 [*] Ajuste para commit do dia 06/03/2018, considerando que o suporte a OpenSSL

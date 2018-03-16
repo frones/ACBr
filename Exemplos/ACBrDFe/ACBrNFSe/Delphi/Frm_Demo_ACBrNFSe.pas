@@ -83,7 +83,6 @@ type
     btnConsultarLote: TButton;
     btnCancNFSe: TButton;
     btnGerarEnviarLote: TButton;
-    btnGerarRPS: TButton;
     btnConsultarSitLote: TButton;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
@@ -186,7 +185,6 @@ type
     procedure btnConsultarLoteClick(Sender: TObject);
     procedure btnCancNFSeClick(Sender: TObject);
     procedure btnConsultarSitLoteClick(Sender: TObject);
-    procedure btnGerarRPSClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
     procedure ACBrNFSe1StatusChange(Sender: TObject);
     procedure ACBrNFSe1GerarLog(const Mensagem: String);
@@ -1079,26 +1077,6 @@ begin
   memoRespWS.Lines.Text :=
     UTF8Encode(ACBrNFSe1.WebServices.ConsSitLoteRPS.RetWS);
   LoadXML(MemoResp, WBResposta);
-end;
-
-procedure TfrmDemo_ACBrNFSe.btnGerarRPSClick(Sender: TObject);
-var
-  vAux: String;
-begin
-  if not(InputQuery('Gerar RPS', 'Numero do RPS', vAux)) then
-    exit;
-
-  ACBrNFSe1.NotasFiscais.Clear;
-  AlimentaComponente(vAux);
-  // ACBrNFSe1.NotasFiscais.Items[0].SaveToFile;
-
-  ShowMessage('Arquivo gerado em: ' + ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
-  MemoDados.Lines.Add('Arquivo gerado em: ' + ACBrNFSe1.NotasFiscais.Items
-    [0].NomeArq);
-  MemoResp.Lines.LoadFromFile(ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
-  LoadXML(MemoResp, WBResposta);
-
-  pgRespostas.ActivePageIndex := 1;
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnImprimirClick(Sender: TObject);

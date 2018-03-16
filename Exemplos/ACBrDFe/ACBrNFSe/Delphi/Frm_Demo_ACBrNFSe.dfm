@@ -101,10 +101,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object TabSheet4: TTabSheet
           Caption = 'Emitente'
           ImageIndex = 3
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label12: TLabel
             Left = 8
             Top = 8
@@ -499,10 +495,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object TabSheet2: TTabSheet
           Caption = 'Geral'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object gbGeral: TGroupBox
             Left = 0
             Top = 4
@@ -905,10 +897,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object TabSheet7: TTabSheet
           Caption = 'Email'
           ImageIndex = 4
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object gbEmail: TGroupBox
             Left = 1
             Top = 4
@@ -1034,10 +1022,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         end
         object TabSheet1: TTabSheet
           Caption = 'Certificado'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object lblHttpLib: TLabel
             Left = 40
             Top = 63
@@ -1368,49 +1352,40 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       Align = alTop
       TabOrder = 0
       object btnImprimir: TButton
-        Left = 376
-        Top = 72
+        Left = 8
+        Top = 103
         Width = 177
         Height = 25
         Caption = 'Imprimir DANFSe'
-        TabOrder = 7
+        TabOrder = 6
         OnClick = btnImprimirClick
       end
       object btnConsultarLote: TButton
-        Left = 192
+        Left = 375
         Top = 40
         Width = 177
         Height = 25
         Caption = 'Consultar Lote'
-        TabOrder = 3
+        TabOrder = 2
         OnClick = btnConsultarLoteClick
       end
       object btnCancNFSe: TButton
-        Left = 192
-        Top = 72
+        Left = 8
+        Top = 135
         Width = 177
         Height = 25
         Caption = 'Cancelar NFSe'
-        TabOrder = 6
+        TabOrder = 5
         OnClick = btnCancNFSeClick
       end
       object btnGerarEnviarLote: TButton
-        Left = 192
-        Top = 8
-        Width = 177
-        Height = 25
-        Caption = 'Gerar e Enviar Lote RPS'
-        TabOrder = 1
-        OnClick = btnGerarEnviarLoteClick
-      end
-      object btnGerarRPS: TButton
         Left = 8
-        Top = 8
+        Top = 9
         Width = 177
         Height = 25
-        Caption = 'Gerar RPS'
+        Caption = 'Enviar Lote RPS (Enviar)'
         TabOrder = 0
-        OnClick = btnGerarRPSClick
+        OnClick = btnGerarEnviarLoteClick
       end
       object btnConsultarSitLote: TButton
         Left = 8
@@ -1418,70 +1393,70 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Width = 177
         Height = 25
         Caption = 'Consultar Situa'#231#227'o do Lote'
-        TabOrder = 2
+        TabOrder = 1
         OnClick = btnConsultarSitLoteClick
       end
       object btnConsultarNFSeRPS: TButton
-        Left = 376
-        Top = 40
+        Left = 8
+        Top = 70
         Width = 177
         Height = 25
         Caption = 'Consultar NFSe por RPS'
-        TabOrder = 4
+        TabOrder = 3
         OnClick = btnConsultarNFSeRPSClick
       end
       object btnConsultarNFSePeriodo: TButton
-        Left = 8
-        Top = 72
+        Left = 375
+        Top = 70
         Width = 177
         Height = 25
         Caption = 'Consultar NFSe por Per'#237'odo'
-        TabOrder = 5
+        TabOrder = 4
         OnClick = btnConsultarNFSePeriodoClick
       end
       object btnGerarEnviarNFSe: TButton
-        Left = 376
-        Top = 8
+        Left = 193
+        Top = 9
         Width = 177
         Height = 25
-        Caption = 'Gerar e Enviar um RPS'
-        TabOrder = 8
+        Caption = 'Enviar um RPS (Gerar)'
+        TabOrder = 7
         OnClick = btnGerarEnviarNFSeClick
       end
       object btnEnviaremail: TButton
-        Left = 8
-        Top = 104
+        Left = 193
+        Top = 103
         Width = 177
         Height = 25
         Caption = 'Enviar e-mail'
-        TabOrder = 9
+        TabOrder = 8
         OnClick = btnEnviaremailClick
       end
       object btnLinkNFSe: TButton
-        Left = 192
-        Top = 104
+        Left = 375
+        Top = 103
         Width = 177
         Height = 25
         Caption = 'Link NFSe'
-        TabOrder = 10
+        TabOrder = 9
         OnClick = btnLinkNFSeClick
       end
       object btnGerarLoteRPS: TButton
-        Left = 376
-        Top = 104
+        Left = 375
+        Top = 134
         Width = 177
         Height = 25
         Caption = 'Gerar Lote RPS'
-        TabOrder = 11
+        TabOrder = 10
         OnClick = btnGerarLoteRPSClick
       end
       object btnGerarEnviarSincrono: TButton
-        Left = 8
-        Top = 136
+        Left = 375
+        Top = 9
         Width = 177
         Height = 25
-        Caption = 'Gerar e Enviar Lote - Sincrono'
-        TabOrder = 12
+        Caption = 'Enviar Lote RPS (EnviarSincrono)'
+        TabOrder = 11
         OnClick = btnGerarEnviarSincronoClick
       end
       object btnVerificarCidade: TButton
@@ -1496,16 +1471,16 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 13
+        TabOrder = 12
         OnClick = btnVerificarCidadeClick
       end
       object btnSubsNFSe: TButton
-        Left = 192
-        Top = 136
+        Left = 193
+        Top = 135
         Width = 177
         Height = 25
         Caption = 'Substituir NFSe'
-        TabOrder = 14
+        TabOrder = 13
         OnClick = btnSubsNFSeClick
       end
     end
@@ -1531,10 +1506,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
@@ -1555,10 +1526,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1572,10 +1539,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet9: TTabSheet
         Caption = 'NFSe'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object trvwNFSe: TTreeView
           Left = 0
           Top = 0
@@ -1589,10 +1552,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoRespWS: TMemo
           Left = 0
           Top = 0
@@ -1605,10 +1564,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoDados: TMemo
           Left = 0
           Top = 0

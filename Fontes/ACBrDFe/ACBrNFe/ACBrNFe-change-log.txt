@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/03/2048
+-- ACBrNFeDANFeESCPOS --
+[+] Destaque separado do Valor do Frete, quando existente
+    (por: DSA)
+[+] Impressão do Valor do Documento, no Evento de Cancelamento
+    https://www.projetoacbr.com.br/forum/topic/41579-nfce-corre%C3%A7%C3%A3o-para-imprimir-valor-cancelamento-esc-pos/
+
 16/03/2018
 -- pcnNFeR --
 [*] https://www.projetoacbr.com.br/forum/topic/41734-xml-de-nfe-versao-310-com-grupo-de-repasse-de-substituicao-tributaria/?do=findComment&comment=275811
@@ -63,6 +70,7 @@ Símbolo : Significado
 [*] Atualização de URLs NFe 4.00 CE.
   Por: BigWings
 
+>>>>>>> .r14864
 13/03/2018
 -- pcnNFeW --
 [*] Comentado a alteração que atribui a string "SEM GTIN" quando os campos

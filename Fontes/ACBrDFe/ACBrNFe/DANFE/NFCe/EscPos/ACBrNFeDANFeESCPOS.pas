@@ -302,12 +302,18 @@ begin
        FormatFloatBr(FpNFe.Total.ICMSTot.vDesc, '-,0.00'),
        FPosPrinter.ColunasFonteCondensada, '|'));
 
-  if (FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vFrete+FpNFe.Total.ICMSTot.vSeg) > 0 then
+  if (FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vSeg) > 0 then
     FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace('Acréscimos|' +
-       FormatFloatBr(FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vFrete+FpNFe.Total.ICMSTot.vSeg, '+,0.00'),
+       FormatFloatBr(FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vSeg, '+,0.00'),
        FPosPrinter.ColunasFonteCondensada, '|')));
 
-  if (FpNFe.Total.ICMSTot.vDesc > 0) or ((FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vFrete+FpNFe.Total.ICMSTot.vSeg) > 0) then
+  if (FpNFe.Total.ICMSTot.vFrete) > 0 then
+    FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace('Frete|' +
+       FormatFloatBr(FpNFe.Total.ICMSTot.vFrete, '+,0.00'),
+       FPosPrinter.ColunasFonteCondensada, '|')));
+
+  if (FpNFe.Total.ICMSTot.vDesc > 0) or
+     ((FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vFrete+FpNFe.Total.ICMSTot.vSeg) > 0) then
     FPosPrinter.Buffer.Add('</ae><e>' + PadSpace('Valor a Pagar R$|' +
        FormatFloatBr(FpNFe.Total.ICMSTot.vNF),
        FPosPrinter.ColunasFonteCondensada div 2, '|') + '</e>');
@@ -595,6 +601,10 @@ begin
   FPosPrinter.Buffer.Add(ACBrStr('Número: ' + IntToStrZero(FpNFe.ide.nNF, 9) +
                                  ' Série: ' + IntToStrZero(FpNFe.ide.serie, 3)));
   FPosPrinter.Buffer.Add(ACBrStr('Emissão: ' + DateTimeToStr(FpNFe.ide.dEmi)) + '</n>');
+
+  if FpNFe.Total.ICMSTot.vNF > 0 then
+    FPosPrinter.Buffer.Add(ACBrStr('Valor Documento: R$ ' +  FormatFloatBr(FpNFe.Total.ICMSTot.vNF)) + '</n>');
+
   FPosPrinter.Buffer.Add(' ');
   FPosPrinter.Buffer.Add('<c>CHAVE ACESSO');
   FPosPrinter.Buffer.Add(FormatarChaveAcesso(OnlyNumber(FpNFe.infNFe.ID)));

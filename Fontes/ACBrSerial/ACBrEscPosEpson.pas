@@ -233,7 +233,7 @@ begin
     AlinhadoDireita         := ESC + 'a' + #2;
     CorteTotal              := GS  + 'V' + #0;
     CorteParcial            := GS  + 'V' + #1;
-    Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
+    Beep                    := ESC + '(A' + #5 + #0 + #97 + #100 + #1 + #50 + #50;
   end;
   {*)}
 

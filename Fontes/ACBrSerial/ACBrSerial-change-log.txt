@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/03/2018
+-- ACBrPosPrinter --
+[-] Correção da Emissão do Beep em alguns modelos de Impressoras compatíveis
+    com Epson Esc/Pos
+    (por: DSA)
+
 Data: 06/03/2018
 -- ACBrETQ --
 [+] Adicionada a propriedade: "MargemEsquerda: Integer default 0", que permite

@@ -2920,16 +2920,16 @@ begin
     UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFe));
   end;
 
-  if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2]) then
+  if (FEvento.Evento.Items[0].InfEvento.tpEvento = teEPECNFe) and
+     (FPConfiguracoesNFe.WebServices.UFCodigo = 35) and  // Apenas SP tem EPEC para NFCe, pois não permite off-line
+     (FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) then
+  begin
+    FPLayout := LayNFCeEPEC;
+  end
+  else if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2]) then
   begin
     FPLayout := LayNFeEventoAN;
     UF       := 'AN';
-  end
-  else if (FEvento.Evento.Items[0].InfEvento.tpEvento = teEPECNFe) and
-          (FPConfiguracoesNFe.WebServices.UFCodigo = 35) and  // Apenas SP tem EPEC para NFCe, pois não permite off-line
-          (FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) then
-  begin
-    FPLayout := LayNFCeEPEC;
   end;
 
   FPURL := '';

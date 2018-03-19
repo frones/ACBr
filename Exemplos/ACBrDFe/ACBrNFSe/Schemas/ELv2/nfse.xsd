@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.abrasf.org.br/nfse.xsd" xmlns="http://www.abrasf.org.br/nfse.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
@@ -1352,8 +1352,7 @@
 		</xsd:complexType>
 	</xsd:element>
 
-	<xsd:element name="CompNfse" type="tcCompNfse" 
-		minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="CompNfse" type="tcCompNfse"/>
 
 		<!-- definition of complex elements (webservice) -->
 		

@@ -588,6 +588,7 @@ begin
                                             Notas +
                                           '</Lote>';
             end;
+
     proNFSEBrasil: begin
                      Atributo_cMun := ' codMunicipio="' + IntToStr(CodMunicipio) + '"';
 
@@ -679,6 +680,7 @@ begin
             Gerador.wGrupoNFSe('/LoteRps');
           end;
 
+     proELv2,
      proSmarAPDABRASF:
           begin
            Gerador.Prefixo := Prefixo3;

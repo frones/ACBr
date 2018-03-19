@@ -144,7 +144,8 @@ begin
      (NFSe.Tomador.RazaoSocial <> '') or (NFSe.Tomador.Endereco.Endereco <> '') or
      (NFSe.Tomador.Contato.Telefone <> '') or (NFSe.Tomador.Contato.Email <> '') then
   begin
-    if (FProvedor in [proActcon, proVersaTecnologia, proISSJoinville, proSmarAPDABRASF]) or
+    if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
+        proSmarAPDABRASF]) or
        ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupoNFSe('TomadorServico')
     else
@@ -185,11 +186,15 @@ begin
     Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
     Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
 
-    if not (FProvedor in [proNFSeBrasil, proPronimv2, proISSJoinville, proSmarAPDABRASF]) or
+    if not (FProvedor in [proELv2, proNFSeBrasil, proPronimv2, proISSJoinville, proSmarAPDABRASF]) or
        ((FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
       Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 
-    Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP);
+    if FProvedor = proELv2 then
+      Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 1, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP)
+    else
+      Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP);
+
     Gerador.wGrupoNFSe('/Endereco');
 
     case FProvedor of
@@ -215,7 +220,9 @@ begin
       end;
     end;
 
-    if (FProvedor in [proActcon, proVersaTecnologia, proISSJoinville, proSmarAPDABRASF]) or ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
+    if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
+        proSmarAPDABRASF]) or
+        ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupoNFSe('/TomadorServico')
     else
       Gerador.wGrupoNFSe('/Tomador');
@@ -364,6 +371,7 @@ begin
     proActconv2,
     proCoplan,
     proDigifred,
+    proELv2,
     proFiorilli,
     proFriburgo,
     proNEAInformatica,
@@ -707,7 +715,7 @@ begin
       proNEAInformatica, proNotaInteligente, proProdata, proPronimv2, proPVH,
       proSaatri, proSisPMJP, proSiam, proVirtual, proVersaTecnologia, proVitoria,
       proWebISSv2, proActconv202, proSIAPNet, proBelford, proSystemPro, proSH3,
-      proISSJoinville, proSmarAPDABRASF,
+      proISSJoinville, proSmarAPDABRASF, proElv2,
       proAsten: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
     else
@@ -744,7 +752,7 @@ begin
 
         proABase, proBethav2, proFriburgo, proGovDigital, proNotaInteligente, proPronimv2,
         proVersaTecnologia, proWebISSv2, proActconv202, proBelford, proSH3,
-        proSIAPNet, proISSJoinville, proSmarAPDABRASF,
+        proSIAPNet, proISSJoinville, proSmarAPDABRASF, proELv2,
         proAsten: Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
         proTecnos: Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
@@ -757,10 +765,10 @@ begin
     begin
       if FProvedor in [proABase, proActcon, proBethav2, proCoplan, proEReceita, proFiorilli,
          proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
-         proNEAInformatica, proNotaInteligente, proPronimv2,
-         proProdata, proPVH, proSaatri, proSiam, proSisPMJP, proSystemPro,
-         proVirtual, proVitoria, proVersaTecnologia, proWebISSv2, proActconv202,
-         proSH3, proSIAPNet, proBelford, proISSJoinville, proSmarAPDABRASF, proAsten] then
+         proNEAInformatica, proNotaInteligente, proPronimv2, proProdata, proPVH,
+         proSaatri, proSiam, proSisPMJP, proSystemPro, proVirtual, proVitoria,
+         proVersaTecnologia, proWebISSv2, proActconv202, proSH3, proSIAPNet,
+         proBelford, proISSJoinville, proSmarAPDABRASF, proAsten, proELv2] then
         Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
       else
       begin

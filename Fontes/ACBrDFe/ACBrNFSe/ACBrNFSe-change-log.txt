@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/03/2018
+--pnfsNFSeG / pnfsNFSeW_ABRASFv2 --
+[*] Correções visando atender o provedor ELv2
+   Por: Italo Jurisato Junior
 --pnfsNFSeG / pnfsNFSeW_ABRASFv1 --
 [*] Removido o prefixo do ID do RPS e do Lote para o provedor Abaco.
    Por: Augelias

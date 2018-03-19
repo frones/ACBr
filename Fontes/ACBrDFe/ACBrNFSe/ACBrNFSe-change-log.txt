@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2018
+--pnfsNFSeG / pnfsNFSeW_ABRASFv1 --
+[*] Removido o prefixo do ID do RPS e do Lote para o provedor Abaco.
+   Por: Augelias
+
 13/03/2018
 -- ACBrNFSeWebServices --
 [*] Corrigido o nome da tag para realizar a consulta da NFSe para o provedor SmarAPDABRASF.

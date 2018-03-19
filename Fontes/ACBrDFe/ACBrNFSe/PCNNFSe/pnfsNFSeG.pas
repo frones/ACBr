@@ -316,7 +316,7 @@ begin
 
   // Valor do atributo Id ======================================================
   case Provedor of
-    proAbaco: IdLote := 'LOTE' + NumeroLote;
+//    proAbaco: IdLote := 'LOTE' + NumeroLote;
 
     proBethav2: IdLote := 'lote' + NumeroLote;
 

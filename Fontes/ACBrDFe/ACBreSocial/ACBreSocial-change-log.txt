@@ -48,6 +48,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/03/2018
+-- pcesS1200 / pcesS1202 / pcesS1207 --
+[+] Implementação da leitura do arquivo INI referente aos eventos S-1200, S-1202, S-1207.
+   Por: Italo Jurisato Junior
+
+19/03/2018
+-- pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/42199-s2200-adicionando-parametro/?do=findComment&comment=278080
+    https://www.projetoacbr.com.br/forum/topic/42199-s2200-adicionando-parametro/?do=findComment&comment=278117
+   Por: Renato E
+-- pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/42223-ajuste-no-tptptributo/
+   Por: Joceandro Perin
+
 16/03/2018
 -- pcesConversaoeSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/42199-s2200-adicionando-parametro/

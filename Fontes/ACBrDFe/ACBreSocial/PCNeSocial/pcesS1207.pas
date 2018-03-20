@@ -358,7 +358,7 @@ var
   INIRec: TMemIniFile;
   Ok: Boolean;
   sSecao, sFim: String;
-  I: Integer;
+  I, J: Integer;
 begin
   Result := False;
 
@@ -368,7 +368,68 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtBenPrRP';
+      Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.IndApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
+      ideEvento.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideBenef';
+      ideBenef.cpfBenef := INIRec.ReadString(sSecao, 'cpfBenef', EmptyStr);
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'dmDev' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'nrBenefic', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with dmDev.Add do
+        begin
+          tpBenef   := INIRec.ReadInteger(sSecao, 'tpBenef', 0);
+          nrBenefic := sFim;
+          ideDmDev  := INIRec.ReadString(sSecao, 'ideDmDev', '');
+
+
+          J := 1;
+          while true do
+          begin
+            // de 01 até 99
+            sSecao := 'itens' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+            sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with itens.Add do
+            begin
+              codRubr    := sFim;
+              ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', '');
+              vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
+            end;
+
+            Inc(J);
+          end;
+
+        end;
+
+        Inc(I);
+      end;
+
     end;
 
     GerarXML;

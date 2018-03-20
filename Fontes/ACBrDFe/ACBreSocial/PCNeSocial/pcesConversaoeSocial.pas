@@ -228,9 +228,9 @@ type
 
   tpNatAtividade          = (navNaoInformar, navUrbano, navRural );
 
-  tpTpTributo             = (tptIRRF, tptPrevidenciaria);
+  tpTpTributo             = (tptIRRF, tptPrevidenciaria, tptFGTS, tptContribSind);
 
-  tpGrauExp               = (ge1,ge2,ge3,ge4 );
+  tpGrauExp               = (ge1, ge2, ge3, ge4);
 
   tpTpAcordo              = (tpaAcordo, tpaComissao, tpaConvenca, tpaDissidio );
 
@@ -328,9 +328,9 @@ type
 
   tpMtvContrat            = (mcNecessidadeTransitoriaSubstituicaoPessoalRegular, mcAcrescimoExtraordinarioServicos);
 
-  tpIndProvim             = (ipNormal, ipDecorrenteDecisaoJudicial, ipTomouPosseMasNaoEntrouExercicio);
+  tpIndProvim             = (ipNormal, ipDecorrenteDecisaoJudicial);
 
-  tpTpProv                = (tpNomeacaoCargoEfetivo, tpNomeacaoCargoComissao, tpIncorporacao, tpMatricula, tpReinclusao, tpOutros);
+  tpTpProv                = (tpNomeacaoCargoEfetivo, tpNomeacaoCargoComissao, tpIncorporacao, tpMatricula, tpReinclusao, tpDiplomacao, tpOutros);
 
   tpUndSalFixo            = (sfPorHora, sfPorDia, sfPorSemana, sfPorQuinzena, sfPorMes, sfPorTarefa, sfNaoaplicavel);
 
@@ -1123,22 +1123,22 @@ end;
 
 function eSIndProvimToStr(const t: tpIndProvim ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_3 );
+  result := EnumeradoToStr2(t,TGenericosString1_2 );
 end;
 
 function eSStrToIndProvim(var ok: boolean; const s: string): tpIndProvim;
 begin
-  result := tpIndProvim( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
+  result := tpIndProvim( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
 end;
 
 function eSTpProvToStr(const t: tpTpProv ): string;
 begin
-  result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '9' ] );
+  result := EnumeradoToStr2(t,[ '1', '2', '3', '4', '5', '6', '99' ] );
 end;
 
 function eSStrToTpProv(var ok: boolean; const s: string): tpTpProv;
 begin
-  result := tpTpProv( StrToEnumerado2(ok , s, [ '1', '2', '3', '4', '5', '9' ] ) );
+  result := tpTpProv( StrToEnumerado2(ok , s, [ '1', '2', '3', '4', '5', '6', '99' ] ) );
 end;
 
 function eSTpIndMatProcToStr(const t: tpIndMatProc): string;
@@ -1745,12 +1745,12 @@ end;
 
 function eSTpTributoToStr(const t:tpTpTributo ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_3  );
+  result := EnumeradoToStr2(t,TGenericosString1_4  );
 end;
 
 function eSStrToTpTributo(var ok: boolean; const s: string): TpTpTributo;
 begin
-  result := TpTpTributo( StrToEnumerado2(ok , s,TGenericosString1_3 ));
+  result := TpTpTributo( StrToEnumerado2(ok , s,TGenericosString1_4 ));
 end;
 
 function eSGrauExpToStr(const t:tpGrauExp ): string;

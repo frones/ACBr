@@ -1327,6 +1327,9 @@ begin
 
     if Nivel > 0 then
     begin
+      if FProvedor = proTecnos then
+         NFSe.Link := Leitor.rCampo(tcStr, 'LinkNota');
+
       NFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
       NFSe.SeriePrestacao    := Leitor.rCampo(tcStr, 'Serie');
       NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');

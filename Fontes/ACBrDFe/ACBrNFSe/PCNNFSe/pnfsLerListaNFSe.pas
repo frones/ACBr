@@ -527,6 +527,9 @@ begin
               // Retorno do ConsultarLoteRps
               FNFSe.Situacao := SituacaoTemp;
 
+              {Márcio - Se tiver link na NFSeLida, então deve ser tratado lá, e aqui simplesmente pega o valor }
+              FNFSe.Link              := NFSeLida.NFSe.Link;
+
               FNFSe.InfID.ID          := NFSeLida.NFSe.InfID.ID;
               FNFSe.Numero            := NFSeLida.NFSe.Numero;
               FNFSe.SeriePrestacao    := NFSeLida.NFSe.SeriePrestacao;

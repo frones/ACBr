@@ -1229,6 +1229,9 @@ begin
     if (FPLayout in [LayNFSeGerar, LayNfseConsultaLote]) or ((FPLayout = LayNfseConsultaNfseRps) and (FProvedor = proISSNET)) then
       FNotasFiscais.Items[ii].NFSe.Situacao := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Situacao;
 
+    { Márcio - Como a questão do link é tratada no reader do XML, acho que aqui
+      pode pegar direto, sem validar provedor }
+    FNotasFiscais.Items[ii].NFSe.Link              := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Link;
     FNotasFiscais.Items[ii].NFSe.CodigoVerificacao := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.CodigoVerificacao;
     FNotasFiscais.Items[ii].NFSe.Numero            := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Numero;
     FNotasFiscais.Items[ii].NFSe.Competencia       := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Competencia;
@@ -1358,8 +1361,22 @@ begin
     if (FProvedor = ProTecnos) and (DateToStr(FDataRecebimento) = '01/01/0001') then
       FDataRecebimento := 0;
 
-    if FProvedor in [proGovDigital, proInfisc, proInfiscv11, proNFSeBrasil,
-                     proTecnos, proVersaTecnologia] then
+    if FProvedor in [proGovDigital, proInfisc, proInfiscv11, proNFSeBrasil, proVersaTecnologia] then
+      FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
+
+    { Márcio - O provedor Tecnos está no 'in' acima e eu retirei. Isso estava
+      gerando problema, pois FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo
+      estava vindo com '0' e como o protocolo é usado no nome do XML do resultado
+      da consulta de lote, acabava que todas as consultas ficavam com o mesmo
+      nome, pois o arquivo era sempre sobresvrevido. Temos clientes que usam
+      esses aquivos, então tem que ficar com o nome do protocolo.
+
+      O protocolo é usado no XML de envio da consulta, então não sei se existe
+      chance de ele estar vazio, pois já no envio ele é necessário. Coloquei
+      então uma validação específica para o provedor Tecnos, assim, se em outras
+      consultas ele estiver vazio ele será preenchido.
+      }
+    if (FProtocolo = '') = (FProvedor in [proTecnos]) then
       FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else

@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/03/2018
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/42217-acbrnfse-n%C3%A3o-esta-saindo-valor-liquido/?do=findComment&comment=278218
+   Por: Tiago Passarella
 -- ACBrNFSe --
 [*] https://www.projetoacbr.com.br/forum/topic/42237-ajuste-na-busca-de-link-do-provedor-tecnos/
    Por: Marcio st

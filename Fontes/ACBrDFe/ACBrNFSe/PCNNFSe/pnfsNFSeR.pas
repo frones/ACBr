@@ -392,6 +392,7 @@ begin
        (Leitor.rExtrai(2, 'Tomador') <> '') or (Leitor.rExtrai(2, 'TomadorServico') <> '') then
     begin
       NFSe.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazaoSocial');
+      NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual := Leitor.rCampo(tcStr, 'InscricaoEstadual');
 
       NFSe.Tomador.Endereco.Endereco := Leitor.rCampo(tcStr, 'Endereco');
       if Copy(NFSe.Tomador.Endereco.Endereco, 1, 10) = '<Endereco>' then
@@ -1610,6 +1611,7 @@ begin
   if (Leitor.rExtrai(Nivel +1, 'Tomador') <> '') or (Leitor.rExtrai(Nivel +1, 'TomadorServico') <> '') then
   begin
     NFSe.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazaoSocial');
+    NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual := Leitor.rCampo(tcStr, 'InscricaoEstadual');
 
     NFSe.Tomador.Endereco.Endereco := Leitor.rCampo(tcStr, 'EnderecoDescricao');
     if NFSe.Tomador.Endereco.Endereco = '' then
@@ -1724,7 +1726,7 @@ begin
     NFSe.ValoresNfse.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
     NFSe.ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
 
-    if (FProvedor = proCoplan) then
+    if (FProvedor in [proCoplan, proWebISSv2]) then
     begin
       NFSe.Servico.Valores.BaseCalculo      := Leitor.rCampo(tcDe2, 'BaseCalculo');
       NFSe.Servico.Valores.Aliquota         := Leitor.rCampo(tcDe3, 'Aliquota');
@@ -1937,9 +1939,13 @@ begin
         NFSe.Servico.Valores.ValorIr         := Leitor.rCampo(tcDe2, 'ValorIr');
         NFSe.Servico.Valores.ValorCsll       := Leitor.rCampo(tcDe2, 'ValorCsll');
         NFSe.Servico.Valores.OutrasRetencoes := Leitor.rCampo(tcDe2, 'OutrasRetencoes');
-        NFSe.Servico.Valores.ValorIss        := Leitor.rCampo(tcDe2, 'ValorIss');
 //        NFSe.Servico.Valores.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
-        NFSe.Servico.Valores.Aliquota        := Leitor.rCampo(tcDe3, 'Aliquota');
+
+        if NFSe.Servico.Valores.ValorIss = 0 then
+          NFSe.Servico.Valores.ValorIss := Leitor.rCampo(tcDe2, 'ValorIss');
+
+        if NFSe.Servico.Valores.Aliquota = 0 then
+          NFSe.Servico.Valores.Aliquota := Leitor.rCampo(tcDe3, 'Aliquota');
 
         if (FProvedor in [proActconv202]) then
           NFSe.Servico.Valores.Aliquota := (NFSe.Servico.Valores.Aliquota * 100);

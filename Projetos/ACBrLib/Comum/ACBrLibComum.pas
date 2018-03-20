@@ -502,7 +502,6 @@ begin
     pLib.GravarLog('   SetRetorno(' + IntToStr(ACodigo) + ', ' + AMensagem + ')', logParanoico);
 end;
 
-
 function LerArquivoParaString(AArquivo: String): AnsiString;
 var
   FS: TFileStream;

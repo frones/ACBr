@@ -87,10 +87,8 @@ function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%region NFe}
 function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
 function NFE_CarregarININFe(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
 function NFE_LimparListaNFEs: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
@@ -172,7 +170,7 @@ begin
 end;
 
 function NFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
-  cdecl;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(sMensagem, esTamanho);
 end;
@@ -189,7 +187,8 @@ begin
   Result := LIB_ConfigGravar(eArqConfig);
 end;
 
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint; cdecl;
+function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(eSessao, eChave, sValor, esTamanho);
 end;
@@ -310,7 +309,8 @@ end;
 
 {%region Servicos}
 
-function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint; cdecl;
+function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resposta: TStatusServicoResposta;
 begin

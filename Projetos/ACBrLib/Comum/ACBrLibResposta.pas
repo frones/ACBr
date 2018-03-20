@@ -106,7 +106,7 @@ begin
         tkSString,
         tkLString,
         tkAString:
-          Node := xDoc.CreateTextNode(GetStrProp(Self, PI));
+          Node := xDoc.CreateTextNode(Trim(GetStrProp(Self, PI)));
         tkFloat:
           if (PT = TypeInfo(TDateTime)) then
             Node := xDoc.CreateTextNode(DateTimeToStr(GetFloatProp(Self, PI)))
@@ -160,7 +160,7 @@ begin
         tkSString,
         tkLString,
         tkAString:
-          AIni.WriteString(Sessao, PI^.Name, GetStrProp(Self, PI));
+          AIni.WriteString(Sessao, PI^.Name, Trim(GetStrProp(Self, PI)));
         tkFloat:
           if (PT = TypeInfo(TDateTime)) then
             AIni.WriteDateTime(Sessao, PI^.Name, GetFloatProp(Self, PI))
@@ -213,7 +213,7 @@ begin
         tkSString,
         tkLString,
         tkAString:
-          JSONRoot.Add(PI^.Name, GetStrProp(Self, PI));
+          JSONRoot.Add(PI^.Name, Trim(GetStrProp(Self, PI)));
         tkFloat:
           if (PT = TypeInfo(TDateTime)) then
           begin

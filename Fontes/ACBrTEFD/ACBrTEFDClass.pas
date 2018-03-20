@@ -1479,8 +1479,11 @@ begin
        9   : fpStatusTransacao            := Linha.Informacao.AsString;
        10  :
          begin
-           if Linha.Sequencia = 0 then
-             fpRede := Linha.Informacao.AsString;
+           case Linha.Sequencia of
+             0 : fpRede := Linha.Informacao.AsString;
+             4 : fpBin  := Linha.Informacao.AsString; //Seis primeiros digitos do cartão
+             5 : fpNFCeSAT.UltimosQuatroDigitos  := Linha.Informacao.AsString; 
+           end;
          end;
        11  : fpTipoTransacao              := Linha.Informacao.AsInteger;
        12  : fpNSU                        := Linha.Informacao.AsString;
@@ -1541,6 +1544,17 @@ begin
        131 : fpInstituicao           := Linha.Informacao.AsString;
        132 : fpCodigoBandeiraPadrao  := Linha.Informacao.AsString;
        136 : fpBin                   := Linha.Informacao.AsString;
+
+       300 : case Linha.Sequencia of
+               1 : fpNFCeSAT.DataExpiracao := Linha.Informacao.AsString;
+               2 : fpNFCeSAT.DonoCartao    := Linha.Informacao.AsString;
+             end;
+
+       600 : fpNFCeSAT.CNPJCredenciadora := Linha.Informacao.AsString;
+       601 : fpNFCeSAT.Bandeira          := Linha.Informacao.AsString;
+       602 : fpNFCeSAT.Autorizacao       := Linha.Informacao.AsString;
+       603 : fpNFCeSAT.CodCredenciadora := Linha.Informacao.AsString;
+
        707 : fpValorOriginal         := Linha.Informacao.AsFloat;
        708 : fpSaque                 := Linha.Informacao.AsFloat;
        709 : fpDesconto              := Linha.Informacao.AsFloat;

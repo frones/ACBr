@@ -9,7 +9,7 @@ uses
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   pcnConversao, pnfsConversao, blcksock, TypInfo, unit2,
   ACBrNFSe, ACBrNFSeDANFSeClass, pnfsNFSe, ACBrMail, ACBrUtil,
-  ACBrBase, ACBrDFe, ACBrDFeSSL, ACBrNFSeDANFSeRLClass, Spin;
+  ACBrBase, ACBrDFe, ACBrDFeSSL, Spin, ACBrNFSeDANFSeRLClass;
 
 type
   TfrmDemo_ACBrNFSe = class(TForm)
@@ -131,7 +131,6 @@ type
     edtArqINI: TEdit;
     sbtArqINI: TSpeedButton;
     cbEmailTLS: TCheckBox;
-    ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL;
     TabSheet1: TTabSheet;
     lblHttpLib: TLabel;
     lblCryptLib: TLabel;
@@ -172,6 +171,7 @@ type
     lblTimeOut: TLabel;
     cbSSLType: TComboBox;
     lblSSLLib1: TLabel;
+    ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL;
     procedure btnCaminhoCertClick(Sender: TObject);
     procedure btnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -229,6 +229,7 @@ type
     procedure AtualizaSSLLibsCombo;
     procedure LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
     procedure AlimentaComponente(NumNFSe: String);
+    procedure AtualizaCidades;
   public
     { Public declarations }
   end;
@@ -353,6 +354,9 @@ begin
       AtualizaSSLLibsCombo;
     end;
 
+    edtArqINI.Text := Ini.ReadString('Geral', 'PathINI', '');
+    AtualizaCidades;
+
     edtEmitCNPJ.Text := Ini.ReadString('Emitente', 'CNPJ', '');
     edtEmitIM.Text := Ini.ReadString('Emitente', 'IM', '');
     edtEmitRazao.Text := Ini.ReadString('Emitente', 'RazaoSocial', '');
@@ -406,6 +410,41 @@ begin
 
   finally
     Ini.Free;
+  end;
+end;
+
+procedure TfrmDemo_ACBrNFSe.AtualizaCidades;
+var
+  IniFile: String;
+  Ini: TIniFile;
+  Cidades: TStringList;
+  StreamMemo: TMemoryStream;
+  I: Integer;
+  sNome, sCod, sUF: String;
+begin
+  IniFile := edtArqINI.Text+'\Cidades.ini';
+  Ini := TIniFile.Create(IniFile);
+  Cidades := TStringList.Create;
+
+  try
+    Ini.ReadSections(Cidades);
+    cbCidades.Items.Clear;
+    for I := 0 to Pred(Cidades.Count) do
+      if (StrToIntdef(Cidades[I], 0) > 0) then
+        begin
+          //Exemplo: Alfenas/3101607/MG
+          sCod := Cidades[I];
+          sNome := Ini.ReadString(sCod, 'Nome', '');
+          sUF := Ini.ReadString(sCod, 'UF', '');
+
+          cbCidades.Items.Add(Format('%s/%s/%s', [sNome, sCod, sUF]));
+        end;
+
+    //Sort
+    cbCidades.Sorted := false;
+    cbCidades.Sorted := true;
+  finally
+    FreeAndNil(Cidades);
   end;
 end;
 
@@ -573,7 +612,7 @@ begin
       // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
       /// RpsSubstituido.Tipo   := trRPS;
 
-      Servico.Valores.ValorServicos := 1685.50;
+      Servico.Valores.ValorServicos := 100.00;
       Servico.Valores.ValorDeducoes := 0.00;
       Servico.Valores.ValorPis := 0.00;
       Servico.Valores.ValorCofins := 0.00;
@@ -599,7 +638,7 @@ begin
       // No caso do provedor Ginfes devemos informar a aliquota já dividida por 100
       // para outros provedores devemos informar por exemplo 3, mas ao fazer o calculo
       // do valor do ISS devemos dividir por 100
-      Servico.Valores.Aliquota := 2;
+      Servico.Valores.Aliquota := 4;
 
       // Valor do ISS calculado multiplicando-se a base de calculo pela aliquota
       ValorISS := Servico.Valores.BaseCalculo * Servico.Valores.Aliquota / 100;
@@ -622,12 +661,13 @@ begin
       // TnfseResponsavelRetencao = ( ptTomador, rtPrestador );
       Servico.ResponsavelRetencao := ptTomador;
 
-      Servico.ItemListaServico := '14.01';
+      Servico.ItemListaServico := '09.01';
+      Servico.CodigoCnae := '8711505';
 
       // Para o provedor ISS.NET em ambiente de Homologação
       // o Codigo CNAE tem que ser '6511102'
       // Servico.CodigoCnae                := '123'; // Informação Opcional
-      Servico.CodigoTributacaoMunicipio := '3314799';
+      // Servico.CodigoTributacaoMunicipio := '3314799';
       Servico.Discriminacao := 'discriminacao I;discriminacao II';
 
       // Para o provedor ISS.NET em ambiente de Homologação

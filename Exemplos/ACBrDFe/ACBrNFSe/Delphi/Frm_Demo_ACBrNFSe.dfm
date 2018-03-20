@@ -94,7 +94,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 15
         Width = 277
         Height = 456
-        ActivePage = TabSheet3
+        ActivePage = TabSheet4
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -474,7 +474,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Varzea Grande/5108402/MT'
               'Vilhena/1100304/RO'
               'Vitoria/3205309/ES'
-              'Votuporanga/3557105/SP')
+              'Votuporanga/3557105/SP'
+              'Nova Serrana/3145208/MG')
           end
           object edtCodCidade: TEdit
             Left = 128
@@ -1501,6 +1502,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           Height = 360
           Align = alClient
           TabOrder = 0
+          ExplicitLeft = 32
+          ExplicitTop = -2
         end
       end
       object TabSheet6: TTabSheet
@@ -1603,7 +1606,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.Certificados.VerificarValidade = False
     DANFSE = ACBrNFSeDANFSeRL1
-    Left = 360
+    Left = 392
     Top = 248
   end
   object ACBrMail1: TACBrMail
@@ -1614,7 +1617,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 430
+    Left = 574
     Top = 249
   end
   object ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL
@@ -1631,7 +1634,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     TamanhoFonte = 6
     FormatarNumeroDocumentoNFSe = True
     PrintDialog = True
-    Left = 554
-    Top = 260
+    Left = 481
+    Top = 248
   end
 end

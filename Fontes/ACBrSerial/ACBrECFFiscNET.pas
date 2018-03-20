@@ -3315,7 +3315,7 @@ var
 begin
 
   // Modelos mais antigos usam comandos "B" //
-  CodB := (pos(fsModeloECF,'3202DT|X5|ELGIN FIT|ELGIN K|URANO/1FIT LOGGER') > 0 );
+  CodB := (pos(fsModeloECF,'3202DT|X5|ELGIN FIT|ELGIN K|URANO/1FIT LOGGER|ZPM/1FIT LOGGER') > 0 );
 
   if ATag = cTagLigaExpandido then
     Result := ifthen(CodB, cExpandidoON_B , cExpandidoON)

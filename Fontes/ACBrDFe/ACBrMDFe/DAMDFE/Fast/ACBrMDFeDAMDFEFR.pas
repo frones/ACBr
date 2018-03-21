@@ -361,7 +361,7 @@ begin
     // Veiculos
     Add('placa', ftMemo);
     Add('RNTRCProp', ftMemo);
-    Add('RENAVAM', ftString, 11);
+    Add('RENAVAM', ftMemo);
     // Condutor
     Add('xNome', ftMemo);
     Add('CPF', ftMemo);

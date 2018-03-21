@@ -555,7 +555,7 @@ begin
     begin
       Result := OnlyNumber(copy(SubjectName, P+1, 14));
       // Evita pegar CPF ou outro Documento, do SubjectName (comuns em EPP)
-      if (ValidarCNPJ(Result) <> '') then
+      if (ValidarCNPJ(Result) <> '') and (ValidarCPF(Result) <> '') then
         Result := '';
     end;
   end;

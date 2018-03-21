@@ -698,7 +698,13 @@ begin
         if Filtro = fiNenhum then
          begin
            if MostrarPreview then
-              RLLayout.PreviewModal
+           begin
+              RLLayout.Title := '';
+              SelectedFilter := RLPDFFilter1;
+              RLPDFFilter1.FileName := NomeArquivo;
+
+              RLLayout.PreviewModal;
+           end
            else
               RLLayout.Print;
          end

@@ -49,6 +49,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/03/2018
+-- pcesS2300 --
+[*] https://www.projetoacbr.com.br/forum/topic/42253-ajuste-no-campo-tpregjor-e-natatividade/?do=findComment&comment=278585
+   Por: Joceandro Perin
 -- pcesS2206 / pcesS2300 / pcesS2306 --
 [*] https://www.projetoacbr.com.br/forum/topic/42253-ajuste-no-campo-tpregjor-e-natatividade/
    Por: Joceandro Perin

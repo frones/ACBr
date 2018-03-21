@@ -481,7 +481,7 @@ begin
     Gerador.wGrupo('remuneracao');
 
     Gerador.wCampo(tcDe2, '', 'vrSalFx',    1,  14, 1, obj.vrSalFx);
-    Gerador.wCampo(tcStr, '', 'undSalFixo', 1,   1, 1, obj.undSalFixo);
+    Gerador.wCampo(tcStr, '', 'undSalFixo', 1,   1, 1, eSUndSalFixoToStr(obj.undSalFixo));
     Gerador.wCampo(tcStr, '', 'dscSalVar',  1, 255, 0, obj.dscSalVar);
 
     Gerador.wGrupo('/remuneracao');

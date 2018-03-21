@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2018
+-- pcesS2206 / pcesS2300 / pcesS2306 --
+[*] https://www.projetoacbr.com.br/forum/topic/42253-ajuste-no-campo-tpregjor-e-natatividade/
+   Por: Joceandro Perin
+
 20/03/2018
 -- pcesS1200 / pcesS1202 / pcesS1207 --
 [+] Implementação da leitura do arquivo INI referente aos eventos S-1200, S-1202, S-1207.

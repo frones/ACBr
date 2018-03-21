@@ -269,8 +269,8 @@ procedure TEvtAltContratual.GerarInfoCeletista(objInfoCeletista: TInfoCeletista)
 begin
   Gerador.wGrupo('infoCeletista');
 
-  Gerador.wCampo(tcStr, '', 'tpRegJor',           1,  1, 1, ord(objInfoCeletista.TpRegJor) + 1);
-  Gerador.wCampo(tcStr, '', 'natAtividade',       1,  1, 1, ord(objInfoCeletista.NatAtividade) + 1);
+  Gerador.wCampo(tcStr, '', 'tpRegJor',           1,  1, 1, eSTpRegJorToStr(objInfoCeletista.TpRegJor));
+  Gerador.wCampo(tcStr, '', 'natAtividade',       1,  1, 1, eSNatAtividadeToStr(objInfoCeletista.NatAtividade));
 
   if objInfoCeletista.dtBase > 0  then
     Gerador.wCampo(tcStr, '', 'dtBase',             1,  2, 0, objInfoCeletista.dtBase);

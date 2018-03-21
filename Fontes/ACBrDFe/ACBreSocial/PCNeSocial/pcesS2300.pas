@@ -448,7 +448,7 @@ begin
   else if obj.codCateg = 771 Then //Membro conselho tutelar
   else if obj.codCateg = 901 Then //Estagiario
   else
-   Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, ord(obj.natAtivididade) + 1);
+   Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtivididade));
 
   GerarInfoComplementares(obj.InfoComplementares);
 

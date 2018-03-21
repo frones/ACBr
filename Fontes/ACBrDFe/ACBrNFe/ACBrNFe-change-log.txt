@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2018
+-- ACBrNFeServicos --
+[*] Inclusão das URLs NFe 4.00 PE produção.
+  Por: BigWings
+
 19/03/2018
 -- ACBrNFeWebservices --
 [-] Correção no método "DefinirURL" para ajustar o layout do serviço corretamente
@@ -76,7 +81,6 @@ Símbolo : Significado
 [*] Atualização de URLs NFe 4.00 CE.
   Por: BigWings
 
->>>>>>> .r14864
 13/03/2018
 -- pcnNFeW --
 [*] Comentado a alteração que atribui a string "SEM GTIN" quando os campos

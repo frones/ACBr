@@ -1719,10 +1719,10 @@ begin
        begin
          case FProvedor of
            proAbaco: begin
-//                       // Manaus
-//                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
-//                         FTagI := '<'+FTagGrupo+'>'
-//                       else // Outros
+                       // Manaus
+                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+                         FTagI := '<'+FTagGrupo+'>'
+                       else // Outros
                          FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
                      end;
 
@@ -1759,6 +1759,14 @@ begin
     LayNfseConsultaSitLoteRps:
        begin
         case FProvedor of
+           proAbaco: begin
+                       // Manaus
+                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+                         FTagI := '<'+FTagGrupo+'>'
+                       else // Outros
+                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+                     end;
+
            proDBSeller: FTagI := '<ConsultarSituacaoLoteRps>' +
                                   '<' + FTagGrupo + FNameSpaceDad + '>';
 
@@ -1789,6 +1797,14 @@ begin
     LayNfseConsultaLote:
        begin
         case FProvedor of
+           proAbaco: begin
+                       // Manaus
+                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+                         FTagI := '<'+FTagGrupo+'>'
+                       else // Outros
+                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+                     end;
+
            proAgili: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                '<UnidadeGestora>' +
                                OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
@@ -1821,6 +1837,14 @@ begin
     LayNfseConsultaNfseRps:
        begin
          case FProvedor of
+           proAbaco: begin
+                       // Manaus
+                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+                         FTagI := '<'+FTagGrupo+'>'
+                       else // Outros
+                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+                     end;
+
            proDBSeller: FTagI := '<ConsultarNfsePorRps>' +
                                   '<' + FTagGrupo + FNameSpaceDad + '>';
 
@@ -1850,6 +1874,14 @@ begin
     LayNfseConsultaNfse:
        begin
          case FProvedor of
+           proAbaco: begin
+                       // Manaus
+                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+                         FTagI := '<'+FTagGrupo+'>'
+                       else // Outros
+                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+                     end;
+
            proEL,
            proInfisc,
            proInfiscv11,
@@ -1868,6 +1900,14 @@ begin
     LayNfseCancelaNfse:
        begin
          case FProvedor of
+           proAbaco: begin
+                       // Manaus
+                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+                         FTagI := '<'+FTagGrupo+'>'
+                       else // Outros
+                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+                     end;
+
            proAgili: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                '<UnidadeGestora>' +
                                  OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +

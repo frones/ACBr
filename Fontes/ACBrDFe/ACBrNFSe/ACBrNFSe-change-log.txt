@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2018
+-- ACBrNFSeWebServices --
+[*] Condicionado a inclusão do NameSpace - provedor Ábaco - cidade Manaus/AM.
+   Por: Italo Jurisato Junior
+
 20/03/2018
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/42217-acbrnfse-n%C3%A3o-esta-saindo-valor-liquido/?do=findComment&comment=278218

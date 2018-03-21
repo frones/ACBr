@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2018
+-- ACBrTEFDClass --
+[*] Ajuste para permitir letras no NSU
+    https://www.projetoacbr.com.br/forum/topic/42242-altera%C3%A7%C3%A3o-para-atender-passo-43-ntk/
+
 31/01/2018
 -- ACBrTEFD, ACBrTEFDClass --
 [+] Adicionado suporte a Identificacao.RegistroCertificacao, inserindo o

@@ -1198,7 +1198,7 @@ end;
 
 procedure TACBrTEFDReq.SetNSU(const AValue : String);
 begin
-  fNSU := OnlyNumber(AValue);
+  fNSU := Trim(AValue);
   fConteudo.GravaInformacao(12,0,fNSU);
 end;
 

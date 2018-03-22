@@ -487,7 +487,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
       end
       object RLDraw70: TRLDraw
@@ -521,9 +521,9 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object rllCompetencia: TRLLabel
-        Left = 9
+        Left = 10
         Top = 157
-        Width = 88
+        Width = 94
         Height = 15
         Alignment = taCenter
         Font.Charset = DEFAULT_CHARSET

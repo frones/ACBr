@@ -370,6 +370,8 @@ begin
 
     if length( Competencia )  = 6 then
       rllCompetencia.Caption      := Copy(Competencia, 5, 2) + '/' + Copy(Competencia, 1, 4)
+    else if length( Competencia ) = 10 then // dd/mm/aaaa
+      rllCompetencia.Caption      := Copy(Competencia, 4, Length(Competencia) )
     else
       rllCompetencia.Caption      := Copy(Competencia, 6, 2) + '/' + Copy(Competencia, 1, 4);
 

@@ -511,7 +511,7 @@ end;
 
 function TACBrNFeDANFEClass.ManterCodigo( scEAN , scProd : String ) : String;
 begin
-  if (Length( scEAN ) > 0) and (UsaCodigoEanImpressao) then
+  if (Length( scEAN ) > 0) and (UpperCase(Trim(scEAN)) <> 'SEM GTIN') and (UsaCodigoEanImpressao) then
     Result := Trim(scEAN)
   else
     Result := Trim(scProd);

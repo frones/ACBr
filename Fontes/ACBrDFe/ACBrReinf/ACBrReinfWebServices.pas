@@ -500,8 +500,8 @@ procedure TConsultarLote.Clear;
 begin
   inherited Clear;
 
-  FPLayout := LayEnvioLoteEventos;
-  FPStatus := stEnvLoteEventos;
+  FPLayout := LayConsultaLoteEventos;
+  FPStatus := stConsultaLote;
   FPArqEnv := 'sit-lot';
   FPArqResp := 'sit';
   FVersao := '';
@@ -523,19 +523,20 @@ procedure TConsultarLote.DefinirDadosMsg;
 var
   tpInsc, nrInsc: String;
 begin
-  if Length(TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte) = 14 then
-    tpInsc := '1'
+  nrInsc := TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte;
+
+  if Length(nrInsc) = 14 then
+  begin
+    nrInsc := Copy( nrInsc, 1, 8 );
+    tpInsc := '1';
+  end
   else
     tpInsc := '2';
 
-  nrInsc := TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte;
-
   FPDadosMsg :=
-          '<v1:ConsultaInformacoesConsolidadas>' +
-            '<tipoInscricaoContribuinte>' + tpInsc + '</tipoInscricaoContribuinte>' +
-            '<numeroInscricaoContribuinte>' + nrInsc + '</numeroInscricaoContribuinte>' +
-            '<numeroReciboFechamento>' + FProtocolo + '</numeroReciboFechamento>' +
-          '</v1:ConsultaInformacoesConsolidadas>';
+            '<v1:tipoInscricaoContribuinte>' + tpInsc + '</v1:tipoInscricaoContribuinte>' +
+            '<v1:numeroInscricaoContribuinte>' + nrInsc + '</v1:numeroInscricaoContribuinte>' +
+            '<v1:numeroReciboFechamento>' + FProtocolo + '</v1:numeroReciboFechamento>';
 
 //  if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
 //    TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioLote);
@@ -553,11 +554,9 @@ begin
 
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
-//  Texto := Texto + '<' + 'v1:ConsultaInformacoesConsolidadas>';
-//  Texto := Texto + '<' +  'v1:loteEventos>';
+  Texto := Texto + '<' + 'v1:ConsultaInformacoesConsolidadas>';
   Texto := Texto + DadosMsg;
-//  Texto := Texto + '<' +  '/v1:loteEventos>';
-//  Texto := Texto + '<' +  '/v1:ConsultaInformacoesConsolidadas>';
+  Texto := Texto + '<' +  '/v1:ConsultaInformacoesConsolidadas>';
   Texto := Texto + '</' + FPSoapVersion + ':Body>';
   Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
 

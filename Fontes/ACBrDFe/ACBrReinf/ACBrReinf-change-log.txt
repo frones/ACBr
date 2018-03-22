@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/03/2018
+-- pcnReinfR2099 --
+[*] Correção, nome da tag estava errado o correto é compSemMovto
+   Por: Edipo Rauber
+-- ACBrReinfWebServices --
+[*] Correções para consumir o WebServices de Consulta.
+   Por: Renato Rubinho.
+
 15/03/2018
 -- ACBrReinf --
 [*] Ajustes para não criar sub-pastas ao salvar os eventos.

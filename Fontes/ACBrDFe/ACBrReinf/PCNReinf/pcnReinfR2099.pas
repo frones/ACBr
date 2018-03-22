@@ -105,7 +105,7 @@ begin
   Gerador.wCampo(tcStr, '', 'evtComProd',    1, 1, 1, SimNaoToStr(FinfoFech.evtComProd));
   Gerador.wCampo(tcStr, '', 'evtCPRB',       1, 1, 1, SimNaoToStr(FinfoFech.evtCPRB));
   Gerador.wCampo(tcStr, '', 'evtPgtos',      1, 1, 1, SimNaoToStr(FinfoFech.evtPgtos));
-  Gerador.wCampo(tcStr, '', 'evtServTm',     1, 7, 0, FinfoFech.compSemMovto);
+  Gerador.wCampo(tcStr, '', 'compSemMovto',  1, 7, 0, FinfoFech.compSemMovto);
 
   Gerador.wGrupo('/infoFech');
 end;

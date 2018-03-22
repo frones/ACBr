@@ -189,7 +189,7 @@ begin
           NomeArqXML := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
            NFSe.DataEmissao,
            NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
-           StrToIntDef(NFSe.Numero, 0))
+           StrToInt64Def(NFSe.Numero,0))
         else
           NomeArqXML := NFSe.Numero + NFSe.IdentificacaoRps.Serie;
       end;

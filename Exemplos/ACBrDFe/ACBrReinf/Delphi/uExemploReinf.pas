@@ -284,7 +284,7 @@ var
   Protocolo: string;
   i, J: Integer;
   evtR5001: TR5001;
-  evtR5002: TR5011;
+  evtR5011: TR5011;
 begin
   Protocolo := '';
   if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo))
@@ -294,108 +294,38 @@ begin
   if ACBrReinf1.Consultar(Protocolo) then
   begin
 
-    MmoRet.Lines.Text := ACBrReinf1.WebServices.ConsultarLote.RetWS;
+    MmoRet.Lines.Text := ACBrReinf1.WebServices.Consultar.RetWS;
 
     with Memo2.Lines do
     begin
-      (*
-      with ACBrReinf1.WebServices.ConsultarLote.RetConsultarLote do
+
+      with ACBrReinf1.WebServices.Consultar.RetConsulta do
       begin
         Add('');
-        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
-        Add('Mensagem: ' + Status.descResposta);
 
-        if Status.cdResposta in [201, 202] then
+        for i := 0 to RetEventos.Count - 1 do
         begin
-          Add('ideEmpregador');
-          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeEmpregador.TpInsc));
-          Add(' - NrInsc: ' + IdeEmpregador.NrInsc);
-          Add('ideTransmissor');
-          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
-          Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
-          Add('dadosRecepcaoLote');
-          Add(' - dhRecepcao..............: ' +
-            DateTimeToStr(dadosRecLote.dhRecepcao));
-          Add(' - versaoAplicativoRecepcao: ' +
-            dadosRecLote.versaoAplicRecepcao);
-          Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
-
-          for i := 0 to retEventos.Count - 1 do
-          begin
-            Add('Processamento');
-            Add(' - cdResposta.........: ' +
-              IntToStr(retEventos.Items[i].Processamento.cdResposta));
-            Add(' - descResposta.......: ' + retEventos.Items[i]
-              .Processamento.descResposta);
-            Add(' - versaoAplicProcLote: ' + retEventos.Items[i]
-              .Processamento.versaoAplicProcLote);
-            Add(' - dhProcessamento....: ' + DateTimeToStr(retEventos.Items[i]
-              .Processamento.dhProcessamento));
-
-            if retEventos.Items[i].Processamento.Ocorrencias.Count > 0 then
-            begin
-              Add('Ocorrencias do Processamento');
-              for J := 0 to retEventos.Items[i].Processamento.Ocorrencias.
-                Count - 1 do
+          Add(' Evento: ' + IntToStr(J));
+          Add('   Tipo.........: ' + retEventos.Items[i].Tipo);
+          case retEventos.Items[i].Evento.TipoEvento of
+            teR5001:
               begin
-                Add(' Ocorrencia ' + IntToStr(J));
-                Add('   Código.....: ' +
-                  IntToStr(retEventos.Items[i].Processamento.Ocorrencias.Items
-                  [J].Codigo));
-                Add('   Descrição..: ' + retEventos.Items[i]
-                  .Processamento.Ocorrencias.Items[J].Descricao);
-                Add('   Tipo.......: ' +
-                  IntToStr(retEventos.Items[i].Processamento.Ocorrencias.Items
-                  [J].Tipo));
-                Add('   Localização: ' + retEventos.Items[i]
-                  .Processamento.Ocorrencias.Items[J].Localizacao);
+                evtR5001 := TR5001(retEventos.Items[i].Evento.GetEvento);
+                Add('   Id...........: ' + evtR5001.EvtTotal.Id);
+                Add('   Cód Retorno..: ' + evtR5001.EvtTotal.IdeStatus.cdRetorno);
+                Add('   Descrição....: ' + evtR5001.EvtTotal.IdeStatus.descRetorno);
               end;
-            end;
-
-            for J := 0 to retEventos.Items[i].tot.Count - 1 do
-            begin
-              Add(' Tot ' + IntToStr(J));
-              Add('   Tipo.........: ' + retEventos.Items[i].tot[J].Tipo);
-              case retEventos.Items[i].tot[J].Evento.TipoEvento of
-                teR5001:
-                  begin
-                    evtR5001 := TR5001(retEventos.Items[i].tot[J].Evento.GetEvento);
-                    Add('   Id...........: ' + evtR5001.EvtBasesTrab.Id);
-                    Add('   nrRecArqBase.: ' +
-                      evtR5001.EvtBasesTrab.IdeEvento.nrRecArqBase);
-                  end;
-                teR5002:
-                  begin
-                    evtR5011 := TR5011(retEventos.Items[i].tot[J].Evento.GetEvento);
-                    Add('   Id...........: ' + evtR5011.EvtirrfBenef.Id);
-                    Add('   nrRecArqBase.: ' +
-                      evtR5011.EvtirrfBenef.IdeEvento.nrRecArqBase);
-                  end;
+            teR5011:
+              begin
+                evtR5011 := TR5011(retEventos.Items[i].Evento.GetEvento);
+                Add('   Id...........: ' + evtR5011.EvtTotalContrib.Id);
+                Add('   Cód Retorno..: ' + evtR5011.EvtTotalContrib.IdeStatus.cdRetorno);
+                Add('   Descrição....: ' + evtR5011.EvtTotalContrib.IdeStatus.descRetorno);
               end;
-            end;
-
-            Add('Recibo');
-            Add(' - nrRecibo: ' + retEventos.Items[i].Recibo.NrRecibo);
-            Add(' - hash....: ' + retEventos.Items[i].Recibo.hash);
-          end;
-
-        end
-        else
-        begin
-          for i := 0 to Status.Ocorrencias.Count - 1 do
-          begin
-            with Status.Ocorrencias.Items[i] do
-            begin
-              Add(' Ocorrencia ' + IntToStr(i));
-              Add('   Código.....: ' + IntToStr(Codigo));
-              Add('   Descrição..: ' + Descricao);
-              Add('   Tipo.......: ' + IntToStr(Tipo));
-              Add('   Localização: ' + Localizacao);
-            end;
           end;
         end;
       end;
-      *)
+
     end;
 
     PageControl1.ActivePageIndex := 1;

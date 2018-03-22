@@ -862,11 +862,13 @@ type
     FMatricAnt: string;
     FdtTransf: TDateTime;
     FObservacao: string;
+    FCnpjEmpSucessora: string;
   public
     constructor Create;
     destructor Destroy; override;
 
     property cnpjEmpregAnt: string read FCnpjEmpregAnt write FCnpjEmpregAnt;
+    property CnpjEmpSucessora: string read FCnpjEmpSucessora write FCnpjEmpSucessora;
     property MatricAnt: string read FMatricAnt write FMatricAnt;
     property dtTransf: TDateTime read FdtTransf write FdtTransf;
     property Observacao: string read FObservacao write FObservacao;

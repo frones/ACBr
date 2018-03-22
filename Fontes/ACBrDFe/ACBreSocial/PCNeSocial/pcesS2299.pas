@@ -148,6 +148,7 @@ type
     FconsigFGTS: TconsigFGTS;
     FInfoASO: TInfoASO;
     FtransfTit: TtransfTit;
+    FQtdDiasInterm: Integer;
 
     function getVerbasResc: TVerbasRescS2299;
   public
@@ -174,6 +175,7 @@ type
     property consigFGTS: TconsigFGTS read FconsigFGTS write FconsigFGTS;
     property InfoASO : TInfoASO read FInfoASO write FInfoASO;
     property transfTit: TtransfTit read FtransfTit write FtransfTit;
+    property QtdDiasInterm: Integer read FQtdDiasInterm write FQtdDiasInterm;
   end;
 
   TIdePeriodoCollection = class(TCollection)
@@ -397,7 +399,11 @@ begin
     Gerador.wCampo(tcStr, '', 'nrProcTrab', 1, 20, 0, obj.nrProcTrab);
 
   Gerador.wCampo(tcStr, '', 'indCumprParc', 1,   1, 1, eSTpCumprParcialAvisoToStr(obj.indCumprParc));
-  if (VersaoDF = ve02_04_01) then  
+
+  If (obj.QtdDiasInterm > 0) And (VersaoDF <> ve02_04_01) Then
+     Gerador.wCampo(tcInt, '', 'qtdDiasInterm', 1,   2, 0, obj.QtdDiasInterm);
+
+  if (VersaoDF = ve02_04_01) then
     Gerador.wCampo(tcStr, '', 'observacao',   1, 255, 0, obj.Observacao)
   else
     GerarObservacoes(obj.observacoes);
@@ -417,11 +423,11 @@ end;
 
 procedure TEvtDeslig.GerarSucessaoVinc(obj: TSucessaoVinc);
 begin
-  if obj.cnpjEmpregAnt <> EmptyStr then
+  if obj.CnpjEmpSucessora <> EmptyStr then
   begin
     Gerador.wGrupo('sucessaoVinc');
 
-    Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.cnpjEmpregAnt);
+    Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.CnpjEmpSucessora);
 
     Gerador.wGrupo('/sucessaoVinc');
   end;

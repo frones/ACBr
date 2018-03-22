@@ -45,8 +45,8 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrUtil, ACBrDFe, ACBrDFeWebService, ACBrReinfConfiguracoes,
-  pcnLeitor, pcnGerador, pcnConversaoReinf, pcnReinfRetEventos;
+  ACBrUtil, ACBrDFe, ACBrDFeWebService, ACBrReinfConfiguracoes, pcnLeitor,
+  pcnGerador, pcnConversaoReinf, pcnReinfRetEventos, pcnReinfRetConsulta;
 
 type
   { TReinfWebService }
@@ -79,9 +79,7 @@ type
   TEnvioLote = class(TReinfWebService)
   private
     FVersao: String;
-//    FLote: TLoteEventos;
     FRetEnvioLote: TRetEnvioLote;
-
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -102,14 +100,13 @@ type
     property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
   end;
 
-  { TConsultarLote }
+  { TConsultar }
 
-  TConsultarLote = class(TReinfWebService)
+  TConsultar = class(TReinfWebService)
   private
     FVersao: String;
     FProtocolo: String;
-//    FGrupo : Integer;
-//    FPURLEnvio : string;
+    FRetConsulta: TRetConsulta;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -121,9 +118,6 @@ type
     function GerarPrefixoArquivo: String; override;
     function GerarMsgErro(E: Exception): String; override;
     function GerarVersaoDadosSoap: String; override;
-
-//    procedure SalvarEnvio; override;
-//    procedure SalvarResposta; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
 
@@ -131,25 +125,24 @@ type
     procedure BeforeDestruction; override;
 
     property Protocolo: String read FProtocolo;
-//    property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
+    property RetConsulta: TRetConsulta read FRetConsulta;
   end;
 
   TWebServices = class
   private
     FACBrReinf: TACBrDFe;
     FEnvioLote : TEnvioLote;
-    FConsultarLote: TConsultarLote;
+    FConsultar: TConsultar;
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
     function Enviar(const AXML: string): Boolean;
-    function Consultar(const AProtocolo: string): Boolean;
+    function Consulta(const AProtocolo: string): Boolean;
 
     property ACBrReinf: TACBrDFe read FACBrReinf write FACBrReinf;
     property EnvioLote: TEnvioLote read FEnvioLote write FEnvioLote;
-    property ConsultarLote: TConsultarLote read FConsultarLote write FConsultarLote;
-//    property RetEventos: TRetEnvioLote read FRetEventos;
+    property Consultar: TConsultar read FConsultar write FConsultar;
   end;
 
 implementation
@@ -174,7 +167,7 @@ begin
 
   FPSoapEnvelopeAtributtes :='xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v1="http://sped.fazenda.gov.br/"';
 
-  FPMimeType := 'text/xml'; // Vazio, usará por default: 'application/soap+xml'
+  FPMimeType := 'text/xml';
 end;
 
 procedure TReinfWebService.DefinirURL;
@@ -228,98 +221,13 @@ begin
 
   TACBrReinf(FPDFeOwner).SetStatus(stIdle);
 end;
-(*
-function TEnvioLote.TratarResposta: Boolean;
-var
-  Leitor, Reader: TLeitor;
-  i, j, k: integer;
-  RetEventos: TRetornoLoteEventos;
-  Evento: TEvento;
-  Ocorrencia: TOcorrencia;
-begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'ReceberLoteEventosResult');
 
-  Result := FPRetWS <> EmptyStr;
-  RetEventos := TACBrReinf(FPDFeOwner).WebServices.RetEventos;
-  Leitor := TLeitor.Create;
-  try
-    Leitor.Arquivo := AnsiString(FPRetWS);
-    Leitor.Grupo := AnsiString(FPRetWS);
-
-    RetEventos.IdeTransmissor.IdTransmissor := Leitor.rCampo(tcStr, 'IdTransmissor');
-    Leitor.Grupo := Leitor.rExtrai(1, 'status');
-    RetEventos.Status.cdStatus := Leitor.rCampo(tcInt, 'cdStatus');
-    RetEventos.Status.descRetorno := Leitor.rCampo(tcStr,'descRetorno');
-    // Eventos
-    Leitor.Arquivo := Ansistring(FPRetWS);
-    i := 0;
-
-    while Leitor.rExtrai(1, 'retornoEvento', '', i + 1) <> '' do
-    begin
-      //recepcao
-      Reader := TLeitor.Create;
-      try
-        Reader.Arquivo := Leitor.Grupo;
-        Reader.Grupo := Reader.rExtrai(1, 'retornoEvento');
-        Evento := RetEventos.Eventos.Items[RetEventos.Eventos.Add(TEvento.Create)];
-        Evento.id := Reader.rAtributo('Id', 'evento');
-        Evento.ideContrib.TpInsc := tpTpInsc(Reader.rCampo(tcInt, 'tpInsc'));
-        Evento.ideContrib.NrInsc := Reader.rCampo(tcStr, 'NrInsc');
-
-        Evento.dadosRecepcaoEvento.dhProcessamento := Reader.rCampo(tcDatHor, 'dhProcessamento','');
-
-        Evento.dadosRecepcaoEvento.tipoEvento := Reader.rCampo(tcStr, 'tipoEvento');
-        Evento.dadosRecepcaoEvento.IDEvento := Reader.rCampo(tcStr, 'idEvento');
-        Evento.dadosRecepcaoEvento.Hash := Reader.rCampo(tcStr, 'hash');
-
-        Reader.Arquivo := Reader.rExtrai(1, 'retornoEvento');
-        Reader.Grupo := Reader.rExtrai(1, 'status');
-        Evento.Status.cdRetorno := Reader.rCampo(tcInt, 'cdRetorno');
-        Evento.Status.descRetorno := UTF8ToNativeString((Reader.rCampo(tcStr, 'descRetorno')));
-
-        if Evento.Status.cdRetorno = 0 then
-        begin
-          Reader.Arquivo := Reader.rExtrai(1, 'retornoEvento');
-          Reader.Grupo := Reader.rExtrai(1, 'dadosReciboEntrega');
-          Evento.dadosReciboEntrega.numeroRecibo := Reader.rCampo(tcStr, 'numeroRecibo');
-        end
-        else
-        begin
-          j := 0;
-          while Reader.rExtrai(1, 'dadosRegistroOcorrenciaEvento', '', j + 1) <> '' do
-          begin
-            k := 0;
-            while Reader.rExtrai(1, 'ocorrencias', '', k + 1) <> '' do
-            begin
-              Ocorrencia := Evento.Status.Ocorrencias.Items[Evento.Status.Ocorrencias.Add(TOcorrencia.Create)];
-              Ocorrencia.tipo := Reader.rCampo(tcInt, 'tipo');
-              Ocorrencia.localizacaoErroAviso := Reader.rCampo(tcStr, 'localizacaoErroAviso');
-              Ocorrencia.codigo := Reader.rCampo(tcStr, 'codigo');
-              Ocorrencia.descricao := UTF8ToNativeString(Reader.rCampo(tcStr, 'descricao'));
-
-              inc(k);
-            end;
-
-            inc(j);
-          end;
-        end;
-      finally
-        Reader.Free;
-      end;
-      inc(i);
-    end;
-  finally
-    Leitor.Free;
-  end;
-end;
-*)
 { TEnvioLote }
 
 constructor TEnvioLote.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
 
-//  FLote := TLoteEventos.Create(AOwner);
 end;
 
 procedure TEnvioLote.Clear;
@@ -342,7 +250,6 @@ procedure TEnvioLote.BeforeDestruction;
 begin
   inherited;
 
-//  FLote.Free;
   FRetEnvioLote.Free;
 end;
 
@@ -488,15 +395,15 @@ begin
   Result := '';
 end;
 
-{ TConsultarLote }
+{ TConsultar }
 
-constructor TConsultarLote.Create(AOwner: TACBrDFe);
+constructor TConsultar.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
 
 end;
 
-procedure TConsultarLote.Clear;
+procedure TConsultar.Clear;
 begin
   inherited Clear;
 
@@ -506,20 +413,20 @@ begin
   FPArqResp := 'sit';
   FVersao := '';
 
-//  if Assigned(FRetConsultarLote) then
-//    FRetConsultarLote.Free;
+  if Assigned(FRetConsulta) then
+    FRetConsulta.Free;
 
-//  FRetConsultarLote := TRetConsultarLote.Create;
+  FRetConsulta := TRetConsulta.Create;
 end;
 
-procedure TConsultarLote.BeforeDestruction;
+procedure TConsultar.BeforeDestruction;
 begin
   inherited;
 
-//  FRetConsultarLote.Free;
+  FRetConsulta.Free;
 end;
 
-procedure TConsultarLote.DefinirDadosMsg;
+procedure TConsultar.DefinirDadosMsg;
 var
   tpInsc, nrInsc: String;
 begin
@@ -542,7 +449,7 @@ begin
 //    TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioLote);
 end;
 
-procedure TConsultarLote.DefinirEnvelopeSoap;
+procedure TConsultar.DefinirEnvelopeSoap;
 var
   Texto: String;
 begin
@@ -563,14 +470,14 @@ begin
   FPEnvelopeSoap := Texto;
 end;
 
-procedure TConsultarLote.DefinirServicoEAction;
+procedure TConsultar.DefinirServicoEAction;
 begin
   FPServico := ACBRREINF_NAMESPACE_CON +
                '/ConsultaInformacoesConsolidadas';
   FPSoapAction := Trim(FPServico);
 end;
 
-procedure TConsultarLote.DefinirURL;
+procedure TConsultar.DefinirURL;
 var
   Versao: Double;
 begin
@@ -582,13 +489,13 @@ begin
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
-function TConsultarLote.GerarMsgErro(E: Exception): String;
+function TConsultar.GerarMsgErro(E: Exception): String;
 begin
   Result := ACBrStr('WebService: ' + FPServico + #13#10 +
     '- Inativo ou Inoperante tente novamente.');
 end;
 
-function TConsultarLote.GerarMsgLog: String;
+function TConsultar.GerarMsgLog: String;
 var
   aMsg: String;
 begin
@@ -601,54 +508,50 @@ begin
                  ['2.4.01',
                   TpAmbToStr(TACBrReinf(FPDFeOwner).Configuracoes.WebServices.Ambiente)
 //                  FRetEnvioLote.dadosRecLote.versaoAplicRecepcao,
-//                  IntToStr(FRetConsultarLote.Status.cdStatus),
-//                  FRetConsultarLote.Status.descRetorno
+//                  IntToStr(FRetConsulta.Status.cdStatus),
+//                  FRetConsulta.Status.descRetorno
                   ]);
-
-//    aMsg := aMsg + Format(ACBrStr('Recebimento: %s ' + LineBreak),
-//       [IfThen(FRetEnvioLote.dadosRecLote.dhRecepcao = 0, '',
-//               FormatDateTimeBr(FRetEnvioLote.dadosRecLote.dhRecepcao))]);
 
   Result := aMsg;
 end;
 
-function TConsultarLote.GerarPrefixoArquivo: String;
+function TConsultar.GerarPrefixoArquivo: String;
 begin
   Result := FormatDateTime('yyyymmddhhnnss', Now);
 end;
 
-function TConsultarLote.GerarVersaoDadosSoap: String;
+function TConsultar.GerarVersaoDadosSoap: String;
 begin
   Result := '';
 end;
 
-function TConsultarLote.TratarResposta: Boolean;
+function TConsultar.TratarResposta: Boolean;
 var
   i: Integer;
   AXML, NomeArq: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'ConsultaInformacoesConsolidadasResult');
 
-//  FRetConsultarLote.Leitor.Arquivo := ParseText(FPRetWS);
-//  FRetConsultarLote.LerXml;
+  FRetConsulta.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetConsulta.LerXml;
 
   if Assigned(TACBrReinf(FPDFeOwner).OnAfterEnviar) then
     TACBrReinf(FPDFeOwner).OnAfterEnviar(FPRetWS);
-  (*
-  for i := 0 to FRetConsultarLote.evento.Count - 1 do
+
+  for i := 0 to FRetConsulta.RetEventos.Count - 1 do
   begin
-    AXML := FRetConsultarLote.evento.Items[i].ArquivoReinf;
+    AXML := FRetConsulta.RetEventos.Items[i].ArquivoReinf;
 
     if AXML <> '' then
     begin
-      NomeArq := FRetConsultarLote.evento.Items[i].Id + '-' +
-                 FRetConsultarLote.evento.Items[i].Tipo + '.xml';
+      NomeArq := FRetConsulta.RetEventos.Items[i].Id + '-' +
+                 FRetConsulta.RetEventos.Items[i].Tipo + '.xml';
 
       if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
         FPDFeOwner.Gravar(NomeArq, AXML, '',False);
     end;
   end;
-  *)
+
   Result := True;
 end;
 
@@ -659,13 +562,13 @@ begin
   FACBrReinf := TACBrDFe(AOwner);
 
   FEnvioLote := TEnvioLote.Create(FACBrReinf);
-  FConsultarLote := TConsultarLote.Create(FACBrReinf);
+  FConsultar := TConsultar.Create(FACBrReinf);
 end;
 
 destructor TWebServices.Destroy;
 begin
   FEnvioLote.Free;
-  FConsultarLote.Free;
+  FConsultar.Free;
 
   inherited Destroy;
 end;
@@ -684,12 +587,12 @@ begin
   Result := True;
 end;
 
-function TWebServices.Consultar(const AProtocolo: string): Boolean;
+function TWebServices.Consulta(const AProtocolo: string): Boolean;
 begin
-  ConsultarLote.FProtocolo := AProtocolo;
+  Consultar.FProtocolo := AProtocolo;
 
-  if not ConsultarLote.Executar then
-    ConsultarLote.GerarException(ConsultarLote.Msg);
+  if not Consultar.Executar then
+    Consultar.GerarException(Consultar.Msg);
 
   Result := True;
 end;

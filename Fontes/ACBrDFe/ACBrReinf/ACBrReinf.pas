@@ -234,7 +234,7 @@ end;
 
 function TACBrReinf.Consultar(const AProtocolo: string): boolean;
 begin
-  Result := WebServices.Consultar(AProtocolo);
+  Result := WebServices.Consulta(AProtocolo);
 end;
 
 function TACBrReinf.NomeServicoToNomeSchema(const NomeServico: String): String;

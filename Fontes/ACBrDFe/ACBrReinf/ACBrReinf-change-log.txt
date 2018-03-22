@@ -49,6 +49,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/03/2018
+-- pcnReinfRetConsulta / ACBrReinfWebServices -- 
+[+] Implementado a unit para a leitura do retorno a consulta.
+[*] Alteração visando a leitura do retorno e gravação do XML do evento R5011 em disco.
+   Por: Italo Jurisato Junior
 -- pcnReinfR2099 --
 [*] Correção, nome da tag estava errado o correto é compSemMovto
    Por: Edipo Rauber

@@ -51,11 +51,11 @@ type
 
   protected
     procedure Inicializar; override;
-    procedure CriarConfiguracao(ArqConfig: String = ''; ChaveCrypt: AnsiString = '');
+    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
       override;
     procedure Executar; override;
   public
-    constructor Create(ArqConfig: String = ''; ChaveCrypt: AnsiString = ''); override;
+    constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     destructor Destroy; override;
 
     property NFeDM: TLibNFeDM read FNFeDM;
@@ -78,7 +78,8 @@ function NFE_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+  var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -91,11 +92,23 @@ function NFE_CarregarININFe(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_LimparListaNFEs: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ValidarNFEs: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
 function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ConsultarNFe(const eChaveOuNFe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_InutilizarNFe(const ACNPJ, AJustificativa: PChar;
+  Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
+  const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%endregion}
@@ -104,12 +117,12 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig, ACBrLibNFeConfig,
-  ACBrLibNFeRespostas,
+  ACBrLibNFeRespostas, ACBrNFe,
   pcnConversao, pcnAuxiliar, blcksock, ACBrUtil;
 
 { TACBrLibNFe }
 
-constructor TACBrLibNFe.Create(ArqConfig: String; ChaveCrypt: AnsiString);
+constructor TACBrLibNFe.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
   fpNome := CLibNFeNome;
@@ -131,7 +144,7 @@ begin
   GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
 end;
 
-procedure TACBrLibNFe.CriarConfiguracao(ArqConfig: String; ChaveCrypt: AnsiString);
+procedure TACBrLibNFe.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   fpConfig := TLibNFeConfig.Create(Self, ArqConfig, ChaveCrypt);
 end;
@@ -187,7 +200,8 @@ begin
   Result := LIB_ConfigGravar(eArqConfig);
 end;
 
-function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
+function NFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+  var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigLerValor(eSessao, eChave, sValor, esTamanho);
@@ -204,8 +218,8 @@ end;
 function NFE_CarregarXMLNFe(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  EhArquivo: Boolean;
-  ArquivoOuXml: String;
+  EhArquivo: boolean;
+  ArquivoOuXml: string;
 begin
   try
     VerificarLibInicializada;
@@ -246,7 +260,7 @@ end;
 function NFE_CarregarININFe(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  ArquivoOuINI: String;
+  ArquivoOuINI: string;
 begin
   try
     VerificarLibInicializada;
@@ -292,6 +306,97 @@ begin
       try
         NFeDM.ACBrNFe1.NotasFiscais.Clear;
         Result := SetRetornoNFesCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_ValidarNFEs: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('NFE_ValidarNFEs', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      try
+        try
+          NFeDM.ACBrNFe1.NotasFiscais.Validar;
+        except
+          on E: EACBrNFeException do
+            Result := SetRetorno(ErrValidacaoNFe, E.Message);
+        end;
+        Result := SetRetornoNFesCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Erros: string;
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('NFE_ValidarRegrasdeNegocios', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      try
+        Erros := '';
+        NFeDM.ACBrNFe1.NotasFiscais.ValidarRegrasdeNegocios(Erros);
+        MoverStringParaPChar(Erros, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, StrPas(sResposta));
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Erros: string;
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('NFE_VerificarAssinatura', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      try
+        Erros := '';
+        NFeDM.ACBrNFe1.NotasFiscais.VerificarAssinatura(Erros);
+        MoverStringParaPChar(Erros, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, StrPas(sResposta));
       finally
         NFeDM.Destravar;
       end;
@@ -354,6 +459,161 @@ begin
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
 
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_ConsultarNFe(const eChaveOuNFe: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  EhArquivo: boolean;
+  ChaveOuNFe: string;
+  Resposta: TConsultaNFeResposta;
+begin
+  try
+    VerificarLibInicializada;
+
+    ChaveOuNFe := string(eChaveOuNFe);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_ConsultarNFe(' + ChaveOuNFe + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_ConsultarNFe', logNormal);
+
+    EhArquivo := StringEhArquivo(ChaveOuNFe);
+    if EhArquivo then
+      VerificarArquivoExiste(ChaveOuNFe);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+
+      if EhArquivo then
+        NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(ChaveOuNFe);
+
+      if NFeDM.ACBrNFe1.NotasFiscais.Count = 0 then
+      begin
+        if ValidarChave(Cmd.Params(0)) then
+          NFeDM.ACBrNFe1.WebServices.Consulta.NFeChave := Cmd.Params(0)
+        else
+          raise EACBrLibException.Create(ErrChaveNFe, Format(SErrChaveInvalida, [ChaveOuNFe]));
+      end
+      else
+        NFeDM.ACBrNFe1.WebServices.Consulta.NFeChave := StringReplace(
+          NFeDM.ACBrNFe1.NotasFiscais.Items[NFeDM.ACBrNFe1.NotasFiscais.Count - 1].NFe.infNFe.ID,
+          'NFe','',[rfIgnoreCase]);
+
+
+      Resposta := TConsultaNFeResposta.Create(pLib.Config.TipoResposta);
+      try
+        with NFeDM.ACBrNFe1 do
+        begin
+          if WebServices.Consulta.Executar then
+          begin
+            Resposta.Msg := WebServices.Consulta.Msg;
+            Resposta.Versao := WebServices.Consulta.versao;
+            Resposta.TpAmb := TpAmbToStr(WebServices.Consulta.TpAmb);
+            Resposta.VerAplic := WebServices.Consulta.VerAplic;
+            Resposta.CStat := WebServices.Consulta.CStat;
+            Resposta.XMotivo := WebServices.Consulta.XMotivo;
+            Resposta.CUF := WebServices.Consulta.CUF;
+            Resposta.DhRecbto := WebServices.Consulta.DhRecbto;
+            Resposta.ChNFe := WebServices.Consulta.NFeChave;
+            Resposta.NProt := WebServices.Consulta.Protocolo;
+            Resposta.DigVal := WebServices.Consulta.protNFe.digVal;
+
+            MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
+            Result := SetRetorno(ErrOK, StrPas(sResposta));
+          end
+          else
+          Result := SetRetornoWebService(SSL.HTTPResultCode, 'StatusServico');
+        end;
+      finally
+        Resposta.Free;
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_InutilizarNFe(const ACNPJ, AJustificativa: PChar;
+  Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
+  const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resposta: TInutilizarNFeResposta;
+  CNPJ, Justificativa: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    Justificativa := string(AJustificativa);
+    CNPJ := string(ACNPJ);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_InutilizarNFe(' + CNPJ + ',' + Justificativa + ',' + IntToStr(Ano) + ',' +
+        IntToStr(modelo) + ',' + IntToStr(Serie) +  ',' + IntToStr(NumeroInicial) +  ',' +
+        IntToStr(NumeroFinal) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_InutilizarNFe', logNormal);
+
+    CNPJ := OnlyNumber(CNPJ);
+
+    if not ValidarCNPJ(CNPJ) then
+       raise EACBrNFeException.Create('CNPJ: ' + CNPJ + ', inválido.');
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      Resposta := TInutilizarNFeResposta.Create(pLib.Config.TipoResposta);
+      try
+        with NFeDM.ACBrNFe1 do
+        begin
+          with WebServices do
+          begin
+            Inutilizacao.CNPJ := CNPJ;
+            Inutilizacao.Justificativa := Justificativa;
+            Inutilizacao.Modelo := Modelo;
+            Inutilizacao.Serie := Serie;
+            Inutilizacao.Ano := Ano;
+            Inutilizacao.NumeroInicial := NumeroInicial;
+            Inutilizacao.NumeroFinal := NumeroFinal;
+
+            if Inutilizacao.Executar then
+            begin
+              Resposta.Msg := Inutilizacao.Msg;
+              Resposta.Versao := Inutilizacao.versao;
+              Resposta.TpAmb := TpAmbToStr(Inutilizacao.TpAmb);
+              Resposta.VerAplic := Inutilizacao.VerAplic;
+              Resposta.CStat := Inutilizacao.CStat;
+              Resposta.XMotivo := Inutilizacao.XMotivo;
+              Resposta.CUF := Inutilizacao.cUF;
+              Resposta.DhRecbto := Inutilizacao.DhRecbto;
+              Resposta.NomeArquivo := Inutilizacao.NomeArquivo;
+              Resposta.Xml := Inutilizacao.XML_ProcInutNFe;
+
+              MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
+              Result := SetRetorno(ErrOK, StrPas(sResposta));
+            end
+            else
+              Result := SetRetornoWebService(SSL.HTTPResultCode, 'InutilizarNFe');
+          end;
+        end;
+      finally
+        Resposta.Free;
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;

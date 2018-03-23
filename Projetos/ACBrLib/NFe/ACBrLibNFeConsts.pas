@@ -69,9 +69,16 @@ const
   CChaveTipoUnQtVlComercial = 'TipoUnQtVlComercial';
 
   CSessaoRespStatus = 'Status';
+  CSessaoRespInutilizacao = 'Inutilizacao';
+  CSessaoRespConsulta = 'Consulta';
+
+  ErrValidacaoNFe = -11;
+  ErrChaveNFe = -12;
 
 Resourcestring
   SInfNFeNotasCarregadas = '%d NFe(s) Carregada(s)';
+
+  SErrChaveInvalida = 'Chave % inválida.';
 
 function SetRetornoNFesCarregadas(const NumNFe: Integer): Integer;
 

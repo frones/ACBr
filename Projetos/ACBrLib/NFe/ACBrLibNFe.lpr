@@ -28,11 +28,16 @@ exports
 
   // Servicos
   NFE_StatusServico,
+  NFE_InutilizarNFe,
+  NFE_ConsultarNFe,
 
   // Arquivos
   NFE_CarregarXMLNFe,
   NFE_CarregarININFe,
-  NFE_LimparListaNFEs;
+  NFE_LimparListaNFEs,
+  NFE_ValidarNFEs,
+  NFE_ValidarRegrasdeNegocios,
+  NFE_VerificarAssinatura;
 
 begin
   {$IFDEF DEBUG}

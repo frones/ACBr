@@ -1153,9 +1153,9 @@ begin
               {19} LFill( strIND_APUR )          +
               {20} LFill( CstIpiToStr(CST_IPI) ) +
               {21} LFill( COD_ENQ )              +
-              {22} LFill( VL_BC_IPI,0,2 )        +
-              {23} LFill( ALIQ_IPI,0,2 )         +
-              {24} LFill( VL_IPI,0,2 )           +
+              {22} LFill( VL_BC_IPI,0,2,True )   +
+              {23} LFill( ALIQ_IPI,0,2,True )    +
+              {24} LFill( VL_IPI,0,2,True )      +
               {25} LFill( CstPisToStr(CST_PIS) ) +
               {26} VDFill( VL_BC_PIS,     2) +
               {27} VDFill( ALIQ_PIS_PERC, 4) +

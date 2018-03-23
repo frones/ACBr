@@ -101,8 +101,6 @@ type
     rllTipoServico: TRLLabel;
     rlLabel28: TRLLabel;
     rllTomaServico: TRLLabel;
-    rlLabel78: TRLLabel;
-    rllFormaPagamento: TRLLabel;
     rllInscSuframa: TRLLabel;
     rlb_07_HeaderItens: TRLBand;
     rlLabel91: TRLLabel;
@@ -404,7 +402,6 @@ type
     RLDraw98: TRLDraw;
     rlmCNPJPg: TrlMemo;
     RLDraw88: TRLDraw;
-    rllVariavel1: TRLLabel;
     RLDraw99: TRLDraw;
     rlmQtdUnidMedida4: TrlMemo;
     rlLabel73: TRLLabel;
@@ -451,7 +448,44 @@ type
     RLDraw5: TRLDraw;
     rlmObsFisco: TrlMemo;
     RLDraw3: TRLDraw;
-    RLLabel198: TRLLabel;
+    rlb_03_DadosRedespachoExpedidor: TRLBand;
+    RLDraw11: TRLDraw;
+    RLDraw17: TRLDraw;
+    RLLabel7: TRLLabel;
+    rllRazaoResdes: TRLLabel;
+    rllEnderecoRedes1: TRLLabel;
+    rllEnderecoRedes2: TRLLabel;
+    rllMunRedes: TRLLabel;
+    rllCnpjRedes: TRLLabel;
+    rllPaisRedes: TRLLabel;
+    RLLabel81: TRLLabel;
+    RLLabel82: TRLLabel;
+    RLLabel86: TRLLabel;
+    RLLabel87: TRLLabel;
+    RLLabel88: TRLLabel;
+    RLLabel89: TRLLabel;
+    rllCEPRedes: TRLLabel;
+    rllInscEstRedes: TRLLabel;
+    RLLabel97: TRLLabel;
+    rllFoneRedes: TRLLabel;
+    rllRazaoReceb: TRLLabel;
+    rllEnderecoRecebe1: TRLLabel;
+    rllEnderecoRecebe2: TRLLabel;
+    rllMunReceb: TRLLabel;
+    rllCnpjReceb: TRLLabel;
+    rllPaisReceb: TRLLabel;
+    RLLabel80: TRLLabel;
+    RLLabel90: TRLLabel;
+    RLLabel94: TRLLabel;
+    RLLabel99: TRLLabel;
+    RLLabel101: TRLLabel;
+    RLLabel102: TRLLabel;
+    rllCEPReceb: TRLLabel;
+    rllInscEstReceb: TRLLabel;
+    RLLabel105: TRLLabel;
+    rllFoneReceb: TRLLabel;
+    RLLabel108: TRLLabel;
+    RLDraw12: TRLDraw;
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TObject;
@@ -484,6 +518,8 @@ type
       var PrintIt: Boolean);
     procedure RLCTeBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_08_ItensAfterPrint(Sender: TObject);
+    procedure rlb_03_DadosRedespachoExpedidorBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
   private
     Linhas : Integer;
     procedure Itens;
@@ -494,7 +530,8 @@ type
 implementation
 
 uses
-  DateUtils, ACBrDFeUtil, ACBrUtil, ACBrValidador, pcteConversaoCTe;
+  DateUtils, ACBrDFeUtil, ACBrUtil, ACBrValidador, pcteConversaoCTe,
+  pcteCTe;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -982,12 +1019,12 @@ begin
   if FCTe.Ide.Toma4.xNome = ''
    then rllTomaServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma03.Toma)
    else rllTomaServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
-  rllFormaPagamento.Caption := tpforPagToStrText(FCTe.Ide.forPag);
+  //rllFormaPagamento.Caption := tpforPagToStrText(FCTe.Ide.forPag);
 
   // Normal **************************************************************
   if FCTe.Ide.tpEmis in [teNormal, teSCAN] then
    begin
-    rllVariavel1.Enabled := True;
+    //rllVariavel1.Enabled := True;
     RLBarcode1.Enabled  := False;
     if FCTe.procCTe.cStat = 100
      then rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
@@ -1010,7 +1047,7 @@ begin
    begin
     if FCTe.procCTe.cStat in [100, 101, 110] 
      then begin
-      rllVariavel1.Enabled := True;
+//      rllVariavel1.Enabled := True;
       RLBarcode1.Enabled  := False;
       if FCTe.procCTe.cStat = 100
        then rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
@@ -1028,7 +1065,7 @@ begin
                                         DateTimeToStr(FCTe.procCTe.dhRecbto), '');
      end
      else begin
-      rllVariavel1.Enabled := False;
+//      rllVariavel1.Enabled := False;
       RLBarcode1.Enabled  := True;
 
       strChaveContingencia := FACBrCTe.GerarChaveContingencia(FCTe);
@@ -1045,8 +1082,8 @@ begin
     rllProtocolo.Caption := FProtocoloCTE;
    end;
 
-  rllVariavel1.Enabled := True;
-  RLBarcode1.Enabled  := False;   
+  //rllVariavel1.Enabled := True;
+  RLBarcode1.Enabled  := False;
 
   rllInscSuframa.Caption := FCTe.Dest.ISUF;
 end;
@@ -1084,6 +1121,39 @@ begin
   rllPaisDest.Caption := FCTe.Dest.EnderDest.xPais;
   rllInscEstDest.Caption := FCTe.Dest.IE;
   rllFoneDest.Caption := FormatarFone(FCTe.Dest.fone);
+
+  // Imprime os dados do Redespacho ou Recebedor
+  rlb_03_DadosRedespachoExpedidor.Visible:= (FCTe.exped.xNome <> '') or (FCTe.receb.xNome <> '');
+
+
+  //DADOS REDESPACHO
+  if (FCTe.exped.xNome <> '') then
+  begin
+   rllRazaoResdes.Caption := FCTe.exped.xNome;
+   rllEnderecoRedes1.Caption := FCTe.exped.enderExped.xLgr + ', ' + FCTe.exped.enderExped.nro;
+   rllEnderecoRedes2.Caption := FCTe.exped.enderExped.xCpl + ' - ' + FCTe.exped.enderExped.xBairro;
+   rllCEPRedes.Caption := FormatarCEP(FCTe.exped.enderExped.CEP);
+   rllMunRedes.Caption := FCTe.exped.enderExped.xMun+' - '+FCTe.exped.enderExped.UF;
+   rllCnpjRedes.Caption := FormatarCNPJouCPF(FCTe.exped.CNPJCPF);
+   rllPaisRedes.Caption := FCTe.exped.enderExped.xPais;
+   rllInscEstRedes.Caption := FCTe.exped.IE;
+   rllFoneRedes.Caption := FormatarFone(FCTe.exped.fone);
+  end;
+
+  //DADOS RECEBEDOR
+  if (FCTe.receb.xNome <> '') then
+  begin
+   rllRazaoReceb.Caption := FCTe.receb.xNome;
+   rllEnderecoRecebe1.Caption := FCTe.receb.enderReceb.xLgr + ', ' + FCTe.receb.enderReceb.nro;
+   rllEnderecoRecebe2.Caption := FCTe.receb.enderReceb.xCpl + ' - ' + FCTe.receb.enderReceb.xBairro;
+   rllCEPReceb.Caption := FormatarCEP(FCTe.receb.enderReceb.CEP);
+   rllMunReceb.Caption := FCTe.receb.enderReceb.xMun+' - '+FCTe.receb.enderReceb.UF;
+   rllCnpjReceb.Caption := FormatarCNPJouCPF(FCTe.receb.CNPJCPF);
+   rllPaisReceb.Caption := FCTe.receb.enderReceb.xPais;
+   rllInscEstReceb.Caption := FCTe.receb.IE;
+   rllFoneReceb.Caption := FormatarFone(FCTe.receb.fone);
+  end;
+
 
 {$IFDEF PL_200}
   rllProdPredominante.Caption := FCTe.infCTeNorm.infCarga.proPred;
@@ -1518,7 +1588,7 @@ begin
 
   for i := 1 to 2 do
     if Trim(cdsDocumentos.FieldByName('DOCUMENTO_' + IntToStr(i)).AsString) = '' then
-      TRLDBText(FindComponent('rldbtCnpjEmitente' + intToStr(i))).Width := 325
+      TRLDBText(FindComponent('rldbtCnpjEmitente' + intToStr(i))).Width := 290 //325
     else
       TRLDBText(FindComponent('rldbtCnpjEmitente' + intToStr(i))).Width := 128;
 
@@ -1922,6 +1992,15 @@ begin
     rlb_08_Itens.Height := 16;
     RLCTe.newpage;
   end;
+end;
+
+procedure TfrmDACTeRLRetratoA5.rlb_03_DadosRedespachoExpedidorBeforePrint(
+  Sender: TObject; var PrintIt: Boolean);
+begin
+  inherited;
+  PrintIt := rlCTe.PageNumber = 1;
+  // Imprime os dados da da Nota Fiscal se o Tipo de CTe for Normal
+  rlb_03_DadosRedespachoExpedidor.Enabled:= (FCTe.exped.xNome <> '') or (FCTe.receb.xNome <> '');
 end;
 
 end.

@@ -1,18 +1,18 @@
 inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
-  Left = 335
-  Height = 735
-  Top = 130
-  Width = 877
-  VertScrollBar.Position = 124
-  Caption = 'DACTe - Retrato A5 '
-  ClientHeight = 735
-  ClientWidth = 877
+  Left = 290
+  Height = 919
+  Top = 188
+  Width = 974
+  VertScrollBar.Position = 251
+  Caption = 'DACTe - Retrato A5'
+  ClientHeight = 919
+  ClientWidth = 974
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 24
-    Top = -196
+    Left = 16
+    Top = -243
     DataSource = Datasource1
     Font.Height = -8
     Font.Name = 'Courier New'
@@ -25,7 +25,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_08_Itens: TRLBand[0]
       Left = 26
       Height = 16
-      Top = 734
+      Top = 762
       Width = 742
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -80,7 +80,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Left = 373
         Height = 13
         Top = 1
-        Width = 46
+        Width = 74
         AutoSize = False
         Color = clWhite
         DataField = 'TIPO_2'
@@ -100,7 +100,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Left = 5
         Height = 13
         Top = 1
-        Width = 46
+        Width = 74
         AutoSize = False
         Color = clWhite
         DataField = 'TIPO_1'
@@ -117,10 +117,10 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rldbtDocumento2: TRLDBText
-        Left = 542
+        Left = 582
         Height = 13
         Top = 1
-        Width = 195
+        Width = 156
         AutoSize = False
         Color = clWhite
         DataField = 'DOCUMENTO_2'
@@ -137,10 +137,10 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rldbtDocumento1: TRLDBText
-        Left = 174
+        Left = 206
         Height = 13
         Top = 1
-        Width = 195
+        Width = 162
         AutoSize = False
         Color = clWhite
         DataField = 'DOCUMENTO_1'
@@ -157,10 +157,10 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rldbtCnpjEmitente2: TRLDBText
-        Left = 424
+        Left = 449
         Height = 12
         Top = 1
-        Width = 51
+        Width = 128
         Color = clWhite
         DataField = 'CNPJCPF_2'
         DataSource = Datasource1
@@ -176,10 +176,10 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rldbtCnpjEmitente1: TRLDBText
-        Left = 56
+        Left = 81
         Height = 12
         Top = 1
-        Width = 51
+        Width = 290
         Color = clWhite
         DataField = 'CNPJCPF_1'
         DataSource = Datasource1
@@ -210,7 +210,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_01_Recibo: TRLBand[1]
       Left = 26
-      Height = 69
+      Height = 56
       Top = 26
       Width = 742
       BandType = btHeader
@@ -223,7 +223,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       BeforePrint = rlb_01_ReciboBeforePrint
       object RLDraw46: TRLDraw
         Left = 0
-        Height = 64
+        Height = 57
         Top = 0
         Width = 741
         Angle = 0
@@ -236,7 +236,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object RLDraw49: TRLDraw
         Left = 1
         Height = 1
-        Top = 40
+        Top = 32
         Width = 201
         HelpContext = 1
         Angle = 0
@@ -248,7 +248,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       end
       object RLDraw50: TRLDraw
         Left = 593
-        Height = 50
+        Height = 46
         Top = 14
         Width = 1
         Angle = 0
@@ -260,7 +260,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       end
       object RLDraw51: TRLDraw
         Left = 473
-        Height = 50
+        Height = 46
         Top = 14
         Width = 1
         Angle = 0
@@ -272,7 +272,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       end
       object RLDraw52: TRLDraw
         Left = 202
-        Height = 50
+        Height = 46
         Top = 14
         Width = 1
         Angle = 0
@@ -285,7 +285,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rllSerie2: TRLLabel
         Left = 655
         Height = 13
-        Top = 47
+        Top = 41
         Width = 50
         Alignment = taCenter
         Color = clWhite
@@ -304,7 +304,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rllNumCTe2: TRLLabel
         Left = 638
         Height = 16
-        Top = 33
+        Top = 27
         Width = 86
         Alignment = taRightJustify
         AutoSize = False
@@ -325,7 +325,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlLabel3: TRLLabel
         Left = 480
         Height = 16
-        Top = 46
+        Top = 40
         Width = 108
         Alignment = taCenter
         AutoSize = False
@@ -345,7 +345,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlLabel143: TRLLabel
         Left = 480
         Height = 16
-        Top = 23
+        Top = 20
         Width = 108
         Alignment = taCenter
         AutoSize = False
@@ -365,7 +365,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlLabel140: TRLLabel
         Left = 647
         Height = 13
-        Top = 17
+        Top = 15
         Width = 28
         Caption = 'CT-E'
         Color = clWhite
@@ -384,7 +384,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlLabel139: TRLLabel
         Left = 605
         Height = 12
-        Top = 33
+        Top = 27
         Width = 14
         Caption = 'No '
         Color = clWhite
@@ -402,9 +402,9 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlLabel138: TRLLabel
         Left = 605
         Height = 12
-        Top = 47
+        Top = 41
         Width = 30
-        Caption = 'S√âRIE:'
+        Caption = 'S…RIE:'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -440,7 +440,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlLabel136: TRLLabel
         Left = 6
         Height = 12
-        Top = 21
+        Top = 18
         Width = 30
         Caption = 'NOME'
         Color = clWhite
@@ -478,11 +478,11 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlLabel134: TRLLabel
         Left = 480
         Height = 9
-        Top = 38
+        Top = 35
         Width = 108
         Alignment = taCenter
         AutoSize = False
-        Caption = 'SA√çDA DATA/HORA'
+        Caption = 'SAÕDA DATA/HORA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -498,7 +498,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlLabel133: TRLLabel
         Left = 207
         Height = 13
-        Top = 48
+        Top = 42
         Width = 262
         Alignment = taCenter
         AutoSize = False
@@ -518,7 +518,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rlLabel132: TRLLabel
         Left = 6
         Height = 13
-        Top = 45
+        Top = 37
         Width = 19
         AutoSize = False
         Caption = 'RG'
@@ -563,7 +563,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_07_HeaderItens: TRLBand[2]
       Left = 26
       Height = 11
-      Top = 723
+      Top = 751
       Width = 742
       BandType = btColumnHeader
       Color = clWhite
@@ -598,11 +598,11 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         RealBounds.Height = 0
       end
       object rlLabel96: TRLLabel
-        Left = 174
+        Left = 206
         Height = 8
         Top = 1
         Width = 86
-        Caption = 'S√âRIE/NRO. DOCUMENTO'
+        Caption = 'S…RIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -616,7 +616,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rlLabel92: TRLLabel
-        Left = 56
+        Left = 80
         Height = 8
         Top = 1
         Width = 69
@@ -670,7 +670,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rlLabel106: TRLLabel
-        Left = 424
+        Left = 448
         Height = 8
         Top = 1
         Width = 69
@@ -688,11 +688,11 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rlLabel100: TRLLabel
-        Left = 542
+        Left = 582
         Height = 8
         Top = 1
         Width = 86
-        Caption = 'S√âRIE/NRO. DOCUMENTO'
+        Caption = 'S…RIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -709,7 +709,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_09_Obs: TRLBand[3]
       Left = 26
       Height = 56
-      Top = 667
+      Top = 695
       Width = 742
       AlignToBottom = True
       BandType = btHeader
@@ -763,7 +763,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 234
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Observa√ß√µes - Informa√ß√µes Complementares'
+        Caption = 'ObservaÁıes - InformaÁıes Complementares'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -817,7 +817,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 35
-        Caption = 'LOTA√á√ÉO'
+        Caption = 'LOTA«√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -984,7 +984,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 292
         Alignment = taCenter
         AutoSize = False
-        Caption = 'ESSE CT-e DE TRANSP. ATENDE LEGISLA√á√ÉO DE TRANSP. RODO.EM VIGOR'
+        Caption = 'ESSE CT-e DE TRANSP. ATENDE LEGISLA«√O DE TRANSP. RODO.EM VIGOR'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -8
@@ -1057,7 +1057,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 14
         Width = 718
         Alignment = taCenter
-        Caption = 'AMBIENTE DE HOMOLOGA√á√ÉO - SEM VALOR FISCAL'
+        Caption = 'AMBIENTE DE HOMOLOGA«√O - SEM VALOR FISCAL'
         Color = clWhite
         Font.Color = clGray
         Font.Height = -27
@@ -1086,8 +1086,8 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_02_Cabecalho: TRLBand[4]
       Left = 26
-      Height = 172
-      Top = 241
+      Height = 148
+      Top = 228
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -1113,7 +1113,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       end
       object rlsQuadro01: TRLDraw
         Left = 0
-        Height = 174
+        Height = 149
         Top = 0
         Width = 741
         Angle = 0
@@ -1148,8 +1148,8 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         RealBounds.Height = 0
       end
       object rlsLinhaV01: TRLDraw
-        Left = 174
-        Height = 60
+        Left = 105
+        Height = 35
         Top = 114
         Width = 1
         Angle = 0
@@ -1161,7 +1161,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       end
       object rlsLinhaV04: TRLDraw
         Left = 332
-        Height = 174
+        Height = 149
         Top = 0
         Width = 1
         Angle = 0
@@ -1341,7 +1341,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 278
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Documento Auxiliar do Conhecimento de Transporte Eletr√¥nico'
+        Caption = 'Documento Auxiliar do Conhecimento de Transporte EletrÙnico'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -8
@@ -1441,7 +1441,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 30
         Width = 22
         Alignment = taCenter
-        Caption = 'S√âRIE'
+        Caption = 'S…RIE'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1481,7 +1481,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 70
         Alignment = taCenter
         AutoSize = False
-        Caption = 'N√öMERO'
+        Caption = 'N⁄MERO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1562,7 +1562,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 30
         Width = 95
         AutoSize = False
-        Caption = 'DATA E HORA DE EMISS√ÉO'
+        Caption = 'DATA E HORA DE EMISS√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1668,11 +1668,11 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         RealBounds.Height = 0
       end
       object rlLabel9: TRLLabel
-        Left = 178
+        Left = 107
         Height = 8
         Top = 116
         Width = 61
-        Caption = 'TIPO DO SERVI√áO'
+        Caption = 'TIPO DO SERVI«O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1686,10 +1686,10 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rllTipoServico: TRLLabel
-        Left = 178
+        Left = 107
         Height = 15
         Top = 124
-        Width = 91
+        Width = 77
         AutoSize = False
         Color = clWhite
         Font.Color = clWindowText
@@ -1703,11 +1703,11 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         RealBounds.Height = 0
       end
       object rlLabel28: TRLLabel
-        Left = 4
+        Left = 212
         Height = 8
-        Top = 149
+        Top = 117
         Width = 81
-        Caption = 'TOMADOR DO SERVI√áO'
+        Caption = 'TOMADOR DO SERVI«O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1721,45 +1721,10 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rllTomaServico: TRLLabel
-        Left = 4
+        Left = 212
         Height = 15
-        Top = 158
+        Top = 126
         Width = 81
-        AutoSize = False
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlLabel78: TRLLabel
-        Left = 178
-        Height = 8
-        Top = 149
-        Width = 83
-        Caption = 'FORMA DE PAGAMENTO'
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -7
-        Font.Name = 'Times New Roman'
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Transparent = False
-      end
-      object rllFormaPagamento: TRLLabel
-        Left = 178
-        Height = 15
-        Top = 158
-        Width = 73
         AutoSize = False
         Color = clWhite
         Font.Color = clWindowText
@@ -1775,9 +1740,9 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rllDescricao: TRLLabel
         Left = 334
         Height = 8
-        Top = 149
+        Top = 117
         Width = 56
-        Caption = 'N¬∞ PROTOCOLO'
+        Caption = 'N∞ PROTOCOLO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1794,7 +1759,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rllProtocolo: TRLLabel
         Left = 336
         Height = 15
-        Top = 158
+        Top = 126
         Width = 402
         Alignment = taCenter
         AutoSize = False
@@ -1815,7 +1780,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 30
         Width = 120
-        Caption = 'INSC. SUFRAMA DO DESTINAT√ÅRIO'
+        Caption = 'INSC. SUFRAMA DO DESTINAT¡RIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1855,27 +1820,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
-      end
-      object rllVariavel1: TRLLabel
-        Left = 344
-        Height = 16
-        Top = 116
-        Width = 388
-        Alignment = taCenter
-        AutoSize = False
-        Caption = 'Consulta de autenticidade no portal nacional do CT-e, no site da Sefaz'
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Transparent = False
       end
       object rlsLinhaH01: TRLDraw
         Left = 332
@@ -1920,6 +1864,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 398
         AutoSize = False
         BarcodeType = bcCode128C
+        Caption = '1234569789'
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
         RealBounds.Left = 0
@@ -1927,32 +1872,23 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel198: TRLLabel
-        Left = 344
-        Height = 13
-        Top = 131
-        Width = 386
-        Alignment = taCenter
-        AutoSize = False
-        Caption = 'Autorizadora, ou em http://www.cte.fazenda.gov.br/portal'
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
+      object RLDraw12: TRLDraw
+        Left = 209
+        Height = 35
+        Top = 114
+        Width = 1
+        Angle = 0
+        Brush.Style = bsClear
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
-        Transparent = False
       end
     end
     object rlb_03_DadosDACTe: TRLBand[5]
       Left = 26
       Height = 81
-      Top = 413
+      Top = 376
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -1962,23 +1898,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_03_DadosDACTeBeforePrint
-      object rllEnderecoDest2: TRLLabel
-        Left = 432
-        Height = 13
-        Top = 41
-        Width = 303
-        AutoSize = False
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -9
-        Font.Name = 'Times New Roman'
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object rlsQuadro02: TRLDraw
         Left = 0
         Height = 82
@@ -2362,7 +2281,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 58
         Width = 78
-        Caption = 'INSCRI√á√ÉO ESTADUAL'
+        Caption = 'INSCRI«√O ESTADUAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2416,7 +2335,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 49
         Width = 38
-        Caption = 'MUNIC√çPIO'
+        Caption = 'MUNICÕPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2434,7 +2353,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 33
         Width = 39
-        Caption = 'ENDERE√áO'
+        Caption = 'ENDERE«O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2452,7 +2371,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 115
-        Caption = 'CFOP - NATUREZA DA OPERA√á√ÉO'
+        Caption = 'CFOP - NATUREZA DA OPERA«√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2470,7 +2389,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 25
         Width = 52
-        Caption = 'DESTINAT√ÅRIO'
+        Caption = 'DESTINAT¡RIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2524,7 +2443,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 49
         Width = 38
-        Caption = 'MUNIC√çPIO'
+        Caption = 'MUNICÕPIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2542,7 +2461,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 33
         Width = 39
-        Caption = 'ENDERE√áO'
+        Caption = 'ENDERE«O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2560,7 +2479,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 86
-        Caption = 'DESTINO DA PRESTA√á√ÉO'
+        Caption = 'DESTINO DA PRESTA«√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2596,7 +2515,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 84
-        Caption = 'ORIGEM DA PRESTA√á√ÉO'
+        Caption = 'ORIGEM DA PRESTA«√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2632,7 +2551,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 58
         Width = 78
-        Caption = 'INSCRI√á√ÉO ESTADUAL'
+        Caption = 'INSCRI«√O ESTADUAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -2721,11 +2640,28 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         RealBounds.Height = 0
         Transparent = False
       end
+      object rllEnderecoDest2: TRLLabel
+        Left = 432
+        Height = 13
+        Top = 41
+        Width = 303
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
     end
     object rlb_04_DadosNotaFiscal: TRLBand[6]
       Left = 26
       Height = 65
-      Top = 494
+      Top = 522
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -3128,7 +3064,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 24
         Width = 90
-        Caption = 'N√öMERO DA AVERBA√á√ÉO'
+        Caption = 'N⁄MERO DA AVERBA«√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3146,7 +3082,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 1
         Width = 135
-        Caption = 'OUTRAS CARACTER√çSTICAS DA CARGA'
+        Caption = 'OUTRAS CARACTERÕSTICAS DA CARGA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3164,7 +3100,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 24
         Width = 75
-        Caption = 'N√öMERO DA AP√ìLICE'
+        Caption = 'N⁄MERO DA AP”LICE'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3182,7 +3118,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 24
         Width = 51
-        Caption = 'RESPONS√ÅVEL'
+        Caption = 'RESPONS¡VEL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3202,7 +3138,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 76
         Alignment = taCenter
         AutoSize = False
-        Caption = 'PESO BASE C√ÅLC. (Kg)'
+        Caption = 'PESO BASE C¡LC. (Kg)'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3330,7 +3266,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 45
         Width = 81
-        Caption = 'SITUA√á√ÉO TRIBUT√ÅRIA'
+        Caption = 'SITUA«√O TRIBUT¡RIA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3377,7 +3313,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 45
         Width = 66
-        Caption = 'BASE DE C√ÅLCULO'
+        Caption = 'BASE DE C¡LCULO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3395,7 +3331,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 45
         Width = 39
-        Caption = 'AL√çQ. ICMS'
+        Caption = 'ALÕQ. ICMS'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -3621,7 +3557,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_05_Complemento: TRLBand[7]
       Left = 26
       Height = 61
-      Top = 559
+      Top = 587
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -3829,7 +3765,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_17_Sistema: TRLBand[8]
       Left = 26
       Height = 13
-      Top = 1126
+      Top = 1154
       Width = 742
       AlignToBottom = True
       BandType = btSummary
@@ -3845,7 +3781,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Top = 0
         Width = 140
-        Caption = 'DATA E HORA DA IMPRESS√ÉO: '
+        Caption = 'DATA E HORA DA IMPRESS√O: '
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -3880,7 +3816,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_06_ValorPrestacao: TRLBand[9]
       Left = 26
       Height = 47
-      Top = 620
+      Top = 648
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -4159,7 +4095,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 1
         Width = 96
         AutoSize = False
-        Caption = 'VALOR TOTAL DO SERVI√áO'
+        Caption = 'VALOR TOTAL DO SERVI«O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -4284,7 +4220,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_12_ModAereo: TRLBand[10]
       Left = 26
       Height = 97
-      Top = 853
+      Top = 881
       Width = 742
       BandType = btColumnFooter
       Color = clWhite
@@ -4677,7 +4613,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 16
         Width = 152
-        Caption = 'CARACTERISTICAS ADICIONAIS DO SERVI√áO'
+        Caption = 'CARACTERISTICAS ADICIONAIS DO SERVI«O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -4697,7 +4633,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 730
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMA√á√ïES ESPEC√çFICAS DO MODAL A√âREO'
+        Caption = 'INFORMA«’ES ESPECÕFICAS DO MODAL A…REO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -4751,7 +4687,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 40
         Width = 73
-        Caption = 'N√öMERO DA MINUTA'
+        Caption = 'N⁄MERO DA MINUTA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -4787,7 +4723,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 50
         Width = 29
-        Caption = 'C√ìDIGO'
+        Caption = 'C”DIGO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -4861,7 +4797,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 16
         Width = 83
-        Caption = 'N√öMERO OPERACIONAL'
+        Caption = 'N⁄MERO OPERACIONAL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -4915,7 +4851,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_13_ModAquaviario: TRLBand[11]
       Left = 26
       Height = 90
-      Top = 763
+      Top = 791
       Width = 742
       BandType = btColumnFooter
       Color = clWhite
@@ -4944,7 +4880,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 732
         Alignment = taCenter
         AutoSize = False
-        Caption = 'DADOS ESPEC√çFICOS DO MODAL AQUAVI√ÅRIO'
+        Caption = 'DADOS ESPECÕFICOS DO MODAL AQUAVI¡RIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -5056,7 +4992,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 40
         Width = 141
-        Caption = 'IDENTIFICA√á√ÉO DO NAVIO / REBOCADOR'
+        Caption = 'IDENTIFICA«√O DO NAVIO / REBOCADOR'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -5103,7 +5039,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 64
         Width = 116
-        Caption = 'IDENTIFICA√á√ÉO DOS CONTEINERS'
+        Caption = 'IDENTIFICA«√O DOS CONTEINERS'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -5217,7 +5153,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 40
         Width = 74
-        Caption = 'TIPO DE NAVEGA√á√ÉO'
+        Caption = 'TIPO DE NAVEGA«√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -5251,7 +5187,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 40
         Width = 33
-        Caption = 'DIRE√á√ÉO'
+        Caption = 'DIRE«√O'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -5320,7 +5256,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_14_ModFerroviario: TRLBand[12]
       Left = 26
       Height = 7
-      Top = 756
+      Top = 784
       Width = 742
       BandType = btColumnFooter
       Color = clWhite
@@ -5334,7 +5270,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_15_ModDutoviario: TRLBand[13]
       Left = 26
       Height = 6
-      Top = 750
+      Top = 778
       Width = 742
       BandType = btColumnFooter
       Color = clWhite
@@ -5348,7 +5284,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_01_Recibo_Aereo: TRLBand[14]
       Left = 26
       Height = 146
-      Top = 95
+      Top = 82
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -5457,7 +5393,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 17
         Width = 730
         AutoSize = False
-        Caption = 'O Transporte coberto por este conhecimento se rege pelo c√≥digo Brasileiro de Aeron√°utica (Lei 7.565 de 19/12/1986), especificamente pelas regras relativas a responsabilidade Civil prevista nos artigos 193, 241, 244, 262 e 264, de cujo teor o Expedidor / Remetente declara concordar e ter plena ci√™ncia. O Expedidor / Remetente aceita como corretas todas as especifica√ß√µes impressas, manuscritas, datilografadas ou carimbadas neste conhecimento, certificando que os artigos perigosos descritos pela regulamenta√ß√£o da I.C.A.O. foram devidamente informados e acondicionados para transporte A√©reo.'
+        Caption = 'O Transporte coberto por este conhecimento se rege pelo cÛdigo Brasileiro de Aeron·utica (Lei 7.565 de 19/12/1986), especificamente pelas regras relativas a responsabilidade Civil prevista nos artigos 193, 241, 244, 262 e 264, de cujo teor o Expedidor / Remetente declara concordar e ter plena ciÍncia. O Expedidor / Remetente aceita como corretas todas as especificaÁıes impressas, manuscritas, datilografadas ou carimbadas neste conhecimento, certificando que os artigos perigosos descritos pela regulamentaÁ„o da I.C.A.O. foram devidamente informados e acondicionados para transporte AÈreo.'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -5521,7 +5457,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Top = 68
         Width = 100
         Alignment = taCenter
-        Caption = 'DESTINAT√ÅRIO / RECEBEDOR'
+        Caption = 'DESTINAT¡RIO / RECEBEDOR'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -5646,7 +5582,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_11_ModRodLot104: TRLBand[15]
       Left = 26
       Height = 108
-      Top = 950
+      Top = 978
       Width = 742
       BandType = btColumnFooter
       Color = clWhite
@@ -5806,7 +5742,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 524
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMA√á√ïES REFERENTES AO VALE-PED√ÅGIO'
+        Caption = 'INFORMA«’ES REFERENTES AO VALE-PED¡GIO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -5826,7 +5762,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 202
         Alignment = taCenter
         AutoSize = False
-        Caption = 'IDENTIFICA√á√ÉO DO CONJ. TRANSPORTADOR'
+        Caption = 'IDENTIFICA«√O DO CONJ. TRANSPORTADOR'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -5844,7 +5780,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 84
         Width = 148
-        Caption = 'IDENTIFICA√á√ÉO DOS LACRES EM TR√ÇNSITO'
+        Caption = 'IDENTIFICA«√O DOS LACRES EM TR¬NSITO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -5898,7 +5834,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 15
         Width = 87
-        Caption = 'N√öMERO COMPROVANTE'
+        Caption = 'N⁄MERO COMPROVANTE'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -5916,7 +5852,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 8
         Top = 15
         Width = 70
-        Caption = 'CNPJ RESPONS√ÅVEL'
+        Caption = 'CNPJ RESPONS¡VEL'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -6230,7 +6166,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     object rlb_18_Recibo: TRLBand[16]
       Left = 26
       Height = 68
-      Top = 1058
+      Top = 1086
       Width = 742
       BandType = btSummary
       Color = clWhite
@@ -6378,7 +6314,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Top = 33
         Width = 14
-        Caption = 'N¬∞ '
+        Caption = 'N∞ '
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -6396,7 +6332,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Top = 47
         Width = 30
-        Caption = 'S√âRIE:'
+        Caption = 'S…RIE:'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -6474,7 +6410,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 108
         Alignment = taCenter
         AutoSize = False
-        Caption = 'SA√çDA DATA/HORA'
+        Caption = 'SAÕDA DATA/HORA'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -6557,6 +6493,638 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+    end
+    object rlb_03_DadosRedespachoExpedidor: TRLBand[17]
+      Left = 26
+      Height = 65
+      Top = 457
+      Width = 742
+      BandType = btHeader
+      Color = clWhite
+      ParentColor = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      BeforePrint = rlb_03_DadosRedespachoExpedidorBeforePrint
+      object RLDraw11: TRLDraw
+        Left = 0
+        Height = 66
+        Top = 0
+        Width = 741
+        Angle = 0
+        Brush.Style = bsClear
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLDraw17: TRLDraw
+        Left = 370
+        Height = 64
+        Top = 0
+        Width = 1
+        Angle = 0
+        Brush.Style = bsClear
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel7: TRLLabel
+        Left = 4
+        Height = 8
+        Top = 1
+        Width = 41
+        Caption = 'EXPEDIDOR'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllRazaoResdes: TRLLabel
+        Left = 48
+        Height = 13
+        Top = 1
+        Width = 318
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllEnderecoRedes1: TRLLabel
+        Left = 48
+        Height = 13
+        Top = 9
+        Width = 318
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllEnderecoRedes2: TRLLabel
+        Left = 48
+        Height = 10
+        Top = 19
+        Width = 318
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllMunRedes: TRLLabel
+        Left = 48
+        Height = 19
+        Top = 29
+        Width = 234
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllCnpjRedes: TRLLabel
+        Left = 48
+        Height = 13
+        Top = 39
+        Width = 124
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllPaisRedes: TRLLabel
+        Left = 48
+        Height = 13
+        Top = 50
+        Width = 209
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel81: TRLLabel
+        Left = 4
+        Height = 8
+        Top = 9
+        Width = 39
+        Caption = 'ENDERE«O'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel82: TRLLabel
+        Left = 4
+        Height = 8
+        Top = 32
+        Width = 38
+        Caption = 'MUNICÕPIO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel86: TRLLabel
+        Left = 4
+        Height = 8
+        Top = 40
+        Width = 34
+        Caption = 'CNPJ/CPF'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel87: TRLLabel
+        Left = 5
+        Height = 8
+        Top = 51
+        Width = 17
+        Caption = 'PAIS'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel88: TRLLabel
+        Left = 174
+        Height = 8
+        Top = 40
+        Width = 78
+        Caption = 'INSCRI«√O ESTADUAL'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel89: TRLLabel
+        Left = 284
+        Height = 8
+        Top = 29
+        Width = 15
+        Caption = 'CEP'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllCEPRedes: TRLLabel
+        Left = 301
+        Height = 13
+        Top = 27
+        Width = 64
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllInscEstRedes: TRLLabel
+        Left = 256
+        Height = 13
+        Top = 37
+        Width = 109
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel97: TRLLabel
+        Left = 262
+        Height = 8
+        Top = 51
+        Width = 20
+        Caption = 'FONE'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllFoneRedes: TRLLabel
+        Left = 286
+        Height = 13
+        Top = 50
+        Width = 77
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllRazaoReceb: TRLLabel
+        Left = 432
+        Height = 13
+        Top = 2
+        Width = 307
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllEnderecoRecebe1: TRLLabel
+        Left = 432
+        Height = 13
+        Top = 10
+        Width = 307
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllEnderecoRecebe2: TRLLabel
+        Left = 432
+        Height = 10
+        Top = 20
+        Width = 307
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllMunReceb: TRLLabel
+        Left = 432
+        Height = 19
+        Top = 30
+        Width = 234
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllCnpjReceb: TRLLabel
+        Left = 432
+        Height = 13
+        Top = 40
+        Width = 124
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllPaisReceb: TRLLabel
+        Left = 432
+        Height = 13
+        Top = 48
+        Width = 209
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel80: TRLLabel
+        Left = 373
+        Height = 8
+        Top = 10
+        Width = 39
+        Caption = 'ENDERE«O'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel90: TRLLabel
+        Left = 373
+        Height = 8
+        Top = 33
+        Width = 38
+        Caption = 'MUNICÕPIO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel94: TRLLabel
+        Left = 373
+        Height = 8
+        Top = 41
+        Width = 34
+        Caption = 'CNPJ/CPF'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel99: TRLLabel
+        Left = 374
+        Height = 8
+        Top = 50
+        Width = 17
+        Caption = 'PAIS'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel101: TRLLabel
+        Left = 558
+        Height = 8
+        Top = 41
+        Width = 78
+        Caption = 'INSCRI«√O ESTADUAL'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel102: TRLLabel
+        Left = 652
+        Height = 8
+        Top = 30
+        Width = 15
+        Caption = 'CEP'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllCEPReceb: TRLLabel
+        Left = 669
+        Height = 13
+        Top = 28
+        Width = 64
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllInscEstReceb: TRLLabel
+        Left = 640
+        Height = 13
+        Top = 38
+        Width = 97
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel105: TRLLabel
+        Left = 646
+        Height = 8
+        Top = 53
+        Width = 20
+        Caption = 'FONE'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllFoneReceb: TRLLabel
+        Left = 670
+        Height = 13
+        Top = 50
+        Width = 68
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel108: TRLLabel
+        Left = 373
+        Height = 8
+        Top = 2
+        Width = 44
+        Caption = 'RECEBEDOR'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
         RealBounds.Left = 0

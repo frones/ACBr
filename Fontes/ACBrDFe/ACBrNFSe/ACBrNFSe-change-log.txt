@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Alterações, foi removido a declaração de namespace, tentativa para ser se vai
+    funcionar com a cidade de Cabo Frio, provedor ISSDigital
+   Por: Italo Jurisato Junior
+
 21/03/2018
 -- ACBrNFSeWebServices --
 [*] Condicionado a inclusão do NameSpace - provedor Ábaco - cidade Manaus/AM.

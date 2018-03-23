@@ -684,9 +684,11 @@ begin
 
     proISSDigital:
       begin
-        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
-        Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + OnlyNumber(FNFSe.IdentificacaoRps.Numero) + '"');
-      end;
+        // alterado em 23/03/2018 para ver se funciona com a cidade de Cabo Frio
+        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' {+ ' xmlns="http://www.abrasf.org.br/nfse.xsd"'});
+//        Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + OnlyNumber(FNFSe.IdentificacaoRps.Numero) + '"');
+        Gerador.wGrupoNFSe('Rps');
+        end;
 
     proVirtual:
       begin

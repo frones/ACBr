@@ -37,6 +37,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2018
+-- ACBrIBPTax --
+[*] Ajuste na montagem da URL de chamada na consulta por API com os campos 
+    agora obrigatórios.
+[*] Inclusão de campos no retorno na consulta por API: vigência, chave, versão,
+    fonte, valores calculados.
+[*] Ajustes de codificação e vazamento de memória nas mensagens de erro.
+  Por: BigWings
+
 06/03/2018
 -- ACBrWinHTTPReqResp, ACBrWinINetReqResp, ACBrWinReqRespClass --
 [+] Adicionado o método "Abort". Para permitir interromper uma requisição em

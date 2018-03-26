@@ -67,7 +67,21 @@ type
     Descricao : String;
     Nacional  : Double;
     Estadual  : Double;
+    Municipal : Double;
     Importado : Double;
+
+    VigenciaInicio: TDateTime;
+    VigenciaFim: TDateTime;
+    Chave: String;
+    Versao: String;
+    Fonte: String;
+
+    Valor: Double;
+    ValorTributoNacional: Currency;
+    ValorTributoEstadual: Currency;
+    ValorTributoMunicipal: Currency;
+    ValorTributoImportado: Currency;
+
     JSON      : String;
   end;
 
@@ -80,6 +94,19 @@ type
     Estadual  : Double;
     Municipal : Double;
     Importado : Double;
+
+    VigenciaInicio: TDateTime;
+    VigenciaFim: TDateTime;
+    Chave: String;
+    Versao: String;
+    Fonte: String;
+
+    Valor: Double;
+    ValorTributoNacional: Currency;
+    ValorTributoEstadual: Currency;
+    ValorTributoMunicipal: Currency;
+    ValorTributoImportado: Currency;
+
     JSON      : String;
   end;
 
@@ -184,7 +211,7 @@ implementation
 
 uses
   Math, StrUtils,
-  ACBrValidador, ACBrUtil;
+  ACBrValidador, ACBrUtil, ACBrConsts;
 
 function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;
 begin
@@ -204,7 +231,7 @@ begin
   if TabelaTmp >= 0 then
     Result := TACBrIBPTaxTabela(TabelaTmp)
   else
-    raise EACBrIBPTax.CreateFmt('Tipo de tabela desconhecido "%s".', [ATabela]);
+    raise EACBrIBPTax.Create(ACBrStr(Format('Tipo de tabela desconhecido "%s".', [ATabela])));
 end;
 
 function SimpleJSONToList(const AJSONString: String): TStringList;
@@ -218,7 +245,7 @@ begin
   Texto := StringReplace(Texto, ',"', sLineBreak + '"', [rfReplaceAll]);
   Texto := StringReplace(Texto, '"', '', [rfReplaceAll]);
   Texto := StringReplace(Texto, ':', '=', [rfReplaceAll]);
-  Texto := StringReplace(Texto, '.', ',', [rfReplaceAll]);
+  //Texto := StringReplace(Texto, '.', ',', [rfReplaceAll]);
 
   Result.Text := Texto;
 end;
@@ -273,7 +300,7 @@ const
   COUNT_COLUN = 13;
 begin
   if Arquivo.Count <= 0 then
-    raise EACBrIBPTax.Create('Arquivo de itens não foi baixado!');
+    raise EACBrIBPTax.Create(ACBrStr('Arquivo de itens não foi baixado!'));
 
   FVersaoArquivo := '';
   FFonte := '';
@@ -357,7 +384,7 @@ var
 begin
 
   if Itens.Count <= 0 then
-    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
+    raise EACBrIBPTax.Create(ACBrStr('Tabela de itens ainda não foi aberta!'));
 
   Result := nil;
   
@@ -390,7 +417,7 @@ function TACBrIBPTax.DownloadTabela: Boolean;
 begin
 
   if Trim(FURLDownload) = '' then
-    raise EACBrIBPTax.Create('URL do arquivo .csv não foi informado em "URLDownload!"');
+    raise EACBrIBPTax.Create(ACBrStr('URL do arquivo .csv não foi informado em "URLDownload!"'));
 
   // baixar a tabela
   HTTPGet( FURLDownload );
@@ -406,7 +433,7 @@ begin
   if Trim(AFileName) <> '' then
   begin
     if not FileExists(AFileName) then
-      raise EACBrIBPTax.CreateFmt('Arquivo informado "%s" não encontrando!', [AFileName])
+      raise EACBrIBPTax.Create(ACBrStr(Format('Arquivo informado "%s" não encontrando!', [AFileName])))
     else
       Arquivo.LoadFromFile(AFileName);
 
@@ -418,7 +445,7 @@ begin
     if Arquivo.Count <= 0 then
     begin
       if Trim(URLDownload) = EmptyStr then
-        raise EACBrIBPTax.Create('URL para download da tabela IBPT não foi informada!');
+        raise EACBrIBPTax.Create(ACBrStr('URL para download da tabela IBPT não foi informada!'));
 
       DownloadTabela;
     end;
@@ -443,7 +470,7 @@ begin
     Arquivo.Text := AConteudoArquivo.Text;
   end
   else
-    raise EFilerError.Create('TStringList não pode ser vazio!');
+    raise EFilerError.Create(ACBrStr('TStringList não pode ser vazio!'));
 
   Result := PopularItens > 0;
 end;
@@ -457,45 +484,46 @@ var
   json: TStringList;
 begin
   if Trim(FToken) = '' then
-    raise EACBrIBPTax.Create('Token não foi configurado no componente ACBrIBPTax.');
+    raise EACBrIBPTax.Create(ACBrStr('Token não foi configurado no componente ACBrIBPTax.'));
 
   if Trim(FCNPJEmpresa) = '' then
-    raise EACBrIBPTax.Create('CNPJ não foi configurado no componente ACBrIBPTax.');
+    raise EACBrIBPTax.Create(ACBrStr('CNPJ não foi configurado no componente ACBrIBPTax.'));
 
   if ValidarCNPJ(FCNPJEmpresa) <> '' then
-    raise EACBrIBPTax.Create('CNPJ configurado é inválido.');
+    raise EACBrIBPTax.Create(ACBrStr('CNPJ configurado é inválido.'));
 
   if Trim(ANCM) = '' then
-    raise EACBrIBPTax.Create('NCM não foi informado.');
+    raise EACBrIBPTax.Create(ACBrStr('NCM não foi informado.'));
 
   if Trim(AUF) = '' then
-    raise EACBrIBPTax.Create('UF não foi informado.');
+    raise EACBrIBPTax.Create(ACBrStr('UF não foi informado.'));
 
   if AExcecao < 0 then
-    raise EACBrIBPTax.Create('Informe 0 quando não houver exceção ou o código da exceção.');
+    raise EACBrIBPTax.Create(ACBrStr('Informe 0 quando não houver exceção ou o código da exceção.'));
+
+  if Trim(ADescricaoProduto) = '' then
+    raise EACBrIBPTax.Create(ACBrStr('Descrição do produto não foi informada.'));
+
+  if Trim(AUnidadeMedida) = '' then
+    raise EACBrIBPTax.Create(ACBrStr('Unidade de medida não foi informada.'));
+
+  if Trim(AGtin) = '' then
+    raise EACBrIBPTax.Create(ACBrStr('GTIN não foi informado.'));
 
   UrlConsulta := 'https://apidoni.ibpt.org.br/api/v1/produtos' +
                    '?token='  + Self.AjustaParam(FToken) +
                    '&cnpj='   + Self.AjustaParam(OnlyNumber(FCNPJEmpresa)) +
                    '&codigo=' + Self.AjustaParam(ANCM) +
                    '&uf='     + Self.AjustaParam(AUF) +
-                   '&ex='     + Self.AjustaParam(IntToStr(AExcecao));
+                   '&ex='     + Self.AjustaParam(IntToStr(AExcecao)) +
+                   '&descricao=' + Self.AjustaParam(ADescricaoProduto) +
+                   '&unidadeMedida=' + Self.AjustaParam(AUnidadeMedida) +
+                   '&valor=' + Self.AjustaParam(FloatToString(AValorUnitario, '.', '0.##')) +
+                   '&gtin=' + Self.AjustaParam(AGtin);
 
   // parâmetros opcionais
   if Trim(ACodigoProprio) <> '' then
     UrlConsulta := UrlConsulta + '&codigoInterno=' + Self.AjustaParam(ACodigoProprio);
-
-  if Trim(ADescricaoProduto) <> '' then
-    UrlConsulta := UrlConsulta + '&descricao=' + Self.AjustaParam(ADescricaoProduto);
-
-  if Trim(AUnidadeMedida) <> '' then
-    UrlConsulta := UrlConsulta + '&unidadeMedida=' + Self.AjustaParam(AUnidadeMedida);
-
-  if AValorUnitario > 0 then
-	UrlConsulta := UrlConsulta + '&valor=' + Self.AjustaParam(FormatFloatBr(AValorUnitario,'#.##'));    
-
-  if Trim(AGtin) <> '' then
-    UrlConsulta := UrlConsulta + '&gtin=' + Self.AjustaParam(AGtin);
 
   // enviar consulta
   Self.HTTPGet(TraduzStrToAnsi(UrlConsulta));
@@ -508,9 +536,23 @@ begin
     Result.UF        := json.Values['UF'];
     Result.EX        := StrToIntDef(json.Values['EX'], 0);
     Result.Descricao := json.Values['Descricao'];
-    Result.Nacional  := StrToFloatDef(json.Values['Nacional'], 0);
-    Result.Estadual  := StrToFloatDef(json.Values['Estadual'], 0);
-    Result.Importado := StrToFloatDef(json.Values['Importado'], 0);
+    Result.Nacional  := StringToFloatDef(json.Values['Nacional'], 0);
+    Result.Estadual  := StringToFloatDef(json.Values['Estadual'], 0);
+    Result.Municipal := StringToFloatDef(json.Values['Municipal'], 0);
+    Result.Importado := StringToFloatDef(json.Values['Importado'], 0);
+
+    Result.VigenciaInicio := StringToDateTimeDef(json.Values['VigenciaInicio'], 0, 'dd/mm/yyyy');
+    Result.VigenciaFim := StringToDateTimeDef(json.Values['VigenciaFim'], 0, 'dd/mm/yyyy');
+    Result.Chave := json.Values['Chave'];
+    Result.Versao := json.Values['Versao'];
+    Result.Fonte := json.Values['Fonte'];
+
+    Result.Valor := StringToFloatDef(json.Values['Valor'], 0);
+    Result.ValorTributoNacional := StringToFloatDef(json.Values['ValorTributoNacional'], 0);
+    Result.ValorTributoEstadual := StringToFloatDef(json.Values['ValorTributoEstadual'], 0);
+    Result.ValorTributoMunicipal := StringToFloatDef(json.Values['ValorTributoMunicipal'], 0);
+    Result.ValorTributoImportado := StringToFloatDef(json.Values['ValorTributoImportado'], 0);
+
   finally
     json.Free;
   end;
@@ -524,35 +566,34 @@ var
   json: TStringList;
 begin
   if Trim(FToken) = '' then
-    raise EACBrIBPTax.Create('Token não foi configurado no componente ACBrIBPTax.');
+    raise EACBrIBPTax.Create(ACBrStr('Token não foi configurado no componente ACBrIBPTax.'));
 
   if Trim(FCNPJEmpresa) = '' then
-    raise EACBrIBPTax.Create('CNPJ não foi configurado no componente ACBrIBPTax.');
+    raise EACBrIBPTax.Create(ACBrStr('CNPJ não foi configurado no componente ACBrIBPTax.'));
 
   if ValidarCNPJ(FCNPJEmpresa) <> '' then
-    raise EACBrIBPTax.Create('CNPJ configurado é inválido.');
+    raise EACBrIBPTax.Create(ACBrStr('CNPJ configurado é inválido.'));
 
   if Trim(ANBS_LC116) = '' then
-    raise EACBrIBPTax.Create('Código NBS/LC-116 não foi informado.');
+    raise EACBrIBPTax.Create(ACBrStr('Código NBS/LC-116 não foi informado.'));
 
   if Trim(AUF) = '' then
-    raise EACBrIBPTax.Create('UF não foi informado.');
+    raise EACBrIBPTax.Create(ACBrStr('UF não foi informado.'));
+
+  if Trim(ADescricaoServico) = '' then
+    raise EACBrIBPTax.Create(ACBrStr('Descrição do serviço não foi informada.'));
+
+  if Trim(AUnidadeMedida) = '' then
+    raise EACBrIBPTax.Create(ACBrStr('Unidade de medida não foi informada.'));
 
   UrlConsulta := 'https://apidoni.ibpt.org.br/api/v1/servicos' +
                    '?token='  + Self.AjustaParam(FToken) +
                    '&cnpj='   + Self.AjustaParam(OnlyNumber(FCNPJEmpresa)) +
                    '&codigo=' + Self.AjustaParam(ANBS_LC116) +
-                   '&uf='     + Self.AjustaParam(AUF);
-
-  // parâmetros opcionais
-  if Trim(ADescricaoServico) <> '' then
-    UrlConsulta := UrlConsulta + '&descricao=' + Self.AjustaParam(ADescricaoServico);
-
-  if Trim(AUnidadeMedida) <> '' then
-    UrlConsulta := UrlConsulta + '&unidadeMedida=' + Self.AjustaParam(AUnidadeMedida);
-
-  if AValorUnitario > 0 then
-    UrlConsulta := UrlConsulta + '&valor=' + Self.AjustaParam(FormatFloatBr(AValorUnitario,'#.##'));
+                   '&uf='     + Self.AjustaParam(AUF) +
+                   '&descricao=' + Self.AjustaParam(ADescricaoServico) +
+                   '&unidadeMedida=' + Self.AjustaParam(AUnidadeMedida) +
+                   '&valor=' + Self.AjustaParam(FloatToString(AValorUnitario, '.', '0.##'));
 
   // enviar consulta
   Self.HTTPGet(TraduzStrToAnsi(UrlConsulta));
@@ -565,10 +606,23 @@ begin
     Result.UF        := json.Values['UF'];
     Result.Descricao := json.Values['Descricao'];
     Result.Tipo      := json.Values['Tipo'];
-    Result.Nacional  := StrToFloatDef(json.Values['Nacional'], 0);
-    Result.Estadual  := StrToFloatDef(json.Values['Estadual'], 0);
-    Result.Municipal := StrToFloatDef(json.Values['Municipal'], 0);
-    Result.Importado := StrToFloatDef(json.Values['Importado'], 0);
+    Result.Nacional  := StringToFloatDef(json.Values['Nacional'], 0);
+    Result.Estadual  := StringToFloatDef(json.Values['Estadual'], 0);
+    Result.Municipal := StringToFloatDef(json.Values['Municipal'], 0);
+    Result.Importado := StringToFloatDef(json.Values['Importado'], 0);
+
+    Result.VigenciaInicio := StringToDateTimeDef(json.Values['VigenciaInicio'], 0, 'dd/mm/yyyy');
+    Result.VigenciaFim := StringToDateTimeDef(json.Values['VigenciaFim'], 0, 'dd/mm/yyyy');
+    Result.Chave := json.Values['Chave'];
+    Result.Versao := json.Values['Versao'];
+    Result.Fonte := json.Values['Fonte'];
+
+    Result.Valor := StringToFloatDef(json.Values['Valor'], 0);
+    Result.ValorTributoNacional := StringToFloatDef(json.Values['ValorTributoNacional'], 0);
+    Result.ValorTributoEstadual := StringToFloatDef(json.Values['ValorTributoEstadual'], 0);
+    Result.ValorTributoMunicipal := StringToFloatDef(json.Values['ValorTributoMunicipal'], 0);
+    Result.ValorTributoImportado := StringToFloatDef(json.Values['ValorTributoImportado'], 0);
+
   finally
     json.Free;
   end;
@@ -582,7 +636,7 @@ var
   Igual: Boolean;
 begin
   if Itens.Count <= 0 then
-    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
+    raise EACBrIBPTax.Create(ACBrStr('Tabela de itens ainda não foi aberta!'));
 
   Result := False;
   for I := 0 to Itens.Count - 1 do
@@ -611,7 +665,7 @@ end;
 procedure TACBrIBPTax.Exportar(const AArquivo: String; ATipo: TACBrIBPTaxExporta);
 begin
   if Itens.Count <= 0 then
-    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
+    raise EACBrIBPTax.Create(ACBrStr('Tabela de itens ainda não foi aberta!'));
 
   case ATipo of
     exTXT:  ExportarTXT(AArquivo);
@@ -643,7 +697,7 @@ var
   end;
 begin
   if Itens.Count <= 0 then
-    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
+    raise EACBrIBPTax.Create(ACBrStr('Tabela de itens ainda não foi aberta!'));
 
   Texto := '';
   for I := 0 to Itens.Count - 1 do
@@ -670,7 +724,7 @@ var
   Texto: String;
 begin
   if Itens.Count <= 0 then
-    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
+    raise EACBrIBPTax.Create(ACBrStr('Tabela de itens ainda não foi aberta!'));
 
   Texto := '';
   for I := 0 to Itens.Count - 1 do
@@ -708,7 +762,7 @@ var
 
 begin
   if Itens.Count <= 0 then
-    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
+    raise EACBrIBPTax.Create(ACBrStr('Tabela de itens ainda não foi aberta!'));
 
   Texto := '';
   for I := 0 to Itens.Count - 1 do
@@ -735,7 +789,7 @@ var
   Texto: String;
 begin
   if Itens.Count <= 0 then
-    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
+    raise EACBrIBPTax.Create(ACBrStr('Tabela de itens ainda não foi aberta!'));
 
   Texto := '<?xml version="1.0" encoding="ISO-8859-1"?><IBPTax>';
   for I := 0 to Itens.Count - 1 do
@@ -764,7 +818,7 @@ var
   Texto: String;
 begin
   if Itens.Count <= 0 then
-    EACBrIBPTax.Create('Tabela de itens ainda não foi aberta!');
+    raise EACBrIBPTax.Create(ACBrStr('Tabela de itens ainda não foi aberta!'));
 
   Texto :=
     '<html>' + slineBreak +

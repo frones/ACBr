@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2018
+-- pcesS1210 / pcesS1250 / pcesS1260 --
+[+] Implementação da leitura do arquivo INI referente aos eventos S-1210, S-1250, S-1260.
+   Por: Italo Jurisato Junior
+
 22/03/2018
 -- pcesS2299 / pcesCommon --
 [*] https://www.projetoacbr.com.br/forum/topic/42296-s2299-desligamento-adi%C3%A7%C3%A3o-de-campo/

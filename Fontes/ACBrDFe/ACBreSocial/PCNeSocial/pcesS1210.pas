@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes, Controls,
-  pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -415,285 +415,6 @@ end;
 procedure TS1210CollectionItem.setEvtPgtos(const Value: TEvtPgtos);
 begin
   FEvtPgtos.Assign(Value);
-end;
-
-{ TEvtPgtos }
-
-constructor TEvtPgtos.Create(AACBreSocial: TObject);
-begin
-  inherited;
-
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento3.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeBenef := TIdeBenef.Create;
-end;
-
-destructor TEvtPgtos.Destroy;
-begin
-  FIdeEvento.Free;
-  FIdeEmpregador.Free;
-  FIdeBenef.Free;
-
-  inherited;
-end;
-
-procedure TEvtPgtos.GerarCamposRubricas(pRubrica: TRubricaCollectionItem);
-begin
-  Gerador.wCampo(tcStr, '', 'codRubr',    1, 30, 1, pRubrica.codRubr);
-  Gerador.wCampo(tcStr, '', 'ideTabRubr', 1,  8, 1, pRubrica.ideTabRubr);
-  Gerador.wCampo(tcDe2, '', 'qtdRubr',    1,  6, 0, pRubrica.qtdRubr);
-  Gerador.wCampo(tcDe2, '', 'fatorRubr',  1,  5, 0, pRubrica.fatorRubr);
-  Gerador.wCampo(tcDe2, '', 'vrUnit',     1, 14, 0, pRubrica.vrUnit);
-  Gerador.wCampo(tcDe2, '', 'vrRubr',     1, 14, 1, pRubrica.vrRubr);
-end;
-
-procedure TEvtPgtos.GerarRubricasComPensao(
-  pRubricasComPensao: TRubricasComPensaoCollection;
-  const GroupName: string = 'retPgtoTot');
-var
-  i: Integer;
-begin
-  for i := 0 to pRubricasComPensao.Count - 1 do
-  begin
-    Gerador.wGrupo(GroupName);
-
-    GerarCamposRubricas(pRubricasComPensao[i]);
-
-    if pRubricasComPensao[i].pensaoAlimInst() then
-      GerarPensaoAlim(pRubricasComPensao[i].penAlim, 'penAlim');
-
-    Gerador.wGrupo('/'+GroupName);
-  end;
-
-  if pRubricasComPensao.Count > 99 then
-    Gerador.wAlerta('', GroupName, 'Lista de ' + GroupName, ERR_MSG_MAIOR_MAXIMO + '99');
-end;
-
-procedure TEvtPgtos.GerardetPgtoFl(objdetPgtofl: TdetPgtoFlCollection);
-var
-  i: Integer;
-begin
-  for i := 0 to objdetPgtofl.Count - 1 do
-  begin
-    Gerador.wGrupo('detPgtoFl');
-
-    Gerador.wCampo(tcStr, '', 'perRef',    7,  7, 0, objdetPgtofl.Items[i].perRef);
-    Gerador.wCampo(tcStr, '', 'ideDmDev',  1, 30, 1, objdetPgtofl.Items[i].ideDmDev);
-    Gerador.wCampo(tcStr, '', 'indPgtoTt', 1,  1, 1, eSSimNaoToStr(objdetPgtofl.Items[i].indPagtoTt));
-    Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, objdetPgtoFl.items[i].vrLiq);
-    Gerador.wCampo(tcStr, '', 'nrRecArq',  1, 40, 0, objdetPgtofl.Items[i].nrRecArq);
-
-    if objdetPgtofl.Items[i].retPagtoToInst() then
-      GerarRubricasComPensao(objdetPgtofl.Items[i].retPagtoTot);
-
-    if objdetPgtofl.Items[i].infoPgtoFlInst then
-      GerarItensRemun(objdetPgtofl.Items[i].infoPgtoParc, 'infoPgtoParc');
-
-    Gerador.wGrupo('/detPgtoFl');
-  end;
-
-  if objdetPgtofl.Count > 200 then
-    Gerador.wAlerta('', 'detPgtoFl', 'Lista de Detalhamento de Pagamento', ERR_MSG_MAIOR_MAXIMO + '200');
-end;
-
-procedure TEvtPgtos.GerarDeps(pDeps: TDeps);
-begin
-  Gerador.wGrupo('deps');
-
-  Gerador.wCampo(tcDe2, '', 'vrDedDep', 1, 14, 1, pDeps.vrDedDep);
-
-  Gerador.wGrupo('/deps');
-end;
-
-procedure TEvtPgtos.GerarIdeBenef(objIdeBenef : TIdeBenef);
-begin
-  Gerador.wGrupo('ideBenef');
-  Gerador.wCampo(tcStr, '', 'cpfBenef', 11, 11, 1, objIdeBenef.cpfBenef);
-
-  if objIdeBenef.depsInst() then
-    GerarDeps(objIdeBenef.deps);
-
-  GerarInfoPgto(objIdeBenef.InfoPgto);
-
-  Gerador.wGrupo('/ideBenef');
-end;
-
-procedure TEvtPgtos.GeraridePgtoExt(objPgtoExt: TPgtoExt);
-begin
-  Gerador.wGrupo('idePgtoExt');
-
-  GerarIdePais(objPgtoExt.idePais);
-  GerarEndExt(objPgtoExt.endExt);
-
-  Gerador.wGrupo('/idePgtoExt');
-end;
-
-procedure TEvtPgtos.GerarDetPgtoBenPr(pDetPgtoBenPr: TDetPgtoBenPr);
-begin
-  Gerador.wGrupo('detPgtoBenPr');
-
-  Gerador.wCampo(tcStr, '', 'perRef',    7,  7, 1, pDetPgtoBenPr.perRef);
-  Gerador.wCampo(tcStr, '', 'ideDmDev',  1, 30, 1, pDetPgtoBenPr.ideDmDev);
-  Gerador.wCampo(tcStr, '', 'indPgtoTt', 1,  1, 1, eSSimNaoToStr(pDetPgtoBenPr.indPgtoTt));
-  Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, pDetPgtoBenPr.vrLiq);
-
-  if pDetPgtoBenPr.retPgtoTotInst() then
-    GerarItensRemun(pDetPgtoBenPr.retPgtoTot, 'retPgtoTot');
-
-  if pDetPgtoBenPr.infoPgtoParcInst() then
-    GerarItensRemun(pDetPgtoBenPr.retPgtoTot, 'infoPgtoParc');
-
-  Gerador.wGrupo('/detPgtoBenPr');
-end;
-
-procedure TEvtPgtos.GerarDetPgtoFer(pDetPgtoFer: TDetPgtoFerCollection);
-var
-  i: integer;
-begin
-  for i := 0 to pDetPgtoFer.Count - 1 do
-  begin
-    Gerador.wGrupo('detPgtoFer');
-
-    Gerador.wCampo(tcInt, '', 'codCateg',  1,  3, 1, pDetPgtoFer[i].codCateg);
-    Gerador.wCampo(tcDat, '', 'dtIniGoz', 10, 10, 1, pDetPgtoFer[i].dtIniGoz);
-    Gerador.wCampo(tcInt, '', 'qtDias',    1,  2, 1, pDetPgtoFer[i].qtDias);
-    Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, pDetPgtoFer[i].vrLiq);
-
-    GerarRubricasComPensao(pDetPgtoFer[i].detRubrFer, 'detRubrFer');
-
-    Gerador.wGrupo('/detPgtoFer');
-  end;
-
-  if pDetPgtoFer.Count > 5 then
-    Gerador.wAlerta('', 'detPgtoFer', 'Lista de Detalhamento de Pagamento', ERR_MSG_MAIOR_MAXIMO + '5');
-end;
-
-procedure TEvtPgtos.GerarDetPgtoAnt(pDetPgtoAnt: TDetPgtoAntCollection);
-var
-  i: Integer;
-begin
-  for i := 0 to pDetPgtoAnt.Count - 1 do
-  begin
-    Gerador.wGrupo('detPgtoAnt');
-
-    Gerador.wCampo(tcInt, '', 'codCateg', 1, 3, 1, pDetPgtoAnt[i].codCateg);
-
-    GerarInfoPgtoAnt(pDetPgtoAnt[i].infoPgtoAnt);
-
-    Gerador.wGrupo('/detPgtoAnt');
-  end;
-
-  if pDetPgtoAnt.Count > 99 then
-    Gerador.wAlerta('', 'detPgtoAnt', 'Lista de Detalhamento de Pagamento Anterior', ERR_MSG_MAIOR_MAXIMO + '99');
-end;
-
-procedure TEvtPgtos.GerarInfoPgtoAnt(pInfoPgtoAnt: TInfoPgtoAntCollection);
-var
-  i: Integer;
-begin
-  for i := 0 to pInfoPgtoAnt.Count - 1 do
-  begin
-    Gerador.wGrupo('infoPgtoAnt');
-
-    Gerador.wCampo(tcStr, '', 'tpBcIRRF', 2,  2, 1, eSCodIncIRRFToStr(pInfoPgtoAnt[i].tpBcIRRF));
-    Gerador.wCampo(tcDe2, '', 'vrBcIRRF', 1, 14, 1, pInfoPgtoAnt[i].vrBcIRRF);
-
-    Gerador.wGrupo('/infoPgtoAnt');
-  end;
-
-  if pInfoPgtoAnt.Count > 99 then
-    Gerador.wAlerta('', 'infoPgtoAnt', 'Lista de Detalhamento de Pagamento', ERR_MSG_MAIOR_MAXIMO + '99');
-end;
-
-procedure TEvtPgtos.GerarInfoPgto(objInfoPgto: TInfoPgtoCollection);
-var
-  i: integer;
-begin
-  for i := 0 to objInfoPgto.Count - 1 do
-  begin
-    Gerador.wGrupo('infoPgto');
-
-    Gerador.wCampo(tcDat, '', 'dtPgto',   10, 10, 1, objInfoPgto.Items[i].dtPgto);
-    Gerador.wCampo(tcStr, '', 'tpPgto',    1,  2, 1, eSTpTpPgtoToStr(objInfoPgto.Items[i].tpPgto));
-    Gerador.wCampo(tcStr, '', 'indResBr',  1,  1, 1, eSSimNaoToStr(objInfoPgto.Items[i].indResBr));
-
-    if (objInfoPgto.Items[i].tpPgto=tpPgtoFl) then
-      if (objInfoPgto.Items[i].detPgtoFlInst()) then
-        GerardetPgtoFl(objInfoPgto.Items[i].detPgtoFl);
-
-    if objInfoPgto.Items[i].detPgtoBenPrInst() then
-      GerarDetPgtoBenPr(objInfoPgto.Items[i].detPgtoBenPr);
-
-    if objInfoPgto.Items[i].detPgtoFerInst() then
-      GerarDetPgtoFer(objInfoPgto.Items[i].detPgtoFer);
-
-    if objInfoPgto.Items[i].detPgtoAntInst() then
-      GerarDetPgtoAnt(objInfoPgto.Items[i].detPgtoAnt);
-
-    if (objInfoPgto.Items[i].indResBr = tpNao) then
-      if (objInfoPgto.Items[i].detidePgtoExtInst) then
-        GeraridePgtoExt(objInfoPgto.Items[i].idePgtoExt);
-
-    Gerador.wGrupo('/infoPgto');
-  end;
-
-  if objInfoPgto.Count > 60 then
-    Gerador.wAlerta('', 'infoPgto', 'Lista de Informações de Pagamento', ERR_MSG_MAIOR_MAXIMO + '60');
-end;
-
-function TEvtPgtos.GerarXML: Boolean;
-begin
-  try
-    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
-
-    GerarCabecalho('evtPgtos');
-    Gerador.wGrupo('evtPgtos Id="' + Self.Id + '"');
-
-    GerarIdeEvento3(Self.IdeEvento);
-    GerarIdeEmpregador(Self.ideEmpregador);
-    GerarIdeBenef(Self.IdeBenef);
-
-    Gerador.wGrupo('/evtPgtos');
-
-    GerarRodape;
-
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtPgtos');
-
-    Validar(schevtPgtos);
-  except on e:exception do
-    raise Exception.Create(e.Message);
-  end;
-
-  Result := (Gerador.ArquivoFormatoXML <> '')
-end;
-
-function TEvtPgtos.LerArqIni(const AIniString: String): Boolean;
-var
-  INIRec: TMemIniFile;
-  Ok: Boolean;
-  sSecao, sFim: String;
-  I: Integer;
-begin
-  Result := False;
-
-  INIRec := TMemIniFile.Create('');
-  try
-    LerIniArquivoOuString(AIniString, INIRec);
-
-    with Self do
-    begin
-      // Falta Implementar
-    end;
-
-    GerarXML;
-
-    Result := True;
-  finally
-     INIRec.Free;
-  end;
 end;
 
 { TIdeBenef }
@@ -1102,6 +823,594 @@ end;
 function TDetPgtoBenPr.retPgtoTotInst: boolean;
 begin
   Result := Assigned(FRetPgtoTot);
+end;
+
+{ TEvtPgtos }
+
+constructor TEvtPgtos.Create(AACBreSocial: TObject);
+begin
+  inherited;
+
+  FACBreSocial := AACBreSocial;
+  FIdeEvento := TIdeEvento3.Create;
+  FIdeEmpregador := TIdeEmpregador.Create;
+  FIdeBenef := TIdeBenef.Create;
+end;
+
+destructor TEvtPgtos.Destroy;
+begin
+  FIdeEvento.Free;
+  FIdeEmpregador.Free;
+  FIdeBenef.Free;
+
+  inherited;
+end;
+
+procedure TEvtPgtos.GerarCamposRubricas(pRubrica: TRubricaCollectionItem);
+begin
+  Gerador.wCampo(tcStr, '', 'codRubr',    1, 30, 1, pRubrica.codRubr);
+  Gerador.wCampo(tcStr, '', 'ideTabRubr', 1,  8, 1, pRubrica.ideTabRubr);
+  Gerador.wCampo(tcDe2, '', 'qtdRubr',    1,  6, 0, pRubrica.qtdRubr);
+  Gerador.wCampo(tcDe2, '', 'fatorRubr',  1,  5, 0, pRubrica.fatorRubr);
+  Gerador.wCampo(tcDe2, '', 'vrUnit',     1, 14, 0, pRubrica.vrUnit);
+  Gerador.wCampo(tcDe2, '', 'vrRubr',     1, 14, 1, pRubrica.vrRubr);
+end;
+
+procedure TEvtPgtos.GerarRubricasComPensao(
+  pRubricasComPensao: TRubricasComPensaoCollection;
+  const GroupName: string = 'retPgtoTot');
+var
+  i: Integer;
+begin
+  for i := 0 to pRubricasComPensao.Count - 1 do
+  begin
+    Gerador.wGrupo(GroupName);
+
+    GerarCamposRubricas(pRubricasComPensao[i]);
+
+    if pRubricasComPensao[i].pensaoAlimInst() then
+      GerarPensaoAlim(pRubricasComPensao[i].penAlim, 'penAlim');
+
+    Gerador.wGrupo('/'+GroupName);
+  end;
+
+  if pRubricasComPensao.Count > 99 then
+    Gerador.wAlerta('', GroupName, 'Lista de ' + GroupName, ERR_MSG_MAIOR_MAXIMO + '99');
+end;
+
+procedure TEvtPgtos.GerardetPgtoFl(objdetPgtofl: TdetPgtoFlCollection);
+var
+  i: Integer;
+begin
+  for i := 0 to objdetPgtofl.Count - 1 do
+  begin
+    Gerador.wGrupo('detPgtoFl');
+
+    Gerador.wCampo(tcStr, '', 'perRef',    7,  7, 0, objdetPgtofl.Items[i].perRef);
+    Gerador.wCampo(tcStr, '', 'ideDmDev',  1, 30, 1, objdetPgtofl.Items[i].ideDmDev);
+    Gerador.wCampo(tcStr, '', 'indPgtoTt', 1,  1, 1, eSSimNaoToStr(objdetPgtofl.Items[i].indPagtoTt));
+    Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, objdetPgtoFl.items[i].vrLiq);
+    Gerador.wCampo(tcStr, '', 'nrRecArq',  1, 40, 0, objdetPgtofl.Items[i].nrRecArq);
+
+    if objdetPgtofl.Items[i].retPagtoToInst() then
+      GerarRubricasComPensao(objdetPgtofl.Items[i].retPagtoTot);
+
+    if objdetPgtofl.Items[i].infoPgtoFlInst then
+      GerarItensRemun(objdetPgtofl.Items[i].infoPgtoParc, 'infoPgtoParc');
+
+    Gerador.wGrupo('/detPgtoFl');
+  end;
+
+  if objdetPgtofl.Count > 200 then
+    Gerador.wAlerta('', 'detPgtoFl', 'Lista de Detalhamento de Pagamento', ERR_MSG_MAIOR_MAXIMO + '200');
+end;
+
+procedure TEvtPgtos.GerarDeps(pDeps: TDeps);
+begin
+  Gerador.wGrupo('deps');
+
+  Gerador.wCampo(tcDe2, '', 'vrDedDep', 1, 14, 1, pDeps.vrDedDep);
+
+  Gerador.wGrupo('/deps');
+end;
+
+procedure TEvtPgtos.GerarIdeBenef(objIdeBenef : TIdeBenef);
+begin
+  Gerador.wGrupo('ideBenef');
+  Gerador.wCampo(tcStr, '', 'cpfBenef', 11, 11, 1, objIdeBenef.cpfBenef);
+
+  if objIdeBenef.depsInst() then
+    GerarDeps(objIdeBenef.deps);
+
+  GerarInfoPgto(objIdeBenef.InfoPgto);
+
+  Gerador.wGrupo('/ideBenef');
+end;
+
+procedure TEvtPgtos.GeraridePgtoExt(objPgtoExt: TPgtoExt);
+begin
+  Gerador.wGrupo('idePgtoExt');
+
+  GerarIdePais(objPgtoExt.idePais);
+  GerarEndExt(objPgtoExt.endExt);
+
+  Gerador.wGrupo('/idePgtoExt');
+end;
+
+procedure TEvtPgtos.GerarDetPgtoBenPr(pDetPgtoBenPr: TDetPgtoBenPr);
+begin
+  Gerador.wGrupo('detPgtoBenPr');
+
+  Gerador.wCampo(tcStr, '', 'perRef',    7,  7, 1, pDetPgtoBenPr.perRef);
+  Gerador.wCampo(tcStr, '', 'ideDmDev',  1, 30, 1, pDetPgtoBenPr.ideDmDev);
+  Gerador.wCampo(tcStr, '', 'indPgtoTt', 1,  1, 1, eSSimNaoToStr(pDetPgtoBenPr.indPgtoTt));
+  Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, pDetPgtoBenPr.vrLiq);
+
+  if pDetPgtoBenPr.retPgtoTotInst() then
+    GerarItensRemun(pDetPgtoBenPr.retPgtoTot, 'retPgtoTot');
+
+  if pDetPgtoBenPr.infoPgtoParcInst() then
+    GerarItensRemun(pDetPgtoBenPr.retPgtoTot, 'infoPgtoParc');
+
+  Gerador.wGrupo('/detPgtoBenPr');
+end;
+
+procedure TEvtPgtos.GerarDetPgtoFer(pDetPgtoFer: TDetPgtoFerCollection);
+var
+  i: integer;
+begin
+  for i := 0 to pDetPgtoFer.Count - 1 do
+  begin
+    Gerador.wGrupo('detPgtoFer');
+
+    Gerador.wCampo(tcInt, '', 'codCateg',  1,  3, 1, pDetPgtoFer[i].codCateg);
+    Gerador.wCampo(tcDat, '', 'dtIniGoz', 10, 10, 1, pDetPgtoFer[i].dtIniGoz);
+    Gerador.wCampo(tcInt, '', 'qtDias',    1,  2, 1, pDetPgtoFer[i].qtDias);
+    Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, pDetPgtoFer[i].vrLiq);
+
+    GerarRubricasComPensao(pDetPgtoFer[i].detRubrFer, 'detRubrFer');
+
+    Gerador.wGrupo('/detPgtoFer');
+  end;
+
+  if pDetPgtoFer.Count > 5 then
+    Gerador.wAlerta('', 'detPgtoFer', 'Lista de Detalhamento de Pagamento', ERR_MSG_MAIOR_MAXIMO + '5');
+end;
+
+procedure TEvtPgtos.GerarDetPgtoAnt(pDetPgtoAnt: TDetPgtoAntCollection);
+var
+  i: Integer;
+begin
+  for i := 0 to pDetPgtoAnt.Count - 1 do
+  begin
+    Gerador.wGrupo('detPgtoAnt');
+
+    Gerador.wCampo(tcInt, '', 'codCateg', 1, 3, 1, pDetPgtoAnt[i].codCateg);
+
+    GerarInfoPgtoAnt(pDetPgtoAnt[i].infoPgtoAnt);
+
+    Gerador.wGrupo('/detPgtoAnt');
+  end;
+
+  if pDetPgtoAnt.Count > 99 then
+    Gerador.wAlerta('', 'detPgtoAnt', 'Lista de Detalhamento de Pagamento Anterior', ERR_MSG_MAIOR_MAXIMO + '99');
+end;
+
+procedure TEvtPgtos.GerarInfoPgtoAnt(pInfoPgtoAnt: TInfoPgtoAntCollection);
+var
+  i: Integer;
+begin
+  for i := 0 to pInfoPgtoAnt.Count - 1 do
+  begin
+    Gerador.wGrupo('infoPgtoAnt');
+
+    Gerador.wCampo(tcStr, '', 'tpBcIRRF', 2,  2, 1, eSCodIncIRRFToStr(pInfoPgtoAnt[i].tpBcIRRF));
+    Gerador.wCampo(tcDe2, '', 'vrBcIRRF', 1, 14, 1, pInfoPgtoAnt[i].vrBcIRRF);
+
+    Gerador.wGrupo('/infoPgtoAnt');
+  end;
+
+  if pInfoPgtoAnt.Count > 99 then
+    Gerador.wAlerta('', 'infoPgtoAnt', 'Lista de Detalhamento de Pagamento', ERR_MSG_MAIOR_MAXIMO + '99');
+end;
+
+procedure TEvtPgtos.GerarInfoPgto(objInfoPgto: TInfoPgtoCollection);
+var
+  i: integer;
+begin
+  for i := 0 to objInfoPgto.Count - 1 do
+  begin
+    Gerador.wGrupo('infoPgto');
+
+    Gerador.wCampo(tcDat, '', 'dtPgto',   10, 10, 1, objInfoPgto.Items[i].dtPgto);
+    Gerador.wCampo(tcStr, '', 'tpPgto',    1,  2, 1, eSTpTpPgtoToStr(objInfoPgto.Items[i].tpPgto));
+    Gerador.wCampo(tcStr, '', 'indResBr',  1,  1, 1, eSSimNaoToStr(objInfoPgto.Items[i].indResBr));
+
+    if (objInfoPgto.Items[i].tpPgto=tpPgtoFl) then
+      if (objInfoPgto.Items[i].detPgtoFlInst()) then
+        GerardetPgtoFl(objInfoPgto.Items[i].detPgtoFl);
+
+    if objInfoPgto.Items[i].detPgtoBenPrInst() then
+      GerarDetPgtoBenPr(objInfoPgto.Items[i].detPgtoBenPr);
+
+    if objInfoPgto.Items[i].detPgtoFerInst() then
+      GerarDetPgtoFer(objInfoPgto.Items[i].detPgtoFer);
+
+    if objInfoPgto.Items[i].detPgtoAntInst() then
+      GerarDetPgtoAnt(objInfoPgto.Items[i].detPgtoAnt);
+
+    if (objInfoPgto.Items[i].indResBr = tpNao) then
+      if (objInfoPgto.Items[i].detidePgtoExtInst) then
+        GeraridePgtoExt(objInfoPgto.Items[i].idePgtoExt);
+
+    Gerador.wGrupo('/infoPgto');
+  end;
+
+  if objInfoPgto.Count > 60 then
+    Gerador.wAlerta('', 'infoPgto', 'Lista de Informações de Pagamento', ERR_MSG_MAIOR_MAXIMO + '60');
+end;
+
+function TEvtPgtos.GerarXML: Boolean;
+begin
+  try
+    Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
+     
+    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
+
+    GerarCabecalho('evtPgtos');
+    Gerador.wGrupo('evtPgtos Id="' + Self.Id + '"');
+
+    GerarIdeEvento3(Self.IdeEvento);
+    GerarIdeEmpregador(Self.ideEmpregador);
+    GerarIdeBenef(Self.IdeBenef);
+
+    Gerador.wGrupo('/evtPgtos');
+
+    GerarRodape;
+
+    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtPgtos');
+
+    Validar(schevtPgtos);
+  except on e:exception do
+    raise Exception.Create(e.Message);
+  end;
+
+  Result := (Gerador.ArquivoFormatoXML <> '')
+end;
+
+function TEvtPgtos.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I, J, K, L: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      sSecao := 'evtPgtos';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.IndApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
+      ideEvento.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideBenef';
+      ideBenef.cpfBenef := INIRec.ReadString(sSecao, 'cpfBenef', EmptyStr);
+
+      sSecao := 'deps';
+      ideBenef.deps.vrDedDep := StringToFloatDef(INIRec.ReadString(sSecao, 'vrDedDep', ''), 0);
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 60
+        sSecao := 'infoPgto' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'dtPgto', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with ideBenef.InfoPgto.Add do
+        begin
+          DtPgto   := StringToDateTime(sFim);
+          TpPgto   := eSStrTotpTpPgto(Ok, INIRec.ReadString(sSecao, 'tpPgto', '1'));
+          IndResBr := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indResBr', 'S'));
+
+          J := 1;
+          while true do
+          begin
+            // de 001 até 200
+            sSecao := 'detPgtoFl' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+            sFim   := INIRec.ReadString(sSecao, 'perRef', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with detPgtoFl.Add do
+            begin
+              perRef     := sFim;
+              ideDmDev   := INIRec.ReadString(sSecao, 'ideDmDev', EmptyStr);
+              indPagtoTt := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPagtoTt', 'S'));
+              vrLiq      := StringToFloatDef(INIRec.ReadString(sSecao, 'vrLiq', ''), 0);
+              nrRecArq   := INIRec.ReadString(sSecao, 'nrRecArq', EmptyStr);
+
+              K := 1;
+              while true do
+              begin
+                // de 01 até 99
+                sSecao := 'retPgtoTot' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
+                               IntToStrZero(K, 2);
+                sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with retPagtoTot.Add do
+                begin
+                  codRubr    := sFim;
+                  ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
+                  qtdRubr    := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdRubr', ''), 0);
+                  fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
+                  vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
+                  vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
+
+                  L := 1;
+                  while true do
+                  begin
+                    // de 01 até 99
+                    sSecao := 'penAlim' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
+                                   IntToStrZero(K, 2) + IntToStrZero(L, 2);
+                    sFim   := INIRec.ReadString(sSecao, 'cpfBenef', 'FIM');
+
+                    if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                      break;
+
+                    with penAlim.Add do
+                    begin
+                      cpfBenef      := sFim;
+                      dtNasctoBenef := StringToDateTime(INIRec.ReadString(sSecao, 'dtNasctoBenef', '0'));
+                      nmBenefic     := INIRec.ReadString(sSecao, 'nmBenefic', EmptyStr);
+                      vlrPensao     := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrPensao', ''), 0);
+                    end;
+
+                    Inc(L);
+                  end;
+
+                end;
+
+                Inc(K);
+              end;
+
+              K := 1;
+              while true do
+              begin
+                // de 01 até 99
+                sSecao := 'infoPgtoParc' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
+                               IntToStrZero(K, 2);
+                sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with infoPgtoParc.Add do
+                begin
+                  codRubr    := sFim;
+                  ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
+                  qtdRubr    := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdRubr', ''), 0);
+                  fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
+                  vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
+                  vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
+                end;
+
+                Inc(K);
+              end;
+
+            end;
+
+            Inc(J);
+          end;
+
+          sSecao := 'detPgtoBenPr' + IntToStrZero(I, 2);
+          detPgtoBenPr.perRef    := INIRec.ReadString(sSecao, 'perRef', EmptyStr);
+          detPgtoBenPr.ideDmDev  := INIRec.ReadString(sSecao, 'ideDmDev', EmptyStr);
+          detPgtoBenPr.indPgtoTt := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPgtoTt', 'S'));
+          detPgtoBenPr.vrLiq     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrLiq', ''), 0);
+
+          J := 1;
+          while true do
+          begin
+            // de 01 até 99
+            sSecao := 'retPgtoTot' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+            sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with detPgtoBenPr.retPgtoTot.Add do
+            begin
+              codRubr    := sFim;
+              ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
+              qtdRubr    := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdRubr', ''), 0);
+              fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
+              vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
+              vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
+            end;
+
+            Inc(J);
+          end;
+
+          J := 1;
+          while true do
+          begin
+            // de 01 até 99
+            sSecao := 'infoPgtoParc' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+            sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with detPgtoBenPr.infoPgtoParc.Add do
+            begin
+              codRubr    := sFim;
+              ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
+              qtdRubr    := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdRubr', ''), 0);
+              fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
+              vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
+              vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
+            end;
+
+            Inc(J);
+          end;
+
+          J := 1;
+          while true do
+          begin
+            // de 1 até 5
+            sSecao := 'detPgtoFer' + IntToStrZero(I, 2) + IntToStrZero(J, 1);
+            sFim   := INIRec.ReadString(sSecao, 'codCateg', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with detPgtoFer.Add do
+            begin
+              codCateg := StrToInt(sFim);
+              dtIniGoz := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniGoz', '0'));
+              qtDias   := INIRec.ReadInteger(sSecao, 'qtDias', 0);
+              vrLiq    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrLiq', ''), 0);
+
+              K := 1;
+              while true do
+              begin
+                // de 01 até 99
+                sSecao := 'detRubrFer' + IntToStrZero(I, 2) + IntToStrZero(J, 1) +
+                               IntToStrZero(K, 2);
+                sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with detRubrFer.Add do
+                begin
+                  codRubr    := sFim;
+                  ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
+                  qtdRubr    := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdRubr', ''), 0);
+                  fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
+                  vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
+                  vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
+
+                  L := 1;
+                  while true do
+                  begin
+                    // de 01 até 99
+                    sSecao := 'penAlim' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
+                                   IntToStrZero(K, 2) + IntToStrZero(L, 2);
+                    sFim   := INIRec.ReadString(sSecao, 'cpfBenef', 'FIM');
+
+                    if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                      break;
+
+                    with penAlim.Add do
+                    begin
+                      cpfBenef      := sFim;
+                      dtNasctoBenef := StringToDateTime(INIRec.ReadString(sSecao, 'dtNasctoBenef', '0'));
+                      nmBenefic     := INIRec.ReadString(sSecao, 'nmBenefic', EmptyStr);
+                      vlrPensao     := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrPensao', ''), 0);
+                    end;
+
+                    Inc(L);
+                  end;
+
+                end;
+
+                Inc(K);
+              end;
+
+            end;
+
+            Inc(J);
+          end;
+
+          J := 1;
+          while true do
+          begin
+            // de 01 até 99
+            sSecao := 'detPgtoAnt' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+            sFim   := INIRec.ReadString(sSecao, 'codCateg', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with detPgtoAnt.Add do
+            begin
+              codCateg := StrToInt(sFim);
+
+              K := 1;
+              while true do
+              begin
+                // de 01 até 99
+                sSecao := 'infoPgtoAnt' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
+                               IntToStrZero(K, 2);
+                sFim   := INIRec.ReadString(sSecao, 'tpBcIRRF', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with infoPgtoAnt.Add do
+                begin
+                  tpBcIRRF := eSStrToCodIncIRRF(Ok, sFim);
+                  vrBcIRRF := StringToFloatDef(INIRec.ReadString(sSecao, 'vrBcIRRF', ''), 0);
+                end;
+
+                Inc(K);
+              end;
+
+            end;
+
+            Inc(J);
+          end;
+
+          sSecao := 'idePgtoExt' + IntToStrZero(I, 2);
+
+          idePgtoExt.idePais.codPais  := INIRec.ReadString(sSecao, 'codPais', EmptyStr);
+          idePgtoExt.idePais.indNIF   := eSStrToIndNIF(Ok, INIRec.ReadString(sSecao, 'indNIF', '1'));
+          idePgtoExt.idePais.nifBenef := INIRec.ReadString(sSecao, 'nifBenef', EmptyStr);
+
+          idePgtoExt.endExt.dscLograd := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
+          idePgtoExt.endExt.nrLograd  := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
+          idePgtoExt.endExt.complem   := INIRec.ReadString(sSecao, 'complem', EmptyStr);
+          idePgtoExt.endExt.bairro    := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
+          idePgtoExt.endExt.nmCid     := INIRec.ReadString(sSecao, 'nmCid', EmptyStr);
+          idePgtoExt.endExt.codPostal := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
+        end;
+
+        Inc(I);
+      end;
+
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 end.

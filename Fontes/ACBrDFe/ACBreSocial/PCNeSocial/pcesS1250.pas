@@ -52,7 +52,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -483,7 +483,7 @@ var
   INIRec: TMemIniFile;
   Ok: Boolean;
   sSecao, sFim: String;
-  I: Integer;
+  I, J, K: Integer;
 begin
   Result := False;
 
@@ -493,7 +493,119 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtAqProd';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.IndApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
+      ideEvento.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideEstabAdquir';
+      InfoAquisProd.IdeEstabAdquir.tpInscAdq := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscAdq', '1'));
+      InfoAquisProd.IdeEstabAdquir.nrInscAdq := INIRec.ReadString(sSecao, 'nrInscAdq', '');
+
+      I := 1;
+      while true do
+      begin
+        // de 1 até 3
+        sSecao := 'tpAquis' + IntToStrZero(I, 1);
+        sFim   := INIRec.ReadString(sSecao, 'indAquis', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with InfoAquisProd.IdeEstabAdquir.tpAquis.Add do
+        begin
+          indAquis    := eSStrToIdAquis(Ok, sFim);
+          vlrTotAquis := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotAquis', ''), 0);
+
+          J := 1;
+          while true do
+          begin
+            // de 0001 até 9999
+            sSecao := 'ideProdutor' + IntToStrZero(I, 1) + IntToStrZero(J, 4);
+            sFim   := INIRec.ReadString(sSecao, 'tpInscProd', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with ideProdutor.Add do
+            begin
+              tpInscProd  := eSStrToTpInscricao(Ok, sFim);
+              nrInscProd  := INIRec.ReadString(sSecao, 'nrInscProd', EmptyStr);
+              vlrBruto    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBruto', ''), 0);
+              vrCPDescPR  := StringToFloatDef(INIRec.ReadString(sSecao, 'vrCPDescPR', ''), 0);
+              vrRatDescPR := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRatDescPR', ''), 0);
+              vrSenarDesc := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSenarDesc', ''), 0);
+
+              K := 1;
+              while true do
+              begin
+                // de 0000 até 9999
+                sSecao := 'nfs' + IntToStrZero(I, 1) + IntToStrZero(J, 4) +
+                               IntToStrZero(K, 4);
+                sFim   := INIRec.ReadString(sSecao, 'serie', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with nfs.Add do
+                begin
+                  serie       := sFim;
+                  nrDocto     := INIRec.ReadString(sSecao, 'nrDocto', EmptyStr);
+                  dtEmisNF    := StringToDateTime(INIRec.ReadString(sSecao, 'dtEmisNF', '0'));
+                  vlrBruto    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBruto', ''), 0);
+                  vrCPDescPR  := StringToFloatDef(INIRec.ReadString(sSecao, 'vrCPDescPR', ''), 0);
+                  vrRatDescPR := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRatDescPR', ''), 0);
+                  vrSenarDesc := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSenarDesc', ''), 0);
+                end;
+
+                Inc(K);
+              end;
+
+              K := 1;
+              while true do
+              begin
+                // de 00 até 10
+                sSecao := 'infoProcJud' + IntToStrZero(I, 1) + IntToStrZero(J, 4) +
+                               IntToStrZero(K, 2);
+                sFim   := INIRec.ReadString(sSecao, 'nrProcJud', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with infoProcJud.Add do
+                begin
+                  nrProcJud   := sFim;
+                  codSusp     := INIRec.ReadInteger(sSecao, 'codSusp', 0);
+                  vrCPNRet    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrCPNRet', ''), 0);
+                  vrRatNRet   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRatNRet', ''), 0);
+                  vrSenarNRet := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSenarNRet', ''), 0);
+                end;
+
+                Inc(K);
+              end;
+
+            end;
+
+            Inc(J);
+          end;
+
+        end;
+
+        Inc(I);
+      end;
+
     end;
 
     GerarXML;

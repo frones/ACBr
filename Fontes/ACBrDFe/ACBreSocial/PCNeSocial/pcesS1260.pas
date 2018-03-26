@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -233,6 +233,122 @@ begin
   FEvtComProd.Assign(Value);
 end;
 
+{ TTpComercColecao }
+function TTpComercColecao.Add: TTpComercItem;
+begin
+  Result := TTpComercItem(inherited add);
+  Result.Create;
+end;
+
+constructor TTpComercColecao.create(AOwner: TPersistent);
+begin
+  inherited create(TTpComercItem)
+end;
+
+function TTpComercColecao.GetItem(Index: Integer): TTpComercItem;
+begin
+  Result := TTpComercItem(inherited GetItem(Index));
+end;
+
+procedure TTpComercColecao.SetItem(Index: Integer; const Value: TTpComercItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TInfoComProd }
+constructor TInfoComProd.create;
+begin
+  inherited;
+
+  FIdeEstabel := TIdeEstabel.create;
+end;
+
+destructor TInfoComProd.destroy;
+begin
+  FIdeEstabel.Free;
+
+  inherited;
+end;
+
+{ TTpComercItem }
+constructor TTpComercItem.create;
+begin
+  FIdeAdquir := TIdeAdquirColecao.Create(self);
+  FInfoProcJud := TInfoProcJudCollection.Create(self);
+end;
+
+destructor TTpComercItem.destroy;
+begin
+  FIdeAdquir.Free;
+  FInfoProcJud.Free;
+
+  inherited;
+end;
+
+{ TIdeAdquirColecao }
+function TIdeAdquirColecao.Add: TIdeAdquirItem;
+begin
+  Result := TIdeAdquirItem(inherited Add);
+  Result.Create;
+end;
+
+constructor TIdeAdquirColecao.Create(AOwner: TPersistent);
+begin
+  inherited Create(TIdeAdquirItem);
+end;
+
+function TIdeAdquirColecao.GetItem(Index: Integer): TIdeAdquirItem;
+begin
+  Result := TIdeAdquirItem(inherited GetItem(Index));
+end;
+
+procedure TIdeAdquirColecao.SetItem(Index: Integer;
+  const Value: TIdeAdquirItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TIdeAdquirItem }
+
+constructor TIdeAdquirItem.Create;
+begin
+  FNfs := nil;
+end;
+
+destructor TIdeAdquirItem.Destroy;
+begin
+  FreeAndNil(FNfs);
+
+  inherited;
+end;
+
+function TIdeAdquirItem.getNfs: TNfsColecao;
+begin
+  if not Assigned(FNfs) then
+    FNfs := TNfsColecao.Create(FNfs);
+  Result := FNfs;
+end;
+
+function TIdeAdquirItem.nfsInst: boolean;
+begin
+  result := Assigned(FNfs);
+end;
+
+{ TIdeEstabel }
+constructor TIdeEstabel.create;
+begin
+  inherited;
+
+  FTpComerc := TTpComercColecao.Create(self);
+end;
+
+destructor TIdeEstabel.destroy;
+begin
+  FTpComerc.Free;
+
+  inherited;
+end;
+
 { TEvtComProd }
 constructor TEvtComProd.Create(AACBreSocial: TObject);
 begin
@@ -371,7 +487,7 @@ var
   INIRec: TMemIniFile;
   Ok: Boolean;
   sSecao, sFim: String;
-  I: Integer;
+  I, J, K: Integer;
 begin
   Result := False;
 
@@ -381,7 +497,116 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtComProd';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.IndApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
+      ideEvento.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideEstabel';
+      InfoComProd.IdeEstabel.nrInscEstabRural := INIRec.ReadString(sSecao, 'nrInscEstabRural', '');
+
+      I := 1;
+      while true do
+      begin
+        // de 1 até 4
+        sSecao := 'tpComerc' + IntToStrZero(I, 1);
+        sFim   := INIRec.ReadString(sSecao, 'indComerc', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with InfoComProd.IdeEstabel.tpComerc.Add do
+        begin
+          indComerc := eSStrToIndComerc(Ok, sFim);
+          vrTotCom  := StringToFloatDef(INIRec.ReadString(sSecao, 'vrTotCom', ''), 0);
+
+          J := 1;
+          while true do
+          begin
+            // de 0000 até 9999
+            sSecao := 'ideAdquir' + IntToStrZero(I, 1) + IntToStrZero(J, 4);
+            sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with ideAdquir.Add do
+            begin
+              tpInsc   := eSStrToTpInscricao(Ok, sFim);
+              nrInsc   := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+              vrComerc := StringToFloatDef(INIRec.ReadString(sSecao, 'vrComerc', ''), 0);
+
+              K := 1;
+              while true do
+              begin
+                // de 0000 até 9999
+                sSecao := 'nfs' + IntToStrZero(I, 1) + IntToStrZero(J, 4) +
+                               IntToStrZero(K, 4);
+                sFim   := INIRec.ReadString(sSecao, 'serie', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with nfs.Add do
+                begin
+                  serie       := sFim;
+                  nrDocto     := INIRec.ReadString(sSecao, 'nrDocto', EmptyStr);
+                  dtEmisNF    := StringToDateTime(INIRec.ReadString(sSecao, 'dtEmisNF', '0'));
+                  vlrBruto    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBruto', ''), 0);
+                  vrCPDescPR  := StringToFloatDef(INIRec.ReadString(sSecao, 'vrCPDescPR', ''), 0);
+                  vrRatDescPR := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRatDescPR', ''), 0);
+                  vrSenarDesc := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSenarDesc', ''), 0);
+                end;
+
+                Inc(K);
+              end;
+
+              K := 1;
+              while true do
+              begin
+                // de 00 até 10
+                sSecao := 'infoProcJud' + IntToStrZero(I, 1) + IntToStrZero(J, 4) +
+                               IntToStrZero(K, 2);
+                sFim   := INIRec.ReadString(sSecao, 'nrProc', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with infoProcJud.Add do
+                begin
+                  tpProc      := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
+                  nrProcJud   := sFim;
+                  codSusp     := INIRec.ReadInteger(sSecao, 'codSusp', 0);
+                  vrCPSusp    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrCPSusp', ''), 0);
+                  vrRatSusp   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRatSusp', ''), 0);
+                  vrSenarSusp := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSenarSusp', ''), 0);
+                end;
+
+                Inc(K);
+              end;
+
+            end;
+
+            Inc(J);
+          end;
+
+        end;
+
+        Inc(I);
+      end;
+
     end;
 
     GerarXML;
@@ -390,122 +615,6 @@ begin
   finally
      INIRec.Free;
   end;
-end;
-
-{ TTpComercColecao }
-function TTpComercColecao.Add: TTpComercItem;
-begin
-  Result := TTpComercItem(inherited add);
-  Result.Create;
-end;
-
-constructor TTpComercColecao.create(AOwner: TPersistent);
-begin
-  inherited create(TTpComercItem)
-end;
-
-function TTpComercColecao.GetItem(Index: Integer): TTpComercItem;
-begin
-  Result := TTpComercItem(inherited GetItem(Index));
-end;
-
-procedure TTpComercColecao.SetItem(Index: Integer; const Value: TTpComercItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TInfoComProd }
-constructor TInfoComProd.create;
-begin
-  inherited;
-
-  FIdeEstabel := TIdeEstabel.create;
-end;
-
-destructor TInfoComProd.destroy;
-begin
-  FIdeEstabel.Free;
-
-  inherited;
-end;
-
-{ TTpComercItem }
-constructor TTpComercItem.create;
-begin
-  FIdeAdquir := TIdeAdquirColecao.Create(self);
-  FInfoProcJud := TInfoProcJudCollection.Create(self);
-end;
-
-destructor TTpComercItem.destroy;
-begin
-  FIdeAdquir.Free;
-  FInfoProcJud.Free;
-
-  inherited;
-end;
-
-{ TIdeAdquirColecao }
-function TIdeAdquirColecao.Add: TIdeAdquirItem;
-begin
-  Result := TIdeAdquirItem(inherited Add);
-  Result.Create;
-end;
-
-constructor TIdeAdquirColecao.Create(AOwner: TPersistent);
-begin
-  inherited Create(TIdeAdquirItem);
-end;
-
-function TIdeAdquirColecao.GetItem(Index: Integer): TIdeAdquirItem;
-begin
-  Result := TIdeAdquirItem(inherited GetItem(Index));
-end;
-
-procedure TIdeAdquirColecao.SetItem(Index: Integer;
-  const Value: TIdeAdquirItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TIdeAdquirItem }
-
-constructor TIdeAdquirItem.Create;
-begin
-  FNfs := nil;
-end;
-
-destructor TIdeAdquirItem.Destroy;
-begin
-  FreeAndNil(FNfs);
-
-  inherited;
-end;
-
-function TIdeAdquirItem.getNfs: TNfsColecao;
-begin
-  if not Assigned(FNfs) then
-    FNfs := TNfsColecao.Create(FNfs);
-  Result := FNfs;
-end;
-
-function TIdeAdquirItem.nfsInst: boolean;
-begin
-  result := Assigned(FNfs);
-end;
-
-{ TIdeEstabel }
-constructor TIdeEstabel.create;
-begin
-  inherited;
-
-  FTpComerc := TTpComercColecao.Create(self);
-end;
-
-destructor TIdeEstabel.destroy;
-begin
-  FTpComerc.Free;
-
-  inherited;
 end;
 
 end.

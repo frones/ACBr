@@ -439,16 +439,18 @@ begin
   Gerador.wCampo(tcStr, '', 'cadIni',        1,  1, 1, eSSimNaoToStr(obj.cadIni));
   Gerador.wCampo(tcStr, '', 'codCateg',      0,  3, 1, obj.codCateg);
   Gerador.wCampo(tcDat, '', 'dtInicio',     10, 10, 1, obj.dtInicio);
-  if      obj.codCateg = 305 Then //Servidor Publico Indicado a Conselho
-  else if obj.codCateg = 201 Then // Trabalhador Avulso Portuário
-  else if obj.codCateg = 202 Then // Trabalhador Avulso Não Portuário
-  else if obj.codCateg = 401 Then // Dirigente Sindical    
-  else if obj.codCateg = 721 Then //Diretor não empregado com FGTS
-  else if obj.codCateg = 722 Then //Diretor não empregado sem FGTS
-  else if obj.codCateg = 771 Then //Membro conselho tutelar
-  else if obj.codCateg = 901 Then //Estagiario
-  else
-   Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtivididade));
+
+  //    Validação: **Preenchimento obrigatório** para as categorias de avulso, cooperado e dirigente sindical.
+  //               Não deve ser preenchido para as categorias Diretor não empregado, servidor público indicado a conselho, membro de conselho tutelar e estagiário.
+
+  if (
+    (obj.codCateg <> 721) and // Diretor não empregado com FGTS
+    (obj.codCateg <> 722) and // Diretor não empregado sem FGTS
+    (obj.codCateg <> 305) and // Servidor Publico Indicado a Conselho
+    (obj.codCateg <> 771) and // Membro conselho tutelar
+    (obj.codCateg <> 901)     // Estagiario
+  then
+    Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtivididade));
 
   GerarInfoComplementares(obj.InfoComplementares);
 

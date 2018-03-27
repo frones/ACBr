@@ -49,6 +49,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/03/2018
+-- pcesS2300 --
+[*] https://www.projetoacbr.com.br/forum/topic/41671-alterar-s2300-campo-natatividade-n%C3%A3o-pode-ser-informado-para-determinadas-categorias/?do=findComment&comment=279323
+   Por: croscato
 -- pcesS1270 / pcesS1280 / pcesS1295 / pcesS1298 / pcesS1299 / pcesS1300 --
 [+] Implementação da leitura do arquivo INI referente aos eventos S-1270, 
     S-1280, S-1295, S-1298, S-1299, S-1300.

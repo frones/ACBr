@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -183,6 +183,28 @@ begin
   FEvtContratAvNP.Assign(Value);
 end;
 
+{ TRemunAvNPColecao }
+function TRemunAvNPColecao.Add: TRemunAvNPItem;
+begin
+  Result := TRemunAvNPItem(inherited Add);
+end;
+
+constructor TRemunAvNPColecao.Create(AOwner: TPersistent);
+begin
+  inherited Create(TRemunAvNPItem);
+end;
+
+function TRemunAvNPColecao.GetItem(Index: Integer): TRemunAvNPItem;
+begin
+  Result := TRemunAvNPItem(inherited GetItem(Index));
+end;
+
+procedure TRemunAvNPColecao.SetItem(Index: Integer;
+  const Value: TRemunAvNPItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
 { TEvtContratAvNP }
 constructor TEvtContratAvNP.Create(AACBreSocial: TObject);
 begin
@@ -272,7 +294,50 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtContratAvNP';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.IndApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
+      ideEvento.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      I := 1;
+      while true do
+      begin
+        // de 001 até 999
+        sSecao := 'remunAvNP' + IntToStrZero(I, 3);
+        sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with remunAvNP.Add do
+        begin
+          TpInsc     := eSStrToTpInscricao(Ok, sFim);
+          NrInsc     := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+          codLotacao := INIRec.ReadString(sSecao, 'codLotacao', EmptyStr);
+          vrBcCp00   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrBcCp00', ''), 0);
+          vrBcCp15   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrBcCp15', ''), 0);
+          vrBcCp20   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrBcCp20', ''), 0);
+          vrBcCp25   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrBcCp25', ''), 0);
+          vrBcCp13   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrBcCp13', ''), 0);
+          vrBcFgts   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrBcFgts', ''), 0);
+          vrDescCP   := StringToFloatDef(INIRec.ReadString(sSecao, 'vrDescCP', ''), 0);
+        end;
+
+        Inc(I);
+      end;
+
     end;
 
     GerarXML;
@@ -281,28 +346,6 @@ begin
   finally
      INIRec.Free;
   end;
-end;
-
-{ TRemunAvNPColecao }
-function TRemunAvNPColecao.Add: TRemunAvNPItem;
-begin
-  Result := TRemunAvNPItem(inherited Add);
-end;
-
-constructor TRemunAvNPColecao.Create(AOwner: TPersistent);
-begin
-  inherited Create(TRemunAvNPItem);
-end;
-
-function TRemunAvNPColecao.GetItem(Index: Integer): TRemunAvNPItem;
-begin
-  Result := TRemunAvNPItem(inherited GetItem(Index));
-end;
-
-procedure TRemunAvNPColecao.SetItem(Index: Integer;
-  const Value: TRemunAvNPItem);
-begin
-  inherited SetItem(Index, Value);
 end;
 
 end.

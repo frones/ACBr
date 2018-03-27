@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2018
+-- pcesS1270 / pcesS1280 / pcesS1295 / pcesS1298 / pcesS1299 / pcesS1300 --
+[+] Implementação da leitura do arquivo INI referente aos eventos S-1270, 
+    S-1280, S-1295, S-1298, S-1299, S-1300.
+   Por: Italo Jurisato Junior
+
 26/03/2018
 -- pcesS1210 / pcesS1250 / pcesS1260 --
 [+] Implementação da leitura do arquivo INI referente aos eventos S-1210, S-1250, S-1260.

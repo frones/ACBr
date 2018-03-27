@@ -270,7 +270,35 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtFechaEvPer';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.IndApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
+      ideEvento.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideRespInf';
+      ideRespInf.nmResp   := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
+      ideRespInf.cpfResp  := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
+      ideRespInf.telefone := INIRec.ReadString(sSecao, 'telefone', EmptyStr);
+      ideRespInf.email    := INIRec.ReadString(sSecao, 'email', EmptyStr);
+
+      sSecao := 'infoFech';
+      infoFech.evtRemun        := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtRemun', 'S'));
+      infoFech.evtPgtos        := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtPgtos', 'S'));
+      infoFech.evtAqProd       := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtAqProd', 'S'));
+      infoFech.evtComProd      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtComProd', 'S'));
+      infoFech.evtContratAvNP  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtContratAvNP', 'S'));
+      infoFech.evtInfoComplPer := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtInfoComplPer', 'S'));
+      infoFech.compSemMovto    := INIRec.ReadString(sSecao, 'compSemMovto', 'S');
     end;
 
     GerarXML;

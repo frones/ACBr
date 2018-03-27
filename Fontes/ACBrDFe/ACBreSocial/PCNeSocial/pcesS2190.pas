@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -231,7 +231,23 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtAdmPrelim';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'infoRegPrelim';
+      infoRegPrelim.cpfTrab  := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      infoRegPrelim.dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
+      infoRegPrelim.dtAdm    := StringToDateTime(INIRec.ReadString(sSecao, 'dtAdm', '0'));
     end;
 
     GerarXML;

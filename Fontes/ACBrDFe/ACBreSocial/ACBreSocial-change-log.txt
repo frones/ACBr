@@ -49,6 +49,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/03/2018
+-- pcesS2190 / pcesS2200 / pcesS2205 --
+[+] Implementação da leitura do arquivo INI referente aos eventos S-2190, 
+    S-2200, S-2205.
+   Por: Italo Jurisato Junior
 -- pcesS2300 --
 [*] https://www.projetoacbr.com.br/forum/topic/41671-alterar-s2300-campo-natatividade-n%C3%A3o-pode-ser-informado-para-determinadas-categorias/?do=findComment&comment=279323
    Por: croscato

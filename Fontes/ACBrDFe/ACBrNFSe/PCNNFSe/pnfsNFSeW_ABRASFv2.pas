@@ -647,7 +647,7 @@ begin
   end;
 
   case FProvedor of
-    proABase, proBethav2, proDigifred, proEReceita, proFiorilli, proGovDigital,
+    proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
     proCoplan, proSIAPNet, proSystemPro:
       begin
@@ -863,7 +863,7 @@ begin
   if (FProvedor in [proISSDigital, proNotaInteligente]) and (NFSe.NumeroLote <> '') then
     Atributo := ' Id="' + (NFSe.IdentificacaoRps.Numero) + '"';
 
-  if (FProvedor in [proBethav2, proNotaInteligente, proPronimv2]) then
+  if (FProvedor in [proNotaInteligente, proPronimv2]) then
     Gerador.wGrupo('Rps')
   else
     Gerador.wGrupo('Rps' + Atributo);

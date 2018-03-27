@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Alterações, visando o provedor Bethav2
+   Por: Davi
+
 23/03/2018
 -- pnfsNFSeW_ABRASFv2 --
 [*] Alterações, foi removido a declaração de namespace, tentativa para ser se vai

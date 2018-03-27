@@ -443,7 +443,7 @@ begin
   //    Validação: **Preenchimento obrigatório** para as categorias de avulso, cooperado e dirigente sindical.
   //               Não deve ser preenchido para as categorias Diretor não empregado, servidor público indicado a conselho, membro de conselho tutelar e estagiário.
 
-  if (
+  if
     (obj.codCateg <> 721) and // Diretor não empregado com FGTS
     (obj.codCateg <> 722) and // Diretor não empregado sem FGTS
     (obj.codCateg <> 305) and // Servidor Publico Indicado a Conselho

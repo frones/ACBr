@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2018
+-- pcesS2206 / pcesS2210 / pcesS2220 / pcesS2230 --
+[+] Implementação da leitura do arquivo INI referente aos eventos S-2206, 
+    S-2210, S-2220 e S-2230.
+   Por: Italo Jurisato Junior
+
 27/03/2018
 -- pcesS2190 / pcesS2200 / pcesS2205 --
 [+] Implementação da leitura do arquivo INI referente aos eventos S-2190, 

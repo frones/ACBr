@@ -350,7 +350,7 @@ begin
       trabalhador.contato.EmailAlternat := INIRec.ReadString(sSecao, 'emailAlternat', 'S');
 
       sSecao := 'vinculo';
-      vinculo.Matricula      := INIRec.ReadString(sSecao, 'matricula', 'S');
+      vinculo.Matricula      := INIRec.ReadString(sSecao, 'matricula', '');
       vinculo.TpRegTrab      := eSStrToTpRegTrab(Ok, INIRec.ReadString(sSecao, 'tpRegTrab', '1'));
       vinculo.TpRegPrev      := eSStrTotpRegPrev(Ok, INIRec.ReadString(sSecao, 'tpRegPrev', '1'));
       vinculo.NrRecInfPrelim := INIRec.ReadString(sSecao, 'nrRecInfPrelim', '');

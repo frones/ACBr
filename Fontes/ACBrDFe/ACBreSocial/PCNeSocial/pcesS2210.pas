@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -377,6 +377,30 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+{ TCat }
+
+constructor TCat.create;
+begin
+  inherited;
+
+  FLocalAcidente := TLocalAcidente.Create;
+  FParteAtingida := TParteAtingidaColecao.Create(self);
+  FAgenteCausador := TAgenteCausadorColecao.Create(self);
+  FAtestado := TAtestado.Create;
+  FCatOrigem := TCatOrigem.Create;
+end;
+
+destructor TCat.destroy;
+begin
+  FLocalAcidente.Free;
+  FParteAtingida.Free;
+  FAgenteCausador.Free;
+  FAtestado.Free;
+  FCatOrigem.Free;
+
+  inherited;
+end;
+
 { TEvtCAT }
 
 constructor TEvtCAT.Create(AACBreSocial: TObject);
@@ -572,7 +596,113 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtCAT';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideRegistrador';
+      ideRegistrador.tpRegistrador := eSStrToTpRegistrador(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideRegistrador.TpInsc        := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideRegistrador.NrInsc        := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideTrabalhador';
+      ideTrabalhador.CpfTrab    := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideTrabalhador.NisTrab    := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+
+      sSecao := 'cat';
+      cat.dtAcid           := StringToDateTime(INIRec.ReadString(sSecao, 'dtAcid', '0'));
+      cat.TpAcid           := INIRec.ReadString(sSecao, 'tpAcid', EmptyStr);
+      cat.hrAcid           := INIRec.ReadString(sSecao, 'hrAcid', EmptyStr);
+      cat.hrsTrabAntesAcid := INIRec.ReadString(sSecao, 'hrsTrabAntesAcid', EmptyStr);
+      cat.tpCat            := eSStrToTpCat(Ok, INIRec.ReadString(sSecao, 'tpCat', '1'));
+      cat.indCatObito      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indCatObito', 'S'));
+      cat.dtOBito          := StringToDateTime(INIRec.ReadString(sSecao, 'dtObito', '0'));
+      cat.indComunPolicia  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indComunPolicia', 'S'));
+      cat.codSitGeradora   := INIRec.ReadInteger(sSecao, 'codSitGeradora', 0);
+      cat.iniciatCAT       := eSStrToIniciatCAT(Ok, INIRec.ReadString(sSecao, 'hrsTrabAntesAcid', '1'));
+      cat.observacao       := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+
+      sSecao := 'localAcidente';
+      cat.localAcidente.tpLocal       := eSStrToTpLocal(Ok, INIRec.ReadString(sSecao, 'tpLocal', '1'));
+      cat.localAcidente.dscLocal      := INIRec.ReadString(sSecao, 'dscLocal', EmptyStr);
+      cat.localAcidente.dscLograd     := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
+      cat.localAcidente.nrLograd      := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
+      cat.localAcidente.codMunic      := INIRec.ReadInteger(sSecao, 'codMunic', 0);
+      cat.localAcidente.uf            := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+      cat.localAcidente.cnpjLocalAcid := INIRec.ReadString(sSecao, 'cnpjLocalAcid', EmptyStr);
+      cat.localAcidente.pais          := INIRec.ReadString(sSecao, 'pais', EmptyStr);
+      cat.localAcidente.codPostal     := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'parteAtingida' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'codParteAting', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with cat.parteAtingida.Add do
+        begin
+          codParteAting := StrToInt(sFim);
+          lateralidade  := eSStrToLateralidade(Ok, INIRec.ReadString(sSecao, 'lateralidade', '1'));
+        end;
+
+        Inc(I);
+      end;
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'agenteCausador' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'codAgntCausador', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with cat.agenteCausador.Add do
+        begin
+          codAgntCausador := StrToInt(sFim);
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'atestado';
+      cat.atestado.codCNES       := INIRec.ReadString(sSecao, 'codCNES', EmptyStr);
+      cat.atestado.dtAtendimento := StringToDateTime(INIRec.ReadString(sSecao, 'dtAtendimento', '0'));
+      cat.atestado.hrAtendimento := INIRec.ReadString(sSecao, 'hrAtendimento', EmptyStr);
+      cat.atestado.indInternacao := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indInternacao', 'S'));
+      cat.atestado.durTrat       := INIRec.ReadInteger(sSecao, 'durTrat', 0);
+      cat.atestado.indAfast      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indAfast', 'S'));
+      cat.atestado.dscLesao      := INIRec.ReadInteger(sSecao, 'dscLesao', 0);
+      cat.atestado.dscCompLesao  := INIRec.ReadString(sSecao, 'dscCompLesao', EmptyStr);
+      cat.atestado.diagProvavel  := INIRec.ReadString(sSecao, 'diagProvavel', EmptyStr);
+      cat.atestado.codCID        := INIRec.ReadString(sSecao, 'codCID', EmptyStr);
+      cat.atestado.observacao    := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+
+      sSecao := 'emitente';
+      cat.atestado.Emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);
+      cat.atestado.Emitente.ideOC  := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', '1'));
+      cat.atestado.Emitente.nrOc   := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
+      cat.atestado.Emitente.ufOC   := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+
+      sSecao := 'catOrigem';
+      cat.catOrigem.dtCatOrig := StringToDateTime(INIRec.ReadString(sSecao, 'dtCatOrig', '0'));
+      cat.catOrigem.nrCatOrig := INIRec.ReadString(sSecao, 'nrCatOrig', '');
     end;
 
     GerarXML;
@@ -581,30 +711,6 @@ begin
   finally
      INIRec.Free;
   end;
-end;
-
-{ TCat }
-
-constructor TCat.create;
-begin
-  inherited;
-
-  FLocalAcidente := TLocalAcidente.Create;
-  FParteAtingida := TParteAtingidaColecao.Create(self);
-  FAgenteCausador := TAgenteCausadorColecao.Create(self);
-  FAtestado := TAtestado.Create;
-  FCatOrigem := TCatOrigem.Create;
-end;
-
-destructor TCat.destroy;
-begin
-  FLocalAcidente.Free;
-  FParteAtingida.Free;
-  FAgenteCausador.Free;
-  FAtestado.Free;
-  FCatOrigem.Free;
-
-  inherited;
 end;
 
 end.

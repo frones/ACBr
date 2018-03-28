@@ -833,6 +833,12 @@ function eSStrTotpTpAcidTransito(var ok: boolean; const s: string): tpTpAcidTran
 function eStpMotivosAfastamentoToStr(const t: tpMotivosAfastamento ): string;
 function eSStrTotpMotivosAfastamento(var ok: boolean; const s: string): tpMotivosAfastamento;
 
+function tpInfOnusToStr(const t: tpInfOnus ): string;
+function StrTotpInfOnus(var ok: boolean; const s: string): tpInfOnus;
+
+function tpOnusRemunToStr(const t: tpOnusRemun ): string;
+function StrTotpOnusRemun(var ok: boolean; const s: string): tpOnusRemun;
+
 implementation
 
 uses
@@ -2278,6 +2284,26 @@ const
        'evtExclusao', 'S-4000', 'S-4999', 'S-5001', 'S-5002', 'S-5011', 'S-5012');
 begin
   result := TTipoEvento( StrToEnumerado2(ok , s, EventoString ) );
+end;
+
+function tpInfOnusToStr(const t: tpInfOnus ): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString1_3);
+end;
+
+function StrTotpInfOnus(var ok: boolean; const s: string): tpInfOnus;
+begin
+  result := tpInfOnus(StrToEnumerado2(ok, s, TGenericosString1_3));
+end;
+
+function tpOnusRemunToStr(const t: tpOnusRemun ): string;
+begin
+  result := EnumeradoToStr2(t, TGenericosString1_3);
+end;
+
+function StrTotpOnusRemun(var ok: boolean; const s: string): tpOnusRemun;
+begin
+  result := tpOnusRemun(StrToEnumerado2(ok, s, TGenericosString1_3));
 end;
 
 end.

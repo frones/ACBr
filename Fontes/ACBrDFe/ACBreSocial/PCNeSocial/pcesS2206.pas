@@ -49,7 +49,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -196,6 +196,54 @@ end;
 procedure TS2206CollectionItem.setEvtAltContratual(const Value: TEvtAltContratual);
 begin
   FEvtAltContratual.Assign(Value)
+end;
+
+{ TAltContratual }
+
+constructor TAltContratual.Create;
+begin
+  inherited;
+
+  FVinculo := TVinculo.Create;
+  FinfoRegimeTrab := TinfoRegimeTrab.Create;
+  FinfoContrato   := TInfoContratoS2206.Create;
+end;
+
+destructor TAltContratual.destroy;
+begin
+  FVinculo.Free;
+  FinfoRegimeTrab.Free;
+  FinfoContrato.Free;
+
+  inherited;
+end;
+
+{ TInfoContratoS2206 }
+
+constructor TInfoContratoS2206.Create;
+begin
+  inherited;
+
+  FServPubl := nil;
+end;
+
+destructor TInfoContratoS2206.Destroy;
+begin
+  FreeAndNil(FServPubl);
+
+  inherited;
+end;
+
+function TInfoContratoS2206.getServPubl: TServPubl;
+begin
+  if not Assigned(FServPubl) then
+    FServPubl := TServPubl.Create;
+  Result := FServPubl;
+end;
+
+function TInfoContratoS2206.servPublInst: boolean;
+begin
+  result := Assigned(FServPubl);
 end;
 
 { TEvtAltContratual }
@@ -372,7 +420,147 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtAltContratual';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideVinculo';
+      ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+
+      sSecao := 'altContratual';
+      altContratual.dtAlteracao := StringToDateTime(INIRec.ReadString(sSecao, 'dtAlteracao', '0'));
+      altContratual.dtEf        := StringToDateTime(INIRec.ReadString(sSecao, 'dtEf', '0'));
+      altContratual.dscAlt      := INIRec.ReadString(sSecao, 'dscAlt', EmptyStr);
+
+      sSecao := 'vinculo';
+      altContratual.vinculo.TpRegPrev := eSStrTotpRegPrev(Ok, INIRec.ReadString(sSecao, 'tpRegPrev', '1'));
+
+      sSecao := 'infoCeletista';
+      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.TpRegJor          := eSStrToTpRegJor(Ok, INIRec.ReadString(sSecao, 'tpRegJor', '1'));
+      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.NatAtividade      := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
+      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.dtBase            := INIRec.ReadInteger(sSecao, 'dtBase', 0);
+      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.cnpjSindCategProf := INIRec.ReadString(sSecao, 'cnpjSindCategProf', '');
+
+      sSecao := 'trabTemp';
+      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr := INIRec.ReadString(sSecao, 'justContr', '');
+
+      sSecao := 'aprend';
+      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+
+      sSecao := 'infoEstatutario';
+      altContratual.vinculo.InfoRegimeTrab.infoEstatutario.tpPlanRP := eSStrToTpPlanRP(Ok, INIRec.ReadString(sSecao, 'tpPlanRP', '1'));
+
+      sSecao := 'infoContrato';
+      altContratual.infoContrato.CodCargo    := INIRec.ReadString(sSecao, 'codCargo', '');
+      altContratual.infoContrato.CodFuncao   := INIRec.ReadString(sSecao, 'codFuncao', '');
+      altContratual.infoContrato.CodCateg    := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+      altContratual.infoContrato.codCarreira := INIRec.ReadString(sSecao, 'codCarreira', '');
+      altContratual.infoContrato.dtIngrCarr  := StringToDateTime(INIRec.ReadString(sSecao, 'dtIngrCarr', '0'));
+
+      sSecao := 'remuneracao';
+      altContratual.infoContrato.remuneracao.VrSalFx    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSalFx', ''), 0);
+      altContratual.infoContrato.remuneracao.UndSalFixo := eSStrToUndSalFixo(Ok, INIRec.ReadString(sSecao, 'undSalFixo', ''));
+      altContratual.infoContrato.remuneracao.DscSalVar  := INIRec.ReadString(sSecao, 'dscSalVar', '');
+
+      sSecao := 'duracao';
+      altContratual.infoContrato.duracao.TpContr := eSStrToTpContr(Ok, INIRec.ReadString(sSecao, 'tpContr', '1'));
+      altContratual.infoContrato.duracao.dtTerm  := StringToDateTime(INIRec.ReadString(sSecao, 'dtTerm', '0'));
+
+      sSecao := 'localTrabGeral';
+      altContratual.infoContrato.LocalTrabalho.LocalTrabGeral.TpInsc   := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      altContratual.infoContrato.LocalTrabalho.LocalTrabGeral.NrInsc   := INIRec.ReadString(sSecao, 'nrInsc', '');
+      altContratual.infoContrato.LocalTrabalho.LocalTrabGeral.DescComp := INIRec.ReadString(sSecao, 'descComp', '');
+
+      sSecao := 'localTrabDom';
+      altContratual.infoContrato.LocalTrabalho.localTrabDom.TpLograd    := INIRec.ReadString(sSecao, 'tpLograd', '');
+      altContratual.infoContrato.LocalTrabalho.localTrabDom.DscLograd   := INIRec.ReadString(sSecao, 'dscLograd', '');
+      altContratual.infoContrato.LocalTrabalho.localTrabDom.NrLograd    := INIRec.ReadString(sSecao, 'nrLograd', '');
+      altContratual.infoContrato.LocalTrabalho.localTrabDom.Complemento := INIRec.ReadString(sSecao, 'complemento', '');
+      altContratual.infoContrato.LocalTrabalho.localTrabDom.Bairro      := INIRec.ReadString(sSecao, 'bairro', '');
+      altContratual.infoContrato.LocalTrabalho.localTrabDom.Cep         := INIRec.ReadString(sSecao, 'cep', '');
+      altContratual.infoContrato.LocalTrabalho.localTrabDom.CodMunic    := INIRec.ReadInteger(sSecao, 'CodMunic', 0);
+      altContratual.infoContrato.LocalTrabalho.localTrabDom.uf          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+
+      sSecao := 'horContratual';
+      altContratual.infoContrato.horContratual.QtdHrsSem := INIRec.ReadInteger(sSecao, 'qtdHrsSem', 0);
+      altContratual.infoContrato.horContratual.TpJornada := eSStrToTpJornada(Ok, INIRec.ReadString(sSecao, 'tpJornada', '1'));
+      altContratual.infoContrato.horContratual.DscTpJorn := INIRec.ReadString(sSecao, 'dscTpJorn', '');
+      altContratual.infoContrato.horContratual.tmpParc   := StrTotpTmpParc(Ok, INIRec.ReadString(sSecao, 'tmpParc', '0'));
+
+      I := 1;
+      while true do
+      begin
+        // de 00 até 99
+        sSecao := 'horario' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'dia', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with altContratual.infoContrato.horContratual.horario.Add do
+        begin
+          dia           := eSStrToTpDia(Ok, sFim);
+          CodHorContrat := INIRec.ReadString(sSecao, 'codHorContrat', '');
+        end;
+
+        Inc(I);
+      end;
+
+      I := 1;
+      while true do
+      begin
+        // de 0 até 2
+        sSecao := 'filiacaoSindical' + IntToStrZero(I, 1);
+        sFim   := INIRec.ReadString(sSecao, 'cnpjSindTrab', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with altContratual.infoContrato.filiacaoSindical.Add do
+        begin
+          cnpjSindTrab := sFim;
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'alvaraJudicial';
+      altContratual.infoContrato.alvaraJudicial.NrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', '');
+
+      I := 1;
+      while true do
+      begin
+        // de 00 até 99
+        sSecao := 'observacoes' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'observacao', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with altContratual.infoContrato.observacoes.Add do
+        begin
+          observacao := sFim;
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'servPubl';
+      altContratual.infoContrato.servPubl.mtvAlter := eSStrToTpMtvAlt(Ok, INIRec.ReadString(sSecao, 'mtvAlter', '1'));
     end;
 
     GerarXML;
@@ -381,54 +569,6 @@ begin
   finally
      INIRec.Free;
   end;
-end;
-
-{ TAltContratual }
-
-constructor TAltContratual.Create;
-begin
-  inherited;
-
-  FVinculo := TVinculo.Create;
-  FinfoRegimeTrab := TinfoRegimeTrab.Create;
-  FinfoContrato   := TInfoContratoS2206.Create;
-end;
-
-destructor TAltContratual.destroy;
-begin
-  FVinculo.Free;
-  FinfoRegimeTrab.Free;
-  FinfoContrato.Free;
-
-  inherited;
-end;
-
-{ TInfoContratoS2206 }
-
-constructor TInfoContratoS2206.Create;
-begin
-  inherited;
-
-  FServPubl := nil;
-end;
-
-destructor TInfoContratoS2206.Destroy;
-begin
-  FreeAndNil(FServPubl);
-
-  inherited;
-end;
-
-function TInfoContratoS2206.getServPubl: TServPubl;
-begin
-  if not Assigned(FServPubl) then
-    FServPubl := TServPubl.Create;
-  Result := FServPubl;
-end;
-
-function TInfoContratoS2206.servPublInst: boolean;
-begin
-  result := Assigned(FServPubl);
 end;
 
 end.

@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -313,6 +313,139 @@ begin
   FEvtAfastTemp.Assign(Value);
 end;
 
+{ TinfoAfastamento }
+
+constructor TinfoAfastamento.create;
+begin
+  inherited;
+
+  FiniAfastamento := TiniAfastamento.Create;
+  FaltAfastamento := TaltAfastamento.Create;
+  FinfoRetif := TinfoRetif.Create;
+  FfimAfastamento := TfimAfastamento.Create;
+end;
+
+destructor TinfoAfastamento.destroy;
+begin
+  FiniAfastamento.Free;
+  FaltAfastamento.Free;
+  FinfoRetif.Free;
+  FfimAfastamento.Free;
+
+  inherited;
+end;
+
+{ tiniAfastamento }
+
+constructor tiniAfastamento.create;
+begin
+  inherited;
+
+  FinfoAtestado := nil;
+  FinfoCessao := TinfoCessao.Create;
+  FinfoMandSind := TinfoMandSind.Create;
+end;
+
+destructor tiniAfastamento.destroy;
+begin
+  FreeAndNil(FInfoAtestado);
+  FinfoCessao.Free;
+  FinfoMandSind.Free;
+
+  inherited;
+end;
+
+function tiniAfastamento.getInfoAtestado: TinfoAtestado;
+begin
+  if not Assigned(FinfoAtestado) then
+    FinfoAtestado := TinfoAtestado.create;
+  Result := FinfoAtestado;
+end;
+
+function tiniAfastamento.infoAtestadoInst: boolean;
+begin
+  result := Assigned(FinfoAtestado);
+end;
+
+{ TinfoAtestado }
+
+function TinfoAtestado.Add: TinfoAtestadoItem;
+begin
+  Result := TinfoAtestadoItem(inherited add());
+  Result.Create;
+end;
+
+constructor TinfoAtestado.create;
+begin
+  Inherited create(TinfoAtestadoItem);
+end;
+
+function TinfoAtestado.GetItem(
+  Index: Integer): TinfoAtestadoItem;
+begin
+  Result := TinfoAtestadoItem(inherited GetItem(Index));
+end;
+
+procedure TinfoAtestado.SetItem(Index: Integer;
+  Value: TinfoAtestadoItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfoAtestadoItem }
+
+constructor TinfoAtestadoItem.create;
+begin
+  FEmitente := nil;
+end;
+
+destructor TinfoAtestadoItem.destroy;
+begin
+  FreeAndNil(FEmitente);
+
+  inherited;
+end;
+
+function TinfoAtestadoItem.getEmitente: TEmitente;
+begin
+  if not assigned(FEmitente) then
+    FEmitente := TEmitente.Create;
+  Result := FEmitente;
+end;
+
+function TinfoAtestadoItem.emitenteInst: boolean;
+begin
+  result := Assigned(FEmitente);
+end;
+
+{ TaltAfastamento }
+
+constructor TaltAfastamento.Create;
+begin
+  inherited;
+
+  FAltEmpr := nil;
+end;
+
+destructor TaltAfastamento.Destroy;
+begin
+  FreeAndNil(FAltEmpr);
+
+  inherited;
+end;
+
+function TaltAfastamento.getAltEmpr: TAltEmpr;
+begin
+  if not Assigned(FAltEmpr) then
+    FAltEmpr := TAltEmpr.Create;
+  Result := FAltEmpr;
+end;
+
+function TaltAfastamento.altEmprInst: boolean;
+begin
+  result := Assigned(FAltEmpr);
+end;
+
 { TEvtAfastTemp }
 
 constructor TEvtAfastTemp.Create(AACBreSocial: TObject);
@@ -537,7 +670,75 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtAfastTemp';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideVinculo';
+      ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+      ideVinculo.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+
+      sSecao := 'iniAfastamento';
+      infoAfastamento.iniAfastamento.DtIniAfast     := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniAfast', '0'));
+      infoAfastamento.iniAfastamento.codMotAfast    := eSStrTotpMotivosAfastamento(Ok, INIRec.ReadString(sSecao, 'codMotAfast', '00'));
+      infoAfastamento.iniAfastamento.infoMesmoMtv   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'infoMesmoMtv', 'S'));
+      infoAfastamento.iniAfastamento.tpAcidTransito := eSStrTotpTpAcidTransito(Ok, INIRec.ReadString(sSecao, 'tpAcidTransito', '1'));
+      infoAfastamento.iniAfastamento.Observacao     := INIRec.ReadString(sSecao, 'observacao', '');
+
+      I := 1;
+      while true do
+      begin
+        // de 0 até 9
+        sSecao := 'infoAtestado' + IntToStrZero(I, 1);
+        sFim   := INIRec.ReadString(sSecao, 'codCID', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with infoAfastamento.iniAfastamento.infoAtestado.Add do
+        begin
+          codCID      := sFim;
+          qtDiasAfast := INIRec.ReadInteger(sSecao, 'qtDiasAfast', 0);
+
+          sSecao := 'emitente' + IntToStrZero(I, 1);
+          emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);
+          emitente.ideOC  := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', '1'));
+          emitente.nrOc   := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
+          emitente.ufOC   := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
+        end;
+
+        Inc(I);
+      end;
+
+
+      sSecao := 'infoCessao';
+      infoAfastamento.iniAfastamento.infoCessao.cnpjCess := INIRec.ReadString(sSecao, 'cnpjCess', EmptyStr);
+      infoAfastamento.iniAfastamento.infoCessao.infOnus  := StrTotpInfOnus(Ok, INIRec.ReadString(sSecao, 'infOnus', '1'));
+
+      sSecao := 'infoMandSind';
+      infoAfastamento.iniAfastamento.infoMandSind.cnpjSind     := INIRec.ReadString(sSecao, 'cnpjSind', EmptyStr);
+      infoAfastamento.iniAfastamento.infoMandSind.infOnusRemun := StrTotpOnusRemun(Ok, INIRec.ReadString(sSecao, 'infOnusRemun', '1'));
+
+      sSecao := 'infoRetif';
+      infoAfastamento.infoRetif.origRetif := INIRec.ReadInteger(sSecao, 'origRetif', 1);
+      infoAfastamento.infoRetif.tpProc    := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
+      infoAfastamento.infoRetif.nrProc    :=  INIRec.ReadString(sSecao, 'nrProc', EmptyStr);
+
+      sSecao := 'fimAfastamento';
+      infoAfastamento.fimAfastamento.dtTermAfast :=  StringToDateTime(INIRec.ReadString(sSecao, 'dtTermAfast', '0'));
     end;
 
     GerarXML;
@@ -546,139 +747,6 @@ begin
   finally
      INIRec.Free;
   end;
-end;
-
-{ TinfoAfastamento }
-
-constructor TinfoAfastamento.create;
-begin
-  inherited;
-
-  FiniAfastamento := TiniAfastamento.Create;
-  FaltAfastamento := TaltAfastamento.Create;
-  FinfoRetif := TinfoRetif.Create;
-  FfimAfastamento := TfimAfastamento.Create;
-end;
-
-destructor TinfoAfastamento.destroy;
-begin
-  FiniAfastamento.Free;
-  FaltAfastamento.Free;
-  FinfoRetif.Free;
-  FfimAfastamento.Free;
-
-  inherited;
-end;
-
-{ tiniAfastamento }
-
-constructor tiniAfastamento.create;
-begin
-  inherited;
-
-  FinfoAtestado := nil;
-  FinfoCessao := TinfoCessao.Create;
-  FinfoMandSind := TinfoMandSind.Create;
-end;
-
-destructor tiniAfastamento.destroy;
-begin
-  FreeAndNil(FInfoAtestado);
-  FinfoCessao.Free;
-  FinfoMandSind.Free;
-
-  inherited;
-end;
-
-function tiniAfastamento.getInfoAtestado: TinfoAtestado;
-begin
-  if not Assigned(FinfoAtestado) then
-    FinfoAtestado := TinfoAtestado.create;
-  Result := FinfoAtestado;
-end;
-
-function tiniAfastamento.infoAtestadoInst: boolean;
-begin
-  result := Assigned(FinfoAtestado);
-end;
-
-{ TinfoAtestado }
-
-function TinfoAtestado.Add: TinfoAtestadoItem;
-begin
-  Result := TinfoAtestadoItem(inherited add());
-  Result.Create;
-end;
-
-constructor TinfoAtestado.create;
-begin
-  Inherited create(TinfoAtestadoItem);
-end;
-
-function TinfoAtestado.GetItem(
-  Index: Integer): TinfoAtestadoItem;
-begin
-  Result := TinfoAtestadoItem(inherited GetItem(Index));
-end;
-
-procedure TinfoAtestado.SetItem(Index: Integer;
-  Value: TinfoAtestadoItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TinfoAtestadoItem }
-
-constructor TinfoAtestadoItem.create;
-begin
-  FEmitente := nil;
-end;
-
-destructor TinfoAtestadoItem.destroy;
-begin
-  FreeAndNil(FEmitente);
-
-  inherited;
-end;
-
-function TinfoAtestadoItem.getEmitente: TEmitente;
-begin
-  if not assigned(FEmitente) then
-    FEmitente := TEmitente.Create;
-  Result := FEmitente;
-end;
-
-function TinfoAtestadoItem.emitenteInst: boolean;
-begin
-  result := Assigned(FEmitente);
-end;
-
-{ TaltAfastamento }
-
-constructor TaltAfastamento.Create;
-begin
-  inherited;
-
-  FAltEmpr := nil;
-end;
-
-destructor TaltAfastamento.Destroy;
-begin
-  FreeAndNil(FAltEmpr);
-
-  inherited;
-end;
-
-function TaltAfastamento.getAltEmpr: TAltEmpr;
-begin
-  if not Assigned(FAltEmpr) then
-    FAltEmpr := TAltEmpr.Create;
-  Result := FAltEmpr;
-end;
-
-function TaltAfastamento.altEmprInst: boolean;
-begin
-  result := Assigned(FAltEmpr);
 end;
 
 end.

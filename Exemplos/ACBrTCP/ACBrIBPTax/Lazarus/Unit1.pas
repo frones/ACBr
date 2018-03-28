@@ -69,7 +69,14 @@ type
     procedure ACBrIBPTax1ErroImportacao(const ALinha, AErro: string);
     procedure btnAPIConsultarProdutoClick(Sender: TObject);
   private
-
+    StrNCM: string;
+    StrUF: string;
+    StrEX_TIPI: String;
+    StrCodInterno: string;
+    StrDescricao: string;
+    StrUnidade: string;
+    StrValor: string;
+    StrGTIN: string;
   public
 
   end;
@@ -80,7 +87,8 @@ var
 implementation
 
 uses
-  ProxyConfig;
+  ProxyConfig,
+  ACBrUtil;
 
 {$R *.lfm}
 
@@ -227,10 +235,24 @@ begin
   ACBrIBPTax1.CNPJEmpresa := edtCNPJ.Text;
   ACBrIBPTax1.Token       := edtToken.Text;
 
-  Retorno := ACBrIBPTax1.API_ConsultarProduto(
-    InputBox('NCM', 'Informe o NCM (8 dígitos):', ''),
-    InputBox('UF', 'Informe a UF (Sigla):', '')
-  );
+  StrNCM := InputBox('NCM', 'Informe o NCM (8 dígitos):', StrNCM);
+  StrUF := InputBox('UF', 'Informe a UF (Sigla):', StrUF);
+  StrEX_TIPI := InputBox('Exceção', 'Informe a exceção da TIPI (0 para nenhuma)', StrEX_TIPI);
+  StrCodInterno := InputBox('Código interno', 'Informe o código interno (opcional)', StrCodInterno);
+  StrDescricao := InputBox('Descrição', 'Informe a descrição do item:', StrDescricao);
+  StrUnidade := InputBox('Unidade de medida', 'Informe a unidade de medida', StrUnidade);
+  StrValor := InputBox('Valor', 'Informe o valor', StrValor);
+  StrGTIN := InputBox('GTIN', 'Informe o GTIN', 'SEM GTIN');
+
+  Retorno := ACBrIBPTax1.API_ConsultarProduto(StrNCM
+    , StrUF
+    , StrToInt(StrEX_TIPI)
+    , StrCodInterno
+    , StrDescricao
+    , StrUnidade
+    , StringToFloatDef(StrValor, 0)
+    , StrGTIN
+    );
 
   Memo2.Clear;
   Memo2.Lines.Add('Codigo : ' + Retorno.Codigo);
@@ -239,7 +261,18 @@ begin
   Memo2.Lines.Add('Descricao : ' + Retorno.Descricao);
   Memo2.Lines.Add('Aliq. Nacional : ' + FloatToStr(Retorno.Nacional));
   Memo2.Lines.Add('Aliq. Estadual : ' + FloatToStr(Retorno.Estadual));
+  Memo2.Lines.Add('Aliq. Municipal: ' + FloatToStr(Retorno.Municipal));
   Memo2.Lines.Add('Aliq. Importado : ' + FloatToStr(Retorno.Importado));
+  Memo2.Lines.Add('Início Vigência: ' + DateToStr(Retorno.VigenciaInicio));
+  Memo2.Lines.Add('Fim Vigência: ' + DateToStr(Retorno.VigenciaFim));
+  Memo2.Lines.Add('Versão: ' + Retorno.Versao);
+  Memo2.Lines.Add('Chave: ' + Retorno.Chave);
+  Memo2.Lines.Add('Fonte: ' + Retorno.Fonte);
+  Memo2.Lines.Add('Valor : ' + FloatToStr(Retorno.Valor));
+  Memo2.Lines.Add('Valor Tributo Nacional : ' + FloatToStr(Retorno.ValorTributoNacional));
+  Memo2.Lines.Add('Valor Tributo Estadual : ' + FloatToStr(Retorno.ValorTributoEstadual));
+  Memo2.Lines.Add('Valor Tributo Municipal: ' + FloatToStr(Retorno.ValorTributoMunicipal));
+  Memo2.Lines.Add('Valor Tributo Importado : ' + FloatToStr(Retorno.ValorTributoImportado));
   Memo2.Lines.Add('JSON : ' + Retorno.JSON);
 end;
 

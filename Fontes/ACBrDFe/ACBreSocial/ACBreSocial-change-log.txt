@@ -49,6 +49,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/03/2018
+-- pcesS2299 --
+[*] https://www.projetoacbr.com.br/forum/topic/42296-s2299-desligamento-adi%C3%A7%C3%A3o-de-campo/?do=findComment&comment=279595
+   Por: Hudson G Leite
+
 -- pcesS2206 / pcesS2210 / pcesS2220 / pcesS2230 --
 [+] Implementação da leitura do arquivo INI referente aos eventos S-2206, 
     S-2210, S-2220 e S-2230.

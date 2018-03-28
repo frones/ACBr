@@ -69,7 +69,8 @@ type
   TIdeADCItem = class;
   TIdePeriodoCollection = class;
   TIdePeriodoItem = class;
-  TconsigFGTS = class;
+  TConsigFGTSCollection = class;
+  TConsigFGTSItem = class;
   TtransfTit = class;
   TInfoTrabIntermCollection = class;
   TInfoTrabIntermItem = class;
@@ -112,7 +113,7 @@ type
     procedure GerarInfoPerAnt(pInfoPerAnt: TInfoPerAnt);
     procedure GerarIdeADC(pIdeADC: TIdeADCCollection);
     procedure GerarIdePeriodo(pIdePeriodo: TIdePeriodoCollection);
-    procedure GerarconsigFGTS(obj: TconsigFGTS);
+    procedure GerarconsigFGTS(obj: TConsigFGTSCollection);
     procedure GerarTransfTit(obj: TtransfTit);
     procedure GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
   public
@@ -145,7 +146,7 @@ type
     FSucessaoVinc : TSucessaoVinc;
     FVerbasResc : TVerbasRescS2299;
     FQuarentena: TQuarentena;
-    FconsigFGTS: TconsigFGTS;
+    FconsigFGTS: TConsigFGTSCollection;
     FInfoASO: TInfoASO;
     FtransfTit: TtransfTit;
     FQtdDiasInterm: Integer;
@@ -172,7 +173,7 @@ type
     property SucessaoVinc : TSucessaoVinc read FSucessaoVinc write FSucessaoVinc;
     property VerbasResc : TVerbasRescS2299 read getVerbasResc write FVerbasResc;
     property Quarentena: TQuarentena read FQuarentena write FQuarentena;
-    property consigFGTS: TconsigFGTS read FconsigFGTS write FconsigFGTS;
+    property consigFGTS: TConsigFGTSCollection read FconsigFGTS write FconsigFGTS;
     property InfoASO : TInfoASO read FInfoASO write FInfoASO;
     property transfTit: TtransfTit read FtransfTit write FtransfTit;
     property QtdDiasInterm: Integer read FQtdDiasInterm write FQtdDiasInterm;
@@ -293,7 +294,17 @@ type
     property dmDev: TDmDevCollection read FDmDev write FDmDev;
   end;
 
-  TconsigFGTS = class(TPersistent)
+  TConsigFGTSCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TConsigFGTSItem;
+    procedure SetItem(Index: Integer; Value: TConsigFGTSItem);
+  public
+    constructor Create; reintroduce;
+    function Add: TConsigFGTSItem;
+    property Items[Index: Integer]: TConsigFGTSItem read GetItem write SetItem; default;
+  end;
+
+  TConsigFGTSItem = class(TCollectionItem)
   private
     FidConsig: tpSimNao;
     FinsConsig: string;
@@ -333,7 +344,7 @@ type
 implementation
 
 uses
-  IniFiles,
+  IniFiles,StrUtils,
   ACBreSocial, ACBrDFeUtil;
 
 { TS2299Collection }
@@ -407,9 +418,9 @@ begin
     Gerador.wCampo(tcStr, '', 'observacao',   1, 255, 0, obj.Observacao)
   else
     GerarObservacoes(obj.observacoes);
-
-  GerarSucessaoVinc(obj.SucessaoVinc);
-  if obj.transfTit.cpfSubstituto <> '' then
+  if (StrToIntDef(obj.mtvDeslig,0) in [11, 12, 13, 25, 28, 29, 30]) then
+     GerarSucessaoVinc(obj.SucessaoVinc);
+  if (obj.transfTit.cpfSubstituto <> '') And (obj.mtvDeslig='34') then
     GerarTransfTit(obj.transfTit);
 
   if obj.verbasRescInst then
@@ -559,14 +570,21 @@ begin
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
-procedure TEvtDeslig.GerarconsigFGTS(obj: TconsigFGTS);
+procedure TEvtDeslig.GerarconsigFGTS(obj: TConsigFGTSCollection);
+   var zCount,i : Integer;
 begin
-  Gerador.wGrupo('consigFGTS');
-  if (VersaoDF = ve02_04_01) then
-    Gerador.wCampo(tcStr, '', 'idConsig',  1,  1, 1, eSSimNaoToStr(obj.idConsig));
-  Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj.insConsig);
-  Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj.nrContr);
-  Gerador.wGrupo('/consigFGTS');
+  zCount := StrToInt(IfThen((VersaoDF = ve02_04_01), '1', IntToStr(obj.Count)));
+  for i := 0 to pred(zCount) do
+  begin
+     Gerador.wGrupo('consigFGTS');
+     if (VersaoDF = ve02_04_01) then
+       Gerador.wCampo(tcStr, '', 'idConsig',  1,  1, 1, eSSimNaoToStr(obj[i].idConsig));
+     Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj[i].insConsig);
+     Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj[i].nrContr);
+     Gerador.wGrupo('/consigFGTS');
+  end;
+  if zCount > 9 then
+    Gerador.wAlerta('', 'consigFGTS', 'Informações sobre operação de crédito consignado com garantia de FGTS', ERR_MSG_MAIOR_MAXIMO + '9')
 end;
 
 procedure TEvtDeslig.GerarTransfTit(obj: TtransfTit);
@@ -627,14 +645,13 @@ end;
 constructor TInfoDeslig.Create;
 begin
   inherited;
-
   FSucessaoVinc := TSucessaoVinc.Create;
   FVerbasResc   := nil;
   FQuarentena   := TQuarentena.Create;
-  FconsigFGTS   := TconsigFGTS.Create;
   FInfoASO      := TInfoASO.Create;
   FtransfTit    := TtransfTit.Create;
   Fobservacoes  := TobservacoesCollection.Create;
+  FconsigFGTS   := TConsigFGTSCollection.Create;
 end;
 
 destructor TInfoDeslig.destroy;
@@ -642,11 +659,10 @@ begin
   FSucessaoVinc.Free;
   FreeAndNil(FVerbasResc);
   FQuarentena.Free;
-  FconsigFGTS.Free;
   FInfoASO.Free;
   FtransfTit.Free;
   Fobservacoes.Free;
-
+  FreeAndNil(FconsigFGTS);
   inherited;
 end;
 
@@ -875,6 +891,28 @@ end;
 
 procedure TInfoTrabIntermCollection.SetItem(Index: Integer;
   Value: TInfoTrabIntermItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TConsigFGTSCollection }
+
+function TConsigFGTSCollection.Add: TConsigFGTSItem;
+begin
+  Result := TConsigFGTSItem(inherited Add);
+end;
+
+constructor TConsigFGTSCollection.Create;
+begin
+  inherited Create(TConsigFGTSItem);
+end;
+
+function TConsigFGTSCollection.GetItem(Index: Integer): TConsigFGTSItem;
+begin
+  Result := TConsigFGTSItem(inherited GetItem(Index));
+end;
+
+procedure TConsigFGTSCollection.SetItem(Index: Integer; Value: TConsigFGTSItem);
 begin
   inherited SetItem(Index, Value);
 end;

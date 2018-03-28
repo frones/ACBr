@@ -828,7 +828,8 @@ begin
     end;
 
     NFSe.Producao := _StrToSimNao(ok, Leitor.rCampo(tcStr, 'Producao'));
-    NFSe.Servico.CodigoCnae := Leitor.rCampo(tcStr, 'CodigoAtividadeEconomica');
+    NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoAtividadeEconomica');
+    NFSe.Servico.CodigoCnae := codCNAE;
     NFSe.Servico.ItemListaServico := codLCServ;
 
     if TabServicosExt then
@@ -2322,7 +2323,8 @@ begin
       NFSe.Servico.CodigoMunicipio := IntToStr(NFSe.Servico.MunicipioIncidencia);
     end;
 
-    NFSe.Servico.CodigoCnae := Leitor.rCampo(tcStr, 'CodigoAtividadeEconomica');
+    NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoAtividadeEconomica');
+    NFSe.Servico.CodigoCnae := codCNAE;
     NFSe.Servico.ItemListaServico := codLCServ;
 
     if TabServicosExt then

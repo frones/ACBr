@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2018
+-- pnfsNFSeW_Agili, pnfsNFSeR --
+[*] Ajustes visando permitir informar valores diferentes para as tags
+    "CodigoAtividadeEconomica" e "CodigoCnae" para o provedor Agili.
+  https://www.projetoacbr.com.br/forum/topic/42250-nfs-e-provedor-agiliv2/  
+  Por: BigWings
+
 27/03/2018
 -- pnfsNFSeW_ABRASFv2 --
 [*] Alterações, visando o provedor Bethav2

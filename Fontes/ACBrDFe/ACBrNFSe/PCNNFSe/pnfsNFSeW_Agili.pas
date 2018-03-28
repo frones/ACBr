@@ -523,10 +523,15 @@ begin
   end;
 
   GerarResponsavelISSQN;
-  if VersaoNFSe = ve100 then
-    Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividadeEconomica', 01, 140, 1, FormatarCnae(NFSe.Servico.CodigoCnae), '')
+  if NaoEstaVazio(NFSe.Servico.CodigoTributacaoMunicipio) then
+    Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividadeEconomica', 01, 140, 1, NFSe.Servico.CodigoTributacaoMunicipio, '')
   else
-    Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividadeEconomica', 01, 140, 1, NFSe.Servico.CodigoCnae, '');
+  begin
+    if VersaoNFSe = ve100 then
+      Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividadeEconomica', 01, 140, 1, FormatarCnae(NFSe.Servico.CodigoCnae), '')
+    else
+      Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividadeEconomica', 01, 140, 1, NFSe.Servico.CodigoCnae, '');
+  end;
 
   if VersaoNFSe = ve200 then
     Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 15, 0, OnlyNumber(NFSe.Servico.CodigoCnae), '');

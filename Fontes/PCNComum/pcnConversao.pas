@@ -108,7 +108,7 @@ type
   TPosRecibo = (prCabecalho, prRodape);
   TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
 
-  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao,
+  TpcnTpEvento = (teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao,
                   teManifDestCiencia, teManifDestDesconhecimento, teManifDestOperNaoRealizada,
                   teEncerramento, teEPEC, teInclusaoCondutor,
                   teMultiModal, teRegistroPassagem, teRegistroPassagemBRId,
@@ -119,7 +119,9 @@ type
                   teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
                   teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
                   teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2,
-                  teNaoEmbarque, teMDFeCancelado2,teMDFeAutorizadoComCTe);
+                  teNaoEmbarque, teMDFeCancelado2,teMDFeAutorizadoComCTe,
+                  teRegPasNfeProMDFe, teRegPasNfeProMDFeCte, teRegPasAutMDFeComCte,
+                  teCancelamentoMDFeAutComCTe, teAverbacaoExportacao);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -168,19 +170,21 @@ type
 
   TIndicador = (tiSim, tiNao);
 const
-  TpcnTpEventoString : array[0..36] of String =('110110', '110111', '210200',
-                                                '210210', '210220', '210240',
-                                                '110112', '110113', '110114',
-                                                '110160', '310620', '510620',
-                                                '110140', '610600', '610501',
-                                                '610550', '610601', '610611',
-                                                '990900', '111500', '111501',
-                                                '111502', '111503', '411500',
-                                                '411501', '411502', '411503',
-                                                '610500', '990910', '000000',
-                                                '610610', '610110', '110170',
-                                                '310610', '110115', '310611',
-                                                '610614');
+  TpcnTpEventoString : array[0..42] of String =('-99999', '110110', '110111',
+                                                '210200', '210210', '210220',
+                                                '210240', '110112', '110113',
+                                                '110114', '110160', '310620',
+                                                '510620', '110140', '610600',
+                                                '610501', '610550', '610601',
+                                                '610611', '990900', '111500',
+                                                '111501', '111502', '111503',
+                                                '411500', '411501', '411502',
+                                                '411503', '610500', '990910',
+                                                '000000', '610610', '610110',
+                                                '110170', '310610', '110115',
+                                                '310611', '610614', '610510',
+                                                '610514', '610554', '610615',
+                                                '790700');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1037,7 +1041,7 @@ end;
 function TpEventoToDescStr(const t: TpcnTpEvento): string;
 begin
   result := EnumeradoToStr(t,
-             ['CCe', 'Cancelamento', 'Confirmacao', 'Ciencia',
+             ['Evento não Mapeado', 'CCe', 'Cancelamento', 'Confirmacao', 'Ciencia',
               'Desconhecimento', 'NaoRealizada',
               'Encerramento', 'EPEC', 'IncCondutor', 'Multimodal',
               'RegPassagem', 'RegPassagemBRId', 'EPEC',
@@ -1048,8 +1052,13 @@ begin
               'EventoFiscoPP2', 'EventoFiscoCPP1', 'EventoFiscoCPP2',
               'RegPassagemNFe', 'ConfInternalizacao', 'CTeAutorizado',
               'MDFeAutorizado', 'PrestDesacordo', 'GTV', 'MDFeAutorizado2',
-              'NaoEmbarque', 'MDFeCancelado2','MDFeAutorizadoComCTe'],
-             [teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
+              'NaoEmbarque', 'MDFeCancelado2','MDFeAutorizadoComCTe',
+              'Registro de Passagem de NFe propagado pelo MDFe',
+              'Registro de Passagem de NFe propagado pelo MDFe/Cte',
+              'Registro de Passagem Automatico MDF-e com CT-e',
+              'Cancelamento de MDF-e Autorizado com CT-e',
+              'Averbação de Exportação'],
+             [teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
               teRegistroPassagem, teRegistroPassagemBRId, teEPECNFe,
@@ -1060,7 +1069,9 @@ begin
               teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
               teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
               teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2,
-              teNaoEmbarque, teMDFeCancelado2, teMDFeAutorizadoComCTe]);
+              teNaoEmbarque, teMDFeCancelado2, teMDFeAutorizadoComCTe,
+              teRegPasNfeProMDFe, teRegPasNfeProMDFeCte, teRegPasAutMDFeComCte,
+              teCancelamentoMDFeAutComCTe, teAverbacaoExportacao]);
 end;
 
 

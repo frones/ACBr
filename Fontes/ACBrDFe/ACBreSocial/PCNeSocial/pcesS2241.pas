@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -284,6 +284,24 @@ begin
   inherited;
 end;
 
+{ TS2241Collection }
+
+function TS2241Collection.Add: TS2241CollectionItem;
+begin
+  Result := TS2241CollectionItem(inherited Add);
+  Result.Create(TComponent(Self.Owner));
+end;
+
+function TS2241Collection.GetItem(Index: Integer): TS2241CollectionItem;
+begin
+  Result := TS2241CollectionItem(inherited GetItem(Index));
+end;
+
+procedure TS2241Collection.SetItem(Index: Integer; Value: TS2241CollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
 { TEvtInsApo }
 
 constructor TEvtInsApo.Create(AACBreSocial: TObject);
@@ -483,7 +501,7 @@ var
   INIRec: TMemIniFile;
   Ok: Boolean;
   sSecao, sFim: String;
-  I: Integer;
+  I, J: Integer;
 begin
   Result := False;
 
@@ -493,7 +511,228 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtInsApo';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideVinculo';
+      ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+
+      sSecao := 'iniInsalPeric';
+      InsalPeric.iniInsalPeric.DtiniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'infoAmb' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with InsalPeric.iniInsalPeric.infoAmb.Add do
+        begin
+          codAmb := sFim;
+
+          J := 1;
+          while true do
+          begin
+            // de 001 até 999
+            sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+            sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with fatRisco.Add do
+            begin
+              codFatRis := sFim;
+            end;
+
+            Inc(J);
+          end;
+
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'altInsalPeric';
+      InsalPeric.altInsalPeric.DtaltCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtAltCondicao', '0'));
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'infoAmb' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with InsalPeric.altInsalPeric.infoAmb.Add do
+        begin
+          codAmb := sFim;
+
+          J := 1;
+          while true do
+          begin
+            // de 001 até 999
+            sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+            sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with fatRisco.Add do
+            begin
+              codFatRis := sFim;
+            end;
+
+            Inc(J);
+          end;
+
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'fimInsalPeric';
+      InsalPeric.fimInsalPeric.dtFimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'infoAmb' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with InsalPeric.fimInsalPeric.infoAmb.Add do
+        begin
+          codAmb := sFim;
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'iniAposentEsp';
+      AposentEsp.iniAposentEsp.DtiniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'infoAmb' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with AposentEsp.iniAposentEsp.infoAmb.Add do
+        begin
+          codAmb := sFim;
+
+          J := 1;
+          while true do
+          begin
+            // de 001 até 999
+            sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+            sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with fatRisco.Add do
+            begin
+              codFatRis := sFim;
+            end;
+
+            Inc(J);
+          end;
+
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'altAposentEsp';
+      AposentEsp.altAposentEsp.DtaltCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtAltCondicao', '0'));
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'infoAmb' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with AposentEsp.altAposentEsp.infoAmb.Add do
+        begin
+          codAmb := sFim;
+
+          J := 1;
+          while true do
+          begin
+            // de 001 até 999
+            sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+            sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with fatRisco.Add do
+            begin
+              codFatRis := sFim;
+            end;
+
+            Inc(J);
+          end;
+
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'fimAposentEsp';
+      AposentEsp.fimAposentEsp.DtfimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'infoAmb' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with AposentEsp.fimAposentEsp.infoAmb.Add do
+        begin
+          codAmb := sFim;
+        end;
+
+        Inc(I);
+      end;
+
     end;
 
     GerarXML;
@@ -502,24 +741,6 @@ begin
   finally
      INIRec.Free;
   end;
-end;
-
-{ TS2241Collection }
-
-function TS2241Collection.Add: TS2241CollectionItem;
-begin
-  Result := TS2241CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
-end;
-
-function TS2241Collection.GetItem(Index: Integer): TS2241CollectionItem;
-begin
-  Result := TS2241CollectionItem(inherited GetItem(Index));
-end;
-
-procedure TS2241Collection.SetItem(Index: Integer; Value: TS2241CollectionItem);
-begin
-  inherited SetItem(Index, Value);
 end;
 
 end.

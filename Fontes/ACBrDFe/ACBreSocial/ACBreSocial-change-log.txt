@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/03/2018
+-- pcesS2240 / pcesS2241 / pcesS2250 / pcesS2260 / pcesS2298 --
+[+] Implementação da leitura do arquivo INI referente aos eventos S-2240, 
+    S-2241, S-2250, S-2260 e S-2298.
+   Por: Italo Jurisato Junior
+
 28/03/2018
 -- pcesS2299 --
 [*] https://www.projetoacbr.com.br/forum/topic/42296-s2299-desligamento-adi%C3%A7%C3%A3o-de-campo/?do=findComment&comment=279595

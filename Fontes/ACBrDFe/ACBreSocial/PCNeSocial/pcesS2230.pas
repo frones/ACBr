@@ -723,7 +723,6 @@ begin
         Inc(I);
       end;
 
-
       sSecao := 'infoCessao';
       infoAfastamento.iniAfastamento.infoCessao.cnpjCess := INIRec.ReadString(sSecao, 'cnpjCess', EmptyStr);
       infoAfastamento.iniAfastamento.infoCessao.infOnus  := StrTotpInfOnus(Ok, INIRec.ReadString(sSecao, 'infOnus', '1'));
@@ -738,7 +737,7 @@ begin
       infoAfastamento.infoRetif.nrProc    :=  INIRec.ReadString(sSecao, 'nrProc', EmptyStr);
 
       sSecao := 'fimAfastamento';
-      infoAfastamento.fimAfastamento.dtTermAfast :=  StringToDateTime(INIRec.ReadString(sSecao, 'dtTermAfast', '0'));
+      infoAfastamento.fimAfastamento.dtTermAfast := StringToDateTime(INIRec.ReadString(sSecao, 'dtTermAfast', '0'));
     end;
 
     GerarXML;

@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -250,7 +250,33 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtReintegr';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideVinculo';
+      ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+
+      sSecao := 'infoReintegr';
+      infoReintegr.tpReint       := eSStrToTpReint(Ok, INIRec.ReadString(sSecao, 'tpReint', '1'));
+      infoReintegr.nrProcJud     := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
+      infoReintegr.nrLeiAnistia  := eSStrToNrLeiAnistia(Ok, INIRec.ReadString(sSecao, 'nrLeiAnistia', '1'));
+      infoReintegr.dtEfetRetorno := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfetRetorno', '0'));
+      infoReintegr.dtEfeito      := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfeito', '0'));
+      infoReintegr.indPagtoJuizo := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPagtoJuizo', 'S'));
     end;
 
     GerarXML;

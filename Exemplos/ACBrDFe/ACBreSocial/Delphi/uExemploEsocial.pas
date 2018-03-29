@@ -3162,9 +3162,13 @@ begin
 
     EvtDeslig.InfoDeslig.Quarentena.dtFimQuar := Now;
 
-    EvtDeslig.InfoDeslig.consigFGTS.idConsig := tpSim;
-    EvtDeslig.InfoDeslig.consigFGTS.insConsig := '12345';
-    EvtDeslig.InfoDeslig.consigFGTS.nrContr := '123456';
+    with EvtDeslig.InfoDeslig.consigFGTS.Add do
+    begin
+      idConsig := tpSim;
+      insConsig := '12345';
+      nrContr := '123456';
+    end;
+
   end;
 end;
 

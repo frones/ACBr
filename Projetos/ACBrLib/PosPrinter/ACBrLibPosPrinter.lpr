@@ -55,7 +55,6 @@ begin
   {$ENDIF}
 
   pLibClass := TACBrLibPosPrinter; // Ajusta a classe a ser criada
-
   MainThreadID := GetCurrentThreadId();
 end.
 

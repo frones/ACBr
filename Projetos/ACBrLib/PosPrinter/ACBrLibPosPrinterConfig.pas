@@ -247,6 +247,12 @@ begin
   FConfigQRCode.LarguraModulo :=  AIni.ReadInteger(CSessaoConfigQRCode, CChaveQRLarguraModulo, FConfigQRCode.LarguraModulo);
   FConfigQRCode.ErrorLevel :=  AIni.ReadInteger(CSessaoConfigQRCode, CChaveQRErrorLevel, FConfigQRCode.ErrorLevel);
 
+  FConfigLogo.IgnorarLogo := AIni.ReadBool(CSessaoConfigLogo, CChaveLGIgnorarLogo, FConfigLogo.IgnorarLogo);
+  FConfigLogo.KeyCode1 := AIni.ReadInteger(CSessaoConfigLogo, CChaveLGKeyCode1, FConfigLogo.KeyCode1);
+  FConfigLogo.KeyCode2 := AIni.ReadInteger(CSessaoConfigLogo, CChaveLGKeyCode2, FConfigLogo.KeyCode2);
+  FConfigLogo.FatorX := AIni.ReadInteger(CSessaoConfigLogo, CChaveLGFatorX, FConfigLogo.FatorX);
+  FConfigLogo.FatorY := AIni.ReadInteger(CSessaoConfigLogo, CChaveLGFatorY, FConfigLogo.FatorY);
+
   FConfigGaveta.SinalInvertido :=  AIni.ReadBool(CSessaoConfigGaveta, CChaveGVSinalInvertido, FConfigGaveta.SinalInvertido);
   FConfigGaveta.TempoON :=  AIni.ReadInteger(CSessaoConfigGaveta, CChaveGVTempoON, FConfigGaveta.TempoON);
   FConfigGaveta.TempoOFF :=  AIni.ReadInteger(CSessaoConfigGaveta, CChaveGVTempoOFF, FConfigGaveta.TempoOFF);
@@ -275,6 +281,12 @@ begin
   AIni.WriteInteger(CSessaoConfigQRCode, CChaveQRTipo, FConfigQRCode.Tipo);
   AIni.WriteInteger(CSessaoConfigQRCode, CChaveQRLarguraModulo, FConfigQRCode.LarguraModulo);
   AIni.WriteInteger(CSessaoConfigQRCode, CChaveQRErrorLevel, FConfigQRCode.ErrorLevel);
+
+  AIni.WriteBool(CSessaoConfigLogo, CChaveLGIgnorarLogo, FConfigLogo.IgnorarLogo);
+  AIni.WriteInteger(CSessaoConfigLogo, CChaveLGKeyCode1, FConfigLogo.KeyCode1);
+  AIni.WriteInteger(CSessaoConfigLogo, CChaveLGKeyCode2, FConfigLogo.KeyCode2);
+  AIni.WriteInteger(CSessaoConfigLogo, CChaveLGFatorX, FConfigLogo.FatorX);
+  AIni.WriteInteger(CSessaoConfigLogo, CChaveLGFatorY, FConfigLogo.FatorY);
 
   AIni.WriteBool(CSessaoConfigGaveta, CChaveGVSinalInvertido, FConfigGaveta.SinalInvertido);
   AIni.WriteInteger(CSessaoConfigGaveta, CChaveGVTempoON, FConfigGaveta.TempoON);

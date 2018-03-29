@@ -73,6 +73,12 @@ const
   CChaveQRLarguraModulo = 'LarguraModulo';
   CChaveQRErrorLevel = 'ErrorLevel';
 
+  CChaveLGIgnorarLogo = 'IgnorarLogo';
+  CChaveLGKeyCode1 = 'KeyCode1';
+  CChaveLGKeyCode2 = 'KeyCode2';
+  CChaveLGFatorX = 'FatorX';
+  CChaveLGFatorY = 'FatorY';
+
   CChaveGVSinalInvertido = 'SinalInvertido';
   CChaveGVTempoON = 'TempoON';
   CChaveGVTempoOFF = 'TempoOFF';

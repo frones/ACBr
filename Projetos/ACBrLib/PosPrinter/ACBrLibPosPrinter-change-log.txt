@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/03/2018
+--- ACBrLibPosPrinterConfig ---
+[-] Corrigido de não salvar as configurações de Logo.  Por: (Rafael Dias)
+
+--- ACBrLibPosPrinterDataModule ---
+[-] Corrigido erro na hora de setar as propriedades do componente.  Por: (Rafael Dias)
+
 --- ACBrLibPosPrinter ---
 [+] Finalizado a implementação do metodos do ACBrPosPrinter.  Por: (Rafael Dias)
 [-] Correção na compilação CDECL x86. Por: (Rafael Dias)

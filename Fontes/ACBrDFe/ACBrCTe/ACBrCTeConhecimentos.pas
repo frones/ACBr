@@ -2536,7 +2536,7 @@ begin
   N := PosCTe;
   while N > 0 do
   begin
-    if TACBrCTe(ACBrCTe).Configuracoes.Geral.ModeloDF = moCTeOS then
+    if Modelo = moCTeOS then
     begin
       P := pos('</cteOSProc>', XMLStr);
 

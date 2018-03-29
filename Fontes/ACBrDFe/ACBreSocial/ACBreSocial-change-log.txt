@@ -49,6 +49,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/03/2018
+-- pcesS2299 / pcesS2300 --
+[+] Implementação da leitura do arquivo INI referente aos eventos S-2299 e 
+    S-2300.
 -- pcesS2240 / pcesS2241 / pcesS2250 / pcesS2260 / pcesS2298 --
 [+] Implementação da leitura do arquivo INI referente aos eventos S-2240, 
     S-2241, S-2250, S-2260 e S-2298.

@@ -49,6 +49,7 @@ const
   CSessaoConfigQRCode = 'ConfigQRCode';
   CSessaoConfigLogo = 'ConfigLogo';
   CSessaoConfigGaveta = 'ConfigGaveta';
+  CSessaoDevice = 'Device';
 
   CChaveModelo = 'Modelo';
   CChavePorta = 'Porta';
@@ -75,6 +76,17 @@ const
   CChaveGVSinalInvertido = 'SinalInvertido';
   CChaveGVTempoON = 'TempoON';
   CChaveGVTempoOFF = 'TempoOFF';
+
+  CChaveDVBaud = 'Baud';
+  CChaveDVData = 'Data';
+  CChaveDVParity = 'Parity';
+  CChaveDVStop = 'Stop';
+  CChaveDVMaxBandwidth = 'MaxBandwidth';
+  CChaveDVSendBytesCount = 'SendBytesCount';
+  CChaveDVSendBytesInterval = 'SendBytesInterval';
+  CChaveDVHandShake = 'HandShake';
+  CChaveDVSoftFlow = 'SoftFlow';
+  CChaveDVHardFlow = 'HardFlow';
 
 implementation
 

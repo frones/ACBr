@@ -23,7 +23,28 @@ exports
   POS_ConfigLer,
   POS_ConfigGravar,
   POS_ConfigLerValor,
-  POS_ConfigGravarValor;
+  POS_ConfigGravarValor,
+
+  //Ativar
+  POS_Ativar,
+  POS_Desativar,
+
+  //Comandos de impressão
+  POS_Imprimir,
+  POS_ImprimirLinha,
+  POS_ImprimirCmd,
+  POS_ImprimirTags,
+
+  //Diversos
+  POS_TxRx,
+  POS_Zerar,
+  POS_InicializarPos,
+  POS_Reset,
+  POS_PularLinhas,
+  POS_CortarPapel,
+  POS_AbrirGaveta,
+  POS_LerInfoImpressora,
+  POS_LerStatusImpressora;
 
 begin
   {$IFDEF DEBUG}

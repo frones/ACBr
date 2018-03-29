@@ -43,8 +43,40 @@ uses
 
 type
 
+  { TDeviceConfig }
+  TDeviceConfig = class
+  private
+    FBaud: Integer;
+    FData: Integer;
+    FParity: TACBrSerialParity;
+    FStop: TACBrSerialStop;
+    FMaxBandwidth: Integer;
+    FSendBytesCount: Integer;
+    FSendBytesInterval: Integer;
+    FHandShake: TACBrHandShake;
+    FSoftFlow: Boolean;
+    FHardFlow: Boolean;
+
+  public
+    constructor Create;
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
+
+    property Baud: Integer read FBaud write FBaud;
+    property Data: Integer read FData write FData;
+    property Parity: TACBrSerialParity read FParity write FParity;
+    property Stop: TACBrSerialStop read FStop write FStop;
+    property MaxBandwidth: Integer read  FMaxBandwidth write FMaxBandwidth;
+    property SendBytesCount: Integer read  FSendBytesCount write FSendBytesCount;
+    property SendBytesInterval: Integer read  FSendBytesInterval write FSendBytesInterval;
+    property HandShake: TACBrHandShake read FHandShake write FHandShake;
+    property SoftFlow: Boolean read FSoftFlow write FSoftFlow;
+    property HardFlow: Boolean read FHardFlow write FHardFlow;
+
+  end;
+
   { TPosPrinterConfig }
-  TPosPrinterConfig = class(TPersistent)
+  TPosPrinterConfig = class
   private
     FModelo: TACBrPosPrinterModelo;
     FPorta: String;
@@ -65,7 +97,7 @@ type
 
   public
     constructor Create;
-    destructor Destroy; override;
+    destructor Destroy;
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
@@ -92,6 +124,7 @@ type
   TLibPosPrinterConfig = class(TLibConfig)
   private
     FPosPrinterConfig: TPosPrinterConfig;
+    FDevice: TDeviceConfig;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
@@ -105,14 +138,59 @@ type
     procedure Gravar; override;
 
     property PosPrinterConfig: TPosPrinterConfig read FPosPrinterConfig;
+    property DeviceConfig: TDeviceConfig read FDevice;
   end;
-
 
 implementation
 
 uses
   ACBrLibPosPrinterClass, ACBrLibPosPrinterConsts, ACBrLibConsts, ACBrLibComum,
   ACBrUtil;
+
+{ TDeviceConfig }
+constructor TDeviceConfig.Create;
+begin
+  FBaud := 9600;
+  FData := 8;
+  FParity := pNone;
+  FStop := s1;
+  FMaxBandwidth := 0;
+  FSendBytesCount := 0;
+  FSendBytesInterval := 0;
+  FHandShake := hsNenhum;
+  FSoftFlow := False;
+  FHardFlow := False;
+
+end;
+
+procedure TDeviceConfig.LerIni(const AIni: TCustomIniFile);
+begin
+  FBaud := AIni.ReadInteger(CSessaoDevice, CChaveDVBaud, FBaud);
+  FData := AIni.ReadInteger(CSessaoDevice, CChaveDVData, FData);
+  FParity := TACBrSerialParity(AIni.ReadInteger(CSessaoDevice, CChaveDVParity, Integer(FParity)));
+  FStop := TACBrSerialStop(AIni.ReadInteger(CSessaoDevice, CChaveDVStop, Integer(FStop)));
+  FMaxBandwidth := AIni.ReadInteger(CSessaoDevice, CChaveDVMaxBandwidth, FMaxBandwidth);
+  FSendBytesCount := AIni.ReadInteger(CSessaoDevice, CChaveDVSendBytesCount, FSendBytesCount);
+  FSendBytesInterval := AIni.ReadInteger(CSessaoDevice, CChaveDVSendBytesInterval, FSendBytesInterval);
+  FHandShake := TACBrHandShake(AIni.ReadInteger(CSessaoDevice, CChaveDVHandShake, Integer(FHandShake)));
+  FSoftFlow := AIni.ReadBool(CSessaoDevice, CChaveDVSoftFlow, FSoftFlow);
+  FHardFlow := AIni.ReadBool(CSessaoDevice, CChaveDVHardFlow, FHardFlow);
+
+end;
+
+procedure TDeviceConfig.GravarIni(const AIni: TCustomIniFile);
+begin
+  AIni.WriteInteger(CSessaoDevice, CChaveDVBaud, FBaud);
+  AIni.WriteInteger(CSessaoDevice, CChaveDVData, FData);
+  AIni.WriteInteger(CSessaoDevice, CChaveDVParity, Integer(FParity));
+  AIni.WriteInteger(CSessaoDevice, CChaveDVStop, Integer(FStop));
+  AIni.WriteInteger(CSessaoDevice, CChaveDVMaxBandwidth, FMaxBandwidth);
+  AIni.WriteInteger(CSessaoDevice, CChaveDVSendBytesCount, FSendBytesCount);
+  AIni.WriteInteger(CSessaoDevice, CChaveDVSendBytesInterval, FSendBytesInterval);
+  AIni.WriteInteger(CSessaoDevice, CChaveDVHandShake, Integer(FHandShake));
+  AIni.WriteBool(CSessaoDevice, CChaveDVSoftFlow, FSoftFlow);
+  AIni.WriteBool(CSessaoDevice, CChaveDVHardFlow, FHardFlow);
+end;
 
 { TPosPrinterConfig }
 constructor TPosPrinterConfig.Create;
@@ -262,6 +340,7 @@ begin
     inherited Ler;
 
     FPosPrinterConfig.LerIni(Ini);
+    FDevice.LerIni(Ini);
 
     AplicarConfiguracoes;
   finally
@@ -294,6 +373,7 @@ begin
     Ini.WriteString(CSessaoVersao, CLibPosPrinterNome, CLibPosPrinterVersao);
 
     FPosPrinterConfig.GravarIni(Ini);
+    FDevice.GravarIni(Ini);
 
     Ini.UpdateFile;
   finally

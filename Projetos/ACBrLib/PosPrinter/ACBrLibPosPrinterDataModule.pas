@@ -69,6 +69,17 @@ begin
     ConfigQRCode.Assign(pLibConfig.PosPrinterConfig.ConfigQRCode);
     ConfigLogo.Assign(pLibConfig.PosPrinterConfig.ConfigLogo);
     ConfigGaveta.Assign(pLibConfig.PosPrinterConfig.ConfigGaveta);
+
+    Device.Baud := pLibConfig.DeviceConfig.Baud;
+    Device.Data := pLibConfig.DeviceConfig.Data;
+    Device.Parity := pLibConfig.DeviceConfig.Parity;
+    Device.Stop := pLibConfig.DeviceConfig.Stop;
+    Device.MaxBandwidth := pLibConfig.DeviceConfig.MaxBandwidth;
+    Device.SendBytesCount := pLibConfig.DeviceConfig.SendBytesCount;
+    Device.SendBytesInterval := pLibConfig.DeviceConfig.SendBytesInterval;
+    Device.HandShake := pLibConfig.DeviceConfig.HandShake;
+    Device.SoftFlow := pLibConfig.DeviceConfig.SoftFlow;
+    Device.HardFlow := pLibConfig.DeviceConfig.HardFlow;
   end;
 end;
 

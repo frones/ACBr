@@ -97,7 +97,7 @@ type
 
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
@@ -288,11 +288,13 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FPosPrinterConfig := TPosPrinterConfig.Create;
+  FDevice := TDeviceConfig.Create;
 end;
 
 destructor TLibPosPrinterConfig.Destroy;
 begin
   FPosPrinterConfig.Free;
+  FDevice.Free;
 
   inherited Destroy;
 end;

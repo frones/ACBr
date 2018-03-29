@@ -3,7 +3,8 @@
 library ACBrLibPosPrinter;
 
 uses
-  Interfaces, sysutils, Classes, Forms, ACBrLibConfig, ACBrLibComum,
+  Interfaces, sysutils, Classes,
+  ACBrLibConfig, ACBrLibComum,
   ACBrLibPosPrinterClass, ACBrLibPosPrinterConfig, ACBrLibPosPrinterDataModule;
 
 {$R *.res}

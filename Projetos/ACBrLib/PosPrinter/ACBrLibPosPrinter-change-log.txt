@@ -46,8 +46,9 @@ Símbolo : Significado
 
 29/03/2018
 --- ACBrLibPosPrinter ---
-[+] Finalizado a implementação do metodos do ACBrPosPrinter.
+[+] Finalizado a implementação do metodos do ACBrPosPrinter.  Por: (Rafael Dias)
+[-] Correção na compilação CDECL x86. Por: (Rafael Dias)
 
 26/03/2018
 --- ACBrLibPosPrinter ---
-[+] Inicio do projeto.
+[+] Inicio do projeto.  Por: (Rafael Dias)

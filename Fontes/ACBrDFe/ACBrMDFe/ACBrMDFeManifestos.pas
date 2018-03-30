@@ -757,8 +757,6 @@ begin
          Emit.enderEmit.UF      := INIRec.ReadString('emit', 'UF', '');
          Emit.enderEmit.fone    := INIRec.ReadString('emit', 'fone', '');
          Emit.enderEmit.email   := INIRec.ReadString('emit', 'email', '');
-//         if Emit.enderEmit.cMun <= 0 then
-//           Emit.enderEmit.cMun := ObterCodigoMunicipio(Emit.enderEmit.xMun, Emit.enderEmit.UF);
 
          ide.cUF := INIRec.ReadInteger('ide', 'cUF', UFparaCodigo(Emit.enderEmit.UF));
 
@@ -768,137 +766,35 @@ begin
          //
          //*********************************************************************
 
-         rodo.RNTRC         := INIRec.ReadString('Rodo', 'RNTRC', '');
-         rodo.infANTT.RNTRC := INIRec.ReadString('infANTT', 'RNTRC', '');
+         rodo.RNTRC      := INIRec.ReadString('Rodo', 'RNTRC', '');
+         rodo.CIOT       := INIRec.ReadString('Rodo', 'CIOT', '');
+         Rodo.codAgPorto := INIRec.ReadString('Rodo', 'codAgPorto', '');
 
-         if ( (rodo.RNTRC <> '') or (rodo.infANTT.RNTRC <> '') )  then
+         // Dados sobre Informações para Agencia Reguladora (Opcional) - Nível 1 - Versão 3.00
+
+         if INIRec.ReadString('infANTT', 'RNTRC', '') <> '' then
          begin
-           rodo.CIOT               := INIRec.ReadString('Rodo', 'CIOT', '');
-           rodo.veicTracao.cInt    := INIRec.ReadString('veicTracao', 'cInt', '');
-           rodo.veicTracao.placa   := INIRec.ReadString('veicTracao', 'placa', '');
-           rodo.veicTracao.RENAVAM := INIRec.ReadString('veicTracao', 'RENAVAM', '');
-           rodo.veicTracao.tara    := INIRec.ReadInteger('veicTracao', 'tara', 0);
-           rodo.veicTracao.capKG   := INIRec.ReadInteger('veicTracao', 'capKG', 0);
-           rodo.veicTracao.capM3   := INIRec.ReadInteger('veicTracao', 'capM3', 0);
+           rodo.infANTT.RNTRC := INIRec.ReadString('infANTT', 'RNTRC', '');
 
-           // Dados da ANTT MDFe Versão 3.0
-
-           if (rodo.infANTT.RNTRC <> '') then
-           begin
-             I := 1;
-             while true do
-             begin
-               sSecao := 'infCIOT' + IntToStrZero(I, 3);
-               sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
-               if sFim = 'FIM' then
-                 break;
-
-               with rodo.infANTT.infCIOT.Add do
-               begin
-                 CIOT    := INIRec.ReadString(sSecao, 'CIOT', '');
-                 CNPJCPF := sFim;
-               end;
-               Inc(I);
-             end;
-
-             I := 1;
-             while true do
-             begin
-               sSecao := 'valePed' + IntToStrZero(I, 3);
-               sFim   := INIRec.ReadString(sSecao, 'CNPJForn', 'FIM');
-               if sFim = 'FIM' then
-                 break;
-
-               with rodo.infANTT.valePed.disp.Add do
-               begin
-                 CNPJForn := sFim;
-                 CNPJPg   := INIRec.ReadString(sSecao, 'CNPJPg', '');
-                 nCompra  := INIRec.ReadString(sSecao, 'nCompra', '');
-                 vValePed := StringToFloatDef(INIRec.ReadString(sSecao, 'vValePed', ''), 0 );
-               end;
-               Inc(I);
-             end;
-
-             I := 1;
-             while true do
-             begin
-               sSecao := 'infContratante' + IntToStrZero(I, 3);
-               sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
-               if sFim = 'FIM' then
-                 break;
-
-               with rodo.infANTT.infContratante.Add do
-               begin
-                 CNPJCPF := sFim;
-               end;
-               Inc(I);
-             end;
-
-           end;
-           // Dados do proprietário do veículo de Tração
-
-           if INIRec.ReadString('veicTracao', 'CNPJCPF', '') <> '' then
-           begin
-             rodo.veicTracao.prop.CNPJCPF := INIRec.ReadString('veicTracao', 'CNPJCPF', '');
-             rodo.veicTracao.prop.RNTRC   := INIRec.ReadString('veicTracao', 'RNTRC', '');
-             rodo.veicTracao.prop.xNome   := INIRec.ReadString('veicTracao', 'xNome', '');
-             rodo.veicTracao.prop.IE      := INIRec.ReadString('veicTracao', 'IE', '');
-             rodo.veicTracao.prop.UF      := INIRec.ReadString('veicTracao', 'UFProp', '');
-             rodo.veicTracao.prop.tpProp  := StrToTpProp(OK, INIRec.ReadString('veicTracao', 'tpProp', '0'));
-           end;
+           // Dados do CIOT (Opcional) - Nível 2 - Versão 3.00
 
            I := 1;
            while true do
            begin
-             sSecao := 'moto' + IntToStrZero(I, 3);
-             sFim   := INIRec.ReadString(sSecao, 'xNome', 'FIM');
+             sSecao := 'infCIOT' + IntToStrZero(I, 3);
+             sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
              if sFim = 'FIM' then
                break;
-             with rodo.veicTracao.condutor.Add do
+
+             with rodo.infANTT.infCIOT.Add do
              begin
-               xNome := sFim;
-               CPF   := INIRec.ReadString(sSecao, 'CPF', '');
+               CIOT    := INIRec.ReadString(sSecao, 'CIOT', '');
+               CNPJCPF := sFim;
              end;
              Inc(I);
            end;
 
-           rodo.veicTracao.tpRod := StrToTpRodado(OK, INIRec.ReadString('veicTracao', 'tpRod', '01'));
-           rodo.veicTracao.tpCar := StrToTpCarroceria(OK, INIRec.ReadString('veicTracao', 'tpCar', '00'));
-           rodo.veicTracao.UF    := INIRec.ReadString('veicTracao', 'UF', '');
-
-           I := 1;
-           while true do
-           begin
-             sSecao := 'reboque' + IntToStrZero(I, 2);
-             sFim   := INIRec.ReadString(sSecao, 'placa', 'FIM');
-             if sFim = 'FIM' then
-               break;
-             with rodo.veicReboque.Add do
-             begin
-               cInt    := INIRec.ReadString(sSecao, 'cInt', '');
-               placa   := sFim;
-               RENAVAM := INIRec.ReadString(sSecao, 'RENAVAM', '');
-               tara    := INIRec.ReadInteger(sSecao, 'tara', 0);
-               capKG   := INIRec.ReadInteger(sSecao, 'capKG', 0);
-               capM3   := INIRec.ReadInteger(sSecao, 'capM3', 0);
-
-               // Dados do proprietário do veículo Reboque
-
-               if INIRec.ReadString(sSecao, 'CNPJCPF', '') <> '' then
-               begin
-                 prop.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
-                 prop.RNTRC   := INIRec.ReadString(sSecao, 'RNTRC', '');
-                 prop.xNome   := INIRec.ReadString(sSecao, 'xNome', '');
-                 prop.IE      := INIRec.ReadString(sSecao, 'IE', '');
-                 prop.UF      := INIRec.ReadString(sSecao, 'UFProp', '');
-                 prop.tpProp  := StrToTpProp(OK, INIRec.ReadString(sSecao, 'tpProp', '0'));
-               end;
-
-               tpCar := StrToTpCarroceria(OK, INIRec.ReadString(sSecao, 'tpCar', '00'));
-               UF    := INIRec.ReadString(sSecao, 'UF', '');
-             end;
-             Inc(I);
-           end;
+           // Dados do Vale Pedágio (Opcional) - Nível 2 - Versão 3.00
 
            I := 1;
            while true do
@@ -907,17 +803,149 @@ begin
              sFim   := INIRec.ReadString(sSecao, 'CNPJForn', 'FIM');
              if sFim = 'FIM' then
                break;
-             with rodo.valePed.disp.Add do
+
+             with rodo.infANTT.valePed.disp.Add do
              begin
                CNPJForn := sFim;
                CNPJPg   := INIRec.ReadString(sSecao, 'CNPJPg', '');
                nCompra  := INIRec.ReadString(sSecao, 'nCompra', '');
+               vValePed := StringToFloatDef(INIRec.ReadString(sSecao, 'vValePed', ''), 0 );
              end;
              Inc(I);
            end;
 
-           Rodo.codAgPorto := INIRec.ReadString('Rodo', 'codAgPorto', '');
-         end; // Fim do Rodoviário
+           // Dados dos Contratantes (Opcional) - Nível 2 - Versão 3.00
+
+           I := 1;
+           while true do
+           begin
+             sSecao := 'infContratante' + IntToStrZero(I, 3);
+             sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
+             if sFim = 'FIM' then
+               break;
+
+             with rodo.infANTT.infContratante.Add do
+             begin
+               CNPJCPF := sFim;
+             end;
+             Inc(I);
+           end;
+
+         end;
+
+         // Dados do veículo de Tração (Obrigatório) - Nível 1
+
+         if INIRec.ReadString('veicTracao', 'placa', '') <> '' then
+         begin
+           rodo.veicTracao.cInt    := INIRec.ReadString('veicTracao', 'cInt', '');
+           rodo.veicTracao.placa   := INIRec.ReadString('veicTracao', 'placa', '');
+           rodo.veicTracao.RENAVAM := INIRec.ReadString('veicTracao', 'RENAVAM', '');
+           rodo.veicTracao.tara    := INIRec.ReadInteger('veicTracao', 'tara', 0);
+           rodo.veicTracao.capKG   := INIRec.ReadInteger('veicTracao', 'capKG', 0);
+           rodo.veicTracao.capM3   := INIRec.ReadInteger('veicTracao', 'capM3', 0);
+           rodo.veicTracao.tpRod   := StrToTpRodado(OK, INIRec.ReadString('veicTracao', 'tpRod', '01'));
+           rodo.veicTracao.tpCar   := StrToTpCarroceria(OK, INIRec.ReadString('veicTracao', 'tpCar', '00'));
+           rodo.veicTracao.UF      := INIRec.ReadString('veicTracao', 'UF', '');
+         end;
+
+         // Dados do proprietário do veículo de Tração (Opcional) - Nível 2
+
+         if INIRec.ReadString('veicTracao', 'CNPJCPF', '') <> '' then
+         begin
+           rodo.veicTracao.prop.CNPJCPF := INIRec.ReadString('veicTracao', 'CNPJCPF', '');
+           rodo.veicTracao.prop.RNTRC   := INIRec.ReadString('veicTracao', 'RNTRC', '');
+           rodo.veicTracao.prop.xNome   := INIRec.ReadString('veicTracao', 'xNome', '');
+           rodo.veicTracao.prop.IE      := INIRec.ReadString('veicTracao', 'IE', '');
+           rodo.veicTracao.prop.UF      := INIRec.ReadString('veicTracao', 'UFProp', '');
+           rodo.veicTracao.prop.tpProp  := StrToTpProp(OK, INIRec.ReadString('veicTracao', 'tpProp', '0'));
+         end;
+
+         // Dados do Condudor do veículo de Tração (Obrigatório) - Nível 2
+
+         I := 1;
+         while true do
+         begin
+           sSecao := 'moto' + IntToStrZero(I, 3);
+           sFim   := INIRec.ReadString(sSecao, 'xNome', 'FIM');
+           if sFim = 'FIM' then
+             break;
+           with rodo.veicTracao.condutor.Add do
+           begin
+             xNome := sFim;
+             CPF   := INIRec.ReadString(sSecao, 'CPF', '');
+           end;
+           Inc(I);
+         end;
+
+         // Dados do veículo Reboque (Opcional) - Nível 1
+
+         I := 1;
+         while true do
+         begin
+           sSecao := 'reboque' + IntToStrZero(I, 2);
+           sFim   := INIRec.ReadString(sSecao, 'placa', 'FIM');
+           if sFim = 'FIM' then
+             break;
+           with rodo.veicReboque.Add do
+           begin
+             cInt    := INIRec.ReadString(sSecao, 'cInt', '');
+             placa   := sFim;
+             RENAVAM := INIRec.ReadString(sSecao, 'RENAVAM', '');
+             tara    := INIRec.ReadInteger(sSecao, 'tara', 0);
+             capKG   := INIRec.ReadInteger(sSecao, 'capKG', 0);
+             capM3   := INIRec.ReadInteger(sSecao, 'capM3', 0);
+
+             // Dados do proprietário do veículo Reboque (Opcional) - Nível 2 - Versão 3.00
+
+             if INIRec.ReadString(sSecao, 'CNPJCPF', '') <> '' then
+             begin
+               prop.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+               prop.RNTRC   := INIRec.ReadString(sSecao, 'RNTRC', '');
+               prop.xNome   := INIRec.ReadString(sSecao, 'xNome', '');
+               prop.IE      := INIRec.ReadString(sSecao, 'IE', '');
+               prop.UF      := INIRec.ReadString(sSecao, 'UFProp', '');
+               prop.tpProp  := StrToTpProp(OK, INIRec.ReadString(sSecao, 'tpProp', '0'));
+             end;
+
+             tpCar := StrToTpCarroceria(OK, INIRec.ReadString(sSecao, 'tpCar', '00'));
+             UF    := INIRec.ReadString(sSecao, 'UF', '');
+           end;
+           Inc(I);
+         end;
+
+         // Dados do Vale Pedário (Opcional) - Nível 1
+
+         I := 1;
+         while true do
+         begin
+           sSecao := 'valePed' + IntToStrZero(I, 3);
+           sFim   := INIRec.ReadString(sSecao, 'CNPJForn', 'FIM');
+           if sFim = 'FIM' then
+             break;
+           with rodo.valePed.disp.Add do
+           begin
+             CNPJForn := sFim;
+             CNPJPg   := INIRec.ReadString(sSecao, 'CNPJPg', '');
+             nCompra  := INIRec.ReadString(sSecao, 'nCompra', '');
+           end;
+           Inc(I);
+         end;
+
+         // Dados do Lacre (Opcional) - Nível 1
+
+         I := 1;
+         while true do
+         begin
+           sSecao := 'lacRodo' + IntToStrZero(I, 3);
+           sFim   := INIRec.ReadString(sSecao, 'nLacre', 'FIM');
+           if sFim = 'FIM' then
+             break;
+           with rodo.lacRodo.Add do
+           begin
+             nLacre := sFim;
+           end;
+           Inc(I);
+         end;
 
          //*********************************************************************
          //

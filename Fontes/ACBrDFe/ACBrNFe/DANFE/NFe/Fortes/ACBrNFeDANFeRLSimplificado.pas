@@ -330,9 +330,9 @@ begin
 
   PrintBand := RLNFe.PageNumber = 1;
 
-  RLBarcode1.Caption := Copy ( FNFe.InfNFe.Id, 4, 44 );
+  RLBarcode1.Caption := FNFe.InfNFe.Id;
 
-  rllChave.Caption := FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
+  rllChave.Caption := FormatarChaveAcesso(FNFe.InfNFe.Id);
 
   // Normal **************************************************************
   if FNFe.Ide.tpEmis in [teNormal, teSCAN] then

@@ -656,7 +656,7 @@ procedure TeSocialEvento.GerarHorContratual(pHorContratual: THorContratual);
 begin
   Gerador.wGrupo('horContratual');
 
-  Gerador.wCampo(tcde2, '', 'qtdHrsSem', 0, 4, 0, IntToStr(pHorContratual.QtdHrsSem));
+  Gerador.wCampo(tcDe2, '', 'qtdHrsSem', 0, 4, 0, pHorContratual.QtdHrsSem);
   Gerador.wCampo(tcStr, '', 'tpJornada', 1, 1, 1, eSTpJornadaToStr(pHorContratual.TpJornada));
 
   if (eSTpJornadaToStr(pHorContratual.TpJornada) = '9') then
@@ -671,18 +671,15 @@ end;
 
 procedure TeSocialEvento.GerarRemuneracao(pRemuneracao: TRemuneracao);
 begin
-  if pRemuneracao.VrSalFx > 0 then
-  begin
-    Gerador.wGrupo('remuneracao');
+  Gerador.wGrupo('remuneracao');
 
-    Gerador.wCampo(tcDe2, '', 'vrSalFx',    1, 14, 1, pRemuneracao.VrSalFx);
-    Gerador.wCampo(tcStr, '', 'undSalFixo', 1,  1, 1, eSUndSalFixoToStr(pRemuneracao.UndSalFixo));
+  Gerador.wCampo(tcDe2, '', 'vrSalFx',    1, 14, 1, pRemuneracao.VrSalFx);
+  Gerador.wCampo(tcStr, '', 'undSalFixo', 1,  1, 1, eSUndSalFixoToStr(pRemuneracao.UndSalFixo));
 
-    if (eSUndSalFixoToStr(pRemuneracao.UndSalFixo) = '7') then
-      Gerador.wCampo(tcStr, '', 'dscSalVar', 0, 255, 0, pRemuneracao.DscSalVar);
+  if (eSUndSalFixoToStr(pRemuneracao.UndSalFixo) = '7') then
+    Gerador.wCampo(tcStr, '', 'dscSalVar', 0, 255, 0, pRemuneracao.DscSalVar);
 
-    Gerador.wGrupo('/remuneracao');
-  end;
+  Gerador.wGrupo('/remuneracao');
 end;
 
 procedure TeSocialEvento.GerarRG(pRg: TRg);
@@ -1149,7 +1146,9 @@ end;
 procedure TeSocialEvento.GerarInfoDeficiencia(
   pInfoDeficiencia: TInfoDeficiencia; pTipo: Integer = 0);
 begin
-  if pInfoDeficiencia.DefFisica = tpSim then
+  if (pInfoDeficiencia.DefFisica = tpSim) or (pInfoDeficiencia.DefVisual = tpSim) or
+     (pInfoDeficiencia.DefAuditiva = tpSim) or (pInfoDeficiencia.DefMental = tpSim) or
+     (pInfoDeficiencia.DefIntelectual = tpSim) or (pInfoDeficiencia.ReabReadap = tpSim) then
   begin
     Gerador.wGrupo('infoDeficiencia');
 

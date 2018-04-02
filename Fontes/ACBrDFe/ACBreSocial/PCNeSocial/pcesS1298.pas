@@ -191,8 +191,7 @@ function TEvtReabreEvPer.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim: String;
-  I: Integer;
+  sSecao: String;
 begin
   Result := False;
 

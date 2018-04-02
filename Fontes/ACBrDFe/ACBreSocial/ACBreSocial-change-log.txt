@@ -48,6 +48,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/04/2018
+-- pcesCommon / pcesGerador --
+[*] Correção do tipo do campo qtdHrsSem de Integer para Double.
+   Por: Renato E
+-- pcesGerador --
+[*] https://www.projetoacbr.com.br/forum/topic/39746-erro-ao-assinar-xml-no-esocial/?do=findComment&comment=279903
+   Por: Leandro JLM
+-- pcesGerador / pcesS2306 --
+[*] A geração do grupo Remuneração nos eventos 2200 e 2206 é obrigatória, já nos eventos 2300 e 2306
+    é opcional, na unit pcesGerador foi removido o IF e na unit 2306 foi criado a procedure para gerar o 
+    grupo.
+   Por: Italo Jurisato Junior
+-- pcesS2306 / pcesS2399 / pcesS2400 / pcesS3000 --
+[+] Implementação da leitura do arquivo INI referente aos eventos S-2306, 
+    S-2399, S-2400 e S-3000.
+   Por: Italo Jurisato Junior
+
 29/03/2018
 -- pcesS2299 / pcesS2300 --
 [+] Implementação da leitura do arquivo INI referente aos eventos S-2299 e 

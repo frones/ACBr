@@ -560,7 +560,7 @@ type
 
   THorContratual = class(TPersistent)
   private
-    FQtdHrsSem: integer;
+    FQtdHrsSem: Double;
     FTpJornada: tpTpJornada;
     FDscTpJorn: string;
     FTMPParc: tpTmpParc;
@@ -569,7 +569,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    property QtdHrsSem: integer read FQtdHrsSem write FQtdHrsSem;
+    property QtdHrsSem: Double read FQtdHrsSem write FQtdHrsSem;
     property TpJornada: tpTpJornada read FTpJornada write FTpJornada;
     property DscTpJorn: string read FDscTpJorn write FDscTpJorn;
     property tmpParc: tpTmpParc read FTMPParc write FTMPParc;

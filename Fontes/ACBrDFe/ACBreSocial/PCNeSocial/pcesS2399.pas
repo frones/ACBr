@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador,
+  pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -200,6 +200,64 @@ begin
   FEvtTSVTermino.Assign(Value);
 end;
 
+{ TinfoTSVTermino }
+
+constructor TinfoTSVTermino.Create;
+begin
+  inherited;
+
+  FverbasResc := TVerbasRescS2399.Create;
+  Fquarentena := TQuarentena.Create;
+end;
+
+destructor TinfoTSVTermino.Destroy;
+begin
+  FverbasResc.Free;
+  Fquarentena.Free;
+
+  inherited;
+end;
+
+{ TDmDevCollection }
+
+constructor TDmDevCollection.Create;
+begin
+  inherited Create(TDMDevCollectionItem);
+end;
+
+function TDmDevCollection.Add: TDMDevCollectionItem;
+begin
+  Result := TDMDevCollectionItem(inherited Add);
+  Result.Create;
+end;
+
+function TDmDevCollection.GetItem(Index: Integer): TDMDevCollectionItem;
+begin
+  Result := TDMDevCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TDmDevCollection.SetItem(Index: Integer; Value: TDMDevCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TDMDevCollectionItem }
+
+constructor TDMDevCollectionItem.Create;
+begin
+  FIdeEstabLot := TideEstabLotCollection.Create;
+end;
+
+{ TVerbasRescS2399 }
+
+constructor TVerbasRescS2399.Create;
+begin
+  inherited;
+
+  FDmDev := TDmDevCollection.Create;
+end;
+
+
 { TEvtTSVTermino }
 
 constructor TEvtTSVTermino.Create(AACBreSocial: TObject);
@@ -317,7 +375,7 @@ var
   INIRec: TMemIniFile;
   Ok: Boolean;
   sSecao, sFim: String;
-  I: Integer;
+  I, J, K, L, M: Integer;
 begin
   Result := False;
 
@@ -327,7 +385,192 @@ begin
 
     with Self do
     begin
-      // Falta Implementar
+      sSecao := 'evtTSVTermino';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.TpAmb       := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideTrabSemVinculo';
+      ideTrabSemVinc.CpfTrab    := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideTrabSemVinc.NisTrab    := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      ideTrabSemVinc.codCateg   := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+
+      sSecao := 'infoTSVTermino';
+      infoTSVTermino.dtTerm       := StringToDateTime(INIRec.ReadString(sSecao, 'dtTerm', '0'));
+      infoTSVTermino.mtvDesligTSV := INIRec.ReadString(sSecao, 'mtvDesligTSV', '');
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 50
+        sSecao := 'dmDev' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'ideDmDev', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with infoTSVTermino.verbasResc.dmDev.Add do
+        begin
+          ideDmDev := sFim;
+
+          J := 1;
+          while true do
+          begin
+            // de 01 até 99
+            sSecao := 'ideEstabLot' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+            sFim   := INIRec.ReadString(sSecao, 'nrInsc', 'FIM');
+
+            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+              break;
+
+            with ideEstabLot.Add do
+            begin
+              tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+              nrInsc     := sFim;
+              codLotacao := INIRec.ReadString(sSecao, 'codLotacao', '');
+
+              K := 1;
+              while true do
+              begin
+                // de 001 até 200
+                sSecao := 'detVerbas' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
+                             IntToStrZero(K, 3);
+                sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
+
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with detVerbas.Add do
+                begin
+                  codRubr    := sFim;
+                  ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', '');
+                  qtdRubr    := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdRubr', ''), 0);
+                  fatorRubr  := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorRubr', ''), 0);
+                  vrUnit     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrUnit', ''), 0);
+                  vrRubr     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRubr', ''), 0);
+
+                  L := 1;
+                  while true do
+                  begin
+                    // de 01 até 99
+                    sSecao := 'detOper' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
+                             IntToStrZero(K, 3) + IntToStrZero(L, 2);
+                    sFim   := INIRec.ReadString(sSecao, 'cnpjOper', 'FIM');
+
+                    if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                      break;
+
+                    with infoSaudeColet.detOper.Add do
+                    begin
+                      cnpjOper := sFim;
+                      regANS   := INIRec.ReadString(sSecao, 'regANS', '');
+                      vrPgTit  := StringToFloatDef(INIRec.ReadString(sSecao, 'vrPgTit', ''), 0);
+
+                      M := 1;
+                      while true do
+                      begin
+                        // de 01 até 99
+                        sSecao := 'detPlano' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
+                             IntToStrZero(K, 3) + IntToStrZero(L, 2) + IntToStrZero(M, 2);
+                        sFim   := INIRec.ReadString(sSecao, 'cpfDep', 'FIM');
+
+                        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                          break;
+
+                        with detPlano.Add do
+                         begin
+                          tpDep    := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', '00'));
+                          cpfDep   := sFim;
+                          nmDep    := INIRec.ReadString(sSecao, 'nmDep', '');
+                          dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
+                          vlrPgDep := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrPgDep', ''), 0);
+                        end;
+
+                        Inc(M);
+                      end;
+                    end;
+
+                    Inc(L);
+                  end;
+
+                  sSecao := 'infoAgNocivo' + IntToStrZero(I, 2) +
+                                    IntToStrZero(J, 2) + IntToStrZero(K, 3);
+                  infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', '1'));
+
+                  sSecao := 'infoSimples' + IntToStrZero(I, 2) +
+                                    IntToStrZero(J, 2) + IntToStrZero(K, 3);
+                  infoSimples.indSimples := eSStrToIndSimples(Ok, INIRec.ReadString(sSecao, 'indSimples', '1'));
+                end;
+
+                Inc(K);
+              end;
+
+            end;
+
+            Inc(J);
+          end;
+
+        end;
+
+        inc(I);
+      end;
+
+      I := 1;
+      while true do
+      begin
+        // de 00 até 99
+        sSecao := 'procJudTrab' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'tpTrib', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with infoTSVTermino.verbasResc.procJudTrab.Add do
+        begin
+          tpTrib    := eSStrToTpTributo(Ok, sFim);
+          nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
+          codSusp   := INIRec.ReadInteger(sSecao, 'codSusp', 0);
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'infoMV';
+      infoTSVTermino.VerbasResc.infoMV.indMV := eSStrToIndMV(Ok, INIRec.ReadString(sSecao, 'indMV', '1'));
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 10
+        sSecao := 'remunOutrEmpr' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with infoTSVTermino.VerbasResc.infoMV.remunOutrEmpr.Add do
+        begin
+          TpInsc     := eSStrToTpInscricao(Ok, sFim);
+          NrInsc     := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+          codCateg   := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+          vlrRemunOE := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRemunOE', ''), 0);
+        end;
+
+        Inc(I);
+      end;
+
+      sSecao := 'quarentena';
+      infoTSVTermino.quarentena.dtFimQuar := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimQuar', '0'));
     end;
 
     GerarXML;
@@ -337,63 +580,5 @@ begin
      INIRec.Free;
   end;
 end;
-
-{ TinfoTSVTermino }
-
-constructor TinfoTSVTermino.Create;
-begin
-  inherited;
-
-  FverbasResc := TVerbasRescS2399.Create;
-  Fquarentena := TQuarentena.Create;
-end;
-
-destructor TinfoTSVTermino.Destroy;
-begin
-  FverbasResc.Free;
-  Fquarentena.Free;
-
-  inherited;
-end;
-
-{ TDmDevCollection }
-
-constructor TDmDevCollection.Create;
-begin
-  inherited Create(TDMDevCollectionItem);
-end;
-
-function TDmDevCollection.Add: TDMDevCollectionItem;
-begin
-  Result := TDMDevCollectionItem(inherited Add);
-  Result.Create;
-end;
-
-function TDmDevCollection.GetItem(Index: Integer): TDMDevCollectionItem;
-begin
-  Result := TDMDevCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TDmDevCollection.SetItem(Index: Integer; Value: TDMDevCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TDMDevCollectionItem }
-
-constructor TDMDevCollectionItem.Create;
-begin
-  FIdeEstabLot := TideEstabLotCollection.Create;
-end;
-
-{ TVerbasRescS2399 }
-
-constructor TVerbasRescS2399.Create;
-begin
-  inherited;
-
-  FDmDev := TDmDevCollection.Create;
-end;
-
 
 end.

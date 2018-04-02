@@ -199,7 +199,7 @@ type
   TACBrIndicadorDados = TACBrIndDad;
 
   /// Versão do Leiaute do arquivo - TRegistro0000
-  TACBrECFCodVer = (ECFVersao100, ECFVersao200, ECFVersao300);
+  TACBrECFCodVer = (ECFVersao100, ECFVersao200, ECFVersao300, ECFVersao400);
 //  TACBrECFVersaoLeiaute = TACBrECFCodVer;
 
   /// Código da finalidade do arquivo - TRegistro0000
@@ -863,10 +863,12 @@ begin
   if AValue = '0003' then
     Result := ECFVersao300
   else
+  if AValue = '0004' then
+    Result := ECFVersao400
+  else
     raise Exception.CreateFmt('Valor informado [%s] deve estar entre (0001,0002 e 0003)', [AValue]);
 end;
-
-
+              
 function CodVerToStr(AValue: TACBrECFCodVer): string;
 begin
   if AValue = ECFVersao100 then
@@ -877,6 +879,9 @@ begin
   else
   if AValue = ECFVersao300 then
     Result := '0003'
+  else
+  if AValue = ECFVersao400 then
+    Result := '0004'
 end;
 
 function IndOperToStr(AValue: TACBrIndOper): string;

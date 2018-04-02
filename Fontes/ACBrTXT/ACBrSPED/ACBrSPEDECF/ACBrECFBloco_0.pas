@@ -208,6 +208,7 @@ type
     fIND_VEND_EXP: string;
     fIND_ZON_EXP:  string;
     fIND_PAIS_A_PAIS: string;
+    fIND_DEREX: string;
   public
     property IND_ALIQ_CSLL: string read fIND_ALIQ_CSLL write fIND_ALIQ_CSLL;
     property IND_QTE_SCP: integer read fIND_QTE_SCP write fIND_QTE_SCP;
@@ -240,6 +241,7 @@ type
     property IND_ZON_EXP: string read fIND_ZON_EXP write fIND_ZON_EXP;
     property IND_AREA_COM: string read fIND_AREA_COM write fIND_AREA_COM;
     property IND_PAIS_A_PAIS: string read fIND_PAIS_A_PAIS write fIND_PAIS_A_PAIS;
+    property IND_DEREX: string read fIND_DEREX write fIND_DEREX;
 
   end;
 

@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/04/2018
+-- ACBrDFeConfiguracoes --
+[*] Ajuste no método "CalcSSLLib" para definir corretamente a propriedade 
+    quando SSLXmlSignLib for xsLibXML2.
+    (por: BigWings)
+
 16/03/2018
 -- ACBrDFeXsLibXml2 --
 [-] Correção da assinatura do lote das NFSe.

@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2018
+-- pcesS1050 --
+[-] Correção de erro "Argument out of range" na geração do evento S-1050.
+    https://www.projetoacbr.com.br/forum/topic/42490-problema-inclus%C3%A3o-de-intervalos-na-s-1050/
+  Por: CarlosSolla / BigWings
+
 02/04/2018
 -- pcesCommon / pcesGerador --
 [*] Correção do tipo do campo qtdHrsSem de Integer para Double.

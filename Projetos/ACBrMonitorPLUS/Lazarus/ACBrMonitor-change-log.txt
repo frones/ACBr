@@ -43,6 +43,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2018
+[*] Atualização de campos na Função de Geração do .INI através da leitura do XML
+       por: José M. S. Junior
+
+02/04/2018
+[*] Validação e Ajustes na leitura de Respostas do Integrador Fiscal
+       por: José M. S. Junior
+
+19/03/2018
+[*] Ajustes na configuração - Integrador Fiscal
+       Validação Tipo de Documento (NFCe) para validar Integrador
+       por: José M. S. Junior
+
 09/03/2018
 [+] Atualização Componente PosPrinter
        Adicionado Campos para configurações Gaveta em tela

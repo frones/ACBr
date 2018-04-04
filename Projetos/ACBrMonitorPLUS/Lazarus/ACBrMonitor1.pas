@@ -1514,6 +1514,7 @@ type
     procedure DepoisDeImprimir;
     procedure HelptabSheet;
     procedure ValidarIntegradorNFCe(ChaveNFe: String = '');
+    function RespostaIntegrador():String;
   end;
 
 var
@@ -4265,7 +4266,10 @@ begin
     end;
 
     if ckNFCeUsarIntegrador.Checked then
-      ACBrNFe1.Integrador := ACBrIntegrador1
+    begin
+      ACBrNFe1.Integrador := ACBrIntegrador1;
+      ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFCe;
+    end
     else
       ACBrNFe1.Integrador := nil;
 
@@ -8682,11 +8686,34 @@ begin
   begin
     if NaoEstaVazio(ChaveNFe) then
       Modelo:= StrToIntDef(copy(OnlyNumber(ChaveNFe),21,2),55);
-    if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFe) or (Modelo = 55) then
+    if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFe) and (Modelo <> 65) then
       ACBrNFe1.Integrador := nil
     else
       ACBrNFe1.Integrador := ACBrIntegrador1;
   end;
+
+end;
+
+function TFrmACBrMonitor.RespostaIntegrador: String;
+begin
+   Result := '';
+   if (ACBrSAT1.Integrador= ACBrIntegrador1) or
+     (ACBrNFe1.Integrador= ACBrIntegrador1) then
+   begin
+     if (ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo <> '') then
+     begin
+       Result := sLineBreak+'[Integrador]'+sLineBreak;
+       Result := Result + 'Codigo='+ ACBrIntegrador1.ComandoIntegrador.
+                                     IntegradorResposta.Codigo + sLineBreak;
+       Result := Result + 'Valor='+ ACBrIntegrador1.ComandoIntegrador.
+                                   IntegradorResposta.Valor ;
+
+       ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo:= '';
+       ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor:= '';
+
+     end;
+
+   end;
 end;
 
 procedure TFrmACBrMonitor.sbSerialClick(Sender: TObject);

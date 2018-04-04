@@ -28,244 +28,249 @@ var
 begin
   with FrmACBrMonitor do
   begin
-    if Cmd.Metodo = 'ativar' then
-    begin
-      if (EstaVazio(Trim(Cmd.Params(0))) and
-          EstaVazio(Trim(Cmd.Params(1)))) then
-        Cmd.Resposta := ACBrSAT1.AtivarSAT(1, OnlyNumber(edtEmitCNPJ.Text), StrToInt(edtCodUF.Text))
-      else
+    try
+      if Cmd.Metodo = 'ativar' then
       begin
-        if (ACBrSAT1.Config.ide_tpAmb <> taHomologacao) and
-           (not ValidarCNPJ(Cmd.Params(0))) then
-          raise Exception.Create('CNPJ '+Cmd.Params(0)+' inválido.') ;
-
-        Cmd.Resposta := ACBrSAT1.AtivarSAT(1,Cmd.Params(0), StrToInt(Cmd.Params(1)));
-      end
-    end
-
-    else if Cmd.Metodo = 'inicializar' then
-    begin
-      if ACBrSAT1.Inicializado then
-        Cmd.Resposta := 'SAT ja inicializado'
-      else
-      begin
-        ACBrSAT1.Inicializar;
-        Cmd.Resposta := 'SAT inicializado';
-      end;
-    end
-
-    else if Cmd.Metodo = 'desinicializar' then
-    begin
-      if not ACBrSAT1.Inicializado then
-        Cmd.Resposta := 'SAT não inicializado'
-      else
-      begin
-        ACBrSAT1.DesInicializar;
-        Cmd.Resposta := 'SAT desinicializado'
-      end;
-    end
-
-    else if Cmd.Metodo = 'associarassinatura' then
-    begin
-      if (EstaVazio(Trim(Cmd.Params(0))) and
-          EstaVazio(Trim(Cmd.Params(1)))) then
-        Cmd.Resposta := ACBrSAT1.AssociarAssinatura(edtEmitCNPJ.Text, edtSwHAssinatura.Text)
-      else
-      begin
-        if (ACBrSAT1.Config.ide_tpAmb <> taHomologacao) and
-           (not ValidarCNPJ(Cmd.Params(0))) then
-          raise Exception.Create('CNPJ '+Cmd.Params(0)+' inválido.') ;
-
-        Cmd.Resposta := ACBrSAT1.AssociarAssinatura(Cmd.Params(0), Cmd.Params(1))
-      end
-    end
-
-    else if Cmd.Metodo = 'bloquear' then
-      Cmd.Resposta := ACBrSAT1.BloquearSAT
-
-    else if Cmd.Metodo = 'desbloquear' then
-      Cmd.Resposta := ACBrSAT1.DesbloquearSAT
-
-    else if Cmd.Metodo = 'trocarcodigoativacao' then
-      Cmd.Resposta := ACBrSAT1.TrocarCodigoDeAtivacao(Cmd.Params(0),
-                             StrToIntDef(cmd.Params(1),1), cmd.Params(2))
-
-    else if Cmd.Metodo = 'consultarsat' then
-      Cmd.Resposta := ACBrSAT1.ConsultarSAT
-
-    else if Cmd.Metodo = 'consultarstatusoperacional' then
-      Cmd.Resposta := MontaDadosStatusSAT
-
-    else if (Cmd.Metodo = 'consultarsessao') or (Cmd.Metodo = 'consultarnumerosessao')  then
-       begin
-          ACBrSAT1.CFe.Clear;
-          ACBrSAT1.CFeCanc.Clear;
-
-          Cmd.Resposta := ACBrSAT1.ConsultarNumeroSessao(StrToInt(cmd.Params(0)));
-
-          if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
-          begin
-             ArqCFe:=ACBrSAT1.CFe.NomeArquivo;
-             Cmd.Resposta := '[CFE]'+sLineBreak+
-                             'nCFe='+IntToStr(ACBrSAT1.CFe.ide.nCFe)+sLineBreak+
-                             IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
-                             'XML='+ACBrSAT1.CFe.AsXMLString;
-          end;
-
-          if ACBrSAT1.Resposta.codigoDeRetorno = 7000 then
-          begin
-             ArqCFe:=ACBrSAT1.CFeCanc.NomeArquivo;
-             Cmd.Resposta := '[CANCELAMENTO]'+sLineBreak+
-                             'nCFeCanc='+IntToStr(ACBrSAT1.CFeCanc.ide.nCFe)+sLineBreak+
-                             IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
-                             'XML='+ACBrSAT1.CFeCanc.AsXMLString;
-          end;
-        end
-
-
-    else if (Cmd.Metodo = 'atualizasoftware') or (Cmd.Metodo = 'atualizarsoftwaresat') then
-      Cmd.Resposta := ACBrSAT1.AtualizarSoftwareSAT
-
-    else if (Cmd.Metodo = 'comunicarcertificado') or
-            (Cmd.Metodo = 'comunicarcertificadoicpbrasil') then
-      Cmd.Resposta := ACBrSAT1.ComunicarCertificadoICPBRASIL(Cmd.Params(0))
-
-    else if Cmd.Metodo = 'carregardadosvenda' then
-      CarregarDadosVenda(Cmd.Params(0))
-
-    else if Cmd.Metodo = 'carregardadoscancelamento' then
-      CarregarDadosCancelamento(Cmd.Params(0))
-
-    else if (Cmd.Metodo = 'criarcfe') or
-            (Cmd.Metodo = 'criarenviarcfe')  then
-    begin
-      AjustaACBrSAT;
-      GerarIniCFe( Cmd.Params(0), (Cmd.Metodo = 'criarenviarcfe') );
-
-      if (Cmd.Metodo = 'criarcfe') then
-      begin
-        ArqCFe := '';
-
-        if cbxSATSalvarCFe.Checked then
+        if (EstaVazio(Trim(Cmd.Params(0))) and
+            EstaVazio(Trim(Cmd.Params(1)))) then
+          Cmd.Resposta := ACBrSAT1.AtivarSAT(1, OnlyNumber(edtEmitCNPJ.Text), StrToInt(edtCodUF.Text))
+        else
         begin
-          ArqCFe := ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaEnvio,
-                        IntToStrZero(ACBrSAT1.CFe.ide.numeroCaixa,3)+'-'+
-                        IntToStrZero(ACBrSAT1.CFe.ide.cNF,6),'-satcfe');
-          ACBrSAT1.CFe.SaveToFile(ArqCFe);
-        end;
+          if (ACBrSAT1.Config.ide_tpAmb <> taHomologacao) and
+             (not ValidarCNPJ(Cmd.Params(0))) then
+            raise Exception.Create('CNPJ '+Cmd.Params(0)+' inválido.') ;
 
-        Cmd.Resposta :=  '[CFE]'+sLineBreak+
-                         'nCFe='+IntToStr(ACBrSAT1.CFe.ide.nCFe)+sLineBreak+
-                         IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
-                         'XML='+ACBrSAT1.CFe.GerarXML( True );
+          Cmd.Resposta := ACBrSAT1.AtivarSAT(1,Cmd.Params(0), StrToInt(Cmd.Params(1)));
+        end
       end
-      else
+
+      else if Cmd.Metodo = 'inicializar' then
       begin
-        Resultado := ACBrSAT1.EnviarDadosVenda( ACBrSAT1.CFe.AsXMLString );
+        if ACBrSAT1.Inicializado then
+          Cmd.Resposta := 'SAT ja inicializado'
+        else
+        begin
+          ACBrSAT1.Inicializar;
+          Cmd.Resposta := 'SAT inicializado';
+        end;
+      end
+
+      else if Cmd.Metodo = 'desinicializar' then
+      begin
+        if not ACBrSAT1.Inicializado then
+          Cmd.Resposta := 'SAT não inicializado'
+        else
+        begin
+          ACBrSAT1.DesInicializar;
+          Cmd.Resposta := 'SAT desinicializado'
+        end;
+      end
+
+      else if Cmd.Metodo = 'associarassinatura' then
+      begin
+        if (EstaVazio(Trim(Cmd.Params(0))) and
+            EstaVazio(Trim(Cmd.Params(1)))) then
+          Cmd.Resposta := ACBrSAT1.AssociarAssinatura(edtEmitCNPJ.Text, edtSwHAssinatura.Text)
+        else
+        begin
+          if (ACBrSAT1.Config.ide_tpAmb <> taHomologacao) and
+             (not ValidarCNPJ(Cmd.Params(0))) then
+            raise Exception.Create('CNPJ '+Cmd.Params(0)+' inválido.') ;
+
+          Cmd.Resposta := ACBrSAT1.AssociarAssinatura(Cmd.Params(0), Cmd.Params(1))
+        end
+      end
+
+      else if Cmd.Metodo = 'bloquear' then
+        Cmd.Resposta := ACBrSAT1.BloquearSAT
+
+      else if Cmd.Metodo = 'desbloquear' then
+        Cmd.Resposta := ACBrSAT1.DesbloquearSAT
+
+      else if Cmd.Metodo = 'trocarcodigoativacao' then
+        Cmd.Resposta := ACBrSAT1.TrocarCodigoDeAtivacao(Cmd.Params(0),
+                               StrToIntDef(cmd.Params(1),1), cmd.Params(2))
+
+      else if Cmd.Metodo = 'consultarsat' then
+        Cmd.Resposta := ACBrSAT1.ConsultarSAT
+
+      else if Cmd.Metodo = 'consultarstatusoperacional' then
+        Cmd.Resposta := MontaDadosStatusSAT
+
+      else if (Cmd.Metodo = 'consultarsessao') or (Cmd.Metodo = 'consultarnumerosessao')  then
+         begin
+            ACBrSAT1.CFe.Clear;
+            ACBrSAT1.CFeCanc.Clear;
+
+            Cmd.Resposta := ACBrSAT1.ConsultarNumeroSessao(StrToInt(cmd.Params(0)));
+
+            if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
+            begin
+               ArqCFe:=ACBrSAT1.CFe.NomeArquivo;
+               Cmd.Resposta := '[CFE]'+sLineBreak+
+                               'nCFe='+IntToStr(ACBrSAT1.CFe.ide.nCFe)+sLineBreak+
+                               IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
+                               'XML='+ACBrSAT1.CFe.AsXMLString;
+            end;
+
+            if ACBrSAT1.Resposta.codigoDeRetorno = 7000 then
+            begin
+               ArqCFe:=ACBrSAT1.CFeCanc.NomeArquivo;
+               Cmd.Resposta := '[CANCELAMENTO]'+sLineBreak+
+                               'nCFeCanc='+IntToStr(ACBrSAT1.CFeCanc.ide.nCFe)+sLineBreak+
+                               IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
+                               'XML='+ACBrSAT1.CFeCanc.AsXMLString;
+            end;
+          end
+
+
+      else if (Cmd.Metodo = 'atualizasoftware') or (Cmd.Metodo = 'atualizarsoftwaresat') then
+        Cmd.Resposta := ACBrSAT1.AtualizarSoftwareSAT
+
+      else if (Cmd.Metodo = 'comunicarcertificado') or
+              (Cmd.Metodo = 'comunicarcertificadoicpbrasil') then
+        Cmd.Resposta := ACBrSAT1.ComunicarCertificadoICPBRASIL(Cmd.Params(0))
+
+      else if Cmd.Metodo = 'carregardadosvenda' then
+        CarregarDadosVenda(Cmd.Params(0))
+
+      else if Cmd.Metodo = 'carregardadoscancelamento' then
+        CarregarDadosCancelamento(Cmd.Params(0))
+
+      else if (Cmd.Metodo = 'criarcfe') or
+              (Cmd.Metodo = 'criarenviarcfe')  then
+      begin
+        AjustaACBrSAT;
+        GerarIniCFe( Cmd.Params(0), (Cmd.Metodo = 'criarenviarcfe') );
+
+        if (Cmd.Metodo = 'criarcfe') then
+        begin
+          ArqCFe := '';
+
+          if cbxSATSalvarCFe.Checked then
+          begin
+            ArqCFe := ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaEnvio,
+                          IntToStrZero(ACBrSAT1.CFe.ide.numeroCaixa,3)+'-'+
+                          IntToStrZero(ACBrSAT1.CFe.ide.cNF,6),'-satcfe');
+            ACBrSAT1.CFe.SaveToFile(ArqCFe);
+          end;
+
+          Cmd.Resposta :=  '[CFE]'+sLineBreak+
+                           'nCFe='+IntToStr(ACBrSAT1.CFe.ide.nCFe)+sLineBreak+
+                           IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
+                           'XML='+ACBrSAT1.CFe.GerarXML( True );
+        end
+        else
+        begin
+          Resultado := ACBrSAT1.EnviarDadosVenda( ACBrSAT1.CFe.AsXMLString );
+          Cmd.Resposta := RespostaEnviarDadosVenda( Resultado );
+        end;
+      end
+
+      else if Cmd.Metodo = 'enviarcfe' then
+      begin
+        AjustaACBrSAT;
+
+        ArqCFe := ParamAsXML(Cmd.Params(0));
+        if ArqCFe = '' then
+          Resultado := ACBrSAT1.EnviarDadosVenda
+        else
+          Resultado := ACBrSAT1.EnviarDadosVenda( ArqCFe );
+
         Cmd.Resposta := RespostaEnviarDadosVenda( Resultado );
-      end;
-    end
+      end
 
-    else if Cmd.Metodo = 'enviarcfe' then
-    begin
-      AjustaACBrSAT;
+      else if Cmd.Metodo = 'cancelarcfe' then
+      begin
+        if Cmd.Params(0) <> '' then
+          CarregarDadosVenda(Cmd.Params(0));
 
-      ArqCFe := ParamAsXML(Cmd.Params(0));
-      if ArqCFe = '' then
-        Resultado := ACBrSAT1.EnviarDadosVenda
+        Resultado := ACBrSAT1.CancelarUltimaVenda;
+
+        Cmd.Resposta := '[CANCELAMENTO]'+sLineBreak+
+                         'Resultado='+Resultado+sLineBreak+
+                         'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
+                         'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
+                         'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak;
+
+        ArqCFe := ACBrSAT1.CFeCanc.NomeArquivo;
+        if (ArqCFe <> '') and FileExists(ArqCFe) then
+          Cmd.Resposta := Cmd.Resposta + 'Arquivo='+ArqCFe+sLineBreak ;
+
+        Cmd.Resposta := Cmd.Resposta + 'XML='+ACBrSAT1.CFeCanc.AsXMLString;
+      end
+
+      else if Cmd.Metodo = 'imprimirextratovenda' then
+      begin
+        PrepararImpressaoSAT(cmd.Params(1));
+        CarregarDadosVenda(cmd.Params(0));
+        ACBrSAT1.ImprimirExtrato;
+      end
+
+      else if Cmd.Metodo = 'imprimirextratoresumido' then
+      begin
+        PrepararImpressaoSAT(cmd.Params(1));
+        CarregarDadosVenda(cmd.Params(0));
+        ACBrSAT1.ImprimirExtratoResumido;
+      end
+
+      else if Cmd.Metodo = 'imprimirextratocancelamento' then
+      begin
+        PrepararImpressaoSAT(cmd.Params(2));
+        CarregarDadosVenda(cmd.Params(0));
+        CarregarDadosCancelamento(cmd.Params(1));
+        ACBrSAT1.ImprimirExtratoCancelamento;
+      end
+
+      else if Cmd.Metodo = 'gerarpdfextratovenda' then
+      begin
+        PrepararImpressaoSAT(cmd.Params(0),true);
+        CarregarDadosVenda(cmd.Params(0),cmd.Params(1));
+        ACBrSAT1.ImprimirExtrato;
+
+        Cmd.Resposta := '[CFe]'+sLineBreak+
+                        'NomeArquivo='+ACBrSAT1.Extrato.NomeArquivo;
+      end
+      else if Cmd.Metodo = 'extrairlogs' then
+        ACBrSAT1.ExtrairLogs(cmd.Params(0))
+
+      else if Cmd.Metodo = 'testefimafim' then
+      begin
+        AjustaACBrSAT;
+        ACBrSAT1.InicializaCFe;
+        CarregarDadosVenda(cmd.Params(0));
+        Resultado := ACBrSAT1.TesteFimAFim(ACBrSAT1.CFe.GerarXML(True));
+
+        Cmd.Resposta := '[TESTEFIMAFIM]'+sLineBreak+
+                        'Resultado='+Resultado+sLineBreak+
+                        'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
+                        'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
+                        'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak+
+                        'XML='+ACBrSAT1.CFe.AsXMLString;
+      end
+      else if Cmd.Metodo = 'setnumerosessao' then
+        ACBrSAT1.Tag := StrToIntDef(Trim(cmd.Params(0)), 0)
+
+      else if Cmd.Metodo = 'setlogomarca' then
+      begin
+        if FileExists(Cmd.Params(0)) then
+         begin
+           ACBrSATExtratoFortes1.LogoVisible := True;
+           ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(Cmd.Params(0));
+           edtLogoMarcaNFCeSAT.Text := Cmd.Params(0);
+           SalvarIni;
+         end
+        else
+           raise Exception.Create('Arquivo não encontrado.');
+      end
+
       else
-        Resultado := ACBrSAT1.EnviarDadosVenda( ArqCFe );
-
-      Cmd.Resposta := RespostaEnviarDadosVenda( Resultado );
+        raise Exception.Create(ACBrStr('Comando invalido ('+Cmd.Comando+')'));
+    finally
+      Cmd.Resposta := Cmd.Resposta + FrmACBrMonitor.RespostaIntegrador;
     end
-
-    else if Cmd.Metodo = 'cancelarcfe' then
-    begin
-      if Cmd.Params(0) <> '' then
-        CarregarDadosVenda(Cmd.Params(0));
-
-      Resultado := ACBrSAT1.CancelarUltimaVenda;
-
-      Cmd.Resposta := '[CANCELAMENTO]'+sLineBreak+
-                       'Resultado='+Resultado+sLineBreak+
-                       'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
-                       'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
-                       'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak;
-
-      ArqCFe := ACBrSAT1.CFeCanc.NomeArquivo;
-      if (ArqCFe <> '') and FileExists(ArqCFe) then
-        Cmd.Resposta := Cmd.Resposta + 'Arquivo='+ArqCFe+sLineBreak ;
-
-      Cmd.Resposta := Cmd.Resposta + 'XML='+ACBrSAT1.CFeCanc.AsXMLString;
-    end
-
-    else if Cmd.Metodo = 'imprimirextratovenda' then
-    begin
-      PrepararImpressaoSAT(cmd.Params(1));
-      CarregarDadosVenda(cmd.Params(0));
-      ACBrSAT1.ImprimirExtrato;
-    end
-
-    else if Cmd.Metodo = 'imprimirextratoresumido' then
-    begin
-      PrepararImpressaoSAT(cmd.Params(1));
-      CarregarDadosVenda(cmd.Params(0));
-      ACBrSAT1.ImprimirExtratoResumido;
-    end
-
-    else if Cmd.Metodo = 'imprimirextratocancelamento' then
-    begin
-      PrepararImpressaoSAT(cmd.Params(2));
-      CarregarDadosVenda(cmd.Params(0));
-      CarregarDadosCancelamento(cmd.Params(1));
-      ACBrSAT1.ImprimirExtratoCancelamento;
-    end
-
-    else if Cmd.Metodo = 'gerarpdfextratovenda' then
-    begin
-      PrepararImpressaoSAT(cmd.Params(0),true);
-      CarregarDadosVenda(cmd.Params(0),cmd.Params(1));
-      ACBrSAT1.ImprimirExtrato;
-
-      Cmd.Resposta := '[CFe]'+sLineBreak+
-                      'NomeArquivo='+ACBrSAT1.Extrato.NomeArquivo;
-    end
-    else if Cmd.Metodo = 'extrairlogs' then
-      ACBrSAT1.ExtrairLogs(cmd.Params(0))
-
-    else if Cmd.Metodo = 'testefimafim' then
-    begin
-      AjustaACBrSAT;
-      ACBrSAT1.InicializaCFe;
-      CarregarDadosVenda(cmd.Params(0));
-      Resultado := ACBrSAT1.TesteFimAFim(ACBrSAT1.CFe.GerarXML(True));
-
-      Cmd.Resposta := '[TESTEFIMAFIM]'+sLineBreak+
-                      'Resultado='+Resultado+sLineBreak+
-                      'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
-                      'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
-                      'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak+
-                      'XML='+ACBrSAT1.CFe.AsXMLString;
-    end
-    else if Cmd.Metodo = 'setnumerosessao' then
-      ACBrSAT1.Tag := StrToIntDef(Trim(cmd.Params(0)), 0)
-
-    else if Cmd.Metodo = 'setlogomarca' then
-    begin
-      if FileExists(Cmd.Params(0)) then
-       begin
-         ACBrSATExtratoFortes1.LogoVisible := True;
-         ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(Cmd.Params(0));
-         edtLogoMarcaNFCeSAT.Text := Cmd.Params(0);
-         SalvarIni;
-       end
-      else
-         raise Exception.Create('Arquivo não encontrado.');
-    end
-
-    else
-      raise Exception.Create(ACBrStr('Comando invalido ('+Cmd.Comando+')'));
   end;
+
 end;
 
 procedure CarregarDadosVenda(aStr: String; aNomePDF: String);
@@ -341,9 +346,11 @@ begin
       Result := Result + 'DH_ULTIMA = '+DateTimeToStr(DH_ULTIMA)+ sLineBreak;
       Result := Result + 'CERT_EMISSAO = '+DateToStr(CERT_EMISSAO)+ sLineBreak;
       Result := Result + 'CERT_VENCIMENTO = '+DateToStr(CERT_VENCIMENTO)+ sLineBreak;
-      Result := Result + 'ESTADO_OPERACAO = '+EstadoOperacaoToStr(ESTADO_OPERACAO)
+      Result := Result + 'ESTADO_OPERACAO = '+EstadoOperacaoToStr(ESTADO_OPERACAO);
+
     end;
   end;
+
 end;
 
 function RespostaEnviarDadosVenda(Resultado: String): AnsiString;

@@ -126,15 +126,17 @@ TACBrThreadTimer = class(TThread)
 de campos quando necessário}
   TACBrInformacao = class
   private
+    fFloatDecimalDigits: Integer;
     fInfo: String;
     fName: String;
     function GetAsDate : TDateTime;
-    function GetAsFloat : Double;
+    function GetAsFloat: Double;
     function GetAsInteger : Integer;
     function GetAsString: String;
     function GetAsTime : TDateTime;
     function GetAsTimeStamp : TDateTime;
     function GetAsTimeStampSQL : TDateTime;
+    function GetFloatDecimalDigits: Integer;
     //procedure SetAsAnsiString(const AValue: AnsiString);
     procedure SetAsDate(const AValue : TDateTime);
     procedure SetAsFloat(const AValue : Double);
@@ -144,6 +146,7 @@ de campos quando necessário}
     procedure SetAsTimeStamp(const AValue : TDateTime);
     procedure SetAsTimeStampSQL(const AValue : TDateTime);
   public
+    constructor Create;
     property Nome          : String     read fName             write fName;
     property AsString      : String     read GetAsString       write SetAsString ;
     property AsDate        : TDateTime  read GetAsDate         write SetAsDate ;
@@ -152,6 +155,8 @@ de campos quando necessário}
     property AsTimeStampSQL: TDateTime  read GetAsTimeStampSQL write SetAsTimeStampSQL ;
     property AsInteger     : Integer    read GetAsInteger      write SetAsInteger ;
     property AsFloat       : Double     read GetAsFloat        write SetAsFloat ;
+
+    property FloatDecimalDigits : Integer read GetFloatDecimalDigits write fFloatDecimalDigits;
   end ;
 
   { TACBrInformacoes }
@@ -166,6 +171,8 @@ de campos quando necessário}
     function AddField(const AName: String; AValue: String): TACBrInformacao;
     function FindFieldByName(const AName: String): TACBrInformacao;
     function FieldByName(const AName: String): TACBrInformacao;
+
+    function FieldExists(const AName: String): Boolean;
 
     procedure SaveToFile( AFileName: String) ;
     procedure LoadFromFile( AFileName: String) ;
@@ -359,7 +366,8 @@ begin
   Info := StringReplace( Trim(fInfo), ',','',[rfReplaceAll] );
   Info := StringReplace( Info       , '.','',[rfReplaceAll] );
 
-  Result := StrToIntDef( Info ,0) / 100 ;
+  Result := StrToFloatDef( Info , 0);
+  Result := Result / FloatDecimalDigits ;
 end;
 
 function TACBrInformacao.GetAsInteger : Integer;
@@ -397,9 +405,9 @@ begin
      Result := EncodeDateTime( YearOf(now),
                                StrToInt(copy(DateTimeStr,3,2)),
                                StrToInt(copy(DateTimeStr,1,2)),
-                               StrToInt(copy(DateTimeStr,5,2)),
-                               StrToInt(copy(DateTimeStr,7,2)),
-                               StrToInt(copy(DateTimeStr,9,2)), 0) ;
+                               StrToIntDef(copy(DateTimeStr,5,2),0),
+                               StrToIntDef(copy(DateTimeStr,7,2),0),
+                               StrToIntDef(copy(DateTimeStr,9,2),0), 0) ;
   except
      Result := 0 ;
   end;
@@ -407,7 +415,7 @@ end;
 
 function TACBrInformacao.GetAsTimeStampSQL : TDateTime;
 var
-   DateTimeStr : String;
+  DateTimeStr : String;
 begin
   DateTimeStr := OnlyNumber( Trim(fInfo) );
 
@@ -415,13 +423,19 @@ begin
      Result := EncodeDateTime( StrToInt(copy(DateTimeStr,1,4)),
                                StrToInt(copy(DateTimeStr,5,2)),
                                StrToInt(copy(DateTimeStr,7,2)),
-                               StrToInt(copy(DateTimeStr,9,2)),
-                               StrToInt(copy(DateTimeStr,11,2)),
-                               StrToInt(copy(DateTimeStr,13,2)), 0) ;
+                               StrToIntDef(copy(DateTimeStr,9,2),0),
+                               StrToIntDef(copy(DateTimeStr,11,2),0),
+                               StrToIntDef(copy(DateTimeStr,13,2),0), 0) ;
   except
      Result := 0 ;
   end;
 end;
+
+function TACBrInformacao.GetFloatDecimalDigits: Integer;
+begin
+  Result := StrToInt( PadRight('1', fFloatDecimalDigits+1, '0'));
+end;
+
 {
 procedure TACBrInformacao.SetAsAnsiString(const AValue: AnsiString);
 begin
@@ -441,11 +455,11 @@ begin
   if AValue = 0 then
      fInfo := ''
   else
-   begin
-     fInfo := IntToStr(Trunc(SimpleRoundTo( AValue * 100 ,0))) ;
-     if Length(fInfo) < 3 then
-        fInfo := PadLeft(fInfo,3,'0') ;
-   end ;
+  begin
+    fInfo := IntToStr(Trunc(SimpleRoundTo( AValue * FloatDecimalDigits ,0)));
+    if Length(fInfo) < 3 then
+      fInfo := PadLeft(fInfo,3,'0') ;
+  end ;
 end;
 
 procedure TACBrInformacao.SetAsInteger(const AValue : Integer);
@@ -485,6 +499,12 @@ begin
      fInfo := FormatDateTime('YYYYMMDDHHNNSS', AValue);
 end;
 
+constructor TACBrInformacao.Create;
+begin
+  inherited Create;
+  fFloatDecimalDigits := 2;
+end;
+
 { TACBrInformacoes }
 
 function TACBrInformacoes.AddField(const AName: String; AValue: String
@@ -510,6 +530,11 @@ begin
 
   if Result = nil then
     raise Exception.CreateFmt('Campo "%s" não encontrado.', [AName]);
+end;
+
+function TACBrInformacoes.FieldExists(const AName: String): Boolean;
+begin
+  Result := FindFieldByName( AName ) <> nil;
 end;
 
 function TACBrInformacoes.FindFieldByName(const AName: String): TACBrInformacao;

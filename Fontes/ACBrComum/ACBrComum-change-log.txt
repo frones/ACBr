@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/04/2018
+-- ACBrBase --
+[+] Adicionada propriedade possibilitando definir numero de digitos nos campos float em ACBrInformacao
+[+] Adicionada função FieldExists em ACBrInformacoes
+    (por: Celso Marigo Junior)
+
 Data: 06/03/2018
 -- ACBrUtil --
 [*] Refactoring no método "Split" para utilizar método já implementado "AddDelimitedTextToList"

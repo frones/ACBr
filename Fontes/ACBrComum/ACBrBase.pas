@@ -136,7 +136,6 @@ de campos quando necessário}
     function GetAsTime : TDateTime;
     function GetAsTimeStamp : TDateTime;
     function GetAsTimeStampSQL : TDateTime;
-    function GetFloatDecimalDigits: Integer;
     //procedure SetAsAnsiString(const AValue: AnsiString);
     procedure SetAsDate(const AValue : TDateTime);
     procedure SetAsFloat(const AValue : Double);
@@ -145,6 +144,7 @@ de campos quando necessário}
     procedure SetAsTime(const AValue : TDateTime);
     procedure SetAsTimeStamp(const AValue : TDateTime);
     procedure SetAsTimeStampSQL(const AValue : TDateTime);
+    procedure SetFloatDecimalDigits(AValue: Integer);
   public
     constructor Create;
     property Nome          : String     read fName             write fName;
@@ -156,7 +156,7 @@ de campos quando necessário}
     property AsInteger     : Integer    read GetAsInteger      write SetAsInteger ;
     property AsFloat       : Double     read GetAsFloat        write SetAsFloat ;
 
-    property FloatDecimalDigits : Integer read GetFloatDecimalDigits write fFloatDecimalDigits;
+    property FloatDecimalDigits : Integer read fFloatDecimalDigits write SetFloatDecimalDigits default 2;
   end ;
 
   { TACBrInformacoes }
@@ -361,13 +361,15 @@ end;
 
 function TACBrInformacao.GetAsFloat : Double;
 Var
-  Info : String ;
+  Info: String ;
+  Pow: Extended;
 begin
   Info := StringReplace( Trim(fInfo), ',','',[rfReplaceAll] );
   Info := StringReplace( Info       , '.','',[rfReplaceAll] );
+  Pow  := IntPower(10, FloatDecimalDigits);
 
   Result := StrToFloatDef( Info , 0);
-  Result := Result / FloatDecimalDigits ;
+  Result := Result / Pow;
 end;
 
 function TACBrInformacao.GetAsInteger : Integer;
@@ -431,11 +433,6 @@ begin
   end;
 end;
 
-function TACBrInformacao.GetFloatDecimalDigits: Integer;
-begin
-  Result := StrToInt( PadRight('1', fFloatDecimalDigits+1, '0'));
-end;
-
 {
 procedure TACBrInformacao.SetAsAnsiString(const AValue: AnsiString);
 begin
@@ -451,12 +448,15 @@ begin
 end;
 
 procedure TACBrInformacao.SetAsFloat(const AValue : Double);
+var
+  Pow: Extended;
 begin
   if AValue = 0 then
      fInfo := ''
   else
   begin
-    fInfo := IntToStr(Trunc(SimpleRoundTo( AValue * FloatDecimalDigits ,0)));
+    Pow  := IntPower(10, FloatDecimalDigits);
+    fInfo := IntToStr(Trunc(SimpleRoundTo(AValue * Pow, 0)));
     if Length(fInfo) < 3 then
       fInfo := PadLeft(fInfo,3,'0') ;
   end ;
@@ -497,6 +497,14 @@ begin
      fInfo := ''
   else
      fInfo := FormatDateTime('YYYYMMDDHHNNSS', AValue);
+end;
+
+procedure TACBrInformacao.SetFloatDecimalDigits(AValue: Integer);
+begin
+  if fFloatDecimalDigits = AValue then
+    Exit;
+
+  fFloatDecimalDigits := abs(AValue);
 end;
 
 constructor TACBrInformacao.Create;

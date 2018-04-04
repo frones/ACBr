@@ -1025,7 +1025,7 @@ begin
   begin
     Gerador.wGrupo('ideEstabVinc');
 
-    Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, pIdeEstabVinc.TpInsc);
+    Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, eSTpInscricaoToStr(pIdeEstabVinc.TpInsc));
     Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, pIdeEstabVinc.NrInsc);
 
     Gerador.wGrupo('/ideEstabVinc');
@@ -1036,7 +1036,7 @@ procedure TeSocialEvento.GerarIdeTomadorServ(pIdeTomadorServ: TIdeTomadorServ);
 begin
   Gerador.wGrupo('ideTomadorServ');
 
-  Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, pIdeTomadorServ.TpInsc);
+  Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, eSTpInscricaoToStr(pIdeTomadorServ.TpInsc));
   Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, pIdeTomadorServ.NrInsc);
 
   GerarIdeEstabVinc(pIdeTomadorServ.ideEstabVinc);
@@ -1111,7 +1111,7 @@ begin
   begin
     Gerador.wGrupo('aprend');
 
-    Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, pAprend.TpInsc);
+    Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, eSTpInscricaoToStr(pAprend.TpInsc));
     Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, pAprend.NrInsc);
 
     Gerador.wGrupo('/aprend');

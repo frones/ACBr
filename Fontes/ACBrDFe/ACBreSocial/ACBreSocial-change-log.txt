@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2018
+-- pcesGerador --
+[*] Incluido a função de conversão de tipos para o campo tpInsc.
+   Por: Italo Jurisato Junior
+
 03/04/2018
 -- pcesS1050 --
 [-] Correção de erro "Argument out of range" na geração do evento S-1050.

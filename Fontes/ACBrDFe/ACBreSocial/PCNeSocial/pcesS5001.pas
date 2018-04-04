@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnLeitor,
+  pcnConversao, pcnLeitor, ACBrUtil,
   pcesCommon, pcesConversaoeSocial;
 
 type
@@ -237,6 +237,7 @@ type
     destructor  Destroy; override;
 
     function LerXML: boolean;
+    function SalvarINI: boolean;
 
     property IdeEvento: TIdeEvento5 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -250,6 +251,9 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles;
 
 { TS5001 }
 
@@ -587,7 +591,7 @@ begin
             end;
 
             k := 0;
-            while Leitor.rExtrai(5, 'calcTer', '', k + 1) <> '' do
+            while Leitor.rExtrai(5, 'calcTerc', '', k + 1) <> '' do
             begin
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Add;
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].tpCR        := leitor.rCampo(tcInt, 'tpCR');
@@ -609,6 +613,109 @@ begin
   except
     Result := False;
   end;
+end;
+
+function TEvtBasesTrab.SalvarINI: boolean;
+var
+  AIni: TMemIniFile;
+  Ok: Boolean;
+  sSecao: String;
+  i, j, k: Integer;
+begin
+  Result := False;
+
+  AIni := TMemIniFile.Create('');
+  try
+    Result := True;
+
+    with Self do
+    begin
+      sSecao := 'evtBasesTrab';
+      AIni.WriteString(sSecao, 'Id', Id);
+
+      sSecao := 'ideEvento';
+      AIni.WriteString(sSecao, 'nrRecArqBase', IdeEvento.nrRecArqBase);
+//      AIni.WriteString(sSecao, 'IndApuracao',  IdeEvento.IndApuracao); //*
+      AIni.WriteString(sSecao, 'perApur',      IdeEvento.perApur);
+
+      sSecao := 'ideEmpregador';
+//      AIni.WriteString(sSecao, 'tpInsc', IdeEmpregador.TpInsc); //*
+      AIni.WriteString(sSecao, 'nrInsc', IdeEmpregador.nrInsc);
+
+      sSecao := 'ideTrabalhador';
+      AIni.WriteString(sSecao, 'cpfTrab', ideTrabalhador.cpfTrab);
+
+      for i := 0 to IdeTrabalhador.procJudTrab.Count -1 do
+      begin
+        sSecao := 'procJudTrab' + IntToStrZero(I, 2);
+
+        AIni.WriteString(sSecao, 'nrProcJud', IdeTrabalhador.procJudTrab.Items[i].nrProcJud);
+        AIni.WriteInteger(sSecao, 'codSusp',  IdeTrabalhador.procJudTrab.Items[i].codSusp);
+      end;
+
+      for i := 0 to infoCpCalc.Count -1 do
+      begin
+        sSecao := 'infoCpCalc' + IntToStrZero(I, 1);
+
+        AIni.WriteString(sSecao, 'tpCR',     infoCpCalc.Items[i].tpCR);
+        AIni.WriteFloat(sSecao, 'vrCpSeg',   infoCpCalc.Items[i].vrCpSeg);
+        AIni.WriteFloat(sSecao, 'vrDescSeg', infoCpCalc.Items[i].vrDescSeg);
+      end;
+
+      for i := 0 to infoCp.IdeEstabLot.Count -1 do
+      begin
+        with infoCp.IdeEstabLot.Items[i] do
+        begin
+          sSecao := 'ideEstabLot' + IntToStrZero(I, 2);
+
+//          AIni.WriteString(sSecao, 'tpInsc',     tpInsc);  //*
+          AIni.WriteString(sSecao, 'nrInsc',     nrInsc);
+          AIni.WriteString(sSecao, 'codLotacao', codLotacao);
+
+          for j := 0 to infoCategIncid.Count -1 do
+          begin
+            with InfoCategIncid.Items[j] do
+            begin
+              sSecao := 'infoCategIncid' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+
+              AIni.WriteString(sSecao, 'matricula',  matricula);
+              AIni.WriteInteger(sSecao, 'codCateg',  codCateg);
+//              AIni.WriteString(sSecao, 'indSimples', indSimples); //*
+
+              for k := 0 to infoBaseCS.Count -1 do
+              begin
+                with infoBaseCS.Items[k] do
+                begin
+                  sSecao := 'infoBaseCS' + IntToStrZero(I, 2) +
+                                     IntToStrZero(J, 2) + IntToStrZero(k, 2);
+
+                  AIni.WriteInteger(sSecao, 'ind13',   ind13);
+                  AIni.WriteInteger(sSecao, 'tpValor', tpValor);
+                  AIni.WriteFloat(sSecao, 'valor',     valor);
+                end;
+              end;
+
+              for k := 0 to CalcTerc.Count -1 do
+              begin
+                with CalcTerc.Items[k] do
+                begin
+                  sSecao := 'calcTerc' + IntToStrZero(I, 2) +
+                                     IntToStrZero(J, 2) + IntToStrZero(k, 1);
+
+                  AIni.WriteInteger(sSecao, 'tpCR',      tpCR);
+                  AIni.WriteFloat(sSecao, 'vrCsSegTerc', vrCsSegTerc);
+                  AIni.WriteFloat(sSecao, 'vrDescTerc',  vrDescTerc);
+                end;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+  finally
+       AIni.Free;
+  end;
+
 end;
 
 end.

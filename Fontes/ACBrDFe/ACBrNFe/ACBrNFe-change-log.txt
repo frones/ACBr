@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/04/2018
+-- pcnNFeW --
+[*] https://www.projetoacbr.com.br/forum/topic/42563-gera%C3%A7%C3%A3o-da-chave-de-nf-e-avulsa/
+  Por: BSoft
+
+05/04/2018
 -- ACBrNFeServicos --
 [*] Inclusão de URLs NFe 4.00 SVC-RS homologação.
 [*] Atualização de URLs NFe 4.00 homologação (BA, MS) e produção RS.

@@ -225,13 +225,19 @@ var
   chave: String;
   Gerar: Boolean;
   xProtNFe : String;
+  xCNPJCPF : string;
 begin
   Gerador.ListaDeAlertas.Clear;
 
   Usar_tcDe4 := (NFe.infNFe.Versao >= 3.10);
   Versao     := Copy(NFe.infNFe.VersaoStr, 9, 4);
 
-  chave := GerarChaveAcesso(nfe.ide.cUF, nfe.ide.dEmi, nfe.emit.CNPJCPF, nfe.ide.serie,
+  xCNPJCPF := nfe.emit.CNPJCPF;
+
+  if not EstaVazio(nfe.Avulsa.CNPJ) then
+    xCNPJCPF := nfe.Avulsa.CNPJ;
+
+  chave := GerarChaveAcesso(nfe.ide.cUF, nfe.ide.dEmi, xCNPJCPF, nfe.ide.serie,
                             nfe.ide.nNF, StrToInt(TpEmisToStr(nfe.ide.tpEmis)),
                             nfe.ide.cNF, nfe.ide.modelo);
   nfe.infNFe.ID := 'NFe' + chave;

@@ -47,13 +47,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/2018
+-- ACBrNFeServicos --
+[*] Inclusão de URLs NFe 4.00 SVC-RS homologação.
+[*] Atualização de URLs NFe 4.00 homologação (BA, MS) e produção RS.
+  Por: BigWings
+
+-- ACBrNFeWebServices --
+[*] Ajuste para serviço de consulta de cadastro NFe 4.00 RS e SVRS onde o WSDL 
+  do serviço está fora do padrão.
+[-] Correção da versão do layout da NFe gerada no protocolo de autorização
+  ao efetuar a consulta.
+  Por: BigWings
+
 22/03/2018
 -- ACBrNFeDANFEClass --
 [*] Ajuste no manter Codigo.
 	https://www.projetoacbr.com.br/forum/topic/42326-corre%C3%A7%C3%A3o-no-m%C3%A9todo-mantercodigo-para-imprimir-o-c%C3%B3digo-e-n%C3%A3o-sem-gtin-nfce-40/
   Por: HLeoRj
-
-
 
 21/03/2018
 -- ACBrNFeServicos --

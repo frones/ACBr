@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Incluido uma condição para determinar se será gerado ou não o grupo <CpfCnpj>.
+   Por: Davi
+
 28/03/2018
 -- pnfsNFSeW_Agili, pnfsNFSeR --
 [*] Ajustes visando permitir informar valores diferentes para as tags

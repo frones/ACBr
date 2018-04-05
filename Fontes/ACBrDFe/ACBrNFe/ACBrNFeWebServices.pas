@@ -408,6 +408,7 @@ type
     procedure SetCPF(const Value: String);
     procedure SetIE(const Value: String);
   protected
+    procedure InicializarServico; override;
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosIntegrador; override;
@@ -2181,6 +2182,7 @@ begin
     FprotNFe.digVal := NFeRetorno.protNFe.digVal;
     FprotNFe.cStat := NFeRetorno.protNFe.cStat;
     FprotNFe.xMotivo := NFeRetorno.protNFe.xMotivo;
+    FprotNFe.Versao := NFeRetorno.protNFe.Versao;
 
     {(*}
     if Assigned(NFeRetorno.procEventoNFe) and (NFeRetorno.procEventoNFe.Count > 0) then
@@ -2320,6 +2322,7 @@ begin
             NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
             NFe.procNFe.cStat := NFeRetorno.cStat;
             NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
+            NFe.procNFe.Versao := NFeRetorno.protNFe.Versao;
 
             if TACBrNFe(FPDFeOwner).CstatCancelada(NFeRetorno.CStat) and
                FPConfiguracoesNFe.Geral.AtualizarXMLCancelado then
@@ -2331,7 +2334,9 @@ begin
               try
                 AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLOriginal);
                 AProcNFe.XML_Prot := NFeRetorno.XMLprotNFe;
-                AProcNFe.Versao := FPVersaoServico;
+                AProcNFe.Versao := NFeRetorno.protNFe.Versao;
+                if AProcNFe.Versao = '' then
+                  AProcNFe.Versao := FPVersaoServico;
                 AjustarOpcoes( AProcNFe.Gerador.Opcoes );
                 AProcNFe.GerarXML;
 
@@ -2805,6 +2810,13 @@ begin
     ConCadNFe.GerarXML;
 
     FPDadosMsg := ConCadNFe.Gerador.ArquivoFormatoXML;
+
+    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) and
+      ((UpperCase(FUF) = 'RS') or (Pos('svrs.rs.gov.br', FPURL) > 0)) then
+    begin
+      FPDadosMsg := '<nfeDadosMsg>' + FPDadosMsg + '</nfeDadosMsg>';
+    end;
+
   finally
     ConCadNFe.Free;
   end;
@@ -2848,6 +2860,16 @@ end;
 function TNFeConsultaCadastro.GerarUFSoap: String;
 begin
   Result := '<cUF>' + IntToStr(UFparaCodigo(FUF)) + '</cUF>';
+end;
+
+procedure TNFeConsultaCadastro.InicializarServico;
+begin
+  inherited InicializarServico;
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) and
+    ((UpperCase(FUF) = 'RS') or (Pos('svrs.rs.gov.br', FPURL) > 0)) then
+  begin
+    FPBodyElement := 'consultaCadastro';
+  end;
 end;
 
 { TNFeEnvEvento }

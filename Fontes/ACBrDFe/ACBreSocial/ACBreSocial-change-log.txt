@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/2018
+-- pcesS5001 / pcesS5002 / pcesS5011 / pcesS5012 --
+[+] Implementação da gravação do arquivo INI referente aos eventos de retornos:
+    S-5001, S-5002, S-5011 e S-5012.
+   Por: Italo Jurisato Junior
+
 04/04/2018
 -- pcesGerador --
 [*] Incluido a função de conversão de tipos para o campo tpInsc.

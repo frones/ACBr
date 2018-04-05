@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnLeitor,
+  pcnConversao, pcnLeitor, ACBrUtil,
   pcesCommon, pcesConversaoeSocial;
 
 type
@@ -128,6 +128,7 @@ type
     destructor  Destroy; override;
 
     function LerXML: Boolean;
+    function SalvarINI: boolean;
 
     property IdeEvento: TIdeEvento5 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -139,6 +140,9 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles;
 
 { TS5012 }
 
@@ -272,6 +276,51 @@ begin
     end;
   except
     Result := False;
+  end;
+end;
+
+function TEvtIrrf.SalvarINI: boolean;
+var
+  AIni: TMemIniFile;
+  Ok: Boolean;
+  sSecao: String;
+  i, j, k: Integer;
+begin
+  Result := False;
+
+  AIni := TMemIniFile.Create('');
+  try
+    Result := True;
+
+    with Self do
+    begin
+      sSecao := 'evtIrrf';
+      AIni.WriteString(sSecao, 'Id', Id);
+
+      sSecao := 'ideEvento';
+      AIni.WriteString(sSecao, 'perApur', IdeEvento.perApur);
+
+      sSecao := 'ideEmpregador';
+      AIni.WriteString(sSecao, 'tpInsc', eSTpInscricaoToStr(IdeEmpregador.TpInsc));
+      AIni.WriteString(sSecao, 'nrInsc', IdeEmpregador.nrInsc);
+
+      sSecao := 'infoIRRF';
+      AIni.WriteString(sSecao, 'nrRecArqBase',  infoIRRF.nrRecArqBase);
+      AIni.WriteInteger(sSecao, 'indExistInfo', infoIRRF.indExistInfo);
+
+      for i := 0 to infoIRRF.InfoCRContrib.Count -1 do
+      begin
+        sSecao := 'InfoCRContrib' + IntToStrZero(I, 1);
+
+        with infoIRRF.InfoCRContrib.Items[i] do
+        begin
+          AIni.WriteString(sSecao, 'tpCR', tpCR);
+          AIni.WriteFloat(sSecao, 'vrCR',  vrCR);
+        end;
+      end;
+    end;
+  finally
+    AIni.Free;
   end;
 end;
 

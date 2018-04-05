@@ -635,11 +635,11 @@ begin
 
       sSecao := 'ideEvento';
       AIni.WriteString(sSecao, 'nrRecArqBase', IdeEvento.nrRecArqBase);
-//      AIni.WriteString(sSecao, 'IndApuracao',  IdeEvento.IndApuracao); //*
+      AIni.WriteString(sSecao, 'IndApuracao',  eSIndApuracaoToStr(IdeEvento.IndApuracao));
       AIni.WriteString(sSecao, 'perApur',      IdeEvento.perApur);
 
       sSecao := 'ideEmpregador';
-//      AIni.WriteString(sSecao, 'tpInsc', IdeEmpregador.TpInsc); //*
+      AIni.WriteString(sSecao, 'tpInsc', eSTpInscricaoToStr(IdeEmpregador.TpInsc));
       AIni.WriteString(sSecao, 'nrInsc', IdeEmpregador.nrInsc);
 
       sSecao := 'ideTrabalhador';
@@ -668,7 +668,7 @@ begin
         begin
           sSecao := 'ideEstabLot' + IntToStrZero(I, 2);
 
-//          AIni.WriteString(sSecao, 'tpInsc',     tpInsc);  //*
+          AIni.WriteString(sSecao, 'tpInsc',     eSTpInscricaoToStr(tpInsc));
           AIni.WriteString(sSecao, 'nrInsc',     nrInsc);
           AIni.WriteString(sSecao, 'codLotacao', codLotacao);
 
@@ -680,7 +680,7 @@ begin
 
               AIni.WriteString(sSecao, 'matricula',  matricula);
               AIni.WriteInteger(sSecao, 'codCateg',  codCateg);
-//              AIni.WriteString(sSecao, 'indSimples', indSimples); //*
+              AIni.WriteString(sSecao, 'indSimples', eSIndSimplesToStr(indSimples));
 
               for k := 0 to infoBaseCS.Count -1 do
               begin
@@ -713,9 +713,8 @@ begin
       end;
     end;
   finally
-       AIni.Free;
+    AIni.Free;
   end;
-
 end;
 
 end.

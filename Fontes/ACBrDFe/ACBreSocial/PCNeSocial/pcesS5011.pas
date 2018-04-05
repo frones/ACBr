@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnLeitor,
+  pcnConversao, pcnLeitor, ACBrUtil,
   pcesCommon, pcesConversaoeSocial;
 
 type
@@ -69,8 +69,8 @@ type
   TInfoTercSuspCollectionItem = class;
   TbasesRemunCollection = class;
   TbasesremunCollectionItem = class;
-  TinfoSubstPartOpPortCollection = class;
-  TinfoSubstPartOpPortCollectionItem = class;
+  TinfoSubstPatrOpPortCollection = class;
+  TinfoSubstPatrOpPortCollectionItem = class;
   TbasesAquisCollection = class;
   TbasesAquisCollectionItem = class;
   TbasesComercCollection = class;
@@ -305,17 +305,17 @@ type
     property vrDescCP: Double read FvrDescCP write FvrDescCP;
   end;
 
-  TinfoSubstPartOpPortCollection = class(TCollection)
+  TinfoSubstPatrOpPortCollection = class(TCollection)
   private
-    function GetItem(Index: Integer): TinfoSubstPartOpPortCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfoSubstPartOpPortCollectionItem);
+    function GetItem(Index: Integer): TinfoSubstPatrOpPortCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoSubstPatrOpPortCollectionItem);
   public
     constructor Create; reintroduce;
-    function Add: TinfoSubstPartOpPortCollectionItem;
-    property Items[Index: Integer]: TinfoSubstPartOpPortCollectionItem read GetItem write SetItem;
+    function Add: TinfoSubstPatrOpPortCollectionItem;
+    property Items[Index: Integer]: TinfoSubstPatrOpPortCollectionItem read GetItem write SetItem;
   end;
 
-  TinfoSubstPartOpPortCollectionItem = class(TCollectionItem)
+  TinfoSubstPatrOpPortCollectionItem = class(TCollectionItem)
   private
     FcnpjOpPortuario: String;
   public
@@ -333,7 +333,7 @@ type
     FdadosOpPort: TdadosOpPort;
     Fbasesremun: TbasesremunCollection;
     FbasesAvNport: TbasesAvNport;
-    FinfoSubstPartOpPort: TinfoSubstPartOpPortCollection;
+    FinfoSubstPatrOpPort: TinfoSubstPatrOpPortCollection;
   public
     constructor Create(AOwner: TideEstabCollectionItem); reintroduce;
     destructor Destroy; override;
@@ -347,7 +347,7 @@ type
     property dadosOpPort: TdadosOpPort read FdadosOpPort write FdadosOpPort;
     property basesremun: TbasesremunCollection read Fbasesremun write Fbasesremun;
     property basesAvNPort: TbasesAvNport read FbasesAvNport write FbasesAvNport;
-    property infoSubstPartOpPort: TinfoSubstPartOpPortCollection read FinfoSubstPartOpPort write FinfoSubstPartOpPort;
+    property infoSubstPatrOpPort: TinfoSubstPatrOpPortCollection read FinfoSubstPatrOpPort write FinfoSubstPatrOpPort;
   end;
 
   TideEstabCollection = class(TCollection)
@@ -521,6 +521,7 @@ type
     destructor  Destroy; override;
 
     function LerXML: boolean;
+    function SalvarINI: boolean;
 
     property IdeEvento: TIdeEvento5 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -533,6 +534,9 @@ type
   end;
 
 implementation
+
+uses
+  IniFiles;
 
 { TS5011 }
 
@@ -856,26 +860,26 @@ begin
   inherited;
 end;
 
-{ TinfoSubstPartOpPortCollection }
+{ TinfoSubstPatrOpPortCollection }
 
-function TinfoSubstPartOpPortCollection.Add: TinfoSubstPartOpPortCollectionItem;
+function TinfoSubstPatrOpPortCollection.Add: TinfoSubstPatrOpPortCollectionItem;
 begin
-  Result := TinfoSubstPartOpPortCollectionItem(inherited Add);
+  Result := TinfoSubstPatrOpPortCollectionItem(inherited Add);
 end;
 
-constructor TinfoSubstPartOpPortCollection.Create;
+constructor TinfoSubstPatrOpPortCollection.Create;
 begin
-  inherited create(TinfoSubstPartOpPortCollectionItem);
+  inherited create(TinfoSubstPatrOpPortCollectionItem);
 end;
 
-function TinfoSubstPartOpPortCollection.GetItem(
-  Index: Integer): TinfoSubstPartOpPortCollectionItem;
+function TinfoSubstPatrOpPortCollection.GetItem(
+  Index: Integer): TinfoSubstPatrOpPortCollectionItem;
 begin
-  Result := TinfoSubstPartOpPortCollectionItem(inherited GetItem(Index));
+  Result := TinfoSubstPatrOpPortCollectionItem(inherited GetItem(Index));
 end;
 
-procedure TinfoSubstPartOpPortCollection.SetItem(Index: Integer;
-  Value: TinfoSubstPartOpPortCollectionItem);
+procedure TinfoSubstPatrOpPortCollection.SetItem(Index: Integer;
+  Value: TinfoSubstPatrOpPortCollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;
@@ -890,7 +894,7 @@ begin
   FdadosOpPort := TdadosOpPort.Create;
   Fbasesremun := TbasesremunCollection.Create;
   FbasesAvNport := TbasesAvNport.Create;
-  FinfoSubstPartOpPort := TinfoSubstPartOpPortCollection.Create;
+  FinfoSubstPatrOpPort := TinfoSubstPatrOpPortCollection.Create;
 end;
 
 destructor TideLotacaoCollectionItem.Destroy;
@@ -900,7 +904,7 @@ begin
   FdadosOpPort.Free;
   Fbasesremun.Free;
   FbasesAvNport.Free;
-  FinfoSubstPartOpPort.Free;
+  FinfoSubstPatrOpPort.Free;
 
   inherited;
 end;
@@ -1092,10 +1096,10 @@ begin
               end;
 
               k := 0;
-              while Leitor.rExtrai(6, 'infoSubstPartOpPort', '', i + 1) <> '' do
+              while Leitor.rExtrai(6, 'infoSubstPatrOpPort', '', i + 1) <> '' do
               begin
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPartOpPort.Add;
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPartOpPort.Items[k].cnpjOpPortuario := leitor.rCampo(tcStr, 'cnpjOpPortuario');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPatrOpPort.Add;
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPatrOpPort.Items[k].cnpjOpPortuario := leitor.rCampo(tcStr, 'cnpjOpPortuario');
                 inc(k);
               end;
 
@@ -1161,6 +1165,231 @@ begin
     end;
   except
     Result := False;
+  end;
+end;
+
+function TEvtCS.SalvarINI: boolean;
+var
+  AIni: TMemIniFile;
+  Ok: Boolean;
+  sSecao: String;
+  i, j, k: Integer;
+begin
+  Result := False;
+
+  AIni := TMemIniFile.Create('');
+  try
+    Result := True;
+
+    with Self do
+    begin
+      sSecao := 'evtCS';
+      AIni.WriteString(sSecao, 'Id', Id);
+
+      sSecao := 'ideEvento';
+      AIni.WriteString(sSecao, 'IndApuracao', eSIndApuracaoToStr(IdeEvento.IndApuracao));
+      AIni.WriteString(sSecao, 'perApur',     IdeEvento.perApur);
+
+      sSecao := 'ideEmpregador';
+      AIni.WriteString(sSecao, 'tpInsc', eSTpInscricaoToStr(IdeEmpregador.TpInsc));
+      AIni.WriteString(sSecao, 'nrInsc', IdeEmpregador.nrInsc);
+
+      sSecao := 'infoCS';
+      AIni.WriteString(sSecao, 'nrRecArqBase',  infoCS.nrRecArqBase);
+      AIni.WriteInteger(sSecao, 'indExistInfo', infoCS.indExistInfo);
+
+      sSecao := 'infoCPSeg';
+      AIni.WriteFloat(sSecao, 'vrDescCP', infoCS.infoCPSeg.vrDescCP);
+      AIni.WriteFloat(sSecao, 'vrCpSeg',  infoCS.infoCPSeg.vrCpSeg);
+
+      sSecao := 'infoContrib';
+      AIni.WriteString(sSecao, 'classTrib', infoCS.infoContrib.classTrib);
+
+      sSecao := 'infoPJ';
+      AIni.WriteInteger(sSecao, 'indCoop',      infoCS.infoContrib.infoPJ.indCoop);
+      AIni.WriteInteger(sSecao, 'indConstr',    infoCS.infoContrib.infoPJ.indConstr);
+      AIni.WriteInteger(sSecao, 'indSubstPart', infoCS.infoContrib.infoPJ.indSubstPart);
+      AIni.WriteFloat(sSecao, 'percRedContrib', infoCS.infoContrib.infoPJ.percRedContrib);
+
+      sSecao := 'infoAtConc';
+      AIni.WriteFloat(sSecao, 'fatorMes', infoCS.infoContrib.infoPJ.infoAtConc.fatorMes);
+      AIni.WriteFloat(sSecao, 'fator13',  infoCS.infoContrib.infoPJ.infoAtConc.fator13);
+
+      for i := 0 to infoCS.ideEstab.Count -1 do
+      begin
+        sSecao := 'ideEstab' + IntToStrZero(I, 4);
+
+        AIni.WriteString(sSecao, 'tpInsc', eSTpInscricaoToStr(infoCS.ideEstab.Items[i].TpInsc));
+        AIni.WriteString(sSecao, 'nrInsc', infoCS.ideEstab.Items[i].nrInsc);
+
+        sSecao := 'infoEstab' + IntToStrZero(I, 4);
+
+        AIni.WriteString(sSecao, 'cnaePrep',    infoCS.ideEstab.Items[i].infoEstab.cnaePrep);
+        AIni.WriteString(sSecao, 'aliqRat',     eSAliqRatToStr(infoCS.ideEstab.Items[i].infoEstab.AliqRat));
+        AIni.WriteFloat(sSecao, 'fap',          infoCS.ideEstab.Items[i].infoEstab.fap);
+        AIni.WriteFloat(sSecao, 'aliqRatAjust', infoCS.ideEstab.Items[i].infoEstab.aliqRatAjust);
+
+        sSecao := 'infoComplObra' + IntToStrZero(I, 4);
+
+        AIni.WriteInteger(sSecao, 'indSubstPartObra', infoCS.ideEstab.Items[i].infoEstab.infoComplObra.indSubstPartObra);
+
+        with infoCS.ideEstab.Items[i] do
+        begin
+          for j := 0 to ideLotacao.Count -1 do
+          begin
+            sSecao := 'ideLotacao' + IntToStrZero(I, 4) + IntToStrZero(j, 2);
+
+            AIni.WriteString(sSecao, 'codLotacao',   ideLotacao.Items[j].codLotacao);
+            AIni.WriteInteger(sSecao, 'fpas',        ideLotacao.Items[j].fpas);
+            AIni.WriteString(sSecao, 'codTercs',     ideLotacao.Items[j].codTercs);
+            AIni.WriteString(sSecao, 'codTercsSusp', ideLotacao.Items[j].codTercsSusp);
+
+            with ideLotacao.Items[j] do
+            begin
+              for k := 0 to infoTercSusp.Count -1 do
+              begin
+                with infoTercSusp.Items[k] do
+                begin
+                  sSecao := 'infoTercSusp' + IntToStrZero(I, 4) + IntToStrZero(j, 2) +
+                          IntToStrZero(k, 2);
+
+                  AIni.WriteString(sSecao, 'codTerc', codTerc);
+                end;
+              end;
+
+              sSecao := 'infoEmprParcial' + IntToStrZero(I, 4) + IntToStrZero(j, 2);
+
+              AIni.WriteInteger(sSecao, 'tpInscContrat', infoEmprParcial.tpInscContrat);
+              AIni.WriteString(sSecao, 'nrInscContrat',  infoEmprParcial.nrInscContrat);
+              AIni.WriteInteger(sSecao, 'tpInscProp',    infoEmprParcial.tpInscProp);
+              AIni.WriteString(sSecao, 'nrInscProp',     infoEmprParcial.nrInscProp);
+
+              sSecao := 'dadosOpPort' + IntToStrZero(I, 4) + IntToStrZero(j, 2);
+
+              AIni.WriteString(sSecao, 'cnpjOpPortuario', dadosOpPort.cnpjOpPortuario);
+              AIni.WriteString(sSecao, 'nrInscContrat',   eSAliqRatToStr(dadosOpPort.AliqRat));
+              AIni.WriteFloat(sSecao, 'fap',              dadosOpPort.fap);
+              AIni.WriteFloat(sSecao, 'aliqRatAjust',     dadosOpPort.aliqRatAjust);
+
+              for k := 0 to basesremun.Count -1 do
+              begin
+                with basesremun.Items[k] do
+                begin
+                  sSecao := 'basesRemun' + IntToStrZero(I, 4) + IntToStrZero(j, 2) +
+                          IntToStrZero(k, 2);
+
+                  AIni.WriteInteger(sSecao, 'indincid', indincid);
+                  AIni.WriteInteger(sSecao, 'codCateg',  codCateg);
+
+                  sSecao := 'basesCp' + IntToStrZero(I, 4) + IntToStrZero(j, 2) +
+                          IntToStrZero(k, 2);
+
+                  with basesCp do
+                  begin
+                    AIni.WriteFloat(sSecao, 'vrBcCp00',     vrBcCp00);
+                    AIni.WriteFloat(sSecao, 'vrBcCp15',     vrBcCp15);
+                    AIni.WriteFloat(sSecao, 'vrBcCp20',     vrBcCp20);
+                    AIni.WriteFloat(sSecao, 'vrBcCp25',     vrBcCp25);
+                    AIni.WriteFloat(sSecao, 'vrSuspBcCp00', vrSuspBcCp00);
+                    AIni.WriteFloat(sSecao, 'vrSuspBcCp15', vrSuspBcCp15);
+                    AIni.WriteFloat(sSecao, 'vrSuspBcCp20', vrSuspBcCp20);
+                    AIni.WriteFloat(sSecao, 'vrSuspBcCp25', vrSuspBcCp25);
+                    AIni.WriteFloat(sSecao, 'vrDescSest',   vrDescSest);
+                    AIni.WriteFloat(sSecao, 'vrCalcSest',   vrCalcSest);
+                    AIni.WriteFloat(sSecao, 'vrDescSenat',  vrDescSenat);
+                    AIni.WriteFloat(sSecao, 'vrCalcSenat',  vrCalcSenat);
+                    AIni.WriteFloat(sSecao, 'vrSalFam',     vrSalFam);
+                    AIni.WriteFloat(sSecao, 'vrSalMat',     vrSalMat);
+                  end;
+                end;
+              end;
+
+              sSecao := 'basesAvNPort' + IntToStrZero(I, 4) + IntToStrZero(j, 2);
+
+              with basesAvNPort do
+              begin
+                AIni.WriteFloat(sSecao, 'vrBcCp00', vrBcCp00);
+                AIni.WriteFloat(sSecao, 'vrBcCp15', vrBcCp15);
+                AIni.WriteFloat(sSecao, 'vrBcCp20', vrBcCp20);
+                AIni.WriteFloat(sSecao, 'vrBcCp25', vrBcCp25);
+                AIni.WriteFloat(sSecao, 'vrBcCp13', vrBcCp13);
+                AIni.WriteFloat(sSecao, 'vrBcFgts', vrBcFgts);
+                AIni.WriteFloat(sSecao, 'vrDescCP', vrDescCP);
+              end;
+
+              for k := 0 to infoSubstPatrOpPort.Count -1 do
+              begin
+                with infoSubstPatrOpPort.Items[k] do
+                begin
+                  sSecao := 'infoSubstPatrOpPort' + IntToStrZero(I, 4) + IntToStrZero(j, 2) +
+                          IntToStrZero(k, 3);
+
+                  AIni.WriteString(sSecao, 'cnpjOpPortuario', cnpjOpPortuario);
+                end;
+              end;
+            end;
+          end;
+
+          for j := 0 to basesAquis.Count -1 do
+          begin
+            with basesAquis.Items[j] do
+            begin
+              sSecao := 'basesAquis' + IntToStrZero(I, 4) + IntToStrZero(j, 1);
+
+              AIni.WriteInteger(sSecao, 'indAquis',  indAquis);
+              AIni.WriteFloat(sSecao, 'vlrAquis',    vlrAquis);
+              AIni.WriteFloat(sSecao, 'vrCPDescPR',  vrCPDescPR);
+              AIni.WriteFloat(sSecao, 'vrCPNRet',    vrCPNRet);
+              AIni.WriteFloat(sSecao, 'vrRatNRet',   vrRatNRet);
+              AIni.WriteFloat(sSecao, 'vrSenarNRet', vrSenarNRet);
+              AIni.WriteFloat(sSecao, 'vrCPCalcPR',  vrCPCalcPR);
+              AIni.WriteFloat(sSecao, 'vrRatDescPR', vrRatDescPR);
+              AIni.WriteFloat(sSecao, 'vrRatCalcPR', vrRatCalcPR);
+              AIni.WriteFloat(sSecao, 'vrSenarDesc', vrSenarDesc);
+              AIni.WriteFloat(sSecao, 'vrSenarCalc', vrSenarCalc);
+            end;
+           end;
+
+          for j := 0 to basesComerc.Count -1 do
+          begin
+            with basesComerc.Items[j] do
+            begin
+              sSecao := 'basesComerc' + IntToStrZero(I, 4) + IntToStrZero(j, 1);
+
+              AIni.WriteInteger(sSecao, 'indComerc', indComerc);
+              AIni.WriteFloat(sSecao, 'vrBcComPR',   vrBcComPr);
+              AIni.WriteFloat(sSecao, 'vrCPSusp',    vrCPSusp);
+              AIni.WriteFloat(sSecao, 'vrRatSusp',   vrRatSusp);
+              AIni.WriteFloat(sSecao, 'vrSenarSusp', vrSenarSusp);
+            end;
+           end;
+
+          for j := 0 to infoCREstab.Count -1 do
+          begin
+            with infoCREstab.Items[j] do
+            begin
+              sSecao := 'infoCREstab' + IntToStrZero(I, 4) + IntToStrZero(j, 2);
+
+              AIni.WriteInteger(sSecao, 'tpCR',   tpCR);
+              AIni.WriteFloat(sSecao, 'vrCR',     vrCR);
+              AIni.WriteFloat(sSecao, 'vrSuspCR', vrSuspCR);
+            end;
+           end;
+
+        end;
+      end;
+
+      for i := 0 to infoCS.infoCRContrib.Count -1 do
+      begin
+        sSecao := 'infoCRContrib' + IntToStrZero(I, 2);
+
+        AIni.WriteString(sSecao, 'tpCR',    infoCS.infoCRContrib.Items[i].tpCR);
+        AIni.WriteFloat(sSecao, 'vrCR',     infoCS.infoCRContrib.Items[i].vrCR);
+        AIni.WriteFloat(sSecao, 'vrCRSusp', infoCS.infoCRContrib.Items[i].vrCRSusp);
+      end;
+    end;
+  finally
+    AIni.Free;
   end;
 end;
 

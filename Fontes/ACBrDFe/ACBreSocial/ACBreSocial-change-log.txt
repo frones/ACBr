@@ -49,6 +49,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/04/2018
+-- ACBreSocialWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/42564-ideempregador-nrinsc-com-8-posi%C3%A7%C3%B5es/
+   Por: Márcio M Gomes
 -- pcesS5001 / pcesS5002 / pcesS5011 / pcesS5012 --
 [+] Implementação da gravação do arquivo INI referente aos eventos de retornos:
     S-5001, S-5002, S-5011 e S-5012.

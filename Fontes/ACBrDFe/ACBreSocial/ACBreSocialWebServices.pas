@@ -292,7 +292,8 @@ begin
 
   with FLote.IdeEmpregador do
   begin
-    if Length(TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdEmpregador) = 14 then
+    if ( Length(TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdEmpregador) = 14 ) or
+       ( TACBreSocial(FPDFeOwner).Configuracoes.Geral.TipoEmpregador <> tePessoaFisica ) then
       TpInsc := tiCNPJ
     else
       TpInsc := tiCPF;

@@ -359,7 +359,7 @@ function TACBrETQEpl2.ComandoImprimirLinha(aVertical, aHorizontal, aLargura,
 begin
   Result := 'LO' +
             ConverterCoordenadas(aVertical, aHorizontal) + ',' +
-            ConverterCoordenadas(aVertical+aAltura, aHorizontal+aLargura);
+            ConverterCoordenadas(aAltura, aLargura);
 end;
 
 function TACBrETQEpl2.ComandoImprimirCaixa(aVertical, aHorizontal, aLargura,

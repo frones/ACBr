@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/04/2018
+-- ACBrETQEpl2 --
+[-] Correção no método "ImprimirLinha" (por: Elias)
+
 Data: 18/03/2018
 -- ACBrPosPrinter --
 [-] Correção da Emissão do Beep em alguns modelos de Impressoras compatíveis

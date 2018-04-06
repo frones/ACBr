@@ -109,6 +109,7 @@ type
     procedure AddDelimitedTextToListTeste_ComDelimitadorEntreAspasSimplesQuoteAspasSimples;
     procedure AddDelimitedTextToListTeste_ComDelimitadorEntreAspasDuplasComQuoteInvalido;
     procedure AddDelimitedTextToListTeste_ComDelimitadorEntreAspasDuplasSemQuote;
+    procedure AddDelimitedTextToListTeste_ComDelimitadoresVazios;
   end;
 
   { Split }
@@ -1162,6 +1163,18 @@ begin
   CheckEquals('B', FSL[3]);
   CheckEquals('R"', FSL[4]);
   CheckEquals('www.projetoacbr.com.br', FSL[5]);
+end;
+
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDelimitadoresVazios;
+begin
+  CheckEquals(7, AddDelimitedTextToList('PROJETO||||ACBR||www.projetoacbr.com.br','|',FSL, #0));
+  CheckEquals('PROJETO', FSL[0]);
+  CheckEquals('', FSL[1]);
+  CheckEquals('', FSL[2]);
+  CheckEquals('', FSL[3]);
+  CheckEquals('ACBR', FSL[4]);
+  CheckEquals('', FSL[5]);
+  CheckEquals('www.projetoacbr.com.br', FSL[6]);
 end;
 
 { FindDelimiterInTextTest }

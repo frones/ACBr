@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2018
+-- ACBrSATClass --
+[*] Ajuste no método: TACBrSATResposta.SetRetornoStr, para suportar Strings
+    com Aspas Duplas no texto.
+    (por: DSA)
+
 14/02/2018
 -- pcnCFeCancW / pcnCFeW --
 [*] Remção de funções em duplicidade e a troca das chamadas das funções antigas

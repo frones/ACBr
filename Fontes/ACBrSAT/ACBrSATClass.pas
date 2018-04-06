@@ -589,15 +589,7 @@ TrocarCodigoDeAtivacao.......: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
   Clear;
   fRetornoStr := AValue;
 
-  fRetornoLst.Delimiter := '|';
-  {$IFDEF FPC}
-   fRetornoLst.StrictDelimiter := True;
-  {$ELSE}
-   AValue := '"' + StringReplace(AValue, fRetornoLst.Delimiter,
-                            '"' + fRetornoLst.Delimiter + '"', [rfReplaceAll]) +
-             '"';
-  {$ENDIF}
-  fRetornoLst.DelimitedText := AValue;
+  AddDelimitedTextToList(fRetornoStr, '|', fRetornoLst, #0);
 
   if fRetornoLst.Count > 1 then
   begin

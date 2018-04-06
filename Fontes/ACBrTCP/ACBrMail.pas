@@ -504,15 +504,15 @@ begin
   fSubject := '';
 
   fReplyTo := TStringList.Create;
-  {$IFDEF FPC}
+  {$IfDef HAS_STRICTDELIMITER}
   fReplyTo.StrictDelimiter := True;
-  {$ENDIF}
+  {$EndIf}
   fReplyTo.Delimiter := ';';
 
   fBCC := TStringList.Create;
-  {$IFDEF FPC}
+  {$IfDef HAS_STRICTDELIMITER}
   fBCC.StrictDelimiter := True;
-  {$ENDIF}
+  {$EndIf}
   fBCC.Delimiter := ';';
 
   // NOTAR ISSO: fSMTP.Sock.OnStatus := ;

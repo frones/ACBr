@@ -47,12 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2018
+-- ACBrNFeServicos --
+[*] Inclusão de URLs QRCode e consulta NFCe 4.00 BA.
+  https://www.projetoacbr.com.br/forum/topic/42578-nfce-urls-invalidas/
+  Por: BigWings
+
 05/04/2018
 -- pcnNFeW --
 [*] https://www.projetoacbr.com.br/forum/topic/42563-gera%C3%A7%C3%A3o-da-chave-de-nf-e-avulsa/
   Por: BSoft
 
-05/04/2018
 -- ACBrNFeServicos --
 [*] Inclusão de URLs NFe 4.00 SVC-RS homologação.
 [*] Atualização de URLs NFe 4.00 homologação (BA, MS) e produção RS.

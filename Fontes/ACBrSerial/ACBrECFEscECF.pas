@@ -578,16 +578,7 @@ begin
 
     SL := TStringList.Create;
     try
-      SL.Delimiter := '|';
-      {$IFDEF FPC}
-       SL.StrictDelimiter := True;
-       SL.DelimitedText := CmdResp;
-      {$ELSE}
-       SL.DelimitedText := '"' + StringReplace(CmdResp, SL.Delimiter,
-                                '"' + SL.Delimiter + '"', [rfReplaceAll]) +
-                           '"';
-      {$ENDIF}
-
+      AddDelimitedTextToList( CmdResp, '|', SL, #0);
       if SL.Count < 5 then
         raise EACBrECFCMDInvalido.Create('Resposta Inválida de EPSON_Send_From_FileEX');
 

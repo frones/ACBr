@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/04/2018
+-- ACBrECFEscECF --
+[*] Ajuste no método: TACBrECFEscECFProtocoloEpsonDLL.EnviaComando_ECF, para
+    suportar Strings com Aspas Duplas no texto.
+    (por: DSA)
+
 Data: 05/04/2018
 -- ACBrETQEpl2 --
 [-] Correção no método "ImprimirLinha" (por: Elias)

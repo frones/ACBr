@@ -101,13 +101,13 @@ type
     procedure AddDelimitedTextToListTeste_SemDelimitador;
     procedure AddDelimitedTextToListTeste_DelimitadorEspaco;
     procedure AddDelimitedTextToListTeste_ComUmaAspasSimples;
-    procedure AddDelimitedTextToListTeste_ComDuasAspasSimples;
+    procedure AddDelimitedTextToListTeste_ComDuasAspasSimplesQuoteAspasDuplas;
     procedure AddDelimitedTextToListTeste_ComUmaAspasDuplasComQuote;
     procedure AddDelimitedTextToListTeste_ComUmaAspasDuplasSemQuote;
     procedure AddDelimitedTextToListTeste_ComDuasAspasDuplaComQuote;
     procedure AddDelimitedTextToListTeste_ComDuasAspasDuplaSemQuote;
-    procedure AddDelimitedTextToListTeste_ComDelimitadorEntreAspasSimples;
-    procedure AddDelimitedTextToListTeste_ComDelimitadorEntreAspasDuplasComQuote;
+    procedure AddDelimitedTextToListTeste_ComDelimitadorEntreAspasSimplesQuoteAspasSimples;
+    procedure AddDelimitedTextToListTeste_ComDelimitadorEntreAspasDuplasComQuoteInvalido;
     procedure AddDelimitedTextToListTeste_ComDelimitadorEntreAspasDuplasSemQuote;
   end;
 
@@ -1087,13 +1087,13 @@ end;
 
 procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComUmaAspasSimples;
 begin
-  CheckEquals(3, AddDelimitedTextToList('PROJETO|''ACBR|www.projetoacbr.com.br','|',FSL));
+  CheckEquals(3, AddDelimitedTextToList('PROJETO|AC''BR|www.projetoacbr.com.br','|',FSL));
   CheckEquals('PROJETO', FSL[0]);
-  CheckEquals('''ACBR', FSL[1]);
+  CheckEquals('AC''BR', FSL[1]);
   CheckEquals('www.projetoacbr.com.br', FSL[2]);
 end;
 
-procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDuasAspasSimples;
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDuasAspasSimplesQuoteAspasDuplas;
 begin
   CheckEquals(3, AddDelimitedTextToList('PROJETO|''ACBR''|www.projetoacbr.com.br','|',FSL));
   CheckEquals('PROJETO', FSL[0]);
@@ -1103,25 +1103,27 @@ end;
 
 procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComUmaAspasDuplasComQuote;
 begin
-  CheckEquals(2, AddDelimitedTextToList('PROJETO|"ACBR|www.projetoacbr.com.br','|',FSL));
+  CheckEquals(3, AddDelimitedTextToList('PROJETO|AC"BR|www.projetoacbr.com.br','|',FSL));
   CheckEquals('PROJETO', FSL[0]);
-  CheckEquals('ACBR|www.projetoacbr.com.br', FSL[1]);
+  CheckEquals('AC"BR', FSL[1]);
+  CheckEquals('www.projetoacbr.com.br', FSL[2]);
 end;
 
 procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComUmaAspasDuplasSemQuote;
 begin
-  CheckEquals(3, AddDelimitedTextToList('PROJETO|"ACBR|www.projetoacbr.com.br','|',FSL, #0 ));
+  CheckEquals(3, AddDelimitedTextToList('PROJETO|AC"BR|www.projetoacbr.com.br','|',FSL, #0 ));
   CheckEquals('PROJETO', FSL[0]);
-  CheckEquals('"ACBR', FSL[1]);
+  CheckEquals('AC"BR', FSL[1]);
   CheckEquals('www.projetoacbr.com.br', FSL[2]);
 end;
 
 procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDuasAspasDuplaComQuote;
 begin
-  CheckEquals(3, AddDelimitedTextToList('PROJETO|"ACBR"|www.projetoacbr.com.br','|',FSL));
+  CheckEquals(4, AddDelimitedTextToList('PROJETO|"A|C"|"B|R"|www.projetoacbr.com.br','|',FSL));
   CheckEquals('PROJETO', FSL[0]);
-  CheckEquals('ACBR', FSL[1]);
-  CheckEquals('www.projetoacbr.com.br', FSL[2]);
+  CheckEquals('A|C', FSL[1]);
+  CheckEquals('B|R', FSL[2]);
+  CheckEquals('www.projetoacbr.com.br', FSL[3]);
 end;
 
 procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDuasAspasDuplaSemQuote;
@@ -1132,7 +1134,7 @@ begin
   CheckEquals('www.projetoacbr.com.br', FSL[2]);
 end;
 
-procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDelimitadorEntreAspasSimples;
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDelimitadorEntreAspasSimplesQuoteAspasSimples;
 begin
   CheckEquals(3, AddDelimitedTextToList('PROJETO ''A C B R'' www.projetoacbr.com.br',' ',FSL, ''''));
   CheckEquals('PROJETO', FSL[0]);
@@ -1140,19 +1142,22 @@ begin
   CheckEquals('www.projetoacbr.com.br', FSL[2]);
 end;
 
-procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDelimitadorEntreAspasDuplasComQuote;
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDelimitadorEntreAspasDuplasComQuoteInvalido;
 begin
-  CheckEquals(3, AddDelimitedTextToList('PROJETO "A C B R" www.projetoacbr.com.br',' ',FSL));
+  CheckEquals(6, AddDelimitedTextToList('PROJETO|A"A|C|B|R"|www.projetoacbr.com.br','|',FSL));
   CheckEquals('PROJETO', FSL[0]);
-  CheckEquals('A C B R', FSL[1]);
-  CheckEquals('www.projetoacbr.com.br', FSL[2]);
+  CheckEquals('A"A', FSL[1]);
+  CheckEquals('C', FSL[2]);
+  CheckEquals('B', FSL[3]);
+  CheckEquals('R"', FSL[4]);
+  CheckEquals('www.projetoacbr.com.br', FSL[5]);
 end;
 
 procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_ComDelimitadorEntreAspasDuplasSemQuote;
 begin
-  CheckEquals(6, AddDelimitedTextToList('PROJETO "A C B R" www.projetoacbr.com.br',' ',FSL, #0));
+  CheckEquals(6, AddDelimitedTextToList('PROJETO A"A C B R" www.projetoacbr.com.br',' ',FSL, #0));
   CheckEquals('PROJETO', FSL[0]);
-  CheckEquals('"A', FSL[1]);
+  CheckEquals('A"A', FSL[1]);
   CheckEquals('C', FSL[2]);
   CheckEquals('B', FSL[3]);
   CheckEquals('R"', FSL[4]);

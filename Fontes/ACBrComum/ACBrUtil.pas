@@ -349,7 +349,7 @@ function MatchText(const AText: String; const AValues: array of String): Boolean
 
 function FindDelimiterInText( const AText: String; ADelimiters: String = ''): Char;
 function AddDelimitedTextToList( const AText: String; const ADelimiter: Char;
-   AStringList: TStrings): Integer;
+   AStringList: TStrings; const AQuoteChar: Char = '"'): Integer;
 
 function UnZip(S: TStream): AnsiString; overload;
 function UnZip(const ABinaryString: AnsiString): AnsiString; overload;
@@ -3653,32 +3653,67 @@ end;
   Retorna o número de Itens Inseridos
  ------------------------------------------------------------------------------}
 function AddDelimitedTextToList(const AText: String; const ADelimiter: Char;
-  AStringList: TStrings): Integer;
+  AStringList: TStrings; const AQuoteChar: Char): Integer;
 var
   SL: TStringList;
-  ADelimitedText: String;
+  QC: Char;
+  {$IfNDef HAS_STRICTDELIMITER}
+   L, Pi, Pf, Pq: Integer;
+  {$EndIf}
 begin
   Result := 0;
   if (AText = '') then
     Exit;
 
+  if (AQuoteChar = #0) then
+    QC := ADelimiter
+  else
+    QC := AQuoteChar;
+
   SL := TStringList.Create;
   try
-    SL.Delimiter := ADelimiter;
-    {$IFDEF FPC}
+    {$IfDef HAS_STRICTDELIMITER}
+     SL.Delimiter := ADelimiter;
+     SL.QuoteChar := QC;
      SL.StrictDelimiter := True;
-     ADelimitedText := AText;
-    {$ELSE}
-     {$IFDEF DELPHI2006_UP}
-      SL.StrictDelimiter := True;
-      ADelimitedText := AText;
-     {$ELSE}
-      ADelimitedText := '"' + StringReplace(AText, ADelimiter,
-                           '"' + ADelimiter + '"', [rfReplaceAll]) +
-                      '"';
-     {$ENDIF}
-    {$ENDIF}
-    SL.DelimitedText := ADelimitedText;
+     SL.DelimitedText := AText;
+    {$Else}
+     L  := Length(AText);
+     Pi := 1;
+     if (ADelimiter = QC) then
+       Pq := L+1
+     else
+     begin
+       Pq := Pos(QC, AText);
+       if Pq = 0 then
+         Pq := L+1;
+     end;
+
+     while Pi <= L do
+     begin
+       if (Pq = Pi) then
+       begin
+         Inc(Pi);  // Pula o Quote
+         Pf := PosEx(QC, AText, Pi);
+         Pq := Pf;
+       end
+       else
+         Pf := PosEx(ADelimiter, AText, Pi);
+
+       if Pf = 0 then
+         Pf := L+1;
+
+       SL.Add(Copy(AText, Pi, Pf-Pi));
+
+       if (Pq = Pf) then
+       begin
+         Pq := PosEx(QC, AText, Pq+1);
+         Inc(Pf);
+       end;
+
+       Pi := Pf + 1;
+     end;
+    {$EndIf}
     Result := SL.Count;
 
     AStringList.AddStrings(SL);

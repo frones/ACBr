@@ -38,6 +38,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/04/2018
+-- ACBr.Inc --
+[+] Adicionado suporte a diretiva:   {$DEFINE HAS_STRICTDELIMITER}
+
+-- ACBrUtil --
+[*] Modificada a assinatura do método "AddDelimitedTextToList" para:
+    function AddDelimitedTextToList( const AText: String; const ADelimiter: Char;
+      AStringList: TStrings; const AQuoteChar: Char = '"'): Integer;
+    Informe AQuoteChar := #0, para que as Aspas Duplas sejam ignoradas, no
+    calculo da separação de Linhas
+    (por: DSA)
+
 Data: 04/04/2018
 -- ACBrBase --
 [+] Adicionada propriedade possibilitando definir numero de digitos nos campos float em ACBrInformacao

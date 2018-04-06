@@ -3650,13 +3650,16 @@ end;
 {------------------------------------------------------------------------------
   Quebra a String "AText", em várias linhas, separando-a de acordo com a ocorrência
   de "ADelimiter", e adiciona os Itens encontrados em "AStringList".
-  Retorna o número de Itens Inseridos
+  Retorna o número de Itens Inseridos.
+  Informe #0 em "AQuoteChar", para que as Aspas Duplas sejam ignoradas na divisão
+  Se AQuoteChar for diferente de #0, ele será considerado, para evitar os delimitadores
+  que estão dentro de um contexto do QuoteChar...
+  Veja exemplos de uso e retorno em: "ACBrUtilTeste"
  ------------------------------------------------------------------------------}
 function AddDelimitedTextToList(const AText: String; const ADelimiter: Char;
   AStringList: TStrings; const AQuoteChar: Char): Integer;
 var
   SL: TStringList;
-  QC: Char;
   {$IfNDef HAS_STRICTDELIMITER}
    L, Pi, Pf, Pq: Integer;
   {$EndIf}
@@ -3665,26 +3668,21 @@ begin
   if (AText = '') then
     Exit;
 
-  if (AQuoteChar = #0) then
-    QC := ADelimiter
-  else
-    QC := AQuoteChar;
-
   SL := TStringList.Create;
   try
     {$IfDef HAS_STRICTDELIMITER}
      SL.Delimiter := ADelimiter;
-     SL.QuoteChar := QC;
+     SL.QuoteChar := AQuoteChar;
      SL.StrictDelimiter := True;
      SL.DelimitedText := AText;
     {$Else}
      L  := Length(AText);
      Pi := 1;
-     if (ADelimiter = QC) then
+     if (ADelimiter = AQuoteChar) then
        Pq := L+1
      else
      begin
-       Pq := Pos(QC, AText);
+       Pq := Pos(AQuoteChar, AText);
        if Pq = 0 then
          Pq := L+1;
      end;
@@ -3694,7 +3692,7 @@ begin
        if (Pq = Pi) then
        begin
          Inc(Pi);  // Pula o Quote
-         Pf := PosEx(QC, AText, Pi);
+         Pf := PosEx(AQuoteChar, AText, Pi);
          Pq := Pf;
        end
        else
@@ -3707,7 +3705,7 @@ begin
 
        if (Pq = Pf) then
        begin
-         Pq := PosEx(QC, AText, Pq+1);
+         Pq := PosEx(AQuoteChar, AText, Pq+1);
          Inc(Pf);
        end;
 

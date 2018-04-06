@@ -510,17 +510,8 @@ begin
 
   if (LeftStr(Result,2) = '\"') then
     Delete(Result,1,2);
-    
-  FRespostas.Delimiter := '|';
-  {$IFDEF FPC}
-   FRespostas.StrictDelimiter := True;
-   FRespostas.DelimitedText   := Result;
-  {$ELSE}
-   FRespostas.DelimitedText :=
-           '"' + StringReplace(Result, FRespostas.Delimiter,
-                            '"' + FRespostas.Delimiter + '"', [rfReplaceAll]) +
-           '"';
-  {$ENDIF}
+
+  AddDelimitedTextToList( Result, '|', FRespostas, #0 );
 end ;
 
 function TACBrIntegrador.GetErroResposta: String;

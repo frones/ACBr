@@ -392,13 +392,13 @@ type
                       cdaJogosSoltos     // 05 - Jogos Soltos
                       );
   /// Código do Tipo de Assinante
-  TACBrTpAssinante = (assComercialIndustrial,    // 1 - Comercial/Industrial
+  TACBrTpAssinante = (assNenhum,                  // Preencher vazio
+                      assComercialIndustrial,    // 1 - Comercial/Industrial
                       assPodrPublico,            // 2 - Poder Público
                       assResidencial,            // 3 - Residencial/Pessoa física
                       assPublico,                // 4 - Público
                       assSemiPublico,            // 5 - Semi-Público
-                      assOutros,                 // 6 - Outros
-                      assNenhum                  // Preencher vazio
+                      assOutros                  // 6 - Outros
                       );
   TACBrTipoAssinante = TACBrTpAssinante;
 

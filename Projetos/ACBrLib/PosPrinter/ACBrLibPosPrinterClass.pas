@@ -113,8 +113,9 @@ function POS_CortarPapel(Parcial: Boolean): longint;{$IfDef STDCALL} stdcall{$El
 function POS_AbrirGaveta: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_LerInfoImpressora(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_LerStatusImpressora(Tentativas: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -635,12 +636,10 @@ begin
   end;
 end;
 
-function POS_LerStatusImpressora(Tentativas: Integer;
-  const sResposta: PChar; var esTamanho: longint): longint;
+function POS_LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
-  Resposta: string;
-  Status: TACBrPosPrinterStatus;
+  RetStatus: TACBrPosPrinterStatus;
   i: TACBrPosTipoStatus;
 begin
   try
@@ -654,22 +653,19 @@ begin
     with TACBrLibPosPrinter(pLib) do
     begin
       PosDM.Travar;
+      status := 0;
       try
-        Resposta := '';
-        Status := PosDM.ACBrPosPrinter1.LerStatusImpressora(Tentativas);
-        if status = [] then
-          Resposta := 'Nenhum status encontrado'
-        else
+        RetStatus := PosDM.ACBrPosPrinter1.LerStatusImpressora(Tentativas);
+        if RetStatus <> [] then
         begin
           for i := Low(TACBrPosTipoStatus) to High(TACBrPosTipoStatus) do
           begin
-            if i in status then
-              Resposta := Resposta + GetEnumName(TypeInfo(TACBrPosTipoStatus),
-                integer(i)) + ', ';
+            if i in RetStatus then
+              status := status + (1 << Ord(i));
           end;
         end;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
+
+        Result := SetRetorno(ErrOK);
       finally
         PosDM.Destravar;
       end;
@@ -682,6 +678,43 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
+
+function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  TagList: TStringList;
+  Tags: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('POS_RetornarTags(' + BoolToStr(IncluiAjuda, True) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('POS_RetornarTags', logNormal);
+
+    with TACBrLibPosPrinter(pLib) do
+    begin
+      PosDM.Travar;
+      TagList := TStringList.Create;
+      try
+        PosDM.ACBrPosPrinter1.RetornarTags(TagList, IncluiAjuda);
+        Tags := StringReplace(TagList.Text, sLineBreak, '|', [rfReplaceAll, rfIgnoreCase]);
+        MoverStringParaPChar(Tags, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Tags);;
+      finally
+        PosDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 {%endregion}
 
 {%endregion}

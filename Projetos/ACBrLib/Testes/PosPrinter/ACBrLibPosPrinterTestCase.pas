@@ -24,6 +24,7 @@ type
     procedure Test_POS_Nome_Lendo_Buffer_Tamanho_Menor;
     procedure Test_POS_Versao;
     procedure Test_POS_ConfigLerValor;
+    procedure Test_POS_ConfigGravarValor;
   end;
 
 implementation
@@ -131,6 +132,22 @@ begin
   AssertEquals(ErrOk, POS_ConfigLerValor(CSessaoVersao, CLibPosPrinterNome, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals(CLibPosPrinterVersao, AStr);
+end;
+
+procedure TTestACBrPosPrinterLib.Test_POS_ConfigGravarValor;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  // Gravando o valor
+  AssertEquals('Erro ao Mudar configuração', ErrOk, POS_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
+
+  // Checando se o valor foi atualizado //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, POS_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
+  AStr := copy(AStr,1,Bufflen);
+  AssertEquals('Erro ao Mudar configuração', '4', AStr);
 end;
 
 initialization

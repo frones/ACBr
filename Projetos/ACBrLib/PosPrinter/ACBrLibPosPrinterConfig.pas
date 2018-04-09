@@ -78,6 +78,7 @@ type
   { TPosPrinterConfig }
   TPosPrinterConfig = class
   private
+    FArqLog: String;
     FModelo: TACBrPosPrinterModelo;
     FPorta: String;
     FPaginaDeCodigo: TACBrPosPaginaCodigo;
@@ -101,6 +102,7 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
+    property ArqLog: string read FArqLog write FArqLog;
     property Modelo: TACBrPosPrinterModelo read FModelo write FModelo;
     property Porta: String read FPorta write FPorta;
     property PaginaDeCodigo: TACBrPosPaginaCodigo read FPaginaDeCodigo write FPaginaDeCodigo;
@@ -225,6 +227,7 @@ end;
 
 procedure TPosPrinterConfig.LerIni(const AIni: TCustomIniFile);
 begin
+  FArqLog := AIni.ReadString(CSessaoPosPrinter, CChaveLog, FArqLog);
   FModelo := TACBrPosPrinterModelo(AIni.ReadInteger(CSessaoPosPrinter, CChaveModelo, Integer(FModelo)));
   FPorta := AIni.ReadString(CSessaoPosPrinter, CChavePorta, FPorta);
   FPaginaDeCodigo := TACBrPosPaginaCodigo(AIni.ReadInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo)));
@@ -260,6 +263,7 @@ end;
 
 procedure TPosPrinterConfig.GravarIni(const AIni: TCustomIniFile);
 begin
+  AIni.WriteString(CSessaoPosPrinter, CChaveLog, FArqLog);
   AIni.WriteInteger(CSessaoPosPrinter, CChaveModelo, Integer(FModelo));
   AIni.WriteString(CSessaoPosPrinter, CChavePorta, FPorta);
   AIni.WriteInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo));

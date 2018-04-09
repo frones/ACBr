@@ -51,12 +51,13 @@ const
   CSessaoConfigGaveta = 'ConfigGaveta';
   CSessaoDevice = 'Device';
 
+  CChaveLog = 'ArqLog';
   CChaveModelo = 'Modelo';
   CChavePorta = 'Porta';
   CChavePaginaDeCodigo = 'PaginaDeCodigo';
   CChaveColunasFonteNormal = 'ColunasFonteNormal';
   CChaveEspacoEntreLinhas = 'EspacoEntreLinhas';
-  CChaveFLinhasEntreCupons = 'FLinhasEntreCupons';
+  CChaveFLinhasEntreCupons = 'LinhasEntreCupons';
   CChaveCortaPapel = 'CortaPapel';
   CChaveTraduzirTags = 'TraduzirTags';
   CChaveIgnorarTags = 'IgnorarTags';

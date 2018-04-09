@@ -52,6 +52,7 @@ begin
 
   with ACBrPosPrinter1 do
   begin
+    ArqLog := pLibConfig.PosPrinterConfig.ArqLog;
     Modelo := pLibConfig.PosPrinterConfig.Modelo;
     Porta := pLibConfig.PosPrinterConfig.Porta;
     PaginaDeCodigo := pLibConfig.PosPrinterConfig.PaginaDeCodigo;

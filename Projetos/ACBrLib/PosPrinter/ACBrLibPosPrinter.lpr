@@ -45,7 +45,8 @@ exports
   POS_CortarPapel,
   POS_AbrirGaveta,
   POS_LerInfoImpressora,
-  POS_LerStatusImpressora;
+  POS_LerStatusImpressora,
+  POS_RetornarTags;
 
 begin
   {$IFDEF DEBUG}

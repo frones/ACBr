@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/04/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Incluido a geração da tag <InformacoesComplementares> para o provedor SmarAPDABRASF.
+   Por: Italo Jurisato Junior
+
 05/04/2018
 -- pnfsNFSeW_ABRASFv2 --
 [*] Incluido uma condição para determinar se será gerado ou não o grupo <CpfCnpj>.

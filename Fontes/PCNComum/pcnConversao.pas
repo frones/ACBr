@@ -121,7 +121,7 @@ type
                   teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2,
                   teNaoEmbarque, teMDFeCancelado2,teMDFeAutorizadoComCTe,
                   teRegPasNfeProMDFe, teRegPasNfeProMDFeCte, teRegPasAutMDFeComCte,
-                  teCancelamentoMDFeAutComCTe, teAverbacaoExportacao);
+                  teCancelamentoMDFeAutComCTe, teAverbacaoExportacao, teAutCteComplementar);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -170,7 +170,7 @@ type
 
   TIndicador = (tiSim, tiNao);
 const
-  TpcnTpEventoString : array[0..42] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..43] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -184,7 +184,7 @@ const
                                                 '110170', '310610', '110115',
                                                 '310611', '610614', '610510',
                                                 '610514', '610554', '610615',
-                                                '790700');
+                                                '790700', '240130');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1057,7 +1057,7 @@ begin
               'Registro de Passagem de NFe propagado pelo MDFe/Cte',
               'Registro de Passagem Automatico MDF-e com CT-e',
               'Cancelamento de MDF-e Autorizado com CT-e',
-              'Averbação de Exportação'],
+              'Averbação de Exportação','Autorizado CTe Complementar'],
              [teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1071,7 +1071,7 @@ begin
               teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2,
               teNaoEmbarque, teMDFeCancelado2, teMDFeAutorizadoComCTe,
               teRegPasNfeProMDFe, teRegPasNfeProMDFeCte, teRegPasAutMDFeComCte,
-              teCancelamentoMDFeAutComCTe, teAverbacaoExportacao]);
+              teCancelamentoMDFeAutComCTe, teAverbacaoExportacao, teAutCteComplementar]);
 end;
 
 

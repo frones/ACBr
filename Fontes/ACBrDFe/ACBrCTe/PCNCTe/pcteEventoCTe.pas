@@ -421,6 +421,7 @@ begin
     teConfInternalizacao          : Desc := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
     tePrestDesacordo              : Desc := 'Prestacao do Servico em Desacordo';
     teGTV                         : Desc := 'Informacoes da GTV';
+    teAutCteComplementar          : Desc := 'Autorizado CTe Complemetnar';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -465,7 +466,8 @@ begin
     teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
     tePrestDesacordo           : Result := 'Prestação do Serviço em Desacordo';
-    teGTV                      : Result := 'Informações da GTV'
+    teGTV                      : Result := 'Informações da GTV';
+    teAutCteComplementar       : Result := 'Autorizado CTe Complementar';
   else
     Result := 'Não Definido';
   end;

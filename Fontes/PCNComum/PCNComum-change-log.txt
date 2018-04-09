@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/04/2018
+-- pcnConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/42534-consulta-situa%C3%A7%C3%A3o-ct-e-erro-descri%C3%A7%C3%A3o-do-evento-n%C3%A3o-implementado/?do=findComment&comment=280692
+   Por: Douglas wf
+
 28/03/2018
 -- pcnConversao
 [*] Ref. a Distribuição de Documentos - Eventos

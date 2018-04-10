@@ -12,9 +12,7 @@
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <Title Value="ACBrLibNFe"/>
-      <Scaled Value="True"/>
       <ResourceType Value="res"/>
-      <UseXPManifest Value="True"/>
       <XPManifest>
         <DpiAware Value="True/PM"/>
       </XPManifest>
@@ -22,6 +20,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
+      <RevisionNr Value="1"/>
       <BuildNr Value="30"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>

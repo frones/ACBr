@@ -121,7 +121,10 @@ type
                   teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2,
                   teNaoEmbarque, teMDFeCancelado2,teMDFeAutorizadoComCTe,
                   teRegPasNfeProMDFe, teRegPasNfeProMDFeCte, teRegPasAutMDFeComCte,
-                  teCancelamentoMDFeAutComCTe, teAverbacaoExportacao, teAutCteComplementar);
+                  teCancelamentoMDFeAutComCTe, teAverbacaoExportacao, teAutCteComplementar,
+                  teCancCteComplementar,teCTeSubstituicao,teCTeAnulacao,teLiberacaoEPEC,teLiberacaoPrazoCanc,
+                  teAutorizadoRedespacho,teautorizadoRedespIntermed,teAutorizadoSubcontratacao,
+                  teautorizadoServMultimodal);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -170,7 +173,7 @@ type
 
   TIndicador = (tiSim, tiNao);
 const
-  TpcnTpEventoString : array[0..43] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..52] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -184,7 +187,10 @@ const
                                                 '110170', '310610', '110115',
                                                 '310611', '610614', '610510',
                                                 '610514', '610554', '610615',
-                                                '790700', '240130');
+                                                '790700', '240130', '240131',
+                                                '240140', '240150', '240160',
+                                                '240170', '440130', '440140',
+                                                '440150', '440160');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1057,7 +1063,11 @@ begin
               'Registro de Passagem de NFe propagado pelo MDFe/Cte',
               'Registro de Passagem Automatico MDF-e com CT-e',
               'Cancelamento de MDF-e Autorizado com CT-e',
-              'Averbação de Exportação','Autorizado CTe Complementar'],
+              'Averbação de Exportação','Autorizado CTe Complementar',
+              'Cancelado CTe Complementar','CTe de Substituicao','CTe de Anulacao',
+              'Liberacao de EPEC','Liberacao Prazo Cancelamento','Autorizado Redespacho',
+              'Autorizado Redespacho Intermediario', 'Autorizado Subcontratacao',
+              'Autorizado Servico Vinculado Multimodal'],
              [teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1071,7 +1081,11 @@ begin
               teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2,
               teNaoEmbarque, teMDFeCancelado2, teMDFeAutorizadoComCTe,
               teRegPasNfeProMDFe, teRegPasNfeProMDFeCte, teRegPasAutMDFeComCte,
-              teCancelamentoMDFeAutComCTe, teAverbacaoExportacao, teAutCteComplementar]);
+              teCancelamentoMDFeAutComCTe, teAverbacaoExportacao, teAutCteComplementar,
+              teCancCteComplementar,teCTeSubstituicao,
+              teCTeAnulacao,teLiberacaoEPEC,teLiberacaoPrazoCanc,
+              teAutorizadoRedespacho,teautorizadoRedespIntermed,teAutorizadoSubcontratacao,
+              teautorizadoServMultimodal]);
 end;
 
 

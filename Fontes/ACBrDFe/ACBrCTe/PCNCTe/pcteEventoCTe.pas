@@ -422,6 +422,16 @@ begin
     tePrestDesacordo              : Desc := 'Prestacao do Servico em Desacordo';
     teGTV                         : Desc := 'Informacoes da GTV';
     teAutCteComplementar          : Desc := 'Autorizado CTe Complemetnar';
+    teCancCteComplementar         : Desc := 'Cancelado CTe Complementar';
+    teCTeSubstituicao             : Desc := 'CTe de Substituicao';
+    teCTeAnulacao                 : Desc := 'CTe de Anulacao';
+    teLiberacaoEPEC               : Desc := 'Liberacao de EPEC';
+    teLiberacaoPrazoCanc          : Desc := 'Liberacao Prazo Cancelamento';
+    teAutorizadoRedespacho        : Desc := 'Autorizado Redespacho';
+    teautorizadoRedespIntermed    : Desc := 'Autorizado Redespacho Intermediario';
+    teAutorizadoSubcontratacao    : Desc := 'Autorizado Subcontratacao';
+    teautorizadoServMultimodal    : Desc := 'Autorizado Servico Vinculado Multimodal';
+
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -468,6 +478,15 @@ begin
     tePrestDesacordo           : Result := 'Prestação do Serviço em Desacordo';
     teGTV                      : Result := 'Informações da GTV';
     teAutCteComplementar       : Result := 'Autorizado CTe Complementar';
+    teCancCteComplementar         : Result := 'Cancelado CTe Complementar';
+    teCTeSubstituicao             : Result := 'CTe de Substituicao';
+    teCTeAnulacao                 : Result := 'CTe de Anulacao';
+    teLiberacaoEPEC               : Result := 'Liberacao de EPEC';
+    teLiberacaoPrazoCanc          : Result := 'Liberacao Prazo Cancelamento';
+    teAutorizadoRedespacho        : Result := 'Autorizado Redespacho';
+    teautorizadoRedespIntermed    : Result := 'Autorizado Redespacho Intermediario';
+    teAutorizadoSubcontratacao    : Result := 'Autorizado Subcontratacao';
+    teautorizadoServMultimodal    : Result := 'Autorizado Servico Vinculado Multimodal';
   else
     Result := 'Não Definido';
   end;

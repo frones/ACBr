@@ -54,7 +54,8 @@ procedure DoACBrNFe(Cmd: TACBrCmd);
 var
   I, J, K, nNumCopias : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
-  Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
+  Salva, OK, bImprimir, bImprimirPDF : Boolean;
+  bMostrarPreview : String;
   ChavesNFe, PathsNFe: Tstrings;
   Alertas : AnsiString;
   wDiretorioAtual : String;
@@ -363,7 +364,7 @@ begin
              PathsNFe.Free;
            end;
 
-           bMostrarPreview := (Cmd.Params(4) = '1');
+           bMostrarPreview := Cmd.Params(4);
            ConfiguraDANFe(False, bMostrarPreview );
 
            if NaoEstaVazio(Cmd.Params(1)) then
@@ -394,7 +395,8 @@ begin
             end;
 
            try
-             AntesDeImprimir(bMostrarPreview);
+             AntesDeImprimir( ( StrToBoolDef(bMostrarPreview, False) ) or
+                              (FrmACBrMonitor.cbxMostrarPreview.Checked)  );
              ACBrNFe1.NotasFiscais.Imprimir;
            finally
              DepoisDeImprimir;
@@ -408,7 +410,7 @@ begin
            ACBrNFe1.NotasFiscais.Clear;
 
            CarregarDFe(Cmd.Params(0), ArqNFe);
-           ConfiguraDANFe(True, False);
+           ConfiguraDANFe(True, '0');
 
            if NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1);
@@ -486,7 +488,7 @@ begin
              end;
            end;
 
-           bMostrarPreview := (Cmd.Metodo = 'imprimirevento' ) and (Cmd.Params(4) = '1');
+           bMostrarPreview :=  BoolToStr((Cmd.Metodo = 'imprimirevento' ) and (Cmd.Params(4) = '1'));
            ConfiguraDANFe(False, bMostrarPreview );
            if (rgModoImpressaoEvento.ItemIndex = 0) or (ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1) then  //Atualmente não existe impressão de eventos em Fortes para Bobina
               ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
@@ -507,7 +509,8 @@ begin
                ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(3),1);
 
              try
-               AntesDeImprimir(bMostrarPreview);
+               AntesDeImprimir( ( StrToBoolDef(bMostrarPreview, False) ) or
+                              (FrmACBrMonitor.cbxMostrarPreview.Checked) );
                ACBrNFe1.ImprimirEvento;
              finally
                DepoisDeImprimir;
@@ -562,7 +565,7 @@ begin
              PathsNFe.Free;
            end;
 
-           bMostrarPreview := (Cmd.Metodo = 'imprimirinutilizacao' ) and (Cmd.Params(3) = '1');
+           bMostrarPreview := BoolToStr((Cmd.Metodo = 'imprimirinutilizacao' ) and (Cmd.Params(3) = '1'));
            ConfiguraDANFe(False, bMostrarPreview );
            ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
 
@@ -582,7 +585,8 @@ begin
                ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1);
 
              try
-               AntesDeImprimir(bMostrarPreview);
+               AntesDeImprimir( ( StrToBoolDef(bMostrarPreview, False) ) or
+                              (FrmACBrMonitor.cbxMostrarPreview.Checked) );
                ACBrNFe1.ImprimirInutilizacao;
              finally
                DepoisDeImprimir;
@@ -675,7 +679,7 @@ begin
                  end;
                 if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                  begin
-                   ConfiguraDANFe(False, False);
+                   ConfiguraDANFe(False, '0');
 
                    if NaoEstaVazio(Cmd.Params(4)) then
                      ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
@@ -693,7 +697,7 @@ begin
             begin
               if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                begin
-                 ConfiguraDANFe(False, False);
+                 ConfiguraDANFe(False, '0');
 
                  if NaoEstaVazio(Cmd.Params(4)) then
                     ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
@@ -817,7 +821,7 @@ begin
                 (Cmd.Metodo = 'adicionarnfe')  or (Cmd.Metodo = 'adicionarnfesefaz') or
                 (Cmd.Metodo = 'enviarlotenfe') or (Cmd.Metodo = 'enviardpecnfe') then
          begin
-           ConfiguraDANFe(False, False);
+           ConfiguraDANFe(False, '0');
 
            if (Cmd.Metodo = 'criarnfe') or (Cmd.Metodo = 'criarenviarnfe') or
               (Cmd.Metodo = 'adicionarnfe') then
@@ -1028,7 +1032,7 @@ begin
                          begin
                           bImprimir := (Cmd.Params(1) = '1');
                           cImpressora := Cmd.Params(2);
-                          bMostrarPreview := (Cmd.Params(4) = '1');
+                          bMostrarPreview := Cmd.Params(4);
                           nNumCopias := StrToIntDef(Cmd.Params(5), 0);
                           bImprimirPDF := (Cmd.Params(6) = '1');
                          end
@@ -1036,7 +1040,7 @@ begin
                          begin
                           bImprimir := (Cmd.Params(2) = '1');
                           cImpressora := Cmd.Params(4);
-                          bMostrarPreview := (Cmd.Params(5) = '1');
+                          bMostrarPreview := Cmd.Params(5);
                           nNumCopias := StrToIntDef(Cmd.Params(6), 0);
                           bImprimirPDF := (Cmd.Params(7) = '1');
                          end;
@@ -1061,7 +1065,8 @@ begin
                              ACBrNFe1.DANFE.Impressora := cImpressora;
 
                            try
-                             AntesDeImprimir(bMostrarPreview);
+                             AntesDeImprimir( ( StrToBoolDef(bMostrarPreview, False) ) or
+                                              (FrmACBrMonitor.cbxMostrarPreview.Checked) );
                              ACBrNFe1.NotasFiscais.Items[i].Imprimir;
                            finally
                              DepoisDeImprimir;
@@ -1472,7 +1477,7 @@ begin
              PathsNFe.Free;
            end;
 
-           ConfiguraDANFe(True, False);
+           ConfiguraDANFe(True, '0');
 
            sMensagemEmail := TStringList.Create;
            CC := TstringList.Create;
@@ -1539,7 +1544,7 @@ begin
              end;
            end;
 
-           ConfiguraDANFe(True, False);
+           ConfiguraDANFe(True, '0');
 
            if (Cmd.Params(3) = '1') then
             begin
@@ -1617,7 +1622,7 @@ begin
              PathsNFe.Free;
            end;
 
-           ConfiguraDANFe(True, False);
+           ConfiguraDANFe(True, '0');
 
            if (Cmd.Params(2) = '1') then
             begin
@@ -1787,10 +1792,12 @@ begin
            SalvarIni;
          end
 
-        else if Cmd.Metodo = 'lernfe' then //NFe.LerNFe(cArqXML)
+        else if Cmd.Metodo = 'lernfe' then
          begin
            try
-              Cmd.Resposta := GerarNFeIni( Cmd.Params(0)  )
+             ACBrNFe1.NotasFiscais.Clear;
+             CarregarDFe(Cmd.Params(0), ArqNFe);
+             Cmd.Resposta := ACBrNFe1.NotasFiscais.GerarIni();
            except
            on E: Exception do
              begin
@@ -1906,7 +1913,7 @@ begin
 
         else if Cmd.Metodo = 'imprimirrelatorio' then //NFe.ImprimirRelatorio(cTexto)
          begin
-           ConfiguraDANFe(False, False);
+           ConfiguraDANFe(False, '0');
 
            if rgModeloDANFeNFCE.ItemIndex <> 1  then
                raise Exception.Create('Comando disponível apenas para o DANFe modelo DANFe ESCPOS');

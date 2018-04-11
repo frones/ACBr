@@ -1494,7 +1494,7 @@ type
 
     procedure LerIni;
     procedure SalvarIni;
-    procedure ConfiguraDANFe(GerarPDF, MostrarPreview : Boolean);
+    procedure ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview : String);
     procedure VerificaDiretorios;
     procedure LimparResp;
     procedure ExibeResp(Documento: ansistring);
@@ -2751,7 +2751,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe(True, False);
+    ConfiguraDANFe(True, '0');
 
     vPara := '';
     if not (InputQuery('Enviar Email', 'Email de Destino', vPara)) then
@@ -2910,7 +2910,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe(False, False);
+    ConfiguraDANFe(False, '0');
 
     try
       AntesDeImprimir(False);
@@ -7762,7 +7762,7 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.ConfiguraDANFe(GerarPDF, MostrarPreview: Boolean);
+procedure TFrmACBrMonitor.ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview: String);
 var
   OK: boolean;
 begin
@@ -7878,7 +7878,9 @@ begin
   end;
 
   ACBrNFe1.DANFE.MostrarPreview := (not GerarPDF) and
-                                   (cbxMostrarPreview.Checked or MostrarPreview) and
+                                   (cbxMostrarPreview.Checked or (MostrarPreview = '1') or
+                                     (UpperCase(MostrarPreview) = 'TRUE') ) and
+                                   ((MostrarPreview <> '0') and (UpperCase(MostrarPreview) <> 'FALSE') ) and
                                    (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1);
 
   //if ACBrNFe1.DANFE.MostrarPreview or MostrarPreview then

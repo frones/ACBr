@@ -43,42 +43,11 @@ uses
 
 type
 
-  { TDeviceConfig }
-  TDeviceConfig = class
-  private
-    FBaud: Integer;
-    FData: Integer;
-    FParity: TACBrSerialParity;
-    FStop: TACBrSerialStop;
-    FMaxBandwidth: Integer;
-    FSendBytesCount: Integer;
-    FSendBytesInterval: Integer;
-    FHandShake: TACBrHandShake;
-    FSoftFlow: Boolean;
-    FHardFlow: Boolean;
-
-  public
-    constructor Create;
-    procedure LerIni(const AIni: TCustomIniFile);
-    procedure GravarIni(const AIni: TCustomIniFile);
-
-    property Baud: Integer read FBaud write FBaud;
-    property Data: Integer read FData write FData;
-    property Parity: TACBrSerialParity read FParity write FParity;
-    property Stop: TACBrSerialStop read FStop write FStop;
-    property MaxBandwidth: Integer read  FMaxBandwidth write FMaxBandwidth;
-    property SendBytesCount: Integer read  FSendBytesCount write FSendBytesCount;
-    property SendBytesInterval: Integer read  FSendBytesInterval write FSendBytesInterval;
-    property HandShake: TACBrHandShake read FHandShake write FHandShake;
-    property SoftFlow: Boolean read FSoftFlow write FSoftFlow;
-    property HardFlow: Boolean read FHardFlow write FHardFlow;
-
-  end;
-
   { TPosPrinterConfig }
   TPosPrinterConfig = class
   private
     FArqLog: String;
+    FDeviceParams: String;
     FModelo: TACBrPosPrinterModelo;
     FPorta: String;
     FPaginaDeCodigo: TACBrPosPaginaCodigo;
@@ -103,6 +72,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile);
 
     property ArqLog: string read FArqLog write FArqLog;
+    property DeviceParams: String read FDeviceParams write FDeviceParams;
     property Modelo: TACBrPosPrinterModelo read FModelo write FModelo;
     property Porta: String read FPorta write FPorta;
     property PaginaDeCodigo: TACBrPosPaginaCodigo read FPaginaDeCodigo write FPaginaDeCodigo;
@@ -126,21 +96,22 @@ type
   TLibPosPrinterConfig = class(TLibConfig)
   private
     FPosPrinterConfig: TPosPrinterConfig;
-    FDevice: TDeviceConfig;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
-    procedure AplicarConfiguracoes; override;
+
+    procedure INIParaClasse; override;
+    procedure ClasseParaINI; override;
+    procedure ClasseParaComponentes; override;
+
+    procedure Travar; override;
+    procedure Destravar; override;
 
   public
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
-    procedure Ler; override;
-    procedure Gravar; override;
-
     property PosPrinterConfig: TPosPrinterConfig read FPosPrinterConfig;
-    property DeviceConfig: TDeviceConfig read FDevice;
   end;
 
 implementation
@@ -149,55 +120,11 @@ uses
   ACBrLibPosPrinterClass, ACBrLibPosPrinterConsts, ACBrLibConsts, ACBrLibComum,
   ACBrUtil;
 
-{ TDeviceConfig }
-constructor TDeviceConfig.Create;
-begin
-  FBaud := 9600;
-  FData := 8;
-  FParity := pNone;
-  FStop := s1;
-  FMaxBandwidth := 0;
-  FSendBytesCount := 0;
-  FSendBytesInterval := 0;
-  FHandShake := hsNenhum;
-  FSoftFlow := False;
-  FHardFlow := False;
-
-end;
-
-procedure TDeviceConfig.LerIni(const AIni: TCustomIniFile);
-begin
-  FBaud := AIni.ReadInteger(CSessaoDevice, CChaveDVBaud, FBaud);
-  FData := AIni.ReadInteger(CSessaoDevice, CChaveDVData, FData);
-  FParity := TACBrSerialParity(AIni.ReadInteger(CSessaoDevice, CChaveDVParity, Integer(FParity)));
-  FStop := TACBrSerialStop(AIni.ReadInteger(CSessaoDevice, CChaveDVStop, Integer(FStop)));
-  FMaxBandwidth := AIni.ReadInteger(CSessaoDevice, CChaveDVMaxBandwidth, FMaxBandwidth);
-  FSendBytesCount := AIni.ReadInteger(CSessaoDevice, CChaveDVSendBytesCount, FSendBytesCount);
-  FSendBytesInterval := AIni.ReadInteger(CSessaoDevice, CChaveDVSendBytesInterval, FSendBytesInterval);
-  FHandShake := TACBrHandShake(AIni.ReadInteger(CSessaoDevice, CChaveDVHandShake, Integer(FHandShake)));
-  FSoftFlow := AIni.ReadBool(CSessaoDevice, CChaveDVSoftFlow, FSoftFlow);
-  FHardFlow := AIni.ReadBool(CSessaoDevice, CChaveDVHardFlow, FHardFlow);
-
-end;
-
-procedure TDeviceConfig.GravarIni(const AIni: TCustomIniFile);
-begin
-  AIni.WriteInteger(CSessaoDevice, CChaveDVBaud, FBaud);
-  AIni.WriteInteger(CSessaoDevice, CChaveDVData, FData);
-  AIni.WriteInteger(CSessaoDevice, CChaveDVParity, Integer(FParity));
-  AIni.WriteInteger(CSessaoDevice, CChaveDVStop, Integer(FStop));
-  AIni.WriteInteger(CSessaoDevice, CChaveDVMaxBandwidth, FMaxBandwidth);
-  AIni.WriteInteger(CSessaoDevice, CChaveDVSendBytesCount, FSendBytesCount);
-  AIni.WriteInteger(CSessaoDevice, CChaveDVSendBytesInterval, FSendBytesInterval);
-  AIni.WriteInteger(CSessaoDevice, CChaveDVHandShake, Integer(FHandShake));
-  AIni.WriteBool(CSessaoDevice, CChaveDVSoftFlow, FSoftFlow);
-  AIni.WriteBool(CSessaoDevice, CChaveDVHardFlow, FHardFlow);
-end;
-
 { TPosPrinterConfig }
 constructor TPosPrinterConfig.Create;
 begin
   FModelo := ppTexto;
+  FDeviceParams := '';
   FPaginaDeCodigo := pc850;
   FColunasFonteNormal := 48;
   FEspacoEntreLinhas := 0;
@@ -229,6 +156,7 @@ procedure TPosPrinterConfig.LerIni(const AIni: TCustomIniFile);
 begin
   FArqLog := AIni.ReadString(CSessaoPosPrinter, CChaveLog, FArqLog);
   FModelo := TACBrPosPrinterModelo(AIni.ReadInteger(CSessaoPosPrinter, CChaveModelo, Integer(FModelo)));
+  FDeviceParams := AIni.ReadString(CSessaoPosPrinter, CChaveDevice, FDeviceParams);
   FPorta := AIni.ReadString(CSessaoPosPrinter, CChavePorta, FPorta);
   FPaginaDeCodigo := TACBrPosPaginaCodigo(AIni.ReadInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo)));
   FColunasFonteNormal := AIni.ReadInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
@@ -241,30 +169,31 @@ begin
   FControlePorta :=  AIni.ReadBool(CSessaoPosPrinter, CChaveControlePorta, FControlePorta);
   FVerificarImpressora :=  AIni.ReadBool(CSessaoPosPrinter, CChaveVerificarImpressora, FVerificarImpressora);
 
-  FConfigBarras.MostrarCodigo :=  AIni.ReadBool(CSessaoConfigBarras, CChaveCBMostrarCodigo, FConfigBarras.MostrarCodigo);
-  FConfigBarras.LarguraLinha :=  AIni.ReadInteger(CSessaoConfigBarras, CChaveCBLarguraLinha, FConfigBarras.LarguraLinha);
-  FConfigBarras.Altura :=  AIni.ReadInteger(CSessaoConfigBarras, CChaveCBAltura, FConfigBarras.Altura);
-  FConfigBarras.Margem :=  AIni.ReadInteger(CSessaoConfigBarras, CChaveCBMargem, FConfigBarras.Margem);
+  FConfigBarras.MostrarCodigo :=  AIni.ReadBool(CSessaoPosPrinterBarras, CChaveCBMostrarCodigo, FConfigBarras.MostrarCodigo);
+  FConfigBarras.LarguraLinha :=  AIni.ReadInteger(CSessaoPosPrinterBarras, CChaveCBLarguraLinha, FConfigBarras.LarguraLinha);
+  FConfigBarras.Altura :=  AIni.ReadInteger(CSessaoPosPrinterBarras, CChaveCBAltura, FConfigBarras.Altura);
+  FConfigBarras.Margem :=  AIni.ReadInteger(CSessaoPosPrinterBarras, CChaveCBMargem, FConfigBarras.Margem);
 
-  FConfigQRCode.Tipo :=  AIni.ReadInteger(CSessaoConfigQRCode, CChaveQRTipo, FConfigQRCode.Tipo);
-  FConfigQRCode.LarguraModulo :=  AIni.ReadInteger(CSessaoConfigQRCode, CChaveQRLarguraModulo, FConfigQRCode.LarguraModulo);
-  FConfigQRCode.ErrorLevel :=  AIni.ReadInteger(CSessaoConfigQRCode, CChaveQRErrorLevel, FConfigQRCode.ErrorLevel);
+  FConfigQRCode.Tipo :=  AIni.ReadInteger(CSessaoPosPrinterQRCode, CChaveQRTipo, FConfigQRCode.Tipo);
+  FConfigQRCode.LarguraModulo :=  AIni.ReadInteger(CSessaoPosPrinterQRCode, CChaveQRLarguraModulo, FConfigQRCode.LarguraModulo);
+  FConfigQRCode.ErrorLevel :=  AIni.ReadInteger(CSessaoPosPrinterQRCode, CChaveQRErrorLevel, FConfigQRCode.ErrorLevel);
 
-  FConfigLogo.IgnorarLogo := AIni.ReadBool(CSessaoConfigLogo, CChaveLGIgnorarLogo, FConfigLogo.IgnorarLogo);
-  FConfigLogo.KeyCode1 := AIni.ReadInteger(CSessaoConfigLogo, CChaveLGKeyCode1, FConfigLogo.KeyCode1);
-  FConfigLogo.KeyCode2 := AIni.ReadInteger(CSessaoConfigLogo, CChaveLGKeyCode2, FConfigLogo.KeyCode2);
-  FConfigLogo.FatorX := AIni.ReadInteger(CSessaoConfigLogo, CChaveLGFatorX, FConfigLogo.FatorX);
-  FConfigLogo.FatorY := AIni.ReadInteger(CSessaoConfigLogo, CChaveLGFatorY, FConfigLogo.FatorY);
+  FConfigLogo.IgnorarLogo := AIni.ReadBool(CSessaoPosPrinterLogo, CChaveLGIgnorarLogo, FConfigLogo.IgnorarLogo);
+  FConfigLogo.KeyCode1 := AIni.ReadInteger(CSessaoPosPrinterLogo, CChaveLGKeyCode1, FConfigLogo.KeyCode1);
+  FConfigLogo.KeyCode2 := AIni.ReadInteger(CSessaoPosPrinterLogo, CChaveLGKeyCode2, FConfigLogo.KeyCode2);
+  FConfigLogo.FatorX := AIni.ReadInteger(CSessaoPosPrinterLogo, CChaveLGFatorX, FConfigLogo.FatorX);
+  FConfigLogo.FatorY := AIni.ReadInteger(CSessaoPosPrinterLogo, CChaveLGFatorY, FConfigLogo.FatorY);
 
-  FConfigGaveta.SinalInvertido :=  AIni.ReadBool(CSessaoConfigGaveta, CChaveGVSinalInvertido, FConfigGaveta.SinalInvertido);
-  FConfigGaveta.TempoON :=  AIni.ReadInteger(CSessaoConfigGaveta, CChaveGVTempoON, FConfigGaveta.TempoON);
-  FConfigGaveta.TempoOFF :=  AIni.ReadInteger(CSessaoConfigGaveta, CChaveGVTempoOFF, FConfigGaveta.TempoOFF);
+  FConfigGaveta.SinalInvertido :=  AIni.ReadBool(CSessaoPosPrinterGaveta, CChaveGVSinalInvertido, FConfigGaveta.SinalInvertido);
+  FConfigGaveta.TempoON :=  AIni.ReadInteger(CSessaoPosPrinterGaveta, CChaveGVTempoON, FConfigGaveta.TempoON);
+  FConfigGaveta.TempoOFF :=  AIni.ReadInteger(CSessaoPosPrinterGaveta, CChaveGVTempoOFF, FConfigGaveta.TempoOFF);
 end;
 
 procedure TPosPrinterConfig.GravarIni(const AIni: TCustomIniFile);
 begin
   AIni.WriteString(CSessaoPosPrinter, CChaveLog, FArqLog);
   AIni.WriteInteger(CSessaoPosPrinter, CChaveModelo, Integer(FModelo));
+  AIni.WriteString(CSessaoPosPrinter, CChaveDevice, FDeviceParams);
   AIni.WriteString(CSessaoPosPrinter, CChavePorta, FPorta);
   AIni.WriteInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo));
   AIni.WriteInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
@@ -277,24 +206,24 @@ begin
   AIni.WriteBool(CSessaoPosPrinter, CChaveControlePorta, FControlePorta);
   AIni.WriteBool(CSessaoPosPrinter, CChaveVerificarImpressora, FVerificarImpressora);
 
-  AIni.WriteBool(CSessaoConfigBarras, CChaveCBMostrarCodigo, FConfigBarras.MostrarCodigo);
-  AIni.WriteInteger(CSessaoConfigBarras, CChaveCBLarguraLinha, FConfigBarras.LarguraLinha);
-  AIni.WriteInteger(CSessaoConfigBarras, CChaveCBAltura, FConfigBarras.Altura);
-  AIni.WriteInteger(CSessaoConfigBarras, CChaveCBMargem, FConfigBarras.Margem);
+  AIni.WriteBool(CSessaoPosPrinterBarras, CChaveCBMostrarCodigo, FConfigBarras.MostrarCodigo);
+  AIni.WriteInteger(CSessaoPosPrinterBarras, CChaveCBLarguraLinha, FConfigBarras.LarguraLinha);
+  AIni.WriteInteger(CSessaoPosPrinterBarras, CChaveCBAltura, FConfigBarras.Altura);
+  AIni.WriteInteger(CSessaoPosPrinterBarras, CChaveCBMargem, FConfigBarras.Margem);
 
-  AIni.WriteInteger(CSessaoConfigQRCode, CChaveQRTipo, FConfigQRCode.Tipo);
-  AIni.WriteInteger(CSessaoConfigQRCode, CChaveQRLarguraModulo, FConfigQRCode.LarguraModulo);
-  AIni.WriteInteger(CSessaoConfigQRCode, CChaveQRErrorLevel, FConfigQRCode.ErrorLevel);
+  AIni.WriteInteger(CSessaoPosPrinterQRCode, CChaveQRTipo, FConfigQRCode.Tipo);
+  AIni.WriteInteger(CSessaoPosPrinterQRCode, CChaveQRLarguraModulo, FConfigQRCode.LarguraModulo);
+  AIni.WriteInteger(CSessaoPosPrinterQRCode, CChaveQRErrorLevel, FConfigQRCode.ErrorLevel);
 
-  AIni.WriteBool(CSessaoConfigLogo, CChaveLGIgnorarLogo, FConfigLogo.IgnorarLogo);
-  AIni.WriteInteger(CSessaoConfigLogo, CChaveLGKeyCode1, FConfigLogo.KeyCode1);
-  AIni.WriteInteger(CSessaoConfigLogo, CChaveLGKeyCode2, FConfigLogo.KeyCode2);
-  AIni.WriteInteger(CSessaoConfigLogo, CChaveLGFatorX, FConfigLogo.FatorX);
-  AIni.WriteInteger(CSessaoConfigLogo, CChaveLGFatorY, FConfigLogo.FatorY);
+  AIni.WriteBool(CSessaoPosPrinterLogo, CChaveLGIgnorarLogo, FConfigLogo.IgnorarLogo);
+  AIni.WriteInteger(CSessaoPosPrinterLogo, CChaveLGKeyCode1, FConfigLogo.KeyCode1);
+  AIni.WriteInteger(CSessaoPosPrinterLogo, CChaveLGKeyCode2, FConfigLogo.KeyCode2);
+  AIni.WriteInteger(CSessaoPosPrinterLogo, CChaveLGFatorX, FConfigLogo.FatorX);
+  AIni.WriteInteger(CSessaoPosPrinterLogo, CChaveLGFatorY, FConfigLogo.FatorY);
 
-  AIni.WriteBool(CSessaoConfigGaveta, CChaveGVSinalInvertido, FConfigGaveta.SinalInvertido);
-  AIni.WriteInteger(CSessaoConfigGaveta, CChaveGVTempoON, FConfigGaveta.TempoON);
-  AIni.WriteInteger(CSessaoConfigGaveta, CChaveGVTempoOFF, FConfigGaveta.TempoOFF);
+  AIni.WriteBool(CSessaoPosPrinterGaveta, CChaveGVSinalInvertido, FConfigGaveta.SinalInvertido);
+  AIni.WriteInteger(CSessaoPosPrinterGaveta, CChaveGVTempoON, FConfigGaveta.TempoON);
+  AIni.WriteInteger(CSessaoPosPrinterGaveta, CChaveGVTempoOFF, FConfigGaveta.TempoOFF);
 end;
 
 { TLibPosPrinterConfig }
@@ -304,13 +233,11 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FPosPrinterConfig := TPosPrinterConfig.Create;
-  FDevice := TDeviceConfig.Create;
 end;
 
 destructor TLibPosPrinterConfig.Destroy;
 begin
   FPosPrinterConfig.Free;
-  FDevice.Free;
 
   inherited Destroy;
 end;
@@ -324,85 +251,43 @@ begin
             (inherited AtualizarArquivoConfiguracao);
 end;
 
-procedure TLibPosPrinterConfig.AplicarConfiguracoes;
+procedure TLibPosPrinterConfig.INIParaClasse;
 begin
-  inherited AplicarConfiguracoes;
+  inherited INIParaClasse;
 
+  FPosPrinterConfig.LerIni(Ini);
+end;
+
+procedure TLibPosPrinterConfig.ClasseParaINI;
+begin
+  inherited ClasseParaINI;
+
+  Ini.WriteString(CSessaoVersao, CLibPosPrinterNome, CLibPosPrinterVersao);
+
+  FPosPrinterConfig.GravarIni(Ini);
+end;
+
+procedure TLibPosPrinterConfig.ClasseParaComponentes;
+begin
   if Assigned(Owner) then
-    TACBrLibPosPrinter(Owner).PosDM.Travar;
-
-  try
-    inherited AplicarConfiguracoes;
-
     TACBrLibPosPrinter(Owner).PosDM.AplicarConfiguracoes;
-
-    TACBrLibPosPrinter(Owner).GravarLog(ClassName + '.AplicarConfiguracoes - Feito', logParanoico);
-  finally
-    if Assigned(Owner) then
-      TACBrLibPosPrinter(Owner).PosDM.Destravar;
-  end;
 end;
 
-procedure TLibPosPrinterConfig.Ler;
+procedure TLibPosPrinterConfig.Travar;
 begin
   if Assigned(Owner) then
   begin
     with TACBrLibPosPrinter(Owner) do
-    begin
-      GravarLog(ClassName + '.Ler: ' + NomeArquivo, logCompleto);
       PosDM.Travar;
-    end;
-  end;
-
-  try
-    inherited Ler;
-
-    FPosPrinterConfig.LerIni(Ini);
-    FDevice.LerIni(Ini);
-
-    AplicarConfiguracoes;
-  finally
-    // Ajustes pos leitura das configurações //
-    if Assigned(Owner) then
-    begin
-      with TACBrLibPosPrinter(Owner) do
-      begin
-        PosDM.Destravar;
-        GravarLog(ClassName + '.Ler - Feito', logParanoico);
-      end;
-    end;
   end;
 end;
 
-procedure TLibPosPrinterConfig.Gravar;
+procedure TLibPosPrinterConfig.Destravar;
 begin
   if Assigned(Owner) then
   begin
     with TACBrLibPosPrinter(Owner) do
-    begin
-      GravarLog(ClassName + '.Gravar: ' + NomeArquivo, logCompleto);
-      PosDM.Travar;
-    end;
-  end;
-
-  try
-    inherited Gravar;
-
-    Ini.WriteString(CSessaoVersao, CLibPosPrinterNome, CLibPosPrinterVersao);
-
-    FPosPrinterConfig.GravarIni(Ini);
-    FDevice.GravarIni(Ini);
-
-    Ini.UpdateFile;
-  finally
-    if Assigned(Owner) then
-    begin
-      with TACBrLibPosPrinter(Owner) do
-      begin
-        PosDM.Destravar;
-        GravarLog(ClassName + '.Gravar - Feito', logParanoico);
-      end;
-    end;
+      PosDM.Destravar;
   end;
 end;
 

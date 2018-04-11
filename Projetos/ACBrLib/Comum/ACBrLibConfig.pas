@@ -202,6 +202,13 @@ type
     function AtualizarArquivoConfiguracao: Boolean; virtual;
     procedure AplicarConfiguracoes; virtual;
 
+    procedure INIParaClasse; virtual;
+    procedure ClasseParaINI; virtual;
+    procedure ClasseParaComponentes; virtual;
+
+    procedure Travar; virtual;
+    procedure Destravar; virtual;
+
     property Owner: TObject read FOwner;
 
   public
@@ -546,28 +553,49 @@ end;
 
 procedure TLibConfig.AplicarConfiguracoes;
 begin
-  TACBrLib(FOwner).GravarLog('TLibConfig.AplicarConfiguracoes: ' + FNomeArquivo, logCompleto);
+  TACBrLib(FOwner).GravarLog(ClassName + '.AplicarConfiguracoes: ' + FNomeArquivo, logCompleto);
   if AtualizarArquivoConfiguracao then
     Gravar;
+
+  Travar;
+  try
+    INIParaClasse;
+    ClasseParaComponentes;
+    TACBrLib(FOwner).GravarLog(ClassName + '.AplicarConfiguracoes - Feito', logParanoico);
+  finally
+    Destravar;
+  end;
 end;
 
 procedure TLibConfig.Ler;
 var
   ArquivoInformado: Boolean;
 begin
-  ArquivoInformado := (FNomeArquivo <> '');
-  VerificarNomeEPath(not ArquivoInformado);
-  TACBrLib(FOwner).GravarLog('TLibConfig.Ler: ' + FNomeArquivo, logCompleto);
+  Travar;
+  try
+    ArquivoInformado := (FNomeArquivo <> '');
+    VerificarNomeEPath(not ArquivoInformado);
+    TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
 
-  if FIni.FileName <> FNomeArquivo then
-    FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
+    if FIni.FileName <> FNomeArquivo then
+      FIni.Rename(FNomeArquivo, FileExists(FNomeArquivo));
 
-  if not FileExists(FNomeArquivo) then
-  begin
-    Gravar;
-    Exit;
+    if not FileExists(FNomeArquivo) then
+    begin
+      Gravar;
+      Exit;
+    end;
+
+    INIParaClasse;
+    AplicarConfiguracoes;
+  finally
+    TACBrLib(FOwner).GravarLog(ClassName + '.Ler - Feito', logParanoico);
+    Destravar;
   end;
+end;
 
+procedure TLibConfig.INIParaClasse;
+begin
   FTipoResposta := TACBrLibRespostaTipo(FIni.ReadInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta)));
   FLog.LerIni(FIni);
   FSistema.LerIni(FIni);
@@ -575,14 +603,25 @@ begin
   FProxyInfo.LerIni(FIni);
   FSoftwareHouse.LerIni(FIni);
   FEmissor.LerIni(FIni);
-  TACBrLib(FOwner).GravarLog('TLibConfig.Ler - Feito', logCompleto);
 end;
 
 procedure TLibConfig.Gravar;
 begin
-  TACBrLib(FOwner).GravarLog('TLibConfig.Gravar: ' + FNomeArquivo, logCompleto);
-  VerificarNomeEPath(True);
+  Travar;
+  try
+    TACBrLib(FOwner).GravarLog(ClassName + '.Gravar: ' + FNomeArquivo, logCompleto);
+    VerificarNomeEPath(True);
 
+    ClasseParaINI;
+    FIni.UpdateFile;
+  finally
+    TACBrLib(FOwner).GravarLog(ClassName + '.Gravar - Feito', logParanoico);
+    Destravar;
+  end;
+end;
+
+procedure TLibConfig.ClasseParaINI;
+begin
   FIni.WriteInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta));
   FIni.WriteString(CSessaoVersao, CLibNome, CLibVersao);
 
@@ -592,9 +631,21 @@ begin
   FProxyInfo.GravarIni(FIni);
   FSoftwareHouse.GravarIni(FIni);
   FEmissor.GravarIni(FIni);
+end;
 
-  FIni.UpdateFile;
-  TACBrLib(FOwner).GravarLog('TLibConfig.Gravar - Feito', logParanoico);
+procedure TLibConfig.ClasseParaComponentes;
+begin
+  {}
+end;
+
+procedure TLibConfig.Travar;
+begin
+  {}
+end;
+
+procedure TLibConfig.Destravar;
+begin
+  {}
 end;
 
 procedure TLibConfig.GravarValor(ASessao, AChave, AValor: String);

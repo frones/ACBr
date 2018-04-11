@@ -25,12 +25,13 @@ type
     procedure Test_POS_Versao;
     procedure Test_POS_ConfigLerValor;
     procedure Test_POS_ConfigGravarValor;
+    procedure Test_POS_InicializarConfigGravarValoresEFinalizar;
   end;
 
 implementation
 
 uses
-  ACBrLibPosPrinterStaticImport, ACBrLibPosPrinterConsts, ACBrLibConsts;
+  ACBrLibPosPrinterStaticImport, ACBrLibPosPrinterConsts, ACBrLibConsts, ACBrUtil;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Inicializar_Com_DiretorioInvalido;
 begin
@@ -148,6 +149,19 @@ begin
   AssertEquals(ErrOk, POS_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+end;
+
+procedure TTestACBrPosPrinterLib.Test_POS_InicializarConfigGravarValoresEFinalizar;
+begin
+  AssertEquals(ErrOk, POS_Inicializar('',''));
+
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(ApplicationPath+'teste.txt')));
+  AssertEquals(ErrOK, POS_ConfigGravar(''));
+  AssertEquals(ErrOK, POS_ConfigLer(''));
+  AssertEquals(ErrOK, POS_Ativar);
+
+  AssertEquals(ErrOK, POS_Finalizar());
 end;
 
 initialization

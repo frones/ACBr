@@ -64,6 +64,7 @@ const
   CChaveUsuario = 'Usuario';
   CChaveSenha = 'Senha';
   CChavePorta = 'Porta';
+  CChaveDevice = 'Device';
 
   CSessaoSistema = 'Sistema';
   CChaveVersao = 'Versao';

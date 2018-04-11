@@ -189,12 +189,16 @@ type
     function AtualizarArquivoConfiguracao: Boolean; override;
     procedure AplicarConfiguracoes; override;
 
+    procedure INIParaClasse; override;
+    procedure ClasseParaINI; override;
+    procedure ClasseParaComponentes; override;
+
+    procedure Travar; override;
+    procedure Destravar; override;
+
   public
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
-
-    procedure Ler; override;
-    procedure Gravar; override;
 
     property NFeConfig: TConfiguracoesNFe read FNFeConfig;
     property DANFeConfig: TDANFeConfig read FDANFeConfig;
@@ -435,145 +439,49 @@ begin
             (inherited AtualizarArquivoConfiguracao);
 end;
 
-procedure TLibNFeConfig.AplicarConfiguracoes;
+procedure TLibNFeConfig.INIParaClasse;
 begin
-  inherited AplicarConfiguracoes;
+  inherited INIParaClasse;
 
+  FNFeConfig.LerIni(Ini);
+  FDANFeConfig.LerIni(Ini);
+  FDANFECeConfig.LerIni(Ini);
+end;
+
+procedure TLibNFeConfig.ClasseParaINI;
+begin
+  inherited ClasseParaINI;
+
+  Ini.WriteString(CSessaoVersao, CLibNFeNome, CLibNFeVersao);
+
+  FNFeConfig.GravarIni(Ini);
+  FDANFeConfig.GravarIni(Ini);
+  FDANFECeConfig.GravarIni(Ini);
+end;
+
+procedure TLibNFeConfig.ClasseParaComponentes;
+begin
   if Assigned(Owner) then
-    TACBrLibNFe(Owner).NFeDM.Travar;
-
-  try
-    inherited AplicarConfiguracoes;
-
     TACBrLibNFe(Owner).NFeDM.AplicarConfiguracoes;
-
-    TACBrLibNFe(Owner).GravarLog(ClassName + '.AplicarConfiguracoes - Feito', logParanoico);
-  finally
-    if Assigned(Owner) then
-      TACBrLibNFe(Owner).NFeDM.Destravar;
-  end;
 end;
 
-procedure TLibNFeConfig.Ler;
+procedure TLibNFeConfig.Travar;
 begin
   if Assigned(Owner) then
   begin
     with TACBrLibNFe(Owner) do
-    begin
-      GravarLog('TLibNFeConfig.Ler: ' + NomeArquivo, logCompleto);
       NFeDM.Travar;
-    end;
-  end;
-
-  try
-    inherited Ler;
-
-    FNFeConfig.LerIni(Ini);
-    FDANFeConfig.LerIni(Ini);
-    FDANFECeConfig.LerIni(Ini);
-
-    AplicarConfiguracoes;
-  finally
-    // Ajustes pos leitura das configurações //
-    if Assigned(Owner) then
-    begin
-      with TACBrLibNFe(Owner) do
-      begin
-        NFeDM.Destravar;
-        GravarLog('TLibNFeConfig.Ler - Feito', logParanoico);
-      end;
-    end;
   end;
 end;
 
-procedure TLibNFeConfig.Gravar;
+procedure TLibNFeConfig.Destravar;
 begin
   if Assigned(Owner) then
   begin
     with TACBrLibNFe(Owner) do
-    begin
-      GravarLog('TLibNFeConfig.Gravar: ' + NomeArquivo, logCompleto);
-      NFeDM.Travar;
-    end;
-  end;
-
-  try
-    inherited Gravar;
-
-    Ini.WriteString(CSessaoVersao, CLibNFeNome, CLibNFeVersao);
-
-    FNFeConfig.GravarIni(Ini);
-    FDANFeConfig.GravarIni(Ini);
-    FDANFECeConfig.GravarIni(Ini);
-
-    Ini.UpdateFile;
-  finally
-    if Assigned(Owner) then
-    begin
-      with TACBrLibNFe(Owner) do
-      begin
-        NFeDM.Destravar;
-        GravarLog('TLibNFeConfig.Gravar - Feito', logParanoico);
-      end;
-    end;
+      NFeDM.Destravar;
   end;
 end;
 
 end.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

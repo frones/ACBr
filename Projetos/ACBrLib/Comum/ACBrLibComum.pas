@@ -439,7 +439,7 @@ begin
     Valor := strpas(eValor);
     pLib.GravarLog('LIB_ConfigGravarValor(' + Sessao + ', ' + Chave + ', ' + Valor + ')', logNormal);
 
-    pLib.Config.GravarValor(Chave, Sessao, Valor);
+    pLib.Config.GravarValor(Sessao, Chave, Valor);
     Result := SetRetorno(ErrOK);
   except
     on E: EACBrLibException do

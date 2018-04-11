@@ -45,11 +45,10 @@ const
   CLibPosPrinterVersao = '0.0.1';
 
   CSessaoPosPrinter = 'PosPrinter';
-  CSessaoConfigBarras = 'ConfigBarras';
-  CSessaoConfigQRCode = 'ConfigQRCode';
-  CSessaoConfigLogo = 'ConfigLogo';
-  CSessaoConfigGaveta = 'ConfigGaveta';
-  CSessaoDevice = 'Device';
+  CSessaoPosPrinterBarras = 'PosPrinter_Barras';
+  CSessaoPosPrinterQRCode = 'PosPrinter_QRCode';
+  CSessaoPosPrinterLogo = 'PosPrinter_Logo';
+  CSessaoPosPrinterGaveta = 'PosPrinter_Gaveta';
 
   CChaveLog = 'ArqLog';
   CChaveModelo = 'Modelo';
@@ -83,17 +82,6 @@ const
   CChaveGVSinalInvertido = 'SinalInvertido';
   CChaveGVTempoON = 'TempoON';
   CChaveGVTempoOFF = 'TempoOFF';
-
-  CChaveDVBaud = 'Baud';
-  CChaveDVData = 'Data';
-  CChaveDVParity = 'Parity';
-  CChaveDVStop = 'Stop';
-  CChaveDVMaxBandwidth = 'MaxBandwidth';
-  CChaveDVSendBytesCount = 'SendBytesCount';
-  CChaveDVSendBytesInterval = 'SendBytesInterval';
-  CChaveDVHandShake = 'HandShake';
-  CChaveDVSoftFlow = 'SoftFlow';
-  CChaveDVHardFlow = 'HardFlow';
 
 implementation
 

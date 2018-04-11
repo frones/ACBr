@@ -699,10 +699,11 @@ begin
       TagList := TStringList.Create;
       try
         PosDM.ACBrPosPrinter1.RetornarTags(TagList, IncluiAjuda);
-        Tags := StringReplace(TagList.Text, sLineBreak, '|', [rfReplaceAll, rfIgnoreCase]);
+        Tags := StringReplace(TagList.Text, sLineBreak, '|', [rfReplaceAll]);
         MoverStringParaPChar(Tags, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Tags);;
+        Result := SetRetorno(ErrOK, Tags);
       finally
+        TagList.Free;
         PosDM.Destravar;
       end;
     end;

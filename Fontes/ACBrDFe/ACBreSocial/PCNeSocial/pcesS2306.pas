@@ -123,7 +123,7 @@ type
     destructor  Destroy; override;
 
     property dtAlteracao : TDateTime read FdtAlteracao write FdtAlteracao;
-    property natAtivididade : tpNatAtividade read FnatAtividade write FnatAtividade;
+    property natAtividade : tpNatAtividade read FnatAtividade write FnatAtividade;
     property infoComplementares : TinfoComplementares read FinfoComplementares write FinfoComplementares;
   end;
 
@@ -336,7 +336,7 @@ begin
   else if Self.FideTrabSemVinc.codCateg = 771 Then // Membro conselho tutelar
   else if Self.FideTrabSemVinc.codCateg = 901 Then // Estagiario
   else
-    Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtivididade));
+    Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtividade));
 
   GerarinfoComplementares(obj.infoComplementares);
 
@@ -454,7 +454,7 @@ begin
 
       sSecao := 'infoTSVAlteracao';
       infoTSVAlteracao.dtAlteracao    := StringToDateTime(INIRec.ReadString(sSecao, 'dtAlteracao', '0'));
-      infoTSVAlteracao.natAtivididade := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtivididade', '1'));
+      infoTSVAlteracao.natAtividade := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
 
       sSecao := 'infoComplementares';
       infoTSVAlteracao.infoComplementares.cargoFuncao.CodCargo  := INIRec.ReadString(sSecao, 'codCargo', '');

@@ -136,7 +136,7 @@ type
     property cadIni: tpSimNao read FcadIni write FcadIni;
     property codCateg : Integer read FcodCateg write FcodCateg;
     property dtInicio : TDateTime read FdtInicio write FdtInicio;
-    property natAtivididade : tpNatAtividade read FnatAtividade write FnatAtividade;
+    property natAtividade : tpNatAtividade read FnatAtividade write FnatAtividade;
     property infoComplementares : TinfoComplementares read FinfoComplementares write FinfoComplementares;
     property afastamento: TAfastamento read Fafastamento write Fafastamento;
     property termino: TTermino read Ftermino write Ftermino;
@@ -450,7 +450,7 @@ begin
     (obj.codCateg <> 771) and // Membro conselho tutelar
     (obj.codCateg <> 901)     // Estagiario
   then
-    Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtivididade));
+    Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtividade));
 
   GerarInfoComplementares(obj.InfoComplementares);
 
@@ -696,7 +696,7 @@ begin
       infoTSVInicio.cadIni         := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'cadIni', 'S'));
       infoTSVInicio.codCateg       := INIRec.ReadInteger(sSecao, 'codCateg', 0);
       infoTSVInicio.dtInicio       := StringToDateTime(INIRec.ReadString(sSecao, 'dtInicio', '0'));
-      infoTSVInicio.natAtivididade := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'cadIni', '1'));
+      infoTSVInicio.natAtividade   := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
 
       sSecao := 'cargoFuncao';
       infoTSVInicio.infoComplementares.cargoFuncao.CodCargo    := INIRec.ReadString(sSecao, 'codCargo', '');

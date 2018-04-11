@@ -388,7 +388,8 @@ type
   tpIndComerc             = (icComProdPorProdRuralPFInclusiveSegEspEfetuadaDirVarejoConsFinal, icComProdPorProdRuralPFSegEspVendasPJOuIntermPF,
                              icComProdPorPFSegEspEntProgAquiAliPAA, icComProdMercadoExterno);
 
-  tpTpPgto                = (tpPgtoFl, tpPgtoResc2299, tpPgtoResc2399, tpPgtoFlRPPS);//tpPgto numeral 0 CORRIGIR!!!!!!
+  tpTpPgto                = (tpPgtoRemun1200, tpPgtoResc2299, tpPgtoResc2399, tpPgtoRemun1202, tpPgtoBenefPrev1207,
+                             tpPgtoFerias, tpPgtoCompAnt);
 
   tpMotivosAfastamento    = ( mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho, mtvAfastLicencaRegimeProprioSemRemuneracao,
                               mtvAposentadoriaInvalidez, mtvAcompanhamentoFamiliaEnfermo, mtvAfastamentoEmpregadoConCuradorFGTS,
@@ -2111,12 +2112,12 @@ end;
 
 function eStpTpPgtoToStr(const t: tpTpPgto): string;
 begin
-  result := EnumeradoToStr2(t,[ '1', '2', '3', '5' ] );
+  result := EnumeradoToStr2(t,['1', '2', '3', '5', '6', '7', '9'] );
 end;
 
 function eSStrTotpTpPgto(var ok:Boolean; const s: string): tpTpPgto;
 begin
-  result := tpTpPgto(StrToEnumerado2(ok, s, ['1', '2', '3', '5']));
+  result := tpTpPgto(StrToEnumerado2(ok, s, ['1', '2', '3', '5', '6', '7', '9']));
 end;
 
 function eStpNivelEstagioToStr(const t: tpNivelEstagio): string;

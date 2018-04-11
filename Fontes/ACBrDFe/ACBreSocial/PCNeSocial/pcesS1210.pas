@@ -1026,7 +1026,7 @@ begin
     Gerador.wCampo(tcStr, '', 'tpPgto',    1,  2, 1, eSTpTpPgtoToStr(objInfoPgto.Items[i].tpPgto));
     Gerador.wCampo(tcStr, '', 'indResBr',  1,  1, 1, eSSimNaoToStr(objInfoPgto.Items[i].indResBr));
 
-    if (objInfoPgto.Items[i].tpPgto=tpPgtoFl) then
+    if (objInfoPgto.Items[i].tpPgto in [tpPgtoRemun1200, tpPgtoResc2299, tpPgtoResc2399, tpPgtoRemun1202]) then
       if (objInfoPgto.Items[i].detPgtoFlInst()) then
         GerardetPgtoFl(objInfoPgto.Items[i].detPgtoFl);
 

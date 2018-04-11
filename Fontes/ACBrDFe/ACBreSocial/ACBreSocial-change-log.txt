@@ -48,6 +48,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+<<<<<<< .mine
+10/04/2018
+-- pcesS1210 / pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/42629-ajuste-no-campo-tppgto-do-evento-s-1210-e-valida%C3%A7%C3%B5es/
+  Por: Joceandro Perin
+-- pcesS2300 / pcesS2306 --
+[-] Correção na nomenclatura da propriedade natAtividade.
+  Por: Hudson G Leite
+
+
+=======
 05/04/2018
 -- ACBreSocialWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/42564-ideempregador-nrinsc-com-8-posi%C3%A7%C3%B5es/
@@ -62,6 +73,7 @@ Símbolo : Significado
 [*] Incluido a função de conversão de tipos para o campo tpInsc.
    Por: Italo Jurisato Junior
 
+>>>>>>> .r14977
 03/04/2018
 -- pcesS1050 --
 [-] Correção de erro "Argument out of range" na geração do evento S-1050.

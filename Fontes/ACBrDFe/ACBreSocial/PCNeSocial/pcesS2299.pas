@@ -848,20 +848,41 @@ begin
 end;
 
 procedure TEvtDeslig.GerarconsigFGTS(obj: TConsigFGTSCollection);
-   var zCount,i : Integer;
+var
+  i: Integer;
 begin
-  zCount := StrToInt(IfThen((VersaoDF = ve02_04_01), '1', IntToStr(obj.Count)));
-  for i := 0 to pred(zCount) do
+  if VersaoDF = ve02_04_01 then
   begin
-     Gerador.wGrupo('consigFGTS');
-     if (VersaoDF = ve02_04_01) then
-       Gerador.wCampo(tcStr, '', 'idConsig',  1,  1, 1, eSSimNaoToStr(obj[i].idConsig));
-     Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj[i].insConsig);
-     Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj[i].nrContr);
-     Gerador.wGrupo('/consigFGTS');
+    // Na versão 02.04.01 o grupo <consigFGTS> é obrigatório e a quantidade de
+    // ocorrências é 1
+    if obj.Count = 1 then
+    begin
+      Gerador.wGrupo('consigFGTS');
+
+      Gerador.wCampo(tcStr, '', 'idConsig',  1,  1, 1, eSSimNaoToStr(obj[0].idConsig));
+      Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj[0].insConsig);
+      Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj[0].nrContr);
+
+      Gerador.wGrupo('/consigFGTS');
+    end;
+  end
+  else
+  begin
+    // Na versão 02.04.02 o grupo <consigFGTS> é opcional e a quantidade de
+    // ocorrências é 9
+    for i := 0 to obj.Count -1 do
+    begin
+       Gerador.wGrupo('consigFGTS');
+
+       Gerador.wCampo(tcStr, '', 'insConsig', 0,  5, 0, obj[i].insConsig);
+       Gerador.wCampo(tcStr, '', 'nrContr',   0, 40, 0, obj[i].nrContr);
+
+       Gerador.wGrupo('/consigFGTS');
+    end;
+
+    if obj.Count > 9 then
+      Gerador.wAlerta('', 'consigFGTS', 'Informações sobre operação de crédito consignado com garantia de FGTS', ERR_MSG_MAIOR_MAXIMO + '9')
   end;
-  if zCount > 9 then
-    Gerador.wAlerta('', 'consigFGTS', 'Informações sobre operação de crédito consignado com garantia de FGTS', ERR_MSG_MAIOR_MAXIMO + '9')
 end;
 
 procedure TEvtDeslig.GerarTransfTit(obj: TtransfTit);

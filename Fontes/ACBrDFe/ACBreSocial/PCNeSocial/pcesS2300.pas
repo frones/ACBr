@@ -426,7 +426,7 @@ begin
     Gerador.wCampo(tcDat, '', 'dtAdmCed',  10, 10, 1, obj.dtAdmCed);
     Gerador.wCampo(tcInt, '', 'tpRegTrab',  1,  1, 1, eSTpRegTrabToStr(obj.tpRegTrab));
     Gerador.wCampo(tcInt, '', 'tpRegPrev',  1,  1, 1, eSTpRegPrevToStr(obj.tpRegPrev));
-    Gerador.wCampo(tcStr, '', 'infOnus',    1,  1, 1, obj.infOnus);
+    Gerador.wCampo(tcStr, '', 'infOnus',    1,  1, 1, tpInfOnusToStr(obj.infOnus));
 
     Gerador.wGrupo('/infoTrabCedido');
   end;

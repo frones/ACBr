@@ -537,7 +537,7 @@ begin
     Gerador.wGrupo('infoCessao');
 
     Gerador.wCampo(tcStr, '', 'cnpjCess', 14, 14, 1, objInfoCessao.cnpjCess);
-    Gerador.wCampo(tcStr, '', 'infOnus',   1,  1, 1, objInfoCessao.infOnus);
+    Gerador.wCampo(tcStr, '', 'infOnus',   1,  1, 1, tpInfOnusToStr(objInfoCessao.infOnus));
 
     Gerador.wGrupo('/infoCessao');
   end;
@@ -550,7 +550,7 @@ begin
     Gerador.wGrupo('infoMandSind');
 
     Gerador.wCampo(tcStr, '', 'cnpjSind',     14, 14, 1, objInfoMandSind.cnpjSind);
-    Gerador.wCampo(tcStr, '', 'infOnusRemun',  1,  1, 1, objInfoMandSind.infOnusRemun);
+    Gerador.wCampo(tcStr, '', 'infOnusRemun',  1,  1, 1, tpOnusRemunToStr(objInfoMandSind.infOnusRemun));
 
     Gerador.wGrupo('/infoMandSind');
   end;

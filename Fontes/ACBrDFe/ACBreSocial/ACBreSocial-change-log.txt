@@ -48,7 +48,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-<<<<<<< .mine
+12/04/2018
+-- pcesS2299 --
+[*] Refeito a geração do grupo <consigFGTS> em função das versões 2.04.01 e 2.04.02
+   Por: Italo Jurisato Junior
+-- pcesS2230 / pcesS2300 --
+[*] https://www.projetoacbr.com.br/forum/topic/42678-valor-do-campo-infonus-s2300/?do=findComment&comment=281148
+-- pcesS1200 --
+[*] https://www.projetoacbr.com.br/forum/topic/42702-ajuste-ao-gerar-grupo-infotrabinterm-e-infocomplcont-do-evento-s-1200/
+   Por: Joceandro Perin
+
 10/04/2018
 -- pcesS1210 / pcesConversaoeSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/42629-ajuste-no-campo-tppgto-do-evento-s-1210-e-valida%C3%A7%C3%B5es/
@@ -57,8 +66,6 @@ Símbolo : Significado
 [-] Correção na nomenclatura da propriedade natAtividade.
   Por: Hudson G Leite
 
-
-=======
 05/04/2018
 -- ACBreSocialWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/42564-ideempregador-nrinsc-com-8-posi%C3%A7%C3%B5es/

@@ -128,6 +128,8 @@ type
 
     function infoPerApurInst(): boolean;
     function infoPerAntInst(): boolean;
+    function infoComplContInst(): boolean;
+    function infoTrabIntermInst(): boolean;
   published
     property ideDmDev: string read FIdeDmDev write FIdeDmDev;
     property codCateg: integer read FCodCateg write FCodCateg;
@@ -722,11 +724,21 @@ begin
   Result := Assigned(FInfoPerApur);
 end;
 
+function TDMDevCollectionItem.infoTrabIntermInst: boolean;
+begin
+  Result := Assigned(FinfoTrabInterm);
+end;
+
 function TDMDevCollectionItem.getInfoPerAnt: TInfoPerAnt;
 begin
   if not(Assigned(FInfoPerAnt)) then
     FInfoPerAnt := TInfoPerAnt.Create;
   Result := FInfoPerAnt;
+end;
+
+function TDMDevCollectionItem.infoComplContInst: boolean;
+begin
+  Result := Assigned(FinfoComplCont);
 end;
 
 function TDMDevCollectionItem.infoPerAntInst: boolean;
@@ -924,10 +936,10 @@ begin
     if (dmDev[i].infoPerAntInst()) then
       GerarInfoPerAnt(dmDev[i].infoPerAnt);
 
-    if VersaoDF < ve02_04_02 then
+    if (VersaoDF < ve02_04_02) and (dmDev[i].infoTrabIntermInst()) then
       GerarInfoTrabInterm(dmDev[i].infoTrabInterm);
 
-    if VersaoDF >= ve02_04_02 then
+    if (VersaoDF >= ve02_04_02) and (dmDev[i].infoComplContInst()) then
       GerarInfoComplCont(dmDev[i].infoComplCont);
 
     Gerador.wGrupo('/dmDev');

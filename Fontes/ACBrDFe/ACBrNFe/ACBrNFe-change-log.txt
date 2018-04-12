@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/04/2018
+-- ACBrNFeDANFeESCPOS --
+[*] Ajuste no método: ImprimirDANFECancelado, para considerar o número de 
+    cópias. (por: DSA)
+
 06/04/2018
 -- ACBrNFeNotasFiscais --
 [+] Adicionado Função que gera .INI a partir da leitura do XML da NFe

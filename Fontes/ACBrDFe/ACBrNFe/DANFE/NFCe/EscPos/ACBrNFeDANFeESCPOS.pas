@@ -684,7 +684,7 @@ begin
   GerarInformacoesQRCode(True);
   GerarRodape;
 
-  FPosPrinter.Imprimir;
+  FPosPrinter.Imprimir('',False,True,True,NumCopias);
 end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirEVENTO(NFE: TNFe);

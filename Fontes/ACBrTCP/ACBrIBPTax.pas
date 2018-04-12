@@ -501,14 +501,14 @@ begin
   if AExcecao < 0 then
     raise EACBrIBPTax.Create(ACBrStr('Informe 0 quando não houver exceção ou o código da exceção.'));
 
-  if Trim(ADescricaoProduto) = '' then
-    raise EACBrIBPTax.Create(ACBrStr('Descrição do produto não foi informada.'));
-
-  if Trim(AUnidadeMedida) = '' then
-    raise EACBrIBPTax.Create(ACBrStr('Unidade de medida não foi informada.'));
-
-  if Trim(AGtin) = '' then
-    raise EACBrIBPTax.Create(ACBrStr('GTIN não foi informado.'));
+//  if Trim(ADescricaoProduto) = '' then
+//    raise EACBrIBPTax.Create(ACBrStr('Descrição do produto não foi informada.'));
+//
+//  if Trim(AUnidadeMedida) = '' then
+//    raise EACBrIBPTax.Create(ACBrStr('Unidade de medida não foi informada.'));
+//
+//  if Trim(AGtin) = '' then
+//    raise EACBrIBPTax.Create(ACBrStr('GTIN não foi informado.'));
 
   UrlConsulta := 'https://apidoni.ibpt.org.br/api/v1/produtos' +
                    '?token='  + Self.AjustaParam(FToken) +
@@ -580,11 +580,11 @@ begin
   if Trim(AUF) = '' then
     raise EACBrIBPTax.Create(ACBrStr('UF não foi informado.'));
 
-  if Trim(ADescricaoServico) = '' then
-    raise EACBrIBPTax.Create(ACBrStr('Descrição do serviço não foi informada.'));
-
-  if Trim(AUnidadeMedida) = '' then
-    raise EACBrIBPTax.Create(ACBrStr('Unidade de medida não foi informada.'));
+//  if Trim(ADescricaoServico) = '' then
+//    raise EACBrIBPTax.Create(ACBrStr('Descrição do serviço não foi informada.'));
+//
+//  if Trim(AUnidadeMedida) = '' then
+//    raise EACBrIBPTax.Create(ACBrStr('Unidade de medida não foi informada.'));
 
   UrlConsulta := 'https://apidoni.ibpt.org.br/api/v1/servicos' +
                    '?token='  + Self.AjustaParam(FToken) +

@@ -105,4 +105,12 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     Left = 192
     Top = 160
   end
+  object frxJPEGExport: TfrxJPEGExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Left = 40
+    Top = 248
+  end
 end

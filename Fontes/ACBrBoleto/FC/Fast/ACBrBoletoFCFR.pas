@@ -56,7 +56,7 @@ interface
 
 uses
   SysUtils, Classes, DB, DBClient, ACBrBase, ACBrBoleto, StrUtils,
-  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF;
+  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage;
 
 const
   CACBrBoletoFCFR_Versao = '0.0.15';
@@ -113,6 +113,7 @@ type
     frxCedente: TfrxDBDataset;
     cdsBanco: TClientDataSet;
     frxBanco: TfrxDBDataset;
+    frxJPEGExport: TfrxJPEGExport;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxReportProgressStart(Sender: TfrxReport;
       ProgressType: TfrxProgressType; Progress: Integer);
@@ -370,6 +371,19 @@ begin
               frxReport.Export(FdmBoleto.frxHTMLExport);
               if frxHTMLExport.FileName <> NomeArquivo then
                 NomeArquivo := frxHTMLExport.FileName;
+            end;
+          fiJPG:
+            begin
+              frxJPEGExport.FileName      := NomeArquivo;
+              frxJPEGExport.ShowDialog    := False;
+              frxJPEGExport.ShowProgress  := True;
+              frxJPEGExport.Monochrome    := True;
+              frxJPEGExport.SeparateFiles := True;
+              frxJPEGExport.JPEGQuality   := 200;
+              frxJPEGExport.Resolution    := 160;
+              frxReport.Export(FdmBoleto.frxJPEGExport);
+              if frxJPEGExport.FileName <> NomeArquivo then
+                NomeArquivo := frxJPEGExport.FileName;
             end;
         else
           exit;

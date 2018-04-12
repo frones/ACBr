@@ -1256,6 +1256,7 @@ type
 
     procedure GerarPDF;
     procedure GerarHTML;
+    procedure GerarJPG;
 
     procedure EnviarEmail(const sPara, sAssunto: String;
        sMensagem: TStrings = nil; EnviaPDF: Boolean = true; sCC: TStrings = nil;
@@ -1290,7 +1291,7 @@ type
   end;
 
  {TACBrBoletoFCClass}
- TACBrBoletoFCFiltro = (fiNenhum, fiPDF, fiHTML ) ;
+ TACBrBoletoFCFiltro = (fiNenhum, fiPDF, fiHTML, fiJPG) ;
 
  TACBrBoletoFCOnObterLogo = procedure( const PictureLogo : TPicture; const NumeroBanco: Integer ) of object ;
 	{$IFDEF RTL230_UP}
@@ -1329,6 +1330,7 @@ type
     procedure Imprimir; virtual;
     procedure GerarPDF; virtual;
     procedure GerarHTML; virtual;
+    procedure GerarJPG; virtual;
 
     procedure CarregaLogo( const PictureLogo : TPicture; const NumeroBanco: Integer ) ;
 
@@ -1874,6 +1876,16 @@ begin
    ChecarDadosObrigatorios;
 
    ACBrBoletoFC.GerarHTML;
+end;
+
+procedure TACBrBoleto.GerarJPG;
+begin
+   if not Assigned(ACBrBoletoFC) then
+      raise Exception.Create( ACBrStr('Nenhum componente "ACBrBoletoFC" associado' ) ) ;
+
+   ChecarDadosObrigatorios;
+
+   ACBrBoletoFC.GerarJPG;
 end;
 
 procedure TACBrBoleto.EnviarEmail(const sPara, sAssunto: String;
@@ -2971,6 +2983,34 @@ begin
    PrinterNameAntigo    := PrinterName;
    try
      Filtro         := fiHTML;
+     MostrarPreview := false;
+     MostrarSetup   := false;
+     PrinterName    := '';
+     Imprimir;
+   finally
+     Filtro         := FiltroAntigo;
+     MostrarPreview := MostrarPreviewAntigo;
+     MostrarSetup   := MostrarSetupAntigo;
+     PrinterName    := PrinterNameAntigo;
+   end;
+end;
+
+procedure TACBrBoletoFCClass.GerarJPG;
+var
+   FiltroAntigo         : TACBrBoletoFCFiltro;
+   MostrarPreviewAntigo : Boolean;
+   MostrarSetupAntigo   : Boolean;
+   PrinterNameAntigo    : String;
+begin
+   if NomeArquivo = '' then
+      raise Exception.Create( ACBrStr('NomeArquivo não especificado')) ;
+
+   FiltroAntigo         := Filtro;
+   MostrarPreviewAntigo := MostrarPreview;
+   MostrarSetupAntigo   := MostrarSetup;
+   PrinterNameAntigo    := PrinterName;
+   try
+     Filtro         := fiJPG;
      MostrarPreview := false;
      MostrarSetup   := false;
      PrinterName    := '';

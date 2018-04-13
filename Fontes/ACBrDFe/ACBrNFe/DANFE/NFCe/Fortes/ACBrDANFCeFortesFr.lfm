@@ -12,7 +12,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.6'
   object rlVenda: TRLReport
     Left = 8
     Height = 1512
@@ -40,7 +40,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbQRCode: TRLBand
       Left = 4
       Height = 137
-      Top = 409
+      Top = 413
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -899,7 +899,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbChaveDeAcesso: TRLBand
       Left = 4
-      Height = 35
+      Height = 39
       Top = 270
       Width = 294
       AutoSize = True
@@ -936,14 +936,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object lURLConsulta: TRLMemo
         Left = 8
-        Height = 12
+        Height = 16
         Top = 11
         Width = 278
         Align = faTop
         Alignment = taCenter
         Behavior = [beSiteExpander]
         Font.Color = clBlack
-        Font.Height = -9
+        Font.Height = -13
         Font.Name = 'Arial'
         Lines.Strings = (
           'URL CONSULTA'
@@ -957,7 +957,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object lChaveDeAcesso: TRLMemo
         Left = 8
         Height = 12
-        Top = 23
+        Top = 27
         Width = 278
         Align = faTop
         Alignment = taCenter
@@ -978,7 +978,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbConsumidor: TRLBand
       Left = 4
       Height = 81
-      Top = 305
+      Top = 309
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1129,7 +1129,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbMensagemFiscal: TRLBand
       Left = 4
       Height = 23
-      Top = 386
+      Top = 390
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1174,7 +1174,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbRodape: TRLBand
       Left = 4
       Height = 72
-      Top = 666
+      Top = 670
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1282,7 +1282,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbQRLateral: TRLBand
       Left = 4
       Height = 120
-      Top = 546
+      Top = 550
       Width = 294
       AutoSize = True
       BandType = btSummary

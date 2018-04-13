@@ -66,6 +66,7 @@ type
   TACBrNFeDANFCeFortes = class( TACBrNFeDANFEClass )
   private
     function CalcularCaractesWidth( Canvas : TCanvas; WidthTotal : Integer ): Integer;
+    procedure DiminuirFonteSeNecessario( ARLMemo: TRLMemo; TamanhoMinimo: Integer = 1);
 
     procedure ImprimirInterno(const Cancelado: Boolean;
       const DanfeResumido : Boolean = False;
@@ -393,7 +394,9 @@ begin
     end;
 
     lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em');
+
     lURLConsulta.Lines.Text := TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao);
+    ACBrNFeDANFCeFortes.DiminuirFonteSeNecessario(lURLConsulta, 5);
 
     lChaveDeAcesso.Lines.Text := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
 
@@ -530,6 +533,7 @@ begin
 
     lTitConsulteChaveCanc.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
        TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao));
+    ACBrNFeDANFCeFortes.DiminuirFonteSeNecessario(lTitConsulteChaveCanc, 5);
 
     lChaveDeAcessoCanc.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
 
@@ -667,8 +671,6 @@ procedure TACBrNFeDANFCeFortesFr.rlVendaBeforePrint(Sender: TObject;
 var
   qrcode: String;
   LogoStream: TStringStream;
-  I: Integer;
-  Prod: TProd;
 begin
   fNumItem  := 0;
   fNumPagto := 0;
@@ -1419,6 +1421,29 @@ begin
   end;
 
   Result := maxCaracter-2;
+end;
+
+procedure TACBrNFeDANFCeFortes.DiminuirFonteSeNecessario(ARLMemo: TRLMemo;
+  TamanhoMinimo: Integer);
+var
+  ABmp: TBitmap;
+begin
+  ABmp := TBitmap.Create;
+  try
+    ABmp.Canvas.Font.Assign(ARLMemo.Font);
+    TamanhoMinimo := max(1, TamanhoMinimo);
+
+    while ABmp.Canvas.Font.Size > TamanhoMinimo do
+    begin
+      if ABmp.Canvas.TextWidth( ARLMemo.Lines.Text ) <= ARLMemo.ClientWidth then
+        Break;
+
+      ABmp.Canvas.Font.Size := ABmp.Canvas.Font.Size - 1;
+    end;
+  finally
+    ARLMemo.Font.Size := ABmp.Canvas.Font.Size;
+    ABmp.Free;
+  end;
 end;
 
 {$ifdef FPC}

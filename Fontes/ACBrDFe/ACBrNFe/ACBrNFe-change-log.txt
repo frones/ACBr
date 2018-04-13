@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2014
+-- ACBrDANFCeFortesFr --
+[*] Adicionado o método "DiminuirFonteSeNecessario", para permitir ajuste do
+    tamanho da fonte, em Labels que não são quebrados em várias lihnhas, por não
+    possuir espaços no texto. Exemplo: "lURLConsulta"
+    (Por: DSA)
+
 12/04/2018
 -- ACBrNFeDANFeESCPOS --
 [*] Ajuste no método: ImprimirDANFECancelado, para considerar o número de 

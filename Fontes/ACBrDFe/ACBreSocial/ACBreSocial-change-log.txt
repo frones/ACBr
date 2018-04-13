@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2018
+-- pcesCommon / pcesGerador --
+[*] https://www.projetoacbr.com.br/forum/topic/42715-erro-s2200-e-s2300-exterior/?do=findComment&comment=281388
+   Por: Renato E
+-- pcesS1200 --
+[*] https://www.projetoacbr.com.br/forum/topic/42702-ajuste-ao-gerar-grupo-infotrabinterm-e-infocomplcont-do-evento-s-1200/?do=findComment&comment=281433
+   Por: Joceandro Perin
+
 12/04/2018
 -- pcesS2299 --
 [*] Refeito a geração do grupo <consigFGTS> em função das versões 2.04.01 e 2.04.02

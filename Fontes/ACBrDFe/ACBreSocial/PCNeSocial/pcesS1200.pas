@@ -315,6 +315,7 @@ type
     function getInfoComplem: TInfoComplem;
     function getInfoMV: TInfoMV;
     function getInfoProcJudTrab: TProcJudTrabCollection;
+    function getInfoInterm: TinfoInterm;
   public
     constructor Create;
     destructor Destroy; override;
@@ -322,11 +323,12 @@ type
     function infoMVInst(): boolean;
     function infoComplemInst(): boolean;
     function procJudTrabInst(): boolean;
+    function infoIntermInst(): boolean;
 
     property infoMV: TInfoMV read getInfoMV write FInfoMV;
     property infoComplem: TInfoComplem read getInfoComplem write FInfoComplem;
     property procJudTrab: TProcJudTrabCollection read getInfoProcJudTrab write FProcJudTrab;
-    property infoInterm: TinfoInterm read FinfoInterm write FinfoInterm;
+    property infoInterm: TinfoInterm read getInfoInterm write FinfoInterm;
   end;
 
   TSucessaoVinc = class(TPersistent)
@@ -620,16 +622,16 @@ constructor TeS1200IdeTrabalhador.Create;
 begin
   FInfoMV := nil;
   FInfoComplem := nil;
-  FProcJudTrab := TProcJudTrabCollection.Create;
-  FinfoInterm  := TinfoInterm.Create;
+  FinfoInterm  := nil;
+  FProcJudTrab := nil;
 end;
 
 destructor TeS1200IdeTrabalhador.Destroy;
 begin
   FreeAndNil(FInfoMV);
   FreeAndNil(FInfoComplem);
-  FProcJudTrab.Free;
-  FinfoInterm.Free;
+  FreeAndNil(FinfoInterm);
+  FreeAndNil(FProcJudTrab);
 
   inherited;
 end;
@@ -653,6 +655,13 @@ begin
   Result := FInfoComplem;
 end;
 
+function TeS1200IdeTrabalhador.getInfoInterm: TinfoInterm;
+begin
+  if not(Assigned(FinfoInterm)) then
+    FinfoInterm := TinfoInterm.Create;
+  Result := FinfoInterm;
+end;
+
 function TeS1200IdeTrabalhador.getInfoMV: TInfoMV;
 begin
   if not(Assigned(FInfoMV)) then
@@ -663,6 +672,11 @@ end;
 function TeS1200IdeTrabalhador.infoComplemInst: boolean;
 begin
   Result := Assigned(FInfoComplem);
+end;
+
+function TeS1200IdeTrabalhador.infoIntermInst: boolean;
+begin
+  Result := Assigned(FinfoInterm);
 end;
 
 function TeS1200IdeTrabalhador.infoMVInst: boolean;
@@ -870,7 +884,7 @@ begin
   if (ideTrabalhador.procJudTrabInst()) then
     GerarProcJudTrab(ideTrabalhador.procJudTrab);
 
-  if VersaoDF >= ve02_04_02 then
+  if (VersaoDF >= ve02_04_02) and (ideTrabalhador.infoIntermInst()) then
     GerarInfoInterm;
 
   Gerador.wGrupo('/ideTrabalhador');

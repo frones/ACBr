@@ -769,7 +769,7 @@ begin
     GerarNascimento(pTrabalhador.Nascimento);
 
   GerarDocumentos(pTrabalhador.Documentos);
-  GerarEndereco(pTrabalhador.Endereco);
+  GerarEndereco(pTrabalhador.Endereco,pTrabalhador.ExtrangeiroSN);
   GerarTrabEstrangeiro(pTrabalhador.TrabEstrangeiro);
   GerarInfoDeficiencia(pTrabalhador.InfoDeficiencia, tipo);
   GerarDependente(pTrabalhador.Dependente);

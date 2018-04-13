@@ -918,6 +918,7 @@ type
     FDependente: TDependenteCollection;
     FAposentadoria: TAposentadoria;
     FContato: TContatoTrabalhador;
+    FExtrangeiroSN : Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -939,6 +940,7 @@ type
     property Dependente: TDependenteCollection read FDependente write FDependente;
     property Aposentadoria: TAposentadoria read FAposentadoria write FAposentadoria;
     property Contato: TContatoTrabalhador read FContato write FContato;
+    property ExtrangeiroSN: Boolean read FExtrangeiroSN write FExtrangeiroSN;
   end;
 
   TTrabEstrangeiro = class

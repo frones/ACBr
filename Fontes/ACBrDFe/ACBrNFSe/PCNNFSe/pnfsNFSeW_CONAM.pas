@@ -133,6 +133,9 @@ var
   MunPrestador: String;
 begin
   //Gerador.wGrupoNFSe('Reg20');
+
+  Gerador.ArquivoFormatoXML := '';
+
   Gerador.wGrupoNFSe('Reg20Item');
   if FNFSe.IdentificacaoRps.Tipo = trRPS then
     Gerador.wCampoNFSe(tcStr, '', 'TipoNFS', 01, 3, 1, 'RPS' , '')

@@ -105,6 +105,7 @@ type
     FTipoTributacao: String;
     FQtdTributos: Integer; //almp1
     FValorNota: Currency;
+    FAliquotaSN: Currency; // mauroasl
     FAliquotaISS: Currency;
     FValorIss: Currency;
     FValorIssRetido: Currency;
@@ -208,6 +209,7 @@ type
     property TipoTributacao: String   read FTipoTributacao write FTipoTributacao;
     property QtdTributos: Integer     read FQtdTributos    write FQtdTributos;
     property ValorNota: Currency      read FValorNota      write FValorNota;
+    property AliquotaSN: Currency     read FAliquotaSN     write FAliquotaSN; // mauroasl
     property AliquotaIss: Currency    read FAliquotaIss    write FAliquotaIss;
     property ValorIss: Currency       read FValorIss       write FValorIss;
     property ValorIssRetido: Currency read FValorIssRetido write FValorIssRetido;
@@ -470,7 +472,7 @@ begin
                   Gerador.wCampoNFSe(tcInt, '', 'TipoTrib'   , 01, 01, 0, 4 , '');
                   // Data de adesao ao simples nacional
                   Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN'    , 01, 10, 0, FormatDateTime('dd/mm/yyyy', DataOptanteSimples) , '');
-                  Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 01, 06, 0, AliquotaIss, '');
+                  Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 01, 06, 0, AliquotaSN, '');
                 end
                 else begin
                   case ExigibilidadeISS of

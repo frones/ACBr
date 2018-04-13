@@ -1905,7 +1905,9 @@ begin
                        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
                          FTagI := '<'+FTagGrupo+'>'
                        else // Outros
-                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
+                                     '<' + FPrefixo3 + 'Pedido>' +
+                                        '<' + FPrefixo4 + 'InfPedidoCancelamento' + ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' + FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
                      end;
 
            proAgili: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +

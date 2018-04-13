@@ -189,6 +189,7 @@ type
     FOutrasRetencoes: Currency;
     FBaseCalculo: Currency;
     FAliquota: Currency;
+    FAliquotaSN: Currency; // mauroasl : Aliquota usada pelo Provedor conam
     FAliquotaPis: Currency;
     FAliquotaCofins: Currency;
     FAliquotaInss: Currency;
@@ -217,6 +218,9 @@ type
     property OutrasRetencoes: Currency read FOutrasRetencoes write FOutrasRetencoes;
     property BaseCalculo: Currency read FBaseCalculo write FBaseCalculo;
     property Aliquota: Currency read FAliquota write FAliquota;
+    // mauroasl : Aliquota usada pelo Provedor conam
+    property AliquotaSN: Currency read FAliquotaSN write FAliquotaSN;
+
     // Aliquotas usadas pelo Provedor IssDsf
     property AliquotaPis: Currency read FAliquotaPis write FAliquotaPis;
     property AliquotaCofins: Currency read FAliquotaCofins write FAliquotaCofins;

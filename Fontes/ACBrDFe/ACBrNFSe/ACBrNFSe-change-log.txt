@@ -47,6 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2018
+-- pnfsNFSeW_CONAM --
+[*] https://www.projetoacbr.com.br/forum/topic/42675-provedor-conam-duplicando-rps/?do=findComment&comment=281135
+   Por: SoftPro Sistemas
+-- pnfsNFSeG / pnfsNFSe --
+[*] https://www.projetoacbr.com.br/forum/topic/42667-provedor-conam-alqisssn_ip/?do=findComment&comment=281396
+   Por: Mauro Augusto Souza Lima
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/17101-nfs-e-sert%C3%A3ozinho/?do=findComment&comment=281311
+   Por: Weber de Paula
+-- ACBrNFSeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/42731-erro-na-gera%C3%A7%C3%A3o-de-xml-de-cancelamento-do-provedor-abaco/
+   Por: Marcio st
+
 09/04/2018
 -- pnfsNFSeW_ABRASFv2 --
 [*] Incluido a geração da tag <InformacoesComplementares> para o provedor SmarAPDABRASF.

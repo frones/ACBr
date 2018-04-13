@@ -1,29 +1,29 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componente ACBrNFSe                                                 }
 {  Biblioteca multiplataforma de componentes Delphi                            }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 {                                                                              }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
+{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -148,7 +148,7 @@ begin
   NomeArqParams := PathIniCidades + '\Cidades.ini';
 
   if not FileExists(NomeArqParams) then
-    raise Exception.Create('Arquivo de Par‚metro n„o encontrado: ' +
+    raise Exception.Create('Arquivo de Par√¢metro n√£o encontrado: ' +
       NomeArqParams);
 
   IniParams := TMemIniFile.Create(NomeArqParams);
@@ -212,7 +212,7 @@ begin
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
-//  FunÁıes especificas para ler o XML de um RPS                              //
+//  Fun√ß√µes especificas para ler o XML de um RPS                              //
 ////////////////////////////////////////////////////////////////////////////////
 
 function TNFSeR.LerRPS: Boolean;
@@ -494,7 +494,7 @@ begin
 
     NFSe.Servico.Valores.Aliquota    := Leitor.rCampo(tcDe3, 'Aliquota');
 
-    //Se n„o me engano o maximo de servicos È 10...n„o?
+    //Se n√£o me engano o maximo de servicos √© 10...n√£o?
     for I := 1 to 10 do
     begin
       if (Leitor.rExtrai(2, 'Servico', 'Servico', i) <> '') then
@@ -516,7 +516,7 @@ begin
       else
         Break;
     end;
-  end; // fim lista serviÁo
+  end; // fim lista servi√ßo
 
   if (Leitor.rExtrai(2, 'InfDeclaracaoPrestacaoServico') <> '') or
      (Leitor.rExtrai(1, 'InfDeclaracaoPrestacaoServico') <> '') then
@@ -599,7 +599,7 @@ begin
           NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
                                                    NFSe.Servico.Valores.DescontoIncondicionado -
                                                    NFSe.Servico.Valores.DescontoCondicionado -
-                                                   // RetenÁıes Federais
+                                                   // Reten√ß√µes Federais
                                                    NFSe.Servico.Valores.ValorPis -
                                                    NFSe.Servico.Valores.ValorCofins -
                                                    NFSe.Servico.Valores.ValorIr -
@@ -618,7 +618,7 @@ begin
 //          NFSe.Servico.Valores.ValorIss := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
 
       end;
-    end; // fim serviÁo
+    end; // fim servi√ßo
 
     if (Leitor.rExtrai(3, 'Prestador') <> '') or (Leitor.rExtrai(2, 'Prestador') <> '') then
     begin
@@ -785,7 +785,7 @@ begin
 
       i := i + 1;
     end;
-  end; // fim lista serviÁo
+  end; // fim lista servi√ßo
 
   if VersaoNFSe = ve100 then
   begin
@@ -961,7 +961,7 @@ var
   ok  : Boolean;
   sOperacao, sTributacao: String;
 begin
-  VersaoNFSe := ve100; // para este provedor usar padr„o "1".
+  VersaoNFSe := ve100; // para este provedor usar padr√£o "1".
   if (Leitor.rExtrai(1, 'Cabecalho') <> '') then
   begin
    	NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'CPFCNPJRemetente');
@@ -1251,7 +1251,7 @@ begin
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
-//  FunÁıes especificas para ler o XML de uma NFS-e                           //
+//  Fun√ß√µes especificas para ler o XML de uma NFS-e                           //
 ////////////////////////////////////////////////////////////////////////////////
 
 function TNFSeR.LerNFSe: Boolean;
@@ -1315,7 +1315,7 @@ begin
     if NFSe.InfID.ID = '' then
       NFSe.InfID.ID := Leitor.rAtributo('id=', 'InfNfse');
 
-    // Quando baixamos diretamente do site do provedor GINFES dentro do grupo <Nfse> n„o
+    // Quando baixamos diretamente do site do provedor GINFES dentro do grupo <Nfse> n√£o
     // contem o grupo <InfNfse>
     if (Leitor.rExtrai(2, 'InfNfse') = '') and (Leitor.rExtrai(1, 'InfNfse') = '') then
       Leitor.Grupo := Leitor.Arquivo;
@@ -1339,7 +1339,7 @@ begin
       {Considerar a data de recebimento da NFS-e como dhrecebimento - para esse provedor nao tem a tag
         Diferente do que foi colocado para outros provedores, de atribuir a data now, ficaria errado se
         passase a transmissao de um dia para outro. E se for pensar como dhrecebimento pelo webservice e
-        n„o o recebimento no programa que usar esse componente
+        n√£o o recebimento no programa que usar esse componente
       }
       if FProvedor = proVersaTecnologia then
         NFSe.dhRecebimento := Leitor.rCampo(tcDatHor, 'DataEmissao');
@@ -1355,7 +1355,7 @@ begin
       else
         NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
-      // Tratar erro de convers„o de tipo no Provedor ¡baco
+      // Tratar erro de convers√£o de tipo no Provedor √Åbaco
       if Leitor.rCampo(tcStr, 'DataEmissaoRps') <> '0000-00-00' then
       begin
         if FProvedor in [proNFSeBrasil] then
@@ -1516,7 +1516,7 @@ begin
       NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
                                                NFSe.Servico.Valores.DescontoIncondicionado -
                                                NFSe.Servico.Valores.DescontoCondicionado -
-                                               // RetenÁıes Federais
+                                               // Reten√ß√µes Federais
                                                NFSe.Servico.Valores.ValorPis -
                                                NFSe.Servico.Valores.ValorCofins -
                                                NFSe.Servico.Valores.ValorIr -
@@ -1550,7 +1550,7 @@ begin
       end;
     end;
 
-  end; // fim serviÁo
+  end; // fim servi√ßo
 
   if Leitor.rExtrai(Nivel +1, 'PrestadorServico') <> '' then
   begin
@@ -1951,7 +1951,8 @@ begin
         if (FProvedor in [proActconv202]) then
           NFSe.Servico.Valores.Aliquota := (NFSe.Servico.Valores.Aliquota * 100);
 
-        if (FProvedor in [proActconv202, proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2, proVitoria]) then
+				//if Ôªø(FProvedor in [proActconv202, proISSe, proVersaTecnologiaÔªø, proNEAInformatica, proFiorilli, proPronimv2, proVitoria]) then
+        if (FProvedor in [proActconv202, proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2, proVitoria, proSmarAPDABRASF]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')
@@ -1969,7 +1970,7 @@ begin
           NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
                                                    NFSe.Servico.Valores.DescontoIncondicionado -
                                                    NFSe.Servico.Valores.DescontoCondicionado -
-                                                   // RetenÁıes Federais
+                                                   // Reten√ß√µes Federais
                                                    NFSe.Servico.Valores.ValorPis -
                                                    NFSe.Servico.Valores.ValorCofins -
                                                    NFSe.Servico.Valores.ValorIr -
@@ -1988,7 +1989,7 @@ begin
 //          NFSe.Servico.Valores.ValorIss := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
 
       end;
-    end; // fim serviÁo
+    end; // fim servi√ßo
 
     if (Leitor.rExtrai(Nivel, 'Prestador') <> '') then
     begin
@@ -2179,7 +2180,7 @@ begin
       end;
     end;
 
-  end; // fim lista serviÁo
+  end; // fim lista servi√ßo
 
   if Leitor.rExtrai(1, 'Nfse') <> '' then
   begin
@@ -2391,7 +2392,7 @@ begin
       NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
                                                NFSe.Servico.Valores.DescontoIncondicionado -
                                                NFSe.Servico.Valores.DescontoCondicionado -
-                                               // RetenÁıes Federais
+                                               // Reten√ß√µes Federais
                                                NFSe.Servico.Valores.ValorPis -
                                                NFSe.Servico.Valores.ValorCofins -
                                                NFSe.Servico.Valores.ValorIr -
@@ -2501,7 +2502,7 @@ begin
      (Pos('<Nota>', Leitor.Arquivo) > 0) or
      (Pos('<ConsultaNFSe>', Leitor.Arquivo) > 0) then
   begin
-    VersaoNFSe := ve100; // para este provedor usar padr„o "1".
+    VersaoNFSe := ve100; // para este provedor usar padr√£o "1".
 
     FNFSe.Numero := Leitor.rCampo(tcStr, 'NumeroNota');
     if (FNFSe.Numero = '') then
@@ -2669,7 +2670,7 @@ begin
                                              FNFSe.Servico.Valores.ValorIssRetido));
   *)
 
-  // CorreÁ„o para o c·lculo de VALOR LIQUIDO da NFSE - estavam faltando PIS, COFINS, INSS, IR e CSLL
+  // Corre√ß√£o para o c√°lculo de VALOR LIQUIDO da NFSE - estavam faltando PIS, COFINS, INSS, IR e CSLL
   NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
                                             (NFSe.Servico.Valores.ValorPis +
                                              NFSe.Servico.Valores.ValorCofins +
@@ -2853,7 +2854,7 @@ begin
 
     NFSe.TipoTributacaoRPS := StrToTTributacaoRPS(bOk, Leitor.rCampo(tcStr, 'TributacaoNFe'));
 
-    if (Leitor.rCampo(tcStr, 'OpcaoSimples') = '0') then // ver pag do manual de integraÁao...
+    if (Leitor.rCampo(tcStr, 'OpcaoSimples') = '0') then // ver pag do manual de integra√ßao...
       NFSe.OptanteSimplesNacional := snNao
     else
       NFSe.OptanteSimplesNacional := snSim;
@@ -2892,7 +2893,7 @@ begin
       valorIssRetido := Leitor.rCampo(tcDe2, 'ValorISS');
     end;
 
-    // Como o valor lÌquido n„o esta no layout deve refazer o c·lculo
+    // Como o valor l√≠quido n√£o esta no layout deve refazer o c√°lculo
     (*
     NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos - (NFSe.Servico.Valores.ValorPis +
                                              NFSe.Servico.Valores.ValorCofins +
@@ -3291,10 +3292,10 @@ begin
       end;
     end; // fim Tomador
 
-    // Dados dos ServiÁos
+    // Dados dos Servi√ßos
     if (Leitor.rExtrai(2, 'Servicos') <> '') then
     begin
-      // Total m·ximo de 12 serviÁos na prefeitura
+      // Total m√°ximo de 12 servi√ßos na prefeitura
       for I := 1 to 12 do
       begin
         if (Leitor.rExtrai(3, 'Servico', 'Servico', I) <> '') then
@@ -3342,7 +3343,7 @@ begin
       end;
     end; // fim Valores
 
-    // Outras InformaÁıes
+    // Outras Informa√ß√µes
     if (Leitor.rExtrai(2, 'Observacao') <> '') then
     begin
       NFSe.OutrasInformacoes := Leitor.rCampo(tcStr, 'Observacao');
@@ -3405,7 +3406,7 @@ begin
       Servico.Discriminacao := Leitor.rCampo(tcStr, 'DesSvc');
       Servico.Descricao := Leitor.rCampo(tcStr, 'DescricaoServ');
 
-//    Itens do serviÁo prestado
+//    Itens do servi√ßo prestado
       i := 0;
       while i <> -1 do
       begin
@@ -3512,9 +3513,9 @@ begin
       Servico.Valores.BaseCalculo := Leitor.rCampo(tcDe2, 'VlBasCalc');
       Servico.Valores.ValorServicos := Leitor.rCampo(tcDe2, 'VlNFS');
       Servico.Valores.Aliquota := Leitor.rCampo(tcDe2, 'AlqIss');
-      Servico.Valores.IssRetido := Leitor.rCampo(tcDe2, 'VlIssRet'); // Isto nao est· funcionando...
-              //O conte˙do de "Servico.Valores.IssRetido dever ser SIM ou NAO
-              //O conte˙do de "Sevrico.Valores.ValorIssRetido È o valor do ISS
+      Servico.Valores.IssRetido := Leitor.rCampo(tcDe2, 'VlIssRet'); // Isto nao est√° funcionando...
+              //O conte√∫do de "Servico.Valores.IssRetido dever ser SIM ou NAO
+              //O conte√∫do de "Sevrico.Valores.ValorIssRetido √© o valor do ISS
       Servico.Valores.ValorDeducoes := Leitor.rCampo(tcDe2, 'VlDed');
       Servico.Valores.JustificativaDeducao := Leitor.rCampo(tcStr, 'DiscrDed');
 
@@ -3690,7 +3691,7 @@ begin
 
   end;
 
-  // Detalhes dos serviÁos
+  // Detalhes dos servi√ßos
   Item := 0;
   while (Leitor.rExtrai(1, 'det', '', Item + 1) <> '') do
   begin
@@ -3709,7 +3710,7 @@ begin
       Nfse.Servico.ItemServico[Item].BaseCalculo := Leitor.rCampo(tcDe2, 'vBCISS');
       Nfse.Servico.ItemServico[Item].Aliquota    := Leitor.rCampo(tcDe2, 'pISS');
       Nfse.Servico.ItemServico[Item].ValorIss    := Leitor.rCampo(tcDe2, 'vISS');
-      // RetenÁıes
+      // Reten√ß√µes
       NFSe.Servico.ItemServico.Items[Item].ValorIr     := Leitor.rCampo(tcDe2, 'vRetIRF');
       NFSe.Servico.ItemServico.Items[Item].ValorPis    := Leitor.rCampo(tcDe2, 'vRetLei10833-PIS-PASEP');
       NFSe.Servico.ItemServico.Items[Item].ValorCofins := Leitor.rCampo(tcDe2, 'vRetLei10833-COFINS');
@@ -3749,7 +3750,7 @@ begin
     end;
 
     (*
-        // RetenÁıes
+        // Reten√ß√µes
         NFSe.Servico.Valores.ValorIr     := Leitor.rCampo(tcDe2, 'vRetIRF');
         NFSe.Servico.Valores.ValorPis    := Leitor.rCampo(tcDe2, 'vRetLei10833-PIS-PASEP');
         NFSe.Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'vRetLei10833-COFINS');
@@ -3761,7 +3762,7 @@ begin
 
   if (Leitor.rExtrai(1, 'cobr') <> '') then
   begin
-    // CobranÁa
+    // Cobran√ßa
   end;
 
   if (Leitor.rExtrai(1, 'Observacoes') <> '') then
@@ -3776,11 +3777,11 @@ begin
 
   if (Leitor.rExtrai(1, 'ISSST') <> '') then
   begin
-    // ISS SubstituiÁ„o Tribut·ria
+    // ISS Substitui√ß√£o Tribut√°ria
   end;
 
   (*
-      // Lay-Out Infisc n„o possui campo especÌficos
+      // Lay-Out Infisc n√£o possui campo espec√≠ficos
       NFSe.Servico.ItemListaServico := Leitor.rCampo(tcStr, 'infAdic');
   *)
 
@@ -3894,7 +3895,7 @@ begin
   end;
 
   Nfse.Servico.MunicipioIncidencia := 0;
-  // Detalhes dos serviÁos
+  // Detalhes dos servi√ßos
   Item := 0;
   while (Leitor.rExtrai(1, 'det', '', Item + 1) <> '') do
   begin
@@ -3917,7 +3918,7 @@ begin
       Nfse.Servico.ItemServico[Item].BaseCalculo := Leitor.rCampo(tcDe2, 'vBCISS');
       Nfse.Servico.ItemServico[Item].Aliquota    := Leitor.rCampo(tcDe2, 'pISS');
       Nfse.Servico.ItemServico[Item].ValorIss    := Leitor.rCampo(tcDe2, 'vISS');
-      // RetenÁıes
+      // Reten√ß√µes
       NFSe.Servico.ItemServico.Items[Item].ValorIr     := Leitor.rCampo(tcDe2, 'vRetIR');
       NFSe.Servico.ItemServico.Items[Item].ValorPis    := Leitor.rCampo(tcDe2, 'vRetPISPASEP');
       NFSe.Servico.ItemServico.Items[Item].ValorCofins := Leitor.rCampo(tcDe2, 'vRetCOFINS');
@@ -3961,14 +3962,14 @@ begin
       if NFSe.Servico.Valores.ValorIssRetido > 0 then
       begin
         NFSe.Servico.Valores.IssRetido   := stRetencao;
-        //Dados est· sendo buscando na linha no inicio do metodo
+        //Dados est√° sendo buscando na linha no inicio do metodo
         //NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
       end;
     end;
 
     if (Leitor.rExtrai(2, 'Ret') <> '') then
     begin
-        // RetenÁıes
+        // Reten√ß√µes
       NFSe.Servico.Valores.ValorIr     := Leitor.rCampo(tcDe2, 'vRetIR');
       NFSe.Servico.Valores.ValorPis    := Leitor.rCampo(tcDe2, 'vRetPISPASEP');
       NFSe.Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'vRetCOFINS');

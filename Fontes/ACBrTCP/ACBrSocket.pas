@@ -903,7 +903,11 @@ begin
       case  HTTPSend.ResultCode of
         301, 302, 303, 307:
         begin
-          Location := Trim(SeparateLeft( GetHeaderValue('Location:'), ';' ));
+          // DEBUG //
+          //HTTPSend.Headers.SaveToFile('c:\temp\HeaderResp.txt');
+
+          Location := GetHeaderValue('Location:');
+          Location := Trim(SeparateLeft( Location, ';' ));
 
           //Location pode ser relativa ou absoluta http://stackoverflow.com/a/25643550/460775
           if IsAbsoluteURL(Location) then

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/04/2018
+-- ACBrConsultaCNPJ --
+[*] Ajustes para funcionamento da Consulta por CNPJ no SEFAZ
+    (por: DSA)
+
 26/03/2018
 -- ACBrIBPTax --
 [*] Ajuste na montagem da URL de chamada na consulta por API com os campos 

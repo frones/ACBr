@@ -892,7 +892,14 @@ begin
     if FTimeOut > 0 then
     begin
       HTTPSend.Timeout := FTimeOut;
-      HTTPSend.Sock.ConnectionTimeout := FTimeOut;
+      with HTTPSend.Sock do
+      begin
+        ConnectionTimeout := FTimeOut;
+        InterPacketTimeout := False;
+        NonblockSendTimeout := FTimeOut;
+        SocksTimeout := FTimeOut;
+        HTTPTunnelTimeout := FTimeOut;
+      end;
     end;
 
     HTTPSend.HTTPMethod(Method, AURL);

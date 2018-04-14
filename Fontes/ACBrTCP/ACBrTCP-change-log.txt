@@ -38,6 +38,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/04/2018
+-- ACBrSocket --
+[*] TACBrHTTP, melhorias no controle do TimeOut
+
 -- ACBrConsultaCNPJ --
 [*] Ajustes para funcionamento da Consulta por CNPJ no SEFAZ
     (por: DSA)

@@ -160,9 +160,9 @@ begin
       Stream.CopyFrom(HttpSend.Document, HttpSend.Document.Size);
       Stream.Position := 0;
     end;
-  Except on E: Exception do begin
-    raise EACBrConsultaCNPJException.Create('Erro na hora de fazer o download da imagem do captcha.'+#13#10+E.Message);
-  end;
+  except
+    on E: Exception do
+      raise EACBrConsultaCNPJException.Create('Erro na hora de fazer o download da imagem do captcha.'+sLineBreak+E.Message);
   end;
 end;
 

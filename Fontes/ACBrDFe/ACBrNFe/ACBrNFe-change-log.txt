@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/04/2018
+-- pcnEventoNFe --
+[*] Modificação nos métodos "Getters" para não disparar exception no caso de
+    erros ou conversão inválida, assumindo valores vazios ou nulos.  (por: DSA)
+
 -- ACBrNFeWebServices --
 [-] Correção na execução do serviço de consulta de cadastro, para retornar o
     FPBodyElement padrão após uma consulta de cadastro dos estados do RS e

@@ -391,6 +391,8 @@ type
 
   TNFeConsultaCadastro = class(TNFeWebService)
   private
+    FOldBodyElement: String;
+
     Fversao: String;
     FverAplic: String;
     FcStat: integer;
@@ -414,6 +416,7 @@ type
     procedure DefinirDadosIntegrador; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
 
     function GerarMsgLog: String; override;
     function GerarUFSoap: String; override;
@@ -2690,6 +2693,12 @@ begin
   inherited Destroy;
 end;
 
+procedure TNFeConsultaCadastro.FinalizarServico;
+begin
+  inherited FinalizarServico;
+  FPBodyElement := FOldBodyElement;
+end;
+
 procedure TNFeConsultaCadastro.Clear;
 begin
   inherited Clear;
@@ -2865,6 +2874,7 @@ end;
 procedure TNFeConsultaCadastro.InicializarServico;
 begin
   inherited InicializarServico;
+  FOldBodyElement := FPBodyElement;
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) and
     ((UpperCase(FUF) = 'RS') or (Pos('svrs.rs.gov.br', FPURL) > 0)) then
   begin

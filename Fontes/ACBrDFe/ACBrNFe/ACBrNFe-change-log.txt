@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2018
+-- ACBrNFeWebServices --
+[-] Correção na execução do serviço de consulta de cadastro, para retornar o
+    FPBodyElement padrão após uma consulta de cadastro dos estados do RS e
+    estados usuários da SVRS.
+  Por: BigWings
+
 13/04/2014
 -- ACBrDANFCeFortesFr --
 [*] Adicionado o método "DiminuirFonteSeNecessario", para permitir ajuste do

@@ -354,36 +354,29 @@ end;
 procedure TevtTabLotacao.GerarInfoProcJudTerceiros;
 var
   i: Integer;
-  objProcJudTer: TProcJudTerceiroCollectionItem;
 begin
   if (infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Count > 0) then
   begin
-    objProcJudTer := infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Items[0];
-
-    if objProcJudTer.codTerc <> EmptyStr then
+    Gerador.wGrupo('infoProcJudTerceiros');
+    with infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros do
     begin
-      Gerador.wGrupo('infoProcJudTerceiros');
-
-      for i := 1 to infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Count - 1 do
+      for i := 0 to procJudTerceiro.Count-1 do
       begin
-        objProcJudTer := infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Items[i];
-
         Gerador.wGrupo('procJudTerceiro');
 
-        Gerador.wCampo(tcStr, '', 'codTerc',   1,  4, 1, objProcJudTer.codTerc);
-        Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 1, objProcJudTer.nrProcJud);
+        Gerador.wCampo(tcStr, '', 'codTerc',   1,  4, 1, procJudTerceiro.Items[i].codTerc);
+        Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 1, procJudTerceiro.Items[i].nrProcJud);
 
-        if trim(objProcJudTer.codSusp) <> '' then
-          Gerador.wCampo(tcInt, '', 'codSusp', 1, 14, 1, objProcJudTer.codSusp);
+        if trim(procJudTerceiro.Items[i].codSusp) <> '' then
+          Gerador.wCampo(tcInt, '', 'codSusp', 1, 14, 1, procJudTerceiro.Items[i].codSusp);
 
         Gerador.wGrupo('/procJudTerceiro');
       end;
 
-      if infoLotacao.dadosLotacao.fPasLotacao.infoProcJudTerceiros.procJudTerceiro.Count > 99 then
+      if procJudTerceiro.Count > 99 then
         Gerador.wAlerta('', 'infoProcJudTerceiros', 'Lista de Processos Judic. Terceiros', ERR_MSG_MAIOR_MAXIMO + '99');
-
-      Gerador.wGrupo('/infoProcJudTerceiros');
     end;
+    Gerador.wGrupo('/infoProcJudTerceiros');
   end;
 end;
 
@@ -620,7 +613,6 @@ end;
 constructor TInfoProcJudTerceiros.create;
 begin
   FProcJudTerceiro := TProcJudTerceiroCollection.create;
-  FProcJudTerceiro.Add();
 end;
 
 destructor TInfoProcJudTerceiros.destroy;

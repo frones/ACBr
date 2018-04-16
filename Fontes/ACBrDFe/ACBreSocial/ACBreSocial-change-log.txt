@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2018
+-- pcesS1020 / pcesS1070 / pcesGerador --
+[*] https://www.projetoacbr.com.br/forum/topic/42743-altera%C3%A7%C3%A3o-infoprocjudterceiros-evento-s-1020/
+   Por: Arce
+-- pcesS1210 --
+[*] https://www.projetoacbr.com.br/forum/topic/42760-adicionar-campo-matricula-no-grupo-detpgtofer-do-evento-s-1210/
+   Por: Joceandro Perin
+
 13/04/2018
 -- pcesCommon / pcesGerador --
 [*] https://www.projetoacbr.com.br/forum/topic/42715-erro-s2200-e-s2300-exterior/?do=findComment&comment=281388

@@ -415,7 +415,7 @@ begin
 
   Gerador.wCampo(tcInt, '', 'indMatProc', 1, 2, 1, eSTpIndMatProcToStr(InfoProcesso.dadosProc.indMatProc));
 
-  if VersaoDF = ve02_04_02 then
+  if VersaoDF >= ve02_04_02 then
     Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, InfoProcesso.dadosProc.observacao);
 
   GerarDadosProcJud;

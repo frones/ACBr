@@ -765,7 +765,7 @@ begin
   Gerador.wCampo(tcStr, '', 'nmSoc', 1, 70, 0, pTrabalhador.nmSoc);
 
   if (GroupName = 'trabalhador') or
-     ((GroupName = 'dadosTrabalhador') and (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF = ve02_04_02)) then
+     ((GroupName = 'dadosTrabalhador') and (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF >= ve02_04_02)) then
     GerarNascimento(pTrabalhador.Nascimento);
 
   GerarDocumentos(pTrabalhador.Documentos);

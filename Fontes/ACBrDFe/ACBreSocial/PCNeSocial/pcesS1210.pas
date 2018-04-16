@@ -319,11 +319,13 @@ type
     FQtDias: Integer;
     FVrLiq: Double;
     FDetRubrFer: TRubricasComPensaoCollection;
+    Fmatricula: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
 
     property codCateg: integer read FCodCateg write FCodCateg;
+    property matricula: String read Fmatricula write Fmatricula;
     property dtIniGoz: TDate read FDtIniGoz write FDtIniGoz;
     property qtDias: integer read FQtDias write FQtDias;
     property vrLiq: Double read FVrLiq write FVrLiq;
@@ -964,6 +966,10 @@ begin
     Gerador.wGrupo('detPgtoFer');
 
     Gerador.wCampo(tcInt, '', 'codCateg',  1,  3, 1, pDetPgtoFer[i].codCateg);
+
+    if (VersaoDF >= ve02_04_02) then
+      Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, pDetPgtoFer[i].matricula);
+
     Gerador.wCampo(tcDat, '', 'dtIniGoz', 10, 10, 1, pDetPgtoFer[i].dtIniGoz);
     Gerador.wCampo(tcInt, '', 'qtDias',    1,  2, 1, pDetPgtoFer[i].qtDias);
     Gerador.wCampo(tcDe2, '', 'vrLiq',     1, 14, 1, pDetPgtoFer[i].vrLiq);
@@ -1290,10 +1296,11 @@ begin
 
             with detPgtoFer.Add do
             begin
-              codCateg := StrToInt(sFim);
-              dtIniGoz := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniGoz', '0'));
-              qtDias   := INIRec.ReadInteger(sSecao, 'qtDias', 0);
-              vrLiq    := StringToFloatDef(INIRec.ReadString(sSecao, 'vrLiq', ''), 0);
+              codCateg  := StrToInt(sFim);
+              matricula := INIRec.ReadString(sSecao, 'matricula', '');
+              dtIniGoz  := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniGoz', '0'));
+              qtDias    := INIRec.ReadInteger(sSecao, 'qtDias', 0);
+              vrLiq     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrLiq', ''), 0);
 
               K := 1;
               while true do

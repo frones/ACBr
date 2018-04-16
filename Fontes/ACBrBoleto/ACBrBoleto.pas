@@ -2767,7 +2767,7 @@ begin
     Raise Exception.Create(ACBrStr('Dígito da conta não informado'));
   if Cedente.Agencia = '' then
     Raise Exception.Create(ACBrStr('Agência não informada'));
-  if (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanrisul])) then
+  if (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanrisul, cobItau, cobCaixaEconomica, cobCaixaSicob])) then
     Raise Exception.Create(ACBrStr('Dígito da agência não informado'));
 end;
 

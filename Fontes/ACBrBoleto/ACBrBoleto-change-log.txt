@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 16/04/2018 ver: 0.0.240
+
+ -- ACBrBoleto
+[*] Ajuste Validação de dados obrigatórios
+    https://www.projetoacbr.com.br/forum/topic/40620-ajuste-valida%C3%A7%C3%A3o-dados-obrigat%C3%B3rios/
+
 Data 05/02/2018 ver: 0.0.240
 
  -- ACBrBancoCaixa

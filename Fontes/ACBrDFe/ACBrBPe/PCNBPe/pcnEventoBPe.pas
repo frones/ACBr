@@ -276,10 +276,7 @@ begin
   if FcOrgao <> 0 then
     Result := FcOrgao
   else
-     Result := StrToIntDef(copy(FChave, 1, 2), 0);
-
-  if Result = 0 then
-    raise EventoException.Create('Campo cOrgao não informado');
+    Result := StrToIntDef(copy(FChave, 1, 2), 0);
 end;
 
 function TInfEvento.getDescEvento: String;
@@ -289,7 +286,7 @@ begin
     teCancelamento: Result := 'Cancelamento';
     teNaoEmbarque : Result := 'Nao Embarque';
   else
-    raise EventoException.Create('Descrição do Evento não Implementado!');
+    Result := '';
   end;
 end;
 
@@ -298,7 +295,7 @@ begin
   try
     Result := TpEventoToStr( FTpEvento );
   except
-    raise EventoException.Create('Tipo do Evento não Implementado!');
+    Result := '';
   end;
 end;
 

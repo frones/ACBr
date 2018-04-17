@@ -173,13 +173,10 @@ function TInfEvento.getcOrgao: Integer;
 //  (AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO);
 //  (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 begin
-  Result := StrToInt(copy(FChave, 1, 2));
-  (*
-  {Estados que utilizam a SVAN: ES, MA, PA, PI, RN}
-  {Devem utilizar 91}
-  if Result in [32,21,15,22,24] then
-    Result := 91;
-  *)
+  if FcOrgao <> 0 then
+    Result := FcOrgao
+  else
+    Result := StrToIntDef(copy(FChave, 1, 2), 0);
 end;
 
 function TInfEvento.getDescEvento: String;
@@ -212,7 +209,7 @@ begin
     teVistoriaSuframa              : Desc := 'Vistoria SUFRAMA';
     teConfInternalizacao           : Desc := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
   else
-    raise EventoException.Create('Descrição do Evento não Implementado!');
+    Result := '';
   end;
 
   Result := ACBrStr(Desc);
@@ -223,7 +220,7 @@ begin
   try
     Result := TpEventoToStr( FTpEvento );
   except
-    raise EventoException.Create('Tipo do Evento não Implementado!');
+    Result := '';
   end;
 end;
 

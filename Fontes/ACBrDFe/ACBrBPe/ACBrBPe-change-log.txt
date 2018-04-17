@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2018
+-- pcnEventoBPe --
+[*] Modificação nos métodos "Getters" para não disparar exception no caso de
+    erros ou conversão inválida, assumindo valores vazios ou nulos.
+  Por: Italo Jurisato Junior
+
 19/03/2018
 -- ACBrBPeServicos --
 [*] Remoção do "?wsdl" de algumas URLs.

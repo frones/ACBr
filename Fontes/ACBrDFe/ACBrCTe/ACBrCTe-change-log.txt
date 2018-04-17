@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2018
+-- pcteEventoCTe --
+[*] Modificação nos métodos "Getters" para não disparar exception no caso de
+    erros ou conversão inválida, assumindo valores vazios ou nulos.
+  Por: Italo Jurisato Junior
+
+-- ACBrCTeWebServices --
+[-] Correção na execução do serviço de consulta de cadastro, para retornar o
+    FPBodyElement padrão após uma consulta de cadastro dos estados do RS e
+    estados usuários da SVRS.
+  Por: Italo Jurisato Junior
+
 11/04/2018
 -- pcteEventoCTe --
 [*] https://www.projetoacbr.com.br/forum/topic/42534-consulta-situa%C3%A7%C3%A3o-ct-e-erro-descri%C3%A7%C3%A3o-do-evento-n%C3%A3o-implementado/?do=findComment&comment=280732

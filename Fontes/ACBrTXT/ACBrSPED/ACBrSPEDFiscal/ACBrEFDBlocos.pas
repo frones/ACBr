@@ -298,7 +298,8 @@ type
   TACBrPosseItem = TACBrIndProp;
   /// Informe o tipo de documento
   TACBrTipoDocto = (docDeclaracaoExportacao,           // 0 - Declaração de Exportação;
-                    docDeclaracaoSimplesExportacao     // 1 - Declaração Simplificada de Exportação.
+                    docDeclaracaoSimplesExportacao,    // 1 - Declaração Simplificada de Exportação;
+                    docDeclaracaoUnicaExportacao       // 2 - Declaração Única de Exportação.
                     );
   /// Preencher com
   TACBrExportacao = (exDireta,             // 0 - Exportação Direta

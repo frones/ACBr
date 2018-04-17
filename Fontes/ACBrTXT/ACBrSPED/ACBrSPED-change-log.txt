@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 17/04/2018
+-- ACBrEFDBlocos, ACBrECFBlocos --
+[*] Atualização de valores válidos para o campo IND_DOC do registro 1100 EFD ICMS/IPI.
+    https://www.projetoacbr.com.br/forum/topic/42786-declara%C3%A7%C3%A3o-%C3%BAnica-de-exporta%C3%A7%C3%A3o/  
+  Por: Wesley Oliveira
+  
 Data 22/06/2017
 [-] Correção nos regystros Ya do SpedECF
 		http://www.projetoacbr.com.br/forum/topic/36760-novas-propriedades-em-tregistro0010-tregistro0020-e-tregistroy800/?do=findComment&comment=244809

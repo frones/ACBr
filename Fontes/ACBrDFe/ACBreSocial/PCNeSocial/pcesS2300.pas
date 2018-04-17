@@ -448,7 +448,8 @@ begin
     (obj.codCateg <> 722) and // Diretor não empregado sem FGTS
     (obj.codCateg <> 305) and // Servidor Publico Indicado a Conselho
     (obj.codCateg <> 771) and // Membro conselho tutelar
-    (obj.codCateg <> 901)     // Estagiario
+    (obj.codCateg <> 901) and // Estagiario
+    (obj.natAtividade <> navNaoInformar)
   then
     Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtividade));
 

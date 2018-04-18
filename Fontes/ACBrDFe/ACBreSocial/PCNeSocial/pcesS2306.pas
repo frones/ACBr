@@ -339,7 +339,6 @@ begin
     (Self.FideTrabSemVinc.codCateg <> 901) and // Estagiario
     (obj.natAtividade <> navNaoInformar)
   then
-  else
     Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtividade));
 
   GerarinfoComplementares(obj.infoComplementares);

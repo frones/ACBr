@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/04/2018
+-- pcesS2306 --
+[*] https://www.projetoacbr.com.br/forum/topic/41671-alterar-s2300-campo-natatividade-n%C3%A3o-pode-ser-informado-para-determinadas-categorias/?do=findComment&comment=282067
+   Por: Gustavo Ribeiro Croscato
+
 17/04/2018
 -- pcesS2300 / pcesS2306 --
 [*] https://www.projetoacbr.com.br/forum/topic/41671-alterar-s2300-campo-natatividade-n%C3%A3o-pode-ser-informado-para-determinadas-categorias/?do=findComment&comment=281822

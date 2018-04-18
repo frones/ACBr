@@ -456,8 +456,6 @@ end;
 
 procedure VerificarLibInicializada;
 begin
-  SetRetorno(ErrOK);
-
   if not Assigned(pLib) then
   begin
     if (LIB_Inicializar('', '') <> ErrOK) then
@@ -499,7 +497,7 @@ begin
   pLibRetorno.Mensagem := AMensagem;
 
   if Assigned(pLib) then
-    pLib.GravarLog('   SetRetorno(' + IntToStr(ACodigo) + ', ' + AMensagem + ')', logParanoico);
+    pLib.GravarLog('   SetRetorno(' + IntToStr(pLibRetorno.Codigo) + ', ' + pLibRetorno.Mensagem + ')', logParanoico);
 end;
 
 function LerArquivoParaString(AArquivo: String): AnsiString;

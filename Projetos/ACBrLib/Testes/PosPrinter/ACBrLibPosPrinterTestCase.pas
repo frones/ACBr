@@ -26,6 +26,7 @@ type
     procedure Test_POS_ConfigLerValor;
     procedure Test_POS_ConfigGravarValor;
     procedure Test_POS_InicializarConfigGravarValoresEFinalizar;
+    procedure Test_POS_InicializarAtivarEFinalizar;
   end;
 
 implementation
@@ -160,6 +161,28 @@ begin
   AssertEquals(ErrOK, POS_ConfigGravar(''));
   AssertEquals(ErrOK, POS_ConfigLer(''));
   AssertEquals(ErrOK, POS_Ativar);
+
+  AssertEquals(ErrOK, POS_Finalizar());
+end;
+
+procedure TTestACBrPosPrinterLib.Test_POS_InicializarAtivarEFinalizar;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  AssertEquals(ErrOk, POS_Inicializar('',''));
+
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, ''));
+  AssertEquals(ErrOK, POS_ConfigGravar(''));
+  AssertEquals(ErrOK, POS_ConfigLer(''));
+  AssertEquals(ErrExecutandoMetodo, POS_Ativar);
+
+  // Checando se é possivel pegar a descrição do erro //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  AssertEquals(ErrExecutandoMetodo, POS_UltimoRetorno(PChar(AStr), bufflen));
+  AssertEquals('Porta não definida', Trim(AStr));
 
   AssertEquals(ErrOK, POS_Finalizar());
 end;

@@ -55,6 +55,7 @@ begin
     ArqLog := pLibConfig.PosPrinterConfig.ArqLog;
     Modelo := pLibConfig.PosPrinterConfig.Modelo;
     Porta := pLibConfig.PosPrinterConfig.Porta;
+    Device.TimeOut := pLibConfig.PosPrinterConfig.TimeOut;
     PaginaDeCodigo := pLibConfig.PosPrinterConfig.PaginaDeCodigo;
     ColunasFonteNormal := pLibConfig.PosPrinterConfig.ColunasFonteNormal;
     EspacoEntreLinhas := pLibConfig.PosPrinterConfig.EspacoEntreLinhas;

@@ -192,7 +192,7 @@ end;
 function POS_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
-  Result := POS_UltimoRetorno(sMensagem, esTamanho);
+  Result := LIB_UltimoRetorno(sMensagem, esTamanho);
 end;
 
 function POS_ConfigLer(const eArqConfig: PChar): longint;

@@ -50,6 +50,7 @@ type
     FDeviceParams: String;
     FModelo: TACBrPosPrinterModelo;
     FPorta: String;
+    FTimeOut: Integer;
     FPaginaDeCodigo: TACBrPosPaginaCodigo;
     FColunasFonteNormal: Integer;
     FEspacoEntreLinhas: byte;
@@ -75,6 +76,7 @@ type
     property DeviceParams: String read FDeviceParams write FDeviceParams;
     property Modelo: TACBrPosPrinterModelo read FModelo write FModelo;
     property Porta: String read FPorta write FPorta;
+    property TimeOut: Integer read FTimeOut write FTimeOut;
     property PaginaDeCodigo: TACBrPosPaginaCodigo read FPaginaDeCodigo write FPaginaDeCodigo;
     property ColunasFonteNormal: Integer read FColunasFonteNormal write FColunasFonteNormal;
     property EspacoEntreLinhas: byte read FEspacoEntreLinhas write FEspacoEntreLinhas;
@@ -125,6 +127,8 @@ constructor TPosPrinterConfig.Create;
 begin
   FModelo := ppTexto;
   FDeviceParams := '';
+  FPorta := '';
+  FTimeOut := 3;
   FPaginaDeCodigo := pc850;
   FColunasFonteNormal := 48;
   FEspacoEntreLinhas := 0;
@@ -158,6 +162,7 @@ begin
   FModelo := TACBrPosPrinterModelo(AIni.ReadInteger(CSessaoPosPrinter, CChaveModelo, Integer(FModelo)));
   FDeviceParams := AIni.ReadString(CSessaoPosPrinter, CChaveDevice, FDeviceParams);
   FPorta := AIni.ReadString(CSessaoPosPrinter, CChavePorta, FPorta);
+  FTimeOut := AIni.ReadInteger(CSessaoPosPrinter, CChaveTimeOut, FTimeOut);
   FPaginaDeCodigo := TACBrPosPaginaCodigo(AIni.ReadInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo)));
   FColunasFonteNormal := AIni.ReadInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
   FEspacoEntreLinhas :=  AIni.ReadInteger(CSessaoPosPrinter, CChaveEspacoEntreLinhas, FEspacoEntreLinhas);
@@ -195,6 +200,7 @@ begin
   AIni.WriteInteger(CSessaoPosPrinter, CChaveModelo, Integer(FModelo));
   AIni.WriteString(CSessaoPosPrinter, CChaveDevice, FDeviceParams);
   AIni.WriteString(CSessaoPosPrinter, CChavePorta, FPorta);
+  AIni.WriteInteger(CSessaoPosPrinter, CChaveTimeOut, FTimeOut);
   AIni.WriteInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo));
   AIni.WriteInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
   AIni.WriteInteger(CSessaoPosPrinter, CChaveEspacoEntreLinhas, FEspacoEntreLinhas);

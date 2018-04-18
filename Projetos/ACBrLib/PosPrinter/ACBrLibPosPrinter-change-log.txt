@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/04/2018
+--- ACBrLibPosPrinter ---
+[+] Adicionado a propriedade TimeOut do componente PosPrinter.  Por: (Rafael Dias)
+[-] Corrigido erro na função POS_UltimoRetorno.  Por: (Rafael Dias)
+
 09/04/2018
 --- ACBrLibPosPrinter ---
 [+] Adicionado a propriedade ArqLog do componente PosPrinter.  Por: (Rafael Dias)

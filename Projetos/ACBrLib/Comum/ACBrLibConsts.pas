@@ -80,7 +80,7 @@ const
   CChaveEmailConfirmacao = 'Confirmacao';
   CChaveEmailSegundoPlano = 'SegundoPlano';
 
-  CSessaoSwHouse = 'SofwareHouse';
+  CSessaoSwHouse = 'SoftwareHouse';
   CSessaoEmissor = 'Emissor';
 
   CChaveNomeFantasia = 'NomeFantasia';

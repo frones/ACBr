@@ -227,7 +227,7 @@ namespace ACBrLibPosPrinter.Demo
 
             bufferLen = 256;
             pValue.Clear();
-            ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "IgnorarTags".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "ArqLog".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
 
             txtArqLog.Text = pValue.FromUTF8();

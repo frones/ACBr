@@ -92,6 +92,7 @@ type
     FSistema: String;
     FUsuario: String;
     FPathPDF: String;
+    FPArquivoPDF: String;
     FUsarSeparadorPathPDF: Boolean;
     FImpressora: String;
     FNomeDocumento: String;
@@ -178,6 +179,7 @@ type
     property Sistema: String                         read FSistema                        write FSistema;
     property Usuario: String                         read FUsuario                        write FUsuario;
     property PathPDF: String                         read GetPathPDF                      write SetPathPDF;
+    property ArquivoPDF: String                      read FPArquivoPDF;
     property UsarSeparadorPathPDF: Boolean           read FUsarSeparadorPathPDF           write FUsarSeparadorPathPDF default False;
     property Impressora: String                      read FImpressora                     write FImpressora;
     property NomeDocumento: String                   read FNomeDocumento                  write FNomeDocumento;
@@ -281,6 +283,7 @@ begin
   FSistema    := '';
   FUsuario    := '';
   FPathPDF    := '';
+  FPArquivoPDF:= '';
   FUsarSeparadorPathPDF := False;
   FImpressora := '';
   FNomeDocumento := '';
@@ -463,22 +466,22 @@ end;
 
 procedure TACBrNFeDANFEClass.ImprimirEVENTO(NFE: TNFe);
 begin
-  ErroAbstract('Imprimir');
+  ErroAbstract('ImprimirEVENTO');
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirEVENTOPDF(NFE: TNFe);
 begin
-  ErroAbstract('ImprimirPDF');
+  ErroAbstract('ImprimirEVENTOPDF');
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirINUTILIZACAO(NFE: TNFe);
 begin
-  ErroAbstract('Imprimir');
+  ErroAbstract('ImprimirINUTILIZACAO');
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirINUTILIZACAOPDF(NFE: TNFe);
 begin
-  ErroAbstract('ImprimirPDF');
+  ErroAbstract('ImprimirINUTILIZACAOPDF');
 end;
 
 function TACBrNFeDANFEClass.FormatQuantidade(dValor: Double; dForcarDecimais: Boolean) : String;

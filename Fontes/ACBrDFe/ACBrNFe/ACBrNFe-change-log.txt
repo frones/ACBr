@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/04/2018
+-- ACBrNFeDANFEClass --
+[+] Adicionada a propriedade READONLY: TACBrNFeDANFEClass.ArquivoPDF: String
+    Útil para LER o nome do arquivo PDF que foi gerado.
+    (por: DSA)
+
+-- ACBrDANFCeFortesFr --
+[+] Adicionado suporte ao método "ImprimirEventoPDF"
+[*] Refatoração de código, removendo código repetido
+    (por: DSA)
+
+-- ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFEFR, ACBrNFeDANFeRLClass --
+[+] Publicando o nome do PDF gerado em: TACBrNFeDANFEClass.ArquivoPDF
+    (por: DSA)
+
 16/04/2018
 -- pcnEventoNFe --
 [*] Modificação nos métodos "Getters" para não disparar exception no caso de

@@ -488,6 +488,7 @@ begin
 			frxPDFExport.Background    := False;
 
 			frxPDFExport.FileName := PathWithDelim(Self.PathPDF) +	OnlyNumber(NFe.infNFe.ID) + '-nfe.pdf';
+            Self.FPArquivoPDF := frxPDFExport.FileName;
 	
 			if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
 				ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -528,6 +529,7 @@ begin
     NomeArq := StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
 
     FdmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-procEventoNFe.pdf';
+    Self.FPArquivoPDF := FdmDanfe.frxPDFExport.FileName;
 
     if not DirectoryExists(ExtractFileDir(FdmDanfe.frxPDFExport.FileName)) then
       ForceDirectories(ExtractFileDir(FdmDanfe.frxPDFExport.FileName));
@@ -566,6 +568,7 @@ begin
     NomeArq := OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.RetInutNFe.Id);
 
     FdmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutNFe.pdf';
+    Self.FPArquivoPDF := FdmDanfe.frxPDFExport.FileName;
 
     if not DirectoryExists(ExtractFileDir(FdmDanfe.frxPDFExport.FileName)) then
       ForceDirectories(ExtractFileDir(FdmDanfe.frxPDFExport.FileName));

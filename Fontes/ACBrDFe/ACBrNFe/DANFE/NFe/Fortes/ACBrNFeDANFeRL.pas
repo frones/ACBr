@@ -649,6 +649,7 @@ begin
       RLNFe.ShowProgress := FMostrarStatus;
       RLNFe.Prepare;
       RLPDFFilter1.FilterPages(RLNFe.Pages);
+
     finally
      Destroy;
     end ;

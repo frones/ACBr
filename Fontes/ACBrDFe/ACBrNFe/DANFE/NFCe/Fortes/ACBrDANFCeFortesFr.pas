@@ -74,6 +74,7 @@ type
   protected
     FpNFe: TNFe;
 
+    procedure AtribuirNFe(NFE: TNFe = Nil);
     procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrSATExtratoFiltro = fiNenhum);
     procedure ImprimirCancelado(const DanfeResumido : Boolean = False; const AFiltro : TACBrSATExtratoFiltro = fiNenhum);
   public
@@ -86,6 +87,7 @@ type
     procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil);override;
     procedure ImprimirDANFECancelado(NFE : TNFe = nil);override;
     procedure ImprimirEVENTO(NFE : TNFe = nil);override;
+    procedure ImprimirEVENTOPDF(NFE: TNFe = nil); override;
   published
   end ;
 
@@ -1223,42 +1225,22 @@ end;
 constructor TACBrNFeDANFCeFortes.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
-
 end;
 
 destructor TACBrNFeDANFCeFortes.Destroy;
 begin
-
   inherited Destroy ;
 end;
 
 procedure TACBrNFeDANFCeFortes.ImprimirDANFE(NFE: TNFe);
 begin
-  if NFe = nil then
-   begin
-     if not Assigned(ACBrNFe) then
-        raise Exception.Create('Componente ACBrNFe não atribuído');
-
-     FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
-   end
-  else
-    FpNFe := NFE;
-
+  AtribuirNFe(NFE);
   Imprimir(False);
 end;
 
 procedure TACBrNFeDANFCeFortes.ImprimirDANFECancelado(NFE: TNFe);
 begin
-  if NFe = nil then
-   begin
-     if not Assigned(ACBrNFe) then
-        raise Exception.Create('Componente ACBrNFe não atribuí­do');
-
-     FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
-   end
-  else
-    FpNFe := NFE;
-
+  AtribuirNFe(NFE);
   ImprimirCancelado(True);
 end;
 
@@ -1267,50 +1249,28 @@ begin
   ImprimirDANFECancelado(NFE);
 end;
 
+procedure TACBrNFeDANFCeFortes.ImprimirEVENTOPDF(NFE: TNFe);
+begin
+  AtribuirNFe(NFE);
+  ImprimirCancelado(True, fiPDF);
+end;
+
 procedure TACBrNFeDANFCeFortes.ImprimirDANFEResumido(NFE: TNFe);
 begin
-  if NFe = nil then
-   begin
-     if not Assigned(ACBrNFe) then
-        raise Exception.Create('Componente ACBrNFe não atribuí­do');
-
-     FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
-   end
-  else
-    FpNFe := NFE;
-
+  AtribuirNFe(NFE);
   Imprimir(True);
 end;
 
 procedure TACBrNFeDANFCeFortes.ImprimirDANFEPDF(NFE: TNFe);
 begin
-//  inherited ImprimirDANFEPDF(NFE);
-  if NFe = nil then
-   begin
-     if not Assigned(ACBrNFe) then
-        raise Exception.Create('Componente ACBrNFe nÃo atribuí­do');
-
-     FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
-   end
-  else
-    FpNFe := NFE;
+  AtribuirNFe(NFE);
   Imprimir(False, fiPDF);
 end;
 
 procedure TACBrNFeDANFCeFortes.ImprimirDANFEResumidoPDF(NFE: TNFe);
 begin
-  //  inherited ImprimirDANFEPDF(NFE);
-    if NFe = nil then
-     begin
-       if not Assigned(ACBrNFe) then
-          raise Exception.Create('Componente ACBrNFe nÃo atribuí­do');
-
-       FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
-     end
-    else
-      FpNFe := NFE;
-
-    Imprimir(True, fiPDF);
+  AtribuirNFe(NFE);
+  Imprimir(True, fiPDF);
 end;
 
 procedure TACBrNFeDANFCeFortes.Imprimir(const DanfeResumido: Boolean;
@@ -1397,12 +1357,26 @@ begin
           RLFiltro.FileName := PathWithDelim(ACBrNFeDANFCeFortes.PathPDF) +
                                ChangeFileExt( RLLayout.JobTitle, '.pdf');
           RLFiltro.FilterPages( RLLayout.Pages );
+          ACBrNFeDANFCeFortes.FPArquivoPDF := RLFiltro.FileName;
         end;
       end;
     end;
   finally
     frACBrNFeDANFCeFortesFr.Free ;
   end;
+end;
+
+procedure TACBrNFeDANFCeFortes.AtribuirNFe(NFE: TNFe);
+begin
+  if NFe = nil then
+  begin
+    if not Assigned(ACBrNFe) then
+      raise Exception.Create('Componente ACBrNFe não atribuído');
+
+    FpNFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+  end
+  else
+    FpNFe := NFE;
 end;
 
 function TACBrNFeDANFCeFortes.CalcularCaractesWidth(Canvas : TCanvas; WidthTotal: Integer

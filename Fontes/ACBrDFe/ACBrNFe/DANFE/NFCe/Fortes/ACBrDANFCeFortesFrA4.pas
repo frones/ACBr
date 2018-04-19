@@ -842,6 +842,7 @@ begin
           RLFiltro.ShowProgress := FACBrNFeDANFCeFortesA4.MostrarStatus;
           RLFiltro.FileName := FACBrNFeDANFCeFortesA4.PathPDF + OnlyNumber(FACBrNFeDANFCeFortesA4.FpNFe.infNFe.ID) + '-nfe.pdf';
           RLFiltro.FilterPages( RLLayout.Pages );
+          FACBrNFeDANFCeFortesA4.FPArquivoPDF := RLFiltro.FileName;
         end;
       end;
     end;

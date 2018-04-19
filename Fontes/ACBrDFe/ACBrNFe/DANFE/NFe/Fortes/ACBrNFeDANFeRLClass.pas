@@ -308,7 +308,6 @@ begin
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirDANFEPDF(NFE : TNFe = nil);
-var sFile: String;
 var
   i : Integer;
 begin
@@ -328,13 +327,13 @@ begin
 //          sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
 //                   Copy(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.ID,
 //                   4, 44) + '-nfe.pdf';
-          sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
-                   StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase])
-                   + '-nfe.pdf';
+          FPArquivoPDF := TACBrNFe(ACBrNFe).DANFE.PathPDF +
+                          StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]) +
+                          '-nfe.pdf';
 
           frlDANFeRL.SavePDF(Self, TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
           FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
-          FNumCopias, FSistema, FSite, FUsuario, sFile, FPosCanhoto, FFormularioContinuo,
+          FNumCopias, FSistema, FSite, FUsuario, FPArquivoPDF, FPosCanhoto, FFormularioContinuo,
           FExpandirLogoMarca, FMostrarStatus, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,
           FMargemInferior, FMargemEsquerda, FMargemDireita, FCasasDecimais._qCom,
           FCasasDecimais._vUnCom, FProdutosPorPagina, FImpressora,
@@ -365,13 +364,13 @@ begin
   else
     begin
 //      sFile := Self.PathPDF + Copy(NFe.infNFe.ID, 4, 44) + '-nfe.pdf';
-      sFile := Self.PathPDF +
-               StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]) +
-               '-nfe.pdf';
+      FPArquivoPDF := Self.PathPDF +
+                      StringReplace(NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]) +
+                      '-nfe.pdf';
 
       frlDANFeRL.SavePDF(Self, NFe,
       FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
-      FNumCopias, FSistema, FSite, FUsuario, sFile, FPosCanhoto, FFormularioContinuo,
+      FNumCopias, FSistema, FSite, FUsuario, FPArquivoPDF, FPosCanhoto, FFormularioContinuo,
       FExpandirLogoMarca, FMostrarStatus, FFonte.FNome, FFonte.FNegrito, FMargemSuperior,
       FMargemInferior, FMargemEsquerda, FMargemDireita, FCasasDecimais._qCom,
       FCasasDecimais._vUnCom, FProdutosPorPagina, FImpressora,
@@ -480,9 +479,9 @@ try
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirEVENTOPDF(NFE: TNFe);
-var sFile: String;
-Impresso: Boolean;
-I, J : Integer;
+var
+  Impresso: Boolean;
+  I, J : Integer;
 begin
 try
   case TipoDANFE of
@@ -496,7 +495,7 @@ try
     begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
-          sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
+          FPArquivoPDF := TACBrNFe(ACBrNFe).DANFE.PathPDF +
                    StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
                    '-procEventoNFe.pdf';
 
@@ -509,7 +508,7 @@ try
               if StringReplace(TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe.infNFe.ID,'NFe', '', [rfIgnoreCase]) = TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.chNFe then
                 begin
                   frlDANFeEventoRL.SavePDF(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-                  FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
+                  FLogo, FMarcadagua, FPArquivoPDF, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
                   FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita,
                   TACBrNFe(ACBrNFe).NotasFiscais.Items[j].NFe);
                   Impresso := True;
@@ -520,7 +519,7 @@ try
           if Impresso = False then
             begin
               frlDANFeEventoRL.SavePDF(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-              FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
+              FLogo, FMarcadagua, FPArquivoPDF, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
               FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita);
             end;
         end; // for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1)
@@ -529,13 +528,13 @@ try
     begin
       for i := 0 to (TACBrNFe(ACBrNFe).EventoNFe.Evento.Count - 1) do
         begin
-          sFile := TACBrNFe(ACBrNFe).DANFE.PathPDF +
-                   StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
-                   '-procEventoNFe.pdf';
+          FPArquivoPDF := TACBrNFe(ACBrNFe).DANFE.PathPDF +
+                          StringReplace(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 'ID', '', [rfIgnoreCase]) +
+                          '-procEventoNFe.pdf';
 //          Copy(TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i].InfEvento.id, 3, 52) + 'evento.pdf';
 
           frlDANFeEventoRL.SavePDF(Self, TACBrNFe(ACBrNFe).EventoNFe.Evento.Items[i],
-          FLogo, FMarcadagua, sFile, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
+          FLogo, FMarcadagua, FPArquivoPDF, FSistema, FUsuario, FFonte.FNome, FFonte.FNegrito,
           FMargemSuperior, FMargemInferior, FMargemEsquerda, FMargemDireita);
         end;
     end;
@@ -558,18 +557,16 @@ begin
 end;
 
 procedure TACBrNFeDANFErl.ImprimirINUTILIZACAOPDF(NFe: TNFe);
-var
- NomeArq: String;
 begin
   frmNFeDAInutRL := TfrmNFeDAInutRLRetrato.Create(Self);
 
-  NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
-  if NomeArq = '' then
-    NomeArq := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
-  NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutNFe.pdf';
+  FPArquivoPDF := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
+  if FPArquivoPDF = '' then
+    FPArquivoPDF := StringReplace(TACBrNFe(ACBrNFe).InutNFe.ID, 'ID', '', [rfIgnoreCase]);
+  FPArquivoPDF := PathWithDelim(Self.PathPDF) + FPArquivoPDF + '-procInutNFe.pdf';
 
   frmNFeDAInutRL.SavePDF(TACBrNFe(ACBrNFe),
-                         FLogo, NomeArq, FSistema, FUsuario,
+                         FLogo, FPArquivoPDF, FSistema, FUsuario,
                          FMargemSuperior, FMargemInferior,
                          FMargemEsquerda, FMargemDireita);
 

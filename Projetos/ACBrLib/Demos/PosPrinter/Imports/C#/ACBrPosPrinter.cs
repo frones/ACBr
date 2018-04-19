@@ -9,8 +9,8 @@ namespace ACBrLibPosPrinter
     {
         #region DLL
 
-        //private const string ACBr = "ACBrPosPrinter32.dll";
-        private const string ACBr = "ACBrPosPrinter64.dll";
+        private const string ACBr = "ACBrPosPrinter32.dll";
+        //private const string ACBr = "ACBrPosPrinter64.dll";
 
         #endregion DLL
 

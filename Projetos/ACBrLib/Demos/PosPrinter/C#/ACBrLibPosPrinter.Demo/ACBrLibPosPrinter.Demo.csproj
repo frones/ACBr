@@ -12,7 +12,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -46,9 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACBrPosPrinter.cs" />
-    <Compile Include="ACBrPosPrinterModelo.cs" />
-    <Compile Include="PosPaginaCodigo.cs" />
+    <Compile Include="..\..\Imports\C#\ACBrPosPrinter.cs">
+      <Link>ACBrPosPrinter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Imports\C#\ACBrPosPrinterModelo.cs">
+      <Link>ACBrPosPrinterModelo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Imports\C#\ACBrPosTipoStatus.cs">
+      <Link>ACBrPosTipoStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Imports\C#\PosPaginaCodigo.cs">
+      <Link>PosPaginaCodigo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Imports\C#\SerialHandShake.cs">
+      <Link>SerialHandShake.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Imports\C#\SerialParity.cs">
+      <Link>SerialParity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Imports\C#\SerialStopBytes.cs">
+      <Link>SerialStopBytes.cs</Link>
+    </Compile>
     <Compile Include="UIExtensions.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>

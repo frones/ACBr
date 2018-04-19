@@ -21,7 +21,7 @@ namespace ACBrLibPosPrinter.Demo
             InitializeComponent();
 
             // Inicializando a dll
-            var ret = ACBrPosPrinter.POS_Inicializar("".ToUTF8(), "".ToUTF8());
+            var ret = ACBrPosPrinter.POS_Inicializar("ACBrLib.ini".ToUTF8(), "".ToUTF8());
             ACBrPosPrinter.CheckResult(ret);
         }
 
@@ -51,17 +51,21 @@ namespace ACBrLibPosPrinter.Demo
                 cbbPortas.Items.Add($"RAW:{printer}");
             }
 
-            LoadConfig();
-
             // Altera as config de log
             var ret = ACBrPosPrinter.POS_ConfigGravarValor("Principal".ToUTF8(), "LogNivel".ToUTF8(), "4".ToUTF8());
             ACBrPosPrinter.CheckResult(ret);
 
-            ret = ACBrPosPrinter.POS_ConfigGravarValor("Principal".ToUTF8(), "LogPath".ToUTF8(), Path.Combine(Application.StartupPath, "Docs").ToUTF8());
+            var logPath = Path.Combine(Application.StartupPath, "Docs");
+            if (!Directory.Exists(logPath))
+                Directory.CreateDirectory(logPath);
+
+            ret = ACBrPosPrinter.POS_ConfigGravarValor("Principal".ToUTF8(), "LogPath".ToUTF8(), logPath.ToUTF8());
             ACBrPosPrinter.CheckResult(ret);
 
-            ret = ACBrPosPrinter.POS_ConfigGravar("".ToUTF8());
+            ret = ACBrPosPrinter.POS_ConfigGravar("ACBrLib.ini".ToUTF8());
             ACBrPosPrinter.CheckResult(ret);
+
+            LoadConfig();
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -84,7 +88,7 @@ namespace ACBrLibPosPrinter.Demo
         {
             txtImpressao.AppendLine("</zera>");
             txtImpressao.AppendLine("</linha_dupla>");
-            txtImpressao.AppendLine($"FONTE NORMAL: {nudColunas.Text} Colunas");
+            txtImpressao.AppendLine($"FONTE NORMAL: {(int)nudColunas.Value} Colunas");
             txtImpressao.AppendLine("</c><n>FONTE NEGRITO</N>");
             txtImpressao.AppendLine("<in>FONTE INVERTIDA</in>");
             txtImpressao.AppendLine("<S>FONTE SUBLINHADA</s>");
@@ -149,7 +153,7 @@ namespace ACBrLibPosPrinter.Demo
 
         private void LoadConfig()
         {
-            ACBrPosPrinter.POS_ConfigLer("");
+            ACBrPosPrinter.POS_ConfigLer("ACBrLib.ini");
 
             var bufferLen = 256;
             var pValue = new StringBuilder(bufferLen);
@@ -159,18 +163,21 @@ namespace ACBrLibPosPrinter.Demo
 
             cbbModelo.SetSelectedValue((ACBrPosPrinterModelo)Convert.ToInt32(pValue.FromUTF8()));
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "Porta".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
 
             cbbPortas.SelectedItem = pValue.FromUTF8();
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "ColunasFonteNormal".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
 
             nudColunas.Value = Convert.ToInt32(pValue.FromUTF8());
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "EspacoEntreLinhas".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
@@ -183,42 +190,49 @@ namespace ACBrLibPosPrinter.Demo
 
             nudBuffer.Value = Convert.ToInt32(pValue.FromUTF8());
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "LinhasEntreCupons".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
 
             nudLinhasPular.Value = Convert.ToInt32(pValue.FromUTF8());
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "ControlePorta".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
 
             cbxControlePorta.Checked = Convert.ToBoolean(Convert.ToInt32(pValue.FromUTF8()));
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "CortaPapel".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
 
             cbxCortarPapel.Checked = Convert.ToBoolean(Convert.ToInt32(pValue.FromUTF8()));
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "TraduzirTags".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
 
             cbxTraduzirTags.Checked = Convert.ToBoolean(Convert.ToInt32(pValue.FromUTF8()));
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "IgnorarTags".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
 
             cbxIgnorarTags.Checked = Convert.ToBoolean(Convert.ToInt32(pValue.FromUTF8()));
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "IgnorarTags".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
 
             txtArqLog.Text = pValue.FromUTF8();
 
+            bufferLen = 256;
             pValue.Clear();
             ret = ACBrPosPrinter.POS_ConfigLerValor("PosPrinter".ToUTF8(), "PaginaDeCodigo".ToUTF8(), pValue, ref bufferLen);
             ACBrPosPrinter.CheckResult(ret);
@@ -266,7 +280,7 @@ namespace ACBrLibPosPrinter.Demo
             ret = ACBrPosPrinter.POS_ConfigGravarValor("PosPrinter".ToUTF8(), "PaginaDeCodigo".ToUTF8(), paginaCodigo.ToString().ToUTF8());
             ACBrPosPrinter.CheckResult(ret);
 
-            ret = ACBrPosPrinter.POS_ConfigGravar("".ToUTF8());
+            ret = ACBrPosPrinter.POS_ConfigGravar("ACBrLib.ini".ToUTF8());
             ACBrPosPrinter.CheckResult(ret);
         }
 

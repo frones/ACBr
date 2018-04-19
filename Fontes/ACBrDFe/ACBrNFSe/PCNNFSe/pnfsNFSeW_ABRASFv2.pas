@@ -651,66 +651,53 @@ begin
   case FProvedor of
     proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
-    proCoplan, proSIAPNet, proSystemPro:
-      begin
+    proCoplan, proSIAPNet, proSystemPro, proISSJoinville:
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
-        // Não escrever grupo RPS se não houver um tipo definido
-        if NFSe.IdentificacaoRps.Tipo <> trNone then
-          Gerador.wGrupoNFSe('Rps');
-      end;
 
-    proISSJoinville:
-      begin
-        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
-        Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
-      end;
-
-    proPronimv2:
-      begin
-        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
-        Gerador.wGrupoNFSe('Rps');
-      end;
+    proISSDigital:
+        // alterado em 23/03/2018 para ver se funciona com a cidade de Cabo Frio
+        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' {+ ' xmlns="http://www.abrasf.org.br/nfse.xsd"'});
 
     proSiam:
-      begin
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="Declaracao_' + OnlyNumber(NFSe.Prestador.Cnpj) + '"');
-        Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
-      end;
 
     proTecnos:
       begin
         Gerador.WGrupoNFSe('tcDeclaracaoPrestacaoServico');
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
-        Gerador.wGrupoNFSe('Rps');
       end;
-
-    proISSDigital:
-      begin
-        // alterado em 23/03/2018 para ver se funciona com a cidade de Cabo Frio
-        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' {+ ' xmlns="http://www.abrasf.org.br/nfse.xsd"'});
-//        Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + OnlyNumber(FNFSe.IdentificacaoRps.Numero) + '"');
-        Gerador.wGrupoNFSe('Rps');
-        end;
 
     proVirtual:
-      begin
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '=""');
-        Gerador.wGrupoNFSe('Rps ' + FIdentificador + '=""');
-      end;
 
   else
-    begin
-      Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
-      if FIdentificador = '' then
-        Gerador.wGrupoNFSe('Rps')
-      else
-        Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
-    end;
+    Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
   end;
 
   // Não escrever os dados do RPS se não houver um tipo definido
   if NFSe.IdentificacaoRps.Tipo <> trNone then
   begin
+    case FProvedor of
+      proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
+      proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
+      proCoplan, proSIAPNet, proSystemPro, proPronimv2, proTecnos, proISSDigital:
+          Gerador.wGrupoNFSe('Rps');
+
+      proSiam:
+          Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+
+      proVirtual:
+          Gerador.wGrupoNFSe('Rps ' + FIdentificador + '=""');
+
+    else
+      begin
+        if FIdentificador = '' then
+          Gerador.wGrupoNFSe('Rps')
+        else
+          Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
+      end;
+    end;
+
     GerarIdentificacaoRPS;
 
     case FProvedor of

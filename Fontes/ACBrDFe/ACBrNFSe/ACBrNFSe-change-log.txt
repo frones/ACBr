@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Correção na geração do grupo <Rps> quando o valor de IdentificacaoRps.Tipo é trNone.
+   Por: Italo Jurisato Junior
+
 13/04/2018
 -- pnfsNFSeW_CONAM --
 [*] https://www.projetoacbr.com.br/forum/topic/42675-provedor-conam-duplicando-rps/?do=findComment&comment=281135

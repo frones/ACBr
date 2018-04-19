@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2018
+-- ACBrCTeWebServices --
+[-] Correção na montagem da Mensagem de retorno da consulta.
+  Por: Italo Jurisato Junior
+
 16/04/2018
 -- pcteEventoCTe --
 [*] Modificação nos métodos "Getters" para não disparar exception no caso de

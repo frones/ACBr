@@ -1941,9 +1941,9 @@ begin
                              'Descrição do status: %s ' + LineBreak +
                              'Protocolo: %s ' + LineBreak +
                              'Data/Hora do registro: %s '),
-                     [IntToStr(InfEvento.nSeqEvento),
-                      TpEventoToStr(InfEvento.TpEvento),
-                      InfEvento.DescEvento,
+                     [IntToStr(retEvento.Items[J].RetInfEvento.nSeqEvento),
+                      TpEventoToStr(retEvento.Items[J].RetInfEvento.TpEvento),
+                      retEvento.Items[J].RetInfEvento.xEvento,
                       IntToStr(retEvento.Items[J].RetInfEvento.cStat),
                       retEvento.Items[J].RetInfEvento.xMotivo,
                       retEvento.Items[J].RetInfEvento.nProt,

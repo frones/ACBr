@@ -46,25 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Imports\C#\ACBrPosPrinter.cs">
+    <Compile Include="..\..\Imports\ACBrPosPrinter.cs">
       <Link>ACBrPosPrinter.cs</Link>
     </Compile>
-    <Compile Include="..\..\Imports\C#\ACBrPosPrinterModelo.cs">
+    <Compile Include="..\..\Imports\ACBrPosPrinterModelo.cs">
       <Link>ACBrPosPrinterModelo.cs</Link>
     </Compile>
-    <Compile Include="..\..\Imports\C#\ACBrPosTipoStatus.cs">
+    <Compile Include="..\..\Imports\ACBrPosTipoStatus.cs">
       <Link>ACBrPosTipoStatus.cs</Link>
     </Compile>
-    <Compile Include="..\..\Imports\C#\PosPaginaCodigo.cs">
+    <Compile Include="..\..\Imports\PosPaginaCodigo.cs">
       <Link>PosPaginaCodigo.cs</Link>
     </Compile>
-    <Compile Include="..\..\Imports\C#\SerialHandShake.cs">
+    <Compile Include="..\..\Imports\SerialHandShake.cs">
       <Link>SerialHandShake.cs</Link>
     </Compile>
-    <Compile Include="..\..\Imports\C#\SerialParity.cs">
+    <Compile Include="..\..\Imports\SerialParity.cs">
       <Link>SerialParity.cs</Link>
     </Compile>
-    <Compile Include="..\..\Imports\C#\SerialStopBytes.cs">
+    <Compile Include="..\..\Imports\SerialStopBytes.cs">
       <Link>SerialStopBytes.cs</Link>
     </Compile>
     <Compile Include="UIExtensions.cs" />

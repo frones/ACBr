@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/04/2018
+-- ACBrNFeServicos --
+[*] Inclusão das URL NFCe 4.00 SP produção.
+[*] Atualização das URL de consulta por QRCode e chave de acesso NFCe 4.00 SP.
+[*] Atualização das URL de consulta de cadastro NFe 4.00 RS e SVRS 
+    homologação.
+  Por: BigWings
+
 18/04/2018
 -- ACBrNFeDANFEClass --
 [+] Adicionada a propriedade READONLY: TACBrNFeDANFEClass.ArquivoPDF: String

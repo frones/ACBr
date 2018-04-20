@@ -4183,8 +4183,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/ContaBancaria.htm'
               Caption = 'Conta Bancária'
-              ClientHeight = 323
-              ClientWidth = 852
+              ClientHeight = 319
+              ClientWidth = 839
               object cbxBOLBanco: TComboBox
                 AnchorSideLeft.Control = lblBOLBanco
                 AnchorSideTop.Control = lblBOLBanco
@@ -4433,7 +4433,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 562
                 Height = 177
                 Top = 40
-                Width = 276
+                Width = 267
                 Anchors = [akTop, akLeft, akRight, akBottom]
                 BorderSpacing.Left = 10
                 BorderSpacing.Right = 10
@@ -4442,7 +4442,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 BorderStyle = bsSingle
                 Caption = 'Sem logo'
                 ClientHeight = 173
-                ClientWidth = 272
+                ClientWidth = 263
                 Color = clWhite
                 Font.Height = -20
                 Font.Style = [fsBold]
@@ -4456,7 +4456,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Side = asrCenter
                   AnchorSideRight.Control = tsContaBancaria
                   AnchorSideRight.Side = asrBottom
-                  Left = -7
+                  Left = -12
                   Height = 154
                   Top = 9
                   Width = 286
@@ -13293,7 +13293,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

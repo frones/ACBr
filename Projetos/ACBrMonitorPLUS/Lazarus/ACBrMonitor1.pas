@@ -7877,11 +7877,12 @@ begin
     end;
   end;
 
-  ACBrNFe1.DANFE.MostrarPreview := (not GerarPDF) and
-                                   (cbxMostrarPreview.Checked or (MostrarPreview = '1') or
-                                     (UpperCase(MostrarPreview) = 'TRUE') ) and
-                                   ((MostrarPreview <> '0') and (UpperCase(MostrarPreview) <> 'FALSE') ) and
-                                   (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1);
+  ACBrNFe1.DANFE.MostrarPreview := False;
+  if ((not GerarPDF) and (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1)) then
+    if EstaVazio(MostrarPreview) then
+      ACBrNFe1.DANFE.MostrarPreview := cbxMostrarPreview.Checked
+    else
+      ACBrNFe1.DANFE.MostrarPreview := StrToBoolDef(MostrarPreview, False);
 
   //if ACBrNFe1.DANFE.MostrarPreview or MostrarPreview then
   //  ForceForeground(Self.Handle);

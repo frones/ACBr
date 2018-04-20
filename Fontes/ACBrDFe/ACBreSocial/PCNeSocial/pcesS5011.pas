@@ -1171,7 +1171,6 @@ end;
 function TEvtCS.SalvarINI: boolean;
 var
   AIni: TMemIniFile;
-  Ok: Boolean;
   sSecao: String;
   i, j, k: Integer;
 begin

@@ -282,9 +282,8 @@ end;
 function TEvtIrrf.SalvarINI: boolean;
 var
   AIni: TMemIniFile;
-  Ok: Boolean;
   sSecao: String;
-  i, j, k: Integer;
+  i: Integer;
 begin
   Result := False;
 

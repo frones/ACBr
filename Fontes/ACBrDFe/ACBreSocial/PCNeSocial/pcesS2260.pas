@@ -109,11 +109,12 @@ type
     property InfoConvInterm: TInfoConvInterm read FInfoConvInterm write FInfoConvInterm;
   end;
 
-  TInfoConvInterm = class
+  TInfoConvInterm = class(TPersistent)
   private
     FcodConv: string;
     FdtInicio: TDateTime;
     FdtFim: TDateTime;
+    FdtPrevPgto: TDateTime;
     Fjornada : Tjornada;
     FlocalTrab: TlocalTrab;
   public
@@ -123,11 +124,12 @@ type
     property codConv: string read FcodConv write FcodConv;
     property dtInicio: TDateTime read FdtInicio write FdtInicio;
     property dtFim: TDateTime read FdtFim write FdtFim;
+    property dtPrevPgto: TDateTime read FdtPrevPgto write FdtPrevPgto;
     property jornada: Tjornada read Fjornada write Fjornada;
     property localTrab: TlocalTrab read FlocalTrab write FlocalTrab;
   end;
 
-  Tjornada = class
+  Tjornada = class(TPersistent)
   private
     FcodHorContrat: string;
     FdscJornada: string;
@@ -136,7 +138,7 @@ type
     property dscJornada: string read FdscJornada write FdscJornada;
   end;
 
-  TlocalTrab = class
+  TlocalTrab = class(TPersistent)
   private
     FindLocal: string;
     FlocalTrabInterm: TBrasil;
@@ -272,9 +274,12 @@ procedure TEvtConvInterm.GerarInfoConvInterm;
 begin
   Gerador.wGrupo('infoConvInterm');
 
-  Gerador.wCampo(tcStr, '', 'codConv',   1, 30, 1, self.InfoConvInterm.codConv);
-  Gerador.wCampo(tcDat, '', 'dtInicio', 10, 10, 1, self.InfoConvInterm.dtInicio);
-  Gerador.wCampo(tcDat, '', 'dtFim',    10, 10, 1, self.InfoConvInterm.dtFim);
+  Gerador.wCampo(tcStr, '', 'codConv',     1, 30, 1, self.InfoConvInterm.codConv);
+  Gerador.wCampo(tcDat, '', 'dtInicio',   10, 10, 1, self.InfoConvInterm.dtInicio);
+  Gerador.wCampo(tcDat, '', 'dtFim',      10, 10, 1, self.InfoConvInterm.dtFim);
+
+  if self.VersaoDF >= ve02_04_02 then
+    Gerador.wCampo(tcDat, '', 'dtPrevPgto', 10, 10, 1, self.InfoConvInterm.dtPrevPgto);
 
   Gerarjornada;
   GerarlocalTrab;
@@ -305,7 +310,7 @@ begin
 
     Validar(schevtConvInterm);
   except on e:exception do
-    raise Exception.Create(e.Message);
+    raise Exception.Create('CPF: ' + Self.FIdeVinculo.cpfTrab + sLineBreak + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
@@ -346,9 +351,10 @@ begin
       ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
 
       sSecao := 'infoConvInterm';
-      infoConvInterm.codConv  := INIRec.ReadString(sSecao, 'codConv', EmptyStr);
-      infoConvInterm.dtInicio := StringToDateTime(INIRec.ReadString(sSecao, 'dtInicio', '0'));
-      infoConvInterm.dtFim    := StringToDateTime(INIRec.ReadString(sSecao, 'dtFim', '0'));
+      infoConvInterm.codConv    := INIRec.ReadString(sSecao, 'codConv', EmptyStr);
+      infoConvInterm.dtInicio   := StringToDateTime(INIRec.ReadString(sSecao, 'dtInicio', '0'));
+      infoConvInterm.dtFim      := StringToDateTime(INIRec.ReadString(sSecao, 'dtFim', '0'));
+      infoConvInterm.dtPrevPgto := StringToDateTime(INIRec.ReadString(sSecao, 'dtPrevPgto', '0'));
 
       sSecao := 'jornada';
       infoConvInterm.jornada.codHorContrat := INIRec.ReadString(sSecao, 'codHorContrat', EmptyStr);

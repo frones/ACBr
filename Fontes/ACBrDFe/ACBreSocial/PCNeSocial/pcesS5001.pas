@@ -618,7 +618,6 @@ end;
 function TEvtBasesTrab.SalvarINI: boolean;
 var
   AIni: TMemIniFile;
-  Ok: Boolean;
   sSecao: String;
   i, j, k: Integer;
 begin

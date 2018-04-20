@@ -473,9 +473,8 @@ end;
 function TEvtIrrfBenef.SalvarINI: boolean;
 var
   AIni: TMemIniFile;
-  Ok: Boolean;
   sSecao: String;
-  i, j, k: Integer;
+  i, j: Integer;
 begin
   Result := False;
 

@@ -482,7 +482,7 @@ Begin
      exit ;
 
   Mascara := MascaraIE( AValue, UF);
-  Result := FormatarMascaraNumerica( AValue, Mascara);
+  Result := FormatarMascaraNumerica( OnlyAlphaNum( AValue ), Mascara);
 end;
 
 function FormatarCheque(const AValue: String): String;

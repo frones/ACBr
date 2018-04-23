@@ -401,7 +401,7 @@ type
                               mtvQualificacao, mtvRepresentanteSindical, mtvServicoMilitar, mtvSuspensaoDisciplinar, mtvServidorPublicoDisponibilidade,
                               mtvLicencaMaternidade180Dias, mtvInatividadetrabalhadorAvulso90Dias);
 
-  tpTpAcidTransito        = (tpatAtropelamento, tpatColisao, tpatOutros);
+  tpTpAcidTransito        = (tpatAtropelamento, tpatColisao, tpatOutros, tpatNao);
 
   tpInfOnus               = (ocCedente, ocCessionario, ocCedenteCessionario);
 

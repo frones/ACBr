@@ -483,7 +483,8 @@ begin
     if (objInfoAfast.iniAfastamento.codMotAfast in [mtvAcidenteDoencaTrabalho, mtvAcidenteDoencaNaoTrabalho]) then
     begin
       Gerador.wCampo(tcStr, '', 'infoMesmoMtv',   1, 1, 0, eSSimNaoToStr(objInfoAfast.iniAfastamento.infoMesmoMtv));
-      Gerador.wCampo(tcStr, '', 'tpAcidTransito', 1, 1, 0, eStpTpAcidTransitoToStr(objInfoAfast.iniAfastamento.tpAcidTransito));
+      if ( objInfoAfast.iniAfastamento.tpAcidTransito <> tpatNao ) then
+        Gerador.wCampo(tcStr, '', 'tpAcidTransito', 1, 1, 0, eStpTpAcidTransitoToStr(objInfoAfast.iniAfastamento.tpAcidTransito));
     end;
 
     Gerador.wCampo(tcStr, '', 'observacao', 1, 255, 0, objInfoAfast.iniAfastamento.Observacao);

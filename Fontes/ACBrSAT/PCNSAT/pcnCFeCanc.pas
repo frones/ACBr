@@ -70,6 +70,7 @@ type
     FDest: TDest;
     FNomeArquivo: String;
     FRetirarAcentos: boolean;
+    FRetirarEspacos: boolean;
     FTamanhoIdentacao: integer;
     FTotal: TTotal;
     FInfAdic: TInfAdic;
@@ -101,6 +102,7 @@ type
     property signature: Tsignature read Fsignature write Fsignature;
 
     property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos;
+    property RetirarEspacos: boolean read FRetirarEspacos write FRetirarEspacos;
     property IdentarXML: boolean read FIdentarXML write FIdentarXML;
     property TamanhoIdentacao: integer read FTamanhoIdentacao write FTamanhoIdentacao;
   end;
@@ -493,6 +495,7 @@ begin
   Fsignature := Tsignature.create;
 
   FRetirarAcentos := True;
+  FRetirarEspacos := True;
   FIdentarXML := False;
   FTamanhoIdentacao := 3;
 
@@ -547,6 +550,7 @@ begin
   LocCFeCancW := TCFeCancW.Create(Self);
   try
     LocCFeCancW.Gerador.Opcoes.RetirarAcentos := FRetirarAcentos;
+    LocCFeCancW.Gerador.Opcoes.RetirarEspacos := FRetirarEspacos;
     LocCFeCancW.Gerador.Opcoes.IdentarXML := FIdentarXML;
     LocCFeCancW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;
 

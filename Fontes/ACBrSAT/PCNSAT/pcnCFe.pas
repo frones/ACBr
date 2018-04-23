@@ -88,6 +88,7 @@ type
     FDet: TDetCollection;
     FNomeArquivo: String;
     FRetirarAcentos: boolean;
+    FRetirarEspacos: boolean;
     FTamanhoIdentacao: integer;
     FTotal: TTotal;
     fPagto: TMPCollection;
@@ -126,6 +127,7 @@ type
     property signature: Tsignature read Fsignature write Fsignature;
 
     property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos;
+    property RetirarEspacos: boolean read FRetirarEspacos write FRetirarEspacos;
     property IdentarXML: boolean read FIdentarXML write FIdentarXML;
     property TamanhoIdentacao: integer read FTamanhoIdentacao write FTamanhoIdentacao;
     property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
@@ -1268,6 +1270,7 @@ begin
   Fsignature := Tsignature.create;
 
   FRetirarAcentos := True;
+  FRetirarEspacos := True;
   FIdentarXML := False;
   FTamanhoIdentacao := 3;
   FAjustarTagNro := True;
@@ -1356,6 +1359,7 @@ begin
   LocCFeW := TCFeW.Create(Self);
   try
     LocCFeW.Gerador.Opcoes.RetirarAcentos   := FRetirarAcentos;
+    LocCFeW.Gerador.Opcoes.RetirarEspacos   := FRetirarEspacos;
     LocCFeW.Gerador.Opcoes.IdentarXML       := FIdentarXML;
     LocCFeW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;   
     LocCFeW.Opcoes.AjustarTagNro            := FAjustarTagNro;   

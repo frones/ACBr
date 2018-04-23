@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2018
+-- ACBrNFeServicos --
+[*] Atualização de URLs NFe 4.00 MS homologação.
+  Por: BigWings
+
 20/04/2018
 -- ACBrNFeServicos --
 [*] Inclusão das URL NFCe 4.00 SP produção.

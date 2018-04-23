@@ -2387,9 +2387,17 @@ type
   private
     FCOTM: String;
     FindNegociavel: TpcnindNegociavel;
+    FxSeg: string;
+    FCNPJ: string;
+    FnApol: string;
+    FnAver: string;
   published
     property COTM: String  read FCOTM write FCOTM;
     property indNegociavel: TpcnindNegociavel read FindNegociavel write FindNegociavel;
+    property xSeg: String  read FxSeg  write FxSeg;
+    property CNPJ: String  read FCNPJ  write FCNPJ;
+    property nApol: String read FnApol write FnApol;
+    property nAver: String read FnAver write FnAver;
   end;
 
 ////////////////////////////////////////////////////////////////////////////////

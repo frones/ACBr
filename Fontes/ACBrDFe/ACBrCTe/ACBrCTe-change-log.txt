@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2018
+-- pcteCTeR --
+[*] Alterado a posição da leitura da tag indAlteraToma.
+  Por: Nellien
+-- pcteCTe / pcteCTeW / pcteCTeR --
+[+] Acrescentado os campos para informar os dados referente ao seguro para o 
+    modal Multimodal.
+  Por: Italo Jurisato Junior
+
 19/04/2018
 -- ACBrCTeWebServices --
 [-] Correção na montagem da Mensagem de retorno da consulta.

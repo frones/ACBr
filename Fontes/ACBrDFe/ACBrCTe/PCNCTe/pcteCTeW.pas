@@ -2453,6 +2453,25 @@ begin
   Gerador.wGrupo('multimodal', '#01');
   Gerador.wCampo(tcStr, '#02', 'COTM         ', 01, 255, 1, CTe.infCTeNorm.multimodal.COTM, DSC_COTM);
   Gerador.wCampo(tcStr, '#03', 'indNegociavel', 01, 001, 1, indNegociavelToStr(CTe.infCTeNorm.multimodal.indNegociavel), DSC_INDNEG);
+
+  if CTe.infCTe.versao >= 3 then
+  begin
+    if (CTe.infCTeNorm.multimodal.xSeg <> '') then
+    begin
+      Gerador.wGrupo('seg', '#04');
+
+      Gerador.wGrupo('infSeg', '#05');
+      Gerador.wCampo(tcStr, '#06', 'xSeg', 01, 30, 0, CTe.infCTeNorm.multimodal.xSeg, DSC_XSEG);
+      Gerador.wCampoCNPJ('#07', CTe.infCTeNorm.multimodal.CNPJ, CODIGO_BRASIL, True);
+      Gerador.wGrupo('/infSeg');
+
+      Gerador.wCampo(tcStr, '#08', 'nApol', 01, 20, 0, CTe.infCTeNorm.multimodal.nApol, DSC_NAPOL);
+      Gerador.wCampo(tcStr, '#09', 'nAver', 01, 20, 0, CTe.infCTeNorm.multimodal.nAver, DSC_NAVER);
+
+    Gerador.wGrupo('/seg');
+    end;
+  end;
+
   Gerador.wGrupo('/multimodal');
 end;
 

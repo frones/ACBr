@@ -1345,6 +1345,11 @@ begin
     begin
       CTe.infCTeNorm.multimodal.COTM          := Leitor.rCampo(tcStr, 'COTM');
       CTe.infCTeNorm.multimodal.indNegociavel := StrToindNegociavel(ok, Leitor.rCampo(tcStr, 'indNegociavel'));
+      // dados sobre o seguro informados somente na versão 3.00
+      CTe.infCTeNorm.multimodal.xSeg          := Leitor.rCampo(tcStr, 'xSeg');
+      CTe.infCTeNorm.multimodal.CNPJ          := Leitor.rCampo(tcStr, 'CNPJ');
+      CTe.infCTeNorm.multimodal.nApol         := Leitor.rCampo(tcStr, 'nApol');
+      CTe.infCTeNorm.multimodal.nAver         := Leitor.rCampo(tcStr, 'nAver');
     end; // fim das informações do Multimodal
 
     i01 := 0;
@@ -1401,6 +1406,9 @@ begin
       if CTe.infCTe.versao >= 3 then
         CTe.infCTeNorm.infCTeSub.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
 
+      if Leitor.rCampo(tcStr, 'indAlteraToma') <> '' then
+        CTe.infCTeNorm.infCTeSub.indAlteraToma := StrToTIndicador(Ok, Leitor.rCampo(tcStr, 'indAlteraToma'));
+
       if Leitor.rExtrai(3, 'tomaICMS') <> '' then
       begin
         CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe := Leitor.rCampo(tcStr, 'refNFe');
@@ -1416,11 +1424,9 @@ begin
           CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.dEmi     := Leitor.rCampo(tcDat, 'dEmi');
         end;
       end;
+
       if Leitor.rExtrai(3, 'tomaNaoICMS') <> '' then
         CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
-
-      if Leitor.rCampo(tcStr, 'indAlteraToma') <> '' then
-        CTe.infCTeNorm.infCTeSub.indAlteraToma := StrToTIndicador(Ok, Leitor.rCampo(tcStr, 'indAlteraToma'));
     end;
 
     if Leitor.rExtrai(2, 'infGlobalizado') <> '' then

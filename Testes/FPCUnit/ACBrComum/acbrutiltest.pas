@@ -549,6 +549,7 @@ type
    procedure ComMascaraDisplayFormat02666x3;
    procedure ComMascaraDisplayFormat026660x4;
    procedure ComMascaraDisplayFormat026601x5;
+   procedure ComMascaramsk15x2;
   end;
 
   { FloatMaskTest }
@@ -2308,6 +2309,11 @@ end;
 procedure FormatFloatBrTest.ComMascaraDisplayFormat026601x5;
 begin
   CheckEquals('0,26601', FormatFloatBr(0.26601, Mascara(5)));
+end;
+
+procedure FormatFloatBrTest.ComMascaramsk15x2;
+begin
+  CheckEquals('35.015.010,12', FormatFloatBr(msk15x2, 35015010.12));
 end;
 
 procedure FormatFloatBrTest.ComMascaraDisplayFormat026660x4;

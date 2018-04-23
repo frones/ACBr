@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/0/2018
+-- ACBrTEFDClass --
+[*] Ajuste para considerar o numero de linhas no campo 028-001
+    https://www.projetoacbr.com.br/forum/topic/15507-quantidade-de-vias/?do=findComment&comment=282612
+
 21/03/2018
 -- ACBrTEFDClass --
 [*] Ajuste para permitir letras no NSU

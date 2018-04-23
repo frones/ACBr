@@ -1438,10 +1438,10 @@ end;
 
 procedure TACBrTEFDRespTXT.ConteudoToProperty;
 var
-   Linha : TACBrTEFDLinha ;
-   I     : Integer;
-   Parc  : TACBrTEFDRespParcela;
-   Usar711, Usar713, Usar715, TemParcelas : Boolean ;
+   Linha: TACBrTEFDLinha ;
+   I, Linha2801: Integer;
+   Parc: TACBrTEFDRespParcela;
+   Usar711, Usar713, Usar715, TemParcelas: Boolean ;
 
    function AjustaLinhaImagemComprovante( Linha: AnsiString ) : AnsiString;
    begin
@@ -1461,6 +1461,7 @@ begin
    Usar713     := False;
    Usar715     := False;
    TemParcelas := False;
+   Linha2801   := 0;
 
    for I := 0 to Conteudo.Count - 1 do
    begin
@@ -1521,15 +1522,31 @@ begin
 
            if not Usar715 then
               fpImagemComprovante2aVia.Clear;
-         end;
-       29  :
-         begin
-            if not (Usar711 or Usar713) then
-               fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
 
-            if not Usar715 then
-               fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+           if (Linha.Sequencia = 1) then
+              Linha2801 := Linha.Informacao.AsInteger;
          end;
+         
+       29 : 
+         begin 
+            if (Linha2801 = 0) then
+            begin
+               if not (Usar711 or Usar713) then
+                 fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+
+               if not Usar715 then
+                 fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+            end
+            else
+            begin
+               if (Linha.Sequencia <= Linha2801) then
+                 fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) )
+               else
+                 fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+            end;
+         end;
+         
+
        30  : fpTextoEspecialOperador := Linha.Informacao.AsString;
        31  : fpTextoEspecialCliente  := Linha.Informacao.AsString;
        32  : fpAutenticacao          := Linha.Informacao.AsString;

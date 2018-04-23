@@ -4127,6 +4127,11 @@ begin
   end;
 
   Result := FormatFloatBr(AValue, Mask);
+  {$IfDef FPC}
+  // Workround para BUG em FPC
+  if (AValue > 999) and (pos(',', Mask) > 0) and (pos('.', Result) = 0) then
+    Result := FormatFloatBr(AValue);
+  {$EndIf}
 end;
 
 //*****************************************************************************************

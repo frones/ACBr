@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/04/2018
+-- ACBrUtil --
+[-] Aplicado Workround para BUG em FPC em:
+    function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String;
+    https://www.projetoacbr.com.br/forum/topic/42922-cteimprimirdactepdf-falta-ponto/
+    (por: DSA)
+
 Data: 06/04/2018
 -- ACBr.Inc --
 [+] Adicionado suporte a diretiva:   {$DEFINE HAS_STRICTDELIMITER}

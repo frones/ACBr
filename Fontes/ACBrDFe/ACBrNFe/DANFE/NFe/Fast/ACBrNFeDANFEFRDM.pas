@@ -781,10 +781,11 @@ begin
     Append;
     with FNFe.Total.ISSQNtot do
     begin
-      FieldByName('vSERV').AsFloat  := VServ;
-      FieldByName('vBC').AsFloat    := VBC;
-      FieldByName('vISS').AsFloat   := VISS;
-      FieldByName('vDescIncond').AsFloat := vDescIncond;
+      FieldByName('vSERV').AsFloat        := VServ;
+      FieldByName('vBC').AsFloat          := VBC;
+      FieldByName('vISS').AsFloat         := VISS;
+      FieldByName('vDescIncond').AsFloat  := vDescIncond;
+      FieldByName('vISSRet').AsFloat      := vISSRet;
     end;
     Post;
   end;
@@ -1672,6 +1673,7 @@ begin
          FieldDefs.Add('vBC', ftFloat);
          FieldDefs.Add('vISS', ftFloat);
          FieldDefs.Add('vDescIncond', ftFloat);
+         FieldDefs.Add('vISSRet', ftFloat);
          CreateDataSet;
       end;
    end;

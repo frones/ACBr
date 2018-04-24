@@ -147,6 +147,7 @@ begin
         begin
           ArqCFe := '';
 
+          ACBrSAT1.CFe.GerarXML( True ); // Tags da Aplicação
           if cbxSATSalvarCFe.Checked then
           begin
             ArqCFe := ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaEnvio,
@@ -158,7 +159,7 @@ begin
           Cmd.Resposta :=  '[CFE]'+sLineBreak+
                            'nCFe='+IntToStr(ACBrSAT1.CFe.ide.nCFe)+sLineBreak+
                            IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
-                           'XML='+ACBrSAT1.CFe.GerarXML( True );
+                           'XML='+ACBrSAT1.CFe.AsXMLString;
         end
         else
         begin

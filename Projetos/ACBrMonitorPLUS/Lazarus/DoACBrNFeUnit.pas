@@ -374,7 +374,9 @@ begin
               ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1);
 
            if NaoEstaVazio(Cmd.Params(3)) then
-              ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(3);
+              ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(3)
+           else
+             ACBrNFe1.DANFE.ProtocoloNFe:= '';
 
            if NaoEstaVazio(Cmd.Params(5)) then
             begin
@@ -413,7 +415,9 @@ begin
            ConfiguraDANFe(True, '0');
 
            if NaoEstaVazio(Cmd.Params(1)) then
-              ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1);
+              ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1)
+           else
+             ACBrNFe1.DANFE.ProtocoloNFe:= '';
 
            if NaoEstaVazio(Cmd.Params(2)) then
               ACBrNFeDANFeRL1.MarcadAgua := Cmd.Params(2)

@@ -99,9 +99,11 @@ begin
 
       else if cmd.Metodo = 'gerarremessa' then
        begin
-         DirArqRemessa := Cmd.Params(0);
-         NomeArqRemessa:= Cmd.Params(2);
-         GerarRemessa( StrToIntDef(cmd.Params(1),1))
+         if NaoEstaVazio( Cmd.Params(0) ) then
+           DirArqRemessa := Cmd.Params(0);
+         if NaoEstaVazio( Cmd.Params(2) ) then
+           NomeArqRemessa:= Cmd.Params(2);
+         GerarRemessa( StrToIntDef(cmd.Params(1),1));
        end
 
       else if cmd.Metodo = 'lerretorno' then
@@ -144,6 +146,22 @@ begin
            Cmd.Resposta := 'E-mail enviado com sucesso!'
          end;
        end
+      else if cmd.Metodo = 'setdiretorioarquivo' then
+      begin
+        if DirectoryExists(Cmd.Params(0)) then
+        begin
+          if ACBrBoletoFC.Filtro = TACBrBoletoFCFiltro(fiHTML) then
+            ACBrBoletoFC.NomeArquivo := PathWithDelim(Cmd.Params(0))  + 'boleto.html'
+          else
+            ACBrBoletoFC.NomeArquivo := PathWithDelim( Cmd.Params(0)) + 'boleto.pdf';
+
+          FrmACBrMonitor.deBOLDirArquivo.Text := Cmd.Params(0);
+          FrmACBrMonitor.SalvarIni;
+        end
+        else
+          raise Exception.Create('Arquivo não encontrado.');
+      end
+
       else if cmd.Metodo = 'listabancos' then
          Cmd.Resposta := ListaBancos()
       else if cmd.Metodo = 'listacaracttitulo' then
@@ -354,7 +372,7 @@ begin
          DataAbatimento      := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataAbatimento','')),0);
          DataDesconto        := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataDesconto','')),0);
          DataMoraJuros       := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataMoraJuros','')),0);
-		 DataMulta           := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataMulta','')),0);
+	 DataMulta           := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataMulta','')),0);
          DataProtesto        := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataProtesto','')),0);
          DataBaixa           := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataBaixa','')),0);
          DataLimitePagto     := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataLimitePagto','')),0);
@@ -450,6 +468,7 @@ begin
          IniRetorno.WriteString(wSessao,'DataOcorrencia',DateToStr(ListadeBoletos[I].DataOcorrencia));
          IniRetorno.WriteString(wSessao,'DataCredito',DateToStr(ListadeBoletos[I].DataCredito));
          IniRetorno.WriteString(wSessao,'DataBaixa',DateToStr(ListadeBoletos[I].DataBaixa));
+         IniRetorno.WriteString(wSessao,'DataMoraJuros',DateToStr(ListadeBoletos[I].DataMoraJuros));
          IniRetorno.WriteFloat(wSessao,'ValorDespesaCobranca',ListadeBoletos[I].ValorDespesaCobranca);
          IniRetorno.WriteFloat(wSessao,'ValorAbatimento',ListadeBoletos[I].ValorAbatimento);
          IniRetorno.WriteFloat(wSessao,'ValorDesconto',ListadeBoletos[I].ValorDesconto);

@@ -43,6 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2018
+[*] Ajuste no método "CriarCFe" do ACBrSAT
+[*] Ajuste no método "ImprimirDANFEPDF" validar protocoloNf em ACBrNFe
+[+] Adicionado Método SetDiretorioArquivo para informar diretório para geração de
+    arquivos via comando no componente ACBrBoleto
+[*] Validação do nome e path do arquivo na geração de Remessa do componente Boleto
+[*] Adicionado tag DataMoraJuros na leitura de retorno do componente Boleto
+       por: José M. S. Junior
+
 18/04/2018
 [*] Ajuste nos métodos que utilizam parâmetros para Visualizar Impressão
        por: José M. S. Junior

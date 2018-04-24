@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Alteração para que a tag <Aliquota> seja gerada com 4 casas decimais para o provedor
+    Fiorilli.
+   Por: Italo Jurisato Junior
+
 19/04/2018
 -- pnfsNFSeW_ABRASFv2 --
 [*] Correção na geração do grupo <Rps> quando o valor de IdentificacaoRps.Tipo é trNone.

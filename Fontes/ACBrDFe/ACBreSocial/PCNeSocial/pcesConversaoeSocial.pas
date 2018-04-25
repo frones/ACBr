@@ -115,7 +115,7 @@ type
 
   TpIndConstr             = (iconNaoeConstrutora, iconEmpresaConstrutora);
 
-  TpIndDesFolha           = (idfNaoAplicavel, idfEmpresaenquadradanoArt14, idfEmpresaenquadradanosArt7_9);
+  TpIndDesFolha           = (idfNaoAplicavel, idfEmpresaenquadradanosArt7_9);
 
   TpIndOptRegEletron      = (iorNaooptou, iorOptoupeloregistro);
 
@@ -1420,12 +1420,12 @@ end;
 
 function eSIndDesFolhaToStr(const t:tpIndDesFolha ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString0_2 );
+  result := EnumeradoToStr2(t,TGenericosString0_1 );
 end;
 
 function eSStrToIndDesFolha(var ok: boolean; const s: string): TpIndDesFolha;
 begin
-  result := TpIndDesFolha( StrToEnumerado2(ok , s, TGenericosString0_2 ) );
+  result := TpIndDesFolha( StrToEnumerado2(ok , s, TGenericosString0_1 ) );
 end;
 
 function eSIndOptRegEletronicoToStr(const t:TpIndOptRegEletron ): string;

@@ -440,6 +440,7 @@ procedure TACBrMail.AddEmailWithDelimitersToList(aEmail: String; aList: TStrings
 var
   sDelimiter: Char;
 begin
+  aEmail := Trim(aEmail);
   sDelimiter := FindDelimiterInText(aEmail);
 
   if (sDelimiter = ' ') then

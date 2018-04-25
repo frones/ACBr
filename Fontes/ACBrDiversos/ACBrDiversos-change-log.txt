@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/04/2018
+-- ACBrExtenso --
+[-] Correção para valores superiores ao MaxInt
+    https://www.projetoacbr.com.br/forum/topic/42975-acbrextenso-convertendo-errado-valor-acima-de-maxint/
+
 05/08/2017
 -- ACBrValidador --
 [+] Adicionado o método:

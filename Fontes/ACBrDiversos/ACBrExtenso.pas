@@ -139,9 +139,11 @@ begin
 end;
 
 procedure TACBrExtenso.TraduzValor(const Value: Double);
-Var Casa, Inteiros, Decimais : Integer ;
-    StrInteiros : String ;
-    aStrCasas : array[0..3] of string ;
+Var 
+  Inteiros: Int64;
+  Casa, Decimais: Integer;
+  StrInteiros: String;
+  aStrCasas: array[0..3] of string;
 begin
   if Value = fsValor then exit ;
 

@@ -281,6 +281,7 @@ begin
 
   with FrmACBrMonitor.ACBrSAT1 do
   begin
+    CFe.Clear;
     if (pos(#10,aStr) = 0) and FileExists(aStr) then
       CFe.LoadFromFile(aStr)
     else

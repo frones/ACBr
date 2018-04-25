@@ -319,14 +319,14 @@ begin
       end ;
 
       if FACBrIBGE.Cidades.Count > 0 then  // Achou ?
-      for CountCid := 0 to FACBrIBGE.Cidades.Count -1 do
+      for CountCid := 0  to FACBrIBGE.Cidades.Count -1 do
       Begin
          if (UpperCase(TiraAcentos(FCidade)) = UpperCase(TiraAcentos(FACBrIBGE.Cidades[CountCid].Municipio))) And
             (FUF = FACBrIBGE.Cidades[CountCid].UF) then
-         Begin
+		 Begin
            FCodigoIBGE := IntToStr( FACBrIBGE.Cidades[CountCid].CodMunicipio );
            Break;
-         End;
+		 End;
       End;
     end ;
 

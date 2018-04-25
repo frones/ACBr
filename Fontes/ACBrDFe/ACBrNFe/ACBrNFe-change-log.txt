@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2018
+-- ACBrNFeWebServices --
+[-] Correção em "TNFeRetRecepcao" para retornar o valor das propriedades 
+    modificadas pelo componente, na finalização do serviço.
+  https://www.projetoacbr.com.br/forum/topic/42900-ref-a-erro-no-retorno-da-nf-e-autorizada/
+  Por: BigWings
+
 23/04/2018
 -- ACBrNFeServicos --
 [*] Atualização de URLs NFe 4.00 MS homologação.

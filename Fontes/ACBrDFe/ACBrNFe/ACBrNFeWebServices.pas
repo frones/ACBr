@@ -1724,6 +1724,10 @@ end;
 procedure TNFeRetRecepcao.FinalizarServico;
 begin
   // Sobrescrito, para não liberar para stIdle... não ainda...;
+
+  // Retornar configurações anteriores
+  FPDFeOwner.SSL.SSLType := FOldSSLType;
+  FPHeaderElement := FOldHeaderElement;
 end;
 
 function TNFeRetRecepcao.GerarMsgLog: String;

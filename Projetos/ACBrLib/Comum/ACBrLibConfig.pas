@@ -461,7 +461,7 @@ begin
 
   FOwner := AOwner;
   FNomeArquivo := Trim(ANomeArquivo);
-  if Length(AChaveCrypt) = 0 then
+  if Length(Trim(AChaveCrypt)) = 0 then
     FChaveCrypt := CLibChaveCrypt
   else
     FChaveCrypt := AChaveCrypt;

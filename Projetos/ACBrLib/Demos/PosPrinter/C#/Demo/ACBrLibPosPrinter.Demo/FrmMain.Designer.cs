@@ -327,9 +327,9 @@
             this.panel1.Controls.Add(this.btnAddTags);
             this.panel1.Controls.Add(this.btnLimpar);
             this.panel1.Controls.Add(this.btnImprimir);
-            this.panel1.Location = new System.Drawing.Point(572, 34);
+            this.panel1.Location = new System.Drawing.Point(572, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(83, 247);
+            this.panel1.Size = new System.Drawing.Size(83, 269);
             this.panel1.TabIndex = 5;
             // 
             // btnAddTags
@@ -345,7 +345,7 @@
             // btnLimpar
             // 
             this.btnLimpar.Image = global::ACBrLibPosPrinter.Demo.Properties.Resources.limpar;
-            this.btnLimpar.Location = new System.Drawing.Point(3, 176);
+            this.btnLimpar.Location = new System.Drawing.Point(3, 198);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(75, 30);
             this.btnLimpar.TabIndex = 2;
@@ -357,7 +357,7 @@
             // btnImprimir
             // 
             this.btnImprimir.Image = global::ACBrLibPosPrinter.Demo.Properties.Resources.imprimir;
-            this.btnImprimir.Location = new System.Drawing.Point(3, 212);
+            this.btnImprimir.Location = new System.Drawing.Point(3, 234);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(75, 30);
             this.btnImprimir.TabIndex = 1;

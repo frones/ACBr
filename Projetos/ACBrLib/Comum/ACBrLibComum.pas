@@ -337,11 +337,10 @@ end;
 function LIB_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
 begin
   try
-    VerificarLibInicializada;
-    pLib.GravarLog('LIB_UltimoRetorno', logNormal);
+    if Assigned(pLib) then pLib.GravarLog('LIB_UltimoRetorno', logNormal);
     MoverStringParaPChar(pLibRetorno.Mensagem, sMensagem, esTamanho);
     Result := pLibRetorno.Codigo;
-    if pLib.Config.Log.Nivel >= logCompleto then
+    if Assigned(pLib) and (pLib.Config.Log.Nivel >= logCompleto) then
       pLib.GravarLog('   Codigo:' + IntToStr(Result) + ', Mensagem:' + strpas(sMensagem), logCompleto, True);
   except
     on E: EACBrLibException do

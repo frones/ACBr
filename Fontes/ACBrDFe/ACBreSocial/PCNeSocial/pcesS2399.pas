@@ -41,7 +41,10 @@
 |*  - Doação do componente para o Projeto ACBr
 |* 01/03/2016: Guilherme Costa
 |*  - Alterações para validação com o XSD
+|* 25/04/2018: [MSS] Mário Soares Santos - mario@clinfo.com.br
+|*  - Alterações para validação com o XSD (v.2.4.02)
 ******************************************************************************}
+
 {$I ACBr.inc}
 
 unit pcesS2399;
@@ -300,7 +303,7 @@ begin
   Gerador.wCampo(tcStr, '', 'mtvDesligTSV',  1,  2, 0, obj.mtvDesligTSV);
 
   GerarVerbasResc(obj.verbasResc);
-  GerarRemunOutrEmpr(obj.verbasResc.infoMV.remunOutrEmpr);
+//  GerarRemunOutrEmpr(obj.verbasResc.infoMV.remunOutrEmpr);
   GerarQuarentena(obj.quarentena);
 
   Gerador.wGrupo('/infoTSVTermino');

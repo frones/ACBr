@@ -47,6 +47,8 @@
 |*  - Alteração nas linhas 271 e 274 Não estava gravando o nome do xml
 |* 28/08/2017: Leivio Fontenele - leivio@yahoo.com.br
 |*  - Implementação comunicação, envelope, status e retorno do componente com webservice.
+|* 25/04/2018: [MSS] Mário Soares Santos - mario@clinfo.com.br
+|*  - Alterações para validação com o XSD (v.2.4.02)
 ******************************************************************************}
 {$I ACBr.inc}
 
@@ -1574,7 +1576,7 @@ end;
 
 procedure TeSocialEvento.GerarInfoMV(pInfoMV: TInfoMV);
 begin
-  if Ord(pInfoMV.indMV) > 0 then
+  if pInfoMV.indMV in [imvDescontadaempregador, imvDescontadaoutras, imvSobrelimite] then
   begin
     Gerador.wGrupo('infoMV');
 

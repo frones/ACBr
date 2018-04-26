@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2018
+-- pcesS3000 --
+[*] https://www.projetoacbr.com.br/forum/topic/42988-erro-ao-excluir-evento-s-1200-atrav%C3%A9s-do-evento-s-3000/
+   Por: ghv Oliveira
+
 25/04/2018
 --  pcesConversaoeSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/42949-corre%C3%A7%C3%A3o-s-1000/

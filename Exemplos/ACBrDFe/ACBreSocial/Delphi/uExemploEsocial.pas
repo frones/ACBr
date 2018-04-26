@@ -1232,7 +1232,7 @@ begin
     with EvtPgtos.ideBenef.InfoPgto.Add do
     begin
       DtPgto := StrToDate('10/06/2015');
-      tpPgto := tpPgtoFl;
+      tpPgto := tpPgtoRemun1200;
       IndResBr := tpNao;
       // -OS GRUPOS ABAIXO SÃO OPCIONAIS
       // grupo detPgtoFl agora é um collection
@@ -3290,7 +3290,7 @@ begin
 
     EvtTSVInicio.infoTSVInicio.CodCateg := 101;
     EvtTSVInicio.infoTSVInicio.dtInicio := date;
-    EvtTSVInicio.infoTSVInicio.natAtivididade := navUrbano;
+    EvtTSVInicio.infoTSVInicio.natAtividade := navUrbano;
 
     EvtTSVInicio.infoTSVInicio.InfoComplementares.cargoFuncao.CodCargo := '001';
     EvtTSVInicio.infoTSVInicio.InfoComplementares.cargoFuncao.CodFuncao
@@ -3402,7 +3402,7 @@ begin
     EvtTSVAltContr.IdeTrabSemVinc.CodCateg := 555;
 
     EvtTSVAltContr.infoTSVAlteracao.dtAlteracao := date;
-    EvtTSVAltContr.infoTSVAlteracao.natAtivididade := navUrbano;
+    EvtTSVAltContr.infoTSVAlteracao.natAtividade := navUrbano;
 
     EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.cargoFuncao.
       CodCargo := '001';

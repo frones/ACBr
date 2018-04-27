@@ -7,10 +7,12 @@ unit ACBr_Reinf;
 interface
 
 uses
-  pcnReinfClasses, ACBrReinfEventos, ACBrReinfEventosBase, pcnReinfR1000, 
-  pcnReinfR1070, pcnReinfR2010, pcnReinfR2020, pcnReinfR2060, 
-  pcnReinfR2098, pcnReinfR2099, pcnReinfR9000, ACBrReinfReg, 
-  pcnReinfRetEventos, pcnConversaoReinf, LazarusPackageIntf;
+  ACBrReinfEventos, pcnReinfR1000, pcnReinfR1070, pcnReinfR2010, 
+  pcnReinfR2020, pcnReinfR2060, pcnReinfR2098, pcnReinfR2099, pcnReinfR9000, 
+  ACBrReinfReg, pcnReinfRetEventos, pcnConversaoReinf, pcnCommonReinf, 
+  pcnEventosReinf, pcnGeradorReinf, pcnReinfR2030, pcnReinfR2040, 
+  pcnReinfR2050, pcnReinfR2070, pcnReinfR3010, pcnReinfR5001, pcnReinfR5011, 
+  pcnReinfRetConsulta, ACBrReinfLoteEventos, LazarusPackageIntf;
 
 implementation
 

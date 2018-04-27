@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2018
+-- pcesS1280 --
+[*] https://www.projetoacbr.com.br/forum/topic/43026-ajuste-no-evento-s-1280/
+   Por: Joceandro Perin
+
 26/04/2018
 -- pcesS3000 --
 [*] https://www.projetoacbr.com.br/forum/topic/42988-erro-ao-excluir-evento-s-1200-atrav%C3%A9s-do-evento-s-3000/

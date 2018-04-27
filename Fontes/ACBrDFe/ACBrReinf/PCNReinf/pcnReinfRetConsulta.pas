@@ -32,6 +32,7 @@
 {******************************************************************************}
 
 {$I ACBr.inc}
+
 unit pcnReinfRetConsulta;
 
 interface
@@ -39,7 +40,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
-  pcnReinfClasses, pcnConversaoReinf, pcnReinfR5011;
+  pcnCommonReinf, pcnConversaoReinf, pcnReinfR5001, pcnReinfR5011;
 
 type
   TRetEventosCollection = class;
@@ -138,8 +139,7 @@ end;
 
 function TRetConsulta.LerXml: boolean;
 var
-  ok: boolean;
-  i, j, k: Integer;
+  i: Integer;
 begin
   Result := False;
   try
@@ -149,8 +149,15 @@ begin
     while Leitor.rExtrai(1, 'Reinf', '', i + 1) <> '' do
     begin
       RetEventos.Add;
-      RetEventos.Items[i].Id           := FLeitor.rAtributo('Id=', 'evento');
+      RetEventos.Items[i].Id           := FLeitor.rAtributo('id=', 'evtTotalContrib');
       RetEventos.Items[i].ArquivoReinf := Leitor.Arquivo;
+
+      if pos('evtTotal', RetEventos.Items[i].ArquivoReinf) > 0 then
+      begin
+        RetEventos.Items[i].Tipo       := 'R5001';
+        RetEventos.Items[i].Evento     := TR5001.Create;
+        RetEventos.Items[i].Evento.Xml := RetEventos.Items[i].ArquivoReinf;
+      end;
 
       if pos('evtTotalContrib', RetEventos.Items[i].ArquivoReinf) > 0 then
       begin

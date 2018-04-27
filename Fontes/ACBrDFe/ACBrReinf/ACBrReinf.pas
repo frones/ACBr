@@ -44,9 +44,10 @@ unit ACBrReinf;
 interface
 
 uses
-  Classes, SysUtils, TypInfo, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
-  ACBrReinfConfiguracoes, pcnConversao, ACBrUtil, pcnConversaoReinf,
-  pcnReinfClasses, ACBrReinfEventos, ACBrReinfWebServices;
+  Classes, SysUtils, ACBrUtil,
+  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  ACBrReinfConfiguracoes, ACBrReinfWebServices, ACBrReinfEventos,
+  pcnConversao, pcnConversaoReinf;
 
 resourcestring
   ACBRREINF_CErroAmbienteDiferente = 'Ambiente do XML (tpAmb) é diferente do configurado no Componente (Configuracoes.WebServices.Ambiente)';
@@ -54,101 +55,64 @@ resourcestring
   ACBRREINF_CErroCryptLib = 'Necessário DigestMethod Algorithm SHA256. use cryOpenSSL ou cryWinCrypt na propriedade SSLCryptLib.';
 
 const
-  ACBRREINF_VERSAO = '1.2';
+  ACBRREINF_VERSAO = '1.3';
   ACBRREINF_NAMESPACE_ENV = 'http://sped.fazenda.gov.br/RecepcaoLoteReinf';
   ACBRREINF_NAMESPACE_CON = 'http://sped.fazenda.gov.br/ConsultasReinf';
+
+  ACBRREINF_NAMESPACE = ' http://www.reinf.gov.br/servicos/empregador/lote/eventos/envio/v1_1_0';
+  ACBRREINF_NAMESPACE_URI = 'http://www.reinf.esocial.gov.br/schemas/';
   ACBRREINF_MODELODF = 'Reinf';
 
 type
 
-  EACBReinfException = class(EACBrDFeException);
+  EACBrReinfException = class(EACBrDFeException);
+  TNotifyEventosReinf = procedure(const AXML: AnsiString; ATipo: TEventosReinf) of object;
 
-  TXmlSender = procedure(const Axml: string) of object;
-
-  { TACBreSocial }
+  { TACBrReinf }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
   TACBrReinf = class(TACBrDFe)
   private
-    FContribuinte: TIdeContribuinte;
-    FIdeEvento: TIdeEvento;
-    FOnAfterEnviar: TXmlSender;
-    FOnBeforeEnviar: TXmlSender;
-
     FEventos: TEventos;
     FStatus : TStatusReinf;
     FWebServices: TWebServices;
 
-//    FOnTransmissaoEventos: TNotifyEventoseSocial;
+    FOnTransmissaoEventos: TNotifyEventosReinf;
 
     function GetConfiguracoes: TConfiguracoesReinf;
     procedure SetConfiguracoes(AValue: TConfiguracoesReinf);
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
     function GetAbout: String; override;
-
+    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
+    function VersaoSchemaDoubleToString(AVersao: Double): String; override;
+    function VersaoSchemaStringToDouble(AVersao: String): Double; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-//    procedure AfterConstruction; override;
-//    procedure BeforeDestruction; override;
-
+    procedure AssinarEventos;
     procedure LerServicoDeParams(LayOutServico: TLayOutReinf; var Versao: Double; var URL: String); overload;
     procedure SetStatus(const stNewStatus: TStatusReinf);
 
     function GetNomeModeloDFe: string; override;
     function GetNameSpaceURI: string; override;
     function LerVersaoDeParams(LayOutServico: TLayOutReinf): String; reintroduce; overload;
-    function NomeServicoToNomeSchema(const NomeServico: String): String; override;
 
     function Enviar: boolean;
     function Consultar(const AProtocolo: string): boolean;
 
-    property ideContri: TIdeContribuinte read FContribuinte;
-    property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
     property Eventos: TEventos read FEventos write FEventos;
     property Status: TStatusReinf read FStatus;
     property WebServices: TWebServices read FWebServices write FWebServices;
 
   published
     property Configuracoes: TConfiguracoesReinf read GetConfiguracoes write SetConfiguracoes;
-    property OnBeforeEnviar: TXmlSender read FOnBeforeEnviar write FOnBeforeEnviar;
-    property OnAfterEnviar: TXmlSender read FOnAfterEnviar write FOnAfterEnviar;
-//    property OnTransmissaoEventos: TNotifyEventoseSocial read FOnTransmissaoEventos write FOnTransmissaoEventos;
+    property OnTransmissaoEventos: TNotifyEventosReinf read FOnTransmissaoEventos write FOnTransmissaoEventos;
+
   end;
-(*
-  TACBrReinf = class(TACBrDFe)
-  private
-//    FConfiguracoes: TConfiguracoesReinf;
-//    FContribuinte: TIdeContribuinte;
-//    FIdeEvento: TIdeEvento;
-//    FEventos: TEventos;
-//    FWebServices: TWebServices;
-//    FOnAfterEnviar: TXmlSender;
-//    FOnBeforeEnviar: TXmlSender;
-//    function GetConfiguracoes: TConfiguracoesReinf;
-//    procedure SetConfiguracoes(const Value: TConfiguracoesReinf);
-//    function GetVersao: string;
-  protected
-  public
-//    procedure LerServicoDeParams(ALayOutReinf: TLayReinf; var URL: String); reintroduce;
-//    procedure AfterConstruction; override;
-//    procedure BeforeDestruction; override;
-//    function Enviar: Boolean;
-//    function GetNameSpaceURI: string; override;
-//    property ideContri: TIdeContribuinte read FContribuinte;
-//    property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
-//    property Eventos: TEventos read FEventos;
-//    property WebServices: TWebServices read FWebServices write FWebServices;
-  published
-    property Configuracoes: TConfiguracoesReinf read GetConfiguracoes write SetConfiguracoes;
-    property OnBeforeEnviar: TXmlSender read FOnBeforeEnviar write FOnBeforeEnviar;
-    property OnAfterEnviar: TXmlSender read FOnAfterEnviar write FOnAfterEnviar;
-    property Versao: string read GetVersao;
-  end;
-*)
+
 implementation
 
 {$IFDEF FPC}
@@ -166,9 +130,6 @@ implementation
 uses
   ACBrDFeSSL;
 
-type
-  THackEventos = class(TEventos);
-
 constructor TACBrReinf.Create(AOwner: TComponent);
 begin
   inherited;
@@ -176,18 +137,12 @@ begin
   SSL.SSLDgst := dgstSHA256;
   FEventos := TEventos.Create(Self);
   FWebServices := TWebServices.Create(Self);
-
-  FContribuinte := TIdeContribuinte.Create;
-  FIdeEvento := TIdeEvento.Create;
 end;
 
 destructor TACBrReinf.Destroy;
 begin
   FEventos.Free;
   FWebServices.Free;
-
-  FContribuinte.Free;
-  FIdeEvento.Free;
 
   inherited;
 end;
@@ -209,32 +164,24 @@ end;
 
 function TACBrReinf.GetAbout: String;
 begin
-  Result := 'ACBrReinf Ver: ' + ACBRReinf_VERSAO;
+  Result := 'ACBrReinf Ver: ' + ACBRREINF_VERSAO;
 end;
 
 function TACBrReinf.Enviar: boolean;
-var
-  xml: string;
 begin
-  if SSL.SSLXmlSignLib in [xsXmlSec, xsLibXml2] then
-  begin
-    xml := Eventos.GetXml;
-
-    if Assigned(FOnBeforeEnviar) then
-      FOnBeforeEnviar(xml);
-
-    Result := FWebServices.Enviar(xml);
-    
-    if Result and Assigned(FOnAfterEnviar) then
-      FOnAfterEnviar(FWebServices.EnvioLote.RetornoWS);
-  end
-  else
-    raise EACBReinfException.Create('Necessário DigestMethod Algorithm = sha256 -> SSLLib = libOpenSSL');
+  result := WebServices.Envia;
 end;
 
 function TACBrReinf.Consultar(const AProtocolo: string): boolean;
 begin
   Result := WebServices.Consulta(AProtocolo);
+end;
+
+procedure TACBrReinf.AssinarEventos;
+begin
+  Eventos.GerarXMLs;
+  if Configuracoes.Geral.Salvar then
+    Eventos.SaveToFiles;
 end;
 
 function TACBrReinf.NomeServicoToNomeSchema(const NomeServico: String): String;
@@ -249,8 +196,35 @@ begin
     Result := '';
 end;
 
-procedure TACBrReinf.LerServicoDeParams(LayOutServico: TLayOutReinf; var Versao: Double; var URL: String);
+function TACBrReinf.VersaoSchemaDoubleToString(AVersao: Double): String;
 var
+  StrVer: String;
+begin
+  Result := '';
+
+  if (AVersao > 0) then
+  begin
+    StrVer := FloatToString(AVersao, '.', '0.00');
+    StrVer := StringReplace(StrVer,'.','',[rfReplaceAll]);
+    Result := StrVer[1] + '_' + StrVer[2] + '_' + StrVer[3];
+  end;
+end;
+
+function TACBrReinf.VersaoSchemaStringToDouble(AVersao: String): Double;
+var
+  StrVer: String;
+begin
+  Result := 0;
+  if (AVersao <> '') then
+  begin
+    StrVer := StringReplace(AVersao,'_','',[rfReplaceAll]);
+    StrVer := PadRight(StrVer, 3, '0');
+    Result := StringToFloatDef(StrVer[1]+'.'+StrVer[2]+StrVer[3], 0);
+  end;
+end;
+
+procedure TACBrReinf.LerServicoDeParams(LayOutServico: TLayOutReinf; var Versao: Double; var URL: String);
+Var
   Sessao: string;
 begin
   if Configuracoes.WebServices.Ambiente = taHomologacao then
@@ -290,10 +264,6 @@ end;
 
 function TACBrReinf.GetNameSpaceURI: string;
 begin
-//  case LayOutServico of
-//    LayEnvioLoteEventos:    Result := ACBRREINF_NAMESPACE_ENV;
-//    LayConsultaLoteEventos: Result := ACBRREINF_NAMESPACE_CON;
-//  end;
   Result := ACBRREINF_NAMESPACE_ENV;
 end;
 

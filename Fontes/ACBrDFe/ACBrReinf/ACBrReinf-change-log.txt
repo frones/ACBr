@@ -33,11 +33,13 @@ Agradecimentos:
 - André Ferreira de Moraes
 
 * Desenvolvedores:
-* dd/mm/aaaa: 
+* Leivio Ramos de Fontenele
+* Renato Rubinho
+* 24/10/2017: 
 *  - Doação do componente para o Projeto ACBr
 
 {******************************************************************************
-|* ACBreSocial
+|* ACBrReinf
 |*
 |* PROPÓSITO: Registro de Alterações
 ******************************************************************************}
@@ -47,6 +49,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+09/04/2018
+-- ACBrReinf --
+[*] Inicio do Refactoring no componente para deixa-lo semelhante ao eSocial.
+   Por: Italo Jurisato Junior  
 
 22/03/2018
 -- pcnReinfRetConsulta / ACBrReinfWebServices -- 

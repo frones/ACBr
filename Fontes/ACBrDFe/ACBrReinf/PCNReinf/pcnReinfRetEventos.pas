@@ -31,6 +31,8 @@
 { Leivio Ramos de Fontenele  -  leivio@yahoo.com.br                            }
 {******************************************************************************}
 
+{$I ACBr.inc}
+
 unit pcnReinfRetEventos;
 
 interface
@@ -38,7 +40,8 @@ interface
 uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnLeitor,
-  pcnReinfClasses, pcnConversaoReinf, pcnReinfR5001, pcnReinfR5011;
+  pcnCommonReinf, pcnConversaoReinf,
+  pcnReinfR5001, pcnReinfR5011;
 
 type
 

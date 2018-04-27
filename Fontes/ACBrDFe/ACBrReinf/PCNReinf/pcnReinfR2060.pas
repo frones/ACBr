@@ -33,72 +33,381 @@
 {******************************************************************************
 |* Historico
 |*
-|* 24/10/2017: Renato Rubinho
-|*  - Compatibilizado Fonte com Delphi 7
+|* 04/12/2017: Renato Rubinho
+|*  - Implementados registros que faltavam e isoladas as respectivas classes
 *******************************************************************************}
+
+{$I ACBr.inc}
 
 unit pcnReinfR2060;
 
 interface
 
 uses
-  Classes, Sysutils, pcnGerador, pcnConversaoReinf,
-  pcnReinfR2060_Class, ACBrReinfEventosBase;
+  SysUtils, Classes,
+  pcnConversao, pcnGerador, ACBrUtil,
+  pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type
+  TR2060Collection = class;
+  TR2060CollectionItem = class;
+  TevtCPRB = class;
 
-  TR2060 = class(TEventoReinfRet)
+  {Classes específicas deste evento}
+  TinfoCPRB = class;
+  TideEstab = class;
+  TtipoCodCollection = class;
+  TtipoCodCollectionItem = class;
+  TtipoAjusteCollection = class;
+  TtipoAjusteCollectionItem = class;
+  TinfoProcCollection = class;
+  TinfoProcCollectionItem = class;
+
+  TR2060Collection = class(TOwnedCollection)
   private
-    FinfoCPRB: TinfoCPRB;
-  protected
-    procedure GerarEventoXML; override;
-    procedure GerarinfoCPRB;
-    procedure GerarideEstab;
-    procedure GerartipoCod(Items: TtipoCods);
-    procedure GerartipoAjustes(Items: TtipoAjustes);
-    procedure GerarinfoProc(Items: TinfoProcs);
+    function GetItem(Index: Integer): TR2060CollectionItem;
+    procedure SetItem(Index: Integer; Value: TR2060CollectionItem);
+  public
+    function Add: TR2060CollectionItem;
+    property Items[Index: Integer]: TR2060CollectionItem read GetItem write SetItem; default;
+  end;
+
+  TR2060CollectionItem = class(TCollectionItem)
+  private
+    FTipoEvento: TTipoEvento;
+    FevtCPRB: TevtCPRB;
+    procedure setevtCPRB(const Value: TevtCPRB);
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
+  published
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtCPRB: TevtCPRB read FevtCPRB write setevtCPRB;
+  end;
 
-    property infoCPRB: TinfoCPRB read FinfoCPRB;
+  TevtCPRB = class(TReinfEvento) //Classe do elemento principal do XML do evento!
+  private
+    FIdeEvento: TIdeEvento2;
+    FideContri: TideContri;
+    FACBrReinf: TObject;
+    FinfoCPRB: TinfoCPRB;
+
+    {Geradores específicos desta classe}
+    procedure GerarideEstab;
+    procedure GerartipoCod(Lista: TtipoCodCollection);
+    procedure GerartipoAjuste(Lista: TtipoAjusteCollection);
+    procedure GerarinfoProc(Lista: TinfoProcCollection);
+  public
+    constructor Create(AACBrReinf: TObject); overload;
+    destructor  Destroy; override;
+
+    function GerarXML: Boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property ideContri: TideContri read FideContri write FideContri;
+    property infoCPRB: TinfoCPRB read FinfoCPRB write FinfoCPRB;
+  end;
+
+  { TinfoCPRB }
+  TinfoCPRB = class(TPersistent)
+  private
+    FideEstab: TideEstab;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property ideEstab: TideEstab read FideEstab write FideEstab;
+  end;
+
+  { TideEstab }
+  TideEstab = class(TPersistent)
+  private
+    FtpInscEstab: TtpInsc;
+    FnrInscEstab: string;
+    FvlrRecBrutaTotal: double;
+    FvlrCPApurTotal: double;
+    FvlrCPRBSuspTotal: double;
+    FtipoCod: TtipoCodCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property tpInscEstab: TtpInsc read FtpInscEstab write FtpInscEstab default tiCNPJ;
+    property nrInscEstab: string read FnrInscEstab write FnrInscEstab;
+    property vlrRecBrutaTotal: double read FvlrRecBrutaTotal write FvlrRecBrutaTotal;
+    property vlrCPApurTotal: double read FvlrCPApurTotal write FvlrCPApurTotal;
+    property vlrCPRBSuspTotal: double read FvlrCPRBSuspTotal write FvlrCPRBSuspTotal;
+    property tipoCod: TtipoCodCollection read FtipoCod write FtipoCod;
+  end;
+
+  TtipoCodCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TtipoCodCollectionItem;
+    procedure SetItem(Index: Integer; Value: TtipoCodCollectionItem);
+  public
+    constructor create(AOwner: TideEstab);
+    function Add: TtipoCodCollectionItem;
+    property Items[Index: Integer]: TtipoCodCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TtipoCodCollectionItem = class(TCollectionItem)
+  private
+    FcodAtivEcon: string;
+    FvlrRecBrutaAtiv: double;
+    FvlrExcRecBruta: double;
+    FvlrAdicRecBruta: double;
+    FvlrBcCPRB: double;
+    FvlrCPRBapur: double;
+    FtipoAjuste: TtipoAjusteCollection;
+    FinfoProc: TinfoProcCollection;
+  public
+    constructor create; reintroduce;
+    destructor Destroy; override;
+
+    property codAtivEcon: string read FcodAtivEcon write FcodAtivEcon;
+    property vlrRecBrutaAtiv: double read FvlrRecBrutaAtiv write FvlrRecBrutaAtiv;
+    property vlrExcRecBruta: double read FvlrExcRecBruta write FvlrExcRecBruta;
+    property vlrAdicRecBruta: double read FvlrAdicRecBruta write FvlrAdicRecBruta;
+    property vlrBcCPRB: double read FvlrBcCPRB write FvlrBcCPRB;
+    property vlrCPRBapur: double read FvlrCPRBapur write FvlrCPRBapur;
+    property tipoAjuste: TtipoAjusteCollection read FtipoAjuste write FtipoAjuste;
+    property infoProc: TinfoProcCollection read FinfoProc write FinfoProc;
+  end;
+
+  TtipoAjusteCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TtipoAjusteCollectionItem;
+    procedure SetItem(Index: Integer; Value: TtipoAjusteCollectionItem);
+  public
+    constructor create(); reintroduce;
+    function Add: TtipoAjusteCollectionItem;
+    property Items[Index: Integer]: TtipoAjusteCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TtipoAjusteCollectionItem = class(TCollectionItem)
+  private
+    FtpAjuste: TtpAjuste;
+    FcodAjuste: TcodAjuste;
+    FvlrAjuste: double;
+    FdescAjuste: string;
+    FdtAjuste: string;
+  public
+    property tpAjuste: TtpAjuste read FtpAjuste write FtpAjuste;
+    property codAjuste: TcodAjuste read FcodAjuste write FcodAjuste;
+    property vlrAjuste: double read FvlrAjuste write FvlrAjuste;
+    property descAjuste: string read FdescAjuste write FdescAjuste;
+    property dtAjuste: string read FdtAjuste write FdtAjuste;
+  end;
+
+  TinfoProcCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfoProcCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoProcCollectionItem);
+  public
+    constructor create(); reintroduce;
+    function Add: TinfoProcCollectionItem;
+    property Items[Index: Integer]: TinfoProcCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoProcCollectionItem = class(TCollectionItem)
+  private
+    FtpProc: TtpProc;
+    FnrProc: String;
+    FcodSusp: String;
+    FvlrCPRBSusp: double;
+  public
+    property tpProc: TtpProc read FtpProc write FtpProc;
+    property nrProc: String read FnrProc write FnrProc;
+    property codSusp: String read FcodSusp write FcodSusp;
+    property vlrCPRBSusp: double read FvlrCPRBSusp write FvlrCPRBSusp;
   end;
 
 implementation
 
 uses
-  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
+  IniFiles,
+  ACBrReinf, ACBrDFeUtil;
 
-{ TR2060 }
+{ TR2060Collection }
 
-procedure TR2060.AfterConstruction;
+function TR2060Collection.Add: TR2060CollectionItem;
 begin
-  inherited;
-  SetSchema(schevtCPRB);
-  FinfoCPRB := TinfoCPRB.Create;
+  Result := TR2060CollectionItem(inherited Add);
 end;
 
-procedure TR2060.BeforeDestruction;
+function TR2060Collection.GetItem(Index: Integer): TR2060CollectionItem;
+begin
+  Result := TR2060CollectionItem(inherited GetItem(Index));
+end;
+
+procedure TR2060Collection.SetItem(Index: Integer; Value: TR2060CollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TR2060CollectionItem }
+
+procedure TR2060CollectionItem.AfterConstruction;
 begin
   inherited;
+  FTipoEvento := teR2060;
+  FevtCPRB := TevtCPRB.Create(Collection.Owner);
+end;
+
+procedure TR2060CollectionItem.BeforeDestruction;
+begin
+  inherited;
+  FevtCPRB.Free;
+end;
+
+procedure TR2060CollectionItem.setevtCPRB(const Value: TevtCPRB);
+begin
+  FevtCPRB.Assign(Value);
+end;
+
+{ TevtCPRB }
+
+constructor TevtCPRB.Create(AACBrReinf: TObject);
+begin
+  inherited;
+
+  FACBrReinf := AACBrReinf;
+
+  FideContri := TideContri.create;
+  FIdeEvento := TIdeEvento2.create;
+  FinfoCPRB  := TinfoCPRB.Create;
+end;
+
+destructor TevtCPRB.Destroy;
+begin
+  FideContri.Free;
+  FIdeEvento.Free;
   FinfoCPRB.Free;
+
+  inherited;
 end;
 
-procedure TR2060.GerarEventoXML;
+{ TinfoCPRB }
+
+constructor TinfoCPRB.Create;
 begin
-  GerarinfoCPRB;
+  FideEstab := TideEstab.Create;
 end;
 
-procedure TR2060.GerarinfoCPRB;
+destructor TinfoCPRB.Destroy;
 begin
-  Gerador.wGrupo('infoCPRB');
+  FideEstab.Free;
 
-  GerarideEstab;
-
-  Gerador.wGrupo('/infoCPRB');
+  inherited;
 end;
 
-procedure TR2060.GerarideEstab;
+{ TideEstab }
+
+constructor TideEstab.Create;
+begin
+  FtipoCod := TtipoCodCollection.create(Self);
+end;
+
+destructor TideEstab.Destroy;
+begin
+  FtipoCod.Free;
+
+  inherited;
+end;
+
+{ TtipoCodCollection }
+
+function TtipoCodCollection.Add: TtipoCodCollectionItem;
+begin
+  Result := TtipoCodCollectionItem(inherited add());
+  Result.Create;
+end;
+
+constructor TtipoCodCollection.create(AOwner: TideEstab);
+begin
+  Inherited create(TtipoCodCollectionItem);
+end;
+
+function TtipoCodCollection.GetItem(
+  Index: Integer): TtipoCodCollectionItem;
+begin
+  Result := TtipoCodCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TtipoCodCollection.SetItem(Index: Integer;
+  Value: TtipoCodCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TtipoCodCollectionItem }
+
+constructor TtipoCodCollectionItem.create;
+begin
+  FtipoAjuste := TtipoAjusteCollection.Create;
+  FinfoProc   := TinfoProcCollection.Create;
+end;
+
+destructor TtipoCodCollectionItem.Destroy;
+begin
+  FtipoAjuste.Free;
+  FinfoProc.Free;
+
+  inherited;
+end;
+
+{ TtipoAjusteCollection }
+
+function TtipoAjusteCollection.Add: TtipoAjusteCollectionItem;
+begin
+  Result := TtipoAjusteCollectionItem(inherited add());
+//  Result.Create;
+end;
+
+constructor TtipoAjusteCollection.create;
+begin
+  Inherited create(TtipoAjusteCollectionItem);
+end;
+
+function TtipoAjusteCollection.GetItem(
+  Index: Integer): TtipoAjusteCollectionItem;
+begin
+  Result := TtipoAjusteCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TtipoAjusteCollection.SetItem(Index: Integer;
+  Value: TtipoAjusteCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfoProcCollection }
+
+function TinfoProcCollection.Add: TinfoProcCollectionItem;
+begin
+  Result := TinfoProcCollectionItem(inherited add());
+//  Result.Create;
+end;
+
+constructor TinfoProcCollection.create;
+begin
+  Inherited create(TinfoProcCollectionItem);
+end;
+
+function TinfoProcCollection.GetItem(
+  Index: Integer): TinfoProcCollectionItem;
+begin
+  Result := TinfoProcCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfoProcCollection.SetItem(Index: Integer;
+  Value: TinfoProcCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+procedure TevtCPRB.GerarideEstab;
 begin
   Gerador.wGrupo('ideEstab');
 
@@ -108,70 +417,232 @@ begin
   Gerador.wCampo(tcDe2, '', 'vlrCPApurTotal',   1, 14, 1, Self.FinfoCPRB.ideEstab.vlrCPApurTotal);
   Gerador.wCampo(tcDe2, '', 'vlrCPRBSuspTotal', 1, 14, 0, Self.FinfoCPRB.ideEstab.vlrCPRBSuspTotal);
 
-  GerartipoCod(Self.FinfoCPRB.ideEstab.tipoCods);
-  GerarinfoProc(Self.FinfoCPRB.ideEstab.infoProcs);
+  GerartipoCod(Self.FinfoCPRB.ideEstab.tipoCod);
 
   Gerador.wGrupo('/ideEstab');
 end;
 
-procedure TR2060.GerartipoCod(Items: TtipoCods);
+procedure TevtCPRB.GerartipoCod(Lista: TtipoCodCollection);
 var
+  item: TtipoCodCollectionItem;
   i: Integer;
 begin
-  for i:=0 to Items.Count - 1 do
-    with Items.Items[i] do
-    begin
-      Gerador.wGrupo('tipoCod');
+  for i := 0 to Lista.Count - 1 do
+  begin
+    Item := Lista.Items[i];
 
-      Gerador.wCampo(tcStr, '', 'codAtivEcon',     1,  8, 1, codAtivEcon);
-      Gerador.wCampo(tcDe2, '', 'vlrRecBrutaAtiv', 1, 14, 1, vlrRecBrutaAtiv);
-      Gerador.wCampo(tcDe2, '', 'vlrExcRecBruta',  1, 14, 1, vlrExcRecBruta);
-      Gerador.wCampo(tcDe2, '', 'vlrAdicRecBruta', 1, 14, 1, vlrAdicRecBruta);
-      Gerador.wCampo(tcDe2, '', 'vlrBcCPRB',       1, 14, 1, vlrBcCPRB);
-      Gerador.wCampo(tcDe2, '', 'vlrCPRBapur',     1, 14, 0, vlrCPRBapur);
+    Gerador.wGrupo('tipoCod');
 
-      GerartipoAjustes(tipoAjustes);
+    Gerador.wCampo(tcStr, '', 'codAtivEcon',     1,  8, 1, item.codAtivEcon);
+    Gerador.wCampo(tcDe2, '', 'vlrRecBrutaAtiv', 1, 14, 1, item.vlrRecBrutaAtiv);
+    Gerador.wCampo(tcDe2, '', 'vlrExcRecBruta',  1, 14, 1, item.vlrExcRecBruta);
+    Gerador.wCampo(tcDe2, '', 'vlrAdicRecBruta', 1, 14, 1, item.vlrAdicRecBruta);
+    Gerador.wCampo(tcDe2, '', 'vlrBcCPRB',       1, 14, 1, item.vlrBcCPRB);
+    Gerador.wCampo(tcDe2, '', 'vlrCPRBapur',     1, 14, 0, item.vlrCPRBapur);
 
-      Gerador.wGrupo('/tipoCod');
-    end;
+    GerartipoAjuste(item.tipoAjuste);
+    GerarinfoProc(item.infoProc);
+
+    Gerador.wGrupo('/tipoCod');
+  end;
+
+  if Lista.Count > 999 then
+    Gerador.wAlerta('', 'tipoCod', 'Lista de Tipos de Códigos de Atividade', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-procedure TR2060.GerartipoAjustes(Items: TtipoAjustes);
+procedure TevtCPRB.GerartipoAjuste(Lista: TtipoAjusteCollection);
 var
+  item: TtipoAjusteCollectionItem;
   i: Integer;
 begin
-  for i:=0 to Items.Count - 1 do
-    with Items.Items[i] do
-    begin
-      Gerador.wGrupo('tipoAjuste');
+  for i := 0 to Lista.Count - 1 do
+  begin
+    Item := Lista.Items[i];
 
-      Gerador.wCampo(tcStr, '', 'tpAjuste',   1,  1, 1, tpAjusteToStr(tpAjuste));
-      Gerador.wCampo(tcStr, '', 'codAjuste',  1,  2, 1, codAjusteToStr(codAjuste));
-      Gerador.wCampo(tcDe2, '', 'vlrAjuste',  1, 14, 1, vlrAjuste);
-      Gerador.wCampo(tcStr, '', 'descAjuste', 1, 20, 1, descAjuste);
-      Gerador.wCampo(tcStr, '', 'dtAjuste',   7,  7, 1, dtAjuste);
+    Gerador.wGrupo('tipoAjuste');
 
-      Gerador.wGrupo('/tipoAjuste');
-    end;
+    Gerador.wCampo(tcStr, '', 'tpAjuste',   1,  1, 1, tpAjusteToStr(item.tpAjuste));
+    Gerador.wCampo(tcStr, '', 'codAjuste',  1,  2, 1, codAjusteToStr(item.codAjuste));
+    Gerador.wCampo(tcDe2, '', 'vlrAjuste',  1, 14, 1, item.vlrAjuste);
+    Gerador.wCampo(tcStr, '', 'descAjuste', 1, 20, 1, item.descAjuste);
+    Gerador.wCampo(tcStr, '', 'dtAjuste',   7,  7, 1, item.dtAjuste);
+
+    Gerador.wGrupo('/tipoAjuste');
+  end;
+
+  if Lista.Count > 999 then
+    Gerador.wAlerta('', 'tipoAjuste', 'Lista de Tipos de Ajustes', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-procedure TR2060.GerarinfoProc(Items: TinfoProcs);
+procedure TevtCPRB.GerarinfoProc(Lista: TinfoProcCollection);
 var
+  item: TinfoProcCollectionItem;
   i: Integer;
 begin
-  for i:=0 to Items.Count - 1 do
-    with Items.Items[i] do
+  for i := 0 to Lista.Count - 1 do
+  begin
+    Item := Lista.Items[i];
+
+    Gerador.wGrupo('infoProc');
+
+    Gerador.wCampo(tcStr, '', 'tpProc',      1,  1, 1, TpProcToStr( item.tpProc ));
+    Gerador.wCampo(tcStr, '', 'nrProc',      1, 21, 1, item.nrProc);
+    Gerador.wCampo(tcStr, '', 'codSusp',     1, 14, 0, item.codSusp);
+    Gerador.wCampo(tcDe2, '', 'vlrCPRBSusp', 1, 14, 1, item.vlrCPRBSusp);
+
+    Gerador.wGrupo('/infoProc');
+  end;
+
+  if Lista.Count > 50 then
+    Gerador.wAlerta('', 'infoProc', 'Lista de Informações de Processos', ERR_MSG_MAIOR_MAXIMO + '50');
+end;
+
+function TevtCPRB.GerarXML: Boolean;
+begin
+  try
+    Self.VersaoDF := TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF;
+
+    Self.Id := GerarChaveReinf(now, self.ideContri.NrInsc, self.Sequencial);
+
+    GerarCabecalho('evtInfoCPRB');
+    Gerador.wGrupo('evtCPRB id="' + Self.Id + '"');
+
+    GerarIdeEvento2(Self.IdeEvento);
+    GerarideContri(Self.ideContri);
+
+    Gerador.wGrupo('infoCPRB');
+
+    GerarideEstab;
+
+    Gerador.wGrupo('/infoCPRB');
+    Gerador.wGrupo('/evtCPRB');
+
+    GerarRodape;
+
+    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtCPRB');
+
+    Validar(schevtInfoCPRB);
+  except on e:exception do
+    raise Exception.Create(e.Message);
+  end;
+
+  Result := (Gerador.ArquivoFormatoXML <> '');
+end;
+
+function TevtCPRB.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I, J: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
     begin
-      Gerador.wGrupo('infoProc');
+      sSecao := 'evtCPRB';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
-      Gerador.wCampo(tcInt, '', 'tpProc',      1,  1, 1, TpProcToStr(tpProc));
-      Gerador.wCampo(tcStr, '', 'nrProc',      1, 21, 1, nrProc);
-      Gerador.wCampo(tcStr, '', 'codSusp',     1, 14, 0, codSusp);
-      Gerador.wCampo(tcDe2, '', 'vlrCPRBSusp', 1, 14, 1, vlrCPRBSusp);
+      sSecao := 'ideEvento';
+      ideEvento.indRetif := StrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.perApur  := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      ideEvento.TpAmb    := StrTotpAmbReinf(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi  := StrToProcEmiReinf(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc  := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 
-      Gerador.wGrupo('/infoProc');
+      sSecao := 'ideContri';
+      ideContri.OrgaoPublico := (TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte = tcOrgaoPublico);
+      ideContri.TpInsc       := StrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideContri.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideEstab';
+      infoCPRB.ideEstab.tpInscEstab       := StrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscEstab', '1'));
+      infoCPRB.ideEstab.nrInscEstab       := INIRec.ReadString(sSecao, 'nrInscEstab', EmptyStr);
+      infoCPRB.ideEstab.vlrRecBrutaTotal  := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRecBrutaTotal', ''), 0);
+      infoCPRB.ideEstab.vlrCPApurTotal    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrCPApurTotal', ''), 0);
+      infoCPRB.ideEstab.vlrCPRBSuspTotal  := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrCPRBSuspTotal', ''), 0);
+
+      with infoCPRB.ideEstab do
+      begin
+        I := 1;
+        while true do
+        begin
+          // de 001 até 999
+          sSecao := 'tipoCod' + IntToStrZero(I, 3);
+          sFim   := INIRec.ReadString(sSecao, 'codAtivEcon', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with tipoCod.Add do
+          begin
+            codAtivEcon := sFim;
+            vlrRecBrutaAtiv := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRecBrutaAtiv', ''), 0);
+            vlrExcRecBruta  := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrExcRecBruta', ''), 0);
+            vlrAdicRecBruta := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrAdicRecBruta', ''), 0);
+            vlrBcCPRB       := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBcCPRB', ''), 0);
+            vlrCPRBapur     := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrCPRBapur', ''), 0);
+
+            J := 1;
+            while true do
+            begin
+              // de 001 até 999
+              sSecao := 'tipoAjuste' + IntToStrZero(I, 3) + IntToStrZero(J, 3);
+              sFim   := INIRec.ReadString(sSecao, 'tpAjuste', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+
+              with tipoAjuste.Add do
+              begin
+                tpAjuste   := StrTotpAjuste(Ok, sFim);
+                codAjuste  := StrTocodAjuste(Ok, INIRec.ReadString(sSecao, 'codAjuste', ''));
+                vlrAjuste  := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrAjuste', ''), 0);
+                descAjuste := INIRec.ReadString(sSecao, 'descAjuste', '');
+                dtAjuste   := INIRec.ReadString(sSecao, 'dtAjuste', '');
+              end;
+
+              Inc(J);
+            end;
+
+            J := 1;
+            while true do
+            begin
+              // de 00 até 50
+              sSecao := 'infoProc' + IntToStrZero(I, 3) + IntToStrZero(J, 2);
+              sFim   := INIRec.ReadString(sSecao, 'tpProc', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+
+              with infoProc.Add do
+              begin
+                tpProc      := StrToTpProc(Ok, sFim);
+                nrProc      := INIRec.ReadString(sSecao, 'nrProc', '');
+                codSusp     := INIRec.ReadString(sSecao, 'codSusp', '');
+                vlrCPRBSusp := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrCPRBSusp', ''), 0);
+              end;
+
+              Inc(J);
+            end;
+          end;
+
+          Inc(I);
+        end;
+      end;
     end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
+  end;
 end;
 
 end.
-

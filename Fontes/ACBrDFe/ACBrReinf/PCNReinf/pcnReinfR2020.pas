@@ -33,154 +33,552 @@
 {******************************************************************************
 |* Historico
 |*
-|* 24/10/2017: Renato Rubinho
-|*  - Compatibilizado Fonte com Delphi 7
+|* 04/12/2017: Renato Rubinho
+|*  - Implementados registros que faltavam e isoladas as respectivas classes
 *******************************************************************************}
+
+{$I ACBr.inc}
 
 unit pcnReinfR2020;
 
 interface
 
 uses
-  Classes, Sysutils, pcnGerador, pcnConversaoReinf, ACBrReinfEventosBase,
-  pcnReinfClasses, pcnReinfR2010_Class, pcnReinfR2020_Class;
+  SysUtils, Classes,
+  pcnConversao, pcnGerador, ACBrUtil,
+  pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type
-  TR2020 = class(TEventoReinfRet)
+  TR2020Collection = class;
+  TR2020CollectionItem = class;
+  TevtServPrest = class;
+
+  {Classes específicas deste evento}
+  TinfoServPrest = class;
+  TideEstabPrest = class;
+  TideTomador = class;
+  TnfsCollection = class;
+  TnfsCollectionItem = class;
+  TinfoTpServCollection = class;
+  TinfoTpServCollectionItem = class;
+  TinfoProcRetPrCollection = class;
+  TinfoProcRetPrCollectionItem = class;
+  TinfoProcRetAdCollection = class;
+  TinfoProcRetAdCollectionItem = class;
+
+  TR2020Collection = class(TOwnedCollection)
   private
-    FinfoServPrest: TinfoServPrest;
-  protected
-    procedure GerarEventoXML; override;
-    procedure GerarideEstabPrest;
-    procedure GerarideTomador(Items: TideTomadors);
-    procedure GerarinfoProcRetPr(Items: TinfoProcRetPrs);
-    procedure GerarinfoProcRetAd(Items: TinfoProcRetPrs);
-    procedure GerarNFs(Items: Tnfss);
-    procedure GerarinfoTpServ(Items: TinfoTpServs);
+    function GetItem(Index: Integer): TR2020CollectionItem;
+    procedure SetItem(Index: Integer; Value: TR2020CollectionItem);
+  public
+    function Add: TR2020CollectionItem;
+    property Items[Index: Integer]: TR2020CollectionItem read GetItem write SetItem; default;
+  end;
+
+  TR2020CollectionItem = class(TCollectionItem)
+  private
+    FTipoEvento: TTipoEvento;
+    FevtServPrest: TevtServPrest;
+    procedure setevtServPrest(const Value: TevtServPrest);
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property infoServPrest: TinfoServPrest read FinfoServPrest;
+  published
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtServPrest: TevtServPrest read FevtServPrest write setevtServPrest;
+  end;
+
+  TevtServPrest = class(TReinfEvento) //Classe do elemento principal do XML do evento!
+  private
+    FIdeEvento: TIdeEvento2;
+    FideContri: TideContri;
+    FACBrReinf: TObject;
+    FinfoServPrest: TinfoServPrest;
+
+    {Geradores específicos desta classe}
+    procedure GerarideEstabPrest;
+    procedure GerarideTomador;
+    procedure GerarNFs(Lista: TnfsCollection);
+    procedure GerarinfoTpServ(Lista: TinfoTpServCollection);
+    procedure GerarinfoProcRetPr(Lista: TinfoProcRetPrCollection);
+    procedure GerarinfoProcRetAd(Lista: TinfoProcRetAdCollection);
+  public
+    constructor Create(AACBrReinf: TObject); overload;
+    destructor  Destroy; override;
+
+    function GerarXML: Boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property ideContri: TideContri read FideContri write FideContri;
+    property infoServPrest: TinfoServPrest read FinfoServPrest write FinfoServPrest;
+  end;
+
+  { TinfoServPrest }
+  TinfoServPrest = class(TPersistent)
+  private
+    FideEstabPrest: TideEstabPrest;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property ideEstabPrest: TideEstabPrest read FideEstabPrest write FideEstabPrest;
+  end;
+
+  { TideEstabPrest }
+  TideEstabPrest = class(TPersistent)
+  private
+    FtpInscEstabPrest: TtpInsc;
+    FnrInscEstabPrest: string;
+    FideTomador: TideTomador;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property tpInscEstabPrest: TtpInsc read FtpInscEstabPrest write FtpInscEstabPrest default tiCNPJ;
+    property nrInscEstabPrest: string read FnrInscEstabPrest write FnrInscEstabPrest;
+    property ideTomador: TideTomador read FideTomador write FideTomador;
+  end;
+
+  { TideTomador }
+  TideTomador = class(TPersistent)
+  private
+    FtpInscTomador: TtpInsc;
+    FnrInscTomador: string;
+    FindObra: TpindObra;
+    FvlrTotalBruto: Double;
+    FvlrTotalRetPrinc: Double;
+    FvlrTotalNRetPrinc: Double;
+    FvlrTotalRetAdic: Double;
+    FvlrTotalNRetAdic: Double;
+    FvlrTotalBaseRet: Double;
+    Fnfs: TnfsCollection;
+    FinfoProcRetPr: TinfoProcRetPrCollection;
+    FinfoProcRetAd: TinfoProcRetAdCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property tpInscTomador: TtpInsc read FtpInscTomador write FtpInscTomador default tiCNPJ;
+    property nrInscTomador: string read FnrInscTomador write FnrInscTomador;
+    property indObra: TpindObra read FindObra write FindObra;
+    property vlrTotalBruto: Double read FvlrTotalBruto write FvlrTotalBruto;
+    property vlrTotalBaseRet: Double read FvlrTotalBaseRet write FvlrTotalBaseRet;
+    property vlrTotalRetPrinc: Double read FvlrTotalRetPrinc write FvlrTotalRetPrinc;
+    property vlrTotalRetAdic: Double read FvlrTotalRetAdic write FvlrTotalRetAdic;
+    property vlrTotalNRetPrinc: Double read FvlrTotalNRetPrinc write FvlrTotalNRetPrinc;
+    property vlrTotalNRetAdic: Double read FvlrTotalNRetAdic write FvlrTotalNRetAdic;
+    property nfs: TnfsCollection read Fnfs write Fnfs;
+    property infoProcRetPr: TinfoProcRetPrCollection read FinfoProcRetPr write FinfoProcRetPr;
+    property infoProcRetAd: TinfoProcRetAdCollection read FinfoProcRetAd write FinfoProcRetAd;
+  end;
+
+  TnfsCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TnfsCollectionItem;
+    procedure SetItem(Index: Integer; Value: TnfsCollectionItem);
+  public
+    constructor create(AOwner: TideTomador);
+    function Add: TnfsCollectionItem;
+    property Items[Index: Integer]: TnfsCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TnfsCollectionItem = class(TCollectionItem)
+  private
+    Fserie: string;
+    FnumDocto: string;
+    FdtEmissaoNF: TDateTime;
+    FvlrBruto: Double;
+    Fobs: string;
+    FinfoTpServ: TinfoTpServCollection;
+  public
+    constructor create; reintroduce;
+    destructor Destroy; override;
+
+    property serie: string read Fserie write Fserie;
+    property numDocto: string read FnumDocto write FnumDocto;
+    property dtEmissaoNF: TDateTime read FdtEmissaoNF write FdtEmissaoNF;
+    property vlrBruto: Double read FvlrBruto write FvlrBruto;
+    property obs: string read Fobs write Fobs;
+    property infoTpServ: TinfoTpServCollection read FinfoTpServ write FinfoTpServ;
+  end;
+
+  TinfoTpServCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfoTpServCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoTpServCollectionItem);
+  public
+    constructor create(); reintroduce;
+    function Add: TinfoTpServCollectionItem;
+    property Items[Index: Integer]: TinfoTpServCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoTpServCollectionItem = class(TCollectionItem)
+  private
+    FtpServico: string;
+    FvlrBaseRet: Double;
+    FvlrRetencao: Double;
+    FvlrRetSub: Double;
+    FvlrNRetPrinc: Double;
+    FvlrServicos15: Double;
+    FvlrServicos20: Double;
+    FvlrServicos25: Double;
+    FvlrAdicional: Double;
+    FvlrNRetAdic: Double;
+  public
+    property tpServico: string read FtpServico write FtpServico;
+    property vlrBaseRet: Double read FvlrBaseRet write FvlrBaseRet;
+    property vlrRetencao: Double read FvlrRetencao write FvlrRetencao;
+    property vlrRetSub: Double read FvlrRetSub write FvlrRetSub;
+    property vlrNRetPrinc: Double read FvlrNRetPrinc write FvlrNRetPrinc;
+    property vlrServicos15: Double read FvlrServicos15 write FvlrServicos15;
+    property vlrServicos20: Double read FvlrServicos20 write FvlrServicos20;
+    property vlrServicos25: Double read FvlrServicos25 write FvlrServicos25;
+    property vlrAdicional: Double read FvlrAdicional write FvlrAdicional;
+    property vlrNRetAdic: Double read FvlrNRetAdic write FvlrNRetAdic;
+  end;
+
+  TinfoProcRetPrCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfoProcRetPrCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoProcRetPrCollectionItem);
+  public
+    constructor create(); reintroduce;
+    function Add: TinfoProcRetPrCollectionItem;
+    property Items[Index: Integer]: TinfoProcRetPrCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoProcRetPrCollectionItem = class(TCollectionItem)
+  private
+    FtpProcRetPrinc: TtpProc;
+    FnrProcRetPrinc: string;
+    FcodSuspPrinc: integer;
+    FvalorPrinc: Double;
+  public
+    property tpProcRetPrinc: TtpProc read  FtpProcRetPrinc write FtpProcRetPrinc;
+    property nrProcRetPrinc: string read FnrProcRetPrinc write FnrProcRetPrinc;
+    property codSuspPrinc: integer read FcodSuspPrinc write FcodSuspPrinc;
+    property valorPrinc: Double read FvalorPrinc write FvalorPrinc;
+  end;
+
+  TinfoProcRetAdCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfoProcRetAdCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoProcRetAdCollectionItem);
+  public
+    constructor create(); reintroduce;
+    function Add: TinfoProcRetAdCollectionItem;
+    property Items[Index: Integer]: TinfoProcRetAdCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfoProcRetAdCollectionItem = class(TCollectionItem)
+  private
+    FtpProcRetAdic: TtpProc;
+    FnrProcRetAdic: string;
+    FcodSuspAdic: integer;
+    FvalorAdic: Double;
+  public
+    property tpProcRetAdic: TtpProc read  FtpProcRetAdic write FtpProcRetAdic;
+    property nrProcRetAdic: string read FnrProcRetAdic write FnrProcRetAdic;
+    property codSuspAdic: integer read FcodSuspAdic write FcodSuspAdic;
+    property valorAdic: Double read FvalorAdic write FvalorAdic;
   end;
 
 implementation
 
 uses
-  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
+  IniFiles,
+  ACBrReinf, ACBrDFeUtil;
 
-{ TR2020 }
+{ TR2020Collection }
 
-procedure TR2020.AfterConstruction;
+function TR2020Collection.Add: TR2020CollectionItem;
+begin
+  Result := TR2020CollectionItem(inherited Add);
+end;
+
+function TR2020Collection.GetItem(Index: Integer): TR2020CollectionItem;
+begin
+  Result := TR2020CollectionItem(inherited GetItem(Index));
+end;
+
+procedure TR2020Collection.SetItem(Index: Integer; Value: TR2020CollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TR2020CollectionItem }
+
+procedure TR2020CollectionItem.AfterConstruction;
 begin
   inherited;
-  SetSchema(schevtServPrest);
+  FTipoEvento := teR2020;
+  FevtServPrest := TevtServPrest.Create(Collection.Owner);
+end;
+
+procedure TR2020CollectionItem.BeforeDestruction;
+begin
+  inherited;
+  FevtServPrest.Free;
+end;
+
+procedure TR2020CollectionItem.setevtServPrest(const Value: TevtServPrest);
+begin
+  FevtServPrest.Assign(Value);
+end;
+
+{ TevtServPrest }
+
+constructor TevtServPrest.Create(AACBrReinf: TObject);
+begin
+  inherited;
+
+  FACBrReinf := AACBrReinf;
+
+  FideContri     := TideContri.create;
+  FIdeEvento     := TIdeEvento2.create;
   FinfoServPrest := TinfoServPrest.Create;
 end;
 
-procedure TR2020.BeforeDestruction;
+destructor TevtServPrest.Destroy;
 begin
-  inherited;
+  FideContri.Free;
+  FIdeEvento.Free;
   FinfoServPrest.Free;
+
+  inherited;
 end;
 
-procedure TR2020.GerarEventoXML;
+{ TinfoServPrest }
+
+constructor TinfoServPrest.Create;
 begin
-  Gerador.wGrupo('infoServPrest');
-
-  GerarideEstabPrest;
-
-  Gerador.wGrupo('/infoServPrest');
+  FideEstabPrest := TideEstabPrest.Create;
 end;
 
-procedure TR2020.GerarideEstabPrest;
+destructor TinfoServPrest.Destroy;
+begin
+  FideEstabPrest.Free;
+
+  inherited;
+end;
+
+{ TideEstabPrest }
+
+constructor TideEstabPrest.Create;
+begin
+  FideTomador := TideTomador.Create;
+end;
+
+destructor TideEstabPrest.Destroy;
+begin
+  FideTomador.Free;
+
+  inherited;
+end;
+
+{ TideTomador }
+
+constructor TideTomador.Create;
+begin
+  Fnfs           := TnfsCollection.Create(Self);
+  FinfoProcRetPr := TinfoProcRetPrCollection.Create;
+  FinfoProcRetAd := TinfoProcRetAdCollection.create;
+end;
+
+destructor TideTomador.Destroy;
+begin
+  Fnfs.Free;
+  FinfoProcRetPr.Free;
+  FinfoProcRetAd.Free;
+
+  inherited;
+end;
+
+{ TnfsCollection }
+
+function TnfsCollection.Add: TnfsCollectionItem;
+begin
+  Result := TnfsCollectionItem(inherited add());
+  Result.Create;
+end;
+
+constructor TnfsCollection.create(AOwner: TideTomador);
+begin
+  Inherited create(TnfsCollectionItem);
+end;
+
+function TnfsCollection.GetItem(
+  Index: Integer): TnfsCollectionItem;
+begin
+  Result := TnfsCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TnfsCollection.SetItem(Index: Integer;
+  Value: TnfsCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TnfsCollectionItem }
+
+constructor TnfsCollectionItem.create;
+begin
+  FinfoTpServ := TinfoTpServCollection.Create;
+end;
+
+destructor TnfsCollectionItem.Destroy;
+begin
+  FinfoTpServ.Free;
+
+  inherited;
+end;
+
+{ TinfoTpServCollection }
+
+function TinfoTpServCollection.Add: TinfoTpServCollectionItem;
+begin
+  Result := TinfoTpServCollectionItem(inherited add());
+//  Result.Create;
+end;
+
+constructor TinfoTpServCollection.create();
+begin
+  Inherited create(TinfoTpServCollectionItem);
+end;
+
+function TinfoTpServCollection.GetItem(
+  Index: Integer): TinfoTpServCollectionItem;
+begin
+  Result := TinfoTpServCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfoTpServCollection.SetItem(Index: Integer;
+  Value: TinfoTpServCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfoProcRetPrCollection }
+
+function TinfoProcRetPrCollection.Add: TinfoProcRetPrCollectionItem;
+begin
+  Result := TinfoProcRetPrCollectionItem(inherited add());
+//  Result.Create;
+end;
+
+constructor TinfoProcRetPrCollection.create;
+begin
+  Inherited create(TinfoProcRetPrCollectionItem);
+end;
+
+function TinfoProcRetPrCollection.GetItem(
+  Index: Integer): TinfoProcRetPrCollectionItem;
+begin
+  Result := TinfoProcRetPrCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfoProcRetPrCollection.SetItem(Index: Integer;
+  Value: TinfoProcRetPrCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfoProcRetAdCollection }
+
+function TinfoProcRetAdCollection.Add: TinfoProcRetAdCollectionItem;
+begin
+  Result := TinfoProcRetAdCollectionItem(inherited add());
+//  Result.Create;
+end;
+
+constructor TinfoProcRetAdCollection.create;
+begin
+  Inherited create(TinfoProcRetAdCollectionItem);
+end;
+
+function TinfoProcRetAdCollection.GetItem(
+  Index: Integer): TinfoProcRetAdCollectionItem;
+begin
+  Result := TinfoProcRetAdCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfoProcRetAdCollection.SetItem(Index: Integer;
+  Value: TinfoProcRetAdCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+procedure TevtServPrest.GerarideEstabPrest;
 begin
   Gerador.wGrupo('ideEstabPrest');
 
-  Gerador.wCampo(tcStr, '', 'tpInscEstabPrest', 1,  1, 1, TpInscricaoToStr( Self.FinfoServPrest.ideEstabPrest.tpInscEstabPrest ) );
+  Gerador.wCampo(tcStr, '', 'tpInscEstabPrest', 1,  1, 1, TpInscricaoToStr(Self.FinfoServPrest.ideEstabPrest.tpInscEstabPrest));
   Gerador.wCampo(tcStr, '', 'nrInscEstabPrest', 1, 14, 1, Self.FinfoServPrest.ideEstabPrest.nrInscEstabPrest);
 
-  GerarideTomador(Self.FinfoServPrest.ideEstabPrest.ideTomadors);
+  GerarideTomador;
 
   Gerador.wGrupo('/ideEstabPrest');
 end;
 
-procedure TR2020.GerarideTomador(Items: TideTomadors);
-var
-  item: TideTomador;
-  i: Integer;
+procedure TevtServPrest.GerarideTomador;
 begin
-  for i:=0 to Items.Count - 1 do
+  Gerador.wGrupo('ideTomador');
+
+  with Self.FinfoServPrest.ideEstabPrest do
   begin
-    Item := Items.Items[i];
+    Gerador.wCampo(tcStr, '', 'tpInscTomador',     1,  1, 1, TpInscricaoToStr(ideTomador.tpInscTomador));
+    Gerador.wCampo(tcStr, '', 'nrInscTomador',     1, 14, 1, ideTomador.nrInscTomador);
+    Gerador.wCampo(tcStr, '', 'indObra',           1,  1, 1, indObraToStr(ideTomador.indObra));
+    Gerador.wCampo(tcDe2, '', 'vlrTotalBruto',     1, 14, 1, ideTomador.vlrTotalBruto);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalBaseRet',   1, 14, 1, ideTomador.vlrTotalBaseRet);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalRetPrinc',  1, 14, 1, ideTomador.vlrTotalRetPrinc);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalRetAdic',   1, 14, 0, ideTomador.vlrTotalRetAdic);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetPrinc', 1, 14, 0, ideTomador.vlrTotalNRetPrinc);
+    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetAdic',  1, 14, 0, ideTomador.vlrTotalNRetAdic);
 
-    Gerador.wGrupo('ideTomador');
-
-    Gerador.wCampo(tcStr, '', 'tpInscTomador',     1,  1, 1, TpInscricaoToStr(item.tpInscTomador));
-    Gerador.wCampo(tcStr, '', 'nrInscTomador',     1, 14, 1, item.nrInscTomador);
-    Gerador.wCampo(tcStr, '', 'indObra',           1,  1, 1, indObraToStr(item.indObra));
-    Gerador.wCampo(tcDe2, '', 'vlrTotalBruto',     1, 14, 1, item.vlrTotalBruto);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalBaseRet',   1, 14, 1, item.vlrTotalBaseRet);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalRetPrinc',  1, 14, 1, item.vlrTotalRetPrinc);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalRetAdic',   1, 14, 0, item.vlrTotalRetAdic);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetPrinc', 1, 14, 0, item.vlrTotalNRetPrinc);
-    Gerador.wCampo(tcDe2, '', 'vlrTotalNRetAdic',  1, 14, 0, item.vlrTotalNRetAdic);
-
-    GerarNFs(item.nfss);
-    GerarinfoProcRetPr(item.infoProcRetPr);
-    GerarinfoProcRetAd(item.infoProcRetAd);
-
-    Gerador.wGrupo('/ideTomador');
+    GerarNFs(ideTomador.nfs);
+    GerarinfoProcRetPr(ideTomador.infoProcRetPr);
+    GerarinfoProcRetAd(ideTomador.infoProcRetAd);
   end;
+
+  Gerador.wGrupo('/ideTomador');
 end;
 
-procedure TR2020.GerarinfoProcRetAd(Items: TinfoProcRetPrs);
+procedure TevtServPrest.GerarNFs(Lista: TnfsCollection);
 var
-  Item: TinfoProcRetPr;
+  item: TnfsCollectionItem;
   i: Integer;
 begin
-  for i:=0 to Items.Count - 1 do
+  for i := 0 to Lista.Count - 1 do
   begin
-    Item := Items.Items[i];
+    Item := Lista.Items[i];
 
-    Gerador.wGrupo('infoProcRetAd');
+    Gerador.wGrupo('nfs');
 
-    Gerador.wCampo(tcStr, '', 'tpProcRetPrinc', 1,  1, 1, TpProcToStr(item.tpProcRetPrinc));
-    Gerador.wCampo(tcStr, '', 'nrProcRetPrinc', 1, 21, 1, item.nrProcRetPrinc);
-    Gerador.wCampo(tcInt, '', 'codSuspPrinc',   1, 14, 0, item.codSuspPrinc);
-    Gerador.wCampo(tcDe2, '', 'valorPrinc',     1, 14, 1, item.valorPrinc);
+    Gerador.wCampo(tcStr, '', 'serie',        1,   5, 1, item.serie);
+    Gerador.wCampo(tcStr, '', 'numDocto',     1,  15, 1, item.numDocto);
+    Gerador.wCampo(tcDat, '', 'dtEmissaoNF', 10,  10, 1, item.dtEmissaoNF);
+    Gerador.wCampo(tcDe2, '', 'vlrBruto',     1,  14, 1, item.vlrBruto);
+    Gerador.wCampo(tcStr, '', 'obs',          1, 255, 0, item.obs);
 
-    Gerador.wGrupo('/infoProcRetAd');
+    GerarinfoTpServ(item.infoTpServ);
+
+    Gerador.wGrupo('/nfs');
   end;
+
+  if Lista.Count > 999 then
+    Gerador.wAlerta('', 'nfs', 'Lista de Notas Fiscais', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-procedure TR2020.GerarinfoProcRetPr(Items: TinfoProcRetPrs);
+procedure TevtServPrest.GerarinfoTpServ(Lista: TinfoTpServCollection);
 var
-  Item: TinfoProcRetPr;
+  item: TinfoTpServCollectionItem;
   i: Integer;
 begin
-  for i:=0 to Items.Count - 1 do
+  for i := 0 to Lista.Count - 1 do
   begin
-    Item := Items.Items[i];
-
-    Gerador.wGrupo('infoProcRetPr');
-
-    Gerador.wCampo(tcStr, '', 'tpProcRetPrinc', 1,  1, 1, TpProcToStr(item.tpProcRetPrinc));
-    Gerador.wCampo(tcStr, '', 'nrProcRetPrinc', 1, 21, 1, item.nrProcRetPrinc);
-    Gerador.wCampo(tcInt, '', 'codSuspPrinc',   1, 14, 0, item.codSuspPrinc);
-    Gerador.wCampo(tcDe2, '', 'valorPrinc',     1, 14, 1, item.valorPrinc);
-
-    Gerador.wGrupo('/infoProcRetPr');
-  end;
-end;
-
-procedure TR2020.GerarinfoTpServ(Items: TinfoTpServs);
-var
-  Item: TinfoTpServ;
-  i: Integer;
-begin
-  for i:=0 to Items.Count - 1 do
-  begin
-    Item := Items.Items[i];
+    Item := Lista.Items[i];
 
     Gerador.wGrupo('infoTpServ');
 
@@ -197,28 +595,235 @@ begin
 
     Gerador.wGrupo('/infoTpServ');
   end;
+
+  if Lista.Count > 9 then
+    Gerador.wAlerta('', 'infoTpServ', 'Lista de Informações sobre os tipos de serviços', ERR_MSG_MAIOR_MAXIMO + '9');
 end;
 
-procedure TR2020.GerarNFs(Items: Tnfss);
+procedure TevtServPrest.GerarinfoProcRetPr(Lista: TinfoProcRetPrCollection);
 var
-  item: TNFs;
+  item: TinfoProcRetPrCollectionItem;
   i: Integer;
 begin
-  for i:=0 to Items.Count - 1 do
+  for i := 0 to Lista.Count - 1 do
   begin
-    Item := Items.Items[i];
+    Item := Lista.Items[i];
 
-    Gerador.wGrupo('nfs');
+    Gerador.wGrupo('infoProcRetPr');
 
-    Gerador.wCampo(tcStr, '', 'serie',        1,   5, 1, item.serie);
-    Gerador.wCampo(tcStr, '', 'numDocto',     1,  15, 1, item.numDocto);
-    Gerador.wCampo(tcDat, '', 'dtEmissaoNF', 10,  10, 1, item.dtEmissaoNF);
-    Gerador.wCampo(tcDe2, '', 'vlrBruto',     1,  14, 1, item.vlrBruto);
-    Gerador.wCampo(tcStr, '', 'obs',          1, 250, 0, item.obs);
+    Gerador.wCampo(tcStr, '', 'tpProcRetPrinc', 1,  1, 1, TpProcToStr(item.tpProcRetPrinc));
+    Gerador.wCampo(tcStr, '', 'nrProcRetPrinc', 1, 21, 1, item.nrProcRetPrinc);
+    Gerador.wCampo(tcInt, '', 'codSuspPrinc',   1, 14, 0, item.codSuspPrinc);
+    Gerador.wCampo(tcDe2, '', 'valorPrinc',     1, 14, 1, item.valorPrinc);
 
-    GerarinfoTpServ(item.infoTpServs);
+    Gerador.wGrupo('/infoProcRetPr');
+  end;
 
-    Gerador.wGrupo('/nfs');
+  if Lista.Count > 50 then
+    Gerador.wAlerta('', 'infoProcRetPr', 'Lista de Processos', ERR_MSG_MAIOR_MAXIMO + '50');
+end;
+
+procedure TevtServPrest.GerarinfoProcRetAd(Lista: TinfoProcRetAdCollection);
+var
+  item: TinfoProcRetAdCollectionItem;
+  i: Integer;
+begin
+  for i := 0 to Lista.Count - 1 do
+  begin
+    Item := Lista.Items[i];
+
+    Gerador.wGrupo('infoProcRetAd');
+
+    Gerador.wCampo(tcStr, '', 'tpProcRetAdic', 1,  1, 1, TpProcToStr(item.tpProcRetAdic));
+    Gerador.wCampo(tcStr, '', 'nrProcRetAdic', 1, 21, 1, item.nrProcRetAdic);
+    Gerador.wCampo(tcInt, '', 'codSuspAdic',   1, 14, 0, item.codSuspAdic);
+    Gerador.wCampo(tcDe2, '', 'valorAdic',     1, 14, 1, item.valorAdic);
+
+    Gerador.wGrupo('/infoProcRetAd');
+  end;
+
+  if Lista.Count > 50 then
+    Gerador.wAlerta('', 'infoProcRetAd', 'Lista de Processos', ERR_MSG_MAIOR_MAXIMO + '50');
+end;
+
+function TevtServPrest.GerarXML: Boolean;
+begin
+  try
+    Self.VersaoDF := TACBrReinf(FACBrReinf).Configuracoes.Geral.VersaoDF;
+
+    Self.Id := GerarChaveReinf(now, self.ideContri.NrInsc, self.Sequencial);
+
+    GerarCabecalho('evtPrestadorServicos');
+    Gerador.wGrupo('evtServPrest id="' + Self.Id + '"');
+
+    GerarIdeEvento2(Self.IdeEvento);
+    GerarideContri(Self.ideContri);
+
+    Gerador.wGrupo('infoServPrest');
+
+    GerarideEstabPrest;
+
+    Gerador.wGrupo('/infoServPrest');
+    Gerador.wGrupo('/evtServPrest');
+
+    GerarRodape;
+
+    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtServPrest');
+
+    Validar(schevtPrestadorServicos);
+  except on e:exception do
+    raise Exception.Create(e.Message);
+  end;
+
+  Result := (Gerador.ArquivoFormatoXML <> '');
+end;
+
+function TevtServPrest.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I, J: Integer;
+begin
+  Result := False;
+
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
+
+    with Self do
+    begin
+      sSecao := 'evtServPrest';
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif := StrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.perApur  := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      ideEvento.TpAmb    := StrTotpAmbReinf(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
+      ideEvento.ProcEmi  := StrToProcEmiReinf(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc  := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideContri';
+      ideContri.OrgaoPublico := (TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte = tcOrgaoPublico);
+      ideContri.TpInsc       := StrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideContri.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideEstabPrest';
+      infoServPrest.ideEstabPrest.tpInscEstabPrest := StrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscEstabPrest', '1'));
+      infoServPrest.ideEstabPrest.nrInscEstabPrest := INIRec.ReadString(sSecao, 'nrInscEstabPrest', EmptyStr);
+
+      with infoServPrest.ideEstabPrest do
+      begin
+        sSecao := 'ideTomador';
+        ideTomador.tpInscTomador     := StrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscTomador', '1'));
+        ideTomador.nrInscTomador     := INIRec.ReadString(sSecao, 'nrInscTomador', EmptyStr);
+        ideTomador.indObra           := StrToindObra(Ok, INIRec.ReadString(sSecao, 'indObra', '1'));
+        ideTomador.vlrTotalBruto     := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalBruto', ''), 0);
+        ideTomador.vlrTotalBaseRet   := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalBaseRet', ''), 0);
+        ideTomador.vlrTotalRetPrinc  := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalRetPrinc', ''), 0);
+        ideTomador.vlrTotalRetAdic   := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalRetAdic', ''), 0);
+        ideTomador.vlrTotalNRetPrinc := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalNRetPrinc', ''), 0);
+        ideTomador.vlrTotalNRetAdic  := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalNRetAdic', ''), 0);
+
+        I := 1;
+        while true do
+        begin
+          // de 01 até 999
+          sSecao := 'nfs' + IntToStrZero(I, 3);
+          sFim   := INIRec.ReadString(sSecao, 'serie', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with ideTomador.nfs.Add do
+          begin
+            serie       := sFim;
+            numDocto    := INIRec.ReadString(sSecao, 'numDocto', '');
+            dtEmissaoNF := StringToDateTime(INIRec.ReadString(sSecao, 'dtEmissaoNF', '0'));
+            vlrBruto    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBruto', ''), 0);
+            obs         := INIRec.ReadString(sSecao, 'obs', '');
+
+            J := 1;
+            while true do
+            begin
+              // de 1 até 9
+              sSecao := 'infoTpServ' + IntToStrZero(I, 3) + IntToStrZero(J, 1);
+              sFim   := INIRec.ReadString(sSecao, 'tpServico', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+
+              with infoTpServ.Add do
+              begin
+                tpServico     := sFim;
+                vlrBaseRet    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBaseRet', ''), 0);
+                vlrRetencao   := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRetencao', ''), 0);
+                vlrRetSub     := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRetSub', ''), 0);
+                vlrNRetPrinc  := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrNRetPrinc', ''), 0);
+                vlrServicos15 := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrServicos15', ''), 0);
+                vlrServicos20 := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrServicos20', ''), 0);
+                vlrServicos25 := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrServicos25', ''), 0);
+                vlrAdicional  := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrAdicional', ''), 0);
+                vlrNRetAdic   := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrNRetAdic', ''), 0);
+              end;
+
+              Inc(J);
+            end;
+          end;
+
+          Inc(I);
+        end;
+
+        I := 1;
+        while true do
+        begin
+          // de 00 até 50
+          sSecao := 'infoProcRetPr' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'tpProcRetPrinc', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with ideTomador.infoProcRetPr.Add do
+          begin
+            tpProcRetPrinc := StrToTpProc(Ok, sFim);
+            nrProcRetPrinc := INIRec.ReadString(sSecao, 'nrProcRetPrinc', '');
+            codSuspPrinc   := INIRec.ReadInteger(sSecao, 'codSuspPrinc', 0);
+            valorPrinc     := StringToFloatDef(INIRec.ReadString(sSecao, 'valorPrinc', ''), 0);
+          end;
+
+          Inc(I);
+        end;
+
+        I := 1;
+        while true do
+        begin
+          // de 00 até 50
+          sSecao := 'infoProcRetAd' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'tpProcRetAdic', 'FIM');
+
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with ideTomador.infoProcRetAd.Add do
+          begin
+            tpProcRetAdic := StrToTpProc(Ok, sFim);
+            nrProcRetAdic := INIRec.ReadString(sSecao, 'nrProcRetAdic', '');
+            codSuspAdic   := INIRec.ReadInteger(sSecao, 'codSuspAdic', 0);
+            valorAdic     := StringToFloatDef(INIRec.ReadString(sSecao, 'valorAdic', ''), 0);
+          end;
+
+          Inc(I);
+        end;
+      end;
+    end;
+
+    GerarXML;
+
+    Result := True;
+  finally
+     INIRec.Free;
   end;
 end;
 

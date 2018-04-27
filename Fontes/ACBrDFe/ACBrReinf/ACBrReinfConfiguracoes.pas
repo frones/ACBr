@@ -30,6 +30,12 @@
 {                                                                              }
 { Leivio Ramos de Fontenele  -  leivio@yahoo.com.br                            }
 {******************************************************************************}
+{******************************************************************************
+|* Historico
+|*
+|* 24/10/2017: Renato Rubinho
+|*  - Compatibilizado Fonte com Delphi 7
+*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -37,34 +43,32 @@ unit ACBrReinfConfiguracoes;
 
 interface
 
-
 uses
   Classes, SysUtils, IniFiles,
   ACBrDFeConfiguracoes, pcnConversao,
   pcnConversaoReinf;
 
 type
-
   { TGeralConfReinf }
   TGeralConfReinf = class(TGeralConf)
   private
     FVersaoDF: TVersaoReinf;
+    FIdTransmissor: string;
     FIdContribuinte: string;
-    FTipoContribuinte: TtpInsc;
+    FTipoContribuinte: TContribuinte;
 
     procedure SetVersaoDF(const Value: TVersaoReinf);
-    procedure SetTipoContribuinte(const Value: TtpInsc);
-
+    procedure SetTipoContribuinte(const Value: TContribuinte);
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfReinf: TGeralConfReinf); reintroduce;
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
-
   published
-    property VersaoDF: TVersaoReinf read FVersaoDF write SetVersaoDF default v1_02_00;
+    property VersaoDF: TVersaoReinf read FVersaoDF write SetVersaoDF default v1_03_00;
     property IdContribuinte: string read FIdContribuinte write FIdContribuinte;
-    property TipoContribuinte: TtpInsc read FTipoContribuinte write SetTipoContribuinte default tiCNPJ;
+    property IdTransmissor: string read FIdTransmissor write FIdTransmissor;
+    property TipoContribuinte: TContribuinte read FTipoContribuinte write SetTipoContribuinte default tcPessoaJuridica;
   end;
 
   { TArquivosConfReinf }
@@ -72,7 +76,6 @@ type
   private
     FEmissaoPathReinf: Boolean;
     FPathReinf: String;
-
   public
     constructor Create(AOwner: TConfiguracoes); override;
 
@@ -81,7 +84,6 @@ type
     procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathReinf(Data: TDateTime = 0; CNPJ: String = ''): String;
-
   published
     property EmissaoPathReinf: Boolean read FEmissaoPathReinf write FEmissaoPathReinf default False;
     property PathReinf: String read FPathReinf write FPathReinf;
@@ -97,6 +99,7 @@ type
     procedure CreateArquivosConf; override;
   public
     constructor Create(AOwner: TComponent); override;
+
     procedure Assign(DeConfiguracoesReinf: TConfiguracoesReinf); reintroduce;
   published
     property Geral: TGeralConfReinf read GetGeral;
@@ -154,9 +157,10 @@ constructor TGeralConfReinf.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
-  FVersaoDF := v1_02_00;
+  FVersaoDF := v1_03_00;
+  FIdTransmissor := '';
   FIdContribuinte := '';
-  FTipoContribuinte := tiCNPJ;
+  FTipoContribuinte := tcPessoaJuridica;
 end;
 
 procedure TGeralConfReinf.Assign(DeGeralConfReinf: TGeralConfReinf);
@@ -164,13 +168,9 @@ begin
   inherited Assign(DeGeralConfReinf);
 
   VersaoDF := DeGeralConfReinf.VersaoDF;
+  IdTransmissor := DeGeralConfReinf.IdTransmissor;
   IdContribuinte := DeGeralConfReinf.IdContribuinte;
   TipoContribuinte := DeGeralConfReinf.TipoContribuinte;
-end;
-
-procedure TGeralConfReinf.SetTipoContribuinte(const Value: TtpInsc);
-begin
-  FTipoContribuinte := Value;
 end;
 
 procedure TGeralConfReinf.SetVersaoDF(const Value: TVersaoReinf);
@@ -183,6 +183,7 @@ begin
   inherited GravarIni(AIni);
 
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdTransmissor', IdTransmissor);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdContribuinte', IdContribuinte);
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'TipoContribuinte', Integer(TipoContribuinte));
 end;
@@ -192,8 +193,14 @@ begin
   inherited LerIni(AIni);
 
   VersaoDF := TVersaoReinf(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+  IdTransmissor := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdTransmissor', IdTransmissor);
   IdContribuinte := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdContribuinte', IdContribuinte);
-  TipoContribuinte := TtpInsc(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'TipoContribuinte', Integer(TipoContribuinte)));
+  TipoContribuinte := TContribuinte(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'TipoContribuinte', Integer(TipoContribuinte)));
+end;
+
+procedure TGeralConfReinf.SetTipoContribuinte(const Value: TContribuinte);
+begin
+  FTipoContribuinte := Value;
 end;
 
 { TArquivosConfReinf }
@@ -218,7 +225,7 @@ end;
 function TArquivosConfReinf.GetPathReinf(Data: TDateTime;
   CNPJ: String): String;
 begin
-  Result := GetPath(PathReinf, ACBRREINF_MODELODF, CNPJ, Data, ACBRREINF_MODELODF);
+  Result := GetPath(PathReinf, ACBRReinf_MODELODF, CNPJ, Data, ACBRReinf_MODELODF);
 end;
 
 procedure TArquivosConfReinf.GravarIni(const AIni: TCustomIniFile);

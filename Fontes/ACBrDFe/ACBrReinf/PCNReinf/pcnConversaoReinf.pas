@@ -34,12 +34,12 @@
 |* Historico
 |*
 |* 04/12/2017: Renato Rubinho
-|*  - Implementados registros que faltavam e isoladas as respectivas classes 
+|*  - Implementados registros que faltavam e isoladas as respectivas classes
 *******************************************************************************}
 
-unit pcnConversaoReinf;
-
 {$I ACBr.inc}
+
+unit pcnConversaoReinf;
 
 interface
 
@@ -48,21 +48,29 @@ uses
 
 type
 
+  TContribuinte           = (tcPessoaJuridica, tcOrgaoPublico, tcPessoaFisica);
+
+  TTipoEvento             = (teR1000, teR1070, teR2010, teR2020, teR2030,
+                             teR2040, teR2050, teR2060, teR2070, teR2098,
+                             teR2099, teR3010, teR5001, teR5011, teR9000);
+
+  TtpAmb                  = (taNenhum, taProducao, taProducaoRestritaDadosReais);
+
+  TprocEmi                = (peNenhum, peAplicEmpregador, peAplicGoverno);
+
+  TStatusReinf            = (stIdle, stEnvLoteEventos, stConsultaLote);
+
+  TLayOutReinf            = (LayEnvioLoteEventos, LayConsultaLoteEventos);
+
+  TEventosReinf           = (erEnvioLote, erRetornoLote, erEnvioConsulta, erRetornoConsulta);
+
   TtpInsc                 = (tiCNPJ, tiCPF, tiCNO);
 
   TtpInscProp             = (tpCNPJ, tpCPF);
 
-  TLayOutReinf            = (LayEnvioLoteEventos, LayConsultaLoteEventos);
-
-  TStatusReinf            = (stIdle, stEnvLoteEventos, stConsultaLote);
-
-  TindOperacao            = (toInclusao, toAlteracao, toExclusao);
-
-  TtpAmb                  = (taNenhum, taProducao, taProducaoRestritaDadosReais, taProducaoRestritaDadosFicticios);
+  TTipoOperacao           = (toInclusao, toAlteracao, toExclusao);
 
   TtpSimNao               = (tpSim, tpNao);
-
-  TprocEmi                = (peNenhum, peAplicEmpregador, peAplicGoverno);
 
   TpIndCoop               = (icNaoecooperativa, icCooperativadeTrabalho, icCooperativadeProducao, icOutrasCooperativas );
 
@@ -79,10 +87,6 @@ type
                              siSentenca1instanciaNaoTransitadaJulgadoEfeitoSusp,
                              siDecisaoDefinitivaAFavorDoContribuinte,
                              siSemSuspensaoDaExigibilidade);
-
-  TTipoEvento             = (teR1000, teR1070, teR2010, teR2020, teR2030,
-                             teR2040, teR2050, teR2060, teR2070, teR2098,
-                             teR2099, teR3010, teR5001, teR5011, teR9000);
 
   TindSitPJ               = (spNormal, spExtincao, spFusao, spCisao, spIncorporacao);
 
@@ -101,21 +105,21 @@ type
                              tprJudicialPrestador);
 
   TReinfSchema            = (
-                            schevtInfoContri,         // R-1000 - Informações do Contribuinte
-                            schevtTabProcesso,        // R-1070 - Tabela de Processos Administrativos/Judiciais
-                            schevtServTom,            // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
-                            schevtServPrest,          // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
-                            schevtAssocDespRec,       // R-2030 - Recursos Recebidos por Associação Desportiva
-                            schevtAssocDespRep,       // R-2040 - Recursos Repassados para Associação Desportiva
-                            schevtComProd,            // R-2050 - Comercialização da Produção por Produtor Rural PJ/Agroindústria
-                            schevtCPRB,               // R-2060 - Contribuição Previdenciária sobre a Receita Bruta - CPRB
+                            schevtInfoContribuinte,           // R-1000 - Informações do Contribuinte
+                            schevtTabProcesso,                // R-1070 - Tabela de Processos Administrativos/Judiciais
+                            schevtTomadorServicos,            // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
+                            schevtPrestadorServicos,          // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
+                            schevtRecursoRecebidoAssociacao,  // R-2030 - Recursos Recebidos por Associação Desportiva
+                            schevtRecursoRepassadoAssociacao, // R-2040 - Recursos Repassados para Associação Desportiva
+                            schevtInfoProdRural,              // R-2050 - Comercialização da Produção por Produtor Rural PJ/Agroindústria
+                            schevtInfoCPRB,                   // R-2060 - Contribuição Previdenciária sobre a Receita Bruta - CPRB
                             schevtPgtosDivs,          // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
-                            schevtReabreEvPer,        // R-2098 - Reabertura dos Eventos Periódicos
-                            schevtFechaEvPer,         // R-2099 - Fechamento dos Eventos Periódicos
+                            schevtReabreEvPer,                // R-2098 - Reabertura dos Eventos Periódicos
+                            schevtFechamento,                 // R-2099 - Fechamento dos Eventos Periódicos
                             schevtEspDesportivo,      // R-3010 - Receita de Espetáculo Desportivo
-                            schevtTotal,              // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
-                            schevtTotalConsolid,      // R-5011 - Informações de bases e tributos consolidadas por período de apuração
-                            schevtExclusao,           // R-9000 - Exclusão de Eventos
+                            schevtTotal,                      // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
+                            schevtTotalConsolid,              // R-5011 - Informações de bases e tributos consolidadas por período de apuração
+                            schevtExclusao,                   // R-9000 - Exclusão de Eventos
                             schErro, schConsultaLoteEventos, schEnvioLoteEventos
                             );
 
@@ -215,53 +219,62 @@ type
                               ttiCamarote      // 4 - Camarote
                             );
 
-  TtpReceita              = ( ttrTransmissso, // 1 - Transmissão
+  TtpReceita              = ( ttrTransmissao, // 1 - Transmissão
                               ttrPropaganda,  // 2 - Propaganda
                               ttrPublicidade, // 3 - Publicidade
                               ttrSorteio,     // 4 - Sorteio
                               ttrOutros       // 5 - Outros
                             );
 
-  TVersaoReinf            = ( v1_02_00, // v1.2
-                              v1_03_00  // v1.3
-                            );
+  TVersaoReinf            = ( v1_02_00, v1_03_00, v1_03_02 );
+
+  // ct00 não consta no manual mas consta no manual do desenvolvedor pg 85, é usado para zerar a base de teste.
+  TpClassTrib = (ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
+                 ct13, ct14, ct21, ct22, ct60, ct70, ct80, ct85, ct99);
 
 const
   PrefixVersao = '-v';
 
-  TReinfSchemaStr : array[0..14] of string = ('evtInfoContribuinte',                 // R-1000 - Informações do Contribuinte
-                                              'evtTabProcesso',                      // R-1070 - Tabela de Processos Administrativos/Judiciais
-                                              'evtTomadorServicos',                  // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
-                                              'evtPrestadorServicos',                // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
-                                              'evtRecursoRecebidoAssociacao',        // R-2030 - Recursos Recebidos por Associação Desportiva
-                                              'evtRecursoRepassadoAssociacao',       // R-2040 - Recursos Repassados para Associação Desportiva
-                                              'evtInfoProdRural',                    // R-2050 - Comercialização da Produção por Produtor Rural PJ/Agroindústria
-                                              'evtInfoCPRB',                         // R-2060 - Contribuição Previdenciária sobre a Receita Bruta - CPRB
-                                              'evtPagamentosDiversos',               // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
-                                              'evtReabreEvPer',                      // R-2098 - Reabertura dos Eventos Periódicos
-                                              'evtFechamento',                       // R-2099 - Fechamento dos Eventos Periódicos
-                                              'evtEspDesportivo',                    // R-3010 - Receita de Espetáculo Desportivo
-                                              'evtTotal',                            // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
-                                              'evtTotalConsolid',                    // R-5011 - Informações de bases e tributos consolidadas por período de apuração
-                                              'evtExclusao'                          // R-9000 - Exclusão de Eventos
-                                              );
+  TTipoEventoString: array[0..14] of String =('R-1000', 'R-1070', 'R-2010',
+                                              'R-2020', 'R-2030', 'R-2040',
+                                              'R-2050', 'R-2060', 'R-2070',
+                                              'R-2098', 'R-2099', 'R-3010',
+                                              'R-5001', 'R-5011', 'R-9000'
+                                                   );
+
+  TReinfSchemaStr: array[0..14] of string = ('evtInfoContribuinte',                 // R-1000 - Informações do Contribuinte
+                                             'evtTabProcesso',                      // R-1070 - Tabela de Processos Administrativos/Judiciais
+                                             'evtTomadorServicos',                  // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
+                                             'evtPrestadorServicos',                // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
+                                             'evtRecursoRecebidoAssociacao',        // R-2030 - Recursos Recebidos por Associação Desportiva
+                                             'evtRecursoRepassadoAssociacao',       // R-2040 - Recursos Repassados para Associação Desportiva
+                                             'evtInfoProdRural',                    // R-2050 - Comercialização da Produção por Produtor Rural PJ/Agroindústria
+                                             'evtInfoCPRB',                         // R-2060 - Contribuição Previdenciária sobre a Receita Bruta - CPRB
+                                             'evtPagamentosDiversos',               // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
+                                             'evtReabreEvPer',                      // R-2098 - Reabertura dos Eventos Periódicos
+                                             'evtFechamento',                       // R-2099 - Fechamento dos Eventos Periódicos
+                                             'evtEspDesportivo',                    // R-3010 - Receita de Espetáculo Desportivo
+                                             'evtTotal',                            // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
+                                             'evtTotalConsolid',                    // R-5011 - Informações de bases e tributos consolidadas por período de apuração
+                                             'evtExclusao'                          // R-9000 - Exclusão de Eventos
+                                            );
 
-  TReinfSchemaRegistro : array[0..14] of string = ('R-1000', // rsevtInfoContri    - Informações do Contribuinte
-                                                   'R-1070', // rsevtTabProcesso   - Tabela de Processos Administrativos/Judiciais
-                                                   'R-2010', // rsevtServTom       - Retenção Contribuição Previdenciária - Serviços Tomados
-                                                   'R-2020', // rsevtServPrest     - Retenção Contribuição Previdenciária - Serviços Prestados
-                                                   'R-2030', // rsevtAssocDespRec  - Recursos Recebidos por Associação Desportiva
-                                                   'R-2040', // rsevtAssocDespRep  - Recursos Repassados para Associação Desportiva
-                                                   'R-2050', // rsevtComProd       - Comercialização da Produção por Produtor Rural PJ/Agroindústria
-                                                   'R-2060', // rsevtCPRB          - Contribuição Previdenciária sobre a Receita Bruta - CPRB
-                                                   'R-2070', // rsevtPgtosDivs     - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
-                                                   'R-2098', // rsevtReabreEvPer   - Reabertura dos Eventos Periódicos
-                                                   'R-2099', // rsevtFechaEvPer    - Fechamento dos Eventos Periódicos
-                                                   'R-3010', // rsevtEspDesportivo - Receita de Espetáculo Desportivo
-                                                   'R-5001', // rsevtTotal         - Informações das bases e dos tributos consolidados por contribuinte
-                                                   'R-5011', // rsevtTotalConsolid - Informações de bases e tributos consolidadas por período de apuração
-                                                   'R-9000'  // rsevtExclusao      - Exclusão de Eventos
-                                                   );
+  TReinfSchemaRegistro: array[0..14] of string = ('R-1000', // rsevtInfoContri    - Informações do Contribuinte
+                                                  'R-1070', // rsevtTabProcesso   - Tabela de Processos Administrativos/Judiciais
+                                                  'R-2010', // rsevtServTom       - Retenção Contribuição Previdenciária - Serviços Tomados
+                                                  'R-2020', // rsevtServPrest     - Retenção Contribuição Previdenciária - Serviços Prestados
+                                                  'R-2030', // rsevtAssocDespRec  - Recursos Recebidos por Associação Desportiva
+                                                  'R-2040', // rsevtAssocDespRep  - Recursos Repassados para Associação Desportiva
+                                                  'R-2050', // rsevtComProd       - Comercialização da Produção por Produtor Rural PJ/Agroindústria
+                                                  'R-2060', // rsevtCPRB          - Contribuição Previdenciária sobre a Receita Bruta - CPRB
+                                                  'R-2070', // rsevtPgtosDivs     - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
+                                                  'R-2098', // rsevtReabreEvPer   - Reabertura dos Eventos Periódicos
+                                                  'R-2099', // rsevtFechaEvPer    - Fechamento dos Eventos Periódicos
+                                                  'R-3010', // rsevtEspDesportivo - Receita de Espetáculo Desportivo
+                                                  'R-5001', // rsevtTotal         - Informações das bases e dos tributos consolidados por contribuinte
+                                                  'R-5011', // rsevtTotalConsolid - Informações de bases e tributos consolidadas por período de apuração
+                                                  'R-9000'  // rsevtExclusao      - Exclusão de Eventos
+                                                 );
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
 
@@ -273,7 +286,12 @@ const
 function VersaoReinfToDbl(const t: TVersaoReinf): Real;
 function VersaoReinfToStr(const t: TVersaoReinf): String;
 
-function TpInscricaoToStr(const t: TtpInsc ): string;
+function TipoEventoToStr(const t: TTipoEvento ): string;
+function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+
+function TpInscricaoToStr(const t: TtpInsc ): string;
 function StrToTpInscricao(var ok: boolean; const s: string): TtpInsc;
 
 function tpAmbReinfToStr(const t: TtpAmb ): string;
@@ -360,6 +378,12 @@ function StrTotpReceita(var ok: boolean; const s: string): TtpReceita;
 function indExistInfoToStr(const t: TindExistInfo ): string;
 function StrToindExistInfo(var ok: boolean; const s: string): TindExistInfo;
 
+function TipoOperacaoToStr(const t: TTipoOperacao): string;
+function StrToTipoOperacao(var ok: boolean; const s: string): TTipoOperacao;
+
+function tpClassTribToStr(const t: TpClassTrib ): string;
+function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
+
 implementation
 
 uses
@@ -397,9 +421,12 @@ end;
 
 function VersaoReinfToDbl(const t: TVersaoReinf): Real;
 begin
+  // a versão do Reinf em formato Double foi suprimido os zeros para ficar
+  // compativel com a procedure: LerServicoChaveDeParams em ACBrDFe
   case t of
-    v1_02_00: result := 1.02;
-    v1_03_00: result := 1.03;
+    v1_02_00: result := 1.20;
+    v1_03_00: result := 1.30;
+    v1_03_02: result := 1.32;
   else
     result := 0;
   end;
@@ -407,7 +434,52 @@ end;
 
 function VersaoReinfToStr(const t: TVersaoReinf): String;
 begin
-  result := EnumeradoToStr(t, ['1_02_00', '1_03_00'], [v1_02_00, v1_03_00]);
+  result := EnumeradoToStr(t, ['1_02_00', '1_03_00', '1_03_02'], [v1_02_00, v1_03_00, v1_03_02]);
+end;
+
+function TipoEventoToStr(const t: TTipoEvento ): string;
+begin
+  result := EnumeradoToStr2(t,TTipoEventoString );
+end;
+
+function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+begin
+  result  := TTipoEvento( StrToEnumerado2(ok , s, TTipoEventoString ) );
+end;
+
+function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+const
+  EventoString: array[0..14] of String =('evtInfoContri', 'evtTabProcesso',
+       'evtServTom', 'evtServPrest', 'evtAssocDespRec', 'evtAssocDespRep',
+       'evtComProd', 'evtCPRB', 'evtPgtosDivs', 'evtReabreEvPer', 'evtFechaEvPer',
+       'evtEspDesportivo', 'evtTotal', 'evtTotalContrib', 'evtExclusao');
+begin
+  result := TTipoEvento( StrToEnumerado2(ok , s, EventoString ) );
+end;
+
+function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+const
+  EventoString: array[0..14] of String =('evtInfoContri', 'evtTabProcesso',
+       'evtServTom', 'evtServPrest', 'evtAssocDespRec', 'evtAssocDespRep',
+       'evtComProd', 'evtCPRB', 'evtPgtosDivs', 'evtReabreEvPer', 'evtFechaEvPer',
+       'evtEspDesportivo', 'evtTotal', 'evtTotalContrib', 'evtExclusao');
+var
+  i: integer;
+begin
+  ok := False;
+  result := TTipoEvento( 0 );
+
+  try
+    for i := 0 to 14 do
+      if Pos('[' + EventoString[i] + ']', s) > 0 then
+      begin
+        ok := True;
+        result := TTipoEvento( i );
+        exit;
+      end;
+  except
+    ok := False;
+  end;
 end;
 
 function TpInscricaoToStr(const t:TtpInsc ): string;
@@ -422,12 +494,12 @@ end;
 
 function tpAmbReinfToStr(const t: TtpAmb ): string;
 begin
-  result := EnumeradoToStr2(t, ['0', '1', '2', '3']);
+  result := EnumeradoToStr2(t, ['0', '1', '2']);
 end;
 
 function StrTotpAmbReinf(var ok: boolean; const s: string): TtpAmb;
 begin
-  result := TtpAmb( StrToEnumerado2(ok , s, ['0', '1', '2', '3']) );
+  result := TtpAmb( StrToEnumerado2(ok , s, ['0', '1', '2']) );
 end;
 
 function ProcEmiReinfToStr(const t: TprocEmi ): string;
@@ -705,6 +777,36 @@ end;
 function StrToindExistInfo(var ok: boolean; const s: string): TindExistInfo;
 begin
   result := TindExistInfo( StrToEnumerado2(ok , s, ['1', '2', '3']) );
+end;
+
+function TipoOperacaoToStr(const t: TTipoOperacao): string;
+begin
+  result := EnumeradoToStr2(t, ['inclusao', 'alteracao', 'exclusao']);
+end;
+
+function StrToTipoOperacao(var ok: boolean; const s: string): TTipoOperacao;
+begin
+  result := TTipoOperacao( StrToEnumerado2(ok , s, ['inclusao', 'alteracao', 'exclusao']) );
+end;
+
+function tpClassTribToStr(const t: TpClassTrib ): string;
+begin
+  result := EnumeradoToStr(t, ['00', '01', '02', '03', '04', '06', '07', '08', '09',
+                               '10', '11', '13', '14', '21', '22', '60', '70',
+                               '80', '85', '99'],
+                              [ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,
+                               ct10, ct11, ct13, ct14, ct21, ct22, ct60, ct70,
+                               ct80, ct85, ct99]);
+end;
+
+function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
+begin
+  result := StrToEnumerado(ok, s, ['00', '01', '02', '03', '04', '06', '07', '08', '09',
+                                   '10', '11', '13', '14', '21', '22', '60', '70',
+                                   '80', '85', '99'],
+                              [ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09,
+                               ct10, ct11, ct13, ct14, ct21, ct22, ct60, ct70,
+                               ct80, ct85, ct99]);
 end;
 
 end.

@@ -37,16 +37,17 @@
 |*  - Implementados registros que faltavam e isoladas as respectivas classes 
 *******************************************************************************}
 
+{$I ACBr.inc}
+
 unit pcnReinfR5011;
 
 interface
 
 uses
   Classes, Sysutils, pcnGerador, pcnLeitor,
-  pcnConversaoReinf, pcnReinfClasses, ACBrReinfEventosBase;
+  pcnCommonReinf, pcnConversaoReinf;
 
 type
-
   TR5011 = class;
   TEvtTotalContrib = class;
   TInfoRecEv = class;
@@ -67,15 +68,15 @@ type
     FTipoEvento: TTipoEvento;
     FEvtTotalContrib: TEvtTotalContrib;
 
-    function GetXml : string;
+    function GetXml: string;
     procedure SetXml(const Value: string);
-    function GetTipoEvento : TTipoEvento;
+    function GetTipoEvento: TTipoEvento;
     procedure SetEvtTotalContrib(const Value: TEvtTotalContrib);
   public
     constructor Create;
     destructor Destroy; override;
-    function GetEvento: TObject;
 
+    function GetEvento: TObject;
   published
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
@@ -100,6 +101,7 @@ type
     destructor  Destroy; override;
 
     function LerXML: boolean;
+    function SalvarINI: boolean;
 
     property IdeEvento: TIdeEvento1 read FIdeEvento write FIdeEvento;
     property IdeContrib: TIdeContrib read FIdeContrib write FIdeContrib;
@@ -285,7 +287,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
+  IniFiles, pcnAuxiliar, ACBrUtil, pcnConversao, DateUtils;
 
 { TR5011 }
 
@@ -309,7 +311,8 @@ end;
 
 procedure TR5011.SetXml(const Value: string);
 begin
-  if Value = FEvtTotalContrib.XML then Exit;
+  if Value = FEvtTotalContrib.XML then
+    Exit;
 
   FEvtTotalContrib.XML := Value;
   FEvtTotalContrib.Leitor.Arquivo := Value;
@@ -331,16 +334,185 @@ begin
   Result := Self;
 end;
 
+{ TInfoTotalContribCollection }
+
+function TInfoTotalContribCollection.Add: TInfoTotalContribCollectionItem;
+begin
+  Result := TInfoTotalContribCollectionItem(inherited Add);
+//  Result.Create;
+end;
+
+constructor TInfoTotalContribCollection.Create;
+begin
+  inherited create(TInfoTotalContribCollectionItem);
+end;
+
+function TInfoTotalContribCollection.GetItem(
+  Index: Integer): TInfoTotalContribCollectionItem;
+begin
+  Result := TInfoTotalContribCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TInfoTotalContribCollection.SetItem(Index: Integer;
+  Value: TInfoTotalContribCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TInfoTotalContribCollectionItem }
+
+constructor TInfoTotalContribCollectionItem.Create(
+  AOwner: TEvtTotalContrib);
+begin
+  FRTom      := TRTomCollection.Create;
+  FRPrest    := TRPrestCollection.Create;
+  FRRecRepAD := TRRecRepADCollection.Create;
+  FRComl     := TRComl.Create;
+  FRCPRB     := TRCPRBCollection.Create;
+end;
+
+destructor TInfoTotalContribCollectionItem.Destroy;
+begin
+  FRTom.Free;
+  FRPrest.Free;
+  FRRecRepAD.Free;
+  FRComl.Free;
+  FRCPRB.Free;
+
+  inherited;
+end;
+
+procedure TInfoTotalContribCollectionItem.SetRCPRB(
+  const Value: TRCPRBCollection);
+begin
+  FRCPRB := Value;
+end;
+
+procedure TInfoTotalContribCollectionItem.SetRPrest(
+  const Value: TRPrestCollection);
+begin
+  FRPrest := Value;
+end;
+
+procedure TInfoTotalContribCollectionItem.SetRRecRepAD(
+  const Value: TRRecRepADCollection);
+begin
+  FRRecRepAD := Value;
+end;
+
+procedure TInfoTotalContribCollectionItem.SetRTom(
+  const Value: TRTomCollection);
+begin
+  FRTom := Value;
+end;
+
+{ TRTomCollection }
+
+function TRTomCollection.Add: TRTomCollectionItem;
+begin
+  Result := TRTomCollectionItem(inherited Add);
+//  Result.Create;
+end;
+
+constructor TRTomCollection.Create;
+begin
+  inherited create(TRTomCollectionItem);
+end;
+
+function TRTomCollection.GetItem(Index: Integer): TRTomCollectionItem;
+begin
+  Result := TRTomCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TRTomCollection.SetItem(Index: Integer;
+  Value: TRTomCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TRPrestCollection }
+
+function TRPrestCollection.Add: TRPrestCollectionItem;
+begin
+  Result := TRPrestCollectionItem(inherited Add);
+//  Result.Create;
+end;
+
+constructor TRPrestCollection.Create;
+begin
+  inherited create(TRPrestCollectionItem);
+end;
+
+function TRPrestCollection.GetItem(Index: Integer): TRPrestCollectionItem;
+begin
+  Result := TRPrestCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TRPrestCollection.SetItem(Index: Integer;
+  Value: TRPrestCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TRRecRepADCollection }
+
+function TRRecRepADCollection.Add: TRRecRepADCollectionItem;
+begin
+  Result := TRRecRepADCollectionItem(inherited Add);
+//  Result.Create;
+end;
+
+constructor TRRecRepADCollection.Create;
+begin
+  inherited create(TRRecRepADCollectionItem);
+end;
+
+function TRRecRepADCollection.GetItem(
+  Index: Integer): TRRecRepADCollectionItem;
+begin
+  Result := TRRecRepADCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TRRecRepADCollection.SetItem(Index: Integer;
+  Value: TRRecRepADCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TRCPRBCollection }
+
+function TRCPRBCollection.Add: TRCPRBCollectionItem;
+begin
+  Result := TRCPRBCollectionItem(inherited Add);
+//  Result.Create;
+end;
+
+constructor TRCPRBCollection.Create;
+begin
+  inherited create(TRCPRBCollectionItem);
+end;
+
+function TRCPRBCollection.GetItem(Index: Integer): TRCPRBCollectionItem;
+begin
+  Result := TRCPRBCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TRCPRBCollection.SetItem(Index: Integer;
+  Value: TRCPRBCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
 { TEvtTotalContrib }
 
 constructor TEvtTotalContrib.Create();
 begin
   FLeitor := TLeitor.Create;
 
-  FIdeEvento := TIdeEvento1.Create;
-  FIdeContrib := TIdeContrib.Create;
-  FIdeStatus := TIdeStatus.Create;
-  FInfoRecEv := TInfoRecEv.Create;
+  FIdeEvento        := TIdeEvento1.Create;
+  FIdeContrib       := TIdeContrib.Create;
+  FIdeStatus        := TIdeStatus.Create;
+  FInfoRecEv        := TInfoRecEv.Create;
   FInfoTotalContrib := TInfoTotalContribCollection.Create;
 end;
 
@@ -488,8 +660,6 @@ begin
         inc(i);
       end;
 
-
-
       Result := True;
     end;
   except
@@ -497,194 +667,117 @@ begin
   end;
 end;
 
-(*
-{ TRCPRBCollection }
-
-function TRCPRBCollection.Add: TRCPRBCollectionItem;
+function TEvtTotalContrib.SalvarINI: boolean;
+var
+  AIni: TMemIniFile;
+  sSecao: String;
+  i, j: Integer;
 begin
-  Result := TRCPRBCollectionItem(inherited Add);
-end;
+  Result := False;
 
-constructor TRCPRBCollection.Create(AOwner: TInfoTotalContrib);
-begin
-  inherited create(TRCPRBCollectionItem);
-end;
+  AIni := TMemIniFile.Create('');
+  try
+    Result := True;
 
-function TRCPRBCollection.GetItem(
-  Index: Integer): TRCPRBCollectionItem;
-begin
-  Result := TRCPRBCollectionItem(inherited GetItem(Index));
-end;
+    with Self do
+    begin
+      sSecao := 'evtTotal';
+      AIni.WriteString(sSecao, 'Id', Id);
 
-procedure TRCPRBCollection.SetItem(Index: Integer;
-  Value: TRCPRBCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-*)
+      sSecao := 'ideEvento';
+      AIni.WriteString(sSecao, 'perApur', IdeEvento.perApur);
 
-{ TInfoTotalContribCollection }
+      sSecao := 'ideContri';
+      AIni.WriteString(sSecao, 'tpInsc', TpInscricaoToStr(IdeContrib.TpInsc));
+      AIni.WriteString(sSecao, 'nrInsc', IdeContrib.nrInsc);
 
-function TInfoTotalContribCollection.Add: TInfoTotalContribCollectionItem;
-begin
-  Result := TInfoTotalContribCollectionItem(inherited Add);
-end;
+      sSecao := 'ideStatus';
+      AIni.WriteString(sSecao, 'cdRetorno', ideStatus.cdRetorno);
+      AIni.WriteString(sSecao, 'descRetorno', ideStatus.descRetorno);
 
-constructor TInfoTotalContribCollection.Create;
-begin
-  inherited create(TInfoTotalContribCollectionItem);
-end;
+      for i := 0 to ideStatus.regOcorrs.Count -1 do
+      begin
+        sSecao := 'regOcorrs' + IntToStrZero(I, 3);
 
-function TInfoTotalContribCollection.GetItem(
-  Index: Integer): TInfoTotalContribCollectionItem;
-begin
-  Result := TInfoTotalContribCollectionItem(inherited GetItem(Index));
-end;
+        AIni.WriteInteger(sSecao, 'tpOcorr',       ideStatus.regOcorrs.Items[i].tpOcorr);
+        AIni.WriteString(sSecao, 'localErroAviso', ideStatus.regOcorrs.Items[i].localErroAviso);
+        AIni.WriteString(sSecao, 'codResp',        ideStatus.regOcorrs.Items[i].codResp);
+        AIni.WriteString(sSecao, 'dscResp',        ideStatus.regOcorrs.Items[i].dscResp);
+      end;
 
-procedure TInfoTotalContribCollection.SetItem(Index: Integer;
-  Value: TInfoTotalContribCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
+      sSecao := 'infoRecEv';
+      AIni.WriteString(sSecao, 'nrProtEntr', infoRecEv.nrProtEntr);
+      AIni.WriteString(sSecao, 'dhProcess',  DateToStr(infoRecEv.dhProcess));
+      AIni.WriteString(sSecao, 'tpEv',       infoRecEv.tpEv);
+      AIni.WriteString(sSecao, 'idEv',       infoRecEv.idEv);
+      AIni.WriteString(sSecao, 'hash',       infoRecEv.hash);
 
-{ TInfoTotalContribCollectionItem }
+      for i := 0 to infoTotalContrib.Count -1 do
+      begin
+        sSecao := 'infoTotalContrib' + IntToStrZero(I, 3);
 
-constructor TInfoTotalContribCollectionItem.Create(
-  AOwner: TEvtTotalContrib);
-begin
-  FRTom := TRTomCollection.Create;
-  FRPrest := TRPrestCollection.Create;
-  FRRecRepAD := TRRecRepADCollection.Create;
-  FRComl := TRComl.Create;
-  FRCPRB := TRCPRBCollection.Create;
-end;
+        AIni.WriteString(sSecao, 'nrRecArqBase', infoTotalContrib.Items[i].nrRecArqBase);
+        AIni.WriteString(sSecao, 'indExistInfo', indExistInfoToStr(infoTotalContrib.Items[i].indExistInfo));
 
-destructor TInfoTotalContribCollectionItem.Destroy;
-begin
-  FRTom.Free;
-  FRPrest.Free;
-  FRRecRepAD.Free;
-  FRComl.Free;
-  FRCPRB.Free;
+        with infoTotalContrib.Items[i] do
+        begin
+          for j := 0 to RTom.Count -1 do
+          begin
+            sSecao := 'RTom' + IntToStrZero(I, 3) + IntToStrZero(j, 3);
 
-  inherited;
-end;
+            AIni.WriteString(sSecao, 'cnpjPrestador',    RTom.Items[j].cnpjPrestador);
+            AIni.WriteFloat(sSecao, 'vlrTotalBaseRet',   RTom.Items[j].vlrTotalBaseRet);
+            AIni.WriteFloat(sSecao, 'vlrTotalRetPrinc',  RTom.Items[j].vlrTotalRetPrinc);
+            AIni.WriteFloat(sSecao, 'vlrTotalRetAdic',   RTom.Items[j].vlrTotalRetAdic);
+            AIni.WriteFloat(sSecao, 'vlrTotalNRetPrinc', RTom.Items[j].vlrTotalNRetPrinc);
+            AIni.WriteFloat(sSecao, 'vlrTotalNRetAdic',  RTom.Items[j].vlrTotalNRetAdic);
+          end;
 
-procedure TInfoTotalContribCollectionItem.SetRCPRB(
-  const Value: TRCPRBCollection);
-begin
-  FRCPRB := Value;
-end;
+          for j := 0 to RPrest.Count -1 do
+          begin
+            sSecao := 'RPrest' + IntToStrZero(I, 3) + IntToStrZero(j, 3);
 
-procedure TInfoTotalContribCollectionItem.SetRPrest(
-  const Value: TRPrestCollection);
-begin
-  FRPrest := Value;
-end;
+            AIni.WriteString(sSecao, 'tpInscTomador',    TpInscricaoToStr(RPrest.Items[j].tpInscTomador));
+            AIni.WriteString(sSecao, 'nrInscTomador',    RPrest.Items[j].nrInscTomador);
+            AIni.WriteFloat(sSecao, 'vlrTotalBaseRet',   RPrest.Items[j].vlrTotalBaseRet);
+            AIni.WriteFloat(sSecao, 'vlrTotalRetPrinc',  RPrest.Items[j].vlrTotalRetPrinc);
+            AIni.WriteFloat(sSecao, 'vlrTotalRetAdic',   RPrest.Items[j].vlrTotalRetAdic);
+            AIni.WriteFloat(sSecao, 'vlrTotalNRetPrinc', RPrest.Items[j].vlrTotalNRetPrinc);
+            AIni.WriteFloat(sSecao, 'vlrTotalNRetAdic',  RPrest.Items[j].vlrTotalNRetAdic);
+          end;
 
-procedure TInfoTotalContribCollectionItem.SetRRecRepAD(
-  const Value: TRRecRepADCollection);
-begin
-  FRRecRepAD := Value;
-end;
+          for j := 0 to RRecRepAD.Count -1 do
+          begin
+            sSecao := 'RRecRepAD' + IntToStrZero(I, 3) + IntToStrZero(j, 3);
 
-procedure TInfoTotalContribCollectionItem.SetRTom(
-  const Value: TRTomCollection);
-begin
-  FRTom := Value;
-end;
+            AIni.WriteString(sSecao, 'cnpjAssocDesp', RRecRepAD.Items[j].cnpjAssocDesp);
+            AIni.WriteFloat(sSecao, 'vlrTotalRep',    RRecRepAD.Items[j].vlrTotalRep);
+            AIni.WriteFloat(sSecao, 'vlrTotalRet',    RRecRepAD.Items[j].vlrTotalRet);
+            AIni.WriteFloat(sSecao, 'vlrTotalNRet',   RRecRepAD.Items[j].vlrTotalNRet);
+          end;
 
-{ TRTomCollection }
+          sSecao := 'RComl' + IntToStrZero(I, 3);
+          AIni.WriteFloat(sSecao, 'vlrCPApur',    RComl.vlrCPApur);
+          AIni.WriteFloat(sSecao, 'vlrRatApur',   RComl.vlrRatApur);
+          AIni.WriteFloat(sSecao, 'vlrSenarApur', RComl.vlrSenarApur);
+          AIni.WriteFloat(sSecao, 'vlrCPSusp',    RComl.vlrCPSusp);
+          AIni.WriteFloat(sSecao, 'vlrRatSusp',   RComl.vlrRatSusp);
+          AIni.WriteFloat(sSecao, 'vlrSenarSusp', RComl.vlrSenarSusp);
 
-function TRTomCollection.Add: TRTomCollectionItem;
-begin
-  Result := TRTomCollectionItem(inherited Add);
-end;
+          for j := 0 to RCPRB.Count -1 do
+          begin
+            sSecao := 'RCPRB' + IntToStrZero(I, 3) + IntToStrZero(j, 1);
 
-constructor TRTomCollection.Create;
-begin
-  inherited create(TRTomCollectionItem);
-end;
-
-function TRTomCollection.GetItem(Index: Integer): TRTomCollectionItem;
-begin
-  Result := TRTomCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TRTomCollection.SetItem(Index: Integer;
-  Value: TRTomCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TRPrestCollection }
-
-function TRPrestCollection.Add: TRPrestCollectionItem;
-begin
-  Result := TRPrestCollectionItem(inherited Add);
-end;
-
-constructor TRPrestCollection.Create;
-begin
-  inherited create(TRPrestCollectionItem);
-end;
-
-function TRPrestCollection.GetItem(Index: Integer): TRPrestCollectionItem;
-begin
-  Result := TRPrestCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TRPrestCollection.SetItem(Index: Integer;
-  Value: TRPrestCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TRRecRepADCollection }
-
-function TRRecRepADCollection.Add: TRRecRepADCollectionItem;
-begin
-  Result := TRRecRepADCollectionItem(inherited Add);
-end;
-
-constructor TRRecRepADCollection.Create;
-begin
-  inherited create(TRRecRepADCollectionItem);
-end;
-
-function TRRecRepADCollection.GetItem(
-  Index: Integer): TRRecRepADCollectionItem;
-begin
-  Result := TRRecRepADCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TRRecRepADCollection.SetItem(Index: Integer;
-  Value: TRRecRepADCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TRCPRBCollection }
-
-function TRCPRBCollection.Add: TRCPRBCollectionItem;
-begin
-  Result := TRCPRBCollectionItem(inherited Add);
-end;
-
-constructor TRCPRBCollection.Create;
-begin
-  inherited create(TRCPRBCollectionItem);
-end;
-
-function TRCPRBCollection.GetItem(Index: Integer): TRCPRBCollectionItem;
-begin
-  Result := TRCPRBCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TRCPRBCollection.SetItem(Index: Integer;
-  Value: TRCPRBCollectionItem);
-begin
-  inherited SetItem(Index, Value);
+            AIni.WriteInteger(sSecao, 'codRec',       RCPRB.Items[j].codRec);
+            AIni.WriteFloat(sSecao, 'vlrCPApurTotal', RCPRB.Items[j].vlrCPApurTotal);
+            AIni.WriteFloat(sSecao, 'vlrCPRBSusp',    RCPRB.Items[j].vlrCPRBSusp);
+          end;
+        end;
+      end;
+    end;
+  finally
+    AIni.Free;
+  end;
 end;
 
 end.

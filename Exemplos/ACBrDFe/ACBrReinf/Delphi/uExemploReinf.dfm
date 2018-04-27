@@ -132,10 +132,6 @@ object Form2: TForm2
           TabOrder = 0
           object TabSheet6: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -582,10 +578,6 @@ object Form2: TForm2
           object TabSheet8: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox5: TGroupBox
               Left = 0
               Top = 4
@@ -860,10 +852,6 @@ object Form2: TForm2
           object TabSheet12: TTabSheet
             Caption = 'Emitente'
             ImageIndex = 3
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object Label12: TLabel
               Left = 8
               Top = 4
@@ -1056,10 +1044,6 @@ object Form2: TForm2
               TabOrder = 13
               object TabSheet9: TTabSheet
                 Caption = 'Contato'
-                ExplicitLeft = 0
-                ExplicitTop = 0
-                ExplicitWidth = 0
-                ExplicitHeight = 0
                 object Label5: TLabel
                   Left = 3
                   Top = 0
@@ -1134,10 +1118,6 @@ object Form2: TForm2
               object TabSheet10: TTabSheet
                 Caption = 'Software House'
                 ImageIndex = 1
-                ExplicitLeft = 0
-                ExplicitTop = 0
-                ExplicitWidth = 0
-                ExplicitHeight = 0
                 object Label40: TLabel
                   Left = 3
                   Top = 0
@@ -1214,10 +1194,6 @@ object Form2: TForm2
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object sbPathReinf: TSpeedButton
               Left = 240
               Top = 101
@@ -1342,30 +1318,26 @@ object Form2: TForm2
     TabOrder = 1
     object PageControl1: TPageControl
       Left = 1
-      Top = 48
+      Top = 78
       Width = 589
-      Height = 559
-      ActivePage = TabSheet4
+      Height = 529
+      ActivePage = TabSheet1
       Align = alClient
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = '  Eventos   '
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object GroupBox1: TGroupBox
           Left = 0
           Top = 0
           Width = 581
-          Height = 395
+          Height = 365
           Align = alClient
           Caption = ' Eventos de Tabela '
           TabOrder = 0
           object chk1000: TCheckBox
             Left = 8
             Top = 23
-            Width = 233
+            Width = 268
             Height = 17
             Caption = 'R-1000 - Informa'#231#245'es do Contribuinte'
             Ctl3D = False
@@ -1399,7 +1371,7 @@ object Form2: TForm2
           object chk2020: TCheckBox
             Left = 8
             Top = 86
-            Width = 665
+            Width = 553
             Height = 17
             Caption = 
               'R-2020 - Reten'#231#227'o Contribui'#231#227'o Previdenci'#225'ria  Servi'#231'os Prestado' +
@@ -1418,7 +1390,7 @@ object Form2: TForm2
           object chk2098: TCheckBox
             Left = 8
             Top = 214
-            Width = 271
+            Width = 289
             Height = 17
             Caption = 'R-2098 - Reabertura dos Eventos Peri'#243'dicos'
             Ctl3D = False
@@ -1452,7 +1424,7 @@ object Form2: TForm2
           object chk2099: TCheckBox
             Left = 8
             Top = 235
-            Width = 271
+            Width = 289
             Height = 17
             Caption = 'R-2099 - Fechamento dos Eventos Peri'#243'dicos'
             Ctl3D = False
@@ -1505,29 +1477,19 @@ object Form2: TForm2
           object chk2070: TCheckBox
             Left = 8
             Top = 193
-            Width = 337
+            Width = 377
             Height = 17
             Caption = 'R-2070 - Reten'#231#245'es na Fonte - IR, CSLL, Cofins, PIS/PASEP'
             Ctl3D = False
-            Enabled = False
             Font.Charset = ANSI_CHARSET
             Font.Color = clWindowText
             Font.Height = -11
             Font.Name = 'MS Sans Serif'
-            Font.Style = [fsStrikeOut]
+            Font.Style = [fsBold]
             ParentCtl3D = False
             ParentFont = False
             TabOrder = 9
             OnClick = chk1000Click
-          end
-          object btnConsultaFechamento: TButton
-            Left = 291
-            Top = 231
-            Width = 116
-            Height = 25
-            Caption = 'Consulta Fechamento'
-            Enabled = False
-            TabOrder = 10
           end
           object chk3010: TCheckBox
             Left = 8
@@ -1560,13 +1522,13 @@ object Form2: TForm2
             Font.Style = [fsBold]
             ParentCtl3D = False
             ParentFont = False
-            TabOrder = 11
+            TabOrder = 10
             OnClick = chk1000Click
           end
           object chk2040: TCheckBox
             Left = 8
             Top = 129
-            Width = 337
+            Width = 409
             Height = 17
             Caption = 'R-2040 - Recursos Repassados para Associa'#231#227'o Desportiva'
             Ctl3D = False
@@ -1577,13 +1539,13 @@ object Form2: TForm2
             Font.Style = [fsBold]
             ParentCtl3D = False
             ParentFont = False
-            TabOrder = 12
+            TabOrder = 11
             OnClick = chk1000Click
           end
           object chk2050: TCheckBox
             Left = 8
             Top = 150
-            Width = 271
+            Width = 457
             Height = 17
             Caption = 
               'R-2050 - Comercializa'#231#227'o da Produ'#231#227'o por Produtor Rural PJ/Agroi' +
@@ -1596,13 +1558,13 @@ object Form2: TForm2
             Font.Style = [fsBold]
             ParentCtl3D = False
             ParentFont = False
-            TabOrder = 13
+            TabOrder = 12
             OnClick = chk1000Click
           end
         end
         object GroupBox4: TGroupBox
           Left = 0
-          Top = 395
+          Top = 365
           Width = 581
           Height = 136
           Align = alBottom
@@ -1700,15 +1662,11 @@ object Form2: TForm2
       object TabSheet2: TTabSheet
         Caption = '  Dados de Retorno Eventos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
-        object mmoRet: TMemo
+        object mmoDados: TMemo
           Left = 0
           Top = 0
           Width = 581
-          Height = 531
+          Height = 501
           Align = alClient
           Lines.Strings = (
             'mmoRet')
@@ -1718,15 +1676,11 @@ object Form2: TForm2
       object TabSheet3: TTabSheet
         Caption = '  XML de Envio   '
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
-        object Memo1: TMemo
+        object mmoXMLEnv: TMemo
           Left = 0
           Top = 0
           Width = 581
-          Height = 531
+          Height = 501
           Align = alClient
           Lines.Strings = (
             'Memo1')
@@ -1737,11 +1691,11 @@ object Form2: TForm2
       object TabSheet4: TTabSheet
         Caption = '  XML Retorno  '
         ImageIndex = 3
-        object Memo2: TMemo
+        object mmoXMLRet: TMemo
           Left = 0
           Top = 0
           Width = 581
-          Height = 531
+          Height = 501
           Align = alClient
           Lines.Strings = (
             'Memo1')
@@ -1754,7 +1708,7 @@ object Form2: TForm2
       Left = 1
       Top = 1
       Width = 589
-      Height = 47
+      Height = 77
       Align = alTop
       TabOrder = 1
       object btnGerar: TButton
@@ -1762,13 +1716,13 @@ object Form2: TForm2
         Top = 10
         Width = 137
         Height = 24
-        Caption = 'Gerar Arquivos e Enviar'
+        Caption = 'Gerar Arquivos'
         TabOrder = 0
         OnClick = btnGerarClick
       end
       object btnValidarSchema: TButton
-        Left = 294
-        Top = 10
+        Left = 151
+        Top = 42
         Width = 137
         Height = 24
         Caption = 'Validar Schema'
@@ -1776,8 +1730,8 @@ object Form2: TForm2
         OnClick = btnValidarSchemaClick
       end
       object btnValidarAssinatura: TButton
-        Left = 151
-        Top = 10
+        Left = 8
+        Top = 42
         Width = 137
         Height = 24
         Caption = 'Validar Assinatura'
@@ -1785,13 +1739,31 @@ object Form2: TForm2
         OnClick = btnValidarAssinaturaClick
       end
       object btnConsultar: TButton
-        Left = 437
-        Top = 10
+        Left = 294
+        Top = 42
         Width = 137
         Height = 24
         Caption = 'Consultar'
         TabOrder = 3
         OnClick = btnConsultarClick
+      end
+      object btnLerArqINI: TButton
+        Left = 151
+        Top = 10
+        Width = 137
+        Height = 24
+        Caption = 'Ler Arquivo INI'
+        TabOrder = 4
+        OnClick = btnLerArqINIClick
+      end
+      object btnEnviar: TButton
+        Left = 294
+        Top = 9
+        Width = 137
+        Height = 24
+        Caption = 'Enviar'
+        TabOrder = 5
+        OnClick = btnEnviarClick
       end
     end
   end

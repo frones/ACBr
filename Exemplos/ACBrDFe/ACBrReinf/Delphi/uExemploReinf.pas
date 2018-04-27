@@ -5,11 +5,12 @@ unit uExemploReinf;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, ExtCtrls, ComCtrls,
-  ACBrReinf, ACBrReinfWebServices, pcnConversaoReinf, ACBrReinfEventos, ACBrBase,
-  ACBrDFe, Spin, Buttons, ACBrUtil, IniFiles, Math, blcksock, StrUtils, TypInfo,
-  FileCtrl, pcnReinfR2010_Class, pcnReinfR5001, pcnReinfR5011;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, ComCtrls, Spin, Buttons, IniFiles, Math, blcksock,
+  StrUtils, TypInfo, FileCtrl,
+  ACBrUtil, ACBrBase, ACBrDFe,
+  ACBrReinf, ACBrReinfWebServices, ACBrReinfEventos, pcnConversaoReinf,
+  pcnReinfR5001, pcnReinfR5011;
 
 type
   TForm2 = class(TForm)
@@ -148,13 +149,12 @@ type
     chk9000: TCheckBox;
     chk2060: TCheckBox;
     chk2070: TCheckBox;
-    btnConsultaFechamento: TButton;
     TabSheet2: TTabSheet;
-    mmoRet: TMemo;
+    mmoDados: TMemo;
     TabSheet3: TTabSheet;
-    Memo1: TMemo;
+    mmoXMLEnv: TMemo;
     TabSheet4: TTabSheet;
-    Memo2: TMemo;
+    mmoXMLRet: TMemo;
     Panel4: TPanel;
     btnGerar: TButton;
     GroupBox4: TGroupBox;
@@ -199,6 +199,9 @@ type
     rdgOperacao: TRadioGroup;
     ACBrReinf1: TACBrReinf;
     btnConsultar: TButton;
+    btnLerArqINI: TButton;
+    btnEnviar: TButton;
+
     procedure btnGerarClick(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
     procedure lblPatrocinadorClick(Sender: TObject);
@@ -232,6 +235,8 @@ type
     procedure btnValidarAssinaturaClick(Sender: TObject);
     procedure chk1000Click(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
+    procedure btnLerArqINIClick(Sender: TObject);
+    procedure btnEnviarClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -240,7 +245,7 @@ type
 
     procedure PreencherXMLEventos;
     procedure LimparDocsPasta;
-    function GetTipoOperacao: TindOperacao;
+    function GetTipoOperacao: TTipoOperacao;
     {Eventos}
     procedure GerarReinf1000;
     procedure GerarReinf1070;
@@ -268,21 +273,21 @@ implementation
 {$R *.dfm}
 
 uses
-  ACBrDFeSSL, pcnConversao, ShellAPI, pcnReinfClasses, Unit2,
-  ACBrReinfEventosBase;
+  ACBrDFeSSL, pcnConversao, ShellAPI, Unit2;
 
 const
   SELDIRHELP = 1000;
   
 procedure TForm2.AntesDeEnviar(const Axml: string);
 begin
-  Memo1.Lines.Text := Axml;
+  mmoXMLEnv.Clear;
+  mmoXMLEnv.Lines.Text := Axml;
 end;
 
 procedure TForm2.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
-  i, J: Integer;
+  i, j: Integer;
   evtR5001: TR5001;
   evtR5011: TR5011;
 begin
@@ -293,19 +298,18 @@ begin
 
   if ACBrReinf1.Consultar(Protocolo) then
   begin
+    mmoXMLRet.Clear;
+    mmoXMLRet.Lines.Text := ACBrReinf1.WebServices.Consultar.RetWS;
 
-    MmoRet.Lines.Text := ACBrReinf1.WebServices.Consultar.RetWS;
-
-    with Memo2.Lines do
+    with mmoDados.Lines do
     begin
-
       with ACBrReinf1.WebServices.Consultar.RetConsulta do
       begin
         Add('');
 
         for i := 0 to RetEventos.Count - 1 do
         begin
-          Add(' Evento: ' + IntToStr(J));
+          Add(' Evento: ' + IntToStr(i));
           Add('   Tipo.........: ' + retEventos.Items[i].Tipo);
           case retEventos.Items[i].Evento.TipoEvento of
             teR5001:
@@ -318,99 +322,133 @@ begin
             teR5011:
               begin
                 evtR5011 := TR5011(retEventos.Items[i].Evento.GetEvento);
-                Add('   Id...........: ' + evtR5011.EvtTotalContrib.Id);
-                Add('   Cód Retorno..: ' + evtR5011.EvtTotalContrib.IdeStatus.cdRetorno);
-                Add('   Descrição....: ' + evtR5011.EvtTotalContrib.IdeStatus.descRetorno);
+                with evtR5011.EvtTotalContrib do
+                begin
+                  Add('   Id...........: ' + Id);
+                  Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+                  Add('   Descrição....: ' + IdeStatus.descRetorno);
+
+                  Add(' **Ocorrencias');
+
+                  for j := 0 to IdeStatus.regOcorrs.Count - 1 do
+                  begin
+                    with IdeStatus.regOcorrs.Items[j] do
+                    begin
+                      Add('   Tipo............: ' + Inttostr(tpOcorr));
+                      Add('   Local Erro Aviso: ' + localErroAviso);
+                      Add('   Código Resp.... : ' + codResp);
+                      Add('   Descricao Resp..: ' + dscResp);
+                    end;
+                  end;
+                end;
               end;
           end;
         end;
       end;
-
     end;
 
     PageControl1.ActivePageIndex := 1;
   end;
 end;
 
+procedure TForm2.btnEnviarClick(Sender: TObject);
+var
+  i: Integer;
+  evtR5001: TR5001;
+begin
+//  edProtocolo.Text := '';
+//  ACBrReinf1.Configuracoes.Geral.VersaoDF := TVersaoReinf(cbVersaoDF.ItemIndex);
+
+//  ACBrReinf1.Eventos.Clear;
+//  PreencherXMLEventos;
+//  ACBrReinf1.AssinarEventos;
+
+  if ACBrReinf1.Enviar then
+  begin
+    mmoXMLRet.Clear;
+    mmoXMLRet.Lines.Text := ACBrReinf1.WebServices.EnvioLote.RetWS;
+
+    with mmoDados.Lines do
+    begin
+      with ACBrReinf1.WebServices.EnvioLote.RetEnvioLote do
+      begin
+        Add('ideTransmissor: ' + IdeTransmissor.IdTransmissor);
+        Add('cdStatus      : ' + IntToStr(Status.cdStatus));
+        Add('descRetorno   : ' + Status.descRetorno);
+
+        Add(' **Ocorrencias');
+
+        for i := 0 to Status.Ocorrencias.Count - 1 do
+        begin
+          with Status.Ocorrencias.Items[i] do
+          begin
+            Add('   tipo: ' + Inttostr(tipo));
+            Add('   localizacaoErroAviso: ' + localizacao);
+            Add('   codigo: ' + inttostr(codigo));
+            Add('   descricao: ' + descricao);
+          end;
+        end;
+
+        Add('retornoEventos');
+
+        for i:=0 to evento.Count - 1 do
+        begin
+          with evento.Items[i] do
+          begin
+            Add('Evento Id: ' + Id);
+
+            evtR5001 := TR5001(Evento.GetEvento);
+            Add('   Id...........: ' + evtR5001.EvtTotal.Id);
+            Add('   Cód Retorno..: ' + evtR5001.EvtTotal.IdeStatus.cdRetorno);
+            Add('   Descrição....: ' + evtR5001.EvtTotal.IdeStatus.descRetorno);
+          end;
+        end;
+      end;
+    end;
+
+    PageControl1.ActivePageIndex := 1;
+  end
+  else
+    ShowMessage('Falha');
+end;
+
 procedure TForm2.btnGerarClick(Sender: TObject);
 var
   i: Integer;
+  evtR5001: TR5001;
 begin
-  mmoRet.Clear;
   edProtocolo.Text := '';
   ACBrReinf1.Configuracoes.Geral.VersaoDF := TVersaoReinf(cbVersaoDF.ItemIndex);
 
-  {IdeEvento}
-  ACBrReinf1.IdeEvento.TpAmb := TtpAmb( rgTipoAmb.ItemIndex + 1 );
-  ACBrReinf1.IdeEvento.ProcEmi := peAplicEmpregador;
-  ACBrReinf1.IdeEvento.VerProc := '1.0';
-  {IdeEvento}
-  ACBrReinf1.ideContri.TpInsc := tiCNPJ;
-  ACBrReinf1.ideContri.NrInsc := edtEmitCNPJ.Text;
+  ACBrReinf1.Eventos.Clear;
+  PreencherXMLEventos;
+  ACBrReinf1.AssinarEventos;
 
-  ACBrReinf1.OnBeforeEnviar := AntesDeEnviar;
-  ACBrReinf1.OnAfterEnviar := DepoisDeEnviar;
-  try
-    ACBrReinf1.Eventos.Items.Clear;
-    PreencherXMLEventos;
+  ShowMessage('XML dos Eventos Selecionados Gerados.');
+end;
 
-    if ACBrReinf1.Enviar then
-    begin
-      mmoRet.Lines.Add('ideTransmissor: '+ ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.IdeTransmissor.IdTransmissor);
-      mmoRet.Lines.Add('cdStatus      : '+ IntToStr(ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.Status.cdStatus));
-      mmoRet.Lines.Add('descRetorno   : '+ ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.Status.descRetorno);
+procedure TForm2.btnLerArqINIClick(Sender: TObject);
+begin
+  edProtocolo.Text := '';
+  ACBrReinf1.Configuracoes.Geral.VersaoDF := TVersaoReinf(cbVersaoDF.ItemIndex);
 
-      mmoRet.Lines.Add(' **Ocorrencias');
+  OpenDialog1.Title := 'Selecione o Evento (Arquivo INI)';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrReinf1.Configuracoes.Arquivos.PathSalvar;
 
-      for i := 0 to ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Count - 1 do
-      begin
-        with  ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.Status.Ocorrencias.Items[i] do
-        begin
-          mmoRet.Lines.Add('   tipo: ' + Inttostr(tipo));
-          mmoRet.Lines.Add('   localizacaoErroAviso: ' + localizacao);
-          mmoRet.Lines.Add('   codigo: ' + inttostr(codigo));
-          mmoRet.Lines.Add('   descricao: ' + descricao);
-        end;
-      end;
+  if OpenDialog1.Execute then
+    ACBrReinf1.Eventos.LoadFromINI(OpenDialog1.FileName);
 
-      mmoRet.Lines.Add('retornoEventos');
-      for i:=0 to ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Count - 1 do
-      begin
-        with ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[i] do
-        begin
-          mmoRet.Lines.Add('Evento Id: ' + Id);
-          (*
-          mmoRet.Lines.Add('*ideContrib ');
-          mmoRet.Lines.Add(' ideContrib: ' + Inttostr(ord(Evento.ideContrib.TpInsc)));
-          mmoRet.Lines.Add(' NrInsc: ' + Evento.ideContrib.NrInsc);
-          mmoRet.Lines.Add('*dadosRecepcaoEvento ');
-          mmoRet.Lines.Add(' dhProcessamento ' + Datetostr(Evento.dadosRecepcaoEvento.dhProcessamento));
-          mmoRet.Lines.Add(' tipoEvento ' + Evento.dadosRecepcaoEvento.tipoEvento);
-          mmoRet.Lines.Add(' IdEvento ' + Evento.dadosRecepcaoEvento.IDEvento);
-          mmoRet.Lines.Add(' Hash ' + Evento.dadosRecepcaoEvento.Hash);
-          edProtocolo.Text := Evento.dadosRecepcaoEvento.Hash;
-          mmoRet.Lines.Add('*Status ');
-          mmoRet.Lines.Add(' cdRetorno ' + Inttostr(Evento.Status.cdRetorno));
-          mmoRet.Lines.Add(' descRetorno ' + Evento.Status.descRetorno);
-          if Evento.Status.cdRetorno = 0 then {Sucesso}
-          begin
-            mmoRet.Lines.Add('*dadosReciboEntrega');
-            mmoRet.Lines.Add(' numeroRecibo ' + Evento.dadosReciboEntrega.numeroRecibo);
-          end;
-          *)
-        end;
-      end;
-    end
-    else
-      ShowMessage('Falha');
-  finally
-
-  end;
+  mmoDados.Lines.Add('INI de Eventos Carregado com Sucesso!');
+  PageControl1.ActivePageIndex := 1;
 end;
 
 procedure TForm2.DepoisDeEnviar(const Axml: string);
 begin
-  Memo2.Lines.Text := Axml;
+  mmoXMLRet.Clear;
+  mmoXMLRet.Lines.Text := Axml;
 end;
 
 procedure TForm2.LimparDocsPasta;
@@ -475,264 +513,327 @@ end;
 
 procedure TForm2.GerarReinf1000;
 begin
-  with ACBrReinf1.Eventos.AddR1000 do
+  ACBrReinf1.Eventos.ReinfEventos.R1000.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R1000.Add do
   begin
-    TipoOperacao := GetTipoOperacao;
-
-    infoContri.IdePeriodo.IniValid := '2017-01';
-    infoContri.IdePeriodo.FimValid := '2099-12';
-
-    if ( TipoOperacao = toAlteracao ) then
+    with evtInfoContri do
     begin
-      NovaValidade.IniValid := '2017-01';
-      NovaValidade.FimValid := '2099-12';
-    end;
+      Sequencial     := 0;
+      ModoLancamento := GetTipoOperacao;
 
-    if ( TipoOperacao in [ toInclusao, toAlteracao ] ) then
-    begin
-      // TESTE 2030 2040 3010
-      infoContri.InfoCadastro.ClassTrib := '11';
-      // TESTE 2050
-      // infoContri.InfoCadastro.ClassTrib := '07';
-      // OUTROS
-      //infoContri.InfoCadastro.ClassTrib := '99';
+      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi := peAplicEmpregador;
+      IdeEvento.VerProc := '1.0';
 
-      infoContri.InfoCadastro.indEscrituracao    := TindEscrituracao(0);
-      infoContri.InfoCadastro.indDesoneracao     := TindDesoneracao(1);
-      infoContri.InfoCadastro.indAcordoIsenMulta := TindAcordoIsenMulta(0);
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
 
-      infoContri.InfoCadastro.Contato.NmCtt    := edContNome.Text;
-      infoContri.InfoCadastro.Contato.CpfCtt   := edContCPF.Text;
-      infoContri.InfoCadastro.Contato.FoneFixo := edContFone.Text;
-      infoContri.InfoCadastro.Contato.FoneCel  := edContCel.Text;
-      infoContri.InfoCadastro.Contato.email    := edContEmail.Text;
+      infoContribuinte.IdePeriodo.IniValid := '2017-01';
+      infoContribuinte.IdePeriodo.FimValid := '2099-12';
 
-      with infoContri.InfoCadastro.SoftwareHouse do
+      with infoContribuinte.InfoCadastro do
       begin
-        CnpjSoftHouse := edSoftCNPJ.Text;
-        NmRazao       := edSoftRazao.Text;
-        NmCont        := edSoftContato.Text;
-        Telefone      := edSoftFone.Text;
-        email         := edSoftEmail.Text;
+        ClassTrib          := ct11;
+        indEscrituracao    := TindEscrituracao(0);
+        indDesoneracao     := TindDesoneracao(1);
+        indAcordoIsenMulta := TindAcordoIsenMulta(0);
+        indSitPJ           := TindSitPJ(0);
+
+        Contato.NmCtt    := edContNome.Text;
+        Contato.CpfCtt   := edContCPF.Text;
+        Contato.FoneFixo := edContFone.Text;
+        Contato.FoneCel  := edContCel.Text;
+        Contato.email    := edContEmail.Text;
+
+        SoftwareHouse.Clear;
+        with SoftwareHouse.Add do
+        begin
+          CnpjSoftHouse := '12345678000123';
+          NmRazao       := 'SoftwareHouse Teste';
+          NmCont        := 'Soft Contato';
+          Telefone      := '1634335856';
+          email         := 'teste@teste.com';
+        end;
       end;
 
-      infoContri.InfoCadastro.indSitPJ := spNormal;
-    end;  
+      infoContribuinte.NovaValidade.IniValid := '2017-01';
+      infoContribuinte.NovaValidade.FimValid := '2099-12';
+    end;
   end;
 end;
 
 procedure TForm2.GerarReinf1070;
 begin
-  with ACBrReinf1.Eventos.AddR1070 do
+  ACBrReinf1.Eventos.ReinfEventos.R1070.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R1070.Add do
   begin
-    TipoOperacao := GetTipoOperacao;
-    InfoProcesso.IdePeriodo.IniValid := '2017-01';
-
-    if ( TipoOperacao = toExclusao ) then
-      InfoProcesso.IdePeriodo.FimValid := '2099-12';
-
-    if ( TipoOperacao = toAlteracao ) then
+    with evtTabProcesso do
     begin
-      NovaValidade.IniValid := '2017-01';
-      NovaValidade.FimValid := '2099-12';
-    end;
+      Sequencial     := 0;
+      ModoLancamento := GetTipoOperacao;
 
-    InfoProcesso.IdeProcesso.tpProc := tpJudicial;
-    InfoProcesso.IdeProcesso.nrProc := '12345678901234567890';
-    InfoProcesso.IdeProcesso.DadosProcJud.UfVara     := 'SP';
-    InfoProcesso.IdeProcesso.DadosProcJud.codMunic   := 3550308;
-    InfoProcesso.IdeProcesso.DadosProcJud.IdVara     := '03';
-    InfoProcesso.IdeProcesso.DadosProcJud.indAutoria := TindAutoria(1);
+      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi := peAplicEmpregador;
+      IdeEvento.VerProc := '1.0';
 
-    with InfoProcesso.IdeProcesso.infoSusps.New do
-    begin
-      //codSusp := '1';
-      indSusp := siDecisaoDefinitivaAFavorDoContribuinte;
-      dtDecisao := StrtoDate('01/01/2017');
-      indDeposito := tpNao;
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with infoProcesso do
+      begin
+        ideProcesso.tpProc     := tpAdministrativo;
+        ideProcesso.nrProc     := '123';
+        ideProcesso.IniValid   := '2017-01';
+        ideProcesso.FimValid   := '2099-12';
+        ideProcesso.indAutoria := taContribuinte;
+
+        with ideProcesso do
+        begin
+          infoSusp.Clear;
+          with infoSusp.Add do
+          begin
+            codSusp     := '12345678';
+            indSusp     := siLiminarMandadoSeguranca;
+            dtDecisao   := Date;
+            indDeposito := tpSim;
+          end;
+
+          DadosProcJud.UfVara   := 'SP';
+          DadosProcJud.codMunic := 1234567;
+          DadosProcJud.idVara   := '12';
+        end;
+
+        NovaValidade.IniValid := '2017-01';
+        NovaValidade.FimValid := '2099-12';
+      end;
     end;
   end;
 end;
 
 procedure TForm2.GerarReinf2010;
 begin
-  with ACBrReinf1.Eventos.AddR2010 do
+  ACBrReinf1.Eventos.ReinfEventos.R2010.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2010.Add do
   begin
-    indRetif := trOriginal;
-
-    if ChkRetificadora.Checked then
-      indRetif := trRetificacao;
-
-    if indRetif = trRetificacao then
-      nrRecibo := edRecibo.Text;
-
-    perApur := FormatDateTime( 'yyyy-mm', Now );
-
-    infoServTom.IdePeriodo.IniValid := '2017-01';
-
-    infoServTom.ideEstabObra.tpInscEstab := tiCNPJ;
-    infoServTom.ideEstabObra.nrInscEstab := edtEmitCNPJ.Text;
-    infoServTom.ideEstabObra.indObra := ioNaoeObraDeConstrucaoCivil;
-
-    with infoServTom.ideEstabObra.idePrestServs.New do
+    with evtServTom do
     begin
-      cnpjPrestador := '00000000000000';
-      vlrTotalBruto := 100;
-      vlrTotalBaseRet := 100;
-      vlrTotalRetPrinc := 11;
-      // vlrTotalRetAdic := 0;
-      // vlrTotalNRetPrinc := 100;
-      codAnaCont := '001';
-      indCPRB := icNaoContribuintePrevidenciariaReceitaBruta;
-      with nfss.Items[nfss.Add(Tnfs.Create)] do
+      Sequencial := 0;
+
+      ideEvento.indRetif := trOriginal;
+      ideEvento.NrRecibo := '123';
+      ideEvento.perApur  := '2018-04';
+      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi  := peAplicEmpregador;
+      IdeEvento.VerProc  := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with infoServTom do
       begin
-        serie := '00001';
-        numDocto  := '0000000001';
-        dtEmissaoNF := Now;
-        vlrBruto  := 100;
-        obs := '';
-        with infoTpServs.Items[infoTpServs.Add(TinfoTpServ.Create)] do
+        with ideEstabObra do
         begin
-          tpServico := '100000003'; {Tabela 06}
-          //codAtivEcon := '00000025';
-          vlrMatEquip := 0;
-          vlrDedAlim := 0;
-          vlrDedTrans := 0;
-          vlrBaseRet := 100;
-          vlrRetencao := 11;
-          //vlrRetSub := 0;
+          tpInscEstab := tiCNPJ;
+          nrInscEstab := '123';
+          indObra     := ioNaoeObraDeConstrucaoCivil;
+
+          with idePrestServ do
+          begin
+            cnpjPrestador     := '12345678000123';
+            vlrTotalBruto     := 10.00;
+            vlrTotalBaseRet   := 10.00;
+            vlrTotalRetPrinc  := 10.00;
+            vlrTotalRetAdic   := 10.00;
+            vlrTotalNRetPrinc := 10.00;
+            vlrTotalNRetAdic  := 10.00;
+            indCPRB           := icNaoContribuintePrevidenciariaReceitaBruta;
+
+            nfs.Clear;
+            with nfs.Add do
+            begin
+              serie       := '1';
+              numDocto    := '123';
+              dtEmissaoNF := Date;
+              vlrBruto    := 1000.00;
+              obs         := '';
+
+              infoTpServ.Clear;
+              with infoTpServ.Add do
+              begin
+                tpServico     := '100000003'; {Tabela 06}
+                vlrBaseRet    := 100.00;
+                vlrRetencao   := 11.00;
+                vlrRetSub     := 0.00;
+                vlrNRetPrinc  := 0.00;
+                vlrServicos15 := 0.00;
+                vlrServicos20 := 0.00;
+                vlrServicos25 := 0.00;
+                vlrAdicional  := 0.00;
+                vlrNRetAdic   := 0.00;
+              end;
+            end;
+
+            infoProcRetPr.Clear;
+            with infoProcRetPr.Add do
+            begin
+              tpProcRetPrinc := tpAdministrativo;
+              nrProcRetPrinc := '1122112';
+              codSuspPrinc   := 001;
+              valorPrinc     := 100.00;
+            end;
+
+            infoProcRetAd.Clear;
+            with infoProcRetAd.Add do
+            begin
+              tpProcRetAdic := tpAdministrativo;
+              nrProcRetAdic := '1122112';
+              codSuspAdic   := 001;
+              valorAdic     := 1000.00;
+            end;
+          end;
         end;
       end;
-
-      with infoProcRetPr.Items[infoProcRetPr.Add(TinfoProcRetPr.Create)] do
-      begin
-        tpProcRetPrinc := tpAdministrativo;
-        nrProcRetPrinc := '1122112';
-        codSuspPrinc := 001;
-        valorPrinc := 100.00;
-      end;
-
-      with infoProcRetAd.Items[infoProcRetAd.Add(TinfoProcRetPr.Create)] do
-      begin
-        tpProcRetPrinc := tpAdministrativo;
-        nrProcRetPrinc := '1122112';
-        codSuspPrinc := 001;
-        valorPrinc := 100.00;
-      end;
-
     end;
   end;
 end;
 
 procedure TForm2.GerarReinf2020;
 begin
-  with ACBrReinf1.Eventos.AddR2020 do
+  ACBrReinf1.Eventos.ReinfEventos.R2020.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2020.Add do
   begin
-    indRetif := trOriginal;
-
-    if ChkRetificadora.Checked then
-      indRetif := trRetificacao;
-
-    if indRetif = trRetificacao then
-      nrRecibo := edRecibo.Text;
-      
-    perApur := FormatDateTime( 'yyyy-mm', Now );
-
-    infoServPrest.IdePeriodo.IniValid := '2017-01';
-
-     infoServPrest.ideEstabPrest.tpInscEstabPrest := tiCNPJ; {valor somente leitura -> Valor fixo 1}
-    infoServPrest.ideEstabPrest.nrInscEstabPrest := edtEmitCNPJ.Text;
-
-    with infoServPrest.ideEstabPrest.ideTomadors.New do
+    with evtServPrest do
     begin
-      tpInscTomador := tiCNPJ; {Não preencher fixo}
-      nrInscTomador := '99999999999999';
-      vlrTotalBruto := 100;
-      vlrTotalBaseRet := 100;
-      vlrTotalRetPrinc := 11;
-      //codAnaCont := '001';
-      with nfss.Items[nfss.Add(Tnfs.Create)] do
+      Sequencial := 0;
+
+      ideEvento.indRetif := trOriginal;
+      ideEvento.NrRecibo := '123';
+      ideEvento.perApur  := '2018-04';
+      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi  := peAplicEmpregador;
+      IdeEvento.VerProc  := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with infoServPrest do
       begin
-        serie := '00001';
-        numDocto  := '0000000001';
-        dtEmissaoNF := Now;
-        vlrBruto  := 100;
-        obs := 'teste';
-        with infoTpServs.Items[infoTpServs.Add(TinfoTpServ.Create)] do
+        with ideEstabPrest do
         begin
-          tpServico := '100000006'; {Tabela 06}
-          // codAtivEcon := '00000025';
-          //vlrMatEquip := 0;
-          //vlrDedAlim := 0;
-          //vlrDedTrans := 0;
-          vlrBaseRet := 100;
-          vlrRetencao := 11;
-          //vlrRetSub := 0;
+          tpInscEstabPrest := tiCNPJ;
+          nrInscEstabPrest := '12345678000123';
+
+          with ideTomador do
+          begin
+            tpInscTomador     := tiCNPJ;
+            nrInscTomador     := '12345678000123';
+            indObra           := ioNaoeObraDeConstrucaoCivil;
+            vlrTotalBruto     := 10.00;
+            vlrTotalBaseRet   := 10.00;
+            vlrTotalRetPrinc  := 10.00;
+            vlrTotalRetAdic   := 10.00;
+            vlrTotalNRetPrinc := 10.00;
+            vlrTotalNRetAdic  := 10.00;
+
+            nfs.Clear;
+            with nfs.Add do
+            begin
+              serie       := '1';
+              numDocto    := '123';
+              dtEmissaoNF := Date;
+              vlrBruto    := 1000.00;
+              obs         := '';
+
+              infoTpServ.Clear;
+              with infoTpServ.Add do
+              begin
+                tpServico     := '100000003'; {Tabela 06}
+                vlrBaseRet    := 100.00;
+                vlrRetencao   := 11.00;
+                vlrRetSub     := 0.00;
+                vlrNRetPrinc  := 0.00;
+                vlrServicos15 := 0.00;
+                vlrServicos20 := 0.00;
+                vlrServicos25 := 0.00;
+                vlrAdicional  := 0.00;
+                vlrNRetAdic   := 0.00;
+              end;
+            end;
+
+            infoProcRetPr.Clear;
+            with infoProcRetPr.Add do
+            begin
+              tpProcRetPrinc := tpAdministrativo;
+              nrProcRetPrinc := '1122112';
+              codSuspPrinc   := 001;
+              valorPrinc     := 100.00;
+            end;
+
+            infoProcRetAd.Clear;
+            with infoProcRetAd.Add do
+            begin
+              tpProcRetAdic := tpAdministrativo;
+              nrProcRetAdic := '1122112';
+              codSuspAdic   := 001;
+              valorAdic     := 1000.00;
+            end;
+          end;
         end;
       end;
-
-      with infoProcRetPr.Items[infoProcRetPr.Add(TinfoProcRetPr.Create)] do
-      begin
-        tpProcRetPrinc := tpAdministrativo;
-        nrProcRetPrinc := '1122112';
-        codSuspPrinc := 001;
-        valorPrinc := 100.00;
-      end;
-
-      with infoProcRetAd.Items[infoProcRetAd.Add(TinfoProcRetPr.Create)] do
-      begin
-        tpProcRetPrinc := tpAdministrativo;
-        nrProcRetPrinc := '1122112';
-        codSuspPrinc := 001;
-        valorPrinc := 100.00;
-      end;
-
     end;
   end;
 end;
 
 procedure TForm2.GerarReinf2030;
 begin
-  with ACBrReinf1.Eventos.AddR2030 do
+  ACBrReinf1.Eventos.ReinfEventos.R2030.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2030.Add do
   begin
-    indRetif := trOriginal;
-
-    if ChkRetificadora.Checked then
-      indRetif := trRetificacao;
-
-    if indRetif = trRetificacao then
-      nrRecibo := edRecibo.Text;
-
-    perApur := FormatDateTime( 'yyyy-mm', Now );
-
-    with ideEstab do
+    with evtAssocDespRec do
     begin
-      tpInscEstab := tiCNPJ;
-      nrInscEstab := edtEmitCNPJ.Text;
+      Sequencial := 0;
 
-      with recursosRecs.New do
+      ideEvento.indRetif := trOriginal;
+      ideEvento.NrRecibo := '123';
+      ideEvento.perApur  := '2018-04';
+      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi  := peAplicEmpregador;
+      IdeEvento.VerProc  := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with ideEstab do
       begin
-        cnpjOrigRecurso := '99999999999999';
-        vlrTotalRec     := 1234;
-        vlrTotalRet     := 0;
-        // vlrTotalNRet    := 0;
+        tpInscEstab := tiCNPJ;
+        nrInscEstab := '12345678000123';
 
-        with infoRecursos.New do
+        recursosRec.Clear;
+        with recursosRec.Add do
         begin
-          tpRepasse   := TtpRepasse(1);
-          descRecurso := 'TESTE';
-          vlrBruto    := 1234;
-        end;
+          cnpjOrigRecurso := '12345678000123';
+          vlrTotalRec     := 100.00;
+          vlrTotalRet     := 0;
+          vlrTotalNRet    := 0;
 
-        {
-        with infoProcs.New do
-        begin
-          tpProc  := tpTpProc(1);
-          nrProc  := '1234567890';
-          // codSusp  := '1234';
-          vlrNRet := 1234;
+          infoRecurso.Clear;
+          with infoRecurso.Add do
+          begin
+            tpRepasse   := trPatrocinio;
+            descRecurso := 'descricao resumida';
+            vlrBruto    := 11.00;
+            vlrRetApur  := 0.00;
+          end;
+
+          infoProc.Clear;
+          with infoProc.Add do
+          begin
+            tpProc  := tpAdministrativo;
+            nrProc  := '123';
+            codSusp := '456';
+            vlrNRet := 0.00;
+          end;
         end;
-        }
       end;
     end;
   end;
@@ -740,46 +841,54 @@ end;
 
 procedure TForm2.GerarReinf2040;
 begin
-  with ACBrReinf1.Eventos.AddR2040 do
+  ACBrReinf1.Eventos.ReinfEventos.R2040.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2040.Add do
   begin
-    indRetif := trOriginal;
-
-    if ChkRetificadora.Checked then
-      indRetif := trRetificacao;
-
-    if indRetif = trRetificacao then
-      nrRecibo := edRecibo.Text;
-
-    perApur := FormatDateTime( 'yyyy-mm', Now );
-
-    with ideEstab do
+    with evtAssocDespRep do
     begin
-      tpInscEstab := tiCNPJ;
-      nrInscEstab := edtEmitCNPJ.Text;
+      Sequencial := 0;
 
-      with recursosReps.New do
+      ideEvento.indRetif := trOriginal;
+      ideEvento.NrRecibo := '123';
+      ideEvento.perApur  := '2018-04';
+      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi  := peAplicEmpregador;
+      IdeEvento.VerProc  := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with ideEstab do
       begin
-        cnpjAssocDesp := '99999999999999';
-        vlrTotalRep   := 1234;
-        vlrTotalRet   := 0;
-        // vlrTotalNRet  := 0;
+        tpInscEstab := tiCNPJ;
+        nrInscEstab := '12345678000123';
 
-        with infoRecursos.New do
+        recursosRep.Clear;
+        with recursosRep.Add do
         begin
-          tpRepasse   := TtpRepasse(1);
-          descRecurso := 'TESTE';
-          vlrBruto    := 1234;
-        end;
+          cnpjAssocDesp := '12345678000123';
+          vlrTotalRep   := 100.00;
+          vlrTotalRet   := 0;
+          vlrTotalNRet  := 0;
 
-        {
-        with infoProcs.New do
-        begin
-          tpProc  := tpTpProc(1);
-          nrProc  := '1234567890';
-          // codSusp  := '1234';
-          vlrNRet := 1234;
+          infoRecurso.Clear;
+          with infoRecurso.Add do
+          begin
+            tpRepasse   := trPatrocinio;
+            descRecurso := 'descricao resumida';
+            vlrBruto    := 11.00;
+            vlrRetApur  := 0.00;
+          end;
+
+          infoProc.Clear;
+          with infoProc.Add do
+          begin
+            tpProc  := tpAdministrativo;
+            nrProc  := '123';
+            codSusp := '456';
+            vlrNRet := 0.00;
+          end;
         end;
-        }
       end;
     end;
   end;
@@ -787,48 +896,51 @@ end;
 
 procedure TForm2.GerarReinf2050;
 begin
-  with ACBrReinf1.Eventos.AddR2050 do
+  ACBrReinf1.Eventos.ReinfEventos.R2050.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2050.Add do
   begin
-    indRetif := trOriginal;
-
-    if ChkRetificadora.Checked then
-      indRetif := trRetificacao;
-
-    if indRetif = trRetificacao then
-      nrRecibo := edRecibo.Text;
-
-    perApur := FormatDateTime( 'yyyy-mm', Now );
-
-    with infoComProd do
+    with evtComProd do
     begin
-      with ideEstab do
+      Sequencial := 0;
+
+      ideEvento.indRetif := trOriginal;
+      ideEvento.NrRecibo := '123';
+      ideEvento.perApur  := '2018-04';
+      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi  := peAplicEmpregador;
+      IdeEvento.VerProc  := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with infoComProd.ideEstab do
       begin
         tpInscEstab       := tiCNPJ;
-        nrInscEstab       := edtEmitCNPJ.Text;
-        vlrRecBrutaTotal  := 9876;
-        vlrCPApur         := 1234;
-        vlrRatApur        := 1234;
-        vlrSenarApur      := 1234;
-        // vlrCPSuspTotal    := 0;
-        // vlrRatSuspTotal   := 0;
-        // vlrSenarSuspTotal := 0;
+        nrInscEstab       := '12345678000123';
+        vlrRecBrutaTotal  := 100.00;
+        vlrCPApur         := 100.00;
+        vlrRatApur        := 100.00;
+        vlrSenarApur      := 100.00;
+        vlrCPSuspTotal    := 100.00;
+        vlrRatSuspTotal   := 100.00;
+        vlrSenarSuspTotal := 100.00;
 
-        with tipoComs.New do
+        tipoCom.Clear;
+        with tipoCom.Add do
         begin
-          indCom      := TindCom(1);
-          vlrRecBruta := 9876;
+          indCom      := icProdRural;
+          vlrRecBruta := 100.50;
 
-          {
-          with infoProcs.New do
+          infoProc.Clear;
+          with infoProc.Add do
           begin
-            tpProc       := tpTpProc(1);
-            nrProc       := '1234567890';
-            codSusp      := '1234';
-            // vlrCPSusp    := 0;
-            // vlrRatSusp   := 0;
-            // vlrSenarSusp := 0;
+            tpProc       := tpAdministrativo;
+            nrProc       := '123';
+            codSusp      := '456';
+            vlrCPSusp    := 0.00;
+            vlrRatSusp   := 0.00;
+            vlrSenarSusp := 0.00;
           end;
-          }
         end;
       end;
     end;
@@ -837,54 +949,62 @@ end;
 
 procedure TForm2.GerarReinf2060;
 begin
-  with ACBrReinf1.Eventos.AddR2060 do
+  ACBrReinf1.Eventos.ReinfEventos.R2060.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2060.Add do
   begin
-    indRetif := trOriginal;
-
-    if ChkRetificadora.Checked then
-      indRetif := trRetificacao;
-
-    if indRetif = trRetificacao then
-      nrRecibo := edRecibo.Text;
-
-    perApur := FormatDateTime( 'yyyy-mm', Now );
-
-    infoCPRB.ideEstab.tpInscEstab := TtpInsc(1);
-    infoCPRB.ideEstab.nrInscEstab := edtEmitCNPJ.Text;
-    infoCPRB.ideEstab.vlrRecBrutaTotal := 100;
-    infoCPRB.ideEstab.vlrCPApurTotal   := 0;
-    infoCPRB.ideEstab.vlrCPRBSuspTotal := 0;
-
-    with infoCPRB.ideEstab.tipoCods.New do
+    with evtCPRB do
     begin
-      codAtivEcon := '00000025';
-      vlrRecBrutaAtiv := 100;
-      vlrExcRecBruta  := 0;
-      vlrAdicRecBruta := 0;
-      vlrBcCPRB       := 100;
-      vlrCPRBapur     := 0;
+      Sequencial := 0;
 
-      {
-      with tipoAjustes.New do
+      ideEvento.indRetif := trOriginal;
+      ideEvento.NrRecibo := '123';
+      ideEvento.perApur  := '2018-04';
+      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi  := peAplicEmpregador;
+      IdeEvento.VerProc  := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with infoCPRB.ideEstab do
       begin
-        tpAjuste   := TtpAjuste(1);
-        codAjuste  := caOutras;
-        vlrAjuste  := 10;
-        descAjuste := 'TESTE';
-        dtAjuste   := FormatDateTime( 'yyyy-mm', Now );
-      end;
-      }
-    end;
+        tpInscEstab      := tiCNPJ;
+        nrInscEstab      := '12345678000123';
+        vlrRecBrutaTotal := 100.00;
+        vlrCPApurTotal   := 100.00;
+        vlrCPRBSuspTotal := 100.00;
 
-    {
-    with infoCPRB.ideEstab.infoProcs.New do
-    begin
-      vlrCPRBSusp := 0;
-      tpProc      := tpTpProc(1);
-      nrProc      := '12345678901234567890';
-      codSusp     := '';
+        tipoCod.Clear;
+        with tipoCod.Add do
+        begin
+          codAtivEcon     := '12345678';
+          vlrRecBrutaAtiv := 100.50;
+          vlrExcRecBruta  := 100.50;
+          vlrAdicRecBruta := 100.50;
+          vlrBcCPRB       := 100.50;
+          vlrCPRBapur     := 100.50;
+
+          tipoAjuste.Clear;
+          with tipoAjuste.Add do
+          begin
+            tpAjuste   := taReducao;
+            codAjuste  := caRegimeCaixa;
+            vlrAjuste  := 0.00;
+            descAjuste := 'descricao';
+            dtAjuste   := '2018-04';
+          end;
+
+          infoProc.Clear;
+          with infoProc.Add do
+          begin
+            tpProc      := tpAdministrativo;
+            nrProc      := '123';
+            codSusp     := '456';
+            vlrCPRBSusp := 0.00;
+          end;
+        end;
+      end;
     end;
-    }
   end;
 end;
 
@@ -892,123 +1012,354 @@ procedure TForm2.GerarReinf2070;
 begin
   // EVENTO NÃO DISPONIBILIZADO ATÉ A VERSÃO 1_02
 
-  EXIT;
+//  EXIT;
 
-  with ACBrReinf1.Eventos.AddR2070 do
+  ACBrReinf1.Eventos.ReinfEventos.R2070.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2070.Add do
   begin
-    perApur := FormatDateTime( 'yyyy-mm', Now );
+    with evtPgtosDivs do
+    begin
+      Sequencial := 0;
+
+      ideEvento.indRetif := trOriginal;
+      ideEvento.NrRecibo := '123';
+      ideEvento.perApur  := '2018-04';
+      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi  := peAplicEmpregador;
+      IdeEvento.VerProc  := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with ideBenef do
+      begin
+        codPgto      := '123';
+        tpInscBenef  := tiCNPJ;
+        nrInscBenef  := '12345678000123';
+        nmRazaoBenef := 'Nome do Beneficiario';
+
+        with infoResidExt do
+        begin
+          with infoEnder do
+          begin
+            paisResid := 'Estados Unidos da America';
+            dscLograd := 'avenida';
+            nrLograd  := '100';
+            complem   := '';
+            bairro    := 'centro';
+            cidade    := 'New York';
+            codPostal := '123';
+          end;
+
+          with infoFiscal do
+          begin
+            indNIF        := nifCom;
+            nifBenef      := '1234';
+            relFontePagad := '1245';
+          end;
+        end;
+
+        with infoMolestia do
+        begin
+          dtLaudo := Date;
+        end;
+
+        ideEstab.Clear;
+        with ideEstab.Add do
+        begin
+          tpInsc := tiCNPJ;
+          nrInsc := '12345678000112';
+
+          pgtoPF.Clear;
+          with pgtoPF.Add do
+          begin
+            dtPgto            := Date;
+            indSuspExig       := tpSim;
+            indDecTerceiro    := tpSim;
+            vlrRendTributavel := 0.0;
+
+            detDeducao.Clear;
+            with detDeducao.Add do
+            begin
+              indTpDeducao := itdOficial;
+              vlrDeducao   := 0.0;
+            end;
+
+            rendIsento.Clear;
+            with rendIsento.Add do
+            begin
+              tpIsencao      := tiIsenta;
+              vlrIsento      := 0.0;
+              descRendimento := '';
+            end;
+
+            detCompet.Clear;
+            with detCompet.Add do
+            begin
+              indPerReferencia  := iprMensal;
+              perRefPagto       := '2018-04';
+              vlrRendTributavel := 0.0;
+            end;
+
+            with compJud do
+            begin
+              vlrCompAnoCalend := 0.0;
+              vlrCompAnoAnt    := 0.0;
+            end;
+
+            infoRRA.Clear;
+            with infoRRA.Add do
+            begin
+              tpProcRRA   := tpAdministrativo;
+              nrProcRRA   := '1234';
+              codSusp     := '12345';
+              natRRA      := 'natureza';
+              qtdMesesRRA := 1;
+
+              with despProcJud do
+              begin
+                vlrDespCustas    := 0.0;
+                vlrDespAdvogados := 0.0;
+
+                ideAdvogado.Clear;
+                with ideAdvogado.Add do
+                begin
+                  tpInscAdvogado := tiCNPJ;
+                  nrInscAdvogado := '12345678000123';
+                  vlrAdvogado    := 0.0;
+                end;
+              end;
+            end;
+
+            infoProcJud.Clear;
+            with infoProcJud.Add do
+            begin
+              nrProcJud         := '1234';
+              codSusp           := '123';
+              indOrigemRecursos := iorProprios;
+
+              with despProcJud do
+              begin
+                vlrDespCustas    := 0.0;
+                vlrDespAdvogados := 0.0;
+
+                ideAdvogado.Clear;
+                with ideAdvogado.Add do
+                begin
+                  tpInscAdvogado := tiCNPJ;
+                  nrInscAdvogado := '12345678000123';
+                  vlrAdvogado    := 0.0;
+                end;
+              end;
+
+              with origemRecursos do
+              begin
+                cnpjOrigemRecursos := '12345678000123';
+              end;
+            end;
+
+            with depJudicial do
+            begin
+              vlrDepJudicial := 0.0
+            end;
+          end;
+
+          pgtoPJ.Clear;
+          with pgtoPJ.Add do
+          begin
+            dtPagto           := Date;
+            vlrRendTributavel := 0.0;
+            vlrRet            := 0.0;
+
+            infoProcJud.Clear;
+            with infoProcJud.Add do
+            begin
+              nrProcJud         := '1234';
+              codSusp           := '123';
+              indOrigemRecursos := iorProprios;
+
+              with despProcJud do
+              begin
+                vlrDespCustas    := 0.0;
+                vlrDespAdvogados := 0.0;
+
+                ideAdvogado.Clear;
+                with ideAdvogado.Add do
+                begin
+                  tpInscAdvogado := tiCNPJ;
+                  nrInscAdvogado := '12345678000123';
+                  vlrAdvogado    := 0.0;
+                end;
+              end;
+
+              with origemRecursos do
+              begin
+                cnpjOrigemRecursos := '12345678000123';
+              end;
+            end;
+          end;
+
+          with pgtoResidExt do
+          begin
+            dtPagto         := Date;
+            tpRendimento    := '123';
+            formaTributacao := '123';
+            vlrPgto         := 0.0;
+            vlrRet          := 0.0;
+          end;
+        end;
+      end;
+    end;
   end;
 end;
 
 procedure TForm2.GerarReinf2098;
 begin
-  with ACBrReinf1.Eventos.AddR2098 do
+  ACBrReinf1.Eventos.ReinfEventos.R2098.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2098.Add do
   begin
-    perApur := FormatDateTime( 'yyyy-mm', Now );
+    with evtReabreEvPer do
+    begin
+      Sequencial := 0;
+
+      ideEvento.perApur := '2018-04';
+      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi := peAplicEmpregador;
+      IdeEvento.VerProc := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+    end;
   end;
 end;
 
 procedure TForm2.GerarReinf2099;
 begin
-  with ACBrReinf1.Eventos.AddR2099 do
+  ACBrReinf1.Eventos.ReinfEventos.R2099.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R2099.Add do
   begin
-    perApur := FormatDateTime( 'yyyy-mm', Now );
-    with ideRespInf do
+    with evtFechaEvPer do
     begin
-      nmResp   := edContNome.Text;
-      cpfResp  := edContCPF.Text;
-      telefone := edContFone.Text;
-      email    := edContEmail.Text;
-    end;
+      Sequencial := 0;
 
-    with infoFech do
-    begin
-      evtServTm     := tpSim;
-      evtServPr     := tpSim;
-      evtAssDespRec := tpSim;
-      evtAssDespRep := tpSim;
-      evtComProd    := tpSim;
-      evtCPRB       := tpSim;
-      evtPgtos      := tpNao;
+      ideEvento.perApur := '2018-04';
+      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi := peAplicEmpregador;
+      IdeEvento.VerProc := '1.0';
 
-      //compSemMovto := '2017-01'; {Somente preenchido se os outros valores forem tbNao}
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with ideRespInf do
+      begin
+        nmResp   := edContNome.Text;
+        cpfResp  := edContCPF.Text;
+        telefone := edContFone.Text;
+        email    := edContEmail.Text;
+      end;
+
+      with infoFech do
+      begin
+        evtServTm     := tpSim;
+        evtServPr     := tpSim;
+        evtAssDespRec := tpSim;
+        evtAssDespRep := tpSim;
+        evtComProd    := tpSim;
+        evtCPRB       := tpSim;
+        evtPgtos      := tpNao;
+
+        compSemMovto := '2017-01'; {Somente preenchido se os outros valores forem tbNao}
+      end;
     end;
   end;
 end;
 
 procedure TForm2.GerarReinf3010;
 begin
-  with ACBrReinf1.Eventos.AddR3010 do
+  ACBrReinf1.Eventos.ReinfEventos.R3010.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R3010.Add do
   begin
-    indRetif := trOriginal;
-
-    if ChkRetificadora.Checked then
-      indRetif := trRetificacao;
-
-    if indRetif = trRetificacao then
-      nrRecibo := edRecibo.Text;
-
-    dtApuracao := Now;
-
-    with ideEstabs.New do
+    with evtEspDesportivo do
     begin
-      tpInscEstab := tiCNPJ;
-      nrInscEstab := edtEmitCNPJ.Text;
+      Sequencial := 0;
 
-      with boletins.New do
+      ideEvento.indRetif := trOriginal;
+
+      if ChkRetificadora.Checked then
+        ideEvento.indRetif := trRetificacao;
+
+      if ideEvento.indRetif = trRetificacao then
+        ideEvento.nrRecibo := edRecibo.Text;
+
+      ideEvento.dtApuracao := Date;
+      IdeEvento.TpAmb      := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi    := peAplicEmpregador;
+      IdeEvento.VerProc    := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      ideEstab.Clear;
+      with ideEstab.Add do
       begin
-        nrBoletim       := '1234';
-        tpCompeticao    := TtpCompeticao(1);
-        categEvento     := TcategEvento(4);
-        modDesportiva   := 'TESTE';
-        nomeCompeticao  := 'TESTE';
-        cnpjMandante    := edtEmitCNPJ.Text;
-        // cnpjVisitante   := '99999999999999';
-         nomeVisitante   := 'TESTE';
-        pracaDesportiva := 'TESTE';
-        // codMunic        := 3550308;
-        uf              := 'SP';
-        qtdePagantes    := 999;
-        qtdeNaoPagantes := 999;
+        tpInscEstab := tiCNPJ;
+        nrInscEstab := edtEmitCNPJ.Text;
 
-        with receitaIngressoss.New do
+        boletim.Clear;
+        with boletim.Add do
         begin
-          tpIngresso       := TtpIngresso(1);
-          descIngr         := 'TESTE';
-          qtdeIngrVenda    := 999;
-          qtdeIngrVendidos := 999;
-          qtdeIngrDev      := 0;
-          precoIndiv       := 1;
-          vlrTotal         := 999;
+          nrBoletim       := '1234';
+          tpCompeticao    := ttcOficial;
+          categEvento     := tceLocal;
+          modDesportiva   := 'TESTE';
+          nomeCompeticao  := 'TESTE';
+          cnpjMandante    := edtEmitCNPJ.Text;
+          cnpjVisitante   := '99999999999999';
+          nomeVisitante   := 'TESTE';
+          pracaDesportiva := 'TESTE';
+          codMunic        := 3550308;
+          uf              := 'SP';
+          qtdePagantes    := 999;
+          qtdeNaoPagantes := 999;
+
+          receitaIngressos.Clear;
+          with receitaIngressos.Add do
+          begin
+            tpIngresso       := ttiArquibancada;
+            descIngr         := 'TESTE';
+            qtdeIngrVenda    := 999;
+            qtdeIngrVendidos := 999;
+            qtdeIngrDev      := 0;
+            precoIndiv       := 1;
+            vlrTotal         := 999;
+          end;
+
+          outrasReceitas.Clear;
+          with outrasReceitas.Add do
+          begin
+            tpReceita   := ttrTransmissao;
+            vlrReceita  := 1234;
+            descReceita := 'TESTE'
+          end;
         end;
 
-        {
-        with outrasReceitass.New do
+        with receitaTotal do
         begin
-          tpReceita   := TtpReceita(5);
-          vlrReceita  := 1234;
-          descReceita := 'TESTE'
-        end;
-        }
-      end;
+          vlrReceitaTotal  := 999;
+          vlrCP            := 0;
+          vlrCPSuspTotal   := 0;
+          vlrReceitaClubes := 0;
+          vlrRetParc       := 0;
 
-      with receitaTotal do
-      begin
-        vlrReceitaTotal  := 999;
-        vlrCP            := 0;
-        vlrCPSuspTotal   := 0;
-        vlrReceitaClubes := 0;
-        vlrRetParc       := 0;
-
-        {
-        with infoProcs.New do
-        begin
-          tpProc    := tpTpProc(1);
-          nrProc    := '1234567890';
-          // codSusp   := '1234';
-          vlrCPSusp := 1234;
+          infoProc.Clear;
+          with infoProc.Add do
+          begin
+            tpProc    := tpAdministrativo;
+            nrProc    := '1234567890';
+            codSusp   := '1234';
+            vlrCPSusp := 1234;
+          end;
         end;
-        }
       end;
     end;
   end;
@@ -1016,19 +1367,35 @@ end;
 
 procedure TForm2.GerarReinf9000;
 begin
-  with ACBrReinf1.Eventos.AddR9000 do
+  ACBrReinf1.Eventos.ReinfEventos.R9000.Clear;
+  with ACBrReinf1.Eventos.ReinfEventos.R9000.Add do
   begin
-    infoExclusao.tpEvento := cbEvento.Items.Strings[cbEvento.ItemIndex];
-    infoExclusao.nrRecEvt := Trim(edRecibo.Text);
+    with evtExclusao do
+    begin
+      Sequencial := 0;
 
-    if ( cbEvento.Text = 'R-3010' ) then
-      infoExclusao.perApur  := FormatDateTime( 'yyyy-mm-dd', Now )
-    else
-      infoExclusao.perApur  := FormatDateTime( 'yyyy-mm', Now );
+      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
+      IdeEvento.ProcEmi := peAplicEmpregador;
+      IdeEvento.VerProc := '1.0';
+
+      ideContri.TpInsc := tiCNPJ;
+      ideContri.NrInsc := edtEmitCNPJ.Text;
+
+      with infoExclusao do
+      begin
+        tpEvento := cbEvento.Items.Strings[cbEvento.ItemIndex];
+        nrRecEvt := Trim(edRecibo.Text);
+
+        if ( cbEvento.Text = 'R-3010' ) then
+          perApur := FormatDateTime( 'yyyy-mm-dd', Now )
+        else
+          perApur := FormatDateTime( 'yyyy-mm', Now );
+      end;
+    end;
   end;
 end;
 
-function TForm2.GetTipoOperacao: TindOperacao;
+function TForm2.GetTipoOperacao: TTipoOperacao;
 begin
   case rdgOperacao.ItemIndex of
     1: Result := toAlteracao;
@@ -1055,17 +1422,18 @@ end;
 
 procedure TForm2.lblColaboradorMouseEnter(Sender: TObject);
 begin
- TLabel(Sender).Font.Style := [fsBold,fsUnderline];
+  TLabel(Sender).Font.Style := [fsBold,fsUnderline];
 end;
 
 procedure TForm2.lblColaboradorMouseLeave(Sender: TObject);
 begin
- TLabel(Sender).Font.Style := [fsBold];
+  TLabel(Sender).Font.Style := [fsBold];
 end;
 
 procedure TForm2.GravarConfiguracao;
-Var IniFile : String;
-    Ini     : TIniFile;
+var
+  IniFile: String;
+  Ini: TIniFile;
 begin
   IniFile := ChangeFileExt( Application.ExeName, '.ini');
 
@@ -1147,12 +1515,37 @@ procedure TForm2.LerConfiguracao;
 var
   IniFile, PathMensal: String;
   Ini: TIniFile;
-  Ok: Boolean;
 begin
   IniFile := ChangeFileExt( Application.ExeName, '.ini');
 
   Ini := TIniFile.Create( IniFile );
   try
+    edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'');
+    edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         ,'');
+    edtEmitRazao.Text      := Ini.ReadString( 'Emitente','RazaoSocial','');
+    edtEmitFantasia.Text   := Ini.ReadString( 'Emitente','Fantasia'   ,'');
+    edtEmitFone.Text       := Ini.ReadString( 'Emitente','Fone'       ,'');
+    edtEmitCEP.Text        := Ini.ReadString( 'Emitente','CEP'        ,'');
+    edtEmitLogradouro.Text := Ini.ReadString( 'Emitente','Logradouro' ,'');
+    edtEmitNumero.Text     := Ini.ReadString( 'Emitente','Numero'     ,'');
+    edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento','');
+    edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     ,'');
+    edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  ,'');
+    edtEmitCidade.Text     :=Ini.ReadString( 'Emitente','Cidade'     ,'');
+    edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         ,'');
+
+    edContNome.Text        := Ini.ReadString( 'Contato', 'Nome'        ,'');
+    edContCPF.Text         := Ini.ReadString( 'Contato', 'CPF'         ,'');
+    edContFone.Text        := Ini.ReadString( 'Contato', 'Fone'        ,'');
+    edContCel.Text         := Ini.ReadString( 'Contato', 'Celular'     ,'');
+    edContEmail.Text       := Ini.ReadString( 'Contato', 'Email'       ,'');
+
+    edSoftRazao.Text       := Ini.ReadString( 'SofHouse', 'RazaoSocial','');
+    edSoftCNPJ.Text        := Ini.ReadString( 'SofHouse', 'CNPJ'       ,'');
+    edSoftEmail.Text       := Ini.ReadString( 'SofHouse', 'Email'      ,'');
+    edSoftFone.Text        := Ini.ReadString( 'SofHouse', 'Fone'       ,'');
+    edSoftContato.Text     := Ini.ReadString( 'SofHouse', 'Contato'    ,'');
+
     cbSSLLib.ItemIndex:= Ini.ReadInteger( 'Certificado','SSLLib' ,0);
     cbCryptLib.ItemIndex := Ini.ReadInteger( 'Certificado','CryptLib' , 0);
     cbHttpLib.ItemIndex := Ini.ReadInteger( 'Certificado','HttpLib' , 0);
@@ -1176,10 +1569,9 @@ begin
     edtPathLogs.Text     := Ini.ReadString( 'Geral','PathSalvar'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
     edtPathSchemas.Text  := Ini.ReadString( 'Geral','PathSchemas'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\Reinf');
 
-    ACBrReinf1.Configuracoes.Geral.VersaoDF := TVersaoReinf(cbVersaoDF.ItemIndex);
-
     with ACBrReinf1.Configuracoes.Geral do
     begin
+      VersaoDF := TVersaoReinf(cbVersaoDF.ItemIndex);
       SSLLib                := TSSLLib(cbSSLLib.ItemIndex);
       SSLCryptLib           := TSSLCryptLib(cbCryptLib.ItemIndex);
       SSLHttpLib            := TSSLHttpLib(cbHttpLib.ItemIndex);
@@ -1190,6 +1582,7 @@ begin
       FormatoAlerta    := edtFormatoAlerta.Text;
       FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
       Salvar           := ckSalvar.Checked;
+      IdContribuinte := edtEmitCNPJ.Text;
     end;
 
     cbUF.ItemIndex        := cbUF.Items.IndexOf(Ini.ReadString( 'WebService','UF','SP'));
@@ -1242,6 +1635,7 @@ begin
         edtIntervalo.Text := IntToStr(ACBrReinf1.Configuracoes.WebServices.IntervaloTentativas);
 
       TimeOut := seTimeOut.Value;
+
       ProxyHost := edtProxyHost.Text;
       ProxyPort := edtProxyPorta.Text;
       ProxyUser := edtProxyUser.Text;
@@ -1258,41 +1652,13 @@ begin
 
     with ACBrReinf1.Configuracoes.Arquivos do
     begin
-      SepararPorCNPJ     := cbxSepararPorCNPJ.Checked;
-      Salvar             := cbxSalvarArqs.Checked;
-      SepararPorMes      := cbxPastaMensal.Checked;
-      AdicionarLiteral   := cbxAdicionaLiteral.Checked;
-      PathSalvar         := edtPathLogs.Text;
-      PathSchemas        := edtPathSchemas.Text;
+      SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
+      Salvar           := cbxSalvarArqs.Checked;
+      SepararPorMes    := cbxPastaMensal.Checked;
+      AdicionarLiteral := cbxAdicionaLiteral.Checked;
+      PathSalvar       := edtPathLogs.Text;
+      PathSchemas      := edtPathSchemas.Text;
     end;
-
-    edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'');
-    edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         ,'');
-    edtEmitRazao.Text      := Ini.ReadString( 'Emitente','RazaoSocial','');
-    edtEmitFantasia.Text   := Ini.ReadString( 'Emitente','Fantasia'   ,'');
-    edtEmitFone.Text       := Ini.ReadString( 'Emitente','Fone'       ,'');
-    edtEmitCEP.Text        := Ini.ReadString( 'Emitente','CEP'        ,'');
-    edtEmitLogradouro.Text := Ini.ReadString( 'Emitente','Logradouro' ,'');
-    edtEmitNumero.Text     := Ini.ReadString( 'Emitente','Numero'     ,'');
-    edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento','');
-    edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     ,'');
-    edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  ,'');
-    edtEmitCidade.Text     :=Ini.ReadString( 'Emitente','Cidade'     ,'');
-    edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         ,'');
-
-    edContNome.Text        := Ini.ReadString( 'Contato', 'Nome'        ,'');
-    edContCPF.Text         := Ini.ReadString( 'Contato', 'CPF'         ,'');
-    edContFone.Text        := Ini.ReadString( 'Contato', 'Fone'        ,'');
-    edContCel.Text         := Ini.ReadString( 'Contato', 'Celular'     ,'');
-    edContEmail.Text       := Ini.ReadString( 'Contato', 'Email'       ,'');
-
-    edSoftRazao.Text       := Ini.ReadString( 'SofHouse', 'RazaoSocial','');
-    edSoftCNPJ.Text        := Ini.ReadString( 'SofHouse', 'CNPJ'       ,'');
-    edSoftEmail.Text       := Ini.ReadString( 'SofHouse', 'Email'      ,'');
-    edSoftFone.Text        := Ini.ReadString( 'SofHouse', 'Fone'       ,'');
-    edSoftContato.Text     := Ini.ReadString( 'SofHouse', 'Contato'    ,'');
-
-    ACBrReinf1.Configuracoes.Geral.IdContribuinte := edtEmitCNPJ.Text;
 
     PathMensal := ACBrReinf1.Configuracoes.Arquivos.GetPathReinf(0);
 
@@ -1312,6 +1678,10 @@ var
  Y: TSSLType;
  R: TVersaoReinf;
 begin
+  mmoDados.Clear;
+  mmoXMLRet.Clear;
+  mmoXMLEnv.Clear;
+
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
     cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) );
@@ -1356,30 +1726,29 @@ end;
 
 procedure TForm2.AtualizaSSLLibsCombo;
 begin
- cbSSLLib.ItemIndex := Integer( ACBrReinf1.Configuracoes.Geral.SSLLib );
- cbCryptLib.ItemIndex := Integer( ACBrReinf1.Configuracoes.Geral.SSLCryptLib );
- cbHttpLib.ItemIndex := Integer( ACBrReinf1.Configuracoes.Geral.SSLHttpLib );
- cbXmlSignLib.ItemIndex := Integer( ACBrReinf1.Configuracoes.Geral.SSLXmlSignLib );
+  cbSSLLib.ItemIndex     := Integer( ACBrReinf1.Configuracoes.Geral.SSLLib );
+  cbCryptLib.ItemIndex   := Integer( ACBrReinf1.Configuracoes.Geral.SSLCryptLib );
+  cbHttpLib.ItemIndex    := Integer( ACBrReinf1.Configuracoes.Geral.SSLHttpLib );
+  cbXmlSignLib.ItemIndex := Integer( ACBrReinf1.Configuracoes.Geral.SSLXmlSignLib );
 
- cbSSLType.Enabled := (ACBrReinf1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
+  cbSSLType.Enabled := (ACBrReinf1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
 end;
 
 procedure TForm2.btnSalvarConfigClick(Sender: TObject);
 begin
- GravarConfiguracao;
- LerConfiguracao;
+  GravarConfiguracao;
+  LerConfiguracao;
 end;
 
 procedure TForm2.sbtnCaminhoCertClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione o Certificado';
+  OpenDialog1.Title      := 'Selecione o Certificado';
   OpenDialog1.DefaultExt := '*.pfx';
-  OpenDialog1.Filter := 'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.Filter     := 'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+
   if OpenDialog1.Execute then
-  begin
     edtCaminho.Text := OpenDialog1.FileName;
-  end;
 end;
 
 procedure TForm2.SpeedButton1Click(Sender: TObject);
@@ -1478,7 +1847,7 @@ var
   Ahash: AnsiString;
 begin
   Ahash := ACBrReinf1.SSL.CalcHash(edHash.Text, dgstSHA256, outBase64, cbAssinar.Checked);
-  mmoRet.Lines.Add( Ahash );
+  mmoDados.Lines.Add( Ahash );
   PageControl1.ActivePageIndex := 1;
 end;
 
@@ -1501,7 +1870,7 @@ begin
   OldUseCert := ACBrReinf1.SSL.UseCertificateHTTP;
   ACBrReinf1.SSL.UseCertificateHTTP := False;
   try
-    mmoRet.Lines.Text := ACBrReinf1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
+    mmoDados.Lines.Text := ACBrReinf1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
   finally
     ACBrReinf1.SSL.UseCertificateHTTP := OldUseCert;
   end;
@@ -1512,24 +1881,27 @@ procedure TForm2.Button9Click(Sender: TObject);
 begin
   with ACBrReinf1.SSL do
   begin
-     CarregarCertificadoPublico(mmoRet.Lines.Text);
-     mmoRet.Lines.Add(CertIssuerName);
-     mmoRet.Lines.Add(CertRazaoSocial);
-     mmoRet.Lines.Add(CertCNPJ);
-     mmoRet.Lines.Add(CertSubjectName);
-     mmoRet.Lines.Add(CertNumeroSerie);
+    with mmoDados do
+    begin
+      CarregarCertificadoPublico(Lines.Text);
+      Lines.Add(CertIssuerName);
+      Lines.Add(CertRazaoSocial);
+      Lines.Add(CertCNPJ);
+      Lines.Add(CertSubjectName);
+      Lines.Add(CertNumeroSerie);
+     end;
     PageControl1.ActivePageIndex := 1;
   end;
 end;
 
 procedure TForm2.sbtnPathSalvarClick(Sender: TObject);
 begin
- PathClick(edtPathLogs);
+  PathClick(edtPathLogs);
 end;
 
 procedure TForm2.spPathSchemasClick(Sender: TObject);
 begin
- PathClick(edtPathSchemas);
+  PathClick(edtPathSchemas);
 end;
 
 procedure TForm2.PathClick(Sender: TObject);
@@ -1547,12 +1919,12 @@ end;
 
 procedure TForm2.sbPathReinfClick(Sender: TObject);
 begin
- PathClick(edtPathReinf);
+  PathClick(edtPathReinf);
 end;
 
 procedure TForm2.sbPathEventoClick(Sender: TObject);
 begin
- PathClick(edtPathEvento);
+  PathClick(edtPathEvento);
 end;
 
 procedure TForm2.cbSSLLibChange(Sender: TObject);
@@ -1686,26 +2058,6 @@ begin
 
   lblEvento.Visible       := cbEvento.Visible;
 end;
-
-{
-
-9.2.Eventos
-Inicialmente, o ambiente de Produção Restrita será disponibilizado contendo os
-eventos abaixo que foram implementados de acordo com a versão 1.1 do leiaute e da versão
-1_01_01 dos schemas XML:
-1. R-1000 - Informações do Empregador/Contribuinte
-2. R-1070 - Tabela de Processos Administrativos/Judiciais
-3. R-2010 – Retenção Contribuição Previdenciária - Serviços Tomados
-4. R-2020 – Retenção Contribuição Previdenciária - Serviços Prestados
-  5. R-2030 – Recursos Recebidos por Associação Desportiva  (Não vamos fazer)
-  6. R-2040 – Recursos Repassados para Associação Desportiva (Não Vamos Fazer)
-7. R-2098 – Reabertura dos Eventos Periódicos
-8. R-2099 – Fechamento dos Eventos Periódicos
-9. R-9000 – Exclusão de Eventos
-As datas para disponibilização de versões futuras da EFD-REINF nos ambientes de
-Produção Restrita e Produção serão divulgadas oportunamente.
-
-}
 
 end.
 

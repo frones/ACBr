@@ -412,7 +412,7 @@ begin
            ACBrNFe1.NotasFiscais.Clear;
 
            CarregarDFe(Cmd.Params(0), ArqNFe);
-           ConfiguraDANFe(True, '0');
+           ConfiguraDANFe(True, '');
 
            if NaoEstaVazio(Cmd.Params(1)) then
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1)
@@ -683,7 +683,7 @@ begin
                  end;
                 if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                  begin
-                   ConfiguraDANFe(False, '0');
+                   ConfiguraDANFe(False, '');
 
                    if NaoEstaVazio(Cmd.Params(4)) then
                      ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
@@ -701,7 +701,7 @@ begin
             begin
               if ACBrNFe1.NotasFiscais.Items[0].Confirmada and (Cmd.Params(3) = '1') then
                begin
-                 ConfiguraDANFe(False, '0');
+                 ConfiguraDANFe(False, '');
 
                  if NaoEstaVazio(Cmd.Params(4)) then
                     ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
@@ -825,7 +825,7 @@ begin
                 (Cmd.Metodo = 'adicionarnfe')  or (Cmd.Metodo = 'adicionarnfesefaz') or
                 (Cmd.Metodo = 'enviarlotenfe') or (Cmd.Metodo = 'enviardpecnfe') then
          begin
-           ConfiguraDANFe(False, '0');
+           ConfiguraDANFe(False, '');
 
            if (Cmd.Metodo = 'criarnfe') or (Cmd.Metodo = 'criarenviarnfe') or
               (Cmd.Metodo = 'adicionarnfe') then
@@ -1481,7 +1481,7 @@ begin
              PathsNFe.Free;
            end;
 
-           ConfiguraDANFe(True, '0');
+           ConfiguraDANFe(True, '');
 
            sMensagemEmail := TStringList.Create;
            CC := TstringList.Create;
@@ -1548,7 +1548,7 @@ begin
              end;
            end;
 
-           ConfiguraDANFe(True, '0');
+           ConfiguraDANFe(True, '');
 
            if (Cmd.Params(3) = '1') then
             begin
@@ -1626,7 +1626,7 @@ begin
              PathsNFe.Free;
            end;
 
-           ConfiguraDANFe(True, '0');
+           ConfiguraDANFe(True, '');
 
            if (Cmd.Params(2) = '1') then
             begin
@@ -1917,7 +1917,7 @@ begin
 
         else if Cmd.Metodo = 'imprimirrelatorio' then //NFe.ImprimirRelatorio(cTexto)
          begin
-           ConfiguraDANFe(False, '0');
+           ConfiguraDANFe(False, '');
 
            if rgModeloDANFeNFCE.ItemIndex <> 1  then
                raise Exception.Create('Comando disponível apenas para o DANFe modelo DANFe ESCPOS');

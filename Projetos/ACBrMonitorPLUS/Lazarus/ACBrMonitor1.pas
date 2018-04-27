@@ -2751,7 +2751,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe(True, '0');
+    ConfiguraDANFe(True, '');
 
     vPara := '';
     if not (InputQuery('Enviar Email', 'Email de Destino', vPara)) then
@@ -2910,7 +2910,7 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-    ConfiguraDANFe(False, '0');
+    ConfiguraDANFe(False, '');
 
     try
       AntesDeImprimir(False);

@@ -4494,6 +4494,47 @@ Somente para Transporte de Valores</xs:documentation>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="ICMS20">
+				<xs:annotation>
+					<xs:documentation>Prestação sujeito à tributação com redução de BC do ICMS</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CST">
+							<xs:annotation>
+								<xs:documentation>Classificação Tributária do serviço</xs:documentation>
+								<xs:documentation>20 - tributação com BC reduzida do ICMS</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+									<xs:enumeration value="20"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="pRedBC" type="TDec_0302Opc">
+							<xs:annotation>
+								<xs:documentation>Percentual de redução da BC</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vBC" type="TDec_1302">
+							<xs:annotation>
+								<xs:documentation>Valor da BC do ICMS</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="pICMS" type="TDec_0302">
+							<xs:annotation>
+								<xs:documentation>Alíquota do ICMS</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="vICMS" type="TDec_1302">
+							<xs:annotation>
+								<xs:documentation>Valor do ICMS</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="ICMS45">
 				<xs:annotation>
 					<xs:documentation>ICMS  Isento, não Tributado ou diferido</xs:documentation>
@@ -5094,15 +5135,6 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:pattern value="[0-9]{8}|ISENTO"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="TPlaca">
-		<xs:annotation>
-			<xs:documentation>Tipo Placa </xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[A-Z]{3}(([1-9]\d{3})|(0[1-9]\d{2})|(00[1-9]\d)|(000[1-9]))"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TCIOT">

@@ -446,6 +446,7 @@ type
 function TipoEventoToStr(const t: TTipoEvento ): string;
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 
 function eStpAmbToStr(const t: TptpAmb ): string;
 function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
@@ -2285,6 +2286,38 @@ const
        'evtExclusao', 'S-4000', 'S-4999', 'S-5001', 'S-5002', 'S-5011', 'S-5012');
 begin
   result := TTipoEvento( StrToEnumerado2(ok , s, EventoString ) );
+end;
+
+function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+const
+  EventoString: array[0..49] of String =('evtInfoEmpregador', 'evtTabEstab',
+       'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
+       'evtTabFuncao', 'evtTabHorContratual', 'evtTabAmbiente', 'evtTabProcesso',
+       'evtTabOperPortuario', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP',
+       'evtPgtos', 'S-1220', 'evtAqProd', 'evtComProd', 'evtContratAvNP',
+       'evtInfoComplPer', 'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer',
+       'evtContrSindPatr', 'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral',
+       'evtAltContratual', 'evtCAT', 'evtASO', 'evtAfastTemp', 'evtExpRisco',
+       'evtInsApo', 'evtAvPrevio', 'evtConvInterm', 'evtReintegr', 'evtDeslig',
+       'evtTSVInicio', 'S-2305', 'evtTSVAltContr', 'evtTSVTermino', 'evtCdBenPrRP',
+       'evtExclusao', 'S-4000', 'S-4999', 'S-5001', 'S-5002', 'S-5011', 'S-5012');
+var
+  i: integer;
+begin
+  ok := False;
+  result := TTipoEvento( 0 );
+
+  try
+    for i := 0 to 49 do
+      if Pos('[' + EventoString[i] + ']', s) > 0 then
+      begin
+        ok := True;
+        result := TTipoEvento( i );
+        exit;
+      end;
+  except
+    ok := False;
+  end;
 end;
 
 function tpInfOnusToStr(const t: tpInfOnus ): string;

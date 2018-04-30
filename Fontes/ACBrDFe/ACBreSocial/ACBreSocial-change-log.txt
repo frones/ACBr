@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/04/2018
+-- eSocial --
+[*] Correções em várias Units para que os tipos de eventos salvos em arquivos INI
+    sejam identificados de forma correta.
+   Por: Italo Jurisato Junior
+
 27/04/2018
 -- pcesS1280 --
 [*] https://www.projetoacbr.com.br/forum/topic/43026-ajuste-no-evento-s-1280/

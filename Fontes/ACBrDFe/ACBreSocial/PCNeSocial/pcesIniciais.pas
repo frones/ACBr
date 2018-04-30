@@ -172,7 +172,7 @@ function TIniciais.LoadFromIni(AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StrEventoToTipoEvento(Ok, AIniString) of
+  case StringToTipoEvento(Ok, AIniString) of
     teS1000: Self.S1000.Add.evtInfoEmpregador.LerArqIni(AIniString);
     teS1005: Self.S1005.Add.evtTabEstab.LerArqIni(AIniString);
   end;

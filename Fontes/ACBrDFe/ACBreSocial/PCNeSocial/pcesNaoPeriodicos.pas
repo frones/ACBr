@@ -511,7 +511,7 @@ function TNaoPeriodicos.LoadFromIni(AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StrEventoToTipoEvento(Ok, AIniString) of
+  case StringToTipoEvento(Ok, AIniString) of
     teS2190: Self.S2190.Add.EvtAdmPrelim.LerArqIni(AIniString);
     teS2200: Self.S2200.Add.EvtAdmissao.LerArqIni(AIniString);
     teS2205: Self.S2205.Add.EvtAltCadastral.LerArqIni(AIniString);

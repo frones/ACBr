@@ -75,9 +75,10 @@ type
     procedure SaveToFiles;
     procedure Clear;
 
-    function LoadFromFile(CaminhoArquivo: String): Boolean;
+    function LoadFromFile(CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream): Boolean;
     function LoadFromString(AXMLString: String): Boolean;
+    function LoadFromStringINI(AINIString: String): Boolean;
     function LoadFromIni(AIniString: String): Boolean;
 
     property Count:          Integer        read GetCount;
@@ -169,7 +170,7 @@ begin
   FPeriodicos.Assign(Value);
 end;
 
-function TEventos.LoadFromFile(CaminhoArquivo: String): Boolean;
+function TEventos.LoadFromFile(CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
 var
   ArquivoXML: TStringList;
   XML: String;
@@ -185,7 +186,11 @@ begin
     // Converte de UTF8 para a String nativa da IDE //
     XML := DecodeToString(XMLOriginal, True);
 
-    Result := LoadFromString(XML);
+    if ArqXML then
+      Result := LoadFromString(XML)
+    else
+      Result := LoadFromStringINI(XML);
+
   finally
     ArquivoXML.Free;
   end;
@@ -239,12 +244,20 @@ begin
   end;
 end;
 
-function TEventos.LoadFromIni(AIniString: String): Boolean;
+function TEventos.LoadFromStringINI(AINIString: String): Boolean;
 begin
   Result := Self.Iniciais.LoadFromIni(AIniString) or
             Self.Tabelas.LoadFromIni(AIniString) or
             Self.NaoPeriodicos.LoadFromIni(AIniString) or
             Self.Periodicos.LoadFromIni(AIniString);
+  SaveToFiles;
+end;
+
+function TEventos.LoadFromIni(AIniString: String): Boolean;
+begin
+  // O valor False no segundo parâmetro indica que o conteudo do arquivo não é
+  // um XML.
+  Result := LoadFromFile(AIniString, False);
 end;
 
 end.

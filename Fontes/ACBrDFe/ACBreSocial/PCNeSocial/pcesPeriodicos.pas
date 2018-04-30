@@ -384,7 +384,7 @@ function TPeriodicos.LoadFromIni(AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StrEventoToTipoEvento(Ok, AIniString) of
+  case StringToTipoEvento(Ok, AIniString) of
     teS1200: Self.S1200.Add.evtRemun.LerArqIni(AIniString);
     teS1202: Self.S1202.Add.EvtRmnRPPS.LerArqIni(AIniString);
     teS1207: Self.S1207.Add.evtBenPrRP.LerArqIni(AIniString);

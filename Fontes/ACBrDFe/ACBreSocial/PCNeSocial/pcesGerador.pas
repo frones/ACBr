@@ -150,7 +150,7 @@ type
     procedure GerarRic(pRic: TRic);
     procedure GerarOC(pOc: TOC);
     procedure GerarSucessaoVinc(pSucessaoVinc: TSucessaoVinc);
-    procedure GerarTrabalhador(pTrabalhador: TTrabalhador; const GroupName: string = 'trabalhador'; const Tipo: Integer = 1);
+    procedure GerarTrabalhador(pTrabalhador: TTrabalhador; const GroupName: string = 'trabalhador'; const Tipo: Integer = 1; const Categoria: Integer = 0);
     procedure GerarTrabEstrangeiro(pTrabEstrangeiro: TTrabEstrangeiro);
     procedure GerarTrabTemporario(pTrabTemporario: TTrabTemporario);
     procedure GerarInfoASO(pInfoASO: TInfoASO);
@@ -744,14 +744,22 @@ begin
   end;
 end;
 
-procedure TeSocialEvento.GerarTrabalhador(pTrabalhador: TTrabalhador; const GroupName: string;const tipo: Integer);
+procedure TeSocialEvento.GerarTrabalhador(pTrabalhador: TTrabalhador; const GroupName: string; const tipo: Integer; const Categoria: Integer);
 begin
   Gerador.wGrupo(GroupName);
 
   if (GroupName = 'trabalhador') then
     Gerador.wCampo(tcStr, '', 'cpfTrab', 11, 11, 1, pTrabalhador.CpfTrab);
 
-  Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 1, pTrabalhador.NisTrab);
+  // Preencher com o Número de Identificação Social - NIS, o qual pode ser o PIS,
+  // PASEP ou NIT.
+  // Validação: O preenchimento é obrigatório, exceto se o código de categoria do
+  // trabalhador for igual a [901, 903, 904].
+  if ((Categoria = 901) or (Categoria = 903) or (Categoria = 904)) then
+    Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 0, pTrabalhador.NisTrab)
+  else
+    Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 1, pTrabalhador.NisTrab);
+
   Gerador.wCampo(tcStr, '', 'nmTrab',  1, 70, 1, pTrabalhador.NmTrab);
   Gerador.wCampo(tcStr, '', 'sexo',    1,  1, 1, pTrabalhador.Sexo);
   Gerador.wCampo(tcStr, '', 'racaCor', 1,  1, 1, pTrabalhador.RacaCor);

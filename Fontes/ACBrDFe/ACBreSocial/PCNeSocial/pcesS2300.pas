@@ -529,7 +529,7 @@ begin
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
 
-    GerarTrabalhador(self.Trabalhador, 'trabalhador', 3);
+    GerarTrabalhador(self.Trabalhador, 'trabalhador', 3, Self.FinfoTSVInicio.codCateg);
     GerarInfoTSVInicio(self.infoTSVInicio);
 
     Gerador.wGrupo('/evtTSVInicio');

@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2018
+-- pcesGerador / pcesS2300 --
+[*] https://www.projetoacbr.com.br/forum/topic/43062-registro-s-2300-campo-nistrab/
+   Por: Gustavo Ribeiro Croscato
+
 30/04/2018
 -- eSocial --
 [*] Correções em várias Units para que os tipos de eventos salvos em arquivos INI

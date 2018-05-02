@@ -2290,17 +2290,16 @@ end;
 
 function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 const
-  EventoString: array[0..49] of String =('evtInfoEmpregador', 'evtTabEstab',
+  EventoString: array[0..40] of String =('evtInfoEmpregador', 'evtTabEstab',
        'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
        'evtTabFuncao', 'evtTabHorTur', 'evtTabAmbiente', 'evtTabProcesso',
-       'evtTabOperPort', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP',
-       'evtPgtos', 'S-1220', 'evtAqProd', 'evtComProd', 'evtContratAvNP',
-       'evtInfoComplPer', 'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer',
-       'evtContrSindPatr', 'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral',
-       'evtAltContratual', 'evtCAT', 'evtASO', 'evtAfastTemp', 'evtExpRisco',
-       'evtInsApo', 'evtAvPrevio', 'evtConvInterm', 'evtReintegr', 'evtDeslig',
-       'evtTSVInicio', 'S-2305', 'evtTSVAltContr', 'evtTSVTermino', 'evtCdBenPrRP',
-       'evtExclusao', 'S-4000', 'S-4999', 'S-5001', 'S-5002', 'S-5011', 'S-5012');
+       'evtTabOperPort', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP', 'evtPgtos',
+       'evtAqProd', 'evtComProd', 'evtContratAvNP', 'evtInfoComplPer',
+       'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer', 'evtContrSindPatr',
+       'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral', 'evtAltContratual',
+       'evtCAT', 'evtMonit', 'evtAfastTemp', 'evtExpRisco', 'evtInsApo',
+       'evtAvPrevio', 'evtConvInterm', 'evtReintegr', 'evtDeslig',
+       'evtTSVInicio', 'evtTSVAltContr', 'evtTSVTermino', 'evtCdBenPrRP', 'evtExclusao');
 var
   i: integer;
 begin

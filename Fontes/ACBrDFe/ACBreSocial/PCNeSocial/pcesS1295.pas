@@ -206,7 +206,7 @@ begin
 
     with Self do
     begin
-      sSecao := 'evtInfoComplPer';
+      sSecao := 'evtTotConting';
       Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
       sSecao := 'ideEvento';
@@ -221,7 +221,7 @@ begin
       ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
       ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 
-      sSecao := 'ideRespinf';
+      sSecao := 'ideRespInf';
       ideRespinf.nmResp   := INIRec.ReadString(sSecao, 'nmResp', '');
       ideRespinf.cpfResp  := INIRec.ReadString(sSecao, 'cpfResp', '');
       ideRespinf.telefone := INIRec.ReadString(sSecao, 'telefone', '');

@@ -1740,9 +1740,11 @@ type
     FCNPJ: String;
     FtBand: TpcnBandeiraCartao;
     FcAut: String;
+    FindPag: TpcnIndicadorPagamento;
   public
     procedure Assign(Source: TPersistent); override;
   published
+    property indPag: TpcnIndicadorPagamento read FindPag write FindPag default ipNenhum;
     property tPag: TpcnFormaPagamento read FtPag write FtPag;
     property vPag: Currency read FvPag write FvPag;
     property tpIntegra: TtpIntegra read FtpIntegra write FtpIntegra;
@@ -4004,6 +4006,7 @@ procedure TpagCollectionItem.Assign(Source: TPersistent);
 begin
   if Source is TpagCollectionItem then
   begin
+    indPag := TpagCollectionItem(Source).indPag;
     tPag := TpagCollectionItem(Source).tPag;
     vPag := TpagCollectionItem(Source).vPag;
     tpIntegra := TpagCollectionItem(Source).tpIntegra;

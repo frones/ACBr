@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2018
+-- pcnNFe / pcnNFeW / pcnNFeR --
+[*] Alerações visanto deixar o componente em conformidade com a NT 2016/002 versão 1.50
+  Por: Italo Jurisato Junior
+
 24/04/2018
 -- ACBrNFeWebServices --
 [-] Correção em "TNFeRetRecepcao" para retornar o valor das propriedades 

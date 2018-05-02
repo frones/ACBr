@@ -967,6 +967,7 @@ begin
     while Leitor.rExtrai(1, tagPag, '', i + 1) <> '' do
      begin
        NFe.pag.Add;
+      (*YA01b*)NFe.pag[i].indPag := StrToIndpag(Ok, Leitor.rCampo(tcStr, 'indPag');
       (*YA02*)NFe.pag[i].tPag := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
       (*YA03*)NFe.pag[i].vPag := Leitor.rCampo(tcDe2, 'vPag');
       if Leitor.rExtrai(2, 'card') <> '' then

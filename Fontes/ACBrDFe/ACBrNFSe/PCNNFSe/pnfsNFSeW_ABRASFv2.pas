@@ -801,7 +801,7 @@ begin
   if FProvedor = proTecnos then
     Gerador.wCampoNFSe(tcStr, '#9', 'OutrasInformacoes', 00, 255, 0, NFSe.OutrasInformacoes, DSC_OUTRASINF);
 
-  if FProvedor in [proELv2, proISSJoinvile, proPublica, proSmarAPDABRASF] then
+  if FProvedor in [proELv2, proISSJoinville, proPublica, proSmarAPDABRASF] then
     Gerador.wCampoNFSe(tcStr, '#9', 'InformacoesComplementares', 00, 2000, 0, NFSe.InformacoesComplementares, DSC_OUTRASINF);
 
   if FProvedor = profintelISS then

@@ -49,8 +49,13 @@ Símbolo : Significado
 
 02/05/2018
 -- pcnNFe / pcnNFeW / pcnNFeR --
-[*] Alerações visanto deixar o componente em conformidade com a NT 2016/002 versão 1.50
+[*] Alterações visando deixar o componente em conformidade com a NT 2016/002 versão 1.50
   Por: Italo Jurisato Junior
+
+[*] Definição de valor padrão vazio para as tags indEscala e indPag de forma
+    a não gerar as tags caso não informado (NFe 4.00).
+[*] Ajustes de compatibilidade com layouts anteriores da NFe.
+  Por: BigWings
 
 24/04/2018
 -- ACBrNFeWebServices --

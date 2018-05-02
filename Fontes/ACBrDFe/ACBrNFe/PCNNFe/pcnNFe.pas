@@ -686,7 +686,7 @@ type
     property nRECOPI: String read FnRECOPI write FnRECOPI;
     property nFCI: String read FnFCI write FnFCI;
     property CEST: String read FCEST write FCEST;
-    property indEscala: TpcnIndEscala read FindEscala write FindEscala;
+    property indEscala: TpcnIndEscala read FindEscala write FindEscala default ieNenhum;
     property CNPJFab: String read FCNPJFab write FCNPJFab;
     property cBenef: String read FcBenef write FcBenef;
   end;
@@ -1742,6 +1742,7 @@ type
     FcAut: String;
     FindPag: TpcnIndicadorPagamento;
   public
+    constructor Create(AOwner: TCollection); override;
     procedure Assign(Source: TPersistent); override;
   published
     property indPag: TpcnIndicadorPagamento read FindPag write FindPag default ipNenhum;
@@ -2325,6 +2326,8 @@ end;
 constructor TProd.Create(AOwner: TDetcollectionItem);
 begin
   inherited Create;
+  FindEscala := ieNenhum;
+
   FDI := TDICollection.Create(Self);
   FNVE := TNVECollection.Create(self);
   FdetExport := TdetExportCollection.Create(Self);
@@ -4016,6 +4019,12 @@ begin
   end
   else
     inherited;
+end;
+
+constructor TpagCollectionItem.Create(AOwner: TCollection);
+begin
+  inherited Create(AOwner);
+  FindPag := ipNenhum;
 end;
 
 { TobsContCollectionItem }

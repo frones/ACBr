@@ -1330,7 +1330,7 @@ end;
 
 procedure TForm1.mGerarVendaClick(Sender : TObject) ;
 var
-  TotalItem, TotalGeral, Pagto1: Double;
+  TotalItem, TotalGeral: Double;
   A: Integer;
   Loops: Integer;
 begin
@@ -1513,9 +1513,9 @@ begin
     *)
 
     Total.DescAcrEntr.vDescSubtot := 5;
-    Total.vCFeLei12741 := 1.23;
+    Total.vCFeLei12741 := 1.23 ;
 
-    Pagto1 := RoundABNT(TotalGeral/2,-2);
+    //Pagto1 := RoundABNT( TotalGeral/2 ,-2);
 {    with Pagto.Add do
     begin
       cMP := mpCartaodeCredito;
@@ -1525,7 +1525,7 @@ begin
     with Pagto.Add do
     begin
       cMP := mpDinheiro;
-      vMP := TotalGeral - Pagto1 + 100;
+      vMP := TotalGeral; //- Pagto1 + 100;
     end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+

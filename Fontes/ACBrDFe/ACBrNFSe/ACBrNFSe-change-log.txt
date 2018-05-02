@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Acrescentado os provedores ELv2, ISSJoinville, Publica e SmarAPDABRASF a lista para gerar
+   a tag <InformacoesComplemetares> no RPS.
+   Por: Italo Jurisato Junior
+
 24/04/2018
 -- pnfsNFSeW_ABRASFv2 --
 [*] Alteração para que a tag <Aliquota> seja gerada com 4 casas decimais para o provedor

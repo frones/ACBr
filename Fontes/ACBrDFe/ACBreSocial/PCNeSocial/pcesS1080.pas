@@ -361,8 +361,8 @@ begin
       begin
         sSecao := 'dadosOperPortuario';
         infoOperPortuario.dadosOperPortuario.aliqRat      := eSStrToAliqRat(Ok, INIRec.ReadString(sSecao, 'aliqRat', '1'));
-        infoOperPortuario.dadosOperPortuario.fap          := INIRec.ReadFloat(sSecao, 'fap', 0.0);
-        infoOperPortuario.dadosOperPortuario.aliqRatAjust := INIRec.ReadFloat(sSecao, 'aliqRatAjust', 0.0);
+        infoOperPortuario.dadosOperPortuario.fap          := StringToFloatDef(INIRec.ReadString(sSecao, 'fap', ''), 0);
+        infoOperPortuario.dadosOperPortuario.aliqRatAjust := StringToFloatDef(INIRec.ReadString(sSecao, 'aliqRatAjust', ''), 0);
 
         if ModoLancamento = mlAlteracao then
         begin

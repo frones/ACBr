@@ -49,6 +49,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/05/2018
+-- ACBreSocialLoteEventos / pcesConversaoeSocial / pcesS1080 --
+[*] Correções necessárias para poder gerar corretamente os XML dos eventos através
+   da leitura de seus dados em arquivos INI.
+   Por: Italo Jurisato Junior
 -- pcesGerador / pcesS2300 --
 [*] https://www.projetoacbr.com.br/forum/topic/43062-registro-s-2300-campo-nistrab/
    Por: Gustavo Ribeiro Croscato

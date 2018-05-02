@@ -182,9 +182,12 @@ begin
   {S1020}
   for i := 0 to FEventos.Tabelas.S1020.Count - 1 do
     LoadFromString(FEventos.Tabelas.S1020[i].EvtTabLotacao.XML);
-  {S2100}
+  {S1030}
   for i := 0 to FEventos.Tabelas.S1030.Count - 1 do
     LoadFromString(FEventos.Tabelas.S1030[i].EvtTabCargo.XML);
+  {S1035}
+  for i := 0 to FEventos.Tabelas.S1035.Count - 1 do
+    LoadFromString(FEventos.Tabelas.S1035[i].evtTabCarreira.XML);
   {S1040}
   for i := 0 to FEventos.Tabelas.S1040.Count - 1 do
     LoadFromString(FEventos.Tabelas.S1040[i].EvtTabFuncao.XML);

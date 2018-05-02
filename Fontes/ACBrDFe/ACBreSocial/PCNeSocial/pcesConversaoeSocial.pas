@@ -2292,8 +2292,8 @@ function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 const
   EventoString: array[0..49] of String =('evtInfoEmpregador', 'evtTabEstab',
        'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
-       'evtTabFuncao', 'evtTabHorContratual', 'evtTabAmbiente', 'evtTabProcesso',
-       'evtTabOperPortuario', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP',
+       'evtTabFuncao', 'evtTabHorTur', 'evtTabAmbiente', 'evtTabProcesso',
+       'evtTabOperPort', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP',
        'evtPgtos', 'S-1220', 'evtAqProd', 'evtComProd', 'evtContratAvNP',
        'evtInfoComplPer', 'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer',
        'evtContrSindPatr', 'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral',

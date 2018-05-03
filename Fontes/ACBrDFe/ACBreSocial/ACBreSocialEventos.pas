@@ -54,6 +54,29 @@ uses
   pcesConversaoeSocial;
 
 type
+  TEventos = class;
+  TGeradosCollection = class;
+  TGeradosCollectionItem = class;
+
+  TGeradosCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TGeradosCollectionItem;
+    procedure SetItem(Index: Integer; Value: TGeradosCollectionItem);
+  public
+    constructor create(AOwner: TEventos);
+    function Add: TGeradosCollectionItem;
+    property Items[Index: Integer]: TGeradosCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TGeradosCollectionItem = class(TCollectionItem)
+  private
+    FTipoEvento: TTipoEvento;
+    FPathNome: String;
+  public
+    property TipoEvento: TTipoEvento read FTipoEvento write FTipoEvento;
+    property PathNome: String read FPathNome write FPathNome;
+  end;
+
   TEventos = class(TComponent)
   private
     FIniciais: TIniciais;
@@ -61,12 +84,14 @@ type
     FNaoPeriodicos: TNaoPeriodicos;
     FPeriodicos: TPeriodicos;
     FTipoEmpregador: TEmpregador;
+    FGerados: TGeradosCollection;
 
     procedure SetIniciais(const Value: TIniciais);
     procedure SetNaoPeriodicos(const Value: TNaoPeriodicos);
     procedure SetPeriodicos(const Value: TPeriodicos);
     procedure SetTabelas(const Value: TTabelas);
     function GetCount: integer;
+    procedure SetGerados(const Value: TGeradosCollection);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;//verificar se será necessário, se TIniciais for TComponent;
@@ -87,6 +112,7 @@ type
     property NaoPeriodicos:  TNaoPeriodicos read FNaoPeriodicos  write SetNaoPeriodicos;
     property Periodicos:     TPeriodicos    read FPeriodicos     write SetPeriodicos;
     property TipoEmpregador: TEmpregador    read FTipoEmpregador write FTipoEmpregador;
+    property Gerados: TGeradosCollection    read FGerados        write SetGerados;
   end;
 
 implementation
@@ -94,6 +120,30 @@ implementation
 uses
   dateutils,
   ACBrUtil, ACBrDFeUtil, ACBreSocial;
+
+{ TGeradosCollection }
+
+function TGeradosCollection.Add: TGeradosCollectionItem;
+begin
+  Result := TGeradosCollectionItem(inherited add());
+//  Result.Create;
+end;
+
+constructor TGeradosCollection.create(AOwner: TEventos);
+begin
+  Inherited create(TGeradosCollectionItem);
+end;
+
+function TGeradosCollection.GetItem(Index: Integer): TGeradosCollectionItem;
+begin
+  Result := TGeradosCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TGeradosCollection.SetItem(Index: Integer;
+  Value: TGeradosCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
 
 { TEventos }
 
@@ -103,6 +153,7 @@ begin
   FTabelas.Clear;
   FNaoPeriodicos.Clear;
   FPeriodicos.Clear;
+  FGerados.Clear;
 end;
 
 constructor TEventos.Create(AOwner: TComponent);
@@ -113,6 +164,7 @@ begin
   FTabelas := TTabelas.Create(AOwner);
   FNaoPeriodicos := TNaoPeriodicos.Create(AOwner);
   FPeriodicos := TPeriodicos.Create(AOwner);
+  FGerados := TGeradosCollection.create(Self);
 end;
 
 destructor TEventos.Destroy;
@@ -121,6 +173,7 @@ begin
   FTabelas.Free;
   FNaoPeriodicos.Free;
   FPeriodicos.Free;
+  FGerados.Free;
   
   inherited;
 end;
@@ -144,10 +197,18 @@ end;
 
 procedure TEventos.SaveToFiles;
 begin
+  // Limpa a lista para não ocorrer duplicidades.
+  Gerados.Clear;
+
   Self.Iniciais.SaveToFiles;
   Self.Tabelas.SaveToFiles;
   Self.NaoPeriodicos.SaveToFiles;
   Self.Periodicos.SaveToFiles;
+end;
+
+procedure TEventos.SetGerados(const Value: TGeradosCollection);
+begin
+  FGerados := Value;
 end;
 
 procedure TEventos.SetIniciais(const Value: TIniciais);

@@ -404,7 +404,6 @@ begin
           nrBenefic := sFim;
           ideDmDev  := INIRec.ReadString(sSecao, 'ideDmDev', '');
 
-
           J := 1;
           while true do
           begin

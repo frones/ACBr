@@ -870,7 +870,7 @@ begin
                   begin
                     // de 01 até 99
                     sSecao := 'detOper' + IntToStrZero(I, 2) +
-                                IntToStrZero(J, 3) + IntToStrZero(K, 2) +
+                                IntToStrZero(J, 2) + IntToStrZero(K, 2) +
                                 IntToStrZero(L, 2);
                     sFim   := INIRec.ReadString(sSecao, 'cnpjOper', 'FIM');
 
@@ -888,7 +888,7 @@ begin
                       begin
                         // de 01 até 99
                         sSecao := 'detPlano' + IntToStrZero(I, 2) +
-                                    IntToStrZero(J, 3) + IntToStrZero(K, 2) +
+                                    IntToStrZero(J, 2) + IntToStrZero(K, 2) +
                                     IntToStrZero(L, 2) + IntToStrZero(M, 2);
                         sFim   := INIRec.ReadString(sSecao, 'cpfDep', 'FIM');
 
@@ -957,7 +957,7 @@ begin
                   while true do
                   begin
                     // de 01 até 24
-                    sSecao := 'ideEsta' + IntToStrZero(I, 2) + IntToStrZero(J, 1) +
+                    sSecao := 'ideEstab' + IntToStrZero(I, 2) + IntToStrZero(J, 1) +
                        IntToStrZero(K, 3) + IntToStrZero(L, 2);
                     sFim   := INIRec.ReadString(sSecao, 'nrInsc', 'FIM');
 

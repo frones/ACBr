@@ -1000,7 +1000,7 @@ begin
 
     Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, objRemunPer.Items[i].matricula);
 
-    if ord(objRemunPer.Items[i].indSimples) > 0 then
+    if objRemunPer.Items[i].indSimples <> idsNenhum then
       Gerador.wCampo(tcStr, '', 'indSimples', 1, 1, 0, eSIndSimplesToStr(objRemunPer.Items[i].indSimples));
 
     GerarItensRemun(objRemunPer.Items[i].itensRemun, 'itensRemun');
@@ -1351,7 +1351,7 @@ begin
                           begin
                             // de 001 até 200
                             sSecao := 'itensRemun' + IntToStrZero(I, 2) +
-                                        IntToStrZero(J, 3) + IntToStrZero(K, 1) +
+                                        IntToStrZero(J, 1) + IntToStrZero(K, 3) +
                                         IntToStrZero(L, 3) + IntToStrZero(M, 1) +
                                         IntToStrZero(N, 3);
                             sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
@@ -1373,7 +1373,7 @@ begin
                           end;
 
                           sSecao := 'infoAgNocivo' + IntToStrZero(I, 2) +
-                                        IntToStrZero(J, 3) + IntToStrZero(K, 1) +
+                                        IntToStrZero(J, 1) + IntToStrZero(K, 3) +
                                         IntToStrZero(L, 3) + IntToStrZero(M, 1);
                           infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', '1'));
 

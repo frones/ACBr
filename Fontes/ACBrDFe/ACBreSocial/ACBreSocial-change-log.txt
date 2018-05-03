@@ -49,6 +49,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/05/2018
+-- ACBreSocialEventos / pcesConversaoeSocial / pcesIniciais / pcesS1200 / pcesS1202 / pcesS1207 / pcesS2298 --
+[*] Correções necessárias para poder gerar corretamente os XML dos eventos através
+   da leitura de seus dados em arquivos INI.
+   Por: Italo Jurisato Junior
+
 -- pcesS5001 / pcesS5002 / pcesS5011 / pcesS5012 --
 [*] Tentativa de eliminar o erro interno relatado por Edmar Frazao.
     https://www.projetoacbr.com.br/forum/topic/43021-retorno-do-s-1210-evento-s-5002-com-erro-no-componente/

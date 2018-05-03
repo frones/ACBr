@@ -224,7 +224,7 @@ type
 
   tpIndMV                 = (imvDescontadaempregador, imvDescontadaoutras, imvSobrelimite);
 
-  tpIndSimples            = (idsIntegralmente, idsNaosubstituida, idsConcomitante);
+  tpIndSimples            = (idsNenhum, idsIntegralmente, idsNaosubstituida, idsConcomitante);
 
   tpNatAtividade          = (navNaoInformar, navUrbano, navRural );
 
@@ -912,6 +912,10 @@ const
                                                     '06', '07', '08', '09', '10',
                                                     '11', '12', '99');
 
+  TNrLeiAnistia : array[0..5] of string = ('LEI6683_1979', 'LEI8632_1993',
+                                            'LEI8878_1994', 'LEI10559_2002',
+                                            'LEI10790_2003', 'LEI11282_2006');
+
 function LayOuteSocialToServico(const t: TLayOut): String;
 begin
    Result := EnumeradoToStr(t,
@@ -1331,12 +1335,12 @@ end;
 
 function eSNrLeiAnistiaToStr(const t: tpNrLeiAnistia ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_6 );
+  result := EnumeradoToStr2(t, TNrLeiAnistia );
 end;
 
 function eSStrToNrLeiAnistia(var ok: boolean; const s: string): tpNrLeiAnistia;
 begin
-  result := tpNrLeiAnistia( StrToEnumerado2(ok , s, TGenericosString1_6 ) );
+  result := tpNrLeiAnistia( StrToEnumerado2(ok , s, TNrLeiAnistia ) );
 end;
 
 function eSTpContribSindToStr(const t: tpTpContribSind ): string;
@@ -1733,12 +1737,12 @@ end;
 
 function eSIndSimplesToStr(const t:tpIndSimples ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_3  );
+  result := EnumeradoToStr2(t,TGenericosString0_3  );
 end;
 
 function eSStrToIndSimples(var ok: boolean; const s: string): TpIndSimples;
 begin
-  result := TpIndSimples( StrToEnumerado2(ok , s,TGenericosString1_3 ));
+  result := TpIndSimples( StrToEnumerado2(ok , s,TGenericosString0_3 ));
 end;
 
 function eSNatAtividadeToStr(const t:tpNatAtividade ): string;
@@ -2290,16 +2294,18 @@ end;
 
 function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 const
-  EventoString: array[0..40] of String =('evtInfoEmpregador', 'evtTabEstab',
+  EventoString: array[0..43] of String =('evtInfoEmpregador', 'evtTabEstab',
        'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
        'evtTabFuncao', 'evtTabHorTur', 'evtTabAmbiente', 'evtTabProcesso',
-       'evtTabOperPort', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP', 'evtPgtos',
-       'evtAqProd', 'evtComProd', 'evtContratAvNP', 'evtInfoComplPer',
-       'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer', 'evtContrSindPatr',
-       'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral', 'evtAltContratual',
-       'evtCAT', 'evtMonit', 'evtAfastTemp', 'evtExpRisco', 'evtInsApo',
-       'evtAvPrevio', 'evtConvInterm', 'evtReintegr', 'evtDeslig',
-       'evtTSVInicio', 'evtTSVAltContr', 'evtTSVTermino', 'evtCdBenPrRP', 'evtExclusao');
+       'evtTabOperPort', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP',
+       'evtPgtos', 'S-1220', 'evtAqProd', 'evtComProd', 'evtContratAvNP',
+       'evtInfoComplPer', 'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer',
+       'evtContrSindPatr', 'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral',
+       'evtAltContratual', 'evtCAT', 'evtMonit', 'evtAfastTemp', 'evtExpRisco',
+       'evtInsApo', 'evtAvPrevio', 'evtConvInterm', 'evtReintegr', 'evtDeslig',
+       'evtTSVInicio', 'S-2305', 'evtTSVAltContr', 'evtTSVTermino',
+       'evtCdBenPrRP', 'evtExclusao');
+
 var
   i: integer;
 begin
@@ -2307,7 +2313,7 @@ begin
   result := TTipoEvento( 0 );
 
   try
-    for i := 0 to 49 do
+    for i := 0 to 43 do
       if Pos('[' + EventoString[i] + ']', s) > 0 then
       begin
         ok := True;

@@ -272,7 +272,7 @@ begin
       sSecao := 'infoReintegr';
       infoReintegr.tpReint       := eSStrToTpReint(Ok, INIRec.ReadString(sSecao, 'tpReint', '1'));
       infoReintegr.nrProcJud     := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
-      infoReintegr.nrLeiAnistia  := eSStrToNrLeiAnistia(Ok, INIRec.ReadString(sSecao, 'nrLeiAnistia', '1'));
+      infoReintegr.nrLeiAnistia  := eSStrToNrLeiAnistia(Ok, INIRec.ReadString(sSecao, 'nrLeiAnistia', 'LEI6683_1979'));
       infoReintegr.dtEfetRetorno := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfetRetorno', '0'));
       infoReintegr.dtEfeito      := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfeito', '0'));
       infoReintegr.indPagtoJuizo := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPagtoJuizo', 'S'));

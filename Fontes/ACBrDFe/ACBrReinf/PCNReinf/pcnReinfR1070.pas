@@ -159,12 +159,12 @@ type
   private
     FcodSusp: string;
     FIndDeposito: TtpSimNao;
-    FDTDecisao: TDate;
+    FDTDecisao: TDateTime;
     FIndSusp: TIndSusp;
   public
     property codSusp: string read FcodSusp write FcodSusp;
     property indSusp: TIndSusp read FIndSusp write FIndSusp;
-    property dtDecisao: TDate read FDTDecisao write FDTDecisao;
+    property dtDecisao: TDateTime read FDTDecisao write FDTDecisao;
     property indDeposito: TtpSimNao read FIndDeposito write FIndDeposito;
   end;
 

@@ -115,11 +115,13 @@ type
   TInfoCp = class(TPersistent)
   private
     FIdeEstabLot: TIdeEstabLotCollection;
+
+    procedure SetIdeEstabLot(const Value: TIdeEstabLotCollection);
   public
     constructor Create(AOwner: TEvtBasesTrab);
     destructor Destroy; override;
 
-    property IdeEstabLot: TIdeEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
+    property IdeEstabLot: TIdeEstabLotCollection read FIdeEstabLot write SetIdeEstabLot;
   end;
 
   TIdeEstabLotCollection = class(TCollection)
@@ -138,6 +140,7 @@ type
     FCodLotacao: string;
     FTpInsc: TpTpInsc;
     FInfoCategIncid: TInfoCategIncidCollection;
+
     procedure SetInfoCategIncid(const Value: TInfoCategIncidCollection);
   public
     constructor Create; reintroduce;
@@ -166,6 +169,7 @@ type
     FindSimples: tpIndSimples;
     FInfoBaseCS: TInfoBaseCSCollection;
     FCalcTerc: TCalcTercCollection;
+
     procedure SetInfoBaseCS(const Value: TInfoBaseCSCollection);
     procedure SetCalcTerc(const Value: TCalcTercCollection);
   public
@@ -232,6 +236,8 @@ type
     FIdeTrabalhador: TIdeTrabalhador3;
     FInfoCpCalc: TInfoCpCalcCollection;
     FInfoCp: TInfoCp;
+
+    procedure SetInfoCpCalc(const Value: TInfoCpCalcCollection);
   public
     constructor Create;
     destructor  Destroy; override;
@@ -242,7 +248,7 @@ type
     property IdeEvento: TIdeEvento5 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeTrabalhador: TIdeTrabalhador3 read FIdeTrabalhador write FIdeTrabalhador;
-    property InfoCpCalc: TInfoCpCalcCollection read FInfoCpCalc write FInfoCpCalc;
+    property InfoCpCalc: TInfoCpCalcCollection read FInfoCpCalc write SetInfoCpCalc;
     property InfoCp: TInfoCp read FInfoCp write FInfoCp;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
@@ -326,6 +332,11 @@ begin
   inherited;
 end;
 
+procedure TEvtBasesTrab.SetInfoCpCalc(const Value: TInfoCpCalcCollection);
+begin
+  FInfoCpCalc := Value;
+end;
+
 { TInfoCpCalcCollection }
 
 function TInfoCpCalcCollection.Add: TInfoCpCalcCollectionItem;
@@ -362,6 +373,11 @@ begin
   FIdeEstabLot.Free;
 
   inherited;
+end;
+
+procedure TInfoCp.SetIdeEstabLot(const Value: TIdeEstabLotCollection);
+begin
+  FIdeEstabLot := Value;
 end;
 
 { TIdeEstabLotCollection }

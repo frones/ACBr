@@ -108,10 +108,12 @@ type
     FnrRecArqBase: String;
     FindExistInfo: Integer;
     FInfoCRContrib: TInfoCRContribCollection;
+
+    procedure SetInfoCRContrib(const Value: TInfoCRContribCollection);
   public
     property nrRecArqBase: String read FnrRecArqBase write FnrRecArqBase;
     property indExistInfo: Integer read FindExistInfo write FindExistInfo;
-    property InfoCRContrib: TInfoCRContribCollection read FInfoCRContrib write FInfoCRContrib;
+    property InfoCRContrib: TInfoCRContribCollection read FInfoCRContrib write SetInfoCRContrib;
   end;
 
   TEvtIrrf = class(TPersistent)
@@ -233,6 +235,13 @@ procedure TInfoCRContribCollection.SetItem(Index: Integer;
   Value: TInfoCRContribCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+{ TInfoIRRF }
+
+procedure TInfoIRRF.SetInfoCRContrib(const Value: TInfoCRContribCollection);
+begin
+  FInfoCRContrib := Value;
 end;
 
 function TEvtIrrf.LerXML: Boolean;

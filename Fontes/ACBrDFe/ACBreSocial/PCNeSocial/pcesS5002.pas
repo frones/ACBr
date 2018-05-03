@@ -100,7 +100,7 @@ type
     function GetItem(Index: Integer): TInfoIrrfCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoIrrfCollectionItem);
   public
-    constructor Create; reintroduce;
+    constructor Create(AOwner: TEvtIrrfBenef);
     function Add: TInfoIrrfCollectionItem;
     property Items[Index: Integer]: TInfoIrrfCollectionItem read GetItem write SetItem;
   end;
@@ -112,14 +112,17 @@ type
     FbaseIrrf: TbaseIrrfCollection;
     Firrf: TirrfCollection;
     FidePgtoExt: TidePgtoExt;
+
+    procedure SetbaseIrrf(const Value: TbaseIrrfCollection);
+    procedure Setirrf(const Value: TirrfCollection);
   public
-    constructor Create(AOwner: TEvtIrrfBenef); reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 
     property CodCateg: integer read FCodCateg write FCodCateg;
     property indResBr: String read FindResBr write FindResBr;
-    property baseIrrf: TbaseIrrfCollection read FbaseIrrf write FbaseIrrf;
-    property irrf: TirrfCollection read Firrf write Firrf;
+    property baseIrrf: TbaseIrrfCollection read FbaseIrrf write SetbaseIrrf;
+    property irrf: TirrfCollection read Firrf write Setirrf;
     property idePgtoExt: TidePgtoExt read FidePgtoExt write FidePgtoExt;
   end;
 
@@ -184,6 +187,8 @@ type
     FIdeTrabalhador: TIdeTrabalhador3;
     FInfoDep: TInfoDep;
     FInfoIrrf: TInfoIrrfCollection;
+
+    procedure SetInfoIrrf(const Value: TInfoIrrfCollection);
   public
     constructor Create;
     destructor  Destroy; override;
@@ -195,7 +200,7 @@ type
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeTrabalhador: TIdeTrabalhador3 read FIdeTrabalhador write FIdeTrabalhador;
     property InfoDep: TInfoDep read FInfoDep write FInfoDep;
-    property InfoIrrf: TInfoIrrfCollection read FInfoIrrf write FInfoIrrf;
+    property InfoIrrf: TInfoIrrfCollection read FInfoIrrf write SetInfoIrrf;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property Id: String      read FId     write FId;
@@ -252,32 +257,6 @@ begin
   FEvtIrrfBenef.Assign(Value);
 end;
 
-{ TEvtIrrfBenef }
-
-constructor TEvtIrrfBenef.Create;
-begin
-  FLeitor := TLeitor.Create;
-
-  FIdeEvento := TIdeEvento5.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeTrabalhador := TIdeTrabalhador3.Create;
-  FInfoDep := TInfoDep.Create;
-  FInfoIrrf := TInfoIrrfCollection.Create;
-end;
-
-destructor TEvtIrrfBenef.Destroy;
-begin
-  FLeitor.Free;
-
-  FIdeEvento.Free;
-  FIdeEmpregador.Free;
-  FIdeTrabalhador.Free;
-  FInfoDep.Free;
-  FInfoIrrf.Free;
-
-  inherited;
-end;
-
 { TInfoIrrfCollection }
 
 function TInfoIrrfCollection.Add: TInfoIrrfCollectionItem;
@@ -285,7 +264,7 @@ begin
   Result := TInfoIrrfCollectionItem(inherited Add);
 end;
 
-constructor TInfoIrrfCollection.Create;
+constructor TInfoIrrfCollection.Create(AOwner: TEvtIrrfBenef);
 begin
   inherited create(TInfoIrrfCollectionItem);
 end;
@@ -304,7 +283,7 @@ end;
 
 { TInfoIrrfCollectionItem }
 
-constructor TInfoIrrfCollectionItem.Create(AOwner: TEvtIrrfBenef);
+constructor TInfoIrrfCollectionItem.Create;
 begin
   FbaseIrrf := TbaseIrrfCollection.Create(Self);
   Firrf := TirrfCollection.Create(Self);
@@ -318,6 +297,16 @@ begin
   FidePgtoExt.Free;
 
   inherited;
+end;
+
+procedure TInfoIrrfCollectionItem.SetbaseIrrf(const Value: TbaseIrrfCollection);
+begin
+  FbaseIrrf := Value;
+end;
+
+procedure TInfoIrrfCollectionItem.Setirrf(const Value: TirrfCollection);
+begin
+  Firrf := Value;
 end;
 
 { TbaseIrrfCollection }
@@ -381,6 +370,37 @@ begin
   FendExt.Free;
 
   inherited;
+end;
+
+{ TEvtIrrfBenef }
+
+constructor TEvtIrrfBenef.Create;
+begin
+  FLeitor := TLeitor.Create;
+
+  FIdeEvento := TIdeEvento5.Create;
+  FIdeEmpregador := TIdeEmpregador.Create;
+  FIdeTrabalhador := TIdeTrabalhador3.Create;
+  FInfoDep := TInfoDep.Create;
+  FInfoIrrf := TInfoIrrfCollection.Create(Self);
+end;
+
+destructor TEvtIrrfBenef.Destroy;
+begin
+  FLeitor.Free;
+
+  FIdeEvento.Free;
+  FIdeEmpregador.Free;
+  FIdeTrabalhador.Free;
+  FInfoDep.Free;
+  FInfoIrrf.Free;
+
+  inherited;
+end;
+
+procedure TEvtIrrfBenef.SetInfoIrrf(const Value: TInfoIrrfCollection);
+begin
+  FInfoIrrf := Value;
 end;
 
 function TEvtIrrfBenef.LerXML: boolean;

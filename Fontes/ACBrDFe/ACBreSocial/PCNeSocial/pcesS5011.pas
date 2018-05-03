@@ -267,7 +267,7 @@ type
     function GetItem(Index: Integer): TbasesRemunCollectionItem;
     procedure SetItem(Index: Integer; Value: TbasesRemunCollectionItem);
   public
-    constructor Create; reintroduce;
+    constructor Create(AOwner: TideLotacaoCollectionItem);
     function Add: TbasesRemunCollectionItem;
     property Items[Index: Integer]: TbasesRemunCollectionItem read GetItem write SetItem;
   end;
@@ -278,7 +278,7 @@ type
     FcodCateg: Integer;
     FbasesCp: TbasesCp;
   public
-    constructor Create(AOwner: TideLotacaoCollectionItem); reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 
     property indIncid: Integer read FindIncid write FindIncid;
@@ -334,6 +334,11 @@ type
     Fbasesremun: TbasesremunCollection;
     FbasesAvNport: TbasesAvNport;
     FinfoSubstPatrOpPort: TinfoSubstPatrOpPortCollection;
+
+    procedure Setbasesremun(const Value: TbasesremunCollection);
+    procedure SetinfoSubstPatrOpPort(
+      const Value: TinfoSubstPatrOpPortCollection);
+    procedure SetinfoTercSusp(const Value: TinfoTercSuspCollection);
   public
     constructor Create(AOwner: TideEstabCollectionItem); reintroduce;
     destructor Destroy; override;
@@ -342,12 +347,12 @@ type
     property fpas: Integer read Ffpas write Ffpas;
     property codTercs: String read FcodTercs write FcodTercs;
     property codTercsSusp: String read FcodTercsSusp write FcodTercsSusp;
-    property infoTercSusp: TinfoTercSuspCollection read FinfoTercSusp write FinfoTercSusp;
+    property infoTercSusp: TinfoTercSuspCollection read FinfoTercSusp write SetinfoTercSusp;
     property InfoEmprParcial: TInfoEmprParcial read FInfoEmprParcial write FInfoEmprParcial;
     property dadosOpPort: TdadosOpPort read FdadosOpPort write FdadosOpPort;
-    property basesremun: TbasesremunCollection read Fbasesremun write Fbasesremun;
+    property basesremun: TbasesremunCollection read Fbasesremun write Setbasesremun;
     property basesAvNPort: TbasesAvNport read FbasesAvNport write FbasesAvNport;
-    property infoSubstPatrOpPort: TinfoSubstPatrOpPortCollection read FinfoSubstPatrOpPort write FinfoSubstPatrOpPort;
+    property infoSubstPatrOpPort: TinfoSubstPatrOpPortCollection read FinfoSubstPatrOpPort write SetinfoSubstPatrOpPort;
   end;
 
   TideEstabCollection = class(TCollection)
@@ -452,6 +457,11 @@ type
     FbasesAquis: TbasesAquisCollection;
     FbasesComerc: TbasesComercCollection;
     FinfoCREstab: TinfoCREstabCollection;
+
+    procedure SetbasesAquis(const Value: TbasesAquisCollection);
+    procedure SetbasesComerc(const Value: TbasesComercCollection);
+    procedure SetideLotacao(const Value: TideLotacaoCollection);
+    procedure SetinfoCREstab(const Value: TinfoCREstabCollection);
   public
     constructor Create(AOwner: TInfoCS); reintroduce;
     destructor Destroy; override;
@@ -459,10 +469,10 @@ type
     property TpInsc: tpTpInsc read FTpInsc write FTpInsc;
     property NrInsc: string read FNrInsc write FNrInsc;
     property infoEstab: TinfoEstab read FinfoEstab write FinfoEstab;
-    property ideLotacao: TideLotacaoCollection read FideLotacao write FideLotacao;
-    property basesAquis: TbasesAquisCollection read FbasesAquis write FbasesAquis;
-    property basesComerc: TbasesComercCollection read FbasesComerc write FbasesComerc;
-    property infoCREstab: TinfoCREstabCollection read FinfoCREstab write FinfoCREstab;
+    property ideLotacao: TideLotacaoCollection read FideLotacao write SetideLotacao;
+    property basesAquis: TbasesAquisCollection read FbasesAquis write SetbasesAquis;
+    property basesComerc: TbasesComercCollection read FbasesComerc write SetbasesComerc;
+    property infoCREstab: TinfoCREstabCollection read FinfoCREstab write SetinfoCREstab;
   end;
 
   TInfoCRContribCollection = class(TCollection)
@@ -494,6 +504,9 @@ type
     FInfoContrib: TInfoContrib;
     FideEstab: TideEstabCollection;
     FinfoCRContrib: TinfoCRContribCollection;
+
+    procedure SetideEstab(const Value: TideEstabCollection);
+    procedure SetinfoCRContrib(const Value: TinfoCRContribCollection);
   public
     constructor Create(AOwner: TEvtCS);
     destructor Destroy; override;
@@ -502,8 +515,8 @@ type
     property indExistInfo: Integer read FindExistInfo write FindExistInfo;
     property InfoCpSeg: TInfoCpSeg read FInfoCpSeg write FInfoCpSeg;
     property InfoContrib: TInfoContrib read FInfoContrib write FInfoContrib;
-    property ideEstab: TideEstabCollection read FideEstab write FideEstab;
-    property infoCRContrib: TinfoCRContribCollection read FinfoCRContrib write FinfoCRContrib;
+    property ideEstab: TideEstabCollection read FideEstab write SetideEstab;
+    property infoCRContrib: TinfoCRContribCollection read FinfoCRContrib write SetinfoCRContrib;
   end;
 
   TEvtCS = class(TPersistent)
@@ -625,6 +638,16 @@ begin
   FinfoCRContrib.Free;
 
   inherited;
+end;
+
+procedure TInfoCS.SetideEstab(const Value: TideEstabCollection);
+begin
+  FideEstab := Value;
+end;
+
+procedure TInfoCS.SetinfoCRContrib(const Value: TinfoCRContribCollection);
+begin
+  FinfoCRContrib := Value;
 end;
 
 { TInfoContrib }
@@ -773,6 +796,30 @@ begin
   inherited;
 end;
 
+procedure TideEstabCollectionItem.SetbasesAquis(
+  const Value: TbasesAquisCollection);
+begin
+  FbasesAquis := Value;
+end;
+
+procedure TideEstabCollectionItem.SetbasesComerc(
+  const Value: TbasesComercCollection);
+begin
+  FbasesComerc := Value;
+end;
+
+procedure TideEstabCollectionItem.SetideLotacao(
+  const Value: TideLotacaoCollection);
+begin
+  FideLotacao := Value;
+end;
+
+procedure TideEstabCollectionItem.SetinfoCREstab(
+  const Value: TinfoCREstabCollection);
+begin
+  FinfoCREstab := Value;
+end;
+
 { TideLotacaoCollection }
 
 function TideLotacaoCollection.Add: TideLotacaoCollectionItem;
@@ -828,7 +875,8 @@ begin
   Result := TbasesRemunCollectionItem(inherited Add);
 end;
 
-constructor TbasesRemunCollection.Create;
+constructor TbasesRemunCollection.Create(
+  AOwner: TideLotacaoCollectionItem);
 begin
   inherited create(TbasesRemunCollectionItem);
 end;
@@ -847,8 +895,7 @@ end;
 
 { TbasesRemunCollectionItem }
 
-constructor TbasesRemunCollectionItem.Create(
-  AOwner: TideLotacaoCollectionItem);
+constructor TbasesRemunCollectionItem.Create;
 begin
   FbasesCp := TbasesCp.Create;
 end;
@@ -892,7 +939,7 @@ begin
   FinfoTercSusp := TinfoTercSuspCollection.Create;
   FInfoEmprParcial := TInfoEmprParcial.Create;
   FdadosOpPort := TdadosOpPort.Create;
-  Fbasesremun := TbasesremunCollection.Create;
+  Fbasesremun := TbasesremunCollection.Create(Self);
   FbasesAvNport := TbasesAvNport.Create;
   FinfoSubstPatrOpPort := TinfoSubstPatrOpPortCollection.Create;
 end;
@@ -907,6 +954,24 @@ begin
   FinfoSubstPatrOpPort.Free;
 
   inherited;
+end;
+
+procedure TideLotacaoCollectionItem.Setbasesremun(
+  const Value: TbasesremunCollection);
+begin
+  Fbasesremun := Value;
+end;
+
+procedure TideLotacaoCollectionItem.SetinfoSubstPatrOpPort(
+  const Value: TinfoSubstPatrOpPortCollection);
+begin
+  FinfoSubstPatrOpPort := Value;
+end;
+
+procedure TideLotacaoCollectionItem.SetinfoTercSusp(
+  const Value: TinfoTercSuspCollection);
+begin
+  FinfoTercSusp := Value;
 end;
 
 { TInfoEstab }

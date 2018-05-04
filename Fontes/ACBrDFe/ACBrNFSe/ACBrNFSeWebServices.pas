@@ -5378,7 +5378,11 @@ begin
         proInfisc,
         proInfiscv11: Result := True
       else
-        Result := FConsLote.Executar;
+        begin
+          Sleep(TACBrNFSe(FACBrNFSe).Configuracoes.WebServices.AguardarConsultaRet);
+
+          Result := FConsLote.Executar;
+        end;
       end;
 
       if not (Result) then

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/05/2018
+-- ACBrNFSeWebServices --
+[*] Acrescentado um Sleep entre o envio e a consulta no método EnviarSincrono.
+   Por: Italo Jurisato Junior
+
 02/05/2018
 -- pnfsNFSeW_ABRASFv2 --
 [*] Acrescentado os provedores ELv2, ISSJoinville, Publica e SmarAPDABRASF a lista para gerar

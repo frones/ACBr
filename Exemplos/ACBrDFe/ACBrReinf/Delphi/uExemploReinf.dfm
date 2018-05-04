@@ -1703,6 +1703,20 @@ object Form2: TForm2
           TabOrder = 0
         end
       end
+      object tsLog: TTabSheet
+        Caption = 'Log'
+        ImageIndex = 4
+        object memoLog: TMemo
+          Left = 0
+          Top = 0
+          Width = 581
+          Height = 501
+          Align = alClient
+          TabOrder = 0
+          ExplicitWidth = 730
+          ExplicitHeight = 237
+        end
+      end
     end
     object Panel4: TPanel
       Left = 1
@@ -1775,6 +1789,8 @@ object Form2: TForm2
     Top = 399
   end
   object ACBrReinf1: TACBrReinf
+    OnStatusChange = ACBrReinf1StatusChange
+    OnGerarLog = ACBrReinf1GerarLog
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
@@ -1784,6 +1800,7 @@ object Form2: TForm2
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    OnTransmissaoEventos = ACBrReinf1TransmissaoEventos
     Left = 326
     Top = 400
   end

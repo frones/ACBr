@@ -201,6 +201,8 @@ type
     btnConsultar: TButton;
     btnLerArqINI: TButton;
     btnEnviar: TButton;
+    tsLog: TTabSheet;
+    memoLog: TMemo;
 
     procedure btnGerarClick(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
@@ -237,6 +239,10 @@ type
     procedure btnConsultarClick(Sender: TObject);
     procedure btnLerArqINIClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
+    procedure ACBrReinf1GerarLog(const ALogLine: string; var Tratado: Boolean);
+    procedure ACBrReinf1StatusChange(Sender: TObject);
+    procedure ACBrReinf1TransmissaoEventos(const AXML: AnsiString;
+      ATipo: TEventosReinf);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -273,11 +279,60 @@ implementation
 {$R *.dfm}
 
 uses
-  ACBrDFeSSL, pcnConversao, ShellAPI, Unit2;
+  ACBrDFeSSL, pcnConversao, ShellAPI, Unit2, ufrmStatus;
 
 const
   SELDIRHELP = 1000;
   
+procedure TForm2.ACBrReinf1GerarLog(const ALogLine: string;
+  var Tratado: Boolean);
+begin
+  memoLog.Lines.Add(ALogLine);
+end;
+
+procedure TForm2.ACBrReinf1StatusChange(Sender: TObject);
+begin
+  case ACBrReinf1.Status of
+    stIdle:
+      begin
+        if (frmStatus <> nil) then
+          frmStatus.Hide;
+      end;
+    stEnvLoteEventos:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Enviando lote do Reinf...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
+    stConsultaLote:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Consultando lote do Reinf...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
+  end;
+  Application.ProcessMessages;
+end;
+
+procedure TForm2.ACBrReinf1TransmissaoEventos(const AXML: AnsiString;
+  ATipo: TEventosReinf);
+begin
+  case ATipo of
+    erEnvioLote:
+      mmoXMLEnv.Lines.Text := AXML;
+    erRetornoLote:
+      mmoXMLEnv.Lines.Text := AXML;
+    erEnvioConsulta:
+      mmoXMLEnv.Lines.Text := AXML;
+    erRetornoConsulta:
+      mmoXMLEnv.Lines.Text := AXML;
+  end;
+end;
+
 procedure TForm2.AntesDeEnviar(const Axml: string);
 begin
   mmoXMLEnv.Clear;
@@ -428,6 +483,8 @@ begin
 end;
 
 procedure TForm2.btnLerArqINIClick(Sender: TObject);
+var
+  i: Integer;
 begin
   edProtocolo.Text := '';
   ACBrReinf1.Configuracoes.Geral.VersaoDF := TVersaoReinf(cbVersaoDF.ItemIndex);
@@ -441,7 +498,17 @@ begin
   if OpenDialog1.Execute then
     ACBrReinf1.Eventos.LoadFromINI(OpenDialog1.FileName);
 
+  mmoDados.Clear;
+  mmoDados.Lines.Clear;
   mmoDados.Lines.Add('INI de Eventos Carregado com Sucesso!');
+  mmoDados.Lines.Add(' ');
+
+  for I := 0 to ACBrReinf1.Eventos.Gerados.Count -1 do
+  begin
+    mmoDados.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBrReinf1.Eventos.Gerados.Items[i].TipoEvento));
+    mmoDados.Lines.Add('Evento Salvo: ' + ACBrReinf1.Eventos.Gerados.Items[i].PathNome);
+  end;
+
   PageControl1.ActivePageIndex := 1;
 end;
 

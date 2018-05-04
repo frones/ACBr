@@ -271,7 +271,7 @@ begin
 
     with Self do
     begin
-      sSecao := 'evtContrSindPart';
+      sSecao := 'evtContrSindPatr';
       Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
       sSecao := 'ideEvento';

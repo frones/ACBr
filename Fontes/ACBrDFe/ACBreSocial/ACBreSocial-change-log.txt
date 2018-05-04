@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/05/2018
+-- pcesNaoPeriodicos / pcesPeriodicos / pcesTabelas / pcesS1299 / pcesS1300 --
+[*] Correções necessárias para poder gerar corretamente os XML dos eventos através
+   da leitura de seus dados em arquivos INI.
+   Por: Italo Jurisato Junior
+
 03/05/2018
 -- ACBreSocialEventos / pcesConversaoeSocial / pcesIniciais / pcesS1200 / pcesS1202 / pcesS1207 / pcesS2298 --
 [*] Correções necessárias para poder gerar corretamente os XML dos eventos através

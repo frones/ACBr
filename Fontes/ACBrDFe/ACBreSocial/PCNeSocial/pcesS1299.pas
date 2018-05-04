@@ -297,7 +297,7 @@ begin
       infoFech.evtComProd      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtComProd', 'S'));
       infoFech.evtContratAvNP  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtContratAvNP', 'S'));
       infoFech.evtInfoComplPer := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtInfoComplPer', 'S'));
-      infoFech.compSemMovto    := INIRec.ReadString(sSecao, 'compSemMovto', 'S');
+      infoFech.compSemMovto    := INIRec.ReadString(sSecao, 'compSemMovto', '');
     end;
 
     GerarXML;

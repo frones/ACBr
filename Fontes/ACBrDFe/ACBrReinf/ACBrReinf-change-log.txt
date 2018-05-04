@@ -50,6 +50,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2018
+-- ACBrReinfEventos / pcnEventosReinf --
+[*] Criado a Classe Gerados para conter o tipo e o Path completo do XML
+   gerado.
+   Por: Italo Jurisato Junior  
+
 09/04/2018
 -- ACBrReinf --
 [*] Inicio do Refactoring no componente para deixa-lo semelhante ao eSocial.

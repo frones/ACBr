@@ -227,7 +227,7 @@ end;
 procedure TReinfEventos.SaveToFiles;
 var
   i: integer;
-  Path: String;
+  Path, PathName: String;
 begin
   with TACBrReinf(Self.Owner) do
   begin
@@ -237,69 +237,186 @@ begin
   end;
 
   for i := 0 to Self.R1000.Count - 1 do
-    Self.R1000.Items[i].evtInfoContri.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R1000.Items[i].evtInfoContri.Id) + '-' +
-     TipoEventoToStr(Self.R1000.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R1000.Items[i].evtInfoContri.Id) + '-' +
+     TipoEventoToStr(Self.R1000.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R1000.Items[i].evtInfoContri.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR1000;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R1070.Count - 1 do
-    Self.R1070.Items[i].evtTabProcesso.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R1070.Items[i].evtTabProcesso.Id) + '-' +
-     TipoEventoToStr(Self.R1070.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R1070.Items[i].evtTabProcesso.Id) + '-' +
+     TipoEventoToStr(Self.R1070.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R1070.Items[i].evtTabProcesso.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR1070;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R2010.Count - 1 do
-    Self.R2010.Items[i].evtServTom.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R2010.Items[i].evtServTom.Id) + '-' +
-     TipoEventoToStr(Self.R2010.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R2010.Items[i].evtServTom.Id) + '-' +
+     TipoEventoToStr(Self.R2010.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2010.Items[i].evtServTom.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR2010;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R2020.Count - 1 do
-    Self.R2020.Items[i].evtServPrest.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R2020.Items[i].evtServPrest.Id) + '-' +
-     TipoEventoToStr(Self.R2020.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R2020.Items[i].evtServPrest.Id) + '-' +
+     TipoEventoToStr(Self.R2020.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2020.Items[i].evtServPrest.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR2020;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R2030.Count - 1 do
-    Self.R2030.Items[i].evtAssocDespRec.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R2030.Items[i].evtAssocDespRec.Id) + '-' +
-     TipoEventoToStr(Self.R2030.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R2030.Items[i].evtAssocDespRec.Id) + '-' +
+     TipoEventoToStr(Self.R2030.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2030.Items[i].evtAssocDespRec.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR2030;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R2040.Count - 1 do
-    Self.R2040.Items[i].evtAssocDespRep.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R2040.Items[i].evtAssocDespRep.Id) + '-' +
-     TipoEventoToStr(Self.R2040.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R2040.Items[i].evtAssocDespRep.Id) + '-' +
+     TipoEventoToStr(Self.R2040.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2040.Items[i].evtAssocDespRep.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR2040;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R2050.Count - 1 do
-    Self.R2050.Items[i].evtComProd.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R2050.Items[i].evtComProd.Id) + '-' +
-     TipoEventoToStr(Self.R2050.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R2050.Items[i].evtComProd.Id) + '-' +
+     TipoEventoToStr(Self.R2050.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2050.Items[i].evtComProd.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR2050;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R2060.Count - 1 do
-    Self.R2060.Items[i].evtCPRB.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R2060.Items[i].evtCPRB.Id) + '-' +
-     TipoEventoToStr(Self.R2060.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R2060.Items[i].evtCPRB.Id) + '-' +
+     TipoEventoToStr(Self.R2060.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2060.Items[i].evtCPRB.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR2060;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R2070.Count - 1 do
-    Self.R2070.Items[i].evtPgtosDivs.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R2070.Items[i].evtPgtosDivs.Id) + '-' +
-     TipoEventoToStr(Self.R2070.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R2070.Items[i].evtPgtosDivs.Id) + '-' +
+     TipoEventoToStr(Self.R2070.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2070.Items[i].evtPgtosDivs.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR2070;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R2098.Count - 1 do
-    Self.R2098.Items[i].evtReabreEvPer.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R2098.Items[i].evtReabreEvPer.Id) + '-' +
-     TipoEventoToStr(Self.R2098.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R2098.Items[i].evtReabreEvPer.Id) + '-' +
+     TipoEventoToStr(Self.R2098.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2098.Items[i].evtReabreEvPer.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR2098;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R2099.Count - 1 do
-    Self.R2099.Items[i].evtFechaEvPer.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R2099.Items[i].evtFechaEvPer.Id) + '-' +
-     TipoEventoToStr(Self.R2099.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R2099.Items[i].evtFechaEvPer.Id) + '-' +
+     TipoEventoToStr(Self.R2099.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R2099.Items[i].evtFechaEvPer.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR2099;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R3010.Count - 1 do
-    Self.R3010.Items[i].evtEspDesportivo.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R3010.Items[i].evtEspDesportivo.Id) + '-' +
-     TipoEventoToStr(Self.R3010.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R3010.Items[i].evtEspDesportivo.Id) + '-' +
+     TipoEventoToStr(Self.R3010.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R3010.Items[i].evtEspDesportivo.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR3010;
+      PathNome := PathName;
+    end;
+  end;
 
   for i := 0 to Self.R9000.Count - 1 do
-    Self.R9000.Items[i].evtExclusao.SaveToFile(Path + '\' +
-     OnlyNumber(Self.R9000.Items[i].evtExclusao.Id) + '-' +
-     TipoEventoToStr(Self.R9000.Items[i].TipoEvento)+'-'+IntToStr(i));
+  begin
+    PathName := Path + OnlyNumber(Self.R9000.Items[i].evtExclusao.Id) + '-' +
+     TipoEventoToStr(Self.R9000.Items[i].TipoEvento)+'-'+IntToStr(i);
+
+    Self.R9000.Items[i].evtExclusao.SaveToFile(PathName);
+
+    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teR9000;
+      PathNome := PathName;
+    end;
+  end;
 end;
 
 procedure TReinfEventos.setR1000(const Value: TR1000Collection);

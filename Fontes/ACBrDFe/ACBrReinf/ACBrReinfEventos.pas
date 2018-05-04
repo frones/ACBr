@@ -48,13 +48,38 @@ uses
   pcnGerador, pcnEventosReinf, pcnConversaoReinf;
 
 type
+  TEventos = class;
+  TGeradosCollection = class;
+  TGeradosCollectionItem = class;
+
+  TGeradosCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TGeradosCollectionItem;
+    procedure SetItem(Index: Integer; Value: TGeradosCollectionItem);
+  public
+    constructor create(AOwner: TEventos);
+    function Add: TGeradosCollectionItem;
+    property Items[Index: Integer]: TGeradosCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TGeradosCollectionItem = class(TCollectionItem)
+  private
+    FTipoEvento: TTipoEvento;
+    FPathNome: String;
+  public
+    property TipoEvento: TTipoEvento read FTipoEvento write FTipoEvento;
+    property PathNome: String read FPathNome write FPathNome;
+  end;
+
   TEventos = class(TComponent)
   private
     FReinfEventos: TReinfEventos;
     FTipoContribuinte: TContribuinte;
+    FGerados: TGeradosCollection;
 
     procedure SetReinfEventos(const Value: TReinfEventos);
     function GetCount: integer;
+    procedure SetGerados(const Value: TGeradosCollection);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;//verificar se será necessário, se TReinfEventos for TComponent;
@@ -72,6 +97,7 @@ type
     property Count:        Integer           read GetCount;
     property ReinfEventos: TReinfEventos     read FReinfEventos     write SetReinfEventos;
     property TipoContribuinte: TContribuinte read FTipoContribuinte write FTipoContribuinte;
+    property Gerados: TGeradosCollection    read FGerados        write SetGerados;
   end;
 
 implementation
@@ -80,11 +106,36 @@ uses
   dateutils,
   ACBrUtil, ACBrDFeUtil, ACBrReinf;
 
+{ TGeradosCollection }
+
+function TGeradosCollection.Add: TGeradosCollectionItem;
+begin
+  Result := TGeradosCollectionItem(inherited add());
+//  Result.Create;
+end;
+
+constructor TGeradosCollection.create(AOwner: TEventos);
+begin
+  Inherited create(TGeradosCollectionItem);
+end;
+
+function TGeradosCollection.GetItem(Index: Integer): TGeradosCollectionItem;
+begin
+  Result := TGeradosCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TGeradosCollection.SetItem(Index: Integer;
+  Value: TGeradosCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
 { TEventos }
 
 procedure TEventos.Clear;
 begin
   FReinfEventos.Clear;
+  FGerados.Clear;
 end;
 
 constructor TEventos.Create(AOwner: TComponent);
@@ -92,11 +143,13 @@ begin
   inherited;
 
   FReinfEventos := TReinfEventos.Create(AOwner);
+  FGerados := TGeradosCollection.create(Self);
 end;
 
 destructor TEventos.Destroy;
 begin
   FReinfEventos.Free;
+  FGerados.Free;
 
   inherited;
 end;
@@ -114,7 +167,15 @@ end;
 
 procedure TEventos.SaveToFiles;
 begin
+  // Limpa a lista para não ocorrer duplicidades.
+  Gerados.Clear;
+
   Self.ReinfEventos.SaveToFiles;
+end;
+
+procedure TEventos.SetGerados(const Value: TGeradosCollection);
+begin
+  FGerados := Value;
 end;
 
 procedure TEventos.SetReinfEventos(const Value: TReinfEventos);

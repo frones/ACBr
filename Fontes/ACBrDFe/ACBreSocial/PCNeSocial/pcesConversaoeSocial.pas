@@ -912,9 +912,9 @@ const
                                                     '06', '07', '08', '09', '10',
                                                     '11', '12', '99');
 
-  TNrLeiAnistia : array[0..5] of string = ('LEI6683_1979', 'LEI8632_1993',
-                                            'LEI8878_1994', 'LEI10559_2002',
-                                            'LEI10790_2003', 'LEI11282_2006');
+  TNrLeiAnistia : array[0..5] of string = ('LEI66831979',  'LEI86321993',
+                                           'LEI88781994',  'LEI105592002',
+                                           'LEI107902003', 'LEI112822006');
 
 function LayOuteSocialToServico(const t: TLayOut): String;
 begin

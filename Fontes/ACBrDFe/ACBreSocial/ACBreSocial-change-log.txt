@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/05/2018
+-- ACBreSocialEventos / pcesIniciais / pcesNaoPeriodicos / pcesPeriodicos / pcesTabelas --
+[*] Incluido na Classe Gerados a propriedade XML que contem o XML do evento gerado.
+   Por: Italo Jurisato Junior  
+
 04/05/2018
 -- pcesNaoPeriodicos / pcesPeriodicos / pcesTabelas / pcesS1299 / pcesS1300 --
 [*] Correções necessárias para poder gerar corretamente os XML dos eventos através

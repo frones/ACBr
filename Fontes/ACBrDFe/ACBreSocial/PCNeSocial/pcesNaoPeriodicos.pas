@@ -309,6 +309,7 @@ begin
     begin
       TipoEvento := teS2190;
       PathNome := PathName;
+      XML := Self.S2190.Items[i].EvtAdmPrelim.XML;
     end;
   end;
 
@@ -323,6 +324,7 @@ begin
     begin
       TipoEvento := teS2200;
       PathNome := PathName;
+      XML := Self.S2200.Items[i].EvtAdmissao.XML;
     end;
   end;
 
@@ -337,6 +339,7 @@ begin
     begin
       TipoEvento := teS2205;
       PathNome := PathName;
+      XML := Self.S2205.Items[i].EvtAltCadastral.XML;
     end;
   end;
 
@@ -351,6 +354,7 @@ begin
     begin
       TipoEvento := teS2206;
       PathNome := PathName;
+      XML := Self.S2206.Items[i].EvtAltContratual.XML;
     end;
   end;
 
@@ -365,6 +369,7 @@ begin
     begin
       TipoEvento := teS2210;
       PathNome := PathName;
+      XML := Self.S2210.Items[i].EvtCAT.XML;
     end;
   end;
 
@@ -379,6 +384,7 @@ begin
     begin
       TipoEvento := teS2220;
       PathNome := PathName;
+      XML := Self.S2220.Items[i].EvtASO.XML;
     end;
   end;
 
@@ -393,6 +399,7 @@ begin
     begin
       TipoEvento := teS2230;
       PathNome := PathName;
+      XML := Self.S2230.Items[i].EvtAfastTemp.XML;
     end;
   end;
 
@@ -407,6 +414,7 @@ begin
     begin
       TipoEvento := teS2240;
       PathNome := PathName;
+      XML := Self.S2240.Items[i].EvtExpRisco.XML;
     end;
   end;
 
@@ -421,6 +429,7 @@ begin
     begin
       TipoEvento := teS2241;
       PathNome := PathName;
+      XML := Self.S2241.Items[i].EvtInsApo.XML;
     end;
   end;
 
@@ -435,6 +444,7 @@ begin
     begin
       TipoEvento := teS2250;
       PathNome := PathName;
+      XML := Self.S2250.Items[i].EvtAvPrevio.XML;
     end;
   end;
 
@@ -449,6 +459,7 @@ begin
     begin
       TipoEvento := teS2260;
       PathNome := PathName;
+      XML := Self.S2260.Items[i].EvtConvInterm.XML;
     end;
   end;
 
@@ -463,6 +474,7 @@ begin
     begin
       TipoEvento := teS2298;
       PathNome := PathName;
+      XML := Self.S2298.Items[i].EvtReintegr.XML;
     end;
   end;
 
@@ -477,6 +489,7 @@ begin
     begin
       TipoEvento := teS2299;
       PathNome := PathName;
+      XML := Self.S2299.Items[i].EvtDeslig.XML;
     end;
   end;
 
@@ -491,6 +504,7 @@ begin
     begin
       TipoEvento := teS2300;
       PathNome := PathName;
+      XML := Self.S2300.Items[i].EvtTSVInicio.XML;
     end;
   end;
 
@@ -505,6 +519,7 @@ begin
     begin
       TipoEvento := teS2306;
       PathNome := PathName;
+      XML := Self.S2306.Items[i].EvtTSVAltContr.XML;
     end;
   end;
 
@@ -519,6 +534,7 @@ begin
     begin
       TipoEvento := teS2399;
       PathNome := PathName;
+      XML := Self.S2399.Items[i].EvtTSVTermino.XML;
     end;
   end;
 
@@ -533,6 +549,7 @@ begin
     begin
       TipoEvento := teS2400;
       PathNome := PathName;
+      XML := Self.S2400.Items[i].EvtCdBenPrRP.XML;
     end;
   end;
 
@@ -547,6 +564,7 @@ begin
     begin
       TipoEvento := teS3000;
       PathNome := PathName;
+      XML := Self.S3000.Items[i].EvtExclusao.XML;
     end;
   end;
 end;

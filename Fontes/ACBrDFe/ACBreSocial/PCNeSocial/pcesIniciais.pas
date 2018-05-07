@@ -146,6 +146,7 @@ begin
     begin
       TipoEvento := teS1000;
       PathNome := PathName;
+      XML := Self.S1000.Items[i].evtInfoEmpregador.XML;
     end;
   end;
 
@@ -160,6 +161,7 @@ begin
     begin
       TipoEvento := teS1005;
       PathNome := PathName;
+      XML := Self.S1005.Items[i].evtTabEstab.XML;
     end;
   end;
 end;

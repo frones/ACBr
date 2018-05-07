@@ -247,6 +247,7 @@ begin
     begin
       TipoEvento := teR1000;
       PathNome := PathName;
+      XML := Self.R1000.Items[i].evtInfoContri.XML;
     end;
   end;
 
@@ -261,6 +262,7 @@ begin
     begin
       TipoEvento := teR1070;
       PathNome := PathName;
+      XML := Self.R1070.Items[i].evtTabProcesso.XML;
     end;
   end;
 
@@ -275,6 +277,7 @@ begin
     begin
       TipoEvento := teR2010;
       PathNome := PathName;
+      XML := Self.R2010.Items[i].evtServTom.XML;
     end;
   end;
 
@@ -289,6 +292,7 @@ begin
     begin
       TipoEvento := teR2020;
       PathNome := PathName;
+      XML := Self.R2020.Items[i].evtServPrest.XML;
     end;
   end;
 
@@ -303,6 +307,7 @@ begin
     begin
       TipoEvento := teR2030;
       PathNome := PathName;
+      XML := Self.R2030.Items[i].evtAssocDespRec.XML;
     end;
   end;
 
@@ -317,6 +322,7 @@ begin
     begin
       TipoEvento := teR2040;
       PathNome := PathName;
+      XML := Self.R2040.Items[i].evtAssocDespRep.XML;
     end;
   end;
 
@@ -331,6 +337,7 @@ begin
     begin
       TipoEvento := teR2050;
       PathNome := PathName;
+      XML := Self.R2050.Items[i].evtComProd.XML;
     end;
   end;
 
@@ -345,6 +352,7 @@ begin
     begin
       TipoEvento := teR2060;
       PathNome := PathName;
+      XML := Self.R2060.Items[i].evtCPRB.XML;
     end;
   end;
 
@@ -359,6 +367,7 @@ begin
     begin
       TipoEvento := teR2070;
       PathNome := PathName;
+      XML := Self.R2070.Items[i].evtPgtosDivs.XML;
     end;
   end;
 
@@ -373,6 +382,7 @@ begin
     begin
       TipoEvento := teR2098;
       PathNome := PathName;
+      XML := Self.R2098.Items[i].evtReabreEvPer.XML;
     end;
   end;
 
@@ -387,6 +397,7 @@ begin
     begin
       TipoEvento := teR2099;
       PathNome := PathName;
+      XML := Self.R2099.Items[i].evtFechaEvPer.XML;
     end;
   end;
 
@@ -401,6 +412,7 @@ begin
     begin
       TipoEvento := teR3010;
       PathNome := PathName;
+      XML := Self.R3010.Items[i].evtEspDesportivo.XML;
     end;
   end;
 
@@ -415,6 +427,7 @@ begin
     begin
       TipoEvento := teR9000;
       PathNome := PathName;
+      XML := Self.R9000.Items[i].evtExclusao.XML;
     end;
   end;
 end;

@@ -66,9 +66,11 @@ type
   private
     FTipoEvento: TTipoEvento;
     FPathNome: String;
+    FXML: String;
   public
     property TipoEvento: TTipoEvento read FTipoEvento write FTipoEvento;
     property PathNome: String read FPathNome write FPathNome;
+    property XML: String read FXML write FXML;
   end;
 
   TEventos = class(TComponent)

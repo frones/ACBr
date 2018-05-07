@@ -50,7 +50,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-09/05/2018
+07/05/2018
+-- ACBrReinfEventos / pcnEventosReinf --
+[*] Incluido na Classe Gerados a propriedade XML que contem o XML do evento gerado.
+   Por: Italo Jurisato Junior  
+
+04/05/2018
 -- ACBrReinfEventos / pcnEventosReinf --
 [*] Criado a Classe Gerados para conter o tipo e o Path completo do XML
    gerado.

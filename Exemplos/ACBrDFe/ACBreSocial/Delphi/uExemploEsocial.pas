@@ -2766,85 +2766,116 @@ procedure TFExemploEsocial.GerareSocial2206;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2206.Add do
   begin
-    EvtAltContratual.Sequencial := 0;
-
-    EvtAltContratual.IdeEvento.indRetif := ireOriginal;
-    // EvtAltContratual.IdeEvento.NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigatório se indRetif = ireRetificacao;
-    EvtAltContratual.IdeEvento.TpAmb := taProducaoRestrita;
-    EvtAltContratual.IdeEvento.ProcEmi := peAplicEmpregador;
-    EvtAltContratual.IdeEvento.VerProc := '1.0';
-
-    EvtAltContratual.IdeEmpregador.TpInsc := tiCNPJ;
-    EvtAltContratual.IdeEmpregador.NrInsc := '12345678901234';
-
-    EvtAltContratual.IdeVinculo.CpfTrab := '12345678901';
-    EvtAltContratual.IdeVinculo.NisTrab := '96325874103';
-    EvtAltContratual.IdeVinculo.Matricula := 'A1234';
-
-    EvtAltContratual.AltContratual.dtAlteracao := date;
-    EvtAltContratual.AltContratual.dtEf := Now;
-    EvtAltContratual.AltContratual.dscAlt := 'descrição da alteração';
-
-    EvtAltContratual.AltContratual.Vinculo.TpRegTrab := trCLT;
-    EvtAltContratual.AltContratual.Vinculo.TpRegPrev := rpRGPS;
-
-    EvtAltContratual.AltContratual.InfoRegimeTrab.InfoCeletista.TpRegJor := rjSubmetidosHorarioTrabalho;
-    EvtAltContratual.AltContratual.InfoRegimeTrab.InfoCeletista.NatAtividade := navUrbano;
-    EvtAltContratual.AltContratual.InfoRegimeTrab.InfoCeletista.dtBase := 08;
-    EvtAltContratual.AltContratual.InfoRegimeTrab.InfoCeletista.cnpjSindCategProf := '15975395135700';
-
-    EvtAltContratual.AltContratual.InfoRegimeTrab.InfoCeletista.trabTemporario.justProrr := 'Prorrogado porque eu quis';
-
-    // EvtAltContratual.AltContratual.infoRegimeTrab.InfoEstatutario.tpPlanRP := tpPlanRP(0);
-
-    EvtAltContratual.AltContratual.InfoContrato.CodCargo := '123';
-    EvtAltContratual.AltContratual.InfoContrato.CodFuncao := '321';
-    EvtAltContratual.AltContratual.InfoContrato.CodCateg := 111;
-    EvtAltContratual.AltContratual.InfoContrato.codCarreira := '1';
-    EvtAltContratual.AltContratual.InfoContrato.dtIngrCarr := Now;
-
-    EvtAltContratual.AltContratual.InfoContrato.Remuneracao.VrSalFx := 780.00;
-    EvtAltContratual.AltContratual.InfoContrato.Remuneracao.UndSalFixo
-      := sfPorMes;
-    EvtAltContratual.AltContratual.InfoContrato.Remuneracao.DscSalVar :=
-      'Descrição de salário variável, obrigatório caso UndSalFixo for sfNaoAplicavel';
-
-    EvtAltContratual.AltContratual.InfoContrato.Duracao.TpContr := PrazoIndeterminado;
-    // EvtAltContratual.AltContratual.infoContrato.Duracao.dtTerm  := Date; Obrigatório se TpContr = PrazoDeterminado!
-
-    // LocalTrabGeral não deve ser preenchido no caso de trabalhador doméstico.
-    EvtAltContratual.AltContratual.InfoContrato.LocalTrabalho.LocalTrabGeral.TpInsc := tiCNPJ;
-    EvtAltContratual.AltContratual.InfoContrato.LocalTrabalho.LocalTrabGeral.NrInsc := '12345678901234';
-    EvtAltContratual.AltContratual.InfoContrato.LocalTrabalho.LocalTrabGeral.DescComp := 'Descrição complementar do local de trabalho.';
-
-    // LocalTrabDom - exclusivo para trabalhador doméstico, indicando endereço onde exerce suas atividades
-    (* EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.TpLograd    := '001';
-      EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.DscLograd   := 'Rua das Hortencias';
-      EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.NrLograd    := '12';
-      EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.Complemento := 'Fundos';
-      EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.Bairro      := 'Jardim das Flores';
-      EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.Cep         := '11001001';
-      EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.CodMunic    := 1234567;
-      EvtAltContratual.AltContratual.infoContrato.LocalTrabalho.LocalTrabDom.Uf          := ufPr;
-      *)
-
-    EvtAltContratual.AltContratual.InfoContrato.HorContratual.QtdHrsSem := 44;
-    EvtAltContratual.AltContratual.InfoContrato.HorContratual.TpJornada := tjDemaisTiposJornada;
-    EvtAltContratual.AltContratual.InfoContrato.HorContratual.DscTpJorn := 'Descrição do tipo de jornada, obrigatório se tpJornada = tjDemaisTiposJornada';
-    EvtAltContratual.AltContratual.InfoContrato.HorContratual.tmpParc := tpNaoeTempoParcial;
-
-    with EvtAltContratual.AltContratual.InfoContrato.HorContratual.
-      horario.Add do
+    with EvtAltContratual do
     begin
-      Dia := diSegundaFeira;
-      codHorContrat := '001';
+      Sequencial := 0;
+
+      with IdeEvento do
+      begin
+        indRetif := ireOriginal;
+        // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigatório se indRetif = ireRetificacao;
+        TpAmb := taProducaoRestrita;
+        ProcEmi := peAplicEmpregador;
+        VerProc := '1.0';
+      end;
+
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := '12345678901234';
+
+      IdeVinculo.CpfTrab := '12345678901';
+      IdeVinculo.NisTrab := '96325874103';
+      IdeVinculo.Matricula := 'A1234';
+
+      with AltContratual do
+      begin
+        dtAlteracao := date;
+        dtEf := Now;
+        dscAlt := 'descrição da alteração';
+
+        Vinculo.TpRegTrab := trCLT;
+        Vinculo.TpRegPrev := rpRGPS;
+
+        with infoRegimeTrab do
+        begin
+          with InfoCeletista do
+          begin
+            TpRegJor := rjSubmetidosHorarioTrabalho;
+            NatAtividade := navUrbano;
+            dtBase := 08;
+            cnpjSindCategProf := '15975395135700';
+
+            trabTemporario.justProrr := 'Prorrogado porque eu quis';
+          end;
+
+          // InfoEstatutario.tpPlanRP := tpPlanRP(0);
+        end;
+
+        with infoContrato do
+        begin
+          CodCargo := '123';
+          CodFuncao := '321';
+          CodCateg := 111;
+          codCarreira := '1';
+          dtIngrCarr := Now;
+
+          Remuneracao.VrSalFx := 780.00;
+          Remuneracao.UndSalFixo := sfPorMes;
+          Remuneracao.DscSalVar := 'Descrição de salário variável, obrigatório caso UndSalFixo for sfNaoAplicavel';
+
+          Duracao.TpContr := PrazoIndeterminado;
+          // Duracao.dtTerm  := Date; // Obrigatório se TpContr = PrazoDeterminado!
+
+          // LocalTrabGeral não deve ser preenchido no caso de trabalhador doméstico.
+          with LocalTrabalho do
+          begin
+            LocalTrabGeral.TpInsc := tiCNPJ;
+            LocalTrabGeral.NrInsc := '12345678901234';
+            LocalTrabGeral.DescComp := 'Descrição complementar do local de trabalho.';
+
+            // LocalTrabDom - exclusivo para trabalhador doméstico,
+            // indicando endereço onde exerce suas atividades
+            (*
+            with LocalTrabDom do
+            begin
+              TpLograd    := '001';
+              DscLograd   := 'Rua das Hortencias';
+              NrLograd    := '12';
+              Complemento := 'Fundos';
+              Bairro      := 'Jardim das Flores';
+              Cep         := '11001001';
+              CodMunic    := 1234567;
+              Uf          := ufPr;
+            end;
+            *)
+          end;
+
+          with HorContratual do
+          begin
+            QtdHrsSem := 44;
+            TpJornada := tjDemaisTiposJornada;
+            DscTpJorn := 'Descrição do tipo de jornada, obrigatório se tpJornada = tjDemaisTiposJornada';
+            tmpParc := tpNaoeTempoParcial;
+
+            horario.Clear;
+
+            with horario.Add do
+            begin
+              Dia := diSegundaFeira;
+              codHorContrat := '001';
+            end;
+          end;
+
+          FiliacaoSindical.Clear;
+
+          with FiliacaoSindical.Add do
+            CnpjSindTrab := '12345678901234';
+
+          AlvaraJudicial.nrProcJud := '543216';
+
+          servPubl.mtvAlter := maPromocao;
+        end;
+      end;
     end;
-
-    with EvtAltContratual.AltContratual.InfoContrato.FiliacaoSindical.Add do
-      CnpjSindTrab := '12345678901234';
-
-    EvtAltContratual.AltContratual.InfoContrato.AlvaraJudicial.nrProcJud := '543216';
-    EvtAltContratual.AltContratual.InfoContrato.servPubl.mtvAlter := maPromocao;
   end;
 end;
 

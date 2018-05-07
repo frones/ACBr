@@ -421,6 +421,7 @@ begin
     with Self do
     begin
       sSecao := 'evtAltContratual';
+      Id         := INIRec.ReadString(sSecao, 'Id', '');
       Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
       sSecao := 'ideEvento';
@@ -449,20 +450,20 @@ begin
       altContratual.vinculo.TpRegPrev := eSStrTotpRegPrev(Ok, INIRec.ReadString(sSecao, 'tpRegPrev', '1'));
 
       sSecao := 'infoCeletista';
-      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.TpRegJor          := eSStrToTpRegJor(Ok, INIRec.ReadString(sSecao, 'tpRegJor', '1'));
-      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.NatAtividade      := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
-      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.dtBase            := INIRec.ReadInteger(sSecao, 'dtBase', 0);
-      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.cnpjSindCategProf := INIRec.ReadString(sSecao, 'cnpjSindCategProf', '');
+      altContratual.InfoRegimeTrab.InfoCeletista.TpRegJor          := eSStrToTpRegJor(Ok, INIRec.ReadString(sSecao, 'tpRegJor', '1'));
+      altContratual.InfoRegimeTrab.InfoCeletista.NatAtividade      := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
+      altContratual.InfoRegimeTrab.InfoCeletista.dtBase            := INIRec.ReadInteger(sSecao, 'dtBase', 0);
+      altContratual.InfoRegimeTrab.InfoCeletista.cnpjSindCategProf := INIRec.ReadString(sSecao, 'cnpjSindCategProf', '');
 
       sSecao := 'trabTemp';
-      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr := INIRec.ReadString(sSecao, 'justContr', '');
+      altContratual.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr := INIRec.ReadString(sSecao, 'justContr', '');
 
       sSecao := 'aprend';
-      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-      altContratual.vinculo.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+      altContratual.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      altContratual.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
 
       sSecao := 'infoEstatutario';
-      altContratual.vinculo.InfoRegimeTrab.infoEstatutario.tpPlanRP := eSStrToTpPlanRP(Ok, INIRec.ReadString(sSecao, 'tpPlanRP', '1'));
+      altContratual.InfoRegimeTrab.infoEstatutario.tpPlanRP := eSStrToTpPlanRP(Ok, INIRec.ReadString(sSecao, 'tpPlanRP', '1'));
 
       sSecao := 'infoContrato';
       altContratual.infoContrato.CodCargo    := INIRec.ReadString(sSecao, 'codCargo', '');

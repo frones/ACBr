@@ -477,6 +477,7 @@ begin
     with Self do
     begin
       sSecao := 'evtInfoContri';
+      Id             := INIRec.ReadString(sSecao, 'Id', '');
       Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
       ModoLancamento := StrToTipoOperacao(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
 

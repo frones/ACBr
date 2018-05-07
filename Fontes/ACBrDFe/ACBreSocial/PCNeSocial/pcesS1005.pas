@@ -583,6 +583,7 @@ begin
     with Self do
     begin
       sSecao := 'evtTabEstab';
+      Id             := INIRec.ReadString(sSecao, 'Id', '');
       Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
       ModoLancamento := eSStrToModoLancamento(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
 

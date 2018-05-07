@@ -1069,7 +1069,8 @@ begin
     with Self do
     begin
       sSecao := 'evtRemun';
-      Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+      Id         := INIRec.ReadString(sSecao, 'Id', '');
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
       sSecao := 'ideEvento';
       ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));

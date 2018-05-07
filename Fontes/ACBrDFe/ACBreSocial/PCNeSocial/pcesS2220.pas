@@ -501,6 +501,7 @@ begin
     with Self do
     begin
       sSecao := 'evtMonit';
+      Id         := INIRec.ReadString(sSecao, 'Id', '');
       Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
       sSecao := 'ideEvento';

@@ -329,7 +329,9 @@ begin
     Gerador.wCampo(tcStr, '', 'indAutoria', 1, 21, 1, indAutoriaToStr(pEmp.indAutoria));
 
     GerarinfoSusp;
-    GerarDadosProcJud;
+
+    if pEmp.tpProc = tpJudicial then
+      GerarDadosProcJud;
   end;
 
   Gerador.wGrupo('/ideProcesso');
@@ -425,6 +427,7 @@ begin
     with Self do
     begin
       sSecao := 'evtTabProcesso';
+      Id             := INIRec.ReadString(sSecao, 'Id', '');
       Sequencial     := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
       ModoLancamento := StrToTipoOperacao(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
 

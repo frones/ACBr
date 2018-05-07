@@ -436,6 +436,7 @@ begin
     with Self do
     begin
       sSecao := 'evtTSVAltContr';
+      Id         := INIRec.ReadString(sSecao, 'Id', '');
       Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
       sSecao := 'ideEvento';

@@ -1805,7 +1805,7 @@ begin
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
                   proBetim, proBHISS, proDBSeller, proEquiplano, profintelISS,
                   proFISSLex, proGinfes, proGoiania, proGovBR, proIssCuritiba,
-                  proISSDigital, proISSIntel, proISSNet, proLexsom, proNatal,
+                  proISSIntel, proISSNet, proLexsom, proNatal,
                   proTinus, proProdemge, proPublica, proRecife, proRJ, proSaatri,
                   proFreire, proSimplISS, proThema, proTiplan, proWebISS,
                   proProdata, proAgili, proSpeedGov, proPronim, proSalvador,

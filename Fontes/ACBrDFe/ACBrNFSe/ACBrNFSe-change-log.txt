@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2018
+-- pnfsNFSeG --
+[*] Removido o provedor ISSDigital da lista dos que não possuem o serviço EnviarSincrono,
+    sendo que este provedor possui o serviço mencionado.
+   Por: Italo Jurisato Junior
+
 04/05/2018
 -- ACBrNFSeWebServices --
 [*] Acrescentado um Sleep entre o envio e a consulta no método EnviarSincrono.

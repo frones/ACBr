@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2018
+-- ACBrCEP --
+[+] TACBrCEP, adição de novo provedor viaCEP
+		https://www.projetoacbr.com.br/forum/topic/43080-novo-provedor-cep-para-o-acbrcep/?tab=comments#comment-283756
+		(por: Juliomar Marchetti)
+
 14/04/2018
 -- ACBrSocket --
 [*] TACBrHTTP, melhorias no controle do TimeOut

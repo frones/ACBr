@@ -1626,14 +1626,14 @@ begin
           begin
             sSecao := IfThen( INIRec.SectionExists('Medicamento'+IntToStrZero(I,3)+IntToStrZero(J,3)), 'Medicamento', 'med');
             sSecao := sSecao+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sFim     := INIRec.ReadString(sSecao,'nLote','FIM') ;
+            sFim     := INIRec.ReadString(sSecao,'cProdANVISA','FIM') ;
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
             with Prod.med.Add do
             begin
-              nLote := sFim;
-              cProdANVISA:=  INIRec.ReadString( sSecao,'cProdANVISA','');
+              nLote := INIRec.ReadString(sSecao,'nLote','FIM') ;
+              cProdANVISA:=  sFim;
               qLote := StringToFloatDef(INIRec.ReadString( sSecao,'qLote',''),0) ;
               dFab  := StringToDateTime(INIRec.ReadString( sSecao,'dFab','0')) ;
               dVal  := StringToDateTime(INIRec.ReadString( sSecao,'dVal','0')) ;

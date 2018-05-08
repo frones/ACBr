@@ -47,10 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2018
+
+
 27/06/2017
---ACBrBoletoFCFortesFR--(ver: 0.0.32a)
-[*] Ajustes no tamanho da Fonte para emissão dos dados do cedente.
-	http://www.projetoacbr.com.br/forum/topic/37144-tamanho-da-fonte-do-benefici%C3%A1rio/
+--Logos
+[*] Atualização Logo Sicred
 	por: José M. S. Junior
 
 24/04/2016

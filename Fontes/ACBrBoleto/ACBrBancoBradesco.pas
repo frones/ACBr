@@ -221,7 +221,7 @@ begin
    begin
       ANossoNumero := PadLeft(OnlyNumber(ACBrTitulo.NossoNumero),11, '0');
 
-      if (ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (StrToIntDef(ANossoNumero,0) = 0) then
+      if (ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (StrToInt64Def(ANossoNumero,0) = 0) then
         DigitoNossoNumero := '0'
       else
       begin

@@ -47,6 +47,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08-05-2018 -- ACBrBancoBradesco
+[*] Ajuste conversão campo Nosso Numero
+
 Data 16/04/2018 ver: 0.0.240
 
  -- ACBrBoleto

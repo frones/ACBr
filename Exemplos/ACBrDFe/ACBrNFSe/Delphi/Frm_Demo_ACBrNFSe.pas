@@ -172,6 +172,8 @@ type
     cbSSLType: TComboBox;
     lblSSLLib1: TLabel;
     ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL;
+    Label1: TLabel;
+    edtFraseSecWeb: TEdit;
     procedure btnCaminhoCertClick(Sender: TObject);
     procedure btnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -293,6 +295,7 @@ begin
     Ini.WriteBool('WebService', 'Visualizar', chkVisualizar.Checked);
     Ini.WriteString('WebService', 'SenhaWeb', edtSenhaWeb.Text);
     Ini.WriteString('WebService', 'UserWeb', edtUserWeb.Text);
+    Ini.WriteString('WebService', 'FraseSecWeb', edtFraseSecWeb.Text);
     Ini.WriteBool('WebService', 'SalvarSoap', chkSalvarSOAP.Checked);
     Ini.WriteInteger('WebService', 'TimeOut', seTimeOut.Value);
     Ini.WriteInteger('WebService', 'SSLType', cbSSLType.ItemIndex);
@@ -385,6 +388,7 @@ begin
     chkVisualizar.Checked := Ini.ReadBool('WebService', 'Visualizar', False);
     edtSenhaWeb.Text := Ini.ReadString('WebService', 'SenhaWeb', '');
     edtUserWeb.Text := Ini.ReadString('WebService', 'UserWeb', '');
+    edtFraseSecWeb.Text := Ini.ReadString('WebService', 'FraseSecWeb', '');
     chkSalvarSOAP.Checked := Ini.ReadBool('WebService', 'SalvarSoap', False);
     seTimeOut.Value        := Ini.ReadInteger('WebService','TimeOut'  ,5000) ;
     cbSSLType.ItemIndex    := Ini.ReadInteger( 'WebService','SSLType' , 0) ;
@@ -498,7 +502,7 @@ begin
 
   ACBrNFSe1.Configuracoes.Geral.Emitente.WebUser := edtUserWeb.Text;
   ACBrNFSe1.Configuracoes.Geral.Emitente.WebSenha := edtSenhaWeb.Text;
-  ACBrNFSe1.Configuracoes.Geral.Emitente.WebFraseSecr := '';
+  ACBrNFSe1.Configuracoes.Geral.Emitente.WebFraseSecr := edtFraseSecWeb.Text;
 
   ACBrNFSe1.Configuracoes.WebServices.Salvar := chkSalvarSOAP.Checked;
   ACBrNFSe1.Configuracoes.WebServices.Ambiente :=
@@ -693,8 +697,8 @@ begin
       Prestador.InscricaoMunicipal := edtEmitIM.Text;
 
       // Para o provedor ISSDigital deve-se informar também:
-      Prestador.Senha := 'senha';
-      Prestador.FraseSecreta := 'frase secreta';
+      Prestador.Senha := edtSenhaWeb.Text;
+      Prestador.FraseSecreta := edtFraseSecWeb.Text;
       Prestador.cUF := 33;
 
       PrestadorServico.Endereco.CodigoMunicipio := edtCodCidade.Text;

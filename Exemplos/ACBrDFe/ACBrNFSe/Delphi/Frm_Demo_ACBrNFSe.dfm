@@ -94,7 +94,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 15
         Width = 277
         Height = 456
-        ActivePage = TabSheet4
+        ActivePage = TabSheet3
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -731,6 +731,13 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Height = 13
             Caption = 'Usu'#225'rio'
           end
+          object Label1: TLabel
+            Left = 1
+            Top = 360
+            Width = 66
+            Height = 13
+            Caption = 'Frase Secreta'
+          end
           object gbWebService: TGroupBox
             Left = 0
             Top = 4
@@ -893,6 +900,13 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Width = 249
             Height = 21
             TabOrder = 3
+          end
+          object edtFraseSecWeb: TEdit
+            Left = 1
+            Top = 376
+            Width = 249
+            Height = 21
+            TabOrder = 4
           end
         end
         object TabSheet7: TTabSheet
@@ -1502,8 +1516,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           Height = 360
           Align = alClient
           TabOrder = 0
-          ExplicitLeft = 32
-          ExplicitTop = -2
         end
       end
       object TabSheet6: TTabSheet
@@ -1590,7 +1602,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   object ACBrNFSe1: TACBrNFSe
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFSe1StatusChange
-    Configuracoes.Geral.SSLLib = libCustom
+    Configuracoes.Geral.SSLLib = libWinCrypt
     Configuracoes.Geral.SSLCryptLib = cryWinCrypt
     Configuracoes.Geral.SSLHttpLib = httpWinHttp
     Configuracoes.Geral.SSLXmlSignLib = xsLibXml2

@@ -631,7 +631,7 @@ begin
       cat.dtOBito          := StringToDateTime(INIRec.ReadString(sSecao, 'dtObito', '0'));
       cat.indComunPolicia  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indComunPolicia', 'S'));
       cat.codSitGeradora   := INIRec.ReadInteger(sSecao, 'codSitGeradora', 0);
-      cat.iniciatCAT       := eSStrToIniciatCAT(Ok, INIRec.ReadString(sSecao, 'hrsTrabAntesAcid', '1'));
+      cat.iniciatCAT       := eSStrToIniciatCAT(Ok, INIRec.ReadString(sSecao, 'iniciatCAT', '1'));
       cat.observacao       := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
 
       sSecao := 'localAcidente';
@@ -699,7 +699,7 @@ begin
       cat.atestado.Emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);
       cat.atestado.Emitente.ideOC  := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', '1'));
       cat.atestado.Emitente.nrOc   := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
-      cat.atestado.Emitente.ufOC   := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+      cat.atestado.Emitente.ufOC   := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
 
       sSecao := 'catOrigem';
       cat.catOrigem.dtCatOrig := StringToDateTime(INIRec.ReadString(sSecao, 'dtCatOrig', '0'));

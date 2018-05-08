@@ -251,7 +251,7 @@ begin
     Self.S2210.Items[i].EvtCAT.GerarXML;
 
   for I := 0 to Self.S2220.Count - 1 do
-    Self.S2220.Items[i].EvtASO.GerarXML;
+    Self.S2220.Items[i].evtMonit.GerarXML;
 
   for I := 0 to Self.S2230.Count - 1 do
     Self.S2230.Items[i].EvtAfastTemp.GerarXML;
@@ -375,16 +375,16 @@ begin
 
   for I := 0 to Self.S2220.Count - 1 do
   begin
-    PathName := Path + OnlyNumber(Self.S2220.Items[i].EvtASO.Id) + '-' +
+    PathName := Path + OnlyNumber(Self.S2220.Items[i].evtMonit.Id) + '-' +
      TipoEventoToStr(Self.S2220.Items[i].TipoEvento) + '-' + IntToStr(i);
 
-    Self.S2220.Items[i].EvtASO.SaveToFile(PathName);
+    Self.S2220.Items[i].evtMonit.SaveToFile(PathName);
 
     with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
     begin
       TipoEvento := teS2220;
       PathNome := PathName;
-      XML := Self.S2220.Items[i].EvtASO.XML;
+      XML := Self.S2220.Items[i].evtMonit.XML;
     end;
   end;
 
@@ -669,7 +669,7 @@ begin
     teS2205: Self.S2205.Add.EvtAltCadastral.XML := AXMLString;
     teS2206: Self.S2206.Add.EvtAltContratual.XML := AXMLString;
     teS2210: Self.S2210.Add.EvtCAT.XML := AXMLString;
-    teS2220: Self.S2220.Add.EvtASO.XML := AXMLString;
+    teS2220: Self.S2220.Add.evtMonit.XML := AXMLString;
     teS2230: Self.S2230.Add.EvtAfastTemp.XML := AXMLString;
     teS2240: Self.S2240.Add.EvtExpRisco.XML := AXMLString;
     teS2241: Self.S2241.Add.EvtInsApo.XML := AXMLString;
@@ -697,7 +697,7 @@ begin
     teS2205: Self.S2205.Add.EvtAltCadastral.LerArqIni(AIniString);
     teS2206: Self.S2206.Add.EvtAltContratual.LerArqIni(AIniString);
     teS2210: Self.S2210.Add.EvtCAT.LerArqIni(AIniString);
-    teS2220: Self.S2220.Add.EvtASO.LerArqIni(AIniString);
+    teS2220: Self.S2220.Add.evtMonit.LerArqIni(AIniString);
     teS2230: Self.S2230.Add.EvtAfastTemp.LerArqIni(AIniString);
     teS2240: Self.S2240.Add.EvtExpRisco.LerArqIni(AIniString);
     teS2241: Self.S2241.Add.EvtInsApo.LerArqIni(AIniString);

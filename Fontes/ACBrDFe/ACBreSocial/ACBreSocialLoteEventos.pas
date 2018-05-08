@@ -223,7 +223,7 @@ begin
     LoadFromString(FEventos.NaoPeriodicos.S2210[i].EvtCAT.XML);
   {S2220}
   for i := 0 to FEventos.NaoPeriodicos.S2220.Count - 1 do
-    LoadFromString(FEventos.NaoPeriodicos.S2220[i].EvtASO.XML);
+    LoadFromString(FEventos.NaoPeriodicos.S2220[i].evtMonit.XML);
   {S2230}
   for i := 0 to FEventos.NaoPeriodicos.S2230.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2230[i].EvtAfastTemp.XML);

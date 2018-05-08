@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2018
+-- ACBreSocialLoteEventos / pcesNaoPeriodicos / pcesS2220 / pcesS2210 --
+[*] Correções necessárias para poder gerar corretamente os XML dos eventos através
+   da leitura de seus dados em arquivos INI.
+   Por: Italo Jurisato Junior
+
 07/05/2018
 -- ACBreSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/43138-e-social-reinf-lerarqini/

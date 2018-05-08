@@ -56,7 +56,7 @@ uses
 type
   TS2220Collection = class;
   TS2220CollectionItem = class;
-  TEvtASO = class;
+  TevtMonit = class;
   TAso = class;
   TExameColecaoItem = class;
   TExameColecao = class;
@@ -77,18 +77,18 @@ type
   TS2220CollectionItem = class(TCollectionItem)
   private
     FTipoEvento: TTipoEvento;
-    FEvtASO: TEvtASO;
+    FevtMonit: TevtMonit;
 
-    procedure setEvtASO(const Value: TEvtASO);
+    procedure setevtMonit(const Value: TevtMonit);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtASO: TEvtASO read FEvtASO write setEvtASO;
+    property evtMonit: TevtMonit read FevtMonit write setevtMonit;
   end;
 
-  TEvtASO = class(TeSocialEvento)
+  TevtMonit = class(TeSocialEvento)
   private
     FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
@@ -247,19 +247,19 @@ end;
 constructor TS2220CollectionItem.Create(AOwner: TComponent);
 begin
   FTipoEvento := teS2220;
-  FEvtASO     := TEvtASO.Create(AOwner);
+  FevtMonit     := TevtMonit.Create(AOwner);
 end;
 
 destructor TS2220CollectionItem.Destroy;
 begin
-  FEvtASO.Free;
+  FevtMonit.Free;
 
   inherited;
 end;
 
-procedure TS2220CollectionItem.setEvtASO(const Value: TEvtASO);
+procedure TS2220CollectionItem.setevtMonit(const Value: TevtMonit);
 begin
-  FEvtASO.Assign(Value);
+  FevtMonit.Assign(Value);
 end;
 
 { TAso }
@@ -346,9 +346,9 @@ begin
   inherited;
 end;
 
-{ TEvtASO }
+{ TevtMonit }
 
-constructor TEvtASO.Create(AACBreSocial: TObject);
+constructor TevtMonit.Create(AACBreSocial: TObject);
 begin
   inherited;
 
@@ -359,7 +359,7 @@ begin
   FAso := TAso.Create;
 end;
 
-destructor TEvtASO.destroy;
+destructor TevtMonit.destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
@@ -369,7 +369,7 @@ begin
   inherited;
 end;
 
-procedure TEvtASO.GerarAso;
+procedure TevtMonit.GerarAso;
 begin
   Gerador.wGrupo('aso');
 
@@ -383,7 +383,7 @@ begin
   Gerador.wGrupo('/aso');
 end;
 
-procedure TEvtASO.GerarCRM;
+procedure TevtMonit.GerarCRM;
 begin
   Gerador.wGrupo('crm');
 
@@ -393,7 +393,7 @@ begin
   Gerador.wGrupo('/crm');
 end;
 
-procedure TEvtASO.GerarExame;
+procedure TevtMonit.GerarExame;
 var
   i: integer;
 begin
@@ -419,7 +419,7 @@ begin
     Gerador.wAlerta('', 'exame', 'Lista de Exames', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
-procedure TEvtASO.GerarIdeServSaude;
+procedure TevtMonit.GerarIdeServSaude;
 begin
   Gerador.wGrupo('ideServSaude');
 
@@ -432,7 +432,7 @@ begin
   Gerador.wGrupo('/ideServSaude');
 end;
 
-procedure TEvtASO.GerarMedico;
+procedure TevtMonit.GerarMedico;
 begin
   Gerador.wGrupo('medico');
 
@@ -443,7 +443,7 @@ begin
   Gerador.wGrupo('/medico');
 end;
 
-procedure TEvtASO.GerarRespMonit(pRespMonit: TRespMonit);
+procedure TevtMonit.GerarRespMonit(pRespMonit: TRespMonit);
 begin
   Gerador.wGrupo('respMonit');
 
@@ -456,7 +456,7 @@ begin
   Gerador.wGrupo('/respMonit');
 end;
 
-function TEvtASO.GerarXML: boolean;
+function TevtMonit.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
@@ -485,7 +485,7 @@ begin
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
-function TEvtASO.LerArqIni(const AIniString: String): Boolean;
+function TevtMonit.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
@@ -524,7 +524,7 @@ begin
       sSecao := 'aso';
       aso.DtAso  := StringToDateTime(INIRec.ReadString(sSecao, 'dtAso', '0'));
       aso.tpAso  := eSStrToTpAso(Ok, INIRec.ReadString(sSecao, 'tpAso', '0'));
-      aso.ResAso := eSStrToResAso(Ok, INIRec.ReadString(sSecao, 'tpAso', '1'));
+      aso.ResAso := eSStrToResAso(Ok, INIRec.ReadString(sSecao, 'resAso', '1'));
 
       I := 1;
       while true do

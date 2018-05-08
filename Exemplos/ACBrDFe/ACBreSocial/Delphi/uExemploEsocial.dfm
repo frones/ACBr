@@ -946,6 +946,10 @@ object FExemploEsocial: TFExemploEsocial
       end
       object TabSheet2: TTabSheet
         Caption = 'Certificado'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label6: TLabel
           Left = 35
           Top = 16
@@ -1238,6 +1242,10 @@ object FExemploEsocial: TFExemploEsocial
       object TabSheet5: TTabSheet
         Caption = 'WebService'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object GroupBox4: TGroupBox
           Left = 0
           Top = 4

@@ -59,8 +59,8 @@ type
 
   TInfoIrrfCollection = class;
   TInfoIrrfCollectionItem = class;
-  TbaseIrrfCollection = class;
-  TbaseIrrfCollectionItem = class;
+  TbasesIrrfCollection = class;
+  TbasesIrrfCollectionItem = class;
   TirrfCollection = class;
   TirrfCollectionItem = class;
   TidePgtoExt = class;
@@ -109,11 +109,11 @@ type
   private
     FCodCateg: integer;
     FindResBr: String;
-    FbaseIrrf: TbaseIrrfCollection;
+    FbasesIrrf: TbasesIrrfCollection;
     Firrf: TirrfCollection;
     FidePgtoExt: TidePgtoExt;
 
-    procedure SetbaseIrrf(const Value: TbaseIrrfCollection);
+    procedure SetbasesIrrf(const Value: TbasesIrrfCollection);
     procedure Setirrf(const Value: TirrfCollection);
   public
     constructor Create; reintroduce;
@@ -121,22 +121,22 @@ type
 
     property CodCateg: integer read FCodCateg write FCodCateg;
     property indResBr: String read FindResBr write FindResBr;
-    property baseIrrf: TbaseIrrfCollection read FbaseIrrf write SetbaseIrrf;
+    property basesIrrf: TbasesIrrfCollection read FbasesIrrf write SetbasesIrrf;
     property irrf: TirrfCollection read Firrf write Setirrf;
     property idePgtoExt: TidePgtoExt read FidePgtoExt write FidePgtoExt;
   end;
 
-  TbaseIrrfCollection = class(TCollection)
+  TbasesIrrfCollection = class(TCollection)
   private
-    function GetItem(Index: Integer): TbaseIrrfCollectionItem;
-    procedure SetItem(Index: Integer; Value: TbaseIrrfCollectionItem);
+    function GetItem(Index: Integer): TbasesIrrfCollectionItem;
+    procedure SetItem(Index: Integer; Value: TbasesIrrfCollectionItem);
   public
     constructor Create(AOwner: TInfoIrrfCollectionItem);
-    function Add: TbaseIrrfCollectionItem;
-    property Items[Index: Integer]: TbaseIrrfCollectionItem read GetItem write SetItem;
+    function Add: TbasesIrrfCollectionItem;
+    property Items[Index: Integer]: TbasesIrrfCollectionItem read GetItem write SetItem;
   end;
 
-  TbaseIrrfCollectionItem = class(TCollectionItem)
+  TbasesIrrfCollectionItem = class(TCollectionItem)
   private
     Fvalor: Double;
     FtpValor: Integer;
@@ -262,6 +262,7 @@ end;
 function TInfoIrrfCollection.Add: TInfoIrrfCollectionItem;
 begin
   Result := TInfoIrrfCollectionItem(inherited Add);
+  Result.create;
 end;
 
 constructor TInfoIrrfCollection.Create(AOwner: TEvtIrrfBenef);
@@ -285,23 +286,23 @@ end;
 
 constructor TInfoIrrfCollectionItem.Create;
 begin
-  FbaseIrrf := TbaseIrrfCollection.Create(Self);
-  Firrf := TirrfCollection.Create(Self);
+  FbasesIrrf  := TbasesIrrfCollection.Create(Self);
+  Firrf       := TirrfCollection.Create(Self);
   FidePgtoExt := TidePgtoExt.Create(Self);
 end;
 
 destructor TInfoIrrfCollectionItem.Destroy;
 begin
-  FbaseIrrf.Free;
+  FbasesIrrf.Free;
   Firrf.Free;
   FidePgtoExt.Free;
 
   inherited;
 end;
 
-procedure TInfoIrrfCollectionItem.SetbaseIrrf(const Value: TbaseIrrfCollection);
+procedure TInfoIrrfCollectionItem.SetbasesIrrf(const Value: TbasesIrrfCollection);
 begin
-  FbaseIrrf := Value;
+  FbasesIrrf := Value;
 end;
 
 procedure TInfoIrrfCollectionItem.Setirrf(const Value: TirrfCollection);
@@ -311,24 +312,24 @@ end;
 
 { TbaseIrrfCollection }
 
-function TbaseIrrfCollection.Add: TbaseIrrfCollectionItem;
+function TbasesIrrfCollection.Add: TbasesIrrfCollectionItem;
 begin
-  Result := TbaseIrrfCollectionItem(inherited Add);
+  Result := TbasesIrrfCollectionItem(inherited Add);
 end;
 
-constructor TbaseIrrfCollection.Create(AOwner: TInfoIrrfCollectionItem);
+constructor TbasesIrrfCollection.Create(AOwner: TInfoIrrfCollectionItem);
 begin
-  inherited create(TbaseIrrfCollectionItem);
+  inherited create(TbasesIrrfCollectionItem);
 end;
 
-function TbaseIrrfCollection.GetItem(
-  Index: Integer): TbaseIrrfCollectionItem;
+function TbasesIrrfCollection.GetItem(
+  Index: Integer): TbasesIrrfCollectionItem;
 begin
-  Result := TbaseIrrfCollectionItem(inherited GetItem(Index));
+  Result := TbasesIrrfCollectionItem(inherited GetItem(Index));
 end;
 
-procedure TbaseIrrfCollection.SetItem(Index: Integer;
-  Value: TbaseIrrfCollectionItem);
+procedure TbasesIrrfCollection.SetItem(Index: Integer;
+  Value: TbasesIrrfCollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;
@@ -443,11 +444,11 @@ begin
         InfoIrrf.Items[i].indResBr := leitor.rCampo(tcStr, 'indResBr');
 
         j := 0;
-        while Leitor.rExtrai(3, 'baseIrrf', '', j + 1) <> '' do
+        while Leitor.rExtrai(3, 'basesIrrf', '', j + 1) <> '' do
         begin
-          InfoIrrf.Items[i].baseIrrf.Add;
-          InfoIrrf.Items[i].baseIrrf.Items[j].tpValor := leitor.rCampo(tcInt, 'tpValor');
-          InfoIrrf.Items[i].baseIrrf.Items[j].valor   := leitor.rCampo(tcDe2, 'valor');
+          InfoIrrf.Items[i].basesIrrf.Add;
+          InfoIrrf.Items[i].basesIrrf.Items[j].tpValor := leitor.rCampo(tcInt, 'tpValor');
+          InfoIrrf.Items[i].basesIrrf.Items[j].valor   := leitor.rCampo(tcDe2, 'valor');
           inc(j);
         end;
 
@@ -459,7 +460,7 @@ begin
           InfoIrrf.Items[i].irrf.Items[j].vrIrrfDesc := leitor.rCampo(tcDe2, 'vrIrrfDesc');
           inc(j);
         end;
-
+        
         if leitor.rExtrai(3, 'idePgtoExt') <> '' then
         begin
           if leitor.rExtrai(4, 'idePais') <> '' then
@@ -528,12 +529,12 @@ begin
         AIni.WriteInteger(sSecao, 'codCateg', infoIrrf.Items[i].CodCateg);
         AIni.WriteString(sSecao, 'indResBr',  infoIrrf.Items[i].indResBr);
 
-        for j := 0 to InfoIrrf.Items[i].baseIrrf.Count -1 do
+        for j := 0 to InfoIrrf.Items[i].basesIrrf.Count -1 do
         begin
-          sSecao := 'baseIrrf' + IntToStrZero(I, 1) + IntToStrZero(j, 2);
+          sSecao := 'basesIrrf' + IntToStrZero(I, 1) + IntToStrZero(j, 2);
 
-          AIni.WriteInteger(sSecao, 'tpValor', InfoIrrf.Items[i].baseIrrf.Items[j].tpValor);
-          AIni.WriteFloat(sSecao, 'valor',     InfoIrrf.Items[i].baseIrrf.Items[j].valor);
+          AIni.WriteInteger(sSecao, 'tpValor', InfoIrrf.Items[i].basesIrrf.Items[j].tpValor);
+          AIni.WriteFloat(sSecao, 'valor',     InfoIrrf.Items[i].basesIrrf.Items[j].valor);
         end;
 
         for j := 0 to InfoIrrf.Items[i].irrf.Count -1 do

@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2018
+-- pcesS5002 --
+[*] https://www.projetoacbr.com.br/forum/topic/43021-retorno-do-s-1210-evento-s-5002-com-erro-no-componente/?do=findComment&comment=284580
+   Por: Arce
+
 08/05/2018
 -- ACBreSocialLoteEventos / pcesNaoPeriodicos / pcesS2220 / pcesS2210 --
 [*] Correções necessárias para poder gerar corretamente os XML dos eventos através

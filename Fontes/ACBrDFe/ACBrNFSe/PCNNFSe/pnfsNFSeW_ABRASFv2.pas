@@ -656,7 +656,8 @@ begin
 
     proISSDigital:
         // alterado em 23/03/2018 para ver se funciona com a cidade de Cabo Frio
-        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' {+ ' xmlns="http://www.abrasf.org.br/nfse.xsd"'});
+        // alterado em 09/05/2018 por italo (incluido novamente o namespace)
+        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
 
     proSiam:
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="Declaracao_' + OnlyNumber(NFSe.Prestador.Cnpj) + '"');
@@ -680,8 +681,13 @@ begin
     case FProvedor of
       proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
       proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
-      proCoplan, proSIAPNet, proSystemPro, proPronimv2, proTecnos, proISSDigital:
+      proCoplan, proSIAPNet, proSystemPro, proPronimv2, proTecnos{, proISSDigital}:
           Gerador.wGrupoNFSe('Rps');
+
+      proISSDigital:
+          Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' +
+                                      OnlyNumber(NFSe.NumeroLote) +
+                                      OnlyNumber(FNFSe.IdentificacaoRps.Numero) + '"');
 
       proSiam:
           Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
@@ -870,12 +876,19 @@ begin
     proMitra: NFSe.InfID.ID := 'rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                                        FNFSe.IdentificacaoRps.Serie;
 
+    (*
     proISSDigital: FNFSe.InfID.ID := {'rps' + }ChaveAcesso(FNFSe.Prestador.cUF,
                                                FNFSe.DataEmissao,
                                                OnlyNumber(FNFSe.Prestador.Cnpj),
                                                0, // Serie
                                                StrToInt(OnlyNumber(FNFSe.IdentificacaoRps.Numero)),
                                                StrToInt(OnlyNumber(FNFSe.IdentificacaoRps.Numero)));
+    *)
+
+    proISSDigital: FNFSe.InfID.ID := OnlyNumber(FNFSe.Prestador.Cnpj) +
+                                     OnlyNumber(NFSe.Prestador.InscricaoMunicipal) +
+                                     OnlyNumber(NFSe.NumeroLote) +
+                                     OnlyNumber(FNFSe.IdentificacaoRps.Numero);
 
     proTecnos: FNFSe.InfID.ID := '1' + //Fixo - Lote Sincrono
       //                                 FormatDateTime('yyyy', FNFSe.DataEmissao) +

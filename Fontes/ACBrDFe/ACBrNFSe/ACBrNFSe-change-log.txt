@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Alterações visando o provedor ISSDigital, não estava gerando corretamente os
+    atributos versão e ID.
+   Por: Italo Jurisato Junior
+
 08/05/2018
 -- pnfsNFSeG --
 [*] Removido o provedor ISSDigital da lista dos que não possuem o serviço EnviarSincrono,

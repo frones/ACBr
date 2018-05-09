@@ -682,7 +682,7 @@ begin
 //    else
 //      Gerador.wCampoNFSe(tcDe2, '', 'vtLiq', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
 
-  Gerador.wCampoNFSe(tcDe2, '', 'totalAproxTrib', 01, 15, 1, 0, '');
+//  Gerador.wCampoNFSe(tcDe2, '', 'totalAproxTrib', 01, 15, 1, 0, '');
 
   // Total Retenção IRRF
   if (NFSe.Servico.Valores.ValorIr + NFSe.Servico.Valores.ValorPis +

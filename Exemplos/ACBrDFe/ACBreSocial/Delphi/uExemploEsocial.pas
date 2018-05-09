@@ -3602,136 +3602,185 @@ procedure TFExemploEsocial.GerareSocial2299;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2299.Add do
   begin
-    EvtDeslig.Sequencial := 0;
-
-    EvtDeslig.IdeEvento.indRetif := tpIndRetificacao(0);
-    EvtDeslig.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtDeslig.IdeEvento.TpAmb := taProducaoRestrita;
-    EvtDeslig.IdeEvento.ProcEmi := TpProcEmi(0);
-    EvtDeslig.IdeEvento.VerProc := '1.0';
-
-    EvtDeslig.IdeEmpregador.TpInsc := tpTpInsc(1);
-    EvtDeslig.IdeEmpregador.NrInsc := '0123456789';
-
-    EvtDeslig.IdeVinculo.CpfTrab := '33333333303';
-    EvtDeslig.IdeVinculo.NisTrab := '11111111111';
-    EvtDeslig.IdeVinculo.Matricula := '123456';
-
-    EvtDeslig.InfoDeslig.mtvDeslig := '02';
-    EvtDeslig.InfoDeslig.DtDeslig := date;
-    EvtDeslig.InfoDeslig.indPagtoAPI := tpSim;
-    EvtDeslig.InfoDeslig.dtProjFimAPI := Now;
-    EvtDeslig.InfoDeslig.pensAlim := paPercentualeValordePensaoAlimenticia;
-    EvtDeslig.InfoDeslig.percAliment := 25.5;
-    EvtDeslig.InfoDeslig.vrAlim := 1985.65;
-
-    // Certidão de óbito apenas em caso de morte quando o mtvDeslig for 09 ou 10
-    EvtDeslig.InfoDeslig.nrCertObito := '0123456789';
-
-    // numero do processo que decidiu o desligamento mtvdeslig = 17
-    EvtDeslig.InfoDeslig.nrProcTrab := '9632587410';
-
-    EvtDeslig.InfoDeslig.indCumprParc := cpaCumprimentoTotal;
-
-    // Obsercação opcional - versão 2.04.01
-    EvtDeslig.InfoDeslig.observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
-
-    // Obsercação opcional - versão 2.04.02
-    with EvtDeslig.InfoDeslig.observacoes.Add do
-     observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
-
-    EvtDeslig.InfoDeslig.SucessaoVinc.cnpjEmpregAnt := '12345678912345';
-    // Corrigir nome do campo ou mudar classe.
-
-    with EvtDeslig.InfoDeslig.VerbasResc.dmDev.Add do
+    with EvtDeslig do
     begin
-      ideDmDev := '1234567890';
-      with infoPerApur.ideEstabLot.Add do
+      Sequencial := 0;
+
+      with IdeEvento do
       begin
-        TpInsc := tiCNPJ;
-        NrInsc := '12345678901234';
-        codLotacao := 'A1234';
-        with detVerbas.Add do
-        begin
-          CodRubr := 'Pg123';
-          ideTabRubr := 'A01';
-          qtdRubr := 2;
-          fatorRubr := 200.65;
-          vrUnit := 152.35;
-          vrRubr := 304.70;
-        end;
-        with infoSaudeColet.detOper.Add do
-        begin
-          cnpjOper := '74563215000195';
-          regANS := '123456';
-          vrPgTit := 150.65;
-          with detPlano.Add do
-          begin
-            cpfDep := '11111111111';
-            nmDep := 'Nome do dependente';
-            DtNascto := Now;
-            vlrPgDep := 150.84;
-          end;
-        end;
-        infoAgNocivo.grauExp := ge1;
-        infoSimples.indSimples := idsIntegralmente;
+        indRetif := tpIndRetificacao(0);
+        NrRecibo := '65.5454.987798798798';
+        TpAmb := taProducaoRestrita;
+        ProcEmi := TpProcEmi(0);
+        VerProc := '1.0';
       end;
 
-      with infoPerAnt.ideADC.Add do
+      IdeEmpregador.TpInsc := tpTpInsc(1);
+      IdeEmpregador.NrInsc := '0123456789';
+
+      IdeVinculo.CpfTrab := '33333333303';
+      IdeVinculo.NisTrab := '11111111111';
+      IdeVinculo.Matricula := '123456';
+
+      with InfoDeslig do
       begin
-        dtAcConv := Now;
-        tpAcConv := tacAcordoColTrab;
-        dtEfAcConv := Now;
-        dsc := 'Detalhamento';
-        with IdePeriodo.Add do
+        mtvDeslig := '02';
+        DtDeslig := date;
+        indPagtoAPI := tpSim;
+        dtProjFimAPI := Now;
+        pensAlim := paPercentualeValordePensaoAlimenticia;
+        percAliment := 25.5;
+        vrAlim := 1985.65;
+
+        // Certidão de óbito apenas em caso de morte quando o mtvDeslig for 09 ou 10
+        nrCertObito := '0123456789';
+
+        // numero do processo que decidiu o desligamento mtvdeslig = 17
+        nrProcTrab := '9632587410';
+
+        indCumprParc := cpaCumprimentoTotal;
+
+        // Obsercação opcional - versão 2.04.01
+        observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
+
+        // Obsercação opcional - versão 2.04.02
+        with observacoes.Add do
+         observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
+
+        SucessaoVinc.cnpjEmpregAnt := '12345678912345';
+
+        with VerbasResc do
         begin
-          perRef := '2017-05';
-          with ideEstabLot.Add do
+          dmDev.Clear;
+
+          with dmDev.Add do
           begin
-            TpInsc := tiCNPJ;
-            NrInsc := '12345678901234';
-            codLotacao := 'A1234';
-            with detVerbas.Add do
+            ideDmDev := '1234567890';
+
+            with infoPerApur do
             begin
-              CodRubr := 'Pg124';
-              ideTabRubr := 'A01';
-              qtdRubr := 0.4;
-              fatorRubr := 200.65;
-              vrUnit := 200.35;
-              vrRubr := 1500.70;
+              ideEstabLot.Clear;
+
+              with ideEstabLot.Add do
+              begin
+                TpInsc := tiCNPJ;
+                NrInsc := '12345678901234';
+                codLotacao := 'A1234';
+
+                detVerbas.Clear;
+
+                with detVerbas.Add do
+                begin
+                  CodRubr := 'Pg123';
+                  ideTabRubr := 'A01';
+                  qtdRubr := 2;
+                  fatorRubr := 200.65;
+                  vrUnit := 152.35;
+                  vrRubr := 304.70;
+                end;
+
+                with infoSaudeColet.detOper.Add do
+                begin
+                  cnpjOper := '74563215000195';
+                  regANS := '123456';
+                  vrPgTit := 150.65;
+
+                  with detPlano.Add do
+                  begin
+                    cpfDep := '11111111111';
+                    nmDep := 'Nome do dependente';
+                    DtNascto := Now;
+                    vlrPgDep := 150.84;
+                  end;
+                end;
+
+                infoAgNocivo.grauExp := ge1;
+                infoSimples.indSimples := idsIntegralmente;
+              end;
             end;
-            infoAgNocivo.grauExp := ge1;
-            infoSimples.indSimples := idsIntegralmente;
+
+            with infoPerAnt do
+            begin
+              ideADC.Clear;
+
+              with ideADC.Add do
+              begin
+                dtAcConv := Now;
+                tpAcConv := tacAcordoColTrab;
+                dtEfAcConv := Now;
+                dsc := 'Detalhamento';
+
+                idePeriodo.Clear;
+
+                with IdePeriodo.Add do
+                begin
+                  perRef := '2017-05';
+
+                  ideEstabLot.Clear;
+
+                  with ideEstabLot.Add do
+                  begin
+                    TpInsc := tiCNPJ;
+                    NrInsc := '12345678901234';
+                    codLotacao := 'A1234';
+
+                    detVerbas.Clear;
+
+                    with detVerbas.Add do
+                    begin
+                      CodRubr := 'Pg124';
+                      ideTabRubr := 'A01';
+                      qtdRubr := 0.4;
+                      fatorRubr := 200.65;
+                      vrUnit := 200.35;
+                      vrRubr := 1500.70;
+                    end;
+
+                    infoAgNocivo.grauExp := ge1;
+                    infoSimples.indSimples := idsIntegralmente;
+                  end;
+                end;
+              end;
+            end;
           end;
+
+          procJudTrab.Clear;
+
+          with procJudTrab.Add do
+          begin
+            tpTrib := tptIRRF;
+            nrProcJud := '0123654789';
+            codSusp := 1235;
+          end;
+
+          with infoMV do
+          begin
+            indMV := tpIndMV(0);
+
+            remunOutrEmpr.Clear;
+
+            with remunOutrEmpr.Add do
+            begin
+              TpInsc := tiCNPJ;
+              NrInsc := '12345678901234';
+              CodCateg := 123;
+              vlrRemunOE := 500.84;
+            end;
+          end;
+        end;
+
+        Quarentena.dtFimQuar := Now;
+
+        consigFGTS.Clear;
+
+        with consigFGTS.Add do
+        begin
+          idConsig := tpSim;
+          insConsig := '12345';
+          nrContr := '123456';
         end;
       end;
     end;
-
-    with EvtDeslig.InfoDeslig.VerbasResc.procJudTrab.Add do
-    begin
-      tpTrib := tptIRRF;
-      nrProcJud := '0123654789';
-      codSusp := 1235;
-    end;
-
-    EvtDeslig.InfoDeslig.VerbasResc.infoMV.indMV := tpIndMV(0);
-    with EvtDeslig.InfoDeslig.VerbasResc.infoMV.remunOutrEmpr.Add do
-    begin
-      TpInsc := tiCNPJ;
-      NrInsc := '12345678901234';
-      CodCateg := 123;
-      vlrRemunOE := 500.84;
-    end;
-
-    EvtDeslig.InfoDeslig.Quarentena.dtFimQuar := Now;
-
-    with EvtDeslig.InfoDeslig.consigFGTS.Add do
-    begin
-      idConsig := tpSim;
-      insConsig := '12345';
-      nrContr := '123456';
-    end;
-
   end;
 end;
 
@@ -3739,174 +3788,220 @@ procedure TFExemploEsocial.GerareSocial2300;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2300.Add do
   begin
-    EvtTSVInicio.Sequencial := 0;
-
-    EvtTSVInicio.IdeEvento.TpAmb := taProducaoRestrita;
-    EvtTSVInicio.IdeEvento.ProcEmi := peAplicEmpregador;
-    EvtTSVInicio.IdeEvento.VerProc := '1.0';
-
-    EvtTSVInicio.IdeEmpregador.TpInsc := tiCNPJ;
-    EvtTSVInicio.IdeEmpregador.NrInsc := '12345678987654';
-
-    EvtTSVInicio.Trabalhador.CpfTrab := '98765432123';
-    EvtTSVInicio.Trabalhador.NisTrab := '54789632145';
-    EvtTSVInicio.Trabalhador.NmTrab := 'João das Neve';
-    EvtTSVInicio.Trabalhador.Sexo := 'M';
-    EvtTSVInicio.Trabalhador.RacaCor := 1;
-    EvtTSVInicio.Trabalhador.EstCiv := 1;
-    EvtTSVInicio.Trabalhador.GrauInstr := '07';
-    EvtTSVInicio.Trabalhador.nmSoc := 'Nome social';
-
-    EvtTSVInicio.Trabalhador.Nascimento.DtNascto := date;
-    EvtTSVInicio.Trabalhador.Nascimento.codMunic := 4153623;
-    EvtTSVInicio.Trabalhador.Nascimento.uf := 'PR';
-    EvtTSVInicio.Trabalhador.Nascimento.PaisNascto := '063';
-    EvtTSVInicio.Trabalhador.Nascimento.PaisNac := '105';
-    EvtTSVInicio.Trabalhador.Nascimento.NmMae := 'Joana das Neve';
-    EvtTSVInicio.Trabalhador.Nascimento.NmPai := 'Jose das Neve';
-
-    EvtTSVInicio.Trabalhador.Documentos.CTPS.NrCtps := '01234567897';
-    EvtTSVInicio.Trabalhador.Documentos.CTPS.SerieCtps := '00001';
-    EvtTSVInicio.Trabalhador.Documentos.CTPS.UfCtps := 'PR';
-
-    EvtTSVInicio.Trabalhador.Documentos.RIC.NrRic := '10203040506070';
-    EvtTSVInicio.Trabalhador.Documentos.RIC.OrgaoEmissor := 'Orgão Emissor';
-    EvtTSVInicio.Trabalhador.Documentos.RIC.DtExped := date;
-
-    EvtTSVInicio.Trabalhador.Documentos.RG.NrRg := '73062584';
-    EvtTSVInicio.Trabalhador.Documentos.RG.OrgaoEmissor := 'SSP';
-    EvtTSVInicio.Trabalhador.Documentos.RG.DtExped := date;
-
-    EvtTSVInicio.Trabalhador.Documentos.RNE.NrRne := '01020304050607';
-    EvtTSVInicio.Trabalhador.Documentos.RNE.OrgaoEmissor := 'Orgao Emissor';
-    EvtTSVInicio.Trabalhador.Documentos.RNE.DtExped := date;
-
-    EvtTSVInicio.Trabalhador.Documentos.OC.NrOc := '74108520963012';
-    EvtTSVInicio.Trabalhador.Documentos.OC.OrgaoEmissor := 'CRProfissao';
-    EvtTSVInicio.Trabalhador.Documentos.OC.DtExped := date;
-    EvtTSVInicio.Trabalhador.Documentos.OC.DtValid := date;
-
-    EvtTSVInicio.Trabalhador.Documentos.CNH.nrRegCnh := '123654789632';
-    EvtTSVInicio.Trabalhador.Documentos.CNH.DtExped := date;
-    EvtTSVInicio.Trabalhador.Documentos.CNH.ufCnh := ufPR;
-    EvtTSVInicio.Trabalhador.Documentos.CNH.DtValid := date;
-    EvtTSVInicio.Trabalhador.Documentos.CNH.dtPriHab := date;
-    EvtTSVInicio.Trabalhador.Documentos.CNH.categoriaCnh := cnAB;
-
-    EvtTSVInicio.Trabalhador.Endereco.Brasil.TpLograd := 'R';
-    EvtTSVInicio.Trabalhador.Endereco.Brasil.DscLograd := 'Rua Parmenides';
-    EvtTSVInicio.Trabalhador.Endereco.Brasil.NrLograd := '123456';
-    EvtTSVInicio.Trabalhador.Endereco.Brasil.Complemento := 'fundos';
-    EvtTSVInicio.Trabalhador.Endereco.Brasil.Bairro := 'Jd Filosofia';
-    EvtTSVInicio.Trabalhador.Endereco.Brasil.Cep := '88888888';
-    EvtTSVInicio.Trabalhador.Endereco.Brasil.codMunic := 4141414;
-    EvtTSVInicio.Trabalhador.Endereco.Brasil.uf := ufPR;
-
-    // Dados de trabalhador estrangeiro
-    EvtTSVInicio.Trabalhador.Endereco.Exterior.PaisResid := '063';
-    EvtTSVInicio.Trabalhador.Endereco.Exterior.DscLograd := 'St. Abbey Road';
-    EvtTSVInicio.Trabalhador.Endereco.Exterior.NrLograd := '123456';
-    EvtTSVInicio.Trabalhador.Endereco.Exterior.Complemento := 'apto 010';
-    EvtTSVInicio.Trabalhador.Endereco.Exterior.Bairro := 'RubberSoul';
-    EvtTSVInicio.Trabalhador.Endereco.Exterior.NmCid := 'Buenos Aires';
-    EvtTSVInicio.Trabalhador.Endereco.Exterior.CodPostal := '987654';
-
-    EvtTSVInicio.Trabalhador.TrabEstrangeiro.DtChegada := date;
-    EvtTSVInicio.Trabalhador.TrabEstrangeiro.ClassTrabEstrang :=
-      ctVistoPermanente;
-    EvtTSVInicio.Trabalhador.TrabEstrangeiro.CasadoBr := 'S';
-    EvtTSVInicio.Trabalhador.TrabEstrangeiro.FilhosBr := 'N';
-
-    // Dados de trabalhador com deficiencia
-    EvtTSVInicio.Trabalhador.InfoDeficiencia.DefFisica := tpNao;
-    EvtTSVInicio.Trabalhador.InfoDeficiencia.DefVisual := tpNao;
-    EvtTSVInicio.Trabalhador.InfoDeficiencia.DefAuditiva := tpNao;
-    EvtTSVInicio.Trabalhador.InfoDeficiencia.DefMental := tpNao;
-    EvtTSVInicio.Trabalhador.InfoDeficiencia.DefIntelectual := tpNao;
-    EvtTSVInicio.Trabalhador.InfoDeficiencia.ReabReadap := tpSim;
-    EvtTSVInicio.Trabalhador.InfoDeficiencia.observacao := 'sem deficiencia';
-
-    with EvtTSVInicio.Trabalhador.Dependente.Add do
+    with EvtTSVInicio do
     begin
-      tpDep := tdConjuge;
-      nmDep := 'Dependente 1';
-      DtNascto := date;
-      cpfDep := '99999999909';
-      depIRRF := tpSim;
-      depSF := tpNao;
+      Sequencial := 0;
+
+      IdeEvento.TpAmb := taProducaoRestrita;
+      IdeEvento.ProcEmi := peAplicEmpregador;
+      IdeEvento.VerProc := '1.0';
+
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := '12345678987654';
+
+      with Trabalhador do
+      begin
+        CpfTrab := '98765432123';
+        NisTrab := '54789632145';
+        NmTrab := 'João das Neve';
+        Sexo := 'M';
+        RacaCor := 1;
+        EstCiv := 1;
+        GrauInstr := '07';
+        nmSoc := 'Nome social';
+
+        with Nascimento do
+        begin
+          DtNascto := date;
+          codMunic := 4153623;
+          uf := 'PR';
+          PaisNascto := '063';
+          PaisNac := '105';
+          NmMae := 'Joana das Neve';
+          NmPai := 'Jose das Neve';
+        end;
+
+        with Documentos do
+        begin
+          CTPS.NrCtps := '01234567897';
+          CTPS.SerieCtps := '00001';
+          CTPS.UfCtps := 'PR';
+
+          RIC.NrRic := '10203040506070';
+          RIC.OrgaoEmissor := 'Orgão Emissor';
+          RIC.DtExped := date;
+
+          RG.NrRg := '73062584';
+          RG.OrgaoEmissor := 'SSP';
+          RG.DtExped := date;
+
+          RNE.NrRne := '01020304050607';
+          RNE.OrgaoEmissor := 'Orgao Emissor';
+          RNE.DtExped := date;
+
+          OC.NrOc := '74108520963012';
+          OC.OrgaoEmissor := 'CRProfissao';
+          OC.DtExped := date;
+          OC.DtValid := date;
+
+          CNH.nrRegCnh := '123654789632';
+          CNH.DtExped := date;
+          CNH.ufCnh := ufPR;
+          CNH.DtValid := date;
+          CNH.dtPriHab := date;
+          CNH.categoriaCnh := cnAB;
+        end;
+
+        with Endereco do
+        begin
+          Brasil.TpLograd := 'R';
+          Brasil.DscLograd := 'Rua Parmenides';
+          Brasil.NrLograd := '123456';
+          Brasil.Complemento := 'fundos';
+          Brasil.Bairro := 'Jd Filosofia';
+          Brasil.Cep := '88888888';
+          Brasil.codMunic := 4141414;
+          Brasil.uf := ufPR;
+
+          // Dados de trabalhador estrangeiro
+          Exterior.PaisResid := '063';
+          Exterior.DscLograd := 'St. Abbey Road';
+          Exterior.NrLograd := '123456';
+          Exterior.Complemento := 'apto 010';
+          Exterior.Bairro := 'RubberSoul';
+          Exterior.NmCid := 'Buenos Aires';
+          Exterior.CodPostal := '987654';
+        end;
+
+        with TrabEstrangeiro do
+        begin
+          DtChegada := date;
+          ClassTrabEstrang := ctVistoPermanente;
+          CasadoBr := 'S';
+          FilhosBr := 'N';
+        end;
+
+        // Dados de trabalhador com deficiencia
+        with InfoDeficiencia do
+        begin
+          DefFisica := tpNao;
+          DefVisual := tpNao;
+          DefAuditiva := tpNao;
+          DefMental := tpNao;
+          DefIntelectual := tpNao;
+          ReabReadap := tpSim;
+          observacao := 'sem deficiencia';
+        end;
+
+        Dependente.Clear;
+
+        with Dependente.Add do
+        begin
+          tpDep := tdConjuge;
+          nmDep := 'Dependente 1';
+          DtNascto := date;
+          cpfDep := '99999999909';
+          depIRRF := tpSim;
+          depSF := tpNao;
+        end;
+
+        with Dependente.Add do
+        begin
+          tpDep := tdFilhoOuEnteado;
+          nmDep := 'Dependente 2';
+          DtNascto := date;
+          cpfDep := '99999999909';
+          depIRRF := tpSim;
+          depSF := tpNao;
+        end;
+
+        with Contato do
+        begin
+          FonePrinc := '91067240';
+          FoneAlternat := '91067240';
+          EmailPrinc := 'TESTE@email.com.br';
+          EmailAlternat := 'teste@teste.com';
+        end;
+      end;
+
+      with infoTSVInicio do
+      begin
+        CodCateg := 101;
+        dtInicio := date;
+        natAtividade := navUrbano;
+
+        with infoComplementares do
+        begin
+          cargoFuncao.CodCargo := '001';
+          cargoFuncao.CodFuncao := '001';
+
+          Remuneracao.VrSalFx := 1200.00;
+          Remuneracao.UndSalFixo := sfPorMes;
+          Remuneracao.DscSalVar := 'Comissão de 1,2% sobre a venda do mês';
+
+          FGTS.OpcFGTS := ofOptante;
+          FGTS.DtOpcFGTS := date;
+
+          // dados da empresa de origem do dirigente sindical
+          with infoDirSind do
+          begin
+            categOrig := 111;
+            cnpjOrigem := '12345678901234';
+            dtAdmOrig := date;
+            matricOrig := 'A1234';
+          end;
+
+          // Informações de trabalhador cedido, devem ser preenchidas exclusivamente pelo cessionário
+          with infoTrabCedido do
+          begin
+            categOrig := 111;
+            cnpjCednt := '12345678901234';
+            matricCed := 'B4321';
+            dtAdmCed := date;
+            TpRegTrab := trCLT;
+            TpRegPrev := rpRGPS;
+            infOnus := ocCedente;
+          end;
+
+          with infoEstagiario do
+          begin
+            natEstagio := neObrigatiorio;
+            nivEstagio := nvSuperior;
+            areaAtuacao := 'Direito';
+            nrApol := '123456';
+            vlrBolsa := 600.00;
+            dtPrevTerm := IncMonth(date, 12);
+
+            with instEnsino do
+            begin
+              cnpjInstEnsino := '12345678901234';
+              NmRazao := 'Nome da Instituição de Ensino';
+              DscLograd := 'R Pitagoras';
+              NrLograd := '1618';
+              Bairro := 'Bairro Educacional';
+              Cep := '86086086';
+              codMunic := 4141414;
+              uf := ufPR;
+            end;
+
+            with ageIntegracao do
+            begin
+              cnpjAgntInteg := '12345678901234';
+              NmRazao := 'Nome da empresa';
+              DscLograd := 'R Adam Smith';
+              NrLograd := '9999';
+              Bairro := 'Bairro Empresarial';
+              Cep := '86086086';
+              codMunic := 4141414;
+              uf := ufPR;
+            end;
+
+            supervisorEstagio.cpfSupervisor := '88888888801';
+            supervisorEstagio.nmSuperv := 'Pedro das Pedras';
+          end;
+        end;
+      end;
     end;
-
-    with EvtTSVInicio.Trabalhador.Dependente.Add do
-    begin
-      tpDep := tdFilhoOuEnteado;
-      nmDep := 'Dependente 2';
-      DtNascto := date;
-      cpfDep := '99999999909';
-      depIRRF := tpSim;
-      depSF := tpNao;
-    end;
-
-    EvtTSVInicio.Trabalhador.Contato.FonePrinc := '91067240';
-    EvtTSVInicio.Trabalhador.Contato.FoneAlternat := '91067240';
-    EvtTSVInicio.Trabalhador.Contato.EmailPrinc := 'TESTE@email.com.br';
-    EvtTSVInicio.Trabalhador.Contato.EmailAlternat := 'teste@teste.com';
-
-    EvtTSVInicio.infoTSVInicio.CodCateg := 101;
-    EvtTSVInicio.infoTSVInicio.dtInicio := date;
-    EvtTSVInicio.infoTSVInicio.natAtividade := navUrbano;
-
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.cargoFuncao.CodCargo := '001';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.cargoFuncao.CodFuncao := '001';
-
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.Remuneracao.VrSalFx := 1200.00;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.Remuneracao.UndSalFixo := sfPorMes;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.Remuneracao.DscSalVar := 'Comissão de 1,2% sobre a venda do mês';
-
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.FGTS.OpcFGTS := ofOptante;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.FGTS.DtOpcFGTS := date;
-
-    // dados da empresa de origem do dirigente sindical
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoDirSind.categOrig := 111;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoDirSind.cnpjOrigem := '12345678901234';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoDirSind.dtAdmOrig := date;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoDirSind.matricOrig := 'A1234';
-
-    // Informações de trabalhador cedido, devem ser preenchidas exclusivamente pelo cessionário
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoTrabCedido.categOrig := 111;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoTrabCedido.cnpjCednt := '12345678901234';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoTrabCedido.matricCed := 'B4321';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoTrabCedido.dtAdmCed := date;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoTrabCedido.TpRegTrab := trCLT;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoTrabCedido.TpRegPrev := rpRGPS;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoTrabCedido.infOnus := ocCedente;
-
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.natEstagio := neObrigatiorio;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.nivEstagio := nvSuperior;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.areaAtuacao := 'Direito';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.nrApol := '123456';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.vlrBolsa := 600.00;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.dtPrevTerm := IncMonth(date, 12);
-
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.instEnsino.cnpjInstEnsino := '12345678901234';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.instEnsino.NmRazao := 'Nome da Instituição de Ensino';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.instEnsino.DscLograd := 'R Pitagoras';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.instEnsino.NrLograd := '1618';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.instEnsino.Bairro := 'Bairro Educacional';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.instEnsino.Cep := '86086086';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.instEnsino.codMunic := 4141414;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.instEnsino.uf := ufPR;
-
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.ageIntegracao.cnpjAgntInteg := '12345678901234';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.ageIntegracao.NmRazao := 'Nome da empresa';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.ageIntegracao.DscLograd := 'R Adam Smith';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.ageIntegracao.NrLograd := '9999';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.ageIntegracao.Bairro := 'Bairro Empresarial';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.ageIntegracao.Cep := '86086086';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.ageIntegracao.codMunic := 4141414;
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.ageIntegracao.uf := ufPR;
-
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.supervisorEstagio.cpfSupervisor := '88888888801';
-    EvtTSVInicio.infoTSVInicio.InfoComplementares.infoEstagiario.supervisorEstagio.nmSuperv := 'Pedro das Pedras';
   end;
 end;
 
@@ -3914,85 +4009,74 @@ procedure TFExemploEsocial.GerareSocial2306;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2306.Add do
   begin
-    EvtTSVAltContr.Sequencial := 0;
+    with EvtTSVAltContr do
+    begin
+      Sequencial := 0;
 
-    EvtTSVAltContr.IdeEvento.TpAmb := taProducaoRestrita;
-    EvtTSVAltContr.IdeEvento.ProcEmi := peAplicEmpregador;
-    EvtTSVAltContr.IdeEvento.VerProc := '1.0';
+      IdeEvento.TpAmb := taProducaoRestrita;
+      IdeEvento.ProcEmi := peAplicEmpregador;
+      IdeEvento.VerProc := '1.0';
 
-    EvtTSVAltContr.IdeEmpregador.TpInsc := tiCNPJ;
-    EvtTSVAltContr.IdeEmpregador.NrInsc := '12345678987654';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := '12345678987654';
 
-    EvtTSVAltContr.IdeTrabSemVinc.CpfTrab := '12345678901';
-    EvtTSVAltContr.IdeTrabSemVinc.NisTrab := '00000000000';
-    EvtTSVAltContr.IdeTrabSemVinc.CodCateg := 555;
+      IdeTrabSemVinc.CpfTrab := '12345678901';
+      IdeTrabSemVinc.NisTrab := '00000000000';
+      IdeTrabSemVinc.CodCateg := 555;
 
-    EvtTSVAltContr.infoTSVAlteracao.dtAlteracao := date;
-    EvtTSVAltContr.infoTSVAlteracao.natAtividade := navUrbano;
+      with infoTSVAlteracao do
+      begin
+        dtAlteracao := date;
+        natAtividade := navUrbano;
 
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.cargoFuncao.
-      CodCargo := '001';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.cargoFuncao.
-      CodFuncao := '001';
+        with infoComplementares do
+        begin
+          cargoFuncao.CodCargo := '001';
+          cargoFuncao.CodFuncao := '001';
 
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.Remuneracao.VrSalFx
-      := 1200.00;
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.Remuneracao.UndSalFixo
-      := sfPorMes;
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.Remuneracao.DscSalVar :=
-      'Comissão de 1,2% sobre a venda do mês';
+          Remuneracao.VrSalFx := 1200.00;
+          Remuneracao.UndSalFixo := sfPorMes;
+          Remuneracao.DscSalVar := 'Comissão de 1,2% sobre a venda do mês';
 
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.natEstagio
-      := neObrigatiorio;
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.nivEstagio
-      := nvSuperior;
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      areaAtuacao := 'Direito';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.nrApol
-      := '123456';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.vlrBolsa
-      := 600.00;
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.dtPrevTerm
-      := IncMonth(date, 12);
+          with infoEstagiario do
+          begin
+            natEstagio:= neObrigatiorio;
+            nivEstagio := nvSuperior;
+            areaAtuacao := 'Direito';
+            nrApol := '123456';
+            vlrBolsa := 600.00;
+            dtPrevTerm := IncMonth(date, 12);
 
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      instEnsino.cnpjInstEnsino := '12345678998765';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      instEnsino.NmRazao := 'Nome da Instituição de Ensino';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      instEnsino.DscLograd := 'R Pitagoras';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      instEnsino.NrLograd := '1618';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      instEnsino.Bairro := 'Bairro Educacional';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      instEnsino.Cep := '86086086';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      instEnsino.codMunic := 4141414;
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      instEnsino.uf := ufPR;
+            with instEnsino do
+            begin
+              cnpjInstEnsino := '12345678998765';
+              NmRazao := 'Nome da Instituição de Ensino';
+              DscLograd := 'R Pitagoras';
+              NrLograd := '1618';
+              Bairro := 'Bairro Educacional';
+              Cep := '86086086';
+              codMunic := 4141414;
+              uf := ufPR;
+            end;
 
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      ageIntegracao.cnpjAgntInteg := '98765432145678';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      ageIntegracao.NmRazao := 'Nome da empresa';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      ageIntegracao.DscLograd := 'R Adam Smith';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      ageIntegracao.NrLograd := '9999';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      ageIntegracao.Bairro := 'Bairro Empresarial';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      ageIntegracao.Cep := '86086086';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      ageIntegracao.codMunic := 4141414;
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      ageIntegracao.uf := ufPR;
+            with ageIntegracao do
+            begin
+              cnpjAgntInteg := '98765432145678';
+              NmRazao := 'Nome da empresa';
+              DscLograd := 'R Adam Smith';
+              NrLograd := '9999';
+              Bairro := 'Bairro Empresarial';
+              Cep := '86086086';
+              codMunic := 4141414;
+              uf := ufPR;
+            end;
 
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      supervisorEstagio.cpfSupervisor := '12345678901';
-    EvtTSVAltContr.infoTSVAlteracao.InfoComplementares.infoEstagiario.
-      supervisorEstagio.nmSuperv := 'Pedro das Pedras';
+            supervisorEstagio.cpfSupervisor := '12345678901';
+            supervisorEstagio.nmSuperv := 'Pedro das Pedras';
+          end;
+        end;
+      end;
+    end;
   end;
 end;
 
@@ -4000,75 +4084,112 @@ procedure TFExemploEsocial.GerareSocial2399;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2399.Add do
   begin
-    EvtTSVTermino.Sequencial := 0;
-
-    EvtTSVTermino.IdeEvento.indRetif := tpIndRetificacao(0);
-    EvtTSVTermino.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtTSVTermino.IdeEvento.TpAmb := taProducaoRestrita;
-    EvtTSVTermino.IdeEvento.ProcEmi := TpProcEmi(0);
-    EvtTSVTermino.IdeEvento.VerProc := '1.0';
-
-    EvtTSVTermino.IdeEmpregador.TpInsc := tpTpInsc(1);
-    EvtTSVTermino.IdeEmpregador.NrInsc := '0123456789';
-
-    EvtTSVTermino.IdeTrabSemVinc.CpfTrab := '12345678987';
-    EvtTSVTermino.IdeTrabSemVinc.NisTrab := '98765432123';
-    EvtTSVTermino.IdeTrabSemVinc.CodCateg := 111;
-
-    EvtTSVTermino.InfoTSVTermino.dtTerm := date;
-
-    EvtTSVTermino.InfoTSVTermino.mtvDesligTSV := '02';
-
-    with EvtTSVTermino.InfoTSVTermino.VerbasResc.dmDev.Add do
+    with EvtTSVTermino do
     begin
-      ideDmDev := '012345';
-      with ideEstabLot.Add do
+      Sequencial := 0;
+
+      with IdeEvento do
       begin
-        TpInsc := tiCNPJ;
-        NrInsc := '12345678987654';
-        codLotacao := 'A1234';
-        with detVerbas.Add do
+        indRetif := tpIndRetificacao(0);
+        NrRecibo := '65.5454.987798798798';
+        TpAmb := taProducaoRestrita;
+        ProcEmi := TpProcEmi(0);
+        VerProc := '1.0';
+      end;
+
+      IdeEmpregador.TpInsc := tpTpInsc(1);
+      IdeEmpregador.NrInsc := '0123456789';
+
+      IdeTrabSemVinc.CpfTrab := '12345678987';
+      IdeTrabSemVinc.NisTrab := '98765432123';
+      IdeTrabSemVinc.CodCateg := 111;
+
+      with InfoTSVTermino do
+      begin
+        dtTerm := date;
+        mtvDesligTSV := '02';
+
+        with verbasResc do
         begin
-          CodRubr := 'Pg123';
-          ideTabRubr := 'A01';
-          qtdRubr := 2;
-          fatorRubr := 50.25;
-          vrUnit := 152.35;
-          vrRubr := 304.70;
-        end;
-        with infoSaudeColet.detOper.Add do
-        begin
-          cnpjOper := '89652048000195';
-          regANS := '123456';
-          vrPgTit := 1500.65;
-          with detPlano.Add do
+          dmDev.Clear;
+
+          with dmDev.Add do
           begin
-            cpfDep := '55555555555';
-            nmDep := 'Nome do Dependente';
-            DtNascto := Now;
-            vlrPgDep := 125.36;
+            ideDmDev := '012345';
+
+            ideEstabLot.Clear;
+
+            with ideEstabLot.Add do
+            begin
+              TpInsc := tiCNPJ;
+              NrInsc := '12345678987654';
+              codLotacao := 'A1234';
+
+              detVerbas.Clear;
+
+              with detVerbas.Add do
+              begin
+                CodRubr := 'Pg123';
+                ideTabRubr := 'A01';
+                qtdRubr := 2;
+                fatorRubr := 50.25;
+                vrUnit := 152.35;
+                vrRubr := 304.70;
+              end;
+
+              with infoSaudeColet do
+              begin
+                detOper.Clear;
+
+                with detOper.Add do
+                begin
+                  cnpjOper := '89652048000195';
+                  regANS := '123456';
+                  vrPgTit := 1500.65;
+
+                  detPlano.Clear;
+
+                  with detPlano.Add do
+                  begin
+                    cpfDep := '55555555555';
+                    nmDep := 'Nome do Dependente';
+                    DtNascto := Now;
+                    vlrPgDep := 125.36;
+                  end;
+                end;
+              end;
+
+              infoAgNocivo.grauExp := ge1;
+              infoSimples.indSimples := idsIntegralmente;
+            end;
+          end;
+
+          procJudTrab.Clear;
+
+          with procJudTrab.Add do
+          begin
+            tpTrib := tpTpTributo(0);
+            nrProcJud := '123456789';
+            codSusp := 123456;
+          end;
+
+          with infoMV do
+          begin
+            indMV := tpIndMV(0);
+
+            with remunOutrEmpr.Add do
+            begin
+              TpInsc := tiCNPJ;
+              NrInsc := '14236547000195';
+              CodCateg := 111;
+              vlrRemunOE := 2500.12;
+            end;
           end;
         end;
-        infoAgNocivo.grauExp := ge1;
-        infoSimples.indSimples := idsIntegralmente;
+
+        Quarentena.dtFimQuar := date;
       end;
     end;
-    with EvtTSVTermino.InfoTSVTermino.VerbasResc.procJudTrab.Add do
-    begin
-      tpTrib := tpTpTributo(0);
-      nrProcJud := '123456789';
-      codSusp := 123456;
-    end;
-    EvtTSVTermino.InfoTSVTermino.VerbasResc.infoMV.indMV := tpIndMV(0);
-    with EvtTSVTermino.InfoTSVTermino.VerbasResc.infoMV.remunOutrEmpr.Add do
-    begin
-      TpInsc := tiCNPJ;
-      NrInsc := '14236547000195';
-      CodCateg := 111;
-      vlrRemunOE := 2500.12;
-    end;
-
-    EvtTSVTermino.InfoTSVTermino.Quarentena.dtFimQuar := date;
   end;
 end;
 
@@ -4076,74 +4197,102 @@ procedure TFExemploEsocial.GerareSocial2400;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2400.Add do
   begin
-    EvtCdBenPrRP.Sequencial := 0;
+    with evtCdBenPrRP do
+    begin
+      Sequencial := 0;
 
-    EvtCdBenPrRP.IdeEvento.indRetif := tpIndRetificacao(0);
-    EvtCdBenPrRP.IdeEvento.NrRecibo := '65.5454.987798798798';
-    EvtCdBenPrRP.IdeEvento.TpAmb := taProducaoRestrita;
-    EvtCdBenPrRP.IdeEvento.ProcEmi := TpProcEmi(0);
-    EvtCdBenPrRP.IdeEvento.VerProc := '1.0';
+      with IdeEvento do
+      begin
+        indRetif := tpIndRetificacao(0);
+        NrRecibo := '65.5454.987798798798';
+        TpAmb := taProducaoRestrita;
+        ProcEmi := TpProcEmi(0);
+        VerProc := '1.0';
+      end;
 
-    EvtCdBenPrRP.IdeEmpregador.TpInsc := tpTpInsc(1);
-    EvtCdBenPrRP.IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tpTpInsc(1);
+      IdeEmpregador.NrInsc := '0123456789';
 
-    EvtCdBenPrRP.ideBenef.cpfBenef := '12345678910';
-    EvtCdBenPrRP.ideBenef.nmBenefic := 'Nome do beneficiario';
+      with ideBenef do
+      begin
+        cpfBenef := '12345678910';
+        nmBenefic := 'Nome do beneficiario';
 
-    EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.DtNascto := date;;
-    EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.codMunic := 4153623;
-    EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.uf := 'PR';
-    EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.PaisNascto := '063';
-    EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.PaisNac := '105';
-    EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.NmMae := 'Joana das Neve';
-    EvtCdBenPrRP.ideBenef.dadosBenef.dadosNasc.NmPai := 'Jose das Neve';
+        with dadosBenef do
+        begin
+          with dadosNasc do
+          begin
+            DtNascto := date;;
+            codMunic := 4153623;
+            uf := 'PR';
+            PaisNascto := '063';
+            PaisNac := '105';
+            NmMae := 'Joana das Neve';
+            NmPai := 'Jose das Neve';
+          end;
 
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Brasil.TpLograd := 'R';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Brasil.DscLograd :=
-      'Rua Parmenides';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Brasil.NrLograd := '123456';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Brasil.Complemento := 'fundos';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Brasil.Bairro := 'Jd Filosofia';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Brasil.Cep := '88888888';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Brasil.codMunic := 4141414;
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Brasil.uf := ufPR;
+          with endereco do
+          begin
+            with Brasil do
+            begin
+              TpLograd := 'R';
+              DscLograd := 'Rua Parmenides';
+              NrLograd := '123456';
+              Complemento := 'fundos';
+              Bairro := 'Jd Filosofia';
+              Cep := '88888888';
+              codMunic := 4141414;
+              uf := ufPR;
+            end;
 
-    // Dados de trabalhador estrangeiro
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Exterior.PaisResid := '063';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Exterior.DscLograd :=
-      'St. Abbey Road';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Exterior.NrLograd := '123456';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Exterior.Complemento :=
-      'apto 010';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Exterior.Bairro := 'RubberSoul';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Exterior.NmCid := 'Buenos Aires';
-    EvtCdBenPrRP.ideBenef.dadosBenef.Endereco.Exterior.CodPostal := '987654';
+            // Dados de trabalhador estrangeiro
+            with Exterior do
+            begin
+              PaisResid := '063';
+              DscLograd := 'St. Abbey Road';
+              NrLograd := '123456';
+              Complemento := 'apto 010';
+              Bairro := 'RubberSoul';
+              NmCid := 'Buenos Aires';
+              CodPostal := '987654';
+            end;
+          end;
+        end;
+      end;
 
-    EvtCdBenPrRP.infoBeneficio.tpPlanRP := prpPlanoPrevidenciarioOuUnico;
+      with infoBeneficio do
+      begin
+        tpPlanRP := prpPlanoPrevidenciarioOuUnico;
 
-    EvtCdBenPrRP.infoBeneficio.iniBeneficio.tpBenef := 1;
-    EvtCdBenPrRP.infoBeneficio.iniBeneficio.nrBenefic := '3156189132131';
-    EvtCdBenPrRP.infoBeneficio.iniBeneficio.dtIniBenef := Now;
-    EvtCdBenPrRP.infoBeneficio.iniBeneficio.vrBenef := 1500.32;
-    EvtCdBenPrRP.infoBeneficio.iniBeneficio.infoPenMorte.idQuota :=
-      '1521651651';
-    EvtCdBenPrRP.infoBeneficio.iniBeneficio.infoPenMorte.cpfInst :=
-      '12345678910';
+        with iniBeneficio do
+        begin
+          tpBenef := 1;
+          nrBenefic := '3156189132131';
+          dtIniBenef := Now;
+          vrBenef := 1500.32;
+          infoPenMorte.idQuota := '1521651651';
+          infoPenMorte.cpfInst := '12345678910';
+        end;
 
-    EvtCdBenPrRP.infoBeneficio.altBeneficio.tpBenef := 1;
-    EvtCdBenPrRP.infoBeneficio.altBeneficio.nrBenefic := '3156189132131';
-    EvtCdBenPrRP.infoBeneficio.altBeneficio.dtIniBenef := Now;
-    EvtCdBenPrRP.infoBeneficio.altBeneficio.vrBenef := 1500.32;
-    EvtCdBenPrRP.infoBeneficio.altBeneficio.infoPenMorte.idQuota :=
-      '1521651651';
-    EvtCdBenPrRP.infoBeneficio.altBeneficio.infoPenMorte.cpfInst :=
-      '12345678910';
+        with altBeneficio do
+        begin
+          tpBenef := 1;
+          nrBenefic := '3156189132131';
+          dtIniBenef := Now;
+          vrBenef := 1500.32;
+          infoPenMorte.idQuota := '1521651651';
+          infoPenMorte.cpfInst := '12345678910';
+        end;
 
-    EvtCdBenPrRP.infoBeneficio.fimBeneficio.tpBenef := 1;
-    EvtCdBenPrRP.infoBeneficio.fimBeneficio.nrBenefic := '3156189132131';
-    EvtCdBenPrRP.infoBeneficio.fimBeneficio.dtFimBenef := Now;
-    EvtCdBenPrRP.infoBeneficio.fimBeneficio.mtvFim := 1;
-
+        with fimBeneficio do
+        begin
+          tpBenef := 1;
+          nrBenefic := '3156189132131';
+          dtFimBenef := Now;
+          mtvFim := 1;
+        end;
+      end;
+    end;
   end;
 end;
 
@@ -4151,23 +4300,29 @@ procedure TFExemploEsocial.GerareSocial3000;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S3000.Add do
   begin
-    EvtExclusao.Sequencial := 0;
+    with EvtExclusao do
+    begin
+      Sequencial := 0;
 
-    EvtExclusao.IdeEvento.TpAmb := taProducaoRestrita;
-    EvtExclusao.IdeEvento.ProcEmi := TpProcEmi(0);
-    EvtExclusao.IdeEvento.VerProc := '1.0';
+      IdeEvento.TpAmb := taProducaoRestrita;
+      IdeEvento.ProcEmi := TpProcEmi(0);
+      IdeEvento.VerProc := '1.0';
 
-    EvtExclusao.IdeEmpregador.TpInsc := tpTpInsc(1);
-    EvtExclusao.IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tpTpInsc(1);
+      IdeEmpregador.NrInsc := '0123456789';
 
-    EvtExclusao.InfoExclusao.tpEvento := TTipoEvento(teS2100);
-    EvtExclusao.InfoExclusao.nrRecEvt := '12345789987654321';
+      with InfoExclusao do
+      begin
+        tpEvento := TTipoEvento(teS2100);
+        nrRecEvt := '12345789987654321';
 
-    EvtExclusao.InfoExclusao.ideTrabalhador.CpfTrab := '12345678950';
-    EvtExclusao.InfoExclusao.ideTrabalhador.NisTrab := '12345678901';
+        ideTrabalhador.CpfTrab := '12345678950';
+        ideTrabalhador.NisTrab := '12345678901';
 
-    EvtExclusao.InfoExclusao.IdeFolhaPagto.IndApuracao := tpIndApuracao(0);
-    EvtExclusao.InfoExclusao.IdeFolhaPagto.perApur := '2015-05';
+        IdeFolhaPagto.IndApuracao := tpIndApuracao(0);
+        IdeFolhaPagto.perApur := '2015-05';
+      end;
+    end;
   end;
 end;
 

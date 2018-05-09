@@ -230,7 +230,7 @@ type
     procedure ConfiguraComponente;
     procedure AtualizaSSLLibsCombo;
     procedure LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
-    procedure AlimentaComponente(NumNFSe: String);
+    procedure AlimentaComponente(NumNFSe, NumLote: String);
     procedure AtualizaCidades;
   public
     { Public declarations }
@@ -555,17 +555,19 @@ begin
   MyWebBrowser.Navigate(ExtractFileDir(Application.ExeName) + 'temp.xml');
 end;
 
-procedure TfrmDemo_ACBrNFSe.AlimentaComponente(NumNFSe: String);
+procedure TfrmDemo_ACBrNFSe.AlimentaComponente(NumNFSe, NumLote: String);
 var
   ValorISS: Double;
 begin
   with ACBrNFSe1 do
   begin
-    NotasFiscais.NumeroLote := '1';
+    NotasFiscais.NumeroLote := NumLote;
     NotasFiscais.Transacao := True;
 
     with NotasFiscais.Add.NFSe do
     begin
+      NumeroLote := NumLote;
+
       IdentificacaoRps.Numero := FormatFloat('#########0', StrToInt(NumNFSe));
 
       // Para o provedor ISS.NET em ambiente de Homologação mudar a série para '8'
@@ -1010,7 +1012,7 @@ begin
   for I := 1 to iQtde do
   begin
     sAux := IntToStr(iAux);
-    AlimentaComponente(sAux);
+    AlimentaComponente(sAux, vNumLote);
     inc(iAux);
   end;
 
@@ -1384,7 +1386,7 @@ begin
     exit;
 
   ACBrNFSe1.NotasFiscais.Clear;
-  AlimentaComponente(vNumRPS);
+  AlimentaComponente(vNumRPS, '1');
 
   ACBrNFSe1.Gerar(StrToInt(vNumRPS));
   sNomeArq := ACBrNFSe1.NotasFiscais.Items[0].NomeArq;
@@ -1473,7 +1475,7 @@ begin
     exit;
 
   ACBrNFSe1.NotasFiscais.Clear;
-  AlimentaComponente(vAux);
+  AlimentaComponente(vAux, vNumLote);
   ACBrNFSe1.GerarLote(vNumLote);
 
   ShowMessage('Arquivo gerado em: ' + ACBrNFSe1.NotasFiscais.Items[0].NomeArq);
@@ -1500,7 +1502,7 @@ begin
     exit;
 
   ACBrNFSe1.NotasFiscais.Clear;
-  AlimentaComponente(vAux);
+  AlimentaComponente(vAux, vNumLote);
   ACBrNFSe1.EnviarSincrono(vNumLote);
 
   ACBrNFSe1.NotasFiscais.Clear;
@@ -1537,7 +1539,7 @@ begin
   if not(InputQuery('Substituir NFS-e', 'Numero do novo RPS', vAux)) then
     exit;
   ACBrNFSe1.NotasFiscais.Clear;
-  AlimentaComponente(vAux);
+  AlimentaComponente(vAux, '1');
 
   // Codigo de Cancelamento
   // 1 - Erro de emissão

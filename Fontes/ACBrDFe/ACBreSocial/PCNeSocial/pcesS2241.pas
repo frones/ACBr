@@ -106,7 +106,8 @@ type
     procedure GerarIniAposentEsp(objIniApoEsp: TiniAposentEsp);
     procedure GerarAltAposentEsp(objAltApoEsp: TaltAposentEsp);
     procedure GerarFimAposentEsp(objFimApoEsp: TfimAposentEsp);
-    procedure GerarInfoAmb(Sender: TInsPerApo; objInfoAmb: TInfoAmbCollection);
+    procedure GerarInfoAmb(Sender: TInsPerApo; objInfoAmb: TInfoAmbCollection;
+         Grupo: String = 'infoAmb');
     procedure GerarFatRisco(objFatRisco: TFatRiscoCollection);
   public
     constructor Create(AACBreSocial: TObject);overload;
@@ -331,9 +332,9 @@ procedure TEvtInsApo.GerarAltAposentEsp(objAltApoEsp: TaltAposentEsp);
 begin
   Gerador.wGrupo('altAposentEsp');
 
-  Gerador.wCampo(tcDat, '', 'dtaltCondicao', 10, 10, 1, objAltApoEsp.dtAltCondicao);
+  Gerador.wCampo(tcDat, '', 'dtAltCondicao', 10, 10, 1, objAltApoEsp.dtAltCondicao);
 
-  GerarInfoAmb(objAltApoEsp, objAltApoEsp.InfoAmb);
+  GerarInfoAmb(objAltApoEsp, objAltApoEsp.InfoAmb, 'infoamb');
 
   Gerador.wGrupo('/altAposentEsp');
 end;
@@ -342,9 +343,9 @@ procedure TEvtInsApo.GerarAltInsalPeric(objAltInsPer: TaltInsalPeric);
 begin
   Gerador.wGrupo('altInsalPeric');
 
-  Gerador.wCampo(tcDat, '', 'dtaltCondicao', 10, 10, 1, objAltInsPer.dtAltCondicao);
+  Gerador.wCampo(tcDat, '', 'dtAltCondicao', 10, 10, 1, objAltInsPer.dtAltCondicao);
 
-  GerarInfoAmb(objAltInsPer, objAltInsPer.InfoAmb);
+  GerarInfoAmb(objAltInsPer, objAltInsPer.InfoAmb, 'infoamb');
 
   Gerador.wGrupo('/altInsalPeric');
 end;
@@ -404,24 +405,25 @@ begin
   Gerador.wGrupo('/fimInsalPeric');
 end;
 
-procedure TEvtInsApo.GerarInfoAmb(Sender: TInsPerApo; objInfoAmb: TInfoAmbCollection);
+procedure TEvtInsApo.GerarInfoAmb(Sender: TInsPerApo; objInfoAmb: TInfoAmbCollection;
+   Grupo: String);
 var
   i: Integer;
 begin
   for i := 0 to objInfoAmb.count - 1 do
   begin
-    Gerador.wGrupo('infoAmb');
+    Gerador.wGrupo(Grupo);
 
     Gerador.wCampo(tcStr, '', 'codAmb', 1, 30, 1, objInfoAmb.items[i].codAmb);
 
     if (not ((Sender is TfimAposentEsp) or (Sender is TfimInsalPeric))) then
       GerarFatRisco(objInfoAmb.items[i].FatRisco);
 
-    Gerador.wGrupo('/infoAmb');
+    Gerador.wGrupo('/' + Grupo);
   end;
 
   if objInfoAmb.Count > 99 then
-    Gerador.wAlerta('', 'infoAmb', 'Lista de Informações Ambientais', ERR_MSG_MAIOR_MAXIMO + '99');
+    Gerador.wAlerta('', Grupo, 'Lista de Informações Ambientais', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtInsApo.GerarIniAposentEsp(objIniApoEsp: TiniAposentEsp);

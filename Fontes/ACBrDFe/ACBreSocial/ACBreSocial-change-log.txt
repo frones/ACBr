@@ -49,6 +49,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/05/2018
+-- pcesS2241 / pcesS2400--
+[*] Correções necessárias para poder gerar corretamente os XML dos eventos através
+   da leitura de seus dados em arquivos INI.
+   Por: Italo Jurisato Junior
+
 -- pcesS5002 --
 [*] https://www.projetoacbr.com.br/forum/topic/43021-retorno-do-s-1210-evento-s-5002-com-erro-no-componente/?do=findComment&comment=284580
    Por: Arce

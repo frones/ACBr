@@ -3287,19 +3287,30 @@ var
   FS : TFileStream ;
   LineBreak : AnsiString ;
   VDirectory : String;
+  ArquivoExiste: Boolean;
 begin
-  if EstaVazio(ArqTXT) or (Length(ABinaryString) = 0) then
+  if EstaVazio(ArqTXT) then
     Exit;
 
-  if ForceDirectory then
+  ArquivoExiste := FileExists(ArqTXT);
+
+  if ArquivoExiste then
   begin
-    VDirectory := ExtractFileDir(ArqTXT);
-    if NaoEstaVazio(VDirectory) and (not DirectoryExists(VDirectory)) then
-      ForceDirectories(VDirectory);
+    if (Length(ABinaryString) = 0) then
+      Exit;
+  end
+  else
+  begin
+     if ForceDirectory then
+     begin
+       VDirectory := ExtractFileDir(ArqTXT);
+       if NaoEstaVazio(VDirectory) and (not DirectoryExists(VDirectory)) then
+         ForceDirectories(VDirectory);
+     end;
   end;
 
   FS := TFileStream.Create( ArqTXT,
-               IfThen( AppendIfExists and FileExists(ArqTXT),
+               IfThen( AppendIfExists and ArquivoExiste,
                        Integer(fmOpenReadWrite), Integer(fmCreate)) or fmShareDenyWrite );
   try
      FS.Seek(0, {$IFDEF COMPILER23_UP}soEnd{$ELSE}soFromEnd{$ENDIF});  // vai para EOF

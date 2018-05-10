@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2018
+-- pcnReinfR5011 --
+[*] Possível correção na leitura do evento R-5011.
+   Por: Italo Jurisato Junior
+
 07/05/2018
 -- ACBrReinf --
 [*] https://www.projetoacbr.com.br/forum/topic/43138-e-social-reinf-lerarqini/

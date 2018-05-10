@@ -134,7 +134,7 @@ type
     function GetItem(Index: Integer): TInfoTotalContribCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoTotalContribCollectionItem);
   public
-    constructor Create; reintroduce;
+    constructor Create(AOwner: TEvtTotalContrib);
     function Add: TInfoTotalContribCollectionItem;
     property Items[Index: Integer]: TInfoTotalContribCollectionItem read GetItem write SetItem;
   end;
@@ -172,7 +172,7 @@ type
     function GetItem(Index: Integer): TRTomCollectionItem;
     procedure SetItem(Index: Integer; Value: TRTomCollectionItem);
   public
-    constructor Create; reintroduce;
+    constructor Create(AOwner: TInfoTotalContribCollectionItem);
     function Add: TRTomCollectionItem;
     property Items[Index: Integer]: TRTomCollectionItem read GetItem write SetItem;
   end;
@@ -186,6 +186,9 @@ type
     FvlrTotalNRetPrinc: Double;
     FvlrTotalNRetAdic: Double;
   public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+
     property cnpjPrestador: String read FcnpjPrestador write FcnpjPrestador;
     property vlrTotalBaseRet: Double read FvlrTotalBaseRet write FvlrTotalBaseRet;
     property vlrTotalRetPrinc: Double read FvlrTotalRetPrinc write FvlrTotalRetPrinc;
@@ -199,7 +202,7 @@ type
     function GetItem(Index: Integer): TRPrestCollectionItem;
     procedure SetItem(Index: Integer; Value: TRPrestCollectionItem);
   public
-    constructor Create; reintroduce;
+    constructor Create(AOwner: TInfoTotalContribCollectionItem);
     function Add: TRPrestCollectionItem;
     property Items[Index: Integer]: TRPrestCollectionItem read GetItem write SetItem;
   end;
@@ -214,6 +217,9 @@ type
     FvlrTotalNRetPrinc: Double;
     FvlrTotalNRetAdic: Double;
   public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+
     property tpInscTomador: TtpInsc read FtpInscTomador write FtpInscTomador;
     property nrInscTomador: String read FnrInscTomador write FnrInscTomador;
     property vlrTotalBaseRet: Double read FvlrTotalBaseRet write FvlrTotalBaseRet;
@@ -228,7 +234,7 @@ type
     function GetItem(Index: Integer): TRRecRepADCollectionItem;
     procedure SetItem(Index: Integer; Value: TRRecRepADCollectionItem);
   public
-    constructor Create; reintroduce;
+    constructor Create(AOwner: TInfoTotalContribCollectionItem);
     function Add: TRRecRepADCollectionItem;
     property Items[Index: Integer]: TRRecRepADCollectionItem read GetItem write SetItem;
   end;
@@ -240,6 +246,9 @@ type
     FvlrTotalRet: Double;
     FvlrTotalNRet: Double;
   public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+
     property cnpjAssocDesp: string read FcnpjAssocDesp write FcnpjAssocDesp;
     property vlrTotalRep: Double read FvlrTotalRep write FvlrTotalRep;
     property vlrTotalRet: Double read FvlrTotalRet write FvlrTotalRet;
@@ -268,7 +277,7 @@ type
     function GetItem(Index: Integer): TRCPRBCollectionItem;
     procedure SetItem(Index: Integer; Value: TRCPRBCollectionItem);
   public
-    constructor Create; reintroduce;
+    constructor Create(AOwner: TInfoTotalContribCollectionItem);
     function Add: TRCPRBCollectionItem;
     property Items[Index: Integer]: TRCPRBCollectionItem read GetItem write SetItem;
   end;
@@ -279,6 +288,9 @@ type
     FvlrCPApurTotal: Double;
     FvlrCPRBSusp: Double;
   public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+
     property codRec: Integer read FcodRec write FcodRec;
     property vlrCPApurTotal: Double read FvlrCPApurTotal write FvlrCPApurTotal;
     property vlrCPRBSusp: Double read FvlrCPRBSusp write FvlrCPRBSusp;
@@ -342,7 +354,7 @@ begin
 //  Result.Create;
 end;
 
-constructor TInfoTotalContribCollection.Create;
+constructor TInfoTotalContribCollection.Create(AOwner: TEvtTotalContrib);
 begin
   inherited create(TInfoTotalContribCollectionItem);
 end;
@@ -364,11 +376,11 @@ end;
 constructor TInfoTotalContribCollectionItem.Create(
   AOwner: TEvtTotalContrib);
 begin
-  FRTom      := TRTomCollection.Create;
-  FRPrest    := TRPrestCollection.Create;
-  FRRecRepAD := TRRecRepADCollection.Create;
+  FRTom      := TRTomCollection.Create(Self);
+  FRPrest    := TRPrestCollection.Create(Self);
+  FRRecRepAD := TRRecRepADCollection.Create(Self);
   FRComl     := TRComl.Create;
-  FRCPRB     := TRCPRBCollection.Create;
+  FRCPRB     := TRCPRBCollection.Create(Self);
 end;
 
 destructor TInfoTotalContribCollectionItem.Destroy;
@@ -411,10 +423,10 @@ end;
 function TRTomCollection.Add: TRTomCollectionItem;
 begin
   Result := TRTomCollectionItem(inherited Add);
-//  Result.Create;
+  Result.Create;
 end;
 
-constructor TRTomCollection.Create;
+constructor TRTomCollection.Create(AOwner: TInfoTotalContribCollectionItem);
 begin
   inherited create(TRTomCollectionItem);
 end;
@@ -430,15 +442,67 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+{ TRTomCollectionItem }
+
+constructor TRTomCollectionItem.Create;
+begin
+
+end;
+
+destructor TRTomCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TRRecRepADCollectionItem }
+
+constructor TRRecRepADCollectionItem.Create;
+begin
+
+end;
+
+destructor TRRecRepADCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TRPrestCollectionItem }
+
+constructor TRPrestCollectionItem.Create;
+begin
+
+end;
+
+destructor TRPrestCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TRCPRBCollectionItem }
+
+constructor TRCPRBCollectionItem.Create;
+begin
+
+end;
+
+destructor TRCPRBCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
 { TRPrestCollection }
 
 function TRPrestCollection.Add: TRPrestCollectionItem;
 begin
   Result := TRPrestCollectionItem(inherited Add);
-//  Result.Create;
+  Result.Create;
 end;
 
-constructor TRPrestCollection.Create;
+constructor TRPrestCollection.Create(AOwner: TInfoTotalContribCollectionItem);
 begin
   inherited create(TRPrestCollectionItem);
 end;
@@ -459,10 +523,10 @@ end;
 function TRRecRepADCollection.Add: TRRecRepADCollectionItem;
 begin
   Result := TRRecRepADCollectionItem(inherited Add);
-//  Result.Create;
+  Result.Create;
 end;
 
-constructor TRRecRepADCollection.Create;
+constructor TRRecRepADCollection.Create(AOwner: TInfoTotalContribCollectionItem);
 begin
   inherited create(TRRecRepADCollectionItem);
 end;
@@ -484,10 +548,10 @@ end;
 function TRCPRBCollection.Add: TRCPRBCollectionItem;
 begin
   Result := TRCPRBCollectionItem(inherited Add);
-//  Result.Create;
+  Result.Create;
 end;
 
-constructor TRCPRBCollection.Create;
+constructor TRCPRBCollection.Create(AOwner: TInfoTotalContribCollectionItem);
 begin
   inherited create(TRCPRBCollectionItem);
 end;
@@ -513,7 +577,7 @@ begin
   FIdeContrib       := TIdeContrib.Create;
   FIdeStatus        := TIdeStatus.Create;
   FInfoRecEv        := TInfoRecEv.Create;
-  FInfoTotalContrib := TInfoTotalContribCollection.Create;
+  FInfoTotalContrib := TInfoTotalContribCollection.Create(Self);
 end;
 
 destructor TEvtTotalContrib.Destroy;

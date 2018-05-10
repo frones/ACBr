@@ -5364,29 +5364,38 @@ begin
 
     FConsLote.FProtocolo := FEnviarSincrono.Protocolo;
 
-    if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
+    with TACBrNFSe(FACBrNFSe) do
     begin
-      if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
+      if (Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
       begin
-        Result := FConsSitLoteRPS.Executar;
+        if ProvedorToVersaoNFSe(Configuracoes.Geral.Provedor) = ve100 then
+        begin
+          Result := FConsSitLoteRPS.Executar;
+
+          if not (Result) then
+            FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+        end;
+
+        case Configuracoes.Geral.Provedor of
+          proInfisc,
+          proInfiscv11: Result := True
+        else
+          begin
+            if (Configuracoes.Geral.Provedor = pro4R) and
+               (Configuracoes.WebServices.Ambiente = taHomologacao) then
+              Result := True
+            else
+            begin
+              Sleep(Configuracoes.WebServices.AguardarConsultaRet);
+
+              Result := FConsLote.Executar;
+            end;
+          end;
+        end;
 
         if not (Result) then
-          FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+          FConsLote.GerarException( FConsLote.Msg );
       end;
-
-      case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
-        proInfisc,
-        proInfiscv11: Result := True
-      else
-        begin
-          Sleep(TACBrNFSe(FACBrNFSe).Configuracoes.WebServices.AguardarConsultaRet);
-
-          Result := FConsLote.Executar;
-        end;
-      end;
-
-      if not (Result) then
-        FConsLote.GerarException( FConsLote.Msg );
     end;
   end;
 end;

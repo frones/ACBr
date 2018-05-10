@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2018
+-- ACBrNFSeWebServices --
+[*] Incluido uma condição para checar se o provedor é 4R e se o ambiente é de homologação
+   caso positivo não realiza a consulta ao lote após o envio sincrono.
+   Por: Italo Jurisato Junior
+
 09/05/2018
 -- pnfsNFSeW_Infisc -- 
 [*] https://www.projetoacbr.com.br/forum/topic/43204-corre%C3%A7%C3%A3o-para-gera%C3%A7%C3%A3o-de-xml-para-infisc/

@@ -241,7 +241,7 @@ begin
 
   ModeloDF := DeGeralConfNFe.ModeloDF;
   VersaoDF := DeGeralConfNFe.VersaoDF;
-  AtualizarXMLCancelado := DeGeralConfNFe.VersaoQRCode;
+  AtualizarXMLCancelado := DeGeralConfNFe.AtualizarXMLCancelado;
   IdCSC    := DeGeralConfNFe.IdCSC;
   CSC      := DeGeralConfNFe.CSC;
   IncluirQRCodeXMLNFCe := DeGeralConfNFe.IncluirQRCodeXMLNFCe;

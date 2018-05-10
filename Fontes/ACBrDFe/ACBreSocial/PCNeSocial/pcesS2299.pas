@@ -1114,7 +1114,7 @@ begin
                         // de 01 até 24
                         sSecao := 'ideEstabLot' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
                                     IntToStrZero(K, 1) + IntToStrZero(L, 3) +
-                                    IntToStrZero(M, 1);
+                                    IntToStrZero(M, 2);
                         sFim   := INIRec.ReadString(sSecao, 'tpInsc', 'FIM');
 
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
@@ -1132,7 +1132,7 @@ begin
                             // de 001 até 200
                             sSecao := 'detVerbas' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
                                     IntToStrZero(K, 1) + IntToStrZero(L, 3) +
-                                    IntToStrZero(M, 1) + IntToStrZero(N, 3);
+                                    IntToStrZero(M, 2) + IntToStrZero(N, 3);
                             sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
 
                             if (sFim = 'FIM') or (Length(sFim) <= 0) then

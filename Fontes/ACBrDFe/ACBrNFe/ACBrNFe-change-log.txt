@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2018
+-- pcnNFeW
+[*] Alteração geração Tags PIS / COFINS para modelo 65 CST -99 (permitir gerar tags com valores zerados)
+  Por: José M. S. Junior
+
 07/05/2018
 -- ACBrNFeNotasFiscais
 [*] Alteração Leitura .INI (GerarNFeINI) ref. Tag Medicamentos

@@ -203,7 +203,7 @@ type
     btnEnviar: TButton;
     tsLog: TTabSheet;
     memoLog: TMemo;
-
+    chk1000Limpar: TCheckBox;
     procedure btnGerarClick(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
     procedure lblPatrocinadorClick(Sender: TObject);
@@ -241,8 +241,9 @@ type
     procedure btnEnviarClick(Sender: TObject);
     procedure ACBrReinf1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure ACBrReinf1StatusChange(Sender: TObject);
-    procedure ACBrReinf1TransmissaoEventos(const AXML: AnsiString;
+    procedure ACBrReinf1TransmissaoEventos(const AXML: String;
       ATipo: TEventosReinf);
+    procedure rgTipoAmbClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -318,7 +319,7 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TForm2.ACBrReinf1TransmissaoEventos(const AXML: AnsiString;
+procedure TForm2.ACBrReinf1TransmissaoEventos(const AXML: String;
   ATipo: TEventosReinf);
 begin
   case ATipo of
@@ -538,7 +539,26 @@ end;
 procedure TForm2.PreencherXMLEventos;
 begin
   if chk1000.Checked then
-    GerarReinf1000;
+  begin
+    // Limpar base de dados para o contribuinte informado
+    if ( ( rgTipoAmb.ItemIndex = 1 ) and
+         ( rdgOperacao.ItemIndex = 1 ) and
+         ( chk1000Limpar.Checked ) ) then
+    begin
+      if ( MessageDlg( PChar( '!!! Limpeza de dados do Contribuinte em ambiente Restrito !!!' + #13#13 +
+                       'Os dados do Contribuinte serão eliminados do ambiente de Produção Restrita !!!' + #13#13 +
+                       'Confirma envio do evento para Limpar base de dados para o contribuinte informado ?' ),
+                       mtConfirmation, [ mbYes, mbNo ], 0 ) <> mrYes ) then
+        exit;
+
+      GerarReinf1000;
+
+      // Não executa demais eventos
+      exit;
+    end
+    else
+      GerarReinf1000;
+  end;
 
   if chk1070.Checked then
     GerarReinf1070;
@@ -600,7 +620,15 @@ begin
 
       with infoContribuinte.InfoCadastro do
       begin
-        ClassTrib          := ct11;
+        // Limpar base de dados para o contribuinte informado | VerProc = 'RemoverContribuinte' ClassTrib = ct00
+        if ( ( ModoLancamento = toAlteracao ) and ( chk1000Limpar.Checked ) ) then
+        begin
+          IdeEvento.VerProc := 'RemoverContribuinte';
+          ClassTrib         := ct00;
+        end
+        else
+          ClassTrib := ct11;
+
         indEscrituracao    := TindEscrituracao(0);
         indDesoneracao     := TindDesoneracao(1);
         indAcordoIsenMulta := TindAcordoIsenMulta(0);
@@ -2124,6 +2152,18 @@ begin
   cbEvento.Visible        := ( chk9000.Checked );
 
   lblEvento.Visible       := cbEvento.Visible;
+
+  rgTipoAmbClick( rgTipoAmb );
+end;
+
+procedure TForm2.rgTipoAmbClick(Sender: TObject);
+begin
+  chk1000Limpar.Visible   := ( ( chk1000.Checked ) and
+                               ( rgTipoAmb.ItemIndex = 1 ) and
+                               ( rdgOperacao.ItemIndex = 1 ) );
+
+  if ( not chk1000Limpar.Visible ) then
+    chk1000Limpar.Checked := False;
 end;
 
 end.

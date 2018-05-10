@@ -1,9 +1,9 @@
 object Form2: TForm2
   Left = 193
   Top = 126
+  Width = 904
+  Height = 647
   Caption = 'Exemplo Reinf'
-  ClientHeight = 608
-  ClientWidth = 888
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -95,6 +95,8 @@ object Form2: TForm2
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -109,8 +111,6 @@ object Form2: TForm2
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
     end
     object PageControl2: TPageControl
       Left = 8
@@ -389,6 +389,7 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -398,6 +399,7 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -407,6 +409,7 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -416,6 +419,7 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -526,6 +530,7 @@ object Form2: TForm2
                 Top = 104
                 Width = 248
                 Height = 21
+                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -564,6 +569,7 @@ object Form2: TForm2
                 Top = 147
                 Width = 248
                 Height = 21
+                ItemHeight = 13
                 TabOrder = 7
               end
               object edtPathSchemas: TEdit
@@ -642,6 +648,7 @@ object Form2: TForm2
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
+                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -682,12 +689,12 @@ object Form2: TForm2
                 Height = 52
                 Caption = 'Selecione o Ambiente de Destino'
                 Columns = 2
-                ItemIndex = 2
+                ItemIndex = 1
                 Items.Strings = (
                   'Produ'#231#227'o'
-                  'Restrita Reais'
-                  'Restrita Fict'#237'cios')
+                  'Restrita Reais')
                 TabOrder = 2
+                OnClick = rgTipoAmbClick
               end
               object cbxSalvarSOAP: TCheckBox
                 Left = 8
@@ -715,6 +722,7 @@ object Form2: TForm2
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
+                ItemHeight = 0
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1337,7 +1345,7 @@ object Form2: TForm2
           object chk1000: TCheckBox
             Left = 8
             Top = 23
-            Width = 268
+            Width = 237
             Height = 17
             Caption = 'R-1000 - Informa'#231#245'es do Contribuinte'
             Ctl3D = False
@@ -1561,6 +1569,24 @@ object Form2: TForm2
             TabOrder = 12
             OnClick = chk1000Click
           end
+          object chk1000Limpar: TCheckBox
+            Left = 250
+            Top = 23
+            Width = 312
+            Height = 17
+            Caption = 'Limpar base de dados para o contribuinte - Restrita Reais'
+            Ctl3D = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clRed
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentCtl3D = False
+            ParentFont = False
+            TabOrder = 13
+            Visible = False
+            OnClick = chk1000Click
+          end
         end
         object GroupBox4: TGroupBox
           Left = 0
@@ -1615,6 +1641,7 @@ object Form2: TForm2
             Top = 66
             Width = 87
             Height = 21
+            ItemHeight = 13
             TabOrder = 2
             Visible = False
             Items.Strings = (
@@ -1656,6 +1683,7 @@ object Form2: TForm2
               'Exclus'#227'o')
             ParentFont = False
             TabOrder = 4
+            OnClick = rgTipoAmbClick
           end
         end
       end
@@ -1713,8 +1741,6 @@ object Form2: TForm2
           Height = 501
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 730
-          ExplicitHeight = 237
         end
       end
     end

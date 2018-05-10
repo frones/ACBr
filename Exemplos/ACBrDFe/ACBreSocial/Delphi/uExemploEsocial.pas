@@ -1470,6 +1470,7 @@ begin
           with detPgtoFer.Add do
           begin
             CodCateg := 111;
+            matricula := '54545';
             dtIniGoz := Now;
             qtDias := 30;
             vrLiq := 2500.32;

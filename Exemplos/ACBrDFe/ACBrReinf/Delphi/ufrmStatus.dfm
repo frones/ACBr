@@ -54,8 +54,6 @@ object frmStatus: TfrmStatus
       Color = clGray
       ParentColor = False
       Layout = tlCenter
-      ExplicitWidth = 3
-      ExplicitHeight = 13
     end
   end
 end

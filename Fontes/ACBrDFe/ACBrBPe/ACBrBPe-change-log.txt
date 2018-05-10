@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2018
+-- ACBrBpeServicos --
+[+] Inclusão das URLs dos ambientes de Homologação e Produção do Paraná.
+  Por: Italo Jurisato Junior
+
 16/04/2018
 -- pcnEventoBPe --
 [*] Modificação nos métodos "Getters" para não disparar exception no caso de

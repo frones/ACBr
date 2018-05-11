@@ -1598,11 +1598,14 @@ end;
 
 procedure TeSocialEvento.GerarInfoSimples(obj: TinfoSimples);
 begin
-  Gerador.wGrupo('infoSimples');
+  if obj.indSimples <> idsNenhum then
+  begin
+    Gerador.wGrupo('infoSimples');
 
-  Gerador.wCampo(tcStr, '', 'indSimples', 1, 1, 1, obj.indSimples);
+    Gerador.wCampo(tcStr, '', 'indSimples', 1, 1, 1, obj.indSimples);
 
-  Gerador.wGrupo('/infoSimples');
+    Gerador.wGrupo('/infoSimples');
+  end;
 end;
 
 procedure TeSocialEvento.GerarIdeEstabLot(pIdeEstabLot: TideEstabLotCollection);

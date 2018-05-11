@@ -173,6 +173,8 @@ end;
 
 function TACBreSocial.Enviar(AGrupo: TeSocialGrupo): boolean;
 begin
+  WebServices.EnvioLote.Clear;
+
   result := WebServices.Envia(AGrupo);
 end;
 

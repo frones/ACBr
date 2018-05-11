@@ -107,9 +107,9 @@ type
     FvrCpSeg: Double;
     FvrDescSeg: Double;
   public
-    property tpCR: string read FtpCR write FtpCR;
-    property vrCpSeg: Double read FvrCpSeg write FvrCpSeg;
-    property vrDescSeg: Double read FvrDescSeg write FvrDescSeg;
+    property tpCR: string read FtpCR;
+    property vrCpSeg: Double read FvrCpSeg;
+    property vrDescSeg: Double read FvrDescSeg;
   end;
 
   TInfoCp = class(TPersistent)
@@ -146,9 +146,9 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
 
-    property tpInsc: TpTpInsc read FTpInsc write FTpInsc;
-    property nrInsc: string read FNrInsc write FNrInsc;
-    property codLotacao: string read FCodLotacao write FCodLotacao;
+    property tpInsc: TpTpInsc read FTpInsc;
+    property nrInsc: string read FNrInsc;
+    property codLotacao: string read FCodLotacao;
     property InfoCategIncid: TInfoCategIncidCollection read FInfoCategIncid write SetInfoCategIncid;
   end;
 
@@ -176,9 +176,9 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
 
-    property matricula: string read FMatricula write FMatricula;
-    property codCateg: Integer read FcodCateg write FcodCateg;
-    property indSimples: tpIndSimples read FindSimples write FindSimples;
+    property matricula: string read FMatricula;
+    property codCateg: Integer read FcodCateg;
+    property indSimples: tpIndSimples read FindSimples;
     property InfoBaseCS: TInfoBaseCSCollection read FInfoBaseCS write SetInfoBaseCS;
     property CalcTerc: TCalcTercCollection read FCalcTerc write SetCalcTerc;
   end;
@@ -199,9 +199,9 @@ type
     FtpValor: Integer;
     Fvalor: Double;
   public
-    property ind13: Integer read Find13 write Find13;
-    property tpValor: Integer read FtpValor write FtpValor;
-    property valor: Double read Fvalor write Fvalor;
+    property ind13: Integer read Find13;
+    property tpValor: Integer read FtpValor;
+    property valor: Double read Fvalor;
   end;
 
   TCalcTercCollection = class(TCollection)
@@ -220,9 +220,9 @@ type
     FvrCsSegTerc: Double;
     FvrDescTerc: Double;
   public
-    property tpCR: Integer read FtpCR write FtpCR;
-    property vrCsSegTerc: Double read FvrCsSegTerc write FvrCsSegTerc;
-    property vrDescTerc: Double read FvrDescTerc write FvrDescTerc;
+    property tpCR: Integer read FtpCR;
+    property vrCsSegTerc: Double read FvrCsSegTerc;
+    property vrDescTerc: Double read FvrDescTerc;
   end;
 
   TEvtBasesTrab = class(TPersistent)
@@ -252,8 +252,8 @@ type
     property InfoCp: TInfoCp read FInfoCp write FInfoCp;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
-    property Id: String      read FId     write FId;
-    property XML: String     read FXML    write FXML;
+    property Id: String      read FId;
+    property XML: String     read FXML;
   end;
 
 implementation
@@ -290,7 +290,7 @@ procedure TS5001.SetXml(const Value: string);
 begin
   if Value = FEvtBasesTrab.XML then Exit;
 
-  FEvtBasesTrab.XML := Value;
+  FEvtBasesTrab.FXML := Value;
   FEvtBasesTrab.Leitor.Arquivo := Value;
   FEvtBasesTrab.LerXML;
 
@@ -535,7 +535,7 @@ var
 begin
   Result := False;
   try
-    XML := Leitor.Arquivo;
+    FXML := Leitor.Arquivo;
 
     if leitor.rExtrai(1, 'evtBasesTrab') <> '' then
     begin
@@ -572,9 +572,9 @@ begin
       while Leitor.rExtrai(2, 'infoCpCalc', '', i + 1) <> '' do
       begin
         infoCpCalc.Add;
-        infoCpCalc.Items[i].tpCR      := leitor.rCampo(tcStr, 'tpCR');
-        infoCpCalc.Items[i].vrCpSeg   := leitor.rCampo(tcDe2, 'vrCpSeg');
-        infoCpCalc.Items[i].vrDescSeg := leitor.rCampo(tcDe2, 'vrDescSeg');
+        infoCpCalc.Items[i].FtpCR      := leitor.rCampo(tcStr, 'tpCR');
+        infoCpCalc.Items[i].FvrCpSeg   := leitor.rCampo(tcDe2, 'vrCpSeg');
+        infoCpCalc.Items[i].FvrDescSeg := leitor.rCampo(tcDe2, 'vrDescSeg');
         inc(i);
       end;
 
@@ -584,25 +584,25 @@ begin
         while Leitor.rExtrai(3, 'ideEstabLot', '', i + 1) <> '' do
         begin
           infoCp.IdeEstabLot.Add;
-          infoCp.IdeEstabLot.Items[i].tpInsc     := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
-          infoCp.IdeEstabLot.Items[i].nrInsc     := leitor.rCampo(tcStr, 'nrInsc');
-          infoCp.IdeEstabLot.Items[i].codLotacao := leitor.rCampo(tcStr, 'codLotacao');
+          infoCp.IdeEstabLot.Items[i].FtpInsc     := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
+          infoCp.IdeEstabLot.Items[i].FnrInsc     := leitor.rCampo(tcStr, 'nrInsc');
+          infoCp.IdeEstabLot.Items[i].FcodLotacao := leitor.rCampo(tcStr, 'codLotacao');
 
           j := 0;
           while Leitor.rExtrai(4, 'infoCategIncid', '', j + 1) <> '' do
           begin
             infoCp.IdeEstabLot.Items[i].InfoCategIncid.Add;
-            infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].matricula  := leitor.rCampo(tcStr, 'matricula');
-            infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].codCateg   := leitor.rCampo(tcInt, 'codCateg');
-            infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].indSimples := eSStrToIndSimples(ok, leitor.rCampo(tcStr, 'indSimples'));
+            infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].Fmatricula  := leitor.rCampo(tcStr, 'matricula');
+            infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].FcodCateg   := leitor.rCampo(tcInt, 'codCateg');
+            infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].FindSimples := eSStrToIndSimples(ok, leitor.rCampo(tcStr, 'indSimples'));
 
             k := 0;
             while Leitor.rExtrai(5, 'infoBaseCS', '', k + 1) <> '' do
             begin
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Add;
-              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].ind13   := leitor.rCampo(tcInt, 'ind13');
-              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].tpValor := leitor.rCampo(tcInt, 'tpValor');
-              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].valor   := leitor.rCampo(tcDe2, 'valor');
+              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].Find13   := leitor.rCampo(tcInt, 'ind13');
+              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].FtpValor := leitor.rCampo(tcInt, 'tpValor');
+              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].Fvalor   := leitor.rCampo(tcDe2, 'valor');
               inc(k);
             end;
 
@@ -610,9 +610,9 @@ begin
             while Leitor.rExtrai(5, 'calcTerc', '', k + 1) <> '' do
             begin
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Add;
-              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].tpCR        := leitor.rCampo(tcInt, 'tpCR');
-              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].vrCsSegTerc := leitor.rCampo(tcDe2, 'vrCsSegTerc');
-              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].vrDescTerc  := leitor.rCampo(tcDe2, 'vrDescTerc');
+              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].FtpCR        := leitor.rCampo(tcInt, 'tpCR');
+              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].FvrCsSegTerc := leitor.rCampo(tcDe2, 'vrCsSegTerc');
+              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].FvrDescTerc  := leitor.rCampo(tcDe2, 'vrDescTerc');
               inc(k);
             end;
 

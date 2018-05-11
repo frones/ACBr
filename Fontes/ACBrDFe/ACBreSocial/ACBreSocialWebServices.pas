@@ -557,6 +557,8 @@ end;
 
 function TWebServices.Envia(AGrupo: TeSocialGrupo): Boolean;
 begin
+  FEnvioLote.Clear;
+
 {$IFDEF FPC}
   Result := False;
 {$ENDIF}

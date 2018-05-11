@@ -92,7 +92,7 @@ type
   private
     FvrDedDep: Double;
   public
-    property vrDedDep: Double read FvrDedDep write FvrDedDep;
+    property vrDedDep: Double read FvrDedDep;
   end;
 
   TInfoIrrfCollection = class(TCollection)
@@ -119,8 +119,8 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
 
-    property CodCateg: integer read FCodCateg write FCodCateg;
-    property indResBr: String read FindResBr write FindResBr;
+    property CodCateg: integer read FCodCateg;
+    property indResBr: String read FindResBr;
     property basesIrrf: TbasesIrrfCollection read FbasesIrrf write SetbasesIrrf;
     property irrf: TirrfCollection read Firrf write Setirrf;
     property idePgtoExt: TidePgtoExt read FidePgtoExt write FidePgtoExt;
@@ -141,8 +141,8 @@ type
     Fvalor: Double;
     FtpValor: Integer;
   public
-    property tpValor: Integer read FtpValor write FtpValor;
-    property valor: Double read Fvalor write Fvalor;
+    property tpValor: Integer read FtpValor;
+    property valor: Double read Fvalor;
   end;
 
   TirrfCollection = class(TCollection)
@@ -160,8 +160,8 @@ type
     FtpCR: string;
     FvrIrrfDesc: Double;
   public
-    property tpCR: string read FtpCR write FtpCR;
-    property vrIrrfDesc: Double read FvrIrrfDesc write FvrIrrfDesc;
+    property tpCR: string read FtpCR;
+    property vrIrrfDesc: Double read FvrIrrfDesc;
   end;
 
   TidePgtoExt = class(TPersistent)
@@ -203,8 +203,8 @@ type
     property InfoIrrf: TInfoIrrfCollection read FInfoIrrf write SetInfoIrrf;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
-    property Id: String      read FId     write FId;
-    property XML: String     read FXML    write FXML;
+    property Id: String      read FId;
+    property XML: String     read FXML;
   end;
 
 implementation
@@ -241,7 +241,7 @@ procedure TS5002.SetXml(const Value: string);
 begin
   if Value = FEvtIrrfBenef.XML then Exit;
 
-  FEvtIrrfBenef.XML := Value;
+  FEvtIrrfBenef.FXML := Value;
   FEvtIrrfBenef.Leitor.Arquivo := Value;
   FEvtIrrfBenef.LerXML;
 
@@ -411,7 +411,7 @@ var
 begin
   Result := False;
   try
-    XML := Leitor.Arquivo;
+    FXML := Leitor.Arquivo;
 
     if leitor.rExtrai(1, 'evtIrrfBenef') <> '' then
     begin
@@ -434,21 +434,21 @@ begin
         IdeTrabalhador.cpfTrab := leitor.rCampo(tcStr, 'cpfTrab');
 
       if leitor.rExtrai(2, 'infoDep') <> '' then
-        infoDep.vrDedDep := leitor.rCampo(tcDe2, 'vrDedDep');
+        infoDep.FvrDedDep := leitor.rCampo(tcDe2, 'vrDedDep');
 
       i := 0;
       while Leitor.rExtrai(2, 'infoIrrf', '', i + 1) <> '' do
       begin
         InfoIrrf.Add;
-        InfoIrrf.Items[i].CodCateg := leitor.rCampo(tcInt, 'codCateg');
-        InfoIrrf.Items[i].indResBr := leitor.rCampo(tcStr, 'indResBr');
+        InfoIrrf.Items[i].FCodCateg := leitor.rCampo(tcInt, 'codCateg');
+        InfoIrrf.Items[i].FindResBr := leitor.rCampo(tcStr, 'indResBr');
 
         j := 0;
         while Leitor.rExtrai(3, 'basesIrrf', '', j + 1) <> '' do
         begin
           InfoIrrf.Items[i].basesIrrf.Add;
-          InfoIrrf.Items[i].basesIrrf.Items[j].tpValor := leitor.rCampo(tcInt, 'tpValor');
-          InfoIrrf.Items[i].basesIrrf.Items[j].valor   := leitor.rCampo(tcDe2, 'valor');
+          InfoIrrf.Items[i].basesIrrf.Items[j].FtpValor := leitor.rCampo(tcInt, 'tpValor');
+          InfoIrrf.Items[i].basesIrrf.Items[j].Fvalor   := leitor.rCampo(tcDe2, 'valor');
           inc(j);
         end;
 
@@ -456,8 +456,8 @@ begin
         while Leitor.rExtrai(3, 'irrf', '', j + 1) <> '' do
         begin
           InfoIrrf.Items[i].irrf.Add;
-          InfoIrrf.Items[i].irrf.Items[j].tpCR       := leitor.rCampo(tcStr, 'tpCR');
-          InfoIrrf.Items[i].irrf.Items[j].vrIrrfDesc := leitor.rCampo(tcDe2, 'vrIrrfDesc');
+          InfoIrrf.Items[i].irrf.Items[j].FtpCR       := leitor.rCampo(tcStr, 'tpCR');
+          InfoIrrf.Items[i].irrf.Items[j].FvrIrrfDesc := leitor.rCampo(tcDe2, 'vrIrrfDesc');
           inc(j);
         end;
         

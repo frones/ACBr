@@ -284,8 +284,7 @@ begin
       begin
         Status.cdResposta := Leitor.rCampo(tcInt, 'cdResposta');
         Status.descResposta := Leitor.rCampo(tcStr, 'descResposta');
-        Status.tempoEstimadoConclusao :=
-          Leitor.rCampo(tcInt, 'tempoEstimadoConclusao');
+        Status.tempoEstimadoConclusao := Leitor.rCampo(tcInt, 'tempoEstimadoConclusao');
 
         if Leitor.rExtrai(3, 'ocorrencias') <> '' then
         begin
@@ -312,8 +311,7 @@ begin
       end;
 
       if Leitor.rExtrai(2, 'dadosProcessamentoLote') <> '' then
-        DadosProcLote.versaoAplicProcLote :=
-          FLeitor.rCampo(tcStr, 'versaoAplicativoProcessamentoLote');
+        DadosProcLote.versaoAplicProcLote := FLeitor.rCampo(tcStr, 'versaoAplicativoProcessamentoLote');
 
       if Leitor.rExtrai(2, 'retornoEventos') > '' then
       begin

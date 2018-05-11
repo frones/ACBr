@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/05/2018
+-- ACBrReinfServicos --
+[*] Atualização das URLs de Produção.
+   Por: Renato Rubinho / Italo Jurisato Junior
+
 10/05/2018
 -- pcnReinfR5011 --
 [*] Possível correção na leitura do evento R-5011.

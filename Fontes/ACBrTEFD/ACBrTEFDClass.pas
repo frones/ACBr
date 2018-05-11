@@ -1439,9 +1439,9 @@ end;
 procedure TACBrTEFDRespTXT.ConteudoToProperty;
 var
    Linha: TACBrTEFDLinha ;
-   I, Linha2801: Integer;
+   I : Integer;
    Parc: TACBrTEFDRespParcela;
-   Usar711, Usar713, Usar715, TemParcelas: Boolean ;
+   Usar711, Usar713, Usar715, Usar29, TemParcelas: Boolean ;
 
    function AjustaLinhaImagemComprovante( Linha: AnsiString ) : AnsiString;
    begin
@@ -1461,7 +1461,7 @@ begin
    Usar713     := False;
    Usar715     := False;
    TemParcelas := False;
-   Linha2801   := 0;
+   Usar29      := False;
 
    for I := 0 to Conteudo.Count - 1 do
    begin
@@ -1516,34 +1516,40 @@ begin
          begin
            if not (Usar711 or Usar713) then
            begin
-              fpImagemComprovante1aVia.Clear;
-              fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
+             fpImagemComprovante1aVia.Clear;
+             fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
            end;
 
            if not Usar715 then
-              fpImagemComprovante2aVia.Clear;
+             fpImagemComprovante2aVia.Clear;
 
            if (Linha.Sequencia = 1) then
-              Linha2801 := Linha.Informacao.AsInteger;
+           begin
+             Usar29 := True;
+             fpImagemComprovante1aVia.Clear;
+             fpImagemComprovante2aVia.Clear;
+             fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
+           end;
          end;
          
        29 : 
-         begin 
-            if (Linha2801 = 0) then
-            begin
-               if not (Usar711 or Usar713) then
-                 fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+         begin
+           if Usar29 then
+           begin
+             if (Linha.Sequencia <= fpQtdLinhasComprovante) then
+               fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) )
+             else
+               fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
 
-               if not Usar715 then
-                 fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
-            end
-            else
-            begin
-               if (Linha.Sequencia <= Linha2801) then
-                 fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) )
-               else
-                 fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
-            end;
+           end
+           else
+           begin
+             if not (Usar711 or Usar713) then
+               fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+
+             if not Usar715 then
+               fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+           end;
          end;
          
 
@@ -1579,40 +1585,43 @@ begin
          begin
            if Linha.Informacao.AsInteger > 0 then
            begin
-              Usar711 := True;
-              fpImagemComprovante1aVia.Clear;
-              fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
+             Usar711 := True;
+             fpImagemComprovante1aVia.Clear;
+             fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
            end;
          end;
        711 :
          begin
-            if Usar711 then
-               fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+           if Usar711 then
+             fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
          end;
        712 :
          begin
+           if Linha.Informacao.AsInteger > 0 then
+             Usar711 := False;
+
            if not Usar711 then
            begin
-              Usar713 := True;
-              fpImagemComprovante1aVia.Clear;
-              fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
+             Usar713 := True;
+             fpImagemComprovante1aVia.Clear;
+             fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
            end;
          end;
        713 :
          begin
            if Usar713 then
-              fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+             fpImagemComprovante1aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
          end ;
        714 :
          if Linha.Informacao.AsInteger > 0 then
          begin
-            Usar715 := True;
-            fpImagemComprovante2aVia.Clear;
+           Usar715 := True;
+           fpImagemComprovante2aVia.Clear;
          end;
        715 :
          begin
            if Usar715 then
-              fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
+             fpImagemComprovante2aVia.Add( AjustaLinhaImagemComprovante( Linha.Informacao.AsString ) );
          end;
        899 :  // Tipos de Uso Interno do ACBrTEFD
         begin

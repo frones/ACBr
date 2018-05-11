@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/05/2018
+-- ACBrMDFe --
+[*] Incluido a lipeza das classes de envio e retorno antes do envio.
+   Por: Italo Jurisato Junior
+
 16/04/2018
 -- pmdfeEventoMDFe --
 [*] Modificação nos métodos "Getters" para não disparar exception no caso de

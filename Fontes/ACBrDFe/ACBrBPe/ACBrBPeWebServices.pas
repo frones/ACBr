@@ -1908,6 +1908,8 @@ end;
 
 function TWebServices.Envia(ALote: String): Boolean;
 begin
+  FEnviar.Clear;
+
   FEnviar.Lote := ALote;
 
   if not Enviar.Executar then

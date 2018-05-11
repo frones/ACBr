@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/05/2018
+-- ACBrCTe --
+[*] Incluido a lipeza das classes de envio e retorno antes do envio.
+   Por: Italo Jurisato Junior
+
 23/04/2018
 -- pcteCTeR --
 [*] Alterado a posição da leitura da tag indAlteraToma.

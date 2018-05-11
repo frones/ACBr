@@ -496,6 +496,8 @@ function TACBrBPe.Enviar(ALote: String; Imprimir: Boolean = True): Boolean;
 var
   i: Integer;
 begin
+  WebServices.Enviar.Clear;
+
   if Bilhetes.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NF-e adicionada ao Lote'));
 

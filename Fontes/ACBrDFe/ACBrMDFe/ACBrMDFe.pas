@@ -531,6 +531,9 @@ function TACBrMDFe.Enviar(ALote: String; Imprimir:Boolean = True): Boolean;
 var
  i: Integer;
 begin
+  WebServices.Enviar.Clear;
+  WebServices.Retorno.Clear;
+
   if Manifestos.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum MDF-e adicionado ao Lote'));
 

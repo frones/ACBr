@@ -658,6 +658,9 @@ function TACBrCTe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
 var
   i: Integer;
 begin
+  WebServices.Enviar.Clear;
+  WebServices.Retorno.Clear;
+
   if Conhecimentos.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum CT-e adicionado ao Lote'));
 

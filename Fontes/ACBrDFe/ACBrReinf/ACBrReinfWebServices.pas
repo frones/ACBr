@@ -560,6 +560,8 @@ end;
 
 function TWebServices.Envia: Boolean;
 begin
+  FEnvioLote.Clear;
+
 {$IFDEF FPC}
   Result := False;
 {$ENDIF}

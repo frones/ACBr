@@ -51,6 +51,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/05/2018
+-- ACBrReinf --
+[*] Melhorias no componente tais como, simplificação de código e lipeza das
+   classes de envio antes do envio.
+   Por: Italo Jurisato Junior
+
 -- ACBrReinfServicos --
 [*] Atualização das URLs de Produção.
    Por: Renato Rubinho / Italo Jurisato Junior

@@ -169,6 +169,8 @@ end;
 
 function TACBrReinf.Enviar: boolean;
 begin
+  WebServices.EnvioLote.Clear;
+
   result := WebServices.Envia;
 end;
 

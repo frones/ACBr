@@ -3203,8 +3203,6 @@ var
   I: Integer;
   AValorTotal: Double;
 begin
-
-  // Gumercino 18/01/2018
   if (Leitor.rExtrai(1, 'Rps') <> '') then
   begin
     NFSe.InfID.ID    := Leitor.rCampo(tcStr, 'Id');
@@ -3304,7 +3302,7 @@ begin
           NFSe.Servico.ItemServico.Insert(I - 1);
           NFSe.Servico.ItemServico.Items[I - 1].CodServ       := Leitor.rCampo(tcStr, 'CodigoServico116');
           NFSe.Servico.ItemServico.Items[I - 1].CodLCServ     := Leitor.rCampo(tcStr, 'CodigoServico116');
-          NFSe.Servico.ItemServico.Items[I - 1].Quantidade    := Leitor.rCampo(tcInt, 'Quantidade');
+          NFSe.Servico.ItemServico.Items[I - 1].Quantidade    := Leitor.rCampo(tcDe4, 'Quantidade');
           NFSe.Servico.ItemServico.Items[I - 1].Unidade       := Leitor.rCampo(tcStr, 'Unidade');
           NFSe.Servico.ItemServico.Items[I - 1].ValorUnitario := Leitor.rCampo(tcDe2, 'ValorServico');
           NFSe.Servico.ItemServico.Items[I - 1].Descricao     := Leitor.rCampo(tcStr, 'Descricao');

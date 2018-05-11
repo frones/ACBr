@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/05/2018
+-- pnfsNFSeR / pnfsNFSeW_EL --
+[*] Melhorias visando o provedor EL.
+   Por: Gumercino
+
 10/05/2018
 -- ACBrNFSeWebServices --
 [*] Incluido uma condição para checar se o provedor é 4R e se o ambiente é de homologação

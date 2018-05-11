@@ -4004,6 +4004,9 @@ end;
 function TWebServices.Envia(const ALote: String; const ASincrono: Boolean;
   AZipado: Boolean): Boolean;
 begin
+  FEnviar.Clear;
+  FRetorno.Clear;
+
   FEnviar.Lote := ALote;
   FEnviar.Sincrono := ASincrono;
   FEnviar.Zipado := AZipado;

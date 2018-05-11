@@ -552,7 +552,7 @@ var
   idNFe, sdhEmi_HEX, sdigVal_HEX, sNF, sICMS, cIdCSC, cCSC, sCSC,
   sEntrada, cHashQRCode, urlUF, cDest: String;
 begin
-  urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', Versao);
+  urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', VersaoQrCode);
   idNFe := OnlyNumber(AChaveNFe);
   cDest := Trim(Destinatario);
 
@@ -603,7 +603,12 @@ begin
 
   // Passo 6
   if VersaoQrCode >= 2 then
-    Result := urlUF + sEntrada + cIdCSC + cHashQRCode
+  begin
+    if Pos('?p=', urlUF) > 0 then
+      Result := urlUF + sEntrada + cIdCSC + '|' + cHashQRCode
+    else
+      Result := urlUF + '?p=' + sEntrada + cIdCSC + '|' + cHashQRCode;
+  end
   else
   begin
     if Pos('?', urlUF) > 0 then
@@ -694,6 +699,9 @@ function TACBrNFe.Enviar(ALote: String; Imprimir, Sincrono,
 var
   i: integer;
 begin
+  WebServices.Enviar.Clear;
+  WebServices.Retorno.Clear;
+
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NF-e adicionada ao Lote'));
 

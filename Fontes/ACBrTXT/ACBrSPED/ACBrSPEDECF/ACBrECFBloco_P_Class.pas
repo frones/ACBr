@@ -130,19 +130,7 @@ uses
 constructor TBloco_P.Create;
 begin
   inherited;
-
-  FRegistroP001 := TRegistroP001.Create;
-  FRegistroP001.RegistroP030 := TRegistroP030List.Create;
-  FRegistroP990 := TRegistroP990.Create;
-
-  FRegistroP230Count := 0;
-  FRegistroP200Count := 0;
-  FRegistroP300Count := 0;
-  FRegistroP130Count := 0;
-  FRegistroP100Count := 0;
-  FRegistroP400Count := 0;
-  FRegistroP500Count := 0;
-  FRegistroP150Count := 0;
+  CriaRegistros;
 end;
 
 procedure TBloco_P.CriaRegistros;
@@ -161,6 +149,7 @@ begin
   FRegistroP400Count := 0;
   FRegistroP500Count := 0;
   FRegistroP150Count := 0;
+//  FRegistroP030Count := 0;
 
   FRegistroP990.QTD_LIN := 0;
 end;
@@ -200,10 +189,7 @@ end;
 
 function TBloco_P.RegistroP030New: TRegistroP030;
 begin
-  Result := RegistroP030.New;
-  if FRegistroP001.RegistroP030=nil then
-    FRegistroP001.RegistroP030:=TRegistroP030List.Create;
-  FRegistroP001.RegistroP030.Add(Result);
+  Result := RegistroP001.RegistroP030.New(FRegistroP001);
 end;
 
 function TBloco_P.RegistroP100New: TRegistroP100;

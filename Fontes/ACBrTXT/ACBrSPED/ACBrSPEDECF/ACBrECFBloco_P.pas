@@ -55,6 +55,9 @@ type
   private
     FRegistroP030         : TRegistroP030List; // NIVEL 2
   public
+    constructor Create; virtual;
+    destructor Destroy; override;
+
     property RegistroP030: TRegistroP030List read FRegistroP030 write FRegistroP030;
   end;
 
@@ -113,7 +116,7 @@ type
     function GetItem(Index: Integer): TRegistroP030;
     procedure SetItem(Index: Integer; const Value: TRegistroP030);
   public
-    function New: TRegistroP030;
+    function New(AOwner: TRegistroP001): TRegistroP030;
     property Items[Index: Integer]: TRegistroP030 read GetItem write SetItem;
   end;
 
@@ -366,7 +369,7 @@ begin
    Result := TRegistroP030(Inherited Items[Index]);
 end;
 
-function TRegistroP030List.New: TRegistroP030;
+function TRegistroP030List.New(AOwner: TRegistroP001): TRegistroP030;
 begin
   Result := TRegistroP030.Create;
   Add(Result);
@@ -549,6 +552,19 @@ begin
    FRegistroP150.Free;
    FRegistroP130.Free;
    FRegistroP100.Free;
+end;
+
+{ TRegistroP001 }
+
+constructor TRegistroP001.Create;
+begin
+  fRegistroP030 := TRegistroP030List.Create;
+end;
+
+destructor TRegistroP001.Destroy;
+begin
+  fRegistroP030.Free;
+  inherited;
 end;
 
 end.

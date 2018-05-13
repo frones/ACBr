@@ -56,9 +56,10 @@ type
     FAtualizarXMLCancelado: Boolean;
     FIdCSC: String;
     FCSC: String;
-    FIncluirQRCodeXMLNFCe: Boolean;
-    FVersaoQRCode: Integer;
+    FVersaoQRCode: TpcnVersaoQrCode;
 
+    function GetVersaoQRCode: TpcnVersaoQrCode;
+    function GetVersaoQRCodeCodigo: Real;
     procedure SetCSC(AValue: String);
     procedure SetIdCSC(AValue: String);
     procedure SetModeloDF(AValue: TpcnModeloDF);
@@ -77,8 +78,8 @@ type
       read FAtualizarXMLCancelado write FAtualizarXMLCancelado default False;
     property IdCSC: String read FIdCSC write SetIdCSC;
     property CSC: String read FCSC write SetCSC;
-    property IncluirQRCodeXMLNFCe: Boolean read FIncluirQRCodeXMLNFCe write FIncluirQRCodeXMLNFCe default True;
-    property VersaoQRCode: Integer read FVersaoQRCode write FVersaoQRCode default 0;
+    property VersaoQRCode: TpcnVersaoQrCode read GetVersaoQRCode write FVersaoQRCode default veqr100;
+    property VersaoQRCodeCodigo: Real read GetVersaoQRCodeCodigo;
   end;
 
   { TDownloadConfNFe }
@@ -231,8 +232,7 @@ begin
   FAtualizarXMLCancelado := False;
   FIdCSC := '';
   FCSC := '';
-  FIncluirQRCodeXMLNFCe := True;
-  FVersaoQRCode := 0;
+  FVersaoQRCode := veqr000;
 end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);
@@ -244,7 +244,6 @@ begin
   AtualizarXMLCancelado := DeGeralConfNFe.AtualizarXMLCancelado;
   IdCSC    := DeGeralConfNFe.IdCSC;
   CSC      := DeGeralConfNFe.CSC;
-  IncluirQRCodeXMLNFCe := DeGeralConfNFe.IncluirQRCodeXMLNFCe;
   VersaoQRCode := DeGeralConfNFe.VersaoQRCode;
 end;
 
@@ -254,11 +253,10 @@ begin
 
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'IdCSC', IdCSC);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'CSC', CSC);
-  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'IncluirQRCodeXMLNFCe', IncluirQRCodeXMLNFCe);
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF));
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'AtualizarXMLCancelado', AtualizarXMLCancelado);
-  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', VersaoQRCode);
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode));
 end;
 
 procedure TGeralConfNFe.LerIni(const AIni: TCustomIniFile);
@@ -270,8 +268,7 @@ begin
   ModeloDF := TpcnModeloDF(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF)));
   VersaoDF := TpcnVersaoDF(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
   AtualizarXMLCancelado := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'AtualizarXMLCancelado', AtualizarXMLCancelado);
-  IncluirQRCodeXMLNFCe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'IncluirQRCodeXMLNFCe', IncluirQRCodeXMLNFCe);
-  VersaoQRCode :=  AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', VersaoQRCode);
+  VersaoQRCode :=  TpcnVersaoQrCode(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode)));
 end;
 
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);
@@ -286,6 +283,28 @@ begin
     Exit;
 
   FCSC:=Trim(AValue);
+end;
+
+function TGeralConfNFe.GetVersaoQRCodeCodigo: Real;
+begin
+  if TACBrNFe(fpConfiguracoes.Owner).Configuracoes.Geral.VersaoDF <= ve310 then
+    Result := 0
+  else if FVersaoQRCode > veqr000 then
+    Result := VersaoQrCodeToDbl(FVersaoQRCode)
+  else
+  begin
+    Result := 1
+  end;
+end;
+
+function TGeralConfNFe.GetVersaoQRCode: TpcnVersaoQrCode;
+begin
+  if TACBrNFe(fpConfiguracoes.Owner).Configuracoes.Geral.VersaoDF <= ve310 then
+    Result := veqr000
+  else if FVersaoQRCode > veqr000 then
+    Result := FVersaoQRCode
+  else
+    Result := veqr100;
 end;
 
 procedure TGeralConfNFe.SetIdCSC(AValue: String);

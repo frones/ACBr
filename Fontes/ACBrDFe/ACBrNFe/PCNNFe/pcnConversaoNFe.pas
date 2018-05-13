@@ -79,6 +79,7 @@ type
   TpcnModeloDF = (moNFe, moNFCe);
   TpcnVersaoDF = (ve200, ve300, ve310, ve400);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
+  TpcnVersaoQrCode = (veqr000, veqr100,veqr200);
 
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros);
   TpcnCondicaoVeiculo = (cvAcabado, cvInacabado, cvSemiAcabado);
@@ -101,6 +102,10 @@ function StrToFinNFe(out ok: Boolean; const s: String): TpcnFinalidadeNFe;
 
 function IndicadorNFeToStr(const t: TpcnIndicadorNFe): String;
 function StrToIndicadorNFe(out ok: Boolean; const s: String): TpcnIndicadorNFe;
+
+function VersaoQrCodeToStr(const t: TpcnVersaoQrCode): String;
+function StrToVersaoQrCode(out ok: Boolean; const s: String): TpcnVersaoQrCode;
+function VersaoQrCodeToDbl(const t: TpcnVersaoQrCode): Real;
 
 function ModeloDFToStr(const t: TpcnModeloDF): String;
 function StrToModeloDF(out ok: Boolean; const s: String): TpcnModeloDF;
@@ -252,6 +257,29 @@ function StrToIndicadorNFe(out ok: Boolean; const s: String): TpcnIndicadorNFe;
 begin
   Result := StrToEnumerado(ok, s, ['0', '1', '2'],
     [inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia]);
+end;
+
+function VersaoQrCodeToStr(const t: TpcnVersaoQrCode): String;
+begin
+  Result := EnumeradoToStr(t, ['0', '1', '2'],
+    [veqr000, veqr100, veqr200]);
+end;
+
+function StrToVersaoQrCode(out ok: Boolean; const s: String): TpcnVersaoQrCode;
+begin
+  Result := StrToEnumerado(ok, s, ['0', '1', '2'],
+    [veqr000, veqr100, veqr200]);
+end;
+
+function VersaoQrCodeToDbl(const t: TpcnVersaoQrCode): Real;
+begin
+  case t of
+    veqr000: Result := 0;
+    veqr100: Result := 1;
+    veqr200: Result := 2;
+  else
+    Result := 0;
+  end;
 end;
 
 function ModeloDFToStr(const t: TpcnModeloDF): String;

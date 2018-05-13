@@ -152,11 +152,11 @@ type
 
     function GetURLConsultaNFCe(const CUF: integer;
       const TipoAmbiente: TpcnTipoAmbiente;
-      const Versao: Double): String;
+      VersaoQrCode: TpcnVersaoQrCode = veqr000): String;
     function GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
       const AChaveNFe, Destinatario: String; const DataHoraEmissao: TDateTime;
       const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String;
-      const Versao: Double; const VersaoQrCode: Integer = 0): String;
+      const Versao: Double; VersaoQrCode: TpcnVersaoQrCode = veqr000): String;
 
     function IdentificaSchema(const AXML: String): TSchemaNFe;
     function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: Double
@@ -538,21 +538,27 @@ end;
 
 function TACBrNFe.GetURLConsultaNFCe(const CUF: integer;
   const TipoAmbiente: TpcnTipoAmbiente;
-  const Versao: Double): String;
+  VersaoQrCode: TpcnVersaoQrCode): String;
 begin
-  Result := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaNFCe', Versao);
+  if VersaoQrCode <= veqr000 then
+    VersaoQrCode := TACBrNFe(FPConfiguracoes.Owner).Configuracoes.Geral.VersaoQRCode;
+
+  Result := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaNFCe', VersaoQrCodeToDbl(VersaoQrCode));
 end;
 
 function TACBrNFe.GetURLQRCode(const CUF: integer;
   const TipoAmbiente: TpcnTipoAmbiente; const AChaveNFe, Destinatario: String;
   const DataHoraEmissao: TDateTime; const ValorTotalNF,
   ValorTotalICMS: currency; const DigestValue: String; const Versao: Double;
-  const VersaoQrCode: Integer): String;
+  VersaoQrCode: TpcnVersaoQrCode): String;
 var
   idNFe, sdhEmi_HEX, sdigVal_HEX, sNF, sICMS, cIdCSC, cCSC, sCSC,
   sEntrada, cHashQRCode, urlUF, cDest: String;
 begin
-  urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', VersaoQrCode);
+  if VersaoQrCode <= veqr000 then
+    VersaoQrCode := TACBrNFe(FPConfiguracoes.Owner).Configuracoes.Geral.VersaoQRCode;
+
+  urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', VersaoQrCodeToDbl(VersaoQrCode));
   idNFe := OnlyNumber(AChaveNFe);
   cDest := Trim(Destinatario);
 
@@ -573,7 +579,7 @@ begin
   if EstaVazio(cCSC) then
     cCSC := Copy(idNFe, 7, 8) + '20' + Copy(idNFe, 3, 2) + Copy(cIdCSC, 3, 4);
 
-  if VersaoQrCode >= 2 then
+  if VersaoQrCode >= veqr200 then
     cIdCSC := IntToStr(StrToIntDef(Configuracoes.Geral.IdCSC,0))
   else
     cIdCSC := IntToStrZero(StrToIntDef(Configuracoes.Geral.IdCSC,0),6);
@@ -582,14 +588,14 @@ begin
   sNF := FloatToString( ValorTotalNF, '.', FloatMask(2, False));
   sICMS := FloatToString( ValorTotalICMS, '.', FloatMask(2, False));
 
-  if VersaoQrCode >= 2 then
+  if VersaoQrCode >= veqr200 then
   begin
     if ExtrairTipoEmissaoChaveAcesso(idNFe) = 9 then
-      sEntrada := idNFe + '|' + IntToStr(VersaoQrCode)+ '|' +
+      sEntrada := idNFe + '|' + VersaoQrCodeToStr(VersaoQrCode)+ '|' +
         TpAmbToStr(TipoAmbiente) + '|'+ IntToStr(DayOf(DataHoraEmissao)) + '|' +
         sNF + '|' + sdigVal_HEX + '|'
     else
-      sEntrada := idNFe + '|' + IntToStr(VersaoQrCode)+  '|'  +
+      sEntrada := idNFe + '|' + VersaoQrCodeToStr(VersaoQrCode)+  '|'  +
         TpAmbToStr(TipoAmbiente) + '|';
   end
   else
@@ -602,7 +608,7 @@ begin
   cHashQRCode := AsciiToHex(SHA1(sEntrada + sCSC));
 
   // Passo 6
-  if VersaoQrCode >= 2 then
+  if VersaoQrCode >= veqr200 then
   begin
     if Pos('?p=', urlUF) > 0 then
       Result := urlUF + sEntrada + cIdCSC + '|' + cHashQRCode

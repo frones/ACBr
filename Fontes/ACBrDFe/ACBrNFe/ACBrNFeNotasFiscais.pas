@@ -292,7 +292,7 @@ begin
     // Homologação: 01/10/2015
     // Produção: 03/11/2015
 
-    if (NFe.Ide.modelo = 65) and (Configuracoes.Geral.IncluirQRCodeXMLNFCe) then
+    if (NFe.Ide.modelo = 65) then
     begin
       with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
       begin
@@ -301,10 +301,10 @@ begin
                                   trim(IfThen(NFe.Dest.idEstrangeiro <> '', NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF)),
                                   NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
                                   NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue,
-                                  NFe.infNFe.Versao, IIf(Configuracoes.Geral.VersaoQRCode<=0,NFe.infNFe.Versao,Configuracoes.Geral.VersaoQRCode));
+                                  NFe.infNFe.Versao, Configuracoes.Geral.VersaoQRCode);
 
         if NFe.infNFe.Versao >= 4 then
-          NFe.infNFeSupl.urlChave := GetURLConsultaNFCe(NFe.Ide.cUF, NFe.Ide.tpAmb, IIf(Configuracoes.Geral.VersaoQRCode<=0,NFe.infNFe.Versao,Configuracoes.Geral.VersaoQRCode));
+          NFe.infNFeSupl.urlChave := GetURLConsultaNFCe(NFe.Ide.cUF, NFe.Ide.tpAmb, Configuracoes.Geral.VersaoQRCode);
 
         GerarXML;
       end;

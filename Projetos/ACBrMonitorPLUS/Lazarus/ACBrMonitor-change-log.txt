@@ -43,16 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-23/04/2018
-[*] Ajuste no método "CriarCFe" do ACBrSAT
-[*] Ajuste no método "ImprimirDANFEPDF" validar protocoloNf em ACBrNFe
-[+] Adicionado Método SetDiretorioArquivo para informar diretório para geração de
-    arquivos via comando no componente ACBrBoleto
-[*] Validação do nome e path do arquivo na geração de Remessa do componente Boleto
-[*] Adicionado tag DataMoraJuros na leitura de retorno do componente Boleto
-       por: José M. S. Junior
+14/05/2018 - ACBrMonitor Versão 1.2.0.0
+[*] Inicio Refactory no ACBrMonitorPlus, iniciando pelo componente MDFe
+Adicionado as classes: DoACBrDFeUnit, ACBrMonitorMetodos, ACBrMonitorConsts, ACBrMonitorConfig
+Alterações significativas classes: DoACBrMDFeUnit, ACBrMonitor1, CMDUnit, UtilUnit
 
-18/04/2018
+[+] Adicionados funcionalidades para o componente e-Social no ACBrMonitor nos
+moldes das classes Refactory. Adicionado a Classe DoACBreSocialUnit
+
+07/04/2018
 [*] Ajuste nos métodos que utilizam parâmetros para Visualizar Impressão
        por: José M. S. Junior
 

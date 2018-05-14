@@ -35,12 +35,13 @@ unit UtilUnit;
 
 interface
 
-Uses SysUtils, IniFiles, Classes, ACBrUtil ;
+Uses SysUtils, IniFiles, Classes, ACBrUtil, FileInfo ;
 
 Function AcertaPath(APath : String): String;
 function Converte(cmd: String): String;
 Procedure GravaINICrypt(INI : TIniFile; Section, Ident, AString, Pass : String );
 Function LeINICrypt(INI : TIniFile; Section, Ident, Pass : String) : String ;
+function VersaoACBr(): String;
 
 implementation
 
@@ -84,6 +85,21 @@ begin
       SStream.Free ;
    end ;
 end ;
+
+function VersaoACBr: String;
+var
+  FileVerInfo: TFileVersionInfo;
+begin
+  Result:= '';
+  FileVerInfo:= TFileVersionInfo.Create(nil);
+  try
+    FileVerInfo.FileName:=paramstr(0);
+    FileVerInfo.ReadFileInfo;
+    Result := FileVerInfo.VersionStrings.Values['FileVersion'];
+  finally
+    FileVerInfo.Free;
+  end;
+end;
 
 {------------------------------------------------------------------------------}
 Procedure GravaINICrypt(INI : TIniFile; Section, Ident, AString, Pass : String );

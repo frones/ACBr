@@ -49,7 +49,9 @@ uses
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
   ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types, fileinfo,
-  ACBrDFeConfiguracoes, ACBrIntegrador, LazHelpCHM, pmdfeConversaoMDFe;
+  ACBrDFeConfiguracoes, ACBreSocial, ACBrIntegrador, LazHelpCHM,
+  pmdfeConversaoMDFe, ACBrMonitorConfig, ACBrMonitorConsts, DoACBrMDFeUnit,
+  DoACBreSocialUnit, ACBreSocialConfiguracoes, pcesConversaoeSocial;
 
 const
   //{$I versao.txt}
@@ -58,9 +60,10 @@ const
     'Pagamento', 'Relatório', 'Bloqueada', 'Requer Z', 'Requer X',
     'Não Fiscal');
   CBufferMemoResposta = 10000;              { Maximo de Linhas no MemoResposta }
-  _C = 'tYk*5W@';
+  //_C = 'tYk*5W@';
   UTF8BOM : AnsiString = #$EF#$BB#$BF;
   HelpShortcut = 'F1';
+  ClHelp = 'lhelp';
 
 type
   TCores = class
@@ -91,6 +94,7 @@ type
     ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
     ACBrEAD1: TACBrEAD;
     ACBrECF1: TACBrECF;
+    ACBreSocial1: TACBreSocial;
     ACBrGIF1: TACBrGIF;
     ACBrGNRE1: TACBrGNRE;
     ACBrGNREGuiaRL1: TACBrGNREGuiaRL;
@@ -276,7 +280,9 @@ type
     cbRetirarAcentos: TCheckBox;
     cbCryptLib: TComboBox;
     cbHttpLib: TComboBox;
+    cbTipoEmpregador: TComboBox;
     cbVersaoWSMDFe: TComboBox;
+    cbVersaoWSeSocial: TComboBox;
     cbxUsarSeparadorPathPDF: TCheckBox;
     cbxExibirInfAdicProduto: TCheckBox;
     cbxExibirLogoEmCima: TCheckBox;
@@ -379,6 +385,7 @@ type
     edMFEOutput: TEdit;
     edtArquivoPFX: TEdit;
     edtArquivoWebServicesGNRe: TEdit;
+    edtArquivoWebServiceseSocial: TEdit;
     edtBOLEmailAssunto: TEdit;
     edtBOLEmailMensagem: TMemo;
     edtBOLLocalPagamento: TEdit;
@@ -386,8 +393,10 @@ type
     edtEmailAssuntoCTe: TEdit;
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
+    edtIDTransmissor: TEdit;
     edTimeZoneStr: TEdit;
     edtLogoMarcaNFCeSAT: TEdit;
+    edtIDEmpregador: TEdit;
     eMargemEsquerda: TEdit;
     eTemperatura: TEdit;
     eVelocidade: TEdit;
@@ -397,6 +406,7 @@ type
     edtTimeoutWebServices: TSpinEdit;
     gbExtratoSAT: TGroupBox;
     gbGavetaConfig: TGroupBox;
+    gbxConfeSocial: TGroupBox;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     gbImpressao: TGroupBox;
@@ -443,6 +453,11 @@ type
     Label211: TLabel;
     Label212: TLabel;
     Label213: TLabel;
+    Label214: TLabel;
+    Label215: TLabel;
+    Label216: TLabel;
+    Label217: TLabel;
+    Label218: TLabel;
     Label60: TLabel;
     Label61: TLabel;
     lbAvanco: TLabel;
@@ -490,6 +505,7 @@ type
     rgTipoFonte: TRadioGroup;
     sbArquivoCert: TSpeedButton;
     sbArquivoWebServicesGNRe: TSpeedButton;
+    sbArquivoWebServiceseSocial: TSpeedButton;
     sbLogoMarca1: TSpeedButton;
     sbLogoMarcaNFCeSAT: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
@@ -541,6 +557,7 @@ type
     sbArquivoWebServicesNFe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
     TabSheet1: TTabSheet;
+    gbxWSeSocial: TTabSheet;
     tsIntegrador: TTabSheet;
     tsRelatorio: TTabSheet;
     tsImpCTe: TTabSheet;
@@ -1280,6 +1297,7 @@ type
     procedure SbArqLogClick(Sender: TObject);
     procedure sbArquivoCertClick(Sender: TObject);
     procedure sbArquivoWebServicesCTeClick(Sender: TObject);
+    procedure sbArquivoWebServiceseSocialClick(Sender: TObject);
     procedure sbArquivoWebServicesGNReClick(Sender: TObject);
     procedure sbArquivoWebServicesMDFeClick(Sender: TObject);
     procedure sbArquivoWebServicesNFeClick(Sender: TObject);
@@ -1356,8 +1374,6 @@ type
     procedure AumentaTempoHint(Sender: TObject);
     procedure DiminuiTempoHint(Sender: TObject);
     procedure cbLCBSufixoLeitorChange(Sender: TObject);
-    procedure FormShortCut(Key: integer; Shift: TShiftState;{%h-}
-      var Handled: boolean);{%h-}
     procedure cbGAVStrAbreChange(Sender: TObject);
     procedure bExecECFTesteClick(Sender: TObject);
     procedure chECFSinalGavetaInvertidoClick(Sender: TObject);
@@ -1440,6 +1456,11 @@ type
 
     FWasHidden: Boolean;
     FLastHandle: Integer;
+
+    FMonitorConfig: TMonitorConfig;
+    FDoMDFe: TACBrObjetoMDFe;
+    FDoeSocial: TACBrObjetoeSocial;
+
     function IsVisible : Boolean; virtual;
 
     procedure DesInicializar;
@@ -1473,6 +1494,8 @@ type
 
   protected
     procedure MostraLogoBanco;
+    procedure AtualizarTela(AMonitorConfig: TMonitorConfig);
+
   public
     Conexao: TTCPBlockSocket;
 
@@ -1515,6 +1538,8 @@ type
     procedure HelptabSheet;
     procedure ValidarIntegradorNFCe(ChaveNFe: String = '');
     function RespostaIntegrador():String;
+
+    property MonitorConfig: TMonitorConfig read FMonitorConfig;
   end;
 
 var
@@ -1531,7 +1556,7 @@ uses IniFiles, TypInfo, LCLType, strutils,
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial, DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit,
-  DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrMDFeUnit, DoACBrCTeUnit,
+  DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrCTeUnit,
   DoSATUnit, DoPosPrinterUnit, DoACBrGNReUnit, ACBrSATExtratoClass,
   SelecionarCertificado, ACBrNFeConfiguracoes,
   ACBrCTeConfiguracoes, ACBrMDFeConfiguracoes, ACBrGNREConfiguracoes;
@@ -1593,7 +1618,18 @@ begin
   FpUmask(0);
   {$ENDIF}
 
-  LHelpConnector1.LHelpPath := 'lhelp'+PathDelim+'lhelp';
+  LHelpConnector1.LHelpPath := ExtractFilePath(Application.ExeName)+
+                            ClHelp + PathDelim + ClHelp;
+
+  FMonitorConfig := TMonitorConfig.Create(
+                 PathWithDelim(ExtractFilePath(Application.ExeName)) + CMonitorIni );
+  FMonitorConfig.OnGravarConfig := @AtualizarTela;
+
+  FDoMDFe := TACBrObjetoMDFe.Create(MonitorConfig, ACBrMDFe1);
+  FDoMDFe.OnAntesDeImprimir := @AntesDeImprimir;
+  FDoMDFe.OnDepoisDeImprimir := @DepoisDeImprimir;
+
+  FDoeSocial := TACBrObjetoeSocial.Create(MonitorConfig, ACBreSocial1);
 
   // Seta as definições iniciais para navegação
   SetColorButtons(btnMonitor);
@@ -1795,20 +1831,23 @@ begin
 
   cbETQPorta.Items.Clear;
   ACBrETQ1.Device.AcharPortasSeriais( cbETQPorta.Items );
-  cbETQPorta.Items.Add('LPT1') ;
-  cbETQPorta.Items.Add('LPT2') ;
-  cbETQPorta.Items.Add('\\localhost\L42') ;
-  cbETQPorta.Items.Add('c:\temp\ecf.txt') ;
-  cbETQPorta.Items.Add('TCP:192.168.0.31:9100') ;
 
-  For M := 0 to Printer.Printers.Count-1 do
-    cbETQPorta.Items.Add('RAW:'+Printer.Printers[M]);
-
+  {$IFDEF LINUX}
   cbETQPorta.Items.Add('/dev/ttyS0') ;
   cbETQPorta.Items.Add('/dev/ttyS1') ;
   cbETQPorta.Items.Add('/dev/ttyUSB0') ;
   cbETQPorta.Items.Add('/dev/ttyUSB1') ;
   cbETQPorta.Items.Add('/tmp/ecf.txt') ;
+  {$ELSE}
+  cbETQPorta.Items.Add('LPT1') ;
+  cbETQPorta.Items.Add('LPT2') ;
+  cbETQPorta.Items.Add('\\localhost\L42') ;
+  cbETQPorta.Items.Add('c:\temp\ecf.txt') ;
+  {$ENDIF}
+
+  cbETQPorta.Items.Add('TCP:192.168.0.31:9100') ;
+  For M := 0 to Printer.Printers.Count-1 do
+    cbETQPorta.Items.Add('RAW:'+Printer.Printers[M]);
 
   cbDPI.ItemIndex := 0;
   cbETQModelo.ItemIndex := 3;
@@ -1825,30 +1864,23 @@ begin
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais(cbxPorta.Items);
-  cbxPorta.Items.Add('LPT1') ;
-  cbxPorta.Items.Add('LPT2') ;
-  cbxPorta.Items.Add('\\localhost\Epson') ;
-  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
-  cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
 
-  For K := 0 to Printer.Printers.Count-1 do
-    cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
-
+  {$IFDEF LINUX}
   cbxPorta.Items.Add('/dev/ttyS0') ;
   cbxPorta.Items.Add('/dev/ttyS1') ;
   cbxPorta.Items.Add('/dev/ttyUSB0') ;
   cbxPorta.Items.Add('/dev/ttyUSB1') ;
   cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  {$ELSE}
+  cbxPorta.Items.Add('LPT1') ;
+  cbxPorta.Items.Add('LPT2') ;
+  cbxPorta.Items.Add('\\localhost\Epson') ;
+  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
+  {$ENDIF}
 
-  {cbxPorta.Items.Add('LPT1');
-  cbxPorta.Items.Add('LPT2');
-  cbxPorta.Items.Add('/dev/ttyS0');
-  cbxPorta.Items.Add('/dev/ttyS1');
-  cbxPorta.Items.Add('/dev/ttyUSB0');
-  cbxPorta.Items.Add('/dev/ttyUSB1');
-  cbxPorta.Items.Add('\\localhost\Epson');
-  cbxPorta.Items.Add('c:\temp\ecf.txt');
-  cbxPorta.Items.Add('/temp/ecf.txt');  }
+  cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
+  For K := 0 to Printer.Printers.Count-1 do
+    cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
 
   cbFormaEmissaoNFe.Items.Clear;
   for IFormaEmissaoNFe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
@@ -2768,7 +2800,7 @@ begin
           sAssunto,
           sMensagem,
           True,  // Enviar PDF junto
-          nil,    // Lista com emails que serão enviado cópias - TStrings
+          nil,   // Lista com emails que serão enviado cópias - TStrings
           nil
         );
       finally
@@ -3278,6 +3310,7 @@ begin
       ACBrMDFe1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
       ACBrGNRE1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
       ACBrBlocoX1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+      ACBreSocial1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -3386,6 +3419,7 @@ begin
   ACBrMDFe1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
   ACBrBlocoX1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
   ACBrGNRE1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
+  ACBreSocial1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
 end;
 
 procedure TFrmACBrMonitor.cbxUTF8Change(Sender: TObject);
@@ -3548,6 +3582,10 @@ begin
   fsProcessar.Free;
 
   fsSLPrecos.Free;
+
+  FDoMDFe.Free;
+  FDoeSocial.Free;
+  FMonitorConfig.Free;
 end;
 
 {------------------------------------------------------------------------------}
@@ -3834,10 +3872,10 @@ end;
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.LerIni;
 var
-  Ini: TIniFile;
   ECFAtivado, CHQAtivado, GAVAtivado, DISAtivado, BALAtivado,
   ETQAtivado, ESCPOSAtivado: boolean;
-  Senha, POSPrDeviceParams, ECFDeviceParams, CHQDeviceParams, SATDeviceParams, PathApplication: string;
+  wSenha, POSPrDeviceParams, ECFDeviceParams, CHQDeviceParams, SATDeviceParams,
+  PathApplication: string;
   wNomeArquivo: string;
   OK: boolean;
 begin
@@ -3855,333 +3893,493 @@ begin
   else
      ESCPOSAtivado := False;
 
-  Ini := TIniFile.Create(ACBrMonitorINI);
+  //Atualiza Campos Classe ACbrMonitorConfig
   try
+    FMonitorConfig.CarregarArquivo;
+  except
+    on E: Exception do
+    begin
+      if pos(SErrArqConfigNaoDefinido,E.Message) > 0 then
+      begin
+         FMonitorConfig.CriarArquivo;
+         FMonitorConfig.CarregarArquivo;
+      end;
+    end;
+  end;
+
+  { Parametros do Monitor }
+  with FMonitorConfig.ACBrMonitor do
+  begin
 
     { Lendo Senha }
-    //     Ini.ReadString('ACBrMonitor','TXT_Saida','SAI.TXT');
-    fsHashSenha := StrToIntDef(LeINICrypt(INI, 'ACBrMonitor', 'HashSenha', _C), -1);
+    fsHashSenha := StrToIntDef(HashSenha, -1);
 
-    if fsHashSenha < 1 then  { INI antigo não tinha essa chave }
+    if (fsHashSenha < 1) then  { INI antigo não tinha essa chave }
     begin
-      Senha := Ini.ReadString('ACBrMonitor', 'Senha', '');
-      if Senha <> '' then
-        fsHashSenha := StringCrc16(Senha);
+       wSenha := Senha;
+       if (wSenha <> '') then
+         fsHashSenha := StringCrc16(wSenha);
     end;
 
-    if fsHashSenha > 0 then
+    if (fsHashSenha > 0) then
     begin
-      cbSenha.Checked := True;
-      edSenha.Text := 'NADAAQUI';
+       cbSenha.Checked := True;
+       edSenha.Text := 'NADAAQUI';
     end;
 
-    { Parametros do Monitor }
-    rbTCP.Checked := Ini.ReadBool('ACBrMonitor', 'Modo_TCP', False);
-    rbTXT.Checked := Ini.ReadBool('ACBrMonitor', 'Modo_TXT', True);
-    edPortaTCP.Text := IntToStr(Ini.ReadInteger('ACBrMonitor', 'TCP_Porta', 3434));
-    edTimeOutTCP.Text := IntToStr(Ini.ReadInteger('ACBrMonitor', 'TCP_TimeOut', 10000));
-    chbTCPANSI.Checked := Ini.ReadBool('ACBrMonitor','Converte_TCP_Ansi', False);
-    edEntTXT.Text := Ini.ReadString('ACBrMonitor', 'TXT_Entrada', 'ENT.TXT');
-    edSaiTXT.Text := Ini.ReadString('ACBrMonitor', 'TXT_Saida', 'SAI.TXT');
-    chbArqEntANSI.Checked := Ini.ReadBool('ACBrMonitor','Converte_TXT_Entrada_Ansi', False);
-    chbArqSaiANSI.Checked := Ini.ReadBool('ACBrMonitor','Converte_TXT_Saida_Ansi', False);
-    sedIntervalo.Value := Ini.ReadInteger('ACBrMonitor', 'Intervalo', 50);
-    edLogArq.Text := Ini.ReadString('ACBrMonitor', 'Arquivo_Log', 'LOG.TXT');
-    cbLog.Checked := Ini.ReadBool('ACBrMonitor', 'Gravar_Log', False) and
-      (edLogArq.Text <> '');
-    sedLogLinhas.Value := Ini.ReadInteger('ACBrMonitor', 'Linhas_Log', 0);
-    cbComandos.Checked := Ini.ReadBool('ACBrMonitor', 'Comandos_Remotos', False);
-    cbUmaInstancia.Checked := Ini.ReadBool('ACBrMonitor', 'Uma_Instancia', True);
-    cbAbas.Checked := Ini.ReadBool('ACBrMonitor', 'MostraAbas', False);
-    {$IFDEF LINUX}
-    cbMostrarNaBarraDeTarefas.Checked := Ini.ReadBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', True);
-    {$ELSE}
-    cbMostrarNaBarraDeTarefas.Checked := Ini.ReadBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', False);
-    {$ENDIF}
-    cbRetirarAcentosNaResposta.Checked := Ini.ReadBool('ACBrMonitor', 'RetirarAcentosNaResposta', False);
-    chkMostraLogNaTela.Checked := Ini.ReadBool('ACBrMonitor', 'MostraLogEmRespostasEnviadas', True)
-                                  and cbLog.Checked;
-    cbMonitorarPasta.OnChange := Nil;
-    cbMonitorarPasta.Checked := Ini.ReadBool('ACBrMonitor', 'MonitorarPasta', False);
-    cbMonitorarPasta.OnChange := @cbMonitorarPastaChange;
+    rbTCP.Checked                     := Modo_TCP;
+    rbTXT.Checked                     := Modo_TXT;
+    edPortaTCP.Text                   := IntToStr(TCP_Porta);
+    edTimeOutTCP.Text                 := IntToStr(TCP_TimeOut);
+    chbTCPANSI.Checked                := Converte_TCP_Ansi;
+    edEntTXT.Text                     := TXT_Entrada;
+    edSaiTXT.Text                     := TXT_Saida;
+    chbArqEntANSI.Checked             := Converte_TXT_Entrada_Ansi;
+    chbArqSaiANSI.Checked             := Converte_TXT_Saida_Ansi;
+    sedIntervalo.Value                := Intervalo;
+    edLogArq.Text                     := Arquivo_Log;
+    cbLog.Checked                     := Gravar_Log and (edLogArq.Text <> '');
+    sedLogLinhas.Value                := Linhas_Log;
+    cbComandos.Checked                := Comandos_Remotos;
+    cbUmaInstancia.Checked            := Uma_Instancia;
+    cbAbas.Checked                    := MostraAbas;
+    cbMostrarNaBarraDeTarefas.Checked := MostrarNaBarraDeTarefas;
+    cbRetirarAcentosNaResposta.Checked:= RetirarAcentosNaResposta;
+    chkMostraLogNaTela.Checked        := MostraLogEmRespostasEnviadas and cbLog.Checked;
 
-    MonitorarPasta := cbMonitorarPasta.Checked;
+    cbMonitorarPasta.OnChange         := Nil;
+    cbMonitorarPasta.Checked          := MonitorarPasta;
+    cbMonitorarPasta.OnChange         := @cbMonitorarPastaChange;
 
-    ArqEntTXT := AcertaPath(edEntTXT.Text);
-    ArqEntOrig := ArqEntTXT;
-    ArqSaiTXT := AcertaPath(edSaiTXT.Text);
-    ArqSaiOrig := ArqSaiTXT;
-    ArqSaiTMP := ChangeFileExt(ArqSaiTXT, '.tmp');
-    ArqLogTXT := AcertaPath(edLogArq.Text);
+    MonitorarPasta                    := cbMonitorarPasta.Checked;
 
-    TcpServer.Port := edPortaTCP.Text;
-    TcpServer.TimeOut := StrToIntDef(edTimeOutTCP.Text, 10000);
+    ArqEntTXT                         := AcertaPath(edEntTXT.Text);
+    ArqEntOrig                        := ArqEntTXT;
+    ArqSaiTXT                         := AcertaPath(edSaiTXT.Text);
+    ArqSaiOrig                        := ArqSaiTXT;
+    ArqSaiTMP                         := ChangeFileExt(ArqSaiTXT, '.tmp');
+    ArqLogTXT                         := AcertaPath(edLogArq.Text);
 
-    { Parametros do ECF }
-    ECFDeviceParams := Ini.ReadString('ECF', 'SerialParams', '');
-    cbECFModelo.ItemIndex := Ini.ReadInteger('ECF', 'Modelo', 0) + 1;
+    TcpServer.Port                    := edPortaTCP.Text;
+    TcpServer.TimeOut                 := StrToIntDef(edTimeOutTCP.Text, 10000);
+
+  end;
+
+  { Parametros do ECF }
+  with FMonitorConfig.ECF do
+  begin
+    ECFDeviceParams                   := SerialParams;
+    cbECFModelo.ItemIndex             := Modelo + 1;
     cbECFModeloChange(Self);
-    cbECFPorta.Text := Ini.ReadString('ECF', 'Porta', 'Procurar');
-    sedECFTimeout.Value := Ini.ReadInteger('ECF', 'Timeout', 3);
-    sedECFIntervalo.Value := Ini.ReadInteger('ECF', 'IntervaloAposComando', 100);
-    sedECFMaxLinhasBuffer.Value := Ini.ReadInteger('ECF', 'MaxLinhasBuffer', 0);
-    sedECFPaginaCodigo.Value := Ini.ReadInteger('ECF', 'PaginaCodigo', 0);
-    sedECFLinhasEntreCupons.Value := Ini.ReadInteger('ECF', 'LinhasEntreCupons', 0);
-    chECFArredondaPorQtd.Checked := Ini.ReadBool('ECF', 'ArredondamentoPorQtd', False);
-    chECFArredondaMFD.Checked := Ini.ReadBool('ECF', 'ArredondamentoItemMFD', False);
-    chECFDescrGrande.Checked := Ini.ReadBool('ECF', 'DescricaoGrande', True);
-    chECFSinalGavetaInvertido.Checked :=
-      Ini.ReadBool('ECF', 'GavetaSinalInvertido', False);
-    chECFIgnorarTagsFormatacao.Checked :=
-      Ini.ReadBool('ECF', 'IgnorarTagsFormatacao', False);
-    chECFControlePorta.Checked := Ini.ReadBool('ECF', 'ControlePorta', False);
-    edECFLog.Text := Ini.ReadString('ECF', 'ArqLog', '');
+    cbECFPorta.Text                   := Porta;
+    sedECFTimeout.Value               := Timeout;
+    sedECFIntervalo.Value             := IntervaloAposComando;
+    sedECFMaxLinhasBuffer.Value       := MaxLinhasBuffer;
+    sedECFPaginaCodigo.Value          := PaginaCodigo;
+    sedECFLinhasEntreCupons.Value     := LinhasEntreCupons;
+    chECFArredondaPorQtd.Checked      := ArredondamentoPorQtd;
+    chECFArredondaMFD.Checked         := ArredondamentoItemMFD;
+    chECFDescrGrande.Checked          := DescricaoGrande;
+    chECFSinalGavetaInvertido.Checked := GavetaSinalInvertido;
+    chECFIgnorarTagsFormatacao.Checked:= IgnorarTagsFormatacao;
+    chECFControlePorta.Checked        := ControlePorta;
+    edECFLog.Text                     := ArqLog;
+  end;
 
-    { Parametros do CHQ }
-    cbCHQModelo.ItemIndex := Ini.ReadInteger('CHQ', 'Modelo', 0);
+  { Parametros do CHQ }
+  with FMonitorConfig.CHQ do
+  begin
+    cbCHQModelo.ItemIndex             := Modelo;
     cbCHQModeloChange(Self);
-    cbCHQPorta.Text := Ini.ReadString('CHQ', 'Porta', '');
-    chCHQVerForm.Checked := Ini.ReadBool('CHQ', 'VerificaFormulario', False);
-    edCHQFavorecido.Text := Ini.ReadString('CHQ', 'Favorecido', '');
-    edCHQCidade.Text := Ini.ReadString('CHQ', 'Cidade', '');
-    edCHQBemafiINI.Text := Ini.ReadString('CHQ', 'PathBemafiINI', '');
-    CHQDeviceParams := Ini.ReadString('CHQ', 'SerialParams', '');
+    cbCHQPorta.Text                   := Porta;
+    chCHQVerForm.Checked              := VerificaFormulario;
+    edCHQFavorecido.Text              := Favorecido;
+    edCHQCidade.Text                  := Cidade;
+    edCHQBemafiINI.Text               := PathBemafiINI;
+    CHQDeviceParams                   := SerialParams;
+  end;
 
-    { Parametros do GAV }
-    cbGAVModelo.ItemIndex := Ini.ReadInteger('GAV', 'Modelo', 0);
+  { Parametros do GAV }
+  with FMonitorConfig.GAV do
+  begin
+    cbGAVModelo.ItemIndex             := Modelo;
     cbGAVModeloChange(Self);
-    cbGAVPorta.Text := Ini.ReadString('GAV', 'Porta', '');
-    cbGAVStrAbre.Text := Ini.ReadString('GAV', 'StringAbertura', '');
-    sedGAVIntervaloAbertura.Value :=
-      Ini.ReadInteger('GAV', 'AberturaIntervalo', ACBrGAV1.AberturaIntervalo);
-    cbGAVAcaoAberturaAntecipada.ItemIndex :=
-      Ini.ReadInteger('GAV', 'AcaoAberturaAntecipada', 1);
+    cbGAVPorta.Text                   := Porta;
+    cbGAVStrAbre.Text                 := StringAbertura;
+    sedGAVIntervaloAbertura.Value     := AberturaIntervalo;
+    cbGAVAcaoAberturaAntecipada.ItemIndex := AcaoAberturaAntecipada;
+  end;
 
-    { Parametros do DIS }
-    cbDISModelo.ItemIndex := Ini.ReadInteger('DIS', 'Modelo', 0);
+   { Parametros do DIS }
+  with FMonitorConfig.DIS do
+  begin
+    cbDISModelo.ItemIndex             := Modelo;
     cbDISModeloChange(Self);
-    cbDISPorta.Text := Ini.ReadString('DIS', 'Porta', '');
-    seDISIntervalo.Value := Ini.ReadInteger('DIS', 'Intervalo', 300);
-    seDISPassos.Value := Ini.ReadInteger('DIS', 'Passos', 1);
-    seDISIntByte.Value := Ini.ReadInteger('DIS', 'IntervaloEnvioBytes', 3);
+    cbDISPorta.Text                   := Porta;
+    seDISIntervalo.Value              := Intervalo;
+    seDISPassos.Value                 := Passos;
+    seDISIntByte.Value                := IntervaloEnvioBytes;
+  end;
 
-    { Parametros do LCB }
-    cbLCBPorta.Text := Ini.ReadString('LCB', 'Porta', 'Sem Leitor');
+  { Parametros do LCB }
+  with FMonitorConfig.LCB do
+  begin
+    cbLCBPorta.Text                   := Porta;
     cbLCBPortaChange(Self);
-    sedLCBIntervalo.Value := Ini.ReadInteger('LCB', 'Intervalo', 100);
-    cbLCBSufixoLeitor.Text := Ini.ReadString('LCB', 'SufixoLeitor', '#13');
-    chLCBExcluirSufixo.Checked := Ini.ReadBool('LCB', 'ExcluirSufixo', False);
-    edLCBPreExcluir.Text := Ini.ReadString('LCB', 'PrefixoAExcluir', '');
-    cbLCBSufixo.Text := Ini.ReadString('LCB', 'SufixoIncluir', '');
-    cbLCBDispositivo.Text := Ini.ReadString('LCB', 'Dispositivo', '');
-    rbLCBTeclado.Checked := Ini.ReadBool('LCB', 'Teclado', True);
-    rbLCBFila.Checked := not rbLCBTeclado.Checked;
-    ACBrLCB1.Device.ParamsString := Ini.ReadString('LCB', 'Device', '');
+    sedLCBIntervalo.Value             := Intervalo;
+    cbLCBSufixoLeitor.Text            := SufixoLeitor;
+    chLCBExcluirSufixo.Checked        := ExcluirSufixo;
+    edLCBPreExcluir.Text              := PrefixoAExcluir;
+    cbLCBSufixo.Text                  := SufixoIncluir;
+    cbLCBDispositivo.Text             := Dispositivo;
+    rbLCBTeclado.Checked              := Teclado;
+    rbLCBFila.Checked                 := not rbLCBTeclado.Checked;
+    ACBrLCB1.Device.ParamsString      := Device;
+  end;
 
-    { Parametros do RFD }
-    chRFD.Checked := INI.ReadBool('RFD', 'GerarRFD', False);
-    chRFDIgnoraMFD.Checked := INI.ReadBool('RFD', 'IgnoraECF_MFD', True);
-    edRFDDir.Text := INI.ReadString('RFD', 'DirRFD', edRFDDir.Text);
+  { Parametros do RFD }
+  with FMonitorConfig.RFD do
+  begin
+    chRFD.Checked                     := GerarRFD;
+    chRFDIgnoraMFD.Checked            := IgnoraECF_MFD;
+    edRFDDir.Text                     := DirRFD;
+  end;
 
-    { Parametros do BAL }
-    cbBALModelo.ItemIndex := Ini.ReadInteger('BAL', 'Modelo', 0);
+  { Parametros do BAL }
+  with FMonitorConfig.BAL do
+  begin
+    cbBALModelo.ItemIndex             := Modelo;
     cbBALModeloChange(Self);
-    cbBALPorta.Text := Ini.ReadString('BAL', 'Porta', '');
-    sedBALIntervalo.Value := Ini.ReadInteger('BAL', 'Intervalo', 200);
-    edBALLog.Text := Ini.ReadString('BAL', 'ArqLog', '');
-    ACBrBAL1.Device.ParamsString := Ini.ReadString('BAL', 'Device', '');
+    cbBALPorta.Text                   := Porta;
+    sedBALIntervalo.Value             := Intervalo;
+    edBALLog.Text                     := ArqLog;
+    ACBrBAL1.Device.ParamsString      := Device;
+  end;
 
-    { Parametros do ETQ }
-    cbETQModelo.ItemIndex := Ini.ReadInteger('ETQ', 'Modelo', 0);
+  { Parametros do ETQ }
+  with FMonitorConfig.ETQ do
+  begin
+    cbETQModelo.ItemIndex             := Modelo;
     cbETQModeloChange(Self);
-    cbETQPorta.Text := Ini.ReadString('ETQ', 'Porta', '');
-    cbDPI.ItemIndex := Ini.ReadInteger('ETQ', 'DPI', 0);
-    ckMemoria.Checked:= Ini.ReadBool('ETQ', 'LimparMemoria', True);
-    eTemperatura.Text:= IntToStr(Ini.ReadInteger('ETQ', 'Temperatura', 10));
-    eVelocidade.Text := IntToStr(Ini.ReadInteger('ETQ', 'Velocidade', -1));
-    cbBackFeed.ItemIndex:= Ini.ReadInteger('ETQ', 'BackFeed', -1);
-    eMargemEsquerda.Text:= IntToStr(Ini.ReadInteger('ETQ', 'MargemEsquerda', 10));
-    cbOrigem.ItemIndex  := Ini.ReadInteger('ETQ', 'Origem', -1);
-    eCopias.Text  := IntToStr(Ini.ReadInteger('ETQ', 'Copias', 1));
+    cbETQPorta.Text                   := Porta;
+    cbDPI.ItemIndex                   := DPI;
+    ckMemoria.Checked                 := LimparMemoria;
+    eTemperatura.Text                 := IntToStr(Temperatura);
+    eVelocidade.Text                  := IntToStr(Velocidade);
+    cbBackFeed.ItemIndex              := BackFeed;
+    eMargemEsquerda.Text              := IntToStr(MargemEsquerda);
+    cbOrigem.ItemIndex                := Origem;
+    eCopias.Text                      := IntToStr(Copias);
+  end;
 
-    { Parametros do TC }
-    cbxTCModelo.ItemIndex := Ini.ReadInteger('TC', 'Modelo', 0);
+  { Parametros do TC }
+  with FMonitorConfig.TC do
+  begin
+    cbxTCModelo.ItemIndex             := Modelo;
     cbxTCModeloChange(Self);
-    edTCArqPrecos.Text := IntToStr(Ini.ReadInteger('TC', 'TCP_Porta', 6500));
-    edTCArqPrecos.Text := Ini.ReadString('TC', 'Arq_Precos', 'PRICETAB.TXT');
-    edTCNaoEncontrado.Text :=
-      Ini.ReadString('TC', 'Nao_Econtrado', 'PRODUTO|NAO ENCONTRADO');
+    edTCArqPrecos.Text                := IntToStr(TCP_Porta);
+    edTCArqPrecos.Text                := Arq_Precos;
+    edTCNaoEncontrado.Text            := Nao_Econtrado;
+  end;
 
-    { Parametros do CEP }
-    cbCEPWebService.ItemIndex := Ini.ReadInteger('CEP', 'WebService', 0);
+  { Parametros do CEP }
+  with FMonitorConfig.CEP do
+  begin
+    cbCEPWebService.ItemIndex         := WebService;
     cbCEPWebServiceChange(Self);
-    edCEPChaveBuscarCEP.Text := Ini.ReadString('CEP', 'Chave_BuscarCEP', '');
-    edCONProxyHost.Text := Ini.ReadString('CEP', 'Proxy_Host', '');
-    edCONProxyPort.Text := Ini.ReadString('CEP', 'Proxy_Port', '');
-    edCONProxyUser.Text := Ini.ReadString('CEP', 'Proxy_User', '');
-    edCONProxyPass.Text := LeINICrypt(INI, 'CEP', 'Proxy_Pass', _C);
+    edCEPChaveBuscarCEP.Text          := Chave_BuscarCEP;
+    edCONProxyHost.Text               := Proxy_Host;
+    edCONProxyPort.Text               := Proxy_Port;
+    edCONProxyUser.Text               := Proxy_User;
+    edCONProxyPass.Text               := Proxy_Pass;
+  end;
 
-    {Parametros do Boleto - Cliente}
-    edtBOLRazaoSocial.Text := Ini.ReadString('BOLETO', 'Cedente.Nome', '');
-    edtBOLCNPJ.Text := Ini.ReadString('BOLETO', 'Cedente.CNPJCPF', '');
-    edtBOLLogradouro.Text := Ini.ReadString('BOLETO', 'Cedente.Logradouro', '');
-    edtBOLNumero.Text := Ini.ReadString('BOLETO', 'Cedente.Numero', '');
-    edtBOLBairro.Text := Ini.ReadString('BOLETO', 'Cedente.Bairro', '');
-    edtBOLCidade.Text := Ini.ReadString('BOLETO', 'Cedente.Cidade', '');
-    edtBOLCEP.Text := Ini.ReadString('BOLETO', 'Cedente.CEP', '');
-    edtBOLComplemento.Text := Ini.ReadString('BOLETO', 'Cedente.Complemento', '');
-    cbxBOLUF.Text := Ini.ReadString('BOLETO', 'Cedente.UF', '');
-    cbxBOLEmissao.ItemIndex := Ini.ReadInteger('BOLETO', 'Cedente.RespEmis', -1);
-    cbxBOLF_J.ItemIndex := Ini.ReadInteger('BOLETO', 'Cedente.Pessoa', -1);
-    edtCodTransmissao.Text := Ini.ReadString('BOLETO', 'Cedente.CodTransmissao', '');
-    edtModalidade.Text := Ini.ReadString('BOLETO', 'Cedente.Modalidade', '');
-    edtConvenio.Text := Ini.ReadString('BOLETO', 'Cedente.Convenio', '');
+  {Parametros do Boleto}
+  with FMonitorConfig.BOLETO do
+  begin
+    edtBOLRazaoSocial.Text            := Nome;
+    edtBOLCNPJ.Text                   := CNPJCPF;
+    edtBOLLogradouro.Text             := Logradouro;
+    edtBOLNumero.Text                 := Numero;
+    edtBOLBairro.Text                 := Bairro;
+    edtBOLCidade.Text                 := Cidade;
+    edtBOLCEP.Text                    := CEP;
+    edtBOLComplemento.Text            := Complemento;
+    cbxBOLUF.Text                     := UF;
 
-    {Parametros do Boleto - Banco}
-    cbxBOLBanco.ItemIndex := Ini.ReadInteger('BOLETO', 'Banco', 0);
-    edtBOLConta.Text := Ini.ReadString('BOLETO', 'Conta', '');
-    edtBOLDigitoConta.Text := Ini.ReadString('BOLETO', 'DigitoConta', '');
-    edtBOLAgencia.Text := Ini.ReadString('BOLETO', 'Agencia', '');
-    edtBOLDigitoAgencia.Text := Ini.ReadString('BOLETO', 'DigitoAgencia', '');
-    edtCodCliente.Text := Ini.ReadString('BOLETO', 'CodCedente', '');
-    edtBOLLocalPagamento.Text := Ini.ReadString('BOLETO', 'LocalPagamento', ACBrBoleto1.Banco.LocalPagamento);
+    with Conta do
+    begin
+      cbxBOLEmissao.ItemIndex          := RespEmis -1;
+      cbxBOLF_J.ItemIndex              := Pessoa -1;
 
-    {Parametros do Boleto - Boleto}
-    deBOLDirLogo.Text :=
-      Ini.ReadString('BOLETO', 'DirLogos', ExtractFilePath(Application.ExeName) +
-      'Logos' + PathDelim);
+      edtModalidade.Text               := Modalidade;
+      edtConvenio.Text                 := Convenio;
+      cbxBOLBanco.ItemIndex            := Banco;
+      edtBOLConta.Text                 := Conta;
+      edtBOLDigitoConta.Text           := DigitoConta;
+      edtBOLAgencia.Text               := Agencia;
+      edtBOLDigitoAgencia.Text         := DigitoAgencia;
+      edtCodCliente.Text               := CodCedente;
+      edtBOLLocalPagamento.Text        := LocalPagamento;
+    end;
 
-    spBOLCopias.Value := Ini.ReadInteger('BOLETO', 'Copias', 1);
-    ckgBOLMostrar.Checked[0] := Ini.ReadBool('BOLETO', 'Preview', True);
-    ckgBOLMostrar.Checked[1] := Ini.ReadBool('BOLETO', 'Progresso', True);
-    ckgBOLMostrar.Checked[2] := Ini.ReadBool('BOLETO', 'Setup', True);
-    cbxBOLLayout.ItemIndex := Ini.ReadInteger('BOLETO', 'Layout', 0);
-    cbxBOLFiltro.ItemIndex := Ini.ReadInteger('BOLETO', 'Filtro', 0);
-    deBOLDirArquivo.Text := Ini.ReadString('BOLETO', 'DirArquivoBoleto', '');
-    deBolDirRemessa.Text := Ini.ReadString('BOLETO', 'DirArquivoRemessa', '');
-    deBolDirRetorno.Text := Ini.ReadString('BOLETO', 'DirArquivoRetorno', '');
-    deBolDirRetornoRel.Text := deBolDirRetorno.Text;
+    with RemessaRetorno do
+    begin
+      deBolDirRemessa.Text             := DirArquivoRemessa;
+      deBolDirRetorno.Text             := DirArquivoRetorno;
+      edtCodTransmissao.Text           := CodTransmissao;
+      cbxCNAB.ItemIndex                := CNAB;
+      chkLerCedenteRetorno.Checked     := LerCedenteRetorno;
+    end;
 
-    cbxCNAB.ItemIndex := Ini.ReadInteger('BOLETO', 'CNAB', 0);
-    chkLerCedenteRetorno.Checked := Ini.ReadBool('BOLETO','LerCedenteRetorno',False);
-    chkBOLRelMostraPreview.Checked := Ini.ReadBool('BOLETO','MostraPreviewRelRetorno',True);
-    edtBOLLogoEmpresa.Text := Ini.ReadString('BOLETO', 'LogoEmpresa', '');
-    {Parametro do Boleto Impressora}
-    cbxBOLImpressora.ItemIndex :=
-      cbxBOLImpressora.Items.IndexOf(Ini.ReadString('BOLETO', 'Impressora', ''));
-    {Parametros do Boleto - E-mail}
-    edtBOLEmailAssunto.Text := Ini.ReadString('BOLETO', 'EmailAssuntoBoleto', '');
-    edtBOLEmailMensagem.Text := StringToBinaryString(Ini.ReadString('BOLETO', 'EmailMensagemBoleto', ''));
+    with Layout do
+    begin
+      deBOLDirLogo.Text                := DirLogos;
+      spBOLCopias.Value                := Copias;
+      ckgBOLMostrar.Checked[0]         := Preview;
+      ckgBOLMostrar.Checked[1]         := Progresso;
+      ckgBOLMostrar.Checked[2]         := Setup;
+      cbxBOLLayout.ItemIndex           := Layout;
+      cbxBOLFiltro.ItemIndex           := Filtro;
+      deBOLDirArquivo.Text             := DirArquivoBoleto;
+      cbxBOLImpressora.ItemIndex       := cbxBOLImpressora.Items.IndexOf(Impressora);
+    end;
 
-    {Parametro da Conta de tsEmailDFe}
-    edEmailNome.Text := Ini.ReadString('EMAIL', 'NomeExibicao', '');
-    edEmailEndereco.Text := Ini.ReadString('EMAIL', 'Endereco', '');
-    edEmailHost.Text := Ini.ReadString('EMAIL', 'Email', '');
-    edEmailPorta.Value := Ini.ReadInteger('EMAIL', 'Porta', 0);
-    edEmailUsuario.Text := LeINICrypt(Ini, 'EMAIL', 'Usuario', _C);
-    edEmailSenha.Text := LeINICrypt(Ini, 'EMAIL', 'Senha', _C);
-    cbEmailSsl.Checked := Ini.ReadBool('EMAIL', 'ExigeSSL', False);
-    cbEmailTls.Checked := Ini.ReadBool('EMAIL', 'ExigeTLS', False);
-    cbEmailConfirmation.Checked := Ini.ReadBool('EMAIL', 'Confirmacao', False);
-    cbEmailThread.Checked := Ini.ReadBool('EMAIL', 'SegundoPlano', False);
-    cbEmailCodificacao.Text := Ini.ReadString('EMAIL', 'Codificacao', '');
+    with Relatorio do
+    begin
+      deBolDirRetornoRel.Text          := deBolDirRetorno.Text;
+      chkBOLRelMostraPreview.Checked   := MostraPreviewRelRetorno;
+      edtBOLLogoEmpresa.Text           := LogoEmpresa;
+    end;
 
-    {Parametro Sedex}
-    edtSedexContrato.Text := Ini.ReadString('SEDEX', 'Contrato', '');
-    edtSedexSenha.Text := LeINICrypt(Ini, 'SEDEX', 'SenhaSedex', _C);
-    {Parametro NCM}
-    deNcmSalvar.Text := Ini.ReadString('NCM', 'DirNCMSalvar', '');
+    with Email do
+    begin
+      edtBOLEmailAssunto.Text          := EmailAssuntoBoleto;
+      edtBOLEmailMensagem.Text         := EmailMensagemBoleto;
+    end;
 
-    edtIdToken.Text := Ini.ReadString('NFCe', 'IdToken', '');
-    edtToken.Text := Ini.ReadString('NFCe', 'Token', '');
-    chbTagQrCode.Checked := Ini.ReadBool('NFCe', 'TagQrCode', True);
-    ckNFCeUsarIntegrador.Checked := Ini.ReadBool('NFCe', 'UsarIntegrador', False);
+  end;
 
-        {Parametros NFe}
+  {Parametro e-mail}
+  with FMonitorConfig.Email do
+  begin
+    edEmailNome.Text                   := NomeExibicao;
+    edEmailEndereco.Text               := Endereco;
+    edEmailHost.Text                   := Email;
+    edEmailPorta.Value                 := Porta;
+    edEmailUsuario.Text                := Usuario;
+    edEmailSenha.Text                  := Senha;
+    cbEmailSsl.Checked                 := ExigeSSL;
+    cbEmailTls.Checked                 := ExigeTLS;
+    cbEmailConfirmation.Checked        := Confirmacao;
+    cbEmailThread.Checked              := SegundoPlano;
+    cbEmailCodificacao.Text            := Codificacao;
+  end;
+
+  {Parametro Sedex}
+  with FMonitorConfig.SEDEX do
+  begin
+    edtSedexContrato.Text              := Contrato;
+    edtSedexSenha.Text                 := SenhaSedex;
+  end;
+
+  {Parametro NCM}
+  with FMonitorConfig.NCM do
+  begin
+    deNcmSalvar.Text                   := DirNCMSalvar;
+  end;
+
+  {Parametro DFe}
+  with FMonitorConfig.DFE do
+  begin
     ACBrNFeDANFeESCPOS1.PosPrinter.Device.Desativar;
 
-    cbModoXML.Checked := Ini.ReadBool('ACBrNFeMonitor', 'ModoXML', False);
-    cbRetirarAcentos.Checked := Ini.ReadBool('ACBrNFeMonitor', 'RetirarAcentos', True);
-    edLogComp.Text := Ini.ReadString('ACBrNFeMonitor', 'Arquivo_Log_Comp', 'LOG_COMP.TXT');
-    cbLogComp.Checked := Ini.ReadBool('ACBrNFeMonitor', 'Gravar_Log_Comp', False) and (edLogComp.Text <> '');
-    sedLogLinhasComp.Value := Ini.ReadInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', 0);
-    ArqLogCompTXT := AcertaPath(edLogComp.Text);
-    //rgVersaoSSL.ItemIndex := Ini.ReadInteger('ACBrNFeMonitor', 'VersaoSSL', 0);
-    edtArquivoWebServicesNFe.Text := Ini.ReadString('ACBrNFeMonitor', 'ArquivoWebServices',
-      PathApplication + 'ACBrNFeServicos.ini');
-    edtArquivoWebServicesCTe.Text := Ini.ReadString('ACBrNFeMonitor', 'ArquivoWebServicesCTe',
-      PathApplication + 'ACBrCTeServicos.ini');
-    edtArquivoWebServicesMDFe.Text := Ini.ReadString('ACBrNFeMonitor', 'ArquivoWebServicesMDFe',
-      PathApplication + 'ACBrMDFeServicos.ini');
-    edtArquivoWebServicesGNRe.Text := Ini.ReadString('ACBrNFeMonitor', 'ArquivoWebServicesGNRe',PathApplication + 'ACBrGNREServicos.ini');
-    cbValidarDigest.Checked := Ini.ReadBool('ACBrNFeMonitor', 'ValidarDigest', True);
-    edtTimeoutWebServices.Value := Ini.ReadInteger('ACBrNFeMonitor', 'TimeoutWebService', 15);
+    cbModoXML.Checked                  := ModoXML;
+    cbRetirarAcentos.Checked           := RetirarAcentos;
+    edLogComp.Text                     := Arquivo_Log_Comp;
+    cbLogComp.Checked                  := Gravar_Log_Comp;
+    sedLogLinhasComp.Value             := Linhas_Log_Comp;
+    ArqLogCompTXT                      := AcertaPath(edLogComp.Text);
+    edtArquivoWebServicesNFe.Text      := ArquivoWebServices;
+    edtArquivoWebServicesCTe.Text      := ArquivoWebServicesCTe;
+    edtArquivoWebServicesMDFe.Text     := ArquivoWebServicesMDFe;
+    edtArquivoWebServicesGNRe.Text     := ArquivoWebServicesGNRe;
+    edtArquivoWebServiceseSocial.Text  := ArquivoWebServiceseSocial;
+    cbValidarDigest.Checked            := ValidarDigest;
+    edtTimeoutWebServices.Value        := TimeoutWebService;
+    cbModoEmissao.Checked              := IgnorarComandoModoEmissao;
 
-    cbxTimeZoneMode.ItemIndex := Ini.ReadInteger('WebService','TimeZoneMode',0);
-    edTimeZoneStr.Caption := Ini.ReadString('WebService','TimeZoneStr','');
+    with Certificado do
+    begin
+      cbSSLLib.ItemIndex               := SSLLib;
+      cbCryptLib.ItemIndex             := CryptLib;
+      cbHttpLib.ItemIndex              := HttpLib;
+      cbXmlSignLib.ItemIndex           := XmlSignLib;
+      cbSSLType.ItemIndex              := SSLType;
+      edtArquivoPFX.Text               := ArquivoPFX;
+      edtNumeroSerie.Text              := NumeroSerie;
+      edtSenha.Text                    := Senha;
+      chkExibeRazaoSocial.Checked      := ExibeRazaoSocialCertificado;
+      chkVerificarValidadeCertificado.Checked := VerificarValidade;
+    end;
 
-    cbModoEmissao.Checked := Ini.ReadBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', False);
-    //rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral', 'FormaEmissao', 0);
-    cbFormaEmissaoNFe.ItemIndex := Ini.ReadInteger('WebService', 'FormaEmissaoNFe', Ini.ReadInteger('Geral', 'FormaEmissao', 0));
-    cbFormaEmissaoCTe.ItemIndex := Ini.ReadInteger('WebService', 'FormaEmissaoCTe', Ini.ReadInteger('Geral', 'FormaEmissao', 0));
-    cbFormaEmissaoMDFe.ItemIndex := Ini.ReadInteger('WebService', 'FormaEmissaoMDFe', Ini.ReadInteger('Geral', 'FormaEmissao', 0));
-    cbFormaEmissaoGNRe.ItemIndex := Ini.ReadInteger('WebService', 'FormaEmissaoGNRe', Ini.ReadInteger('Geral', 'FormaEmissao', 0));
-    ckSalvar.Checked := Ini.ReadBool('Geral', 'Salvar', True);
-    edtPathLogs.Text := Ini.ReadString('Geral', 'PathSalvar',PathApplication + 'Logs');
-    cbxImpressora.ItemIndex := cbxImpressora.Items.IndexOf(Ini.ReadString('Geral', 'Impressora', '0'));
+    with Impressao.Geral do
+    begin
+      ckSalvar.Checked                 := Salvar;
+      edtPathLogs.Text                 := PathSalvar;
+      cbxImpressora.ItemIndex          := cbxImpressora.Items.IndexOf(Impressora);
+      rgTipoDanfe.ItemIndex            := DANFE;
+      edtLogoMarca.Text                := LogoMarca;
+      edtLogoMarcaNFCeSAT.Text         := LogoMarcaNFCeSAT;
+    end;
 
-    cbxAjustarAut.Checked := Ini.ReadBool('WebService', 'AjustarAut', False);
-    edtAguardar.Text := Ini.ReadString('WebService', 'Aguardar', '0');
-    edtTentativas.Text := Ini.ReadString('WebService', 'Tentativas', '5');
-    edtIntervalo.Text := Ini.ReadString('WebService', 'Intervalo', '0');
+    with WebService do
+    begin
+      cbxTimeZoneMode.ItemIndex        := TimeZoneMode;
+      edTimeZoneStr.Caption            := TimeZoneStr;
+      cbFormaEmissaoNFe.ItemIndex      := FormaEmissaoNFe;
+      cbFormaEmissaoCTe.ItemIndex      := FormaEmissaoCTe;
+      cbFormaEmissaoMDFe.ItemIndex     := FormaEmissaoMDFe;
+      cbFormaEmissaoGNRe.ItemIndex     := FormaEmissaoGNRe;
+      cbxAjustarAut.Checked            := AjustarAut;
+      edtAguardar.Text                 := Aguardar;
+      edtTentativas.Text               := Tentativas;
+      edtIntervalo.Text                := Intervalo;
+      cbUF.ItemIndex                   := cbUF.Items.IndexOf(UF);
+      rgTipoAmb.ItemIndex              := Ambiente;
+      cbVersaoWS.ItemIndex             := cbVersaoWS.Items.IndexOf(Versao);
+      cbVersaoWSCTe.ItemIndex          := cbVersaoWSCTe.Items.IndexOf(VersaoCTe);
+      cbVersaoWSMDFe.ItemIndex         := cbVersaoWSMDFe.Items.IndexOf(VersaoMDFe);
+      cbVersaoWSeSocial.ItemIndex      := cbVersaoWSeSocial.Items.IndexOf(VersaoeSocial);
+    end;
 
-    cbUF.ItemIndex := cbUF.Items.IndexOf(Ini.ReadString('WebService', 'UF', 'SP'));
-    rgTipoAmb.ItemIndex := Ini.ReadInteger('WebService', 'Ambiente', 0);
-    cbVersaoWS.ItemIndex := cbVersaoWS.Items.IndexOf(
-      Ini.ReadString('WebService', 'Versao', '3.10'));
-    cbVersaoWSCTe.ItemIndex := cbVersaoWSCTe.Items.IndexOf(
-      Ini.ReadString('WebService','VersaoCTe','2.00'));
-    cbVersaoWSMDFe.ItemIndex := cbVersaoWSMDFe.Items.IndexOf(
-      Ini.ReadString('WebService','VersaoMDFe','1.00'));
+    with ESocial do
+    begin
+      edtIDEmpregador.Text             := IdEmpregador;
+      edtIDTransmissor.Text            := IdTransmissor;
+      cbTipoEmpregador.ItemIndex       := cbTipoEmpregador.Items.IndexOf(TipoEmpregador);
+    end;
 
-    edtCNPJContador.Text := Ini.ReadString('NFe', 'CNPJContador', '');
+    with WebService.Proxy do
+    begin
+      edtProxyHost.Text                := Host;
+      edtProxyPorta.Text               := Porta;
+      edtProxyUser.Text                := User;
+      edtProxySenha.Text               := Pass;
+    end;
 
-    cbSSLLib.ItemIndex     := Ini.ReadInteger( 'Certificado','SSLLib' ,
-      IfThen(Ini.ReadInteger('ACBrNFeMonitor', 'VersaoSSL', 0)=0, 1, 4));
-    cbCryptLib.ItemIndex   := Ini.ReadInteger( 'Certificado','CryptLib', 0);
-    cbHttpLib.ItemIndex    := Ini.ReadInteger( 'Certificado','HttpLib', 0);
-    cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado','XmlSignLib', 0);
-    cbSSLType.ItemIndex    := Ini.ReadInteger( 'Certificado','SSLType', 0);
+    with WebService.NFCe do
+    begin
+      edtIdToken.Text                    := IdToken;
+      edtToken.Text                      := Token;
+      chbTagQrCode.Checked               := TagQrCode;
+      ckNFCeUsarIntegrador.Checked       := UsarIntegrador;
 
-    edtArquivoPFX.Text := Ini.ReadString('Certificado', 'ArquivoPFX', '');
-    edtNumeroSerie.Text := Ini.ReadString('Certificado', 'NumeroSerie', '');
-    edtSenha.Text := LeINICrypt(INI, 'Certificado', 'Senha', _C);
-    chkExibeRazaoSocial.Checked := Ini.ReadBool('Certificado', 'ExibeRazaoSocialCertificado', False);
-    chkVerificarValidadeCertificado.Checked := Ini.ReadBool('Certificado', 'VerificarValidade', False);
+       ACBrNFe1.Configuracoes.Geral.IdCSC := IdToken;;
+       ACBrNFe1.Configuracoes.Geral.CSC   := Token;
+       ACBrNFe1.Configuracoes.Geral.IncluirQRCodeXMLNFCe := TagQrCode;
+    end;
 
-    edtProxyHost.Text := Ini.ReadString('Proxy', 'Host', '');
-    edtProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
-    edtProxyUser.Text := Ini.ReadString('Proxy', 'User', '');
-    edtProxySenha.Text := LeINICrypt(INI, 'Proxy', 'Pass', _C);
+    with Email do
+    begin
+      edtEmailAssuntoNFe.Text            := AssuntoNFe;
+      mmEmailMsgNFe.Lines.Text           := StringToBinaryString(MensagemNFe);
+      edtEmailAssuntoCTe.Text            := AssuntoCTe;
+      mmEmailMsgCTe.Lines.Text           := StringToBinaryString(MensagemCTe);
+      edtEmailAssuntoMDFe.Text           := AssuntoMDFe;
+      mmEmailMsgMDFe.Lines.Text          := StringToBinaryString(MensagemMDFe);
+    end;
 
-    cbxSalvarArqs.Checked := Ini.ReadBool('Arquivos', 'Salvar', True);
-    cbxPastaMensal.Checked := Ini.ReadBool('Arquivos', 'PastaMensal', True);
-    cbxAdicionaLiteral.Checked := Ini.ReadBool('Arquivos', 'AddLiteral', True);
-    cbxEmissaoPathNFe.Checked := Ini.ReadBool('Arquivos', 'EmissaoPathNFe', True);
-    cbxSalvaPathEvento.Checked :=
-      Ini.ReadBool('Arquivos', 'SalvarCCeCanPathEvento', True);
-    cbxSepararPorCNPJ.Checked := Ini.ReadBool('Arquivos', 'SepararPorCNPJ', True);
-    cbxSepararporModelo.Checked := Ini.ReadBool('Arquivos', 'SepararPorModelo', True);
-    cbxSalvarNFesProcessadas.Checked :=
-      Ini.ReadBool('Arquivos', 'SalvarApenasNFesAutorizadas', False);
-    cbxAtualizarXMLCancelado.Checked := Ini.ReadBool('Arquivos', 'AtualizarXMLCancelado', True);
-    cbxNormatizarMunicipios.Checked := Ini.ReadBool('Arquivos', 'NormatizarMunicipios', True);
-    cbxUsarSeparadorPathPDF.Checked := Ini.ReadBool('Arquivos', 'UsarSeparadorPathPDF', True);
+    with WebService.NFe do
+    begin
+      edtCNPJContador.Text               := CNPJContador;
+    end;
 
-    edtPathNFe.Text := Ini.ReadString('Arquivos', 'PathNFe', PathApplication+'Arqs');
-    edtPathInu.Text := Ini.ReadString('Arquivos', 'PathInu', PathApplication+'Arqs');
-    edtPathDPEC.Text := Ini.ReadString('Arquivos', 'PathDPEC', PathApplication+'Arqs');
-    edtPathEvento.Text := Ini.ReadString('Arquivos', 'PathEvento', PathApplication+'Arqs');
+    with Impressao.NFCe.Emissao do
+    begin
+      rgModeloDANFeNFCE.ItemIndex         := Modelo;
+      rgModoImpressaoEvento.ItemIndex     := ModoImpressaoEvento;
+      cbxImprimirItem1LinhaNFCe.Checked   := ImprimirItem1Linha;
+      cbxImprimirDescAcresItemNFCe.Checked:= ImprimirDescAcresItem;
+      cbxImpressoraNFCe.ItemIndex         := cbxImpressoraNFCe.Items.IndexOf(ImpressoraPadrao);
+      cbxImprimirQRCodeLateralNFCe.Checked:= QRCodeLateral;
+      cbxImprimirCodigoEANNFCe.Checked    := UsaCodigoEanImpressao;
+      cbxImprimirNomeFantasiaNFCe.Checked := ImprimeNomeFantasia;
+    end;
+
+    with Impressao.NFCe.Emissao.DANFCe do
+    begin
+      fspeNFCeMargemInf.Value             := MargemInf ;
+      fspeNFCeMargemSup.Value             := MargemSup ;
+      fspeNFCeMargemDir.Value             := MargemDir;
+      fspeNFCeMargemEsq.Value             := MargemEsq ;
+      fspeLarguraNFCe.Value               := LarguraBobina;
+    end;
+
+    with Impressao.DANFE do
+    begin
+      rgModeloDanfe.ItemIndex             := Modelo;
+      edtSiteEmpresa.Text                 := Site;
+      edtEmailEmpresa.Text                := Email;
+      edtFaxEmpresa.Text                  := Fax;
+      cbxImpDescPorc.Checked              := ImpDescPorc;
+      cbxMostrarPreview.Checked           := MostrarPreview;
+      edtNumCopia.Value                   := Copias;
+      speLargCodProd.Value                := LarguraCodigoProduto;
+      speEspBorda.Value                   := EspessuraBorda;
+      speFonteRazao.Value                 := FonteRazao;
+      speFonteEndereco.Value              := FonteEndereco;
+      speFonteCampos.Value                := FonteCampos;
+      speAlturaCampos.Value               := AlturaCampos;
+      fspeMargemInf.Value                 := Margem;
+      fspeMargemSup.Value                 := MargemSup;
+      fspeMargemDir.Value                 := MargemDir;
+      fspeMargemEsq.Value                 := MargemEsq;
+      edtPathPDF.Text                     := PathPDF;
+      spedtCasasDecimaisQtd.Value         := DecimaisQTD;
+      spedtDecimaisVUnit.Value            := DecimaisValor;
+      cbxExibeResumo.Checked              := ExibeResumo;
+      cbxImprimirTributos.Checked         := ImprimirTributosItem;
+      cbxImpValLiq.Checked                := ImprimirValLiq;
+      cbxUnComTributavel.ItemIndex        := UNComercialETributavel;
+      cbxFormCont.Checked                 := PreImpresso;
+      cbxMostraStatus.Checked             := MostrarStatus;
+      cbxExibirEAN.Checked                := ExibirEAN;
+      cbxExibirCampoFatura.Checked        := ExibirCampoFatura;
+      cbxExpandirLogo.Checked             := ExpandirLogo;
+      rgTipoFonte.ItemIndex               := Fonte;
+      rgLocalCanhoto.ItemIndex            := LocalCanhoto;
+      cbxQuebrarLinhasDetalhesItens.Checked:=QuebrarLinhasDetalheItens;
+      cbxImpDetEspNFe.Checked             := ImprimirDetalhamentoEspecifico;
+      cbxImpDocsReferenciados.Checked     := ImprimirDadosDocReferenciados;
+      cbxExibirInfAdicProduto.Checked     := ExibirBandInforAdicProduto;
+      cbxExibirLogoEmCima.Checked         := LogoEmCima;
+    end;
+
+    with Impressao.DACTE do
+    begin
+      rgTamanhoPapelDacte.ItemIndex := TamanhoPapel;
+    end;
+
+    with Diretorios do
+    begin
+      cbxSalvarArqs.Checked         := Salvar;
+      cbxPastaMensal.Checked        := PastaMensal;
+      cbxAdicionaLiteral.Checked    := AddLiteral;
+      cbxEmissaoPathNFe.Checked     := EmissaoPathNFe;
+      cbxSalvaPathEvento.Checked    := SalvarCCeCanPathEvento;
+      cbxSepararPorCNPJ.Checked     := SepararPorCNPJ;
+      cbxSepararporModelo.Checked   := SepararPorModelo;
+      cbxSalvarNFesProcessadas.Checked := SalvarApenasNFesAutorizadas;
+      cbxAtualizarXMLCancelado.Checked := AtualizarXMLCancelado;
+      cbxNormatizarMunicipios.Checked  := NormatizarMunicipios;
+      cbxUsarSeparadorPathPDF.Checked  := UsarSeparadorPathPDF;
+      edtPathNFe.Text                  := PathNFe;
+      edtPathInu.Text                  := PathInu;
+      edtPathDPEC.Text                 := PathDPEC;
+      edtPathEvento.Text               := PathEvento;
+
+    end;
 
     SetDFeSSLType;
 
@@ -4190,10 +4388,10 @@ begin
     SetComumConfig(ACBrMDFe1.Configuracoes);
     SetComumConfig(ACBrGNRE1.Configuracoes);
     SetComumConfig(ACBrBlocoX1.Configuracoes);
+    SetComumConfig(ACBreSocial1.Configuracoes);
 
     AtualizaSSLLibsCombo;
 
-    ACBrNFe1.Configuracoes.Geral.AtualizarXMLCancelado := Ini.ReadBool('Arquivos', 'AtualizarXMLCancelado', True);
 
     if EstaVazio(edtAguardar.Text) then
       edtAguardar.Text := IntToStr(ACBrNFe1.Configuracoes.WebServices.AguardarConsultaRet);
@@ -4207,110 +4405,42 @@ begin
     edTimeZoneStr.Caption := ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr;
     edTimeZoneStr.Enabled := (ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao = tzManual);
 
-    rgTipoDanfe.ItemIndex := Ini.ReadInteger('Geral', 'DANFE', 0);
-    edtLogoMarca.Text := Ini.ReadString('Geral', 'LogoMarca', '');
-    edtLogoMarcaNFCeSAT.Text := Ini.ReadString('Geral', 'LogoMarcaNFCeSAT', '');
-    rgModeloDanfe.ItemIndex := Ini.ReadInteger('DANFE', 'Modelo', 0);
-    rgTamanhoPapelDacte.ItemIndex := Ini.ReadInteger('DACTE', 'TamanhoPapel', 0);
-    edtSiteEmpresa.Text := Ini.ReadString('DANFE', 'Site', '');
-    edtEmailEmpresa.Text := Ini.ReadString('DANFE', 'Email', '');
-    edtFaxEmpresa.Text := Ini.ReadString('DANFE', 'Fax', '');
-    cbxImpDescPorc.Checked := Ini.ReadBool('DANFE', 'ImpDescPorc', True);
-    cbxMostrarPreview.Checked := Ini.ReadBool('DANFE', 'MostrarPreview', False);
-    edtNumCopia.Value := Ini.ReadInteger('DANFE', 'Copias', 1);
-    speLargCodProd.Value := Ini.ReadInteger('DANFE', 'LarguraCodigoProduto', 40);
-    speEspBorda.Value := Ini.ReadInteger('DANFE', 'EspessuraBorda', 1);
-    speFonteRazao.Value := Ini.ReadInteger('DANFE', 'FonteRazao', 12);
-    speFonteEndereco.Value := Ini.ReadInteger('DANFE', 'FonteEndereco', 10);
-    speFonteCampos.Value := Ini.ReadInteger('DANFE', 'FonteCampos', 10);
-    speAlturaCampos.Value := Ini.ReadInteger('DANFE', 'AlturaCampos', 30);
-    fspeMargemInf.Value := Ini.ReadFloat('DANFE', 'Margem', 0.8);
-    fspeMargemSup.Value := Ini.ReadFloat('DANFE', 'MargemSup', 0.8);
-    fspeMargemDir.Value := Ini.ReadFloat('DANFE', 'MargemDir', 0.51);
-    fspeMargemEsq.Value := Ini.ReadFloat('DANFE', 'MargemEsq', 0.6);
-    fspeNFCeMargemInf.Value := Ini.ReadFloat('DANFCe', 'MargemInf', 0.8);
-    fspeNFCeMargemSup.Value := Ini.ReadFloat('DANFCe', 'MargemSup', 0.8);
-    fspeNFCeMargemDir.Value := Ini.ReadFloat('DANFCe', 'MargemDir', 0.51);
-    fspeNFCeMargemEsq.Value := Ini.ReadFloat('DANFCe', 'MargemEsq', 0.6);
-    fspeLarguraNFCe.Value   := Ini.ReadInteger('DANFCe', 'LarguraBobina', 302);
-    edtPathPDF.Text :=
-      Ini.ReadString('DANFE', 'PathPDF', PathApplication+'PDF');
-    spedtCasasDecimaisQtd.Value := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
-    spedtDecimaisVUnit.Value := Ini.ReadInteger('DANFE', 'DecimaisValor', 2);
-    cbxExibeResumo.Checked := Ini.ReadBool('DANFE', 'ExibeResumo', False);
-    cbxImprimirTributos.Checked :=
-      Ini.ReadBool('DANFE', 'ImprimirTributosItem', False);
-    cbxImpValLiq.Checked := Ini.ReadBool('DANFE', 'ImprimirValLiq', False);
-    cbxUnComTributavel.ItemIndex := Ini.ReadInteger('DANFE', 'UNComercialETributavel', 0);
-    cbxFormCont.Checked := Ini.ReadBool('DANFE', 'PreImpresso', False);
-    cbxMostraStatus.Checked := Ini.ReadBool('DANFE', 'MostrarStatus', False);
-    cbxExibirEAN.Checked := Ini.ReadBool('DANFE', 'ExibirEAN', False);
-    cbxExibirCampoFatura.Checked := Ini.ReadBool('DANFE', 'ExibirCampoFatura', True);
-    cbxExpandirLogo.Checked := Ini.ReadBool('DANFE', 'ExpandirLogo', False);
-    rgTipoFonte.ItemIndex := Ini.ReadInteger('DANFE', 'Fonte', 0);
-    rgLocalCanhoto.ItemIndex := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
-    cbxQuebrarLinhasDetalhesItens.Checked := ini.ReadBool('DANFE','QuebrarLinhasDetalheItens', False) ;
-    cbxImpDetEspNFe.Checked := ini.ReadBool('DANFE','ImprimirDetalhamentoEspecifico', True) ;
-    cbxImpDocsReferenciados.Checked := ini.ReadBool('DANFE','ImprimirDadosDocReferenciados', True) ;
-    cbxExibirInfAdicProduto.Checked := Ini.ReadBool('DANFE', 'ExibirBandInforAdicProduto', False);
-    cbxExibirLogoEmCima.Checked := Ini.ReadBool('DANFE', 'LogoEmCima', False);
-
     cbxImpDescPorcChange(nil);
 
     if rgModeloDanfe.ItemIndex = 0 then
     begin
-      ACBrNFe1.DANFE           := ACBrNFeDANFeRL1;
-      ACBrCTe1.DACTE           := ACBrCTeDACTeRL1;
-      ACBrMDFe1.DAMDFE         := ACBrMDFeDAMDFeRL1;
-      ACBrGNRE1.GNREGuia       :=ACBrGNREGuiaRL1;
+       ACBrNFe1.DANFE           := ACBrNFeDANFeRL1;
+       ACBrCTe1.DACTE           := ACBrCTeDACTeRL1;
+       ACBrMDFe1.DAMDFE         := ACBrMDFeDAMDFeRL1;
+       ACBrGNRE1.GNREGuia       :=ACBrGNREGuiaRL1;
     end;
 
     if ckNFCeUsarIntegrador.Checked then
-    begin
-      ACBrNFe1.Integrador := ACBrIntegrador1;
-      ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFCe;
-    end
+       ACBrNFe1.Integrador          := ACBrIntegrador1
     else
-      ACBrNFe1.Integrador := nil;
+       ACBrNFe1.Integrador          := nil;
 
-    ACBrCTeDACTeRL1.TamanhoPapel := TpcnTamanhoPapel(rgTamanhoPapelDacte.ItemIndex);
+    ACBrCTeDACTeRL1.TamanhoPapel    := TpcnTamanhoPapel(rgTamanhoPapelDacte.ItemIndex);
 
-    rgModeloDANFeNFCE.ItemIndex := Ini.ReadInteger('NFCe', 'Modelo', 0);
-    rgModoImpressaoEvento.ItemIndex :=
-      Ini.ReadInteger('NFCe', 'ModoImpressaoEvento', 0);
-    cbxImprimirItem1LinhaNFCe.Checked :=
-      Ini.ReadBool('NFCe', 'ImprimirItem1Linha', True);
-    cbxImprimirDescAcresItemNFCe.Checked :=
-      Ini.ReadBool('NFCe', 'ImprimirDescAcresItem', True);
-    cbxImpressoraNFCe.ItemIndex :=
-      cbxImpressoraNFCe.Items.IndexOf(Ini.ReadString('NFCe', 'ImpressoraPadrao', '0'));
-    cbxImprimirQRCodeLateralNFCe.Checked :=
-      Ini.ReadBool('NFCe', 'QRCodeLateral', True);
-    cbxImprimirCodigoEANNFCe.Checked :=
-      Ini.ReadBool('NFCe', 'UsaCodigoEanImpressao', False);
-    cbxImprimirNomeFantasiaNFCe.Checked :=
-      Ini.ReadBool('NFCe', 'ImprimeNomeFantasia', False);
-
-
-    ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
-    ACBrCTe1.DACTe.Logo       := edtLogoMarca.Text;
-    ACBrCTe1.DACTe.Sistema := edSH_RazaoSocial.Text;
-    ACBrCTe1.DACTe.Site    := edtSiteEmpresa.Text;
-    ACBrCTe1.DACTe.Email   := edtEmailEmpresa.Text;
-    ACBrCTe1.DACTe.Fax     := edtFaxEmpresa.Text;
-    ACBrCTe1.DACTe.ImprimirDescPorc  := cbxImpDescPorc.Checked;
-    ACBrCTe1.DACTe.MostrarPreview    := cbxMostrarPreview.Checked;
-    ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
-    ACBrCTe1.DACTe.NumCopias  := edtNumCopia.Value;
-    ACBrCTe1.DACTe.MargemInferior  := fspeMargemInf.Value;
-    ACBrCTe1.DACTe.MargemSuperior  := fspeMargemSup.Value;
-    ACBrCTe1.DACTe.MargemDireita   := fspeMargemDir.Value;
-    ACBrCTe1.DACTe.MargemEsquerda  := fspeMargemEsq.Value;
-    ACBrCTe1.DACTe.PathPDF     := edtPathPDF.Text;
+    ACBrCTe1.DACTe.TipoDACTE        := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
+    ACBrCTe1.DACTe.Logo             := edtLogoMarca.Text;
+    ACBrCTe1.DACTe.Sistema          := edSH_RazaoSocial.Text;
+    ACBrCTe1.DACTe.Site             := edtSiteEmpresa.Text;
+    ACBrCTe1.DACTe.Email            := edtEmailEmpresa.Text;
+    ACBrCTe1.DACTe.Fax              := edtFaxEmpresa.Text;
+    ACBrCTe1.DACTe.ImprimirDescPorc := cbxImpDescPorc.Checked;
+    ACBrCTe1.DACTe.MostrarPreview   := cbxMostrarPreview.Checked;
+    ACBrCTe1.DACTe.Impressora       := cbxImpressora.Text;
+    ACBrCTe1.DACTe.NumCopias        := edtNumCopia.Value;
+    ACBrCTe1.DACTe.MargemInferior   := fspeMargemInf.Value;
+    ACBrCTe1.DACTe.MargemSuperior   := fspeMargemSup.Value;
+    ACBrCTe1.DACTe.MargemDireita    := fspeMargemDir.Value;
+    ACBrCTe1.DACTe.MargemEsquerda   := fspeMargemEsq.Value;
+    ACBrCTe1.DACTe.PathPDF          := edtPathPDF.Text;
     ACBrCTe1.DACTe.MostrarStatus        := cbxMostraStatus.Checked;
     ACBrCTe1.DACTe.ExpandirLogoMarca    := cbxExpandirLogo.Checked;
     ACBrCTe1.DACTE.UsarSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
-    ACBrCTeDACTeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
+    ACBrCTeDACTeRL1.PosCanhoto          := TPosRecibo( rgLocalCanhoto.ItemIndex );
 
     ACBrMDFe1.DAMDFe.TipoDAMDFe        := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrMDFe1.DAMDFe.Logo              := edtLogoMarca.Text;
@@ -4344,142 +4474,170 @@ begin
     ACBrGNRE1.GNREGuia.PathPDF         := edtPathPDF.Text;
     ACBrGNRE1.GNREGuia.MostrarStatus   := cbxMostraStatus.Checked;
 
-    edtEmailAssuntoNFe.Text := Ini.ReadString('Email', 'AssuntoNFe', '');
-    mmEmailMsgNFe.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'MensagemNFe', '') );
-    edtEmailAssuntoCTe.Text := Ini.ReadString('Email', 'AssuntoCTe', '');
-    mmEmailMsgCTe.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'MensagemCTe', '') );
-    edtEmailAssuntoMDFe.Text := Ini.ReadString('Email', 'AssuntoMDFe', '');
-    mmEmailMsgMDFe.Lines.Text := StringToBinaryString( Ini.ReadString('Email', 'MensagemMDFe', '') );
-
     VerificaDiretorios;
-
-    // token da nfce
-    ACBrNFe1.Configuracoes.Geral.IdCSC := Ini.ReadString('NFCe', 'IdToken', '');
-    ACBrNFe1.Configuracoes.Geral.CSC := Ini.ReadString('NFCe', 'Token', '');
-    ACBrNFe1.Configuracoes.Geral.IncluirQRCodeXMLNFCe := Ini.ReadBool('NFCe', 'TagQrCode', True);
 
     ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo := ESCPOSAtivado;
 
-    {Parametro SAT}
+  end;
 
-    cbxModeloSAT.ItemIndex    := INI.ReadInteger('SAT','Modelo',0);
-    edSATLog.Text             := INI.ReadString('SAT','ArqLog','ACBrSAT.log');
-    edNomeDLL.Text         := INI.ReadString('SAT','NomeDLL',PathApplication+'SAT\Emulador\SAT.DLL');
-    edtCodigoAtivacao.Text := INI.ReadString('SAT','CodigoAtivacao','123456');
-    edtCodUF.Text          := INI.ReadString('SAT','CodigoUF','35');
-    seNumeroCaixa.Value    := INI.ReadInteger('SAT','NumeroCaixa',1);
-    cbxAmbiente.ItemIndex  := INI.ReadInteger('SAT','Ambiente',1);
-    sePagCod.Value         := INI.ReadInteger('SAT','PaginaDeCodigo',0);
+  {Parametro SAT}
+
+  with FMonitorConfig.SAT do
+  begin
+    cbxModeloSAT.ItemIndex             := Modelo;
+    edSATLog.Text                      := ArqLog;
+    edNomeDLL.Text                     := NomeDLL;
+    edtCodigoAtivacao.Text             := CodigoAtivacao;
+    edtCodUF.Text                      := CodigoUF;
+    seNumeroCaixa.Value                := NumeroCaixa;
+    cbxAmbiente.ItemIndex              := Ambiente;
+    sePagCod.Value                     := PaginaDeCodigo;
     sePagCodChange(self);
-    sfeVersaoEnt.Value     := INI.ReadFloat('SAT','versaoDadosEnt', cversaoDadosEnt);
-    cbxFormatXML.Checked   := INI.ReadBool('SAT','FormatarXML', True);
-    edSATPathArqs.Text     := INI.ReadString('SAT','PathCFe',PathApplication+'Arqs'+PathDelim+'SAT');
-    cbxSATSalvarCFe.Checked     := INI.ReadBool('SAT','SalvarCFe', True);
-    cbxSATSalvarCFeCanc.Checked := INI.ReadBool('SAT','SalvarCFeCanc', True);
-    cbxSATSalvarEnvio.Checked   := INI.ReadBool('SAT','SalvarEnvio', True);
-    cbxSATSepararPorCNPJ.Checked:= INI.ReadBool('SAT','SepararPorCNPJ', True);
-    cbxSATSepararPorMES.Checked := INI.ReadBool('SAT','SepararPorMES', True);
+    sfeVersaoEnt.Value                 := versaoDadosEnt;
+    cbxFormatXML.Checked               := FormatarXML;
+    edSATPathArqs.Text                 := PathCFe;
+    cbxSATSalvarCFe.Checked            := SalvarCFe;
+    cbxSATSalvarCFeCanc.Checked        := SalvarCFeCanc;
+    cbxSATSalvarEnvio.Checked          := SalvarEnvio;
+    cbxSATSepararPorCNPJ.Checked       := SepararPorCNPJ;
+    cbxSATSepararPorMES.Checked        := SepararPorMES;
 
-    ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := INI.ReadString('SATExtrato','ParamsString','');
-    ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem := INI.ReadBool('SATExtrato', 'ImprimeDescAcrescItem', True);
-    ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha := INI.ReadBool('SATExtrato', 'ImprimeEmUmaLinha', False);
-    ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao := INI.ReadBool('SATExtrato', 'UsaCodigoEanImpressao', False);
+    with SATImpressao.SATExtrado do
+    begin
+      ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := ParamsString;
+      ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem          := ImprimeDescAcrescItem;
+      ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha              := ImprimeEmUmaLinha;
+      ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao          := UsaCodigoEanImpressao;
 
-    ACBrSATExtratoFortes1.ImprimeDescAcrescItem := INI.ReadBool('SATExtrato', 'ImprimeDescAcrescItem', True);
-    ACBrSATExtratoFortes1.ImprimeEmUmaLinha := INI.ReadBool('SATExtrato', 'ImprimeEmUmaLinha', False);
-    ACBrSATExtratoFortes1.UsaCodigoEanImpressao := INI.ReadBool('SATExtrato', 'UsaCodigoEanImpressao', False);
+      ACBrSATExtratoFortes1.ImprimeDescAcrescItem          := ImprimeDescAcrescItem;
+      ACBrSATExtratoFortes1.ImprimeEmUmaLinha              := ImprimeEmUmaLinha;
+      ACBrSATExtratoFortes1.UsaCodigoEanImpressao          := UsaCodigoEanImpressao;
 
-    cbxImprimirDescAcresItemSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem;
-    cbxImprimirItem1LinhaSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha;
-    cbxImprimirCodEANitemSAT.Checked := ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao;
+      cbxImprimirDescAcresItemSAT.Checked   := ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem;
+      cbxImprimirItem1LinhaSAT.Checked      := ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha;
+      cbxImprimirCodEANitemSAT.Checked      := ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao;
 
-    rdgImprimeChave1LinhaSAT.ItemIndex := INI.ReadInteger('SATExtrato', 'ImprimeChaveEmUmaLinha', 0);
-    ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
+      rdgImprimeChave1LinhaSAT.ItemIndex    := ImprimeChaveEmUmaLinha;
+      ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
+    end;
 
-    edtEmitCNPJ.Text := INI.ReadString('SATEmit','CNPJ','');
-    edtEmitIE.Text   := INI.ReadString('SATEmit','IE','');
-    edtEmitIM.Text   := INI.ReadString('SATEmit','IM','');
-    cbxRegTributario.ItemIndex := INI.ReadInteger('SATEmit','RegTributario',0);
-    cbxRegTribISSQN.ItemIndex  := INI.ReadInteger('SATEmit','RegTribISSQN',0);
-    cbxIndRatISSQN.ItemIndex   := INI.ReadInteger('SATEmit','IndRatISSQN',0);
+    with SATImpressao.SATEmit do
+    begin
+      edtEmitCNPJ.Text                      := CNPJ;
+      edtEmitIE.Text                        := IE;
+      edtEmitIM.Text                        := IM;
+      cbxRegTributario.ItemIndex            := RegTributario;
+      cbxRegTribISSQN.ItemIndex             := RegTribISSQN;
+      cbxIndRatISSQN.ItemIndex              := IndRatISSQN;
+    end;
 
-    edtSwHCNPJ.Text       := INI.ReadString('SATSwH','CNPJ','');
-    edtSwHAssinatura.Text := INI.ReadString('SATSwH','Assinatura','');
+    with SATImpressao.SATFortes do
+    begin
+      cbUsarFortes.Checked                  := UsarFortes;
+      cbUsarEscPos.Checked                  := not cbUsarFortes.Checked;
+      seLargura.Value                       := Largura;
+      seMargemTopo.Value                    := MargemTopo;
+      seMargemFundo.Value                   := MargemFundo;
+      seMargemEsquerda.Value                := MargemEsquerda;
+      seMargemDireita.Value                 := MargemDireita;
+      cbPreview.Checked                     := Preview;
+    end;
 
-    cbUsarFortes.Checked   := INI.ReadBool('SATFortes','UsarFortes', True) ;
-    cbUsarEscPos.Checked   := not cbUsarFortes.Checked;
-    seLargura.Value        := INI.ReadInteger('SATFortes','Largura',ACBrSATExtratoFortes1.LarguraBobina);
-    seMargemTopo.Value     := INI.ReadInteger('SATFortes','MargemTopo',ACBrSATExtratoFortes1.Margens.Topo);
-    seMargemFundo.Value    := INI.ReadInteger('SATFortes','MargemFundo',ACBrSATExtratoFortes1.Margens.Fundo);
-    seMargemEsquerda.Value := INI.ReadInteger('SATFortes','MargemEsquerda',ACBrSATExtratoFortes1.Margens.Esquerda);
-	seMargemDireita.Value  := INI.ReadInteger('SATFortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
-    cbPreview.Checked      := INI.ReadBool('SATFortes','Preview',True);
+    with SATImpressao.SATPrinter do
+    begin
+      lImpressora.Caption                   := Name;
+    end;
 
-    lImpressora.Caption := INI.ReadString('SATPrinter','Name',Printer.PrinterName);
+    with SATRede do
+    begin
+      rgRedeTipoInter.ItemIndex             := tipoInter;
+      rgRedeTipoLan.ItemIndex               := tipoLan;
+      edRedeSSID.Text                       := SSID;
+      cbxRedeSeg.ItemIndex                  := seg;
+      edRedeCodigo.Text                     := codigo;
+      edRedeIP.Text                         := lanIP;
+      edRedeMask.Text                       := lanMask;
+      edRedeGW.Text                         := lanGW;
+      edRedeDNS1.Text                       := lanDNS1;
+      edRedeDNS2.Text                       := lanDNS2;;
+      edRedeUsuario.Text                    := usuario;
+      edRedeSenha.Text                      := senha;
+      cbxRedeProxy.ItemIndex                := proxy;
+      edRedeProxyIP.Text                    := proxy_ip;
+      edRedeProxyPorta.Value                := proxy_porta;
+      edRedeProxyUser.Text                  := proxy_user;
+      edRedeProxySenha.Text                 := proxy_senha;
+    end;
 
-    rgRedeTipoInter.ItemIndex := INI.ReadInteger('SATRede','tipoInter',0);
-    rgRedeTipoLan.ItemIndex   := INI.ReadInteger('SATRede','tipoLan',0);
-    edRedeSSID.Text           := INI.ReadString('SATRede','SSID','');
-    cbxRedeSeg.ItemIndex      := INI.ReadInteger('SATRede','seg',0);
-    edRedeCodigo.Text         := INI.ReadString('SATRede','codigo','');
-    edRedeIP.Text             := INI.ReadString('SATRede','lanIP','');
-    edRedeMask.Text           := INI.ReadString('SATRede','lanMask','');
-    edRedeGW.Text             := INI.ReadString('SATRede','lanGW','');
-    edRedeDNS1.Text           := INI.ReadString('SATRede','lanDNS1','');
-    edRedeDNS2.Text           := INI.ReadString('SATRede','lanDNS2','');
-    edRedeUsuario.Text        := INI.ReadString('SATRede','usuario','');
-    edRedeSenha.Text          := INI.ReadString('SATRede','senha','');
-    cbxRedeProxy.ItemIndex    := INI.ReadInteger('SATRede','proxy',0);
-    edRedeProxyIP.Text        := INI.ReadString('SATRede','proxy_ip','');
-    edRedeProxyPorta.Value    := INI.ReadInteger('SATRede','proxy_porta',0);
-    edRedeProxyUser.Text      := INI.ReadString('SATRede','proxy_user','');
-    edRedeProxySenha.Text     := INI.ReadString('SATRede','proxy_senha','');
-
-    edMFEInput.Text           := INI.ReadString('SATIntegrador','Input','c:\Integrador\Input\');
-    edMFEOutput.Text          := INI.ReadString('SATIntegrador','Output','c:\Integrador\Output\');
-    seMFETimeout.Value        := INI.ReadInteger('SATIntegrador','Timeout',30);
+    with SATSwH do
+    begin
+      edtSwHCNPJ.Text       := CNPJ;
+      edtSwHAssinatura.Text := Assinatura;
+    end;
 
     AjustaACBrSAT;
 
-    {Parâmetro PosPrinter}
-    POSPrDeviceParams       := INI.ReadString('PosPrinter', 'SerialParams', ACBrPosPrinter1.Device.ParamsString);
-    cbxModelo.ItemIndex     := INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo));
-    cbxPorta.Text           := INI.ReadString('PosPrinter', 'Porta', ACBrPosPrinter1.Porta);
-    seColunas.Value         := INI.ReadInteger('PosPrinter', 'Colunas', ACBrPosPrinter1.ColunasFonteNormal);
-    seEspacosLinhas.Value   := INI.ReadInteger('PosPrinter', 'EspacoEntreLinhas', ACBrPosPrinter1.EspacoEntreLinhas);
-    seBuffer.Value          := INI.ReadInteger('PosPrinter', 'LinhasBuffer', ACBrPosPrinter1.LinhasBuffer);
-    seLinhasPular.Value     := INI.ReadInteger('PosPrinter', 'LinhasPular', ACBrPosPrinter1.LinhasEntreCupons);
-    cbxPagCodigo.ItemIndex  := INI.ReadInteger('PosPrinter', 'PaginaDeCodigo', Integer(ACBrPosPrinter1.PaginaDeCodigo));
-    cbControlePorta.Checked := INI.ReadBool('PosPrinter', 'ControlePorta', ACBrPosPrinter1.ControlePorta);
-    cbCortarPapel.Checked   := INI.ReadBool('PosPrinter', 'CortarPapel', ACBrPosPrinter1.CortaPapel);
+  end;
 
-    cbTraduzirTags.Checked  := INI.ReadBool('PosPrinter', 'TraduzirTags', ACBrPosPrinter1.TraduzirTags);
-    cbIgnorarTags.Checked   := INI.ReadBool('PosPrinter', 'IgnorarTags', ACBrPosPrinter1.IgnorarTags);
-    edPosPrinterLog.Text    := INI.ReadString('PosPrinter', 'ArqLog', ACBrPosPrinter1.ArqLOG);
+  {Parâmetro Integrador}
+  with FMonitorConfig.IntegradorFiscal do
+  begin
+    edMFEInput.Text           := Input;
+    edMFEOutput.Text          := Output;
+    seMFETimeout.Value        := Timeout;
+  end;
 
-    seCodBarrasLargura.Value := INI.ReadInteger('Barras', 'Largura', ACBrPosPrinter1.ConfigBarras.LarguraLinha);
-    seCodBarrasAltura.Value  := INI.ReadInteger('Barras', 'Altura', ACBrPosPrinter1.ConfigBarras.Altura);
-    cbHRI.Checked            := INI.ReadBool('Barras', 'HRI', ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
+   {Parâmetro PosPrinter}
+  with FMonitorConfig.PosPrinter do
+  begin
+    POSPrDeviceParams       :=  SerialParams;
+    cbxModelo.ItemIndex     :=  Modelo;
+    cbxPorta.Text           :=  Porta;
+    seColunas.Value         :=  Colunas;
+    seEspacosLinhas.Value   :=  EspacoEntreLinhas;
+    seBuffer.Value          :=  LinhasBuffer;
+    seLinhasPular.Value     :=  LinhasPular;
+    cbxPagCodigo.ItemIndex  :=  PaginaDeCodigo;
+    cbControlePorta.Checked :=  ControlePorta;
+    cbCortarPapel.Checked   :=  CortarPapel;
 
-    seQRCodeTipo.Value       := INI.ReadInteger('QRCode', 'Tipo', ACBrPosPrinter1.ConfigQRCode.Tipo);
-    seQRCodeLargMod.Value    := INI.ReadInteger('QRCode', 'LarguraModulo', ACBrPosPrinter1.ConfigQRCode.LarguraModulo);
-    seQRCodeErrorLevel.Value := INI.ReadInteger('QRCode', 'ErrorLevel', ACBrPosPrinter1.ConfigQRCode.ErrorLevel);
+    cbTraduzirTags.Checked  :=  TraduzirTags;
+    cbIgnorarTags.Checked   :=  IgnorarTags;
+    edPosPrinterLog.Text    :=  ArqLog;
 
-    cbEscPosImprimirLogo.Checked := INI.ReadBool('Logo', 'Imprimir', not ACBrPosPrinter1.ConfigLogo.IgnorarLogo);
-    seLogoKC1.Value    := INI.ReadInteger('Logo', 'KC1', ACBrPosPrinter1.ConfigLogo.KeyCode1);
-    seLogoKC2.Value    := INI.ReadInteger('Logo', 'KC2', ACBrPosPrinter1.ConfigLogo.KeyCode2);
-    seLogoFatorX.Value := INI.ReadInteger('Logo', 'FatorX', ACBrPosPrinter1.ConfigLogo.FatorX);
-    seLogoFatorY.Value := INI.ReadInteger('Logo', 'FatorY', ACBrPosPrinter1.ConfigLogo.FatorY);
+    with CodigoBarras do
+    begin
+      seCodBarrasLargura.Value :=  Largura;
+      seCodBarrasAltura.Value  :=  Altura;
+      cbHRI.Checked            :=  HRI;
+    end;
 
-    seGavetaTempoON.Value   := INI.ReadInteger('Gaveta', 'TempoON', ACBrPosPrinter1.ConfigGaveta.TempoON);
-    seGavetaTempoOFF.Value  := INI.ReadInteger('Gaveta', 'TempoOFF', ACBrPosPrinter1.ConfigGaveta.TempoOFF);
-    cbGavetaSinalInvertido.Checked  := INI.ReadBool('Gaveta', 'SinalInvertido', ACBrPosPrinter1.ConfigGaveta.SinalInvertido);
+    with QRCode do
+    begin
+      seQRCodeTipo.Value       :=  Tipo;
+      seQRCodeLargMod.Value    :=  LarguraModulo;
+      seQRCodeErrorLevel.Value :=  ErrorLevel;
+    end;
+
+    with Logo do
+    begin
+      cbEscPosImprimirLogo.Checked := Imprimir;
+      seLogoKC1.Value              := KC1;
+      seLogoKC2.Value              := KC2;
+      seLogoFatorX.Value           := FatorX;
+      seLogoFatorY.Value           := FatorY;
+    end;
+
+    with Gaveta do
+    begin
+      seGavetaTempoON.Value   := TempoON;
+      seGavetaTempoOFF.Value  := TempoOFF;
+      cbGavetaSinalInvertido.Checked  := SinalInvertido;
+    end;
 
     DefineTextoTrayTitulo;
 
     ConfiguraPosPrinter(POSPrDeviceParams);
-  finally
-    Ini.Free;
   end;
 
   if FileExists(PathWithDelim(ExtractFilePath(Application.ExeName)) + 'swh.ini') then;
@@ -4597,10 +4755,9 @@ begin
   with ACBrETQ1 do
   begin
     Desativar;
-
+    Modelo := TACBrETQModelo(cbETQModelo.ItemIndex);
+    Porta := cbETQPorta.Text;
     DPI           := TACBrETQDPI(cbDPI.ItemIndex);
-    Modelo        := TACBrETQModelo(cbETQModelo.ItemIndex);
-    Porta         :=  cbETQPorta.Text;
     LimparMemoria := ckMemoria.Checked;
     Temperatura   := StrToIntDef(eTemperatura.Text,10);
     Velocidade    := StrToIntDef(eVelocidade.Text,-1);
@@ -4721,7 +4878,7 @@ begin
     LayOut := TACBrBolLayOut(cbxBOLLayout.ItemIndex);
 
     NumCopias := spBOLCopias.Value;
-    SoftwareHouse := edSH_RazaoSocial.Text; //edtBOLSH.Text;
+    SoftwareHouse := edSH_RazaoSocial.Text;
     DirLogo := deBOLDirLogo.Text;
     MostrarPreview := ckgBOLMostrar.Checked[0];
     MostrarProgresso := ckgBOLMostrar.Checked[1];
@@ -4834,10 +4991,10 @@ end;
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.SalvarIni;
 var
-  Ini: TIniFile;
   OldMonitoraTXT, OldMonitoraTCP, OldMonitoraPasta: boolean;
   OldVersaoSSL : Integer;
 begin
+
   if cbSenha.Checked and (edSenha.Text <> 'NADAAQUI') and (edSenha.Text <> '') then
     fsHashSenha := StringCrc16(edSenha.Text);
 
@@ -4860,403 +5017,532 @@ begin
     end;
   end;
 
-  Ini := TIniFile.Create(ACBrMonitorINI);
   try
-    // Verificando se modificou o Modo de Monitoramento //
-    OldMonitoraTCP := Ini.ReadBool('ACBrMonitor', 'Modo_TCP', False);
-    OldMonitoraTXT := Ini.ReadBool('ACBrMonitor', 'Modo_TXT', False);
-    OldMonitoraPasta := Ini.ReadBool('ACBrMonitor', 'MonitorarPasta', False);
-    OldVersaoSSL :=  Ini.ReadInteger('ACBrNFeMonitor', 'VersaoSSL', 0);
-
-    // Parametros do Monitor //
-    Ini.WriteBool('ACBrMonitor', 'Modo_TCP', rbTCP.Checked);
-    Ini.WriteBool('ACBrMonitor', 'Modo_TXT', rbTXT.Checked);
-    Ini.WriteBool('ACBrMonitor', 'MonitorarPasta', cbMonitorarPasta.Checked);
-    Ini.WriteInteger('ACBrMonitor', 'TCP_Porta', StrToIntDef(edPortaTCP.Text, 3434));
-    Ini.WriteInteger('ACBrMonitor', 'TCP_TimeOut', StrToIntDef(edTimeOutTCP.Text, 10000));
-    Ini.WriteBool('ACBrMonitor','Converte_TCP_Ansi', chbTCPANSI.Checked);
-
-    if cbMonitorarPasta.Checked then
+    {Parametros do Monitor }
+    With FMonitorConfig.ACBrMonitor do
     begin
-      Ini.WriteString('ACBrMonitor', 'TXT_Entrada', PathWithDelim(edEntTXT.Text));
-      Ini.WriteString('ACBrMonitor', 'TXT_Saida', PathWithDelim(edSaiTXT.Text));
-    end
-    else
-    begin
-      Ini.WriteString('ACBrMonitor', 'TXT_Entrada', edEntTXT.Text);
-      Ini.WriteString('ACBrMonitor', 'TXT_Saida', edSaiTXT.Text);
+      // Verificando se modificou o Modo de Monitoramento //
+      OldMonitoraTCP   := Modo_TCP;
+      OldMonitoraTXT   := Modo_TXT;
+      OldMonitoraPasta := MonitorarPasta;
+      OldVersaoSSL     := VersaoSSL;
+
+      Modo_TCP         := rbTCP.Checked;
+      Modo_TXT         := rbTXT.Checked;
+      MonitorarPasta   := cbMonitorarPasta.Checked;
+      TCP_Porta        := StrToIntDef(edPortaTCP.Text, 3434);
+      TCP_TimeOut      := StrToIntDef(edTimeOutTCP.Text, 10000);
+      Converte_TCP_Ansi:= chbTCPANSI.Checked;
+
+      if cbMonitorarPasta.Checked then
+      begin
+        TXT_Entrada    := PathWithDelim(edEntTXT.Text);
+        TXT_Saida      := PathWithDelim(edSaiTXT.Text);
+      end
+      else
+      begin
+        TXT_Entrada    := edEntTXT.Text;
+        TXT_Saida      := edSaiTXT.Text;
+      end;
+
+      Converte_TXT_Entrada_Ansi   := chbArqEntANSI.Checked;
+      Converte_TXT_Saida_Ansi     := chbArqSaiANSI.Checked;
+      Intervalo                   := sedIntervalo.Value;
+      HashSenha                   := IntToStrZero(fsHashSenha, 8);
+
+      Gravar_Log                  := cbLog.Checked;
+      Arquivo_Log                 := edLogArq.Text;
+      Linhas_Log                  := sedLogLinhas.Value;
+      Comandos_Remotos            := cbComandos.Checked;
+      Uma_Instancia               := cbUmaInstancia.Checked;
+      MostraAbas                  := cbAbas.Checked;
+      MostrarNaBarraDeTarefas     := cbMostrarNaBarraDeTarefas.Checked;
+      RetirarAcentosNaResposta    := cbRetirarAcentosNaResposta.Checked;
+      MostraLogEmRespostasEnviadas:= chkMostraLogNaTela.Checked;
     end;
-    Ini.WriteBool('ACBrMonitor', 'Converte_TXT_Entrada_Ansi', chbArqEntANSI.Checked);
-    Ini.WriteBool('ACBrMonitor', 'Converte_TXT_Saida_Ansi', chbArqSaiANSI.Checked);
-    Ini.WriteInteger('ACBrMonitor', 'Intervalo', sedIntervalo.Value);
-    GravaINICrypt(INI, 'ACBrMonitor', 'HashSenha', IntToStrZero(fsHashSenha, 8), _C);
-
-    Ini.WriteBool('ACBrMonitor', 'Gravar_Log', cbLog.Checked);
-    Ini.WriteString('ACBrMonitor', 'Arquivo_Log', edLogArq.Text);
-    Ini.WriteInteger('ACBrMonitor', 'Linhas_Log', sedLogLinhas.Value);
-    Ini.WriteBool('ACBrMonitor', 'Comandos_Remotos', cbComandos.Checked);
-    Ini.WriteBool('ACBrMonitor', 'Uma_Instancia', cbUmaInstancia.Checked);
-    Ini.WriteBool('ACBrMonitor', 'MostraAbas', cbAbas.Checked);
-    Ini.WriteBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', cbMostrarNaBarraDeTarefas.Checked);
-    Ini.WriteBool('ACBrMonitor', 'RetirarAcentosNaResposta', cbRetirarAcentosNaResposta.Checked);
-    Ini.WriteBool('ACBrMonitor', 'MostraLogEmRespostasEnviadas', chkMostraLogNaTela.Checked);
 
     { Parametros do ECF }
-    Ini.WriteInteger('ECF', 'Modelo', max(cbECFModelo.ItemIndex - 1, 0));
-    Ini.WriteString('ECF', 'Porta', cbECFPorta.Text);
-    Ini.WriteString('ECF', 'SerialParams', ACBrECF1.Device.ParamsString);
-    Ini.WriteInteger('ECF', 'Timeout', sedECFTimeout.Value);
-    Ini.WriteInteger('ECF', 'IntervaloAposComando', sedECFIntervalo.Value);
-    Ini.WriteInteger('ECF', 'MaxLinhasBuffer', sedECFMaxLinhasBuffer.Value);
-    Ini.WriteInteger('ECF', 'PaginaCodigo', sedECFPaginaCodigo.Value);
-    Ini.WriteInteger('ECF', 'LinhasEntreCupons', sedECFLinhasEntreCupons.Value);
-    Ini.WriteBool('ECF', 'ArredondamentoPorQtd', chECFArredondaPorQtd.Checked);
-    Ini.WriteBool('ECF', 'ArredondamentoItemMFD', chECFArredondaMFD.Checked);
-    Ini.WriteBool('ECF', 'DescricaoGrande', chECFDescrGrande.Checked);
-    Ini.WriteBool('ECF', 'GavetaSinalInvertido', chECFSinalGavetaInvertido.Checked);
-    Ini.WriteBool('ECF', 'IgnorarTagsFormatacao', chECFIgnorarTagsFormatacao.Checked);
-    Ini.WriteBool('ECF', 'ControlePorta', chECFControlePorta.Checked);
-    Ini.WriteString('ECF', 'ArqLog', edECFLog.Text);
+    with FMonitorConfig.ECF do
+    begin
+      Modelo                      := max(cbECFModelo.ItemIndex - 1, 0);
+      Porta                       := cbECFPorta.Text;
+      SerialParams                := ACBrECF1.Device.ParamsString;
+      Timeout                     := sedECFTimeout.Value;
+      IntervaloAposComando        := sedECFIntervalo.Value;
+      MaxLinhasBuffer             := sedECFMaxLinhasBuffer.Value;
+      PaginaCodigo                := sedECFPaginaCodigo.Value;
+      LinhasEntreCupons           := sedECFLinhasEntreCupons.Value;
+      ArredondamentoPorQtd        := chECFArredondaPorQtd.Checked;
+      ArredondamentoItemMFD       := chECFArredondaMFD.Checked;
+      DescricaoGrande             := chECFDescrGrande.Checked;
+      GavetaSinalInvertido        := chECFSinalGavetaInvertido.Checked;
+      IgnorarTagsFormatacao       := chECFIgnorarTagsFormatacao.Checked;
+      ControlePorta               := chECFControlePorta.Checked;
+      ArqLog                      := edECFLog.Text;
+    end;
 
     { Parametros do CHQ }
-    Ini.WriteInteger('CHQ', 'Modelo', cbCHQModelo.ItemIndex);
-    Ini.WriteString('CHQ', 'Porta', cbCHQPorta.Text);
-    Ini.WriteString('CHQ', 'SerialParams', ACBrCHQ1.Device.ParamsString);
-    Ini.WriteBool('CHQ', 'VerificaFormulario', chCHQVerForm.Checked);
-    Ini.WriteString('CHQ', 'Favorecido', edCHQFavorecido.Text);
-    Ini.WriteString('CHQ', 'Cidade', edCHQCidade.Text);
-    Ini.WriteString('CHQ', 'PathBemafiINI', edCHQBemafiINI.Text);
+    with FMonitorConfig.CHQ do
+    begin
+      Modelo                      := cbCHQModelo.ItemIndex;
+      Porta                       := cbCHQPorta.Text;
+      SerialParams                := ACBrCHQ1.Device.ParamsString;
+      VerificaFormulario          := chCHQVerForm.Checked;
+      Favorecido                  := edCHQFavorecido.Text;
+      Cidade                      := edCHQCidade.Text;
+      PathBemafiINI               := edCHQBemafiINI.Text;
+    end;
 
     { Parametros do GAV }
-    Ini.WriteInteger('GAV', 'Modelo', cbGAVModelo.ItemIndex);
-    Ini.WriteString('GAV', 'Porta', cbGAVPorta.Text);
-    Ini.WriteString('GAV', 'StringAbertura', cbGAVStrAbre.Text);
-    Ini.WriteInteger('GAV', 'AberturaIntervalo', sedGAVIntervaloAbertura.Value);
-    Ini.WriteInteger('GAV', 'AcaoAberturaAntecipada',
-      cbGAVAcaoAberturaAntecipada.ItemIndex);
+    with FMonitorConfig.GAV do
+    begin
+      Modelo                      := cbGAVModelo.ItemIndex;
+      Porta                       := cbGAVPorta.Text;
+      StringAbertura              := cbGAVStrAbre.Text;
+      AberturaIntervalo           := sedGAVIntervaloAbertura.Value;
+      AcaoAberturaAntecipada      := cbGAVAcaoAberturaAntecipada.ItemIndex;
+    end;
 
     { Parametros do DIS }
-    Ini.WriteInteger('DIS', 'Modelo', cbDISModelo.ItemIndex);
-    Ini.WriteString('DIS', 'Porta', cbDISPorta.Text);
-    Ini.WriteInteger('DIS', 'Intervalo', seDISIntervalo.Value);
-    Ini.WriteInteger('DIS', 'Passos', seDISPassos.Value);
-    Ini.WriteInteger('DIS', 'IntervaloEnvioBytes', seDISIntByte.Value);
+    with FMonitorConfig.DIS do
+    begin
+      Modelo                      := cbDISModelo.ItemIndex;
+      Porta                       := cbDISPorta.Text;
+      Intervalo                   := seDISIntervalo.Value;
+      Passos                      := seDISPassos.Value;
+      IntervaloEnvioBytes         := seDISIntByte.Value;
+    end;
 
     { Parametros do LCB }
-    Ini.WriteString('LCB', 'Porta', cbLCBPorta.Text);
-    Ini.WriteInteger('LCB', 'Intervalo', sedLCBIntervalo.Value);
-    Ini.WriteString('LCB', 'SufixoLeitor', cbLCBSufixoLeitor.Text);
-    Ini.WriteBool('LCB', 'ExcluirSufixo', chLCBExcluirSufixo.Checked);
-    Ini.WriteString('LCB', 'PrefixoAExcluir', edLCBPreExcluir.Text);
-    Ini.WriteString('LCB', 'SufixoIncluir', cbLCBSufixo.Text);
-    Ini.WriteString('LCB', 'Dispositivo', cbLCBDispositivo.Text);
-    Ini.WriteBool('LCB', 'Teclado', rbLCBTeclado.Checked);
-    Ini.WriteString('LCB', 'Device', ACBrLCB1.Device.ParamsString);
+    with FMonitorConfig.LCB do
+    begin
+      Porta                       := cbLCBPorta.Text;
+      Intervalo                   := sedLCBIntervalo.Value;
+      SufixoLeitor                := cbLCBSufixoLeitor.Text;
+      ExcluirSufixo               := chLCBExcluirSufixo.Checked;
+      PrefixoAExcluir             := edLCBPreExcluir.Text;
+      SufixoIncluir               := cbLCBSufixo.Text;
+      Dispositivo                 := cbLCBDispositivo.Text;
+      Teclado                     := rbLCBTeclado.Checked;
+      Device                      := ACBrLCB1.Device.ParamsString;
+    end;
 
     { Parametros do RFD }
-    INI.WriteBool('RFD', 'GerarRFD', chRFD.Checked);
-    INI.WriteString('RFD', 'DirRFD', edRFDDir.Text);
-    INI.WriteBool('RFD', 'IgnoraECF_MFD', chRFDIgnoraMFD.Checked);
+    with FMonitorConfig.RFD do
+    begin
+      GerarRFD                    := chRFD.Checked;
+      DirRFD                      := edRFDDir.Text;
+      IgnoraECF_MFD               := chRFDIgnoraMFD.Checked;
+    end;
 
     { Parametros do BAL }
-    Ini.WriteInteger('BAL', 'Modelo', cbBALModelo.ItemIndex);
-    Ini.WriteString('BAL', 'Porta', cbBALPorta.Text);
-    Ini.WriteInteger('BAL', 'Intervalo', sedBALIntervalo.Value);
-    Ini.WriteString('BAL', 'ArqLog', edBALLog.Text);
-    Ini.WriteString('BAL', 'Device', ACBrBAL1.Device.ParamsString);
+    with FMonitorConfig.BAL do
+    begin
+      Modelo                      := cbBALModelo.ItemIndex;
+      Porta                       := cbBALPorta.Text;
+      Intervalo                   := sedBALIntervalo.Value;
+      ArqLog                      := edBALLog.Text;
+      Device                      := ACBrBAL1.Device.ParamsString;
+    end;
 
     { Parametros do ETQ }
-    Ini.WriteInteger('ETQ', 'Modelo', cbETQModelo.ItemIndex);
-    Ini.WriteString('ETQ', 'Porta', cbETQPorta.Text);
-    Ini.WriteInteger('ETQ', 'DPI', cbDPI.ItemIndex);
-    Ini.WriteBool('ETQ', 'LimparMemoria', ckMemoria.Checked);
-    Ini.WriteInteger('ETQ', 'Temperatura', StrToIntDef(eTemperatura.Text, 10));
-    Ini.WriteInteger('ETQ', 'Velocidade', StrToIntDef(eVelocidade.Text, -1));
-    Ini.WriteInteger('ETQ', 'BackFeed', cbBackFeed.ItemIndex);
-    Ini.WriteInteger('ETQ', 'MargemEsquerda', StrToIntDef(eMargemEsquerda.Text, 10));
-    Ini.WriteInteger('ETQ', 'Origem', cbOrigem.ItemIndex);
-    Ini.WriteInteger('ETQ', 'Copias', StrToIntDef(eCopias.Text, 1));
+    with FMonitorConfig.ETQ do
+    begin
+      Modelo                      := cbETQModelo.ItemIndex;
+      Porta                       := cbETQPorta.Text;
+      DPI                         := cbDPI.ItemIndex;
+      LimparMemoria               := ckMemoria.Checked;
+      Temperatura                 := StrToIntDef(eTemperatura.Text, 10);
+      Velocidade                  := StrToIntDef(eVelocidade.Text, -1);
+      BackFeed                    := cbBackFeed.ItemIndex;
+      MargemEsquerda              := StrToIntDef(eMargemEsquerda.Text, 10);
+      Origem                      := cbOrigem.ItemIndex;
+      Copias                      := StrToIntDef(eCopias.Text, 1);
+    end;
 
     { Parametros do CEP }
-    Ini.WriteInteger('CEP', 'WebService', cbCEPWebService.ItemIndex);
-    Ini.WriteString('CEP', 'Chave_BuscarCEP', edCEPChaveBuscarCEP.Text);
-    Ini.WriteString('CEP', 'Proxy_Host', edCONProxyHost.Text);
-    Ini.WriteString('CEP', 'Proxy_Port', edCONProxyPort.Text);
-    Ini.WriteString('CEP', 'Proxy_User', edCONProxyUser.Text);
-    GravaINICrypt(Ini, 'CEP', 'Proxy_Pass', edCONProxyPass.Text, _C);
+    with FMonitorConfig.CEP do
+    begin
+      WebService                  := cbCEPWebService.ItemIndex;
+      Chave_BuscarCEP             := edCEPChaveBuscarCEP.Text;
+      Proxy_Host                  := edCONProxyHost.Text;
+      Proxy_Port                  := edCONProxyPort.Text;
+      Proxy_User                  := edCONProxyUser.Text;
+      Proxy_Pass                  := edCONProxyPass.Text;
+    end;
 
     { Parametros do TC }
-    Ini.WriteInteger('TC', 'Modelo', cbxTCModelo.ItemIndex);
-    Ini.WriteInteger('TC', 'TCP_Porta', StrToIntDef(edTCArqPrecos.Text, 6500));
-    Ini.WriteString('TC', 'Arq_Precos', edTCArqPrecos.Text);
-    Ini.WriteString('TC', 'Nao_Econtrado', edTCNaoEncontrado.Text);
+    with FMonitorConfig.TC do
+    begin
+      Modelo                      := cbxTCModelo.ItemIndex;
+      TCP_Porta                   := StrToIntDef(edTCArqPrecos.Text, 6500);
+      Arq_Precos                  := edTCArqPrecos.Text;
+      Nao_Econtrado               := edTCNaoEncontrado.Text;
+    end;
 
-    { Parametros da Conta de tsEmailDFe }
-    Ini.WriteString('EMAIL', 'NomeExibicao', edEmailNome.Text);
-    Ini.WriteString('EMAIL', 'Endereco', edEmailEndereco.Text);
-    Ini.WriteString('EMAIL', 'Email', edEmailHost.Text);
-    GravaINICrypt(Ini, 'EMAIL', 'Usuario', edEmailUsuario.Text, _C);
-    GravaINICrypt(Ini, 'EMAIL', 'Senha', edEmailSenha.Text, _C);
-    Ini.WriteInteger('EMAIL', 'Porta', edEmailPorta.Value);
-    Ini.WriteBool('EMAIL', 'ExigeSSL', cbEmailSsl.Checked);
-    Ini.WriteBool('EMAIL', 'ExigeTLS', cbEmailTls.Checked);
-    Ini.WriteBool('EMAIL', 'Confirmacao',  cbEmailConfirmation.Checked);
-    Ini.WriteBool('EMAIL', 'SegundoPlano', cbEmailThread.Checked);
-    Ini.WriteString('EMAIL', 'Codificacao', cbEmailCodificacao.Text);
+    { Parametros de EMAIL }
+    with FMonitorConfig.Email do
+    begin
+      NomeExibicao            := edEmailNome.Text;
+      Endereco                := edEmailEndereco.Text;
+      Email                   := edEmailHost.Text;
+      Usuario                 := edEmailUsuario.Text;
+      Senha                   := edEmailSenha.Text ;
+      Porta                   := edEmailPorta.Value;
+      ExigeSSL                := cbEmailSsl.Checked;
+      ExigeTLS                := cbEmailTls.Checked;
+      Confirmacao             := cbEmailConfirmation.Checked;
+      SegundoPlano            := cbEmailThread.Checked;
+      Codificacao             := cbEmailCodificacao.Text;
+    end;
 
     { Parametros Sedex }
-    Ini.WriteString('SEDEX', 'Contrato', edtSedexContrato.Text);
-    GravaINICrypt(Ini, 'SEDEX', 'SenhaSedex', edtSedexSenha.Text, _C);
+    with FMonitorConfig.SEDEX do
+    begin
+      Contrato                := edtSedexContrato.Text;
+      SenhaSedex              := edtSedexSenha.Text;
+    end;
 
     { Parametros NCM }
-    ini.WriteString('NCM', 'DirNCMSalvar', PathWithoutDelim(deNcmSalvar.Text));
+    with FMonitorConfig.NCM do
+    begin
+      DirNCMSalvar            := PathWithoutDelim(deNcmSalvar.Text);
+    end;
 
-    { Parametros NFe }
-    Ini.WriteInteger( 'Certificado','SSLLib' , cbSSLLib.ItemIndex);
-    Ini.WriteInteger( 'Certificado','CryptLib', cbCryptLib.ItemIndex);
-    Ini.WriteInteger( 'Certificado','HttpLib', cbHttpLib.ItemIndex);
-    Ini.WriteInteger( 'Certificado','XmlSignLib', cbXmlSignLib.ItemIndex);
-    Ini.WriteInteger( 'Certificado','SSLType', cbSSLType.ItemIndex);
+    { Parametros DFe }
+    with FMonitorConfig.DFE do
+    begin
+      IgnorarComandoModoEmissao := cbModoEmissao.Checked;
+      ModoXML                   := cbModoXML.Checked;
+      RetirarAcentos            := cbRetirarAcentos.Checked;
+      Gravar_Log_Comp           := cbLogComp.Checked;
+      Arquivo_Log_Comp          := edLogComp.Text;
+      Linhas_Log_Comp           := sedLogLinhasComp.Value;
+      ArquivoWebServices        := edtArquivoWebServicesNFe.Text;
+      ArquivoWebServicesCTe     := edtArquivoWebServicesCTe.Text;
+      ArquivoWebServicesMDFe    := edtArquivoWebServicesMDFe.Text;
+      ArquivoWebServicesGNRe    := edtArquivoWebServicesGNRe.Text;
+      ArquivoWebServiceseSocial := edtArquivoWebServiceseSocial.Text;
+      ValidarDigest             := cbValidarDigest.Checked;
+      TimeoutWebService         := edtTimeoutWebServices.Value;
 
-    Ini.WriteString('Certificado', 'ArquivoPFX', edtArquivoPFX.Text);
-    Ini.WriteString('Certificado', 'NumeroSerie', edtNumeroSerie.Text);
-    GravaINICrypt(INI, 'Certificado', 'Senha', edtSenha.Text, _C);
-    Ini.WriteBool('Certificado', 'ExibeRazaoSocialCertificado', chkExibeRazaoSocial.Checked);
-    Ini.WriteBool('Certificado', 'VerificarValidade', chkVerificarValidadeCertificado.Checked);
+      with Certificado do
+      begin
+        SSLLib                  := cbSSLLib.ItemIndex;
+        CryptLib                := cbCryptLib.ItemIndex;
+        HttpLib                 := cbHttpLib.ItemIndex;
+        XmlSignLib              := cbXmlSignLib.ItemIndex;
+        SSLType                 := cbSSLType.ItemIndex;
+        ArquivoPFX              := edtArquivoPFX.Text;
+        NumeroSerie             := edtNumeroSerie.Text;
+        Senha                   := edtSenha.Text;
+        ExibeRazaoSocialCertificado := chkExibeRazaoSocial.Checked;
+        VerificarValidade           := chkVerificarValidadeCertificado.Checked;
+      end;
 
-    Ini.WriteBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', cbModoEmissao.Checked);
-    Ini.WriteBool('ACBrNFeMonitor', 'ModoXML', cbModoXML.Checked);
-    Ini.WriteBool('ACBrNFeMonitor', 'RetirarAcentos', cbRetirarAcentos.Checked);
-    Ini.WriteBool('ACBrNFeMonitor', 'Gravar_Log_Comp', cbLogComp.Checked);
-    Ini.WriteString('ACBrNFeMonitor', 'Arquivo_Log_Comp', edLogComp.Text);
-    Ini.WriteInteger('ACBrNFeMonitor', 'Linhas_Log_Comp', sedLogLinhasComp.Value);
-    Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServices', edtArquivoWebServicesNFe.Text );
-    Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServicesCTe', edtArquivoWebServicesCTe.Text );
-    Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServicesMDFe', edtArquivoWebServicesMDFe.Text );
-    Ini.WriteString('ACBrNFeMonitor', 'ArquivoWebServicesGNRe', edtArquivoWebServicesGNRe.Text );
-    Ini.WriteBool('ACBrNFeMonitor', 'ValidarDigest', cbValidarDigest.Checked);
-    Ini.WriteInteger('ACBrNFeMonitor', 'TimeoutWebService', edtTimeoutWebServices.Value);
+      with Impressao.Geral do
+      begin
+        DANFE                    := rgTipoDanfe.ItemIndex;
+        LogoMarca                := edtLogoMarca.Text;
+        LogoMarcaNFCeSAT         := edtLogoMarcaNFCeSAT.Text;
+        Salvar                   := ckSalvar.Checked;
+        PathSalvar               := edtPathLogs.Text;
+        Impressora               := cbxImpressora.Text;
+      end;
 
-    Ini.WriteInteger('Geral', 'DANFE', rgTipoDanfe.ItemIndex);
-    //Ini.WriteInteger('Geral', 'FormaEmissao', rgFormaEmissao.ItemIndex);
-    Ini.WriteInteger('WebService', 'FormaEmissaoNFe', cbFormaEmissaoNFe.ItemIndex);
-    Ini.WriteInteger('WebService', 'FormaEmissaoCTe', cbFormaEmissaoCTe.ItemIndex);
-    Ini.WriteInteger('WebService', 'FormaEmissaoMDFe', cbFormaEmissaoMDFe.ItemIndex);
-    Ini.WriteInteger('WebService', 'FormaEmissaoGNRe', cbFormaEmissaoGNRe.ItemIndex);
-    Ini.WriteString('Geral', 'LogoMarca', edtLogoMarca.Text);
-    Ini.WriteString('Geral', 'LogoMarcaNFCeSAT', edtLogoMarcaNFCeSAT.Text);
-    Ini.WriteBool('Geral', 'Salvar', ckSalvar.Checked);
-    Ini.WriteString('Geral', 'PathSalvar', edtPathLogs.Text);
-    Ini.WriteString('Geral', 'Impressora', cbxImpressora.Text);
+      with WebService do
+      begin
+        UF                       := cbUF.Text;
+        Ambiente                 := rgTipoAmb.ItemIndex;
+        Versao                   := cbVersaoWS.Text;
+        VersaoCTe                := cbVersaoWSCTe.Text;
+        VersaoMDFe               := cbVersaoWSMDFe.Text;
+        VersaoeSocial            := cbVersaoWSeSocial.Text;
+        AjustarAut               := cbxAjustarAut.Checked;
+        Aguardar                 := edtAguardar.Text;
+        Tentativas               := edtTentativas.Text;
+        Intervalo                := edtIntervalo.Text;
+        TimeZoneMode             := cbxTimeZoneMode.ItemIndex;
+        TimeZoneStr              := edTimeZoneStr.Caption;
+        FormaEmissaoNFe          := cbFormaEmissaoNFe.ItemIndex;
+        FormaEmissaoCTe          := cbFormaEmissaoCTe.ItemIndex;
+        FormaEmissaoMDFe         := cbFormaEmissaoMDFe.ItemIndex;
+        FormaEmissaoGNRe         := cbFormaEmissaoGNRe.ItemIndex;
+      end;
 
-    Ini.WriteString('WebService', 'UF', cbUF.Text);
-    Ini.WriteInteger('WebService', 'Ambiente', rgTipoAmb.ItemIndex);
-    Ini.WriteString('WebService', 'Versao', cbVersaoWS.Text);
-    Ini.WriteString('WebService', 'VersaoCTe', cbVersaoWSCTe.Text);
-    Ini.WriteString('WebService', 'VersaoMDFe', cbVersaoWSMDFe.Text);
-    Ini.WriteBool('WebService', 'AjustarAut', cbxAjustarAut.Checked);
-    Ini.WriteString('WebService', 'Aguardar', edtAguardar.Text);
-    Ini.WriteString('WebService', 'Tentativas', edtTentativas.Text);
-    Ini.WriteString('WebService', 'Intervalo', edtIntervalo.Text);
-    Ini.WriteInteger('WebService','TimeZoneMode', cbxTimeZoneMode.ItemIndex);
-    Ini.WriteString('WebService','TimeZoneStr', edTimeZoneStr.Caption);
+      with ESocial do
+      begin
+        IdEmpregador             := edtIDEmpregador.Text;
+        IdTransmissor            := edtIDTransmissor.Text;
+        TipoEmpregador           := cbTipoEmpregador.Text;
+      end;
 
-    Ini.WriteString('Proxy', 'Host', edtProxyHost.Text);
-    Ini.WriteString('Proxy', 'Porta', edtProxyPorta.Text);
-    Ini.WriteString('Proxy', 'User', edtProxyUser.Text);
-    GravaINICrypt(INI, 'Proxy', 'Pass', edtProxySenha.Text, _C);
+      with WebService.Proxy do
+      begin
+        Host                     := edtProxyHost.Text;
+        Porta                    := edtProxyPorta.Text;
+        User                     := edtProxyUser.Text;
+        Pass                     := edtProxySenha.Text;
+      end;
 
-    Ini.WriteString('NFCe', 'IdToken', edtIdToken.Text);
-    Ini.WriteString('NFCe', 'Token', edtToken.Text);
-    Ini.WriteBool('NFCe', 'TagQrCode', chbTagQrCode.Checked);
-    Ini.WriteBool('NFCe', 'UsarIntegrador', ckNFCeUsarIntegrador.Checked );
+      with WebService.NFCe do
+      begin
+        IdToken                  := edtIdToken.Text;
+        Token                    := edtToken.Text;
+        TagQrCode                := chbTagQrCode.Checked;
+        UsarIntegrador           := ckNFCeUsarIntegrador.Checked;
+      end;
 
-    Ini.WriteString('NFe', 'CNPJContador', edtCNPJContador.Text);
+      with WebService.NFe do
+      begin
+        CNPJContador             := edtCNPJContador.Text;
+      end;
 
-    Ini.WriteString('Email', 'AssuntoNFe', edtEmailAssuntoNFe.Text);
-    Ini.WriteString('Email', 'MensagemNFe', BinaryStringToString(mmEmailMsgNFe.Lines.Text));
-    Ini.WriteString('Email', 'AssuntoCTe', edtEmailAssuntoCTe.Text);
-    Ini.WriteString('Email', 'MensagemCTe', BinaryStringToString(mmEmailMsgCTe.Lines.Text) );
-    Ini.WriteString('Email', 'AssuntoMDFe', edtEmailAssuntoMDFe.Text);
-    Ini.WriteString('Email', 'MensagemMDFe', BinaryStringToString(mmEmailMsgMDFe.Lines.Text) );
+      with Email do
+      begin
+        AssuntoNFe               := edtEmailAssuntoNFe.Text;
+        MensagemNFe              := BinaryStringToString(mmEmailMsgNFe.Lines.Text);
+        AssuntoCTe               := edtEmailAssuntoCTe.Text;
+        MensagemCTe              := BinaryStringToString(mmEmailMsgCTe.Lines.Text);
+        AssuntoMDFe              := edtEmailAssuntoMDFe.Text;
+        MensagemMDFe             := BinaryStringToString(mmEmailMsgMDFe.Lines.Text);
+      end;
 
-    Ini.WriteInteger('DANFE', 'Modelo', rgModeloDanfe.ItemIndex);
-    Ini.WriteInteger('DACTE', 'TamanhoPapel', rgTamanhoPapelDacte.ItemIndex);
-    Ini.WriteString('DANFE', 'Site', edtSiteEmpresa.Text);
-    Ini.WriteString('DANFE', 'Email', edtEmailEmpresa.Text);
-    Ini.WriteString('DANFE', 'Fax', edtFaxEmpresa.Text);
-    Ini.WriteBool('DANFE', 'ImpDescPorc', cbxImpDescPorc.Checked);
-    Ini.WriteBool('DANFE', 'MostrarPreview', cbxMostrarPreview.Checked);
-    Ini.WriteInteger('DANFE', 'Copias', edtNumCopia.Value);
-    Ini.WriteInteger('DANFE', 'LarguraCodigoProduto', speLargCodProd.Value);
-    Ini.WriteInteger('DANFE', 'EspessuraBorda', speEspBorda.Value);
-    Ini.WriteInteger('DANFE', 'FonteRazao', speFonteRazao.Value);
-    Ini.WriteInteger('DANFE', 'FonteEndereco', speFonteEndereco.Value);
-    Ini.WriteInteger('DANFE', 'FonteCampos', speFonteCampos.Value);
-    Ini.WriteInteger('DANFE', 'AlturaCampos', speAlturaCampos.Value);
-    Ini.WriteFloat('DANFE', 'Margem', fspeMargemInf.Value);
-    Ini.WriteFloat('DANFE', 'MargemSup', fspeMargemSup.Value);
-    Ini.WriteFloat('DANFE', 'MargemDir', fspeMargemDir.Value);
-    Ini.WriteFloat('DANFE', 'MargemEsq', fspeMargemEsq.Value);
-    Ini.WriteFloat('DANFCe', 'MargemInf', fspeNFCeMargemInf.Value);
-    Ini.WriteFloat('DANFCe', 'MargemSup', fspeNFCeMargemSup.Value);
-    Ini.WriteFloat('DANFCe', 'MargemDir', fspeNFCeMargemDir.Value);
-    Ini.WriteFloat('DANFCe', 'MargemEsq', fspeNFCeMargemEsq.Value);
-    Ini.WriteFloat('DANFCe', 'LarguraBobina', fspeLarguraNFCe.Value);
-    Ini.WriteString('DANFE', 'PathPDF', edtPathPDF.Text);
-    Ini.WriteInteger('DANFE', 'DecimaisQTD', spedtCasasDecimaisQtd.Value);
-    Ini.WriteInteger('DANFE', 'DecimaisValor', spedtDecimaisVUnit.Value);
-    Ini.WriteBool('DANFE', 'ExibeResumo', cbxExibeResumo.Checked);
-    Ini.WriteBool('DANFE', 'ImprimirTributosItem', cbxImprimirTributos.Checked);
-    Ini.WriteBool('DANFE', 'ImprimirValLiq', cbxImpValLiq.Checked);
-    Ini.WriteInteger('DANFE', 'UNComercialETributavel', cbxUnComTributavel.ItemIndex);
-    Ini.WriteBool('DANFE', 'PreImpresso', cbxFormCont.Checked);
-    Ini.WriteBool('DANFE', 'MostrarStatus', cbxMostraStatus.Checked);
-    Ini.WriteBool('DANFE', 'ExibirEAN', cbxExibirEAN.Checked);
-    Ini.WriteBool('DANFE', 'ExibirCampoFatura', cbxExibirCampoFatura.Checked);
-    Ini.WriteBool('DANFE', 'ExpandirLogo', cbxExpandirLogo.Checked);
-    Ini.WriteInteger('DANFE', 'Fonte', rgTipoFonte.ItemIndex);
-    Ini.WriteInteger('DANFE', 'LocalCanhoto', rgLocalCanhoto.ItemIndex);
-    ini.WriteBool('DANFE','QuebrarLinhasDetalheItens', cbxQuebrarLinhasDetalhesItens.Checked) ;
-    ini.WriteBool('DANFE','ImprimirDetalhamentoEspecifico',cbxImpDetEspNFe.Checked);
-    ini.WriteBool('DANFE','ImprimirDadosDocReferenciados',cbxImpDocsReferenciados.Checked);
-    ini.WriteBool('DANFE','ExibirBandInforAdicProduto',cbxExibirInfAdicProduto.Checked);
-    ini.WriteBool('DANFE','LogoEmCima',cbxExibirLogoEmCima.Checked);
+      with Impressao.NFCe.Emissao do
+      begin
+        Modelo                    := rgModeloDANFeNFCE.ItemIndex;
+        ModoImpressaoEvento       := rgModoImpressaoEvento.ItemIndex;
+        ImprimirItem1Linha        := cbxImprimirItem1LinhaNFCe.Checked;
+        ImprimirDescAcresItem     := cbxImprimirDescAcresItemNFCe.Checked;
+        ImpressoraPadrao          := cbxImpressoraNFCe.Text;
+        QRCodeLateral             := cbxImprimirQRCodeLateralNFCe.Checked;
+        UsaCodigoEanImpressao     := cbxImprimirCodigoEANNFCe.Checked;
+        ImprimeNomeFantasia       := cbxImprimirNomeFantasiaNFCe.Checked;
+      end;
 
-    Ini.WriteInteger('NFCe', 'Modelo', rgModeloDANFeNFCE.ItemIndex);
-    Ini.WriteInteger('NFCe', 'ModoImpressaoEvento', rgModoImpressaoEvento.ItemIndex);
-    Ini.WriteBool('NFCe', 'ImprimirItem1Linha', cbxImprimirItem1LinhaNFCe.Checked);
-    Ini.WriteBool('NFCe', 'ImprimirDescAcresItem', cbxImprimirDescAcresItemNFCe.Checked);
-    Ini.WriteString('NFCe', 'ImpressoraPadrao', cbxImpressoraNFCe.Text);
-    Ini.WriteBool('NFCe', 'QRCodeLateral', cbxImprimirQRCodeLateralNFCe.Checked);
-    Ini.WriteBool('NFCe', 'UsaCodigoEanImpressao', cbxImprimirCodigoEANNFCe.Checked);
-    Ini.WriteBool('NFCe', 'ImprimeNomeFantasia', cbxImprimirNomeFantasiaNFCe.Checked);
+      with Impressao.NFCe.Emissao.DANFCe do
+      begin
+        MargemInf                  := fspeNFCeMargemInf.Value;
+        MargemSup                  := fspeNFCeMargemSup.Value;
+        MargemDir                  := fspeNFCeMargemDir.Value;
+        MargemEsq                  := fspeNFCeMargemEsq.Value;
+        LarguraBobina              := fspeLarguraNFCe.Value;
+      end;
 
-    Ini.WriteBool('Arquivos', 'Salvar', cbxSalvarArqs.Checked);
-    Ini.WriteBool('Arquivos', 'PastaMensal', cbxPastaMensal.Checked);
-    Ini.WriteBool('Arquivos', 'AddLiteral', cbxAdicionaLiteral.Checked);
-    Ini.WriteBool('Arquivos', 'EmissaoPathNFe', cbxEmissaoPathNFe.Checked);
-    Ini.WriteBool('Arquivos', 'SalvarCCeCanPathEvento',
-      cbxSalvaPathEvento.Checked);
-    Ini.WriteBool('Arquivos', 'SepararPorCNPJ', cbxSepararPorCNPJ.Checked);
-    Ini.WriteBool('Arquivos', 'SepararPorModelo', cbxSepararporModelo.Checked);
-    Ini.WriteBool('Arquivos', 'SalvarApenasNFesAutorizadas',
-      cbxSalvarNFesProcessadas.Checked);
-    Ini.WriteBool('Arquivos', 'AtualizarXMLCancelado',
-      cbxAtualizarXMLCancelado.Checked);
-    Ini.WriteBool('Arquivos', 'NormatizarMunicipios', cbxNormatizarMunicipios.Checked);
-    Ini.WriteBool('Arquivos', 'UsarSeparadorPathPDF', cbxUsarSeparadorPathPDF.Checked);
-    Ini.WriteString('Arquivos', 'PathNFe', edtPathNFe.Text);
-    Ini.WriteString('Arquivos', 'PathInu', edtPathInu.Text);
-    Ini.WriteString('Arquivos', 'PathDPEC', edtPathDPEC.Text);
-    Ini.WriteString('Arquivos', 'PathEvento', edtPathEvento.Text);
+      with Impressao.DANFE do
+      begin
+        Modelo                     := rgModeloDanfe.ItemIndex;
+        Site                       := edtSiteEmpresa.Text;
+        Email                      := edtEmailEmpresa.Text;
+        Fax                        := edtFaxEmpresa.Text;
+        ImpDescPorc                := cbxImpDescPorc.Checked;
+        MostrarPreview             := cbxMostrarPreview.Checked;
+        Copias                     := edtNumCopia.Value;
+        LarguraCodigoProduto       := speLargCodProd.Value;
+        EspessuraBorda             := speEspBorda.Value;
+        FonteRazao                 := speFonteRazao.Value;
+        FonteEndereco              := speFonteEndereco.Value;
+        FonteCampos                := speFonteCampos.Value;
+        AlturaCampos               := speAlturaCampos.Value;
+        Margem                     := fspeMargemInf.Value;
+        MargemSup                  := fspeMargemSup.Value;
+        MargemDir                  := fspeMargemDir.Value;
+        MargemEsq                  := fspeMargemEsq.Value;
+        PathPDF                    := edtPathPDF.Text;
+        DecimaisQTD                := spedtCasasDecimaisQtd.Value;
+        DecimaisValor              := spedtDecimaisVUnit.Value;
+        ExibeResumo                := cbxExibeResumo.Checked;
+        ImprimirTributosItem       := cbxImprimirTributos.Checked;
+        ImprimirValLiq             := cbxImpValLiq.Checked;
+        UNComercialETributavel     := cbxUnComTributavel.ItemIndex;
+        PreImpresso                := cbxFormCont.Checked;
+        MostrarStatus              := cbxMostraStatus.Checked;
+        ExibirEAN                  := cbxExibirEAN.Checked;
+        ExibirCampoFatura          := cbxExibirCampoFatura.Checked;
+        ExpandirLogo               := cbxExpandirLogo.Checked;
+        Fonte                      := rgTipoFonte.ItemIndex;
+        LocalCanhoto               := rgLocalCanhoto.ItemIndex;
+        QuebrarLinhasDetalheItens  := cbxQuebrarLinhasDetalhesItens.Checked ;
+        ImprimirDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
+        ImprimirDadosDocReferenciados  := cbxImpDocsReferenciados.Checked;
+        ExibirBandInforAdicProduto     := cbxExibirInfAdicProduto.Checked;
+        LogoEmCima                     := cbxExibirLogoEmCima.Checked;
+      end;
 
-    {Parametros SAT}
-    INI.WriteInteger('SAT','Modelo',cbxModeloSAT.ItemIndex);
-    INI.WriteString('SAT','ArqLog',edSATLog.Text);
-    INI.WriteString('SAT','NomeDLL',edNomeDLL.Text);
-    INI.WriteString('SAT','CodigoAtivacao',edtCodigoAtivacao.Text);
-    INI.WriteString('SAT','CodigoUF',edtCodUF.Text);
-    INI.WriteInteger('SAT','NumeroCaixa',seNumeroCaixa.Value);
-    INI.WriteInteger('SAT','Ambiente',cbxAmbiente.ItemIndex);
-    INI.WriteInteger('SAT','PaginaDeCodigo',sePagCod.Value);
-    INI.WriteFloat('SAT','versaoDadosEnt',sfeVersaoEnt.Value);
-    INI.WriteBool('SAT','FormatarXML', cbxFormatXML.Checked);
-    INI.WriteString('SAT','PathCFe',edSATPathArqs.Text);
-    INI.WriteBool('SAT','SalvarCFe', cbxSATSalvarCFe.Checked);
-    INI.WriteBool('SAT','SalvarCFeCanc', cbxSATSalvarCFeCanc.Checked);
-    INI.WriteBool('SAT','SalvarEnvio', cbxSATSalvarEnvio.Checked);
-    INI.WriteBool('SAT','SepararPorCNPJ', cbxSATSepararPorCNPJ.Checked);
-    INI.WriteBool('SAT','SepararPorMES', cbxSATSepararPorMES.Checked);
+      with Impressao.DACTE do
+      begin
+        TamanhoPapel                   := rgTamanhoPapelDacte.ItemIndex;
+      end;
 
-    INI.WriteString('SATExtrato','ParamsString',ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString);
-    INI.WriteBool('SATExtrato', 'ImprimeDescAcrescItem', cbxImprimirDescAcresItemSAT.Checked);
-    INI.WriteBool('SATExtrato', 'ImprimeEmUmaLinha', cbxImprimirItem1LinhaSAT.Checked);
-    INI.WriteInteger('SATExtrato', 'ImprimeChaveEmUmaLinha', rdgImprimeChave1LinhaSAT.ItemIndex);
-    INI.WriteBool('SATExtrato', 'UsaCodigoEanImpressao', cbxImprimirCodEANitemSAT.Checked);
+      with Diretorios do
+      begin
+        Salvar                         := cbxSalvarArqs.Checked;
+        PastaMensal                    := cbxPastaMensal.Checked;
+        AddLiteral                     := cbxAdicionaLiteral.Checked;
+        EmissaoPathNFe                 := cbxEmissaoPathNFe.Checked;
+        SalvarCCeCanPathEvento         := cbxSalvaPathEvento.Checked;
+        SepararPorCNPJ                 := cbxSepararPorCNPJ.Checked;
+        SepararPorModelo               := cbxSepararporModelo.Checked;
+        SalvarApenasNFesAutorizadas    := cbxSalvarNFesProcessadas.Checked;
+        AtualizarXMLCancelado          := cbxAtualizarXMLCancelado.Checked;
+        NormatizarMunicipios           := cbxNormatizarMunicipios.Checked;
+        UsarSeparadorPathPDF           := cbxUsarSeparadorPathPDF.Checked;
+        PathNFe                        := edtPathNFe.Text;
+        PathInu                        := edtPathInu.Text;
+        PathDPEC                       := edtPathDPEC.Text;
+        PathEvento                     := edtPathEvento.Text;
+      end;
+    end;
 
-    INI.WriteString('SATEmit','CNPJ',edtEmitCNPJ.Text);
-    INI.WriteString('SATEmit','IE',edtEmitIE.Text);
-    INI.WriteString('SATEmit','IM',edtEmitIM.Text);
-    INI.WriteInteger('SATEmit','RegTributario',cbxRegTributario.ItemIndex);
-    INI.WriteInteger('SATEmit','RegTribISSQN',cbxRegTribISSQN.ItemIndex);
-    INI.WriteInteger('SATEmit','IndRatISSQN',cbxIndRatISSQN.ItemIndex);
+    {Parametro SAT}
+    with FMonitorConfig.SAT do
+    begin
+      Modelo                           := cbxModeloSAT.ItemIndex;
+      ArqLog                           := edSATLog.Text;
+      NomeDLL                          := edNomeDLL.Text;
+      CodigoAtivacao                   := edtCodigoAtivacao.Text;
+      CodigoUF                         := edtCodUF.Text;
+      NumeroCaixa                      := seNumeroCaixa.Value;
+      Ambiente                         := cbxAmbiente.ItemIndex;
+      PaginaDeCodigo                   := sePagCod.Value;
+      versaoDadosEnt                   := sfeVersaoEnt.Value;
+      FormatarXML                      := cbxFormatXML.Checked;
+      PathCFe                          := edSATPathArqs.Text;
+      SalvarCFe                        := cbxSATSalvarCFe.Checked;
+      SalvarCFeCanc                    := cbxSATSalvarCFeCanc.Checked;
+      SalvarEnvio                      := cbxSATSalvarEnvio.Checked;
+      SepararPorCNPJ                   := cbxSATSepararPorCNPJ.Checked;
+      SepararPorMES                    := cbxSATSepararPorMES.Checked;
 
-    INI.WriteString('SATSwH','CNPJ',edtSwHCNPJ.Text);
-    INI.WriteString('SATSwH','Assinatura',edtSwHAssinatura.Text);
+      with SATImpressao.SATExtrado do
+      begin
+        ParamsString                   := ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString;
+        ImprimeDescAcrescItem          := cbxImprimirDescAcresItemSAT.Checked;
+        ImprimeEmUmaLinha              := cbxImprimirItem1LinhaSAT.Checked;
+        ImprimeChaveEmUmaLinha         := rdgImprimeChave1LinhaSAT.ItemIndex;
+        UsaCodigoEanImpressao          := cbxImprimirCodEANitemSAT.Checked;
+      end;
 
-    INI.WriteBool('SATFortes','UsarFortes',cbUsarFortes.Checked) ;
-    INI.WriteInteger('SATFortes','Largura',seLargura.Value);
-    INI.WriteInteger('SATFortes','MargemTopo',seMargemTopo.Value);
-    INI.WriteInteger('SATFortes','MargemFundo',seMargemFundo.Value);
-    INI.WriteInteger('SATFortes','MargemEsquerda',seMargemEsquerda.Value);
-    INI.WriteInteger('SATFortes','MargemDireita',seMargemDireita.Value);
-    INI.WriteBool('SATFortes','Preview',cbPreview.Checked);
+      with SATImpressao.SATEmit do
+      begin
+        CNPJ                           := edtEmitCNPJ.Text;
+        IE                             := edtEmitIE.Text;
+        IM                             := edtEmitIM.Text;
+        RegTributario                  := cbxRegTributario.ItemIndex;
+        RegTribISSQN                   := cbxRegTribISSQN.ItemIndex;
+        IndRatISSQN                    := cbxIndRatISSQN.ItemIndex;
+      end;
 
-    INI.WriteString('SATPrinter','Name',lImpressora.Caption);
+      with SATImpressao.SATFortes do
+      begin
+        UsarFortes                     := cbUsarFortes.Checked;
+        Largura                        := seLargura.Value;
+        MargemTopo                     := seMargemTopo.Value;
+        MargemFundo                    := seMargemFundo.Value;
+        MargemEsquerda                 := seMargemEsquerda.Value;
+        MargemDireita                  := seMargemDireita.Value;
+        Preview                        := cbPreview.Checked;
+      end;
 
-    INI.WriteInteger('SATRede','tipoInter',rgRedeTipoInter.ItemIndex);
-    INI.WriteInteger('SATRede','tipoLan',rgRedeTipoLan.ItemIndex);
-    INI.WriteString('SATRede','SSID',edRedeSSID.Text);
-    INI.WriteInteger('SATRede','seg',cbxRedeSeg.ItemIndex);
-    INI.WriteString('SATRede','codigo',edRedeCodigo.Text);
-    INI.WriteString('SATRede','lanIP',edRedeIP.Text);
-    INI.WriteString('SATRede','lanMask',edRedeMask.Text);
-    INI.WriteString('SATRede','lanGW',edRedeGW.Text);
-    INI.WriteString('SATRede','lanDNS1',edRedeDNS1.Text);
-    INI.WriteString('SATRede','lanDNS2',edRedeDNS2.Text);
-    INI.WriteString('SATRede','usuario',edRedeUsuario.Text);
-    INI.WriteString('SATRede','senha',edRedeSenha.Text);
-    INI.WriteInteger('SATRede','proxy',cbxRedeProxy.ItemIndex);
-    INI.WriteString('SATRede','proxy_ip',edRedeProxyIP.Text);
-    INI.WriteInteger('SATRede','proxy_porta',edRedeProxyPorta.Value);
-    INI.WriteString('SATRede','proxy_user',edRedeProxyUser.Text);
-    INI.WriteString('SATRede','proxy_senha',edRedeProxySenha.Text);
+      with SATImpressao.SATPrinter do
+      begin
+        Name                           := lImpressora.Caption;
+      end;
 
-    INI.WriteString('SATIntegrador','Input',edMFEInput.Text);
-    INI.WriteString('SATIntegrador','Output',edMFEOutput.Text);
-    INI.WriteInteger('SATIntegrador','Timeout',seMFETimeout.Value);
+      with SATRede do
+      begin
+        tipoInter                      := rgRedeTipoInter.ItemIndex;
+        tipoLan                        := rgRedeTipoLan.ItemIndex;
+        SSID                           := edRedeSSID.Text;
+        seg                            := cbxRedeSeg.ItemIndex;
+        codigo                         := edRedeCodigo.Text;
+        lanIP                          := edRedeIP.Text;
+        lanMask                        := edRedeMask.Text;
+        lanGW                          := edRedeGW.Text;
+        lanDNS1                        := edRedeDNS1.Text;
+        lanDNS2                        := edRedeDNS2.Text;
+        usuario                        := edRedeUsuario.Text;
+        senha                          := edRedeSenha.Text;
+        proxy                          := cbxRedeProxy.ItemIndex;
+        proxy_ip                       := edRedeProxyIP.Text;
+        proxy_porta                    := edRedeProxyPorta.Value;
+        proxy_user                     := edRedeProxyUser.Text;
+        proxy_senha                    := edRedeProxySenha.Text;
+      end;
+
+      with SATSwH do
+      begin
+        CNPJ                           := edtSwHCNPJ.Text;
+        Assinatura                     := edtSwHAssinatura.Text;
+      end;
+    end;
+
+    {Parametro Integrador}
+    with FMonitorConfig.IntegradorFiscal do
+    begin
+      Input                            := edMFEInput.Text;
+      Output                           := edMFEOutput.Text;
+      Timeout                          := seMFETimeout.Value;
+    end;
 
     {Parâmetros PosPrinter}
-    INI.WriteInteger('PosPrinter', 'Modelo', cbxModelo.ItemIndex);
-    INI.WriteString('PosPrinter', 'Porta', cbxPorta.Text);
-    INI.WriteInteger('PosPrinter', 'Colunas', seColunas.Value);
-    INI.WriteInteger('PosPrinter', 'EspacoEntreLinhas', seEspacosLinhas.Value);
-    INI.WriteInteger('PosPrinter', 'LinhasBuffer', seBuffer.Value);
-    INI.WriteInteger('PosPrinter', 'LinhasPular', seLinhasPular.Value);
-    INI.WriteInteger('PosPrinter', 'PaginaDeCodigo', cbxPagCodigo.ItemIndex);
-    INI.WriteBool('PosPrinter', 'ControlePorta', cbControlePorta.Checked);
-    INI.WriteBool('PosPrinter', 'CortarPapel', cbCortarPapel.Checked);
-    INI.WriteBool('PosPrinter', 'TraduzirTags', cbTraduzirTags.Checked);
-    INI.WriteBool('PosPrinter', 'IgnorarTags', cbIgnorarTags.Checked);
-    INI.WriteString('PosPrinter', 'ArqLog', edPosPrinterLog.Text);
-    Ini.WriteString('PosPrinter', 'SerialParams', ACBrPosPrinter1.Device.ParamsString);
+    with FMonitorConfig.PosPrinter do
+    begin
+      Modelo                           := cbxModelo.ItemIndex;
+      Porta                            := cbxPorta.Text;
+      Colunas                          := seColunas.Value;
+      EspacoEntreLinhas                := seEspacosLinhas.Value;
+      LinhasBuffer                     := seBuffer.Value;
+      LinhasPular                      := seLinhasPular.Value;
+      PaginaDeCodigo                   := cbxPagCodigo.ItemIndex;
+      ControlePorta                    := cbControlePorta.Checked;
+      CortarPapel                      := cbCortarPapel.Checked;
+      TraduzirTags                     := cbTraduzirTags.Checked;
+      IgnorarTags                      := cbIgnorarTags.Checked;
+      ArqLog                           := edPosPrinterLog.Text;
+      SerialParams                     := ACBrPosPrinter1.Device.ParamsString;
 
-    INI.WriteInteger('Barras', 'Largura', seCodBarrasLargura.Value);
-    INI.WriteInteger('Barras', 'Altura', seCodBarrasAltura.Value);
-    INI.WriteBool('Barras', 'HRI',cbHRI.Checked);
+      with CodigoBarras do
+      begin
+        Largura                       := seCodBarrasLargura.Value;
+        Altura                        := seCodBarrasAltura.Value;
+        HRI                           := cbHRI.Checked;
+      end;
 
-    INI.WriteInteger('QRCode', 'Tipo', seQRCodeTipo.Value);
-    INI.WriteInteger('QRCode', 'LarguraModulo', seQRCodeLargMod.Value);
-    INI.WriteInteger('QRCode', 'ErrorLevel', seQRCodeErrorLevel.Value);
+      with QRCode do
+      begin
+        Tipo                          := seQRCodeTipo.Value;
+        LarguraModulo                 := seQRCodeLargMod.Value;
+        ErrorLevel                    := seQRCodeErrorLevel.Value;
+      end;
 
-    INI.WriteBool('Logo', 'Imprimir', cbEscPosImprimirLogo.Checked);
-    INI.WriteInteger('Logo', 'KC1', seLogoKC1.Value);
-    INI.WriteInteger('Logo', 'KC2', seLogoKC2.Value);
-    INI.WriteInteger('Logo', 'FatorX', seLogoFatorX.Value);
-    INI.WriteInteger('Logo', 'FatorY', seLogoFatorY.Value);
+      with Logo do
+      begin
+        Imprimir                      := cbEscPosImprimirLogo.Checked;
+        KC1                           := seLogoKC1.Value;
+        KC2                           := seLogoKC2.Value;
+        FatorX                        := seLogoFatorX.Value;
+        FatorY                        := seLogoFatorY.Value;
+      end;
 
-    INI.WriteInteger('Gaveta', 'TempoON', seGavetaTempoON.Value);
-    INI.WriteInteger('Gaveta', 'TempoOFF', seGavetaTempoOFF.Value);
-    INI.WriteBool('Gaveta', 'SinalInvertido', cbGavetaSinalInvertido.Checked);
+      with Gaveta do
+      begin
+        TempoON                       := seGavetaTempoON.Value;
+        TempoOFF                      := seGavetaTempoOFF.Value;
+        SinalInvertido                := cbGavetaSinalInvertido.Checked;
+      end;
+
+    end;
+
+    {Parâmetros Boleto}
+    SalvarConfBoletos;
 
   finally
-    Ini.Free;
+    FMonitorConfig.SalvarArquivo;
   end;
 
   AddLinesLog('Configuração geral gravada com sucesso');
 
-  SalvarConfBoletos;
   SalvarSW;
 
   if chRFD.Checked then
@@ -5265,24 +5551,24 @@ begin
     begin
       if Ativo then
       begin
-        CONT_RazaoSocial := edUSURazaoSocial.Text;
-        CONT_CNPJ := edUSUCNPJ.Text;
-        CONT_Endereco := edUSUEndereco.Text;
-        CONT_IE := edUSUIE.Text;
-        CONT_NumUsuario := seUSUNumeroCadastro.Value;
-        CONT_DataHoraCadastro := deUSUDataCadastro.Date;
+        CONT_RazaoSocial                := edUSURazaoSocial.Text;
+        CONT_CNPJ                       := edUSUCNPJ.Text;
+        CONT_Endereco                   := edUSUEndereco.Text;
+        CONT_IE                         := edUSUIE.Text;
+        CONT_NumUsuario                 := seUSUNumeroCadastro.Value;
+        CONT_DataHoraCadastro           := deUSUDataCadastro.Date;
         try
-          CONT_DataHoraCadastro :=
-            CONT_DataHoraCadastro + StrToTime(meUSUHoraCadastro.Text, ':');
+          CONT_DataHoraCadastro         := CONT_DataHoraCadastro
+                                        + StrToTime(meUSUHoraCadastro.Text, ':');
         except
         end;
-        CONT_CROCadastro := seUSUCROCadastro.Value;
-        CONT_GTCadastro := seUSUGTCadastro.Value;
-        ECF_RFDID := lRFDID.Caption;
-        ECF_DataHoraSwBasico := deRFDDataSwBasico.Date;
+        CONT_CROCadastro                := seUSUCROCadastro.Value;
+        CONT_GTCadastro                 := seUSUGTCadastro.Value;
+        ECF_RFDID                       := lRFDID.Caption;
+        ECF_DataHoraSwBasico            := deRFDDataSwBasico.Date;
         try
-          ECF_DataHoraSwBasico :=
-            ECF_DataHoraSwBasico + StrToTime(meRFDHoraSwBasico.Text, ':');
+          ECF_DataHoraSwBasico          := ECF_DataHoraSwBasico
+                                        + StrToTime(meRFDHoraSwBasico.Text, ':');
         except
         end;
 
@@ -5300,99 +5586,102 @@ begin
       'Configurações de inicialização do ACBrMonitorPLUS foram modificadas' +
       sLineBreak + sLineBreak + 'Será necessário reinicar o ACBrMonitorPLUS',
       mtInformation, [mbOK], 0);
+
     Application.Terminate;
   end;
+
 end;
 
 procedure TFrmACBrMonitor.SalvarConfBoletos;
 var
-  Ini: TIniFile;
   TrimedCNPJ, TrimedCEP: string;
 begin
-  TrimedCNPJ := OnlyNumber(edtBOLCNPJ.Text);
-  TrimedCEP := OnlyNumber(edtBOLCEP.Text);
+   TrimedCNPJ := OnlyNumber(edtBOLCNPJ.Text);
+   TrimedCEP := OnlyNumber(edtBOLCEP.Text);
+   if pConfig.Visible and (TrimedCNPJ <> '') then
+   begin
+     with ACBrValidador1 do
+     begin
+       if cbxBOLF_J.ItemIndex = 0 then
+         TipoDocto := docCPF
+       else
+         TipoDocto := docCNPJ;
+          Documento := edtBOLCNPJ.Text;
+       try
+         Validar;
+       except
+         btnBoletoClick(btnBoleto);
+         btnBoletoCedenteClick(btnBoletoCedente);
+         edtBOLCNPJ.SetFocus;
+         raise;
+       end;
+          edtBOLCNPJ.Text := Formatar;
+     end;
+   end;
 
-  if pConfig.Visible and (TrimedCNPJ <> '') then
-  begin
-    with ACBrValidador1 do
-    begin
-      if cbxBOLF_J.ItemIndex = 0 then
-        TipoDocto := docCPF
-      else
-        TipoDocto := docCNPJ;
+   {Parametros do Boleto}
+   with FMonitorConfig.BOLETO do
+   begin
+     Nome               := edtBOLRazaoSocial.Text;
+     CNPJCPF            := ifthen(TrimedCNPJ = '', '', edtBOLCNPJ.Text);
+     Logradouro         := edtBOLLogradouro.Text;
+     Numero             := edtBOLNumero.Text;
+     Bairro             := edtBOLBairro.Text;
+     Cidade             := edtBOLCidade.Text;
+     CEP                := ifthen(TrimedCEP = '', '', edtBOLCEP.Text);
+     Complemento        := edtBOLComplemento.Text;
+     UF                 := cbxBOLUF.Text;
 
-      Documento := edtBOLCNPJ.Text;
-      try
-        Validar;    // Dispara Exception se Documento estiver errado
-      except
-        btnBoletoClick(btnBoleto);  //pgConfig.ActivePage := tsACBrBoleto;
-        btnBoletoCedenteClick(btnBoletoCedente); //pgBoleto.ActivePage := tsCedente;
-        edtBOLCNPJ.SetFocus;
-        raise;
-      end;
+     with Conta do
+     begin
+       Banco                    := max(cbxBOLBanco.ItemIndex, 0);
+       Conta                    := edtBOLConta.Text;
+       DigitoConta              := edtBOLDigitoConta.Text;
+       Agencia                  := edtBOLAgencia.Text;
+       DigitoAgencia            := edtBOLDigitoAgencia.Text;
+       CodCedente               := edtCodCliente.Text;
+       LocalPagamento           := edtBOLLocalPagamento.Text;
+       RespEmis                 := cbxBOLEmissao.ItemIndex;
+       Pessoa                   := cbxBOLF_J.ItemIndex;
+       Modalidade               := edtModalidade.Text;
+       Convenio                 := edtConvenio.Text;
+     end;
 
-      edtBOLCNPJ.Text := Formatar;
-    end;
-  end;
+     with Layout do
+     begin
+       DirLogos                 := PathWithoutDelim(deBOLDirLogo.Text);
+       Copias                   := spBOLCopias.Value;
+       Preview                  := ckgBOLMostrar.Checked[0];
+       Progresso                := ckgBOLMostrar.Checked[1];
+       Setup                    := ckgBOLMostrar.Checked[2];
+       Layout                   := cbxBOLLayout.ItemIndex;
+       Filtro                   := cbxBOLFiltro.ItemIndex;
+       DirArquivoBoleto         := PathWithoutDelim(deBOLDirArquivo.Text);
+       Impressora               := cbxBOLImpressora.Text;
+     end;
 
-  Ini := TIniFile.Create(ACBrMonitorINI);
-  try
-    {Parametros do Boleto - Cliente}
-    ini.WriteString('BOLETO', 'Cedente.Nome', edtBOLRazaoSocial.Text);
-    ini.WriteString('BOLETO', 'Cedente.CNPJCPF',
-      ifthen(TrimedCNPJ = '', '', edtBOLCNPJ.Text));
-    ini.WriteString('BOLETO', 'Cedente.Logradouro', edtBOLLogradouro.Text);
-    ini.WriteString('BOLETO', 'Cedente.Numero', edtBOLNumero.Text);
-    ini.WriteString('BOLETO', 'Cedente.Bairro', edtBOLBairro.Text);
-    ini.WriteString('BOLETO', 'Cedente.Cidade', edtBOLCidade.Text);
-    ini.WriteString('BOLETO', 'Cedente.CEP', ifthen(TrimedCEP = '', '', edtBOLCEP.Text));
-    ini.WriteString('BOLETO', 'Cedente.Complemento', edtBOLComplemento.Text);
-    ini.WriteString('BOLETO', 'Cedente.UF', cbxBOLUF.Text);
-    ini.WriteInteger('BOLETO', 'Cedente.RespEmis', cbxBOLEmissao.ItemIndex);
-    ini.WriteInteger('BOLETO', 'Cedente.Pessoa', cbxBOLF_J.ItemIndex);
-    ini.WriteString('BOLETO', 'Cedente.CodTransmissao', edtCodTransmissao.Text);
-    ini.WriteString('BOLETO', 'Cedente.Modalidade', edtModalidade.Text);
-    ini.WriteString('BOLETO', 'Cedente.Convenio', edtConvenio.Text);
+     with RemessaRetorno do
+     begin
+       DirArquivoRemessa        := PathWithoutDelim(deBolDirRemessa.Text);
+       DirArquivoRetorno        := PathWithoutDelim(deBolDirRetorno.Text);
+       CNAB                     := cbxCNAB.ItemIndex;
+       LerCedenteRetorno        := chkLerCedenteRetorno.Checked;
+       CodTransmissao           := edtCodTransmissao.Text;
+     end;
 
-    {Parametros do Boleto - Banco}
-    Ini.WriteInteger('BOLETO', 'Banco', max(cbxBOLBanco.ItemIndex, 0));
-    ini.WriteString('BOLETO', 'Conta', edtBOLConta.Text);
-    ini.WriteString('BOLETO', 'DigitoConta', edtBOLDigitoConta.Text);
-    ini.WriteString('BOLETO', 'Agencia', edtBOLAgencia.Text);
-    ini.WriteString('BOLETO', 'DigitoAgencia', edtBOLDigitoAgencia.Text);
-    ini.WriteString('BOLETO', 'CodCedente', edtCodCliente.Text);
-    ini.WriteString('BOLETO', 'LocalPagamento', edtBOLLocalPagamento.Text);
+     with Email do
+     begin
+       EmailAssuntoBoleto       := edtBOLEmailAssunto.Text;
+       EmailMensagemBoleto      := BinaryStringToString(edtBOLEmailMensagem.Lines.Text);
+     end;
 
-    {Parametros do Boleto - Boleto}
-    ini.WriteString('BOLETO', 'DirLogos', PathWithoutDelim(deBOLDirLogo.Text));
-//    ini.WriteString('BOLETO', 'SoftwareHouse', edtBOLSH.Text);
-    ini.WriteInteger('BOLETO', 'Copias', spBOLCopias.Value);
-    Ini.WriteBool('BOLETO', 'Preview', ckgBOLMostrar.Checked[0]);
-    ini.WriteBool('BOLETO', 'Progresso', ckgBOLMostrar.Checked[1]);
-    ini.WriteBool('BOLETO', 'Setup', ckgBOLMostrar.Checked[2]);
-    ini.WriteInteger('BOLETO', 'Layout', cbxBOLLayout.ItemIndex);
-    ini.WriteInteger('BOLETO', 'Filtro', cbxBOLFiltro.ItemIndex);
-    ini.WriteString('BOLETO', 'DirArquivoBoleto', PathWithoutDelim(
-      deBOLDirArquivo.Text));
-    ini.WriteString('BOLETO', 'DirArquivoRemessa', PathWithoutDelim(
-      deBolDirRemessa.Text));
-    ini.WriteString('BOLETO', 'DirArquivoRetorno', PathWithoutDelim(
-      deBolDirRetorno.Text));
-    ini.WriteInteger('BOLETO', 'CNAB', cbxCNAB.ItemIndex);
-    Ini.WriteBool('BOLETO','LerCedenteRetorno', chkLerCedenteRetorno.Checked);
-    Ini.WriteBool('BOLETO','MostraPreviewRelRetorno',chkBOLRelMostraPreview.Checked);
-    Ini.WriteString('BOLETO', 'LogoEmpresa', edtBOLLogoEmpresa.Text);
+     with Relatorio do
+     begin
+       MostraPreviewRelRetorno :=chkBOLRelMostraPreview.Checked;
+       LogoEmpresa             := edtBOLLogoEmpresa.Text;
+     end;
+   end;
 
-    {Parametros do Boleto - E-mail}
-    ini.WriteString('BOLETO', 'EmailAssuntoBoleto', edtBOLEmailAssunto.Text);
-    ini.WriteString('BOLETO', 'EmailMensagemBoleto', BinaryStringToString(edtBOLEmailMensagem.Lines.Text));
-    {Parametros do Boleto - Impressora}
-    Ini.WriteString('BOLETO', 'Impressora', cbxBOLImpressora.Text);
-  finally
-    ini.Free;
-  end;
-
-  AddLinesLog('Configuração de Boletos gravada com sucesso');
 end;
 
 {------------------------------------------------------------------------------}
@@ -5551,6 +5840,7 @@ begin
        (UpperCase(Copy(Objeto, 1, 3)) = 'SAT') or
        (UpperCase(Copy(Objeto, 1, 4)) = 'MDFE') or
        (UpperCase(Copy(Objeto, 1, 4)) = 'GNRE') or
+       (UpperCase(Copy(Objeto, 1, 7)) = 'ESOCIAL') or
        (UpperCase(Copy(Objeto, 1, 3)) = 'CTE')then
     begin
       Linha := Trim(fsProcessar.Text);
@@ -5612,7 +5902,9 @@ begin
         else if fsCmd.Objeto = 'CTE' then
           DoACBrCTe(fsCmd)
         else if fsCmd.Objeto = 'MDFE' then
-          DoACBrMDFe(fsCmd)
+          FDoMDFe.Executar(fsCmd)
+        else if fsCmd.Objeto = 'ESOCIAL' then
+          FDoeSocial.Executar(fsCmd)
         else if fsCmd.Objeto = 'GNRE' then
           DoACBrGNRe(fsCmd)
         else if fsCmd.Objeto = 'SAT' then
@@ -6181,6 +6473,19 @@ begin
   if OpenDialog1.Execute then
   begin
     edtArquivoWebServicesCTe.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbArquivoWebServiceseSocialClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o arquivo';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtArquivoWebServiceseSocial.Text := OpenDialog1.FileName;
   end;
 end;
 
@@ -7321,14 +7626,6 @@ begin
 end;
 
 {------------------------------------------------------------------------------}
-procedure TFrmACBrMonitor.FormShortCut(Key: integer; Shift: TShiftState;
-  var Handled: boolean);
-begin
-  if (Key = VK_HELP) or (Key = VK_F1) then
-    sbSobre.Click;
-end;
-
-{------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.bExecECFTesteClick(Sender: TObject);
 var
   Arquivo: string;
@@ -8267,6 +8564,7 @@ begin
     begin
       UF       := cbUF.Text;
       Ambiente := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex + 1));
+
       Salvar   := ckSalvar.Checked;
       TimeOut  := edtTimeoutWebServices.Value * 1000;
       AjustaAguardaConsultaRet  := cbxAjustarAut.Checked;
@@ -8313,7 +8611,7 @@ begin
   begin
     TConfiguracoesNFe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoNFe.ItemIndex+1));
     TConfiguracoesNFe(Configuracoes).Geral.VersaoDF     := StrToVersaoDF(ok, cbVersaoWS.Text);
-
+    TConfiguracoesNFe(Configuracoes).Geral.AtualizarXMLCancelado:= FMonitorConfig.DFE.Diretorios.AtualizarXMLCancelado;
     TConfiguracoesNFe(Configuracoes).Arquivos.IniServicos    := edtArquivoWebServicesNFe.Text;
     TConfiguracoesNFe(Configuracoes).Arquivos.EmissaoPathNFe := cbxEmissaoPathNFe.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.SalvarEvento   := cbxSalvaPathEvento.Checked;
@@ -8323,6 +8621,7 @@ begin
     TConfiguracoesNFe(Configuracoes).Arquivos.SalvarApenasNFeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
+
 
   end
   else if Configuracoes is TConfiguracoesCTe then
@@ -8360,7 +8659,19 @@ begin
     TConfiguracoesGNRE(Configuracoes).Arquivos.EmissaoPathGNRE := cbxEmissaoPathNFe.Checked;
     TConfiguracoesGNRE(Configuracoes).Arquivos.PathGNRE        := edtPathNFe.Text;
     TConfiguracoesGNRE(Configuracoes).Arquivos.SalvarApenasGNREProcessadas := cbxSalvarNFesProcessadas.Checked;
-  end;
+  end
+  else if Configuracoes is TConfiguracoeseSocial then
+  begin
+    TConfiguracoeseSocial(Configuracoes).Arquivos.IniServicos       := edtArquivoWebServiceseSocial.Text;
+    TConfiguracoeseSocial(Configuracoes).Arquivos.PatheSocial       := edtPathNFe.Text;
+    TConfiguracoeseSocial(Configuracoes).Arquivos.EmissaoPatheSocial:= cbxEmissaoPathNFe.Checked;
+    TConfiguracoeseSocial(Configuracoes).Geral.VersaoDF             := StrToVersaoeSocial(ok, cbVersaoWSeSocial.Text);
+    TConfiguracoeseSocial(Configuracoes).Geral.TipoEmpregador       := TEmpregador(cbTipoEmpregador.ItemIndex);
+    TConfiguracoeseSocial(Configuracoes).Geral.IdEmpregador         := edtIDEmpregador.Text;
+    TConfiguracoeseSocial(Configuracoes).Geral.IdTransmissor        := edtIDTransmissor.Text;
+
+  end
+
 end;
 
 procedure TFrmACBrMonitor.AtualizaSSLLibsCombo;
@@ -8697,7 +9008,7 @@ begin
 
 end;
 
-function TFrmACBrMonitor.RespostaIntegrador: String;
+function TFrmACBrMonitor.RespostaIntegrador(): String;
 begin
    Result := '';
    if (ACBrSAT1.Integrador= ACBrIntegrador1) or
@@ -8760,6 +9071,7 @@ begin
       ACBrMDFe1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
       ACBrGNRE1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
       ACBrBlocoX1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+      ACBreSocial1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -8776,6 +9088,7 @@ begin
       ACBrMDFe1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
       ACBrGNRE1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
       ACBrBlocox1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+      ACBreSocial1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -8818,6 +9131,7 @@ begin
       ACBrMDFe1.Configuracoes.Geral.SSLLib   := TSSLLib(cbSSLLib.ItemIndex);
       ACBrGNRE1.Configuracoes.Geral.SSLLib   := TSSLLib(cbSSLLib.ItemIndex);
       ACBrBlocoX1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+      ACBreSocial1.Configuracoes.Geral.SSLLib:= TSSLLib(cbSSLLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -8931,6 +9245,12 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.AtualizarTela(AMonitorConfig: TMonitorConfig);
+begin
+  if AMonitorConfig = FMonitorConfig then
+    LerIni;
+end;
+
 procedure TFrmACBrMonitor.CarregaArquivosRetorno;
 var
   Item: TListItem;
@@ -8984,6 +9304,7 @@ begin
   ACBrMDFe1.SSL.SSLType   := TSSLType( cbSSLType.ItemIndex );
   ACBrGNRE1.SSL.SSLType   := TSSLType( cbSSLType.ItemIndex );
   ACBrBlocoX1.SSL.SSLType := TSSLType( cbSSLType.ItemIndex );
+  ACBreSocial1.SSL.SSLType:= TSSLType( cbSSLType.ItemIndex );
 end;
 
 procedure TFrmACBrMonitor.SetColorSubButtons(Sender: TObject);

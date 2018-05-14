@@ -34,38 +34,143 @@ unit CmdUnit;
 {$mode objfpc}{$H+}
 
 interface
-Uses SysUtils, Classes, Math ;
+Uses
+  SysUtils, Classes, Math, ACBrMonitorConfig;
 
 Const
-   Objetos = '"ECF","CHQ","GAV","DIS","LCB","ACBR","BAL","ETQ","BOLETO","CEP","IBGE","EMAIL","SEDEX","NCM","NFE","CTE","MDFE","SAT","ESCPOS","GNRE"' ;
+   Objetos = '"ECF","CHQ","GAV","DIS","LCB","ACBR","BAL","ETQ","BOLETO","CEP","IBGE","EMAIL","SEDEX","NCM","NFE","CTE","MDFE","SAT","ESCPOS","GNRE","ESOCIAL"' ;
 
 type
+
+{ TACBrCmd }
+
 TACBrCmd = class
-  private
-    fsParams : TStringList ;
-    fsComando: AnsiString;
-    fsObjeto : AnsiString;
-    fsMetodo : AnsiString;
-    fsResposta: AnsiString;
-    procedure SetComando(const Value: AnsiString);
+private
+  fsParams : TStringList ;
+  fsComando: AnsiString;
+  fsObjeto : AnsiString;
+  fsMetodo : AnsiString;
+  fsResposta: AnsiString;
+  procedure SetComando(const Value: AnsiString);
 
-  public
-    constructor Create;
-    destructor Destroy; override ;
+public
+  constructor Create;
+  destructor Destroy; override ;
 
-    function Params( Index : Integer) : AnsiString ;
+  function Params( Index : Integer) : AnsiString ;
 
-    property Comando : AnsiString read fsComando write SetComando ;
-    property Objeto  : AnsiString read fsObjeto ;
-    property Metodo  : AnsiString read fsMetodo ;
-    property Resposta: AnsiString read fsResposta write fsResposta ;
-  end;
+  property Comando : AnsiString read fsComando write SetComando ;
+  property Objeto  : AnsiString read fsObjeto ;
+  property Metodo  : AnsiString read fsMetodo ;
+  property Resposta: AnsiString read fsResposta write fsResposta ;
+end;
+
+
+{ TACBrObjeto }
+
+TACBrObjeto = class
+private
+  fListaDeMetodos: TStringList;
+protected
+  fpConfig: TMonitorConfig;
+  fpCmd: TACBrCmd;
+public
+  constructor Create(AConfig: TMonitorConfig); virtual;
+  destructor Destroy; override;
+
+  procedure Executar(ACmd: TACBrCmd); virtual;
+
+  property ListaDeMetodos: TStringList read fListaDeMetodos;
+  property MonitorConfig: TMonitorConfig read fpConfig;
+end;
+
+TACBrEventoAntesImprimir = procedure(ShowPreview: Boolean) of object;
+TACBrEventoDepoisImprimir = procedure of object;
+
+{ TACBrObjetoDFe }
+
+TACBrObjetoDFe = class(TACBrObjeto)
+private
+  FOnAntesDeImprimir: TACBrEventoAntesImprimir;
+  FOnDepoisDeImprimir: TACBrEventoDepoisImprimir;
+public
+  procedure DoAntesDeImprimir(ShowPreview: Boolean);
+  procedure DoDepoisDeImprimir;
+
+  property OnAntesDeImprimir: TACBrEventoAntesImprimir read FOnAntesDeImprimir write FOnAntesDeImprimir;
+  property OnDepoisDeImprimir: TACBrEventoDepoisImprimir read FOnDepoisDeImprimir write FOnDepoisDeImprimir;
+end;
+
+{ TACBrMetodo }
+
+TACBrMetodo = class
+protected
+  fpCmd: TACBrCmd;
+  fpObjetoDono: TACBrObjeto;
+public
+  constructor Create(ACmd: TACBrCmd; ObjetoDono: TACBrObjeto); virtual;
+  procedure Executar; virtual;
+end;
+
+TACBrMetodoClass = class of TACBrMetodo;
 
 implementation
 
 uses StrUtils;
 
-{----------------------------------- TACBrCmd ---------------------------------}
+{ TACBrObjetoDFe }
+
+procedure TACBrObjetoDFe.DoAntesDeImprimir(ShowPreview: Boolean);
+begin
+  if Assigned(FOnAntesDeImprimir) then
+    FOnAntesDeImprimir(ShowPreview);
+end;
+
+procedure TACBrObjetoDFe.DoDepoisDeImprimir;
+begin
+  if Assigned(FOnDepoisDeImprimir) then
+    FOnDepoisDeImprimir;
+end;
+
+{ TACBrObjeto }
+
+constructor TACBrObjeto.Create(AConfig: TMonitorConfig);
+begin
+  inherited Create;
+  fpConfig := AConfig;
+  fListaDeMetodos := TStringList.Create;
+end;
+
+destructor TACBrObjeto.Destroy;
+begin
+  fListaDeMetodos.Free;
+  inherited Destroy;
+end;
+
+procedure TACBrObjeto.Executar(ACmd: TACBrCmd);
+begin
+  fpCmd := ACmd;
+
+  if fListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo)) < 0 then
+    raise Exception.Create('Comando inválido (' + ACmd.Metodo + ')');
+end;
+
+{ TACBrMetodo }
+
+constructor TACBrMetodo.Create(ACmd: TACBrCmd; ObjetoDono: TACBrObjeto);
+begin
+  inherited Create;
+  fpCmd := ACmd;
+  fpObjetoDono := ObjetoDono;
+end;
+
+procedure TACBrMetodo.Executar;
+begin
+  raise Exception.Create( ClassName+'.Execute, não implementado');
+end;
+
+{ TACBrCmd }
+
 constructor TACBrCmd.Create;
 begin
   fsParams := TStringList.Create ;
@@ -178,4 +283,7 @@ begin
 end;
 
 end.
- 
+
+
+
+

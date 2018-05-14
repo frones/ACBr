@@ -287,7 +287,8 @@ end;
 
 function TGeralConfNFe.GetVersaoQRCodeCodigo: Real;
 begin
-  if TACBrNFe(fpConfiguracoes.Owner).Configuracoes.Geral.VersaoDF <= ve310 then
+  if (not (csDesigning in fpConfiguracoes.Owner.ComponentState)) and
+     (TACBrNFe(fpConfiguracoes.Owner).Configuracoes.Geral.VersaoDF <= ve310) then
     Result := 0
   else if FVersaoQRCode > veqr000 then
     Result := VersaoQrCodeToDbl(FVersaoQRCode)
@@ -299,7 +300,8 @@ end;
 
 function TGeralConfNFe.GetVersaoQRCode: TpcnVersaoQrCode;
 begin
-  if TACBrNFe(fpConfiguracoes.Owner).Configuracoes.Geral.VersaoDF <= ve310 then
+  if (not (csDesigning in fpConfiguracoes.Owner.ComponentState)) and
+     (TACBrNFe(fpConfiguracoes.Owner).Configuracoes.Geral.VersaoDF <= ve310) then
     Result := veqr000
   else if FVersaoQRCode > veqr000 then
     Result := FVersaoQRCode

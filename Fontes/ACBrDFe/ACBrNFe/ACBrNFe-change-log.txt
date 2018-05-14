@@ -51,12 +51,12 @@ Símbolo : Significado
 -- ACBrNFe --
 [+] Adicionado o método: AjustarVersaoQRCode, para retornar a versão do QRCode
     levando em consideração "Configuracoes.Geral.VersaoQRCode" e a versão do Documento.
-[*] Métodos: GetURLConsultaNFCe e GetURLQRCode restaruados para sua assinatura
+[*] Métodos: GetURLConsultaNFCe e GetURLQRCode restaurados para sua assinatura
     original, e modificados para usar "Configuracoes.Geral.VersaoQRCode" e
     "AjustarVersaoQRCode"  (por: DSA)
 
 -- ACBrNFeNotasFiscais, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFEFRDM --
-[*] Modicados para usar a assinatura original de GetURLConsultaNFCe e GetURLQRCode
+[*] Modificados para usar a assinatura original de GetURLConsultaNFCe e GetURLQRCode
     (por: DSA)
 
 10/05/2018

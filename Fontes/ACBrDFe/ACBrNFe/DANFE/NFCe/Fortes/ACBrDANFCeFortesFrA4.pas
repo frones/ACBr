@@ -641,7 +641,9 @@ begin
     'Consulte pela Chave de Acesso em ' +
     TACBrNFe(self.FACBrNFeDANFCeFortesA4.ACBrNFe).GetURLConsultaNFCe(
       self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.cUF,
-      self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpAmb)
+      self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpAmb,
+      self.FACBrNFeDANFCeFortesA4.FpNFe.infNFe.Versao
+      )
     );
 end;
 

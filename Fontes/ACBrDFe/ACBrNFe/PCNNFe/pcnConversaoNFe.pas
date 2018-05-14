@@ -79,7 +79,7 @@ type
   TpcnModeloDF = (moNFe, moNFCe);
   TpcnVersaoDF = (ve200, ve300, ve310, ve400);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
-  TpcnVersaoQrCode = (veqr000, veqr100,veqr200);
+  TpcnVersaoQrCode = (veqr000, veqr100, veqr200);
 
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros);
   TpcnCondicaoVeiculo = (cvAcabado, cvInacabado, cvSemiAcabado);

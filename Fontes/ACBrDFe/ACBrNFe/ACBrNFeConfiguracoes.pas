@@ -58,8 +58,6 @@ type
     FCSC: String;
     FVersaoQRCode: TpcnVersaoQrCode;
 
-    function GetVersaoQRCode: TpcnVersaoQrCode;
-    function GetVersaoQRCodeCodigo: Real;
     procedure SetCSC(AValue: String);
     procedure SetIdCSC(AValue: String);
     procedure SetModeloDF(AValue: TpcnModeloDF);
@@ -78,8 +76,7 @@ type
       read FAtualizarXMLCancelado write FAtualizarXMLCancelado default False;
     property IdCSC: String read FIdCSC write SetIdCSC;
     property CSC: String read FCSC write SetCSC;
-    property VersaoQRCode: TpcnVersaoQrCode read GetVersaoQRCode write FVersaoQRCode default veqr100;
-    property VersaoQRCodeCodigo: Real read GetVersaoQRCodeCodigo;
+    property VersaoQRCode: TpcnVersaoQrCode read FVersaoQRCode write FVersaoQRCode default veqr100;
   end;
 
   { TDownloadConfNFe }
@@ -283,30 +280,6 @@ begin
     Exit;
 
   FCSC:=Trim(AValue);
-end;
-
-function TGeralConfNFe.GetVersaoQRCodeCodigo: Real;
-begin
-  if (not (csDesigning in fpConfiguracoes.Owner.ComponentState)) and
-     (TACBrNFe(fpConfiguracoes.Owner).Configuracoes.Geral.VersaoDF <= ve310) then
-    Result := 0
-  else if FVersaoQRCode > veqr000 then
-    Result := VersaoQrCodeToDbl(FVersaoQRCode)
-  else
-  begin
-    Result := 1
-  end;
-end;
-
-function TGeralConfNFe.GetVersaoQRCode: TpcnVersaoQrCode;
-begin
-  if (not (csDesigning in fpConfiguracoes.Owner.ComponentState)) and
-     (TACBrNFe(fpConfiguracoes.Owner).Configuracoes.Geral.VersaoDF <= ve310) then
-    Result := veqr000
-  else if FVersaoQRCode > veqr000 then
-    Result := FVersaoQRCode
-  else
-    Result := veqr100;
 end;
 
 procedure TGeralConfNFe.SetIdCSC(AValue: String);

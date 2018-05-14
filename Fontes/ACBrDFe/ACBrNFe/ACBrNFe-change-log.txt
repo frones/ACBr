@@ -47,13 +47,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2018
+-- ACBrNFe --
+[+] Adicionado o método: AjustarVersaoQRCode, para retornar a versão do QRCode
+    levando em consideração "Configuracoes.Geral.VersaoQRCode" e a versão do Documento.
+[*] Métodos: GetURLConsultaNFCe e GetURLQRCode restaruados para sua assinatura
+    original, e modificados para usar "Configuracoes.Geral.VersaoQRCode" e
+    "AjustarVersaoQRCode"  (por: DSA)
+
+-- ACBrNFeNotasFiscais, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFEFRDM --
+[*] Modicados para usar a assinatura original de GetURLConsultaNFCe e GetURLQRCode
+    (por: DSA)
+
 10/05/2018
--- pcnNFeW
+-- pcnNFeW --
 [*] Alteração geração Tags PIS / COFINS para modelo 65 CST -99 (permitir gerar tags com valores zerados)
   Por: José M. S. Junior
 
 07/05/2018
--- ACBrNFeNotasFiscais
+-- ACBrNFeNotasFiscais --
 [*] Alteração Leitura .INI (GerarNFeINI) ref. Tag Medicamentos
   Por: José M. S. Junior
 

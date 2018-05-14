@@ -271,6 +271,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         object TabSheet2: TTabSheet
           Caption = 'Geral'
           ImageIndex = 1
+          ExplicitLeft = 6
+          ExplicitTop = 31
           object GroupBox3: TGroupBox
             Left = 0
             Top = 4
@@ -384,6 +386,32 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
                 '8 = SVC-SP')
               TabOrder = 4
             end
+          end
+          object rgModeloDF: TRadioGroup
+            Left = 0
+            Top = 279
+            Width = 129
+            Height = 49
+            Caption = 'Modelo DF'
+            Columns = 2
+            ItemIndex = 0
+            Items.Strings = (
+              'CT-e'
+              'CT-e OS')
+            TabOrder = 1
+          end
+          object rgVersaoDF: TRadioGroup
+            Left = 133
+            Top = 279
+            Width = 129
+            Height = 50
+            Caption = 'Vers'#227'o DF'
+            Columns = 2
+            ItemIndex = 1
+            Items.Strings = (
+              '2.00'
+              '3.00')
+            TabOrder = 2
           end
         end
         object TabSheet3: TTabSheet
@@ -898,8 +926,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       Align = alTop
       TabOrder = 0
       object btnImprimir: TButton
-        Left = 8
-        Top = 128
+        Left = 9
+        Top = 95
         Width = 177
         Height = 25
         Caption = 'Imprimir DACTe'
@@ -907,8 +935,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnImprimirClick
       end
       object btnConsultar: TButton
-        Left = 8
-        Top = 66
+        Left = 192
+        Top = 34
         Width = 177
         Height = 25
         Caption = 'Consultar carregando XML'
@@ -916,8 +944,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnConsultarClick
       end
       object btnValidarXML: TButton
-        Left = 193
-        Top = 94
+        Left = 9
+        Top = 64
         Width = 177
         Height = 25
         Caption = 'Validar XML'
@@ -934,8 +962,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnStatusServClick
       end
       object btnCancCTe: TButton
-        Left = 377
-        Top = 94
+        Left = 9
+        Top = 126
         Width = 177
         Height = 25
         Caption = 'Cancelamento por Evento'
@@ -943,8 +971,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnCancCTeClick
       end
       object btnCriarEnviar: TButton
-        Left = 192
-        Top = 36
+        Left = 375
+        Top = 6
         Width = 177
         Height = 25
         Caption = 'Criar e Enviar'
@@ -952,8 +980,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnCriarEnviarClick
       end
       object btnInutilizar: TButton
-        Left = 192
-        Top = 6
+        Left = 9
+        Top = 192
         Width = 177
         Height = 25
         Caption = 'Inutilizar Numera'#231#227'o'
@@ -961,7 +989,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnInutilizarClick
       end
       object btnGerarCTe: TButton
-        Left = 376
+        Left = 192
         Top = 6
         Width = 177
         Height = 25
@@ -970,8 +998,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnGerarCTeClick
       end
       object btnConsCad: TButton
-        Left = 9
-        Top = 34
+        Left = 192
+        Top = 64
         Width = 177
         Height = 25
         Caption = 'Consulta Cadastro'
@@ -980,7 +1008,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       end
       object btnGerarPDF: TButton
         Left = 192
-        Top = 128
+        Top = 95
         Width = 177
         Height = 25
         Caption = 'Gerar PDF'
@@ -988,8 +1016,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnGerarPDFClick
       end
       object btnEnviarEmail: TButton
-        Left = 376
-        Top = 128
+        Left = 375
+        Top = 95
         Width = 177
         Height = 25
         Caption = 'Enviar CTe Email'
@@ -997,8 +1025,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnEnviarEmailClick
       end
       object btnConsultarRecibo: TButton
-        Left = 376
-        Top = 36
+        Left = 9
+        Top = 34
         Width = 177
         Height = 25
         Caption = 'Consultar Recibo Lote'
@@ -1006,7 +1034,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnConsultarReciboClick
       end
       object btnEnvEPEC: TButton
-        Left = 377
+        Left = 375
         Top = 64
         Width = 177
         Height = 25
@@ -1015,66 +1043,57 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnEnvEPECClick
       end
       object btnImprimirEvento: TButton
-        Left = 8
-        Top = 160
+        Left = 192
+        Top = 126
         Width = 177
         Height = 25
         Caption = 'Imprimir Evento'
         TabOrder = 13
         OnClick = btnImprimirEventoClick
       end
-      object btnImportarXML: TButton
-        Left = 9
-        Top = 96
-        Width = 177
-        Height = 25
-        Caption = 'Importar XML'
-        TabOrder = 14
-        OnClick = btnImportarXMLClick
-      end
       object btnConsultarChave: TButton
-        Left = 192
-        Top = 64
+        Left = 375
+        Top = 34
         Width = 177
         Height = 25
         Caption = 'Consultar pela Chave'
-        TabOrder = 15
+        TabOrder = 14
         OnClick = btnConsultarChaveClick
       end
       object btnEnviarEventoEmail: TButton
-        Left = 376
+        Left = 192
         Top = 160
         Width = 177
         Height = 25
         Caption = 'Enviar Evento Email'
-        TabOrder = 16
+        TabOrder = 15
         OnClick = btnEnviarEventoEmailClick
       end
       object btnGerarPDFEvento: TButton
-        Left = 192
-        Top = 160
+        Left = 375
+        Top = 126
         Width = 177
         Height = 25
         Caption = 'Gerar PDF Evento'
-        TabOrder = 17
+        TabOrder = 16
         OnClick = btnGerarPDFEventoClick
       end
       object btnImprimirInut: TButton
-        Left = 8
+        Left = 192
         Top = 192
         Width = 177
         Height = 25
         Caption = 'Imprimir Inutiliza'#231#227'o'
-        TabOrder = 18
+        TabOrder = 17
         OnClick = btnImprimirInutClick
       end
       object btnGerarPDFInut: TButton
-        Left = 192
+        Left = 375
         Top = 192
         Width = 177
         Height = 25
         Caption = 'Gerar PDF Inutiliza'#231#227'o'
-        TabOrder = 19
+        TabOrder = 18
         OnClick = btnGerarPDFInutClick
       end
     end
@@ -1188,6 +1207,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.Geral.VersaoDF = ve300
     Configuracoes.Arquivos.PathSalvar = 'C:\ZettaBrasil\DeltaCTe\XMLRet\'
     Configuracoes.Arquivos.PathSchemas = 'D:\Componentes\DelphiXE3\ACBR\Exemplos\ACBrDFe\Schemas\CTe\'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.Arquivos.PathCTe = 'C:\ZettaBrasil\DeltaCTe\XMLRet'
     Configuracoes.Arquivos.PathInu = 'C:\ZettaBrasil\DeltaCTe\XMLRet'
     Configuracoes.Arquivos.PathEvento = 'C:\ZettaBrasil\DeltaCTe\XMLRet'

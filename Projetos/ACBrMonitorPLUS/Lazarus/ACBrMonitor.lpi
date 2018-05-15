@@ -37,6 +37,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\..\ACBrLib\MDFe;..\..\ACBrLib\Comum;..\..\ACBrLib\eSocial"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Linking>
@@ -67,106 +68,103 @@
         <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="32">
+    <RequiredPackages Count="31">
       <Item1>
         <PackageName Value="ACBre_Social"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_Integrador"/>
+        <PackageName Value="lhelpcontrolpkg"/>
       </Item2>
       <Item3>
-        <PackageName Value="lhelpcontrolpkg"/>
+        <PackageName Value="TurboPowerIPro"/>
       </Item3>
       <Item4>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="frce"/>
       </Item4>
       <Item5>
-        <PackageName Value="frce"/>
+        <PackageName Value="ACBr_GNREGuiaRL"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_GNREGuiaRL"/>
+        <PackageName Value="ACBr_GNRE"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_GNRE"/>
+        <PackageName Value="ACBr_BlocoX"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_BlocoX"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item8>
       <Item9>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
+        <PackageName Value="ACBr_MDFe"/>
       </Item10>
       <Item11>
-        <PackageName Value="ACBr_MDFe"/>
+        <PackageName Value="ACBr_CTe_DACTeRL"/>
       </Item11>
       <Item12>
-        <PackageName Value="ACBr_CTe_DACTeRL"/>
+        <PackageName Value="ACBr_CTe"/>
       </Item12>
       <Item13>
-        <PackageName Value="ACBr_CTe"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item13>
       <Item14>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item14>
       <Item15>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item15>
       <Item16>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="SynEdit"/>
       </Item16>
       <Item17>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="FCL"/>
       </Item17>
       <Item18>
-        <PackageName Value="FCL"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item18>
       <Item19>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item19>
       <Item20>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
       </Item20>
       <Item21>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item21>
       <Item22>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item22>
       <Item23>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item23>
       <Item24>
-        <PackageName Value="ACBr_Boleto"/>
+        <PackageName Value="ACBrSerial"/>
       </Item24>
       <Item25>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrTCP"/>
       </Item25>
       <Item26>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item26>
       <Item27>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item27>
       <Item28>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item28>
       <Item29>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBrComum"/>
       </Item29>
       <Item30>
-        <PackageName Value="ACBrComum"/>
-      </Item30>
-      <Item31>
         <PackageName Value="LCLBase"/>
         <MinVersion Major="1" Release="1" Valid="True"/>
-      </Item31>
-      <Item32>
+      </Item30>
+      <Item31>
         <PackageName Value="LCL"/>
-      </Item32>
+      </Item31>
     </RequiredPackages>
-    <Units Count="37">
+    <Units Count="38">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -332,9 +330,13 @@
         <UnitName Value="ACBrLibeSocialConsts"/>
       </Unit35>
       <Unit36>
-        <Filename Value="ACBrMonitorMetodos.pas"/>
+        <Filename Value="..\..\ACBrLib\MDFe\ACBrLibMDFeRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit36>
+      <Unit37>
+        <Filename Value="..\..\ACBrLib\MDFe\ACBrLibMDFeConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit37>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -357,16 +359,10 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
+    <Exceptions Count="1">
       <Item1>
         <Name Value="Exception"/>
       </Item1>
-      <Item2>
-        <Name Value="EACBrDFeException"/>
-      </Item2>
-      <Item3>
-        <Name Value="EACBreSocialException"/>
-      </Item3>
     </Exceptions>
   </Debugging>
 </CONFIG>

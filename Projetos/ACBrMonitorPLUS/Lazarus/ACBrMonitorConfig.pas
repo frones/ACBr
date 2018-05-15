@@ -1817,7 +1817,7 @@ begin
   with ACBrMonitor do
   Begin
     Modo_TCP                  := False;
-    Modo_TXT                  := True;
+    Modo_TXT                  := False;
     MonitorarPasta            := False;
     TCP_Porta                 := 3434;
     TCP_TimeOut               := 10000;
@@ -2385,7 +2385,6 @@ end;
 procedure TMonitorConfig.CriarArquivo;
 begin
   DefinirValoresPadrao;
-  SalvarArquivo;
 end;
 
 procedure TMonitorConfig.DoOnGravarConfig;

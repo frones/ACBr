@@ -43,9 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2018 - ACBrMonitor
+[*] Ajustes referente remoção da propriedade IncluirQRCodeXMLNFCe
+
 14/05/2018 - ACBrMonitor Versão 1.2.0.0
 [*] Inicio Refactory no ACBrMonitorPlus, iniciando pelo componente MDFe
-Adicionado as classes: DoACBrDFeUnit, ACBrMonitorMetodos, ACBrMonitorConsts, ACBrMonitorConfig
+Adicionado as classes: DoACBrDFeUnit, ACBrMonitorConsts, ACBrMonitorConfig
 Alterações significativas classes: DoACBrMDFeUnit, ACBrMonitor1, CMDUnit, UtilUnit
 
 [+] Adicionados funcionalidades para o componente e-Social no ACBrMonitor nos

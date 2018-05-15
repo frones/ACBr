@@ -365,7 +365,6 @@ type
     cbxTCModelo: TComboBox;
     cbxUTF8: TCheckBox;
     chbTCPANSI: TCheckBox;
-    chbTagQrCode: TCheckBox;
     cbEscPosImprimirLogo: TCheckBox;
     cbEmailConfirmation: TCheckBox;
     cbxAtualizarXMLCancelado: TCheckBox;
@@ -1260,7 +1259,6 @@ type
     procedure cbxSepararPorCNPJChange(Sender: TObject);
     procedure cbxTimeZoneModeChange(Sender: TObject);
     procedure cbxUTF8Change(Sender: TObject);
-    procedure chbTagQrCodeChange(Sender: TObject);
     procedure chECFArredondaMFDClick(Sender: TObject);
     procedure chECFControlePortaClick(Sender: TObject);
     procedure chECFIgnorarTagsFormatacaoClick(Sender: TObject);
@@ -3428,16 +3426,6 @@ begin
   sePagCod.Value := ACBrSAT1.Config.PaginaDeCodigo;
 end;
 
-procedure TFrmACBrMonitor.chbTagQrCodeChange(Sender: TObject);
-begin
-  if chbTagQrCode.Checked and (EstaVazio(Trim(edtToken.Text)) or EstaVazio(Trim(edtIdToken.Text))) then
-  begin
-    MessageDlg('Erro', 'Preencha o campo CSC e IDCSC corretamente', mtError, [mbOK], '');
-    chbTagQrCode.Checked := False;
-    edtToken.SetFocus;
-  end;
-end;
-
 procedure TFrmACBrMonitor.chECFArredondaMFDClick(Sender: TObject);
 begin
   ACBrECF1.ArredondaItemMFD :=
@@ -3899,11 +3887,8 @@ begin
   except
     on E: Exception do
     begin
-      if pos(SErrArqConfigNaoDefinido,E.Message) > 0 then
-      begin
+      if pos(SErrArqConfNaoEncontrado,E.Message) > 0 then
          FMonitorConfig.CriarArquivo;
-         FMonitorConfig.CarregarArquivo;
-      end;
     end;
   end;
 
@@ -4272,12 +4257,10 @@ begin
     begin
       edtIdToken.Text                    := IdToken;
       edtToken.Text                      := Token;
-      chbTagQrCode.Checked               := TagQrCode;
       ckNFCeUsarIntegrador.Checked       := UsarIntegrador;
 
        ACBrNFe1.Configuracoes.Geral.IdCSC := IdToken;;
        ACBrNFe1.Configuracoes.Geral.CSC   := Token;
-       ACBrNFe1.Configuracoes.Geral.IncluirQRCodeXMLNFCe := TagQrCode;
     end;
 
     with Email do
@@ -5289,7 +5272,6 @@ begin
       begin
         IdToken                  := edtIdToken.Text;
         Token                    := edtToken.Text;
-        TagQrCode                := chbTagQrCode.Checked;
         UsarIntegrador           := ckNFCeUsarIntegrador.Checked;
       end;
 

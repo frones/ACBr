@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 1771
+  Left = 154
   Height = 688
-  Top = 104
+  Top = 5
   Width = 1055
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -384,10 +384,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 855
-        ActivePage = tsEscPos
+        ActivePage = tsMonitor
         Align = alClient
         Images = ImageList1
-        TabIndex = 19
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -5147,7 +5147,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/ConsultasCEPIBGE.htm'
           Caption = 'Consultas'
           ClientHeight = 327
-          ClientWidth = 856
+          ClientWidth = 847
           ImageIndex = 17
           object gbCEP: TGroupBox
             Left = 267
@@ -5725,7 +5725,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/Sedex.htm'
           Caption = 'Sedex'
           ClientHeight = 327
-          ClientWidth = 856
+          ClientWidth = 847
           ImageIndex = 24
           object Label42: TLabel
             Left = 15
@@ -6106,9 +6106,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 847
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsWebServiceDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 2
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -6818,9 +6818,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 297
                 Top = 0
                 Width = 839
-                ActivePage = tsWSNFe
+                ActivePage = tsWSNFCe
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 1
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e'
@@ -7343,17 +7343,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     MaxLength = 6
                     TabOrder = 1
                   end
-                  object chbTagQrCode: TCheckBox
-                    Left = 8
-                    Height = 21
-                    Top = 96
-                    Width = 361
-                    Caption = 'Adicionar Tag de QRCode em Informações Suplementares'
-                    Checked = True
-                    OnChange = chbTagQrCodeChange
-                    State = cbChecked
-                    TabOrder = 2
-                  end
                   object ckNFCeUsarIntegrador: TCheckBox
                     AnchorSideLeft.Side = asrCenter
                     AnchorSideTop.Side = asrBottom
@@ -7364,7 +7353,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     AutoSize = False
                     BorderSpacing.Top = 6
                     Caption = 'Usar Integrador Fiscal'
-                    TabOrder = 3
+                    TabOrder = 2
                   end
                 end
                 object gbxWSeSocial: TTabSheet
@@ -7672,9 +7661,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 297
                 Top = 0
                 Width = 839
-                ActivePage = tsImpGeralDFe
+                ActivePage = tsImpCTe
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 4
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -13421,7 +13410,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -13501,7 +13489,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
     Configuracoes.Geral.VersaoDF = ve400
-    Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

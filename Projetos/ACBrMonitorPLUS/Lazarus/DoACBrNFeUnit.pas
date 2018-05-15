@@ -1895,11 +1895,6 @@ begin
            Cmd.Resposta := Chave;
          end
 
-        else if cmd.Metodo = 'setincluirqrcodexmlnfce' then
-        begin
-             ACBrNFe1.Configuracoes.Geral.IncluirQRCodeXMLNFCe := Cmd.Params(0) = '1';
-        end
-
         else if cmd.Metodo = 'getpathnfe' then //NFe.GetPathNFe
            Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathNFe
 

@@ -17,8 +17,9 @@ uses
   DoBoletoUnit, DoCEPUnit, DoIBGEUnit, DoEmailUnit, DoNcmUnit, DoACBrNFeUnit,
   DoACBrCTeUnit, DoACBrMDFeUnit, DoSATUnit, DoACBrGNReUnit,
   ACBrBoletoRelatorioRetorno, DoPosPrinterUnit, SelecionarCertificado,
-  ACBrMonitorConfig, ACBrMonitorConsts, DoACBrDFeUnit, DoACBrESocialUnit,
-  ACBrMonitorMetodos, ACBrLibeSocialRespostas, ACBrLibeSocialConsts;
+  DoACBrESocialUnit, DoACBrDFeUnit, ACBrMonitorConsts,
+  ACBrMonitorConfig, ACBrLibeSocialConsts, ACBrLibeSocialRespostas,
+  ACBrLibMDFeConsts, ACBrLibMDFeRespostas;
 
 {$R *.res}
 var

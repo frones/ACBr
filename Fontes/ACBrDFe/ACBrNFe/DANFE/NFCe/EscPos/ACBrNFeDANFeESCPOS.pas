@@ -347,7 +347,10 @@ procedure TACBrNFeDANFeESCPOS.GerarInformacoesConsultaChaveAcesso;
 begin
   // chave de acesso
   FPosPrinter.Buffer.Add('</ce><c><n>Consulte pela Chave de Acesso em</n>');
-  FPosPrinter.Buffer.Add('</ce><c>'+TACBrNFe(ACBrNFe).GetURLConsultaNFCe(FpNFe.ide.cUF, FpNFe.ide.tpAmb, FpNFe.infNFe.Versao));
+  if EstaVazio(FpNFe.infNFeSupl.urlChave) then
+    FPosPrinter.Buffer.Add('</ce><c>'+TACBrNFe(ACBrNFe).GetURLConsultaNFCe(FpNFe.ide.cUF, FpNFe.ide.tpAmb, FpNFe.infNFe.Versao))
+  else
+    FPosPrinter.Buffer.Add('</ce><c>'+FpNFe.infNFeSupl.urlChave);
   FPosPrinter.Buffer.Add('</ce><c>' + FormatarChaveAcesso(OnlyNumber(FpNFe.infNFe.ID)));
 end;
 

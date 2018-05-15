@@ -637,14 +637,19 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel35BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := ACBrStr(
-    'Consulte pela Chave de Acesso em ' +
-    TACBrNFe(self.FACBrNFeDANFCeFortesA4.ACBrNFe).GetURLConsultaNFCe(
-      self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.cUF,
-      self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpAmb,
-      self.FACBrNFeDANFCeFortesA4.FpNFe.infNFe.Versao
+  if EstaVazio(self.FACBrNFeDANFCeFortesA4.FpNFe.infNFeSupl.urlChave) then
+    Text := ACBrStr(
+      'Consulte pela Chave de Acesso em ' +
+      TACBrNFe(self.FACBrNFeDANFCeFortesA4.ACBrNFe).GetURLConsultaNFCe(
+        self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.cUF,
+        self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpAmb,
+        self.FACBrNFeDANFCeFortesA4.FpNFe.infNFe.Versao
+        )
       )
-    );
+  else
+    Text := ACBrStr(
+      'Consulte pela Chave de Acesso em ' +
+      self.FACBrNFeDANFCeFortesA4.FpNFe.infNFeSupl.urlChave);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel37BeforePrint(Sender: TObject;

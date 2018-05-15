@@ -397,7 +397,11 @@ begin
 
     lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em');
 
-    lURLConsulta.Lines.Text := TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao);
+    if EstaVazio(infNFeSupl.urlChave) then
+      lURLConsulta.Lines.Text := TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao)
+    else
+      lURLConsulta.Lines.Text := infNFeSupl.urlChave;
+
     ACBrNFeDANFCeFortes.DiminuirFonteSeNecessario(lURLConsulta, 5);
 
     lChaveDeAcesso.Lines.Text := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
@@ -533,8 +537,13 @@ begin
       'Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Estabelecimento')
     );
 
-    lTitConsulteChaveCanc.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
-       TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao));
+    if EstaVazio(infNFeSupl.urlChave) then
+      lTitConsulteChaveCanc.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
+         TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao))
+    else
+      lTitConsulteChaveCanc.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
+         infNFeSupl.urlChave);
+
     ACBrNFeDANFCeFortes.DiminuirFonteSeNecessario(lTitConsulteChaveCanc, 5);
 
     lChaveDeAcessoCanc.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));

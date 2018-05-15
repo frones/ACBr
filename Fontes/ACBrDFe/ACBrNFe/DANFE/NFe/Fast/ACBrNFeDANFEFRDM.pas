@@ -722,7 +722,10 @@ begin
           FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');
       end;
 
-      FieldByName('URL').AsString := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLConsultaNFCe(FNFe.Ide.cUF, FNFe.Ide.tpAmb, FNFe.infNFe.Versao);
+      if EstaVazio(FNFe.infNFeSupl.urlChave) then
+        FieldByName('URL').AsString := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLConsultaNFCe(FNFe.Ide.cUF, FNFe.Ide.tpAmb, FNFe.infNFe.Versao)
+      else
+        FieldByName('URL').AsString := FNFe.infNFeSupl.urlChave;
     end
     else
     begin

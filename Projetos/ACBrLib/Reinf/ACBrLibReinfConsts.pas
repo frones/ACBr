@@ -32,7 +32,8 @@
 {******************************************************************************}
 
 {$I ACBr.inc}
-unit ACBrLibeSocialConsts;
+
+unit ACBrLibReinfConsts;
 
 interface
 
@@ -40,13 +41,13 @@ uses
   Classes, SysUtils;
 
 const
-  CLibeSocialNome = 'ACBrLibeSocial';
-  CLibeSocialVersao = '0.0.1';
+  CLibReinfNome = 'ACBrLibReinf';
+  CLibReinfVersao = '0.0.1';
 
   CSessaoRespEnvio = 'Envio';
   CSessaoRespConsulta = 'Consulta';
   CSessaoRespOcorrencia = 'Ocorrencia';
-  CSessaoRespConsultaTot = 'Tot';
+
 implementation
 
 end.

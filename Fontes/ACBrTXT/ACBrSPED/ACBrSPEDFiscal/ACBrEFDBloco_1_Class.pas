@@ -668,7 +668,9 @@ begin
           Add( LFill('1210') +
                LFill( TIPO_UTIL ) +
                LFill( NR_DOC ) +
-               LFill( VL_CRED_UTIL,0 ) ) ;
+               LFill( VL_CRED_UTIL,0 ) +
+               LFill( CHV_DOCe )
+               ) ;
         end;
         Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
      end;

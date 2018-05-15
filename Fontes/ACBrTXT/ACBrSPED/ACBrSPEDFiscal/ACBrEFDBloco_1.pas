@@ -319,12 +319,14 @@ type
     fTIPO_UTIL: String;        /// Tipo de utilização do crédito:
     fNR_DOC: String;           /// Número do documento utilizado na baixa de créditos
     fVL_CRED_UTIL: Currency;     /// Total de crédito utilizado
+    fCHV_DOCe: String;
   public
     constructor Create(AOwner: TRegistro1200); virtual; /// Create
 
     property TIPO_UTIL: String read FTIPO_UTIL write FTIPO_UTIL;
     property NR_DOC: String read FNR_DOC write FNR_DOC;
     property VL_CRED_UTIL: Currency read FVL_CRED_UTIL write FVL_CRED_UTIL;
+    property CHV_DOCe: String read fCHV_DOCe write fCHV_DOCe;
   end;
 
   /// Registro 1210 - Lista

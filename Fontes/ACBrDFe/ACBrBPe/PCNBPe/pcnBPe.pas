@@ -357,6 +357,7 @@ type
     FcLocDest: String;
     FxLocDest: String;
     FdhEmb: TDateTime;
+    FdhValidade: TDateTime;
     FinfPassageiro: TinfPassageiro;
   public
     constructor Create(AOwner: TBPe);
@@ -369,6 +370,7 @@ type
     property cLocDest: String read FcLocDest write FcLocDest;
     property xLocDest: String read FxLocDest write FxLocDest;
     property dhEmb: TDateTime read FdhEmb write FdhEmb;
+    property dhValidade: TDateTime read FdhValidade write FdhValidade;
     property infPassageiro: TinfPassageiro read FinfPassageiro write FinfPassageiro;
   end;
 
@@ -982,6 +984,7 @@ begin
     cLocDest := TinfPassagem(Source).cLocDest;
     xLocDest := TinfPassagem(Source).xLocDest;
     dhEmb := TinfPassagem(Source).dhEmb;
+    dhValidade := TinfPassagem(Source).dhValidade;
     infPassageiro.Assign(TinfPassagem(Source).infPassageiro);
   end
   else

@@ -833,6 +833,7 @@ begin
       infPassagem.cLocDest := INIRec.ReadString('infPassagem', 'cLocDest', '');
       infPassagem.xLocDest := INIRec.ReadString('infPassagem', 'xLocDest', '');
       infPassagem.dhEmb    := StringToDateTime(INIRec.ReadString('infPassagem', 'dhEmb', '0'));
+	     infPassagem.dhValidade    := StringToDateTime(INIRec.ReadString('infPassagem', 'dhValidade', '0'));
 
       //
       // Seção [infPassageiro] Informações do Passageiro

@@ -249,6 +249,7 @@ begin
     BPe.infPassagem.cLocDest := Leitor.rCampo(tcStr, 'cLocDest');
     BPe.infPassagem.xLocDest := Leitor.rCampo(tcStr, 'xLocDest');
     BPe.infPassagem.dhEmb    := Leitor.rCampo(tcDatHor, 'dhEmb');
+    BPe.infPassagem.dhValidade := Leitor.rCampo(tcDatHor, 'dhValidade');
 
     if Leitor.rExtrai(2, 'infPassageiro') <> '' then
     begin

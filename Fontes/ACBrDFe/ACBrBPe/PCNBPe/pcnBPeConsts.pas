@@ -79,6 +79,7 @@ const
   DSC_CLOCDEST = 'Código do Local de Destino';
   DSC_XLOCDEST = 'Descrição do Local de Destino';
   DSC_DHEMB = 'Data e Hora de Embarque';
+  DSC_DHVALIDADE = 'Data e Hora de Validade';
   DSC_XNOMEPASS = 'Nome do Passageiro';
   DSC_TPDOC = 'Tipo de Documento';
   DSC_NDOC = 'Numero do Documento';

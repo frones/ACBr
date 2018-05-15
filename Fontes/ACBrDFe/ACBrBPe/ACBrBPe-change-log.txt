@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2018
+-- ACBrBPe --
+[*] https://www.projetoacbr.com.br/forum/topic/43366-dhvalidade-nota-t%C3%A9cnica-2018002/
+   Por: Rino
+
 11/05/2018
 -- ACBrBPe --
 [*] Incluido a lipeza das classes de envio antes do envio.

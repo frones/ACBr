@@ -33,6 +33,13 @@ ResourceString
   SErroeSocialNenhumEvento = 'Erro: Nenhum evento na lista';
   SErroIDEmpregadorTransmissor = 'ID do Empregador/Transmissor Inválido.';
 
+  SErroReinfCarregar = 'Erro ao carregar eSocial';
+  SErroReinfAbrir = 'Erro ao abrir o arquivo do eSocial: %s';
+  SMsgReinfEventoAdicionado = 'Evento Adicionado: %s';
+  SMsgReinfLimparLista = 'Lista de Eventos Limpas com Sucesso';
+  SErroReinfNenhumEvento = 'Erro: Nenhum evento na lista';
+  SErroIDContribuinteTransmissor = 'ID do Contribuinte/Transmissor Inválido.';
+
 
 const
   CMonitorIni = 'ACBrMonitor.ini';
@@ -96,6 +103,13 @@ const
   CMetodoConsultareSocial =            'consultaresocial';
   CMetodoLimpareSocial =               'limparesocial';
   CMetodoCarregarXMLEventoeSocial =    'carregarxmleventoesocial';
+
+  CMetodoCriarEventoReinf =          'criareventoreinf';
+  CMetodoCriarEnviarReinf =          'criarenviarreinf';
+  CMetodoEnviarReinf =               'enviarreinf';
+  CMetodoConsultarReinf =            'consultarreinf';
+  CMetodoLimparReinf =               'limparreinf';
+  CMetodoCarregarXMLEventoReinf =    'carregarxmleventoreinf';
 
   CExtensaoXML =                     '.xml';
 

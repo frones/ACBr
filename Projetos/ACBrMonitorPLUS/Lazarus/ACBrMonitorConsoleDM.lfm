@@ -90,7 +90,7 @@ object dm: Tdm
     Altura = 0
     Largura = 0
     ValorDeclarado = 0
-    Servico = Tps41106PAC
+    Servico = Tps04510PAC
     Diametro = 0
     UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
     left = 417

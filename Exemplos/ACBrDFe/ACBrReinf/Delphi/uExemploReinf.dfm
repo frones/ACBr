@@ -1,9 +1,9 @@
 object Form2: TForm2
   Left = 193
   Top = 126
-  Width = 904
-  Height = 647
   Caption = 'Exemplo Reinf'
+  ClientHeight = 608
+  ClientWidth = 888
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -95,8 +95,6 @@ object Form2: TForm2
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -111,6 +109,8 @@ object Form2: TForm2
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl2: TPageControl
       Left = 8
@@ -389,7 +389,6 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -399,7 +398,6 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -409,7 +407,6 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -419,7 +416,6 @@ object Form2: TForm2
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -530,7 +526,6 @@ object Form2: TForm2
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -569,7 +564,6 @@ object Form2: TForm2
                 Top = 147
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 7
               end
               object edtPathSchemas: TEdit
@@ -648,7 +642,6 @@ object Form2: TForm2
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -722,7 +715,6 @@ object Form2: TForm2
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 0
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1641,7 +1633,6 @@ object Form2: TForm2
             Top = 66
             Width = 87
             Height = 21
-            ItemHeight = 13
             TabOrder = 2
             Visible = False
             Items.Strings = (

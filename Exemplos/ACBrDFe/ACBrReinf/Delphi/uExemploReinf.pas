@@ -241,7 +241,7 @@ type
     procedure btnEnviarClick(Sender: TObject);
     procedure ACBrReinf1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure ACBrReinf1StatusChange(Sender: TObject);
-    procedure ACBrReinf1TransmissaoEventos(const AXML: String;
+    procedure ACBrReinf1TransmissaoEventos(const AXML: AnsiString;
       ATipo: TEventosReinf);
     procedure rgTipoAmbClick(Sender: TObject);
   private
@@ -319,7 +319,7 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TForm2.ACBrReinf1TransmissaoEventos(const AXML: String;
+procedure TForm2.ACBrReinf1TransmissaoEventos(const AXML: AnsiString;
   ATipo: TEventosReinf);
 begin
   case ATipo of
@@ -367,17 +367,37 @@ begin
         begin
           Add(' Evento: ' + IntToStr(i));
           Add('   Tipo.........: ' + retEventos.Items[i].Tipo);
+
           case retEventos.Items[i].Evento.TipoEvento of
             teR5001:
               begin
                 evtR5001 := TR5001(retEventos.Items[i].Evento.GetEvento);
-                Add('   Id...........: ' + evtR5001.EvtTotal.Id);
-                Add('   Cód Retorno..: ' + evtR5001.EvtTotal.IdeStatus.cdRetorno);
-                Add('   Descrição....: ' + evtR5001.EvtTotal.IdeStatus.descRetorno);
+
+                with evtR5001.EvtTotal do
+                begin
+                  Add('   Id...........: ' + Id);
+                  Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+                  Add('   Descrição....: ' + IdeStatus.descRetorno);
+
+                  Add(' **Ocorrencias');
+
+                  for j := 0 to IdeStatus.regOcorrs.Count - 1 do
+                  begin
+                    with IdeStatus.regOcorrs.Items[j] do
+                    begin
+                      Add('   Tipo............: ' + Inttostr(tpOcorr));
+                      Add('   Local Erro Aviso: ' + localErroAviso);
+                      Add('   Código Resp.... : ' + codResp);
+                      Add('   Descricao Resp..: ' + dscResp);
+                    end;
+                  end;
+                end;
               end;
+
             teR5011:
               begin
                 evtR5011 := TR5011(retEventos.Items[i].Evento.GetEvento);
+
                 with evtR5011.EvtTotalContrib do
                 begin
                   Add('   Id...........: ' + Id);
@@ -409,7 +429,7 @@ end;
 
 procedure TForm2.btnEnviarClick(Sender: TObject);
 var
-  i: Integer;
+  i, j: Integer;
   evtR5001: TR5001;
 begin
 //  edProtocolo.Text := '';
@@ -454,9 +474,26 @@ begin
             Add('Evento Id: ' + Id);
 
             evtR5001 := TR5001(Evento.GetEvento);
-            Add('   Id...........: ' + evtR5001.EvtTotal.Id);
-            Add('   Cód Retorno..: ' + evtR5001.EvtTotal.IdeStatus.cdRetorno);
-            Add('   Descrição....: ' + evtR5001.EvtTotal.IdeStatus.descRetorno);
+
+            with evtR5001.EvtTotal do
+            begin
+              Add('   Id...........: ' + Id);
+              Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+              Add('   Descrição....: ' + IdeStatus.descRetorno);
+
+              Add(' **Ocorrencias');
+
+              for j := 0 to IdeStatus.regOcorrs.Count - 1 do
+              begin
+                with IdeStatus.regOcorrs.Items[j] do
+                begin
+                  Add('   Tipo............: ' + Inttostr(tpOcorr));
+                  Add('   Local Erro Aviso: ' + localErroAviso);
+                  Add('   Código Resp.... : ' + codResp);
+                  Add('   Descricao Resp..: ' + dscResp);
+                end;
+              end;
+            end;
           end;
         end;
       end;

@@ -243,6 +243,7 @@ type
     FResponse: String;
 
     function GetActive: Boolean;
+    function GetResponse: String;
   protected
     procedure Execute; override;
   public
@@ -250,7 +251,7 @@ type
        ASoapAction, AMimeType: String); reintroduce;
     destructor Destroy; override;
 
-    property Response: String read FResponse;
+    property Response: String read GetResponse;
     property Active: Boolean read GetActive;
   end;
 
@@ -468,7 +469,6 @@ constructor TDFeSendThread.Create(SSLHttpClass: TDFeSSLHttpClass; AConteudoXML,
   AURL, ASoapAction, AMimeType: String);
 begin
   FreeOnTerminate := False ;
-  Priority := tpNormal;
 
   FSSLHttpClass := SSLHttpClass;
   FConteudoXML  := AConteudoXML;
@@ -478,6 +478,8 @@ begin
   FResponse     := '';
 
   inherited Create(False);  // Run Now
+
+  Priority := tpNormal;
 end;
 
 destructor TDFeSendThread.Destroy;
@@ -501,7 +503,12 @@ begin
   if NaoEstaVazio(FConteudoXML) and NaoEstaVazio(FURL) then
     FResponse := FSSLHttpClass.Enviar(FConteudoXML, FURL, FSoapAction, FMimeType);
 
-  Terminate;
+  Terminate;    
+end;
+
+function TDFeSendThread.GetResponse: String;
+begin
+  Result := FResponse;
 end;
 
 { TDadosCertificado }

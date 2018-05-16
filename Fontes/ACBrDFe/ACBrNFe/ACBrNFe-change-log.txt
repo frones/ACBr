@@ -49,7 +49,7 @@ Símbolo : Significado
 
 16/05/2018
 -- pcnNFeW --
-[*] Ajuste para sempre gerar as tags "vBCFCPUFDest" e "vFCPUFDest" do grupo
+[*] Ajuste para sempre gerar as tags "vBCFCPUFDest", "pFCPUFDest" e "vFCPUFDest" do grupo
     "ICMSUFDest" devido a algumas SEFAZ não terem implantado os schemas da 
     NT 2016/002 v. 1.50.
     https://www.projetoacbr.com.br/forum/topic/43344-nfe-difal

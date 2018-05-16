@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/05/2018
+-- pcnNFeW --
+[*] Ajuste para sempre gerar as tags "vBCFCPUFDest" e "vFCPUFDest" do grupo
+    "ICMSUFDest" devido a algumas SEFAZ não terem implantado os schemas da 
+    NT 2016/002 v. 1.50.
+    https://www.projetoacbr.com.br/forum/topic/43344-nfe-difal
+  Por: BigWings
+
 14/05/2018
 -- ACBrNFe --
 [+] Adicionado o método: AjustarVersaoQRCode, para retornar a versão do QRCode

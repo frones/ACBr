@@ -471,9 +471,9 @@ begin
 
     for I := cont downto 0 do
     begin
-      if Pos('rowspan', SL[I]) > 0 then
+      if Pos('<tr><td valign=', SL[I]) > 0 then
       begin
-        vData :=  Copy(SL[I], 22, 16) + ':00';
+        vData :=  Copy(SL[I], 31, 10) + ' ' + Copy(SL[I], 45, 5) + ':00';
         with retRastreio.New do
         begin
           DataHora   := StrToDateTime(vData);
@@ -483,20 +483,18 @@ begin
         end;
       end;
 
-      If Pos('colspan="2"', SL[I]) > 0 Then 
-			Begin
-        If Pos('colspan="2"><strong>', SL[I]) > 0 Then 
-				Begin
-          vObs := UTF8Decode(CopyDeAte(SL[I], 'colspan="2"><strong><strong>', '</strong></strong></td>'));
-
-          If vObs = '' Then
-            vObs := UTF8Decode(CopyDeAte(SL[I], 'colspan="2"><strong>', '</strong></td>'))
-        End 
-				Else 
-				Begin
-          vLocal :=UTF8Decode(CopyDeAte(SL[I], '<tr>  <td colspan="2">Local:', '</td>'));
-        End;
+      If Pos('</label></td>', SL[I]) > 0 Then
+  		Begin
+        vLocal :=(CopyDeAte(SL[I], '<label>', '</label>')) + ' -> ' + vObs;
       End;
+
+
+     If Pos('<td><strong>', SL[I]) > 0 Then
+		 Begin
+       vObs := CopyDeAte(SL[I], '<td><strong>', '</strong>');
+       //vLocal := vObs;
+     End;
+
     end;
   finally
     SL.Free;

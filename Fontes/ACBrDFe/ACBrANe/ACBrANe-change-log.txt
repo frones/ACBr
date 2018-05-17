@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2018
+-- ACBrANeServicos --
+[*] Incluido uma segunda URL de homologação, se não funcionar com uma deve-se
+    tentar com a outra.
+    Ao fazer a troca deve-se executar o Bat: Compila_RES
+   Por: Italo Jurisato Junior
+
 29/11/2017
 -- ACBrANeWebServices --
 [*] Incluido a checagem se o retorno se refere a averbação de NF-e / CT-e ou

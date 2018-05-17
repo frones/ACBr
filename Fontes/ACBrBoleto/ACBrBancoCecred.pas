@@ -157,7 +157,7 @@ var
   ANossoNumero: String;
   AConvenio: String;
 begin
-   AConvenio    := IntToStr(StrToInt64(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Convenio)));
+   AConvenio    := IntToStr(StrToInt64Def(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Convenio),0));
    ANossoNumero := IntToStrZero(StrToIntDef(OnlyNumber(ACBrTitulo.NossoNumero),0),9);
 
    {Codigo de Barras}

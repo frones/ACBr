@@ -237,9 +237,9 @@ begin
               TipoCarteira:= TACBrTipoCarteira(IniBoletos.ReadInteger('CEDENTE','TipoCarteira',0));    
               TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger('CEDENTE','TipoDocumento',1)); 
 
-              wLayoutBoleto:= IniBoletos.ReadInteger('CEDENTE','LAYOUTBOL',-1);
+              wLayoutBoleto:= IniBoletos.ReadInteger('CEDENTE','LAYOUTBOL',0);
 
-              if wLayoutBoleto >= 0 then
+              if (wLayoutBoleto >= 0) then
                 FrmACBrMonitor.cbxBOLLayout.ItemIndex := wLayoutBoleto;
 
               try

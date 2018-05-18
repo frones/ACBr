@@ -122,6 +122,7 @@ type
 
     function getInfoPerApur: TInfoPerApur;
     function getInfoPerAnt: TInfoPerAnt;
+    function getInfoComplCont: TInfoComplCont;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -136,7 +137,7 @@ type
     property infoPerApur: TInfoPerApur read getInfoPerApur write FInfoPerApur;
     property infoPerAnt: TInfoPerAnt read getInfoPerAnt write FInfoPerAnt;
     property infoTrabInterm: TinfoTrabIntermCollection read FinfoTrabInterm write FinfoTrabInterm;
-    property infoComplCont: TInfoComplCont read FinfoComplCont write FinfoComplCont;
+    property infoComplCont: TInfoComplCont read getInfoComplCont write FinfoComplCont;
   end;
 
   TEvtRemun = class(TeSocialEvento)
@@ -713,14 +714,16 @@ constructor TDMDevCollectionItem.Create;
 begin
   FinfoTrabInterm := TinfoTrabIntermCollection.Create;
 
-  FInfoPerApur := nil;
-  FInfoPerAnt := nil;
+  FInfoPerApur   := nil;
+  FInfoPerAnt    := nil;
+  FinfoComplCont := nil;
 end;
 
 destructor TDMDevCollectionItem.Destroy;
 begin
   FreeAndNil(FInfoPerApur);
   FreeAndNil(FInfoPerAnt);
+  FreeAndNil(FinfoComplCont);
   FinfoTrabInterm.Free;
 
   inherited;
@@ -741,6 +744,13 @@ end;
 function TDMDevCollectionItem.infoTrabIntermInst: boolean;
 begin
   Result := Assigned(FinfoTrabInterm);
+end;
+
+function TDMDevCollectionItem.getInfoComplCont: TInfoComplCont;
+begin
+  if not(Assigned(FInfoComplCont)) then
+    FInfoComplCont := TInfoComplCont.Create;
+  Result := FInfoComplCont;
 end;
 
 function TDMDevCollectionItem.getInfoPerAnt: TInfoPerAnt;

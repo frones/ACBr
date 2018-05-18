@@ -77,6 +77,10 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure AtivarPosPrinter;
 
+    procedure AtivarPageMode;
+    procedure ConfigurarRegiao(AX, AY, AAltura, ALargura: Integer);
+    procedure FinalizarPageMode;
+
     procedure GerarCabecalho;
     procedure GerarIdentificacaodoDANFE;
     procedure GerarMensagemContingencia(CaracterDestaque : Char);
@@ -84,12 +88,13 @@ type
     procedure GerarInformacoesTotais;
     procedure GerarPagamentos;
     procedure GerarInformacoesConsultaChaveAcesso;
-    procedure GerarInformacoesConsumidor;
-    procedure GerarInformacoesIdentificacaoNFCe;
+    function  GerarInformacoesConsumidor( Lateral: Boolean = False ): String;
+    procedure GerarInformacoesIdentificacaoNFCe(Lateral: Boolean = False);
     procedure GerarMensagemFiscal;
     procedure GerarInformacoesQRCode(Cancelamento: Boolean = False);
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
+    procedure AdicionaLinhas(ATexto: String);
 
     procedure GerarRodape;
     procedure GerarDadosEvento;
@@ -172,9 +177,29 @@ begin
   FPosPrinter.Ativar;
 end;
 
+procedure TACBrNFeDANFeESCPOS.AtivarPageMode;
+begin
+  FPosPrinter.Buffer.AddText('<pm>');
+end;
+
+procedure TACBrNFeDANFeESCPOS.ConfigurarRegiao(AX, AY, AAltura,
+  ALargura: Integer);
+begin
+  FPosPrinter.Buffer.AddText('<pagemode_x>'+IntToStr(AX)+'</pagemode_x>');
+  FPosPrinter.Buffer.AddText('<pagemode_y>'+IntToStr(AY)+'</pagemode_y>');
+  FPosPrinter.Buffer.AddText('<pagemode_altura>'+IntToStr(AAltura)+'</pagemode_altura>');
+  FPosPrinter.Buffer.AddText('<pagemode_largura>'+IntToStr(ALargura)+'</pagemode_largura>');
+  FPosPrinter.Buffer.AddText('<pagemode_configurar>');
+end;
+
+procedure TACBrNFeDANFeESCPOS.FinalizarPageMode;
+begin
+  FPosPrinter.Buffer.AddText('</pm>');
+end;
+
 procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
 begin
-  FPosPrinter.Buffer.Add('</zera></ce></logo>');
+  FPosPrinter.Buffer.AddText('</zera></ce></logo>');
 
   if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
      FPosPrinter.Buffer.Add('</ce><c><n>' +  FpNFe.Emit.xFant + '</n>');
@@ -380,6 +405,11 @@ begin
   end;
 end;
 
+procedure TACBrNFeDANFeESCPOS.AdicionaLinhas(ATexto: String);
+begin
+  FPosPrinter.Buffer.AddText(ATexto);
+end;
+
 procedure TACBrNFeDANFeESCPOS.GerarMensagemInteresseContribuinte;
 var
   TextoObservacao: AnsiString;
@@ -409,43 +439,60 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarInformacoesConsumidor;
+function TACBrNFeDANFeESCPOS.GerarInformacoesConsumidor(Lateral: Boolean
+  ): String;
 var
   LinhaCmd: String;
+  DadosConsumidor: TStringList;
 begin
-  if (FpNFe.Dest.idEstrangeiro = '') and (FpNFe.Dest.CNPJCPF = '') then
-  begin
-    FPosPrinter.Buffer.Add(ACBrStr('<c>CONSUMIDOR NÃO IDENTIFICADO'));
-  end
-  else
-  begin
-    if FpNFe.Dest.idEstrangeiro <> '' then
-      LinhaCmd := 'CONSUMIDOR - Id. Estrangeiro ' + FpNFe.Dest.idEstrangeiro
+  DadosConsumidor:= TStringList.Create;
+  try
+    if (FpNFe.Dest.idEstrangeiro = '') and (FpNFe.Dest.CNPJCPF = '') then
+    begin
+      DadosConsumidor.Add(ACBrStr('<c>CONSUMIDOR NÃO IDENTIFICADO'));
+    end
     else
     begin
-      if Length(Trim(FpNFe.Dest.CNPJCPF)) > 11 then
-        LinhaCmd := 'CONSUMIDOR - CNPJ ' + FormatarCNPJ(FpNFe.Dest.CNPJCPF)
+      if FpNFe.Dest.idEstrangeiro <> '' then
+        LinhaCmd := 'CONSUMIDOR - Id. Estrangeiro' +ifthen(Lateral,sLineBreak,' ')+ FpNFe.Dest.idEstrangeiro
       else
-        LinhaCmd := 'CONSUMIDOR - CPF ' + FormatarCPF(FpNFe.Dest.CNPJCPF);
+      begin
+        if Length(Trim(FpNFe.Dest.CNPJCPF)) > 11 then
+          LinhaCmd := 'CONSUMIDOR - CNPJ '+ FormatarCNPJ(FpNFe.Dest.CNPJCPF)
+        else
+          LinhaCmd := 'CONSUMIDOR - CPF ' + FormatarCPF(FpNFe.Dest.CNPJCPF);
+      end;
+
+      if Lateral then
+      begin
+        DadosConsumidor.Add('</ce><c><n>' + LinhaCmd + '</n> ');
+        DadosConsumidor.Add(QuebraLinhas(Trim(FpNFe.Dest.xNome), TruncFix(FPosPrinter.ColunasFonteCondensada/2)));
+      end
+      else
+      begin
+        LinhaCmd := '</ce><c><n>' + LinhaCmd + '</n> ' + Trim(FpNFe.Dest.xNome);
+        DadosConsumidor.Add(QuebraLinhas(LinhaCmd, FPosPrinter.ColunasFonteCondensada));
+      end;
+
+      LinhaCmd := Trim(
+        Trim(FpNFe.Dest.EnderDest.xLgr) + ' ' +
+        IfThen(Trim(FpNFe.Dest.EnderDest.xLgr) = '','',Trim(FpNFe.Dest.EnderDest.nro)) + ' ' +
+        Trim(FpNFe.Dest.EnderDest.xCpl) + ' ' +
+        Trim(FpNFe.Dest.EnderDest.xBairro) + ' ' +
+        Trim(FpNFe.Dest.EnderDest.xMun) + ' ' +
+        Trim(FpNFe.Dest.EnderDest.UF)
+      );
+      if LinhaCmd <> '' then
+        DadosConsumidor.Add('<c>' + QuebraLinhas(LinhaCmd,TruncFix(FPosPrinter.ColunasFonteCondensada/+ifthen(Lateral,2,1))));
     end;
-
-    LinhaCmd := '</ce><c><n>' + LinhaCmd + '</n> ' + Trim(FpNFe.Dest.xNome);
-    FPosPrinter.Buffer.Add(QuebraLinhas(LinhaCmd, FPosPrinter.ColunasFonteCondensada));
-
-    LinhaCmd := Trim(
-      Trim(FpNFe.Dest.EnderDest.xLgr) + ' ' +
-      IfThen(Trim(FpNFe.Dest.EnderDest.xLgr) = '','',Trim(FpNFe.Dest.EnderDest.nro)) + ' ' +
-      Trim(FpNFe.Dest.EnderDest.xCpl) + ' ' +
-      Trim(FpNFe.Dest.EnderDest.xBairro) + ' ' +
-      Trim(FpNFe.Dest.EnderDest.xMun) + ' ' +
-      Trim(FpNFe.Dest.EnderDest.UF)
-    );
-    if LinhaCmd <> '' then
-      FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(LinhaCmd,FPosPrinter.ColunasFonteCondensada));
+  finally
+    Result := DadosConsumidor.Text;
+    DadosConsumidor.Free;
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarInformacoesIdentificacaoNFCe;
+procedure TACBrNFeDANFeESCPOS.GerarInformacoesIdentificacaoNFCe(Lateral: Boolean
+  );
 var
   Via : String;
 begin
@@ -456,8 +503,8 @@ begin
   // dados da nota eletronica de consumidor
   FPosPrinter.Buffer.Add('</ce><c><n>' + StringReplace(QuebraLinhas(ACBrStr(
     'NFC-e nº ' + IntToStrZero(FpNFe.Ide.nNF, 9) +
-    ' Série ' + IntToStrZero(FpNFe.Ide.serie, 3) +
-    ' ' + DateTimeToStr(FpNFe.ide.dEmi) +
+    ' Série ' + IntToStrZero(FpNFe.Ide.serie, 3) +ifthen(Lateral,sLineBreak,' ')+
+    DateTimeToStr(FpNFe.ide.dEmi) +
     Via+'</n>')
     , FPosPrinter.ColunasFonteCondensada, '|'), '|', ' ', [rfReplaceAll]));
 
@@ -465,9 +512,9 @@ begin
   if (FpNFe.Ide.tpEmis <> teOffLine) or
      NaoEstaVazio(FpNFe.procNFe.nProt) then
   begin
-    FPosPrinter.Buffer.Add(ACBrStr('<c><n>Protocolo de Autorização:</n> ')+Trim(FpNFe.procNFe.nProt));
+    FPosPrinter.Buffer.Add(ACBrStr('<c><n>Protocolo de Autorização:</n>')+ifthen(Lateral,sLineBreak,' ')+Trim(FpNFe.procNFe.nProt));
     if (FpNFe.procNFe.dhRecbto <> 0) then
-      FPosPrinter.Buffer.Add(ACBrStr('<c><n>Data de Autorização</n> '+DateTimeToStr(FpNFe.procNFe.dhRecbto)+'</fn>'));
+      FPosPrinter.Buffer.Add(ACBrStr('<c><n>Data de Autorização</n>'+ifthen(Lateral,sLineBreak,' ')+DateTimeToStr(FpNFe.procNFe.dhRecbto)+'</fn>'));
   end;
 end;
 
@@ -537,13 +584,16 @@ begin
 
   // pular linhas e cortar o papel
   if FPosPrinter.CortaPapel then
-    FPosPrinter.Buffer.Add('</corte_total>')
+    FPosPrinter.Buffer.AddText('</corte_total>')
   else
-    FPosPrinter.Buffer.Add('</pular_linhas>')
+    FPosPrinter.Buffer.AddText('</pular_linhas>')
 end;
 
 procedure TACBrNFeDANFeESCPOS.MontarEnviarDANFE(NFE: TNFe;
   const AResumido: Boolean);
+var
+  Altura: Integer;
+  Consumidor: TStringList;
 begin
   if NFE = nil then
   begin
@@ -563,11 +613,40 @@ begin
   GerarInformacoesTotais;
   GerarPagamentos;
   GerarInformacoesConsultaChaveAcesso;
-  GerarInformacoesConsumidor;
-  GerarInformacoesIdentificacaoNFCe;
-  GerarMensagemFiscal;
-  GerarMensagemContingencia(#32);
-  GerarInformacoesQRCode;
+
+  if QRCodeLateral and (PosPrinter.Colunas >= 48) and (PosPrinter.Modelo = ppEscPosEpson) then
+  begin
+    Consumidor := TStringList.Create;
+    try
+      Consumidor.Text := GerarInformacoesConsumidor(True);
+      if (FpNFe.ide.tpEmis <> teNormal) and
+         EstaVazio(FpNFe.procNFe.nProt) then
+        Altura := 600
+      else
+        Altura := 480;
+
+      Altura := Altura+(60*Consumidor.Count);
+      AtivarPageMode;
+      ConfigurarRegiao(0,0,250,Max(Altura,550));
+      GerarInformacoesQRCode;
+      ConfigurarRegiao(265,0,325,Max(Altura,550));
+      AdicionaLinhas(Consumidor.Text);
+      GerarInformacoesIdentificacaoNFCe(True);
+      GerarMensagemContingencia(#32);
+      FinalizarPageMode;
+    finally
+      Consumidor.Free;
+    end;
+  end
+  else
+  begin
+    AdicionaLinhas(GerarInformacoesConsumidor(False));
+    GerarInformacoesIdentificacaoNFCe;
+    GerarMensagemFiscal;
+    GerarMensagemContingencia(#32);
+    GerarInformacoesQRCode;
+  end;
+
   GerarMensagemInteresseContribuinte;
   GerarTotalTributos;
   GerarRodape;
@@ -682,7 +761,7 @@ begin
   AtivarPosPrinter;
   GerarCabecalho;
   GerarDadosEvento;
-  GerarInformacoesConsumidor;
+  AdicionaLinhas(GerarInformacoesConsumidor);
   GerarObservacoesEvento;
   GerarInformacoesQRCode(True);
   GerarRodape;
@@ -705,13 +784,13 @@ begin
     LinhaCmd := LinhaCmd + '</ce></logo>';
 
   LinhaCmd := LinhaCmd + '</ae>';
-  FPosPrinter.Buffer.Add(LinhaCmd);
+  FPosPrinter.Buffer.AddText(LinhaCmd);
 
   FPosPrinter.Buffer.AddStrings( ATexto );
   if ACortaPapel then
-    FPosPrinter.Buffer.Add('</corte_parcial>')
+    FPosPrinter.Buffer.AddText('</corte_parcial>')
   else
-    FPosPrinter.Buffer.Add('</pular_linhas>');
+    FPosPrinter.Buffer.AddText('</pular_linhas>');
 
   FPosPrinter.Imprimir('', True, True, True, AVias);
 end;

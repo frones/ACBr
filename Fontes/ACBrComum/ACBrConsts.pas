@@ -222,6 +222,14 @@ const
   cTagQRCodeLargura = '<qrcode_largura>';
   cTagQRCodeError = '<qrcode_error>';
 
+  cTagPageModeLiga     = '<pm>';
+  cTagPageModeDesliga  = '</pm>';
+  cTagPageModePosIniX  = '<pagemode_x>';
+  cTagPageModePosIniY  = '<pagemode_y>';
+  cTagPageModeLargura  = '<pagemode_largura>';
+  cTagPageModeAltura   = '<pagemode_altura>';
+  cTagPageModeConfig   = '<pagemode_configurar>';
+
   cTAGS_BARRAS: array[0..15] of String = (
     cTagBarraEAN8, cTagBarraEAN13, cTagBarraStd, cTagBarraInter, cTagBarraCode11,
     cTagBarraCode39, cTagBarraCode93, cTagBarraCode128, 

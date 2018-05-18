@@ -167,7 +167,7 @@ begin
     PadRight('', 9, ' ')                             + //9 a 17 Uso exclusivo FEBRABAN/CNAB
     ATipoInscricao                                   + //18 - Tipo de inscrição do cedente
     PadLeft(OnlyNumber(CNPJCPF), 14, '0')            + //19 a 32 -Número de inscrição do cedente
-    PadLeft(CodigoCedente,20, '0')                   + //33 a 52 - Código do convênio no banco-Alfa
+    PadLeft(Convenio,20, '0')                        + //33 a 52 - Código do convênio no banco-Alfa
     PadLeft(OnlyNumber(Agencia), 5, '0')             + //53 a 57 - Código da agência do cedente-Numero
     PadRight(AgenciaDigito, 1 , ' ')                 + //58 - Dígito da agência do cedente -Alfa
     Padleft(Conta, 12 , '0')                         + //59-70 - Número da Conta Corrente -Numero
@@ -199,7 +199,7 @@ begin
     ' '                                        + //17 - Uso exclusivo FEBRABAN/CNAB
     ATipoInscricao                             + //18 - Tipo de inscrição do cedente
     PadLeft(OnlyNumber(CNPJCPF), 15, '0')      + //19 a 33 -Número de inscrição do cedente
-    PadLeft(CodigoCedente, 20, '0')            + //34 a 53 - Código do convênio no banco (código do cedente)
+    PadLeft(Convenio,20, '0')                  + //33 a 52 - Código do convênio no banco-Alfa
     Padleft(Agencia, 5, '0')                   + //54 a 58 - Agência Mantenedora da Conta
     PadLeft(OnlyNumber(AgenciaDigito), 1, '0') + //59 - Dígito da agência do cedente
     Padleft(Conta, 12 , '0')                   + //60 -71 Número da Conta Corrente

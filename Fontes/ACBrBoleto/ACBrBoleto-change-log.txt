@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18-05-2018 -- ACBrBancoBradesco
+[-] Ajuste Geração CNAB240
+https://www.projetoacbr.com.br/forum/topic/43314-homologa%C3%A7%C3%A3o-arquivo-remessa-bradesco-cnab-240/?tab=comments#comment-286080
+
 17-05-2018 -- ACBrBancoCecred
 [-] Ajuste leitura do códgo Convenio
 

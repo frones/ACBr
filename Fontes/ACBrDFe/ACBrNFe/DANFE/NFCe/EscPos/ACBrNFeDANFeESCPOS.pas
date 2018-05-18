@@ -179,27 +179,27 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.AtivarPageMode;
 begin
-  FPosPrinter.Buffer.AddText('<pm>');
+  FPosPrinter.Buffer.Add('<pm>');
 end;
 
 procedure TACBrNFeDANFeESCPOS.ConfigurarRegiao(AX, AY, AAltura,
   ALargura: Integer);
 begin
-  FPosPrinter.Buffer.AddText('<pagemode_x>'+IntToStr(AX)+'</pagemode_x>');
-  FPosPrinter.Buffer.AddText('<pagemode_y>'+IntToStr(AY)+'</pagemode_y>');
-  FPosPrinter.Buffer.AddText('<pagemode_altura>'+IntToStr(AAltura)+'</pagemode_altura>');
-  FPosPrinter.Buffer.AddText('<pagemode_largura>'+IntToStr(ALargura)+'</pagemode_largura>');
-  FPosPrinter.Buffer.AddText('<pagemode_configurar>');
+  FPosPrinter.Buffer.Add('<pagemode_x>'+IntToStr(AX)+'</pagemode_x>');
+  FPosPrinter.Buffer.Add('<pagemode_y>'+IntToStr(AY)+'</pagemode_y>');
+  FPosPrinter.Buffer.Add('<pagemode_altura>'+IntToStr(AAltura)+'</pagemode_altura>');
+  FPosPrinter.Buffer.Add('<pagemode_largura>'+IntToStr(ALargura)+'</pagemode_largura>');
+  FPosPrinter.Buffer.Add('<pagemode_configurar>');
 end;
 
 procedure TACBrNFeDANFeESCPOS.FinalizarPageMode;
 begin
-  FPosPrinter.Buffer.AddText('</pm>');
+  FPosPrinter.Buffer.Add('</pm>');
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
 begin
-  FPosPrinter.Buffer.AddText('</zera></ce></logo>');
+  FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
   if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
      FPosPrinter.Buffer.Add('</ce><c><n>' +  FpNFe.Emit.xFant + '</n>');
@@ -407,7 +407,7 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.AdicionaLinhas(ATexto: String);
 begin
-  FPosPrinter.Buffer.AddText(ATexto);
+  FPosPrinter.Buffer.Add(ATexto);
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarMensagemInteresseContribuinte;
@@ -584,9 +584,9 @@ begin
 
   // pular linhas e cortar o papel
   if FPosPrinter.CortaPapel then
-    FPosPrinter.Buffer.AddText('</corte_total>')
+    FPosPrinter.Buffer.Add('</corte_total>')
   else
-    FPosPrinter.Buffer.AddText('</pular_linhas>')
+    FPosPrinter.Buffer.Add('</pular_linhas>')
 end;
 
 procedure TACBrNFeDANFeESCPOS.MontarEnviarDANFE(NFE: TNFe;
@@ -784,13 +784,13 @@ begin
     LinhaCmd := LinhaCmd + '</ce></logo>';
 
   LinhaCmd := LinhaCmd + '</ae>';
-  FPosPrinter.Buffer.AddText(LinhaCmd);
+  FPosPrinter.Buffer.Add(LinhaCmd);
 
   FPosPrinter.Buffer.AddStrings( ATexto );
   if ACortaPapel then
-    FPosPrinter.Buffer.AddText('</corte_parcial>')
+    FPosPrinter.Buffer.Add('</corte_parcial>')
   else
-    FPosPrinter.Buffer.AddText('</pular_linhas>');
+    FPosPrinter.Buffer.Add('</pular_linhas>');
 
   FPosPrinter.Imprimir('', True, True, True, AVias);
 end;

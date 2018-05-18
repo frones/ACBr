@@ -179,6 +179,9 @@ type
     function ComandoInicializa: AnsiString; virtual;
     function ComandoPuloLinhas(NLinhas: Integer): AnsiString; virtual;
     function ComandoFonte(TipoFonte: TACBrPosTipoFonte; Ligar: Boolean): AnsiString; virtual;
+    function ComandoConfiguraRegiao: AnsiString; virtual;
+    function ComandoPageModeLiga: AnsiString; virtual;
+    function ComandoPageModeDesliga: AnsiString; virtual;
 
     procedure Configurar; virtual;
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); virtual;
@@ -251,6 +254,24 @@ type
       property TempoOFF: Byte read FTempoOFF write FTempoOFF default 200;
   end;
 
+  { TACBrConfigRegion }
+
+  TACBrConfigRegion = class(TPersistent)
+    private
+      FLargura: Integer;
+      FAltura: Integer;
+      FPosIniX: Integer;
+      FPosIniY: Integer;
+    public
+      constructor Create;
+
+    published
+      property Largura: Integer read FLargura write FLargura;
+      property Altura: Integer read FAltura write FAltura;
+      property PosIniX: Integer read FPosIniX write FPosIniX;
+      property PosIniY: Integer read FPosIniY write FPosIniY;
+  end;
+
   { TACBrPosPrinter }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
@@ -261,6 +282,7 @@ type
     FConfigBarras: TACBrECFConfigBarras;
     FConfigLogo: TACBrConfigLogo;
     FConfigQRCode: TACBrConfigQRCode;
+    FConfigRegion: TACBrConfigRegion;
     FControlePorta: Boolean;
     FDevice: TACBrDevice;
     FEspacoEntreLinhas: byte;
@@ -370,6 +392,7 @@ type
     property ConfigQRCode: TACBrConfigQRCode read FConfigQRCode write FConfigQRCode;
     property ConfigLogo: TACBrConfigLogo read FConfigLogo write FConfigLogo;
     property ConfigGaveta: TACBrConfigGaveta read FConfigGaveta write FConfigGaveta;
+    property ConfigRegion: TACBrConfigRegion read FConfigRegion write FConfigRegion;
 
     property LinhasEntreCupons: Integer read FLinhasEntreCupons
       write FLinhasEntreCupons default 21;
@@ -393,6 +416,16 @@ uses
   strutils, Math, typinfo,
   ACBrUtil, ACBrConsts,
   ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold, ACBrEscEpsonP2;
+
+{ TACBrConfigRegion }
+
+constructor TACBrConfigRegion.Create;
+begin
+  FLargura := 0;
+  FAltura  := 0;
+  FPosIniX := 0;
+  FPosIniY := 0;
+end;
 
 { TACBrPosComandos }
 
@@ -592,6 +625,21 @@ begin
   end;
 end;
 
+function TACBrPosPrinterClass.ComandoConfiguraRegiao: AnsiString;
+begin
+  Result := '';
+end;
+
+function TACBrPosPrinterClass.ComandoPageModeLiga: AnsiString;
+begin
+  Result := '';
+end;
+
+function TACBrPosPrinterClass.ComandoPageModeDesliga: AnsiString;
+begin
+  Result := '';
+end;
+
 procedure TACBrPosPrinterClass.Configurar;
 begin
   {nada aqui, método virtual}
@@ -639,6 +687,7 @@ begin
   FConfigQRCode := TACBrConfigQRCode.Create;
   FConfigLogo   := TACBrConfigLogo.Create;
   FConfigGaveta := TACBrConfigGaveta.Create;
+  FConfigRegion := TACBrConfigRegion.Create;
 
   FTagProcessor := TACBrTagProcessor.Create;
   FTagProcessor.AddTags(cTAGS_CARACTER, cTAGS_CARACTER_HELP, False);
@@ -700,6 +749,48 @@ begin
     Nome := cTagQRCodeError;
     Ajuda := 'Configura o Error Level do QRCode: 0 a 3';
     EhBloco := True;
+  end;
+
+  // Tags de Região e configuração do Região //
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagPageModeLiga;
+    Ajuda := 'Liga Modo de Impressão PageMode';
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagPageModeDesliga;
+    Ajuda := 'Desliga Modo de Impressão PageMode';
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagPageModePosIniX;
+    Ajuda := 'Posição Inicial Horizontal PageMode';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagPageModePosIniY;
+    Ajuda := 'Posição Inicial Vertical PageMode';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagPageModeLargura;
+    Ajuda := 'Largura PageMode';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagPageModeAltura;
+    Ajuda := 'Altura PageMode';
+    EhBloco := True;
+  end;
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagPageModeConfig;
+    Ajuda := 'Configurar Região PageMode';
+    EhBloco := False;
   end;
 
   // Tags de configuração do LogoTipo //
@@ -768,6 +859,7 @@ begin
   FConfigQRCode.Free;
   FConfigLogo.Free;
   FConfigGaveta.Free;
+  FConfigRegion.Free;
   FDevice.Free;
 
   inherited Destroy;
@@ -1062,6 +1154,21 @@ begin
   begin
     TagTraduzida := FPosPrinterClass.Cmd.AlinhadoCentro;
     FTipoAlinhamento := alCentro;
+  end
+
+  else if ATag = cTagPageModeLiga then
+  begin
+    TagTraduzida := FPosPrinterClass.ComandoPageModeLiga;
+  end
+
+  else if ATag = cTagPageModeDesliga then
+  begin
+    TagTraduzida := FPosPrinterClass.ComandoPageModeDesliga;
+  end
+
+  else if ATag = cTagPageModeConfig then
+  begin
+    TagTraduzida := FPosPrinterClass.ComandoConfiguraRegiao;
   end;
 
   GravarLog(AnsiString('TraduzirTag(' + ATag + ') -> ') + TagTraduzida, True);
@@ -1109,6 +1216,30 @@ begin
     else if ATag = cTagQRCode then
     begin
       BlocoTraduzido := FPosPrinterClass.ComandoQrCode(ConteudoBloco);
+    end
+
+    else if ATag = cTagPageModePosIniX then
+    begin
+      BlocoTraduzido := '';
+      ConfigRegion.PosIniX := StrToIntDef( ConteudoBloco, ConfigRegion.PosIniX);
+    end
+
+    else if ATag = cTagPageModePosIniY then
+    begin
+      BlocoTraduzido := '';
+      ConfigRegion.PosIniY := StrToIntDef( ConteudoBloco, ConfigRegion.PosIniY);
+    end
+
+    else if ATag = cTagPageModeAltura then
+    begin
+      BlocoTraduzido := '';
+      ConfigRegion.Altura := StrToIntDef( ConteudoBloco, ConfigRegion.Altura);
+    end
+
+    else if ATag = cTagPageModeLargura then
+    begin
+      BlocoTraduzido := '';
+      ConfigRegion.Largura := StrToIntDef( ConteudoBloco, ConfigRegion.Largura);
     end
 
     else if ATag = cTagBarraMostrar then

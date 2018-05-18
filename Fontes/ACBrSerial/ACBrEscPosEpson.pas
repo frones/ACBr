@@ -64,6 +64,10 @@ type
       override;
     function ComandoLogo: AnsiString; override;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
+    function ComandoConfiguraRegiao: AnsiString; override;
+    function ComandoPageModeLiga: AnsiString; override;
+    function ComandoPageModeDesliga: AnsiString; override;
+
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
@@ -380,6 +384,32 @@ begin
   begin
     Result := ESC + 'p' + CharGav + AnsiChar(TempoON) + AnsiChar(TempoOFF);
   end;
+end;
+
+function TACBrEscPosEpson.ComandoConfiguraRegiao: AnsiString;
+begin
+//https://stackoverflow.com/questions/42597358/esc-pos-set-page-size-esc-w-cmd
+  with fpPosPrinter.ConfigRegion do
+  begin
+    Result := ESC + 'T' + AnsiChr(0);
+    Result := GS + '$' + AnsiChr(0)+ AnsiChr(0);
+    Result := Result + ESC + 'W' +
+           AnsiChr(PosIniX mod 255)+AnsiChr( PosIniX div 255)+
+           AnsiChr(PosIniY mod 255)+AnsiChr( PosIniY div 255)+
+           AnsiChr(Altura mod 255)+ AnsiChr(Altura div 255)+
+           AnsiChr(Largura mod 255)+ AnsiChr(Largura div 255);
+  end;
+end;
+
+function TACBrEscPosEpson.ComandoPageModeLiga: AnsiString;
+begin
+  Result := ESC + 'L';
+end;
+
+function TACBrEscPosEpson.ComandoPageModeDesliga: AnsiString;
+begin
+  Result := FF;
+  Result := Result + ESC + 'S';
 end;
 
 procedure TACBrEscPosEpson.LerStatus(var AStatus: TACBrPosPrinterStatus);

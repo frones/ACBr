@@ -39,6 +39,30 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2048
+-- ACBrPosPrinter --
+[+] Adicionadas novas Tags para suportar a Impressão em "Modo Página".
+    '<mp>' - 'Liga Modo de Impressão em Página (em memória)'
+    '</mp>' - 'Desliga Modo de Impressão Página (em memória)'
+    '</mp_imprimir>' - 'Comanda a Impressão da Página na memória'
+    '<mp_direcao>' - 'Direção Texto no Modo Página: 0-Esquerda/Direta, 1-Topo/Baixo, 2-Direita/Esquerda, 3-Baixo/Topo'
+    '<mp_esquerda>' - 'Posição Inicial Horizontal Modo Página (Esquerda)'
+    '<mp_topo>' - 'Posição Inicial Vertical Modo Página (Topo)'
+    '<mp_largura>' - 'Largura da Região no Modo Página'
+    '<mp_altura>' - 'Altura da Região no Modo Página'
+    '<mp_espaco>' - 'Espaço entre Linhas na Região no Modo Página'
+    '</mp_configurar>' - 'Envia a configuração de Coordenadas da Região e direção do Modo Página'
+
+[+] Adicionada nova propriedade: "TACBrPosPrinter.ConfigModoPagina" Published,
+    para permitir configurar as definições do Modo Página, por código
+[*] Demo do ACBrPosPrinter atualizado, para Demonstrar o funcinonamento do
+    "Modo Página" (cool)
+    (por: DSA e André Moraes)
+
+-- ACBrEscPosEpson --
+[+] Implementado o suporte para o "Modo Página"
+    (por: DSA e André Moraes)
+
 06/04/2018
 -- ACBrECFEscECF --
 [*] Ajuste no método: TACBrECFEscECFProtocoloEpsonDLL.EnviaComando_ECF, para

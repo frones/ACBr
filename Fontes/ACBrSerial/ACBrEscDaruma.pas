@@ -131,6 +131,7 @@ begin
   {*)}
 
   TagsNaoSuportadas.Add( cTagBarraCode128c );
+  TagsNaoSuportadas.Add( cTagModoPaginaLiga );
 end;
 
 procedure TACBrEscDaruma.Configurar;

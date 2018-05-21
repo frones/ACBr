@@ -108,6 +108,7 @@ begin
   TagsNaoSuportadas.Add( cTagAbreGaveta );
   TagsNaoSuportadas.Add( cTagAbreGavetaEsp );
   TagsNaoSuportadas.Add( cTagBeep );
+  TagsNaoSuportadas.Add( cTagModoPaginaLiga );
 end;
 
 end.

@@ -124,6 +124,7 @@ begin
 
   TagsNaoSuportadas.Add( cTagBarraMSI );
   TagsNaoSuportadas.Add( cTagBarraCode128c );
+  TagsNaoSuportadas.Add( cTagModoPaginaLiga );
 end;
 
 function TACBrEscBematech.ComandoCodBarras(const ATag: String;

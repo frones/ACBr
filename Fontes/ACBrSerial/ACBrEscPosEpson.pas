@@ -64,10 +64,7 @@ type
       override;
     function ComandoLogo: AnsiString; override;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
-    function ComandoConfiguraRegiao: AnsiString; override;
-    function ComandoPageModeLiga: AnsiString; override;
-    function ComandoPageModeDesliga: AnsiString; override;
-
+    function ComandoConfiguraModoPagina: AnsiString; override;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
@@ -238,6 +235,9 @@ begin
     CorteTotal              := GS  + 'V' + #0;
     CorteParcial            := GS  + 'V' + #1;
     Beep                    := ESC + '(A' + #5 + #0 + #97 + #100 + #1 + #50 + #50;
+    LigaModoPagina          := ESC + 'L';
+    DesligaModoPagina       := ESC + 'S';
+    ImprimePagina           := ESC + FF;
   end;
   {*)}
 
@@ -386,30 +386,29 @@ begin
   end;
 end;
 
-function TACBrEscPosEpson.ComandoConfiguraRegiao: AnsiString;
+function TACBrEscPosEpson.ComandoConfiguraModoPagina: AnsiString;
+var
+  CharDir: AnsiChar;
 begin
-//https://stackoverflow.com/questions/42597358/esc-pos-set-page-size-esc-w-cmd
-  with fpPosPrinter.ConfigRegion do
+  with fpPosPrinter.ConfigModoPagina do
   begin
-    Result := ESC + 'T' + AnsiChr(0);
-    Result := GS + '$' + AnsiChr(0)+ AnsiChr(0);
-    Result := Result + ESC + 'W' +
-           AnsiChr(PosIniX mod 255)+AnsiChr( PosIniX div 255)+
-           AnsiChr(PosIniY mod 255)+AnsiChr( PosIniY div 255)+
-           AnsiChr(Altura mod 255)+ AnsiChr(Altura div 255)+
-           AnsiChr(Largura mod 255)+ AnsiChr(Largura div 255);
+    //https://stackoverflow.com/questions/42597358/esc-pos-set-page-size-esc-w-cmd
+    case Direcao of
+      dirBaixoParaTopo: CharDir := #1;
+      dirDireitaParaEsquerda: CharDir := #2;
+      dirTopoParaBaixo: CharDir := #3;
+    else
+      CharDir := #0;
+    end;
+
+    Result := ESC + 'T' + CharDir +                 // Ajusta a Direcao
+              ComandoEspacoEntreLinhas(EspacoEntreLinhas) +
+              {GS + '$' + AnsiChr(0)+ AnsiChr(0) +}  // Ajusta posição Vertical Absoluta em 0
+              ESC + 'W' + IntToLEStr(Esquerda) +    // Ajusta a Regiao
+                          IntToLEStr(Topo) +
+                          IntToLEStr(Largura) +
+                          IntToLEStr(Altura);
   end;
-end;
-
-function TACBrEscPosEpson.ComandoPageModeLiga: AnsiString;
-begin
-  Result := ESC + 'L';
-end;
-
-function TACBrEscPosEpson.ComandoPageModeDesliga: AnsiString;
-begin
-  Result := FF;
-  Result := Result + ESC + 'S';
 end;
 
 procedure TACBrEscPosEpson.LerStatus(var AStatus: TACBrPosPrinterStatus);
@@ -529,4 +528,6 @@ begin
 end;
 *)
 end.
+
+
 

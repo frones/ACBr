@@ -49,7 +49,7 @@ uses
   pcnLeitor,
   ACBrReinfLoteEventos, ACBrReinfConfiguracoes,
   pcnConversaoReinf, pcnCommonReinf, pcnReinfRetEventos, pcnReinfRetConsulta,
-  pcnReinfR5001, pcnReinfR5011;
+  pcnReinfR5001;
 
 type
   { TReinfWebService }
@@ -331,8 +331,7 @@ begin
 
     if AXML <> '' then
     begin
-      NomeArq := FRetEnvioLote.evento.Items[i].Id + '-' +
-                 FRetEnvioLote.evento.Items[i].Tipo + '.xml';
+      NomeArq := FRetEnvioLote.evento.Items[i].Id + '-R5001.xml';
 
       if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
         FPDFeOwner.Gravar(NomeArq, AXML, '',False);
@@ -434,9 +433,11 @@ begin
     tpInsc := '2';
 
   FPDadosMsg :=
+            '<consultar' + FPSoapEnvelopeAtributtes + '>' +
             '<v1:tipoInscricaoContribuinte>' + tpInsc + '</v1:tipoInscricaoContribuinte>' +
             '<v1:numeroInscricaoContribuinte>' + nrInsc + '</v1:numeroInscricaoContribuinte>' +
-            '<v1:numeroReciboFechamento>' + FProtocolo + '</v1:numeroReciboFechamento>';
+            '<v1:numeroReciboFechamento>' + FProtocolo + '</v1:numeroReciboFechamento>' +
+            '</consultar>';
 
 
   if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
@@ -456,7 +457,7 @@ begin
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
   Texto := Texto + '<' + 'v1:ConsultaInformacoesConsolidadas>';
-  Texto := Texto + DadosMsg;
+  Texto := Texto + SeparaDados(DadosMsg, 'consultar');
   Texto := Texto + '<' +  '/v1:ConsultaInformacoesConsolidadas>';
   Texto := Texto + '</' + FPSoapVersion + ':Body>';
   Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
@@ -520,18 +521,14 @@ begin
   FRetConsulta.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsulta.LerXml;
 
-  for i := 0 to FRetConsulta.RetEventos.Count - 1 do
+  AXML := FRetConsulta.XML;
+
+  if AXML <> '' then
   begin
-    AXML := FRetConsulta.RetEventos.Items[i].ArquivoReinf;
+    NomeArq := FRetConsulta.evtTotalContrib.Id + '-R5011.xml';
 
-    if AXML <> '' then
-    begin
-      NomeArq := FRetConsulta.RetEventos.Items[i].Id + '-' +
-                 FRetConsulta.RetEventos.Items[i].Tipo + '.xml';
-
-      if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
-        FPDFeOwner.Gravar(NomeArq, AXML, '',False);
-    end;
+    if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
+      FPDFeOwner.Gravar(NomeArq, AXML, '',False);
   end;
 
   if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then

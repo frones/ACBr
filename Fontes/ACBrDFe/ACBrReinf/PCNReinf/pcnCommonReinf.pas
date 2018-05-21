@@ -68,8 +68,6 @@ type
   TideStatus = class;
   TregOcorrsCollection = class;
   TregOcorrsCollectionItem = class;
-  TeventoCollection = class;
-  TeventoCollectionItem = class;
 
   IEventoReinf = Interface;
 
@@ -238,34 +236,6 @@ type
     property dscResp: String read FdscResp write FdscResp;
   end;
 
-  { TEvento }
-  TeventoCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TeventoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TeventoCollectionItem);
-  public
-    constructor create(AOwner: TPersistent);
-
-    function Add: TeventoCollectionItem;
-    property Items[Index: Integer]: TeventoCollectionItem read GetItem write SetItem;
-  end;
-
-  TeventoCollectionItem = class(TCollectionItem)
-  private
-    FId: string;
-    FArquivoReinf: string;
-    FTipo: string;
-    FEvento: IEventoReinf;
-  public
-    constructor create; reintroduce;
-    destructor destroy; overload;
-
-    property Id: string read FId write FId;
-    property ArquivoReinf: string read FArquivoReinf write FArquivoReinf;
-    property Tipo: string read FTipo write FTipo;
-    property Evento: IEventoReinf read FEvento write FEvento;
-  end;
-
   IEventoReinf = Interface(IInterface)
     function GetXml: string;
     procedure SetXml(const Value: string);
@@ -362,43 +332,6 @@ procedure TOcorrenciasCollection.SetItem(Index: Integer;
   Value: TOcorrenciasCollectionItem);
 begin
   Inherited SetItem(Index, Value);
-end;
-
-{ TeventoCollection }
-
-function TeventoCollection.Add: TeventoCollectionItem;
-begin
-  Result := TeventoCollectionItem(inherited Add());
-  Result.Create;
-end;
-
-constructor TeventoCollection.create(AOwner: TPersistent);
-begin
-  inherited create(TeventoCollectionItem);
-end;
-
-function TeventoCollection.GetItem(
-  Index: Integer): TeventoCollectionItem;
-begin
-  Result := TeventoCollectionItem(Inherited GetItem(Index));
-end;
-
-procedure TeventoCollection.SetItem(Index: Integer;
-  Value: TeventoCollectionItem);
-begin
-  Inherited SetItem(Index, Value);
-end;
-
-{ TeventoCollectionItem }
-
-constructor TeventoCollectionItem.create;
-begin
-  FId := EmptyStr;
-end;
-
-destructor TeventoCollectionItem.destroy;
-begin
-
 end;
 
 end.

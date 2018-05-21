@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/05/2018
+-- ACBrNFSeWebServices --
+[*] Alteração na montagem da mensagem de dados do Consultar Situação do Lote -
+    provedor DBSeller
+   Por: Italo Jurisato Junior
 -- ACBrNFSeConfiguracoes --
 [*] Removido a leitura dos campos: Recepcionar e RecSincrono (Arquivo INI), pois
     o seu conteudo nunca foi utilizado.

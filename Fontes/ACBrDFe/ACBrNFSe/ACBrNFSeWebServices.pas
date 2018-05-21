@@ -1767,9 +1767,6 @@ begin
                          FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
                      end;
 
-           proDBSeller: FTagI := '<ConsultarSituacaoLoteRps>' +
-                                  '<' + FTagGrupo + FNameSpaceDad + '>';
-
            proEquiplano: FTagI := '<' + FTagGrupo +
                                     ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
@@ -2071,9 +2068,6 @@ begin
 
          if FProvedor in [proFISSLex, proSMARAPD, proIPM] then
            FTagF := '';
-
-         if FProvedor in [proDBSeller] then
-           FTagF := FTagF + '</ConsultarSituacaoLoteRps>';
        end;
 
     LayNfseConsultaLote:

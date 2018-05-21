@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2018
+--- ACBrLibReinfRespostas ---
+[*] Adequações em viture das alterações feitas no componente ACBrReinf.
+   Por: Italo Jurisato Junior
+
 15/05/2018
 --- ACBrLibReinf ---
 

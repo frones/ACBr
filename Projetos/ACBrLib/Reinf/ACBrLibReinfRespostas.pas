@@ -38,7 +38,7 @@ unit ACBrLibReinfRespostas;
 interface
 
 uses
-  Classes, SysUtils, ACBrLibResposta, ACBrLibReinfConsts;
+  Classes, SysUtils, ACBrLibResposta, ACBrLibReinfConsts, pcnReinfRetConsulta;
 
 type
 
@@ -46,14 +46,14 @@ type
 
     TPadraoReinfResposta = class(TACBrLibResposta)
     private
-      FCodigo: Integer;
+      FCodigo: String;
       FMensagem: String;
 
     public
       constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
     published
-      property Codigo: Integer read FCodigo write FCodigo;
+      property Codigo: String read FCodigo write FCodigo;
       property Mensagem: String read FMensagem write FMensagem;
 
     end;
@@ -62,25 +62,19 @@ type
 
   TEnvioResposta = class(TPadraoReinfResposta)
   private
-    FTpInscEmpreg: String;
-    FNrInscEmpreg: String;
-    FTpInscTransm: String;
-    FNrInscTransm: String;
-    FDhRecepcao: TDateTime;
-    FVersaoAplic: String;
-    FProtocolo: String;
+    FIdTransmissor: String;
+//    FDhRecepcao: TDateTime;
+//    FVersaoAplic: String;
+//    FProtocolo: String;
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
-    property TpInscEmpreg: String read FTpInscEmpreg write FTpInscEmpreg;
-    property NrInscEmpreg: String read FNrInscEmpreg write FNrInscEmpreg;
-    property TpInscTransm: String read FTpInscTransm write FTpInscTransm;
-    property NrInscTransm: String read FNrInscTransm write FNrInscTransm;
-    property DhRecepcao: TDateTime read FDhRecepcao write FDhRecepcao;
-    property VersaoAplic: String read FVersaoAplic write FVersaoAplic;
-    property Protocolo: String read FProtocolo write FProtocolo;
+    property IdTransmissor: String read FIdTransmissor write FIdTransmissor;
+//    property DhRecepcao: TDateTime read FDhRecepcao write FDhRecepcao;
+//    property VersaoAplic: String read FVersaoAplic write FVersaoAplic;
+//    property Protocolo: String read FProtocolo write FProtocolo;
 
   end;
 
@@ -88,19 +82,19 @@ type
 
   TOcorrenciaResposta = class(TPadraoReinfResposta)
   private
-    FCodigoOco: Integer;
-    FDescricao: String;
     FTipo: Integer;
     FLocalizacao: String;
+    FCodigoOco: Integer;
+    FDescricao: String;
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
-    property CodigoOco: Integer read FCodigoOco write FCodigoOco;
-    property Descricao: String read FDescricao write FDescricao;
     property Tipo: Integer read FTipo write FTipo;
     property Localizacao: String read FLocalizacao write FLocalizacao;
+    property CodigoOco: Integer read FCodigoOco write FCodigoOco;
+    property Descricao: String read FDescricao write FDescricao;
 
   end;
 
@@ -108,59 +102,34 @@ type
 
   TConsultaResposta = class(TPadraoReinfResposta)
   private
-    FcdResposta: Integer;
-    FdescResposta: String;
-    FversaoAplicProcLote: String;
-    FdhProcessamento: TDateTime;
-    FnrRecibo: String;
-    Fhash: String;
+    FevtTotalContrib: TEvtTotalContrib;
+
+    FTpInscContri: String;
+    FNrInscContri: String;
+    FcdRetorno: Integer;
+    FdescRetorno: String;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
-    property cdResposta: Integer read FcdResposta write FcdResposta;
-    property descResposta: String read FdescResposta write FdescResposta;
-    property versaoAplicProcLote: String read FversaoAplicProcLote write FversaoAplicProcLote;
-    property dhProcessamento: TDateTime read FdhProcessamento write FdhProcessamento;
-    property nrRecibo: String read FnrRecibo write FnrRecibo;
-    property hash: String read Fhash write Fhash;
+    property evtTotalContrib: TEvtTotalContrib read FevtTotalContrib write FevtTotalContrib;
 
-  end;
-
-  { TConsultaTotResposta }
-
-  TConsultaTotResposta = class(TPadraoReinfResposta)
-  private
-    FTipo : String;
-    FID : String;
-    FNrRecArqBase : String;
-
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
-
-  published
-    property Tipo: String read FTipo write FTipo;
-    property ID: String read FID write FID;
-    property NrRecArqBase: String read FNrRecArqBase write FNrRecArqBase;
+    property TpInscContri: String read FTpInscContri write FTpInscContri;
+    property NrInscContri: String read FNrInscContri write FNrInscContri;
+    property cdRetorno: Integer read FcdRetorno write FcdRetorno;
+    property descRetorno: String read FdescRetorno write FdescRetorno;
 
   end;
 
 implementation
 
-{ TConsultaTotResposta }
-
-constructor TConsultaTotResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo);
-begin
-  inherited Create(ASessao, ATipo);
-end;
-
 { TConsultaResposta }
 
-constructor TConsultaResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+constructor TConsultaResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
-  inherited Create(ASessao, ATipo);
+  inherited Create(CSessaoRespConsulta, ATipo);
+  FevtTotalContrib := TEvtTotalContrib.Create;
 end;
 
 { TEnvioResposta }

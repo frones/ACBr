@@ -40,7 +40,7 @@ uses
   Classes, SysUtils, ACBrUtil, ACBrReinf, ACBrMonitorConfig,
   ACBrMonitorConsts, CmdUnit, pcnConversaoReinf, DoACBrDFeUnit,
   ACBrLibResposta, ACBrLibReinfConsts, ACBrLibReinfRespostas,
-  ACBrReinfEventos, pcnReinfR5001, pcnReinfR5011;
+  ACBrReinfEventos;
 
 type
 
@@ -54,12 +54,12 @@ public
   procedure Executar(ACmd: TACBrCmd); override;
 
   procedure RespostaEnvio;
-  procedure RespostaEnvioConsulta;
   procedure RespostaEnvioOcorrencia(ACont: Integer);
+
+  procedure RespostaEnvioConsulta;
+  procedure RespostaConsulta(ACont: Integer);
   procedure RespostaOcorrencia(ACont: Integer);overload;
   procedure RespostaOcorrencia(ACont, ACont2: Integer);overload;
-  procedure RespostaConsulta(ACont: Integer);
-  procedure RespostaTot(ACont, ACont2: Integer);
 
   property ACBrReinf: TACBrReinf read fACBrReinf;
 end;
@@ -195,76 +195,47 @@ begin
     ACBrReinf.Eventos.Clear;
     if ACBrReinf.Consultar(AProtocolo) then
     begin
-      with ACBrReinf.WebServices.Consultar.RetConsulta do
-      begin
-        (*
-        Add('');
+      RespostaEnvioConsulta;
 
-        for i := 0 to RetEventos.Count - 1 do
-        begin
-          Add(' Evento: ' + IntToStr(i));
-          Add('   Tipo.........: ' + retEventos.Items[i].Tipo);
-          case retEventos.Items[i].Evento.TipoEvento of
-            teR5001:
-              begin
-                evtR5001 := TR5001(retEventos.Items[i].Evento.GetEvento);
-                Add('   Id...........: ' + evtR5001.EvtTotal.Id);
-                Add('   Cód Retorno..: ' + evtR5001.EvtTotal.IdeStatus.cdRetorno);
-                Add('   Descrição....: ' + evtR5001.EvtTotal.IdeStatus.descRetorno);
-              end;
-            teR5011:
-              begin
-                evtR5011 := TR5011(retEventos.Items[i].Evento.GetEvento);
-                with evtR5011.EvtTotalContrib do
-                begin
-                  Add('   Id...........: ' + Id);
-                  Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
-                  Add('   Descrição....: ' + IdeStatus.descRetorno);
+//          if Evento. ideStatus.cdRetorno in [201, 202] then
+//          begin
+//            for i := 0 to retEventos.Count - 1 do
+//            begin
+//              RespostaConsulta(i);
+//              if retEventos.Items[i].Processamento.Ocorrencias.Count > 0 then
+//                for J := 0 to retEventos.Items[i].Processamento.Ocorrencias.Count - 1 do
+//                  RespostaOcorrencia(i, j);
 
-                  Add(' **Ocorrencias');
+//              for J := 0 to retEventos.Items[i].tot.Count - 1 do
+//                RespostaTot(i, j);
+//            end;
 
-                  for j := 0 to IdeStatus.regOcorrs.Count - 1 do
-                  begin
-                    with IdeStatus.regOcorrs.Items[j] do
+//          end
+//          else
+//            for i := 0 to Status.Ocorrencias.Count - 1 do
+//              RespostaOcorrencia(i);
+
+          (*
+                    Add(' **Ocorrencias');
+
+                    for j := 0 to IdeStatus.regOcorrs.Count - 1 do
                     begin
-                      Add('   Tipo............: ' + Inttostr(tpOcorr));
-                      Add('   Local Erro Aviso: ' + localErroAviso);
-                      Add('   Código Resp.... : ' + codResp);
-                      Add('   Descricao Resp..: ' + dscResp);
+                      with IdeStatus.regOcorrs.Items[j] do
+                      begin
+                        Add('   Tipo............: ' + Inttostr(tpOcorr));
+                        Add('   Local Erro Aviso: ' + localErroAviso);
+                        Add('   Código Resp.... : ' + codResp);
+                        Add('   Descricao Resp..: ' + dscResp);
+                      end;
                     end;
                   end;
                 end;
-              end;
+            end;
           end;
-        end;
-        *)
-
-        (*
-        if Status.cdResposta in [201, 202] then
-        begin
-          RespostaEnvioConsulta;
-          for i := 0 to retEventos.Count - 1 do
-          begin
-            RespostaConsulta(i);
-            if retEventos.Items[i].Processamento.Ocorrencias.Count > 0 then
-              for J := 0 to retEventos.Items[i].Processamento.Ocorrencias.Count - 1 do
-                RespostaOcorrencia(i, j);
-
-            for J := 0 to retEventos.Items[i].tot.Count - 1 do
-              RespostaTot(i, j);
-          end;
-
-        end
-        else
-          for i := 0 to Status.Ocorrencias.Count - 1 do
-            RespostaOcorrencia(i);
-        *)
-      end;
+          *)
 
     end;
-
   end;
-
 end;
 
 { TMetodoCriarEnviarReinf }
@@ -500,16 +471,9 @@ begin
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote do
     begin
-      Resp.Codigo         := Status.cdStatus;
-      Resp.Mensagem       := Status.descRetorno;
-//      Resp.TpInscEmpreg   := TpInscricaoToStr(IdeContrib.TpInsc);
-//      Resp.NrInscEmpreg   := IdeContrib.NrInsc;
-//      Resp.TpInscTransm   := TpInscricaoToStr(IdeTransmissor .TpInsc);
-      Resp.NrInscTransm   := IdeTransmissor.IdTransmissor;
-//      Resp.DhRecepcao     := dadosRecLote.dhRecepcao;
-//      Resp.VersaoAplic    := dadosRecLote.versaoAplicRecepcao;
-//      Resp.Protocolo      := dadosRecLote.Protocolo;
-
+      Resp.IdTransmissor := IdeTransmissor.IdTransmissor;
+      Resp.Codigo        := IntToStr(Status.cdStatus);
+      Resp.Mensagem      := Status.descRetorno;
     end;
     fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
 
@@ -517,33 +481,6 @@ begin
     Resp.Free;
   end;
 
-end;
-
-procedure TACBrObjetoReinf.RespostaEnvioConsulta;
-var
-  Resp: TEnvioResposta;
-begin
-  Resp := TEnvioResposta.Create(resINI);
-  try
-    with fACBrReinf.WebServices.Consultar.RetConsulta do
-    begin
-      (*
-      Resp.Codigo         := Status.cdResposta;
-      Resp.Mensagem       := Status.descResposta;
-      Resp.TpInscEmpreg   := eSTpInscricaoToStr(IdeEmpregador.TpInsc);
-      Resp.NrInscEmpreg   := IdeEmpregador.NrInsc;
-      Resp.TpInscTransm   := eSTpInscricaoToStr(IdeTransmissor.TpInsc);
-      Resp.NrInscTransm   := IdeTransmissor.NrInsc;
-      Resp.DhRecepcao     := dadosRecLote.dhRecepcao;
-      Resp.VersaoAplic    := dadosRecLote.versaoAplicRecepcao;
-      Resp.Protocolo      := dadosRecLote.Protocolo;
-      *)
-    end;
-    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-
-  finally
-    Resp.Free;
-  end;
 end;
 
 procedure TACBrObjetoReinf.RespostaEnvioOcorrencia(ACont: Integer);
@@ -554,13 +491,39 @@ begin
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote do
     begin
-      Resp.Codigo         := Status.cdStatus;
-      Resp.Mensagem       := Status.descRetorno;
-      Resp.CodigoOco      := Status.Ocorrencias.Items[ACont].Codigo;
-      Resp.Descricao      := Status.Ocorrencias.Items[ACont].Descricao;
-      Resp.Tipo           := Status.Ocorrencias.Items[ACont].Tipo;
-      Resp.Localizacao    := Status.Ocorrencias.Items[ACont].Localizacao;
+      Resp.Codigo      := IntToStr(Status.cdStatus);
+      Resp.Mensagem    := Status.descRetorno;
+      Resp.CodigoOco   := Status.Ocorrencias.Items[ACont].Codigo;
+      Resp.Descricao   := Status.Ocorrencias.Items[ACont].Descricao;
+      Resp.Tipo        := Status.Ocorrencias.Items[ACont].Tipo;
+      Resp.Localizacao := Status.Ocorrencias.Items[ACont].Localizacao;
 
+    end;
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+
+  finally
+    Resp.Free;
+  end;
+end;
+
+procedure TACBrObjetoReinf.RespostaEnvioConsulta;
+var
+  Resp: TConsultaResposta;
+begin
+  Resp := TConsultaResposta.Create(resINI);
+  try
+    with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
+    begin
+      Resp.TpInscContri   := TpInscricaoToStr(IdeContri.TpInsc);
+      Resp.NrInscContri   := IdeContri.NrInsc;
+      Resp.Codigo         := ideStatus.cdRetorno;
+      Resp.Mensagem       := ideStatus.descRetorno;
+
+//      Resp.TpInscTransm   := eSTpInscricaoToStr(IdeTransmissor.TpInsc);
+//      Resp.NrInscTransm   := IdeTransmissor.NrInsc;
+//      Resp.DhRecepcao     := dadosRecLote.dhRecepcao;
+//      Resp.VersaoAplic    := dadosRecLote.versaoAplicRecepcao;
+//      Resp.Protocolo      := dadosRecLote.Protocolo;
     end;
     fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
 
@@ -575,7 +538,7 @@ var
 begin
   Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), resINI);
   try
-    with fACBrReinf.WebServices.Consultar.RetConsulta do
+    with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
       (*
       Resp.Codigo         := Status.cdResposta;
@@ -611,7 +574,7 @@ begin
 
     end;
     *)
-    fpCmd.Resposta      := fpCmd.Resposta + Resp.Gerar;
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
 
   finally
     Resp.Free;
@@ -620,66 +583,39 @@ end;
 
 procedure TACBrObjetoReinf.RespostaConsulta(ACont: Integer);
 var
-  Resp : TConsultaResposta;
+  Resp: TConsultaResposta;
+  i: integer;
 begin
-  Resp := TConsultaResposta.Create(CSessaoRespConsulta+inttostr(ACont),resINI);
+  Resp := TConsultaResposta.Create(resINI);
   try
-    (*
-    with fACBrReinf.WebServices.ConsultaLote.RetConsultaLote.retEventos.Items[ACont] do
+    with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
-      resp.cdResposta      := Processamento.cdResposta;
-      resp.descResposta    := Processamento.descResposta;
-      resp.versaoAplicProcLote:= Processamento.versaoAplicProcLote;
-      resp.dhProcessamento := Processamento.dhProcessamento;
-      resp.nrRecibo        := Recibo.nrRecibo;
-      resp.hash            := Recibo.Hash;
+      resp.evtTotalContrib.Id := Id;
+      resp.evtTotalContrib.IdeEvento.perApur := IdeEvento.perApur;
+      resp.evtTotalContrib.IdeContri.TpInsc  := IdeContri.TpInsc;
+      resp.evtTotalContrib.IdeContri.nrInsc  := IdeContri.nrInsc;
 
-    end;
-    *)
-    fpCmd.Resposta       := Resp.Gerar;
+      resp.evtTotalContrib.IdeStatus.cdRetorno  := IdeStatus.cdRetorno;
+      resp.evtTotalContrib.IdeStatus.descRetorno := IdeStatus.descRetorno;
 
-  finally
-    Resp.Free;
-
-  end;
-
-end;
-
-procedure TACBrObjetoReinf.RespostaTot(ACont, ACont2: Integer);
-var
-  Resp : TConsultaTotResposta;
-  evtR5001: TR5001;
-  evtR5011: TR5011;
-begin
-  (*
-  Resp := TConsultaTotResposta.Create(CSessaoRespConsultaTot+inttostr(ACont),resINI);
-  try
-    with fACBrReinf.WebServices.ConsultaLote.RetConsultaLote.retEventos
-         .Items[ACont].tot[ACont2] do
-    begin
-      resp.Tipo := Tipo;
-
-      case Evento.TipoEvento of
-        teR5001:
-          begin
-            evtR5001 := TSR001(Evento.GetEvento);
-            resp.ID  := evtR5001.EvtBasesTrab.Id;
-            resp.NrRecArqBase := evtR5001.EvtBasesTrab.IdeEvento.nrRecArqBase;
-          end;
-        teR5011:
-          begin
-            evtR5011 := TR5011(Evento.GetEvento);
-            resp.ID  := evtR5011.EvtCS.Id;
-            resp.NrRecArqBase := evtR5011.EvtCS.IdeEvento.nrRecArqBase;
-          end;
+      for i := 0 to IdeStatus.regOcorrs.Count -1 do
+      begin
+        resp.evtTotalContrib.IdeStatus.regOcorrs.Add;
+        resp.evtTotalContrib.IdeStatus.regOcorrs.Items[i].tpOcorr := IdeStatus.regOcorrs.Items[i].tpOcorr;
+        resp.evtTotalContrib.IdeStatus.regOcorrs.Items[i].localErroAviso := IdeStatus.regOcorrs.Items[i].localErroAviso;
+        resp.evtTotalContrib.IdeStatus.regOcorrs.Items[i].codResp := IdeStatus.regOcorrs.Items[i].codResp;
+        resp.evtTotalContrib.IdeStatus.regOcorrs.Items[i].dscResp := IdeStatus.regOcorrs.Items[i].dscResp;
       end;
 
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+//      resp.evtTotalContrib.InfoRecEv.nrProtEntr := InfoRecEv.nrProtEntr;
     end;
+    fpCmd.Resposta := Resp.Gerar;
+
   finally
     Resp.Free;
+
   end;
-  *)
+
 end;
 
 end.

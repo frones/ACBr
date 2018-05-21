@@ -344,8 +344,6 @@ procedure TForm2.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
   i, j: Integer;
-  evtR5001: TR5001;
-  evtR5011: TR5011;
 begin
   Protocolo := '';
   if not(InputQuery('WebServices: Consulta Protocolo', 'Protocolo', Protocolo))
@@ -362,63 +360,41 @@ begin
       with ACBrReinf1.WebServices.Consultar.RetConsulta do
       begin
         Add('');
+        Add(' Evento: R5011');
 
-        for i := 0 to RetEventos.Count - 1 do
+        with evtTotalContrib do
         begin
-          Add(' Evento: ' + IntToStr(i));
-          Add('   Tipo.........: ' + retEventos.Items[i].Tipo);
+          Add('   Id...........: ' + Id);
+          Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
+          Add('   Descrição....: ' + IdeStatus.descRetorno);
 
-          case retEventos.Items[i].Evento.TipoEvento of
-            teR5001:
+          if IdeStatus.regOcorrs.Count > 0 then
+          begin
+            Add(' **Ocorrencias');
+
+            for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+            begin
+              with IdeStatus.regOcorrs.Items[i] do
               begin
-                evtR5001 := TR5001(retEventos.Items[i].Evento.GetEvento);
-
-                with evtR5001.EvtTotal do
-                begin
-                  Add('   Id...........: ' + Id);
-                  Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
-                  Add('   Descrição....: ' + IdeStatus.descRetorno);
-
-                  Add(' **Ocorrencias');
-
-                  for j := 0 to IdeStatus.regOcorrs.Count - 1 do
-                  begin
-                    with IdeStatus.regOcorrs.Items[j] do
-                    begin
-                      Add('   Tipo............: ' + Inttostr(tpOcorr));
-                      Add('   Local Erro Aviso: ' + localErroAviso);
-                      Add('   Código Resp.... : ' + codResp);
-                      Add('   Descricao Resp..: ' + dscResp);
-                    end;
-                  end;
-                end;
+                Add('   Tipo............: ' + Inttostr(tpOcorr));
+                Add('   Local Erro Aviso: ' + localErroAviso);
+                Add('   Código Resp.... : ' + codResp);
+                Add('   Descricao Resp..: ' + dscResp);
               end;
-
-            teR5011:
-              begin
-                evtR5011 := TR5011(retEventos.Items[i].Evento.GetEvento);
-
-                with evtR5011.EvtTotalContrib do
-                begin
-                  Add('   Id...........: ' + Id);
-                  Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
-                  Add('   Descrição....: ' + IdeStatus.descRetorno);
-
-                  Add(' **Ocorrencias');
-
-                  for j := 0 to IdeStatus.regOcorrs.Count - 1 do
-                  begin
-                    with IdeStatus.regOcorrs.Items[j] do
-                    begin
-                      Add('   Tipo............: ' + Inttostr(tpOcorr));
-                      Add('   Local Erro Aviso: ' + localErroAviso);
-                      Add('   Código Resp.... : ' + codResp);
-                      Add('   Descricao Resp..: ' + dscResp);
-                    end;
-                  end;
-                end;
-              end;
+            end;
           end;
+
+          Add(' **Informações de processamento dos eventos ');
+
+          with InfoRecEv do
+          begin
+            Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
+            Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
+            Add('   Tipo do Evento......................: ' + tpEv);
+            Add('   ID do Evento........................: ' + idEv);
+            Add('   Hash do arquivo processado..........: ' + hash);
+          end;
+
         end;
       end;
     end;
@@ -473,9 +449,7 @@ begin
           begin
             Add('Evento Id: ' + Id);
 
-            evtR5001 := TR5001(Evento.GetEvento);
-
-            with evtR5001.EvtTotal do
+            with evtTotal do
             begin
               Add('   Id...........: ' + Id);
               Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
@@ -493,6 +467,18 @@ begin
                   Add('   Descricao Resp..: ' + dscResp);
                 end;
               end;
+
+              Add(' **Informações de processamento dos eventos ');
+
+              with InfoRecEv do
+              begin
+                Add('   Num. Protocolo de Entrega do Evento.: ' + nrProtEntr);
+                Add('   Data/Hora do Processamento do Evento: ' + DateTimeToStr(dhProcess));
+                Add('   Tipo do Evento......................: ' + tpEv);
+                Add('   ID do Evento........................: ' + idEv);
+                Add('   Hash do arquivo processado..........: ' + hash);
+              end;
+
             end;
           end;
         end;

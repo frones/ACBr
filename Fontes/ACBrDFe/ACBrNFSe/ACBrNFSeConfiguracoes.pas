@@ -69,7 +69,6 @@ type
     RPS: Boolean;
     Lote: Boolean;
     URI: Boolean;
-    Recepcionar: Boolean;
     ConsSit: Boolean;
     ConsLote: Boolean;
     ConsNFSeRps: Boolean;
@@ -77,7 +76,6 @@ type
     Cancelar: Boolean;
     RpsGerar: Boolean;
     LoteGerar: Boolean;
-    RecSincrono: Boolean;
     Substituir: Boolean;
     AbrirSessao: Boolean;
     FecharSessao: Boolean;
@@ -581,7 +579,6 @@ begin
   FConfigAssinar.RPS := FPIniParams.ReadBool('Assinar', 'RPS', False);
   FConfigAssinar.Lote := FPIniParams.ReadBool('Assinar', 'Lote', False);
   FConfigAssinar.URI := FPIniParams.ReadBool('Assinar', 'URI', False);
-  FConfigAssinar.Recepcionar := FPIniParams.ReadBool('Assinar', 'Recepcionar', False);
   FConfigAssinar.ConsSit := FPIniParams.ReadBool('Assinar', 'ConsSit', False);
   FConfigAssinar.ConsLote := FPIniParams.ReadBool('Assinar', 'ConsLote', False);
   FConfigAssinar.ConsNFSeRps := FPIniParams.ReadBool('Assinar', 'ConsNFSeRps', False);
@@ -589,7 +586,6 @@ begin
   FConfigAssinar.Cancelar := FPIniParams.ReadBool('Assinar', 'Cancelar', False);
   FConfigAssinar.RpsGerar := FPIniParams.ReadBool('Assinar', 'RpsGerar', False);
   FConfigAssinar.LoteGerar := FPIniParams.ReadBool('Assinar', 'LoteGerar', False);
-  FConfigAssinar.RecSincrono := FPIniParams.ReadBool('Assinar', 'RecSincrono', False);
   FConfigAssinar.Substituir := FPIniParams.ReadBool('Assinar', 'Substituir', False);
   FConfigAssinar.AbrirSessao := FPIniParams.ReadBool('Assinar', 'AbrirSessao', False);
   FConfigAssinar.FecharSessao := FPIniParams.ReadBool('Assinar', 'FecharSessao', False);

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2018
+-- ACBrNFSeConfiguracoes --
+[*] Removido a leitura dos campos: Recepcionar e RecSincrono (Arquivo INI), pois
+    o seu conteudo nunca foi utilizado.
+   Por: Italo Jurisato Junior
+
 11/05/2018
 -- pnfsNFSeR / pnfsNFSeW_EL --
 [*] Melhorias visando o provedor EL.

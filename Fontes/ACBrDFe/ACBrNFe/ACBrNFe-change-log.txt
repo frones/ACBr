@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2018
+-- ACBrNFeDANFeESCPOS --
+[*] Adicionado Suporte as propriedades QRCodeLateral e ImprimeLogoLateral
+    (por: DSA e André Moraes)
+
 16/05/2018
 -- pcnNFeW --
 [*] Ajuste para sempre gerar as tags "vBCFCPUFDest", "pFCPUFDest" e "vFCPUFDest" do grupo

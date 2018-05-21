@@ -68,6 +68,7 @@ type
   TACBrNFeDANFeESCPOS = class(TACBrNFeDANFEClass)
   private
     FPosPrinter : TACBrPosPrinter ;
+    procedure AjustaStringList(AStringList: TStringList);
     procedure MontarEnviarDANFE(NFE: TNFe; const AResumido: Boolean);
     procedure SetPosPrinter(AValue: TACBrPosPrinter);
   protected
@@ -77,9 +78,7 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure AtivarPosPrinter;
 
-    procedure AtivarPageMode;
     procedure ConfigurarRegiao(AEsquerda, ATopo, AAltura, ALargura: Integer);
-    procedure FinalizarPageMode;
 
     procedure GerarCabecalho;
     procedure GerarIdentificacaodoDANFE;
@@ -176,11 +175,6 @@ begin
   FPosPrinter.Ativar;
 end;
 
-procedure TACBrNFeDANFeESCPOS.AtivarPageMode;
-begin
-  FPosPrinter.Buffer.Add('<mp>');
-end;
-
 procedure TACBrNFeDANFeESCPOS.ConfigurarRegiao(AEsquerda, ATopo, AAltura,
   ALargura: Integer);
 begin
@@ -192,32 +186,70 @@ begin
                          '</mp_configurar>');
 end;
 
-procedure TACBrNFeDANFeESCPOS.FinalizarPageMode;
-begin
-  FPosPrinter.Buffer.Add('</mp>');
-end;
-
 procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
+var
+  DadosCabecalho: TStringList;
+  Lateral: Boolean;
+  Altura: Integer;
+  TextoLateral: String;
 begin
-  FPosPrinter.Buffer.Add('</zera></ce></logo>');
+  Lateral := ImprimeLogoLateral and (PosPrinter.TagsNaoSuportadas.IndexOf(cTagModoPaginaLiga) < 0);
+  if Lateral then
+  begin
+    TextoLateral := '<c><n>';
+    if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
+       TextoLateral := TextoLateral + FpNFe.Emit.xFant + ' </n>';
 
-  if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
-     FPosPrinter.Buffer.Add('</ce><c><n>' +  FpNFe.Emit.xFant + '</n>');
+    TextoLateral := TextoLateral +
+                    QuebraLinhas('<n>' + FpNFe.Emit.xNome + '</n>'+
+                    ' CNPJ:'+ FormatarCNPJ(FpNFe.Emit.CNPJCPF) +
+                    ' IE:'+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF),
+                    Trunc(FPosPrinter.ColunasFonteCondensada/2))+sLineBreak;
 
-  FPosPrinter.Buffer.Add('</ce><c>CNPJ: '+ FormatarCNPJ(FpNFe.Emit.CNPJCPF) + ' <n>' + FpNFe.Emit.xNome + '</n>');
+    TextoLateral := TextoLateral +
+                    QuebraLinhas(Trim(Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
+                    Trim(FpNFe.Emit.EnderEmit.nro) + ' ' +
+                    ifthen(Trim(FpNFe.Emit.EnderEmit.xCpl)<>'',Trim(FpNFe.Emit.EnderEmit.xCpl) + ' ','') +
+                    ifthen(Trim(FpNFe.Emit.EnderEmit.xBairro)<>'',Trim(FpNFe.Emit.EnderEmit.xBairro) + ' ','') +
+                    Trim(FpNFe.Emit.EnderEmit.xMun) + '-' + Trim(FpNFe.Emit.EnderEmit.UF) + ' ' +
+                    Trim(FpNFe.Emit.EnderEmit.fone)), Trunc(FPosPrinter.ColunasFonteCondensada/2));
 
-  FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
-    Trim(FpNFe.Emit.EnderEmit.nro) + '  ' +
-    Trim(FpNFe.Emit.EnderEmit.xCpl) + '  ' +
-    Trim(FpNFe.Emit.EnderEmit.xBairro) +  ' ' +
-    Trim(FpNFe.Emit.EnderEmit.xMun) + '-' + Trim(FpNFe.Emit.EnderEmit.UF)
-    , FPosPrinter.ColunasFonteCondensada)
-  );
-
-  if not EstaVazio(FpNFe.Emit.EnderEmit.fone) then
-    FPosPrinter.Buffer.Add('</ce></fn><c>Fone: <n>'+ FormatarFone(FpNFe.Emit.EnderEmit.fone)+'</n> I.E.: '+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF))
+    DadosCabecalho := TStringList.Create;
+    try
+      DadosCabecalho.Text := TextoLateral;
+      Altura := max(43*DadosCabecalho.Count,250);
+    finally
+      DadosCabecalho.Free;
+    end;
+    FPosPrinter.Buffer.Add('</zera><mp>');
+    ConfigurarRegiao(0,0,Altura,260);
+    FPosPrinter.Buffer.Add('</logo>');
+    ConfigurarRegiao(260,0,Altura,325);
+    FPosPrinter.Buffer.Add(TextoLateral);
+    FPosPrinter.Buffer.Add('</mp>');
+  end
   else
-    FPosPrinter.Buffer.Add('</ce></fn><c>I.E.: '+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF))
+  begin
+    FPosPrinter.Buffer.Add('</zera></ce></logo>');
+
+    if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
+       FPosPrinter.Buffer.Add('</ce><c><n>' +  FpNFe.Emit.xFant + '</n>');
+
+    FPosPrinter.Buffer.Add('</ce><c>CNPJ: '+ FormatarCNPJ(FpNFe.Emit.CNPJCPF) + ' <n>' + FpNFe.Emit.xNome + '</n>');
+
+    FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
+      Trim(FpNFe.Emit.EnderEmit.nro) + '  ' +
+      Trim(FpNFe.Emit.EnderEmit.xCpl) + '  ' +
+      Trim(FpNFe.Emit.EnderEmit.xBairro) +  ' ' +
+      Trim(FpNFe.Emit.EnderEmit.xMun) + '-' + Trim(FpNFe.Emit.EnderEmit.UF)
+      , FPosPrinter.ColunasFonteCondensada)
+    );
+
+    if not EstaVazio(FpNFe.Emit.EnderEmit.fone) then
+      FPosPrinter.Buffer.Add('</ce></fn><c>Fone: <n>'+ FormatarFone(FpNFe.Emit.EnderEmit.fone)+'</n> I.E.: '+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF))
+    else
+      FPosPrinter.Buffer.Add('</ce></fn><c>I.E.: '+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF))
+  end;
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarIdentificacaodoDANFE;
@@ -421,12 +453,17 @@ function TACBrNFeDANFeESCPOS.GerarMensagemContingencia(CaracterDestaque: Char
   ): String;
 var
   MsgContingencia: TStringList;
+  Lateral: Boolean;
 begin
+  Lateral := (CaracterDestaque=#0);
   MsgContingencia := TStringList.Create;
   try
     // se homologação imprimir o texto de homologação
     if (FpNFe.ide.tpAmb = taHomologacao) then
-      MsgContingencia.Add(ACBrStr('</ce><c><n>EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL</n>'));
+      MsgContingencia.Add('</ce><c><n>'+
+        QuebraLinhas(ACBrStr('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'),
+                     Trunc(FPosPrinter.ColunasFonteCondensada/ifthen(Lateral,2,1)))+
+        '</n>');
 
     // se diferente de normal imprimir a emissão em contingência
     if (FpNFe.ide.tpEmis <> teNormal) and
@@ -438,7 +475,6 @@ begin
       else
         MsgContingencia.Add(ACBrStr('<c><n>Pendente de autorização</n>'));
     end;
-
   finally
     Result := MsgContingencia.Text;
     MsgContingencia.Free;
@@ -636,13 +672,15 @@ begin
                            GerarInformacoesIdentificacaoNFCe(True) +
                            GerarMensagemContingencia(#0);
 
-      Altura := max((FPosPrinter.EspacoEntreLinhas+4)*TextoLateral.Count, 560);
-      AtivarPageMode;
+      AjustaStringList(TextoLateral); // Ajusta corretamente o numero de Linhas
+
+      Altura := max(43*TextoLateral.Count, 560);
+      FPosPrinter.Buffer.Add('<mp>');
       ConfigurarRegiao(0,0,Altura,250);
       GerarInformacoesQRCode;
       ConfigurarRegiao(270,0,Altura,325);
       FPosPrinter.Buffer.Add(TextoLateral.Text);
-      FinalizarPageMode;
+      FPosPrinter.Buffer.Add('</mp>');
     finally
       TextoLateral.Free;
     end;
@@ -661,6 +699,15 @@ begin
   GerarRodape;
 
   FPosPrinter.Imprimir('',False,True,True,NumCopias);
+end;
+
+procedure TACBrNFeDANFeESCPOS.AjustaStringList(AStringList: TStringList);
+var
+  Linhas: String;
+begin
+  Linhas := AStringList.Text;
+  AStringList.Clear;
+  AStringList.Text := Linhas;
 end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirDANFE(NFE: TNFe);

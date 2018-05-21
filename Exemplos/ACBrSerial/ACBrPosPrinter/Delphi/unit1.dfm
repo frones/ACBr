@@ -18,21 +18,21 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   object Panel1: TPanel
     Left = 256
     Top = 0
-    Width = 623
-    Height = 490
+    Width = 615
+    Height = 482
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
-      Top = 345
-      Width = 621
-      Height = 144
+      Top = 312
+      Width = 613
+      Height = 169
       Align = alBottom
       TabOrder = 0
       object bTagFormtacaoCaracter: TButton
         Left = 8
-        Top = 40
+        Top = 39
         Width = 183
         Height = 25
         Caption = 'Tags de Formata'#231#227'o de Caracter'
@@ -59,7 +59,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bTagsCodBarras: TButton
         Left = 192
-        Top = 40
+        Top = 39
         Width = 183
         Height = 25
         Caption = 'Tags de Codigo de Barras'
@@ -68,7 +68,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bTagsTesteInvalidas: TButton
         Left = 8
-        Top = 88
+        Top = 89
         Width = 183
         Height = 25
         Caption = 'Teste de Tags Invalidas'
@@ -77,7 +77,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bTagsTestePagCodigo: TButton
         Left = 8
-        Top = 112
+        Top = 114
         Width = 183
         Height = 25
         Caption = 'Teste de p'#225'gina de c'#243'digo'
@@ -86,7 +86,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bImpLinhaALinha: TButton
         Left = 192
-        Top = 112
+        Top = 113
         Width = 183
         Height = 25
         Caption = 'Teste Impress'#227'o Linha a Linha'
@@ -123,14 +123,14 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       object Panel4: TPanel
         Left = 1
         Top = 1
-        Width = 619
+        Width = 611
         Height = 39
         Align = alTop
         BevelInner = bvRaised
         BevelOuter = bvLowered
         TabOrder = 11
         DesignSize = (
-          619
+          611
           39)
         object bLimpar: TBitBtn
           Left = 430
@@ -225,19 +225,28 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object bTagLogo: TButton
         Left = 192
-        Top = 88
+        Top = 89
         Width = 183
         Height = 25
         Caption = 'Tags de Logotipo'
         TabOrder = 6
         OnClick = bTagLogoClick
       end
+      object bTagsTestePageMode: TButton
+        Left = 8
+        Top = 139
+        Width = 183
+        Height = 25
+        Caption = 'Teste de Page Mode'
+        TabOrder = 12
+        OnClick = bTagsTestePageModeClick
+      end
     end
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 621
-      Height = 344
+      Width = 613
+      Height = 311
       ActivePage = tsImprimir
       Align = alClient
       TabOrder = 1
@@ -246,8 +255,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mImp: TMemo
           Left = 0
           Top = 0
-          Width = 613
-          Height = 316
+          Width = 605
+          Height = 283
           Align = alClient
           TabOrder = 0
         end
@@ -269,7 +278,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     Left = 0
     Top = 0
     Width = 256
-    Height = 490
+    Height = 482
     Align = alLeft
     TabOrder = 1
     object gbConfiguracao: TGroupBox

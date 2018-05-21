@@ -29,6 +29,7 @@ type
     bTagsTesteInvalidas: TButton;
     bTagsTestePagCodigo: TButton;
     bImpLinhaALinha: TButton;
+    bTagsTestePageMode: TButton;
     Button1: TButton;
     cbCortarPapel: TCheckBox;
     cbHRI: TCheckBox;
@@ -109,6 +110,7 @@ type
     procedure bTagsCodBarrasClick(Sender: TObject);
     procedure bTagsTestePagCodigoClick(Sender: TObject);
     procedure bImpLinhaALinhaClick(Sender: TObject);
+    procedure bTagsTestePageModeClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure cbControlePortaChange(Sender: TObject);
     procedure cbCortarPapelChange(Sender: TObject);
@@ -301,7 +303,7 @@ begin
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
   mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
-  mImp.Lines.Add('<c>FONTE CONDENSADA</e>');
+  mImp.Lines.Add('<c>FONTE CONDENSADA</c>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
@@ -311,7 +313,7 @@ begin
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
   mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
-  mImp.Lines.Add('<c>FONTE CONDENSADA</e>');
+  mImp.Lines.Add('<c>FONTE CONDENSADA</c>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
@@ -321,7 +323,7 @@ begin
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
   mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
-  mImp.Lines.Add('<c>FONTE CONDENSADA</e>');
+  mImp.Lines.Add('<c>FONTE CONDENSADA</c>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
@@ -446,6 +448,44 @@ begin
   ACBrPosPrinter1.ImprimirLinha('</FA>FONTE TIPO A');
   ACBrPosPrinter1.ImprimirLinha('</FN>FONTE NORMAL');
   ACBrPosPrinter1.ImprimirLinha('</corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.bTagsTestePageModeClick(Sender: TObject);
+begin
+  mImp.Lines.Add('</zera><barra_mostrar>0</barra_mostrar><barra_largura>2</barra_largura><barra_altura>40</barra_altura>');
+  mImp.Lines.Add('<mp><mp_direcao>0</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>0</mp_esquerda><mp_largura>257</mp_largura><mp_altura>740</mp_altura><mp_espaco>50</mp_espaco></mp_configurar>');
+  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
+  mImp.Lines.Add('<e>EXPANDIDO</e>');
+  mImp.Lines.Add('<in>INVERTIDA</in>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('<inter>1234567890</inter>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
+  mImp.Lines.Add('<mp_direcao>1</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>210</mp_esquerda><mp_largura>400</mp_largura><mp_altura>500</mp_altura><mp_espaco>25</mp_espaco></mp_configurar>');
+  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
+  mImp.Lines.Add('<e>EXPANDIDO</e>');
+  mImp.Lines.Add('<in>INVERTIDA</in>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('<inter>1234567890</inter>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
+  mImp.Lines.Add('</mp>');
+  mImp.Lines.Add('MODO PAGINA DESLIGADO');
+  mImp.Lines.Add('<mp><mp_direcao>3</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>0</mp_esquerda><mp_largura>400</mp_largura><mp_altura>500</mp_altura><mp_espaco>25</mp_espaco></mp_configurar>');
+  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
+  mImp.Lines.Add('<e>EXPANDIDO</e>');
+  mImp.Lines.Add('<in>INVERTIDA</in>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('<inter>1234567890</inter>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
+  mImp.Lines.Add('<mp_direcao>2</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>350</mp_esquerda><mp_largura>257</mp_largura><mp_altura>740</mp_altura><mp_espaco>50</mp_espaco></mp_configurar>');
+  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
+  mImp.Lines.Add('<e>EXPANDIDO</e>');
+  mImp.Lines.Add('<in>INVERTIDA</in>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('<inter>1234567890</inter>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
+  mImp.Lines.Add('</mp>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('</corte_total>');
 end;
 
 procedure TFrPosPrinterTeste.Button1Click(Sender: TObject);

@@ -1,32 +1,32 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 235
-  Height = 521
-  Top = 93
+  Left = 354
+  Height = 542
+  Top = 106
   Width = 841
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
-  ClientHeight = 521
+  ClientHeight = 542
   ClientWidth = 841
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.8.2.0'
   object Panel1: TPanel
     Left = 256
-    Height = 521
+    Height = 542
     Top = 0
     Width = 585
     Align = alClient
     Caption = 'Panel1'
-    ClientHeight = 521
+    ClientHeight = 542
     ClientWidth = 585
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
-      Height = 144
-      Top = 376
+      Height = 173
+      Top = 368
       Width = 583
       Align = alBottom
-      ClientHeight = 144
+      ClientHeight = 173
       ClientWidth = 583
       TabOrder = 0
       object bTagFormtacaoCaracter: TButton
@@ -252,10 +252,19 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagGavetaClick
         TabOrder = 9
       end
+      object bTagsTestePageMode: TButton
+        Left = 8
+        Height = 25
+        Top = 136
+        Width = 183
+        Caption = 'Teste de Page Mode'
+        OnClick = bTagsTestePageModeClick
+        TabOrder = 13
+      end
     end
     object PageControl1: TPageControl
       Left = 1
-      Height = 375
+      Height = 367
       Top = 1
       Width = 583
       ActivePage = tsImprimir
@@ -264,16 +273,17 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       TabOrder = 1
       object tsImprimir: TTabSheet
         Caption = 'Texto a Imprimir'
-        ClientHeight = 347
+        ClientHeight = 339
         ClientWidth = 575
         object mImp: TMemo
           Left = 0
-          Height = 347
+          Height = 339
           Top = 0
           Width = 575
           Align = alClient
           ScrollBars = ssAutoBoth
           TabOrder = 0
+          WordWrap = False
         end
       end
       object tsLog: TTabSheet
@@ -294,11 +304,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   end
   object Panel2: TPanel
     Left = 0
-    Height = 521
+    Height = 542
     Top = 0
     Width = 256
     Align = alLeft
-    ClientHeight = 521
+    ClientHeight = 542
     ClientWidth = 256
     TabOrder = 1
     object gbConfiguracao: TGroupBox

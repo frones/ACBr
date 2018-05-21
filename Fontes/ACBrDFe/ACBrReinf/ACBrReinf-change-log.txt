@@ -51,6 +51,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/05/2018
+-- pcnReinfRetConsulta --
+[*] Simplificação do código.
+   Por: Italo Jurisato Junior
 -- ACBrReinfWebServices / pcnCommonReinf / pcnReinfRetConsulta / pcnReinfRetEventos --
 [*] Refeito a leitura dos retornos de Envio e Consulta.
    Por: Italo Jurisato Junior

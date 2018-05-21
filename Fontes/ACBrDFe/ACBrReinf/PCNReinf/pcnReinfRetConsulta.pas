@@ -289,13 +289,12 @@ type
     constructor Create;
     destructor  Destroy; override;
 
+    property Id: String read FId write FId;
     property IdeEvento: TIdeEvento1 read FIdeEvento write FIdeEvento;
     property IdeContri: TIdeContrib read FIdeContri write FIdeContri;
     property IdeStatus: TIdeStatus read FIdeStatus write FIdeStatus;
     property InfoRecEv: TInfoRecEv read FInfoRecEv write FInfoRecEv;
     property InfoTotalContrib: TInfoTotalContrib read FInfoTotalContrib write FInfoTotalContrib;
-  published
-    property Id: String      read FId;
   end;
 
   TRetConsulta = class(TPersistent)
@@ -536,7 +535,7 @@ end;
 constructor TEvtTotalContrib.Create;
 begin
   FIdeEvento        := TIdeEvento1.Create;
-  FIdeContri       := TIdeContrib.Create;
+  FIdeContri        := TIdeContrib.Create;
   FIdeStatus        := TIdeStatus.Create;
   FInfoRecEv        := TInfoRecEv.Create;
   FInfoTotalContrib := TInfoTotalContrib.Create(Self);
@@ -584,7 +583,7 @@ begin
     begin
       with evtTotalContrib do
       begin
-        evtTotalContrib.FId := Leitor.rAtributo('id=');
+        FId := Leitor.rAtributo('id=');
 
         if leitor.rExtrai(2, 'ideEvento') <> '' then
           IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
@@ -627,106 +626,108 @@ begin
 
         if leitor.rExtrai(2, 'infoTotalContrib') <> '' then
         begin
-          infoTotalContrib.FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
-          infoTotalContrib.FindExistInfo := StrToindExistInfo(Ok, leitor.rCampo(tcStr, 'indExistInfo'));
-
-          i := 0;
-          while Leitor.rExtrai(3, 'RTom', '', i + 1) <> '' do
+          with infoTotalContrib do
           begin
-            infoTotalContrib.RTom.Add;
+            FnrRecArqBase := leitor.rCampo(tcStr, 'nrRecArqBase');
+            FindExistInfo := StrToindExistInfo(Ok, leitor.rCampo(tcStr, 'indExistInfo'));
 
-            InfoTotalContrib.RTom.Items[i].FcnpjPrestador     := leitor.rCampo(tcStr, 'cnpjPrestador');
-            InfoTotalContrib.RTom.Items[i].FvlrTotalBaseRet   := leitor.rCampo(tcDe2, 'vlrTotalBaseRet');
-            InfoTotalContrib.RTom.Items[i].FvlrTotalRetPrinc  := leitor.rCampo(tcDe2, 'vlrTotalRetPrinc');
-            InfoTotalContrib.RTom.Items[i].FvlrTotalRetAdic   := leitor.rCampo(tcDe2, 'vlrTotalRetAdic');
-            InfoTotalContrib.RTom.Items[i].FvlrTotalNRetPrinc := leitor.rCampo(tcDe2, 'vlrTotalNRetPrinc');
-            InfoTotalContrib.RTom.Items[i].FvlrTotalNRetAdic  := leitor.rCampo(tcDe2, 'vlrTotalNRetAdic');
-
-            // Versão 1.03.02
-            j := 0;
-            while Leitor.rExtrai(4, 'infoCRTom', '', j + 1) <> '' do
+            i := 0;
+            while Leitor.rExtrai(3, 'RTom', '', i + 1) <> '' do
             begin
-              InfoTotalContrib.RTom.Items[i].infoCRTom.Add;
+              RTom.Add;
 
-              InfoTotalContrib.RTom.Items[i].infoCRTom.Items[j].FCRTom        := leitor.rCampo(tcStr, 'CRTom');
-              InfoTotalContrib.RTom.Items[i].infoCRTom.Items[j].FVlrCRTom     := leitor.rCampo(tcDe2, 'VlrCRTom');
-              InfoTotalContrib.RTom.Items[i].infoCRTom.Items[j].FVlrCRTomSusp := leitor.rCampo(tcDe2, 'VlrCRTomSusp');
+              RTom.Items[i].FcnpjPrestador     := leitor.rCampo(tcStr, 'cnpjPrestador');
+              RTom.Items[i].FvlrTotalBaseRet   := leitor.rCampo(tcDe2, 'vlrTotalBaseRet');
+              RTom.Items[i].FvlrTotalRetPrinc  := leitor.rCampo(tcDe2, 'vlrTotalRetPrinc');
+              RTom.Items[i].FvlrTotalRetAdic   := leitor.rCampo(tcDe2, 'vlrTotalRetAdic');
+              RTom.Items[i].FvlrTotalNRetPrinc := leitor.rCampo(tcDe2, 'vlrTotalNRetPrinc');
+              RTom.Items[i].FvlrTotalNRetAdic  := leitor.rCampo(tcDe2, 'vlrTotalNRetAdic');
 
-              inc(j);
+              // Versão 1.03.02
+              j := 0;
+              while Leitor.rExtrai(4, 'infoCRTom', '', j + 1) <> '' do
+              begin
+                RTom.Items[i].infoCRTom.Add;
+
+                RTom.Items[i].infoCRTom.Items[j].FCRTom        := leitor.rCampo(tcStr, 'CRTom');
+                RTom.Items[i].infoCRTom.Items[j].FVlrCRTom     := leitor.rCampo(tcDe2, 'VlrCRTom');
+                RTom.Items[i].infoCRTom.Items[j].FVlrCRTomSusp := leitor.rCampo(tcDe2, 'VlrCRTomSusp');
+
+                inc(j);
+              end;
+
+              inc(i);
             end;
 
-            inc(i);
-          end;
+            i := 0;
+            while Leitor.rExtrai(3, 'RPrest', '', i + 1) <> '' do
+            begin
+              RPrest.Add;
 
-          i := 0;
-          while Leitor.rExtrai(3, 'RPrest', '', i + 1) <> '' do
-          begin
-            infoTotalContrib.RPrest.Add;
+              RPrest.Items[i].FtpInscTomador     := StrToTpInscricao(Ok, leitor.rCampo(tcStr, 'tpInscTomador'));
+              RPrest.Items[i].FnrInscTomador     := leitor.rCampo(tcStr, 'nrInscTomador');
+              RPrest.Items[i].FvlrTotalBaseRet   := leitor.rCampo(tcDe2, 'vlrTotalBaseRet');
+              RPrest.Items[i].FvlrTotalRetPrinc  := leitor.rCampo(tcDe2, 'vlrTotalRetPrinc');
+              RPrest.Items[i].FvlrTotalRetAdic   := leitor.rCampo(tcDe2, 'vlrTotalRetAdic');
+              RPrest.Items[i].FvlrTotalNRetPrinc := leitor.rCampo(tcDe2, 'vlrTotalNRetPrinc');
+              RPrest.Items[i].FvlrTotalNRetAdic  := leitor.rCampo(tcDe2, 'vlrTotalNRetAdic');
 
-            InfoTotalContrib.RPrest.Items[i].FtpInscTomador     := StrToTpInscricao(Ok, leitor.rCampo(tcStr, 'tpInscTomador'));
-            InfoTotalContrib.RPrest.Items[i].FnrInscTomador     := leitor.rCampo(tcStr, 'nrInscTomador');
-            InfoTotalContrib.RPrest.Items[i].FvlrTotalBaseRet   := leitor.rCampo(tcDe2, 'vlrTotalBaseRet');
-            InfoTotalContrib.RPrest.Items[i].FvlrTotalRetPrinc  := leitor.rCampo(tcDe2, 'vlrTotalRetPrinc');
-            InfoTotalContrib.RPrest.Items[i].FvlrTotalRetAdic   := leitor.rCampo(tcDe2, 'vlrTotalRetAdic');
-            InfoTotalContrib.RPrest.Items[i].FvlrTotalNRetPrinc := leitor.rCampo(tcDe2, 'vlrTotalNRetPrinc');
-            InfoTotalContrib.RPrest.Items[i].FvlrTotalNRetAdic  := leitor.rCampo(tcDe2, 'vlrTotalNRetAdic');
+              inc(i);
+            end;
 
-            inc(i);
-          end;
+            i := 0;
+            while Leitor.rExtrai(3, 'RRecRepAD', '', i + 1) <> '' do
+            begin
+              RRecRepAD.Add;
 
-          i := 0;
-          while Leitor.rExtrai(3, 'RRecRepAD', '', i + 1) <> '' do
-          begin
-            InfoTotalContrib.RRecRepAD.Add;
+              RRecRepAD.Items[i].FcnpjAssocDesp := leitor.rCampo(tcStr, 'cnpjAssocDesp');
+              RRecRepAD.Items[i].FvlrTotalRep   := leitor.rCampo(tcDe2, 'vlrTotalRep');
+              RRecRepAD.Items[i].FvlrTotalRet   := leitor.rCampo(tcDe2, 'vlrTotalRet');
+              RRecRepAD.Items[i].FvlrTotalNRet  := leitor.rCampo(tcDe2, 'vlrTotalNRet');
 
-            InfoTotalContrib.RRecRepAD.Items[i].FcnpjAssocDesp := leitor.rCampo(tcStr, 'cnpjAssocDesp');
-            InfoTotalContrib.RRecRepAD.Items[i].FvlrTotalRep   := leitor.rCampo(tcDe2, 'vlrTotalRep');
-            InfoTotalContrib.RRecRepAD.Items[i].FvlrTotalRet   := leitor.rCampo(tcDe2, 'vlrTotalRet');
-            InfoTotalContrib.RRecRepAD.Items[i].FvlrTotalNRet  := leitor.rCampo(tcDe2, 'vlrTotalNRet');
+              // Versão 1.03.02
+              RRecRepAD.Items[i].FCRRecRepAD        := leitor.rCampo(tcStr, 'CRRecRepAD');
+              RRecRepAD.Items[i].FvlrCRRecRepAD     := leitor.rCampo(tcDe2, 'vlrCRRecRepAD');
+              RRecRepAD.Items[i].FvlrCRRecRepADSusp := leitor.rCampo(tcDe2, 'vlrCRRecRepADSusp');
 
-            // Versão 1.03.02
-            InfoTotalContrib.RRecRepAD.Items[i].FCRRecRepAD        := leitor.rCampo(tcStr, 'CRRecRepAD');
-            InfoTotalContrib.RRecRepAD.Items[i].FvlrCRRecRepAD     := leitor.rCampo(tcDe2, 'vlrCRRecRepAD');
-            InfoTotalContrib.RRecRepAD.Items[i].FvlrCRRecRepADSusp := leitor.rCampo(tcDe2, 'vlrCRRecRepADSusp');
+              inc(i);
+            end;
 
-            inc(i);
-          end;
+            i := 0;
+            while Leitor.rExtrai(3, 'RComl', '', i + 1) <> '' do
+            begin
+              RComl.Add;
+              RComl.Items[i].FvlrCPApur    := leitor.rCampo(tcDe2, 'vlrCPApur');
+              RComl.Items[i].FvlrRatApur   := leitor.rCampo(tcDe2, 'vlrRatApur');
+              RComl.Items[i].FvlrSenarApur := leitor.rCampo(tcDe2, 'vlrSenarApur');
+              RComl.Items[i].FvlrCPSusp    := leitor.rCampo(tcDe2, 'vlrCPSusp');
+              RComl.Items[i].FvlrRatSusp   := leitor.rCampo(tcDe2, 'vlrRatSusp');
+              RComl.Items[i].FvlrSenarSusp := leitor.rCampo(tcDe2, 'vlrSenarSusp');
 
-          i := 0;
-          while Leitor.rExtrai(3, 'RComl', '', i + 1) <> '' do
-          begin
-            InfoTotalContrib.RComl.Add;
-            InfoTotalContrib.RComl.Items[i].FvlrCPApur    := leitor.rCampo(tcDe2, 'vlrCPApur');
-            InfoTotalContrib.RComl.Items[i].FvlrRatApur   := leitor.rCampo(tcDe2, 'vlrRatApur');
-            InfoTotalContrib.RComl.Items[i].FvlrSenarApur := leitor.rCampo(tcDe2, 'vlrSenarApur');
-            InfoTotalContrib.RComl.Items[i].FvlrCPSusp    := leitor.rCampo(tcDe2, 'vlrCPSusp');
-            InfoTotalContrib.RComl.Items[i].FvlrRatSusp   := leitor.rCampo(tcDe2, 'vlrRatSusp');
-            InfoTotalContrib.RComl.Items[i].FvlrSenarSusp := leitor.rCampo(tcDe2, 'vlrSenarSusp');
+              // Versão 1.03.02
+              RComl.Items[i].FCRComl        := leitor.rCampo(tcStr, 'CRComl');
+              RComl.Items[i].FvlrCRComl     := leitor.rCampo(tcDe2, 'vlrCRComl');
+              RComl.Items[i].FvlrCRComlSusp := leitor.rCampo(tcDe2, 'vlrCRComlSusp');
 
-            // Versão 1.03.02
-            InfoTotalContrib.RComl.Items[i].FCRComl        := leitor.rCampo(tcStr, 'CRComl');
-            InfoTotalContrib.RComl.Items[i].FvlrCRComl     := leitor.rCampo(tcDe2, 'vlrCRComl');
-            InfoTotalContrib.RComl.Items[i].FvlrCRComlSusp := leitor.rCampo(tcDe2, 'vlrCRComlSusp');
+              inc(i);
+            end;
 
-            inc(i);
-          end;
+            i := 0;
+            while Leitor.rExtrai(3, 'RCPRB', '', i + 1) <> '' do
+            begin
+              RCPRB.Add;
 
-          i := 0;
-          while Leitor.rExtrai(3, 'RCPRB', '', i + 1) <> '' do
-          begin
-            InfoTotalContrib.RCPRB.Add;
+              RCPRB.Items[i].FcodRec         := leitor.rCampo(tcInt, 'codRec');
+              RCPRB.Items[i].FvlrCPApurTotal := leitor.rCampo(tcDe2, 'vlrCPApurTotal');
+              RCPRB.Items[i].FvlrCPRBSusp    := leitor.rCampo(tcDe2, 'vlrCPRBSusp');
 
-            InfoTotalContrib.RCPRB.Items[i].FcodRec         := leitor.rCampo(tcInt, 'codRec');
-            InfoTotalContrib.RCPRB.Items[i].FvlrCPApurTotal := leitor.rCampo(tcDe2, 'vlrCPApurTotal');
-            InfoTotalContrib.RCPRB.Items[i].FvlrCPRBSusp    := leitor.rCampo(tcDe2, 'vlrCPRBSusp');
+              // Versão 1.03.02
+              RCPRB.Items[i].FCRCPRB        := leitor.rCampo(tcStr, 'CRCPRB');
+              RCPRB.Items[i].FvlrCRCPRB     := leitor.rCampo(tcDe2, 'vlrCRCPRB');
+              RCPRB.Items[i].FvlrCRCPRBSusp := leitor.rCampo(tcDe2, 'vlrCRCPRBSusp');
 
-
-            // Versão 1.03.02
-            InfoTotalContrib.RCPRB.Items[i].FCRCPRB        := leitor.rCampo(tcStr, 'CRCPRB');
-            InfoTotalContrib.RCPRB.Items[i].FvlrCRCPRB     := leitor.rCampo(tcDe2, 'vlrCRCPRB');
-            InfoTotalContrib.RCPRB.Items[i].FvlrCRCPRBSusp := leitor.rCampo(tcDe2, 'vlrCRCPRBSusp');
-
-            inc(i);
+              inc(i);
+            end;
           end;
         end;
       end;

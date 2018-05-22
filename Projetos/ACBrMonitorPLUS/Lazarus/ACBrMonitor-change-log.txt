@@ -44,6 +44,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/05/2018 - ACBrMonior
+[-] Ajustes Leitura .INI para manter compatibilidade configuração Boleto
+   por: José M. S. Junior
+
+22/05/2018 - ACBrMonior
 [-] Ajustes na validação no Monitoramento de Pasta
    por: José M. S. Junior
 

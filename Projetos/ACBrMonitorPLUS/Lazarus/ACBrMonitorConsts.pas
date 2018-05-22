@@ -567,6 +567,21 @@ const
   CKeyBOLETOEmailAssuntoBoleto =            'EmailAssuntoBoleto';
   CKeyBOLETOEmailMensagemBoleto =           'EmailMensagemBoleto';
   CKeyBOLETOImpressora =                    'Impressora';
+  //Manter Compatibilidade
+  CKeyBOLETOCedenteNome =                   'Cedente.Nome';
+  CKeyBOLETOCedenteCNPJCPF =                'Cedente.CNPJCPF';
+  CKeyBOLETOCedenteLogradouro =             'Cedente.Logradouro';
+  CKeyBOLETOCedenteNumero =                 'Cedente.Numero';
+  CKeyBOLETOCedenteBairro =                 'Cedente.Bairro';
+  CKeyBOLETOCedenteCidade =                 'Cedente.Cidade';
+  CKeyBOLETOCedenteCEP =                    'Cedente.CEP';
+  CKeyBOLETOCedenteComplemento =            'Cedente.Complemento';
+  CKeyBOLETOCedenteUF =                     'Cedente.UF';
+  CKeyBOLETOCedenteRespEmis =               'Cedente.RespEmis';
+  CKeyBOLETOCedentePessoa =                 'Cedente.Pessoa';
+  CKeyBOLETOCedenteCodTransmissao =         'Cedente.CodTransmissao';
+  CKeyBOLETOCedenteModalidade =             'Cedente.Modalidade';
+  CKeyBOLETOCedenteConvenio =               'Cedente.Convenio';
 
   CValueTipoEmpregador =                    'tePessoaJuridica';
   CvalueVersaoeSocial =                     '02_04_02';

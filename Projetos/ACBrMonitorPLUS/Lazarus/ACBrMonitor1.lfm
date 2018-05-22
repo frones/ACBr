@@ -1,5 +1,5 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 185
+  Left = 178
   Height = 688
   Top = 0
   Width = 1055
@@ -7,8 +7,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 0
-  ClientWidth = 0
+  ClientHeight = 688
+  ClientWidth = 1055
   Color = clBlack
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
@@ -13410,7 +13410,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

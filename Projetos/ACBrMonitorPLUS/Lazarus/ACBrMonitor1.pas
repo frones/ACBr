@@ -4094,8 +4094,8 @@ begin
 
     with Conta do
     begin
-      cbxBOLEmissao.ItemIndex          := RespEmis -1;
-      cbxBOLF_J.ItemIndex              := Pessoa -1;
+      cbxBOLEmissao.ItemIndex          := RespEmis;
+      cbxBOLF_J.ItemIndex              := Pessoa;
 
       edtModalidade.Text               := Modalidade;
       edtConvenio.Text                 := Convenio;

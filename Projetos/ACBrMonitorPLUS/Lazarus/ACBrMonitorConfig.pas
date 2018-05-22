@@ -1730,23 +1730,23 @@ begin
 
     with BOLETO do
     begin
-      Nome                   :=  ini.ReadString( CSecBOLETO, CKeyBOLETONome,             Nome                   );
-      CNPJCPF                :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCNPJCPF,          CNPJCPF                );
-      Logradouro             :=  ini.ReadString( CSecBOLETO, CKeyBOLETOLogradouro,       Logradouro             );
-      Numero                 :=  ini.ReadString( CSecBOLETO, CKeyBOLETONumero,           Numero                 );
-      Bairro                 :=  ini.ReadString( CSecBOLETO, CKeyBOLETOBairro,           Bairro                 );
-      Cidade                 :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCidade,           Cidade                 );
-      CEP                    :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCEP,              CEP                    );
-      Complemento            :=  ini.ReadString( CSecBOLETO, CKeyBOLETOComplemento,      Complemento            );
-      UF                     :=  ini.ReadString( CSecBOLETO, CKeyBOLETOUF,               UF                     );
+      Nome                   :=  ini.ReadString( CSecBOLETO, CKeyBOLETONome,        ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteNome, '') );
+      CNPJCPF                :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCNPJCPF,     ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCNPJCPF, '') );
+      Logradouro             :=  ini.ReadString( CSecBOLETO, CKeyBOLETOLogradouro,  ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteLogradouro, '') );
+      Numero                 :=  ini.ReadString( CSecBOLETO, CKeyBOLETONumero,      ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteNumero, '') );
+      Bairro                 :=  ini.ReadString( CSecBOLETO, CKeyBOLETOBairro,      ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteBairro, '') );
+      Cidade                 :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCidade,      ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCidade, '') );
+      CEP                    :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCEP,         ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCEP, '') );
+      Complemento            :=  ini.ReadString( CSecBOLETO, CKeyBOLETOComplemento, ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteComplemento, '') );
+      UF                     :=  ini.ReadString( CSecBOLETO, CKeyBOLETOUF,          ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteUF, '') );
     end;
 
     with Boleto.Conta do
     begin
-      RespEmis               :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETORespEmis,         RespEmis               );
-      Pessoa                 :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOPessoa,           Pessoa                 );
-      Modalidade             :=  ini.ReadString( CSecBOLETO, CKeyBOLETOModalidade,       Modalidade             );
-      Convenio               :=  ini.ReadString( CSecBOLETO, CKeyBOLETOConvenio,         Convenio               );
+      RespEmis               :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETORespEmis,        ini.ReadInteger(CSecBOLETO, CKeyBOLETOCedenteRespEmis, 0) );
+      Pessoa                 :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOPessoa,          ini.ReadInteger(CSecBOLETO, CKeyBOLETOCedentePessoa, 1 ) );
+      Modalidade             :=  ini.ReadString( CSecBOLETO, CKeyBOLETOModalidade,      ini.ReadString( CSecBOLETO, CKeyBOLETOCedenteModalidade, ''  ) );
+      Convenio               :=  ini.ReadString( CSecBOLETO, CKeyBOLETOConvenio,        ini.ReadString( CSecBOLETO, CKeyBOLETOCedenteConvenio, '' ) );
       Banco                  :=  Ini.ReadInteger(CSecBOLETO, CKeyBOLETOBanco,            Banco                  );
       Conta                  :=  ini.ReadString( CSecBOLETO, CKeyBOLETOConta,            Conta                  );
       DigitoConta            :=  ini.ReadString( CSecBOLETO, CKeyBOLETODigitoConta,      DigitoConta            );
@@ -1775,7 +1775,7 @@ begin
       DirArquivoRetorno      :=  ini.ReadString( CSecBOLETO, CKeyBOLETODirArquivoRetorno,  DirArquivoRetorno      );
       CNAB                   :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOCNAB,               CNAB                   );
       LerCedenteRetorno      :=  Ini.ReadBool(   CSecBOLETO, CKeyBOLETOLerCedenteRetorno,  LerCedenteRetorno      );
-      CodTransmissao         :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodTransmissao,     CodTransmissao         );
+      CodTransmissao         :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodTransmissao,     ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCodTransmissao,'') );
     end;
 
     with BOLETO.Relatorio do

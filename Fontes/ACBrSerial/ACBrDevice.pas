@@ -784,13 +784,7 @@ begin
           begin
             TryCloseSocket;
 
-            {$IfDef MSWINDOWS}
-            // SysErrorMessage() em Windows retorna String em ANSI, convertendo para UTF8 se necessário
-            ErrorMsg := ACBrStr(E.Message);
-            {$Else}
             ErrorMsg := E.Message;
-            {$EndIf}
-
             DoException( ESynapseError.Create(ErrorMsg) );
           end;
 

@@ -2465,6 +2465,7 @@ begin
   if Source is Tcomb then
   begin
     cProdANP := Tcomb(Source).cProdANP;
+    descANP := Tcomb(Source).descANP;
     pMixGN := Tcomb(Source).pMixGN;
     CODIF := Tcomb(Source).CODIF;
     qTemp := Tcomb(Source).qTemp;
@@ -3489,6 +3490,7 @@ begin
     detExport.Assign(TProd(Source).detExport);
     veicProd.Assign(TProd(Source).veicProd);
     med.Assign(TProd(Source).med);
+    rastro.Assign(TProd(Source).rastro);
     arma.Assign(TProd(Source).arma);
     comb.Assign(TProd(Source).comb);
     nRECOPI := TProd(Source).nRECOPI;

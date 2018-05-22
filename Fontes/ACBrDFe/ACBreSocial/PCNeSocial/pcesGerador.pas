@@ -376,10 +376,15 @@ begin
   else
     Result := Result + IntToStr(2);
 
-  if TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador in [teOrgaoPublico, tePessoaFisica] then
-    Result := Result + copy(OnlyNumber(CNPJF) + '00000000000000', 1, 14)
-  else
-    Result := Result + copy(OnlyNumber(Copy(CNPJF, 1, 8)) + '00000000000000', 1, 14);
+  with TACBreSocial(FACBreSocial) do
+  begin
+    if Configuracoes.Geral.TipoEmpregador in [tePessoaFisica,
+               teOrgaoPublicoExecutivoFederal, teOrgaoPublicoLegislativoFederal,
+               teOrgaoPublicoJudiciarioFederal, teOrgaoPublicoAutonomoFederal] then
+      Result := Result + copy(OnlyNumber(CNPJF) + '00000000000000', 1, 14)
+    else
+      Result := Result + copy(OnlyNumber(Copy(CNPJF, 1, 8)) + '00000000000000', 1, 14);
+  end;
 
   Result := Result + IntToStrZero(nAno, 4);
   Result := Result + IntToStrZero(nMes, 2);

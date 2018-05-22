@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2018 - ACBrMonior
+[-] Ajustes na validação no Monitoramento de Pasta
+   por: José M. S. Junior
+
 15/05/2018 - ACBrMonior
 [*] Ajustes quanto ao valor da propriedade ACBrSedex.Servico
 [*] Adicionado novas constantes referentes ao Reinf

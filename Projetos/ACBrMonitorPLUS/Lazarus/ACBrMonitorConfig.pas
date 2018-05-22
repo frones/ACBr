@@ -12,7 +12,7 @@ type
   TACBrMonitor = record
     Modo_TCP          : Boolean;
     Modo_TXT          : Boolean;
-    MonitorarPasta    : Boolean;
+    MonitoraPasta     : Boolean;
     TCP_Porta         : Integer;
     TCP_TimeOut       : Integer;
     Converte_TCP_Ansi : Boolean;
@@ -653,7 +653,7 @@ begin
     begin
       Ini.WriteBool( CSecACBrMonitor, CKeyModo_TCP, Modo_TCP );
       Ini.WriteBool( CSecACBrMonitor, CKeyModo_TXT, Modo_TXT) ;
-      Ini.WriteBool( CSecACBrMonitor, CKeyMonitorarPasta, MonitorarPasta );
+      Ini.WriteBool( CSecACBrMonitor, CKeyMonitorarPasta, MonitoraPasta );
       Ini.WriteInteger( CSecACBrMonitor, CKeyTCP_Porta, TCP_Porta );
       Ini.WriteInteger( CSecACBrMonitor, CKeyTCP_TimeOut, TCP_TimeOut );
       Ini.WriteBool( CSecACBrMonitor, CKeyConverte_TCP_Ansi, Converte_TCP_Ansi );
@@ -1244,7 +1244,7 @@ begin
     Begin
       Modo_TCP                  := Ini.ReadBool( CSecACBrMonitor, CKeyModo_TCP, Modo_TCP );
       Modo_TXT                  := Ini.ReadBool( CSecACBrMonitor, CKeyModo_TXT, Modo_TXT );
-      MonitorarPasta            := Ini.ReadBool( CSecACBrMonitor, CKeyMonitorarPasta, MonitorarPasta );
+      MonitoraPasta             := Ini.ReadBool( CSecACBrMonitor, CKeyMonitorarPasta, MonitoraPasta );
       TCP_Porta                 := Ini.ReadInteger( CSecACBrMonitor, CKeyTCP_Porta, TCP_Porta);
       TCP_TimeOut               := Ini.ReadInteger( CSecACBrMonitor, CKeyTCP_TimeOut, TCP_TimeOut );
       Converte_TCP_Ansi         := Ini.ReadBool( CSecACBrMonitor, CKeyConverte_TCP_Ansi, Converte_TCP_Ansi );
@@ -1818,7 +1818,7 @@ begin
   Begin
     Modo_TCP                  := False;
     Modo_TXT                  := False;
-    MonitorarPasta            := False;
+    MonitoraPasta             := False;
     TCP_Porta                 := 3434;
     TCP_TimeOut               := 10000;
     Converte_TCP_Ansi         := False;

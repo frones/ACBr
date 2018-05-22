@@ -1435,7 +1435,7 @@ type
     procedure ACT_ButtonMouseLeave(Sender: TObject);
   private
     ACBrMonitorINI: string;
-    Inicio, MonitorarPasta: boolean;
+    Inicio, fsMonitorarPasta: boolean;
     ArqSaiTXT, ArqSaiTMP, ArqEntTXT, ArqLogTXT, ArqLogCompTXT,
     ArqEntOrig, ArqSaiOrig: string;
     fsCmd: TACBrCmd;
@@ -3638,7 +3638,7 @@ begin
   cbxImpressoraNFCe.Items.Assign(Printer.Printers);
   Timer1.Enabled := False;
   Inicio := False;
-  MonitorarPasta := False;
+  fsMonitorarPasta := False;
   Erro := '';
   ACBrMonitorINI := ExtractFilePath(Application.ExeName) + 'ACBrMonitor.ini';
 
@@ -3716,7 +3716,7 @@ begin
     end
     else
     begin
-      if MonitorarPasta then
+      if fsMonitorarPasta then
       begin
         AddLinesLog('Monitorando Arquivos em: ' + ExtractFilePath(ArqEntTXT));
         AddLinesLog('Respostas gravadas em: ' + ExtractFilePath(ArqSaiTXT));
@@ -3933,10 +3933,10 @@ begin
     chkMostraLogNaTela.Checked        := MostraLogEmRespostasEnviadas and cbLog.Checked;
 
     cbMonitorarPasta.OnChange         := Nil;
-    cbMonitorarPasta.Checked          := MonitorarPasta;
+    cbMonitorarPasta.Checked          := MonitoraPasta;
     cbMonitorarPasta.OnChange         := @cbMonitorarPastaChange;
 
-    MonitorarPasta                    := cbMonitorarPasta.Checked;
+    fsMonitorarPasta                    := cbMonitorarPasta.Checked;
 
     ArqEntTXT                         := AcertaPath(edEntTXT.Text);
     ArqEntOrig                        := ArqEntTXT;
@@ -5007,12 +5007,12 @@ begin
       // Verificando se modificou o Modo de Monitoramento //
       OldMonitoraTCP   := Modo_TCP;
       OldMonitoraTXT   := Modo_TXT;
-      OldMonitoraPasta := MonitorarPasta;
+      OldMonitoraPasta := MonitoraPasta;
       OldVersaoSSL     := VersaoSSL;
 
       Modo_TCP         := rbTCP.Checked;
       Modo_TXT         := rbTXT.Checked;
-      MonitorarPasta   := cbMonitorarPasta.Checked;
+      MonitoraPasta    := cbMonitorarPasta.Checked;
       TCP_Porta        := StrToIntDef(edPortaTCP.Text, 3434);
       TCP_TimeOut      := StrToIntDef(edTimeOutTCP.Text, 10000);
       Converte_TCP_Ansi:= chbTCPANSI.Checked;
@@ -6120,7 +6120,7 @@ begin
 
   try
     try
-      if MonitorarPasta then
+      if fsMonitorarPasta then
       begin
         NomeArqEnt := PathWithDelim(ExtractFileDir(ArqEntOrig)) + '*.*';
         RetFind := SysUtils.FindFirst(NomeArqEnt, faAnyFile, SearchRec);

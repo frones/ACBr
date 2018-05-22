@@ -2578,7 +2578,7 @@ begin
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                    xSignatureNode, xDSIGNSLote, xIdSignature);
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
 
     // Incluido a linha abaixo por após realizar a assinatura esta gerando o
     // atributo xmlns vazio.
@@ -2873,7 +2873,7 @@ begin
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                    xSignatureNode, xDSIGNSLote, xIdSignature);
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -3080,7 +3080,7 @@ begin
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                   xSignatureNode, xDSIGNSLote, xIdSignature);
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarSincrono(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -3348,7 +3348,7 @@ begin
                               FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
                               xSignatureNode, xDSIGNSLote, xIdSignature);
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
 
    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -3497,7 +3497,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Situação do Lote: ');
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
   end;
   
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingDados);
@@ -3760,7 +3760,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Lote de RPS: ');
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
   end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingDados);
@@ -3974,7 +3974,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe por RPS: ');
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
   end;
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingDados);
@@ -4135,7 +4135,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe: ');
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
   end;
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingDados);
@@ -4480,7 +4480,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
   end;
 
   if FProvedor = proBetha then
@@ -4732,7 +4732,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
   end;
     
   FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
@@ -4897,7 +4897,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Abrir Sessão: ');
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
   end;
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_IncluiEncodingDados);
@@ -5051,7 +5051,7 @@ begin
   begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Fechar Sessão: ');
 
-    AlterarURIAssinatura;
+//    AlterarURIAssinatura;
   end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_IncluiEncodingDados);

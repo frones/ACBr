@@ -224,7 +224,7 @@ end;
 
 procedure NotaFiscal.Assinar(Assina: Boolean);
 var
-  XMLStr, DocElemento, InfElemento: String;
+  XMLStr, DocElemento, InfElemento, IdAttr: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
   Ok: Boolean;
@@ -282,11 +282,17 @@ begin
       InfElemento := InfElemento;
     end;
 
+    if Configuracoes.Geral.ConfigAssinar.URI then
+      IdAttr := Configuracoes.Geral.ConfigGeral.Identificador
+    else
+      IdAttr := '';
+
     if Assina then
-      FXMLAssinado := SSL.Assinar(String(XMLUTF8), DocElemento, InfElemento)
+      FXMLAssinado := SSL.Assinar(String(XMLUTF8), DocElemento, InfElemento, '', '', '', IdAttr)
     else
       FXMLAssinado := XMLOriginal;
 
+    (*
     Leitor := TLeitor.Create;
     try
       i := Pos('URI=""', FXMLAssinado);
@@ -306,6 +312,7 @@ begin
     finally
       Leitor.Free;
     end;
+    *)
 
     if Configuracoes.Arquivos.Salvar and
       (not Configuracoes.Arquivos.SalvarApenasNFSeProcessadas)  then
@@ -676,7 +683,7 @@ function TNotasFiscais.AssinarLote(XMLLote, docElemento, infElemento: String;
   Assina: Boolean; SignatureNode: String; SelectionNamespaces: String;
   IdSignature: String): String;
 var
-  XMLAss, ArqXML: String;
+  XMLAss, ArqXML, IdAttr: String;
 begin
   // XMLLote já deve estar em UTF8, para poder ser assinado //
   ArqXML := ConverteXMLtoUTF8(XMLLote);
@@ -685,10 +692,15 @@ begin
 
   with TACBrNFSe(FACBrNFSe) do
   begin
+    if Configuracoes.Geral.ConfigAssinar.URI then
+      IdAttr := Configuracoes.Geral.ConfigGeral.Identificador
+    else
+      IdAttr := '';
+
     if Assina then
     begin
       XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento,
-                            SignatureNode, SelectionNamespaces, IdSignature);
+                            SignatureNode, SelectionNamespaces, IdSignature, IdAttr);
       FXMLLoteAssinado := XMLAss;
       Result := FXMLLoteAssinado;
     end;

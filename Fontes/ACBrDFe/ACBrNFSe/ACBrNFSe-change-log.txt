@@ -47,10 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2018
+-- ACBrNFSeWebServices / ACBrNFSeNotasFiscais --
+[*] Alteração nas procedures referentes a assinatura do RPS e do Lote, agora é
+   checado o valor do campo URI que se encontra dentro do arquivo INI de cada
+   provedor, se o valor desse campo for 1 o conteúdo do atributo ID será utilizado
+   como conteúdo do atributo URI que se encontra na assinatura do RPS e do Lote. 
+   Por: Italo Jurisato Junior
+
 21/05/2018
 -- ACBrNFSeWebServices --
 [*] Alteração na montagem da mensagem de dados do Consultar Situação do Lote -
-    provedor DBSeller
+    provedor DBSeller.
    Por: Italo Jurisato Junior
 -- ACBrNFSeConfiguracoes --
 [*] Removido a leitura dos campos: Recepcionar e RecSincrono (Arquivo INI), pois

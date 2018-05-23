@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/05/2018
+-- ACBrNFSeWebServices / pnfsNFSeR --
+[*] Alteração visando a leitura correta da aliquota. 
+   Por: Italo Jurisato Junior
+
 22/05/2018
 -- ACBrNFSeWebServices / ACBrNFSeNotasFiscais --
 [*] Alteração nas procedures referentes a assinatura do RPS e do Lote, agora é

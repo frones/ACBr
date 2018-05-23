@@ -1948,6 +1948,9 @@ begin
         if NFSe.Servico.Valores.Aliquota = 0 then
           NFSe.Servico.Valores.Aliquota := Leitor.rCampo(tcDe3, 'Aliquota');
 
+        if NFSe.Servico.Valores.Aliquota = 0 then
+          NFSe.Servico.Valores.Aliquota := Leitor.rCampo(tcDe3, 'AliquotaServicos');
+
         if (FProvedor in [proActconv202]) then
           NFSe.Servico.Valores.Aliquota := (NFSe.Servico.Valores.Aliquota * 100);
 

@@ -2522,6 +2522,7 @@ begin
 
       if FProvedor = proCONAM then
       begin
+        AliquotaSN     := FNotasFiscais.Items[0].NFSe.Servico.Valores.AliquotaSN;
         AliquotaIss    := FNotasFiscais.Items[0].NFSe.Servico.Valores.Aliquota;
         TipoTributacao := '4';
         QtdTributos    := iTributos;

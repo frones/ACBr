@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/05/2018
+-- ACBrNFSeConfiguracoes / ACBrNFSeNotasFiscais --
+[*] https://www.projetoacbr.com.br/forum/topic/43524-nfse-duplicidade-na-cria%C3%A7%C3%A3o-da-pasta-anom%C3%AAs/
+   Por: Italo Jurisato Junior
 -- ACBrNFSeWebServices / pnfsNFSeR --
 [*] Alteração visando a leitura correta da aliquota. 
    Por: Italo Jurisato Junior

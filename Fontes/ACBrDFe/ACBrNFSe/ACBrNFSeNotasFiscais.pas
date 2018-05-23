@@ -226,9 +226,9 @@ procedure NotaFiscal.Assinar(Assina: Boolean);
 var
   XMLStr, DocElemento, InfElemento, IdAttr: String;
   XMLUTF8: AnsiString;
-  Leitor: TLeitor;
+//  Leitor: TLeitor;
   Ok: Boolean;
-  i: Integer;
+//  i: Integer;
 begin
   // Verifica se foi informado o Numero de Série do Certificado.
   if ( TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.NumeroSerie <> '' ) then

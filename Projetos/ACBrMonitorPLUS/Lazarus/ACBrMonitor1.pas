@@ -1513,7 +1513,7 @@ type
 
     procedure AjustaLinhasLog;
 
-    procedure LerIni;
+    procedure LerIni(AtualizaMonitoramento: Boolean = True);
     procedure SalvarIni;
     procedure ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview : String);
     procedure VerificaDiretorios;
@@ -3858,7 +3858,7 @@ begin
 end;
 
 {------------------------------------------------------------------------------}
-procedure TFrmACBrMonitor.LerIni;
+procedure TFrmACBrMonitor.LerIni(AtualizaMonitoramento: Boolean);
 var
   ECFAtivado, CHQAtivado, GAVAtivado, DISAtivado, BALAtivado,
   ETQAtivado, ESCPOSAtivado: boolean;
@@ -3932,21 +3932,24 @@ begin
     cbRetirarAcentosNaResposta.Checked:= RetirarAcentosNaResposta;
     chkMostraLogNaTela.Checked        := MostraLogEmRespostasEnviadas and cbLog.Checked;
 
-    cbMonitorarPasta.OnChange         := Nil;
-    cbMonitorarPasta.Checked          := MonitoraPasta;
-    cbMonitorarPasta.OnChange         := @cbMonitorarPastaChange;
+    if AtualizaMonitoramento then
+    begin
+      cbMonitorarPasta.OnChange         := Nil;
+      cbMonitorarPasta.Checked          := MonitoraPasta;
+      cbMonitorarPasta.OnChange         := @cbMonitorarPastaChange;
 
-    fsMonitorarPasta                    := cbMonitorarPasta.Checked;
+      fsMonitorarPasta                  := cbMonitorarPasta.Checked;
 
-    ArqEntTXT                         := AcertaPath(edEntTXT.Text);
-    ArqEntOrig                        := ArqEntTXT;
-    ArqSaiTXT                         := AcertaPath(edSaiTXT.Text);
-    ArqSaiOrig                        := ArqSaiTXT;
-    ArqSaiTMP                         := ChangeFileExt(ArqSaiTXT, '.tmp');
-    ArqLogTXT                         := AcertaPath(edLogArq.Text);
+      ArqEntTXT                         := AcertaPath(edEntTXT.Text);
+      ArqEntOrig                        := ArqEntTXT;
+      ArqSaiTXT                         := AcertaPath(edSaiTXT.Text);
+      ArqSaiOrig                        := ArqSaiTXT;
+      ArqSaiTMP                         := ChangeFileExt(ArqSaiTXT, '.tmp');
+      ArqLogTXT                         := AcertaPath(edLogArq.Text);
 
-    TcpServer.Port                    := edPortaTCP.Text;
-    TcpServer.TimeOut                 := StrToIntDef(edTimeOutTCP.Text, 10000);
+      TcpServer.Port                    := edPortaTCP.Text;
+      TcpServer.TimeOut                 := StrToIntDef(edTimeOutTCP.Text, 10000);
+    end;
 
   end;
 
@@ -9230,7 +9233,7 @@ end;
 procedure TFrmACBrMonitor.AtualizarTela(AMonitorConfig: TMonitorConfig);
 begin
   if AMonitorConfig = FMonitorConfig then
-    LerIni;
+    LerIni(False);
 end;
 
 procedure TFrmACBrMonitor.CarregaArquivosRetorno;

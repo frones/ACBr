@@ -43,8 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+
 22/05/2018 - ACBrMonior
 [-] Ajustes Leitura .INI para manter compatibilidade configuração Boleto
+https://www.projetoacbr.com.br/forum/topic/43517-boleto-dados-cedente-mudou-bug/
+   por: José M. S. Junior
+
+[-] Ajustes na geração Arquivo de Respostas
+https://www.projetoacbr.com.br/forum/topic/32678-acbrmonitorplus-sac/
    por: José M. S. Junior
 
 22/05/2018 - ACBrMonior

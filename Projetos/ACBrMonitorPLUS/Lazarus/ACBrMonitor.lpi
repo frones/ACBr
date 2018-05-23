@@ -22,9 +22,10 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="2"/>
+      <BuildNr Value="1"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
-      <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion=""/>
+      <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS"/>
     </VersionInfo>
     <BuildModes Count="2">
       <Item1 Name="Debug" Default="True"/>

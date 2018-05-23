@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/05/2018
+-- ACBrNFeServicos --
+[*] Atualização das URLs de Homologação da SEFAZ-MS.
+   Por: Italo Jurisato Junior
+
 21/05/2018
 -- ACBrNFeDANFeESCPOS --
 [*] Adicionado Suporte as propriedades QRCodeLateral e ImprimeLogoLateral

@@ -422,7 +422,6 @@ var
   IniFile: String;
   Ini: TIniFile;
   Cidades: TStringList;
-  StreamMemo: TMemoryStream;
   I: Integer;
   sNome, sCod, sUF: String;
 begin
@@ -864,8 +863,6 @@ begin
 end;
 
 procedure TfrmDemo_ACBrNFSe.btn9Click(Sender: TObject);
-var
-  Erro, AName: String;
 begin
   with ACBrNFSe1.SSL do
   begin
@@ -877,7 +874,6 @@ begin
     MemoResp.Lines.Add(CertNumeroSerie);
     pgRespostas.ActivePageIndex := 0;
   end;
-
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnCaminhoCertClick(Sender: TObject);
@@ -1258,8 +1254,7 @@ begin
       TipoRPSToStr(ACBrNFSe1.NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo));
 
     MemoResp.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
-    memoRespWS.Lines.Text :=
-      UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
+    memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfseRps.RetWS);
     LoadXML(MemoResp, WBResposta);
   end;
 end;
@@ -1510,7 +1505,6 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnVerificarCidadeClick(Sender: TObject);
 var
-  Ok: Boolean;
   NomeArqParams: String;
   IniParams: TMemIniFile;
   vAux, provedor: String;

@@ -930,7 +930,7 @@ begin
         with RegE220.RegistroE240.Items[intFor] do
         begin
           /// Versão do leiaute do arquivo.
-          if FBloco_0.Registro0000.COD_VER >= vlVersao103 then //trocar por FBloco_0.Registro0000.COD_VER in [vlVersao103,vlVersao104] se na versão vlVersao105 não for gerado esse registro.
+          if FBloco_0.Registro0000.COD_VER <= vlVersao103 then //trocar por FBloco_0.Registro0000.COD_VER in [vlVersao103,vlVersao104] se na versão vlVersao105 não for gerado esse registro.
           begin
              Add( LFill('E240') +
                   LFill( COD_PART ) +
@@ -951,9 +951,9 @@ begin
                   LFill( SUB ) +
                   LFill( NUM_DOC ) +
                   LFill( DT_DOC ) +
-                  LFill( CHV_NFE ) +
                   LFill( COD_ITEM ) +
-                  LFill( VL_AJ_ITEM,0 )) ;
+                  LFill( VL_AJ_ITEM,0 )+
+                  LFill( CHV_NFE )) ;
           end;
 
         end;

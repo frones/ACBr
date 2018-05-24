@@ -324,7 +324,7 @@ function FlushFileToDisk(const sFile: string): boolean;
 Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
 {$IfNDef NOGUI}
-function ForceForeground(AppHandle:{$IfDef FPC}LCLType.{$EndIf}THandle): boolean;
+function ForceForeground(AppHandle:{$IfDef FPC}LCLType.HWND{$Else}THandle{$EndIf}): boolean;
 {$EndIf}
 
 Procedure WriteToFile( const Arq: String; ABinaryString : AnsiString);
@@ -3185,7 +3185,7 @@ end;
 {$IfNDef NOGUI}
 {$IfDef MSWINDOWS}
 // Origem: https://www.experts-exchange.com/questions/20294536/WM-ACTIVATE.html
-function ForceForeground(AppHandle:THandle): boolean;
+function ForceForeground(AppHandle:{$IfDef FPC}LCLType.HWND{$Else}THandle{$EndIf}): boolean;
 const
   SPI_GETFOREGROUNDLOCKTIMEOUT = $2000;
   SPI_SETFOREGROUNDLOCKTIMEOUT = $2001;
@@ -3255,7 +3255,7 @@ begin
   end;
 end;
 {$Else}
-function ForceForeground(AppHandle: {$IfDef FPC}LCLType.{$EndIf}THandle): boolean;
+function ForceForeground(AppHandle: {$IfDef FPC}LCLType.HWND{$Else}THandle{$EndIf}): boolean;
 begin
   Application.Restore;
   Application.BringToFront;

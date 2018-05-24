@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2018
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/43570-unit-pnfsconversao-func%C3%A3o-naturezaoperacaodescricao/
+   Por: Graça / Italo Jurisato Junior
+
 23/05/2018
 -- ACBrNFSeConfiguracoes / ACBrNFSeNotasFiscais --
 [*] https://www.projetoacbr.com.br/forum/topic/43524-nfse-duplicidade-na-cria%C3%A7%C3%A3o-da-pasta-anom%C3%AAs/

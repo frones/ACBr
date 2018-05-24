@@ -223,6 +223,13 @@ begin
         ACBrSAT1.ImprimirExtratoCancelamento;
       end
 
+      else if Cmd.Metodo = 'gerarimpressaofiscalmfe' then
+      begin
+        PrepararImpressaoSAT(cmd.Params(1));
+        CarregarDadosVenda(cmd.Params(0));
+        Cmd.Resposta := ACBrSATExtratoESCPOS1.GerarImpressaoFiscalMFe;
+      end
+
       else if Cmd.Metodo = 'gerarpdfextratovenda' then
       begin
         PrepararImpressaoSAT(cmd.Params(0),true);

@@ -51,7 +51,7 @@ Uses
   ACBrConsts,
   {$IfDef COMPILER6_UP} StrUtils, DateUtils {$Else} ACBrD5, FileCtrl {$EndIf}
   {$IfDef FPC}
-    ,dynlibs, LazUTF8, LConvEncoding
+    ,dynlibs, LazUTF8, LConvEncoding, LCLType
     {$IfDef USE_LCLIntf} ,LCLIntf {$EndIf}
   {$EndIf}
   {$IfDef MSWINDOWS}
@@ -324,7 +324,7 @@ function FlushFileToDisk(const sFile: string): boolean;
 Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
 {$IfNDef NOGUI}
-function ForceForeground(AppHandle:THandle): boolean;
+function ForceForeground(AppHandle:{$IfDef FPC}LCLType.{$EndIf}THandle): boolean;
 {$EndIf}
 
 Procedure WriteToFile( const Arq: String; ABinaryString : AnsiString);
@@ -3255,7 +3255,7 @@ begin
   end;
 end;
 {$Else}
-function ForceForeground(AppHandle:THandle): boolean;
+function ForceForeground(AppHandle: {$IfDef FPC}LCLType.{$EndIf}THandle): boolean;
 begin
   Application.Restore;
   Application.BringToFront;

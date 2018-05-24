@@ -507,7 +507,7 @@ begin
 
       if Lateral then
       begin
-        DadosConsumidor.Add('</ce><c><n>' + LinhaCmd + '</n> ');
+        DadosConsumidor.Add('</ce><c><n>' + QuebraLinhas(LinhaCmd, TruncFix(FPosPrinter.ColunasFonteCondensada/2)) + '</n> ');
         DadosConsumidor.Add(QuebraLinhas(Trim(FpNFe.Dest.xNome), TruncFix(FPosPrinter.ColunasFonteCondensada/2)));
       end
       else

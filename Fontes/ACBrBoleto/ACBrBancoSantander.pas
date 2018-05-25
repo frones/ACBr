@@ -324,6 +324,7 @@ begin
        toRemessaCancelarInstrucaoProtesto     : sCodMovimento := '18'; {Sustar protesto e manter na carteira}
        toRemessaConcederDesconto              : sCodMovimento := '10'; {Concessão de Desconto}
        toRemessaCancelarDesconto              : sCodMovimento := '11'; {Cancelamento de Desconto}
+       toRemessaAlterarOutrosDados            : sCodMovimento := '31'; {Alteração de outros dados}
        toRemessaNaoProtestar                  : sCodMovimento := '98'; {Não Protestar (Antes de iniciar o ciclo de protesto )}
     else
        sCodMovimento := '01';                                          {Remessa}
@@ -508,7 +509,7 @@ begin
               sTipoDocto                                              + // 060 - 060 / Tipo de documento
               Space(1)                                                + // 061 - 061 / Reservado (uso Banco)
               Space(1)                                                + // 062 - 062 / Reservado (uso Banco)
-              PadRight(Copy(SeuNumero, 1, 15), 15)                    + // 063 - 077 / Nº do documento
+              PadRight(Copy(NumeroDocumento, 1, 15), 15)              + // 063 - 077 / Nº do documento              
               FormatDateTime('ddmmyyyy',Vencimento)                   + // 078 - 085 / Data de vencimento do título
               IntToStrZero(round(ValorDocumento * 100), 15)           + // 086 - 100 / Valor nominal do título
               PadLeft('0', 4, '0')                                    + // 101 - 104 / Agência encarregada da cobrança
@@ -525,7 +526,7 @@ begin
               IntToStrZero(round(ValorDesconto * 100), 15)            + // 151 - 165 / Valor ou Percentual do desconto concedido
               IntToStrZero(round(ValorIOF * 100), 15)                 + // 166 - 180 / Valor do IOF a ser recolhido
               IntToStrZero(round(ValorAbatimento * 100), 15)          + // 181 - 195 / Valor do abatimento
-              PadRight(NossoNumero, 25)                               + // 196 - 220 / Identificação do título na empresa
+              PadRight(SeuNumero, 25)                                 + // 196 - 220 / Identificação do título na empresa              
               Instrucao1                                              + // 221 - 221 / Código para protesto
               sDiasProtesto                                           + // 222 - 223 / Número de dias para protesto
               Instrucao2                                              + // 224 - 224 / Código para Baixa/Devolução
@@ -939,8 +940,8 @@ begin
       if copy(Linha, 14, 1) = 'T' then
       begin
         NossoNumero          := Copy(Linha, 41, ACBrBanco.TamanhoMaximoNossoNum);
-        SeuNumero            := Copy(Linha, 55, 15);
-        NumeroDocumento      := Copy(Linha, 101, 12);
+        NumeroDocumento      := Copy(Linha, 55, 15);
+        SeuNumero            := Copy(Linha, 101, 25);        
         Carteira             := Copy(Linha, 54, 1);
         Vencimento           := StringToDateTimeDef(Copy(Linha, 70, 2)+'/'+
                                                     Copy(Linha, 72, 2)+'/'+
@@ -949,10 +950,15 @@ begin
         ValorDespesaCobranca := StrToFloatDef(copy(Linha, 194, 15), 0) / 100;
         // Sacado
         if Copy(Linha, 128, 1) = '1' then
-          Sacado.Pessoa := pFisica
+        begin
+          Sacado.Pessoa  := pFisica;
+          Sacado.CNPJCPF := Trim(Copy(Linha, 133, 11));
+        end
         else
+        begin
           Sacado.Pessoa := pJuridica;
-        Sacado.CNPJCPF    := Trim(Copy(Linha, 129, 15));
+          Sacado.CNPJCPF    := Trim(Copy(Linha, 129, 15));
+        end;
         Sacado.NomeSacado := Trim(Copy(Linha, 144, 40));
 
         // Algumas ocorrências estão diferentes do cnab400, farei uma separada aqui

@@ -480,7 +480,6 @@ begin
        rCNPJCPF := RightStr(rCNPJCPF,11) ;
      end;
 
-     Cedente.Conta := PadLeft(IntToStr(StrToInt(Cedente.Conta)), 7, '0');
 
      if ( (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) ) then
        raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
@@ -501,6 +500,7 @@ begin
        Cedente.ContaDigito:= rDigitoConta;
        Cedente.CodigoCedente:= rConta+rDigitoConta;
      end;
+     Cedente.Conta := PadLeft(IntToStr(StrToIntDef(Cedente.Conta,0)), 7, '0');
 
      ListadeBoletos.Clear;
    end;
@@ -534,7 +534,7 @@ begin
             ValorDocumento       := StrToFloatDef(Copy(Linha,82,15),0)/100;
             ValorDespesaCobranca := StrToFloatDef(Copy(Linha,199,15),0)/100;
             NossoNumero          := Copy(Linha,40,7);
-            Carteira             := Copy(Linha,40,2);
+            Carteira             := Copy(Linha,58,1);
             CodigoLiquidacao     := Copy(Linha,214,02);
             //CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( StrToIntDef(CodigoLiquidacao,0) );
 
@@ -568,6 +568,7 @@ begin
                                                   Copy(Linha,148,2)+'/'+
                                                   Copy(Linha,150,4),0, 'DD/MM/YYYY' );
 
+            ValorPago            := StrToFloatDef(Copy(Linha,78,15),0)/100;
             ValorMoraJuros       := StrToFloatDef(Copy(Linha,18,15),0)/100;
             ValorDesconto        := StrToFloatDef(Copy(Linha,33,15),0)/100;
             ValorAbatimento      := StrToFloatDef(Copy(Linha,48,15),0)/100;
@@ -708,7 +709,7 @@ begin
                PadRight(AgenciaDigito, 1, '0')          + // 58 - Digito agência do cedente
                PadLeft(OnlyNumber(Conta), 12, '0')      + // 59 a 70 - Número da conta do cedente
                PadRight(ContaDigito, 1, '0')            + // 71 - Digito conta do cedente
-               '0'                                      + // 72 - Dígito verificador Ag/Conta (zero)
+               ' '                                      + // 72 - Dígito verificador Ag/Conta (zero)
                PadRight(Nome, 30, ' ')                  + // 73 a 102 - Nome do cedente
                PadRight('SICOOB', 30, ' ')              + // 103 a 132 - Nome do banco
                space(10)                                + // 133 A 142 - Brancos
@@ -752,7 +753,7 @@ end;
 function TACBrBancoob.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros,
-    ADataDesconto,ATipoAceite,NossoNum : string;
+    ADataDesconto,ADataDesconto2,ATipoAceite,NossoNum : string;
     DiasProtesto: String;
     ProtestoBaixa: String;
     ATipoInscricaoAvalista: Char;
@@ -762,7 +763,10 @@ var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros
     MsgBoleto: Array[1..5] of string;
     K: Integer;
 begin
-  NossoNum  := RemoveString('-', MontarCampoNossoNumero(ACBrTitulo));
+  if ( ACBrTitulo.NossoNumero <> IntToStrZero(0, length(ACBrTitulo.NossoNumero)) ) then
+    NossoNum  := RemoveString('-', MontarCampoNossoNumero(ACBrTitulo))
+  else
+    NossoNum  := ACBrTitulo.NossoNumero;
   ATipoInscricaoAvalista := ' ';
   ValorMora := '';
   with ACBrTitulo do
@@ -793,11 +797,13 @@ begin
       else
        ATipoOcorrencia := '01';
       end;
+
      {Pegando o Aceite do Titulo }
       case Aceite of
         atSim :  ATipoAceite := 'A';
         atNao :  ATipoAceite := 'N';
       end;
+
       {Pegando Tipo de Boleto} //Quem emite e quem distribui o boleto?
       case ACBrBoleto.Cedente.ResponEmissao of
         tbCliEmite        : ATipoBoleto := '2';
@@ -805,25 +811,76 @@ begin
         tbBancoReemite    : ATipoBoleto := '3';
         tbBancoNaoReemite : ATipoBoleto := '4';
       end;
+
       {Pegando especie do titulo}
-      if EspecieDoc = 'DM' then
+      if EspecieDoc = 'CH' then
+        AEspecieTitulo := '01'
+      else if EspecieDoc = 'DM' then
         AEspecieTitulo := '02'
       else if EspecieDoc = 'DMI' then      // DMI Duplicata Mercantil indicada para protesto
         AEspecieTitulo := '03'             // no campo 107 e 108 tem que sair 03 - GR7 automação em 17.03.2017
+      else if EspecieDoc = 'DS' then
+        AEspecieTitulo := '04'
+      else if EspecieDoc = 'DSI' then
+        AEspecieTitulo := '05'
+      else if EspecieDoc = 'DR' then
+        AEspecieTitulo := '06'
+      else if EspecieDoc = 'LC' then
+        AEspecieTitulo := '07'
+      else if EspecieDoc = 'NCC' then
+        AEspecieTitulo := '08'
+      else if EspecieDoc = 'NCE' then
+        AEspecieTitulo := '09'
+      else if EspecieDoc = 'NCI' then
+        AEspecieTitulo := '10'
+      else if EspecieDoc = 'NCR' then
+        AEspecieTitulo := '11'
+      else if EspecieDoc = 'NP' then
+        AEspecieTitulo := '12'
+      else if EspecieDoc = 'NPR' then
+        AEspecieTitulo := '13'
+      else if EspecieDoc = 'TM' then
+        AEspecieTitulo := '14'
+      else if EspecieDoc = 'TS' then
+        AEspecieTitulo := '15'
+      else if EspecieDoc = 'NS' then
+        AEspecieTitulo := '16'
+      else if EspecieDoc = 'RC' then
+        AEspecieTitulo := '17'
+      else if EspecieDoc = 'FAT' then
+        AEspecieTitulo := '18'
+      else if EspecieDoc = 'ND' then
+        AEspecieTitulo := '19'
+      else if EspecieDoc = 'AP' then
+        AEspecieTitulo := '20'
+      else if EspecieDoc = 'ME' then
+        AEspecieTitulo := '21'
+      else if EspecieDoc = 'PC' then
+        AEspecieTitulo := '22'
+      else if EspecieDoc = 'NF' then
+        AEspecieTitulo := '23'
+      else if EspecieDoc = 'DD' then
+        AEspecieTitulo := '24'
+      else if EspecieDoc = 'BDP' then
+        AEspecieTitulo := '32'
+      else if EspecieDoc = 'Outros' then
+        AEspecieTitulo := '99'
       else
-        AEspecieTitulo := EspecieDoc;
+        AEspecieTitulo := '99';
+
       {Mora Juros}
       if (ValorMoraJuros > 0) then
         begin
-          if (DataMoraJuros <> Null) then
+          if (DataMoraJuros > 0) then
             ADataMoraJuros := FormatDateTime('ddmmyyyy', DataMoraJuros)
           else ADataMoraJuros := PadLeft('', 8, '0');
         end
       else ADataMoraJuros := PadLeft('', 8, '0');
+
      {Descontos}
      if (ValorDesconto > 0) then
        begin
-         if(DataDesconto <> Null) then
+         if(DataDesconto > 0) then
            ADataDesconto := FormatDateTime('ddmmyyyy', DataDesconto)
          else  ADataDesconto := PadLeft('', 8, '0');
        end
@@ -831,15 +888,15 @@ begin
        ADataDesconto := PadLeft('', 8, '0');
 
      DiasProtesto  := IntToStrZero(DiasDeProtesto,2);
-     if (DataProtesto > 0) then
-     begin
-       case TipoDiasProtesto of
-         diCorridos : ProtestoBaixa := '1';
-         diUteis    : ProtestoBaixa := '2';
-       end;
-     end
-     else
-       ProtestoBaixa:= '3';
+//     if (DataProtesto > 0) then
+//     begin
+//       case TipoDiasProtesto of
+//         diCorridos : ProtestoBaixa := '1';
+//         diUteis    : ProtestoBaixa := '2';
+//       end;
+//     end
+//     else
+     ProtestoBaixa:= '1';
 
      if CodigoMora = '' then
      begin
@@ -915,7 +972,7 @@ begin
                          IntToStrZero( round(ValorIOF * 100), 15)         + // 166 a 180 - Valor do IOF a ser recolhido
                          IntToStrZero( round(ValorAbatimento * 100), 15)  + // 181 a 195 - Valor do abatimento
                          PadRight(SeuNumero, 25, ' ')                     + // 196 a 220 - Identificação do título na empresa
-                         ProtestoBaixa                                    + // 221 - Código de protesto: Protestar em XX dias corridos
+                         ProtestoBaixa                                    + // 221 - Código de protesto: "1"
                          DiasProtesto                                     + // 222 a 223 - Prazo para protesto (em dias corridos)
                          '0'                                              + // 224 - Código de Baixa
                          space(3)                                         + // 225 A 227 - Dias para baixa
@@ -970,6 +1027,16 @@ begin
                space(28);                                                   // Uso exclusivo FEBRABAN/CNAB
                 Inc(i);
       //Registro detalhe R
+      {Descontos 2}
+       if (ValorDesconto2 > 0) then
+         begin
+           if(DataDesconto2 > 0) then
+             ADataDesconto2 := FormatDateTime('ddmmyyyy', DataDesconto2)
+           else  ADataDesconto2 := PadLeft('', 8, '0');
+         end
+       else
+         ADataDesconto2 := PadLeft('', 8, '0');
+
       Result:= Result + #13#10 +
                IntToStrZero(ACBrBanco.Numero, 3)                          + // Código do banco
                '0001'                                                     + // Número do lote
@@ -978,9 +1045,14 @@ begin
                'R'                                                        + // Código do segmento do registro detalhe
                ' '                                                        + // Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + // 16 a 17 - Código de movimento
-               '0'                                                        + // 18  tipo de desconto 2
-               PadLeft('0', 8, '0')                                       + // 19 - 26 Numero da linha a ser impressa
-               PadLeft('0',15, '0')                                       + // 27 - 41 Valor/Percentual
+               TipoDescontoToString(TipoDesconto2)                        + // 18 - "Código do Desconto 2
+                                                                            // '0'  =  Não Conceder desconto
+                                                                            // '1'  =  Valor Fixo Até a Data Informada
+                                                                            // '2'  =  Percentual Até a Data Informada"
+               ADataDesconto2                                             + // 19 - 26 Data limite para Desconto 2
+               IfThen(ValorDesconto2 > 0,
+                                IntToStrZero(Round(ValorDesconto2 * 100), 15),
+                                PadLeft('', 15, '0'))                     + // 27 - 41 Valor/Percentual do Desconto 2
                '0'                                                        + // 42
                PadLeft('0', 8, '0')                                       + // 43-50 data do desconto 3
                PadLeft('0', 15, '0')                                      + // 51-65 Valor ou percentual a ser concedido
@@ -1262,7 +1334,8 @@ begin
   case CodOcorrencia of
       02: Result := toRetornoRegistroConfirmado;
       03: Result := toRetornoRegistroRecusado;
-      05: Result := toRetornoLiquidadoSemRegistro;
+      04: Result := toRetornoTransferenciaCarteiraEntrada;
+      05: Result := toRetornoTransferenciaCarteiraBaixa;
       06: Result := toRetornoLiquidado;
       07: Result := toRetornoRecebimentoInstrucaoConcederDesconto;
       08: Result := toRetornoRecebimentoInstrucaoCancelarDesconto;
@@ -1287,6 +1360,7 @@ begin
       40: Result := toRetornoRecebimentoInstrucaoAlterarTipoCobranca;
       42: Result := toRetornoRecebimentoInstrucaoAlterarTipoCobranca;
       43: Result := toRetornoRecebimentoInstrucaoAlterarTipoCobranca;
+      48: Result := toRetornoConfInstrucaoTransferenciaCarteiraModalidadeCobranca;
       51: Result := toRetornoTarifaMensalRefEntradasBancosCorrespCarteira;
       52: Result := toRetornoTarifaMensalBaixasCarteira;
       53: Result := toRetornoTarifaMensalBaixasBancosCorrespCarteira;
@@ -1305,9 +1379,10 @@ begin
   case TipoOcorrencia of
       toRetornoRegistroConfirmado                           : Result :='02';
       toRetornoRegistroRecusado                             : Result :='03';
-      toRetornoTransferenciaCarteira                        : Result :='04';
-      toRetornoLiquidadoSemRegistro                         : Result :='05';
+      toRetornoTransferenciaCarteiraEntrada                 : Result :='04';
+      toRetornoTransferenciaCarteiraBaixa                   : Result :='05';
       toRetornoLiquidado                                    : Result :='06';
+      toRetornoBaixaTransferenciaParaDesconto               : Result :='07';
       toRetornoBaixaSimples                                 : Result :='09';
       toRetornoBaixaSolicitada                              : Result :='10';
       toRetornoTituloEmSer                                  : Result :='11';
@@ -1326,6 +1401,7 @@ begin
       toRetornoDadosAlterados                               : Result :='27';
       toRetornoManutencaoTituloVencido                      : Result :='28';
       toRetornoAlteracaoDadosRejeitados                     : Result :='30';
+      toRetornoConfInstrucaoTransferenciaCarteiraModalidadeCobranca : Result :='48';
       toRetornoDespesasProtesto                             : Result :='96';
       toRetornoDespesasSustacaoProtesto                     : Result :='97';
       toRetornoDebitoCustasAntecipadas                      : Result :='98';
@@ -1366,6 +1442,7 @@ begin
       27: Result:='27-CONFIRMAÇÃO ALTERAÇÃO DADOS' ;
       28: Result:='28-MANUTENÇÃO TÍTULO VENCIDO' ;
       30: Result:='30-ALTERAÇÃO DADOS REJEITADA' ;
+      48: Result:='48-CONFIRMAÇÃO INSTR. TRANSFERENCIA DE CARTEIRA';
       96: Result:='96-DESPESAS DE PROTESTO' ;
       97: Result:='97-DESPESAS DE SUSTAÇÃO DE PROTESTO' ;
       98: Result:='98-DESPESAS DE CUSTAS ANTECIPADAS' ;

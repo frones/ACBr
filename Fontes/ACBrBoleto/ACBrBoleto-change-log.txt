@@ -47,9 +47,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-18-05-2018 -- ACBrBancoBradesco
-[-] Ajuste Geração CNAB240
-https://www.projetoacbr.com.br/forum/topic/43314-homologa%C3%A7%C3%A3o-arquivo-remessa-bradesco-cnab-240/?tab=comments#comment-286080
+Data 16/04/2018 ver: 0.0.241
+
+25-05-2018 -- ACBrBancoSantander
+[*] Validação de Contribuições e Ajustes para Banco Santander (Retorno CNAB 240 / Código Ocorrencias)
+https://www.projetoacbr.com.br/forum/topic/41292-n%C3%BAmeros-sobrando-para-o-sacado-quando-%C3%A9-pessoa-f%C3%ADsica-santander/
+https://www.projetoacbr.com.br/forum/topic/42940-adicionado-ocorr%C3%AAncia-31-altera%C3%A7%C3%A3o-de-outros-dados-no-cnab-240-do-banco-santander/
+https://www.projetoacbr.com.br/forum/topic/43239-erro-acbrbancosantader-transacao-e-retorno-240/
+
+25-05-2018 -- ACBrBancoBancoob
+[*] Validação de Contribuições e Ajustes para Banco Bancoob (Remessa e Retorno CNAB 240/400)
+https://www.projetoacbr.com.br/forum/topic/41392-corre%C3%A7%C3%A3o-para-bancoob/
+https://www.projetoacbr.com.br/forum/topic/40593-bancoobsicoob/
+https://www.projetoacbr.com.br/forum/topic/42130-c%C3%B3digo-de-ocorr%C3%AAncia-no-retorno-de-remessa-cnab-240-sicoob/
+https://www.projetoacbr.com.br/forum/topic/42839-acbrbancoob/
+https://www.projetoacbr.com.br/forum/topic/43022-antecipa%C3%A7%C3%A3o-de-boletos-sicoob/
+https://www.projetoacbr.com.br/forum/topic/43130-remessa-sicoob-arquivo-acbrbancobancoob/
+https://www.projetoacbr.com.br/forum/topic/42435-boleto-sicoob-desconto-2/
 
 17-05-2018 -- ACBrBancoCecred
 [-] Ajuste leitura do códgo Convenio

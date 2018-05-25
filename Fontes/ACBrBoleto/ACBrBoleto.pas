@@ -60,7 +60,7 @@ const
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
-  cACBrTipoOcorrenciaDecricao: array[0..280] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..281] of String = (
     'Remessa Registrar',
     'Remessa Baixar',
     'Remessa Debitar Em Conta',
@@ -181,6 +181,7 @@ const
     'Retorno Conf Cancelamento Negativacao Expressa Tarifa',
     'Retorno Conf Entrada Negativacao Expressa Tarifa',
     'Retorno Conf Exclusao Entrada Negativacao Expressa Por Liquidacao Tarifa',
+    'Retorno Conf Instrucao Transferencia Carteira Modalidade Cobranca',
     'Retorno Confirmacao Alteracao Banco Sacado',
     'Retorno Confirmacao Alteracao Juros Mora',
     'Retorno Confirmacao Email SMS',
@@ -506,6 +507,7 @@ type
     toRetornoConfCancelamentoNegativacaoExpressaTarifa,
     toRetornoConfEntradaNegativacaoExpressaTarifa,
     toRetornoConfExclusaoEntradaNegativacaoExpressaPorLiquidacaoTarifa,
+    toRetornoConfInstrucaoTransferenciaCarteiraModalidadeCobranca,
     toRetornoConfirmacaoAlteracaoBancoSacado,
     toRetornoConfirmacaoAlteracaoJurosMora,
     toRetornoConfirmacaoEmailSMS,
@@ -1044,6 +1046,7 @@ type
     fLocalPagamento    : String;
     fOcorrenciaOriginal: TACBrOcorrencia;
     fTipoDesconto      : TACBrTipoDesconto;
+    fTipoDesconto2     : TACBrTipoDesconto;
     fParcela           : Integer;
     fPercentualMulta   : Double;
     fMultaValorFixo    : Boolean;
@@ -1076,6 +1079,7 @@ type
     fDataCredito          : TDateTime;
     fDataAbatimento       : TDateTime;
     fDataDesconto         : TDateTime;
+    fDataDesconto2        : TDateTime;
     fDataMoraJuros        : TDateTime;
     fDataMulta            : TDateTime;
     fDataProtesto         : TDateTime;
@@ -1085,6 +1089,7 @@ type
     fValorDespesaCobranca : Currency;
     fValorAbatimento      : Currency;
     fValorDesconto        : Currency;
+    fValorDesconto2       : Currency;
     fValorMoraJuros       : Currency;
     fValorIOF             : Currency;
     fValorOutrasDespesas  : Currency;
@@ -1155,6 +1160,7 @@ type
 
      property OcorrenciaOriginal : TACBrOcorrencia read  fOcorrenciaOriginal write fOcorrenciaOriginal;
      property TipoDesconto       : TACBrTipoDesconto read fTipoDesconto write fTipoDesconto;
+     property TipoDesconto2      : TACBrTipoDesconto read fTipoDesconto2 write fTipoDesconto2;
 
      property MotivoRejeicaoComando          : TStrings    read fMotivoRejeicaoComando  write fMotivoRejeicaoComando;
      property DescricaoMotivoRejeicaoComando : TStrings    read fDescricaoMotivoRejeicaoComando  write fDescricaoMotivoRejeicaoComando;
@@ -1163,6 +1169,7 @@ type
      property DataCredito                    : TDateTime read fDataCredito     write fDataCredito;
      property DataAbatimento                 : TDateTime read fDataAbatimento  write fDataAbatimento;
      property DataDesconto                   : TDateTime read fDataDesconto    write fDataDesconto;
+     property DataDesconto2                  : TDateTime read fDataDesconto2   write fDataDesconto2;
      property DataMoraJuros                  : TDateTime read fDataMoraJuros   write fDataMoraJuros;
      property DataMulta                      : TDateTime read fDataMulta       write fDataMulta;
      property DataProtesto                   : TDateTime read fDataProtesto    write SetDataProtesto;
@@ -1173,6 +1180,7 @@ type
      property ValorDespesaCobranca : Currency read fValorDespesaCobranca  write fValorDespesaCobranca;
      property ValorAbatimento      : Currency read fValorAbatimento       write fValorAbatimento;
      property ValorDesconto        : Currency read fValorDesconto         write fValorDesconto;
+     property ValorDesconto2       : Currency read fValorDesconto2        write fValorDesconto2;
      property ValorMoraJuros       : Currency read fValorMoraJuros        write fValorMoraJuros;
      property ValorIOF             : Currency read fValorIOF              write fValorIOF;
      property ValorOutrasDespesas  : Currency read fValorOutrasDespesas   write fValorOutrasDespesas;
@@ -1695,6 +1703,7 @@ begin
    fDataCredito          := 0;
    fDataAbatimento       := 0;
    fDataDesconto         := 0;
+   fDataDesconto2        := 0;
    fDataMoraJuros        := 0;
    fDataMulta            := 0;
    fDataProtesto         := 0;
@@ -1704,6 +1713,7 @@ begin
    fValorDespesaCobranca := 0;
    fValorAbatimento      := 0;
    fValorDesconto        := 0;
+   fValorDesconto2       := 0;
    fValorMoraJuros       := 0;
    fValorIOF             := 0;
    fValorOutrasDespesas  := 0;
@@ -1716,6 +1726,7 @@ begin
    fVersao               := '';
    fTipoImpressao        := tipNormal;
    fTipoDesconto         := tdNaoConcederDesconto ;
+   fTipoDesconto2        := tdNaoConcederDesconto ;
 
    fCodigoMora    := '';
    fCodigoGeracao := '2';
@@ -1998,6 +2009,19 @@ begin
             AStringList.Add(ACBrStr('Conceder desconto de '                 +
                              FormatCurr('R$ #,##0.00',ValorDesconto) +
                              ' por dia de antecipaçao'));
+      end;
+
+      if ValorDesconto2 <> 0 then
+      begin
+        if DataDesconto2 <> 0 then
+          AStringList.Add(ACBrStr('Conceder desconto de '                       +
+                           FormatCurr('R$ #,##0.00',ValorDesconto2)       +
+                           ' para pagamento até ' +
+                           FormatDateTime('dd/mm/yyyy', DataDesconto2)))
+        else
+          AStringList.Add(ACBrStr('Conceder desconto de '                 +
+                           FormatCurr('R$ #,##0.00',ValorDesconto2) +
+                           ' por dia de antecipaçao'));
       end;
 
       if ValorMoraJuros <> 0 then

@@ -5292,6 +5292,8 @@ begin
 end;
 
 procedure TFExemploEsocial.btnCarregarXMLClick(Sender: TObject);
+var
+  i: Integer;
 begin
   OpenDialog1.Title := 'Selecione o Evento (Arquivo XML)';
   OpenDialog1.DefaultExt := '*.xml';
@@ -5302,8 +5304,19 @@ begin
   if OpenDialog1.Execute then
     ACBreSocial1.Eventos.LoadFromFile(OpenDialog1.FileName);
 
+
+  MemoResp.Clear;
+  MemoResp.Lines.Clear;
   MemoResp.Lines.Add('XML de Eventos Carregado com Sucesso!');
-  pgWebservice.ActivePageIndex := 3;
+  MemoResp.Lines.Add(' ');
+
+  for i := 0 to ACBreSocial1.Eventos.Gerados.Count -1 do
+  begin
+    MemoResp.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBreSocial1.Eventos.Gerados.Items[i].TipoEvento));
+    MemoResp.Lines.Add('Evento Salvo: ' + ACBreSocial1.Eventos.Gerados.Items[i].PathNome);
+  end;
+
+  pgWebservice.ActivePageIndex := 2;
 end;
 
 procedure TFExemploEsocial.btnCarregarINIClick(Sender: TObject);

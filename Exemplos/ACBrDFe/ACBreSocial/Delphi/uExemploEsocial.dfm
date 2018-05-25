@@ -32,10 +32,6 @@ object FExemploEsocial: TFExemploEsocial
       TabOrder = 0
       object tbsEventosTabela: TTabSheet
         Caption = 'Eventos de Tabela'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cbS1000: TCheckBox
           Left = 12
           Top = 12
@@ -156,10 +152,6 @@ object FExemploEsocial: TFExemploEsocial
       object tbsEventosPeriodicos: TTabSheet
         Caption = 'Eventos Peri'#243'dicos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cbS1200: TCheckBox
           Left = 12
           Top = 12
@@ -522,10 +514,6 @@ object FExemploEsocial: TFExemploEsocial
       object tsFormaEnvio: TTabSheet
         Caption = 'Forma de Envio'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object rdgGrupo: TRadioGroup
           Left = 0
           Top = 0
@@ -580,10 +568,6 @@ object FExemploEsocial: TFExemploEsocial
       object tsResposta: TTabSheet
         Caption = 'Resposta'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoResp: TMemo
           Left = 0
           Top = 0
@@ -596,10 +580,6 @@ object FExemploEsocial: TFExemploEsocial
       object tsLog: TTabSheet
         Caption = 'Log'
         ImageIndex = 6
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -612,10 +592,6 @@ object FExemploEsocial: TFExemploEsocial
       object tsXmlEnvio: TTabSheet
         Caption = 'XML de Envio'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoXmlEnvio: TMemo
           Left = 0
           Top = 0
@@ -629,10 +605,6 @@ object FExemploEsocial: TFExemploEsocial
       object tsXmlRetorno: TTabSheet
         Caption = 'XML Retorno'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoXmlRetorno: TMemo
           Left = 0
           Top = 0
@@ -646,10 +618,6 @@ object FExemploEsocial: TFExemploEsocial
       object tsDados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 6
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoDados: TMemo
           Left = 0
           Top = 0
@@ -946,10 +914,6 @@ object FExemploEsocial: TFExemploEsocial
       end
       object TabSheet2: TTabSheet
         Caption = 'Certificado'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label6: TLabel
           Left = 35
           Top = 16
@@ -1242,10 +1206,6 @@ object FExemploEsocial: TFExemploEsocial
       object TabSheet5: TTabSheet
         Caption = 'WebService'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object GroupBox4: TGroupBox
           Left = 0
           Top = 4
@@ -1462,10 +1422,6 @@ object FExemploEsocial: TFExemploEsocial
       object TabSheet7: TTabSheet
         Caption = 'Arquivos'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object sbPatheSocial: TSpeedButton
           Left = 240
           Top = 142

@@ -223,8 +223,8 @@ end;
 
 function TEventos.LoadFromString(AXMLString: String): Boolean;
 var
-  AXML: AnsiString;
-  P, N: integer;
+  AXML: String;
+  P: integer;
 
   function PosReinf: integer;
   begin
@@ -233,26 +233,17 @@ var
 
 begin
   Result := False;
-  N := PosReinf;
+  P := PosReinf;
 
-  while N > 0 do
+  while P > 0 do
   begin
-    P := pos('</Reinf>', AXMLString);
-
-    if P > 0 then
-    begin
-      AXML := copy(AXMLString, 1, P + 9);
-      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
-    end
-    else
-    begin
-      AXML := copy(AXMLString, 1, N + 6);
-      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
-    end;
+    AXML := copy(AXMLString, 1, P + 7);
+    AXMLString := Trim(copy(AXMLString, P + 8, length(AXMLString)));
 
     Result := Self.ReinfEventos.LoadFromString(AXML);
+    SaveToFiles;
 
-    N := PosReinf;
+    P := PosReinf;
   end;
 end;
 

@@ -46,7 +46,7 @@ interface
 uses
   SysUtils, Classes, StrUtils, variants,
   ACBrUtil,
-  pcnGerador, pcnConversao, pcnAuxiliar,
+  pcnGerador, pcnLeitor, pcnConversao, pcnAuxiliar,
   pcnCommonReinf, pcnConversaoReinf;
 
 type
@@ -66,6 +66,7 @@ type
     FGerador: TGerador;
     FSchema: TReinfSchema;
     FXML: AnsiString;
+    procedure SetXML(const Value: AnsiString);
   public
     constructor Create(AACBrReinf: TObject); overload;//->recebe a instancia da classe TACBrReinf
     destructor Destroy; override;
@@ -96,7 +97,7 @@ type
   published
     property Gerador: TGerador  read FGerador write FGerador;
     property schema: TReinfSchema read Fschema write Fschema;
-    property XML: AnsiString read FXML write FXML;
+    property XML: AnsiString read FXML write SetXML;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -123,7 +124,7 @@ type
 implementation
 
 uses
-  ACBrReinf, ACBrReinfEventos, ACBrDFeSSL;
+  ACBrReinf, ACBrReinfEventos, ACBrDFeSSL, ACBrDFeUtil;
 
 {TReinfEvento}
 
@@ -205,6 +206,31 @@ begin
     lStr.SaveToFile(ChangeFileExt(lFileName,'.xml'));
   finally
     lStr.Free;
+  end;
+end;
+
+procedure TReinfEvento.SetXML(const Value: AnsiString);
+var
+  NomeEvento: String;
+  Ok: Boolean;
+  Leitor: TLeitor;
+begin
+  FXML := Value;
+
+  if not XmlEstaAssinado(FXML) then
+  begin
+    NomeEvento := TipoEventoToStrEvento(StrEventoToTipoEvento(Ok, FXML));
+    FXML := Assinar(FXML, NomeEvento);
+
+    Leitor := TLeitor.Create;
+    try
+      Leitor.Grupo := FXML;
+      Self.Id := Leitor.rAtributo('id=');
+    finally
+      Leitor.Free;
+    end;
+
+    Validar(TipoEventiToSchemaReinf(StrEventoToTipoEvento(Ok, FXML)));
   end;
 end;
 

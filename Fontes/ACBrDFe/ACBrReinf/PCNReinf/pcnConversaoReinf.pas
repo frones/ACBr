@@ -276,9 +276,18 @@ const
                                                   'R-9000'  // rsevtExclusao      - Exclusão de Eventos
                                                  );
 
+  TEventoString: array[0..14] of String =('evtInfoContri', 'evtTabProcesso',
+                                          'evtServTom', 'evtServPrest',
+                                          'evtAssocDespRec', 'evtAssocDespRep',
+                                          'evtComProd', 'evtCPRB', 'evtPgtosDivs',
+                                          'evtReabreEvPer', 'evtFechaEvPer',
+                                          'evtEspDesportivo', 'evtTotal',
+                                          'evtTotalContrib', 'evtExclusao');
+
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
 
 function SchemaReinfToStr(const t: TReinfSchema): String;
+function TipoEventiToSchemaReinf(const t: TTipoEvento): TReinfSchema;
 
 function LayOutReinfToSchema(const t: TLayOutReinf): TReinfSchema;
 function LayOutReinfToServico(const t: TLayOutReinf): String;
@@ -290,6 +299,7 @@ const
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 
 function TpInscricaoToStr(const t: TtpInsc ): string;
 function StrToTpInscricao(var ok: boolean; const s: string): TtpInsc;
@@ -402,6 +412,29 @@ begin
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
+function TipoEventiToSchemaReinf(const t: TTipoEvento): TReinfSchema;
+begin
+   case t of
+     teR1000: Result := schevtInfoContribuinte;
+     teR1070: Result := schevtTabProcesso;
+     teR2010: Result := schevtTomadorServicos;
+     teR2020: Result := schevtPrestadorServicos;
+     teR2030: Result := schevtRecursoRecebidoAssociacao;
+     teR2040: Result := schevtRecursoRepassadoAssociacao;
+     teR2050: Result := schevtInfoProdRural;
+     teR2060: Result := schevtInfoCPRB;
+     teR2070: Result := schevtPgtosDivs;
+     teR2098: Result := schevtReabreEvPer;
+     teR2099: Result := schevtFechamento;
+     teR3010: Result := schevtEspDesportivo;
+     teR5001: Result := schevtTotal;
+     teR5011: Result := schevtTotalConsolid;
+     teR9000: Result := schevtExclusao;
+  else
+    Result := schErro;
+  end;
+end;
+
 function LayOutReinfToSchema(const t: TLayOutReinf): TReinfSchema;
 begin
    case t of
@@ -439,7 +472,7 @@ end;
 
 function TipoEventoToStr(const t: TTipoEvento ): string;
 begin
-  result := EnumeradoToStr2(t,TTipoEventoString );
+  result := EnumeradoToStr2(t, TTipoEventoString );
 end;
 
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
@@ -448,21 +481,11 @@ begin
 end;
 
 function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-const
-  EventoString: array[0..14] of String =('evtInfoContri', 'evtTabProcesso',
-       'evtServTom', 'evtServPrest', 'evtAssocDespRec', 'evtAssocDespRep',
-       'evtComProd', 'evtCPRB', 'evtPgtosDivs', 'evtReabreEvPer', 'evtFechaEvPer',
-       'evtEspDesportivo', 'evtTotal', 'evtTotalContrib', 'evtExclusao');
 begin
-  result := TTipoEvento( StrToEnumerado2(ok , s, EventoString ) );
+  result := TTipoEvento( StrToEnumerado2(ok , s, TEventoString ) );
 end;
 
 function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-const
-  EventoString: array[0..14] of String =('evtInfoContri', 'evtTabProcesso',
-       'evtServTom', 'evtServPrest', 'evtAssocDespRec', 'evtAssocDespRep',
-       'evtComProd', 'evtCPRB', 'evtPgtosDivs', 'evtReabreEvPer', 'evtFechaEvPer',
-       'evtEspDesportivo', 'evtTotal', 'evtTotalContrib', 'evtExclusao');
 var
   i: integer;
 begin
@@ -471,7 +494,7 @@ begin
 
   try
     for i := 0 to 14 do
-      if Pos('[' + EventoString[i] + ']', s) > 0 then
+      if Pos('[' + TEventoString[i] + ']', s) > 0 then
       begin
         ok := True;
         result := TTipoEvento( i );
@@ -480,6 +503,11 @@ begin
   except
     ok := False;
   end;
+end;
+
+function TipoEventoToStrEvento(const t: TTipoEvento ): string;
+begin
+  result := EnumeradoToStr2(t, TEventoString);
 end;
 
 function TpInscricaoToStr(const t:TtpInsc ): string;

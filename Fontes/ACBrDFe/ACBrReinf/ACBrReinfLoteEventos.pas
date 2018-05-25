@@ -290,7 +290,7 @@ end;
 function TLoteEventos.LoadFromString(AXMLString: String): Boolean;
 var
   AXML: AnsiString;
-  P, N: integer;
+  P: integer;
 
   function PosReinf: integer;
   begin
@@ -298,29 +298,16 @@ var
   end;
 
 begin
-  N := PosReinf;
+  P := PosReinf;
 
-  while N > 0 do
+  while P > 0 do
   begin
-    P := pos('</Reinf>', AXMLString);
+    AXML := copy(AXMLString, 1, P + 7);
+    AXMLString := Trim(copy(AXMLString, P + 8, length(AXMLString)));
 
-    if P > 0 then
-    begin
-      AXML := copy(AXMLString, 1, P + 9);
-      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
-    end
-    else
-    begin
-      AXML := copy(AXMLString, 1, N + 6);
-      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
-    end;
+    Self.Add.FXML := AXML;
 
-    with Self.Add do
-    begin
-      FXML := AXML;
-    end;
-
-    N := PosReinf;
+    P := PosReinf;
   end;
 
   Result := Self.Count > 0;

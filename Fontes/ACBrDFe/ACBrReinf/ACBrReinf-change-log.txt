@@ -50,6 +50,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2018
+-- ACBrReinf --
+[*] Realizada modificações visando a leitura de XML de terceiros.
+    Ao carregar um XML de terceiros através do método LoadFromFile, o componente
+    checa para saber se o XML esta assinado, caso não esteja, será realizado a
+    assinatura e a validação do mesmo e por fim deixa-lo na fila de eventos para
+    ser enviado através do método Enviar.
+   Por: Italo Jurisato Junior
+
 21/05/2018
 -- pcnReinfRetConsulta --
 [*] Simplificação do código.

@@ -445,10 +445,32 @@ type
   TpClassTrib = (ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
                  ct13, ct14, ct21, ct22, ct60, ct70, ct80, ct85, ct99);
 
+Const
+  TEventoString: array[0..43] of String =('evtInfoEmpregador', 'evtTabEstab',
+                                          'evtTabRubrica', 'evtTabLotacao',
+                                          'evtTabCargo', 'evtTabCarreira',
+                                          'evtTabFuncao', 'evtTabHorTur',
+                                          'evtTabAmbiente', 'evtTabProcesso',
+                                          'evtTabOperPort', 'S-2100', 'evtRemun',
+                                          'evtRmnRPPS', 'evtBenPrRP', 'evtPgtos',
+                                          'S-1220', 'evtAqProd', 'evtComProd',
+                                          'evtContratAvNP', 'evtInfoComplPer',
+                                          'evtTotConting', 'evtReabreEvPer',
+                                          'evtFechaEvPer', 'evtContrSindPatr',
+                                          'evtAdmPrelim', 'evtAdmissao',
+                                          'evtAltCadastral', 'evtAltContratual',
+                                          'evtCAT', 'evtMonit', 'evtAfastTemp',
+                                          'evtExpRisco', 'evtInsApo', 'evtAvPrevio',
+                                          'evtConvInterm', 'evtReintegr',
+                                          'evtDeslig', 'evtTSVInicio', 'S-2305',
+                                          'evtTSVAltContr', 'evtTSVTermino',
+                                          'evtCdBenPrRP', 'evtExclusao');
+
 function TipoEventoToStr(const t: TTipoEvento ): string;
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 
 function eStpAmbToStr(const t: TptpAmb ): string;
 function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
@@ -818,6 +840,7 @@ function LayOutToSchema(const t: TLayOut): TeSocialSchema;
 
 function SchemaESocialToStr(const t: TeSocialSchema): String;
 function StrToSchemaESocial(out ok: Boolean; const s: String): TeSocialSchema;
+function TipoEventiToSchemaReinf(const t: TTipoEvento): TeSocialSchema;
 
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
 function VersaoeSocialToStr(const t: TVersaoeSocial): String;
@@ -965,14 +988,68 @@ begin
   Result := TeSocialSchema(GetEnumValue(TypeInfo(TeSocialSchema), SchemaStr ));
 end;
 
+function TipoEventiToSchemaReinf(const t: TTipoEvento): TeSocialSchema;
+begin
+   case t of
+     teS1000: Result := schevtInfoEmpregador;
+     teS1005: Result := schevtTabEstab;
+     teS1010: Result := schevtTabRubrica;
+     teS1020: Result := schevtTabLotacao;
+     teS1030: Result := schevtTabCargo;
+     teS1035: Result := schevtTabCarreira;
+     teS1040: Result := schevtTabFuncao;
+     teS1050: Result := schevtTabHorTur;
+     teS1060: Result := schevtTabAmbiente;
+     teS1070: Result := schevtTabProcesso;
+     teS1080: Result := schevtTabOperPort;
+     teS1200: Result := schevtRemun;
+     teS1202: Result := schevtRmnRPPS;
+     teS1207: Result := schevtBenPrRP;
+     teS1210: Result := schevtPgtos;
+     teS1250: Result := schevtAqProd;
+     teS1260: Result := schevtComProd;
+     teS1270: Result := schevtContratAvNP;
+     teS1280: Result := schevtInfoComplPer;
+     teS1295: Result := schevtTotConting;
+     teS1298: Result := schevtReabreEvPer;
+     teS1299: Result := schevtFechaEvPer;
+     teS1300: Result := schevtContrSindPatr;
+     teS2190: Result := schevtAdmPrelim;
+     teS2200: Result := schevtAdmissao;
+     teS2205: Result := schevtAltCadastral;
+     teS2206: Result := schevtAltContratual;
+     teS2210: Result := schevtCAT;
+     teS2220: Result := schevtMonit;
+     teS2230: Result := schevtAfastTemp;
+     teS2240: Result := schevtExpRisco;
+     teS2241: Result := schevtInsApo;
+     teS2250: Result := schevtAvPrevio;
+     teS2260: Result := schevtConvInterm;
+     teS2298: Result := schevtReintegr;
+     teS2299: Result := schevtDeslig;
+     teS2300: Result := schevtTSVInicio;
+     teS2306: Result := schevtTSVAltContr;
+     teS2399: Result := schevtTSVTermino;
+     teS2400: Result := schevtCdBenPrRP;
+     teS3000: Result := schevtExclusao;
+  else
+    Result := schErro;
+  end;
+end;
+
 function TipoEventoToStr(const t: TTipoEvento ): string;
 begin
-  result := EnumeradoToStr2(t,TTipoEventoString );
+  result := EnumeradoToStr2(t, TTipoEventoString );
 end;
 
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 begin
   result  := TTipoEvento( StrToEnumerado2(ok , s, TTipoEventoString ) );
+end;
+
+function TipoEventoToStrEvento(const t: TTipoEvento ): string;
+begin
+  result := EnumeradoToStr2(t, TEventoString);
 end;
 
 function eStpAmbToStr(const t: TptpAmb ): string;
@@ -2295,19 +2372,6 @@ begin
 end;
 
 function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-const
-  EventoString: array[0..43] of String =('evtInfoEmpregador', 'evtTabEstab',
-       'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
-       'evtTabFuncao', 'evtTabHorTur', 'evtTabAmbiente', 'evtTabProcesso',
-       'evtTabOperPort', 'S-2100', 'evtRemun', 'evtRmnRPPS', 'evtBenPrRP',
-       'evtPgtos', 'S-1220', 'evtAqProd', 'evtComProd', 'evtContratAvNP',
-       'evtInfoComplPer', 'evtTotConting', 'evtReabreEvPer', 'evtFechaEvPer',
-       'evtContrSindPatr', 'evtAdmPrelim', 'evtAdmissao', 'evtAltCadastral',
-       'evtAltContratual', 'evtCAT', 'evtMonit', 'evtAfastTemp', 'evtExpRisco',
-       'evtInsApo', 'evtAvPrevio', 'evtConvInterm', 'evtReintegr', 'evtDeslig',
-       'evtTSVInicio', 'S-2305', 'evtTSVAltContr', 'evtTSVTermino',
-       'evtCdBenPrRP', 'evtExclusao');
-
 var
   i: integer;
 begin
@@ -2316,7 +2380,7 @@ begin
 
   try
     for i := 0 to 43 do
-      if Pos('[' + EventoString[i] + ']', s) > 0 then
+      if Pos('[' + TEventoString[i] + ']', s) > 0 then
       begin
         ok := True;
         result := TTipoEvento( i );

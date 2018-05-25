@@ -272,7 +272,7 @@ end;
 function TEventos.LoadFromString(AXMLString: String): Boolean;
 var
   AXML: AnsiString;
-  P, N: integer;
+  P: integer;
 
   function PoseSocial: integer;
   begin
@@ -281,29 +281,20 @@ var
 
 begin
   Result := False;
-  N := PoseSocial;
+  P := PoseSocial;
 
-  while N > 0 do
+  while P > 0 do
   begin
-    P := pos('</eSocial>', AXMLString);
-
-    if P > 0 then
-    begin
-      AXML := copy(AXMLString, 1, P + 9);
-      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
-    end
-    else
-    begin
-      AXML := copy(AXMLString, 1, N + 6);
-      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
-    end;
+    AXML := copy(AXMLString, 1, P + 9);
+    AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
 
     Result := Self.Iniciais.LoadFromString(AXML) or
               Self.Tabelas.LoadFromString(AXML) or
               Self.NaoPeriodicos.LoadFromString(AXML) or
               Self.Periodicos.LoadFromString(AXML);
+    SaveToFiles;
 
-    N := PoseSocial;
+    P := PoseSocial;
   end;
 end;
 

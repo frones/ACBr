@@ -59,7 +59,7 @@ interface
 uses
   SysUtils, Classes, StrUtils, variants,
   ACBrUtil,
-  pcnGerador, pcnConversao, pcnAuxiliar,
+  pcnGerador, pcnLeitor, pcnConversao, pcnAuxiliar,
   pcesCommon, pcesConversaoeSocial;
 
 type
@@ -79,6 +79,7 @@ type
     FGerador: TGerador;
     FSchema: TeSocialSchema;
     FXML: AnsiString;
+    procedure SetXML(const Value: AnsiString);
   public
     constructor Create(AACBreSocial: TObject); overload;//->recebe a instancia da classe TACBreSocial
     destructor Destroy; override;
@@ -186,7 +187,7 @@ type
   published
     property Gerador: TGerador  read FGerador write FGerador;
     property schema: TeSocialSchema read Fschema write Fschema;
-    property XML: AnsiString read FXML write FXML;
+    property XML: AnsiString read FXML write SetXML;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -213,7 +214,7 @@ type
 implementation
 
 uses
-  ACBreSocial, ACBreSocialEventos, ACBrDFeSSL;
+  ACBreSocial, ACBreSocialEventos, ACBrDFeSSL, ACBrDFeUtil;
 
 {TeSocialEvento}
 
@@ -290,6 +291,31 @@ begin
     lStr.SaveToFile(ChangeFileExt(lFileName,'.xml'));
   finally
     lStr.Free;
+  end;
+end;
+
+procedure TeSocialEvento.SetXML(const Value: AnsiString);
+var
+  NomeEvento: String;
+  Ok: Boolean;
+  Leitor: TLeitor;
+begin
+  FXML := Value;
+
+  if not XmlEstaAssinado(FXML) then
+  begin
+    NomeEvento := TipoEventoToStrEvento(StrEventoToTipoEvento(Ok, FXML));
+    FXML := Assinar(FXML, NomeEvento);
+
+    Leitor := TLeitor.Create;
+    try
+      Leitor.Grupo := FXML;
+      Self.Id := Leitor.rAtributo('Id=');
+    finally
+      Leitor.Free;
+    end;
+
+    Validar(TipoEventiToSchemaReinf(StrEventoToTipoEvento(Ok, FXML)));
   end;
 end;
 

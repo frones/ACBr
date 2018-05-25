@@ -132,10 +132,6 @@ object Form2: TForm2
           TabOrder = 0
           object TabSheet6: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -582,10 +578,6 @@ object Form2: TForm2
           object TabSheet8: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox5: TGroupBox
               Left = 0
               Top = 4
@@ -860,10 +852,6 @@ object Form2: TForm2
           object TabSheet12: TTabSheet
             Caption = 'Emitente'
             ImageIndex = 3
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object Label12: TLabel
               Left = 8
               Top = 4
@@ -1056,10 +1044,6 @@ object Form2: TForm2
               TabOrder = 13
               object TabSheet9: TTabSheet
                 Caption = 'Contato'
-                ExplicitLeft = 0
-                ExplicitTop = 0
-                ExplicitWidth = 0
-                ExplicitHeight = 0
                 object Label5: TLabel
                   Left = 3
                   Top = 0
@@ -1134,10 +1118,6 @@ object Form2: TForm2
               object TabSheet10: TTabSheet
                 Caption = 'Software House'
                 ImageIndex = 1
-                ExplicitLeft = 0
-                ExplicitTop = 0
-                ExplicitWidth = 0
-                ExplicitHeight = 0
                 object Label40: TLabel
                   Left = 3
                   Top = 0
@@ -1214,10 +1194,6 @@ object Form2: TForm2
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object sbPathReinf: TSpeedButton
               Left = 240
               Top = 101
@@ -1705,10 +1681,6 @@ object Form2: TForm2
       object TabSheet2: TTabSheet
         Caption = '  Dados de Retorno Eventos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object mmoDados: TMemo
           Left = 0
           Top = 0
@@ -1723,10 +1695,6 @@ object Form2: TForm2
       object TabSheet3: TTabSheet
         Caption = '  XML de Envio   '
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object mmoXMLEnv: TMemo
           Left = 0
           Top = 0
@@ -1742,10 +1710,6 @@ object Form2: TForm2
       object TabSheet4: TTabSheet
         Caption = '  XML Retorno  '
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object mmoXMLRet: TMemo
           Left = 0
           Top = 0
@@ -1761,10 +1725,6 @@ object Form2: TForm2
       object tsLog: TTabSheet
         Caption = 'Log'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1828,13 +1788,22 @@ object Form2: TForm2
         OnClick = btnLerArqINIClick
       end
       object btnEnviar: TButton
-        Left = 294
-        Top = 9
+        Left = 438
+        Top = 10
         Width = 137
         Height = 24
         Caption = 'Enviar'
         TabOrder = 5
         OnClick = btnEnviarClick
+      end
+      object btnLerArqXML: TButton
+        Left = 295
+        Top = 10
+        Width = 137
+        Height = 24
+        Caption = 'Ler Arquivo XML'
+        TabOrder = 6
+        OnClick = btnLerArqXMLClick
       end
     end
   end

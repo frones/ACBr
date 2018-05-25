@@ -204,6 +204,7 @@ type
     tsLog: TTabSheet;
     memoLog: TMemo;
     chk1000Limpar: TCheckBox;
+    btnLerArqXML: TButton;
     procedure btnGerarClick(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
     procedure lblPatrocinadorClick(Sender: TObject);
@@ -244,6 +245,7 @@ type
     procedure ACBrReinf1TransmissaoEventos(const AXML: AnsiString;
       ATipo: TEventosReinf);
     procedure rgTipoAmbClick(Sender: TObject);
+    procedure btnLerArqXMLClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -525,6 +527,33 @@ begin
   mmoDados.Clear;
   mmoDados.Lines.Clear;
   mmoDados.Lines.Add('INI de Eventos Carregado com Sucesso!');
+  mmoDados.Lines.Add(' ');
+
+  for I := 0 to ACBrReinf1.Eventos.Gerados.Count -1 do
+  begin
+    mmoDados.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBrReinf1.Eventos.Gerados.Items[i].TipoEvento));
+    mmoDados.Lines.Add('Evento Salvo: ' + ACBrReinf1.Eventos.Gerados.Items[i].PathNome);
+  end;
+
+  PageControl1.ActivePageIndex := 1;
+end;
+
+procedure TForm2.btnLerArqXMLClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  OpenDialog1.Title := 'Selecione o Evento (Arquivo XML)';
+  OpenDialog1.DefaultExt := '*.xml';
+  OpenDialog1.Filter :=
+    'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrReinf1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+    ACBrReinf1.Eventos.LoadFromFile(OpenDialog1.FileName);
+
+  mmoDados.Clear;
+  mmoDados.Lines.Clear;
+  mmoDados.Lines.Add('XML de Eventos Carregado com Sucesso!');
   mmoDados.Lines.Add(' ');
 
   for I := 0 to ACBrReinf1.Eventos.Gerados.Count -1 do

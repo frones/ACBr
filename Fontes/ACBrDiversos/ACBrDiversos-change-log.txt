@@ -39,6 +39,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2018
+-- ACBrCargaBal --
+[-] Geração de arquivos da Toledo não estava sendo feita por versão.
+[+] Adicionada versão 1 do arquivo de itens para Toledo para retro-compatibilidade,
+    embora no código não esteja sendo chamada. Veja comentário no método
+    TACBrCargaBal.GerarArquivos
+[+] Adicionada propridade EAN13Fornecedor para Toledo, versão de arquivo 2 e 3
+
 25/04/2018
 -- ACBrExtenso --
 [-] Correção para valores superiores ao MaxInt

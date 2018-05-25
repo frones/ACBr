@@ -167,6 +167,7 @@ type
     FCodigoInfoNutr: Integer;
     FCodigoTara: Integer;
     FCodigoFornecedor: Smallint;
+    FEAN13Fornecedor: string;
   Public
     constructor Create;
     destructor Destroy; override;
@@ -189,6 +190,7 @@ type
     property CodigoInfoNutr: Integer read FCodigoInfoNutr write FCodigoInfoNutr;
     property CodigoTara: Integer Read FCodigoTara Write FCodigoTara Default 0;
     property CodigoFornecedor: Smallint Read FCodigoFornecedor Write FCodigoFornecedor Default 0;
+  	property EAN13Fornecedor: string read FEAN13Fornecedor write FEAN13Fornecedor;
   end;
 
   TACBrCargaBalItens = class(TObjectList)
@@ -239,7 +241,7 @@ type
     function GetTipoValidadeProdutoUranoURF32(Tipo: TACBrCargaBalTipoValidade): string;
 
     procedure PreencherFilizola(Arquivo, Setor, Nutricional, Receita: TStringList);
-    procedure PreencherToledo(Arquivo, Nutricional, Receita, Tara, Fornecedor, Setor: TStringList; Versao: integer = 0);
+    procedure PreencherToledo(Arquivo, Nutricional, Receita, Tara, Fornecedor, Setor: TStringList; Versao: Integer = 0);
     procedure PreencherUrano(Arquivo: TStringList);
     procedure PreencherUranoS(Arquivo: TStringList);
     procedure PreencherUranoURF32(Arquivo, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita: TStringList);
@@ -640,7 +642,7 @@ begin
   end;
 end;
 
-procedure TACBrCargaBal.PreencherToledo(Arquivo, Nutricional, Receita, Tara, Fornecedor, Setor: TStringList; versao:integer);
+procedure TACBrCargaBal.PreencherToledo(Arquivo, Nutricional, Receita, Tara, Fornecedor, Setor: TStringList; Versao: Integer = 0);
 var
   i, Total: Integer;
   ANutri, AReceita, ATara, AFornecedor, ASetor: string;
@@ -649,7 +651,7 @@ begin
 
   for i := 0 to Total - 1 do
   begin
-    if Versao=0 then
+    if Versao = 0 then
     begin
       Arquivo.Add(
         LFIll(Produtos[i].Setor.Codigo, 2) +
@@ -661,99 +663,51 @@ begin
         RFIll(Produtos[i].Descricao, 50) +
         RFIll(Produtos[i].Receita, 250)
       );
-    end else
+    end
+    else if Versao = 1 then
     begin
-      if Modelo = modToledoMGV5 then
-      begin
-        // ITENSMGV.TXT - VERSÃO 2
-        Arquivo.Add(
-          LFIll(Produtos[i].Setor.Codigo, 2) +
-          GetTipoProdutoToledo(Produtos[i].Tipo) +
-          LFIll(Produtos[i].Codigo, 6) +
-          LFIll(Produtos[i].ValorVenda, 6, 2) +
-          LFIll(Produtos[i].Validade, 3) +
-          RFIll(Produtos[i].Descricao, 50) +
-          LFIll(Produtos[i].Codigo, 6)+ // codigo inf extra
-          LFIll('0', 4)+ // codigo imagem
-          LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
-          RFill('1', 1)+ // imprime data de validade
-          RFill('1', 1)+ // imprime data embalagem
-          LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
-          //LFIll('0', 4)+ // codigo fornecedor
-          lFill('0', 12)+ // lote
-          lFill('0', 11)+ // codigo especial
-          LFIll('0', 1)+ // versao do preco
-          LFIll('0', 4)+ // codigo do som
-          LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
-          //LFIll('0', 4)+ // codigo da tara
-          LFIll('0', 4)+ // codigo da fracionador
-          LFIll('0', 4)+ // Código do Campo Extra 1
-          LFIll('0', 4)+ // Código do Campo Extra 2
-          LFIll('0', 4)+ // Código da Conservação
-          LFIll('0', 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
-        );
-      end else
-      begin
-        // ITENSMGV.TXT - VERSÃO 3
-        Arquivo.Add(
-          LFIll(Produtos[i].Setor.Codigo, 2) +
-          GetTipoProdutoToledo(Produtos[i].Tipo) +
-          LFIll(Produtos[i].Codigo, 6) +
-          LFIll(Produtos[i].ValorVenda, 6, 2) +
-          LFIll(Produtos[i].Validade, 3) +
-          RFIll(Produtos[i].Descricao, 50) +
-          LFIll(Produtos[i].Codigo, 6)+ // codigo inf extra
-          LFIll('0', 4)+ // codigo imagem
-          LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
-          RFill('1', 1)+ // imprime data de validade
-          RFill('1', 1)+ // imprime data embalagem
-          LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
-          //LFIll('0', 4)+ // codigo fornecedor
-          lFill('0', 12)+ // lote
-          lFill('0', 11)+ // codigo especial
-          LFIll('0', 1)+ // versao do preco
-          LFIll('0', 4)+ // codigo do som
-          LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
-          //LFIll('0', 4)+ // codigo da tara
-          LFIll('0', 4)+ // codigo da fracionador
-          LFIll('0', 4)+ // Código do Campo Extra 1
-          LFIll('0', 4)+ // Código do Campo Extra 2
-          LFIll('0', 4)+ // Código da Conservação
-          LFIll('0', 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
-
-          (* Novos campos para o arquivo do MGV6 - De acordo com a observação
-            eles podem estar inexistentes no arquivo, pois serão considerados como não associados.*)
-
-          {LFIll('0', 6)+ // Percentual de Glaciamento
-          LFIll('0', 2)+ // Sequencia de departamentos Associados. Ex: Para associar departamentos 2 e 5: |0205|
-          LFIll('', 35)+ // Descritivo do Item – Terceira Linha
-          LFIll('', 35)+ // Descritivo do Item – Quarta Linha
-          LFIll('0', 4)+ // Código do Campo Extra 3
-          LFIll('0', 4)+ // Código do Campo Extra 4
-          LFIll('0', 6) // Código da mídia (Prix 6 Touch)}
-        );
-      end;
+      // ITENSMGV.TXT - VERSÃO 1
+      Arquivo.Add(
+        LFIll(Produtos[i].Setor.Codigo, 2) +
+        GetTipoProdutoToledo(Produtos[i].Tipo) +
+        LFIll(Produtos[i].Codigo, 6) +
+        LFIll(Produtos[i].ValorVenda, 6, 2) +
+        LFIll(Produtos[i].Validade, 3) +
+        RFIll(Produtos[i].Descricao, 50) +
+        LFIll(Produtos[i].Codigo, 6)+ // codigo inf extra
+        LFIll('0', 3)+ // codigo imagem
+        LFIll(Produtos[i].Nutricional.Codigo, 4)+ // codigo inf nutricional
+        RFill('1', 1)+ // imprime data de validade
+        RFill('1', 1)+ // imprime data embalagem
+        LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
+        //LFIll('0', 4)+ // codigo fornecedor
+        lFill('0', 12)+ // lote
+        lFill('0', 11)+ // codigo especial
+        LFIll('0', 1)+ // versao do preco
+        LFIll('0', 2)
+      );
 
       // receita
-      AReceita:=LFIll(Produtos[i].Codigo, 6) + RFill('', 100) + RFill(Produtos[i].Receita, 840);
+      AReceita := LFIll(Produtos[i].Codigo, 6) + RFill('', 100) + RFill(Produtos[i].Receita, 840);
+
       if (Length(Produtos[i].Receita) > 2) and (Receita.IndexOf(AReceita) < 0) then
          Receita.Add(AReceita);
 
-      ANutri:= 'N'+ LFIll(Produtos[i].Nutricional.Codigo, 6) +
-      '0' +
-      LFIll(Produtos[i].Nutricional.Qtd, 3) +
-      GetNutriUndPorcaoToledo(Produtos[i].Nutricional.UndPorcao) +
-      LFIll(Produtos[i].Nutricional.PartInteira, 2) +
-      GetNutriPartDecimalToledo(Produtos[i].Nutricional.PartDecimal) +
-      GetNutriMedCaseiraToledo(Produtos[i].Nutricional.MedCaseira) +
-      LFIll(Produtos[i].Nutricional.ValorEnergetico, 4) +
-      LFIll(Produtos[i].Nutricional.Carboidrato, 4, 1) +
-      LFIll(Produtos[i].Nutricional.Proteina, 3, 1) +
-      LFIll(Produtos[i].Nutricional.GorduraTotal, 3, 1) +
-      LFIll(Produtos[i].Nutricional.GorduraSaturada, 3, 1) +
-      LFIll(Produtos[i].Nutricional.GorduraTrans, 3, 1) +
-      LFIll(Produtos[i].Nutricional.Fibra, 3, 1) +
-      LFIll(Produtos[i].Nutricional.Sodio, 5, 1);
+      ANutri := 'N'+ LFIll(Produtos[i].Nutricional.Codigo, 6) +
+                '0' +
+                LFIll(Produtos[i].Nutricional.Qtd, 3) +
+                GetNutriUndPorcaoToledo(Produtos[i].Nutricional.UndPorcao) +
+                LFIll(Produtos[i].Nutricional.PartInteira, 2) +
+                GetNutriPartDecimalToledo(Produtos[i].Nutricional.PartDecimal) +
+                GetNutriMedCaseiraToledo(Produtos[i].Nutricional.MedCaseira) +
+                LFIll(Produtos[i].Nutricional.ValorEnergetico, 4) +
+                LFIll(Produtos[i].Nutricional.Carboidrato, 4, 1) +
+                LFIll(Produtos[i].Nutricional.Proteina, 3, 1) +
+                LFIll(Produtos[i].Nutricional.GorduraTotal, 3, 1) +
+                LFIll(Produtos[i].Nutricional.GorduraSaturada, 3, 1) +
+                LFIll(Produtos[i].Nutricional.GorduraTrans, 3, 1) +
+                LFIll(Produtos[i].Nutricional.Fibra, 3, 1) +
+                LFIll(Produtos[i].Nutricional.Sodio, 5, 1);
 
       if (Produtos[i].Nutricional.Codigo > 0) and (Nutricional.IndexOf(ANutri) < 0) then
          Nutricional.Add(ANutri);
@@ -766,13 +720,176 @@ begin
          Tara.Add(ATara);
 
       AFornecedor := LFIll(Produtos[i].Fornecedor.Codigo, 4) + RFIll(Produtos[i].Fornecedor.Observacao, 100) +
-        RFill(Produtos[i].Fornecedor.Descricao1, 56) +
-        RFill(Produtos[i].Fornecedor.Descricao2, 56) +
-        RFill(Produtos[i].Fornecedor.Descricao3, 56) +
-        RFill(Produtos[i].Fornecedor.Descricao4, 56) +
-        RFill(Produtos[i].Fornecedor.Descricao5, 56);
+                     RFill(Produtos[i].Fornecedor.Descricao1, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao2, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao3, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao4, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao5, 56);
 
-      if ((Produtos[i].Fornecedor.Codigo > 0) and (Fornecedor.IndexOf(AFornecedor) < 0))then
+      if (Produtos[i].Fornecedor.Codigo > 0) and (Fornecedor.IndexOf(AFornecedor) < 0) then
+        Fornecedor.Add(AFornecedor);
+
+      ASetor := LFIll(Produtos[i].Setor.Codigo, 2) + RFIll(Produtos[i].Setor.Descricao, 40);
+
+      if ((Produtos[i].Setor.Codigo > 0) and (Setor.IndexOf(ASetor) < 0)) then
+        Setor.Add(ASetor);
+    end
+    else if Versao = 2 then
+    begin
+      // ITENSMGV.TXT - VERSÃO 2
+      Arquivo.Add(
+        LFIll(Produtos[i].Setor.Codigo, 2) +
+        GetTipoProdutoToledo(Produtos[i].Tipo) +
+        LFIll(Produtos[i].Codigo, 6) +
+        LFIll(Produtos[i].ValorVenda, 6, 2) +
+        LFIll(Produtos[i].Validade, 3) +
+        RFIll(Produtos[i].Descricao, 50) +
+        LFIll(Produtos[i].Codigo, 6)+ // codigo inf extra
+        LFIll('0', 4)+ // codigo imagem
+        LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
+        RFill('1', 1)+ // imprime data de validade
+        RFill('1', 1)+ // imprime data embalagem
+        LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
+        //LFIll('0', 4)+ // codigo fornecedor
+        lFill('0', 12)+ // lote
+        lFill('0', 11)+ // codigo especial
+        LFIll('0', 1)+ // versao do preco
+        LFIll('0', 4)+ // codigo do som
+        LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
+        //LFIll('0', 4)+ // codigo da tara
+        LFIll('0', 4)+ // codigo da fracionador
+        LFIll('0', 4)+ // Código do Campo Extra 1
+        LFIll('0', 4)+ // Código do Campo Extra 2
+        LFIll('0', 4)+ // Código da Conservação
+        LFIll(Produtos[i].EAN13Fornecedor, 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
+      );
+
+      // receita
+      AReceita := LFIll(Produtos[i].Codigo, 6) + RFill('', 100) + RFill(Produtos[i].Receita, 840);
+
+      if (Length(Produtos[i].Receita) > 2) and (Receita.IndexOf(AReceita) < 0) then
+         Receita.Add(AReceita);
+
+      ANutri := 'N'+ LFIll(Produtos[i].Nutricional.Codigo, 6) +
+                '0' +
+                LFIll(Produtos[i].Nutricional.Qtd, 3) +
+                GetNutriUndPorcaoToledo(Produtos[i].Nutricional.UndPorcao) +
+                LFIll(Produtos[i].Nutricional.PartInteira, 2) +
+                GetNutriPartDecimalToledo(Produtos[i].Nutricional.PartDecimal) +
+                GetNutriMedCaseiraToledo(Produtos[i].Nutricional.MedCaseira) +
+                LFIll(Produtos[i].Nutricional.ValorEnergetico, 4) +
+                LFIll(Produtos[i].Nutricional.Carboidrato, 4, 1) +
+                LFIll(Produtos[i].Nutricional.Proteina, 3, 1) +
+                LFIll(Produtos[i].Nutricional.GorduraTotal, 3, 1) +
+                LFIll(Produtos[i].Nutricional.GorduraSaturada, 3, 1) +
+                LFIll(Produtos[i].Nutricional.GorduraTrans, 3, 1) +
+                LFIll(Produtos[i].Nutricional.Fibra, 3, 1) +
+                LFIll(Produtos[i].Nutricional.Sodio, 5, 1);
+
+      if (Produtos[i].Nutricional.Codigo > 0) and (Nutricional.IndexOf(ANutri) < 0) then
+         Nutricional.Add(ANutri);
+
+      ATara := LFIll(Produtos[i].Tara.Codigo, 4) + LFIll(Produtos[i].Tara.Valor, 6, 3)+
+               RFIll(Produtos[i].Tara.Descricao, 20);
+
+      if (Produtos[i].Tara.Codigo > 0) and (Tara.IndexOf(ATara) < 0) THEN
+         Tara.Add(ATara);
+
+      AFornecedor := LFIll(Produtos[i].Fornecedor.Codigo, 4) + RFIll(Produtos[i].Fornecedor.Observacao, 100) +
+                     RFill(Produtos[i].Fornecedor.Descricao1, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao2, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao3, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao4, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao5, 56);
+
+      if (Produtos[i].Fornecedor.Codigo > 0) and (Fornecedor.IndexOf(AFornecedor) < 0) then
+        Fornecedor.Add(AFornecedor);
+
+      ASetor := LFIll(Produtos[i].Setor.Codigo, 2) + RFIll(Produtos[i].Setor.Descricao, 40);
+
+      if ((Produtos[i].Setor.Codigo > 0) and (Setor.IndexOf(ASetor) < 0)) then
+        Setor.Add(ASetor);
+    end
+    else if Versao = 3 then // Deveria ser if Versao = 2 then
+    begin
+      // ITENSMGV.TXT - VERSÃO 3
+      Arquivo.Add(
+        LFIll(Produtos[i].Setor.Codigo, 2) +
+        GetTipoProdutoToledo(Produtos[i].Tipo) +
+        LFIll(Produtos[i].Codigo, 6) +
+        LFIll(Produtos[i].ValorVenda, 6, 2) +
+        LFIll(Produtos[i].Validade, 3) +
+        RFIll(Produtos[i].Descricao, 50) +
+        LFIll(Produtos[i].Codigo, 6)+ // codigo inf extra
+        LFIll('0', 4)+ // codigo imagem
+        LFIll(Produtos[i].Nutricional.Codigo,6)+ // codigo inf nutricional
+        RFill('1', 1)+ // imprime data de validade
+        RFill('1', 1)+ // imprime data embalagem
+        LFIll(Produtos[i].CodigoFornecedor, 4)+ // codigo fornecedor
+        //LFIll('0', 4)+ // codigo fornecedor
+        lFill('0', 12)+ // lote
+        lFill('0', 11)+ // codigo especial
+        LFIll('0', 1)+ // versao do preco
+        LFIll('0', 4)+ // codigo do som
+        LFIll(IntToStr(Produtos[i].CodigoTara),4)+ // codigo da tara
+        //LFIll('0', 4)+ // codigo da tara
+        LFIll('0', 4)+ // codigo da fracionador
+        LFIll('0', 4)+ // Código do Campo Extra 1
+        LFIll('0', 4)+ // Código do Campo Extra 2
+        LFIll('0', 4)+ // Código da Conservação
+        LFIll(Produtos[i].EAN13Fornecedor, 12) // EAN-13, quando utilizado Tipo de Produto EAN-13
+
+        (* Novos campos para o arquivo do MGV6 - De acordo com a observação
+          eles podem estar inexistentes no arquivo, pois serão considerados como não associados.*)
+        {LFIll('0', 6)+ // Percentual de Glaciamento
+        LFIll('0', 2)+ // Sequencia de departamentos Associados. Ex: Para associar departamentos 2 e 5: |0205|
+        LFIll('', 35)+ // Descritivo do Item – Terceira Linha
+        LFIll('', 35)+ // Descritivo do Item – Quarta Linha
+        LFIll('0', 4)+ // Código do Campo Extra 3
+        LFIll('0', 4)+ // Código do Campo Extra 4
+        LFIll('0', 6) // Código da mídia (Prix 6 Touch)}
+      );
+
+      // receita
+      AReceita := LFIll(Produtos[i].Codigo, 6) + RFill('', 100) + RFill(Produtos[i].Receita, 840);
+
+      if (Length(Produtos[i].Receita) > 2) and (Receita.IndexOf(AReceita) < 0) then
+         Receita.Add(AReceita);
+
+      ANutri := 'N'+ LFIll(Produtos[i].Nutricional.Codigo, 6) +
+                '0' +
+                LFIll(Produtos[i].Nutricional.Qtd, 3) +
+                GetNutriUndPorcaoToledo(Produtos[i].Nutricional.UndPorcao) +
+                LFIll(Produtos[i].Nutricional.PartInteira, 2) +
+                GetNutriPartDecimalToledo(Produtos[i].Nutricional.PartDecimal) +
+                GetNutriMedCaseiraToledo(Produtos[i].Nutricional.MedCaseira) +
+                LFIll(Produtos[i].Nutricional.ValorEnergetico, 4) +
+                LFIll(Produtos[i].Nutricional.Carboidrato, 4, 1) +
+                LFIll(Produtos[i].Nutricional.Proteina, 3, 1) +
+                LFIll(Produtos[i].Nutricional.GorduraTotal, 3, 1) +
+                LFIll(Produtos[i].Nutricional.GorduraSaturada, 3, 1) +
+                LFIll(Produtos[i].Nutricional.GorduraTrans, 3, 1) +
+                LFIll(Produtos[i].Nutricional.Fibra, 3, 1) +
+                LFIll(Produtos[i].Nutricional.Sodio, 5, 1);
+
+      if (Produtos[i].Nutricional.Codigo > 0) and (Nutricional.IndexOf(ANutri) < 0) then
+         Nutricional.Add(ANutri);
+
+
+      ATara := LFIll(Produtos[i].Tara.Codigo, 4) + LFIll(Produtos[i].Tara.Valor, 6, 3)+
+               RFIll(Produtos[i].Tara.Descricao, 20);
+
+      if (Produtos[i].Tara.Codigo > 0) and (Tara.IndexOf(ATara) < 0) THEN
+         Tara.Add(ATara);
+
+      AFornecedor := LFIll(Produtos[i].Fornecedor.Codigo, 4) + RFIll(Produtos[i].Fornecedor.Observacao, 100) +
+                     RFill(Produtos[i].Fornecedor.Descricao1, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao2, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao3, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao4, 56) +
+                     RFill(Produtos[i].Fornecedor.Descricao5, 56);
+
+      if (Produtos[i].Fornecedor.Codigo > 0) and (Fornecedor.IndexOf(AFornecedor) < 0) then
         Fornecedor.Add(AFornecedor);
 
       ASetor := LFIll(Produtos[i].Setor.Codigo, 2) + RFIll(Produtos[i].Setor.Descricao, 40);
@@ -780,6 +897,7 @@ begin
       if ((Produtos[i].Setor.Codigo > 0) and (Setor.IndexOf(ASetor) < 0)) then
         Setor.Add(ASetor);
     end;
+
     Progresso(Format('Gerando produto %6.6d %s', [Produtos[i].Codigo, Produtos[i].Descricao]), i, Total);
   end;
 
@@ -1076,8 +1194,11 @@ begin
       modToledo     : PreencherToledo(Produto, Nutricional, Receita, Tara, nil, nil);
       modUrano      : PreencherUrano(Produto);
       modUranoS     : PreencherUranoS(Produto);
-      modToledoMGV5,
-      modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 1);
+      (*  A linha comentada abaixo foi adicionada para possibilitar a geração da versão 1 do arquivo para a Toledo.
+          A geração de arquivos deveria ser de acordo com modelo e versão. Atualmente é apenas com modelo. *)
+//      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 1);
+      modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 2);
+      modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 3);
       modUranoURF32 : PreencherUranoURF32(Produto, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita);
     end;
 

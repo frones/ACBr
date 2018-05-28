@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2018
+-- ACBrNFSeNotasFiscais --
+[*] https://www.projetoacbr.com.br/forum/topic/43625-adapta%C3%A7%C3%A3o-do-arquivo-acbrnfsenotasfiscais/
+   Por: Henrique Sandri Zimermam
+
 24/05/2018
 -- pnfsConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/43570-unit-pnfsconversao-func%C3%A3o-naturezaoperacaodescricao/

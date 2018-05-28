@@ -892,7 +892,7 @@ var
       inc(i);
       TamTAG := Length(TagF[i]) -1;
       Result := Pos(TagF[i], AXMLString);
-    until (i = 10) or (Result <> 0);
+    until (i = High(TagF)) or (Result <> 0);
 
   end;
 

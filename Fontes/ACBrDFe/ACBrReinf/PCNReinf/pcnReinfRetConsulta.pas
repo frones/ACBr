@@ -742,7 +742,7 @@ function TRetConsulta.SalvarINI: boolean;
 var
   AIni: TMemIniFile;
   sSecao: String;
-  i: Integer;
+  i, j: Integer;
 begin
   Result := False;
 
@@ -801,6 +801,16 @@ begin
             AIni.WriteFloat(sSecao, 'vlrTotalRetAdic',   RTom.Items[i].vlrTotalRetAdic);
             AIni.WriteFloat(sSecao, 'vlrTotalNRetPrinc', RTom.Items[i].vlrTotalNRetPrinc);
             AIni.WriteFloat(sSecao, 'vlrTotalNRetAdic',  RTom.Items[i].vlrTotalNRetAdic);
+
+            // Versão 1.03.02
+            for j := 0 to RTom.Items[i].infoCRTom.Count -1 do
+            begin
+              sSecao := 'infoCRTom' + IntToStrZero(I, 3) + IntToStrZero(J, 1);
+
+              AIni.WriteString(sSecao, 'CRTom',    RTom.Items[i].infoCRTom.Items[J].CRTom);
+              AIni.WriteFloat(sSecao, 'VlrCRTom',   RTom.Items[i].infoCRTom.Items[J].VlrCRTom);
+              AIni.WriteFloat(sSecao, 'VlrCRTomSusp',  RTom.Items[i].infoCRTom.Items[J].VlrCRTomSusp);
+            end;
           end;
 
           for i := 0 to RPrest.Count -1 do

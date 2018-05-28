@@ -430,7 +430,6 @@ end;
 procedure TACBrSATExtratoESCPOS.GerarRodape(CortaPapel: Boolean = True; Cancelamento: Boolean = False);
 var
   QRCode, Chave, TagCode128: String;
-  ConfigQRCodeTipo, ConfigQRCodeErrorLevel: Integer;
   ChaveEmUmaLinha, Suporta128c: Boolean;
 begin
   FBuffer.Add('</fn></linha_simples>');
@@ -464,9 +463,6 @@ begin
 
   if ImprimeQRCode then
   begin
-    ConfigQRCodeTipo := FPosPrinter.ConfigQRCode.Tipo;
-    ConfigQRCodeErrorLevel := FPosPrinter.ConfigQRCode.ErrorLevel;
-
     QRCode := CalcularConteudoQRCode( CFe.infCFe.ID,
                                       CFe.ide.dEmi+CFe.ide.hEmi,
                                       CFe.Total.vCFe,
@@ -475,9 +471,7 @@ begin
 
     FBuffer.Add('<qrcode_tipo>2</qrcode_tipo>'+
                 '<qrcode_error>0</qrcode_error>'+
-                '<qrcode>'+QRCode+'</qrcode>'+
-                '<qrcode_tipo>'+IntToStr(ConfigQRCodeTipo)+'</qrcode_tipo>'+
-                '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
+                '<qrcode>'+QRCode+'</qrcode>');
   end;
 
   if not Cancelamento then
@@ -509,7 +503,6 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarDadosCancelamento;
 Var
-  ConfigQRCodeTipo, ConfigQRCodeErrorLevel: Integer;
   ChaveEmUmaLinha, Suporta128c : Boolean;
   Chave, TagCode128 : String;
   QRCode: AnsiString;
@@ -543,9 +536,6 @@ begin
 
   if ImprimeQRCode then
   begin
-    ConfigQRCodeTipo := FPosPrinter.ConfigQRCode.Tipo;
-    ConfigQRCodeErrorLevel := FPosPrinter.ConfigQRCode.ErrorLevel;
-
     QRCode := CalcularConteudoQRCode( CFeCanc.infCFe.ID,
                                       CFeCanc.ide.dEmi+CFeCanc.ide.hEmi,
                                       CFeCanc.Total.vCFe,
@@ -554,9 +544,7 @@ begin
 
     FBuffer.Add('<qrcode_tipo>2</qrcode_tipo>'+
                 '<qrcode_error>0</qrcode_error>'+
-                '<qrcode>'+QRCode+'</qrcode>'+
-                '<qrcode_tipo>'+IntToStr(ConfigQRCodeTipo)+'</qrcode_tipo>'+
-                '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
+                '<qrcode>'+QRCode+'</qrcode>');
   end;
 
   if MsgAppQRCode <> '' then

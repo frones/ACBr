@@ -601,10 +601,24 @@ Procedure TACBrTEFDCliDTEF.CNF(Rede, NSU, Finalizacao : String;
    DocumentoVinculado : String) ;
 var
   Confirma : Boolean ;
+  I : Integer;
+  RespostasPendentesNaoConfirmadas : Integer;
 begin
   Confirma := True;
+  RespostasPendentesNaoConfirmadas := 0;
+
+  for I := 0 to TACBrTEFD(Owner).RespostasPendentes.Count - 1 do
+  begin
+    if not TACBrTEFD(Owner).RespostasPendentes.Objects[I].CNFEnviado then
+      Inc( RespostasPendentesNaoConfirmadas );
+  end;
 
   //Caso não seja a ultima transação, não deve finalizar a transação(DLL) enviando I = Intermediário.
+  if RespostasPendentesNaoConfirmadas > 1 then
+    Finalizacao := 'I' //Transação Intermediaria
+  else
+    Finalizacao := ''; //Transação Final
+
   if Finalizacao = 'I' then
     Confirma := False;
 
@@ -634,6 +648,7 @@ Var
   pValorTransacao, pNumeroCupomVenda, pNumeroControle,
     pQuantidadeCheques, pPeriodicidadeCheques, pDataPrimeiroCheque,
     pCarenciaPrimeiroCheque : AnsiString;
+  cNumeroControle : array [0..5] of AnsiChar;
   SL, ArquivoResposta : TStringList;
   Voltar, Parar : Boolean;
   ItemSelecionado : integer;
@@ -687,7 +702,9 @@ begin
                  end;
 
                  Parar := True;
-              end;
+              end 
+              else
+                Parar := True;
            end;
         end;
      finally
@@ -745,8 +762,9 @@ begin
 
    if Funcao = 6 then
    begin
-      pNumeroControle := '      ';
-      Result := xTransacaoCancelamentoPagamento( PAnsiChar( pNumeroControle ) );
+      StrCopy( cNumeroControle, #0#0#0#0#0#0 );
+      Result := xTransacaoCancelamentoPagamento( cNumeroControle );
+      pNumeroControle := TrimRight( cNumeroControle );
    end;
 
    if Funcao = 7 then
@@ -783,28 +801,23 @@ begin
          try
            if ((Funcao = 7) or (Funcao = 9)) then
             begin
-              ArquivoResposta.LoadFromFile(ArqResp + 'ULTIMO.PRN');
-              SysUtils.DeleteFile(ArqResp + 'ULTIMO.PRN');
-              ImprimirComprovantes(ArquivoResposta);
-              ApagaEVerifica( ArqBackup );
+              if FileExists( ArqResp + 'ULTIMO.PRN' ) then
+              begin
+                ArquivoResposta.LoadFromFile(ArqResp + 'ULTIMO.PRN');
+                SysUtils.DeleteFile(ArqResp + 'ULTIMO.PRN');
+                ImprimirComprovantes(ArquivoResposta);
+                ApagaEVerifica( ArqBackup );
+              end;
             end
            else
             begin
               ArquivoResposta.LoadFromFile(ArqResp + pNumeroControle + '.' + NumeroTerminal);
 
-              if Funcao = 8 then
-              begin
-                 ImprimirComprovantes(ArquivoResposta);
-                 ApagaEVerifica( ArqResp + pNumeroControle + '.' + NumeroTerminal );
-              end;
-
-              if Funcao = 6 then
+              if ((Funcao = 6) or (Funcao = 8)) then
               begin
                  ImprimirComprovantes(ArquivoResposta);
                  ApagaEVerifica( ArqResp + pNumeroControle + '.' + NumeroTerminal );
                  ApagaEVerifica( ArqBackup );
-                 xConfirmaCartaoCredito( PAnsiChar( pNumeroControle ) );
-                 xFinalizaTransacao;
               end
               else
                begin
@@ -822,8 +835,15 @@ begin
                end;
             end;
          finally
-            ArquivoResposta.Free;
-         end ;
+           if ((Funcao = 6) or (Funcao = 7) or (Funcao = 8) or (Funcao = 9)) then
+           begin
+             xConfirmaCartaoCredito( PAnsiChar( pNumeroControle ) );
+             xFinalizaTransacao;
+           end;
+
+           if Assigned( ArquivoResposta ) then
+             ArquivoResposta.Free;
+         end;
       end;
     end;
 end;
@@ -1133,7 +1153,7 @@ begin
         end;
       end ;
     finally
-      SL.Free;
+      //SL.Free; //Não pode destruir está lista, pois a origem da chamada desta função ainda irá utliza-la.
     end;
   end;
 end;

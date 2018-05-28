@@ -397,6 +397,7 @@ type
     FCnpjEmitente: string;
     FModelo: SmallInt;
     FNumeroArquivoSubstituido: SmallInt;
+    FNomeArquivoMestre: string;
     function GetVersao: string;
     procedure SetSalvarEm(const Value: string);
     procedure DoGerarMestre;
@@ -410,6 +411,7 @@ type
     procedure Clear;
     procedure Gerar;
     property Mestre: TACBrConvenio115Mestres read FMestre;
+    property NomeArquivoMestre: string read FNomeArquivoMestre write FNomeArquivoMestre;
   published
     property Versao: string read GetVersao;
     property SalvarEm: string read FSalvarEm write SetSalvarEm;
@@ -786,18 +788,20 @@ procedure TACBrConvenio115.DoGerarMestre;
 var
   I: Integer;
   OStr: TStringList;
+  lNomeArquivo: string;
 begin
   if Ordernar then
     Mestre.Sort(SortMestre);
 
   OStr := TStringList.Create;
   try
+    lNomeArquivo := DoNomeArquivo(c115taMestre);
     for I := 0 to FMestre.Count - 1 do
     begin
       OStr.Add(FMestre[I].RegistroEAssinatura(_VersaoAntiga).Registro +
                FMestre[I].RegistroEAssinatura(_VersaoAntiga).Assinatura);
     end;
-    OStr.SaveToFile(DoNomeArquivo(c115taMestre));
+    OStr.SaveToFile(lNomeArquivo);
   finally
     OStr.Free;
   end;
@@ -840,6 +844,9 @@ begin
     c115taitem: Result := Result + 'I';
     c115taDestinatario:  Result := Result + 'D';
   end;
+
+  if TipoArquivo =  c115taMestre then
+    FNomeArquivoMestre := Result + '.001';
 
   Result := SalvarEm + Result + '.001'; // Pode ter 1 milhão de registros
 end;

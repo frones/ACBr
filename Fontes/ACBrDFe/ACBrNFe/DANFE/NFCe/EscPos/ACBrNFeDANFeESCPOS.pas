@@ -62,7 +62,7 @@ uses
 
 type
   { TACBrNFeDANFeESCPOS }
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}	
   TACBrNFeDANFeESCPOS = class(TACBrNFeDANFEClass)
@@ -90,7 +90,7 @@ type
     function GerarInformacoesConsumidor(Lateral: Boolean = False): String;
     function GerarInformacoesIdentificacaoNFCe(Lateral: Boolean = False): String;
     procedure GerarMensagemFiscal;
-    procedure GerarInformacoesQRCode(Cancelamento: Boolean = False);
+    procedure GerarInformacoesQRCode(Cancelamento: Boolean = False; Lateral: Boolean = False);
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
 
@@ -579,10 +579,10 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(Cancelamento: Boolean = False);
+procedure TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(Cancelamento: Boolean;
+  Lateral: Boolean);
 var
   qrcode: AnsiString;
-  ConfigQRCodeErrorLevel: Integer;
 begin
   if Cancelamento then
   begin
@@ -604,13 +604,14 @@ begin
   else
     qrcode := FpNFe.infNFeSupl.qrCode;
 
-  ConfigQRCodeErrorLevel := FPosPrinter.ConfigQRCode.ErrorLevel;
-
-  // impressão do qrcode
-  FPosPrinter.Buffer.Add( '<qrcode_error>0</qrcode_error>'+
-                          '<qrcode>'+qrcode+'</qrcode>'+
-                          '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
-
+  if Lateral then
+    FPosPrinter.Buffer.Add( '<qrcode_tipo>2</qrcode_tipo>'+
+                            '<qrcode_error>0</qrcode_error>'+
+                            '<qrcode_largura>4</qrcode_largura>'+
+                            '<qrcode>'+qrcode+'</qrcode>')
+  else
+    FPosPrinter.Buffer.Add( '<qrcode_error>0</qrcode_error>'+
+                            '<qrcode>'+qrcode+'</qrcode>');
 
   if Cancelamento then
   begin
@@ -677,7 +678,7 @@ begin
       Altura := max(43*TextoLateral.Count, 560);
       FPosPrinter.Buffer.Add('<mp>');
       ConfigurarRegiao(0,0,Altura,250);
-      GerarInformacoesQRCode;
+      GerarInformacoesQRCode(False, True);
       ConfigurarRegiao(270,0,Altura,325);
       FPosPrinter.Buffer.Add(TextoLateral.Text);
       FPosPrinter.Buffer.Add('</mp>');

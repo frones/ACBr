@@ -261,8 +261,8 @@ begin
   else
     ATimeout := FTimeout;
 
-  if (ATimeout <= 0) then
-    ATimeout := 30;
+  if (ATimeout <= 25) then
+    ATimeout := 25;
 
   LocTimeOut := IncSecond(ActualTime, ATimeout);
 
@@ -305,7 +305,10 @@ begin
   FOwner.DoLog('RespostaIntegrador: '+RespostaIntegrador);
   FResposta:= RespostaIntegrador;
   FIntegradorResposta.LerResposta(RespostaIntegrador);
-  Result := PegaResposta(RespostaIntegrador);
+  if (FIntegradorResposta.Codigo <> 'EE') then
+    Result := PegaResposta(FResposta)
+  else
+    Result := FResposta;
 end;
 
 function TComandoIntegrador.PegaResposta(Resp: String): String;
@@ -607,7 +610,7 @@ end;
 function TACBrIntegrador.EnviarPagamento(Pagamento: TEnviarPagamento
   ): TRespostaPagamento;
 var
-  Comando, Resp : String;
+  Comando: String;
 begin
   Result := TRespostaPagamento.Create;
 
@@ -617,15 +620,15 @@ begin
   Comando := Pagamento.AsXMLString;
   DoLog('EnviarPagamento( '+Comando+' )');
 
-  Resp := FComandoIntegrador.EnviaComando( numeroSessao, 'EnviarPagamento', Comando);
+  FComandoIntegrador.EnviaComando( numeroSessao, 'EnviarPagamento', Comando);
 
-  Result.AsXMLString := Resp;
+  Result.AsXMLString := FComandoIntegrador.Resposta;
 end;
 
 function TACBrIntegrador.EnviarStatusPagamento(
   StatusPagamento: TStatusPagamento): TRespostaStatusPagamento;
 var
-  Comando, Resp : String;
+  Comando: String;
 begin
   Result := TRespostaStatusPagamento.Create;
 
@@ -635,16 +638,16 @@ begin
   Comando := StatusPagamento.AsXMLString;
   DoLog('EnviarStatusPagamento( '+Comando+' )');
 
-  Resp := FComandoIntegrador.EnviaComando(numeroSessao,'EnviarStatusPagamento',Comando);
+  FComandoIntegrador.EnviaComando(numeroSessao,'EnviarStatusPagamento',Comando);
 
-  Result.AsXMLString := Resp;
+  Result.AsXMLString := FComandoIntegrador.Resposta;
 end;
 
 function TACBrIntegrador.VerificarStatusValidador(
   AVerificarStatusValidador: TVerificarStatusValidador
   ): TRespostaVerificarStatusValidador;
 var
-  Comando, Resp : String;
+  Comando: String;
 begin
   Result := TRespostaVerificarStatusValidador.Create;
 
@@ -654,15 +657,15 @@ begin
   Comando := AVerificarStatusValidador.AsXMLString;
   DoLog('VerificarStatusValidador( '+Comando+' )');
 
-  Resp := FComandoIntegrador.EnviaComando(numeroSessao,'VerificarStatusValidador',Comando);
+  FComandoIntegrador.EnviaComando(numeroSessao,'VerificarStatusValidador',Comando);
 
-  Result.AsXMLString := Resp;
+  Result.AsXMLString := FComandoIntegrador.Resposta;
 end;
 
 function TACBrIntegrador.RespostaFiscal(
   ARespostaFiscal: TRespostaFiscal): TRetornoRespostaFiscal;
 var
-  Comando, Resp : String;
+  Comando: String;
 begin
   Result := TRetornoRespostaFiscal.Create;
 
@@ -672,9 +675,9 @@ begin
   Comando := ARespostaFiscal.AsXMLString;
   DoLog('RespostaFiscal( '+Comando+' )');
 
-  Resp := FComandoIntegrador.EnviaComando(numeroSessao,'RespostaFiscal',Comando);
+  FComandoIntegrador.EnviaComando(numeroSessao,'RespostaFiscal',Comando);
 
-  Result.AsXMLString := Resp;
+  Result.AsXMLString := FComandoIntegrador.Resposta;
 end;
 
 function TACBrIntegrador.ConsultarNumeroSessaoIntegrador(ANumeroSessao: Integer

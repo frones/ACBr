@@ -96,6 +96,7 @@ type
     FMensagem: String;
     FStatusPagamento: String;
     FXML : AnsiString;
+    FRetorno: String;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -111,6 +112,7 @@ type
     property Mensagem: String read FMensagem write FMensagem;
     property StatusPagamento: String read FStatusPagamento write FStatusPagamento;
     property XML: AnsiString read FXML write SetXMLString;
+    property Retorno: String read FRetorno write FRetorno;
   end;
 
   { TVerificarStatusValidador }
@@ -151,6 +153,7 @@ type
     FIDFila : Integer;
     FTipo : String;
     FXML : AnsiString;
+    FRetorno: String;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -174,6 +177,7 @@ type
     property IDFila: Integer read FIDFila write FIDFila;
     property Tipo: String read FTipo write FTipo;
     property XML: AnsiString read FXML write SetXMLString;
+    property Retorno: String read FRetorno write FRetorno;
   end;
 
   { TRespostaFiscal }
@@ -465,6 +469,7 @@ begin
   FValorPagamento := 0;
   FIDFila := 0;
   FTipo := '';
+  FRetorno := '';
 end;
 
 { TVerificarStatusValidador }
@@ -537,6 +542,7 @@ begin
   FIDPagamento := 0;
   FMensagem    := '';
   FStatusPagamento := '';
+  FRetorno     := '';;
 end;
 
 { TEnviarPagamento }

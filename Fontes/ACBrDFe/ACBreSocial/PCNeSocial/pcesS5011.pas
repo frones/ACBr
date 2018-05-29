@@ -267,7 +267,7 @@ type
     function GetItem(Index: Integer): TbasesRemunCollectionItem;
     procedure SetItem(Index: Integer; Value: TbasesRemunCollectionItem);
   public
-    constructor Create(AOwner: TideLotacaoCollectionItem);
+    constructor Create; reintroduce;
     function Add: TbasesRemunCollectionItem;
     property Items[Index: Integer]: TbasesRemunCollectionItem read GetItem write SetItem;
   end;
@@ -340,7 +340,7 @@ type
       const Value: TinfoSubstPatrOpPortCollection);
     procedure SetinfoTercSusp(const Value: TinfoTercSuspCollection);
   public
-    constructor Create(AOwner: TideEstabCollectionItem); reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 
     property codLotacao: String read FcodLotacao;
@@ -463,7 +463,7 @@ type
     procedure SetideLotacao(const Value: TideLotacaoCollection);
     procedure SetinfoCREstab(const Value: TinfoCREstabCollection);
   public
-    constructor Create(AOwner: TInfoCS); reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 
     property TpInsc: tpTpInsc read FTpInsc;
@@ -683,6 +683,7 @@ end;
 function TideEstabCollection.Add: TideEstabCollectionItem;
 begin
   Result := TideEstabCollectionItem(inherited Add);
+  Result.Create;
 end;
 
 constructor TideEstabCollection.Create;
@@ -776,7 +777,7 @@ end;
 
 { TideEstabCollectionItem }
 
-constructor TideEstabCollectionItem.Create(AOwner: TInfoCS);
+constructor TideEstabCollectionItem.Create;
 begin
   FInfoEstab := TInfoEstab.Create(Self);
   FideLotacao := TideLotacaoCollection.Create;
@@ -825,6 +826,7 @@ end;
 function TideLotacaoCollection.Add: TideLotacaoCollectionItem;
 begin
   Result := TideLotacaoCollectionItem(inherited Add);
+  Result.Create;
 end;
 
 constructor TideLotacaoCollection.Create;
@@ -873,10 +875,10 @@ end;
 function TbasesRemunCollection.Add: TbasesRemunCollectionItem;
 begin
   Result := TbasesRemunCollectionItem(inherited Add);
+  Result.Create;
 end;
 
-constructor TbasesRemunCollection.Create(
-  AOwner: TideLotacaoCollectionItem);
+constructor TbasesRemunCollection.Create;
 begin
   inherited create(TbasesRemunCollectionItem);
 end;
@@ -933,13 +935,12 @@ end;
 
 { TideLotacaoCollectionItem }
 
-constructor TideLotacaoCollectionItem.Create(
-  AOwner: TideEstabCollectionItem);
+constructor TideLotacaoCollectionItem.Create;
 begin
   FinfoTercSusp := TinfoTercSuspCollection.Create;
   FInfoEmprParcial := TInfoEmprParcial.Create;
   FdadosOpPort := TdadosOpPort.Create;
-  Fbasesremun := TbasesremunCollection.Create(Self);
+  Fbasesremun := TbasesremunCollection.Create;
   FbasesAvNport := TbasesAvNport.Create;
   FinfoSubstPatrOpPort := TinfoSubstPatrOpPortCollection.Create;
 end;
@@ -1083,97 +1084,97 @@ begin
 
             if leitor.rExtrai(5, 'infoComplObra') <> '' then
               infoCS.ideEstab.Items[i].infoEstab.infoComplObra.FindSubstPartObra := leitor.rCampo(tcInt, 'indSubstPartObra');
-
-            j := 0;
-            while Leitor.rExtrai(5, 'ideLotacao', '', i + 1) <> '' do
-            begin
-              infoCS.ideEstab.Items[i].ideLotacao.Add;
-              infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcodLotacao   := leitor.rCampo(tcStr, 'codLotacao');
-              infoCS.ideEstab.Items[i].ideLotacao.Items[j].Ffpas         := leitor.rCampo(tcInt, 'fpas');
-              infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcodTercs     := leitor.rCampo(tcStr, 'codTercs');
-              infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcodTercsSusp := leitor.rCampo(tcStr, 'codTercsSusp');
-
-              k := 0;
-              while Leitor.rExtrai(6, 'infoTercSusp', '', i + 1) <> '' do
-              begin
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoTercSusp.Add;
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoTercSusp.Items[k].FcodTerc := leitor.rCampo(tcStr, 'codTerc');
-                inc(k);
-              end;
-
-              if leitor.rExtrai(6, 'infoEmprParcial') <> '' then
-              begin
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FtpInscContrat := leitor.rCampo(tcInt, 'tpInscContrat');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FnrInscContrat := leitor.rCampo(tcStr, 'nrInscContrat');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FtpInscProp    := leitor.rCampo(tcInt, 'tpInscProp');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FnrInscProp    := leitor.rCampo(tcStr, 'nrInscProp');
-              end;
-
-              if leitor.rExtrai(6, 'dadosOpPort') <> '' then
-              begin
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].dadosOpPort.FcnpjOpPortuario := leitor.rCampo(tcStr, 'cnpjOpPortuario');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].dadosOpPort.FAliqRat         := eSStrToAliqRat(ok, leitor.rCampo(tcStr, 'AliqRat'));
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].dadosOpPort.Ffap             := leitor.rCampo(tcDe4, 'fap');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].dadosOpPort.FaliqRatAjust    := leitor.rCampo(tcDe4, 'aliqRatAjust');
-              end;
-
-              k := 0;
-              while Leitor.rExtrai(6, 'basesRemun', '', i + 1) <> '' do
-              begin
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Add;
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].FindIncid := leitor.rCampo(tcInt, 'indIncid');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].FcodCateg := leitor.rCampo(tcInt, 'codCateg');
-
-                if leitor.rExtrai(7, 'basesCp') <> '' then
-                begin
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp00 := leitor.rCampo(tcDe2, 'vrBcCp00');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp15 := leitor.rCampo(tcDe2, 'vrBcCp15');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp20 := leitor.rCampo(tcDe2, 'vrBcCp20');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp25 := leitor.rCampo(tcDe2, 'vrBcCp25');
-
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp00 := leitor.rCampo(tcDe2, 'vrSuspBcCp00');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp15 := leitor.rCampo(tcDe2, 'vrSuspBcCp15');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp20 := leitor.rCampo(tcDe2, 'vrSuspBcCp20');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp25 := leitor.rCampo(tcDe2, 'vrSuspBcCp25');
-
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrDescSest  := leitor.rCampo(tcDe2, 'vrDescSest');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrCalcSest  := leitor.rCampo(tcDe2, 'vrCalcSest');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrDescSenat := leitor.rCampo(tcDe2, 'vrDescSenat');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrCalcSenat := leitor.rCampo(tcDe2, 'vrCalcSenat');
-
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSalFam := leitor.rCampo(tcDe2, 'vrSalFam');
-                  infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSalMat := leitor.rCampo(tcDe2, 'vrSalMat');
-                end;
-
-                inc(k);
-              end;
-
-              if leitor.rExtrai(6, 'basesAvNPort') <> '' then
-              begin
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp00 := leitor.rCampo(tcDe2, 'vrBcCp00');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp15 := leitor.rCampo(tcDe2, 'vrBcCp15');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp20 := leitor.rCampo(tcDe2, 'vrBcCp20');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp25 := leitor.rCampo(tcDe2, 'vrBcCp25');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp13 := leitor.rCampo(tcDe2, 'vrBcCp13');
-
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcFgts := leitor.rCampo(tcDe2, 'vrBcFgts');
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrDescCP := leitor.rCampo(tcDe2, 'vrDescCP');
-              end;
-
-              k := 0;
-              while Leitor.rExtrai(6, 'infoSubstPatrOpPort', '', i + 1) <> '' do
-              begin
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPatrOpPort.Add;
-                infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPatrOpPort.Items[k].FcnpjOpPortuario := leitor.rCampo(tcStr, 'cnpjOpPortuario');
-                inc(k);
-              end;
-
-              inc(j);
-            end;
           end;
 
           j := 0;
-          while Leitor.rExtrai(4, 'basesAquis', '', i + 1) <> '' do
+          while Leitor.rExtrai(4, 'ideLotacao', '', j + 1) <> '' do
+          begin
+            infoCS.ideEstab.Items[i].ideLotacao.Add;
+            infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcodLotacao   := leitor.rCampo(tcStr, 'codLotacao');
+            infoCS.ideEstab.Items[i].ideLotacao.Items[j].Ffpas         := leitor.rCampo(tcInt, 'fpas');
+            infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcodTercs     := leitor.rCampo(tcStr, 'codTercs');
+            infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcodTercsSusp := leitor.rCampo(tcStr, 'codTercsSusp');
+
+            k := 0;
+            while Leitor.rExtrai(5, 'infoTercSusp', '', k + 1) <> '' do
+            begin
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoTercSusp.Add;
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoTercSusp.Items[k].FcodTerc := leitor.rCampo(tcStr, 'codTerc');
+              inc(k);
+            end;
+
+            if leitor.rExtrai(5, 'infoEmprParcial') <> '' then
+            begin
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FtpInscContrat := leitor.rCampo(tcInt, 'tpInscContrat');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FnrInscContrat := leitor.rCampo(tcStr, 'nrInscContrat');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FtpInscProp    := leitor.rCampo(tcInt, 'tpInscProp');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FnrInscProp    := leitor.rCampo(tcStr, 'nrInscProp');
+            end;
+
+            if leitor.rExtrai(5, 'dadosOpPort') <> '' then
+            begin
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].dadosOpPort.FcnpjOpPortuario := leitor.rCampo(tcStr, 'cnpjOpPortuario');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].dadosOpPort.FAliqRat         := eSStrToAliqRat(ok, leitor.rCampo(tcStr, 'AliqRat'));
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].dadosOpPort.Ffap             := leitor.rCampo(tcDe4, 'fap');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].dadosOpPort.FaliqRatAjust    := leitor.rCampo(tcDe4, 'aliqRatAjust');
+            end;
+
+            k := 0;
+            while Leitor.rExtrai(5, 'basesRemun', '', k + 1) <> '' do
+            begin
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Add;
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].FindIncid := leitor.rCampo(tcInt, 'indIncid');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].FcodCateg := leitor.rCampo(tcInt, 'codCateg');
+
+              if leitor.rExtrai(6, 'basesCp') <> '' then
+              begin
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp00 := leitor.rCampo(tcDe2, 'vrBcCp00');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp15 := leitor.rCampo(tcDe2, 'vrBcCp15');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp20 := leitor.rCampo(tcDe2, 'vrBcCp20');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrBcCp25 := leitor.rCampo(tcDe2, 'vrBcCp25');
+
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp00 := leitor.rCampo(tcDe2, 'vrSuspBcCp00');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp15 := leitor.rCampo(tcDe2, 'vrSuspBcCp15');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp20 := leitor.rCampo(tcDe2, 'vrSuspBcCp20');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSuspBcCp25 := leitor.rCampo(tcDe2, 'vrSuspBcCp25');
+
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrDescSest  := leitor.rCampo(tcDe2, 'vrDescSest');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrCalcSest  := leitor.rCampo(tcDe2, 'vrCalcSest');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrDescSenat := leitor.rCampo(tcDe2, 'vrDescSenat');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrCalcSenat := leitor.rCampo(tcDe2, 'vrCalcSenat');
+
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSalFam := leitor.rCampo(tcDe2, 'vrSalFam');
+                infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].basesCp.FvrSalMat := leitor.rCampo(tcDe2, 'vrSalMat');
+              end;
+
+              inc(k);
+            end;
+
+            if leitor.rExtrai(5, 'basesAvNPort') <> '' then
+            begin
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp00 := leitor.rCampo(tcDe2, 'vrBcCp00');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp15 := leitor.rCampo(tcDe2, 'vrBcCp15');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp20 := leitor.rCampo(tcDe2, 'vrBcCp20');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp25 := leitor.rCampo(tcDe2, 'vrBcCp25');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcCp13 := leitor.rCampo(tcDe2, 'vrBcCp13');
+
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrBcFgts := leitor.rCampo(tcDe2, 'vrBcFgts');
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesAvNPort.FvrDescCP := leitor.rCampo(tcDe2, 'vrDescCP');
+            end;
+
+            k := 0;
+            while Leitor.rExtrai(5, 'infoSubstPatrOpPort', '', k + 1) <> '' do
+            begin
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPatrOpPort.Add;
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPatrOpPort.Items[k].FcnpjOpPortuario := leitor.rCampo(tcStr, 'cnpjOpPortuario');
+              inc(k);
+            end;
+
+            inc(j);
+          end;
+
+          j := 0;
+          while Leitor.rExtrai(4, 'basesAquis', '', j + 1) <> '' do
           begin
             infoCS.ideEstab.Items[i].basesAquis.Add;
             infoCS.ideEstab.Items[i].basesAquis.Items[j].FindAquis    := leitor.rCampo(tcInt, 'indAquis');
@@ -1191,7 +1192,7 @@ begin
           end;
 
           j := 0;
-          while Leitor.rExtrai(4, 'basesComerc', '', i + 1) <> '' do
+          while Leitor.rExtrai(4, 'basesComerc', '', j + 1) <> '' do
           begin
             infoCS.ideEstab.Items[i].basesComerc.Add;
             infoCS.ideEstab.Items[i].basesComerc.Items[j].FindComerc   := leitor.rCampo(tcInt, 'indComerc');
@@ -1203,7 +1204,7 @@ begin
           end;
 
           j := 0;
-          while Leitor.rExtrai(4, 'infoCREstab', '', i + 1) <> '' do
+          while Leitor.rExtrai(4, 'infoCREstab', '', j + 1) <> '' do
           begin
             infoCS.ideEstab.Items[i].infoCREstab.Add;
             infoCS.ideEstab.Items[i].infoCREstab.Items[j].FtpCR     := leitor.rCampo(tcInt, 'tpCR');

@@ -111,6 +111,9 @@ type
 
     procedure SetInfoCRContrib(const Value: TInfoCRContribCollection);
   public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+
     property nrRecArqBase: String read FnrRecArqBase;
     property indExistInfo: Integer read FindExistInfo;
     property InfoCRContrib: TInfoCRContribCollection read FInfoCRContrib write SetInfoCRContrib;
@@ -238,6 +241,18 @@ begin
 end;
 
 { TInfoIRRF }
+
+constructor TInfoIRRF.Create;
+begin
+   FInfoCRContrib := TInfoCRContribCollection.Create;
+end;
+
+destructor TInfoIRRF.Destroy;
+begin
+  FInfoCRContrib.Free;
+
+  inherited;
+end;
 
 procedure TInfoIRRF.SetInfoCRContrib(const Value: TInfoCRContribCollection);
 begin

@@ -311,7 +311,7 @@ type
     FevtTotal: TEvtTotal;
   public
     constructor create; reintroduce;
-    destructor destroy; overload;
+    destructor destroy; override;
 
     property Id: string read FId write FId;
     property ArquivoReinf: string read FArquivoReinf write FArquivoReinf;
@@ -541,6 +541,8 @@ end;
 destructor TeventoCollectionItem.destroy;
 begin
   evtTotal.Free;
+
+  inherited;
 end;
 
 { TEvtTotal }

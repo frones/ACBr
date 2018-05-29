@@ -50,7 +50,7 @@ Símbolo : Significado
 
 29/05/2018
 -- ACBreSocialWebServices / pcesGerador / pcesConversaoeSocial --
-[*] Ateração na montagem do caminho mais o nome do schema evando em consideração
+[*] Ateração na montagem do caminho mais o nome do schema levando em consideração
     a versão do layout acrescentada no final do nome do arquivo XSD.
    Por: Italo Jurisato Junior
 

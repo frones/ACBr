@@ -4344,7 +4344,9 @@ begin
   ACBreSocial1.Eventos.GerarXMLs;
   ACBreSocial1.Eventos.SaveToFiles;
 
-  MemoResp.Lines.Add('XML de Eventos Gerados com Sucesso!');
+  memoLog.Lines.Add('XML de Eventos Gerados, Assinados e Validados com Sucesso!');
+  memoLog.Lines.Add(' ');
+
   pgWebservice.ActivePageIndex := 3;
 end;
 
@@ -4360,9 +4362,9 @@ begin
     ACBreSocial1.AssinarEventos;
 
     ACBreSocial1.Enviar(TESocialGrupo(rdgGrupo.ItemIndex + 1));
-    Sleep(3000);
 
     MemoResp.Lines.Text := ACBreSocial1.WebServices.EnvioLote.RetWS;
+
     with MemoDados.Lines do
     begin
       with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote do

@@ -38,7 +38,7 @@ unit ACBrLibReinfRespostas;
 interface
 
 uses
-  Classes, SysUtils, ACBrLibResposta, ACBrLibReinfConsts, pcnReinfRetConsulta;
+  Classes, SysUtils, ACBrLibResposta, ACBrLibReinfConsts;
 
 type
 
@@ -48,88 +48,392 @@ type
     private
       FCodigo: String;
       FMensagem: String;
-
     public
       constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
     published
       property Codigo: String read FCodigo write FCodigo;
       property Mensagem: String read FMensagem write FMensagem;
-
     end;
 
   { TEnvioResposta }
 
   TEnvioResposta = class(TPadraoReinfResposta)
   private
-    FIdTransmissor: String;
-//    FDhRecepcao: TDateTime;
-//    FVersaoAplic: String;
-//    FProtocolo: String;
+    FId: String;
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+  published
+    property Id: String read FId write FId;
+  end;
+
+  { TEnvioRespostaideTransmissor }
+
+  TEnvioRespostaideTransmissor = class(TPadraoReinfResposta)
+  private
+    FIdTransmissor: String;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
     property IdTransmissor: String read FIdTransmissor write FIdTransmissor;
-//    property DhRecepcao: TDateTime read FDhRecepcao write FDhRecepcao;
-//    property VersaoAplic: String read FVersaoAplic write FVersaoAplic;
-//    property Protocolo: String read FProtocolo write FProtocolo;
-
   end;
 
-  { TOcorrenciaResposta }
+  { TEnvioRespostastatus }
 
-  TOcorrenciaResposta = class(TPadraoReinfResposta)
+  TEnvioRespostastatus = class(TPadraoReinfResposta)
   private
-    FTipo: Integer;
-    FLocalizacao: String;
-    FCodigoOco: Integer;
-    FDescricao: String;
-
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
-
-  published
-    property Tipo: Integer read FTipo write FTipo;
-    property Localizacao: String read FLocalizacao write FLocalizacao;
-    property CodigoOco: Integer read FCodigoOco write FCodigoOco;
-    property Descricao: String read FDescricao write FDescricao;
-
-  end;
-
-  { TConsultaResposta }
-
-  TConsultaResposta = class(TPadraoReinfResposta)
-  private
-    FevtTotalContrib: TEvtTotalContrib;
-
-    FTpInscContri: String;
-    FNrInscContri: String;
-    FcdRetorno: Integer;
+    FcdStatus: Integer;
     FdescRetorno: String;
-
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
-    property evtTotalContrib: TEvtTotalContrib read FevtTotalContrib write FevtTotalContrib;
-
-    property TpInscContri: String read FTpInscContri write FTpInscContri;
-    property NrInscContri: String read FNrInscContri write FNrInscContri;
-    property cdRetorno: Integer read FcdRetorno write FcdRetorno;
+    property cdStatus: Integer read FcdStatus write FcdStatus;
     property descRetorno: String read FdescRetorno write FdescRetorno;
+  end;
 
+  { TEnvioRespostaOcorrencias }
+  TEnvioRespostaOcorrencias = class(TPadraoReinfResposta)
+  private
+    Ftipo: Byte;
+    FlocalizacaoErroAviso: String;
+    Fcodigo: Integer;
+    Fdescricao: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property tipo: Byte read Ftipo write Ftipo;
+    property localizacaoErroAviso: String read FlocalizacaoErroAviso write FlocalizacaoErroAviso;
+    property codigo: Integer read Fcodigo write Fcodigo;
+    property descricao: String read Fdescricao write Fdescricao;
+  end;
+
+  { TEnvioRespostaevento }
+  TEnvioRespostaevento = class(TPadraoReinfResposta)
+  private
+    FId: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property Id: String read FId write FId;
+  end;
+
+  { TEnvioRespostaRRecEspetDesp }
+  TEnvioRespostaRRecEspetDesp = class(TPadraoReinfResposta)
+  private
+    FCRRecEspetDesp: String;
+    FvlrCPApurTotal: Double;
+    FvlrCPSuspTotal: Double;
+    FvlrCRRecEspetDesp: Double;
+    FvlrCRRecEspetDespSusp: Double;
+    FvlrReceitaTotal: Double;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property vlrReceitaTotal: Double read FvlrReceitaTotal write FvlrReceitaTotal;
+    property vlrCPApurTotal: Double read FvlrCPApurTotal write FvlrCPApurTotal;
+    property vlrCPSuspTotal: Double read FvlrCPSuspTotal write FvlrCPSuspTotal;
+    property CRRecEspetDesp: String read FCRRecEspetDesp write FCRRecEspetDesp;
+    property vlrCRRecEspetDesp: Double read FvlrCRRecEspetDesp write FvlrCRRecEspetDesp;
+    property vlrCRRecEspetDespSusp: Double read FvlrCRRecEspetDespSusp write FvlrCRRecEspetDespSusp;
+  end;
+
+  { TConsultaResposta }
+  TConsultaResposta = class(TPadraoReinfResposta)
+  private
+    FId: String;
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property Id: String read FId write FId;
+  end;
+
+  { TRespostaideEvento }
+  TRespostaideEvento = class(TPadraoReinfResposta)
+  private
+    FperApur: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property perApur: String read FperApur write FperApur;
+  end;
+
+  { TRespostaideContri }
+  TRespostaideContri = class(TPadraoReinfResposta)
+  private
+    FtpInsc: String;
+    FnrInsc: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property tpInsc: String read FtpInsc write FtpInsc;
+    property nrInsc: String read FnrInsc write FnrInsc;
+  end;
+
+  { TRespostaideStatus }
+  TRespostaideStatus = class(TPadraoReinfResposta)
+  private
+    FcdRetorno: String;
+    FdescRetorno: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property cdRetorno: String read FcdRetorno write FcdRetorno;
+    property descRetorno: String read FdescRetorno write FdescRetorno;
+  end;
+
+  { TRespostaregOcorrs }
+
+  TRespostaregOcorrs = class(TPadraoReinfResposta)
+  private
+    FtpOcorr: integer;
+    FlocalErroAviso: String;
+    FcodResp: String;
+    FdscResp: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property tpOcorr: integer read FtpOcorr write FtpOcorr;
+    property localErroAviso: String read FlocalErroAviso write FlocalErroAviso;
+    property codResp: String read FcodResp write FcodResp;
+    property dscResp: String read FdscResp write FdscResp;
+  end;
+
+  { TRespostainfoRecEv }
+  TRespostainfoRecEv = class(TPadraoReinfResposta)
+  private
+    FdhProcess: TDateTime;
+    Fhash: String;
+    FidEv: String;
+    FnrProtEntr: String;
+    FtpEv: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property nrProtEntr: String read FnrProtEntr write FnrProtEntr;
+    property dhProcess: TDateTime read FdhProcess write FdhProcess;
+    property tpEv: String read FtpEv write FtpEv;
+    property idEv: String read FidEv write FidEv;
+    property hash: String read Fhash write Fhash;
+  end;
+
+  { TRespostainfoTotal_infoTotalContrib }
+  TRespostainfoTotal_infoTotalContrib = class(TPadraoReinfResposta)
+  private
+    FindExistInfo: String;
+    FnrRecArqBase: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property nrRecArqBase: String read FnrRecArqBase write FnrRecArqBase;
+    property indExistInfo: String read FindExistInfo write FindExistInfo;
+  end;
+
+  { TRespostaRTom }
+
+  TRespostaRTom = class(TPadraoReinfResposta)
+  private
+    FcnpjPrestador: String;
+    FvlrTotalBaseRet: Double;
+    FvlrTotalNRetAdic: Double;
+    FvlrTotalNRetPrinc: Double;
+    FvlrTotalRetAdic: Double;
+    FvlrTotalRetPrinc: Double;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property cnpjPrestador: String read FcnpjPrestador write FcnpjPrestador;
+    property vlrTotalBaseRet: Double read FvlrTotalBaseRet write FvlrTotalBaseRet;
+    property vlrTotalRetPrinc: Double read FvlrTotalRetPrinc write FvlrTotalRetPrinc;
+    property vlrTotalRetAdic: Double read FvlrTotalRetAdic write FvlrTotalRetAdic;
+    property vlrTotalNRetPrinc: Double read FvlrTotalNRetPrinc write FvlrTotalNRetPrinc;
+    property vlrTotalNRetAdic: Double read FvlrTotalNRetAdic write FvlrTotalNRetAdic;
+  end;
+
+  { TRespostainfoCRTom }
+
+  TRespostainfoCRTom = class(TPadraoReinfResposta)
+  private
+    FCRTom: string;
+    FVlrCRTom: Double;
+    FVlrCRTomSusp: Double;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property CRTom: string read FCRTom write FCRTom;
+    property VlrCRTom: Double read FVlrCRTom write FVlrCRTom;
+    property VlrCRTomSusp: Double read FVlrCRTomSusp write FVlrCRTomSusp;
+  end;
+
+  { TRespostaRPrest }
+
+  TRespostaRPrest = class(TPadraoReinfResposta)
+  private
+    FnrInscTomador: String;
+    FtpInscTomador: String;
+    FvlrTotalBaseRet: Double;
+    FvlrTotalNRetAdic: Double;
+    FvlrTotalNRetPrinc: Double;
+    FvlrTotalRetAdic: Double;
+    FvlrTotalRetPrinc: Double;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property tpInscTomador: String read FtpInscTomador write FtpInscTomador;
+    property nrInscTomador: String read FnrInscTomador write FnrInscTomador;
+    property vlrTotalBaseRet: Double read FvlrTotalBaseRet write FvlrTotalBaseRet;
+    property vlrTotalRetPrinc: Double read FvlrTotalRetPrinc write FvlrTotalRetPrinc;
+    property vlrTotalRetAdic: Double read FvlrTotalRetAdic write FvlrTotalRetAdic;
+    property vlrTotalNRetPrinc: Double read FvlrTotalNRetPrinc write FvlrTotalNRetPrinc;
+    property vlrTotalNRetAdic: Double read FvlrTotalNRetAdic write FvlrTotalNRetAdic;
+  end;
+
+  { TRespostaRRecRepAD }
+
+  TRespostaRRecRepAD = class(TPadraoReinfResposta)
+  private
+    FcnpjAssocDesp: string;
+    FCRRecRepAD: String;
+    FvlrCRRecRepAD: Double;
+    FvlrCRRecRepADSusp: Double;
+    FvlrTotalNRet: Double;
+    FvlrTotalRep: Double;
+    FvlrTotalRet: Double;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property cnpjAssocDesp: string read FcnpjAssocDesp write FcnpjAssocDesp;
+    property vlrTotalRep: Double read FvlrTotalRep write FvlrTotalRep;
+    property vlrTotalRet: Double read FvlrTotalRet write FvlrTotalRet;
+    property vlrTotalNRet: Double read FvlrTotalNRet write FvlrTotalNRet;
+    property CRRecRepAD: String read FCRRecRepAD write FCRRecRepAD;
+    property vlrCRRecRepAD: Double read FvlrCRRecRepAD write FvlrCRRecRepAD;
+    property vlrCRRecRepADSusp: Double read FvlrCRRecRepADSusp write FvlrCRRecRepADSusp;
+  end;
+
+  { TRespostaRComl }
+
+  TRespostaRComl = class(TPadraoReinfResposta)
+  private
+    FCRComl: String;
+    FvlrCPApur: Double;
+    FvlrCPSusp: Double;
+    FvlrCRComl: Double;
+    FvlrCRComlSusp: Double;
+    FvlrRatApur: Double;
+    FvlrRatSusp: Double;
+    FvlrSenarApur: Double;
+    FvlrSenarSusp: Double;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property vlrCPApur: Double read FvlrCPApur write FvlrCPApur;
+    property vlrRatApur: Double read FvlrRatApur write FvlrRatApur;
+    property vlrSenarApur: Double read FvlrSenarApur write FvlrSenarApur;
+    property vlrCPSusp: Double read FvlrCPSusp write FvlrCPSusp;
+    property vlrRatSusp: Double read FvlrRatSusp write FvlrRatSusp;
+    property vlrSenarSusp: Double read FvlrSenarSusp write FvlrSenarSusp;
+    property CRComl: String read FCRComl write FCRComl;
+    property vlrCRComl: Double read FvlrCRComl write FvlrCRComl;
+    property vlrCRComlSusp: Double read FvlrCRComlSusp write FvlrCRComlSusp;
+  end;
+
+  { TRespostaRCPRB }
+
+  TRespostaRCPRB = class(TPadraoReinfResposta)
+  private
+    FcodRec: Integer;
+    FCRCPRB: String;
+    FvlrCPApurTotal: Double;
+    FvlrCPRBSusp: Double;
+    FvlrCRCPRB: Double;
+    FvlrCRCPRBSusp: Double;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property codRec: Integer read FcodRec write FcodRec;
+    property vlrCPApurTotal: Double read FvlrCPApurTotal write FvlrCPApurTotal;
+    property vlrCPRBSusp: Double read FvlrCPRBSusp write FvlrCPRBSusp;
+    property CRCPRB: String read FCRCPRB write FCRCPRB;
+    property vlrCRCPRB: Double read FvlrCRCPRB write FvlrCRCPRB;
+    property vlrCRCPRBSusp: Double read FvlrCRCPRBSusp write FvlrCRCPRBSusp;
+  end;
+
+  { TEnvioRespostaevtTotal }
+  TEnvioRespostaevtTotal = class(TPadraoReinfResposta)
+  private
+    FId: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property Id: String read FId write FId;
   end;
 
 implementation
 
-{ TConsultaResposta }
+{ TEnvioRespostaRRecEspetDesp }
 
-constructor TConsultaResposta.Create(const ATipo: TACBrLibRespostaTipo);
+constructor TEnvioRespostaRRecEspetDesp.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
 begin
-  inherited Create(CSessaoRespConsulta, ATipo);
-  FevtTotalContrib := TEvtTotalContrib.Create;
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TEnvioRespostaevtTotal }
+
+constructor TEnvioRespostaevtTotal.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TEnvioRespostaevento }
+
+constructor TEnvioRespostaevento.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TEnvioRespostaOcorrencias }
+
+constructor TEnvioRespostaOcorrencias.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TEnvioRespostastatus }
+
+constructor TEnvioRespostastatus.Create(const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(CSessaoRespEnviostatus, ATipo);
+end;
+
+{ TEnvioRespostaideTransmissor }
+
+constructor TEnvioRespostaideTransmissor.Create(
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(CSessaoRespEnvioideTransmissor, ATipo);
 end;
 
 { TEnvioResposta }
@@ -139,11 +443,107 @@ begin
   inherited Create(CSessaoRespEnvio, ATipo);
 end;
 
-{ TOcorrenciaResposta }
+{ TRespostaRCPRB }
 
-constructor TOcorrenciaResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+constructor TRespostaRCPRB.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostaRComl }
+
+constructor TRespostaRComl.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostaRRecRepAD }
+
+constructor TRespostaRRecRepAD.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostaRPrest }
+
+constructor TRespostaRPrest.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostainfoCRTom }
+
+constructor TRespostainfoCRTom.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostaRTom }
+
+constructor TRespostaRTom.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostainfoTotal_infoTotalContrib }
+
+constructor TRespostainfoTotal_infoTotalContrib.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostainfoRecEv }
+
+constructor TRespostainfoRecEv.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostaregOcorrs }
+
+constructor TRespostaregOcorrs.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostaideStatus }
+
+constructor TRespostaideStatus.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostaideContri }
+
+constructor TRespostaideContri.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TRespostaideEvento }
+
+constructor TRespostaideEvento.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TConsultaResposta }
+
+constructor TConsultaResposta.Create(const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(CSessaoRespConsulta, ATipo);
 end;
 
 { TPadraoReinfResposta }

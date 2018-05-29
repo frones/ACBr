@@ -44,9 +44,31 @@ const
   CLibReinfNome = 'ACBrLibReinf';
   CLibReinfVersao = '0.0.1';
 
-  CSessaoRespEnvio = 'Envio';
-  CSessaoRespConsulta = 'Consulta';
-  CSessaoRespOcorrencia = 'Ocorrencia';
+  CSessaoRespEnvio = 'retornoLoteEventos';
+  CSessaoRespEnvioideTransmissor = 'ideTransmissor';
+  CSessaoRespEnviostatus = 'status';
+  CSessaoRespEnvioocorrencias = 'ocorrencias';
+
+  CSessaoRespEnvioevento = 'evento';
+  CSessaoRespEnvioevtTotal = 'evtTotal';
+  CSessaoRespEnvioinfoTotal = 'infoTotal';
+
+  CSessaoRespConsulta = 'evtTotalContrib';
+  CSessaoRespConsultainfoTotalContrib = 'infoTotalContrib';
+
+  CSessaoRetornoideEvento = 'ideEvento';
+  CSessaoRetornoideContri = 'ideContri';
+  CSessaoRetornoideStatus = 'ideStatus';
+  CSessaoRetornoregOcorrs = 'regOcorrs';
+  CSessaoRetornoinfoRecEv = 'infoRecEv';
+
+  CSessaoRetornoRTom = 'RTom';
+  CSessaoRetornoinfoCRTom = 'infoCRTom';
+  CSessaoRetornoRPrest = 'RPrest';
+  CSessaoRetornoRRecRepAD = 'RRecRepAD'; //n
+  CSessaoRetornoRComl = 'RComl'; //n
+  CSessaoRetornoRCPRB = 'RCPRB'; //n
+  CSessaoRetornoRRecEspetDesp = 'RRecEspetDesp';
 
 implementation
 

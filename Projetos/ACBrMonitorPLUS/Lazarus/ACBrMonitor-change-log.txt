@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2018 - ACBrMonior
+[-] Ajuste na gravação dos dados aba ( Software House )
+   por: José M. S. Junior
+
 24/05/2018 - ACBrMonior
 [+] Adicionado Método (gerarimpressaofiscalmfe) aos métodos SAT
 para retornar geração fiscal MFe

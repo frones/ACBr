@@ -4555,7 +4555,7 @@ begin
       edRedeProxySenha.Text                 := proxy_senha;
     end;
 
-    with SATSwH do
+    with SATSWH do
     begin
       edtSwHCNPJ.Text       := CNPJ;
       edtSwHAssinatura.Text := Assinatura;
@@ -5000,6 +5000,42 @@ begin
       btnNCMClick(btnNCM); //pgConfig.ActivePageIndex := 15;
       deNcmSalvar.SetFocus;
       raise Exception.Create('Diretorio para salvar arquivo de NCM nao encontrado.');
+    end;
+  end;
+
+  SalvarSW;
+
+  if chRFD.Checked then
+  begin
+    with ACBrRFD1 do
+    begin
+      if Ativo then
+      begin
+        CONT_RazaoSocial                := edUSURazaoSocial.Text;
+        CONT_CNPJ                       := edUSUCNPJ.Text;
+        CONT_Endereco                   := edUSUEndereco.Text;
+        CONT_IE                         := edUSUIE.Text;
+        CONT_NumUsuario                 := seUSUNumeroCadastro.Value;
+        CONT_DataHoraCadastro           := deUSUDataCadastro.Date;
+        try
+          CONT_DataHoraCadastro         := CONT_DataHoraCadastro
+                                        + StrToTime(meUSUHoraCadastro.Text, ':');
+        except
+        end;
+        CONT_CROCadastro                := seUSUCROCadastro.Value;
+        CONT_GTCadastro                 := seUSUGTCadastro.Value;
+        ECF_RFDID                       := lRFDID.Caption;
+        ECF_DataHoraSwBasico            := deRFDDataSwBasico.Date;
+        try
+          ECF_DataHoraSwBasico          := ECF_DataHoraSwBasico
+                                        + StrToTime(meRFDHoraSwBasico.Text, ':');
+        except
+        end;
+
+        GravarINI;
+
+        AddLinesLog('Dados do RFD gravados com sucesso');
+      end;
     end;
   end;
 
@@ -5455,7 +5491,7 @@ begin
         proxy_senha                    := edRedeProxySenha.Text;
       end;
 
-      with SATSwH do
+      with SATSWH do
       begin
         CNPJ                           := edtSwHCNPJ.Text;
         Assinatura                     := edtSwHAssinatura.Text;
@@ -5527,42 +5563,6 @@ begin
   end;
 
   AddLinesLog('Configuração geral gravada com sucesso');
-
-  SalvarSW;
-
-  if chRFD.Checked then
-  begin
-    with ACBrRFD1 do
-    begin
-      if Ativo then
-      begin
-        CONT_RazaoSocial                := edUSURazaoSocial.Text;
-        CONT_CNPJ                       := edUSUCNPJ.Text;
-        CONT_Endereco                   := edUSUEndereco.Text;
-        CONT_IE                         := edUSUIE.Text;
-        CONT_NumUsuario                 := seUSUNumeroCadastro.Value;
-        CONT_DataHoraCadastro           := deUSUDataCadastro.Date;
-        try
-          CONT_DataHoraCadastro         := CONT_DataHoraCadastro
-                                        + StrToTime(meUSUHoraCadastro.Text, ':');
-        except
-        end;
-        CONT_CROCadastro                := seUSUCROCadastro.Value;
-        CONT_GTCadastro                 := seUSUGTCadastro.Value;
-        ECF_RFDID                       := lRFDID.Caption;
-        ECF_DataHoraSwBasico            := deRFDDataSwBasico.Date;
-        try
-          ECF_DataHoraSwBasico          := ECF_DataHoraSwBasico
-                                        + StrToTime(meRFDHoraSwBasico.Text, ':');
-        except
-        end;
-
-        GravarINI;
-
-        AddLinesLog('Dados do RFD gravados com sucesso');
-      end;
-    end;
-  end;
 
   if (OldMonitoraTXT <> rbTXT.Checked) or (OldMonitoraTCP <> rbTCP.Checked) or
     (OldMonitoraPasta <> cbMonitorarPasta.Checked) then

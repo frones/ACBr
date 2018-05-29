@@ -49,6 +49,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/05/2018
+-- ACBreSocialWebServices / pcesGerador / pcesConversaoeSocial --
+[*] Ateração na montagem do caminho mais o nome do schema evando em consideração
+    a versão do layout acrescentada no final do nome do arquivo XSD.
+   Por: Italo Jurisato Junior
+
 -- pcesS5011 / pcesS5012 --
 [*] https://www.projetoacbr.com.br/forum/topic/43675-lerxml-eventos-s-5011-e-s-5012/
    Por: arce

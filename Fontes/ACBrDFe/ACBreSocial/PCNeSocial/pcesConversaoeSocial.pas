@@ -446,6 +446,8 @@ type
                  ct13, ct14, ct21, ct22, ct60, ct70, ct80, ct85, ct99);
 
 Const
+  PrefixoVersao = '-v';
+
   TEventoString: array[0..43] of String =('evtInfoEmpregador', 'evtTabEstab',
                                           'evtTabRubrica', 'evtTabLotacao',
                                           'evtTabCargo', 'evtTabCarreira',

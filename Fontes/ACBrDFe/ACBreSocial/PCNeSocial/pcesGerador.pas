@@ -326,7 +326,9 @@ var
   Evento: string;
 begin
   AXML := FXMLAssinado;
-  Evento := SchemaESocialToStr(Schema);
+  Evento := SchemaeSocialToStr(Schema) + PrefixoVersao +
+          VersaoeSocialToStr(TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF);
+
 
   if EstaVazio(AXML) then
   begin

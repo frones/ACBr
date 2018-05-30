@@ -4,11 +4,12 @@
 
 unit ACBrComum;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrBase, ACBrConsts, ACBrUtil, ACBrReg, ACBrAAC, ACBrPAFClass, 
-  ACBrCompress, GZIPUtils, LazarusPackageIntf;
+  ACBrCompress, LazarusPackageIntf;
 
 implementation
 

@@ -60,7 +60,8 @@
         <UnitName Value="ACBrCompress"/>
       </Item8>
       <Item9>
-        <Filename Value="..\..\..\Fontes\Terceiros\GZIPUtils\gziputils.pas"/>
+        <Filename Value="..\..\..\Fontes\Terceiros\GZIPUtils\GZIPUtils.pas"/>
+        <AddToUsesPkgSection Value="False"/>
         <UnitName Value="GZIPUtils"/>
       </Item9>
     </Files>

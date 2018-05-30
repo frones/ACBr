@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/05/2018
+-- ACBrNFSeConfiguracoes --
+[*] https://www.projetoacbr.com.br/forum/topic/43697-erro-ao-gravar-rpsxml-de-retorno-do-nfse/
+   Por: Italo Jurisato Junior
+
 28/05/2018
 -- ACBrNFSeNotasFiscais --
 [*] https://www.projetoacbr.com.br/forum/topic/43625-adapta%C3%A7%C3%A3o-do-arquivo-acbrnfsenotasfiscais/

@@ -1035,15 +1035,19 @@ function TArquivosConfNFSe.GetPathRPS(Data: TDateTime;
 var
   Dir: String;
 begin
-  Dir := GetPath(FPathGer, 'NFSe', CNPJ, Data);
+  if FPathGer <> '' then
+    Result := GetPath(FPathGer, 'Recibos', CNPJ, Data)
+  else
+  begin
+    Dir := GetPath(FPathGer, 'NFSe', CNPJ, Data);
 
-  Dir := PathWithDelim(Dir) + 'Recibos';
+    Dir := PathWithDelim(Dir) + 'Recibos';
 
-  if not DirectoryExists(Dir) then
-    ForceDirectories(Dir);
+    if not DirectoryExists(Dir) then
+      ForceDirectories(Dir);
 
-  Result := Dir;
-//  Result := GetPath(FPathGer, 'Recibos', CNPJ, Data);
+    Result := Dir;
+  end;
 end;
 
 function TArquivosConfNFSe.GetPathNFSe(Data: TDateTime = 0;
@@ -1051,15 +1055,19 @@ function TArquivosConfNFSe.GetPathNFSe(Data: TDateTime = 0;
 var
   Dir: String;
 begin
-  Dir := GetPath(FPathGer, 'NFSe', CNPJ, Data);
+  if FPathGer <> '' then
+    Result := GetPath(FPathGer, 'Notas', CNPJ, Data)
+  else
+  begin
+    Dir := GetPath(FPathGer, 'NFSe', CNPJ, Data);
 
-  Dir := PathWithDelim(Dir) + 'Notas';
+    Dir := PathWithDelim(Dir) + 'Notas';
 
-  if not DirectoryExists(Dir) then
-    ForceDirectories(Dir);
+    if not DirectoryExists(Dir) then
+      ForceDirectories(Dir);
 
-  Result := Dir;
-//  Result := GetPath(FPathGer, 'Notas', CNPJ, Data);
+    Result := Dir;
+  end;
 end;
 
 function TArquivosConfNFSe.GetPathCan(Data: TDateTime = 0;
@@ -1067,15 +1075,19 @@ function TArquivosConfNFSe.GetPathCan(Data: TDateTime = 0;
 var
   Dir: String;
 begin
-  Dir := GetPath(FPathGer, 'NFSe', CNPJ, Data);
+  if FPathCan <> '' then
+    Result := GetPath(FPathCan, 'Can', CNPJ, Data)
+  else
+  begin
+    Dir := GetPath(FPathGer, 'NFSe', CNPJ, Data);
 
-  Dir := PathWithDelim(Dir) + 'Can';
+    Dir := PathWithDelim(Dir) + 'Can';
 
-  if not DirectoryExists(Dir) then
-    ForceDirectories(Dir);
+    if not DirectoryExists(Dir) then
+      ForceDirectories(Dir);
 
-  Result := Dir;
-//  Result := GetPath(FPathCan, 'Can', CNPJ, Data);
+    Result := Dir;
+  end;
 end;
 
 end.

@@ -176,6 +176,8 @@ type
     property ListaCertificados: TListaCertificados read FpListaCertificados;
   end;
 
+  TDFeSSLHttpClassOf = class of TDFeSSLHttpClass;
+
   { TDFeSSLHttpClass }
 
   TDFeSSLHttpClass = class
@@ -235,24 +237,22 @@ type
 
   TDFeSendThread = class(TThread)
   private
-    FSSLHttpClass: TDFeSSLHttpClass;
+    FSSLHttp: TDFeSSLHttpClass;
     FConteudoXML: String;
     FURL: String;
     FSoapAction: String;
     FMimeType: String;
     FResponse: String;
-
-    function GetActive: Boolean;
-    function GetResponse: String;
+    FHtttpDone: Boolean;
   protected
     procedure Execute; override;
   public
-    constructor Create( SSLHttpClass: TDFeSSLHttpClass; AConteudoXML, AURL,
+    constructor Create(ADFeSSL: TDFeSSL; SSLHttpClass: TDFeSSLHttpClassOf; AConteudoXML, AURL,
        ASoapAction, AMimeType: String); reintroduce;
     destructor Destroy; override;
 
-    property Response: String read GetResponse;
-    property Active: Boolean read GetActive;
+    procedure Abort;
+    property Response: String read FResponse;
   end;
 
   { TDFeSSL }
@@ -432,6 +432,9 @@ type
   end;
 
 
+var
+  HttpSendCriticalSection : TCriticalSection;
+
 implementation
 
 uses
@@ -465,17 +468,21 @@ uses
 
 { TDFeSendThread }
 
-constructor TDFeSendThread.Create(SSLHttpClass: TDFeSSLHttpClass; AConteudoXML,
-  AURL, ASoapAction, AMimeType: String);
+constructor TDFeSendThread.Create(ADFeSSL: TDFeSSL;
+  SSLHttpClass: TDFeSSLHttpClassOf; AConteudoXML, AURL, ASoapAction,
+  AMimeType: String);
 begin
-  FreeOnTerminate := False ;
+  FreeOnTerminate := True ;
+  if (not Assigned(ADFeSSL)) or EstaVazio(AConteudoXML) or EstaVazio(AURL) then
+    raise EACBrDFeException.Create('TDFeSendThread, parâmetros inválidos');
 
-  FSSLHttpClass := SSLHttpClass;
+  FSSLHttp      := SSLHttpClass.Create(ADFeSSL);
   FConteudoXML  := AConteudoXML;
   FURL          := AURL;
   FSoapAction   := ASoapAction;
   FMimeType     := AMimeType;
   FResponse     := '';
+  FHtttpDone    := True;
 
   inherited Create(False);  // Run Now
 
@@ -484,31 +491,36 @@ end;
 
 destructor TDFeSendThread.Destroy;
 begin
-  if not Terminated then
-  begin
-    FSSLHttpClass.Abortar;
-    Terminate;
-  end;
+  FHtttpDone := True;
+  FSSLHttp.Free;
 
   inherited Destroy;
 end;
 
-function TDFeSendThread.GetActive: Boolean;
-begin
-  Result := not Terminated;
-end;
-
 procedure TDFeSendThread.Execute;
 begin
-  if NaoEstaVazio(FConteudoXML) and NaoEstaVazio(FURL) then
-    FResponse := FSSLHttpClass.Enviar(FConteudoXML, FURL, FSoapAction, FMimeType);
+  HttpSendCriticalSection.Acquire;
+  try
+    FHtttpDone := False;
+    FResponse := FSSLHttp.Enviar(FConteudoXML, FURL, FSoapAction, FMimeType);
+  finally
+    FHtttpDone := True;
+    HttpSendCriticalSection.Release;
+  end;
 
-  Terminate;    
+  while not Terminated do
+    Sleep(10);
 end;
 
-function TDFeSendThread.GetResponse: String;
+procedure TDFeSendThread.Abort;
 begin
-  Result := FResponse;
+  if (not FHtttpDone) then
+  begin
+    FHtttpDone := True;
+    FSSLHttp.Abortar;
+  end;
+
+  Terminate;
 end;
 
 { TDadosCertificado }
@@ -1116,27 +1128,29 @@ begin
   if TimeOutPorThread then
   begin
     EndTime := IncSecond(now,TruncFix(TimeOut/1000));
-    SendThread := TDFeSendThread.Create(FSSLHttpClass, ConteudoXML, AURL, ASoapAction, AMimeType);
+    SendThread := TDFeSendThread.Create( Self,
+                                         TDFeSSLHttpClassOf(FSSLHttpClass.ClassType),
+                                         ConteudoXML, AURL, ASoapAction, AMimeType);
     try
-      while SendThread.Active and (Now <= EndTime) do
+      while (SendThread.Response = '') and (Now <= EndTime) do
         Sleep(50);
     finally
       Result := SendThread.Response;
-      if SendThread.Active then
-      begin
-        SendThread.FreeOnTerminate := True;
-        SendThread.Terminate;
-        FSSLHttpClass.Abortar;
-      end
-      else
-        SendThread.Free;
+      SendThread.Abort;
+    end;
 
-      if EstaVazio(Result) then
-        raise EACBrDFeException.Create('Timeout - Não foi possível obter a resposta do servidor');
-    end ;
+    if EstaVazio(Result) then
+      raise EACBrDFeException.Create('Timeout - Não foi possível obter a resposta do servidor');
   end
   else
-    Result := FSSLHttpClass.Enviar(ConteudoXML, AURL, ASoapAction, AMimeType);
+  begin
+    HttpSendCriticalSection.Acquire;
+    try
+      Result := FSSLHttpClass.Enviar(ConteudoXML, AURL, ASoapAction, AMimeType);
+    finally
+      HttpSendCriticalSection.Release;
+    end;
+  end;
 end;
 
 function TDFeSSL.Validar(const ConteudoXML: String; ArqSchema: String;
@@ -1626,6 +1640,13 @@ begin
 
   FSSLXmlSignLib := ASSLXmlSignLib;
 end;
+
+
+initialization
+  HttpSendCriticalSection := TCriticalSection.Create;
+
+finalization;
+  HttpSendCriticalSection.Free;
 
 end.
 

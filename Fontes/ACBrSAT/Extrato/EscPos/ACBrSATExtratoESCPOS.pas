@@ -138,12 +138,12 @@ begin
   FBuffer.Add('<n>'+CFe.Emit.xFant+'</n>');
 
   FBuffer.Add('<c>'+CFe.Emit.xNome);
-  FBuffer.Add(Trim(CFe.Emit.EnderEmit.xLgr)+' '+
+  FBuffer.Add(QuebraLinhas(Trim(CFe.Emit.EnderEmit.xLgr)+' '+
               Trim(CFe.Emit.EnderEmit.nro)+' '+
               Trim(CFe.Emit.EnderEmit.xCpl)+' '+
               Trim(CFe.Emit.EnderEmit.xBairro)+'-'+
               Trim(CFe.Emit.EnderEmit.xMun)+'-'+
-              FormatarCEP(CFe.Emit.EnderEmit.CEP));
+              FormatarCEP(CFe.Emit.EnderEmit.CEP),FPosPrinter.ColunasFonteCondensada));
 
   DocsEmit := 'CNPJ:'+FormatarCNPJ(CFe.Emit.CNPJ)+
                   ' IE:'+Trim(CFe.Emit.IE);
@@ -152,7 +152,7 @@ begin
   if (CFe.Emit.IM <> '') and (CFe.Emit.IM <> '0') then
     DocsEmit := DocsEmit + ' IM:'+Trim(CFe.Emit.IM);
 
-  FBuffer.Add( '</ae><c>'+ DocsEmit);
+  FBuffer.Add( '</ce><c>'+ DocsEmit);
   FBuffer.Add('</linha_simples>');
 
 

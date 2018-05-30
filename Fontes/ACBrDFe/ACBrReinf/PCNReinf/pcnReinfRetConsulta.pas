@@ -129,7 +129,9 @@ type
     function GetItem(Index: Integer): TRTomCollectionItem;
     procedure SetItem(Index: Integer; Value: TRTomCollectionItem);
   public
-    constructor Create(AOwner: TInfoTotalContrib);
+    constructor create(AOwner: TPersistent);
+//    constructor Create(AOwner: TInfoTotalContrib);
+
     function Add: TRTomCollectionItem;
     property Items[Index: Integer]: TRTomCollectionItem read GetItem write SetItem;
   end;
@@ -146,8 +148,10 @@ type
 
     procedure SetinfoCRTom(const Value: TinfoCRTomCollection);
   public
-    constructor Create(AOwner: TInfoTotalContrib);
-    destructor Destroy; override;
+    constructor create; reintroduce;
+    destructor destroy; override;
+//    constructor Create(AOwner: TInfoTotalContrib);
+//    destructor Destroy; override;
 
     property cnpjPrestador: String read FcnpjPrestador;
     property vlrTotalBaseRet: Double read FvlrTotalBaseRet;
@@ -324,10 +328,10 @@ uses
 function TRTomCollection.Add: TRTomCollectionItem;
 begin
   Result := TRTomCollectionItem(inherited Add);
-//  Result.Create;
+  Result.Create;
 end;
 
-constructor TRTomCollection.Create(AOwner: TInfoTotalContrib);
+constructor TRTomCollection.Create(AOwner: TPersistent); //(AOwner: TInfoTotalContrib);
 begin
   inherited create(TRTomCollectionItem);
 end;
@@ -345,7 +349,7 @@ end;
 
 { TRTomCollectionItem }
 
-constructor TRTomCollectionItem.Create(AOwner: TInfoTotalContrib);
+constructor TRTomCollectionItem.Create; //(AOwner: TInfoTotalContrib);
 begin
   FinfoCRTom := TinfoCRTomCollection.Create(Self);
 end;

@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/05/2018
+-- pcnReinfRetConsulta --
+[*] Tentativa de eliminar erro de Violação de Acesso.
+   Por: Italo Jurisato Junior
+
 29/05/2018
 -- pcnReinfRetEventos --
 [*] https://www.projetoacbr.com.br/forum/topic/42398-acbrreinf-retorno-de-eventos/?do=findComment&comment=287690

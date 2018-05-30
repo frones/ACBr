@@ -92,7 +92,7 @@ var
   AURL, Html: String;
 begin
   try
-    Self.HTTPGet('http://cpf.receita.fazenda.gov.br/situacao/defaultSonoro.asp');
+    Self.HTTPGet('https://cpf.receita.fazenda.gov.br/situacao/defaultSonoro.asp');
     Html := UTF8ToNativeString(Self.RespHTTP.Text);
     //Debug
     //WriteToTXT('C:\TEMP\ACBrConsultaCPF-Captcha.TXT',Html);

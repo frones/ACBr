@@ -490,8 +490,6 @@ begin
     (*I05*)NFe.Det[i].Prod.NCM := LerCampo(tcStr, 'NCM');
     if (nfe.infNFe.Versao >= 4.00) then
     begin
-      if NaoEstaVazio(LerCampo(tcStr, 'NVE')) then
-        NFe.Det[i].Prod.NVE.Add.NVE := LerCampo(tcStr, 'NVE');
       NFe.Det[i].Prod.CEST := LerCampo(tcStr, 'CEST');
       NFe.Det[i].Prod.indEscala := StrToIndEscala(ok, LerCampo(tcStr, 'indEscala'));
       NFe.Det[i].Prod.CNPJFab := LerCampo(tcStr, 'CNPJFab');

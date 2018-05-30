@@ -417,7 +417,7 @@ begin
     LoadLayout('<G01>  GA02|CNPJ¨');
     LoadLayout('<G01>  GA03|CPF¨');
     LoadLayout('<H01>     H|NItem¨|InfAdProd¨');
-    LoadLayout('<I01>     I|CProd¨|CEAN¨|XProd¨|NCM¨|NVE¨|CEST¨|indEscala¨|CNPJFab¨|cBenef¨|EXTIPI¨|CFOP¨|UCom¨|QCom¨|VUnCom¨|VProd¨|CEANTrib¨|UTrib¨|QTrib¨|VUnTrib¨|VFrete¨|VSeg¨|VDesc¨|VOutro¨|indTot¨|xPed¨|nItemPed¨|nFCI¨');
+    LoadLayout('<I01>     I|CProd¨|CEAN¨|XProd¨|NCM¨|CEST¨|indEscala¨|CNPJFab¨|cBenef¨|EXTIPI¨|CFOP¨|UCom¨|QCom¨|VUnCom¨|VProd¨|CEANTrib¨|UTrib¨|QTrib¨|VUnTrib¨|VFrete¨|VSeg¨|VDesc¨|VOutro¨|indTot¨|xPed¨|nItemPed¨|nFCI¨');
     LoadLayout('<I05A> I05a|NVE¨');
     LoadLayout('<I05c> I05c|CEST¨|indEscala¨|CNPJFab¨');
     LoadLayout('<I18>   I18|NDI¨|DDI¨|XLocDesemb¨|UFDesemb¨|DDesemb¨|tpViaTransp¨|vAFRMM¨|tpIntermedio¨|CNPJ¨|UFTerceiro¨|CExportador¨');

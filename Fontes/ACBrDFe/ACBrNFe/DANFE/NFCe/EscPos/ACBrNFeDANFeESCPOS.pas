@@ -675,7 +675,7 @@ begin
 
       AjustaStringList(TextoLateral); // Ajusta corretamente o numero de Linhas
 
-      Altura := max(43*TextoLateral.Count, 560);
+      Altura := max(43*TextoLateral.Count, 600);
       FPosPrinter.Buffer.Add('<mp>');
       ConfigurarRegiao(0,0,Altura,250);
       GerarInformacoesQRCode(False, True);

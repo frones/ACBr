@@ -238,7 +238,7 @@ begin
   FIntegrador.NomeComponente := cNomeComponente;
   FIntegrador.NomeMetodo := 'ConfigurarInterfaceDeRedeMFE';
   FIntegrador.Parametros.Values['codigoDeAtivacao']  := codigoDeAtivacao;
-  FIntegrador.Parametros.Values['dadosConfiguracao'] := '<![CDATA[' +AjustaComando(dadosConfiguracao)+ ']]>';
+  FIntegrador.Parametros.Values['dadosConfiguracao'] := '<![CDATA[' +AjustaComando(dadosConfiguracao)+ '|||]]>';
   Result := FIntegrador.Enviar;
 end ;
 

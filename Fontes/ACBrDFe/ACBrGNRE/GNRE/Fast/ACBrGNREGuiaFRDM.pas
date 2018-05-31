@@ -89,6 +89,8 @@ uses ACBrGNRE2, ACBrDFeUtil, StrUtils, Math, pgnreRetConsResLoteGNRE;
   { TdmACBrNFeFR }
 
 procedure TdmACBrGNREFR.CarregaDados;
+var
+  Referencia : String;
 
   function FormatarData(Str: string): string;
   begin
@@ -133,6 +135,7 @@ begin
     FieldDefs.Add('DataVencimento', ftDate);
     FieldDefs.Add('DataLimitePagamento', ftDate);
     FieldDefs.Add('PeriodoReferencia', ftString, 1);
+    FieldDefs.Add('PerMesAnoRef', ftString, 25);
     FieldDefs.Add('MesAnoReferencia', ftString, 6);
     FieldDefs.Add('Parcela', ftString, 2);
     FieldDefs.Add('ValorPrincipal', ftFloat);
@@ -201,6 +204,25 @@ begin
       FieldByName('NumeroControle').AsString         := NumeroControle;
       FieldByName('IdentificadorGuia').AsString      := IdentificadorGuia;
       FieldByName('Reservado').AsString              := Reservado;
+
+      if Trim(FieldByName('PeriodoReferencia').AsString) <> '' then
+      begin
+        case FieldByName('PeriodoReferencia').AsInteger of
+          0: Referencia := 'Mensal';
+          1: Referencia := '1a Quinzena';
+          2: Referencia := '2a Quinzena';
+          3: Referencia := '1o Decêndio';
+          4: Referencia := '2o Decêndio';
+          5: Referencia := '3o Decêndio';
+        end;
+
+        Referencia := Referencia + '-';
+      end;
+
+      FieldByName('PerMesAnoRef').AsString := Referencia
+                                            + LeftStr(FieldByName('MesAnoReferencia').AsString, 2)
+                                            + '/'
+                                            + RightStr(FieldByName('MesAnoReferencia').AsString, 4);
     end;
     Post;
   end;

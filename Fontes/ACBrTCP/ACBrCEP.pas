@@ -1608,9 +1608,6 @@ begin
     fOwner.OnBuscaEfetuada(Self);
 end;
 
-
-{$REGION  'TACBrWSCEPAberto' }
-
 procedure TACBrWSCEPAberto.BuscarPorLogradouro(AMunicipio, ATipo_Logradouro,
   ALogradouro, AUF, ABairro: String);
 var
@@ -1685,14 +1682,14 @@ var
     VJson: TJson;
     VTag, VTag2: string;
   begin
+    VJson := TJson.Create;
     try
-      VJson := TJson.Create;
       VJson.Parse(AJsonStr);
 
       if(Pos('->', ATag) > 0)then
       begin
         VTag := LeftStr(ATag, Pos('->', ATag)-1);
-        VTag2 := Copy(ATag, VTag.Length+3);
+        VTag2 := Copy(ATag, Length(VTag)+3, MaxInt);
         ATag := VTag;
       end;
 
@@ -1708,7 +1705,6 @@ var
 
 begin
   SL1 := TStringList.Create;
-
   try
     Buffer := fOwner.RespHTTP.Text;
 
@@ -1746,9 +1742,6 @@ begin
   if Assigned(fOwner.OnBuscaEfetuada) then
     fOwner.OnBuscaEfetuada(Self);
 end;
-
-{$ENDREGION}
-
 
 { TACBrWSWSCEP }
 

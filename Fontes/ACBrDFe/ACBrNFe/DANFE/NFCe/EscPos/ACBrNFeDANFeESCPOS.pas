@@ -78,7 +78,7 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure AtivarPosPrinter;
 
-    procedure ConfigurarRegiao(AEsquerda, ATopo, AAltura, ALargura: Integer);
+    function ConfigurarRegiao(AEsquerda, ATopo, AAltura, ALargura: Integer): String;
 
     procedure GerarCabecalho;
     procedure GerarIdentificacaodoDANFE;
@@ -90,7 +90,7 @@ type
     function GerarInformacoesConsumidor(Lateral: Boolean = False): String;
     function GerarInformacoesIdentificacaoNFCe(Lateral: Boolean = False): String;
     procedure GerarMensagemFiscal;
-    procedure GerarInformacoesQRCode(Cancelamento: Boolean = False; Lateral: Boolean = False);
+    function GerarInformacoesQRCode(Cancelamento: Boolean = False; Lateral: Boolean = False): String;
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
 
@@ -175,15 +175,15 @@ begin
   FPosPrinter.Ativar;
 end;
 
-procedure TACBrNFeDANFeESCPOS.ConfigurarRegiao(AEsquerda, ATopo, AAltura,
-  ALargura: Integer);
+function TACBrNFeDANFeESCPOS.ConfigurarRegiao(AEsquerda, ATopo, AAltura,
+  ALargura: Integer): String;
 begin
-  FPosPrinter.Buffer.Add('<mp_esquerda>'+IntToStr(AEsquerda)+'</mp_esquerda>'+
-                         '<mp_topo>'+IntToStr(ATopo)+'</mp_topo>'+
-                         '<mp_altura>'+IntToStr(AAltura)+'</mp_altura>'+
-                         '<mp_largura>'+IntToStr(ALargura)+'</mp_largura>'+
-                         '<mp_espaco>'+IntToStr(FPosPrinter.EspacoEntreLinhas)+'</mp_espaco>'+
-                         '</mp_configurar>');
+  Result := '<mp_esquerda>'+IntToStr(AEsquerda)+'</mp_esquerda>'+
+            '<mp_topo>'+IntToStr(ATopo)+'</mp_topo>'+
+            '<mp_altura>'+IntToStr(AAltura)+'</mp_altura>'+
+            '<mp_largura>'+IntToStr(ALargura)+'</mp_largura>'+
+            '<mp_espaco>'+IntToStr(FPosPrinter.EspacoEntreLinhas)+'</mp_espaco>'+
+            '</mp_configurar>';
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
@@ -196,15 +196,17 @@ begin
   Lateral := ImprimeLogoLateral and (PosPrinter.TagsNaoSuportadas.IndexOf(cTagModoPaginaLiga) < 0);
   if Lateral then
   begin
-    TextoLateral := '<c><n>';
+    TextoLateral := '<c>';
     if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
-       TextoLateral := TextoLateral + FpNFe.Emit.xFant + ' </n>';
+       TextoLateral := TextoLateral +
+                       QuebraLinhas('<n>' + FpNFe.Emit.xFant + ' </n>',
+                        Trunc(FPosPrinter.ColunasFonteCondensada/2));
 
     TextoLateral := TextoLateral +
                     QuebraLinhas('<n>' + FpNFe.Emit.xNome + '</n>'+
                     ' CNPJ:'+ FormatarCNPJ(FpNFe.Emit.CNPJCPF) +
                     ' IE:'+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF),
-                    Trunc(FPosPrinter.ColunasFonteCondensada/2))+sLineBreak;
+                      Trunc(FPosPrinter.ColunasFonteCondensada/2))+sLineBreak;
 
     TextoLateral := TextoLateral +
                     QuebraLinhas(Trim(Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
@@ -212,21 +214,18 @@ begin
                     ifthen(Trim(FpNFe.Emit.EnderEmit.xCpl)<>'',Trim(FpNFe.Emit.EnderEmit.xCpl) + ' ','') +
                     ifthen(Trim(FpNFe.Emit.EnderEmit.xBairro)<>'',Trim(FpNFe.Emit.EnderEmit.xBairro) + ' ','') +
                     Trim(FpNFe.Emit.EnderEmit.xMun) + '-' + Trim(FpNFe.Emit.EnderEmit.UF) + ' ' +
-                    Trim(FpNFe.Emit.EnderEmit.fone)), Trunc(FPosPrinter.ColunasFonteCondensada/2));
+                    ifthen(Trim(FpNFe.Emit.EnderEmit.fone)<>'','<n>'+FormatarFone(Trim(FpNFe.Emit.EnderEmit.fone))+'</n>','')),
+                      Trunc(FPosPrinter.ColunasFonteCondensada/2));
 
     DadosCabecalho := TStringList.Create;
     try
       DadosCabecalho.Text := TextoLateral;
-      Altura := max(43*DadosCabecalho.Count,250);
+      Altura := max((FPosPrinter.EspacoEntreLinhas+2)*DadosCabecalho.Count,250);
     finally
       DadosCabecalho.Free;
     end;
-    FPosPrinter.Buffer.Add('</zera><mp>');
-    ConfigurarRegiao(0,0,Altura,260);
-    FPosPrinter.Buffer.Add('</logo>');
-    ConfigurarRegiao(260,0,Altura,325);
-    FPosPrinter.Buffer.Add(TextoLateral);
-    FPosPrinter.Buffer.Add('</mp>');
+    FPosPrinter.Buffer.Add('</zera><mp>' + ConfigurarRegiao(0,0,Altura,260) + '</logo>');
+    FPosPrinter.Buffer.Add(ConfigurarRegiao(260,0,Altura,325) + TextoLateral + '</mp>');
   end
   else
   begin
@@ -579,47 +578,54 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(Cancelamento: Boolean;
-  Lateral: Boolean);
+function TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(Cancelamento: Boolean;
+  Lateral: Boolean): String;
 var
   qrcode: AnsiString;
+  InfoQrCode: TStringList;
 begin
-  if Cancelamento then
-  begin
-    FPosPrinter.Buffer.Add('</fn></linha_simples>');
-    FPosPrinter.Buffer.Add('</ce>Consulta via leitor de QR Code');
-  end;
+  InfoQrCode := TStringList.Create;
+  try
+    if Cancelamento then
+    begin
+      InfoQrCode.Add('</fn></linha_simples>');
+      InfoQrCode.Add('</ce>Consulta via leitor de QR Code');
+    end;
 
-  if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
-    qrcode := TACBrNFe(ACBrNFe).GetURLQRCode(
-      FpNFe.ide.cUF,
-      FpNFe.ide.tpAmb,
-      FpNFe.infNFe.ID,
-      IfThen(FpNFe.Dest.idEstrangeiro <> '', FpNFe.Dest.idEstrangeiro, FpNFe.Dest.CNPJCPF),
-      FpNFe.ide.dEmi,
-      FpNFe.Total.ICMSTot.vNF,
-      FpNFe.Total.ICMSTot.vICMS,
-      FpNFe.signature.DigestValue,
-      FpNFe.infNfe.Versao)
-  else
-    qrcode := FpNFe.infNFeSupl.qrCode;
+    if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
+      qrcode := TACBrNFe(ACBrNFe).GetURLQRCode(
+        FpNFe.ide.cUF,
+        FpNFe.ide.tpAmb,
+        FpNFe.infNFe.ID,
+        IfThen(FpNFe.Dest.idEstrangeiro <> '', FpNFe.Dest.idEstrangeiro, FpNFe.Dest.CNPJCPF),
+        FpNFe.ide.dEmi,
+        FpNFe.Total.ICMSTot.vNF,
+        FpNFe.Total.ICMSTot.vICMS,
+        FpNFe.signature.DigestValue,
+        FpNFe.infNfe.Versao)
+    else
+      qrcode := FpNFe.infNFeSupl.qrCode;
 
-  if Lateral then
-    FPosPrinter.Buffer.Add( '<qrcode_tipo>2</qrcode_tipo>'+
-                            '<qrcode_error>0</qrcode_error>'+
-                            '<qrcode_largura>4</qrcode_largura>'+
-                            '<qrcode>'+qrcode+'</qrcode>')
-  else
-    FPosPrinter.Buffer.Add( '<qrcode_error>0</qrcode_error>'+
-                            '<qrcode>'+qrcode+'</qrcode>');
+    if Lateral then
+      InfoQrCode.Add( '<qrcode_tipo>2</qrcode_tipo>'+
+                              '<qrcode_error>0</qrcode_error>'+
+                              '<qrcode_largura>4</qrcode_largura>'+
+                              '<qrcode>'+qrcode+'</qrcode>')
+    else
+      InfoQrCode.Add( '<qrcode_error>0</qrcode_error>'+
+                              '<qrcode>'+qrcode+'</qrcode>');
 
-  if Cancelamento then
-  begin
-    FPosPrinter.Buffer.Add(ACBrStr('<c>Protocolo de Autorização'));
-    FPosPrinter.Buffer.Add('<c>'+Trim(FpNFe.procNFe.nProt) + ' ' +
-       IfThen(FpNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FpNFe.procNFe.dhRecbto),
-              '') + '</fn>');
-    FPosPrinter.Buffer.Add('</linha_simples>');
+    if Cancelamento then
+    begin
+      InfoQrCode.Add(ACBrStr('<c>Protocolo de Autorização'));
+      InfoQrCode.Add('<c>'+Trim(FpNFe.procNFe.nProt) + ' ' +
+         IfThen(FpNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FpNFe.procNFe.dhRecbto),
+                '') + '</fn>');
+      InfoQrCode.Add('</linha_simples>');
+    end;
+  finally
+    Result := InfoQrCode.Text;
+    InfoQrCode.Free;
   end;
 end;
 
@@ -675,13 +681,9 @@ begin
 
       AjustaStringList(TextoLateral); // Ajusta corretamente o numero de Linhas
 
-      Altura := max(43*TextoLateral.Count, 600);
-      FPosPrinter.Buffer.Add('<mp>');
-      ConfigurarRegiao(0,0,Altura,250);
-      GerarInformacoesQRCode(False, True);
-      ConfigurarRegiao(270,0,Altura,325);
-      FPosPrinter.Buffer.Add(TextoLateral.Text);
-      FPosPrinter.Buffer.Add('</mp>');
+      Altura := max((FPosPrinter.EspacoEntreLinhas+2)*TextoLateral.Count, 560);
+      FPosPrinter.Buffer.Add('<mp>' + ConfigurarRegiao(0,0,Altura,270) + GerarInformacoesQRCode(False, True));
+      FPosPrinter.Buffer.Add(ConfigurarRegiao(270,0,Altura,325) + TextoLateral.Text + '</mp>');
     finally
       TextoLateral.Free;
     end;
@@ -692,7 +694,7 @@ begin
     FPosPrinter.Buffer.Add(GerarInformacoesIdentificacaoNFCe);
     GerarMensagemFiscal;
     FPosPrinter.Buffer.Add(GerarMensagemContingencia(#32));
-    GerarInformacoesQRCode;
+    FPosPrinter.Buffer.Add(GerarInformacoesQRCode(False, False));
   end;
 
   GerarMensagemInteresseContribuinte;
@@ -820,7 +822,7 @@ begin
   GerarDadosEvento;
   FPosPrinter.Buffer.Add(GerarInformacoesConsumidor);
   GerarObservacoesEvento;
-  GerarInformacoesQRCode(True);
+  FPosPrinter.Buffer.Add(GerarInformacoesQRCode(True, False));
   GerarRodape;
 
   FPosPrinter.Imprimir('',False,True,True,NumCopias);

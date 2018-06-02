@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/06/2018
+-- ACBrNFeDANFeESCPOS --
+[*] Impressão com Logo Lateral, Telefone formatado e em negrito
+[-] Impressão com QRCode Lateral, ajuste para imprimir QRCodes mais largos
+    https://www.projetoacbr.com.br/forum/topic/43648-qrcode-lateral-tm-t20-escpos-n%C3%A3o-imprime/?do=findComment&comment=288468
+[*] Ajustes para não imprimir Linhas em branco, desnecessárias
+    (por: DSA)
+
 23/05/2018
 -- ACBrNFeServicos --
 [*] Atualização das URLs de Homologação da SEFAZ-MS.

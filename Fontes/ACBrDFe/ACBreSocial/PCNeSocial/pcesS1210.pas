@@ -850,6 +850,9 @@ end;
 
 procedure TEvtPgtos.GerarCamposRubricas(pRubrica: TRubricaCollectionItem);
 begin
+  if (VersaoDF >= ve02_04_02) then
+    Gerador.wCampo(tcStr, '', 'matricula', 1, 30, 0, pRubrica.matricula);
+
   Gerador.wCampo(tcStr, '', 'codRubr',    1, 30, 1, pRubrica.codRubr);
   Gerador.wCampo(tcStr, '', 'ideTabRubr', 1,  8, 1, pRubrica.ideTabRubr);
   Gerador.wCampo(tcDe2, '', 'qtdRubr',    1,  6, 0, pRubrica.qtdRubr);
@@ -1217,6 +1220,7 @@ begin
 
                 with infoPgtoParc.Add do
                 begin
+                  matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
                   codRubr    := sFim;
                   ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
                   qtdRubr    := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdRubr', ''), 0);

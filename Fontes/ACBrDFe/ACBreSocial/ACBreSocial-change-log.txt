@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/06/2018
+-- pcesS2299 / pcesS1210 / pcesCommon --
+[*] https://www.projetoacbr.com.br/forum/topic/43520-adicionar-novos-campos-s-1210-e-s-2299/
+Por: Italo Jurisato Junior
+
 29/05/2018
 -- ACBreSocialWebServices / pcesGerador / pcesConversaoeSocial --
 [*] Ateração na montagem do caminho mais o nome do schema levando em consideração

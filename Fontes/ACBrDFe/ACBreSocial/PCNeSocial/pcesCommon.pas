@@ -1217,6 +1217,7 @@ type
 
   TRubricaCollectionItem = class(TCollectionItem)
   protected
+    Fmatricula: string;
     FCodRubr: string;
     FIdeTabRubr: string;
     FQtdRubr: Double;
@@ -1225,6 +1226,8 @@ type
     FVrRubr: Double;
   public
     constructor create; reintroduce;
+
+    property matricula: string read Fmatricula write Fmatricula;
     property codRubr: string read FCodRubr write FCodRubr;
     property ideTabRubr: string read FIdeTabRubr write FIdeTabRubr;
     property qtdRubr: Double read FQtdRubr write FQtdRubr;

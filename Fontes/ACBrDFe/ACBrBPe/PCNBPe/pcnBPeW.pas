@@ -675,7 +675,7 @@ begin
                  end;
           cst40,
           cst41,
-          cst50: begin
+          cst51: begin
                    //Esse bloco só contem o CST
                  end;
           cst90: begin

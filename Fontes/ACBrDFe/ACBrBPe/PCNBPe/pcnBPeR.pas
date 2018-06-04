@@ -328,9 +328,11 @@ begin
       BPe.Imp.ICMS.pICMSOutraUF  := Leitor.rCampo(tcDe2, 'pICMSOutraUF');
       BPe.Imp.ICMS.vICMSOutraUF  := Leitor.rCampo(tcDe2, 'vICMSOutraUF');
 
+      if Leitor.rExtrai(3, 'ICMSOutraUF') <> '' then
+        BPe.Imp.ICMS.CST := cstICMSOutraUF;
+
       if Leitor.rExtrai(3, 'ICMSSN') <> '' then
         BPe.Imp.ICMS.CST := cstICMSSN;
-
     end;
 
     if Leitor.rExtrai(2, 'ICMSUFFim') <> '' then

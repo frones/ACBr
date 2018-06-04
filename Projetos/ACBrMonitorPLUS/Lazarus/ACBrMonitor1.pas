@@ -49,9 +49,9 @@ uses
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
   ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types, fileinfo,
-  ACBrDFeConfiguracoes, ACBreSocial, ACBrIntegrador, LazHelpCHM,
+  ACBrDFeConfiguracoes, ACBrReinf, ACBreSocial, ACBrIntegrador, LazHelpCHM,
   pmdfeConversaoMDFe, ACBrMonitorConfig, ACBrMonitorConsts, DoACBrMDFeUnit,
-  DoACBreSocialUnit, ACBreSocialConfiguracoes, pcesConversaoeSocial;
+  DoACBreSocialUnit, pcesConversaoeSocial, DoACBrReinfUnit, pcnConversaoReinf;
 
 const
   //{$I versao.txt}
@@ -109,6 +109,7 @@ type
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
     ACBrPosPrinter1: TACBrPosPrinter;
+    ACBrReinf1: TACBrReinf;
     ACBrSAT1: TACBrSAT;
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
     ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
@@ -281,6 +282,8 @@ type
     cbCryptLib: TComboBox;
     cbHttpLib: TComboBox;
     cbTipoEmpregador: TComboBox;
+    cbTipoContribuinte: TComboBox;
+    cbVersaoWSReinf: TComboBox;
     cbVersaoWSMDFe: TComboBox;
     cbVersaoWSeSocial: TComboBox;
     cbxUsarSeparadorPathPDF: TCheckBox;
@@ -383,6 +386,7 @@ type
     edMFEInput: TEdit;
     edMFEOutput: TEdit;
     edtArquivoPFX: TEdit;
+    edtArquivoWebServicesReinf: TEdit;
     edtArquivoWebServicesGNRe: TEdit;
     edtArquivoWebServiceseSocial: TEdit;
     edtBOLEmailAssunto: TEdit;
@@ -392,7 +396,9 @@ type
     edtEmailAssuntoCTe: TEdit;
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
+    edtIDContribuinte: TEdit;
     edtIDTransmissor: TEdit;
+    edtIDTransmissorReinf: TEdit;
     edTimeZoneStr: TEdit;
     edtLogoMarcaNFCeSAT: TEdit;
     edtIDEmpregador: TEdit;
@@ -406,6 +412,7 @@ type
     gbExtratoSAT: TGroupBox;
     gbGavetaConfig: TGroupBox;
     gbxConfeSocial: TGroupBox;
+    gbxConfReinf: TGroupBox;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     gbImpressao: TGroupBox;
@@ -457,6 +464,11 @@ type
     Label216: TLabel;
     Label217: TLabel;
     Label218: TLabel;
+    Label219: TLabel;
+    Label220: TLabel;
+    Label221: TLabel;
+    Label222: TLabel;
+    Label223: TLabel;
     Label60: TLabel;
     Label61: TLabel;
     lbAvanco: TLabel;
@@ -503,6 +515,7 @@ type
     rdgImprimeChave1LinhaSAT: TRadioGroup;
     rgTipoFonte: TRadioGroup;
     sbArquivoCert: TSpeedButton;
+    sbArquivoWebServicesReinf: TSpeedButton;
     sbArquivoWebServicesGNRe: TSpeedButton;
     sbArquivoWebServiceseSocial: TSpeedButton;
     sbLogoMarca1: TSpeedButton;
@@ -557,6 +570,7 @@ type
     sbArquivoWebServicesCTe: TSpeedButton;
     TabSheet1: TTabSheet;
     gbxWSeSocial: TTabSheet;
+    gbxWSReinf: TTabSheet;
     tsIntegrador: TTabSheet;
     tsRelatorio: TTabSheet;
     tsImpCTe: TTabSheet;
@@ -1299,6 +1313,7 @@ type
     procedure sbArquivoWebServicesGNReClick(Sender: TObject);
     procedure sbArquivoWebServicesMDFeClick(Sender: TObject);
     procedure sbArquivoWebServicesNFeClick(Sender: TObject);
+    procedure sbArquivoWebServicesReinfClick(Sender: TObject);
     procedure sbBALSerialClick(Sender: TObject);
     procedure sbLogoMarca1Click(Sender: TObject);
     procedure sbLogoMarcaNFCeSATClick(Sender: TObject);
@@ -1458,6 +1473,7 @@ type
     FMonitorConfig: TMonitorConfig;
     FDoMDFe: TACBrObjetoMDFe;
     FDoeSocial: TACBrObjetoeSocial;
+    FDoReinf: TACBrObjetoReinf;
 
     function IsVisible : Boolean; virtual;
 
@@ -1556,8 +1572,9 @@ uses IniFiles, TypInfo, LCLType, strutils,
   ConfiguraSerial, DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit,
   DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrCTeUnit,
   DoSATUnit, DoPosPrinterUnit, DoACBrGNReUnit, ACBrSATExtratoClass,
-  SelecionarCertificado, ACBrNFeConfiguracoes,
-  ACBrCTeConfiguracoes, ACBrMDFeConfiguracoes, ACBrGNREConfiguracoes;
+  SelecionarCertificado, ACBrNFeConfiguracoes, ACBrCTeConfiguracoes,
+  ACBrMDFeConfiguracoes, ACBrGNREConfiguracoes, ACBreSocialConfiguracoes,
+  ACBrReinfConfiguracoes;
 
 {$R *.lfm}
 
@@ -1628,6 +1645,7 @@ begin
   FDoMDFe.OnDepoisDeImprimir := @DepoisDeImprimir;
 
   FDoeSocial := TACBrObjetoeSocial.Create(MonitorConfig, ACBreSocial1);
+  FDoReinf   := TACBrObjetoReinf.Create(MonitorConfig, ACBrReinf1);
 
   // Seta as definições iniciais para navegação
   SetColorButtons(btnMonitor);
@@ -3309,6 +3327,7 @@ begin
       ACBrGNRE1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
       ACBrBlocoX1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
       ACBreSocial1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+      ACBrReinf1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -3418,6 +3437,7 @@ begin
   ACBrBlocoX1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
   ACBrGNRE1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
   ACBreSocial1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
+  ACBrReinf1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
 end;
 
 procedure TFrmACBrMonitor.cbxUTF8Change(Sender: TObject);
@@ -3573,6 +3593,7 @@ begin
 
   FDoMDFe.Free;
   FDoeSocial.Free;
+  FDoReinf.Free;
   FMonitorConfig.Free;
 end;
 
@@ -4193,6 +4214,7 @@ begin
     edtArquivoWebServicesMDFe.Text     := ArquivoWebServicesMDFe;
     edtArquivoWebServicesGNRe.Text     := ArquivoWebServicesGNRe;
     edtArquivoWebServiceseSocial.Text  := ArquivoWebServiceseSocial;
+    edtArquivoWebServicesReinf.Text    := ArquivoWebServicesReinf;
     cbValidarDigest.Checked            := ValidarDigest;
     edtTimeoutWebServices.Value        := TimeoutWebService;
     cbModoEmissao.Checked              := IgnorarComandoModoEmissao;
@@ -4239,6 +4261,7 @@ begin
       cbVersaoWSCTe.ItemIndex          := cbVersaoWSCTe.Items.IndexOf(VersaoCTe);
       cbVersaoWSMDFe.ItemIndex         := cbVersaoWSMDFe.Items.IndexOf(VersaoMDFe);
       cbVersaoWSeSocial.ItemIndex      := cbVersaoWSeSocial.Items.IndexOf(VersaoeSocial);
+      cbVersaoWsReinf.ItemIndex        := cbVersaoWSReinf.Items.IndexOf(VersaoReinf);
     end;
 
     with ESocial do
@@ -4246,6 +4269,13 @@ begin
       edtIDEmpregador.Text             := IdEmpregador;
       edtIDTransmissor.Text            := IdTransmissor;
       cbTipoEmpregador.ItemIndex       := cbTipoEmpregador.Items.IndexOf(TipoEmpregador);
+    end;
+
+    with Reinf do
+    begin
+      edtIDContribuinte.Text             := IdContribuinte;
+      edtIDTransmissorReinf.Text         := IdTransmissor;
+      cbTipoContribuinte.ItemIndex       := cbTipoContribuinte.Items.IndexOf(TipoContribuinte);
     end;
 
     with WebService.Proxy do
@@ -4375,6 +4405,7 @@ begin
     SetComumConfig(ACBrGNRE1.Configuracoes);
     SetComumConfig(ACBrBlocoX1.Configuracoes);
     SetComumConfig(ACBreSocial1.Configuracoes);
+    SetComumConfig(ACBrReinf1.Configuracoes);
 
     AtualizaSSLLibsCombo;
 
@@ -5245,6 +5276,7 @@ begin
       ArquivoWebServicesMDFe    := edtArquivoWebServicesMDFe.Text;
       ArquivoWebServicesGNRe    := edtArquivoWebServicesGNRe.Text;
       ArquivoWebServiceseSocial := edtArquivoWebServiceseSocial.Text;
+      ArquivoWebServicesReinf   := edtArquivoWebServicesReinf.Text;
       ValidarDigest             := cbValidarDigest.Checked;
       TimeoutWebService         := edtTimeoutWebServices.Value;
 
@@ -5280,6 +5312,7 @@ begin
         VersaoCTe                := cbVersaoWSCTe.Text;
         VersaoMDFe               := cbVersaoWSMDFe.Text;
         VersaoeSocial            := cbVersaoWSeSocial.Text;
+        VersaoReinf              := cbVersaoWSReinf.Text;
         AjustarAut               := cbxAjustarAut.Checked;
         Aguardar                 := edtAguardar.Text;
         Tentativas               := edtTentativas.Text;
@@ -5297,6 +5330,13 @@ begin
         IdEmpregador             := edtIDEmpregador.Text;
         IdTransmissor            := edtIDTransmissor.Text;
         TipoEmpregador           := cbTipoEmpregador.Text;
+      end;
+
+      with Reinf do
+      begin
+        IdContribuinte           := edtIDContribuinte.Text;
+        IdTransmissor            := edtIDTransmissorReinf.Text;
+        TipoContribuinte         := cbTipoContribuinte.Text;
       end;
 
       with WebService.Proxy do
@@ -6509,6 +6549,19 @@ begin
   if OpenDialog1.Execute then
   begin
     edtArquivoWebServicesNFe.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbArquivoWebServicesReinfClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o arquivo';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtArquivoWebServicesReinf.Text := OpenDialog1.FileName;
   end;
 end;
 

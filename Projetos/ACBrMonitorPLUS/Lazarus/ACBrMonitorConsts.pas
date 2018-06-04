@@ -33,8 +33,8 @@ ResourceString
   SErroeSocialNenhumEvento = 'Erro: Nenhum evento na lista';
   SErroIDEmpregadorTransmissor = 'ID do Empregador/Transmissor Inválido.';
 
-  SErroReinfCarregar = 'Erro ao carregar eSocial';
-  SErroReinfAbrir = 'Erro ao abrir o arquivo do eSocial: %s';
+  SErroReinfCarregar = 'Erro ao carregar Reinf';
+  SErroReinfAbrir = 'Erro ao abrir o arquivo do Reinf: %s';
   SMsgReinfEventoAdicionado = 'Evento Adicionado: %s';
   SMsgReinfLimparLista = 'Lista de Eventos Limpas com Sucesso';
   SErroReinfNenhumEvento = 'Erro: Nenhum evento na lista';
@@ -50,6 +50,7 @@ const
   CACBrMDFeServicosIni =               'ACBrMDFeServicos.ini';
   CACBrGNREServicosIni =               'ACBrGNREServicos.ini';
   CACBreSocialServicosIni =            'ACBreSocialServicos.ini';
+  CACBrReinfServicosIni =              'ACBrReinfServicos.ini';
 
   CMetodostatusservico =               'statusservico';
   CMetodoValidarmdfe =                 'validarmdfe';
@@ -273,6 +274,7 @@ const
   CKeyArquivoWebServicesMDFe =        'ArquivoWebServicesMDFe';
   CKeyArquivoWebServicesGNRe =        'ArquivoWebServicesGNRe';
   CKeyArquivoWebServiceseSocial =     'ArquivoWebServiceseSocial';
+  CKeyArquivoWebServicesReinf =       'ArquivoWebServicesReinf';
   CKeyValidarDigest =                 'ValidarDigest';
   CKeyTimeoutWebService =             'TimeoutWebService';
 
@@ -290,6 +292,7 @@ const
   CKeyVersaoCTe =                    'VersaoCTe';
   CKeyVersaoMDFe =                   'VersaoMDFe';
   CKeyVersaoeSocial =                'VersaoeSocial';
+  CKeyVersaoReinf =                  'VersaoReinf';
   CKeyFormaEmissaoCTe =              'FormaEmissaoCTe';
   CKeyFormaEmissaoNFe =              'FormaEmissaoNFe';
   CKeyFormaEmissaoMDFe =             'FormaEmissaoMDFe';
@@ -306,6 +309,8 @@ const
   CKeyIdEmpregador =                 'IdEmpregador';
   CKeyIdTransmissor =                'IdTransmissor';
   CKeyTipoEmpregador =               'TipoEmpregador';
+  CKeyIdContribuinte =               'IdContribuinte';
+  CKeyTipoContribuinte =             'TipoContribuinte';
 
   CSecProxy =                        'Proxy';
   CKeyProxyHost =                    'Host';
@@ -416,6 +421,7 @@ const
   CKeyArquivosPathEvento =                  'PathEvento';
 
   CSeceSocial =                             'eSocial';
+  CSecReinf =                               'Reinf';
   CKey =                                    'Host';
 
   CSecSAT =                                 'SAT';
@@ -584,7 +590,9 @@ const
   CKeyBOLETOCedenteConvenio =               'Cedente.Convenio';
 
   CValueTipoEmpregador =                    'tePessoaJuridica';
+  CValueTipoContribuinte =                  'tcPessoaJuridica';
   CvalueVersaoeSocial =                     '02_04_02';
+  CvalueVersaoReinf =                       '1_03_02';
 
 
 implementation

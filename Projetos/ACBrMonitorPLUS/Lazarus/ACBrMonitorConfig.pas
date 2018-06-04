@@ -220,6 +220,7 @@ type
     VersaoMDFe        : String;
     VersaoCTe         : String;
     VersaoeSocial     : String;
+    VersaoReinf       : String;
     FormaEmissaoNFe   : Integer;
     FormaEmissaoCTe   : Integer;
     FormaEmissaoMDFe  : Integer;
@@ -331,6 +332,12 @@ type
     TipoEmpregador : String;
   end;
 
+  TReinf = record
+    IdContribuinte   : String;
+    IdTransmissor    : String;
+    TipoContribuinte : String;
+  end;
+
   TDFe = record
     IgnorarComandoModoEmissao: Boolean;
     ModoXML           : Boolean;
@@ -343,6 +350,7 @@ type
     ArquivoWebServicesMDFe: String;
     ArquivoWebServicesGNRe: String;
     ArquivoWebServiceseSocial: String;
+    ArquivoWebServicesReinf: String;
     ValidarDigest      : Boolean;
     TimeoutWebService  : Integer;
     Certificado        : TCertificado;
@@ -351,6 +359,7 @@ type
     Impressao          : TDFeImpressao;
     Diretorios         : TDFeDiretorios;
     ESocial            : TeSocial;
+    Reinf              : TReinf;
   end;
 
   TSATExtrato = record
@@ -822,6 +831,7 @@ begin
       Ini.Writestring( CSecACBrNFeMonitor, CKeyArquivoWebServicesMDFe, ArquivoWebServicesMDFe );
       Ini.WriteString( CSecACBrNFeMonitor, CKeyArquivoWebServicesGNRe, ArquivoWebServicesGNRe );
       Ini.Writestring( CSecACBrNFeMonitor, CKeyArquivoWebServiceseSocial, ArquivoWebServiceseSocial );
+      Ini.Writestring( CSecACBrNFeMonitor, CKeyArquivoWebServicesReinf, ArquivoWebServicesReinf );
       Ini.WriteBool( CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest );
       Ini.WriteInteger( CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeoutWebService );
     end;
@@ -856,6 +866,7 @@ begin
       Ini.WriteString( CSecWebService, CKeyVersao, Versao );
       Ini.WriteString( CSecWebService, CKeyVersaoCTe, VersaoCTe );
       Ini.WriteString( CSecWebService, CKeyVersaoMDFe, VersaoMDFe );
+      Ini.WriteString( CSecWebService, CKeyVersaoReinf, VersaoReinf );
       Ini.WriteString( CSecWebService, CKeyVersaoeSocial, VersaoeSocial );
       Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoNFe, FormaEmissaoNFe );
       Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoCTe, FormaEmissaoCTe );
@@ -875,7 +886,14 @@ begin
     begin
       Ini.WriteString( CSecESocial, CKeyIdEmpregador, IdEmpregador );
       Ini.WriteString( CSecESocial, CKeyIdTransmissor, IdTransmissor );
-      Ini.WriteString( CSecESocial, CKeyTipoEmpregador, TipoEmpregador);
+      Ini.WriteString( CSecESocial, CKeyTipoEmpregador, TipoEmpregador );
+    end;
+
+    with DFe.Reinf do
+    begin
+      Ini.WriteString( CSecReinf, CKeyIdContribuinte, IdContribuinte );
+      Ini.WriteString( CSecReinf, CKeyIdTransmissor, IdTransmissor );
+      Ini.WriteString( CSecReinf, CKeyTipoContribuinte, TipoContribuinte );
     end;
 
     with DFe.WebService.Proxy do
@@ -1419,6 +1437,7 @@ begin
       ArquivoWebServicesMDFe    := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivoWebServicesMDFe, AcertaPath( CACBrMDFeServicosIni ) );
       ArquivoWebServicesGNRe    := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivoWebServicesGNRe, AcertaPath( CACBrGNREServicosIni ) );
       ArquivoWebServiceseSocial := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivoWebServiceseSocial, AcertaPath( CACBreSocialServicosIni ) );
+      ArquivoWebServicesReinf   := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivoWebServicesReinf, AcertaPath( CACBrReinfServicosIni ) );
       ValidarDigest             := Ini.ReadBool( CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest );
       TimeoutWebService         := Ini.ReadInteger( CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeoutWebService );
     end;
@@ -1454,6 +1473,7 @@ begin
       VersaoCTe                 := Ini.ReadString( CSecWebService, CKeyVersaoCTe, VersaoCTe );
       VersaoMDFe                := Ini.ReadString( CSecWebService, CKeyVersaoMDFe, VersaoMDFe );
       VersaoeSocial             := Ini.ReadString( CSecWebService, CKeyVersaoeSocial, CvalueVersaoeSocial );
+      VersaoReinf               := Ini.ReadString( CSecWebService, CKeyVersaoReinf, CvalueVersaoReinf );
       FormaEmissaoNFe           := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoNFe, DFe.Impressao.Geral.FormaEmissao );
       FormaEmissaoCTe           := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoCTe, DFe.Impressao.Geral.FormaEmissao );
       FormaEmissaoGNRe          := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoGNRe, DFe.Impressao.Geral.FormaEmissao );
@@ -1590,6 +1610,13 @@ begin
       IdEmpregador               := Ini.ReadString( CSecESocial,    CKeyIdEmpregador,  IdEmpregador  );
       IdTransmissor              := Ini.ReadString( CSecESocial,    CKeyIdTransmissor,  IdTransmissor  );
       TipoEmpregador             := Ini.ReadString( CSecESocial,    CKeyTipoEmpregador,  CValueTipoEmpregador  );
+    end;
+
+    with DFe.Reinf do
+    begin
+      IdContribuinte             := Ini.ReadString( CSecReinf,    CKeyIdContribuinte,  IdContribuinte  );
+      IdTransmissor              := Ini.ReadString( CSecReinf,    CKeyIdTransmissor,  IdTransmissor  );
+      TipoContribuinte           := Ini.ReadString( CSecReinf,    CKeyTipoContribuinte,  CValueTipoContribuinte  );
     end;
 
     with SAT do
@@ -1994,6 +2021,7 @@ begin
     ArquivoWebServicesMDFe    := AcertaPath( 'ACBrMDFeServicos.ini' );
     ArquivoWebServicesGNRe    := AcertaPath('ACBrGNREServicos.ini' );
     ArquivoWebServiceseSocial := AcertaPath( 'ACBreSocialServicos.ini' );
+    ArquivoWebServicesReinf   := AcertaPath( 'ACBrReinfServicos.ini' );
     ValidarDigest             := True;
     TimeoutWebService         := 15;
   end;
@@ -2029,6 +2057,7 @@ begin
     VersaoCTe                 := '3.00';
     VersaoMDFe                := '3.00';
     VersaoeSocial             := '02_04_02';
+    VersaoReinf               := '1_03_02';
     FormaEmissaoNFe           := 0;
     FormaEmissaoCTe           := 0;
     FormaEmissaoGNRe          := 0;
@@ -2165,6 +2194,13 @@ begin
     IdEmpregador               := '';
     IdTransmissor              := '';
     TipoEmpregador             := 'tePessoaJuridica';
+  end;
+
+  with DFe.Reinf do
+  begin
+    IdContribuinte             := '';
+    IdTransmissor              := '';
+    TipoContribuinte           := 'tcPessoaJuridica';
   end;
 
   with SAT do

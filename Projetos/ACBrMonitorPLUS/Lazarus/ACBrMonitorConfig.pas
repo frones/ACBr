@@ -941,11 +941,11 @@ begin
 
     with DFE.Impressao.NFCe.Emissao.DANFCe do
     begin
-      Ini.WriteFloat( CSecDANFCe,  CKeyDANFCeMargemInf      , MargemInf );
-      Ini.WriteFloat( CSecDANFE,   CKeyDANFCeMargemSup      , MargemSup );
-      Ini.WriteFloat( CSecDANFE,   CKeyDANFCeMargemDir      , MargemDir );
-      Ini.WriteFloat( CSecDANFE,   CKeyDANFCeMargemEsq      , MargemEsq );
-      Ini.WriteFloat( CSecDANFE,   CKeyDANFCeLarguraBobina  , LarguraBobina );
+      Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeMargemInf      , MargemInf );
+      Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeMargemSup      , MargemSup );
+      Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeMargemDir      , MargemDir );
+      Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeMargemEsq      , MargemEsq );
+      Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeLarguraBobina  , LarguraBobina );
     end;
 
     with DFE.Impressao.DANFE do

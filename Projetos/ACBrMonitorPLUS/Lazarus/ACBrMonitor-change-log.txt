@@ -43,6 +43,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2018 - ACBrMonior
+[*] Ajuste para preenchimento campo CST no arquivo .ini
+Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou a UF - CST 10 e 90, informar 10part e 90part respectivamente.
+Grupo de Repasse de ICMS ST retido anteriormente em operações interestaduais com repasses através do Substituto Tributário, CST 41 e 60, informar 41rep e 60rep
+   por: José M. S. Junior
+
+[*] Atualizado Leitura e escrita do .INI com tag indPag (NFe 4.0)
+   por: José M. S. Junior
+
+[-] Correção na gravação das margens da NFCe
+   por: José M. S. Junior
+
+[*] Ajustes para utilizar estruturas de diretórios na geração PDF de Inutilização da NFe
+   por: José M. S. Junior
+
 28/05/2018 - ACBrMonior
 [-] Ajuste na gravação dos dados aba ( Software House )
    por: José M. S. Junior

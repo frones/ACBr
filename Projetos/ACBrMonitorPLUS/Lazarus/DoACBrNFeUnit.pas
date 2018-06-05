@@ -536,79 +536,117 @@ begin
 
         //NFe.InutilizarNFe(cCNPJ,cJustificativa,nAno,nModelo,nSérie,nNumInicial,nNumFinal)
         else if Cmd.Metodo = 'inutilizarnfe' then
-         begin
-           ValidarIntegradorNFCe( IntToStrZero(0,20) + Cmd.Params(3));
-                                          //CNPJ         //Justificat   //Ano                    //Modelo                 //Série                  //Num.Inicial            //Num.Final
-           ACBrNFe1.WebServices.Inutiliza(Cmd.Params(0), Cmd.Params(1), StrToInt(Cmd.Params(2)), StrToInt(Cmd.Params(3)), StrToInt(Cmd.Params(4)), StrToInt(Cmd.Params(5)), StrToInt(Cmd.Params(6)));
-
-           Cmd.Resposta := ACBrNFe1.WebServices.Inutilizacao.Msg+sLineBreak+
-                           '[INUTILIZACAO]'+sLineBreak+
-                           'Versao='+ACBrNFe1.WebServices.Inutilizacao.verAplic+sLineBreak+
-                           'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Inutilizacao.TpAmb)+sLineBreak+
-                           'VerAplic='+ACBrNFe1.WebServices.Inutilizacao.VerAplic+sLineBreak+
-                           'CStat='+IntToStr(ACBrNFe1.WebServices.Inutilizacao.CStat)+sLineBreak+
-                           'XMotivo='+ACBrNFe1.WebServices.Inutilizacao.XMotivo+sLineBreak+
-                           'CUF='+IntToStr(ACBrNFe1.WebServices.Inutilizacao.CUF)+sLineBreak+
-                           'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Inutilizacao.DhRecbto)+sLineBreak+
-                           'NProt='+ACBrNFe1.WebServices.Inutilizacao.Protocolo+sLineBreak+
-                           'Arquivo='+ACBrNFe1.WebServices.Inutilizacao.NomeArquivo+sLineBreak+
-                           'XML='+ACBrNFe1.WebServices.Inutilizacao.XML_ProcInutNFe+sLineBreak;
-         end
-        else if ( Cmd.Metodo = 'imprimirinutilizacao' ) or ( Cmd.Metodo = 'imprimirinutilizacaopdf' ) then
-         begin
-           PathsNFe := TStringList.Create;
-           try
-              PathsNFe.Append(Cmd.Params(0));
-              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
-              try
-                CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
-              except
-              end;
-           finally
-             PathsNFe.Free;
-           end;
-
-           bMostrarPreview := BoolToStr((Cmd.Metodo = 'imprimirinutilizacao' ) and (Cmd.Params(3) = '1'));
-           ConfiguraDANFe(False, bMostrarPreview );
-           ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
-
-           if Cmd.Metodo = 'imprimirinutilizacao' then
-           begin
-             if NaoEstaVazio(Cmd.Params(1)) then
-               ACBrNFe1.DANFE.Impressora := Cmd.Params(1)
-             else
-             begin
-               if rgModoImpressaoEvento.ItemIndex = 0 then
-                 ACBrNFe1.DANFE.Impressora := cbxImpressora.Text
-               else
-                 ACBrNFe1.DANFE.Impressora := cbxImpressoraNFCe.Text;
-             end;
-
-             if NaoEstaVazio(Cmd.Params(2)) then
-               ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1);
-
+        begin
+          ValidarIntegradorNFCe( IntToStrZero(0,20) + Cmd.Params(3));
+                                         //CNPJ         //Justificat   //Ano                    //Modelo                 //Série                  //Num.Inicial            //Num.Final
+          ACBrNFe1.WebServices.Inutiliza(Cmd.Params(0), Cmd.Params(1), StrToInt(Cmd.Params(2)), StrToInt(Cmd.Params(3)), StrToInt(Cmd.Params(4)), StrToInt(Cmd.Params(5)), StrToInt(Cmd.Params(6)));
+                   Cmd.Resposta := ACBrNFe1.WebServices.Inutilizacao.Msg+sLineBreak+
+                          '[INUTILIZACAO]'+sLineBreak+
+                          'Versao='+ACBrNFe1.WebServices.Inutilizacao.verAplic+sLineBreak+
+                          'TpAmb='+TpAmbToStr(ACBrNFe1.WebServices.Inutilizacao.TpAmb)+sLineBreak+
+                          'VerAplic='+ACBrNFe1.WebServices.Inutilizacao.VerAplic+sLineBreak+
+                          'CStat='+IntToStr(ACBrNFe1.WebServices.Inutilizacao.CStat)+sLineBreak+
+                          'XMotivo='+ACBrNFe1.WebServices.Inutilizacao.XMotivo+sLineBreak+
+                          'CUF='+IntToStr(ACBrNFe1.WebServices.Inutilizacao.CUF)+sLineBreak+
+                          'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Inutilizacao.DhRecbto)+sLineBreak+
+                          'NProt='+ACBrNFe1.WebServices.Inutilizacao.Protocolo+sLineBreak+
+                          'Arquivo='+ACBrNFe1.WebServices.Inutilizacao.NomeArquivo+sLineBreak+
+                          'XML='+ACBrNFe1.WebServices.Inutilizacao.XML_ProcInutNFe+sLineBreak;
+        end
+        else if ( Cmd.Metodo = 'imprimirinutilizacao' )  then
+        begin
+          PathsNFe := TStringList.Create;
+          try
+             PathsNFe.Append(Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
              try
-               AntesDeImprimir( ( StrToBoolDef(bMostrarPreview, False) ) or
-                              (FrmACBrMonitor.cbxMostrarPreview.Checked) );
-               ACBrNFe1.ImprimirInutilizacao;
-             finally
-               DepoisDeImprimir;
-             end;
-             Cmd.Resposta := 'Inutilização Impressa com sucesso';
-           end
-           else
-           begin
-             try
-               ACBrNFe1.ImprimirInutilizacaoPDF;
-               ArqPDF := OnlyNumber(ACBrNFe1.InutNFe.ID);
-               ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procInutNFe.pdf';
-               Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
+               CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
              except
-               raise Exception.Create('Erro ao criar o arquivo PDF');
              end;
-           end
-         end
+          finally
+            PathsNFe.Free;
+          end;
+
+          bMostrarPreview := BoolToStr((Cmd.Metodo = 'imprimirinutilizacao' ) and (Cmd.Params(3) = '1'));
+          ConfiguraDANFe(False, bMostrarPreview );
+          ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
+
+          if NaoEstaVazio(Cmd.Params(1)) then
+            ACBrNFe1.DANFE.Impressora := Cmd.Params(1)
+          else
+          begin
+            if rgModoImpressaoEvento.ItemIndex = 0 then
+              ACBrNFe1.DANFE.Impressora := cbxImpressora.Text
+            else
+              ACBrNFe1.DANFE.Impressora := cbxImpressoraNFCe.Text;
+          end;
+
+          if NaoEstaVazio(Cmd.Params(2)) then
+            ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1);
+
+          try
+            AntesDeImprimir( ( StrToBoolDef(bMostrarPreview, False) ) or
+                           (FrmACBrMonitor.cbxMostrarPreview.Checked) );
+            ACBrNFe1.ImprimirInutilizacao;
+          finally
+            DepoisDeImprimir;
+          end;
+          Cmd.Resposta := 'Inutilização Impressa com sucesso';
+        end
+
+        else if ( Cmd.Metodo = 'imprimirinutilizacaopdf' ) then
+        begin
+          PathsNFe := TStringList.Create;
+          try
+             PathsNFe.Append(Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
+             try
+               CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
+             except
+               on E: Exception do
+               begin
+                 raise Exception.Create('Erro ao Carregar XML Inutilização: '+E.Message);
+               end;
+             end;
+          finally
+            PathsNFe.Free;
+          end;
+
+          ACBrNFe1.NotasFiscais.Clear;
+          if NaoEstaVazio(Cmd.Params(1)) then
+          begin
+            PathsNFe := TStringList.Create;
+            try
+              PathsNFe.Append(Cmd.Params(1));
+              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+              try
+                CarregarDFe(PathsNFe, ArqNFe);
+              except
+                 on E: Exception do
+                 begin
+                   raise Exception.Create('Erro ao Carregar DFe: '+E.Message);
+                 end;
+              end;
+            finally
+              PathsNFe.Free;
+            end;
+          end;
+
+          ConfiguraDANFe(False, '' );
+          ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
+
+          try
+            ACBrNFe1.ImprimirInutilizacaoPDF;
+            ArqPDF := OnlyNumber(ACBrNFe1.InutNFe.ID);
+            ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procInutNFe.pdf';
+            Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
+          except
+            raise Exception.Create('Erro ao criar o arquivo PDF');
+          end;
+
+        end
 
         //NFe.EnviarNFe(cArqXML,nLote,[bAssina],[bImprime],[cImpressora],[bSincrono])
         else if Cmd.Metodo = 'enviarnfe' then

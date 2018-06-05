@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2018
+--ACBrNFeNotasFiscais--
+[*] Ajuste na escrita e leitura do campo indPag da no arquivo.INI, para NFe 4.0
+   Por: José M. S. Junior
+
 02/06/2018
 -- ACBrNFeDANFeESCPOS --
 [*] Impressão com Logo Lateral, Telefone formatado e em negrito

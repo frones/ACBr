@@ -2079,6 +2079,7 @@ begin
         begin
           tPag  := StrToFormaPagamento(OK,sFim);
           vPag  := StringToFloatDef( INIRec.ReadString(sSecao,'vPag','') ,0) ;
+          indPag:= StrToIndpag(OK,INIRec.ReadString( sSecao,'indPag','0'));
 
           tpIntegra  := StrTotpIntegra(OK,INIRec.ReadString(sSecao,'tpIntegra',''));
           CNPJ  := INIRec.ReadString(sSecao,'CNPJ','');
@@ -2930,6 +2931,7 @@ begin
         begin
           INIRec.WriteString(sSecao, 'tPag', FormaPagamentoToStr(tPag));
           INIRec.WriteFloat(sSecao, 'vPag', vPag);
+          INIRec.WriteString(sSecao, 'indPag', IndpagToStr(indPag));
           INIRec.WriteString(sSecao, 'tpIntegra', tpIntegraToStr(tpIntegra));
           INIRec.WriteString(sSecao, 'CNPJ', CNPJ);
           INIRec.WriteString(sSecao, 'tBand', BandeiraCartaoToStr(tBand));

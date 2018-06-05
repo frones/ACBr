@@ -735,17 +735,22 @@ begin
   // ID -> N10b - Grupo de informação do ICMS ST devido para a UF de destino,nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário. (v2.0)
   // ID -> N11  - ICMS devido para outras UF
   // ID -> N12  - Outros
-  result := EnumeradoToStr(t, ['00' , '10' , '20' , '30' , '40' , '41' , '50' , '51' ,
-                               '60' , '70' , '80' , '81', '90', '10', '90', '41', '90', 'SN', '60'],
-                              [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51,
-                              cst60, cst70, cst80, cst81, cst90, cstPart10 , cstPart90 ,
-                              cstRep41, cstICMSOutraUF, cstICMSSN, cstRep60]);
+  result := EnumeradoToStr(t, ['', '00' , '10' , '20' , '30' , '40' , '41' , '50' , '51' ,
+                               '60' , '70' , '80' , '81', '90', '91', 'SN',
+                               '10', '90', '41', '60'],
+                              [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51,
+                              cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,
+                              cstPart10, cstPart90, cstRep41, cstRep60]);
 end;
 
 function StrToCSTICMS(out ok: boolean; const s: string): TpcnCSTIcms;
 begin
-  result := StrToEnumerado(ok, s, ['00', '10', '20', '30', '40', '41', '50', '51', '60', '70', '80', '81', '90', '91', 'SN'],
-    [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
+  result := StrToEnumerado(ok, s, ['00', '10', '20', '30', '40', '41', '50', '51', '60',
+                                   '70', '80', '81', '90', '91', 'SN',
+                                   '10part', '90part', '41rep', '60rep'],
+                                  [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60,
+                                   cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,
+                                   cstPart10, cstPart90, cstRep41, cstRep60]);
 end;
 
 function CSTICMSToStrTagPos(const t: TpcnCSTIcms): string;

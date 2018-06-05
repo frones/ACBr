@@ -101,29 +101,6 @@ var
   i, j, k, nItem: Integer;
   Arquivo, Itens, ItensTemp, VersaoInfNFe, NumItem: AnsiString;
   Aspas, tagPag: String;
-
-  function VerificaParSt(const t: TpcnCSTIcms): TpcnCSTIcms;
-  // 	Verifica se existe Partilha ou St
-  begin
-    Result := t;
-    case t of
-          // ICMSPart (N10a)
-    cst10 : if ( nfe.Det[i].Imposto.ICMS.UFST <> '') then Result := cstPart10;
-    cst90 : if ( nfe.Det[i].Imposto.ICMS.UFST <> '') then Result := cstPart90;
-          //ICMSST (N10b)- Repasse de ICMS
-    cst41 : if (	( nfe.Det[i].Imposto.ICMS.vBCSTRet    > 0) or
-                  ( nfe.Det[i].Imposto.ICMS.vICMSSTRet  > 0) or
-                  ( nfe.Det[i].Imposto.ICMS.vBCSTDest   > 0) or
-                  ( nfe.Det[i].Imposto.ICMS.vICMSSTDest > 0) )
-      then Result := cstRep41;
-    cst60 : if ((nfe.infNFe.Versao >= 4) and
-                ( ( nfe.Det[i].Imposto.ICMS.vBCSTRet    > 0) or
-                  ( nfe.Det[i].Imposto.ICMS.vICMSSTRet  > 0) or
-                  ( nfe.Det[i].Imposto.ICMS.vBCSTDest   > 0) or
-                  ( nfe.Det[i].Imposto.ICMS.vICMSSTDest > 0) ))
-      then Result := cstRep60;
-    end;
-  end;
 begin
   Leitor.Grupo := Leitor.Arquivo;
 
@@ -674,9 +651,20 @@ begin
       (*N31*)NFe.Det[i].Imposto.ICMS.vBCSTDest   := Leitor.rCampo(tcDe2, 'vBCSTDest');
       (*N32*)NFe.Det[i].Imposto.ICMS.vICMSSTDest := Leitor.rCampo(tcDe2, 'vICMSSTDest');
 
-      (*N10a*)
-      (*N10b*)
-      (*N12*) NFe.Det[i].Imposto.ICMS.CST := VerificaParSt( NFe.Det[i].Imposto.ICMS.CST );
+      if Leitor.rExtrai(4, 'ICMSPart') <> '' then
+      begin
+        case NFe.Det[i].Imposto.ICMS.CST of
+          cst10 : NFe.Det[i].Imposto.ICMS.CST := cstPart10;
+          cst90 : NFe.Det[i].Imposto.ICMS.CST := cstPart90;
+        end;
+      end
+      else if Leitor.rExtrai(4, 'ICMSST') <> '' then
+      begin
+        case NFe.Det[i].Imposto.ICMS.CST of
+          cst41 : NFe.Det[i].Imposto.ICMS.CST := cstRep41;
+          cst60 : NFe.Det[i].Imposto.ICMS.CST := cstRep60;
+        end;
+      end;
     end;
 
     if Leitor.rExtrai(3, 'ICMSUFDest') <> '' then

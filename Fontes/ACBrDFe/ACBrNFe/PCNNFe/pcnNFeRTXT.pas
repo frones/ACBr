@@ -743,6 +743,22 @@ begin
     i := NFe.Det.Count - 1;
     (*N11*)NFe.Det[i].Imposto.ICMS.orig := StrToOrig(ok, LerCampo(tcStr, 'orig'));
     (*N12*)NFe.Det[i].Imposto.ICMS.CST := StrToCSTICMS(ok, LerCampo(tcStr, 'CST'));
+
+    if (ID = 'N10A') then
+     begin
+       case NFe.Det[i].Imposto.ICMS.CST of
+         cst10: NFe.Det[i].Imposto.ICMS.CST := cstPart10;
+         cst90: NFe.Det[i].Imposto.ICMS.CST := cstPart90;
+       end;
+     end
+     else if (ID = 'N10B') then
+     begin
+       case NFe.Det[i].Imposto.ICMS.CST of
+         cst41: NFe.Det[i].Imposto.ICMS.CST := cstRep41;
+         cst60: NFe.Det[i].Imposto.ICMS.CST := cstRep60;
+       end;
+     end;
+
    (*N12a*)NFe.Det[i].Imposto.ICMS.CSOSN := StrToCSOSNICMS(ok, LerCampo(tcStr, 'CSOSN'));
     (*N13*)NFe.Det[i].Imposto.ICMS.modBC := StrToModBC(ok, LerCampo(tcStr, 'modBC'));
     (*N14*)NFe.Det[i].Imposto.ICMS.pRedBC := LerCampo(tcDe2, 'pRedBC');

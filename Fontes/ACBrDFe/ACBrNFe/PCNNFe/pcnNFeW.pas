@@ -1263,31 +1263,6 @@ begin
    case nfe.Emit.CRT of
       crtRegimeNormal, crtSimplesExcessoReceita :
          begin
-
-            if (nfe.Det[i].Imposto.ICMS.CST = cst41) and       //Ajuste para funcionar no ACBrNFeMonitor
-               ((nfe.Det[i].Imposto.ICMS.vBCSTRet <> 0) or     //Qdo passar CST 41 e algum campo de repasse de ICMS ST
-                (nfe.Det[i].Imposto.ICMS.vICMSSTRet <> 0) or   //estiver preenchido será trocado o cst para cstRep41
-                (nfe.Det[i].Imposto.ICMS.vBCSTDest <> 0) or
-                (nfe.Det[i].Imposto.ICMS.vICMSSTDest <> 0)) then
-               nfe.Det[i].Imposto.ICMS.CST := cstRep41;
-
-            if (nfe.infNFe.Versao >= 4) and
-               (nfe.Ide.modelo = 55) and
-               (nfe.Det[i].Imposto.ICMS.CST = cst60) and         //Ajuste para funcionar no ACBrNFeMonitor
-               ((nfe.Det[i].Imposto.ICMS.vBCSTDest <> 0) or      //Qdo passar CST 60 e algum campo de repasse de ICMS ST
-                (nfe.Det[i].Imposto.ICMS.vICMSSTDest <> 0)) then //estiver preenchido será trocado o cst para cstRep60
-               nfe.Det[i].Imposto.ICMS.CST := cstRep60;
-
-            if (nfe.Det[i].Imposto.ICMS.CST = cst10) and       //Ajuste para funcionar no ACBrNFeMonitor
-               ((nfe.Det[i].Imposto.ICMS.UFST <> '') or        //Qdo passar CST 10 e algum campo de partilha de ICMS ST
-                (nfe.Det[i].Imposto.ICMS.pBCOp <> 0)) then     //estiver preenchido será trocado o cst para cstPart10
-               nfe.Det[i].Imposto.ICMS.CST := cstPart10;
-
-            if (nfe.Det[i].Imposto.ICMS.CST = cst90) and       //Ajuste para funcionar no ACBrNFeMonitor
-               ((nfe.Det[i].Imposto.ICMS.UFST <> '') or        //Qdo passar CST 90 e algum campo de partilha de ICMS ST
-                (nfe.Det[i].Imposto.ICMS.pBCOp <> 0)) then     //estiver preenchido será trocado o cst para cstPart90
-               nfe.Det[i].Imposto.ICMS.CST := cstPart90;
-
             sTagTemp := BuscaTag( nfe.Det[i].Imposto.ICMS.CST );
 
             Gerador.wGrupo('ICMS' + sTagTemp, 'N' + CSTICMSTOStrTagPos(nfe.Det[i].Imposto.ICMS.CST));
@@ -1455,7 +1430,7 @@ begin
                           Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
 
                           if (NFe.infNFe.Versao >= 4) then
-                            Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N26.1', 'pST', 01, IIf(Usar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
+                            Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N26.1', 'pST', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
 
                           Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
                         end;

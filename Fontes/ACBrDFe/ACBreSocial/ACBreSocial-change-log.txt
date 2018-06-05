@@ -48,10 +48,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2018
+-- pcesS1030 --
+[*] Imposta uma condição para gerar ou não o grupo <cargoPublico> na leitura do
+    arquivo INI do evento 1030.
+   Por: Italo Jurisato Junior
+-- pcesS1280 --
+[*] Alterado o tipo de tcDec4 para tcDec2 - tag <fatorMes>.
+   Por: Joceandro Perin
+
 04/06/2018
 -- pcesS2299 / pcesS1210 / pcesCommon --
 [*] https://www.projetoacbr.com.br/forum/topic/43520-adicionar-novos-campos-s-1210-e-s-2299/
-Por: Italo Jurisato Junior
+   Por: Italo Jurisato Junior
 
 29/05/2018
 -- ACBreSocialWebServices / pcesGerador / pcesConversaoeSocial --

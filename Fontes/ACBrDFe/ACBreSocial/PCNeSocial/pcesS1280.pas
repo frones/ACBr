@@ -226,7 +226,7 @@ procedure TEvtInfoComplPer.GerarInfoAtivConcom;
 begin
   Gerador.wGrupo('infoAtivConcom');
 
-  Gerador.wCampo(tcDe4, '', 'fatorMes', 1, 5, 1, InfoAtivConcom.fatorMes);
+  Gerador.wCampo(tcDe2, '', 'fatorMes', 1, 5, 1, InfoAtivConcom.fatorMes);
   Gerador.wCampo(tcDe2, '', 'fator13',  1, 5, 1, InfoAtivConcom.fator13);
 
   Gerador.wGrupo('/infoAtivConcom');

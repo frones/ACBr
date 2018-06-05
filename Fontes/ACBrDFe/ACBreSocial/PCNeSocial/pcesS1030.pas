@@ -429,14 +429,17 @@ begin
         infoCargo.dadosCargo.codCBO  := INIRec.ReadString(sSecao, 'codCBO', '1');
 
         sSecao := 'cargoPublico';
-        infoCargo.dadosCargo.cargoPublico.acumCargo   := eSStrToAcumCargo(Ok, INIRec.ReadString(sSecao, 'acumCargo', '1'));
-        infoCargo.dadosCargo.cargoPublico.contagemEsp := eSStrToContagemEsp(Ok, INIRec.ReadString(sSecao, 'contagemEsp', '1'));
-        infoCargo.dadosCargo.cargoPublico.dedicExcl   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'dedicExcl', 'S'));
+        if INIRec.ReadString(sSecao, 'acumCargo', '') <> '' then
+        begin
+          infoCargo.dadosCargo.cargoPublico.acumCargo   := eSStrToAcumCargo(Ok, INIRec.ReadString(sSecao, 'acumCargo', '1'));
+          infoCargo.dadosCargo.cargoPublico.contagemEsp := eSStrToContagemEsp(Ok, INIRec.ReadString(sSecao, 'contagemEsp', '1'));
+          infoCargo.dadosCargo.cargoPublico.dedicExcl   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'dedicExcl', 'S'));
 
-        sSecao := 'leiCargo';
-        infoCargo.dadosCargo.cargoPublico.leiCargo.nrLei    := INIRec.ReadString(sSecao, 'nrLei', '');
-        infoCargo.dadosCargo.cargoPublico.leiCargo.dtLei    := StringToDateTime(INIRec.ReadString(sSecao, 'dtLei', '0'));
-        infoCargo.dadosCargo.cargoPublico.leiCargo.sitCargo := eSStrToSitCargo(Ok, INIRec.ReadString(sSecao, 'sitCargo', '1'));
+          sSecao := 'leiCargo';
+          infoCargo.dadosCargo.cargoPublico.leiCargo.nrLei    := INIRec.ReadString(sSecao, 'nrLei', '');
+          infoCargo.dadosCargo.cargoPublico.leiCargo.dtLei    := StringToDateTime(INIRec.ReadString(sSecao, 'dtLei', '0'));
+          infoCargo.dadosCargo.cargoPublico.leiCargo.sitCargo := eSStrToSitCargo(Ok, INIRec.ReadString(sSecao, 'sitCargo', '1'));
+        end;
 
         if ModoLancamento = mlAlteracao then
         begin

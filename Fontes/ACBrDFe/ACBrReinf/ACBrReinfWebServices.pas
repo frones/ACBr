@@ -513,7 +513,6 @@ end;
 
 function TConsultar.TratarResposta: Boolean;
 var
-  i: Integer;
   AXML, NomeArq: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'ConsultaInformacoesConsolidadasResult');

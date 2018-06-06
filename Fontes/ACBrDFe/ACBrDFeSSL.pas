@@ -1550,7 +1550,7 @@ begin
     httpWinINet, httpWinHttp:
     begin
       {$IfDef MSWINDOWS}
-       FSSLHttpClass := TDFeHttpWinHttp.Create(Self, ASSLHttpLib);
+       FSSLHttpClass := TDFeHttpWinHttp.Create(Self);
       {$Else}
        raise EACBrDFeException.Create('Suporte a "httpWinINet" disponível apenas em MSWINDOWS');
       {$EndIf}

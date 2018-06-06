@@ -57,7 +57,7 @@ type
     procedure ConfigurarHTTP(const AURL, ASoapAction: String; AMimeType: String); override;
 
   public
-    constructor Create(ADFeSSL: TDFeSSL; WinApi: TSSLHttpLib); reintroduce;
+    constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
     function Enviar(const ConteudoXML: String; const AURL: String;
@@ -75,11 +75,11 @@ uses
 
 { TDFeHttpWinHttp }
 
-constructor TDFeHttpWinHttp.Create(ADFeSSL: TDFeSSL; WinApi: TSSLHttpLib);
+constructor TDFeHttpWinHttp.Create(ADFeSSL: TDFeSSL);
 begin
   inherited Create(ADFeSSL);
 
-  if WinApi = httpWinINet then
+  if ADFeSSL.SSLHttpLib = httpWinINet then
     FWinHTTPReqResp := TACBrWinINetReqResp.Create
   else
     FWinHTTPReqResp := TACBrWinHTTPReqResp.Create;
@@ -119,9 +119,9 @@ begin
     except
       On E: Exception do
       begin
-        raise EACBrDFeException.Create( Format( cACBrDFeSSLEnviarException,
-                                        [InternalErrorCode, HTTPResultCode] ) + sLineBreak +
-                                        E.Message ) ;
+        raise EACBrDFeException.CreateDef( Format( cACBrDFeSSLEnviarException,
+                                           [InternalErrorCode, HTTPResultCode] ) + sLineBreak +
+                                           E.Message ) ;
       end;
     end;
   finally

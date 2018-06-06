@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2018
+-- ACBrDFeSSL, ACBrDFeHttpWinApi --
+[-] Correção de A.V. quando usando httpWinINet, httpWinHttp e
+    TimeOutPorThread = True
+
+-- ACBrDFeHttpWinApi --
+[-] Correção na exibição de mensagens de Erro com acentos
+    (por: DSA)
+
 30/05/2018
 -- ACBrDFeSSL --
 [-] Ajuste em TDFeSendThread, para evitar A.V. em algumas situações

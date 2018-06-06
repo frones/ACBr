@@ -494,6 +494,10 @@ begin
     begin
       CFe.InfAdic.infCpl := Observacao;
 
+      for I := CFe.Pagto.Count-1 downto 0 do
+        if CFe.Pagto.Items[i].vMP=0 then
+          CFe.Pagto.Delete(I);
+
       // apaga os itens cancelados
       for I := CFe.Det.Count-1 downto 0 do
         if CFe.Det.Items[i].Prod.qCom=0 then

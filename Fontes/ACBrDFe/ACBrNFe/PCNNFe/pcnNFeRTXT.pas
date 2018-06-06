@@ -248,7 +248,7 @@ begin
     (*B02*)NFe.ide.cUF := LerCampo(tcInt, 'cUF');
     (*B03*)NFe.ide.cNF := LerCampo(tcInt, 'cNF');
     (*B04*)NFe.ide.natOp := LerCampo(tcStr, 'natOp');
-    if (nfe.infNFe.Versao < 3.10) then
+    if (nfe.infNFe.Versao < 4.00) then
       (*B05*)NFe.ide.indPag := StrToIndpag(ok, LerCampo(tcStr, 'indPag'));
     (*B06*)NFe.ide.modelo := LerCampo(tcInt, 'mod');
     (*B07*)NFe.ide.serie := LerCampo(tcInt, 'serie');

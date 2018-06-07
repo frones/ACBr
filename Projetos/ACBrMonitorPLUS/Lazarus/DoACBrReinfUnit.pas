@@ -461,51 +461,45 @@ var
 begin
   with ACBrReinf.WebServices.EnvioLote.RetEnvioLote do
   begin
-    if Status.cdStatus in [201, 202] then
+    RespostaEnvioRetorno;
+    RespostaEnvioideTransmissor;
+    RespostaEnviostatus;
+
+    for i := 0 to Status.Ocorrencias.Count - 1 do
+      RespostaEnvioOcorrencias(i);
+
+    for i := 0 to evento.Count - 1 do
     begin
-      RespostaEnvioRetorno;
-      RespostaEnvioideTransmissor;
-      RespostaEnviostatus;
+      RespostaEnvioevento(i);
+      RespostaEnvioevtTotal(i);
+      RespostaEnvioideEvento(i);
+      RespostaEnvioideContri(i);
+      RespostaEnvioideStatus(i);
 
-      for i := 0 to Status.Ocorrencias.Count - 1 do
-        RespostaEnvioOcorrencias(i);
+      for j := 0 to evento.Items[i].evtTotal.IdeStatus.regOcorrs.Count -1 do
+        RespostaEnvioregOcorrs(i, j);
 
-      for i := 0 to evento.Count - 1 do
-      begin
-        RespostaEnvioevento(i);
-        RespostaEnvioevtTotal(i);
-        RespostaEnvioideEvento(i);
-        RespostaEnvioideContri(i);
-        RespostaEnvioideStatus(i);
+      RespostaEnvioinfoRecEv(i);
+      RespostaEnvioinfoTotal(i);
 
-        for j := 0 to evento.Items[i].evtTotal.IdeStatus.regOcorrs.Count -1 do
-          RespostaEnvioregOcorrs(i, j);
+      RespostaEnvioRTom(i);
 
-        RespostaEnvioinfoRecEv(i);
-        RespostaEnvioinfoTotal(i);
+      for j := 0 to evento.Items[i].evtTotal.InfoTotal.RTom.infoCRTom.Count -1 do
+        RespostaEnvioinfoCRTom(i, j);
 
-        RespostaEnvioRTom(i);
+      RespostaEnvioRPrest(i);
 
-        for j := 0 to evento.Items[i].evtTotal.InfoTotal.RTom.infoCRTom.Count -1 do
-          RespostaEnvioinfoCRTom(i, j);
+      for j := 0 to evento.Items[i].evtTotal.InfoTotal.RRecRepAD.Count -1 do
+        RespostaEnvioRRecRepAD(i, j);
 
-        RespostaEnvioRPrest(i);
+      for j := 0 to evento.Items[i].evtTotal.InfoTotal.RComl.Count -1 do
+        RespostaEnvioRComl(i, j);
 
-        for j := 0 to evento.Items[i].evtTotal.InfoTotal.RRecRepAD.Count -1 do
-          RespostaEnvioRRecRepAD(i, j);
+      for j := 0 to evento.Items[i].evtTotal.InfoTotal.RCPRB.Count -1 do
+        RespostaEnvioRCPRB(i, j);
 
-        for j := 0 to evento.Items[i].evtTotal.InfoTotal.RComl.Count -1 do
-          RespostaEnvioRComl(i, j);
-
-        for j := 0 to evento.Items[i].evtTotal.InfoTotal.RCPRB.Count -1 do
-          RespostaEnvioRCPRB(i, j);
-
-        RespostaEnvioRRecEspetDest(i);
-      end;
-    end
-    else
-      for i := 0 to Status.Ocorrencias.Count - 1 do
-        RespostaEnvioOcorrencias(i);
+      RespostaEnvioRRecEspetDest(i);
+    end;
   end;
 end;
 

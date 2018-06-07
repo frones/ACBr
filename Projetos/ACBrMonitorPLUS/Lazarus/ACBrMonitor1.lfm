@@ -6582,7 +6582,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 272
                 Height = 17
                 Top = 160
-                Width = 141
+                Width = 142
                 Caption = 'CNPJ Contador(AutXML)'
                 ParentColor = False
               end
@@ -6831,7 +6831,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 8
                   Height = 17
                   Top = 46
-                  Width = 51
+                  Width = 52
                   Caption = 'SSL Type'
                   ParentColor = False
                 end
@@ -6913,7 +6913,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 6
                       Height = 17
                       Top = 45
-                      Width = 67
+                      Width = 68
                       Caption = 'Versão NFe'
                       ParentColor = False
                     end
@@ -7026,7 +7026,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 80
                       Height = 17
                       Top = 45
-                      Width = 65
+                      Width = 67
                       Caption = 'Versão CTe'
                       ParentColor = False
                     end
@@ -7048,7 +7048,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 155
                       Height = 17
                       Top = 45
-                      Width = 78
+                      Width = 79
                       Caption = 'Versão MDFe'
                       ParentColor = False
                     end
@@ -7152,7 +7152,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 100
                       Height = 17
                       Top = 24
-                      Width = 57
+                      Width = 58
                       Caption = 'Tentativas'
                       ParentColor = False
                     end
@@ -7233,7 +7233,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 8
                       Height = 17
                       Top = 26
-                      Width = 21
+                      Width = 22
                       Caption = 'CTe'
                       ParentColor = False
                     end
@@ -7417,7 +7417,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 20
                     Height = 17
                     Top = 19
-                    Width = 90
+                    Width = 91
                     Caption = 'Versão e-Social'
                     ParentColor = False
                   end
@@ -7442,7 +7442,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 6
                       Height = 17
                       Top = 56
-                      Width = 86
+                      Width = 87
                       Caption = 'ID Transmissor'
                       ParentColor = False
                     end
@@ -7493,7 +7493,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 20
                     Height = 17
                     Top = 16
-                    Width = 73
+                    Width = 74
                     Caption = 'Versão Reinf'
                     ParentColor = False
                   end
@@ -7532,7 +7532,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 6
                       Height = 17
                       Top = 56
-                      Width = 86
+                      Width = 87
                       Caption = 'ID Transmissor'
                       ParentColor = False
                     end

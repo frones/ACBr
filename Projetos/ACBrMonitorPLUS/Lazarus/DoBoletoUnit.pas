@@ -150,13 +150,17 @@ begin
       begin
         if DirectoryExists(Cmd.Params(0)) then
         begin
-          if ACBrBoletoFC.Filtro = TACBrBoletoFCFiltro(fiHTML) then
-            ACBrBoletoFC.NomeArquivo := PathWithDelim(Cmd.Params(0))  + 'boleto.html'
-          else
-            ACBrBoletoFC.NomeArquivo := PathWithDelim( Cmd.Params(0)) + 'boleto.pdf';
-
-          FrmACBrMonitor.deBOLDirArquivo.Text := Cmd.Params(0);
+          FrmACBrMonitor.deBOLDirArquivo.Text := PathWithDelim(Cmd.Params(0));
           FrmACBrMonitor.SalvarIni;
+          if ACBrBoletoFC.Filtro = TACBrBoletoFCFiltro(fiHTML) then
+            ACBrBoletoFC.NomeArquivo := PathWithDelim(Cmd.Params(0))  +
+              IfThen(NaoEstaVazio(Cmd.Params(1)), Cmd.Params(1) , 'boleto.html' )
+          else
+            ACBrBoletoFC.NomeArquivo := PathWithDelim( Cmd.Params(0)) +
+              IfThen(NaoEstaVazio(Cmd.Params(1)), Cmd.Params(1) , 'boleto.pdf' );
+
+          Cmd.Resposta := ACBrBoletoFC.NomeArquivo;
+
         end
         else
           raise Exception.Create('Arquivo não encontrado.');

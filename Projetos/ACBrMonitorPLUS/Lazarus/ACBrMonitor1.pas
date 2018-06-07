@@ -4351,7 +4351,7 @@ begin
       fspeMargemSup.Value                 := MargemSup;
       fspeMargemDir.Value                 := MargemDir;
       fspeMargemEsq.Value                 := MargemEsq;
-      edtPathPDF.Text                     := PathPDF;
+      edtPathPDF.Text                     := IfThen( NaoEstaVazio(PathPDF), PathPDF, AcertaPath('PDF'));
       spedtCasasDecimaisQtd.Value         := DecimaisQTD;
       spedtDecimaisVUnit.Value            := DecimaisValor;
       cbxExibeResumo.Checked              := ExibeResumo;
@@ -4390,10 +4390,10 @@ begin
       cbxAtualizarXMLCancelado.Checked := AtualizarXMLCancelado;
       cbxNormatizarMunicipios.Checked  := NormatizarMunicipios;
       cbxUsarSeparadorPathPDF.Checked  := UsarSeparadorPathPDF;
-      edtPathNFe.Text                  := PathNFe;
-      edtPathInu.Text                  := PathInu;
-      edtPathDPEC.Text                 := PathDPEC;
-      edtPathEvento.Text               := PathEvento;
+      edtPathNFe.Text                  := IfThen( NaoEstaVazio(PathNFe), PathNFe, AcertaPath('Arqs'));
+      edtPathInu.Text                  := IfThen( NaoEstaVazio(PathInu), PathInu, AcertaPath('Arqs'));
+      edtPathDPEC.Text                 := IfThen( NaoEstaVazio(PathDPEC), PathDPEC, AcertaPath('Arqs'));
+      edtPathEvento.Text               := IfThen( NaoEstaVazio(PathEvento), PathEvento, AcertaPath('Arqs'));
 
     end;
 
@@ -5866,6 +5866,7 @@ begin
        (UpperCase(Copy(Objeto, 1, 4)) = 'MDFE') or
        (UpperCase(Copy(Objeto, 1, 4)) = 'GNRE') or
        (UpperCase(Copy(Objeto, 1, 7)) = 'ESOCIAL') or
+       (UpperCase(Copy(Objeto, 1, 5)) = 'REINF') or
        (UpperCase(Copy(Objeto, 1, 3)) = 'CTE')then
     begin
       Linha := Trim(fsProcessar.Text);
@@ -5930,6 +5931,8 @@ begin
           FDoMDFe.Executar(fsCmd)
         else if fsCmd.Objeto = 'ESOCIAL' then
           FDoeSocial.Executar(fsCmd)
+        else if fsCmd.Objeto = 'REINF' then
+          FDoReinf.Executar(fsCmd)
         else if fsCmd.Objeto = 'GNRE' then
           DoACBrGNRe(fsCmd)
         else if fsCmd.Objeto = 'SAT' then
@@ -8707,7 +8710,16 @@ begin
     TConfiguracoeseSocial(Configuracoes).Geral.TipoEmpregador       := TEmpregador(cbTipoEmpregador.ItemIndex);
     TConfiguracoeseSocial(Configuracoes).Geral.IdEmpregador         := edtIDEmpregador.Text;
     TConfiguracoeseSocial(Configuracoes).Geral.IdTransmissor        := edtIDTransmissor.Text;
-
+  end
+  else if Configuracoes is TConfiguracoesReinf then
+  begin
+    TConfiguracoesReinf(Configuracoes).Arquivos.IniServicos       := edtArquivoWebServicesReinf.Text;
+    TConfiguracoesReinf(Configuracoes).Arquivos.PathReinf         := edtPathNFe.Text;
+    TConfiguracoesReinf(Configuracoes).Arquivos.EmissaoPathReinf  := cbxEmissaoPathNFe.Checked;
+    TConfiguracoesReinf(Configuracoes).Geral.VersaoDF             := StrToVersaoReinf(ok, cbVersaoWSReinf.Text);
+    TConfiguracoesReinf(Configuracoes).Geral.TipoContribuinte     := TContribuinte(cbTipoContribuinte.ItemIndex);
+    TConfiguracoesReinf(Configuracoes).Geral.IdContribuinte       := edtIDContribuinte.Text;
+    TConfiguracoesReinf(Configuracoes).Geral.IdTransmissor        := edtIDTransmissorReinf.Text;
   end
 
 end;
@@ -9110,6 +9122,7 @@ begin
       ACBrGNRE1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
       ACBrBlocoX1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
       ACBreSocial1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+      ACBrReinf1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -9127,6 +9140,7 @@ begin
       ACBrGNRE1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
       ACBrBlocox1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
       ACBreSocial1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+      ACBrReinf1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -9170,6 +9184,7 @@ begin
       ACBrGNRE1.Configuracoes.Geral.SSLLib   := TSSLLib(cbSSLLib.ItemIndex);
       ACBrBlocoX1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
       ACBreSocial1.Configuracoes.Geral.SSLLib:= TSSLLib(cbSSLLib.ItemIndex);
+      ACBrReinf1.Configuracoes.Geral.SSLLib  := TSSLLib(cbSSLLib.ItemIndex);
     end;
   finally
     AtualizaSSLLibsCombo;
@@ -9343,6 +9358,7 @@ begin
   ACBrGNRE1.SSL.SSLType   := TSSLType( cbSSLType.ItemIndex );
   ACBrBlocoX1.SSL.SSLType := TSSLType( cbSSLType.ItemIndex );
   ACBreSocial1.SSL.SSLType:= TSSLType( cbSSLType.ItemIndex );
+  ACBrReinf1.SSL.SSLType  := TSSLType( cbSSLType.ItemIndex );
 end;
 
 procedure TFrmACBrMonitor.SetColorSubButtons(Sender: TObject);

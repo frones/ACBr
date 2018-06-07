@@ -1560,7 +1560,7 @@ begin
       MargemSup                 :=  Ini.ReadFloat( CSecDANFE,   CKeyDANFEMargemSup                       , MargemSup );
       MargemDir                 :=  Ini.ReadFloat( CSecDANFE,   CKeyDANFEMargemDir                       , MargemDir );
       MargemEsq                 :=  Ini.ReadFloat( CSecDANFE,   CKeyDANFEMargemEsq                       , MargemEsq );
-      PathPDF                   :=  Ini.ReadString( CSecDANFE,   CKeyDANFEPathPDF                        , PathPDF );
+      PathPDF                   :=  Ini.ReadString( CSecDANFE,   CKeyDANFEPathPDF                        , PathPDF);
       DecimaisQTD               :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEDecimaisQTD                    , DecimaisQTD );
       DecimaisValor             :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEDecimaisValor                  , DecimaisValor );
       ExibeResumo               :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEExibeResumo                       , ExibeResumo );

@@ -154,11 +154,8 @@ begin
              PathsNFe.Append(Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
+             CarregarDFe(PathsNFe, ArqNFe);
 
-             try
-               CarregarDFe(PathsNFe, ArqNFe);
-             except
-             end;
            finally
              PathsNFe.Free;
            end;
@@ -356,10 +353,8 @@ begin
              PathsNFe.Append(Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
-             try
-               CarregarDFe(PathsNFe, ArqNFe);
-             except
-             end;
+             CarregarDFe(PathsNFe, ArqNFe);
+
            finally
              PathsNFe.Free;
            end;
@@ -560,10 +555,8 @@ begin
              PathsNFe.Append(Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
-             try
-               CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
-             except
-             end;
+             CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
+
           finally
             PathsNFe.Free;
           end;
@@ -1136,11 +1129,7 @@ begin
               try
                 PathsNFe.Append(Cmd.Params(0));
                 PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-
-                try
-                  CarregarDFe(PathsNFe, ArqNFe, tDFeEventoNFe);
-                except
-                end;
+                CarregarDFe(PathsNFe, ArqNFe, tDFeEventoNFe);
               finally
                 PathsNFe.Free;
               end;
@@ -1511,10 +1500,7 @@ begin
            try
              PathsNFe.Append(Cmd.Params(1));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             try
-               CarregarDFe(PathsNFe, ArqNFe);
-             except
-             end;
+             CarregarDFe(PathsNFe, ArqNFe);
            finally
              PathsNFe.Free;
            end;
@@ -1532,22 +1518,16 @@ begin
 
              Anexos.DelimitedText := sLineBreak;
              Anexos.Text := StringReplace(Cmd.Params(5),';',sLineBreak,[rfReplaceAll]);
-             try
-               ACBrNFe1.NotasFiscais.Items[0].EnviarEmail( Cmd.Params(0),
-                                                           SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssuntoNFe.Text) ),
-                                                           sMensagemEmail
-                                                           , (Cmd.Params(2) = '1')   // Enviar PDF junto
-                                                           , CC    // Lista com emails que serão enviado cópias - TStrings
-                                                           , Anexos); // Lista de anexos - TStrings
+
+             ACBrNFe1.NotasFiscais.Items[0].EnviarEmail( Cmd.Params(0),
+                                                         SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssuntoNFe.Text) ),
+                                                         sMensagemEmail
+                                                         , (Cmd.Params(2) = '1')   // Enviar PDF junto
+                                                         , CC    // Lista com emails que serão enviado cópias - TStrings
+                                                         , Anexos); // Lista de anexos - TStrings
 
 
-               Cmd.Resposta := 'Email enviado com sucesso';
-             except
-                on E: Exception do
-                 begin
-                   raise Exception.Create('Erro ao enviar email'+sLineBreak+E.Message);
-                 end;
-             end;
+             Cmd.Resposta := 'Email enviado com sucesso';
            finally
              CC.Free;
              Anexos.Free;
@@ -1563,10 +1543,7 @@ begin
            try
              PathsNFe.Append(Cmd.Params(1));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             try
-               CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
-             except
-             end;
+             CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
            finally
              PathsNFe.Clear;
            end;
@@ -1577,10 +1554,7 @@ begin
              try
                PathsNFe.Append(Cmd.Params(2));
                PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2));
-               try
-                 CarregarDFe(PathsNFe, ArqNFe);
-               except
-               end;
+               CarregarDFe(PathsNFe, ArqNFe);
              finally
                PathsNFe.Clear;
              end;
@@ -1625,22 +1599,15 @@ begin
              if (Cmd.Params(3) = '1') then
                 Anexos.Add(ArqPDF);
 
-             try
-                ACBrNFe1.EnviarEmail(
-                  Cmd.Params(0),
-                  SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssuntoNFe.Text) ),
-                  sMensagemEmail,
-                  CC,
-                  Anexos
-                );
+             ACBrNFe1.EnviarEmail(
+               Cmd.Params(0),
+               SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssuntoNFe.Text) ),
+               sMensagemEmail,
+               CC,
+               Anexos
+             );
 
-                Cmd.Resposta := 'Email enviado com sucesso';
-             except
-                on E: Exception do
-                 begin
-                   raise Exception.Create('Erro ao enviar email'+sLineBreak+E.Message);
-                 end;
-             end;
+             Cmd.Resposta := 'Email enviado com sucesso';
 
            finally
              CC.Free;
@@ -1656,10 +1623,7 @@ begin
               PathsNFe.Append(Cmd.Params(1));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)+'-inu.xml');
-              try
-                CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
-              except
-              end;
+              CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
            finally
              PathsNFe.Free;
            end;
@@ -1702,22 +1666,16 @@ begin
              if (Cmd.Params(2) = '1') then
                 Anexos.Add(ArqPDF);
 
-             try
-                ACBrNFe1.EnviarEmail(
-                  Cmd.Params(0),
-                  SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssuntoNFe.Text) ),
-                  sMensagemEmail,
-                  CC,
-                  Anexos
-                );
 
-                Cmd.Resposta := 'Email enviado com sucesso';
-             except
-                on E: Exception do
-                 begin
-                   raise Exception.Create('Erro ao enviar email'+sLineBreak+E.Message);
-                 end;
-             end;
+             ACBrNFe1.EnviarEmail(
+                Cmd.Params(0),
+                SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssuntoNFe.Text) ),
+                sMensagemEmail,
+                CC,
+                Anexos
+             );
+
+             Cmd.Resposta := 'Email enviado com sucesso';
 
            finally
              CC.Free;

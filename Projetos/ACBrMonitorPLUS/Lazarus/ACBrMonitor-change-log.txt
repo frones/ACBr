@@ -43,6 +43,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2018
+[*] Ajuste para utilização do componente Reinf e geração Tags de Retorno
+   por: José M. S. Junior
+
+07/06/2018
+[*] Ajuste Componente Boleto, adicionado parametro para nome arquivo em setdiretorioarquivo
+   por: José M. S. Junior
+
+06/06/2018
+[*] Ajuste nos retornos de carregamento XML no componente NFe
+   por: José M. S. Junior
+
+[*] Ajuste nos valores Default para os diretórios DFe
+   por: José M. S. Junior
+
 05/06/2018 - ACBrMonior
 [*] Ajuste para preenchimento campo CST no arquivo .ini
 Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou a UF - CST 10 e 90, informar 10part e 90part respectivamente.

@@ -881,7 +881,8 @@ begin
       AddBufferRodape ;
   else
     begin
-      InsertBufferCabecalho;
+      if Estado = estLivre then
+        InsertBufferCabecalho;
 
       fsBuffer.Add( PadSpace('COO do Cupom Cancelado:|'+IntToStrZero(StrToInt(NumCupom)-1,6),
                          Colunas,'|') ) ;

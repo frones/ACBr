@@ -613,7 +613,7 @@ begin
       TpAmbToStr(TipoAmbiente) + '|';
 
     if ExtrairTipoEmissaoChaveAcesso(idNFe) = 9 then
-      sEntrada := sEntrada + IntToStr(DayOf(DataHoraEmissao)) + '|' +
+      sEntrada := sEntrada + Format('%.2d',[DayOf(DataHoraEmissao)]) + '|' +
                            sNF + '|' + sdigVal_HEX + '|';
   end
   else

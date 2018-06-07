@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2018
+-- pcnConversaoReinf.pas --
+[+] Adicionado função de conversão para versão
+   Por: José M S Junior
+
 30/05/2018
 -- pcnReinfRetConsulta --
 [*] Tentativa de eliminar erro de Violação de Acesso.

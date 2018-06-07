@@ -52,9 +52,9 @@ type
 
   TTipoEvento             = (teR1000, teR1070, teR2010, teR2020, teR2030,
                              teR2040, teR2050, teR2060, teR2070, teR2098,
-                             teR2099, teR3010, teR5001, teR5011, teR9000);
+                             teR2099, teR3010, teR5001, teR5011, teR9000);
 
-  TtpAmb                  = (taNenhum, taProducao, taProducaoRestritaDadosReais);
+  TtpAmb                  = (taNenhum, taProducao, taProducaoRestritaDadosReais);
 
   TprocEmi                = (peNenhum, peAplicEmpregador, peAplicGoverno);
 
@@ -76,10 +76,10 @@ type
 
   TtpProc                 = (tpAdministrativo, tpJudicial);
 
-  TindSusp                = (siLiminarMandadoSeguranca,
-                             siAntecipacaoTutela,
-                             siLiminarMedidaCautelar,
-                             siSentencaMandadoSegurancaFavoravelContribuinte ,
+  TindSusp                = (siLiminarMandadoSeguranca,
+                             siAntecipacaoTutela,
+                             siLiminarMedidaCautelar,
+                             siSentencaMandadoSegurancaFavoravelContribuinte ,
                              siSentencaAcaoOrdinariaFavContribuinteConfirmadaPeloTRF,
                              siAcordaoTRFFavoravelContribuinte,
                              siAcordaoSTJRecursoEspecialFavoravelContribuinte,
@@ -88,24 +88,24 @@ type
                              siDecisaoDefinitivaAFavorDoContribuinte,
                              siSemSuspensaoDaExigibilidade);
 
-  TindSitPJ               = (spNormal, spExtincao, spFusao, spCisao, spIncorporacao);
+  TindSitPJ               = (spNormal, spExtincao, spFusao, spCisao, spIncorporacao);
 
-  TindAutoria             = (taContribuinte, taOutraEntidade);
+  TindAutoria             = (taContribuinte, taOutraEntidade);
 
-  TIndRetificacao         = (trOriginal, trRetificacao);
+  TIndRetificacao         = (trOriginal, trRetificacao);
 
-  TpindObra               = (ioNaoeObraDeConstrucaoCivil,
-                             ioObradeConstrucaoCivilTotal,
-                             ioObradeConstrucaoCivilParcial);
+  TpindObra               = (ioNaoeObraDeConstrucaoCivil,
+                             ioObradeConstrucaoCivilTotal,
+                             ioObradeConstrucaoCivilParcial);
 
-  TpindCPRB               = (icNaoContribuintePrevidenciariaReceitaBruta,
-                             icContribuintePrevidenciaReceitaBruta);
+  TpindCPRB               = (icNaoContribuintePrevidenciariaReceitaBruta,
+                             icContribuintePrevidenciaReceitaBruta);
 
-  TtpProcRetPrinc         = (tprAdministrativoTomador, tprJudicialTomador,
-                             tprJudicialPrestador);
+  TtpProcRetPrinc         = (tprAdministrativoTomador, tprJudicialTomador,
+                             tprJudicialPrestador);
 
-  TReinfSchema            = (
-                            schevtInfoContribuinte,           // R-1000 - Informações do Contribuinte
+  TReinfSchema            = (
+                            schevtInfoContribuinte,           // R-1000 - Informações do Contribuinte
                             schevtTabProcesso,                // R-1070 - Tabela de Processos Administrativos/Judiciais
                             schevtTomadorServicos,            // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
                             schevtPrestadorServicos,          // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
@@ -119,15 +119,15 @@ type
                             schevtEspDesportivo,      // R-3010 - Receita de Espetáculo Desportivo
                             schevtTotal,                      // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
                             schevtTotalConsolid,              // R-5011 - Informações de bases e tributos consolidadas por período de apuração
-                            schevtExclusao,                   // R-9000 - Exclusão de Eventos
-                            schErro, schConsultaLoteEventos, schEnvioLoteEventos
-                            );
+                            schevtExclusao,                   // R-9000 - Exclusão de Eventos
+                            schErro, schConsultaLoteEventos, schEnvioLoteEventos
+                            );
 
-  TtpAjuste               = (taReducao, taAcrescimo);
+  TtpAjuste               = (taReducao, taAcrescimo);
 
-  TcodAjuste              = (
-                            caRegimeCaixa,          // Ajuste da CPRB: Adoção do Regime de Caixa
-                            caDifValRecPer,         // Ajuste da CPRB: Diferimento de Valores a recolher no período
+  TcodAjuste              = (
+                            caRegimeCaixa,          // Ajuste da CPRB: Adoção do Regime de Caixa
+                            caDifValRecPer,         // Ajuste da CPRB: Diferimento de Valores a recolher no período
                             caAdiValDif,            // Adição de valores Diferidos em Período(s) Anteriores(es)
                             caExpDiretas,           // Exportações diretas
                             caTransInternacional,   // Transporte internacional de cargas
@@ -137,17 +137,17 @@ type
                             caReceBruta,            // Receita bruta reconhecida pela construção, recuperação, reforma, ampliação ou melhoramento da infraestrutura, cuja contrapartida seja ativo intangível representativo de direito de exploração, no caso de contratos de concessão de serviços públicos
                             caValAporte,            // O valor do aporte de recursos realizado nos termos do art 6 §3 inciso III da Lei 11.079/2004
                             caOutras                // Demais ajustes oriundos da Legislação Tributária, estorno ou outras situações
-                            );
+                            );
 
-  TindExistInfo           = (
-                            eiComMovComInfo,    // Há informações de bases e/ou de tributos
-                            eiComMovSemInfo,    // Há movimento, porém não há informações de bases ou de tributos
+  TindExistInfo           = (
+                            eiComMovComInfo,    // Há informações de bases e/ou de tributos
+                            eiComMovSemInfo,    // Há movimento, porém não há informações de bases ou de tributos
                             eiSemMov            // Não há movimento na competência
                             );
 
-  TindEscrituracao        = ( ieNaoObrig,  // 0 - Não é obrigada
-                              ieObrig      // 1 - Empresa obrigada a entregar a ECD
-                            );
+  TindEscrituracao        = ( ieNaoObrig,  // 0 - Não é obrigada
+                              ieObrig      // 1 - Empresa obrigada a entregar a ECD
+                            );
 
   TindDesoneracao         = ( idNaoAplic,  // 0 - Não Aplicável
                               idAplic      // 1 - Empresa enquadrada nos art. 7º a 9º da Lei 12.546/2011
@@ -157,21 +157,21 @@ type
                               aiComAcordo  // 1 - Com acordo
                             );
 
-  TindNIF                 = ( nifCom,        // 1 - Beneficiário com NIF;
-                              nifDispensado, // 2 - Beneficiário dispensado do NIF
+  TindNIF                 = ( nifCom,        // 1 - Beneficiário com NIF;
+                              nifDispensado, // 2 - Beneficiário dispensado do NIF
                               nifNaoExige    // 3 - País não exige NIF
                             );
 
-  TindTpDeducao           = ( itdOficial,    // 1 - Previdência Oficial
-                              itdPrivada,    // 2 - Previdência Privada
+  TindTpDeducao           = ( itdOficial,    // 1 - Previdência Oficial
+                              itdPrivada,    // 2 - Previdência Privada
                               itdFapi,       // 3 - Fapi
                               itdFunpresp,   // 4 - Funpresp
                               itdPensao,     // 5 - Pensão Alimentícia
                               itdDependentes // 6 - Dependentes
                             );
 
-  TtpIsencao              = ( tiIsenta,              // 1 - Parcela Isenta 65 anos
-                              tiAjudaCusto,          // 2 - Diária e Ajuda de Custo
+  TtpIsencao              = ( tiIsenta,              // 1 - Parcela Isenta 65 anos
+                              tiAjudaCusto,          // 2 - Diária e Ajuda de Custo
                               tiIndenizaRescisao,    // 3 - Indenização e rescisão de contrato, inclusive a título de PDV
                               tiAbono,               // 4 - Abono pecuniário
                               tiOutros,              // 5 - Outros (especificar)
@@ -183,12 +183,12 @@ type
                               tiComplAposentadoria   // 11 - Complementação de aposentadoria, correspondente às contribuições efetuadas no período de 01/01/1989 a 31/12/1995
                             );
 
-  TindPerReferencia       = ( iprMensal,     // 1 - Folha de Pagamento Mensal
-                              iprDecTerceiro // 2 - Folha do Décimo Terceiro Salário
-                            );
+  TindPerReferencia       = ( iprMensal,     // 1 - Folha de Pagamento Mensal
+                              iprDecTerceiro // 2 - Folha do Décimo Terceiro Salário
+                            );
 
-  TindOrigemRecursos      = ( iorProprios, // 1 - Recursos do próprio declarante
-                              iorTerceiros // 2 - Recursos de terceiros - Declarante é a Instituição Financeira responsável apenas pelo repasse dos valores
+  TindOrigemRecursos      = ( iorProprios, // 1 - Recursos do próprio declarante
+                              iorTerceiros // 2 - Recursos de terceiros - Declarante é a Instituição Financeira responsável apenas pelo repasse dos valores
                             );
 
   TtpRepasse              = ( trPatrocinio,    // 1 - Patrocínio
@@ -235,15 +235,15 @@ type
 const
   PrefixVersao = '-v';
 
-  TTipoEventoString: array[0..14] of String =('R-1000', 'R-1070', 'R-2010',
-                                              'R-2020', 'R-2030', 'R-2040',
+  TTipoEventoString: array[0..14] of String =('R-1000', 'R-1070', 'R-2010',
+                                              'R-2020', 'R-2030', 'R-2040',
                                               'R-2050', 'R-2060', 'R-2070',
                                               'R-2098', 'R-2099', 'R-3010',
                                               'R-5001', 'R-5011', 'R-9000'
                                                    );
-
+
   TReinfSchemaStr: array[0..14] of string = ('evtInfoContribuinte',                 // R-1000 - Informações do Contribuinte
-                                             'evtTabProcesso',                      // R-1070 - Tabela de Processos Administrativos/Judiciais
+                                             'evtTabProcesso',                      // R-1070 - Tabela de Processos Administrativos/Judiciais
                                              'evtTomadorServicos',                  // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
                                              'evtPrestadorServicos',                // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
                                              'evtRecursoRecebidoAssociacao',        // R-2030 - Recursos Recebidos por Associação Desportiva
@@ -256,11 +256,11 @@ const
                                              'evtEspDesportivo',                    // R-3010 - Receita de Espetáculo Desportivo
                                              'evtTotal',                            // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
                                              'evtTotalConsolid',                    // R-5011 - Informações de bases e tributos consolidadas por período de apuração
-                                             'evtExclusao'                          // R-9000 - Exclusão de Eventos
-                                            );
+                                             'evtExclusao'                          // R-9000 - Exclusão de Eventos
+                                            );
 
-  TReinfSchemaRegistro: array[0..14] of string = ('R-1000', // rsevtInfoContri    - Informações do Contribuinte
-                                                  'R-1070', // rsevtTabProcesso   - Tabela de Processos Administrativos/Judiciais
+  TReinfSchemaRegistro: array[0..14] of string = ('R-1000', // rsevtInfoContri    - Informações do Contribuinte
+                                                  'R-1070', // rsevtTabProcesso   - Tabela de Processos Administrativos/Judiciais
                                                   'R-2010', // rsevtServTom       - Retenção Contribuição Previdenciária - Serviços Tomados
                                                   'R-2020', // rsevtServPrest     - Retenção Contribuição Previdenciária - Serviços Prestados
                                                   'R-2030', // rsevtAssocDespRec  - Recursos Recebidos por Associação Desportiva
@@ -274,41 +274,43 @@ const
                                                   'R-5001', // rsevtTotal         - Informações das bases e dos tributos consolidados por contribuinte
                                                   'R-5011', // rsevtTotalConsolid - Informações de bases e tributos consolidadas por período de apuração
                                                   'R-9000'  // rsevtExclusao      - Exclusão de Eventos
-                                                 );
+                                                 );
 
-  TEventoString: array[0..14] of String =('evtInfoContri', 'evtTabProcesso',
-                                          'evtServTom', 'evtServPrest',
+  TEventoString: array[0..14] of String =('evtInfoContri', 'evtTabProcesso',
+                                          'evtServTom', 'evtServPrest',
                                           'evtAssocDespRec', 'evtAssocDespRep',
                                           'evtComProd', 'evtCPRB', 'evtPgtosDivs',
                                           'evtReabreEvPer', 'evtFechaEvPer',
                                           'evtEspDesportivo', 'evtTotal',
                                           'evtTotalContrib', 'evtExclusao');
 
-function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
+function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
 
-function SchemaReinfToStr(const t: TReinfSchema): String;
-function TipoEventiToSchemaReinf(const t: TTipoEvento): TReinfSchema;
+function SchemaReinfToStr(const t: TReinfSchema): String;
+function TipoEventiToSchemaReinf(const t: TTipoEvento): TReinfSchema;
 
-function LayOutReinfToSchema(const t: TLayOutReinf): TReinfSchema;
-function LayOutReinfToServico(const t: TLayOutReinf): String;
+function LayOutReinfToSchema(const t: TLayOutReinf): TReinfSchema;
+function LayOutReinfToServico(const t: TLayOutReinf): String;
 
-function VersaoReinfToDbl(const t: TVersaoReinf): Real;
-function VersaoReinfToStr(const t: TVersaoReinf): String;
+function VersaoReinfToDbl(const t: TVersaoReinf): Real;
 
-function TipoEventoToStr(const t: TTipoEvento ): string;
-function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function VersaoReinfToStr(const t: TVersaoReinf): String;
+function StrToVersaoReinf(out ok: Boolean; const s: String): TVersaoReinf;
+
+function TipoEventoToStr(const t: TTipoEvento ): string;
+function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 
 function TpInscricaoToStr(const t: TtpInsc ): string;
-function StrToTpInscricao(var ok: boolean; const s: string): TtpInsc;
+function StrToTpInscricao(var ok: boolean; const s: string): TtpInsc;
 
-function tpAmbReinfToStr(const t: TtpAmb ): string;
-function StrTotpAmbReinf(var ok: boolean; const s: string): TtpAmb;
+function tpAmbReinfToStr(const t: TtpAmb ): string;
+function StrTotpAmbReinf(var ok: boolean; const s: string): TtpAmb;
 
-function procEmiReinfToStr(const t: TprocEmi ): string;
-function StrToprocEmiReinf(var ok: boolean; const s: string): TprocEmi;
+function procEmiReinfToStr(const t: TprocEmi ): string;
+function StrToprocEmiReinf(var ok: boolean; const s: string): TprocEmi;
 
 function indEscrituracaoToStr(const t: TindEscrituracao ): string;
 function StrToindEscrituracao(var ok: boolean; const s: string): TindEscrituracao;
@@ -328,7 +330,7 @@ function StrToSimNao(var ok: boolean; const s: string): TtpSimNao;
 function TpProcToStr(const t: TtpProc ): string;
 function StrToTpProc(var ok: boolean; const s: string): TtpProc;
 
-function indAutoriaToStr(const t: TindAutoria ): string;
+function indAutoriaToStr(const t: TindAutoria ): string;
 function StrToindAutoria(var ok: boolean; const s: string): TindAutoria;
 
 function IndSuspToStr(const t: TindSusp ): string;
@@ -389,16 +391,16 @@ function indExistInfoToStr(const t: TindExistInfo ): string;
 function StrToindExistInfo(var ok: boolean; const s: string): TindExistInfo;
 
 function TipoOperacaoToStr(const t: TTipoOperacao): string;
-function StrToTipoOperacao(var ok: boolean; const s: string): TTipoOperacao;
+function StrToTipoOperacao(var ok: boolean; const s: string): TTipoOperacao;
 
 function tpClassTribToStr(const t: TpClassTrib ): string;
-function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
+function StrTotpClassTrib(var ok: boolean; const s: string): TpClassTrib;
 
 implementation
 
-uses
-  pcnConversao, typinfo;
-
+uses
+  pcnConversao, typinfo;
+
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
 begin
    Result := StrToEnumerado(ok, s,
@@ -468,6 +470,11 @@ end;
 function VersaoReinfToStr(const t: TVersaoReinf): String;
 begin
   result := EnumeradoToStr(t, ['1_02_00', '1_03_00', '1_03_02'], [v1_02_00, v1_03_00, v1_03_02]);
+end;
+
+function StrToVersaoReinf(out ok: Boolean; const s: String): TVersaoReinf;
+begin
+  result := StrToEnumerado(ok, s, ['1_02_00', '1_03_00', '1_03_02'], [v1_02_00, v1_03_00, v1_03_02]);
 end;
 
 function TipoEventoToStr(const t: TTipoEvento ): string;

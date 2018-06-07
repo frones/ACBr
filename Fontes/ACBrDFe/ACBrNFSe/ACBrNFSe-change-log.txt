@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2018
+-- ACBrNFSeDANFSeClass --
+[*] https://www.projetoacbr.com.br/forum/topic/43882-inclus%C3%A3o-de-par%C3%A2metro-usarseparadorpathpdf/
+   Por: Pedro E. Braga
+
 30/05/2018
 -- ACBrNFSeConfiguracoes --
 [*] https://www.projetoacbr.com.br/forum/topic/43697-erro-ao-gravar-rpsxml-de-retorno-do-nfse/

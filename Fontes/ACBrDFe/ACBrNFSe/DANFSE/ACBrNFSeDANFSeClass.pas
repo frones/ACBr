@@ -94,6 +94,7 @@ type
     FTipoDANFSE: TTipoDANFSE;
     FProvedor: TNFSeProvedor;
     FTamanhoFonte: Integer;
+    FUsarSeparadorPathPDF: Boolean;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -108,6 +109,7 @@ type
     property Sistema: String read FSistema write FSistema;
     property Usuario: String read FUsuario write FUsuario;
     property PathPDF: String read GetPathPDF write SetPathPDF;
+    property UsarSeparadorPathPDF: Boolean read FUsarSeparadorPathPDF write FUsarSeparadorPathPDF default False;
     property Impressora: String read FImpressora write FImpressora;
     property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
     property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
@@ -268,11 +270,50 @@ begin
 end;
 
 function TACBrNFSeDANFSeClass.GetPathPDF: String;
+var
+   dhEmissao: TDateTime;
+   DescricaoModelo: String;
+   ANFSe: TNFSe;
 begin
-  if Trim(FPathPDF) <> '' then
-    Result := IncludeTrailingPathDelimiter(FPathPDF)
-  else
-    Result := Trim(FPathPDF)
+  if (csDesigning in ComponentState) then
+  begin
+    Result := FPathPDF;
+    Exit;
+  end;
+
+  Result := Trim(FPathPDF);
+
+  if EstaVazio(Result) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    Result := PathWithDelim( ExtractFilePath(ParamStr(0))) + 'pdf';
+
+  if FUsarSeparadorPathPDF then
+  begin
+    if Assigned(ACBrNFSe) then  // Se tem o componente ACBrNFSe
+    begin
+      if TACBrNFSe(ACBrNFSe).NotasFiscais.Count > 0 then  // Se tem alguma Nota carregada
+      begin
+        ANFSe := TACBrNFSe(ACBrNFSe).NotasFiscais.Items[0].NFSe;
+        if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.EmissaoPathNFSe then
+          dhEmissao := ANFSe.DataEmissao
+        else
+          dhEmissao := Now;
+
+        DescricaoModelo := '';
+        if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.AdicionarLiteral then
+        begin
+           DescricaoModelo := TACBrNFSe(ACBrNFSe).GetNomeModeloDFe;
+        end;
+
+        Result := TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.GetPath(
+                         Result,
+                         DescricaoModelo,
+                         OnlyNumber(ANFSe.PrestadorServico.IdentificacaoPrestador.CNPJ),
+                         dhEmissao);
+      end;
+    end;
+  end;
+
+  Result := PathWithDelim( Result );
 end;
 
 procedure TACBrNFSeDANFSeClass.SetPathPDF(const Value: String);

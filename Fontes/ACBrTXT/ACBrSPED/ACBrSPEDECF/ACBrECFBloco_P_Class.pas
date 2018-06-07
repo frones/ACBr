@@ -278,9 +278,9 @@ var
 begin
   if Assigned(FRegistroP030) then
   begin
-    for intFor := 0 to FRegistroP030.Count - 1 do
+    for intFor := 0 to FRegistroP001.RegistroP030.Count - 1 do
     begin
-      with FRegistroP030.Items[intFor] do
+      with FRegistroP001.RegistroP030.Items[intFor] do
       begin
 
         Add(LFill('P030') +
@@ -290,14 +290,14 @@ begin
       end;
 
       // Registros Filhos
-      WriteRegistroP100(FRegistroP030.Items[intFor]);
-      WriteRegistroP130(FRegistroP030.Items[intFor]);
-      WriteRegistroP150(FRegistroP030.Items[intFor]);
-      WriteRegistroP200(FRegistroP030.Items[intFor]);
-      WriteRegistroP230(FRegistroP030.Items[intFor]);
-      WriteRegistroP300(FRegistroP030.Items[intFor]);
-      WriteRegistroP400(FRegistroP030.Items[intFor]);
-      WriteRegistroP500(FRegistroP030.Items[intFor]);
+      WriteRegistroP100(FRegistroP001.RegistroP030.Items[intFor]);
+      WriteRegistroP130(FRegistroP001.RegistroP030.Items[intFor]);
+      WriteRegistroP150(FRegistroP001.RegistroP030.Items[intFor]);
+      WriteRegistroP200(FRegistroP001.RegistroP030.Items[intFor]);
+      WriteRegistroP230(FRegistroP001.RegistroP030.Items[intFor]);
+      WriteRegistroP300(FRegistroP001.RegistroP030.Items[intFor]);
+      WriteRegistroP400(FRegistroP001.RegistroP030.Items[intFor]);
+      WriteRegistroP500(FRegistroP001.RegistroP030.Items[intFor]);
 
       FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;
     end;

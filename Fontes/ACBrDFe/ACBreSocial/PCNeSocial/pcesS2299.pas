@@ -864,7 +864,7 @@ begin
 
     Validar(schevtDeslig);
   except on e:exception do
-    raise Exception.Create(e.Message);
+    raise Exception.Create('Matricula Funcionário: ' + Self.FIdeVinculo.matricula + sLineBreak + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')
@@ -937,11 +937,14 @@ end;
 
 procedure TEvtDeslig.GerarProcCS(obj: TProcCS);
 begin
-  Gerador.wGrupo('ProcCS');
+  if Trim(obj.nrProcJud) <> '' then
+  begin
+     Gerador.wGrupo('ProcCS');
 
-  Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 1, obj.nrProcJud);
+     Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 1, obj.nrProcJud);
 
-  Gerador.wGrupo('/ProcCS');
+     Gerador.wGrupo('/ProcCS');
+  end;
 end;
 
 function TEvtDeslig.LerArqIni(const AIniString: String): Boolean;
@@ -1276,8 +1279,11 @@ begin
         Inc(I);
       end;
 
-      sSecao := 'ProcCS';
-      infoDeslig.VerbasResc.ProcCS.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', '');
+      if Trim(INIRec.ReadString(sSecao, 'nrProcJud', '')) <> '' then
+      begin
+         sSecao := 'ProcCS';
+         infoDeslig.VerbasResc.ProcCS.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', '');
+      end;
 
       sSecao := 'quarentena';
       infoDeslig.quarentena.dtFimQuar := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimQuar', '0'));

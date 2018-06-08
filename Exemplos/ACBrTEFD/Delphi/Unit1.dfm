@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 354
   Top = 110
+  Width = 788
+  Height = 490
   Caption = 'TEFDDemo'
-  ClientHeight = 451
-  ClientWidth = 772
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -288,7 +288,7 @@ object Form1: TForm1
     Top = 0
     Width = 772
     Height = 208
-    ActivePage = tsConfig
+    ActivePage = tsOperacao
     Align = alTop
     TabOrder = 1
     OnChange = PageControl1Change
@@ -379,6 +379,7 @@ object Form1: TForm1
           Width = 161
           Height = 21
           Style = csDropDownList
+          ItemHeight = 13
           TabOrder = 0
           OnChange = cbxModeloChange
           Items.Strings = (
@@ -389,6 +390,7 @@ object Form1: TForm1
           Top = 92
           Width = 131
           Height = 21
+          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 1
           Text = 'Procurar'
@@ -514,6 +516,7 @@ object Form1: TForm1
             Width = 133
             Height = 21
             Style = csDropDownList
+            ItemHeight = 13
             TabOrder = 0
             OnChange = cbxGPChange
           end
@@ -824,6 +827,7 @@ object Form1: TForm1
           Width = 142
           Height = 21
           Style = csDropDownList
+          ItemHeight = 13
           TabOrder = 0
           OnChange = cbxGPChange
         end
@@ -875,6 +879,7 @@ object Form1: TForm1
             Top = 17
             Width = 166
             Height = 21
+            ItemHeight = 13
             TabOrder = 0
             Items.Strings = (
               'Nenhuma Transa'#195#167#195#163'o'
@@ -885,6 +890,15 @@ object Form1: TForm1
               'Cheque'
               'Controle de Frota')
           end
+        end
+        object ckViaClienteReduzida: TCheckBox
+          Left = 126
+          Top = 158
+          Width = 121
+          Height = 19
+          Caption = 'Via Cliente Reduzida'
+          TabOrder = 15
+          OnClick = ckViaClienteReduzidaClick
         end
       end
     end
@@ -1279,7 +1293,6 @@ object Form1: TForm1
     TEFFoxWin.ArqSTS = 'C:\FwTEF\rsp\intpos.sts'
     TEFFoxWin.ArqResp = 'C:\FwTEF\rsp\intpos.001'
     TEFFoxWin.GPExeName = 'C:\FwTEF\bin\FwTEF.exe'
-    TEFCliDTEF.ArqResp = ''
     TEFCliDTEF.OnExibeMenu = CliDTEFExibeMenu
     TEFCliDTEF.OnObtemInformacao = CliDTEFObtemInformacao
     TEFPetrocard.ArqTemp = 'C:\CardTech\req\intpos.tmp'

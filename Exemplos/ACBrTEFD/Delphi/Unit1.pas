@@ -1,9 +1,5 @@
 unit Unit1;
 
-{$IFDEF FPC}
- {$mode objfpc}{$H+}
-{$ENDIF}
-
 interface
 
 uses
@@ -118,6 +114,7 @@ type
     sAuttar: TShape;
     lMeuAcresDesc: TLabel;
     edValorDescAcre: TEdit;
+    ckViaClienteReduzida: TCheckBox;
      procedure ACBrECF1MsgPoucoPapel(Sender : TObject) ;
      procedure ACBrTEFD1AguardaResp(Arquivo : String;
         SegundosTimeOut : Integer; var Interromper : Boolean);
@@ -217,6 +214,7 @@ type
       Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: {$IFDEF DELPHI7}String{$ELSE}AnsiString{$ENDIF};
       var Digitado, VoltarMenu: Boolean);
     procedure PageControl1Change(Sender: TObject);
+    procedure ckViaClienteReduzidaClick(Sender: TObject);
   private
      fCancelado : Boolean ;
 
@@ -239,11 +237,7 @@ implementation
 Uses typinfo, dateutils, strutils, ConfiguraSerial, Unit2, Unit3, Unit4, Unit5,
      Unit6, Unit7;
 
-{$IFNDEF FPC}
- {$R *.dfm}
-{$ELSE}
- {$R *.lfm}
-{$ENDIF}
+{$R *.dfm}
 
 { TForm1 }
 
@@ -253,7 +247,7 @@ var
    J : TACBrECFModelo;
 begin
   fCancelado := False ;
-  Application.OnException := {$IFDEF FPC}@{$ENDIF}TrataErros;
+  Application.OnException := TrataErros;
 
   cbxModelo.Items.Clear ;
   For J := Low(TACBrECFModelo) to High(TACBrECFModelo) do
@@ -884,6 +878,15 @@ end;
 procedure TForm1.ckCliSiTefChange(Sender : TObject);
 begin
   ACBrTEFD1.TEFCliSiTef.Habilitado := ckCliSiTef.Checked;
+end;
+
+procedure TForm1.ckViaClienteReduzidaClick(Sender: TObject);
+begin
+   try
+    ACBrTEFD1.ImprimirViaClienteReduzida := TCheckBox(Sender).Checked ;
+   finally
+    ckViaClienteReduzida.Checked := ACBrTEFD1.ImprimirViaClienteReduzida;
+   end;
 end;
 
 procedure TForm1.ckVSPagueChange(Sender : TObject) ;

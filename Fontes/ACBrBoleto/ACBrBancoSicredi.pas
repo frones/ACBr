@@ -1572,7 +1572,7 @@ end;
 function TACBrBancoSicredi.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var
-    AceiteStr, CodProtesto, DiasProtesto, TipoSacado: String;
+    AceiteStr, CodProtesto, DiasProtesto, TipoSacado, ATipoBoleto: String;
     Especie, EndSacado: String;
     TipoAvalista: Char;
 begin
@@ -1623,6 +1623,16 @@ begin
       TipoAvalista := '9';
     end;
 
+
+     {Pegando Tipo de Boleto}
+     case ACBrBoleto.Cedente.ResponEmissao of
+       tbCliEmite        : ATipoBoleto := '2' + '2';
+       tbBancoEmite      : ATipoBoleto := '1' + '1';
+       tbBancoReemite    : ATipoBoleto := '4' + '1';
+       tbBancoNaoReemite : ATipoBoleto := '5' + '2';
+     end;
+
+
     {SEGMENTO P}
     Result:= '748'                                                            + // 001 a 003 - Código do banco na compensação
              '0001'                                                           + // 004 a 007 - Lote de serviço = "0001"
@@ -1641,8 +1651,7 @@ begin
              '1'                                                              + // 058 a 058 - Código da carteira
              '1'                                                              + // 059 a 059 - Forma de cadastro do título no banco
              '2'                                                              + // 060 a 060 - Tipo de documento
-             '2'                                                              + // 061 a 061 - Identificação de emissão do bloqueto
-             '2'                                                              + // 062 a 062 - Identificação da distribuição
+             ATipoBoleto                                                      + // 061 a 062 - Identificação de emissão do bloqueto + 062 a 062 - Identificação da distribuição
              PadRight(NumeroDocumento, 15)                                    + // 063 a 077 - Nº do documento de cobrança
              FormatDateTime('ddmmyyyy', Vencimento)                           + // 078 a 085 - Data de vencimento do título
              IntToStrZero(Round(ValorDocumento * 100), 15)                    + // 086 a 100 - Valor nominal do título

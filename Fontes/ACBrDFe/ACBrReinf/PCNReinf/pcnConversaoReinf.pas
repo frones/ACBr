@@ -300,7 +300,8 @@ function StrToVersaoReinf(out ok: Boolean; const s: String): TVersaoReinf;
 function TipoEventoToStr(const t: TTipoEvento ): string;
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringINIToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringXMLToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 
 function TpInscricaoToStr(const t: TtpInsc ): string;
@@ -492,7 +493,7 @@ begin
   result := TTipoEvento( StrToEnumerado2(ok , s, TEventoString ) );
 end;
 
-function StringToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringINIToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 var
   i: integer;
 begin
@@ -502,6 +503,26 @@ begin
   try
     for i := 0 to 14 do
       if Pos('[' + TEventoString[i] + ']', s) > 0 then
+      begin
+        ok := True;
+        result := TTipoEvento( i );
+        exit;
+      end;
+  except
+    ok := False;
+  end;
+end;
+
+function StringXMLToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+var
+  i: integer;
+begin
+  ok := False;
+  result := TTipoEvento( 0 );
+
+  try
+    for i := 0 to 14 do
+      if Pos('<' + TEventoString[i], s) > 0 then
       begin
         ok := True;
         result := TTipoEvento( i );

@@ -50,6 +50,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2018
+-- ACBrReinf.pas --
+[-] Não estava identificando corretamente o tipo de evento ao carregar um XML
+    através do LoadFromFile
+   Por: Italo Jurisato Junior
+
 07/06/2018
 -- pcnConversaoReinf.pas --
 [+] Adicionado função de conversão para versão

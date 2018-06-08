@@ -298,7 +298,7 @@ begin
 
       sSecao := 'ideRespInf';
       ideRespInf.nmResp   := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
-      ideRespInf.cpfResp  := INIRec.ReadString(sSecao, 'nrInscEstab', EmptyStr);
+      ideRespInf.cpfResp  := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
       ideRespInf.telefone := INIRec.ReadString(sSecao, 'telefone', EmptyStr);
       ideRespInf.email    := INIRec.ReadString(sSecao, 'email', EmptyStr);
 

@@ -501,7 +501,7 @@ function TReinfEventos.LoadFromString(AXMLString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StrEventoToTipoEvento(Ok, AXMLString) of
+  case StringXMLToTipoEvento(Ok, AXMLString) of
     teR1000: Self.R1000.Add.evtInfoContri.XML    := AXMLString;
     teR1070: Self.R1070.Add.evtTabProcesso.XML   := AXMLString;
     teR2010: Self.R2010.Add.evtServTom.XML       := AXMLString;
@@ -524,7 +524,7 @@ function TReinfEventos.LoadFromIni(AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StringToTipoEvento(Ok, AIniString) of
+  case StringINIToTipoEvento(Ok, AIniString) of
     teR1000: Self.R1000.Add.evtInfoContri.LerArqIni(AIniString);
     teR1070: Self.R1070.Add.evtTabProcesso.LerArqIni(AIniString);
     teR2010: Self.R2010.Add.evtServTom.LerArqIni(AIniString);

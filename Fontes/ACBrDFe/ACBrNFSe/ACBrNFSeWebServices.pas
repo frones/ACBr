@@ -975,6 +975,9 @@ begin
                               'xsi:schemaLocation="' + FNameSpace + FSeparador + FxsdServico + ' ' + FxsdServico + ' "';
 
       proSigep: FNameSpaceDad :=  FNameSpace;
+      proTiplanv2: FNameSpaceDad := xmlns3 + FNameSpace + '"' +
+                                  ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
+                                  ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
 
       else begin
         if (FSeparador = '') then
@@ -1376,7 +1379,7 @@ begin
       então uma validação específica para o provedor Tecnos, assim, se em outras
       consultas ele estiver vazio ele será preenchido.
       }
-    if (FProtocolo = '') = (FProvedor in [proTecnos]) then
+    if (FProtocolo = '') = (FProvedor in [proTecnos, proTiplanv2]) then
       FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else
@@ -1975,6 +1978,7 @@ begin
 
            proSMARAPD,
            proIPM: FTagI := '';
+
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
                      '<' + FPrefixo3 + 'Pedido>' +
@@ -3247,7 +3251,7 @@ begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
 
-  if FProvedor in [proBHISS, proWebISS, proWebISSv2] then
+  if FProvedor in [proBHISS, proWebISS, proWebISSv2, proTiplanv2] then
   begin
     if FNotasFiscais.Count > 3 then
       GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 3 RPS)' +
@@ -5500,7 +5504,8 @@ begin
       case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
         proInfisc,
         proInfiscv11,
-        proSafeWeb : Result := True
+        proSafeWeb,
+        proTiplanv2 : Result := True
       else
         Result := FConsNfseRps.Executar;
       end;

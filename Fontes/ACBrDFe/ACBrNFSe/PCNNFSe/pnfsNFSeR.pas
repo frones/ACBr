@@ -1727,7 +1727,7 @@ begin
     NFSe.ValoresNfse.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
     NFSe.ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
 
-    if (FProvedor in [proCoplan, proWebISSv2]) then
+    if (FProvedor in [proCoplan, proWebISSv2, proTiplanv2]) then
     begin
       NFSe.Servico.Valores.BaseCalculo      := Leitor.rCampo(tcDe2, 'BaseCalculo');
       NFSe.Servico.Valores.Aliquota         := Leitor.rCampo(tcDe3, 'Aliquota');

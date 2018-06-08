@@ -263,6 +263,7 @@ type
     FNSU: String;
     FchBPe: String;
     FNomeArq: String;
+    FlistaArqs: TStringList;
 
     FretDistDFeInt: TretDistDFeInt;
 
@@ -286,6 +287,7 @@ type
     property NSU: String read FNSU write FNSU;
     property chBPe: String read FchBPe write FchBPe;
     property NomeArq: String read FNomeArq;
+    property ListaArqs: TStringList read FlistaArqs;
 
     property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
   end;
@@ -1623,6 +1625,7 @@ end;
 destructor TDistribuicaoDFe.Destroy;
 begin
   FretDistDFeInt.Free;
+  FlistaArqs.Free;
 
   inherited;
 end;
@@ -1642,6 +1645,11 @@ begin
     FretDistDFeInt.Free;
 
   FretDistDFeInt := TRetDistDFeInt.Create;
+
+  if Assigned(FlistaArqs) then
+    FlistaArqs.Free;
+
+  FlistaArqs := TStringList.Create;
 end;
 
 procedure TDistribuicaoDFe.DefinirURL;
@@ -1734,14 +1742,17 @@ begin
                      '-procEventoBPe.xml';
       end;
 
-      if (FPConfiguracoesBPe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
+      if NaoEstaVazio(NomeArq) then
+        FlistaArqs.Add( FNomeArq );
+
+      if (FPConfiguracoesBPe.Arquivos.Salvar) and NaoEstaVazio(FNomeArq) then
       begin
         if FPConfiguracoesBPe.Arquivos.SalvarEvento then
            if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoBPe]) then // salvar evento
-              FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+              FPDFeOwner.Gravar(FNomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
 
         if (FretDistDFeInt.docZip.Items[I].schema in [schprocBPe]) then
-           FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+           FPDFeOwner.Gravar(FNomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
       end;
     end;
   end;

@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2018
+-- ACBrBPeWebServices --
+[+] Acrescentado a propriedade ListaArqs na classe DistribuicaoDFe com objetivo
+    relacionar o nome de todos os XML retornados pelo método DistribuicaoDFe.
+   Por: Italo Jurisato Junior
+
 04/06/2018
 -- pcnBPeR / pcnBPeW --
 [*] Correções na geração e leitura dos grupos de ICMS.

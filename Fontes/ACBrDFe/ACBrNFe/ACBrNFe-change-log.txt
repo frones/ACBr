@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2018
+-- ACBrNFeWebServices --
+[+] Acrescentado a propriedade ListaArqs na classe DistribuicaoDFe com objetivo
+    relacionar o nome de todos os XML retornados pelo método DistribuicaoDFe.
+   Por: Fabio Nery
+
 05/06/2018
 --ACBrNFeNotasFiscais--
 [*] Ajuste na escrita e leitura do campo indPag da no arquivo.INI, para NFe 4.0

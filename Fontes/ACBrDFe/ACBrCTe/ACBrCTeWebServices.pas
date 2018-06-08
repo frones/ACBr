@@ -477,6 +477,8 @@ type
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
+    FNomeArq: String;
+    FlistaArqs: TStringList;
 
     FretDistDFeInt: TretDistDFeInt;
 
@@ -498,6 +500,8 @@ type
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
+    property NomeArq: String read FNomeArq;
+    property ListaArqs: TStringList read FlistaArqs;
 
     property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
   end;
@@ -3050,6 +3054,7 @@ end;
 destructor TDistribuicaoDFe.Destroy;
 begin
   FretDistDFeInt.Free;
+  FlistaArqs.Free;
 
   inherited;
 end;
@@ -3069,6 +3074,11 @@ begin
     FretDistDFeInt.Free;
 
   FretDistDFeInt := TRetDistDFeInt.Create;
+
+  if Assigned(FlistaArqs) then
+    FlistaArqs.Free;
+
+  FlistaArqs := TStringList.Create;
 end;
 
 procedure TDistribuicaoDFe.DefinirURL;
@@ -3128,7 +3138,7 @@ end;
 function TDistribuicaoDFe.TratarResposta: Boolean;
 var
   I: Integer;
-  AXML, NomeArq: String;
+  AXML: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteDistDFeInteresseResult');
 
@@ -3139,36 +3149,39 @@ begin
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
   begin
     AXML := FretDistDFeInt.docZip.Items[I].XML;
-    NomeArq := '';
+    FNomeArq := '';
     if (AXML <> '') then
     begin
       case FretDistDFeInt.docZip.Items[I].schema of
         (*
         schresCTe:
-          NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-resCTe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-resCTe.xml';
 
         schresEvento:
-          NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
+          FNomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
                      FretDistDFeInt.docZip.Items[I].resEvento.chCTe +
                      Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
                      '-resEventoCTe.xml';
         *)
         schprocCTe,
         schprocCTeOS:
-          NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-cte.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-cte.xml';
 
         schprocEventoCTe:
-          NomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
+          FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
                      '-procEventoCTe.xml';
       end;
 
-      if (FPConfiguracoesCTe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
+      if NaoEstaVazio(NomeArq) then
+        FlistaArqs.Add( FNomeArq );
+
+      if (FPConfiguracoesCTe.Arquivos.Salvar) and NaoEstaVazio(FNomeArq) then
       begin
         if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoCTe]) then // salvar evento
-          FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+          FPDFeOwner.Gravar(FNomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
 
         if (FretDistDFeInt.docZip.Items[I].schema in [schprocCTe, schprocCTeOS]) then
-          FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+          FPDFeOwner.Gravar(FNomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
       end;
     end;
   end;

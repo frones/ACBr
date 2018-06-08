@@ -576,6 +576,7 @@ type
     FNSU: String;
     FchNFe: String;
     FNomeArq: String;
+    FlistaArqs: TStringList;
 
     FretDistDFeInt: TretDistDFeInt;
 
@@ -599,6 +600,7 @@ type
     property NSU: String read FNSU write FNSU;
     property chNFe: String read FchNFe write FchNFe;
     property NomeArq: String read FNomeArq;
+    property ListaArqs: TStringList read FlistaArqs;
 
     property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
   end;
@@ -896,7 +898,7 @@ begin
     FxObs := NFeRetorno.xObs;
     FPMsg := FxMotivo + LineBreak + FxObs;
 
-    if Assigned(FPConfiguracoesNFe) and 
+    if Assigned(FPConfiguracoesNFe) and
        Assigned(FPConfiguracoesNFe.WebServices) and
        FPConfiguracoesNFe.WebServices.AjustaAguardaConsultaRet then
       FPConfiguracoesNFe.WebServices.AguardarConsultaRet := FTMed * 1000;
@@ -1413,7 +1415,7 @@ begin
     FcUF := FPConfiguracoesNFe.WebServices.UFCodigo;
   end;
 
-  if Assigned(FNFeRetorno) and Assigned(FNotasFiscais) 
+  if Assigned(FNFeRetorno) and Assigned(FNotasFiscais)
 		and Assigned(FNFeRetorno.ProtNFe) then
   begin
     // Limpa Dados dos retornos das notas Fiscais;
@@ -2039,7 +2041,7 @@ begin
   Modelo := ModeloDFToPrefixo( StrToModeloDF(ok, ExtrairModeloChaveAcesso(FNFeChave) ));
   FcUF   := ExtrairUFChaveAcesso(FNFeChave);
   VerServ:= VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
-  
+
   if FNotasFiscais.Count > 0 then
     FTpAmb  := FNotasFiscais.Items[0].NFe.Ide.tpAmb
   else
@@ -3695,6 +3697,7 @@ end;
 destructor TDistribuicaoDFe.Destroy;
 begin
   FretDistDFeInt.Free;
+  FlistaArqs.Free;
 
   inherited Destroy;
 end;
@@ -3714,6 +3717,11 @@ begin
     FretDistDFeInt.Free;
 
   FretDistDFeInt := TRetDistDFeInt.Create;
+
+  if Assigned(FlistaArqs) then
+    FlistaArqs.Free;
+
+  FlistaArqs := TStringList.Create;
 end;
 
 procedure TDistribuicaoDFe.DefinirURL;
@@ -3805,6 +3813,9 @@ begin
           FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
                       '-procEventoNFe.xml';
       end;
+
+      if NaoEstaVazio(NomeArq) then
+        FlistaArqs.Add( FNomeArq );
 
       if (FPConfiguracoesNFe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
       begin

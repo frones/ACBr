@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -65,7 +65,7 @@
         <PackageName Value="FCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="58">
+    <Units Count="59">
       <Unit0>
         <Filename Value="ACBrMonitorConsole.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -118,7 +118,7 @@
       <Unit6>
         <Filename Value="DoACBrUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="178"/>
         <CursorPos X="41" Y="179"/>
         <UsageCount Value="52"/>
@@ -434,8 +434,15 @@
         <CursorPos X="11" Y="19"/>
         <UsageCount Value="9"/>
       </Unit57>
+      <Unit58>
+        <Filename Value="ACBrMonitorConsoleDM.lfm"/>
+        <EditorIndex Value="7"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit58>
     </Units>
-    <JumpHistory Count="26" HistoryIndex="25">
+    <JumpHistory Count="25" HistoryIndex="24">
       <Position1>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
         <Caret Line="352" Column="28" TopLine="330"/>
@@ -464,79 +471,75 @@
       </Position7>
       <Position8>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="67" Column="21" TopLine="71"/>
+        <Caret Line="115" Column="87" TopLine="102"/>
       </Position8>
       <Position9>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="115" Column="87" TopLine="102"/>
+        <Caret Line="116" Column="87" TopLine="102"/>
       </Position9>
       <Position10>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="116" Column="87" TopLine="102"/>
+        <Caret Line="117" Column="87" TopLine="102"/>
       </Position10>
       <Position11>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="117" Column="87" TopLine="102"/>
+        <Caret Line="113" Column="43" TopLine="111"/>
       </Position11>
       <Position12>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="113" Column="43" TopLine="111"/>
+        <Caret Line="115" Column="87" TopLine="111"/>
       </Position12>
       <Position13>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="115" Column="87" TopLine="111"/>
+        <Caret Line="116" Column="87" TopLine="111"/>
       </Position13>
       <Position14>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="116" Column="87" TopLine="111"/>
+        <Caret Line="117" Column="87" TopLine="111"/>
       </Position14>
       <Position15>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="117" Column="87" TopLine="111"/>
+        <Caret Line="118" Column="87" TopLine="111"/>
       </Position15>
       <Position16>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="118" Column="87" TopLine="111"/>
+        <Caret Line="77" Column="27" TopLine="58"/>
       </Position16>
       <Position17>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="77" Column="27" TopLine="58"/>
+        <Caret Line="54" Column="43" TopLine="40"/>
       </Position17>
       <Position18>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="54" Column="43" TopLine="40"/>
       </Position18>
       <Position19>
         <Filename Value="ACBrMonitorConsole.lpr"/>
+        <Caret Line="67" Column="26" TopLine="47"/>
       </Position19>
       <Position20>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="67" Column="26" TopLine="47"/>
+        <Caret Line="72" Column="12" TopLine="52"/>
       </Position20>
       <Position21>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="72" Column="12" TopLine="52"/>
+        <Caret Line="82" Column="38" TopLine="62"/>
       </Position21>
       <Position22>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="82" Column="38" TopLine="62"/>
+        <Caret Line="115" Column="81" TopLine="96"/>
       </Position22>
       <Position23>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="115" Column="81" TopLine="96"/>
+        <Caret Line="116" Column="81" TopLine="97"/>
       </Position23>
       <Position24>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="116" Column="81" TopLine="97"/>
+        <Caret Line="117" Column="81" TopLine="98"/>
       </Position24>
       <Position25>
         <Filename Value="ACBrMonitorConsole.lpr"/>
-        <Caret Line="117" Column="81" TopLine="98"/>
-      </Position25>
-      <Position26>
-        <Filename Value="ACBrMonitorConsole.lpr"/>
         <Caret Line="255" Column="18" TopLine="249"/>
-      </Position26>
+      </Position25>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

@@ -227,6 +227,7 @@ const
   CKeyETQMargemEsquerda =            'MargemEsquerda';
   CKeyETQOrigem =                    'Origem';
   CKeyETQCopias =                    'Copias';
+  CKeyETQUnidade =                   'Unidade';
 
   CSecCEP =                          'CEP';
   CKeyCEPWebService =                'WebService';
@@ -235,6 +236,8 @@ const
   CKeyCEPProxy_Port =                'Proxy_Port';
   CKeyCEPProxy_User =                'Proxy_User';
   CKeyCEPProxy_Pass =                'Proxy_Pass';
+  CKeyCEPIBGEAcentos =               'IBGEAcentos';
+  CKeyCEPIBGEUTF8 =                  'IBGEUTF8';
 
   CSecTC =                           'TC';
   CKeyTCModelo =                     'Modelo';
@@ -419,6 +422,7 @@ const
   CKeyArquivosPathInu =                     'PathInu';
   CKeyArquivosPathDPEC =                    'PathDPEC';
   CKeyArquivosPathEvento =                  'PathEvento';
+  CKeyArquivosPathArqTXT =                  'PathArqTXT';
 
   CSeceSocial =                             'eSocial';
   CSecReinf =                               'Reinf';

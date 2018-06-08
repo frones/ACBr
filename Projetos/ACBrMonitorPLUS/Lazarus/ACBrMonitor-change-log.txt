@@ -43,6 +43,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2018
+[+] Adicionado parâmetro para configuração de Unidade no componente Etiqueta
+   por: José M. S. Junior
+
+[+] Adicionado Campo "pathArqTXT" na aba diretórios do DFe para gravar GNRe
+   por: José M. S. Junior
+
+[+] Adicionado Campo "IgnorarCaixaEAcentos", "IsUTF8" para consulta IBGE
+   por: José M. S. Junior
+
 07/06/2018
 [*] Ajuste para utilização do componente Reinf e geração Tags de Retorno
    por: José M. S. Junior

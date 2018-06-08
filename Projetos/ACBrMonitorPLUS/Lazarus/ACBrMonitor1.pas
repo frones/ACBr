@@ -244,6 +244,8 @@ type
     cbFormaEmissaoMDFe: TComboBox;
     cbFormaEmissaoGNRe: TComboBox;
     cbGavetaSinalInvertido: TCheckBox;
+    cbLog: TCheckBox;
+    cbMonitorarPasta: TCheckBox;
     cbMostrarNaBarraDeTarefas: TCheckBox;
     cbBALModelo: TComboBox;
     cbBALPorta: TComboBox;
@@ -270,12 +272,11 @@ type
     cbLCBPorta: TComboBox;
     cbLCBSufixo: TComboBox;
     cbLCBSufixoLeitor: TComboBox;
-    cbLog: TCheckBox;
     cbLogComp: TCheckBox;
     cbModoEmissao: TCheckBox;
     cbModoXML: TCheckBox;
-    cbMonitorarPasta: TCheckBox;
     cbOrigem: TComboBox;
+    cbUnidade: TComboBox;
     cbRetirarAcentosNaResposta: TCheckBox;
     cbPreview: TCheckBox;
     cbRetirarAcentos: TCheckBox;
@@ -300,6 +301,8 @@ type
     cbXMLSignLib: TComboBox;
     cbSSLType: TComboBox;
     cbxNormatizarMunicipios: TCheckBox;
+    ckIBGEUTF8: TCheckBox;
+    ckIBGEAcentos: TCheckBox;
     chkVerificarValidadeCertificado: TCheckBox;
     chkMostraLogNaTela: TCheckBox;
     cbRFDModelo: TComboBox;
@@ -402,6 +405,7 @@ type
     edTimeZoneStr: TEdit;
     edtLogoMarcaNFCeSAT: TEdit;
     edtIDEmpregador: TEdit;
+    edtPathArqTXT: TEdit;
     eMargemEsquerda: TEdit;
     eTemperatura: TEdit;
     eVelocidade: TEdit;
@@ -469,6 +473,8 @@ type
     Label221: TLabel;
     Label222: TLabel;
     Label223: TLabel;
+    Label224: TLabel;
+    Label225: TLabel;
     Label60: TLabel;
     Label61: TLabel;
     lbAvanco: TLabel;
@@ -521,6 +527,7 @@ type
     sbLogoMarca1: TSpeedButton;
     sbLogoMarcaNFCeSAT: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
+    sbPathArqTXT: TSpeedButton;
     ScrollBox: TScrollBox;
     seGavetaTempoOFF: TSpinEdit;
     seGavetaTempoON: TSpinEdit;
@@ -849,7 +856,7 @@ type
     Label23: TLabel;
     Label24: TLabel;
     Label25: TLabel;
-    Label26: TLabel;
+    lbLogMaxLinhas: TLabel;
     Label27: TLabel;
     Label28: TLabel;
     Label29: TLabel;
@@ -864,7 +871,7 @@ type
     Label37: TLabel;
     Label38: TLabel;
     Label39: TLabel;
-    Label4: TLabel;
+    lblogArquivo: TLabel;
     Label41: TLabel;
     Label42: TLabel;
     Label43: TLabel;
@@ -1243,6 +1250,7 @@ type
     procedure cbCryptLibChange(Sender: TObject);
     procedure cbHttpLibChange(Sender: TObject);
     procedure cbIgnorarTagsChange(Sender: TObject);
+    procedure cbLogChange(Sender: TObject);
     procedure cbLogCompClick(Sender: TObject);
     procedure cbHRIChange(Sender: TObject);
     procedure cbMonitorarPastaChange(Sender: TObject);
@@ -1294,7 +1302,6 @@ type
     procedure ACBrECF1MsgAguarde(Mensagem: string);
     procedure ACBrECF1MsgPoucoPapel(Sender: TObject);
     procedure bConfigClick(Sender: TObject);
-    procedure cbLogClick(Sender: TObject);
     procedure edOnlyNumbers(Sender: TObject; var Key: char);
     procedure bECFTestarClick(Sender: TObject);
     procedure bECFLeituraXClick(Sender: TObject);
@@ -1320,6 +1327,7 @@ type
     procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbBALLogClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
+    procedure sbPathArqTXTClick(Sender: TObject);
     procedure sbPathDPECClick(Sender: TObject);
     procedure sbPathEventoClick(Sender: TObject);
     procedure sbPathInuClick(Sender: TObject);
@@ -1844,6 +1852,10 @@ begin
   cbOrigem.Items.Clear ;
   For iETQOrigem := Low(TACBrETQOrigem) to High(TACBrETQOrigem) do
      cbOrigem.Items.Add( GetEnumName(TypeInfo(TACBrETQOrigem), integer(iETQOrigem) ) ) ;
+
+  cbUnidade.Items.Clear ;
+  For iETQUnidade := Low(TACBrETQUnidade) to High(TACBrETQUnidade) do
+     cbUnidade.Items.Add( GetEnumName(TypeInfo(TACBrETQUnidade), integer(iETQUnidade) ) ) ;
 
   cbETQPorta.Items.Clear;
   ACBrETQ1.Device.AcharPortasSeriais( cbETQPorta.Items );
@@ -3754,6 +3766,8 @@ begin
       end;
     end;
 
+    cbLogChange(Self);
+
     if cbLog.Checked then
       AddLinesLog('Log de comandos será gravado em: ' + ArqLogTXT);
 
@@ -4078,6 +4092,7 @@ begin
     cbBackFeed.ItemIndex              := BackFeed;
     eMargemEsquerda.Text              := IntToStr(MargemEsquerda);
     cbOrigem.ItemIndex                := Origem;
+    cbUnidade.ItemIndex               := Unidade;
     eCopias.Text                      := IntToStr(Copias);
   end;
 
@@ -4101,6 +4116,8 @@ begin
     edCONProxyPort.Text               := Proxy_Port;
     edCONProxyUser.Text               := Proxy_User;
     edCONProxyPass.Text               := Proxy_Pass;
+    ckIBGEAcentos.Checked             := IBGEAcentos;
+    ckIBGEUTF8.Checked                := IBGEUTF8;
   end;
 
   {Parametros do Boleto}
@@ -4394,6 +4411,7 @@ begin
       edtPathInu.Text                  := IfThen( NaoEstaVazio(PathInu), PathInu, AcertaPath('Arqs'));
       edtPathDPEC.Text                 := IfThen( NaoEstaVazio(PathDPEC), PathDPEC, AcertaPath('Arqs'));
       edtPathEvento.Text               := IfThen( NaoEstaVazio(PathEvento), PathEvento, AcertaPath('Arqs'));
+      edtPathArqTXT.Text               := IfThen( NaoEstaVazio(PathArqTXT), PathArqTXT, AcertaPath('TXT'));
 
     end;
 
@@ -4782,7 +4800,7 @@ begin
     Unidade       := etqMilimetros;
     MargemEsquerda:= StrToIntDef(eMargemEsquerda.Text, 0);
     Origem        := TACBrETQOrigem(cbOrigem.ItemIndex);
-
+    Unidade       := TACBrETQUnidade(cbUnidade.ItemIndex);
 
     Ativo := ETQAtivado;
   end;
@@ -4819,6 +4837,8 @@ begin
     ProxyPort := edCONProxyPort.Text;
     ProxyUser := edCONProxyUser.Text;
     ProxyPass := edCONProxyPass.Text;
+    IgnorarCaixaEAcentos:= ckIBGEAcentos.Checked;
+    IsUTF8    :=  ckIBGEUTF8.Checked;
   end;
 
   with ACBrSedex1 do
@@ -5210,6 +5230,7 @@ begin
       BackFeed                    := cbBackFeed.ItemIndex;
       MargemEsquerda              := StrToIntDef(eMargemEsquerda.Text, 10);
       Origem                      := cbOrigem.ItemIndex;
+      Unidade                     := cbUnidade.ItemIndex;
       Copias                      := StrToIntDef(eCopias.Text, 1);
     end;
 
@@ -5222,6 +5243,8 @@ begin
       Proxy_Port                  := edCONProxyPort.Text;
       Proxy_User                  := edCONProxyUser.Text;
       Proxy_Pass                  := edCONProxyPass.Text;
+      IBGEAcentos                 := ckIBGEAcentos.Checked;
+      IBGEUTF8                    := ckIBGEUTF8.Checked;
     end;
 
     { Parametros do TC }
@@ -5452,6 +5475,7 @@ begin
         PathInu                        := edtPathInu.Text;
         PathDPEC                       := edtPathDPEC.Text;
         PathEvento                     := edtPathEvento.Text;
+        PathArqTXT                     := edtPathArqTXT.Text;
       end;
     end;
 
@@ -6109,15 +6133,6 @@ begin
 end;
 
 {------------------------------------------------------------------------------}
-procedure TFrmACBrMonitor.cbLogClick(Sender: TObject);
-begin
-  gbLog.Enabled := cbLog.Checked;
-
-  if cbLog.Checked and (edLogArq.Text = '') then
-    edLogArq.Text := 'LOG.TXT';
-end;
-
-{------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.sbLogClick(Sender: TObject);
 begin
   PathClick(edLogArq);
@@ -6680,6 +6695,11 @@ begin
   begin
     edtLogoMarca.Text := OpenDialog1.FileName;
   end;
+end;
+
+procedure TFrmACBrMonitor.sbPathArqTXTClick(Sender: TObject);
+begin
+  PathClick(edtPathArqTXT);
 end;
 
 procedure TFrmACBrMonitor.sbPathDPECClick(Sender: TObject);
@@ -8700,6 +8720,7 @@ begin
     TConfiguracoesGNRE(Configuracoes).Arquivos.EmissaoPathGNRE := cbxEmissaoPathNFe.Checked;
     TConfiguracoesGNRE(Configuracoes).Arquivos.PathGNRE        := edtPathNFe.Text;
     TConfiguracoesGNRE(Configuracoes).Arquivos.SalvarApenasGNREProcessadas := cbxSalvarNFesProcessadas.Checked;
+    TConfiguracoesGNRE(Configuracoes).Arquivos.PathArqTXT      := edtPathArqTXT.Text;
   end
   else if Configuracoes is TConfiguracoeseSocial then
   begin
@@ -9155,6 +9176,19 @@ end;
 procedure TFrmACBrMonitor.cbIgnorarTagsChange(Sender: TObject);
 begin
   ACBrPosPrinter1.IgnorarTags := cbIgnorarTags.Checked;
+end;
+
+procedure TFrmACBrMonitor.cbLogChange(Sender: TObject);
+begin
+  lblogArquivo.Enabled := cbLog.Checked;
+  lbLogMaxLinhas.Enabled := cbLog.Checked;
+  edLogArq.Enabled := cbLog.Checked;
+  sbLog.Enabled := cbLog.Checked;
+  sedLogLinhas.Enabled := cbLog.Checked;
+  chkMostraLogNaTela.Enabled := cbLog.Checked;
+
+  if cbLog.Checked and (edLogArq.Text = '') then
+    edLogArq.Text := 'LOG.TXT';
 end;
 
 procedure TFrmACBrMonitor.cbHRIChange(Sender: TObject);

@@ -115,6 +115,7 @@ type
     BackFeed          : Integer;
     MargemEsquerda    : Integer;
     Origem            : Integer;
+    Unidade           : Integer;
     Copias            : Integer;
   end;
 
@@ -125,6 +126,8 @@ type
     Proxy_Port        : String;
     Proxy_User        : String;
     Proxy_Pass        : String;
+    IBGEAcentos       : Boolean;
+    IBGEUTF8          : Boolean;
   end;
 
   TTC = record
@@ -308,6 +311,7 @@ type
     PathInu                      : String;
     PathDPEC                     : String;
     PathEvento                   : String;
+    PathArqTXT                   : String;
   end;
 
   TDFeEmail = record
@@ -771,6 +775,7 @@ begin
       Ini.WriteInteger( CSecETQ, CKeyETQBackFeed, BackFeed );
       Ini.WriteInteger( CSecETQ, CKeyETQMargemEsquerda, MargemEsquerda );
       Ini.WriteInteger( CSecETQ, CKeyETQOrigem, Origem );
+      Ini.WriteInteger( CSecETQ, CKeyETQUnidade, Unidade );
       Ini.WriteInteger( CSecETQ, CKeyETQCopias, Copias );
     end;
 
@@ -781,6 +786,8 @@ begin
       Ini.WriteString( CSecCEP, CKeyCEPProxy_Host, Proxy_Host);
       Ini.WriteString( CSecCEP, CKeyCEPProxy_Port, Proxy_Port );
       Ini.WriteString( CSecCEP, CKeyCEPProxy_User, Proxy_User );
+      Ini.WriteBool( CSecCEP, CKeyCEPIBGEAcentos, IBGEAcentos );
+      Ini.WriteBool( CSecCEP, CKeyCEPIBGEUTF8, IBGEUTF8 );
       GravaINICrypt(Ini, CSecCEP, CKeyCEPProxy_Pass, Proxy_Pass, _C);
     end;
 
@@ -1011,6 +1018,7 @@ begin
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathInu,                     PathInu                     );
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathDPEC,                    PathDPEC                    );
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathEvento,                  PathEvento                  );
+      Ini.WriteString(CSecArquivos,  CKeyArquivosPathArqTXT,                  PathArqTXT                  );
     end;
 
     with SAT do
@@ -1377,6 +1385,7 @@ begin
       BackFeed                  := Ini.ReadInteger( CSecETQ, CKeyETQBackFeed, BackFeed );
       MargemEsquerda            := Ini.ReadInteger( CSecETQ, CKeyETQMargemEsquerda, MargemEsquerda );
       Origem                    := Ini.ReadInteger( CSecETQ, CKeyETQOrigem, Origem );
+      Unidade                   := Ini.ReadInteger( CSecETQ, CKeyETQUnidade, Unidade );
       Copias                    := Ini.ReadInteger( CSecETQ, CKeyETQCopias, Copias );
     end;
 
@@ -1387,6 +1396,8 @@ begin
       Proxy_Host                := Ini.ReadString( CSecCEP, CKeyCEPProxy_Host, Proxy_Host );
       Proxy_Port                := Ini.ReadString( CSecCEP, CKeyCEPProxy_Port, Proxy_Port );
       Proxy_User                := Ini.ReadString( CSecCEP, CKeyCEPProxy_User, Proxy_User );
+      IBGEAcentos               := Ini.ReadBool( CSecCEP, CKeyCEPIBGEAcentos, IBGEAcentos);
+      IBGEUTF8                  := Ini.ReadBool( CSecCEP, CKeyCEPIBGEUTF8, IBGEUTF8 );
       Proxy_Pass                := LeINICrypt(Ini, CSecCEP, CKeyCEPProxy_Pass, _C);
     end;
 
@@ -1603,6 +1614,7 @@ begin
       PathInu                    := Ini.ReadString(CSecArquivos,   CKeyArquivosPathInu,                     PathInu                     );
       PathDPEC                   := Ini.ReadString(CSecArquivos,   CKeyArquivosPathDPEC,                    PathDPEC                    );
       PathEvento                 := Ini.ReadString(CSecArquivos,   CKeyArquivosPathEvento,                  PathEvento                  );
+      PathArqTXT                 := Ini.ReadString(CSecArquivos,   CKeyArquivosPathArqTXT,                  PathArqTXT                  );
     end;
 
     with DFe.ESocial do
@@ -1960,6 +1972,7 @@ begin
     BackFeed                  := -1;
     MargemEsquerda            := 10;
     Origem                    := -1;
+    Unidade                   := -1;
     Copias                    := 1;
 
   end;
@@ -1972,6 +1985,8 @@ begin
     Proxy_Port                := '';
     Proxy_User                := '';
     Proxy_Pass                := '';
+    IBGEAcentos               := False;
+    IBGEUTF8                  := False;
   end;
 
   with TC do
@@ -2019,7 +2034,7 @@ begin
     ArquivoWebServices        := AcertaPath( 'ACBrNFeServicos.ini' );
     ArquivoWebServicesCTe     := AcertaPath( 'ACBrCTeServicos.ini' );
     ArquivoWebServicesMDFe    := AcertaPath( 'ACBrMDFeServicos.ini' );
-    ArquivoWebServicesGNRe    := AcertaPath('ACBrGNREServicos.ini' );
+    ArquivoWebServicesGNRe    := AcertaPath( 'ACBrGNREServicos.ini' );
     ArquivoWebServiceseSocial := AcertaPath( 'ACBreSocialServicos.ini' );
     ArquivoWebServicesReinf   := AcertaPath( 'ACBrReinfServicos.ini' );
     ValidarDigest             := True;
@@ -2187,6 +2202,7 @@ begin
     PathInu                    :=  AcertaPath('Arqs');
     PathDPEC                   :=  AcertaPath('Arqs');
     PathEvento                 :=  AcertaPath('Arqs');
+    PathArqTXT                 :=  AcertaPath('TXT');
   end;
 
   with DFe.ESocial do

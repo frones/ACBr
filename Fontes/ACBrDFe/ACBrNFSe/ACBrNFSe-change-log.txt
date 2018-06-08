@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2018
+-- ACBrNFSe --
+[+] Implementação do provedor Tiplanv2 (segue a versão 2 do layout da ABRASF).
+   Por: Delfino Manfredini
+
 07/06/2018
 -- ACBrNFSeDANFSeClass --
 [*] https://www.projetoacbr.com.br/forum/topic/43882-inclus%C3%A3o-de-par%C3%A2metro-usarseparadorpathpdf/

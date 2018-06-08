@@ -110,6 +110,7 @@ type
      fMultiplosCartoes : Boolean;
      fNumeroMaximoCartoes: Integer;
      fNumVias : Integer;
+     fImprimirViaClienteReduzida : Boolean;
      fOnAguardaResp : TACBrTEFDAguardaRespEvent;
      fOnAntesCancelarTransacao: TACBrTEFDAntesCancelarTransacao;
      fOnAntesFinalizarRequisicao : TACBrTEFDAntesFinalizarReq;
@@ -283,6 +284,8 @@ type
        write SetAutoFinalizarCupom default True ;
      property NumVias   : Integer read fNumVias   write SetNumVias
        default CACBrTEFD_NumVias ;
+     property ImprimirViaClienteReduzida : Boolean read fImprimirViaClienteReduzida
+       write fImprimirViaClienteReduzida default False;
      property EsperaSTS : Integer read fEsperaSTS write SetEsperaSTS
         default CACBrTEFD_EsperaSleep ;
      property EsperaSleep : Integer read fEsperaSleep write SetEsperaSleep
@@ -428,6 +431,7 @@ begin
   fAutoFinalizarCupom   := True ;
   fMultiplosCartoes     := False ;
   fNumeroMaximoCartoes  := 0 ;
+  fImprimirViaClienteReduzida := False;
   fGPAtual              := gpNenhum ;
   fNumVias              := CACBrTEFD_NumVias ;
   fEsperaSTS            := CACBrTEFD_EsperaSTS ;

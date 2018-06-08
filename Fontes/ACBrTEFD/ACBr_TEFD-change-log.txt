@@ -47,7 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-23/0/2018
+07/06/2018
+-- ACBrTEFD, ACBrTEFDClass --
+[+] Adicionada a propriedade "ImprimirViaClienteReduzida: Boolean  Default False"
+    Quando for True, o ACBrTEFD dará preferencia a Via reduzida, se a mesma
+    existir na resposta do TEF.
+    https://www.projetoacbr.com.br/forum/topic/15507-quantidade-de-vias/?do=findComment&comment=288722
+
+23/04/2018
 -- ACBrTEFDClass --
 [*] Ajuste para considerar o numero de linhas no campo 028-001
     https://www.projetoacbr.com.br/forum/topic/15507-quantidade-de-vias/?do=findComment&comment=282612

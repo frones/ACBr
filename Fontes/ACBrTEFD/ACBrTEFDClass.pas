@@ -436,6 +436,7 @@ type
      fpAutenticacao : String;
      fpArqBackup : String;
      fpArqRespPendente: String;
+     fpViaClienteReduzida: Boolean;
      fpBanco : String;
      fpCheque : String;
      fpChequeDC : String;
@@ -592,6 +593,8 @@ type
      property IndiceFPG_ECF  : String  read fpIndiceFPG_ECF   write SetIndiceFPG_ECF ;
      property CNFEnviado     : Boolean read fpCNFEnviado      write SetCNFEnviado ;
      property OrdemPagamento : Integer read fpOrdemPagamento  write SetOrdemPagamento ;
+
+     property ViaClienteReduzida : Boolean read fpViaClienteReduzida write fpViaClienteReduzida;
 
      property DataVencimento : TDateTime read fpDataVencimento;
      property Instituicao    : String read fpInstituicao;
@@ -1305,6 +1308,7 @@ begin
 
   ArqBackup := Source.ArqBackup; { ArqBackup não é salva em Conteudo (memory only) }
   TipoGP    := Source.TipoGP;    { TipoGP não é salva em Conteudo (memory only) }
+  ViaClienteReduzida := Source.ViaClienteReduzida;
 end;
 
 procedure TACBrTEFDResp.ConteudoToProperty;
@@ -1384,6 +1388,7 @@ begin
 
    fpArqBackup := '' ;
    fpArqRespPendente := '' ;
+   fpViaClienteReduzida := False;
 
    fpNFCeSAT.Clear;
    fpIdPagamento := 0;
@@ -1583,7 +1588,7 @@ begin
        709 : fpDesconto              := Linha.Informacao.AsFloat;
        710 :
          begin
-           if Linha.Informacao.AsInteger > 0 then
+           if ((Linha.Informacao.AsInteger > 0) and ViaClienteReduzida) then
            begin
              Usar711 := True;
              fpImagemComprovante1aVia.Clear;
@@ -1597,10 +1602,7 @@ begin
          end;
        712 :
          begin
-           if Linha.Informacao.AsInteger > 0 then
-             Usar711 := False;
-
-           if not Usar711 then
+           if ((Linha.Informacao.AsInteger > 0) and (not ViaClienteReduzida)) then
            begin
              Usar713 := True;
              fpImagemComprovante1aVia.Clear;
@@ -2872,6 +2874,7 @@ begin
      { Cria cópia do Objeto Resp, e salva no ObjectList "RespostasPendentes" }
      RespostaPendente := TACBrTEFDRespTXT.Create ;
      RespostaPendente.ArqRespPendente := ArqResp;
+     RespostaPendente.ViaClienteReduzida := ImprimirViaClienteReduzida;
      RespostaPendente.Assign( Resp );
      RespostasPendentes.Add( RespostaPendente );
 

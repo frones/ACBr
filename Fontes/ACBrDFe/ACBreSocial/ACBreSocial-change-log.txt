@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2018
+-- ACBreSocial --
+[-] Não estava identificando corretamente o tipo de evento ao carregar um XML
+    através do LoadFromFile
+   Por: Italo Jurisato Junior
+
 07/06/2018
 -- pcesS2299 --
 [*] https://www.projetoacbr.com.br/forum/topic/43883-corre%C3%A7%C3%A3o-do-s-2299-desligamento/

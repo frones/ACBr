@@ -180,7 +180,7 @@ function TIniciais.LoadFromString(AXMLString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StrEventoToTipoEvento(Ok, AXMLString) of
+  case StringXMLToTipoEvento(Ok, AXMLString) of
     teS1000: Self.S1000.Add.evtInfoEmpregador.XML := AXMLString;
     teS1005: Self.S1005.Add.evtTabEstab.XML := AXMLString;
   end;
@@ -192,7 +192,7 @@ function TIniciais.LoadFromIni(AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StringToTipoEvento(Ok, AIniString) of
+  case StringINIToTipoEvento(Ok, AIniString) of
     teS1000: Self.S1000.Add.evtInfoEmpregador.LerArqIni(AIniString);
     teS1005: Self.S1005.Add.evtTabEstab.LerArqIni(AIniString);
   end;

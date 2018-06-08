@@ -387,7 +387,7 @@ function TTabelas.LoadFromString(AXMLString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StrEventoToTipoEvento(Ok, AXMLString) of
+  case StringXMLToTipoEvento(Ok, AXMLString) of
     teS1010: Self.S1010.Add.EvtTabRubrica.XML := AXMLString;
     teS1020: Self.S1020.Add.EvtTabLotacao.XML := AXMLString;
     teS1030: Self.S1030.Add.EvtTabCargo.XML := AXMLString;
@@ -406,7 +406,7 @@ function TTabelas.LoadFromIni(AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StringToTipoEvento(Ok, AIniString) of
+  case StringINIToTipoEvento(Ok, AIniString) of
     teS1010: Self.S1010.Add.EvtTabRubrica.LerArqIni(AIniString);
     teS1020: Self.S1020.Add.EvtTabLotacao.LerArqIni(AIniString);
     teS1030: Self.S1030.Add.EvtTabCargo.LerArqIni(AIniString);

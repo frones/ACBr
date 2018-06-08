@@ -663,7 +663,7 @@ function TNaoPeriodicos.LoadFromString(AXMLString: String): Boolean;
 var
  Ok: Boolean;
 begin
-  case StrEventoToTipoEvento(Ok, AXMLString) of
+  case StringXMLToTipoEvento(Ok, AXMLString) of
     teS2190: Self.S2190.Add.EvtAdmPrelim.XML := AXMLString;
     teS2200: Self.S2200.Add.EvtAdmissao.XML := AXMLString;
     teS2205: Self.S2205.Add.EvtAltCadastral.XML := AXMLString;
@@ -691,7 +691,7 @@ function TNaoPeriodicos.LoadFromIni(AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StringToTipoEvento(Ok, AIniString) of
+  case StringINIToTipoEvento(Ok, AIniString) of
     teS2190: Self.S2190.Add.EvtAdmPrelim.LerArqIni(AIniString);
     teS2200: Self.S2200.Add.EvtAdmissao.LerArqIni(AIniString);
     teS2205: Self.S2205.Add.EvtAltCadastral.LerArqIni(AIniString);

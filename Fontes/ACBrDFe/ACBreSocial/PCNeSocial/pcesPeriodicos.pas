@@ -482,7 +482,7 @@ function TPeriodicos.LoadFromString(AXMLString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StrEventoToTipoEvento(Ok, AXMLString) of
+  case StringXMLToTipoEvento(Ok, AXMLString) of
     teS1200: Self.S1200.Add.evtRemun.XML := AXMLString;
     teS1202: Self.S1202.Add.EvtRmnRPPS.XML := AXMLString;
     teS1207: Self.S1207.Add.evtBenPrRP.XML := AXMLString;
@@ -504,7 +504,7 @@ function TPeriodicos.LoadFromIni(AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin
-  case StringToTipoEvento(Ok, AIniString) of
+  case StringINIToTipoEvento(Ok, AIniString) of
     teS1200: Self.S1200.Add.evtRemun.LerArqIni(AIniString);
     teS1202: Self.S1202.Add.EvtRmnRPPS.LerArqIni(AIniString);
     teS1207: Self.S1207.Add.evtBenPrRP.LerArqIni(AIniString);

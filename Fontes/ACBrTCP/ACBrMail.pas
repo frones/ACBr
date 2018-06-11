@@ -765,7 +765,7 @@ begin
       Break;
 
     if vAttempts >= fAttempts then
-      SmtpError('SMTP Error: Unable to Login.');
+      SmtpError('SMTP Error: Unable to Login.' + sLineBreak + SMTP.ResultString);
   end;
 
   // Sending Mail Form //
@@ -777,7 +777,7 @@ begin
       Break;
 
     if vAttempts >= fAttempts then
-      SmtpError('SMTP Error: Unable to send MailFrom.');
+      SmtpError('SMTP Error: Unable to send MailFrom.' + sLineBreak + SMTP.ResultString);
   end;
 
   // Sending MailTo //
@@ -791,7 +791,7 @@ begin
         Break;
 
       if vAttempts >= fAttempts then
-        SmtpError('SMTP Error: Unable to send MailTo.');
+        SmtpError('SMTP Error: Unable to send MailTo.' + sLineBreak + SMTP.ResultString);
     end;
   end;
 
@@ -808,7 +808,7 @@ begin
         Break;
 
       if vAttempts >= fAttempts then
-        SmtpError('SMTP Error: Unable to send CC list.');
+        SmtpError('SMTP Error: Unable to send CC list.' + sLineBreak + SMTP.ResultString);
     end;
   end;
 
@@ -825,7 +825,7 @@ begin
         Break;
 
       if vAttempts >= fAttempts then
-        SmtpError('SMTP Error: Unable to send BCC list.');
+        SmtpError('SMTP Error: Unable to send BCC list.' + sLineBreak + SMTP.ResultString);
     end;
   end;
 
@@ -838,7 +838,7 @@ begin
       Break;
 
     if vAttempts >= fAttempts then
-      SmtpError('SMTP Error: Unable to send Mail data.');
+      SmtpError('SMTP Error: Unable to send Mail data.' + sLineBreak + SMTP.ResultString);
   end;
 
   // Login out from SMTP //
@@ -850,7 +850,7 @@ begin
       Break;
 
     if vAttempts >= fAttempts then
-      SmtpError('SMTP Error: Unable to Logout.');
+      SmtpError('SMTP Error: Unable to Logout.' + sLineBreak + SMTP.ResultString);
   end;
 
   // Done //

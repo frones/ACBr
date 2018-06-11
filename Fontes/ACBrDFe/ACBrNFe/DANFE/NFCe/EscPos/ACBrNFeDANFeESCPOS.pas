@@ -60,6 +60,10 @@ uses
   ACBrNFeDANFEClass, ACBrPosPrinter,
   pcnNFe, pcnEnvEventoNFe;
 
+const
+  CDotsMM = 8;  // 203dpi
+  CLarguraRegiaoLateral = 270;
+
 type
   { TACBrNFeDANFeESCPOS }
   {$IFDEF RTL230_UP}
@@ -90,13 +94,18 @@ type
     function GerarInformacoesConsumidor(Lateral: Boolean = False): String;
     function GerarInformacoesIdentificacaoNFCe(Lateral: Boolean = False): String;
     procedure GerarMensagemFiscal;
-    function GerarInformacoesQRCode(Cancelamento: Boolean = False; Lateral: Boolean = False): String;
+    function GerarInformacoesQRCode(DadosQRCode: String; Cancelamento: Boolean = False;
+      Lateral: Boolean = False): String;
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
 
     procedure GerarRodape;
     procedure GerarDadosEvento;
     procedure GerarObservacoesEvento;
+
+    function CalcularDadosQRCode: String;
+    function CalcularAlturaTexto(Linhas: Integer): Integer;
+    function CalcularAlturaQRCode(QRCodeData: String): Integer;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -220,7 +229,7 @@ begin
     DadosCabecalho := TStringList.Create;
     try
       DadosCabecalho.Text := TextoLateral;
-      Altura := max((FPosPrinter.EspacoEntreLinhas+2)*DadosCabecalho.Count,250);
+      Altura := max(CalcularAlturaTexto(DadosCabecalho.Count),250);
     finally
       DadosCabecalho.Free;
     end;
@@ -252,11 +261,16 @@ begin
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarIdentificacaodoDANFE;
+var
+  MsgContingencia: String;
 begin
   FPosPrinter.Buffer.Add('</ce><c><n>' +
     QuebraLinhas(ACBrStr('Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica'), FPosPrinter.ColunasFonteCondensada) + 
     '</n>');
-  FPosPrinter.Buffer.Add(GerarMensagemContingencia('='));
+
+  MsgContingencia := GerarMensagemContingencia('=');
+  if NaoEstaVazio(Trim(MsgContingencia)) then
+    FPosPrinter.Buffer.Add(MsgContingencia);
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarDetalhesProdutosServicos;
@@ -465,14 +479,19 @@ begin
         '</n>');
 
     // se diferente de normal imprimir a emissão em contingência
-    if (FpNFe.ide.tpEmis <> teNormal) and
-       EstaVazio(FpNFe.procNFe.nProt) then
+    if (FpNFe.ide.tpEmis <> teNormal) and EstaVazio(FpNFe.procNFe.nProt) then
     begin
-      MsgContingencia.Add(ACBrStr('</c></ce><e><n>EMITIDA EM CONTINGÊNCIA</n></e>'));
+      if Lateral then
+        MsgContingencia.Add('</ce></fn><n>'+QuebraLinhas(ACBrStr('EMITIDA EM CONTINGÊNCIA'),
+                    Trunc(FPosPrinter.ColunasFonteNormal/2))+'</n>')
+      else
+        MsgContingencia.Add('</ce></fn><e><n>'+QuebraLinhas(ACBrStr('EMITIDA EM CONTINGÊNCIA'),
+                    FPosPrinter.ColunasFonteExpandida)+'</n></e>');
+
       if CaracterDestaque <> #0 then
         MsgContingencia.Add(ACBrStr('<c><n>'+PadCenter('Pendente de autorização',FPosPrinter.ColunasFonteCondensada, CaracterDestaque)+'</n>'))
       else
-        MsgContingencia.Add(ACBrStr('<c><n>Pendente de autorização</n>'));
+        MsgContingencia.Add(ACBrStr('</ce><c><n>Pendente de autorização</n>'));
     end;
   finally
     Result := MsgContingencia.Text;
@@ -485,7 +504,12 @@ function TACBrNFeDANFeESCPOS.GerarInformacoesConsumidor(Lateral: Boolean
 var
   LinhaCmd: String;
   DadosConsumidor: TStringList;
+  Colunas: Integer;
 begin
+  Colunas := FPosPrinter.ColunasFonteCondensada;
+  if Lateral then
+    Colunas := Trunc(Colunas/2);
+
   DadosConsumidor := TStringList.Create;
   try
     if (FpNFe.Dest.idEstrangeiro = '') and (FpNFe.Dest.CNPJCPF = '') then
@@ -495,7 +519,7 @@ begin
     else
     begin
       if FpNFe.Dest.idEstrangeiro <> '' then
-        LinhaCmd := 'CONSUMIDOR - Id. Estrangeiro' +ifthen(Lateral,sLineBreak,' ')+ FpNFe.Dest.idEstrangeiro
+        LinhaCmd := 'CONSUMIDOR - Id. Estrangeiro ' + FpNFe.Dest.idEstrangeiro
       else
       begin
         if Length(Trim(FpNFe.Dest.CNPJCPF)) > 11 then
@@ -504,16 +528,10 @@ begin
           LinhaCmd := 'CONSUMIDOR - CPF ' + FormatarCPF(FpNFe.Dest.CNPJCPF);
       end;
 
-      if Lateral then
-      begin
-        DadosConsumidor.Add('</ce><c><n>' + QuebraLinhas(LinhaCmd, TruncFix(FPosPrinter.ColunasFonteCondensada/2)) + '</n> ');
-        DadosConsumidor.Add(QuebraLinhas(Trim(FpNFe.Dest.xNome), TruncFix(FPosPrinter.ColunasFonteCondensada/2)));
-      end
-      else
-      begin
-        LinhaCmd := '</ce><c><n>' + LinhaCmd + '</n> ' + Trim(FpNFe.Dest.xNome);
-        DadosConsumidor.Add(QuebraLinhas(LinhaCmd, FPosPrinter.ColunasFonteCondensada));
-      end;
+      DadosConsumidor.Add( '</ce><c><n>' +
+                           QuebraLinhas(LinhaCmd, Colunas) +
+                           '</n> ');
+      DadosConsumidor.Add( QuebraLinhas(Trim(FpNFe.Dest.xNome), Colunas) );
 
       LinhaCmd := Trim(
         Trim(FpNFe.Dest.EnderDest.xLgr) + ' ' +
@@ -523,8 +541,9 @@ begin
         Trim(FpNFe.Dest.EnderDest.xMun) + ' ' +
         Trim(FpNFe.Dest.EnderDest.UF)
       );
+
       if LinhaCmd <> '' then
-        DadosConsumidor.Add('<c>' + QuebraLinhas(LinhaCmd,Trunc(FPosPrinter.ColunasFonteCondensada/ifthen(Lateral,2,1))));
+        DadosConsumidor.Add('<c>' + QuebraLinhas(LinhaCmd, Colunas));
     end;
   finally
     Result := DadosConsumidor.Text;
@@ -535,35 +554,47 @@ end;
 function TACBrNFeDANFeESCPOS.GerarInformacoesIdentificacaoNFCe(Lateral: Boolean
   ): String;
 var
-  Via : String;
-  DadosNFe: TStringList;
-begin
-  DadosNFe := TStringList.Create;
-  try
-    if EstaVazio(Trim(FpNFe.procNFe.nProt)) then
-      Via := IfThen(ViaConsumidor, '|Via Consumidor', '|Via Empresa')
-    else
-      Via := '';
-    // dados da nota eletronica de consumidor
-    DadosNFe.Add('</ce><c><n>' + StringReplace(QuebraLinhas(ACBrStr(
-      'NFC-e nº ' + IntToStrZero(FpNFe.Ide.nNF, 9) +
-      ' Série ' + IntToStrZero(FpNFe.Ide.serie, 3) +ifthen(Lateral,'|',' ')+
-      DateTimeToStr(FpNFe.ide.dEmi) +
-      Via+'</n>')
-      , Trunc(FPosPrinter.ColunasFonteCondensada/ifthen(Lateral,2,1)), '|'), '|', ' ', [rfReplaceAll]));
+  InfoNFCe, InfoAut: String;
+  Colunas: Integer;
 
-    // protocolo de autorização
-    if (FpNFe.Ide.tpEmis <> teOffLine) or
-       NaoEstaVazio(FpNFe.procNFe.nProt) then
-    begin
-      DadosNFe.Add(ACBrStr('<c><n>Protocolo de Autorização:</n>')+ifthen(Lateral,sLineBreak,' ')+Trim(FpNFe.procNFe.nProt));
-      if (FpNFe.procNFe.dhRecbto <> 0) then
-        DadosNFe.Add(ACBrStr('<c><n>Data de Autorização</n>'+ifthen(Lateral,sLineBreak,' ')+DateTimeToStr(FpNFe.procNFe.dhRecbto)+'</fn>'));
-    end;
-  finally
-    Result := DadosNFe.Text;
-    DadosNFe.Free;
+  function ReplaceSoftBreak( ALine: String): String;
+  begin
+    Result := StringReplace( ALine, '|', ifthen(Lateral,sLineBreak,' '), [rfReplaceAll]);
   end;
+
+begin
+  Colunas := FPosPrinter.ColunasFonteCondensada;
+  if Lateral then
+    Colunas := Trunc(Colunas/2);
+
+  Result := '</ce><c><n>';
+  InfoNFCe := ACBrStr('NFC-e nº ') + IntToStrZero(FpNFe.Ide.nNF, 9) +
+              ACBrStr(' Série ') + IntToStrZero(FpNFe.Ide.serie, 3) + '|' +
+              DateTimeToStr(FpNFe.ide.dEmi) + '</n>';
+
+  if EstaVazio(Trim(FpNFe.procNFe.nProt)) then
+    InfoNFCe := InfoNFCe + IfThen(ViaConsumidor, '|Via Consumidor', '|Via Empresa');
+
+  // dados da nota eletronica de consumidor
+  Result := Result +
+            QuebraLinhas( ReplaceSoftBreak(InfoNFCe), Colunas) + sLineBreak;
+
+  // protocolo de autorização
+  if (FpNFe.Ide.tpEmis <> teOffLine) or NaoEstaVazio(FpNFe.procNFe.nProt) then
+  begin
+    InfoAut := '<c><n>'+ACBrStr('Protocolo de Autorização:')+'</n>|'+
+                Trim(FpNFe.procNFe.nProt);
+    Result := Result + ReplaceSoftBreak(InfoAut) + sLineBreak;
+
+    if (FpNFe.procNFe.dhRecbto <> 0) then
+    begin
+      InfoAut := '<c><n>'+ACBrStr('Data de Autorização')+'</n>|'+
+                 DateTimeToStr(FpNFe.procNFe.dhRecbto);
+      Result := Result + ReplaceSoftBreak(InfoAut) + sLineBreak;
+    end;
+  end;
+
+  Result := Result + '</fn>';
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarMensagemFiscal;
@@ -578,10 +609,9 @@ begin
   end;
 end;
 
-function TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(Cancelamento: Boolean;
-  Lateral: Boolean): String;
+function TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(DadosQRCode: String;
+  Cancelamento: Boolean; Lateral: Boolean): String;
 var
-  qrcode: AnsiString;
   InfoQrCode: TStringList;
 begin
   InfoQrCode := TStringList.Create;
@@ -592,28 +622,10 @@ begin
       InfoQrCode.Add('</ce>Consulta via leitor de QR Code');
     end;
 
-    if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
-      qrcode := TACBrNFe(ACBrNFe).GetURLQRCode(
-        FpNFe.ide.cUF,
-        FpNFe.ide.tpAmb,
-        FpNFe.infNFe.ID,
-        IfThen(FpNFe.Dest.idEstrangeiro <> '', FpNFe.Dest.idEstrangeiro, FpNFe.Dest.CNPJCPF),
-        FpNFe.ide.dEmi,
-        FpNFe.Total.ICMSTot.vNF,
-        FpNFe.Total.ICMSTot.vICMS,
-        FpNFe.signature.DigestValue,
-        FpNFe.infNfe.Versao)
-    else
-      qrcode := FpNFe.infNFeSupl.qrCode;
-
-    if Lateral then
-      InfoQrCode.Add( '<qrcode_tipo>2</qrcode_tipo>'+
-                              '<qrcode_error>0</qrcode_error>'+
-                              '<qrcode_largura>4</qrcode_largura>'+
-                              '<qrcode>'+qrcode+'</qrcode>')
-    else
-      InfoQrCode.Add( '<qrcode_error>0</qrcode_error>'+
-                              '<qrcode>'+qrcode+'</qrcode>');
+    InfoQrCode.Add( '<qrcode_tipo>2</qrcode_tipo>'+
+                    '<qrcode_error>0</qrcode_error>'+
+                    '<qrcode_largura>'+IntToStr(min(4,FPosPrinter.ConfigQRCode.LarguraModulo))+'</qrcode_largura>'+
+                    '<qrcode>'+DadosQRCode+'</qrcode>');
 
     if Cancelamento then
     begin
@@ -648,8 +660,9 @@ end;
 procedure TACBrNFeDANFeESCPOS.MontarEnviarDANFE(NFE: TNFe;
   const AResumido: Boolean);
 var
-  Altura: Integer;
+  AlturaMax, AlturaQRCode, EsquerdaQRCode: Integer;
   TextoLateral: TStringList;
+  MsgContingencia, DadosQRCode: String;
 begin
   if NFE = nil then
   begin
@@ -670,8 +683,12 @@ begin
   GerarPagamentos;
   GerarInformacoesConsultaChaveAcesso;
 
+  DadosQRCode := CalcularDadosQRCode;
+
   if QRCodeLateral and (PosPrinter.Colunas >= 48) and (PosPrinter.TagsNaoSuportadas.IndexOf(cTagModoPaginaLiga) < 0) then
   begin
+    FPosPrinter.Buffer.Add(' ');
+
     TextoLateral := TStringList.Create;
     try
       TextoLateral.Text := sLineBreak +
@@ -681,9 +698,16 @@ begin
 
       AjustaStringList(TextoLateral); // Ajusta corretamente o numero de Linhas
 
-      Altura := max((FPosPrinter.EspacoEntreLinhas+2)*TextoLateral.Count, 560);
-      FPosPrinter.Buffer.Add('<mp>' + ConfigurarRegiao(0,0,Altura,270) + GerarInformacoesQRCode(False, True));
-      FPosPrinter.Buffer.Add(ConfigurarRegiao(270,0,Altura,325) + TextoLateral.Text + '</mp>');
+      AlturaQRCode := CalcularAlturaQRCode(DadosQRCode);
+      AlturaMax := max( CalcularAlturaTexto(TextoLateral.Count), AlturaQRCode );
+      EsquerdaQRCode := Trunc(max(CLarguraRegiaoLateral - Trunc(AlturaQRCode/2),0) / 2);
+
+      FPosPrinter.Buffer.Add( '<mp>' +
+                              ConfigurarRegiao( EsquerdaQRCode, 0, AlturaMax,
+                                                (CLarguraRegiaoLateral-EsquerdaQRCode) ) +
+                              GerarInformacoesQRCode(DadosQRCode, False, True));
+      FPosPrinter.Buffer.Add( ConfigurarRegiao(CLarguraRegiaoLateral, 0, AlturaMax, 325) +
+                              TextoLateral.Text + '</mp>');
     finally
       TextoLateral.Free;
     end;
@@ -693,8 +717,12 @@ begin
     FPosPrinter.Buffer.Add(GerarInformacoesConsumidor(False));
     FPosPrinter.Buffer.Add(GerarInformacoesIdentificacaoNFCe);
     GerarMensagemFiscal;
-    FPosPrinter.Buffer.Add(GerarMensagemContingencia(#32));
-    FPosPrinter.Buffer.Add(GerarInformacoesQRCode(False, False));
+
+    MsgContingencia := GerarMensagemContingencia(' ');
+    if NaoEstaVazio(Trim(MsgContingencia)) then
+      FPosPrinter.Buffer.Add(MsgContingencia);
+
+    FPosPrinter.Buffer.Add(GerarInformacoesQRCode(DadosQRCode, False, False));
   end;
 
   GerarMensagemInteresseContribuinte;
@@ -798,6 +826,73 @@ begin
   end;
 end;
 
+function TACBrNFeDANFeESCPOS.CalcularDadosQRCode: String;
+begin
+  if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
+    Result := TACBrNFe(ACBrNFe).GetURLQRCode(
+      FpNFe.ide.cUF,
+      FpNFe.ide.tpAmb,
+      FpNFe.infNFe.ID,
+      IfThen(FpNFe.Dest.idEstrangeiro <> '', FpNFe.Dest.idEstrangeiro, FpNFe.Dest.CNPJCPF),
+      FpNFe.ide.dEmi,
+      FpNFe.Total.ICMSTot.vNF,
+      FpNFe.Total.ICMSTot.vICMS,
+      FpNFe.signature.DigestValue,
+      FpNFe.infNfe.Versao)
+  else
+    Result := FpNFe.infNFeSupl.qrCode;
+end;
+
+function TACBrNFeDANFeESCPOS.CalcularAlturaTexto(Linhas: Integer): Integer;
+begin
+  Result := (FPosPrinter.EspacoEntreLinhas+2) * Linhas;
+end;
+
+function TACBrNFeDANFeESCPOS.CalcularAlturaQRCode(QRCodeData: String): Integer;
+var
+  QRCodeModules: Integer;
+  LenData, DotsMM: Integer;
+begin
+  // http://www.qrcode.com/en/about/version.html
+  LenData := Length(QRCodeData);
+
+  if LenData < 20 then
+    QRCodeModules := 21
+  else if LenData < 38 then
+    QRCodeModules := 25
+  else if LenData < 61 then
+    QRCodeModules := 29
+  else if LenData < 90 then
+    QRCodeModules := 33
+  else if LenData < 122 then
+    QRCodeModules := 37
+  else if LenData < 154 then
+    QRCodeModules := 41
+  else if LenData < 178 then
+    QRCodeModules := 45
+  else if LenData < 221 then
+    QRCodeModules := 49
+  else if LenData < 262 then
+    QRCodeModules := 53
+  else if LenData < 311 then
+    QRCodeModules := 57
+  else if LenData < 366 then
+    QRCodeModules := 61
+  else if LenData < 419 then
+    QRCodeModules := 65
+  else if LenData < 483 then
+    QRCodeModules := 69
+  else if LenData < 528 then
+    QRCodeModules := 73
+  else if LenData < 600 then
+    QRCodeModules := 73
+  else
+    raise Exception.Create('QRCode muito grande');
+
+  // http://www.qrcode.com/en/howto/code.html
+  Result := (QRCodeModules + 8) * CDotsMM;
+end;
+
 procedure TACBrNFeDANFeESCPOS.ImprimirDANFECancelado(NFE: TNFe);
 begin
   if NFE = nil then
@@ -822,7 +917,7 @@ begin
   GerarDadosEvento;
   FPosPrinter.Buffer.Add(GerarInformacoesConsumidor);
   GerarObservacoesEvento;
-  FPosPrinter.Buffer.Add(GerarInformacoesQRCode(True, False));
+  FPosPrinter.Buffer.Add(GerarInformacoesQRCode(CalcularDadosQRCode, True, False));
   GerarRodape;
 
   FPosPrinter.Imprimir('',False,True,True,NumCopias);

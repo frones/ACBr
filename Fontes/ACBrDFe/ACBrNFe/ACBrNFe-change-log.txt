@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2018
+-- ACBrNFeDANFeESCPOS --
+[*] Ajuste para calcular corretamente a Altura do QRCode Lateral, com diversas
+    situações de conteúdo de tamanhos variáveis
+    (por: DSA)
+
 08/06/2018
 -- ACBrNFeWebServices --
 [+] Acrescentado a propriedade ListaArqs na classe DistribuicaoDFe com objetivo

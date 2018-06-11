@@ -49,6 +49,12 @@ Símbolo : Significado
 
 Data 16/04/2018 ver: 0.0.241
 
+11-06-2018 -- ACBrBancoBrasil
+[*] Ajuste retorno de ocorrência
+https://www.projetoacbr.com.br/forum/topic/41856-erro-ao-ler-retorno-do-banco-do-brasil-cnab400/
+https://www.projetoacbr.com.br/forum/topic/42127-sacador-avalista-banco-do-brasil/
+https://www.projetoacbr.com.br/forum/topic/43354-codigo-mora-cnab-240-banco-do-brasil/
+
 25-05-2018 -- ACBrBancoSantander
 [*] Validação de Contribuições e Ajustes para Banco Santander (Retorno CNAB 240 / Código Ocorrencias)
 https://www.projetoacbr.com.br/forum/topic/41292-n%C3%BAmeros-sobrando-para-o-sacado-quando-%C3%A9-pessoa-f%C3%ADsica-santander/

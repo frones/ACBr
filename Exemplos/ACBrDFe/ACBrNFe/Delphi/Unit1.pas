@@ -299,8 +299,8 @@ type
     
   private
     { Private declarations }
-    procedure GravarConfiguracao ;
-    procedure LerConfiguracao ;
+    procedure GravarConfiguracao;
+    procedure LerConfiguracao;
     procedure GerarNFe(NumNFe : String);
     procedure GerarNFCe(NumNFe : String);
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
@@ -328,137 +328,137 @@ const
 {$R *.dfm}
 
 procedure TForm1.GravarConfiguracao;
-Var IniFile : String ;
-    Ini     : TIniFile ;
+Var IniFile : String;
+    Ini     : TIniFile;
     StreamMemo : TMemoryStream;
 begin
-  IniFile := ChangeFileExt( Application.ExeName, '.ini') ;
+  IniFile := ChangeFileExt( Application.ExeName, '.ini');
 
   Ini := TIniFile.Create( IniFile );
   try
-      Ini.WriteInteger( 'Certificado','SSLLib' , cbSSLLib.ItemIndex) ;
-      Ini.WriteInteger( 'Certificado','CryptLib' , cbCryptLib.ItemIndex) ;
-      Ini.WriteInteger( 'Certificado','HttpLib' , cbHttpLib.ItemIndex) ;
-      Ini.WriteInteger( 'Certificado','XmlSignLib' , cbXmlSignLib.ItemIndex) ;
-      Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text) ;
-      Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text) ;
-      Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text) ;
+      Ini.WriteInteger( 'Certificado','SSLLib' , cbSSLLib.ItemIndex);
+      Ini.WriteInteger( 'Certificado','CryptLib' , cbCryptLib.ItemIndex);
+      Ini.WriteInteger( 'Certificado','HttpLib' , cbHttpLib.ItemIndex);
+      Ini.WriteInteger( 'Certificado','XmlSignLib' , cbXmlSignLib.ItemIndex);
+      Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text);
+      Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text);
+      Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text);
 
-      Ini.WriteBool(   'Geral','AtualizarXML'      ,cbxAtualizarXML.Checked) ;
-      Ini.WriteBool(   'Geral','ExibirErroSchema'  ,cbxExibirErroSchema.Checked) ;
-      Ini.WriteString( 'Geral','FormatoAlerta'  ,edtFormatoAlerta.Text) ;
-      Ini.WriteInteger( 'Geral','FormaEmissao',cbFormaEmissao.ItemIndex) ;
-      Ini.WriteInteger( 'Geral','ModeloDF',cbModeloDF.ItemIndex) ;
-      Ini.WriteInteger( 'Geral','VersaoDF',cbVersaoDF.ItemIndex) ;
-      Ini.WriteString( 'Geral','IdToken'  ,edtIdToken.Text) ;
-      Ini.WriteString( 'Geral','Token'  ,edtToken.Text) ;
-      Ini.WriteBool(   'Geral','RetirarAcentos'      ,cbxRetirarAcentos.Checked) ;
-      Ini.WriteBool(   'Geral','Salvar'      ,ckSalvar.Checked) ;
-      Ini.WriteString( 'Geral','PathSalvar'  ,edtPathLogs.Text) ;
-      Ini.WriteString( 'Geral','PathSchemas'  ,edtPathSchemas.Text) ;
+      Ini.WriteBool(   'Geral','AtualizarXML'      ,cbxAtualizarXML.Checked);
+      Ini.WriteBool(   'Geral','ExibirErroSchema'  ,cbxExibirErroSchema.Checked);
+      Ini.WriteString( 'Geral','FormatoAlerta'  ,edtFormatoAlerta.Text);
+      Ini.WriteInteger( 'Geral','FormaEmissao',cbFormaEmissao.ItemIndex);
+      Ini.WriteInteger( 'Geral','ModeloDF',cbModeloDF.ItemIndex);
+      Ini.WriteInteger( 'Geral','VersaoDF',cbVersaoDF.ItemIndex);
+      Ini.WriteString( 'Geral','IdToken'  ,edtIdToken.Text);
+      Ini.WriteString( 'Geral','Token'  ,edtToken.Text);
+      Ini.WriteBool(   'Geral','RetirarAcentos'      ,cbxRetirarAcentos.Checked);
+      Ini.WriteBool(   'Geral','Salvar'      ,ckSalvar.Checked);
+      Ini.WriteString( 'Geral','PathSalvar'  ,edtPathLogs.Text);
+      Ini.WriteString( 'Geral','PathSchemas'  ,edtPathSchemas.Text);
 
-      Ini.WriteString( 'WebService','UF'        ,cbUF.Text) ;
-      Ini.WriteInteger( 'WebService','Ambiente'  ,rgTipoAmb.ItemIndex) ;
-      Ini.WriteBool(   'WebService','Visualizar',cbxVisualizar.Checked) ;
-      Ini.WriteBool(   'WebService','SalvarSOAP',cbxSalvarSOAP.Checked) ;
-      Ini.WriteBool(   'WebService','AjustarAut',cbxAjustarAut.Checked) ;
-      Ini.WriteString( 'WebService','Aguardar'    ,edtAguardar.Text) ;
-      Ini.WriteString( 'WebService','Tentativas'  ,edtTentativas.Text) ;
-      Ini.WriteString( 'WebService','Intervalo'  ,edtIntervalo.Text) ;
-      Ini.WriteInteger( 'WebService','TimeOut'   ,seTimeOut.Value) ;
-      Ini.WriteInteger( 'WebService','SSLType' , cbSSLType.ItemIndex) ;
+      Ini.WriteString( 'WebService','UF'        ,cbUF.Text);
+      Ini.WriteInteger( 'WebService','Ambiente'  ,rgTipoAmb.ItemIndex);
+      Ini.WriteBool(   'WebService','Visualizar',cbxVisualizar.Checked);
+      Ini.WriteBool(   'WebService','SalvarSOAP',cbxSalvarSOAP.Checked);
+      Ini.WriteBool(   'WebService','AjustarAut',cbxAjustarAut.Checked);
+      Ini.WriteString( 'WebService','Aguardar'    ,edtAguardar.Text);
+      Ini.WriteString( 'WebService','Tentativas'  ,edtTentativas.Text);
+      Ini.WriteString( 'WebService','Intervalo'  ,edtIntervalo.Text);
+      Ini.WriteInteger( 'WebService','TimeOut'   ,seTimeOut.Value);
+      Ini.WriteInteger( 'WebService','SSLType' , cbSSLType.ItemIndex);
 
-      Ini.WriteString( 'Proxy','Host'   ,edtProxyHost.Text) ;
-      Ini.WriteString( 'Proxy','Porta'  ,edtProxyPorta.Text) ;
-      Ini.WriteString( 'Proxy','User'   ,edtProxyUser.Text) ;
-      Ini.WriteString( 'Proxy','Pass'   ,edtProxySenha.Text) ;
+      Ini.WriteString( 'Proxy','Host'   ,edtProxyHost.Text);
+      Ini.WriteString( 'Proxy','Porta'  ,edtProxyPorta.Text);
+      Ini.WriteString( 'Proxy','User'   ,edtProxyUser.Text);
+      Ini.WriteString( 'Proxy','Pass'   ,edtProxySenha.Text);
 
-      Ini.WriteBool(   'Arquivos','Salvar'          ,cbxSalvarArqs.Checked) ;
-      Ini.WriteBool(   'Arquivos','PastaMensal'     ,cbxPastaMensal.Checked) ;
-      Ini.WriteBool(   'Arquivos','AddLiteral'      ,cbxAdicionaLiteral.Checked) ;
-      Ini.WriteBool(   'Arquivos','EmissaoPathNFe'  ,cbxEmissaoPathNFe.Checked) ;
-      Ini.WriteBool(   'Arquivos','SalvarPathEvento',cbxSalvaPathEvento.Checked) ;
-      Ini.WriteBool(   'Arquivos','SepararPorCNPJ'  ,cbxSepararPorCNPJ.Checked) ;
-      Ini.WriteBool(   'Arquivos','SepararPorModelo',cbxSepararPorModelo.Checked) ;
-      Ini.WriteString( 'Arquivos','PathNFe'    ,edtPathNFe.Text) ;
-      Ini.WriteString( 'Arquivos','PathCan'    ,edtPathCan.Text) ;
-      Ini.WriteString( 'Arquivos','PathInu'    ,edtPathInu.Text) ;
-      Ini.WriteString( 'Arquivos','PathDPEC'   ,edtPathDPEC.Text) ;
-      Ini.WriteString( 'Arquivos','PathCCe'    ,edtPathCCe.Text) ;
-      Ini.WriteString( 'Arquivos','PathEvento' ,edtPathEvento.Text) ;
+      Ini.WriteBool(   'Arquivos','Salvar'          ,cbxSalvarArqs.Checked);
+      Ini.WriteBool(   'Arquivos','PastaMensal'     ,cbxPastaMensal.Checked);
+      Ini.WriteBool(   'Arquivos','AddLiteral'      ,cbxAdicionaLiteral.Checked);
+      Ini.WriteBool(   'Arquivos','EmissaoPathNFe'  ,cbxEmissaoPathNFe.Checked);
+      Ini.WriteBool(   'Arquivos','SalvarPathEvento',cbxSalvaPathEvento.Checked);
+      Ini.WriteBool(   'Arquivos','SepararPorCNPJ'  ,cbxSepararPorCNPJ.Checked);
+      Ini.WriteBool(   'Arquivos','SepararPorModelo',cbxSepararPorModelo.Checked);
+      Ini.WriteString( 'Arquivos','PathNFe'    ,edtPathNFe.Text);
+      Ini.WriteString( 'Arquivos','PathCan'    ,edtPathCan.Text);
+      Ini.WriteString( 'Arquivos','PathInu'    ,edtPathInu.Text);
+      Ini.WriteString( 'Arquivos','PathDPEC'   ,edtPathDPEC.Text);
+      Ini.WriteString( 'Arquivos','PathCCe'    ,edtPathCCe.Text);
+      Ini.WriteString( 'Arquivos','PathEvento' ,edtPathEvento.Text);
 
-      Ini.WriteString( 'Emitente','CNPJ'       ,edtEmitCNPJ.Text) ;
-      Ini.WriteString( 'Emitente','IE'         ,edtEmitIE.Text) ;
-      Ini.WriteString( 'Emitente','RazaoSocial',edtEmitRazao.Text) ;
-      Ini.WriteString( 'Emitente','Fantasia'   ,edtEmitFantasia.Text) ;
-      Ini.WriteString( 'Emitente','Fone'       ,edtEmitFone.Text) ;
-      Ini.WriteString( 'Emitente','CEP'        ,edtEmitCEP.Text) ;
-      Ini.WriteString( 'Emitente','Logradouro' ,edtEmitLogradouro.Text) ;
-      Ini.WriteString( 'Emitente','Numero'     ,edtEmitNumero.Text) ;
-      Ini.WriteString( 'Emitente','Complemento',edtEmitComp.Text) ;
-      Ini.WriteString( 'Emitente','Bairro'     ,edtEmitBairro.Text) ;
-      Ini.WriteString( 'Emitente','CodCidade'  ,edtEmitCodCidade.Text) ;
-      Ini.WriteString( 'Emitente','Cidade'     ,edtEmitCidade.Text) ;
-      Ini.WriteString( 'Emitente','UF'         ,edtEmitUF.Text) ;
+      Ini.WriteString( 'Emitente','CNPJ'       ,edtEmitCNPJ.Text);
+      Ini.WriteString( 'Emitente','IE'         ,edtEmitIE.Text);
+      Ini.WriteString( 'Emitente','RazaoSocial',edtEmitRazao.Text);
+      Ini.WriteString( 'Emitente','Fantasia'   ,edtEmitFantasia.Text);
+      Ini.WriteString( 'Emitente','Fone'       ,edtEmitFone.Text);
+      Ini.WriteString( 'Emitente','CEP'        ,edtEmitCEP.Text);
+      Ini.WriteString( 'Emitente','Logradouro' ,edtEmitLogradouro.Text);
+      Ini.WriteString( 'Emitente','Numero'     ,edtEmitNumero.Text);
+      Ini.WriteString( 'Emitente','Complemento',edtEmitComp.Text);
+      Ini.WriteString( 'Emitente','Bairro'     ,edtEmitBairro.Text);
+      Ini.WriteString( 'Emitente','CodCidade'  ,edtEmitCodCidade.Text);
+      Ini.WriteString( 'Emitente','Cidade'     ,edtEmitCidade.Text);
+      Ini.WriteString( 'Emitente','UF'         ,edtEmitUF.Text);
 
-      Ini.WriteString( 'Email','Host'    ,edtSmtpHost.Text) ;
-      Ini.WriteString( 'Email','Port'    ,edtSmtpPort.Text) ;
-      Ini.WriteString( 'Email','User'    ,edtSmtpUser.Text) ;
-      Ini.WriteString( 'Email','Pass'    ,edtSmtpPass.Text) ;
-      Ini.WriteString( 'Email','Assunto' ,edtEmailAssunto.Text) ;
-      Ini.WriteBool(   'Email','SSL'     ,cbEmailSSL.Checked ) ;
+      Ini.WriteString( 'Email','Host'    ,edtSmtpHost.Text);
+      Ini.WriteString( 'Email','Port'    ,edtSmtpPort.Text);
+      Ini.WriteString( 'Email','User'    ,edtSmtpUser.Text);
+      Ini.WriteString( 'Email','Pass'    ,edtSmtpPass.Text);
+      Ini.WriteString( 'Email','Assunto' ,edtEmailAssunto.Text);
+      Ini.WriteBool(   'Email','SSL'     ,cbEmailSSL.Checked );
       StreamMemo := TMemoryStream.Create;
       mmEmailMsg.Lines.SaveToStream(StreamMemo);
       StreamMemo.Seek(0,soFromBeginning);
-      Ini.WriteBinaryStream( 'Email','Mensagem',StreamMemo) ;
+      Ini.WriteBinaryStream( 'Email','Mensagem',StreamMemo);
       StreamMemo.Free;
 
-      Ini.WriteInteger( 'DANFE','Tipo'       ,rgTipoDanfe.ItemIndex) ;
-      Ini.WriteString( 'DANFE','LogoMarca'   ,edtLogoMarca.Text) ;
+      Ini.WriteInteger( 'DANFE','Tipo'       ,rgTipoDanfe.ItemIndex);
+      Ini.WriteString( 'DANFE','LogoMarca'   ,edtLogoMarca.Text);
 
   finally
-     Ini.Free ;
+     Ini.Free;
   end;
 
 end;
 
 procedure TForm1.LerConfiguracao;
-Var IniFile  : String ;
-    Ini     : TIniFile ;
+Var IniFile  : String;
+    Ini     : TIniFile;
     Ok : Boolean;
     StreamMemo : TMemoryStream;
 begin
-  IniFile := ChangeFileExt( Application.ExeName, '.ini') ;
+  IniFile := ChangeFileExt( Application.ExeName, '.ini');
 
   Ini := TIniFile.Create( IniFile );
   try
-      cbSSLLib.ItemIndex:= Ini.ReadInteger( 'Certificado','SSLLib' ,0) ;
-      cbCryptLib.ItemIndex := Ini.ReadInteger( 'Certificado','CryptLib' , 0) ;
-      cbHttpLib.ItemIndex := Ini.ReadInteger( 'Certificado','HttpLib' , 0) ;
-      cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado','XmlSignLib' , 0) ;
-      edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
-      edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
-      edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
+      cbSSLLib.ItemIndex:= Ini.ReadInteger( 'Certificado','SSLLib' ,0);
+      cbCryptLib.ItemIndex := Ini.ReadInteger( 'Certificado','CryptLib' , 0);
+      cbHttpLib.ItemIndex := Ini.ReadInteger( 'Certificado','HttpLib' , 0);
+      cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado','XmlSignLib' , 0);
+      edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'');
+      edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'');
+      edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','');
       ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
       ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
       ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
-      cbxAtualizarXML.Checked    := Ini.ReadBool(   'Geral','AtualizarXML',True) ;
-      cbxExibirErroSchema.Checked    := Ini.ReadBool(   'Geral','ExibirErroSchema',True) ;
-      edtFormatoAlerta.Text    := Ini.ReadString( 'Geral','FormatoAlerta'  ,'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.') ;
-      cbFormaEmissao.ItemIndex := Ini.ReadInteger( 'Geral','FormaEmissao',0) ;
-      cbModeloDF.ItemIndex := Ini.ReadInteger( 'Geral','ModeloDF',0) ;
+      cbxAtualizarXML.Checked    := Ini.ReadBool(   'Geral','AtualizarXML',True);
+      cbxExibirErroSchema.Checked    := Ini.ReadBool(   'Geral','ExibirErroSchema',True);
+      edtFormatoAlerta.Text    := Ini.ReadString( 'Geral','FormatoAlerta'  ,'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
+      cbFormaEmissao.ItemIndex := Ini.ReadInteger( 'Geral','FormaEmissao',0);
+      cbModeloDF.ItemIndex := Ini.ReadInteger( 'Geral','ModeloDF',0);
       if cbModeloDF.ItemIndex = 0 then
          ACBrNFe1.DANFE := ACBrNFeDANFeRL1
       else
-         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1 ;
-      cbVersaoDF.ItemIndex := Ini.ReadInteger( 'Geral','VersaoDF',0) ;
-      edtIdToken.Text      := Ini.ReadString( 'Geral','IdToken'  ,'') ;
-      edtToken.Text        := Ini.ReadString( 'Geral','Token'  ,'') ;
-      ckSalvar.Checked     := Ini.ReadBool(   'Geral','Salvar',True) ;
-      cbxRetirarAcentos.Checked := Ini.ReadBool(   'Geral','RetirarAcentos',True) ;
-      edtPathLogs.Text     := Ini.ReadString( 'Geral','PathSalvar'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs') ;
-      edtPathSchemas.Text  := Ini.ReadString( 'Geral','PathSchemas'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\'+GetEnumName(TypeInfo(TpcnVersaoDF), integer(cbVersaoDF.ItemIndex) )) ;
+         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
+      cbVersaoDF.ItemIndex := Ini.ReadInteger( 'Geral','VersaoDF',0);
+      edtIdToken.Text      := Ini.ReadString( 'Geral','IdToken'  ,'');
+      edtToken.Text        := Ini.ReadString( 'Geral','Token'  ,'');
+      ckSalvar.Checked     := Ini.ReadBool(   'Geral','Salvar',True);
+      cbxRetirarAcentos.Checked := Ini.ReadBool(   'Geral','RetirarAcentos',True);
+      edtPathLogs.Text     := Ini.ReadString( 'Geral','PathSalvar'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
+      edtPathSchemas.Text  := Ini.ReadString( 'Geral','PathSchemas'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\'+GetEnumName(TypeInfo(TpcnVersaoDF), integer(cbVersaoDF.ItemIndex) ));
 
       ACBrNFe1.SSL.DescarregarCertificado;
 
@@ -481,20 +481,20 @@ begin
          Salvar           := ckSalvar.Checked;
        end;
 
-      cbUF.ItemIndex        := cbUF.Items.IndexOf(Ini.ReadString( 'WebService','UF','SP')) ;
-      rgTipoAmb.ItemIndex   := Ini.ReadInteger( 'WebService','Ambiente'  ,0) ;
-      cbxVisualizar.Checked  := Ini.ReadBool(    'WebService','Visualizar',False) ;
-      cbxSalvarSOAP.Checked := Ini.ReadBool(    'WebService','SalvarSOAP',False) ;
-      cbxAjustarAut.Checked  := Ini.ReadBool(   'WebService','AjustarAut' ,False) ;
-      edtAguardar.Text       := Ini.ReadString( 'WebService','Aguardar'  ,'0') ;
-      edtTentativas.Text     := Ini.ReadString( 'WebService','Tentativas','5') ;
-      edtIntervalo.Text      := Ini.ReadString( 'WebService','Intervalo' ,'0') ;
-      seTimeOut.Value        := Ini.ReadInteger('WebService','TimeOut'  ,5000) ;
-      cbSSLType.ItemIndex    := Ini.ReadInteger('WebService','SSLType' , 0) ;
-      edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host'   ,'') ;
-      edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'') ;
-      edtProxyUser.Text  := Ini.ReadString( 'Proxy','User'   ,'') ;
-      edtProxySenha.Text := Ini.ReadString( 'Proxy','Pass'   ,'') ;
+      cbUF.ItemIndex        := cbUF.Items.IndexOf(Ini.ReadString( 'WebService','UF','SP'));
+      rgTipoAmb.ItemIndex   := Ini.ReadInteger( 'WebService','Ambiente'  ,0);
+      cbxVisualizar.Checked  := Ini.ReadBool(    'WebService','Visualizar',False);
+      cbxSalvarSOAP.Checked := Ini.ReadBool(    'WebService','SalvarSOAP',False);
+      cbxAjustarAut.Checked  := Ini.ReadBool(   'WebService','AjustarAut' ,False);
+      edtAguardar.Text       := Ini.ReadString( 'WebService','Aguardar'  ,'0');
+      edtTentativas.Text     := Ini.ReadString( 'WebService','Tentativas','5');
+      edtIntervalo.Text      := Ini.ReadString( 'WebService','Intervalo' ,'0');
+      seTimeOut.Value        := Ini.ReadInteger('WebService','TimeOut'  ,5000);
+      cbSSLType.ItemIndex    := Ini.ReadInteger('WebService','SSLType' , 0);
+      edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host'   ,'');
+      edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'');
+      edtProxyUser.Text  := Ini.ReadString( 'Proxy','User'   ,'');
+      edtProxySenha.Text := Ini.ReadString( 'Proxy','Pass'   ,'');
 
       with ACBrNFe1.Configuracoes.WebServices do
        begin
@@ -534,12 +534,12 @@ begin
       cbxSalvaPathEvento.Checked  := Ini.ReadBool(   'Arquivos','SalvarPathEvento',false);
       cbxSepararPorCNPJ.Checked   := Ini.ReadBool(   'Arquivos','SepararPorCNPJ',false);
       cbxSepararPorModelo.Checked := Ini.ReadBool(   'Arquivos','SepararPorModelo',false);
-      edtPathNFe.Text             := Ini.ReadString( 'Arquivos','PathNFe'    ,'') ;
-      edtPathCan.Text             := Ini.ReadString( 'Arquivos','PathCan'    ,'') ;
-      edtPathInu.Text             := Ini.ReadString( 'Arquivos','PathInu'    ,'') ;
-      edtPathDPEC.Text            := Ini.ReadString( 'Arquivos','PathDPEC'   ,'') ;
-      edtPathCCe.Text             := Ini.ReadString( 'Arquivos','PathCCe'   ,'') ;
-      edtPathEvento.Text          := Ini.ReadString( 'Arquivos','PathEvento','') ;
+      edtPathNFe.Text             := Ini.ReadString( 'Arquivos','PathNFe'    ,'');
+      edtPathCan.Text             := Ini.ReadString( 'Arquivos','PathCan'    ,'');
+      edtPathInu.Text             := Ini.ReadString( 'Arquivos','PathInu'    ,'');
+      edtPathDPEC.Text            := Ini.ReadString( 'Arquivos','PathDPEC'   ,'');
+      edtPathCCe.Text             := Ini.ReadString( 'Arquivos','PathCCe'   ,'');
+      edtPathEvento.Text          := Ini.ReadString( 'Arquivos','PathEvento','');
 
       with ACBrNFe1.Configuracoes.Arquivos do
        begin
@@ -557,40 +557,40 @@ begin
          PathEvento         := edtPathEvento.Text;
        end;
 
-      edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'') ;
-      edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         ,'') ;
-      edtEmitRazao.Text      := Ini.ReadString( 'Emitente','RazaoSocial','') ;
-      edtEmitFantasia.Text   := Ini.ReadString( 'Emitente','Fantasia'   ,'') ;
-      edtEmitFone.Text       := Ini.ReadString( 'Emitente','Fone'       ,'') ;
-      edtEmitCEP.Text        := Ini.ReadString( 'Emitente','CEP'        ,'') ;
-      edtEmitLogradouro.Text := Ini.ReadString( 'Emitente','Logradouro' ,'') ;
-      edtEmitNumero.Text     := Ini.ReadString( 'Emitente','Numero'     ,'') ;
-      edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento','') ;
-      edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     ,'') ;
-      edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  ,'') ;
-      edtEmitCidade.Text     :=Ini.ReadString( 'Emitente','Cidade'     ,'') ;
-      edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         ,'') ;
+      edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'');
+      edtEmitIE.Text         := Ini.ReadString( 'Emitente','IE'         ,'');
+      edtEmitRazao.Text      := Ini.ReadString( 'Emitente','RazaoSocial','');
+      edtEmitFantasia.Text   := Ini.ReadString( 'Emitente','Fantasia'   ,'');
+      edtEmitFone.Text       := Ini.ReadString( 'Emitente','Fone'       ,'');
+      edtEmitCEP.Text        := Ini.ReadString( 'Emitente','CEP'        ,'');
+      edtEmitLogradouro.Text := Ini.ReadString( 'Emitente','Logradouro' ,'');
+      edtEmitNumero.Text     := Ini.ReadString( 'Emitente','Numero'     ,'');
+      edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento','');
+      edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     ,'');
+      edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  ,'');
+      edtEmitCidade.Text     :=Ini.ReadString( 'Emitente','Cidade'     ,'');
+      edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         ,'');
 
-      edtSmtpHost.Text      := Ini.ReadString( 'Email','Host'   ,'') ;
-      edtSmtpPort.Text      := Ini.ReadString( 'Email','Port'   ,'') ;
-      edtSmtpUser.Text      := Ini.ReadString( 'Email','User'   ,'') ;
-      edtSmtpPass.Text      := Ini.ReadString( 'Email','Pass'   ,'') ;
-      edtEmailAssunto.Text  := Ini.ReadString( 'Email','Assunto','') ;
-      cbEmailSSL.Checked    := Ini.ReadBool(   'Email','SSL'    ,False) ;
+      edtSmtpHost.Text      := Ini.ReadString( 'Email','Host'   ,'');
+      edtSmtpPort.Text      := Ini.ReadString( 'Email','Port'   ,'');
+      edtSmtpUser.Text      := Ini.ReadString( 'Email','User'   ,'');
+      edtSmtpPass.Text      := Ini.ReadString( 'Email','Pass'   ,'');
+      edtEmailAssunto.Text  := Ini.ReadString( 'Email','Assunto','');
+      cbEmailSSL.Checked    := Ini.ReadBool(   'Email','SSL'    ,False);
       StreamMemo := TMemoryStream.Create;
-      Ini.ReadBinaryStream( 'Email','Mensagem',StreamMemo) ;
+      Ini.ReadBinaryStream( 'Email','Mensagem',StreamMemo);
       mmEmailMsg.Lines.LoadFromStream(StreamMemo);
       StreamMemo.Free;
 
-      rgTipoDanfe.ItemIndex     := Ini.ReadInteger( 'DANFE','Tipo'       ,0) ;
-      edtLogoMarca.Text         := Ini.ReadString( 'DANFE','LogoMarca'   ,'') ;
+      rgTipoDanfe.ItemIndex     := Ini.ReadInteger( 'DANFE','Tipo'       ,0);
+      edtLogoMarca.Text         := Ini.ReadString( 'DANFE','LogoMarca'   ,'');
       if ACBrNFe1.DANFE <> nil then
        begin
          ACBrNFe1.DANFE.TipoDANFE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
          ACBrNFe1.DANFE.Logo       := edtLogoMarca.Text;
        end;
   finally
-     Ini.Free ;
+     Ini.Free;
   end;
 
 end;
@@ -690,7 +690,7 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 var
  T : TSSLLib;
- I : TpcnTipoEmissao ;
+ I : TpcnTipoEmissao;
  J : TpcnModeloDF;
  K : TpcnVersaoDF;
  U: TSSLCryptLib;
@@ -698,48 +698,48 @@ var
  X: TSSLXmlSignLib;
  Y: TSSLType;
 begin
-  cbSSLLib.Items.Clear ;
+  cbSSLLib.Items.Clear;
   For T := Low(TSSLLib) to High(TSSLLib) do
-    cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) ) ;
-  cbSSLLib.ItemIndex := 0 ;
+    cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) );
+  cbSSLLib.ItemIndex := 0;
 
-  cbCryptLib.Items.Clear ;
+  cbCryptLib.Items.Clear;
   For U := Low(TSSLCryptLib) to High(TSSLCryptLib) do
-    cbCryptLib.Items.Add( GetEnumName(TypeInfo(TSSLCryptLib), integer(U) ) ) ;
-  cbCryptLib.ItemIndex := 0 ;
+    cbCryptLib.Items.Add( GetEnumName(TypeInfo(TSSLCryptLib), integer(U) ) );
+  cbCryptLib.ItemIndex := 0;
 
-  cbHttpLib.Items.Clear ;
+  cbHttpLib.Items.Clear;
   For V := Low(TSSLHttpLib) to High(TSSLHttpLib) do
-    cbHttpLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(V) ) ) ;
-  cbHttpLib.ItemIndex := 0 ;
+    cbHttpLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(V) ) );
+  cbHttpLib.ItemIndex := 0;
 
-  cbXmlSignLib.Items.Clear ;
+  cbXmlSignLib.Items.Clear;
   For X := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
-    cbXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X) ) ) ;
-  cbXmlSignLib.ItemIndex := 0 ;
+    cbXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X) ) );
+  cbXmlSignLib.ItemIndex := 0;
 
-  cbSSLType.Items.Clear ;
+  cbSSLType.Items.Clear;
   For Y := Low(TSSLType) to High(TSSLType) do
-    cbSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(Y) ) ) ;
-  cbSSLType.ItemIndex := 0 ;
+    cbSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(Y) ) );
+  cbSSLType.ItemIndex := 0;
 
-  cbFormaEmissao.Items.Clear ;
+  cbFormaEmissao.Items.Clear;
   For I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-     cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) ) ;
-  cbFormaEmissao.Items[0] := 'teNormal' ;
-  cbFormaEmissao.ItemIndex := 0 ;
+     cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) );
+  cbFormaEmissao.Items[0] := 'teNormal';
+  cbFormaEmissao.ItemIndex := 0;
 
-  cbModeloDF.Items.Clear ;
+  cbModeloDF.Items.Clear;
   For J := Low(TpcnModeloDF) to High(TpcnModeloDF) do
-     cbModeloDF.Items.Add( GetEnumName(TypeInfo(TpcnModeloDF), integer(J) ) ) ;
-  cbModeloDF.Items[0] := 'moNFe' ;
-  cbModeloDF.ItemIndex := 0 ;
+     cbModeloDF.Items.Add( GetEnumName(TypeInfo(TpcnModeloDF), integer(J) ) );
+  cbModeloDF.Items[0] := 'moNFe';
+  cbModeloDF.ItemIndex := 0;
 
-  cbVersaoDF.Items.Clear ;
+  cbVersaoDF.Items.Clear;
   For K := Low(TpcnVersaoDF) to High(TpcnVersaoDF) do
-     cbVersaoDF.Items.Add( GetEnumName(TypeInfo(TpcnVersaoDF), integer(K) ) ) ;
-  cbVersaoDF.Items[0] := 've200' ;
-  cbVersaoDF.ItemIndex := 0 ;
+     cbVersaoDF.Items.Add( GetEnumName(TypeInfo(TpcnVersaoDF), integer(K) ) );
+  cbVersaoDF.Items[0] := 've200';
+  cbVersaoDF.ItemIndex := 0;
 
   LerConfiguracao;
   PageControl3.ActivePage := tsNFe;
@@ -816,7 +816,7 @@ begin
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Justificativa', vAux)) then
        exit;
     ACBrNFe1.EventoNFe.Evento.Clear;
-    ACBrNFe1.EventoNFe.idLote := StrToInt(idLote) ;
+    ACBrNFe1.EventoNFe.idLote := StrToInt(idLote);
     with ACBrNFe1.EventoNFe.Evento.Add do
     begin
      infEvento.dhEvento := now;
@@ -1261,7 +1261,7 @@ begin
  cbHttpLib.ItemIndex := Integer( ACBrNFe1.Configuracoes.Geral.SSLHttpLib );
  cbXmlSignLib.ItemIndex := Integer( ACBrNFe1.Configuracoes.Geral.SSLXmlSignLib );
 
- cbSSLType.Enabled := (ACBrNFe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]) ;
+ cbSSLType.Enabled := (ACBrNFe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
 end;
 
 procedure TForm1.sbtnGetCertClick(Sender: TObject);
@@ -1644,22 +1644,22 @@ begin
                //trvwNFe.Items.AddChild(NodeItem,'genero=' +IntToStr(Prod.genero));
                trvwNFe.Items.AddChild(NodeItem,'CFOP='   +Prod.CFOP);
                trvwNFe.Items.AddChild(NodeItem,'uCom='   +Prod.uCom);
-               trvwNFe.Items.AddChild(NodeItem,'qCom='   +FloatToStr(Prod.qCom)) ;
-               trvwNFe.Items.AddChild(NodeItem,'vUnCom=' +FloatToStr(Prod.vUnCom)) ;
-               trvwNFe.Items.AddChild(NodeItem,'vProd='  +FloatToStr(Prod.vProd)) ;
+               trvwNFe.Items.AddChild(NodeItem,'qCom='   +FloatToStr(Prod.qCom));
+               trvwNFe.Items.AddChild(NodeItem,'vUnCom=' +FloatToStr(Prod.vUnCom));
+               trvwNFe.Items.AddChild(NodeItem,'vProd='  +FloatToStr(Prod.vProd));
 
                trvwNFe.Items.AddChild(NodeItem,'cEANTrib=' +Prod.cEANTrib);
                trvwNFe.Items.AddChild(NodeItem,'uTrib='    +Prod.uTrib);
                trvwNFe.Items.AddChild(NodeItem,'qTrib='    +FloatToStr(Prod.qTrib));
-               trvwNFe.Items.AddChild(NodeItem,'vUnTrib='  +FloatToStr(Prod.vUnTrib)) ;
+               trvwNFe.Items.AddChild(NodeItem,'vUnTrib='  +FloatToStr(Prod.vUnTrib));
 
-               trvwNFe.Items.AddChild(NodeItem,'vFrete='      +FloatToStr(Prod.vFrete)) ;
-               trvwNFe.Items.AddChild(NodeItem,'vSeg='        +FloatToStr(Prod.vSeg)) ;
-               trvwNFe.Items.AddChild(NodeItem,'vDesc='       +FloatToStr(Prod.vDesc)) ;
-               trvwNFe.Items.AddChild(NodeItem,'vOutro='      +FloatToStr(Prod.vOutro)) ;
-               trvwNFe.Items.AddChild(NodeItem,'indTot='      +indTotToStr(Prod.IndTot)) ;
-               trvwNFe.Items.AddChild(NodeItem,'xPed='        +Prod.xPed) ;
-               trvwNFe.Items.AddChild(NodeItem,'nItemPedido=' +Prod.nItemPed) ;
+               trvwNFe.Items.AddChild(NodeItem,'vFrete='      +FloatToStr(Prod.vFrete));
+               trvwNFe.Items.AddChild(NodeItem,'vSeg='        +FloatToStr(Prod.vSeg));
+               trvwNFe.Items.AddChild(NodeItem,'vDesc='       +FloatToStr(Prod.vDesc));
+               trvwNFe.Items.AddChild(NodeItem,'vOutro='      +FloatToStr(Prod.vOutro));
+               trvwNFe.Items.AddChild(NodeItem,'indTot='      +indTotToStr(Prod.IndTot));
+               trvwNFe.Items.AddChild(NodeItem,'xPed='        +Prod.xPed);
+               trvwNFe.Items.AddChild(NodeItem,'nItemPedido=' +Prod.nItemPed);
 
                trvwNFe.Items.AddChild(NodeItem,'infAdProd=' +infAdProd);
 
@@ -1682,8 +1682,8 @@ begin
                            with adi.Items[K] do
                             begin
                               Node := trvwNFe.Items.AddChild(NodePai,'LADI'+IntToStrZero(K+1,3));
-                              trvwNFe.Items.AddChild(Node,'nAdicao='     +IntToStr(nAdicao)) ;
-                              trvwNFe.Items.AddChild(Node,'nSeqAdi='     +IntToStr(nSeqAdi)) ;
+                              trvwNFe.Items.AddChild(Node,'nAdicao='     +IntToStr(nAdicao));
+                              trvwNFe.Items.AddChild(Node,'nSeqAdi='     +IntToStr(nSeqAdi));
                               trvwNFe.Items.AddChild(Node,'cFabricante=' +cFabricante);
                               trvwNFe.Items.AddChild(Node,'vDescDI='     +FloatToStr(vDescDI));
                             end;
@@ -1700,7 +1700,7 @@ begin
                  with Prod.veicProd do
                   begin
                     trvwNFe.Items.AddChild(Node,'tpOP='     +tpOPToStr(tpOP));
-                    trvwNFe.Items.AddChild(Node,'chassi='   +chassi) ;
+                    trvwNFe.Items.AddChild(Node,'chassi='   +chassi);
                     trvwNFe.Items.AddChild(Node,'cCor='     +cCor);
                     trvwNFe.Items.AddChild(Node,'xCor='     +xCor);
                     trvwNFe.Items.AddChild(Node,'pot='      +pot);
@@ -1729,11 +1729,11 @@ begin
                   Node := trvwNFe.Items.AddChild(NodeItem,'Medicamento'+IntToStrZero(J+1,3) );
                   with Prod.med.Items[J] do
                    begin
-                     trvwNFe.Items.AddChild(Node,'nLote=' +nLote) ;
-                     trvwNFe.Items.AddChild(Node,'qLote=' +FloatToStr(qLote)) ;
-                     trvwNFe.Items.AddChild(Node,'dFab='  +DateToStr(dFab)) ;
-                     trvwNFe.Items.AddChild(Node,'dVal='  +DateToStr(dVal)) ;
-                     trvwNFe.Items.AddChild(Node,'vPMC='  +FloatToStr(vPMC)) ;
+                     trvwNFe.Items.AddChild(Node,'nLote=' +nLote);
+                     trvwNFe.Items.AddChild(Node,'qLote=' +FloatToStr(qLote));
+                     trvwNFe.Items.AddChild(Node,'dFab='  +DateToStr(dFab));
+                     trvwNFe.Items.AddChild(Node,'dVal='  +DateToStr(dVal));
+                     trvwNFe.Items.AddChild(Node,'vPMC='  +FloatToStr(vPMC));
                     end;
                 end;
 
@@ -1742,10 +1742,10 @@ begin
                   Node := trvwNFe.Items.AddChild(NodeItem,'Arma'+IntToStrZero(J+1,3));
                   with Prod.arma.Items[J] do
                    begin
-                     trvwNFe.Items.AddChild(Node,'nSerie=' +nSerie) ;
-                     trvwNFe.Items.AddChild(Node,'tpArma=' +tpArmaToStr(tpArma)) ;
-                     trvwNFe.Items.AddChild(Node,'nCano='  +nCano) ;
-                     trvwNFe.Items.AddChild(Node,'descr='  +descr) ;
+                     trvwNFe.Items.AddChild(Node,'nSerie=' +nSerie);
+                     trvwNFe.Items.AddChild(Node,'tpArma=' +tpArmaToStr(tpArma));
+                     trvwNFe.Items.AddChild(Node,'nCano='  +nCano);
+                     trvwNFe.Items.AddChild(Node,'descr='  +descr);
                     end;
                 end;
 
@@ -1754,35 +1754,35 @@ begin
                  NodePai := trvwNFe.Items.AddChild(NodeItem,'Combustivel');
                  with Prod.comb do
                   begin
-                    trvwNFe.Items.AddChild(NodePai,'cProdANP=' +IntToStr(cProdANP)) ;
-                    trvwNFe.Items.AddChild(NodePai,'CODIF='    +CODIF) ;
-                    trvwNFe.Items.AddChild(NodePai,'qTemp='    +FloatToStr(qTemp)) ;
-                    trvwNFe.Items.AddChild(NodePai,'UFcons='    +UFcons) ;                    
+                    trvwNFe.Items.AddChild(NodePai,'cProdANP=' +IntToStr(cProdANP));
+                    trvwNFe.Items.AddChild(NodePai,'CODIF='    +CODIF);
+                    trvwNFe.Items.AddChild(NodePai,'qTemp='    +FloatToStr(qTemp));
+                    trvwNFe.Items.AddChild(NodePai,'UFcons='    +UFcons);
 
                     Node := trvwNFe.Items.AddChild(NodePai,'CIDE'+IntToStrZero(I+1,3));
-                    trvwNFe.Items.AddChild(Node,'qBCprod='   +FloatToStr(CIDE.qBCprod)) ;
-                    trvwNFe.Items.AddChild(Node,'vAliqProd=' +FloatToStr(CIDE.vAliqProd)) ;
-                    trvwNFe.Items.AddChild(Node,'vCIDE='     +FloatToStr(CIDE.vCIDE)) ;
+                    trvwNFe.Items.AddChild(Node,'qBCprod='   +FloatToStr(CIDE.qBCprod));
+                    trvwNFe.Items.AddChild(Node,'vAliqProd=' +FloatToStr(CIDE.vAliqProd));
+                    trvwNFe.Items.AddChild(Node,'vCIDE='     +FloatToStr(CIDE.vCIDE));
 
                     Node := trvwNFe.Items.AddChild(NodePai,'ICMSComb'+IntToStrZero(I+1,3));
-                    trvwNFe.Items.AddChild(Node,'vBCICMS='   +FloatToStr(ICMS.vBCICMS)) ;
-                    trvwNFe.Items.AddChild(Node,'vICMS='     +FloatToStr(ICMS.vICMS)) ;
-                    trvwNFe.Items.AddChild(Node,'vBCICMSST=' +FloatToStr(ICMS.vBCICMSST)) ;
-                    trvwNFe.Items.AddChild(Node,'vICMSST='   +FloatToStr(ICMS.vICMSST)) ;
+                    trvwNFe.Items.AddChild(Node,'vBCICMS='   +FloatToStr(ICMS.vBCICMS));
+                    trvwNFe.Items.AddChild(Node,'vICMS='     +FloatToStr(ICMS.vICMS));
+                    trvwNFe.Items.AddChild(Node,'vBCICMSST=' +FloatToStr(ICMS.vBCICMSST));
+                    trvwNFe.Items.AddChild(Node,'vICMSST='   +FloatToStr(ICMS.vICMSST));
 
                     if (ICMSInter.vBCICMSSTDest>0) then
                      begin
                        Node := trvwNFe.Items.AddChild(NodePai,'ICMSInter'+IntToStrZero(I+1,3));
-                       trvwNFe.Items.AddChild(Node,'vBCICMSSTDest=' +FloatToStr(ICMSInter.vBCICMSSTDest)) ;
-                       trvwNFe.Items.AddChild(Node,'vICMSSTDest='   +FloatToStr(ICMSInter.vICMSSTDest)) ;
+                       trvwNFe.Items.AddChild(Node,'vBCICMSSTDest=' +FloatToStr(ICMSInter.vBCICMSSTDest));
+                       trvwNFe.Items.AddChild(Node,'vICMSSTDest='   +FloatToStr(ICMSInter.vICMSSTDest));
                      end;
 
                     if (ICMSCons.vBCICMSSTCons>0) then
                      begin
                        Node := trvwNFe.Items.AddChild(NodePai,'ICMSCons'+IntToStrZero(I+1,3));
-                       trvwNFe.Items.AddChild(Node,'vBCICMSSTCons=' +FloatToStr(ICMSCons.vBCICMSSTCons)) ;
-                       trvwNFe.Items.AddChild(Node,'vICMSSTCons='   +FloatToStr(ICMSCons.vICMSSTCons)) ;
-                       trvwNFe.Items.AddChild(Node,'UFCons='        +ICMSCons.UFcons) ;
+                       trvwNFe.Items.AddChild(Node,'vBCICMSSTCons=' +FloatToStr(ICMSCons.vBCICMSSTCons));
+                       trvwNFe.Items.AddChild(Node,'vICMSSTCons='   +FloatToStr(ICMSCons.vICMSSTCons));
+                       trvwNFe.Items.AddChild(Node,'UFCons='        +ICMSCons.UFcons);
                      end;
                   end;
                end;
@@ -1847,7 +1847,7 @@ begin
                       Node := trvwNFe.Items.AddChild(NodePai,'IPI');
                       with IPI do
                        begin
-                         trvwNFe.Items.AddChild(Node,'CST='       +CSTIPIToStr(CST)) ;
+                         trvwNFe.Items.AddChild(Node,'CST='       +CSTIPIToStr(CST));
                          trvwNFe.Items.AddChild(Node,'clEnq='    +clEnq);
                          trvwNFe.Items.AddChild(Node,'CNPJProd=' +CNPJProd);
                          trvwNFe.Items.AddChild(Node,'cSelo='    +cSelo);
@@ -1955,46 +1955,46 @@ begin
                     end;
                 end;
              end;
-          end ;
+          end;
 
        NodePai := trvwNFe.Items.AddChild(Nota,'Total');
        Node := trvwNFe.Items.AddChild(NodePai,'ICMSTot');
        trvwNFe.Items.AddChild(Node,'vBC='     +FloatToStr(Total.ICMSTot.vBC));
-       trvwNFe.Items.AddChild(Node,'vICMS='   +FloatToStr(Total.ICMSTot.vICMS)) ;
-       trvwNFe.Items.AddChild(Node,'vBCST='   +FloatToStr(Total.ICMSTot.vBCST)) ;
-       trvwNFe.Items.AddChild(Node,'vST='     +FloatToStr(Total.ICMSTot.vST)) ;
-       trvwNFe.Items.AddChild(Node,'vProd='   +FloatToStr(Total.ICMSTot.vProd)) ;
-       trvwNFe.Items.AddChild(Node,'vFrete='  +FloatToStr(Total.ICMSTot.vFrete)) ;
-       trvwNFe.Items.AddChild(Node,'vSeg='    +FloatToStr(Total.ICMSTot.vSeg)) ;
-       trvwNFe.Items.AddChild(Node,'vDesc='   +FloatToStr(Total.ICMSTot.vDesc)) ;
-       trvwNFe.Items.AddChild(Node,'vII='     +FloatToStr(Total.ICMSTot.vII)) ;
-       trvwNFe.Items.AddChild(Node,'vIPI='    +FloatToStr(Total.ICMSTot.vIPI)) ;
-       trvwNFe.Items.AddChild(Node,'vPIS='    +FloatToStr(Total.ICMSTot.vPIS)) ;
-       trvwNFe.Items.AddChild(Node,'vCOFINS=' +FloatToStr(Total.ICMSTot.vCOFINS)) ;
-       trvwNFe.Items.AddChild(Node,'vOutro='  +FloatToStr(Total.ICMSTot.vOutro)) ;
-       trvwNFe.Items.AddChild(Node,'vNF='     +FloatToStr(Total.ICMSTot.vNF)) ;
-       trvwNFe.Items.AddChild(Node,'vFCPUFDest='   +FloatToStr(Total.ICMSTot.vFCPUFDest)) ;
-       trvwNFe.Items.AddChild(Node,'vICMSUFDest='  +FloatToStr(Total.ICMSTot.vICMSUFDest)) ;
-       trvwNFe.Items.AddChild(Node,'vICMSUFRemet=' +FloatToStr(Total.ICMSTot.vICMSUFRemet)) ;
+       trvwNFe.Items.AddChild(Node,'vICMS='   +FloatToStr(Total.ICMSTot.vICMS));
+       trvwNFe.Items.AddChild(Node,'vBCST='   +FloatToStr(Total.ICMSTot.vBCST));
+       trvwNFe.Items.AddChild(Node,'vST='     +FloatToStr(Total.ICMSTot.vST));
+       trvwNFe.Items.AddChild(Node,'vProd='   +FloatToStr(Total.ICMSTot.vProd));
+       trvwNFe.Items.AddChild(Node,'vFrete='  +FloatToStr(Total.ICMSTot.vFrete));
+       trvwNFe.Items.AddChild(Node,'vSeg='    +FloatToStr(Total.ICMSTot.vSeg));
+       trvwNFe.Items.AddChild(Node,'vDesc='   +FloatToStr(Total.ICMSTot.vDesc));
+       trvwNFe.Items.AddChild(Node,'vII='     +FloatToStr(Total.ICMSTot.vII));
+       trvwNFe.Items.AddChild(Node,'vIPI='    +FloatToStr(Total.ICMSTot.vIPI));
+       trvwNFe.Items.AddChild(Node,'vPIS='    +FloatToStr(Total.ICMSTot.vPIS));
+       trvwNFe.Items.AddChild(Node,'vCOFINS=' +FloatToStr(Total.ICMSTot.vCOFINS));
+       trvwNFe.Items.AddChild(Node,'vOutro='  +FloatToStr(Total.ICMSTot.vOutro));
+       trvwNFe.Items.AddChild(Node,'vNF='     +FloatToStr(Total.ICMSTot.vNF));
+       trvwNFe.Items.AddChild(Node,'vFCPUFDest='   +FloatToStr(Total.ICMSTot.vFCPUFDest));
+       trvwNFe.Items.AddChild(Node,'vICMSUFDest='  +FloatToStr(Total.ICMSTot.vICMSUFDest));
+       trvwNFe.Items.AddChild(Node,'vICMSUFRemet=' +FloatToStr(Total.ICMSTot.vICMSUFRemet));
 
        if Total.ISSQNtot.vServ > 0 then
         begin
           Node := trvwNFe.Items.AddChild(NodePai,'ISSQNtot');
-          trvwNFe.Items.AddChild(Node,'vServ='   +FloatToStr(Total.ISSQNtot.vServ)) ;
-          trvwNFe.Items.AddChild(Node,'vBC='     +FloatToStr(Total.ISSQNTot.vBC)) ;
-          trvwNFe.Items.AddChild(Node,'vISS='    +FloatToStr(Total.ISSQNTot.vISS)) ;
-          trvwNFe.Items.AddChild(Node,'vPIS='    +FloatToStr(Total.ISSQNTot.vPIS)) ;
-          trvwNFe.Items.AddChild(Node,'vCOFINS=' +FloatToStr(Total.ISSQNTot.vCOFINS)) ;
+          trvwNFe.Items.AddChild(Node,'vServ='   +FloatToStr(Total.ISSQNtot.vServ));
+          trvwNFe.Items.AddChild(Node,'vBC='     +FloatToStr(Total.ISSQNTot.vBC));
+          trvwNFe.Items.AddChild(Node,'vISS='    +FloatToStr(Total.ISSQNTot.vISS));
+          trvwNFe.Items.AddChild(Node,'vPIS='    +FloatToStr(Total.ISSQNTot.vPIS));
+          trvwNFe.Items.AddChild(Node,'vCOFINS=' +FloatToStr(Total.ISSQNTot.vCOFINS));
         end;
 
        Node := trvwNFe.Items.AddChild(NodePai,'retTrib');
-       trvwNFe.Items.AddChild(Node,'vRetPIS='   +FloatToStr(Total.retTrib.vRetPIS)) ;
-       trvwNFe.Items.AddChild(Node,'vRetCOFINS='+FloatToStr(Total.retTrib.vRetCOFINS)) ;
-       trvwNFe.Items.AddChild(Node,'vRetCSLL='  +FloatToStr(Total.retTrib.vRetCSLL)) ;
-       trvwNFe.Items.AddChild(Node,'vBCIRRF='   +FloatToStr(Total.retTrib.vBCIRRF)) ;
-       trvwNFe.Items.AddChild(Node,'vIRRF='     +FloatToStr(Total.retTrib.vIRRF)) ;
-       trvwNFe.Items.AddChild(Node,'vBCRetPrev='+FloatToStr(Total.retTrib.vBCRetPrev)) ;
-       trvwNFe.Items.AddChild(Node,'vRetPrev='  +FloatToStr(Total.retTrib.vRetPrev)) ;
+       trvwNFe.Items.AddChild(Node,'vRetPIS='   +FloatToStr(Total.retTrib.vRetPIS));
+       trvwNFe.Items.AddChild(Node,'vRetCOFINS='+FloatToStr(Total.retTrib.vRetCOFINS));
+       trvwNFe.Items.AddChild(Node,'vRetCSLL='  +FloatToStr(Total.retTrib.vRetCSLL));
+       trvwNFe.Items.AddChild(Node,'vBCIRRF='   +FloatToStr(Total.retTrib.vBCIRRF));
+       trvwNFe.Items.AddChild(Node,'vIRRF='     +FloatToStr(Total.retTrib.vIRRF));
+       trvwNFe.Items.AddChild(Node,'vBCRetPrev='+FloatToStr(Total.retTrib.vBCRetPrev));
+       trvwNFe.Items.AddChild(Node,'vRetPrev='  +FloatToStr(Total.retTrib.vRetPrev));
 
        NodePai := trvwNFe.Items.AddChild(Nota,'Transp');
        Node := trvwNFe.Items.AddChild(NodePai,'Transporta');
@@ -2007,10 +2007,10 @@ begin
        trvwNFe.Items.AddChild(Node,'UF='       +Transp.Transporta.UF);
 
        Node := trvwNFe.Items.AddChild(NodePai,'retTransp');
-       trvwNFe.Items.AddChild(Node,'vServ='    +FloatToStr(Transp.retTransp.vServ)) ;
-       trvwNFe.Items.AddChild(Node,'vBCRet='   +FloatToStr(Transp.retTransp.vBCRet)) ;
-       trvwNFe.Items.AddChild(Node,'pICMSRet=' +FloatToStr(Transp.retTransp.pICMSRet)) ;
-       trvwNFe.Items.AddChild(Node,'vICMSRet=' +FloatToStr(Transp.retTransp.vICMSRet)) ;
+       trvwNFe.Items.AddChild(Node,'vServ='    +FloatToStr(Transp.retTransp.vServ));
+       trvwNFe.Items.AddChild(Node,'vBCRet='   +FloatToStr(Transp.retTransp.vBCRet));
+       trvwNFe.Items.AddChild(Node,'pICMSRet=' +FloatToStr(Transp.retTransp.pICMSRet));
+       trvwNFe.Items.AddChild(Node,'vICMSRet=' +FloatToStr(Transp.retTransp.vICMSRet));
        trvwNFe.Items.AddChild(Node,'CFOP='     +Transp.retTransp.CFOP);
        trvwNFe.Items.AddChild(Node,'cMunFG='   +FloatToStr(Transp.retTransp.cMunFG));
 
@@ -2024,9 +2024,9 @@ begin
           Node := trvwNFe.Items.AddChild(NodePai,'Reboque'+IntToStrZero(I+1,3));
           with Transp.Reboque.Items[I] do
            begin
-             trvwNFe.Items.AddChild(Node,'placa=' +placa) ;
-             trvwNFe.Items.AddChild(Node,'UF='    +UF) ;
-             trvwNFe.Items.AddChild(Node,'RNTC='  +RNTC) ;
+             trvwNFe.Items.AddChild(Node,'placa=' +placa);
+             trvwNFe.Items.AddChild(Node,'UF='    +UF);
+             trvwNFe.Items.AddChild(Node,'RNTC='  +RNTC);
            end;
         end;
 
@@ -2035,17 +2035,17 @@ begin
           Node := trvwNFe.Items.AddChild(NodePai,'Volume'+IntToStrZero(I+1,3));
           with Transp.Vol.Items[I] do
            begin
-             trvwNFe.Items.AddChild(Node,'qVol='  +IntToStr(qVol)) ;
+             trvwNFe.Items.AddChild(Node,'qVol='  +IntToStr(qVol));
              trvwNFe.Items.AddChild(Node,'esp='   +esp);
              trvwNFe.Items.AddChild(Node,'marca=' +marca);
              trvwNFe.Items.AddChild(Node,'nVol='  +nVol);
-             trvwNFe.Items.AddChild(Node,'pesoL=' +FloatToStr(pesoL)) ;
-             trvwNFe.Items.AddChild(Node,'pesoB'  +FloatToStr(pesoB)) ;
+             trvwNFe.Items.AddChild(Node,'pesoL=' +FloatToStr(pesoL));
+             trvwNFe.Items.AddChild(Node,'pesoB'  +FloatToStr(pesoB));
 
              for J:=0 to Lacres.Count-1 do
               begin
                 Node := trvwNFe.Items.AddChild(Node,'Lacre'+IntToStrZero(I+1,3)+IntToStrZero(J+1,3) );
-                trvwNFe.Items.AddChild(Node,'nLacre='+Lacres.Items[J].nLacre) ;
+                trvwNFe.Items.AddChild(Node,'nLacre='+Lacres.Items[J].nLacre);
               end;
            end;
         end;
@@ -2053,18 +2053,18 @@ begin
        NodePai := trvwNFe.Items.AddChild(Nota,'Cobr');
        Node    := trvwNFe.Items.AddChild(NodePai,'Fat');
        trvwNFe.Items.AddChild(Node,'nFat='  +Cobr.Fat.nFat);
-       trvwNFe.Items.AddChild(Node,'vOrig=' +FloatToStr(Cobr.Fat.vOrig)) ;
-       trvwNFe.Items.AddChild(Node,'vDesc=' +FloatToStr(Cobr.Fat.vDesc)) ;
-       trvwNFe.Items.AddChild(Node,'vLiq='  +FloatToStr(Cobr.Fat.vLiq)) ;
+       trvwNFe.Items.AddChild(Node,'vOrig=' +FloatToStr(Cobr.Fat.vOrig));
+       trvwNFe.Items.AddChild(Node,'vDesc=' +FloatToStr(Cobr.Fat.vDesc));
+       trvwNFe.Items.AddChild(Node,'vLiq='  +FloatToStr(Cobr.Fat.vLiq));
 
        for I:=0 to Cobr.Dup.Count-1 do
         begin
           Node    := trvwNFe.Items.AddChild(NodePai,'Duplicata'+IntToStrZero(I+1,3));
           with Cobr.Dup.Items[I] do
            begin
-             trvwNFe.Items.AddChild(Node,'nDup='  +nDup) ;
+             trvwNFe.Items.AddChild(Node,'nDup='  +nDup);
              trvwNFe.Items.AddChild(Node,'dVenc=' +DateToStr(dVenc));
-             trvwNFe.Items.AddChild(Node,'vDup='  +FloatToStr(vDup)) ;
+             trvwNFe.Items.AddChild(Node,'vDup='  +FloatToStr(vDup));
            end;
         end;
 
@@ -2077,7 +2077,7 @@ begin
           Node := trvwNFe.Items.AddChild(NodePai,'obsCont'+IntToStrZero(I+1,3));
           with InfAdic.obsCont.Items[I] do
            begin
-             trvwNFe.Items.AddChild(Node,'xCampo=' +xCampo) ;
+             trvwNFe.Items.AddChild(Node,'xCampo=' +xCampo);
              trvwNFe.Items.AddChild(Node,'xTexto=' +xTexto);
            end;
         end;
@@ -2087,7 +2087,7 @@ begin
             Node := trvwNFe.Items.AddChild(NodePai,'obsFisco'+IntToStrZero(I+1,3));
             with InfAdic.obsFisco.Items[I] do
              begin
-                trvwNFe.Items.AddChild(Node,'xCampo=' +xCampo) ;
+                trvwNFe.Items.AddChild(Node,'xCampo=' +xCampo);
                 trvwNFe.Items.AddChild(Node,'xTexto=' +xTexto);
              end;
           end;
@@ -2097,7 +2097,7 @@ begin
             Node := trvwNFe.Items.AddChild(NodePai,'procRef'+IntToStrZero(I+1,3));
             with InfAdic.procRef.Items[I] do
              begin
-               trvwNFe.Items.AddChild(Node,'nProc='   +nProc) ;
+               trvwNFe.Items.AddChild(Node,'nProc='   +nProc);
                trvwNFe.Items.AddChild(Node,'indProc=' +indProcToStr(indProc));
              end;
           end;
@@ -2105,14 +2105,14 @@ begin
          if (exporta.UFembarq <> '') then
           begin
             Node := trvwNFe.Items.AddChild(Nota,'exporta');
-            trvwNFe.Items.AddChild(Node,'UFembarq='   +exporta.UFembarq) ;
+            trvwNFe.Items.AddChild(Node,'UFembarq='   +exporta.UFembarq);
             trvwNFe.Items.AddChild(Node,'xLocEmbarq=' +exporta.xLocEmbarq);
           end;
 
          if (compra.xNEmp <> '') then
           begin
             Node := trvwNFe.Items.AddChild(Nota,'compra');
-            trvwNFe.Items.AddChild(Node,'xNEmp=' +compra.xNEmp) ;
+            trvwNFe.Items.AddChild(Node,'xNEmp=' +compra.xNEmp);
             trvwNFe.Items.AddChild(Node,'xPed='  +compra.xPed);
             trvwNFe.Items.AddChild(Node,'xCont=' +compra.xCont);
           end;
@@ -2159,6 +2159,7 @@ Var NotaF: NotaFiscal;
     Referenciada: TNFrefCollectionItem;
     DI: TDICollectionItem;
     Adicao: TAdiCollectionItem;
+    Rastro: TrastroCollectionItem;
     Medicamento: TMedCollectionItem;
     Arma: TArmaCollectionItem;
     Reboque: TreboqueCollectionItem;
@@ -2176,7 +2177,7 @@ begin
   NotaF.NFe.Ide.dSaiEnt   := Date;
   NotaF.NFe.Ide.hSaiEnt   := Now;
   NotaF.NFe.Ide.tpNF      := tnSaida;
-  NotaF.NFe.Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex); ;
+  NotaF.NFe.Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);;
   NotaF.NFe.Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variável quando for para ambiente de produção
   NotaF.NFe.Ide.verProc   := '1.0.0.0'; //Versão do seu sistema
   NotaF.NFe.Ide.cUF       := UFtoCUF(edtEmitUF.Text);
@@ -2299,9 +2300,9 @@ begin
   Produto.Prod.EXTIPI   := '';
   Produto.Prod.CFOP     := '5101';
   Produto.Prod.uCom     := 'UN';
-  Produto.Prod.qCom     := 1 ;
+  Produto.Prod.qCom     := 1;
   Produto.Prod.vUnCom   := 100;
-  Produto.Prod.vProd    := 100 ;
+  Produto.Prod.vProd    := 100;
 
   Produto.Prod.cEANTrib  := '7896523206646';
   Produto.Prod.uTrib     := 'UN';
@@ -2315,7 +2316,7 @@ begin
 
   Produto.Prod.CEST := '1111111';
 
-  Produto.infAdProd      := 'Informacao Adicional do Produto';
+  Produto.infAdProd := 'Informacao Adicional do Produto';
 
 //Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
 {
@@ -2359,23 +2360,40 @@ begin
   Produto.Prod.veicProd.condVeic := cvAcabado;
   Produto.Prod.veicProd.cMod    := '';
 }
+
+// Campos de Rastreabilidade do produto
+{
+  O grupo <rastro> permiti a rastreabilidade de qualquer produto sujeito a
+  regulações sanitárias, casos de recolhimento/recall, além de defensivos agrícolas,
+  produtos veterinários, odontológicos, medicamentos, bebidas, águas envasadas,
+  embalagens, etc., a partir da indicação de informações de número de lote,
+  data de fabricação/produção, data de validade, etc.
+  Obrigatório o preenchimento deste grupo no caso de medicamentos e
+  produtos farmacêuticos.
+}
+{
+  Rastro := Produto.Prod.rastro.Add;
+  Rastro.nLote  := '17H8F5';
+  Rastro.qLote  := 1;
+  Rastro.dFab   := StrToDate('01/08/2017');
+  Rastro.dVal   := StrToDate('01/08/2019');
+  Rastro.cAgreg := ''; // Código de Agregação (opcional) de 1 até 20 dígitos
+}
+
 //Campos específicos para venda de medicamentos
 {
   Medicamento := Produto.Prod.med.Add;
-  Medicamento.nLote := '';
-  Medicamento.qLote := 0 ;
-  Medicamento.dFab  := now ;
-  Medicamento.dVal  := now ;
-  Medicamento.vPMC  := 0 ;
+  Medicamento.cProdANVISA := '1256802470029';
+  Medicamento.vPMC        := 100.00; // Preço máximo consumidor
 }
 
 //Campos específicos para venda de armamento
 {
   Arma := Produto.Prod.arma.Add;
   Arma.nSerie := 0;
-  Arma.tpArma := taUsoPermitido ;
-  Arma.nCano  := 0 ;
-  Arma.descr  := '' ;
+  Arma.tpArma := taUsoPermitido;
+  Arma.nCano  := 0;
+  Arma.descr  := '';
 }
 //Campos específicos para venda de combustível(distribuidoras)
 {
@@ -2384,21 +2402,21 @@ begin
   Produto.Prod.comb.qTemp    := 0;
   Produto.Prod.comb.UFcons   := '';
 
-  Produto.Prod.comb.CIDE.qBCprod   := 0 ;
-  Produto.Prod.comb.CIDE.vAliqProd := 0 ;
-  Produto.Prod.comb.CIDE.vCIDE     := 0 ;
+  Produto.Prod.comb.CIDE.qBCprod   := 0;
+  Produto.Prod.comb.CIDE.vAliqProd := 0;
+  Produto.Prod.comb.CIDE.vCIDE     := 0;
 
-  Produto.Prod.comb.ICMS.vBCICMS   := 0 ;
-  Produto.Prod.comb.ICMS.vICMS     := 0 ;
-  Produto.Prod.comb.ICMS.vBCICMSST := 0 ;
-  Produto.Prod.comb.ICMS.vICMSST   := 0 ;
+  Produto.Prod.comb.ICMS.vBCICMS   := 0;
+  Produto.Prod.comb.ICMS.vICMS     := 0;
+  Produto.Prod.comb.ICMS.vBCICMSST := 0;
+  Produto.Prod.comb.ICMS.vICMSST   := 0;
 
-  Produto.Prod.comb.ICMSInter.vBCICMSSTDest := 0 ;
-  Produto.Prod.comb.ICMSInter.vICMSSTDest   := 0 ;
+  Produto.Prod.comb.ICMSInter.vBCICMSSTDest := 0;
+  Produto.Prod.comb.ICMSInter.vICMSSTDest   := 0;
 
-  Produto.Prod.comb.ICMSCons.vBCICMSSTCons := 0 ;
-  Produto.Prod.comb.ICMSCons.vICMSSTCons   := 0 ;
-  Produto.Prod.comb.ICMSCons.UFcons        := '' ;
+  Produto.Prod.comb.ICMSCons.vBCICMSSTCons := 0;
+  Produto.Prod.comb.ICMSCons.vICMSSTCons   := 0;
+  Produto.Prod.comb.ICMSCons.UFcons        := '';
  }
             // lei da transparencia nos impostos
   Produto.Imposto.vTotTrib := 0;
@@ -2428,7 +2446,7 @@ begin
 
 
 {
-  Produto.Imposto.IPI.CST      := ipi99 ;
+  Produto.Imposto.IPI.CST      := ipi99;
   Produto.Imposto.IPI.clEnq    := '999';
   Produto.Imposto.IPI.CNPJProd := '';
   Produto.Imposto.IPI.cSelo    := '';
@@ -2495,9 +2513,9 @@ begin
   Servico.Prod.EXTIPI   := '';
   Servico.Prod.CFOP     := '5933';
   Servico.Prod.uCom     := 'UN';
-  Servico.Prod.qCom     := 1 ;
+  Servico.Prod.qCom     := 1;
   Servico.Prod.vUnCom   := 100;
-  Servico.Prod.vProd    := 100 ;
+  Servico.Prod.vProd    := 100;
 
   Servico.Prod.cEANTrib  := '';
   Servico.Prod.uTrib     := 'UN';
@@ -2604,9 +2622,9 @@ begin
 }
 
   NotaF.NFe.Cobr.Fat.nFat  := 'Numero da Fatura';
-  NotaF.NFe.Cobr.Fat.vOrig := 100 ;
-  NotaF.NFe.Cobr.Fat.vDesc := 0 ;
-  NotaF.NFe.Cobr.Fat.vLiq  := 100 ;
+  NotaF.NFe.Cobr.Fat.vOrig := 100;
+  NotaF.NFe.Cobr.Fat.vDesc := 0;
+  NotaF.NFe.Cobr.Fat.vLiq  := 100;
 
   Duplicata := NotaF.NFe.Cobr.Dup.Add;
   Duplicata.nDup  := '1234';
@@ -2661,7 +2679,7 @@ begin
      Ide.dSaiEnt   := now;
      Ide.hSaiEnt   := now;
      Ide.tpNF      := tnSaida;
-     Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex); ;
+     Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);;
      Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variÃ¡vel quando for para ambiente de produÃ§Ã£o
      Ide.cUF       := UFtoCUF(edtEmitUF.Text);
      Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
@@ -2744,9 +2762,9 @@ begin
          Prod.EXTIPI   := '';
          Prod.CFOP     := '5101';
          Prod.uCom     := 'UN';
-         Prod.qCom     := 1 ;
+         Prod.qCom     := 1;
          Prod.vUnCom   := 100;
-         Prod.vProd    := 100 ;
+         Prod.vProd    := 100;
 
          Prod.cEANTrib  := '7896523206646';
          Prod.uTrib     := 'UN';
@@ -2848,7 +2866,7 @@ begin
                                // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
       {       end;}
           end;
-       end ;
+       end;
 
 //Adicionando Serviços
 {      with Det.Add do
@@ -2861,9 +2879,9 @@ begin
          Prod.EXTIPI   := '';
          Prod.CFOP     := '5933';
          Prod.uCom     := 'UN';
-         Prod.qCom     := 1 ;
+         Prod.qCom     := 1;
          Prod.vUnCom   := 100;
-         Prod.vProd    := 100 ;
+         Prod.vProd    := 100;
 
          Prod.cEANTrib  := '';
          Prod.uTrib     := 'UN';
@@ -2887,7 +2905,7 @@ begin
                cListServ := 1402; // Preencha este campo usando a tabela disponível
                                // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
              end;
-       end ;
+       end;
 }
       Total.ICMSTot.vBC     := 100;
       Total.ICMSTot.vICMS   := 18;
@@ -2926,9 +2944,9 @@ begin
       Transp.modFrete := mfSemFrete; // NFC-e não pode ter FRETE
 
 {      Cobr.Fat.nFat  := 'Numero da Fatura';
-      Cobr.Fat.vOrig := 100 ;
-      Cobr.Fat.vDesc := 0 ;
-      Cobr.Fat.vLiq  := 100 ;
+      Cobr.Fat.vOrig := 100;
+      Cobr.Fat.vDesc := 0;
+      Cobr.Fat.vLiq  := 100;
 
       with Cobr.Dup.Add do
        begin
@@ -2945,7 +2963,7 @@ begin
        end;
  }
 
-      with pag.Add do //PAGAMENTOS apenas para NFC-e
+      with pag.Add do
        begin
          tPag := fpDinheiro;
          vPag := 100;
@@ -3008,7 +3026,7 @@ begin
      exit;
 
   ACBrNFe1.EventoNFe.Evento.Clear;
-//  ACBrNFe1.EvnvEvento.EnvEventoNFe.idLote := StrToInt(idLote) ;
+//  ACBrNFe1.EvnvEvento.EnvEventoNFe.idLote := StrToInt(idLote);
   with ACBrNFe1.EventoNFe.Evento.Add do
    begin
      infEvento.chNFe := Chave;
@@ -3137,7 +3155,7 @@ begin
   if not(InputQuery('WebServices Eventos: Carta de Correção', 'Correção a ser considerada', Correcao)) then
      exit;
   ACBrNFe1.EventoNFe.Evento.Clear;
-//  ACBrNFe1.EnvEvento.EnvEventoNFe..idLote := StrToInt(idLote) ;
+//  ACBrNFe1.EnvEvento.EnvEventoNFe..idLote := StrToInt(idLote);
   with ACBrNFe1.EventoNFe.Evento.Add do
    begin
      infEvento.chNFe := Chave;
@@ -3176,7 +3194,7 @@ begin
     else
     begin
       MemoResp.Lines.Add('OK: Assinatura Válida');
-      ACBrNFe1.SSL.CarregarCertificadoPublico( ACBrNFe1.NotasFiscais[0].NFe.signature.X509Certificate ) ;
+      ACBrNFe1.SSL.CarregarCertificadoPublico( ACBrNFe1.NotasFiscais[0].NFe.signature.X509Certificate );
       MemoResp.Lines.Add('Assinado por: '+ ACBrNFe1.SSL.CertRazaoSocial);
       MemoResp.Lines.Add('CNPJ: '+ ACBrNFe1.SSL.CertCNPJ);
       MemoResp.Lines.Add('Num.Série: '+ ACBrNFe1.SSL.CertNumeroSerie);
@@ -3234,7 +3252,7 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFe1.EventoNFe.Evento.Clear;
-    ACBrNFe1.EventoNFe.LerXML(OpenDialog1.FileName) ;
+    ACBrNFe1.EventoNFe.LerXML(OpenDialog1.FileName);
     ACBrNFe1.ImprimirEvento;
   end;
 //  LoadXML(MemoResp, WBResposta);
@@ -3268,7 +3286,7 @@ begin
     Evento.Clear;
     Evento.Add(OpenDialog1.FileName);
     ACBrNFe1.EventoNFe.Evento.Clear;
-    ACBrNFe1.EventoNFe.LerXML(OpenDialog1.FileName) ;
+    ACBrNFe1.EventoNFe.LerXML(OpenDialog1.FileName);
     CC:=TstringList.Create;
     CC.Add('andrefmoraes@gmail.com'); //especifique um email vÃ¡lido
     CC.Add('anfm@zipmail.com.br');    //especifique um email vÃ¡lido

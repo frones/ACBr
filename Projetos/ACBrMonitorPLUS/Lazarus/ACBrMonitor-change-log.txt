@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/06/2018
+[*] Acrescentado na resposta retornada pelo método DistribuicaoDFe o nome do 
+    XML bem como o seu tipo (Schema).
+   Por: Fabio Nery
+
 08/06/2018
 [+] Adicionado parâmetro para configuração de Unidade no componente Etiqueta
    por: José M. S. Junior

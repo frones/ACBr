@@ -1323,7 +1323,12 @@ begin
                        'cSitNFe=' +SituacaoDFeToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.cSitNFe)+sLineBreak+
                        'nProt='   +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resNFe.nProt+sLineBreak+
                        'XML='     +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].XML;
-                       J := J + 1;
+
+                      Cmd.Resposta := Cmd.Resposta + sLineBreak +
+                       'NomeArq=' + ACBrNFe1.WebServices.DistribuicaoDFe.listaArqs[i] + sLineBreak +
+                       'schema='  + GetEnumName(typeInfo(TSchemaNFe), Ord(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].schema) );
+
+                       inc(J);
                     end;
                  end;
              J := 1;
@@ -1343,7 +1348,12 @@ begin
                      'dhRecbto='  +DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.dhRecbto)+sLineBreak+
                      'nProt='     +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].resEvento.nProt+sLineBreak+
                      'XML='       +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].XML;
-                     J := J + 1;
+
+                    Cmd.Resposta := Cmd.Resposta + sLineBreak +
+                     'NomeArq='   + ACBrNFe1.WebServices.DistribuicaoDFe.listaArqs[i] + sLineBreak +
+                     'schema='    + GetEnumName(typeInfo(TSchemaNFe), Ord(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].schema) );
+
+                     inc(J);
                    end;
                end;
               J := 1;
@@ -1379,7 +1389,11 @@ begin
                       'cteDhRebcto='+DateTimeToStr(AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.detEvento.CTe.dhRecbto)+sLineBreak+
                       'XML='        +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].XML;
 
-                     J := J + 1;
+                     Cmd.Resposta := Cmd.Resposta + sLineBreak +
+                      'NomeArq='    + ACBrNFe1.WebServices.DistribuicaoDFe.listaArqs[i] + sLineBreak +
+                      'schema='     + GetEnumName(typeInfo(TSchemaNFe), Ord(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].schema) );
+
+                     inc(J);
                     end;
                 end;
               J := 1;
@@ -1405,7 +1419,12 @@ begin
                      'emailDest='  +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.emailDest+sLineBreak+
                      'nProt='      +AcbrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].procEvento.RetinfEvento.nProt+sLineBreak+
                      'XML='        +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].XML;
-                     J := J + 1;
+
+                     Cmd.Resposta := Cmd.Resposta + sLineBreak +
+                     'NomeArq='    + ACBrNFe1.WebServices.DistribuicaoDFe.listaArqs[i] + sLineBreak +
+                     'schema='     + GetEnumName(typeInfo(TSchemaNFe), Ord(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[i].schema) );
+
+                     inc(J);
                     end;
                 end;
            except

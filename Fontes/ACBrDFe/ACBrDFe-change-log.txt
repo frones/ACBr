@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/06/2018
+-- ACBrDFeWinCrypt --
+[*] Ajuste no método "PFXDataToCertContextWinApi", para funcionar em Windows XP
+    (por: DSA)
+
 06/06/2018
 -- ACBrDFeSSL, ACBrDFeHttpWinApi --
 [-] Correção de A.V. quando usando httpWinINet, httpWinHttp e

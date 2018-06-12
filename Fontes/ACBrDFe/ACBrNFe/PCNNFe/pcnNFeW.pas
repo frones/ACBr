@@ -1023,7 +1023,7 @@ end;
 
 procedure TNFeW.GerarDetProdMed(const i: Integer);
 var
-  j: Integer;
+  j, MaxMed: Integer;
 begin
   for j := 0 to nfe.Det[i].Prod.med.Count - 1 do
   begin
@@ -1040,8 +1040,14 @@ begin
     Gerador.wCampo(tcDe2, 'K06', 'vPMC ', 00, 15, 1, nfe.Det[i].Prod.med[j].vPMC, DSC_VPMC);
     Gerador.wGrupo('/med');
   end;
-  if nfe.Det[i].Prod.med.Count > 500 then
-    Gerador.wAlerta('K01', 'med', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + '500');
+
+  if (NFe.infNFe.Versao >= 4) then
+    MaxMed := 1
+  else
+    MaxMed := 500;
+
+  if (nfe.Det[i].Prod.med.Count > MaxMed) then
+    Gerador.wAlerta('K01', 'med', DSC_NITEM, ERR_MSG_MAIOR_MAXIMO + IntToStr(MaxMed));
 end;
 
 procedure TNFeW.GerarDetProdNVE(const i: Integer);

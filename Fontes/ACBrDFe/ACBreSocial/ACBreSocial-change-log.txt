@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/06/2018
+-- pcesS2200 --
+[*] Acrescentado condições na leitura das seções no arquivo INI que são opcionais.
+   Por: Italo Jurisato Junior
+
 08/06/2018
 -- ACBreSocial --
 [-] Não estava identificando corretamente o tipo de evento ao carregar um XML

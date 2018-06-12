@@ -371,17 +371,23 @@ begin
       vinculo.InfoRegimeTrab.InfoCeletista.FGTS.DtOpcFGTS := StringToDateTime(INIRec.ReadString(sSecao, 'dtOpcFGTS', '0'));
 
       sSecao := 'trabTemporario';
-      vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.hipLeg      := INIRec.ReadInteger(sSecao, 'hipLeg', 1);
-      vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr   := INIRec.ReadString(sSecao, 'justContr', '');
-      vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.tpinclContr := eSStrToTpInclContr(Ok, INIRec.ReadString(sSecao, 'tpinclContr', ''));
+      if INIRec.ReadString(sSecao, 'hipLeg', '') <> '' then
+      begin
+        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.hipLeg      := INIRec.ReadInteger(sSecao, 'hipLeg', 1);
+        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.justContr   := INIRec.ReadString(sSecao, 'justContr', '');
+        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.tpinclContr := eSStrToTpInclContr(Ok, INIRec.ReadString(sSecao, 'tpinclContr', ''));
 
-      sSecao := 'ideTomadorServ';
-      vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-      vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+        sSecao := 'ideTomadorServ';
+        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+      end;
 
       sSecao := 'ideEstabVinc';
-      vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.ideEstabVinc.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-      vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.ideEstabVinc.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+      if INIRec.ReadString(sSecao, 'tpInsc', '') <> '' then
+      begin
+        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.ideEstabVinc.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.ideTomadorServ.ideEstabVinc.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+      end;
 
       I := 1;
       while true do
@@ -402,17 +408,23 @@ begin
       end;
 
       sSecao := 'aprend';
-      vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-      vinculo.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+      if INIRec.ReadString(sSecao, 'tpInsc', '') <> '' then
+      begin
+        vinculo.InfoRegimeTrab.InfoCeletista.aprend.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        vinculo.InfoRegimeTrab.InfoCeletista.aprend.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
+      end;
 
       sSecao := 'infoEstatutario';
-      vinculo.InfoRegimeTrab.infoEstatutario.IndProvim   := eSStrToIndProvim(Ok, INIRec.ReadString(sSecao, 'indProvim', '1'));
-      vinculo.InfoRegimeTrab.infoEstatutario.TpProv      := eSStrToTpProv(Ok, INIRec.ReadString(sSecao, 'tpProv', '1'));
-      vinculo.InfoRegimeTrab.infoEstatutario.DtNomeacao  := StringToDateTime(INIRec.ReadString(sSecao, 'dtNomeacao', '0'));
-      vinculo.InfoRegimeTrab.infoEstatutario.DtPosse     := StringToDateTime(INIRec.ReadString(sSecao, 'dtPosse', '0'));
-      vinculo.InfoRegimeTrab.infoEstatutario.DtExercicio := StringToDateTime(INIRec.ReadString(sSecao, 'dtExercicio', '0'));
-      vinculo.InfoRegimeTrab.infoEstatutario.tpPlanRP    := eSStrToTpPlanRP(Ok, INIRec.ReadString(sSecao, 'tpPlanRP', '1'));
-      vinculo.InfoRegimeTrab.infoEstatutario.infoDecJud.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', '');
+      if INIRec.ReadString(sSecao, 'indProvim', '') <> '' then
+      begin
+        vinculo.InfoRegimeTrab.infoEstatutario.IndProvim   := eSStrToIndProvim(Ok, INIRec.ReadString(sSecao, 'indProvim', '1'));
+        vinculo.InfoRegimeTrab.infoEstatutario.TpProv      := eSStrToTpProv(Ok, INIRec.ReadString(sSecao, 'tpProv', '1'));
+        vinculo.InfoRegimeTrab.infoEstatutario.DtNomeacao  := StringToDateTime(INIRec.ReadString(sSecao, 'dtNomeacao', '0'));
+        vinculo.InfoRegimeTrab.infoEstatutario.DtPosse     := StringToDateTime(INIRec.ReadString(sSecao, 'dtPosse', '0'));
+        vinculo.InfoRegimeTrab.infoEstatutario.DtExercicio := StringToDateTime(INIRec.ReadString(sSecao, 'dtExercicio', '0'));
+        vinculo.InfoRegimeTrab.infoEstatutario.tpPlanRP    := eSStrToTpPlanRP(Ok, INIRec.ReadString(sSecao, 'tpPlanRP', '1'));
+        vinculo.InfoRegimeTrab.infoEstatutario.infoDecJud.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', '');
+      end;
 
       sSecao := 'infoContrato';
       vinculo.infoContrato.CodCargo    := INIRec.ReadString(sSecao, 'codCargo', '');
@@ -432,25 +444,34 @@ begin
       vinculo.infoContrato.duracao.clauAssec := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'clauAssec', 'S'));
 
       sSecao := 'localTrabGeral';
-      vinculo.infoContrato.LocalTrabalho.LocalTrabGeral.TpInsc   := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-      vinculo.infoContrato.LocalTrabalho.LocalTrabGeral.NrInsc   := INIRec.ReadString(sSecao, 'nrInsc', '');
-      vinculo.infoContrato.LocalTrabalho.LocalTrabGeral.DescComp := INIRec.ReadString(sSecao, 'descComp', '');
+      if INIRec.ReadString(sSecao, 'tpInsc', '') <> '' then
+      begin
+        vinculo.infoContrato.LocalTrabalho.LocalTrabGeral.TpInsc   := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        vinculo.infoContrato.LocalTrabalho.LocalTrabGeral.NrInsc   := INIRec.ReadString(sSecao, 'nrInsc', '');
+        vinculo.infoContrato.LocalTrabalho.LocalTrabGeral.DescComp := INIRec.ReadString(sSecao, 'descComp', '');
+      end;
 
       sSecao := 'localTrabDom';
-      vinculo.infoContrato.LocalTrabalho.localTrabDom.TpLograd    := INIRec.ReadString(sSecao, 'tpLograd', '');
-      vinculo.infoContrato.LocalTrabalho.localTrabDom.DscLograd   := INIRec.ReadString(sSecao, 'dscLograd', '');
-      vinculo.infoContrato.LocalTrabalho.localTrabDom.NrLograd    := INIRec.ReadString(sSecao, 'nrLograd', '');
-      vinculo.infoContrato.LocalTrabalho.localTrabDom.Complemento := INIRec.ReadString(sSecao, 'complemento', '');
-      vinculo.infoContrato.LocalTrabalho.localTrabDom.Bairro      := INIRec.ReadString(sSecao, 'bairro', '');
-      vinculo.infoContrato.LocalTrabalho.localTrabDom.Cep         := INIRec.ReadString(sSecao, 'cep', '');
-      vinculo.infoContrato.LocalTrabalho.localTrabDom.CodMunic    := INIRec.ReadInteger(sSecao, 'CodMunic', 0);
-      vinculo.infoContrato.LocalTrabalho.localTrabDom.uf          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+      if INIRec.ReadString(sSecao, 'tpLograd', '') <> '' then
+      begin
+        vinculo.infoContrato.LocalTrabalho.localTrabDom.TpLograd    := INIRec.ReadString(sSecao, 'tpLograd', '');
+        vinculo.infoContrato.LocalTrabalho.localTrabDom.DscLograd   := INIRec.ReadString(sSecao, 'dscLograd', '');
+        vinculo.infoContrato.LocalTrabalho.localTrabDom.NrLograd    := INIRec.ReadString(sSecao, 'nrLograd', '');
+        vinculo.infoContrato.LocalTrabalho.localTrabDom.Complemento := INIRec.ReadString(sSecao, 'complemento', '');
+        vinculo.infoContrato.LocalTrabalho.localTrabDom.Bairro      := INIRec.ReadString(sSecao, 'bairro', '');
+        vinculo.infoContrato.LocalTrabalho.localTrabDom.Cep         := INIRec.ReadString(sSecao, 'cep', '');
+        vinculo.infoContrato.LocalTrabalho.localTrabDom.CodMunic    := INIRec.ReadInteger(sSecao, 'CodMunic', 0);
+        vinculo.infoContrato.LocalTrabalho.localTrabDom.uf          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+      end;
 
       sSecao := 'horContratual';
-      vinculo.infoContrato.horContratual.QtdHrsSem := INIRec.ReadInteger(sSecao, 'qtdHrsSem', 0);
-      vinculo.infoContrato.horContratual.TpJornada := eSStrToTpJornada(Ok, INIRec.ReadString(sSecao, 'tpJornada', '1'));
-      vinculo.infoContrato.horContratual.DscTpJorn := INIRec.ReadString(sSecao, 'dscTpJorn', '');
-      vinculo.infoContrato.horContratual.tmpParc   := StrTotpTmpParc(Ok, INIRec.ReadString(sSecao, 'tmpParc', '0'));
+      if INIRec.ReadString(sSecao, 'tpJornada', '') <> '' then
+      begin
+        vinculo.infoContrato.horContratual.QtdHrsSem := INIRec.ReadInteger(sSecao, 'qtdHrsSem', 0);
+        vinculo.infoContrato.horContratual.TpJornada := eSStrToTpJornada(Ok, INIRec.ReadString(sSecao, 'tpJornada', '1'));
+        vinculo.infoContrato.horContratual.DscTpJorn := INIRec.ReadString(sSecao, 'dscTpJorn', '');
+        vinculo.infoContrato.horContratual.tmpParc   := StrTotpTmpParc(Ok, INIRec.ReadString(sSecao, 'tmpParc', '0'));
+      end;
 
       I := 1;
       while true do
@@ -511,22 +532,32 @@ begin
       end;
 
       sSecao := 'sucessaoVinc';
-      vinculo.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '');
-      vinculo.sucessaoVinc.MatricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
-      vinculo.sucessaoVinc.dtTransf      := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
-      vinculo.sucessaoVinc.Observacao    := INIRec.ReadString(sSecao, 'observacao', '');
+      if INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '') <> '' then
+      begin
+        vinculo.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '');
+        vinculo.sucessaoVinc.MatricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
+        vinculo.sucessaoVinc.dtTransf      := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
+        vinculo.sucessaoVinc.Observacao    := INIRec.ReadString(sSecao, 'observacao', '');
+      end;
 
       sSecao := 'transfDom';
-      vinculo.transfDom.cpfSubstituido := INIRec.ReadString(sSecao, 'cpfSubstituido', '');
-      vinculo.transfDom.MatricAnt      := INIRec.ReadString(sSecao, 'matricAnt', '');
-      vinculo.transfDom.dtTransf       := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
+      if INIRec.ReadString(sSecao, 'cpfSubstituido', '') <> '' then
+      begin
+        vinculo.transfDom.cpfSubstituido := INIRec.ReadString(sSecao, 'cpfSubstituido', '');
+        vinculo.transfDom.MatricAnt      := INIRec.ReadString(sSecao, 'matricAnt', '');
+        vinculo.transfDom.dtTransf       := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));
+      end;
 
       sSecao := 'afastamento';
-      vinculo.afastamento.DtIniAfast  := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniAfast', '0'));
-      vinculo.afastamento.codMotAfast := eSStrTotpMotivosAfastamento(Ok, INIRec.ReadString(sSecao, 'codMotAfast', '00'));
+      if INIRec.ReadString(sSecao, 'dtIniAfast', '') <> '' then
+      begin
+        vinculo.afastamento.DtIniAfast  := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniAfast', '0'));
+        vinculo.afastamento.codMotAfast := eSStrTotpMotivosAfastamento(Ok, INIRec.ReadString(sSecao, 'codMotAfast', '00'));
+      end;
 
       sSecao := 'desligamento';
-      vinculo.desligamento.DtDeslig := StringToDateTime(INIRec.ReadString(sSecao, 'dtDeslig', '0'));
+      if INIRec.ReadString(sSecao, 'dtDeslig', '') <> '' then
+        vinculo.desligamento.DtDeslig := StringToDateTime(INIRec.ReadString(sSecao, 'dtDeslig', '0'));
     end;
 
     GerarXML;

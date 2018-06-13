@@ -1108,7 +1108,6 @@ var
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
   IdxMotivo : Integer;
-  wSeuNumero: String;
 begin
 
    if (copy(ARetorno.Strings[0],1,3) <> '399') then
@@ -1211,15 +1210,7 @@ begin
             Carteira                  := Copy(Linha,58,1);
             NossoNumero               := Copy(Linha,38,13);
             CodigoLiquidacao          := Copy(Linha,214,10);
-//            CodigoLiquidacaoDescricao := CodigoLiquidacaoDescricao(StrToIntDef(CodigoLiquidacao,0) );
-
-            // prevenir quando o seunumero não vem informado no arquivo, altera para NossoNumero do banco
-            wSeuNumero := StringReplace(SeuNumero, '0','',[rfReplaceAll]);
-            if (AnsiSameText(wSeuNumero, EmptyStr)) then
-            begin
-              SeuNumero       := NossoNumero;
-              NumeroDocumento := NossoNumero
-            end;
+            //CodigoLiquidacaoDescricao := CodigoLiquidacaoDescricao(StrToIntDef(CodigoLiquidacao,0) );
 
             // codigos motivos de ocorrencias
             IdxMotivo := 214;

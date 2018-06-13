@@ -433,7 +433,7 @@ begin
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                         copy(Linha,109,2),0));
 
-         CodOcorrencia := StrToInt(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)));
+         CodOcorrencia := StrToIntDef(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)),0);
 
          //-|Se a ocorrencia for igual a 19 – Confirmação de Instrução de Protesto
          //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado

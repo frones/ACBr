@@ -551,9 +551,9 @@ begin
               IntToStrZero( round(ValorIOF * 100), 15)                                  + // 166 a 180 - Valor do IOF a ser recolhido
               IntToStrZero( round(ValorAbatimento * 100), 15)                           + // 181 a 195 - Valor do abatimento
               PadRight(SeuNumero, 25, ' ')                                              + // 196 a 220 - Identificação do título na empresa
-              IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
+              IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                      IfThen((DaySpan(Vencimento, DataProtesto) > 5), '1', '2'), '3')    + // 221 - Código de protesto: Protestar em XX dias corridos
-              IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
+              IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                      PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'),
                      '00')                                                              + // 222 a 223 - Prazo para protesto (em dias corridos)
               '0'                                                                       + // 224 - Campo não tratado pelo BB [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
@@ -1014,7 +1014,7 @@ begin
 
             TempData := copy(Linha, 74, 2) + '/'+copy(Linha, 76, 2)+'/'+copy(Linha, 78, 4);
             if TempData<>'00/00/0000' then
-               Vencimento := StringToDateTimeDef(TempData, 0, 'DDMMYY');
+              Vencimento := StringToDateTimeDef(TempData, 0, 'DDMMYY');
 
             ValorDocumento := StrToFloatDef(copy(Linha, 82, 15), 0) / 100;
 
@@ -1036,9 +1036,6 @@ begin
                Inc(IdxMotivo, 2);
             end;
 
-            // quando o numero documento vier em branco
-            if Trim(NumeroDocumento) = '' then
-              NumeroDocumento := NossoNumero;
           end
          else if copy(Linha, 14, 1) = 'U' then // segmento U
           begin

@@ -558,9 +558,9 @@ begin
                IntToStrZero(Round(ValorIOF * 100), 15) +                                                                     // 166 a 180 - Valor do IOF a ser recolhido
                IntToStrZero(Round(ValorAbatimento * 100), 15) +                                                              // 181 a 195 - Valor do abatimento
                PadRight(SeuNumero, 25, ' ') +                                                                                // 196 a 220 - Identificação do título na empresa
-               IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
+               IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                       IfThen((DaySpan(Vencimento, DataProtesto) > 5), '1', '2'), '3') +                                      // 221 - Código de protesto: Protestar em XX dias corridos
-               IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
+               IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                       PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'), '00') +                              // 222 a 223 - Prazo para protesto (em dias corridos)
                '0' +                                                                                                         // 224 - Campo não tratado pelo BB [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
                '000' +                                                                                                       // 225 a 227 - Campo não tratado pelo BB [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
@@ -772,9 +772,6 @@ begin
                               Inc(idxMotivo, 2);
                          end;
 
-                         // quando o numero documento vier em branco
-                         if Trim(NumeroDocumento) = '' then
-                              NumeroDocumento := NossoNumero;
                     end
                     else if Copy(Linha, 14, 1) = 'U' then // segmento U
                     begin

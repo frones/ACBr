@@ -329,7 +329,7 @@ begin
       {Mora Juros}
       if (ValorMoraJuros > 0) then
        begin
-         if (DataMoraJuros <> Null) then
+         if (DataMoraJuros > 0) then
             ADataMoraJuros := FormatDateTime('ddmmyyyy', DataMoraJuros)
          else
             ADataMoraJuros := PadLeft('', 8, '0');
@@ -340,7 +340,7 @@ begin
       {Descontos}
       if (ValorDesconto > 0) then
        begin
-         if (DataDesconto <> Null) then
+         if (DataDesconto > 0) then
             ADataDesconto := FormatDateTime('ddmmyyyy', DataDesconto)
          else
             ADataDesconto := PadLeft('', 8, '0');
@@ -391,7 +391,7 @@ begin
                IntToStrZero( round(ValorAbatimento * 100), 15)            + //181 a 195 - Valor do abatimento
                PadRight(SeuNumero, 25, ' ')                               + //196 a 220 - Identificação do título na empresa
                ACodigoNegativacao                                         + //221 - Código de protesto: Protestar em XX dias corridos
-               IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
+               IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                     PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00')      + //222 a 223 - Prazo para protesto
                IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento), '1', '0')  + // 224 - Código de Baixa
                IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento),
@@ -529,7 +529,7 @@ begin
                                                                                     1 para o trailer do arquivo}
             PadLeft('', 6, '0')                                           + //Complemento
             space(205);
-
+   fQtRegLote := 0;
    fValorTotalDocs := 0;
 end;
 
@@ -726,7 +726,7 @@ begin
       {Descontos}
       if (ValorDesconto > 0) then
       begin
-        if (DataDesconto <> Null) then
+        if (DataDesconto > 0) then
           ADataDesconto := FormatDateTime('ddmmyy', DataDesconto)
         else
           ADataDesconto := PadLeft('', 6, '0');
@@ -850,7 +850,7 @@ begin
                    PadRight(Sacado.SacadoAvalista.NomeAvalista, 30, ' ')                          + // NOME DO SACADOR/AVALISTA
                    space(4)                                                                       + // COMPLEMENTO DO REGISTRO
                    ADataMoraJuros                                                                 + // DATA DE MORA
-                   IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
+                   IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                            PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'), '00')+ // PRAZO
                    space(1)                                                                       + // BRANCOS
                    IntToStrZero(aRemessa.Count + 1, 6);                                             // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
@@ -862,7 +862,7 @@ begin
                    begin
                      inc( iSequencia );
                      wLinhaMulta:= '2'                                              + // Tipo de registro - 2 OPCIONAL – COMPLEMENTO DETALHE - MULTA
-                                   '2'                                              + // Cocidgo da Multa X(001) 2-percentual
+                                   IfThen(MultaValorFixo,'1','2')                   + // Cocidgo da Multa 1- Cobrar Multa Valor Fixo / 2- Percentual / 0-Não cobrar multa
                                    ifThen((DataMulta > 0),
                                            FormatDateTime('ddmmyyyy',  DataMulta), '00000000')      + // Data da Multa 9(008)
                                    IntToStrZero( round(PercentualMulta * 100 ), 13) + // Valor/Percentual 9(013)

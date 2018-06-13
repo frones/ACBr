@@ -1994,8 +1994,7 @@ begin
                              ' para pagamento ate ' + FormatDateTime('dd/mm/yyyy',DataAbatimento)))
          else
             AStringList.Add(ACBrStr('Conceder abatimento de ' +
-                             FormatCurr('R$ #,##0.00',ValorAbatimento) +
-                             ' para pagamento ate ' + FormatDateTime('dd/mm/yyyy',Vencimento)));
+                             FormatCurr('R$ #,##0.00',ValorAbatimento)));
       end;
 
       if ValorDesconto <> 0 then

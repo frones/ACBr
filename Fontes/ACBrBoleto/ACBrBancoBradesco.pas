@@ -888,7 +888,7 @@ begin
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                         copy(Linha,109,2),0));
 
-         CodOcorrencia := StrToInt(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)));
+         CodOcorrencia := StrToIntDef(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)),0);
 
          //-|Se a ocorrencia for igual a 19 - Confirmação de Receb. de Protesto
          //-|Verifica o motivo na posição 295 - A = Aceite , D = Desprezado
@@ -1691,9 +1691,6 @@ begin
                Inc(IdxMotivo, 2);
             end;
 
-            // quando o numero documento vier em branco
-            if Trim(NumeroDocumento) = '' then
-              NumeroDocumento := NossoNumero;
           end
          else // segmento U
           begin

@@ -465,7 +465,7 @@ begin
              IntToStrZero( round(ValorAbatimento * 100), 15)                           + // 181 a 195 - Valor do abatimento
              PadRight(SeuNumero, 25, ' ')                                              + // 196 a 220 - Identificação do título na empresa
              aCodNeg                                                                   + // 221 - Código para negativacao
-             IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
+             IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                     PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'),
                     '00')                                                              + // 222 a 223 - Prazo para negativar (em dias corridos)
              '2'                                                                       + // 224 - Codigo para Baixa/Devolucao
@@ -701,8 +701,8 @@ begin
                   ' ' +                                                         // 394 a 394 - Branco
                   IntToStrZero( aRemessa.Count + 1, 6 );                        // 395 a 400 - Sequencial de Registro 
 
-
-         wLinha:= wLinha + sLineBreak +
+         if PercentualMulta > 0 then
+           wLinha:= wLinha + sLineBreak +
                   '5' +                                                         //Tipo Registro
                   '99' +                                                        //Tipo de Serviço (Cobrança de Multa)
                   IfThen(PercentualMulta > 0, '2','9') +                        //Cod. Multa 2- Percentual 9-Sem Multa
@@ -1179,12 +1179,12 @@ begin
 
       with Titulo do
       begin
-         SeuNumero                   := copy(Linha,38,25);
+         SeuNumero                   := copy(Linha,39,25);
          NumeroDocumento             := copy(Linha,117,10);
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                         copy(Linha,109,2),0));
 
-         CodOcorrencia := StrToInt(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)));
+         CodOcorrencia := StrToIntDef(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)),0);
 
          if (CodOcorrencia = 5) or
             (CodOcorrencia = 6) or

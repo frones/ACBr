@@ -1251,9 +1251,6 @@ begin
                Inc(IdxMotivo, 2);
             end;
 
-            // quando o numero documento vier em branco
-            if Trim(NumeroDocumento) = '' then
-              NumeroDocumento := NossoNumero;
           end
          else // segmento U
           begin

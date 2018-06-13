@@ -47,13 +47,39 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 16/04/2018 ver: 0.0.241
+Data 12/06/2018 ver: 0.0.242
+
+12-06-2018 -- ACBrBancoBancob / ACBrBancoCecred / ACBrBancoItau / ACBrBancoCaixa /
+ACBrBancoCaixaSicob / ACBrBancoBrasil / ACBrBancoAmazonia / ACBrBancoUniprime
+[*] Ajuste na comparação campo data e Retorno campo Nosso Número
+https://www.projetoacbr.com.br/forum/topic/42166-corre%C3%A7%C3%A3o-na-compara%C3%A7%C3%A3o-de-datas-tdatetime-com-null/
+https://www.projetoacbr.com.br/forum/topic/42176-corre%C3%A7%C3%A3o-numerodocumento-recebendo-indevidamente-nossonumero-em-algumas-units/
+
+12-06-2018 -- ACBrBoleto
+[*] Ajuste na Mensagem de Abatimento quando não existir data de abatimento
+https://www.projetoacbr.com.br/forum/topic/39176-abatimento-em-boleto/?tab=comments#comment-283171
+
+12-06-2018 -- ACBrBancoBanrisul
+[*] Ajuste na geração CNAB400
+https://www.projetoacbr.com.br/forum/topic/43596-alteracao-cnab-400-banrisul/
+
+12-06-2018 -- ACBrBancoItau
+[*] Ajuste geração CNAB240 e Retorno CNAB400
+https://www.projetoacbr.com.br/forum/topic/41783-tratamento-de-multa-com-valor-fixo-acbrbancoitau-cnab400/
+https://www.projetoacbr.com.br/forum/topic/42592-n%C2%BA-do-registro-cnab-240-itau/
+
+12-06-2018 -- ACBrBancoCecred
+[*] Ajuste retorno CNAB400
+https://www.projetoacbr.com.br/forum/topic/40259-boleto-cecred-retorno-cnab400/
+https://www.projetoacbr.com.br/forum/topic/43440-cecred-altera%C3%A7%C3%B5es-cnab-400/
+https://www.projetoacbr.com.br/forum/topic/42391-ajuste-acbrbancocecred-n%C3%A3o-gerar-detalhe-quando-n%C3%A3o-houver-multa/
 
 11-06-2018 -- ACBrBancoBrasil
 [*] Ajuste retorno de ocorrência
 https://www.projetoacbr.com.br/forum/topic/41856-erro-ao-ler-retorno-do-banco-do-brasil-cnab400/
 https://www.projetoacbr.com.br/forum/topic/42127-sacador-avalista-banco-do-brasil/
 https://www.projetoacbr.com.br/forum/topic/43354-codigo-mora-cnab-240-banco-do-brasil/
+https://www.projetoacbr.com.br/forum/topic/36354-erro-ao-ler-retorno-do-banco-do-brasil-cnab400/
 
 25-05-2018 -- ACBrBancoSantander
 [*] Validação de Contribuições e Ajustes para Banco Santander (Retorno CNAB 240 / Código Ocorrencias)

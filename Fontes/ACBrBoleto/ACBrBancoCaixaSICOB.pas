@@ -1015,7 +1015,7 @@ begin
       {Mora Juros}
       if (ValorMoraJuros > 0) then
        begin
-         if (DataMoraJuros <> Null) and (DataMoraJuros >= 30/12/2000) then
+         if (DataMoraJuros > 0) and (DataMoraJuros >= 30/12/2000) then
             ADataMoraJuros := FormatDateTime('ddmmyy', DataMoraJuros)
          else
             ADataMoraJuros := PadLeft('', 6, '0');
@@ -1150,7 +1150,7 @@ begin
                   IntToStrZero(round((ValorDocumento*PercentualMulta)/100), 10) + //358 até 367 - Valor nominal da multa
                   PadRight( Sacado.NomeSacado, 22)                      + // 368 até 389 - Nome do Sacador Avalista
                   '00'                                                  + // 390  391 - Terceira instrução de Cobrança Default '00'
-                   IfThen((DataProtesto <> null) and
+                   IfThen((DataProtesto > 0) and
                       (DataProtesto > Vencimento),
                        PadLeft(IntToStr(DaysBetween(DataProtesto,
                        Vencimento)), 2, '0'), '00')                     + //392 até 393 - Quantidade de dias para início da ação de protesto ou devolução do Título
@@ -1416,7 +1416,7 @@ begin
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                         copy(Linha,109,2),0));
 
-         CodOcorrencia := StrToInt(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)));
+         CodOcorrencia := StrToIntDef(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)),0);
 
          if(CodOcorrencia >= 2) and ((CodOcorrencia <= 10)) then
          begin

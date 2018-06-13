@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2018
+-- pnfsNFSeW_ABRASFv2 --
+[+] Acrescentado a linha que gera a tag <InscricaoEstadual> se o provedor for
+    Coplan.
+   Por: Italo Jurisato Junior
+-- pnfsNFSeW_Equiplano --
+[*] O e-mail do tomador é opcional e a tag estava sendo gerada vazia e isso 
+    estava causando erro ao validar o XML do RPS.
+   Por: Roberson Rech
+
 08/06/2018
 -- ACBrNFSe --
 [+] Implementação do provedor Tiplanv2 (segue a versão 2 do layout da ABRASF).

@@ -166,6 +166,9 @@ begin
 
       Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoMunicipal', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, DSC_IM);
 
+      if FProvedor = proCoplan then
+        Gerador.wCampoNFSe(tcStr, '#38', 'InscricaoEstadual',  01, 30, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, DSC_IE);
+
       Gerador.wGrupoNFSe('/IdentificacaoTomador');
     end;
 

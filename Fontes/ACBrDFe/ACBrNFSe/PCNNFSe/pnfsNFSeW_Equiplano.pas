@@ -114,10 +114,11 @@ var
 begin
   if (Trim(NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro) <> '') then
     sTpDoc := '3'  //Est
-  else if (Length(OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) = 14) then
-         sTpDoc := '2'  //CNPJ
-       else
-         sTpDoc := '1'; //CPF
+  else
+    if (Length(OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) = 14) then
+      sTpDoc := '2'  //CNPJ
+    else
+      sTpDoc := '1'; //CPF
 
   Gerador.wGrupoNFSe('tomador');
 
@@ -128,7 +129,7 @@ begin
   Gerador.wGrupoNFSe('/documento');
 
   Gerador.wCampoNFSe(tcStr, '', 'nmTomador          ', 01, 080, 1, NFSe.Tomador.RazaoSocial, '');
-  Gerador.wCampoNFSe(tcStr, '', 'dsEmail            ', 00, 080, 1, NFSe.Tomador.Contato.Email, '');
+  Gerador.wCampoNFSe(tcStr, '', 'dsEmail            ', 00, 080, 0, NFSe.Tomador.Contato.Email, '');
   Gerador.wCampoNFSe(tcStr, '', 'nrInscricaoEstadual', 00, 020, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
   Gerador.wCampoNFSe(tcStr, '', 'dsEndereco         ', 00, 040, 1, NFSe.Tomador.Endereco.Endereco, '');
   Gerador.wCampoNFSe(tcStr, '', 'nrEndereco         ', 00, 010, 1, NFSe.Tomador.Endereco.Numero, '');
@@ -170,9 +171,10 @@ begin
   Gerador.wGrupoNFSe('listaServicos');
 
 
-  if NFSe.Servico.ItemServico.Count > 1 then begin
-
-    for i:=0 to NFSe.Servico.ItemServico.Count-1 do begin
+  if NFSe.Servico.ItemServico.Count > 1 then
+  begin
+    for i:=0 to NFSe.Servico.ItemServico.Count-1 do
+    begin
       Gerador.wGrupoNFSe('servico');
       Gerador.wCampoNFSe(tcStr, '', 'nrServicoItem   ', 01, 02, 1, iSerItem, '');
       Gerador.wCampoNFSe(tcStr, '', 'nrServicoSubItem', 01, 02, 1, iSerSubItem, '');
@@ -192,10 +194,9 @@ begin
       Gerador.wCampoNFSe(tcStr, '', 'dsDiscriminacaoServico', 01,1024, 1, NFSe.Servico.ItemServico.Items[i].Discriminacao, '');
       Gerador.wGrupoNFSe('/servico');
     end;
-
-
-  end else begin
-
+  end
+  else
+  begin
     Gerador.wGrupoNFSe('servico');
     Gerador.wCampoNFSe(tcStr, '', 'nrServicoItem   ', 01, 02, 1, iSerItem, '');
     Gerador.wCampoNFSe(tcStr, '', 'nrServicoSubItem', 01, 02, 1, iSerSubItem, '');
@@ -214,7 +215,6 @@ begin
     Gerador.wCampoNFSe(tcDe2, '', 'vlIssServico          ', 01,  15, 1, NFSe.Servico.Valores.ValorIss, '');
     Gerador.wCampoNFSe(tcStr, '', 'dsDiscriminacaoServico', 01,1024, 1, NFSe.Servico.Discriminacao, '');
     Gerador.wGrupoNFSe('/servico');
-
   end;
 
   Gerador.wGrupoNFSe('/listaServicos');
@@ -282,12 +282,13 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
 
-  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
-    then FDefTipos := '/' + FDefTipos;
+  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '') then
+    FDefTipos := '/' + FDefTipos;
 
-  if Trim(FPrefixo4) <> ''
-    then Atributo := ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
-    else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
+  if Trim(FPrefixo4) <> '' then
+    Atributo := ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
+  else
+    Atributo := ' xmlns="' + FURL + FDefTipos + '"';
 
   FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                       FNFSe.IdentificacaoRps.Serie;
@@ -301,10 +302,12 @@ begin
       Gerar := ((NFSe.signature.DigestValue <> '') and
                 (NFSe.signature.SignatureValue <> '') and
                 (NFSe.signature.X509Certificate <> ''));
+
     if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
       Gerar := ((NFSe.signature.DigestValue = '') and
                 (NFSe.signature.SignatureValue = '') and
                 (NFSe.signature.X509Certificate = ''));
+
     if Gerar then
     begin
       FNFSe.signature.URI := FNFSe.InfID.ID;

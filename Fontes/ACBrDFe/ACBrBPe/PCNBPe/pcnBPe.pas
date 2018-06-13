@@ -584,20 +584,30 @@ type
   TpagCollectionItem = class(TCollectionItem)
   private
     FtPag: TpcnFormaPagamento;
+    FxPag: String;
     FvPag: Currency;
     FtpIntegra: TtpIntegra;
     FCNPJ: String;
     FtBand: TpcnBandeiraCartao;
+    FxBand: String;
     FcAut: String;
+    FnsuTrans: String;
+    FnsuHost: String;
+    FnParcelas: Integer;
   public
     procedure Assign(Source: TPersistent); override;
   published
     property tPag: TpcnFormaPagamento read FtPag write FtPag;
+    property xPag: String read FxPag write FxPag;
     property vPag: Currency read FvPag write FvPag;
     property tpIntegra: TtpIntegra read FtpIntegra write FtpIntegra;
     property CNPJ: String read FCNPJ write FCNPJ;
     property tBand: TpcnBandeiraCartao read FtBand write FtBand;
+    property xBand: String read FxBand write FxBand;
     property cAut: String read FcAut write FcAut;
+    property nsuTrans: String read FnsuTrans write FnsuTrans;
+    property nsuHost: String read FnsuHost write FnsuHost;
+    property nParcelas: Integer read FnParcelas write FnParcelas;
   end;
 
   TautXMLCollection = class(TCollection)
@@ -1277,11 +1287,16 @@ begin
   if Source is TpagCollectionItem then
   begin
     tPag := TpagCollectionItem(Source).tPag;
+    xPag := TpagCollectionItem(Source).xPag;
     vPag := TpagCollectionItem(Source).vPag;
     tpIntegra := TpagCollectionItem(Source).tpIntegra;
     CNPJ := TpagCollectionItem(Source).CNPJ;
     tBand := TpagCollectionItem(Source).tBand;
+    xBand := TpagCollectionItem(Source).xBand;
     cAut := TpagCollectionItem(Source).cAut;
+    nsuTrans := TpagCollectionItem(Source).nsuTrans;
+    nsuHost := TpagCollectionItem(Source).nsuHost;
+    nParcelas := TpagCollectionItem(Source).nParcelas;
   end
   else
     inherited;

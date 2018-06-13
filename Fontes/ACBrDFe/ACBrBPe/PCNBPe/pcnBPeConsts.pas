@@ -117,6 +117,12 @@ const
   DSC_VFCPUFFIM = 'Valor do Fundo ao Combate a Pobreza';
   DSC_VICMSUFFIM = 'Valor do ICMS da UF de Fim';
   DSC_VICMSUFINI = 'Valor do ICMS da UF de Inicio';
+  DSC_DHVALIDADE = 'Data/Hora de Validade do Bilhete';
+  DSC_XPAG = 'Descição da forma de pagamento';
+  DSC_XBAND = 'Descrição do tipo de bandeira';
+  DSC_NSUTRANS = 'Numero Sequencial Unico da Transação';
+  DSC_NSUHOST = 'Numero Sequencial Unico da Host';
+  DSC_NPARCELAS = 'Numero de Parcelas';
   DSC_XXXX = 'XXXX';
 
 implementation

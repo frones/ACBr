@@ -528,11 +528,12 @@ procedure TBPeW.GerarinfPassagem;
 begin
   Gerador.wGrupo('infPassagem', '#081');
 
-  Gerador.wCampo(tcStr, '#082', 'cLocOrig', 01, 07, 1, BPe.infPassagem.cLocOrig, DSC_CLOCORIG);
-  Gerador.wCampo(tcStr, '#083', 'xLocOrig', 02, 60, 1, BPe.infPassagem.xLocOrig, DSC_XLOCORIG);
-  Gerador.wCampo(tcStr, '#084', 'cLocDest', 01, 07, 1, BPe.infPassagem.cLocDest, DSC_CLOCDEST);
-  Gerador.wCampo(tcStr, '#085', 'xLocDest', 02, 60, 1, BPe.infPassagem.xLocDest, DSC_XLOCDEST);
-  Gerador.wCampo(tcStr, '#086', 'dhEmb   ', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhEmb) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhEmb), DSC_DHEMB);
+  Gerador.wCampo(tcStr, '#082', 'cLocOrig  ', 01, 07, 1, BPe.infPassagem.cLocOrig, DSC_CLOCORIG);
+  Gerador.wCampo(tcStr, '#083', 'xLocOrig  ', 02, 60, 1, BPe.infPassagem.xLocOrig, DSC_XLOCORIG);
+  Gerador.wCampo(tcStr, '#084', 'cLocDest  ', 01, 07, 1, BPe.infPassagem.cLocDest, DSC_CLOCDEST);
+  Gerador.wCampo(tcStr, '#085', 'xLocDest  ', 02, 60, 1, BPe.infPassagem.xLocDest, DSC_XLOCDEST);
+  Gerador.wCampo(tcStr, '#086', 'dhEmb     ', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhEmb) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhEmb), DSC_DHEMB);
+  Gerador.wCampo(tcStr, '#087', 'dhValidade', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhEmb) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhValidade), DSC_DHVALIDADE);
   Gerador.wCampo(tcStr, '#087', 'dhValidade   ', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhValidade) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhValidade), DSC_DHVALIDADE);
 
   if BPe.infPassagem.infPassageiro.xNome <> '' then
@@ -685,12 +686,14 @@ begin
                    Gerador.wCampo(tcDe2, '#138', 'vICMS ', 01, 15, 1, BPe.Imp.ICMS.vICMS, DSC_VICMS);
                    Gerador.wCampo(tcDe2, '#139', 'vCred ', 01, 15, 0, BPe.Imp.ICMS.vCred, DSC_VCRED);
                  end;
+          (* Conforme a NT 2018/002 não se deve mais gerar.
           cstICMSOutraUF: begin
                             Gerador.wCampo(tcDe2, '#143', 'pRedBCOutraUF', 01, 05, 0, BPe.Imp.ICMS.pRedBCOutraUF, DSC_PREDBC);
                             Gerador.wCampo(tcDe2, '#144', 'vBCOutraUF   ', 01, 15, 1, BPe.Imp.ICMS.vBCOutraUF, DSC_VBC);
                             Gerador.wCampo(tcDe2, '#145', 'pICMSOutraUF ', 01, 05, 1, BPe.Imp.ICMS.pICMSOutraUF, DSC_PICMS);
                             Gerador.wCampo(tcDe2, '#146', 'vICMSOutraUF ', 01, 15, 1, BPe.Imp.ICMS.vICMSOutraUF, DSC_VICMS);
                           end;
+          *)
         end;
 
         Gerador.wGrupo('/ICMS' + sTagTemp );
@@ -740,6 +743,7 @@ begin
     Gerador.wGrupo('pag', '#161');
 
     Gerador.wCampo(tcStr, '#162', 'tPag', 02, 02, 1, FormaPagamentoToStr(BPe.pag[i].tPag), DSC_TPAG);
+    Gerador.wCampo(tcStr, '#162a', 'xPag', 02, 100, 0, BPe.pag[i].xPag, DSC_XPAG);
     Gerador.wCampo(tcDe2, '#163', 'vPag', 01, 15, 1, BPe.pag[i].vPag, DSC_VPAG);
 
     if(BPe.pag[i].tPag in [fpCartaoDebito,fpCartaoCredito]) and
@@ -752,7 +756,11 @@ begin
       begin
         Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, BPe.pag[i].CNPJ, DSC_CNPJ);
         Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(BPe.pag[i].tBand), DSC_TBAND);
+        Gerador.wCampo(tcStr, 'YA06a', 'xBand', 02, 100, 0, BPe.pag[i].xBand, DSC_XBAND);
         Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, BPe.pag[i].cAut, DSC_CAUT);
+        Gerador.wCampo(tcStr, 'YA07', 'nsuTrans', 01, 20, 0, BPe.pag[i].nsuTrans, DSC_NSUTRANS);
+        Gerador.wCampo(tcStr, 'YA07', 'nsuHost', 01, 20, 0, BPe.pag[i].nsuHost, DSC_NSUHOST);
+        Gerador.wCampo(tcInt, 'YA07', 'nParcelas', 01, 03, 0, BPe.pag[i].nParcelas, DSC_NPARCELAS);
       end;
 
       Gerador.wGrupo('/card');

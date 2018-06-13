@@ -244,11 +244,12 @@ begin
 
   if Leitor.rExtrai(1, 'infPassagem') <> '' then
   begin
-    BPe.infPassagem.cLocOrig := Leitor.rCampo(tcStr, 'cLocOrig');
-    BPe.infPassagem.xLocOrig := Leitor.rCampo(tcStr, 'xLocOrig');
-    BPe.infPassagem.cLocDest := Leitor.rCampo(tcStr, 'cLocDest');
-    BPe.infPassagem.xLocDest := Leitor.rCampo(tcStr, 'xLocDest');
-    BPe.infPassagem.dhEmb    := Leitor.rCampo(tcDatHor, 'dhEmb');
+    BPe.infPassagem.cLocOrig   := Leitor.rCampo(tcStr, 'cLocOrig');
+    BPe.infPassagem.xLocOrig   := Leitor.rCampo(tcStr, 'xLocOrig');
+    BPe.infPassagem.cLocDest   := Leitor.rCampo(tcStr, 'cLocDest');
+    BPe.infPassagem.xLocDest   := Leitor.rCampo(tcStr, 'xLocDest');
+    BPe.infPassagem.dhEmb      := Leitor.rCampo(tcDatHor, 'dhEmb');
+    BPe.infPassagem.dhValidade := Leitor.rCampo(tcDatHor, 'dhValidade');
     BPe.infPassagem.dhValidade := Leitor.rCampo(tcDatHor, 'dhValidade');
 
     if Leitor.rExtrai(2, 'infPassageiro') <> '' then
@@ -354,12 +355,17 @@ begin
   begin
     BPe.Pag.Add;
     BPe.Pag[i].tPag := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
+    BPe.Pag[i].xPag := Leitor.rCampo(tcStr, 'xPag');
     BPe.Pag[i].vPag := Leitor.rCampo(tcDe2, 'vPag');
 
     BPe.Pag[i].tpIntegra := StrTotpIntegra(ok, Leitor.rCampo(tcStr, 'tpIntegra'));
     BPe.Pag[i].CNPJ      := Leitor.rCampo(tcStr, 'CNPJ');
     BPe.Pag[i].tBand     := StrToBandeiraCartao(ok, Leitor.rCampo(tcStr, 'tBand'));
+    BPe.Pag[i].xBand     := Leitor.rCampo(tcStr, 'xBand');
     BPe.Pag[i].cAut      := Leitor.rCampo(tcStr, 'cAut');
+    BPe.Pag[i].nsuTrans  := Leitor.rCampo(tcStr, 'nsuTrans');
+    BPe.Pag[i].nsuHost   := Leitor.rCampo(tcStr, 'nsuHost');
+    BPe.Pag[i].nParcelas := Leitor.rCampo(tcInt, 'nParcelas');
 
     inc(i);
   end;

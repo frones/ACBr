@@ -138,6 +138,13 @@
 			<xsd:whiteSpace value="collapse" />
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="tsInscricaoEstadual">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30" />
+			<xsd:minLength value="1" />
+			<xsd:whiteSpace value="collapse" />
+		</xsd:restriction>
+	</xsd:simpleType>	
 	<xsd:simpleType name="tsRazaoSocial">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="150" />
@@ -360,6 +367,8 @@
 				maxOccurs="1" />
 			<xsd:element name="InscricaoMunicipal" type="tsInscricaoMunicipal"
 				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="InscricaoEstadual" type="tsInscricaoEstadual"
+				minOccurs="0" maxOccurs="1" />				
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -801,11 +810,11 @@
 				<xsd:element name="Protocolo" type="tsNumeroProtocolo"
 					minOccurs="0" maxOccurs="1" />
 				<xsd:choice>
-					<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="unbounded">
+					<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
 						<xsd:complexType>
 							<xsd:sequence>
 								<xsd:element ref="CompNfse" 
-									minOccurs="1" />
+									minOccurs="1" maxOccurs="unbounded" />
 								<xsd:element ref="ListaMensagemAlertaRetorno" minOccurs="0" maxOccurs="1" />
 							</xsd:sequence>						
 						</xsd:complexType>
@@ -834,8 +843,8 @@
 					<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
 						<xsd:complexType>
 							<xsd:sequence>
-								<xsd:element ref="CompNfse"
-									minOccurs="1" maxOccurs="1"/>
+								<xsd:element ref="CompNfse" 
+									minOccurs="1" maxOccurs="1" />
 								<xsd:element ref="ListaMensagemAlertaRetorno" minOccurs="0" maxOccurs="1" />
 							</xsd:sequence>						
 						</xsd:complexType>

@@ -136,8 +136,9 @@ begin
   // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
   OK := OK and (FHTTP.ResultCode in [200, 201, 202]);
   if not OK then
-    raise EACBrDFeException.CreateFmt( cACBrDFeSSLEnviarException,
-                                       [InternalErrorCode, HTTPResultCode] );
+    raise EACBrDFeException.Create( Format(cACBrDFeSSLEnviarException,
+                                       [InternalErrorCode, HTTPResultCode] )
+                                       + sLineBreak + FHTTP.Sock.LastErrorDesc);
 end;
 
 procedure TDFeHttpOpenSSL.Abortar;

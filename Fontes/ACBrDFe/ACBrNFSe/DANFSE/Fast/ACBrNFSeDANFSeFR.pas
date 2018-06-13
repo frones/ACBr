@@ -338,7 +338,7 @@ begin
       Add('NumeroNFSe', ftString, 16);
       Add('NFSeSubstituida', ftString, 16);
       Add('DataEmissao', ftString, 19);
-      Add('CodigoVerificacao', ftString, 15);
+      Add('CodigoVerificacao', ftString, 50);
       Add('LinkNFSe', ftString, 500);
     end;
     CreateDataSet;

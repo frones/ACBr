@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/06/2018
+-- ACBrNFSeDANFSeFR --
+[*] Alterado o tamanho do campo CodigoVerificacao para 50.
+   Por: Italo Jurisato Junior
 -- pnfsNFSeW_ABRASFv2 --
 [+] Acrescentado a linha que gera a tag <InscricaoEstadual> se o provedor for
     Coplan.

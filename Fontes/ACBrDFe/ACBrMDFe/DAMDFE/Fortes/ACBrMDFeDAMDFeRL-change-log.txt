@@ -49,6 +49,11 @@ Símbolo : Significado
 
 16/01/2018
 -- ACBrMDFeDAMDFeRLRetrato --
+[*] Ajuste na impressão casas decimais do campo "qcarga"
+  por: José M S Junior
+
+16/01/2018
+-- ACBrMDFeDAMDFeRLRetrato --
 [*] Correção para ler o campo RNTRC corretamente dependendo da versão 1.00 ou 3.00
   por: Rigotti
 

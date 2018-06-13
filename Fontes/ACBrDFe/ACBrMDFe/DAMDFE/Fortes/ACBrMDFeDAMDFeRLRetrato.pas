@@ -341,13 +341,9 @@ begin
   rllqCTe.Caption  := FormatFloatBr(FMDFe.tot.qCTe,  '#0');
   rllqNFe.Caption  := FormatFloatBr(FMDFe.tot.qNFe,  '#0');
   rllqMDFe.Caption := FormatFloatBr(FMDFe.tot.qMDFe, '#0');
+  rllPesoTotal.Caption := FormatFloatBr(FMDFe.tot.qCarga, ',#0.0000');
+  rllValorMercadoria.Caption := FormatFloatBr(FMDFe.tot.vCarga, ',#0.00');
 
-  if Frac(FMDFe.tot.qCarga) > 0 then
-    rllPesoTotal.Caption := FormatFloatBr(FMDFe.tot.qCarga, ',#0.000')
-  else
-    rllPesoTotal.Caption := FormatFloatBr(FMDFe.tot.qCarga, ',#0');
-
-  rllValorMercadoria.Caption := FormatFloatBr(FMDFe.tot.vCarga, ',#0.00')
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);

@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2018
+-- Diversos --
+[*] Acrescentado condições na leitura das seções no arquivo INI que são opcionais.
+   Por: Italo Jurisato Junior
+
 08/06/2018
 -- ACBrReinf.pas --
 [-] Não estava identificando corretamente o tipo de evento ao carregar um XML

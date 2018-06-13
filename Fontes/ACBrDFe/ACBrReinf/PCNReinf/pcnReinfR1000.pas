@@ -534,8 +534,11 @@ begin
         end;
 
         sSecao := 'infoEFR';
-        infoContribuinte.infoCadastro.infoEFR.ideEFR  := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'ideEFR', 'S'));
-        infoContribuinte.infoCadastro.infoEFR.cnpjEFR := INIRec.ReadString(sSecao, 'cnpjEFR', EmptyStr);
+        if INIRec.ReadString(sSecao, 'ideEFR', '') <> '' then
+        begin
+          infoContribuinte.infoCadastro.infoEFR.ideEFR  := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'ideEFR', 'S'));
+          infoContribuinte.infoCadastro.infoEFR.cnpjEFR := INIRec.ReadString(sSecao, 'cnpjEFR', EmptyStr);
+        end;
 
         if ModoLancamento = toAlteracao then
         begin

@@ -472,9 +472,12 @@ begin
         end;
 
         sSecao := 'dadosProcJud';
-        infoProcesso.ideProcesso.dadosProcJud.UfVara   := INIRec.ReadString(sSecao, 'UfVara', 'SP');
-        infoProcesso.ideProcesso.dadosProcJud.codMunic := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-        infoProcesso.ideProcesso.dadosProcJud.idVara   := INIRec.ReadString(sSecao, 'idVara', '0');
+        if INIRec.ReadString(sSecao, 'UfVara', '') <> ''then
+        begin
+          infoProcesso.ideProcesso.dadosProcJud.UfVara   := INIRec.ReadString(sSecao, 'UfVara', 'SP');
+          infoProcesso.ideProcesso.dadosProcJud.codMunic := INIRec.ReadInteger(sSecao, 'codMunic', 0);
+          infoProcesso.ideProcesso.dadosProcJud.idVara   := INIRec.ReadString(sSecao, 'idVara', '0');
+        end;
 
         if ModoLancamento = toAlteracao then
         begin

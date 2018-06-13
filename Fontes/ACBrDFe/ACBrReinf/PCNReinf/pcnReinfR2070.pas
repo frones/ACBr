@@ -1370,21 +1370,25 @@ begin
       ideBenef.nmRazaoBenef := INIRec.ReadString(sSecao, 'nmRazaoBenef', EmptyStr);
 
       sSecao := 'infoEnder';
-      ideBenef.infoResidExt.infoEnder.paisResid := INIRec.ReadString(sSecao, 'paisResid', EmptyStr);
-      ideBenef.infoResidExt.infoEnder.dscLograd := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
-      ideBenef.infoResidExt.infoEnder.nrLograd  := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
-      ideBenef.infoResidExt.infoEnder.complem   := INIRec.ReadString(sSecao, 'complem', EmptyStr);
-      ideBenef.infoResidExt.infoEnder.bairro    := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
-      ideBenef.infoResidExt.infoEnder.cidade    := INIRec.ReadString(sSecao, 'cidade', EmptyStr);
-      ideBenef.infoResidExt.infoEnder.codPostal := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
+      if INIRec.ReadString(sSecao, 'paisResid', '') <> '' then
+      begin
+        ideBenef.infoResidExt.infoEnder.paisResid := INIRec.ReadString(sSecao, 'paisResid', EmptyStr);
+        ideBenef.infoResidExt.infoEnder.dscLograd := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
+        ideBenef.infoResidExt.infoEnder.nrLograd  := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
+        ideBenef.infoResidExt.infoEnder.complem   := INIRec.ReadString(sSecao, 'complem', EmptyStr);
+        ideBenef.infoResidExt.infoEnder.bairro    := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
+        ideBenef.infoResidExt.infoEnder.cidade    := INIRec.ReadString(sSecao, 'cidade', EmptyStr);
+        ideBenef.infoResidExt.infoEnder.codPostal := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
 
-      sSecao := 'infoFiscal';
-      ideBenef.infoResidExt.infoFiscal.indNIF        := StrToindNIF(Ok, INIRec.ReadString(sSecao, 'indNIF', '1'));
-      ideBenef.infoResidExt.infoFiscal.nifBenef      := INIRec.ReadString(sSecao, 'nifBenef', EmptyStr);
-      ideBenef.infoResidExt.infoFiscal.relFontePagad := INIRec.ReadString(sSecao, 'relFontePagad', EmptyStr);
+        sSecao := 'infoFiscal';
+        ideBenef.infoResidExt.infoFiscal.indNIF        := StrToindNIF(Ok, INIRec.ReadString(sSecao, 'indNIF', '1'));
+        ideBenef.infoResidExt.infoFiscal.nifBenef      := INIRec.ReadString(sSecao, 'nifBenef', EmptyStr);
+        ideBenef.infoResidExt.infoFiscal.relFontePagad := INIRec.ReadString(sSecao, 'relFontePagad', EmptyStr);
+      end;
 
       sSecao := 'infoMolestia';
-      ideBenef.infoMolestia.dtLaudo := StringToDateTime(INIRec.ReadString(sSecao, 'dtLaudo', '0'));
+      if INIRec.ReadString(sSecao, 'dtLaudo', '') <> '' then
+        ideBenef.infoMolestia.dtLaudo := StringToDateTime(INIRec.ReadString(sSecao, 'dtLaudo', '0'));
 
       with ideBenef do
       begin
@@ -1484,8 +1488,11 @@ begin
                 end;
 
                 sSecao := 'compJud' + IntToStrZero(I, 3) + IntToStrZero(J, 3);
-                compJud.vlrCompAnoCalend := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrCompAnoCalend', ''), 0);
-                compJud.vlrCompAnoAnt    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrCompAnoAnt', ''), 0);
+                if INIRec.ReadString(sSecao, 'vlrCompAnoCalend', '') <> '' then
+                begin
+                  compJud.vlrCompAnoCalend := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrCompAnoCalend', ''), 0);
+                  compJud.vlrCompAnoAnt    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrCompAnoAnt', ''), 0);
+                end;
 
                 K := 1;
                 while true do
@@ -1508,31 +1515,33 @@ begin
 
                     sSecao := 'infoRRA_despProcJud' + IntToStrZero(I, 3) +
                                         IntToStrZero(J, 3) + IntToStrZero(K, 3);
-                    despProcJud.vlrDespCustas    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespCustas', ''), 0);
-                    despProcJud.vlrDespAdvogados := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespAdvogados', ''), 0);
-
-                    L := 1;
-                    while true do
+                    if INIRec.ReadString(sSecao, 'vlrDespCustas', '') <> '' then
                     begin
-                      // de 000 até 999
-                      sSecao := 'infoRRA_ideAdvogado' + IntToStrZero(I, 3) +
-                                      IntToStrZero(J, 3) + IntToStrZero(K, 3) +
-                                      IntToStrZero(L, 3);
-                      sFim   := INIRec.ReadString(sSecao, 'tpInscAdvogado', 'FIM');
+                      despProcJud.vlrDespCustas    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespCustas', ''), 0);
+                      despProcJud.vlrDespAdvogados := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespAdvogados', ''), 0);
 
-                      if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                        break;
-
-                      with despProcJud.ideAdvogado.Add do
+                      L := 1;
+                      while true do
                       begin
-                        tpInscAdvogado := StrToTpInscricao(Ok, sFim);
-                        nrinscAdvogado := INIRec.ReadString(sSecao, 'nrinscAdvogado', '');
-                        vlrAdvogado    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrAdvogado', ''), 0);
+                        // de 000 até 999
+                        sSecao := 'infoRRA_ideAdvogado' + IntToStrZero(I, 3) +
+                                        IntToStrZero(J, 3) + IntToStrZero(K, 3) +
+                                        IntToStrZero(L, 3);
+                        sFim   := INIRec.ReadString(sSecao, 'tpInscAdvogado', 'FIM');
+
+                        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                          break;
+
+                        with despProcJud.ideAdvogado.Add do
+                        begin
+                          tpInscAdvogado := StrToTpInscricao(Ok, sFim);
+                          nrinscAdvogado := INIRec.ReadString(sSecao, 'nrinscAdvogado', '');
+                          vlrAdvogado    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrAdvogado', ''), 0);
+                        end;
+
+                        Inc(L);
                       end;
-
-                      Inc(L);
                     end;
-
                   end;
 
                   Inc(K);
@@ -1557,35 +1566,38 @@ begin
 
                     sSecao := 'pgtoPF_infoProcJud_despProcJud' + IntToStrZero(I, 3) +
                                         IntToStrZero(J, 3) + IntToStrZero(K, 3);
-                    despProcJud.vlrDespCustas    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespCustas', ''), 0);
-                    despProcJud.vlrDespAdvogados := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespAdvogados', ''), 0);
-
-                    L := 1;
-                    while true do
+                    if INIRec.ReadString(sSecao, 'vlrDespCustas', '') <> '' then
                     begin
-                      // de 000 até 999
-                      sSecao := 'pgtoPF_infoProcJud_ideAdvogado' + IntToStrZero(I, 3) +
-                                      IntToStrZero(J, 3) + IntToStrZero(K, 3) +
-                                      IntToStrZero(L, 3);
-                      sFim   := INIRec.ReadString(sSecao, 'tpInscAdvogado', 'FIM');
+                      despProcJud.vlrDespCustas    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespCustas', ''), 0);
+                      despProcJud.vlrDespAdvogados := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespAdvogados', ''), 0);
 
-                      if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                        break;
-
-                      with despProcJud.ideAdvogado.Add do
+                      L := 1;
+                      while true do
                       begin
-                        tpInscAdvogado := StrToTpInscricao(Ok, sFim);
-                        nrinscAdvogado := INIRec.ReadString(sSecao, 'nrinscAdvogado', '');
-                        vlrAdvogado    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrAdvogado', ''), 0);
-                      end;
+                        // de 000 até 999
+                        sSecao := 'pgtoPF_infoProcJud_ideAdvogado' + IntToStrZero(I, 3) +
+                                        IntToStrZero(J, 3) + IntToStrZero(K, 3) +
+                                        IntToStrZero(L, 3);
+                        sFim   := INIRec.ReadString(sSecao, 'tpInscAdvogado', 'FIM');
 
-                      Inc(L);
+                        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                          break;
+
+                        with despProcJud.ideAdvogado.Add do
+                        begin
+                          tpInscAdvogado := StrToTpInscricao(Ok, sFim);
+                          nrinscAdvogado := INIRec.ReadString(sSecao, 'nrinscAdvogado', '');
+                          vlrAdvogado    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrAdvogado', ''), 0);
+                        end;
+
+                        Inc(L);
+                      end;
                     end;
 
                     sSecao := 'pgtoPF_infoProcJud_origemRecursos' + IntToStrZero(I, 3) +
                                         IntToStrZero(J, 3) + IntToStrZero(K, 3);
-                    origemRecursos.cnpjOrigemRecursos := INIRec.ReadString(sSecao, 'cnpjOrigemRecursos', '');
-
+                    if INIRec.ReadString(sSecao, 'cnpjOrigemRecursos', '') <> '' then
+                      origemRecursos.cnpjOrigemRecursos := INIRec.ReadString(sSecao, 'cnpjOrigemRecursos', '');
                   end;
 
                   Inc(K);
@@ -1593,7 +1605,8 @@ begin
 
                 sSecao := 'depJudicial' + IntToStrZero(I, 3) +
                                         IntToStrZero(J, 3);
-                depJudicial.vlrDepJudicial := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDepJudicial', ''), 0);
+                if INIRec.ReadString(sSecao, 'vlrDepJudicial', '') <> '' then
+                  depJudicial.vlrDepJudicial := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDepJudicial', ''), 0);
               end;
 
               Inc(J);
@@ -1634,35 +1647,38 @@ begin
 
                     sSecao := 'pgtoPJ_infoProcJud_despProcJud' + IntToStrZero(I, 3) +
                                         IntToStrZero(J, 3) + IntToStrZero(K, 3);
-                    despProcJud.vlrDespCustas    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespCustas', ''), 0);
-                    despProcJud.vlrDespAdvogados := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespAdvogados', ''), 0);
-
-                    L := 1;
-                    while true do
+                    if INIRec.ReadString(sSecao, 'vlrDespCustas', '') <> '' then
                     begin
-                      // de 000 até 999
-                      sSecao := 'pgtoPJ_infoProcJud_ideAdvogado' + IntToStrZero(I, 3) +
-                                      IntToStrZero(J, 3) + IntToStrZero(K, 3) +
-                                      IntToStrZero(L, 3);
-                      sFim   := INIRec.ReadString(sSecao, 'tpInscAdvogado', 'FIM');
+                      despProcJud.vlrDespCustas    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespCustas', ''), 0);
+                      despProcJud.vlrDespAdvogados := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDespAdvogados', ''), 0);
 
-                      if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                        break;
-
-                      with despProcJud.ideAdvogado.Add do
+                      L := 1;
+                      while true do
                       begin
-                        tpInscAdvogado := StrToTpInscricao(Ok, sFim);
-                        nrinscAdvogado := INIRec.ReadString(sSecao, 'nrinscAdvogado', '');
-                        vlrAdvogado    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrAdvogado', ''), 0);
-                      end;
+                        // de 000 até 999
+                        sSecao := 'pgtoPJ_infoProcJud_ideAdvogado' + IntToStrZero(I, 3) +
+                                        IntToStrZero(J, 3) + IntToStrZero(K, 3) +
+                                        IntToStrZero(L, 3);
+                        sFim   := INIRec.ReadString(sSecao, 'tpInscAdvogado', 'FIM');
 
-                      Inc(L);
+                        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                          break;
+
+                        with despProcJud.ideAdvogado.Add do
+                        begin
+                          tpInscAdvogado := StrToTpInscricao(Ok, sFim);
+                          nrinscAdvogado := INIRec.ReadString(sSecao, 'nrinscAdvogado', '');
+                          vlrAdvogado    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrAdvogado', ''), 0);
+                        end;
+
+                        Inc(L);
+                      end;
                     end;
 
                     sSecao := 'pgtoPJ_infoProcJud_origemRecursos' + IntToStrZero(I, 3) +
                                         IntToStrZero(J, 3) + IntToStrZero(K, 3);
-                    origemRecursos.cnpjOrigemRecursos := INIRec.ReadString(sSecao, 'cnpjOrigemRecursos', '');
-
+                    if INIRec.ReadString(sSecao, 'cnpjOrigemRecursos', '') <> '' then
+                      origemRecursos.cnpjOrigemRecursos := INIRec.ReadString(sSecao, 'cnpjOrigemRecursos', '');
                   end;
 
                   Inc(K);
@@ -1674,11 +1690,14 @@ begin
             end;
 
             sSecao := 'pgtoResidExt' + IntToStrZero(I, 3);
-            pgtoResidExt.dtPagto         := StringToDateTime(INIRec.ReadString(sSecao, 'dtPagto', '0'));
-            pgtoResidExt.tpRendimento    := INIRec.ReadString(sSecao, 'tpRendimento', EmptyStr);
-            pgtoResidExt.formaTributacao := INIRec.ReadString(sSecao, 'formaTributacao', '');
-            pgtoResidExt.vlrPgto         := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrPgto', ''), 0);
-            pgtoResidExt.vlrRet          := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRet', ''), 0);
+            if INIRec.ReadString(sSecao, 'dtPagto', '') <> '' then
+            begin
+              pgtoResidExt.dtPagto         := StringToDateTime(INIRec.ReadString(sSecao, 'dtPagto', '0'));
+              pgtoResidExt.tpRendimento    := INIRec.ReadString(sSecao, 'tpRendimento', EmptyStr);
+              pgtoResidExt.formaTributacao := INIRec.ReadString(sSecao, 'formaTributacao', '');
+              pgtoResidExt.vlrPgto         := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrPgto', ''), 0);
+              pgtoResidExt.vlrRet          := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRet', ''), 0);
+            end;
           end;
 
           Inc(I);

@@ -297,10 +297,13 @@ begin
       ideContri.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 
       sSecao := 'ideRespInf';
-      ideRespInf.nmResp   := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
-      ideRespInf.cpfResp  := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
-      ideRespInf.telefone := INIRec.ReadString(sSecao, 'telefone', EmptyStr);
-      ideRespInf.email    := INIRec.ReadString(sSecao, 'email', EmptyStr);
+      if INIRec.ReadString(sSecao, 'nmResp', EmptyStr) <> '' then
+      begin
+        ideRespInf.nmResp   := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
+        ideRespInf.cpfResp  := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
+        ideRespInf.telefone := INIRec.ReadString(sSecao, 'telefone', EmptyStr);
+        ideRespInf.email    := INIRec.ReadString(sSecao, 'email', EmptyStr);
+      end;
 
       sSecao := 'infoFech';
       infoFech.evtServTm     := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'evtServTm', 'N'));

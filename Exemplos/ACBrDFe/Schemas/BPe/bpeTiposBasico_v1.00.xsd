@@ -482,6 +482,12 @@ para tpEmis diferente de 1</xs:documentation>
 											<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
 										</xs:annotation>
 									</xs:element>
+									<xs:element name="dhValidade" type="TDateTimeUTC">
+										<xs:annotation>
+											<xs:documentation>Data e hora de validade do bilhete</xs:documentation>
+											<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
+										</xs:annotation>
+									</xs:element>
 									<xs:element name="infPassageiro" minOccurs="0">
 										<xs:annotation>
 											<xs:documentation>Informações do passageiro</xs:documentation>
@@ -1020,6 +1026,17 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
+									<xs:element name="xPag" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Descrição da forma de pagamento 99 - Outros</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TString">
+												<xs:maxLength value="100"/>
+												<xs:minLength value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
 									<xs:element name="vPag" type="TDec_1302">
 										<xs:annotation>
 											<xs:documentation>Valor do Pagamento</xs:documentation>
@@ -1065,6 +1082,17 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
+												<xs:element name="xBand" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Descrição da operador de cartão para 99 - Outros</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:maxLength value="100"/>
+															<xs:minLength value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
 												<xs:element name="cAut" minOccurs="0">
 													<xs:annotation>
 														<xs:documentation>Número de autorização da operação cartão de crédito/débito</xs:documentation>
@@ -1073,6 +1101,41 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 														<xs:restriction base="TString">
 															<xs:minLength value="1"/>
 															<xs:maxLength value="20"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="nsuTrans" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Número sequencial único da transação</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="20"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="nsuHost" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Número sequencial único do Host</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="TString">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="20"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="nParcelas" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Número de parcelas</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="3"/>
+															<xs:whiteSpace value="preserve"/>
+															<xs:pattern value="[0-9]{3}"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
@@ -1681,47 +1744,6 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 						<xs:element name="vCred" type="TDec_1302" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation>Valor do Crédito Outorgado/Presumido</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="ICMSOutraUF">
-				<xs:annotation>
-					<xs:documentation>ICMS devido à UF de início da viagem, quando  diferente da UF do emitente</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="CST">
-							<xs:annotation>
-								<xs:documentation>Classificação Tributária do Serviço</xs:documentation>
-								<xs:documentation>90 - ICMS Outra UF</xs:documentation>
-							</xs:annotation>
-							<xs:simpleType>
-								<xs:restriction base="xs:string">
-									<xs:whiteSpace value="preserve"/>
-									<xs:enumeration value="90"/>
-								</xs:restriction>
-							</xs:simpleType>
-						</xs:element>
-						<xs:element name="pRedBCOutraUF" type="TDec_0302Opc" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Percentual de redução da BC</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vBCOutraUF" type="TDec_1302">
-							<xs:annotation>
-								<xs:documentation>Valor da BC do ICMS</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="pICMSOutraUF" type="TDec_0302">
-							<xs:annotation>
-								<xs:documentation>Alíquota do ICMS</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="vICMSOutraUF" type="TDec_1302">
-							<xs:annotation>
-								<xs:documentation>Valor do ICMS devido outra UF</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 					</xs:sequence>

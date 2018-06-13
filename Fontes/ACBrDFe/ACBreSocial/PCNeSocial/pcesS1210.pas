@@ -1124,7 +1124,8 @@ begin
       ideBenef.cpfBenef := INIRec.ReadString(sSecao, 'cpfBenef', EmptyStr);
 
       sSecao := 'deps';
-      ideBenef.deps.vrDedDep := StringToFloatDef(INIRec.ReadString(sSecao, 'vrDedDep', ''), 0);
+      if INIRec.ReadString(sSecao, 'vrDedDep', '') <> '' then
+        ideBenef.deps.vrDedDep := StringToFloatDef(INIRec.ReadString(sSecao, 'vrDedDep', ''), 0);
 
       I := 1;
       while true do
@@ -1238,10 +1239,13 @@ begin
           end;
 
           sSecao := 'detPgtoBenPr' + IntToStrZero(I, 2);
-          detPgtoBenPr.perRef    := INIRec.ReadString(sSecao, 'perRef', EmptyStr);
-          detPgtoBenPr.ideDmDev  := INIRec.ReadString(sSecao, 'ideDmDev', EmptyStr);
-          detPgtoBenPr.indPgtoTt := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPgtoTt', 'S'));
-          detPgtoBenPr.vrLiq     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrLiq', ''), 0);
+          if INIRec.ReadString(sSecao, 'perRef', '') <> '' then
+          begin
+            detPgtoBenPr.perRef    := INIRec.ReadString(sSecao, 'perRef', EmptyStr);
+            detPgtoBenPr.ideDmDev  := INIRec.ReadString(sSecao, 'ideDmDev', EmptyStr);
+            detPgtoBenPr.indPgtoTt := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPgtoTt', 'S'));
+            detPgtoBenPr.vrLiq     := StringToFloatDef(INIRec.ReadString(sSecao, 'vrLiq', ''), 0);
+          end;
 
           J := 1;
           while true do
@@ -1399,17 +1403,19 @@ begin
           end;
 
           sSecao := 'idePgtoExt' + IntToStrZero(I, 2);
+          if INIRec.ReadString(sSecao, 'codPais', '') <> '' then
+          begin
+            idePgtoExt.idePais.codPais  := INIRec.ReadString(sSecao, 'codPais', EmptyStr);
+            idePgtoExt.idePais.indNIF   := eSStrToIndNIF(Ok, INIRec.ReadString(sSecao, 'indNIF', '1'));
+            idePgtoExt.idePais.nifBenef := INIRec.ReadString(sSecao, 'nifBenef', EmptyStr);
 
-          idePgtoExt.idePais.codPais  := INIRec.ReadString(sSecao, 'codPais', EmptyStr);
-          idePgtoExt.idePais.indNIF   := eSStrToIndNIF(Ok, INIRec.ReadString(sSecao, 'indNIF', '1'));
-          idePgtoExt.idePais.nifBenef := INIRec.ReadString(sSecao, 'nifBenef', EmptyStr);
-
-          idePgtoExt.endExt.dscLograd := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
-          idePgtoExt.endExt.nrLograd  := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
-          idePgtoExt.endExt.complem   := INIRec.ReadString(sSecao, 'complem', EmptyStr);
-          idePgtoExt.endExt.bairro    := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
-          idePgtoExt.endExt.nmCid     := INIRec.ReadString(sSecao, 'nmCid', EmptyStr);
-          idePgtoExt.endExt.codPostal := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
+            idePgtoExt.endExt.dscLograd := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
+            idePgtoExt.endExt.nrLograd  := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
+            idePgtoExt.endExt.complem   := INIRec.ReadString(sSecao, 'complem', EmptyStr);
+            idePgtoExt.endExt.bairro    := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
+            idePgtoExt.endExt.nmCid     := INIRec.ReadString(sSecao, 'nmCid', EmptyStr);
+            idePgtoExt.endExt.codPostal := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
+          end;
         end;
 
         Inc(I);

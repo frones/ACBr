@@ -223,10 +223,13 @@ begin
       ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 
       sSecao := 'ideRespInf';
-      ideRespinf.nmResp   := INIRec.ReadString(sSecao, 'nmResp', '');
-      ideRespinf.cpfResp  := INIRec.ReadString(sSecao, 'cpfResp', '');
-      ideRespinf.telefone := INIRec.ReadString(sSecao, 'telefone', '');
-      ideRespinf.email    := INIRec.ReadString(sSecao, 'email', '');
+      if INIRec.ReadString(sSecao, 'nmResp', '') <> '' then
+      begin
+        ideRespinf.nmResp   := INIRec.ReadString(sSecao, 'nmResp', '');
+        ideRespinf.cpfResp  := INIRec.ReadString(sSecao, 'cpfResp', '');
+        ideRespinf.telefone := INIRec.ReadString(sSecao, 'telefone', '');
+        ideRespinf.email    := INIRec.ReadString(sSecao, 'email', '');
+      end;
     end;
 
     GerarXML;

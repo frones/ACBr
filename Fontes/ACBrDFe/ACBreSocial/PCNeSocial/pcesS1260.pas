@@ -552,9 +552,9 @@ begin
               K := 1;
               while true do
               begin
-                // de 0000 até 9999
+                // de 000 até 999
                 sSecao := 'nfs' + IntToStrZero(I, 1) + IntToStrZero(J, 4) +
-                               IntToStrZero(K, 4);
+                               IntToStrZero(K, 3);
                 sFim   := INIRec.ReadString(sSecao, 'serie', 'FIM');
 
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then

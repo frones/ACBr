@@ -365,14 +365,17 @@ begin
       infoConvInterm.localTrab.indLocal := INIRec.ReadString(sSecao, 'indLocal', EmptyStr);
 
       sSecao := 'localTrabInterm';
-      infoConvInterm.localTrab.localTrabInterm.TpLograd    := INIRec.ReadString(sSecao, 'tpLograd', EmptyStr);
-      infoConvInterm.localTrab.localTrabInterm.DscLograd   := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
-      infoConvInterm.localTrab.localTrabInterm.NrLograd    := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
-      infoConvInterm.localTrab.localTrabInterm.Complemento := INIRec.ReadString(sSecao, 'complem', EmptyStr);
-      infoConvInterm.localTrab.localTrabInterm.bairro      := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
-      infoConvInterm.localTrab.localTrabInterm.Cep         := INIRec.ReadString(sSecao, 'cep', EmptyStr);
-      infoConvInterm.localTrab.localTrabInterm.CodMunic    := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-      infoConvInterm.localTrab.localTrabInterm.UF          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+      if INIRec.ReadString(sSecao, 'tpLograd', '') <> '' then
+      begin
+        infoConvInterm.localTrab.localTrabInterm.TpLograd    := INIRec.ReadString(sSecao, 'tpLograd', EmptyStr);
+        infoConvInterm.localTrab.localTrabInterm.DscLograd   := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
+        infoConvInterm.localTrab.localTrabInterm.NrLograd    := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
+        infoConvInterm.localTrab.localTrabInterm.Complemento := INIRec.ReadString(sSecao, 'complem', EmptyStr);
+        infoConvInterm.localTrab.localTrabInterm.bairro      := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
+        infoConvInterm.localTrab.localTrabInterm.Cep         := INIRec.ReadString(sSecao, 'cep', EmptyStr);
+        infoConvInterm.localTrab.localTrabInterm.CodMunic    := INIRec.ReadInteger(sSecao, 'codMunic', 0);
+        infoConvInterm.localTrab.localTrabInterm.UF          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+      end;
     end;
 
     GerarXML;

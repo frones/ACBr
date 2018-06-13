@@ -683,27 +683,33 @@ begin
       end;
 
       sSecao := 'atestado';
-      cat.atestado.codCNES       := INIRec.ReadString(sSecao, 'codCNES', EmptyStr);
-      cat.atestado.dtAtendimento := StringToDateTime(INIRec.ReadString(sSecao, 'dtAtendimento', '0'));
-      cat.atestado.hrAtendimento := INIRec.ReadString(sSecao, 'hrAtendimento', EmptyStr);
-      cat.atestado.indInternacao := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indInternacao', 'S'));
-      cat.atestado.durTrat       := INIRec.ReadInteger(sSecao, 'durTrat', 0);
-      cat.atestado.indAfast      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indAfast', 'S'));
-      cat.atestado.dscLesao      := INIRec.ReadInteger(sSecao, 'dscLesao', 0);
-      cat.atestado.dscCompLesao  := INIRec.ReadString(sSecao, 'dscCompLesao', EmptyStr);
-      cat.atestado.diagProvavel  := INIRec.ReadString(sSecao, 'diagProvavel', EmptyStr);
-      cat.atestado.codCID        := INIRec.ReadString(sSecao, 'codCID', EmptyStr);
-      cat.atestado.observacao    := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+      if INIRec.ReadString(sSecao, 'dtAtendimento', '') <> '' then
+      begin
+        cat.atestado.codCNES       := INIRec.ReadString(sSecao, 'codCNES', EmptyStr);
+        cat.atestado.dtAtendimento := StringToDateTime(INIRec.ReadString(sSecao, 'dtAtendimento', '0'));
+        cat.atestado.hrAtendimento := INIRec.ReadString(sSecao, 'hrAtendimento', EmptyStr);
+        cat.atestado.indInternacao := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indInternacao', 'S'));
+        cat.atestado.durTrat       := INIRec.ReadInteger(sSecao, 'durTrat', 0);
+        cat.atestado.indAfast      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indAfast', 'S'));
+        cat.atestado.dscLesao      := INIRec.ReadInteger(sSecao, 'dscLesao', 0);
+        cat.atestado.dscCompLesao  := INIRec.ReadString(sSecao, 'dscCompLesao', EmptyStr);
+        cat.atestado.diagProvavel  := INIRec.ReadString(sSecao, 'diagProvavel', EmptyStr);
+        cat.atestado.codCID        := INIRec.ReadString(sSecao, 'codCID', EmptyStr);
+        cat.atestado.observacao    := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
 
-      sSecao := 'emitente';
-      cat.atestado.Emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);
-      cat.atestado.Emitente.ideOC  := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', '1'));
-      cat.atestado.Emitente.nrOc   := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
-      cat.atestado.Emitente.ufOC   := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
+        sSecao := 'emitente';
+        cat.atestado.Emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);
+        cat.atestado.Emitente.ideOC  := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', '1'));
+        cat.atestado.Emitente.nrOc   := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
+        cat.atestado.Emitente.ufOC   := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
+      end;
 
       sSecao := 'catOrigem';
-      cat.catOrigem.dtCatOrig := StringToDateTime(INIRec.ReadString(sSecao, 'dtCatOrig', '0'));
-      cat.catOrigem.nrCatOrig := INIRec.ReadString(sSecao, 'nrCatOrig', '');
+      if INIRec.ReadString(sSecao, 'dtCatOrig', '') <> '' then
+      begin
+        cat.catOrigem.dtCatOrig := StringToDateTime(INIRec.ReadString(sSecao, 'dtCatOrig', '0'));
+        cat.catOrigem.nrCatOrig := INIRec.ReadString(sSecao, 'nrCatOrig', '');
+      end;
     end;
 
     GerarXML;

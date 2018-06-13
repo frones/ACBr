@@ -283,12 +283,18 @@ begin
       infoExclusao.nrRecEvt := INIRec.ReadString(sSecao, 'nrRecEvt', EmptyStr);
 
       sSecao := 'ideTrabalhador';
-      infoExclusao.ideTrabalhador.cpfTrab := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
-      infoExclusao.ideTrabalhador.nisTrab := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      if INIRec.ReadString(sSecao, 'cpfTrab', '') <> '' then
+      begin
+        infoExclusao.ideTrabalhador.cpfTrab := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+        infoExclusao.ideTrabalhador.nisTrab := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      end;
 
       sSecao := 'ideFolhaPagto';
-      infoExclusao.ideFolhaPagto.indApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
-      infoExclusao.ideFolhaPagto.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      if INIRec.ReadString(sSecao, 'indApuracao', '') <> '' then
+      begin
+        infoExclusao.ideFolhaPagto.indApuracao := eSStrToIndApuracao(Ok, INIRec.ReadString(sSecao, 'indApuracao', '1'));
+        infoExclusao.ideFolhaPagto.perApur     := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
+      end;
     end;
 
     GerarXML;

@@ -614,20 +614,28 @@ begin
         infoEstab.DadosEstab.aliqGilrat.AliqRatAjust := StringToFloatDef(INIRec.ReadString(sSecao, 'aliqRatAjust', ''), 0);
 
         sSecao := 'procAdmJudRat';
-        infoEstab.DadosEstab.aliqGilrat.ProcAdmJudRat.tpProc  := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
-        infoEstab.DadosEstab.aliqGilrat.ProcAdmJudRat.nrProc  := INIRec.ReadString(sSecao, 'nrProc', EmptyStr);
-        infoEstab.DadosEstab.aliqGilrat.ProcAdmJudRat.codSusp := INIRec.ReadString(sSecao, 'codSusp', EmptyStr);
+        if INIRec.ReadString(sSecao, 'tpProc', '') <> '' then
+        begin
+          infoEstab.DadosEstab.aliqGilrat.ProcAdmJudRat.tpProc  := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
+          infoEstab.DadosEstab.aliqGilrat.ProcAdmJudRat.nrProc  := INIRec.ReadString(sSecao, 'nrProc', EmptyStr);
+          infoEstab.DadosEstab.aliqGilrat.ProcAdmJudRat.codSusp := INIRec.ReadString(sSecao, 'codSusp', EmptyStr);
+        end;
 
         sSecao := 'procAdmJudFap';
-        infoEstab.DadosEstab.aliqGilrat.ProcAdmJudFap.tpProc  := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
-        infoEstab.DadosEstab.aliqGilrat.ProcAdmJudFap.nrProc  := INIRec.ReadString(sSecao, 'nrProc', EmptyStr);
-        infoEstab.DadosEstab.aliqGilrat.ProcAdmJudFap.codSusp := INIRec.ReadString(sSecao, 'codSusp', EmptyStr);
+        if INIRec.ReadString(sSecao, 'tpProc', '') <> '' then
+        begin
+          infoEstab.DadosEstab.aliqGilrat.ProcAdmJudFap.tpProc  := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
+          infoEstab.DadosEstab.aliqGilrat.ProcAdmJudFap.nrProc  := INIRec.ReadString(sSecao, 'nrProc', EmptyStr);
+          infoEstab.DadosEstab.aliqGilrat.ProcAdmJudFap.codSusp := INIRec.ReadString(sSecao, 'codSusp', EmptyStr);
+        end;
 
         sSecao := 'infoCaepf';
-        infoEstab.DadosEstab.infoCaepf.tpCaepf := eSStrTotpCaepf(Ok, INIRec.ReadString(sSecao, 'tpCaepf', '1'));
+        if INIRec.ReadString(sSecao, 'tpCaepf', '') <> '' then
+          infoEstab.DadosEstab.infoCaepf.tpCaepf := eSStrTotpCaepf(Ok, INIRec.ReadString(sSecao, 'tpCaepf', '1'));
 
         sSecao := 'infoObra';
-        infoEstab.DadosEstab.InfoObra.indSubstPatrObra := eSStrToIndSubstPatronalObra(Ok, INIRec.ReadString(sSecao, 'indSubstPatrObra', '1'));
+        if INIRec.ReadString(sSecao, 'indSubstPatrObra', '') <> '' then
+          infoEstab.DadosEstab.InfoObra.indSubstPatrObra := eSStrToIndSubstPatronalObra(Ok, INIRec.ReadString(sSecao, 'indSubstPatrObra', '1'));
 
         sSecao := 'infoTrab';
         infoEstab.DadosEstab.infoTrab.regPt := eSStrToTpRegPt(Ok, INIRec.ReadString(sSecao, 'regPt', '0'));
@@ -656,8 +664,11 @@ begin
         end;
 
         sSecao := 'infoPCD';
-        infoEstab.DadosEstab.infoTrab.infoPCD.contPCD   := eSStrToTpContPCD(Ok, INIRec.ReadString(sSecao, 'contPCD', '0'));
-        infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
+        if INIRec.ReadString(sSecao, 'contPCD', '') <> '' then
+        begin
+          infoEstab.DadosEstab.infoTrab.infoPCD.contPCD   := eSStrToTpContPCD(Ok, INIRec.ReadString(sSecao, 'contPCD', '0'));
+          infoEstab.DadosEstab.infoTrab.infoPCD.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
+        end;
 
         if ModoLancamento = mlAlteracao then
         begin

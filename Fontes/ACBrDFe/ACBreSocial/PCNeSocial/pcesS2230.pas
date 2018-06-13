@@ -694,11 +694,14 @@ begin
       ideVinculo.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
 
       sSecao := 'iniAfastamento';
-      infoAfastamento.iniAfastamento.DtIniAfast     := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniAfast', '0'));
-      infoAfastamento.iniAfastamento.codMotAfast    := eSStrTotpMotivosAfastamento(Ok, INIRec.ReadString(sSecao, 'codMotAfast', '00'));
-      infoAfastamento.iniAfastamento.infoMesmoMtv   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'infoMesmoMtv', 'S'));
-      infoAfastamento.iniAfastamento.tpAcidTransito := eSStrTotpTpAcidTransito(Ok, INIRec.ReadString(sSecao, 'tpAcidTransito', '1'));
-      infoAfastamento.iniAfastamento.Observacao     := INIRec.ReadString(sSecao, 'observacao', '');
+      if INIRec.ReadString(sSecao, 'dtIniAfast', '') <> '' then
+      begin
+        infoAfastamento.iniAfastamento.DtIniAfast     := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniAfast', '0'));
+        infoAfastamento.iniAfastamento.codMotAfast    := eSStrTotpMotivosAfastamento(Ok, INIRec.ReadString(sSecao, 'codMotAfast', '00'));
+        infoAfastamento.iniAfastamento.infoMesmoMtv   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'infoMesmoMtv', 'S'));
+        infoAfastamento.iniAfastamento.tpAcidTransito := eSStrTotpTpAcidTransito(Ok, INIRec.ReadString(sSecao, 'tpAcidTransito', '1'));
+        infoAfastamento.iniAfastamento.Observacao     := INIRec.ReadString(sSecao, 'observacao', '');
+      end;
 
       I := 1;
       while true do
@@ -726,20 +729,30 @@ begin
       end;
 
       sSecao := 'infoCessao';
-      infoAfastamento.iniAfastamento.infoCessao.cnpjCess := INIRec.ReadString(sSecao, 'cnpjCess', EmptyStr);
-      infoAfastamento.iniAfastamento.infoCessao.infOnus  := StrTotpInfOnus(Ok, INIRec.ReadString(sSecao, 'infOnus', '1'));
+      if INIRec.ReadString(sSecao, 'cnpjCess', '') <> '' then
+      begin
+        infoAfastamento.iniAfastamento.infoCessao.cnpjCess := INIRec.ReadString(sSecao, 'cnpjCess', EmptyStr);
+        infoAfastamento.iniAfastamento.infoCessao.infOnus  := StrTotpInfOnus(Ok, INIRec.ReadString(sSecao, 'infOnus', '1'));
+      end;
 
       sSecao := 'infoMandSind';
-      infoAfastamento.iniAfastamento.infoMandSind.cnpjSind     := INIRec.ReadString(sSecao, 'cnpjSind', EmptyStr);
-      infoAfastamento.iniAfastamento.infoMandSind.infOnusRemun := StrTotpOnusRemun(Ok, INIRec.ReadString(sSecao, 'infOnusRemun', '1'));
+      if INIRec.ReadString(sSecao, 'cnpjSind', '') <> '' then
+      begin
+        infoAfastamento.iniAfastamento.infoMandSind.cnpjSind     := INIRec.ReadString(sSecao, 'cnpjSind', EmptyStr);
+        infoAfastamento.iniAfastamento.infoMandSind.infOnusRemun := StrTotpOnusRemun(Ok, INIRec.ReadString(sSecao, 'infOnusRemun', '1'));
+      end;
 
       sSecao := 'infoRetif';
-      infoAfastamento.infoRetif.origRetif := INIRec.ReadInteger(sSecao, 'origRetif', 1);
-      infoAfastamento.infoRetif.tpProc    := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
-      infoAfastamento.infoRetif.nrProc    :=  INIRec.ReadString(sSecao, 'nrProc', EmptyStr);
+      if INIRec.ReadString(sSecao, 'origRetif', '') <> '' then
+      begin
+        infoAfastamento.infoRetif.origRetif := INIRec.ReadInteger(sSecao, 'origRetif', 1);
+        infoAfastamento.infoRetif.tpProc    := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
+        infoAfastamento.infoRetif.nrProc    :=  INIRec.ReadString(sSecao, 'nrProc', EmptyStr);
+      end;
 
       sSecao := 'fimAfastamento';
-      infoAfastamento.fimAfastamento.dtTermAfast := StringToDateTime(INIRec.ReadString(sSecao, 'dtTermAfast', '0'));
+      if INIRec.ReadString(sSecao, 'dtTermAfast', '') <> '' then
+        infoAfastamento.fimAfastamento.dtTermAfast := StringToDateTime(INIRec.ReadString(sSecao, 'dtTermAfast', '0'));
     end;
 
     GerarXML;

@@ -665,14 +665,17 @@ begin
         infoEmpregador.infoCadastro.nrRegEtt         := INIRec.ReadString(sSecao, 'nrRegEtt', EmptyStr);
 
         sSecao := 'dadosIsencao';
-        infoEmpregador.infoCadastro.DadosIsencao.IdeMinLei    := INIRec.ReadString(sSecao, 'ideMinLei', EmptyStr);
-        infoEmpregador.infoCadastro.DadosIsencao.nrCertif     := INIRec.ReadString(sSecao, 'nrCertif', EmptyStr);
-        infoEmpregador.infoCadastro.DadosIsencao.dtEmisCertif := StringToDateTime(INIRec.ReadString(sSecao, 'dtEmisCertif', '0'));
-        infoEmpregador.infoCadastro.DadosIsencao.dtVencCertif := StringToDateTime(INIRec.ReadString(sSecao, 'dtVencCertif', '0'));
-        infoEmpregador.infoCadastro.DadosIsencao.nrProtRenov  := INIRec.ReadString(sSecao, 'nrProtRenov', EmptyStr);
-        infoEmpregador.infoCadastro.DadosIsencao.dtProtRenov  := StringToDateTime(INIRec.ReadString(sSecao, 'dtProtRenov', '0'));
-        infoEmpregador.infoCadastro.DadosIsencao.dtDou        := StringToDateTime(INIRec.ReadString(sSecao, 'dtDou', '0'));
-        infoEmpregador.infoCadastro.DadosIsencao.pagDou       := INIRec.ReadString(sSecao, 'pagDou', EmptyStr);
+        if INIRec.ReadString(sSecao, 'ideMinLei', '') <> '' then
+        begin
+          infoEmpregador.infoCadastro.DadosIsencao.IdeMinLei    := INIRec.ReadString(sSecao, 'ideMinLei', EmptyStr);
+          infoEmpregador.infoCadastro.DadosIsencao.nrCertif     := INIRec.ReadString(sSecao, 'nrCertif', EmptyStr);
+          infoEmpregador.infoCadastro.DadosIsencao.dtEmisCertif := StringToDateTime(INIRec.ReadString(sSecao, 'dtEmisCertif', '0'));
+          infoEmpregador.infoCadastro.DadosIsencao.dtVencCertif := StringToDateTime(INIRec.ReadString(sSecao, 'dtVencCertif', '0'));
+          infoEmpregador.infoCadastro.DadosIsencao.nrProtRenov  := INIRec.ReadString(sSecao, 'nrProtRenov', EmptyStr);
+          infoEmpregador.infoCadastro.DadosIsencao.dtProtRenov  := StringToDateTime(INIRec.ReadString(sSecao, 'dtProtRenov', '0'));
+          infoEmpregador.infoCadastro.DadosIsencao.dtDou        := StringToDateTime(INIRec.ReadString(sSecao, 'dtDou', '0'));
+          infoEmpregador.infoCadastro.DadosIsencao.pagDou       := INIRec.ReadString(sSecao, 'pagDou', EmptyStr);
+        end;
 
         sSecao := 'contato';
         infoEmpregador.infoCadastro.Contato.NmCtt    := INIRec.ReadString(sSecao, 'nmCtt', EmptyStr);
@@ -682,22 +685,32 @@ begin
         infoEmpregador.infoCadastro.Contato.email    := INIRec.ReadString(sSecao, 'email', EmptyStr);
 
         sSecao := 'infoOP';
-        infoEmpregador.infoCadastro.InfoOp.nrSiafi := INIRec.ReadString(sSecao, 'nrSiafi', EmptyStr);
+        if INIRec.ReadString(sSecao, 'nrSiafi', '') <> '' then
+        begin
+          infoEmpregador.infoCadastro.InfoOp.nrSiafi := INIRec.ReadString(sSecao, 'nrSiafi', EmptyStr);
 
-        sSecao := 'infoEFR';
-        infoEmpregador.infoCadastro.InfoOp.infoEFR.ideEFR  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'ideEFR', 'S'));
-        infoEmpregador.infoCadastro.InfoOp.infoEFR.cnpjEFR := INIRec.ReadString(sSecao, 'cnpjEFR', EmptyStr);
+          sSecao := 'infoEFR';
+          if INIRec.ReadString(sSecao, 'ideEFR', '') <> '' then
+          begin
+            infoEmpregador.infoCadastro.InfoOp.infoEFR.ideEFR  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'ideEFR', 'S'));
+            infoEmpregador.infoCadastro.InfoOp.infoEFR.cnpjEFR := INIRec.ReadString(sSecao, 'cnpjEFR', EmptyStr);
+          end;
 
-        sSecao := 'infoEnte';
-        infoEmpregador.infoCadastro.InfoOp.infoEnte.nmEnte    := INIRec.ReadString(sSecao, 'nmEnte', EmptyStr);
-        infoEmpregador.infoCadastro.InfoOp.infoEnte.uf        := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
-        infoEmpregador.infoCadastro.InfoOp.infoEnte.codMunic  := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-        infoEmpregador.infoCadastro.InfoOp.infoEnte.indRPPS   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indRPPS', 'S'));
-        infoEmpregador.infoCadastro.InfoOp.infoEnte.subteto   := eSStrToIdeSubteto(Ok, INIRec.ReadString(sSecao, 'subteto', '1'));
-        infoEmpregador.infoCadastro.InfoOp.infoEnte.vrSubteto := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSubteto', ''), 0);
+          sSecao := 'infoEnte';
+          if INIRec.ReadString(sSecao, 'nmEnte', '') <> '' then
+          begin
+            infoEmpregador.infoCadastro.InfoOp.infoEnte.nmEnte    := INIRec.ReadString(sSecao, 'nmEnte', EmptyStr);
+            infoEmpregador.infoCadastro.InfoOp.infoEnte.uf        := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+            infoEmpregador.infoCadastro.InfoOp.infoEnte.codMunic  := INIRec.ReadInteger(sSecao, 'codMunic', 0);
+            infoEmpregador.infoCadastro.InfoOp.infoEnte.indRPPS   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indRPPS', 'S'));
+            infoEmpregador.infoCadastro.InfoOp.infoEnte.subteto   := eSStrToIdeSubteto(Ok, INIRec.ReadString(sSecao, 'subteto', '1'));
+            infoEmpregador.infoCadastro.InfoOp.infoEnte.vrSubteto := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSubteto', ''), 0);
+          end;
+        end;
 
         sSecao := 'infoOrgInternacional';
-        infoEmpregador.infoCadastro.InfoOrgInternacional.IndAcordoIsenMulta := eSStrToIndAcordoIsencaoMulta(Ok, INIRec.ReadString(sSecao, 'indAcordoIsenMulta', '0'));
+        if INIRec.ReadString(sSecao, 'indAcordoIsenMulta', '') <> '' then
+          infoEmpregador.infoCadastro.InfoOrgInternacional.IndAcordoIsenMulta := eSStrToIndAcordoIsencaoMulta(Ok, INIRec.ReadString(sSecao, 'indAcordoIsenMulta', '0'));
 
         I := 1;
         while true do
@@ -722,8 +735,10 @@ begin
         end;
 
         sSecao := 'infoComplementares';
-        infoEmpregador.infoCadastro.InfoComplementares.SituacaoPJ.IndSitPJ := eSStrToIndSitPJ(Ok, INIRec.ReadString(sSecao, 'indSitPJ', '0'));
-        infoEmpregador.infoCadastro.InfoComplementares.SituacaoPF.IndSitPF := eSStrToTpIndSitPF(Ok, INIRec.ReadString(sSecao, 'indSitPF', '0'));
+        if INIRec.ReadString(sSecao, 'indSitPJ', '') <> ''then
+          infoEmpregador.infoCadastro.InfoComplementares.SituacaoPJ.IndSitPJ := eSStrToIndSitPJ(Ok, INIRec.ReadString(sSecao, 'indSitPJ', '0'));
+        if INIRec.ReadString(sSecao, 'indSitPF', '') <> ''then
+          infoEmpregador.infoCadastro.InfoComplementares.SituacaoPF.IndSitPF := eSStrToTpIndSitPF(Ok, INIRec.ReadString(sSecao, 'indSitPF', '0'));
 
         if ModoLancamento = mlAlteracao then
         begin

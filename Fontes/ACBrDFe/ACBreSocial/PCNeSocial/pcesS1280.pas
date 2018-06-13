@@ -387,8 +387,11 @@ begin
       ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 
       sSecao := 'infoSubstPatr';
-      infoSubstPatr.indSubstPatr   := eSStrToIndSubstPatrOpPort(Ok, INIRec.ReadString(sSecao, 'indSubstPatr', '1'));
-      infoSubstPatr.percRedContrib := StringToFloatDef(INIRec.ReadString(sSecao, 'percRedContrib', ''), 0);
+      if INIRec.ReadString(sSecao, 'indSubstPatr', '') <> ''then
+      begin
+        infoSubstPatr.indSubstPatr   := eSStrToIndSubstPatrOpPort(Ok, INIRec.ReadString(sSecao, 'indSubstPatr', '1'));
+        infoSubstPatr.percRedContrib := StringToFloatDef(INIRec.ReadString(sSecao, 'percRedContrib', ''), 0);
+      end;
 
       I := 1;
       while true do

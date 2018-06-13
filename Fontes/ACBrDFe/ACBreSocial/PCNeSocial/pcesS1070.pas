@@ -537,9 +537,12 @@ begin
         infoProcesso.dadosProc.indMatProc := eSStrToTpIndMatProc(Ok, INIRec.ReadString(sSecao, 'indMatProc', '1'));
 
         sSecao := 'dadosProcJud';
-        infoProcesso.dadosProc.DadosProcJud.UfVara   := INIRec.ReadString(sSecao, 'UfVara', '');
-        infoProcesso.dadosProc.DadosProcJud.codMunic := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-        infoProcesso.dadosProc.DadosProcJud.idVara   := INIRec.ReadString(sSecao, 'idVara', '');
+        if INIRec.ReadString(sSecao, 'UfVara', '') <> '' then
+        begin
+          infoProcesso.dadosProc.DadosProcJud.UfVara   := INIRec.ReadString(sSecao, 'UfVara', '');
+          infoProcesso.dadosProc.DadosProcJud.codMunic := INIRec.ReadInteger(sSecao, 'codMunic', 0);
+          infoProcesso.dadosProc.DadosProcJud.idVara   := INIRec.ReadString(sSecao, 'idVara', '');
+        end;
 
         I := 1;
         while true do

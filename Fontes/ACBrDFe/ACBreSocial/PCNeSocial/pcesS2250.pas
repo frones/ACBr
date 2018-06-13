@@ -331,15 +331,21 @@ begin
       ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
 
       sSecao := 'detAvPrevio';
-      InfoAvPrevio.detAvPrevio.dtAvPrv      := StringToDateTime(INIRec.ReadString(sSecao, 'dtAvPrv', '0'));
-      InfoAvPrevio.detAvPrevio.dtPrevDeslig := StringToDateTime(INIRec.ReadString(sSecao, 'dtPrevDeslig', '0'));
-      InfoAvPrevio.DetAvPrevio.tpAvPrevio   := eSStrToTpAvPrevio(Ok, INIRec.ReadString(sSecao, 'tpAvPrevio', '1'));
-      InfoAvPrevio.DetAvPrevio.observacao   := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+      if INIRec.ReadString(sSecao, 'dtAvPrv', '') <> ''then
+      begin
+        InfoAvPrevio.detAvPrevio.dtAvPrv      := StringToDateTime(INIRec.ReadString(sSecao, 'dtAvPrv', '0'));
+        InfoAvPrevio.detAvPrevio.dtPrevDeslig := StringToDateTime(INIRec.ReadString(sSecao, 'dtPrevDeslig', '0'));
+        InfoAvPrevio.DetAvPrevio.tpAvPrevio   := eSStrToTpAvPrevio(Ok, INIRec.ReadString(sSecao, 'tpAvPrevio', '1'));
+        InfoAvPrevio.DetAvPrevio.observacao   := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+      end;
 
       sSecao := 'cancAvPrevio';
-      InfoAvPrevio.cancAvPrevio.dtCancAvPrv     := StringToDateTime(INIRec.ReadString(sSecao, 'dtCancAvPrv', '0'));
-      InfoAvPrevio.cancAvPrevio.observacao      := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
-      InfoAvPrevio.cancAvPrevio.mtvCancAvPrevio := eSStrToMtvCancAvPrevio(Ok, INIRec.ReadString(sSecao, 'mtvCancAvPrevio', '1'));
+      if INIRec.ReadString(sSecao, 'dtCancAvPrv', '') <> ''then
+      begin
+        InfoAvPrevio.cancAvPrevio.dtCancAvPrv     := StringToDateTime(INIRec.ReadString(sSecao, 'dtCancAvPrv', '0'));
+        InfoAvPrevio.cancAvPrevio.observacao      := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+        InfoAvPrevio.cancAvPrevio.mtvCancAvPrevio := eSStrToMtvCancAvPrevio(Ok, INIRec.ReadString(sSecao, 'mtvCancAvPrevio', '1'));
+      end;
     end;
 
     GerarXML;

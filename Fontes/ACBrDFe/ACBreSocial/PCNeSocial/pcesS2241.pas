@@ -535,205 +535,223 @@ begin
       ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
 
       sSecao := 'iniInsalPeric';
-      InsalPeric.iniInsalPeric.DtiniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
-
-      I := 1;
-      while true do
+      if INIRec.ReadString(sSecao, 'dtIniCondicao', '') <> '' then
       begin
-        // de 01 até 99
-        sSecao := 'infoAmb' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+        InsalPeric.iniInsalPeric.DtiniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
 
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with InsalPeric.iniInsalPeric.infoAmb.Add do
+        I := 1;
+        while true do
         begin
-          codAmb := sFim;
+          // de 01 até 99
+          sSecao := 'infoAmb' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
 
-          J := 1;
-          while true do
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with InsalPeric.iniInsalPeric.infoAmb.Add do
           begin
-            // de 001 até 999
-            sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
-            sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+            codAmb := sFim;
 
-            if (sFim = 'FIM') or (Length(sFim) <= 0) then
-              break;
-
-            with fatRisco.Add do
+            J := 1;
+            while true do
             begin
-              codFatRis := sFim;
+              // de 001 até 999
+              sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+              sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+
+              with fatRisco.Add do
+              begin
+                codFatRis := sFim;
+              end;
+
+              Inc(J);
             end;
 
-            Inc(J);
           end;
 
+          Inc(I);
         end;
-
-        Inc(I);
       end;
 
       sSecao := 'altInsalPeric';
-      InsalPeric.altInsalPeric.DtaltCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtAltCondicao', '0'));
-
-      I := 1;
-      while true do
+      if INIRec.ReadString(sSecao, 'dtAltCondicao', '') <> '' then
       begin
-        // de 01 até 99
-        sSecao := 'infoAmb' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+        InsalPeric.altInsalPeric.DtaltCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtAltCondicao', '0'));
 
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with InsalPeric.altInsalPeric.infoAmb.Add do
+        I := 1;
+        while true do
         begin
-          codAmb := sFim;
+          // de 01 até 99
+          sSecao := 'infoAmb' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
 
-          J := 1;
-          while true do
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with InsalPeric.altInsalPeric.infoAmb.Add do
           begin
-            // de 001 até 999
-            sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
-            sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+            codAmb := sFim;
 
-            if (sFim = 'FIM') or (Length(sFim) <= 0) then
-              break;
-
-            with fatRisco.Add do
+            J := 1;
+            while true do
             begin
-              codFatRis := sFim;
+              // de 001 até 999
+              sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+              sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+
+              with fatRisco.Add do
+              begin
+                codFatRis := sFim;
+              end;
+
+              Inc(J);
             end;
 
-            Inc(J);
           end;
 
+          Inc(I);
         end;
-
-        Inc(I);
       end;
 
       sSecao := 'fimInsalPeric';
-      InsalPeric.fimInsalPeric.dtFimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
-
-      I := 1;
-      while true do
+      if INIRec.ReadString(sSecao, 'dtFimCondicao', '') <> '' then
       begin
-        // de 01 até 99
-        sSecao := 'infoAmb' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+        InsalPeric.fimInsalPeric.dtFimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
 
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with InsalPeric.fimInsalPeric.infoAmb.Add do
+        I := 1;
+        while true do
         begin
-          codAmb := sFim;
-        end;
+          // de 01 até 99
+          sSecao := 'infoAmb' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
 
-        Inc(I);
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with InsalPeric.fimInsalPeric.infoAmb.Add do
+          begin
+            codAmb := sFim;
+          end;
+
+          Inc(I);
+        end;
       end;
 
       sSecao := 'iniAposentEsp';
-      AposentEsp.iniAposentEsp.DtiniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
-
-      I := 1;
-      while true do
+      if INIRec.ReadString(sSecao, 'dtIniCondicao', '') <> '' then
       begin
-        // de 01 até 99
-        sSecao := 'infoAmb' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+        AposentEsp.iniAposentEsp.DtiniCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
 
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with AposentEsp.iniAposentEsp.infoAmb.Add do
+        I := 1;
+        while true do
         begin
-          codAmb := sFim;
+          // de 01 até 99
+          sSecao := 'infoAmb' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
 
-          J := 1;
-          while true do
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with AposentEsp.iniAposentEsp.infoAmb.Add do
           begin
-            // de 001 até 999
-            sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
-            sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+            codAmb := sFim;
 
-            if (sFim = 'FIM') or (Length(sFim) <= 0) then
-              break;
-
-            with fatRisco.Add do
+            J := 1;
+            while true do
             begin
-              codFatRis := sFim;
+              // de 001 até 999
+              sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+              sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+
+              with fatRisco.Add do
+              begin
+                codFatRis := sFim;
+              end;
+
+              Inc(J);
             end;
 
-            Inc(J);
           end;
 
+          Inc(I);
         end;
-
-        Inc(I);
       end;
 
       sSecao := 'altAposentEsp';
-      AposentEsp.altAposentEsp.DtaltCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtAltCondicao', '0'));
-
-      I := 1;
-      while true do
+      if INIRec.ReadString(sSecao, 'dtAltCondicao', '') <> '' then
       begin
-        // de 01 até 99
-        sSecao := 'infoAmb' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+        AposentEsp.altAposentEsp.DtaltCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtAltCondicao', '0'));
 
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with AposentEsp.altAposentEsp.infoAmb.Add do
+        I := 1;
+        while true do
         begin
-          codAmb := sFim;
+          // de 01 até 99
+          sSecao := 'infoAmb' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
 
-          J := 1;
-          while true do
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with AposentEsp.altAposentEsp.infoAmb.Add do
           begin
-            // de 001 até 999
-            sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
-            sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+            codAmb := sFim;
 
-            if (sFim = 'FIM') or (Length(sFim) <= 0) then
-              break;
-
-            with fatRisco.Add do
+            J := 1;
+            while true do
             begin
-              codFatRis := sFim;
+              // de 001 até 999
+              sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+              sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+
+              with fatRisco.Add do
+              begin
+                codFatRis := sFim;
+              end;
+
+              Inc(J);
             end;
 
-            Inc(J);
           end;
 
+          Inc(I);
         end;
-
-        Inc(I);
       end;
 
       sSecao := 'fimAposentEsp';
-      AposentEsp.fimAposentEsp.DtfimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
-
-      I := 1;
-      while true do
+      if INIRec.ReadString(sSecao, 'dtFimCondicao', '') <> '' then
       begin
-        // de 01 até 99
-        sSecao := 'infoAmb' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+        AposentEsp.fimAposentEsp.DtfimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
 
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with AposentEsp.fimAposentEsp.infoAmb.Add do
+        I := 1;
+        while true do
         begin
-          codAmb := sFim;
-        end;
+          // de 01 até 99
+          sSecao := 'infoAmb' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
 
-        Inc(I);
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with AposentEsp.fimAposentEsp.infoAmb.Add do
+          begin
+            codAmb := sFim;
+          end;
+
+          Inc(I);
+        end;
       end;
 
     end;

@@ -1101,41 +1101,50 @@ begin
       ideTrabalhador.nisTrab := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
 
       sSecao := 'infoMV';
-      ideTrabalhador.infoMV.indMV := eSStrToIndMV(Ok, INIRec.ReadString(sSecao, 'indMV', '1'));
-
-      I := 1;
-      while true do
+      if INIRec.ReadString(sSecao, 'indMV', '') <> ''then
       begin
-        // de 01 até 10
-        sSecao := 'remunOutrEmpr' + IntToStrZero(I, 2);
-        sFim   := INIRec.ReadString(sSecao, 'nrInsc', 'FIM');
+        ideTrabalhador.infoMV.indMV := eSStrToIndMV(Ok, INIRec.ReadString(sSecao, 'indMV', '1'));
 
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with ideTrabalhador.infoMV.remunOutrEmpr.Add do
+        I := 1;
+        while true do
         begin
-          tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-          nrInsc     := sFim;
-          codCateg   := INIRec.ReadInteger(sSecao, 'codCateg', 0);
-          vlrRemunOE := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRemunOE', ''), 0);
-        end;
+          // de 01 até 10
+          sSecao := 'remunOutrEmpr' + IntToStrZero(I, 2);
+          sFim   := INIRec.ReadString(sSecao, 'nrInsc', 'FIM');
 
-        Inc(I);
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with ideTrabalhador.infoMV.remunOutrEmpr.Add do
+          begin
+            tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+            nrInsc     := sFim;
+            codCateg   := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+            vlrRemunOE := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRemunOE', ''), 0);
+          end;
+
+          Inc(I);
+        end;
       end;
 
       sSecao := 'infoComplem';
-      ideTrabalhador.infoComplem.nmTrab       := INIRec.ReadString(sSecao, 'nmTrab', '');
-      ideTrabalhador.infoComplem.dtNascto     := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
-      ideTrabalhador.infoComplem.codCBO       := INIRec.ReadString(sSecao, 'codCBO', '');
-      ideTrabalhador.infoComplem.natAtividade := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
-      ideTrabalhador.infoComplem.qtdDiasTrab  := INIRec.ReadInteger(sSecao, 'qtdDiasTrab', 0);
+      if INIRec.ReadString(sSecao, 'nmTrab', '') <> '' then
+      begin
+        ideTrabalhador.infoComplem.nmTrab       := INIRec.ReadString(sSecao, 'nmTrab', '');
+        ideTrabalhador.infoComplem.dtNascto     := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
+        ideTrabalhador.infoComplem.codCBO       := INIRec.ReadString(sSecao, 'codCBO', '');
+        ideTrabalhador.infoComplem.natAtividade := eSStrToNatAtividade(Ok, INIRec.ReadString(sSecao, 'natAtividade', '1'));
+        ideTrabalhador.infoComplem.qtdDiasTrab  := INIRec.ReadInteger(sSecao, 'qtdDiasTrab', 0);
+      end;
 
       sSecao := 'sucessaoVinc';
-      ideTrabalhador.infoComplem.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '');
-      ideTrabalhador.infoComplem.sucessaoVinc.matricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
-      ideTrabalhador.infoComplem.sucessaoVinc.dtAdm         := StringToDateTime(INIRec.ReadString(sSecao, 'dtAdm', '0'));
-      ideTrabalhador.infoComplem.sucessaoVinc.observacao    := INIRec.ReadString(sSecao, 'observacao', '');
+      if INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '') <> '' then
+      begin
+        ideTrabalhador.infoComplem.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '');
+        ideTrabalhador.infoComplem.sucessaoVinc.matricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
+        ideTrabalhador.infoComplem.sucessaoVinc.dtAdm         := StringToDateTime(INIRec.ReadString(sSecao, 'dtAdm', '0'));
+        ideTrabalhador.infoComplem.sucessaoVinc.observacao    := INIRec.ReadString(sSecao, 'observacao', '');
+      end;
 
       I := 1;
       while true do
@@ -1279,7 +1288,8 @@ begin
 
                   sSecao := 'infoAgNocivo' + IntToStrZero(I, 2) +
                                     IntToStrZero(J, 3) + IntToStrZero(K, 1);
-                  infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', '1'));
+                  if INIRec.ReadString(sSecao, 'grauExp', '') <> '' then
+                    infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', '1'));
                 end;
 
                 Inc(K);
@@ -1386,8 +1396,8 @@ begin
                           sSecao := 'infoAgNocivo' + IntToStrZero(I, 2) +
                                         IntToStrZero(J, 1) + IntToStrZero(K, 3) +
                                         IntToStrZero(L, 3) + IntToStrZero(M, 1);
-                          infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', '1'));
-
+                          if INIRec.ReadString(sSecao, 'grauExp', '') <> '' then
+                            infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', '1'));
                         end;
 
                         Inc(M);

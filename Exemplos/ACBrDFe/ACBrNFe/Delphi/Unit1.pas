@@ -2372,7 +2372,8 @@ begin
   produtos farmacêuticos.
 }
 {
-  Rastro := Produto.Prod.rastro.Add;
+  Rastro := Produto.Prod.rastro.Add; Ocorrências: 0 - 500
+
   Rastro.nLote  := '17H8F5';
   Rastro.qLote  := 1;
   Rastro.dFab   := StrToDate('01/08/2017');
@@ -2382,7 +2383,8 @@ begin
 
 //Campos específicos para venda de medicamentos
 {
-  Medicamento := Produto.Prod.med.Add;
+  Medicamento := Produto.Prod.med.Add; Ocorrências: 1 - 500 ==> 1 - 1 (4.00)
+
   Medicamento.cProdANVISA := '1256802470029';
   Medicamento.vPMC        := 100.00; // Preço máximo consumidor
 }

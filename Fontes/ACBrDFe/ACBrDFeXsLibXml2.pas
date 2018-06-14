@@ -47,10 +47,15 @@ resourcestring
   cErrFindSignNode = 'Erro: Falha ao localizar o nó de Assinatura';
   cErrFindRootNode = 'Erro: Falha ao localizar o nó Raiz';
   cErrC14NTransformation = 'Erro ao aplicar transformação C14N';
+  cErrSelecionarElements = 'Erro ao selecionar os elementos do XML.';
   cErrElementsNotFound = 'Nenhum elemento encontrado';
+  cErrEX509CertificateNotFound = 'X509Certificate não encontrado';
   cErrDigestValueNode = 'Node DigestValue não encontrado';
   cErrSignatureValueNode = 'Node SignatureValue não encontrado';
   cErrDigestValueNaoConfere = 'DigestValue não confere. Conteúdo de "%s" foi alterado';
+  cErrInvalidSchema = 'Erro: Schema inválido';
+  cErrCreateSchemaContext = 'Erro: Não foi possivel criar um contexto para o Schema';
+  cErrNotIdentfiedSchema = 'Erro indefinido, ao validar o Documento com o Schema';
 
 const
   cSignatureNode = 'Signature';
@@ -232,7 +237,7 @@ begin
 
     XmlNode := LibXmlLookUpNode(SignNode, cX509CertificateNode);
     if (XmlNode = nil) then
-      raise EACBrDFeException.Create('X509Certificate não encontrado.');
+      raise EACBrDFeException.Create(cErrEX509CertificateNotFound);
 
     xmlNodeSetContent(XmlNode, PAnsiChar(AnsiString(FpDFeSSL.DadosCertificado.DERBase64)));
 
@@ -311,14 +316,13 @@ begin
 
     // express?o para selecionar os elementos n: ? o namespace selecionado
     xpathExpr := '(//.|//@*|//namespace::*)[ancestor-or-self::*[local-name()='''
-      + infElement + ''']]';
+      + Copy(infElement, pos(':', infElement) + 1, Length(infElement)) + ''']]';
 
     // seleciona os elementos baseados na expressão(retorna um objeto XPath com os elementos)
     xpathObj := xmlXPathEvalExpression(PAnsiChar(xpathExpr), xpathCtx);
 
     if (xpathObj = nil) then
-      raise EACBrDFeException.Create
-        (ACBrStr('Erro ao selecionar os elementos do XML.'));
+      raise EACBrDFeException.Create(cErrSelecionarElements);
 
     if (xpathObj.nodesetval.nodeNr > 0) then
       Result := xpathObj.nodesetval
@@ -362,7 +366,7 @@ begin
     // unable to create a parser context for the schema */
     if (parser_ctxt = nil) then
     begin
-      MsgErro := ACBrStr('Erro: Não foi possivel criar um contexto para o Schema');
+      MsgErro := cErrCreateSchemaContext;
       Exit;
     end;
 
@@ -370,7 +374,7 @@ begin
     // the schema itself is not valid
     if (schema = nil) then
     begin
-      MsgErro := ACBrStr('Erro: Schema inválido');
+      MsgErro := cErrInvalidSchema;
       Exit;
     end;
 
@@ -378,7 +382,7 @@ begin
     // unable to create a validation context for the schema */
     if (valid_ctxt = nil) then
     begin
-      MsgErro := ACBrStr('Error: não foi possivel criar um contexto de validação para o Schema');
+      MsgErro := cErrCreateContext;
       Exit;
     end;
 
@@ -388,7 +392,7 @@ begin
       if (schemError <> nil) then
         MsgErro := IntToStr(schemError^.code) + ' - ' + schemError^.message
       else
-        MsgErro := ACBrStr('Erro indefinido, ao validar o Documento com o Schema');
+        MsgErro := cErrNotIdentfiedSchema;
     end
     else
       Result := True;

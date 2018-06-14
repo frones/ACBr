@@ -76,6 +76,8 @@ type
     procedure LerRetorno240(ARetorno: TStringList); override;
     function CodMotivoRejeicaoToDescricao(
       const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
+
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
    end;
 
 implementation
@@ -288,6 +290,23 @@ begin
   end;
 end;
 
+function TACBrBancoBrasilSICOOB.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    07 : Result:= toRemessaConcederDesconto;                {Concessão de Desconto}
+    08 : Result:= toRemessaCancelarDesconto;                {Não conceder desconto}
+    09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
+    10 : Result:= toRemessaCancelarInstrucaoProtestoBaixa;  {Sustar protesto e baixar}
+    31 : Result:= toRemessaOutrasOcorrencias;               {Alteração de Outros Dados}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
+  end;
+end;
+
 function TACBrBancoBrasilSICOOB.CodMotivoRejeicaoToDescricao(
    const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
 begin
@@ -440,7 +459,7 @@ function TACBrBancoBrasilSICOOB.GerarRegistroTransacao240(
 var
   ATipoOcorrencia, ATipoInscricao, ANossoNumero, ATipoMora, AEndereco : String;
   AValorCEP, ADiasProtesto, TipoAvalista : String;
-  wLinhaP, wLinhaQ : WideString;
+  wLinhaP, wLinhaQ : String;
   indice           : Integer;
   AValorMora       : Double;
 begin

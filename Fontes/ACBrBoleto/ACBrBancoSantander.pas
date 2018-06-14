@@ -67,6 +67,8 @@ type
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
+
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
   end;
 
 implementation
@@ -1270,6 +1272,23 @@ begin
     38: Result := toRetornoRecebimentoInstrucaoNaoProtestar;
   else
     Result := toRetornoOutrasOcorrencias;
+  end;
+end;
+
+function TACBrBancoSantander.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    07 : Result:= toRemessaAlterarControleParticipante;     {Alteração do controle do participante}
+    08 : Result:= toRemessaAlterarNumeroControle;           {Alteração de seu número}
+    09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
+    18 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}
+    98 : Result:= toRemessaNaoProtestar;                    {Sustar protesto antes do início do ciclo de protesto}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
   end;
 end;
 

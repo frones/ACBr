@@ -1087,7 +1087,7 @@ var
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
   MotivoLinha, CodMotivo: Integer;
-  wSeuNumero, TempData: String;
+  TempData: String;
   codOcorrencia : String;
 begin
 

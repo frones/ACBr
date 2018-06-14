@@ -70,6 +70,7 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
 
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
    end;
 
 implementation
@@ -1371,6 +1372,25 @@ begin
       Result := toRetornoOutrasOcorrencias;
    end;
 
+end;
+
+function TACBrBancoob.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    08 : Result:= toRemessaAlterarNumeroControle;           {Alteração de seu número}
+    09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
+    10 : Result:= toRemessaCancelarInstrucaoProtestoBaixa;  {Instrução para sustar protesto}
+    11 : Result:= toRemessaDispensarJuros;                  {Instrução para dispensar juros}
+    12 : Result:= toRemessaAlterarDadosPagador;             {Alteração de Pagador}
+    31 : Result:= toRemessaOutrasOcorrencias;               {Alteração de Outros Dados}
+    34 : Result:= toRemessaBaixaporPagtoDiretoCedente;      {Baixa - Pagamento Direto ao Beneficiário}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
+  end;
 end;
 
 function TACBrBancoob.TipoOCorrenciaToCod(

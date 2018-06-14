@@ -80,6 +80,8 @@ type
       const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
 
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;
+
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
    end;
 
 implementation
@@ -956,6 +958,26 @@ begin
     23: Result := toRetornoEncaminhadoACartorio;
   else
     Result := toRetornoOutrasOcorrencias;
+  end;
+end;
+
+function TACBrBancoCecred.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    07 : Result:= toRemessaAlterarControleParticipante;     {Alteração do controle do participante}
+    08 : Result:= toRemessaAlterarNumeroControle;           {Alteração de seu número}
+    09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
+    10 : Result:= toRemessaCancelarInstrucaoProtestoBaixa;  {Sustar protesto e baixar}
+    11 : Result:= toRemessaDispensarJuros;                  {Instrução para dispensar juros}
+    12 : Result:= toRemessaAlterarNomeEnderecoSacado;       {Alteração de nome e endereço do Sacado}
+    31 : Result:= toRemessaOutrasOcorrencias;               {Alteração de Outros Dados}
+    32 : Result:= toRemessaCancelarDesconto;                {Não conceder desconto}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
   end;
 end;
 

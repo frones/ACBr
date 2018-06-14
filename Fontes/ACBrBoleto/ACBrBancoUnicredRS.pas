@@ -165,10 +165,9 @@ end;
 
 procedure TACBrBancoUnicredRS.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  sDigitoNossoNumero, sOcorrencia, sEspecie, sAgencia : String;
-  sProtesto, sTipoSacado, sMensagemCedente, sConta    : String;
+  sDigitoNossoNumero, sOcorrencia, sAgencia           : String;
+  sProtesto, sTipoSacado, sConta                      : String;
   sCarteira, sLinha, sNossoNumero, sNumContrato       : String;
-  cTipoBoleto : Char;
   iTamNossoNum: Integer;
 
   function DoMontaInstrucoes1: string;
@@ -259,31 +258,9 @@ begin
       end;
 
       {Pegando Tipo de Boleto}
-      case ACBrBoleto.Cedente.ResponEmissao of
-         tbCliEmite : cTipoBoleto := '2';
-      else
-         cTipoBoleto := '1';
-         if NossoNumero = EmptyStr then
+      if not(ACBrBoleto.Cedente.ResponEmissao = tbCliEmite) then
+        if (NossoNumero = EmptyStr) then
            sDigitoNossoNumero := '0';
-      end;
-
-      {Pegando Especie}
-      if trim(EspecieDoc) = 'DM' then
-         sEspecie:= '01'
-      else if trim(EspecieDoc) = 'NP' then
-         sEspecie:= '02'
-      else if trim(EspecieDoc) = 'NS' then
-         sEspecie:= '03'
-      else if trim(EspecieDoc) = 'CS' then
-         sEspecie:= '04'
-      else if trim(EspecieDoc) = 'ND' then
-         sEspecie:= '11'
-      else if trim(EspecieDoc) = 'DS' then
-         sEspecie:= '12'
-      else if trim(EspecieDoc) = 'OU' then
-         sEspecie:= '99'
-      else
-         sEspecie := EspecieDoc;
 
       {Pegando campo Intruções}
       if (DataProtesto > 0) and (DataProtesto > Vencimento) then
@@ -303,9 +280,6 @@ begin
 
       with ACBrBoleto do
       begin
-         if Mensagem.Text <> '' then
-            sMensagemCedente:= Mensagem[0];
-         
          sLinha:= '1'                                                     +  { 001: ID Registro }
                   sAgencia                                                +  { 002: Agência }
                   Cedente.AgenciaDigito                                   +  { 007: Agência Dígito }
@@ -570,7 +544,6 @@ end;
 function TACBrBancoUnicredRS.CodOcorrenciaToTipo(const CodOcorrencia:
    Integer ) : TACBrTipoOcorrencia;
 begin
-  Result := toTipoOcorrenciaNenhum;
 
   case CodOcorrencia of
     02: Result := toRetornoRegistroConfirmado;

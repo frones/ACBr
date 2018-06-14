@@ -1086,7 +1086,7 @@ end;
 procedure TACBrBoletoFCFortesFr.RLBand5BeforePrint(Sender: TObject; var PrintIt: Boolean);
 Var
    // consulta tec 04/10/2017
-   NomeCed, EnderecoCed, NossoNum,LinhaDigitavel,CodBarras,CodCedente,TipoDoc: String;
+   EnderecoCed, NossoNum,LinhaDigitavel,CodBarras,CodCedente,TipoDoc: String;
 begin
    with fBoletoFC.ACBrBoleto do
    begin

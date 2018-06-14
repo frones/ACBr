@@ -68,6 +68,8 @@ type
     function CarteiraToTipoOperacao(const Carteira: string):String; 
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
     function MotivoRejeicaoColuna(const Coluna: integer):string;
+
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
   end;
 
 implementation
@@ -506,6 +508,23 @@ begin
    else
       Result := toRetornoOutrasOcorrencias;
    end;
+end;
+
+function TACBrBancoNordeste.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    08 : Result:= toRemessaAlterarNumeroControle;           {Alteração de seu número}
+    09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
+    18 : Result:= toRemessaCancelarInstrucaoProtestoBaixa;  {Sustar protesto e baixar}
+    19 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}
+    31 : Result:= toRemessaOutrasOcorrencias;               {Alteração de Outros Dados}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
+  end;
 end;
 
 function TACBrBancoNordeste.TipoOCorrenciaToCod (

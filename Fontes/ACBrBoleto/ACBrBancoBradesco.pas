@@ -38,7 +38,7 @@ unit ACBrBancoBradesco;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto;
+  Classes, Contnrs, SysUtils, ACBrBoleto;
 
 type
 
@@ -251,7 +251,6 @@ var
   AEspecieDoc: String;
   TipoMovimento:string;
 
-  fValorTotalDocs:Double;
   Fsequencia:Integer;
   FdigitoNossoNumero:String;
   FcodCarteira:string;
@@ -412,7 +411,6 @@ begin
     end;
     FdigitoNossoNumero:=CalcularDigitoVerificador(ACBrTitulo);
 
-    fValorTotalDocs:= fValorTotalDocs  + ValorDocumento;
     {REGISTRO P}
     Result:=
     IntToStrZero(ACBrBanco.Numero, 3)                    + //1 a 3 - Código do banco

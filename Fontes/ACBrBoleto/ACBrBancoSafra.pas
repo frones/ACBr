@@ -74,6 +74,8 @@ type
       override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;
       CodMotivo: integer): string; override;
+
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
   end;
 
 implementation
@@ -256,6 +258,25 @@ begin
     77: Result := toRetornoRecebimentoInstrucaoAlterarJuros;
     else
       Result := toRetornoOutrasOcorrencias;
+  end;
+end;
+
+function TACBrBancoSafra.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    07 : Result:= toRemessaAlterarExclusivoCliente;         {Alteração "Uso Exclusivo do Cliente"}
+    08 : Result:= toRemessaAlterarNumeroControle;           {Alteração de seu número}
+    09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
+    10 : Result:= toRemessaNaoProtestar;                    {Não Protestar}
+    11 : Result:= toRemessaNaoCobrarJurosMora;              {Não Cobrar Juros de Mora}
+    16 : Result:= toRemessaCobrarJurosMora;                 {Cobrar Juros de Mora}
+    31 : Result:= toRemessaAlterarValorTitulo;              {Alteração do Valor do Título}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
   end;
 end;
 

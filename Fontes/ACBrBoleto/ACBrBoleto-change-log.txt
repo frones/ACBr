@@ -49,6 +49,16 @@ Símbolo : Significado
 
 Data 12/06/2018 ver: 0.0.242
 
+12-06-2018 -- ACBrBancoCaixa / ACBrBancoUnicredRS/ ACBrBancoBradesco / ACBrBoletoFCFortesFr
+Remoção de Hints e Warnings
+
+12-06-2018 -- ACBrBancoBancob / ACBrBancoCecred / ACBrBancoItau / ACBrBancoCaixa /
+ACBrBancoCaixaSicob / ACBrBancoBrasil / ACBrBancoAmazonia / ACBrBancoUniprime /
+ACBrBancoBanrisul / ACBrBancoBradescoSICOB / ACBrBancoBrasilSICOB / ACBrBancoHSBC /
+ACBrBancoMercantil /ACBrBancoNordeste / ACBrBancoSicred / ACBrBancoSafra / ACBrBancoSafraBradesco
+[+] Adicionado Função padrão da classe ACBrBoleto (CodOcorrenciaToTipoRemessa)
+https://www.projetoacbr.com.br/forum/topic/35653-acbrboleto-remessa-cnab-240-tipoocorrencia/
+
 12-06-2018 -- ACBrBancoBancob / ACBrBancoCecred / ACBrBancoItau / ACBrBancoCaixa /
 ACBrBancoCaixaSicob / ACBrBancoBrasil / ACBrBancoAmazonia / ACBrBancoUniprime
 [*] Ajuste na comparação campo data e Retorno campo Nosso Número

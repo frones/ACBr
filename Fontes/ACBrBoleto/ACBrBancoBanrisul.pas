@@ -70,6 +70,8 @@ type
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
+
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
   end;
 
 implementation
@@ -1190,6 +1192,21 @@ begin
     23: Result := toRetornoEntradaEmCartorio;
   else
     Result := toRetornoOutrasOcorrencias;
+  end;
+end;
+
+function TACBrBanrisul.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02 : Result:= toRemessaBaixar;                          {Pedido de Baixa}
+    04 : Result:= toRemessaConcederAbatimento;              {Concessão de Abatimento}
+    05 : Result:= toRemessaCancelarAbatimento;              {Cancelamento de Abatimento concedido}
+    06 : Result:= toRemessaAlterarVencimento;               {Alteração de vencimento}
+    09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
+    10 : Result:= toRemessaSustarProtesto;                  {Sustação de protesto}
+    16 : Result:= toRemessaAlterarNumeroDiasProtesto;       {Alteração do numero de dias para protesto}
+  else
+     Result:= toRemessaRegistrar;                           {Remessa}
   end;
 end;
 

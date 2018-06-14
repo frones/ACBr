@@ -56,7 +56,7 @@ resourcestring
   cErrInvalidSchema = 'Erro: Schema inválido';
   cErrCreateSchemaContext = 'Erro: Não foi possivel criar um contexto para o Schema';
   cErrNotIdentfiedSchema = 'Erro indefinido, ao validar o Documento com o Schema';
-  cErrCreateContext = 'Error: não foi possivel criar um contexto de validação para o Schema';
+  cErrSchemaValidationContext = 'Error: não foi possivel criar um contexto de validação para o Schema';
 
 const
   cSignatureNode = 'Signature';
@@ -367,7 +367,7 @@ begin
     // unable to create a parser context for the schema */
     if (parser_ctxt = nil) then
     begin
-      MsgErro := cErrCreateSchemaContext;
+      MsgErro := cErrSchemaValidationContext;
       Exit;
     end;
 
@@ -383,7 +383,7 @@ begin
     // unable to create a validation context for the schema */
     if (valid_ctxt = nil) then
     begin
-      MsgErro := cErrCreateContext;
+      MsgErro := cErrCreateSchemaContext;
       Exit;
     end;
 

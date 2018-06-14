@@ -56,6 +56,7 @@ resourcestring
   cErrInvalidSchema = 'Erro: Schema inválido';
   cErrCreateSchemaContext = 'Erro: Não foi possivel criar um contexto para o Schema';
   cErrNotIdentfiedSchema = 'Erro indefinido, ao validar o Documento com o Schema';
+  cErrCreateContext = 'Error: não foi possivel criar um contexto de validação para o Schema';
 
 const
   cSignatureNode = 'Signature';

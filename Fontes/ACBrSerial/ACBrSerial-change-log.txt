@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2018
+-- ACBrECFDaruma --
+[*] Adicionada verificação de retorno para a leitura dos comandos GetEstado
+    e RetornaInfoECF. Pois notado que em alguns equipamentos, em algumas ocasiões
+    o retorno vinha incompleto ou com informações diferentes
+    (por: DSA)
+
 21/05/2048
 -- ACBrPosPrinter --
 [+] Adicionadas novas Tags para suportar a Impressão em "Modo Página".

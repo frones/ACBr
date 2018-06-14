@@ -1937,7 +1937,7 @@ end;
 }
 function TACBrECFDaruma.GetEstado: TACBrECFEstado;
 Var RetCmd1,RetCmd2 : AnsiString ;
-    Flag1, Flag2 : Byte ; 
+    Flag1, Flag2, Flag3, I: Byte ;
 begin
   fpEstado := estNaoInicializada ;
   if (not fpAtivo) then
@@ -1997,12 +1997,20 @@ begin
       else
         begin
            fpEstado := estLivre;
+           Flag3 := 255;
+           I := 0;
+           while (Flag3 = 255) and (I < 3) do
+           begin
+             RetCmd1 := EnviaComando( GS + ACK, 1);
+             Flag3 := StrToIntDef('$'+RetCmd1[5], 255);
+             if (Flag3 = 255) then
+               Sleep(200);
+             Inc(I);
+           end;
 
-           RetCmd1 := EnviaComando( GS + ACK, 1) ;
-
-           if TestBit(StrToInt('$'+RetCmd1[5]),3) then
+           if TestBit(Flag3,3) then
              fpEstado := estBloqueada
-           else if TestBit(StrToInt('$'+RetCmd1[5]),2) then
+           else if TestBit(Flag3,2) then
               fpEstado := estRequerZ ;
 //  TODO: Daruma FS600 continua informando Bit Requer X mesmo apos emitir a LeituraX
 //         else if not TestBit(StrToInt('$'+RetCmd1[4]),0) then
@@ -4812,7 +4820,9 @@ begin
 end;
 
 function TACBrECFDaruma.RetornaInfoECF(Registrador : String) : AnsiString ;
- Var Indice : Integer ;
+Var
+  Indice , I: Integer ;
+  OK: Boolean;
 begin
   Result := '' ;
   
@@ -4827,8 +4837,19 @@ begin
       raise EACBrECFERRO.create( ACBrStr('Não existe nenhum Informação com o Registrador: '+Registrador+'('+IntToStr(Indice)+')')) ;
 
     Registrador := IntToStrZero(Indice, 3);
-    Result := EnviaComando( FS + 'R' + #200 + Registrador);
-    Result  :=  Trim(LimpaChr0(Copy(Result, 6, Length(Result) - 6)));
+
+    I := 0;
+    OK := False;
+    while (not OK) and (I < 3) do
+    begin
+      Inc(I);
+      Result := EnviaComando( FS + 'R' + #200 + Registrador);
+      OK := (LeftStr(Result, 5) =  ':' + #200 + Registrador);
+      if not OK then
+        Sleep(200)
+      else
+        Result :=  Trim(LimpaChr0(Copy(Result, 6, Length(Result) - 6)));
+    end;
   end;
 end;
 

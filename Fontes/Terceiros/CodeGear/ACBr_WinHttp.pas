@@ -740,9 +740,7 @@ const
   {$EXTERNALSYM WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_2}
   WINHTTP_FLAG_SECURE_PROTOCOL_ALL    = (WINHTTP_FLAG_SECURE_PROTOCOL_SSL2 or
                                          WINHTTP_FLAG_SECURE_PROTOCOL_SSL3 or
-                                         WINHTTP_FLAG_SECURE_PROTOCOL_TLS1 or
-                                         WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_1 or
-                                         WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_2);
+                                         WINHTTP_FLAG_SECURE_PROTOCOL_TLS1);
   {$EXTERNALSYM WINHTTP_FLAG_SECURE_PROTOCOL_ALL}
 
 

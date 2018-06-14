@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2018
+-- ACBrNFSeConfiguracoes --
+[*] Feitas correções ao gerar as pastas Notas e Recibos, não estava levando em 
+    consideração o conteudo das propriedades PathRPS e PathNFSe.
+   Por: Italo Jurisato Junior
+
 13/06/2018
 -- ACBrNFSeDANFSeFR --
 [*] Alterado o tamanho do campo CodigoVerificacao para 50.

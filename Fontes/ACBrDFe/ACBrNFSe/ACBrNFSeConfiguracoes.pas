@@ -1035,8 +1035,8 @@ function TArquivosConfNFSe.GetPathRPS(Data: TDateTime;
 var
   Dir: String;
 begin
-  if FPathGer <> '' then
-    Result := GetPath(FPathGer, 'Recibos', CNPJ, Data)
+  if FPathRPS <> '' then
+    Result := GetPath(FPathRPS, 'Recibos', CNPJ, Data)
   else
   begin
     Dir := GetPath(FPathGer, 'NFSe', CNPJ, Data);
@@ -1055,8 +1055,8 @@ function TArquivosConfNFSe.GetPathNFSe(Data: TDateTime = 0;
 var
   Dir: String;
 begin
-  if FPathGer <> '' then
-    Result := GetPath(FPathGer, 'Notas', CNPJ, Data)
+  if FPathNFSe <> '' then
+    Result := GetPath(FPathNFSe, 'Notas', CNPJ, Data)
   else
   begin
     Dir := GetPath(FPathGer, 'NFSe', CNPJ, Data);

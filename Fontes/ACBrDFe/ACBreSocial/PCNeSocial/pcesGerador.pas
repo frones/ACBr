@@ -304,7 +304,7 @@ begin
 
   if not XmlEstaAssinado(FXML) then
   begin
-    NomeEvento := TipoEventoToStrEvento(StrEventoToTipoEvento(Ok, FXML));
+    NomeEvento := TipoEventoToStrEvento(StringXMLToTipoEvento(Ok, FXML));
     FXML := Assinar(FXML, NomeEvento);
 
     Leitor := TLeitor.Create;
@@ -315,7 +315,7 @@ begin
       Leitor.Free;
     end;
 
-    Validar(TipoEventiToSchemaReinf(StrEventoToTipoEvento(Ok, FXML)));
+    Validar(TipoEventiToSchemaReinf(StringXMLToTipoEvento(Ok, FXML)));
   end;
 end;
 

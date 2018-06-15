@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2018
+-- pcesGerador --
+[*] Estava sendo utilizada uma função de conversão errada para obter o tipo de
+    evento.
+   Por: Italo Jurisato Junior
+
 13/06/2018
 -- Diversos --
 [*] Acrescentado condições na leitura das seções no arquivo INI que são opcionais.

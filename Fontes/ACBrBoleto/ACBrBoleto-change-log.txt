@@ -47,7 +47,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 12/06/2018 ver: 0.0.242
+Data 15/06/2018 ver: 0.0.243
+
+15-06-2018 -- ACBrBancoCredisis
+[+] Adicionado Unit ACBrBancoCredisis
+https://www.projetoacbr.com.br/forum/topic/28312-boleto-para-o-banco-credisis/
+
+15-06-2018 -- ACBrBancoBanese
+[+] Adicionado Unit ACBrBancoBanese
+https://www.projetoacbr.com.br/forum/topic/43013-acbrboleto-banco-banese/
+
+15-06-2018 -- ACBrBancoSafraBradesco
+[*] Ajuste para homologação Boleto banco Safra Bradesco
+https://www.projetoacbr.com.br/forum/topic/41319-ajustes-unist-banco-safra-com-correspondente-bradesco/
+
+15-06-2018 -- ACBrBancoSafra
+[*] Ajuste para homologação Boleto banco Safra
+https://www.projetoacbr.com.br/forum/topic/41965-corre%C3%A7%C3%A3o-e-homologa%C3%A7%C3%A3o-banco-safra-cnab-400/
 
 12-06-2018 -- ACBrBancoCaixa / ACBrBancoUnicredRS/ ACBrBancoBradesco / ACBrBoletoFCFortesFr
 Remoção de Hints e Warnings

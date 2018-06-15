@@ -78,6 +78,7 @@ type
     RLDraw1: TRLDraw;
     RLDraw10: TRLDraw;
     RLDraw11: TRLDraw;
+    RLDraw119: TRLDraw;
     RLDraw12: TRLDraw;
     RLDraw13: TRLDraw;
     RLDraw14: TRLDraw;
@@ -137,6 +138,7 @@ type
     RLLabel123: TRLMemo;
     RLLabel161: TRLMemo;
     RLLabel80: TRLMemo;
+    RLLabel88: TRLLabel;
     txtEndCedente: TRLMemo;
     txtEndCedente1: TRLMemo;
     txtEndSacadorAval3: TRLLabel;
@@ -225,6 +227,7 @@ type
     txtLocalPagamento3: TRLMemo;
     txtNomeSacado: TRLLabel;
     txtNomeSacadoCarne: TRLMemo;
+    txtNumeroDocumentoCarne: TRLLabel;
     txtOrientacoesBanco: TRLMemo;
     RLMemo2: TRLMemo;
     txtDesconto5: TRLLabel;
@@ -984,6 +987,7 @@ begin
       txtValorCar.Caption             := txtValorCarne.Caption;
       txtNossoNumeroCarne.Caption     := NossoNum;
       txtNossoNumCan.Caption          := NossoNum;
+      txtNumeroDocumentoCarne.Caption := Titulo.NumeroDocumento;
       txtNomeSacado.Caption           := Titulo.Sacado.NomeSacado;
       txtNomeSacadoCarne.Lines.Text   := txtNomeSacado.Caption;
 

@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.240';
+  CACBrBoleto_Versao = '0.0.243';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -358,6 +358,7 @@ type
     cobSicred,
     cobBancoob,
     cobBanrisul,
+    cobCrediSIS,
     cobBanestes,
     cobHSBC,
     cobBancoDoNordeste,
@@ -370,7 +371,8 @@ type
     cobBancoDaAmazonia,
     cobBancoDoBrasilSICOOB,
     cobUniprime,
-    cobUnicredRS
+    cobUnicredRS,
+    cobBanese
     );
 
   TACBrTitulo = class;
@@ -1371,7 +1373,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
-     ACBrUniprime, ACBrBancoUnicredRS;
+     ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2245,6 +2247,7 @@ begin
      cobBRB                 : fBancoClass := TACBrBancoBRB.create(Self);            {070}
      cobUnicredRS           : fBancoClass := TACbrBancoUnicredRS.Create(Self);      {091}
      cobBancoCECRED         : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
+     cobCrediSIS            : fBancoClass := TACBrBancoCrediSIS.Create(Self);       {097}
      cobUniprime            : fBancoClass := TACBrUniprime.create(Self);            {099}
      cobCaixaEconomica      : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
      cobCaixaSicob          : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
@@ -2258,6 +2261,7 @@ begin
      cobBradescoSICOOB      : fBancoClass := TAcbrBancoBradescoSICOOB.create(Self); {237}
      cobBancoSafra          : fBancoClass := TACBrBancoSafra.create(Self);          {422}
      cobSafraBradesco       : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
+     cobBanese              : fBancoClass := TACBrBancoBanese.Create(Self);         {047}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;
@@ -2677,7 +2681,7 @@ begin
 
    SLRemessa := TStringList.Create;
    try
-      if LayoutRemessa =c400 then
+      if LayoutRemessa = c400 then
       begin
          Banco.GerarRegistroHeader400( NumeroRemessa, SLRemessa );
 
@@ -2786,11 +2790,11 @@ begin
     Raise Exception.Create(ACBrStr('Nome do cedente não informado'));
   if Cedente.Conta = '' then
     Raise Exception.Create(ACBrStr('Conta não informada'));
-  if (Cedente.ContaDigito = '') and (Banco.TipoCobranca <> cobBanestes) then
+  if (Cedente.ContaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes,cobBanese])) then
     Raise Exception.Create(ACBrStr('Dígito da conta não informado'));
   if Cedente.Agencia = '' then
     Raise Exception.Create(ACBrStr('Agência não informada'));
-  if (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanrisul, cobItau, cobCaixaEconomica, cobCaixaSicob])) then
+  if (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanese, cobBanrisul, cobItau, cobCaixaEconomica, cobCaixaSicob])) then
     Raise Exception.Create(ACBrStr('Dígito da agência não informado'));
 end;
 
@@ -2817,6 +2821,7 @@ begin
     041: Result := cobBanrisul;
     070: Result := cobBRB;
     091: Result := cobUnicredRS;
+    097: Result := cobCrediSIS;
     099: Result := cobUniprime;
     104: Result := cobCaixaEconomica;
     237: Result := cobBradesco;
@@ -2827,6 +2832,7 @@ begin
     399: Result := cobHSBC;
     422: Result := cobSafraBradesco;
     085: Result := cobBancoCECRED;
+    047: Result := cobBanese;
   else
     raise Exception.Create('Erro ao configurar o tipo de cobrança.'+
       sLineBreak+'Número do Banco inválido: '+IntToStr(NumeroBanco));

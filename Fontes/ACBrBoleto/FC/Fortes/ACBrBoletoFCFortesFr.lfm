@@ -1,7 +1,7 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 257
+  Left = 1421
   Height = 749
-  Top = 150
+  Top = 100
   Width = 1370
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 749
@@ -12,7 +12,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.8.2.0'
   object LayoutBoleto: TRLReport
     Left = 14
     Height = 1123
@@ -5346,7 +5346,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel44: TRLLabel
         Left = 0
         Height = 10
-        Top = 165
+        Top = 159
         Width = 62
         Caption = '( + ) Mora / Multa'
         Font.Color = clBlack
@@ -5361,7 +5361,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLLabel45: TRLLabel
         Left = 0
         Height = 10
-        Top = 184
+        Top = 171
         Width = 68
         Caption = '( = ) Valor Cobrado'
         Font.Color = clBlack
@@ -5376,7 +5376,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLDraw68: TRLDraw
         Left = 0
         Height = 1
-        Top = 164
+        Top = 157
         Width = 141
         Angle = 0
         DrawKind = dkLine
@@ -5388,7 +5388,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object RLDraw69: TRLDraw
         Left = 0
         Height = 1
-        Top = 183
+        Top = 169
         Width = 141
         Angle = 0
         DrawKind = dkLine
@@ -6021,12 +6021,55 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
+      object RLLabel88: TRLLabel
+        Left = 0
+        Height = 10
+        Top = 182
+        Width = 69
+        Caption = 'Número Documento'
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLDraw119: TRLDraw
+        Left = 0
+        Height = 1
+        Top = 181
+        Width = 141
+        Angle = 0
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object txtNumeroDocumentoCarne: TRLLabel
+        Left = 3
+        Height = 12
+        Top = 190
+        Width = 136
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
     end
   end
   object BoletoReciboTopo: TRLReport
-    Left = 237
+    Left = 182
     Height = 1123
-    Top = 91
+    Top = 98
     Width = 794
     Font.Color = clBlack
     Font.Height = -13

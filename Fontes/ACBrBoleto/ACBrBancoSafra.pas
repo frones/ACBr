@@ -53,6 +53,7 @@ type
   TACBrBancoSafra = class(TACBrBancoClass)
   private
   protected
+    FNumeroRemessa: Integer;
   public
     constructor Create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo): string; override;
@@ -81,6 +82,10 @@ type
 implementation
 
 uses ACBrUtil;
+
+var
+  aTotal: Extended;
+  aCount: Integer;
 
 { TACBrBancoSafra }
 
@@ -284,6 +289,10 @@ procedure TACBrBancoSafra.GerarRegistroHeader400(NumeroRemessa: integer;
   ARemessa: TStringList);
 var wLinha: String;
 begin
+  aTotal := 0;
+  aCount := 0;
+  FNumeroRemessa := NumeroRemessa;
+
   with ACBrBanco.ACBrBoleto.Cedente do
   begin
     wLinha := '0'                             + // ID do Registro Header
@@ -310,11 +319,15 @@ procedure TACBrBancoSafra.GerarRegistroTrailler400(ARemessa: TStringList);
 var
   wLinha: String;
 begin
-  wLinha := '9'                                  + // Identificação do Registro do Trailler
-            Space(393)                           + // "Branc"
-            IntToStrZero(ARemessa.Count + 1, 6);   // Número Sequencial do Registro do Arquivo
+  wLinha := '9'                               + // Identificação do Registro do Trailler
+  Space(367)                                  + // "Branc"
+  PadLeft(IntToStr(aCount), 8, '0')           + // Quantidade de títulos no arquivo
+  FormatCurr('000000000000000', aTotal * 100) + // Valor total dos títulos
+  IntToStrZero(FNumeroRemessa, 3)             + // Nr. Sequencial de Geração do Arquivo
+  IntToStrZero(ARemessa.Count + 1, 6);          // Número Sequencial do Registro do Arquivo
 
   ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
+
 end;
 
 procedure TACBrBancoSafra.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo;
@@ -393,50 +406,52 @@ begin
     else
       sDataDesconto := FormatDateTime('ddmmyy', DataDesconto);
 
-    wLinha := '1'                                                        + // Identificação do Registro de Transação
-              tipoInscricao                                              + // Tipo de Inscrição da Empresa
-              PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF), 14, '0')   + // Número da Inscrição da Empresa
-              aAgencia + aConta                                          + // Identificação da Empresa no Banco
-              Space(6)                                                   + // "Brancos"
-              Space(25)                                                  + // Uso exclusivo da Empresa
-              Copy(NossoNumero, 1, 8) + IntToStr(Digito)                 + // Número do título no banco
-              Space(30)                                                  + // "Brancos"
-              '0'                                                        + // Código de IOF sobre Operações de Seguro
-              '00'                                                       + // Identificação do Tipo de Moeda, 00=Real
-              Space(1)                                                   + // "Branco"
-              IntToStrZero(StrToIntDef(Instrucao3,0), 2)                 + // Terceira Instrução de Cobrança. Utilizar somente quando Instrução2 é igual a 10
-              Carteira                                                   + // Identificação do Tipo de Carteira
-              Ocorrencia                                                 + // Identificação do Tipo de Ocorrência
-              PadRight(SeuNumero, 10)                                    + // Identificação do Título da Empresa
-              FormatDateTime('ddmmyy', Vencimento)                       + // Data de Vencimento do Título
-              IntToStrZero(Round(ValorDocumento * 100), 13)              + // Valor Nominal do Título
-              IntToStr(ACBrBoleto.Banco.Numero)                          + // Código do Banco encarregado da cobraça
-              '00000'                                                    + // Agência Encarregada da Cobrança
-              aEspecie                                                   + // Espécie do Título
-              aAceite                                                    + // Identificação do Aceite do Título
-              FormatDateTime('ddmmyy', DataDocumento)                    + // Data de Emissão do Título
-              PadLeft(trim(Instrucao1), 2, '0')                          + // Primeira Instrução de Cobrança
-              aInstrucao2                                                + // Segunda Instrução de Cobrança
-              IntToStrZero(round(ValorMoraJuros * 100), 13)              + // Juros de Mora Por Dia de Atraso
-              sDataDesconto                                              + // Data Limite para Desconto
-              IntToStrZero(round(ValorDesconto * 100), 13)               + // Valor Do Desconto Concedido
-              IntToStrZero(round(ValorIOF * 100), 13)                    + // Valor De Iof Operações Deseguro
-              IntToStrZero(round(ValorAbatimento * 100), 13)             + // Valor Do Abatimento Concedido Ou Cancelado / Multa
-              aTipoSacado                                                + // Código De Inscrição Do Sacado
-              PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')               + // Número de Inscrição do Sacado
-              PadRight(Sacado.NomeSacado, 40, ' ')                       + // Nome Do Sacado
-              PadRight(Sacado.Logradouro + ' ' + Sacado.Numero, 40, ' ') + // Endereço Do Sacado
-              PadRight(Sacado.Bairro, 10, ' ')                           + // Bairro Do Sacado
-              Space(2)                                                   + // 'Brancos"
-              PadRight(Sacado.CEP, 8)                                    + // CEP do Sacado
-              PadRight(Sacado.Cidade, 15)                                + // Cidade do Sacado
-              PadRight(Sacado.UF, 2)                                     + // UF do Sacado
-              PadRight(MensagemCedente, 30)                              + // Mensagem específica
-              Space(7)                                                   + // "Brancos"
-              '422'                                                      + // Banco Emitente do Boleto
-              copy(aRemessa.Text, 392, 3)                                + // Numero Seqüencial Geração Arquivo Remessa
-              IntToStrZero(ARemessa.Count + 1, 6);                         // Número Sequencial De Registro De Arquivo
+    wLinha := '1'                                                                            + // Identificação do Registro de Transação
+              tipoInscricao                                                                  + // Tipo de Inscrição da Empresa
+              PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF), 14, '0')                       + // Número da Inscrição da Empresa
+              aAgencia + aConta                                                              + // Identificação da Empresa no Banco
+              Space(6)                                                                       + // "Brancos"
+              Space(25)                                                                      + // Uso exclusivo da Empresa
+              PadLeft(RightStr(NossoNumero,8),8,'0') + CalcularDigitoVerificador(ACBrTitulo) + // Número do título no banco
+              Space(30)                                                                      + // "Brancos"
+              '0'                                                                            + // Código de IOF sobre Operações de Seguro
+              '00'                                                                           + // Identificação do Tipo de Moeda, 00=Real
+              Space(1)                                                                       + // "Branco"
+              IntToStrZero(StrToIntDef(Instrucao3,0), 2)                                     + // Terceira Instrução de Cobrança. Utilizar somente quando Instrução2 é igual a 10
+              Carteira                                                                       + // Identificação do Tipo de Carteira
+              Ocorrencia                                                                     + // Identificação do Tipo de Ocorrência
+              PadRight(SeuNumero, 10)                                                        + // Identificação do Título da Empresa
+              FormatDateTime('ddmmyy', Vencimento)                                           + // Data de Vencimento do Título
+              IntToStrZero(Round(ValorDocumento * 100), 13)                                  + // Valor Nominal do Título
+              IntToStr(ACBrBoleto.Banco.Numero)                                              + // Código do Banco encarregado da cobraça
+              '00000'                                                                        + // Agência Encarregada da Cobrança
+              aEspecie                                                                       + // Espécie do Título
+              aAceite                                                                        + // Identificação do Aceite do Título
+              FormatDateTime('ddmmyy', DataDocumento)                                        + // Data de Emissão do Título
+              PadLeft(trim(Instrucao1), 2, '0')                                              + // Primeira Instrução de Cobrança
+              aInstrucao2                                                                    + // Segunda Instrução de Cobrança
+              IntToStrZero(round(ValorMoraJuros * 100), 13)                                  + // Juros de Mora Por Dia de Atraso
+              sDataDesconto                                                                  + // Data Limite para Desconto
+              IntToStrZero(round(ValorDesconto * 100), 13)                                   + // Valor Do Desconto Concedido
+              IntToStrZero(round(ValorIOF * 100), 13)                                        + // Valor De Iof Operações Deseguro
+              IntToStrZero(round(ValorAbatimento * 100), 13)                                 + // Valor Do Abatimento Concedido Ou Cancelado / Multa
+              aTipoSacado                                                                    + // Código De Inscrição Do Sacado
+              PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                                   + // Número de Inscrição do Sacado
+              PadRight(Sacado.NomeSacado, 40, ' ')                                           + // Nome Do Sacado
+              PadRight(Sacado.Logradouro + ' ' + Sacado.Numero, 40, ' ')                     + // Endereço Do Sacado
+              PadRight(Sacado.Bairro, 10, ' ')                                               + // Bairro Do Sacado
+              Space(2)                                                                       + // 'Brancos"
+              PadRight(Sacado.CEP, 8)                                                        + // CEP do Sacado
+              PadRight(Sacado.Cidade, 15)                                                    + // Cidade do Sacado
+              PadRight(Sacado.UF, 2)                                                         + // UF do Sacado
+              PadRight(MensagemCedente, 30)                                                  + // Mensagem específica
+              Space(7)                                                                       + // "Brancos"
+              '422'                                                                          + // Banco Emitente do Boleto
+              copy(aRemessa.Text, 392, 3)                                                    + // Numero Seqüencial Geração Arquivo Remessa
+              IntToStrZero(ARemessa.Count + 1, 6);                                             // Número Sequencial De Registro De Arquivo
 
+    aTotal := aTotal + ValorDocumento;
+    Inc(aCount);
     aRemessa.Text := aRemessa.Text + wLinha;
   end;
 end;
@@ -563,8 +578,7 @@ function TACBrBancoSafra.MontarCampoCodigoCedente(
 begin
   with ACBrTitulo.ACBrBoleto.Cedente do
   begin
-    Result := PadLeft(Agencia, 5, '0') + '/' + PadLeft(CodigoCedente, 5, '0') +
-              '-' + copy(CodigoCedente, 6, 1);
+    Result := PadLeft(Agencia, 4, '0') + PadLeft(AgenciaDigito, 1, '0') + '/' + PadLeft(ACBrBoleto.Cedente.Conta, 8, '0') + PadLeft(ACBrBoleto.Cedente.ContaDigito, 1, '0');
   end;
 end;
 
@@ -572,7 +586,7 @@ function TACBrBancoSafra.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): 
 begin
   with ACBrTitulo do
   begin
-    Result := NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
+    Result := PadLeft(RightStr(NossoNumero,8),8,'0') + '-' + CalcularDigitoVerificador(ACBrTitulo);
   end;
 end;
 
@@ -586,8 +600,8 @@ begin
 
     CodigoBarras := IntToStr(Banco.Numero) + '9' + FatorVencimento +
                     IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10) +
-                    '7' + Cedente.Agencia + Cedente.Conta +
-                    ACBrTitulo.NossoNumero + '2';
+                    '7' + Cedente.Agencia + Cedente.AgenciaDigito + Cedente.Conta + Cedente.ContaDigito +
+                    PadLeft(RightStr(ACBrTitulo.NossoNumero,8),8,'0') + CalcularDigitoVerificador(ACBrTitulo) + '2';
 
     DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
   end;

@@ -540,7 +540,7 @@ type
     property pRedBC: Currency read FpRedBC write FpRedBC;
     property vCred: Currency read FvCred write FvCred;
     property pRedBCOutraUF: Currency read FpRedBCOutraUF write FpRedBCOutraUF;
-    property vBCOutraUF: Currency read FvBCOutraUF write FvBC;
+    property vBCOutraUF: Currency read FvBCOutraUF write FvBCOutraUF;
     property pICMSOutraUF: Currency read FpICMSOutraUF write FpICMSOutraUF;
     property vICMSOutraUF: Currency read FvICMSOutraUF write FvICMSOutraUF;
   end;

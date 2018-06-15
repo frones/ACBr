@@ -5117,7 +5117,11 @@ begin
 
     with ACBreSocial1.Configuracoes.WebServices do
     begin
-      Ambiente := taHomologacao;
+      if rgTipoAmb.ItemIndex = 0 then
+        Ambiente := taProducao
+      else
+        Ambiente := taHomologacao;
+
       Visualizar := cbxVisualizar.Checked;
       Salvar := cbxSalvarSOAP.Checked;
 

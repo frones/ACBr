@@ -368,7 +368,8 @@ const
   cACBrAACNumSerieNaoEncontardoException = 'ECF de Número de série %s não encontrado no Arquivo Auxiliar Criptografado.' ;
   cACBrAACValorGTInvalidoException       = 'Divergência no Valor do Grande Total.';
 
-  cACBrDFeSSLEnviarException = 'Erro Interno: %d'+sLineBreak+'Erro HTTP: %d';
+  cACBrDFeSSLEnviarException = 'Erro Interno: %d'+sLineBreak+'Erro HTTP: %d'+sLineBreak+
+                               'URL: %s';
 
   sDisplayFormat = ',#0.%.*d';
 

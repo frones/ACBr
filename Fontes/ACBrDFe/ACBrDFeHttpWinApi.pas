@@ -120,7 +120,7 @@ begin
       On E: Exception do
       begin
         raise EACBrDFeException.CreateDef( Format( cACBrDFeSSLEnviarException,
-                                           [InternalErrorCode, HTTPResultCode] ) + sLineBreak +
+                                           [InternalErrorCode, HTTPResultCode, AURL] ) + sLineBreak +
                                            E.Message ) ;
       end;
     end;

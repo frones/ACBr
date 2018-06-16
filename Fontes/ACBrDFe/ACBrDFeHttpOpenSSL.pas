@@ -137,7 +137,7 @@ begin
   OK := OK and (FHTTP.ResultCode in [200, 201, 202]);
   if not OK then
     raise EACBrDFeException.Create( Format(cACBrDFeSSLEnviarException,
-                                       [InternalErrorCode, HTTPResultCode] )
+                                       [InternalErrorCode, HTTPResultCode, AURL] )
                                        + sLineBreak + FHTTP.Sock.LastErrorDesc);
 end;
 

@@ -215,10 +215,6 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsArqMemoria     : String ;
     fsDeviceParams   : String;
 
-    function IsBematech: Boolean;
-    function IsEpson: Boolean;
-    function IsDaruma: Boolean;
-
     procedure EnviaConsumidor;
     Function AjustaDescricao( ADescricao: String ): String;
 
@@ -481,6 +477,12 @@ TACBrECFEscECF = class( TACBrECFClass )
     Function RetornaInfoECF( Registrador: String) : AnsiString; override ;
 
     Function CapturaXMLCupom( Inicial, Final: String; Tipo: Integer = 2 ): AnsiString;
+
+    function IsBematech: Boolean;
+    function IsEpson: Boolean;
+    function IsDaruma: Boolean;
+
+    property MarcaECF: String read fsMarcaECF;
  end ;
 
 implementation

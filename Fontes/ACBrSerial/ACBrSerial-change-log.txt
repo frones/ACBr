@@ -44,7 +44,8 @@ Símbolo : Significado
 [*] Método "CancelaCupom". Bematech não permite o Cancelamento de Cupom, a não
     ser que seja o último. Modificado para que a mensagem de erro de Canelamento
     disparada pela Bematech seja mais significativa
-    (por: DSA)
+[*] Métodos "IsBematech, IsDaruma, IsEpson", e propriedade "MarcaECF" tornados
+    Públicos  (por: DSA)
 
 14/06/2018
 -- ACBrECFDaruma --

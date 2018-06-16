@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/06/2018
+-- ACBrECFEscECF --
+[*] Método "CancelaCupom". Bematech não permite o Cancelamento de Cupom, a não
+    ser que seja o último. Modificado para que a mensagem de erro de Canelamento
+    disparada pela Bematech seja mais significativa
+    (por: DSA)
+
 14/06/2018
 -- ACBrECFDaruma --
 [*] Adicionada verificação de retorno para a leitura dos comandos GetEstado

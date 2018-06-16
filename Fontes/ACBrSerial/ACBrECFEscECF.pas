@@ -2811,7 +2811,8 @@ var
    Est: TACBrECFEstado;
    TipoUltDocto: TACBrECFTipoDocumento;
    EhUltimoCupom: Boolean;
-   TentarEstornarCCDAnteriores, TentarEstornarCCDSeguintes: Boolean;
+   TentarEstornarCCDAnteriores, TentarEstornarCCDSeguintes,
+     ErroGenericoCancelamenetoBematech: Boolean;
 begin
   RespostasComando.Clear;
   Est := TACBrECF( fpOwner ).Estado;
@@ -2864,9 +2865,12 @@ begin
                          ((EscECFResposta.CAT = 05) and (EscECFResposta.RET.ECF = 10)) or
              (IsEpson and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 21));
 
+          ErroGenericoCancelamenetoBematech :=
+            (IsBematech and (EscECFResposta.CAT = 02) and (EscECFResposta.RET.ECF = 02));
+
           TentarEstornarCCDAnteriores :=  // Erro genérico de Cancelamento //
              (not TentarEstornarCCDSeguintes) and
-             ((IsBematech and (EscECFResposta.CAT = 02) and (EscECFResposta.RET.ECF = 02)) or
+             ( ErroGenericoCancelamenetoBematech or
               (IsEpson    and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 18)) or
               (IsDaruma   and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 146)));
 
@@ -2890,7 +2894,12 @@ begin
           if NumCCDEstornado > 0 then
             CancelaCupom(UltimoCOO)
           else
-            raise;
+          begin
+            if ErroGenericoCancelamenetoBematech then
+              raise EACBrECFERRO.Create(ACBrStr('Cancelamento não permitido'))
+            else
+              raise;
+          end;
         end;
       end ;
     end;

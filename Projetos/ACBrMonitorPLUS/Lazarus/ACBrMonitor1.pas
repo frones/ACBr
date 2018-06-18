@@ -276,6 +276,7 @@ type
     cbModoEmissao: TCheckBox;
     cbModoXML: TCheckBox;
     cbOrigem: TComboBox;
+    cbSenha: TCheckBox;
     cbUnidade: TComboBox;
     cbRetirarAcentosNaResposta: TCheckBox;
     cbPreview: TCheckBox;
@@ -306,7 +307,6 @@ type
     chkVerificarValidadeCertificado: TCheckBox;
     chkMostraLogNaTela: TCheckBox;
     cbRFDModelo: TComboBox;
-    cbSenha: TCheckBox;
     cbTraduzirTags: TCheckBox;
     cbUF: TComboBox;
     cbAbas: TCheckBox;

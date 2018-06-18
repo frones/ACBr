@@ -1196,13 +1196,13 @@ begin
               FXMLOriginal := TStringList.Create;
               try
                 FXMLOriginal.LoadFromFile(Cmd.Params(0));
-                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := FXMLOriginal.Text;
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.XML := FXMLOriginal.Text;
               finally
                 FXMLOriginal.Free;
               end;
             end
             else
-               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := Cmd.Params(0);
+              FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.XML := Cmd.Params(0);
 
             FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.Executar;
             Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.RetWS;
@@ -1215,13 +1215,13 @@ begin
               FXMLOriginal := TStringList.Create;
               try
                 FXMLOriginal.LoadFromFile(Cmd.Params(0));
-                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := FXMLOriginal.Text;
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.XML := FXMLOriginal.Text;
               finally
                 FXMLOriginal.Free;
               end;
             end
             else
-               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := Cmd.Params(0);
+               FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.XML := Cmd.Params(0);
 
             FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.Executar;
             Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.RetWS;

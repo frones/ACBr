@@ -515,25 +515,24 @@ object FrmACBrMonitor: TFrmACBrMonitor
             TabOrder = 2
           end
           object gbSenha: TGroupBox
-            AnchorSideTop.Control = cbRetirarAcentosNaResposta
             AnchorSideTop.Side = asrBottom
             Left = 8
-            Height = 58
+            Height = 53
             Hint = 'Evita que usuários abram a tela de configuração '#13#10' '#13#10'Também é usada para proteger o arquivo de configurações'#13#10'com dados da Sw.House para geração da RFD'
-            Top = 232
+            Top = 253
             Width = 236
             BorderSpacing.Top = 2
-            ClientHeight = 36
+            ClientHeight = 31
             ClientWidth = 232
             Enabled = False
-            TabOrder = 8
+            TabOrder = 7
             object edSenha: TEdit
               AnchorSideTop.Control = gbSenha
               AnchorSideTop.Side = asrCenter
               Cursor = crIBeam
               Left = 48
               Height = 25
-              Top = 6
+              Top = 3
               Width = 136
               EchoMode = emPassword
               PasswordChar = '*'
@@ -545,7 +544,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = edSenha
               Left = 5
               Height = 17
-              Top = 10
+              Top = 7
               Width = 38
               Anchors = [akTop, akRight]
               BorderSpacing.Right = 5
@@ -556,20 +555,20 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object gbLog: TGroupBox
             AnchorSideTop.Side = asrBottom
             Left = 253
-            Height = 144
+            Height = 160
             Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
             Top = 146
             Width = 587
             Anchors = [akTop, akLeft, akRight]
-            ClientHeight = 122
+            ClientHeight = 138
             ClientWidth = 583
-            TabOrder = 9
+            TabOrder = 8
             object sbLog: TSpeedButton
               AnchorSideTop.Control = edLogArq
               AnchorSideTop.Side = asrCenter
               Left = 555
               Height = 23
-              Top = 30
+              Top = 35
               Width = 23
               Anchors = [akRight]
               Caption = '...'
@@ -580,7 +579,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 94
               Height = 25
-              Top = 29
+              Top = 34
               Width = 461
               Anchors = [akLeft, akRight]
               BorderSpacing.Top = 5
@@ -592,7 +591,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = edLogArq
               Left = 43
               Height = 17
-              Top = 33
+              Top = 38
               Width = 48
               Alignment = taRightJustify
               Anchors = [akRight]
@@ -608,7 +607,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = sedLogLinhas
               Left = 24
               Height = 17
-              Top = 62
+              Top = 71
               Width = 67
               Alignment = taRightJustify
               Anchors = [akRight]
@@ -626,7 +625,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 94
               Height = 25
               Hint = 'Número máximo de linhas no arquivo de LOG'#13#10'Se for diferente de zero, o ACBrMonitor ajustará'#13#10'o arquivo de Log sempre que for iniciado'
-              Top = 58
+              Top = 67
               Width = 101
               Anchors = [akLeft, akRight]
               BorderSpacing.Top = 4
@@ -655,18 +654,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
               TabOrder = 3
             end
           end
-          object cbSenha: TCheckBox
-            AnchorSideLeft.Control = gbSenha
-            AnchorSideTop.Control = gbSenha
-            Left = 8
-            Height = 21
-            Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
-            Top = 232
-            Width = 159
-            Caption = 'Proteger Configurações'
-            OnClick = cbSenhaClick
-            TabOrder = 7
-          end
           object gbTXT: TGroupBox
             AnchorSideTop.Side = asrBottom
             Left = 253
@@ -677,7 +664,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             ClientHeight = 90
             ClientWidth = 583
             Enabled = False
-            TabOrder = 11
+            TabOrder = 10
             object Label6: TLabel
               AnchorSideTop.Control = edEntTXT
               AnchorSideTop.Side = asrCenter
@@ -833,7 +820,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Font.Style = [fsBold]
             OnClick = rbTCPTXTClick
             ParentFont = False
-            TabOrder = 10
+            TabOrder = 9
           end
           object cbUmaInstancia: TCheckBox
             Left = 8
@@ -866,6 +853,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Width = 182
             Caption = 'Retirar acentos da resposta'
             TabOrder = 6
+          end
+          object cbSenha: TCheckBox
+            Left = 8
+            Height = 21
+            Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
+            Top = 231
+            Width = 159
+            Caption = 'Proteger Configurações'
+            OnClick = cbSenhaClick
+            TabOrder = 11
           end
         end
         object tsCadastro: TTabSheet

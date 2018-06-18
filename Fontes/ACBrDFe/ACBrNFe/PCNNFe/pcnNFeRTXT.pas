@@ -792,6 +792,10 @@ begin
       (*N27a*)NFe.Det[i].Imposto.ICMS.vBCFCPSTRet := LerCampo(tcDe2, 'vBCFCPSTRet');
       (*N27b*)NFe.Det[i].Imposto.ICMS.pFCPSTRet := LerCampo(tcDe2, 'pFCPSTRet');
       (*N27d*)NFe.Det[i].Imposto.ICMS.vFCPSTRet := LerCampo(tcDe2, 'vFCPSTRet');
+      (*N34*)NFe.Det[i].Imposto.ICMS.pRedBCEfet := LerCampo(tcDe2, 'pRedBCEfet');
+      (*N35*)NFe.Det[i].Imposto.ICMS.vBCEfet := LerCampo(tcDe2, 'vBCEfet');
+      (*N36*)NFe.Det[i].Imposto.ICMS.pICMSEfet := LerCampo(tcDe2, 'pICMSEfet');
+      (*N37*)NFe.Det[i].Imposto.ICMS.vICMSEfet := LerCampo(tcDe2, 'vICMSEfet');
     end;
 {           NFe.Det[i].Imposto.ICMS.motDesICMS := StrToModBC(ok, LerCampo(tcStr, 'motDesICMS'));
            NFe.Det[i].Imposto.ICMS.pDif := LerCampo(tcDe4, 'pDif');

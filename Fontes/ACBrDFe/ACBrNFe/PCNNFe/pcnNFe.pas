@@ -1129,6 +1129,10 @@ type
     FpFCPSTRet: Currency;
     FvFCPSTRet: Currency;
     FpST: Currency;
+    FpRedBCEfet: Currency;
+    FvBCEfet: Currency;
+    FpICMSEfet: Currency;
+    FvICMSEfet: Currency;
   public
     procedure Assign(Source: TPersistent); override;
   published
@@ -1169,6 +1173,10 @@ type
     property pFCPSTRet: Currency read FpFCPSTRet write FpFCPSTRet;
     property vFCPSTRet: Currency read FvFCPSTRet write FvFCPSTRet;
     property pST: Currency read FpST write FpST;
+    property pRedBCEfet: Currency read FpRedBCEfet write FpRedBCEfet;
+    property vBCEfet: Currency read FvBCEfet write FvBCEfet;
+    property pICMSEfet: Currency read FpICMSEfet write FpICMSEfet;
+    property vICMSEfet: Currency read FvICMSEfet write FvICMSEfet;
   end;
 
   TIPI = class(TPersistent)

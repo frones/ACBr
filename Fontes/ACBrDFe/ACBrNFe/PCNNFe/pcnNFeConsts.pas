@@ -241,6 +241,10 @@ const
   DSC_VFCPSTRET = 'Valor do FCP retido por Substituição Tributária';
   DSC_PST = 'Alíquota suportada pelo Consumidor Final';
   DSC_VBCFCPUFDEST = 'Valor da BC FCP na UF de destino';
+  DSC_PREDBCEFET = 'Percentual de redução da base de cálculo efetiva';
+  DSC_VBCEFET = 'Valor da base de cálculo efetiva';
+  DSC_PICMSEFET = 'Alíquota do ICMS efetiva';
+  DSC_VICMSEFET = 'Valor do ICMS efetivo';
   //DSC_VPART = 'Valor';
   DSC_INDESCALA = 'Indicador de Escala de Produção';
   DSC_CNPJFAB = 'CNPJ do Fabricante da Mercadoria';

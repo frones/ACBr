@@ -554,8 +554,7 @@ type
     FpICMSInterPart: Currency;
     FvFCPUFFim: Currency;
     FvICMSUFFim: Currency;
-    FvICMSUFIni: Currency;
-    FvICMSUFim: Currency;
+    FvICMSUFIni: Currency;    
   public
     procedure Assign(Source: TPersistent); override;
   published
@@ -565,7 +564,7 @@ type
     property pICMSInter: Currency read FpICMSInter write FpICMSInter;
     property pICMSInterPart: Currency read FpICMSInterPart write FpICMSInterPart;
     property vFCPUFFim: Currency read FvFCPUFFim write FvFCPUFFim;
-    property vICMSUFFim: Currency read FvICMSUFim write FvICMSUFFim;
+    property vICMSUFFim: Currency read FvICMSUFFim write FvICMSUFFim;
     property vICMSUFIni: Currency read FvICMSUFIni write FvICMSUFIni;
   end;
 

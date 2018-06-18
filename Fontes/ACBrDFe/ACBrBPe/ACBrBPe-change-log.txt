@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2018
+-- pcnBPe --
+[*] https://www.projetoacbr.com.br/forum/topic/36432-bilhete-de-passagem-eletr%C3%B4nico-bp-e/?do=findComment&comment=290912
+   Por: Evertof
+
 15/06/2018
 -- pcnBPe --
 [*] https://www.projetoacbr.com.br/forum/topic/36432-bilhete-de-passagem-eletr%C3%B4nico-bp-e/?do=findComment&comment=290748

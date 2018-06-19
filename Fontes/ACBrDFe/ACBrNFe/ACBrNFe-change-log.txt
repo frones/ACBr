@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2018
+-- ACBrNFe --
+[*] Alteração no componente para deixa-lo em conformidade com a NT 2016/002
+    versão 1.60 - Alteracao Leiaute da NF-e - Versao 4.00
+   por: Italo Jurisato Junior
+
 11/06/2018
 -- ACBrNFeDANFeESCPOS --
 [*] Ajuste para calcular corretamente a Altura do QRCode Lateral, com diversas

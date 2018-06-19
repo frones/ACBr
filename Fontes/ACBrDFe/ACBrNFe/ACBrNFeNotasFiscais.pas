@@ -1763,6 +1763,11 @@ begin
                 ICMS.vICMSOp    := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSOp','') ,0);
                 ICMS.pDif       := StringToFloatDef( INIRec.ReadString(sSecao,'pDif','') ,0);
                 ICMS.vICMSDif   := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSDif','') ,0);
+
+                ICMS.pRedBCEfet := StringToFloatDef( INIRec.ReadString(sSecao,'pRedBCEfet','') ,0);
+                ICMS.vBCEfet    := StringToFloatDef( INIRec.ReadString(sSecao,'vBCEfet','') ,0);
+                ICMS.pICMSEfet  := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSEfet','') ,0);
+                ICMS.vICMSEfet  := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSEfet','') ,0);
               end;
             end;
 
@@ -2666,6 +2671,10 @@ begin
               INIRec.WriteFloat(sSecao, 'pDif', ICMS.pDif);
               INIRec.WriteFloat(sSecao, 'vICMSDif', ICMS.vICMSDif);
 
+              INIRec.WriteFloat(sSecao, 'pRedBCEfet', ICMS.pRedBCEfet);
+              INIRec.WriteFloat(sSecao, 'vBCEfet', ICMS.vBCEfet);
+              INIRec.WriteFloat(sSecao, 'pICMSEfet', ICMS.pICMSEfet);
+              INIRec.WriteFloat(sSecao, 'vICMSEfet', ICMS.vICMSEfet);
             end;
             sSecao := 'ICMSUFDEST' + IntToStrZero(I + 1, 3);
             with ICMSUFDest do

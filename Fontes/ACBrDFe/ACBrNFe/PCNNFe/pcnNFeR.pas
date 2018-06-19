@@ -650,6 +650,10 @@ begin
       (*N30*)NFe.Det[i].Imposto.ICMS.vCredICMSSN := Leitor.rCampo(tcDe2, 'vCredICMSSN');
       (*N31*)NFe.Det[i].Imposto.ICMS.vBCSTDest   := Leitor.rCampo(tcDe2, 'vBCSTDest');
       (*N32*)NFe.Det[i].Imposto.ICMS.vICMSSTDest := Leitor.rCampo(tcDe2, 'vICMSSTDest');
+      (*N34*)NFe.Det[i].Imposto.ICMS.pRedBCEfet  := Leitor.rCampo(tcDe4, 'pRedBCEfet');
+      (*N35*)NFe.Det[i].Imposto.ICMS.vBCEfet     := Leitor.rCampo(tcDe2, 'vBCEfet');
+      (*N36*)NFe.Det[i].Imposto.ICMS.pICMSEfet   := Leitor.rCampo(tcDe4, 'pICMSEfet');
+      (*N37*)NFe.Det[i].Imposto.ICMS.vICMSEfet   := Leitor.rCampo(tcDe2, 'vICMSEfet');
 
       if Leitor.rExtrai(4, 'ICMSPart') <> '' then
       begin

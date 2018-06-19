@@ -800,7 +800,7 @@ begin
       Gerador.wCampo(tcStr, 'I05d', 'indEscala', 01, 01, 0, indEscalaToStr(nfe.Det[i].Prod.indEscala), DSC_INDESCALA);
       Gerador.wCampo(tcStr, 'I05e', 'CNPJFab  ', 14, 14, 0, nfe.Det[i].Prod.CNPJFab, DSC_CNPJFAB);
     end;
-    Gerador.wCampo(tcStr, 'I05f', 'cBenef', 10, 10, 0, nfe.Det[i].Prod.cBenef, DSC_CBENEF);
+    Gerador.wCampo(tcStr, 'I05f', 'cBenef', 08, 10, 0, nfe.Det[i].Prod.cBenef, DSC_CBENEF);
   end
   else
     Gerador.wCampo(tcStr, 'I05w', 'CEST', 07, 07, 0, OnlyNumber(nfe.Det[i].Prod.CEST), DSC_CEST);

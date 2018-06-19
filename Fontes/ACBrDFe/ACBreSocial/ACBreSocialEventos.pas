@@ -183,6 +183,7 @@ end;
 procedure TEventos.GerarXMLs;
 begin
   FTipoEmpregador := TACBreSocial(Self.Owner).Configuracoes.Geral.TipoEmpregador;
+
   Self.Iniciais.GerarXMLs;
   Self.Tabelas.GerarXMLs;
   Self.NaoPeriodicos.GerarXMLs;
@@ -191,10 +192,10 @@ end;
 
 function TEventos.GetCount: integer;
 begin
-  Result :=  Self.Iniciais.Count +
-             Self.Tabelas.Count +
-             Self.NaoPeriodicos.Count +
-             Self.Periodicos.Count;
+  Result := Self.Iniciais.Count +
+            Self.Tabelas.Count +
+            Self.NaoPeriodicos.Count +
+            Self.Periodicos.Count;
 end;
 
 procedure TEventos.SaveToFiles;
@@ -288,10 +289,11 @@ begin
     AXML := copy(AXMLString, 1, P + 9);
     AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
 
-    Result := Self.Iniciais.LoadFromString(AXML) or
-              Self.Tabelas.LoadFromString(AXML) or
-              Self.NaoPeriodicos.LoadFromString(AXML) or
-              Self.Periodicos.LoadFromString(AXML);
+    Result := Self.Iniciais.LoadFromString(AXML);
+    Result := Self.Tabelas.LoadFromString(AXML) or Result;
+    Result := Self.NaoPeriodicos.LoadFromString(AXML) or Result;
+    Result := Self.Periodicos.LoadFromString(AXML) or Result;
+
     SaveToFiles;
 
     P := PoseSocial;
@@ -300,10 +302,11 @@ end;
 
 function TEventos.LoadFromStringINI(AINIString: String): Boolean;
 begin
-  Result := Self.Iniciais.LoadFromIni(AIniString) or
-            Self.Tabelas.LoadFromIni(AIniString) or
-            Self.NaoPeriodicos.LoadFromIni(AIniString) or
-            Self.Periodicos.LoadFromIni(AIniString);
+  Result := Self.Iniciais.LoadFromIni(AIniString);
+  Result := Self.Tabelas.LoadFromIni(AIniString) or Result;
+  Result := Self.NaoPeriodicos.LoadFromIni(AIniString) or Result;
+  Result := Self.Periodicos.LoadFromIni(AIniString) or Result;
+
   SaveToFiles;
 end;
 

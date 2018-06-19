@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/06/2018
+-- ACBreSocialEventos --
+[*] https://www.projetoacbr.com.br/forum/topic/44165-erro-ao-carregar-v%C3%A1rios-xml-de-eventos/
+   Por: Gustavo Almeida
+
 15/06/2018
 -- pcesGerador --
 [*] Estava sendo utilizada uma função de conversão errada para obter o tipo de

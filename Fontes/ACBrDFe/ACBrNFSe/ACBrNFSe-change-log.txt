@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2018
+-- pnfsNFSeR --
+[*] Para o provedor NFSeBrasil o nome da tag é AliquotaServico e não Aliquota.
+   Por: Italo Jurisato Junior
+[*] Incluido a leitura do grupo <ContatoPrestadorServico>
+   Por: thi4182 / Italo Jurisato Junior
+-- pnfsNFSeW_ABRASFv1 --
+   Por: Italo Jurisato Junior
+[*] Para o provedor NFSeBrasil não se deve gerar a tag ValorISSRetido.
+-- pnfsNFSeG --
+   Por: Italo Jurisato Junior
+[*] Para o provedor Abaco (Cidade - Manaus) Deve-se constar uma letra junto com o 
+    numero do Lote (atributo id do grupo LoteRps).
+   Por: Rodrigo Vian / Italo Jurisato Junior
+
 14/06/2018
 -- ACBrNFSeConfiguracoes --
 [*] Feitas correções ao gerar as pastas Notas e Recibos, não estava levando em 

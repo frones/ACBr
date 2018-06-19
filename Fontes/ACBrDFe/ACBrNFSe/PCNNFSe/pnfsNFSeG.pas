@@ -318,16 +318,22 @@ begin
 
   // Valor do atributo Id ======================================================
   case Provedor of
-//    proAbaco: IdLote := 'LOTE' + NumeroLote;
+    proAbaco: begin
+                if CodMunicipio = 1302603 then
+                  IdLote := 'L' + NumeroLote
+                else
+                  IdLote := NumeroLote;
+              end;
 
-    proBethav2: IdLote := 'lote' + NumeroLote;
+    proBethav2,
+    proSIAPNet,
+    proSalvador: IdLote := 'lote' + NumeroLote;
+
 
     proEL: begin
              IdLote := StringOfChar('0', 15) + OnlyNumber(NumeroRps) + SerieRps;
              IdLote := copy(IdLote, length(IdLote) - 15 + 1, 15);
            end;
-
-    proSalvador: IdLote := 'Lote' + NumeroLote;
 
     proSiam: IdLote := 'Lote_' + NumeroLote + '_' + dhEnvio;
 

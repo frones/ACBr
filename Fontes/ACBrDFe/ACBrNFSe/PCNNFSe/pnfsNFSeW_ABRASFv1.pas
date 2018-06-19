@@ -267,7 +267,7 @@ begin
     Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss     ', 01, 15, 0, NFSe.Servico.Valores.ValorIss, DSC_VISS);
   end;
 
-  if not (FProvedor in [proPronim, proBetha, proGovBr]) then
+  if not (FProvedor in [proPronim, proBetha, proGovBr, proNFSeBrasil]) then
     Gerador.wCampoNFSe(tcDe2, '#22', 'ValorIssRetido', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, DSC_VISSRET);
 
   if FProvedor in [proPronim, proNFSeBrasil] then
@@ -565,7 +565,7 @@ begin
   case FProvedor of
 //    proAbaco,
     proRecife,
-    proSalvador: FNFSe.InfID.ID := 'RPS' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
+    proSalvador: FNFSe.InfID.ID := 'rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
   else
     FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                       FNFSe.IdentificacaoRps.Serie;

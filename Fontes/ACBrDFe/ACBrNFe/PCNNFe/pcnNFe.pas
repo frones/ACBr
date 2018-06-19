@@ -3691,6 +3691,20 @@ begin
     vICMSOp := TICMS(Source).vICMSOp;
     pDif := TICMS(Source).pDif;
     vICMSDif := TICMS(Source).vICMSDif;
+    vBCFCP := TICMS(Source).vBCFCP;
+    pFCP := TICMS(Source).pFCP;
+    vFCP := TICMS(Source).vFCP;
+    vBCFCPST := TICMS(Source).vBCFCPST;
+    pFCPST := TICMS(Source).pFCPST;
+    vFCPST := TICMS(Source).vFCPST;
+    vBCFCPSTRet := TICMS(Source).vBCFCPSTRet;
+    pFCPSTRet := TICMS(Source).pFCPSTRet;
+    vFCPSTRet := TICMS(Source).vFCPSTRet;
+    pST := TICMS(Source).pST;
+    pRedBCEfet := TICMS(Source).pRedBCEfet;
+    vBCEfet := TICMS(Source).vBCEfet;
+    pICMSEfet := TICMS(Source).pICMSEfet;
+    vICMSEfet := TICMS(Source).vICMSEfet;
   end
   else
     inherited;
@@ -4169,6 +4183,7 @@ begin
   if Source is TICMSUFDest then
   begin
     vBCUFDest := TICMSUFDest(Source).vBCUFDest;
+    vBCFCPUFDest := TICMSUFDest(Source).vBCFCPUFDest;
     pFCPUFDest := TICMSUFDest(Source).pFCPUFDest;
     pICMSUFDest := TICMSUFDest(Source).pICMSUFDest;
     pICMSInter := TICMSUFDest(Source).pICMSInter;

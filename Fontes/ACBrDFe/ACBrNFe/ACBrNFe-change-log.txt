@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/06/2018
+-- pcnNFe --
+[*] https://www.projetoacbr.com.br/forum/topic/44172-nfe-40-atualizado-m%C3%A9todo-nfeassign-com-as-novas-propriedades/
+   por: Solivan Araujo
+
 18/06/2018
 -- ACBrNFe --
 [*] Alteração no componente para deixa-lo em conformidade com a NT 2016/002

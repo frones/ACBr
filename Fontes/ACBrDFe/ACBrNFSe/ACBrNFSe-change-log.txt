@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2018
+-- pnfsNFSeW_ABRASFv1 --
+[*] Para o provedor de Natal é obrigatório gerar a tag <BaseCalculo> mesmo com o valor zero.
+-- ACBrNFSeWebServices --
+[*] Ao extrair o XML do Grupo de Mensagem de Retorno (Envio Sincrono) estava usando o grupo Gerar
+    em vez de RecSincrono
+Por: Italo  Jurisato Junior
+
 18/06/2018
 -- pnfsNFSeR --
 [*] Para o provedor NFSeBrasil o nome da tag é AliquotaServico e não Aliquota.

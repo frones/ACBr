@@ -277,7 +277,7 @@ begin
 
   if FProvedor <> proNFSeBrasil then
   begin
-    if FProvedor = proPronim then
+    if FProvedor in [proPronim, proNatal] then
       Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, DSC_VBCISS)
     else
       Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, DSC_VBCISS);

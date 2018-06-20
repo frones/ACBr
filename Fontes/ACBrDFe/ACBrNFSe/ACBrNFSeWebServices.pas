@@ -3117,7 +3117,7 @@ begin
 
   if FNotaRetornada then
   begin
-    FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Gerar);
+    FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.RecSincrono);
     Result := ExtrairNotasRetorno;
   end
   else

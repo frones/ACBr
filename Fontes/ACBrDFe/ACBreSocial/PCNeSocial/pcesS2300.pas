@@ -362,6 +362,7 @@ end;
 procedure TEvtTSVInicio.GerarInfoComplementares(obj: TinfoComplementares);
 begin
   if (obj.cargoFuncao.codCargo <> EmptyStr) or (obj.Remuneracao.VrSalFx > 0) or
+     (obj.Remuneracao.UndSalFixo = sfNaoaplicavel ) or
      (obj.FGTS.DtOpcFGTS> 0) or (obj.infoDirSind.dtAdmOrig > 0) or
      (obj.infoTrabCedido.dtAdmCed>0) or (obj.infoEstagiario.dtPrevTerm > 0) then
   begin
@@ -479,7 +480,7 @@ end;
 
 procedure TEvtTSVInicio.GerarRemuneracao(obj: TRemuneracao);
 begin
-  if obj.vrSalFx > 0 then
+  if (obj.vrSalFx > 0) or (obj.UndSalFixo = sfNaoaplicavel ) then
   begin
     Gerador.wGrupo('remuneracao');
 

@@ -485,7 +485,7 @@ TACBrECF = class( TACBrComponent )
     Property RFDID     : String    read GetRFDIDClass;
     Property DataHora  : TDateTime read GetDataHoraClass ;
     Property NumCupom  : String    read GetNumCupomClass ;
-    Property NumCOO    : String    read GetNumCupomClass ;
+    Property NumCOO    : String    read GetNumCupomClass ;   //Contador de Ordem de Operação
     Property NumLoja   : String    read GetNumLojaClass  ;
     Property NumECF    : String    read GetNumECFClass   ;
     Property NumSerie  : String    read GetNumSerieClass ;
@@ -512,17 +512,17 @@ TACBrECF = class( TACBrComponent )
     Property MFAdicional        : String     read GetMFAdicional ;
 
     Property PAF                : String     read GetPAFClass ;
-    Property NumCRZ             : String     read GetNumCRZClass ;
-    Property NumCRO             : String     read GetNumCROClass ;
-    Property NumCCF             : String     read GetNumCCFClass ;
-    Property NumGNF             : String     read GetNumGNFClass ;
-    Property NumGRG             : String     read GetNumGRGClass ;
-    Property NumCDC             : String     read GetNumCDCClass ;
-    Property NumCFC             : String     read GetNumCFCClass ;
-    Property NumGNFC            : String     read GetNumGNFCClass ;
-    Property NumCFD             : String     read GetNumCFDClass ;
-    Property NumNCN             : String     read GetNumNCNClass ;
-    Property NumCCDC            : String     read GetNumCCDCClass ;
+    Property NumCRZ             : String     read GetNumCRZClass ;     //Contador de Reduções Z
+    Property NumCRO             : String     read GetNumCROClass ;     //Contador de Reinício de Operação
+    Property NumCCF             : String     read GetNumCCFClass ;     //Contador de Cupom Fiscal
+    Property NumGNF             : String     read GetNumGNFClass ;     //Contador Geral de Operação Não-Fiscal
+    Property NumGRG             : String     read GetNumGRGClass ;     //Contador Geral de Relatório Gerencial
+    Property NumCDC             : String     read GetNumCDCClass ;     //Contador de Comprovante de Crédito ou Débito
+    Property NumCFC             : String     read GetNumCFCClass ;     //Contador de Cupom Fiscal Cancelado
+    Property NumGNFC            : String     read GetNumGNFCClass ;    //GNFC ou NFC - Contador Geral de Operação Não-Fiscal Cancelada
+    Property NumCFD             : String     read GetNumCFDClass ;     //Contador de Fita-detalhe
+    Property NumNCN             : String     read GetNumNCNClass ;     //Contador de Comprovantes de Crédito ou Débito Não Emitidos
+    Property NumCCDC            : String     read GetNumCCDCClass ;    //Contador de Débito ou Crédito Cancelados
     Property NumCOOInicial      : String     read GetNumCOOInicialClass ;
     Property VendaBruta         : Double     read GetVendaBrutaClass ;
     Property GrandeTotal        : Double     read GetGrandeTotalClass ;

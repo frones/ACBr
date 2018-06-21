@@ -123,6 +123,7 @@ TACBrETQClass = class
     property Temperatura:     Integer          read fTemperatura      write fTemperatura;
     property Velocidade:      Integer          read fVelocidade       write fVelocidade;
     property BackFeed:        TACBrETQBackFeed read fpBackFeed        write fpBackFeed;
+    property LimparMemoria:   Boolean          read fpLimparMemoria   write fpLimparMemoria;
     property Unidade:         TACBrETQUnidade  read fUnidade          write fUnidade;
     property Origem:          TACBrETQOrigem   read fpOrigem          write fpOrigem;
     property Avanco:          Integer          read fAvanco           write fAvanco;
@@ -242,6 +243,9 @@ begin
   AdicionarComandos( ComandoBackFeed, ListaComandos );
   AdicionarComandos( ComandoAbertura, ListaComandos );
   AdicionarComandos( ComandoUnidade, ListaComandos );
+  if fpLimparMemoria then
+    AdicionarComandos( ComandoLimparMemoria, ListaComandos );
+
   AdicionarComandos( ComandoTemperatura, ListaComandos );
   AdicionarComandos( ComandoResolucao, ListaComandos );
   AdicionarComandos( ComandoOrigemCoordenadas, ListaComandos );

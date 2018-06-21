@@ -68,7 +68,6 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     fsMargemEsquerda: Integer;
     fsEtqFinalizada: Boolean;
     fsEtqInicializada: Boolean;
-    fsLimparMemoria: Boolean;
     fsOnGravarLog: TACBrGravarLog;
     fsModelo: TACBrETQModelo;
     fsListaCmd: TACBrETQCmdList;
@@ -77,6 +76,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     fsArqLOG: String;
     fsAtivo: Boolean;
 
+    function GetLimparMemoria: Boolean;
     function GetModeloStr: String;
     function GetBackFeed: TACBrETQBackFeed;
     function GetOrigem: TACBrETQOrigem;
@@ -90,6 +90,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     procedure SetUnidade(const AValue: TACBrETQUnidade);
     procedure SetModelo(const Value: TACBrETQModelo);
     procedure SetBackFeed(AValue: TACBrETQBackFeed);
+    procedure SetLimparMemoria(const Value: Boolean);
     procedure SetTemperatura(const Value: Integer);
     procedure SetVelocidade(const Value: Integer);
     procedure SetDPI(const AValue: TACBrETQDPI);
@@ -158,13 +159,13 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     property Unidade:         TACBrETQUnidade  read GetUnidade       write SetUnidade default etqDecimoDeMilimetros;
     property Modelo:          TACBrETQModelo   read fsModelo         write SetModelo default etqNenhum;
     property BackFeed:        TACBrETQBackFeed read GetBackFeed      write SetBackFeed default bfNone;
-    property LimparMemoria:   Boolean          read fsLimparMemoria  write fsLimparMemoria default True;
+    property LimparMemoria:   Boolean          read GetLimparMemoria write SetLimparMemoria default True;
     property Temperatura:     Integer          read GetTemperatura   write SetTemperatura default 10;
     property Velocidade:      Integer          read GetVelocidade    write SetVelocidade default -1;
     property Origem:          TACBrETQOrigem   read GetOrigem        write SetOrigem default ogNone;
     property DPI:             TACBrETQDPI      read GetDPI           write SetDPI default dpi203;
     property Avanco:          Integer          read GetAvanco        write SetAvanco default 0;
-    property MargemEsquerda:  Integer          read fsMargemEsquerda  write fsMargemEsquerda default 0;
+    property MargemEsquerda:  Integer          read fsMargemEsquerda write fsMargemEsquerda default 0;
     property OnGravarLog:     TACBrGravarLog   read fsOnGravarLog    write fsOnGravarLog;
     property ArqLOG:          String           read fsArqLOG         write fsArqLOG;
     property Porta:           String           read GetPorta         write SetPorta;
@@ -219,7 +220,6 @@ begin
   { Instanciando fsETQ com modelo Generico (TACBrETQClass) }
   fsETQ := TACBrETQClass.create(Self);
 
-  fsLimparMemoria   := True;
   fsArqLOG          := '';
   fsOnGravarLog     := Nil;
   fsEtqFinalizada   := False;
@@ -243,6 +243,11 @@ end;
 function TACBrETQ.GetModeloStr: String;
 begin
   Result := ACBrStr(fsETQ.ModeloStr);
+end;
+
+function TACBrETQ.GetLimparMemoria: Boolean;
+begin
+  Result := fsETQ.LimparMemoria;
 end;
 
 function TACBrETQ.GetBackFeed: TACBrETQBackFeed;
@@ -294,6 +299,7 @@ procedure TACBrETQ.SetModelo(const Value: TACBrETQModelo);
 var
   wUnidade: TACBrETQUnidade;
   wDPI: TACBrETQDPI;
+  wLimparMemoria: Boolean;
   wTemperatura, wVelocidade, wAvanco: Integer;
 begin
   GravarLog('- SetModelo. '+GetEnumName(TypeInfo(TACBrETQModelo), Integer(Value)));
@@ -301,11 +307,12 @@ begin
   if (fsModelo = Value) then
     Exit;
 
-  wTemperatura := Temperatura;
-  wAvanco      := Avanco;
-  wUnidade     := Unidade;
-  wDPI         := DPI;
-  wVelocidade  := Velocidade;
+  wTemperatura   := Temperatura;
+  wLimparMemoria := LimparMemoria;
+  wAvanco        := Avanco;
+  wUnidade       := Unidade;
+  wDPI           := DPI;
+  wVelocidade    := Velocidade;
 
   if fsAtivo then
     raise Exception.Create(ACBrStr('Não é possível mudar o Modelo com ACBrETQ Ativo'));
@@ -321,12 +328,13 @@ begin
     fsETQ := TACBrETQClass.Create(Self);
   end;
 
-  Temperatura := wTemperatura;
-  Avanco      := wAvanco;
-  Unidade     := wUnidade;
-  DPI         := wDPI;
-  Velocidade  := wVelocidade;
-  fsModelo    := Value;
+  Temperatura  := wTemperatura;
+  LimparMemoria:= wLimparMemoria;
+  Avanco       := wAvanco;
+  Unidade      := wUnidade;
+  DPI          := wDPI;
+  Velocidade   := wVelocidade;
+  fsModelo     := Value;
 end;
 
 procedure TACBrETQ.SetBackFeed(AValue: TACBrETQBackFeed);
@@ -347,6 +355,11 @@ end;
 procedure TACBrETQ.SetDPI(const AValue: TACBrETQDPI);
 begin
   fsETQ.DPI := AValue;
+end;
+
+procedure TACBrETQ.SetLimparMemoria(const Value: Boolean);
+begin
+  fsETQ.LimparMemoria := Value;
 end;
 
 procedure TACBrETQ.SetPorta(const Value: String);

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2018
+-- ACBrETQ, ACBrETQClass --
+[-] Ajuste para enviar o comando de Limpar a Memória, ante de Impressão da Etiqueta
+    (por: Warquia Pereira)
+    https://www.projetoacbr.com.br/forum/topic/42762-acbretq-tarja-na-primeira-impressão-tlp-2844-e-gc420t/
+
 16/06/2018
 -- ACBrECFEscECF --
 [*] Método "CancelaCupom". Bematech não permite o Cancelamento de Cupom, a não

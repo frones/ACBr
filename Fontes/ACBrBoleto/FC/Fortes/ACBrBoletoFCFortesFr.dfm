@@ -12,7 +12,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.8.2.0'
   object LayoutBoleto: TRLReport
     Left = 14
     Height = 1123

@@ -58,6 +58,7 @@ type
     FConfigQRCode: TACBrConfigQRCode;
     FConfigLogo: TACBrConfigLogo;
     FConfigGaveta: TACBrConfigGaveta;
+    FConfigModoPagina: TACBrConfigModoPagina;
     FLinhasEntreCupons: Integer;
     FCortaPapel: Boolean;
     FTraduzirTags: Boolean;
@@ -84,6 +85,7 @@ type
     property ConfigQRCode: TACBrConfigQRCode read FConfigQRCode;
     property ConfigLogo: TACBrConfigLogo read FConfigLogo;
     property ConfigGaveta: TACBrConfigGaveta read FConfigGaveta;
+    property ConfigModoPagina: TACBrConfigModoPagina read FConfigModoPagina;
     property LinhasEntreCupons: Integer read FLinhasEntreCupons write FLinhasEntreCupons;
     property CortaPapel: Boolean read FCortaPapel write FCortaPapel;
     property TraduzirTags: Boolean read FTraduzirTags write FTraduzirTags;
@@ -136,6 +138,7 @@ begin
   FConfigQRCode := TACBrConfigQRCode.Create;
   FConfigLogo := TACBrConfigLogo.Create;
   FConfigGaveta := TACBrConfigGaveta.Create;
+  FConfigModoPagina := TACBrConfigModoPagina.Create;
   FLinhasEntreCupons := 21;
   FCortaPapel := True;
   FTraduzirTags := True;
@@ -152,6 +155,7 @@ begin
   FConfigQRCode.Free;
   FConfigLogo.Free;
   FConfigGaveta.Free;
+  FConfigModoPagina.Free;
 
   inherited Destroy;
 end;
@@ -166,7 +170,7 @@ begin
   FPaginaDeCodigo := TACBrPosPaginaCodigo(AIni.ReadInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo)));
   FColunasFonteNormal := AIni.ReadInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
   FEspacoEntreLinhas :=  AIni.ReadInteger(CSessaoPosPrinter, CChaveEspacoEntreLinhas, FEspacoEntreLinhas);
-  FLinhasEntreCupons :=  AIni.ReadInteger(CSessaoPosPrinter, CChaveFLinhasEntreCupons, FLinhasEntreCupons);
+  FLinhasEntreCupons :=  AIni.ReadInteger(CSessaoPosPrinter, CChaveLinhasEntreCupons, FLinhasEntreCupons);
   FCortaPapel :=  AIni.ReadBool(CSessaoPosPrinter, CChaveCortaPapel, FCortaPapel);
   FTraduzirTags :=  AIni.ReadBool(CSessaoPosPrinter, CChaveTraduzirTags, FTraduzirTags);
   FIgnorarTags :=  AIni.ReadBool(CSessaoPosPrinter, CChaveIgnorarTags, FIgnorarTags);
@@ -192,6 +196,13 @@ begin
   FConfigGaveta.SinalInvertido :=  AIni.ReadBool(CSessaoPosPrinterGaveta, CChaveGVSinalInvertido, FConfigGaveta.SinalInvertido);
   FConfigGaveta.TempoON :=  AIni.ReadInteger(CSessaoPosPrinterGaveta, CChaveGVTempoON, FConfigGaveta.TempoON);
   FConfigGaveta.TempoOFF :=  AIni.ReadInteger(CSessaoPosPrinterGaveta, CChaveGVTempoOFF, FConfigGaveta.TempoOFF);
+
+  FConfigModoPagina.Largura := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPLargura, FConfigModoPagina.Largura);
+  FConfigModoPagina.Altura := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPAltura, FConfigModoPagina.Altura);
+  FConfigModoPagina.Esquerda := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPEsquerda, FConfigModoPagina.Esquerda);
+  FConfigModoPagina.Topo := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPTopo, FConfigModoPagina.Topo);
+  FConfigModoPagina.Direcao := TACBrPosDirecao(AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPDirecao, Integer(FConfigModoPagina.Direcao)));
+  FConfigModoPagina.EspacoEntreLinhas := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPEspacoEntreLinhas, FConfigModoPagina.EspacoEntreLinhas);
 end;
 
 procedure TPosPrinterConfig.GravarIni(const AIni: TCustomIniFile);
@@ -204,7 +215,7 @@ begin
   AIni.WriteInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo));
   AIni.WriteInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
   AIni.WriteInteger(CSessaoPosPrinter, CChaveEspacoEntreLinhas, FEspacoEntreLinhas);
-  AIni.WriteInteger(CSessaoPosPrinter, CChaveFLinhasEntreCupons, FLinhasEntreCupons);
+  AIni.WriteInteger(CSessaoPosPrinter, CChaveLinhasEntreCupons, FLinhasEntreCupons);
   AIni.WriteBool(CSessaoPosPrinter, CChaveCortaPapel, FCortaPapel);
   AIni.WriteBool(CSessaoPosPrinter, CChaveTraduzirTags, FTraduzirTags);
   AIni.WriteBool(CSessaoPosPrinter, CChaveIgnorarTags, FIgnorarTags);
@@ -230,6 +241,13 @@ begin
   AIni.WriteBool(CSessaoPosPrinterGaveta, CChaveGVSinalInvertido, FConfigGaveta.SinalInvertido);
   AIni.WriteInteger(CSessaoPosPrinterGaveta, CChaveGVTempoON, FConfigGaveta.TempoON);
   AIni.WriteInteger(CSessaoPosPrinterGaveta, CChaveGVTempoOFF, FConfigGaveta.TempoOFF);
+
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPLargura, FConfigModoPagina.Largura);
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPAltura, FConfigModoPagina.Altura);
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPEsquerda, FConfigModoPagina.Esquerda);
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPTopo, FConfigModoPagina.Topo);
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPDirecao, Integer(FConfigModoPagina.Direcao));
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPEspacoEntreLinhas, FConfigModoPagina.EspacoEntreLinhas);
 end;
 
 { TLibPosPrinterConfig }

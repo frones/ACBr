@@ -86,6 +86,13 @@ begin
     ConfigGaveta.TempoON := pLibConfig.PosPrinterConfig.ConfigGaveta.TempoON;
     ConfigGaveta.TempoOFF := pLibConfig.PosPrinterConfig.ConfigGaveta.TempoOFF;
 
+    ConfigModoPagina.Largura := pLibConfig.PosPrinterConfig.ConfigModoPagina.Largura;
+    ConfigModoPagina.Altura := pLibConfig.PosPrinterConfig.ConfigModoPagina.Altura;
+    ConfigModoPagina.Esquerda := pLibConfig.PosPrinterConfig.ConfigModoPagina.Esquerda;
+    ConfigModoPagina.Topo := pLibConfig.PosPrinterConfig.ConfigModoPagina.Topo;
+    ConfigModoPagina.Direcao := pLibConfig.PosPrinterConfig.ConfigModoPagina.Direcao;
+    ConfigModoPagina.EspacoEntreLinhas := pLibConfig.PosPrinterConfig.ConfigModoPagina.EspacoEntreLinhas;
+
     Device.ParamsString := pLibConfig.PosPrinterConfig.DeviceParams;
   end;
 end;

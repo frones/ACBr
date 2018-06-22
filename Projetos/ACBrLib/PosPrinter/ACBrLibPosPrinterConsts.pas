@@ -49,6 +49,7 @@ const
   CSessaoPosPrinterQRCode = 'PosPrinter_QRCode';
   CSessaoPosPrinterLogo = 'PosPrinter_Logo';
   CSessaoPosPrinterGaveta = 'PosPrinter_Gaveta';
+  CSessaoPosPrinterMPagina = 'PosPrinter_MPagina';
 
   CChaveLog = 'ArqLog';
   CChaveModelo = 'Modelo';
@@ -56,7 +57,7 @@ const
   CChavePaginaDeCodigo = 'PaginaDeCodigo';
   CChaveColunasFonteNormal = 'ColunasFonteNormal';
   CChaveEspacoEntreLinhas = 'EspacoEntreLinhas';
-  CChaveFLinhasEntreCupons = 'LinhasEntreCupons';
+  CChaveLinhasEntreCupons = 'LinhasEntreCupons';
   CChaveCortaPapel = 'CortaPapel';
   CChaveTraduzirTags = 'TraduzirTags';
   CChaveIgnorarTags = 'IgnorarTags';
@@ -82,6 +83,13 @@ const
   CChaveGVSinalInvertido = 'SinalInvertido';
   CChaveGVTempoON = 'TempoON';
   CChaveGVTempoOFF = 'TempoOFF';
+
+  CChaveMPLargura = 'Largura';
+  CChaveMPAltura = 'Altura';
+  CChaveMPEsquerda = 'Esquerda';
+  CChaveMPTopo = 'Topo';
+  CChaveMPDirecao = 'Direcao';
+  CChaveMPEspacoEntreLinhas = 'EspacoEntreLinhas';
 
 implementation
 

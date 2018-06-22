@@ -85,6 +85,7 @@ type
   TpcnCondicaoVeiculo = (cvAcabado, cvInacabado, cvSemiAcabado);
   TpcnTipoArma = (taUsoPermitido, taUsoRestrito);
   TpcnIndEscala = (ieRelevante, ieNaoRelevante, ieNenhum);
+  TpcnModalidadeFrete = (mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete);
 
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
@@ -139,6 +140,9 @@ function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
 
 function IndEscalaToStr(const t: TpcnIndEscala): String;
 function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
+function modFreteToStr(const t: TpcnModalidadeFrete): string;
+function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
+function modFreteToDesStr(const t: TpcnModalidadeFrete; versao: TpcnVersaoDF): string;
 
 implementation
 
@@ -389,7 +393,6 @@ begin
   end;
 end;
 
-
 function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
 begin
   case StrToIntDef( sCorDENATRAN, 0 ) of
@@ -422,7 +425,6 @@ begin
     cvSemiAcabado : result := '3-SEMI-ACABADO';
   end;
 end;
-
 
 function VeiculosVinStr( const sVin: String ): String;
 begin
@@ -521,6 +523,7 @@ begin
   end;
 
 end;
+
 function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
 begin
   case TtpArma of
@@ -539,6 +542,45 @@ function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
 begin
   result := StrToEnumerado(ok, s, ['S', 'N', ''],
                                   [ieRelevante, ieNaoRelevante, ieNenhum]);
+end;
+
+// ??? - Modalidade do frete ***************************************************
+function modFreteToStr(const t: TpcnModalidadeFrete): string;
+begin
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '9'],
+    [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete]);
+end;
+
+function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
+begin
+  result := StrToEnumerado(ok, s, ['0', '1', '2',  '3', '4', '9'],
+    [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete]);
+end;
+
+function modFreteToDesStr(const t: TpcnModalidadeFrete; versao: TpcnVersaoDF): string;
+begin
+  case versao of
+    ve200,
+    ve300,
+    ve310:
+      case t  of
+        mfContaEmitente       : result := '0 - EMITENTE';
+        mfContaDestinatario   : result := '1 - DEST/REM';
+        mfContaTerceiros      : result := '2 - TERCEIROS';
+        mfProprioRemetente    : result := '3 - PROP/REMT';
+        mfProprioDestinatario : result := '4 - PROP/DEST';
+        mfSemFrete            : result := '9 - SEM FRETE';
+      end;
+    ve400:
+      case t  of
+        mfContaEmitente       : result := '0 - REMITENTE';
+        mfContaDestinatario   : result := '1 - DESTINATARIO';
+        mfContaTerceiros      : result := '2 - TERCEIROS';
+        mfProprioRemetente    : result := '3 - PROP/REMT';
+        mfProprioDestinatario : result := '4 - PROP/DEST';
+        mfSemFrete            : result := '9 - SEM FRETE';
+      end;
+  end;
 end;
 
 end.

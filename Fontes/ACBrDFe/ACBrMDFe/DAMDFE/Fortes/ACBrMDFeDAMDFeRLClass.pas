@@ -235,7 +235,8 @@ begin
               FMargemEsquerda,
               FMargemDireita,
               FImpressora,
-              TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe);
+              TACBrMDFe(ACBrMDFe).Manifestos.Items[j].MDFe,
+              PrintDialog);
             Impresso := True;
             Break;
           end;
@@ -254,7 +255,9 @@ begin
             FMargemInferior,
             FMargemEsquerda,
             FMargemDireita,
-            FImpressora);
+            FImpressora,
+            Nil,
+            PrintDialog);
         end;
       end;
     end
@@ -273,7 +276,9 @@ begin
           FMargemInferior,
           FMargemEsquerda,
           FMargemDireita,
-          FImpressora);
+          FImpressora,
+          Nil,
+          PrintDialog);
       end;
     end;
   finally

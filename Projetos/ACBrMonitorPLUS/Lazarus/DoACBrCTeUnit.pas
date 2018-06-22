@@ -34,7 +34,7 @@
 unit DoACBrCTeUnit;
 
 interface
-Uses Classes, SysUtils, CmdUnit, Dialogs;
+Uses Classes, SysUtils, CmdUnit, Dialogs, ACBrCTeConhecimentos;
 
 Procedure DoACBrCTe( Cmd : TACBrCmd );
 procedure GerarIniCTe( AStr: String );
@@ -608,7 +608,8 @@ begin
          begin
            if (Cmd.Metodo = 'criarcte') or (Cmd.Metodo = 'criarenviarcte') or
               (Cmd.Metodo = 'adicionarcte') then
-              GerarIniCTe( Cmd.Params(0)  );
+               ACBrCTe1.Conhecimentos.Clear;
+               ACBrCTe1.Conhecimentos.LoadFromIni( Cmd.Params(0) );
 
 
            if (Cmd.Metodo = 'adicionarcte')  or (Cmd.Metodo = 'adicionarctesefaz') then

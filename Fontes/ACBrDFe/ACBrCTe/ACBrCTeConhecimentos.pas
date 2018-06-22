@@ -710,8 +710,6 @@ var
   sSecao, versao, sFim, sCampoAdic, sKey: String;
   OK: boolean;
   INIRec: TMemIniFile;
-  SL: TStringList;
-  fsICMSUFFim: TStrings;
 begin
   Result := False;
 
@@ -1647,51 +1645,83 @@ begin
 
           I := 1;
           while true do
-           begin
-             sSecao := 'docAnt'+IntToStrZero(I,3);
-             sFim   := INIRec.ReadString(sSecao,'xNome','FIM');
-             if sFim = 'FIM' then
-                break;
+          begin
+            sSecao := IfThen( INIRec.SectionExists('emiDocAnt'+ IntToStrZero(I, 3) )
+                              , 'emiDocAnt'
+                              , 'DocAnt') + IntToStrZero(I, 3);
+            sFim   := INIRec.ReadString(sSecao, 'xNome', 'FIM');
+            if sFim = 'FIM' then
+              break;
 
-           {$IFDEF PL_200}
-             with infCTeNorm.docAnt.emiDocAnt.Add do
-           {$ELSE}
-             with infCTeNorm.emiDocAnt.Add do
-           {$ENDIF}
-             begin
-               CNPJCPF := INIRec.ReadString(sSecao,'CNPJCPF','');
-               IE      := INIRec.ReadString(sSecao,'IE','');
-               UF      := INIRec.ReadString(sSecao,'UF','');
-               xNome   := INIRec.ReadString(sSecao,'xNome','');
-               J := 1;
-               while true do
+            {$IFDEF PL_200}
+            with infCTeNorm.docAnt.emiDocAnt.Add do
+            {$ELSE}
+            with infCTeNorm.emiDocAnt.Add do
+            {$ENDIF}
+            begin
+              CNPJCPF := INIRec.ReadString(sSecao,'CNPJCPF','');
+              IE      := INIRec.ReadString(sSecao,'IE','');
+              UF      := INIRec.ReadString(sSecao,'UF','');
+              xNome   := INIRec.ReadString(sSecao,'xNome','');
+
+              sSecao := IfThen( INIRec.SectionExists('idDocAntPap'+ IntToStrZero(I, 3) + '001')
+                                , 'idDocAntPap'
+                                , 'idDocAnt') + IntToStrZero(I, 3) + '001';
+              sFim   := INIRec.ReadString(sSecao, 'nDoc', 'FIM');
+
+              if sFim <> 'FIM' then
+              begin
+                with idDocAnt.Add do
                 begin
-                  sSecao := 'idDocAnt'+IntToStrZero(I,3)+IntToStrZero(J,3);
-                  sFim   := INIRec.ReadString(sSecao,'nDoc',INIRec.ReadString(sSecao,'chCTe','FIM'));
-                  if sFim = 'FIM' then
-                    break;
-                  with idDocAnt.Add do
-                   begin
-                     if INIRec.ReadString(sSecao,'chCTe','') <> '' then
-                       idDocAntEle.Add.chCTe := INIRec.ReadString(sSecao,'chCTe','')
-                     else
-                      begin
-                        with idDocAntPap.Add do
-                         begin
-                           tpDoc  := StrToTpDocumentoAnterior(OK, INIRec.ReadString(sSecao,'tpDoc',''));
-                           serie  := INIRec.ReadString(sSecao,'serie','');
-                           subser := INIRec.ReadString(sSecao,'subser','');
-                           nDoc   := INIRec.ReadInteger(sSecao,'nDoc',0);
-                           dEmi   := StringToDateTime(INIRec.ReadString( sSecao,'dEmi','0'));
-                         end
-                      end;
-                   end;
+                  J := 1;
+                  while true do
+                  begin
+                    sSecao := IfThen( INIRec.SectionExists('idDocAntPap'+IntToStrZero(I, 3) + IntToStrZero(J, 3) )
+                                      , 'idDocAntPap'
+                                      , 'idDocAnt') + IntToStrZero(I, 3) + IntToStrZero(J, 3);
+                    sFim   := INIRec.ReadString(sSecao, 'nDoc', 'FIM');
+                    if sFim = 'FIM' then
+                      break;
 
-                  Inc(J);
+                    with idDocAntPap.Add do
+                    begin
+                      tpDoc  := StrToTpDocumentoAnterior(OK, INIRec.ReadString(sSecao,'tpDoc',''));
+                      serie  := INIRec.ReadString(sSecao,'serie','');
+                      subser := INIRec.ReadString(sSecao,'subser','');
+                      nDoc   := INIRec.ReadInteger(sSecao,'nDoc',0);
+                      dEmi   := StringToDateTime(INIRec.ReadString( sSecao,'dEmi','0'));
+                    end;
+
+                    Inc(J);
+                  end;
                 end;
-             end;
-             Inc(I);
-           end;
+              end;
+
+              sSecao := 'idDocAntEle' + IntToStrZero(I, 3) + '001';
+              sFim   := INIRec.ReadString(sSecao, 'chCTe', 'FIM');
+
+              if sFim <> 'FIM' then
+              begin
+                with idDocAnt.Add do
+                begin
+                  J := 1;
+                  while true do
+                  begin
+                    sSecao := 'idDocAntEle' + IntToStrZero(I, 3) + IntToStrZero(J, 3);
+                    sFim   := INIRec.ReadString(sSecao, 'chCTe', 'FIM');
+                    if sFim = 'FIM' then
+                      break;
+
+                    idDocAntEle.Add.chCTe := sFim;
+
+                    Inc(J);
+                  end;
+                end;
+              end;
+            end;
+
+            Inc(I);
+          end;
 
           I := 1;
           while true do
@@ -2306,10 +2336,10 @@ begin
              end;
           end;
 
-         if INIRec.ReadString('infCteComp', 'chave', '') <> '' then
+         if INIRec.ReadString('infCteComp', 'chCte', INIRec.ReadString('infCteComp', 'chave', '') ) <> '' then
           begin
           {$IFDEF PL_200}
-            infCTeComp.chave := INIRec.ReadString('infCteComp', 'chave', '');
+            infCTeComp.chave := INIRec.ReadString('infCteComp', 'chCte', INIRec.ReadString('infCteComp', 'chave', '') );
           {$ENDIF}
           end;
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/06/2018
+-- ACBrCTeConhecimentos --
+[*] Ajuste na leitura do arquivo INI (LerArqINI) referente tag [emiDocAnt]
+   Por: Italo Jurisato Junior
+
 08/06/2018
 -- ACBrCTeWebServices --
 [+] Acrescentado a propriedade ListaArqs na classe DistribuicaoDFe com objetivo

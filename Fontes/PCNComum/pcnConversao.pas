@@ -94,7 +94,6 @@ type
   TpcnCstCofins = (cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53,
                    cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72,
                    cof73, cof74, cof75, cof98, cof99);
-  TpcnModalidadeFrete = (mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete);
   TpcnIndicadorProcesso = (ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipOutros);
   TpcnCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
   TpcnIndicadorTotal = (itSomaTotalNFe, itNaoSomaTotalNFe );
@@ -260,9 +259,6 @@ function CSTPISToStr(const t: TpcnCstPIS): string;
 function StrToCSTPIS(out ok: boolean; const s: string): TpcnCstPIS;
 function CSTCOFINSToStr(const t: TpcnCstCOFINS): string;
 function StrToCSTCOFINS(out ok: boolean; const s: string): TpcnCstCOFINS;
-function modFreteToStr(const t: TpcnModalidadeFrete): string;
-function modFreteToDesStr(const t: TpcnModalidadeFrete): string;
-function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
 function indProcToStr(const t: TpcnIndicadorProcesso): string;
 function indProcToDescrStr(const t: TpcnIndicadorProcesso): string;
 function StrToindProc(out ok: boolean; const s: string): TpcnIndicadorProcesso;
@@ -903,31 +899,6 @@ function StrToCSTCOFINS(out ok: boolean; const s: string): TpcnCstCOFINS;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62', '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98', '99'],
     [cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99]);
-end;
-
-// ??? - Modalidade do frete ***************************************************
-function modFreteToStr(const t: TpcnModalidadeFrete): string;
-begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '9'],
-    [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete]);
-end;
-
-function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2',  '3', '4', '9'],
-    [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete]);
-end;
-
-function modFreteToDesStr(const t: TpcnModalidadeFrete): string;
-begin
-  case t  of
-    mfContaEmitente       : result := '0 - EMITENTE';
-    mfContaDestinatario   : result := '1 - DEST/REM';
-    mfContaTerceiros      : result := '2 - TERCEIROS';
-    mfProprioRemetente    : result := '3 - PROP/REMT';
-    mfProprioDestinatario : result := '4 - PROP/DEST';
-    mfSemFrete            : result := '9 - SEM FRETE';
-  end;
 end;
 
 // 401i - Indicador da origem do processo **************************************

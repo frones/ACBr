@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/06/2018
+-- pcnConversao --
+[*] Movido TpcnModalidadeFrete, modFreteToStr, StrTomodFrete, modFreteToDesStr para pcnConversaoNFe.
+  Por: Rafael Dias
+
 25/05/2018
 -- pcnConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/43584-pcnconversao-sugest%C3%A3o-para-resolver-problema-de-criar-arquivo/

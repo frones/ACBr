@@ -573,7 +573,7 @@ begin
       end;
     ve400:
       case t  of
-        mfContaEmitente       : result := '0 - REMITENTE';
+        mfContaEmitente       : result := '0 - REMETENTE';
         mfContaDestinatario   : result := '1 - DESTINATARIO';
         mfContaTerceiros      : result := '2 - TERCEIROS';
         mfProprioRemetente    : result := '3 - PROP/REMT';

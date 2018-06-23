@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2018
+-- ACBrNFeServicos --
+[*] Alteração das URL NFCe 4.00 AM homologação para o ambiente de testes para
+    desenvolvedores.
+    https://www.projetoacbr.com.br/forum/topic/43771-iniciando-testes-com-nfc-e-mas-sem-csc-e-idcsc/?do=findComment&comment=288653	
+  
 19/06/2018
 -- pcnNFe --
 [*] https://www.projetoacbr.com.br/forum/topic/44172-nfe-40-atualizado-m%C3%A9todo-nfeassign-com-as-novas-propriedades/

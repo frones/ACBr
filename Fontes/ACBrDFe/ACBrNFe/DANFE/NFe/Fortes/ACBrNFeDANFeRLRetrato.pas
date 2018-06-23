@@ -1292,10 +1292,11 @@ procedure TfrlDANFeRLRetrato.Transporte;
 var
   i, j : Integer;
   RLLabel, RLLabelModelo: TRLLabel;
+  ok: Boolean;
 begin
   with FNFe.Transp do
   begin
-    rllTransModFrete.Caption := modFreteToDesStr( modFrete );
+    rllTransModFrete.Caption := modFreteToDesStr( modFrete, DblToVersaoDF(ok, FNFe.infNFe.Versao) );
     with Transporta do
     begin
       rllTransCNPJ.Caption      := FormatarCNPJouCPF(CNPJCPF);

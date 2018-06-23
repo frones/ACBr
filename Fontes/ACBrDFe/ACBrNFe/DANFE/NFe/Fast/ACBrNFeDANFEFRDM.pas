@@ -1053,6 +1053,8 @@ begin
 end;
 
 procedure TACBrNFeFRClass.CarregaTransportador;
+var
+  ok: Boolean;
 begin
   with cdsTransportador do
   begin
@@ -1062,7 +1064,7 @@ begin
 
     with FNFe.Transp do
     begin
-      FieldByName('ModFrete').AsString :=modFreteToDesStr( ModFrete );
+      FieldByName('ModFrete').AsString := modFreteToDesStr( ModFrete, DblToVersaoDF(ok, FNFe.infNFe.Versao) );
       with Transporta do
       begin
         FieldByName('CNPJCPF').AsString := FormatarCNPJouCPF(CNPJCPF);

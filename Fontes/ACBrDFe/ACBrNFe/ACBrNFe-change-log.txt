@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2018
+-- pcnLayoutTXT --
+[*] Ajuste na leitura do Layout TXT NFe v4.0 linha <W02>
+    https://www.projetoacbr.com.br/forum/topic/44316-nfe-400-utilizando-txt-layout-sefaz/
+   por: José M. S. Junior
+
 23/06/2018
 -- ACBrNFeServicos --
 [*] Alteração das URL NFCe 4.00 AM homologação para o ambiente de testes para

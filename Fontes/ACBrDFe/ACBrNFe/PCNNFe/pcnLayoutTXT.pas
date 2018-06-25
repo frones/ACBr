@@ -481,8 +481,7 @@ begin
     LoadLayout('<U01>     U|VBC¨|VAliq¨|VISSQN¨|CMunFG¨|CListServ¨|VDeducao¨|VOutro¨|VDescIncond¨|VDescCond¨|VISSRet¨|IndISS¨|CServico¨|CMun¨|CPais¨|NProcesso¨|IndIncentivo¨'); //ok
     LoadLayout('<UA>     UA|ImpostoDevol¨|PDevol¨|IPI¨|VIPIDevol¨');  //VERIFICAR
     LoadLayout('<W01>     W'); //ok
-    LoadLayout('<W02>   W02|vBC¨|vICMS¨|vICMSDeson¨|vFCP¨|vBCST¨|vST¨|vFCPST¨|vFCPSTRet¨|vProd¨|vFrete¨|vSeg¨|vDesc¨|vII¨|vIPI¨|vIPIDevol¨|vPIS¨|vCOFINS¨|vOutro¨|vNF¨|vTotTrib¨');
-    LoadLayout('<W04>   W04|vICMSUFDest¨|vICMSUFRemet¨|vFCPUFDest¨');
+    LoadLayout('<W02>   W02|vBC¨|vICMS¨|vICMSDeson¨|vFCP¨|vFCPUFDest¨|vICMSUFDest¨|vICMSUFRemet¨|vBCST¨|vST¨|vFCPST¨|vFCPSTRet¨|vProd¨|vFrete¨|vSeg¨|vDesc¨|vII¨|vIPI¨|vIPIDevol¨|vPIS¨|vCOFINS¨|vOutro¨|vNF¨|vTotTrib¨');
     LoadLayout('<W17>   W17|VServ¨|VBC¨|VISS¨|VPIS¨|VCOFINS¨|dCompet¨|vDeducao¨|vOutro¨|vDescIncond¨|vDescCond¨|vISSRet¨|cRegTrib¨');
     LoadLayout('<W23>   W23|VRetPIS¨|VRetCOFINS¨|VRetCSLL¨|VBCIRRF¨|VIRRF¨|VBCRetPrev¨|VRetPrev¨');
     LoadLayout('<X01>     X|ModFrete¨');

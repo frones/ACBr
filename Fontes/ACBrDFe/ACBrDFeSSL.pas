@@ -1546,6 +1546,8 @@ begin
   if Assigned(FSSLHttpClass) then
     FreeAndNil(FSSLHttpClass);
 
+  FSSLHttpLib := ASSLHttpLib;
+
   case ASSLHttpLib of
     httpWinINet, httpWinHttp:
     begin
@@ -1577,8 +1579,6 @@ begin
   else
     FSSLHttpClass := TDFeSSLHttpClass.Create(Self);
   end;
-
-  FSSLHttpLib := ASSLHttpLib;
 end;
 
 procedure TDFeSSL.SetSSLXmlSignLib(ASSLXmlSignLib: TSSLXmlSignLib);

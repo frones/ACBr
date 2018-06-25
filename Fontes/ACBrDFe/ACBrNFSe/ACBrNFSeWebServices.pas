@@ -174,6 +174,7 @@ type
   private
     // Entrada
     FNumeroLote: String;
+    FqMaxRps: Integer;
     // Retorno
     FRetEnvLote: TRetEnvLote;
 
@@ -192,6 +193,7 @@ type
     procedure Clear; override;
 
     property NumeroLote: String read FNumeroLote;
+    property qMaxRps: Integer read FqMaxRps;
 
     property RetEnvLote: TRetEnvLote read FRetEnvLote write FRetEnvLote;
   end;
@@ -270,6 +272,7 @@ type
   private
     // Entrada
     FNumeroLote: String;
+    FqMaxRps: Integer;
 
   protected
     procedure DefinirURL; override;
@@ -286,6 +289,7 @@ type
     function Executar: Boolean; override;
 
     property NumeroLote: String read FNumeroLote;
+    property qMaxRps: Integer read FqMaxRps;
   end;
 
 { TNFSeConsultarSituacaoLoteRPS }
@@ -614,8 +618,8 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function GeraLote(ALote: Integer): Boolean; overload;
-    function GeraLote(ALote: String): Boolean; overload;
+    function GeraLote(ALote: Integer; AqMaxRps: Integer = 50): Boolean; overload;
+    function GeraLote(ALote: String; AqMaxRps: Integer = 50): Boolean; overload;
 
     function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
@@ -2287,6 +2291,7 @@ end;
 procedure TNFSeGerarLoteRPS.DefinirDadosMsg;
 begin
   TNFSeEnviarLoteRPS(Self).FNumeroLote := NumeroLote;
+  TNFSeEnviarLoteRPS(Self).FqMaxRps := qMaxRps;
 
   inherited DefinirDadosMsg;
 end;
@@ -2390,8 +2395,9 @@ begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
-  if FNotasFiscais.Count > 50 then
-    GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
+  if FNotasFiscais.Count > qMaxRps then
+    GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de ' +
+      IntToStr(qMaxRps) + ' RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
 
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_CabecalhoStr;
@@ -5244,14 +5250,15 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.GeraLote(ALote: Integer): Boolean;
+function TWebServices.GeraLote(ALote: Integer; AqMaxRps: Integer): Boolean;
 begin
-  Result := GeraLote(IntToStr(ALote));
+  Result := GeraLote(IntToStr(ALote), AqMaxRps);
 end;
 
-function TWebServices.GeraLote(ALote: String): Boolean;
+function TWebServices.GeraLote(ALote: String; AqMaxRps: Integer): Boolean;
 begin
   FGerarLoteRPS.FNumeroLote := ALote;
+  FGerarLoteRPS.FqMaxRps := AqMaxRps;
 
   Result := GerarLoteRPS.Executar;
 
@@ -5279,6 +5286,7 @@ begin
   end;
 
   FEnviarLoteRPS.FNumeroLote := ALote;
+  FEnviarLoteRPS.FqMaxRps    := 50;
 
   Result := FEnviarLoteRPS.Executar;
 

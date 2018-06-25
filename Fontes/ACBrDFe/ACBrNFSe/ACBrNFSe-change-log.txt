@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2018
+-- ACBrNFSe / ACBrNFSeWebServices --
+[*] Incluido um segundo parâmetro no método GerarLote, que tem por finalidade definir a 
+    quatidade máxima de RPS a serem ADD ao lote.
+    O envio via webservice normalmente permite um máximo de 50, mas ao ser importado 
+    pelo site do provedor, essa quantidade pode até ser 10 vezes maior.
+   Por: Italo Jurisato Junior
+
 20/06/2018
 -- pnfsNFSeW_ABRASFv1 --
 [*] Para o provedor de Natal é obrigatório gerar a tag <BaseCalculo> mesmo com o valor zero.

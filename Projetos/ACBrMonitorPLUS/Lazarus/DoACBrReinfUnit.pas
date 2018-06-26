@@ -145,6 +145,20 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoSetIDContribuinte}
+
+TMetodoSetIDContribuinte = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetIDTransmissor}
+
+TMetodoSetIDTransmissor = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses
@@ -400,6 +414,50 @@ begin
   end;
 end;
 
+{ TMetodoSetIDContribuinte }
+
+{ Params: 0 - idContribuinte: String
+}
+procedure TMetodoSetIDContribuinte.Executar;
+var
+  nIDContribuinte: String;
+begin
+  nIDContribuinte := fpCmd.Params(0);
+
+  if EstaVazio(nIDContribuinte) then
+    raise Exception.Create('Valor Nulo.');
+
+  with TACBrObjetoReinf(fpObjetoDono) do
+  begin
+    with MonitorConfig.DFE.Reinf do
+      IdContribuinte := nIDContribuinte;
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
+
+{ TMetodoSetIDTransmissor }
+
+{ Params: 0 - idTransmissor: String
+}
+procedure TMetodoSetIDTransmissor.Executar;
+var
+  nIDTransmissor: String;
+begin
+  nIDTransmissor := fpCmd.Params(0);
+
+  if EstaVazio(nIDTransmissor) then
+    raise Exception.Create('Valor Nulo.');
+
+  with TACBrObjetoReinf(fpObjetoDono) do
+  begin
+    with MonitorConfig.DFE.Reinf do
+      IDTransmissor := nIDTransmissor;
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
+
 { TACBrObjetoReinf }
 
 constructor TACBrObjetoReinf.Create(AConfig: TMonitorConfig;
@@ -415,6 +473,8 @@ begin
   ListaDeMetodos.Add(CMetodoConsultarReinf);
   ListaDeMetodos.Add(CMetodoLimparReinf);
   ListaDeMetodos.Add(CMetodoCarregarXMLEventoReinf);
+  ListaDeMetodos.Add(CMetodoSetIDContribuinteReinf);
+  ListaDeMetodos.Add(CMetodoSetIDTransmissorReinf);
 end;
 
 procedure TACBrObjetoReinf.Executar(ACmd: TACBrCmd);
@@ -441,7 +501,9 @@ begin
     3  : AMetodoClass := TMetodoConsultarReinf;
     4  : AMetodoClass := TMetodoLimparReinf;
     5  : AMetodoClass := TMetodoCarregarXMLEventoReinf;
-    6..20 : DoACbr(ACmd);
+    6  : AMetodoClass := TMetodoSetIDContribuinte;
+    7  : AMetodoClass := TMetodoSetIDTransmissor;
+    8..22 : DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then

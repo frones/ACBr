@@ -116,6 +116,20 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoSetIDEmpregador}
+
+TMetodoSetIDEmpregador = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetIDTransmissor}
+
+TMetodoSetIDTransmissor = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 
 implementation
 
@@ -393,6 +407,52 @@ begin
 
 end;
 
+{ TMetodoSetIDEmpregador }
+
+{ Params: 0 - idEmpregador: String
+}
+procedure TMetodoSetIDEmpregador.Executar;
+var
+  nIDEmpregador: String;
+begin
+  nIDEmpregador := fpCmd.Params(0);
+
+  if EstaVazio(nIDEmpregador) then
+    raise Exception.Create('Valor Nulo.');
+
+  with TACBrObjetoeSocial(fpObjetoDono) do
+  begin
+    with MonitorConfig.DFE.ESocial do
+      IdEmpregador := nIDEmpregador;
+
+    MonitorConfig.SalvarArquivo;
+  end;
+
+end;
+
+{ TMetodoSetIDTransmissor }
+
+{ Params: 0 - idTransmissor: String
+}
+procedure TMetodoSetIDTransmissor.Executar;
+var
+  nIDTransmissor: String;
+begin
+  nIDTransmissor := fpCmd.Params(0);
+
+  if EstaVazio(nIDTransmissor) then
+    raise Exception.Create('Valor Nulo.');
+
+  with TACBrObjetoeSocial(fpObjetoDono) do
+  begin
+    with MonitorConfig.DFE.ESocial do
+      IDTransmissor := nIDTransmissor;
+
+    MonitorConfig.SalvarArquivo;
+  end;
+
+end;
+
 { TACBrObjetoeSocial }
 
 constructor TACBrObjetoeSocial.Create(AConfig: TMonitorConfig;
@@ -408,6 +468,8 @@ begin
   ListaDeMetodos.Add(CMetodoConsultareSocial);
   ListaDeMetodos.Add(CMetodoLimpareSocial);
   ListaDeMetodos.Add(CMetodoCarregarXMLEventoeSocial);
+  ListaDeMetodos.Add(CMetodoSetIDEmpregadoreSocial);
+  ListaDeMetodos.Add(CMetodoSetIDTransmissoresocial);
 
 end;
 
@@ -435,7 +497,9 @@ begin
     3  : AMetodoClass := TMetodoConsultareSocial;
     4  : AMetodoClass := TMetodoLimpareSocial;
     5  : AMetodoClass := TMetodoCarregarXMLEventoeSocial;
-    6..20 : DoACbr(ACmd);
+    6  : AMetodoClass := TMetodoSetIDEmpregador;
+    7  : AMetodoClass := TMetodoSetIDTransmissor;
+    8..22 : DoACbr(ACmd);
 
   end;
 

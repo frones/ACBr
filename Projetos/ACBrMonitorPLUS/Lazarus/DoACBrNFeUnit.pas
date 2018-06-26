@@ -71,6 +71,7 @@ var
   NFeRTXT   : TNFeRTXT;
   VersaoDF  : TpcnVersaoDF;
   ModeloDF  : TpcnModeloDF;
+  TipoDANFE : TpcnTipoImpressao;
 
   CC, Anexos: Tstrings;
   sTemMais,ErrosRegraNegocio: String;
@@ -1797,18 +1798,29 @@ begin
          end
 
         else if (Cmd.Metodo = 'setidtoken') or (Cmd.Metodo = 'setidcsc') then  //NFe.SetIdCSC(cIdCSC)
-         begin
-           ACBrNFe1.Configuracoes.Geral.IdCSC := Cmd.Params(0);
-           edtIdToken.Text := ACBrNFe1.Configuracoes.Geral.IdCSC;
-
-           if (Cmd.Params(1) <> '') then
-            begin
-              ACBrNFe1.Configuracoes.Geral.CSC := Cmd.Params(1);
-              edtToken.Text := ACBrNFe1.Configuracoes.Geral.CSC;
-            end;
-
+        begin
+          ACBrNFe1.Configuracoes.Geral.IdCSC := Cmd.Params(0);
+          edtIdToken.Text := ACBrNFe1.Configuracoes.Geral.IdCSC;
+                    if (Cmd.Params(1) <> '') then
+           begin
+             ACBrNFe1.Configuracoes.Geral.CSC := Cmd.Params(1);
+             edtToken.Text := ACBrNFe1.Configuracoes.Geral.CSC;
+           end;
            SalvarIni;
-         end
+        end
+
+        else if Cmd.Metodo = 'settipoimpressao' then
+        begin
+          TipoDANFE := StrToTpImp(OK, Cmd.Params(0));
+          if OK then
+          begin
+            ACBrNFe1.DANFE.TipoDANFE := TipoDANFE;
+            rgTipoDanfe.ItemIndex := StrToIntDef(TpImpToStr(TipoDANFE),1) -1 ;
+            SalvarIni;
+          end
+          else
+            raise Exception.Create('Tipo Impressão Inválido.');
+        end
 
         else if (Cmd.Metodo = 'lernfe') or (Cmd.Metodo = 'gerarininfe')  then
          begin

@@ -43,6 +43,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2018
+[+] DoACBreSocialUnit, DoACBrReinfUnit
+Adicionado os metodos para Configuração: ID Contribuinte, ID Empregador, ID Transmissor
+SetIDTransmissor(),  SetIDEmpregador(), SetIDContribuinte()
+   por: José M. S. Junior
+
+25/06/2018
+[*] DoACBrNFeUnit, DOACBrCTeUnit, DOACBrMDfeUnit - Adicionado Método
+SetTipoImpressao(Para selecionar tipo Retrato ou Paisagem)
+   por: José M. S. Junior
+
 14/06/2018
 [*] DoECFUnit - Ajustes no método "enviarblocoxreducaoz"
    por: José M. S. Junior

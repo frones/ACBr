@@ -71,6 +71,7 @@ var
 
   VersaoDFCTe  : TVersaoCTe;
   ModeloDFCTe  : TModeloCTe;
+  TipoDACTE    : TpcnTipoImpressao;
 
 begin
  with FrmACBrMonitor do
@@ -1180,6 +1181,19 @@ begin
              SalvarIni;
            end;
          end
+
+        else if Cmd.Metodo = 'settipoimpressao' then
+        begin
+          TipoDACTE := StrToTpImp(OK, Cmd.Params(0));
+          if OK then
+          begin
+            ACBrCTe1.DACTE.TipoDACTE := TipoDACTE;
+            rgTipoDanfe.ItemIndex := StrToIntDef(TpImpToStr(TipoDACTE),1) -1 ;
+            SalvarIni;
+          end
+          else
+            raise Exception.Create('Tipo Impressão Inválido.');
+        end
 
         else if Cmd.Metodo = 'lercte' then
          begin

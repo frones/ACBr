@@ -233,6 +233,12 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoSetTipoImpressao}
+TMetodoSetTipoImpressao = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoSetVersaoDF}
 TMetodoSetVersaoDF = class(TACBrMetodo)
 public
@@ -329,6 +335,7 @@ begin
   ListaDeMetodos.Add(CMetodoCertificadodatavencimento);
   ListaDeMetodos.Add(CMetodoGerarchave);
   ListaDeMetodos.Add(CMetodoVersao);
+  ListaDeMetodos.Add(CMetodoSetTipoImpressao);
   ListaDeMetodos.Add(CMetodoSavetofile);
   ListaDeMetodos.Add(CMetodoLoadfromfile);
   ListaDeMetodos.Add(CMetodoLerini);
@@ -388,7 +395,8 @@ begin
     27 : AMetodoClass := TMetodoCertificadoDataVencimento;
     28 : AMetodoClass := TMetodoGeraChave;
     29 : AMetodoClass := TMetodoVersao;
-    30..44 : DoACbr(ACmd);
+    30 : AMetodoClass := TMetodoSetTipoImpressao;
+    31..45 : DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then
@@ -1158,6 +1166,33 @@ begin
 
     with MonitorConfig.DFE.WebService do
       FormaEmissaoMDFe := StrToInt(TpEmisToStr(FormaEmissao));
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
+
+{ TMetodoSetTipoImpressao }
+
+{ Params: 0 -  1: Retrato 2: Paisagem
+}
+procedure TMetodoSetTipoImpressao.Executar;
+var
+  OK: boolean;
+  TipoDAMDFe: TpcnTipoImpressao;
+  NTipoImpressao: Integer;
+begin
+  NTipoImpressao := StrToIntDef(fpCmd.Params(0), 1);
+
+  with TACBrObjetoMDFe(fpObjetoDono) do
+  begin
+    OK := False;
+    TipoDAMDFe := StrToTpImp(OK, IntToStr(NTipoImpressao));
+
+    if not OK then
+      raise Exception.Create('Tipo Impressão Inválido: ' + TpImpToStr(TipoDAMDFe));
+
+    with MonitorConfig.DFE.Impressao.Geral do
+      DANFE := StrToInt(TpImpToStr(TipoDAMDFe)) -1;
 
     MonitorConfig.SalvarArquivo;
   end;

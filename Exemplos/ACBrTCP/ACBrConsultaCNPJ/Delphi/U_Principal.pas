@@ -66,6 +66,8 @@ type
     Label17: TLabel;
     EditTelefone: TEdit;
     Label18: TLabel;
+    Label19: TLabel;
+    EditPorte: TEdit;
     procedure LabAtualizarCaptchaClick(Sender: TObject);
     procedure ButBuscarClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -105,6 +107,7 @@ begin
     begin
       EditTipo.Text        := ACBrConsultaCNPJ1.EmpresaTipo;
       EditRazaoSocial.Text := ACBrConsultaCNPJ1.RazaoSocial;
+      EditPorte.Text       := ACBrConsultaCNPJ1.Porte;
       EditAbertura.Text    := DateToStr( ACBrConsultaCNPJ1.Abertura );
       EditFantasia.Text    := ACBrConsultaCNPJ1.Fantasia;
       EditEndereco.Text    := ACBrConsultaCNPJ1.Endereco;

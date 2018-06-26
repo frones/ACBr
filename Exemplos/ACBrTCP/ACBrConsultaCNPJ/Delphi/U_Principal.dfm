@@ -232,6 +232,19 @@ object F_Principal: TF_Principal
       Font.Style = []
       ParentFont = False
     end
+    object Label19: TLabel
+      Left = 473
+      Top = 11
+      Width = 31
+      Height = 16
+      Caption = 'Porte'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
     object EditTipo: TEdit
       Left = 8
       Top = 29
@@ -248,7 +261,7 @@ object F_Principal: TF_Principal
     object EditRazaoSocial: TEdit
       Left = 112
       Top = 29
-      Width = 418
+      Width = 355
       Height = 24
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -269,7 +282,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 3
     end
     object EditEndereco: TEdit
       Left = 192
@@ -282,7 +295,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 4
+      TabOrder = 5
     end
     object EditNumero: TEdit
       Left = 486
@@ -295,7 +308,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 6
     end
     object EditComplemento: TEdit
       Left = 8
@@ -308,7 +321,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 6
+      TabOrder = 7
     end
     object EditBairro: TEdit
       Left = 344
@@ -321,7 +334,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 7
+      TabOrder = 8
     end
     object EditCidade: TEdit
       Left = 8
@@ -334,7 +347,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 8
+      TabOrder = 9
     end
     object EditUF: TEdit
       Left = 305
@@ -347,7 +360,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 9
+      TabOrder = 10
     end
     object EditCEP: TEdit
       Left = 344
@@ -360,7 +373,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 10
+      TabOrder = 11
     end
     object EditSituacao: TEdit
       Left = 464
@@ -373,7 +386,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 11
+      TabOrder = 12
     end
     object EditFantasia: TEdit
       Left = 8
@@ -386,7 +399,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 3
+      TabOrder = 4
     end
     object ListCNAE2: TListBox
       Left = 8
@@ -394,7 +407,7 @@ object F_Principal: TF_Principal
       Width = 616
       Height = 125
       ItemHeight = 13
-      TabOrder = 15
+      TabOrder = 16
     end
     object EditCNAE1: TEdit
       Left = 8
@@ -407,7 +420,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 14
+      TabOrder = 15
     end
     object EditEmail: TEdit
       Left = 8
@@ -420,7 +433,7 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 12
+      TabOrder = 13
     end
     object EditTelefone: TEdit
       Left = 344
@@ -433,7 +446,20 @@ object F_Principal: TF_Principal
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 13
+      TabOrder = 14
+    end
+    object EditPorte: TEdit
+      Left = 473
+      Top = 29
+      Width = 57
+      Height = 24
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
     end
   end
   object Panel1: TPanel

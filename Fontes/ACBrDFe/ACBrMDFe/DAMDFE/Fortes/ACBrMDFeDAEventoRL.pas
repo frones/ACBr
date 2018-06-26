@@ -81,8 +81,8 @@ type
       AMargemEsquerda: double = 0.7;
       AMargemDireita: double = 0.7;
       AImpressora: string = '';
-      AMDFe: TMDFe = nil{;
-      APrintDialog  : Boolean = True  });
+      AMDFe: TMDFe = nil;
+      APrintDialog  : Boolean = True  );
 
     class procedure SavePDF(AOwner: TComponent;
 		  AEventoMDFe: TInfEventoCollectionItem;
@@ -120,8 +120,8 @@ class procedure TfrmMDFeDAEventorl.Imprimir(AOwner: TComponent;
   AMargemEsquerda: double = 0.7;
   AMargemDireita: double = 0.7;
   AImpressora: string = '';
-  AMDFe: TMDFe = nil{;
-  APrintDialog  : Boolean = True } );
+  AMDFe: TMDFe = nil;
+  APrintDialog  : Boolean = True  );
 begin
   with Create ( AOwner ) do
     try
@@ -149,7 +149,7 @@ begin
       else
         RLPrinter.Copies := 1;
 
-//      RLMDFeEvento.PrintDialog := APrintDialog;
+      RLMDFeEvento.PrintDialog := APrintDialog;
 
       if AMostrarPreview then
         RLMDFeEvento.PreviewModal

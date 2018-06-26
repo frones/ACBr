@@ -65,6 +65,7 @@ type
     FAbertura: TDateTime;
     FRazaoSocial: String;
     FFantasia: String;
+    FPorte: String;
     FCNAE1: String;
     FCNAE2: TStringList;
     FEndereco: String;
@@ -101,6 +102,7 @@ type
     property Abertura: TDateTime Read FAbertura;
     property RazaoSocial: String Read FRazaoSocial;
     property Fantasia: String Read FFantasia;
+    property Porte: String read FPorte;
     property CNAE1: String Read FCNAE1;
     property CNAE2: TStringList Read FCNAE2;
     property Endereco: String Read FEndereco;
@@ -273,6 +275,7 @@ begin
       FAbertura     := StringToDateTimeDef(LerCampo(Resposta,'DATA DE ABERTURA'),0);
       FRazaoSocial  := LerCampo(Resposta,'NOME EMPRESARIAL');
       FFantasia     := LerCampo(Resposta,'TÍTULO DO ESTABELECIMENTO (NOME DE FANTASIA)');
+      FPorte        := LerCampo(Resposta,'PORTE');
       FCNAE1        := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA ATIVIDADE ECONÔMICA PRINCIPAL');
       FEndereco     := LerCampo(Resposta,'LOGRADOURO');
       FNumero       := LerCampo(Resposta,'NÚMERO');
@@ -373,6 +376,7 @@ begin
   FAbertura         := 0;
   FRazaoSocial      := '';
   FFantasia         := '';
+  FPorte            := '';
   FCNAE1            := '';
   FEndereco         := '';
   FNumero           := '';

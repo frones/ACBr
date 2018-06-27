@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2018
+-- Diversos --
+[*] Melhorias ao ler o XML de retorno, quando este possui o grupo Fault.
+   Por: Italo Jurisato Junior
+
 25/06/2018
 -- ACBrNFSe / ACBrNFSeWebServices --
 [*] Incluido um segundo parâmetro no método GerarLote, que tem por finalidade definir a 

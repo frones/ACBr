@@ -262,6 +262,8 @@ function StrToOperacao(out ok: boolean; const s: String): TOperacao;
 function TributacaoToStr(const t: TTributacao): String;
 function StrToTributacao(out ok: boolean; const s: String): TTributacao;
 
+function RemoverAtributos(const AXML: String; AProvedor: TnfseProvedor): String;
+
 implementation
 
 uses
@@ -18064,42 +18066,43 @@ end;
 
 function RetirarPrefixos(const AXML: String; AProvedor: TnfseProvedor): String;
 var
- XML: String;
+  XML: String;
 begin
- XML := StringReplace( AXML, 'ns1:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'ns2:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'ns3:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'ns4:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'ns5:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'tc:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'ii:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'p1:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'env:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'nfse:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'soap:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'soap12:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'SOAP-ENV:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'tin:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'a:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'b:', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'tipos:', '', [rfReplaceAll] );
+  XML := StringReplace( AXML, 'ns1:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'ns2:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'ns3:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'ns4:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'ns5:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'tc:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'ii:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'p1:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'env:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'nfse:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'soap:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'soap12:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'SOAP-ENV:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'tin:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'a:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'b:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 's:', '', [rfReplaceAll] );
+  XML := StringReplace( XML, 'tipos:', '', [rfReplaceAll] );
 
- // Provedor NFSeBrasil
- if AProvedor = proNFSeBrasil then
- begin
-   XML := StringReplace( XML, '<![CDATA[', '', [rfReplaceAll] );
-   XML := StringReplace( XML, ']]>', '', [rfReplaceAll] );
-   XML := StringReplace( XML, 'R$', '', [rfReplaceAll] );
- end;
+  // Provedor NFSeBrasil
+  if AProvedor = proNFSeBrasil then
+  begin
+    XML := StringReplace( XML, '<![CDATA[', '', [rfReplaceAll] );
+    XML := StringReplace( XML, ']]>', '', [rfReplaceAll] );
+    XML := StringReplace( XML, 'R$', '', [rfReplaceAll] );
+  end;
 
- // Provedor Governa, os prefixos não tem ":"
- if AProvedor = proGoverna then
- begin
-   XML := StringReplace( XML, 'tc', '', [rfReplaceAll] );
-   XML := StringReplace( XML, 'ts', '', [rfReplaceAll] );
- end;
+  // Provedor Governa, os prefixos não tem ":"
+  if AProvedor = proGoverna then
+  begin
+    XML := StringReplace( XML, 'tc', '', [rfReplaceAll] );
+    XML := StringReplace( XML, 'ts', '', [rfReplaceAll] );
+  end;
 
- result := XML;
+  result := XML;
 end;
 
 function VersaoXML(AXML: String): String;
@@ -18566,6 +18569,15 @@ begin
                            [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
                             ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
                             ttTributavelFixo, ttTributavelSN, ttMEI]);
+end;
+
+function RemoverAtributos(const AXML: String; AProvedor: TnfseProvedor): String;
+var
+  XML: String;
+begin
+  XML := StringReplace( AXML, ' xml:lang="pt-BR"', '', [rfReplaceAll] );
+
+  result := XML;
 end;
 
 end.

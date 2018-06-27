@@ -291,7 +291,7 @@ begin
   if Provedor = proISSCuritiba then
     Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
   else
-    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo, Provedor));
+    Leitor.Arquivo := RemoverNameSpace(RemoverAtributos(RetirarPrefixos(Leitor.Arquivo, Provedor), Provedor));
 
   Leitor.Grupo   := Leitor.Arquivo;
 

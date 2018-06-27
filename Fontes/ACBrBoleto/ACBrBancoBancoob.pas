@@ -717,7 +717,8 @@ begin
                '1'                                      + // 143 - Código de Remessa (1) / Retorno (2)
                FormatDateTime('ddmmyyyy', Now)          + // 144 a 151 - Data do de geração do arquivo
                FormatDateTime('hhmmss', Now)            + // 152 a 157 - Hora de geração do arquivo
-               '000001'                                 + // 158 a 163 - Número sequencial do arquivo retorno
+//               '000001'                                 + // 158 a 163 - Número sequencial do arquivo retorno
+               PadLeft(OnlyNumber(inttostr(NumeroRemessa)), 6, '0')     + // 158 a 163 - Número sequencial do arquivo retorno  - marcio ereno 09/06/2018
                PadLeft(IntToStr(fpLayoutVersaoArquivo) , 3, '0')  + // 164 a 166 - Número da versão do layout do arquivo  //Alteração para passar no Validador
                '00000'                                  + // 167 a 171 - Zeros
                space(54)                                + // 172 a 225 - 54 Brancos
@@ -889,15 +890,11 @@ begin
        ADataDesconto := PadLeft('', 8, '0');
 
      DiasProtesto  := IntToStrZero(DiasDeProtesto,2);
-//     if (DataProtesto > 0) then
-//     begin
-//       case TipoDiasProtesto of
-//         diCorridos : ProtestoBaixa := '1';
-//         diUteis    : ProtestoBaixa := '2';
-//       end;
-//     end
-//     else
-     ProtestoBaixa:= '1';
+
+     if (DataProtesto > 0) then
+       ProtestoBaixa:= '1'
+     else
+       ProtestoBaixa:= '3';
 
      if CodigoMora = '' then
      begin

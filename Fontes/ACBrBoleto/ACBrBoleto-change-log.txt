@@ -47,7 +47,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 15/06/2018 ver: 0.0.243
+Data 26/06/2018 ver: 0.0.244
+
+26-06-2018 -- ACBrBancoSantander
+[*] Adicionadado validações no retorno CNAB240
+https://www.projetoacbr.com.br/forum/topic/43728-banco-santander-lerretorno240-motivo-da-ocorr%C3%AAncia-quando-liquida%C3%A7%C3%A3o/
+
+26-06-2018 -- ACBrBancoBancoob
+[*] Ajustes de validações no arquivo remessa CNAB240
+https://www.projetoacbr.com.br/forum/topic/44009-ajuste-sicoob-240/
+
+26-06-2018 -- ACBrBancoBanrisul
+[*] Ajustes de validações no arquivo remessa CNAB400
+https://www.projetoacbr.com.br/forum/topic/43596-alteracao-cnab-400-banrisul/
+
+26-06-2018 -- ACBrBancoSicred / ACBrBoleto
+[+] Adicionado validações de TipoDesconto CNAB400 e CNAB240
+https://www.projetoacbr.com.br/forum/topic/39673-adicionado-segmento-r-para-o-banco-sicredi-cnab-240/
 
 15-06-2018 -- ACBrBancoCredisis
 [+] Adicionado Unit ACBrBancoCredisis

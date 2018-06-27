@@ -816,8 +816,18 @@ var
   begin
     with Titulo.OcorrenciaOriginal do
     begin
-      if MatchText(AOcorrencia, ['03', '26', '30'])  then
+      if MatchText(AOcorrencia, ['03', '06', '09', '17', '26', '30'])  then
       begin
+       if AOcorrencia = '03' then
+         Tipo:= toRetornoRegistroRecusado
+       else if AOcorrencia = '26' then
+         Tipo := toRetornoInstrucaoRejeitada
+       else if AOcorrencia = '30' then
+         Tipo := toRetornoAlteracaoDadosRejeitados
+       else if MatchText(AOcorrencia, ['06', '09'])  then
+         Tipo := CodOcorrenciaToTipo(StrToInt(AOcorrencia))
+       else if AOcorrencia = '17' then
+          Tipo := toRetornoLiquidadoAposBaixaOuNaoRegistro;
        pMotivoRejeicao:= 209;
        for I:= 0 to 4 do
        begin
@@ -830,12 +840,6 @@ var
          end;
          Inc(pMotivoRejeicao, 2);
        end;
-       if AOcorrencia = '03' then
-         Tipo:= toRetornoRegistroRecusado
-       else if AOcorrencia = '26' then
-         Tipo := toRetornoInstrucaoRejeitada
-       else if AOcorrencia = '30' then
-         Tipo := toRetornoAlteracaoDadosRejeitados;
       end
       else if MatchText(AOcorrencia, ['02', '06', '09', '11', '12', '13', '14'])  then
       begin
@@ -1358,191 +1362,287 @@ begin
   end;
 end;
 
-function TACBrBancoSantander.COdMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;
-begin  
-  case CodMotivo of
-    001: Result := '001-NOSSO NUMERO NAO NUMERICO';
-    002: Result := '002-VALOR DO ABATIMENTO NAO NUMERICO';
-    003: Result := '003-DATA VENCIMENTO NAO NUMERICA';
-    004: Result := '004-CONTA COBRANCA NAO NUMERICA';
-    005: Result := '005-CODIGO DA CARTEIRA NAO NUMERICO';
-    006: Result := '006-CODIGO DA CARTEIRA INVALIDO';
-    007: Result := '007-ESPECIE DO DOCUMENTO INVALIDA';
-    008: Result := '008-UNIDADE DE VALOR NAO NUMERICA';
-    009: Result := '009-UNIDADE DE VALOR INVALIDA';
-    010: Result := '010-CODIGO PRIMEIRA INSTRUCAO NAO NUMERICA';
-    011: Result := '011-CODIGO SEGUNDA INSTRUCAO NAO NUMERICA';
-    012: Result := '012-VALOR DO TITULO EM OUTRA UNIDADE';
-    013: Result := '013-VALOR DO TITULO NAO NUMERICO';
-    014: Result := '014-VALOR DE MORA NAO NUMERICO';
-    015: Result := '015-DATA EMISSAO NÃO NUMERICA';
-    016: Result := '016-DATA DE VENCIMENTO INVALIDA';
-    017: Result := '017-CODIGO DA AGENCIA COBRADORA NAO NUMERICA';
-    018: Result := '018-VALOR DO IOC NAO NUMERICO';
-    019: Result := '019-NUMERO DO CEP NAO NUMERICO';
-    020: Result := '020-TIPO INSCRICAO NAO NUMERICO';
-    021: Result := '021-NUMERO DO CGC OU CPF NAO NUMERICO';
-    022: Result := '022-CODIGO OCORRENCIA INVALIDO';
-    024: Result := '024-TOTAL PARCELA NAO NUMERICO';
-    025: Result := '025-VALOR DESCONTO NAO NUMERICO';
-    026: Result := '026-CODIGO BANCO COBRADOR INVALIDO';
-    027: Result := '027-NUMERO PARCELAS CARNE NAO NUMERICO';
-    028: Result := '028-NUMERO PARCELAS CARNE ZERADO';
-    029: Result := '029-VALOR DE MORA INVALIDO';
-    030: Result := '030-DT VENC MENOR DE 15 DIAS DA DT PROCES';
-    039: Result := '039-PERFIL NAO ACEITA TITULO EM BCO CORRESP';
-    041: Result := '041-AGENCIA COBRADORA NAO ENCONTRADA';
-    042: Result := '042-CONTA COBRANCA INVALIDA';
-    043: Result := '043-NAO BAIXAR,  COMPL. INFORMADO INVALIDO';
-    044: Result := '044-NAO PROTESTAR, COMPL. INFORMADO INVALIDO';
-    045: Result := '045-QTD DE DIAS DE BAIXA NAO PREENCHIDO';
-    046: Result := '046-QTD DE DIAS PROTESTO NAO PREENCHIDO';
-    047: Result := '047-TOT PARC. INF. NAO BATE C/ QTD PARC GER';
-    048: Result := '048-CARNE COM PARCELAS COM ERRO';
-    049: Result := '049-SEU NUMERO NAO CONFERE COM O CARNE';
-    051: Result := '051-TITULO NAO ENCONTRADO';
-    052: Result := '052-OCOR.  NAO ACATADA, TITULO  LIQUIDADO';
-    053: Result := '053-OCOR. NAO ACATADA, TITULO BAIXADO';
-    054: Result := '054-TITULO COM ORDEM DE PROTESTO JA EMITIDA';
-    055: Result := '055-OCOR. NAO ACATADA, TITULO JA PROTESTADO';
-    056: Result := '056-OCOR. NAO ACATADA, TIT. NAO VENCIDO';
-    057: Result := '057-CEP DO SACADO INCORRETO';
-    058: Result := '058-CGC/CPF INCORRETO';
-    059: Result := '059-INSTRUCAO ACEITA SO P/ COBRANCA SIMPLES';
-    060: Result := '060-ESPECIE DOCUMENTO NAO PROTESTAVEL';
-    061: Result := '061-CEDENTE SEM CARTA DE PROTESTO';
-    062: Result := '062-SACADO NAO PROTESTAVEL';
-    063: Result := '063-CEP NAO ENCONTRADO NA TABELA DE PRACAS';
-    064: Result := '064-TIPO DE COBRANCA NAO PERMITE PROTESTO';
-    065: Result := '065-PEDIDO SUSTACAO JA SOLICITADO';
-    066: Result := '066-SUSTACAO PROTESTO FORA DE PRAZO';
-    067: Result := '067-CLIENTE NAO TRANSMITE REG. DE OCORRENCIA';
-    068: Result := '068-TIPO DE VENCIMENTO INVALIDO';
-    069: Result := '069-PRODUTO DIFERENTE DE COBRANCA SIMPLES';
-    070: Result := '070-DATA PRORROGACAO MENOR QUE DATA VENCTO';
-    071: Result := '071-DATA ANTECIPACAO MAIOR QUE DATA VENCTO';
-    072: Result := '072-DATA DOCUMENTO SUPERIOR A DATA INSTRUCAO';
-    073: Result := '073-ABATIMENTO MAIOR/IGUAL AO VALOR TITULO';
-    074: Result := '074-PRIM. DESCONTO MAIOR/IGUAL VALOR TITULO';
-    075: Result := '075-SEG. DESCONTO MAIOR/IGUAL VALOR TITULO';
-    076: Result := '076-TERC. DESCONTO MAIOR/IGUAL VALOR TITULO';
-    077: Result := '077-DESC. POR ANTEC. MAIOR/IGUAL VLR TITULO';
-    078: Result := '078-NAO EXISTE ABATIMENTO P/ CANCELAR';
-    079: Result := '079-NAO EXISTE PRIM. DESCONTO P/ CANCELAR';
-    080: Result := '080-NAO EXISTE SEG. DESCONTO P/ CANCELAR';
-    081: Result := '081-NAO EXISTE TERC. DESCONTO P/ CANCELAR';
-    082: Result := '082-NAO EXISTE DESC. POR ANTEC. P/ CANCELAR';
-    084: Result := '084-JA EXISTE SEGUNDO DESCONTO';
-    085: Result := '085-JA EXISTE TERCEIRO DESCONTO';
-    086: Result := '086-DATA SEGUNDO DESCONTO INVALIDA';
-    087: Result := '087-DATA TERCEIRO DESCONTO INVALIDA';
-    089: Result := '089-DATA MULTA MENOR/IGUAL QUE VENCIMENTO';
-    090: Result := '090-JA EXISTE DESCONTO POR DIA ANTECIPACAO';
-    091: Result := '091-JA EXISTE CONCESSAO DE DESCONTO';
-    092: Result := '092-NOSSO NUMERO JA CADASTRADO';
-    093: Result := '093-VALOR DO TITULO NAO INFORMADO';
-    094: Result := '094-VALOR TIT. EM OUTRA MOEDA NAO INFORMADO';
-    095: Result := '095-PERFIL NAO ACEITA VALOR TITULO ZERADO';
-    096: Result := '096-ESPECIE DOCTO NAO PERMITE PROTESTO';
-    097: Result := '097-ESPECIE DOCTO NAO PERMITE IOC ZERADO';
-    098: Result := '098-DATA EMISSAO INVALIDA';
-    099: Result := '099-REGISTRO DUPLICADO NO MOVIMENTO DIÁRIO';
-    100: Result := '100-DATA EMISSAO MAIOR QUE A DATA VENCIMENTO';
-    101: Result := '101-NOME DO SACADO NÃO INFORMADO';
-    102: Result := '102-ENDERECO DO SACADO NÃO INFORMADO';
-    103: Result := '103-MUNICIPIO DO SACADO NAO INFORMADO';
-    104: Result := '104-UNIDADE DA FEDERACAO NAO INFORMADA';
-    105: Result := '105-TIPO INSCRICAO NÃO EXISTE';
-    106: Result := '106-CGC/CPF NAO INFORMADO';
-    107: Result := '107-UNIDADE DA FEDERACAO INCORRETA';
-    108: Result := '108-DIGITO CGC/CPF INCORRETO';
-    109: Result := '109-VALOR MORA TEM QUE SER ZERO (TIT = ZERO)';
-    110: Result := '110-DATA PRIMEIRO DESCONTO INVALIDA';
-    111: Result := '111-DATA  DESCONTO NAO NUMERICA';
-    112: Result := '112-VALOR DESCONTO NAO INFORMADO';
-    113: Result := '113-VALOR DESCONTO INVALIDO';
-    114: Result := '114-VALOR ABATIMENTO NAO INFORMADO';
-    115: Result := '115-VALOR ABATIMENTO MAIOR VALOR TITULO';
-    116: Result := '116-DATA MULTA NAO NUMERICA';
-    117: Result := '117-VALOR DESCONTO MAIOR VALOR TITULO';
-    118: Result := '118-DATA MULTA NAO INFORMADA';
-    119: Result := '119-DATA MULTA MAIOR QUE DATA DE VENCIMENTO';
-    120: Result := '120-PERCENTUAL MULTA NAO NUMERICO';
-    121: Result := '121-PERCENTUAL MULTA NAO INFORMADO';
-    122: Result := '122-VALOR IOF MAIOR QUE VALOR TITULO';
-    123: Result := '123-CEP DO SACADO NAO NUMERICO';
-    124: Result := '124-CEP SACADO NAO ENCONTRADO';
-    126: Result := '126-CODIGO P. BAIXA / DEVOL. INVALIDO';
-    127: Result := '127-CODIGO P. BAIXA / DEVOL. NAO NUMERICA';
-    128: Result := '128-CODIGO PROTESTO INVALIDO';
-    129: Result := '129-ESPEC DE DOCUMENTO NAO NUMERICA';
-    130: Result := '130-FORMA DE CADASTRAMENTO NAO NUMERICA';
-    131: Result := '131-FORMA DE CADASTRAMENTO INVALIDA';
-    132: Result := '132-FORMA CADAST. 2 INVALIDA PARA CARTEIRA 3';
-    133: Result := '133-FORMA CADAST. 2 INVALIDA PARA CARTEIRA 4';
-    134: Result := '134-CODIGO DO MOV. REMESSA NAO NUMERICO';
-    135: Result := '135-CODIGO DO MOV. REMESSA INVALIDO';
-    136: Result := '136-CODIGO BCO NA COMPENSACAO NAO NUMERICO';
-    138: Result := '138-NUM. LOTE REMESSA(DETALHE) NAO NUMERICO';
-    140: Result := '140-COD. SEQUEC.DO REG. DETALHE INVALIDO';
-    141: Result := '141-NUM. SEQ. REG. DO LOTE NAO NUMERICO';
-    142: Result := '142-NUM.AG.CEDENTE/DIG.NAO NUMERICO';
-    144: Result := '144-TIPO DE DOCUMENTO NAO NUMERICO';
-    145: Result := '145-TIPO DE DOCUMENTO INVALIDO';
-    146: Result := '146-CODIGO P. PROTESTO NAO NUMERICO';
-    147: Result := '147-QTDE DE DIAS P. PROTESTO INVALIDO';
-    148: Result := '148-QTDE DE DIAS P. PROTESTO NAO NUMERICO';
-    149: Result := '149-CODIGO DE MORA INVALIDO';
-    150: Result := '150-CODIGO DE MORA NAO NUMERICO';
-    151: Result := '151-VL.MORA IGUAL A ZEROS P. COD.MORA 1';
-    152: Result := '152-VL. TAXA MORA IGUAL A ZEROS P.COD MORA 2';
-    154: Result := '154-VL. MORA NAO NUMERICO P. COD MORA 2';
-    155: Result := '155-VL. MORA INVALIDO P. COD.MORA 4';
-    156: Result := '156-QTDE DIAS P.BAIXA/DEVOL. NAO NUMERICO';
-    157: Result := '157-QTDE DIAS BAIXA/DEV. INVALIDO P. COD. 1';
-    158: Result := '158-QTDE DIAS BAIXA/DEV. INVALIDO P.COD. 2';
-    160: Result := '160-BAIRRO DO SACADO NAO INFORMADO';
-    161: Result := '161-TIPO INSC.CPF/CGC SACADOR/AVAL.NAO NUM.';
-    162: Result := '162-INDICADOR DE CARNE NAO NUMERICO';
-    163: Result := '163-NUM. TOTAL DE PARC.CARNE NAO NUMERICO';
-    164: Result := '164-NUMERO DO PLANO NAO NUMERICO';
-    165: Result := '165-INDICADOR DE PARCELAS CARNE INVALIDO';
-    166: Result := '166-N.SEQ. PARCELA INV.P.INDIC. MAIOR 0';
-    167: Result := '167-N. SEQ.PARCELA INV.P.INDIC.DIF.ZEROS';
-    168: Result := '168-N.TOT.PARC.INV.P.INDIC. MAIOR ZEROS';
-    169: Result := '169-NUM.TOT.PARC.INV.P.INDIC.DIFER.ZEROS';
-    170: Result := '170-FORMA DE CADASTRAMENTO 2 INV.P.CART.5';
-    199: Result := '199-TIPO INSC.CGC/CPF SACADOR.AVAL.INVAL.';
-    200: Result := '200-NUM.INSC.(CGC)SACADOR/AVAL.NAO NUMERICO';
-    201: Result := '201-ALT. DO CONTR. PARTICIPANTE INVALIDO';
-    202: Result := '202-ALT. DO SEU NUMERO INVALIDA';
-    218: Result := '218-BCO COMPENSACAO NAO NUMERICO (D3Q)';
-    219: Result := '219-BCO COMPENSACAO INVALIDO (D3Q)';
-    220: Result := '220-NUM. DO LOTE REMESSA NAO NUMERICO(D3Q)';
-    221: Result := '221-NUM. SEQ. REG. NO LOTE (D3Q)';
-    222: Result := '222-TIPO INSC.SACADO NAO NUMERICO (D3Q)';
-    223: Result := '223-TIPO INSC.SACADO INVALIDO (D3Q)';
-    224: Result := '224-NUM.INSC.SACADO NAO NUMERICO (D3Q)';
-    225: Result := '225-NUM.INSC.SAC.INV.P.TIPO INSC.0 E 9(D3Q)';
-    226: Result := '226-NUM.BCO COMPENSACAO NAO NUMERICO (D3R)';
-    228: Result := '228-NUM. LOTE REMESSA NAO NUMERICO (D3R)';
-    229: Result := '229-NUM. SEQ. REG. LOTE NAO NUMERICO (D3R)';
-    246: Result := '246-COD.BCO COMPENSACAO NAO NUMERICO (D3S)';
-    247: Result := '247-COD. BANCO COMPENSACAO INVALIDO (D3S)';
-    248: Result := '248-NUM.LOTE REMESSA NAO NUMERICO (D3S)';
-    249: Result := '249-NUM.SEQ.DO REG.LOTE NAO NUMERICO (D3S)';
-    250: Result := '250-NUM.IDENT.DE IMPRESSAO NAO NUMERICO(D3S)';
-    251: Result := '251-NUM.IDENT.DE IMPRESSAO INVALIDO (D3S)';
-    252: Result := '252-NUM.LINHA IMPRESSA NAO NUMERICO(D3S)';
-    253: Result := '253-COD.MSG. P.REC. SAC. NAO NUMERICO (D3S)';
-    254: Result := '254-COD.MSG.P.REC.SACADO INVALIDO(D3S)';
-    258: Result := '258-VL.MORA NAO NUMERICO P.COD=4(D3P)';
-    259: Result := '259-CAD.TXPERM.SK.INV.P.COD.MORA=4(D3P)';
-    260: Result := '260-VL.TIT(REAL).INV.P.COD.MORA = 1(DEP)';
-    261: Result := '261-VL.OUTROS INV.P.COD.MORA = 1(D3P)';
-  else
-    Result := IntToStrZero(CodMotivo, 3) + ' - Outros Motivos';
-  end;
+function TACBrBancoSantander.CodMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo: Integer) : String;
+begin
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c400) then
+  begin
+    case CodMotivo of
+      001: Result := '001-NOSSO NUMERO NAO NUMERICO';
+      002: Result := '002-VALOR DO ABATIMENTO NAO NUMERICO';
+      003: Result := '003-DATA VENCIMENTO NAO NUMERICA';
+      004: Result := '004-CONTA COBRANCA NAO NUMERICA';
+      005: Result := '005-CODIGO DA CARTEIRA NAO NUMERICO';
+      006: Result := '006-CODIGO DA CARTEIRA INVALIDO';
+      007: Result := '007-ESPECIE DO DOCUMENTO INVALIDA';
+      008: Result := '008-UNIDADE DE VALOR NAO NUMERICA';
+      009: Result := '009-UNIDADE DE VALOR INVALIDA';
+      010: Result := '010-CODIGO PRIMEIRA INSTRUCAO NAO NUMERICA';
+      011: Result := '011-CODIGO SEGUNDA INSTRUCAO NAO NUMERICA';
+      012: Result := '012-VALOR DO TITULO EM OUTRA UNIDADE';
+      013: Result := '013-VALOR DO TITULO NAO NUMERICO';
+      014: Result := '014-VALOR DE MORA NAO NUMERICO';
+      015: Result := '015-DATA EMISSAO NÃO NUMERICA';
+      016: Result := '016-DATA DE VENCIMENTO INVALIDA';
+      017: Result := '017-CODIGO DA AGENCIA COBRADORA NAO NUMERICA';
+      018: Result := '018-VALOR DO IOC NAO NUMERICO';
+      019: Result := '019-NUMERO DO CEP NAO NUMERICO';
+      020: Result := '020-TIPO INSCRICAO NAO NUMERICO';
+      021: Result := '021-NUMERO DO CGC OU CPF NAO NUMERICO';
+      022: Result := '022-CODIGO OCORRENCIA INVALIDO';
+      024: Result := '024-TOTAL PARCELA NAO NUMERICO';
+      025: Result := '025-VALOR DESCONTO NAO NUMERICO';
+      026: Result := '026-CODIGO BANCO COBRADOR INVALIDO';
+      027: Result := '027-NUMERO PARCELAS CARNE NAO NUMERICO';
+      028: Result := '028-NUMERO PARCELAS CARNE ZERADO';
+      029: Result := '029-VALOR DE MORA INVALIDO';
+      030: Result := '030-DT VENC MENOR DE 15 DIAS DA DT PROCES';
+      039: Result := '039-PERFIL NAO ACEITA TITULO EM BCO CORRESP';
+      041: Result := '041-AGENCIA COBRADORA NAO ENCONTRADA';
+      042: Result := '042-CONTA COBRANCA INVALIDA';
+      043: Result := '043-NAO BAIXAR,  COMPL. INFORMADO INVALIDO';
+      044: Result := '044-NAO PROTESTAR, COMPL. INFORMADO INVALIDO';
+      045: Result := '045-QTD DE DIAS DE BAIXA NAO PREENCHIDO';
+      046: Result := '046-QTD DE DIAS PROTESTO NAO PREENCHIDO';
+      047: Result := '047-TOT PARC. INF. NAO BATE C/ QTD PARC GER';
+      048: Result := '048-CARNE COM PARCELAS COM ERRO';
+      049: Result := '049-SEU NUMERO NAO CONFERE COM O CARNE';
+      051: Result := '051-TITULO NAO ENCONTRADO';
+      052: Result := '052-OCOR.  NAO ACATADA, TITULO  LIQUIDADO';
+      053: Result := '053-OCOR. NAO ACATADA, TITULO BAIXADO';
+      054: Result := '054-TITULO COM ORDEM DE PROTESTO JA EMITIDA';
+      055: Result := '055-OCOR. NAO ACATADA, TITULO JA PROTESTADO';
+      056: Result := '056-OCOR. NAO ACATADA, TIT. NAO VENCIDO';
+      057: Result := '057-CEP DO SACADO INCORRETO';
+      058: Result := '058-CGC/CPF INCORRETO';
+      059: Result := '059-INSTRUCAO ACEITA SO P/ COBRANCA SIMPLES';
+      060: Result := '060-ESPECIE DOCUMENTO NAO PROTESTAVEL';
+      061: Result := '061-CEDENTE SEM CARTA DE PROTESTO';
+      062: Result := '062-SACADO NAO PROTESTAVEL';
+      063: Result := '063-CEP NAO ENCONTRADO NA TABELA DE PRACAS';
+      064: Result := '064-TIPO DE COBRANCA NAO PERMITE PROTESTO';
+      065: Result := '065-PEDIDO SUSTACAO JA SOLICITADO';
+      066: Result := '066-SUSTACAO PROTESTO FORA DE PRAZO';
+      067: Result := '067-CLIENTE NAO TRANSMITE REG. DE OCORRENCIA';
+      068: Result := '068-TIPO DE VENCIMENTO INVALIDO';
+      069: Result := '069-PRODUTO DIFERENTE DE COBRANCA SIMPLES';
+      070: Result := '070-DATA PRORROGACAO MENOR QUE DATA VENCTO';
+      071: Result := '071-DATA ANTECIPACAO MAIOR QUE DATA VENCTO';
+      072: Result := '072-DATA DOCUMENTO SUPERIOR A DATA INSTRUCAO';
+      073: Result := '073-ABATIMENTO MAIOR/IGUAL AO VALOR TITULO';
+      074: Result := '074-PRIM. DESCONTO MAIOR/IGUAL VALOR TITULO';
+      075: Result := '075-SEG. DESCONTO MAIOR/IGUAL VALOR TITULO';
+      076: Result := '076-TERC. DESCONTO MAIOR/IGUAL VALOR TITULO';
+      077: Result := '077-DESC. POR ANTEC. MAIOR/IGUAL VLR TITULO';
+      078: Result := '078-NAO EXISTE ABATIMENTO P/ CANCELAR';
+      079: Result := '079-NAO EXISTE PRIM. DESCONTO P/ CANCELAR';
+      080: Result := '080-NAO EXISTE SEG. DESCONTO P/ CANCELAR';
+      081: Result := '081-NAO EXISTE TERC. DESCONTO P/ CANCELAR';
+      082: Result := '082-NAO EXISTE DESC. POR ANTEC. P/ CANCELAR';
+      084: Result := '084-JA EXISTE SEGUNDO DESCONTO';
+      085: Result := '085-JA EXISTE TERCEIRO DESCONTO';
+      086: Result := '086-DATA SEGUNDO DESCONTO INVALIDA';
+      087: Result := '087-DATA TERCEIRO DESCONTO INVALIDA';
+      089: Result := '089-DATA MULTA MENOR/IGUAL QUE VENCIMENTO';
+      090: Result := '090-JA EXISTE DESCONTO POR DIA ANTECIPACAO';
+      091: Result := '091-JA EXISTE CONCESSAO DE DESCONTO';
+      092: Result := '092-NOSSO NUMERO JA CADASTRADO';
+      093: Result := '093-VALOR DO TITULO NAO INFORMADO';
+      094: Result := '094-VALOR TIT. EM OUTRA MOEDA NAO INFORMADO';
+      095: Result := '095-PERFIL NAO ACEITA VALOR TITULO ZERADO';
+      096: Result := '096-ESPECIE DOCTO NAO PERMITE PROTESTO';
+      097: Result := '097-ESPECIE DOCTO NAO PERMITE IOC ZERADO';
+      098: Result := '098-DATA EMISSAO INVALIDA';
+      099: Result := '099-REGISTRO DUPLICADO NO MOVIMENTO DIÁRIO';
+      100: Result := '100-DATA EMISSAO MAIOR QUE A DATA VENCIMENTO';
+      101: Result := '101-NOME DO SACADO NÃO INFORMADO';
+      102: Result := '102-ENDERECO DO SACADO NÃO INFORMADO';
+      103: Result := '103-MUNICIPIO DO SACADO NAO INFORMADO';
+      104: Result := '104-UNIDADE DA FEDERACAO NAO INFORMADA';
+      105: Result := '105-TIPO INSCRICAO NÃO EXISTE';
+      106: Result := '106-CGC/CPF NAO INFORMADO';
+      107: Result := '107-UNIDADE DA FEDERACAO INCORRETA';
+      108: Result := '108-DIGITO CGC/CPF INCORRETO';
+      109: Result := '109-VALOR MORA TEM QUE SER ZERO (TIT = ZERO)';
+      110: Result := '110-DATA PRIMEIRO DESCONTO INVALIDA';
+      111: Result := '111-DATA  DESCONTO NAO NUMERICA';
+      112: Result := '112-VALOR DESCONTO NAO INFORMADO';
+      113: Result := '113-VALOR DESCONTO INVALIDO';
+      114: Result := '114-VALOR ABATIMENTO NAO INFORMADO';
+      115: Result := '115-VALOR ABATIMENTO MAIOR VALOR TITULO';
+      116: Result := '116-DATA MULTA NAO NUMERICA';
+      117: Result := '117-VALOR DESCONTO MAIOR VALOR TITULO';
+      118: Result := '118-DATA MULTA NAO INFORMADA';
+      119: Result := '119-DATA MULTA MAIOR QUE DATA DE VENCIMENTO';
+      120: Result := '120-PERCENTUAL MULTA NAO NUMERICO';
+      121: Result := '121-PERCENTUAL MULTA NAO INFORMADO';
+      122: Result := '122-VALOR IOF MAIOR QUE VALOR TITULO';
+      123: Result := '123-CEP DO SACADO NAO NUMERICO';
+      124: Result := '124-CEP SACADO NAO ENCONTRADO';
+      126: Result := '126-CODIGO P. BAIXA / DEVOL. INVALIDO';
+      127: Result := '127-CODIGO P. BAIXA / DEVOL. NAO NUMERICA';
+      128: Result := '128-CODIGO PROTESTO INVALIDO';
+      129: Result := '129-ESPEC DE DOCUMENTO NAO NUMERICA';
+      130: Result := '130-FORMA DE CADASTRAMENTO NAO NUMERICA';
+      131: Result := '131-FORMA DE CADASTRAMENTO INVALIDA';
+      132: Result := '132-FORMA CADAST. 2 INVALIDA PARA CARTEIRA 3';
+      133: Result := '133-FORMA CADAST. 2 INVALIDA PARA CARTEIRA 4';
+      134: Result := '134-CODIGO DO MOV. REMESSA NAO NUMERICO';
+      135: Result := '135-CODIGO DO MOV. REMESSA INVALIDO';
+      136: Result := '136-CODIGO BCO NA COMPENSACAO NAO NUMERICO';
+      138: Result := '138-NUM. LOTE REMESSA(DETALHE) NAO NUMERICO';
+      140: Result := '140-COD. SEQUEC.DO REG. DETALHE INVALIDO';
+      141: Result := '141-NUM. SEQ. REG. DO LOTE NAO NUMERICO';
+      142: Result := '142-NUM.AG.CEDENTE/DIG.NAO NUMERICO';
+      144: Result := '144-TIPO DE DOCUMENTO NAO NUMERICO';
+      145: Result := '145-TIPO DE DOCUMENTO INVALIDO';
+      146: Result := '146-CODIGO P. PROTESTO NAO NUMERICO';
+      147: Result := '147-QTDE DE DIAS P. PROTESTO INVALIDO';
+      148: Result := '148-QTDE DE DIAS P. PROTESTO NAO NUMERICO';
+      149: Result := '149-CODIGO DE MORA INVALIDO';
+      150: Result := '150-CODIGO DE MORA NAO NUMERICO';
+      151: Result := '151-VL.MORA IGUAL A ZEROS P. COD.MORA 1';
+      152: Result := '152-VL. TAXA MORA IGUAL A ZEROS P.COD MORA 2';
+      154: Result := '154-VL. MORA NAO NUMERICO P. COD MORA 2';
+      155: Result := '155-VL. MORA INVALIDO P. COD.MORA 4';
+      156: Result := '156-QTDE DIAS P.BAIXA/DEVOL. NAO NUMERICO';
+      157: Result := '157-QTDE DIAS BAIXA/DEV. INVALIDO P. COD. 1';
+      158: Result := '158-QTDE DIAS BAIXA/DEV. INVALIDO P.COD. 2';
+      160: Result := '160-BAIRRO DO SACADO NAO INFORMADO';
+      161: Result := '161-TIPO INSC.CPF/CGC SACADOR/AVAL.NAO NUM.';
+      162: Result := '162-INDICADOR DE CARNE NAO NUMERICO';
+      163: Result := '163-NUM. TOTAL DE PARC.CARNE NAO NUMERICO';
+      164: Result := '164-NUMERO DO PLANO NAO NUMERICO';
+      165: Result := '165-INDICADOR DE PARCELAS CARNE INVALIDO';
+      166: Result := '166-N.SEQ. PARCELA INV.P.INDIC. MAIOR 0';
+      167: Result := '167-N. SEQ.PARCELA INV.P.INDIC.DIF.ZEROS';
+      168: Result := '168-N.TOT.PARC.INV.P.INDIC. MAIOR ZEROS';
+      169: Result := '169-NUM.TOT.PARC.INV.P.INDIC.DIFER.ZEROS';
+      170: Result := '170-FORMA DE CADASTRAMENTO 2 INV.P.CART.5';
+      199: Result := '199-TIPO INSC.CGC/CPF SACADOR.AVAL.INVAL.';
+      200: Result := '200-NUM.INSC.(CGC)SACADOR/AVAL.NAO NUMERICO';
+      201: Result := '201-ALT. DO CONTR. PARTICIPANTE INVALIDO';
+      202: Result := '202-ALT. DO SEU NUMERO INVALIDA';
+      218: Result := '218-BCO COMPENSACAO NAO NUMERICO (D3Q)';
+      219: Result := '219-BCO COMPENSACAO INVALIDO (D3Q)';
+      220: Result := '220-NUM. DO LOTE REMESSA NAO NUMERICO(D3Q)';
+      221: Result := '221-NUM. SEQ. REG. NO LOTE (D3Q)';
+      222: Result := '222-TIPO INSC.SACADO NAO NUMERICO (D3Q)';
+      223: Result := '223-TIPO INSC.SACADO INVALIDO (D3Q)';
+      224: Result := '224-NUM.INSC.SACADO NAO NUMERICO (D3Q)';
+      225: Result := '225-NUM.INSC.SAC.INV.P.TIPO INSC.0 E 9(D3Q)';
+      226: Result := '226-NUM.BCO COMPENSACAO NAO NUMERICO (D3R)';
+      228: Result := '228-NUM. LOTE REMESSA NAO NUMERICO (D3R)';
+      229: Result := '229-NUM. SEQ. REG. LOTE NAO NUMERICO (D3R)';
+      246: Result := '246-COD.BCO COMPENSACAO NAO NUMERICO (D3S)';
+      247: Result := '247-COD. BANCO COMPENSACAO INVALIDO (D3S)';
+      248: Result := '248-NUM.LOTE REMESSA NAO NUMERICO (D3S)';
+      249: Result := '249-NUM.SEQ.DO REG.LOTE NAO NUMERICO (D3S)';
+      250: Result := '250-NUM.IDENT.DE IMPRESSAO NAO NUMERICO(D3S)';
+      251: Result := '251-NUM.IDENT.DE IMPRESSAO INVALIDO (D3S)';
+      252: Result := '252-NUM.LINHA IMPRESSA NAO NUMERICO(D3S)';
+      253: Result := '253-COD.MSG. P.REC. SAC. NAO NUMERICO (D3S)';
+      254: Result := '254-COD.MSG.P.REC.SACADO INVALIDO(D3S)';
+      258: Result := '258-VL.MORA NAO NUMERICO P.COD=4(D3P)';
+      259: Result := '259-CAD.TXPERM.SK.INV.P.COD.MORA=4(D3P)';
+      260: Result := '260-VL.TIT(REAL).INV.P.COD.MORA = 1(DEP)';
+      261: Result := '261-VL.OUTROS INV.P.COD.MORA = 1(D3P)';
+    else
+      Result := IntToStrZero(CodMotivo, 3) + ' - Outros Motivos';
+    end;
+  end
+  else // 240
+  begin
+    case TipoOcorrencia of
+    toRetornoComandoRecusado: //03 (Entrada rejeitada)
+      case CodMotivo of
+        01: Result:='Codigo do banco invalido';
+        02: Result:='Codigo do registro detalhe invalido';
+        03: Result:='Codigo do segmento invalido';
+        04: Result:='Codigo do movimento nao permitido para carteira';
+        05: Result:='Codigo de movimento invalido';
+        06: Result:='Tipo/numero de inscricao do beneficiário invalidos';
+        07: Result:='Agencia/Conta/DV invalido';
+        08: Result:='Nosso numero invalido';
+        09: Result:='Nosso numero duplicado';
+        10: Result:='Carteira invalida';
+        11: Result:='Forma de cadastramento do titulo invalido';
+        12: Result:='Tipo de documento invalido';
+        13: Result:='Identificacao da emissao do bloqueto invalida';
+        14: Result:='Identificacao da distribuicao do bloqueto invalida';
+        15: Result:='Caracteristicas da cobranca incompativeis';
+        16: Result:='Data de vencimento invalida';
+        17: Result:='Data de vencimento anterior a data de emissao';
+        18: Result:='Vencimento fora do prazo de operacao';
+        19: Result:='Titulo a cargo de Bancos Correspondentes com vencimento inferior XX dias';
+        20: Result:='Valor do titulo invalido';
+        21: Result:='Especie do titulo invalida';
+        22: Result:='Especie nao permitida para a carteira';
+        23: Result:='Aceite invalido';
+        24: Result:='Data da emissao invalida';
+        25: Result:='Data da emissao posterior a data';
+        26: Result:='Codigo de juros de mora invalido';
+        27: Result:='Valor/Taxa de juros de mora invalido';
+        28: Result:='Codigo do desconto invalido';
+        29: Result:='Valor do desconto maior ou igual ao valor do titulo ';
+        30: Result:='Desconto a conceder nao confere';
+        31: Result:='Concessao de desconto - ja existe desconto anterior';
+        32: Result:='Valor do IOF invalido';
+        33: Result:='Valor do abatimento invalido';
+        34: Result:='Valor do abatimento maior ou igual ao valor do titulo';
+        35: Result:='Abatimento a conceder nao confere';
+        36: Result:='Concessao de abatimento - ja existe abatimento anterior';
+        37: Result:='Codigo para protesto invalido';
+        38: Result:='Prazo para protesto invalido';
+        39: Result:='Pedido de protesto nao permitido para o titulo';
+        40: Result:='Titulo com ordem de protesto emitida';
+        41: Result:='Pedido de cancelamento/sustacao para titulos sem instrucao de protesto';
+        42: Result:='Codigo para baixa/devolucao invalido';
+        43: Result:='Prazo para baixa/devolucao invalido';
+        44: Result:='Codigo da moeda invalido';
+        45: Result:='Nome do pagador nao informado';
+        46: Result:='Tipo/numero de inscricao do pagador invalidos';
+        47: Result:='Endereco do pagador nao informado';
+        48: Result:='CEP invalido';
+        49: Result:='CEP sem praca de cobranca /nao localizado';
+        50: Result:='CEP referente a um Banco Correspondente';
+        51: Result:='CEP incompativel com a unidade da federacao';
+        52: Result:='Unidade da federacao invalida';
+        53: Result:='Tipo/numero de inscricao do sacador/avalista invalidos';
+        54: Result:='Sacador/Avalista nao informado';
+        55: Result:='Nosso numero no Banco Correspondente nao informado';
+        56: Result:='Codigo do Banco Correspondente nao informado';
+        57: Result:='Codigo da multa invalido';
+        58: Result:='Data da multa invalida';
+        59: Result:='Valor/Percentual da multa invalido';
+        60: Result:='Movimento para titulo nao cadastrado';
+        61: Result:='Alteracao da agencia cobradora/dv invalida';
+        62: Result:='Tipo de impressao invalido';
+        63: Result:='Entrada para titulo ja cadastrado';
+        64: Result:='Numero da linha invalido';
+        65: Result:='A espécie de título não permite a instrução';
+        72: Result:='Entrada de título Sem Registro';
+        90: Result:='Identificador/Quantidade de Parcelas de carnê invalido';
+        92: Result:='Data de Desconto Inválida';
+      end;
+    toRetornoLiquidadoSemRegistro, toRetornoLiquidado, toRetornoLiquidadoPorConta,
+       toRetornoLiquidadoSaldoRestante, toRetornoLiquidadoEmCartorio: // 05, 06, 07, 08 e 15 (Liquidado)
+      case CodMotivo of
+        01: Result:='01-Por saldo';
+        02: Result:='02-Por conta';
+        03: Result:='03-No próprio banco';
+        04: Result:='04-Compensação eletrônica';
+        05: Result:='05-Compensação convencional';
+        06: Result:='06-Arquivo magnético';
+        07: Result:='07-Após feriado local';
+        08: Result:='08-Em cartório';
+        09: Result:='09-Pagamento Parcial';
+      end;
+    else
+      Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
+    end; //case TipoOcorrencia
+
+  end; //else 240
+
 end;
 
 

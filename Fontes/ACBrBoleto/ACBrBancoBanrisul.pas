@@ -425,9 +425,7 @@ begin
                PadRight(OnlyNumber(Sacado.CEP), 8, '0')                             + // CEP
                PadRight(Sacado.Cidade, 15)                                          + // Cidade do Sacado
                PadRight(Sacado.UF, 2)                                               + // UF do Sacado
-               '0000'                                                           + // Taxa ao dia para pagamento antecipado
-               space(2)                                                         + // Brancos
-               '000000000000'                                                   + // Valor para cálculo de desconto
+               space(18)                                                            + // Brancos
                IfThen((DataProtesto <> 0) and (DataProtesto > Vencimento),
                       PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)),
                       2, '0'), '00')                                            + // Dias para protesto/devolução automática

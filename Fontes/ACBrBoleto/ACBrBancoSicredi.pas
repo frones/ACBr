@@ -1289,15 +1289,25 @@ begin
    end;
 end;
 
-function TACBrBancoSicredi.TipoDescontoToString(const AValue: TACBrTipoDesconto
-  ): string;
+function TACBrBancoSicredi.TipoDescontoToString(const AValue: TACBrTipoDesconto): string;
 begin
-   case AValue of
-     tdValorFixoAteDataInformada  : Result := 'A';
-     tdPercentualAteDataInformada : Result := 'B';
-   else
-     Result := 'A';
-   end;
+  // Gera o tipo de desconto numero, utilizado no padrao febraban cnab240
+  Result := inherited TipoDescontoToString(AValue);
+
+  // este código de desconto A - Valor - B - Percentual, somente é utilizado no cnab 400
+  if self.ACBrBanco.ACBrBoleto.LayoutRemessa = c400 then
+    begin
+      case AValue of
+        tdValorFixoAteDataInformada : Result := 'A';
+        tdPercentualAteDataInformada : Result := 'B';
+        tdValorAntecipacaoDiaCorrido : Result := 'A';
+        tdValorAntecipacaoDiaUtil : Result := 'A';
+        tdPercentualSobreValorNominalDiaCorrido : Result := 'B';
+        tdPercentualSobreValorNominalDiaUtil : Result := 'B';
+      else
+        Result := 'A';
+      end;
+    end;
 end;
 
 function TACBrBancoSicredi.TipoOcorrenciaToDescricao(
@@ -1681,7 +1691,7 @@ begin
              IfThen(ValorMoraJuros = 0, '3', '1')                             + // 118 a 118 - Código do juro de mora
              '00000000'                                                       + // 119 a 126 - Data do juro de mora
              IntToStrZero(Round(ValorMoraJuros * 100), 15)                    + // 127 a 141 - Juros de mora por dia/taxa
-             '1'                                                              + // 142 a 142 - Código do desconto 1
+             TipoDescontoToString(ACBrTitulo.TipoDesconto)                    + // 142 a 142 - Código do desconto 1
              IfThen(ValorDesconto = 0, '00000000', FormatDateTime('ddmmyyyy', Vencimento))                         + // 143 a 150 - Data do desconto 1
              IntToStrZero(Round(ValorDesconto * 100), 15)                     + // 151 a 165 - Valor percentual a ser concedido
              IntToStrZero(Round(ValorIOF * 100), 15)                          + // 166 a 180 - Valor do IOF a ser recolhido
@@ -1731,9 +1741,9 @@ begin
                'R'                                                         + // Código do segmento do registro detalhe
                ' '                                                         + // Uso exclusivo FEBRABAN/CNAB: Branco
                '01'                                                        + // 16 a 17 - Código de movimento
-               '0'                                                         + // 18  tipo de desconto 2
-               PadLeft('0', 8, '0')                                        + // 19 - 26 Numero da linha a ser impressa
-               PadLeft('0',15, '0')                                        + // 27 - 41 Valor/Percentual
+               TipoDescontoToString(ACBrTitulo.TipoDesconto2)              + // 18  tipo de desconto 2
+               IfThen(ValorDesconto2 = 0, '00000000', FormatDateTime('ddmmyyyy', Vencimento)) + // 19 - 26 Data do Desconto 2
+               IntToStrZero(Round(ValorDesconto2 * 100), 15)               + // 27 - 41 Valor/Percentual
                '0'                                                         + // 42
                PadLeft('0', 8, '0')                                        + // 43-50 data do desconto 3
                PadLeft('0', 15, '0')                                       + // 51-65 Valor ou percentual a ser concedido

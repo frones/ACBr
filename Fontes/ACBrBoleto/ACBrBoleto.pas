@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.243';
+  CACBrBoleto_Versao = '0.0.244';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -381,7 +381,8 @@ type
   TACBrBanco  = class;
   TACBrBoleto = class;
 
-  TACBrTipoDesconto = (tdNaoConcederDesconto, tdValorFixoAteDataInformada, tdPercentualAteDataInformada);
+  TACBrTipoDesconto = (tdNaoConcederDesconto, tdValorFixoAteDataInformada, tdPercentualAteDataInformada, tdValorAntecipacaoDiaCorrido, tdValorAntecipacaoDiaUtil, tdPercentualSobreValorNominalDiaCorrido, tdPercentualSobreValorNominalDiaUtil, tdCancelamentoDesconto);
+
   TACBrLayoutRemessa = (c400, c240);
 
   {Tipos de ocorrências permitidas no arquivos remessa / retorno}
@@ -1386,6 +1387,11 @@ begin
      tdNaoConcederDesconto : Result := '0';
      tdValorFixoAteDataInformada : Result := '1';
      tdPercentualAteDataInformada : Result := '2';
+     tdValorAntecipacaoDiaCorrido : Result := '3';
+     tdValorAntecipacaoDiaUtil : Result := '4';
+     tdPercentualSobreValorNominalDiaCorrido : Result := '5';
+     tdPercentualSobreValorNominalDiaUtil : Result := '6';
+     tdCancelamentoDesconto : Result := '7';
   end;
 end;
 

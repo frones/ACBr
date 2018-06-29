@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2018
+-- ACBrNFeServicos --
+[*] Correção das URLs NFCe 4.00 MT produção.
+  Por: BigWings
+  
 25/06/2018
 -- pcnLayoutTXT --
 [*] Ajuste na leitura do Layout TXT NFe v4.0 linha <W02>

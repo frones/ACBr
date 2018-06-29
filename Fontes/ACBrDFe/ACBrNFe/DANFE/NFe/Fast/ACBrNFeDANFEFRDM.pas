@@ -1590,7 +1590,7 @@ begin
      end;
      with cdsTransportador do
      begin
-        FieldDefs.Add('ModFrete', ftString, 14);
+        FieldDefs.Add('ModFrete', ftString, 20);
         FieldDefs.Add('CNPJCPF', ftString, 18);
         FieldDefs.Add('XNome', ftString, 60);
         FieldDefs.Add('IE', ftString, 15);

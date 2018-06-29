@@ -2984,7 +2984,7 @@ begin
             nmEmit := 'Emitente Teste';
             ideOC := tpIdeOC(1);
             NrOc := '456123';
-            ufOC := tpuf(ufPR);
+            ufOC := 'PR';
           end;
         end;
 
@@ -3119,7 +3119,7 @@ begin
               nmEmit := 'João das Neves';
               ideOC := idCRM;
               NrOc := '3690';
-              ufOC := ufPR;
+              ufOC := 'PR';
             end;
           end;
 

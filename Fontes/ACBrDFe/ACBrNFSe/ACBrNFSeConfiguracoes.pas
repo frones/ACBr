@@ -571,6 +571,9 @@ begin
   FConfigGeral.Identificador := trim(FPIniParams.ReadString('Geral', 'Identificador', ''));
   FConfigGeral.QuebradeLinha := trim(FPIniParams.ReadString('Geral', 'QuebradeLinha', ''));
 
+  if FConfigGeral.QuebradeLinha = 'ENTER' then
+    FConfigGeral.QuebradeLinha := #13#10;
+
   FConfigGeral.UseCertificateHTTP := FPIniParams.ReadBool('Geral', 'UseCertificado', False);
 
   FConfigNameSpace.Producao    := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);

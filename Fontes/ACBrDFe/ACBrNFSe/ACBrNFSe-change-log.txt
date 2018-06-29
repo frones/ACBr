@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2018
+-- Diversos --
+[*] Melhorias na inserção de quebra de linhas no campo Discriminação.
+   Por: Italo Jurisato Junior
+
 27/06/2018
 -- Diversos --
 [*] Melhorias ao ler o XML de retorno, quando este possui o grupo Fault.

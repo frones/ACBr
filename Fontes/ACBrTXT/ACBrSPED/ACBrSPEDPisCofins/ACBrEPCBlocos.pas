@@ -57,7 +57,8 @@ type
                  vlVersao100,  // Código 001 - Versão 100 ADE Cofis nº 31/2010 de 01/01/2011
                  vlVersao101,  // Código 002 - Versão 101 ADE Cofis nº 34/2010 de 01/01/2011
                  vlVersao200,  // Código 002 - Versão 200 ADE Cofis nº 20/2012
-                 vlVersao201   // Código 003 - Versão 201 ADE Cofis nº 20/2012 de 14/03/2012
+                 vlVersao201,  // Código 003 - Versão 201 ADE Cofis nº 20/2012 de 14/03/2012
+				 				 vlVersao202   // Código 004
                 );
   TACBrVersaoLeiaute = TACBrCodVer;
 
@@ -1695,6 +1696,9 @@ begin
    else
    if AValue = vlVersao201 then
       Result := '003'
+   else
+   if AValue = vlVersao202 then
+      Result := '004';
 end;
 
 function StrToCodVer(AValue: string): TACBrCodVer;
@@ -1707,8 +1711,11 @@ begin
    else
    if AValue = '003' then
       Result := vlVersao201
+	else
+	if AValue = '004' then
+		Result := vlVersao202
     else
-     raise Exception.Create(format('Valor informado [%s] deve estar entre (001,002 e 003)',[AValue]));
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (001, 002, 003 e 004)',[AValue]));
 end;
 
 function TipoEscritToStr(AValue: TACBrTipoEscrit): string;

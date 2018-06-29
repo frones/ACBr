@@ -701,7 +701,7 @@ begin
         cat.atestado.Emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);
         cat.atestado.Emitente.ideOC  := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', '1'));
         cat.atestado.Emitente.nrOc   := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
-        cat.atestado.Emitente.ufOC   := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
+        cat.atestado.Emitente.ufOC   := INIRec.ReadString(sSecao, 'ufOC', 'SP');//eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
       end;
 
       sSecao := 'catOrigem';

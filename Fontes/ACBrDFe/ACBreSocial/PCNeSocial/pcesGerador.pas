@@ -711,7 +711,8 @@ begin
   Gerador.wCampo(tcDe2, '', 'vrSalFx',    1, 14, 1, pRemuneracao.VrSalFx);
   Gerador.wCampo(tcStr, '', 'undSalFixo', 1,  1, 1, eSUndSalFixoToStr(pRemuneracao.UndSalFixo));
 
-  if (eSUndSalFixoToStr(pRemuneracao.UndSalFixo) = '7') then
+  if (eSUndSalFixoToStr(pRemuneracao.UndSalFixo) = '6') or
+     (eSUndSalFixoToStr(pRemuneracao.UndSalFixo) = '7') then
     Gerador.wCampo(tcStr, '', 'dscSalVar', 0, 255, 0, pRemuneracao.DscSalVar);
 
   Gerador.wGrupo('/remuneracao');
@@ -1517,7 +1518,7 @@ begin
   Gerador.wCampo(tcStr, '', 'nmEmit', 1, 70, 1, pEmitente.nmEmit);
   Gerador.wCampo(tcStr, '', 'ideOC',  1,  1, 1, eSIdeOCToStr(pEmitente.ideOC));
   Gerador.wCampo(tcStr, '', 'nrOc',   1, 14, 1, pEmitente.nrOc);
-  Gerador.wCampo(tcStr, '', 'ufOC',   2,  2, 0, eSufToStr(pEmitente.ufOC));
+  Gerador.wCampo(tcStr, '', 'ufOC',   2,  2, 0, pEmitente.ufOC);//eSufToStr(pEmitente.ufOC));
 
   Gerador.wGrupo('/emitente');
 end;

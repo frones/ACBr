@@ -1160,12 +1160,12 @@ type
     FnmEmit: string;
     FideOC: tpIdeOC;
     FnrOc: string;
-    FufOC: tpuf;
+    FufOC: string;
   public
     property nmEmit: string read FnmEmit write FnmEmit;
     property ideOC: tpIdeOC read FideOC write FideOC;
     property nrOc: string read FnrOc write FnrOc;
-    property ufOC: tpuf read FufOC write FufOC;
+    property ufOC: string read FufOC write FufOC;
   end;
 
   TEndExt = class(TPersistent)

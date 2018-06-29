@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2018
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/44184-s-2230-corre%C3%A7%C3%A3o/?do=findComment&comment=292935
+   Por: Paulo Aguiar Junior
+
 20/06/2018
 -- pcesS2300 --
 [*] https://www.projetoacbr.com.br/forum/topic/44095-e-social-nota-de-documenta%C3%A7%C3%A3o-evolutiva-012018-de-30052018/

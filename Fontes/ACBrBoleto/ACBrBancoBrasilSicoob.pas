@@ -619,10 +619,9 @@ begin
    rCedente := trim(copy(ARetorno[0], 71, 30));
    rCNPJCPF := OnlyNumber( copy(ARetorno[1], 136, 14) );
 
+   ValidarDadosRetorno('', '', rCNPJCPF);
    with ACBrBanco.ACBrBoleto do
    begin
-      if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-         raise Exception.create(ACBrStr('CNPJ\CPF do arquivo inválido'));
 
       Cedente.Nome := rCedente;
       Cedente.CNPJCPF := rCNPJCPF;

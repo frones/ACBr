@@ -348,15 +348,9 @@ begin
      rCNPJCPF := Copy(ARetorno[1],4,14);
    end;
 
+   ValidarDadosRetorno(rAgencia, rConta, rCNPJCPF);
    with ACBrBanco.ACBrBoleto do
    begin
-      if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-         raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
-
-      if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-          (rConta <> OnlyNumber(Cedente.Conta))) then
-         raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
-
       Cedente.Nome    := rCedente;
       Cedente.CNPJCPF := rCNPJCPF;
       Cedente.Agencia := rAgencia;

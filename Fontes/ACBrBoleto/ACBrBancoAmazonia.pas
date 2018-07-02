@@ -1518,24 +1518,21 @@ begin
      ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0], 95, 2) + '/' +
                                          Copy(ARetorno[0], 97, 2) + '/' + Copy(ARetorno[0], 99, 2), 0, 'DD/MM/YY');
 
+     ValidarDadosRetorno(rAgencia, rConta);
      with ACBrBanco.ACBrBoleto do
      begin
-          if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-             (StrToIntDef(rConta, 0) <> StrToIntDef(OnlyNumber(Cedente.Conta), 0))) then
-               raise Exception.create(ACBrStr('Agencia\Conta do arquivo inválido'));
+        if LeCedenteRetorno then
+        begin
+                 Cedente.Nome := rCedente;
+                 Cedente.Agencia := rAgencia;
+                 Cedente.AgenciaDigito := rDigitoAgencia;
+                 Cedente.Conta := rConta;
+                 Cedente.ContaDigito := rDigitoConta;
+                 Cedente.CodigoCedente := rCodigoCedente;
+                 Cedente.Convenio := rConvenioCedente;
+        end;
 
-          if LeCedenteRetorno then
-          begin
-               Cedente.Nome := rCedente;
-               Cedente.Agencia := rAgencia;
-               Cedente.AgenciaDigito := rDigitoAgencia;
-               Cedente.Conta := rConta;
-               Cedente.ContaDigito := rDigitoConta;
-               Cedente.CodigoCedente := rCodigoCedente;
-               Cedente.Convenio := rConvenioCedente;
-          end;
-
-          ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
+        ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
      end;
 
      ACBrBanco.TamanhoMaximoNossoNum := fpTamanhoMaximoNossoNum;
@@ -1626,24 +1623,21 @@ begin
      ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0], 95, 2) +
                                          '/' + Copy(ARetorno[0], 97, 2) + '/' + Copy(ARetorno[0], 99, 2), 0, 'DD/MM/YY');
 
+     ValidarDadosRetorno(rAgencia, rConta);
      with ACBrBanco.ACBrBoleto do
      begin
-          if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia))
-             or (StrToIntDef(rConta, 0) <> StrToIntDef(OnlyNumber(Cedente.Conta), 0))) then
-               raise Exception.create(ACBrStr('Agencia\Conta do arquivo inválido'));
+       if LeCedenteRetorno then
+       begin
+            Cedente.Nome := rCedente;
+            Cedente.Agencia := rAgencia;
+            Cedente.AgenciaDigito := rDigitoAgencia;
+            Cedente.Conta := rConta;
+            Cedente.ContaDigito := rDigitoConta;
+            Cedente.CodigoCedente := rCodigoCedente;
+            Cedente.Convenio := rConvenioCedente;
+       end;
 
-          if LeCedenteRetorno then
-          begin
-               Cedente.Nome := rCedente;
-               Cedente.Agencia := rAgencia;
-               Cedente.AgenciaDigito := rDigitoAgencia;
-               Cedente.Conta := rConta;
-               Cedente.ContaDigito := rDigitoConta;
-               Cedente.CodigoCedente := rCodigoCedente;
-               Cedente.Convenio := rConvenioCedente;
-          end;
-
-          ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
+       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
      end;
 
      ACBrBanco.TamanhoMaximoNossoNum := 20;

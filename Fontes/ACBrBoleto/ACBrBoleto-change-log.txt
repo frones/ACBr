@@ -49,6 +49,15 @@ Símbolo : Significado
 
 Data 26/06/2018 ver: 0.0.244
 
+02-07-2018 -- ACBrBancoSantander
+[*] Ajuste na geração Remessa Posição 148 a 149 (08 = BDP - BOLETO DE PROPOSTA -
+(NOTA 6) e 19 = BCC – BOLETO CARTÃO DE CRÉDITO (NOTA 8) )
+https://www.projetoacbr.com.br/forum/topic/44451-altera%C3%A7%C3%A3o-acbrbancosantander-layout-setembro-2017-v-217/
+
+27-06-2018 -- ACBrBoleto
+[*] Ajuste na Verificação do Arquivo de Retorno, verificando CNPJCPF, Agencia e Conta.
+Adicionado função (ValidarDadosRetorno) em ACBrBoleto, podendo ser utilizada por todos os bancos
+
 26-06-2018 -- ACBrBancoSantander
 [*] Adicionadado validações no retorno CNAB240
 https://www.projetoacbr.com.br/forum/topic/43728-banco-santander-lerretorno240-motivo-da-ocorr%C3%AAncia-quando-liquida%C3%A7%C3%A3o/

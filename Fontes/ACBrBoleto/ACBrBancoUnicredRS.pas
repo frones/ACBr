@@ -372,14 +372,11 @@ begin
      sCNPJCPF := Copy(ARetorno[1],4,14);
    end;
 
+   ValidarDadosRetorno(sAgencia, sConta);
    with ACBrBanco.ACBrBoleto do
    begin
       if (not LeCedenteRetorno) and (sCodEmpresa <> PadLeft(Cedente.CodigoCedente, 20, '0')) then
          raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido'));
-
-      if (not LeCedenteRetorno) and ((sAgencia <> OnlyNumber(Cedente.Agencia)) or
-         (sConta <> RightStr(OnlyNumber(Cedente.Conta),Length(sConta)))) then
-         raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
       case StrToIntDef(Copy(ARetorno[1],2,2),0) of
          11: Cedente.TipoInscricao:= pFisica;

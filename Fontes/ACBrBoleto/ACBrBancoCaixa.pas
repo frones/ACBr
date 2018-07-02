@@ -1126,36 +1126,28 @@ begin
       rCNPJCPF := RightStr(rCNPJCPF,11) ;
     end;
 
-
+   ValidarDadosRetorno(rAgencia, rConta+rDigitoConta, rCNPJCPF, True);
    with ACBrBanco.ACBrBoleto do
    begin
+     if LeCedenteRetorno then
+     begin
+        Cedente.Nome    := rCedente;
+        Cedente.CNPJCPF := rCNPJCPF;
+        Cedente.Agencia := rAgencia;
+        Cedente.AgenciaDigito:= '0';
+        Cedente.Conta   := rConta;
+        Cedente.ContaDigito:= rDigitoConta;
+        Cedente.CodigoCedente:= rConta+rDigitoConta;
 
-      if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-         raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
+        case StrToIntDef(Copy(ARetorno[1],18,1),0) of
+           1: Cedente.TipoInscricao:= pFisica;
+           2: Cedente.TipoInscricao:= pJuridica;
+           else
+              Cedente.TipoInscricao:= pJuridica;
+        end;
+     end;
 
-      if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-          (rConta+rDigitoConta  <> OnlyNumber(Cedente.CodigoCedente))) then
-         raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
-
-      if LeCedenteRetorno then
-      begin
-         Cedente.Nome    := rCedente;
-         Cedente.CNPJCPF := rCNPJCPF;
-         Cedente.Agencia := rAgencia;
-         Cedente.AgenciaDigito:= '0';
-         Cedente.Conta   := rConta;
-         Cedente.ContaDigito:= rDigitoConta;
-         Cedente.CodigoCedente:= rConta+rDigitoConta;
-
-         case StrToIntDef(Copy(ARetorno[1],18,1),0) of
-            1: Cedente.TipoInscricao:= pFisica;
-            2: Cedente.TipoInscricao:= pJuridica;
-            else
-               Cedente.TipoInscricao:= pJuridica;
-         end;
-      end;
-
-      ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
+     ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
    Linha := '';
@@ -1775,13 +1767,9 @@ begin
    if TempData <> '00/00/00' then
      ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(TempData, 0, 'DD/MM/YY');
 
+   ValidarDadosRetorno(rAgencia, rCodCedente, '', True);
    with ACBrBanco.ACBrBoleto do
    begin
-      if (not LeCedenteRetorno) and
-         ((rAgencia <> OnlyNumber(RightStr(Cedente.Agencia,4))) or
-          (rCodCedente <> OnlyNumber(Cedente.CodigoCedente))) then
-         raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
-
       if LeCedenteRetorno then
       begin
         Cedente.Nome         := rCedente;

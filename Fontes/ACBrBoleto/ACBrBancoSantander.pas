@@ -674,6 +674,10 @@ begin
          aEspecie:= '06'
       else if trim(EspecieDoc) = 'LC' then
          aEspecie:= '07'
+      else if trim(EspecieDoc) = 'BDP' then
+         aEspecie:= '08'
+      else if trim(EspecieDoc) = 'BCC' then
+         aEspecie:= '19'
       else
          aEspecie := EspecieDoc;
 
@@ -737,11 +741,11 @@ begin
                   PadRight( OnlyNumber(Sacado.CEP) , 8, ' ' )                 +  // 327 a 334
                   PadRight( Sacado.Cidade, 15, ' ')                           +
                   PadRight( Sacado.UF, 2 )                                    +  // 335 a 351
-		  IfThen(ACBrBoleto.Cedente.TipoInscricao = pJuridica,
-                         Space(30),
-                         PadRight(Sacado.Avalista, 30, ' ' )) + ' I'          +  // 352 a 383
-                  Copy( Cedente.Conta, length( Cedente.Conta ),1 )            +  // 
-                  PadLeft( Cedente.ContaDigito, 1 ) + Space(6)                +  // 384 a 391
+                  Space(30)                                                   +  // 352 a 381
+                  ' I'                                                        +  // 382 a 383
+                  Copy( Cedente.Conta, length( Cedente.Conta ),1 )            +  //
+                  PadLeft( Cedente.ContaDigito, 1 )                           +  // 384 a 385
+                  Space(6)                                                    +  // 386 a 391
                   Protesto + ' '                                              +  // 392 a 394
                   IntToStrZero( aRemessa.Count + 1, 6 );                         // 395 a 400
 
@@ -901,15 +905,9 @@ begin
    rCNPJCPF := Copy(ARetorno[0],19,14);
   end;
 
+  ValidarDadosRetorno(rAgencia, rConta, rCNPJCPF);
   with ACBrBanco.ACBrBoleto do
   begin
-    if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-       raise Exception.create(ACBrStr('CNPJ\CPF do arquivo inválido'));
-
-    if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-        (rConta <> OnlyNumber(Cedente.Conta))) then
-       raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
-
     Cedente.Nome          := rCedente;
     Cedente.CodigoCedente := rCodigoCedente;
     Cedente.CNPJCPF       := rCnpjCpf;
@@ -1021,15 +1019,9 @@ begin
                          Copy(ARetorno[0], 97, 2) + '/' +
                          Copy(ARetorno[0], 99, 2), 0, 'dd/mm/yy');
 
+   ValidarDadosRetorno(rAgencia, rConta, rCNPJCPF);
    with ACBrBanco.ACBrBoleto do
    begin
-      if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-         raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
-
-      if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-          (rConta <> OnlyNumber(Cedente.Conta))) then
-         raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
-
       Cedente.Nome    := rCedente;
       Cedente.CNPJCPF := rCNPJCPF;
       Cedente.Agencia := rAgencia;
@@ -1111,12 +1103,14 @@ begin
          ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
 
          case StrToIntDef(Copy(Linha,174,2),0) of
-            1: EspecieDoc:= 'DM';
-            2: EspecieDoc:= 'NP';
-            3: EspecieDoc:= 'NS';
-            5: EspecieDoc:= 'RC';
-            6: EspecieDoc:= 'DS';
-            7: EspecieDoc:= 'LS';
+            01 : EspecieDoc:= 'DM';
+            02 : EspecieDoc:= 'NP';
+            03 : EspecieDoc:= 'NS';
+            05 : EspecieDoc:= 'RC';
+            06 : EspecieDoc:= 'DS';
+            07 : EspecieDoc:= 'LS';
+            08 : EspecieDoc:= 'BDP';
+            19 : EspecieDoc:= 'BCC';
          end;
 
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;

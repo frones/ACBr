@@ -934,11 +934,9 @@ begin
    rCedente := trim(copy(ARetorno[0], 73, 30));
    rCNPJCPF := OnlyNumber( copy(ARetorno[0], 19, 14) );
 
+   ValidarDadosRetorno('', '', rCNPJCPF);
    with ACBrBanco.ACBrBoleto do
    begin
-      if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-         raise Exception.create(ACBrStr('CNPJ\CPF do arquivo inválido'));
-
       if LeCedenteRetorno then
       begin
         Cedente.Nome          := rCedente;
@@ -1064,15 +1062,9 @@ begin
     rCNPJCPF:= Copy(ARetorno[1],4,14);
   end;
 
+  ValidarDadosRetorno(rAgencia, rConta, rCNPJCPF);
   with ACBrBanco.ACBrBoleto do
   begin
-    if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-      raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
-
-    if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-       (rConta <> RightStr(OnlyNumber(Cedente.Conta), Length(rConta)))) then
-      raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
-
     case StrToIntDef(Copy(ARetorno[1],2,2),0) of
       01: Cedente.TipoInscricao:= pFisica;
     else

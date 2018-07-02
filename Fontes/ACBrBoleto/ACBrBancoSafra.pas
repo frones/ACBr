@@ -481,15 +481,12 @@ begin
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 392, 3), 0);
 
+  ValidarDadosRetorno(rAgencia, rConta);
   with ACBrBanco.ACBrBoleto do
   begin
     if (not LeCedenteRetorno) and (rCodEmpresa <>
         PadLeft(Cedente.CodigoCedente, 14, '0')) then
       raise Exception.Create(ACBrStr('Código da Empresa do arquivo inválido'));
-
-    if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-       (rConta <> RightStr(OnlyNumber(Cedente.Conta), Length(rConta)))) then
-      raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
     case StrToIntDef(Copy(ARetorno[1], 2, 2), 0) of
       01: Cedente.TipoInscricao := pFisica;

@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2018
+-- pnfsNFSe / pnfsNFSeW_IPM --
+[*] https://www.projetoacbr.com.br/forum/topic/44453-erro-00228-provedor-ipm/?do=findComment&comment=293129
+   Por: Simons
+-- pnfsNFSeW_SmarAPDABRASF --
+[*] https://www.projetoacbr.com.br/forum/topic/44435-provedor-smarapd-erro-ao-emitir-nfs-e-para-estrangeiro/
+   Por: Joelcio Nuernberg H
+
 29/06/2018
 -- Diversos --
 [*] Melhorias na inserção de quebra de linhas no campo Discriminação.

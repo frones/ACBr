@@ -457,6 +457,7 @@ type
 
  TEndereco = class(TPersistent)
   private
+    FEnderecoInformado: Boolean;
     FTipoLogradouro: String;
     FEndereco: String;
     FNumero: String;
@@ -470,6 +471,7 @@ type
     FCodigoPais: Integer;
     FxPais: String;
   published
+    property EnderecoInformado: Boolean read FEnderecoInformado write FEnderecoInformado;
     property TipoLogradouro: String read FTipoLogradouro write FTipoLogradouro;
     property Endereco: String read FEndereco write FEndereco;
     property Numero: String read FNumero write FNumero;

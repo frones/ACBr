@@ -126,7 +126,12 @@ begin
   Gerador.wGrupoNFSe('tomador');
 
   if( NFSe.Status <> srCancelado )then
-    Gerador.wCampoNFSe(tcStr, '', 'endereco_informado', 1, 1,  0, 'S', '');
+  begin
+    if (NFSe.PrestadorServico.Endereco.EnderecoInformado) then
+      Gerador.wCampoNFSe(tcStr, '', 'endereco_informado', 1, 1, 0, 'S', '')
+    else
+      Gerador.wCampoNFSe(tcStr, '', 'endereco_informado', 1, 1, 0, 'N', '');
+  end;
 
   if Trim(NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro) <> '' then
   begin

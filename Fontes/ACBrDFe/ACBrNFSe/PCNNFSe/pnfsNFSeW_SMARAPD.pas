@@ -64,28 +64,28 @@ var
 begin
   Gerador.wGrupoNFSe('tbfatura');
   for i := 0 to FNFSe.CondicaoPagamento.Parcelas.Count - 1 do
-    begin
-      Gerador.wGrupoNFSe('fatura');
-      Gerador.wCampoNFSe(tcStr,    '', 'numfatura',        01, 12, 1, FNFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, '');
-      Gerador.wCampoNFSe(tcDatVcto,'', 'vencimentofatura', 01, 12, 1, FNFSe.CondicaoPagamento.Parcelas.Items[i].DataVencimento, '');
-      Gerador.wCampoNFSe(tcDe2,    '', 'valorfatura',      01, 12, 1, FNFSe.CondicaoPagamento.Parcelas.Items[i].Valor, '');
-      Gerador.wGrupoNFSe('/fatura');
-    end;
+  begin
+    Gerador.wGrupoNFSe('fatura');
+    Gerador.wCampoNFSe(tcStr,    '', 'numfatura',        01, 12, 1, FNFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, '');
+    Gerador.wCampoNFSe(tcDatVcto,'', 'vencimentofatura', 01, 12, 1, FNFSe.CondicaoPagamento.Parcelas.Items[i].DataVencimento, '');
+    Gerador.wCampoNFSe(tcDe2,    '', 'valorfatura',      01, 12, 1, FNFSe.CondicaoPagamento.Parcelas.Items[i].Valor, '');
+    Gerador.wGrupoNFSe('/fatura');
+  end;
   Gerador.wGrupoNFSe('/tbfatura');
 end;
 
 procedure TNFSeW_SMARAPD.GerarConstrucaoCivil;
 begin
-  If (FNFSe.Servico.Valores.ValorDeducoes > 0) Then
-  Begin
+  if (FNFSe.Servico.Valores.ValorDeducoes > 0) then
+  begin
     Gerador.wCampoNFSe(tcStr, '', 'descdeducoesconstrucao', 01, 255, 1, FNFSe.Servico.Valores.JustificativaDeducao, '');
     Gerador.wCampoNFSe(tcStr, '', 'totaldeducoesconstrucao', 01, 15, 1, FormatCurr('0.00', FNFSe.Servico.Valores.ValorDeducoes), '');
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     Gerador.wCampoNFSe(tcStr, '', 'descdeducoesconstrucao', 01, 255, 1, '', '');
     Gerador.wCampoNFSe(tcStr, '', 'totaldeducoesconstrucao', 01, 15, 1, '', '');
-  End;
+  end;
 end;
 
 procedure TNFSeW_SMARAPD.GerarIdentificacaoRPS;
@@ -163,15 +163,25 @@ end;
 
 procedure TNFSeW_SMARAPD.GerarTomador;
 begin
-  Gerador.wCampoNFSe(tcStr, '', 'razaotomador',              01, 120, 1, FNFSe.Tomador.RazaoSocial, '');
+  Gerador.wCampoNFSe(tcStr, '', 'razaotomador', 01, 120, 1, FNFSe.Tomador.RazaoSocial, '');
+
   if length(OnlyNumber(FNFSe.Tomador.IdentificacaoTomador.CpfCnpj)) = 11 then
-    Gerador.wCampoNFSe(tcStr, '', 'tppessoa',                01, 120, 1, 'F', '')
+    Gerador.wCampoNFSe(tcStr, '', 'tppessoa', 01, 120, 1, 'F', '')
   else
-    Gerador.wCampoNFSe(tcStr, '', 'tppessoa',                01, 120, 1, 'J', '');
+    Gerador.wCampoNFSe(tcStr, '', 'tppessoa', 01, 120, 1, 'J', '');
+
+  if FNFSe.Tomador.Endereco.CodigoMunicipio = '9999999' then
+    Gerador.wCampoNFSe(tcStr, '', 'tppessoa', 01, 120, 1, 'O', '');
+
   Gerador.wCampoNFSe(tcStr, '', 'nomefantasiatomador',       01, 120, 1, FNFSe.Tomador.RazaoSocial, '');
   Gerador.wCampoNFSe(tcStr, '', 'enderecotomador',           01,  50, 1, FNFSe.Tomador.Endereco.Endereco, '');
   Gerador.wCampoNFSe(tcStr, '', 'numeroendereco',            01,  50, 1, FNFSe.Tomador.Endereco.Numero, '');
-  Gerador.wCampoNFSe(tcStr, '', 'cidadetomador',             01,  50, 1, CodCidadeToCidade(StrToInt64Def(FNFSe.Tomador.Endereco.CodigoMunicipio,3202405)), '');
+
+  if FNFSe.Tomador.Endereco.CodigoMunicipio = '9999999' then
+    Gerador.wCampoNFSe(tcStr, '', 'cidadetomador', 01, 50, 1, FNFSe.Tomador.Endereco.xMunicipio, '')
+  else
+    Gerador.wCampoNFSe(tcStr, '', 'cidadetomador', 01, 50, 1, CodCidadeToCidade(StrToInt64Def(FNFSe.Tomador.Endereco.CodigoMunicipio, 3202405)), '');
+
   Gerador.wCampoNFSe(tcStr, '', 'estadotomador',             01,  50, 1, FNFSe.Tomador.Endereco.UF, '');
   Gerador.wCampoNFSe(tcStr, '', 'paistomador',               01,  50, 1, FNFSe.Tomador.Endereco.xPais, '');
   Gerador.wCampoNFSe(tcStr, '', 'fonetomador',               01,  60, 1, FNFSe.Tomador.Contato.Telefone, '');
@@ -204,7 +214,7 @@ end;
 function TNFSeW_SMARAPD.GerarXml: Boolean;
 Var
   Gerar: boolean;
-Begin
+begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo := FPrefixo4;
   Gerador.Opcoes.DecimalChar := ',';
@@ -212,32 +222,32 @@ Begin
   Gerador.wGrupo('tbnfd');
   FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
   GerarXML_Smarapd;
-  If FOpcoes.GerarTagAssinatura <> taNunca
-    Then Begin
+  if FOpcoes.GerarTagAssinatura <> taNunca then
+  begin
     Gerar := true;
-    If FOpcoes.GerarTagAssinatura = taSomenteSeAssinada
-      Then Gerar := ((NFSe.signature.DigestValue <> '') And
-        (NFSe.signature.SignatureValue <> '') And
-        (NFSe.signature.X509Certificate <> ''));
-    If FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada
-      Then Gerar := ((NFSe.signature.DigestValue = '') And
-        (NFSe.signature.SignatureValue = '') And
-        (NFSe.signature.X509Certificate = ''));
-    If Gerar
-      Then Begin
+    if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
+      Gerar := ((NFSe.signature.DigestValue <> '') And
+                (NFSe.signature.SignatureValue <> '') And
+                (NFSe.signature.X509Certificate <> ''));
+    if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
+      Gerar := ((NFSe.signature.DigestValue = '') And
+                (NFSe.signature.SignatureValue = '') And
+                (NFSe.signature.X509Certificate = ''));
+    if Gerar then
+    begin
       FNFSe.signature.URI := FNFSe.InfID.ID;
       FNFSe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FNFSe.signature.GerarXMLNFSe;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FNFSe.signature.Gerador.ArquivoFormatoXML;
-    End;
-  End;
+    end;
+  end;
   Gerador.wGrupo('/tbnfd');
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 procedure TNFSeW_SMARAPD.GerarXML_SMARAPD;
-Begin
+begin
   Gerador.Prefixo := '';
   Gerador.wGrupoNFSe('nfd');
   GerarIdentificacaoRPS;

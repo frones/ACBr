@@ -49,7 +49,9 @@ procedure DoPosPrinter(cmd: TACBrCmd);
 var
   status: TACBrPosPrinterStatus;
   i: TACBrPosTipoStatus;
+  j: TACBrPosPrinterModelo;
   astr: string;
+  iModelo: integer;
 begin
   with FrmACBrMonitor.ACBrPosPrinter1 do
   begin
@@ -109,6 +111,26 @@ begin
 
       else if cmd.Metodo = 'modelo' then
         cmd.Resposta := GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(Modelo))
+        
+      else if cmd.Metodo = 'setmodelo' then
+      begin
+        iModelo := -1;
+        for j := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+        begin
+           if Uppercase(GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(j))) = UpperCase(cmd.Params(0)) then
+           begin
+              iModelo := integer(j);
+              break;
+           end;
+        end;
+        if iModelo >= 0 then
+        begin
+           Modelo := TACBrPosPrinterModelo(iModelo);
+           FrmACBrMonitor.cbxModelo.Text := cmd.Params(0);
+        end
+        else
+           raise Exception.Create('Modelo de impressora inválido: '+Cmd.Params(0));
+      end
 
       else if cmd.Metodo = 'porta' then
         cmd.Resposta := Porta

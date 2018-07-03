@@ -436,7 +436,7 @@ begin
             '<consultar' + FPSoapEnvelopeAtributtes + '>' +
             '<v1:tipoInscricaoContribuinte>' + tpInsc + '</v1:tipoInscricaoContribuinte>' +
             '<v1:numeroInscricaoContribuinte>' + nrInsc + '</v1:numeroInscricaoContribuinte>' +
-            '<v1:numeroReciboFechamento>' + FProtocolo + '</v1:numeroReciboFechamento>' +
+            '<v1:numeroProtocoloFechamento>' + FProtocolo + '</v1:numeroProtocoloFechamento>' +
             '</consultar>';
 
 

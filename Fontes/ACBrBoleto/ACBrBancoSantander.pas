@@ -987,6 +987,7 @@ begin
       end;
     end;
   end;
+  ACBrBanco.TamanhoMaximoNossoNum := 12;
 end;
 
 Procedure TACBrBancoSantander.LerRetorno400 ( ARetorno: TStringList );

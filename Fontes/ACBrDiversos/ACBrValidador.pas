@@ -72,9 +72,9 @@ const
                 'RJ,RN,RS,RO,RR,SC,SP,SE,TO,EX,';
 
 type
-  TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque, docPIS, 
+  TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque, docPIS,
                         docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, 
-                        docEmail, docCNH ) ;
+                        docEmail, docCNH, docPrefixoGTIN ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -131,7 +131,7 @@ type
     procedure SetDocumento(const Value: String);
     procedure SetComplemento(const Value: String);
     Function LimpaDocto(const AString : String) : String ;
-
+    
     Procedure ValidarCPF  ;
     Procedure ValidarCNPJ ;
     Procedure ValidarUF( UF : String) ;
@@ -145,6 +145,7 @@ type
     procedure ValidarRenavam;
     Procedure ValidarEmail;
     Procedure ValidarCNH ;
+    Procedure ValidarPrefixoGTIN ;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -184,6 +185,7 @@ function ValidarCNPJouCPF( const Documento : String ) : String ;
 function ValidarIE(const AIE, AUF: String): String ;
 function ValidarSuframa( const Documento : String ) : String ;
 function ValidarGTIN( const Documento : String ) : String ;
+function ValidarPrefixoGTIN( const Documento : String ) : String ;
 function ValidarRenavam( const Documento : String ) : String ;
 function ValidarEmail (const Documento : string ) : String;
 function ValidarCEP(const ACEP, AUF: String): String; overload;
@@ -243,6 +245,11 @@ end;
 function ValidarGTIN( const Documento : String ) : String ;
 begin
   Result := ValidarDocumento( docGTIN, Documento );
+end;
+
+function ValidarPrefixoGTIN( const Documento : String ) : String ;
+begin
+  Result := ValidarDocumento( docPrefixoGTIN, Documento );
 end;
 
 function ValidarRenavam( const Documento : String ) : String ;
@@ -689,6 +696,7 @@ begin
           docRenavam       : NomeDocto := 'Renavam';
           docEmail         : NomeDocto := 'E-Mail';
           docCNH           : NomeDocto := 'Carteira Nacional de Habilitação' ;
+          docPrefixoGTIN   : NomeDocto := 'Prefixo do Código GTIN' ;
         end;
 
         fsMsgErro := NomeDocto + ' não pode ser vazio.' ;
@@ -707,9 +715,12 @@ begin
        docCartaoCredito : ValidarCartaoCredito ;
        docSuframa       : ValidarSuframa ;
        docGTIN          : ValidarGTIN ;
-       docRenavam       : ValidarRenavam;
-       docEmail         : ValidarEmail;
+       docRenavam       : ValidarRenavam ;
+       docEmail         : ValidarEmail ;
        docCNH           : ValidarCNH ;
+       docPrefixoGTIN   : ValidarPrefixoGTIN ;
+     else
+      raise Exception.Create('Tipo de documento informado inválido!');
      end;
 
   if fsMsgErro <> '' then
@@ -1527,6 +1538,191 @@ begin
      if fsExibeDigitoCorreto then
         fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;
   end ;
+end;
+
+procedure TACBrValidador.ValidarPrefixoGTIN;
+type
+  TRangePrefixGTIN = record
+    fxPrefixIni: Integer;
+    fxPrefixFim: Integer;
+    indEsp: Integer;
+    fxPaisNome: String;
+  end;
+
+var
+  I: Integer;
+  CodigoNormalizado: String;
+  IsGtin8: Boolean;
+  sPrefixo: String;
+  iPrefixo: Integer;
+  bEncontrado: Boolean;
+
+const
+  ARRAY_PREFIX_GTIN: array[0..126] of TRangePrefixGTIN = (
+    (fxPrefixIni: 000;	fxPrefixFim: 019; indEsp: 0; fxPaisNome: 'GS1 US'),
+    (fxPrefixIni: 020;	fxPrefixFim: 029; indEsp: 1; fxPaisNome: 'Números de circulação restrita dentro da região'),
+    (fxPrefixIni: 030;	fxPrefixFim: 039; indEsp: 0; fxPaisNome: 'GS1 US'),
+    (fxPrefixIni: 040;	fxPrefixFim: 049; indEsp: 1; fxPaisNome: 'GS1 Números de circulação restrita dentro da empresa'),
+    (fxPrefixIni: 050;	fxPrefixFim: 059; indEsp: 1; fxPaisNome: 'GS1 US reserved for future use'),
+    (fxPrefixIni: 060;	fxPrefixFim: 139; indEsp: 0; fxPaisNome: 'GS1 US'),
+    (fxPrefixIni: 200;	fxPrefixFim: 299; indEsp: 1; fxPaisNome: 'GS1 Números de circulação restrita dentro da região'),
+    (fxPrefixIni: 300;	fxPrefixFim: 379; indEsp: 0; fxPaisNome: 'GS1 France'),
+    (fxPrefixIni: 380;	fxPrefixFim: 380; indEsp: 0; fxPaisNome: 'GS1 Bulgaria'),
+    (fxPrefixIni: 383;	fxPrefixFim: 383; indEsp: 0; fxPaisNome: 'GS1 Slovenija'),
+    (fxPrefixIni: 385;	fxPrefixFim: 385; indEsp: 0; fxPaisNome: 'GS1 Croatia'),
+    (fxPrefixIni: 387;	fxPrefixFim: 387; indEsp: 0; fxPaisNome: 'GS1 BIH (Bosnia-Herzegovina)'),
+    (fxPrefixIni: 389;	fxPrefixFim: 389; indEsp: 0; fxPaisNome: 'GS1 Montenegro'),
+    (fxPrefixIni: 400;	fxPrefixFim: 440; indEsp: 0; fxPaisNome: 'GS1 Germany'),
+    (fxPrefixIni: 450;	fxPrefixFim: 459; indEsp: 0; fxPaisNome: 'GS1 Japan'),
+    (fxPrefixIni: 490;	fxPrefixFim: 499; indEsp: 0; fxPaisNome: 'GS1 Japan'),
+    (fxPrefixIni: 460;	fxPrefixFim: 469; indEsp: 0; fxPaisNome: 'GS1 Russia'),
+    (fxPrefixIni: 470;	fxPrefixFim: 470; indEsp: 0; fxPaisNome: 'GS1 Kyrgyzstan'),
+    (fxPrefixIni: 471;	fxPrefixFim: 471; indEsp: 0; fxPaisNome: 'GS1 Taiwan'),
+    (fxPrefixIni: 474;	fxPrefixFim: 474; indEsp: 0; fxPaisNome: 'GS1 Estonia'),
+    (fxPrefixIni: 475;	fxPrefixFim: 475; indEsp: 0; fxPaisNome: 'GS1 Latvia'),
+    (fxPrefixIni: 476;	fxPrefixFim: 476; indEsp: 0; fxPaisNome: 'GS1 Azerbaijan'),
+    (fxPrefixIni: 477;	fxPrefixFim: 477; indEsp: 0; fxPaisNome: 'GS1 Lithuania'),
+    (fxPrefixIni: 478;	fxPrefixFim: 478; indEsp: 0; fxPaisNome: 'GS1 Uzbekistan'),
+    (fxPrefixIni: 479;	fxPrefixFim: 479; indEsp: 0; fxPaisNome: 'GS1 Sri Lanka'),
+    (fxPrefixIni: 480;	fxPrefixFim: 480; indEsp: 0; fxPaisNome: 'GS1 Philippines'),
+    (fxPrefixIni: 481;	fxPrefixFim: 481; indEsp: 0; fxPaisNome: 'GS1 Belarus'),
+    (fxPrefixIni: 482;	fxPrefixFim: 482; indEsp: 0; fxPaisNome: 'GS1 Ukraine'),
+    (fxPrefixIni: 483;	fxPrefixFim: 483; indEsp: 0; fxPaisNome: 'GS1 Turkmenistan'),
+    (fxPrefixIni: 484;	fxPrefixFim: 484; indEsp: 0; fxPaisNome: 'GS1 Moldova'),
+    (fxPrefixIni: 485;	fxPrefixFim: 485; indEsp: 0; fxPaisNome: 'GS1 Armenia'),
+    (fxPrefixIni: 486;	fxPrefixFim: 486; indEsp: 0; fxPaisNome: 'GS1 Georgia'),
+    (fxPrefixIni: 487;	fxPrefixFim: 487; indEsp: 0; fxPaisNome: 'GS1 Kazakstan'),
+    (fxPrefixIni: 488;	fxPrefixFim: 488; indEsp: 0; fxPaisNome: 'GS1 Tajikistan'),
+    (fxPrefixIni: 489;	fxPrefixFim: 489; indEsp: 0; fxPaisNome: 'GS1 Hong Kong'),
+    (fxPrefixIni: 500;	fxPrefixFim: 509; indEsp: 0; fxPaisNome: 'GS1 UK'),
+    (fxPrefixIni: 520;	fxPrefixFim: 521; indEsp: 0; fxPaisNome: 'GS1 Association Greece'),
+    (fxPrefixIni: 528;	fxPrefixFim: 528; indEsp: 0; fxPaisNome: 'GS1 Lebanon'),
+    (fxPrefixIni: 529;	fxPrefixFim: 529; indEsp: 0; fxPaisNome: 'GS1 Cyprus'),
+    (fxPrefixIni: 530;	fxPrefixFim: 530; indEsp: 0; fxPaisNome: 'GS1 Albania'),
+    (fxPrefixIni: 531;	fxPrefixFim: 531; indEsp: 0; fxPaisNome: 'GS1 Macedonia'),
+    (fxPrefixIni: 535;	fxPrefixFim: 535; indEsp: 0; fxPaisNome: 'GS1 Malta'),
+    (fxPrefixIni: 539;	fxPrefixFim: 539; indEsp: 0; fxPaisNome: 'GS1 Ireland'),
+    (fxPrefixIni: 540;	fxPrefixFim: 549; indEsp: 0; fxPaisNome: 'GS1 Belgium & Luxembourg'),
+    (fxPrefixIni: 560;	fxPrefixFim: 560; indEsp: 0; fxPaisNome: 'GS1 Portugal'),
+    (fxPrefixIni: 569;	fxPrefixFim: 569; indEsp: 0; fxPaisNome: 'GS1 Iceland'),
+    (fxPrefixIni: 570;	fxPrefixFim: 579; indEsp: 0; fxPaisNome: 'GS1 Denmark'),
+    (fxPrefixIni: 590;	fxPrefixFim: 590; indEsp: 0; fxPaisNome: 'GS1 Poland'),
+    (fxPrefixIni: 594;	fxPrefixFim: 594; indEsp: 0; fxPaisNome: 'GS1 Romania'),
+    (fxPrefixIni: 599;	fxPrefixFim: 599; indEsp: 0; fxPaisNome: 'GS1 Hungary'),
+    (fxPrefixIni: 600;	fxPrefixFim: 601; indEsp: 0; fxPaisNome: 'GS1 South Africa'),
+    (fxPrefixIni: 603;	fxPrefixFim: 603; indEsp: 0; fxPaisNome: 'GS1 Ghana'),
+    (fxPrefixIni: 604;	fxPrefixFim: 604; indEsp: 0; fxPaisNome: 'GS1 Senegal'),
+    (fxPrefixIni: 608;	fxPrefixFim: 608; indEsp: 0; fxPaisNome: 'GS1 Bahrain'),
+    (fxPrefixIni: 609;	fxPrefixFim: 609; indEsp: 0; fxPaisNome: 'GS1 Mauritius'),
+    (fxPrefixIni: 611;	fxPrefixFim: 611; indEsp: 0; fxPaisNome: 'GS1 Morocco'),
+    (fxPrefixIni: 613;	fxPrefixFim: 613; indEsp: 0; fxPaisNome: 'GS1 Algeria'),
+    (fxPrefixIni: 615;	fxPrefixFim: 615; indEsp: 0; fxPaisNome: 'GS1 Nigeria'),
+    (fxPrefixIni: 616;	fxPrefixFim: 616; indEsp: 0; fxPaisNome: 'GS1 Kenya'),
+    (fxPrefixIni: 618;	fxPrefixFim: 618; indEsp: 0; fxPaisNome: 'GS1 Ivory Coast'),
+    (fxPrefixIni: 619;	fxPrefixFim: 619; indEsp: 0; fxPaisNome: 'GS1 Tunisia'),
+    (fxPrefixIni: 620;	fxPrefixFim: 620; indEsp: 0; fxPaisNome: 'GS1 Tanzania'),
+    (fxPrefixIni: 621;	fxPrefixFim: 621; indEsp: 0; fxPaisNome: 'GS1 Syria'),
+    (fxPrefixIni: 622;	fxPrefixFim: 622; indEsp: 0; fxPaisNome: 'GS1 Egypt'),
+    (fxPrefixIni: 623;	fxPrefixFim: 623; indEsp: 0; fxPaisNome: 'GS1 Brunei'),
+    (fxPrefixIni: 624;	fxPrefixFim: 624; indEsp: 0; fxPaisNome: 'GS1 Libya'),
+    (fxPrefixIni: 625;	fxPrefixFim: 625; indEsp: 0; fxPaisNome: 'GS1 Jordan'),
+    (fxPrefixIni: 626;	fxPrefixFim: 626; indEsp: 0; fxPaisNome: 'GS1 Iran'),
+    (fxPrefixIni: 627;	fxPrefixFim: 627; indEsp: 0; fxPaisNome: 'GS1 Kuwait'),
+    (fxPrefixIni: 628;	fxPrefixFim: 628; indEsp: 0; fxPaisNome: 'GS1 Saudi Arabia'),
+    (fxPrefixIni: 629;	fxPrefixFim: 629; indEsp: 0; fxPaisNome: 'GS1 Emirates'),
+    (fxPrefixIni: 640;	fxPrefixFim: 649; indEsp: 0; fxPaisNome: 'GS1 Finland'),
+    (fxPrefixIni: 690;	fxPrefixFim: 699; indEsp: 0; fxPaisNome: 'GS1 China'),
+    (fxPrefixIni: 700;	fxPrefixFim: 709; indEsp: 0; fxPaisNome: 'GS1 Norway'),
+    (fxPrefixIni: 729;	fxPrefixFim: 729; indEsp: 0; fxPaisNome: 'GS1 Israel'),
+    (fxPrefixIni: 730;	fxPrefixFim: 739; indEsp: 0; fxPaisNome: 'GS1 Sweden'),
+    (fxPrefixIni: 740;	fxPrefixFim: 740; indEsp: 0; fxPaisNome: 'GS1 Guatemala'),
+    (fxPrefixIni: 741;	fxPrefixFim: 741; indEsp: 0; fxPaisNome: 'GS1 El Salvador'),
+    (fxPrefixIni: 742;	fxPrefixFim: 742; indEsp: 0; fxPaisNome: 'GS1 Honduras'),
+    (fxPrefixIni: 743;	fxPrefixFim: 743; indEsp: 0; fxPaisNome: 'GS1 Nicaragua'),
+    (fxPrefixIni: 744;	fxPrefixFim: 744; indEsp: 0; fxPaisNome: 'GS1 Costa Rica'),
+    (fxPrefixIni: 745;	fxPrefixFim: 745; indEsp: 0; fxPaisNome: 'GS1 Panama'),
+    (fxPrefixIni: 746;	fxPrefixFim: 746; indEsp: 0; fxPaisNome: 'GS1 Republica Dominicana'),
+    (fxPrefixIni: 750;	fxPrefixFim: 750; indEsp: 0; fxPaisNome: 'GS1 Mexico'),
+    (fxPrefixIni: 754;	fxPrefixFim: 755; indEsp: 0; fxPaisNome: 'GS1 Canada'),
+    (fxPrefixIni: 759;	fxPrefixFim: 759; indEsp: 0; fxPaisNome: 'GS1 Venezuela'),
+    (fxPrefixIni: 760;	fxPrefixFim: 769; indEsp: 0; fxPaisNome: 'GS1 Schweiz; Suisse; Svizzera'),
+    (fxPrefixIni: 770;	fxPrefixFim: 771; indEsp: 0; fxPaisNome: 'GS1 Colombia'),
+    (fxPrefixIni: 773;	fxPrefixFim: 773; indEsp: 0; fxPaisNome: 'GS1 Uruguay'),
+    (fxPrefixIni: 775;	fxPrefixFim: 775; indEsp: 0; fxPaisNome: 'GS1 Peru'),
+    (fxPrefixIni: 777;	fxPrefixFim: 777; indEsp: 0; fxPaisNome: 'GS1 Bolivia'),
+    (fxPrefixIni: 778;	fxPrefixFim: 779; indEsp: 0; fxPaisNome: 'GS1 Argentina'),
+    (fxPrefixIni: 780;	fxPrefixFim: 780; indEsp: 0; fxPaisNome: 'GS1 Chile'),
+    (fxPrefixIni: 784;	fxPrefixFim: 784; indEsp: 0; fxPaisNome: 'GS1 Paraguay'),
+    (fxPrefixIni: 786;	fxPrefixFim: 786; indEsp: 0; fxPaisNome: 'GS1 Ecuador'),
+    (fxPrefixIni: 789;	fxPrefixFim: 790; indEsp: 0; fxPaisNome: 'GS1 Brasil'),
+    (fxPrefixIni: 800;	fxPrefixFim: 839; indEsp: 0; fxPaisNome: 'GS1 Italy'),
+    (fxPrefixIni: 840;	fxPrefixFim: 849; indEsp: 0; fxPaisNome: 'GS1 Spain'),
+    (fxPrefixIni: 850;	fxPrefixFim: 850; indEsp: 0; fxPaisNome: 'GS1 Cuba'),
+    (fxPrefixIni: 858;	fxPrefixFim: 858; indEsp: 0; fxPaisNome: 'GS1 Slovakia'),
+    (fxPrefixIni: 859;	fxPrefixFim: 859; indEsp: 0; fxPaisNome: 'GS1 Czech'),
+    (fxPrefixIni: 860;	fxPrefixFim: 860; indEsp: 0; fxPaisNome: 'GS1 Serbia'),
+    (fxPrefixIni: 865;	fxPrefixFim: 865; indEsp: 0; fxPaisNome: 'GS1 Mongolia'),
+    (fxPrefixIni: 867;	fxPrefixFim: 867; indEsp: 0; fxPaisNome: 'GS1 North Korea'),
+    (fxPrefixIni: 868;	fxPrefixFim: 869; indEsp: 0; fxPaisNome: 'GS1 Turkey'),
+    (fxPrefixIni: 870;	fxPrefixFim: 879; indEsp: 0; fxPaisNome: 'GS1 Netherlands'),
+    (fxPrefixIni: 880;	fxPrefixFim: 880; indEsp: 0; fxPaisNome: 'GS1 South Korea'),
+    (fxPrefixIni: 884;	fxPrefixFim: 884; indEsp: 0; fxPaisNome: 'GS1 Cambodia'),
+    (fxPrefixIni: 885;	fxPrefixFim: 885; indEsp: 0; fxPaisNome: 'GS1 Thailand'),
+    (fxPrefixIni: 888;	fxPrefixFim: 888; indEsp: 0; fxPaisNome: 'GS1 Singapore'),
+    (fxPrefixIni: 890;	fxPrefixFim: 890; indEsp: 0; fxPaisNome: 'GS1 India'),
+    (fxPrefixIni: 893;	fxPrefixFim: 893; indEsp: 0; fxPaisNome: 'GS1 Vietnam'),
+    (fxPrefixIni: 896;	fxPrefixFim: 896; indEsp: 0; fxPaisNome: 'GS1 Pakistan'),
+    (fxPrefixIni: 899;	fxPrefixFim: 899; indEsp: 0; fxPaisNome: 'GS1 Indonesia'),
+    (fxPrefixIni: 900;	fxPrefixFim: 919; indEsp: 0; fxPaisNome: 'GS1 Austria'),
+    (fxPrefixIni: 930;	fxPrefixFim: 939; indEsp: 0; fxPaisNome: 'GS1 Australia'),
+    (fxPrefixIni: 940;	fxPrefixFim: 949; indEsp: 0; fxPaisNome: 'GS1 New Zealand'),
+    (fxPrefixIni: 950;	fxPrefixFim: 950; indEsp: 1; fxPaisNome: 'GS1 Global Office'),
+    (fxPrefixIni: 951;	fxPrefixFim: 951; indEsp: 1; fxPaisNome: 'Numeracao para EPC Tag Data Standard'),
+    (fxPrefixIni: 955;	fxPrefixFim: 955; indEsp: 0; fxPaisNome: 'GS1 Malaysia'),
+    (fxPrefixIni: 958;	fxPrefixFim: 958; indEsp: 0; fxPaisNome: 'GS1 Macau'),
+    (fxPrefixIni: 960;	fxPrefixFim: 969; indEsp: 1; fxPaisNome: 'Global Office (GTIN-8s)'),
+    (fxPrefixIni: 977;	fxPrefixFim: 977; indEsp: 1; fxPaisNome: 'Serial publications (ISSN)'),
+    (fxPrefixIni: 978;	fxPrefixFim: 979; indEsp: 1; fxPaisNome: 'Bookland (ISBN)'),
+    (fxPrefixIni: 980;	fxPrefixFim: 980; indEsp: 1; fxPaisNome: 'Refund receipts'),
+    (fxPrefixIni: 981;	fxPrefixFim: 984; indEsp: 1; fxPaisNome: 'GS1 Coupon identification for common currency areas'),
+    (fxPrefixIni: 990;	fxPrefixFim: 999; indEsp: 1; fxPaisNome: 'GS1 Coupon identification')
+  );
+begin
+  ValidarGTIN;
+  if fsMsgErro = '' then
+  begin
+    CodigoNormalizado := PadLeft(Trim(Documento), 14, '0');
+    IsGtin8           := StrToInt(Copy(CodigoNormalizado, 1, 6)) = 0;
+
+    if IsGtin8 then
+      sPrefixo := copy(CodigoNormalizado, 7, 3)
+    else
+      sPrefixo := copy(CodigoNormalizado, 2, 3);
+
+    iPrefixo := StrtoIntDef(sPrefixo, 0);
+    if iPrefixo = 0 then
+      fsMsgErro := 'Prefixo do código GTIN inválido!'
+    else
+    begin
+      bEncontrado := False;
+      for I := Low(ARRAY_PREFIX_GTIN) to High(ARRAY_PREFIX_GTIN) do
+      begin
+        bEncontrado :=
+          (iPrefixo >= ARRAY_PREFIX_GTIN[I].fxPrefixIni) and
+          (iPrefixo <= ARRAY_PREFIX_GTIN[I].fxPrefixFim);
+
+        if bEncontrado then
+          Break;
+      end;
+
+      if bEncontrado then
+        fsMsgErro := ''
+      else
+        fsMsgErro := Format(
+          'Prefixo "%d" do GTIN "%s" informado inválido', [iPrefixo, Documento]
+        );
+    end;
+  end;
 end;
 
 procedure TACBrValidador.ValidarRenavam;

@@ -1,12 +1,11 @@
 object frValidador: TfrValidador
   Left = 282
   Top = 156
-  Width = 346
+  Width = 352
   Height = 286
   HorzScrollBar.Range = 329
   VertScrollBar.Range = 243
   ActiveControl = edDocto
-  AutoScroll = False
   Caption = 'Validador de Documentos'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -71,7 +70,6 @@ object frValidador: TfrValidador
     Height = 21
     Style = csDropDownList
     DropDownCount = 20
-    ItemHeight = 13
     TabOrder = 2
     OnChange = cbTipoDoctoChange
     Items.Strings = (
@@ -86,7 +84,9 @@ object frValidador: TfrValidador
       'docSuframa'
       'docGTIN'
       'docRenavam'
-      'docEmail')
+      'docEmail'
+      'docCNH'
+      'docPrefixoGTIN')
   end
   object mMsgErro: TMemo
     Left = 8
@@ -97,8 +97,8 @@ object frValidador: TfrValidador
     TabOrder = 8
   end
   object bValidar: TButton
-    Left = 72
-    Top = 218
+    Left = 173
+    Top = 215
     Width = 75
     Height = 25
     Caption = '&Validar'
@@ -120,7 +120,7 @@ object frValidador: TfrValidador
     Width = 57
     Height = 21
     Cursor = crIBeam
-    TabOrder = 3
+    TabOrder = 4
   end
   object cbPermiteVazio: TCheckBox
     Left = 144
@@ -128,7 +128,7 @@ object frValidador: TfrValidador
     Width = 153
     Height = 17
     Caption = 'Permite Vazio'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = cbPermiteVazioClick
   end
   object cbAjustarTam: TCheckBox
@@ -141,8 +141,8 @@ object frValidador: TfrValidador
     OnClick = cbAjustarTamClick
   end
   object bFormatar: TButton
-    Left = 192
-    Top = 218
+    Left = 254
+    Top = 215
     Width = 75
     Height = 25
     Caption = 'Formatar'

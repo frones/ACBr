@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2018
+-- ACBrValidador --
+[+] Adicionado a validação do prefixo GTIN ao ACBrValidador, conforme tabela 
+    provida pelo site da NF-e.
+    http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=mpYVEbsVRuE=
+    por: regys.silveira
+
 25/05/2018
 -- ACBrCargaBal --
 [-] Geração de arquivos da Toledo não estava sendo feita por versão.

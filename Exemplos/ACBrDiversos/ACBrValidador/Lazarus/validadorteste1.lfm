@@ -1,7 +1,7 @@
 object frValidador: TfrValidador
-  Left = 282
+  Left = 740
   Height = 251
-  Top = 156
+  Top = 342
   Width = 336
   HorzScrollBar.Page = 335
   HorzScrollBar.Range = 329
@@ -15,7 +15,7 @@ object frValidador: TfrValidador
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.8.4.0'
   object Label1: TLabel
     Left = 8
     Height = 13
@@ -84,6 +84,8 @@ object frValidador: TfrValidador
       'docGTIN'
       'docRenavam'
       'docEmail'
+      'docCNH'
+      'docPrefixoGTIN'
     )
     OnChange = cbTipoDoctoChange
     Style = csDropDownList
@@ -182,7 +184,7 @@ object frValidador: TfrValidador
   object ACBrValidador1: TACBrValidador
     IgnorarChar = './-'
     OnMsgErro = ACBrValidador1MsgErro
-    left = 16
-    top = 216
+    left = 80
+    top = 96
   end
 end

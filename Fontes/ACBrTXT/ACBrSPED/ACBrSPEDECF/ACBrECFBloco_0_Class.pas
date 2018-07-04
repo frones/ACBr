@@ -292,6 +292,7 @@ begin
       end;
 
       case IND_REC_RECEITA of
+        irrNenhum            : strIND_REC_RECEITA := '';
         irrRegimeCaixa       : strIND_REC_RECEITA := '1';
         irrRegimeCompetencia : strIND_REC_RECEITA := '2';
       end;

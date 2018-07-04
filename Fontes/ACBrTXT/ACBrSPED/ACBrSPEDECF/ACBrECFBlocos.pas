@@ -776,7 +776,7 @@ type
     ftlIsentoIRPJ);
 
   // Critério de reconhecimento de receitas para empresas tributadas pelo Lucro Presumido
-  TACBrIndRecReceita = (irrRegimeCaixa, irrRegimeCompetencia);
+  TACBrIndRecReceita = (irrRegimeCaixa, irrRegimeCompetencia, irrNenhum);
 
   // Qualificação do representante legal;
   TACBrQualificacaoRepLegal = (qrlProcurador,

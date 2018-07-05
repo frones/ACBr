@@ -1346,17 +1346,17 @@ end;
 
 function TACBrECFBematech.GetNumVersao: String ;
 var wRetentar : Boolean ;
-    wTimeOut  : Integer ;
+//    wTimeOut  : Integer ;
     RetCmd    : AnsiString ;
 begin
   if fsNumVersao = '' then
   begin
      try
         wRetentar := Retentar ;
-        wTimeOut  := TimeOut ;
+//        wTimeOut  := TimeOut ;
         try
            Retentar    := false ;
-           TimeOut     := 1 ;
+//           TimeOut     := 1 ;
            fsNumVersao := Trim( RetornaInfoECF( '41' )) ;
            fs25MFD     := True ;
            try
@@ -1368,7 +1368,7 @@ begin
            end ;
         finally
            Retentar := wRetentar ;
-           TimeOut  := wTimeOut ;
+//           TimeOut  := wTimeOut ;
         end ;
      except
         fpMFD       := False ;
@@ -1445,6 +1445,8 @@ begin
       fpEstado := estPagamento
     else if TestBit( B1 ,0) then
       fpEstado := estVenda
+    else if TestBit( B1 ,3) then
+      fpEstado := estBloqueada
     else
      begin
        if fpMFD and fpTermica then    { Bematech Matricial, nao possui Flag para }
@@ -1464,24 +1466,19 @@ begin
 
     if fpEstado = estDesconhecido then
     begin
-      if TestBit( B1 ,3) then
-         fpEstado := estBloqueada
-      else
-       begin
-         fpEstado := estLivre ;
-         DataMov  := RetornaInfoECF( '27' ) ;
+       fpEstado := estLivre ;
+       DataMov  := RetornaInfoECF( '27' ) ;
 
-         if DataMov <> '000000' then
-          begin
-            DataHora := RetornaInfoECF( '23' ) ;
-            if DataMov <> copy(DataHora,1,6) then
-              fpEstado := estRequerZ ;
-          end
+       if DataMov <> '000000' then
+        begin
+          DataHora := RetornaInfoECF( '23' ) ;
+          if DataMov <> copy(DataHora,1,6) then
+            fpEstado := estRequerZ ;
+        end
 //         else
 //          fpEstado :=  estRequerX ;
-            { OBS.: comentado pois a Leitura X na Bematech não abre o Movimento,
-              apenas a abertura de cupom, inicializa a DataMov }
-       end ;
+          { OBS.: comentado pois a Leitura X na Bematech não abre o Movimento,
+            apenas a abertura de cupom, inicializa a DataMov }
     end ;
   finally
     Result := fpEstado ;
@@ -2192,6 +2189,7 @@ procedure TACBrECFBematech.CarregaFormasPagamento;  { funçao Lenta +- 3 sec. }
 Var StrRet : AnsiString ;
     Cont : Integer ;
     FPagto : TACBrECFFormaPagamento ;
+//    FPagtoUltimoCupom : TACBrECFFormaPagamento ;
     Descr : String ;
 begin
   if not fs25MFD then
@@ -2242,6 +2240,13 @@ begin
                                      (copy(StrRet, Cont + 600, 1 ) = #85);
           FPagto.Total := RoundTo( StrToFloatDef( BcdToAsc(
                               copy(StrRet,(Cont*7) - 6 + 320,7) ),0) / 100, -4) ;
+
+          // O ECF permite recuperar as formas de pagamento e seus valores do último cupom.
+          // TODO: Verificar se outras marcas permitem isso. Em caso afirmativo, adicionar função ou propriedade correspondente.
+//          FPagtoUltimoCupom := TACBrECFFormaPagamento.create ;
+//          FPagtoUltimoCupom.Descricao := Descr;
+//          FPagtoUltimoCupom.Total := RoundTo( StrToFloatDef( BcdToAsc(
+//                                                copy(StrRet,(Cont*7) - 6 + 460,7) ),0) / 100, -4) ;
 
           fpFormasPagamentos.Add( FPagto ) ;
        end ;
@@ -3583,14 +3588,20 @@ begin
   ByteReg := StrToIntDef( Registrador, 0 ) ;
 
   Case ByteReg of
-     //Nota: Conforme os manuais da Bematech (ECFs MP2100, MP3000 e MP4000),
+     //Notas:
+     //  * Conforme os manuais da Bematech (ECFs MP2100, MP3000 e MP4000),
      //      os valores dos registradores 0, 1, 2, 32, 33 e 34 só devem ser
-     //      usados para impressoras MP20 e MP40.
+     //      usados para impressoras MP20 FI II e MP40 FI II.
+     //  * Apesar de documentados na MP4000 FI registradores 80,81,82 não funcionam
+     //      no emulador nem na MP3000. É preciso testar numa MP4000 FI.
+     //  * No manual da MP4000 FI são mostrados registradores 4A e 4B que são os mesmos que
+     //      os registradores 74 e 75 respectivamente.
+     //
      0            : begin BytesResp := 15 ; IsBCD := False ; end ;
      //1,8,9,10,11,12,14,15,18,19,45,46,52,53,57,59,71 : BytesResp := 2 ; //Não são necessários pois o padrão é esse...
      2            : begin BytesResp := 33 ; IsBCD := False ; end ;
      3,68         : BytesResp := 9 ;
-     4,5,22,30,66,77,78,79,80,81,82 : BytesResp := 7 ; //Apesar de documentados na MP4000 registradores 80,81,82 não funcionam no emulador nem na MP3000, é preciso testar numa MP4000
+     4,5,22,30,66,77,78,79,80,81,82 : BytesResp := 7 ;
      6,7,27,31,41,54,55,56,67,253 : BytesResp := 3 ;
      13           : begin BytesResp := 186 ; IsBCD := False ; end ;
      16,29,70     : IsBCD := False ;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2018
+-- ACBrCTeConhecimentos --
+[+] Implementado o método GerarINI que tem por finalidade gerar um arquivo INI no
+    padrão ACBr com os dados de um CT-e previamente carregado.
+   Por: Italo Jurisato Junior
+
 21/06/2018
 -- ACBrCTeConhecimentos --
 [*] Ajuste na leitura do arquivo INI (LerArqINI) referente tag [emiDocAnt]

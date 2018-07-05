@@ -54,6 +54,9 @@ type
     FcUF: integer;
     FdhRecbto: TDateTime;
   public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
     property Msg: string read FMsg write FMsg;
     property Versao: string read Fversao write Fversao;
     property tpAmb: string read FtpAmb write FtpAmb;
@@ -73,6 +76,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+  published
     property TMed: integer read FTMed write FTMed;
     property DhRetorno: TDateTime read FdhRetorno write FdhRetorno;
     property XObs: string read FxObs write FxObs;
@@ -86,6 +90,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+  published
     property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
     property Xml: String read FXml write FXml;
   end;
@@ -99,6 +104,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+  published
     property ChCTe: String read FChCTe write FChCTe;
     property NProt: String read FNProt write FNProt;
     property DigVal: String read FDigVal write FDigVal;
@@ -494,6 +500,14 @@ end;
 constructor TConsultaCTeResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoRespConsulta, ATipo);
+end;
+
+{ TLibCTeResposta }
+
+constructor TLibCTeResposta.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
 end;
 
 end.

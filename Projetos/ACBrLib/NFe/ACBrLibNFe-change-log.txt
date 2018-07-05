@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2018
+-- ACBrLibNFeRespostas --
+[*] Em algumas classes estava faltando definir que as propriedades são Published
+    em vez de Public.
+   Por: Italo Jurisato Junior
+
 02/07/2018
 -- ACBrLibNFeConst / ACBrLibNFeRespostas
 [+] Adicionado novas constantes e classes referente as respostas de envio e retorno.

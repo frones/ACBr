@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/07/2018
+-- ACBrMDFeDAMDFeRLRetrato --
+[*] Ajuste na impressão do label "QTDE CT-e"
+  por: Allan Colombo
+
 21/06/2018
 -- ACBrMDFeDAMDFeRL --
 [*] Ajuste na função ImprimirEvento passando parametro "PrintDialog"

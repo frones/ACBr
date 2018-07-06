@@ -1105,7 +1105,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       end
       object rlLabel5: TRLLabel
         Left = 8
-        Top = 4
+        Top = 6
         Width = 87
         Height = 18
         AutoSize = False

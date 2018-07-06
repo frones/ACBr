@@ -239,6 +239,7 @@ begin
         signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
       end;
 
+      Result := True;
     end;
 
     if (Leitor.rExtrai(1, 'retEnvEvento') <> '') or
@@ -293,6 +294,7 @@ begin
 
          inc(i);
        end;
+
       Result := True;
     end;
   except

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/07/2018
+-- Diversos --
+[*] Removido o ultimo parâmetro que gera a tag <Discriminacao> pois este estava mantendo os caracteres
+    especiais e isso estava provocando valha na validação da assinatura por parte do provedor.
+   Por: Italo Jurisato Junior
+
 02/07/2018
 -- pnfsNFSe / pnfsNFSeW_IPM --
 [*] https://www.projetoacbr.com.br/forum/topic/44453-erro-00228-provedor-ipm/?do=findComment&comment=293129

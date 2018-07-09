@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/07/2018
+-- ACBrNFeServicos --
+[*] Alteração das URLs NFe 4.00 MS produção.
+  Por: guilhermefq
+  
 07/07/2018
 -- ACBrNFeServicos --
 [*] Alteração das URLs NFCe 4.00 MS produção.

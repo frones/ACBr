@@ -2165,6 +2165,7 @@ Var NotaF: NotaFiscal;
     Reboque: TreboqueCollectionItem;
     Lacre: TLacresCollectionItem;
     ProcReferenciado: TprocRefCollectionItem;
+    InfoPgto: TpagCollectionItem;
 begin
   NotaF := ACBrNFe1.NotasFiscais.Add;
   NotaF.NFe.Ide.cNF       := StrToInt(NumNFe); //Caso não seja preenchido será gerado um número aleatório pelo componente
@@ -2663,6 +2664,30 @@ begin
   NotaF.NFe.compra.xNEmp := '';
   NotaF.NFe.compra.xPed  := '';
   NotaF.NFe.compra.xCont := '';
+
+// YA. Informações de pagamento
+
+  InfoPgto := NotaF.NFe.pag.Add;
+  InfoPgto.indPag := ipVista;
+  InfoPgto.tPag   := fpDinheiro;
+  InfoPgto.vPag   := 100;
+
+// Exemplo de pagamento integrado.
+{
+  InfoPgto := NotaF.NFe.pag.Add;
+  InfoPgto.indPag := ipVista;
+  InfoPgto.tPag   := fpCartaoCredito;
+  InfoPgto.vPag   := 75;
+  InfoPgto.tpIntegra := tiPagIntegrado;
+  InfoPgto.CNPJ      := '05481336000137';
+  InfoPgto.tBand     := bcVisa;
+  InfoPgto.cAut      := '1234567890123456';
+}
+
+// YA09 Troco
+// Regra opcional: Informar se valor dos pagamentos maior que valor da nota.
+// Regra obrigatória: Se informado, Não pode diferir de "(+) vPag (id:YA03) (-) vNF (id:W16)"
+//  NotaF.NFe.pag.vTroco := 75;
 
   ACBrNFe1.NotasFiscais.GerarNFe;
 end;

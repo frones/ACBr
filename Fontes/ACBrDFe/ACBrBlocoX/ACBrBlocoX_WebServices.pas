@@ -59,6 +59,7 @@ const
     fSituacaoProcCod: Integer;
     fSituacaoProcStr: AnsiString;
     fRecibo: AnsiString;
+    fMensagem: AnsiString;
     fTipo: AnsiString;
     fVersao: AnsiString;
     FXML : AnsiString;
@@ -88,6 +89,7 @@ const
     property Recibo         : AnsiString    read fRecibo;
     property Tipo           : AnsiString    read fTipo;
     property Versao         : AnsiString    read fVersao;
+    property Mensagem       : AnsiString    read fMensagem;
   end;
 
   { TConsultarBlocoX }
@@ -194,6 +196,7 @@ begin
   fRecibo          := '';
   fTipo            := '';
   fVersao          := '';
+  fMensagem        := '';
 
   if Assigned(fBlocoXRetorno) then
     FreeAndNil( fBlocoXRetorno );
@@ -257,6 +260,7 @@ begin
   fRecibo          := fBlocoXRetorno.Recibo;
   fTipo            := fBlocoXRetorno.Tipo;
   fVersao          := fBlocoXRetorno.Versao;
+  fMensagem        := fBlocoXRetorno.Mensagem;
 
   Result := (FPRetWS <> '');
 end;

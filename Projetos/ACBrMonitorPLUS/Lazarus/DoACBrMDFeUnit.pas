@@ -1429,7 +1429,8 @@ begin
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
     ACBrMDFe.Manifestos.Clear;
-    CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, AXML);
+    if FilesExists(AXML) then
+      CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, AXML);
     try
 
       if (ACBrMDFe.Manifestos.Count = 0) then

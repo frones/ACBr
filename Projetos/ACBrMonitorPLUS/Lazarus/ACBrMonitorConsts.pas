@@ -301,6 +301,7 @@ const
   CKeyVersaoMDFe =                   'VersaoMDFe';
   CKeyVersaoeSocial =                'VersaoeSocial';
   CKeyVersaoReinf =                  'VersaoReinf';
+  CKeyVersaoQRCode =                 'VersaoQRCode';
   CKeyFormaEmissaoCTe =              'FormaEmissaoCTe';
   CKeyFormaEmissaoNFe =              'FormaEmissaoNFe';
   CKeyFormaEmissaoMDFe =             'FormaEmissaoMDFe';
@@ -602,6 +603,7 @@ const
   CValueTipoContribuinte =                  'tcPessoaJuridica';
   CvalueVersaoeSocial =                     '02_04_02';
   CvalueVersaoReinf =                       '1_03_02';
+  CvalueVersaoQRCode =                      '0';
 
 
 implementation

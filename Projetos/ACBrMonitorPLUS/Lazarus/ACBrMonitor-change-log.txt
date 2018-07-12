@@ -43,6 +43,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2018
+[+] ACBrNFeNotasFiscais
+Adicionado Novos campos ref Grupo ICMS Efetivo
+pRedBCEfet, vBCEfet, pICMSEfet, vICMSEfet=
+
+11/06/2018
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado parâmetro para configurar versão do QRCode
+   por: José M. S. Junior
+
+04/07/2018
+[*] DoACBrMDFeUnit
+Ajuste Método EncerrarMDFe para validar parâmetro com a Chave
+   por: José M. S. Junior
+
+03/07/2018
+[*] DoPosPrinterUnit
+Adicionado Método SetModelo
+https://www.projetoacbr.com.br/forum/topic/44497-contribui%C3%A7%C3%A3o-doposprinterunitpas/
+   por: JSantos
+
 25/06/2018
 [+] DoACBreSocialUnit, DoACBrReinfUnit
 Adicionado os metodos para Configuração: ID Contribuinte, ID Empregador, ID Transmissor

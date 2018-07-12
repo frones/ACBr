@@ -285,6 +285,7 @@ type
     cbHttpLib: TComboBox;
     cbTipoEmpregador: TComboBox;
     cbTipoContribuinte: TComboBox;
+    cbVersaoWSQRCode: TComboBox;
     cbVersaoWSReinf: TComboBox;
     cbVersaoWSMDFe: TComboBox;
     cbVersaoWSeSocial: TComboBox;
@@ -475,6 +476,7 @@ type
     Label223: TLabel;
     Label224: TLabel;
     Label225: TLabel;
+    Label226: TLabel;
     Label60: TLabel;
     Label61: TLabel;
     lbAvanco: TLabel;
@@ -4279,6 +4281,7 @@ begin
       cbVersaoWSMDFe.ItemIndex         := cbVersaoWSMDFe.Items.IndexOf(VersaoMDFe);
       cbVersaoWSeSocial.ItemIndex      := cbVersaoWSeSocial.Items.IndexOf(VersaoeSocial);
       cbVersaoWsReinf.ItemIndex        := cbVersaoWSReinf.Items.IndexOf(VersaoReinf);
+      cbVersaoWSQRCode.ItemIndex       := cbVersaoWSQRCode.Items.IndexOf(VersaoQRCode);
     end;
 
     with ESocial do
@@ -5336,6 +5339,7 @@ begin
         VersaoMDFe               := cbVersaoWSMDFe.Text;
         VersaoeSocial            := cbVersaoWSeSocial.Text;
         VersaoReinf              := cbVersaoWSReinf.Text;
+        VersaoQRCode             := cbVersaoWSQRCode.Text;
         AjustarAut               := cbxAjustarAut.Checked;
         Aguardar                 := edtAguardar.Text;
         Tentativas               := edtTentativas.Text;
@@ -8672,6 +8676,7 @@ begin
   begin
     TConfiguracoesNFe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoNFe.ItemIndex+1));
     TConfiguracoesNFe(Configuracoes).Geral.VersaoDF     := StrToVersaoDF(ok, cbVersaoWS.Text);
+    TConfiguracoesNFe(Configuracoes).Geral.VersaoQRCode := StrToVersaoQrCode(ok, cbVersaoWSQRCode.Text);
     TConfiguracoesNFe(Configuracoes).Geral.AtualizarXMLCancelado:= FMonitorConfig.DFE.Diretorios.AtualizarXMLCancelado;
     TConfiguracoesNFe(Configuracoes).Arquivos.IniServicos    := edtArquivoWebServicesNFe.Text;
     TConfiguracoesNFe(Configuracoes).Arquivos.EmissaoPathNFe := cbxEmissaoPathNFe.Checked;

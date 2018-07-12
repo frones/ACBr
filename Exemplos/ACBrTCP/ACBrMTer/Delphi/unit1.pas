@@ -6,18 +6,15 @@ uses
   Classes, SysUtils, db, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ExtCtrls, CheckLst, Spin, ComCtrls, DBGrids,
   ACBrMTer, ACBrSocket, ACBrConsts, blcksock, DBClient, ACBrBase,
-  Grids;
+  Grids, ACBrBAL;
 
 type
 
   { TForm1 }
   TForm1 = class(TForm)
     ACBrMTer1: TACBrMTer;
-    btAtivar: TButton;
-    btAtualizar: TButton;
     btBackSpace: TButton;
     btBeep: TButton;
-    btDesativar: TButton;
     btDeslocarCursor: TButton;
     btDeslocarLinha: TButton;
     btEnviarParalela: TButton;
@@ -28,7 +25,6 @@ type
     btLimparLinha: TButton;
     btLimparLinha1: TButton;
     btPosicionarCursor: TButton;
-    cbModelo: TComboBox;
     clbConectados: TCheckListBox;
     dbgComandas: TDBGrid;
     dbgTerminais: TDBGrid;
@@ -39,31 +35,23 @@ type
     edEnviarSerial: TEdit;
     edEnviarTexto: TEdit;
     edLimparLinha: TSpinEdit;
-    edPorta: TEdit;
     edPosColuna: TSpinEdit;
     edPosLinha: TSpinEdit;
     edQtdPosicao: TSpinEdit;
     edSerial: TSpinEdit;
-    edTerminador: TEdit;
-    edTimeout: TEdit;
     gbComandas: TGroupBox;
-    Label1: TLabel;
     lbDesLinha: TLabel;
     lbLimparLinha: TLabel;
-    lbModelo: TLabel;
-    lbPorta: TLabel;
     lbPosColuna: TLabel;
     lbPosLinha: TLabel;
     lbQtdPosicoes: TLabel;
     lbSerial: TLabel;
-    lbTerminador: TLabel;
     mOutput: TMemo;
     PageControl2: TPageControl;
     pnAtivarFluxo: TPanel;
     pnComandas: TPanel;
     pnComandos: TPanel;
     pnConectados: TPanel;
-    pnConfig: TPanel;
     pnLegenda: TPanel;
     pnTerminais: TPanel;
     Splitter1: TSplitter;
@@ -71,13 +59,33 @@ type
     tsFluxoVendas: TTabSheet;
     memComandas: TClientDataSet;
     memTerminais: TClientDataSet;
+    pgConfigs: TPageControl;
+    tsConfig: TTabSheet;
+    btAtivar: TButton;
+    btDesativar: TButton;
+    lbPorta: TLabel;
+    edPorta: TEdit;
+    cbModelo: TComboBox;
+    lbModelo: TLabel;
+    edTerminador: TEdit;
+    lbTerminador: TLabel;
+    edTimeout: TEdit;
+    Label1: TLabel;
+    btAtualizar: TButton;
     cbEchoMode: TComboBox;
     lbEchoMode: TLabel;
+    tsBalanca: TTabSheet;
+    cbBalanca: TComboBox;
+    Label2: TLabel;
+    edSerialPeso: TSpinEdit;
+    Label4: TLabel;
+    btSolicitarPeso: TButton;
+    ACBrBAL1: TACBrBAL;
     procedure ACBrMTer1Conecta(const IP: String);
     procedure ACBrMTer1Desconecta(const IP: String; Erro: Integer;
       ErroDesc: String);
     procedure ACBrMTer1RecebeDados(const IP: String;
-      var Recebido: String);
+      var Recebido: String; var EchoMode: TACBrMTerEchoMode);
     procedure btAtivarClick(Sender: TObject);
     procedure btAtualizarClick(Sender: TObject);
     procedure btBackSpaceClick(Sender: TObject);
@@ -98,6 +106,7 @@ type
     procedure PageControl2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cbEchoModeChange(Sender: TObject);
+    procedure btSolicitarPesoClick(Sender: TObject);
   private
     procedure AtualizarConexoes;
     procedure VerificaSelecionado;
@@ -159,7 +168,7 @@ begin
 end;
 
 procedure TForm1.ACBrMTer1RecebeDados(const IP: String;
-  var Recebido: String);
+  var Recebido: String; var EchoMode: TACBrMTerEchoMode);
 begin
   mOutput.Lines.Add('IP: ' + IP + ' - Recebido :' + Recebido);
 
@@ -558,6 +567,31 @@ end;
 procedure TForm1.cbEchoModeChange(Sender: TObject);
 begin
   ACBrMTer1.EchoMode := TACBrMTerEchoMode(cbEchoMode.ItemIndex);
+end;
+
+procedure TForm1.btSolicitarPesoClick(Sender: TObject);
+var
+  I: Integer;
+  wIP: String;
+begin
+  VerificaSelecionado;
+
+  if (cbBalanca.ItemIndex = 0) then
+  begin
+    MessageDlg('Selecione o Modelo', mtError, [mbOK], 0);
+    cbBalanca.DroppedDown := True;
+    Exit;
+  end;
+
+  ACBrBAL1.Modelo := TACBrBALModelo(cbBalanca.ItemIndex);
+
+  for I := 0 to clbConectados.Count - 1 do
+  begin
+    wIP := clbConectados.Items[I];
+
+    if clbConectados.Checked[I] then
+      ACBrMTer1.SolicitarPeso(wIP, edSerialPeso.Value);
+  end;    
 end;
 
 end.

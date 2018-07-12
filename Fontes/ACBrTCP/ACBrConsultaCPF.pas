@@ -66,6 +66,8 @@ type
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
     function GetCaptchaURL : String ;
   public
+    constructor Create(AOwner: TComponent); override;
+
     procedure Captcha(Stream: TStream);
     function Consulta(const ACPF, DataNasc, ACaptcha: String;
       ARemoverEspacosDuplos: Boolean = False): Boolean;
@@ -85,15 +87,22 @@ implementation
 uses
   strutils,
   ACBrUtil, ACBrValidador,
-  synacode, synautil;
+  synacode, synautil, blcksock;
+
+constructor TACBrConsultaCPF.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
+  Self.IsUTF8 := False;
+end;
 
 function TACBrConsultaCPF.GetCaptchaURL : String ;
 var
   AURL, Html: String;
 begin
   try
-    Self.HTTPGet('https://cpf.receita.fazenda.gov.br/situacao/defaultSonoro.asp');
-    Html := UTF8ToNativeString(Self.RespHTTP.Text);
+    Self.HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/ConsultaPublicaSonoro.asp');
+    Html := Self.RespHTTP.Text;
     //Debug
     //WriteToTXT('C:\TEMP\ACBrConsultaCPF-Captcha.TXT',Html);
     AURL := RetornarConteudoEntre(Html, 'src="data:image/png;base64,', '">');
@@ -194,12 +203,11 @@ begin
 
     Post.Position:= 0;
 
-    Self.IsUTF8 := True; // Receita sempre responde em UTF8, método "HTTPPost", já devolve em String Nativa
     HttpSend.Clear;
     HttpSend.Document.Position:= 0;
     HttpSend.Document.CopyFrom(Post, Post.Size);
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
-    HTTPPost('https://cpf.receita.fazenda.gov.br/situacao/ConsultaSituacao.asp');
+    HTTPPost('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/ConsultaPublicaExibir.asp');
 
     //Debug
     //RespHTTP.SaveToFile('C:\TEMP\ACBrConsultaCPF-1.TXT');
@@ -217,14 +225,14 @@ begin
         //Debug
         //Resposta.SaveToFile('C:\TEMP\ACBrConsultaCPF-2.TXT');
 
-        FCPF      := LerCampo(Resposta,'N&ordm; do CPF:');
+        FCPF      := LerCampo(Resposta,'No do CPF:');
         FNome     := LerCampo(Resposta,'Nome:');
-        FDataNascimento := LerCampo(Resposta,'Data Nascimento:');
-        FSituacao := LerCampo(Resposta,'Situa&ccedil;&atilde;o Cadastral:');
-        FDataInscricao := LerCampo(Resposta,'Data de Inscri&ccedil;&atilde;o no CPF:');
-        FEmissao  := LerCampo(Resposta,'Comprovante emitido &agrave;s:');
-        FCodCtrlControle   := LerCampo(Resposta,'C&oacute;digo de controle do comprovante:');
-        FDigitoVerificador := LerCampo(Resposta,'D&iacute;gito Verificador:');
+        FDataNascimento := LerCampo(Resposta,'Data de Nascimento:');
+        FSituacao := LerCampo(Resposta,'Situação Cadastral:');
+        FDataInscricao := LerCampo(Resposta,'Data da Inscrição:');
+        FEmissao  := LerCampo(Resposta,'Comprovante emitido às:');
+        FCodCtrlControle   := LerCampo(Resposta,'Código de controle do comprovante:');
+        FDigitoVerificador := LerCampo(Resposta,'Digito Verificador:');
 
         if Trim(FNome) = '' then
         begin

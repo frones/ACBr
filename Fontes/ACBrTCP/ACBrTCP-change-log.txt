@@ -37,6 +37,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/07/2018
+-- ACBrSocket --
+[*] Melhoria na detecção de conteúdo em UTF8  (por: DSA)
+
+-- ACBrConsultaCPF --
+[-] Correção de URLs, a ajustes para funcionamento
+    https://www.projetoacbr.com.br/forum/topic/44728-corre%C3%A7%C3%A3o-no-acbrconsultacpfpas/
+
 26/06/2018
 -- ACBrConsultaCNPJ --
 [*] Inclusão de propriedade "Porte" para leitura do porte da empresa na 

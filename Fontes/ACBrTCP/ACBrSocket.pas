@@ -861,7 +861,7 @@ var
   {$IFNDEF NOGUI}
    OldCursor : TCursor ;
   {$ENDIF}
-   CT, Location , HtmlHead: String ;
+   CT, Location, HtmlHead: String ;
    RespIsUTF8, AddUTF8InHeader: Boolean;
    ContaRedirecionamentos: Integer;
 begin
@@ -971,7 +971,7 @@ begin
         if (pos('html', CT) > 0) then
         begin
           HtmlHead := RetornarConteudoEntre(LowerCase(RespHTTP.Text),'<head>','</head>');
-          RespIsUTF8 := (pos('<meta charset="utf-8">', HtmlHead) > 0);
+          RespIsUTF8 := (pos('charset="utf-8"', HtmlHead) > 0);
         end;
       end;
     end;

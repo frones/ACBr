@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/07/2018
+-- pnfsNFSeW_SP --
+[*] Corrigido a ordem de gerar uma tag referente ao grupo de construção civil.
+   Por: Italo Jurisato Junior
+
 06/07/2018
 -- Diversos --
 [*] Removido o ultimo parâmetro que gera a tag <Discriminacao> pois este estava mantendo os caracteres

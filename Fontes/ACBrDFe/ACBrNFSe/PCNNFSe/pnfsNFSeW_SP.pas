@@ -215,8 +215,8 @@ procedure TNFSeW_SP.GerarConstrucaoCivil;
 begin
   Gerador.wCampoNFSe(tcStr, '', 'CodigoCEI', 1, 12, 0, NFSe.ConstrucaoCivil.nCei, '');
   Gerador.wCampoNFSe(tcStr, '', 'MatriculaObra', 1, 12, 0, NFSe.ConstrucaoCivil.nMatri, '');
-  Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.ConstrucaoCivil.CodigoMunicipioObra, '');
   Gerador.wCampoNFSe(tcStr, '', 'NumeroEncapsulamento', 1, 12, 0, NFSe.ConstrucaoCivil.nNumeroEncapsulamento, '');
+  Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.ConstrucaoCivil.CodigoMunicipioObra, '');
 end;
 
 procedure TNFSeW_SP.GerarCondicaoPagamento;

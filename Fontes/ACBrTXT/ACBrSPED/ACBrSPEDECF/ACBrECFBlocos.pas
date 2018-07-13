@@ -784,7 +784,8 @@ type
                                qrlMae,
                                qrlPai,
                                qrlTutor,
-                               qrlOutro);
+                               qrlOutro,
+                               qrlNenhum);
   { TBlocos }
 
   TBlocos = class

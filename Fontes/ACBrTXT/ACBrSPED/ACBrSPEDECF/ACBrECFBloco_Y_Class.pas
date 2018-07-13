@@ -520,6 +520,7 @@ begin
       with FRegistroY001.RegistroY600.Items[intFor] do
       begin
         case QUALIF_REP_LEG of
+          qrlNenhum     : strQUALIF_REP_LEG := '';
           qrlProcurador : strQUALIF_REP_LEG := '01';
           qrlCurador    : strQUALIF_REP_LEG := '02';
           qrlMae        : strQUALIF_REP_LEG := '03';

@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/07/2018
+-- ACBrBPeServicos --
+[*] Correção na URL de homologação do QR-Code de MG.
+   Por: Guhcordeiro91
+
 19/06/2018
 -- ACBrBPeServicos --
 [*] https://www.projetoacbr.com.br/forum/topic/36432-bilhete-de-passagem-eletr%C3%B4nico-bp-e/?do=findComment&comment=291356

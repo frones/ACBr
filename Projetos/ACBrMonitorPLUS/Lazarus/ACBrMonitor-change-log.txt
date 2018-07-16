@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2018
+[*] DoACBrMDFeUnit
+Ajustes para concatenar corretamentes Tags de Retorno
+
 11/06/2018
 [+] ACBrNFeNotasFiscais
 Adicionado Novos campos ref Grupo ICMS Efetivo

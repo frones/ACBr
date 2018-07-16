@@ -429,7 +429,7 @@ begin
       Resp.Tmed := TMed;
       Resp.Msg := Msg;
 
-      fpCmd.Resposta := Msg;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
   finally
@@ -454,7 +454,7 @@ begin
       Resp.nRec := Recibo;
       Resp.Msg := Msg;
 
-      fpCmd.Resposta := Msg;
+      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
   finally
@@ -504,8 +504,8 @@ var
   Resp: TRetornoItemResposta;
 begin
   Resp := TRetornoItemResposta.Create(
-    '[MDFe' + Trim(IntToStr(
-    fACBrMDFe.Manifestos.Items[ManifestoID].MDFe.Ide.nMDF)) + ']', resINI);
+    'MDFe' + Trim(IntToStr(
+    fACBrMDFe.Manifestos.Items[ManifestoID].MDFe.Ide.nMDF)), resINI);
   try
     with fACBrMDFe.WebServices.Retorno.MDFeRetorno.ProtMDFe.Items[ItemID] do
     begin
@@ -552,7 +552,7 @@ begin
       Resp.xObs := xObs;
       Resp.Msg := Msg;
 
-      fpCmd.Resposta := Msg;
+      fpCmd.Resposta := Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
   finally
@@ -710,9 +710,9 @@ var
   Resp: TRetornoItemResposta;
 begin
   Resp := TRetornoItemResposta.Create(
-    '[MDFe' + Trim(IntToStr(StrToInt(copy(
+    'MDFe' + Trim(IntToStr(StrToInt(copy(
     fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtMDFe.Items
-    [ItemID].chMDFe, 26, 9)))) + ']', resINI);
+    [ItemID].chMDFe, 26, 9)))), resINI);
   try
     with fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtMDFe.Items[ItemID] do
     begin

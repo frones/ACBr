@@ -700,6 +700,8 @@ begin
     // Extrai a Lista de Mensagens de Erro
     // =======================================================================
 
+    Leitor.Grupo := Leitor.Arquivo;
+
     if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
        (leitor.rExtrai(1, 'Listamensagemretorno') <> '') or
        (leitor.rExtrai(1, 'ListaMensagemRetornoLote') <> '') then

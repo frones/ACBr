@@ -1046,11 +1046,17 @@ begin
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xD;'   , '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xd;'   , '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, '#9#9#9#9', '', [rfReplaceAll]); //proCONAM
+
   // Remover quebras de linha //
-  FPRetornoWS := StringReplace(FPRetornoWS, #10       , '', [rfReplaceAll]);
-  FPRetornoWS := StringReplace(FPRetornoWS, #13       , '', [rfReplaceAll]);
+  if (FProvedor <> proRJ) then
+  begin
+    FPRetornoWS := StringReplace(FPRetornoWS, #10, '', [rfReplaceAll]);
+    FPRetornoWS := StringReplace(FPRetornoWS, #13, '', [rfReplaceAll]);
+  end;
+
   if (FProvedor <> proNFSeBrasil) then
-    FPRetornoWS := StringReplace(FPRetornoWS, '&amp;'   , '', [rfReplaceAll]);
+    FPRetornoWS := StringReplace(FPRetornoWS, '&amp;', '', [rfReplaceAll]);
+
   FPRetornoWS := StringReplace(FPRetornoWS, 'lt;brgt;', '', [rfReplaceAll]);
 
   FPRetornoWS := RemoverDeclaracaoXML(FPRetornoWS);

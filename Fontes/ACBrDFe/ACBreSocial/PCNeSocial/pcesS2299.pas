@@ -864,7 +864,7 @@ begin
 
     Validar(schevtDeslig);
   except on e:exception do
-    raise Exception.Create('Matricula Funcionário: ' + Self.FIdeVinculo.matricula + sLineBreak + e.Message);
+    raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')

@@ -392,7 +392,7 @@ begin
 
     Validar(schevtAltContratual);
   except on e:exception do
-    raise Exception.Create(Self.Id + sLineBreak + ' ' + e.Message);
+    raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')

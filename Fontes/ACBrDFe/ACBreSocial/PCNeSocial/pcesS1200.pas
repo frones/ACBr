@@ -1055,9 +1055,8 @@ begin
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtRemun');
 
     Validar(schevtRemun);
-  except
-    on e: Exception do
-      raise Exception.Create(e.Message);
+  except on e: Exception do
+    raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '');

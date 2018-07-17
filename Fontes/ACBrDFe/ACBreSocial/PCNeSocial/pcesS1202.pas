@@ -730,9 +730,8 @@ begin
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtRmnRPPS');
 
     Validar(schevtRmnRPPS);
-  except
-    on e: Exception do
-      raise Exception.Create(e.Message);
+  except on e: Exception do
+    raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '');

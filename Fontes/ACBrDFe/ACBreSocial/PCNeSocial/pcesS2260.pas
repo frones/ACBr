@@ -310,7 +310,7 @@ begin
 
     Validar(schevtConvInterm);
   except on e:exception do
-    raise Exception.Create('CPF: ' + Self.FIdeVinculo.cpfTrab + sLineBreak + e.Message);
+    raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '')

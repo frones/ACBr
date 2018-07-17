@@ -610,7 +610,7 @@ begin
 
     Validar(schevtInfoEmpregador);
   except on e:exception do
-    raise Exception.Create(e.Message);
+    raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '');

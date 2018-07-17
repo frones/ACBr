@@ -316,6 +316,7 @@ end;
 procedure TDFeWebService.EnviarDados;
 Var
   Tentar, Tratado, TemCertificadoConfigurado: Boolean;
+  HTTPResultCode, InternalErrorCode: Integer;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -354,9 +355,21 @@ begin
   begin
     Tentar  := False;
     Tratado := False;
+    FPRetWS     := '';
+    FPRetornoWS := '';
+    HTTPResultCode := 0;
+    InternalErrorCode := 0;
 
     try
-      if Assigned( FPDFeOwner.Integrador ) then
+      if Assigned(FPDFeOwner.OnTransmit) then  // Envio por Evento... Aplicação cuidará do envio
+      begin
+        FPDFeOwner.OnTransmit( FPEnvelopeSoap, FPURL, FPSoapAction,
+                               FPMimeType, FPRetornoWS, HTTPResultCode, InternalErrorCode);
+        if (InternalErrorCode <> 0) then
+          raise EACBrDFeException.Create('Erro ao Transmitir');
+      end
+
+      else if Assigned( FPDFeOwner.Integrador ) then   // Envio pelo Integrador Fiscal (CE)
       begin
         FPDFeOwner.Integrador.Parametros.Values['dados'] := EncodeBase64(FPEnvelopeSoap);
         FPDFeOwner.Integrador.Enviar(True);
@@ -370,12 +383,19 @@ begin
             raise EACBrDFeException.Create('Resposta do Integrador inválida');
         end;
       end
-      else
-        FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);
+
+      else   // Envio interno, por TDFeSSL
+      begin
+        try
+          FPRetornoWS := FPDFeOwner.SSL.Enviar(FPEnvelopeSoap, FPURL, FPSoapAction, FPMimeType);
+        finally
+          HTTPResultCode := FPDFeOwner.SSL.HTTPResultCode;
+          InternalErrorCode := FPDFeOwner.SSL.InternalErrorCode;
+        end;
+      end;
     except
       if Assigned(FPDFeOwner.OnTransmitError) then
-        FPDFeOwner.OnTransmitError( FPDFeOwner.SSL.HTTPResultCode,
-                                    FPDFeOwner.SSL.InternalErrorCode,
+        FPDFeOwner.OnTransmitError( HTTPResultCode, InternalErrorCode,
                                     FPURL, FPEnvelopeSoap, FPSoapAction,
                                     Tentar, Tratado) ;
 

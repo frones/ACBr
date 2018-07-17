@@ -51,6 +51,8 @@ const
   CSCHEMA_SeparadorVersao = '_v';
 
 type
+  TACBrDFeOnTransmit = procedure(const Dados, URL, SoapAction, MimeType: String;
+    var Resposta: String; var HTTPResultCode: Integer; var InternalErrorCode: Integer) of object ;
 
   TACBrDFeOnTransmitError = procedure(const HttpError, InternalError: Integer;
     const URL, DadosEnviados, SoapAction: String; var Retentar: Boolean; var Tratado: Boolean) of object ;
@@ -63,6 +65,7 @@ type
   private
     FMAIL: TACBrMail;
     FIntegrador: TACBrIntegrador;
+    FOnTransmit: TACBrDFeOnTransmit;
     FOnTransmitError: TACBrDFeOnTransmitError;
     FSSL: TDFeSSL;
     FListaDeSchemas: TStringList;
@@ -132,6 +135,7 @@ type
   published
     property MAIL: TACBrMail read FMAIL write SetMAIL;
     property Integrador: TACBrIntegrador read FIntegrador write SetIntegrador;
+    property OnTransmit : TACBrDFeOnTransmit read FOnTransmit write FOnTransmit;
     property OnTransmitError : TACBrDFeOnTransmitError read FOnTransmitError
        write FOnTransmitError;
     property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
@@ -190,6 +194,7 @@ begin
   end;
 
   FOnGerarLog := nil;
+  FOnTransmit := nil;
   FOnTransmitError := nil;
 
   FPIniParams := TMemIniFile.Create(Configuracoes.Arquivos.IniServicos);

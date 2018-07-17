@@ -3136,6 +3136,7 @@ begin
     FNFeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
     FNFeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FNFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
+    FNFeW.Opcoes.CamposFatObrigatorios := Configuracoes.Geral.CamposFatObrigatorios;
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
@@ -3169,6 +3170,7 @@ begin
     FNFeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
     FNFeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FNFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
+    FNFeW.Opcoes.CamposFatObrigatorios := Configuracoes.Geral.CamposFatObrigatorios;
   end;
 
   FNFeW.Opcoes.GerarTXTSimultaneamente := True;

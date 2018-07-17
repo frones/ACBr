@@ -169,6 +169,7 @@ type
     FPathArquivoMunicipios: String;
     FValidarInscricoes: Boolean;
     FValidarListaServicos: Boolean;
+    FCamposFatObrigatorios: Boolean;
   published
     property AjustarTagNro: Boolean read FAjustarTagNro;
     property GerarTagIPIparaNaoTributado: Boolean read FGerarTagIPIparaNaoTributado;
@@ -178,6 +179,7 @@ type
     property PathArquivoMunicipios: String read FPathArquivoMunicipios write FPathArquivoMunicipios;
     property ValidarInscricoes: Boolean read FValidarInscricoes;
     property ValidarListaServicos: Boolean read FValidarListaServicos;
+    property CamposFatObrigatorios: Boolean read FCamposFatObrigatorios write FCamposFatObrigatorios;
   end;
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -204,6 +206,7 @@ begin
   FOpcoes.FGerarTagAssinatura := taSomenteSeAssinada;
   FOpcoes.FValidarInscricoes := False;
   FOpcoes.FValidarListaServicos := False;
+  FOpcoes.FCamposFatObrigatorios := True;
 end;
 
 destructor TNFeW.Destroy;
@@ -2203,10 +2206,10 @@ begin
     (nfe.Cobr.Fat.vLiq > 0) then
   begin
     Gerador.wGrupo('fat', 'Y02');
-    Gerador.wCampo(tcStr, 'Y03', 'nFat   ', 01, 60, 0, nfe.Cobr.Fat.nFat, DSC_NFAT);
-    Gerador.wCampo(tcDe2, 'Y04', 'vOrig  ', 01, 15, 0, nfe.Cobr.Fat.vOrig, DSC_VORIG);
-    Gerador.wCampo(tcDe2, 'Y05', 'vDesc  ', 01, 15, 0, nfe.Cobr.Fat.vDesc, DSC_VDESC);
-    Gerador.wCampo(tcDe2, 'Y06', 'vLiq   ', 01, 15, 0, nfe.Cobr.Fat.vLiq, DSC_VLIQ);
+    Gerador.wCampo(tcStr, 'Y03', 'nFat   ', 01, 60, IIf(FOpcoes.CamposFatObrigatorios,1,0), nfe.Cobr.Fat.nFat, DSC_NFAT);
+    Gerador.wCampo(tcDe2, 'Y04', 'vOrig  ', 01, 15, IIf(FOpcoes.CamposFatObrigatorios,1,0), nfe.Cobr.Fat.vOrig, DSC_VORIG);
+    Gerador.wCampo(tcDe2, 'Y05', 'vDesc  ', 01, 15, IIf(FOpcoes.CamposFatObrigatorios,1,0), nfe.Cobr.Fat.vDesc, DSC_VDESC);
+    Gerador.wCampo(tcDe2, 'Y06', 'vLiq   ', 01, 15, IIf(FOpcoes.CamposFatObrigatorios,1,0), nfe.Cobr.Fat.vLiq, DSC_VLIQ);
     Gerador.wGrupo('/fat');
   end;
 end;

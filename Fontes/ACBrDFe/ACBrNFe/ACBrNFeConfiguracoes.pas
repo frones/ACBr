@@ -57,6 +57,7 @@ type
     FIdCSC: String;
     FCSC: String;
     FVersaoQRCode: TpcnVersaoQrCode;
+    FCamposFatObrigatorios: Boolean;
 
     procedure SetCSC(AValue: String);
     procedure SetIdCSC(AValue: String);
@@ -77,6 +78,8 @@ type
     property IdCSC: String read FIdCSC write SetIdCSC;
     property CSC: String read FCSC write SetCSC;
     property VersaoQRCode: TpcnVersaoQrCode read FVersaoQRCode write FVersaoQRCode default veqr100;
+    property CamposFatObrigatorios: Boolean
+      read FCamposFatObrigatorios write FCamposFatObrigatorios default True;
   end;
 
   { TDownloadConfNFe }
@@ -230,6 +233,7 @@ begin
   FIdCSC := '';
   FCSC := '';
   FVersaoQRCode := veqr000;
+  FCamposFatObrigatorios := True;
 end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);
@@ -242,6 +246,7 @@ begin
   IdCSC    := DeGeralConfNFe.IdCSC;
   CSC      := DeGeralConfNFe.CSC;
   VersaoQRCode := DeGeralConfNFe.VersaoQRCode;
+  CamposFatObrigatorios := DeGeralConfNFe.CamposFatObrigatorios;
 end;
 
 procedure TGeralConfNFe.GravarIni(const AIni: TCustomIniFile);
@@ -254,6 +259,7 @@ begin
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'AtualizarXMLCancelado', AtualizarXMLCancelado);
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode));
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'CamposFatObrigatorios', CamposFatObrigatorios);
 end;
 
 procedure TGeralConfNFe.LerIni(const AIni: TCustomIniFile);
@@ -266,6 +272,7 @@ begin
   VersaoDF := TpcnVersaoDF(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
   AtualizarXMLCancelado := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'AtualizarXMLCancelado', AtualizarXMLCancelado);
   VersaoQRCode :=  TpcnVersaoQrCode(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode)));
+  CamposFatObrigatorios := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'CamposFatObrigatorios', CamposFatObrigatorios);
 end;
 
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);

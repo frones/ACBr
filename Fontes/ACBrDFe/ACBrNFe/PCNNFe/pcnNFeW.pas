@@ -2206,10 +2206,10 @@ begin
     (nfe.Cobr.Fat.vLiq > 0) then
   begin
     Gerador.wGrupo('fat', 'Y02');
-    Gerador.wCampo(tcStr, 'Y03', 'nFat   ', 01, 60, IIf(FOpcoes.CamposFatObrigatorios,1,0), nfe.Cobr.Fat.nFat, DSC_NFAT);
-    Gerador.wCampo(tcDe2, 'Y04', 'vOrig  ', 01, 15, IIf(FOpcoes.CamposFatObrigatorios,1,0), nfe.Cobr.Fat.vOrig, DSC_VORIG);
-    Gerador.wCampo(tcDe2, 'Y05', 'vDesc  ', 01, 15, IIf(FOpcoes.CamposFatObrigatorios,1,0), nfe.Cobr.Fat.vDesc, DSC_VDESC);
-    Gerador.wCampo(tcDe2, 'Y06', 'vLiq   ', 01, 15, IIf(FOpcoes.CamposFatObrigatorios,1,0), nfe.Cobr.Fat.vLiq, DSC_VLIQ);
+    Gerador.wCampo(tcStr, 'Y03', 'nFat   ', 01, 60, IIf(FOpcoes.CamposFatObrigatorios and (NFe.infNFe.Versao >= 4),1,0), nfe.Cobr.Fat.nFat, DSC_NFAT);
+    Gerador.wCampo(tcDe2, 'Y04', 'vOrig  ', 01, 15, IIf(FOpcoes.CamposFatObrigatorios and (NFe.infNFe.Versao >= 4),1,0), nfe.Cobr.Fat.vOrig, DSC_VORIG);
+    Gerador.wCampo(tcDe2, 'Y05', 'vDesc  ', 01, 15, IIf(FOpcoes.CamposFatObrigatorios and (NFe.infNFe.Versao >= 4),1,0), nfe.Cobr.Fat.vDesc, DSC_VDESC);
+    Gerador.wCampo(tcDe2, 'Y06', 'vLiq   ', 01, 15, IIf(FOpcoes.CamposFatObrigatorios and (NFe.infNFe.Versao >= 4),1,0), nfe.Cobr.Fat.vLiq, DSC_VLIQ);
     Gerador.wGrupo('/fat');
   end;
 end;

@@ -76,7 +76,7 @@ type
 
     function GetConfiguracoes: TConfiguracoesCTe;
     function Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
-      chCTe: String): Boolean;
+      AchCTe: String): Boolean;
 
     procedure SetConfiguracoes(AValue: TConfiguracoesCTe);
   	procedure SetDACTE(const Value: TACBrCTeDACTEClass);
@@ -125,10 +125,8 @@ type
       ACNPJCPF, AultNSU: String): Boolean;
     function DistribuicaoDFePorNSU(AcUFAutor: integer;
       ACNPJCPF, ANSU: String): Boolean;
-    (*
     function DistribuicaoDFePorChaveCTe(AcUFAutor: integer;
       ACNPJCPF, AchCTe: String): Boolean;
-    *)
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamCTe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
@@ -832,13 +830,13 @@ begin
 end;
 
 function TACBrCTe.Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
-  chCTe: String): Boolean;
+  AchCTe: String): Boolean;
 begin
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU := AultNSU;
   WebServices.DistribuicaoDFe.NSU := ANSU;
-//  WebServices.DistribuicaoDFe.chCTe := AchCTe;
+  WebServices.DistribuicaoDFe.chCTe := AchCTe;
 
   Result := WebServices.DistribuicaoDFe.Executar;
 
@@ -857,13 +855,17 @@ function TACBrCTe.DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, '', ANSU, '');
 end;
-(*
+
 function TACBrCTe.DistribuicaoDFePorChaveCTe(AcUFAutor: integer; ACNPJCPF,
   AchCTe: String): Boolean;
 begin
-  Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchCTe);
+  // Aguardando a SEFAZ implementar esse recurso já existente para a NF-e.
+  Result := False;
+  GerarException('Aguardando a SEFAZ implementar esse recurso já existente para a NF-e.');
+
+//  Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchCTe);
 end;
-*)
+
 procedure TACBrCTe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
   sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; NomeArq: String;
   sReplyTo: TStrings);

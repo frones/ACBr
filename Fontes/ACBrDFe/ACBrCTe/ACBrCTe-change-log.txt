@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2018
+-- ACBrCTe / ACBrCTeWebServices / pcteDistDFeInt --
+[*] Ajustes no DistribuicaoDFe do CTe visando uma futura liberação por parte
+    da SEFAZ o DistribuicaoDFe por chave.
+   Por: Italo Jurisato Junior
+
 05/07/2018
 -- ACBrCTeConhecimentos --
 [+] Implementado o método GerarINI que tem por finalidade gerar um arquivo INI no

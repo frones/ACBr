@@ -477,6 +477,7 @@ type
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
+    FchCTe: String;
     FNomeArq: String;
     FlistaArqs: TStringList;
 
@@ -500,6 +501,7 @@ type
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
+    property chCTe: String read FchCTe write FchCTe;
     property NomeArq: String read FNomeArq;
     property ListaArqs: TStringList read FlistaArqs;
 
@@ -3123,6 +3125,7 @@ begin
     DistDFeInt.CNPJCPF := FCNPJCPF;
     DistDFeInt.ultNSU := FultNSU;
     DistDFeInt.NSU := FNSU;
+    DistDFeInt.chCTe := trim(FchCTe);
     DistDFeInt.Versao := FPVersaoServico;
 
     AjustarOpcoes( DistDFeInt.Gerador.Opcoes );

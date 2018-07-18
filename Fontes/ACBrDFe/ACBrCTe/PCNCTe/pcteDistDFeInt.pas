@@ -39,6 +39,8 @@ uses
 
 type
 
+  { TDistDFeInt }
+
   TDistDFeInt = class(TPersistent)
   private
     FGerador: TGerador;
@@ -48,6 +50,7 @@ type
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
+    FchCTe: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -62,6 +65,7 @@ type
     // Usado no Grupo de informações para consultar um DF-e a partir de um
     // NSU específico.
     property NSU: String             read FNSU      write FNSU;
+    property chCTe: String           read FchCTe    write FchCTe;
   end;
 
 implementation
@@ -92,10 +96,22 @@ begin
 
   if FNSU = '' then
   begin
-    sNSU := IntToStrZero(StrToIntDef(FultNSU,0),15);
-    Gerador.wGrupo('distNSU');
-    Gerador.wCampo(tcStr, 'A08', 'ultNSU', 01, 15, 1, sNSU, DSC_ULTNSU);
-    Gerador.wGrupo('/distNSU');
+    if FchCTe = '' then
+    begin
+      sNSU := IntToStrZero(StrToIntDef(FultNSU,0),15);
+      Gerador.wGrupo('distNSU');
+      Gerador.wCampo(tcStr, 'A08', 'ultNSU', 01, 15, 1, sNSU, DSC_ULTNSU);
+      Gerador.wGrupo('/distNSU');
+    end
+    else begin
+      Gerador.wGrupo('consChCTe');
+      Gerador.wCampo(tcStr, 'A12', 'chCTe', 44, 44, 1, FchCTe, DSC_CHAVE);
+
+      if not ValidarChave(FchCTe) then
+        Gerador.wAlerta('A12', 'chCTe', '', 'Chave de CTe inválida');
+
+      Gerador.wGrupo('/consChCTe');
+    end;
   end
   else
   begin

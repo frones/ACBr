@@ -6,10 +6,9 @@ object frmDemo: TfrmDemo
   Caption = 'Demo ACBrBoleto'
   ClientHeight = 601
   ClientWidth = 811
-  Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.8.4.0'
   object GroupBox2: TGroupBox
     Left = 8
     Height = 72
@@ -299,7 +298,7 @@ object frmDemo: TfrmDemo
       Left = 6
       Height = 15
       Top = 176
-      Width = 64
+      Width = 63
       Caption = 'Vencimento'
       ParentColor = False
     end
@@ -309,8 +308,6 @@ object frmDemo: TfrmDemo
       Top = 195
       Width = 153
       CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-      OKCaption = 'OK'
-      CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
       NumGlyphs = 1
@@ -323,8 +320,6 @@ object frmDemo: TfrmDemo
       Top = 136
       Width = 153
       CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-      OKCaption = 'OK'
-      CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
       NumGlyphs = 1
@@ -335,7 +330,7 @@ object frmDemo: TfrmDemo
       Left = 6
       Height = 15
       Top = 64
-      Width = 27
+      Width = 26
       Caption = 'Valor'
       ParentColor = False
     end
@@ -377,7 +372,7 @@ object frmDemo: TfrmDemo
       Left = 336
       Height = 15
       Top = 9
-      Width = 60
+      Width = 59
       Caption = 'CPF / CNPJ'
       ParentColor = False
     end
@@ -563,8 +558,6 @@ object frmDemo: TfrmDemo
       Top = 66
       Width = 101
       CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-      OKCaption = 'OK'
-      CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
       NumGlyphs = 1
@@ -577,8 +570,6 @@ object frmDemo: TfrmDemo
       Top = 66
       Width = 104
       CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-      OKCaption = 'OK'
-      CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
       NumGlyphs = 1
@@ -607,8 +598,6 @@ object frmDemo: TfrmDemo
       Top = 66
       Width = 104
       CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-      OKCaption = 'OK'
-      CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
       NumGlyphs = 1
@@ -637,8 +626,6 @@ object frmDemo: TfrmDemo
       Top = 65
       Width = 101
       CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-      OKCaption = 'OK'
-      CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
       NumGlyphs = 1
@@ -649,7 +636,7 @@ object frmDemo: TfrmDemo
       Left = 4
       Height = 15
       Top = 6
-      Width = 87
+      Width = 86
       Caption = 'ValorMora\Juros'
       ParentColor = False
     end
@@ -665,7 +652,7 @@ object frmDemo: TfrmDemo
       Left = 292
       Height = 15
       Top = 6
-      Width = 93
+      Width = 92
       Caption = 'Valor Abatimento'
       ParentColor = False
     end
@@ -681,7 +668,7 @@ object frmDemo: TfrmDemo
       Left = 144
       Height = 15
       Top = 6
-      Width = 80
+      Width = 79
       Caption = 'Valor Desconto'
       ParentColor = False
     end
@@ -715,6 +702,8 @@ object frmDemo: TfrmDemo
     Banco.Numero = 237
     Banco.TamanhoMaximoNossoNum = 11
     Banco.TipoCobranca = cobBradesco
+    Banco.LayoutVersaoArquivo = 0
+    Banco.LayoutVersaoLote = 0
     Cedente.Nome = 'teste cedente'
     Cedente.CodigoCedente = '4863177'
     Cedente.Agencia = '2132'
@@ -723,6 +712,7 @@ object frmDemo: TfrmDemo
     Cedente.ContaDigito = '7'
     Cedente.Modalidade = '019'
     Cedente.Convenio = '899283'
+    Cedente.TipoDocumento = Tradicional
     Cedente.CNPJCPF = '82.961.095/0001-74'
     Cedente.TipoInscricao = pJuridica
     Cedente.Logradouro = 'Rua  XI de Agosto'
@@ -773,13 +763,5 @@ object frmDemo: TfrmDemo
     IDECharset = UTF_8
     left = 235
     top = 265
-  end
-  object MainMenu1: TMainMenu
-    left = 217
-    top = 287
-  end
-  object MainMenu2: TMainMenu
-    left = 212
-    top = 277
   end
 end

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2018
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado parâmetro "ComposFatObrigatorios" para NFe4.0
+
 13/06/2018
 [*] DoACBrMDFeUnit
 Ajustes para concatenar corretamentes Tags de Retorno

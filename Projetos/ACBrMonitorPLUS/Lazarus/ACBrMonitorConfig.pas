@@ -225,6 +225,7 @@ type
     VersaoeSocial     : String;
     VersaoReinf       : String;
     VersaoQRCode      : String;
+    CamposFatObrig    : Boolean;
     FormaEmissaoNFe   : Integer;
     FormaEmissaoCTe   : Integer;
     FormaEmissaoMDFe  : Integer;
@@ -889,6 +890,7 @@ begin
       Ini.WriteString( CSecWebService, CKeyWebServiceIntervalo, Intervalo );
       Ini.WriteInteger( CSecWebService, CKeyTimeZoneMode , TimeZoneMode );
       Ini.WriteString( CSecWebService, CKeyTimeZoneStr, TimeZoneStr );
+      Ini.WriteBool( CSecWebService, CKeyCamposFatObrig, CamposFatObrig );
     end;
 
     with DFe.ESocial do
@@ -1500,6 +1502,7 @@ begin
       Intervalo                 := Ini.ReadString( CSecWebService, CKeyWebServiceIntervalo, Intervalo);
       TimeZoneMode              := Ini.ReadInteger( CSecWebService, CKeyTimeZoneMode, TimeZoneMode);
       TimeZoneStr               := Ini.ReadString( CSecWebService, CKeyTimeZoneStr, TimeZoneStr);
+      CamposFatObrig            := Ini.ReadBool( CSecWebService, CKeyCamposFatObrig, True);
     end;
 
     with DFe.WebService.Proxy do
@@ -2089,6 +2092,7 @@ begin
     Intervalo                 := '0';
     TimeZoneMode              := 0;
     TimeZoneStr               := '';
+    CamposFatObrig            := True;
   end;
 
   with DFe.WebService.Proxy do

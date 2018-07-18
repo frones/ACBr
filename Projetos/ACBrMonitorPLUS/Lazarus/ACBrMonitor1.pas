@@ -383,6 +383,7 @@ type
     CHMHelpDatabase1: TCHMHelpDatabase;
     ckMemoria: TCheckBox;
     ckNFCeUsarIntegrador: TCheckBox;
+    ckCamposFatObrigatorio: TCheckBox;
     deBolDirRetornoRel: TDirectoryEdit;
     deUSUDataCadastro: TDateEdit;
     eAvanco: TEdit;
@@ -4282,6 +4283,7 @@ begin
       cbVersaoWSeSocial.ItemIndex      := cbVersaoWSeSocial.Items.IndexOf(VersaoeSocial);
       cbVersaoWsReinf.ItemIndex        := cbVersaoWSReinf.Items.IndexOf(VersaoReinf);
       cbVersaoWSQRCode.ItemIndex       := cbVersaoWSQRCode.Items.IndexOf(VersaoQRCode);
+      ckCamposFatObrigatorio.Checked   := CamposFatObrig;
     end;
 
     with ESocial do
@@ -5350,6 +5352,7 @@ begin
         FormaEmissaoCTe          := cbFormaEmissaoCTe.ItemIndex;
         FormaEmissaoMDFe         := cbFormaEmissaoMDFe.ItemIndex;
         FormaEmissaoGNRe         := cbFormaEmissaoGNRe.ItemIndex;
+        CamposFatObrig           := ckCamposFatObrigatorio.Checked;
       end;
 
       with ESocial do
@@ -8687,7 +8690,7 @@ begin
     TConfiguracoesNFe(Configuracoes).Arquivos.SalvarApenasNFeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
-
+    TConfiguracoesNFe(Configuracoes).Geral.CamposFatObrigatorios    := ckCamposFatObrigatorio.Checked;
 
   end
   else if Configuracoes is TConfiguracoesCTe then

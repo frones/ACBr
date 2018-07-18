@@ -314,6 +314,7 @@ const
   CKeyWebServiceIntervalo =          'Intervalo';
   CKeyTimeZoneMode =                 'TimeZoneMode';
   CKeyTimeZoneStr =                  'TimeZoneStr';
+  CKeyCamposFatObrig =               'CamposFatObrig';
 
   CKeyIdEmpregador =                 'IdEmpregador';
   CKeyIdTransmissor =                'IdTransmissor';

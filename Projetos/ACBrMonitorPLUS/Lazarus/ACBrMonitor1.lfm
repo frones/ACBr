@@ -384,10 +384,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 855
-        ActivePage = tsEscPos
+        ActivePage = tsMonitor
         Align = alClient
         Images = ImageList1
-        TabIndex = 19
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -7262,11 +7262,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object GroupBox2: TGroupBox
                     Left = 300
-                    Height = 123
+                    Height = 119
                     Top = 136
                     Width = 254
                     Caption = 'Forma de Emissão'
-                    ClientHeight = 101
+                    ClientHeight = 97
                     ClientWidth = 250
                     TabOrder = 4
                     object Label195: TLabel
@@ -7296,7 +7296,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object cbFormaEmissaoNFe: TComboBox
                       Left = 120
                       Height = 23
-                      Top = -3
+                      Top = -5
                       Width = 120
                       Font.Height = -12
                       ItemHeight = 15
@@ -7318,7 +7318,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object cbFormaEmissaoCTe: TComboBox
                       Left = 120
                       Height = 23
-                      Top = 24
+                      Top = 22
                       Width = 120
                       Font.Height = -12
                       ItemHeight = 15
@@ -7341,7 +7341,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object cbFormaEmissaoMDFe: TComboBox
                       Left = 120
                       Height = 23
-                      Top = 51
+                      Top = 49
                       Width = 120
                       Font.Height = -12
                       ItemHeight = 15
@@ -7372,7 +7372,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object cbFormaEmissaoGNRe: TComboBox
                       Left = 120
                       Height = 23
-                      Top = 78
+                      Top = 76
                       Width = 120
                       Font.Height = -12
                       ItemHeight = 15
@@ -7392,6 +7392,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       TabOrder = 3
                       Text = 'teNormal'
                     end
+                  end
+                  object ckCamposFatObrigatorio: TCheckBox
+                    AnchorSideLeft.Side = asrCenter
+                    AnchorSideTop.Side = asrBottom
+                    Left = 6
+                    Height = 22
+                    Top = 256
+                    Width = 368
+                    AutoSize = False
+                    BorderSpacing.Top = 6
+                    Caption = 'Campos do grupo "Fatura" Obrigatórios no XML NFe 4.0'
+                    TabOrder = 5
                   end
                 end
                 object tsWSNFCe: TTabSheet
@@ -13647,7 +13659,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -13817,6 +13828,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 448
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
+    ACBrNFe = ACBrNFe1
     MostrarPreview = True
     MostrarStatus = True
     TipoDANFE = tiRetrato

@@ -57,7 +57,14 @@ type
     ProLinkNFSe: String;
     HomLinkNFSe: String;
     DadosSenha: String;
-    UseCertificateHTTP:Boolean;
+    UseCertificateHTTP: Boolean;
+ end;
+
+ TConfigRemover = record
+    QuebradeLinhaRetorno: Boolean;
+    EComercial: Boolean;
+    Tabulacao: Boolean;
+    TagQuebradeLinhaUnica: Boolean;
  end;
 
  TConfigNameSpace = record
@@ -300,9 +307,9 @@ type
     FPathIniCidades: String;
     FPathIniProvedor: String;
     FEmitente: TEmitenteConfNFSe;
+    FConfigRemover: TConfigRemover;
 
     procedure SetCodigoMunicipio(const Value: Integer);
-
   public
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
@@ -318,6 +325,7 @@ type
     property ConfigURL: TConfigURL read FConfigURL;
     property ConfigEnvelope: TConfigEnvelope read FConfigEnvelope;
     property ConfigGrupoMsgRet: TConfigGrupoMsgRet read FConfigGrupoMsgRet;
+    property ConfigRemover: TConfigRemover read FConfigRemover;
   published
     property CodigoMunicipio: Integer read FCodigoMunicipio write SetCodigoMunicipio;
     property Provedor: TnfseProvedor read FProvedor;
@@ -575,6 +583,11 @@ begin
     FConfigGeral.QuebradeLinha := #13#10;
 
   FConfigGeral.UseCertificateHTTP := FPIniParams.ReadBool('Geral', 'UseCertificado', False);
+
+  FConfigRemover.QuebradeLinhaRetorno  := FPIniParams.ReadBool('Remover', 'QuebradeLinhaRetorno', False);
+  FConfigRemover.EComercial            := FPIniParams.ReadBool('Remover', 'EComercial', False);
+  FConfigRemover.Tabulacao             := FPIniParams.ReadBool('Remover', 'Tabulacao', False);
+  FConfigRemover.TagQuebradeLinhaUnica := FPIniParams.ReadBool('Remover', 'TagQuebradeLinhaUnica', False);
 
   FConfigNameSpace.Producao    := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigNameSpace.Homologacao := StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);

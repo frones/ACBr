@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/07/2018
+-- ACBrNFSeConfiguracoes / ACBrNFSeWebServices --
+[+] Implementado as propriedades de configuração: QuebradeLinhaRetorno, EComercial,
+Tabulacao e TagQuebradeLinhaUnica onde é possível definir se serão removidos ou não do XML retornado.
+Por: Italo Jurisato Junior 
 -- Diversos --
 [*] Ajustes na leitura do XML de retorno.
    Por: Italo Jurisato Junior

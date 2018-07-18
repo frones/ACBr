@@ -122,6 +122,7 @@ type
     procedure InicializarGerarDadosMsg;
     function ExtrairGrupoMsgRet(AGrupo: String): String;
     procedure AlterarURIAssinatura;
+    function RemoverCharControle(AXML: String): String;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -1035,6 +1036,29 @@ begin
   TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
 end;
 
+function TNFSeWebService.RemoverCharControle(AXML: String): String;
+begin
+  if FPConfiguracoesNFSe.Geral.ConfigRemover.Tabulacao then
+    AXML := StringReplace(AXML, '#9', '', [rfReplaceAll]);
+
+  if FPConfiguracoesNFSe.Geral.ConfigRemover.QuebradeLinhaRetorno then
+  begin
+    AXML := StringReplace(AXML, #10, '', [rfReplaceAll]);
+    AXML := StringReplace(AXML, #13, '', [rfReplaceAll]);
+
+    AXML := StringReplace(AXML, '&#xD;', '', [rfReplaceAll]);
+    AXML := StringReplace(AXML, '&#xd;', '', [rfReplaceAll]);
+  end;
+
+  if FPConfiguracoesNFSe.Geral.ConfigRemover.EComercial then
+    AXML := StringReplace(AXML, '&amp;', '', [rfReplaceAll]);
+
+  if FPConfiguracoesNFSe.Geral.ConfigRemover.TagQuebradeLinhaUnica then
+    AXML := StringReplace(AXML, 'lt;brgt;', '', [rfReplaceAll]);
+
+  Result := AXML;
+end;
+
 function TNFSeWebService.ExtrairRetorno(GrupoMsgRet: String): String;
 var
   AuxXML, XMLRet: String;
@@ -1043,21 +1067,7 @@ begin
   // Aplicado a conversão de String para XML
   FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
 
-  FPRetornoWS := StringReplace(FPRetornoWS, '&#xD;'   , '', [rfReplaceAll]);
-  FPRetornoWS := StringReplace(FPRetornoWS, '&#xd;'   , '', [rfReplaceAll]);
-  FPRetornoWS := StringReplace(FPRetornoWS, '#9#9#9#9', '', [rfReplaceAll]); //proCONAM
-
-  // Remover quebras de linha //
-  if (FProvedor <> proRJ) then
-  begin
-    FPRetornoWS := StringReplace(FPRetornoWS, #10, '', [rfReplaceAll]);
-    FPRetornoWS := StringReplace(FPRetornoWS, #13, '', [rfReplaceAll]);
-  end;
-
-  if (FProvedor <> proNFSeBrasil) then
-    FPRetornoWS := StringReplace(FPRetornoWS, '&amp;', '', [rfReplaceAll]);
-
-  FPRetornoWS := StringReplace(FPRetornoWS, 'lt;brgt;', '', [rfReplaceAll]);
+  FPRetornoWS := RemoverCharControle(FPRetornoWS);
 
   FPRetornoWS := RemoverDeclaracaoXML(FPRetornoWS);
 
@@ -1104,6 +1114,8 @@ begin
   if XMLRet = '' then
     XMLRet := AuxXML;
 
+  // No retorno ao separar os dados do grupo de retorno pode conter uma
+  // segunda Declaração XML que também deve ser removida.
   XMLRet := RemoverDeclaracaoXML(XMLRet);
 
   Result := XMLRet;

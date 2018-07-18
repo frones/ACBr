@@ -10,8 +10,7 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
-  LCLVersion = '1.6.2.0'
-  Visible = False
+  LCLVersion = '1.8.4.0'
   object RlReport: TRLReport
     Left = 0
     Height = 1123
@@ -528,7 +527,7 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
         Left = 3
         Height = 7
         Top = 14
-        Width = 80
+        Width = 81
         Caption = 'NOME / RAZÃO SOCIAL'
         Font.Color = clBlack
         Font.Height = -7
@@ -604,7 +603,7 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
         Left = 3
         Height = 7
         Top = 74
-        Width = 38
+        Width = 39
         Caption = 'MUNICÍPIO'
         Font.Color = clBlack
         Font.Height = -7

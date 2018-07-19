@@ -50,9 +50,9 @@ type
 
   TContribuinte           = (tcPessoaJuridica, tcOrgaoPublico, tcPessoaFisica);
 
-  TTipoEvento             = (teR1000, teR1070, teR2010, teR2020, teR2030,
-                             teR2040, teR2050, teR2060, teR2070, teR2098,
-                             teR2099, teR3010, teR5001, teR5011, teR9000);
+  TTipoEvento             = (teR1000, teR2099, teR1070, teR2010, teR2020,
+                             teR2030, teR2040, teR2050, teR2060, teR2070,
+                             teR2098, teR3010, teR5001, teR5011, teR9000);
 
   TtpAmb                  = (taNenhum, taProducao, taProducaoRestritaDadosReais);
 
@@ -106,6 +106,7 @@ type
 
   TReinfSchema            = (
                             schevtInfoContribuinte,           // R-1000 - Informações do Contribuinte
+                            schevtFechamento,                 // R-2099 - Fechamento dos Eventos Periódicos
                             schevtTabProcesso,                // R-1070 - Tabela de Processos Administrativos/Judiciais
                             schevtTomadorServicos,            // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
                             schevtPrestadorServicos,          // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
@@ -113,10 +114,9 @@ type
                             schevtRecursoRepassadoAssociacao, // R-2040 - Recursos Repassados para Associação Desportiva
                             schevtInfoProdRural,              // R-2050 - Comercialização da Produção por Produtor Rural PJ/Agroindústria
                             schevtInfoCPRB,                   // R-2060 - Contribuição Previdenciária sobre a Receita Bruta - CPRB
-                            schevtPgtosDivs,          // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
+                            schevtPgtosDivs,                  // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
                             schevtReabreEvPer,                // R-2098 - Reabertura dos Eventos Periódicos
-                            schevtFechamento,                 // R-2099 - Fechamento dos Eventos Periódicos
-                            schevtEspDesportivo,      // R-3010 - Receita de Espetáculo Desportivo
+                            schevtEspDesportivo,              // R-3010 - Receita de Espetáculo Desportivo
                             schevtTotal,                      // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
                             schevtTotalConsolid,              // R-5011 - Informações de bases e tributos consolidadas por período de apuração
                             schevtExclusao,                   // R-9000 - Exclusão de Eventos
@@ -235,14 +235,14 @@ type
 const
   PrefixVersao = '-v';
 
-  TTipoEventoString: array[0..14] of String =('R-1000', 'R-1070', 'R-2010',
-                                              'R-2020', 'R-2030', 'R-2040',
-                                              'R-2050', 'R-2060', 'R-2070',
-                                              'R-2098', 'R-2099', 'R-3010',
-                                              'R-5001', 'R-5011', 'R-9000'
-                                                   );
+  TTipoEventoString: array[0..14] of String =('R-1000', 'R-2099', 'R-1070',
+                                              'R-2010', 'R-2020', 'R-2030',
+                                              'R-2040', 'R-2050', 'R-2060',
+                                              'R-2070', 'R-2098', 'R-3010',
+                                              'R-5001', 'R-5011', 'R-9000' );
 
   TReinfSchemaStr: array[0..14] of string = ('evtInfoContribuinte',                 // R-1000 - Informações do Contribuinte
+                                             'evtFechamento',                       // R-2099 - Fechamento dos Eventos Periódicos
                                              'evtTabProcesso',                      // R-1070 - Tabela de Processos Administrativos/Judiciais
                                              'evtTomadorServicos',                  // R-2010 - Retenção Contribuição Previdenciária - Serviços Tomados
                                              'evtPrestadorServicos',                // R-2020 - Retenção Contribuição Previdenciária - Serviços Prestados
@@ -252,7 +252,6 @@ const
                                              'evtInfoCPRB',                         // R-2060 - Contribuição Previdenciária sobre a Receita Bruta - CPRB
                                              'evtPagamentosDiversos',               // R-2070 - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
                                              'evtReabreEvPer',                      // R-2098 - Reabertura dos Eventos Periódicos
-                                             'evtFechamento',                       // R-2099 - Fechamento dos Eventos Periódicos
                                              'evtEspDesportivo',                    // R-3010 - Receita de Espetáculo Desportivo
                                              'evtTotal',                            // R-5001 - Informações das bases e dos tributos consolidados por contribuinte
                                              'evtTotalConsolid',                    // R-5011 - Informações de bases e tributos consolidadas por período de apuração
@@ -260,6 +259,7 @@ const
                                             );
 
   TReinfSchemaRegistro: array[0..14] of string = ('R-1000', // rsevtInfoContri    - Informações do Contribuinte
+                                                  'R-2099', // rsevtFechaEvPer    - Fechamento dos Eventos Periódicos
                                                   'R-1070', // rsevtTabProcesso   - Tabela de Processos Administrativos/Judiciais
                                                   'R-2010', // rsevtServTom       - Retenção Contribuição Previdenciária - Serviços Tomados
                                                   'R-2020', // rsevtServPrest     - Retenção Contribuição Previdenciária - Serviços Prestados
@@ -269,20 +269,18 @@ const
                                                   'R-2060', // rsevtCPRB          - Contribuição Previdenciária sobre a Receita Bruta - CPRB
                                                   'R-2070', // rsevtPgtosDivs     - Retenções na Fonte - IR, CSLL, Cofins, PIS/PASEP
                                                   'R-2098', // rsevtReabreEvPer   - Reabertura dos Eventos Periódicos
-                                                  'R-2099', // rsevtFechaEvPer    - Fechamento dos Eventos Periódicos
                                                   'R-3010', // rsevtEspDesportivo - Receita de Espetáculo Desportivo
                                                   'R-5001', // rsevtTotal         - Informações das bases e dos tributos consolidados por contribuinte
                                                   'R-5011', // rsevtTotalConsolid - Informações de bases e tributos consolidadas por período de apuração
                                                   'R-9000'  // rsevtExclusao      - Exclusão de Eventos
                                                  );
 
-  TEventoString: array[0..14] of String =('evtInfoContri', 'evtTabProcesso',
-                                          'evtServTom', 'evtServPrest',
-                                          'evtAssocDespRec', 'evtAssocDespRep',
-                                          'evtComProd', 'evtCPRB', 'evtPgtosDivs',
-                                          'evtReabreEvPer', 'evtFechaEvPer',
-                                          'evtEspDesportivo', 'evtTotal',
-                                          'evtTotalContrib', 'evtExclusao');
+  TEventoString: array[0..14] of String =('evtInfoContri',   'evtFechaEvPer',   'evtTabProcesso',
+                                          'evtServTom',      'evtServPrest',    'evtAssocDespRec',
+                                          'evtAssocDespRep', 'evtComProd',      'evtCPRB',
+                                          'evtPgtosDivs',    'evtReabreEvPer',  'evtEspDesportivo',
+                                          'evtTotal',        'evtTotalContrib', 'evtExclusao');
+
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutReinf;
 

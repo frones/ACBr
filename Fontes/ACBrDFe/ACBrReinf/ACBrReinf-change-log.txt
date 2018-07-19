@@ -50,8 +50,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/07/2018
+-- pcnConversaoReinf -- 
+[*] https://www.projetoacbr.com.br/forum/topic/44880-reinf-acbrmonitorplus-teste-carregando-xml/
+   Por: Fabio Nery
+
 03/07/2018
--- ACBrReinfWebServices 
+-- ACBrReinfWebServices --
 [*] Alterado a tag usada na consulta de <numeroReciboFechamento> para <numeroProtocoloFechamento>.
    Por: Luis Tsiuf
 

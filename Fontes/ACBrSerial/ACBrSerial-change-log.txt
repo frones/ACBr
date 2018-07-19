@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/07/2018
+-- ACBrDevice --
+[+] Ajustes para melhorar as mensagens de Erro, quando Ativar Porta Serial ou
+    Paralela e a mesma for inexistente ou inacessível  (por: DSA)
+
 21/02/2018
 -- ACBrETQ, ACBrETQClass --
 [-] Ajuste para enviar o comando de Limpar a Memória, ante de Impressão da Etiqueta

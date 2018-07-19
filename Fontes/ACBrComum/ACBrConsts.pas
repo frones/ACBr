@@ -262,6 +262,8 @@ const
 
   cACBrDeviceAtivarPortaException    = 'Porta não definida' ;
   cACBrDeviceAtivarException         = 'Erro abrindo: %s ' + sLineBreak +' %s ' ;
+  cACBrDeviceAtivarPortaNaoEncontrada= 'Porta %s não encontrada' ;
+  cACBrDeviceAtivarPortaNaoAcessivel = 'Porta %s não acessível' ;
   cACBrDeviceSetBaudException        = 'Valor deve estar na faixa de 50 a 4000000.'+#10+
                                        'Normalmente os equipamentos Seriais utilizam: 9600' ;
   cACBrDeviceSetDataException        = 'Valor deve estar na faixa de 5 a 8.'+#10+

@@ -103,6 +103,8 @@ type
     FRetornoNFSe: TRetornoNFSe;
     FGerarDadosMsg: TNFSeG;
 
+    FLoteNaoProc: Boolean;
+
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirEnvelopeSoap; override;
@@ -158,6 +160,7 @@ type
     property docElemento: String     read FdocElemento;
     property infElemento: String     read FinfElemento;
     property IDLote: String          read FIDLote;
+    property LoteNaoProc: Boolean      read FLoteNaoProc;
 
     property vNotas: String   read FvNotas;
     property XML_NFSe: String read FXML_NFSe;
@@ -1252,7 +1255,10 @@ begin
 
     // Retorno do GerarNfse e ConsultarLoteRps
     if (FPLayout in [LayNFSeGerar, LayNfseConsultaLote]) or ((FPLayout = LayNfseConsultaNfseRps) and (FProvedor = proISSNET)) then
+    begin
       FNotasFiscais.Items[ii].NFSe.Situacao := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Situacao;
+      FLoteNaoProc := (FNotasFiscais.Items[ii].NFSe.Situacao = '2');
+    end;
 
     { Márcio - Como a questão do link é tratada no reader do XML, acho que aqui
       pode pegar direto, sem validar provedor }
@@ -1506,8 +1512,6 @@ begin
 
       proSMARAPD,
       proIPM:       EnviarLoteRps := ''
-
-//      proTinus:     EnviarLoteRps := 'Arg';
     else
       EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
     end;
@@ -2442,8 +2446,6 @@ begin
 
       proSMARAPD,
       proIPM:       FTagGrupo := '';
-
-      //      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'EnviarLoteRpsEnvio';
     end;
@@ -2630,6 +2632,9 @@ begin
   end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingDados);
+
+  if FProvedor = proTinus then
+    FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio', 'Arg', [rfReplaceAll]);
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
@@ -3491,8 +3496,6 @@ begin
 
       proSP, 
       proNotaBlu:   FTagGrupo := 'p1:PedidoInformacoesLote';
-
-//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
     end;
@@ -3532,6 +3535,9 @@ begin
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit;
+
+  if FProvedor = proTinus then
+    FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarSituacaoLoteRpsEnvio', 'Arg', [rfReplaceAll]);
 
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then
     GerarException(ACBrStr('A funcionalidade [Consultar Situação do Lote] não foi disponibilizada pelo provedor: ' +
@@ -3751,8 +3757,6 @@ begin
 
       proSMARAPD,
       proIPM:       FTagGrupo := '';
-
-//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarLoteRpsEnvio';
     end;
@@ -3795,6 +3799,9 @@ begin
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote;
+
+  if FProvedor = proTinus then
+    FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarLoteRpsEnvio', 'Arg', [rfReplaceAll]);
 
   if ((FPDadosMsg = '') or (FDadosEnvelope = '')) and (not (FProvedor in [proIPM])) then
     GerarException(ACBrStr('A funcionalidade [Consultar Lote] não foi disponibilizada pelo provedor: ' +
@@ -3898,8 +3905,6 @@ begin
       proNotaBlu:   FTagGrupo := 'p1:PedidoConsultaNFe';
 
       proIPM:       FTagGrupo := '';
-
-//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarNfseRpsEnvio';
     end;
@@ -4009,6 +4014,9 @@ begin
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps;
+
+  if FProvedor = proTinus then
+    FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarNfseRpsEnvio', 'Arg', [rfReplaceAll]);
 
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then
     GerarException(ACBrStr('A funcionalidade [Consultar NFSe por RPS] não foi disponibilizada pelo provedor: ' +
@@ -4171,6 +4179,9 @@ begin
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe;
 
+  if FProvedor = proTinus then
+    FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarNfseEnvio', 'Arg', [rfReplaceAll]);
+
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then
     GerarException(ACBrStr('A funcionalidade [Consultar NFSe] não foi disponibilizada pelo provedor: ' +
      FPConfiguracoesNFSe.Geral.xProvedor));
@@ -4285,8 +4296,6 @@ begin
 
       proSMARAPD,
       proIPM:         FTagGrupo := '';
-
-//      proTinus:       FTagGrupo := 'Arg';
     else
       FTagGrupo := 'CancelarNfseEnvio';
     end;
@@ -4518,6 +4527,9 @@ begin
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar;
+
+  if FProvedor = proTinus then
+    FPDadosMsg := StringReplace(FPDadosMsg, 'CancelarNfseEnvio', 'Arg', [rfReplaceAll]);
 
   if ((FPDadosMsg = '') or (FDadosEnvelope = '')) and (not (FProvedor in [proIPM])) then
     GerarException(ACBrStr('A funcionalidade [Cancelar NFSe] não foi disponibilizada pelo provedor: ' +
@@ -5290,6 +5302,8 @@ begin
 end;
 
 function TWebServices.Envia(ALote: String): Boolean;
+var
+  Tentativas, IntervaloTentativas: Integer;
 begin
   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
   begin
@@ -5328,41 +5342,71 @@ begin
   FConsLote.FProtocolo := FEnviarLoteRPS.Protocolo;
   FConsLote.FNumeroLote := FEnviarLoteRPS.NumeroLote;
 
-  if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
+  with TACBrNFSe(FACBrNFSe) do
   begin
-    //==========================================================================
-    // Provedores que seguem a versão 1.0 do layout da ABRASF devem primeiro
-    // Consultar a Situação do Lote
-    if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
+    if (Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
     begin
-      // Provedores cuja versão é 1.0 mas não possuem o método Consulta
-      // a Situação do Lote devem ser relacionados no case abaixo.
-      case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
+      //==========================================================================
+      // Provedores que seguem a versão 1.0 do layout da ABRASF devem primeiro
+        // Consultar a Situação do Lote
+      if ProvedorToVersaoNFSe(Configuracoes.Geral.Provedor) = ve100 then
+      begin
+        // Provedores cuja versão é 1.0 mas não possuem o método Consulta
+        // a Situação do Lote devem ser relacionados no case abaixo.
+        case Configuracoes.Geral.Provedor of
+          proGoverna,
+          proIPM,
+          proIssDSF: Result := True
+        else
+          Result := FConsSitLoteRPS.Executar;
+        end;
+
+        if not (Result) then
+          FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+      end;
+
+      // Provedores que não possuem o método Consultar o Lote devem ser
+      // relacionados no case abaixo.
+      case Configuracoes.Geral.Provedor of
         proGoverna,
         proIPM,
-        proIssDSF: Result := True
+        proInfisc,
+        proInfiscv11: Result := True
       else
-        Result := FConsSitLoteRPS.Executar;
+        begin
+          Sleep(Configuracoes.WebServices.AguardarConsultaRet);
+
+          Result := FConsLote.Executar;
+
+          // O código abaixo tem por objetivo repetir a consulta ao lote
+          // quando no retorno constar que o lote ainda se encontra em processamento
+          // não sabemos se vai funcionar como o esperado.
+          //****************************************************************
+          if ProvedorToVersaoNFSe(Configuracoes.Geral.Provedor) = ve200 then
+          begin
+            try
+              Tentativas := 0;
+              IntervaloTentativas := max(Configuracoes.WebServices.IntervaloTentativas, 1000);
+
+              while (FConsLote.FLoteNaoProc) and
+                      (Tentativas < Configuracoes.WebServices.Tentativas) do
+              begin
+                Inc(Tentativas);
+                sleep(IntervaloTentativas);
+
+                Result := FConsLote.Executar;
+              end;
+            finally
+              SetStatus(stNFSeIdle);
+            end;
+          end;
+          //****************************************************************
+        end;
       end;
 
       if not (Result) then
-        FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+        FConsLote.GerarException( FConsLote.Msg );
     end;
-
-    // Provedores que não possuem o método Consultar o Lote devem ser
-    // relacionados no case abaixo.
-    case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
-//      proEL,
-      proGoverna,
-      proIPM,
-      proInfisc,
-      proInfiscv11: Result := True
-    else
-      Result := FConsLote.Executar;
-    end;
-
-    if not (Result) then
-      FConsLote.GerarException( FConsLote.Msg );
   end;
 end;
 
@@ -5372,6 +5416,8 @@ begin
 end;
 
 function TWebServices.EnviaSincrono(ALote: String): Boolean;
+var
+  Tentativas, IntervaloTentativas: Integer;
 begin
   FEnviarSincrono.FNumeroLote := ALote;
 
@@ -5414,6 +5460,30 @@ begin
               Sleep(Configuracoes.WebServices.AguardarConsultaRet);
 
               Result := FConsLote.Executar;
+
+              // O código abaixo tem por objetivo repetir a consulta ao lote
+              // quando no retorno constar que o lote ainda se encontra em processamento
+              // não sabemos se vai funcionar como o esperado.
+              //****************************************************************
+              if ProvedorToVersaoNFSe(Configuracoes.Geral.Provedor) = ve200 then
+              begin
+                try
+                  Tentativas := 0;
+                  IntervaloTentativas := max(Configuracoes.WebServices.IntervaloTentativas, 1000);
+
+                  while (FConsLote.FLoteNaoProc) and
+                          (Tentativas < Configuracoes.WebServices.Tentativas) do
+                  begin
+                    Inc(Tentativas);
+                    sleep(IntervaloTentativas);
+
+                    Result := FConsLote.Executar;
+                  end;
+                finally
+                  SetStatus(stNFSeIdle);
+                end;
+              end;
+              //****************************************************************
             end;
           end;
         end;

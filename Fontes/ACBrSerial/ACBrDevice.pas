@@ -831,7 +831,7 @@ begin
             if (ErrorMsg = '') then
               ErrorMsg := E.Message;
 
-            DoException( EFOpenError.Create(ErrorMsg) );
+            DoException( EStreamError.Create(ErrorMsg) );
           end;
 
           On E: Exception do

@@ -694,6 +694,19 @@ begin
         ListaNFSe.Sucesso                        := Leitor.rCampo(tcStr, 'Sucesso');
         Result := ListaNFSe.Sucesso = 'true';
       end;
+
+      if Provedor = proISSDigital then
+      begin
+        i := 0;
+        while Leitor.rExtrai(2, 'ListaMensagemRetorno', '', i + 1) <> '' do
+        begin
+          ListaNFSe.FMsgRetorno.Add;
+          ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+          ListaNFSe.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+          inc(i);
+        end;
+      end;
     end;
 
     // =======================================================================

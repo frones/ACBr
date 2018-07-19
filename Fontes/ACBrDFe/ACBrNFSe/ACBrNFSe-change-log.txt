@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/07/2018
+-- pnfsLerListaNFSe --
+[*] Feita uma alteração para ler o retorno da consulta ao lote quando a situação não é lote 
+    processado com sucesso.
+Por: Italo Jurisato Junior 
+
 -- ACBrNFSeWebServices --
 [*] Feita uma alteração que podera resolver o problema do provedor Tinus, pois este necessita de uma determinada
     tag para poder validar o Lote de RPS, mas no enveio a mesma tem que ser substituida pela tag <Arg>.

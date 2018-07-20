@@ -39,6 +39,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2018
+-- ACBrDevice --
+[+] Adicionado no evento: HookAtivar = procedure(const APort: String; Params: String) of object;
+[+] Adicionado no evento: HookDesativar = procedure(const APort: String) of object;
+    (Que permitem, por exemplo, usar DLLs para acesso a impressoras por interface USB.
+     Veja exemplo de implementação, no Demo: PosPrinterTeste)
+[*] Melhoria em TACBrDevice.LeString, para que leitura por Hook também considere
+    o parâmetro "Terminador"
+
+-- ACBrEscBematech, ACBrEscDaruma, ACBrEscPosEpson --
+[*] Melhorias para correto funcionamento com Hook
+
 19/07/2018
 -- ACBrDevice --
 [+] Ajustes para melhorar as mensagens de Erro, quando Ativar Porta Serial ou

@@ -277,6 +277,8 @@ type
     FValorCofins: Currency;
     FValorInss: Currency;
     FValorIr: Currency;
+    FQuantidadeDiaria: Currency;
+    FValorTaxaTurismo: Currency;
     //Provedor: Infisc
     FCodigo: String;
     // Provedor Infisc Versão XML 1.1
@@ -323,6 +325,8 @@ type
     property ValorInss: Currency read FValorInss write FValorInss;
     property ValorIr: Currency read FValorIr write FValorIr;
     property ValorCsll: Currency read FValorCsll write FValorCsll;
+    property QuantidadeDiaria: Currency read FQuantidadeDiaria write FQuantidadeDiaria;
+    property ValorTaxaTurismo: Currency read FValorTaxaTurismo write FValorTaxaTurismo;
     // Provedor Infisc Versão XML 1.1
     property CodServ     : String read FCodServ write FCodServ;
     property CodLCServ   : String read FCodLCServ write FCodLCServ;

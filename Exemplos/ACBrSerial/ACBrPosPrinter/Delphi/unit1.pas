@@ -3,8 +3,9 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, ACBrPosPrinter, ACBrBase, Forms, StdCtrls, Buttons,
-  Spin, Controls, ComCtrls, ExtCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  strutils, ExtCtrls, Buttons, Spin, ComCtrls, ACBrPosPrinter, ACBrBase,
+  ACBrEscPosHookElginDLL, ACBrDevice;
 
 type
 
@@ -18,6 +19,7 @@ type
     bLerInfo: TButton;
     bLimpar: TBitBtn;
     bTagFormtacaoCaracter: TButton;
+    bTagGaveta: TButton;
     bTagQRCode: TButton;
     bLerStatus: TButton;
     bTagLogo: TButton;
@@ -26,7 +28,11 @@ type
     bTagsTesteInvalidas: TButton;
     bTagsTestePagCodigo: TButton;
     bImpLinhaALinha: TButton;
+    bTagsTestePageMode: TButton;
+    Button1: TButton;
+    cbCortarPapel: TCheckBox;
     cbHRI: TCheckBox;
+    cbGavetaSinalInvertido: TCheckBox;
     cbxModelo: TComboBox;
     cbxPagCodigo: TComboBox;
     cbxPorta: TComboBox;
@@ -36,6 +42,7 @@ type
     edLog: TEdit;
     gbCodBarrasConfig1: TGroupBox;
     gbCodBarrasConfig2: TGroupBox;
+    gbGavetaConfig: TGroupBox;
     gbConfiguracao: TGroupBox;
     gbCodBarrasConfig: TGroupBox;
     Label1: TLabel;
@@ -47,7 +54,10 @@ type
     Label15: TLabel;
     Label16: TLabel;
     Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
     Label2: TLabel;
+    Label20: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
@@ -64,6 +74,8 @@ type
     Panel4: TPanel;
     SbArqLog: TSpeedButton;
     btSerial: TSpeedButton;
+    seGavetaTempoON: TSpinEdit;
+    seGavetaTempoOFF: TSpinEdit;
     seLogoFatorX: TSpinEdit;
     seLogoFatorY: TSpinEdit;
     seQRCodeLarguraModulo: TSpinEdit;
@@ -77,10 +89,14 @@ type
     seLinhasBuffer: TSpinEdit;
     seLinhasPular: TSpinEdit;
     seLogoKC1: TSpinEdit;
+    seGavetaNum: TSpinEdit;
     tsImprimir: TTabSheet;
     tsLog: TTabSheet;
-    cbCortarPapel: TCheckBox;
-    bTagsTestePageMode: TButton;
+    procedure ACBrDeviceHookAtivar(const APort: String; Params: String);
+    procedure ACBrDeviceHookDesativar(const APort: String);
+    procedure ACBrDeviceHookEnviaString(const cmd: AnsiString);
+    procedure ACBrDeviceHookLeString(const NumBytes, ATimeOut: Integer;
+      var Retorno: AnsiString);
     procedure ACBrPosPrinter1GravarLog(const ALogLine: String;
       var Tratado: Boolean);
     procedure bAtivarClick(Sender: TObject);
@@ -90,6 +106,7 @@ type
     procedure bLerStatusClick(Sender: TObject);
     procedure bLimparClick(Sender: TObject);
     procedure bTagFormtacaoCaracterClick(Sender: TObject);
+    procedure bTagGavetaClick(Sender: TObject);
     procedure bTagLogoClick(Sender: TObject);
     procedure bTagQRCodeClick(Sender: TObject);
     procedure bTagsAlinhamentoClick(Sender: TObject);
@@ -97,15 +114,16 @@ type
     procedure bTagsCodBarrasClick(Sender: TObject);
     procedure bTagsTestePagCodigoClick(Sender: TObject);
     procedure bImpLinhaALinhaClick(Sender: TObject);
-    procedure cbControlePortaChange(Sender: TObject);
-    procedure cbHRIChange(Sender: TObject);
-    procedure cbIgnorarTagsChange(Sender: TObject);
-    procedure cbTraduzirTagsChange(Sender: TObject);
+    procedure bTagsTestePageModeClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure cbxModeloChange(Sender: TObject);
     procedure cbxPagCodigoChange(Sender: TObject);
     procedure cbxPortaChange(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure seBarrasAlturaChange(Sender: TObject);
+    procedure seGavetaTempoOFFChange(Sender: TObject);
+    procedure seGavetaTempoONChange(Sender: TObject);
     procedure seBarrasLarguraChange(Sender: TObject);
     procedure seEspLinhasChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -120,13 +138,23 @@ type
     procedure seQRCodeErrorLevelChange(Sender: TObject);
     procedure seQRCodeLarguraModuloChange(Sender: TObject);
     procedure seQRCodeTipoChange(Sender: TObject);
+    procedure cbGavetaSinalInvertidoClick(Sender: TObject);
+    procedure cbControlePortaClick(Sender: TObject);
     procedure cbCortarPapelClick(Sender: TObject);
-    procedure bTagsTestePageModeClick(Sender: TObject);
+    procedure cbTraduzirTagsClick(Sender: TObject);
+    procedure cbIgnorarTagsClick(Sender: TObject);
+    procedure cbHRIClick(Sender: TObject);
+    procedure ACBrPosPrinter1ACBrDeviceHookEnviaString(const cmd: String);
+    procedure ACBrPosPrinter1ACBrDeviceHookLeString(const NumBytes,
+      ATimeOut: Integer; var Retorno: String);
   private
+    { private declarations }
+    FElginUSB : TElginUSBPrinter;
+
     Procedure GravarINI ;
     Procedure LerINI ;
   public
-    
+    { public declarations }
   end;
 
 var
@@ -134,8 +162,10 @@ var
 
 implementation
 
-Uses 
-  typinfo, IniFiles, Printers, ConfiguraSerial, ACBrUtil;
+Uses
+  typinfo, IniFiles, Printers,
+  ConfiguraSerial,
+  ACBrUtil, ACBrConsts;
 
 {$R *.dfm}
 
@@ -147,6 +177,8 @@ var
   J: TACBrPosPaginaCodigo;
   K: Integer;
 begin
+  FElginUSB := TElginUSBPrinter.Create;
+
   cbxModelo.Items.Clear ;
   For I := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
      cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(I) ) ) ;
@@ -159,10 +191,6 @@ begin
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
   cbxPorta.Items.Add('LPT1') ;
   cbxPorta.Items.Add('LPT2') ;
-  cbxPorta.Items.Add('/dev/ttyS0') ;
-  cbxPorta.Items.Add('/dev/ttyS1') ;
-  cbxPorta.Items.Add('/dev/ttyUSB0') ;
-  cbxPorta.Items.Add('/dev/ttyUSB1') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
   cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
@@ -170,11 +198,21 @@ begin
   For K := 0 to Printer.Printers.Count-1 do
     cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
 
+  cbxPorta.Items.Add('/dev/ttyS0') ;
+  cbxPorta.Items.Add('/dev/ttyS1') ;
+  cbxPorta.Items.Add('/dev/ttyUSB0') ;
+  cbxPorta.Items.Add('/dev/ttyUSB1') ;
+  cbxPorta.Items.Add('/tmp/ecf.txt') ;
+
   PageControl1.ActivePageIndex := 0;
 
   LerINI;
 end;
 
+procedure TFrPosPrinterTeste.FormDestroy(Sender: TObject);
+begin
+  FElginUSB.Free;
+end;
 
 procedure TFrPosPrinterTeste.bLimparClick(Sender: TObject);
 begin
@@ -186,11 +224,11 @@ begin
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
   mImp.Lines.Add('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas');
-  mImp.Lines.Add(PadLeft('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
+  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
   mImp.Lines.Add('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas');
-  mImp.Lines.Add(PadLeft('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
+  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
   mImp.Lines.Add('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas');
-  mImp.Lines.Add(PadLeft('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
+  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
   mImp.Lines.Add('</c><n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
@@ -202,16 +240,22 @@ begin
   mImp.Lines.Add('<S>LIGA SUBLINHADA');
   mImp.Lines.Add('<c>LIGA CONDENSADA');
   mImp.Lines.Add('<e>LIGA EXPANDIDA');
+  mImp.Lines.Add('<a>LIGA ALTURA DUPLA');
   mImp.Lines.Add('</fn>FONTE NORMAL');
   mImp.Lines.Add('</linha_simples>');
   mImp.Lines.Add('<e><n>NEGRITO E EXPANDIDA</n></e>');
+  mImp.Lines.Add('<c><n>NEGRITO E CONDENSADA</n></c>');
+  mImp.Lines.Add('<e><a>EXPANDIDA E ALT.DUPLA</a></e>');
   mImp.Lines.Add('</fn>FONTE NORMAL');
+  mImp.Lines.Add('<in><e>INVERTIDA E EXPANDIDA</e></in>');
   mImp.Lines.Add('<in><c>INVERTIDA E CONDENSADA</c></in>');
+  mImp.Lines.Add('<in><a>INVERTIDA E ALT.DUPLA</a></in>');
   mImp.Lines.Add('</fn>FONTE NORMAL');
   mImp.Lines.Add('</linha_simples>');
   mImp.Lines.Add('</FB>FONTE TIPO B');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
@@ -220,14 +264,26 @@ begin
   mImp.Lines.Add('</corte_total>');
 end;
 
+procedure TFrPosPrinterTeste.bTagGavetaClick(Sender: TObject);
+begin
+  mImp.Lines.Add('Abertura da Gaveta padr„o');
+  mImp.Lines.Add('</abre_gaveta>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('Abertura da Gaveta especÌfica');
+  mImp.Lines.Add('<abre_gaveta>'+IntToStr(seGavetaNum.Value)+'</abre_gaveta>');
+  mImp.Lines.Add('</corte_total>');
+end;
+
 procedure TFrPosPrinterTeste.bTagLogoClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</ce>');
-  mImp.Lines.Add('Logo: '+chr(ACBrPosPrinter1.ConfigLogo.KeyCode1)+
-                          chr(ACBrPosPrinter1.ConfigLogo.KeyCode2) +
-                          ' - FatorX: ' + IntToStr(ACBrPosPrinter1.ConfigLogo.FatorX)+
-                          ' - FatorY: ' + IntToStr(ACBrPosPrinter1.ConfigLogo.FatorY));
+  mImp.Lines.Add('<logo_imprimir>'+ifthen(ACBrPosPrinter1.ConfigLogo.IgnorarLogo,'0','1')+'</logo_imprimir>');
+  mImp.Lines.Add('<logo_kc1>'+IntToStr(ACBrPosPrinter1.ConfigLogo.KeyCode1)+'</logo_kc1>');
+  mImp.Lines.Add('<logo_kc2>'+IntToStr(ACBrPosPrinter1.ConfigLogo.KeyCode2)+'</logo_kc2>');
+  mImp.Lines.Add('<logo_fatorx>'+IntToStr(ACBrPosPrinter1.ConfigLogo.FatorX)+'</logo_fatorx>');
+  mImp.Lines.Add('<logo_fatory>'+IntToStr(ACBrPosPrinter1.ConfigLogo.FatorY)+'</logo_fatory>');
   mImp.Lines.Add('</logo>');
   mImp.Lines.Add('</corte_total>');
 end;
@@ -246,16 +302,14 @@ begin
   mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/questoes_importantes.html</qrcode>');
   mImp.Lines.Add('</ce>');
   mImp.Lines.Add('Exemplo de QRCode para NFCe');
-  mImp.Lines.Add('<qrcode_error>0</qrcode_error>'+
-       '<qrcode>https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx?chNFe=35150805481336000137650220000000711000001960'+
-       '&nVersao=100&tpAmb=2&dhEmi=323031352D30382D31395432323A33333A32352D30333A3030&vNF=3.00&vICMS=0.12'+
-       '&digVal=776967396F2B665861706673396878776E64594C396F61654C35493D&cIdToken=000001&cHashQRCode=9BD312D558823E1EC68CEDB338A39B6150B0480E</qrcode>');
+  mImp.Lines.Add('<qrcode_error>0</qrcode_error><qrcode>https://www.homologacao.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx?'+
+                 'chNFe=35150805481336000137650220000000711000001960&nVersao=100&tpAmb=2&dhEmi=323031352D30382D31395432323A33333A32352D30333A3030&vNF=3.00'+
+                 '&vICMS=0.12&digVal=776967396F2B665861706673396878776E64594C396F61654C35493D&cIdToken=000001&cHashQRCode=9BD312D558823E1EC68CEDB338A39B6150B0480E</qrcode>');
   mImp.Lines.Add('Exemplo de QRCode para SAT');
-  mImp.Lines.Add('<qrcode_error>0</qrcode_error>'+
-       '<qrcode>35150811111111111111591234567890001672668828|20150820201736|118.72|05481336000137|'+
-       'TCbeD81ePUpMvso4VjFqRTvs4ovqmR1ZG3bwSCumzHtW8bbMedVJjVnww103v3LxKfgckAyuizcR/9pXaKay6M4Gu8kyDef+6VH5qONIZV1cB+mFfXiaCgeZALuRDCH1PRyb6hoBeRUkUk6'+
-       'lOdXSczRW9Y83GJMXdOFroEbzFmpf4+WOhe2BZ3mEdXKKGMfl1EB0JWnAThkGT+1Er9Jh/3En5YI4hgQP3NC2BiJVJ6oCEbKb85s5915DSZAw4qB/MlESWViDsDVYEnS/FQgA2kP2A9pR4+'+
-       'agdHmgWiz30MJYqX5Ng9XEYvvOMzl1Y6+7/frzsocOxfuQyFsnfJzogw==</qrcode>');
+  mImp.Lines.Add('<qrcode_error>0</qrcode_error><qrcode>35150811111111111111591234567890001672668828|20150820201736|118.72|05481336000137|'+
+                 'TCbeD81ePUpMvso4VjFqRTvs4ovqmR1ZG3bwSCumzHtW8bbMedVJjVnww103v3LxKfgckAyuizcR/9pXaKay6M4Gu8kyDef+6VH5qONIZV1cB+mFfXiaCgeZA'+
+                 'LuRDCH1PRyb6hoBeRUkUk6lOdXSczRW9Y83GJMXdOFroEbzFmpf4+WOhe2BZ3mEdXKKGMfl1EB0JWnAThkGT+1Er9Jh/3En5YI4hgQP3NC2BiJVJ6oCEbKb85'+
+                 's5915DSZAw4qB/MlESWViDsDVYEnS/FQgA2kP2A9pR4+agdHmgWiz30MJYqX5Ng9XEYvvOMzl1Y6+7/frzsocOxfuQyFsnfJzogw==</qrcode>');
   mImp.Lines.Add('</corte_total>');
 end;
 
@@ -268,6 +322,7 @@ begin
   mImp.Lines.Add('1 2 3 TESTANDO');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<c>FONTE CONDENSADA</c>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
@@ -277,6 +332,7 @@ begin
   mImp.Lines.Add('1 2 3 TESTANDO');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<c>FONTE CONDENSADA</c>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
@@ -286,6 +342,7 @@ begin
   mImp.Lines.Add('1 2 3 TESTANDO');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
+  mImp.Lines.Add('<a>FONTE ALT.DUPLA</a>');
   mImp.Lines.Add('<c>FONTE CONDENSADA</c>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
@@ -298,15 +355,22 @@ end;
 procedure TFrPosPrinterTeste.bTagsTesteInvalidasClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
-  mImp.Lines.Add(ACBrStr('<CE>*** TESTE DE TAGS INV¡LIDAS ***</CE>'));
-  mImp.Lines.Add(ACBrStr('<ce> <>tags inv·lidas no texto">">><<</CE>'));
+  mImp.Lines.Add('<CE>*** TESTE DE TAGS INV¡LIDAS ***</CE>');
+  mImp.Lines.Add('<ce> <>tags inv·lidas no texto">">><<</CE>');
   mImp.Lines.Add('<AD><da><ec></</A Direita</ad>');
   mImp.Lines.Add('</corte_total>');
 end;
 
 procedure TFrPosPrinterTeste.bTagsCodBarrasClick(Sender: TObject);
 begin
+
+  if not ACBrPosPrinter1.Ativo then
+    ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModelo.ItemIndex );
+
   mImp.Lines.Add('</zera>');
+  mImp.Lines.Add('<barra_mostrar>'+ifthen(cbHRI.Checked,'1','0')+'</barra_mostrar>');
+  mImp.Lines.Add('<barra_largura>'+IntToStr(seBarrasLargura.Value)+'</barra_largura>');
+  mImp.Lines.Add('<barra_altura>'+IntToStr(seBarrasAltura.Value)+'</barra_altura>');
   mImp.Lines.Add('</ce>');
   mImp.Lines.Add('</linha_dupla>');
   mImp.Lines.Add('EAN 8: 1234567');
@@ -332,6 +396,21 @@ begin
   mImp.Lines.Add('</Linha_Simples>');
   mImp.Lines.Add('CODE128: $-=+ABC123abc');
   mImp.Lines.Add('<code128>$-=+ABC123abc</code128>');
+  mImp.Lines.Add('CODE128C: 3515071111111111111159');
+  mImp.Lines.Add('<code128c>3515071111111111111159</code128c>');
+  if ACBrPosPrinter1.TagsNaoSuportadas.IndexOf(cTagBarraCode128c) >= 0 then
+  begin
+    mImp.Lines.Add('<c>CODE128C: 3515071111111111111159</c>');
+    mImp.Lines.Add('<code128c>3515071111111111111159</code128c>');
+    mImp.Lines.Add('<c>CODE128C: 1234567890001135408700</c>');
+    mImp.Lines.Add('<code128c>1234567890001135408700</code128c>');
+  end
+  else
+  begin
+    mImp.Lines.Add('<c>CODE128C: 35150711111111111111591234567890001135408700</c>');
+    mImp.Lines.Add('<code128c>35150711111111111111591234567890001135408700</code128c>');
+  end;
+
   mImp.Lines.Add('</Linha_Simples>');
   mImp.Lines.Add('UPCA: 12345678901');
   mImp.Lines.Add('<upca>12345678901</upca>');
@@ -348,7 +427,7 @@ procedure TFrPosPrinterTeste.bTagsTestePagCodigoClick(Sender: TObject);
 begin
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
-  mImp.Lines.Add(ACBrStr('¡…Õ”⁄·ÈÌÛ˙Á«„ı√’ Í¿‡'));
+  mImp.Lines.Add('¡…Õ”⁄·ÈÌÛ˙Á«„ı√’ Í¿‡');
   mImp.Lines.Add('</corte_total>');
 end;
 
@@ -357,11 +436,11 @@ begin
   ACBrPosPrinter1.ImprimirLinha('</zera>');
   ACBrPosPrinter1.ImprimirLinha('</linha_dupla>');
   ACBrPosPrinter1.ImprimirLinha('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas');
-  ACBrPosPrinter1.ImprimirLinha(PadLeft('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
+  ACBrPosPrinter1.ImprimirLinha(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
   ACBrPosPrinter1.ImprimirLinha('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas');
-  ACBrPosPrinter1.ImprimirLinha(PadLeft('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
+  ACBrPosPrinter1.ImprimirLinha(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
   ACBrPosPrinter1.ImprimirLinha('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas');
-  ACBrPosPrinter1.ImprimirLinha(PadLeft('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
+  ACBrPosPrinter1.ImprimirLinha(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
   ACBrPosPrinter1.ImprimirLinha('</c><n>FONTE NEGRITO</N>');
   ACBrPosPrinter1.ImprimirLinha('<in>FONTE INVERTIDA</in>');
   ACBrPosPrinter1.ImprimirLinha('<S>FONTE SUBLINHADA</s>');
@@ -391,24 +470,47 @@ begin
   ACBrPosPrinter1.ImprimirLinha('</corte_total>');
 end;
 
-procedure TFrPosPrinterTeste.cbControlePortaChange(Sender: TObject);
+procedure TFrPosPrinterTeste.bTagsTestePageModeClick(Sender: TObject);
 begin
-  ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
+  mImp.Lines.Add('</zera><barra_mostrar>0</barra_mostrar><barra_largura>2</barra_largura><barra_altura>40</barra_altura>');
+  mImp.Lines.Add('<mp><mp_direcao>0</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>0</mp_esquerda><mp_largura>257</mp_largura><mp_altura>740</mp_altura><mp_espaco>50</mp_espaco></mp_configurar>');
+  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
+  mImp.Lines.Add('<e>EXPANDIDO</e>');
+  mImp.Lines.Add('<in>INVERTIDA</in>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('<inter>1234567890</inter>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
+  mImp.Lines.Add('<mp_direcao>1</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>210</mp_esquerda><mp_largura>400</mp_largura><mp_altura>500</mp_altura><mp_espaco>25</mp_espaco></mp_configurar>');
+  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
+  mImp.Lines.Add('<e>EXPANDIDO</e>');
+  mImp.Lines.Add('<in>INVERTIDA</in>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('<inter>1234567890</inter>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
+  mImp.Lines.Add('</mp>');
+  mImp.Lines.Add('MODO PAGINA DESLIGADO');
+  mImp.Lines.Add('<mp><mp_direcao>3</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>0</mp_esquerda><mp_largura>400</mp_largura><mp_altura>500</mp_altura><mp_espaco>25</mp_espaco></mp_configurar>');
+  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
+  mImp.Lines.Add('<e>EXPANDIDO</e>');
+  mImp.Lines.Add('<in>INVERTIDA</in>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('<inter>1234567890</inter>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
+  mImp.Lines.Add('<mp_direcao>2</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>350</mp_esquerda><mp_largura>257</mp_largura><mp_altura>740</mp_altura><mp_espaco>50</mp_espaco></mp_configurar>');
+  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
+  mImp.Lines.Add('<e>EXPANDIDO</e>');
+  mImp.Lines.Add('<in>INVERTIDA</in>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('<inter>1234567890</inter>');
+  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
+  mImp.Lines.Add('</mp>');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('</corte_total>');
 end;
 
-procedure TFrPosPrinterTeste.cbHRIChange(Sender: TObject);
+procedure TFrPosPrinterTeste.Button1Click(Sender: TObject);
 begin
-  ACBrPosPrinter1.ConfigBarras.MostrarCodigo := cbHRI.Checked;
-end;
-
-procedure TFrPosPrinterTeste.cbIgnorarTagsChange(Sender: TObject);
-begin
-  ACBrPosPrinter1.IgnorarTags := cbIgnorarTags.Checked;
-end;
-
-procedure TFrPosPrinterTeste.cbTraduzirTagsChange(Sender: TObject);
-begin
-  ACBrPosPrinter1.TraduzirTags := cbTraduzirTags.Checked;
+  ACBrPosPrinter1.Imprimir('<code93>1234'+#9+'5678</code93></corte_total>');
 end;
 
 procedure TFrPosPrinterTeste.cbxModeloChange(Sender: TObject);
@@ -452,6 +554,16 @@ end;
 procedure TFrPosPrinterTeste.seBarrasAlturaChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ConfigBarras.Altura := seBarrasAltura.Value;
+end;
+
+procedure TFrPosPrinterTeste.seGavetaTempoOFFChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigGaveta.TempoOFF := seGavetaTempoOFF.Value ;
+end;
+
+procedure TFrPosPrinterTeste.seGavetaTempoONChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigGaveta.TempoON := seGavetaTempoON.Value ;
 end;
 
 procedure TFrPosPrinterTeste.seBarrasLarguraChange(Sender: TObject);
@@ -546,6 +658,7 @@ begin
   try
      INI.WriteInteger('PosPrinter','Modelo',cbxModelo.ItemIndex);
      INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
+     INI.WriteString('PosPrinter','DeviceParams',ACBrPosPrinter1.Device.ParamsString);
      INI.WriteInteger('PosPrinter','Colunas',seColunas.Value);
      INI.WriteInteger('PosPrinter','EspacoEntreLinhas',seEspLinhas.Value);
      INI.WriteInteger('PosPrinter','LinhasBuffer',seLinhasBuffer.Value);
@@ -566,6 +679,10 @@ begin
      INI.WriteInteger('Logo','KC2',seLogoKC2.Value);
      INI.WriteInteger('Logo','FatorX',seLogoFatorX.Value);
      INI.WriteInteger('Logo','FatorY',seLogoFatorY.Value);
+     INI.WriteInteger('Gaveta','Numero',seGavetaNum.Value);
+     INI.WriteInteger('Gaveta','TempoOn',seGavetaTempoON.Value);
+     INI.WriteInteger('Gaveta','TempoOff',seGavetaTempoOFF.Value);
+     INI.WriteBool('Gaveta','SinalInvertido',cbGavetaSinalInvertido.Checked);
   finally
      INI.Free ;
   end ;
@@ -583,6 +700,7 @@ begin
      cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
      cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
      cbxPortaChange(nil);
+     ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter','DeviceParams',ACBrPosPrinter1.Device.ParamsString);
      seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
      seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
      seLinhasBuffer.Value := INI.ReadInteger('PosPrinter','LinhasBuffer',ACBrPosPrinter1.LinhasBuffer);
@@ -603,6 +721,10 @@ begin
      seLogoKC2.Value := INI.ReadInteger('Logo','KC2',ACBrPosPrinter1.ConfigLogo.KeyCode2);
      seLogoFatorX.Value := INI.ReadInteger('Logo','FatorX',ACBrPosPrinter1.ConfigLogo.FatorX);
      seLogoFatorY.Value := INI.ReadInteger('Logo','FatorY',ACBrPosPrinter1.ConfigLogo.FatorY);
+     seGavetaNum.Value := INI.ReadInteger('Gaveta','Numero',1);
+     seGavetaTempoON.Value := INI.ReadInteger('Gaveta','TempoOn',ACBrPosPrinter1.ConfigGaveta.TempoON);
+     seGavetaTempoOFF.Value := INI.ReadInteger('Gaveta','TempoOff',ACBrPosPrinter1.ConfigGaveta.TempoOFF);
+     cbGavetaSinalInvertido.Checked := INI.ReadBool('Gaveta','SinalInvertido',ACBrPosPrinter1.ConfigGaveta.SinalInvertido);
   finally
      INI.Free ;
   end ;
@@ -610,10 +732,8 @@ end;
 
 procedure TFrPosPrinterTeste.bImprimirClick(Sender: TObject);
 begin
-  if bAtivar.Caption = 'Ativar' then
-    bAtivar.Click;
-
-  ACBrPosPrinter1.Imprimir(mImp.Text);
+  ACBrPosPrinter1.Buffer.Text := mImp.Lines.Text;
+  ACBrPosPrinter1.Imprimir;
 end;
 
 procedure TFrPosPrinterTeste.bImpTagsValidasClick(Sender: TObject);
@@ -652,7 +772,7 @@ end;
 
 procedure TFrPosPrinterTeste.bAtivarClick(Sender: TObject);
 begin
-  if ACBrPosPrinter1.Ativo then
+  if not btSerial.Enabled then
   begin
      ACBrPosPrinter1.Desativar ;
      bAtivar.Caption := 'Ativar' ;
@@ -669,8 +789,8 @@ begin
        ACBrPosPrinter1.LinhasEntreCupons := seLinhasPular.Value;
        ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;
        ACBrPosPrinter1.ColunasFonteNormal := seColunas.Value;
-       ACBrPosPrinter1.CortaPapel := cbCortarPapel.Checked;
        ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
+       ACBrPosPrinter1.CortaPapel := cbCortarPapel.Checked;
        ACBrPosPrinter1.TraduzirTags := cbTraduzirTags.Checked;
        ACBrPosPrinter1.IgnorarTags := cbIgnorarTags.Checked;
        ACBrPosPrinter1.PaginaDeCodigo := TACBrPosPaginaCodigo( cbxPagCodigo.ItemIndex );
@@ -706,47 +826,68 @@ begin
   Tratado := False;
 end;
 
+procedure TFrPosPrinterTeste.ACBrDeviceHookAtivar(const APort: String;
+  Params: String);
+begin
+  FElginUSB.Open(APort);
+end;
+
+procedure TFrPosPrinterTeste.ACBrDeviceHookDesativar(const APort: String);
+begin
+  FElginUSB.Close;
+end;
+
+procedure TFrPosPrinterTeste.ACBrDeviceHookEnviaString(const cmd: AnsiString);
+begin
+  FElginUSB.WriteData(cmd);
+end;
+
+procedure TFrPosPrinterTeste.ACBrDeviceHookLeString(const NumBytes,
+  ATimeOut: Integer; var Retorno: AnsiString);
+begin
+  Retorno := FElginUSB.ReadData;
+end;
+
+procedure TFrPosPrinterTeste.cbGavetaSinalInvertidoClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigGaveta.SinalInvertido := cbGavetaSinalInvertido.Checked;
+end;
+
+procedure TFrPosPrinterTeste.cbControlePortaClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
+end;
+
 procedure TFrPosPrinterTeste.cbCortarPapelClick(Sender: TObject);
 begin
   ACBrPosPrinter1.CortaPapel := cbCortarPapel.Checked;
 end;
 
-procedure TFrPosPrinterTeste.bTagsTestePageModeClick(Sender: TObject);
+procedure TFrPosPrinterTeste.cbTraduzirTagsClick(Sender: TObject);
 begin
-  mImp.Lines.Add('</zera><barra_mostrar>0</barra_mostrar><barra_largura>2</barra_largura><barra_altura>40</barra_altura>');
-  mImp.Lines.Add('<mp><mp_direcao>0</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>0</mp_esquerda><mp_largura>257</mp_largura><mp_altura>740</mp_altura><mp_espaco>50</mp_espaco></mp_configurar>');
-  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
-  mImp.Lines.Add('<e>EXPANDIDO</e>');
-  mImp.Lines.Add('<in>INVERTIDA</in>');
-  mImp.Lines.Add('');
-  mImp.Lines.Add('<inter>1234567890</inter>');
-  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
-  mImp.Lines.Add('<mp_direcao>1</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>210</mp_esquerda><mp_largura>400</mp_largura><mp_altura>500</mp_altura><mp_espaco>25</mp_espaco></mp_configurar>');
-  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
-  mImp.Lines.Add('<e>EXPANDIDO</e>');
-  mImp.Lines.Add('<in>INVERTIDA</in>');
-  mImp.Lines.Add('');
-  mImp.Lines.Add('<inter>1234567890</inter>');
-  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
-  mImp.Lines.Add('</mp>');
-  mImp.Lines.Add('MODO PAGINA DESLIGADO');
-  mImp.Lines.Add('<mp><mp_direcao>3</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>0</mp_esquerda><mp_largura>400</mp_largura><mp_altura>500</mp_altura><mp_espaco>25</mp_espaco></mp_configurar>');
-  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
-  mImp.Lines.Add('<e>EXPANDIDO</e>');
-  mImp.Lines.Add('<in>INVERTIDA</in>');
-  mImp.Lines.Add('');
-  mImp.Lines.Add('<inter>1234567890</inter>');
-  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
-  mImp.Lines.Add('<mp_direcao>2</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>350</mp_esquerda><mp_largura>257</mp_largura><mp_altura>740</mp_altura><mp_espaco>50</mp_espaco></mp_configurar>');
-  mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
-  mImp.Lines.Add('<e>EXPANDIDO</e>');
-  mImp.Lines.Add('<in>INVERTIDA</in>');
-  mImp.Lines.Add('');
-  mImp.Lines.Add('<inter>1234567890</inter>');
-  mImp.Lines.Add('<qrcode>http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html</qrcode>');
-  mImp.Lines.Add('</mp>');
-  mImp.Lines.Add('');
-  mImp.Lines.Add('</corte_total>');
+  ACBrPosPrinter1.TraduzirTags := cbTraduzirTags.Checked;
+end;
+
+procedure TFrPosPrinterTeste.cbIgnorarTagsClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.IgnorarTags := cbIgnorarTags.Checked;
+end;
+
+procedure TFrPosPrinterTeste.cbHRIClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigBarras.MostrarCodigo := cbHRI.Checked;
+end;
+
+procedure TFrPosPrinterTeste.ACBrPosPrinter1ACBrDeviceHookEnviaString(
+  const cmd: String);
+begin
+  FElginUSB.WriteData(cmd);
+end;
+
+procedure TFrPosPrinterTeste.ACBrPosPrinter1ACBrDeviceHookLeString(
+  const NumBytes, ATimeOut: Integer; var Retorno: String);
+begin
+  Retorno := FElginUSB.ReadData;  
 end;
 
 end.

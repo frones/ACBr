@@ -1,38 +1,40 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 408
-  Top = 125
-  Width = 887
-  Height = 521
+  Left = 630
+  Top = 311
+  Width = 885
+  Height = 569
+  ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 256
     Top = 0
-    Width = 615
-    Height = 482
+    Width = 613
+    Height = 530
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
-      Top = 312
-      Width = 613
-      Height = 169
+      Top = 356
+      Width = 611
+      Height = 173
       Align = alBottom
       TabOrder = 0
       object bTagFormtacaoCaracter: TButton
-        Left = 8
-        Top = 39
+        Left = 24
+        Top = 48
         Width = 183
         Height = 25
         Caption = 'Tags de Formata'#231#227'o de Caracter'
@@ -40,8 +42,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagFormtacaoCaracterClick
       end
       object bTagsAlinhamento: TButton
-        Left = 8
-        Top = 64
+        Left = 24
+        Top = 72
         Width = 183
         Height = 25
         Caption = 'Tags de Alinhamento'
@@ -49,8 +51,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagsAlinhamentoClick
       end
       object bTagQRCode: TButton
-        Left = 192
-        Top = 64
+        Left = 216
+        Top = 72
         Width = 183
         Height = 25
         Caption = 'Tags de QRCode'
@@ -58,8 +60,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagQRCodeClick
       end
       object bTagsCodBarras: TButton
-        Left = 192
-        Top = 39
+        Left = 216
+        Top = 48
         Width = 183
         Height = 25
         Caption = 'Tags de Codigo de Barras'
@@ -67,8 +69,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagsCodBarrasClick
       end
       object bTagsTesteInvalidas: TButton
-        Left = 8
-        Top = 89
+        Left = 24
+        Top = 96
         Width = 183
         Height = 25
         Caption = 'Teste de Tags Invalidas'
@@ -76,17 +78,17 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagsTesteInvalidasClick
       end
       object bTagsTestePagCodigo: TButton
-        Left = 8
-        Top = 114
+        Left = 24
+        Top = 120
         Width = 183
         Height = 25
-        Caption = 'Teste de p'#225'gina de c'#243'digo'
+        Caption = 'Teste de P'#225'gina de C'#243'digo'
         TabOrder = 3
         OnClick = bTagsTestePagCodigoClick
       end
       object bImpLinhaALinha: TButton
-        Left = 192
-        Top = 113
+        Left = 216
+        Top = 120
         Width = 183
         Height = 25
         Caption = 'Teste Impress'#227'o Linha a Linha'
@@ -94,46 +96,46 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bImpLinhaALinhaClick
       end
       object bImpTagsValidas: TButton
-        Left = 392
-        Top = 112
+        Left = 408
+        Top = 48
         Width = 183
         Height = 25
         Caption = 'Ajuda - Tags Validas'
-        TabOrder = 10
+        TabOrder = 8
         OnClick = bImpTagsValidasClick
       end
       object bLerStatus: TButton
-        Left = 392
-        Top = 64
+        Left = 408
+        Top = 120
         Width = 183
         Height = 25
         Caption = 'Leitura de Status'
-        TabOrder = 9
+        TabOrder = 11
         OnClick = bLerStatusClick
       end
       object bLerInfo: TButton
-        Left = 392
-        Top = 40
+        Left = 408
+        Top = 96
         Width = 183
         Height = 25
         Caption = 'Leitura de Informa'#231#245'es'
-        TabOrder = 8
+        TabOrder = 10
         OnClick = bLerInfoClick
       end
       object Panel4: TPanel
         Left = 1
         Top = 1
-        Width = 611
+        Width = 609
         Height = 39
         Align = alTop
         BevelInner = bvRaised
         BevelOuter = bvLowered
-        TabOrder = 11
+        TabOrder = 12
         DesignSize = (
-          611
+          609
           39)
         object bLimpar: TBitBtn
-          Left = 430
+          Left = 420
           Top = 7
           Width = 83
           Height = 26
@@ -178,7 +180,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00}
         end
         object bImprimir: TBitBtn
-          Left = 521
+          Left = 511
           Top = 7
           Width = 92
           Height = 26
@@ -222,31 +224,49 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             0000000000000000000000000000000000000000000000000000000000000000
             0000000000000000000000000000000000000000000000000000}
         end
+        object Button1: TButton
+          Left = 64
+          Top = 8
+          Width = 75
+          Height = 25
+          Caption = 'Senha'
+          TabOrder = 2
+          OnClick = Button1Click
+        end
       end
       object bTagLogo: TButton
-        Left = 192
-        Top = 89
+        Left = 216
+        Top = 96
         Width = 183
         Height = 25
         Caption = 'Tags de Logotipo'
         TabOrder = 6
         OnClick = bTagLogoClick
       end
+      object bTagGaveta: TButton
+        Left = 408
+        Top = 72
+        Width = 183
+        Height = 25
+        Caption = 'Tag de Gaveta'
+        TabOrder = 9
+        OnClick = bTagGavetaClick
+      end
       object bTagsTestePageMode: TButton
-        Left = 8
-        Top = 139
+        Left = 24
+        Top = 144
         Width = 183
         Height = 25
         Caption = 'Teste de Page Mode'
-        TabOrder = 12
+        TabOrder = 13
         OnClick = bTagsTestePageModeClick
       end
     end
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 613
-      Height = 311
+      Width = 611
+      Height = 355
       ActivePage = tsImprimir
       Align = alClient
       TabOrder = 1
@@ -255,10 +275,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mImp: TMemo
           Left = 0
           Top = 0
-          Width = 605
-          Height = 283
+          Width = 603
+          Height = 327
           Align = alClient
           TabOrder = 0
+          WordWrap = False
         end
       end
       object tsLog: TTabSheet
@@ -266,8 +287,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mLog: TMemo
           Left = 0
           Top = 0
-          Width = 613
-          Height = 316
+          Width = 603
+          Height = 327
           Align = alClient
           TabOrder = 0
         end
@@ -278,7 +299,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     Left = 0
     Top = 0
     Width = 256
-    Height = 482
+    Height = 530
     Align = alLeft
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -293,26 +314,26 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         254
         247)
       object Label1: TLabel
-        Left = 12
-        Top = 13
-        Width = 34
+        Left = 16
+        Top = 16
+        Width = 35
         Height = 13
         Caption = 'Modelo'
         Color = clBtnFace
         ParentColor = False
       end
       object Label4: TLabel
-        Left = 12
-        Top = 60
-        Width = 26
+        Left = 16
+        Top = 56
+        Width = 25
         Height = 13
         Caption = 'Porta'
         Color = clBtnFace
         ParentColor = False
       end
       object Label2: TLabel
-        Left = 11
-        Top = 108
+        Left = 15
+        Top = 104
         Width = 38
         Height = 13
         Caption = 'Colunas'
@@ -320,26 +341,26 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         ParentColor = False
       end
       object Label3: TLabel
-        Left = 68
-        Top = 108
-        Width = 39
+        Left = 72
+        Top = 104
+        Width = 41
         Height = 13
         Caption = 'Espa'#231'os'
         Color = clBtnFace
         ParentColor = False
       end
       object Label5: TLabel
-        Left = 123
-        Top = 204
-        Width = 53
+        Left = 127
+        Top = 200
+        Width = 54
         Height = 13
         Caption = 'Pag.codigo'
         Color = clBtnFace
         ParentColor = False
       end
       object btSerial: TSpeedButton
-        Left = 217
-        Top = 80
+        Left = 220
+        Top = 72
         Width = 23
         Height = 22
         Glyph.Data = {
@@ -372,18 +393,18 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = btSerialClick
       end
       object Label6: TLabel
-        Left = 127
-        Top = 108
-        Width = 30
+        Left = 131
+        Top = 104
+        Width = 28
         Height = 13
         Caption = 'Buffer'
         Color = clBtnFace
         ParentColor = False
       end
       object Label9: TLabel
-        Left = 126
-        Top = 156
-        Width = 42
+        Left = 132
+        Top = 152
+        Width = 40
         Height = 13
         Alignment = taRightJustify
         Caption = 'Arq.Log:'
@@ -391,8 +412,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         ParentColor = False
       end
       object SbArqLog: TSpeedButton
-        Left = 215
-        Top = 171
+        Left = 220
+        Top = 168
         Width = 24
         Height = 22
         Hint = 'Abre Arquivo de Log'
@@ -400,37 +421,39 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = SbArqLogClick
       end
       object Label7: TLabel
-        Left = 188
-        Top = 108
-        Width = 57
+        Left = 192
+        Top = 104
+        Width = 58
         Height = 13
         Caption = 'Linhas Pular'
         Color = clBtnFace
         ParentColor = False
       end
       object cbTraduzirTags: TCheckBox
-        Left = 11
-        Top = 201
+        Left = 15
+        Top = 197
         Width = 88
         Height = 19
-        Hint = 'Traduz as Tags de Formata'#195#167#195#163'o e Cod.Barras'
+        Hint = 'Traduz as Tags de Formata'#231#227'o e Cod.Barras'
         Caption = 'TraduzirTags'
         Checked = True
         State = cbChecked
         TabOrder = 0
+        OnClick = cbTraduzirTagsClick
       end
       object cbIgnorarTags: TCheckBox
-        Left = 11
-        Top = 220
+        Left = 15
+        Top = 216
         Width = 83
         Height = 19
-        Hint = 'N'#195#163'o processa as Tags, imprime-as como texto normal'
+        Hint = 'N'#227'o processa as Tags, imprime-as como texto normal'
         Caption = 'IgnorarTags'
         TabOrder = 1
+        OnClick = cbIgnorarTagsClick
       end
       object cbxModelo: TComboBox
-        Left = 12
-        Top = 36
+        Left = 16
+        Top = 32
         Width = 145
         Height = 21
         Style = csDropDownList
@@ -439,8 +462,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = cbxModeloChange
       end
       object cbxPorta: TComboBox
-        Left = 12
-        Top = 76
+        Left = 16
+        Top = 72
         Width = 192
         Height = 21
         ItemHeight = 13
@@ -448,8 +471,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = cbxPortaChange
       end
       object seColunas: TSpinEdit
-        Left = 11
-        Top = 124
+        Left = 15
+        Top = 120
         Width = 41
         Height = 22
         MaxValue = 999
@@ -459,19 +482,20 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seColunasChange
       end
       object cbControlePorta: TCheckBox
-        Left = 11
-        Top = 161
+        Left = 15
+        Top = 158
         Width = 97
         Height = 19
         Hint = 
           'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
-          'ta Serial ap'#195#179's o envio'
+          'ta Serial ap'#243's o envio'
         Caption = 'Controle Porta'
         TabOrder = 5
+        OnClick = cbControlePortaClick
       end
       object seEspLinhas: TSpinEdit
-        Left = 68
-        Top = 124
+        Left = 72
+        Top = 120
         Width = 41
         Height = 22
         MaxValue = 255
@@ -481,19 +505,19 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seEspLinhasChange
       end
       object cbxPagCodigo: TComboBox
-        Left = 123
-        Top = 220
+        Left = 127
+        Top = 216
         Width = 117
         Height = 21
-        Hint = 'Pagina de c'#195#179'digo usada pela Impressora POS'
+        Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
         Style = csDropDownList
         ItemHeight = 13
         TabOrder = 7
         OnChange = cbxPagCodigoChange
       end
       object seLinhasBuffer: TSpinEdit
-        Left = 127
-        Top = 124
+        Left = 131
+        Top = 120
         Width = 41
         Height = 22
         MaxValue = 255
@@ -503,8 +527,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seLinhasBufferChange
       end
       object edLog: TEdit
-        Left = 125
-        Top = 172
+        Left = 129
+        Top = 168
         Width = 84
         Height = 21
         Cursor = crIBeam
@@ -513,8 +537,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Text = 'PosPrinter.log'
       end
       object bAtivar: TBitBtn
-        Left = 171
-        Top = 20
+        Left = 175
+        Top = 16
         Width = 67
         Height = 43
         Anchors = [akTop, akRight]
@@ -559,8 +583,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Layout = blGlyphTop
       end
       object seLinhasPular: TSpinEdit
-        Left = 188
-        Top = 124
+        Left = 192
+        Top = 120
         Width = 41
         Height = 22
         MaxValue = 255
@@ -570,13 +594,13 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seLinhasPularChange
       end
       object cbCortarPapel: TCheckBox
-        Left = 11
-        Top = 181
-        Width = 97
+        Left = 15
+        Top = 178
+        Width = 85
         Height = 19
         Hint = 
           'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
-          'ta Serial ap'#195#179's o envio'
+          'ta Serial ap'#243's o envio'
         Caption = 'Cortar Papel'
         Checked = True
         State = cbChecked
@@ -593,9 +617,9 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       Caption = 'Cod.Barras'
       TabOrder = 1
       object Label8: TLabel
-        Left = 12
-        Top = 15
-        Width = 37
+        Left = 16
+        Top = 16
+        Width = 36
         Height = 13
         Caption = 'Largura'
         Color = clBtnFace
@@ -603,16 +627,16 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object Label10: TLabel
         Left = 72
-        Top = 0
-        Width = 29
+        Top = 16
+        Width = 27
         Height = 13
         Caption = 'Altura'
         Color = clBtnFace
         ParentColor = False
       end
       object seBarrasLargura: TSpinEdit
-        Left = 12
-        Top = 31
+        Left = 16
+        Top = 32
         Width = 41
         Height = 22
         MaxValue = 5
@@ -622,8 +646,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seBarrasLarguraChange
       end
       object seBarrasAltura: TSpinEdit
-        Left = 68
-        Top = 31
+        Left = 72
+        Top = 32
         Width = 41
         Height = 22
         MaxValue = 255
@@ -633,15 +657,16 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seBarrasAlturaChange
       end
       object cbHRI: TCheckBox
-        Left = 132
-        Top = 31
+        Left = 136
+        Top = 32
         Width = 94
         Height = 19
         Hint = 
           'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
-          'ta Serial ap'#195#179's o envio'
+          'ta Serial ap'#243's o envio'
         Caption = 'Exibe Numero'
         TabOrder = 2
+        OnClick = cbHRIClick
       end
     end
     object gbCodBarrasConfig1: TGroupBox
@@ -653,35 +678,35 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       Caption = 'QRCode'
       TabOrder = 2
       object Label11: TLabel
-        Left = 12
-        Top = 20
-        Width = 20
+        Left = 16
+        Top = 16
+        Width = 21
         Height = 13
         Caption = 'Tipo'
         Color = clBtnFace
         ParentColor = False
       end
       object Label12: TLabel
-        Left = 68
-        Top = 20
-        Width = 64
+        Left = 72
+        Top = 16
+        Width = 63
         Height = 13
         Caption = 'Largura Mod.'
         Color = clBtnFace
         ParentColor = False
       end
       object Label13: TLabel
-        Left = 163
-        Top = 20
-        Width = 49
+        Left = 167
+        Top = 16
+        Width = 48
         Height = 13
         Caption = 'ErrorLevel'
         Color = clBtnFace
         ParentColor = False
       end
       object seQRCodeTipo: TSpinEdit
-        Left = 12
-        Top = 36
+        Left = 16
+        Top = 32
         Width = 41
         Height = 22
         MaxValue = 2
@@ -691,8 +716,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seQRCodeTipoChange
       end
       object seQRCodeLarguraModulo: TSpinEdit
-        Left = 84
-        Top = 36
+        Left = 88
+        Top = 32
         Width = 41
         Height = 22
         MaxValue = 16
@@ -702,8 +727,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seQRCodeLarguraModuloChange
       end
       object seQRCodeErrorLevel: TSpinEdit
-        Left = 164
-        Top = 36
+        Left = 168
+        Top = 32
         Width = 41
         Height = 22
         MaxValue = 3
@@ -717,71 +742,71 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       Left = 1
       Top = 376
       Width = 254
-      Height = 66
+      Height = 64
       Align = alTop
       Caption = 'LogoTipo'
       TabOrder = 3
       object Label14: TLabel
-        Left = 12
-        Top = 20
-        Width = 19
+        Left = 16
+        Top = 16
+        Width = 20
         Height = 13
         Caption = 'KC1'
         Color = clBtnFace
         ParentColor = False
       end
       object Label15: TLabel
-        Left = 68
-        Top = 20
-        Width = 19
+        Left = 72
+        Top = 16
+        Width = 20
         Height = 13
         Caption = 'KC2'
         Color = clBtnFace
         ParentColor = False
       end
       object Label16: TLabel
-        Left = 124
-        Top = 20
-        Width = 32
+        Left = 128
+        Top = 16
+        Width = 31
         Height = 13
         Caption = 'FatorX'
         Color = clBtnFace
         ParentColor = False
       end
       object Label17: TLabel
-        Left = 181
-        Top = 20
-        Width = 32
+        Left = 185
+        Top = 16
+        Width = 31
         Height = 13
         Caption = 'FatorY'
         Color = clBtnFace
         ParentColor = False
       end
       object seLogoKC1: TSpinEdit
-        Left = 12
-        Top = 36
+        Left = 16
+        Top = 32
         Width = 41
         Height = 22
         MaxValue = 126
-        MinValue = 32
+        MinValue = 0
         TabOrder = 0
         Value = 32
         OnChange = seLogoKC1Change
       end
       object seLogoKC2: TSpinEdit
-        Left = 68
-        Top = 36
+        Left = 72
+        Top = 32
         Width = 41
         Height = 22
         MaxValue = 126
-        MinValue = 32
+        MinValue = 0
         TabOrder = 1
         Value = 32
         OnChange = seLogoKC2Change
       end
       object seLogoFatorX: TSpinEdit
-        Left = 125
-        Top = 36
+        Left = 129
+        Top = 32
         Width = 41
         Height = 22
         MaxValue = 4
@@ -791,8 +816,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seLogoFatorXChange
       end
       object seLogoFatorY: TSpinEdit
-        Left = 180
-        Top = 36
+        Left = 184
+        Top = 32
         Width = 41
         Height = 22
         MaxValue = 4
@@ -802,9 +827,94 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seLogoFatorYChange
       end
     end
+    object gbGavetaConfig: TGroupBox
+      Left = 1
+      Top = 440
+      Width = 254
+      Height = 64
+      Align = alTop
+      Caption = 'Gaveta'
+      TabOrder = 4
+      object Label18: TLabel
+        Left = 63
+        Top = 16
+        Width = 16
+        Height = 13
+        Caption = 'ON'
+        Color = clBtnFace
+        ParentColor = False
+      end
+      object Label19: TLabel
+        Left = 112
+        Top = 16
+        Width = 20
+        Height = 13
+        Caption = 'OFF'
+        Color = clBtnFace
+        ParentColor = False
+      end
+      object Label20: TLabel
+        Left = 16
+        Top = 16
+        Width = 35
+        Height = 13
+        Caption = 'Gaveta'
+        Color = clBtnFace
+        ParentColor = False
+      end
+      object seGavetaTempoON: TSpinEdit
+        Left = 63
+        Top = 32
+        Width = 41
+        Height = 22
+        MaxValue = 250
+        MinValue = 50
+        TabOrder = 1
+        Value = 50
+        OnChange = seGavetaTempoONChange
+      end
+      object cbGavetaSinalInvertido: TCheckBox
+        Left = 167
+        Top = 32
+        Width = 67
+        Height = 19
+        Hint = 
+          'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
+          'ta Serial ap'#243's o envio'
+        Caption = 'Invertido'
+        TabOrder = 3
+        OnClick = cbGavetaSinalInvertidoClick
+      end
+      object seGavetaTempoOFF: TSpinEdit
+        Left = 112
+        Top = 31
+        Width = 41
+        Height = 22
+        MaxValue = 250
+        MinValue = 50
+        TabOrder = 2
+        Value = 200
+        OnChange = seGavetaTempoOFFChange
+      end
+      object seGavetaNum: TSpinEdit
+        Left = 16
+        Top = 32
+        Width = 41
+        Height = 22
+        MaxValue = 2
+        MinValue = 1
+        TabOrder = 0
+        Value = 1
+      end
+    end
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
+    Device.NomeDocumento = 'ACBrPorPrinterDemo'
+    Device.HookAtivar = ACBrDeviceHookAtivar
+    Device.HookDesativar = ACBrDeviceHookDesativar
+    Device.HookEnviaString = ACBrPosPrinter1ACBrDeviceHookEnviaString
+    Device.HookLeString = ACBrPosPrinter1ACBrDeviceHookLeString
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
@@ -814,6 +924,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
     CortaPapel = False
+    VerificarImpressora = True
     OnGravarLog = ACBrPosPrinter1GravarLog
     Left = 280
     Top = 256

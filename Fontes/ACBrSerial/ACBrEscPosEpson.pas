@@ -487,7 +487,7 @@ begin
   Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 500, True );
   AddInfo('Serial', Ret);
 
-  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 500, True );
+  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 500, False );
   if Length(Ret) > 0 then
   begin
     B := Ord(Ret[1]);

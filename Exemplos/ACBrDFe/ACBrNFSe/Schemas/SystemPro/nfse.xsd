@@ -419,6 +419,10 @@
 				minOccurs="0" maxOccurs="1" />
 			<xsd:element name="ValorIss" type="tsValor" minOccurs="0"
 				maxOccurs="1" />
+			<xsd:element name="ValorTTS" type="tsValor" minOccurs="0"
+				maxOccurs="1" />
+			<xsd:element name="QuantDiarias" type="tsValor" minOccurs="0"
+				maxOccurs="1" />
 			<xsd:element name="Aliquota" type="tsAliquota" minOccurs="0"
 				maxOccurs="1" />
 			<xsd:element name="DescontoIncondicionado" type="tsValor"

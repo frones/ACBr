@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2018
+-- ACBrBPeWebServices --
+[*] Alteração para uma correta leitura de retorno, nome do grupo diferente do
+    padrão.
+   Por: Italo Jurisato Junior
+
 13/07/2018
 -- ACBrBPeServicos --
 [*] Correção na URL de homologação do QR-Code de MG.

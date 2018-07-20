@@ -727,7 +727,7 @@ var
   AProcBPe: TProcBPe;
   SalvarXML: Boolean;
 begin
-  FPRetWS := SeparaDadosArray(['bpeResultMsg'], FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeRecepcaoResult'], FPRetornoWS );
 
   FBPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FBPeRetorno.LerXml;

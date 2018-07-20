@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  strutils, ExtCtrls, Buttons, Spin, ComCtrls, ACBrPosPrinter, ACBrBase;
+  strutils, ExtCtrls, Buttons, Spin, ComCtrls, ACBrPosPrinter, ACBrBase,
+  ACBrEscPosHookElginDLL, ACBrDevice;
 
 type
 
@@ -93,6 +94,11 @@ type
     seGavetaNum: TSpinEdit;
     tsImprimir: TTabSheet;
     tsLog: TTabSheet;
+    procedure ACBrDeviceHookAtivar(const APort: String; Params: String);
+    procedure ACBrDeviceHookDesativar(const APort: String);
+    procedure ACBrDeviceHookEnviaString(const cmd: AnsiString);
+    procedure ACBrDeviceHookLeString(const NumBytes, ATimeOut: Integer;
+      var Retorno: AnsiString);
     procedure ACBrPosPrinter1GravarLog(const ALogLine: String;
       var Tratado: Boolean);
     procedure bAtivarClick(Sender: TObject);
@@ -121,6 +127,7 @@ type
     procedure cbxModeloChange(Sender: TObject);
     procedure cbxPagCodigoChange(Sender: TObject);
     procedure cbxPortaChange(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure seBarrasAlturaChange(Sender: TObject);
     procedure seGavetaTempoOFFChange(Sender: TObject);
@@ -141,9 +148,10 @@ type
     procedure seQRCodeTipoChange(Sender: TObject);
   private
     { private declarations }
+    FElginUSB : TElginUSBPrinter;
+
     Procedure GravarINI ;
     Procedure LerINI ;
-
   public
     { public declarations }
   end;
@@ -168,6 +176,8 @@ var
   J: TACBrPosPaginaCodigo;
   K: Integer;
 begin
+  FElginUSB := TElginUSBPrinter.Create;
+
   cbxModelo.Items.Clear ;
   For I := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
      cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(I) ) ) ;
@@ -198,6 +208,10 @@ begin
   LerINI;
 end;
 
+procedure TFrPosPrinterTeste.FormDestroy(Sender: TObject);
+begin
+  FElginUSB.Free;
+end;
 
 procedure TFrPosPrinterTeste.bLimparClick(Sender: TObject);
 begin
@@ -742,9 +756,6 @@ end;
 
 procedure TFrPosPrinterTeste.bImprimirClick(Sender: TObject);
 begin
-  if bAtivar.Caption = 'Ativar' then
-    bAtivar.Click;
-
   ACBrPosPrinter1.Buffer.Text := mImp.Lines.Text;
   ACBrPosPrinter1.Imprimir;
 end;
@@ -757,9 +768,6 @@ end;
 
 procedure TFrPosPrinterTeste.bLerInfoClick(Sender: TObject);
 begin
-  if bAtivar.Caption = 'Ativar' then
-    bAtivar.Click;
-
   mImp.Lines.Add( ACBrPosPrinter1.LerInfoImpressora );
 end;
 
@@ -769,9 +777,6 @@ var
   i: TACBrPosTipoStatus;
   AStr: String;
 begin
-  if bAtivar.Caption = 'Ativar' then
-    bAtivar.Click;
-
   Status := ACBrPosPrinter1.LerStatusImpressora;
 
   if Status = [] then
@@ -843,6 +848,28 @@ procedure TFrPosPrinterTeste.ACBrPosPrinter1GravarLog(const ALogLine: String;
 begin
   mLog.Lines.Add(ALogLine);
   Tratado := False;
+end;
+
+procedure TFrPosPrinterTeste.ACBrDeviceHookAtivar(const APort: String;
+  Params: String);
+begin
+  FElginUSB.Open(APort);
+end;
+
+procedure TFrPosPrinterTeste.ACBrDeviceHookDesativar(const APort: String);
+begin
+  FElginUSB.Close;
+end;
+
+procedure TFrPosPrinterTeste.ACBrDeviceHookEnviaString(const cmd: AnsiString);
+begin
+  FElginUSB.WriteData(cmd);
+end;
+
+procedure TFrPosPrinterTeste.ACBrDeviceHookLeString(const NumBytes,
+  ATimeOut: Integer; var Retorno: AnsiString);
+begin
+  Retorno := FElginUSB.ReadData;
 end;
 
 end.

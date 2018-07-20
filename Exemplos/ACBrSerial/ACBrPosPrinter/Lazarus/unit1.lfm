@@ -1,33 +1,34 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 354
-  Height = 542
-  Top = 106
-  Width = 841
+  Left = 637
+  Height = 530
+  Top = 311
+  Width = 869
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
-  ClientHeight = 542
-  ClientWidth = 841
+  ClientHeight = 530
+  ClientWidth = 869
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '1.8.4.0'
   object Panel1: TPanel
     Left = 256
-    Height = 542
+    Height = 530
     Top = 0
-    Width = 585
+    Width = 613
     Align = alClient
     Caption = 'Panel1'
-    ClientHeight = 542
-    ClientWidth = 585
+    ClientHeight = 530
+    ClientWidth = 613
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
       Height = 173
-      Top = 368
-      Width = 583
+      Top = 356
+      Width = 611
       Align = alBottom
       ClientHeight = 173
-      ClientWidth = 583
+      ClientWidth = 611
       TabOrder = 0
       object bTagFormtacaoCaracter: TButton
         Left = 8
@@ -123,15 +124,15 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 1
         Height = 39
         Top = 1
-        Width = 581
+        Width = 609
         Align = alTop
         BevelInner = bvRaised
         BevelOuter = bvLowered
         ClientHeight = 39
-        ClientWidth = 581
+        ClientWidth = 609
         TabOrder = 12
         object bLimpar: TBitBtn
-          Left = 392
+          Left = 420
           Height = 26
           Top = 7
           Width = 83
@@ -178,7 +179,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           TabOrder = 0
         end
         object bImprimir: TBitBtn
-          Left = 483
+          Left = 511
           Height = 26
           Top = 7
           Width = 92
@@ -264,22 +265,22 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     end
     object PageControl1: TPageControl
       Left = 1
-      Height = 367
+      Height = 355
       Top = 1
-      Width = 583
+      Width = 611
       ActivePage = tsImprimir
       Align = alClient
       TabIndex = 0
       TabOrder = 1
       object tsImprimir: TTabSheet
         Caption = 'Texto a Imprimir'
-        ClientHeight = 339
-        ClientWidth = 575
+        ClientHeight = 327
+        ClientWidth = 603
         object mImp: TMemo
           Left = 0
-          Height = 339
+          Height = 327
           Top = 0
-          Width = 575
+          Width = 603
           Align = alClient
           ScrollBars = ssAutoBoth
           TabOrder = 0
@@ -304,11 +305,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   end
   object Panel2: TPanel
     Left = 0
-    Height = 542
+    Height = 530
     Top = 0
     Width = 256
     Align = alLeft
-    ClientHeight = 542
+    ClientHeight = 530
     ClientWidth = 256
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -888,6 +889,10 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
     Device.NomeDocumento = 'ACBrPorPrinterDemo'
+    Device.HookAtivar = ACBrDeviceHookAtivar
+    Device.HookDesativar = ACBrDeviceHookDesativar
+    Device.HookEnviaString = ACBrDeviceHookEnviaString
+    Device.HookLeString = ACBrDeviceHookLeString
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0

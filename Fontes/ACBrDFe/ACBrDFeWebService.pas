@@ -40,11 +40,14 @@ unit ACBrDFeWebService;
 
 interface
 
-uses Classes, SysUtils,
+uses Classes, SysUtils, strutils,
   {$IFNDEF NOGUI}
    {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
   {$ENDIF}
   ACBrDFeConfiguracoes, ACBrIntegrador, ACBrDFe, pcnGerador;
+
+const
+  CErroSemResposta = 'Erro ao obter resposta do webservice.';
 
 type
 
@@ -89,6 +92,7 @@ type
     function TratarResposta: Boolean; virtual;
     procedure SalvarResposta; virtual;
     procedure FinalizarServico; virtual;
+    procedure VerificarSemResposta; virtual;
 
     function GetUrlWsd: String; virtual;
 
@@ -529,6 +533,14 @@ procedure TDFeWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }
 
+end;
+
+procedure TDFeWebService.VerificarSemResposta;
+begin
+  { Sobrescrever apenas se necessário }
+  if EstaVazio(FPRetWS) then
+    raise EACBrDFeException.Create( CErroSemResposta +
+          ifthen(NaoEstaVazio(FPRetornoWS),sLineBreak+FPRetornoWS,''));
 end;
 
 function TDFeWebService.GetUrlWsd: String;

@@ -141,8 +141,6 @@ implementation
 uses
   ACBrUtil;
 
-function PrtPrinterCreatorW(printer: PPointer;model:ansistring): Integer; cdecl ; external 'HprtPrinter.dll';
-
 procedure FunctionDetectLib(FuncName : String ;
   var LibPointer : Pointer) ;
 var

@@ -143,7 +143,9 @@ begin
   FConfigurado := False;
 
   { Lendo as informações da Impressora, para auto configuração das colunas }
-  if (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
+  if (fpPosPrinter.Device.IsSerialPort or
+      fpPosPrinter.Device.IsTCPPort or
+      fpPosPrinter.Device.IsDLLPort) then
   begin
     SL := TStringList.Create;
     try
@@ -285,9 +287,6 @@ procedure TACBrEscDaruma.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
   B: Byte;
 begin
-  if not (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
-    exit;
-
   try
     B := Ord(fpPosPrinter.TxRx( ENQ )[1]);
     if TestBit(B, 0) then

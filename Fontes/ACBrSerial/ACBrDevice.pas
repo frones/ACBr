@@ -168,6 +168,8 @@ TACBrAlinhamento = (alDireita, alEsquerda, alCentro);
 
 TACBrECFCHQEstado = (chqIdle, chqPosicione, chqImprimindo, chqFimImpressao, chqRetire, chqAutenticacao);
 
+TACBrDeviceHookAtivar = procedure(const APort: String; Params: String) of object;
+TACBrDeviceHookDesativar = procedure(const APort: String) of object;
 TACBrDeviceHookEnviaString = procedure(const cmd: AnsiString) of object;
 TACBrDeviceHookLeString = procedure(const NumBytes, ATimeOut: Integer; var Retorno: AnsiString) of object;
 
@@ -272,6 +274,8 @@ TACBrDeviceType = (dtFile, dtSerial, dtParallel, dtTCP, dtRawPrinter, dtHook);
 TACBrDevice = class( TComponent )
   private
     fsHardFlow: Boolean;
+    fsHookAtivar: TACBrDeviceHookAtivar;
+    fsHookDesativar: TACBrDeviceHookDesativar;
     fsHookEnviaString: TACBrDeviceHookEnviaString;
     fsHookLeString: TACBrDeviceHookLeString;
     fsSoftFlow: Boolean;
@@ -410,6 +414,10 @@ TACBrDevice = class( TComponent )
         write fProcessMessages default True ;
 
      property OnStatus : THookSerialStatus read GetOnStatus write SetOnStatus ;
+     property HookAtivar : TACBrDeviceHookAtivar read fsHookAtivar
+        write fsHookAtivar;
+     property HookDesativar : TACBrDeviceHookDesativar read fsHookDesativar
+        write fsHookDesativar;
      property HookEnviaString : TACBrDeviceHookEnviaString read fsHookEnviaString
         write fsHookEnviaString;
      property HookLeString : TACBrDeviceHookLeString read fsHookLeString
@@ -690,6 +698,8 @@ begin
 
   fProcessMessages := True ;
 
+  fsHookAtivar      := nil;
+  fsHookDesativar   := nil;
   fsHookEnviaString := nil;
   fsHookLeString    := nil;
   fsNomeDocumento   := '';
@@ -747,6 +757,10 @@ begin
     DoException( Exception.Create(ACBrStr(cACBrDeviceAtivarPortaException)) );
 
   case fsDeviceType of
+    dtHook:
+      if Assigned(fsHookAtivar) then
+        fsHookAtivar( fsPorta, DeviceToString(False));
+
     dtTCP:
       begin
         ip := copy(Porta,5 , 255);  //     "TCP:ip_maquina:porta"
@@ -870,7 +884,14 @@ begin
 
   GravaLog('Desativar');
 
-  TryCloseSocket;
+  if (fsDeviceType = dtHook) then
+  begin
+    if Assigned(fsHookDesativar) then
+      fsHookDesativar(fsPorta);
+  end
+  else
+    TryCloseSocket;
+
   fsAtivo := false ;
 end;
 
@@ -1590,23 +1611,25 @@ end;
 function TACBrDevice.LeString(ATimeOut: Integer; NumBytes: Integer;
   Terminador: AnsiString): String;
 var
-   Buffer: AnsiString;
-   Fim: TDateTime;
+  Buffer: AnsiString;
+  Fim: TDateTime;
+  LenTer, LenBuf: Integer;
 begin
   if TemArqLog then
     GravaLog('LeString('+IntToStr(ATimeOut)+', '+IntToStr(NumBytes)+', '+Terminador +')', True);
 
   Result := '';
+  LenTer := Length(Terminador);
 
   if ATimeOut = 0 then
-     ATimeOut := Self.TimeOut;
+    ATimeOut := Self.TimeOut;
 
   case fsDeviceType of
     dtTCP:
       begin
-        if NumBytes > 0 then
+        if (NumBytes > 0) then
           Result := Socket.RecvBufferStr( NumBytes, ATimeOut)
-        else if Terminador <> '' then
+        else if (LenTer > 0) then
           Result := Socket.RecvTerminated( ATimeOut, Terminador)
         else
           Result := Socket.RecvPacket( ATimeOut );
@@ -1614,9 +1637,9 @@ begin
 
     dtSerial:
       begin
-        if NumBytes > 0 then
+        if (NumBytes > 0) then
           Result := Serial.RecvBufferStr( NumBytes, ATimeOut)
-        else if Terminador <> '' then
+        else if (LenTer > 0) then
           Result := Serial.RecvTerminated( ATimeOut, Terminador)
         else
           Result := Serial.RecvPacket( ATimeOut );
@@ -1626,12 +1649,23 @@ begin
       begin
         if Assigned( HookLeString ) then
         begin
+          NumBytes := max(NumBytes,1);
           Fim := IncMilliSecond( Now, ATimeOut );
           repeat
             Buffer := '';
-            HookLeString( max(NumBytes,1), ATimeOut, Buffer );
+            HookLeString( NumBytes, ATimeOut, Buffer );
+            LenBuf := Length(Buffer);
+            if (LenTer > 0) and (LenBuf > 0) then
+            begin
+              if (RightStr(Buffer, LenTer) = Terminador) then
+              begin
+                SetLength(Buffer, (LenBuf-LenTer));
+                NumBytes := 0; // força saida
+              end;
+            end;
+
             Result := Result + Buffer;
-          until (now > Fim) or ( (NumBytes > 0) and (Length(Result) >= NumBytes) );
+          until (Length(Result) >= NumBytes) or (now > Fim) ;
         end;
       end;
   end;

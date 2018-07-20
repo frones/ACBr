@@ -401,10 +401,10 @@ begin
       CharDir := #0;
     end;
 
-    Result := ESC + 'T' + CharDir +                 // Ajusta a Direcao
+    Result := ESC + 'T' + CharDir +                  // Ajusta a Direcao
               ComandoEspacoEntreLinhas(EspacoEntreLinhas) +
               {GS + '$' + AnsiChr(0)+ AnsiChr(0) +}  // Ajusta posição Vertical Absoluta em 0
-              ESC + 'W' + IntToLEStr(Esquerda) +    // Ajusta a Regiao
+              ESC + 'W' + IntToLEStr(Esquerda) +     // Ajusta a Regiao
                           IntToLEStr(Topo) +
                           IntToLEStr(Largura) +
                           IntToLEStr(Altura);
@@ -414,38 +414,48 @@ end;
 procedure TACBrEscPosEpson.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
   B: Byte;
+  C: String;
 begin
-  if not (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
-    exit;
-
   try
     fpPosPrinter.Ativo := True;
 
-    B := Ord(fpPosPrinter.TxRx( DLE + EOT + #1 )[1]);
-    if not TestBit(B, 2) then
-      AStatus := AStatus + [stGavetaAberta];
-    if TestBit(B, 3) then
-      AStatus := AStatus + [stOffLine];
-    if TestBit(B, 5) then
-      AStatus := AStatus + [stErro];  // Waiting for online recovery
-    if TestBit(B, 6) then
-      AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
+    C := fpPosPrinter.TxRx( DLE + EOT + #1 );
+    if (Length(C) > 0) then
+    begin
+      B := Ord(C[1]);
+      if not TestBit(B, 2) then
+        AStatus := AStatus + [stGavetaAberta];
+      if TestBit(B, 3) then
+        AStatus := AStatus + [stOffLine];
+      if TestBit(B, 5) then
+        AStatus := AStatus + [stErro];  // Waiting for online recovery
+      if TestBit(B, 6) then
+        AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
+    end;
 
-    B := Ord(fpPosPrinter.TxRx( DLE + EOT + #2 )[1]);
-    if TestBit(B, 2) then
-      AStatus := AStatus + [stTampaAberta];
-    if TestBit(B, 3) then
-      AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
-    if TestBit(B, 5) then
-      AStatus := AStatus + [stSemPapel];
-    if TestBit(B, 6) then
-      AStatus := AStatus + [stErro];
+    C := fpPosPrinter.TxRx( DLE + EOT + #2 );
+    if (Length(C) > 0) then
+    begin
+      B := Ord(C[1]);
+      if TestBit(B, 2) then
+        AStatus := AStatus + [stTampaAberta];
+      if TestBit(B, 3) then
+        AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
+      if TestBit(B, 5) then
+        AStatus := AStatus + [stSemPapel];
+      if TestBit(B, 6) then
+        AStatus := AStatus + [stErro];
+    end;
 
-    B := Ord(fpPosPrinter.TxRx( DLE + EOT + #4 )[1]);
-    if TestBit(B, 2) and TestBit(B, 3) then
-      AStatus := AStatus + [stPoucoPapel];
-    if TestBit(B, 5) and TestBit(B, 6) then
-      AStatus := AStatus + [stSemPapel];
+    C := fpPosPrinter.TxRx( DLE + EOT + #4 );
+    if (Length(C) > 0) then
+    begin
+      B := Ord(C[1]);
+      if TestBit(B, 2) and TestBit(B, 3) then
+        AStatus := AStatus + [stPoucoPapel];
+      if TestBit(B, 5) and TestBit(B, 6) then
+        AStatus := AStatus + [stSemPapel];
+    end;
   except
     AStatus := AStatus + [stErroLeitura];
   end;
@@ -477,9 +487,12 @@ begin
   Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 500, True );
   AddInfo('Serial', Ret);
 
-  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 500 );
-  B := Ord(Ret[1]);
-  Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
+  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 500, True );
+  if Length(Ret) > 0 then
+  begin
+    B := Ord(Ret[1]);
+    Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
+  end;
 
   Result := Info;
 end;

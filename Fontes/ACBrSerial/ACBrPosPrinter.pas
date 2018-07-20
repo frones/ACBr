@@ -1557,7 +1557,7 @@ var
 begin
   Tentativas := max(Tentativas, 1);
 
-  if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
+  if not (FDevice.IsSerialPort or FDevice.IsTCPPort or FDevice.IsDLLPort) then
   begin
     Result := [stNaoSerial];
     Exit;
@@ -1601,7 +1601,7 @@ begin
   try
     Ativo := True;
 
-    if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
+    if not (FDevice.IsSerialPort or FDevice.IsTCPPort or FDevice.IsDLLPort) then
       raise EPosPrinterException.Create(ACBrStr('Leitura de Informações só disponivel em Portas Seriais ou TCP'));
 
     Result := FPosPrinterClass.LerInfo;

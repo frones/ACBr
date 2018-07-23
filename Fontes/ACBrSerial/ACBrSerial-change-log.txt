@@ -39,6 +39,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2018
+-- ACBrCHQ, ACBrCHQClass --
+[+] Adicionada a propriedade "PaginaDeCodigo: Word default 0"
+    0 = Remove acentos de "Cidade, Favorecido, Textos". Caso contrário, traduz
+    para a página de código em ANSI, usada pelo equipamento
+    https://www.projetoacbr.com.br/forum/topic/44737-acbrchq-nova-propriedade-paginadecodigo/
+    (por: DSA)
+
 20/07/2018
 -- ACBrDevice --
 [+] Adicionado no evento: HookAtivar = procedure(const APort: String; Params: String) of object;

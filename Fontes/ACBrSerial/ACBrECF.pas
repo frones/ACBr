@@ -3743,6 +3743,7 @@ var
   VlPercentualFederal, VlPercentualEstadual, VlPercentualMunicipal: Double;
   InformouValorAproxFederal, InformouValorAproxEstadual, InformouValorAproxMunicipal: Boolean;
   SubtotalSemImpostos: Double;
+  SubtotalCache: Double;
 begin
   Result := '';
   if InfoRodapeCupom.Imposto.ValorAproximado > 0 then
@@ -3777,15 +3778,17 @@ begin
 
     if InformouValorAproxFederal or InformouValorAproxEstadual or InformouValorAproxMunicipal then
     begin
+      //evita ter que fazer várias leituras na serial
+      SubtotalCache := Subtotal;
       // valor aproximado informado pelo usuário
       VlImpostoFederal := InfoRodapeCupom.Imposto.ValorAproximadoFederal;
       VlImpostoEstadual := InfoRodapeCupom.Imposto.ValorAproximadoEstadual;
       VlImpostoMunicipal := InfoRodapeCupom.Imposto.ValorAproximadoMunicipal;
 
       // valor aproximado percentual (Não utilizado nas sugestões do IBPT no momento...)
-      VlPercentualFederal := VlImpostoFederal / Subtotal * 100;
-      VlPercentualEstadual := VlImpostoEstadual / Subtotal * 100;
-      VlPercentualMunicipal := VlImpostoMunicipal / Subtotal * 100;
+      VlPercentualFederal := VlImpostoFederal / SubtotalCache * 100;
+      VlPercentualEstadual := VlImpostoEstadual / SubtotalCache * 100;
+      VlPercentualMunicipal := VlImpostoMunicipal / SubtotalCache * 100;
 
       // impressão do texto
       // se o usuário informou a propriedade Texto, utilizar
@@ -3826,7 +3829,7 @@ begin
         else
         begin
           // IBPT opção 1
-          SubtotalSemImpostos := Subtotal - (VlImpostoFederal + VlImpostoEstadual + VlImpostoMunicipal);
+          SubtotalSemImpostos := SubtotalCache - (VlImpostoFederal + VlImpostoEstadual + VlImpostoMunicipal);
 
           Result := 'Você pagou aproximadamente:' + #10 +
             'R$ ' + FormatFloatBr(VlImpostoFederal, ',#0.00') + ' de tributos federais'+

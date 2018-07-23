@@ -1738,7 +1738,13 @@ begin
     05 : result := 'Compensação Convencional';
     06 : result := 'Internet Banking';
     07 : result := 'Correspondente Bancário';
-    08 : result := 'Em Cartório'
+    08 : result := 'Em Cartório';
+    09 : Result := 'Comandada Banco';
+    10 : result := 'Comandada Cliente via Arquivo';
+    11 : result := 'Comandada Cliente On-line';
+    12 : result := 'Decurso Prazo - Cliente';
+    13 : result := 'Decurso Prazo - Banco';
+    14 : result := 'Protestado';
   end;
 end;
 

@@ -94,31 +94,24 @@ begin
 
   {  Usando Protocolo Generico 2 (Muito mais simples) }
   { Ligando asteriscos no final da impressao }
-  fpDevice.EnviaString( #27 + 'p1$' ) ;
-  Sleep(100);
+  EnviarStr( #27 + 'p1$' ) ;
   { Cidade }
-  fpDevice.EnviaString( #27 + 'c' + PadRight(fpCidade,20) + '$' ) ;
-  Sleep(100);
+  EnviarStr( #27 + 'c' + PadRight(fpCidade,20) + '$' ) ;
   { Favorecido }
-  fpDevice.EnviaString( #27 + 'f' + PadRight(fpFavorecido,40) + '$' ) ;
-  Sleep(100);
+  EnviarStr( #27 + 'f' + PadRight(fpFavorecido,40) + '$' ) ;
   { Data }
   DataStr := FormatDateTime('ddmmyy',fpData) ;
-  fpDevice.EnviaString( #27 + 'd' + DataStr + '$' ) ;
-  Sleep(100);
+  EnviarStr( #27 + 'd' + DataStr + '$' ) ;
   { Banco }
-  fpDevice.EnviaString( #27 + 'b' + fpBanco + '$' ) ;
-  Sleep(100);
+  EnviarStr( #27 + 'b' + fpBanco + '$' ) ;
   { Valor }
   ValStr := IntToStrZero( Round( fpValor * 100), 14) ;
-  fpDevice.EnviaString( #27 + 'v' + ValStr + '$' ) ;
-  Sleep(100);
+  EnviarStr( #27 + 'v' + ValStr + '$' ) ;
 end;
 
 procedure TACBrCHQUrano.ImprimirLinha(AString: AnsiString);
 begin
-  fpDevice.EnviaString( #27 + 'g' + TrimRight(AString) + #10 + '$' ) ;
-  Sleep(100);
+  EnviarStr( #27 + 'g' + CodificarPaginaDeCodigo(TrimRight(AString)) + #10 + '$' ) ;
 end;
 
 function TACBrCHQUrano.GetChequePronto: Boolean;

@@ -57,9 +57,6 @@ type TACBrCHQBematech = class( TACBrCHQClass )
   private
     FImprimeVerso: boolean;
 
-  protected
-
-    procedure EnviarStr(AStr: string);
   public
     constructor Create(AOwner: TComponent);
 
@@ -123,7 +120,7 @@ begin
   TravarCheque ;
 
   For A := 0 to AStringList.Count - 1 do
-     ImprimirLinha( StringOfChar(' ',10) + TiraAcentos( AStringList[A] ) );
+     ImprimirLinha( StringOfChar(' ',10) + AStringList[A] );
 
   DestravarCheque ;
 end;
@@ -147,10 +144,10 @@ begin
   EnviarStr( #27 + #163 + ValStr + #13 ) ;
 
   { Favorecido }
-  EnviarStr( #27 + #160 + Trim(fpFavorecido) + #13 ) ;
+  EnviarStr( #27 + #160 + fpFavorecido + #13 ) ;
 
   { Cidade }
-  EnviarStr( #27 + #161 + Trim(fpCidade) + #13 ) ;
+  EnviarStr( #27 + #161 + fpCidade + #13 ) ;
 
   { Data }
   DataStr := FormatDateTime('dd/mm/yy',fpData) ;
@@ -158,19 +155,6 @@ begin
   EnviarStr( #27 + #164 + DataStr + #13 ) ;
 
   DestravarCheque ;
-end;
-
-procedure TACBrCHQBematech.EnviarStr(AStr: string);
-begin
-  try
-    fpDevice.EnviaString(AStr);
-  except
-    on E: Exception do
-    begin
-    end;
-  end;
-
-  Sleep(100);
 end;
 
 end.

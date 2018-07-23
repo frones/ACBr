@@ -197,11 +197,11 @@ begin
 
   { Favorecido }
   if (Trim(fpFavorecido) <> EmptyStr) then
-    VerificaErro(EnviaComando('%' + Trim(UpperCase(fpFavorecido))));
+    VerificaErro(EnviaComando('%' + UpperCase(fpFavorecido)));
 
   { Cidade }
   if (Trim(fpCidade) <> EmptyStr) then
-    VerificaErro(EnviaComando('#' + Trim(UpperCase(fpCidade))));
+    VerificaErro(EnviaComando('#' + UpperCase(fpCidade)));
 
   { Data }
   DataStr := FormatDateTime('ddmmyy', fpData);
@@ -235,11 +235,10 @@ begin
       Texto2 := AStringList[1];
   end;
 
-  Texto1 := PadRight(UpperCase(TiraAcentos(Texto1)), 60);
-  Texto2 := PadRight(UpperCase(TiraAcentos(Texto2)), 60);
+  Texto1 := PadRight(UpperCase(CodificarPaginaDeCodigo(Texto1)), 60);
+  Texto2 := PadRight(UpperCase(CodificarPaginaDeCodigo(Texto2)), 60);
 
   VerificaErro(EnviaComando('"' + Texto1 + #255 + Texto2 + #255, Max(fpDevice.TimeOut, 30)));
-
 end;
 
 function TACBrCHQPerto.EnviaComando(cmd: string; SecTimeOut: Integer): string;
@@ -273,18 +272,24 @@ begin
           { põe pra dormir para atualizar o buffer da porta serial... }
           Sleep(200);
         except
-          raise Exception.create(ACBrStr('Erro ao enviar comandos para a PertoCheck'));
+          On E: Exception do
+          begin
+            raise Exception.create('Erro ao enviar comandos para a PertoCheck' + sLineBreak + E.Message);
+          end;
         end;
 
         try
           ACK := fpDevice.LeByte(SecTimeOut);
         except
-          raise Exception.create(ACBrStr('PertoCheck não responde'));
+          On E: Exception do
+          begin
+            raise Exception.create(ACBrStr('PertoCheck não responde') + sLineBreak + E.Message);
+          end;
         end;
 
         if ACK = 21 then
           raise Exception.create(ACBrStr('PertoCheck não reconheceu o comando'));
-      until ACK = 6;
+      until (ACK = 6);
 
       { Le conteudo da porta }
       { Calcula Tempo Limite. Espera resposta até Tempo Limite. Se a resposta

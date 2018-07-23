@@ -158,7 +158,9 @@ begin
   ACBrEXT := TACBrExtenso.Create(nil);
   try
      ACBrEXT.Valor := fpValor ;
-     Texto := ACBrEXT.Texto   ;
+
+     // Utilizar pagina de codigo para substituir acentos
+     Texto := CodificarPaginaDeCodigo(ACBrEXT.Texto);
   finally
      ACBrEXT.Free ;
   end ;
@@ -204,16 +206,18 @@ begin
                    IntToStrZero(Round(ColunaExtenso2/cAF),3)+'|'+ Ext2 ) ;
         Linhas.Add(IntToStrZero(LinhaFavorecido,3)+'|'+
                    IntToStrZero(Round(ColunaFavorecido/cAF),3)+'|( '+
-                   Trim(fpFavorecido)+' )' ) ;
+                   fpFavorecido+' )' ) ;
+
         Linhas.Add(IntToStrZero(LinhaLocal,3)+'|'+
                    IntToStrZero(Round(ColunaLocal/cAF),3)+
-                   '|'+PadLeft(Trim(fpCidade),nCharLocal) ) ;
+                   '|'+PadLeft(fpCidade, nCharLocal) ) ;
         Linhas.Add(IntToStrZero(LinhaLocal,3)+'|'+
                    IntToStrZero(Round(ColunaDia/cAF),3)+'|'+
                    IntToStr( DayOf(fpData) ) ) ;
         Linhas.Add(IntToStrZero(LinhaLocal,3)+'|'+
                    IntToStrZero(Round(ColunaMes/cAF),3)+'|'+
-                   MesDescr[ MonthOf(fpData) ] ) ;
+                   CodificarPaginaDeCodigo( ACBrStr(MesDescr[ MonthOf(fpData) ]) ) ) ;
+
         Linhas.Add(IntToStrZero(LinhaLocal,3)+'|'+
                    IntToStrZero(Round(ColunaAno/cAF),3)+'|'+
                    copy(IntToStr(YearOf(fpData)),3,2) ) ;

@@ -102,27 +102,21 @@ procedure TACBrCHQSotomaq.ImprimirCheque;
 Var ValStr, DataStr : String ;
 begin
   { Banco }
-  fpDevice.EnviaString( #27 + #162 + fpBanco + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #162 + fpBanco + #13 ) ;
   { Valor }
   ValStr := IntToStrZero( Round( fpValor * 100), 11) ;
   ValStr := copy(ValStr,1,9)+','+copy(ValStr,10,2) ;
-  fpDevice.EnviaString( #27 + #163 + ValStr + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #163 + ValStr + #13 ) ;
   { Favorecido }
-  fpDevice.EnviaString( #27 + #160 + Trim(fpFavorecido) + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #160 + fpFavorecido + #13 ) ;
   { Cidade }
-  fpDevice.EnviaString( #27 + #161 + Trim(fpCidade) + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #161 + fpCidade + #13 ) ;
   { Data }
   DataStr := FormatDateTime('dd/mm/yy',fpData) ;
   DataStr := StringReplace(DataStr,DateSeparator,'/',[rfReplaceAll]) ;
-  fpDevice.EnviaString( #27 + #164 + DataStr + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #164 + DataStr + #13 ) ;
 
-  fpDevice.EnviaString( #27 + #176 ) ;   // Imprimir...
-  Sleep(100);
+  EnviarStr( #27 + #176 ) ;   // Imprimir...
 end;
 
 function TACBrCHQSotomaq.GetChequePronto: Boolean;

@@ -56,9 +56,6 @@ type
   private
     FImprimeVerso: boolean;
 
-  protected
-
-    procedure EnviarStr(AStr: string);
   public
     constructor Create(AOwner: TComponent);
 
@@ -155,7 +152,7 @@ begin
   EnviarStr( #27 + #66 + fpBanco ) ;
 
   { Cidade }
-  EnviarStr( #27 + #67 + Copy(Trim(fpCidade),1,20) + '$' ) ;  // Cidade - termina com caracter $ #36
+  EnviarStr( #27 + #67 + Copy(fpCidade,1,20) + '$' ) ;  // Cidade - termina com caracter $ #36
 
   { Data }
   DataStr := FormatDateTime('dd/mm/yy',fpData) ;
@@ -163,9 +160,7 @@ begin
   EnviarStr( #27 + #68 + DataStr ) ;
 
   { Favorecido }
-  EnviarStr( #27 + #70 + Trim(fpFavorecido) + '$' ) ;   // Favorecido - termina com caracter $
-
-
+  EnviarStr( #27 + #70 + fpFavorecido + '$' ) ;   // Favorecido - termina com caracter $
 
   { Valor com 14 digitos - SEMPRE ENVIAR POR ÚLTIMO - Quando recebe o valor, imprime o chq }
   ValStr := IntToStrZero( Round( fpValor * 100), 14) ;
@@ -173,22 +168,7 @@ begin
   //ValStr := copy(ValStr,1,9)+','+copy(ValStr,10,2) ;
   EnviarStr( #27 + #86 + ValStr );
 
-
   DestravarCheque ;
-end;
-
-procedure TACBrCHQElgin.EnviarStr(AStr: string);
-begin
-  try
-    fpDevice.EnviaString(AStr);
-  except
-    on E: Exception do
-    begin
-    end;
-  end;
-
-  Sleep(100);
-
 end;
 
 end.

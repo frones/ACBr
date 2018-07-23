@@ -91,52 +91,46 @@ end;
 
 procedure TACBrCHQChronos.TravarCheque;
 begin
-  fpDevice.EnviaString( #27 + #177 );
-  Sleep(100);
+  EnviarStr( #27 + #177 );
 end;
 
 procedure TACBrCHQChronos.DestravarCheque;
 begin
-  fpDevice.EnviaString( #27 + #178 );
-  Sleep(100);
+  EnviarStr( #27 + #178 );
 end;
 
 procedure TACBrCHQChronos.ImprimirCheque;
-Var ValStr, DataStr : String ;
+Var
+  ValStr, DataStr : String ;
 begin
   { Banco }
-  fpDevice.EnviaString( #27 + #162 + fpBanco + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #162 + fpBanco + #13 ) ;
   { Valor }
   ValStr := IntToStrZero( Round( fpValor * 100), 11) ;
   ValStr := copy(ValStr,1,9)+','+copy(ValStr,10,2) ;
-  fpDevice.EnviaString( #27 + #163 + ValStr + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #163 + ValStr + #13 ) ;
   { Favorecido }
-  fpDevice.EnviaString( #27 + #160 + Trim(fpFavorecido) + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #160 + fpFavorecido + #13 ) ;
   { Cidade }
-  fpDevice.EnviaString( #27 + #161 + Trim(fpCidade) + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #161 + fpCidade + #13 ) ;
   { Data }
   DataStr := FormatDateTime('dd/mm/yy',fpData) ;
   DataStr := StringReplace(DataStr,DateSeparator,'/',[rfReplaceAll]) ;
-  fpDevice.EnviaString( #27 + #164 + DataStr + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #164 + DataStr + #13 ) ;
 
-  fpDevice.EnviaString( #27 + #176 ) ;   // Imprimir...
-  Sleep(100);
+  EnviarStr( #27 + #176 ) ;   // Imprimir...
 end;
 
 function TACBrCHQChronos.GetChequePronto: Boolean;
-Var nBit : Byte ;
+Var
+  nBit : Byte ;
 begin
   Result := true ;
 
   if not fpDevice.IsSerialPort then
      exit ;
 
-  fpDevice.EnviaString( #0 ) ;   // Pede Status
+  EnviarStr( #0 ) ;   // Pede Status
   nBit := fpDevice.LeByte( 200 ) ;
 
   Result := not TestBit( nBit , 2 ) ;

@@ -74,9 +74,11 @@ TACBrCHQ = class( TACBrComponent )
     procedure SetModelo(const Value: TACBrCHQModelo);
     procedure SetPorta(const Value: String);
     procedure SetAtivo(const Value: Boolean);
+    procedure SetPaginaDeCodigoClass(const Value: Word);
 
     function GetPorta: String;
     function GetModeloStrClass: String;
+    function GetPaginaDeCodigoClass: Word;
     procedure SetECF(const Value: TACBrECF);
     function GetValorClass: Double;
     procedure SetValorClass(const Value: Double);
@@ -130,6 +132,9 @@ TACBrCHQ = class( TACBrComponent )
      property Modelo : TACBrCHQModelo read fsModelo write SetModelo
                  default chqNenhuma ;
      property Porta : String read GetPorta write SetPorta ;
+
+     // Pagina de Código
+     property PaginaDeCodigo: Word   read GetPaginaDeCodigoClass write SetPaginaDeCodigoClass  default 0;
 
      { Propriedades para preencher o Cheque }
      property Banco : String read GetBancoClass write SetBancoClass
@@ -207,6 +212,7 @@ Var wBanco      : String ;
     wCidade     : String ;
     wFavorecido : String ;
     wObservacao : String ;
+    wPaginaCod  : Word ;
 begin
   if fsModelo = Value then exit ;
 
@@ -219,6 +225,7 @@ begin
   wCidade     := Cidade ;
   wFavorecido := Favorecido ;
   wObservacao := Observacao ;
+  wPaginaCod  := PaginaDeCodigo ;
 
   FreeAndNil( fsCHQ ) ;
 
@@ -243,6 +250,7 @@ begin
   Cidade     := wCidade ;
   Favorecido := wFavorecido ;
   Observacao := wObservacao ;
+  PaginaDeCodigo := wPaginaCod ;
 
   fsModelo := Value;
 
@@ -485,5 +493,16 @@ begin
         fsCHQ.ECF := nil ;
   end ;
 end;
+
+procedure TACBrCHQ.SetPaginaDeCodigoClass(const Value: Word);
+begin
+  fsCHQ.PaginaDeCodigo := Value ;
+end;
+
+function TACBrCHQ.GetPaginaDeCodigoClass: Word;
+begin
+  Result := fsCHQ.PaginaDeCodigo;
+end;
+
 
 end.

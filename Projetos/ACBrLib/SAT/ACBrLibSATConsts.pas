@@ -41,8 +41,8 @@ uses
   Classes, SysUtils;
 
 const
-  CLibMDFeNome = 'ACBrLibSAT';
-  CLibMDFeVersao = '0.0.1';
+  CLibSATNome = 'ACBrLibSAT';
+  CLibSATVersao = '0.0.1';
 
   CSessaoCFe = 'CFE';
   CSessaoENVIO = 'ENVIO';

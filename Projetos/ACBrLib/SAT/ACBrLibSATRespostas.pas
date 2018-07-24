@@ -172,7 +172,7 @@ type
     FLISTA_FINAL     : Integer;
     FDH_CFe          : TDateTime;
     FDH_ULTIMA       : TDateTime;
-    FCERT_EMISSAO    : String;
+    FCERT_EMISSAO    : TDateTime;
     FCERT_VENCIMENTO : TDateTime;
     FESTADO_OPERACAO : String;
 
@@ -194,7 +194,7 @@ type
     property LISTA_FINAL      : Integer   read  FLISTA_FINAL      write FLISTA_FINAL;
     property DH_CFe           : TDateTime read  FDH_CFe           write FDH_CFe;
     property DH_ULTIMA        : TDateTime read  FDH_ULTIMA        write FDH_ULTIMA;
-    property CERT_EMISSAO     : String    read  FCERT_EMISSAO     write FCERT_EMISSAO;
+    property CERT_EMISSAO     : TDateTime read  FCERT_EMISSAO     write FCERT_EMISSAO;
     property CERT_VENCIMENTO  : TDateTime read  FCERT_VENCIMENTO  write FCERT_VENCIMENTO;
     property ESTADO_OPERACAO  : String    read  FESTADO_OPERACAO  write FESTADO_OPERACAO;
 

@@ -76,6 +76,7 @@ type
     FNomeArq: String;
 
     function GetConfirmada: Boolean;
+    function GetcStat: Integer;
     function GetProcessada: Boolean;
     function GetCancelada: Boolean;
 
@@ -128,6 +129,7 @@ type
     property Confirmada: Boolean read GetConfirmada;
     property Processada: Boolean read GetProcessada;
     property Cancelada: Boolean read GetCancelada;
+    property cStat: Integer read GetcStat;
     property Msg: String read GetMsg;
     property NumID: String read GetNumID;
 
@@ -3266,6 +3268,11 @@ function NotaFiscal.GetConfirmada: Boolean;
 begin
   Result := TACBrNFe(TNotasFiscais(Collection).ACBrNFe).CstatConfirmada(
     FNFe.procNFe.cStat);
+end;
+
+function NotaFiscal.GetcStat: Integer;
+begin
+ Result := FNFe.procNFe.cStat;
 end;
 
 function NotaFiscal.GetProcessada: Boolean;

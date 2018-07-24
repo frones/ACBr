@@ -1740,7 +1740,7 @@ begin
   begin
     if not FNotasFiscais.Items[I].Confirmada then
       FPMsg := FPMsg + IntToStr(FNotasFiscais.Items[I].NFe.Ide.nNF) +
-        '->' + FNotasFiscais.Items[I].Msg + LineBreak;
+        '->' + IntToStr(FNotasFiscais.Items[I].cStat)+'-'+ FNotasFiscais.Items[I].Msg + LineBreak;
   end;
 
   if AInfProt.Count > 0 then

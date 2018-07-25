@@ -865,6 +865,7 @@ end;
 function TNotasFiscais.LoadFromString(AXMLString: String;
   AGerarNFSe: Boolean = True): Boolean;
 var
+  AProvedor: TnfseProvedor;
   VersaoNFSe: TVersaoNFSe;
   Ok: Boolean;
   AXML: AnsiString;
@@ -905,10 +906,10 @@ var
       Result := Pos('</CancelamentoNfse>', AXMLString);
   end;
 
-  function PosRPS: Integer;
+  function PosRPS(AProvedor: TnfseProvedor): Integer;
   begin
     TamTAG := 5;
-    if (VersaoNFSe < ve200) and (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor <> proAgili) then
+    if (VersaoNFSe < ve200) and (AProvedor <> proAgili) then
     begin
       Result := Pos('</Rps>', AXMLString);
       // Provedor ISSDSF
@@ -931,12 +932,17 @@ var
   end;
 
 begin
-  VersaoNFSe := StrToVersaoNFSe(Ok, TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConfigXML.VersaoXML);
+  with TACBrNFSe(FACBrNFSe) do
+  begin
+    AProvedor := Configuracoes.Geral.Provedor;
 
-  AXMLString := StringReplace(StringReplace( AXMLString, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
+    VersaoNFSe := StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML);
 
-  if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor <> proISSCuritiba then
-    AXMLString := RetirarPrefixos(AXMLString, TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor);
+    AXMLString := StringReplace(StringReplace( AXMLString, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
+  end;
+
+  if AProvedor <> proISSCuritiba then
+    AXMLString := RetirarPrefixos(AXMLString, AProvedor);
 
   N := PosNFSe;
 
@@ -948,14 +954,14 @@ begin
       AXML := copy(AXMLString, 1, N + TamTAG);
       AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
 
-      // No caso dos provedores [SimplISS, Betha e Tecnos] o grupo NfseCancelamento fica fora do
-      // grupo CompNfse
-      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proSimplISS, proBetha, proTecnos, proFISSLEX] then
+      // Abaixo a lista de provedores cujo grupo NfseCancelamento não se encontra
+      // dentro do grupo CompNfse
+      if AProvedor in [proSimplISS, {proBetha,} proTecnos, proFISSLEX] then
       begin
         N:= PosNFSeCancelamento;
         if N > 0 then
         begin
-          // concatena o grupo NfseCancelamento ao grupo Nfse
+          // concatena o grupo NfseCancelamento abaixo do grupo Nfse
           AXML:= AXML + copy(AXMLString, 1, N + TamTAG);
           AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
         end;
@@ -964,9 +970,6 @@ begin
       with Self.Add do
       begin
         LerXML(AXML);
-
-//        if AGerarNFSe then // Recalcula o XML
-//          GerarXML;
       end;
 
       N := PosNFSe;
@@ -974,7 +977,7 @@ begin
   end
   else
   begin
-    N := PosRPS;
+    N := PosRPS(AProvedor);
     // Ler os XMLs dos RPS
     while N > 0 do
     begin
@@ -988,7 +991,7 @@ begin
           GerarXML;
       end;
 
-      N := PosRPS;
+      N := PosRPS(AProvedor);
     end;
   end;
 

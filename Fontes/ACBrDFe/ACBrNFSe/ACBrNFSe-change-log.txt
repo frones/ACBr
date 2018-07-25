@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/07/2018
+-- ACBrNFSeNotasFiscais --
+[*] Alteração, removido o provedor Betha da lista de provedores que não contem
+    o grupo NfseCancelamento dentro do grupo CompNfse.
+Por: Italo Jurisato Junior
+
 20/07/2018
 -- pnfsNFSeW_ABRASFv2 / pnfsNFSe --
 [*] Alteração para a inclusão das tags de Taxa de Turismo para o provedor SystemPro.

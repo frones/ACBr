@@ -2,8 +2,7 @@ program DemoAcbrSpedTabelas;
 
 uses
   Forms,
-  Unit1 in 'Unit1.pas' {Form1},
-  ACBrSpedTabelas in '..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas';
+  Unit1 in 'Unit1.pas' {Form1};
 
 {$R *.res}
 

@@ -533,8 +533,7 @@ begin
   Gerador.wCampo(tcStr, '#084', 'cLocDest  ', 01, 07, 1, BPe.infPassagem.cLocDest, DSC_CLOCDEST);
   Gerador.wCampo(tcStr, '#085', 'xLocDest  ', 02, 60, 1, BPe.infPassagem.xLocDest, DSC_XLOCDEST);
   Gerador.wCampo(tcStr, '#086', 'dhEmb     ', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhEmb) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhEmb), DSC_DHEMB);
-  Gerador.wCampo(tcStr, '#087', 'dhValidade', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhEmb) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhValidade), DSC_DHVALIDADE);
-  Gerador.wCampo(tcStr, '#087', 'dhValidade   ', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhValidade) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhValidade), DSC_DHVALIDADE);
+  Gerador.wCampo(tcStr, '#087', 'dhValidade', 25, 25, 1, DateTimeTodh(BPe.infPassagem.dhValidade) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infPassagem.dhValidade), DSC_DHVALIDADE);
 
   if BPe.infPassagem.infPassageiro.xNome <> '' then
     GerarinfPassageiro;

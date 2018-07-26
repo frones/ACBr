@@ -167,9 +167,9 @@ type
     FDH_ATUAL        : TDateTime;
     FVER_SB          : String;
     FVER_LAYOUT      : String;
-    FULTIMO_CFe      : Integer;
-    FLISTA_INICIAL   : Integer;
-    FLISTA_FINAL     : Integer;
+    FULTIMO_CFe      : String;
+    FLISTA_INICIAL   : String;
+    FLISTA_FINAL     : String;
     FDH_CFe          : TDateTime;
     FDH_ULTIMA       : TDateTime;
     FCERT_EMISSAO    : TDateTime;
@@ -189,9 +189,9 @@ type
     property DH_ATUAL         : TDateTime read  FDH_ATUAL         write FDH_ATUAL;
     property VER_SB           : String    read  FVER_SB           write FVER_SB;
     property VER_LAYOUT       : String    read  FVER_LAYOUT       write FVER_LAYOUT;
-    property ULTIMO_CFe       : Integer   read  FULTIMO_CFe       write FULTIMO_CFe;
-    property LISTA_INICIAL    : Integer   read  FLISTA_INICIAL    write FLISTA_INICIAL;
-    property LISTA_FINAL      : Integer   read  FLISTA_FINAL      write FLISTA_FINAL;
+    property ULTIMO_CFe       : String    read  FULTIMO_CFe       write FULTIMO_CFe;
+    property LISTA_INICIAL    : String    read  FLISTA_INICIAL    write FLISTA_INICIAL;
+    property LISTA_FINAL      : String    read  FLISTA_FINAL      write FLISTA_FINAL;
     property DH_CFe           : TDateTime read  FDH_CFe           write FDH_CFe;
     property DH_ULTIMA        : TDateTime read  FDH_ULTIMA        write FDH_ULTIMA;
     property CERT_EMISSAO     : TDateTime read  FCERT_EMISSAO     write FCERT_EMISSAO;

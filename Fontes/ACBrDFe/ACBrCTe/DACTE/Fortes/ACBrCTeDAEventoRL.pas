@@ -186,17 +186,19 @@ begin
       FMargemDireita := AMargemDireita;
 
       if ACTe <> nil then
+	  begin
         FCTe := ACTe;
 
-      with RLPDFFilter1.DocumentInfo do
-      begin
-        Title := ACBrStr('DACTE - Conhecimento nº ') +
-          FormatFloat('000,000,000', FCTe.Ide.nCT);
-        KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', FCTe.Ide.nCT) +
-          ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', FCTe.Ide.dhEmi) +
-          ACBrStr('; Destinatário: ') + FCTe.Dest.xNome +
-          '; CNPJ: ' + FCTe.Dest.CNPJCPF;
-      end;
+        with RLPDFFilter1.DocumentInfo do
+        begin
+          Title := ACBrStr('DACTE - Conhecimento nº ') +
+            FormatFloat('000,000,000', FCTe.Ide.nCT);
+          KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', FCTe.Ide.nCT) +
+            ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', FCTe.Ide.dhEmi) +
+            ACBrStr('; Destinatário: ') + FCTe.Dest.xNome +
+            '; CNPJ: ' + FCTe.Dest.CNPJCPF;
+        end;
+	  end;
 
       RLCTeEvento.SaveToFile(AFile);
     finally

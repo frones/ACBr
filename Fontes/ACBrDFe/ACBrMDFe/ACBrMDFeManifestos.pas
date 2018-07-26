@@ -76,6 +76,7 @@ type
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
+    function GetcStat: Integer;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -115,6 +116,7 @@ type
     property Confirmado: Boolean read GetConfirmado;
     property Processado: Boolean read GetProcessado;
     property Cancelado: Boolean  read GetCancelado;
+    property cStat: Integer read GetcStat;
     property Msg: String read GetMsg;
     property NumID: String read GetNumID;
 
@@ -620,6 +622,11 @@ function Manifesto.GetConfirmado: Boolean;
 begin
   Result := TACBrMDFe(TManifestos(Collection).ACBrMDFe).cStatConfirmado(
     FMDFe.procMDFe.cStat);
+end;
+
+function Manifesto.GetcStat: Integer;
+begin
+  Result := FMDFe.procMDFe.cStat;
 end;
 
 function Manifesto.GetProcessado: Boolean;

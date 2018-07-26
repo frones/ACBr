@@ -1464,7 +1464,7 @@ begin
   begin
     if not FConhecimentos.Items[I].Confirmado then
       FPMsg := FPMsg + IntToStr(FConhecimentos.Items[I].CTe.Ide.nCT) +
-        '->' + FConhecimentos.Items[I].Msg + LineBreak;
+        '->' + IntToStr(FConhecimentos.Items[I].cStat) + '-' + FConhecimentos.Items[I].Msg + LineBreak;
   end;
 
   if AInfProt.Count > 0 then

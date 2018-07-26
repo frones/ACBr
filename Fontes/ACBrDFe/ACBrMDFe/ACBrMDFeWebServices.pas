@@ -1159,7 +1159,7 @@ begin
   begin
     if not FManifestos.Items[I].Confirmado then
       FPMsg := FPMsg + IntToStr(FManifestos.Items[I].MDFe.Ide.nMDF) +
-        '->' + FManifestos.Items[I].Msg + LineBreak;
+        '->' + IntToStr(FManifestos.Items[I].cStat) + '-' + FManifestos.Items[I].Msg + LineBreak;
   end;
 
   if AInfProt.Count > 0 then

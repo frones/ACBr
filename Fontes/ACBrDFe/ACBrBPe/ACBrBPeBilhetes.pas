@@ -81,6 +81,7 @@ type
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
+    function GetcStat: Integer;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -121,6 +122,7 @@ type
     property Confirmada: Boolean read GetConfirmada;
     property Processada: Boolean read GetProcessada;
     property Cancelada: Boolean read GetCancelada;
+    property cStat: Integer read GetcStat;
     property Msg: String read GetMsg;
     property NumID: String read GetNumID;
 
@@ -648,6 +650,11 @@ begin
     FBPe.procBPe.cStat);
 end;
 
+function Bilhete.GetcStat: Integer;
+begin
+  Result := FBPe.procBPe.cStat;
+end;
+
 function Bilhete.GetProcessada: Boolean;
 begin
   Result := TACBrBPe(TBilhetes(Collection).ACBrBPe).CstatProcessado(
@@ -758,14 +765,10 @@ begin
       Emit.enderEmit.xMun    := INIRec.ReadString('emit', 'xMun', '');
       Emit.enderEmit.CEP     := INIRec.ReadInteger('emit', 'CEP', 0);
       Emit.enderEmit.UF      := INIRec.ReadString('emit', 'UF', '');
-
-      ide.cUF := INIRec.ReadInteger('ide', 'cUF', UFparaCodigo(Emit.enderEmit.UF));
-
-//          if Emit.enderEmit.cMun <= 0 then
-//            Emit.enderEmit.cMun := ObterCodigoMunicipio(Emit.enderEmit.xMun, Emit.enderEmit.UF);
-
       Emit.enderEmit.fone    := INIRec.ReadString('emit', 'fone', '');
       Emit.enderEmit.Email   := INIRec.ReadString('emit', 'Email', '');
+
+      ide.cUF := INIRec.ReadInteger('ide', 'cUF', UFparaCodigo(Emit.enderEmit.UF));
 
       //
       // Seção [comp] Comprador
@@ -783,10 +786,6 @@ begin
       Comp.enderComp.xMun    := INIRec.ReadString('comp', 'xMun', '');
       Comp.enderComp.CEP     := INIRec.ReadInteger('comp', 'CEP', 0);
       Comp.enderComp.UF      := INIRec.ReadString('comp', 'UF', '');
-
-//          if Comp.enderComp.cMun <= 0 then
-//            Comp.enderComp.cMun := ObterCodigoMunicipio(Comp.enderComp.xMun, Comp.enderComp.UF);
-
       Comp.EnderComp.cPais   := INIRec.ReadInteger('comp', 'cPais', 1058);
       Comp.EnderComp.xPais   := INIRec.ReadString('comp', 'xPais', 'BRASIL');
       Comp.enderComp.fone    := INIRec.ReadString('comp', 'fone', '');
@@ -806,10 +805,6 @@ begin
       Agencia.enderAgencia.xMun    := INIRec.ReadString('Agencia', 'xMun', '');
       Agencia.enderAgencia.CEP     := INIRec.ReadInteger('Agencia', 'CEP', 0);
       Agencia.enderAgencia.UF      := INIRec.ReadString('Agencia', 'UF', '');
-
-//          if Agencia.enderAgencia.cMun <= 0 then
-//            Agencia.enderAgencia.cMun := ObterCodigoMunicipio(Agencia.enderAgencia.xMun, Agencia.enderAgencia.UF);
-
       Agencia.enderAgencia.fone    := INIRec.ReadString('Agencia', 'fone', '');
       Agencia.enderAgencia.Email   := INIRec.ReadString('Agencia', 'Email', '');
 
@@ -828,12 +823,12 @@ begin
       //
       // Seção [infPassagem] Informações da Passagem
       //
-      infPassagem.cLocOrig := INIRec.ReadString('infPassagem', 'cLocOrig', '');
-      infPassagem.xLocOrig := INIRec.ReadString('infPassagem', 'xLocOrig', '');
-      infPassagem.cLocDest := INIRec.ReadString('infPassagem', 'cLocDest', '');
-      infPassagem.xLocDest := INIRec.ReadString('infPassagem', 'xLocDest', '');
-      infPassagem.dhEmb    := StringToDateTime(INIRec.ReadString('infPassagem', 'dhEmb', '0'));
-	     infPassagem.dhValidade    := StringToDateTime(INIRec.ReadString('infPassagem', 'dhValidade', '0'));
+      infPassagem.cLocOrig   := INIRec.ReadString('infPassagem', 'cLocOrig', '');
+      infPassagem.xLocOrig   := INIRec.ReadString('infPassagem', 'xLocOrig', '');
+      infPassagem.cLocDest   := INIRec.ReadString('infPassagem', 'cLocDest', '');
+      infPassagem.xLocDest   := INIRec.ReadString('infPassagem', 'xLocDest', '');
+      infPassagem.dhEmb      := StringToDateTime(INIRec.ReadString('infPassagem', 'dhEmb', '0'));
+      infPassagem.dhValidade := StringToDateTime(INIRec.ReadString('infPassagem', 'dhValidade', '0'));
 
       //
       // Seção [infPassageiro] Informações do Passageiro

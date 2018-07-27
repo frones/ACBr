@@ -732,7 +732,7 @@ begin
   // ID -> N11  - ICMS devido para outras UF
   // ID -> N12  - Outros
   result := EnumeradoToStr(t, ['', '00' , '10' , '20' , '30' , '40' , '41' , '50' , '51' ,
-                               '60' , '70' , '80' , '81', '90', '91', 'SN',
+                               '60' , '70' , '80' , '81', '90', '90', 'SN',
                                '10', '90', '41', '60'],
                               [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51,
                               cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,

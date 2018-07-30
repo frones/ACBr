@@ -659,7 +659,7 @@ begin
   begin
     lSequencia.Caption := IntToStrZero(nItem,3);
     lTotalItem.Caption := FormatFloatBr(Prod.vProd);
-    mvUnCom := IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom)
+    mvUnCom := IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom);
 
     if (Length( Trim( Prod.cEAN ) ) > 0) and (ACBrSATExtrato.UsaCodigoEanImpressao) then
       sCodigo := Trim(Prod.cEAN)

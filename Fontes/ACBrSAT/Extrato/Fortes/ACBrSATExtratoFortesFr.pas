@@ -143,6 +143,7 @@ type
     lNumSAT: TRLLabel;
     lTitSAT: TRLLabel;
     bcChaveAcesso1: TRLBarcode;
+    lSequencia: TRLLabel;
     lTitDeducISSQN: TRLLabel;
     lTitSubTotal: TRLLabel;
     lTitDesconto: TRLLabel;
@@ -152,6 +153,7 @@ type
     lTitBaseCalcISSQN: TRLLabel;
     lTotal: TRLLabel;
     lTroco: TRLLabel;
+    lTotalItem: TRLLabel;
     lTotDescontos: TRLLabel;
     mDestEnt: TRLMemo;
     mEndEnt: TRLMemo;
@@ -540,19 +542,14 @@ end;
 function TACBrSATExtratoFortesFr.CalcularCaractesWidth(Canvas: TCanvas;
   WidthTotal: Integer): Integer;
 var
-  maxCaracter : Integer;
-  LinhaAjustada : String;
+  LinhaExemplo : String;
 begin
-  maxCaracter := 1;
-  LinhaAjustada := '*';
+  LinhaExemplo := '*';
 
-  while (Canvas.TextWidth(LinhaAjustada) < WidthTotal) do
-  begin
-    LinhaAjustada := LinhaAjustada + '*';
-    maxCaracter := maxCaracter + 1;
-  end;
+  while (Canvas.TextWidth(LinhaExemplo) < WidthTotal) do
+    LinhaExemplo := LinhaExemplo + '*';
 
-  Result := maxCaracter-2;
+  Result := Length(LinhaExemplo)-2
 end;
 
 procedure TACBrSATExtratoFortesFr.rlVendaBeforePrint(Sender: TObject;
@@ -636,7 +633,7 @@ end;
 procedure TACBrSATExtratoFortesFr.rlbDetItemBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  LinhaItem, LinhaTotal, sCodigo, sDescricao, sVlrImpostos: String;
+  LinhaItem, sCodigo, sDescricao, sVlrImpostos, mvUnCom: String;
   nTamDescricao, maxCaracter: Integer;
   {$IFNDEF FPC}
     BMP : TBitmap;
@@ -655,12 +652,15 @@ begin
       BMP.Free;
     end;
   {$ELSE}
-    maxCaracter := CalcularCaractesWidth(mLinhaItem.Canvas , mLinhaItem.Width);
+    maxCaracter := CalcularCaractesWidth(mLinhaItem.Canvas, mLinhaItem.Width);
   {$ENDIF}
-
 
   with ACBrSATExtrato.CFe.Det.Items[fNumItem] do
   begin
+    lSequencia.Caption := IntToStrZero(nItem,3);
+    lTotalItem.Caption := FormatFloatBr(Prod.vProd);
+    mvUnCom := IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom)
+
     if (Length( Trim( Prod.cEAN ) ) > 0) and (ACBrSATExtrato.UsaCodigoEanImpressao) then
       sCodigo := Trim(Prod.cEAN)
     else
@@ -669,16 +669,15 @@ begin
     if Imposto.vItem12741 > 0 then
       sVlrImpostos := ' ('+FormatFloatBr(Imposto.vItem12741)+') '
     else
-      sVlrImpostos := ' ';
+      sVlrImpostos := '';
 
     if ACBrSATExtrato.ImprimeEmUmaLinha then
     begin
-      LinhaItem := IntToStrZero(nItem,3) + ' ' + sCodigo +
-                   ' ' + '[DesProd] ' +  ACBrSATExtrato.FormatQuantidade(Prod.qCom, False) + ' ' +
+      LinhaItem := sCodigo + ' [DesProd] ' +
+                   ACBrSATExtrato.FormatQuantidade(Prod.qCom, False) + ' ' +
                    Trim( Prod.uCom) + ' X ' +
-                   FormatFloatBr(Prod.vUnCom, IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom)) +
-                   sVlrImpostos +
-                   FormatFloatBr( Prod.vProd );
+                   FormatFloatBr(Prod.vUnCom, mvUnCom) +
+                   sVlrImpostos;
 
       // acerta tamanho da descrição
       nTamDescricao := maxCaracter - Length(LinhaItem);
@@ -690,25 +689,20 @@ begin
     end
     else
     begin
-      LinhaItem := IntToStrZero(nItem,3) + ' ' +
-                               sCodigo + ' ' +
-                               Trim(Prod.xProd);
-
+      LinhaItem := sCodigo + ' ' + Trim(Prod.xProd);
       if Trim(infAdProd) <> '' then
-        LinhaItem := LinhaItem + '-'+ StringReplace( infAdProd, ';',#13,[rfReplaceAll]);
+        LinhaItem := LinhaItem + '-'+ StringReplace( infAdProd, ';', sLineBreak, [rfReplaceAll]);
 
       mLinhaItem.Lines.Add(LinhaItem);
 
       sVlrImpostos := sVlrImpostos + '|';
       //Centraliza os valores. A fonte dos itens foi mudada para Courier New, Pois esta o espaço tem o mesmo tamanho dos demais caractere.
-      LinhaTotal  := '|'+ ACBrSATExtrato.FormatQuantidade(Prod.qCom, False) +'|'+
-                     Trim(Prod.uCom) + ' X ' +
-                     FormatFloatBr(Prod.vUnCom, IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom)) +'|'+
-                     sVlrImpostos +
-                     FormatFloatBr(Prod.vProd) ;
-      LinhaTotal  := PadSpace(LinhaTotal, maxCaracter-9, '|') ;
-
-      mLinhaItem.Lines.Add(LinhaTotal);
+      LinhaItem  := ACBrSATExtrato.FormatQuantidade(Prod.qCom, False) +'|'+
+                    Trim(Prod.uCom) + ' X ' +
+                    FormatFloatBr(Prod.vUnCom, mvUnCom) +'|'+
+                    sVlrImpostos + '|';
+      LinhaItem  := PadSpace(LinhaItem, maxCaracter, '|') ;
+      mLinhaItem.Lines.Add(LinhaItem);
     end;
   end;
 end;

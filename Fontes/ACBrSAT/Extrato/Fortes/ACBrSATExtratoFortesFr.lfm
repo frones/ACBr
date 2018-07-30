@@ -12,7 +12,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.8.4.0'
   object rlVenda: TRLReport
     Left = 32
     Height = 1512
@@ -290,7 +290,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       OnDataRecord = rlsbDetItemDataRecord
       object rlbDetItem: TRLBand
         Left = 0
-        Height = 12
+        Height = 24
         Top = 0
         Width = 286
         AutoSize = True
@@ -299,21 +299,42 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
         BeforePrint = rlbDetItemBeforePrint
-        object mLinhaItem: TRLMemo
-          Left = 0
-          Height = 12
+        object lTotalItem: TRLLabel
+          Left = 242
+          Height = 24
           Top = 0
-          Width = 286
-          Align = faTop
+          Width = 44
+          Align = faClientRight
+          Alignment = taRightJustify
+          Caption = '99.999,99'
+          Layout = tlBottom
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object lSequencia: TRLLabel
+          Left = 0
+          Height = 24
+          Top = 0
+          Width = 18
+          Align = faClientLeft
+          Caption = '001'
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object mLinhaItem: TRLMemo
+          Left = 18
+          Height = 24
+          Top = 0
+          Width = 222
+          Anchors = [fkLeft, fkRight]
           Behavior = [beSiteExpander]
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Courier New'
-          Font.Style = [fsBold]
           Lines.Strings = (
-            '999999999 DESCRICAO PRODUTO 99,999 UN x 999,999 (99,99)'
+            '9999999999999 DESCRICAO DO PRODUTO 99,999 UN x 999,999 (99,99)'
           )
-          ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0
@@ -323,7 +344,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbDescItem: TRLBand
         Left = 0
         Height = 24
-        Top = 12
+        Top = 24
         Width = 286
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -391,7 +412,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbOutroItem: TRLBand
         Left = 0
         Height = 24
-        Top = 36
+        Top = 48
         Width = 286
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -459,7 +480,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbDeducISSQN: TRLBand
         Left = 0
         Height = 24
-        Top = 60
+        Top = 72
         Width = 286
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -527,7 +548,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbSubTotal: TRLBand
         Left = 0
         Height = 14
-        Top = 91
+        Top = 103
         Width = 286
         AutoSize = True
         BandType = btSummary
@@ -568,7 +589,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbDescontos: TRLBand
         Left = 0
         Height = 14
-        Top = 105
+        Top = 117
         Width = 286
         AutoSize = True
         BandType = btSummary
@@ -609,7 +630,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbAcrescimos: TRLBand
         Left = 0
         Height = 14
-        Top = 119
+        Top = 131
         Width = 286
         AutoSize = True
         BandType = btSummary
@@ -650,7 +671,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbTotal: TRLBand
         Left = 0
         Height = 24
-        Top = 133
+        Top = 145
         Width = 286
         AutoSize = True
         BandType = btSummary
@@ -695,7 +716,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object rlbGap: TRLBand
         Left = 0
         Height = 7
-        Top = 84
+        Top = 96
         Width = 286
         BandType = btSummary
         RealBounds.Left = 0

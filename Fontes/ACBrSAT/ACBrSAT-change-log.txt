@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2018
+-- ACBrSATExtratoFortesFr, ACBrSATExtratoESCPOS --
+[-] Correção da impressão do Valor Líquido do Item, quando o mesmo tiver
+    Desconto e Acréscimo
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=45160
+    (por: DSA e Wladimir)
+
 06/04/2018
 -- ACBrSATClass --
 [*] Ajuste no método: TACBrSATResposta.SetRetornoStr, para suportar Strings

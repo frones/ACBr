@@ -723,7 +723,7 @@ begin
     if PrintIt then
     begin
       lDesconto.Caption   := FormatFloatBr(Prod.vDesc,'-,0.00');
-      lDescValLiq.Caption := FormatFloatBr(Prod.vProd-Prod.vDesc);
+      lDescValLiq.Caption := FormatFloatBr(Prod.vProd - Prod.vDesc);
     end;
   end;
 end;
@@ -738,7 +738,7 @@ begin
     if PrintIt then
     begin
       lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+,0.00');
-      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro);
+      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd + Prod.vOutro - Prod.vDesc);
     end;
   end;
 

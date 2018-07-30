@@ -259,10 +259,12 @@ begin
 
     if ImprimeDescAcrescItem then
     begin
+      VlrLiquido := CFe.Det.Items[i].Prod.vProd;
+
       // desconto
       if CFe.Det.Items[i].Prod.vDesc > 0 then
       begin
-        VlrLiquido := CFe.Det.Items[i].Prod.vProd - CFe.Det.Items[i].Prod.vDesc;
+        VlrLiquido := VlrLiquido - CFe.Det.Items[i].Prod.vDesc;
 
         LinhaCmd := '</ae><c>' + padSpace(
             'desconto ' + padLeft(FormatFloatBr(CFe.Det.Items[i].Prod.vDesc, '-,0.00'), 15, ' ')
@@ -274,7 +276,7 @@ begin
       // ascrescimo
       if CFe.Det.Items[i].Prod.vOutro > 0 then
       begin
-        VlrLiquido := CFe.Det.Items[i].Prod.vProd + CFe.Det.Items[i].Prod.vOutro;
+        VlrLiquido := VlrLiquido + CFe.Det.Items[i].Prod.vOutro;
 
         LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
             'acréscimo ' + padLeft(FormatFloatBr(CFe.Det.Items[i].Prod.vOutro, '+,0.00'), 15, ' ')

@@ -47,7 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 26/06/2018 ver: 0.0.244
+Data 31/07/2018 ver: 0.0.245
+
+31-07-2018 -- ACBrBoleto
+[+] Adicionado as Funções para Leitura e Escrita arquivo.INI, para alimentar o componente (utilizado pelo ACBrMonitor) 
 
 03-07-2018 -- ACBrBancoSantander
 [*] Ajuste na leitura do Arquivo Retorno240 (Validar Tamanho campo NossoNumero)

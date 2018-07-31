@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2018
+--ACBrGNReGuias.pas--
+[+] Implementado o método para a leitura de arquivo INI, que é utilizado no
+    ACBrMonitor Plus
+   Por: Italo Jurisato Junior
+
 --ACBrGNReGuiaRL.pas--
 [-] Correção de AV na Guia do Fortes, contribuição: BigWings
 	http://www.projetoacbr.com.br/forum/topic/36490-impress%C3%A3o-gnre-erro-no-lfm/

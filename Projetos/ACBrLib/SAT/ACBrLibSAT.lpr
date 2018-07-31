@@ -24,7 +24,10 @@ exports
   SAT_ConfigLer,
   SAT_ConfigGravar,
   SAT_ConfigLerValor,
-  SAT_ConfigGravarValor;
+  SAT_ConfigGravarValor,
+
+  SAT_InicializarSAT,
+  SAT_DesInicializar;
 
 begin
   {$IFDEF DEBUG}

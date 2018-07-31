@@ -192,6 +192,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
+        <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
       </local>
     </RunParams>
     <RequiredPackages Count="6">
@@ -270,7 +271,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="ACBrLibSat"/>
+      <Filename Value="bin\Cdecl\ACBrSAT32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

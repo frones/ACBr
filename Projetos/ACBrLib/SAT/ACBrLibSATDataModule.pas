@@ -35,9 +35,9 @@ uses
 
 type
 
-  { TLibSATDM }
+  { TLibSatDM }
 
-  TLibSATDM = class(TDataModule)
+  TLibSatDM = class(TDataModule)
     ACBrIntegrador1: TACBrIntegrador;
     ACBrSAT1: TACBrSAT;
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
@@ -64,19 +64,19 @@ uses
 
 {$R *.lfm}
 
-{ TLibSATDM }
+{ TLibSatDM }
 
-procedure TLibSATDM.DataModuleCreate(Sender: TObject);
+procedure TLibSatDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
 end;
 
-procedure TLibSATDM.DataModuleDestroy(Sender: TObject);
+procedure TLibSatDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
 end;
 
-procedure TLibSATDM.AplicarConfiguracoes;
+procedure TLibSatDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibSATConfig;
 begin
@@ -167,20 +167,20 @@ begin
   end;
 end;
 
-procedure TLibSATDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
+procedure TLibSatDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
   Traduzir: Boolean);
 begin
   if Assigned(pLib) then
     pLib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
-procedure TLibSATDM.Travar;
+procedure TLibSatDM.Travar;
 begin
   GravarLog('Travar', logParanoico);
   FLock.Acquire;
 end;
 
-procedure TLibSATDM.Destravar;
+procedure TLibSatDM.Destravar;
 begin
   GravarLog('Destravar', logParanoico);
   FLock.Release;

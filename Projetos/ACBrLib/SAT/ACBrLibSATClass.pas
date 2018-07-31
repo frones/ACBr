@@ -47,7 +47,7 @@ type
 
   TACBrLibSAT = class(TACBrLib)
   private
-    FSATDM: TLibSATDM;
+    FSatDM: TLibSatDM;
 
   protected
     procedure Inicializar; override;
@@ -58,7 +58,7 @@ type
     constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     destructor Destroy; override;
 
-    property SATDM: TLibSATDM read FSATDM;
+    property SatDM: TLibSatDM read FSatDM;
   end;
 
   {%region Declaração da funções}
@@ -85,13 +85,17 @@ type
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   {%endregion}
 
+  {%region Ativar}
+  function SAT_InicializarSAT: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  function SAT_DesInicializar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+{%endregion}
+
   {%endregion}
 
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig,
-  ACBrSAT;
+  ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig;
 
 { TACBrLibSAT }
 constructor TACBrLibSAT.Create(ArqConfig: string; ChaveCrypt: ansistring);
@@ -100,12 +104,12 @@ begin
   fpNome := CLibSATNome;
   fpVersao := CLibSATVersao;
 
-  FSATDM := TLibSATDM.Create(nil);
+  FSatDM := TLibSatDM.Create(nil);
 end;
 
 destructor TACBrLibSAT.Destroy;
 begin
-  FSATDM.Free;
+  FSatDM.Free;
   inherited Destroy;
 end;
 
@@ -124,7 +128,7 @@ end;
 procedure TACBrLibSAT.Executar;
 begin
   inherited Executar;
-  FSATDM.AplicarConfiguracoes;
+  FSatDM.AplicarConfiguracoes;
 end;
 
 { ACBrLibSAT }
@@ -183,6 +187,60 @@ function SAT_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_ConfigGravarValor(eSessao, eChave, eValor);
+end;
+{%endregion}
+
+{%region Ativar}
+function SAT_InicializarSAT: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('POS_Ativar', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+      try
+        SatDM.ACBrSAT1.Inicializar;
+        Result := SetRetorno(ErrOK);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_DesInicializar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('SAT_DesInicializar', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+      try
+        SatDM.ACBrSAT1.DesInicializar;
+        Result := SetRetorno(ErrOK);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
 end;
 {%endregion}
 

@@ -63,51 +63,10 @@ function SAT_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%endregion}
 
 {%region Ativar}
-function SAT_Ativar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_Desativar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-{%endregion}
-
-{%region Impressão}
-function SAT_Imprimir(eString: PChar; PulaLinha, DecodificarTags, CodificarPagina: Boolean; Copias: Integer): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_ImprimirLinha(eString: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_ImprimirCmd(eComando: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_ImprimirTags: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-{%endregion}
-
-{%region Diversos}
-function SAT_TxRx(eCmd: PChar; BytesToRead: Byte; ATimeOut: Integer; WaitForTerminator: Boolean;
-  const sResSATta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_Zerar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
 function SAT_InicializarSAT: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
 
-function SAT_Reset: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_PularLinhas(NumLinhas: Integer): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_CortarPapel(Parcial: Boolean): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_AbrirGaveta: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_LerInfoImpressora(const sResSATta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
-
-function SAT_RetornarTags(const sResSATta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+function SAT_DesInicializar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
 {%endregion}
-
 
 implementation
 

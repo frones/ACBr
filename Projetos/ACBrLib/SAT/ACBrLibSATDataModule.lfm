@@ -1,4 +1,4 @@
-object LibSATDM: TLibSATDM
+object LibSATDM: TLibSatDM
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False

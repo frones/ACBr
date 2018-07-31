@@ -39,8 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  synachar,
-  ACBrLibResposta;
+  synachar;
 
 type
 

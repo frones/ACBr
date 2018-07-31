@@ -26,7 +26,6 @@ type
     procedure Test_SAT_ConfigLerValor;
     procedure Test_SAT_ConfigGravarValor;
     procedure Test_SAT_InicializarConfigGravarValoresEFinalizar;
-    procedure Test_SAT_InicializarAtivarEFinalizar;
   end;
 
 implementation
@@ -157,32 +156,9 @@ begin
   AssertEquals(ErrOk, SAT_Inicializar('',''));
 
   AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChavePorta, PChar(ApplicationPath+'teste.txt')));
   AssertEquals(ErrOK, SAT_ConfigGravar(''));
   AssertEquals(ErrOK, SAT_ConfigLer(''));
-  AssertEquals(ErrOK, SAT_Ativar);
-
-  AssertEquals(ErrOK, SAT_Finalizar());
-end;
-
-procedure TTestACBrSATLib.Test_SAT_InicializarAtivarEFinalizar;
-var
-  Bufflen: Integer;
-  AStr: String;
-begin
-  AssertEquals(ErrOk, SAT_Inicializar('',''));
-
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
-  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChavePorta, ''));
-  AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_ConfigLer(''));
-  AssertEquals(ErrExecutandoMetodo, SAT_Ativar);
-
-  // Checando se é SATsivel pegar a descrição do erro //
-  Bufflen := 255;
-  AStr := Space(Bufflen);
-  AssertEquals(ErrExecutandoMetodo, SAT_UltimoRetorno(PChar(AStr), bufflen));
-  AssertEquals('Porta não definida', Trim(AStr));
+  AssertEquals(ErrOK, SAT_InicializarSAT);
 
   AssertEquals(ErrOK, SAT_Finalizar());
 end;

@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2018
+-- ACBrBPeDABPeESCPOS --
+[*] https://www.projetoacbr.com.br/forum/topic/45081-dabpe-erro-no-preenchimento-dos-dados-da-agencia-emitente/
+   Por: Moacir
+
 26/07/2018
 -- pcnBPeW --
 [*] https://www.projetoacbr.com.br/forum/topic/45037-tag-dhvalidade-duplicada/

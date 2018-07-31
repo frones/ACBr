@@ -184,17 +184,20 @@ end;
 
 procedure TACBrBPeDABPeESCPOS.GerarCabecalhoAgencia;
 begin
-  FPosPrinter.Buffer.Add('</zera></ce></logo>');
+  if trim(FpBPe.agencia.xNome) <> '' then
+  begin
+    FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
-  FPosPrinter.Buffer.Add('</ce><c>'+ FormatarCNPJ(FpBPe.Emit.CNPJ) + ' <n>' + FpBPe.Emit.xNome + '</n>');
+    FPosPrinter.Buffer.Add('</ce><c>' + FormatarCNPJ(FpBPe.agencia.CNPJ) + ' <n>' + FpBPe.agencia.xNome + '</n>');
 
-  FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpBPe.Emit.EnderEmit.xLgr) + ', ' +
-    Trim(FpBPe.Emit.EnderEmit.nro) + '  ' +
-    Trim(FpBPe.Emit.EnderEmit.xCpl) + '  ' +
-    Trim(FpBPe.Emit.EnderEmit.xBairro) +  ' ' +
-    Trim(FpBPe.Emit.EnderEmit.xMun) + '-' + Trim(FpBPe.Emit.EnderEmit.UF)
-    , FPosPrinter.ColunasFonteCondensada)
-  );
+    FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpBPe.agencia.EnderAgencia.xLgr) + ', ' +
+      Trim(FpBPe.agencia.EnderAgencia.nro) + '  ' +
+      Trim(FpBPe.agencia.EnderAgencia.xCpl) + '  ' +
+      Trim(FpBPe.agencia.EnderAgencia.xBairro) + ' ' +
+      Trim(FpBPe.agencia.EnderAgencia.xMun) + '-' + Trim(FpBPe.agencia.EnderAgencia.UF)
+      , FPosPrinter.ColunasFonteCondensada)
+    );
+  end;
 end;
 
 procedure TACBrBPeDABPeESCPOS.GerarCabecalhoEmitente;
@@ -204,15 +207,14 @@ begin
 //  if (Trim(FpBPe.Emit.xFant) <> '') and ImprimeNomeFantasia then
 //     FPosPrinter.Buffer.Add('</ce><c><n>' +  FpBPe.Emit.xFant + '</n>');
 
-  FPosPrinter.Buffer.Add('</ce><c>'+ FpBPe.Emit.xNome);
-  FPosPrinter.Buffer.Add('</ce><c>'+ FormatarCNPJ(FpBPe.Emit.CNPJ) + ' I.E.: ' +
+  FPosPrinter.Buffer.Add('</ce><c>' + FpBPe.Emit.xNome);
+  FPosPrinter.Buffer.Add('</ce><c>' + FormatarCNPJ(FpBPe.Emit.CNPJ) + ' I.E.: ' +
                          FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF));
-
 
   FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpBPe.Emit.EnderEmit.xLgr) + ', ' +
     Trim(FpBPe.Emit.EnderEmit.nro) + '  ' +
     Trim(FpBPe.Emit.EnderEmit.xCpl) + '  ' +
-    Trim(FpBPe.Emit.EnderEmit.xBairro) +  ' ' +
+    Trim(FpBPe.Emit.EnderEmit.xBairro) + ' ' +
     Trim(FpBPe.Emit.EnderEmit.xMun) + '-' + Trim(FpBPe.Emit.EnderEmit.UF)
     , FPosPrinter.ColunasFonteCondensada)
   );

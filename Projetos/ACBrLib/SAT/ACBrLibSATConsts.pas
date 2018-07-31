@@ -44,11 +44,72 @@ const
   CLibSATNome = 'ACBrLibSAT';
   CLibSATVersao = '0.0.1';
 
+  CSessaoSAT = 'SAT';
+  CChaveModelo = 'Modelo';
+  CChaveNomeDLL = 'NomeDLL';
+  CChaveValidarNumero = 'ValidarNumeroSessaoResposta';
+  CChaveNumeroTentativas = 'NumeroTentativasValidarSessao';
+  CChaveMFe = 'IsMFe';
+
+  CSessaoSATConfig = 'SATConfig';
+  CChaveVersaoDadosEnt = 'infCFe_versaoDadosEnt';
+  CChaveIdeCNPJ = 'ide_CNPJ';
+  CChaveIdeNumeroCaixa = 'ide_numeroCaixa';
+  CChaveIdeTpAmb = 'ide_tpAmb';
+  CChaveEmitCNPJ = 'emit_CNPJ';
+  CChaveEmitIE = 'emit_IE';
+  CChaveEmitIM = 'emit_IM';
+  CChaveEmitcRegTrib = 'emit_cRegTrib';
+  CChaveEmitcRegTribISSQN = 'emit_cRegTribISSQN';
+  CChaveEmitIndRatISSQN = 'emit_indRatISSQN';
+  CChaveEhUTF8 = 'EhUTF8';
+  CChavePaginaDeCodigo = 'PaginaDeCodigo';
+  CChaveArqSchema = 'ArqSchema';
+  CChaveXmlSignLib = 'XmlSignLib';
+
+  CSessaoSATConfigArquivos = 'SATConfigArquivos';
+  CChaveSalvarCFe = 'SalvarCFe';
+  CChaveSalvarCFeCanc = 'SalvarCFeCanc';
+  CChaveSalvarEnvio = 'SalvarEnvio';
+  CChaveSepararPorCNPJ = 'SepararPorCNPJ';
+  CChaveSepararPorModelo = 'SepararPorModelo';
+  CChaveSepararPorAno = 'SepararPorAno';
+  CChaveSepararPorMes = 'SepararPorMes';
+  CChaveSepararPorDia = 'SepararPorDia';
+  CChavePastaCFeVenda = 'PastaCFeVenda';
+  CChavePastaCFeCancelamento = 'PastaCFeCancelamento';
+  CChavePastaEnvio = 'PastaEnvio';
+  CChavePrefixoArqCFe = 'PrefixoArqCFe';
+  CChavePrefixoArqCFeCanc = 'PrefixoArqCFeCanc';
+
+  CSessaoSATRede = 'SATRede';
+  CChaveTipoInter = 'tipoInter';
+  CChaveSSID = 'SSID';
+  CChaveSeg = 'seg';
+  CChaveCodigo = 'codigo';
+  CChaveTipoLan = 'tipoLan';
+  CChaveLanIP = 'lanIP';
+  CChaveLanMask = 'lanMask';
+  CChaveLanGW = 'lanGW';
+  CChaveLanDNS1 = 'lanDNS1';
+  CChaveLanDNS2 = 'lanDNS2';
+  CChaveUsuario = 'usuario';
+  CChaveSenha = 'senha';
+  CChaveProxy = 'proxy';
+  CChaveProxyIp = 'proxy_ip';
+  CChaveProxyPorta = 'proxy_porta';
+  CChaveProxyUser = 'proxy_user';
+  CChaveProxySenha = 'proxy_senha';
+
+  CSessaoExtrato = 'Extrato';
+  CChaveTipo = 'Tipo';
+
   CSessaoCFe = 'CFE';
   CSessaoENVIO = 'ENVIO';
   CSessaoCFeCancelado = 'CANCELAMENTO';
   CSessaoTESTEFIMAFIM = 'TESTEFIMAFIM';
   CSessaoStatusSAT = 'STATUSSAT';
+
 
 implementation
 

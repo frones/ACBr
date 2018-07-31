@@ -191,7 +191,6 @@ type
     FSistema: TSistemaConfig;
     FSoftwareHouse: TEmpresaConfig;
     FEmissor: TEmpresaConfig;
-    FChaveCrypt: AnsiString;
     FTipoResposta: TACBrLibRespostaTipo;
 
     procedure SetNomeArquivo(AValue: String);
@@ -199,6 +198,8 @@ type
     procedure VerificarSessaoEChave(ASessao, AChave: String);
 
   protected
+    FChaveCrypt: AnsiString;
+
     function AtualizarArquivoConfiguracao: Boolean; virtual;
     procedure AplicarConfiguracoes; virtual;
 

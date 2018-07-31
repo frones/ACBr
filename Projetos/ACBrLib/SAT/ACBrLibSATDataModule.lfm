@@ -1,0 +1,66 @@
+object LibSATDM: TLibSATDM
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  OldCreateOrder = False
+  Height = 257
+  HorizontalOffset = 388
+  VerticalOffset = 250
+  Width = 393
+  PPI = 96
+  object ACBrSAT1: TACBrSAT
+    Config.infCFe_versaoDadosEnt = 0.07
+    Config.ide_numeroCaixa = 0
+    Config.ide_tpAmb = taHomologacao
+    Config.emit_cRegTrib = RTSimplesNacional
+    Config.emit_cRegTribISSQN = RTISSMicroempresaMunicipal
+    Config.emit_indRatISSQN = irSim
+    Config.EhUTF8 = False
+    Config.PaginaDeCodigo = 0
+    Config.XmlSignLib = xsNone
+    ConfigArquivos.PrefixoArqCFe = 'AD'
+    ConfigArquivos.PrefixoArqCFeCanc = 'ADC'
+    Rede.tipoInter = infETHE
+    Rede.seg = segNONE
+    Rede.tipoLan = lanDHCP
+    Rede.proxy = 0
+    Rede.proxy_porta = 0
+    left = 61
+    top = 80
+  end
+  object ACBrSATWS1: TACBrSATWS
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    left = 200
+    top = 80
+  end
+  object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
+    Mask_qCom = ',0.0000'
+    Mask_vUnCom = ',0.000'
+    SoftwareHouse = 'Projeto ACBr'
+    Site = 'http://www.projetoacbr.com.br'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    left = 200
+    top = 152
+  end
+  object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
+    Mask_qCom = ',0.0000'
+    Mask_vUnCom = ',0.000'
+    SoftwareHouse = 'Projeto ACBr'
+    Site = 'http://www.projetoacbr.com.br'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    left = 61
+    top = 152
+  end
+  object ACBrIntegrador1: TACBrIntegrador
+    PastaInput = 'C:\Integrador\Input\'
+    PastaOutput = 'C:\Integrador\Output\'
+    left = 61
+    top = 24
+  end
+end

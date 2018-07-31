@@ -65,6 +65,7 @@ const
   CChaveSenha = 'Senha';
   CChavePorta = 'Porta';
   CChaveDevice = 'Device';
+  CChaveIntegrador = 'Integrador';
 
   CSessaoSistema = 'Sistema';
   CChaveVersao = 'Versao';
@@ -110,6 +111,10 @@ const
   CChaveImprimeCodigoEAN = 'ImprimeCodigoEAN';
   CChaveImprimeDescAcrescItem = 'ImprimeDescAcrescItem';
   CChaveExpandeLogoMarca = 'ExpandeLogoMarca';
+
+  CChaveArqLog = 'ArqLog';
+  CChavePastaInput = 'PastaInput';
+  CChavePastaOutput = 'PastaOutput';
 
 resourcestring
   SErrLibSemNome = 'Nome da Biblioteca não foi definido';

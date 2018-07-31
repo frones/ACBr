@@ -38,22 +38,41 @@ unit ACBrLibResposta;
 interface
 
 uses
-  SysUtils, Classes, laz2_DOM, laz2_XMLWrite,
-  inifiles, fpjson, jsonparser, TypInfo, rttiutils;
+  SysUtils, Classes, laz2_DOM, laz2_XMLWrite, StrUtils,
+  inifiles, fpjson, jsonparser, TypInfo, rttiutils,
+  ACBrUtil;
 
 type
+  TACBrCollection = class abstract (TCollection)
+  private
+    FSessao: String;
+    FSessaoItem: String;
+
+  public
+    constructor Create(AItemClass: TCollectionItemClass; const ASessao: String; const ASessaoItem: String = ''); reintroduce;
+
+    property Sessao: String read FSessao;
+    property SessaoItem: String read FSessaoItem;
+
+  end;
 
   { TACBrLibResposta }
   TACBrLibRespostaTipo = (resINI, resXML, resJSON);
 
-  TACBrLibResposta = class
+  TACBrLibResposta = class abstract
   private
-    FSessao: String;
     FTipo: TACBrLibRespostaTipo;
+
   protected
+    FSessao: String;
+
     function GerarXml: String;
     function GerarIni: String;
     function GerarJson: String;
+
+    procedure GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode; const Target: TObject); virtual;
+    procedure GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean = false); virtual;
+    procedure GravarJson(const JSON: TJSONObject; const ASessao: String; const Target: TObject); virtual;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
 
@@ -64,6 +83,17 @@ type
 
 implementation
 
+{ TACBrCollection }
+constructor TACBrCollection.Create(AItemClass: TCollectionItemClass; const ASessao: String; const ASessaoItem: String);
+begin
+  inherited Create(AItemClass);
+
+  FSessao := ASessao;
+  FSessaoItem := ASessaoItem;
+end;
+
+{ TACBrLibResposta }
+
 constructor TACBrLibResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create;
@@ -73,22 +103,39 @@ end;
 
 function TACBrLibResposta.GerarXml: String;
 var
-  PropList: TPropInfoList;
-  i: Integer;
-  PI: PPropInfo;
-  PT: PTypeInfo;
   xDoc: TXMLDocument;
-  RootNode, ParentNode, Node: TDomNode;
+  RootNode: TDomNode;
   Stream: TMemoryStream;
 begin
   xDoc := TXMLDocument.Create;
-  PropList := TPropInfoList.Create(Self, tkProperties);
 
   try
     RootNode := xDoc.CreateElement(Sessao);
     xDoc.AppendChild(RootNode);
     RootNode := xDoc.DocumentElement;
+    GravarXml(xDoc, RootNode, Self);
+    Stream := TMemoryStream.Create();
+    WriteXML(xDoc.FirstChild, Stream);
+    SetString(Result, PChar(Stream.Memory), Stream.Size div SizeOf(char));
+  finally
+    if Stream <> nil then
+      Stream.Free;
+    if xDoc <> nil then
+      xDoc.Free;
+  end;
+end;
 
+procedure TACBrLibResposta.GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode; const Target: TObject);
+Var
+  PropList: TPropInfoList;
+  i: Integer;
+  PI: PPropInfo;
+  PT: PTypeInfo;
+  ParentNode, Node: TDomNode;
+begin
+  PropList := TPropInfoList.Create(Target, tkProperties);
+
+  try
     for i := 0 to PropList.Count - 1 do
     begin
       PI := PropList.Items[i];
@@ -100,80 +147,42 @@ begin
         tkInteger,
         tkBool,
         tkInt64:
-          Node := xDoc.CreateTextNode(IntToStr(GetOrdProp(Self, PI)));
+          Node := xDoc.CreateTextNode(IntToStr(GetOrdProp(Target, PI)));
         tkWString,
         tkUString,
         tkSString,
         tkLString,
         tkAString:
-          Node := xDoc.CreateTextNode(Trim(GetStrProp(Self, PI)));
+          Node := xDoc.CreateTextNode(Trim(GetStrProp(Target, PI)));
         tkFloat:
           if (PT = TypeInfo(TDateTime)) then
-            Node := xDoc.CreateTextNode(DateTimeToStr(GetFloatProp(Self, PI)))
+            Node := xDoc.CreateTextNode(DateTimeToStr(GetFloatProp(Target, PI)))
           else
-            Node := xDoc.CreateTextNode(FloatToStr(GetFloatProp(Self, PI)));
+            Node := xDoc.CreateTextNode(FloatToStr(GetFloatProp(Target, PI)));
       end;
       ParentNode.AppendChild(Node);
       RootNode.AppendChild(ParentNode);
     end;
-
-    Stream := TMemoryStream.Create();
-    WriteXML(xDoc.FirstChild, Stream);
-    SetString(Result, PChar(Stream.Memory), Stream.Size div SizeOf(char));
   finally
-    if Stream <> nil then
-      Stream.Free;
     if PropList <> nil then
       PropList.Free;
-    if xDoc <> nil then
-      xDoc.Free;
   end;
 end;
 
 function TACBrLibResposta.GerarIni: String;
 var
-  PropList: TPropInfoList;
-  i: Integer;
-  PI: PPropInfo;
-  PT: PTypeInfo;
   AIni: TMemIniFile;
   TList: TStringList;
 begin
   AIni := TMemIniFile.Create('');
   TList := TStringList.Create;
-  PropList := TPropInfoList.Create(Self, tkProperties);
 
   try
-    for i := 0 to PropList.Count - 1 do
-    begin
-      PI := PropList.Items[i];
-      PT := PI^.PropType;
-      case PT^.Kind of
-        tkSet,
-        tkEnumeration,
-        tkInteger,
-        tkBool,
-        tkInt64:
-          AIni.WriteInt64(Sessao, PI^.Name, GetOrdProp(Self, PI));
-        tkWString,
-        tkUString,
-        tkSString,
-        tkLString,
-        tkAString:
-          AIni.WriteString(Sessao, PI^.Name, Trim(GetStrProp(Self, PI)));
-        tkFloat:
-          if (PT = TypeInfo(TDateTime)) then
-            AIni.WriteDateTime(Sessao, PI^.Name, GetFloatProp(Self, PI))
-          else
-            AIni.WriteFloat(Sessao, PI^.Name, GetFloatProp(Self, PI));
-      end;
-    end;
+    GravarIni(AIni, Sessao, Self);
 
     AIni.GetStrings(TList);
     Result := TList.Text;
   finally
-    if PropList <> nil then
-      PropList.Free;
     if TList <> nil then
       TList.Free;
     if AIni <> nil then
@@ -181,20 +190,119 @@ begin
   end;
 end;
 
+procedure TACBrLibResposta.GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean);
+var
+  PropList: TPropInfoList;
+  i, j: Integer;
+  PI: PPropInfo;
+  PT: PTypeInfo;
+  SetValues: TSplitResult;
+  SetValue, Sessao: String;
+  SetOrdValue: Int64;
+  ClassObject: TObject;
+  CollectionObject: TCollection;
+  CollectionItem: TCollectionItem;
+begin
+  PropList := TPropInfoList.Create(Target, tkProperties);
+
+  try
+    for i := 0 to PropList.Count - 1 do
+    begin
+      PI := PropList.Items[i];
+      PT := PI^.PropType;
+      case PT^.Kind of
+        tkClass:
+          begin
+            ClassObject := GetObjectProp(Target, PI);
+            if ClassObject = nil then continue;
+
+            if (ClassObject.InheritsFrom(TCollection)) then
+            begin
+              CollectionObject := TCollection(ClassObject);
+              for j := 0 to CollectionObject.Count - 1 do
+              begin
+                CollectionItem := CollectionObject.Items[j];
+                Sessao := IfThen(IsCollection, ASessao + PI.Name, PI.Name);
+                GravarIni(AIni, Sessao + FormatFloat('000', J+1), CollectionItem, True)
+              end;
+            end
+            else
+            begin
+              if (ClassObject.InheritsFrom(TACBrLibResposta)) then
+              begin
+                Sessao := IfThen(IsCollection, ASessao + TACBrLibResposta(ClassObject).Sessao, TACBrLibResposta(ClassObject).Sessao);
+                GravarIni(AIni, Sessao, ClassObject, IsCollection)
+              end
+              else
+              begin
+                Sessao := IfThen(IsCollection, ASessao + PI.Name, PI.Name);
+                GravarIni(AIni, PI.Name, ClassObject, IsCollection);
+              end;
+            end;
+          end;
+        tkSet:
+          begin
+            SetOrdValue := 0;
+            SetValues := Split(',', GetSetProp(Target, PI, false));
+            for j := 0 to Length(SetValues) - 1 do
+            begin
+              SetOrdValue := SetOrdValue + (1 << GetEnumValue(PT, SetValue));
+            end;
+
+            AIni.WriteInt64(ASessao, PI^.Name, SetOrdValue);
+          end;
+        tkBool,
+        tkEnumeration,
+        tkInteger,
+        tkInt64:
+          AIni.WriteInt64(ASessao, PI^.Name, GetOrdProp(Target, PI));
+        tkWString,
+        tkUString,
+        tkSString,
+        tkLString,
+        tkAString:
+          AIni.WriteString(ASessao, PI^.Name, Trim(GetStrProp(Target, PI)));
+        tkFloat:
+          begin
+            if (PT = TypeInfo(TDateTime)) then
+              AIni.WriteDateTime(ASessao, PI^.Name, GetFloatProp(Target, PI))
+            else
+              AIni.WriteFloat(ASessao, PI^.Name, GetFloatProp(Target, PI));
+          end;
+      end;
+    end;
+  finally
+    if PropList <> nil then
+      PropList.Free;
+  end;
+end;
+
 function TACBrLibResposta.GerarJson: String;
+var
+  JSON: TJSONObject;
+begin
+  JSon := TJSONObject.Create;
+  try
+    GravarJson(JSon, Sessao, Self);
+    Result := JSON.AsJSON;
+  finally
+    if JSON <> nil then
+      JSON.Free;
+  end;
+end;
+
+procedure TACBrLibResposta.GravarJson(const JSON: TJSONObject; const ASessao: String; const Target: TObject);
 var
   PropList: TPropInfoList;
   i: Integer;
   PI: PPropInfo;
   PT: PTypeInfo;
-  JSON, JSONRoot: TJSONObject;
   Aux: Double;
+  JSONRoot: TJSONObject;
 begin
-  JSon := TJSONObject.Create;
   JSONRoot := TJSONObject.Create;
-  JSON.Add(Sessao, JSONRoot);
-
-  PropList := TPropInfoList.Create(Self, tkProperties);
+  JSON.Add(ASessao, JSONRoot);
+  PropList := TPropInfoList.Create(Target, tkProperties);
 
   try
     for i := 0 to PropList.Count - 1 do
@@ -207,30 +315,26 @@ begin
         tkInteger,
         tkBool,
         tkInt64:
-          JSONRoot.Add(PI^.Name, GetOrdProp(Self, PI));
+          JSONRoot.Add(PI^.Name, GetOrdProp(Target, PI));
         tkWString,
         tkUString,
         tkSString,
         tkLString,
         tkAString:
-          JSONRoot.Add(PI^.Name, Trim(GetStrProp(Self, PI)));
+          JSONRoot.Add(PI^.Name, Trim(GetStrProp(Target, PI)));
         tkFloat:
           if (PT = TypeInfo(TDateTime)) then
           begin
-            Aux := GetFloatProp(Self, PI);
-            JSONRoot.Add(Sessao, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', TDateTime(Aux)));
+            Aux := GetFloatProp(Target, PI);
+            JSONRoot.Add(PI^.Name, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', TDateTime(Aux)));
           end
           else
-            JSONRoot.Add(Sessao, GetFloatProp(Self, PI));
+            JSONRoot.Add(PI^.Name, GetFloatProp(Target, PI));
       end;
     end;
-
-    Result := JSON.AsJSON;
   finally
     if PropList <> nil then
       PropList.Free;
-    if JSON <> nil then
-      JSON.Free;
   end;
 end;
 

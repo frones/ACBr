@@ -3,8 +3,8 @@ object LibPosPrinterDM: TLibPosPrinterDM
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   Height = 314
-  HorizontalOffset = 388
-  VerticalOffset = 250
+  HorizontalOffset = -964
+  VerticalOffset = 513
   Width = 418
   PPI = 96
   object ACBrPosPrinter1: TACBrPosPrinter

@@ -148,7 +148,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="infoCp">
+              <xs:element name="infoCp" minOccurs="0">
                 <xs:annotation>
                   <xs:documentation>Informações sobre bases de cálculo, descontos e deduções de contribuições sociais devidas à Previdência Social e a Outras Entidades e Fundos, referentes à Remuneração do Período de Apuração e de Períodos Anteriores informados nos eventos S-1200, S-2299 e S-2399.</xs:documentation>
                 </xs:annotation>

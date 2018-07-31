@@ -473,7 +473,7 @@ O somatório de cada uma das rubricas cujo {codIncCP} = [31, 32, 34, 35] e {codI
                                     </xs:restriction>
                                   </xs:simpleType>
                                 </xs:element>
-                                <xs:element name="matricula">
+                                <xs:element name="matricula" minOccurs="0">
                                   <xs:simpleType>
                                     <xs:annotation>
                                       <xs:documentation>Matricula</xs:documentation>
@@ -949,7 +949,7 @@ O somatório de cada uma das rubricas cujo {codIncCP} = [31, 32, 34, 35] e {codI
                 </xs:annotation>
                 <xs:restriction base="xs:string">
                   <xs:minLength value="1"/>
-                  <xs:maxLength value="80"/>
+                  <xs:maxLength value="100"/>
                 </xs:restriction>
               </xs:simpleType>
             </xs:element>
@@ -981,7 +981,7 @@ O somatório de cada uma das rubricas cujo {codIncCP} = [31, 32, 34, 35] e {codI
                 </xs:annotation>
                 <xs:restriction base="xs:string">
                   <xs:minLength value="1"/>
-                  <xs:maxLength value="60"/>
+                  <xs:maxLength value="90"/>
                 </xs:restriction>
               </xs:simpleType>
             </xs:element>

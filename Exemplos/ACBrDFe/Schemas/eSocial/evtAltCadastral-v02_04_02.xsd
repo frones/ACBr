@@ -873,7 +873,7 @@
           </xs:annotation>
           <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
-            <xs:maxLength value="80"/>
+            <xs:maxLength value="100"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
@@ -905,7 +905,7 @@
           </xs:annotation>
           <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
-            <xs:maxLength value="60"/>
+            <xs:maxLength value="90"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
@@ -988,7 +988,7 @@
           </xs:annotation>
           <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
-            <xs:maxLength value="80"/>
+            <xs:maxLength value="100"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
@@ -1020,7 +1020,7 @@
           </xs:annotation>
           <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
-            <xs:maxLength value="60"/>
+            <xs:maxLength value="90"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>

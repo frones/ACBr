@@ -275,7 +275,7 @@ Origem S-1200, S-1202, S-1207, S-1210, S-2299, S-2399.</xs:documentation>
                 </xs:annotation>
                 <xs:restriction base="xs:string">
                   <xs:minLength value="1"/>
-                  <xs:maxLength value="80"/>
+                  <xs:maxLength value="100"/>
                 </xs:restriction>
               </xs:simpleType>
             </xs:element>
@@ -307,7 +307,7 @@ Origem S-1200, S-1202, S-1207, S-1210, S-2299, S-2399.</xs:documentation>
                 </xs:annotation>
                 <xs:restriction base="xs:string">
                   <xs:minLength value="1"/>
-                  <xs:maxLength value="60"/>
+                  <xs:maxLength value="90"/>
                 </xs:restriction>
               </xs:simpleType>
             </xs:element>

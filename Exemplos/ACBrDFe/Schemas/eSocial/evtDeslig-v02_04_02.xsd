@@ -793,7 +793,7 @@ Não preencher nos demais casos.</xs:documentation>
                                 <xs:documentation>Número do contrato de empréstimo consignado existente na Instituição Consignatária</xs:documentation>
                               </xs:annotation>
                               <xs:restriction base="xs:string">
-                                <xs:pattern value="\d{1,15}"/>
+                                <xs:pattern value="\d{1,40}"/>
                               </xs:restriction>
                             </xs:simpleType>
                           </xs:element>

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2018
+-- ACBrNFSeWebServices/ pnfsNFSeG --
+[*] Incluida condições para detectar se um determinado provedor necessita de alguma
+   configuração especifica, por exemplo: WebUser, WebSenha, WebFraseSecr, entre outras.
+Por: Italo Jurisato Junior
+
 25/07/2018
 -- ACBrNFSeNotasFiscais --
 [*] Alteração, removido o provedor Betha da lista de provedores que não contem

@@ -68,7 +68,6 @@ type
 
     FProtocolo: String;
 
-    FSenha: String;
     FFraseSecreta: String;
     FRazaoSocial: String;
 
@@ -103,16 +102,16 @@ type
     FUserWeb: String;
     FSenhaWeb: String;
     FTipoTributacao: String;
-    FQtdTributos: Integer; //almp1
+    FQtdTributos: Integer;
     FValorNota: Currency;
-    FAliquotaSN: Currency; // mauroasl
+    FAliquotaSN: Currency;
     FAliquotaISS: Currency;
     FValorIss: Currency;
     FValorIssRetido: Currency;
-    FValorTotalTributos: Currency; //almp1
-    FDataOptanteSimples: TDateTime; //almp1
-    FExigibilidadeISS: TnfseExigibilidadeISS; //almp1
-    FRegimeEspecialTributacao: TnfseRegimeEspecialTributacao; //almp1
+    FValorTotalTributos: Currency;
+    FDataOptanteSimples: TDateTime;
+    FExigibilidadeISS: TnfseExigibilidadeISS;
+    FRegimeEspecialTributacao: TnfseRegimeEspecialTributacao;
     // Layout - Equiplano
     FOptanteSimples: TnfseSimNao;
 
@@ -173,7 +172,6 @@ type
 
     property Protocolo: String     read FProtocolo     write FProtocolo;
 
-    property Senha: String         read FSenha         write FSenha;
     property FraseSecreta: String  read FFraseSecreta  write FFraseSecreta;
     property RazaoSocial: String   read FRazaoSocial   write FRazaoSocial;
 
@@ -209,14 +207,14 @@ type
     property TipoTributacao: String   read FTipoTributacao write FTipoTributacao;
     property QtdTributos: Integer     read FQtdTributos    write FQtdTributos;
     property ValorNota: Currency      read FValorNota      write FValorNota;
-    property AliquotaSN: Currency     read FAliquotaSN     write FAliquotaSN; // mauroasl
+    property AliquotaSN: Currency     read FAliquotaSN     write FAliquotaSN;
     property AliquotaIss: Currency    read FAliquotaIss    write FAliquotaIss;
     property ValorIss: Currency       read FValorIss       write FValorIss;
     property ValorIssRetido: Currency read FValorIssRetido write FValorIssRetido;
-    property ValorTotalTributos: Currency read FValorTotalTributos write FValorTotalTributos; //almp1
-    property DataOptanteSimples: TDateTime read FDataOptanteSimples write FDataOptanteSimples; //almp1
-    property ExigibilidadeISS: TnfseExigibilidadeISS read FExigibilidadeISS write FExigibilidadeISS; //almp1
-    property RegimeEspecialTributacao: TnfseRegimeEspecialTributacao read FRegimeEspecialTributacao write FRegimeEspecialTributacao; //almp1
+    property ValorTotalTributos: Currency read FValorTotalTributos write FValorTotalTributos;
+    property DataOptanteSimples: TDateTime read FDataOptanteSimples write FDataOptanteSimples;
+    property ExigibilidadeISS: TnfseExigibilidadeISS read FExigibilidadeISS write FExigibilidadeISS;
+    property RegimeEspecialTributacao: TnfseRegimeEspecialTributacao read FRegimeEspecialTributacao write FRegimeEspecialTributacao;
 
     // Layout - Equiplano
     property OptanteSimples: TnfseSimNao read FOptanteSimples write FOptanteSimples;
@@ -1005,7 +1003,7 @@ begin
 
          if Provedor = proISSDigital then
          begin
-           Gerador.wCampoNFSe(tcStr, '#5', 'Senha', 06, 10, 1, Senha, '');
+           Gerador.wCampoNFSe(tcStr, '#5', 'Senha', 06, 10, 1, SenhaWeb, '');
            Gerador.wCampoNFSe(tcStr, '#6', 'FraseSecreta', 06, 20, 1, FraseSecreta, '');
          end;
 
@@ -1206,7 +1204,7 @@ begin
 
          if Provedor = proISSDigital then
          begin
-           Gerador.wCampoNFSe(tcStr, '#5', 'Senha', 06, 10, 1, Senha, '');
+           Gerador.wCampoNFSe(tcStr, '#5', 'Senha', 06, 10, 1, SenhaWeb, '');
            Gerador.wCampoNFSe(tcStr, '#6', 'FraseSecreta', 06, 20, 1, FraseSecreta, '');
          end;
 
@@ -1367,7 +1365,7 @@ begin
 
          if Provedor = proISSDigital then
          begin
-           Gerador.wCampoNFSe(tcStr, '#5', 'Senha', 06, 10, 1, Senha, '');
+           Gerador.wCampoNFSe(tcStr, '#5', 'Senha', 06, 10, 1, SenhaWeb, '');
            Gerador.wCampoNFSe(tcStr, '#6', 'FraseSecreta', 06, 20, 1, FraseSecreta, '');
          end;
 
@@ -1704,7 +1702,7 @@ begin
          if Provedor in [proPublica, proTecnos, proFriburgo] then
            Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '')
          else if Provedor in [proISSNET] then
-           Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamentoNfse', 01, 255, 1, MotivoCanc, ''); // Filipe
+           Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamentoNfse', 01, 255, 1, MotivoCanc, '');
 
 //         if (Provedor in [proPublica]) and (CodigoCanc = 'C999') then
 //           Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '');

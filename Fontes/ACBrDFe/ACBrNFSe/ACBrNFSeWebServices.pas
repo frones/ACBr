@@ -745,7 +745,7 @@ end;
 
 procedure TNFSeWebService.DefinirEnvelopeSoap;
 var
-  Texto, DadosMsg, CabMsg, NameSpace, Bound: String;
+  Texto, DadosMsg, CabMsg, NameSpace, Bound, UsuarioWeb, SenhaWeb: String;
 begin
   {$IFDEF FPC}
    Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
@@ -759,18 +759,32 @@ begin
   begin
     Bound := IntToHex( Random( MaxInt ), 8 ) + '_Synapse_boundary';
 
+    UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebUser);
+    if UsuarioWeb = '' then
+      UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.UserWeb);
+
+    SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebSenha);
+    if SenhaWeb = '' then
+      SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.SenhaWeb);
+
+    if UsuarioWeb = '' then
+      GerarException(ACBrStr('O provedor IPM necessita que a propriedade: Configuracoes.Geral.Emitente.WebUser seja informada.'));
+
+    if SenhaWeb = '' then
+      GerarException(ACBrStr('O provedor IPM necessita que a propriedade: Configuracoes.Geral.Emitente.WebSenha seja informada.'));
+
     Texto := Texto +
       '--' + Bound + sLineBreak +
       'Content-Disposition: form-data; name=' + AnsiQuotedStr( 'login', '"') + sLineBreak +
       sLineBreak +
 
-      FPConfiguracoesNFSe.Geral.UserWeb +
+      UsuarioWeb +
 
       sLineBreak + '--' + Bound + sLineBreak +
       'Content-Disposition: form-data; name=' + AnsiQuotedStr( 'senha', '"') + sLineBreak +
       sLineBreak +
 
-      FPConfiguracoesNFSe.Geral.SenhaWeb +
+      SenhaWeb +
 
       sLineBreak + '--' + Bound + sLineBreak +
       'Content-Disposition: form-data; name=' + AnsiQuotedStr( 'f1', '"' ) + '; ' +
@@ -870,7 +884,7 @@ end;
 
 procedure TNFSeWebService.InicializarDadosMsg(AIncluiEncodingCab: Boolean);
 var
-  Texto, xmlns2, xmlns3, xmlns4: String;
+  Texto, xmlns2, xmlns3, xmlns4, UsuarioWeb, SenhaWeb: String;
   Ok: Boolean;
 begin
   FvNotas := '';
@@ -1012,21 +1026,41 @@ begin
   if FNameSpaceDad <> '' then
     FNameSpaceDad := ' ' + FNameSpaceDad;
 
+  UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebUser);
+  if UsuarioWeb = '' then
+    UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.UserWeb);
+
+  SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebSenha);
+  if SenhaWeb = '' then
+    SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.SenhaWeb);
+
+  if (UsuarioWeb = '') and
+     (FProvedor in [proCONAM, proFiorilli, proEL, proIPM, proNFSeBrasil, proSafeWeb,
+                    proSaatri, proSMARAPD, proSimplISS]) then
+    GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebUser seja informada.'));
+
   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.DadosSenha;
   // %Usuario% : Representa o nome do usuário ou CNPJ
   // %Senha%   : Representa a senha do usuário
   Texto := StringReplace(Texto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%Usuario%', FPConfiguracoesNFSe.Geral.UserWeb, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%Usuario%', UsuarioWeb, [rfReplaceAll]);
+
+  if (SenhaWeb = '') and
+     (FProvedor in [proAgili, proAgiliv2, proCONAM, proFiorilli, proEL, proIPM,
+                    proNFSeBrasil, proSaatri, proSMARAPD, proSimplISS]) then
+    GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebSenha seja informada.'));
 
   // Fazer o parse da senha, pois pode ter caracteres especiais
   case FProvedor of
-    proSimplISS: Texto := StringReplace(Texto, '%Senha%', ParseText(FPConfiguracoesNFSe.Geral.SenhaWeb, False), [rfReplaceAll]);
+    proSimplISS: Texto := StringReplace(Texto, '%Senha%', ParseText(SenhaWeb, False), [rfReplaceAll]);
 
-    proSMARAPD:  Texto := StringReplace(Texto, '%Senha%', EncodeBase64(SHA1(FPConfiguracoesNFSe.Geral.SenhaWeb)) , [rfReplaceAll]);
+    proSMARAPD:  Texto := StringReplace(Texto, '%Senha%', EncodeBase64(SHA1(SenhaWeb)) , [rfReplaceAll]);
 
-    proIPM:      Texto := StringReplace(Texto, '%Senha%', ParseText(FPConfiguracoesNFSe.Geral.SenhaWeb, False), [rfReplaceAll]);
+    proIPM:      Texto := StringReplace(Texto, '%Senha%', ParseText(SenhaWeb, False), [rfReplaceAll]);
   else
-    Texto := StringReplace(Texto, '%Senha%', FPConfiguracoesNFSe.Geral.SenhaWeb, [rfReplaceAll]);
+    Texto := StringReplace(Texto, '%Senha%', SenhaWeb, [rfReplaceAll]);
   end;
 
   FDadosSenha := Texto;
@@ -2221,8 +2255,6 @@ begin
     Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
     VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
 
-    UserWeb        := FPConfiguracoesNFSe.Geral.UserWeb;
-    SenhaWeb       := FPConfiguracoesNFSe.Geral.SenhaWeb;
     CNPJPrefeitura := OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura);
 
     // Dados do Emitente
@@ -2236,10 +2268,31 @@ begin
     if RazaoSocial = '' then
       GerarException(ACBrStr('A Razão Social não informada em: Configuracoes.Geral.Emitente.RazSocial'));
 
-    Senha        := FPConfiguracoesNFSe.Geral.Emitente.WebSenha;
-    FraseSecreta := FPConfiguracoesNFSe.Geral.Emitente.WebFraseSecr;
+    UserWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebUser);
+    if UserWeb = '' then
+      UserWeb := Trim(FPConfiguracoesNFSe.Geral.UserWeb);
+    if (UserWeb = '') and (Provedor in [proCONAM]) then
+      GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+        ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebUser seja informada.'));
 
+    SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebSenha);
+    if SenhaWeb = '' then
+      SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.SenhaWeb);
+    if (SenhaWeb = '') and (Provedor in [proCONAM, proEL, proISSDigital]) then
+      GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+        ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebSenha seja informada.'));
+
+    FraseSecreta := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebFraseSecr);
+    if (FraseSecreta = '') and (Provedor in [proISSDigital]) then
+      GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+        ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebFraseSecr seja informada.'));
+
+    // Agiliv2, CTA, Governa, proEGoverneISS
     ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
+    if (FraseSecreta = '') and
+       (Provedor in [proAgiliv2, proCTA, proGoverna, proEgoverneISS]) then
+      GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+        ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
   end;
 end;
 

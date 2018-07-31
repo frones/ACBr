@@ -76,7 +76,7 @@ protected
   function ValidarDFe( const AValue: String ): Boolean; override;
 
 public
-  constructor Create(AACBrDFe: TACBrMDFe; AXMLorFile: String ); reintroduce;
+  constructor Create(AACBrDFe: TACBrMDFe; AXMLorFile: String; ARetornaFalha: Boolean = True ); reintroduce;
 end;
 
 { TACBrCarregarMDFeEvento }
@@ -972,9 +972,9 @@ begin
                         + AValue + CExtensaoXmlMdfe ;
 end;
 
-constructor TACBrCarregarMDFe.Create(AACBrDFe: TACBrMDFe; AXMLorFile: String);
+constructor TACBrCarregarMDFe.Create(AACBrDFe: TACBrMDFe; AXMLorFile: String; ARetornaFalha: Boolean);
 begin
-  inherited Create(AACBrDFe, AXMLorFile);
+  inherited Create(AACBrDFe, AXMLorFile, ARetornaFalha);
 end;
 
 { TACBrCarregarMDFeEvento }
@@ -1520,7 +1520,7 @@ begin
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
     ACBrMDFe.Manifestos.Clear;
-    CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, AXML);
+    CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, AXML, False);
     try
       if (ACBrMDFe.Manifestos.Count = 0) then
       begin

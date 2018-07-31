@@ -43,6 +43,26 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2018
+[*] DoACBrNFeUnit
+Realizado Refactory desta Unit no projeto ACBrMonitor
+
+30/07/2018
+[*] DoACBrCTeUnit
+Realizado Refactory desta Unit no projeto ACBrMonitor
+
+30/07/2018
+[*] DoSATUnit
+Realizado Refactory desta Unit no projeto ACBrMonitor
+
+30/07/2018
+[*] DoBoletoUnit / CMDUnit
+Realizado Refactory desta Unit no projeto ACBrMonitor
+
+23/07/2018
+[*] ACBrNFeUnit
+Ajustes no método NFe.NFeToTXT para geração do arquivo TXT
+
 18/07/2018
 [+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado parâmetro "ComposFatObrigatorios" para NFe4.0

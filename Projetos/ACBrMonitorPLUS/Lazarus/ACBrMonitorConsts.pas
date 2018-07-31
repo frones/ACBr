@@ -16,7 +16,7 @@ ResourceString
   SErroNFeAbrir = 'Erro ao abrir o arquivo da Nota Fiscal: %s';
   SErroNFeCarregar = 'Erro ao carregar Nota Fiscal';
 
-  SErroCTeAbrir = 'Erro ao abrir o arquivo do Conhecimento: %s';
+  SErrocteAbrir = 'Erro ao abrir o arquivo do Conhecimento: %s';
   SErroCTeCarregar = 'Erro ao carregar Conhecimento';
 
   SErroGNReAbrir = 'Erro ao abrir o arquivo da GNRe: %s';
@@ -51,6 +51,37 @@ const
   CACBrGNREServicosIni =               'ACBrGNREServicos.ini';
   CACBreSocialServicosIni =            'ACBreSocialServicos.ini';
   CACBrReinfServicosIni =              'ACBrReinfServicos.ini';
+
+  CMetodoSATAtivar =                   'ativar';
+  CMetodoInicializar =                 'inicializar';
+  CMetodoDesInicializar =              'desinicializar';
+  CMetodoAssociarAssinatura =          'associarassinatura';
+  CMetodoBloquear =                    'bloquear';
+  CMetodoDesbloquear =                 'desbloquear';
+  CMetodotrocarcodigoativacao =        'trocarcodigoativacao';
+  CMetodoConsultarSat =                'consultarsat';
+  CMetodoConsultarStatusOperacional =  'consultarstatusoperacional';
+  CMetodoConsultarSessao =             'consultarsessao';
+  CMetodoConsultarNumeroSessao =       'consultarnumerosessao';
+  CMetodoAtualizaSoftware =            'atualizasoftware';
+  CMetodoAtualizarSoftwareSAT =        'atualizarsoftwaresat';
+  CMetodoComunicarCertificado =        'comunicarcertificado';
+  CMetodoComunicarCertificadoICPBrasil='comunicarcertificadoicpbrasil';
+  CMetodoCarregarDadosVenda =          'carregardadosvenda';
+  CMetodoCarregarDadosCancelamento =   'carregardadoscancelamento';
+  CMetodoCriarCFe =                    'criarcfe';
+  CMetodoCriarEnviarCFe =              'criarenviarcfe';
+  CMetodoEnviarCFe =                   'enviarcfe';
+  CMetodoCancelarCFe =                 'cancelarcfe';
+  CMetodoImprimirExtratoVenda =        'imprimirextratovenda';
+  CMetodoImprimirExtratoResumido =     'imprimirextratoresumido';
+  CMetodoImprimirExtratoCancelamento = 'imprimirextratocancelamento';
+  CMetodoGerarImpressaoFiscalMFe =     'gerarimpressaofiscalmfe';
+  CMetodoGerarPDFExtratoVenda =        'gerarpdfextratovenda';
+  CMetodoExtrairLogs =                 'extrairlogs';
+  CMetodoTesteFimaFim =                'testefimafim';
+  CMetodoSetNumeroSessao =             'setnumerosessao';
+  CMetodoSetlogomarcaSAT =             'setlogomarca';
 
   CMetodostatusservico =               'statusservico';
   CMetodoValidarmdfe =                 'validarmdfe';
@@ -99,6 +130,71 @@ const
   CMetodoFim  =                        'fim';
   CMetodoSair =                        'sair';
 
+  CMetodoValidarnfe =                  'validarnfe';
+  CMetodoAssinarnfe =                  'assinarnfe';
+  CMetodoConsultarnfe =                'consultarnfe';
+  CMetodoCancelarnfe =                 'cancelarnfe';
+  CMetodoImprimirdanfe =               'imprimirdanfe';
+  CMetodoImprimirdanfepdf =            'imprimirdanfepdf';
+  CMetodoEnviarnfe =                   'enviarnfe';
+  CMetodoCriarnfe =                    'criarnfe';
+  CMetodoCriarenviarnfe =              'criarenviarnfe';
+  CMetodoAdicionarnfe =                'adicionarnfe';
+  CMetodoEnviarlotenfe =               'enviarlotenfe';
+  CMetodoRecibonfe =                   'recibonfe';
+  CMetodoInutilizarnfe =               'inutilizarnfe';
+  CMetodoLernfe =                      'lernfe';
+  CMetodonfetotxt =                    'nfetotxt';
+  CMetodoValidarRegrasNegocios =       'validarnferegranegocios';
+  CMetodoImprimirInutilizacao =        'imprimirinutilizacao';
+  CMetodoImprimirInutilizacaoPDF =     'imprimirinutilizacaopdf';
+  CMetodoEnviarEvento =                'enviarevento';
+  CMetodoCartaCorrecao =               'cartadecorrecao';
+  CMetodoXMLEnviarEvento =             'xmlenviarevento';
+  CMetodoDistribuicaoDFeporChaveNFe =  'distribuicaodfeporchavenfe';
+  CMetodoDistribuicaoDFeporNSU =       'distribuicaodfepornsu';
+  CMetodoDistribuicaoDFeporUltNSU =    'distribuicaodfeporultnsu';
+  CMetodoEnviaremailEvento =           'enviaremailevento';
+  CMetodoEnviaremailInutilizacao =     'enviaremailinutilizacao';
+  CMetodoSetModeloDF =                 'setmodelodf';
+  CMetodoSetToken =                    'settoken';
+  CMetodoSetCSC =                      'setcsc';
+  CMetodoSetIdToken =                  'setidtoken';
+  CMetodoSetIdCSC =                    'setidcsc';
+  CMetodoGerarININFe =                 'gerarininfe';
+  CMetodoCNPJCertificado =             'cnpjcertificado';
+  CMetodoGetPathNFe =                  'getpathnfe';
+  CMetodoGetPathCCe =                  'getpathcce';
+  CMetodoGetPathCan =                  'getpathcan';
+  CMetodoGetPathEvento =               'getpathevento';
+  CMetodoGetPathInu =                  'getpathinu';
+  CMetodoImprimirRelatorio =           'imprimirrelatorio';
+  CMetodoCriarNFeSEFAZ =               'criarnfesefaz';
+  CMetodoCriarEnviarNFeSEFAZ =         'criarenviarnfesefaz';
+  CMetodoAdicionarNFeSEFAZ =           'adicionarnfesefaz';
+  CMetodoDistribuicaoDFe =             'distribuicaodfe';
+  CMetodoDataVencimentoCertificado =   'datavencimentocertificado';
+
+  CMetodoValidarCTe =                  'validarcte';
+  CMetodoAssinarCTe =                  'assinarcte';
+  CMetodoConsultarCTe =                'consultarcte';
+  CMetodoCancelarCTe =                 'cancelarcte';
+  CMetodoImprimirDACTe =               'imprimirdacte';
+  CMetodoImprimirDACTePDF =            'imprimirdactepdf';
+
+  CMetodoEnviarCTe =                   'enviarcte';
+  CMetodoCriarCTe =                    'criarcte';
+  CMetodoCriarEnviarCTe =              'criarenviarcte';
+  CMetodoAdicionarCTe =                'adicionarcte';
+  CMetodoEnviarLoteCTe =               'enviarlotecte';
+  CMetodoReciboCTe =                   'recibocte';
+  CMetodoInutilizarCTe =               'inutilizarcte';
+  CMetodoLerCTe =                      'lercte';
+  CMetodoCTetotxt =                    'ctetotxt';
+  CMetodoDistribuicaoDFeporChaveCTe =  'distribuicaodfeporchavecte';
+  CMetodoGerarINICTe =                 'gerarinicte';
+  CMetodoGetPathCTe =                  'getpathcte';
+
   CMetodoCriarEventoeSocial =          'criareventoesocial';
   CMetodoCriarEnviareSocial =          'criarenviaresocial';
   CMetodoEnviareSocial =               'enviaresocial';
@@ -116,6 +212,90 @@ const
   CMetodoCarregarXMLEventoReinf =    'carregarxmleventoreinf';
   CMetodoSetIDContribuinteReinf =    'setidcontribuinte';
   CMetodoSetIDTransmissorReinf =     'setidtransmissor';
+
+  CMetodoConfigurarDados =           'configurardados';
+  CMetodoLimparLista =               'limparlista';
+  CMetodoTotalTitulosLista =         'totaltituloslista';
+  CMetodoImprimir =                  'imprimir';
+  CMetodoGerarPDF =                  'gerarpdf';
+  CMetodoGerarHTML =                 'gerarhtml';
+  CMetodoGerarRemessa =              'gerarremessa';
+  CMetodoLerRetorno =                'lerretorno';
+  CMetodoIncluirTitulos =            'incluirtitulos';
+  CMetodoSetDiretorioArquivo =       'setdiretorioarquivo';
+  CMetodoListaBancos =               'listabancos';
+  CMetodoListaCaractTitulo =         'listacaracttitulo';
+  CMetodoListaOcorrencias =          'listaocorrencias';
+  CMetodoTamNossoNumero =            'tamnossonumero';
+  CMetodoCodigosMoraAceitos =        'codigosmoraaceitos';
+  CMetodoSelecionaBanco =            'selecionabanco';
+
+  CMetodoAtivar =               'ativar';
+  CMetodoDesativar =            'desativar';
+  CMetodoModeloStr =            'modelostr';
+  CMetodoModelo =               'modelo';
+  CMetodoPorta =                'porta';
+  CMetodoIntervalo =            'intervalo';
+  CMetodoSetIntervalo =         'setintervalor';
+  CMetodoLePeso =               'lepeso';
+  CMetodoUltimoPesoLido =       'ultimopesolido';
+  CMetodoUltimaResposta =       'ultimaresposta';
+  CMetodoMonitorarBalanca =     'monitorarbalanca';
+
+  CMetodoNovo =                 'novo';
+  CMetodoAdicionaPara =         'adicionapara';
+  CMetodoAdicionaResponderA =   'adicionarespondera';
+  CMetodoAdicionaCC =           'adicionacc';
+  CMetodoAdicionaBCC =          'adicionabcc';
+  CMetodoAssunto =              'assunto';
+  CMetodoConfirmarLeitura =     'confirmarleitura';
+  CMetodoUsarHTML =             'usarhtml';
+  CMetodoTentativasEnvio =      'tentativasenvio';
+  CMetodoSetPrioridade =        'setprioridade';
+  CMetodoSetCodificacao =       'setcodificacao';
+  CMetodoTextoMensagem =        'textomensagem';
+  CMetodoTextoAlternativo =     'textoalternativo';
+  CMetodoAdicionaAnexo =        'adicionaanexo';
+  CMetodoEnviar =               'enviar';
+
+  CMetodoBuscarPorCEP =         'buscarporcep';
+  CMetodoBuscarPorLogradouro =  'buscarporlogradouro';
+
+  CMetodoChequePronto    = 'chequepronto';
+  CMetodoBanco           = 'banco';
+  CMetodoSetBanco        = 'setbanco';
+  CMetodoCidade          = 'cidade';
+  CMetodoSetCidade       = 'setcidade';
+  CMetodoFavorecido      = 'favorecido';
+  CMetodoSetFavorecido   = 'setfavorecido';
+  CMetodoObservacao      = 'observacao';
+  CMetodoSetObservacao   = 'setobservacao';
+  CMetodoValor           = 'valor';
+  CMetodoSetValor        = 'setvalor';
+  CMetodoSetData         = 'setdata';
+  CMetodoBomPara         = 'bompara';
+  CMetodoSetBomPara      = 'setbompara';
+  CMetodoImprimirCheque  = 'imprimircheque';
+  CMetodoTravarCheque    = 'travarcheque';
+  CMetodoDestravarCheque = 'destravarcheque';
+  CMetodoCMC7            = 'cmc7';
+  CMetodoImprimirLinha   = 'imprimirlinha';
+  CMetodoImprimirVerso   = 'imprimirverso';
+
+  CMetodoAbreGaveta           = 'abregaveta';
+  CMetodoGavetaAberta         = 'gavetaaberta';
+  CMetodoStrComando           = 'strcomando';
+  CMetodoSetStrComando        = 'setstrcomando';
+  CMetodoAberturaIntervalo    = 'aberturaintervalo';
+  CMetodoSetAberturaIntervalo = 'setaberturaintervalo';
+  CMetodoAberturaAntecipada   = 'aberturaantecipada';
+
+  CMetodoBuscarPorCodigo = 'buscarporcodigo';
+  CMetodoBuscarPorNome   = 'buscarpornome';
+
+  CMetodoValidar      = 'validar';
+  CMetodoBaixarLista  = 'baixarlista';
+  CMetodoDescricaoNCM = 'descricaoncm';
 
   CExtensaoXML =                     '.xml';
 

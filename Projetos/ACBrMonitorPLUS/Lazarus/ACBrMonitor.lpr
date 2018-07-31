@@ -20,7 +20,8 @@ uses
   DoACBrESocialUnit, DoACBrDFeUnit, ACBrMonitorConsts, ACBrMonitorConfig,
   DoACBrReinfUnit, ACBrLibeSocialConsts, ACBrLibeSocialRespostas,
   ACBrLibMDFeConsts, ACBrLibMDFeRespostas, ACBrLibReinfConsts,
-  ACBrLibReinfRespostas;
+  ACBrLibReinfRespostas, ACBrLibNFeRespostas, ACBrLibNFeConsts,
+  ACBrLibSATConsts, ACBrLibSATRespostas;
 
 {$R *.res}
 var

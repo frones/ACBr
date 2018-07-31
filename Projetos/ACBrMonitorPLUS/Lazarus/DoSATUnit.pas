@@ -5,288 +5,244 @@ unit DoSATUnit;
 interface
 
 uses
-  Classes, SysUtils, CmdUnit, pcnConversao, strutils;
+  Classes, SysUtils, CmdUnit, pcnConversao, strutils,
+  ACBrSAT, ACBrMonitorConfig, ACBrMonitorConsts, ACBrDFeUtil,
+  ACBrLibSATRespostas, ACBrLibResposta,
+  ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr;
 
-procedure DoSAT(Cmd: TACBrCmd);
-procedure CarregarDadosVenda(aStr: String; aNomePDF : String = '');
-function ParamAsXML(AParam: String): String;
-procedure CarregarDadosCancelamento(aStr: String);
-function MontaDadosStatusSAT : AnsiString;
-function RespostaEnviarDadosVenda( Resultado: String): AnsiString;
-procedure GerarIniCFe( AStr: WideString; ApenasTagsAplicacao: Boolean = True);
+type
+
+{ TACBrObjetoSAT }
+
+TACBrObjetoSAT = class(TACBrObjetoDFe)
+private
+  fACBrSAT: TACBrSAT;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrSAT: TACBrSAT); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  procedure RespostaConsultaSessao(ArqCFe: String);
+  procedure RespostaConsultaSessaoCancelado(ArqCFe: String);
+  procedure RespostaStatusSAT;
+  procedure RespostaCriarCFe(ArqCFe: String);
+  procedure RespostaEnviarDadosVenda( Resultado: String);
+  procedure RespostaCancelarVenda( Resultado: String);
+  procedure RespostaTesteFimaFim( Resultado: String );
+  procedure RespostaPadrao;
+  procedure RespostaIntegrador;
+
+  procedure CarregarDadosVenda(aStr: String; aNomePDF : String = '');
+  procedure CarregarDadosCancelamento(aStr: String);
+  function ParamAsXML(AParam: String): String;
+
+  procedure GerarIniCFe( AStr: WideString; ApenasTagsAplicacao: Boolean = True);
+
+  property ACBrSAT: TACBrSAT read fACBrSAT;
+end;
+
+{ TMetodoAtivar }
+
+TMetodoAtivar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoInicializar }
+
+TMetodoInicializar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDesinicializar}
+
+TMetodoDesinicializar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAssociarAssinatura}
+
+TMetodoAssociarAssinatura = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoBloquear}
+
+TMetodoBloquear = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDesbloquear}
+
+TMetodoDesbloquear = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTrocarCodigoAtivacao}
+
+TMetodoTrocarCodigoAtivacao = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConsultarSat }
+
+TMetodoConsultarSat = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConsultarStatusOperacional }
+
+TMetodoConsultarStatusOperacional = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConsultarSessao }
+
+TMetodoConsultarSessao = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAtualizaSoftware }
+
+TMetodoAtualizaSoftware = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoComunicarCertificado }
+
+TMetodoComunicarCertificado = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCarregarDadosVenda }
+
+TMetodoCarregarDadosVenda = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCarregarDadosCancelamento }
+
+TMetodoCarregarDadosCancelamento = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCriarCFe }
+
+TMetodoCriarCFe = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCriarEnviarCFe }
+
+TMetodoCriarEnviarCFe = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoEnviarCFe }
+
+TMetodoEnviarCFe = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCancelarCFe }
+
+TMetodoCancelarCFe = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirExtratoVenda }
+
+TMetodoImprimirExtratoVenda = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirExtratoResumido }
+
+TMetodoImprimirExtratoResumido = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirExtratoCancelamento }
+
+TMetodoImprimirExtratoCancelamento = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGerarImpressaoFiscalMFe }
+
+TMetodoGerarImpressaoFiscalMFe = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGerarPDFExtratoVenda }
+
+TMetodoGerarPDFExtratoVenda = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoExtrairLog }
+
+TMetodoExtrairLog = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTesteFimaFim}
+
+TMetodoTesteFimaFim = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetNumeroSessao}
+
+TMetodoSetNumeroSessao = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetLogoMarca}
+
+TMetodoSetLogoMarca = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 
 implementation
 
 uses
-  ACBrMonitor1,ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar, typinfo,
+  ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar, typinfo,
   ACBrSATExtratoClass;
 
-procedure DoSAT(Cmd: TACBrCmd);
-var
-  ArqCFe : String;
-  Resultado: String;
-begin
-  with FrmACBrMonitor do
-  begin
-    try
-      if Cmd.Metodo = 'ativar' then
-      begin
-        if (EstaVazio(Trim(Cmd.Params(0))) and
-            EstaVazio(Trim(Cmd.Params(1)))) then
-          Cmd.Resposta := ACBrSAT1.AtivarSAT(1, OnlyNumber(edtEmitCNPJ.Text), StrToInt(edtCodUF.Text))
-        else
-        begin
-          if (ACBrSAT1.Config.ide_tpAmb <> taHomologacao) and
-             (not ValidarCNPJ(Cmd.Params(0))) then
-            raise Exception.Create('CNPJ '+Cmd.Params(0)+' inválido.') ;
 
-          Cmd.Resposta := ACBrSAT1.AtivarSAT(1,Cmd.Params(0), StrToInt(Cmd.Params(1)));
-        end
-      end
-
-      else if Cmd.Metodo = 'inicializar' then
-      begin
-        if ACBrSAT1.Inicializado then
-          Cmd.Resposta := 'SAT ja inicializado'
-        else
-        begin
-          ACBrSAT1.Inicializar;
-          Cmd.Resposta := 'SAT inicializado';
-        end;
-      end
-
-      else if Cmd.Metodo = 'desinicializar' then
-      begin
-        if not ACBrSAT1.Inicializado then
-          Cmd.Resposta := 'SAT não inicializado'
-        else
-        begin
-          ACBrSAT1.DesInicializar;
-          Cmd.Resposta := 'SAT desinicializado'
-        end;
-      end
-
-      else if Cmd.Metodo = 'associarassinatura' then
-      begin
-        if (EstaVazio(Trim(Cmd.Params(0))) and
-            EstaVazio(Trim(Cmd.Params(1)))) then
-          Cmd.Resposta := ACBrSAT1.AssociarAssinatura(edtEmitCNPJ.Text, edtSwHAssinatura.Text)
-        else
-        begin
-          if (ACBrSAT1.Config.ide_tpAmb <> taHomologacao) and
-             (not ValidarCNPJ(Cmd.Params(0))) then
-            raise Exception.Create('CNPJ '+Cmd.Params(0)+' inválido.') ;
-
-          Cmd.Resposta := ACBrSAT1.AssociarAssinatura(Cmd.Params(0), Cmd.Params(1))
-        end
-      end
-
-      else if Cmd.Metodo = 'bloquear' then
-        Cmd.Resposta := ACBrSAT1.BloquearSAT
-
-      else if Cmd.Metodo = 'desbloquear' then
-        Cmd.Resposta := ACBrSAT1.DesbloquearSAT
-
-      else if Cmd.Metodo = 'trocarcodigoativacao' then
-        Cmd.Resposta := ACBrSAT1.TrocarCodigoDeAtivacao(Cmd.Params(0),
-                               StrToIntDef(cmd.Params(1),1), cmd.Params(2))
-
-      else if Cmd.Metodo = 'consultarsat' then
-        Cmd.Resposta := ACBrSAT1.ConsultarSAT
-
-      else if Cmd.Metodo = 'consultarstatusoperacional' then
-        Cmd.Resposta := MontaDadosStatusSAT
-
-      else if (Cmd.Metodo = 'consultarsessao') or (Cmd.Metodo = 'consultarnumerosessao')  then
-         begin
-            ACBrSAT1.CFe.Clear;
-            ACBrSAT1.CFeCanc.Clear;
-
-            Cmd.Resposta := ACBrSAT1.ConsultarNumeroSessao(StrToInt(cmd.Params(0)));
-
-            if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
-            begin
-               ArqCFe:=ACBrSAT1.CFe.NomeArquivo;
-               Cmd.Resposta := '[CFE]'+sLineBreak+
-                               'nCFe='+IntToStr(ACBrSAT1.CFe.ide.nCFe)+sLineBreak+
-                               IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
-                               'XML='+ACBrSAT1.CFe.AsXMLString;
-            end;
-
-            if ACBrSAT1.Resposta.codigoDeRetorno = 7000 then
-            begin
-               ArqCFe:=ACBrSAT1.CFeCanc.NomeArquivo;
-               Cmd.Resposta := '[CANCELAMENTO]'+sLineBreak+
-                               'nCFeCanc='+IntToStr(ACBrSAT1.CFeCanc.ide.nCFe)+sLineBreak+
-                               IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
-                               'XML='+ACBrSAT1.CFeCanc.AsXMLString;
-            end;
-          end
-
-
-      else if (Cmd.Metodo = 'atualizasoftware') or (Cmd.Metodo = 'atualizarsoftwaresat') then
-        Cmd.Resposta := ACBrSAT1.AtualizarSoftwareSAT
-
-      else if (Cmd.Metodo = 'comunicarcertificado') or
-              (Cmd.Metodo = 'comunicarcertificadoicpbrasil') then
-        Cmd.Resposta := ACBrSAT1.ComunicarCertificadoICPBRASIL(Cmd.Params(0))
-
-      else if Cmd.Metodo = 'carregardadosvenda' then
-        CarregarDadosVenda(Cmd.Params(0))
-
-      else if Cmd.Metodo = 'carregardadoscancelamento' then
-        CarregarDadosCancelamento(Cmd.Params(0))
-
-      else if (Cmd.Metodo = 'criarcfe') or
-              (Cmd.Metodo = 'criarenviarcfe')  then
-      begin
-        AjustaACBrSAT;
-        GerarIniCFe( Cmd.Params(0), (Cmd.Metodo = 'criarenviarcfe') );
-
-        if (Cmd.Metodo = 'criarcfe') then
-        begin
-          ArqCFe := '';
-
-          ACBrSAT1.CFe.GerarXML( True ); // Tags da Aplicação
-          if cbxSATSalvarCFe.Checked then
-          begin
-            ArqCFe := ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaEnvio,
-                          IntToStrZero(ACBrSAT1.CFe.ide.numeroCaixa,3)+'-'+
-                          IntToStrZero(ACBrSAT1.CFe.ide.cNF,6),'-satcfe');
-            ACBrSAT1.CFe.SaveToFile(ArqCFe);
-          end;
-
-          Cmd.Resposta :=  '[CFE]'+sLineBreak+
-                           'nCFe='+IntToStr(ACBrSAT1.CFe.ide.nCFe)+sLineBreak+
-                           IfThen(EstaVazio(ArqCFe),'','Arquivo='+ArqCFe+sLineBreak)+
-                           'XML='+ACBrSAT1.CFe.AsXMLString;
-        end
-        else
-        begin
-          Resultado := ACBrSAT1.EnviarDadosVenda( ACBrSAT1.CFe.AsXMLString );
-          Cmd.Resposta := RespostaEnviarDadosVenda( Resultado );
-        end;
-      end
-
-      else if Cmd.Metodo = 'enviarcfe' then
-      begin
-        AjustaACBrSAT;
-
-        ArqCFe := ParamAsXML(Cmd.Params(0));
-        if ArqCFe = '' then
-          Resultado := ACBrSAT1.EnviarDadosVenda
-        else
-          Resultado := ACBrSAT1.EnviarDadosVenda( ArqCFe );
-
-        Cmd.Resposta := RespostaEnviarDadosVenda( Resultado );
-      end
-
-      else if Cmd.Metodo = 'cancelarcfe' then
-      begin
-        if Cmd.Params(0) <> '' then
-          CarregarDadosVenda(Cmd.Params(0));
-
-        Resultado := ACBrSAT1.CancelarUltimaVenda;
-
-        Cmd.Resposta := '[CANCELAMENTO]'+sLineBreak+
-                         'Resultado='+Resultado+sLineBreak+
-                         'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
-                         'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
-                         'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak;
-
-        ArqCFe := ACBrSAT1.CFeCanc.NomeArquivo;
-        if (ArqCFe <> '') and FileExists(ArqCFe) then
-          Cmd.Resposta := Cmd.Resposta + 'Arquivo='+ArqCFe+sLineBreak ;
-
-        Cmd.Resposta := Cmd.Resposta + 'XML='+ACBrSAT1.CFeCanc.AsXMLString;
-      end
-
-      else if Cmd.Metodo = 'imprimirextratovenda' then
-      begin
-        PrepararImpressaoSAT(cmd.Params(1));
-        CarregarDadosVenda(cmd.Params(0));
-        ACBrSAT1.ImprimirExtrato;
-      end
-
-      else if Cmd.Metodo = 'imprimirextratoresumido' then
-      begin
-        PrepararImpressaoSAT(cmd.Params(1));
-        CarregarDadosVenda(cmd.Params(0));
-        ACBrSAT1.ImprimirExtratoResumido;
-      end
-
-      else if Cmd.Metodo = 'imprimirextratocancelamento' then
-      begin
-        PrepararImpressaoSAT(cmd.Params(2));
-        CarregarDadosVenda(cmd.Params(0));
-        CarregarDadosCancelamento(cmd.Params(1));
-        ACBrSAT1.ImprimirExtratoCancelamento;
-      end
-
-      else if Cmd.Metodo = 'gerarimpressaofiscalmfe' then
-      begin
-        PrepararImpressaoSAT(cmd.Params(1));
-        CarregarDadosVenda(cmd.Params(0));
-        Cmd.Resposta := ACBrSATExtratoESCPOS1.GerarImpressaoFiscalMFe;
-      end
-
-      else if Cmd.Metodo = 'gerarpdfextratovenda' then
-      begin
-        PrepararImpressaoSAT(cmd.Params(0),true);
-        CarregarDadosVenda(cmd.Params(0),cmd.Params(1));
-        ACBrSAT1.ImprimirExtrato;
-
-        Cmd.Resposta := '[CFe]'+sLineBreak+
-                        'NomeArquivo='+ACBrSAT1.Extrato.NomeArquivo;
-      end
-      else if Cmd.Metodo = 'extrairlogs' then
-        ACBrSAT1.ExtrairLogs(cmd.Params(0))
-
-      else if Cmd.Metodo = 'testefimafim' then
-      begin
-        AjustaACBrSAT;
-        ACBrSAT1.InicializaCFe;
-        CarregarDadosVenda(cmd.Params(0));
-        Resultado := ACBrSAT1.TesteFimAFim(ACBrSAT1.CFe.GerarXML(True));
-
-        Cmd.Resposta := '[TESTEFIMAFIM]'+sLineBreak+
-                        'Resultado='+Resultado+sLineBreak+
-                        'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
-                        'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
-                        'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak+
-                        'XML='+ACBrSAT1.CFe.AsXMLString;
-      end
-      else if Cmd.Metodo = 'setnumerosessao' then
-        ACBrSAT1.Tag := StrToIntDef(Trim(cmd.Params(0)), 0)
-
-      else if Cmd.Metodo = 'setlogomarca' then
-      begin
-        if FileExists(Cmd.Params(0)) then
-         begin
-           ACBrSATExtratoFortes1.LogoVisible := True;
-           ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(Cmd.Params(0));
-           edtLogoMarcaNFCeSAT.Text := Cmd.Params(0);
-           SalvarIni;
-         end
-        else
-           raise Exception.Create('Arquivo não encontrado.');
-      end
-
-      else
-        raise Exception.Create(ACBrStr('Comando invalido ('+Cmd.Comando+')'));
-    finally
-      Cmd.Resposta := Cmd.Resposta + FrmACBrMonitor.RespostaIntegrador;
-    end
-  end;
-
-end;
-
-procedure CarregarDadosVenda(aStr: String; aNomePDF: String);
+procedure TACBrObjetoSAT.CarregarDadosVenda(aStr: String; aNomePDF: String);
 begin
   if Trim(aStr) = '' then
     exit;
 
-  with FrmACBrMonitor.ACBrSAT1 do
+  with fACBrSAT do
   begin
     CFe.Clear;
     if (pos(#10,aStr) = 0) and FileExists(aStr) then
@@ -294,14 +250,14 @@ begin
     else
       CFe.AsXMLString := ConvertStrRecived(aStr);
 
-    if ( FrmACBrMonitor.ACBrSAT1.Extrato.Filtro = TACBrSATExtratoFiltro(fiPDF) ) then
+    if ( Extrato.Filtro = TACBrSATExtratoFiltro(fiPDF) ) then
       Extrato.NomeArquivo := IfThen(aNomePDF <> '', aNomePDF ,
         CalcCFeNomeArq(ConfigArquivos.PastaCFeVenda,CFe.infCFe.ID,'','.pdf'));
   end;
 
 end;
 
-function ParamAsXML(AParam: String): String;
+function TACBrObjetoSAT.ParamAsXML(AParam: String): String;
 var
   SL : TStringList;
 begin
@@ -319,70 +275,19 @@ begin
   end;
 end;
 
-procedure CarregarDadosCancelamento(aStr: String);
+procedure TACBrObjetoSAT.CarregarDadosCancelamento(aStr: String);
 begin
   if Trim(aStr) = '' then
     exit;
 
   if (pos(#10,aStr) = 0) and FileExists(aStr) then
-    FrmACBrMonitor.ACBrSAT1.CFeCanc.LoadFromFile(aStr)
+    fACBrSAT.CFeCanc.LoadFromFile(aStr)
   else
-    FrmACBrMonitor.ACBrSAT1.CFeCanc.AsXMLString := ConvertStrRecived(aStr);
-end;
-
-function MontaDadosStatusSAT: AnsiString;
-begin
-  Result := FrmACBrMonitor.ACBrSAT1.ConsultarStatusOperacional;
-
-  if FrmACBrMonitor.ACBrSAT1.Resposta.codigoDeRetorno = 10000 then
-  begin
-    with FrmACBrMonitor.ACBrSAT1.Status do
-    begin
-      Result := '[StatusSAT]' + sLineBreak ;
-      Result := Result + 'NSERIE = '+NSERIE + sLineBreak;
-      Result := Result + 'LAN_MAC = '+LAN_MAC+ sLineBreak;
-      Result := Result + 'STATUS_LAN = '+StatusLanToStr(STATUS_LAN)+ sLineBreak;
-      Result := Result + 'NIVEL_BATERIA = '+NivelBateriaToStr(NIVEL_BATERIA)+ sLineBreak;
-      Result := Result + 'MT_TOTAL = '+MT_TOTAL+ sLineBreak;
-      Result := Result + 'MT_USADA = '+MT_USADA+ sLineBreak;
-      Result := Result + 'DH_ATUAL = '+DateTimeToStr(DH_ATUAL)+ sLineBreak;
-      Result := Result + 'VER_SB = '+VER_SB+ sLineBreak;
-      Result := Result + 'VER_LAYOUT = '+VER_LAYOUT+ sLineBreak;
-      Result := Result + 'ULTIMO_CFe = '+ULTIMO_CFe+ sLineBreak;
-      Result := Result + 'LISTA_INICIAL = '+LISTA_INICIAL+ sLineBreak;
-      Result := Result + 'LISTA_FINAL = '+LISTA_FINAL+ sLineBreak;
-      Result := Result + 'DH_CFe = '+DateTimeToStr(DH_CFe)+ sLineBreak;
-      Result := Result + 'DH_ULTIMA = '+DateTimeToStr(DH_ULTIMA)+ sLineBreak;
-      Result := Result + 'CERT_EMISSAO = '+DateToStr(CERT_EMISSAO)+ sLineBreak;
-      Result := Result + 'CERT_VENCIMENTO = '+DateToStr(CERT_VENCIMENTO)+ sLineBreak;
-      Result := Result + 'ESTADO_OPERACAO = '+EstadoOperacaoToStr(ESTADO_OPERACAO);
-
-    end;
-  end;
+    fACBrSAT.CFeCanc.AsXMLString := ConvertStrRecived(aStr);
 
 end;
 
-function RespostaEnviarDadosVenda(Resultado: String): AnsiString;
-var
-  ArqCFe: String;
-begin
-  with FrmACBrMonitor do
-  begin
-    Result := '[ENVIO]'+sLineBreak+
-              'Resultado='+Resultado+sLineBreak+
-              'numeroSessao='+IntToStr(ACBrSAT1.Resposta.numeroSessao)+sLineBreak+
-              'codigoDeRetorno='+IntToStr(ACBrSAT1.Resposta.codigoDeRetorno)+sLineBreak+
-              'RetornoStr='+ACBrSAT1.Resposta.RetornoStr+sLineBreak;
-
-    ArqCFe := ACBrSAT1.CFe.NomeArquivo;
-    if (ArqCFe <> '') and FileExists(ArqCFe) then
-      Result := Result + 'Arquivo='+ArqCFe+sLineBreak;
-
-    Result := Result + 'XML='+ACBrSAT1.CFe.AsXMLString;
-  end;
-end;
-
-procedure GerarIniCFe(AStr: WideString; ApenasTagsAplicacao: Boolean = True);
+procedure TACBrObjetoSAT.GerarIniCFe(AStr: WideString; ApenasTagsAplicacao: Boolean = True);
 var
   INIRec : TMemIniFile ;
   OK     : Boolean;
@@ -407,16 +312,16 @@ var
 begin
   INIRec := LerConverterIni(AStr);
   try
-    with FrmACBrMonitor do
+    with fACBrSAT do
      begin
-       ACBrSAT1.InicializaCFe;
+       ACBrSAT.InicializaCFe;
 
-       with ACBrSAT1.CFe do
+       with ACBrSAT.CFe do
         begin
 
-          ACBrSAT1.Config.infCFe_versaoDadosEnt := StringToFloatDef( INIRec.ReadString('infCFe','versao',''),ACBrSAT1.Config.infCFe_versaoDadosEnt) ;
+          ACBrSAT.Config.infCFe_versaoDadosEnt := StringToFloatDef( INIRec.ReadString('infCFe','versao',''),ACBrSAT.Config.infCFe_versaoDadosEnt) ;
 
-          infCFe.versaoDadosEnt := ACBrSAT1.Config.infCFe_versaoDadosEnt;
+          infCFe.versaoDadosEnt := ACBrSAT.Config.infCFe_versaoDadosEnt;
 
           Ide.cUF        := INIRec.ReadInteger( 'Identificacao','cUF' ,UFparaCodigo(INIRec.ReadString(  'Emitente','UF', CodigoParaUF(Ide.cUF))));
           Ide.cNF        := INIRec.ReadInteger( 'Identificacao','Codigo' ,INIRec.ReadInteger( 'Identificacao','cNF' ,Ide.cNF));
@@ -427,20 +332,20 @@ begin
           Ide.hEmi       := StrToTimeDef(INIRec.ReadString( 'Identificacao','hEmi',''),Ide.hEmi);
           Ide.cDV        := INIRec.ReadInteger( 'Identificacao','cDV' , Ide.cDV);
           Ide.tpAmb      := StrToTpAmb(OK,INIRec.ReadString( 'Identificacao','tpAmb',TpAmbToStr(Ide.tpAmb)));
-          Ide.CNPJ       := INIRec.ReadString(  'Identificacao','CNPJ' ,edtSwHCNPJ.Text );
-          Ide.signAC     := INIRec.ReadString(  'Identificacao','signAC' ,edtSwHAssinatura.Text );
+          Ide.CNPJ       := INIRec.ReadString(  'Identificacao','CNPJ' , MonitorConfig.SAT.SATSWH.CNPJ );
+          Ide.signAC     := INIRec.ReadString(  'Identificacao','signAC' ,MonitorConfig.SAT.SATSWH.Assinatura );
           Ide.assinaturaQRCODE := INIRec.ReadString(  'Identificacao','assinaturaQRCODE' ,Ide.assinaturaQRCODE );
           Ide.numeroCaixa := INIRec.ReadInteger( 'Identificacao','numeroCaixa' , Ide.numeroCaixa);
 
-          Emit.CNPJ              := INIRec.ReadString(  'Emitente','CNPJ'    ,INIRec.ReadString(  'Emitente','CNPJCPF', edtEmitCNPJ.Text ));
+          Emit.CNPJ              := INIRec.ReadString(  'Emitente','CNPJ'    ,INIRec.ReadString(  'Emitente','CNPJCPF', MonitorConfig.SAT.SATImpressao.SATEmit.CNPJ ));
           Emit.xNome             := INIRec.ReadString(  'Emitente','Razao'   ,INIRec.ReadString(  'Emitente','xNome', Emit.xNome));
           Emit.xFant             := INIRec.ReadString(  'Emitente','Fantasia',INIRec.ReadString(  'Emitente','xFant', Emit.xFant));
-          Emit.IE                := INIRec.ReadString(  'Emitente','IE', edtEmitIE.Text);
-          Emit.IM                := INIRec.ReadString(  'Emitente','IM', edtEmitIM.Text);
+          Emit.IE                := INIRec.ReadString(  'Emitente','IE', MonitorConfig.SAT.SATImpressao.SATEmit.IE);
+          Emit.IM                := INIRec.ReadString(  'Emitente','IM', MonitorConfig.SAT.SATImpressao.SATEmit.IM);
 
-          Emit.cRegTrib          := StrToRegTrib(      ok, INIRec.ReadString( 'Emitente','cRegTrib',      RegTribDescToStr(cbxRegTributario.ItemIndex)));
-          Emit.cRegTribISSQN     := StrToRegTribISSQN( ok, INIRec.ReadString( 'Emitente','cRegTribISSQN', RegTribISSQNDescToStr(cbxRegTribISSQN.ItemIndex)));
-          Emit.indRatISSQN       := StrToindRatISSQN(  ok, INIRec.ReadString( 'Emitente','indRatISSQN',   indRatISSQNDescToStr(cbxIndRatISSQN.ItemIndex)));
+          Emit.cRegTrib          := StrToRegTrib(      ok, INIRec.ReadString( 'Emitente','cRegTrib',      RegTribDescToStr(MonitorConfig.SAT.SATImpressao.SATEmit.RegTributario)));
+          Emit.cRegTribISSQN     := StrToRegTribISSQN( ok, INIRec.ReadString( 'Emitente','cRegTribISSQN', RegTribISSQNDescToStr(MonitorConfig.SAT.SATImpressao.SATEmit.RegTribISSQN)));
+          Emit.indRatISSQN       := StrToindRatISSQN(  ok, INIRec.ReadString( 'Emitente','indRatISSQN',   indRatISSQNDescToStr(MonitorConfig.SAT.SATImpressao.SATEmit.IndRatISSQN)));
 
           Emit.EnderEmit.xLgr    := INIRec.ReadString(  'Emitente','Logradouro' ,INIRec.ReadString(  'Emitente','xLgr', Emit.EnderEmit.xLgr));
           Emit.EnderEmit.nro     := INIRec.ReadString(  'Emitente','Numero'     ,INIRec.ReadString(  'Emitente','nro', Emit.EnderEmit.nro));
@@ -682,11 +587,881 @@ begin
              Inc(I);
            end;
          end;
-         ACBrSAT1.CFe.GerarXML(ApenasTagsAplicacao);
+         ACBrSAT.CFe.GerarXML(ApenasTagsAplicacao);
      end;
   finally
     INIRec.Free;
   end;
 end;
+
+{ TMetodoSetLogoMarca }
+
+{ Params: 0 - cpath: path do logo
+}
+procedure TMetodoSetLogoMarca.Executar;
+var
+  cPath : String;
+begin
+  cPath := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    if FileExists(cPath) then
+    begin
+      TACBrSATExtratoFortes(ACBrSAT.Extrato).LogoVisible := True;
+      TACBrSATExtratoFortes(ACBrSAT.Extrato).PictureLogo.LoadFromFile(cPath);
+      with MonitorConfig.DFE do
+        Impressao.Geral.LogoMarcaNFCeSAT:= cPath;
+      MonitorConfig.SalvarArquivo;
+
+    end
+    else
+      raise Exception.Create('Arquivo não encontrado.');
+  end;
+
+end;
+
+{ TMetodoSetNumeroSessao }
+
+{ Params: 0 - cNumero: Numero de sessão
+}
+procedure TMetodoSetNumeroSessao.Executar;
+var
+  cNumero : String;
+begin
+  cNumero := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+    ACBrSAT.Tag := StrToIntDef(Trim(cNumero), 0);
+
+end;
+
+{ TMetodoTesteFimaFim }
+
+{ Params: 0 - cXMLVenda: String com caminho oo Arquivo XML de Venda
+}
+procedure TMetodoTesteFimaFim.Executar;
+var
+  cXMLVenda : String;
+  Resultado : String;
+begin
+  cXMLVenda := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    ACBrSAT.InicializaCFe;
+    CarregarDadosVenda(cXMLVenda);
+    Resultado := ACBrSAT.TesteFimAFim(ACBrSAT.CFe.GerarXML(True));
+
+    RespostaTesteFimaFim(Resultado);
+
+  end;
+
+end;
+
+{ TMetodoExtrairLog }
+
+{ Params: 0 - cPathArq: String com caminho do Arquivo
+}
+procedure TMetodoExtrairLog.Executar;
+var
+  cPathArq : String;
+begin
+  cPathArq := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+    ACBrSAT.ExtrairLogs(cPathArq);
+
+end;
+
+{ TMetodoGerarPDFExtratoVenda }
+
+{ Params: 0 - cXMLVenda: String com XML de Vendas o path do arquivo
+          1 - cNomeArq: String com nome do o Arquivo
+}
+procedure TMetodoGerarPDFExtratoVenda.Executar;
+var
+  cXMLVenda : String;
+  cNomeArq : String;
+begin
+  cXMLVenda := fpCmd.Params(0);
+  cNomeArq := fpCmd.Params(1);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    DoPrepararImpressaoSAT(cXMLVenda, True);
+    CarregarDadosVenda(cXMLVenda, cNomeArq);
+    ACBrSAT.ImprimirExtrato;
+
+    RespostaPadrao;
+
+  end;
+
+end;
+
+{ TMetodoGerarImpressaoFiscalMFe }
+
+{ Params: 0 - cXMLVenda: String com XML de Vendas o path do arquivo
+          1 - cImpressora: String com nome da impressora
+}
+procedure TMetodoGerarImpressaoFiscalMFe.Executar;
+var
+  cXMLVenda : String;
+  cImpressora : String;
+begin
+  cXMLVenda := fpCmd.Params(0);
+  cImpressora := fpCmd.Params(1);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    DoPrepararImpressaoSAT(cImpressora);
+    CarregarDadosVenda(cXMLVenda);
+    TACBrSATExtratoESCPOS(ACBrSAT.Extrato).GerarImpressaoFiscalMFe();
+
+  end;
+
+end;
+
+
+{ TMetodoImprimirExtratoCancelamento }
+
+{ Params: 0 - cXMLVenda: String com XML de Vendas o path do arquivo
+          1 - cXMLCancelamento: String com XML de Cancelamentoo path do arquivo
+          2 - cImpressora: String com nome da impressora
+}
+procedure TMetodoImprimirExtratoCancelamento.Executar;
+var
+  cXMLVenda : String;
+  cXMLCancelamento : String;
+  cImpressora : String;
+begin
+  cXMLVenda := fpCmd.Params(0);
+  cXMLCancelamento := fpCmd.Params(1);
+  cImpressora := fpCmd.Params(2);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    DoPrepararImpressaoSAT(cImpressora);
+    CarregarDadosVenda(cXMLVenda);
+    CarregarDadosCancelamento(cXMLCancelamento);
+    ACBrSAT.ImprimirExtratoCancelamento;
+  end;
+
+end;
+
+
+{ TMetodoImprimirExtratoResumido }
+
+{ Params: 0 - cXMLVenda: String com XML de Vendas o path do arquivo
+          1 - cImpressora: String com nome da impressora
+}
+procedure TMetodoImprimirExtratoResumido.Executar;
+var
+  cXMLVenda : String;
+  cImpressora : String;
+begin
+  cXMLVenda := fpCmd.Params(0);
+  cImpressora := fpCmd.Params(1);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    DoPrepararImpressaoSAT(cImpressora);
+    CarregarDadosVenda(cXMLVenda);
+    ACBrSAT.ImprimirExtratoResumido;
+  end;
+
+end;
+
+{ TMetodoImprimirExtratoVenda }
+
+{ Params: 0 - cXMLVenda: String com XML de Vendas o path do arquivo
+          1 - cImpressora: String com nome da impressora
+}
+procedure TMetodoImprimirExtratoVenda.Executar;
+var
+  cXMLVenda : String;
+  cImpressora : String;
+begin
+  cXMLVenda := fpCmd.Params(0);
+  cImpressora := fpCmd.Params(1);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    DoPrepararImpressaoSAT(cImpressora);
+    CarregarDadosVenda(cXMLVenda);
+    ACBrSAT.ImprimirExtrato;
+  end;
+
+end;
+
+{ TMetodoCancelarCFe }
+
+{ Params: 0 - cArqXMLVenda: String com XML de Venda
+}
+procedure TMetodoCancelarCFe.Executar;
+var
+  cArqXMLVenda, Resultado : String;
+begin
+  cArqXMLVenda := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    if NaoEstaVazio(cArqXMLVenda) then
+      CarregarDadosVenda(cArqXMLVenda);
+
+    Resultado := ACBrSAT.CancelarUltimaVenda;
+
+    RespostaCancelarVenda(Resultado);
+
+  end;
+
+end;
+
+{ TMetodoEnviarCFe }
+
+{ Params: 0 - cArqXML: String com XML ou Path do arquivo
+}
+procedure TMetodoEnviarCFe.Executar;
+var
+  cArqXML, ArqCFe, Resultado: String;
+begin
+  cArqXML := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+
+    ArqCFe := ParamAsXML(cArqXML);
+    if ArqCFe = '' then
+      Resultado := ACBrSAT.EnviarDadosVenda
+    else
+      Resultado := ACBrSAT.EnviarDadosVenda( ArqCFe );
+
+    RespostaEnviarDadosVenda( Resultado );
+
+  end;
+
+end;
+
+{ TMetodoCriarEnviarCFe }
+
+{ Params: 0 - cArqIni: String com INI ou Path do arquivo
+}
+procedure TMetodoCriarEnviarCFe.Executar;
+var
+  cArqIni, Resultado: String;
+begin
+  cArqIni := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    GerarIniCFe( cArqIni, True );
+
+    Resultado := ACBrSAT.EnviarDadosVenda( ACBrSAT.CFe.AsXMLString );
+    RespostaEnviarDadosVenda( Resultado );
+
+  end;
+
+end;
+
+{ TMetodoCriarCFe }
+
+{ Params: 0 - cArqIni: String com INI ou Path do arquivo
+}
+procedure TMetodoCriarCFe.Executar;
+var
+  cArqIni, ArqCFe: String;
+begin
+  cArqIni := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    GerarIniCFe( cArqIni, False );
+
+    ArqCFe := '';
+    ACBrSAT.CFe.GerarXML( True ); // Tags da Aplicação
+    if MonitorConfig.SAT.SalvarCFe then
+    begin
+      ArqCFe := ACBrSAT.CalcCFeNomeArq(ACBrSAT.ConfigArquivos.PastaEnvio,
+                          IntToStrZero(ACBrSAT.CFe.ide.numeroCaixa,3)+'-'+
+                          IntToStrZero(ACBrSAT.CFe.ide.cNF,6),'-satcfe');
+      ACBrSAT.CFe.SaveToFile(ArqCFe);
+    end;
+
+    RespostaCriarCFe(ArqCFe);
+
+  end;
+
+end;
+
+{ TMetodoCarregarDadosCancelamento }
+
+{ Params: 0 - aStr: Path do arquivo
+}
+procedure TMetodoCarregarDadosCancelamento.Executar;
+var
+  aStr : String;
+begin
+  aStr := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+    CarregarDadosCancelamento(aStr);
+
+end;
+
+{ TMetodoCarregarDadosVenda }
+
+{ Params: 0 - aStr: Path do arquivo
+}
+procedure TMetodoCarregarDadosVenda.Executar;
+var
+  aStr : String;
+begin
+  aStr := fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+   CarregarDadosVenda(aStr);
+
+end;
+
+{ TMetodoComunicarCertificado }
+
+{ Params: 0 - cNumeroCertificado
+}
+procedure TMetodoComunicarCertificado.Executar;
+var
+  cNumeroCertificado: AnsiString;
+begin
+  cNumeroCertificado     :=  fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrSAT.ComunicarCertificadoICPBRASIL(cNumeroCertificado);
+  end;
+
+end;
+
+{ TMetodoAtualizaSoftware }
+
+procedure TMetodoAtualizaSoftware.Executar;
+begin
+  with TACBrObjetoSAT(fpObjetoDono) do
+    fpCmd.Resposta := ACBrSAT.AtualizarSoftwareSAT;
+
+
+end;
+
+{ TMetodoConsultarSessao }
+
+{ Params: 0 - cConsultarSessao
+}
+procedure TMetodoConsultarSessao.Executar;
+var
+  cConsultarSessao: String;
+begin
+  cConsultarSessao     :=  fpCmd.Params(0);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    ACBrSAT.CFe.Clear;
+    ACBrSAT.CFeCanc.Clear;
+
+    fpCmd.Resposta := ACBrSAT.ConsultarNumeroSessao(StrToInt(cConsultarSessao));
+
+    if ACBrSAT.Resposta.codigoDeRetorno = 6000 then
+      RespostaConsultaSessao(ACBrSAT.CFe.NomeArquivo);
+
+    if ACBrSAT.Resposta.codigoDeRetorno = 7000 then
+      RespostaConsultaSessaoCancelado(ACBrSAT.CFeCanc.NomeArquivo);
+
+  end;
+
+end;
+
+{ TMetodoConsultarStatusOperacional }
+
+procedure TMetodoConsultarStatusOperacional.Executar;
+begin
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrSAT.ConsultarStatusOperacional;
+
+    if (ACBrSAT.Resposta.codigoDeRetorno = 10000) then
+      RespostaStatusSAT;
+
+  end;
+
+end;
+
+{ TMetodoConsultarSat }
+
+procedure TMetodoConsultarSat.Executar;
+begin
+  with TACBrObjetoSAT(fpObjetoDono) do
+    fpCmd.Resposta := ACBrSAT.ConsultarSAT;
+
+end;
+
+{ TMetodoTrocarCodigoAtivacao }
+
+{ Params: 0 - cCodAtivacao - Uma String com código para ativação
+          1 - cOpcao - Uma String com a assinatura
+          2 - cNovoCodAtivacao - Uma String com novo código para ativação
+}
+procedure TMetodoTrocarCodigoAtivacao.Executar;
+var
+cCodAtivacao, cOpcao, cNovoCodAtivacao: String;
+begin
+  cCodAtivacao     :=  fpCmd.Params(0);
+  cOpcao           :=  fpCmd.Params(1);
+  cNovoCodAtivacao :=  fpCmd.Params(2);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrSAT.TrocarCodigoDeAtivacao(cCodAtivacao,
+                               StrToIntDef(cOpcao,1), cNovoCodAtivacao)
+  end;
+
+end;
+
+{ TMetodoDesbloquear }
+
+procedure TMetodoDesbloquear.Executar;
+begin
+  with TACBrObjetoSAT(fpObjetoDono) do
+    fpCmd.Resposta := ACBrSAT.DesbloquearSAT;
+end;
+
+{ TMetodoBloquear }
+
+{ Params:
+}
+procedure TMetodoBloquear.Executar;
+begin
+  with TACBrObjetoSAT(fpObjetoDono) do
+    fpCmd.Resposta := ACBrSAT.BloquearSAT;
+end;
+
+{ TMetodoAssociarAssinatura }
+
+{ Params: 0 - CNPJ - Uma String com CNPJ para ativação
+          1 - Assinatura - Uma String com a assinatura
+}
+procedure TMetodoAssociarAssinatura.Executar;
+var
+  cCNPJ, cAssinatura: String;
+begin
+  cCNPJ := fpCmd.Params(0);
+  cAssinatura :=   fpCmd.Params(1);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    if (EstaVazio(Trim(cCNPJ)) and
+        EstaVazio(Trim(cAssinatura))) then
+      with MonitorConfig.SAT do
+        fpCmd.Resposta := ACBrSAT.AssociarAssinatura(SATSWH.CNPJ, SATSWH.Assinatura)
+    else
+    begin
+      if (ACBrSAT.Config.ide_tpAmb <> taHomologacao) and
+         (not ValidarCNPJ(cCNPJ)) then
+        raise Exception.Create('CNPJ '+cCNPJ+' inválido.') ;
+
+      fpCmd.Resposta := ACBrSAT.AssociarAssinatura(cCNPJ, cAssinatura);
+    end;
+  end;
+
+end;
+
+{ TMetodoDesinicializar }
+
+procedure TMetodoDesinicializar.Executar;
+begin
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    if not ACBrSAT.Inicializado then
+      fpCmd.Resposta := 'SAT não inicializado'
+    else
+    begin
+      ACBrSAT.DesInicializar;
+      fpCmd.Resposta := 'SAT desinicializado'
+    end;
+  end;
+
+end;
+
+{ TMetodoInicializar }
+
+{ Params:
+}
+procedure TMetodoInicializar.Executar;
+begin
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    if ACBrSAT.Inicializado then
+       fpCmd.Resposta := 'SAT ja inicializado'
+    else
+    begin
+       ACBrSAT.Inicializar;
+       fpCmd.Resposta := 'SAT inicializado';
+    end;
+  end;
+
+end;
+
+{ TMetodoAtivar }
+
+
+{ Params: 0 - CNPJ - Uma String com CNPJ para ativação
+          1 - UF - Uma String com código da UF para ativação
+}
+procedure TMetodoAtivar.Executar;
+var
+  cCNPJ, cUF: String;
+begin
+  cCNPJ := fpCmd.Params(0);
+  cUF :=   fpCmd.Params(1);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+    if (EstaVazio(Trim(cCNPJ)) and
+          EstaVazio(Trim(cUF))) then
+        with MonitorConfig.SAT do
+          fpCmd.Resposta := ACBrSAT.AtivarSAT(1, OnlyNumber(SATImpressao.SATEmit.CNPJ), StrToInt(CodigoUF))
+      else
+      begin
+        if (ACBrSAT.Config.ide_tpAmb <> taHomologacao) and
+           (not ValidarCNPJ(cCNPJ)) then
+          raise Exception.Create('CNPJ '+cCNPJ+' inválido.');
+
+        fpCmd.Resposta := ACBrStr( ACBrSAT.AtivarSAT(1,cCNPJ, StrToInt(cUF)) );
+      end;
+
+    end;
+
+end;
+
+{ TACBrObjetoSAT }
+
+constructor TACBrObjetoSAT.Create(AConfig: TMonitorConfig; ACBrSAT: TACBrSAT);
+begin
+  inherited Create(AConfig);
+
+  fACBrSAT := ACBrSAT;
+
+  ListaDeMetodos.Add(CMetodoSATAtivar);
+  ListaDeMetodos.Add(CMetodoInicializar);
+  ListaDeMetodos.Add(CMetodoDesInicializar);
+  ListaDeMetodos.Add(CMetodoAssociarAssinatura);
+  ListaDeMetodos.Add(CMetodoBloquear);
+  ListaDeMetodos.Add(CMetodoDesbloquear);
+  ListaDeMetodos.Add(CMetodotrocarcodigoativacao);
+  ListaDeMetodos.Add(CMetodoConsultarSat);
+  ListaDeMetodos.Add(CMetodoConsultarStatusOperacional);
+  ListaDeMetodos.Add(CMetodoConsultarSessao);
+  ListaDeMetodos.Add(CMetodoConsultarNumeroSessao);
+  ListaDeMetodos.Add(CMetodoAtualizaSoftware);
+  ListaDeMetodos.Add(CMetodoAtualizarSoftwareSAT);
+  ListaDeMetodos.Add(CMetodoComunicarCertificado);
+  ListaDeMetodos.Add(CMetodoComunicarCertificadoICPBrasil);
+  ListaDeMetodos.Add(CMetodoCarregarDadosVenda);
+  ListaDeMetodos.Add(CMetodoCarregarDadosCancelamento);
+  ListaDeMetodos.Add(CMetodoCriarCFe);
+  ListaDeMetodos.Add(CMetodoCriarEnviarCFe);
+  ListaDeMetodos.Add(CMetodoEnviarCFe);
+  ListaDeMetodos.Add(CMetodoCancelarCFe);
+  ListaDeMetodos.Add(CMetodoImprimirExtratoVenda);
+  ListaDeMetodos.Add(CMetodoImprimirExtratoResumido);
+  ListaDeMetodos.Add(CMetodoImprimirExtratoCancelamento);
+  ListaDeMetodos.Add(CMetodoGerarImpressaoFiscalMFe);
+  ListaDeMetodos.Add(CMetodoExtrairLogs);
+  ListaDeMetodos.Add(CMetodoTesteFimaFim);
+  ListaDeMetodos.Add(CMetodoGerarPDFExtratoVenda);
+  ListaDeMetodos.Add(CMetodoSetNumeroSessao);
+  ListaDeMetodos.Add(CMetodoSetlogomarcaSAT);
+
+  // DoACBr
+  ListaDeMetodos.Add(CMetodoSavetofile);
+  ListaDeMetodos.Add(CMetodoLoadfromfile);
+  ListaDeMetodos.Add(CMetodoLerini);
+  ListaDeMetodos.Add(CMetodoSetcertificado);
+  ListaDeMetodos.Add(CMetodoRestaurar);
+  ListaDeMetodos.Add(CMetodoOcultar);
+  ListaDeMetodos.Add(CMetodoEncerrarmonitor);
+  ListaDeMetodos.Add(CMetodoAtivo);
+  ListaDeMetodos.Add(CMetodoDatahora);
+  ListaDeMetodos.Add(CMetodoData);
+  ListaDeMetodos.Add(CMetodoHora);
+  ListaDeMetodos.Add(CMetodoExit);
+  ListaDeMetodos.Add(CMetodoBye);
+  ListaDeMetodos.Add(CMetodoFim);
+  ListaDeMetodos.Add(CMetodoSair);
+
+end;
+
+procedure TACBrObjetoSAT.Executar(ACmd: TACBrCmd);
+var
+  AMetodoClass: TACBrMetodoClass;
+  CmdNum: Integer;
+  Ametodo: TACBrMetodo;
+begin
+  inherited Executar(ACmd);
+
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
+
+  case CmdNum of
+    0  : AMetodoClass := TMetodoAtivar;
+    1  : AMetodoClass := TMetodoInicializar;
+    2  : AMetodoClass := TMetodoDesinicializar;
+    3  : AMetodoClass := TMetodoAssociarAssinatura;
+    4  : AMetodoClass := TMetodoBloquear;
+    5  : AMetodoClass := TMetodoDesbloquear;
+    6  : AMetodoClass := TMetodoTrocarCodigoAtivacao;
+    7  : AMetodoClass := TMetodoConsultarSat;
+    8  : AMetodoClass := TMetodoConsultarStatusOperacional;
+    9  : AMetodoClass := TMetodoConsultarSessao;
+    10 : AMetodoClass := TMetodoConsultarSessao;
+    11 : AMetodoClass := TMetodoAtualizaSoftware;
+    12 : AMetodoClass := TMetodoAtualizaSoftware;
+    13 : AMetodoClass := TMetodoComunicarCertificado;
+    14 : AMetodoClass := TMetodoComunicarCertificado;
+    15 : AMetodoClass := TMetodoCarregarDadosVenda;
+    16 : AMetodoClass := TMetodoCarregarDadosCancelamento;
+    17 : AMetodoClass := TMetodoCriarCFe;
+    18 : AMetodoClass := TMetodoCriarEnviarCFe;
+    19 : AMetodoClass := TMetodoEnviarCFe;
+    20 : AMetodoClass := TMetodoCancelarCFe;
+    21 : AMetodoClass := TMetodoImprimirExtratoVenda;
+    22 : AMetodoClass := TMetodoImprimirExtratoResumido;
+    23 : AMetodoClass := TMetodoImprimirExtratoCancelamento;
+    24 : AMetodoClass := TMetodoGerarImpressaoFiscalMFe;
+    25 : AMetodoClass := TMetodoExtrairLog;
+    26 : AMetodoClass := TMetodoTesteFimaFim;
+    27 : AMetodoClass := TMetodoGerarPDFExtratoVenda;
+    28 : AMetodoClass := TMetodoSetNumeroSessao;
+    29 : AMetodoClass := TMetodoSetLogoMarca;
+
+    30..45 : DoACbr(ACmd);
+  end;
+
+  if Assigned(AMetodoClass) then
+  begin
+    Ametodo := AMetodoClass.Create(ACmd, Self);
+    try
+      Ametodo.Executar;
+    finally
+      Ametodo.Free;
+    end;
+  end;
+
+end;
+
+procedure TACBrObjetoSAT.RespostaConsultaSessao(ArqCFe: String);
+var
+  Resp: TRetornoConsultarSessao;
+begin
+  Resp := TRetornoConsultarSessao.Create(resINI);
+  try
+    with fACBrSAT.CFe do
+    begin
+      Resp.nCFe := IntToStrZero(ide.nCFe,0);
+      Resp.XML  := AsXMLString;
+      Resp.Arquivo:= ArqCFe;
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+      RespostaIntegrador;
+    end;
+  finally
+    Resp.Free;
+  end;
+
+end;
+
+procedure TACBrObjetoSAT.RespostaConsultaSessaoCancelado(ArqCFe: String);
+var
+  Resp: TRetornoConsultarSessaoCancelado;
+begin
+  Resp := TRetornoConsultarSessaoCancelado.Create(resINI);
+  try
+    with fACBrSAT.CFeCanc do
+    begin
+      Resp.nCFeCanc := IntToStrZero(ide.nCFe,0);
+      Resp.XML  := AsXMLString;
+      Resp.Arquivo:= ArqCFe;
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+      RespostaIntegrador;
+
+    end;
+  finally
+    Resp.Free;
+  end;
+end;
+
+procedure TACBrObjetoSAT.RespostaStatusSAT;
+var
+  Resp: TRetornoStatusSAT;
+begin
+  Resp := TRetornoStatusSAT.Create(resINI);
+  try
+    with fACBrSAT.Status do
+    begin
+      Resp.NSERIE :=            NSERIE;
+      Resp.LAN_MAC :=           LAN_MAC;
+      Resp.STATUS_LAN :=        StatusLanToStr(STATUS_LAN);
+      Resp.NIVEL_BATERIA :=     NivelBateriaToStr(NIVEL_BATERIA);
+      Resp.MT_TOTAL :=          MT_TOTAL;
+      Resp.MT_USADA :=          MT_USADA;
+      Resp.DH_ATUAL :=          DH_ATUAL;
+      Resp.VER_SB :=            VER_SB;
+      Resp.VER_LAYOUT :=        VER_LAYOUT;
+      Resp.ULTIMO_CFe :=        ULTIMO_CFe;
+      Resp.LISTA_INICIAL :=     LISTA_INICIAL;
+      Resp.LISTA_FINAL :=       LISTA_FINAL;
+      Resp.DH_CFe :=            DH_CFe;
+      Resp.DH_ULTIMA :=         DH_ULTIMA;
+      Resp.CERT_EMISSAO :=      CERT_EMISSAO;
+      Resp.CERT_VENCIMENTO :=   CERT_VENCIMENTO;
+      Resp.ESTADO_OPERACAO :=   EstadoOperacaoToStr(ESTADO_OPERACAO);
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+      RespostaIntegrador;
+    end;
+
+  finally
+    Resp.Free;
+  end;
+
+end;
+
+procedure TACBrObjetoSAT.RespostaCriarCFe(ArqCFe: String);
+var
+  Resp: TRetornoCriarCFe;
+begin
+  Resp := TRetornoCriarCFe.Create(resINI);
+  try
+    with fACBrSAT.CFe do
+    begin
+      Resp.nCFe := IntToStr(ide.nCFe);
+      Resp.XML  := AsXMLString;
+      Resp.Arquivo:= ArqCFe;
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+      RespostaIntegrador;
+    end;
+
+  finally
+    Resp.Free;
+  end;
+
+end;
+
+procedure TACBrObjetoSAT.RespostaEnviarDadosVenda(Resultado: String);
+var
+  ArqCFe: String;
+  Resp: TRetornoEnvio;
+begin
+  Resp := TRetornoEnvio.Create(resINI);
+  try
+    with fACBrSAT do
+    begin
+      ArqCFe := CFe.NomeArquivo;
+      Resp.Resultado := Resultado;
+      Resp.NumeroSessao  := Resposta.numeroSessao;
+      Resp.CodigoDeRetorno := Resposta.codigoDeRetorno;
+      Resp.RetornoStr := Resposta.RetornoStr;
+      if (ArqCFe <> '') and FileExists(ArqCFe) then
+        Resp.Arquivo := ArqCFe;
+      Resp.XML := CFe.AsXMLString;
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+      RespostaIntegrador;
+    end;
+
+  finally
+    Resp.Free;
+  end;
+
+end;
+
+procedure TACBrObjetoSAT.RespostaCancelarVenda(Resultado: String);
+var
+  ArqCFe: String;
+  Resp: TRetornoCancelarCFe;
+begin
+  Resp := TRetornoCancelarCFe.Create(resINI);
+  try
+    with fACBrSAT do
+    begin
+      ArqCFe := CFeCanc.NomeArquivo;
+      Resp.Resultado := Resultado;
+      Resp.NumeroSessao  := Resposta.numeroSessao;
+      Resp.CodigoDeRetorno := Resposta.codigoDeRetorno;
+      Resp.RetornoStr := Resposta.RetornoStr;
+      if (ArqCFe <> '') and FileExists(ArqCFe) then
+        Resp.Arquivo := ArqCFe;
+      Resp.XML := CFeCanc.AsXMLString;
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+      RespostaIntegrador;
+    end;
+
+  finally
+    Resp.Free;
+  end;
+
+end;
+
+procedure TACBrObjetoSAT.RespostaTesteFimaFim(Resultado: String);
+var
+  Resp: TRetornoTesteFimaFim;
+begin
+  Resp := TRetornoTesteFimaFim.Create(resINI);
+  try
+    with fACBrSAT do
+    begin
+      Resp.Resultado := Resultado;
+      Resp.NumeroSessao  := Resposta.numeroSessao;
+      Resp.CodigoDeRetorno := Resposta.codigoDeRetorno;
+      Resp.RetornoStr := Resposta.RetornoStr;
+      Resp.XML := CFeCanc.AsXMLString;
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+      RespostaIntegrador;
+
+    end;
+
+  finally
+    Resp.Free;
+  end;
+
+end;
+
+procedure TACBrObjetoSAT.RespostaPadrao;
+var
+  Resp: TPadraoSATResposta;
+begin
+  Resp := TPadraoSATResposta.Create('CFe',resINI);
+  try
+    with fACBrSAT do
+    begin
+      Resp.Arquivo:= Extrato.NomeArquivo;
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+
+    end;
+
+  finally
+    Resp.Free;
+  end;
+
+end;
+
+procedure TACBrObjetoSAT.RespostaIntegrador;
+begin
+  with fACBrSAT do
+    fpCmd.Resposta := fpCmd.Resposta + DoRespostaIntegrador();
+
+end;
+
 
 end.

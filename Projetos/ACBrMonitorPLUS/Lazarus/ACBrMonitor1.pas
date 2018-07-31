@@ -51,7 +51,8 @@ uses
   ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types, fileinfo,
   ACBrDFeConfiguracoes, ACBrReinf, ACBreSocial, ACBrIntegrador, LazHelpCHM,
   pmdfeConversaoMDFe, ACBrMonitorConfig, ACBrMonitorConsts, DoACBrMDFeUnit,
-  DoACBreSocialUnit, pcesConversaoeSocial, DoACBrReinfUnit, pcnConversaoReinf;
+  DoACBreSocialUnit, pcesConversaoeSocial, DoACBrReinfUnit, pcnConversaoReinf,
+  DoBoletoUnit, DOACBrNFeUnit, DoACBrCTeUnit, DoSATUnit;
 
 const
   //{$I versao.txt}
@@ -1482,9 +1483,13 @@ type
     FLastHandle: Integer;
 
     FMonitorConfig: TMonitorConfig;
+    FDoNFe: TACBrObjetoNFe;
+    FDoCTe: TACBrObjetoCTe;
     FDoMDFe: TACBrObjetoMDFe;
+    FDoBoleto: TACBrObjetoBoleto;
     FDoeSocial: TACBrObjetoeSocial;
     FDoReinf: TACBrObjetoReinf;
+    FDoSAT: TACBrObjetoSAT;
 
     function IsVisible : Boolean; virtual;
 
@@ -1543,6 +1548,7 @@ type
     procedure LerIni(AtualizaMonitoramento: Boolean = True);
     procedure SalvarIni;
     procedure ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview : String);
+    procedure ConfiguraDACTe(GerarPDF: Boolean; MostrarPreview : String);
     procedure VerificaDiretorios;
     procedure LimparResp;
     procedure ExibeResp(Documento: ansistring);
@@ -1563,6 +1569,7 @@ type
     procedure HelptabSheet;
     procedure ValidarIntegradorNFCe(ChaveNFe: String = '');
     function RespostaIntegrador():String;
+    function SubstituirVariaveis(const ATexto: String): String;
 
     property MonitorConfig: TMonitorConfig read FMonitorConfig;
   end;
@@ -1576,13 +1583,13 @@ implementation
 uses IniFiles, TypInfo, LCLType, strutils,
   UtilUnit, pcnAuxiliar,
   DoECFUnit, DoGAVUnit, DoCHQUnit, DoDISUnit, DoLCBUnit, DoACBrUnit, DoBALUnit,
-  DoBoletoUnit, DoCEPUnit, DoIBGEUnit,
+  DoCEPUnit, DoIBGEUnit,
   {$IFDEF MSWINDOWS} sndkey32, {$ENDIF}
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial, DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit,
-  DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrCTeUnit,
-  DoSATUnit, DoPosPrinterUnit, DoACBrGNReUnit, ACBrSATExtratoClass,
+  DoSedexUnit, DoNcmUnit,
+  DoPosPrinterUnit, DoACBrGNReUnit, ACBrSATExtratoClass,
   SelecionarCertificado, ACBrNFeConfiguracoes, ACBrCTeConfiguracoes,
   ACBrMDFeConfiguracoes, ACBrGNREConfiguracoes, ACBreSocialConfiguracoes,
   ACBrReinfConfiguracoes;
@@ -1651,12 +1658,31 @@ begin
                  PathWithDelim(ExtractFilePath(Application.ExeName)) + CMonitorIni );
   FMonitorConfig.OnGravarConfig := @AtualizarTela;
 
+  FDoNFe := TACBrObjetoNFe.Create(MonitorConfig, ACBrNFe1);
+  FDoNFe.OnAntesDeImprimir  := @AntesDeImprimir;
+  FDoNFe.OnDepoisDeImprimir := @DepoisDeImprimir;
+  FDoNFe.OnConfiguraDANFe   := @ConfiguraDANFe;
+  FDoNFe.OnValidarIntegradorNFCe:= @ValidarIntegradorNFCe;
+
+  FDoCTe := TACBrObjetoCTe.Create(MonitorConfig, ACBrCTe1);
+  FDoCTe.OnAntesDeImprimir := @AntesDeImprimir;
+  FDoCTe.OnDepoisDeImprimir := @DepoisDeImprimir;
+  FDoNFe.OnConfiguraDACTe   := @ConfiguraDACTe;
+
   FDoMDFe := TACBrObjetoMDFe.Create(MonitorConfig, ACBrMDFe1);
   FDoMDFe.OnAntesDeImprimir := @AntesDeImprimir;
   FDoMDFe.OnDepoisDeImprimir := @DepoisDeImprimir;
 
+  FDoBoleto := TACBrObjetoBoleto.Create(MonitorConfig, ACBrBoleto1);
+  FDoBoleto.OnAntesDeImprimir := @AntesDeImprimir;
+  FDoBoleto.OnDepoisDeImprimir := @DepoisDeImprimir;
+
   FDoeSocial := TACBrObjetoeSocial.Create(MonitorConfig, ACBreSocial1);
   FDoReinf   := TACBrObjetoReinf.Create(MonitorConfig, ACBrReinf1);
+
+  FDoSAT := TACBrObjetoSAT.Create(MonitorConfig, ACBrSAT1);
+  FDoSAT.OnPrepararImpressaoSAT := @PrepararImpressaoSAT;
+  FDoSAT.OnRespostaIntegrador := @RespostaIntegrador;
 
   // Seta as definições iniciais para navegação
   SetColorButtons(btnMonitor);
@@ -3438,6 +3464,8 @@ end;
 procedure TFrmACBrMonitor.cbxSepararPorCNPJChange(Sender: TObject);
 begin
   ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
+  ACBrCTe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
+  ACBrMDFe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
 end;
 
 procedure TFrmACBrMonitor.cbxTimeZoneModeChange(Sender: TObject);
@@ -3607,8 +3635,12 @@ begin
   fsSLPrecos.Free;
 
   FDoMDFe.Free;
+  FDoNFe.Free;
+  FDoBoleto.Free;
+  FDoCTe.Free;
   FDoeSocial.Free;
   FDoReinf.Free;
+  FDoSAT.Free;
   FMonitorConfig.Free;
 end;
 
@@ -5943,7 +5975,7 @@ begin
         else if fsCmd.Objeto = 'ETQ' then
           DoETQ(fsCmd)
         else if fsCmd.Objeto = 'BOLETO' then
-          DoBoleto(fsCmd)
+          FDoBoleto.Executar(fsCmd)
         else if fsCmd.Objeto = 'CEP' then
           DoCEP(fsCmd)
         else if fsCmd.Objeto = 'IBGE' then
@@ -5955,9 +5987,9 @@ begin
         else if fsCmd.Objeto = 'NCM' then
           DoNcm(fsCmd)
         else if fsCmd.Objeto = 'NFE' then
-          DoACBrNFe(fsCmd)
+          FDoNFe.Executar(fsCmd)
         else if fsCmd.Objeto = 'CTE' then
-          DoACBrCTe(fsCmd)
+          FDoCTe.Executar(fsCmd)
         else if fsCmd.Objeto = 'MDFE' then
           FDoMDFe.Executar(fsCmd)
         else if fsCmd.Objeto = 'ESOCIAL' then
@@ -5967,7 +5999,7 @@ begin
         else if fsCmd.Objeto = 'GNRE' then
           DoACBrGNRe(fsCmd)
         else if fsCmd.Objeto = 'SAT' then
-          DoSAT(fsCmd)
+          FDoSAT.Executar(fsCmd)
         else if fsCmd.Objeto = 'ESCPOS' then
           DoPosPrinter(fsCmd);
 
@@ -8253,6 +8285,75 @@ begin
   //  ForceForeground(Self.Handle);
 end;
 
+procedure TFrmACBrMonitor.ConfiguraDACTe(GerarPDF: Boolean;
+  MostrarPreview: String);
+var
+  OK: boolean;
+begin
+  if ACBrCTe1.Conhecimentos.Count > 0 then
+  begin
+    if ACBrCTe1.Conhecimentos.Items[0].CTe.Ide.modelo = 67 then
+    begin
+//      if (rgModeloDANFeNFCE.ItemIndex = 0) or GerarPDF then
+//        ACBrCTe1.DANFE := ACBrNFeDANFCeFortes1
+//      else
+//        ACBrCTe1.DANFE := ACBrNFeDANFeESCPOS1;
+
+//      ACBrCTe1.DACTE.Impressora := cbxImpressoraNFCe.Text;
+    end
+    else
+    begin
+      ACBrCTe1.DACTE := ACBrCTeDACTeRL1;
+      ACBrCTe1.DACTE.Impressora := cbxImpressora.Text;
+    end;
+
+    if (ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.cStat in [101, 151, 155]) then
+       ACBrCTe1.DACTE.CTeCancelada := True
+    else
+       ACBrCTe1.DACTE.CTeCancelada := False;
+  end;
+
+  if GerarPDF and not DirectoryExists(PathWithDelim(edtPathPDF.Text))then
+    ForceDirectories(PathWithDelim(edtPathPDF.Text));
+
+  if ACBrCTe1.DACTE <> nil then
+  begin
+    ACBrCTe1.DACTE.TipoDACTE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
+    ACBrCTe1.DACTE.Logo := edtLogoMarca.Text;
+    ACBrCTe1.DACTE.Sistema := edSH_RazaoSocial.Text;
+    ACBrCTe1.DACTE.Site := edtSiteEmpresa.Text;
+    ACBrCTe1.DACTE.Email := edtEmailEmpresa.Text;
+    ACBrCTe1.DACTE.Fax := edtFaxEmpresa.Text;
+    ACBrCTe1.DACTE.ImprimirDescPorc := cbxImpDescPorc.Checked;
+    ACBrCTe1.DACTE.NumCopias := edtNumCopia.Value;
+    ACBrCTe1.DACTE.MargemInferior := fspeMargemInf.Value;
+    ACBrCTe1.DACTE.MargemSuperior := fspeMargemSup.Value;
+    ACBrCTe1.DACTE.MargemDireita := fspeMargemDir.Value;
+    ACBrCTe1.DACTE.MargemEsquerda := fspeMargemEsq.Value;
+    ACBrCTe1.DACTE.PathPDF := PathWithDelim(edtPathPDF.Text);
+    ACBrCTe1.DACTE.ExibirResumoCanhoto := cbxExibeResumo.Checked;
+    ACBrCTe1.DACTE.MostrarStatus := cbxMostraStatus.Checked;
+    ACBrCTe1.DACTE.ExpandirLogoMarca := cbxExpandirLogo.Checked;
+    ACBrCTe1.DACTE.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
+    ACBrCTe1.DACTE.UsarSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+
+    if ACBrCTe1.DACTE = ACBrCTeDACTeRL1 then
+    begin
+//      ACBrCTeDACTeRL1.Fonte.Nome := TNomeFonte(rgTipoFonte.ItemIndex);
+//      ACBrCTeDACTeRL1.Fonte.TamanhoFonte_RazaoSocial := speFonteRazao.Value;
+//      ACBrCTeDACTeRL1.AltLinhaComun := speAlturaCampos.Value;
+      ACBrCTeDACTeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
+    end;
+  end;
+
+  ACBrCTe1.DACTE.MostrarPreview := False;
+  if (not GerarPDF) then
+    if EstaVazio(MostrarPreview) then
+      ACBrCTe1.DACTE.MostrarPreview := cbxMostrarPreview.Checked
+    else
+      ACBrCTe1.DACTE.MostrarPreview := StrToBoolDef(MostrarPreview, False);
+end;
+
 procedure TFrmACBrMonitor.VerificaDiretorios;
 var
   CanEnabled: Boolean;
@@ -8518,7 +8619,7 @@ end;
 procedure TFrmACBrMonitor.bBoletoRelatorioRetornoClick(Sender: TObject);
 begin
   if ACBrBoleto1.ListadeBoletos.Count > 0 then
-    ImprimeRelatorioRetorno(lsvArqsRetorno.Selected.Caption);
+    FDoBoleto.ImprimeRelatorioRetorno(lsvArqsRetorno.Selected.Caption);
 
 end;
 
@@ -8691,6 +8792,7 @@ begin
     TConfiguracoesNFe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
     TConfiguracoesNFe(Configuracoes).Geral.CamposFatObrigatorios    := ckCamposFatObrigatorio.Checked;
+
 
   end
   else if Configuracoes is TConfiguracoesCTe then
@@ -9107,6 +9209,43 @@ begin
      end;
 
    end;
+end;
+
+function TFrmACBrMonitor.SubstituirVariaveis(const ATexto: String): String;
+var
+  TextoStr: String;
+begin
+  if Trim(ATexto) = '' then
+    Result := ''
+  else
+  begin
+    TextoStr := ATexto;
+
+    if ACBrNFe1.NotasFiscais.Count > 0 then
+    begin
+      with ACBrNFe1.NotasFiscais.Items[0].NFe do
+      begin
+        TextoStr := StringReplace(TextoStr,'[EmitNome]',     Emit.xNome,   [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[EmitFantasia]', Emit.xFant,   [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[EmitCNPJCPF]',  Emit.CNPJCPF, [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[EmitIE]',       Emit.IE,      [rfReplaceAll, rfIgnoreCase]);
+
+        TextoStr := StringReplace(TextoStr,'[DestNome]',     Dest.xNome,   [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[DestCNPJCPF]',  Dest.CNPJCPF, [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[DestIE]',       Dest.IE,      [rfReplaceAll, rfIgnoreCase]);
+
+        TextoStr := StringReplace(TextoStr,'[ChaveNFe]',     procNFe.chNFe, [rfReplaceAll, rfIgnoreCase]);
+
+        TextoStr := StringReplace(TextoStr,'[SerieNF]',      FormatFloat('000',           Ide.serie),         [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[NumeroNF]',     FormatFloat('000000000',     Ide.nNF),           [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[ValorNF]',      FormatFloat('0.00',          Total.ICMSTot.vNF), [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[dtEmissao]',    FormatDateTime('dd/mm/yyyy', Ide.dEmi),          [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[dtSaida]',      FormatDateTime('dd/mm/yyyy', Ide.dSaiEnt),       [rfReplaceAll, rfIgnoreCase]);
+        TextoStr := StringReplace(TextoStr,'[hrSaida]',      FormatDateTime('hh:mm:ss',   Ide.hSaiEnt),       [rfReplaceAll, rfIgnoreCase]);
+      end;
+    end;
+    Result := TextoStr;
+  end;
 end;
 
 procedure TFrmACBrMonitor.sbSerialClick(Sender: TObject);

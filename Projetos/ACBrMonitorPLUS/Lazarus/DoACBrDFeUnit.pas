@@ -16,6 +16,7 @@ protected
   FXMLorFile           : String;
   FPathDFe             : String;
   FPathDFeExtensao     : String;
+  FRetornaFalha        : Boolean;
 
   FpACBrDFe: TACBrDFe;
   FMsgValidaPath : TStringList;
@@ -30,11 +31,12 @@ protected
   property XMLorFile : String read FXMLorFile write SetFXMLorFile;
 
 public
-  constructor Create(AACBrDFe: TACBrDFe; AXMLorFile: String );
+  constructor Create(AACBrDFe: TACBrDFe; AXMLorFile: String; ARetornaFalha: Boolean = True );
   Destructor  Destroy; Override;
 
   property PathDFe        : String read FPathDFe;
   property PathDFeExtensao: String read FPathDFeExtensao;
+  property RetornaFalha   : Boolean read FRetornaFalha;
 
 end;
 
@@ -93,7 +95,7 @@ begin
         begin
           if ValidarPath(FPathDFeExtensao) then
             CarregarDFePath(FPathDFeExtensao)
-          else
+          else if RetornaFalha then
             raise Exception.Create( ACBrStr( FMsgValidaPath.Text ) );
         end;
 
@@ -112,12 +114,13 @@ begin
   end;
 end;
 
-constructor TACBrCarregarDFe.Create(AACBrDFe: TACBrDFe; AXMLorFile: String);
+constructor TACBrCarregarDFe.Create(AACBrDFe: TACBrDFe; AXMLorFile: String; ARetornaFalha: Boolean);
 begin
   inherited Create;
   FMsgValidaPath   := TStringList.Create;
   FPathDFe         := '';
   FPathDFeExtensao := '';
+  FRetornaFalha    := ARetornaFalha;
   FpACBrDFe := AACBrDFe;
   XMLorFile := AXMLorFile;
 end;

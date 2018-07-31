@@ -38,470 +38,645 @@ unit DoBoletoUnit;
 interface
 
 uses
-  Classes, SysUtils, CmdUnit, IniFiles;
+  Classes, SysUtils, CmdUnit, IniFiles, ACBrBoleto,
+  ACBrMonitorConfig, ACBrMonitorConsts;
 
-procedure DoBoleto(Cmd: TACBrCmd);
-procedure LerIniBoletos(aStr: AnsiString);
-procedure IncluirTitulo(aIni: TMemIniFile; Sessao: String);
-procedure GravarIniRetorno(DirIniRetorno: String);
-function ListaBancos() : String;
-function ListaCaractTitulo() : String;
-function ListaOcorrencias(): String;
-procedure ImprimeRelatorioRetorno(sArqRetorno : String);
+type
+
+{ TACBrObjetoBoleto}
+TACBrObjetoBoleto = class(TACBrObjetoDFe)
+private
+  fACBrBoleto: TACBrBoleto;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrBoleto: TACBrBoleto); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  procedure LerIniBoletos(aStr: String);
+  procedure ImprimeRelatorioRetorno(sArqRetorno : String);
+  function ListaBancos(): String;
+  function ListaCaractTitulo() : String;
+  function ListaOcorrencias(): String;
+
+  property ACBrBoleto: TACBrBoleto read fACBrBoleto;
+
+end;
+
+{ TMetodoConfigurarDados }
+
+TMetodoConfigurarDados = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoLimparLista }
+
+TMetodoLimparLista = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTotalTitulosLista }
+
+TMetodoTotalTitulosLista = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimir }
+
+TMetodoImprimir = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGerarPDF }
+
+TMetodoGerarPDF = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGerarHTML }
+
+TMetodoGerarHTML = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGerarRemessa }
+
+TMetodoGerarRemessa = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoLerRetorno }
+
+TMetodoLerRetorno = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoEnviarEmail }
+
+TMetodoEnviarEmail = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoIncluirTitulos  }
+
+TMetodoIncluirTitulos  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetDiretorioArquivo  }
+
+TMetodoSetDiretorioArquivo  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoListaBancos  }
+
+TMetodoListaBancos  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoListaCaractTitulo  }
+
+TMetodoListaCaractTitulo  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoListaOcorrencias  }
+
+TMetodoListaOcorrencias  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTamNossoNumero  }
+
+TMetodoTamNossoNumero  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCodigosMoraAceitos  }
+
+TMetodoCodigosMoraAceitos  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSelecionaBanco  }
+
+TMetodoSelecionaBanco  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
 
 implementation
 
-uses ACBrBoleto, ACBrUtil, ACBrMonitor1, DoACBrUnit, strutils, typinfo,
-  DoEmailUnit, ACBrBoletoRelatorioRetorno ;
+uses ACBrUtil, DoACBrUnit, strutils, typinfo,
+  DoEmailUnit, ACBrBoletoRelatorioRetorno;
 
-procedure DoBoleto ( Cmd: TACBrCmd ) ;
+{ TACBrObjetoBoleto }
+
+constructor TACBrObjetoBoleto.Create(AConfig: TMonitorConfig;
+  ACBrBoleto: TACBrBoleto);
+begin
+  inherited Create(AConfig);
+
+  fACBrBoleto:= ACBrBoleto;
+
+  ListaDeMetodos.Add(CMetodoConfigurarDados);
+  ListaDeMetodos.Add(CMetodoLimparLista);
+  ListaDeMetodos.Add(CMetodoTotalTitulosLista);
+  ListaDeMetodos.Add(CMetodoImprimir);
+  ListaDeMetodos.Add(CMetodoGerarPDF);
+  ListaDeMetodos.Add(CMetodoGerarHTML);
+  ListaDeMetodos.Add(CMetodoGerarRemessa);
+  ListaDeMetodos.Add(CMetodoLerRetorno);
+  ListaDeMetodos.Add(CMetodoEnviarEmail);
+  ListaDeMetodos.Add(CMetodoIncluirTitulos);
+  ListaDeMetodos.Add(CMetodoSetDiretorioArquivo);
+  ListaDeMetodos.Add(CMetodoListaBancos);
+  ListaDeMetodos.Add(CMetodoListaCaractTitulo);
+  ListaDeMetodos.Add(CMetodoListaOcorrencias);
+  ListaDeMetodos.Add(CMetodoTamNossoNumero);
+  ListaDeMetodos.Add(CMetodoCodigosMoraAceitos);
+  ListaDeMetodos.Add(CMetodoSelecionaBanco);
+
+end;
+
+procedure TACBrObjetoBoleto.Executar(ACmd: TACBrCmd);
 var
-  Destinatario: String;
+   AMetodoClass: TACBrMetodoClass;
+   CmdNum: Integer;
+   Ametodo: TACBrMetodo;
+begin
+  inherited Executar(ACmd);
 
-  procedure Imprime;
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
+
+  case CmdNum of
+    0  : AMetodoClass := TMetodoConfigurarDados;
+    1  : AMetodoClass := TMetodoLimparLista;
+    2  : AMetodoClass := TMetodoTotalTitulosLista;
+    3  : AMetodoClass := TMetodoImprimir;
+    4  : AMetodoClass := TMetodoGerarPDF;
+    5  : AMetodoClass := TMetodoGerarHTML;
+    6  : AMetodoClass := TMetodoGerarRemessa;
+    7  : AMetodoClass := TMetodoLerRetorno;
+    8  : AMetodoClass := TMetodoEnviarEmail;
+    9  : AMetodoClass := TMetodoIncluirTitulos;
+    10 : AMetodoClass := TMetodoSetDiretorioArquivo;
+    11 : AMetodoClass := TMetodoListaBancos;
+    12 : AMetodoClass := TMetodoListaCaractTitulo;
+    13 : AMetodoClass := TMetodoListaOcorrencias;
+    14 : AMetodoClass := TMetodoTamNossoNumero;
+    15 : AMetodoClass := TMetodoCodigosMoraAceitos;
+    16 : AMetodoClass := TMetodoSelecionaBanco;
+
+    17..31 : DoACbr(ACmd);
+  end;
+
+  if Assigned(AMetodoClass) then
   begin
-    with FrmACBrMonitor do
+    Ametodo := AMetodoClass.Create(ACmd, Self);
+    try
+      Ametodo.Executar;
+    finally
+      Ametodo.Free;
+    end;
+
+  end;
+
+end;
+
+{ TMetodoConfigurarDados }
+
+{ Params: 0 - Ini - Uma String com um Path completo arquivo .ini
+                         ou Uma String com conteúdo txt da Configuracao Cedente
+}
+
+procedure TMetodoConfigurarDados.Executar;
+var
+  AIni: String;
+begin
+  AIni := fpCmd.Params(0);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    LerIniBoletos(AIni);
+  end;
+
+end;
+
+{ TMetodoLimparLista }
+
+procedure TMetodoLimparLista.Executar;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    ACBrBoleto.ListadeBoletos.Clear;
+  end;
+
+end;
+
+{ TMetodoTotalTitulosLista }
+
+procedure TMetodoTotalTitulosLista.Executar;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr( ACBrBoleto.ListadeBoletos.Count);
+  end;
+
+end;
+
+{ TMetodoImprimir }
+
+{ Params: 0 - PrintName = Nome da Impressora
+}
+procedure TMetodoImprimir.Executar;
+var
+  AName: String;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    AName := fpCmd.Params(0);
+
+    if NaoEstaVazio(AName) then
+      ACBrBoleto.ACBrBoletoFC.PrinterName := AName;
+
+    try
+      DoAntesDeImprimir(ACBrBoleto.ACBrBoletoFC.MostrarPreview);
+      ACBrBoleto.Imprimir;
+    finally
+      DoDepoisDeImprimir;
+    end;
+
+  end;
+
+end;
+
+{ TMetodoGerarPDF }
+
+procedure TMetodoGerarPDF.Executar;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    ACBrBoleto.GerarPDF;
+  end;
+
+end;
+
+{ TMetodoGerarHTML }
+
+procedure TMetodoGerarHTML.Executar;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    ACBrBoleto.GerarHTML;
+  end;
+
+end;
+
+{ TMetodoGerarRemessa }
+
+{ Params: 0 - Dir = Diretório do arquivo de Remessa
+          1 - NumArq = Integer: Número do arquivo de Remessa
+          2 - ListaRelat = Nome do arquivo de Remessa
+}
+
+procedure TMetodoGerarRemessa.Executar;
+var
+  ADir : String;
+  ANumArq : Integer;
+  ANomeArq : String;
+begin
+  ADir     := fpCmd.Params(0);
+  ANumArq  := StrToIntDef(fpCmd.Params(1),1);
+  ANomeArq := fpCmd.Params(2);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    if NaoEstaVazio( ADir ) then
+      ACBrBoleto.DirArqRemessa := ADir;
+    if NaoEstaVazio( ANomeArq ) then
+      ACBrBoleto.NomeArqRemessa:= ANomeArq;
+    ACBrBoleto.GerarRemessa( ANumArq );
+
+  end;
+
+end;
+
+{ TMetodoLerRetorno }
+
+{ Params: 0 - Dir = Diretório do arquivo de Retorno
+          1 - NomeArq = Nome do arquivo de Retorno
+          2 - ListaRelat = Boolean: Listar Relatório caso seja true
+}
+procedure TMetodoLerRetorno.Executar;
+var
+  ADir     : String;
+  ANomeArq : String;
+  AListaRelat : Boolean;
+begin
+  ADir     := fpCmd.Params(0);
+  ANomeArq := fpCmd.Params(1);
+  AListaRelat := StrToBoolDef( fpCmd.Params(2), False );
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    ACBrBoleto.DirArqRetorno  := ADir;
+    ACBrBoleto.NomeArqRetorno := ANomeArq;
+    ACBrBoleto.LerRetorno();
+    ACBrBoleto.GravarArqIni(ADir,'');
+      if ( AListaRelat ) then
+        ImprimeRelatorioRetorno(ADir);
+
+  end;
+
+end;
+
+{ TMetodoEnviarEmail }
+
+{ Params: 0 - Dest : email do destinatário
+}
+procedure TMetodoEnviarEmail.Executar;
+var
+  ADest: String;
+  Mensagem: TStringList;
+begin
+  ADest := Trim(fpCmd.Params(0));
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    if (ADest = '') and (ACBrBoleto.ListadeBoletos.Count > 0) then
+      ADest := ACBrBoleto.ListadeBoletos[0].Sacado.Email;
+
+    with MonitorConfig.BOLETO.Email do
+    begin
+        Mensagem := TStringList.Create;
+      try
+        Mensagem.Add(EmailMensagemBoleto);
+
+        ACBrBoleto.EnviarEmail( ADest,
+                 EmailAssuntoBoleto,
+                 Mensagem,
+                 True);
+        fpCmd.Resposta := 'E-mail enviado com sucesso!'
+
+      finally
+        Mensagem.Free;
+      end;
+    end;
+
+  end;
+
+end;
+
+{ TMetodoIncluirTitulos }
+
+{ Params: 0 - AIni : String com Path ou conteúdo .ini
+          1 - TpSaida: Caractere com o Tipo de Saída
+}
+procedure TMetodoIncluirTitulos.Executar;
+var
+  AIni: String;
+  ATpSaida: String;
+  Mensagem: TStringList;
+begin
+  AIni := fpCmd.Params(0);
+  ATpSaida := fpCmd.Params(1);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    LerIniBoletos(AIni);
+
+    if ATpSaida = 'I' then
     begin
       try
-        AntesDeImprimir(ckgBOLMostrar.Checked[0]);
-        ACBrBoleto1.Imprimir;
+        DoAntesDeImprimir(ACBrBoleto.ACBrBoletoFC.MostrarPreview);
+        ACBrBoleto.Imprimir;
       finally
-        DepoisDeImprimir;
+        DoDepoisDeImprimir;
       end;
-    end;
-  end;
-
-begin
-   with FrmACBrMonitor.ACBrBoleto1 do
-   begin
-      if Cmd.Metodo = 'configurardados' then
-         LerIniBoletos(Cmd.Params(0))
-
-      else if cmd.Metodo = 'limparlista' then
-         ListadeBoletos.Clear
-
-      else if cmd.Metodo = 'totaltituloslista' then
-         Cmd.Resposta:= IntToStr(ListadeBoletos.Count)
-
-      else if cmd.Metodo = 'imprimir' then
-       begin
-         if Cmd.Params(0) <> '' then
-            ACBrBoletoFC.PrinterName := Cmd.Params(0);
-
-         Imprime;
-       end
-
-      else if cmd.Metodo = 'gerarpdf' then
-         GerarPDF
-
-      else if cmd.Metodo = 'gerarhtml' then
-         GerarHTML
-
-      else if cmd.Metodo = 'gerarremessa' then
-       begin
-         if NaoEstaVazio( Cmd.Params(0) ) then
-           DirArqRemessa := Cmd.Params(0);
-         if NaoEstaVazio( Cmd.Params(2) ) then
-           NomeArqRemessa:= Cmd.Params(2);
-         GerarRemessa( StrToIntDef(cmd.Params(1),1));
-       end
-
-      else if cmd.Metodo = 'lerretorno' then
-       begin
-         DirArqRetorno  := Cmd.Params(0);
-         NomeArqRetorno := cmd.Params(1);
-         LerRetorno();
-         GravarIniRetorno(DirArqRetorno);
-
-         if ( Cmd.Params(2) = '1' ) then
-            ImprimeRelatorioRetorno(DirArqRetorno);
-       end
-
-      else if cmd.Metodo = 'enviaremail' then
-       begin
-         Destinatario := Trim(Cmd.Params(0));
-         if (Destinatario = '') and (ListadeBoletos.Count > 0) then
-           Destinatario := ListadeBoletos[0].Sacado.Email;
-
-         EnviarEmail( Destinatario,
-                      FrmACBrMonitor.edtBOLEmailAssunto.Text,
-                      FrmACBrMonitor.edtBOLEmailMensagem.Lines,
-                      True);
-         Cmd.Resposta := 'E-mail enviado com sucesso!'
-       end
-
-      else if cmd.Metodo = 'incluirtitulos' then
-       begin
-        LerIniBoletos(Cmd.Params(0));
-        if Cmd.Params(1) = 'I' then
-          Imprime
-        else if Cmd.Params(1)= 'P' then
-          GerarPDF
-        else if Cmd.Params(1)= 'E' then
-         begin
-           EnviarEmail( ListadeBoletos[0].Sacado.Email,
-                        FrmACBrMonitor.edtBOLEmailAssunto.Text,
-                        FrmACBrMonitor.edtBOLEmailMensagem.Lines,
-                        True );
-           Cmd.Resposta := 'E-mail enviado com sucesso!'
-         end;
-       end
-      else if cmd.Metodo = 'setdiretorioarquivo' then
-      begin
-        if DirectoryExists(Cmd.Params(0)) then
-        begin
-          FrmACBrMonitor.deBOLDirArquivo.Text := PathWithDelim(Cmd.Params(0));
-          FrmACBrMonitor.SalvarIni;
-          if ACBrBoletoFC.Filtro = TACBrBoletoFCFiltro(fiHTML) then
-            ACBrBoletoFC.NomeArquivo := PathWithDelim(Cmd.Params(0))  +
-              IfThen(NaoEstaVazio(Cmd.Params(1)), Cmd.Params(1) , 'boleto.html' )
-          else
-            ACBrBoletoFC.NomeArquivo := PathWithDelim( Cmd.Params(0)) +
-              IfThen(NaoEstaVazio(Cmd.Params(1)), Cmd.Params(1) , 'boleto.pdf' );
-
-          Cmd.Resposta := ACBrBoletoFC.NomeArquivo;
-
-        end
-        else
-          raise Exception.Create('Arquivo não encontrado.');
-      end
-
-      else if cmd.Metodo = 'listabancos' then
-         Cmd.Resposta := ListaBancos()
-      else if cmd.Metodo = 'listacaracttitulo' then
-         Cmd.Resposta := ListaCaractTitulo()
-      else if cmd.Metodo = 'listaocorrencias' then
-         Cmd.Resposta := ListaOcorrencias()
-      else if cmd.Metodo = 'tamnossonumero' then
-         Cmd.Resposta := IntToStr(Banco.CalcularTamMaximoNossoNumero(Cmd.Params(0)))
-      else if cmd.Metodo = 'codigosmoraaceitos' then
-         Cmd.Resposta := Banco.CodigosMoraAceitos
-      else if cmd.Metodo = 'selecionabanco' then
-         Banco.TipoCobranca := GetTipoCobranca(StrToInt64Def(Trim(Cmd.Params(0)),0))
-      else
-         raise Exception.Create(ACBrStr('Comando inválido ('+Cmd.Comando+')'));
-   end;
-
-end;
-
-procedure LerIniBoletos( aStr: AnsiString ) ;
-var
-   IniBoletos: TMemIniFile;
-   ContTitulos: Integer;
-   NomeSessao: String;
-   MudouDados: boolean;
-   NumeroBanco: LongInt;
-   IndiceACBr: LongInt;
-   wLayoutBoleto: Integer;
-begin
-  MudouDados := False;
-  IniBoletos := LerConverterIni(aStr);
-
-  try
-     with FrmACBrMonitor.ACBrBoleto1 do
-     begin
-        if IniBoletos.SectionExists('Cedente') then
-        begin
-           MudouDados := True;
-           with Cedente do
-           begin
-              FrmACBrMonitor.cbxBOLF_J.ItemIndex := IniBoletos.ReadInteger('CEDENTE','TipoPessoa',2);
-              try
-                 TipoInscricao := TACBrPessoa( FrmACBrMonitor.cbxBOLF_J.ItemIndex ) ;
-              except
-                 TipoInscricao := pJuridica ;
-              end ;
-
-              Nome          := IniBoletos.ReadString('CEDENTE','Nome',Nome);
-              CNPJCPF       := IniBoletos.ReadString('CEDENTE','CNPJCPF',CNPJCPF);
-              Logradouro    := IniBoletos.ReadString('CEDENTE','Logradouro',Logradouro);
-              NumeroRes     := IniBoletos.ReadString('CEDENTE','Numero',NumeroRes);
-              Bairro        := IniBoletos.ReadString('CEDENTE','Bairro','');
-              Cidade        := IniBoletos.ReadString('CEDENTE','Cidade','');
-              CEP           := IniBoletos.ReadString('CEDENTE','CEP','');
-              Complemento   := IniBoletos.ReadString('CEDENTE','Complemento','');
-              UF            := IniBoletos.ReadString('CEDENTE','UF','');
-              CodigoCedente := IniBoletos.ReadString('CEDENTE','CodigoCedente','');
-              Modalidade    := IniBoletos.ReadString('CEDENTE','MODALIDADE','');
-              CodigoTransmissao:= IniBoletos.ReadString('CEDENTE','CODTRANSMISSAO','');
-              Convenio      := IniBoletos.ReadString('CEDENTE','CONVENIO','');
-
-              FrmACBrMonitor.edtCodTransmissao.Text := CodigoTransmissao;
-              FrmACBrMonitor.edtModalidade.Text     := Modalidade;
-              FrmACBrMonitor.edtConvenio.Text       := Convenio;
-
-              FrmACBrMonitor.cbxBOLEmissao.ItemIndex := IniBoletos.ReadInteger('CEDENTE','RespEmis',0);
-              try
-                 ResponEmissao := TACBrResponEmissao( FrmACBrMonitor.cbxBOLEmissao.ItemIndex ) ;
-              except
-                 ResponEmissao := tbCliEmite ;
-              end ;
-
-              CaracTitulo := TACBrCaracTitulo(IniBoletos.ReadInteger('CEDENTE','CaracTitulo',0));
-              TipoCarteira:= TACBrTipoCarteira(IniBoletos.ReadInteger('CEDENTE','TipoCarteira',0));    
-              TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger('CEDENTE','TipoDocumento',1)); 
-
-              wLayoutBoleto:= IniBoletos.ReadInteger('CEDENTE','LAYOUTBOL',0);
-
-              if (wLayoutBoleto >= 0) then
-                FrmACBrMonitor.cbxBOLLayout.ItemIndex := wLayoutBoleto;
-
-              try
-                ACBrBoletoFC.LayOut:= TACBrBolLayOut(FrmACBrMonitor.cbxBOLLayout.ItemIndex);
-              except
-                ACBrBoletoFC.LayOut:= lPadrao;
-              end;
-           end;
-
-           with FrmACBrMonitor do
-           begin
-              edtBOLRazaoSocial.Text  := Cedente.Nome;
-              edtBOLCNPJ.Text         := Cedente.CNPJCPF;
-              edtBOLLogradouro.Text   := Cedente.Logradouro;
-              edtBOLNumero.Text       := Cedente.NumeroRes;
-              edtBOLBairro.Text       := Cedente.Bairro;
-              edtBOLCidade.Text       := Cedente.Cidade;
-              edtBOLComplemento.Text  := Cedente.Complemento;
-              cbxBOLUF.Text           := Cedente.UF;
-              edtBOLCEP.Text          := Cedente.CEP;
-           end;
-        end;
-
-        if IniBoletos.SectionExists('Banco') then
-        begin
-           MudouDados := True;
-
-           NumeroBanco := IniBoletos.ReadInteger('BANCO','Numero',0);
-           IndiceACBr  := IniBoletos.ReadInteger('BANCO','IndiceACBr',0);
-
-           if IndiceACBr > 0 then
-             Banco.TipoCobranca:= TACBrTipoCobranca(IndiceACBr)
-           else if NumeroBanco > 0 then
-             Banco.TipoCobranca := GetTipoCobranca(NumeroBanco);
-
-           if (trim(Banco.Nome) = 'Não definido') then
-              raise exception.Create('Banco não definido ou não '+
-                                     'implementado no ACBrBoleto!');
-
-           FrmACBrMonitor.cbxBOLBanco.ItemIndex :=  Integer(Banco.TipoCobranca);
-           FrmACBrMonitor.cbxCNAB.ItemIndex := IniBoletos.ReadInteger('BANCO','CNAB',0);
-           if FrmACBrMonitor.cbxCNAB.ItemIndex = 0 then
-              LayoutRemessa := c240
-           else
-              LayoutRemessa := c400;
-        end;
-
-        if IniBoletos.SectionExists('Conta') then
-        begin
-           MudouDados := True;
-           with Cedente do
-           begin
-             Conta         := IniBoletos.ReadString('CONTA','Conta','');
-             ContaDigito   := IniBoletos.ReadString('CONTA','DigitoConta','');
-             Agencia       := IniBoletos.ReadString('CONTA','Agencia','');
-             AgenciaDigito := IniBoletos.ReadString('CONTA','DigitoAgencia','');
-           end;
-
-           with FrmACBrMonitor do
-           begin
-              edtBOLConta.Text         := Cedente.Conta;
-              edtBOLDigitoConta.Text   := Cedente.ContaDigito;
-              edtBOLAgencia.Text       := Cedente.Agencia;
-              edtBOLDigitoAgencia.Text := Cedente.AgenciaDigito;
-              edtCodCliente.Text       := Cedente.CodigoCedente;
-           end;
-        end;
-
-
-        if MudouDados then
-           FrmACBrMonitor.SalvarConfBoletos;
-
-        if IniBoletos.SectionExists('Titulo') then
-        begin
-           IncluirTitulo(IniBoletos,'Titulo');
-           MudouDados := true;
-        end;
-
-        ContTitulos := 0;
-        NomeSessao  := 'Titulo1';
-        while IniBoletos.SectionExists(NomeSessao)do
-        begin
-           Inc( ContTitulos );
-           IncluirTitulo( IniBoletos, NomeSessao );
-           NomeSessao := 'Titulo'+IntToStr( ContTitulos+1 );
-        end;
-
-        if (( not MudouDados ) and ( ContTitulos = 0 )) then
-           raise exception.Create('Erro ao ler arquivo de entrada ou '+
-             'parâmetro incorreto.');
-     end;
-  finally
-     IniBoletos.Free;
-  end ;
-end;
-
-procedure IncluirTitulo( aIni: TMemIniFile; Sessao: String ) ;
-var
-   Titulo : TACBrTitulo;
-   MemFormatada : String;
-   LocalPagto: String;
-begin
-   with FrmACBrMonitor.ACBrBoleto1 do
-   begin
-      if (trim(Banco.Nome) = 'Não definido') then
-              raise exception.Create('Banco não definido ou não '+
-                                     'implementado no ACBrBoleto!');
-      Titulo := CriarTituloNaLista;
-
-      MemFormatada := aIni.ReadString(Sessao,'Mensagem','') ;
-      MemFormatada := StringReplace( MemFormatada,'|',sLineBreak, [rfReplaceAll] );
-
-      with Titulo do
-      begin
-         Aceite        := TACBrAceiteTitulo(aIni.ReadInteger(Sessao,'Aceite',1));
-         Sacado.Pessoa := TACBrPessoa( aIni.ReadInteger(Sessao,'Sacado.Pessoa',2) );
-         Sacado.Pessoa := TACBrPessoa( aIni.ReadInteger(Sessao,'Sacado.Pessoa',2) );
-         OcorrenciaOriginal.Tipo := TACBrTipoOcorrencia(
-               aini.ReadInteger(Sessao,'OcorrenciaOriginal.TipoOcorrencia',0) ) ;
-         TipoDiasProtesto := TACBrTipoDiasIntrucao(aIni.ReadInteger(Sessao,'TipoDiasProtesto',0));
-         TipoImpressao := TACBrTipoImpressao(aIni.ReadInteger(Sessao,'TipoImpressao',1));
-         TipoDesconto := TACBrTipoDesconto(aIni.ReadInteger(Sessao,'TipoDesconto',0));
-         MultaValorFixo := aIni.ReadBool(Sessao,'MultaValorFixo',False);
-
-         LocalPagto := aIni.ReadString(Sessao,'LocalPagamento','');
-
-         Vencimento          := StrToDateDef(Trim(aIni.ReadString(Sessao,'Vencimento','')), now);
-         DataDocumento       := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataDocumento','')),now);
-         DataProcessamento   := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataProcessamento','')),now);
-         DataAbatimento      := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataAbatimento','')),0);
-         DataDesconto        := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataDesconto','')),0);
-         DataMoraJuros       := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataMoraJuros','')),0);
-	 DataMulta           := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataMulta','')),0);
-         DataProtesto        := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataProtesto','')),0);
-         DataBaixa           := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataBaixa','')),0);
-         DataLimitePagto     := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataLimitePagto','')),0);
-         LocalPagamento      := IfThen(Trim(LocalPagto) <> '',LocalPagto,LocalPagamento);
-         NumeroDocumento     := aIni.ReadString(Sessao,'NumeroDocumento',NumeroDocumento);
-         EspecieDoc          := aIni.ReadString(Sessao,'Especie',EspecieDoc);
-         Carteira            := trim(aIni.ReadString(Sessao,'Carteira',''));
-         NossoNumero         := aIni.ReadString(Sessao,'NossoNumero','');
-         ValorDocumento      := aIni.ReadFloat(Sessao,'ValorDocumento',ValorDocumento);
-         Sacado.NomeSacado   := aIni.ReadString(Sessao,'Sacado.NomeSacado','');
-         Sacado.CNPJCPF      := OnlyNumber(aIni.ReadString(Sessao,'Sacado.CNPJCPF',''));
-         Sacado.Logradouro   := aIni.ReadString(Sessao,'Sacado.Logradouro','');
-         Sacado.Numero       := aIni.ReadString(Sessao,'Sacado.Numero','');
-         Sacado.Bairro       := aIni.ReadString(Sessao,'Sacado.Bairro','');
-         Sacado.Complemento  := aIni.ReadString(Sessao,'Sacado.Complemento','');
-         Sacado.Cidade       := aIni.ReadString(Sessao,'Sacado.Cidade','');
-         Sacado.UF           := aIni.ReadString(Sessao,'Sacado.UF','');
-         Sacado.CEP          := OnlyNumber(aIni.ReadString(Sessao,'Sacado.CEP',''));
-         Sacado.Email        := aIni.ReadString(Sessao,'Sacado.Email',Sacado.Email);
-         EspecieMod          := aIni.ReadString(Sessao,'EspecieMod',EspecieMod);
-         Mensagem.Text       := MemFormatada;
-         Instrucao1          := PadLeft(aIni.ReadString(Sessao,'Instrucao1',Instrucao1),2);
-         Instrucao2          := PadLeft(aIni.ReadString(Sessao,'Instrucao2',Instrucao2),2);
-         TotalParcelas       := aIni.ReadInteger(Sessao,'TotalParcelas',TotalParcelas);
-         Parcela             := aIni.ReadInteger(Sessao,'Parcela',Parcela);
-         ValorAbatimento     := aIni.ReadFloat(Sessao,'ValorAbatimento',ValorAbatimento);
-         ValorDesconto       := aIni.ReadFloat(Sessao,'ValorDesconto',ValorDesconto);
-         ValorMoraJuros      := aIni.ReadFloat(Sessao,'ValorMoraJuros',ValorMoraJuros);
-         ValorIOF            := aIni.ReadFloat(Sessao,'ValorIOF',ValorIOF);
-         ValorOutrasDespesas := aIni.ReadFloat(Sessao,'ValorOutrasDespesas',ValorOutrasDespesas);
-         SeuNumero           := aIni.ReadString(Sessao,'SeuNumero',SeuNumero);
-         PercentualMulta     := aIni.ReadFloat(Sessao,'PercentualMulta',PercentualMulta);
-         CodigoMora          := aIni.ReadString(Sessao,'CodigoMora','1');
-         CodigoGeracao       := aIni.ReadString(Sessao,'CodigoGeracao','2');
-         Sacado.SacadoAvalista.NomeAvalista  := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.NomeAvalista','');
-         Sacado.SacadoAvalista.CNPJCPF       := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.CNPJCPF','');
-         Sacado.SacadoAvalista.Logradouro    := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Logradouro','');
-         Sacado.SacadoAvalista.Numero        := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Numero','');
-         Sacado.SacadoAvalista.Complemento   := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Complemento','');
-         Sacado.SacadoAvalista.Bairro        := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Bairro','');
-         Sacado.SacadoAvalista.Cidade        := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Cidade','');
-         Sacado.SacadoAvalista.UF            := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.UF','');
-         Sacado.SacadoAvalista.CEP           := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.CEP','');
-         Sacado.SacadoAvalista.Email         := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Email','');
-         Sacado.SacadoAvalista.Fone          := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Fone','');
-         Sacado.SacadoAvalista.InscricaoNr   := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.InscricaoNr','');
-
-      end;
-   end;
-end;
-
-procedure GravarIniRetorno(DirIniRetorno: String);
-var
-  IniRetorno: TIniFile;
-  wSessao: String;
-  I: Integer;
-  J: Integer;
-begin
-  if Pos(PathDelim,DirIniRetorno) <> Length(DirIniRetorno) then
-     DirIniRetorno:= DirIniRetorno + PathDelim;
-
-  IniRetorno:= TMemIniFile.Create(DirIniRetorno + 'Retorno.ini');
-  try
-    with FrmACBrMonitor.ACBrBoleto1 do
+    end
+    else if ATpSaida = 'P' then
+      ACBrBoleto.GerarPDF
+    else if ATpSaida = 'E' then
     begin
-       IniRetorno.WriteString('CEDENTE','Nome',Cedente.Nome);
-       IniRetorno.WriteString('CEDENTE','CNPJCPF',Cedente.CNPJCPF);
-       IniRetorno.WriteString('CEDENTE','CodigoCedente',Cedente. CodigoCedente);
-       IniRetorno.WriteString('CEDENTE','MODALIDADE',Cedente.Modalidade);
-       IniRetorno.WriteString('CEDENTE','CODTRANSMISSAO',Cedente.CodigoTransmissao);
-       IniRetorno.WriteString('CEDENTE','CONVENIO',Cedente.Convenio);
+      with MonitorConfig.BOLETO.Email do
+      begin
+        Mensagem := TStringList.Create;
+        try
+          Mensagem.Add(EmailMensagemBoleto);
+              ACBrBoleto.EnviarEmail( ACBrBoleto.ListadeBoletos[0].Sacado.Email,
+                           EmailAssuntoBoleto,
+                           Mensagem,
+                           True );
+              fpCmd.Resposta := 'E-mail enviado com sucesso!'
 
-       IniRetorno.WriteInteger('BANCO','Numero',Banco.Numero);
-       IniRetorno.WriteInteger('BANCO','IndiceACBr',Integer(Banco.TipoCobranca));
+        finally
+          Mensagem.Free;
+        end;
+      end;
 
-       IniRetorno.WriteString('CONTA','Conta',Cedente.Conta);
-       IniRetorno.WriteString('CONTA','DigitoConta',Cedente.ContaDigito);
-       IniRetorno.WriteString('CONTA','Agencia',Cedente.Agencia);
-       IniRetorno.WriteString('CONTA','DigitoAgencia',Cedente.AgenciaDigito);
-
-       for I:= 0 to ListadeBoletos.Count - 1 do
-       begin
-         wSessao:= 'Titulo'+ IntToStr(I+1);
-         IniRetorno.WriteString(wSessao,'Sacado.Nome', ListadeBoletos[I].Sacado.NomeSacado);
-         IniRetorno.WriteString(wSessao,'Sacado.CNPJCPF', ListadeBoletos[I].Sacado.CNPJCPF);
-         IniRetorno.WriteString(wSessao,'Vencimento',DateToStr(ListadeBoletos[I].Vencimento));
-         IniRetorno.WriteString(wSessao,'DataDocumento',DateToStr(ListadeBoletos[I].DataDocumento));
-         IniRetorno.WriteString(wSessao,'NumeroDocumento',ListadeBoletos[I].NumeroDocumento);
-         IniRetorno.WriteString(wSessao,'DataProcessamento',DateToStr(ListadeBoletos[I].DataProcessamento));
-         IniRetorno.WriteString(wSessao,'NossoNumero',ListadeBoletos[I].NossoNumero);
-         IniRetorno.WriteString(wSessao,'Carteira',ListadeBoletos[I].Carteira);
-         IniRetorno.WriteFloat(wSessao,'ValorDocumento',ListadeBoletos[I].ValorDocumento);
-         IniRetorno.WriteString(wSessao,'DataOcorrencia',DateToStr(ListadeBoletos[I].DataOcorrencia));
-         IniRetorno.WriteString(wSessao,'DataCredito',DateToStr(ListadeBoletos[I].DataCredito));
-         IniRetorno.WriteString(wSessao,'DataBaixa',DateToStr(ListadeBoletos[I].DataBaixa));
-         IniRetorno.WriteString(wSessao,'DataMoraJuros',DateToStr(ListadeBoletos[I].DataMoraJuros));
-         IniRetorno.WriteFloat(wSessao,'ValorDespesaCobranca',ListadeBoletos[I].ValorDespesaCobranca);
-         IniRetorno.WriteFloat(wSessao,'ValorAbatimento',ListadeBoletos[I].ValorAbatimento);
-         IniRetorno.WriteFloat(wSessao,'ValorDesconto',ListadeBoletos[I].ValorDesconto);
-         IniRetorno.WriteFloat(wSessao,'ValorMoraJuros',ListadeBoletos[I].ValorMoraJuros);
-         IniRetorno.WriteFloat(wSessao,'ValorIOF',ListadeBoletos[I].ValorIOF);
-         IniRetorno.WriteFloat(wSessao,'ValorOutrasDespesas',ListadeBoletos[I].ValorOutrasDespesas);
-         IniRetorno.WriteFloat(wSessao,'ValorOutrosCreditos',ListadeBoletos[I].ValorOutrosCreditos);
-         IniRetorno.WriteFloat(wSessao,'ValorRecebido',ListadeBoletos[I].ValorRecebido);
-         IniRetorno.WriteString(wSessao,'SeuNumero',ListadeBoletos[I].SeuNumero);
-         IniRetorno.WriteString(wSessao,'CodTipoOcorrencia',
-                                GetEnumName( TypeInfo(TACBrTipoOcorrencia),
-                                             Integer(ListadeBoletos[I].OcorrenciaOriginal.Tipo)));
-         IniRetorno.WriteString(wSessao,'DescricaoTipoOcorrencia',ListadeBoletos[I].OcorrenciaOriginal.Descricao);
-
-
-         for J:= 0 to ListadeBoletos[I].DescricaoMotivoRejeicaoComando.Count-1 do
-            IniRetorno.WriteString(wSessao,'MotivoRejeicao' + IntToStr(I+1),
-                                   ListadeBoletos[I].DescricaoMotivoRejeicaoComando[J]);
-       end;
     end;
-  finally
-    IniRetorno.Free;
+
   end;
+
 end;
 
-function ListaBancos() : String;
+{ TMetodoSetDiretorioArquivo }
+
+{ Params: 0 - ADir : String com Diretório do Arquivo
+          1 - AArq: String com Nome Arquivo
+}
+procedure TMetodoSetDiretorioArquivo.Executar;
+var
+  ADir: String;
+  AArq: String;
+begin
+  ADir := fpCmd.Params(0);
+  AArq := fpCmd.Params(1);
+
+  if DirectoryExists(ADir) then
+  begin
+    with TACBrObjetoBoleto(fpObjetoDono) do
+    begin
+      with MonitorConfig.BOLETO.Layout do
+      begin
+        DirArquivoBoleto := PathWithDelim(ADir);
+        MonitorConfig.SalvarArquivo;
+
+        if ACBrBoleto.ACBrBoletoFC.Filtro = TACBrBoletoFCFiltro(fiHTML) then
+           ACBrBoleto.ACBrBoletoFC.NomeArquivo := PathWithDelim( ADir )  +
+             IfThen(NaoEstaVazio(AArq), AArq , 'boleto.html' )
+        else
+           ACBrBoleto.ACBrBoletoFC.NomeArquivo := PathWithDelim( ADir) +
+             IfThen(NaoEstaVazio(AArq), AArq , 'boleto.pdf' );
+
+        fpCmd.Resposta := ACBrBoleto.ACBrBoletoFC.NomeArquivo;
+
+      end;
+
+    end;
+
+  end
+  else
+    raise Exception.Create('Arquivo não encontrado.');
+
+end;
+
+{ TMetodoListaBancos }
+
+procedure TMetodoListaBancos.Executar;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+    fpCmd.Resposta := ListaBancos();
+
+end;
+
+{ TMetodoListaCaractTitulo }
+
+procedure TMetodoListaCaractTitulo.Executar;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+    fpCmd.Resposta := ListaCaractTitulo();
+end;
+
+{ TMetodoListaOcorrencias }
+
+procedure TMetodoListaOcorrencias.Executar;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+    fpCmd.Resposta := ListaOcorrencias();
+end;
+
+{ TMetodoTamNossoNumero }
+
+{ Params: 0 - ACarteira: Código Carteira
+}
+procedure TMetodoTamNossoNumero.Executar;
+var
+  ATam: String;
+begin
+  ATam := fpCmd.Params(0);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+    fpCmd.Resposta := IntToStr(ACBrBoleto.Banco.CalcularTamMaximoNossoNumero(ATam));
+
+end;
+
+{ TMetodoCodigosMoraAceitos }
+
+procedure TMetodoCodigosMoraAceitos.Executar;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+    fpCmd.Resposta := ACBrBoleto.Banco.CodigosMoraAceitos;
+end;
+
+{ TMetodoSelecionaBanco }
+
+{ Params: 0 - ACodBanco: Código do Banco
+}
+procedure TMetodoSelecionaBanco.Executar;
+var
+  ACodBanco: String;
+begin
+  ACodBanco := fpCmd.Params(0);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+    ACBrBoleto.Banco.TipoCobranca := ACBrBoleto.GetTipoCobranca(StrToInt64Def(Trim(ACodBanco),0))
+
+end;
+
+procedure TACBrObjetoBoleto.LerIniBoletos( aStr: String ) ;
+var
+   wCedente, wBanco, wConta: Boolean;
+begin
+  if not ( ACBrBoleto.LerArqIni( aStr, wCedente, wBanco, wConta ) ) then
+      raise exception.Create('Erro ao ler arquivo de entrada ou '+
+         'parâmetro incorreto.');
+
+  {Parametros do Cedente}
+  if wCedente then
+  begin
+    with MonitorConfig.BOLETO do
+    begin
+      Nome               := fACBrBoleto.Cedente.Nome;
+      CNPJCPF            := fACBrBoleto.Cedente.CNPJCPF;
+      Logradouro         := fACBrBoleto.Cedente.Logradouro;
+      Numero             := fACBrBoleto.Cedente.NumeroRes;
+      Bairro             := fACBrBoleto.Cedente.Bairro;
+      Cidade             := fACBrBoleto.Cedente.Cidade;
+      CEP                := fACBrBoleto.Cedente.CEP;
+      Complemento        := fACBrBoleto.Cedente.Complemento;
+      UF                 := fACBrBoleto.Cedente.UF;
+
+      with Conta do
+      begin
+        CodCedente       := fACBrBoleto.Cedente.CodigoCedente;
+        RespEmis         := Integer( fACBrBoleto.Cedente.ResponEmissao );
+        Pessoa           := Integer( fACBrBoleto.Cedente.TipoInscricao );
+        Modalidade       := fACBrBoleto.Cedente.Modalidade;
+        Convenio         := fACBrBoleto.Cedente.Convenio;
+      end;
+
+      with RemessaRetorno do
+        CodTransmissao    := fACBrBoleto.Cedente.CodigoTransmissao;
+
+      if ( Integer(fACBrBoleto.ACBrBoletoFC.LayOut) > 0 ) then
+      with Layout do
+        Layout            := Integer(fACBrBoleto.ACBrBoletoFC.LayOut);
+
+    end;
+
+  end;
+
+  {Parametros do Banco}
+  if wBanco then
+  begin
+    with MonitorConfig.BOLETO.Conta do
+      Banco := Integer(fACBrBoleto.Banco.TipoCobranca);
+    with MonitorConfig.BOLETO.RemessaRetorno do
+      CNAB := Integer(fACBrBoleto.LayoutRemessa);
+
+  end;
+
+  {Parametros da Conta}
+  if wConta then
+  begin
+    with MonitorConfig.BOLETO.Conta do
+    begin
+      Conta         := fACBrBoleto.Cedente.Conta;
+      DigitoConta   := fACBrBoleto.Cedente.ContaDigito;
+      Agencia       := fACBrBoleto.Cedente.Agencia;
+      DigitoAgencia := fACBrBoleto.Cedente.AgenciaDigito;
+      CodCedente    := fACBrBoleto.Cedente.CodigoCedente;
+    end;
+
+  end;
+
+  if (wCedente or wBanco or wConta) then
+    MonitorConfig.SalvarArquivo;
+
+end;
+
+function TACBrObjetoBoleto.ListaBancos() : String;
 var
    IBanco : TACBrTipoCobranca;
-   SBanco : AnsiString;
+   SBanco : String;
 begin
    IBanco := Low(TACBrTipoCobranca);
    Inc(IBanco); // Removendo item 0-Nenhum
@@ -520,10 +695,10 @@ begin
       Result := copy(Result,1,Length(Result)-1) ;
 end;
 
-function ListaCaractTitulo: String;
+function TACBrObjetoBoleto.ListaCaractTitulo: String;
 var
    ICaractTitulo : TACBrCaracTitulo;
-   SCaractTitulo : AnsiString;
+   SCaractTitulo : String;
 begin
    ICaractTitulo := Low(TACBrCaracTitulo);
 
@@ -540,10 +715,10 @@ begin
       Result := copy(Result,1,Length(Result)-1) ;
 end;
 
-function ListaOcorrencias: String;
+function TACBrObjetoBoleto.ListaOcorrencias: String;
 var
    ITipoOcorrencia : TACBrTipoOcorrencia;
-   SOcorrencia     : AnsiString;
+   SOcorrencia     : String;
 begin
   ITipoOcorrencia := Low(TACBrTipoOcorrencia);
 
@@ -558,24 +733,27 @@ begin
     Result := copy(Result,1,Length(Result)-1) ;
 end;
 
-procedure ImprimeRelatorioRetorno(sArqRetorno : String);
+procedure TACBrObjetoBoleto.ImprimeRelatorioRetorno(sArqRetorno : String);
 var
    fRelRetorno : TfrmACBrBoletoRelatorioRet;
 begin
-  try
-    fRelRetorno := TfrmACBrBoletoRelatorioRet.Create(FrmACBrMonitor);
-    fRelRetorno.ACBrBoleto     := FrmACBrMonitor.ACBrBoleto1;
-    fRelRetorno.ArquivoRetorno := sArqRetorno;
-    fRelRetorno.PathLogo       := FrmACBrMonitor.deBOLDirLogo.Text;
-    fRelRetorno.LogoEmpresa    := FrmACBrMonitor.edtBOLLogoEmpresa.Text;
 
-    if FrmACBrMonitor.chkBOLRelMostraPreview.Checked then
+    fRelRetorno := TfrmACBrBoletoRelatorioRet.Create(frmACBrBoletoRelatorioRet);
+    try
+    fRelRetorno.ACBrBoleto     := fACBrBoleto;
+    fRelRetorno.ArquivoRetorno := sArqRetorno;
+    fRelRetorno.PathLogo       := MonitorConfig.BOLETO.Layout.DirLogos;
+    fRelRetorno.LogoEmpresa    := MonitorConfig.BOLETO.Relatorio.LogoEmpresa;
+
+    if MonitorConfig.BOLETO.Relatorio.MostraPreviewRelRetorno then
       fRelRetorno.ResumoRetornoRemessa.Preview()
     else
       fRelRetorno.ResumoRetornoRemessa.Print;
-  finally
-  end;
+    finally
+    end;
 end;
+
+
 
 
 end.

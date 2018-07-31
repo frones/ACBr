@@ -42,41 +42,33 @@ uses
 
 type
 
-  { TLibCEPResposta }
-  TLibCEPResposta = class(TACBrLibResposta)
+  { TLibIBGEResposta }
+  TLibIBGEResposta = class(TACBrLibResposta)
   private
-    FBairro: string;
-    FCEP: string;
-    FComplemento: string;
-    FIBGE_Municipio: string;
-    FIBGE_UF: string;
-    FLogradouro: string;
-    FMunicipio: string;
-    FTipo_Logradouro: string;
     FUF: string;
+    FCodUF: string;
+    FMunicipio: string;
+    FCodMunicipio: string;
+    FArea: string;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
-    property CEP: string read FCEP write FCEP;
-    property Tipo_Logradouro: string read FTipo_Logradouro write FTipo_Logradouro;
-    property Logradouro: string read FLogradouro write FLogradouro;
-    property Complemento: string read FComplemento write FComplemento;
-    property Bairro: string read FBairro write FBairro;
-    property Municipio: string read FMunicipio write FMunicipio;
     property UF: string read FUF write FUF;
-    property IBGE_Municipio: string read FIBGE_Municipio write FIBGE_Municipio;
-    property IBGE_UF: string read FIBGE_UF write FIBGE_UF;
+    property CodUF: string read FCodUF write FCodUF;
+    property Municipio: string read FMunicipio write FMunicipio;
+    property CodMunicipio: string read FCodMunicipio write FCodMunicipio;
+    property Area: string read FArea write FArea;
   end;
 
 implementation
 
 uses
-  ACBrLibCEPConsts;
+  ACBrLibIBGEConsts;
 
-{ TLibCEPResposta }
+{ TLibIBGEResposta }
 
-constructor TLibCEPResposta.Create(const ASessao: String;
+constructor TLibIBGEResposta.Create(const ASessao: String;
   const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(ASessao, ATipo);

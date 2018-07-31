@@ -63,9 +63,6 @@ type
 
 implementation
 
-uses
-  ACBrLibIBGEConsts;
-
 { TLibIBGEResposta }
 
 constructor TLibIBGEResposta.Create(const ASessao: String;

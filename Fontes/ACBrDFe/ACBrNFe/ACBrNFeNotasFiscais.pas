@@ -101,7 +101,7 @@ type
 
     function LerXML(const AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
-    function GerarNFeIni(): String;
+    function GerarNFeIni: String;
 
     function GerarXML: String;
     function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
@@ -177,7 +177,7 @@ type
     function LoadFromString(const AXMLString: String; AGerarNFe: Boolean = False): Boolean;
     function LoadFromIni(const AIniString: String): Boolean;
 
-    function GerarIni(): String;
+    function GerarIni: String;
     function GravarXML(const APathNomeArquivo: String = ''): Boolean;
     function GravarTXT(const APathNomeArquivo: String = ''): Boolean;
 
@@ -1226,7 +1226,7 @@ begin
       infNFe.versao := StringToFloatDef( INIRec.ReadString('infNFe','versao', VersaoDFToStr(FConfiguracoes.Geral.VersaoDF)), 0) ;
 
       versao      := FloatToString(infNFe.versao,'.','#0.00');
-      sSecao    := IfThen( INIRec.SectionExists('Identificacao'), 'Identificacao', 'ide');
+      sSecao      := IfThen( INIRec.SectionExists('Identificacao'), 'Identificacao', 'ide');
       Ide.cNF     := INIRec.ReadInteger( sSecao,'Codigo' ,INIRec.ReadInteger( sSecao,'cNF' ,0));
       Ide.natOp   := INIRec.ReadString(  sSecao,'NaturezaOperacao' ,INIRec.ReadString(  sSecao,'natOp' ,''));
       Ide.indPag  := StrToIndpag(OK,INIRec.ReadString( sSecao,'FormaPag',INIRec.ReadString( sSecao,'indPag','0')));
@@ -2225,7 +2225,7 @@ begin
   end;
 end;
 
-function NotaFiscal.GerarNFeIni(): String;
+function NotaFiscal.GerarNFeIni: String;
 var
   I, J, K: integer;
   sSecao: string;
@@ -3559,11 +3559,11 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TNotasFiscais.GerarIni(): String;
+function TNotasFiscais.GerarIni: String;
 begin
   Result := '';
   if (Self.Count > 0) then
-    Result := Self.Items[0].GerarNFeIni();
+    Result := Self.Items[0].GerarNFeIni;
 
 end;
 

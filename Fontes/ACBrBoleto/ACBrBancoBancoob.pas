@@ -501,7 +501,7 @@ begin
        Cedente.ContaDigito:= rDigitoConta;
        Cedente.CodigoCedente:= rConta+rDigitoConta;
      end;
-     Cedente.Conta := PadLeft(IntToStr(StrToIntDef(Cedente.Conta,0)), 7, '0');
+     Cedente.Conta := RemoveZerosEsquerda(Cedente.Conta);
 
      ListadeBoletos.Clear;
    end;

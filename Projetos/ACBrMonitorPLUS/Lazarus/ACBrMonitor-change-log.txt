@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2018
+[*] DoACBrNFeUnit, ACBrMonitor1
+Realizado Ajustes referentes Tags de Retorno e ajustes de Tela
+
 30/07/2018
 [*] DoACBrNFeUnit
 Realizado Refactory desta Unit no projeto ACBrMonitor

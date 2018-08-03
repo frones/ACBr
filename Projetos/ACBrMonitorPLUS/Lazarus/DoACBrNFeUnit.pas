@@ -74,6 +74,7 @@ public
   procedure RespostaItensDistribuicaoDFeProEve(ItemID: integer = 0; TagID: integer = 1);
   procedure RespostaItensDistribuicaoDFeInfEve(ItemID: integer = 0; TagID: integer = 1);
   Procedure LerIniNFe(ArqINI: String);
+  procedure ImprimirNFe(pImpressora: String; pPreview: Boolean; pCopias: Integer; pPDF: Boolean);
 
   property ACBrNFe: TACBrNFe read fACBrNFe;
 end;
@@ -749,10 +750,10 @@ begin
       Resp.DigVal := digVal;
 
       if Gerar then
-        Resp.Arquivo :=
-          PathWithDelim(fACBrNFe.Configuracoes.Arquivos.PathSalvar) +
+        Resp.Arquivo := fACBrNFe.NotasFiscais.Items[NotasFiscaisID].NomeArq+sLineBreak;
+          {PathWithDelim(fACBrNFe.Configuracoes.Arquivos.PathSalvar) +
           OnlyNumber(fACBrNFe.NotasFiscais.Items[NotasFiscaisID].NFe.infNFe.ID) +
-          '-nfe.xml';
+          '-nfe.xml';}
 
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -1238,6 +1239,44 @@ begin
         CNPJCPF := MonitorConfig.DFE.WebService.NFe.CNPJContador;
 
   end;
+end;
+
+procedure TACBrObjetoNFe.ImprimirNFe(pImpressora: String; pPreview: Boolean;
+  pCopias: Integer; pPDF: Boolean);
+var
+  ArqPDF : String;
+begin
+  with fACBrNFe do
+  begin
+    if (NotasFiscais.Items[0].Confirmada) then
+    begin
+      DoConfiguraDANFe(pPDF, BoolToStr(pPreview,'1',''));
+      if NaoEstaVazio(pImpressora) then
+        DANFe.Impressora := pImpressora;
+
+      if pCopias > 0 then
+        DANFE.NumCopias := pCopias;
+
+      if pPDF then
+      begin
+        NotasFiscais.Items[0].ImprimirPDF;
+        ArqPDF := OnlyNumber(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
+
+        fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
+                'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF ;
+      end;
+
+      try
+        DoAntesDeImprimir((pPreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+        NotasFiscais.Items[0].Imprimir;
+      finally
+        DoDepoisDeImprimir;
+      end;
+
+    end;
+
+  end;
+
 end;
 
 function TACBrObjetoNFe.GerarNFeIni(XML: string): string;
@@ -2108,18 +2147,22 @@ begin
     else
       ACBrNFe.WebServices.Enviar.Lote := IntToStr(ALote);
 
-    if not (ACBrNFe.WebServices.StatusServico.Executar) then
-      raise Exception.Create(ACBrNFe.WebServices.StatusServico.Msg);
-
     DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
     ACBrNFe.WebServices.Enviar.Executar;
     RespostaEnvio;
 
-    ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
-    ACBrNFe.WebServices.Retorno.Executar;
+    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    begin
+      ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
+      ACBrNFe.WebServices.Retorno.Executar;
+      RespostaRetorno;
+      RespostaNotasFiscais(AImprime, AImpressora, APreview, ACopias, APDF);
 
-    RespostaRetorno;
-    RespostaNotasFiscais(AImprime, AImpressora, APreview, ACopias, APDF);
+    end
+    else
+    if AImprime then //Sincrono
+      ImprimirNFe(AImpressora, APreview, ACopias, APDF);
+
   end;
 end;
 
@@ -2234,19 +2277,24 @@ begin
     ACBrNFe.WebServices.Enviar.Lote := IntToStr(ALoteEnvio);
     ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
 
-    if not (ACBrNFe.WebServices.StatusServico.Executar) then
-      raise Exception.Create(ACBrNFe.WebServices.StatusServico.Msg);
-
     DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
     ACBrNFe.WebServices.Enviar.Executar;
 
     RespostaEnvio;
 
-    ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
-    ACBrNFe.WebServices.Retorno.Executar;
+    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    begin
+      ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
+      ACBrNFe.WebServices.Retorno.Executar;
 
-    RespostaRetorno;
-    RespostaNotasFiscais(AImprime, AImpressora, APreview, ACopias, APDF);
+      RespostaRetorno;
+      RespostaNotasFiscais(AImprime, AImpressora, APreview, ACopias, APDF);
+
+    end
+    else
+    if AImprime then //Sincrono
+      ImprimirNFe(AImpressora, APreview, ACopias, APDF);
+
   end;
 end;
 
@@ -2294,18 +2342,24 @@ begin
       ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
       DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
 
-      if not (ACBrNFe.WebServices.StatusServico.Executar) then
-        raise Exception.Create(ACBrNFe.WebServices.StatusServico.Msg);
-
       ACBrNFe.WebServices.Enviar.Executar;
 
       RespostaEnvio;
 
-      ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
-      ACBrNFe.WebServices.Retorno.Executar;
+      if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+      begin
+        ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
+        ACBrNFe.WebServices.Retorno.Executar;
 
-      RespostaRetorno;
-      RespostaNotasFiscais(AImprime, AImpressora, False, 0, False);
+        RespostaRetorno;
+        RespostaNotasFiscais(AImprime, AImpressora, False, 0, False);
+
+      end
+      else
+      if AImprime then //Sincrono
+        ImprimirNFe(AImpressora, False, 0, False);
+
+
     finally
       CargaDFe.Free;
     end;
@@ -3439,18 +3493,22 @@ begin
 
     ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
 
-    if not (ACBrNFe.WebServices.StatusServico.Executar) then
-      raise Exception.Create(ACBrNFe.WebServices.StatusServico.Msg);
-
     DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
     ACBrNFe.WebServices.Enviar.Executar;
     RespostaEnvio;
 
-    ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
-    ACBrNFe.WebServices.Retorno.Executar;
+    if (ACBrNFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    begin
+      ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
+      ACBrNFe.WebServices.Retorno.Executar;
 
-    RespostaRetorno;
-    RespostaNotasFiscais(AImprime, AImpressora, APreview, ACopias, False);
+      RespostaRetorno;
+      RespostaNotasFiscais(AImprime, AImpressora, APreview, ACopias, False);
+    end
+    else
+    if AImprime then //Sincrono
+      ImprimirNFe(AImpressora, APreview, ACopias, False);
+
   end;
 end;
 

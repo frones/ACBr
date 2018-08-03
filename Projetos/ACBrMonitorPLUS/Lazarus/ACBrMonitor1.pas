@@ -579,6 +579,8 @@ type
     sbArquivoWebServicesMDFe: TSpeedButton;
     sbArquivoWebServicesNFe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
+    Splitter2: TSplitter;
+    Splitter3: TSplitter;
     TabSheet1: TTabSheet;
     gbxWSeSocial: TTabSheet;
     gbxWSReinf: TTabSheet;

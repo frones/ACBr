@@ -385,10 +385,11 @@ type
   tpIndSubstPatrOpPort    = (spIntegralmenteSubstituida, spParcialmenteSubstituida);
 
   tpIdAquis               = (iaAquiProducaoProdutorRuralPessoaFisSegEspGeral, iaAquiProducaoProdutorRuralPessoaFisSegEspGeralEntPAA,
-                             iaAquiProducaoProdutorRuralPessoaJurEntPAA);
+                             iaAquiProducaoProdutorRuralPessoaJurEntPAA, iaAquiProducaoProdutorRuralPessoaFisSegEspGeralProdIsenta,
+                             iaAquiProducaoProdutorRuralPessoaFisSegEspGeralEntPAAProdIsenta, iaAquiProducaoProdutorRuralPessoaJurEntPAAProdIsenta);
 
   tpIndComerc             = (icComProdPorProdRuralPFInclusiveSegEspEfetuadaDirVarejoConsFinal, icComProdPorProdRuralPFSegEspVendasPJOuIntermPF,
-                             icComProdPorPFSegEspEntProgAquiAliPAA, icComProdMercadoExterno);
+                             icComProdPorProdIsenta, icComProdPorPFSegEspEntProgAquiAliPAA, icComProdMercadoExterno);
 
   tpTpPgto                = (tpPgtoRemun1200, tpPgtoResc2299, tpPgtoResc2399, tpPgtoRemun1202, tpPgtoBenefPrev1207,
                              tpPgtoFerias, tpPgtoCompAnt);
@@ -1447,12 +1448,12 @@ end;
 
 function eSIdAquisStr(const t: tpIdAquis ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_3 );
+  result := EnumeradoToStr2(t,TGenericosString1_6 );
 end;
 
 function eSStrToIdAquis(var ok: boolean; const s: string): tpIdAquis;
 begin
-  result := tpIdAquis( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
+  result := tpIdAquis( StrToEnumerado2(ok , s, TGenericosString1_6 ) );
 end;
 
 function eSSimNaoToStr(const t: tpSimNao ): string;
@@ -1477,12 +1478,12 @@ end;
 
 function eSIndComercStr(const t: tpIndComerc ): string;
 begin
-  result := EnumeradoToStr2(t,[ '2', '3', '8', '9' ] );
+  result := EnumeradoToStr2(t,[ '2', '3', '7', '8', '9' ] );
 end;
 
 function eSStrToIndComerc(var ok: boolean; const s: string): tpIndComerc;
 begin
-  result := tpIndComerc( StrToEnumerado2(ok , s,[ '2', '3', '8', '9' ] ));
+  result := tpIndComerc( StrToEnumerado2(ok , s,[ '2', '3', '7', '8', '9' ] ));
 end;
 
 function eSIndCooperativaToStr(const t:TpIndCoop ): string;

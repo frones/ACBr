@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2018
+-- pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/45256-ajuste-nos-campos-indcomerc-e-indaquis-dos-eventos-s-1250-e-s-1260/
+   Por: Joceandro Perin
+
 17/07/2018
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/44815-padroniza%C3%A7%C3%A3o-eventos-esocial/

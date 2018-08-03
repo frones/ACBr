@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2018
+-- ACBrSedex --
+[+] Incluido o método para Ler os dados de um arquivo INI, que é usado pelo Monitor.
+   Por: Italo Jurisato Junior
+
 12/07/2018
 -- ACBrSocket --
 [*] Melhoria na detecção de conteúdo em UTF8  (por: DSA)

@@ -45,7 +45,7 @@ unit ACBrSedex;
 interface
 
 uses
-  Classes, SysUtils, contnrs, ACBrSocket, ACBrUtil;
+  Classes, SysUtils, contnrs, ACBrSocket, ACBrUtil, IniFiles;
 
 const
   CURL_SEDEX = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
@@ -129,12 +129,17 @@ type
     fErro: Integer;
     fMsgErro: String;
     fRastreio: TACBrRastreioClass;
+
+    function ConvertStrRecived( AStr: String ) : String ;
+    function LerConverterIni(AStr: String): TMemIniFile;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
     function Consultar: Boolean;
     procedure Rastrear(const CodRastreio: String);
+
+    function LerArqIni(const AIniSedex: String): Boolean;
 
     property retCodigoServico: String read fCodigoServico write fCodigoServico;
     property retValor: Double read fValor write fValor;
@@ -208,6 +213,56 @@ begin
 end;
 
 { TACBrSedex }
+
+function TACBrSedex.ConvertStrRecived(AStr: String): String;
+var
+  P: Integer;
+  Hex: String;
+  CharHex: Char;
+begin
+  { Verificando por codigos em Hexa }
+  Result := AStr;
+
+  P := pos('\x',Result);
+  while P > 0 do
+  begin
+     Hex := copy(Result, P + 2, 2);
+
+     try
+        CharHex := Chr(StrToInt('$'+Hex));
+     except
+        CharHex := ' ';
+     end;
+
+     Result := StringReplace(Result,'\x'+Hex,CharHex,[rfReplaceAll]);
+     P      := pos('\x',Result);
+  end;
+end;
+
+function TACBrSedex.LerConverterIni(AStr: String): TMemIniFile;
+var
+  SL: TStringList;
+begin
+  Result := TMemIniFile.Create(' ');
+  SL     := TStringList.Create;
+  try
+    try
+      if (pos(#10,aStr) = 0) and FilesExists(Astr) then
+        SL.LoadFromFile(AStr)
+      else
+        SL.Text := ConvertStrRecived( Astr );
+
+      Result.SetStrings(SL);
+    except
+      on E: Exception do
+      begin
+        raise Exception.Create('Erro ao carregar arquivo'+sLineBreak+E.Message);
+      end;
+    end;
+  finally
+    SL.Free;
+  end;
+end;
 
 constructor TACBrSedex.Create(AOwner: TComponent);
 begin
@@ -498,6 +553,41 @@ begin
     end;
   finally
     SL.Free;
+  end;
+end;
+
+function TACBrSedex.LerArqIni(const AIniSedex: String): Boolean;
+var
+  IniSedex: TMemIniFile;
+  Sessao: String;
+  MemFormatada: String;
+begin
+  Result   := False;
+
+  IniSedex := LerConverterIni(AIniSedex);
+  try
+    with Self do
+    begin
+      Sessao := 'SEDEX';
+      MemFormatada     := IniSedex.ReadString(Sessao,'Mensagem','') ;
+      MemFormatada     := StringReplace( MemFormatada,'|',sLineBreak, [rfReplaceAll] );
+
+      CepOrigem        := OnlyNumber(IniSedex.ReadString(Sessao,'CepOrigem',''));
+      CepDestino       := OnlyNumber(IniSedex.ReadString(Sessao,'CepDestino',''));
+      Servico          := TACBrTpServico(IniSedex.ReadInteger(Sessao,'Servico',0));
+      Peso             := IniSedex.ReadFloat(Sessao,'Peso',0);
+      Altura           := IniSedex.ReadFloat(Sessao,'Altura',0);
+      Largura          := IniSedex.ReadFloat(Sessao,'Largura',0);
+      Comprimento      := IniSedex.ReadFloat(Sessao,'Comprimento',0);
+      Diametro         := IniSedex.ReadFloat(Sessao,'Diametro',0);
+      ValorDeclarado   := IniSedex.ReadFloat(Sessao,'ValorDeclarado',0);
+      Formato          := TACBrTpFormato(IniSedex.ReadInteger(Sessao,'Formato',0));
+      AvisoRecebimento := IniSedex.ReadBool(Sessao,'AvisoRecebimento',False);
+      MaoPropria       := IniSedex.ReadBool(Sessao,'MaoPropria',False);
+    end;
+  finally
+    IniSedex.free;
+    Result := True;
   end;
 end;
 

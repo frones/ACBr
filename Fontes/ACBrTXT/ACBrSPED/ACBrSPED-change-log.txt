@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 03/08/2018
+-- ACBrEFDBlocos --
+[-] Correção na definição de tipo dos campos IND_VEIC e VEIC_ID no registro D140.
+    https://www.projetoacbr.com.br/forum/topic/45382-speed-fiscal-erro-no-registro-d140
+  Por: Vicente Carletto Scalfoni
+  
 Data 17/04/2018
 -- ACBrEFDBlocos, ACBrECFBlocos --
 [*] Atualização de valores válidos para o campo IND_DOC do registro 1100 EFD ICMS/IPI.

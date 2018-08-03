@@ -894,8 +894,8 @@ begin
                LFill( COD_PART_CONSG ) +
                LFill( COD_MUN_ORIG ) +
                LFill( COD_MUN_DEST ) +
-               LFill( IND_VEIC ) +
-               LFill( Integer(VEIC_ID), 0 ) +
+               LFill( Integer(IND_VEIC), 0 ) +
+               LFill( VEIC_ID ) +
                LFill( Integer(IND_NAV), 0 ) +
                LFill( VIAGEM ) +
                LFill( VL_FRT_LIQ,0,2 ) +

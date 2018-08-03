@@ -336,8 +336,8 @@ type
     fCOD_PART_CONSG: String;        /// Código do participante (campo 02 do Registro 0150):
     fCOD_MUN_ORIG: String;          /// Código do município de origem do serviço, conforme a tabela IBGE
     fCOD_MUN_DEST: String;          /// Código do município de destino, conforme a tabela IBGE
-    fIND_VEIC: String;              /// Indicador do tipo do veículo transportador:
-    fVEIC_ID: TACBrTipoVeiculo;     /// Identificação da embarcação (IRIM ou Registro CPP)
+    fIND_VEIC: TACBrTipoVeiculo;    /// Indicador do tipo do veículo transportador:
+    fVEIC_ID: String;               /// Identificação da embarcação (IRIM ou Registro CPP)
     fIND_NAV: TACBrTipoNavegacao;   /// Indicador do tipo da navegação:
     fVIAGEM: String;                /// Número da viagem
     fVL_FRT_LIQ: currency;          /// Valor líquido do frete
@@ -350,8 +350,8 @@ type
     property COD_PART_CONSG: String read FCOD_PART_CONSG write FCOD_PART_CONSG;
     property COD_MUN_ORIG: String read FCOD_MUN_ORIG write FCOD_MUN_ORIG;
     property COD_MUN_DEST: String read FCOD_MUN_DEST write FCOD_MUN_DEST;
-    property IND_VEIC: String read FIND_VEIC write FIND_VEIC;
-    property VEIC_ID: TACBrTipoVeiculo read FVEIC_ID write FVEIC_ID;
+    property IND_VEIC: TACBrTipoVeiculo read FIND_VEIC write FIND_VEIC;
+    property VEIC_ID: String read FVEIC_ID write FVEIC_ID;
     property IND_NAV: TACBrTipoNavegacao read FIND_NAV write FIND_NAV;
     property VIAGEM: String read FVIAGEM write FVIAGEM;
     property VL_FRT_LIQ: currency read FVL_FRT_LIQ write FVL_FRT_LIQ;

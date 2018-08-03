@@ -92,7 +92,7 @@ type
 
     function LerXML(AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
-    function GerarCTeIni(): String;
+    function GerarCTeIni: String;
 
     function GerarXML: String;
     function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
@@ -163,7 +163,7 @@ type
     function LoadFromString(AXMLString: String; AGerarCTe: Boolean = False): Boolean;
     function LoadFromIni(AIniString: String): Boolean;
 
-    function GerarIni(): String;
+    function GerarIni: String;
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
 
     property ACBrCTe: TComponent read FACBrCTe;
@@ -2797,7 +2797,7 @@ function TConhecimentos.GerarIni: String;
 begin
   Result := '';
   if (Self.Count > 0) then
-    Result := Self.Items[0].GerarCTeIni();
+    Result := Self.Items[0].GerarCTeIni;
 end;
 
 function TConhecimentos.GetItem(Index: Integer): Conhecimento;

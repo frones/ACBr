@@ -3095,6 +3095,7 @@ begin
             TipoDiasProtesto := TACBrTipoDiasIntrucao(IniBoletos.ReadInteger(Sessao,'TipoDiasProtesto',0));
             TipoImpressao := TACBrTipoImpressao(IniBoletos.ReadInteger(Sessao,'TipoImpressao',1));
             TipoDesconto := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto',0));
+            TipoDesconto2 := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto2',0));
             MultaValorFixo := IniBoletos.ReadBool(Sessao,'MultaValorFixo',False);
 
             wLocalPagto := IniBoletos.ReadString(Sessao,'LocalPagamento','');

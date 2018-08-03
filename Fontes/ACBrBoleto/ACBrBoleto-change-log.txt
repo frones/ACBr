@@ -49,6 +49,9 @@ Símbolo : Significado
 
 Data 31/07/2018 ver: 0.0.245
 
+03-08-2018 -- ACBrBoleto
+[+] Adicionado campo TipoDesconto2 na leitura do arquivo .INI
+
 01-08-2018 -- ACBrBancoBancob
 [*] Ajuste na validação Conta na leitura do retorno240
 

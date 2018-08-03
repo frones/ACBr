@@ -1441,7 +1441,7 @@ begin
       então uma validação específica para o provedor Tecnos, assim, se em outras
       consultas ele estiver vazio ele será preenchido.
       }
-    if (FProtocolo = '') = (FProvedor in [proTecnos, proTiplanv2]) then
+    if (FProtocolo = '') and (FProvedor in [proTecnos, proTiplanv2]) then
       FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else

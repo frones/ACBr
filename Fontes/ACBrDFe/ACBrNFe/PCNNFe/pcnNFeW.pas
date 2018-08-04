@@ -822,7 +822,7 @@ begin
 
   Gerador.wCampo(tcStr, 'I12 ', 'cEANTrib', 00, 14, 1, nfe.Det[i].Prod.cEANTrib, DSC_CEANTRIB);
 
-  if (nfe.Det[i].Prod.cEANTrib <> SEMGTIN) and (nfe.Det[i].Prod.cEAN <> '') then
+  if (nfe.Det[i].Prod.cEANTrib <> SEMGTIN) and (nfe.Det[i].Prod.cEANTrib <> '') then
   begin
     ErroValidarGTIN := ValidarGTIN(nfe.Det[i].Prod.cEANTrib);
     if ErroValidarGTIN <> '' then

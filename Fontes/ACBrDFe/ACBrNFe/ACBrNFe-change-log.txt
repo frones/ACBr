@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2018
+-- pcnNFeW --
+[-] Correção na validação da tag cEANTrib.
+    https://www.projetoacbr.com.br/forum/topic/45414-valida%C3%A7%C3%A3o-do-ceantrib-melhoria/
+  Por: Gabriel Bonzanini
+  
 09/07/2018
 -- ACBrNFeServicos --
 [*] Alteração das URLs NFe 4.00 MS produção.

@@ -1,9 +1,9 @@
 object frmPrincipal: TfrmPrincipal
-  Left = 0
-  Top = 0
+  Left = 445
+  Top = 195
+  Width = 712
+  Height = 541
   Caption = 'ACBrCotacao'
-  ClientHeight = 502
-  ClientWidth = 696
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,7 @@ object frmPrincipal: TfrmPrincipal
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
@@ -110,7 +111,7 @@ object frmPrincipal: TfrmPrincipal
       Cursor = crHandPoint
       Align = alTop
       AutoSize = False
-      Caption = 'http://www4.bcb.gov.br/pec/taxas/batch/cotacaomoedas.asp'
+      Caption = 'https://www4.bcb.gov.br/pec/taxas/batch/cotacaomoedas.asp'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -11

@@ -22,6 +22,7 @@ type
     procedure btnAtualizarMostrarClick(Sender: TObject);
     procedure btnProcurarSimboloClick(Sender: TObject);
     procedure Label2Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
 
   public
@@ -112,7 +113,12 @@ end;
 
 procedure TfrmPrincipal.Label2Click(Sender: TObject);
 begin
-  ShellExecute(Handle, 'open', PWideChar(TLabel(Sender).Caption), '', '', WS_MAXIMIZE)
+  OpenURL( Label2.Caption )
+end;
+
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  DateTimePicker1.DateTime := Date;
 end;
 
 end.

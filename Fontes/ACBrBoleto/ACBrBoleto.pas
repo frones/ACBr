@@ -1291,7 +1291,7 @@ type
 
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
     function GetTipoCobranca(NumeroBanco: Integer): TACBrTipoCobranca;
-    function LerArqIni(const AIniBoletos: String; var ACedente, ABanco, AConta: Boolean): Boolean;
+    function LerArqIni(const AIniBoletos: String): Boolean;
     procedure GravarArqIni(DirIniRetorno, NomeArquivo: String);
 
   published
@@ -2956,7 +2956,7 @@ begin
   end;
 end;
 
-function TACBrBoleto.LerArqIni(const AIniBoletos: String; var ACedente, ABanco, AConta: Boolean): Boolean;
+function TACBrBoleto.LerArqIni(const AIniBoletos: String): Boolean;
 var
   IniBoletos : TMemIniFile ;
   Titulo : TACBrTitulo;
@@ -2967,12 +2967,11 @@ var
   I: Integer;
 begin
   Result   := False;
-  ACedente := False;
-  ABanco   := False;
-  AConta   := False;
 
-  IniBoletos := LerConverterIni(AIniBoletos);
+  IniBoletos := TMemIniFile.Create('');
   try
+    LerIniArquivoOuString(AIniBoletos, IniBoletos);
+
     with Self.Cedente do
     begin
       //Cedente
@@ -2989,69 +2988,64 @@ begin
         CNPJCPF       := IniBoletos.ReadString(CCedente,'CNPJCPF',CNPJCPF);
         Logradouro    := IniBoletos.ReadString(CCedente,'Logradouro',Logradouro);
         NumeroRes     := IniBoletos.ReadString(CCedente,'Numero',NumeroRes);
-        Bairro        := IniBoletos.ReadString(CCedente,'Bairro','');
-        Cidade        := IniBoletos.ReadString(CCedente,'Cidade','');
-        CEP           := IniBoletos.ReadString(CCedente,'CEP','');
-        Complemento   := IniBoletos.ReadString(CCedente,'Complemento','');
-        UF            := IniBoletos.ReadString(CCedente,'UF','');
-        CodigoCedente := IniBoletos.ReadString(CCedente,'CodigoCedente','');
-        Modalidade    := IniBoletos.ReadString(CCedente,'MODALIDADE','');
-        CodigoTransmissao:= IniBoletos.ReadString(CCedente,'CODTRANSMISSAO','');
-        Convenio      := IniBoletos.ReadString(CCedente,'CONVENIO','');
-        CaracTitulo  := TACBrCaracTitulo(IniBoletos.ReadInteger(CCedente,'CaracTitulo',0));
-        TipoCarteira := TACBrTipoCarteira(IniBoletos.ReadInteger(CCedente,'TipoCarteira',0));
-        TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger(CCedente,'TipoDocumento',1));
+        Bairro        := IniBoletos.ReadString(CCedente,'Bairro',Bairro);
+        Cidade        := IniBoletos.ReadString(CCedente,'Cidade',Cidade);
+        CEP           := IniBoletos.ReadString(CCedente,'CEP',CEP);
+        Complemento   := IniBoletos.ReadString(CCedente,'Complemento',Complemento);
+        UF            := IniBoletos.ReadString(CCedente,'UF',UF);
+        CodigoCedente := IniBoletos.ReadString(CCedente,'CodigoCedente',CodigoCedente);
+        Modalidade    := IniBoletos.ReadString(CCedente,'MODALIDADE',Modalidade);
+        CodigoTransmissao:= IniBoletos.ReadString(CCedente,'CODTRANSMISSAO',CodigoTransmissao);
+        Convenio      := IniBoletos.ReadString(CCedente,'CONVENIO',Convenio);
+        CaracTitulo  := TACBrCaracTitulo(IniBoletos.ReadInteger(CCedente,'CaracTitulo',Integer(CaracTitulo) ));
+        TipoCarteira := TACBrTipoCarteira(IniBoletos.ReadInteger(CCedente,'TipoCarteira', Integer(TipoCarteira) ));
+        TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger(CCedente,'TipoDocumento',Integer(TipoDocumento) ));
 
-        wLayoutBoleto:= IniBoletos.ReadInteger(CCedente,'LAYOUTBOL',0);
+        wLayoutBoleto:= IniBoletos.ReadInteger(CCedente,'LAYOUTBOL', Integer(Self.ACBrBoletoFC.LayOut) );
         Self.ACBrBoletoFC.LayOut  := TACBrBolLayOut(wLayoutBoleto);
 
-        wRespEmissao := IniBoletos.ReadInteger(CCedente,'RespEmis',0);
+        wRespEmissao := IniBoletos.ReadInteger(CCedente,'RespEmis', Integer(ResponEmissao) );
         try
           ResponEmissao := TACBrResponEmissao( wRespEmissao );
         except
           ResponEmissao := tbCliEmite ;
         end ;
 
-        ACedente := True;
         Result   := True;
-
       end;
 
       //Banco
       if IniBoletos.SectionExists('Banco') then
       begin
-        wNumeroBanco := IniBoletos.ReadInteger(CBanco,'Numero',0);
-        wIndiceACBr  := IniBoletos.ReadInteger(CBanco,'IndiceACBr',0);
-        wCNAB        := IniBoletos.ReadInteger(CBanco,'CNAB',0);
+        wNumeroBanco := IniBoletos.ReadInteger(CBanco,'Numero', 0 );
+        wIndiceACBr  := IniBoletos.ReadInteger(CBanco,'IndiceACBr', 0 );
+        wCNAB        := IniBoletos.ReadInteger(CBanco,'CNAB', Integer(LayoutRemessa) );
 
-        if ( wCNAB > 0 ) then
+        if ( wCNAB <> 0 ) then
            LayoutRemessa := c240
         else
            LayoutRemessa := c400;
 
         if ( wIndiceACBr > 0 ) then
           Banco.TipoCobranca:= TACBrTipoCobranca(wIndiceACBr)
-        else if wNumeroBanco > 0 then
+        else if ( wNumeroBanco > 0 ) then
           Banco.TipoCobranca := GetTipoCobranca(wNumeroBanco);
 
         if (trim(Banco.Nome) = 'Não definido') then
            raise exception.Create('Banco não definido ou não '+
                                   'implementado no ACBrBoleto!');
 
-        ABanco := True;
         Result := True;
-
       end;
 
       //Conta
       if IniBoletos.SectionExists('Conta') then
       begin
-        Conta         := IniBoletos.ReadString(CConta,'Conta','');
-        ContaDigito   := IniBoletos.ReadString(CConta,'DigitoConta','');
-        Agencia       := IniBoletos.ReadString(CConta,'Agencia','');
-        AgenciaDigito := IniBoletos.ReadString(CConta,'DigitoAgencia','');
+        Conta         := IniBoletos.ReadString(CConta,'Conta', Conta);
+        ContaDigito   := IniBoletos.ReadString(CConta,'DigitoConta', ContaDigito);
+        Agencia       := IniBoletos.ReadString(CConta,'Agencia', Agencia);
+        AgenciaDigito := IniBoletos.ReadString(CConta,'DigitoAgencia', AgenciaDigito);
 
-        AConta := True;
         Result := True;
       end;
 
@@ -3069,7 +3063,7 @@ begin
         I := 1 ;
         while true do
         begin
-          Sessao := 'Titulo' + IntToStrZero(I,1);
+          Sessao := 'Titulo' + IntToStr(I);
           sFim   := IniBoletos.ReadString(Sessao,'NumeroDocumento','FIM');
 
           if (sFim = 'FIM') and (Sessao = 'Titulo1')  then
@@ -3158,9 +3152,7 @@ begin
           inc(I);
           Result := True;
         end;
-
       end;
-
     end;
 
   finally

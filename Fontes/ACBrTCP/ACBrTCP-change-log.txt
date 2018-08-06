@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/08/2018
+-- ACBrSedex --
+[*] Removido funções que foram definidas e que já existem na unit ACBrUtil.
+   Por: Italo Jurisato Junior
+
 30/07/2018
 -- ACBrSedex --
 [+] Incluido o método para Ler os dados de um arquivo INI, que é usado pelo Monitor.

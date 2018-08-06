@@ -164,7 +164,7 @@ end;
 
 procedure TNFSeW_ISSDSF.GerarIntermediarioServico;
 begin
-  Gerador.wCampoNFSe(tcStr, '', 'CpfCnpjIntermediario', 00, 14, 0, OnlyNumber(NFSe.IntermediarioServico.CpfCnpj), '');
+  Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJIntermediario', 00, 14, 0, OnlyNumber(NFSe.IntermediarioServico.CpfCnpj), '');
 end;
 
 procedure TNFSeW_ISSDSF.GerarServicoValores;

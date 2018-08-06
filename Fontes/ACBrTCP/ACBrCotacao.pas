@@ -42,8 +42,8 @@
 |*    Régys Borges da Silveira
 |*
 |* mais informações
-|* http://www4.bcb.gov.br/pec/taxas/batch/cotacaomoedas.asp
-|* http://www4.bcb.gov.br/pec/taxas/batch/tabmoedas.asp
+|* https://www4.bcb.gov.br/pec/taxas/batch/cotacaomoedas.asp
+|* https://www4.bcb.gov.br/pec/taxas/batch/tabmoedas.asp
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -158,7 +158,7 @@ begin
   Self.HTTPGet('https://ptax.bcb.gov.br/ptax_internet/consultarTabelaMoedas.do?method=consultaTabelaMoedas');
   StrTmp := Self.RespHTTP.Text;
 
-  PosCp := Pos('http://www4.bcb.gov.br/Download/fechamento/', StrTmp);
+  PosCp := Pos('https://www4.bcb.gov.br/Download/fechamento/', StrTmp);
   StrTmp := Copy(StrTmp, PosCp, Length(StrTmp) - PosCp);
 
   PosCp := Pos('.csv', strTmp) + 3;
@@ -174,17 +174,17 @@ var
 begin
   // alterado pois o endereço antigo começou a utilizar frame
   // então agora abrimos direto o frame
-  //Self.HTTPGet('http://www4.bcb.gov.br/pec/taxas/batch/cotacaomoedas.asp');
+  //Self.HTTPGet('https://www4.bcb.gov.br/pec/taxas/batch/cotacaomoedas.asp');
   if AData > 0 then
   begin
-    Result := 'http://www4.bcb.gov.br/Download/fechamento/' + FormatDateTime('yyyymmdd', AData) + '.csv';
+    Result := 'https://www4.bcb.gov.br/Download/fechamento/' + FormatDateTime('yyyymmdd', AData) + '.csv';
   end
   else
   begin
     Self.HTTPGet('https://ptax.bcb.gov.br/ptax_internet/consultarTodasAsMoedas.do?method=consultaTodasMoedas');
     StrTmp := Self.RespHTTP.Text;
 
-    PosCp := Pos('http://www4.bcb.gov.br/Download/fechamento/', StrTmp);
+    PosCp := Pos('https://www4.bcb.gov.br/Download/fechamento/', StrTmp);
     StrTmp := Copy(StrTmp, PosCp, Length(StrTmp) - PosCp);
 
     PosCp := Pos('.csv', strTmp) + 3;

@@ -602,74 +602,57 @@ begin
 end;
 
 procedure TACBrObjetoBoleto.LerIniBoletos( aStr: String ) ;
-var
-   wCedente, wBanco, wConta: Boolean;
 begin
-  if not ( ACBrBoleto.LerArqIni( aStr, wCedente, wBanco, wConta ) ) then
+  if not ( ACBrBoleto.LerArqIni( aStr ) ) then
       raise exception.Create('Erro ao ler arquivo de entrada ou '+
          'parâmetro incorreto.');
 
   {Parametros do Cedente}
-  if wCedente then
+  with MonitorConfig.BOLETO do
   begin
-    with MonitorConfig.BOLETO do
+    Nome               := fACBrBoleto.Cedente.Nome;
+    CNPJCPF            := fACBrBoleto.Cedente.CNPJCPF;
+    Logradouro         := fACBrBoleto.Cedente.Logradouro;
+    Numero             := fACBrBoleto.Cedente.NumeroRes;
+    Bairro             := fACBrBoleto.Cedente.Bairro;
+    Cidade             := fACBrBoleto.Cedente.Cidade;
+    CEP                := fACBrBoleto.Cedente.CEP;
+    Complemento        := fACBrBoleto.Cedente.Complemento;
+    UF                 := fACBrBoleto.Cedente.UF;
+    with Conta do
     begin
-      Nome               := fACBrBoleto.Cedente.Nome;
-      CNPJCPF            := fACBrBoleto.Cedente.CNPJCPF;
-      Logradouro         := fACBrBoleto.Cedente.Logradouro;
-      Numero             := fACBrBoleto.Cedente.NumeroRes;
-      Bairro             := fACBrBoleto.Cedente.Bairro;
-      Cidade             := fACBrBoleto.Cedente.Cidade;
-      CEP                := fACBrBoleto.Cedente.CEP;
-      Complemento        := fACBrBoleto.Cedente.Complemento;
-      UF                 := fACBrBoleto.Cedente.UF;
-
-      with Conta do
-      begin
-        CodCedente       := fACBrBoleto.Cedente.CodigoCedente;
-        RespEmis         := Integer( fACBrBoleto.Cedente.ResponEmissao );
-        Pessoa           := Integer( fACBrBoleto.Cedente.TipoInscricao );
-        Modalidade       := fACBrBoleto.Cedente.Modalidade;
-        Convenio         := fACBrBoleto.Cedente.Convenio;
-      end;
-
-      with RemessaRetorno do
-        CodTransmissao    := fACBrBoleto.Cedente.CodigoTransmissao;
-
-      if ( Integer(fACBrBoleto.ACBrBoletoFC.LayOut) > 0 ) then
-      with Layout do
-        Layout            := Integer(fACBrBoleto.ACBrBoletoFC.LayOut);
-
+      CodCedente       := fACBrBoleto.Cedente.CodigoCedente;
+      RespEmis         := Integer( fACBrBoleto.Cedente.ResponEmissao );
+      Pessoa           := Integer( fACBrBoleto.Cedente.TipoInscricao );
+      Modalidade       := fACBrBoleto.Cedente.Modalidade;
+      Convenio         := fACBrBoleto.Cedente.Convenio;
     end;
+    with RemessaRetorno do
+      CodTransmissao    := fACBrBoleto.Cedente.CodigoTransmissao;
+    if ( Integer(fACBrBoleto.ACBrBoletoFC.LayOut) > 0 ) then
+    with Layout do
+      Layout            := Integer(fACBrBoleto.ACBrBoletoFC.LayOut);
 
   end;
 
   {Parametros do Banco}
-  if wBanco then
-  begin
-    with MonitorConfig.BOLETO.Conta do
-      Banco := Integer(fACBrBoleto.Banco.TipoCobranca);
-    with MonitorConfig.BOLETO.RemessaRetorno do
-      CNAB := Integer(fACBrBoleto.LayoutRemessa);
+  with MonitorConfig.BOLETO.Conta do
+    Banco := Integer(fACBrBoleto.Banco.TipoCobranca);
+  with MonitorConfig.BOLETO.RemessaRetorno do
+    CNAB := Integer(fACBrBoleto.LayoutRemessa);
 
-  end;
 
   {Parametros da Conta}
-  if wConta then
+  with MonitorConfig.BOLETO.Conta do
   begin
-    with MonitorConfig.BOLETO.Conta do
-    begin
-      Conta         := fACBrBoleto.Cedente.Conta;
-      DigitoConta   := fACBrBoleto.Cedente.ContaDigito;
-      Agencia       := fACBrBoleto.Cedente.Agencia;
-      DigitoAgencia := fACBrBoleto.Cedente.AgenciaDigito;
-      CodCedente    := fACBrBoleto.Cedente.CodigoCedente;
-    end;
-
+    Conta         := fACBrBoleto.Cedente.Conta;
+    DigitoConta   := fACBrBoleto.Cedente.ContaDigito;
+    Agencia       := fACBrBoleto.Cedente.Agencia;
+    DigitoAgencia := fACBrBoleto.Cedente.AgenciaDigito;
+    CodCedente    := fACBrBoleto.Cedente.CodigoCedente;
   end;
 
-  if (wCedente or wBanco or wConta) then
-    MonitorConfig.SalvarArquivo;
+  MonitorConfig.SalvarArquivo;
 
 end;
 

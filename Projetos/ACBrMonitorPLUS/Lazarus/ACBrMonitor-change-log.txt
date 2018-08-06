@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/08/2018
+[*] DoBoletoUnit
+Realizado Ajustes ref Refactory e Leitura .INI para mais de um título.
+
 03/08/2018
 [*] DoACBrNFeUnit, ACBrMonitor1
 Realizado Ajustes referentes Tags de Retorno e ajustes de Tela

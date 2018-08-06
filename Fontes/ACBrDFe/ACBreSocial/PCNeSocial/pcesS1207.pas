@@ -178,7 +178,7 @@ implementation
 
 uses
   IniFiles,
-  ACBreSocial, ACBrDFeUtil;
+  ACBreSocial;
 
 { TItensCollection }
 

@@ -203,7 +203,7 @@ implementation
 
 uses
   IniFiles,
-  ACBreSocial, ACBrDFeUtil;
+  ACBreSocial;
 
 { TS2400Collection }
 

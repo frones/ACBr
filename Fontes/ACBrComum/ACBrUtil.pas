@@ -48,7 +48,7 @@ interface
 
 Uses
   SysUtils, Math, Classes,
-  ACBrConsts,
+  ACBrConsts, IniFiles,
   {$IfDef COMPILER6_UP} StrUtils, DateUtils {$Else} ACBrD5, FileCtrl {$EndIf}
   {$IfDef FPC}
     ,dynlibs, LazUTF8, LConvEncoding, LCLType
@@ -361,6 +361,8 @@ function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): Strin
 function IsWorkingDay(ADate: TDateTime): Boolean;
 function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
 function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
+
+procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString; AMemIni: TMemIniFile);
 
 {$IfDef FPC}
 var ACBrANSIEncoding: String;
@@ -4064,6 +4066,28 @@ begin
     Result := StringReplace(AXML, DeclaracaoXML, '', [])
   else
     Result := AXML;
+end;
+
+{------------------------------------------------------------------------------
+   Valida se é um arquivo válido para carregar em um MenIniFile, caso contrário
+   adiciona a String convertendo representações em Hexa.
+ ------------------------------------------------------------------------------}
+procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString;
+  AMemIni: TMemIniFile);
+var
+  SL: TStringList;
+begin
+  SL := TStringList.Create;
+  try
+    if (pos(LF, IniArquivoOuString) = 0) and FilesExists(IniArquivoOuString) then
+      SL.LoadFromFile(IniArquivoOuString)
+    else
+      SL.Text := StringToBinaryString( IniArquivoOuString );
+
+    AMemIni.SetStrings(SL);
+  finally
+    SL.Free;
+  end;
 end;
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;

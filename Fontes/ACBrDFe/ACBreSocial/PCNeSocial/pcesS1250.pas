@@ -201,7 +201,7 @@ implementation
 
 uses
   IniFiles,
-  ACBreSocial, ACBrDFeUtil;
+  ACBreSocial;
 
 { TS1250Collection }
 

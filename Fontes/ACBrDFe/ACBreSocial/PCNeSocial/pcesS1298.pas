@@ -50,7 +50,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  pcnConversao, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
@@ -103,7 +103,7 @@ implementation
 
 uses
   IniFiles,
-  ACBreSocial, ACBrDFeUtil;
+  ACBreSocial;
 
 { TS1298Collection }
 

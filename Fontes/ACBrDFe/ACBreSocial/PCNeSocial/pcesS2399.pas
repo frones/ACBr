@@ -163,7 +163,7 @@ implementation
 
 uses
   IniFiles,
-  ACBreSocial, ACBrDFeUtil;
+  ACBreSocial;
 
 { TS2399Collection }
 

@@ -357,7 +357,7 @@ implementation
 
 uses
   IniFiles,StrUtils,
-  ACBreSocial, ACBrDFeUtil;
+  ACBreSocial;
 
 { TS2299Collection }
 

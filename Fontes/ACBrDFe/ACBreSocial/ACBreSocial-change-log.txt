@@ -48,6 +48,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/08/2018 -- PCNeSocial --
+[*] Migrado a procedure LerIniArquivoOuString para classe ACBrUtil, devido utilização fora das classes do DFe. 
+
 02/08/2018
 -- pcesConversaoeSocial --
 [*] https://www.projetoacbr.com.br/forum/topic/45256-ajuste-nos-campos-indcomerc-e-indaquis-dos-eventos-s-1250-e-s-1260/

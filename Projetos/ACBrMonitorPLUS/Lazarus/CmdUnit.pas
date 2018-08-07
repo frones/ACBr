@@ -91,6 +91,7 @@ TACBrEventoValidarIntegradorNFCe = procedure(ChaveNFe: String) of object;
 TACBrEventoConfiguraDACTe = procedure(GerarPDF: Boolean; MostrarPreview : String) of  object;
 TACBrEventoPrepararImpressaoSAT = procedure(NomeImpressora : String; GerarPDF : Boolean) of object;
 TACBrEventoRespostaIntegrador = function():String of object;
+TACBrEventoSubstituirVariaveis = function(const ATexto: String): String of object;
 
 { TACBrObjetoDFe }
 
@@ -103,6 +104,7 @@ private
   FOnConfiguraDACTe: TACBrEventoConfiguraDACTe;
   FOnPrepararImpressaoSAT: TACBrEventoPrepararImpressaoSAT;
   FOnRespostaIntegrador: TACBrEventoRespostaIntegrador;
+  FOnSubstituirVariaveis: TACBrEventoSubstituirVariaveis;
 public
   procedure DoAntesDeImprimir(ShowPreview: Boolean);
   procedure DoDepoisDeImprimir;
@@ -111,6 +113,7 @@ public
   procedure DoConfiguraDACTe(GerarPDF: Boolean; MostrarPreview : String);
   procedure DoPrepararImpressaoSAT(NomeImpressora : String; GerarPDF : Boolean = False);
   function  DoRespostaIntegrador():String;
+  function  DoSubstituirVariaveis(const ATexto: String): String;
 
   property OnAntesDeImprimir: TACBrEventoAntesImprimir read FOnAntesDeImprimir write FOnAntesDeImprimir;
   property OnDepoisDeImprimir: TACBrEventoDepoisImprimir read FOnDepoisDeImprimir write FOnDepoisDeImprimir;
@@ -119,6 +122,7 @@ public
   property OnConfiguraDACTe: TACBrEventoConfiguraDACTe read FOnConfiguraDACTe write FOnConfiguraDACTe;
   property OnPrepararImpressaoSAT: TACBrEventoPrepararImpressaoSAT read FOnPrepararImpressaoSAT write FOnPrepararImpressaoSAT;
   property OnRespostaIntegrador: TACBrEventoRespostaIntegrador read FOnRespostaIntegrador write FOnRespostaIntegrador;
+  property OnSubstituirVariaveis: TACBrEventoSubstituirVariaveis read FOnSubstituirVariaveis write FOnSubstituirVariaveis;
 end;
 
 { TACBrMetodo }
@@ -181,6 +185,12 @@ function TACBrObjetoDFe.DoRespostaIntegrador(): String;
 begin
   if Assigned(FOnRespostaIntegrador) then
     Result:= FOnRespostaIntegrador();
+end;
+
+function TACBrObjetoDFe.DoSubstituirVariaveis(const ATexto: String): String;
+begin
+  if Assigned(FOnSubstituirVariaveis) then
+    Result:= FOnSubstituirVariaveis(ATexto);
 end;
 
 { TACBrObjeto }

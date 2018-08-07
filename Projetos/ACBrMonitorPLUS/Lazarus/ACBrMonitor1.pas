@@ -1665,6 +1665,8 @@ begin
   FDoNFe.OnDepoisDeImprimir := @DepoisDeImprimir;
   FDoNFe.OnConfiguraDANFe   := @ConfiguraDANFe;
   FDoNFe.OnValidarIntegradorNFCe:= @ValidarIntegradorNFCe;
+  FDoNFe.OnSubstituirVariaveis  := @SubstituirVariaveis;
+  FDoNFe.OnRespostaIntegrador   := @RespostaIntegrador;
 
   FDoCTe := TACBrObjetoCTe.Create(MonitorConfig, ACBrCTe1);
   FDoCTe.OnAntesDeImprimir := @AntesDeImprimir;

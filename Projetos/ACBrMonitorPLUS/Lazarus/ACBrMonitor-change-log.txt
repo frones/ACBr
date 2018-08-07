@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2018
+[*] DoACBrNFe
+Realizado Ajustes ref Refactory no retorno do Integrador Fiscal
+
 06/08/2018
 [*] DoBoletoUnit
 Realizado Ajustes ref Refactory e Leitura .INI para mais de um título.

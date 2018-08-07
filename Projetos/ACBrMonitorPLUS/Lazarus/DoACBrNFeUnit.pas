@@ -75,6 +75,7 @@ public
   procedure RespostaItensDistribuicaoDFeInfEve(ItemID: integer = 0; TagID: integer = 1);
   Procedure LerIniNFe(ArqINI: String);
   procedure ImprimirNFe(pImpressora: String; pPreview: Boolean; pCopias: Integer; pPDF: Boolean);
+  procedure RespostaIntegrador;
 
   property ACBrNFe: TACBrNFe read fACBrNFe;
 end;
@@ -620,6 +621,7 @@ begin
     try
       Ametodo.Executar;
     finally
+      RespostaIntegrador;
       Ametodo.Free;
     end;
   end;
@@ -841,6 +843,7 @@ begin
       Resp.CNPJDest := CNPJDest;
       Resp.emailDest := emailDest;
       Resp.XML := XML;
+      Resp.Arquivo := NomeArquivo;
 
       fpCmd.Resposta := XMotivo + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
@@ -865,7 +868,6 @@ begin
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
       Resp.CUF := cUF;
-      //Resp.MotivoNFe := NFeRetorno.ProtNFe.Items[0].xMotivo;
 
       fpCmd.Resposta := Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
@@ -919,6 +921,9 @@ begin
       Resp.XMotivo := XMotivo;
       Resp.CUF := cUF;
       Resp.XML := XML_ProcInutNFe;
+      Resp.NProt := Protocolo;
+      Resp.DhRecbto := dhRecbto;
+      Resp.NomeArquivo := NomeArquivo;
 
       fpCmd.Resposta := Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
@@ -1309,6 +1314,13 @@ begin
   INIRec.Free;
   Result := IniNFe.Text;
   IniNFe.Free;
+end;
+
+procedure TACBrObjetoNFe.RespostaIntegrador;
+begin
+  with fACBrNFe do
+    fpCmd.Resposta := fpCmd.Resposta + DoRespostaIntegrador();
+
 end;
 
 { TACBrCarregarNFe }
@@ -1729,7 +1741,7 @@ begin
 
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := MensagemNFe;
+          slMensagemEmail.Text := DoSubstituirVariaveis( MensagemNFe );
           sAssunto := AssuntoNFe;
         end;
 
@@ -1738,7 +1750,7 @@ begin
 
         try
           ACBrNFe.NotasFiscais.Items[0].EnviarEmail(ADestinatario,
-            IfThen( NaoEstaVazio(AAssunto), AAssunto, sAssunto),
+            DoSubstituirVariaveis( IfThen( NaoEstaVazio(AAssunto), AAssunto, sAssunto) ),
             slMensagemEmail,
             AEnviaPDF,
             // Enviar PDF junto
@@ -1826,6 +1838,9 @@ begin
         DoValidarIntegradorNFCe(ACBrNFe.WebServices.Consulta.NFeChave);
         ACBrNFe.WebServices.Consulta.Executar;
         RespostaConsulta;
+        if  FilesExists( AXML ) then
+          fpCmd.Resposta :=  fpCmd.Resposta + 'Arquivo=' + AXML;
+
       except
         raise Exception.Create(ACBrNFe.WebServices.Consulta.Msg);
       end;
@@ -3110,7 +3125,7 @@ begin
 
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := MensagemNFe;
+          slMensagemEmail.Text := DoSubstituirVariaveis( MensagemNFe );
           sAssunto := AssuntoNFe;
         end;
 
@@ -3135,7 +3150,7 @@ begin
 
         try
           ACBrNFe.EnviarEmail(ADestinatario,
-            IfThen(NaoEstaVazio(AAssunto), AAssunto, sAssunto),
+            DoSubstituirVariaveis( IfThen(NaoEstaVazio(AAssunto), AAssunto, sAssunto) ),
             slMensagemEmail,
             slCC,      // Lista com emails que serão enviado cópias - TStrings
             slAnexos); // Lista de slAnexos - TStrings
@@ -3206,7 +3221,7 @@ begin
 
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := MensagemNFe;
+          slMensagemEmail.Text := DoSubstituirVariaveis( MensagemNFe );
           sAssunto := AssuntoNFe;
         end;
 
@@ -3230,7 +3245,7 @@ begin
 
         try
           ACBrNFe.EnviarEmail(ADestinatario,
-            IfThen(NaoEstaVazio(AAssunto), AAssunto, sAssunto),
+            DoSubstituirVariaveis( IfThen(NaoEstaVazio(AAssunto), AAssunto, sAssunto) ),
             slMensagemEmail,
             slCC,      // Lista com emails que serão enviado cópias - TStrings
             slAnexos); // Lista de slAnexos - TStrings

@@ -87,12 +87,14 @@ type
   private
     FNomeArquivo: String;
     FXml: String;
+    FNProt: String;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
     property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
     property Xml: String read FXml write FXml;
+    property NProt: String read FNProt write FNProt;
   end;
 
   { TConsultaNFeResposta }
@@ -166,6 +168,7 @@ type
     FCNPJDest: string;
     FemailDest: string;
     Fxml: string;
+    FArquivo: string;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
@@ -178,6 +181,7 @@ type
     property CNPJDest: string read FCNPJDest write FCNPJDest;
     property emailDest: string read FemailDest write FemailDest;
     property XML: string read Fxml write Fxml;
+    property Arquivo: string read FArquivo write FArquivo;
   end;
 
   { TConsultaCadastroResposta }

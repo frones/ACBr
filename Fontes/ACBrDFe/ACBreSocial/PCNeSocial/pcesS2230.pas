@@ -708,15 +708,15 @@ begin
       begin
         // de 0 até 9
         sSecao := 'infoAtestado' + IntToStrZero(I, 1);
-        sFim   := INIRec.ReadString(sSecao, 'codCID', 'FIM');
+        sFim   := INIRec.ReadString(sSecao, 'qtdDiasAfast', 'FIM');
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
         with infoAfastamento.iniAfastamento.infoAtestado.Add do
         begin
-          codCID      := sFim;
-          qtDiasAfast := INIRec.ReadInteger(sSecao, 'qtDiasAfast', 0);
+          codCID      := INIRec.ReadString(sSecao, 'codCID', '');
+          qtDiasAfast := strToInt(sFim);
 
           sSecao := 'emitente' + IntToStrZero(I, 1);
           emitente.nmEmit := INIRec.ReadString(sSecao, 'nmEmit', EmptyStr);

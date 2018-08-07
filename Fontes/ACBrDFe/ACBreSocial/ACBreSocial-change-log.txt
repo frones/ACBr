@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2018
+-- pcesS2230--
+[*] https://www.projetoacbr.com.br/forum/topic/42108-s-2230-afastamento-temporario-retorno-de-afastamento/?do=findComment&comment=300600
+   Por: Leandro LJM
+
 06/08/2018 -- PCNeSocial --
 [*] Migrado a procedure LerIniArquivoOuString para classe ACBrUtil, devido utilização fora das classes do DFe. 
 

@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2018
+-- pcnConversaoReinf -- 
+[*] https://www.projetoacbr.com.br/forum/topic/45468-acbr-reinf-tindsusp-indicativo-de-suspens%C3%A3o-da-exigibilidade/
+   Por: Sergio Jonas
+
 19/07/2018
 -- pcnConversaoReinf -- 
 [*] https://www.projetoacbr.com.br/forum/topic/44880-reinf-acbrmonitorplus-teste-carregando-xml/

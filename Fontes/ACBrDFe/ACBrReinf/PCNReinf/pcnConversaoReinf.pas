@@ -77,6 +77,8 @@ type
   TtpProc                 = (tpAdministrativo, tpJudicial);
 
   TindSusp                = (siLiminarMandadoSeguranca,
+                             siDepositoJudicialMontanteIntegral,
+                             siDepositoAdministrativoMontanteIntegral,
                              siAntecipacaoTutela,
                              siLiminarMedidaCautelar,
                              siSentencaMandadoSegurancaFavoravelContribuinte ,
@@ -638,13 +640,13 @@ end;
 
 function IndSuspToStr(const t: TindSusp ): string;
 begin
-  result := EnumeradoToStr2(t, ['01', '04', '05', '08', '09', '10', '11', '12',
+  result := EnumeradoToStr2(t, ['01', '02', '03', '04', '05', '08', '09', '10', '11', '12',
                                 '13', '90', '92']);
 end;
 
 function StrToIndSusp(var ok: boolean; const s: string): TindSusp;
 begin
-  result := TindSusp( StrToEnumerado2(ok , s, ['01', '04', '05', '08', '09',
+  result := TindSusp( StrToEnumerado2(ok , s, ['01', '02', '03', '04', '05', '08', '09',
                                                 '10', '11', '12', '13', '90',
                                                 '92']) );
 end;

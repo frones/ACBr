@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/08/2018
+-- ACBrNFeNotasFiscais --
+[*] Ajuste na função GerarNFeIni (Escrita do .ini ref totalizadores do XML)
+por: José M. S. Junior
+
+04/08/2018
 -- pcnNFeW --
 [-] Correção na validação da tag cEANTrib.
     https://www.projetoacbr.com.br/forum/topic/45414-valida%C3%A7%C3%A3o-do-ceantrib-melhoria/

@@ -2846,18 +2846,19 @@ begin
       INIRec.WriteFloat('Total', 'vOutro', Total.ICMSTot.vOutro);
       INIRec.WriteFloat('Total', 'vNF', Total.ICMSTot.vNF);
       INIRec.WriteFloat('Total', 'vTotTrib', Total.ICMSTot.vTotTrib);
-      INIRec.WriteFloat('Total', 'vServ', Total.ISSQNtot.vServ);
-      INIRec.WriteFloat('Total', 'vBC', Total.ISSQNTot.vBC);
-      INIRec.WriteFloat('Total', 'vISS', Total.ISSQNTot.vISS);
-      INIRec.WriteFloat('Total', 'vPIS', Total.ISSQNTot.vPIS);
-      INIRec.WriteFloat('Total', 'vCOFINS', Total.ISSQNTot.vCOFINS);
-      INIRec.WriteDateTime('Total', 'dCompet', Total.ISSQNTot.dCompet);
-      INIRec.WriteFloat('Total', 'vDeducao', Total.ISSQNTot.vDeducao);
-      INIRec.WriteFloat('Total', 'vOutro', Total.ISSQNTot.vOutro);
-      INIRec.WriteFloat('Total', 'vDescIncond', Total.ISSQNTot.vDescIncond);
-      INIRec.WriteFloat('Total', 'vDescCond', Total.ISSQNTot.vDescCond);
-      INIRec.WriteFloat('Total', 'vISSRet', Total.ISSQNTot.vISSRet);
-      INIRec.WriteString('Total', 'cRegTrib', RegTribISSQNToStr(
+
+      INIRec.WriteFloat('ISSQNtot', 'vServ', Total.ISSQNtot.vServ);
+      INIRec.WriteFloat('ISSQNtot', 'vBC', Total.ISSQNTot.vBC);
+      INIRec.WriteFloat('ISSQNtot', 'vISS', Total.ISSQNTot.vISS);
+      INIRec.WriteFloat('ISSQNtot', 'vPIS', Total.ISSQNTot.vPIS);
+      INIRec.WriteFloat('ISSQNtot', 'vCOFINS', Total.ISSQNTot.vCOFINS);
+      INIRec.WriteDateTime('ISSQNtot', 'dCompet', Total.ISSQNTot.dCompet);
+      INIRec.WriteFloat('ISSQNtot', 'vDeducao', Total.ISSQNTot.vDeducao);
+      INIRec.WriteFloat('ISSQNtot', 'vOutro', Total.ISSQNTot.vOutro);
+      INIRec.WriteFloat('ISSQNtot', 'vDescIncond', Total.ISSQNTot.vDescIncond);
+      INIRec.WriteFloat('ISSQNtot', 'vDescCond', Total.ISSQNTot.vDescCond);
+      INIRec.WriteFloat('ISSQNtot', 'vISSRet', Total.ISSQNTot.vISSRet);
+      INIRec.WriteString('ISSQNtot', 'cRegTrib', RegTribISSQNToStr(
         Total.ISSQNTot.cRegTrib));
 
       INIRec.WriteFloat('retTrib', 'vRetPIS', Total.retTrib.vRetPIS);

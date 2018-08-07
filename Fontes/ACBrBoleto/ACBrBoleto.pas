@@ -1262,8 +1262,6 @@ type
     procedure SetAbout(const AValue: String);
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
     procedure SetMAIL(AValue: TACBrMail);
-    function ConvertStrRecived( AStr: String ) : String ;
-    function LerConverterIni(AStr: String): TMemIniFile;
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -1808,57 +1806,6 @@ begin
     if AValue <> nil then
       AValue.FreeNotification(self);
   end;
-end;
-
-function TACBrBoleto.ConvertStrRecived(AStr: String): String;
-Var  P   : Integer ;
-     Hex : String ;
-     CharHex : Char ;
-begin
-  { Verificando por codigos em Hexa }
-  Result := AStr ;
-
-  P := pos('\x',Result) ;
-  while P > 0 do
-  begin
-     Hex := copy(Result,P+2,2) ;
-
-     try
-        CharHex := Chr(StrToInt('$'+Hex)) ;
-     except
-        CharHex := ' ' ;
-     end ;
-
-     Result := StringReplace(Result,'\x'+Hex,CharHex,[rfReplaceAll]) ;
-     P      := pos('\x',Result) ;
-  end ;
-
-end ;
-
-function TACBrBoleto.LerConverterIni(AStr: String): TMemIniFile;
-var
-  SL: TStringList;
-begin
-  Result := TMemIniFile.Create(' ');
-  SL     := TStringList.Create;
-  try
-    try
-      if (pos(#10,aStr) = 0) and FilesExists(Astr) then
-        SL.LoadFromFile(AStr)
-      else
-        SL.Text := ConvertStrRecived( Astr );
-
-      Result.SetStrings(SL);
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Erro ao carregar arquivo'+sLineBreak+E.Message);
-      end;
-    end;
-  finally
-    SL.Free;
-  end;
-
 end;
 
 function TACBrBoleto.GetAbout: String;

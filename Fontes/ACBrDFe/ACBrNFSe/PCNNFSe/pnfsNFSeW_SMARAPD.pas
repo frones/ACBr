@@ -125,7 +125,7 @@ begin
   for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
   begin
     Gerador.wGrupoNFSe('servico');
-    Gerador.wCampoNFSe(tcInt, '', 'quantidade'    , 01, 005, 1, FNFSe.Servico.ItemServico[i].Quantidade, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'quantidade'    , 01, 015, 1, FNFSe.Servico.ItemServico[i].Quantidade, '');
     Gerador.wCampoNFSe(tcStr, '', 'descricao'     , 01, 255, 1, FNFSe.Servico.ItemServico[i].Descricao, '');
     Gerador.wCampoNFSe(tcStr, '', 'codatividade'  , 01, 020, 1, FNFSe.Servico.ItemServico[i].CodLCServ, '');
     Gerador.wCampoNFSe(tcDe2, '', 'valorunitario' , 01, 015, 1, FNFSe.Servico.ItemServico[i].ValorUnitario, '');

@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2018
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/45504-leitura-de-xml-do-provedor-el/
+Por: RaylanZibel
+-- pnfsNFSeW_SMARAPD --
+[*] https://www.projetoacbr.com.br/forum/topic/45511-smarapd-casa-decimal-na-quantidade/
+Por: Rodrigo
+-- ACBrNFSeWebServices / pnfsNFSeG --
+[*] Removido da lista o provedor WebISSv2 de provedores que permitem mais de 1 RPS no 
+    método Gerar.
+Por: Italo Jurisato Junior
+
 31/07/2018
 -- ACBrNFSeWebServices/ pnfsNFSeG --
 [*] Incluida condições para detectar se um determinado provedor necessita de alguma

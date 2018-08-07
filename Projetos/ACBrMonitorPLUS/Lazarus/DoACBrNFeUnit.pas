@@ -54,7 +54,7 @@ public
 
   function GerarNFeIni(XML: string): string;
   procedure RespostaNotasFiscais(pImprimir: Boolean; pImpressora: String;
-            pPreview: Boolean; pCopias: Integer; pPDF: Boolean);
+            pPreview: String; pCopias: Integer; pPDF: Boolean);
   procedure RespostaItensNFe(NotasFiscaisID: integer = 0; ItemID: integer = 0; Gerar: boolean = False);
   procedure RespostaEnvio;
   procedure RespostaRetorno;
@@ -74,7 +74,7 @@ public
   procedure RespostaItensDistribuicaoDFeProEve(ItemID: integer = 0; TagID: integer = 1);
   procedure RespostaItensDistribuicaoDFeInfEve(ItemID: integer = 0; TagID: integer = 1);
   Procedure LerIniNFe(ArqINI: String);
-  procedure ImprimirNFe(pImpressora: String; pPreview: Boolean; pCopias: Integer; pPDF: Boolean);
+  procedure ImprimirNFe(pImpressora: String; pPreview: String; pCopias: Integer; pPDF: Boolean);
   procedure RespostaIntegrador;
 
   property ACBrNFe: TACBrNFe read fACBrNFe;
@@ -680,7 +680,7 @@ begin
 end;
 
 procedure TACBrObjetoNFe.RespostaNotasFiscais(pImprimir: Boolean; pImpressora: String;
-          pPreview: Boolean; pCopias: Integer; pPDF: Boolean);
+          pPreview: String; pCopias: Integer; pPDF: Boolean);
 var
   I, J: integer;
   ArqPDF: String;
@@ -696,7 +696,8 @@ begin
         begin
           RespostaItensNFe(J, I, True);
 
-          DoConfiguraDANFe(False, BoolToStr(pPreview,'1',''));
+          DoConfiguraDANFe(False, Trim(pPreview) );
+
           if NaoEstaVazio(pImpressora) then
             DANFe.Impressora := pImpressora;
 
@@ -715,7 +716,7 @@ begin
           if (NotasFiscais.Items[I].Confirmada) and (pImprimir) then
           begin
             try
-              DoAntesDeImprimir((pPreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+              DoAntesDeImprimir(( StrToBoolDef( pPreview, False ) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
               NotasFiscais.Items[I].Imprimir;
             finally
               DoDepoisDeImprimir;
@@ -1246,7 +1247,7 @@ begin
   end;
 end;
 
-procedure TACBrObjetoNFe.ImprimirNFe(pImpressora: String; pPreview: Boolean;
+procedure TACBrObjetoNFe.ImprimirNFe(pImpressora: String; pPreview: String;
   pCopias: Integer; pPDF: Boolean);
 var
   ArqPDF : String;
@@ -1255,7 +1256,7 @@ begin
   begin
     if (NotasFiscais.Items[0].Confirmada) then
     begin
-      DoConfiguraDANFe(pPDF, BoolToStr(pPreview,'1',''));
+      DoConfiguraDANFe(pPDF, Trim(pPreview) );
       if NaoEstaVazio(pImpressora) then
         DANFe.Impressora := pImpressora;
 
@@ -1272,7 +1273,7 @@ begin
       end;
 
       try
-        DoAntesDeImprimir((pPreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+        DoAntesDeImprimir(( StrToBoolDef( pPreview, False) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
         NotasFiscais.Items[0].Imprimir;
       finally
         DoDepoisDeImprimir;
@@ -1981,14 +1982,14 @@ var
   CargaDFeEvento: TACBrCarregarNFeEvento;
   AXMLEvento, AXML, AImpressora: String;
   ACopias: Integer;
-  APreview: Boolean;
+  APreview: String;
   DanfeRL: TACBrNFeDANFeRL;
 begin
   AXMLEvento := fpCmd.Params(0);
   AXML := fpCmd.Params(1);
   AImpressora := fpCmd.Params(2);
   ACopias := StrToIntDef(fpCmd.Params(3), 0);
-  APreview := StrToBoolDef(fpCmd.Params(4), False);
+  APreview := fpCmd.Params(4);
 
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
@@ -1999,8 +2000,8 @@ begin
       CargaDFe := TACBrCarregarNFe.Create(ACBrNFe, AXML);
     DanfeRL:= TACBrNFeDANFeRL.Create(ACBrNFe);
     try
-      DoConfiguraDANFe(False, BoolToStr(APreview,'1',''));
       ACBrNFe.DANFE:= DanfeRL;
+      DoConfiguraDANFe(False, Trim(APreview) );
 
       if NaoEstaVazio(AImpressora) then
         ACBrNFe.DANFe.Impressora := AImpressora;
@@ -2009,7 +2010,7 @@ begin
         ACBrNFe.DANFe.NumCopias := ACopias;
 
       try
-        DoAntesDeImprimir((APreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+        DoAntesDeImprimir( ( StrToBoolDef( APreview, False ) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
         ACBrNFe.ImprimirEvento;
       finally
         DoDepoisDeImprimir;
@@ -2109,7 +2110,7 @@ var
   AImprime: Boolean;
   ASincrono: Boolean;
   AImpressora: String;
-  APreview: Boolean;
+  APreview: String;
   ACopias: Integer;
   APDF: Boolean;
 begin
@@ -2119,7 +2120,7 @@ begin
   AImprime      := StrToBoolDef(fpCmd.Params(2), False);
   ASincrono     := StrToBoolDef(fpCmd.Params(3), False);
   AImpressora   := fpCmd.Params(4);
-  APreview      := StrToBoolDef(fpCmd.Params(5), False);
+  APreview      := fpCmd.Params(5);
   ACopias       := StrToIntDef(fpCmd.Params(6), 0);
   APDF          := StrToBoolDef(fpCmd.Params(7), False);
 
@@ -2245,7 +2246,7 @@ var
   AImprime: Boolean;
   AImpressora: String;
   ASincrono: Boolean;
-  APreview: Boolean;
+  APreview: String;
   ACopias: Integer;
   APDF: Boolean;
 begin
@@ -2253,7 +2254,7 @@ begin
   AImprime     := StrToBoolDef(fpCmd.Params(1), False);
   AImpressora  := fpCmd.Params(2);
   ASincrono    := StrToBoolDef(fpCmd.Params(3), False);
-  APreview     := StrToBoolDef(fpCmd.Params(4), False);
+  APreview     := fpCmd.Params(4);
   ACopias      := StrToIntDef(fpCmd.Params(5), 0);
   APDF         := StrToBoolDef(fpCmd.Params(6), False);
 
@@ -2367,12 +2368,12 @@ begin
         ACBrNFe.WebServices.Retorno.Executar;
 
         RespostaRetorno;
-        RespostaNotasFiscais(AImprime, AImpressora, False, 0, False);
+        RespostaNotasFiscais(AImprime, AImpressora, '0' , 0, False);
 
       end
       else
       if AImprime then //Sincrono
-        ImprimirNFe(AImpressora, False, 0, False);
+        ImprimirNFe(AImpressora, '0', 0, False);
 
 
     finally
@@ -2460,7 +2461,7 @@ var
   CargaDFe: TACBrCarregarNFe;
   AChave, AImpressora, AProtocolo: String;
   ACopias: Integer;
-  APreview: Boolean;
+  APreview: String;
   AMarcaDagua: String;
   AConsumidor: Boolean;
   ASimplificado: Boolean;
@@ -2469,7 +2470,7 @@ begin
   AImpressora := fpCmd.Params(1);
   ACopias := StrToIntDef(fpCmd.Params(2), 0);
   AProtocolo := fpCmd.Params(3);
-  APreview := StrToBoolDef(fpCmd.Params(4), False);
+  APreview := fpCmd.Params(4);
   AMarcaDagua := fpCmd.Params(5);
   AConsumidor := StrToBoolDef(fpCmd.Params(6), False);
   ASimplificado := StrToBoolDef(fpCmd.Params(7), False);
@@ -2479,7 +2480,7 @@ begin
     ACBrNFe.NotasFiscais.Clear;
     CargaDFe := TACBrCarregarNFe.Create(ACBrNFe, AChave);
     try
-      DoConfiguraDANFe(False, BoolToStr(APreview,'1',''));
+      DoConfiguraDANFe(False, Trim(APreview) );
 
       if NaoEstaVazio(AImpressora) then
         ACBrNFe.DANFe.Impressora := AImpressora;
@@ -2504,7 +2505,7 @@ begin
           ACBrNFe.DANFE.TipoDANFE := tiSimplificado;
 
       try
-        DoAntesDeImprimir((APreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+        DoAntesDeImprimir(( StrToBoolDef( APreview, False) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
         ACBrNFe.NotasFiscais.Imprimir;
       finally
         DoDepoisDeImprimir;
@@ -2660,13 +2661,13 @@ var
   CargaDFeInut: TACBrCarregarNFeInut;
   AXMLInut, AImpressora: String;
   ACopias: Integer;
-  APreview: Boolean;
+  APreview: String;
   DanfeRL: TACBrNFeDANFeRL;
 begin
   AXMLInut := fpCmd.Params(0);
   AImpressora := fpCmd.Params(1);
   ACopias := StrToIntDef(fpCmd.Params(2), 0);
-  APreview:= StrToBoolDef(fpCmd.Params(3), False);
+  APreview:= fpCmd.Params(3);
 
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
@@ -2674,8 +2675,8 @@ begin
     CargaDFeInut := TACBrCarregarNFeInut.Create(ACBrNFe, AXMLInut);
     DanfeRL:= TACBrNFeDANFeRL.Create(ACBrNFe);
     try
-      DoConfiguraDANFe(False, BoolToStr(APreview,'1',''));
       ACBrNFe.DANFE:= DanfeRL;
+      DoConfiguraDANFe(False, Trim(APreview) );
 
       if NaoEstaVazio(AImpressora) then
         ACBrNFe.DANFe.Impressora := AImpressora;
@@ -2684,7 +2685,7 @@ begin
         ACBrNFe.DANFe.NumCopias := ACopias;
 
       try
-        DoAntesDeImprimir((APreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+        DoAntesDeImprimir(( StrToBoolDef(APreview,False) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
         ACBrNFe.ImprimirInutilizacao;
       finally
         DoDepoisDeImprimir;
@@ -2717,8 +2718,8 @@ begin
     CargaDFeInut := TACBrCarregarNFeInut.Create(ACBrNFe, AXMLInut);
     DanfeRL:= TACBrNFeDANFeRL.Create(ACBrNFe);
     try
-      DoConfiguraDANFe(False, '');
       ACBrNFe.DANFE:= DanfeRL;
+      DoConfiguraDANFe(False, '');
       try
         ACBrNFe.ImprimirInutilizacaoPDF;
         ArqPDF := OnlyNumber(ACBrNFe.InutNFe.ID);
@@ -3441,7 +3442,7 @@ var
   NFeRTXT: TNFeRTXT;
   APathTXT: Boolean;
   ASincrono : Boolean;
-  APreview : Boolean;
+  APreview : String;
   ACopias : Integer;
 begin
   ATXT := fpCmd.Params(0);
@@ -3450,7 +3451,7 @@ begin
   AImprime := StrToBoolDef(fpCmd.Params(2), False);
   ASincrono := StrToBoolDef(fpCmd.Params(3), False);
   AImpressora := fpCmd.Params(4);
-  APreview := StrToBoolDef(fpCmd.Params(5), False);
+  APreview := fpCmd.Params(5);
   ACopias := StrToIntDef(fpCmd.Params(6), 0);
 
   with TACBrObjetoNFe(fpObjetoDono) do

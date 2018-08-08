@@ -150,7 +150,8 @@ const
   DSC_TPNAV     = 'Tipo de Navegação';
   DSC_IRIN      = 'Irin do navio sempre deverá ser informado';
 
-  DSC_AUTXML = 'Autorizados para download do XML do DF-e';
+  DSC_AUTXML   = 'Autorizados para download do XML do DF-e';
+  DSC_XCONTATO = 'Nome do Contato';
 
   DSC_DigestValue = 'Digest Value';
   DSC_SignatureValue = 'Signature Value';

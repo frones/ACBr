@@ -142,7 +142,7 @@ begin
 
   vUF          := Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
-  vCNPJ        := copy(OnlyNumber(ACNPJ) + '00000000000000', 1, 14);
+  vCNPJ        := PadLeft(OnlyNumber(ACNPJ), 14, '0');
   vModelo      := Poem_Zeros(AModelo, 2);
   vSerie       := Poem_Zeros(ASerie, 3);
   vNumero      := Poem_Zeros(ANumero, 9);

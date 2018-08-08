@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2018 
+-- ACBrDFeUtil --
+[*] Alterado a linha que trata o CNPJ passado na função GerarChaveAcesso, para
+    que possa gerar chave com o CPF em vez de CNPJ.
+   Por: Italo Jurisato Junior 
+
 06/08/2018 
 -- ACBrDFeUtil --
 [*] Migrado a procedure LerIniArquivoOuString para classe ACBrUtil, devido utilização fora 

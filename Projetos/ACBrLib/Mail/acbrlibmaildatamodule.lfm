@@ -1,0 +1,19 @@
+object TLibMailDM: TTLibMailDM
+  OldCreateOrder = False
+  Height = 150
+  HorizontalOffset = 257
+  VerticalOffset = 127
+  Width = 150
+  PPI = 96
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = UTF_8
+    left = 47
+    top = 29
+  end
+end

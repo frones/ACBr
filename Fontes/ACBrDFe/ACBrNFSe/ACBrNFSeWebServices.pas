@@ -3636,6 +3636,7 @@ begin
     TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
   end;
 
+  {
   if (FProvedor in [proEquiplano, proEL]) then
     cSituacao := '2'  // Não Processado, lote com erro
   else
@@ -3645,6 +3646,9 @@ begin
   if (FSituacao = cSituacao) or (FSituacao = '3') or (FSituacao = '4') or
      (FSituacao = '5') or (FSituacao = 'Erro') then
     Result := TratarRespostaFinal;
+  }
+
+  Result := TratarRespostaFinal;
 end;
 
 function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/08/2018
+-- ACBrNFSeWebServices --
+[*] Possível correção no método Consultar Situação do Lote.
+Por: Italo Jurisato Junior
+
 07/08/2018
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/45504-leitura-de-xml-do-provedor-el/

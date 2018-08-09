@@ -74,7 +74,7 @@ function MAIL_AddBCC(eEmail: PChar): longint;
 function MAIL_ClearAttachment: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 function MAIL_AddAttachment(eFileName: PChar; eDescription: PChar = '';
-            const aDisposition: TMailAttachmentDisposition = adInline): longint;
+            const aDisposition: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 function MAIL_AddAttachmentStream(aStream: TStream; eDescription: PChar = '';
             const aDisposition: TMailAttachmentDisposition = adInline): longint;

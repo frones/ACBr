@@ -86,35 +86,25 @@ function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%endregion}
 
 {%region Diversos}
-function MAIL_AddAddress(eEmail: PChar; eName: PChar = ''): longint;
+function MAIL_AddAddress(const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddReplyTo(eEmail: PChar; eName: PChar = ''): longint;
+function MAIL_AddReplyTo(const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddCC(eEmail: PChar; eName: PChar = ''): longint;
+function MAIL_AddCC(const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddBCC(eEmail: PChar): longint;
+function MAIL_AddBCC(const eEmail: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_ClearAttachment: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddAttachment(eFileName: PChar; eDescription: PChar = '';
-            const aDisposition: TMailAttachmentDisposition = adInline): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_AddAttachmentStream(aStream: TStream; eDescription: PChar = '';
-            const aDisposition: TMailAttachmentDisposition = adInline): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function MAIL_MailProcess(const aStatus: TMailStatus): longint;
+function MAIL_AddAttachment(const eFileName, eDescription: PChar;
+            const aDisposition: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_SaveToFile(const eFileName: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_SaveToStream(AStream: TStream): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Envio}
 function MAIL_Clear: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_BuildMimeMess: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_Send(UseThreadNow: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -222,7 +212,7 @@ end;
 {%endregion}
 
 {%region Diversos}
-function MAIL_AddAddress(eEmail: PChar; eName: PChar = ''): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddAddress(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   AEmail: AnsiString;
   AName: AnsiString;
@@ -256,7 +246,7 @@ begin
   end;
 end;
 
-function MAIL_AddReplyTo(eEmail: PChar; eName: PChar = ''): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddReplyTo(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   AEmail: AnsiString;
   AName: AnsiString;
@@ -290,7 +280,7 @@ begin
   end;
 end;
 
-function MAIL_AddCC(eEmail: PChar; eName: PChar = ''): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddCC(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   AEmail: AnsiString;
   AName: AnsiString;
@@ -324,7 +314,7 @@ begin
   end;
 end;
 
-function MAIL_AddBCC(eEmail: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddBCC(const eEmail: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   AEmail: AnsiString;
 begin
@@ -382,8 +372,8 @@ begin
   end;
 end;
 
-function MAIL_AddAttachment(eFileName: PChar; eDescription: PChar = '';
-  const aDisposition: TMailAttachmentDisposition = adInline): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddAttachment(const eFileName, eDescription: PChar;
+  const aDisposition: Integer): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   AFileName: AnsiString;
   ADescription: AnsiString;
@@ -394,8 +384,8 @@ begin
     ADescription := AnsiString(eDescription);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('MAIL_AddAttachment( ' + AFileName + ',' + ADescription {+
-             TMailAttachmentDisposition(aDisposition)} + ' )', logCompleto, True)
+      pLib.GravarLog('MAIL_AddAttachment( ' + AFileName + ',' + ADescription + ',' +
+             IntToStr(aDisposition) + ' )', logCompleto, True)
     else
       pLib.GravarLog('MAIL_AddAttachment', logNormal);
 
@@ -403,70 +393,7 @@ begin
     begin
       MailDM.Travar;
       try
-        MailDM.ACBrMail1.AddAttachment(AFileName, ADescription, aDisposition);
-        Result := SetRetorno(ErrOK);
-      finally
-        MailDM.Destravar;
-      end;
-    end;
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-  end;
-end;
-
-function MAIL_AddAttachmentStream(aStream: TStream; eDescription: PChar = '';
-  const aDisposition: TMailAttachmentDisposition = adInline): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-var
-  ADescription: AnsiString;
-begin
-  try
-    VerificarLibInicializada;
-    ADescription := AnsiString(eDescription);
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('MAIL_AddAttachmentStream( ' + {AFileName + ',' +} ADescription {+
-             TMailAttachmentDisposition(aDisposition)} + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('MAIL_AddAttachmentStream', logNormal);
-
-    with TACBrLibMail(pLib) do
-    begin
-      MailDM.Travar;
-      try
-        MailDM.ACBrMail1.AddAttachment(aStream, ADescription, aDisposition);
-        Result := SetRetorno(ErrOK);
-      finally
-        MailDM.Destravar;
-      end;
-    end;
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-  end;
-end;
-
-function MAIL_MailProcess(const aStatus: TMailStatus): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('MAIL_MailProcess( ' {+ TMailStatus(aStatus)} + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('MAIL_MailProcess', logNormal);
-
-    with TACBrLibMail(pLib) do
-    begin
-      MailDM.Travar;
-      try
-        MailDM.ACBrMail1.MailProcess(aStatus);
+        MailDM.ACBrMail1.AddAttachment(AFileName, ADescription, TMailAttachmentDisposition(aDisposition));
         Result := SetRetorno(ErrOK);
       finally
         MailDM.Destravar;
@@ -512,35 +439,6 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
-
-function MAIL_SaveToStream(aStream: TStream): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada;
-
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('MAIL_SaveToStream( ' + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('MAIL_SaveToStream', logNormal);
-
-    with TACBrLibMail(pLib) do
-    begin
-      MailDM.Travar;
-      try
-        MailDM.ACBrMail1.SaveToStream(aStream);
-        Result := SetRetorno(ErrOK);
-      finally
-        MailDM.Destravar;
-      end;
-    end;
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-  end;
-end;
 {%endregion}
 
 {%region Envio}
@@ -556,32 +454,6 @@ begin
       MailDM.Travar;
       try
         MailDM.ACBrMail1.Clear;
-        Result := SetRetorno(ErrOK);
-      finally
-        MailDM.Destravar;
-      end;
-    end;
-  except
-    on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
-
-    on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
-  end;
-end;
-
-function MAIL_BuildMimeMess: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-begin
-  try
-    VerificarLibInicializada;
-
-    pLib.GravarLog('MAIL_BuildMimeMess', logNormal);
-
-    with TACBrLibMail(pLib) do
-    begin
-      MailDM.Travar;
-      try
-        MailDM.ACBrMail1.BuildMimeMess;
         Result := SetRetorno(ErrOK);
       finally
         MailDM.Destravar;

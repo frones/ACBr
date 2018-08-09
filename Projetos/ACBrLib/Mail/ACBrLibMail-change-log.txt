@@ -44,6 +44,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/08/2018
+--- ACBrLibMail ---
+[-] Correção nos nomes das Unit do DataModule para seguir o padrão.
+    Por: Rafael Dias
+[-] Correção do LFM do DataModule estava com o nome da classe incorreto.
+    Por: Rafael Dias
+[-] Remoção de metodos com Stream.
+    Por: Rafael Dias
+[-] Correções nos metodos para não usarem parametros opcionais e enum.
+    Por: Rafael Dias
+[*] Adicionados os modos de compilação padrão.
+    Por: Rafael Dias
+
 02/08/2018
 --- ACBrLibMail ---
 [+] Inicio do projeto.

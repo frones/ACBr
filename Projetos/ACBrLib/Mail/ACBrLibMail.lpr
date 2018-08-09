@@ -66,14 +66,10 @@ exports
   MAIL_AddBCC,
   MAIL_ClearAttachment,
   MAIL_AddAttachment,
-
-  MAIL_MailProcess,
   MAIL_SaveToFile,
-  MAIL_SaveToStream,
 
   // Envio
   MAIL_Clear,
-  MAIL_BuildMimeMess,
   MAIL_Send;
 
 begin

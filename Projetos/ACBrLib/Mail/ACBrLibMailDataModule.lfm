@@ -1,4 +1,4 @@
-object TLibMailDM: TTLibMailDM
+object LibMailDM: TLibMailDM
   OldCreateOrder = False
   Height = 150
   HorizontalOffset = 257

@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/08/2018
+-- pnfsNFSeW_ABRASFv1 --
+[*] https://www.projetoacbr.com.br/forum/topic/45571-provedor-abaco-corre%C3%A7%C3%A3o-formato-al%C3%ADquota-modelo-abrasf/
+Por: Francisco Flores
 -- ACBrNFSeWebServices --
 [*] Possível correção no método Consultar Situação do Lote.
 Por: Italo Jurisato Junior

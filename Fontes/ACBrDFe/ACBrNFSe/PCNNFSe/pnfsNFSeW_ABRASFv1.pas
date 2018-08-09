@@ -287,7 +287,8 @@ begin
     proGINFES,
     proRJ,
     proPublica,
-    proBHISS:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
+    proBHISS,
+    proAbaco:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
 
     proGovBR,
     proPronim,

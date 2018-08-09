@@ -1150,7 +1150,7 @@ begin
             sSecao := 'detPgtoFl' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
             sFim   := INIRec.ReadString(sSecao, 'perRef', 'FIM');
 
-            if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            if (sFim = 'FIM') then
               break;
 
             with detPgtoFl.Add do

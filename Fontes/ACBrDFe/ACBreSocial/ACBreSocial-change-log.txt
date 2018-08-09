@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2018
+-- pcesS1200--
+[*] https://www.projetoacbr.com.br/forum/topic/43461-s-1200-tsv-com-mais-de-um-demonstartivo/?do=findComment&comment=300837
+-- pcesS1210--
+[*] https://www.projetoacbr.com.br/forum/topic/42760-adicionar-campo-matricula-no-grupo-detpgtofer-do-evento-s-1210/?do=findComment&comment=300851
+   Por: Leandro LJM
+
 07/08/2018
 -- pcesS2230--
 [*] https://www.projetoacbr.com.br/forum/topic/42108-s-2230-afastamento-temporario-retorno-de-afastamento/?do=findComment&comment=300600

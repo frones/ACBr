@@ -1205,7 +1205,7 @@ begin
                              IntToStrZero(K, 1);
                 sFim   := INIRec.ReadString(sSecao, 'matricula', 'FIM');
 
-                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                if (sFim = 'FIM') then
                   break;
 
                 with remunPerApur.Add do

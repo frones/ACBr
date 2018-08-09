@@ -1113,7 +1113,16 @@ begin
   Gerador.wGrupo('ideVinculo');
 
   Gerador.wCampo(tcStr, '', 'cpfTrab',   11, 11, 1, pIdeVinculo.cpfTrab);
-  Gerador.wCampo(tcStr, '', 'nisTrab',    1, 11, 1, pIdeVinculo.nisTrab);
+
+  if (
+    (pIdeVinculo.codCateg = 901) or
+    (pIdeVinculo.codCateg = 903) or
+    (pIdeVinculo.codCateg = 904)
+  ) then
+    Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 0, pIdeVinculo.nisTrab)
+  else
+    Gerador.wCampo(tcStr, '', 'nisTrab', 1, 11, 1, pIdeVinculo.nisTrab);
+    
   Gerador.wCampo(tcStr, '', 'matricula',  1, 30, 0, pIdeVinculo.matricula);
   Gerador.wCampo(tcInt, '', 'codCateg',   1,  3, 0, pIdeVinculo.codCateg);
 

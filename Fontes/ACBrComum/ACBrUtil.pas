@@ -87,6 +87,9 @@ const
 type
   TSetOfChars = set of AnsiChar;
   TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, msk6x4, mskAliq);
+  TFindFileSortType = (fstNone, fstDateTime, fstFileName);
+  TFindFileSortDirection = (fsdNone, fsdAscending, fsdDescending);
+
   TSplitResult = array of string;
   {$IfNDef FPC}
    TLibHandle = THandle;
@@ -296,7 +299,9 @@ function StringCrc16(const AString : AnsiString ) : word;
 
 function ApplicationPath: String;
 Procedure FindFiles( const FileMask : String; AStringList : TStrings;
-  IncludePath : Boolean = True ) ;
+  IncludePath : Boolean = True;
+  SortType: TFindFileSortType = fstNone;
+  SortDirection: TFindFileSortDirection = fsdNone ) ;
 Procedure FindSubDirectories( const APath: String; AStringList : TStrings;
   IncludePath : Boolean = True ) ;
 Function FilesExists(const FileMask: String) : Boolean ;
@@ -2650,32 +2655,67 @@ end;
  Encontra arquivos que correspondam a "FileMask" e cria lista com o Path e nome
  dos mesmos em "AstringList"
 -----------------------------------------------------------------------------}
-procedure FindFiles(const FileMask : String ; AStringList : TStrings ;
-   IncludePath : Boolean) ;
+procedure FindFiles(const FileMask: String; AStringList: TStrings;
+  IncludePath: Boolean; SortType: TFindFileSortType;
+  SortDirection: TFindFileSortDirection);
 var
-  SearchRec : TSearchRec ;
-  RetFind   : Integer ;
-  LastFile  : string ;
-  Path      : String ;
+  SearchRec: TSearchRec;
+  RetFind, I: Integer;
+  LastFile, AFileName, APath: String;
+  SL: TStringList;
 begin
+ AStringList.Clear;
+
   LastFile := '' ;
-  Path     := ExtractFilePath(FileMask) ;
-  RetFind  := SysUtils.FindFirst(FileMask, faAnyFile, SearchRec);
-  AStringList.Clear;
+  if IncludePath then
+    APath := ExtractFilePath(FileMask)
+  else
+    APath := '';
 
+  RetFind := SysUtils.FindFirst(FileMask, faAnyFile, SearchRec);
   try
-     while (RetFind = 0) and (LastFile <> SearchRec.Name) do
-     begin
-        LastFile := SearchRec.Name ;
+    while (RetFind = 0) and (LastFile <> SearchRec.Name) do
+    begin
+      LastFile := SearchRec.Name ;
 
-        if pos(LastFile, '..') = 0 then    { ignora . e .. }
-           AStringList.Add( IfThen(IncludePath, Path, '') + LastFile) ;
+      if pos(LastFile, '..') = 0 then    { ignora . e .. }
+      begin
+        AFileName := APath + LastFile;
+        if (SortType = fstDateTime) then
+          AFileName := DTtoS(FileDateToDateTime(SearchRec.Time)) + '|' + AFileName;
 
-        SysUtils.FindNext(SearchRec) ;
-     end ;
+        AStringList.Add( AFileName ) ;
+      end;
+
+      SysUtils.FindNext(SearchRec) ;
+    end ;
   finally
-     SysUtils.FindClose(SearchRec) ;
-  end ;
+    SysUtils.FindClose(SearchRec) ;
+  end;
+
+  if (SortType <> fstNone) then
+  begin
+    SL := TStringList.Create;
+    try
+      SL.Assign(AStringList);
+      SL.Sort;
+
+      AStringList.Clear;
+      For I := 0 to SL.Count-1 do
+      begin
+        AFileName := SL[I];
+        if (SortType = fstDateTime) then
+          AFileName := copy(AFileName, pos('|', AFileName)+1, Length(SL[I]));
+
+        if (SortDirection = fsdDescending) then
+          AStringList.Insert(0, AFileName)
+        else
+          AStringList.Add(AFileName);
+      end;
+    finally
+      SL.Free;
+    end;
+  end;
 end;
 
 procedure FindSubDirectories(const APath: String; AStringList: TStrings;
@@ -3901,10 +3941,10 @@ function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
 var
   AStr: String;
 
-  function InternalStringReplace(const S, OldPatern: String; NewPattern: String ): String;
+  function InternalStringReplace(const S, OldPatern, NewPattern: String ): String;
   begin
     if pos(OldPatern, S) > 0 then
-      Result := StringReplace(S, OldPatern, ACBrStr(NewPattern), [rfReplaceAll])
+      Result := ReplaceString(AnsiString(S), AnsiString(OldPatern), AnsiString(ACBrStr(NewPattern)))
     else
       Result := S;
   end;

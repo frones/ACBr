@@ -327,6 +327,7 @@ end;
 
 destructor TACBrCargaBalItem.Destroy;
 begin
+  FFornecedor.Free;
   FSetor.Free;
   FNutricional.Free;
   FTara.Free;

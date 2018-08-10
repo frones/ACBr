@@ -3826,6 +3826,7 @@ begin
     vDesc := TICMSTot(Source).vDesc;
     vII := TICMSTot(Source).vII;
     vIPI := TICMSTot(Source).vIPI;
+    vIPIDevol := TICMSTot(Source).vIPIDevol;
     vPIS := TICMSTot(Source).vPIS;
     vCOFINS := TICMSTot(Source).vCOFINS;
     vOutro := TICMSTot(Source).vOutro;

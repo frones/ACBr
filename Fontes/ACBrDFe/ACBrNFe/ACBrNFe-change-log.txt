@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/08/2018
+-- ACBrNFeWebServices --
+[*] Incluido a verificação se a UF é MT e caso afirmativo é feito os ajustes
+    necessário para a correta montagem no XML soap da Consulta ao Cadastro a 
+    ser enviando para a SEFAZ.
+por: Italo Jurisato Junior
+
 04/08/2018
 -- ACBrNFeNotasFiscais --
 [*] Ajuste na função GerarNFeIni (Escrita do .ini ref totalizadores do XML)

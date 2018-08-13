@@ -6207,11 +6207,11 @@ var
   MS: TMemoryStream;
   Linhas: TStringList;
   S: ansistring;
-  RetFind: integer;
-  SearchRec: TSearchRec;
   NomeArqEnt, NomeArqSai: string;
+  SL: TStringList;
 begin
   Timer1.Enabled := False;
+  ArqEntTXT := '';
 
   if Inicio then
   begin
@@ -6223,49 +6223,50 @@ begin
   end;
 
   try
-    try
-      if fsMonitorarPasta then
-      begin
-        NomeArqEnt := PathWithDelim(ExtractFileDir(ArqEntOrig)) + '*.*';
-        RetFind := SysUtils.FindFirst(NomeArqEnt, faAnyFile, SearchRec);
-        if (RetFind = 0) then
+    if fsMonitorarPasta then
+    begin
+      NomeArqEnt := PathWithDelim(ExtractFileDir(ArqEntOrig)) + '*.*';
+      SL:= TStringList.Create;
+      try
+        FindFiles(NomeArqEnt, SL, True, fstDateTime, fsdAscending);
+        if (SL.Count > 0) then
         begin
-          if SearchRec.Name = '.' then
-            FindNext(SearchRec);
-          if SearchRec.Name = '..' then
-            FindNext(SearchRec);
-
-          ArqEntTXT := PathWithDelim(ExtractFileDir(ArqEntOrig)) + SearchRec.Name;
+          ArqEntTXT := SL[0];
           { Arquivo de Requisicao }
           NomeArqEnt := StringReplace(ExtractFileName(ArqEntTXT),
-            ExtractFileExt(ArqEntTXT), '', [rfReplaceAll]);
-          NomeArqEnt := NomeArqEnt + '-resp' + ExtractFileExt(ArqEntTXT);
+                     ExtractFileExt(ArqEntTXT), '', [rfReplaceAll]);
+          NomeArqEnt:= NomeArqEnt + '-resp' + ExtractFileExt(ArqEntTXT);
           ArqSaiTXT := PathWithDelim(ExtractFilePath(ArqSaiOrig)) + NomeArqEnt;
           ArqSaiTMP := ChangeFileExt(ArqSaiTXT, '.tmp');
         end;
-      end
-      else
-      begin
-        NomeArqEnt := PathWithDelim(ExtractFileDir(ArqEntOrig)) +
-          StringReplace(ExtractFileName(ArqEntOrig), ExtractFileExt(ArqEntOrig),
-          '', [rfReplaceAll]) + '*' + ExtractFileExt(ArqEntOrig);
-        RetFind := SysUtils.FindFirst(NomeArqEnt, faAnyFile, SearchRec);
-        if (RetFind = 0) then
+      finally
+        SL.Free;
+      end;
+    end
+    else
+    begin
+      NomeArqEnt := PathWithDelim(ExtractFileDir(ArqEntOrig)) +
+                 StringReplace(ExtractFileName(ArqEntOrig), ExtractFileExt(ArqEntOrig),
+                 '', [rfReplaceAll]) + '*' + ExtractFileExt(ArqEntOrig);
+      SL:= TStringList.Create;
+      try
+        FindFiles(NomeArqEnt, SL, True, fstDateTime, fsdAscending);
+        if (SL.Count > 0) then
         begin
           NomeArqEnt := StringReplace(ExtractFileName(ArqEntOrig),
-            ExtractFileExt(ArqEntOrig), '', [rfReplaceAll]);
+                     ExtractFileExt(ArqEntOrig), '', [rfReplaceAll]);
           NomeArqSai := StringReplace(ExtractFileName(ArqSaiOrig),
-            ExtractFileExt(ArqSaiOrig), '', [rfReplaceAll]);
-          ArqEntTXT := PathWithDelim(ExtractFileDir(ArqEntOrig)) + SearchRec.Name;
+                     ExtractFileExt(ArqSaiOrig), '', [rfReplaceAll]);
+          ArqEntTXT := SL[0];
           { Arquivo de Requisicao }
           ArqSaiTXT := PathWithDelim(ExtractFilePath(ArqSaiOrig)) + StringReplace(
-            ExtractFileName(LowerCase(ArqEntTXT)), LowerCase(NomeArqEnt), LowerCase(
-            NomeArqSai), [rfReplaceAll]);
+                    ExtractFileName(LowerCase(ArqEntTXT)), LowerCase(NomeArqEnt), LowerCase(
+                    NomeArqSai), [rfReplaceAll]);
           ArqSaiTMP := ChangeFileExt(ArqSaiTXT, '.tmp');
         end;
+      finally
+        SL.Free;
       end;
-    finally
-      SysUtils.FindClose(SearchRec);
     end;
 
     if FileExists(ArqEntTXT) then  { Existe arquivo para ler ? }

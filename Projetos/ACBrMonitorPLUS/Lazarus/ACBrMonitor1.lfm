@@ -7,8 +7,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 0
-  ClientWidth = 0
+  ClientHeight = 659
+  ClientWidth = 1055
   Color = clBlack
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
@@ -7481,7 +7481,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object gbxWSeSocial: TTabSheet
                   Caption = 'e-Social'
                   ClientHeight = 267
-                  ClientWidth = 831
+                  ClientWidth = 826
                   object cbVersaoWSeSocial: TComboBox
                     Left = 20
                     Height = 25
@@ -7571,7 +7571,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object gbxWSReinf: TTabSheet
                   Caption = 'Reinf'
                   ClientHeight = 267
-                  ClientWidth = 831
+                  ClientWidth = 826
                   object Label219: TLabel
                     Left = 20
                     Height = 17
@@ -7866,13 +7866,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpKeyword = 'ACBrMonitor/Impressao.htm'
               Caption = 'Impressão'
               ClientHeight = 297
-              ClientWidth = 839
+              ClientWidth = 834
               ImageIndex = 4
               object pgImpressaoDFe: TPageControl
                 Left = 0
                 Height = 297
                 Top = 0
-                Width = 839
+                Width = 834
                 ActivePage = tsImpGeralDFe
                 Align = alClient
                 TabIndex = 0
@@ -7880,7 +7880,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
                   ClientHeight = 267
-                  ClientWidth = 831
+                  ClientWidth = 826
                   object Label139: TLabel
                     Left = 2
                     Height = 17
@@ -8138,7 +8138,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object tsDadosEmpresa: TTabSheet
                   Caption = 'Dados Empresa'
                   ClientHeight = 267
-                  ClientWidth = 831
+                  ClientWidth = 826
                   ImageIndex = 1
                   object Label150: TLabel
                     Left = 6
@@ -8263,7 +8263,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object TabSheet1: TTabSheet
                   Caption = 'NFe'
                   ClientHeight = 267
-                  ClientWidth = 831
+                  ClientWidth = 826
                   object Label145: TLabel
                     AnchorSideLeft.Control = spedtDecimaisVUnit
                     AnchorSideRight.Control = spedtDecimaisVUnit
@@ -8607,7 +8607,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object tsImpNFCe: TTabSheet
                   Caption = 'NFC-e'
                   ClientHeight = 267
-                  ClientWidth = 831
+                  ClientWidth = 826
                   ImageIndex = 2
                   object rgModeloDANFeNFCE: TRadioGroup
                     Left = 6
@@ -8832,7 +8832,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object tsImpCTe: TTabSheet
                   Caption = 'CT-e'
                   ClientHeight = 267
-                  ClientWidth = 831
+                  ClientWidth = 826
                   object rgTamanhoPapelDacte: TRadioGroup
                     Left = 6
                     Height = 44
@@ -8866,7 +8866,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpKeyword = 'ACBrMonitor/Diretorios.htm'
               Caption = 'Diretórios'
               ClientHeight = 297
-              ClientWidth = 839
+              ClientWidth = 834
               ImageIndex = 6
               object sbPathNFe: TSpeedButton
                 Left = 258
@@ -9202,7 +9202,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpKeyword = 'ACBrMonitor/Teste.htm'
               Caption = 'Teste'
               ClientHeight = 297
-              ClientWidth = 839
+              ClientWidth = 834
               ImageIndex = 5
               object Panel1: TPanel
                 Left = 0
@@ -9450,16 +9450,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 177
                 Height = 297
                 Top = 0
-                Width = 662
+                Width = 657
                 Align = alClient
                 ClientHeight = 297
-                ClientWidth = 662
+                ClientWidth = 657
                 TabOrder = 1
                 object Panel3: TPanel
                   Left = 1
                   Height = 17
                   Top = 17
-                  Width = 660
+                  Width = 655
                   Align = alBottom
                   Alignment = taLeftJustify
                   Caption = 'Resposta WebService'
@@ -9475,7 +9475,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 1
                   Height = 262
                   Top = 34
-                  Width = 660
+                  Width = 655
                   Align = alBottom
                   Font.Height = -13
                   Font.Name = 'Courier New'
@@ -14994,6 +14994,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.Arquivos.SalvarTXT = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'

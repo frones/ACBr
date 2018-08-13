@@ -1583,7 +1583,7 @@ begin
       raise Exception.Create('Forma de Emissão Inválida: ' + TpEmisToStr(FormaEmissao));
 
     with MonitorConfig.DFE.WebService do
-      FormaEmissaoNFe := StrToInt(TpEmisToStr(FormaEmissao));
+      FormaEmissaoNFe := StrToInt(TpEmisToStr(FormaEmissao))-1;
 
     MonitorConfig.SalvarArquivo;
   end;

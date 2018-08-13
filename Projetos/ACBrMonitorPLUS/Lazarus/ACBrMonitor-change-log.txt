@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2018
+[-] DoACBrNFeUnit / DoACBrCTeUnit / DoACBrMDFeUnit
+Correção na mensagem para envio de e-mail
+
+10/08/2018
+[*] ACBrMonitor1
+Ajusta na leitura do .TXT ordenando a leitura pela data de geração do arquivo
+
 07/08/2018
 [*] DoACBrNFe
 Realizado Ajustes ref Refactory no retorno do Integrador Fiscal

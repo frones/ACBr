@@ -231,6 +231,7 @@ var
   STipoJuros, sTipoDesconto, sDiasProtesto, sDiasBaixaDevol: String;
   sTipoInscricao, sEndereco : String;
   aTipoInscricao: Char;
+  ACodProtesto: Char;
   function MontarInstrucoes1: string;
   begin
     with ACBrTitulo do
@@ -312,7 +313,7 @@ var
 
 begin
  aTipoInscricao := ' ';
-// by Jéter Rabelo Ferreira - 06/2014
+
   with ACBrTitulo do
   begin
     case OcorrenciaOriginal.Tipo of
@@ -430,23 +431,25 @@ begin
     else
        sDataDesconto := PadLeft('', 8, '0');
 
+    {Código para Protesto}
+    case TipoDiasProtesto of
+       diCorridos       : ACodProtesto := '1';
+       diUteis          : ACodProtesto := '2';
+    else
+       ACodProtesto := '0';
+    end;
+
     {Instruções}
 
     Instrucao1 := Trim(Instrucao1);
     Instrucao2 := Trim(Instrucao2);
 
-    if (DataProtesto <> 0) and
-       (DataProtesto > Vencimento) then
+    if ((DataProtesto <> 0) and (DiasDeProtesto > 0)) then
     begin
-      if (Instrucao1 = '') then
-        Instrucao1 := '1' // Protestar Dias Corridos
-      else
-      begin
-        if not MatchText(Instrucao1, ['0', '1', '2', '3', '9']) then
-          raise Exception.Create('Código de protesto informado incorretamente!');
-      end;
-      // Calcular os dias para protesto
-      sDiasProtesto := PadLeft(IntToStr(Trunc(DataProtesto) - Trunc(Vencimento)), 2, '0');
+      if not MatchText(Instrucao1, ['0', '1', '2', '3', '9']) then
+        Instrucao1 := ACodProtesto;
+      // Dias para protesto
+      sDiasProtesto := PadLeft(IntToStr(DiasDeProtesto), 2, '0');
     end
     else
     begin

@@ -1744,7 +1744,7 @@ begin
                TipoDescontoToString(ACBrTitulo.TipoDesconto2)              + // 18  tipo de desconto 2
                IfThen(ValorDesconto2 = 0, '00000000', FormatDateTime('ddmmyyyy', Vencimento)) + // 19 - 26 Data do Desconto 2
                IntToStrZero(Round(ValorDesconto2 * 100), 15)               + // 27 - 41 Valor/Percentual
-               '0'                                                         + // 42
+               TipoDescontoToString(ACBrTitulo.TipoDesconto2)              + // 42 tipo de desconto 3
                PadLeft('0', 8, '0')                                        + // 43-50 data do desconto 3
                PadLeft('0', 15, '0')                                       + // 51-65 Valor ou percentual a ser concedido
                IfThen((PercentualMulta > 0),

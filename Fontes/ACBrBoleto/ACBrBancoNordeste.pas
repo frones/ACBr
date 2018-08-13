@@ -90,7 +90,7 @@ begin
    fpTamanhoMaximoNossoNum := 7;
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 7;
-   fpTamanhoCarteira       := 1;
+   fpTamanhoCarteira       := 2; 
    fSequencia              := 1;
 end;
 

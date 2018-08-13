@@ -47,7 +47,43 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 31/07/2018 ver: 0.0.245
+Data 13/08/2018 ver: 0.0.246
+
+13-08-2018 -- ACBrBoleto
+[-] Correção na mensagem de Juros no boleto para cobrança com percentual mensal
+https://www.projetoacbr.com.br/forum/topic/44908-ajuste-descri%C3%A7%C3%A3o-boleto/
+
+13-08-2018 -- ACBrBoleto / ACBrBancoBrasil / ACBrSantander / ACBrBradesco
+[-] Correção na mensagem de Juros no boleto para cobrança com percentual mensal
+    Ajustes Bradesco arquivo Remessa CNAB400
+https://www.projetoacbr.com.br/forum/topic/44908-ajuste-descri%C3%A7%C3%A3o-boleto/
+https://www.projetoacbr.com.br/forum/topic/44974-problema-ao-gerar-o-c%C3%B3digo-do-protesto-na-remessa-quando-s%C3%A3o-dias-%C3%BAteis/
+https://www.projetoacbr.com.br/forum/topic/45117-remessa-bradesco-cnab400-registro-tipo-2-descontos/
+https://www.projetoacbr.com.br/forum/topic/45162-remessa-bradesco-cnab400-ajuste-instrucao2-baixa/
+
+13-08-2018 -- ACBrBancoSicred
+[*] Ajustes Arquivo Remessa (Segmento R)
+https://www.projetoacbr.com.br/forum/topic/44053-sicred-tipo-de-desconto-segmento-r/
+
+13-08-2018 -- ACBrBancoSafra
+[*] Ajustes Arquivo Remessa (CNAB400)
+https://www.projetoacbr.com.br/forum/topic/44802-altera%C3%A7%C3%A3o-remessa-banco-safra/
+https://www.projetoacbr.com.br/forum/topic/41965-corre%C3%A7%C3%A3o-e-homologa%C3%A7%C3%A3o-banco-safra-cnab-400/?page=2&tab=comments#comment-294519
+
+13-08-2018 -- ACBrBancoCaixa
+[*] Ajustes Arquivo Remessa (CNAB400)
+https://www.projetoacbr.com.br/forum/topic/45008-acbrbancocaixapas-altera%C3%A7%C3%A3o-na-gera%C3%A7%C3%A3o-da-remessa-cnab400-databaixa/
+
+13-08-2018 -- ACBrBancoBancoob
+[*] Ajustes Arquivo Retorno (CNAB240)
+https://www.projetoacbr.com.br/forum/topic/45102-problema-leitura-arquivo-retorno-cnab240-sicoob/?tab=comments#comment-297931
+
+13-08-2018 -- ACBrBancoNordeste
+[*] Ajustes Código da Carteira no Boleto
+https://www.projetoacbr.com.br/forum/topic/44677-homologa%C3%A7%C3%A3o-boletos-e-remessa-bnb-resolvido-altera%C3%A7%C3%A3o-na-unit-acbrbanconordestepas/
+
+06-08-2018 -- ACBrBoleto
+[*] Melhorias referente Refactory ACBrMonitor e ajuste na leitura do arquivo .INI
 
 06-08-2018 -- ACBrBoleto
 [*] Melhorias referente Refactory ACBrMonitor e ajuste na leitura do arquivo .INI

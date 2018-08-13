@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs, IniFiles,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.244';
+  CACBrBoleto_Versao = '0.0.246';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
   CCedente = 'CEDENTE';
@@ -1058,7 +1058,7 @@ type
     fOcorrenciaOriginal: TACBrOcorrencia;
     fTipoDesconto      : TACBrTipoDesconto;
     fTipoDesconto2     : TACBrTipoDesconto;
-    fParcela           : Integer;
+  fParcela           : Integer;
     fPercentualMulta   : Double;
     fMultaValorFixo    : Boolean;
     fSeuNumero         : String;
@@ -2046,16 +2046,16 @@ begin
       begin
          if DataMoraJuros <> 0 then
             AStringList.Add(ACBrStr('Cobrar juros de '                        +
-                            ifthen(((CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '%',
-                                   FormatCurr('R$ #,##0.00',ValorMoraJuros))         +
-                             ' por dia de atraso para pagamento a partir de ' +
+                            ifthen(((CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
+                                   FormatCurr('R$ #,##0.00 por dia',ValorMoraJuros))         +
+                             ' de atraso para pagamento a partir de ' +
                              FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
                                                                 IncDay(DataMoraJuros,1),DataMoraJuros))))
          else
             AStringList.Add(ACBrStr('Cobrar juros de '                +
-                                    ifthen(((CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '%',
-                                           FormatCurr('R$ #,##0.00',ValorMoraJuros))         +
-                             ' por dia de atraso'));
+                                    ifthen(((CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
+                                           FormatCurr('R$ #,##0.00 por dia',ValorMoraJuros))         +
+                             ' de atraso'));
       end;
 
       if PercentualMulta <> 0 then   

@@ -412,7 +412,9 @@ begin
               aAgencia + aConta                                                              + // Identificação da Empresa no Banco
               Space(6)                                                                       + // "Brancos"
               Space(25)                                                                      + // Uso exclusivo da Empresa
-              PadLeft(RightStr(NossoNumero,8),8,'0') + CalcularDigitoVerificador(ACBrTitulo) + // Número do título no banco
+              IfThen(NossoNumero = '000000000', '000000000',
+                                 PadLeft(RightStr(NossoNumero,8),8,'0') +
+                                 CalcularDigitoVerificador(ACBrTitulo)) +                      // Número do título no banco
               Space(30)                                                                      + // "Brancos"
               '0'                                                                            + // Código de IOF sobre Operações de Seguro
               '00'                                                                           + // Identificação do Tipo de Moeda, 00=Real
@@ -434,7 +436,13 @@ begin
               sDataDesconto                                                                  + // Data Limite para Desconto
               IntToStrZero(round(ValorDesconto * 100), 13)                                   + // Valor Do Desconto Concedido
               IntToStrZero(round(ValorIOF * 100), 13)                                        + // Valor De Iof Operações Deseguro
-              IntToStrZero(round(ValorAbatimento * 100), 13)                                 + // Valor Do Abatimento Concedido Ou Cancelado / Multa
+
+              IfThen( ((Ocorrencia = '01') and ( Copy(Instrucao1, 1, 2) = '16')),
+                (FormatDateTime('ddmmyy', DataMulta) +                                         // - Posição 206 a 211 a data a partir da qual a multa deve ser cobrada
+                IntToStrZero(round(PercentualMulta * 100), 4) +                                // - Posição 212 a 215 o percentual referente à multa no formato 99v99
+                '000'),                                                                        // - Posição 216 a 218 zeros
+                IntToStrZero(round(ValorAbatimento * 100), 13)  )                            + // Valor Do Abatimento Concedido Ou Cancelado / Multa
+
               aTipoSacado                                                                    + // Código De Inscrição Do Sacado
               PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                                   + // Número de Inscrição do Sacado
               PadRight(Sacado.NomeSacado, 40, ' ')                                           + // Nome Do Sacado

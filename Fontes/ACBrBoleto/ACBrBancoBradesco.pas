@@ -254,6 +254,7 @@ var
   Fsequencia:Integer;
   FdigitoNossoNumero:String;
   FcodCarteira:string;
+  ACodProtesto:Char;
 
 begin
   Fsequencia     :=3 * ACBrTitulo.ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo);
@@ -272,6 +273,15 @@ begin
   begin
 
     ANossoNumero := MontarCampoNossoNumero (ACBrTitulo);
+
+    {Código para Protesto}
+    case TipoDiasProtesto of
+       diCorridos       : ACodProtesto := '1';
+       diUteis          : ACodProtesto := '2';
+    else
+       ACodProtesto := '3';
+    end;
+
     {Pegando o Tipo de Ocorrencia}
     case OcorrenciaOriginal.Tipo of
       toRemessaBaixar                        : ATipoOcorrencia := '02';
@@ -447,7 +457,7 @@ begin
     IfThen(ValorMoraJuros > 0, '1', '3')                 + //Código do Juros de Mora 118 118 1 - Num *C018  '1' = Valor por Dia'2' = Taxa Mensal '3' = Isento
     ADataMoraJuros                                       + //Data do Juros de Mora 119 126 8 - Num *C019
 
-    IfThen(ValorMoraJuros > 0, IntToStrZero(round(ValorMoraJuros * 100), 15),PadRight('', 15, '0'))                          + //juros de Mora por Dia/Taxa 127 141 13 2 Num C020
+    IfThen(ValorMoraJuros > 0, IntToStrZero(round(ValorMoraJuros * 100), 15),PadRight('', 15, '0')) + //juros de Mora por Dia/Taxa 127 141 13 2 Num C020
 
     IfThen(ValorDesconto > 0, '1', '0')                  + //Código do Desconto 1 142 142 1 - Num *C021
     ADataDesconto                                        + //Data do Desconto 1 143 150 8 - Num C022
@@ -460,11 +470,12 @@ begin
 
     PadRight(IfThen(SeuNumero<> '',SeuNumero,NumeroDocumento), 25, ' ')                + //Identificação do Título na Empresa 196 220 25 - Alfa G072
 
-    IfThen((DataProtesto <> 0) and (DataProtesto > Vencimento), '1', '3')            + //Código para Protesto 221 221 1 - Num C026
+    IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0), ACodProtesto, '3')            + //Código para Protesto 221 221 1 - Num C026
 
-    IfThen((DataProtesto <> 0) and (DataProtesto > Vencimento),PadLeft(IntToStr(DaysBetween(DataProtesto,Vencimento)), 2, '0'), '00') + //Número de Dias para Protesto 222 223 2 - Num C027
+    IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0),
+                    PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00')                   + //Número de Dias para Protesto 222 223 2 - Num C027
 
-    IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento), '1', '2') + //Código para Baixa/Devolução 224 224 1 - Num C028
+    IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento), '1', '2')                    + //Código para Baixa/Devolução 224 224 1 - Num C028
 
     IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento),PadLeft(IntToStr(DaysBetween(DataBaixa, Vencimento)), 3, '0'), '000') + //Número de Dias para Baixa/Devolução 225 227 3 - Alfa C029
 
@@ -589,8 +600,12 @@ var
            Result := Result + PadRight('', 80, ' ');                          // CONTEÚDO DO RESTANTE DAS LINHAS
 
 
-        Result := Result                                              +
-                  space(45)                                           +  // COMPLEMENTO DO REGISTRO
+        Result := Result                                              +       // 001 a 321 - Mensagens
+                  PadLeft('', 6,  '0')                                +       // 322 a 327 - Data limite para concessão de Desconto 2
+                  PadLeft('', 13, '0')                                +       // 328 a 340 - Valor do Desconto 2
+                  PadLeft('', 6,  '0')                                +       // 341 a 346 - Data limite para concessão de Desconto 3
+                  PadLeft('', 13, '0')                                +       // 347 a 359 - Valor do Desconto 3
+                  space(7)                                            +       // 360 a 366 - Reserva
                   aCarteira                                           +
                   aAgencia                                            +
                   aConta                                              +
@@ -667,10 +682,13 @@ begin
          aEspecie := EspecieDoc;
 
       {Pegando campo Intruções}
-      if (DataProtesto > 0) and (DataProtesto > Vencimento) then
-         Protesto := '06' + IntToStrZero(DaysBetween(DataProtesto,Vencimento),2)
+      if ((DataProtesto > 0) and (DataProtesto > Vencimento)) then
+         Protesto := IfThen(PadLeft(trim(Instrucao1),2,'0') = '00','06',PadLeft(trim(Instrucao1),2,'0'))
+                   + IntToStrZero(DaysBetween(DataProtesto,Vencimento),2)
       else if Ocorrencia = '31' then
          Protesto := '9999'
+      else if ((DataBaixa > 0) and (DataBaixa > Vencimento)) then
+         Protesto := PadLeft(trim(Instrucao2),2,'0') + IntToStrZero(DaysBetween(DataBaixa,Vencimento),2)
       else
          Protesto := PadLeft(trim(Instrucao1),2,'0') + PadLeft(trim(Instrucao2),2,'0');
 

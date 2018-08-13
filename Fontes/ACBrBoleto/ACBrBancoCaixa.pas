@@ -935,7 +935,7 @@ begin
       if (DataProtesto > 0) and (DataProtesto > Vencimento) then
         Instrucao1:= '01'    // Protestar
       else
-        Instrucao1:='02'; //Não Protestar
+        Instrucao1:='02'; //Devolver (Não Protestar)
 
       Instrucao2  := '00';  //Registro Detalhe Tipo 1: Campo 25.1 - Posição 159 à 160 – Segunda Instrução de Cobrança: Inserir 00
 
@@ -1020,10 +1020,12 @@ begin
                   IntToStrZero(round((ValorDocumento* (PercentualMulta*100) )/100), 10)    + //358 até 367 - Valor nominal da multa
                   PadRight(Sacado.NomeSacado, 22)                                  + // 368 até 389 - Nome do Sacador Avalista
                   '00'                                                             + // 390  391 - Terceira instrução de Cobrança Default '00'
-                   IfThen((DataProtesto > 0) and
-                      (DataProtesto > Vencimento),
-                       PadLeft(IntToStr(DaysBetween(DataProtesto,
-                       Vencimento)), 2, '0'), '99')                                + //392 até 393 - Quantidade de dias para início da ação de protesto ou devolução do Título
+                   IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
+                             PadLeft(IntToStr(DaysBetween(DataProtesto,Vencimento)), 2, '0'),
+                          IfThen( (DataBaixa > 0) and (DataBaixa > Vencimento),
+                             PadLeft(IntToStr(DaysBetween(DataBaixa,Vencimento)), 2, '0'),
+                             '99')
+                          )                                                          + //392 até 393 - Quantidade de dias para início da ação de protesto ou devolução do Título
                    '1';                                                              // 394 até 394 - Código da moeda: Real
 
          wLinha := wLinha + IntToStrZero(aRemessa.Count + 1, 6 );                    // 395 até 400

@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/08/2018
+-- ACBrNFeNotasFiscais --
+[*] Acertos para validações de gtin da Nota Técnica 2017.001 - v 1.30
+    Outros acertos referentes a Nota Técnica 2016.002 - v 1.60
+por: Regys Silveira e André Ferreira de Moraes
+
+13/08/2018
 -- ACBrNFeWebServices --
 [*] Incluido a verificação se a UF é MT e caso afirmativo é feito os ajustes
     necessário para a correta montagem no XML soap da Consulta ao Cadastro a 

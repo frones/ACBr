@@ -99,6 +99,8 @@ function ValidarNumeros(const s: string): boolean;
 function ValidarUF(const UF: string): boolean;
 function ValidarIE(IE, UF: string): boolean;
 function ValidarISUF(const ISUF: string): boolean;
+function ValidarGTIN(const numero: string): boolean;
+function ValidarPrefixoGTIN(const numero: string): boolean;
 function SubStrEmSubStr(const SubStr1: string; SubStr2: string): boolean;
 function xml4line(texto: String): String;
 function RetornarPosEx(const SubStr, S: String; Offset: Cardinal = 1): Integer;
@@ -418,6 +420,16 @@ end;
 function ValidarCPF(const numero: string): boolean;
 begin
   result := (ACBrValidador.ValidarCPF(numero) = '');
+end;
+
+function ValidarGTIN(const numero: string): boolean;
+begin
+  result := (ACBrValidador.ValidarGTIN(numero) = '');
+end;
+
+function ValidarPrefixoGTIN(const numero: string): boolean;
+begin
+  result := (ACBrValidador.ValidarPrefixoGTIN(numero) = '');
 end;
 
 function ValidarMod(const modelo: integer; versao : Real): boolean;

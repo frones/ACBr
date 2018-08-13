@@ -399,12 +399,15 @@ begin
 end;
 
 function NotaFiscal.ValidarRegrasdeNegocios: Boolean;
+const
+  SEM_GTIN = 'SEM GTIN';
 var
   Erros: String;
-  I: Integer;
-  Inicio, Agora: TDateTime;
+  I, J: Integer;
+  Inicio, Agora, UltVencto: TDateTime;
   fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
   fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag : Currency;
+  fsvFCP, fsvFCPST, fsvFCPSTRet, fsvIPIDevol, fsvDup : Currency;
   FaturamentoDireto, NFImportacao : Boolean;
 
   procedure GravaLog(AString: String);
@@ -767,9 +770,8 @@ begin
          (NFe.cana.fordia.Count > 0) or (NFe.cana.deduc.Count > 0) then
         AdicionaErro('763-Rejeição: NFC-e com dados de aquisição de Cana');
 
-    end;
-
-    if (NFe.Ide.modelo = 55) then  //Regras válidas apenas para NF-e - 55
+    end
+    else if (NFe.Ide.modelo = 55) then  //Regras válidas apenas para NF-e - 55
     begin
       GravaLog('Validar: 504-Saida > 30');
       if ((NFe.Ide.dSaiEnt - Agora) > 30) then  //B10-20  - Facultativo
@@ -908,6 +910,64 @@ begin
         if (NFe.pag.Count <= 0) then
           AdicionaErro('769-Rejeição: NF-e deve possuir o grupo de Formas de Pagamento');
       end;
+
+      if NFe.infNFe.Versao >= 4 then
+      begin
+        GravaLog('Validar: 864-Operação presencial, fora do estabelecimento e não informada campos refNFe');
+        if (NFe.Ide.indPres = pcPresencialForaEstabelecimento) and
+           (NFe.Ide.NFref.Count <= 0) then
+          AdicionaErro('864-Rejeição: NF-e com indicativo de Operação presencial, fora do estabelecimento e não informada NF referenciada');
+
+        GravaLog('Validar: 868-Se operação interestadual(idDest=2), não informar os Grupos Veiculo Transporte (id:X18; veicTransp) e Grupo Reboque (id: X22)');
+        if (NFe.Ide.idDest = doInterestadual) and
+           (((trim(NFe.Transp.veicTransp.placa) <> '') or
+            (trim(NFe.Transp.veicTransp.UF) <> '') or
+            (trim(NFe.Transp.veicTransp.RNTC) <> '')) or
+            (nfe.Transp.Reboque.Count > 0)) then
+          AdicionaErro('868-Rejeição: Grupos Veiculo Transporte e Reboque não devem ser informados');
+
+        GravaLog('Validar: 895-Valor do Desconto (vDesc, id:Y05) maior que o Valor Original da Fatura (vOrig, id:Y04)');
+        if (nfe.Cobr.Fat.vDesc > nfe.Cobr.Fat.vOrig) then
+          AdicionaErro('895-Rejeição: Valor do Desconto da Fatura maior que Valor Original da Fatura');
+
+        GravaLog('Validar: 896-Valor Líquido da Fatura (vLiq, id:Y06) difere do Valor Original da Fatura (vOrig; id:Y04) – Valor do Desconto (vDesc, id:Y05)');
+        if (nfe.Cobr.Fat.vLiq <> (nfe.Cobr.Fat.vOrig - nfe.Cobr.Fat.vDesc)) then
+          AdicionaErro('896-Rejeição: Valor Liquido da Fatura difere do Valor Original menos o Valor do Desconto');
+
+        GravaLog('Validar: 897-Valor Líquido da Fatura/Valor Original da Fatura maior que o Valor Total da Nota Fiscal');
+        if (((nfe.Cobr.Fat.vLiq > 0) and (nfe.Cobr.Fat.vLiq > nfe.Total.ICMSTot.vNF)) or
+            ((nfe.Cobr.Fat.vOrig > nfe.Total.ICMSTot.vNF)))then
+          AdicionaErro('897-Rejeição: Valor da Fatura maior que Valor Total da NF-e');
+
+         fsvDup := 0;
+         UltVencto := NFe.Ide.dEmi;
+         for I:=0 to nfe.Cobr.Dup.Count-1 do
+         begin
+           fsvDup := fsvDup + nfe.Cobr.Dup.Items[I].vDup;
+
+           GravaLog('Validar: 857-Se informado o Grupo Parcelas de cobrança (tag:dup, Id:Y07), Número da parcela (nDup, id:Y08) não informado ou inválido.');
+           if EstaVazio(nfe.Cobr.Dup.Items[I].nDup) then
+             AdicionaErro('857-Rejeição: Número da parcela inválido ou não informado');
+
+           //898 - Verificar DATA de autorização
+
+           GravaLog('Validar: 894-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de Emissão (id:B09)');
+           if (nfe.Cobr.Dup.Items[I].dVenc < NFe.Ide.dEmi) then
+             AdicionaErro('894-Rejeição: Data de vencimento da parcela não informada ou menor que Data de Emissão');
+
+           GravaLog('Validar: 867-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de vencimento da parcela anterior (dVenc, id:Y09)');
+           if (nfe.Cobr.Dup.Items[I].dVenc < UltVencto) then
+             AdicionaErro('867-Rejeição: Data de vencimento da parcela não informada ou menor que a Data de vencimento da parcela anterior');
+
+           UltVencto := nfe.Cobr.Dup.Items[I].dVenc;
+         end;
+
+         GravaLog('Validar: 872-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e a soma do valor das parcelas (vDup, id: Y10) difere do Valor Líquido da Fatura (vLiq, id:Y06).');
+         if (((nfe.Cobr.Fat.vLiq > 0) and (fsvDup < nfe.Cobr.Fat.vLiq)) or
+           (fsvDup < (nfe.Cobr.Fat.vOrig-nfe.Cobr.Fat.vDesc)))then
+           AdicionaErro('872-Rejeição: Soma do valor das parcelas difere do Valor Líquido da Fatura');
+
+      end;
     end;
 
     for I:=0 to NFe.autXML.Count-1 do
@@ -939,6 +999,10 @@ begin
     fsvCOFINS  := 0;
     fsvOutro   := 0;
     fsvServ    := 0;
+    fsvFCP     := 0;
+    fsvFCPST   := 0;
+    fsvFCPSTRet:= 0;
+    fsvIPIDevol:= 0;
     FaturamentoDireto := False;
     NFImportacao := False;
 
@@ -1024,12 +1088,27 @@ begin
              (Imposto.COFINSST.vAliqProd > 0) or
              (Imposto.COFINSST.vCOFINS > 0) then
             AdicionaErro('749-Rejeição: NFC-e com grupo da COFINS-ST');
+        end
+        else if(NFe.Ide.modelo = 55) then
+        begin
+          if (NFe.infNFe.Versao >= 4) then
+          begin
+            GravaLog('Validar: 856-'+IntToStr(I)+'-Obrigatória a informação do campo vPart (id: LA03d) para produto "210203001 – GLP" (tag:cProdANP)');
+            if (Prod.comb.cProdANP = 210203001) and (Prod.comb.vPart <= 0) then
+              AdicionaErro('856-Rejeição: Campo valor de partida não preenchido para produto GLP [nItem:'+IntToStr(I)+']');
+
+{            GravaLog('Validar: 858-'+IntToStr(I)+'-Grupo ICMS60 (id:N08) informado indevidamente nas operações com os produtos combustíveis sujeitos a repasse interestadual');
+            if (Prod.comb.cProdANP = '210203001') and (Imposto.ICMS.CST = cst60 and Imposto.ICMS.vICMSSTDest <= 0) then
+              AdicionaErro('858-Rejeição: Grupo de Tributação informado indevidamente [nItem:'+IntToStr(I)+']');    }//VERIFICAR
+
+
+          end;
         end;
 
         GravaLog('Validar: 528-'+IntToStr(I)+'-ICMS BC e Aliq');
         if (Imposto.ICMS.CST in [cst00,cst10,cst20,cst70]) and
            (NFe.Ide.finNFe = fnNormal) and
-	   (ComparaValor(Imposto.ICMS.vICMS, Imposto.ICMS.vBC * (Imposto.ICMS.pICMS/100), 0.01) <> 0) then
+	         (ComparaValor(Imposto.ICMS.vICMS, Imposto.ICMS.vBC * (Imposto.ICMS.pICMS/100), 0.01) <> 0) then
           AdicionaErro('528-Rejeição: Valor do ICMS difere do produto BC e Alíquota');
 
         GravaLog('Validar: 625-'+IntToStr(I)+'-Insc.SUFRAMA');
@@ -1051,6 +1130,100 @@ begin
            not ValidarMunicipio(Imposto.ISSQN.cMunFG) then
           AdicionaErro('287-Rejeição: Código Município do FG - ISSQN: dígito inválido');
 
+        if (NFe.infNFe.Versao >= 4) then
+        begin
+          if (Trim(Prod.cEAN) = '') then
+          begin
+            //somente aplicavel em produção a partir de 01/12/2018
+            //GravaLog('Validar: 883-GTIN (cEAN) sem informação [nItem:' + IntToStr(I) + ']');
+            //AdicionaErro('883-Rejeição: GTIN (cEAN) sem informação [nItem:' + IntToStr(I) + ']');
+          end
+          else
+          begin
+            if (Prod.cEAN <> SEM_GTIN) then
+            begin
+              GravaLog('Validar: 611-GTIN (cEAN) inválido [nItem:' + IntToStr(I) + ']');
+              if not ValidarGTIN(Prod.cEAN) then
+                AdicionaErro('611-Rejeição: GTIN (cEAN) inválido [nItem:' + IntToStr(I) + ']');
+
+              GravaLog('Validar: 882-GTIN (cEAN) com prefixo inválido [nItem:' + IntToStr(I) + ']');
+              if not ValidarPrefixoGTIN(Prod.cEAN) then
+                AdicionaErro('882-Rejeição: GTIN (cEAN) com prefixo inválido [nItem:' + IntToStr(I) + ']');
+
+              GravaLog('Validar: 885-GTIN informado, mas não informado o GTIN da unidade tributável [nItem:' + IntToStr(I) + ']');
+              if (Trim(Prod.cEANTrib) = '') or ((Trim(Prod.cEANTrib) = SEM_GTIN)) then
+                AdicionaErro('885-Rejeição: GTIN informado, mas não informado o GTIN da unidade tributável [nItem:' + IntToStr(I) + ']');
+            end;
+          end;
+
+          if (Trim(Prod.cEANTrib) = '') then
+          begin
+            //somente aplicavel em produção a partir de 01/12/2018
+            //GravaLog('Validar: 888-GTIN da unidade tributável (cEANTrib) sem informação [nItem:' + IntToStr(I) + ']');
+            //AdicionaErro('888-Rejeição: GTIN da unidade tributável (cEANTrib) sem informação [nItem:' + IntToStr(I) + ']');
+          end
+          else
+          begin
+            if (Prod.cEANTrib <> SEM_GTIN) then
+            begin
+              GravaLog('Validar: 612-GTIN da unidade tributável (cEANTrib) inválido [nItem:' + IntToStr(I) + ']');
+              if not ValidarGTIN(Prod.cEANTrib) then
+                AdicionaErro('612-Rejeição: GTIN da unidade tributável (cEANTrib) inválido [nItem:' + IntToStr(I) + ']');
+
+              GravaLog('Validar: 884-GTIN da unidade tributável (cEANTrib) com prefixo inválido [nItem:' + IntToStr(I) + ']');
+              if not ValidarPrefixoGTIN(Prod.cEANTrib) then
+                AdicionaErro('884-Rejeição: GTIN da unidade tributável (cEANTrib) com prefixo inválido [nItem:' + IntToStr(I) + ']');
+
+              GravaLog('Validar: 886-GTIN da unidade tributável informado, mas não informado o GTIN [nItem:' + IntToStr(I) + ']');
+              if (Trim(Prod.cEAN) = '') or ((Trim(Prod.cEAN) = SEM_GTIN)) then
+                AdicionaErro('886-Rejeição: GTIN da unidade tributável informado, mas não informado o GTIN [nItem:' + IntToStr(I) + ']');
+            end;
+          end;
+
+          GravaLog('Validação: 889-Obrigatória a informação do GTIN para o produto [nItem:' + IntToStr(I) + ']');
+          if (Trim(Prod.cEAN) = '') then
+            AdicionaErro('889-Rejeição: Obrigatória a informação do GTIN para o produto [nItem:' + IntToStr(I) + ']');
+
+          GravaLog('Validar: 879-'+IntToStr(I)+'-Se informado indEscala=N- não relevante (id: I05d), deve ser informado CNPJ do Fabricante da Mercadoria (id: I05e)');
+          if (Prod.indEscala = ieNaoRelevante) and
+             EstaVazio(Prod.CNPJFab) then
+            AdicionaErro('879-Rejeição: Informado item Produzido em Escala NÃO Relevante e não informado CNPJ do Fabricante [nItem:'+IntToStr(I)+']');
+
+          GravaLog('Validar: 489-'+IntToStr(I)+'-Se informado CNPJFab (id: I05e) - CNPJ inválido (DV, zeros)');
+          if NaoEstaVazio(Prod.CNPJFab) and (not ValidarCNPJ(Prod.CNPJFab)) then
+            AdicionaErro('489-Rejeição: CNPJFab informado inválido (DV ou zeros)');
+
+          GravaLog('Validar: 854-'+IntToStr(I)+'-Informado campo cProdANP (id: LA02) = 210203001 (GLP) e campo uTrib (id: I13) <> “kg” (ignorar a diferenciação entre maiúsculas e minúsculas)');
+          if (Prod.comb.cProdANP = 210203001) and (UpperCase(Prod.uTrib) <> 'KG') then
+            AdicionaErro('854-Rejeição: Unidade Tributável (tag:uTrib) incompatível com produto informado [nItem:'+IntToStr(I)+']');
+
+          for J:=0 to Prod.rastro.Count-1 do
+          begin
+            GravaLog('Validar: 877-'+IntToStr(I)+'-Data de Fabricação dFab (id:I83) maior que a data de processamento');
+            if (Prod.rastro.Items[J].dFab > NFe.Ide.dEmi) then
+              AdicionaErro('877-Rejeição: Data de fabricação maior que a data de processamento [nItem:'+IntToStr(I)+']');
+
+            GravaLog('Validar: 870-'+IntToStr(I)+'-Informada data de validade dVal(id: I84) menor que Data de Fabricação dFab (id: I83)');
+            if (Prod.rastro.Items[J].dVal < Prod.rastro.Items[J].dFab) then
+              AdicionaErro('870-Rejeição: Data de validade incompatível com data de fabricação [nItem:'+IntToStr(I)+']');
+          end;
+
+          for J:=0 to Prod.med.Count-1 do
+          begin
+            GravaLog('Validar: 873-'+IntToStr(I)+'-Se informado Grupo de Medicamentos (tag:med) obrigatório preenchimento do grupo rastro (id: I80)');
+            if NaoEstaVazio(Prod.med[J].cProdANVISA) and (Prod.rastro.Count<=0) then
+              AdicionaErro('873-Rejeição: Operação com medicamentos e não informado os campos de rastreabilidade [nItem:'+IntToStr(I)+']');
+          end;
+
+          GravaLog('Validar: 461-'+IntToStr(I)+'-Informado percentual do GLP (id: LA03a) ou percentual de Gás Natural Nacional (id: LA03b) ou percentual de Gás Natural Importado (id: LA03c) para produto diferente de "210203001 – GLP" (tag:cProdANP)');
+          if (Prod.comb.cProdANP <> 210203001) and ((Prod.comb.pGLP > 0) or (Prod.comb.pGNn > 0) or (Prod.comb.pGNi > 0)) then
+            AdicionaErro('461-Rejeição: Informado campos de percentual de GLP e/ou GLGNn e/ou GLGNi para produto diferente de GLP [nItem:'+IntToStr(I)+']');
+
+          GravaLog('Validar: 855-'+IntToStr(I)+'-Informado percentual do GLP (id: LA03a) ou percentual de Gás Natural Nacional (id: LA03b) ou percentual de Gás Natural Importado (id: LA03c) para produto diferente de "210203001 – GLP" (tag:cProdANP)');
+          if (Prod.comb.cProdANP = 210203001) and ((Prod.comb.pGLP + Prod.comb.pGNn + Prod.comb.pGNi) <> 100) then
+            AdicionaErro('855-Rejeição: Somatório percentuais de GLP derivado do petróleo, GLGNn e GLGNi diferente de 100 [nItem:'+IntToStr(I)+']');
+        end;
+
         if Prod.IndTot = itSomaTotalNFe then
         begin
           fsvTotTrib := fsvTotTrib + Imposto.vTotTrib;
@@ -1067,7 +1240,11 @@ begin
           fsvPIS     := fsvPIS + Imposto.PIS.vPIS;
           fsvCOFINS  := fsvCOFINS + Imposto.COFINS.vCOFINS;
           fsvOutro   := fsvOutro + Prod.vOutro;
-          fsvServ   := fsvServ + Imposto.ISSQN.vBC; //VERIFICAR
+          fsvServ    := fsvServ + Imposto.ISSQN.vBC; //VERIFICAR
+          fsvFCP     := fsvFCP + Imposto.ICMS.vFCP;;
+          fsvFCPST   := fsvFCPST + Imposto.ICMS.vFCPST;;
+          fsvFCPSTRet:= fsvFCPSTRet + Imposto.ICMS.vFCPSTRet;;
+          fsvIPIDevol:= fsvIPIDevol + vIPIDevol;
 
           // quando for serviço o produto não soma do total de produtos, quando for nota de ajuste também irá somar
           if (Prod.NCM <> '00') or ((Prod.NCM = '00') and (NFe.Ide.finNFe = fnAjuste)) then
@@ -1085,7 +1262,7 @@ begin
     if FaturamentoDireto then
       fsvNF := (fsvProd+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ)-(fsvDesc+fsvICMSDeson)
     else
-      fsvNF := (fsvProd+fsvST+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ)-(fsvDesc+fsvICMSDeson);
+      fsvNF := (fsvProd+fsvST+fsvFrete+fsvSeg+fsvOutro+fsvII+fsvIPI+fsvServ+fsvFCPST+fsvIPIDevol)-(fsvDesc+fsvICMSDeson);
 
     GravaLog('Validar: 531-Total BC ICMS');
     if (NFe.Total.ICMSTot.vBC <> fsvBC) then
@@ -1143,6 +1320,25 @@ begin
     if (NFe.Total.ICMSTot.vOutro <> fsvOutro) then
       AdicionaErro('604-Rejeição: Total do vOutro difere do somatório dos itens');
 
+    GravaLog('Validar: 861-Total do FCP');
+    if (NFe.Total.ICMSTot.vFCP <> fsvFCP) then
+      AdicionaErro('861-Rejeição: Total do FCP difere do somatório dos itens');
+
+    if (NFe.Ide.modelo = 55) then  //Regras válidas apenas para NF-e - 55
+    begin
+      GravaLog('Validar: 862-Total do FCP ST');
+      if (NFe.Total.ICMSTot.vFCPST <> fsvFCPST) then
+        AdicionaErro('862-Rejeição: Total do FCP ST difere do somatório dos itens');
+
+      GravaLog('Validar: 859-Total do FCP ST retido anteriormente');
+      if (NFe.Total.ICMSTot.vFCPSTRet <> fsvFCPSTRet) then
+        AdicionaErro('859-Rejeição: Total do FCP retido anteriormente por Substituição Tributária difere do somatório dos itens');
+
+      GravaLog('Validar: 863-Total do IPI devolvido');
+      if (NFe.Total.ICMSTot.vIPIDevol <> fsvIPIDevol) then
+        AdicionaErro('863-Rejeição: Total do IPI devolvido difere do somatório dos itens');
+    end;
+
     GravaLog('Validar: 610-Total NF');
     if not NFImportacao and
        (NFe.Total.ICMSTot.vNF <> fsvNF) then
@@ -1166,7 +1362,25 @@ begin
 
       if (NFe.Total.ICMSTot.vNF <> fsvTotPag) then
         AdicionaErro('767-Rejeição: NFC-e com somatório dos pagamentos diferente do total da Nota Fiscal');
+    end
+    else if (NFe.infNFe.Versao >= 4) then
+    begin
+      fsvTotPag := 0;
+      for I := 0 to NFe.pag.Count-1 do
+      begin
+        fsvTotPag :=  fsvTotPag + NFe.pag[I].vPag;
+      end;
+
+      GravaLog('Validar: 767-Soma dos pagamentos');
+      if (fsvTotPag < NFe.Total.ICMSTot.vNF) then
+        AdicionaErro('767-Rejeição: Somatório dos pagamentos diferente do total da Nota Fiscal');
+
+      GravaLog('Validar: 869-Valor do troco');
+      if (NFe.Total.ICMSTot.vNF <> (fsvTotPag - NFe.pag.vTroco)) then
+        AdicionaErro('869-Rejeição: Valor do troco incorreto');
+
     end;
+
     //TODO: Regrar W01. Total da NF-e / ISSQN
 
   end;

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/08/2018
+--- ACBrLibMail ---
+[+] Adcionado o metodo MAIL_AddBody e MAIL_AddAltBody, para poder adicionar o corpo do email.
+    Por: Rafael Dias
+
 09/08/2018
 --- ACBrLibMail ---
 [-] Correção nos nomes das Unit do DataModule para seguir o padrão.

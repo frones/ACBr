@@ -66,6 +66,8 @@ exports
   MAIL_AddBCC,
   MAIL_ClearAttachment,
   MAIL_AddAttachment,
+  MAIL_AddBody,
+  MAIL_AddAltBody,
   MAIL_SaveToFile,
 
   // Envio

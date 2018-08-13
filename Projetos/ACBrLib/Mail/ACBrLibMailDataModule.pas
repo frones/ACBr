@@ -59,6 +59,9 @@ type
     procedure Destravar;
   end;
 
+//var
+//  TLibMailDM: TTLibMailDM;
+
 implementation
 
 uses

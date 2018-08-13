@@ -99,6 +99,10 @@ function MAIL_ClearAttachment: longint;
 function MAIL_AddAttachment(const eFileName, eDescription: PChar;
             const aDisposition: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddBody(const eBody: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_AddAltBody(const eAltBody: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_SaveToFile(const eFileName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
@@ -343,6 +347,82 @@ begin
 
     on E: Exception do
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function MAIL_AddBody(const eBody: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Body: TStringList;
+begin
+  try
+    try
+      VerificarLibInicializada;
+      Body := TStringList.Create;
+      Body.Text := String(eBody);
+
+      if pLib.Config.Log.Nivel > logNormal then
+        pLib.GravarLog('MAIL_AddBody( ' + Body.Text + ' )', logCompleto, True)
+      else
+        pLib.GravarLog('MAIL_AddBody', logNormal);
+
+      with TACBrLibMail(pLib) do
+      begin
+        MailDM.Travar;
+        try
+          MailDM.ACBrMail1.Body.Assign(Body);
+          Result := SetRetorno(ErrOK);
+        finally
+          MailDM.Destravar;
+        end;
+      end;
+    except
+      on E: EACBrLibException do
+        Result := SetRetorno(E.Erro, E.Message);
+
+      on E: Exception do
+        Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+    end;
+  finally
+    Body.Free;
+  end;
+end;
+
+function MAIL_AddAltBody(const eAltBody: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  AltBody: TStringList;
+begin
+  try
+    try
+      VerificarLibInicializada;
+      AltBody := TStringList.Create;
+      AltBody.Text := String(eAltBody);
+
+      if pLib.Config.Log.Nivel > logNormal then
+        pLib.GravarLog('MAIL_AddAltBody( ' + AltBody.Text + ' )', logCompleto, True)
+      else
+        pLib.GravarLog('MAIL_AddAltBody', logNormal);
+
+      with TACBrLibMail(pLib) do
+      begin
+        MailDM.Travar;
+        try
+          MailDM.ACBrMail1.AltBody.Assign(AltBody);
+          Result := SetRetorno(ErrOK);
+        finally
+          MailDM.Destravar;
+        end;
+      end;
+    except
+      on E: EACBrLibException do
+        Result := SetRetorno(E.Erro, E.Message);
+
+      on E: Exception do
+        Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+    end;
+  finally
+    AltBody.Free;
   end;
 end;
 

@@ -3,26 +3,23 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="10"/>
-    <BuildModes Active="x64 - CDECL"/>
+    <BuildModes Active="x86 - CDECL"/>
     <Units Count="10">
       <Unit0>
         <Filename Value="ACBrLibMail.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="46"/>
+        <TopLine Value="62"/>
         <CursorPos X="22" Y="68"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
         <Filename Value="ACBrLibMailConfig.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="149"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="25"/>
         <CursorPos Y="149"/>
         <UsageCount Value="27"/>
-        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
@@ -58,158 +55,69 @@
         <ComponentName Value="LibMailDM"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="67"/>
-        <CursorPos X="52" Y="100"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="53"/>
+        <CursorPos Y="62"/>
         <UsageCount Value="25"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
         <Filename Value="ACBrLibMailClass.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="200"/>
+        <TopLine Value="90"/>
         <CursorPos X="59" Y="471"/>
         <FoldState Value=" T3lg0W3 pj8k50O[942ja0RJ"/>
         <UsageCount Value="25"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit6>
       <Unit7>
         <Filename Value="ACBrLibMailConsts.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
         <CursorPos Y="9"/>
         <UsageCount Value="25"/>
-        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit7>
       <Unit8>
         <Filename Value="ACBrLibMailStaticImport.pas"/>
         <EditorIndex Value="-1"/>
-        <CursorPos Y="100"/>
+        <TopLine Value="51"/>
+        <CursorPos Y="86"/>
         <UsageCount Value="24"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="616"/>
         <CursorPos X="34" Y="612"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
       </Unit9>
     </Units>
-    <JumpHistory Count="27" HistoryIndex="26">
+    <JumpHistory Count="5" HistoryIndex="4">
       <Position1>
         <Filename Value="ACBrLibMail.lpr"/>
         <Caret Line="25" Column="14" TopLine="18"/>
       </Position1>
       <Position2>
-        <Filename Value="acbrlibmaildatamodule.pas"/>
-        <Caret Line="9" TopLine="8"/>
-      </Position2>
-      <Position3>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="41" Column="40" TopLine="33"/>
-      </Position3>
-      <Position4>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="122" Column="26" TopLine="113"/>
-      </Position4>
-      <Position5>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="41" Column="50" TopLine="28"/>
-      </Position5>
-      <Position6>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="185" Column="69" TopLine="169"/>
-      </Position6>
-      <Position7>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="237" Column="29" TopLine="227"/>
-      </Position7>
-      <Position8>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="80" Column="53" TopLine="78"/>
-      </Position8>
-      <Position9>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="158" Column="59" TopLine="143"/>
-      </Position9>
-      <Position10>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="179" Column="49" TopLine="162"/>
-      </Position10>
-      <Position11>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="176" Column="79" TopLine="167"/>
-      </Position11>
-      <Position12>
-        <Filename Value="acbrlibmaildatamodule.pas"/>
-        <Caret Line="63" Column="59" TopLine="47"/>
-      </Position12>
-      <Position13>
-        <Filename Value="acbrlibmaildatamodule.pas"/>
-        <Caret Line="68" Column="51" TopLine="56"/>
-      </Position13>
-      <Position14>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="74" Column="3" TopLine="63"/>
-      </Position14>
-      <Position15>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="151" Column="3" TopLine="138"/>
-      </Position15>
-      <Position16>
-        <Filename Value="ACBrLibMailConsts.pas"/>
-        <Caret Line="54" Column="42" TopLine="46"/>
-      </Position16>
-      <Position17>
-        <Filename Value="ACBrLibMailConfig.pas"/>
-        <Caret Line="151" Column="3" TopLine="140"/>
-      </Position17>
-      <Position18>
         <Filename Value="ACBrLibMail.lpr"/>
         <Caret Line="31" Column="28"/>
-      </Position18>
-      <Position19>
+      </Position2>
+      <Position3>
         <Filename Value="ACBrLibMailClass.pas"/>
         <Caret Line="318" TopLine="284"/>
-      </Position19>
-      <Position20>
+      </Position3>
+      <Position4>
         <Filename Value="ACBrLibMailClass.pas"/>
         <Caret Line="385" Column="38" TopLine="380"/>
-      </Position20>
-      <Position21>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <Caret Line="210" Column="28" TopLine="191"/>
-      </Position21>
-      <Position22>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <Caret Line="212" Column="28" TopLine="191"/>
-      </Position22>
-      <Position23>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <Caret Line="213" Column="28" TopLine="191"/>
-      </Position23>
-      <Position24>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <Caret Line="215" Column="28" TopLine="191"/>
-      </Position24>
-      <Position25>
+      </Position4>
+      <Position5>
         <Filename Value="ACBrLibMailClass.pas"/>
         <Caret Line="444" TopLine="284"/>
-      </Position25>
-      <Position26>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <Caret Line="205" Column="28" TopLine="186"/>
-      </Position26>
-      <Position27>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMail.pas"/>
-        <Caret Line="475" Column="16" TopLine="446"/>
-      </Position27>
+      </Position5>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

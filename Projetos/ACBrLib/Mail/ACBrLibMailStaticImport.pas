@@ -63,35 +63,25 @@ function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%endregion}
 
 {%region Diversos}
-function MAIL_AddAddress(eEmail: PChar; eName: PChar = ''): longint;
+function MAIL_AddAddress(const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddReplyTo(eEmail: PChar; eName: PChar = ''): longint;
+function MAIL_AddReplyTo(const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddCC(eEmail: PChar; eName: PChar = ''): longint;
+function MAIL_AddCC(const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddBCC(eEmail: PChar): longint;
+function MAIL_AddBCC(const eEmail: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 function MAIL_ClearAttachment: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddAttachment(eFileName: PChar; eDescription: PChar = '';
+function MAIL_AddAttachment(const eFileName, eDescription: PChar;
             const aDisposition: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_AddAttachmentStream(aStream: TStream; eDescription: PChar = '';
-            const aDisposition: TMailAttachmentDisposition = adInline): longint;
- {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-
-function MAIL_MailProcess(const aStatus: TMailStatus): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 function MAIL_SaveToFile(const eFileName: PChar): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_SaveToStream(AStream: TStream): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 {%endregion}
 
 {%region Envio}
 function MAIL_Clear: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_BuildMimeMess: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 function MAIL_Send(UseThreadNow: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;

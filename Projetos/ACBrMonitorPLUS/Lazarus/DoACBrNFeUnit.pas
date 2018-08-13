@@ -1742,11 +1742,15 @@ begin
 
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := DoSubstituirVariaveis( MensagemNFe );
+          slMensagemEmail.Text := DoSubstituirVariaveis( StringToBinaryString(MensagemNFe) );
+
           sAssunto := AssuntoNFe;
         end;
 
+        slCC.DelimitedText := sLineBreak;
         slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+
+        slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
         try
@@ -2065,7 +2069,9 @@ begin
       end;
 
       if NaoEstaVazio(AProtocolo) then
-        ACBrNFe.DANFe.ProtocoloNFe := AProtocolo;
+        ACBrNFe.DANFe.ProtocoloNFe := AProtocolo
+      else
+        ACBrNFe.DANFe.ProtocoloNFe := '';
 
       ACBrNFe.DANFE.ViaConsumidor := Consumidor;
 
@@ -2489,7 +2495,9 @@ begin
         ACBrNFe.DANFe.NumCopias := ACopias;
 
       if NaoEstaVazio(AProtocolo) then
-        ACBrNFe.DANFe.ProtocoloNFe := AProtocolo;
+        ACBrNFe.DANFe.ProtocoloNFe := AProtocolo
+      else
+        ACBrNFe.DANFe.ProtocoloNFe := '';
 
       if (ACBrNFe.NotasFiscais.Items[0].NFe.Ide.modelo = 55) then
       begin
@@ -3126,11 +3134,14 @@ begin
 
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := DoSubstituirVariaveis( MensagemNFe );
+          slMensagemEmail.Text := DoSubstituirVariaveis( StringToBinaryString(MensagemNFe) );
           sAssunto := AssuntoNFe;
         end;
 
+        slCC.DelimitedText := sLineBreak;
         slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+
+        slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
@@ -3222,11 +3233,14 @@ begin
 
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := DoSubstituirVariaveis( MensagemNFe );
+          slMensagemEmail.Text := DoSubstituirVariaveis( StringToBinaryString(MensagemNFe) );
           sAssunto := AssuntoNFe;
         end;
 
+        slCC.DelimitedText := sLineBreak;
         slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+
+        slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar

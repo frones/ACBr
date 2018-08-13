@@ -1578,11 +1578,14 @@ begin
 
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := MensagemCTe;
+          slMensagemEmail.Text := StringToBinaryString(MensagemCTe);
           sAssunto := AssuntoCTe;
         end;
 
+        slCC.DelimitedText := sLineBreak;
         slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+
+        slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
         try
@@ -2760,11 +2763,14 @@ begin
 
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := MensagemCTe;
+          slMensagemEmail.Text := StringToBinaryString(MensagemCTe);
           sAssunto := AssuntoCTe;
         end;
 
+        slCC.DelimitedText := sLineBreak;
         slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+
+        slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
@@ -2852,11 +2858,14 @@ begin
 
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := MensagemCTe;
+          slMensagemEmail.Text := StringToBinaryString(MensagemCTe);
           sAssunto := AssuntoCTe;
         end;
 
+        slCC.DelimitedText := sLineBreak;
         slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+
+        slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
         // Se carregou Inutilizacao usando XML como parâmetro, salva XML para poder anexar

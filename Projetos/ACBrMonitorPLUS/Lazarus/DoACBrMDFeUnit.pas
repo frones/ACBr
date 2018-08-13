@@ -1322,11 +1322,14 @@ begin
       try
         with MonitorConfig.DFE.Email do
         begin
-          slMensagemEmail.Text := MensagemMDFe;
+          slMensagemEmail.Text := StringToBinaryString(MensagemMDFe);
           sAssunto := AssuntoMDFe;
         end;
 
+        slCC.DelimitedText := sLineBreak;
         slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+
+        slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
         try

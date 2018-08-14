@@ -243,10 +243,12 @@ type
                    );
   /// Indicador do tipo do frete
   TACBrIndFrt = (
-                 tfPorContaEmitente,     // 0 - Por conta de terceiros
-                 tfPorContaDestinatario, // 1 - Por conta do emitente
-                 tfPorContaTerceiros,    // 2 - Por conta do destinatário
-                 tfSemCobrancaFrete,     // 9 - Sem cobrança de frete
+                 tfPorContaEmitente,             // 0 - Por conta do emitente
+                 tfPorContaDestinatario,         // 1 - Por conta do destinatário 
+                 tfPorContaTerceiros,            // 2 - Por conta de terceiros
+                 tfProprioPorContaEmitente,      // 3 - Próprio Por conta do emitente
+                 tfProprioPorContaDestinatario,  // 4 - Próprio Por conta do destinatário
+                 tfSemCobrancaFrete,             // 9 - Sem cobrança de frete
                  tfNenhum
                 );
   TACBrTipoFrete = TACBrIndFrt;

@@ -46,6 +46,11 @@ Símbolo : Significado
 
 13/08/2018
 --- ACBrLibMail ---
+[-] Corrigido erro ao inicializar datamodule.
+    Por: Rafael Dias
+
+13/08/2018
+--- ACBrLibMail ---
 [+] Adcionado o metodo MAIL_AddBody e MAIL_AddAltBody, para poder adicionar o corpo do email.
     Por: Rafael Dias
 

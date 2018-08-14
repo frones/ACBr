@@ -2164,6 +2164,15 @@ begin
     LayNfseCancelaNfse:
        begin
          case FProvedor of
+           proAbaco: begin
+                       // Manaus
+                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+                         FTagF := '</' + FTagGrupo + '>'
+                       else // Outros
+                         FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
+                                  '</' + FTagGrupo + '>';
+                     end;
+
            proAgili,
            proAgiliv2: FTagF :=  '</' + FPrefixo3 + 'PedidoCancelamento>' +
                                 '</' + FTagGrupo + '>';

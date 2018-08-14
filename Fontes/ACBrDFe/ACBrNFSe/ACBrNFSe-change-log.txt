@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/08/2018
+-- ACBrNFSeWebServices --
+[*] Possível correção no método Cancelar NFS-e - provedor Abaco.
+Por: Italo Jurisato Junior
+
 09/08/2018
 -- pnfsNFSeW_ABRASFv1 --
 [*] https://www.projetoacbr.com.br/forum/topic/45571-provedor-abaco-corre%C3%A7%C3%A3o-formato-al%C3%ADquota-modelo-abrasf/

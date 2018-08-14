@@ -76,6 +76,10 @@ function MAIL_ClearAttachment: longint;
 function MAIL_AddAttachment(const eFileName, eDescription: PChar;
             const aDisposition: Integer): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
+function MAIL_AddBody(const eBody: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
+function MAIL_AddAltBody(const eAltBody: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 function MAIL_SaveToFile(const eFileName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 {%endregion}

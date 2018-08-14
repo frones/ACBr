@@ -193,6 +193,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
+        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\Mail\bin\ACBrLibMailTest.exe"/>
       </local>
     </RunParams>
     <RequiredPackages Count="1">

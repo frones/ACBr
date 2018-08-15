@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/08/2018
+-- ACBrNFeNotasFiscais --
+[*] Ajuste na leitura do arquivo .INI grupo "detExport"
+por: José M. S. Junior
+
 13/08/2018
 -- ACBrNFeNotasFiscais --
 [*] Acertos para validações de gtin da Nota Técnica 2017.001 - v 1.30

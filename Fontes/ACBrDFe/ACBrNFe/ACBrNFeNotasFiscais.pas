@@ -1779,7 +1779,7 @@ begin
           while true do
           begin
             sSecao := 'detExport'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sFim     := INIRec.ReadString(sSecao,'nDraw',INIRec.ReadString(sSecao,'nRE','FIM')) ;
+            sFim     := INIRec.ReadString(sSecao,'nRE','FIM') ;
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break ;
 

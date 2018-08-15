@@ -44,28 +44,6 @@ const
   CLibMailNome = 'ACBrLibMail';
   CLibMailVersao = '0.0.1';
 
-  CSessaoMail = 'Mail';
-
-  CChaveLog = 'ArqLog';
-
-  CChaveAttempts = 'Attempts';
-  CChaveSetTLS = 'SetTLS';
-  CChaveDefaultCharset = 'DefaultCharset';
-  CChaveFrom = 'From';
-  CChaveFromName = 'FromName';
-  CChaveSetSSL = 'SetSSL';
-  CChaveHost = 'Host';
-  CChaveIDECharset = 'IDECharset';
-  CChaveIsHTML = 'IsHTML';
-  CChavePassword = 'Password';
-  CChavePort = 'Port';
-  CChavePriority = 'Priority';
-  CChaveReadingConfirmation = 'ReadingConfirmation';
-  CChaveSubject = 'Subject';
-  CChaveTimeOut = 'TimeOut';
-  CChaveUsername = 'Username';
-  CChaveUseThread = 'UseThread';
-
 implementation
 
 end.

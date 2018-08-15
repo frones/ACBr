@@ -60,6 +60,7 @@ exports
   MAIL_ConfigGravarValor,
 
   // Diversos
+  MAIL_SetSubject,
   MAIL_AddAddress,
   MAIL_AddReplyTo,
   MAIL_AddCC,

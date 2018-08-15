@@ -86,6 +86,8 @@ function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%endregion}
 
 {%region Diversos}
+function MAIL_SetSubject(const eSubject: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_AddAddress(const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_AddReplyTo(const eEmail, eName: PChar): longint;
@@ -216,6 +218,39 @@ end;
 {%endregion}
 
 {%region Diversos}
+function MAIL_SetSubject(const eSubject: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ASubject: String;
+begin
+  try
+    VerificarLibInicializada;
+    ASubject := String(eSubject);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('MAIL_SetSubject( ' + ASubject + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('MAIL_SetSubject', logNormal);
+
+    with TACBrLibMail(pLib) do
+    begin
+      MailDM.Travar;
+      try
+        MailDM.ACBrMail1.Subject := ASubject;
+        Result := SetRetorno(ErrOK);
+      finally
+        MailDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function MAIL_AddAddress(const eEmail, eName: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   AEmail: AnsiString;

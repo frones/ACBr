@@ -44,7 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-13/08/2018
+15/08/2018
+--- ACBrLibMail ---
+[*] Melhorias no codigo para evitar duplicação de codigo.
+    Por: Rafael Dias
+
+14/08/2018
 --- ACBrLibMail ---
 [-] Corrigido erro ao inicializar datamodule.
     Por: Rafael Dias

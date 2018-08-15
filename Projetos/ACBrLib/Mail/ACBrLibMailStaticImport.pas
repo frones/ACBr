@@ -63,6 +63,8 @@ function MAIL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 {%endregion}
 
 {%region Diversos}
+function MAIL_SetSubject(const eSubject: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 function MAIL_AddAddress(const eEmail, eName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 function MAIL_AddReplyTo(const eEmail, eName: PChar): longint;

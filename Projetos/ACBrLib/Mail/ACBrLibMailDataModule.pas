@@ -87,23 +87,22 @@ begin
 
   with ACBrMail1 do
   begin
-    Attempts := pLibConfig.MailConfig.Attempts;
-    SetTLS := pLibConfig.MailConfig.SetTLS;
-    DefaultCharset := pLibConfig.MailConfig.DefaultCharset;
-    From := pLibConfig.MailConfig.From;
-    FromName := pLibConfig.MailConfig.FromName;
-    SetSSL := pLibConfig.MailConfig.SetSSL;
-    Host := pLibConfig.MailConfig.Host;
-    IDECharset := pLibConfig.MailConfig.IDECharset;
-    IsHTML := pLibConfig.MailConfig.IsHTML;
-    Password := pLibConfig.MailConfig.Password;
-    Port := pLibConfig.MailConfig.Port;
-    Priority := pLibConfig.MailConfig.Priority;
-    ReadingConfirmation := pLibConfig.MailConfig.ReadingConfirmation;
-    Subject := pLibConfig.MailConfig.Subject;
-    TimeOut := pLibConfig.MailConfig.TimeOut;
-    Username := pLibConfig.MailConfig.Username;
-    UseThread := pLibConfig.MailConfig.UseThread;
+    Attempts := pLibConfig.Email.Tentativas;
+    SetTLS := pLibConfig.Email.TLS;
+    DefaultCharset := pLibConfig.Email.Codificacao;
+    From := pLibConfig.Email.Conta;
+    FromName := pLibConfig.Email.Nome;
+    SetSSL := pLibConfig.Email.SSL;
+    Host := pLibConfig.Email.Servidor;
+    IDECharset := pLibConfig.Email.Codificacao;
+    IsHTML := pLibConfig.Email.IsHTML;
+    Password := pLibConfig.Email.Senha;
+    Port := IntToStr(pLibConfig.Email.Porta);
+    Priority := pLibConfig.Email.Priority;
+    ReadingConfirmation := pLibConfig.Email.Confirmacao;
+    TimeOut := pLibConfig.Email.TimeOut;
+    Username := pLibConfig.Email.Usuario;
+    UseThread := pLibConfig.Email.SegundoPlano;
   end;
 end;
 

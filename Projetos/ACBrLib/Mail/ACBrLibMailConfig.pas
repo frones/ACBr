@@ -43,61 +43,11 @@ uses
 
 type
 
-  { TMailConfig }
-  TMailConfig = class
-  private
-    FAttempts: Byte;
-    FSetTLS: boolean;
-    FDefaultCharset: TMailCharset;
-    FFrom: string;
-    FFromName: string;
-    FSetSSL: boolean;
-    FHost: string;
-    FIDECharset: TMailCharset;
-    FIsHTML: boolean;
-    FPassword: string;
-    FPort: string;
-    FPriority: TMessPriority;
-    FReadingConfirmation: boolean;
-    FSubject: string;
-    FTimeOut: Integer;
-    FUsername: string;
-    FUseThread: boolean;
-
-  public
-    constructor Create;
-    destructor Destroy; override;
-    procedure LerIni(const AIni: TCustomIniFile);
-    procedure GravarIni(const AIni: TCustomIniFile);
-
-    property Host: string read FHost write FHost;
-    property Port: string read FPort write FPort;
-    property Username: string read FUsername write FUsername;
-    property Password: string read FPassword write FPassword;
-    property SetSSL: boolean read FSetSSL write FSetSSL;
-    property SetTLS: boolean read FSetTLS write FSetTLS;
-    property Priority: TMessPriority read FPriority write FPriority;
-    property ReadingConfirmation: boolean read FReadingConfirmation write FReadingConfirmation;
-    property IsHTML: boolean read FIsHTML write FIsHTML;
-    property UseThread: boolean read FUseThread write FUseThread;
-    property TimeOut: Integer read FTimeOut write FTimeOut;
-    property Attempts: Byte read FAttempts write FAttempts;
-    property From: string read FFrom write FFrom;
-    property FromName: string read FFromName write FFromName;
-    property Subject: string read FSubject write FSubject;
-    property DefaultCharset: TMailCharset read FDefaultCharset write FDefaultCharset;
-    property IDECharset: TMailCharset read FIDECharset write FIDECharset;
-  end;
-
   { TLibMailConfig }
   TLibMailConfig = class(TLibConfig)
-  private
-    FMailConfig: TMailConfig;
-
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
 
-    procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
 
@@ -107,8 +57,6 @@ type
   public
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
-
-    property MailConfig: TMailConfig read FMailConfig;
   end;
 
 implementation
@@ -116,89 +64,15 @@ implementation
 uses
   ACBrLibMailClass, ACBrLibMailConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
-{ TMailConfig }
-constructor TMailConfig.Create;
-begin
-  FAttempts := 0;
-  FSetTLS := False;
-  FDefaultCharset := UTF_8;
-  FFrom := '';
-  FFromName := '';
-  FSetSSL := False;
-  FHost := '';
-  FIDECharset := {$IFDEF FPC}UTF_8{$ELSE}CP1252{$ENDIF};
-  FIsHTML := False;
-  FPassword := '';
-  FPort := '';
-  FPriority := MP_normal;
-  FReadingConfirmation := False;
-  FSubject := '';
-  FTimeOut := 0;
-  FUsername := '';
-  FUseThread := False;
-end;
-
-destructor TMailConfig.Destroy;
-begin
-
-  inherited Destroy;
-end;
-
-procedure TMailConfig.LerIni(const AIni: TCustomIniFile);
-begin
-  FAttempts := AIni.ReadInteger(CSessaoMail, CChaveAttempts, FAttempts);
-  FSetTLS := AIni.ReadBool(CSessaoMail, CChaveSetTLS, FSetTLS);
-  FDefaultCharset := TMailCharSet(AIni.ReadInteger(CSessaoMail, CChaveDefaultCharset, Integer(FDefaultCharset)));
-  FFrom := AIni.ReadString(CSessaoMail, CChaveFrom, FFrom);
-  FFromName := AIni.ReadString(CSessaoMail, CChaveFromName, FFromName);
-  FSetSSL := AIni.ReadBool(CSessaoMail, CChaveSetSSL, FSetSSL);
-  FHost := AIni.ReadString(CSessaoMail, CChaveHost, FHost);
-  FIDECharset := TMailCharSet(AIni.ReadInteger(CSessaoMail, CChaveIDECharset, Integer(FIDECharset)));
-  FIsHTML := AIni.ReadBool(CSessaoMail, CChaveIsHTML, FIsHTML);
-  FPassword := AIni.ReadString(CSessaoMail, CChavePassword, FPassword);
-  FPort := AIni.ReadString(CSessaoMail, CChavePort, FPort);
-  FPriority := TMessPriority(AIni.ReadInteger(CSessaoMail, CChavePriority, Integer(FPriority)));
-  FReadingConfirmation := AIni.ReadBool(CSessaoMail, CChaveReadingConfirmation, FReadingConfirmation);
-  FSubject := AIni.ReadString(CSessaoMail, CChaveSubject, FSubject);
-  FTimeOut := AIni.readInteger(CSessaoMail, CChaveTimeOut, FTimeOut);
-  FUsername := AIni.ReadString(CSessaoMail, CChaveUsername, FUsername);
-  FUseThread := AIni.ReadBool(CSessaoMail, CChaveUseThread, FUseThread);
-end;
-
-procedure TMailConfig.GravarIni(const AIni: TCustomIniFile);
-begin
-  AIni.WriteInteger(CSessaoMail, CChaveAttempts, FAttempts);
-  AIni.WriteBool(CSessaoMail, CChaveSetTLS, FSetTLS);
-  AIni.WriteInteger(CSessaoMail, CChaveDefaultCharset, Integer(FDefaultCharset));
-  AIni.WriteString(CSessaoMail, CChaveFrom, FFrom);
-  AIni.WriteString(CSessaoMail, CChaveFromName, FFromName);
-  AIni.WriteBool(CSessaoMail, CChaveSetSSL, FSetSSL);
-  AIni.WriteString(CSessaoMail, CChaveHost, FHost);
-  AIni.WriteInteger(CSessaoMail, CChaveIDECharset, Integer(FIDECharset));
-  AIni.WriteBool(CSessaoMail, CChaveIsHTML, FIsHTML);
-  AIni.WriteString(CSessaoMail, CChavePassword, FPassword);
-  AIni.WriteString(CSessaoMail, CChavePort, FPort);
-  AIni.WriteInteger(CSessaoMail, CChavePriority, Integer(FPriority));
-  AIni.WriteBool(CSessaoMail, CChaveReadingConfirmation, FReadingConfirmation);
-  AIni.WriteString(CSessaoMail, CChaveSubject, FSubject);
-  AIni.WriteInteger(CSessaoMail, CChaveTimeOut, FTimeOut);
-  AIni.WriteString(CSessaoMail, CChaveUsername, FUsername);
-  AIni.WriteBool(CSessaoMail, CChaveUseThread, FUseThread);
-end;
-
 { TLibMailConfig }
 
 constructor TLibMailConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
-
-  FMailConfig := TMailConfig.Create;
 end;
 
 destructor TLibMailConfig.Destroy;
 begin
-  FMailConfig.Free;
-
   inherited Destroy;
 end;
 
@@ -211,20 +85,11 @@ begin
             (inherited AtualizarArquivoConfiguracao);
 end;
 
-procedure TLibMailConfig.INIParaClasse;
-begin
-  inherited INIParaClasse;
-
-  FMailConfig.LerIni(Ini);
-end;
-
 procedure TLibMailConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
   Ini.WriteString(CSessaoVersao, CLibMailNome, CLibMailVersao);
-
-  FMailConfig.GravarIni(Ini);
 end;
 
 procedure TLibMailConfig.ClasseParaComponentes;

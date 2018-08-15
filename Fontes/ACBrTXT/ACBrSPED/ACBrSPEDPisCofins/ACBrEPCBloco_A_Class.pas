@@ -466,6 +466,8 @@ begin
             opcVazio          : strIND_ORIG_CRED := '';
             opcMercadoInterno : strIND_ORIG_CRED := '0';
             opcImportacao     : strIND_ORIG_CRED := '1';
+        else
+            strIND_ORIG_CRED := '';
         end;
 
         case NAT_BC_CRED of
@@ -488,6 +490,8 @@ begin
           bccAtImobCustoOrcado             : strNAT_BC_CRED := '16';
           bccAtPresServ                    : strNAT_BC_CRED := '17';
           bccEstoqueAberturaBens           : strNAT_BC_CRED := '18';
+        else
+          strNAT_BC_CRED := '';
         end;
 
         Add( LFill('A170')             +

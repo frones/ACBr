@@ -501,14 +501,18 @@ begin
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'xml');  // Provedor NFSeBrasil
               if NFSe.XML = '' then
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'Nota', True);
-              if NFSe.XML = '' then
-                FNFSe.XML := SeparaDados(Leitor.Grupo, 'tbnfd', True);
+//              if NFSe.XML = '' then
+//                FNFSe.XML := SeparaDados(Leitor.Grupo, 'tbnfd', True);
+
+              if Provedor = proSMARAPD then
+                FNFSe.XML := '<nfdok ' + Leitor.Grupo + '</nfdok>';
+
               if (Provedor = proEL) then
-                begin
-                  FNFSe.XML := SeparaDados(Leitor.Grupo, 'notasFiscais', True);
-                  if NFSe.XML = '' then
-                    FNFSe.XML := SeparaDados(Leitor.Grupo, 'nfeRpsNotaFiscal', True);
-                end;
+              begin
+                FNFSe.XML := SeparaDados(Leitor.Grupo, 'notasFiscais', True);
+                if NFSe.XML = '' then
+                  FNFSe.XML := SeparaDados(Leitor.Grupo, 'nfeRpsNotaFiscal', True);
+              end;
 
               // Retorno do GerarNfse e EnviarLoteRpsSincrono
 

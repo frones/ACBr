@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.giss.com.br/enviar-lote-rps-resposta-v2_04.xsd"
+	xmlns="http://www.giss.com.br/enviar-lote-rps-resposta-v2_04.xsd"
+	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:tipos="http://www.giss.com.br/tipos-v2_04.xsd"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
+		schemaLocation="xmldsig-core-schema20020212.xsd" />
+
+	<xsd:import namespace="http://www.giss.com.br/tipos-v2_04.xsd"
+		schemaLocation="tipos-v2_04.xsd" />
+
+	<xsd:element name="EnviarLoteRpsResposta">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element name="NumeroLote" type="tipos:tsNumeroLote"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="DataRecebimento" type="xsd:dateTime"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="Protocolo" type="tipos:tsNumeroProtocolo"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+				<xsd:element ref="tipos:ListaMensagemRetorno" minOccurs="1"
+					maxOccurs="1" />
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>
+

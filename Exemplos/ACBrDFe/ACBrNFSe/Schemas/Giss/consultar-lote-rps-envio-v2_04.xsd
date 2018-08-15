@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.giss.com.br/consultar-lote-rps-envio-v2_04.xsd"
+	xmlns="http://www.giss.com.br/consultar-lote-rps-envio-v2_04.xsd"
+	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:tipos="http://www.giss.com.br/tipos-v2_04.xsd"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
+		schemaLocation="xmldsig-core-schema20020212.xsd" />
+
+	<xsd:import namespace="http://www.giss.com.br/tipos-v2_04.xsd"
+		schemaLocation="tipos-v2_04.xsd" />
+
+	<!-- Consulta de Lote de RPS - ConsultarLoteRps -->
+	<xsd:element name="ConsultarLoteRpsEnvio">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Prestador" type="tipos:tcIdentificacaoPessoaEmpresa"
+					minOccurs="1" maxOccurs="1" />
+				<xsd:element name="Protocolo" type="tipos:tsNumeroProtocolo"
+					minOccurs="1" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>
+

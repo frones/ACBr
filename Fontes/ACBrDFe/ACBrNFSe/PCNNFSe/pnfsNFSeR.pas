@@ -1344,7 +1344,8 @@ begin
       if FProvedor = proVersaTecnologia then
         NFSe.dhRecebimento := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
-      if FProvedor in [proFreire, proSpeedGov, proVitoria, proDBSeller, proFriburgo] then
+      if FProvedor in [proFreire, proSpeedGov, proVitoria, proDBSeller,
+                       proFriburgo, proISSNet] then
         NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
       else if FProvedor in [proNFSeBrasil] then
       begin

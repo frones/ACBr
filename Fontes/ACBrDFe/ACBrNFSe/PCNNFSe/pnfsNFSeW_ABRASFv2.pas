@@ -145,7 +145,7 @@ begin
      (NFSe.Tomador.Contato.Telefone <> '') or (NFSe.Tomador.Contato.Email <> '') then
   begin
     if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
-        proSmarAPDABRASF]) or
+        proSmarAPDABRASF, proNotaInteligente]) or
        ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupoNFSe('TomadorServico')
     else
@@ -226,7 +226,7 @@ begin
     end;
 
     if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
-        proSmarAPDABRASF]) or
+        proSmarAPDABRASF, proNotaInteligente]) or
         ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupoNFSe('/TomadorServico')
     else

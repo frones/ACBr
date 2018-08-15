@@ -1486,6 +1486,8 @@ begin
 end;
 
 function TNFSeG.Gera_DadosMsgCancelarNFSe: String;
+var
+  TagI, TagF: string;
 begin
   SetAtributos;
   Gerador.ArquivoFormatoXML := '';
@@ -1701,14 +1703,80 @@ begin
 
          if Provedor in [proPublica, proTecnos, proFriburgo] then
            Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '')
-         else if Provedor in [proISSNET] then
-           Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamentoNfse', 01, 255, 1, MotivoCanc, '');
+         {else if Provedor in [proISSNET] then
+           Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamentoNfse', 01, 255, 1, MotivoCanc, '')};
 
 //         if (Provedor in [proPublica]) and (CodigoCanc = 'C999') then
 //           Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '');
 
-         Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                      '</' + Prefixo4 + 'InfPedidoCancelamento>';
+         case Provedor of
+           proAbaco: begin
+                       // Manaus
+                       if (CodMunicipio = 1302603) then
+                       begin
+                         TagI := '';
+                         TagF := '';
+                       end
+                       else // Outros
+                       begin
+                         TagI := '<' + Prefixo3 + 'Pedido>' +
+                                   '<' + Prefixo4 + 'InfPedidoCancelamento' + aIdentificador + '>';
+                         TagF :=   '</' + Prefixo4 + 'InfPedidoCancelamento>' +
+                                 '</' + Prefixo3 + 'Pedido>';
+                       end;
+                     end;
+
+           proAgili,
+           proAgiliv2: begin
+                         TagI := '<' + Prefixo3 + 'PedidoCancelamento>';
+                         TagF := '</' + Prefixo3 + 'PedidoCancelamento>';
+                       end;
+
+           proBetha,
+           proSpeedGov: begin
+                          TagI := '<Pedido>' +
+                                    '<' + Prefixo4 + 'InfPedidoCancelamento ' + aIdentificador + '>';
+                          TagF :=   '</' + Prefixo4 + 'InfPedidoCancelamento>' +
+                                  '</Pedido>';
+                         end;
+
+           proISSCuritiba: TagI := '<' + Prefixo3 + 'Pedido>';
+
+           proTecnos: TagI := '<' + Prefixo3 + 'Pedido>' +
+                                '<' + Prefixo4 + 'InfPedidoCancelamento ' + aIdentificador +
+                                  'xmlns="http://www.abrasf.org.br/nfse.xsd">';
+
+           proSimplISS: TagI := '<' + Prefixo3 + 'Pedido' + FNameSpaceDad + '>' +
+                                  '<' + Prefixo4 + 'InfPedidoCancelamento' + aIdentificador + '>';
+
+           proEquiplano,
+           proGinfes,
+           proGoverna,
+           proEGoverneISS,
+           proISSDSF,
+           proCTA,
+           proCONAM,
+           proEL,
+           proInfisc,
+           proInfiscv11,
+           proSP,
+           proNotaBlu,
+           proSMARAPD,
+           proIPM: begin
+                     TagI := '';
+                     TagF := '';
+                   end;
+
+         else
+           begin
+             TagI := '<' + Prefixo3 + 'Pedido>' +
+                       '<' + Prefixo4 + 'InfPedidoCancelamento' + aIdentificador + '>';
+             TagF :=   '</' + Prefixo4 + 'InfPedidoCancelamento>' +
+                      '</' + Prefixo3 + 'Pedido>';
+           end;
+         end;
+
+         Gerador.ArquivoFormatoXML := TagI + Gerador.ArquivoFormatoXML + TagF;
        end;
   end;
 

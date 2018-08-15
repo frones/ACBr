@@ -1821,7 +1821,7 @@ begin
 
     LayNfseConsultaSitLoteRps:
        begin
-        case FProvedor of
+         case FProvedor of
            proAbaco: begin
                        // Manaus
                        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
@@ -1846,9 +1846,9 @@ begin
            proNotaBlu: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
-          proFISSLex,
-          proIPM,
-          proSMARAPD: FTagI := '';
+           proFISSLex,
+           proIPM,
+           proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -1856,7 +1856,7 @@ begin
 
     LayNfseConsultaLote:
        begin
-        case FProvedor of
+         case FProvedor of
            proAbaco: begin
                        // Manaus
                        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
@@ -1965,6 +1965,57 @@ begin
                        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
                          FTagI := '<'+FTagGrupo+'>'
                        else // Outros
+                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+                     end;
+
+           proAgili: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
+                               '<UnidadeGestora>' +
+                                 OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
+                               '</UnidadeGestora>';
+
+           proEquiplano: FTagI := '<' + FTagGrupo +
+                                    ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
+                                    'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                                    'xsi:schemaLocation="http://www.equiplano.com.br/enfs esCancelarNfseEnvio_v01.xsd">';
+
+           proGinfes: FTagI := '<' + FTagGrupo +
+                                 ' xmlns="http://www.ginfes.com.br/servico_cancelar_nfse_envio"' +
+                                 ' xmlns:ns4="http://www.ginfes.com.br/tipos">';
+
+           proCONAM,
+           proEL,
+           proInfisc,
+           proInfiscv11,
+           proSimplISS: FTagI := '<' + FTagGrupo + '>';
+
+           proSP,
+           proNotaBlu: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+                             ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+
+           proISSNet: FTagI := '<p1:' + FTagGrupo + ' xmlns:p1="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd" ' +
+                                                    'xmlns:tc="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" ' +
+                                                    'xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd">';
+
+           proBetha,
+           proGoverna,
+           proSMARAPD,
+           proIPM: FTagI := '';
+         else
+           FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+         end;
+
+         if FProvedor in [proDBSeller] then
+           FTagI := '<CancelarNfse>' + FTagI;
+       end;
+    {
+    LayNfseCancelaNfse:
+       begin
+         case FProvedor of
+           proAbaco: begin
+                       // Manaus
+                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
+                         FTagI := '<'+FTagGrupo+'>'
+                       else // Outros
                          FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                      '<' + FPrefixo3 + 'Pedido>' +
                                         '<' + FPrefixo4 + 'InfPedidoCancelamento' + ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' + FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
@@ -2004,7 +2055,7 @@ begin
            proInfisc,
            proInfiscv11: FTagI := '<' + FTagGrupo + '>';
 
-           proSP, 
+           proSP,
            proNotaBlu: FTagI := '<' + FTagGrupo + FNameSpaceDad +
                              ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
 
@@ -2050,6 +2101,7 @@ begin
          if FProvedor in [proDBSeller] then
            FTagI := '<CancelarNfse>' + FTagI;
        end;
+    }
 
     LayNfseGerar:
        begin
@@ -2164,6 +2216,23 @@ begin
     LayNfseCancelaNfse:
        begin
          case FProvedor of
+           proBetha,
+           proGoverna,
+           proIPM,
+           proSMARAPD: FTagF := '';
+
+           proISSNet: FTagF := '</p1:' + FTagGrupo + '>';
+         else
+           FTagF := '</' + FTagGrupo + '>';
+         end;
+
+         if FProvedor in [proDBSeller] then
+           FTagF := FTagF + '</CancelarNfse>';
+       end;
+    {
+    LayNfseCancelaNfse:
+       begin
+         case FProvedor of
            proAbaco: begin
                        // Manaus
                        if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
@@ -2191,7 +2260,7 @@ begin
            proEL,
            proInfisc,
            proInfiscv11,
-           proSP, 
+           proSP,
            proNotaBlu,
            proCTA: FTagF := '</' + FTagGrupo + '>';
 
@@ -2209,6 +2278,7 @@ begin
          if FProvedor in [proDBSeller] then
            FTagF := FTagF + '</CancelarNfse>';
        end;
+    }
 
     LayNfseGerar:
        begin
@@ -4370,7 +4440,7 @@ begin
       FTagGrupo := FPrefixo3 + FTagGrupo;
 
     case FProvedor of
-      proBetha:  FdocElemento := 'Pedido';
+      proBetha: FdocElemento := 'Pedido';
 
       proDBSeller: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo + '></CancelarNfse';
 
@@ -4379,7 +4449,7 @@ begin
       proInfisc,
       proInfiscv11,
       proSP,
-      proNotaBlu:  FdocElemento := FTagGrupo;
+      proNotaBlu: FdocElemento := FTagGrupo;
 
       proGinfes: FdocElemento := FTagGrupo;
 
@@ -4393,6 +4463,8 @@ begin
     end;
 
     case FProvedor of
+//      proISSNet: FinfElemento := FPrefixo4 + 'InfPedidoCancelamento';
+
       proBetha,
       proISSe,
       proFiorilli,

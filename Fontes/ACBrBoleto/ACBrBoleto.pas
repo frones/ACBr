@@ -376,7 +376,8 @@ type
     cobUniprime,
     cobUnicredRS,
     cobBanese,
-    cobCrediSIS
+    cobCrediSIS,
+    cobUnicredES
     );
 
   TACBrTitulo = class;
@@ -888,7 +889,7 @@ type
   TACBrCodigoDesconto    = (cdSemDesconto, cdValorFixo);
 
   {Definir codigo Juros }
-  TACBrCodigoJuros       = (cjValorDia, cjTaxaMensal, cjIsento);
+  TACBrCodigoJuros       = (cjValorDia, cjTaxaMensal, cjIsento, cjValorMensal, cjTaxaDiaria);
 
   {Definir codigo Multa }
   TACBrCodigoMulta       = (cmValorFixo, cmPercentual);
@@ -1058,7 +1059,7 @@ type
     fOcorrenciaOriginal: TACBrOcorrencia;
     fTipoDesconto      : TACBrTipoDesconto;
     fTipoDesconto2     : TACBrTipoDesconto;
-  fParcela           : Integer;
+    fParcela           : Integer;
     fPercentualMulta   : Double;
     fMultaValorFixo    : Boolean;
     fSeuNumero         : String;
@@ -1385,7 +1386,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
-     ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis;
+     ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2268,6 +2269,7 @@ begin
      cobUniprime            : fBancoClass := TACBrUniprime.create(Self);            {099}
      cobCaixaEconomica      : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
      cobCaixaSicob          : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
+     cobUnicredES           : fBancoClass := TACBrBancoUnicredES.create(Self);      {136}
      cobBradesco            : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
      cobItau                : fBancoClass := TACBrBancoItau.Create(Self);           {341}
      cobBancoMercantil      : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
@@ -2888,6 +2890,7 @@ begin
     097: Result := cobCrediSIS;
     099: Result := cobUniprime;
     104: Result := cobCaixaEconomica;
+    136: Result := cobUnicredES;
     237: Result := cobBradesco;
     341: Result := cobItau;
     389: Result := cobBancoMercantil;

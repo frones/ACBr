@@ -49,6 +49,10 @@ Símbolo : Significado
 
 Data 13/08/2018 ver: 0.0.246
 
+14-08-2018 -- ACBrBancoUnicredES / ACBrBoleto
+[+] Adicionado Unit Banco UnicredES
+https://www.projetoacbr.com.br/forum/topic/44836-unicredes/
+
 13-08-2018 -- ACBrBoleto
 [-] Correção na mensagem de Juros no boleto para cobrança com percentual mensal
 https://www.projetoacbr.com.br/forum/topic/44908-ajuste-descri%C3%A7%C3%A3o-boleto/

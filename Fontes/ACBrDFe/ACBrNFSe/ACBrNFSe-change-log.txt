@@ -49,6 +49,9 @@ Símbolo : Significado
 
 15/08/2018
 -- Diversos --
+[*] Implementação do provedor Giss
+Por: Italo Jurisato Junior
+-- Diversos --
 [*] Realizado diversos ajustes.
 Por: Italo Jurisato Junior
 

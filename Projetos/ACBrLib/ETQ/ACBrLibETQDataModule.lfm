@@ -1,0 +1,16 @@
+object LibETQDM: TLibETQDM
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  OldCreateOrder = False
+  Height = 150
+  HorizontalOffset = 257
+  VerticalOffset = 127
+  Width = 150
+  PPI = 96
+  object ACBrETQ1: TACBrETQ
+    Porta = 'LPT1'
+    Ativo = False
+    left = 42
+    top = 29
+  end
+end

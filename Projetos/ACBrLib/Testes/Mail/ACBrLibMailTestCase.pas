@@ -28,6 +28,7 @@ type
 
     procedure Test_MAIL_Clear;
 
+    procedure Test_MAIL_SetSubject;
     procedure Test_MAIL_AddAddress;
     procedure Test_MAIL_AddReplyTo;
     procedure Test_MAIL_AddCC;
@@ -171,33 +172,16 @@ begin
   AssertEquals('Erro ao limpar o e-mail', ErrOk, MAIL_Clear);
 end;
 
+procedure TTestACBrMailLib.Test_MAIL_SetSubject;
+begin
+  // Definindo o texto referente ao assunto do e-mail
+  AssertEquals('Erro ao definir o assunto do e-mail', ErrOk, MAIL_SetSubject('Teste de envio'));
+end;
+
 procedure TTestACBrMailLib.Test_MAIL_AddAddress;
-//var
-//  Bufflen: Integer;
-//  AStr: String;
 begin
   // Adicionando um Endereço de e-mail
   AssertEquals('Erro ao adicionar um endereço de e-mail', ErrOk, MAIL_AddAddress('fulano@provedor.com', 'fulano'));
-  {
-
-  AssertEquals(ErrOk, POS_Inicializar('',''));
-
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(ApplicationPath+'teste.txt')));
-  AssertEquals(ErrOK, POS_ConfigGravar(''));
-  AssertEquals(ErrOK, POS_ConfigLer(''));
-  AssertEquals(ErrOK, POS_Ativar);
-
-  AssertEquals(ErrOK, POS_Finalizar());
-
-
-  // Checando se o valor foi atualizado //
-  Bufflen := 255;
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, MAIL_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
-  AStr := copy(AStr,1,Bufflen);
-  AssertEquals('Erro ao Mudar configuração', '4', AStr);
-  }
 end;
 
 procedure TTestACBrMailLib.Test_MAIL_AddReplyTo;

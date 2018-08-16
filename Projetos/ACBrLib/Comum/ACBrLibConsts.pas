@@ -80,6 +80,9 @@ const
   CChaveEmailTLS = 'TLS';
   CChaveEmailConfirmacao = 'Confirmacao';
   CChaveEmailSegundoPlano = 'SegundoPlano';
+  CChaveEmailTentativas   = 'Tentativas';
+  CChaveEmailIsHTML = 'IsHTML';
+  CChaveEmailPriority = 'Priority';
 
   CSessaoSwHouse = 'SoftwareHouse';
   CSessaoEmissor = 'Emissor';

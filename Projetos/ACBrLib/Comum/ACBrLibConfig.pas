@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  synachar,
+  synachar, mimemess,
   ACBrLibResposta;
 
 type
@@ -117,12 +117,15 @@ type
     FCodificacao: TMimeChar;
     FConfirmacao: Boolean;
     FConta: String;
+    FIsHTML: Boolean;
     FNome: String;
     FPorta: Integer;
+    FPriority: TMessPriority;
     FSegundoPlano: Boolean;
     FSenha: String;
     FServidor: String;
     FSSL: Boolean;
+    FTentativas: Integer;
     FTimeOut: Integer;
     FTLS: Boolean;
     FUsuario: String;
@@ -148,6 +151,9 @@ type
     property Confirmacao: Boolean read FConfirmacao;
     property SegundoPlano: Boolean read FSegundoPlano;
     property TimeOut: Integer read FTimeOut;
+    property Tentativas: Integer read FTentativas;
+    property IsHTML: Boolean read FIsHTML;
+    property Priority: TMessPriority read FPriority;
   end;
 
   { TEmpresaConfig }
@@ -334,6 +340,9 @@ begin
   FConfirmacao := False;
   FSegundoPlano := False;
   FTimeOut := 0;
+  FTentativas := 0;
+  FIsHTML := False;
+  FPriority := MP_low;
 end;
 
 function TEmailConfig.GetSenha: String;
@@ -355,6 +364,9 @@ begin
   FTimeOut := AIni.ReadInteger(CSessaoEmail, CChaveTimeOut, FTimeOut);
   FConfirmacao := AIni.ReadBool(CSessaoEmail, CChaveEmailConfirmacao, FConfirmacao);
   FSegundoPlano := AIni.ReadBool(CSessaoEmail, CChaveEmailSegundoPlano, FSegundoPlano);
+  FTentativas := AIni.ReadInteger(CSessaoEmail, CChaveEmailTentativas, FTentativas);
+  FIsHTML := AIni.ReadBool(CSessaoEmail, CChaveEmailIsHTML, FIsHTML);
+  FPriority := TMessPriority(AIni.ReadInteger(CSessaoEmail, CChaveEmailPriority, Integer(FPriority)));
 end;
 
 procedure TEmailConfig.GravarIni(const AIni: TCustomIniFile);
@@ -371,6 +383,9 @@ begin
   AIni.WriteInteger(CSessaoEmail, CChaveTimeOut, FTimeOut);
   AIni.WriteBool(CSessaoEmail, CChaveEmailConfirmacao, FConfirmacao);
   AIni.WriteBool(CSessaoEmail, CChaveEmailSegundoPlano, FSegundoPlano);
+  AIni.WriteInteger(CSessaoEmail, CChaveEmailTentativas, FTentativas);
+  AIni.WriteBool(CSessaoEmail, CChaveEmailIsHTML, FIsHTML);
+  AIni.WriteInteger(CSessaoEmail, CChaveEmailPriority, Integer(FPriority));
 end;
 
 { TEmpresaConfig }

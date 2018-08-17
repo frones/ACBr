@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/08/2018
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/45792-n%C3%A3o-est%C3%A1-gerando-a-tag-de-iss-retido/?do=findComment&comment=302727
+Por: Maiquel
 -- pnfsNFSeG --
 [*] Simplificação de código e correção na geração das Tags Iniciais e Finais de Cancelamento.
 Por: Italo Jurisato Junior

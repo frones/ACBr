@@ -505,7 +505,7 @@ begin
 //                FNFSe.XML := SeparaDados(Leitor.Grupo, 'tbnfd', True);
 
               if Provedor = proSMARAPD then
-                FNFSe.XML := '<nfdok ' + Leitor.Grupo + '</nfdok>';
+                FNFSe.XML := Leitor.Grupo;
 
               if (Provedor = proEL) then
               begin

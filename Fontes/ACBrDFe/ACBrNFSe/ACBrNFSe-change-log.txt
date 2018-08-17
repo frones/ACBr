@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2018
+-- pnfsLerListaNFSe --
+[*] https://www.projetoacbr.com.br/forum/topic/45658-problemas-com-smarapd/?do=findComment&comment=302379
+Por: Aquiniti
+
 15/08/2018
 -- Diversos --
 [*] Implementação do provedor Giss

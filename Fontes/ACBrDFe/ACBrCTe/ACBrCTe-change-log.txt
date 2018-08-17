@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2018
+-- Diversos --
+[*] Alterações visando deixar o componente em conformidade com a Nota Técnica 2018/002.
+  por: Italo Jurisato Junior
+
 18/07/2018
 -- ACBrCTe / ACBrCTeWebServices / pcteDistDFeInt --
 [*] Ajustes no DistribuicaoDFe do CTe visando uma futura liberação por parte

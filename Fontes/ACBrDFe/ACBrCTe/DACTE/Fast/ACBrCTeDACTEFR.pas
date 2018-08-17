@@ -2133,7 +2133,7 @@ begin
                 daBL    : FieldByName('Tipo').AsString  := 'BL';
               end;
               FieldByName('Serie').AsString := idDocAnt.Items[ii].idDocAntPap.Items[iii].serie;
-              FieldByName('nDoc').AsString  := IntToStr(idDocAnt.Items[ii].idDocAntPap.Items[iii].nDoc);
+              FieldByName('nDoc').AsString  := idDocAnt.Items[ii].idDocAntPap.Items[iii].nDoc;
               FieldByName('dEmi').AsString  := FormatDateTime('dd/mm/yyyy', idDocAnt.Items[ii].idDocAntPap.Items[iii].dEmi);
             end;
             Post;

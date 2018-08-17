@@ -1032,7 +1032,7 @@ begin
             CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].tpDoc  := StrToTpDocumentoAnterior(ok, Leitor.rCampo(tcStr, 'tpDoc'));
             CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].serie  := Leitor.rCampo(tcStr, 'serie');
             CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].subser := Leitor.rCampo(tcStr, 'subser');
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].nDoc   := Leitor.rCampo(tcInt, 'nDoc');
+            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].nDoc   := Leitor.rCampo(tcStr, 'nDoc');
             CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].dEmi   := Leitor.rCampo(tcDat, 'dEmi');
             inc(i03);
           end;
@@ -1186,6 +1186,12 @@ begin
           CTe.infCTeNorm.rodoOS.veic.prop.UF             := Leitor.rCampo(tcStr, 'UF');
           CTe.infCTeNorm.rodoOS.veic.prop.tpProp         := StrToTpProp(ok, Leitor.rCampo(tcStr, 'tpProp'));
         end;
+      end;
+
+      if Leitor.rExtrai(3, 'infFretamento') <> '' then
+      begin
+        CTe.infCTeNorm.rodoOS.infFretamento.tpFretamento := StrToTpFretamento(ok, Leitor.rCampo(tcStr, 'tpFretamento'));
+        CTe.infCTeNorm.rodoOS.infFretamento.dhViagem     := Leitor.rCampo(tcDatHor,'dhViagem');
       end;
     end;
 
@@ -1467,6 +1473,14 @@ begin
     CTe.autXML.Add;
     CTe.autXML[i01].CNPJCPF := Leitor.rCampoCNPJCPF;;
     inc(i01);
+  end;
+
+  if Leitor.rExtrai(1, 'infEmpresaSoft') <> '' then
+  begin
+    CTe.infEmpresaSoft.CNPJCPF  := Leitor.rCampoCNPJCPF;;
+    CTe.infEmpresaSoft.xContato := Leitor.rCampo(tcStr, 'xContato');
+    CTe.infEmpresaSoft.email    := Leitor.rCampo(tcStr, 'email');
+    CTe.infEmpresaSoft.fone     := Leitor.rCampo(tcStr, 'fone');
   end;
 
   (* Grupo da TAG <signature> *************************************************)

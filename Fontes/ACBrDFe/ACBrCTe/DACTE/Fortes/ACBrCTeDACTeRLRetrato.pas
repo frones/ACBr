@@ -895,7 +895,7 @@ begin
              daOutros: cdsDocumentos.FieldByname('TIPO_1').AsString := 'Outros';
             end;
             cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarCNPJouCPF(FCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].CNPJCPF);
-            cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := serie + '-' + IntToStr(nDoc);
+            cdsDocumentos.FieldByname('DOCUMENTO_1').AsString := serie + '-' + nDoc;
           end
           else
           begin
@@ -916,7 +916,7 @@ begin
              daOutros: cdsDocumentos.FieldByname('TIPO_2').AsString := 'Outros';
             end;
             cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarCNPJouCPF(FCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].CNPJCPF);
-            cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := serie + '-' + IntToStr(nDoc);
+            cdsDocumentos.FieldByname('DOCUMENTO_2').AsString := serie + '-' + nDoc;
 
             cdsDocumentos.Post;
           end;

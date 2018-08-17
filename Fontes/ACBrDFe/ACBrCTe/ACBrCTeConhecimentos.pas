@@ -2072,7 +2072,7 @@ begin
                   tpDoc  := StrToTpDocumentoAnterior(OK, INIRec.ReadString(sSecao,'tpDoc',''));
                   serie  := INIRec.ReadString(sSecao,'serie','');
                   subser := INIRec.ReadString(sSecao,'subser','');
-                  nDoc   := INIRec.ReadInteger(sSecao,'nDoc',0);
+                  nDoc   := INIRec.ReadString(sSecao,'nDoc','');
                   dEmi   := StringToDateTime(INIRec.ReadString( sSecao,'dEmi','0'));
                 end;
                 Inc(J);
@@ -2297,6 +2297,16 @@ begin
             prop.tpProp         := StrToTpProp(OK,INIRec.ReadString(sSecao,'ProptpProp',INIRec.ReadString(sSecao,'tpProp','')));
           end;
           Inc(I);
+        end;
+
+        sSecao := 'infFretamento';
+        if INIRec.SectionExists(sSecao) then
+        begin
+          with infCTeNorm.rodoOS.infFretamento do
+          begin
+            tpFretamento := StrToTpFretamento(OK, INIRec.ReadString(sSecao, 'tpFretamento', '1'));
+            dhViagem     := StringToDateTime(INIRec.ReadString(sSecao, 'dhViagem','0'));
+          end;
         end;
       end;
 
@@ -2747,7 +2757,19 @@ begin
         end;
         Inc(I);
       end;
-      {$ENDIF}
+
+      sSecao := 'infEmpresaSoft';
+      if INIRec.SectionExists(sSecao) then
+      begin
+        with infEmpresaSoft do
+        begin
+          CNPJCPF  := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+          xContato := INIRec.ReadString(sSecao, 'xContato', '');
+          email    := INIRec.ReadString(sSecao, 'email', '');
+          fone     := INIRec.ReadString(sSecao, 'fone', '');
+        end;
+      end;
+     {$ENDIF}
     end;
 
     GerarXML;

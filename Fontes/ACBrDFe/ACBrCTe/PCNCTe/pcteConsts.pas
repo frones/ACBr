@@ -163,6 +163,8 @@ const
   DSC_INDALTERATOMA    = 'Indicador de alteração de Tomador';
   DSC_CHCTEMULTIMODAL  = 'Chave do CT-e Multimodal';
   DSC_INFCTEMULTIMODAL = 'Informações do CT-e Multimodal';
+  DSC_TPFRETAMENTO     = 'Tipo de Fretamento';
+  DSC_DHVIAGEM         = 'Data / Hora da Viagem';
 
 implementation
 

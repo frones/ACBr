@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2018
+-- ACBrCTeDACTEFR --
+[*] Alterações visando deixar o componente em conformidade com a Nota Técnica 2018/002.
+  por: Italo Jurisato Junior
+
 13/12/2017
 -- ACBrCTeDACTEFR --
 [-] Remoção de texto que não possui no xml e estava sendo impresso indevidamente no DACTe

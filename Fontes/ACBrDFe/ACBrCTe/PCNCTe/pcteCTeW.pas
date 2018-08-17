@@ -179,6 +179,7 @@ type
 
     procedure GerarInfCTeAnu;  // Nivel 1
     procedure GerarautXML;     // Nivel 1
+    procedure GerarInfEmpresaSoft; // Nivel 1
 
     procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 
@@ -356,6 +357,8 @@ begin
   GerarInfCTeAnu;  // Gerado somente se Tipo de CTe = tcAnulacao
 
   GerarautXML;
+  if VersaoDF >= ve300 then
+    GerarInfEmpresaSoft;
 end;
 
 procedure TCTeW.GerarIde;
@@ -1913,7 +1916,7 @@ begin
         Gerador.wCampo(tcStr, '#353', 'tpDoc  ', 02, 02, 1, TpDocumentoAnteriorToStr(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].tpDoc), DSC_TPNF);
         Gerador.wCampo(tcStr, '#354', 'serie  ', 01, 03, 1, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].serie, DSC_SERIE);
         Gerador.wCampo(tcStr, '#355', 'subser ', 01, 02, 0, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].subser, DSC_SERIE);
-        Gerador.wCampo(tcInt, '#356', 'nDoc   ', 01, 20, 1, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].nDoc, DSC_NNF);
+        Gerador.wCampo(tcStr, '#356', 'nDoc   ', 01, 30, 1, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].nDoc, DSC_NNF);
         Gerador.wCampo(tcDat, '#357', 'dEmi   ', 10, 10, 1, CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntPap[i02].dEmi, DSC_DEMI);
         Gerador.wGrupo('/idDocAntPap');
       end;
@@ -2194,6 +2197,17 @@ begin
 
     Gerador.wCampo(tcStr, '#16', 'UF', 02, 02, 1, CTe.infCTeNorm.rodoOS.veic.UF, DSC_CUF);
     Gerador.wGrupo('/veic');
+  end;
+
+  if CTe.Ide.tpServ = tsTranspPessoas then
+  begin
+    Gerador.wGrupo('infFretamento', '#17');
+    with CTe.infCTeNorm.rodoOS.infFretamento do
+    begin
+      Gerador.wCampo(tcStr, '#18', 'tpFretamento', 01, 01, 1, TpFretamentoToStr(tpFretamento), DSC_TPFRETAMENTO);
+      Gerador.wCampo(tcStr, '#19', 'dhViagem    ', 25, 25, 1, DateTimeTodh(dhViagem) + GetUTC(CodigoParaUF(CTe.ide.cUF), dhViagem), DSC_DHVIAGEM)
+    end;
+    Gerador.wGrupo('/infFretamento');
   end;
 
   Gerador.wGrupo('/rodoOS');
@@ -2726,6 +2740,19 @@ begin
   end;
   if CTe.autXML.Count > 10 then
     Gerador.wAlerta('#415', 'autXML', DSC_AUTXML, ERR_MSG_MAIOR_MAXIMO + '10');
+end;
+
+procedure TCTeW.GerarInfEmpresaSoft;
+begin
+  if (CTe.infEmpresaSoft.CNPJCPF <> '') then
+  begin
+    Gerador.wGrupo('infEmpresaSoft', '#081');
+    Gerador.wCampoCNPJCPF('#082', '#083', CTe.infEmpresaSoft.CNPJCPF);
+    Gerador.wCampo(tcStr, '#084', 'xContato', 02, 60, 1, CTe.infEmpresaSoft.xContato, DSC_XCONTATO);
+    Gerador.wCampo(tcStr, '#080', 'email   ', 06, 60, 1, CTe.infEmpresaSoft.email, DSC_EMAIL);
+    Gerador.wCampo(tcStr, '#080', 'fone    ', 07, 12, 1, CTe.infEmpresaSoft.fone, DSC_FONE);
+    Gerador.wGrupo('/infEmpresaSoft');
+   end;
 end;
 
 procedure TCTeW.GerarinfPercurso;

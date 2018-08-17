@@ -102,6 +102,7 @@ type
   TpInfManu = (imCEEAV, imAPCDEA, imSAC, imAPDENR, imAPQI, imGSR, imNR, imAPCC,
                imAAGA, imPI965, imPI966, imPI967, imPI968, imPI969, imPI970, imOUTRO);
   TpUniMed = (umKG, umKGG, umLitros, umTI, umUnidades);
+  TtpFretamento = (tfEventual, tpContinuo);
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -198,6 +199,9 @@ function StrToTpInfManuV2(out ok: boolean; const s: string): TpInfManu;
 
 function UniMedToStr(const t: TpUniMed): String;
 function StrToUniMed(out ok: Boolean; const s: String): TpUniMed;
+
+function TpFretamentoToStr(const t: TtpFretamento): String;
+function StrToTpFretamento(out ok: Boolean; const s: String): TtpFretamento;
 
 implementation
 
@@ -686,6 +690,18 @@ function StrToUniMed(out ok: Boolean; const s: String): TpUniMed;
 begin
   result := StrToEnumerado(ok, s, ['1','2','3','4','5'],
                                   [umKG, umKGG, umLitros, umTI, umUnidades]);
+end;
+
+function TpFretamentoToStr(const t: TtpFretamento): String;
+begin
+  result := EnumeradoToStr(t, ['1','2'],
+                              [tfEventual, tpContinuo]);
+end;
+
+function StrToTpFretamento(out ok: Boolean; const s: String): TtpFretamento;
+begin
+  result := StrToEnumerado(ok, s, ['1','2'],
+                                  [tfEventual, tpContinuo]);
 end;
 
 end.

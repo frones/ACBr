@@ -215,6 +215,7 @@ type
   TRodoOS                = class;
   TVeicOS                = class;
   TPropOS                = class;
+  TinfFretamento         = class;
 
   // Informações do modal Aéreo
   TAereo    = class;
@@ -292,7 +293,8 @@ type
   TautXMLCollection     = class;
   TautXMLCollectionItem = class;
 
-  ////////////////////////////////////////////////////////////////////////////////
+  TinfEmpresaSoft = class;
+////////////////////////////////////////////////////////////////////////////////
 
   TCTe = class(TPersistent)
   private
@@ -314,6 +316,7 @@ type
     FinfCteComp: TInfCteComp;
     FInfCteAnu: TInfCteAnu;
     FautXML: TautXMLCollection;
+    FinfEmpresaSoft: TinfEmpresaSoft;
 
     FProcCTe: TProcCTe;
     FSignature: TSignature;
@@ -342,6 +345,8 @@ type
     property infCteAnu: TInfCteAnu   read FinfCteAnu  write FinfCteAnu;
 
     property autXML: TautXMLCollection read FautXML write SetautXML;
+
+    property infEmpresaSoft: TinfEmpresaSoft read FinfEmpresaSoft write FinfEmpresaSoft;
 
     property procCTe: TProcCTe     read FProcCTe   write FProcCTe;
     property signature: Tsignature read Fsignature write Fsignature;
@@ -1687,7 +1692,7 @@ type
     FtpDoc  : TpcteTipoDocumentoAnterior;
     Fserie  : String;
     Fsubser : String;
-    FnDoc   : Integer;
+    FnDoc   : String;
     FdEmi   : TDateTime;
   public
     constructor Create; reintroduce;
@@ -1696,7 +1701,7 @@ type
     property tpDoc: TpcteTipoDocumentoAnterior read FtpDoc  write FtpDoc;
     property serie: String                     read Fserie  write Fserie;
     property subser: String                    read Fsubser write Fsubser;
-    property nDoc: Integer                     read FnDoc   write FnDoc;
+    property nDoc: string                      read FnDoc   write FnDoc;
     property dEmi: TDateTime                   read FdEmi   write FdEmi;
   end;
 
@@ -1959,6 +1964,7 @@ type
     FNroRegEstadual: String;
     FTAF: String;
     Fveic: TVeicOS;
+    FinfFretamento: TinfFretamento;
   public
     constructor Create(AOwner: TInfCTeNorm);
     destructor Destroy; override;
@@ -1966,6 +1972,7 @@ type
     property TAF: String            read FTAF            write FTAF;
     property NroRegEstadual: String read FNroRegEstadual write FNroRegEstadual;
     property veic: TVeicOS          read Fveic           write Fveic;
+    property infFretamento: TinfFretamento read FinfFretamento write FinfFretamento;
   end;
 
   TVeicOS = class(TPersistent)
@@ -2001,6 +2008,15 @@ type
     property IE: String             read FIE             write FIE;
     property UF: String             read FUF             write FUF;
     property tpProp: TpcteProp      read FtpProp         write FtpProp;
+  end;
+
+  TinfFretamento = class(TPersistent)
+  private
+    FtpFretamento: TtpFretamento;
+    FdhViagem: TDateTime;
+  published
+    property tpFretamento: TtpFretamento read FtpFretamento write FtpFretamento;
+    property dhViagem: TDateTime         read FdhViagem     write FdhViagem;
   end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2702,6 +2718,19 @@ type
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
   end;
 
+  TinfEmpresaSoft = class(TPersistent)
+  private
+    FCNPJCPF: String;
+    FxContato: String;
+    Femail: String;
+    Ffone: String;
+  published
+    property CNPJCPF: String  read FCNPJCPF  write FCNPJCPF;
+    property xContato: String read FxContato write FxContato;
+    property email: String    read Femail    write Femail;
+    property fone: String     read Ffone     write Ffone;
+  end;
+
 const
   CMUN_EXTERIOR : Integer = 9999999;
   XMUN_EXTERIOR : String  = 'EXTERIOR';
@@ -2735,6 +2764,8 @@ begin
   FinfCteAnu  := TInfCteAnu.Create;
   FautXML     := TautXMLCollection.Create(Self);
 
+  FinfEmpresaSoft := TinfEmpresaSoft.Create;
+
   FProcCTe   := TProcCTe.create;
   Fsignature := Tsignature.create;
 end;
@@ -2759,7 +2790,8 @@ begin
   FInfCTeComp.Free;
   FInfCTeAnu.Free;
   FautXML.Free;
-  
+  FinfEmpresaSoft.Free;
+
   FProcCTe.Free;
   Fsignature.Free;
 
@@ -5147,11 +5179,13 @@ end;
 constructor TRodoOS.Create(AOwner: TInfCTeNorm);
 begin
   Fveic := TVeicOS.Create(Self);
+  FinfFretamento := TinfFretamento.Create;
 end;
 
 destructor TRodoOS.Destroy;
 begin
   Fveic.Free;
+  FinfFretamento.Free;
 
   inherited;
 end;

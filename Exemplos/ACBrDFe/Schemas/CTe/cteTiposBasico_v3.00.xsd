@@ -2360,6 +2360,11 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
+						<xs:element name="infEmpresaSoft" type="TEmpresaSoft" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Informações da empresa (ou pessoa física) desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico</xs:documentation>
+							</xs:annotation>
+						</xs:element>
 					</xs:sequence>
 					<xs:attribute name="versao" use="required">
 						<xs:annotation>
@@ -3551,6 +3556,11 @@ Somente para Transporte de Valores</xs:documentation>
 									</xs:choice>
 								</xs:sequence>
 							</xs:complexType>
+						</xs:element>
+						<xs:element name="infEmpresaSoft" type="TEmpresaSoft" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Informações da empresa (ou pessoa física) desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico</xs:documentation>
+							</xs:annotation>
 						</xs:element>
 					</xs:sequence>
 					<xs:attribute name="versao" use="required">
@@ -4784,6 +4794,56 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 				<xs:annotation>
 					<xs:documentation>Quantidade rateada (Peso,Volume)</xs:documentation>
 				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TEmpresaSoft">
+		<xs:annotation>
+			<xs:documentation>Tipo Dados da Empresa de Software</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="CNPJ" type="TCnpj">
+					<xs:annotation>
+						<xs:documentation>CNPJ da pessoa jurídica desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico</xs:documentation>
+						<xs:documentation>Informar o CNPJ da pessoa jurídica desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CPF" type="TCpf">
+					<xs:annotation>
+						<xs:documentation>CPF da pessoa física desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico</xs:documentation>
+						<xs:documentation>No caso de pessoa física, informar o CPF do desenvolvedor do sistema utilizado na emissão do documento fiscal eletrônico.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="xContato">
+				<xs:annotation>
+					<xs:documentation>Nome da pessoa a ser contatada</xs:documentation>
+					<xs:documentation>Informar o nome da pessoa a ser contatada na empresa desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico. No caso de pessoa física, informar o respectivo nome.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="TString">
+						<xs:maxLength value="60"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="email" type="TEmail">
+				<xs:annotation>
+					<xs:documentation>Email da pessoa jurídica/física a ser contatada</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fone">
+				<xs:annotation>
+					<xs:documentation>Telefone da pessoa jurídica/física a ser contatada</xs:documentation>
+					<xs:documentation>Preencher com o Código DDD + número do telefone.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="preserve"/>
+						<xs:pattern value="[0-9]{7,12}"/>
+					</xs:restriction>
+				</xs:simpleType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>

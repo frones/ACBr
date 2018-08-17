@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/08/2018
+-- pnfsNFSeG --
+[*] Simplificação de código e correção na geração das Tags Iniciais e Finais de Cancelamento.
+Por: Italo Jurisato Junior
+
+17/08/2018
 -- pnfsLerListaNFSe --
 [*] https://www.projetoacbr.com.br/forum/topic/45658-problemas-com-smarapd/?do=findComment&comment=302379
 Por: Aquiniti

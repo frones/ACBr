@@ -2044,19 +2044,21 @@ begin
   begin
     if med.Count > 0 then
     begin
-      Result := sQuebraLinha;
       for i := 0 to med.Count - 1 do
       begin
         if NFe.infNFe.Versao >= 4 then
-          Result := Result + 'C.P. ANVISA '+ med.Items[i].cProdANVISA+ sQuebraLinha
+          Result := Result + IfThen(Result = '', '', sQuebraLinha) + 'C.P. ANVISA: '+ med.Items[i].cProdANVISA
         else
         begin
-          Result := Result + 'LOTE: ' + med.Items[i].nLote+ sQuebraLinha;
-          Result := Result + 'QTD: '  + FormatFloatBr(med.Items[i].qLote)+ sQuebraLinha;
-          Result := Result + 'FAB: '  + FormatDateBr(med.Items[i].dFab)+ sQuebraLinha;
-          Result := Result + 'VAL: '  + FormatDateBr(med.Items[i].dVal)+ sQuebraLinha;
+          Result := Result + IfThen(Result = '', '', sQuebraLinha) + 'LOTE: ' + med.Items[i].nLote;
+
+          if(med.Items[i].qLote <> qCom) Then
+            Result := Result + sQuebraLinha + 'QTD: '  + FormatFloatBr(med.Items[i].qLote);
+
+          Result := Result + sQuebraLinha + 'FAB: '  + FormatDateBr(med.Items[i].dFab);
+          Result := Result + sQuebraLinha + 'VAL: '  + FormatDateBr(med.Items[i].dVal);
         end;
-        Result := Result + IfThen( med.Items[i].vPMC  > 0, 'PMC: ' + FormatFloatBr(med.Items[i].vPMC) + ';' , '');
+        Result := Result + IfThen( med.Items[i].vPMC  > 0, sQuebraLinha + 'PMC: ' + FormatFloatBr(med.Items[i].vPMC), '') + ';';
       end;
     end;
   end;
@@ -2072,14 +2074,20 @@ begin
   begin
     if Rastro.Count > 0 then
     begin
-      Result := sQuebraLinha;
       for i := 0 to Rastro.Count - 1 do
       begin
-        Result := Result + 'LOTE: ' + rastro.Items[i].nLote+ sQuebraLinha;
-        Result := Result + 'QTD: '  + FormatFloatBr(rastro.Items[i].qLote)+ sQuebraLinha;
-        Result := Result + 'FAB: '  + FormatDateBr(rastro.Items[i].dFab)+ sQuebraLinha;
-        Result := Result + 'VAL: '  + FormatDateBr(rastro.Items[i].dVal)+ sQuebraLinha;
-        Result := Result + ACBrStr('C.AGREGAÇÃO: ' ) + rastro.Items[i].cAgreg+ ';';
+        Result := Result + IfThen(Result = '', '', sQuebraLinha) + 'LOTE: ' + rastro.Items[i].nLote;
+
+        if(rastro.Items[i].qLote <> qCom) Then
+          Result := Result + sQuebraLinha + 'QTD: '  + FormatFloatBr(rastro.Items[i].qLote);
+
+        Result := Result + sQuebraLinha + 'FAB: '  + FormatDateBr(rastro.Items[i].dFab);
+        Result := Result + sQuebraLinha + 'VAL: '  + FormatDateBr(rastro.Items[i].dVal);
+
+        if NaoEstaVazio(rastro.Items[i].cAgreg) Then
+          Result := Result + sQuebraLinha + ACBrStr('C.AGREGAÇÃO: ' ) + rastro.Items[i].cAgreg;
+
+        Result := Result + ';';
       end;
     end;
   end;

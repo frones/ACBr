@@ -2861,8 +2861,7 @@ begin
     FPDadosMsg := ConCadNFe.Gerador.ArquivoFormatoXML;
 
     if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) and
-      ((UpperCase(FUF) = 'RS') or (UpperCase(FUF) = 'MT') or
-       (Pos('svrs.rs.gov.br', FPURL) > 0)) then
+      (UpperCase(FUF) = 'MT') then
     begin
       FPDadosMsg := '<nfeDadosMsg>' + FPDadosMsg + '</nfeDadosMsg>';
     end;
@@ -2919,8 +2918,7 @@ begin
   inherited InicializarServico;
   FOldBodyElement := FPBodyElement;
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) and
-    ((UpperCase(FUF) = 'RS') or (UpperCase(FUF) = 'MT') or
-     (Pos('svrs.rs.gov.br', FPURL) > 0)) then
+    (UpperCase(FUF) = 'MT') then
   begin
     FPBodyElement := 'consultaCadastro';
   end;

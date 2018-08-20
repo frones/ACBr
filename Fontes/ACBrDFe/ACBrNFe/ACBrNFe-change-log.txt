@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/08/2018
+-- ACBrNFeWebServices --
+[*] Ajuste para serviço de consulta de cadastro NFe 4.00 RS e SVRS que tiveram
+    o WSDL do serviço corrigidos.
+  Por: BigWings
+  
 15/08/2018
 -- ACBrNFeNotasFiscais --
 [*] Ajuste na leitura do arquivo .INI grupo "detExport"

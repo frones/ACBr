@@ -705,9 +705,31 @@ begin
       imgLogo.Parent := pLogoeCliche;
     if ACBrNFeDANFCeFortes.Logo <> '' then
     begin
-      imgLogo.Height := ACBrNFeDANFCeFortes.TamanhoLogoHeight ;
-      imgLogo.Width := ACBrNFeDANFCeFortes.TamanhoLogoWidth ;
-      imgLogo.AutoSize := ACBrNFeDANFCeFortes.ExpandirLogoMarca ;
+      if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
+       begin
+        pLogoLateral.Height := ACBrNFeDANFCeFortes.TamanhoLogoHeight;
+        pLogoLateral.Width := ACBrNFeDANFCeFortes.TamanhoLogoWidth;
+        lNomeFantasia.Alignment := taLeftJustify;
+        lRazaoSocial.Alignment := taLeftJustify;
+        lEndereco.Alignment := taLeftJustify;
+        imgLogo.Parent := pLogoLateral;
+        imgLogo.AutoSize := False;
+       end
+      else
+       begin
+        lNomeFantasia.Alignment := taCenter;
+        lRazaoSocial.Alignment := taCenter;
+        lEndereco.Alignment := taCenter;
+        imgLogo.Parent := pLogoeCliche;
+        imgLogo.AutoSize := ACBrNFeDANFCeFortes.ExpandirLogoMarca;
+       end;
+
+      rlbDadosCliche.Margins.RightMargin := rlVenda.Margins.RightMargin;
+      rlbQRLateral.Margins.RightMargin := rlVenda.Margins.RightMargin;
+
+      imgLogo.Height := ACBrNFeDANFCeFortes.TamanhoLogoHeight;
+      imgLogo.Width := ACBrNFeDANFCeFortes.TamanhoLogoWidth;
+      imgLogo.Scaled := True;
 
       if (imgLogo.Width <= 0) or (imgLogo.Height <= 0) then
         imgLogo.AutoSize := True;

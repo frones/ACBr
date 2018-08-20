@@ -57,7 +57,10 @@ namespace ACBrLibMail.Demo
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
-            var ret = ACBrMail.MAIL_AddAddress(txtDestinatario.Text.ToUTF8(), txtDestinatario.Text.ToUTF8());
+            var ret = ACBrMail.MAIL_Clear();
+            ACBrMail.CheckResult(ret);
+
+            ret = ACBrMail.MAIL_AddAddress(txtDestinatario.Text.ToUTF8(), txtDestinatario.Text.ToUTF8());
             ACBrMail.CheckResult(ret);
 
             ret = ACBrMail.MAIL_SetSubject(txtAssunto.Text.ToUTF8());

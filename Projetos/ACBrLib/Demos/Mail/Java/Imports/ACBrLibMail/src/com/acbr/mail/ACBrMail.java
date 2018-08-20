@@ -9,8 +9,8 @@ import java.nio.charset.Charset;
 
 public interface ACBrMail extends Library {
 
-    public final static Charset UTF8 = Charset.forName("UTF-8");
-    public final static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
+    static Charset UTF8 = Charset.forName("UTF-8");
+    static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
     public final static ACBrMail INSTANCE = LibraryLoader.getInstance();
 
     class LibraryLoader {
@@ -50,6 +50,30 @@ public interface ACBrMail extends Library {
     int MAIL_ConfigLerValor(String eSessao, String eChave, ByteBuffer buffer, IntByReference bufferSize);
 
     int MAIL_ConfigGravarValor(String eSessao, String eChave, String valor);
+    
+    int MAIL_SetSubject(String eSubject);
+    
+    int MAIL_AddAddress(String eEmail, String eName);
+    
+    int MAIL_AddReplyTo(String eEmail, String eName);
+    
+    int MAIL_AddCC(String eEmail, String eName);
+    
+    int MAIL_AddBCC(String eEmail);
+    
+    int MAIL_ClearAttachment();
+    
+    int MAIL_AddAttachment(String eFileName, String eDescription, int aDisposition);
+    
+    int MAIL_AddBody(String eBody);
+    
+    int MAIL_AddAltBody(String eAltBody);
+    
+    int MAIL_SaveToFile(String eFileName);
+    
+    int MAIL_Clear();
+    
+    int MAIL_Send(Boolean UseThreadNow);
 
     public static String toUTF8(String value) {
         return new String(value.getBytes(UTF8));
@@ -76,5 +100,4 @@ public interface ACBrMail extends Library {
 
         throw new Exception(fromUTF8(buffer, bufferLen.getValue()));
     }
-
 }

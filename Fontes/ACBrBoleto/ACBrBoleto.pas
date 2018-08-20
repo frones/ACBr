@@ -2971,7 +2971,7 @@ begin
         wIndiceACBr  := IniBoletos.ReadInteger(CBanco,'IndiceACBr', 0 );
         wCNAB        := IniBoletos.ReadInteger(CBanco,'CNAB', Integer(LayoutRemessa) );
 
-        if ( wCNAB <> 0 ) then
+        if ( wCNAB = 0 ) then
            LayoutRemessa := c240
         else
            LayoutRemessa := c400;

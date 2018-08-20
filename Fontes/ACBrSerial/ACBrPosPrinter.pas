@@ -1554,40 +1554,55 @@ function TACBrPosPrinter.LerStatusImpressora(Tentativas: Integer
 var
   OldAtivo: Boolean;
   Falhas: Integer;
+  tpStatus: TACBrPosTipoStatus;
+  AStr: String;
 begin
   Tentativas := max(Tentativas, 1);
+  GravarLog('LerStatusImpressora( '+IntToStr(Tentativas)+' )');
 
-  if not (FDevice.IsSerialPort or FDevice.IsTCPPort or FDevice.IsDLLPort) then
-  begin
-    Result := [stNaoSerial];
-    Exit;
-  end;
-
-  OldAtivo := Ativo;
   try
-    Ativo := True;
-    Falhas := 0;
-
-    while Falhas < Tentativas do
+    if not (FDevice.IsSerialPort or FDevice.IsTCPPort or FDevice.IsDLLPort) then
     begin
-      Result := [];
-      FPosPrinterClass.LerStatus( Result );
-
-      if stErroLeitura in Result then
-        Inc( Falhas )
-      else
-        Break;
+      Result := [stNaoSerial];
+      Exit;
     end;
 
-    if ConfigGaveta.SinalInvertido then
-    begin
-      if (stGavetaAberta in Result) then
-        Result := Result - [stGavetaAberta]
-      else
-        Result := Result + [stGavetaAberta];
+    OldAtivo := Ativo;
+    try
+      Ativo := True;
+      Falhas := 0;
+
+      while Falhas < Tentativas do
+      begin
+        Result := [];
+        FPosPrinterClass.LerStatus( Result );
+
+        if stErroLeitura in Result then
+          Inc( Falhas )
+        else
+          Break;
+      end;
+
+      if ConfigGaveta.SinalInvertido then
+      begin
+        if (stGavetaAberta in Result) then
+          Result := Result - [stGavetaAberta]
+        else
+          Result := Result + [stGavetaAberta];
+      end;
+    finally
+      Ativo := OldAtivo;
     end;
   finally
-    Ativo := OldAtivo;
+    AStr := '';
+    For tpStatus := Low(TACBrPosTipoStatus) to High(TACBrPosTipoStatus) do
+    begin
+      if tpStatus in Result then
+        AStr := AStr + GetEnumName(TypeInfo(TACBrPosTipoStatus), integer(tpStatus) )+ ', ';
+    end;
+
+    if (AStr <> '') then
+      GravarLog('   '+AStr);
   end;
 end;
 
@@ -1595,6 +1610,7 @@ function TACBrPosPrinter.LerInfoImpressora: String;
 var
   OldAtivo: Boolean;
 begin
+  GravarLog('LerInfoImpressora');
   Result := '';
 
   OldAtivo := Ativo;
@@ -1605,6 +1621,8 @@ begin
       raise EPosPrinterException.Create(ACBrStr('Leitura de Informações só disponivel em Portas Seriais ou TCP'));
 
     Result := FPosPrinterClass.LerInfo;
+    if (Result <> '') then
+      GravarLog('   '+Result, True);
   finally
     Ativo := OldAtivo;
   end;

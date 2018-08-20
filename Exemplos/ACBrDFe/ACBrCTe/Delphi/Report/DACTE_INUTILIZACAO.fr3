@@ -1,23 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TfrxReport Version="5.2.3" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Padrão" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="42383,5721361227" ReportOptions.Description.Text="" ReportOptions.LastChange="42748,1613518981" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<TfrxReport Version="5.5.8" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="PadrÃ£o" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="42383,5721361227" ReportOptions.Description.Text="" ReportOptions.LastChange="43325,6463494213" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
   <Datasets>
-    <item DataSetName="Identificacao"/>
-    <item DataSetName="Emitente"/>
-    <item DataSetName="Destinatario"/>
-    <item DataSetName="DadosProdutos"/>
-    <item DataSetName="Parametros"/>
-    <item DataSetName="Duplicatas"/>
-    <item DataSetName="CalculoImposto"/>
-    <item DataSetName="Transportador"/>
-    <item DataSetName="Veiculo"/>
-    <item DataSetName="Volumes"/>
-    <item DataSetName="Eventos"/>
-    <item DataSetName="ISSQN"/>
-    <item DataSetName="Fatura"/>
-    <item DataSetName="LocalRetirada"/>
-    <item DataSetName="LocalEntrega"/>
-    <item DataSetName="InformacoesAdicionais"/>
-    <item DataSetName="Pagamento"/>
     <item DataSetName="Inutilizacao"/>
   </Datasets>
   <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>

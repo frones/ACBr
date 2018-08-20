@@ -1906,7 +1906,6 @@ end;
 
 procedure TACBrCTeDACTEFR.CarregaDadosInutilizacao;
 begin
-   CarregaParametros;
 
    with cdsInutilizacao do
    begin

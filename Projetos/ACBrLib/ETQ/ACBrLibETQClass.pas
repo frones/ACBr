@@ -278,7 +278,7 @@ function ETQ_IniciarEtiqueta: longint;
 begin
   try
     VerificarLibInicializada;
-    pLib.GravarLog('ETQ_AddReplyTo', logNormal);
+    pLib.GravarLog('ETQ_IniciarEtiqueta', logNormal);
 
     with TACBrLibETQ(pLib) do
     begin

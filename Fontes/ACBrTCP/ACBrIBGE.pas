@@ -210,6 +210,7 @@ type
     fOnGravarCache: TACBrIBGELerGravarCache;
     fOnLerCache: TACBrIBGELerGravarCache;
     function GetCacheArquivo: String;
+    procedure SetIgnorarCaixaEAcentos(AValue: Boolean);
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy ; override ;
@@ -247,7 +248,7 @@ type
       write fCacheDiasValidade default 0;  // 0-não expira
 
     property IgnorarCaixaEAcentos: Boolean read fIgnorarCaixaEAcentos
-      write fIgnorarCaixaEAcentos default False;
+      write SetIgnorarCaixaEAcentos default False;
 
     property OnBuscaEfetuada : TNotifyEvent read fOnBuscaEfetuada
        write fOnBuscaEfetuada ;
@@ -824,6 +825,15 @@ begin
   end;
 
   Result := fCacheArquivo;
+end;
+
+procedure TACBrIBGE.SetIgnorarCaixaEAcentos(AValue: Boolean);
+begin
+  if fIgnorarCaixaEAcentos = AValue then
+    Exit;
+
+  fIgnorarCaixaEAcentos := AValue;
+  fCacheLido := False;  // Força recarga do Cache, no formato correto
 end;
 
 constructor TACBrIBGE.Create(AOwner : TComponent) ;

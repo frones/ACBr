@@ -4642,9 +4642,9 @@ begin
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
-    if FProvedor = proISSNET then
-      FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe
-    else
+//    if FProvedor = proISSNET then
+//      FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe
+//    else
       FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
 
     FIDLote := GerarDadosMsg.IdLote;
@@ -4661,7 +4661,7 @@ begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
   case FProvedor of
-    proISSNET: FPDadosMsg := FTagI + FPDadosMsg + FTagF;
+//    proISSNET: FPDadosMsg := FTagI + FPDadosMsg + FTagF;
 
     proBetha: FPDadosMsg := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                   FPDadosMsg +

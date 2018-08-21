@@ -2108,6 +2108,7 @@ begin
          case FProvedor of
      //      proEGoverneISS: FTagI := '<' + FTagGrupo + ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
      //                                                ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+
            proEGoverneISS,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
@@ -4252,6 +4253,7 @@ begin
 
       proAgili,
       proAgiliv2,
+      proDeISS,
       proPVH,
       proTecnos,
       proSmarAPDABRASF,

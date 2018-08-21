@@ -386,6 +386,7 @@ begin
     proVitoria,
     proSmarAPDABRASF,
     proGiss,
+    proDeISS,
     proISSJoinville: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     proABase,
@@ -663,6 +664,9 @@ begin
     proCoplan, proSIAPNet, proSystemPro, proISSJoinville:
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
 
+    proDeISS:
+        Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="dec' + NFSe.InfID.ID + '"');
+
     proISSDigital:
         // alterado em 23/03/2018 para ver se funciona com a cidade de Cabo Frio
         // alterado em 09/05/2018 por italo (incluido novamente o namespace)
@@ -724,7 +728,7 @@ begin
       proProdata, proPronimv2, proPVH, proSaatri, proSisPMJP, proSiam, proVirtual,
       proVersaTecnologia, proVitoria, proWebISSv2, proActconv202, proSIAPNet,
       proBelford, proSystemPro, proSH3, proISSJoinville, proSmarAPDABRASF,
-      proElv2, proAsten, proGiss,
+      proElv2, proAsten, proGiss, proDeISS,
       proTiplanv2: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
     else
@@ -762,7 +766,7 @@ begin
         proABase, proBethav2, proFriburgo, proGovDigital, proNotaInteligente,
         proPronimv2, proVersaTecnologia, proWebISSv2, proActconv202, proBelford,
         proSH3, proSIAPNet, proISSJoinville, proSmarAPDABRASF, proELv2, proAsten,
-        proTiplanv2,
+        proTiplanv2, proDeISS,
         proGiss: Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
         proTecnos: Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
@@ -779,7 +783,7 @@ begin
          proSaatri, proSiam, proSisPMJP, proSystemPro, proVirtual, proVitoria,
          proVersaTecnologia, proWebISSv2, proActconv202, proSH3, proSIAPNet,
          proBelford, proISSJoinville, proSmarAPDABRASF, proAsten, proELv2,
-         proGiss, proTiplanv2] then
+         proGiss, proTiplanv2, proDeISS] then
         Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
       else
       begin

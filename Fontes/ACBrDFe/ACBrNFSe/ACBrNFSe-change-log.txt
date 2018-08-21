@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/08/2018
+-- ACBrNFSeWebServices --
+[*] Possível correção no método Cancelar NFS-e - provedor ISSNet.
+Por: Italo Jurisato Junior
 -- Diversos --
 [*] Implementação do provedor DeISS
 Por: Italo Jurisato Junior

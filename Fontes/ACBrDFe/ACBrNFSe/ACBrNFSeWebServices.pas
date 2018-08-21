@@ -4642,27 +4642,31 @@ begin
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
-    FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
+    if FProvedor = proISSNET then
+      FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe
+    else
+      FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
 
     FIDLote := GerarDadosMsg.IdLote;
   finally
     GerarDadosMsg.Free;
   end;
 
-  if (FProvedor = proNFSeBrasil)
-    then FPDadosMsg := NumeroNFSe;
-      
+  if (FProvedor = proNFSeBrasil) then
+    FPDadosMsg := NumeroNFSe;
+
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
-  begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
-//    AlterarURIAssinatura;
-  end;
+  case FProvedor of
+    proISSNET: FPDadosMsg := FTagI + FPDadosMsg + FTagF;
 
-  if FProvedor = proBetha then
-    FPDadosMsg := '<' + FTagGrupo + FNameSpaceDad + '>' + FPDadosMsg + '</' + FTagGrupo + '>';
+    proBetha: FPDadosMsg := '<' + FTagGrupo + FNameSpaceDad + '>' +
+                                  FPDadosMsg +
+                            '</' + FTagGrupo + '>';
+  end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingDados);
 

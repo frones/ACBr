@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2018
+[*] DoBoleto / ACBrMonitor1
+Ajuste na leitura do .ini e configurações em tela
+
+[*] DoACBrNFeUnit 
+Ajustes e validações nos métodos de envio de e-mail
+
 10/08/2018
 [-] DoACBrNFeUnit / DoACBrCTeUnit / DoACBrMDFeUnit
 Correção na mensagem para envio de e-mail

@@ -4193,7 +4193,7 @@ begin
       deBolDirRemessa.Text             := DirArquivoRemessa;
       deBolDirRetorno.Text             := DirArquivoRetorno;
       edtCodTransmissao.Text           := CodTransmissao;
-      cbxCNAB.ItemIndex                := CNAB;
+      cbxCNAB.ItemIndex                := StrToInt(IfThen(CNAB = 0, '1', '0'));
       chkLerCedenteRetorno.Checked     := LerCedenteRetorno;
     end;
 
@@ -5756,7 +5756,7 @@ begin
      begin
        DirArquivoRemessa        := PathWithoutDelim(deBolDirRemessa.Text);
        DirArquivoRetorno        := PathWithoutDelim(deBolDirRetorno.Text);
-       CNAB                     := cbxCNAB.ItemIndex;
+       CNAB                     := StrToInt(IfThen(cbxCNAB.ItemIndex = 0, '1', '0'));
        LerCedenteRetorno        := chkLerCedenteRetorno.Checked;
        CodTransmissao           := edtCodTransmissao.Text;
      end;

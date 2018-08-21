@@ -110,7 +110,7 @@ const
   CMetodoSetversaodf =                 'setversaodf';
   CMetodoLermdfe =                     'lermdfe';
   CMetodoMdfetotxt =                   'mdfetotxt';
-  CMetodoFileexist =                   'fileexist';
+  CMetodoFileexist =                   'fileexists';
   CMetodoCertificadodatavencimento =   'certificadodatavencimento';
   CMetodoGerarchave =                  'gerarchave';
   CMetodoVersao =                      'versao';

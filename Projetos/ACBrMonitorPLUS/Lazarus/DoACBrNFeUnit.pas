@@ -1747,11 +1747,9 @@ begin
           sAssunto := AssuntoNFe;
         end;
 
-        slCC.DelimitedText := sLineBreak;
-        slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+        QuebrarLinha(AEmailCopias, slCC);
 
-        slAnexos.DelimitedText := sLineBreak;
-        slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
+        QuebrarLinha(AAnexos, slAnexos);
 
         try
           ACBrNFe.NotasFiscais.Items[0].EnviarEmail(ADestinatario,
@@ -2068,10 +2066,7 @@ begin
           TACBrNFeDANFeRL(ACBrNFe.DANFE).MarcadAgua:= '';
       end;
 
-      if NaoEstaVazio(AProtocolo) then
-        ACBrNFe.DANFe.ProtocoloNFe := AProtocolo
-      else
-        ACBrNFe.DANFe.ProtocoloNFe := '';
+      ACBrNFe.DANFe.ProtocoloNFe :=  trim( AProtocolo );
 
       ACBrNFe.DANFE.ViaConsumidor := Consumidor;
 
@@ -2374,12 +2369,12 @@ begin
         ACBrNFe.WebServices.Retorno.Executar;
 
         RespostaRetorno;
-        RespostaNotasFiscais(AImprime, AImpressora, '0' , 0, False);
+        RespostaNotasFiscais(AImprime, AImpressora, '' , 0, False);
 
       end
       else
       if AImprime then //Sincrono
-        ImprimirNFe(AImpressora, '0', 0, False);
+        ImprimirNFe(AImpressora, '', 0, False);
 
 
     finally
@@ -2494,10 +2489,7 @@ begin
       if (ACopias > 0) then
         ACBrNFe.DANFe.NumCopias := ACopias;
 
-      if NaoEstaVazio(AProtocolo) then
-        ACBrNFe.DANFe.ProtocoloNFe := AProtocolo
-      else
-        ACBrNFe.DANFe.ProtocoloNFe := '';
+      ACBrNFe.DANFe.ProtocoloNFe := trim( AProtocolo );
 
       if (ACBrNFe.NotasFiscais.Items[0].NFe.Ide.modelo = 55) then
       begin
@@ -3138,11 +3130,9 @@ begin
           sAssunto := AssuntoNFe;
         end;
 
-        slCC.DelimitedText := sLineBreak;
-        slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+        QuebrarLinha(AEmailCopias, slCC);
 
-        slAnexos.DelimitedText := sLineBreak;
-        slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
+        QuebrarLinha(AAnexos, slAnexos);
 
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
         if  StringIsXML( APathXMLEvento ) then
@@ -3237,11 +3227,9 @@ begin
           sAssunto := AssuntoNFe;
         end;
 
-        slCC.DelimitedText := sLineBreak;
-        slCC.Text := StringReplace(AEmailCopias, ';', sLineBreak, [rfReplaceAll]);
+        QuebrarLinha(AEmailCopias, slCC);
 
-        slAnexos.DelimitedText := sLineBreak;
-        slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
+        QuebrarLinha(AAnexos, slAnexos);
 
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
         if  StringIsXML( APathXML ) then

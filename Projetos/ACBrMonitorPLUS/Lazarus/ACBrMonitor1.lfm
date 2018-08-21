@@ -384,10 +384,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 850
-        ActivePage = tsEscPos
+        ActivePage = tsMonitor
         Align = alClient
         Images = ImageList1
-        TabIndex = 19
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -6662,8 +6662,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 272
                 Height = 17
                 Top = 24
-                Width = 164
-                Caption = 'Número de Série(CAPICOM)'
+                Width = 194
+                Caption = 'Número de Série (Certificado A3)'
                 ParentColor = False
               end
               object lblSenha: TLabel
@@ -6724,8 +6724,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 272
                 Height = 17
                 Top = 72
-                Width = 130
-                Caption = 'Arquivo PFX(OpenSSL)'
+                Width = 164
+                Caption = 'Arquivo PFX (Certificado A1)'
                 ParentColor = False
               end
               object sbArquivoCert: TSpeedButton

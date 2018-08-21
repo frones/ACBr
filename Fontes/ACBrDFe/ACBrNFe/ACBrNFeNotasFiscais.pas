@@ -926,47 +926,49 @@ begin
             (nfe.Transp.Reboque.Count > 0)) then
           AdicionaErro('868-Rejeição: Grupos Veiculo Transporte e Reboque não devem ser informados');
 
-        GravaLog('Validar: 895-Valor do Desconto (vDesc, id:Y05) maior que o Valor Original da Fatura (vOrig, id:Y04)');
-        if (nfe.Cobr.Fat.vDesc > nfe.Cobr.Fat.vOrig) then
-          AdicionaErro('895-Rejeição: Valor do Desconto da Fatura maior que Valor Original da Fatura');
+        if NFe.Ide.finNFe in [fnNormal, fnComplementar] then
+        begin
+          GravaLog('Validar: 895-Valor do Desconto (vDesc, id:Y05) maior que o Valor Original da Fatura (vOrig, id:Y04)');
+          if (nfe.Cobr.Fat.vDesc > nfe.Cobr.Fat.vOrig) then
+            AdicionaErro('895-Rejeição: Valor do Desconto da Fatura maior que Valor Original da Fatura');
 
-        GravaLog('Validar: 896-Valor Líquido da Fatura (vLiq, id:Y06) difere do Valor Original da Fatura (vOrig; id:Y04) – Valor do Desconto (vDesc, id:Y05)');
-        if (nfe.Cobr.Fat.vLiq <> (nfe.Cobr.Fat.vOrig - nfe.Cobr.Fat.vDesc)) then
-          AdicionaErro('896-Rejeição: Valor Liquido da Fatura difere do Valor Original menos o Valor do Desconto');
+          GravaLog('Validar: 896-Valor Líquido da Fatura (vLiq, id:Y06) difere do Valor Original da Fatura (vOrig; id:Y04) – Valor do Desconto (vDesc, id:Y05)');
+          if (nfe.Cobr.Fat.vLiq <> (nfe.Cobr.Fat.vOrig - nfe.Cobr.Fat.vDesc)) then
+            AdicionaErro('896-Rejeição: Valor Liquido da Fatura difere do Valor Original menos o Valor do Desconto');
 
-        GravaLog('Validar: 897-Valor Líquido da Fatura/Valor Original da Fatura maior que o Valor Total da Nota Fiscal');
-        if (((nfe.Cobr.Fat.vLiq > 0) and (nfe.Cobr.Fat.vLiq > nfe.Total.ICMSTot.vNF)) or
-            ((nfe.Cobr.Fat.vOrig > nfe.Total.ICMSTot.vNF)))then
-          AdicionaErro('897-Rejeição: Valor da Fatura maior que Valor Total da NF-e');
+          GravaLog('Validar: 897-Valor Líquido da Fatura/Valor Original da Fatura maior que o Valor Total da Nota Fiscal');
+          if (((nfe.Cobr.Fat.vLiq > 0) and (nfe.Cobr.Fat.vLiq > nfe.Total.ICMSTot.vNF)) or
+              ((nfe.Cobr.Fat.vOrig > nfe.Total.ICMSTot.vNF)))then
+            AdicionaErro('897-Rejeição: Valor da Fatura maior que Valor Total da NF-e');
 
-         fsvDup := 0;
-         UltVencto := NFe.Ide.dEmi;
-         for I:=0 to nfe.Cobr.Dup.Count-1 do
-         begin
-           fsvDup := fsvDup + nfe.Cobr.Dup.Items[I].vDup;
+          fsvDup := 0;
+          UltVencto := NFe.Ide.dEmi;
+          for I:=0 to nfe.Cobr.Dup.Count-1 do
+          begin
+            fsvDup := fsvDup + nfe.Cobr.Dup.Items[I].vDup;
 
-           GravaLog('Validar: 857-Se informado o Grupo Parcelas de cobrança (tag:dup, Id:Y07), Número da parcela (nDup, id:Y08) não informado ou inválido.');
-           if EstaVazio(nfe.Cobr.Dup.Items[I].nDup) then
-             AdicionaErro('857-Rejeição: Número da parcela inválido ou não informado');
+            GravaLog('Validar: 857-Se informado o Grupo Parcelas de cobrança (tag:dup, Id:Y07), Número da parcela (nDup, id:Y08) não informado ou inválido.');
+            if EstaVazio(nfe.Cobr.Dup.Items[I].nDup) then
+              AdicionaErro('857-Rejeição: Número da parcela inválido ou não informado');
 
-           //898 - Verificar DATA de autorização
+            //898 - Verificar DATA de autorização
 
-           GravaLog('Validar: 894-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de Emissão (id:B09)');
-           if (nfe.Cobr.Dup.Items[I].dVenc < NFe.Ide.dEmi) then
-             AdicionaErro('894-Rejeição: Data de vencimento da parcela não informada ou menor que Data de Emissão');
+            GravaLog('Validar: 894-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de Emissão (id:B09)');
+            if (nfe.Cobr.Dup.Items[I].dVenc < NFe.Ide.dEmi) then
+              AdicionaErro('894-Rejeição: Data de vencimento da parcela não informada ou menor que Data de Emissão');
 
-           GravaLog('Validar: 867-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de vencimento da parcela anterior (dVenc, id:Y09)');
-           if (nfe.Cobr.Dup.Items[I].dVenc < UltVencto) then
-             AdicionaErro('867-Rejeição: Data de vencimento da parcela não informada ou menor que a Data de vencimento da parcela anterior');
+            GravaLog('Validar: 867-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de vencimento da parcela anterior (dVenc, id:Y09)');
+            if (nfe.Cobr.Dup.Items[I].dVenc < UltVencto) then
+              AdicionaErro('867-Rejeição: Data de vencimento da parcela não informada ou menor que a Data de vencimento da parcela anterior');
 
-           UltVencto := nfe.Cobr.Dup.Items[I].dVenc;
-         end;
+            UltVencto := nfe.Cobr.Dup.Items[I].dVenc;
+          end;
 
-         GravaLog('Validar: 872-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e a soma do valor das parcelas (vDup, id: Y10) difere do Valor Líquido da Fatura (vLiq, id:Y06).');
-         if (((nfe.Cobr.Fat.vLiq > 0) and (fsvDup < nfe.Cobr.Fat.vLiq)) or
-           (fsvDup < (nfe.Cobr.Fat.vOrig-nfe.Cobr.Fat.vDesc)))then
-           AdicionaErro('872-Rejeição: Soma do valor das parcelas difere do Valor Líquido da Fatura');
-
+          GravaLog('Validar: 872-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e a soma do valor das parcelas (vDup, id: Y10) difere do Valor Líquido da Fatura (vLiq, id:Y06).');
+          if (((nfe.Cobr.Fat.vLiq > 0) and (fsvDup < nfe.Cobr.Fat.vLiq)) or
+            (fsvDup < (nfe.Cobr.Fat.vOrig-nfe.Cobr.Fat.vDesc)))then
+            AdicionaErro('872-Rejeição: Soma do valor das parcelas difere do Valor Líquido da Fatura');
+        end;
       end;
     end;
 
@@ -1093,6 +1095,37 @@ begin
         begin
           if (NFe.infNFe.Versao >= 4) then
           begin
+ {           GravaLog('Validar: 508-'+IntToStr(I)+'-CST incompatível na operação com Não Contribuinte');
+            if (NFe.Emit.CRT <> crtSimplesNacional) and
+               (NFe.Dest.indIEDest = inNaoContribuinte) and
+               (NFe.Ide.tpNF <> tnEntrada) and
+               (pos(OnlyNumber(Prod.CFOP), 'XXXX,5915,5916,6915,6916,5912,5913') <= 0) and
+               (EstaVazio(Prod.veicProd.chassi) or (NaoEstaVazio(Prod.veicProd.chassi) and not (Prod.veicProd.tpOP in [toFaturamentoDireto, toVendaDireta]))) and
+               (not (Imposto.ICMS.CST in [cst00, cst20, cst40, cst41, cst60])) then
+              AdicionaErro('508-Rejeição: CST incompatível na operação com Não Contribuinte [nItem:'+IntToStr(I)+']');
+
+            GravaLog('Validar: 529-'+IntToStr(I)+'-CST incompatível na operação com Contribuinte Isento de Inscrição Estadual');
+            if (NFe.Dest.indIEDest = inIsento) and
+               ((Imposto.ICMS.CST = cst51) or
+               ((Imposto.ICMS.CST = cst50) and (pos(OnlyNumber(Prod.CFOP), 'XXXX,5915,5916,6915,6916,5912,5913') <= 0))) then
+             AdicionaErro('529-Rejeição: CST incompatível na operação com Contribuinte Isento de Inscrição Estadual [nItem:'+IntToStr(I)+']');
+
+            GravaLog('Validar: 600-'+IntToStr(I)+'-CSOSN incompatível na operação com Não Contribuinte');
+            if (NFe.Emit.CRT = crtSimplesNacional) and
+               (NFe.Dest.indIEDest = inNaoContribuinte) and
+               (NFe.Ide.tpNF <> tnEntrada) and
+               (pos(OnlyNumber(Prod.CFOP), 'XXXX,5915,5916,6915,6916,5912,5913') <= 0) and
+               (EstaVazio(Prod.veicProd.chassi) or (NaoEstaVazio(Prod.veicProd.chassi) and not (Prod.veicProd.tpOP in [toFaturamentoDireto, toVendaDireta]))) and
+               (not (Imposto.ICMS.CSOSN in [csosn102, csosn103, csosn300, csosn400, csosn500])) then
+              AdicionaErro('600-Rejeição: CSOSN incompatível na operação com Não Contribuinte [nItem:'+IntToStr(I)+']');
+
+            GravaLog('Validar: 806-'+IntToStr(I)+'-Operação com ICMS-ST sem informação do CEST');
+            if (not Imposto.ICMS.CST in [cstPart10,cstPart90]) and
+               EstaVazio(Prod.CEST) and
+               (((NFe.Emit.CRT = crtSimplesNacional) and (Imposto.ICMS.CSOSN in [csosn201, csosn202, csosn203, csosn500, csosn900])) or
+                ((NFe.Emit.CRT <> crtSimplesNacional) and (Imposto.ICMS.CST in [cst10, cst30, cst60, cst70, cst90]))) then
+              AdicionaErro('806-Rejeição: Operação com ICMS-ST sem informação do CEST [nItem:'+IntToStr(I)+']');           }
+
             GravaLog('Validar: 856-'+IntToStr(I)+'-Obrigatória a informação do campo vPart (id: LA03d) para produto "210203001 – GLP" (tag:cProdANP)');
             if (Prod.comb.cProdANP = 210203001) and (Prod.comb.vPart <= 0) then
               AdicionaErro('856-Rejeição: Campo valor de partida não preenchido para produto GLP [nItem:'+IntToStr(I)+']');
@@ -1108,7 +1141,7 @@ begin
         GravaLog('Validar: 528-'+IntToStr(I)+'-ICMS BC e Aliq');
         if (Imposto.ICMS.CST in [cst00,cst10,cst20,cst70]) and
            (NFe.Ide.finNFe = fnNormal) and
-	         (ComparaValor(Imposto.ICMS.vICMS, Imposto.ICMS.vBC * (Imposto.ICMS.pICMS/100), 0.01) <> 0) then
+	       (ComparaValor(Imposto.ICMS.vICMS, Imposto.ICMS.vBC * (Imposto.ICMS.pICMS/100), 0.01) <> 0) then
           AdicionaErro('528-Rejeição: Valor do ICMS difere do produto BC e Alíquota');
 
         GravaLog('Validar: 625-'+IntToStr(I)+'-Insc.SUFRAMA');
@@ -1365,20 +1398,34 @@ begin
     end
     else if (NFe.infNFe.Versao >= 4) then
     begin
-      fsvTotPag := 0;
-      for I := 0 to NFe.pag.Count-1 do
-      begin
-        fsvTotPag :=  fsvTotPag + NFe.pag[I].vPag;
+      case NFe.Ide.finNFe of
+        fnNormal, fnComplementar:
+        begin
+          fsvTotPag := 0;
+          for I := 0 to NFe.pag.Count-1 do
+          begin
+            fsvTotPag :=  fsvTotPag + NFe.pag[I].vPag;
+          end;
+
+          GravaLog('Validar: 767-Soma dos pagamentos');
+          if (fsvTotPag < NFe.Total.ICMSTot.vNF) then
+            AdicionaErro('767-Rejeição: Somatório dos pagamentos diferente do total da Nota Fiscal');
+
+          GravaLog('Validar: 869-Valor do troco');
+          if (NFe.Total.ICMSTot.vNF <> (fsvTotPag - NFe.pag.vTroco)) then
+            AdicionaErro('869-Rejeição: Valor do troco incorreto');
+        end;
+
+        fnDevolucao:
+        begin
+          GravaLog('Validar: 871-Informações de Pagamento');
+          for I := 0 to NFe.pag.Count-1 do
+          begin
+            if (NFe.pag[I].tPag <> fpSemPagamento) then
+              AdicionaErro('871-Rejeição: O campo Meio de Pagamento deve ser preenchido com a opção Sem Pagamento');
+          end;
+        end;
       end;
-
-      GravaLog('Validar: 767-Soma dos pagamentos');
-      if (fsvTotPag < NFe.Total.ICMSTot.vNF) then
-        AdicionaErro('767-Rejeição: Somatório dos pagamentos diferente do total da Nota Fiscal');
-
-      GravaLog('Validar: 869-Valor do troco');
-      if (NFe.Total.ICMSTot.vNF <> (fsvTotPag - NFe.pag.vTroco)) then
-        AdicionaErro('869-Rejeição: Valor do troco incorreto');
-
     end;
 
     //TODO: Regrar W01. Total da NF-e / ISSQN

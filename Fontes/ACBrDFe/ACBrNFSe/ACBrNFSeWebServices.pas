@@ -104,6 +104,7 @@ type
     FGerarDadosMsg: TNFSeG;
 
     FLoteNaoProc: Boolean;
+    FNameSpaceCan: String;
 
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -160,7 +161,8 @@ type
     property docElemento: String     read FdocElemento;
     property infElemento: String     read FinfElemento;
     property IDLote: String          read FIDLote;
-    property LoteNaoProc: Boolean      read FLoteNaoProc;
+    property LoteNaoProc: Boolean    read FLoteNaoProc;
+    property NameSpaceCan: String    read FNameSpaceCan;
 
     property vNotas: String   read FvNotas;
     property XML_NFSe: String read FXML_NFSe;
@@ -1959,6 +1961,8 @@ begin
 
     LayNfseCancelaNfse:
        begin
+         FNameSpaceCan := '';
+
          case FProvedor of
            proAbaco: begin
                        // Manaus
@@ -1992,9 +1996,13 @@ begin
            proNotaBlu: FTagI := '<' + FTagGrupo + FNameSpaceDad +
                              ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
 
-           proISSNet: FTagI := '<p1:' + FTagGrupo + ' xmlns:p1="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd" ' +
-                                                    'xmlns:tc="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" ' +
-                                                    'xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd">';
+           proISSNet: begin
+                        FNameSpaceCan := ' xmlns:p1="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd"' +
+                                         ' xmlns:tc="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"' +
+                                         ' xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"';
+
+                        FTagI := '<p1:' + FTagGrupo + FNameSpaceCan + '>';
+                      end;
 
            proBetha,
            proGoverna,
@@ -4401,7 +4409,7 @@ end;
 
 procedure TNFSeCancelarNfse.DefinirDadosMsg;
 var
-  i: Integer;
+  i, iPos: Integer;
   Gerador: TGerador;
   sAssinatura: String;
 begin
@@ -4455,7 +4463,8 @@ begin
 
       proGinfes: FdocElemento := FTagGrupo;
 
-      proISSNet: FdocElemento := FPrefixo3 + 'Pedido></p1:' + FTagGrupo;
+      proISSNET: FdocElemento := FPrefixo3 + 'Pedido';
+//      proISSNet: FdocElemento := FPrefixo3 + 'Pedido></p1:' + FTagGrupo;
 
       proSMARAPD: FdocElemento := 'nfd';
 
@@ -4465,8 +4474,6 @@ begin
     end;
 
     case FProvedor of
-//      proISSNet: FinfElemento := FPrefixo4 + 'InfPedidoCancelamento';
-
       proBetha,
       proISSe,
       proFiorilli,
@@ -4642,10 +4649,16 @@ begin
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
-//    if FProvedor = proISSNET then
-//      FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe
-//    else
+    case Fprovedor of
+      proISSNET: begin
+                   FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
+                   iPos := Pos('><tc:InfPedido', FPDadosMsg);
+                   FPDadosMsg := Copy(FPDadosMsg, 1, iPos -1) + FNameSpaceCan +
+                                 Copy(FPDadosMsg, iPos, Length(FPDadosMsg));
+                 end;
+    else
       FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
+    end;
 
     FIDLote := GerarDadosMsg.IdLote;
   finally
@@ -4661,7 +4674,10 @@ begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
   case FProvedor of
-//    proISSNET: FPDadosMsg := FTagI + FPDadosMsg + FTagF;
+    proISSNET: begin
+                 FPDadosMsg := StringReplace(FPDadosMsg, FNameSpaceCan, '', []);
+                 FPDadosMsg := FTagI + FPDadosMsg + FTagF;
+               end;
 
     proBetha: FPDadosMsg := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                   FPDadosMsg +

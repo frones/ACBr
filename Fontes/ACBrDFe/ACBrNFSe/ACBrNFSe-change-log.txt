@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/08/2018
+-- ACBrNFSeWebServices --
+[*] Possível correção na montagem do XML de cancelamento para a assinatura.
+Por: Italo Jurisato Junior
+
 21/08/2018
 -- ACBrNFSeWebServices --
 [*] Possível correção no método Cancelar NFS-e - provedor ISSNet.

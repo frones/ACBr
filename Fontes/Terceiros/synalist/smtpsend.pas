@@ -70,6 +70,10 @@ const
   cSmtpProtocol = '25';
 
 type
+  TDeliveryStatusNotificationEvents = (dsnSucecess, dsnFailure, dsnDelay);
+
+  TDeliveryStatusNotification = set of TDeliveryStatusNotificationEvents;
+
   {:@abstract(Implementation of SMTP and ESMTP procotol),
    include some ESMTP extensions, include SSL/TLS too.
 
@@ -78,6 +82,9 @@ type
 
    Are you missing properties for specify server address and port? Look to
    parent @link(TSynaClient) too!}
+
+  { TSMTPSend }
+
   TSMTPSend = class(TSynaClient)
   private
     FSock: TTCPBlockSocket;
@@ -95,6 +102,7 @@ type
     FSystemName: string;
     FAutoTLS: Boolean;
     FFullSSL: Boolean;
+    FDeliveryStatusNotification: TDeliveryStatusNotification;
     procedure EnhancedCode(const Value: string);
     function ReadResult: Integer;
     function AuthLogin: Boolean;
@@ -209,6 +217,12 @@ type
      SSL/TLS mode usualy using non-standard TCP port!}
     property FullSSL: Boolean read FFullSSL Write FFullSSL;
 
+    {:Set of Events where DSN-Delivery Status Notification must occurs. The
+     Default is a empty Set (no DSN)
+     https://www.lifewire.com/what-is-dsn-delivery-status-notification-for-smtp-email-3860942}
+    property DeliveryStatusNotification: TDeliveryStatusNotification
+      read FDeliveryStatusNotification write FDeliveryStatusNotification default [];
+
     {:Socket object used for TCP/IP operation. Good for seting OnStatus hook, etc.}
     property Sock: TTCPBlockSocket read FSock;
   end;
@@ -273,6 +287,7 @@ begin
   FSystemName := FSock.LocalName;
   FAutoTLS := False;
   FFullSSL := False;
+  FDeliveryStatusNotification := [];
 end;
 
 destructor TSMTPSend.Destroy;
@@ -498,17 +513,45 @@ begin
   s := 'MAIL FROM:<' + Value + '>';
   if FESMTPsize and (Size > 0) then
     s := s + ' SIZE=' + IntToStr(Size);
+
+  if FDeliveryStatusNotification <> [] then
+    s := s + ' RET=FULL';
+
   FSock.SendString(s + CRLF);
   Result := ReadResult div 100 = 2;
 end;
 
 function TSMTPSend.MailTo(const Value: string): Boolean;
+var
+  s, n: String;
+
+  procedure AddDSN(const AEvent: String);
+  begin
+    if (n <> '') then
+      n := n +',';
+
+    n := n + AEvent;
+  end;
+
 begin
-  FSock.SendString('RCPT TO:<' + Value + '>' + CRLF);
+  s := 'RCPT TO:<' + Value + '>';
+  n := '';
+
+  if dsnSucecess in FDeliveryStatusNotification then
+    AddDSN('SUCCESS');
+  if dsnFailure in FDeliveryStatusNotification then
+    AddDSN('FAILURE');
+  if dsnDelay in FDeliveryStatusNotification then
+    AddDSN('DELAY');
+
+  if (n <> '') then
+    s := s + ' NOTIFY='+n+' ORCPT=rfc822;'+Value;
+
+  FSock.SendString(s + CRLF);
   Result := ReadResult div 100 = 2;
 end;
 
-function TSMTPSend.MailData(const Value: TStrings): Boolean;
+function TSMTPSend.MailData(const Value: Tstrings): Boolean;
 var
   n: Integer;
   s: string;

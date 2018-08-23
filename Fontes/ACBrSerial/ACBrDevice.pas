@@ -1873,13 +1873,14 @@ end;
 
 procedure TACBrDevice.EnviaStringArquivo( const AString: AnsiString);
 Var
-  I, Max, NBytes , CreateModeFlag: Integer ;
+  I, Max, NBytes: Integer ;
   NomeArq: String;
   {$IFDEF Device_Stream}
-    FS     : TFileStream ;
-    Buffer : AnsiString ;
+    CreateModeFlag: Integer;
+    FS: TFileStream ;
+    Buffer: AnsiString ;
   {$ELSE}
-    ArqPrn : TextFile ;
+    ArqPrn: TextFile ;
   {$ENDIF}
 begin
   GravaLog('EnviaStringArquivo('+AString+')', True);

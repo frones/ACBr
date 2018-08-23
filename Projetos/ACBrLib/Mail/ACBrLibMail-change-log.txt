@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/08/2018
+--- ACBrLibMail ---
+[+] Adicionado a nova propriedade para confirmação de entrega.
+    Por: Rafael Dias
+
 15/08/2018
 --- ACBrLibMail ---
 [*] Melhorias no codigo para evitar duplicação de codigo.

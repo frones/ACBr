@@ -116,6 +116,7 @@ type
   private
     FCodificacao: TMimeChar;
     FConfirmacao: Boolean;
+    FConfirmacaoEntrega: Boolean;
     FConta: String;
     FIsHTML: Boolean;
     FNome: String;
@@ -149,6 +150,7 @@ type
     property SSL: Boolean read FSSL;
     property TLS: Boolean read FTLS;
     property Confirmacao: Boolean read FConfirmacao;
+    property ConfirmacaoEntrega: Boolean read FConfirmacaoEntrega;
     property SegundoPlano: Boolean read FSegundoPlano;
     property TimeOut: Integer read FTimeOut;
     property Tentativas: Integer read FTentativas;
@@ -338,6 +340,7 @@ begin
   FSSL := False;
   FTLS := False;
   FConfirmacao := False;
+  FConfirmacaoEntrega := False;
   FSegundoPlano := False;
   FTimeOut := 0;
   FTentativas := 0;
@@ -363,6 +366,7 @@ begin
   FTLS := AIni.ReadBool(CSessaoEmail, CChaveEmailTLS, FTLS);
   FTimeOut := AIni.ReadInteger(CSessaoEmail, CChaveTimeOut, FTimeOut);
   FConfirmacao := AIni.ReadBool(CSessaoEmail, CChaveEmailConfirmacao, FConfirmacao);
+  FConfirmacaoEntrega := AIni.ReadBool(CSessaoEmail, CChaveEmailConfirmacaoEntrega, FConfirmacaoEntrega);
   FSegundoPlano := AIni.ReadBool(CSessaoEmail, CChaveEmailSegundoPlano, FSegundoPlano);
   FTentativas := AIni.ReadInteger(CSessaoEmail, CChaveEmailTentativas, FTentativas);
   FIsHTML := AIni.ReadBool(CSessaoEmail, CChaveEmailIsHTML, FIsHTML);
@@ -382,6 +386,7 @@ begin
   AIni.WriteBool(CSessaoEmail, CChaveEmailTLS, FTLS);
   AIni.WriteInteger(CSessaoEmail, CChaveTimeOut, FTimeOut);
   AIni.WriteBool(CSessaoEmail, CChaveEmailConfirmacao, FConfirmacao);
+  AIni.WriteBool(CSessaoEmail, CChaveEmailConfirmacaoEntrega, FConfirmacaoEntrega);
   AIni.WriteBool(CSessaoEmail, CChaveEmailSegundoPlano, FSegundoPlano);
   AIni.WriteInteger(CSessaoEmail, CChaveEmailTentativas, FTentativas);
   AIni.WriteBool(CSessaoEmail, CChaveEmailIsHTML, FIsHTML);

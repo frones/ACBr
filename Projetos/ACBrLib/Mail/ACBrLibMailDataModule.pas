@@ -100,6 +100,7 @@ begin
     Port := IntToStr(pLibConfig.Email.Porta);
     Priority := pLibConfig.Email.Priority;
     ReadingConfirmation := pLibConfig.Email.Confirmacao;
+    DeliveryConfirmation := pLibConfig.Email.ConfirmacaoEntrega;
     TimeOut := pLibConfig.Email.TimeOut;
     Username := pLibConfig.Email.Usuario;
     UseThread := pLibConfig.Email.SegundoPlano;

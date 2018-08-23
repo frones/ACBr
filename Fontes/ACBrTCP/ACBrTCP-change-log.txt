@@ -37,6 +37,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/08/2018
+-- ACBrMail --
+[+] Adicionada a propriedade: "DeliveryConfirmation: boolean default False;"
+    Quando a mesma for True, o remetente receberá um e-mail de resposta do
+    Servidor SMTP, no caso de Entrega ou Falha. (DSN - Delivery Sstatus Notification)
+    (por: DSA)
+
+-- Terceiros/smtpsend --
+[*] Adicionada a propriedade "DeliveryStatusNotification: TDeliveryStatusNotification default []"
+    TDeliveryStatusNotificationEvents = (dsnSucecess, dsnFailure, dsnDelay);
+    TDeliveryStatusNotification = set of TDeliveryStatusNotificationEvents;
+    Set of Events where DSN-Delivery Status Notification must occurs. The
+    Default is a empty Set (no DSN)
+    https://www.lifewire.com/what-is-dsn-delivery-status-notification-for-smtp-email-3860942}
+    (por: DSA)
+
 21/08/2018
 -- ACBrIBGE --
 [-] Ajuste para ignorar Cache em memória, quando mudar o valor de "IgnorarCaixaEAcentos"

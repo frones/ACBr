@@ -146,6 +146,7 @@ type
     fArqMIMe             : TMemoryStream;
 
     fReadingConfirmation : boolean;
+    fDeliveryConfirmation: boolean;
     fOnMailProcess       : TACBrOnMailProcess;
     fOnMailException     : TACBrOnMailException;
 
@@ -240,6 +241,7 @@ type
     property SetTLS: boolean read GetAutoTLS write SetAutoTLS;
     property Priority: TMessPriority read GetPriority write SetPriority default MP_normal;
     property ReadingConfirmation: boolean read fReadingConfirmation write fReadingConfirmation default False;
+    property DeliveryConfirmation: boolean read fDeliveryConfirmation write fDeliveryConfirmation default False;
     property IsHTML: boolean read fIsHTML write fIsHTML default False;
     property UseThread: boolean read fUseThread write fUseThread default False;
     property TimeOut: Integer read fTimeOut write fTimeOut default 0;
@@ -506,6 +508,7 @@ begin
   fDefaultCharsetCode := UTF_8;
   fIDECharsetCode := {$IFDEF FPC}UTF_8{$ELSE}CP1252{$ENDIF};
   fReadingConfirmation := False;
+  fDeliveryConfirmation := False;
   fIsHTML := False;
   fUseThread := False;
   fAttempts := 3;
@@ -657,7 +660,10 @@ begin
     fMIMEMess.Header.ReplyTo := fReplyTo.DelimitedText;
 
   if fReadingConfirmation then
-    fMIMEMess.Header.CustomHeaders.Insert(0, 'Disposition-Notification-To: ' + fFrom);
+    fMIMEMess.Header.CustomHeaders.Insert(0, 'Disposition-Notification-To: ' + fMIMEMess.Header.From);
+
+  if fDeliveryConfirmation then
+    fMIMEMess.Header.CustomHeaders.Insert(0, 'Return-Receipt-To: ' + fMIMEMess.Header.From);
 
   fMIMEMess.Header.XMailer := 'Synapse - ACBrMail';
 
@@ -780,6 +786,14 @@ begin
 
     if vAttempts >= fAttempts then
       SmtpError('SMTP Error: Unable to Login.' + sLineBreak + SMTP.ResultString);
+  end;
+
+  if fDeliveryConfirmation then
+  begin
+    if (fSMTP.FindCap('DSN') = '') then
+      SmtpError('SMTP Error: The SMTP Server does not support Delivery Status Notification');
+
+    fSMTP.DeliveryStatusNotification := [dsnSucecess, dsnFailure];
   end;
 
   // Sending Mail Form //

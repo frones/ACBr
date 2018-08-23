@@ -79,7 +79,7 @@ const
   CChaveEmailSSL = 'SSL';
   CChaveEmailTLS = 'TLS';
   CChaveEmailConfirmacao = 'Confirmacao';
-  CChaveEmailConfirmacaoEntrega = 'FConfirmacaoEntrega';
+  CChaveEmailConfirmacaoEntrega = 'ConfirmacaoEntrega';
   CChaveEmailSegundoPlano = 'SegundoPlano';
   CChaveEmailTentativas = 'Tentativas';
   CChaveEmailIsHTML = 'IsHTML';

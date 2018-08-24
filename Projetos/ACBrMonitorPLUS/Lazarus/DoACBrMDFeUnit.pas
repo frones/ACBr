@@ -611,6 +611,7 @@ begin
       Resp.CNPJDest := CNPJDest;
       Resp.emailDest := emailDest;
       Resp.XML := XML;
+      Resp.Arquivo := NomeArquivo;
 
       fpCmd.Resposta := XMotivo + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
@@ -643,6 +644,7 @@ begin
       Resp.CNPJDest := CNPJDest;
       Resp.emailDest := emailDest;
       Resp.XML := XML;
+      Resp.Arquivo := NomeArquivo;
 
       fpCmd.Resposta := XMotivo + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/08/2018
+-- ACBrLibMDFeRespostas --
+[+] Acrescentado a propriedade Arquivo nas respostas de Cancelamento e Encerramento.
+Por: Italo Jurisato Junior
+
 14/05/2018
 --- ACBrLibMDFe ---
 

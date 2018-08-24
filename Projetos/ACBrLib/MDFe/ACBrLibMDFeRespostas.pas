@@ -112,6 +112,7 @@ type
 
   TCancelamentoResposta = class(TPadraoMDFeResposta)
   private
+    FArquivo: string;
     FchMDFe: string;
     FdhRecbto: TDateTime;
     FnProt: string;
@@ -135,6 +136,7 @@ type
     property CNPJDest: string read FCNPJDest write FCNPJDest;
     property EmailDest: string read FemailDest write FemailDest;
     property XML: string read Fxml write Fxml;
+    property Arquivo: string read FArquivo write FArquivo;
 
   end;
 
@@ -142,6 +144,7 @@ type
 
   TEncerramentoResposta = class(TPadraoMDFeResposta)
   private
+    FArquivo: string;
     FchMDFe: string;
     FdhRecbto: TDateTime;
     FnProt: string;
@@ -165,6 +168,7 @@ type
     property CNPJDest: string read FCNPJDest write FCNPJDest;
     property EmailDest: string read FemailDest write FemailDest;
     property XML: string read Fxml write Fxml;
+    property Arquivo: string read FArquivo write FArquivo;
 
   end;
 

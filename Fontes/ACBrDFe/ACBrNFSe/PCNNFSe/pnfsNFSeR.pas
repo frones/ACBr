@@ -3323,11 +3323,13 @@ begin
       NFSe.DataEmissao             := leitor.rCampo(tcDatHor, 'dtEmissaoNfs');
       NFSe.IdentificacaoRps.Numero := leitor.rCampo(tcStr, 'nrRps');
 
-      if Leitor.rExtrai(3, 'cancelamento') <> '' then
+      if (Leitor.rExtrai(1, 'cancelamento') <> '') or
+         (Leitor.rExtrai(3, 'cancelamento') <> '') then
       begin
         NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'dtCancelamento');
         NFSe.MotivoCancelamento        := Leitor.rCampo(tcStr, 'dsCancelamento');
         NFSe.Status := srCancelado;
+        NFSe.Cancelada := snSim;
       end;
     end
     else
@@ -3351,8 +3353,10 @@ begin
       NFSe.Servico.Valores.Aliquota := Leitor.rCampo(tcDe2, 'vlAliquota');
       NFSe.Servico.Valores.ValorISS := Leitor.rCampo(tcDe2, 'vlImposto');
       NFSe.Servico.Valores.BaseCalculo := Leitor.rCampo(tcDe2, 'vlBaseCalculo');
+
       if Leitor.rCampo(tcStr, 'isIssRetido') = 'Sim' then
-      NFSe.Servico.Valores.ValorISSRetido := Leitor.rCampo(tcDe2, 'vlImposto');
+        NFSe.Servico.Valores.ValorISSRetido := Leitor.rCampo(tcDe2, 'vlImposto');
+
       NFSe.Servico.Valores.ValorPIS := Leitor.rCampo(tcDe2, 'vlPis');
       NFSe.Servico.Valores.ValorCOFINS := Leitor.rCampo(tcDe2, 'vlCofins');
       NFSe.Servico.Valores.ValorIr := Leitor.rCampo(tcDe2, 'vlAliquotaIrpj');

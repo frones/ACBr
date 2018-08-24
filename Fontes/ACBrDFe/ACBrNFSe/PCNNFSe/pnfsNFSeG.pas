@@ -1785,7 +1785,7 @@ begin
     proTecnos: begin
                  TagI := '<' + Prefixo3 + 'Pedido>' +
                            '<' + Prefixo4 + 'InfPedidoCancelamento ' + aIdentificador +
-                             'xmlns="http://www.abrasf.org.br/nfse.xsd">';
+                             ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
                  TagF :=   '</' + Prefixo4 + 'InfPedidoCancelamento>' +
                          '</' + Prefixo3 + 'Pedido>';
                end;

@@ -47,9 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-23/08/2018
+24/08/2018
+-- Diversos --
+[*] Possível correção no método Cancelar NFS-e - provedor ISSNet.
+Por: Italo Jurisato Junior
+-- ACBrNFSeDANFSeFR --
+[*] https://www.projetoacbr.com.br/forum/topic/45898-erros-encontrados-memo9-erro-na-express%C3%A3o-identificacaonumeronfse-identifier-expected-ou-o-erro-memo2-erro-na-express%C3%A3o-parametrosnome_prefeitura-identifier-expected/
+Por: Paulo Vale
+
+24/08/2018
 -- ACBrNFSeWebServices --
-[*] Possível correção na montagem do XML de cancelamento para a assinatura.
+[*] Possível correção no método Cancelar NFS-e - provedor ISSNet.
 Por: Italo Jurisato Junior
 
 21/08/2018

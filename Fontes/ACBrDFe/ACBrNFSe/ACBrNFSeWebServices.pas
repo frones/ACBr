@@ -2009,7 +2009,10 @@ begin
            proSMARAPD,
            proIPM: FTagI := '';
          else
-           FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+           begin
+             FNameSpaceCan := FNameSpaceDad;
+             FTagI := '<' + FTagGrupo + FNameSpaceCan + '>';
+           end;
          end;
 
          if FProvedor in [proDBSeller] then
@@ -4463,6 +4466,7 @@ begin
 
       proGinfes: FdocElemento := FTagGrupo;
 
+      ProTecnos,
       proISSNET: FdocElemento := FPrefixo3 + 'Pedido';
 //      proISSNet: FdocElemento := FPrefixo3 + 'Pedido></p1:' + FTagGrupo;
 
@@ -4650,6 +4654,12 @@ begin
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     case Fprovedor of
+      ProTecnos: begin
+                   FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
+                   iPos := Pos('><InfPedido', FPDadosMsg);
+                   FPDadosMsg := Copy(FPDadosMsg, 1, iPos -1) + FNameSpaceCan +
+                                 Copy(FPDadosMsg, iPos, Length(FPDadosMsg));
+                 end;
       proISSNET: begin
                    FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
                    iPos := Pos('><tc:InfPedido', FPDadosMsg);
@@ -4674,6 +4684,7 @@ begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
   case FProvedor of
+    ProTecnos,
     proISSNET: begin
                  FPDadosMsg := StringReplace(FPDadosMsg, FNameSpaceCan, '', []);
                  FPDadosMsg := FTagI + FPDadosMsg + FTagF;

@@ -179,7 +179,7 @@ type
 
     procedure GerarInfCTeAnu;  // Nivel 1
     procedure GerarautXML;     // Nivel 1
-    procedure GerarInfEmpresaSoft; // Nivel 1
+    procedure GerarinfRespTec; // Nivel 1
 
     procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 
@@ -358,7 +358,7 @@ begin
 
   GerarautXML;
   if VersaoDF >= ve300 then
-    GerarInfEmpresaSoft;
+    GerarinfRespTec;
 end;
 
 procedure TCTeW.GerarIde;
@@ -2742,17 +2742,25 @@ begin
     Gerador.wAlerta('#415', 'autXML', DSC_AUTXML, ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
-procedure TCTeW.GerarInfEmpresaSoft;
+procedure TCTeW.GerarinfRespTec;
 begin
-  if (CTe.infEmpresaSoft.CNPJCPF <> '') then
+  if (CTe.infRespTec.CNPJ <> '') then
   begin
-    Gerador.wGrupo('infEmpresaSoft', '#081');
-    Gerador.wCampoCNPJCPF('#082', '#083', CTe.infEmpresaSoft.CNPJCPF);
-    Gerador.wCampo(tcStr, '#084', 'xContato', 02, 60, 1, CTe.infEmpresaSoft.xContato, DSC_XCONTATO);
-    Gerador.wCampo(tcStr, '#080', 'email   ', 06, 60, 1, CTe.infEmpresaSoft.email, DSC_EMAIL);
-    Gerador.wCampo(tcStr, '#080', 'fone    ', 07, 12, 1, CTe.infEmpresaSoft.fone, DSC_FONE);
-    Gerador.wGrupo('/infEmpresaSoft');
-   end;
+    Gerador.wGrupo('infRespTec', '#081');
+    Gerador.wCampoCNPJ('#82', CTe.infRespTec.CNPJ, CODIGO_BRASIL, True);
+    Gerador.wCampo(tcStr, '#083', 'xContato', 02, 60, 1, CTe.infRespTec.xContato, DSC_XCONTATO);
+    Gerador.wCampo(tcStr, '#084', 'email   ', 06, 60, 1, CTe.infRespTec.email, DSC_EMAIL);
+    Gerador.wCampo(tcStr, '#085', 'fone    ', 07, 12, 1, CTe.infRespTec.fone, DSC_FONE);
+
+    // Implementação Futura
+    if (CTe.infRespTec.idCSRT <> 0) and (CTe.infRespTec.hashCSRT <> '') then
+    begin
+//      Gerador.wCampo(tcInt, '#086', 'idCSRT  ', 03, 03, 1, CTe.infRespTec.idCSRT, DSC_IDCSRT);
+//      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, CTe.infRespTec.hashCSRT, DSC_HASHCSRT);
+    end;
+
+    Gerador.wGrupo('/infRespTec');
+  end;
 end;
 
 procedure TCTeW.GerarinfPercurso;

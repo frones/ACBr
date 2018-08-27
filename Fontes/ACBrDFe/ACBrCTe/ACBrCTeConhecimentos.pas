@@ -2758,15 +2758,17 @@ begin
         Inc(I);
       end;
 
-      sSecao := 'infEmpresaSoft';
+      sSecao := 'infRespTec';
       if INIRec.SectionExists(sSecao) then
       begin
-        with infEmpresaSoft do
+        with infRespTec do
         begin
-          CNPJCPF  := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+          CNPJ     := INIRec.ReadString(sSecao, 'CNPJ', '');
           xContato := INIRec.ReadString(sSecao, 'xContato', '');
           email    := INIRec.ReadString(sSecao, 'email', '');
           fone     := INIRec.ReadString(sSecao, 'fone', '');
+          idCSRT   := INIRec.ReadInteger(sSecao, 'idCSRT', 0);
+          hashCSRT := INIRec.ReadString(sSecao, 'hashCSRT', '');
         end;
       end;
      {$ENDIF}

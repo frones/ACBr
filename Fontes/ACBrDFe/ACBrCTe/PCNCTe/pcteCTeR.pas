@@ -1475,12 +1475,14 @@ begin
     inc(i01);
   end;
 
-  if Leitor.rExtrai(1, 'infEmpresaSoft') <> '' then
+  if Leitor.rExtrai(1, 'infRespTec') <> '' then
   begin
-    CTe.infEmpresaSoft.CNPJCPF  := Leitor.rCampoCNPJCPF;;
-    CTe.infEmpresaSoft.xContato := Leitor.rCampo(tcStr, 'xContato');
-    CTe.infEmpresaSoft.email    := Leitor.rCampo(tcStr, 'email');
-    CTe.infEmpresaSoft.fone     := Leitor.rCampo(tcStr, 'fone');
+    CTe.infRespTec.CNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+    CTe.infRespTec.xContato := Leitor.rCampo(tcStr, 'xContato');
+    CTe.infRespTec.email    := Leitor.rCampo(tcStr, 'email');
+    CTe.infRespTec.fone     := Leitor.rCampo(tcStr, 'fone');
+    CTe.infRespTec.idCSRT   := Leitor.rCampo(tcInt, 'idCSRT');
+    CTe.infRespTec.hashCSRT := Leitor.rCampo(tcStr, 'hashCSRT');
   end;
 
   (* Grupo da TAG <signature> *************************************************)

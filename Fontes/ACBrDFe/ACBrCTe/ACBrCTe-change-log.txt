@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/08/2018
+-- Diversos --
+[*] Alterações visando deixar o componente em conformidade com a nova versão da Nota Técnica 2018/002.
+  por: Italo Jurisato Junior
+
 21/08/2018
 -- Diversos --
 [*] Correção, pois estava gerando o grupo <infFretamento> de forma indevida.

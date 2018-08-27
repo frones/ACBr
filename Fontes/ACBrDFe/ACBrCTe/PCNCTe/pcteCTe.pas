@@ -293,7 +293,7 @@ type
   TautXMLCollection     = class;
   TautXMLCollectionItem = class;
 
-  TinfEmpresaSoft = class;
+  TinfRespTec = class;
 ////////////////////////////////////////////////////////////////////////////////
 
   TCTe = class(TPersistent)
@@ -316,7 +316,7 @@ type
     FinfCteComp: TInfCteComp;
     FInfCteAnu: TInfCteAnu;
     FautXML: TautXMLCollection;
-    FinfEmpresaSoft: TinfEmpresaSoft;
+    FinfRespTec: TinfRespTec;
 
     FProcCTe: TProcCTe;
     FSignature: TSignature;
@@ -346,7 +346,7 @@ type
 
     property autXML: TautXMLCollection read FautXML write SetautXML;
 
-    property infEmpresaSoft: TinfEmpresaSoft read FinfEmpresaSoft write FinfEmpresaSoft;
+    property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
 
     property procCTe: TProcCTe     read FProcCTe   write FProcCTe;
     property signature: Tsignature read Fsignature write Fsignature;
@@ -2718,17 +2718,21 @@ type
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
   end;
 
-  TinfEmpresaSoft = class(TPersistent)
+  TinfRespTec = class(TPersistent)
   private
-    FCNPJCPF: String;
+    FCNPJ: String;
     FxContato: String;
     Femail: String;
     Ffone: String;
+    FidCSRT: Integer;
+    FhashCSRT: String;
   published
-    property CNPJCPF: String  read FCNPJCPF  write FCNPJCPF;
+    property CNPJ: String     read FCNPJ     write FCNPJ;
     property xContato: String read FxContato write FxContato;
     property email: String    read Femail    write Femail;
     property fone: String     read Ffone     write Ffone;
+    property idCSRT: Integer  read FidCSRT   write FidCSRT;
+    property hashCSRT: String read FhashCSRT write FhashCSRT;
   end;
 
 const
@@ -2764,7 +2768,7 @@ begin
   FinfCteAnu  := TInfCteAnu.Create;
   FautXML     := TautXMLCollection.Create(Self);
 
-  FinfEmpresaSoft := TinfEmpresaSoft.Create;
+  FinfRespTec := TinfRespTec.Create;
 
   FProcCTe   := TProcCTe.create;
   Fsignature := Tsignature.create;
@@ -2790,7 +2794,7 @@ begin
   FInfCTeComp.Free;
   FInfCTeAnu.Free;
   FautXML.Free;
-  FinfEmpresaSoft.Free;
+  FinfRespTec.Free;
 
   FProcCTe.Free;
   Fsignature.Free;

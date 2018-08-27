@@ -1049,7 +1049,7 @@ begin
   Texto := StringReplace(Texto, '%Usuario%', UsuarioWeb, [rfReplaceAll]);
 
   if (SenhaWeb = '') and
-     (FProvedor in [proAgili, proAgiliv2, proCONAM, proFiorilli, proEL, proIPM,
+     (FProvedor in [proCONAM, proFiorilli, proEL, proIPM,
                     proNFSeBrasil, proSaatri, proSMARAPD, proSimplISS]) then
     GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
       ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebSenha seja informada.'));
@@ -2381,7 +2381,7 @@ begin
     // Agiliv2, CTA, Governa, proEGoverneISS
     ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
     if (FraseSecreta = '') and
-       (Provedor in [proAgiliv2, proCTA, proGoverna, proEgoverneISS]) then
+       (Provedor in [proAgili, proAgiliv2, proCTA, proGoverna, proEgoverneISS]) then
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
   end;

@@ -2360,9 +2360,9 @@ Onde v9.99 é a a designação genérica para a versão do arquivo. Por exemplo,
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element name="infEmpresaSoft" type="TEmpresaSoft" minOccurs="0">
+						<xs:element name="infRespTec" type="TRespTec" minOccurs="0">
 							<xs:annotation>
-								<xs:documentation>Informações da empresa (ou pessoa física) desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico</xs:documentation>
+								<xs:documentation>Informações do Responsável Técnico pela emissão do DF-e</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 					</xs:sequence>
@@ -3557,9 +3557,9 @@ Somente para Transporte de Valores</xs:documentation>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element name="infEmpresaSoft" type="TEmpresaSoft" minOccurs="0">
+						<xs:element name="infRespTec" type="TRespTec" minOccurs="0">
 							<xs:annotation>
-								<xs:documentation>Informações da empresa (ou pessoa física) desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico</xs:documentation>
+								<xs:documentation>Informações do Responsável Técnico pela emissão do DF-e</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 					</xs:sequence>
@@ -4797,25 +4797,17 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="TEmpresaSoft">
+	<xs:complexType name="TRespTec">
 		<xs:annotation>
-			<xs:documentation>Tipo Dados da Empresa de Software</xs:documentation>
+			<xs:documentation>Tipo Dados da Responsável Técnico</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:choice>
-				<xs:element name="CNPJ" type="TCnpj">
-					<xs:annotation>
-						<xs:documentation>CNPJ da pessoa jurídica desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico</xs:documentation>
-						<xs:documentation>Informar o CNPJ da pessoa jurídica desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="CPF" type="TCpf">
-					<xs:annotation>
-						<xs:documentation>CPF da pessoa física desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico</xs:documentation>
-						<xs:documentation>No caso de pessoa física, informar o CPF do desenvolvedor do sistema utilizado na emissão do documento fiscal eletrônico.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:choice>
+			<xs:element name="CNPJ" type="TCnpj">
+				<xs:annotation>
+					<xs:documentation>CNPJ da pessoa jurídica responsável técnica pelo sistema utilizado na emissão do documento fiscal eletrônico</xs:documentation>
+					<xs:documentation>Informar o CNPJ da pessoa jurídica desenvolvedora do sistema utilizado na emissão do documento fiscal eletrônico.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="xContato">
 				<xs:annotation>
 					<xs:documentation>Nome da pessoa a ser contatada</xs:documentation>
@@ -4830,12 +4822,12 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 			</xs:element>
 			<xs:element name="email" type="TEmail">
 				<xs:annotation>
-					<xs:documentation>Email da pessoa jurídica/física a ser contatada</xs:documentation>
+					<xs:documentation>Email da pessoa jurídica a ser contatada</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="fone">
 				<xs:annotation>
-					<xs:documentation>Telefone da pessoa jurídica/física a ser contatada</xs:documentation>
+					<xs:documentation>Telefone da pessoa jurídica a ser contatada</xs:documentation>
 					<xs:documentation>Preencher com o Código DDD + número do telefone.</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
@@ -4845,6 +4837,31 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:sequence minOccurs="0">
+				<xs:element name="idCSRT">
+					<xs:annotation>
+						<xs:documentation>Identificador do código de segurança do responsável técnico</xs:documentation>
+						<xs:documentation>Identificador do CSRT utilizado para geração do hash</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="[0-9]{3}"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="hashCSRT">
+					<xs:annotation>
+						<xs:documentation>Hash do token do código de segurança do responsável técnico</xs:documentation>
+						<xs:documentation>O hashCSRT é o resultado das funções SHA-1 e base64 do token CSRT fornecido pelo fisco + chave de acesso do DF-e. (Implementação em futura NT)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:base64Binary">
+							<xs:minLength value="28"/>
+							<xs:maxLength value="28"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="TCfop">

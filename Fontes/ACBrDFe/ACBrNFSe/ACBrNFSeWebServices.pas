@@ -2378,9 +2378,9 @@ begin
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebFraseSecr seja informada.'));
 
-    // Agiliv2, CTA, Governa, proEGoverneISS
+    // Agili, Agiliv2, CTA, Governa, proEGoverneISS
     ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
-    if (FraseSecreta = '') and
+    if (ChaveAcessoPrefeitura = '') and
        (Provedor in [proAgili, proAgiliv2, proCTA, proGoverna, proEgoverneISS]) then
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));

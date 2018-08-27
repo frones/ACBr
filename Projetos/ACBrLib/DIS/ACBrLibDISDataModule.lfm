@@ -1,0 +1,15 @@
+object LibDISDM: TLibDISDM
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  OldCreateOrder = False
+  Height = 150
+  HorizontalOffset = 257
+  VerticalOffset = 127
+  Width = 150
+  PPI = 96
+  object ACBrDIS1: TACBrDIS
+    Porta = 'COM1'
+    left = 41
+    top = 25
+  end
+end

@@ -1,0 +1,15 @@
+object LibCHQDM: TLibCHQDM
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  OldCreateOrder = False
+  Height = 150
+  HorizontalOffset = 257
+  VerticalOffset = 127
+  Width = 150
+  PPI = 96
+  object ACBrCHQ1: TACBrCHQ
+    Porta = 'COM1'
+    left = 58
+    top = 38
+  end
+end

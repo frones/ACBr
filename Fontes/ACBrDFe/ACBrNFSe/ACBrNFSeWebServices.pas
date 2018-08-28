@@ -4453,6 +4453,7 @@ begin
       FTagGrupo := FPrefixo3 + FTagGrupo;
 
     case FProvedor of
+      proISSe,
       proBetha: FdocElemento := 'Pedido';
 
       proDBSeller: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo + '></CancelarNfse';
@@ -4654,6 +4655,7 @@ begin
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     case Fprovedor of
+      proISSe,
       ProTecnos: begin
                    FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
                    iPos := Pos('><InfPedido', FPDadosMsg);
@@ -4684,6 +4686,7 @@ begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
   case FProvedor of
+    proISSe,
     ProTecnos,
     proISSNET: begin
                  FPDadosMsg := StringReplace(FPDadosMsg, FNameSpaceCan, '', []);

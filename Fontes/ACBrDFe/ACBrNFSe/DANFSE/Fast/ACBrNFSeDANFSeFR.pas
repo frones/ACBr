@@ -223,6 +223,7 @@ var
 begin
   Result := False;
 
+	SetDataSetsToFrxReport;
 	if Trim(FastFile) <> '' then
   begin
     if not (uppercase(copy(FastFile,length(FastFile)-3,4))='.FR3') then
@@ -243,11 +244,7 @@ begin
   end
   else
     raise EACBrNFSeDANFSeFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
-
-  //Alterada por Paulo Vale em 21/08/2018
-  CriarDataSetsFrx;         // <- Cria os datasets
-	SetDataSetsToFrxReport;   // <- Preenche as informações
-
+		
   frxReport.PrintOptions.Copies     := NumCopias;
   frxReport.PreviewOptions.AllowEdit := False;
   frxReport.PrintOptions.ShowDialog := MostrarPreview;
@@ -270,7 +267,7 @@ begin
     begin
       for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
       begin
-
+        
         CarregaDados(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I].NFSe);
 
         if (I > 0) then
@@ -289,7 +286,7 @@ begin
   frxReport := TfrxReport.Create(nil);
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
     pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];
-	frxReport.EngineOptions.UseGlobalDataSetList := False;
+	frxReport.EngineOptions.UseGlobalDataSetList := False; 
   with frxReport do
   begin
     Tag := 1;
@@ -854,8 +851,6 @@ begin
 
     with ANFSe do
     begin
-
-//      FieldByName('Nome_Prefeitura').AsString := Prefeitura;  //DANFSeClassOwner.Prefeitura
       FieldByName('OutrasInformacoes').AsString := OutrasInformacoes;
       FieldByName('NaturezaOperacao').AsString  := NaturezaOperacaoDescricao(NaturezaOperacao);
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2018
+-- ACBrNFSeWebServices/pnfsNFSeG --
+[*] Ficou faltando na assinatura o valor do ID no Cancelar NFS-e - provedor ISSe.
+Por: Italo Jurisato Junior
+
 28/08/2018
 -- ACBrNFSeWebServices --
 [*] Possível correção no método Cancelar NFS-e - provedor ISSe.

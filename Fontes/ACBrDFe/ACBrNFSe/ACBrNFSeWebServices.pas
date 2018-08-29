@@ -2345,6 +2345,7 @@ begin
     CodMunicipio  := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
     Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
     VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
+    IdCanc        := FURI; // URI de Cancelamento
 
     CNPJPrefeitura := OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura);
 

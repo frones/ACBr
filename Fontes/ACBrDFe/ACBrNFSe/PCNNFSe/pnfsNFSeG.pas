@@ -47,6 +47,7 @@ type
   private
     aVersao: String;
     aIdentificador: String;
+    aIdentificadorCanc: String;
     aNameSpace: String;
 
     FGerador: TGerador;
@@ -129,6 +130,7 @@ type
 
     // Layout - EL
     FHashIdent: String;
+    FIdCanc: String;
 
     procedure SetAtributos;
     function GetIdEntidadeEquiplano(const IBGE: Integer): String;
@@ -238,6 +240,7 @@ type
     property HashIdent: String read FHashIdent write FHashIdent;
 
     property IdLote: String read FIdLote write FIdLote;
+    property IdCanc: String read FIdCanc write FIdCanc;
    end;
 
 implementation
@@ -357,6 +360,15 @@ begin
   end
   else
     aIdentificador := '';
+
+  // Atributo Id do Cancelamento ===============================================
+  if Identificador <> '' then
+  begin
+    aIdentificadorCanc := ' ' + Identificador + '="' + IdCanc + '"';
+
+  end
+  else
+    aIdentificadorCanc := '';
 
   // Redefine o Profixo 3 ======================================================
   if Provedor in [proBetha, proBethav2, proSpeedGov] then
@@ -1784,7 +1796,7 @@ begin
 
     proTecnos: begin
                  TagI := '<' + Prefixo3 + 'Pedido>' +
-                           '<' + Prefixo4 + 'InfPedidoCancelamento ' + aIdentificador +
+                           '<' + Prefixo4 + 'InfPedidoCancelamento ' + aIdentificadorCanc +
                              ' xmlns="http://www.abrasf.org.br/nfse.xsd">';
                  TagF :=   '</' + Prefixo4 + 'InfPedidoCancelamento>' +
                          '</' + Prefixo3 + 'Pedido>';
@@ -1792,7 +1804,7 @@ begin
 
     proSimplISS: begin
                    TagI := '<' + Prefixo3 + 'Pedido' + FNameSpaceDad + '>' +
-                             '<' + Prefixo4 + 'InfPedidoCancelamento' + aIdentificador + '>';
+                             '<' + Prefixo4 + 'InfPedidoCancelamento' + aIdentificadorCanc + '>';
                    TagF :=   '</' + Prefixo4 + 'InfPedidoCancelamento>' +
                            '</' + Prefixo3 + 'Pedido>';
                  end;
@@ -1817,7 +1829,7 @@ begin
   else
     begin
       TagI := '<' + Prefixo3 + 'Pedido>' +
-                '<' + Prefixo4 + 'InfPedidoCancelamento' + aIdentificador + '>';
+                '<' + Prefixo4 + 'InfPedidoCancelamento' + aIdentificadorCanc + '>';
       TagF :=   '</' + Prefixo4 + 'InfPedidoCancelamento>' +
                '</' + Prefixo3 + 'Pedido>';
     end;

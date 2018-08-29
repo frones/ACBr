@@ -2,8 +2,8 @@ object frmPrincipal: TfrmPrincipal
   Left = 0
   Top = 0
   Caption = 'ACBr Bloco X - Demonstra'#231#227'o'
-  ClientHeight = 220
-  ClientWidth = 729
+  ClientHeight = 350
+  ClientWidth = 721
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -41,7 +41,7 @@ object frmPrincipal: TfrmPrincipal
     Width = 226
     Height = 71
     Caption = 'Gerar XML Estoque'
-    TabOrder = 0
+    TabOrder = 1
     OnClick = Button1Click
   end
   object Edit1: TEdit
@@ -49,7 +49,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 50
     Width = 241
     Height = 21
-    TabOrder = 1
+    TabOrder = 0
   end
   object Edit2: TEdit
     Left = 30
@@ -67,13 +67,21 @@ object frmPrincipal: TfrmPrincipal
     TabOrder = 3
     OnClick = Button2Click
   end
+  object Button3: TButton
+    Left = 465
+    Top = 252
+    Width = 226
+    Height = 71
+    Caption = 'Validar e enviar XML'
+    TabOrder = 4
+    OnClick = Button3Click
+  end
   object ACBrBlocoX1: TACBrBlocoX
-    ECF.Convenio0909 = False
-    Configuracoes.VersaoER = erv0204
-    Configuracoes.Geral.SSLLib = libNone
-    Configuracoes.Geral.SSLCryptLib = cryNone
-    Configuracoes.Geral.SSLHttpLib = httpNone
-    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.VersaoER = erv0205
+    Configuracoes.Geral.SSLLib = libWinCrypt
+    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
+    Configuracoes.Geral.SSLHttpLib = httpWinHttp
+    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
@@ -88,5 +96,12 @@ object frmPrincipal: TfrmPrincipal
     Title = 'Salvar arquivo'
     Left = 230
     Top = 135
+  end
+  object OpenDialog1: TOpenDialog
+    DefaultExt = '.xml'
+    Filter = 'arquivos xml|*.xml'
+    Title = 'Validar e enviar'
+    Left = 150
+    Top = 140
   end
 end

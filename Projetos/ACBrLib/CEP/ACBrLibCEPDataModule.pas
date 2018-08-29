@@ -31,31 +31,88 @@
 
 {******************************************************************************}
 
-{$I ACBr.inc}
+unit ACBrLibCEPDataModule;
 
-unit ACBrLibDISConsts;
+{$mode delphi}
 
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrCEP;
 
-const
-  CLibDISNome = 'ACBrLibDIS';
-  CLibDISVersao = '0.0.1';
+type
 
-  CSessaoDIS = 'DIS';
+  { TLibCEPDM }
 
-  CChaveModelo = 'Modelo';
-  CChaveAlinhamento = 'Alinhamento';
-  CChaveLinhasCount = 'LinhasCount';
-  CChaveColunas = 'Colunas';
-  CChaveIntervalo = 'Intervalo';
-  CChavePassos = 'Passos';
-  CChaveIntervaloEnvioBytes = 'IntervaloEnvioBytes';
-  CChaveRemoveAcentos = 'RemoveAcentos';
+  TLibCEPDM = class(TDataModule)
+    ACBrCEP1: TACBrCEP;
+
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+  private
+    FLock: TCriticalSection;
+
+  public
+    procedure AplicarConfiguracoes;
+    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
+    procedure Travar;
+    procedure Destravar;
+  end;
 
 implementation
+
+uses
+  ACBrUtil,
+  ACBrLibCEPConfig, ACBrLibComum, ACBrLibCEPClass;
+
+{$R *.lfm}
+
+{ TLibCEPDM }
+
+procedure TLibCEPDM.DataModuleCreate(Sender: TObject);
+begin
+  FLock := TCriticalSection.Create;
+end;
+
+procedure TLibCEPDM.DataModuleDestroy(Sender: TObject);
+begin
+  FLock.Destroy;
+end;
+
+procedure TLibCEPDM.AplicarConfiguracoes;
+var
+  pLibConfig: TLibCEPConfig;
+begin
+  pLibConfig := TLibCEPConfig(TACBrLibCEP(pLib).Config);
+
+  with ACBrCEP1 do
+  begin
+    WebService    := pLibConfig.CEPConfig.WebService;
+    ChaveAcesso   := pLibConfig.CEPConfig.ChaveAcesso;
+    Usuario       := pLibConfig.CEPConfig.Usuario;
+    Senha         := pLibConfig.CEPConfig.Senha;
+    PesquisarIBGE := pLibConfig.CEPConfig.PesquisarIBGE;
+  end;
+end;
+
+procedure TLibCEPDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
+  Traduzir: Boolean);
+begin
+  if Assigned(pLib) then
+    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+end;
+
+procedure TLibCEPDM.Travar;
+begin
+  GravarLog('Travar', logParanoico);
+  FLock.Acquire;
+end;
+
+procedure TLibCEPDM.Destravar;
+begin
+  GravarLog('Destravar', logParanoico);
+  FLock.Release;
+end;
 
 end.
 

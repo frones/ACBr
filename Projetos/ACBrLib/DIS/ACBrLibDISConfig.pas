@@ -131,7 +131,7 @@ begin
   FIntervalo           := AIni.ReadInteger(CSessaoDIS, CChaveIntervalo, FIntervalo);
   FPassos              := AIni.ReadInteger(CSessaoDIS, CChavePassos, FPassos);
   FIntervaloEnvioBytes := AIni.ReadInteger(CSessaoDIS, CChaveIntervaloEnvioBytes, FIntervaloEnvioBytes);
-  FRemoveAcentos       := AIni.ReadBool(CSessaoDIS, CChaveIntervaloRemoveAcentos, FRemoveAcentos);
+  FRemoveAcentos       := AIni.ReadBool(CSessaoDIS, CChaveRemoveAcentos, FRemoveAcentos);
 end;
 
 procedure TDISConfig.GravarIni(const AIni: TCustomIniFile);
@@ -144,7 +144,7 @@ begin
   AIni.WriteInteger(CSessaoDIS, CChaveIntervalo, FIntervalo);
   AIni.WriteInteger(CSessaoDIS, CChavePassos, FPassos);
   AIni.WriteInteger(CSessaoDIS, CChaveIntervaloEnvioBytes, FIntervaloEnvioBytes);
-  AIni.WriteBool(CSessaoDIS, CChaveIntervaloRemoveAcentos, FRemoveAcentos);
+  AIni.WriteBool(CSessaoDIS, CChaveRemoveAcentos, FRemoveAcentos);
 end;
 
 { TLibDISConfig }

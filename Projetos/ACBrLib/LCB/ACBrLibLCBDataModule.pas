@@ -31,31 +31,90 @@
 
 {******************************************************************************}
 
-{$I ACBr.inc}
+unit ACBrLibLCBDataModule;
 
-unit ACBrLibDISConsts;
+{$mode delphi}
 
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrLCB;
 
-const
-  CLibDISNome = 'ACBrLibDIS';
-  CLibDISVersao = '0.0.1';
+type
 
-  CSessaoDIS = 'DIS';
+  { TLibLCBDM }
 
-  CChaveModelo = 'Modelo';
-  CChaveAlinhamento = 'Alinhamento';
-  CChaveLinhasCount = 'LinhasCount';
-  CChaveColunas = 'Colunas';
-  CChaveIntervalo = 'Intervalo';
-  CChavePassos = 'Passos';
-  CChaveIntervaloEnvioBytes = 'IntervaloEnvioBytes';
-  CChaveRemoveAcentos = 'RemoveAcentos';
+  TLibLCBDM = class(TDataModule)
+    ACBrLCB1: TACBrLCB;
+
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+  private
+    FLock: TCriticalSection;
+
+  public
+    procedure AplicarConfiguracoes;
+    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
+    procedure Travar;
+    procedure Destravar;
+  end;
 
 implementation
+
+uses
+  ACBrUtil,
+  ACBrLibLCBConfig, ACBrLibComum, ACBrLibLCBClass;
+
+{$R *.lfm}
+
+{ TLibLCBDM }
+
+procedure TLibLCBDM.DataModuleCreate(Sender: TObject);
+begin
+  FLock := TCriticalSection.Create;
+end;
+
+procedure TLibLCBDM.DataModuleDestroy(Sender: TObject);
+begin
+  FLock.Destroy;
+end;
+
+procedure TLibLCBDM.AplicarConfiguracoes;
+var
+  pLibConfig: TLibLCBConfig;
+begin
+  pLibConfig := TLibLCBConfig(TACBrLibLCB(pLib).Config);
+
+  with ACBrLCB1 do
+  begin
+    Porta           := pLibConfig.LCBConfig.Porta;
+    ExcluirSufixo   := pLibConfig.LCBConfig.ExcluirSufixo;
+    UsarFila        := pLibConfig.LCBConfig.UsarFila;
+    PrefixoAExcluir := pLibConfig.LCBConfig.PrefixoAExcluir;
+    Sufixo          := pLibConfig.LCBConfig.Sufixo;
+    FilaMaxItens    := pLibConfig.LCBConfig.FilaMaxItens;
+    Intervalo       := pLibConfig.LCBConfig.Intervalo;
+  end;
+end;
+
+procedure TLibLCBDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
+  Traduzir: Boolean);
+begin
+  if Assigned(pLib) then
+    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+end;
+
+procedure TLibLCBDM.Travar;
+begin
+  GravarLog('Travar', logParanoico);
+  FLock.Acquire;
+end;
+
+procedure TLibLCBDM.Destravar;
+begin
+  GravarLog('Destravar', logParanoico);
+  FLock.Release;
+end;
 
 end.
 

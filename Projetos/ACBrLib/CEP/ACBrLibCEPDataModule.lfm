@@ -1,0 +1,16 @@
+object LibCEPDM: TLibCEPDM
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  OldCreateOrder = False
+  Height = 150
+  HorizontalOffset = 257
+  VerticalOffset = 127
+  Width = 150
+  PPI = 96
+  object ACBrCEP1: TACBrCEP
+    ProxyPort = '8080'
+    PesquisarIBGE = True
+    left = 61
+    top = 32
+  end
+end

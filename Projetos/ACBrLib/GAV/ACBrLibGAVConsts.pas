@@ -33,7 +33,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibDISConsts;
+unit ACBrLibGAVConsts;
 
 interface
 
@@ -41,19 +41,15 @@ uses
   Classes, SysUtils;
 
 const
-  CLibDISNome = 'ACBrLibDIS';
-  CLibDISVersao = '0.0.1';
+  CLibGAVNome = 'ACBrLibGAV';
+  CLibGAVVersao = '0.0.1';
 
-  CSessaoDIS = 'DIS';
+  CSessaoGAV = 'GAV';
 
   CChaveModelo = 'Modelo';
-  CChaveAlinhamento = 'Alinhamento';
-  CChaveLinhasCount = 'LinhasCount';
-  CChaveColunas = 'Colunas';
-  CChaveIntervalo = 'Intervalo';
-  CChavePassos = 'Passos';
-  CChaveIntervaloEnvioBytes = 'IntervaloEnvioBytes';
-  CChaveRemoveAcentos = 'RemoveAcentos';
+  CChaveStrComando = 'StrComando';
+  CChaveAberturaIntervalo = 'AberturaIntervalo';
+  CChaveAberturaAntecipada = 'AberturaAntecipada';
 
 implementation
 

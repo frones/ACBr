@@ -31,31 +31,88 @@
 
 {******************************************************************************}
 
-{$I ACBr.inc}
+unit ACBrLibGAVDataModule;
 
-unit ACBrLibDISConsts;
+{$mode delphi}
 
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrGAV;
 
-const
-  CLibDISNome = 'ACBrLibDIS';
-  CLibDISVersao = '0.0.1';
+type
 
-  CSessaoDIS = 'DIS';
+  { TLibGAVDM }
 
-  CChaveModelo = 'Modelo';
-  CChaveAlinhamento = 'Alinhamento';
-  CChaveLinhasCount = 'LinhasCount';
-  CChaveColunas = 'Colunas';
-  CChaveIntervalo = 'Intervalo';
-  CChavePassos = 'Passos';
-  CChaveIntervaloEnvioBytes = 'IntervaloEnvioBytes';
-  CChaveRemoveAcentos = 'RemoveAcentos';
+  TLibGAVDM = class(TDataModule)
+    ACBrGAV1: TACBrGAV;
+
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+  private
+    FLock: TCriticalSection;
+
+  public
+    procedure AplicarConfiguracoes;
+    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
+    procedure Travar;
+    procedure Destravar;
+  end;
 
 implementation
+
+uses
+  ACBrUtil,
+  ACBrLibGAVConfig, ACBrLibComum, ACBrLibGAVClass;
+
+{$R *.lfm}
+
+{ TLibGAVDM }
+
+procedure TLibGAVDM.DataModuleCreate(Sender: TObject);
+begin
+  FLock := TCriticalSection.Create;
+end;
+
+procedure TLibGAVDM.DataModuleDestroy(Sender: TObject);
+begin
+  FLock.Destroy;
+end;
+
+procedure TLibGAVDM.AplicarConfiguracoes;
+var
+  pLibConfig: TLibGAVConfig;
+begin
+  pLibConfig := TLibGAVConfig(TACBrLibGAV(pLib).Config);
+
+  with ACBrGAV1 do
+  begin
+    Porta              := pLibConfig.GAVConfig.Porta;
+    Modelo             := pLibConfig.GAVConfig.Modelo;
+    StrComando         := pLibConfig.GAVConfig.StrComando;
+    AberturaIntervalo  := pLibConfig.GAVConfig.AberturaIntervalo;
+    AberturaAntecipada := pLibConfig.GAVConfig.AberturaAntecipada;
+  end;
+end;
+
+procedure TLibGAVDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
+  Traduzir: Boolean);
+begin
+  if Assigned(pLib) then
+    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+end;
+
+procedure TLibGAVDM.Travar;
+begin
+  GravarLog('Travar', logParanoico);
+  FLock.Acquire;
+end;
+
+procedure TLibGAVDM.Destravar;
+begin
+  GravarLog('Destravar', logParanoico);
+  FLock.Release;
+end;
 
 end.
 

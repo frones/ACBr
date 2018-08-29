@@ -33,7 +33,7 @@ Agradecimentos:
 - André Ferreira de Moraes
 
 {******************************************************************************
-|* ACBrLibCEP
+|* ACBrLibGAV
 |*
 |* PROPÓSITO: Registro de Alterações
 ******************************************************************************}
@@ -44,7 +44,7 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-29/08/2018
---- ACBrLibCEP ---
+28/08/2018
+--- ACBrLibGAV ---
 [+] Inicio do projeto.
    Por: Italo Jurisato Junior

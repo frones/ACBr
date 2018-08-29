@@ -33,29 +33,48 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibDISConsts;
-
-interface
+library ACBrLibLCB;
 
 uses
-  Classes, SysUtils;
+  Interfaces, sysutils, Classes,
+  ACBrLibConfig, ACBrLibComum,
+  ACBrLibLCBClass, ACBrLibLCBConfig, ACBrLibLCBDataModule;
 
-const
-  CLibDISNome = 'ACBrLibDIS';
-  CLibDISVersao = '0.0.1';
+{$R *.res}
 
-  CSessaoDIS = 'DIS';
+{$IFDEF DEBUG}
+var
+   HeapTraceFile: String;
+{$ENDIF}
 
-  CChaveModelo = 'Modelo';
-  CChaveAlinhamento = 'Alinhamento';
-  CChaveLinhasCount = 'LinhasCount';
-  CChaveColunas = 'Colunas';
-  CChaveIntervalo = 'Intervalo';
-  CChavePassos = 'Passos';
-  CChaveIntervaloEnvioBytes = 'IntervaloEnvioBytes';
-  CChaveRemoveAcentos = 'RemoveAcentos';
+exports
+  // Importadas de ACBrLibComum
+  LCB_Inicializar,
+  LCB_Finalizar,
+  LCB_Nome,
+  LCB_Versao,
+  LCB_UltimoRetorno,
+  LCB_ConfigLer,
+  LCB_ConfigGravar,
+  LCB_ConfigLerValor,
+  LCB_ConfigGravarValor,
 
-implementation
+  // Leitor de Código de Barras
+  LCB_Ativar,
+  LCB_Desativar,
+  LCB_LerFila,
+  LCB_ApagarFila,
+  LCB_EnviarString,
+  LCB_LerString;
 
+begin
+  {$IFDEF DEBUG}
+   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc';
+   DeleteFile( HeapTraceFile );
+   SetHeapTraceOutput( HeapTraceFile );
+  {$ENDIF}
+
+  pLibClass := TACBrLibLCB; // Ajusta a classe a ser criada
+  MainThreadID := GetCurrentThreadId();
 end.
 

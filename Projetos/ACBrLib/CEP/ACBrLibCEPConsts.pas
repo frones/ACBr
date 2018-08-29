@@ -46,10 +46,15 @@ const
 
   CSessaoRespConsulta = 'Endereco';
 
-implementation
+  CSessaoCEP = 'CEP';
 
-uses
-  ACBrLibComum;
+  CChaveWebService = 'WebService';
+  CChaveChaveAcesso = 'ChaveAcesso';
+  CChavePesquisarIBGE = 'PesquisarIBGE';
+  CChaveUsuario = 'Usuario';
+  CChaveSenha = 'Senha';
+
+implementation
 
 end.
 

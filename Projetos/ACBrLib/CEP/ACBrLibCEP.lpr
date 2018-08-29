@@ -33,29 +33,44 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibDISConsts;
-
-interface
+library ACBrLibCEP;
 
 uses
-  Classes, SysUtils;
+  Interfaces, sysutils, Classes,
+  ACBrLibConfig, ACBrLibComum,
+  ACBrLibCEPClass, ACBrLibCEPConfig, ACBrLibCEPDataModule;
 
-const
-  CLibDISNome = 'ACBrLibDIS';
-  CLibDISVersao = '0.0.1';
+{$R *.res}
 
-  CSessaoDIS = 'DIS';
+{$IFDEF DEBUG}
+var
+   HeapTraceFile: String;
+{$ENDIF}
 
-  CChaveModelo = 'Modelo';
-  CChaveAlinhamento = 'Alinhamento';
-  CChaveLinhasCount = 'LinhasCount';
-  CChaveColunas = 'Colunas';
-  CChaveIntervalo = 'Intervalo';
-  CChavePassos = 'Passos';
-  CChaveIntervaloEnvioBytes = 'IntervaloEnvioBytes';
-  CChaveRemoveAcentos = 'RemoveAcentos';
+exports
+  // Importadas de ACBrLibComum
+  CEP_Inicializar,
+  CEP_Finalizar,
+  CEP_Nome,
+  CEP_Versao,
+  CEP_UltimoRetorno,
+  CEP_ConfigLer,
+  CEP_ConfigGravar,
+  CEP_ConfigLerValor,
+  CEP_ConfigGravarValor,
 
-implementation
+  // CEP
+  CEP_BuscarPorCEP,
+  CEP_BuscarPorLogradouro;
 
+begin
+  {$IFDEF DEBUG}
+   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc';
+   DeleteFile( HeapTraceFile );
+   SetHeapTraceOutput( HeapTraceFile );
+  {$ENDIF}
+
+  pLibClass := TACBrLibCEP; // Ajusta a classe a ser criada
+  MainThreadID := GetCurrentThreadId();
 end.
 

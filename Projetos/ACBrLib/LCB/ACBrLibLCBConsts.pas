@@ -33,7 +33,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibDISConsts;
+unit ACBrLibLCBConsts;
 
 interface
 
@@ -41,19 +41,18 @@ uses
   Classes, SysUtils;
 
 const
-  CLibDISNome = 'ACBrLibDIS';
-  CLibDISVersao = '0.0.1';
+  CLibLCBNome = 'ACBrLibLCB';
+  CLibLCBVersao = '0.0.1';
 
-  CSessaoDIS = 'DIS';
+  CSessaoLCB = 'LCB';
 
   CChaveModelo = 'Modelo';
-  CChaveAlinhamento = 'Alinhamento';
-  CChaveLinhasCount = 'LinhasCount';
-  CChaveColunas = 'Colunas';
+  CChaveExcluirSufixo = 'ExcluirSufixo';
+  CChaveUsarFila = 'UsarFila';
+  CChavePrefixoAExcluir = 'PrefixoAExcluir';
+  CChaveSufixo = 'Sufixo';
+  CChaveFilaMaxItens = 'FilaMaxItens';
   CChaveIntervalo = 'Intervalo';
-  CChavePassos = 'Passos';
-  CChaveIntervaloEnvioBytes = 'IntervaloEnvioBytes';
-  CChaveRemoveAcentos = 'RemoveAcentos';
 
 implementation
 

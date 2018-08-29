@@ -33,29 +33,45 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibDISConsts;
-
-interface
+library ACBrLibGAV;
 
 uses
-  Classes, SysUtils;
+  Interfaces, sysutils, Classes,
+  ACBrLibConfig, ACBrLibComum,
+  ACBrLibGAVClass, ACBrLibGAVConfig, ACBrLibGAVDataModule;
 
-const
-  CLibDISNome = 'ACBrLibDIS';
-  CLibDISVersao = '0.0.1';
+{$R *.res}
 
-  CSessaoDIS = 'DIS';
+{$IFDEF DEBUG}
+var
+   HeapTraceFile: String;
+{$ENDIF}
 
-  CChaveModelo = 'Modelo';
-  CChaveAlinhamento = 'Alinhamento';
-  CChaveLinhasCount = 'LinhasCount';
-  CChaveColunas = 'Colunas';
-  CChaveIntervalo = 'Intervalo';
-  CChavePassos = 'Passos';
-  CChaveIntervaloEnvioBytes = 'IntervaloEnvioBytes';
-  CChaveRemoveAcentos = 'RemoveAcentos';
+exports
+  // Importadas de ACBrLibComum
+  GAV_Inicializar,
+  GAV_Finalizar,
+  GAV_Nome,
+  GAV_Versao,
+  GAV_UltimoRetorno,
+  GAV_ConfigLer,
+  GAV_ConfigGravar,
+  GAV_ConfigLerValor,
+  GAV_ConfigGravarValor,
 
-implementation
+  // Gaveta
+  GAV_Ativar,
+  GAV_Desativar,
+  GAV_AbreGaveta;
 
+begin
+  {$IFDEF DEBUG}
+   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc';
+   DeleteFile( HeapTraceFile );
+   SetHeapTraceOutput( HeapTraceFile );
+  {$ENDIF}
+
+  pLibClass := TACBrLibGAV; // Ajusta a classe a ser criada
+  MainThreadID := GetCurrentThreadId();
 end.
 

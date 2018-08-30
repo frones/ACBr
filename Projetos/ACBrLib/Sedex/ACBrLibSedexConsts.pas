@@ -41,16 +41,17 @@ uses
   Classes, SysUtils;
 
 const
-  CLibCEPNome = 'ACBrLibSedex';
-  CLibCEPVersao = '0.0.1';
+  CLibSedexNome = 'ACBrLibSedex';
+  CLibSedexVersao = '0.0.1';
 
   CSessaoRespConsulta = 'Consulta';
   CSessaoRespRastreio = 'Rastreio';
 
-implementation
+  CSessaoSedex = 'Sedex';
 
-uses
-  ACBrLibComum;
+  CChaveCodContrato = 'CodContrato';
+
+implementation
 
 end.
 

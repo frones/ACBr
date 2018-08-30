@@ -121,7 +121,8 @@ begin
           , T_Complemento
           , T_Email
           , PrintDialog
-          , ImprimeCanhoto);
+          , ImprimeCanhoto
+          , DetalharServico);
 			  end;
 		  end
 		  else
@@ -159,7 +160,8 @@ begin
           , T_Complemento
           , T_Email
           , PrintDialog
-          , ImprimeCanhoto);
+          , ImprimeCanhoto
+          , DetalharServico);
 	 finally
 		  frlDANFSeRLRetrato.Free;
 	 end;
@@ -212,14 +214,15 @@ begin
           , T_Endereco
           , T_Complemento
           , T_Email
-          , ImprimeCanhoto);
+          , ImprimeCanhoto
+          , DetalharServico);
       end;
 	  end
 	  else
 	  begin
       NomeArq := PathWithDelim(Self.PathPDF) + TACBrNFSe(ACBrNFSe).NumID[NFSe] + '-nfse.pdf';
 
-		   frlDANFSeRLRetrato.SavePDF(Self
+		  frlDANFSeRLRetrato.SavePDF(Self
         , NomeArq
         , NFSe
         , Logo
@@ -251,7 +254,8 @@ begin
         , T_Endereco
         , T_Complemento
         , T_Email
-        , ImprimeCanhoto);
+        , ImprimeCanhoto
+        , DetalharServico);
 	  end;
   finally
 	  frlDANFSeRLRetrato.Free;

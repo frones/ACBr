@@ -104,7 +104,7 @@ type
   TpcteTipoRodado = (trNaoAplicavel, trTruck, trToco, trCavaloMecanico, trVAN, trUtilitario, trOutros);
   TpcteTipoCarroceria = (tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider);
 
-  TPosRecibo = (prCabecalho, prRodape);
+  TPosRecibo = (prCabecalho, prRodape, prEsquerda);
   TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
 
   TpcnTpEvento = (teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao,

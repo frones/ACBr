@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2018
+-- pcnConversao --
+[+] Inclusão de opção de alinhamento à esquerda para o canhoto do DANFE em FR paisagem.
+    https://www.projetoacbr.com.br/forum/topic/45975-impress%C3%A3o-do-canhoto-a-esquerda-no-modelo-pa%C3%ADsagem/
+  Por: Pedro E. Braga
+
 08/08/2018
 -- pcnConst --
 [+] Incluida uma nova constante.

@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/08/2018
+-- Diversos --
+[*] Correções, tag com a nomenclatura errada.
+   Por: Italo Jurisato Junior
+
 09/08/2018
 -- pcesGerador --
 [*] https://www.projetoacbr.com.br/forum/topic/45582-altera%C3%A7%C3%B5es-para-a-unit-pcesgeradorpas/

@@ -96,7 +96,7 @@ type
      possuem campos excedentes que não se aplicam ao S2206}
     procedure GerarAltContratual(objAltContratual: TAltContratual);
     procedure GerarInfoCeletista(objInfoCeletista : TInfoCeletista);
-    procedure GerarInfoEstaturario(pInfoEstatutario: TInfoEstatutario);
+    procedure GerarInfoEstatutario(pInfoEstatutario: TInfoEstatutario);
     procedure GerarInfoContrato(ObjInfoContrato : TInfoContratoS2206; pTipo: Integer; pInfoCeletista: TInfoCeletista);
     procedure GerarTrabTemp(pTrabTemp: TTrabTemporario);
     procedure GerarServPubl(pServPubl: TServPubl);
@@ -268,13 +268,13 @@ begin
   inherited;
 end;
 
-procedure TEvtAltContratual.GerarInfoEstaturario(pInfoEstatutario: TInfoEstatutario);
+procedure TEvtAltContratual.GerarInfoEstatutario(pInfoEstatutario: TInfoEstatutario);
 begin
-  Gerador.wGrupo('infoEstaturario');
+  Gerador.wGrupo('infoEstatutario');
 
   Gerador.wCampo(tcInt, '', 'tpPlanRP', 1, 1, 1, eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
 
-  Gerador.wGrupo('/infoEstaturario');
+  Gerador.wGrupo('/infoEstatutario');
 end;
 
 procedure TEvtAltContratual.GerarAltContratual(objAltContratual: TAltContratual);
@@ -292,7 +292,7 @@ begin
   if objAltContratual.infoRegimeTrab.InfoCeletista.cnpjSindCategProf <> '' then
     GerarInfoCeletista(objAltContratual.infoRegimeTrab.InfoCeletista)
   else
-    GerarInfoEstaturario(objAltContratual.infoRegimeTrab.InfoEstatutario);
+    GerarInfoEstatutario(objAltContratual.infoRegimeTrab.InfoEstatutario);
 
   Gerador.wGrupo('/infoRegimeTrab');
 

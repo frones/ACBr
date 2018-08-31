@@ -2259,6 +2259,9 @@ begin
 
         if SuportaReajusteValor then
            Operacoes := Operacoes + 64;
+
+        if SuportaNSUEstendido then
+           Operacoes := Operacoes + 128;
      end;
 
      if TemIdentificacao and (Operacoes > 0) then

@@ -136,6 +136,7 @@ type
      fSuportaDesconto : Boolean;
      fSuportaSaque : Boolean;
      fSuportaReajusteValor : Boolean;
+     fSuportaNSUEstendido: Boolean;
      fTempoInicialMensagemOperador: TDateTime;
      fTempoInicialMensagemCliente: TDateTime;
 
@@ -161,6 +162,7 @@ type
      fTEFList      : TACBrTEFDClassList ;
      fpRespostasPendentes : TACBrTEFDRespostasPendentes;
      fArqLOG: string;
+
      function GetAbout : String;
      function GetAguardandoResposta: Boolean;
      function GetArqReq : String;
@@ -303,6 +305,8 @@ type
        default True;
      Property SuportaReajusteValor : Boolean read fSuportaReajusteValor write fSuportaReajusteValor
        default False;
+     Property SuportaNSUEstendido : Boolean read fSuportaNSUEstendido write fSuportaNSUEstendido
+       default False;
      property ConfirmarAntesDosComprovantes: Boolean read fConfirmarAntesDosComprovantes
        write fConfirmarAntesDosComprovantes default False;
 
@@ -444,6 +448,7 @@ begin
   fSuportaDesconto      := True;
   fSuportaSaque         := True;
   fSuportaReajusteValor := False;
+  fSuportaNSUEstendido  := False;
 
   fTempoInicialMensagemCliente  := 0;
   fTempoInicialMensagemOperador := 0;

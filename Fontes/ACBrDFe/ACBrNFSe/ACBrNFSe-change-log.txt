@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/08/2018
+-- Diversos --
+[+] Implementação do provedor TcheInfo que se utiliza da versão 2 do layout da ABRASF.
+Por: Simons
+
 29/08/2018
 -- ACBrNFSeWebServices/pnfsNFSeG --
 [*] Ficou faltando na assinatura o valor do ID no Cancelar NFS-e - provedor ISSe.

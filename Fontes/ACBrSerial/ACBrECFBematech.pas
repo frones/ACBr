@@ -395,6 +395,7 @@ TACBrECFBematech = class( TACBrECFClass )
     function GetTotalizadoresParciais : String ;
     procedure FinalidadeToTipoPrefixo( AFinalidade : TACBrECFFinalizaArqMFD;
        var Tipo: Integer; var Prefixo: AnsiString) ;
+    function ACKValido( const nACK: Integer): Boolean;
 
  protected
     property TotalizadoresParciais : String read GetTotalizadoresParciais ;
@@ -912,7 +913,7 @@ begin
         EnviaComando( #19 ) ;       { Pede Status }
      end ;
 
-     if (fsACK = 21) or (fsACK <> 6) then
+     if not ACKValido(fsACK) then
         raise EACBrECFNaoInicializado.Create( ACBrStr(
                  'Erro inicializando a impressora '+fpModeloStr ));
 
@@ -948,7 +949,7 @@ Var
         raise EACBrECFSemResposta.create( ACBrStr(
               'Impressora '+fpModeloStr+' não reconheceu o Comando'+
               sLineBreak+' (ACK = 21)'))
-     else if fsACK <> 6 then
+     else if not ACKValido(fsACK) then
         raise EACBrECFSemResposta.create( ACBrStr(
               'Erro. Resposta da Impressora '+fpModeloStr+' inválida'+
               sLineBreak+' (ACK = '+IntToStr(fsACK)+')')) ;
@@ -977,10 +978,10 @@ begin
      fpDevice.Serial.DeadlockTimeout := 2000 ; { Timeout p/ Envio }
      FalhasACK := 0 ;
 
-     while (fsACK <> 6) do     { Se ACK = 6 Comando foi reconhecido }
+     while not ACKValido(fsACK) do
      begin
         fsACK := 0 ;
-        fpDevice.Serial.Purge ;                   { Limpa a Porta }
+        fpDevice.Serial.Purge ;                { Limpa a Porta }
 
         if not TransmiteComando( cmd ) then
            continue ;
@@ -1191,9 +1192,9 @@ begin
         // espera ACK chegar na Porta por 1,5s //
         wACK := fpDevice.LeByte( 1500 ) ;
 
-        if wACK = 6 then   // ECF Respondeu corretamente, portanto está trabalhando //
+        if ACKValido(wACK) then   // ECF Respondeu corretamente, portanto está trabalhando //
          begin
-           GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' VerificaFimImpressao: ACK = 6, OK... Aguardando ST1 e ST2' ) ;
+           GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' VerificaFimImpressao: ACK = '+IntToStr(wACK)+', OK... Aguardando ST1 e ST2' ) ;
            TempoLimite := IncSecond(now, TimeOut);
            fsFalhasFimImpressao := 0 ;
 
@@ -1202,11 +1203,11 @@ begin
            Result := (Length( RetCmd ) >= 2) ;
          end
         else
-           raise EACBrECFErro.Create( 'ACK <> 6' );
+           raise EACBrECFErro.Create( 'ACK não válido' );
      except
        On E: Exception do
        begin
-          if (wACK <> 6) and (BytesResp < 0) then  { Incrementa Falhas apenas na leitura de Relatorios pela Serial }
+          if (not ACKValido(wACK)) and (BytesResp < 0) then  { Incrementa Falhas apenas na leitura de Relatorios pela Serial }
              Inc( fsFalhasFimImpressao ) ;
 
           GravaLog('   '+FormatDateTime('hh:nn:ss:zzz',now)+' VerificaFimImpressao: ACK = '+IntToStr(wACK)+
@@ -1599,10 +1600,10 @@ begin
   EnviaComando( #39 + chr( Valor ) ) ;
 end;
 
-procedure TACBrECFBematech.AbreBilhetePassagem(Origem, Destino, Linha,
-  Agencia: string; DataHora: TDateTime; Poltrona, Plataforma: string;
-  Tipo: TACBrECFTipoBilhete; UFDestino, PassageiroRG, PassageiroNome,
-  PassageiroEnd: string);
+procedure TACBrECFBematech.AbreBilhetePassagem(Origem: string; Destino: string;
+  Linha: string; Agencia: string; DataHora: TDateTime; Poltrona: string;
+  Plataforma: string; Tipo: TACBrECFTipoBilhete; UFDestino: string;
+  PassageiroRG: string; PassageiroNome: string; PassageiroEnd: string);
 var
   StrComando: String;
 
@@ -4380,6 +4381,11 @@ begin
         Tipo    := 4;
       end;
   end;
+end;
+
+function TACBrECFBematech.ACKValido(const nACK: Integer): Boolean;
+begin
+  Result := (nACK = 6) or (nACK = 255);
 end;
 
 function TACBrECFBematech.TraduzirTag(const ATag: AnsiString): AnsiString;

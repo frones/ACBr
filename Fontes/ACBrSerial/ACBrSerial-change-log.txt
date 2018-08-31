@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2018
+-- ACBrECFBematech --
+[-] Correção para Item registrado 2 vezes na impressora Bematech MP 4000 TH
+    (Aplicado workaround, quando o ECF responde com um ACK igual a 255.)
+    https://www.projetoacbr.com.br/forum/topic/45654-item-registrado-2-vezes-na-impressora-bematech-mp-4000-th/
+    (por: DSA)
+
 20/08/2018
 -- ACBrPosPrinter --
 [*] Métodos LerInfoImpressora e LerStatusImpressora modificados para inserir

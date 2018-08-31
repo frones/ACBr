@@ -534,7 +534,7 @@ begin
 
             ValorDocumento       := StrToFloatDef(Copy(Linha,82,15),0)/100;
             ValorDespesaCobranca := StrToFloatDef(Copy(Linha,199,15),0)/100;
-            NossoNumero          := Copy(Linha,38,7);
+            NossoNumero          := Copy(Linha,40,7);
             Carteira             := Copy(Linha,58,1);
             CodigoLiquidacao     := Copy(Linha,214,02);
             //CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( StrToIntDef(CodigoLiquidacao,0) );

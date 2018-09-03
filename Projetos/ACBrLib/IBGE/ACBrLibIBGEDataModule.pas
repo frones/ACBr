@@ -5,7 +5,7 @@
 
 { Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida               }
 
-{ Colaboradores nesse arquivo: Rafael Teno Dias                                }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -31,28 +31,86 @@
 
 {******************************************************************************}
 
-{$I ACBr.inc}
+unit ACBrLibIBGEDataModule;
 
-unit ACBrLibIBGEConsts;
+{$mode delphi}
 
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, FileUtil, ACBrLibConfig, syncobjs, ACBrIBGE;
 
-const
-  CLibIBGENome = 'ACBrLibIBGE';
-  CLibIBGEVersao = '0.0.1';
+type
 
-  CSessaoRespConsulta = 'Cidade';
+  { TLibIBGEDM }
 
-  CSessaoIBGE = 'IBGE';
+  TLibIBGEDM = class(TDataModule)
+    ACBrIBGE1: TACBrIBGE;
 
-  CChaveCacheArquivo = 'CacheArquivo';
-  CChaveCacheDiasValidade = 'CacheDiasValidade';
-  CChaveIgnorarCaixaEAcentos = 'IgnorarCaixaEAcentos';
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+  private
+    FLock: TCriticalSection;
+
+  public
+    procedure AplicarConfiguracoes;
+    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
+    procedure Travar;
+    procedure Destravar;
+  end;
 
 implementation
+
+uses
+  ACBrUtil,
+  ACBrLibIBGEConfig, ACBrLibComum, ACBrLibIBGEClass;
+
+{$R *.lfm}
+
+{ TLibIBGEDM }
+
+procedure TLibIBGEDM.DataModuleCreate(Sender: TObject);
+begin
+  FLock := TCriticalSection.Create;
+end;
+
+procedure TLibIBGEDM.DataModuleDestroy(Sender: TObject);
+begin
+  FLock.Destroy;
+end;
+
+procedure TLibIBGEDM.AplicarConfiguracoes;
+var
+  pLibConfig: TLibIBGEConfig;
+begin
+  pLibConfig := TLibIBGEConfig(TACBrLibIBGE(pLib).Config);
+
+  with ACBrIBGE1 do
+  begin
+    CacheArquivo         := pLibConfig.IBGEConfig.CacheArquivo;
+    CacheDiasValidade    := pLibConfig.IBGEConfig.CacheDiasValidade;
+    IgnorarCaixaEAcentos := pLibConfig.IBGEConfig.IgnorarCaixaEAcentos;
+  end;
+end;
+
+procedure TLibIBGEDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
+  Traduzir: Boolean);
+begin
+  if Assigned(pLib) then
+    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+end;
+
+procedure TLibIBGEDM.Travar;
+begin
+  GravarLog('Travar', logParanoico);
+  FLock.Acquire;
+end;
+
+procedure TLibIBGEDM.Destravar;
+begin
+  GravarLog('Destravar', logParanoico);
+  FLock.Release;
+end;
 
 end.
 

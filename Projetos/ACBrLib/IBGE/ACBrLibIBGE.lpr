@@ -5,7 +5,7 @@
 
 { Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida               }
 
-{ Colaboradores nesse arquivo: Rafael Teno Dias                                }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -33,26 +33,44 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibIBGEConsts;
-
-interface
+library ACBrLibIBGE;
 
 uses
-  Classes, SysUtils;
+  Interfaces, sysutils, Classes,
+  ACBrLibConfig, ACBrLibComum,
+  ACBrLibIBGEClass, ACBrLibIBGEConfig, ACBrLibIBGEDataModule;
 
-const
-  CLibIBGENome = 'ACBrLibIBGE';
-  CLibIBGEVersao = '0.0.1';
+{$R *.res}
 
-  CSessaoRespConsulta = 'Cidade';
+{$IFDEF DEBUG}
+var
+   HeapTraceFile: String;
+{$ENDIF}
 
-  CSessaoIBGE = 'IBGE';
+exports
+  // Importadas de ACBrLibComum
+  IBGE_Inicializar,
+  IBGE_Finalizar,
+  IBGE_Nome,
+  IBGE_Versao,
+  IBGE_UltimoRetorno,
+  IBGE_ConfigLer,
+  IBGE_ConfigGravar,
+  IBGE_ConfigLerValor,
+  IBGE_ConfigGravarValor,
 
-  CChaveCacheArquivo = 'CacheArquivo';
-  CChaveCacheDiasValidade = 'CacheDiasValidade';
-  CChaveIgnorarCaixaEAcentos = 'IgnorarCaixaEAcentos';
+  // IBGE
+  IBGE_BuscarPorCodigo,
+  IBGE_BuscarPorNome;
 
-implementation
+begin
+  {$IFDEF DEBUG}
+   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc';
+   DeleteFile( HeapTraceFile );
+   SetHeapTraceOutput( HeapTraceFile );
+  {$ENDIF}
 
+  pLibClass := TACBrLibIBGE; // Ajusta a classe a ser criada
+  MainThreadID := GetCurrentThreadId();
 end.
 

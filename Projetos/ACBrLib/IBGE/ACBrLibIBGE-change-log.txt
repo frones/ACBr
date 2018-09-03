@@ -44,3 +44,7 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/09/2018
+--- ACBrLibIBGE ---
+[+] Inicio do projeto.
+   Por: Italo Jurisato Junior

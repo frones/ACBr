@@ -1240,7 +1240,8 @@ begin
     NotasFiscais.LoadFromIni(ArqINI);
 
     //Campos preenchidos em tela
-    if NaoEstaVazio(MonitorConfig.DFE.WebService.NFe.CNPJContador) then
+    if (NotasFiscais.Count > 0) and
+       ( NaoEstaVazio(MonitorConfig.DFE.WebService.NFe.CNPJContador) ) then
       with NotasFiscais.Items[0].NFe.autXML.Add do
         CNPJCPF := MonitorConfig.DFE.WebService.NFe.CNPJContador;
 
@@ -2164,7 +2165,8 @@ begin
     else
       ACBrNFe.WebServices.Enviar.Lote := IntToStr(ALote);
 
-    DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
+    if ACBrNFe.NotasFiscais.Count > 0 then
+      DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
     ACBrNFe.WebServices.Enviar.Executar;
     RespostaEnvio;
 
@@ -2243,7 +2245,7 @@ procedure TMetodoEnviarLoteNFe.Executar;
 var
   RetFind: integer;
   SearchRec: TSearchRec;
-  ALoteEnvio: Integer;
+  ALoteEnvio: String;
   AImprime: Boolean;
   AImpressora: String;
   ASincrono: Boolean;
@@ -2251,7 +2253,7 @@ var
   ACopias: Integer;
   APDF: Boolean;
 begin
-  ALoteEnvio   := StrToIntDef(fpCmd.Params(0), 1);
+  ALoteEnvio   := Trim(fpCmd.Params(0));
   AImprime     := StrToBoolDef(fpCmd.Params(1), False);
   AImpressora  := fpCmd.Params(2);
   ASincrono    := StrToBoolDef(fpCmd.Params(3), False);
@@ -2262,24 +2264,24 @@ begin
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
     if not DirectoryExists(PathWithDelim(ExtractFilePath(Application.ExeName)) +
-      'Lotes' + PathDelim + 'Lote' + IntToStr(ALoteEnvio)) then
+      'Lotes' + PathDelim + 'Lote' + ALoteEnvio) then
       raise Exception.Create('Diretório não encontrado:' + PathWithDelim(
         ExtractFilePath(Application.ExeName)) +
-        'Lotes' + PathDelim + 'Lote' + IntToStr(ALoteEnvio))
+        'Lotes' + PathDelim + 'Lote' + ALoteEnvio)
     else
     begin
       ACBrNFe.NotasFiscais.Clear;
       RetFind := SysUtils.FindFirst(
         PathWithDelim(ExtractFilePath(Application.ExeName)) +
-        'Lotes' + PathDelim + 'Lote' + IntToStr(
-        ALoteEnvio) + PathDelim + '*-nfe.xml', faAnyFile, SearchRec);
+        'Lotes' + PathDelim + 'Lote' +
+        ALoteEnvio + PathDelim + '*-nfe.xml', faAnyFile, SearchRec);
       if (RetFind = 0) then
       begin
         while RetFind = 0 do
         begin
           ACBrNFe.NotasFiscais.LoadFromFile(PathWithDelim(ExtractFilePath(Application.ExeName)) +
             'Lotes' + PathDelim +
-            'Lote' + IntToStr(ALoteEnvio) + PathDelim + SearchRec.Name);
+            'Lote' + ALoteEnvio + PathDelim + SearchRec.Name);
           RetFind := FindNext(SearchRec);
         end;
         ACBrNFe.NotasFiscais.GerarNFe;
@@ -2288,13 +2290,14 @@ begin
       end
       else
         raise Exception.Create('Não foi encontrada nenhuma nota para o Lote: ' +
-          IntToStr(ALoteEnvio));
+          ALoteEnvio);
     end;
 
-    ACBrNFe.WebServices.Enviar.Lote := IntToStr(ALoteEnvio);
+    ACBrNFe.WebServices.Enviar.Lote := ALoteEnvio;
     ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
 
-    DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
+    if ACBrNFe.NotasFiscais.Count > 0 then
+      DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
     ACBrNFe.WebServices.Enviar.Executar;
 
     RespostaEnvio;
@@ -2357,7 +2360,8 @@ begin
         ACBrNFe.WebServices.Enviar.Lote := IntToStr(ALote);
 
       ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
-      DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
+      if ACBrNFe.NotasFiscais.Count > 0 then
+        DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
 
       ACBrNFe.WebServices.Enviar.Executar;
 
@@ -2809,8 +2813,10 @@ begin
 
     ACBrNFe.EventoNFe.LerFromIni( AArq, False );
 
-    DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
+    if ACBrNFe.EventoNFe.Evento.Count > 0 then
+      DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
     ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote);
+
 
     RespostaEvento;
 
@@ -2837,7 +2843,8 @@ begin
 
     ACBrNFe.EventoNFe.LerFromIni( AArq, True );
 
-    DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
+    if ACBrNFe.EventoNFe.Evento.Count > 0 then
+      DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
     ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote);
 
     RespostaEvento;
@@ -2866,7 +2873,8 @@ begin
     CargaDFeEvento := TACBrCarregarNFeEvento.Create(ACBrNFe, AArq);
     try
 
-      DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
+      if ACBrNFe.EventoNFe.Evento.Count > 0 then
+        DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
       ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote);
 
     finally
@@ -3511,7 +3519,8 @@ begin
 
     ACBrNFe.WebServices.Enviar.Sincrono := ASincrono;
 
-    DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
+    if ACBrNFe.NotasFiscais.Count > 0 then
+      DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
     ACBrNFe.WebServices.Enviar.Executar;
     RespostaEnvio;
 

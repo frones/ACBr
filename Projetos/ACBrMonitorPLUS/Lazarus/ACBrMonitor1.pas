@@ -52,7 +52,7 @@ uses
   ACBrDFeConfiguracoes, ACBrReinf, ACBreSocial, ACBrIntegrador, LazHelpCHM,
   pmdfeConversaoMDFe, ACBrMonitorConfig, ACBrMonitorConsts, DoACBrMDFeUnit,
   DoACBreSocialUnit, pcesConversaoeSocial, DoACBrReinfUnit, pcnConversaoReinf,
-  DoBoletoUnit, DOACBrNFeUnit, DoACBrCTeUnit, DoSATUnit;
+  DoBoletoUnit, DOACBrNFeUnit, DoACBrCTeUnit, DoSATUnit, DoECFUnit;
 
 const
   //{$I versao.txt}
@@ -1492,6 +1492,7 @@ type
     FDoeSocial: TACBrObjetoeSocial;
     FDoReinf: TACBrObjetoReinf;
     FDoSAT: TACBrObjetoSAT;
+    FDoECF: TACBrObjetoECF;
 
     function IsVisible : Boolean; virtual;
 
@@ -1584,7 +1585,7 @@ implementation
 
 uses IniFiles, TypInfo, LCLType, strutils,
   UtilUnit, pcnAuxiliar,
-  DoECFUnit, DoGAVUnit, DoCHQUnit, DoDISUnit, DoLCBUnit, DoACBrUnit, DoBALUnit,
+  DoGAVUnit, DoCHQUnit, DoDISUnit, DoLCBUnit, DoACBrUnit, DoBALUnit,
   DoCEPUnit, DoIBGEUnit,
   {$IFDEF MSWINDOWS} sndkey32, {$ENDIF}
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
@@ -1687,6 +1688,8 @@ begin
   FDoSAT := TACBrObjetoSAT.Create(MonitorConfig, ACBrSAT1);
   FDoSAT.OnPrepararImpressaoSAT := @PrepararImpressaoSAT;
   FDoSAT.OnRespostaIntegrador := @RespostaIntegrador;
+
+  FDoECF := TACBrObjetoECF.Create(MonitorConfig, ACBrECF1, ACBrBlocoX1);
 
   // Seta as definições iniciais para navegação
   SetColorButtons(btnMonitor);
@@ -3645,6 +3648,7 @@ begin
   FDoeSocial.Free;
   FDoReinf.Free;
   FDoSAT.Free;
+  FDoECF.Free;
   FMonitorConfig.Free;
 end;
 
@@ -5150,6 +5154,12 @@ begin
 
       if cbMonitorarPasta.Checked then
       begin
+        if (not DirectoryExists(edEntTXT.Text)) or (not DirectoryExists(edSaiTXT.Text))  then
+        begin
+          cbMonitorarPasta.Checked := False;
+          raise Exception.Create('Diretorio para monitorar pasta, nao encontrado!');
+        end;
+
         TXT_Entrada    := PathWithDelim(edEntTXT.Text);
         TXT_Saida      := PathWithDelim(edSaiTXT.Text);
       end
@@ -5965,7 +5975,7 @@ begin
         if fsCmd.Objeto = 'ACBR' then
           DoACBr(fsCmd)
         else if fsCmd.Objeto = 'ECF' then
-          DoECF(fsCmd)
+          FDoECF.Executar(fsCmd)
         else if fsCmd.Objeto = 'GAV' then
           DoGAV(fsCmd)
         else if fsCmd.Objeto = 'CHQ' then

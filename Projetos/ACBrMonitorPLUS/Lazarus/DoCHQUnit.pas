@@ -145,7 +145,7 @@ begin
          begin
            Linhas := TStringList.Create ;
            try
-              StringToMemo( Cmd.Params(0), Linhas ); {Linha separadas por | (pipe)}
+              //StringToMemo( Cmd.Params(0), Linhas ); {Linha separadas por | (pipe)}
               ImprimirVerso( Linhas );
            finally
               Linhas.Free ;

@@ -43,6 +43,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/09/2018
+[*] DoACBrNFeUnit
+Ajuste para envio de NFe em lote
+
+03/09/2018
+[-] DoACBrNFeUnit
+Correção de erros list-index--out-of-bounds
+
+03/09/2018
+[*] DACBrMonitor1
+Ajuste na validação do path do diretório para Monitorar Pasta no ACBrMonitor
+
+30/08/2018
+[*] DoECFUnit
+Realizado Refactory na classe DoECFUnit
+
 24/08/2018
 -- DoACBrMDFeUnit --
 [+] Acrescentado a propriedade Arquivo nas respostas de Cancelamento e Encerramento.

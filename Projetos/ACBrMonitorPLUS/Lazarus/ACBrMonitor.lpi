@@ -22,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="2"/>
-      <BuildNr Value="14"/>
+      <BuildNr Value="18"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion="1.2.0.1"/>
@@ -401,14 +401,4 @@
       </Options>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="2">
-      <Item1>
-        <Name Value="RunError(203)"/>
-      </Item1>
-      <Item2>
-        <Name Value="EOutOfMemory"/>
-      </Item2>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

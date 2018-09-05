@@ -42,6 +42,7 @@ uses
   ACBrLibComum, ACBrLibMailDataModule, ACBrMail;
 
 type
+  PACBrMail = ^TACBrMail;
 
   { TACBrLibMail }
 
@@ -106,6 +107,8 @@ function MAIL_AddBody(const eBody: PChar): longint;
 function MAIL_AddAltBody(const eAltBody: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_SaveToFile(const eFileName: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_GetMail(var handle: PACBrMail): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -554,6 +557,33 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
+
+function MAIL_GetMail(var handle: PACBrMail): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('MAIL_GetMail', logNormal);
+
+    with TACBrLibMail(pLib) do
+    begin
+      MailDM.Travar;
+      try
+        handle := @MailDM.ACBrMail1;
+        Result := SetRetorno(ErrOK);
+      finally
+        MailDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 {%endregion}
 
 {%region Envio}

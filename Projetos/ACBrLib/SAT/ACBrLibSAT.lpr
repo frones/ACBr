@@ -27,7 +27,16 @@ exports
   SAT_ConfigGravarValor,
 
   SAT_InicializarSAT,
-  SAT_DesInicializar;
+  SAT_DesInicializar,
+
+  SAT_AssociarAssinatura,
+  SAT_BloquearSAT,
+  SAT_DesbloquearSAT,
+  SAT_TrocarCodigoDeAtivacao,
+  SAT_ConsultarSAT,
+  SAT_ConsultarStatusOperacional,
+  SAT_AtualizarSoftwareSAT,
+  SAT_ComunicarCertificadoICPBRASIL;
 
 begin
   {$IFDEF DEBUG}

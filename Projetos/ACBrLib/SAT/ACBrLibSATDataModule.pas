@@ -31,7 +31,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, syncobjs, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
-  ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrECFVirtualSAT, ACBrSATWS;
+  ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrECFVirtualSAT, ACBrSATWS,
+  ACBrMail;
 
 type
 
@@ -43,6 +44,7 @@ type
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
     ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
     ACBrSATWS1: TACBrSATWS;
+    ACBrMail1: TACBrMail;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

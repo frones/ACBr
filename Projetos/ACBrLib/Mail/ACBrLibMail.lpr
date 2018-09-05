@@ -70,6 +70,7 @@ exports
   MAIL_AddBody,
   MAIL_AddAltBody,
   MAIL_SaveToFile,
+  MAIL_GetMail,
 
   // Envio
   MAIL_Clear,

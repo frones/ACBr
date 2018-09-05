@@ -38,7 +38,7 @@ unit ACBrLibSATClass;
 interface
 
 uses
-  Classes, SysUtils, typinfo,
+  Classes, SysUtils, typinfo, ACBrLibMailImport,
   ACBrLibComum, ACBrLibSATDataModule;
 
 type
@@ -48,6 +48,7 @@ type
   TACBrLibSAT = class(TACBrLib)
   private
     FSatDM: TLibSatDM;
+    FLibMail: TACBrLibMail;
 
   protected
     procedure Inicializar; override;
@@ -88,14 +89,38 @@ type
   {%region Ativar}
   function SAT_InicializarSAT: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   function SAT_DesInicializar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-{%endregion}
+  {%endregion}
+
+  {%region Funções SAT}
+  function SAT_AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
+    const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  function SAT_BloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  function SAT_DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  function SAT_TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar; opcao: Integer; novoCodigo: PChar;
+    const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  function SAT_ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  function SAT_ConsultarStatusOperacional(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  function SAT_ConsultarNumeroSessao(cNumeroDeSessao: Integer; const sResposta: PChar;
+    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  function SAT_AtualizarSoftwareSAT(const sResposta: PChar;
+    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar; const sResposta: PChar;
+    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  {%endregion}
 
   {%endregion}
 
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig;
+  sysutils,
+  ACBrUtil, ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig,
+  ACBrLibResposta, ACBrLibSATRespostas;
 
 { TACBrLibSAT }
 constructor TACBrLibSAT.Create(ArqConfig: string; ChaveCrypt: ansistring);
@@ -105,11 +130,18 @@ begin
   fpVersao := CLibSATVersao;
 
   FSatDM := TLibSatDM.Create(nil);
+  if FileExists(CACBrMailLIBName) then
+  begin
+    FLibMail := TACBrLibMail.Create(ArqConfig, ChaveCrypt);
+    FSatDM.ACBrMail1 := FLibMail.GetMail;
+  end;
 end;
 
 destructor TACBrLibSAT.Destroy;
 begin
   FSatDM.Free;
+  if(FLibMail <> nil) FLibMail.Free;
+
   inherited Destroy;
 end;
 
@@ -244,6 +276,355 @@ begin
 end;
 {%endregion}
 
+{%region Funções SAT}
+function SAT_AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  CNPJ, Assinatura, Resposta: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+    CNPJ := AnsiString(CNPJvalue);
+    Assinatura := AnsiString(assinaturaCNPJs);
 
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_AssociarAssinatura(' + CNPJ + ',' + Assinatura +  ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_AssociarAssinatura', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := SatDM.ACBrSAT1.AssociarAssinatura(CNPJ, Assinatura);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_BloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resposta: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('SAT_BloquearSAT', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := SatDM.ACBrSAT1.BloquearSAT;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resposta: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('SAT_DesbloquearSAT', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := SatDM.ACBrSAT1.DesbloquearSAT;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar; opcao: Integer; novoCodigo: PChar;
+    const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  CodigoAtivacao, NovoCodigoAtv, Resposta: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+    CodigoAtivacao := AnsiString(codigoDeAtivacaoOuEmergencia);
+    NovoCodigoAtv := AnsiString(novoCodigo);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_TrocarCodigoDeAtivacao(' + CodigoAtivacao + ',' + IntToStr(opcao)
+                        + ',' + NovoCodigoAtv +  ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_TrocarCodigoDeAtivacao', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := SatDM.ACBrSAT1.TrocarCodigoDeAtivacao(CodigoAtivacao, opcao, NovoCodigoAtv);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resposta: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('SAT_ConsultarSAT', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := SatDM.ACBrSAT1.ConsultarSAT;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_ConsultarStatusOperacional(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resposta: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('SAT_ConsultarStatusOperacional', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := SatDM.ACBrSAT1.ConsultarStatusOperacional;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_ConsultarNumeroSessao(cNumeroDeSessao: Integer; const sResposta: PChar;
+    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resposta: Ansistring;
+  Resp: TRetornoConsultarSessao;
+  RespCanc: TRetornoConsultarSessaoCancelado;
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_ConsultarNumeroSessao(' + IntToStr(cNumeroDeSessao) +  ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_ConsultarNumeroSessao', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        SatDM.ACBrSAT1.CFe.Clear;
+        SatDM.ACBrSAT1.CFeCanc.Clear;
+
+        Resposta := SatDM.ACBrSAT1.ConsultarNumeroSessao(cNumeroDeSessao);
+
+        if SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
+        begin
+          Resp := TRetornoConsultarSessao.Create(resINI);
+          try
+            with SatDM.ACBrSAT1.CFe do
+            begin
+              Resp.nCFe := IntToStrZero(ide.nCFe,0);
+              Resp.XML  := AsXMLString;
+              Resp.Arquivo:= SatDM.ACBrSAT1.CFe.NomeArquivo;
+
+              Resposta := sLineBreak + Resp.Gerar;
+            end;
+          finally
+            Resp.Free;
+          end;
+        end;
+
+        if SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 7000 then
+        begin
+          RespCanc := TRetornoConsultarSessaoCancelado.Create(resINI);
+          try
+            with SatDM.ACBrSAT1.CFeCanc do
+            begin
+              RespCanc.nCFeCanc := IntToStrZero(ide.nCFe,0);
+              RespCanc.XML  := AsXMLString;
+              RespCanc.Arquivo:= SatDM.ACBrSAT1.CFe.NomeArquivo;
+
+              Resposta := sLineBreak + Resp.Gerar;
+            end;
+          finally
+            RespCanc.Free;
+          end;
+        end;
+
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_AtualizarSoftwareSAT(const sResposta: PChar;
+    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resposta: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('SAT_AtualizarSoftwareSAT', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := SatDM.ACBrSAT1.AtualizarSoftwareSAT;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar; const sResposta: PChar;
+    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  cCertificado, Resposta: Ansistring;
+begin
+  try
+    VerificarLibInicializada;
+    cCertificado := Ansistring(certificado);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_ComunicarCertificadoICPBRASIL(' + cCertificado +  ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_ComunicarCertificadoICPBRASIL', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := SatDM.ACBrSAT1.ComunicarCertificadoICPBRASIL(cCertificado);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+{%endregion}
+
+{%endregion}
 end.
 

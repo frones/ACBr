@@ -1423,6 +1423,14 @@ begin
   end;
 
   Leitor.Grupo := Leitor.Arquivo;
+  if FProvedor = proABase then
+  begin
+    NFSe.Status := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status') );
+    if NFSe.Status = srCancelado then
+      NFSe.Cancelada := snSim
+    else
+      NFSe.Cancelada := snNao;
+  end;  
 
   if ((Leitor.rExtrai(1, 'NfseCancelamento') <> '') or (Leitor.rExtrai(1, 'CancelamentoNfse') <> '')) then
   begin

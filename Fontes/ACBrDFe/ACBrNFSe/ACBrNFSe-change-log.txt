@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2018
+-- Diversos --
+[*] Implementação do provedor DataSmart
+Por: Italo Jurisato Junior
+
+04/09/2018
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/46214-corre%C3%A7%C3%B5es-para-o-provedor-abase/
+Por: Roberto Godinho
 
 29/08/2018
 -- ACBrNFSeWebServices/pnfsNFSeG --

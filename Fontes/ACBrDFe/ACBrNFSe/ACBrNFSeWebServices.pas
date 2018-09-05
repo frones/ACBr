@@ -1045,7 +1045,6 @@ begin
   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.DadosSenha;
   // %Usuario% : Representa o nome do usuário ou CNPJ
   // %Senha%   : Representa a senha do usuário
-  Texto := StringReplace(Texto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
   Texto := StringReplace(Texto, '%Usuario%', UsuarioWeb, [rfReplaceAll]);
 
   if (SenhaWeb = '') and
@@ -1065,6 +1064,11 @@ begin
     Texto := StringReplace(Texto, '%Senha%', SenhaWeb, [rfReplaceAll]);
   end;
 
+  case FProvedor of
+    proDataSmart: Texto := StringReplace(Texto, '%Municipio%', CodCidadeToCidade(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
+  else
+    Texto := StringReplace(Texto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
+  end;
   FDadosSenha := Texto;
 end;
 
@@ -3892,7 +3896,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
-      proABase:     FTagGrupo := 'ConsultaLoteRpsEnvio';
+      proABase:     FTagGrupo := 'ConsultarLoteRpsEnvio';
 
       proCONAM:     FTagGrupo := 'ws_nfe.CONSULTANOTASPROTOCOLO';
 
@@ -3979,7 +3983,7 @@ end;
 
 function TNFSeConsultarLoteRPS.GerarPrefixoArquivo: String;
 begin
-  Result := Protocolo;
+  Result := TiraPontos(Protocolo);
 end;
 
 { TNFSeConsultarNfseRPS }

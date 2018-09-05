@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2018
+-- ACBrNFeServicos --
+[*] Correção das URLs Consulta NFCe QRCode2.0 MS.
+  Por: José M. S. Junior
+
 20/08/2018
 -- ACBrNFeWebServices --
 [*] Ajuste para serviço de consulta de cadastro NFe 4.00 RS e SVRS que tiveram

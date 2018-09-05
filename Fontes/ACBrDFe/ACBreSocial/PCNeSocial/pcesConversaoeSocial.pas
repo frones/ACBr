@@ -1148,12 +1148,12 @@ end;
 
 function eSTpPlanRPToStr(const t: tpPlanRP): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosString1_2 );
+  result := EnumeradoToStr2(t, TGenericosString0_2 );
 end;
 
 function eSStrToTpPlanRP(var ok: Boolean; const s: string): tpPlanRP;
 begin
-  result := tpPlanRP( StrToEnumerado2(ok, s, TGenericosString1_2) );
+  result := tpPlanRP( StrToEnumerado2(ok, s, TGenericosString0_2) );
 end;
 
 function eSTpRegTrabToStr(const t: tpTpRegTrab ): string;

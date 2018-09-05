@@ -1252,7 +1252,8 @@ begin
         (DateToStr(pInfoEstatutario.DtExercicio) <> '')) then
       Gerador.wCampo(tcDat, '', 'dtExercicio ', 10, 10, 0, pInfoEstatutario.DtExercicio);
 
-    Gerador.wCampo(tcInt, '', 'tpPlanRP', 0, 1, 0,  eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
+    if eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP) <> '0' then
+      Gerador.wCampo(tcInt, '', 'tpPlanRP', 0, 1, 0,  eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
 
     GerarInfoDecJud(pInfoEstatutario.infoDecJud);
 

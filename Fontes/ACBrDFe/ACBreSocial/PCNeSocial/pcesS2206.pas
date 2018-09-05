@@ -270,11 +270,14 @@ end;
 
 procedure TEvtAltContratual.GerarInfoEstatutario(pInfoEstatutario: TInfoEstatutario);
 begin
-  Gerador.wGrupo('infoEstatutario');
+  if eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP) <> '0' then
+  begin
+    Gerador.wGrupo('infoEstatutario');
 
-  Gerador.wCampo(tcInt, '', 'tpPlanRP', 1, 1, 1, eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
+    Gerador.wCampo(tcInt, '', 'tpPlanRP', 1, 1, 1, eSTpPlanRPToStr(pInfoEstatutario.tpPlanRP));
 
-  Gerador.wGrupo('/infoEstatutario');
+    Gerador.wGrupo('/infoEstatutario');
+  end;
 end;
 
 procedure TEvtAltContratual.GerarAltContratual(objAltContratual: TAltContratual);

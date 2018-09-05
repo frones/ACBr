@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2018
+--- ACBrLibeSocial ---
+[+] Inicio do projeto.
+   Por: Italo Jurisato Junior
+
 14/05/2018
 --- ACBrLibeSocial ---
 

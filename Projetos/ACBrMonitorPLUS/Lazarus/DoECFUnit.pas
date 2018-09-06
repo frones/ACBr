@@ -2938,7 +2938,7 @@ var
   cImpVinculado : Boolean;
 begin
   cCodFormaPagamento := fpCmd.Params(0);
-  nValor             := StrToFloat(fpCmd.Params(1));
+  nValor             := StringToFloat(fpCmd.Params(1));
   cObs               := fpCmd.Params(2);
   cImpVinculado      := StrToBoolDef(fpCmd.Params(3),False);
 
@@ -2959,7 +2959,7 @@ procedure TMetodoSubTotalizaNaoFiscal.Executar;
 var
   nValor: Double;
 begin
-  nValor := StrToFloat(fpCmd.Params(0));
+  nValor := StringToFloatDef(fpCmd.Params(0),0);
 
   with TACBrObjetoECF(fpObjetoDono) do
   begin
@@ -2996,7 +2996,7 @@ var
   cOBS    : String;
 begin
   cCodCNF := fpCmd.Params(0);
-  nValor  := StrToFloat(fpCmd.Params(1));
+  nValor  := StringToFloat(fpCmd.Params(1));
   cOBS := fpCmd.Params(2);
 
   with TACBrObjetoECF(fpObjetoDono) do
@@ -3038,7 +3038,7 @@ var
   cOBS : String;
 begin
   cCodCNF := fpCmd.Params(0);
-  nValor  := StrToFloat(fpCmd.Params(1));
+  nValor  := StringToFloat(fpCmd.Params(1));
   cCodFormaPagto := fpCmd.Params(2);
   cOBS := fpCmd.Params(3);
 
@@ -3082,7 +3082,7 @@ var
   cDescricaoCNF : String;
   cDescricaoFPG : String;
 begin
-  nValor := StrToFloat(fpCmd.Params(0));
+  nValor := StringToFloat(fpCmd.Params(0));
   cObs   := fpCmd.Params(1);
   cDescricaoCNF := fpCmd.Params(2);
   cDescricaoFPG := fpCmd.Params(3);
@@ -3110,7 +3110,7 @@ var
   cDescricaoCNF : String;
   cDescricaoFPG : String;
 begin
-  nValor := StrToFloat(fpCmd.Params(0));
+  nValor := StringToFloat(fpCmd.Params(0));
   cObs   := fpCmd.Params(1);
   cDescricaoCNF := fpCmd.Params(2);
   cDescricaoFPG := fpCmd.Params(3);
@@ -3187,7 +3187,7 @@ var
   nValor: Double;
 begin
   nItem := StrToInt(fpCmd.Params(0));
-  nValor:= StrToFloat(fpCmd.Params(1));
+  nValor:= StringToFloat(fpCmd.Params(1));
 
   with TACBrObjetoECF(fpObjetoDono) do
   begin
@@ -3254,7 +3254,7 @@ var
 begin
   cCodFormaPagtoEstornar := fpCmd.Params(0);
   cCodFormaPagtoEfetivar := fpCmd.Params(1);
-  nValor                 := StrToFloatDef(fpCmd.Params(2),0);
+  nValor                 := StringToFloat(fpCmd.Params(2));
   cObservacao            := fpCmd.Params(3);
 
   with TACBrObjetoECF(fpObjetoDono) do
@@ -3281,7 +3281,7 @@ var
   bImprimeVinculado : Boolean;
 begin
   cCodFormaPagto    := fpCmd.Params(0);
-  nValor            := StrToFloatDef(fpCmd.Params(1),0);
+  nValor            := StringToFloat(fpCmd.Params(1));
   cObservacao       := fpCmd.Params(2);
   bImprimeVinculado := StrToBoolDef(fpCmd.Params(3),False);
 
@@ -3304,7 +3304,7 @@ var
   nDescontoAcrescimo : Double;
   cMensagemRodape : String;
 begin
-  nDescontoAcrescimo := StrToFloatDef(fpCmd.Params(0),0);
+  nDescontoAcrescimo := StringToFloatDef(fpCmd.Params(0),0);
   cMensagemRodape    := fpCmd.Params(1);
 
   with TACBrObjetoECF(fpObjetoDono) do
@@ -3328,7 +3328,7 @@ var
   cTipoDescontoAcrescimo  : String;
   nNumItem                : Integer;
 begin
-  nValorDescontoAcrescimo := StrToFloatDef(fpCmd.Params(0),0);
+  nValorDescontoAcrescimo := StringToFloat(fpCmd.Params(0));
   cDescontoAcrescimo      := fpCmd.Params(1);
   cTipoDescontoAcrescimo  := fpCmd.Params(2);
   nNumItem                := StrToIntDef(fpCmd.Params(3),0);
@@ -3370,7 +3370,7 @@ var
 begin
   cCodigo           := fpCmd.Params(0);
   cDescricao        := fpCmd.Params(1);
-  cAliquotaICMS     := fpCmd.Params(2);
+  cAliquotaICMS     := Trim(fpCmd.Params(2));
   nQtd              := StringToFloat(fpCmd.Params(3));
   nValorUnitario    := StringToFloat(fpCmd.Params(4));
   nValorDescontoAcrescimo := StringToFloatDef(fpCmd.Params(5),0);
@@ -3793,7 +3793,7 @@ var
   fAliq : Double;
   cTipo : String;
 begin
-  fAliq := StrToFloat(fpCmd.Params(0));
+  fAliq := StringToFloat(fpCmd.Params(0));
   cTipo := fpCmd.Params(1);
 
   with TACBrObjetoECF(fpObjetoDono) do
@@ -3823,7 +3823,7 @@ var
   cTipo : String;
   sPosicao : String;
 begin
-  fAliq := StrToFloat(fpCmd.Params(0));
+  fAliq := StringToFloat(fpCmd.Params(0));
   cTipo := fpCmd.Params(1);
   sPosicao := fpCmd.Params(2);
 

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2018
+[*] DoECFUnit
+Ajuste na passagem de parâmetros do método "EfetuaPagamento"
+
 04/09/2018
 [*] DoACBrNFeUnit
 Ajuste para envio de NFe em lote

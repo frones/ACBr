@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/08/2018
+-- ACBrNFeNotasFiscais --
+[*] Validações na leitura do arquivo .INI
+por: José M. S. Junior
+
 05/09/2018
 -- ACBrNFeServicos --
 [*] Correção das URLs Consulta NFCe QRCode2.0 MS.

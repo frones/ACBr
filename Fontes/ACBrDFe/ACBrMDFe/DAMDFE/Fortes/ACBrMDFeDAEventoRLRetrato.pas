@@ -336,7 +336,7 @@ begin
     printIt := True;
 
     rllRazaoEmitente.Caption := FMDFe.emit.xNome;
-    rllCNPJEmitente.Caption := FormatarCNPJouCPF(FMDFe.emit.CNPJ);
+    rllCNPJEmitente.Caption := FormatarCNPJouCPF(FMDFe.emit.CNPJCPF);
     rllEnderecoEmitente.Caption := FMDFe.emit.EnderEmit.xLgr + ', ' + FMDFe.emit.EnderEmit.nro;
     rllBairroEmitente.Caption := FMDFe.emit.EnderEmit.xBairro;
     rllCEPEmitente.Caption := FormatarCEP(FMDFe.emit.EnderEmit.CEP);

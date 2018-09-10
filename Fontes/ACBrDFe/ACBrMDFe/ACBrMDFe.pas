@@ -99,7 +99,7 @@ type
     function cStatCancelado(AValue: integer): Boolean;
 
     function Consultar( AChave: String = ''): Boolean;
-    function ConsultarMDFeNaoEnc(ACNPJ: String): Boolean;
+    function ConsultarMDFeNaoEnc(ACNPJCPF: String): Boolean;
     function Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
 
@@ -474,11 +474,12 @@ begin
     EventoMDFe.Evento.Clear;
     with EventoMDFe.Evento.Add do
     begin
-      infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.MDFeChave), 7, 14);
-      infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.MDFeChave), 1, 2), 0);
+      infEvento.CNPJCPF  := copy(OnlyNumber(WebServices.Consulta.MDFeChave), 7, 14);
+      infEvento.cOrgao   := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.MDFeChave), 1, 2), 0);
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;
-      infEvento.chMDFe := WebServices.Consulta.MDFeChave;
+      infEvento.chMDFe   := WebServices.Consulta.MDFeChave;
+
       infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
       infEvento.detEvento.xJust := AJustificativa;
     end;
@@ -517,9 +518,9 @@ begin
   Result := True;
 end;
 
-function TACBrMDFe.ConsultarMDFeNaoEnc(ACNPJ: String): Boolean;
+function TACBrMDFe.ConsultarMDFeNaoEnc(ACNPJCPF: String): Boolean;
 begin
-  Result := WebServices.ConsultaMDFeNaoEnc(ACNPJ);
+  Result := WebServices.ConsultaMDFeNaoEnc(ACNPJCPF);
 end;
 
 function TACBrMDFe.Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean;
@@ -599,8 +600,8 @@ begin
       else
         j := 0;
 
-      if trim(EventoMDFe.Evento.Items[i].InfEvento.CNPJ) = '' then
-        EventoMDFe.Evento.Items[i].InfEvento.CNPJ := Manifestos.Items[j].MDFe.Emit.CNPJ;
+      if trim(EventoMDFe.Evento.Items[i].InfEvento.CNPJCPF) = '' then
+        EventoMDFe.Evento.Items[i].InfEvento.CNPJCPF := Manifestos.Items[j].MDFe.Emit.CNPJCPF;
 
       if chMDFe = '' then
         EventoMDFe.Evento.Items[i].InfEvento.chMDFe := Manifestos.Items[j].NumID;

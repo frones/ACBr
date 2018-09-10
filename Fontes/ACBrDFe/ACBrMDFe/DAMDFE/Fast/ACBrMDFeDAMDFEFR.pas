@@ -1199,7 +1199,13 @@ begin
     Append;
     with FMDFe.emit do
     begin
-      FieldByName('CNPJ').AsString  := FormatarCNPJ(CNPJ);
+//      FieldByName('CNPJ').AsString  := FormatarCNPJ(CNPJ);
+
+      if Length(CNPJCPF)=11 then
+        FieldByName('CNPJ').AsString := FormatarCPF(CNPJCPF)
+      else
+        FieldByName('CNPJ').AsString := FormatarCNPJ(CNPJCPF);
+
       FieldByName('IE').AsString    := IE;
       FieldByName('XNome').AsString := xNome;
       FieldByName('XFant').AsString := XFant;
@@ -1637,7 +1643,10 @@ begin
         FieldByName('dhRegEvento').AsDateTime := RetInfEvento.dhRegEvento;
         FieldByName('xJust').AsString         := InfEvento.detEvento.xJust;
         FieldByName('xNome').AsString         := InfEvento.detEvento.xNome;
-        FieldByName('CPF').AsString           := FormatarCPF(InfEvento.detEvento.CPF);
+
+        if (InfEvento.detEvento.CPF <> '') then
+          FieldByName('CPF').AsString := FormatarCPF(InfEvento.detEvento.CPF);
+
         FieldByName('nProtEvento').AsString   := InfEvento.detEvento.nProt;
         FieldByName('dtEnc').AsDateTime       := InfEvento.detEvento.dtEnc;
         FieldByName('cUf').AsInteger          := InfEvento.detEvento.cUF;

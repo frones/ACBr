@@ -107,7 +107,7 @@ begin
     MDFe.Ide.cUF         := Leitor.rCampo(tcInt, 'cUF');
     MDFe.Ide.tpAmb       := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
     MDFe.Ide.tpEmit      := StrToTpEmitente(ok, Leitor.rCampo(tcStr, 'tpEmit'));
-    if MDFe.infMDFe.versao = 3 then
+    if MDFe.infMDFe.versao >= 3 then
       MDFe.Ide.tpTransp := StrToTTransportador(ok, Leitor.rCampo(tcStr, 'tpTransp'));
     MDFe.Ide.modelo      := Leitor.rCampo(tcStr, 'mod');
     MDFe.Ide.serie       := Leitor.rCampo(tcInt, 'serie');
@@ -153,10 +153,11 @@ begin
   (* Grupo da TAG <emit> ******************************************************)
   if Leitor.rExtrai(1, 'emit') <> '' then
   begin
-    MDFe.emit.CNPJ  := Leitor.rCampo(tcStr, 'CNPJ');
-    MDFe.emit.IE    := Leitor.rCampo(tcStr, 'IE');
-    MDFe.emit.xNome := Leitor.rCampo(tcStr, 'xNome');
-    MDFe.emit.xFant := Leitor.rCampo(tcStr, 'xFant');
+    MDFe.emit.CNPJCPF :=  Leitor.rCampoCNPJCPF;
+//    MDFe.emit.CNPJ  := Leitor.rCampo(tcStr, 'CNPJ');
+    MDFe.emit.IE      := Leitor.rCampo(tcStr, 'IE');
+    MDFe.emit.xNome   := Leitor.rCampo(tcStr, 'xNome');
+    MDFe.emit.xFant   := Leitor.rCampo(tcStr, 'xFant');
 
     if Leitor.rExtrai(2, 'enderEmit') <> '' then
     begin
@@ -429,7 +430,7 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infCTe[i02].chCTe       := Leitor.rCampo(tcStr, 'chCTe');
         MDFe.infDoc.infMunDescarga[i01].infCTe[i02].SegCodBarra := Leitor.rCampo(tcStr, 'SegCodBarra');
 
-        if MDFe.infMDFe.versao = 3 then
+        if MDFe.infMDFe.versao >= 3 then
           MDFe.infDoc.infMunDescarga[i01].infCTe[i02].indReentrega := Leitor.rCampo(tcStr, 'indReentrega');
 
         i03 := 0;
@@ -490,7 +491,7 @@ begin
           inc(i03);
         end;
 
-        if MDFe.infMDFe.versao = 3 then
+        if MDFe.infMDFe.versao >= 3 then
         begin
           i03 := 0;
           while Leitor.rExtrai(4, 'peri', '', i03 + 1) <> '' do
@@ -503,6 +504,12 @@ begin
             MDFe.infDoc.infMunDescarga[i01].infCTe[i02].peri[i03].qTotProd  := Leitor.rCampo(tcStr, 'qTotProd');
             MDFe.infDoc.infMunDescarga[i01].infCTe[i02].peri[i03].qVolTipo  := Leitor.rCampo(tcStr, 'qVolTipo');
             inc(i03);
+          end;
+
+          if Leitor.rExtrai(4, 'infEntregaParcial') <> '' then
+          begin
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infEntregaParcial.qtdTotal   := Leitor.rCampo(tcDe2, 'qtdTotal');
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infEntregaParcial.qtdParcial := Leitor.rCampo(tcDe2, 'qtdParcial');
           end;
         end;
 
@@ -587,7 +594,7 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infNFe[i02].chNFe       := Leitor.rCampo(tcStr, 'chNFe');
         MDFe.infDoc.infMunDescarga[i01].infNFe[i02].SegCodBarra := Leitor.rCampo(tcStr, 'SegCodBarra');
 
-        if MDFe.infMDFe.versao = 3 then
+        if MDFe.infMDFe.versao >= 3 then
           MDFe.infDoc.infMunDescarga[i01].infNFe[i02].indReentrega := Leitor.rCampo(tcStr, 'indReentrega');
 
         i03 := 0;
@@ -648,7 +655,7 @@ begin
           inc(i03);
         end;
 
-        if MDFe.infMDFe.versao = 3 then
+        if MDFe.infMDFe.versao >= 3 then
         begin
           i03 := 0;
           while Leitor.rExtrai(4, 'peri', '', i03 + 1) <> '' do
@@ -746,7 +753,7 @@ begin
         MDFe.infDoc.infMunDescarga[i01].infMDFeTransp.Add;
         MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].chMDFe := Leitor.rCampo(tcStr, 'chMDFe');
 
-        if MDFe.infMDFe.versao = 3 then
+        if MDFe.infMDFe.versao >= 3 then
           MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].indReentrega := Leitor.rCampo(tcStr, 'indReentrega');
 
         i03 := 0;
@@ -807,7 +814,7 @@ begin
           inc(i03);
         end;
 
-        if MDFe.infMDFe.versao = 3 then
+        if MDFe.infMDFe.versao >= 3 then
         begin
           i03 := 0;
           while Leitor.rExtrai(4, 'peri', '', i03 + 1) <> '' do
@@ -830,7 +837,7 @@ begin
     end;
   end;
 
-  if MDFe.infMDFe.versao = 3 then
+  if MDFe.infMDFe.versao >= 3 then
   begin
     i01 := 0;
     while Leitor.rExtrai(1, 'seg', '', i01 + 1) <> '' do
@@ -896,8 +903,18 @@ begin
   (* Grupo da TAG <infAdic> ***************************************************)
   if Leitor.rExtrai(1, 'infAdic') <> '' then
   begin
-   MDFe.infAdic.infAdFisco := Leitor.rCampo(tcStr, 'infAdFisco');
-   MDFe.infAdic.infCpl     := Leitor.rCampo(tcStr, 'infCpl');
+    MDFe.infAdic.infAdFisco := Leitor.rCampo(tcStr, 'infAdFisco');
+    MDFe.infAdic.infCpl     := Leitor.rCampo(tcStr, 'infCpl');
+  end;
+
+  if Leitor.rExtrai(1, 'infRespTec') <> '' then
+  begin
+    MDFe.infRespTec.CNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+    MDFe.infRespTec.xContato := Leitor.rCampo(tcStr, 'xContato');
+    MDFe.infRespTec.email    := Leitor.rCampo(tcStr, 'email');
+    MDFe.infRespTec.fone     := Leitor.rCampo(tcStr, 'fone');
+    MDFe.infRespTec.idCSRT   := Leitor.rCampo(tcInt, 'idCSRT');
+    MDFe.infRespTec.hashCSRT := Leitor.rCampo(tcStr, 'hashCSRT');
   end;
 
   (* Grupo da TAG <signature> *************************************************)

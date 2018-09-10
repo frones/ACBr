@@ -351,7 +351,7 @@ type
   TMDFeConsultaMDFeNaoEnc = Class(TMDFeWebService)
   private
     FOwner: TACBrDFe;
-    FCNPJ: String;
+    FCNPJCPF: String;
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
@@ -374,7 +374,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property CNPJ: String                   read FCNPJ write FCNPJ;
+    property CNPJCPF: String                read FCNPJCPF write FCNPJCPF;
     property versao: String                 read Fversao;
     property tpAmb: TpcnTipoAmbiente        read FtpAmb;
     property verAplic: String               read FverAplic;
@@ -469,7 +469,7 @@ type
 
     function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
-    function ConsultaMDFeNaoEnc(ACNPJ: String): Boolean;
+    function ConsultaMDFeNaoEnc(ACNPJCPF: String): Boolean;
 
     property ACBrMDFe: TACBrDFe read FACBrMDFe write FACBrMDFe;
     property StatusServico: TMDFeStatusServico read FStatusServico write FStatusServico;
@@ -1545,7 +1545,7 @@ begin
 
           Infevento.ID              := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.ID;
           Infevento.tpAmb           := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.tpAmb;
-          InfEvento.CNPJ            := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.CNPJ;
+          InfEvento.CNPJCPF         := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.CNPJCPF;
           InfEvento.chMDFe          := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.chMDFe;
           InfEvento.dhEvento        := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.dhEvento;
           InfEvento.TpEvento        := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.InfEvento.TpEvento;
@@ -1713,7 +1713,7 @@ begin
               else
                 dhEmissao := Now;
 
-                sPathMDFe := PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(dhEmissao, MDFe.Emit.CNPJ));
+                sPathMDFe := PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(dhEmissao, MDFe.Emit.CNPJCPF));
 
                 if (FRetMDFeDFe <> '') {and FPConfiguracoesMDFe.Geral.Salvar} then
                   FPDFeOwner.Gravar( FMDFeChave + '-MDFeDFe.xml', FRetMDFeDFe, sPathMDFe);
@@ -1836,7 +1836,7 @@ begin
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
 
   VerServ := VersaoMDFeToDbl(FPConfiguracoesMDFe.Geral.VersaoDF);
-  FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
+  FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJCPF;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo  := 'MDFe';
   UF      := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chMDFe));
@@ -1882,7 +1882,7 @@ begin
       with EventoMDFe.Evento.Add do
       begin
         infEvento.tpAmb      := FTpAmb;
-        infEvento.CNPJ       := FEvento.Evento[i].InfEvento.CNPJ;
+        infEvento.CNPJCPF    := FEvento.Evento[i].InfEvento.CNPJCPF;
         infEvento.chMDFe     := FEvento.Evento[i].InfEvento.chMDFe;
         infEvento.dhEvento   := FEvento.Evento[i].InfEvento.dhEvento;
         infEvento.tpEvento   := FEvento.Evento[i].InfEvento.tpEvento;
@@ -2036,7 +2036,7 @@ begin
             if FPConfiguracoesMDFe.Arquivos.Salvar then
             begin
               NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) + '-procEventoMDFe.xml';
-              PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
+              PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJCPF));
 
               FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
               FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
@@ -2177,9 +2177,9 @@ var
 begin
   ConsMDFeNaoEnc := TConsMDFeNaoEnc.create;
   try
-    ConsMDFeNaoEnc.TpAmb  := FPConfiguracoesMDFe.WebServices.Ambiente;
-    ConsMDFeNaoEnc.CNPJ   := OnlyNumber( FCNPJ );
-    ConsMDFeNaoEnc.Versao := FPVersaoServico;
+    ConsMDFeNaoEnc.TpAmb   := FPConfiguracoesMDFe.WebServices.Ambiente;
+    ConsMDFeNaoEnc.CNPJCPF := OnlyNumber( FCNPJCPF );
+    ConsMDFeNaoEnc.Versao  := FPVersaoServico;
 
     AjustarOpcoes( ConsMDFeNaoEnc.Gerador.Opcoes );
     ConsMDFeNaoEnc.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
@@ -2567,9 +2567,9 @@ begin
   Result := True;
 end;
 
-function TWebServices.ConsultaMDFeNaoEnc(ACNPJ: String): Boolean;
+function TWebServices.ConsultaMDFeNaoEnc(ACNPJCPF: String): Boolean;
 begin
-  FConsMDFeNaoEnc.FCNPJ := ACNPJ;
+  FConsMDFeNaoEnc.FCNPJCPF := ACNPJCPF;
 
   if not FConsMDFeNaoEnc.Executar then
     FConsMDFeNaoEnc.GerarException( FConsMDFeNaoEnc.Msg );

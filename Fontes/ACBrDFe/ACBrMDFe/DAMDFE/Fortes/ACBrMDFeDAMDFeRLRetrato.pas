@@ -288,7 +288,7 @@ begin
         rlmDadosEmitente.Lines.Add('CEP: ' + FormatarCEP(CEP) +
           ' - ' + XMun + ' - ' + UF);
       end;
-      rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJ(CNPJ));
+      rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJouCPF(CNPJCPF));
       rlmDadosEmitente.Lines.Add(ACBrStr('INSCRIÇÃO ESTADUAL: ') + IE);
       rlmDadosEmitente.Lines.Add('TELEFONE: ' + FormatarFone(EnderEmit.Fone));
 
@@ -667,7 +667,7 @@ begin
    // Lista de CT
     for J := 0 to (infCT.Count - 1) do
     begin
-      Printar( 'CT            ' + FormatarCNPJouCPF(FMDFe.emit.CNPJ) + ' - '
+      Printar( 'CT            ' + FormatarCNPJouCPF(FMDFe.emit.CNPJCPF) + ' - '
                                 + IntToStr(infCT.Items[J].serie)     + '-'
                                 + infCT.Items[J].nCT , nItem );
       Inc(nItem);

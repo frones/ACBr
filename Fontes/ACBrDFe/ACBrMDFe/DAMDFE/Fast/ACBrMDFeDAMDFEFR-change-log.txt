@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2018
+-- ACBrMDFeDAMDFEFR --
+[*] Alterações visando deixar o componente em conformidade com a Nota Técnica 2018/002.
+  por: Italo Jurisato Junior
+
 Data: 13/06/2017
 [-] Adição de campos para o MDFe 3.00
 		http://www.projetoacbr.com.br/forum/topic/38490-damdfefr-disponibilizados-novos-campos-mdf-e-3/

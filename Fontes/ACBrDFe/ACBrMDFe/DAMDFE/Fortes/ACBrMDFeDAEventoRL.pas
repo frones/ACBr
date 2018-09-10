@@ -195,7 +195,7 @@ begin
         KeyWords :=
           ACBrStr(Format('Número: %s; Data de emissão: %s; CNPJ: %s',
             [FormatFloat('000,000,000', AEventoMDFe.RetInfEvento.nSeqEvento),FormatDateTime('dd/mm/yyyy', AEventoMDFe.RetInfEvento.dhRegEvento),
-              AEventoMDFe.InfEvento.CNPJ]));
+              AEventoMDFe.InfEvento.CNPJCPF]));
       end;
 
       RLMDFeEvento.SaveToFile(AFile);

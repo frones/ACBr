@@ -143,7 +143,7 @@ begin
   Gerador.wCampo(tcInt, 'EP05', 'cOrgao', 1, 2, 1, Evento.Items[0].InfEvento.cOrgao);
   Gerador.wCampo(tcStr, 'EP06', 'tpAmb ', 1, 1, 1, TpAmbToStr(Evento.Items[0].InfEvento.tpAmb), DSC_TPAMB);
 
-  sDoc := OnlyNumber(Evento.Items[0].InfEvento.CNPJ);
+  sDoc := OnlyNumber(Evento.Items[0].InfEvento.CNPJCPF);
 
   case Length(sDoc) of
     14: begin
@@ -248,7 +248,7 @@ begin
         infEvento.Id         := RetEventoMDFe.InfEvento.Id;
         InfEvento.cOrgao     := RetEventoMDFe.InfEvento.cOrgao;
         infEvento.tpAmb      := RetEventoMDFe.InfEvento.tpAmb;
-        infEvento.CNPJ       := RetEventoMDFe.InfEvento.CNPJ;
+        infEvento.CNPJCPF    := RetEventoMDFe.InfEvento.CNPJCPF;
         infEvento.chMDFe     := RetEventoMDFe.InfEvento.chMDFe;
         infEvento.dhEvento   := RetEventoMDFe.InfEvento.dhEvento;
         infEvento.tpEvento   := RetEventoMDFe.InfEvento.tpEvento;
@@ -306,10 +306,10 @@ end;
 
 function TEventoMDFe.LerFromIni(const AIniString: String): Boolean;
 var
-//  I: Integer;
-//  sSecao, sFim: String;
+  I: Integer;
+  sSecao, sFim: String;
   INIRec: TMemIniFile;
-//  ok: Boolean;
+  Ok: Boolean;
 begin
   Result := False;
   Self.Evento.Clear;
@@ -318,11 +318,40 @@ begin
   try
     LerIniArquivoOuString(AIniString, INIRec);
 
-    // Implementar
+    idLote := INIRec.ReadInteger('EVENTO', 'idLote', 0);
+
+    I := 1;
+    while true do
+    begin
+      sSecao := 'EVENTO'+IntToStrZero(I,3);
+      sFim   := INIRec.ReadString(sSecao, 'chMDFe', 'FIM');
+      if (sFim = 'FIM') or (Length(sFim) <= 0) then
+        break;
+
+      with Self.Evento.Add do
+      begin
+        infEvento.chMDFe     := INIRec.ReadString(sSecao, 'chMDFe', '');
+        infEvento.cOrgao     := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
+        infEvento.CNPJCPF    := INIRec.ReadString(sSecao, 'CNPJCPF', '');
+        infEvento.dhEvento   := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
+        infEvento.tpEvento   := StrToTpEvento(Ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
+        infEvento.nSeqEvento := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
+
+        // Usado no detalhamento do evento
+        infEvento.detEvento.xJust := INIRec.ReadString(sSecao, 'xJust', '');
+        infEvento.detEvento.nProt := INIRec.ReadString(sSecao, 'nProt', '');
+        InfEvento.detEvento.dtEnc := StringToDateTime(INIRec.ReadString(sSecao, 'dtEnc', ''));
+        InfEvento.detEvento.cUF   := INIRec.ReadInteger(sSecao, 'cUF', 0);
+        InfEvento.detEvento.cMun  := INIRec.ReadInteger(sSecao, 'cMun', 0);
+        infEvento.detEvento.xNome := INIRec.ReadString(sSecao, 'xNome', '');
+        infEvento.detEvento.CPF   := INIRec.ReadString(sSecao, 'CPF', '');
+      end;
+      Inc(I);
+    end;
 
     Result := True;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

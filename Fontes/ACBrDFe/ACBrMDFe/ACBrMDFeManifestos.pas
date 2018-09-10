@@ -235,7 +235,7 @@ begin
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
     if not Assigned(SSL.AntesDeAssinar) then
-      SSL.ValidarCNPJCertificado( MDFe.Emit.CNPJ );
+      SSL.ValidarCNPJCertificado( MDFe.Emit.CNPJCPF );
   end;
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
@@ -423,7 +423,7 @@ begin
     if (Configuracoes.Geral.VersaoDF >= ve300) and (MDFe.Ide.tpTransp <> ttNenhum) and
         (MDFe.Ide.tpEmit = teTranspCargaPropria) and
         (MDFe.Ide.modal = moRodoviario) and ((MDFe.Rodo.veicTracao.Prop.CNPJCPF = '') or
-        (MDFe.Rodo.veicTracao.Prop.CNPJCPF = MDFe.emit.CNPJ))  then
+        (MDFe.Rodo.veicTracao.Prop.CNPJCPF = MDFe.emit.CNPJCPF))  then
       AdicionaErro('458-Rejeição: Tipo de transportador (tpTransp) não deve ser preenchido');
 
     // *************************************************************************
@@ -574,7 +574,7 @@ begin
     else
       Data := Now;
 
-    Result := PathWithDelim(Configuracoes.Arquivos.GetPathMDFe(Data, FMDFe.Emit.CNPJ));
+    Result := PathWithDelim(Configuracoes.Arquivos.GetPathMDFe(Data, FMDFe.Emit.CNPJCPF));
   end;
 end;
 
@@ -610,7 +610,7 @@ begin
     ((Copy(MDFe.infMDFe.ID, 5, 2) <> IntToStrZero(MDFe.Ide.cUF, 2)) or
     (Copy(MDFe.infMDFe.ID, 7, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
     (Copy(MDFe.infMDFe.ID, 9, 2)  <> FormatFloat('00', wMes)) or
-    (Copy(MDFe.infMDFe.ID, 11, 14)<> PadLeft(OnlyNumber(MDFe.Emit.CNPJ), 14, '0')) or
+    (Copy(MDFe.infMDFe.ID, 11, 14)<> PadLeft(OnlyNumber(MDFe.Emit.CNPJCPF), 14, '0')) or
     (Copy(MDFe.infMDFe.ID, 25, 2) <> MDFe.Ide.modelo) or
     (Copy(MDFe.infMDFe.ID, 27, 3) <> IntToStrZero(MDFe.Ide.serie, 3)) or
     (Copy(MDFe.infMDFe.ID, 30, 9) <> IntToStrZero(MDFe.Ide.nMDF, 9)) or
@@ -749,10 +749,10 @@ begin
 
          Ide.dhIniViagem := StringToDateTime(INIRec.ReadString('ide', 'dhIniViagem', '0'));
 
-         Emit.CNPJ  := INIRec.ReadString('emit', 'CNPJ', '');
-         Emit.IE    := INIRec.ReadString('emit', 'IE', '');
-         Emit.xNome := INIRec.ReadString('emit', 'xNome', '');
-         Emit.xFant := INIRec.ReadString('emit', 'xFant', '');
+         Emit.CNPJCPF := INIRec.ReadString('emit', 'CNPJCPF', INIRec.ReadString('emit', 'CNPJ', ''));
+         Emit.IE      := INIRec.ReadString('emit', 'IE', '');
+         Emit.xNome   := INIRec.ReadString('emit', 'xNome', '');
+         Emit.xFant   := INIRec.ReadString('emit', 'xFant', '');
 
          Emit.enderEmit.xLgr    := INIRec.ReadString('emit', 'xLgr', '');
          Emit.enderEmit.nro     := INIRec.ReadString('emit', 'nro', '');
@@ -1152,6 +1152,14 @@ begin
                    inc(K);
                  end;
 
+                 sSecao := 'infEntregaParcial'+IntToStrZero(I,3)+IntToStrZero(J,3);
+
+                 if INIRec.SectionExists(sSecao) then
+                 begin
+                   infEntregaParcial.qtdTotal   := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdTotal', ''), 0);
+                   infEntregaParcial.qtdParcial := StringToFloatDef(INIRec.ReadString(sSecao, 'qtdParcial', ''), 0);
+                 end;
+
                  K := 1;
                  while true do
                  begin
@@ -1516,6 +1524,20 @@ begin
 
        infAdic.infCpl     := INIRec.ReadString('infAdic', 'infCpl', '');
        infAdic.infAdFisco := INIRec.ReadString('infAdic', 'infAdFisco', '');
+
+       sSecao := 'infRespTec';
+       if INIRec.SectionExists(sSecao) then
+       begin
+         with infRespTec do
+         begin
+           CNPJ     := INIRec.ReadString(sSecao, 'CNPJ', '');
+           xContato := INIRec.ReadString(sSecao, 'xContato', '');
+           email    := INIRec.ReadString(sSecao, 'email', '');
+           fone     := INIRec.ReadString(sSecao, 'fone', '');
+           idCSRT   := INIRec.ReadInteger(sSecao, 'idCSRT', 0);
+           hashCSRT := INIRec.ReadString(sSecao, 'hashCSRT', '');
+         end;
+       end;
     end;
 
     GerarXML;

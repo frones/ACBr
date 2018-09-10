@@ -62,6 +62,9 @@ const
   DSC_QCARGA      = 'Peso Bruto Total da Carga / Mercadoria Transportada';
   DSC_DHINIVIAGEM = 'Data e Hora previstas de Inicio da Viagem';
   DSC_INDREENTREGA = 'Indicador de reentrega';
+  DSC_QTDTOTAL    = 'Quantidade Total';
+  DSC_QTDPARCIAL  = 'Quantidade Parcial';
+
 
   // Rodoviário
   DSC_CIOT        = 'Código Identificador da Operação de Transporte';

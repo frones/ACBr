@@ -57,7 +57,7 @@ type
   private
     FId: String;
     FtpAmbiente: TpcnTipoAmbiente;
-    FCNPJ: String;
+    FCNPJCPF: String;
     FcOrgao: Integer;
     FChave: String;
     FDataEvento: TDateTime;
@@ -77,12 +77,12 @@ type
     property Id: String              read FId             write FId;
     property cOrgao: Integer         read getcOrgao       write FcOrgao;
     property tpAmb: TpcnTipoAmbiente read FtpAmbiente     write FtpAmbiente;
-    property CNPJ: String            read FCNPJ           write FCNPJ;
+    property CNPJCPF: String         read FCNPJCPF        write FCNPJCPF;
     property chMDFe: String          read FChave          write FChave;
     property dhEvento: TDateTime     read FDataEvento     write FDataEvento;
     property tpEvento: TpcnTpEvento  read FTpEvento       write FTpEvento;
     property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
-    property versaoEvento: String    read FVersaoEvento write FversaoEvento;
+    property versaoEvento: String    read FVersaoEvento   write FversaoEvento;
     property detEvento: TDetEvento   read FDetEvento      write FDetEvento;
     property DescEvento: String      read getDescEvento;
     property TipoEvento: String      read getTipoEvento;

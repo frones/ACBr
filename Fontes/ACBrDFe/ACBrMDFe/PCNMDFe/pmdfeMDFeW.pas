@@ -83,6 +83,7 @@ type
     procedure GerarLacres;        // Nivel 1
     procedure GerarautXML;        // Nivel 1
     procedure GerarInfAdic;       // Nivel 1
+    procedure GerarinfRespTec; // Nivel 1
 
     procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 
@@ -155,7 +156,7 @@ begin
 
   VersaoDF := DblToVersaoMDFe(Ok, MDFe.infMDFe.versao);
 
-  chave := GerarChaveAcesso(MDFe.ide.cUF, MDFe.ide.dhEmi, MDFe.emit.CNPJ, MDFe.ide.serie,
+  chave := GerarChaveAcesso(MDFe.ide.cUF, MDFe.ide.dhEmi, MDFe.emit.CNPJCPF, MDFe.ide.serie,
                             MDFe.ide.nMDF, StrToInt(TpEmisToStr(MDFe.ide.tpEmis)),
                             MDFe.ide.cMDF, StrToInt(MDFe.ide.modelo));
   MDFe.infMDFe.ID := 'MDFe' + chave;
@@ -228,6 +229,8 @@ begin
   GerarLacres;
   GerarautXML;
   GerarInfAdic;
+  if VersaoDF >= ve300 then
+    GerarinfRespTec;
 end;
 
 procedure TMDFeW.GerarIde;
@@ -316,7 +319,8 @@ end;
 procedure TMDFeW.GerarEmit;
 begin
   Gerador.wGrupo('emit', '#025');
-  Gerador.wCampoCNPJ('#026', MDFe.Emit.CNPJ, CODIGO_BRASIL, True);
+  Gerador.wCampoCNPJCPF('#026', '026a', MDFe.Emit.CNPJCPF);
+//  Gerador.wCampoCNPJ('#026', MDFe.Emit.CNPJ, CODIGO_BRASIL, True);
   Gerador.wCampo(tcStr, '#027', 'IE   ', 02, 14, 1, OnlyNumber(MDFe.Emit.IE), DSC_IE);
   if (FOpcoes.ValidarInscricoes)
    then if not ValidarIE(MDFe.Emit.IE, MDFe.Emit.enderEmit.UF) then
@@ -844,7 +848,18 @@ begin
                Gerador.wGrupo('/peri');
              end;
              if MDFe.infDoc.infMunDescarga[i].infCTe[j].peri.Count > 990 then
-               Gerador.wAlerta('#369', 'peri', '', ERR_MSG_MAIOR_MAXIMO + '990');
+               Gerador.wAlerta('#89', 'peri', '', ERR_MSG_MAIOR_MAXIMO + '990');
+
+             if (MDFe.Ide.modal = moAereo) and
+                ((MDFe.infDoc.infMunDescarga[i].infCTe[j].infEntregaParcial.qtdTotal <> 0) or
+                (MDFe.infDoc.infMunDescarga[i].infCTe[j].infEntregaParcial.qtdParcial <> 0)) then
+             begin
+               Gerador.wGrupo('infEntregaParcial', '#96');
+               Gerador.wCampo(tcDe2, '#97', 'qtdTotal  ', 01, 05, 1, MDFe.infDoc.infMunDescarga[i].infCTe[j].infEntregaParcial.qtdTotal, DSC_QTDTOTAL);
+               Gerador.wCampo(tcDe2, '#98', 'qtdParcial', 01, 05, 1, MDFe.infDoc.infMunDescarga[i].infCTe[j].infEntregaParcial.qtdParcial, DSC_QTDPARCIAL);
+               Gerador.wGrupo('/infEntregaParcial');
+             end;
+
            end;
 
            Gerador.wGrupo('/infCTe');
@@ -1189,6 +1204,27 @@ begin
     Gerador.wCampo(tcStr, '#079', 'infAdFisco', 01, 2000, 0, MDFe.infAdic.infAdFisco, DSC_INFADFISCO);
     Gerador.wCampo(tcStr, '#080', 'infCpl    ', 01, 2000, 0, MDFe.infAdic.infCpl, DSC_INFCPL);
     Gerador.wGrupo('/infAdic');
+   end;
+end;
+
+procedure TMDFeW.GerarinfRespTec;
+begin
+  if (MDFe.infRespTec.CNPJ <> '') then
+  begin
+    Gerador.wGrupo('infRespTec', '#081');
+    Gerador.wCampoCNPJ('#82', MDFe.infRespTec.CNPJ, CODIGO_BRASIL, True);
+    Gerador.wCampo(tcStr, '#083', 'xContato', 02, 60, 1, MDFe.infRespTec.xContato, DSC_XCONTATO);
+    Gerador.wCampo(tcStr, '#084', 'email   ', 06, 60, 1, MDFe.infRespTec.email, DSC_EMAIL);
+    Gerador.wCampo(tcStr, '#085', 'fone    ', 07, 12, 1, MDFe.infRespTec.fone, DSC_FONE);
+
+    // Implementação Futura
+    if (MDFe.infRespTec.idCSRT <> 0) and (MDFe.infRespTec.hashCSRT <> '') then
+    begin
+//      Gerador.wCampo(tcInt, '#086', 'idCSRT  ', 03, 03, 1, MDFe.infRespTec.idCSRT, DSC_IDCSRT);
+//      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, MDFe.infRespTec.hashCSRT, DSC_HASHCSRT);
+    end;
+
+    Gerador.wGrupo('/infRespTec');
    end;
 end;
 

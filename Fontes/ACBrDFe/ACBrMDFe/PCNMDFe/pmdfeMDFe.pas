@@ -255,7 +255,7 @@ type
 
   Temit = class(TPersistent)
   private
-    FCNPJ: String;
+    FCNPJCPF: String;
     FIE: String;
     FxNome: String;
     FxFant: String;
@@ -264,7 +264,7 @@ type
     constructor Create(AOwner: TMDFe);
     destructor Destroy; override;
   published
-    property CNPJ: String          read FCNPJ      write FCNPJ;
+    property CNPJCPF: String       read FCNPJCPF   write FCNPJCPF;
     property IE: String            read FIE        write FIE;
     property xNome: String         read FxNome     write FxNome;
     property xFant: String         read FxFant     write FxFant;
@@ -868,6 +868,15 @@ type
     property infMDFeTransp: TinfMDFeTranspCollection read FinfMDFeTransp write SetinfMDFeTransp;
   end;
 
+  TinfEntregaParcial = class(TPersistent)
+  private
+    FqtdTotal: Double;
+    FqtdParcial: Double;
+  published
+    property qtdTotal: Double read FqtdTotal write FqtdTotal;
+    property qtdParcial: Double read FqtdParcial write FqtdParcial;
+  end;
+
   TinfCTeCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TinfCTeCollectionItem;
@@ -885,6 +894,7 @@ type
     FindReentrega: String;
     FinfUnidTransp: TinfUnidTranspCTeCollection;
     Fperi: TPeriCTeCollection;
+    FinfEntregaParcial: TinfEntregaParcial;
 
     procedure SetinfUnidTransp(const Value: TinfUnidTranspCTeCollection);
     procedure SetPeri(const Value: TPeriCTeCollection);
@@ -892,11 +902,12 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property chCTe: String                              read FchCTe         write FchCTe;
-    property SegCodBarra: String                        read FSegCodBarra   write FSegCodBarra;
-    property indReentrega: String                       read FindReentrega  write FindReentrega;
-    property infUnidTransp: TinfUnidTranspCTeCollection read FinfUnidTransp write SetinfUnidTransp;
-    property peri: TPeriCTeCollection                   read Fperi          write SetPeri;
+    property chCTe: String                              read FchCTe             write FchCTe;
+    property SegCodBarra: String                        read FSegCodBarra       write FSegCodBarra;
+    property indReentrega: String                       read FindReentrega      write FindReentrega;
+    property infUnidTransp: TinfUnidTranspCTeCollection read FinfUnidTransp     write SetinfUnidTransp;
+    property peri: TPeriCTeCollection                   read Fperi              write SetPeri;
+    property infEntregaParcial: TinfEntregaParcial      read FinfEntregaParcial write FinfEntregaParcial;
   end;
 
   TinfUnidTranspCTeCollection = class(TCollection)
@@ -1296,6 +1307,23 @@ type
     property infCpl: String     read FinfCpl     write FinfCpl;
   end;
 
+  TinfRespTec = class(TPersistent)
+  private
+    FCNPJ: String;
+    FxContato: String;
+    Femail: String;
+    Ffone: String;
+    FidCSRT: Integer;
+    FhashCSRT: String;
+  published
+    property CNPJ: String     read FCNPJ     write FCNPJ;
+    property xContato: String read FxContato write FxContato;
+    property email: String    read Femail    write Femail;
+    property fone: String     read Ffone     write Ffone;
+    property idCSRT: Integer  read FidCSRT   write FidCSRT;
+    property hashCSRT: String read FhashCSRT write FhashCSRT;
+ end;
+
   TMDFe = class(TPersistent)
   private
     FinfMDFe: TinfMDFe;
@@ -1313,6 +1341,7 @@ type
     Flacres: TlacresCollection;
     FautXML: TautXMLCollection;
     FinfAdic: TinfAdic;
+    FinfRespTec: TinfRespTec;
 
     FProcMDFe: TProcMDFe;
     FSignature: TSignature;
@@ -1339,6 +1368,8 @@ type
     property lacres: TlacresCollection read Flacres  write Setlacres;
     property autXML: TautXMLCollection read FautXML  write SetautXML;
     property infAdic: TinfAdic         read FinfAdic write FinfAdic;
+
+    property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
 
     property procMDFe: TProcMDFe   read FProcMDFe  write FProcMDFe;
     property signature: Tsignature read Fsignature write Fsignature;
@@ -1374,6 +1405,8 @@ begin
   FautXML  := TautXMLCollection.Create(Self);
   FinfAdic := TinfAdic.Create;
 
+  FinfRespTec := TinfRespTec.Create;
+
   FProcMDFe  := TProcMDFe.create;
   Fsignature := Tsignature.create;
 end;
@@ -1395,6 +1428,7 @@ begin
   Flacres.Free;
   FautXML.Free;
   FinfAdic.Free;
+  FinfRespTec.Free;
 
   FProcMDFe.Free;
   Fsignature.Free;
@@ -1899,12 +1933,15 @@ constructor TinfCTeCollectionItem.Create;
 begin
   FinfUnidTransp := TInfUnidTranspCTeCollection.Create(Self);
   FPeri := TPeriCTeCollection.Create(Self);
+  FinfEntregaParcial := TinfEntregaParcial.Create;
 end;
 
 destructor TinfCTeCollectionItem.Destroy;
 begin
   FinfUnidTransp.Free;
   FPeri.Free;
+  FinfEntregaParcial.Free;
+
   inherited;
 end;
 

@@ -226,7 +226,7 @@ begin
           FormatFloat('000,000,000', FMDFe.Ide.nMDF);
         KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', FMDFe.Ide.nMDF) +
           ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', FMDFe.Ide.dhEmi) +
-          '; CNPJ: ' + FMDFe.emit.CNPJ;
+          '; CNPJ: ' + FMDFe.emit.CNPJCPF;
       end;
 
       RLMDFe.SaveToFile(AFile);

@@ -51,7 +51,7 @@ type
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
-    FCNPJ: String;
+    FCNPJCPF: String;
     FVersao: String;
   public
     constructor Create;
@@ -60,7 +60,7 @@ type
   published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
-    property CNPJ: String            read FCNPJ    write FCNPJ;
+    property CNPJCPF: String         read FCNPJCPF write FCNPJCPF;
     property Versao: String          read FVersao  write FVersao;
   end;
 
@@ -81,15 +81,16 @@ end;
 
 function TConsMDFeNaoEnc.GerarXML: Boolean;
 begin
- Gerador.ArquivoFormatoXML := '';
+  Gerador.ArquivoFormatoXML := '';
 
- Gerador.wGrupo('consMDFeNaoEnc ' + NAME_SPACE_MDFE + ' versao="' + Versao + '"');
- Gerador.wCampo(tcStr, 'CP03', 'tpAmb', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
- Gerador.wCampo(tcStr, 'CP04', 'xServ', 24, 24, 1, ACBrStr('CONSULTAR NÃO ENCERRADOS'), DSC_XSERV);
- Gerador.wCampo(tcEsp, 'CP05', 'CNPJ ', 14, 14, 1, OnlyNumber(FCNPJ), DSC_CNPJ);
- Gerador.wGrupo('/consMDFeNaoEnc');
+  Gerador.wGrupo('consMDFeNaoEnc ' + NAME_SPACE_MDFE + ' versao="' + Versao + '"');
+  Gerador.wCampo(tcStr, 'CP03', 'tpAmb', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcStr, 'CP04', 'xServ', 24, 24, 1, ACBrStr('CONSULTAR NÃO ENCERRADOS'), DSC_XSERV);
+  Gerador.wCampoCNPJCPF('CP05', 'CP05a', OnlyNumber(FCNPJCPF));
+//  Gerador.wCampo(tcEsp, 'CP05', 'CNPJ ', 14, 14, 1, OnlyNumber(FCNPJCPF), DSC_CNPJ);
+  Gerador.wGrupo('/consMDFeNaoEnc');
 
- Result := (Gerador.ListaDeAlertas.Count = 0);
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 end.

@@ -258,7 +258,7 @@ begin
         Result := TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
                          Result,
                          DescricaoModelo,
-                         AMDFe.Emit.CNPJ,
+                         AMDFe.Emit.CNPJCPF,
                          dhEmissao,
                          DescricaoModelo);
       end;

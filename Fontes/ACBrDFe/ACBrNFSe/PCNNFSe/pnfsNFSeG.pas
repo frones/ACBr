@@ -378,21 +378,22 @@ end;
 function TNFSeG.GetIdEntidadeEquiplano(const IBGE: Integer): String;
 begin
   case IBGE of
-    4102307: Result:= '23'; // Balsa Nova/PR
-    4104501: Result:= '50'; // Capanema/PR
-    4104659: Result:= '141';// Carambei/PR
-    4107207: Result:= '68'; // Dois Vizinhos/PR
-    4108403: Result:= '35'; // Francisco Beltrao/PR
-    4109807: Result:= '332';// Ibipora/PR
-    4120606: Result:= '28'; // Prudentopolis/PR
-    4122008: Result:= '19'; // Rio Azul/PR
-    4123501: Result:= '54'; // Santa Helena/PR
-    4126306: Result:= '61'; // Senges/PR
-    4127106: Result:= '260';// Telemaco Borba/PR
-    4127700: Result:= '136';// Toledo/PR
-    4119608: Result:= '104';// Pitanga/PR
+    4102307: Result :=  '23'; // Balsa Nova/PR
+    4104501: Result :=  '50'; // Capanema/PR
+    4104659: Result := '141'; // Carambei/PR
+    4107207: Result :=  '68'; // Dois Vizinhos/PR
+    4108403: Result :=  '35'; // Francisco Beltrao/PR
+    4109807: Result := '332'; // Ibipora/PR
+    4120606: Result :=  '28'; // Prudentopolis/PR
+    4122008: Result :=  '19'; // Rio Azul/PR
+    4123501: Result :=  '54'; // Santa Helena/PR
+    4126306: Result :=  '61'; // Senges/PR
+    4127106: Result := '260'; // Telemaco Borba/PR
+    4127700: Result := '136'; // Toledo/PR
+    4119608: Result := '104'; // Pitanga/PR
+    4107736: Result := '140'; // Fernandes Pinheiro/PR
   else
-    Result:= '';
+    Result := '';
   end;
 end;
 

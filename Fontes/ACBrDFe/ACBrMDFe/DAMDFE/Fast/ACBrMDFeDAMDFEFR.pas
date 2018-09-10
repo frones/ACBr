@@ -1272,7 +1272,7 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'CT';
-            FieldByName('Chave').AsString := FormatarCNPJouCPF(FMDFe.emit.CNPJ) + '        ' +
+            FieldByName('Chave').AsString := FormatarCNPJouCPF(FMDFe.emit.CNPJCPF) + '        ' +
               IntToStr(infCT.Items[j].serie) + '-' + infCT.Items[j].nCT;
             Post;
             with infCT[j] do
@@ -1325,7 +1325,7 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'NF';
-            FieldByName('Chave').AsString := FormatarCNPJouCPF(FMDFe.emit.CNPJ) + '        ' +
+            FieldByName('Chave').AsString := FormatarCNPJouCPF(FMDFe.emit.CNPJCPF) + '        ' +
               IntToStr(infNF.Items[j].serie) + '-' + IntToStr(infNF.Items[j].nNF);
             Post;
             with infNF[j] do

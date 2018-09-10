@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2018
+-- pnfsNFSeW_ABRASFv1 --
+[*] https://www.projetoacbr.com.br/forum/topic/8434-ginfes-com-aliquota-do-iss-igual-a-0-zero/?do=findComment&comment=304776
+Por: Sandro Reck
+
 05/09/2018
 -- Diversos --
 [*] Implementação do provedor DataSmart

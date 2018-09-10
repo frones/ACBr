@@ -295,6 +295,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object TabSheet2: TTabSheet
           Caption = 'Geral'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox3: TGroupBox
             Left = 0
             Top = 4
@@ -458,6 +462,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object TabSheet3: TTabSheet
           Caption = 'WebService'
           ImageIndex = 2
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox4: TGroupBox
             Left = 0
             Top = 4
@@ -639,6 +647,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object TabSheet4: TTabSheet
           Caption = 'Emitente'
           ImageIndex = 3
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Label12: TLabel
             Left = 8
             Top = 4
@@ -825,6 +837,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         object TabSheet7: TTabSheet
           Caption = 'Email'
           ImageIndex = 4
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox5: TGroupBox
             Left = 1
             Top = 4
@@ -1128,6 +1144,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
@@ -1147,6 +1167,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1160,6 +1184,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       object TabSheet9: TTabSheet
         Caption = 'MDFe'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object trvwMDFe: TTreeView
           Left = 0
           Top = 0
@@ -1173,6 +1201,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object memoRespWS: TMemo
           Left = 0
           Top = 0
@@ -1185,6 +1217,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object MemoDados: TMemo
           Left = 0
           Top = 0

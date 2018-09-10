@@ -533,10 +533,10 @@ begin
     //
     // Dados do Emitente
     //
-    Emit.CNPJ  := edtEmitCNPJ.Text;
-    Emit.IE    := edtEmitIE.Text;
-    Emit.xNome := edtEmitRazao.Text;
-    Emit.xFant := edtEmitFantasia.Text;
+    Emit.CNPJCPF := edtEmitCNPJ.Text;
+    Emit.IE      := edtEmitIE.Text;
+    Emit.xNome   := edtEmitRazao.Text;
+    Emit.xFant   := edtEmitFantasia.Text;
 
     Emit.EnderEmit.xLgr    := edtEmitLogradouro.Text;
     Emit.EnderEmit.nro     := edtEmitNumero.Text;
@@ -1092,7 +1092,7 @@ begin
     with ACBrMDFe1.EventoMDFe.Evento.Add do
     begin
       infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
-      infEvento.CNPJ     := edtEmitCNPJ.Text;
+      infEvento.CNPJCPF  := edtEmitCNPJ.Text;
       infEvento.dhEvento := now;
 //  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
 //                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
@@ -1136,7 +1136,7 @@ begin
   with ACBrMDFe1.EventoMDFe.Evento.Add do
   begin
     infEvento.chMDFe   := vChave;
-    infEvento.CNPJ     := edtEmitCNPJ.Text;
+    infEvento.CNPJCPF  := edtEmitCNPJ.Text;
     infEvento.dhEvento := now;
 //  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
 //                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,

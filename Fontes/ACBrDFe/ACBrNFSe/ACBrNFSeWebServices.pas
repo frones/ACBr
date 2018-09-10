@@ -808,7 +808,7 @@ begin
     else
       NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
 
-    if FProvedor = proSafeWeb then
+    if FProvedor in [proSafeWeb, proTcheInfov2] then
       FPCabMsg := StringReplace(FPCabMsg, '%SenhaMsg%' , FDadosSenha, [rfReplaceAll]);
 
     CabMsg := FPCabMsg;

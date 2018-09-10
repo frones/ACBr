@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2018
+-- pcesS3000 --
+[*] https://www.projetoacbr.com.br/forum/topic/46212-pcess3000-n%C3%A3o-gera-idetrabalhador-para-os-te-s2299-nem-s2399/?do=findComment&comment=306205
+   Por: Aristarco Ribeiro
+
 05/09/2018
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/46168-corre%C3%A7%C3%A3o-no-s-2200-ajuda-s-2206-infoestaturario/?do=findComment&comment=305616

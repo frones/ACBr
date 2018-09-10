@@ -221,7 +221,7 @@ begin
     Gerador.wCampo(tcStr, '', 'tpEvento', 1,  6, 1, TipoEventoToStr(self.InfoExclusao.tpEvento));
     Gerador.wCampo(tcStr, '', 'nrRecEvt', 1, 40, 1, self.InfoExclusao.nrRecEvt);
                                  
-    if ( self.InfoExclusao.tpEvento In [teS1200,teS1202,teS1210] ) then
+    if ( self.InfoExclusao.tpEvento In [teS1200, teS1202, teS1210, teS2299] ) then
       begin 
         GerarIdeTrabalhador2(self.InfoExclusao.IdeTrabalhador, True);
         GerarIdeFolhaPagto(self.InfoExclusao.IdeFolhaPagto);

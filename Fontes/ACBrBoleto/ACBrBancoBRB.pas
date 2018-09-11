@@ -460,7 +460,7 @@ begin
   ChaveASBACESemDigito := ChaveASBACESemDigito + PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Conta), 6, '0');
   ChaveASBACESemDigito := ChaveASBACESemDigito + PadLeft(ACBrTitulo.ACBrBoleto.Cedente.ContaDigito, 1, '0');
   ChaveASBACESemDigito := ChaveASBACESemDigito + PadRight(trim(ACBrTitulo.ACBrBoleto.Cedente.Modalidade), 1); //Categoria da Cobrança
-  ChaveASBACESemDigito := ChaveASBACESemDigito + PadLeft(ACBrTitulo.NossoNumero, 6, '0');
+  ChaveASBACESemDigito := ChaveASBACESemDigito + PadLeft(IntToStr(StrToInt(ACBrTitulo.NossoNumero)), 6, '0');
   ChaveASBACESemDigito := ChaveASBACESemDigito + PadLeft(IntToStr(Numero), 3, '0');
   Result := ChaveASBACESemDigito + CalculaDigitosChaveASBACE(ChaveASBACESemDigito);
 end;

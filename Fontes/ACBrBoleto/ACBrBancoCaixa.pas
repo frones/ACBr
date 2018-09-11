@@ -96,6 +96,8 @@ begin
    fpTamanhoCarteira       := 2;
    fValorTotalDocs         := 0;
    fQtRegLote              := 0;
+   fpLayoutVersaoArquivo := 50;
+   fpLayoutVersaoLote    := 30;
 
    fpOrientacoesBanco.Clear;
    fpOrientacoesBanco.Add(ACBrStr(
@@ -389,58 +391,58 @@ begin
 
           { GERAR REGISTRO-HEADER DO ARQUIVO }
 
-      Result:= IntToStrZero(ACBrBanco.Numero, 3)       + //1 a 3 - Código do banco
-               '0000'                                  + //4 a 7 - Lote de serviço
-               '0'                                     + //8 - Tipo de registro - Registro header de arquivo
-               PadRight('', 9, ' ')                        + //9 a 17 Uso exclusivo FEBRABAN/CNAB
-               ATipoInscricao                          + //18 - Tipo de inscrição do cedente
-               PadLeft(OnlyNumber(CNPJCPF), 14, '0')      + //19 a 32 -Número de inscrição do cedente
-               PadRight('',20, '0')                               +  //33 a 52 - Código do convênio no banco  [ Alterado conforme instruções da CSO Brasília ] 27-07-09
-               PadLeft(OnlyNumber(Agencia), 5, '0')       + //53 a 57 - Código da agência do cedente
-               PadRight(AgenciaDigito, 1 , '0')            + //58 - Dígito da agência do cedente
-               PadLeft(CodigoCedente, 6, '0')             + //59 a 64 - Código Cedente (Código do Convênio no Banco)
-               PadRight('', 7, '0')                        + //65 a 71 - Uso Exclusivo CAIXA
-               '0'                                     + //72 - Uso Exclusivo CAIXA
-               PadRight(Nome, 30, ' ')                     + //73 a 102 - Nome do cedente
-               PadRight('CAIXA ECONOMICA FEDERAL', 30, ' ') + //103 a 132 - Nome do banco
-               PadRight('', 10, ' ')                       + //133 a 142 - Uso exclusivo FEBRABAN/CNAB
-               '1'                                     + //143 - Código de Remessa (1) / Retorno (2)
-               FormatDateTime('ddmmyyyy', Now)         + //144 a 151 - Data do de geração do arquivo
-               FormatDateTime('hhmmss', Now)           + //152 a 157 - Hora de geração do arquivo
-               PadLeft(IntToStr(NumeroRemessa), 6, '0')   + //158 a 163 - Número seqüencial do arquivo
-               '050'                                   + //164 a 166 - Número da versão do layout do arquivo
-               PadRight('',  5, '0')                       + //167 a 171 - Densidade de gravação do arquivo (BPI)
-               Space(20)                               + // 172 a 191 - Uso reservado do banco
-               PadRight(AMensagemReservada, 20, ' ')       + // 192 a 211 - Uso reservado da empresa
-               PadRight('', 4, ' ')                        + // 212 a 215 - Versao Aplicativo Caixa
-               PadRight('', 25, ' ');                        // 216 a 240 - Uso Exclusivo FEBRABAN / CNAB
+      Result:= IntToStrZero(ACBrBanco.Numero, 3)                + //1 a 3 - Código do banco
+               '0000'                                           + //4 a 7 - Lote de serviço
+               '0'                                              + //8 - Tipo de registro - Registro header de arquivo
+               PadRight('', 9, ' ')                             + //9 a 17 Uso exclusivo FEBRABAN/CNAB
+               ATipoInscricao                                   + //18 - Tipo de inscrição do cedente
+               PadLeft(OnlyNumber(CNPJCPF), 14, '0')            + //19 a 32 -Número de inscrição do cedente
+               PadRight('',20, '0')                             + //33 a 52 - Código do convênio no banco  [ Alterado conforme instruções da CSO Brasília ] 27-07-09
+               PadLeft(OnlyNumber(Agencia), 5, '0')             + //53 a 57 - Código da agência do cedente
+               PadRight(AgenciaDigito, 1 , '0')                 + //58 - Dígito da agência do cedente
+               PadLeft(CodigoCedente, 6, '0')                   + //59 a 64 - Código Cedente (Código do Convênio no Banco)
+               PadRight('', 7, '0')                             + //65 a 71 - Uso Exclusivo CAIXA
+               '0'                                              + //72 - Uso Exclusivo CAIXA
+               PadRight(Nome, 30, ' ')                          + //73 a 102 - Nome do cedente
+               PadRight('CAIXA ECONOMICA FEDERAL', 30, ' ')     + //103 a 132 - Nome do banco
+               PadRight('', 10, ' ')                            + //133 a 142 - Uso exclusivo FEBRABAN/CNAB
+               '1'                                              + //143 - Código de Remessa (1) / Retorno (2)
+               FormatDateTime('ddmmyyyy', Now)                  + //144 a 151 - Data do de geração do arquivo
+               FormatDateTime('hhmmss', Now)                    + //152 a 157 - Hora de geração do arquivo
+               PadLeft(IntToStr(NumeroRemessa), 6, '0')         + //158 a 163 - Número seqüencial do arquivo
+               PadLeft(IntToStr(fpLayoutVersaoArquivo), 3, '0') + //164 a 166 - Número da versão do layout do arquivo
+               PadRight('',  5, '0')                            + //167 a 171 - Densidade de gravação do arquivo (BPI)
+               Space(20)                                        + //172 a 191 - Uso reservado do banco
+               PadRight(AMensagemReservada, 20, ' ')            + //192 a 211 - Uso reservado da empresa
+               PadRight('', 4, ' ')                             + //212 a 215 - Versao Aplicativo Caixa
+               PadRight('', 25, ' ');                             //216 a 240 - Uso Exclusivo FEBRABAN / CNAB
 
           { GERAR REGISTRO HEADER DO LOTE }
 
       Result:= Result + #13#10 +
-               IntToStrZero(ACBrBanco.Numero, 3)       + //1 a 3 - Código do banco
-               '0001'                                  + //4 a 7 - Lote de serviço
-               '1'                                     + //8 - Tipo de registro - Registro header de arquivo
-               'R'                                     + //9 - Tipo de operação: R (Remessa) ou T (Retorno)
-               '01'                                    + //10 a 11 - Tipo de serviço: 01 (Cobrança)
-               '00'                                    + //12 a 13 - Forma de lançamento: preencher com ZEROS no caso de cobrança
-               '030'                                   + //14 a 16 - Número da versão do layout do lote
-               ' '                                     + //17 - Uso exclusivo FEBRABAN/CNAB
-               ATipoInscricao                          + //18 - Tipo de inscrição do cedente
-               PadLeft(OnlyNumber(CNPJCPF), 15, '0')      + //19 a 33 -Número de inscrição do cedente
-               PadLeft(CodigoCedente, 6, '0')             + //34 a 39 - Código do convênio no banco (código do cedente)
-               PadRight('', 14, '0')                       + //40 a 53 - Uso Exclusivo Caixa
-               PadLeft(OnlyNumber(Agencia), 5 , '0')      + //54 a 58 - Dígito da agência do cedente
-               PadRight(AgenciaDigito, 1 , '0')            + //59 - Dígito da agência do cedente
-               PadLeft(CodigoCedente, 6, '0')             + //60 a 65 - Código do convênio no banco (código do cedente)
-               PadRight('',7,'0')                          + //66 a 72 - Código do Modelo Personalizado (Código fornecido pela CAIXA/gráfica, utilizado somente quando o modelo do bloqueto for personalizado)
-               '0'                                     + //73 - Uso Exclusivo Caixa
-               PadRight(Nome, 30, ' ')                     + //74 a 103 - Nome do cedente
-               PadRight('', 40, ' ')                       + //104 a 143 - Mensagem 1 para todos os boletos do lote
-               PadRight('', 40, ' ')                       + //144 a 183 - Mensagem 2 para todos os boletos do lote
-               PadLeft(IntToStr(NumeroRemessa), 8, '0')   + //184 a 191 - Número do arquivo
-               FormatDateTime('ddmmyyyy', Now)         + //192 a 199 - Data de geração do arquivo
-               PadRight('', 8, '0')                        + //200 a 207 - Data do crédito - Só para arquivo retorno
+               IntToStrZero(ACBrBanco.Numero, 3)            +//1 a 3 - Código do banco
+               '0001'                                       +//4 a 7 - Lote de serviço
+               '1'                                          +//8 - Tipo de registro - Registro header de arquivo
+               'R'                                          +//9 - Tipo de operação: R (Remessa) ou T (Retorno)
+               '01'                                         +//10 a 11 - Tipo de serviço: 01 (Cobrança)
+               '00'                                         +//12 a 13 - Forma de lançamento: preencher com ZEROS no caso de cobrança
+               PadLeft(IntToStr(fpLayoutVersaoLote), 3, '0')+//14 a 16 - Número da versão do layout do lote
+               ' '                                          +//17 - Uso exclusivo FEBRABAN/CNAB
+               ATipoInscricao                               +//18 - Tipo de inscrição do cedente
+               PadLeft(OnlyNumber(CNPJCPF), 15, '0')        +//19 a 33 -Número de inscrição do cedente
+               PadLeft(CodigoCedente, 6, '0')               +//34 a 39 - Código do convênio no banco (código do cedente)
+               PadRight('', 14, '0')                        +//40 a 53 - Uso Exclusivo Caixa
+               PadLeft(OnlyNumber(Agencia), 5 , '0')        +//54 a 58 - Dígito da agência do cedente
+               PadRight(AgenciaDigito, 1 , '0')             +//59 - Dígito da agência do cedente
+               PadLeft(CodigoCedente, 6, '0')               +//60 a 65 - Código do convênio no banco (código do cedente)
+               PadRight('',7,'0')                           +//66 a 72 - Código do Modelo Personalizado (Código fornecido pela CAIXA/gráfica, utilizado somente quando o modelo do bloqueto for personalizado)
+               '0'                                          +//73 - Uso Exclusivo Caixa
+               PadRight(Nome, 30, ' ')                      +//74 a 103 - Nome do cedente
+               PadRight('', 40, ' ')                        +//104 a 143 - Mensagem 1 para todos os boletos do lote
+               PadRight('', 40, ' ')                        +//144 a 183 - Mensagem 2 para todos os boletos do lote
+               PadLeft(IntToStr(NumeroRemessa), 8, '0')     +//184 a 191 - Número do arquivo
+               FormatDateTime('ddmmyyyy', Now)              +//192 a 199 - Data de geração do arquivo
+               PadRight('', 8, '0')                         +//200 a 207 - Data do crédito - Só para arquivo retorno
                PadRight('', 33, ' ');                        //208 a 240 - Uso exclusivo FEBRABAN/CNAB
    end;
 end;
@@ -724,7 +726,7 @@ begin
                )                                                                       + // 154 a 157 - Tipo de Inscrição
                PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')             + // 155 a 169 - Número de inscrição
                PadRight(Sacado.SacadoAvalista.NomeAValista, 40, ' ')                   + // 170 a 209 - Nome do sacador/avalista
-               Space(3)                                                                + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
+               IfThen(fpLayoutVersaoArquivo = 50, Space(3), '000')                     + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
                Space(20)                                                               + // 213 a 232 - Uso exclusivo FEBRABAN/CNAB
                Space(8);                                                                 // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
 

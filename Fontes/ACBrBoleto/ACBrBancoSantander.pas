@@ -269,10 +269,10 @@ var
   begin
     with ACBrTitulo do
     begin
-      if Mensagem.Count <= 2 then
+      if (Mensagem.Count <= 2) then
       begin
         // Somente duas linhas, foi montado o MonarInstrucoes1
-        Result := PadRight('', 200, ' '); // 5 registros
+        Result := PadRight('', 200, ' ');
         Exit;
       end;
 
@@ -1551,7 +1551,7 @@ begin
   else // 240
   begin
     case TipoOcorrencia of
-    toRetornoComandoRecusado: //03 (Entrada rejeitada)
+    toRetornoComandoRecusado, toRetornoRegistroRecusado: //03 (Entrada rejeitada)
       case CodMotivo of
         01: Result:='Codigo do banco invalido';
         02: Result:='Codigo do registro detalhe invalido';

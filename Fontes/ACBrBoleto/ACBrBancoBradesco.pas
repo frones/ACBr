@@ -208,7 +208,7 @@ begin
     PadRight(Nome, 30, ' ')                    + //74 a 103 - Nome do cedente
     PadRight('', 40, ' ')                      + //104 a 143 - Mensagem 1
     PadRight('', 40, ' ')                      + //144 a 183 - Mensagen 2
-    IntToStrZero(1,8)                          + //184 a 191 - Número seqüencial do registro no lote
+    PadLeft(IntToStr(NumeroRemessa), 8, '0')   + //184 a 191 - Número seqüencial do registro no lote
     FormatDateTime('ddmmyyyy', date)           +// 192 a 199 Data de Gravação Remessa/Retorno
     Padleft('0', 8 , '0')                      + //200 -207 Data do Crédito
     PadRight('', 33, ' ');                      //208 a 240 - Uso exclusivo FEBRABAN/CNAB

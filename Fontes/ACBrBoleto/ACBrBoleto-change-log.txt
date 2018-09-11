@@ -47,7 +47,40 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 13/08/2018 ver: 0.0.246
+Data 11/09/2018 ver: 0.0.247
+
+11-09-2018 -- ACBrBancoSantander
+[*] Ajuste Retorno CNAB240 leitura código ocorrência liquidação
+https://www.projetoacbr.com.br/forum/topic/43728-banco-santander-lerretorno240-motivo-da-ocorr%C3%AAncia-quando-liquida%C3%A7%C3%A3o/
+
+11-09-2018 -- ACBrBancoBrasil
+[+] Ajustes Adicinando Segmento S na geração Remessa CNAB240
+https://www.projetoacbr.com.br/forum/topic/45970-segmento-s-santander-e-banco-do-brasil-mensagem-c-200/
+
+11-09-2018 -- ACBrBancoBradesco
+[+] Ajustes na geração geração Remessa CNAB240
+https://www.projetoacbr.com.br/forum/topic/43314-homologa%C3%A7%C3%A3o-arquivo-remessa-bradesco-cnab-240/
+
+11-09-2018 -- ACBrBancoCaixa
+[*] Ajustes na geração de remessa Remessa CNAB240- Adicionado propriedade para alterar Versao do Cabeçalho e Lote do arquivo
+https://www.projetoacbr.com.br/forum/topic/43690-n%C3%BAmero-da-vers%C3%A3o-do-layout-caixa/
+
+11-09-2018 -- ACBrBancoob
+[*] Ajustes Remessa CNAB400 - Valor Juros de Mora foi removico multiplicação por 30, deve ser passado % Mensal
+para ficar no padrão da mensagem do Boleto e dos demais bancos.
+https://www.projetoacbr.com.br/forum/topic/45970-segmento-s-santander-e-banco-do-brasil-mensagem-c-200/
+
+11-09-2018 -- ACBrBancoBRB
+[*] Ajustes na geração NossoNumero
+https://www.projetoacbr.com.br/forum/topic/45729-corre%C3%A7%C3%A3o-acbrbancobrb-nosso-numero/
+
+11-09-2018 -- ACBrBancoAmazonia
+[*] Ajustes na geração de remessa
+https://www.projetoacbr.com.br/forum/topic/45719-erro-remessa-boleto-amaz%C3%B4nia/
+
+11-09-2018 -- ACBrBancoBanrisul
+[*] Ajustes na geração de remessa CNAB400
+https://www.projetoacbr.com.br/forum/topic/45916-campos-num%C3%A9ricos-opcionais-em-branco/
 
 14-08-2018 -- ACBrBancoUnicredES / ACBrBoleto
 [+] Adicionado Unit Banco UnicredES

@@ -386,7 +386,7 @@ begin
                   FormatDateTime( 'ddmmyy', DataDocumento )               +  // 32 Data de Emissão
                   PadLeft(AInstrucao1, 2, '0')                            +  // 33 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
                   PadLeft(AInstrucao2, 2, '0')                            +  // 34 Primeira instrução (SEQ 34) = 00 e segunda (SEQ 35) = 00, não imprime nada.
-                  IntToStrZero( Round( (ValorMoraJuros * 30) *10000 ), 6) +  // Taxa de mora mês
+                  IntToStrZero( Round( (ValorMoraJuros) * 10000 ), 6)     +  // Taxa de mora mês
                   IntToStrZero( Round( PercentualMulta * 10000 ), 6)      +  // Taxa de multa
                   strCarteiraEnvio                                        +  // Responsabilidade Distribuição
                   strDataDesconto                                         +  // Data do Primeiro Desconto, Preencher com zeros quando não for concedido nenhum desconto.
@@ -1056,8 +1056,8 @@ begin
                PadLeft('0', 15, '0')                                      + // 51-65 Valor ou percentual a ser concedido
                IfThen((PercentualMulta > 0),
                        IfThen(MultaValorFixo,'1','2'), '0')               + // 66 Código da multa - 1 valor fixo / 2 valor percentual / 0 Sem Multa
-               IfThen((PercentualMulta > 0),
-                       FormatDateTime('ddmmyyyy', DataMoraJuros),
+               IfThen((DataMulta > 0),
+                       FormatDateTime('ddmmyyyy', DataMulta),
                                       '00000000')                         + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
                IfThen((PercentualMulta > 0),
                       IntToStrZero(round(PercentualMulta * 100), 15),

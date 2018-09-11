@@ -404,22 +404,29 @@ begin
                PadLeft(trim(Instrucao1), 2)                                        + // 1ª Instrução
                PadLeft(trim(Instrucao2), 2)                                        + // 2ª Instrução
                PadLeft(trim(CodigoMora), 1)                                        + // Código de mora (0=Valor diário; 1=Taxa Mensal)
-               IntToStrZero(Round(ValorMoraJuros*100), 12)                      + // Valor ao dia ou Taxa Mensal de juros
-               IfThen(DataDesconto = 0, '000000',                                 //volmir 27-01-16
+
+               ifthen(ValorMoraJuros > 0,
+                       IntToStrZero(Round(ValorMoraJuros*100), 12), Space(12))  + // Valor ao dia ou Taxa Mensal de juros
+               IfThen(DataDesconto = 0, space(6),                                 //se nao tem valor deve ser branco os campos numéricos
                       FormatDateTime('ddmmyy', DataDesconto))                   + // Data para concessão de desconto
-               IntToStrZero(Round(ValorDesconto*100), 13)                       + // Valor do desconto a ser concedido
-               IntToStrZero(Round(ValorIOF*100), 13)                            + // Valor IOF (para carteira "X" é: taxa juros + IOF + zeros)
-               IntToStrZero(Round(ValorAbatimento*100), 13)                     + // Valor do abatimento
+               ifthen(ValorDesconto > 0,
+                      IntToStrZero(Round(ValorDesconto*100), 13), Space(13))    + // Valor do desconto a ser concedido
+               ifthen(ValorIOF > 0,
+                      IntToStrZero(Round(ValorIOF*100), 13), Space(13))         + // Valor IOF (para carteira "X" é: taxa juros + IOF + zeros)
+               ifthen(ValorAbatimento > 0,
+                      IntToStrZero(Round(ValorAbatimento*100), 13), Space(13))  + // Valor do abatimento
+
                TipoSacado                                                       + // Tipo do Sacado (01-CPF, 02-CNPJ, 03-Outros)
-               PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                        + // Número da inscrição do Sacado (CPF, CNPJ)
-               PadRight(Sacado.NomeSacado, 35)                                      + // Nome do Sacado
+               PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                     + // Número da inscrição do Sacado (CPF, CNPJ)
+               PadRight(Sacado.NomeSacado, 35)                                  + // Nome do Sacado
                space(5)                                                         + // Brancos
                PadRight(Sacado.Logradouro+' '+
                     Sacado.Numero+' '+
                     Sacado.Complemento, 40)                                     + // Endereço Sacado
                space(7)                                                         + // Brancos
-               IntToStrZero(Round( PercentualMulta * 10), 3)                    + // Taxa de multa após o Vencimento -- estava '000' é apenas uma casa decimal
-               IfThen((DataMoraJuros <> 0) and (DataMoraJuros > Vencimento),      
+               ifthen(PercentualMulta > 0,
+               IntToStrZero(Round( PercentualMulta * 10), 3), Space(3))         + // Taxa de multa após o Vencimento -- estava '000' é apenas uma casa decimal
+               IfThen((DataMoraJuros <> 0) and (DataMoraJuros > Vencimento),
                       PadLeft(IntToStr(DaysBetween(DataMoraJuros, Vencimento)),
                       2, '0'), '00')                                                + // Nº dias para multa após o vencimento (00 considera-se Após Vencimento)
                PadRight(OnlyNumber(Sacado.CEP), 8, '0')                             + // CEP

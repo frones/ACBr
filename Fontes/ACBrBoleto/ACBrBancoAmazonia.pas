@@ -601,10 +601,10 @@ begin
                ATipoOcorrencia +                                                                                             // 16 - 17 Tipo Ocorrencia
                PadLeft('', 1, '0') +                                                                                         // 18 - Código do desconto 2
                PadLeft('', 8, '0') +                                                                                         // 19 a 26 - Data do desconto 2
-               PadLeft('', 13, '0') +                                                                                        // 27 a 41 - Percentual concedido
+               PadLeft('', 15, '0') +                                                                                        // 27 a 41 - Percentual concedido
                PadLeft('', 1, '0') +                                                                                         // 42 - Código do desconto 3
                PadLeft('', 8, '0') +                                                                                         // 43 a 50 - Data do desconto 3
-               PadLeft('', 13, '0') +                                                                                        // 51 a 65 - Percentual concedido
+               PadLeft('', 15, '0') +                                                                                        // 51 a 65 - Percentual concedido
                IfThen((PercentualMulta > 0), '2', '0') +                                                                     // 66 - 66 1-Cobrar Multa / 0-Não cobrar multa
                IfThen((PercentualMulta > 0), FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000') +                        // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
                IfThen(PercentualMulta > 0, IntToStrZero(Round(PercentualMulta * 100), 15), PadRight('', 15, '0')) +          // 75 - 89 Percentual de multa. Informar zeros se não cobrar

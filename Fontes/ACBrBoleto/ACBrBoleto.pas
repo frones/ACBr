@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs, IniFiles,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.246';
+  CACBrBoleto_Versao = '0.0.247';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
   CCedente = 'CEDENTE';

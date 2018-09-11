@@ -773,8 +773,6 @@ begin
          //
          //*********************************************************************
 
-         rodo.RNTRC      := INIRec.ReadString('Rodo', 'RNTRC', '');
-         rodo.CIOT       := INIRec.ReadString('Rodo', 'CIOT', '');
          Rodo.codAgPorto := INIRec.ReadString('Rodo', 'codAgPorto', '');
 
          // Dados sobre Informações para Agencia Reguladora (Opcional) - Nível 1 - Versão 3.00

@@ -33,7 +33,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -74,7 +74,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -115,7 +115,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -156,7 +156,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -201,7 +201,7 @@
         <PackageName Value="ACBre_Social"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="8">
+    <Units Count="9">
       <Unit0>
         <Filename Value="ACBrLibeSocial.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -237,6 +237,10 @@
         <Filename Value="ACBrLibeSocialConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="ACBrLibeSocialRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -247,7 +251,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-      <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP"/>
+      <OtherUnitFiles Value="..\Comum;..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrDFe\ACBreSocial;..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>

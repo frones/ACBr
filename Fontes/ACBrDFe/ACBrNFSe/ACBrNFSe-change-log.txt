@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Alteração incluido o provedor TcheInfo na lista de provedores cuja tag <Aliquota> tem apenas 
+    2 casas decimais.
+Por: Italo Jurisato Junior
+
+-- ACBrNFSeWebServices --
+[*] Alteração visando o provedor DataSmart, para ambiente de homologação não se deve
+    informar o nome da Cidade e sim: BANCO_DEMOSTRACAO
+Por: Italo Jurisato Junior
+
 10/09/2018
 -- pnfsNFSeW_ABRASFv1 --
 [*] https://www.projetoacbr.com.br/forum/topic/8434-ginfes-com-aliquota-do-iss-igual-a-0-zero/?do=findComment&comment=304776

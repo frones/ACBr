@@ -1065,7 +1065,13 @@ begin
   end;
 
   case FProvedor of
-    proDataSmart: Texto := StringReplace(Texto, '%Municipio%', CodCidadeToCidade(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
+    proDataSmart:
+      begin
+        if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
+          Texto := StringReplace(Texto, '%Municipio%', UpperCase(CodCidadeToCidade(FPConfiguracoesNFSe.Geral.CodigoMunicipio)), [rfReplaceAll])
+        else
+          Texto := StringReplace(Texto, '%Municipio%', 'BANCO_DEMONSTRACAO', [rfReplaceAll]);
+      end
   else
     Texto := StringReplace(Texto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
   end;

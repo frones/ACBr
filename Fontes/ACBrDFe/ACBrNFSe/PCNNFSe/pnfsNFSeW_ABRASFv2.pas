@@ -387,6 +387,7 @@ begin
     proSmarAPDABRASF,
     proGiss,
     proDeISS,
+    proTcheInfov2,
     proISSJoinville: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     proABase,

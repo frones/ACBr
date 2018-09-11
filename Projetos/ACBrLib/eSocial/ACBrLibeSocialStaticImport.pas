@@ -65,10 +65,10 @@ function eSocial_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longin
 {%region eSocial}
 function eSocial_LerArqIni(const eArqIni: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
-function eSocial_Consultar(const sResposta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
-function eSocial_Rastrear(const eCodRastreio: PChar; const sResposta: PChar;
+function eSocial_Enviar(const Agrupo: Integer; const sResposta: PChar;
   var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
+function eSocial_Consultar(const eProtocolo, sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBreSocialLIBName;
 {%endregion}
 

@@ -45,6 +45,7 @@ uses
 type
 
   { TeSocialConfig }
+  {
   TeSocialConfig = class
   private
     FeSocialConfig: TConfiguracoeseSocial;
@@ -57,11 +58,11 @@ type
 
     property eSocialConfig: TConfiguracoeseSocial read FeSocialConfig;
   end;
-
+  }
   { TLibeSocialConfig }
   TLibeSocialConfig = class(TLibConfig)
   private
-    FeSocialConfig: TeSocialConfig;
+    FeSocialConfig: TConfiguracoeseSocial;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
@@ -77,7 +78,7 @@ type
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
-    property eSocialConfig: TeSocialConfig read FeSocialConfig;
+    property eSocialConfig: TConfiguracoeseSocial read FeSocialConfig;
   end;
 
 implementation
@@ -86,7 +87,7 @@ uses
   ACBrLibeSocialClass, ACBrLibeSocialConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
 { TeSocialConfig }
-
+{
 constructor TeSocialConfig.Create;
 begin
   FeSocialConfig := TConfiguracoeseSocial.Create(nil);
@@ -98,6 +99,7 @@ begin
 
   inherited Destroy;
 end;
+}
 {
 procedure TeSocialConfig.LerIni(const AIni: TCustomIniFile);
 begin
@@ -117,7 +119,7 @@ constructor TLibeSocialConfig.Create(AOwner: TObject; ANomeArquivo: String; ACha
 begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
-  FeSocialConfig := TeSocialConfig.Create;
+  FeSocialConfig := TConfiguracoeseSocial.Create(nil);
 end;
 
 destructor TLibeSocialConfig.Destroy;
@@ -140,7 +142,7 @@ procedure TLibeSocialConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
 
-  FeSocialConfig.LerIni(Ini);
+//  FeSocialConfig.LerIni(Ini);
 end;
 
 procedure TLibeSocialConfig.ClasseParaINI;
@@ -149,7 +151,7 @@ begin
 
   Ini.WriteString(CSessaoVersao, CLibeSocialNome, CLibeSocialVersao);
 
-  FeSocialConfig.GravarIni(Ini);
+//  FeSocialConfig.GravarIni(Ini);
 end;
 
 procedure TLibeSocialConfig.ClasseParaComponentes;

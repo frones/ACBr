@@ -39,7 +39,8 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrUtil, ACBrLibComum, ACBrLibeSocialDataModule; //, ACBreSocial;
+  ACBrUtil, ACBrLibComum, ACBrLibeSocialDataModule, ACBreSocial,
+  pcesS5001, pcesS5002, pcesS5011, pcesS5012;
 
 type
 
@@ -86,7 +87,13 @@ function eSocial_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longin
 {%endregion}
 
 {%region eSocial}
-function RespostaItensRastreio(ItemID: integer = 0): String;
+function RespostaEnvio: String;
+function RespostaEnvioConsulta: String;
+function RespostaEnvioOcorrencia(ACont: Integer): String;
+function RespostaOcorrencia1(ACont: Integer): String;
+function RespostaOcorrencia2(ACont, ACont2: Integer): String;
+function RespostaConsulta(ACont: Integer): String;
+function RespostaTot(ACont, ACont2: Integer): String;
 
 function eSocial_LerArqIni(const eArqIni: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -200,21 +207,197 @@ end;
 {%endregion}
 
 {%region eSocial}
-function RespostaItensRastreio(ItemID: integer): String;
+function RespostaEnvio: String;
 var
-  Resp: TLibeSocialRastreio;
+  Resp: TEnvioResposta;
 begin
-  Resp := TLibeSocialRastreio.Create(
-          CSessaoRespRastreio + Trim(IntToStrZero(ItemID +1, 2)), resINI);
+  Resp := TEnvioResposta.Create(resINI);
   try
-    with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.retRastreio[ItemID] do
+    with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
     begin
-      Resp.DataHora := DataHora;
-      Resp.Local := Local;
-      Resp.Situacao := Situacao;
-      Resp.Observacao := Observacao;
+      with EnvioLote.RetEnvioLote do
+      begin
+        Resp.Codigo       := Status.cdResposta;
+        Resp.Mensagem     := Status.descResposta;
+        Resp.TpInscEmpreg := eSTpInscricaoToStr(IdeEmpregador.TpInsc);
+        Resp.NrInscEmpreg := IdeEmpregador.NrInsc;
+        Resp.TpInscTransm := eSTpInscricaoToStr(IdeTransmissor.TpInsc);
+        Resp.NrInscTransm := IdeTransmissor.NrInsc;
+        Resp.DhRecepcao   := dadosRecLote.dhRecepcao;
+        Resp.VersaoAplic  := dadosRecLote.versaoAplicRecepcao;
+        Resp.Protocolo    := dadosRecLote.Protocolo;
+      end;
+    end;
+    Result := Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+end;
 
-      result := Resp.Gerar;
+function RespostaEnvioConsulta: String;
+var
+  Resp: TEnvioResposta;
+begin
+  Resp := TEnvioResposta.Create(resINI);
+  try
+    with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
+    begin
+      with ConsultaLote.RetConsultaLote do
+      begin
+        Resp.Codigo       := Status.cdResposta;
+        Resp.Mensagem     := Status.descResposta;
+        Resp.TpInscEmpreg := eSTpInscricaoToStr(IdeEmpregador.TpInsc);
+        Resp.NrInscEmpreg := IdeEmpregador.NrInsc;
+        Resp.TpInscTransm := eSTpInscricaoToStr(IdeTransmissor.TpInsc);
+        Resp.NrInscTransm := IdeTransmissor.NrInsc;
+        Resp.DhRecepcao   := dadosRecLote.dhRecepcao;
+        Resp.VersaoAplic  := dadosRecLote.versaoAplicRecepcao;
+        Resp.Protocolo    := dadosRecLote.Protocolo;
+      end;
+    end;
+    Result := Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+end;
+
+function RespostaEnvioOcorrencia(ACont: Integer): String;
+var
+  Resp: TOcorrenciaResposta;
+begin
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia + IntToStr(ACont), resINI);
+  try
+    with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
+    begin
+      with EnvioLote.RetEnvioLote do
+      begin
+        Resp.Codigo      := Status.cdResposta;
+        Resp.Mensagem    := Status.descResposta;
+        Resp.CodigoOco   := Status.Ocorrencias.Items[ACont].Codigo;
+        Resp.Descricao   := Status.Ocorrencias.Items[ACont].Descricao;
+        Resp.Tipo        := Status.Ocorrencias.Items[ACont].Tipo;
+        Resp.Localizacao := Status.Ocorrencias.Items[ACont].Localizacao;
+      end;
+    end;
+    Result := Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+end;
+
+function RespostaOcorrencia1(ACont: Integer): String;
+var
+  Resp: TOcorrenciaResposta;
+begin
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia + IntToStr(ACont), resINI);
+  try
+    with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
+    begin
+      with ConsultaLote.RetConsultaLote do
+      begin
+        Resp.Codigo      := Status.cdResposta;
+        Resp.Mensagem    := Status.descResposta;
+        Resp.CodigoOco   := Status.Ocorrencias.Items[ACont].Codigo;
+        Resp.Descricao   := Status.Ocorrencias.Items[ACont].Descricao;
+        Resp.Tipo        := Status.Ocorrencias.Items[ACont].Tipo;
+        Resp.Localizacao := Status.Ocorrencias.Items[ACont].Localizacao;
+      end;
+    end;
+    Result := Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+end;
+
+function RespostaOcorrencia2(ACont, ACont2: Integer): String;
+var
+  Resp: TOcorrenciaResposta;
+begin
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia + IntToStr(ACont2), resINI);
+  try
+    with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
+    begin
+      with ConsultaLote.RetConsultaLote.retEventos.Items[ACont].Processamento.Ocorrencias.Items[ACont2] do
+      begin
+        Resp.CodigoOco   := Codigo;
+        Resp.Descricao   := Descricao;
+        Resp.Tipo        := Tipo;
+        Resp.Localizacao := Localizacao;
+      end;
+    end;
+    Result := Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+end;
+
+function RespostaConsulta(ACont: Integer): String;
+var
+  Resp: TConsultaResposta;
+begin
+  Resp := TConsultaResposta.Create(CSessaoRespConsulta + IntToStr(ACont), resINI);
+  try
+    with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
+    begin
+      with ConsultaLote.RetConsultaLote.retEventos.Items[ACont] do
+      begin
+        resp.cdResposta          := Processamento.cdResposta;
+        resp.descResposta        := Processamento.descResposta;
+        resp.versaoAplicProcLote := Processamento.versaoAplicProcLote;
+        resp.dhProcessamento     := Processamento.dhProcessamento;
+        resp.nrRecibo            := Recibo.nrRecibo;
+        resp.hash                := Recibo.Hash;
+      end;
+    end;
+    Result := Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+end;
+
+function RespostaTot(ACont, ACont2: Integer): String;
+var
+  Resp: TConsultaTotResposta;
+  evtS5001: TS5001;
+  evtS5002: TS5002;
+  evtS5011: TS5011;
+  evtS5012: TS5012;
+begin
+  Resp := TConsultaTotResposta.Create(CSessaoRespConsultaTot + IntToStr(ACont2), resINI);
+  try
+    with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
+    begin
+      with ConsultaLote.RetConsultaLote.retEventos.Items[ACont].tot[ACont2] do
+      begin
+        resp.Tipo := Tipo;
+        case Evento.TipoEvento of
+          teS5001:
+            begin
+              evtS5001 := TS5001(Evento.GetEvento);
+              resp.ID  := evtS5001.EvtBasesTrab.Id;
+              resp.NrRecArqBase := evtS5001.EvtBasesTrab.IdeEvento.nrRecArqBase;
+            end;
+          teS5002:
+            begin
+              evtS5002 := TS5002(Evento.GetEvento);
+              resp.ID  := evtS5002.EvtirrfBenef.Id;
+              resp.NrRecArqBase := evtS5002.EvtirrfBenef.IdeEvento.nrRecArqBase;
+            end;
+          teS5011:
+            begin
+              evtS5011 := TS5011(Evento.GetEvento);
+              resp.ID  := evtS5011.EvtCS.Id;
+              resp.NrRecArqBase := evtS5011.EvtCS.IdeEvento.nrRecArqBase;
+            end;
+          teS5012:
+            begin
+              evtS5012 := TS5012(Evento.GetEvento);
+              resp.ID  := evtS5012.EvtIrrf.Id;
+              resp.NrRecArqBase := evtS5012.EvtIrrf.IdeEvento.nrRecArqBase;
+            end;
+        end;
+      end;
+      Result := Resp.Gerar;
     end;
   finally
     Resp.Free;
@@ -240,7 +423,7 @@ begin
     begin
       eSocialDM.Travar;
       try
-        Ok := eSocialDM.ACBreSocial1.LerArqIni(AArqIni);
+        Ok := eSocialDM.ACBreSocial1.Eventos.LoadFromFile(AArqIni, False);
         Result := SetRetorno(ErrOK);
       finally
         eSocialDM.Destravar;
@@ -277,10 +460,18 @@ begin
         eSocialDM.ACBreSocial1.Enviar(TeSocialGrupo(Agrupo));
         AResposta := '';
 
-//        for I := 0 to eSocialDM.ACBreSocial1.retRastreio.Count - 1 do
-//          AResposta := AResposta + RespostaItensRastreio(I);
+        with eSocialDM.ACBreSocial1.WebServices.EnvioLote.RetEnvioLote do
+        begin
+          if Status.cdResposta in [201, 202] then
+            AResposta := AResposta + RespostaEnvio
+          else
+            for i := 0 to Status.Ocorrencias.Count - 1 do
+              AResposta := AResposta + RespostaEnvioOcorrencia(i);
+        end;
 
-//        MoverStringParaPChar(AResposta, sResposta, esTamanho);
+        eSocialDM.ACBreSocial1.Eventos.Clear;
+
+        MoverStringParaPChar(AResposta, sResposta, esTamanho);
 
         Result := SetRetorno(ErrOK, StrPas(sResposta));
       finally
@@ -299,9 +490,9 @@ end;
 function eSocial_Consultar(const eProtocolo, sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resp: TLibeSocialConsulta;
   AProtocolo: String;
   AResposta: String;
+  i, j: Integer;
 begin
   try
     VerificarLibInicializada;
@@ -315,34 +506,40 @@ begin
     with TACBrLibeSocial(pLib) do
     begin
       eSocialDM.Travar;
-      Resp := TLibeSocialConsulta.Create(resINI);
       try
+        eSocialDM.ACBreSocial1.Eventos.Clear;
         eSocialDM.ACBreSocial1.Consultar(AProtocolo);
         AResposta := '';
-        {
-        with eSocialDM.ACBreSocial1 do
-        begin
-          Resp.CodigoServico := retCodigoServico;
-          Resp.Valor := retValor;
-          Resp.PrazoEntrega := retPrazoEntrega;
-          Resp.ValorSemAdicionais := retValorSemAdicionais;
-          Resp.ValorMaoPropria := retValorMaoPropria;
-          Resp.ValorAvisoRecebimento := retValorAvisoRecebimento;
-          Resp.ValorValorDeclarado := retValorValorDeclarado;
-          Resp.EntregaDomiciliar := retEntregaDomiciliar;
-          Resp.EntregaSabado := retEntregaSabado;
-          Resp.Erro := retErro;
-          Resp.MsgErro := retMsgErro;
 
-          AResposta := retMsgErro + sLineBreak;
-          AResposta := AResposta + Resp.Gerar;
+        with eSocialDM.ACBreSocial1.WebServices.ConsultaLote.RetConsultaLote do
+        begin
+          if Status.cdResposta in [201, 202] then
+          begin
+            AResposta := AResposta + RespostaEnvioConsulta;
+
+            for i := 0 to retEventos.Count - 1 do
+            begin
+              AResposta := AResposta + RespostaConsulta(i);
+
+              if retEventos.Items[i].Processamento.Ocorrencias.Count > 0 then
+                for j := 0 to retEventos.Items[i].Processamento.Ocorrencias.Count - 1 do
+                  AResposta := AResposta + RespostaOcorrencia2(i, j);
+
+              for j := 0 to retEventos.Items[i].tot.Count - 1 do
+                AResposta := AResposta + RespostaTot(i, j);
+            end;
+          end
+          else
+          begin
+            for i := 0 to Status.Ocorrencias.Count - 1 do
+              AResposta := AResposta + RespostaOcorrencia1(i);
+          end;
         end;
 
         MoverStringParaPChar(AResposta, sResposta, esTamanho);
-        }
+
         Result := SetRetorno(ErrOK, StrPas(sResposta));
       finally
-        Resp.Free;
         eSocialDM.Destravar;
       end;
     end;

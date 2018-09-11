@@ -106,6 +106,10 @@ function ETQ_ImprimirTexto(const Orientacao, Fonte, MultiplicadorH,
             MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
             const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function ETQ_ImprimirTextoStr(const Orientacao: Integer; const Fonte: PChar; const MultiplicadorH,
+            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
+            const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function ETQ_ImprimirBarras(const Orientacao, TipoBarras, LarguraBarraLarga,
             LarguraBarraFina, Vertical, Horizontal: Integer;
      const eTexto: PChar; const AlturaCodBarras, ExibeCodigo: Integer): longint;
@@ -424,6 +428,48 @@ begin
       ETQDM.Travar;
       try
         ETQDM.ACBrETQ1.ImprimirTexto(TACBrETQOrientacao(Orientacao), Fonte, MultiplicadorH,
+              MultiplicadorV, Vertical, Horizontal, ATexto,
+              SubFonte, ImprimirReverso);
+        Result := SetRetorno(ErrOK);
+      finally
+        ETQDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function ETQ_ImprimirTextoStr(const Orientacao: Integer; const Fonte: PChar; const MultiplicadorH,
+            MultiplicadorV, Vertical, Horizontal: Integer; const eTexto: PChar;
+            const SubFonte: Integer; const ImprimirReverso: Boolean): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+    ATexto, AFonte: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+    ATexto := AnsiString(eTexto);
+    AFonte := AnsiString(Fonte);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('ETQ_ImprimirTextoStr( ' + IntToStr(Orientacao) + ',' +
+        AFonte + ',' + IntToStr(MultiplicadorH) + ',' +
+        IntToStr(MultiplicadorV) + ',' + IntToStr(Vertical) + ',' +
+        IntToStr(Horizontal) + ',' + ATexto + ',' + IntToStr(SubFonte) + ',' +
+        BoolToStr(ImprimirReverso, True) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('ETQ_ImprimirTextoStr', logNormal);
+
+    with TACBrLibETQ(pLib) do
+    begin
+      ETQDM.Travar;
+      try
+        ETQDM.ACBrETQ1.ImprimirTexto(TACBrETQOrientacao(Orientacao), AFonte, MultiplicadorH,
               MultiplicadorV, Vertical, Horizontal, ATexto,
               SubFonte, ImprimirReverso);
         Result := SetRetorno(ErrOK);

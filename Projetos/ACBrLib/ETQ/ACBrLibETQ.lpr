@@ -69,6 +69,7 @@ exports
   // Impressão
   ETQ_Imprimir,
   ETQ_ImprimirTexto,
+  ETQ_ImprimirTextoStr,
   ETQ_ImprimirBarras,
   ETQ_ImprimirLinha,
   ETQ_ImprimirCaixa,

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
 using System.IO.Ports;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ACBrLib;
 
 namespace ACBrLibPosPrinter.Demo
 {
@@ -21,7 +17,7 @@ namespace ACBrLibPosPrinter.Demo
             InitializeComponent();
 
             // Inicializando a dll
-            var ret = ACBrPosPrinter.POS_Inicializar("ACBrLib.ini".ToUTF8(), "".ToUTF8());
+            var ret = ACBrPosPrinter.POS_Inicializar("".ToUTF8(), "".ToUTF8());
             ACBrPosPrinter.CheckResult(ret);
         }
 
@@ -153,7 +149,7 @@ namespace ACBrLibPosPrinter.Demo
 
         private void LoadConfig()
         {
-            ACBrPosPrinter.POS_ConfigLer("ACBrLib.ini");
+            ACBrPosPrinter.POS_ConfigLer("".ToUTF8());
 
             var bufferLen = 256;
             var pValue = new StringBuilder(bufferLen);

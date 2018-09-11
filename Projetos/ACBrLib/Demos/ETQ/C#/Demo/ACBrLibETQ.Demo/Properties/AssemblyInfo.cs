@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associada a um assembly.
-[assembly: AssemblyTitle("ACBrLibPosPrinter.Demo")]
+[assembly: AssemblyTitle("ACBrLibETQ.Demo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ACBrLibPosPrinter.Demo")]
+[assembly: AssemblyProduct("ACBrLibETQ.Demo")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // O GUID a seguir será destinado à ID de typelib se este projeto for exposto para COM
-[assembly: Guid("c6aab316-8b0b-41ec-a5e1-a4a0c543a53b")]
+[assembly: Guid("fd0336f0-43e7-4a41-9564-2572af11a08d")]
 
 // As informações da versão de um assembly consistem nos quatro valores a seguir:
 //

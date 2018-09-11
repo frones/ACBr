@@ -4,38 +4,40 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C6AAB316-8B0B-41EC-A5E1-A4A0C543A53B}</ProjectGuid>
+    <ProjectGuid>{FD0336F0-43E7-4A41-9564-2572AF11A08D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ACBrLibPosPrinter.Demo</RootNamespace>
-    <AssemblyName>ACBrLibPosPrinter.Demo</AssemblyName>
+    <RootNamespace>ACBrLibETQ.Demo</RootNamespace>
+    <AssemblyName>ACBrLibETQ.Demo</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>ACBrMonitor.ico</ApplicationIcon>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,31 +51,9 @@
     <Compile Include="..\..\..\..\Libs\C#\Helpers.cs">
       <Link>Helpers.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\..\Libs\C#\ItemData.cs">
-      <Link>ItemData.cs</Link>
+    <Compile Include="..\..\Imports\ACBrETQ.cs">
+      <Link>ACBrETQ.cs</Link>
     </Compile>
-    <Compile Include="..\..\Imports\ACBrPosPrinter.cs">
-      <Link>ACBrPosPrinter.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Imports\ACBrPosPrinterModelo.cs">
-      <Link>ACBrPosPrinterModelo.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Imports\ACBrPosTipoStatus.cs">
-      <Link>ACBrPosTipoStatus.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Imports\PosPaginaCodigo.cs">
-      <Link>PosPaginaCodigo.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Imports\SerialHandShake.cs">
-      <Link>SerialHandShake.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Imports\SerialParity.cs">
-      <Link>SerialParity.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Imports\SerialStopBytes.cs">
-      <Link>SerialStopBytes.cs</Link>
-    </Compile>
-    <Compile Include="UIExtensions.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,13 +86,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ativar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ACBrMonitor.ico" />
-    <None Include="Resources\limpar.png" />
-    <None Include="Resources\imprimir.png" />
-    <None Include="Resources\serial.png" />
+    <None Include="Resources\acbr.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

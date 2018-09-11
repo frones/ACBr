@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBrLibETQ.Demo", "ACBrLibETQ.Demo\ACBrLibETQ.Demo.csproj", "{FD0336F0-43E7-4A41-9564-2572AF11A08D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD0336F0-43E7-4A41-9564-2572AF11A08D}.Debug|x86.ActiveCfg = Debug|x86
+		{FD0336F0-43E7-4A41-9564-2572AF11A08D}.Debug|x86.Build.0 = Debug|x86
+		{FD0336F0-43E7-4A41-9564-2572AF11A08D}.Release|x86.ActiveCfg = Release|x86
+		{FD0336F0-43E7-4A41-9564-2572AF11A08D}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A09200AE-FE1D-4007-B9A5-B5931D4C2552}
+	EndGlobalSection
+EndGlobal

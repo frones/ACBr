@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/09/2018
+-- ACBrNFSeWebServices --
+[*] Correções no provedor Tinus visando as diferenças de NameSpace e SoapAction entre os ambientes.
+Por: Italo Jurisato Junior
+
 -- pnfsNFSeW_ABRASFv2 --
 [*] Alteração incluido o provedor TcheInfo na lista de provedores cuja tag <Aliquota> tem apenas 
     2 casas decimais.

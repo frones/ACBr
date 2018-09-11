@@ -731,6 +731,12 @@ begin
       FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
   end;
 
+  if FProvedor = proTinus then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, 'www.tinus', 'www2.tinus', [rfReplaceAll])
+  end;
+
   if FProvedor = proActconv202 then
   begin
     if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 3167202 then
@@ -853,9 +859,9 @@ end;
 procedure TNFSeWebService.InicializarServico;
 begin
   { Sobrescrever apenas se necessário }
-  inherited InicializarServico;
-
   FProvedor := FPConfiguracoesNFSe.Geral.Provedor;
+
+  inherited InicializarServico;
 
   if FPConfiguracoesNFSe.Geral.ConfigGeral.VersaoSoap = '' then
     FPMimeType := 'application/xml'
@@ -2789,7 +2795,12 @@ begin
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingDados);
 
   if FProvedor = proTinus then
+  begin
     FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio', 'Arg', [rfReplaceAll]);
+
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
+  end;
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
@@ -3692,7 +3703,12 @@ begin
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit;
 
   if FProvedor = proTinus then
+  begin
     FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarSituacaoLoteRpsEnvio', 'Arg', [rfReplaceAll]);
+
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
+  end;
 
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then
     GerarException(ACBrStr('A funcionalidade [Consultar Situação do Lote] não foi disponibilizada pelo provedor: ' +
@@ -3960,7 +3976,12 @@ begin
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote;
 
   if FProvedor = proTinus then
+  begin
     FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarLoteRpsEnvio', 'Arg', [rfReplaceAll]);
+
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
+  end;
 
   if ((FPDadosMsg = '') or (FDadosEnvelope = '')) and (not (FProvedor in [proIPM])) then
     GerarException(ACBrStr('A funcionalidade [Consultar Lote] não foi disponibilizada pelo provedor: ' +
@@ -4175,7 +4196,12 @@ begin
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps;
 
   if FProvedor = proTinus then
+  begin
     FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarNfseRpsEnvio', 'Arg', [rfReplaceAll]);
+
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
+  end;
 
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then
     GerarException(ACBrStr('A funcionalidade [Consultar NFSe por RPS] não foi disponibilizada pelo provedor: ' +
@@ -4340,7 +4366,12 @@ begin
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe;
 
   if FProvedor = proTinus then
+  begin
     FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarNfseEnvio', 'Arg', [rfReplaceAll]);
+
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
+  end;
 
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then
     GerarException(ACBrStr('A funcionalidade [Consultar NFSe] não foi disponibilizada pelo provedor: ' +
@@ -4714,7 +4745,12 @@ begin
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar;
 
   if FProvedor = proTinus then
+  begin
     FPDadosMsg := StringReplace(FPDadosMsg, 'CancelarNfseEnvio', 'Arg', [rfReplaceAll]);
+
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
+  end;
 
   if ((FPDadosMsg = '') or (FDadosEnvelope = '')) and (not (FProvedor in [proIPM])) then
     GerarException(ACBrStr('A funcionalidade [Cancelar NFSe] não foi disponibilizada pelo provedor: ' +

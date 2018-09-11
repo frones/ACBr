@@ -668,7 +668,7 @@ begin
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
       Resp.CUF := cUF;
-      Resp.CNPJ := CNPJ;
+      Resp.CNPJ := CNPJCPF;
       Resp.ChMDFe := InfMDFe.Items[0].chMDFe;
       Resp.NProt := InfMDFe.Items[0].nProt;
 
@@ -799,7 +799,7 @@ begin
             INIRec.WriteString(sSecao, 'UFPer', UFPer);
           end;
         end;
-        INIRec.WriteString('emit', 'CNPJ', Emit.CNPJ);
+        INIRec.WriteString('emit', 'CNPJ', Emit.CNPJCPF);
         INIRec.WriteString('emit', 'IE', Emit.IE);
         INIRec.WriteString('emit', 'xNome', Emit.xNome);
         INIRec.WriteString('emit', 'xFant', Emit.xFant);
@@ -1452,9 +1452,9 @@ begin
       ACBrMDFe.EventoMDFe.Evento.Clear;
       with ACBrMDFe.EventoMDFe.Evento.Add do
       begin
-        infEvento.CNPJ := ACNPJ;
-        if Trim(infEvento.CNPJ) = '' then
-          infEvento.CNPJ := copy(chave, 7, 14)
+        infEvento.CNPJCPF := ACNPJ;
+        if Trim(infEvento.CNPJCPF) = '' then
+          infEvento.CNPJCPF := copy(chave, 7, 14)
         else
         begin
           if not ValidarCNPJ(ACNPJ) then
@@ -2130,9 +2130,9 @@ begin
     ACBrMDFe.EventoMDFe.Evento.Clear;
     with ACBrMDFe.EventoMDFe.Evento.Add do
     begin
-      infEvento.CNPJ := ACNPJ;
-      if Trim(infEvento.CNPJ) = '' then
-        infEvento.CNPJ := copy(OnlyNumber(ACBrMDFe.WebServices.Consulta.MDFeChave), 7, 14)
+      infEvento.CNPJCPF := ACNPJ;
+      if Trim(infEvento.CNPJCPF) = '' then
+        infEvento.CNPJCPF := copy(OnlyNumber(ACBrMDFe.WebServices.Consulta.MDFeChave), 7, 14)
       else
       begin
         if not ValidarCNPJ(ACNPJ) then

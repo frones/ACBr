@@ -1465,7 +1465,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/ECF.htm'
           Caption = '&ECF'
           ClientHeight = 327
-          ClientWidth = 847
+          ClientWidth = 842
           ImageIndex = 1
           object sbECFSerial: TSpeedButton
             AnchorSideLeft.Control = cbECFPorta
@@ -1791,8 +1791,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsECFParamII: TTabSheet
               Caption = 'Parâmetros II'
-              ClientHeight = 132
-              ClientWidth = 485
+              ClientHeight = 106
+              ClientWidth = 481
               object Label55: TLabel
                 AnchorSideTop.Control = edECFLog
                 AnchorSideTop.Side = asrCenter
@@ -1813,7 +1813,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 64
                 Height = 25
                 Top = 73
-                Width = 335
+                Width = 331
                 Anchors = [akTop, akLeft, akRight]
                 OnChange = edECFLogChange
                 TabOrder = 0
@@ -1821,7 +1821,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sbECFLog: TSpeedButton
                 AnchorSideTop.Control = edECFLog
                 AnchorSideTop.Side = asrCenter
-                Left = 406
+                Left = 402
                 Height = 23
                 Top = 74
                 Width = 23
@@ -13674,7 +13674,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

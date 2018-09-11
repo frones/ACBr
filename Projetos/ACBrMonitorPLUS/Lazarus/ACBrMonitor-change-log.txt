@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2018
+[*] DoACBrMDFeUnit
+Ajuste na nomenclatura do Campo CNPJCPF, conforme alteração do componente
+
 06/09/2018
 [*] DoECFUnit
 Ajuste na passagem de parâmetros do método "EfetuaPagamento"

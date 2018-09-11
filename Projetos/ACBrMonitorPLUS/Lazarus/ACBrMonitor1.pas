@@ -2612,7 +2612,7 @@ begin
     with ACBrMDFe1.EventoMDFe.Evento.Add do
     begin
       infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
-      infEvento.CNPJ     := ACBrMDFe1.Manifestos.Items[0].MDFe.emit.CNPJ;
+      infEvento.CNPJCPF  := ACBrMDFe1.Manifestos.Items[0].MDFe.emit.CNPJCPF;
       infEvento.dhEvento := now;
       infEvento.tpEvento   := teCancelamento;
       infEvento.nSeqEvento := 1;
@@ -7204,7 +7204,10 @@ procedure TFrmACBrMonitor.cbLCBPortaChange(Sender: TObject);
 begin
   try
     ACBrLCB1.Desativar;
-    ACBrLCB1.Porta := cbLCBPorta.Text;
+    if (cbLCBPorta.Text <> 'Sem Leitor') then
+      ACBrLCB1.Porta := cbLCBPorta.Text
+    else
+      ACBrLCB1.Porta := '';
   finally
     cbLCBPorta.Text := ACBrLCB1.Porta;
   end;

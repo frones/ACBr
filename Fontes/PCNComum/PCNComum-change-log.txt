@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2018
+-- pcnConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/46359-ajuste-na-descri%C3%A7%C3%A3o-do-cst60-no-dacte/
+  Por: bsoft
+
 30/08/2018
 -- pcnConversao --
 [+] Inclusão de opção de alinhamento à esquerda para o canhoto do DANFE em FR paisagem.

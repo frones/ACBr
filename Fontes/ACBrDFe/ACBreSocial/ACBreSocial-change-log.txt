@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2018
+-- pcesS2205 --
+[*] Acrescentado a leitura da seção [nascimento] do arquivo INI.
+   Por: Italo Jurisato Junior
+
 10/09/2018
 -- pcesS3000 --
 [*] https://www.projetoacbr.com.br/forum/topic/46212-pcess3000-n%C3%A3o-gera-idetrabalhador-para-os-te-s2299-nem-s2399/?do=findComment&comment=306205

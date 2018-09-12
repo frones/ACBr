@@ -264,6 +264,15 @@ begin
 //      Trabalhador.IndPriEmpr := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPriEmpr', 'S'));
       trabalhador.nmSoc      := INIRec.ReadString(sSecao, 'nmSoc', EmptyStr);
 
+      sSecao := 'nascimento';
+      trabalhador.Nascimento.dtNascto   := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
+      trabalhador.Nascimento.codMunic   := INIRec.ReadInteger(sSecao, 'codMunic', 0);
+      trabalhador.Nascimento.uf         := INIRec.ReadString(sSecao, 'uf', 'SP');
+      trabalhador.Nascimento.paisNascto := INIRec.ReadString(sSecao, 'paisNascto', '');
+      trabalhador.Nascimento.paisNac    := INIRec.ReadString(sSecao, 'paisNac', '');
+      trabalhador.Nascimento.nmMae      := INIRec.ReadString(sSecao, 'nmMae', '');
+      trabalhador.Nascimento.nmPai      := INIRec.ReadString(sSecao, 'nmPai', '');
+
       sSecao := 'CTPS';
       if INIRec.ReadString(sSecao, 'nrCtps', '') <> '' then
       begin

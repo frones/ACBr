@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2018
+-- pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/42704-nfse-cidade-para%C3%ADso-das-aguasms-inclu%C3%ADda/
+Por: Helio Neto
+
 11/09/2018
 -- ACBrNFSeWebServices --
 [*] Correções no provedor Tinus visando as diferenças de NameSpace e SoapAction entre os ambientes.

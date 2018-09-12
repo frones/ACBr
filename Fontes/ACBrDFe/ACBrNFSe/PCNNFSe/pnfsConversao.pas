@@ -6138,6 +6138,7 @@ var
       5006002: Cidade := 'Nova Alvorada Do Sul/MS';
       5006200: Cidade := 'Nova Andradina/MS';
       5006259: Cidade := 'Novo Horizonte Do Sul/MS';
+      5006275: Cidade := 'Paraiso Das Aguas/MS';
       5006309: Cidade := 'Paranaiba/MS';
       5006358: Cidade := 'Paranhos/MS';
       5006408: Cidade := 'Pedro Gomes/MS';
@@ -11912,6 +11913,7 @@ var
       5006002: CodSiafi := '0143'; // Nova Alvorada Do Sul/MS';
       5006200: CodSiafi := '9123'; // Nova Andradina/MS';
       5006259: CodSiafi := '0159'; // Novo Horizonte Do Sul/MS';
+      5006275: CodSiafi := '1196'; // Paraiso Das Aguas/MS';
       5006309: CodSiafi := '9125'; // Paranaiba/MS';
       5006358: CodSiafi := '9739'; // Paranhos/MS';
       5006408: CodSiafi := '9127'; // Pedro Gomes/MS';
@@ -17545,6 +17547,7 @@ begin
       0143: CodCidade := 5006002; // Nova Alvorada Do Sul/MS  
       9123: CodCidade := 5006200; // Nova Andradina/MS  
       0159: CodCidade := 5006259; // Novo Horizonte Do Sul/MS
+      1196: CodCidade := 5006275; // Paraiso Das Aguas/MS  
       9125: CodCidade := 5006309; // Paranaiba/MS  
       9739: CodCidade := 5006358; // Paranhos/MS  
       9127: CodCidade := 5006408; // Pedro Gomes/MS

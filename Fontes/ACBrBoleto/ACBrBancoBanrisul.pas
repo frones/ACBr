@@ -435,7 +435,7 @@ begin
                space(18)                                                            + // Brancos
                IfThen((DataProtesto <> 0) and (DataProtesto > Vencimento),
                       PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)),
-                      2, '0'), '00')                                            + // Dias para protesto/devolução automática
+                      2, '0'), Space(2))                                            + // Dias para protesto/devolução automática
                space(23)                                                        + // Brancos
                IntToStrZero(aRemessa.Count + 1, 6);                               // Número sequencial do registro  
 

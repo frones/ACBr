@@ -2648,6 +2648,17 @@ begin
         GrauInstr := '10';
         nmSoc := 'Nome social';
 
+        with Nascimento do
+        begin
+          dtNascto   := StrToDate('10/02/1960');
+          codMunic   := 3560025;
+          uf         := 'SP';
+          paisNascto := '123';
+          paisNac    := '123';
+          nmMae      := 'Joaquina';
+          nmPai      := 'Sebastiao';
+        end;
+
         with Documentos do
         begin
           CTPS.NrCtps := '56454';

@@ -49,6 +49,8 @@ const
   CSessaoRespOcorrencia = 'Ocorrencia';
   CSessaoRespConsultaTot = 'Tot';
 
+  CSessaoeSocial = 'eSocial';
+
 implementation
 
 end.

@@ -86,12 +86,6 @@ begin
   ACBreSocial1.SSL.DescarregarCertificado;
   pLibConfig := TLibeSocialConfig(TACBrLibeSocial(pLib).Config);
   ACBreSocial1.Configuracoes.Assign(pLibConfig.eSocialConfig);
-
-//  with ACBreSocial1 do
-//  begin
-//    CodContrato := pLibConfig.eSocialConfig.CodContrato;
-//    Senha       := pLibConfig.eSocialConfig.Senha;
-//  end;
 end;
 
 procedure TLibeSocialDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

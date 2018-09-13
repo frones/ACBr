@@ -157,7 +157,8 @@ end;
 procedure TTestACBreSocialLib.Test_eSocial_LerArqIni;
 begin
   // Lendo o arquivo INI
-  AssertEquals('Erro ao ler o arquivo INI', ErrOk, eSocial_LerArqIni('C:\NAOEXISTE\Arquivo.ini'));
+  AssertEquals('Erro ao ler o arquivo INI', ErrOk,
+       eSocial_LerArqIni('C:\ACBr\trunk2\Projetos\ACBrLib\Testes\eSocial\bin\S1000.ini'));
 end;
 
 procedure TTestACBreSocialLib.Test_eSocial_Enviar;

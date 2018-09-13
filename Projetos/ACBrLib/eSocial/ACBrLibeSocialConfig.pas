@@ -142,6 +142,10 @@ procedure TLibeSocialConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
 
+  FeSocialConfig.Arquivos.LerIni(Ini);
+  FeSocialConfig.Certificados.LerIni(Ini);
+  FeSocialConfig.Geral.LerIni(Ini);
+  FeSocialConfig.WebServices.LerIni(Ini);
 //  FeSocialConfig.LerIni(Ini);
 end;
 
@@ -151,7 +155,10 @@ begin
 
   Ini.WriteString(CSessaoVersao, CLibeSocialNome, CLibeSocialVersao);
 
-//  FeSocialConfig.GravarIni(Ini);
+  FeSocialConfig.Arquivos.GravarIni(Ini);
+  FeSocialConfig.Certificados.GravarIni(Ini);
+  FeSocialConfig.Geral.GravarIni(Ini);
+  FeSocialConfig.WebServices.GravarIni(Ini);
 end;
 
 procedure TLibeSocialConfig.ClasseParaComponentes;

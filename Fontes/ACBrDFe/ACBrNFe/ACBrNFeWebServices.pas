@@ -863,7 +863,10 @@ begin
   inherited DefinirDadosIntegrador;
 
   if Assigned(FPDFeOwner.Integrador) then
+  begin
+    FPDFeOwner.Integrador.Parametros.Values['versaoDados'] :=  VersaoDFToStr(FPConfiguracoesNFe.Geral.VersaoDF);
     FPDFeOwner.Integrador.SetNomeMetodo('NfeStatusServico2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  end;
 end;
 
 procedure TNFeStatusServico.DefinirDadosMsg;
@@ -1136,6 +1139,7 @@ begin
   if Assigned(FPDFeOwner.Integrador) then
   begin
     //Atualmente não é possível enviar em LOTE com o Integrador
+    FPDFeOwner.Integrador.Parametros.Values['versaoDados']        :=  FormatFloat('0.00',FNotasFiscais.Items[0].NFe.infNFe.Versao);
     FPDFeOwner.Integrador.Parametros.Values['NumeroNFCe']         := OnlyNumber(FNotasFiscais.Items[0].NFe.infNFe.ID);
     FPDFeOwner.Integrador.Parametros.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', FNotasFiscais.Items[0].NFe.Ide.dEmi);
     FPDFeOwner.Integrador.Parametros.Values['ValorNFCe']          := StringReplace(FormatFloat('0.00',FNotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);
@@ -1577,7 +1581,10 @@ begin
   inherited DefinirDadosIntegrador;
 
   if Assigned(FPDFeOwner.Integrador) then
+  begin
+    FPDFeOwner.Integrador.Parametros.Values['versaoDados'] :=  VersaoDFToStr(FPConfiguracoesNFe.Geral.VersaoDF);
     FPDFeOwner.Integrador.SetNomeMetodo('NfeRetAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  end;
 end;
 
 procedure TNFeRetRecepcao.DefinirDadosMsg;
@@ -1927,7 +1934,10 @@ begin
   inherited DefinirDadosIntegrador;
 
   if Assigned(FPDFeOwner.Integrador) then
+  begin
+    FPDFeOwner.Integrador.Parametros.Values['versaoDados'] :=  VersaoDFToStr(FPConfiguracoesNFe.Geral.VersaoDF);
     FPDFeOwner.Integrador.SetNomeMetodo('NfeRetAutorizacaoLote12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  end;
 end;
 
 procedure TNFeRecibo.DefinirDadosMsg;
@@ -2128,7 +2138,10 @@ begin
   inherited DefinirDadosIntegrador;
 
   if Assigned(FPDFeOwner.Integrador) then
+  begin
+    FPDFeOwner.Integrador.Parametros.Values['versaoDados'] :=  VersaoDFToStr(FPConfiguracoesNFe.Geral.VersaoDF);
     FPDFeOwner.Integrador.SetNomeMetodo('NfeConsulta2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  end;
 end;
 
 procedure TNFeConsulta.DefinirDadosMsg;
@@ -2593,7 +2606,10 @@ begin
   inherited DefinirDadosIntegrador;
 
   if Assigned(FPDFeOwner.Integrador) then
+  begin
+    FPDFeOwner.Integrador.Parametros.Values['versaoDados'] :=  VersaoDFToStr(FPConfiguracoesNFe.Geral.VersaoDF);
     FPDFeOwner.Integrador.SetNomeMetodo('NfeInutilizacao2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  end;
 end;
 
 procedure TNFeInutilizacao.DefinirDadosMsg;
@@ -2817,7 +2833,10 @@ begin
   inherited DefinirDadosIntegrador;
 
   if Assigned(FPDFeOwner.Integrador) then
+  begin
+    FPDFeOwner.Integrador.Parametros.Values['versaoDados'] :=  VersaoDFToStr(FPConfiguracoesNFe.Geral.VersaoDF);
     FPDFeOwner.Integrador.SetNomeMetodo('CadConsultaCadastro2Soap12', (FPConfiguracoesNFe.WebServices.Ambiente = taHomologacao) );
+  end;
 end;
 
 procedure TNFeConsultaCadastro.DefinirURL;
@@ -3047,6 +3066,7 @@ begin
     if (FEvento.Evento[0].InfEvento.tpEvento = teCancelamento) and
        (TACBrNFe(FPDFeOwner).NotasFiscais.Count > 0) then
     begin
+      FPDFeOwner.Integrador.Parametros.Values['versaoDados'] :=  '1.00';
       FPDFeOwner.Integrador.Parametros.Values['NumeroNFCe'] := OnlyNumber(TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.infNFe.ID);
       FPDFeOwner.Integrador.Parametros.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Ide.dEmi);
       FPDFeOwner.Integrador.Parametros.Values['ValorNFCe'] := StringReplace(FormatFloat('0.00',TACBrNFe(FPDFeOwner).NotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);

@@ -1,0 +1,15 @@
+[History]
+1=#P0#=mb	#P1#=cmdBlocoDe_Click	#P2#=ACBrLibETQ/FrmMain/cmdBlocoDe_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914170204	#P7#=0	#P8#=61	.
+2=#P0#=mb	#P1#=cmdEtiqueta3_Click	#P2#=ACBrLibETQ/FrmMain/cmdEtiqueta3_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914165653	#P7#=0	#P8#=2	.
+3=#P0#=mb	#P1#=cmdEtiquetaSimples_Click	#P2#=ACBrLibETQ/FrmMain/cmdEtiquetaSimples_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914165422	#P7#=0	#P8#=7	.
+4=#P0#=mb	#P1#=cmdCarregarImagem_Click	#P2#=ACBrLibETQ/FrmMain/cmdCarregarImagem_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914164616	#P7#=0	#P8#=13	.
+5=#P0#=mb	#P1#=txtVelocidade_Change	#P2#=ACBrLibETQ/FrmMain/txtVelocidade_Change	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914164101	#P7#=0	#P8#=8	.
+6=#P0#=mb	#P1#=txtTemperatura_Change	#P2#=ACBrLibETQ/FrmMain/txtTemperatura_Change	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914164106	#P7#=0	#P8#=8	.
+7=#P0#=mb	#P1#=txtCopias_Change	#P2#=ACBrLibETQ/FrmMain/txtCopias_Change	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914164109	#P7#=0	#P8#=8	.
+8=#P0#=mb	#P1#=txtAvanco_Change	#P2#=ACBrLibETQ/FrmMain/txtAvanco_Change	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914164149	#P7#=0	#P8#=8	.
+9=#P0#=mb	#P1#=SaveConfig	#P2#=ACBrLibETQ/FrmMain/SaveConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180914165455	#P7#=0	#P8#=6	.
+10=#P0#=mb	#P1#=FromUTF8	#P2#=ACBrLibETQ/ACBrETQ/FromUTF8	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180914160159	#P7#=0	#P8#=3	.
+11=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibETQ/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180914161619	#P7#=0	#P8#=4	.
+12=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibETQ/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914165610	#P7#=0	#P8#=14	.
+13=#P0#=mb	#P1#=Form_Terminate	#P2#=ACBrLibETQ/FrmMain/Form_Terminate	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180914160622	#P7#=0	#P8#=0	.
+14=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibETQ/ACBrETQ/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180914160503	#P7#=0	#P8#=14	.

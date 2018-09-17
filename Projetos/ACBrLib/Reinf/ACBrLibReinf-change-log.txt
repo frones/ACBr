@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2018
+--- ACBrLibReinf ---
+[+] Inicio do projeto.
+   Por: Italo Jurisato Junior
+
 29/05/2018
 --- ACBrLibReinfRespostas / ACBrLibReinfConsts ---
 [*] Alterações nos nomes de constantes e classes visando a reutilização das mesmas

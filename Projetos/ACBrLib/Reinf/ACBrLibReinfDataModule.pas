@@ -5,7 +5,7 @@
 
 { Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida               }
 
-{ Colaboradores nesse arquivo: Rafael Teno Dias                                }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -31,48 +31,81 @@
 
 {******************************************************************************}
 
-{$I ACBr.inc}
+unit ACBrLibReinfDataModule;
 
-unit ACBrLibReinfConsts;
+{$mode delphi}
 
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, FileUtil, ACBrReinf, ACBrLibConfig, syncobjs;
 
-const
-  CLibReinfNome = 'ACBrLibReinf';
-  CLibReinfVersao = '0.0.1';
+type
 
-  CSessaoRespEnvio = 'retornoLoteEventos';
-  CSessaoRespEnvioideTransmissor = 'ideTransmissor';
-  CSessaoRespEnviostatus = 'status';
-  CSessaoRespEnvioocorrencias = 'ocorrencias';
+  { TLibReinfDM }
 
-  CSessaoRespEnvioevento = 'evento';
-  CSessaoRespEnvioevtTotal = 'evtTotal';
-  CSessaoRespEnvioinfoTotal = 'infoTotal';
+  TLibReinfDM = class(TDataModule)
+    ACBrReinf1: TACBrReinf;
 
-  CSessaoRespConsulta = 'evtTotalContrib';
-  CSessaoRespConsultainfoTotalContrib = 'infoTotalContrib';
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+  private
+    FLock: TCriticalSection;
 
-  CSessaoRetornoideEvento = 'ideEvento';
-  CSessaoRetornoideContri = 'ideContri';
-  CSessaoRetornoideStatus = 'ideStatus';
-  CSessaoRetornoregOcorrs = 'regOcorrs';
-  CSessaoRetornoinfoRecEv = 'infoRecEv';
-
-  CSessaoRetornoRTom = 'RTom';
-  CSessaoRetornoinfoCRTom = 'infoCRTom';
-  CSessaoRetornoRPrest = 'RPrest';
-  CSessaoRetornoRRecRepAD = 'RRecRepAD'; 
-  CSessaoRetornoRComl = 'RComl'; 
-  CSessaoRetornoRCPRB = 'RCPRB'; 
-  CSessaoRetornoRRecEspetDesp = 'RRecEspetDesp';
-
-  CSessaoReinf = 'Reinf';
+  public
+    procedure AplicarConfiguracoes;
+    procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
+    procedure Travar;
+    procedure Destravar;
+  end;
 
 implementation
+
+uses
+  ACBrUtil,
+  ACBrLibReinfConfig, ACBrLibComum, ACBrLibReinfClass;
+
+{$R *.lfm}
+
+{ TLibReinfDM }
+
+procedure TLibReinfDM.DataModuleCreate(Sender: TObject);
+begin
+  FLock := TCriticalSection.Create;
+end;
+
+procedure TLibReinfDM.DataModuleDestroy(Sender: TObject);
+begin
+  FLock.Destroy;
+end;
+
+procedure TLibReinfDM.AplicarConfiguracoes;
+var
+  pLibConfig: TLibReinfConfig;
+begin
+  ACBrReinf1.SSL.DescarregarCertificado;
+  pLibConfig := TLibReinfConfig(TACBrLibReinf(pLib).Config);
+  ACBrReinf1.Configuracoes.Assign(pLibConfig.ReinfConfig);
+end;
+
+procedure TLibReinfDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
+  Traduzir: Boolean);
+begin
+  if Assigned(pLib) then
+    pLib.GravarLog(AMsg, NivelLog, Traduzir);
+end;
+
+procedure TLibReinfDM.Travar;
+begin
+  GravarLog('Travar', logParanoico);
+  FLock.Acquire;
+end;
+
+procedure TLibReinfDM.Destravar;
+begin
+  GravarLog('Destravar', logParanoico);
+  FLock.Release;
+end;
 
 end.
 

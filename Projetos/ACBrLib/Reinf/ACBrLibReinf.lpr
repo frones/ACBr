@@ -5,7 +5,7 @@
 
 { Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida               }
 
-{ Colaboradores nesse arquivo: Rafael Teno Dias                                }
+{ Colaboradores nesse arquivo: Italo Jurisato Junior                           }
 
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -33,46 +33,45 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibReinfConsts;
-
-interface
+library ACBrLibReinf;
 
 uses
-  Classes, SysUtils;
+  Interfaces, sysutils, Classes,
+  ACBrLibConfig, ACBrLibComum,
+  ACBrLibReinfClass, ACBrLibReinfConfig, ACBrLibReinfDataModule;
 
-const
-  CLibReinfNome = 'ACBrLibReinf';
-  CLibReinfVersao = '0.0.1';
+{$R *.res}
 
-  CSessaoRespEnvio = 'retornoLoteEventos';
-  CSessaoRespEnvioideTransmissor = 'ideTransmissor';
-  CSessaoRespEnviostatus = 'status';
-  CSessaoRespEnvioocorrencias = 'ocorrencias';
+{$IFDEF DEBUG}
+var
+   HeapTraceFile: String;
+{$ENDIF}
 
-  CSessaoRespEnvioevento = 'evento';
-  CSessaoRespEnvioevtTotal = 'evtTotal';
-  CSessaoRespEnvioinfoTotal = 'infoTotal';
+exports
+  // Importadas de ACBrLibComum
+  Reinf_Inicializar,
+  Reinf_Finalizar,
+  Reinf_Nome,
+  Reinf_Versao,
+  Reinf_UltimoRetorno,
+  Reinf_ConfigLer,
+  Reinf_ConfigGravar,
+  Reinf_ConfigLerValor,
+  Reinf_ConfigGravarValor,
 
-  CSessaoRespConsulta = 'evtTotalContrib';
-  CSessaoRespConsultainfoTotalContrib = 'infoTotalContrib';
+  // Reinf
+  Reinf_LerArqIni,
+  Reinf_Enviar,
+  Reinf_Consultar;
 
-  CSessaoRetornoideEvento = 'ideEvento';
-  CSessaoRetornoideContri = 'ideContri';
-  CSessaoRetornoideStatus = 'ideStatus';
-  CSessaoRetornoregOcorrs = 'regOcorrs';
-  CSessaoRetornoinfoRecEv = 'infoRecEv';
+begin
+  {$IFDEF DEBUG}
+   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc';
+   DeleteFile( HeapTraceFile );
+   SetHeapTraceOutput( HeapTraceFile );
+  {$ENDIF}
 
-  CSessaoRetornoRTom = 'RTom';
-  CSessaoRetornoinfoCRTom = 'infoCRTom';
-  CSessaoRetornoRPrest = 'RPrest';
-  CSessaoRetornoRRecRepAD = 'RRecRepAD'; 
-  CSessaoRetornoRComl = 'RComl'; 
-  CSessaoRetornoRCPRB = 'RCPRB'; 
-  CSessaoRetornoRRecEspetDesp = 'RRecEspetDesp';
-
-  CSessaoReinf = 'Reinf';
-
-implementation
-
+  pLibClass := TACBrLibReinf; // Ajusta a classe a ser criada
+  MainThreadID := GetCurrentThreadId();
 end.
 

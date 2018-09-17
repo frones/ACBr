@@ -33,22 +33,22 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibeSocialConfig;
+unit ACBrLibReinfConfig;
 
 interface
 
 uses
   Classes, SysUtils, IniFiles, SynaChar,
-  ACBreSocialConfiguracoes,
+  ACBrReinfConfiguracoes,
   ACBrLibConfig;
 
 type
 
-  { TeSocialConfig }
+  { TReinfConfig }
   {
-  TeSocialConfig = class
+  TReinfConfig = class
   private
-    FeSocialConfig: TConfiguracoeseSocial;
+    FReinfConfig: TConfiguracoesReinf;
 
   public
     constructor Create;
@@ -56,13 +56,13 @@ type
 //    procedure LerIni(const AIni: TCustomIniFile);
 //    procedure GravarIni(const AIni: TCustomIniFile);
 
-    property eSocialConfig: TConfiguracoeseSocial read FeSocialConfig;
+    property ReinfConfig: TConfiguracoesReinf read FReinfConfig;
   end;
   }
-  { TLibeSocialConfig }
-  TLibeSocialConfig = class(TLibConfig)
+  { TLibReinfConfig }
+  TLibReinfConfig = class(TLibConfig)
   private
-    FeSocialConfig: TConfiguracoeseSocial;
+    FReinfConfig: TConfiguracoesReinf;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
@@ -78,109 +78,109 @@ type
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
-    property eSocialConfig: TConfiguracoeseSocial read FeSocialConfig;
+    property ReinfConfig: TConfiguracoesReinf read FReinfConfig;
   end;
 
 implementation
 
 uses
-  ACBrLibeSocialClass, ACBrLibeSocialConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibReinfClass, ACBrLibReinfConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
-{ TeSocialConfig }
+{ TReinfConfig }
 {
-constructor TeSocialConfig.Create;
+constructor TReinfConfig.Create;
 begin
-  FeSocialConfig := TConfiguracoeseSocial.Create(nil);
+  FReinfConfig := TConfiguracoesReinf.Create(nil);
 end;
 
-destructor TeSocialConfig.Destroy;
+destructor TReinfConfig.Destroy;
 begin
-  FeSocialConfig.Destroy;
+  FReinfConfig.Destroy;
 
   inherited Destroy;
 end;
 }
 {
-procedure TeSocialConfig.LerIni(const AIni: TCustomIniFile);
+procedure TReinfConfig.LerIni(const AIni: TCustomIniFile);
 begin
-  FCodContrato := AIni.ReadString(CSessaoeSocial, CChaveCodContrato, FCodContrato);
-  FSenha       := AIni.ReadString(CSessaoeSocial, CChaveSenha, FSenha);
+  FCodContrato := AIni.ReadString(CSessaoReinf, CChaveCodContrato, FCodContrato);
+  FSenha       := AIni.ReadString(CSessaoReinf, CChaveSenha, FSenha);
 end;
 
-procedure TeSocialConfig.GravarIni(const AIni: TCustomIniFile);
+procedure TReinfConfig.GravarIni(const AIni: TCustomIniFile);
 begin
-  AIni.WriteString(CSessaoeSocial, CChaveCodContrato, FCodContrato);
-  AIni.WriteString(CSessaoeSocial, CChaveSenha, FSenha);
+  AIni.WriteString(CSessaoReinf, CChaveCodContrato, FCodContrato);
+  AIni.WriteString(CSessaoReinf, CChaveSenha, FSenha);
 end;
 }
-{ TLibeSocialConfig }
+{ TLibReinfConfig }
 
-constructor TLibeSocialConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
+constructor TLibReinfConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
-  FeSocialConfig := TConfiguracoeseSocial.Create(nil);
+  FReinfConfig := TConfiguracoesReinf.Create(nil);
 end;
 
-destructor TLibeSocialConfig.Destroy;
+destructor TLibReinfConfig.Destroy;
 begin
-  FeSocialConfig.Free;
+  FReinfConfig.Free;
 
   inherited Destroy;
 end;
 
-function TLibeSocialConfig.AtualizarArquivoConfiguracao: Boolean;
+function TLibReinfConfig.AtualizarArquivoConfiguracao: Boolean;
 var
   Versao: String;
 begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibeSocialNome, '0');
-  Result := (CompareVersions(CLibeSocialVersao, Versao) > 0) or
+  Versao := Ini.ReadString(CSessaoVersao, CLibReinfNome, '0');
+  Result := (CompareVersions(CLibReinfVersao, Versao) > 0) or
             (inherited AtualizarArquivoConfiguracao);
 end;
 
-procedure TLibeSocialConfig.INIParaClasse;
+procedure TLibReinfConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
 
-  FeSocialConfig.Arquivos.LerIni(Ini);
-  FeSocialConfig.Certificados.LerIni(Ini);
-  FeSocialConfig.Geral.LerIni(Ini);
-  FeSocialConfig.WebServices.LerIni(Ini);
+  FReinfConfig.Arquivos.LerIni(Ini);
+  FReinfConfig.Certificados.LerIni(Ini);
+  FReinfConfig.Geral.LerIni(Ini);
+  FReinfConfig.WebServices.LerIni(Ini);
 end;
 
-procedure TLibeSocialConfig.ClasseParaINI;
+procedure TLibReinfConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
-  Ini.WriteString(CSessaoVersao, CLibeSocialNome, CLibeSocialVersao);
+  Ini.WriteString(CSessaoVersao, CLibReinfNome, CLibReinfVersao);
 
-  FeSocialConfig.Arquivos.GravarIni(Ini);
-  FeSocialConfig.Certificados.GravarIni(Ini);
-  FeSocialConfig.Geral.GravarIni(Ini);
-  FeSocialConfig.WebServices.GravarIni(Ini);
+  FReinfConfig.Arquivos.GravarIni(Ini);
+  FReinfConfig.Certificados.GravarIni(Ini);
+  FReinfConfig.Geral.GravarIni(Ini);
+  FReinfConfig.WebServices.GravarIni(Ini);
 end;
 
-procedure TLibeSocialConfig.ClasseParaComponentes;
+procedure TLibReinfConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
-    TACBrLibeSocial(Owner).eSocialDM.AplicarConfiguracoes;
+    TACBrLibReinf(Owner).ReinfDM.AplicarConfiguracoes;
 end;
 
-procedure TLibeSocialConfig.Travar;
+procedure TLibReinfConfig.Travar;
 begin
   if Assigned(Owner) then
   begin
-    with TACBrLibeSocial(Owner) do
-      eSocialDM.Travar;
+    with TACBrLibReinf(Owner) do
+      ReinfDM.Travar;
   end;
 end;
 
-procedure TLibeSocialConfig.Destravar;
+procedure TLibReinfConfig.Destravar;
 begin
   if Assigned(Owner) then
   begin
-    with TACBrLibeSocial(Owner) do
-      eSocialDM.Destravar;
+    with TACBrLibReinf(Owner) do
+      ReinfDM.Destravar;
   end;
 end;
 

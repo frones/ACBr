@@ -388,7 +388,11 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'retorno') <> '');
 
-   if Nivel1 then
+    //DataSmart
+    if not Nivel1 and (Provedor = proDataSmart) then
+      Nivel1 := (Pos('CompNfse', Leitor.Grupo) > 0);
+
+    if Nivel1 then
     begin
       // =======================================================================
       // Extrai a Lista de Notas

@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2018
+-- ACBrDFeConfiguracoes --
+[*] Alterado o nome do campo Salvar (Arquivo INI de configuração) por
+    SalvarGer, SalvarArq e  SalvarWS, pois existem 3 propriedades de
+    configuração chamada Salvar e estava ocorrendo sobreposição ao
+    incluir essa propriedade no arquivo INI de configuração.
+   Por: Italo Jurisato Junior
+
 08/08/2018 
 -- ACBrDFeUtil --
 [*] Alterado a linha que trata o CNPJ passado na função GerarChaveAcesso, para

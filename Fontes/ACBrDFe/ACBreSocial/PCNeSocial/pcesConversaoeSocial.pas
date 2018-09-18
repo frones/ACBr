@@ -2340,12 +2340,12 @@ end;
 
 function eStpTpAcidTransitoToStr(const t: tpTpAcidTransito ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_3 );
+  result := EnumeradoToStr2(t,TGenericosString1_4 );
 end;
 
 function eSStrTotpTpAcidTransito(var ok: boolean; const s: string): tpTpAcidTransito;
 begin
-  result := tpTpAcidTransito( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
+  result := tpTpAcidTransito( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
 end;
 
 function eStpMotivosAfastamentoToStr(const t: tpMotivosAfastamento ): string;

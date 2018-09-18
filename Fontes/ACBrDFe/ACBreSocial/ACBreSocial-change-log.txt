@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2018
+-- pcesS2230/pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/42108-s-2230-afastamento-temporario-retorno-de-afastamento/?do=findComment&comment=307354
+   Por: Leandro LJM
+
 12/09/2018
 -- pcesS2205 --
 [*] Acrescentado a leitura da seção [nascimento] do arquivo INI.

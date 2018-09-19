@@ -2205,7 +2205,10 @@ begin
     begin
       Gerador.wGrupo('infFretamento', '#17');
       Gerador.wCampo(tcStr, '#18', 'tpFretamento', 01, 01, 1, TpFretamentoToStr(tpFretamento), DSC_TPFRETAMENTO);
-      Gerador.wCampo(tcStr, '#19', 'dhViagem    ', 25, 25, 0, DateTimeTodh(dhViagem) + GetUTC(CodigoParaUF(CTe.ide.cUF), dhViagem), DSC_DHVIAGEM);
+
+      if tpFretamento = tfEventual then
+        Gerador.wCampo(tcStr, '#19', 'dhViagem', 25, 25, 0, DateTimeTodh(dhViagem) + GetUTC(CodigoParaUF(CTe.ide.cUF), dhViagem), DSC_DHVIAGEM);
+
       Gerador.wGrupo('/infFretamento');
     end;
   end;

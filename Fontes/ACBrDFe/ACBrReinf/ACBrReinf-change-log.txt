@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/09/2018
+-- pcnReinfR1000 -- 
+[*] https://www.projetoacbr.com.br/forum/topic/46549-tag-de-telefone-da-sw-obrigat%C3%B3ria-r1000/
+   Por: Data Lider
+
 07/08/2018
 -- pcnConversaoReinf -- 
 [*] https://www.projetoacbr.com.br/forum/topic/45468-acbr-reinf-tindsusp-indicativo-de-suspens%C3%A3o-da-exigibilidade/

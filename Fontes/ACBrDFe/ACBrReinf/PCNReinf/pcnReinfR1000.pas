@@ -395,7 +395,7 @@ begin
     Gerador.wCampo(tcStr, '', 'cnpjSoftHouse', 14,  14, 1, infoContribuinte.infoCadastro.SoftwareHouse[i].CnpjSoftHouse);
     Gerador.wCampo(tcStr, '', 'nmRazao',        1, 100, 1, infoContribuinte.infoCadastro.SoftwareHouse[i].NmRazao);
     Gerador.wCampo(tcStr, '', 'nmCont',         1,  70, 1, infoContribuinte.infoCadastro.SoftwareHouse[i].NmCont);
-    Gerador.wCampo(tcStr, '', 'telefone',       1,  13, 1, infoContribuinte.infoCadastro.SoftwareHouse[i].Telefone);
+    Gerador.wCampo(tcStr, '', 'telefone',       1,  13, 0, infoContribuinte.infoCadastro.SoftwareHouse[i].Telefone);
     Gerador.wCampo(tcStr, '', 'email',          1,  60, 0, infoContribuinte.infoCadastro.SoftwareHouse[i].email);
 
     Gerador.wGrupo('/softHouse');

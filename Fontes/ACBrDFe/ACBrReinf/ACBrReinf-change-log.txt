@@ -50,6 +50,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2018
+-- Diversos --
+[*] Acrescentado a propriedade idEvento na classe Gerados, desta forma é possível
+    obter de uma forma simples o ID de cada evento que foi gerado e esta a espera
+    de ser enviado.
+   Por: Italo Jurisato Junior
+
 19/09/2018
 -- pcnReinfR1000 -- 
 [*] https://www.projetoacbr.com.br/forum/topic/46549-tag-de-telefone-da-sw-obrigat%C3%B3ria-r1000/

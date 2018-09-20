@@ -589,7 +589,7 @@ begin
 
           with IdeProcessoSIND.Add do
           begin
-            nrProc := '50';
+            nrProc := '123456';
           end;
         end;
 
@@ -4349,6 +4349,8 @@ begin
 end;
 
 procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
+var
+  i: Integer;
 begin
   SelecionaEventos;
 
@@ -4357,6 +4359,13 @@ begin
 
   memoLog.Lines.Add('XML de Eventos Gerados, Assinados e Validados com Sucesso!');
   memoLog.Lines.Add(' ');
+
+  for i := 0 to ACBreSocial1.Eventos.Gerados.Count -1 do
+  begin
+    MemoLog.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBreSocial1.Eventos.Gerados.Items[i].TipoEvento));
+    MemoLog.Lines.Add('ID do Evento: ' + ACBreSocial1.Eventos.Gerados.Items[i].idEvento);
+    MemoLog.Lines.Add('Evento Salvo: ' + ACBreSocial1.Eventos.Gerados.Items[i].PathNome);
+  end;
 
   pgWebservice.ActivePageIndex := 3;
 end;

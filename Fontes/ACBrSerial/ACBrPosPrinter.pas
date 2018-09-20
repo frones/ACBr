@@ -372,7 +372,7 @@ type
 
     procedure PularLinhas(NumLinhas: Integer = 0);
     procedure CortarPapel(Parcial: Boolean = False);
-    procedure AbrirGaveta;
+    procedure AbrirGaveta(NumGaveta: Integer = 1);
 
     function LerStatusImpressora( Tentativas: Integer = 1): TACBrPosPrinterStatus;
     function LerInfoImpressora: String;
@@ -890,10 +890,10 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrPosPrinter.AbrirGaveta;
+procedure TACBrPosPrinter.AbrirGaveta(NumGaveta: Integer);
 begin
   GravarLog('AbrirGaveta');
-  ImprimirCmd(FPosPrinterClass.ComandoGaveta());
+  ImprimirCmd(FPosPrinterClass.ComandoGaveta(NumGaveta));
   Sleep(500);
 end;
 

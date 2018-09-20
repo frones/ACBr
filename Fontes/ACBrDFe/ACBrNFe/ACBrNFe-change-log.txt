@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2018
+-- ACBrNFeNotasFiscais --
+[*] Correções e melhorias nas Validações de Regras de Negócio.
+   por: Alexandre Faustinoni/Wanderson Pereira/André Angeluci
+
 14/09/2018
 -- ACBrNFeServicos --
 [*] Correção das URLs Consulta NFCe QRCode2.0 GO

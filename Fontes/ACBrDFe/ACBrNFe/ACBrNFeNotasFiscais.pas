@@ -408,7 +408,7 @@ var
   fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
   fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag : Currency;
   fsvFCP, fsvFCPST, fsvFCPSTRet, fsvIPIDevol, fsvDup : Currency;
-  FaturamentoDireto, NFImportacao : Boolean;
+  FaturamentoDireto, NFImportacao, UFCons : Boolean;
 
   procedure GravaLog(AString: String);
   begin
@@ -882,11 +882,6 @@ begin
          (NFe.Dest.EnderDest.UF = 'EX') then
         AdicionaErro('771-Rejeição: Operação Interestadual e UF de destino com EX');
 
-      GravaLog('Validar: 772-Op.Interstadual e UF igual');
-      if (nfe.Ide.idDest = doInterestadual) and
-         (NFe.Dest.EnderDest.UF = NFe.Emit.EnderEmit.UF) then
-        AdicionaErro('772-Rejeição: Operação Interestadual e UF de destino igual à UF do emitente');
-
       GravaLog('Validar: 773-Op.Interna e UF diferente');
       if (nfe.Ide.idDest = doInterna) and
          (NFe.Dest.EnderDest.UF <> NFe.Emit.EnderEmit.UF) and
@@ -942,7 +937,7 @@ begin
             AdicionaErro('897-Rejeição: Valor da Fatura maior que Valor Total da NF-e');
 
           fsvDup := 0;
-          UltVencto := NFe.Ide.dEmi;
+          UltVencto := DateOf(NFe.Ide.dEmi);
           for I:=0 to nfe.Cobr.Dup.Count-1 do
           begin
             fsvDup := fsvDup + nfe.Cobr.Dup.Items[I].vDup;
@@ -954,7 +949,7 @@ begin
             //898 - Verificar DATA de autorização
 
             GravaLog('Validar: 894-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de Emissão (id:B09)');
-            if (nfe.Cobr.Dup.Items[I].dVenc < NFe.Ide.dEmi) then
+            if (nfe.Cobr.Dup.Items[I].dVenc < DateOf(NFe.Ide.dEmi)) then
               AdicionaErro('894-Rejeição: Data de vencimento da parcela não informada ou menor que Data de Emissão');
 
             GravaLog('Validar: 867-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e Data de vencimento (dVenc, id:Y09) não informada ou menor que a Data de vencimento da parcela anterior (dVenc, id:Y09)');
@@ -965,8 +960,9 @@ begin
           end;
 
           GravaLog('Validar: 872-Se informado o grupo de Parcelas de cobrança (tag:dup, Id:Y07) e a soma do valor das parcelas (vDup, id: Y10) difere do Valor Líquido da Fatura (vLiq, id:Y06).');
-          if (((nfe.Cobr.Fat.vLiq > 0) and (fsvDup < nfe.Cobr.Fat.vLiq)) or
-            (fsvDup < (nfe.Cobr.Fat.vOrig-nfe.Cobr.Fat.vDesc)))then
+          //porque se não tiver parcela não tem valor para ser verificado
+          if (nfe.Cobr.Dup.Count > 0) and (((nfe.Cobr.Fat.vLiq > 0) and (fsvDup < nfe.Cobr.Fat.vLiq)) or
+             (fsvDup < (nfe.Cobr.Fat.vOrig-nfe.Cobr.Fat.vDesc))) then
             AdicionaErro('872-Rejeição: Soma do valor das parcelas difere do Valor Líquido da Fatura');
         end;
       end;
@@ -1007,6 +1003,7 @@ begin
     fsvIPIDevol:= 0;
     FaturamentoDireto := False;
     NFImportacao := False;
+    UFCons := False;
 
     for I:=0 to NFe.Det.Count-1 do
     begin
@@ -1230,6 +1227,9 @@ begin
           if (Prod.comb.cProdANP = 210203001) and (UpperCase(Prod.uTrib) <> 'KG') then
             AdicionaErro('854-Rejeição: Unidade Tributável (tag:uTrib) incompatível com produto informado [nItem:'+IntToStr(I)+']');
 
+          if not UFCons then
+            UFCons := (Prod.comb.UFcons <> '') and (Prod.comb.UFcons <> NFe.emit.EnderEmit.UF);
+
           for J:=0 to Prod.rastro.Count-1 do
           begin
             GravaLog('Validar: 877-'+IntToStr(I)+'-Data de Fabricação dFab (id:I83) maior que a data de processamento');
@@ -1290,6 +1290,15 @@ begin
         if Copy(Prod.CFOP,1,1) = '3'then
           NFImportacao := True;
       end;
+    end;
+
+    if not UFCons then
+    begin
+      GravaLog('Validar: 772-Op.Interstadual e UF igual');
+      if (nfe.Ide.idDest = doInterestadual) and
+         (NFe.Dest.EnderDest.UF = NFe.Emit.EnderEmit.UF) and
+         (NFe.Dest.CNPJCPF <> NFe.Emit.CNPJCPF) then
+        AdicionaErro('772-Rejeição: Operação Interestadual e UF de destino igual à UF do emitente');
     end;
 
     if FaturamentoDireto then

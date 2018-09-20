@@ -309,6 +309,7 @@ begin
     begin
       TipoEvento := teS2190;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2190.Items[i].EvtAdmPrelim.Id);
       XML := Self.S2190.Items[i].EvtAdmPrelim.XML;
     end;
   end;
@@ -324,6 +325,7 @@ begin
     begin
       TipoEvento := teS2200;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2200.Items[i].EvtAdmissao.Id);
       XML := Self.S2200.Items[i].EvtAdmissao.XML;
     end;
   end;
@@ -339,6 +341,7 @@ begin
     begin
       TipoEvento := teS2205;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2205.Items[i].EvtAltCadastral.Id);
       XML := Self.S2205.Items[i].EvtAltCadastral.XML;
     end;
   end;
@@ -354,6 +357,7 @@ begin
     begin
       TipoEvento := teS2206;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2206.Items[i].EvtAltContratual.Id);
       XML := Self.S2206.Items[i].EvtAltContratual.XML;
     end;
   end;
@@ -369,6 +373,7 @@ begin
     begin
       TipoEvento := teS2210;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2210.Items[i].EvtCAT.Id);
       XML := Self.S2210.Items[i].EvtCAT.XML;
     end;
   end;
@@ -384,6 +389,7 @@ begin
     begin
       TipoEvento := teS2220;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2220.Items[i].evtMonit.Id);
       XML := Self.S2220.Items[i].evtMonit.XML;
     end;
   end;
@@ -399,6 +405,7 @@ begin
     begin
       TipoEvento := teS2230;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2230.Items[i].EvtAfastTemp.Id);
       XML := Self.S2230.Items[i].EvtAfastTemp.XML;
     end;
   end;
@@ -414,6 +421,7 @@ begin
     begin
       TipoEvento := teS2240;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2240.Items[i].EvtExpRisco.Id);
       XML := Self.S2240.Items[i].EvtExpRisco.XML;
     end;
   end;
@@ -429,6 +437,7 @@ begin
     begin
       TipoEvento := teS2241;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2241.Items[i].EvtInsApo.Id);
       XML := Self.S2241.Items[i].EvtInsApo.XML;
     end;
   end;
@@ -444,6 +453,7 @@ begin
     begin
       TipoEvento := teS2250;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2250.Items[i].EvtAvPrevio.Id);
       XML := Self.S2250.Items[i].EvtAvPrevio.XML;
     end;
   end;
@@ -459,6 +469,7 @@ begin
     begin
       TipoEvento := teS2260;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2260.Items[i].EvtConvInterm.Id);
       XML := Self.S2260.Items[i].EvtConvInterm.XML;
     end;
   end;
@@ -474,6 +485,7 @@ begin
     begin
       TipoEvento := teS2298;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2298.Items[i].EvtReintegr.Id);
       XML := Self.S2298.Items[i].EvtReintegr.XML;
     end;
   end;
@@ -489,6 +501,7 @@ begin
     begin
       TipoEvento := teS2299;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2299.Items[i].EvtDeslig.Id);
       XML := Self.S2299.Items[i].EvtDeslig.XML;
     end;
   end;
@@ -504,6 +517,7 @@ begin
     begin
       TipoEvento := teS2300;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2300.Items[i].EvtTSVInicio.Id);
       XML := Self.S2300.Items[i].EvtTSVInicio.XML;
     end;
   end;
@@ -519,6 +533,7 @@ begin
     begin
       TipoEvento := teS2306;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2306.Items[i].EvtTSVAltContr.Id);
       XML := Self.S2306.Items[i].EvtTSVAltContr.XML;
     end;
   end;
@@ -534,6 +549,7 @@ begin
     begin
       TipoEvento := teS2399;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2399.Items[i].EvtTSVTermino.Id);
       XML := Self.S2399.Items[i].EvtTSVTermino.XML;
     end;
   end;
@@ -549,6 +565,7 @@ begin
     begin
       TipoEvento := teS2400;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2400.Items[i].EvtCdBenPrRP.Id);
       XML := Self.S2400.Items[i].EvtCdBenPrRP.XML;
     end;
   end;
@@ -564,6 +581,7 @@ begin
     begin
       TipoEvento := teS3000;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S3000.Items[i].EvtExclusao.Id);
       XML := Self.S3000.Items[i].EvtExclusao.XML;
     end;
   end;

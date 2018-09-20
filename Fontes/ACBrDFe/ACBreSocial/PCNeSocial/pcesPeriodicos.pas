@@ -248,6 +248,7 @@ begin
     begin
       TipoEvento := teS1200;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1200.Items[i].evtRemun.Id);
       XML := Self.S1200.Items[i].evtRemun.XML;
     end;
   end;
@@ -263,6 +264,7 @@ begin
     begin
       TipoEvento := teS1202;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1202.Items[i].EvtRmnRPPS.Id);
       XML := Self.S1202.Items[i].EvtRmnRPPS.XML;
     end;
   end;
@@ -278,6 +280,7 @@ begin
     begin
       TipoEvento := teS1207;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1207.Items[i].evtBenPrRP.Id);
       XML := Self.S1207.Items[i].evtBenPrRP.XML;
     end;
   end;
@@ -293,6 +296,7 @@ begin
     begin
       TipoEvento := teS1210;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1210.Items[i].evtPgtos.Id);
       XML := Self.S1210.Items[i].evtPgtos.XML;
     end;
   end;
@@ -308,6 +312,7 @@ begin
     begin
       TipoEvento := teS1250;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1250.Items[i].EvtAqProd.Id);
       XML := Self.S1250.Items[i].EvtAqProd.XML;
     end;
   end;
@@ -323,6 +328,7 @@ begin
     begin
       TipoEvento := teS1260;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1260.Items[i].EvtComProd.Id);
       XML := Self.S1260.Items[i].EvtComProd.XML;
     end;
   end;
@@ -338,6 +344,7 @@ begin
     begin
       TipoEvento := teS1270;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1270.Items[i].EvtContratAvNP.Id);
       XML := Self.S1270.Items[i].EvtContratAvNP.XML;
     end;
   end;
@@ -353,6 +360,7 @@ begin
     begin
       TipoEvento := teS1280;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1280.Items[i].EvtInfoComplPer.Id);
       XML := Self.S1280.Items[i].EvtInfoComplPer.XML;
     end;
   end;
@@ -368,6 +376,7 @@ begin
     begin
       TipoEvento := teS1295;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1295.Items[i].evtTotConting.Id);
       XML := Self.S1295.Items[i].evtTotConting.XML;
     end;
   end;
@@ -383,6 +392,7 @@ begin
     begin
       TipoEvento := teS1298;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1298.Items[i].EvtReabreEvPer.Id);
       XML := Self.S1298.Items[i].EvtReabreEvPer.XML;
     end;
   end;
@@ -398,6 +408,7 @@ begin
     begin
       TipoEvento := teS1299;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1299.Items[i].EvtFechaEvPer.Id);
       XML := Self.S1299.Items[i].EvtFechaEvPer.XML;
     end;
   end;
@@ -413,6 +424,7 @@ begin
     begin
       TipoEvento := teS1300;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1300.Items[i].EvtContrSindPatr.Id);
       XML := Self.S1300.Items[i].EvtContrSindPatr.XML;
     end;
   end;

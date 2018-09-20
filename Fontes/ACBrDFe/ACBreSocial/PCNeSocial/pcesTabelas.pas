@@ -213,6 +213,7 @@ begin
     begin
       TipoEvento := teS1010;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1010.Items[i].EvtTabRubrica.Id);
       XML := Self.S1010.Items[i].EvtTabRubrica.XML;
     end;
   end;
@@ -228,6 +229,7 @@ begin
     begin
       TipoEvento := teS1020;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1020.Items[i].EvtTabLotacao.Id);
       XML := Self.S1020.Items[i].EvtTabLotacao.XML;
     end;
   end;
@@ -243,6 +245,7 @@ begin
     begin
       TipoEvento := teS1030;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1030.Items[i].EvtTabCargo.Id);
       XML := Self.S1030.Items[i].EvtTabCargo.XML;
     end;
   end;
@@ -258,6 +261,7 @@ begin
     begin
       TipoEvento := teS1035;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1035.Items[i].evtTabCarreira.Id);
       XML := Self.S1035.Items[i].evtTabCarreira.XML;
     end;
   end;
@@ -273,8 +277,9 @@ begin
     begin
       TipoEvento := teS1040;
       PathNome := PathName;
-       XML := Self.S1040.Items[i].EvtTabFuncao.XML;
-   end;
+      idEvento := OnlyNumber(Self.S1040.Items[i].EvtTabFuncao.Id);
+      XML := Self.S1040.Items[i].EvtTabFuncao.XML;
+    end;
   end;
 
   for I := 0 to Self.S1050.Count - 1 do
@@ -288,6 +293,7 @@ begin
     begin
       TipoEvento := teS1050;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1050.Items[i].EvtTabHorContratual.Id);
       XML := Self.S1050.Items[i].EvtTabHorContratual.XML;
     end;
   end;
@@ -303,6 +309,7 @@ begin
     begin
       TipoEvento := teS1060;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1060.Items[i].EvtTabAmbiente.Id);
       XML := Self.S1060.Items[i].EvtTabAmbiente.XML;
     end;
   end;
@@ -318,6 +325,7 @@ begin
     begin
       TipoEvento := teS1070;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1070.Items[i].EvtTabProcesso.Id);
       XML := Self.S1070.Items[i].EvtTabProcesso.XML;
     end;
   end;
@@ -333,6 +341,7 @@ begin
     begin
       TipoEvento := teS1080;
       PathNome := PathName;
+      idEvento := OnlyNumber(Self.S1080.Items[i].EvtTabOperPortuario.Id);
       XML := Self.S1080.Items[i].EvtTabOperPortuario.XML;
     end;
   end;

@@ -73,9 +73,11 @@ type
     FTipoEvento: TTipoEvento;
     FPathNome: String;
     FXML: String;
+    FidEvento: String;
   public
     property TipoEvento: TTipoEvento read FTipoEvento write FTipoEvento;
     property PathNome: String read FPathNome write FPathNome;
+    property idEvento: String read FidEvento write FidEvento;
     property XML: String read FXML write FXML;
   end;
 

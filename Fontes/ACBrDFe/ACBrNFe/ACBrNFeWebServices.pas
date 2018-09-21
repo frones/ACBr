@@ -1139,7 +1139,7 @@ begin
   if Assigned(FPDFeOwner.Integrador) then
   begin
     //Atualmente não é possível enviar em LOTE com o Integrador
-    FPDFeOwner.Integrador.Parametros.Values['versaoDados']        :=  FormatFloat('0.00',FNotasFiscais.Items[0].NFe.infNFe.Versao);
+    FPDFeOwner.Integrador.Parametros.Values['versaoDados']        :=  StringReplace(FormatFloat('0.00',FNotasFiscais.Items[0].NFe.infNFe.Versao),',','.',[rfReplaceAll]);
     FPDFeOwner.Integrador.Parametros.Values['NumeroNFCe']         := OnlyNumber(FNotasFiscais.Items[0].NFe.infNFe.ID);
     FPDFeOwner.Integrador.Parametros.Values['DataHoraNFCeGerado'] := FormatDateTime('yyyymmddhhnnss', FNotasFiscais.Items[0].NFe.Ide.dEmi);
     FPDFeOwner.Integrador.Parametros.Values['ValorNFCe']          := StringReplace(FormatFloat('0.00',FNotasFiscais.Items[0].NFe.Total.ICMSTot.vNF),',','.',[rfReplaceAll]);

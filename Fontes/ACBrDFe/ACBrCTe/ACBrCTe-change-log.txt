@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2018
+-- pcteEnvEventoCTe --
+[*] Acrescentado os demais tipos de eventos no metodo de leitura de arquivo INI do tipo eventos.
+  Por: Italo Jurisato Junior
+
 19/09/2018
 -- pcteCTeW --
 [*] Alterado para gerar a tag <dhViagem> somente quando o tipo de fretamento for

@@ -327,7 +327,7 @@ begin
          Gerador.wCampo(tcStr, 'EP06', 'serie   ', 03, 03, 0, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].serie);
          Gerador.wCampo(tcStr, 'EP07', 'subserie', 03, 03, 0, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].subserie);
          Gerador.wCampo(tcDat, 'EP08', 'dEmi    ', 10, 10, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dEmi);
-         Gerador.wCampo(tcInt, 'EP09', 'dDV     ', 01, 01, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].nDV);
+         Gerador.wCampo(tcInt, 'EP09', 'nDV     ', 01, 01, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].nDV);
          Gerador.wCampo(tcDe4, 'EP10', 'qCarga  ', 01, 15, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].qCarga);
 
          for j := 0 to Evento.Items[0].FInfEvento.detEvento.infGTV.Items[i].infEspecie.Count - 1 do
@@ -542,7 +542,7 @@ end;
 function TEventoCTe.LerFromIni(const AIniString: String;
   CCe: Boolean): Boolean;
 var
-  I, J: Integer;
+  I, J, K: Integer;
   sSecao, sFim: String;
   INIRec: TMemIniFile;
   ok: Boolean;
@@ -570,30 +570,136 @@ begin
         infEvento.cOrgao             := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
         infEvento.CNPJ               := INIRec.ReadString(sSecao, 'CNPJ', '');
         infEvento.dhEvento           := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
-        infEvento.tpEvento           := StrToTpEvento(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
+        infEvento.tpEvento           := StrToTpEvento(ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
         infEvento.nSeqEvento         := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
         infEvento.detEvento.xCondUso := '';
         infEvento.detEvento.xJust    := INIRec.ReadString(sSecao, 'xJust', '');
         infEvento.detEvento.nProt    := INIRec.ReadString(sSecao, 'nProt', '');
 
-        Self.Evento.Items[I-1].InfEvento.detEvento.infCorrecao.Clear;
+        case InfEvento.tpEvento of
+          teEPEC:
+            begin
+              infEvento.detEvento.vICMS   := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMS', ''), 0);
+              infEvento.detEvento.vTPrest := StringToFloatDef(INIRec.ReadString(sSecao, 'vTPrest', ''), 0);
+              infEvento.detEvento.vCarga  := StringToFloatDef(INIRec.ReadString(sSecao, 'vCarga', ''), 0);
+              InfEvento.detEvento.modal   := StrToTpModal(ok, INIRec.ReadString(sSecao, 'modal', '01'));
+              infEvento.detEvento.UFIni   := INIRec.ReadString(sSecao, 'UFIni', '');
+              infEvento.detEvento.UFFim   := INIRec.ReadString(sSecao, 'UFFim', '');
+              infEvento.detEvento.dhEmi   := StringToDateTime(INIRec.ReadString(sSecao, 'dhEmi', ''));
 
-        J := 1;
-        while true do
-        begin
-          sSecao := 'DETEVENTO' + IntToStrZero(J, 3);
-          sFim   := INIRec.ReadString(sSecao, 'grupoAlterado', 'FIM');
-          if (sFim = 'FIM') or (Length(sFim) <= 0) then
-            break;
+              infEvento.detEvento.toma    := StrToTpTomador(ok, INIRec.ReadString('TOMADOR', 'toma', '1'));
+              infEvento.detEvento.UF      := INIRec.ReadString('TOMADOR', 'UF', '');
+              infEvento.detEvento.CNPJCPF := INIRec.ReadString('TOMADOR', 'CNPJCPF', '');
+              infEvento.detEvento.IE      := INIRec.ReadString('TOMDOR', 'IE', '');
+            end;
 
-          with Self.Evento.Items[I-1].InfEvento.detEvento.infCorrecao.Add do
-          begin
-            grupoAlterado   := INIRec.ReadString(sSecao, 'grupoAlterado', '');
-            campoAlterado   := INIRec.ReadString(sSecao, 'campoAlterado', '');
-            valorAlterado   := INIRec.ReadString(sSecao, 'valorAlterado', '');
-            nroItemAlterado := INIRec.ReadInteger(sSecao, 'nroItemAlterado', 0);
-          end;
-          Inc(J);
+          teCCe:
+            begin
+              Self.Evento.Items[I-1].InfEvento.detEvento.infCorrecao.Clear;
+
+              J := 1;
+              while true do
+              begin
+                sSecao := 'DETEVENTO' + IntToStrZero(J, 3);
+                sFim   := INIRec.ReadString(sSecao, 'grupoAlterado', 'FIM');
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with Self.Evento.Items[I-1].InfEvento.detEvento.infCorrecao.Add do
+                begin
+                  grupoAlterado   := INIRec.ReadString(sSecao, 'grupoAlterado', '');
+                  campoAlterado   := INIRec.ReadString(sSecao, 'campoAlterado', '');
+                  valorAlterado   := INIRec.ReadString(sSecao, 'valorAlterado', '');
+                  nroItemAlterado := INIRec.ReadInteger(sSecao, 'nroItemAlterado', 0);
+                end;
+                Inc(J);
+              end;
+            end;
+
+          teMultiModal:
+            begin
+              infEvento.detEvento.xRegistro := INIRec.ReadString(sSecao, 'xRegistro', '');
+              infEvento.detEvento.nDoc      := INIRec.ReadString(sSecao, 'nDoc', '');
+            end;
+
+          tePrestDesacordo:
+            begin
+              infEvento.detEvento.xOBS := INIRec.ReadString(sSecao, 'nObs', '');
+            end;
+
+          teGTV:
+            begin
+              Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.Clear;
+
+              J := 1;
+              while true do
+              begin
+                sSecao := 'infGTV' + IntToStrZero(J, 3);
+                sFim   := INIRec.ReadString(sSecao, 'nDoc', 'FIM');
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.Add do
+                begin
+                  nDoc     := sFim;
+                  id       := INIRec.ReadString(sSecao, 'id', '');
+                  serie    := INIRec.ReadString(sSecao, 'serie', '');
+                  subserie := INIRec.ReadString(sSecao, 'subserie', '');
+                  dEmi     := StringToDateTime(INIRec.ReadString(sSecao, 'dEmi', ''));
+                  nDV      := INIRec.ReadInteger(sSecao, 'nDV', 0);
+                  qCarga   := StringToFloatDef(INIRec.ReadString(sSecao, 'qCarga', ''), 0);
+                  placa    := INIRec.ReadString(sSecao, 'placa', '');
+                  UF       := INIRec.ReadString(sSecao, 'UF', '');
+                  RNTRC    := INIRec.ReadString(sSecao, 'RNTRC', '');
+                end;
+
+                Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.Items[J].infEspecie.Clear;
+
+                K := 1;
+                while true do
+                begin
+                  sSecao := 'infEspecie' + IntToStrZero(J, 3) + IntToStrZero(K, 3);
+                  sFim   := INIRec.ReadString(sSecao, 'tpEspecie', 'FIM');
+                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                    break;
+
+                  with Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.Items[J].infEspecie.Add do
+                  begin
+                    tpEspecie := StrToTEspecie(Ok, sFim);
+                    vEspecie  := StringToFloatDef(INIRec.ReadString(sSecao, 'vEspecie', ''), 0);
+                  end;
+                  Inc(K);
+                end;
+
+                sSecao := 'rem' + IntToStrZero(J, 3);
+                sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.Items[J].rem do
+                begin
+                  CNPJCPF := sFim;
+                  IE      := INIRec.ReadString(sSecao, 'IE', '');
+                  UF      := INIRec.ReadString(sSecao, 'UF', '');
+                  xNome   := INIRec.ReadString(sSecao, 'xNome', '');
+                end;
+
+                sSecao := 'dest' + IntToStrZero(J, 3);
+                sFim   := INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM');
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.Items[J].dest do
+                begin
+                  CNPJCPF := sFim;
+                  IE      := INIRec.ReadString(sSecao, 'IE', '');
+                  UF      := INIRec.ReadString(sSecao, 'UF', '');
+                  xNome   := INIRec.ReadString(sSecao, 'xNome', '');
+                end;
+
+                Inc(J);
+              end;
+            end;
         end;
       end;
       Inc(I);

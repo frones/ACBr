@@ -186,7 +186,8 @@ begin
             LFill(NUMERO_NOTA,10) +
             RFill(SERIE_NOTA,3) +
             LFill(CHAVE_NF,44) +
-            RFill(IfThen(RegistroValido, TIPO_DOC[1], '?'),1) );
+            RFill(TIPO_DOC[1], 2, IfThen(RegistroValido, ' ', '?'))
+            );
       end;
     end;
 
@@ -240,7 +241,8 @@ begin
             LFill(NUMERO_NOTA,10) +
             RFill(SERIE_NOTA,3) +
             LFill(CHAVE_NF,44) +
-            RFill(IfThen(RegistroValido, TIPO_DOC[1], '?'),1) );
+            RFill(TIPO_DOC[1], 2, IfThen(RegistroValido, ' ', '?'))
+            );
       end;
 
     end;

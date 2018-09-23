@@ -47,18 +47,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2018
+-- ACBrPAF_J_Class
+[*] Correção no bloco J1 e J2 segundo novo ER. 02.06
+    https://www.projetoacbr.com.br/forum/topic/45522-er-0206-reg-j1-e-j2/
+    por : Juliomar Marchetti
+
 27/10/2017
 -- ACBrPaf
 [-] Correção registro E3.
 		https://www.projetoacbr.com.br/forum/topic/39589-correção-registro-e3/
 		por : Juliomar Marchetti
-		
+
 05/01/2017
 --ACBrPAF_R_Class
 [-] Correção de erro para quando o valor passar de mil ele adicionava um ponto como separador de milhar gerando o txt errado.
 		http://www.projetoacbr.com.br/forum/topic/34391-venda-bruta-saindo-errado-no-registros-do-paf/
 		por : Juliomar Marchetti
-	
+
 22/12/2016
 -- ACBrPAF_J_Class --
 [*] Alteração para preencher com 0(zeros) o campo CHAVE_NF dos Registros J1 e J2.
@@ -69,7 +75,7 @@ Símbolo : Significado
 [*] Mudança para gerar o registro E3 mesmo não existindo o E2 pois ele deve sempre existir
 	http://www.projetoacbr.com.br/forum/topic/33792-erro-na-gera%C3%A7%C3%A3o-registro-e3/
 	por : Juliomar Marchetti
-	
+
 01/12/2016
 -- ACBrPAF_J_Class --
 [*] Melhoria no registro J1 e J2, para a SERIE_NOTA e NUMERO_NOTA para preencher com zeros a esquerda.
@@ -78,28 +84,28 @@ Símbolo : Significado
 04/11/2016
 [*] Melhoria para atender E.R. 02.04 para Postos combustíveis WriteRegistroC2 do ACBrPAF_C_Class
 		http://www.projetoacbr.com.br/forum/topic/33307-altera%C3%A7%C3%A3o-procedure-tpaf_cwriteregistroc2-da-unit-acbrpaf_c_class/
-		por : Juliomar Marchetti 
-		
+		por : Juliomar Marchetti
+
 03/11/2016
 [*] Mudança no registro Z4 do campo CNPJ para CPF_CNPJ para demonstrar exatamente a informação
 		nele contida.
 		Apos atualizar vai ocorrer erro, para corrigir basta trocar o nome da propriedade de CNPJ para CPF_CNPJ!
 		http://www.projetoacbr.com.br/forum/topic/33241-sugest%C3%A3o-de-altera%C3%A7%C3%A3o-para-o-registroz4-do-acbrpaf/
 		por: Juliomar Marchetti
-		
+
 31/10/2016
 [-] Correção no registro Z tratar informações para upper case igual ao registro N
 		por : Juliomar Marchetti
-		
+
 15/09/2016
 [*] Validação no bloco J1 e J2 para trocar a informação por ? para validar
 		http://www.projetoacbr.com.br/forum/topic/32423-registro-j1-e-j2/
 		por : Juliomar Marchetti
-		
+
 06/09/2016
 [+] Adição do registro J1, J2 e dos registro V
 		por : Juliomar Marchetti
-		
+
 02/12/2015
 -- ACBrPAF_Z_Class --
 [-] acertos na geração do arquivo Z do Paf-ECF
@@ -121,7 +127,7 @@ http://www.projetoacbr.com.br/forum/topic/23991-homologa%C3%A7%C3%A3o-realizada-
     um Buffer interno, para a geração do arquivo.
     (por: Jean Patrick e DSA)
 
-07/11/2014 - ACBrPAF - 
+07/11/2014 - ACBrPAF -
 [*] acerto na geração do COO do registro C2
     http://www.projetoacbr.com.br/forum/index.php?/topic/18508-registro-c2-do-acbrpaf-com-erro/#entry116945
     usuário: Lenandro(leomcl)
@@ -132,7 +138,7 @@ http://www.projetoacbr.com.br/forum/topic/23991-homologa%C3%A7%C3%A3o-realizada-
     Contribuição: Luiz Paulo
 
 21/11/2013
-[*] Atualização do registro H2 
+[*] Atualização do registro H2
     por: Regys.Silveira
 
 13/08/2013
@@ -168,14 +174,14 @@ http://www.projetoacbr.com.br/forum/topic/23991-homologa%C3%A7%C3%A3o-realizada-
     dígitos)   (por: DSA)
 
 01/03/2012
-[+] Adicionado os Registros "B" 
-[-] Correções no registro "C" 
+[+] Adicionado os Registros "B"
+[-] Correções no registro "C"
 	(por: Gutierres Santana da Costa)
 	http://www.djsystem.com.br/acbr/forum/viewtopic.php?f=12&t=4990
-	
+
 Versão 0.09   29/11/11
 ---------------
-[-] Acerto no arquivo de DAVs emitidos, alguém alterou o que já havia sido 
+[-] Acerto no arquivo de DAVs emitidos, alguém alterou o que já havia sido
     acertado para a ER 1.09 na parte de itens.
     (por: Régys Silveira)
 
@@ -201,7 +207,7 @@ Versão 0.09   28/09/11
 
 Versão 0.09   27/09/11
 ---------------
-[+] Adicionado a propriedade InclusaoExclusao, para atender ao roteiro 1.09, 
+[+] Adicionado a propriedade InclusaoExclusao, para atender ao roteiro 1.09,
     onde deve ser colocado "?" nos registro onde houverem inclusão e exclusão
     de registro pelo DB.
     (por: Juliomar Marchetti)
@@ -218,17 +224,17 @@ Versão 0.08   26/09/11
 
 Versão 0.08   26/09/11
 ---------------
-[*] Alterações da versão 1.09 da especificação de requisitos do Paf-ECF 
+[*] Alterações da versão 1.09 da especificação de requisitos do Paf-ECF
    (por: Régys Silveira)
 
 Versão 0.08   08/08/11
 ---------------
-[*] Mudado para no método create do componente as propriedades Delimitador e 
+[*] Mudado para no método create do componente as propriedades Delimitador e
     CurMascara, sejam iniciadas em branco (por: Isaque Pinheiro)
 
 Versão 0.08   14/05/11
 ---------------
-[-] Correção de bug, do qual as rotinas "SaveFileTXT_?", eram chamadas, mas 
+[-] Correção de bug, do qual as rotinas "SaveFileTXT_?", eram chamadas, mas
     ao terminar, não limpava a lista de registros, nem zerava os totalizadores.
     (por Isaque Pinheiro)
 
@@ -240,15 +246,15 @@ Versão 0.07   13/05/11
 
 Versão 0.07   09/05/11
 ---------------
-[*] Registro N, modificado para permitir o calculo do MD5 de cada arquivo da 
+[*] Registro N, modificado para permitir o calculo do MD5 de cada arquivo da
     Lista, de forma dinâmica, basta não informar o MD5 no registro, que o mesmo
     será calculado no momento da geração  (por: DSA)
-[+] Adiconada a propriedade AAC, que permite ligar o componente ACBrPAF com o 
+[+] Adiconada a propriedade AAC, que permite ligar o componente ACBrPAF com o
     componente ACBrAAC (Arquivo Auxiliar Criptografado)    (Por: DSA)
-[*] Após o arquivo PAF_N ser gerado, se o ACBrPAF estiver associado ao componente 
-    ACBrAAC, ele irá chamar o método do componente ACBrAAC para atualizar o arquivo 
+[*] Após o arquivo PAF_N ser gerado, se o ACBrPAF estiver associado ao componente
+    ACBrAAC, ele irá chamar o método do componente ACBrAAC para atualizar o arquivo
     auxiliar cripotografado com o MD5 final da Lista Gerada pelo PAF_N   (Por: DSA)
-**  NOTA: As recentes mudanças exigem a completa re-instalação dos Packages 
+**  NOTA: As recentes mudanças exigem a completa re-instalação dos Packages
           ACBrComum e ACBrSerial e ACBrPAF
 
 
@@ -256,7 +262,7 @@ Versão 0.07   07/05/11
 ---------------
 [+] Adicionada a propriedade EAD, que permite ligar o componente ACBrPAF a
     um componente ACBrEAD já existente. Isso evita a necessidade de programação
-    dos eventos de Captura das Chaves em vários componentes, além de carregar 
+    dos eventos de Captura das Chaves em vários componentes, além de carregar
     apenas uma vez o OpenSSL na memória (por: DSA)
 
 Versão 0.07   12/04/11
@@ -266,11 +272,11 @@ Versão 0.07   12/04/11
 
 Versão 0.07   12/04/11
 ---------------
-[*] Adicionado novas propriedades no Registro D2, para atender a 
+[*] Adicionado novas propriedades no Registro D2, para atender a
     versão 01.07 do PAF-ECF.
     por Isaque Pinheiro / Régys Silveira
 
-[+] Adicionado Registros Tipo D3 REGISTRO TIPO D3 - DETALHE DO 
+[+] Adicionado Registros Tipo D3 REGISTRO TIPO D3 - DETALHE DO
     DOCUMENTO AUXILIAR DE VENDA - DAV, versão 01.07 do PAF-ECF
     por Isaque Pinheiro
 
@@ -299,7 +305,7 @@ Versão 0.06   14/12/10
 Versão 0.05   23/07/10
 ---------------
 [+] Adicionado método RegistroValido, em todos os Registros, para atender a
-    exigencia, dos testes do roteiro 1.05 do PAF-ECF, desenvolvido por 
+    exigencia, dos testes do roteiro 1.05 do PAF-ECF, desenvolvido por
     (Anderson Kovalski) e otimização por (Isaque Pinheiro)
 
 Versão 0.04   15/07/10
@@ -309,7 +315,7 @@ Versão 0.04   15/07/10
 
 Versão 0.03b   11/06/10
 ---------------
-[*] Definido as propriedades "CurMascara" e "Delimitador" para vazio, para 
+[*] Definido as propriedades "CurMascara" e "Delimitador" para vazio, para
     atenderem as exigencias de formato do arquivo do PAF, essas propriedades
     não podem ser alimentadas. Sugestão de (lampada)
 
@@ -323,7 +329,7 @@ Versão 0.03b   12/03/10
 ---------------
 [-] Corrigido a totalização de registros nos arquivos D, E, P e T estava sendo
     somado ao totalizador geral de cada registro o tipo "1", e no AC pede para
-    somar somente o tipo "2". 
+    somar somente o tipo "2".
 
 Todos os registros tipo "9" devem totalizar somente os registros tipo "2"
     e o ACBrPAF estava somando os tipo "1" na totalização geral
@@ -335,7 +341,7 @@ Versão 0.03b   12/03/10
 Versão 0.02b   11/03/10
 ---------------
 [+] Implementado a procedure "ReordenarRegistroR", para colocar os registros "R"
-    em ordem ascendente, devido a hierarquia, os registros "R" não sairem na 
+    em ordem ascendente, devido a hierarquia, os registros "R" não sairem na
     ordem exigida para homologação do PAF-ECF.
 
 Versão 0.02b   02/03/10
@@ -346,20 +352,20 @@ Versão 0.02b   02/03/10
 
 Versão 0.02b   25/02/10
 ---------------
-[-] No evento OnPAFCalcEAD e no método WriteRegistroEAD, o parametro passado 
-    tava sendo só o arquivo e tem que ser passado "Path + Arquivo". 
+[-] No evento OnPAFCalcEAD e no método WriteRegistroEAD, o parametro passado
+    tava sendo só o arquivo e tem que ser passado "Path + Arquivo".
 
 Versão 0.02b   22/02/10
 ---------------
-[*] Melhorado o recurso de assinatura dos arquivos "R" com openssl 
-    por (wagnerra) 
+[*] Melhorado o recurso de assinatura dos arquivos "R" com openssl
+    por (wagnerra)
     Nota: Para que o Demo assine os arquivos, é preciso ter o openssl.exe e suas
           DLLs no memo diretório do EXE.
 [+] Adicionado o evento "OnCalcEAD" para quem não queira assinar os arquivos
     com openssl.
 [+] Foi implementado hierarquia PAI-FLIHO nos registros R03, R05 e R07, sendo
     o R03 Filho do R02, R05 Filho do R04 e R07 Filho do R06.
-[*] Foi modificado o Demo, para demostrar como usar as novas implementações 
+[*] Foi modificado o Demo, para demostrar como usar as novas implementações
     PAI-FILHO.
 
 Versão 0.01b   21/02/10
@@ -372,13 +378,13 @@ Versão 0.01b   20/02/10
 
 Versão 0.01a   25/01/10
 ---------------
-[+] Implementado no RegistroD2 a propriedade "CCF" conforme AC 
+[+] Implementado no RegistroD2 a propriedade "CCF" conforme AC
     http://www.fazenda.gov.br/confaz/confaz/atos/atos_cotepe/2009/ac036_09.htm
 
 Versão 0.01a   23/01/10
 ---------------
 [+] Início do Projeto
-[+] Primeira Versao lançada baseado no componente fornecido por Isaque Pinheiro 
+[+] Primeira Versao lançada baseado no componente fornecido por Isaque Pinheiro
     e colaboração de (Wagnerra).
 
 

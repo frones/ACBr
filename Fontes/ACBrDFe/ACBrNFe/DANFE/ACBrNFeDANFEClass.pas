@@ -102,6 +102,7 @@ type
     FMostrarStatus: Boolean;
     FTipoDANFE: TpcnTipoImpressao;
     FNumCopias: Integer;
+    FAgruparNumCopias: boolean;
     FExpandirLogoMarca: Boolean;
     FFax: String;
     FSite: String;
@@ -187,6 +188,7 @@ type
     property MostrarStatus: Boolean                  read FMostrarStatus                  write FMostrarStatus;
     property TipoDANFE: TpcnTipoImpressao            read FTipoDANFE                      write FTipoDANFE;
     property NumCopias: Integer                      read FNumCopias                      write FNumCopias;
+    property AgruparNumCopias: Boolean               read FAgruparNumCopias               write FAgruparNumCopias;
     property Fax: String                             read FFax                            write FFax;
     property Site: String                            read FSite                           write FSite;
     property Email: String                           read FEmail                          write FEmail;
@@ -291,6 +293,7 @@ begin
   FMostrarPreview       := True;
   FMostrarStatus        := True;
   FNumCopias := 1;
+  FAgruparNumCopias := False;
   FFax       := '';
   FSite      := '';
   FEmail     := '';

@@ -214,6 +214,7 @@ procedure TACBrNFeDANFeRL.ImprimirDANFE(NFE: TNFe = nil);
 var
  i : Integer;
  ReportArray : TObjectArray; 
+ c, ANumCopiasAgrupar: integer;
 begin
 try
   case TipoDANFE of
@@ -226,39 +227,50 @@ try
 
   if NFE = nil then
     begin
+      // alteração para imprimir agrupando por notas quando tem mais de 1 cópia configurada
+      ANumCopiasAgrupar := 1;
+      if FAgruparNumCopias then
+        begin
+          ANumCopiasAgrupar := FNumCopias;
+          FNumCopias := 1; // tem que considerar que foi configurado apenas 1 cópia e realizar um outro "for" para ir adicionando as cópias agrupadas por nota
+        end;
+
       for i:= 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count - 1 do
         begin
-          frlDANFeRL.Imprimir( Self, TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
-          FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
-          FNumCopias, FSistema, FSite, FUsuario, FPosCanhoto, FFormularioContinuo,
-          FExpandirLogoMarca, FMostrarPreview, FMostrarStatus, FFonte.FNome,
-          FFonte.FNegrito, FMargemSuperior, FMargemInferior, FMargemEsquerda,
-          FMargemDireita, FCasasDecimais._qCom,
-          FCasasDecimais._vUnCom, FProdutosPorPagina, FImpressora,
-          FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
-          FExibeResumoCanhoto_Texto, FNFeCancelada,
-          FImprimirDetalhamentoEspecifico, FImprimeDescPorc,FImprimeNomeFantasia,fImprimirTotalLiquido,
-          FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
-          fQuebraLinhaEmDetalhamentoEspecifico,
-          Integer ( fCasasDecimais.Formato ),
-          fCasasDecimais._Mask_qCom,
-          fCasasDecimais._Mask_vUnCom,
-          fExibeCampoFatura,
-          fMostraDadosISSQN,
-          fAltLinhaComun,
-          fEspacoEntreProdutos,
-          fAlternaCoresProdutos,
-          fCorDestaqueProdutos,
-	  fImprimirDadosDocReferenciados,
-          fTamanhoLogoHeight,
-          fTamanhoLogoWidth,
-          fRecuoEndereco,
-          fRecuoEmpresa,
-          fLogoEmCima,
-          fTamanhoFonteEndereco,
-          fRecuoLogo,
-          i = Pred(TACBrNFe(ACBrNFe).NotasFiscais.Count),
-          @ReportArray);
+          for c:= 0 to ANumCopiasAgrupar - 1 do
+            begin
+              frlDANFeRL.Imprimir( Self, TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe,
+              FLogo, FMarcaDagua, FLarguraCodProd, FEmail, FExibeResumoCanhoto, FFax,
+              FNumCopias, FSistema, FSite, FUsuario, FPosCanhoto, FFormularioContinuo,
+              FExpandirLogoMarca, FMostrarPreview, FMostrarStatus, FFonte.FNome,
+              FFonte.FNegrito, FMargemSuperior, FMargemInferior, FMargemEsquerda,
+              FMargemDireita, FCasasDecimais._qCom,
+              FCasasDecimais._vUnCom, FProdutosPorPagina, FImpressora,
+              FFonte.FTamanhoFonte_RazaoSocial, FExibirEAN, FProtocoloNFe,
+              FExibeResumoCanhoto_Texto, FNFeCancelada,
+              FImprimirDetalhamentoEspecifico, FImprimeDescPorc,FImprimeNomeFantasia,fImprimirTotalLiquido,
+              FDetVeiculos, FDetMedicamentos, FDetArmamentos, FDetCombustiveis,
+              fQuebraLinhaEmDetalhamentoEspecifico,
+              Integer ( fCasasDecimais.Formato ),
+              fCasasDecimais._Mask_qCom,
+              fCasasDecimais._Mask_vUnCom,
+              fExibeCampoFatura,
+              fMostraDadosISSQN,
+              fAltLinhaComun,
+              fEspacoEntreProdutos,
+              fAlternaCoresProdutos,
+              fCorDestaqueProdutos,
+              fImprimirDadosDocReferenciados,
+              fTamanhoLogoHeight,
+              fTamanhoLogoWidth,
+              fRecuoEndereco,
+              fRecuoEmpresa,
+              fLogoEmCima,
+              fTamanhoFonteEndereco,
+              fRecuoLogo,
+              (i = Pred(TACBrNFe(ACBrNFe).NotasFiscais.Count)) and (c = ANumCopiasAgrupar - 1),
+              @ReportArray);
+          end;
         end;
     end
   else

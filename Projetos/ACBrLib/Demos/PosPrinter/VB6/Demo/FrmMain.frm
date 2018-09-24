@@ -529,7 +529,10 @@ Private Sub Form_Load()
     ComPorta.ListIndex = ComPorta.ListCount - 1
     
     ComPorta.AddItem "TCP:192.168.0.31:9100"
-    ComPorta.AddItem "RAW:Elgin I9"
+    Dim p As Printer
+    For Each p In Printers
+        ComPorta.AddItem "RAW:" + p.DeviceName
+    Next
     
     ComCodePage.AddItem "None", PosPaginaCodigo.None
     ComCodePage.AddItem "pc437", PosPaginaCodigo.pc437

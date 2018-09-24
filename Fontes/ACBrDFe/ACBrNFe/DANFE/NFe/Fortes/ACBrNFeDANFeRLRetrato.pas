@@ -690,7 +690,7 @@ begin
     rlmEmitente.Height := 28;
     rlmEmitente.Width  := 255;
 
-    rlmEndereco.Top    := 85;
+    rlmEndereco.Top    := 80;
     rlmEndereco.Left   := 8;
     rlmEndereco.Height := 25;
     rlmEndereco.Width  := 255;

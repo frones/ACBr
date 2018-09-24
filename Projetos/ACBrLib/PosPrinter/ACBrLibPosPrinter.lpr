@@ -46,7 +46,10 @@ exports
   POS_AbrirGaveta,
   POS_LerInfoImpressora,
   POS_LerStatusImpressora,
-  POS_RetornarTags;
+  POS_RetornarTags,
+
+  // Componente Handler
+  POS_GetPosPrinter;
 
 begin
   {$IFDEF DEBUG}

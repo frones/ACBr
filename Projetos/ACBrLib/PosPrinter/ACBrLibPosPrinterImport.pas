@@ -33,48 +33,48 @@
 
 {$I ACBr.inc}
 
-unit ACBrLibMailImport;
+unit ACBrLibPosPrinterImport;
 
 interface
 
 uses
   Classes, SysUtils, DynLibs,
-  ACBrMail;
+  ACBrPosPrinter;
 
 const
  {$IfDef MSWINDOWS}
   {$IfDef CPU64}
-  CACBrMailLIBName = 'ACBrMail64.dll';
+  CACBrPosPrinterLIBName = 'ACBrPosPrinter64.dll';
   {$Else}
-  CACBrMailLIBName = 'ACBrMail32.dll';
+  CACBrPosPrinterLIBName = 'ACBrPosPrinter32.dll';
   {$EndIf}
  {$Else}
   {$IfDef CPU64}
-  CACBrMailLIBName = 'ACBrMail64.so';
+  CACBrPosPrinterLIBName = 'ACBrPosPrinter64.so';
   {$Else}
-  CACBrMailLIBName = 'ACBrMail32.so';
+  CACBrPosPrinterLIBName = 'ACBrPosPrinter32.so';
   {$EndIf}
  {$EndIf}
 
 type
-  PACBrMail = ^TACBrMail;
+  PACBrPosPrinter = ^TACBrPosPrinter;
 
-  TMailInicializar = function(const eArqConfig, eChaveCrypt: PChar): longint;
+  TPOSInicializar = function(const eArqConfig, eChaveCrypt: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  TMailFinalizar = function: longint;
+  TPOSFinalizar = function: longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  TMailUltimoRetorno = function(const sMensagem: PChar; var esTamanho: longint): longint;
+  TPOSUltimoRetorno = function(const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  TMailGetMail = function(var handle: PACBrMail): longint;
+  TPOSGetPosPrinter = function(var handle: PACBrPosPrinter): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-  TACBrLibMail = class
+  TACBrLibPosPrinter = class
   private
     FHandle: TLibHandle;
-    FMailInicializar: TMailInicializar;
-    FMailFinalizar: TMailFinalizar;
-    FMailUltimoRetorno: TMailUltimoRetorno;
-    FMailGetMail: TMailGetMail;
+    FPOSInicializar: TPOSInicializar;
+    FPOSFinalizar: TPOSFinalizar;
+    FPOSUltimoRetorno: TPOSUltimoRetorno;
+    FPOSGetPosPrinter: TPOSGetPosPrinter;
 
     procedure LoadLib;
     procedure UnLoadLib;
@@ -84,54 +84,54 @@ type
     constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
     destructor Destroy; override;
 
-    function GetMail: TACBrMail;
+    function GetPosPrinter: TACBrPosPrinter;
   end;
 
 implementation
 
-constructor TACBrLibMail.Create(ArqConfig: string; ChaveCrypt: ansistring);
+constructor TACBrLibPosPrinter.Create(ArqConfig: string; ChaveCrypt: ansistring);
 Var
   ret: longint;
 begin
   inherited Create();
   LoadLib;
 
-  ret := FMailInicializar(PChar(ArqConfig), PChar(ChaveCrypt));
+  ret := FPOSInicializar(PChar(ArqConfig), PChar(ChaveCrypt));
   CheckResut(ret);
 end;
 
-destructor TACBrLibMail.Destroy;
+destructor TACBrLibPosPrinter.Destroy;
 Var
   ret: longint;
 begin
-  ret := FMailFinalizar;
+  ret := FPOSFinalizar;
   CheckResut(ret);
 
   UnLoadLib;
   inherited Destroy;
 end;
 
-procedure TACBrLibMail.LoadLib;
+procedure TACBrLibPosPrinter.LoadLib;
 begin
-  FHandle := LoadLibrary(CACBrMailLIBName);
+  FHandle := LoadLibrary(CACBrPosPrinterLIBName);
 
-  FMailInicializar := GetProcedureAddress(FHandle, 'MAIL_Inicializar');
-  FMailFinalizar := GetProcedureAddress(FHandle, 'MAIL_Finalizar');
-  FMailUltimoRetorno := GetProcedureAddress(FHandle, 'MAIL_UltimoRetorno');
-  FMailGetMail := GetProcedureAddress(FHandle, 'MAIL_GetMail');
+  FPOSInicializar := GetProcedureAddress(FHandle, 'POS_Inicializar');
+  FPOSFinalizar := GetProcedureAddress(FHandle, 'POS_Finalizar');
+  FPOSUltimoRetorno := GetProcedureAddress(FHandle, 'POS_UltimoRetorno');
+  FPOSGetPosPrinter := GetProcedureAddress(FHandle, 'POS_GetPosPrinter');
 end;
 
-procedure TACBrLibMail.UnLoadLib;
+procedure TACBrLibPosPrinter.UnLoadLib;
 begin
   UnloadLibrary(FHandle);
 
-  FMailInicializar := nil;
-  FMailFinalizar := nil;
-  FMailUltimoRetorno := nil;
-  FMailGetMail := nil;
+  FPOSInicializar := nil;
+  FPOSFinalizar := nil;
+  FPOSUltimoRetorno := nil;
+  FPOSGetPosPrinter := nil;
 end;
 
-procedure TACBrLibMail.CheckResut(const resultado: longint);
+procedure TACBrLibPosPrinter.CheckResut(const resultado: longint);
 Var
   bufferLen: longint;
   sMensagem: string;
@@ -140,27 +140,27 @@ begin
 
   bufferLen := 256;
   sMensagem := Space(bufferLen);
-  FMailUltimoRetorno(PChar(sMensagem), bufferLen);
+  FPOSUltimoRetorno(PChar(sMensagem), bufferLen);
 
   if bufferLen > 256 then
   begin
     sMensagem := Space(bufferLen);
-    FMailUltimoRetorno(PChar(sMensagem), bufferLen);
+    FPOSUltimoRetorno(PChar(sMensagem), bufferLen);
   end;
 
   Raise Exception.Create(Trim(sMensagem));
 end;
 
-function TACBrLibMail.GetMail: TACBrMail;
+function TACBrLibPosPrinter.GetPosPrinter: TACBrPosPrinter;
 Var
   ret: longint;
-  mail: PACBrMail;
+  PosPrinter: PACBrPosPrinter;
 begin
-  mail := nil;
-  ret := FMailGetMail(mail);
+  PosPrinter := nil;
+  ret := FPOSGetPosPrinter(PosPrinter);
   CheckResut(ret);
 
-  Result := TACBrMail(mail^);
+  Result := TACBrPosPrinter(PosPrinter^);
 end;
 
 end.

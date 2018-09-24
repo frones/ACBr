@@ -153,6 +153,7 @@ type
     FRede: TRede;
     FExtrato: TExtratoConfig;
     FIntegrador: TIntegradorConfig;
+    FChaveCrypt: String;
 
   protected
     function AtualizarArquivoConfiguracao: boolean; override;
@@ -368,6 +369,7 @@ begin
   FRede := TRede.Create;
   FExtrato := TExtratoConfig.Create;
   FIntegrador := TIntegradorConfig.Create;
+  FChaveCrypt := AChaveCrypt;
 end;
 
 destructor TLibSATConfig.Destroy;

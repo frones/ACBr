@@ -38,7 +38,8 @@ unit ACBrLibSATClass;
 interface
 
 uses
-  Classes, SysUtils, typinfo, ACBrLibMailImport,
+  Classes, SysUtils, typinfo,
+  ACBrLibMailImport, ACBrLibPosPrinterImport,
   ACBrLibComum, ACBrLibSATDataModule;
 
 type
@@ -49,12 +50,14 @@ type
   private
     FSatDM: TLibSatDM;
     FLibMail: TACBrLibMail;
+    FLibPosPrinter: TACBrLibPosPrinter;
 
   protected
     procedure Inicializar; override;
     procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
       override;
     procedure Executar; override;
+
   public
     constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     destructor Destroy; override;
@@ -62,65 +65,82 @@ type
     property SatDM: TLibSatDM read FSatDM;
   end;
 
-  {%region Declaração da funções}
+{%region Declaração da funções}
 
-  {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-  function SAT_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+{%region Redeclarando Métodos de ACBrLibComum, com nome específico}
+function SAT_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_Finalizar: longint;
+function SAT_Finalizar: longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function SAT_Nome(const sNome: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function SAT_Versao(const sVersao: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function SAT_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_ConfigLer(const eArqConfig: PChar): longint;
+function SAT_ConfigLer(const eArqConfig: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_ConfigGravar(const eArqConfig: PChar): longint;
+function SAT_ConfigGravar(const eArqConfig: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
-    var esTamanho: longint): longint;
+function SAT_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+  var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function SAT_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  {%endregion}
+{%endregion}
 
-  {%region Ativar}
-  function SAT_InicializarSAT: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_DesInicializar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  {%endregion}
+{%region Ativar}
+function SAT_InicializarSAT: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_DesInicializar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+{%endregion}
 
-  {%region Funções SAT}
-  function SAT_AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
-    const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_BloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+{%region Funções SAT}
+function SAT_AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_BloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar; opcao: Integer; novoCodigo: PChar;
-    const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar;
+  opcao: integer; novoCodigo: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_ConsultarStatusOperacional(const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_ConsultarStatusOperacional(const sResposta: PChar;
+  var esTamanho: longint): longint;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_ConsultarNumeroSessao(cNumeroDeSessao: Integer; const sResposta: PChar;
-    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_AtualizarSoftwareSAT(const sResposta: PChar;
-    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar; const sResposta: PChar;
-    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  {%endregion}
+function SAT_ConsultarNumeroSessao(cNumeroDeSessao: integer;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_AtualizarSoftwareSAT(const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ExtrairLogs(eArquivo: PChar): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+{%endregion}
 
-  {%endregion}
+{%region CFe}
+function SAT_CriarCFe(eArquivoIni: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CriarEnviarCFe(eArquivoIni: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_EnviarCFe(eArquivoXml: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_CancelarCFe(eArquivoXml: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+{%endregion}
+
+{%endregion}
 
 implementation
 
 uses
-  sysutils,
   ACBrUtil, ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig,
-  ACBrLibResposta, ACBrLibSATRespostas;
+  ACBrLibResposta, ACBrLibSATRespostas, ACBrMail, ACBrPosPrinter;
 
 { TACBrLibSAT }
 constructor TACBrLibSAT.Create(ArqConfig: string; ChaveCrypt: ansistring);
@@ -130,17 +150,15 @@ begin
   fpVersao := CLibSATVersao;
 
   FSatDM := TLibSatDM.Create(nil);
-  if FileExists(CACBrMailLIBName) then
-  begin
-    FLibMail := TACBrLibMail.Create(ArqConfig, ChaveCrypt);
-    FSatDM.ACBrMail1 := FLibMail.GetMail;
-  end;
 end;
 
 destructor TACBrLibSAT.Destroy;
 begin
   FSatDM.Free;
-  if(FLibMail <> nil) FLibMail.Free;
+  if FLibMail <> nil then
+    FLibMail.Free;
+  if FLibPosPrinter <> nil then
+    FLibPosPrinter.Free;
 
   inherited Destroy;
 end;
@@ -148,6 +166,39 @@ end;
 procedure TACBrLibSAT.Inicializar;
 begin
   inherited Inicializar;
+
+  GravarLog('TACBrLibSAT.Inicializar - Inicializando Mail', logParanoico);
+
+  if FileExists(CACBrMailLIBName) then
+  begin
+    FLibMail := TACBrLibMail.Create(pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
+    FSatDM.ACBrMail1 := FLibMail.GetMail;
+  end
+  else
+  begin
+    FSatDM.ACBrMail1 := TACBrMail.Create(FSatDM);
+  end;
+
+  FSatDM.ACBrSAT1.MAIL := FSatDM.ACBrMail1;
+
+  GravarLog('TACBrLibSAT.Inicializar - Inicializando Mail Feito', logParanoico);
+
+  GravarLog('TACBrLibSAT.Inicializar - Inicializando PosPrinter', logParanoico);
+
+  if FileExists(CACBrPosPrinterLIBName) then
+  begin
+    FLibPosPrinter := TACBrLibPosPrinter.Create(pLib.Config.NomeArquivo,
+      pLib.Config.ChaveCrypt);
+    FSatDM.ACBrPosPrinter1 := FLibPosPrinter.GetPosPrinter;
+  end
+  else
+  begin
+    FSatDM.ACBrPosPrinter1 := TACBrPosPrinter.Create(FSatDM);
+  end;
+
+  FSatDM.ACBrSATExtratoESCPOS1.PosPrinter := FSatDM.ACBrPosPrinter1;
+
+  GravarLog('TACBrLibSAT.Inicializar - Inicializando PosPrinter Feito', logParanoico);
 
   GravarLog('TACBrLibSAT.Inicializar - Feito', logParanoico);
 end;
@@ -220,6 +271,7 @@ function SAT_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 begin
   Result := LIB_ConfigGravarValor(eSessao, eChave, eValor);
 end;
+
 {%endregion}
 
 {%region Ativar}
@@ -278,17 +330,19 @@ end;
 
 {%region Funções SAT}
 function SAT_AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
-  const sResposta: PChar; var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  CNPJ, Assinatura, Resposta: AnsiString;
+  CNPJ, Assinatura, Resposta: ansistring;
 begin
   try
     VerificarLibInicializada;
-    CNPJ := AnsiString(CNPJvalue);
-    Assinatura := AnsiString(assinaturaCNPJs);
+    CNPJ := ansistring(CNPJvalue);
+    Assinatura := ansistring(assinaturaCNPJs);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('SAT_AssociarAssinatura(' + CNPJ + ',' + Assinatura +  ' )', logCompleto, True)
+      pLib.GravarLog('SAT_AssociarAssinatura(' + CNPJ + ',' +
+        Assinatura + ' )', logCompleto, True)
     else
       pLib.GravarLog('SAT_AssociarAssinatura', logNormal);
 
@@ -317,7 +371,7 @@ end;
 function SAT_BloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: AnsiString;
+  Resposta: ansistring;
 begin
   try
     VerificarLibInicializada;
@@ -349,7 +403,7 @@ end;
 function SAT_DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: AnsiString;
+  Resposta: ansistring;
 begin
   try
     VerificarLibInicializada;
@@ -378,19 +432,21 @@ begin
   end;
 end;
 
-function SAT_TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar; opcao: Integer; novoCodigo: PChar;
-    const sResposta: PChar; var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar;
+  opcao: integer; novoCodigo: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  CodigoAtivacao, NovoCodigoAtv, Resposta: AnsiString;
+  CodigoAtivacao, NovoCodigoAtv, Resposta: ansistring;
 begin
   try
     VerificarLibInicializada;
-    CodigoAtivacao := AnsiString(codigoDeAtivacaoOuEmergencia);
-    NovoCodigoAtv := AnsiString(novoCodigo);
+    CodigoAtivacao := ansistring(codigoDeAtivacaoOuEmergencia);
+    NovoCodigoAtv := ansistring(novoCodigo);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('SAT_TrocarCodigoDeAtivacao(' + CodigoAtivacao + ',' + IntToStr(opcao)
-                        + ',' + NovoCodigoAtv +  ' )', logCompleto, True)
+      pLib.GravarLog('SAT_TrocarCodigoDeAtivacao(' + CodigoAtivacao +
+        ',' + IntToStr(opcao) + ',' + NovoCodigoAtv +
+        ' )', logCompleto, True)
     else
       pLib.GravarLog('SAT_TrocarCodigoDeAtivacao', logNormal);
 
@@ -400,7 +456,8 @@ begin
 
       try
         Resposta := '';
-        Resposta := SatDM.ACBrSAT1.TrocarCodigoDeAtivacao(CodigoAtivacao, opcao, NovoCodigoAtv);
+        Resposta := SatDM.ACBrSAT1.TrocarCodigoDeAtivacao(CodigoAtivacao,
+          opcao, NovoCodigoAtv);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
@@ -419,7 +476,7 @@ end;
 function SAT_ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: AnsiString;
+  Resposta: ansistring;
 begin
   try
     VerificarLibInicializada;
@@ -448,10 +505,11 @@ begin
   end;
 end;
 
-function SAT_ConsultarStatusOperacional(const sResposta: PChar; var esTamanho: longint): longint;
+function SAT_ConsultarStatusOperacional(const sResposta: PChar;
+  var esTamanho: longint): longint;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: AnsiString;
+  Resposta: ansistring;
 begin
   try
     VerificarLibInicializada;
@@ -480,10 +538,11 @@ begin
   end;
 end;
 
-function SAT_ConsultarNumeroSessao(cNumeroDeSessao: Integer; const sResposta: PChar;
-    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ConsultarNumeroSessao(cNumeroDeSessao: integer;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: Ansistring;
+  Resposta: ansistring;
   Resp: TRetornoConsultarSessao;
   RespCanc: TRetornoConsultarSessaoCancelado;
 begin
@@ -491,7 +550,8 @@ begin
     VerificarLibInicializada;
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('SAT_ConsultarNumeroSessao(' + IntToStr(cNumeroDeSessao) +  ' )', logCompleto, True)
+      pLib.GravarLog('SAT_ConsultarNumeroSessao(' + IntToStr(cNumeroDeSessao) +
+        ' )', logCompleto, True)
     else
       pLib.GravarLog('SAT_ConsultarNumeroSessao', logNormal);
 
@@ -512,9 +572,9 @@ begin
           try
             with SatDM.ACBrSAT1.CFe do
             begin
-              Resp.nCFe := IntToStrZero(ide.nCFe,0);
-              Resp.XML  := AsXMLString;
-              Resp.Arquivo:= SatDM.ACBrSAT1.CFe.NomeArquivo;
+              Resp.nCFe := IntToStrZero(ide.nCFe, 0);
+              Resp.XML := AsXMLString;
+              Resp.Arquivo := SatDM.ACBrSAT1.CFe.NomeArquivo;
 
               Resposta := sLineBreak + Resp.Gerar;
             end;
@@ -529,9 +589,9 @@ begin
           try
             with SatDM.ACBrSAT1.CFeCanc do
             begin
-              RespCanc.nCFeCanc := IntToStrZero(ide.nCFe,0);
-              RespCanc.XML  := AsXMLString;
-              RespCanc.Arquivo:= SatDM.ACBrSAT1.CFe.NomeArquivo;
+              RespCanc.nCFeCanc := IntToStrZero(ide.nCFe, 0);
+              RespCanc.XML := AsXMLString;
+              RespCanc.Arquivo := SatDM.ACBrSAT1.CFe.NomeArquivo;
 
               Resposta := sLineBreak + Resp.Gerar;
             end;
@@ -556,9 +616,9 @@ begin
 end;
 
 function SAT_AtualizarSoftwareSAT(const sResposta: PChar;
-    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: AnsiString;
+  Resposta: ansistring;
 begin
   try
     VerificarLibInicializada;
@@ -587,17 +647,19 @@ begin
   end;
 end;
 
-function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar; const sResposta: PChar;
-    var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  cCertificado, Resposta: Ansistring;
+  cCertificado, Resposta: ansistring;
 begin
   try
     VerificarLibInicializada;
-    cCertificado := Ansistring(certificado);
+    cCertificado := ansistring(certificado);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('SAT_ComunicarCertificadoICPBRASIL(' + cCertificado +  ' )', logCompleto, True)
+      pLib.GravarLog('SAT_ComunicarCertificadoICPBRASIL(' + cCertificado +
+        ' )', logCompleto, True)
     else
       pLib.GravarLog('SAT_ComunicarCertificadoICPBRASIL', logNormal);
 
@@ -623,8 +685,261 @@ begin
   end;
 end;
 
+function SAT_ExtrairLogs(eArquivo: PChar): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  cArquivo: ansistring;
+begin
+  try
+    VerificarLibInicializada;
+    cArquivo := ansistring(eArquivo);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_ExtrairLogs(' + cArquivo + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_ExtrairLogs', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        SatDM.ACBrSAT1.ExtrairLogs(cArquivo);
+        Result := SetRetorno(ErrOK);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+{%endregion}
+
+{%region CFe}
+function SAT_CriarCFe(eArquivoIni: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resp: TRetornoCriarCFe;
+  Resposta: Ansistring;
+  ArquivoIni, ArqCFe: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArquivoIni := String(eArquivoIni);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_CriarCFe(' + ArquivoIni + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_CriarCFe', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        SatDM.ACBrSAT1.CFe.Clear;
+        SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
+        SatDM.ACBrSAT1.CFe.GerarXML(True);
+
+        ArqCFe := SatDM.ACBrSAT1.CalcCFeNomeArq(SatDM.ACBrSAT1.ConfigArquivos.PastaEnvio,
+                          IntToStrZero(SatDM.ACBrSAT1.CFe.ide.numeroCaixa,3)+'-'+
+                          IntToStrZero(SatDM.ACBrSAT1.CFe.ide.cNF,6),'-satcfe');
+
+        SatDM.ACBrSAT1.CFe.SaveToFile(ArqCFe);
+        Resp := TRetornoCriarCFe.Create(Config.TipoResposta);
+        Resp.nCFe := IntToStr(SatDM.ACBrSAT1.CFe.ide.nCFe);
+        Resp.XML  := SatDM.ACBrSAT1.CFe.AsXMLString;
+        Resp.Arquivo:= ArqCFe;
+
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+        Resp.Free;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_CriarEnviarCFe(eArquivoIni: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resp: TRetornoEnvio;
+  Resposta: Ansistring;
+  ArquivoIni: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArquivoIni := String(eArquivoIni);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_CriarEnviarCFe(' + ArquivoIni + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_CriarEnviarCFe', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        SatDM.ACBrSAT1.CFe.Clear;
+        SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
+
+        Resp := TRetornoEnvio.Create(Config.TipoResposta);
+
+        Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
+
+        Resp.NumeroSessao := SatDM.ACBrSAT1.Resposta.numeroSessao;
+        Resp.CodigoDeRetorno  := SatDM.ACBrSAT1.Resposta.codigoDeRetorno;
+        Resp.RetornoStr  := SatDM.ACBrSAT1.Resposta.RetornoStr;
+        Resp.XML:= SatDM.ACBrSAT1.CFe.AsXMLString;
+
+       if (SatDM.ACBrSAT1.CFe.NomeArquivo <> '') and FileExists(SatDM.ACBrSAT1.CFe.NomeArquivo) then
+          Resp.Arquivo:= SatDM.ACBrSAT1.CFe.NomeArquivo;
+
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+        Resp.Free;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_EnviarCFe(eArquivoXml: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resp: TRetornoEnvio;
+  Resposta: Ansistring;
+  ArquivoXml: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArquivoXml := String(eArquivoXml);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_EnviarCFe(' + ArquivoXml + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_EnviarCFe', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        SatDM.ACBrSAT1.CFe.Clear;
+        SatDM.ACBrSAT1.CFe.LoadFromFile(ArquivoXml);
+
+        Resp := TRetornoEnvio.Create(Config.TipoResposta);
+
+        Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
+
+        Resp.NumeroSessao := SatDM.ACBrSAT1.Resposta.numeroSessao;
+        Resp.CodigoDeRetorno  := SatDM.ACBrSAT1.Resposta.codigoDeRetorno;
+        Resp.RetornoStr  := SatDM.ACBrSAT1.Resposta.RetornoStr;
+        Resp.XML:= SatDM.ACBrSAT1.CFe.AsXMLString;
+
+       if (SatDM.ACBrSAT1.CFe.NomeArquivo <> '') and FileExists(SatDM.ACBrSAT1.CFe.NomeArquivo) then
+          Resp.Arquivo:= SatDM.ACBrSAT1.CFe.NomeArquivo;
+
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+        Resp.Free;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_CancelarCFe(eArquivoXml: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resp: TRetornoCancelarCFe;
+  Resposta: Ansistring;
+  ArquivoXml: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArquivoXml := String(eArquivoXml);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_CancelarCFe(' + ArquivoXml + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_CancelarCFe', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        if (ArquivoXml <> '') and (FileExists(ArquivoXml)) then
+        begin
+          SatDM.ACBrSAT1.CFe.Clear;
+          SatDM.ACBrSAT1.CFe.LoadFromFile(ArquivoXml);
+        end;
+
+        Resp := TRetornoCancelarCFe.Create(Config.TipoResposta);
+
+        Resp.Resultado := SatDM.ACBrSAT1.CancelarUltimaVenda;
+
+        Resp.NumeroSessao := SatDM.ACBrSAT1.Resposta.numeroSessao;
+        Resp.CodigoDeRetorno  := SatDM.ACBrSAT1.Resposta.codigoDeRetorno;
+        Resp.RetornoStr  := SatDM.ACBrSAT1.Resposta.RetornoStr;
+        Resp.XML:= SatDM.ACBrSAT1.CFeCanc.AsXMLString;
+
+       if (SatDM.ACBrSAT1.CFeCanc.NomeArquivo <> '') and FileExists(SatDM.ACBrSAT1.CFeCanc.NomeArquivo) then
+          Resp.Arquivo:= SatDM.ACBrSAT1.CFeCanc.NomeArquivo;
+
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+        Resp.Free;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 {%endregion}
 
 {%endregion}
 end.
-

@@ -36,7 +36,13 @@ exports
   SAT_ConsultarSAT,
   SAT_ConsultarStatusOperacional,
   SAT_AtualizarSoftwareSAT,
-  SAT_ComunicarCertificadoICPBRASIL;
+  SAT_ComunicarCertificadoICPBRASIL,
+  SAT_ExtrairLogs,
+
+  SAT_CriarCFe,
+  SAT_CriarEnviarCFe,
+  SAT_EnviarCFe,
+  SAT_CancelarCFe;
 
 begin
   {$IFDEF DEBUG}

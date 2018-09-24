@@ -195,6 +195,7 @@ type
     FIni: TMemIniFile;
     FLog: TLogConfig;
     FNomeArquivo: String;
+    FChaveCrypt: AnsiString;
     FProxyInfo: TProxyConfig;
     FSistema: TSistemaConfig;
     FSoftwareHouse: TEmpresaConfig;
@@ -206,8 +207,6 @@ type
     procedure VerificarSessaoEChave(ASessao, AChave: String);
 
   protected
-    FChaveCrypt: AnsiString;
-
     function AtualizarArquivoConfiguracao: Boolean; virtual;
     procedure AplicarConfiguracoes; virtual;
 
@@ -231,6 +230,7 @@ type
     function LerValor(ASessao, AChave: String): String;
 
     property NomeArquivo: String read FNomeArquivo write SetNomeArquivo;
+    property ChaveCrypt: String read FChaveCrypt;
 
     property TipoResposta: TACBrLibRespostaTipo read FTipoResposta;
     property Log: TLogConfig read FLog;

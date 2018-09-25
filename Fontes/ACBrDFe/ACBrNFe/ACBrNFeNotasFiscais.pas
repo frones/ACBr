@@ -1416,13 +1416,38 @@ begin
             fsvTotPag :=  fsvTotPag + NFe.pag[I].vPag;
           end;
 
+          {
+            ** Validação removida na NT 2016.002 v1.10
           GravaLog('Validar: 767-Soma dos pagamentos');
           if (fsvTotPag < NFe.Total.ICMSTot.vNF) then
             AdicionaErro('767-Rejeição: Somatório dos pagamentos diferente do total da Nota Fiscal');
+          }
+
+          if (NFe.Ide.modelo = 65) then
+          begin
+            GravaLog('Validar: 899-NFCe sem pagamento');
+            for I := 0 to NFe.pag.Count - 1 do
+            begin
+              if (NFe.pag[I].tPag = fpSemPagamento) then
+              begin
+                AdicionaErro('899-Rejeição: Informado incorretamente o campo meio de pagamento');
+                Break;
+              end;
+            end;
+
+            GravaLog('Validar: 865-Total dos pagamentos NFCe');
+            if (fsvTotPag < NFe.Total.ICMSTot.vNF) then
+              AdicionaErro('865-Rejeição: Total dos pagamentos menor que o total da nota');
+          end;
+
+          GravaLog('Validar: 866-Ausência de troco');
+          if (NFe.pag.vTroco = 0) and (fsvTotPag > NFe.Total.ICMSTot.vNF) then
+            AdicionaErro('866-Rejeição: Ausência de troco quando o valor dos pagamentos informados for maior que o total da nota');
 
           GravaLog('Validar: 869-Valor do troco');
-          if (NFe.Total.ICMSTot.vNF <> (fsvTotPag - NFe.pag.vTroco)) then
+          if (NFe.pag.vTroco > 0) and (NFe.Total.ICMSTot.vNF <> (fsvTotPag - NFe.pag.vTroco)) then
             AdicionaErro('869-Rejeição: Valor do troco incorreto');
+
         end;
 
         fnDevolucao:

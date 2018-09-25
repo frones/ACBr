@@ -420,7 +420,7 @@ end;
 procedure TfrlDANFSeRLRetrato.rlbISSQNBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
-  MostrarObra: Boolean;
+  MostrarObra, MostrarNaturezaOperacao: Boolean;
 begin
   inherited;
   RLLabel16.Visible := False;
@@ -428,6 +428,8 @@ begin
   With FNFSe do
   begin
     rllNatOperacao.Caption    := NaturezaOperacaoDescricao( NaturezaOperacao );
+    MostrarNaturezaOperacao   := rllNatOperacao.Caption<>'';
+    RLLabel137.Visible        := MostrarNaturezaOperacao;
     rllRegimeEspecial.Caption := nfseRegimeEspecialTributacaoDescricao( RegimeEspecialTributacao );
     rllOpcaoSimples.Caption   := SimNao( Integer ( OptanteSimplesNacional ) );
     rllIncentivador.Caption   := SimNao( Integer ( IncentivadorCultural ) );

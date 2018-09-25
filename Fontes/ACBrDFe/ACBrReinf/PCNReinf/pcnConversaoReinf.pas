@@ -228,7 +228,7 @@ type
                               ttrOutros       // 5 - Outros
                             );
 
-  TVersaoReinf            = ( v1_02_00, v1_03_00, v1_03_02 );
+  TVersaoReinf            = ( v1_02_00, v1_03_00, v1_03_02, v1_04_00 );
 
   // ct00 não consta no manual mas consta no manual do desenvolvedor pg 85, é usado para zerar a base de teste.
   TpClassTrib = (ct00, ct01, ct02, ct03, ct04, ct06, ct07, ct08, ct09, ct10, ct11,
@@ -463,6 +463,7 @@ begin
     v1_02_00: result := 1.20;
     v1_03_00: result := 1.30;
     v1_03_02: result := 1.32;
+    v1_04_00: Result := 1.40;
   else
     result := 0;
   end;
@@ -470,12 +471,14 @@ end;
 
 function VersaoReinfToStr(const t: TVersaoReinf): String;
 begin
-  result := EnumeradoToStr(t, ['1_02_00', '1_03_00', '1_03_02'], [v1_02_00, v1_03_00, v1_03_02]);
+  result := EnumeradoToStr(t, ['1_02_00', '1_03_00', '1_03_02', '1_04_00'],
+                           [v1_02_00, v1_03_00, v1_03_02, v1_04_00]);
 end;
 
 function StrToVersaoReinf(out ok: Boolean; const s: String): TVersaoReinf;
 begin
-  result := StrToEnumerado(ok, s, ['1_02_00', '1_03_00', '1_03_02'], [v1_02_00, v1_03_00, v1_03_02]);
+  result := StrToEnumerado(ok, s, ['1_02_00', '1_03_00', '1_03_02', '1_04_00'],
+                           [v1_02_00, v1_03_00, v1_03_02, v1_04_00]);
 end;
 
 function TipoEventoToStr(const t: TTipoEvento ): string;

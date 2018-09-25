@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/09/2018
+-- pcnConversaoReinf -- 
+[+] Acrescentado o enumerador da versão: v1_04_00.
+   Por: Italo Jurisato Junior
+
 20/09/2018
 -- Diversos --
 [*] Acrescentado a propriedade idEvento na classe Gerados, desta forma é possível

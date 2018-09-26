@@ -29,8 +29,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
-  ACBrLibPosPrinterConfig, ACBrLibComum, ACBrLibPosPrinterClass;
+  ACBrUtil, ACBrLibComum;
 
 {$R *.lfm}
 
@@ -45,55 +44,51 @@ begin
 end;
 
 procedure TLibPosPrinterDM.AplicarConfiguracoes;
-var
-  pLibConfig: TLibPosPrinterConfig;
 begin
-  pLibConfig := TLibPosPrinterConfig(TACBrLibPosPrinter(pLib).Config);
-
   with ACBrPosPrinter1 do
   begin
-    ArqLog := pLibConfig.PosPrinterConfig.ArqLog;
-    Modelo := pLibConfig.PosPrinterConfig.Modelo;
-    Porta := pLibConfig.PosPrinterConfig.Porta;
-    Device.TimeOut := pLibConfig.PosPrinterConfig.TimeOut;
-    PaginaDeCodigo := pLibConfig.PosPrinterConfig.PaginaDeCodigo;
-    ColunasFonteNormal := pLibConfig.PosPrinterConfig.ColunasFonteNormal;
-    EspacoEntreLinhas := pLibConfig.PosPrinterConfig.EspacoEntreLinhas;
-    LinhasEntreCupons := pLibConfig.PosPrinterConfig.LinhasEntreCupons;
-    CortaPapel := pLibConfig.PosPrinterConfig.CortaPapel;
-    TraduzirTags := pLibConfig.PosPrinterConfig.TraduzirTags;
-    IgnorarTags := pLibConfig.PosPrinterConfig.IgnorarTags;
-    LinhasBuffer := pLibConfig.PosPrinterConfig.LinhasBuffer;
-    ControlePorta := pLibConfig.PosPrinterConfig.ControlePorta;
-    VerificarImpressora := pLibConfig.PosPrinterConfig.VerificarImpressora;
+    ArqLog := pLib.Config.PosPrinter.ArqLog;
+    Modelo := TACBrPosPrinterModelo(pLib.Config.PosPrinter.Modelo);
+    Porta := pLib.Config.PosPrinter.Porta;
+    Device.TimeOut := pLib.Config.PosPrinter.TimeOut;
+    PaginaDeCodigo := TACBrPosPaginaCodigo(pLib.Config.PosPrinter.PaginaDeCodigo);
+    ColunasFonteNormal := pLib.Config.PosPrinter.ColunasFonteNormal;
+    EspacoEntreLinhas := pLib.Config.PosPrinter.EspacoEntreLinhas;
+    LinhasEntreCupons := pLib.Config.PosPrinter.LinhasEntreCupons;
+    CortaPapel := pLib.Config.PosPrinter.CortaPapel;
+    TraduzirTags := pLib.Config.PosPrinter.TraduzirTags;
+    IgnorarTags := pLib.Config.PosPrinter.IgnorarTags;
+    LinhasBuffer := pLib.Config.PosPrinter.LinhasBuffer;
+    ControlePorta := pLib.Config.PosPrinter.ControlePorta;
+    VerificarImpressora := pLib.Config.PosPrinter.VerificarImpressora;
 
-    ConfigBarras.MostrarCodigo := pLibConfig.PosPrinterConfig.ConfigBarras.MostrarCodigo;
-    ConfigBarras.LarguraLinha := pLibConfig.PosPrinterConfig.ConfigBarras.LarguraLinha;
-    ConfigBarras.Altura := pLibConfig.PosPrinterConfig.ConfigBarras.Altura;
-    ConfigBarras.Margem := pLibConfig.PosPrinterConfig.ConfigBarras.Margem;
+    ConfigBarras.MostrarCodigo := pLib.Config.PosPrinter.BcMostrarCodigo;
+    ConfigBarras.LarguraLinha := pLib.Config.PosPrinter.BcLarguraLinha;
+    ConfigBarras.Altura := pLib.Config.PosPrinter.BcAltura;
+    ConfigBarras.Margem := pLib.Config.PosPrinter.BcMargem;
 
-    ConfigQRCode.Tipo := pLibConfig.PosPrinterConfig.ConfigQRCode.Tipo;
-    ConfigQRCode.LarguraModulo := pLibConfig.PosPrinterConfig.ConfigQRCode.LarguraModulo;
-    ConfigQRCode.ErrorLevel := pLibConfig.PosPrinterConfig.ConfigQRCode.ErrorLevel;
+    ConfigQRCode.Tipo := pLib.Config.PosPrinter.QrTipo;
+    ConfigQRCode.LarguraModulo := pLib.Config.PosPrinter.QrLarguraModulo;
+    ConfigQRCode.ErrorLevel := pLib.Config.PosPrinter.QrErrorLevel;
 
-    ConfigLogo.IgnorarLogo := pLibConfig.PosPrinterConfig.ConfigLogo.IgnorarLogo;
-    ConfigLogo.KeyCode1 := pLibConfig.PosPrinterConfig.ConfigLogo.KeyCode1;
-    ConfigLogo.KeyCode2 := pLibConfig.PosPrinterConfig.ConfigLogo.KeyCode2;
-    ConfigLogo.FatorX := pLibConfig.PosPrinterConfig.ConfigLogo.FatorX;
-    ConfigLogo.FatorY := pLibConfig.PosPrinterConfig.ConfigLogo.FatorY;
+    ConfigLogo.IgnorarLogo := pLib.Config.PosPrinter.LgIgnorarLogo;
+    ConfigLogo.KeyCode1 := pLib.Config.PosPrinter.LgKeyCode1;
+    ConfigLogo.KeyCode2 := pLib.Config.PosPrinter.LgKeyCode2;
+    ConfigLogo.FatorX := pLib.Config.PosPrinter.LgFatorX;
+    ConfigLogo.FatorY := pLib.Config.PosPrinter.LgFatorY;
 
-    ConfigGaveta.SinalInvertido := pLibConfig.PosPrinterConfig.ConfigGaveta.SinalInvertido;
-    ConfigGaveta.TempoON := pLibConfig.PosPrinterConfig.ConfigGaveta.TempoON;
-    ConfigGaveta.TempoOFF := pLibConfig.PosPrinterConfig.ConfigGaveta.TempoOFF;
+    ConfigGaveta.SinalInvertido := pLib.Config.PosPrinter.GvSinalInvertido;
+    ConfigGaveta.TempoON := pLib.Config.PosPrinter.GvTempoON;
+    ConfigGaveta.TempoOFF := pLib.Config.PosPrinter.GvTempoOFF;
 
-    ConfigModoPagina.Largura := pLibConfig.PosPrinterConfig.ConfigModoPagina.Largura;
-    ConfigModoPagina.Altura := pLibConfig.PosPrinterConfig.ConfigModoPagina.Altura;
-    ConfigModoPagina.Esquerda := pLibConfig.PosPrinterConfig.ConfigModoPagina.Esquerda;
-    ConfigModoPagina.Topo := pLibConfig.PosPrinterConfig.ConfigModoPagina.Topo;
-    ConfigModoPagina.Direcao := pLibConfig.PosPrinterConfig.ConfigModoPagina.Direcao;
-    ConfigModoPagina.EspacoEntreLinhas := pLibConfig.PosPrinterConfig.ConfigModoPagina.EspacoEntreLinhas;
+    ConfigModoPagina.Largura := pLib.Config.PosPrinter.MpLargura;
+    ConfigModoPagina.Altura := pLib.Config.PosPrinter.MpAltura;
+    ConfigModoPagina.Esquerda := pLib.Config.PosPrinter.MpEsquerda;
+    ConfigModoPagina.Topo := pLib.Config.PosPrinter.MpTopo;
+    ConfigModoPagina.Direcao := TACBrPosDirecao(pLib.Config.PosPrinter.MpDirecao);
+    ConfigModoPagina.EspacoEntreLinhas := pLib.Config.PosPrinter.MpEspacoEntreLinhas;
 
-    Device.ParamsString := pLibConfig.PosPrinterConfig.DeviceParams;
+    Device.ParamsString := pLib.Config.PosPrinter.DeviceParams;
   end;
 end;
 

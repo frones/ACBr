@@ -158,6 +158,91 @@ type
     property Priority: TMessPriority read FPriority;
   end;
 
+  { TPosPrinterConfig }
+
+  TPosPrinterConfig = class
+  private
+    FArqLog: String;
+    FDeviceParams: String;
+    FModelo: Integer;
+    FPorta: String;
+    FTimeOut: Integer;
+    FPaginaDeCodigo: Integer;
+    FColunasFonteNormal: Integer;
+    FEspacoEntreLinhas: byte;
+    FBcMostrarCodigo: Boolean;
+    FBcAltura: Integer;
+    FBcLarguraLinha: Integer;
+    FBcMargem: Integer;
+    FQrErrorLevel: Integer;
+    FQrLarguraModulo: Integer;
+    FQrTipo: Integer;
+    FLgFatorX: Byte;
+    FLgFatorY: Byte;
+    FLgIgnorarLogo: Boolean;
+    FLgKeyCode1: Byte;
+    FLgKeyCode2: Byte;
+    FGvSinalInvertido: Boolean;
+    FGvTempoOFF: Byte;
+    FGvTempoON: Byte;
+    FMpDirecao: Integer;
+    FMpEspacoEntreLinhas: Byte;
+    FMpLargura: Integer;
+    FMpAltura: Integer;
+    FMpEsquerda: Integer;
+    FMpTopo: Integer;
+    FLinhasEntreCupons: Integer;
+    FCortaPapel: Boolean;
+    FTraduzirTags: Boolean;
+    FIgnorarTags: Boolean;
+    FLinhasBuffer: Integer;
+    FControlePorta: Boolean;
+    FVerificarImpressora: Boolean;
+
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure LerIni(const AIni: TCustomIniFile);
+    procedure GravarIni(const AIni: TCustomIniFile);
+
+    property ArqLog: string read FArqLog write FArqLog;
+    property DeviceParams: String read FDeviceParams write FDeviceParams;
+    property Modelo: Integer read FModelo write FModelo;
+    property Porta: String read FPorta write FPorta;
+    property TimeOut: Integer read FTimeOut write FTimeOut;
+    property PaginaDeCodigo: Integer read FPaginaDeCodigo write FPaginaDeCodigo;
+    property ColunasFonteNormal: Integer read FColunasFonteNormal write FColunasFonteNormal;
+    property EspacoEntreLinhas: byte read FEspacoEntreLinhas write FEspacoEntreLinhas;
+    property BcMostrarCodigo: Boolean read FBcMostrarCodigo write FBcMostrarCodigo;
+    property BcLarguraLinha: Integer read FBcLarguraLinha write FBcLarguraLinha;
+    property BcAltura: Integer read FBcAltura write FBcAltura;
+    property BcMargem: Integer read FBcMargem write FBcMargem;
+    property QrTipo: Integer read FQrTipo write FQrTipo;
+    property QrLarguraModulo: Integer read FQrLarguraModulo write FQrLarguraModulo;
+    property QrErrorLevel: Integer read FQrErrorLevel write FQrErrorLevel;
+    property LgIgnorarLogo: Boolean read FLgIgnorarLogo write FLgIgnorarLogo;
+    property LgKeyCode1: Byte read FLgKeyCode1 write FLgKeyCode1;
+    property LgKeyCode2: Byte read FLgKeyCode2 write FLgKeyCode2;
+    property LgFatorX: Byte read FLgFatorX write FLgFatorX ;
+    property LgFatorY: Byte read FLgFatorY write FLgFatorY;
+    property GvSinalInvertido: Boolean read FGvSinalInvertido write FGvSinalInvertido;
+    property GvTempoON: Byte read FGvTempoON write FGvTempoON;
+    property GvTempoOFF: Byte read FGvTempoOFF write FGvTempoOFF;
+    property MpLargura: Integer read FMpLargura write FMpLargura;
+    property MpAltura: Integer read FMpAltura write FMpAltura;
+    property MpEsquerda: Integer read FMpEsquerda write FMpEsquerda;
+    property MpTopo: Integer read FMpTopo write FMpTopo;
+    property MpDirecao: Integer read FMpDirecao write FMpDirecao;
+    property MpEspacoEntreLinhas: Byte read FMpEspacoEntreLinhas write FMpEspacoEntreLinhas;
+    property LinhasEntreCupons: Integer read FLinhasEntreCupons write FLinhasEntreCupons;
+    property CortaPapel: Boolean read FCortaPapel write FCortaPapel;
+    property TraduzirTags: Boolean read FTraduzirTags write FTraduzirTags;
+    property IgnorarTags: Boolean read FIgnorarTags write FIgnorarTags;
+    property LinhasBuffer: Integer read FLinhasBuffer write FLinhasBuffer;
+    property ControlePorta: Boolean read FControlePorta write FControlePorta;
+    property VerificarImpressora: Boolean read FVerificarImpressora write FVerificarImpressora;
+  end;
+
   { TEmpresaConfig }
 
   TEmpresaConfig = class
@@ -192,6 +277,7 @@ type
   private
     FOwner: TObject;
     FEmail: TEmailConfig;
+    FPosPrinter: TPosPrinterConfig;
     FIni: TMemIniFile;
     FLog: TLogConfig;
     FNomeArquivo: String;
@@ -236,6 +322,7 @@ type
     property Log: TLogConfig read FLog;
     property ProxyInfo: TProxyConfig read FProxyInfo;
     property Email: TEmailConfig read FEmail;
+    property PosPrinter: TPosPrinterConfig read FPosPrinter;
     property SoftwareHouse: TEmpresaConfig read FSoftwareHouse;
     property Sistema: TSistemaConfig read FSistema;
     property Emissor: TEmpresaConfig read FEmissor;
@@ -393,6 +480,142 @@ begin
   AIni.WriteInteger(CSessaoEmail, CChaveEmailPriority, Integer(FPriority));
 end;
 
+{ TPosPrinterConfig }
+constructor TPosPrinterConfig.Create;
+begin
+  FModelo := 0;
+  FDeviceParams := '';
+  FPorta := '';
+  FTimeOut := 3;
+  FPaginaDeCodigo := 2;
+  FColunasFonteNormal := 48;
+  FEspacoEntreLinhas := 0;
+  FBcMostrarCodigo := False;
+  FBcAltura := 0;
+  FBcLarguraLinha := 0;
+  FBcMargem := 0;
+  FQrErrorLevel := 0;
+  FQrLarguraModulo := 4;
+  FQrTipo := 2;
+  FLgFatorX := 1;
+  FLgFatorY := 1;
+  FLgIgnorarLogo := False;
+  FLgKeyCode1 := 32;
+  FLgKeyCode2 := 32;
+  FGvSinalInvertido := False;
+  FGvTempoOFF := 200;
+  FGvTempoON := 50;
+  FMpDirecao := 0;
+  FMpEspacoEntreLinhas := 0;
+  FMpLargura := 0;
+  FMpAltura := 0;
+  FMpEsquerda := 0;
+  FMpTopo := 0;
+  FLinhasEntreCupons := 21;
+  FCortaPapel := True;
+  FTraduzirTags := True;
+  FIgnorarTags := False;
+  FLinhasBuffer := 0;
+  FControlePorta := False;
+  FVerificarImpressora := False;
+
+end;
+
+destructor TPosPrinterConfig.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TPosPrinterConfig.LerIni(const AIni: TCustomIniFile);
+begin
+  FArqLog := AIni.ReadString(CSessaoPosPrinter, CChaveArqLog, FArqLog);
+  FModelo := AIni.ReadInteger(CSessaoPosPrinter, CChaveModelo, FModelo);
+  FDeviceParams := AIni.ReadString(CSessaoPosPrinter, CChaveDevice, FDeviceParams);
+  FPorta := AIni.ReadString(CSessaoPosPrinter, CChavePorta, FPorta);
+  FTimeOut := AIni.ReadInteger(CSessaoPosPrinter, CChaveTimeOut, FTimeOut);
+  FPaginaDeCodigo := AIni.ReadInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, FPaginaDeCodigo);
+  FColunasFonteNormal := AIni.ReadInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
+  FEspacoEntreLinhas :=  AIni.ReadInteger(CSessaoPosPrinter, CChaveEspacoEntreLinhas, FEspacoEntreLinhas);
+  FLinhasEntreCupons :=  AIni.ReadInteger(CSessaoPosPrinter, CChaveLinhasEntreCupons, FLinhasEntreCupons);
+  FCortaPapel :=  AIni.ReadBool(CSessaoPosPrinter, CChaveCortaPapel, FCortaPapel);
+  FTraduzirTags :=  AIni.ReadBool(CSessaoPosPrinter, CChaveTraduzirTags, FTraduzirTags);
+  FIgnorarTags :=  AIni.ReadBool(CSessaoPosPrinter, CChaveIgnorarTags, FIgnorarTags);
+  FLinhasBuffer :=  AIni.ReadInteger(CSessaoPosPrinter, CChaveLinhasBuffer, FLinhasBuffer);
+  FControlePorta :=  AIni.ReadBool(CSessaoPosPrinter, CChaveControlePorta, FControlePorta);
+  FVerificarImpressora :=  AIni.ReadBool(CSessaoPosPrinter, CChaveVerificarImpressora, FVerificarImpressora);
+
+  FBcMostrarCodigo :=  AIni.ReadBool(CSessaoPosPrinterBarras, CChaveCBMostrarCodigo, FBcMostrarCodigo);
+  FBcLarguraLinha :=  AIni.ReadInteger(CSessaoPosPrinterBarras, CChaveCBLarguraLinha, FBcLarguraLinha);
+  FBcAltura :=  AIni.ReadInteger(CSessaoPosPrinterBarras, CChaveCBAltura, FBcAltura);
+  FBcMargem :=  AIni.ReadInteger(CSessaoPosPrinterBarras, CChaveCBMargem, FBcMargem);
+
+  FQrTipo :=  AIni.ReadInteger(CSessaoPosPrinterQRCode, CChaveQRTipo, FQrTipo);
+  FQrLarguraModulo :=  AIni.ReadInteger(CSessaoPosPrinterQRCode, CChaveQRLarguraModulo, FQrLarguraModulo);
+  FQrErrorLevel :=  AIni.ReadInteger(CSessaoPosPrinterQRCode, CChaveQRErrorLevel, FQrErrorLevel);
+
+  FLgIgnorarLogo := AIni.ReadBool(CSessaoPosPrinterLogo, CChaveLGIgnorarLogo, FLgIgnorarLogo);
+  FLgKeyCode1 := AIni.ReadInteger(CSessaoPosPrinterLogo, CChaveLGKeyCode1, FLgKeyCode1);
+  FLgKeyCode2 := AIni.ReadInteger(CSessaoPosPrinterLogo, CChaveLGKeyCode2, FLgKeyCode2);
+  FLgFatorX := AIni.ReadInteger(CSessaoPosPrinterLogo, CChaveLGFatorX, FLgFatorX);
+  FLgFatorY := AIni.ReadInteger(CSessaoPosPrinterLogo, CChaveLGFatorY, FLgFatorY);
+
+  FGvSinalInvertido :=  AIni.ReadBool(CSessaoPosPrinterGaveta, CChaveGVSinalInvertido, FGvSinalInvertido);
+  FGvTempoON :=  AIni.ReadInteger(CSessaoPosPrinterGaveta, CChaveGVTempoON, FGvTempoON);
+  FGvTempoOFF :=  AIni.ReadInteger(CSessaoPosPrinterGaveta, CChaveGVTempoOFF, FGvTempoOFF);
+
+  FMpLargura := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPLargura, FMpLargura);
+  FMpAltura := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPAltura, FMpAltura);
+  FMpEsquerda := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPEsquerda, FMpEsquerda);
+  FMpTopo := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPTopo, FMpTopo);
+  FMpDirecao := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPDirecao, FMpDirecao);
+  FMpEspacoEntreLinhas := AIni.ReadInteger(CSessaoPosPrinterMPagina, CChaveMPEspacoEntreLinhas, FMpEspacoEntreLinhas);
+end;
+
+procedure TPosPrinterConfig.GravarIni(const AIni: TCustomIniFile);
+begin
+  AIni.WriteString(CSessaoPosPrinter, CChaveArqLog, FArqLog);
+  AIni.WriteInteger(CSessaoPosPrinter, CChaveModelo, Integer(FModelo));
+  AIni.WriteString(CSessaoPosPrinter, CChaveDevice, FDeviceParams);
+  AIni.WriteString(CSessaoPosPrinter, CChavePorta, FPorta);
+  AIni.WriteInteger(CSessaoPosPrinter, CChaveTimeOut, FTimeOut);
+  AIni.WriteInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo));
+  AIni.WriteInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
+  AIni.WriteInteger(CSessaoPosPrinter, CChaveEspacoEntreLinhas, FEspacoEntreLinhas);
+  AIni.WriteInteger(CSessaoPosPrinter, CChaveLinhasEntreCupons, FLinhasEntreCupons);
+  AIni.WriteBool(CSessaoPosPrinter, CChaveCortaPapel, FCortaPapel);
+  AIni.WriteBool(CSessaoPosPrinter, CChaveTraduzirTags, FTraduzirTags);
+  AIni.WriteBool(CSessaoPosPrinter, CChaveIgnorarTags, FIgnorarTags);
+  AIni.WriteInteger(CSessaoPosPrinter, CChaveLinhasBuffer, FLinhasBuffer);
+  AIni.WriteBool(CSessaoPosPrinter, CChaveControlePorta, FControlePorta);
+  AIni.WriteBool(CSessaoPosPrinter, CChaveVerificarImpressora, FVerificarImpressora);
+
+  AIni.WriteBool(CSessaoPosPrinterBarras, CChaveCBMostrarCodigo, FBcMostrarCodigo);
+  AIni.WriteInteger(CSessaoPosPrinterBarras, CChaveCBLarguraLinha, FBcLarguraLinha);
+  AIni.WriteInteger(CSessaoPosPrinterBarras, CChaveCBAltura, FBcAltura);
+  AIni.WriteInteger(CSessaoPosPrinterBarras, CChaveCBMargem, FBcMargem);
+
+  AIni.WriteInteger(CSessaoPosPrinterQRCode, CChaveQRTipo, FQrTipo);
+  AIni.WriteInteger(CSessaoPosPrinterQRCode, CChaveQRLarguraModulo, FQrLarguraModulo);
+  AIni.WriteInteger(CSessaoPosPrinterQRCode, CChaveQRErrorLevel, FQrErrorLevel);
+
+  AIni.WriteBool(CSessaoPosPrinterLogo, CChaveLGIgnorarLogo, FLgIgnorarLogo);
+  AIni.WriteInteger(CSessaoPosPrinterLogo, CChaveLGKeyCode1, FLgKeyCode1);
+  AIni.WriteInteger(CSessaoPosPrinterLogo, CChaveLGKeyCode2, FLgKeyCode2);
+  AIni.WriteInteger(CSessaoPosPrinterLogo, CChaveLGFatorX, FLgFatorX);
+  AIni.WriteInteger(CSessaoPosPrinterLogo, CChaveLGFatorY, FLgFatorY);
+
+  AIni.WriteBool(CSessaoPosPrinterGaveta, CChaveGVSinalInvertido, FGvSinalInvertido);
+  AIni.WriteInteger(CSessaoPosPrinterGaveta, CChaveGVTempoON, FGvTempoON);
+  AIni.WriteInteger(CSessaoPosPrinterGaveta, CChaveGVTempoOFF, FGvTempoOFF);
+
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPLargura, FMpLargura);
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPAltura, FMpAltura);
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPEsquerda, FMpEsquerda);
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPTopo, FMpTopo);
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPDirecao, Integer(FMpDirecao));
+  AIni.WriteInteger(CSessaoPosPrinterMPagina, CChaveMPEspacoEntreLinhas, FMpEspacoEntreLinhas);
+end;
+
 { TEmpresaConfig }
 
 constructor TEmpresaConfig.Create(AIdentificador: String);
@@ -491,6 +714,7 @@ begin
   FLog := TLogConfig.Create;
   FSistema := TSistemaConfig.Create;
   FEmail := TEmailConfig.Create(FChaveCrypt);
+  FPosPrinter := TPosPrinterConfig.Create();
   FProxyInfo := TProxyConfig.Create(FChaveCrypt);
   FSoftwareHouse := TEmpresaConfig.Create(CSessaoSwHouse);
   FEmissor := TEmpresaConfig.Create(CSessaoEmissor);
@@ -512,6 +736,7 @@ begin
   FSoftwareHouse.Free;
   FProxyInfo.Free;
   FEmail.Free;
+  FPosPrinter.Free;
 
   inherited Destroy;
 end;
@@ -621,6 +846,7 @@ begin
   FLog.LerIni(FIni);
   FSistema.LerIni(FIni);
   FEmail.LerIni(FIni);
+  FPosPrinter.LerIni(FIni);
   FProxyInfo.LerIni(FIni);
   FSoftwareHouse.LerIni(FIni);
   FEmissor.LerIni(FIni);
@@ -649,6 +875,7 @@ begin
   FLog.GravarIni(FIni);
   FSistema.GravarIni(FIni);
   FEmail.GravarIni(FIni);
+  FPosPrinter.GravarIni(FIni);
   FProxyInfo.GravarIni(FIni);
   FSoftwareHouse.GravarIni(FIni);
   FEmissor.GravarIni(FIni);

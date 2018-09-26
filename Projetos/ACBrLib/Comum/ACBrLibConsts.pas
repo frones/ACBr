@@ -120,6 +120,51 @@ const
   CChavePastaInput = 'PastaInput';
   CChavePastaOutput = 'PastaOutput';
 
+  CSessaoPosPrinter = 'PosPrinter';
+  CSessaoPosPrinterBarras = 'PosPrinter_Barras';
+  CSessaoPosPrinterQRCode = 'PosPrinter_QRCode';
+  CSessaoPosPrinterLogo = 'PosPrinter_Logo';
+  CSessaoPosPrinterGaveta = 'PosPrinter_Gaveta';
+  CSessaoPosPrinterMPagina = 'PosPrinter_MPagina';
+
+  CChaveModelo = 'Modelo';
+  CChavePaginaDeCodigo = 'PaginaDeCodigo';
+  CChaveColunasFonteNormal = 'ColunasFonteNormal';
+  CChaveEspacoEntreLinhas = 'EspacoEntreLinhas';
+  CChaveLinhasEntreCupons = 'LinhasEntreCupons';
+  CChaveCortaPapel = 'CortaPapel';
+  CChaveTraduzirTags = 'TraduzirTags';
+  CChaveIgnorarTags = 'IgnorarTags';
+  CChaveLinhasBuffer = 'LinhasBuffer';
+  CChaveControlePorta = 'ControlePorta';
+  CChaveVerificarImpressora = 'VerificarImpressora';
+
+  CChaveCBMostrarCodigo = 'MostrarCodigo';
+  CChaveCBLarguraLinha = 'LarguraLinha';
+  CChaveCBAltura = 'Altura';
+  CChaveCBMargem = 'Margem';
+
+  CChaveQRTipo = 'Tipo';
+  CChaveQRLarguraModulo = 'LarguraModulo';
+  CChaveQRErrorLevel = 'ErrorLevel';
+
+  CChaveLGIgnorarLogo = 'IgnorarLogo';
+  CChaveLGKeyCode1 = 'KeyCode1';
+  CChaveLGKeyCode2 = 'KeyCode2';
+  CChaveLGFatorX = 'FatorX';
+  CChaveLGFatorY = 'FatorY';
+
+  CChaveGVSinalInvertido = 'SinalInvertido';
+  CChaveGVTempoON = 'TempoON';
+  CChaveGVTempoOFF = 'TempoOFF';
+
+  CChaveMPLargura = 'Largura';
+  CChaveMPAltura = 'Altura';
+  CChaveMPEsquerda = 'Esquerda';
+  CChaveMPTopo = 'Topo';
+  CChaveMPDirecao = 'Direcao';
+  CChaveMPEspacoEntreLinhas = 'EspacoEntreLinhas';
+
 resourcestring
   SErrLibSemNome = 'Nome da Biblioteca não foi definido';
   SErrLibDono = 'Dono de TLibConfig deve ser do tipo TACBrLib';

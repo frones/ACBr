@@ -63,6 +63,8 @@ type
     destructor Destroy; override;
 
     property SatDM: TLibSatDM read FSatDM;
+    property LibMail: TACBrLibMail read FLibMail;
+    property LibPosPrinter: TACBrLibPosPrinter read FLibPosPrinter;
   end;
 
 {%region Declaração da funções}
@@ -121,6 +123,8 @@ function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_ExtrairLogs(eArquivo: PChar): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_TesteFimAFim(eArquivoXmlVenda: PChar): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region CFe}
@@ -134,13 +138,29 @@ function SAT_CancelarCFe(eArquivoXml: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
+{%region Impressão}
+function SAT_ImprimirExtratoVenda(eArqXMLVenda, eNomeImpressora: PChar)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ImprimirExtratoResumido(eArqXMLVenda, eNomeImpressora: PChar)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora: PChar)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarImpressaoFiscalMFe(eArqXMLVenda, eNomeImpressora: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_EnviarEmail(eArqXMLVenda, sPara, sAssunto, eNomeArquivo, sMensagem,
+  sCC, eAnexos: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+{%endregion}
+
 {%endregion}
 
 implementation
 
 uses
   ACBrUtil, ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig,
-  ACBrLibResposta, ACBrLibSATRespostas, ACBrMail, ACBrPosPrinter;
+  ACBrLibResposta, ACBrLibSATRespostas, ACBrMail, ACBrPosPrinter,
+  ACBrSATExtratoESCPOS;
 
 { TACBrLibSAT }
 constructor TACBrLibSAT.Create(ArqConfig: string; ChaveCrypt: ansistring);
@@ -718,6 +738,40 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
+
+function SAT_TesteFimAFim(eArquivoXmlVenda: PChar): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArquivoXmlVenda: ansistring;
+begin
+  try
+    VerificarLibInicializada;
+    ArquivoXmlVenda := ansistring(eArquivoXmlVenda);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_TesteFimAFim(' + ArquivoXmlVenda + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_TesteFimAFim', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        SatDM.ACBrSAT1.TesteFimAFim(ArquivoXmlVenda);
+        Result := SetRetorno(ErrOK);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
 {%endregion}
 
 {%region CFe}
@@ -938,7 +992,260 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
+{%endregion}
 
+{%region Impressão}
+function SAT_ImprimirExtratoVenda(eArqXMLVenda, eNomeImpressora: PChar)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArquivoXml, NomeImpressora: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArquivoXml := String(eArqXMLVenda);
+    NomeImpressora := String(eNomeImpressora);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_ImprimirExtratoVenda(' + ArquivoXml + ',' + NomeImpressora + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_ImprimirExtratoVenda', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        SatDM.CarregarDadosVenda(ArquivoXml);
+        SatDM.ConfigurarImpressao(NomeImpressora);
+        SatDM.ACBrSAT1.ImprimirExtrato;
+        Result := SetRetorno(ErrOK);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_ImprimirExtratoResumido(eArqXMLVenda, eNomeImpressora: PChar)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArquivoXml, NomeImpressora: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArquivoXml := String(eArqXMLVenda);
+    NomeImpressora := String(eNomeImpressora);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_ImprimirExtratoResumido(' + ArquivoXml + ',' + NomeImpressora + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_ImprimirExtratoResumido', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        SatDM.CarregarDadosVenda(ArquivoXml);
+        SatDM.ConfigurarImpressao(NomeImpressora);
+        SatDM.ACBrSAT1.ImprimirExtratoResumido;
+        Result := SetRetorno(ErrOK);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora: PChar)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArqXMLVenda, ArqXMLCancelamento, NomeImpressora: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArqXMLVenda := String(eArqXMLVenda);
+    ArqXMLCancelamento := String(eArqXMLCancelamento);
+    NomeImpressora := String(eNomeImpressora);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_ImprimirExtratoCancelamento(' + ArqXMLVenda + ',' + ArqXMLCancelamento +
+        ',' + NomeImpressora + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_ImprimirExtratoCancelamento', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        SatDM.CarregarDadosVenda(ArqXMLVenda);
+        SatDM.CarregarDadosCancelamento(ArqXMLCancelamento);
+
+        SatDM.ConfigurarImpressao(NomeImpressora);
+        SatDM.ACBrSAT1.ImprimirExtratoCancelamento;
+        Result := SetRetorno(ErrOK);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_GerarImpressaoFiscalMFe(eArqXMLVenda, eNomeImpressora: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArquivoXml, NomeImpressora, Resposta: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArquivoXml := String(eArqXMLVenda);
+    NomeImpressora := String(eNomeImpressora);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_GerarImpressaoFiscalMFe(' + ArquivoXml + ',' + NomeImpressora + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_GerarImpressaoFiscalMFe', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+        SatDM.CarregarDadosVenda(ArquivoXml);
+        SatDM.ConfigurarImpressao(NomeImpressora);
+        if TLibSATConfig(Config).Extrato.TipoExtrato = teEscPos then
+        begin
+          Resposta := TACBrSATExtratoESCPOS(SatDM.ACBrSAT1.Extrato).GerarImpressaoFiscalMFe();
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        end;
+
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArqXMLVenda, NomeArquivo: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArqXMLVenda := String(eArqXMLVenda);
+    NomeArquivo := String(eNomeArquivo);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_GerarPDFExtratoVenda(' + ArqXMLVenda + ',' + NomeArquivo + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_GerarPDFExtratoVenda', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        SatDM.ConfigurarImpressao('', True);
+        SatDM.CarregarDadosVenda(ArqXMLVenda);
+        SatDM.ACBrSAT1.ImprimirExtrato;
+
+        MoverStringParaPChar(SatDM.ACBrSAT1.Extrato.NomeArquivo, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, SatDM.ACBrSAT1.Extrato.NomeArquivo);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_EnviarEmail(eArqXMLVenda, sPara, sAssunto, eNomeArquivo, sMensagem,
+  sCC, eAnexos: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArqXMLVenda, Para, Assunto, NomeArquivo, Mensagem, CC, Anexos: String;
+  slMensagem, slCC, slAnexos: TStrings;
+begin
+   try
+    VerificarLibInicializada;
+    ArqXMLVenda := String(eArqXMLVenda);
+    Para := String(sPara);
+    Assunto := String(sAssunto);
+    NomeArquivo := String(eNomeArquivo);
+    Mensagem := String(sMensagem);
+    CC := String(sCC);
+    Anexos := String(eAnexos);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_EnviarEmail(' + ArqXMLVenda + ',' + Para + ',' + Assunto
+      + ',' + NomeArquivo + ',' + Mensagem + ',' + CC + ',' + Anexos + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_EnviarEmail', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        slMensagem := TStringList.Create;
+        slMensagem.Text := Mensagem;
+
+        slCC := TStringList.Create;
+        slCC.Text := CC;
+
+        slAnexos := TStringList.Create;
+        slAnexos.Text := Anexos;
+
+        SatDM.CarregarDadosVenda(ArqXMLVenda);
+        SatDM.ACBrSAT1.EnviarEmail(Para, Assunto, slMensagem, slCC, slAnexos);
+        Result := SetRetorno(ErrOK);
+      finally
+        slMensagem.Free;
+        slCC.Free;
+        slAnexos.Free;
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
 {%endregion}
 
 {%endregion}

@@ -103,6 +103,38 @@ const
 
   CSessaoExtrato = 'Extrato';
   CChaveTipo = 'Tipo';
+  CChaveMask_qCom = 'Mask_qCom';
+  CChaveMask_vUnCom = 'Mask_vUnCom';
+  CChaveImprimeQRCode = 'ImprimeQRCode';
+  CChaveImprimeMsgOlhoNoImposto = 'ImprimeMsgOlhoNoImposto';
+  CChaveImprimeCPFNaoInformado = 'ImprimeCPFNaoInformado';
+  CChavePictureLogo = 'PictureLogo';
+  CChaveMostrarPreview = 'MostrarPreview';
+  CChaveMostrarSetup = 'MostrarSetup';
+  CChaveNumCopias = 'NumCopias';
+  CChaveNomeArquivo = 'NomeArquivo';
+  CChaveSoftwareHouse = 'SoftwareHouse';
+  CChaveSite = 'Site';
+  CChaveFiltro = 'Filtro';
+  CChaveMsgAppQRCode = 'MsgAppQRCode';
+  CChaveImprimeEmUmaLinha = 'ImprimeEmUmaLinha';
+  CChaveImprimeDescAcrescItem = 'ImprimeDescAcrescItem';
+  CChaveUsaCodigoEanImpressao = 'UsaCodigoEanImpressao';
+
+  CChaveLarguraBobina = 'LarguraBobina';
+  CChaveMargensTopo = 'MargensTopo';
+  CChaveMargensEsquerda = 'MargensEsquerda';
+  CChaveMargensFundo = 'MargensFundo';
+  CChaveMargensDireita = 'MargensDireita';
+  CChaveEspacoFinal = 'EspacoFinal';
+  CChaveLogoWidth = 'LogoWidth';
+  CChaveLogoHeigth = 'LogoHeigth';
+  CChaveLogoStretch = 'LogoStretch';
+  CChaveLogoAutoSize = 'LogoAutoSize';
+  CChaveLogoCenter = 'LogoCenter';
+  CChaveLogoVisible = 'LogoVisible';
+  CChavePrinterName = 'PrinterName';
+  CChaveImprimeChaveEmUmaLinha = 'ImprimeChaveEmUmaLinha';
 
   CSessaoCFe = 'CFE';
   CSessaoENVIO = 'ENVIO';

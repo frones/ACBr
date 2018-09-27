@@ -31,7 +31,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, syncobjs, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
-  ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrECFVirtualSAT, ACBrSATWS,
+  ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATWS,
   ACBrMail, ACBrPosPrinter;
 
 type
@@ -43,7 +43,6 @@ type
     ACBrSAT1: TACBrSAT;
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
     ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
-    ACBrSATWS1: TACBrSATWS;
     ACBrMail1: TACBrMail;
     ACBrPosPrinter1: TACBrPosPrinter;
     procedure DataModuleCreate(Sender: TObject);
@@ -53,6 +52,11 @@ type
 
   public
     procedure AplicarConfiguracoes;
+    procedure AplicarConfigMail;
+    procedure AplicarConfigPosPrinter;
+    procedure ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolean = False);
+    procedure CarregarDadosVenda(aStr: String; aNomePDF: String = '');
+    procedure CarregarDadosCancelamento(aStr: String);
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -62,8 +66,8 @@ type
 implementation
 
 uses
-  ACBrUtil,
-  ACBrLibSATConfig, ACBrLibComum, ACBrLibSATClass;
+  strutils,
+  ACBrUtil, ACBrLibSATConfig, ACBrLibComum, ACBrLibSATClass;
 
 {$R *.lfm}
 
@@ -149,11 +153,6 @@ begin
       proxy_senha := pLibConfig.Rede.proxy_senha;
     end;
 
-    if pLibConfig.Extrato.TipoExtrato = teFortes then
-      Extrato := ACBrSATExtratoFortes1
-    else
-      Extrato := ACBrSATExtratoESCPOS1;
-
     if pLibConfig.IsMFe then
     begin
       Integrador := ACBrIntegrador1;
@@ -167,6 +166,82 @@ begin
     end
     else
       Integrador := nil;
+
+    if(TACBrLibSAT(pLib).LibMail = nil) then AplicarConfigMail;
+    if(TACBrLibSAT(pLib).LibPosPrinter = nil) then AplicarConfigPosPrinter;
+  end;
+end;
+
+procedure TLibSatDM.AplicarConfigMail;
+begin
+  with ACBrMail1 do
+  begin
+    Attempts := pLib.Config.Email.Tentativas;
+    SetTLS := pLib.Config.Email.TLS;
+    DefaultCharset := pLib.Config.Email.Codificacao;
+    From := pLib.Config.Email.Conta;
+    FromName := pLib.Config.Email.Nome;
+    SetSSL := pLib.Config.Email.SSL;
+    Host := pLib.Config.Email.Servidor;
+    IDECharset := pLib.Config.Email.Codificacao;
+    IsHTML := pLib.Config.Email.IsHTML;
+    Password := pLib.Config.Email.Senha;
+    Port := IntToStr(pLib.Config.Email.Porta);
+    Priority := pLib.Config.Email.Priority;
+    ReadingConfirmation := pLib.Config.Email.Confirmacao;
+    DeliveryConfirmation := pLib.Config.Email.ConfirmacaoEntrega;
+    TimeOut := pLib.Config.Email.TimeOut;
+    Username := pLib.Config.Email.Usuario;
+    UseThread := pLib.Config.Email.SegundoPlano;
+  end;
+end;
+
+procedure TLibSatDM.AplicarConfigPosPrinter;
+begin
+   with ACBrPosPrinter1 do
+  begin
+    ArqLog := pLib.Config.PosPrinter.ArqLog;
+    Modelo := TACBrPosPrinterModelo(pLib.Config.PosPrinter.Modelo);
+    Porta := pLib.Config.PosPrinter.Porta;
+    Device.TimeOut := pLib.Config.PosPrinter.TimeOut;
+    PaginaDeCodigo := TACBrPosPaginaCodigo(pLib.Config.PosPrinter.PaginaDeCodigo);
+    ColunasFonteNormal := pLib.Config.PosPrinter.ColunasFonteNormal;
+    EspacoEntreLinhas := pLib.Config.PosPrinter.EspacoEntreLinhas;
+    LinhasEntreCupons := pLib.Config.PosPrinter.LinhasEntreCupons;
+    CortaPapel := pLib.Config.PosPrinter.CortaPapel;
+    TraduzirTags := pLib.Config.PosPrinter.TraduzirTags;
+    IgnorarTags := pLib.Config.PosPrinter.IgnorarTags;
+    LinhasBuffer := pLib.Config.PosPrinter.LinhasBuffer;
+    ControlePorta := pLib.Config.PosPrinter.ControlePorta;
+    VerificarImpressora := pLib.Config.PosPrinter.VerificarImpressora;
+
+    ConfigBarras.MostrarCodigo := pLib.Config.PosPrinter.BcMostrarCodigo;
+    ConfigBarras.LarguraLinha := pLib.Config.PosPrinter.BcLarguraLinha;
+    ConfigBarras.Altura := pLib.Config.PosPrinter.BcAltura;
+    ConfigBarras.Margem := pLib.Config.PosPrinter.BcMargem;
+
+    ConfigQRCode.Tipo := pLib.Config.PosPrinter.QrTipo;
+    ConfigQRCode.LarguraModulo := pLib.Config.PosPrinter.QrLarguraModulo;
+    ConfigQRCode.ErrorLevel := pLib.Config.PosPrinter.QrErrorLevel;
+
+    ConfigLogo.IgnorarLogo := pLib.Config.PosPrinter.LgIgnorarLogo;
+    ConfigLogo.KeyCode1 := pLib.Config.PosPrinter.LgKeyCode1;
+    ConfigLogo.KeyCode2 := pLib.Config.PosPrinter.LgKeyCode2;
+    ConfigLogo.FatorX := pLib.Config.PosPrinter.LgFatorX;
+    ConfigLogo.FatorY := pLib.Config.PosPrinter.LgFatorY;
+
+    ConfigGaveta.SinalInvertido := pLib.Config.PosPrinter.GvSinalInvertido;
+    ConfigGaveta.TempoON := pLib.Config.PosPrinter.GvTempoON;
+    ConfigGaveta.TempoOFF := pLib.Config.PosPrinter.GvTempoOFF;
+
+    ConfigModoPagina.Largura := pLib.Config.PosPrinter.MpLargura;
+    ConfigModoPagina.Altura := pLib.Config.PosPrinter.MpAltura;
+    ConfigModoPagina.Esquerda := pLib.Config.PosPrinter.MpEsquerda;
+    ConfigModoPagina.Topo := pLib.Config.PosPrinter.MpTopo;
+    ConfigModoPagina.Direcao := TACBrPosDirecao(pLib.Config.PosPrinter.MpDirecao);
+    ConfigModoPagina.EspacoEntreLinhas := pLib.Config.PosPrinter.MpEspacoEntreLinhas;
+
+    Device.ParamsString := pLib.Config.PosPrinter.DeviceParams;
   end;
 end;
 
@@ -175,6 +250,92 @@ procedure TLibSatDM.GravarLog(AMsg: String; NivelLog: TNivelLog;
 begin
   if Assigned(pLib) then
     pLib.GravarLog(AMsg, NivelLog, Traduzir);
+end;
+
+procedure TLibSatDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolean);
+var
+  pLibConfig: TLibSATConfig;
+begin
+  pLibConfig := TLibSATConfig(pLib.Config);
+
+  with pLibConfig.Extrato do
+  begin
+    if TipoExtrato = teFortes then
+    begin
+      ACBrSAT1.Extrato := ACBrSATExtratoFortes1;
+
+      if NomeImpressora <> '' then
+        ACBrSATExtratoFortes1.PrinterName := NomeImpressora
+      else
+        ACBrSATExtratoFortes1.PrinterName := PrinterName;
+
+      ACBrSATExtratoFortes1.LarguraBobina := LarguraBobina;
+      ACBrSATExtratoFortes1.Margens.Topo := MargensTopo;
+      ACBrSATExtratoFortes1.Margens.Esquerda := MargensEsquerda;
+      ACBrSATExtratoFortes1.Margens.Fundo := MargensFundo;
+      ACBrSATExtratoFortes1.Margens.Direita := MargensDireita;
+      ACBrSATExtratoFortes1.EspacoFinal := EspacoFinal;
+      ACBrSATExtratoFortes1.LogoWidth := LogoWidth;
+      ACBrSATExtratoFortes1.LogoHeigth := LogoHeigth;
+      ACBrSATExtratoFortes1.LogoStretch := LogoStretch;
+      ACBrSATExtratoFortes1.LogoAutoSize := LogoAutoSize;
+      ACBrSATExtratoFortes1.LogoCenter := LogoCenter;
+      ACBrSATExtratoFortes1.LogoVisible := LogoVisible;
+    end
+    else
+    begin
+      ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
+      ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := ImprimeChaveEmUmaLinha;
+    end;
+
+    if FileExists(PictureLogo) then
+      ACBrSAT1.Extrato.PictureLogo.Bitmap.LoadFromFile(PictureLogo);
+
+    ACBrSAT1.Extrato.Mask_qCom := Mask_qCom;
+    ACBrSAT1.Extrato.Mask_vUnCom := Mask_vUnCom;
+    ACBrSAT1.Extrato.ImprimeQRCode := ImprimeQRCode;
+    ACBrSAT1.Extrato.ImprimeMsgOlhoNoImposto := ImprimeMsgOlhoNoImposto;
+    ACBrSAT1.Extrato.ImprimeCPFNaoInformado := ImprimeCPFNaoInformado;
+    ACBrSAT1.Extrato.MostrarPreview := MostrarPreview;
+    ACBrSAT1.Extrato.MostrarSetup := MostrarSetup;
+    ACBrSAT1.Extrato.NumCopias := NumCopias;
+    ACBrSAT1.Extrato.NomeArquivo := NomeArquivo;
+    ACBrSAT1.Extrato.SoftwareHouse := SoftwareHouse;
+    ACBrSAT1.Extrato.Site := Site;
+    ACBrSAT1.Extrato.MsgAppQRCode := MsgAppQRCode;
+    ACBrSAT1.Extrato.ImprimeEmUmaLinha := ImprimeEmUmaLinha;
+    ACBrSAT1.Extrato.ImprimeDescAcrescItem := ImprimeDescAcrescItem;
+    ACBrSAT1.Extrato.UsaCodigoEanImpressao := UsaCodigoEanImpressao;
+
+    if GerarPDF then
+      ACBrSAT1.Extrato.Filtro := fiPDF
+    else
+      ACBrSAT1.Extrato.Filtro := Filtro;
+  end;
+end;
+
+procedure TLibSatDM.CarregarDadosVenda(aStr: String; aNomePDF: String);
+begin
+  if Trim(aStr) = '' then exit;
+
+  if (pos(#10,aStr) = 0) and FileExists(aStr) then
+    ACBrSAT1.CFe.LoadFromFile(aStr)
+  else
+    ACBrSAT1.CFe.AsXMLString := aStr;
+
+  if (ACBrSAT1.Extrato.Filtro = fiPDF) then
+      ACBrSAT1.Extrato.NomeArquivo := IfThen(aNomePDF <> '', aNomePDF ,
+        ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaCFeVenda, ACBrSAT1.CFe.infCFe.ID,'','.pdf'));
+end;
+
+procedure TLibSatDM.CarregarDadosCancelamento(aStr: String);
+begin
+  if Trim(aStr) = '' then exit;
+
+  if (pos(#10,aStr) = 0) and FileExists(aStr) then
+    ACBrSAT1.CFeCanc.LoadFromFile(aStr)
+  else
+    ACBrSAT1.CFeCanc.AsXMLString := aStr;
 end;
 
 procedure TLibSatDM.Travar;

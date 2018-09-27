@@ -38,11 +38,18 @@ exports
   SAT_AtualizarSoftwareSAT,
   SAT_ComunicarCertificadoICPBRASIL,
   SAT_ExtrairLogs,
+  SAT_TesteFimAFim,
 
   SAT_CriarCFe,
   SAT_CriarEnviarCFe,
   SAT_EnviarCFe,
-  SAT_CancelarCFe;
+  SAT_CancelarCFe,
+
+  SAT_ImprimirExtratoVenda,
+  SAT_ImprimirExtratoResumido,
+  SAT_ImprimirExtratoCancelamento,
+  SAT_GerarPDFExtratoVenda,
+  SAT_EnviarEmail;
 
 begin
   {$IFDEF DEBUG}

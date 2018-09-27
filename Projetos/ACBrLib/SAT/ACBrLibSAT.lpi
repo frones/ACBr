@@ -240,7 +240,7 @@
       <Unit5>
         <Filename Value="ACBrLibSATDataModule.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="LibSATDM"/>
+        <ComponentName Value="LibSatDM"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <UnitName Value="ACBrLibSatDataModule"/>

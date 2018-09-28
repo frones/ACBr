@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2018
+-- pcesS2300 / pcesS2306/ pcesCommon --
+[*] Alterado o tipo do campo uf da classe instEnsino para String, pois este campo
+    é opcional.
+   Por: Italo Jurisato Junior
+
 20/09/2018
 -- Diversos --
 [*] Acrescentado a propriedade idEvento na classe Gerados, desta forma é possível

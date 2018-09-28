@@ -348,8 +348,8 @@ end;
 
 procedure TEvtTSVAltContr.GerarInstEnsino(obj: TinstEnsino);
 begin
-  if obj.cnpjInstEnsino <> EmptyStr then
-  begin
+//  if obj.cnpjInstEnsino <> EmptyStr then
+//  begin
     Gerador.wGrupo('instEnsino');
 
     Gerador.wCampo(tcStr, '', 'cnpjInstEnsino', 14,  14, 0, obj.cnpjInstEnsino);
@@ -358,11 +358,11 @@ begin
     Gerador.wCampo(tcStr, '', 'nrLograd',        1,  10, 0, obj.nrLograd);
     Gerador.wCampo(tcStr, '', 'bairro',          1,  60, 0, obj.bairro);
     Gerador.wCampo(tcStr, '', 'cep',             1,   8, 0, obj.cep);
-    Gerador.wCampo(tcStr, '', 'codMunic',        7,   7, 0, obj.codMunic);
-    Gerador.wCampo(tcStr, '', 'uf',              2,   2, 0, eSufToStr(obj.uf));
+    Gerador.wCampo(tcInt, '', 'codMunic',        7,   7, 0, obj.codMunic);
+    Gerador.wCampo(tcStr, '', 'uf',              2,   2, 0, obj.uf);
 
     Gerador.wGrupo('/instEnsino');
-  end;
+//  end;
 end;
 
 procedure TEvtTSVAltContr.GerarRemuneracao(obj: TRemuneracao);
@@ -493,7 +493,7 @@ begin
         infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.bairro         := INIRec.ReadString(sSecao, 'bairro', '');
         infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.Cep            := INIRec.ReadString(sSecao, 'cep', '');
         infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.codMunic       := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-        infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.uf             := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+        infoTSVAlteracao.infoComplementares.infoEstagiario.instEnsino.uf             := INIRec.ReadString(sSecao, 'uf', '');
 
         sSecao := 'ageIntegracao';
         if INIRec.ReadString(sSecao, 'cnpjAgntInteg', '') <> '' then

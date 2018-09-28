@@ -1475,7 +1475,7 @@ type
     Fbairro : String;
     FCep : String;
     FcodMunic : Integer;
-    FUf : tpUf;
+    FUf : String;
   public
     property cnpjInstEnsino : String read FcnpjInstEnsino write FcnpjInstEnsino;
     property nmRazao : String read FnmRazao write FnmRazao;
@@ -1484,7 +1484,7 @@ type
     property bairro : String read Fbairro write Fbairro;
     property Cep : String read FCep write FCep;
     property codMunic : Integer read FcodMunic write FcodMunic;
-    property Uf : tpUf read FUf write FUf;
+    property Uf : String read FUf write FUf;
   end;
 
   TageIntegracao = class(TPersistent)

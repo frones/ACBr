@@ -28,14 +28,29 @@ exports
 
   // Servicos
   NFE_StatusServico,
-  NFE_InutilizarNFe,
-  NFE_ConsultarNFe,
+  NFE_Inutilizar,
+  NFE_Enviar,
+  NFE_Consultar,
+  NFE_Cancelar,
+  NFE_EnviarEvento,
+  NFE_DistribuicaoDFePorUltNSU,
+  NFE_DistribuicaoDFePorNSU,
+  NFE_DistribuicaoDFePorChave,
+  NFE_EnviarEmail,
+  NFE_EnviarEmailEvento,
+  NFE_Imprimir,
+  NFE_ImprimirPDF,
+  NFE_ImprimirEvento,
+  NFE_ImprimirEventoPDF,
+  NFE_ImprimirInutilizacao,
+  NFE_ImprimirInutilizacaoPDF,
 
   // Arquivos
-  NFE_CarregarXMLNFe,
-  NFE_CarregarININFe,
-  NFE_LimparListaNFEs,
-  NFE_ValidarNFEs,
+  NFE_CarregarXML,
+  NFE_CarregarINI,
+  NFE_LimparLista,
+  NFE_Assinar,
+  NFE_Validar,
   NFE_ValidarRegrasdeNegocios,
   NFE_VerificarAssinatura;
 

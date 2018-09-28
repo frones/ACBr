@@ -187,7 +187,6 @@ type
     FNFeConfig: TConfiguracoesNFe;
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
-    procedure AplicarConfiguracoes; override;
 
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;

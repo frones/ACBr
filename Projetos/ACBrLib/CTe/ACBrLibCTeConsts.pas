@@ -48,14 +48,20 @@ const
 
   CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';
   CChaveTipoDACTe = 'TipoDACTe';
-  CChaveFormularioContinuo = 'FormularioContinuo';
-  CChaveTamanhoFonteEndereco = 'TamanhoFonteEndereco';
-  CChaveTamanhoFonteDemaisCampos = 'TamanhoFonteDemaisCampos';
-  CChaveTamanhoFonteRazaoSocial = 'TamanhoFonteRazaoSocial';
   CChaveExibeResumoCanhoto = 'ExibeResumoCanhoto';
   CChavePosCanhoto = 'PosCanhoto';
-  CChaveNomeFonte = 'NomeFonte';
   CChaveAlturaLinhaComun = 'AlturaLinhaComun';
+  CChaveCTeCancelada = 'CTeCancelada';
+  CChaveEPECEnviado = 'EPECEnviado';
+  CChaveImprimirHoraSaida = 'ImprimirHoraSaida';
+  CChavePrintDialog = 'PrintDialog';
+  CChaveUsarSeparadorPathPDF = 'UsarSeparadorPathPDF';
+  CChaveFax = 'Fax';
+  CChaveImprimirHoraSaida_Hora = 'ImprimirHoraSaida_Hora';
+  CChaveProtocoloCTe = 'ProtocoloCTe';
+  CChaveSistema = 'Sistema';
+  CChaveSite = 'Site';
+  CChaveTamanhoPapel = 'TamanhoPapel';
 
   CSessaoRespStatus = 'Status';
   CSessaoRespInutilizacao = 'Inutilizacao';
@@ -69,21 +75,30 @@ const
 
   ErrValidacaoCTe = -11;
   ErrChaveCTe = -12;
+  ErrAssinarCTe = -13;
+  ErrConsulta = -14;
+  ErrCNPJ = -15;
+  ErrRetorno = -16;
+  ErrEnvio = -17;
+  ErrEnvioEvento = -18;
 
 Resourcestring
-  SInfCTeNotasCarregadas = '%d CTe(s) Carregada(s)';
+  SInfCTeCarregados = '%d CTe(s) Carregado(s)';
+  SInfEventosCarregados = '%d Evento(s) Carregado(s)';
 
   SErrChaveInvalida = 'Chave % inválida.';
+  SErrCNPJInvalido = 'CNPJ % inválido.';
+  SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
 
-function SetRetornoCTesCarregadas(const NumCTe: Integer): Integer;
+function SetRetornoCTesCarregados(const NumCTe: Integer): Integer;
 
 implementation
 uses
   ACBrLibComum;
 
-function SetRetornoCTesCarregadas(const NumCTe: Integer): Integer;
+function SetRetornoCTesCarregados(const NumCTe: Integer): Integer;
 begin
-  Result := SetRetorno( NumCTe, Format(SInfCTeNotasCarregadas, [NumCTe]));
+  Result := SetRetorno( 0, {NumCTe,} Format(SInfCTeCarregados, [NumCTe]));
 end;
 
 end.

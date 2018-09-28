@@ -1,24 +1,21 @@
-unit ACBrLibNFeDataModule;
+unit ACBrLibCTeDataModule;
 
 {$mode delphi}
 
 interface
 
 uses
-  Classes, SysUtils, syncobjs, FileUtil, ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail,
-  ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr, ACBrLibConfig;
+  Classes, SysUtils, syncobjs, FileUtil, ACBrCTe, ACBrCTeDACTeRLClass, ACBrMail,
+  ACBrLibConfig;
 
 type
 
-  { TLibNFeDM }
+  { TLibCTeDM }
 
-  TLibNFeDM = class(TDataModule)
+  TLibCTeDM = class(TDataModule)
+    ACBrCTe1: TACBrCTe;
+    ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
     ACBrMail1: TACBrMail;
-    ACBrNFe1: TACBrNFe;
-    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
-    ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
-    ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
-    ACBrPosPrinter1: TACBrPosPrinter;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
 
@@ -37,51 +34,35 @@ implementation
 
 uses
   ACBrUtil,
-  ACBrLibNFeConfig, ACBrLibComum, ACBrLibNFeClass;
+  ACBrLibCTeConfig, ACBrLibComum, ACBrLibCTeClass;
 
 {$R *.lfm}
 
-{ TLibNFeDM }
+{ TLibCTeDM }
 
-procedure TLibNFeDM.DataModuleCreate(Sender: TObject);
+procedure TLibCTeDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
 end;
 
-procedure TLibNFeDM.DataModuleDestroy(Sender: TObject);
+procedure TLibCTeDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
 end;
 
-procedure TLibNFeDM.AplicarConfiguracoes;
+procedure TLibCTeDM.AplicarConfiguracoes;
 var
-  pLibConfig: TLibNFeConfig;
+  pLibConfig: TLibCTeConfig;
 begin
-  ACBrNFe1.SSL.DescarregarCertificado;
-  pLibConfig := TLibNFeConfig(TACBrLibNFe(pLib).Config);
-  ACBrNFe1.Configuracoes.Assign(pLibConfig.NFeConfig);
+  ACBrCTe1.SSL.DescarregarCertificado;
+  pLibConfig := TLibCTeConfig(TACBrLibCTe(pLib).Config);
+  ACBrCTe1.Configuracoes.Assign(pLibConfig.CTeConfig);
 
-  if (TACBrLibNFe(pLib).LibMail = nil) then
+  if (TACBrLibCTe(pLib).LibMail = nil) then
     AplicarConfigMail;
-  {
-  with ACBrMail do
-  begin
-    FromName := pLibConfig.Email.Nome;
-    From := pLibConfig.Email.Conta;
-    Host := pLibConfig.Email.Servidor;
-    Port := IntToStr(pLibConfig.Email.Porta);
-    Username := pLibConfig.Email.Usuario;
-    Password := pLibConfig.Email.Senha;
-    SetSSL := pLibConfig.Email.SSL;
-    SetTLS := pLibConfig.Email.TLS;
-    ReadingConfirmation := pLibConfig.Email.Confirmacao;
-    UseThread := pLibConfig.Email.SegundoPlano;
-    DefaultCharset := pLibConfig.Email.Codificacao;
-  end;
-  }
 end;
 
-procedure TLibNFeDM.AplicarConfigMail;
+procedure TLibCTeDM.AplicarConfigMail;
 begin
   with ACBrMail1 do
   begin
@@ -105,19 +86,19 @@ begin
   end;
 end;
 
-procedure TLibNFeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
+procedure TLibCTeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
 begin
   if Assigned(pLib) then
     pLib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
-procedure TLibNFeDM.Travar;
+procedure TLibCTeDM.Travar;
 begin
   GravarLog('Travar', logParanoico);
   FLock.Acquire;
 end;
 
-procedure TLibNFeDM.Destravar;
+procedure TLibCTeDM.Destravar;
 begin
   GravarLog('Destravar', logParanoico);
   FLock.Release;

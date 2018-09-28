@@ -80,21 +80,30 @@ const
 
   ErrValidacaoNFe = -11;
   ErrChaveNFe = -12;
+  ErrAssinarNFe = -13;
+  ErrConsulta = -14;
+  ErrCNPJ = -15;
+  ErrRetorno = -16;
+  ErrEnvio = -17;
+  ErrEnvioEvento = -18;
 
 Resourcestring
-  SInfNFeNotasCarregadas = '%d NFe(s) Carregada(s)';
+  SInfNFeCarregadas = '%d NFe(s) Carregada(s)';
+  SInfEventosCarregados = '%d Evento(s) Carregado(s)';
 
   SErrChaveInvalida = 'Chave % inválida.';
+  SErrCNPJInvalido = 'CNPJ % inválido.';
+  SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
 
-function SetRetornoNFesCarregadas(const NumNFe: Integer): Integer;
+function SetRetornoNFeCarregadas(const NumNFe: Integer): Integer;
 
 implementation
 uses
   ACBrLibComum;
 
-function SetRetornoNFesCarregadas(const NumNFe: Integer): Integer;
+function SetRetornoNFeCarregadas(const NumNFe: Integer): Integer;
 begin
-  Result := SetRetorno( NumNFe, Format(SInfNFeNotasCarregadas, [NumNFe]));
+  Result := SetRetorno( 0, {NumNFe,} Format(SInfNFeCarregadas, [NumNFe]));
 end;
 
 end.

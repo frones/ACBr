@@ -429,7 +429,7 @@ begin
   Gerador.wCampo(tcStr, '#06a', 'RENAVAM', 09, 11, 0, MDFe.Rodo.veicTracao.RENAVAM, DSC_RENAVAM);
   Gerador.wCampo(tcInt, '#07',  'tara   ', 01, 06, 1, MDFe.Rodo.veicTracao.tara, DSC_TARA);
   Gerador.wCampo(tcInt, '#08',  'capKG  ', 01, 06, 1, MDFe.Rodo.veicTracao.capKG, DSC_CAPKG);
-  Gerador.wCampo(tcInt, '#09',  'capM3  ', 01, 03, 1, MDFe.Rodo.veicTracao.capM3, DSC_CAPM3);
+  Gerador.wCampo(tcInt, '#09',  'capM3  ', 01, 03, 0, MDFe.Rodo.veicTracao.capM3, DSC_CAPM3);
 
   if (MDFe.Rodo.veicTracao.Prop.CNPJCPF <> '') or
      (MDFe.Rodo.veicTracao.Prop.RNTRC <> '') or
@@ -492,7 +492,7 @@ begin
     Gerador.wCampo(tcStr, '#26a', 'RENAVAM', 09, 11, 0, MDFe.Rodo.veicReboque[i].RENAVAM, DSC_RENAVAM);
     Gerador.wCampo(tcInt, '#27',  'tara   ', 01, 06, 1, MDFe.Rodo.veicReboque[i].tara, DSC_TARA);
     Gerador.wCampo(tcInt, '#28',  'capKG  ', 01, 06, 1, MDFe.Rodo.veicReboque[i].capKG, DSC_CAPKG);
-    Gerador.wCampo(tcInt, '#29',  'capM3  ', 01, 03, 1, MDFe.Rodo.veicReboque[i].capM3, DSC_CAPM3);
+    Gerador.wCampo(tcInt, '#29',  'capM3  ', 01, 03, 0, MDFe.Rodo.veicReboque[i].capM3, DSC_CAPM3);
 
     if (MDFe.Rodo.veicReboque[i].Prop.CNPJCPF <> '') or
        (MDFe.Rodo.veicReboque[i].Prop.RNTRC <> '') or

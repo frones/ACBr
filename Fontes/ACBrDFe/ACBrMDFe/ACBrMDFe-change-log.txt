@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2018
+-- pmdfeMDFeW --
+[*] A tag <capM3> estava como obrigatória sendo que é opcional.
+  por: Italo Jurisato Junior
+
 11/09/2018
 -- ACBrMDFeManifestos --
 [*] Ajuste na leitura do arquivo .ini baseado na versão 3.0 do MDFe

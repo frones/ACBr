@@ -68,6 +68,81 @@ function SAT_InicializarSAT: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndI
 function SAT_DesInicializar: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
 {%endregion}
 
+{%region Funções SAT}
+function SAT_AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_BloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar;
+  opcao: integer; novoCodigo: PChar; const sResposta: PChar; var esTamanho: longint):
+  longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longint;
+        {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_ConsultarStatusOperacional(const sResposta: PChar;
+  var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_ConsultarNumeroSessao(cNumeroDeSessao: integer;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_AtualizarSoftwareSAT(const sResposta: PChar;
+  var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_ExtrairLogs(eArquivo: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_TesteFimAFim(eArquivoXmlVenda: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+{%endregion}
+
+{%region CFe}
+function SAT_CriarCFe(eArquivoIni: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_CriarEnviarCFe(eArquivoIni: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_EnviarCFe(eArquivoXml: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_CancelarCFe(eArquivoXml: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+{%endregion}
+
+{%region Impressão}
+function SAT_ImprimirExtratoVenda(eArqXMLVenda, eNomeImpressora: PChar)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_ImprimirExtratoResumido(eArqXMLVenda, eNomeImpressora: PChar)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_ImprimirExtratoCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeImpressora: PChar)
+  : longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_GerarImpressaoFiscalMFe(eArqXMLVenda, eNomeImpressora: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+
+function SAT_EnviarEmail(eArqXMLVenda, sPara, sAssunto, eNomeArquivo, sMensagem,
+  sCC, eAnexos: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrSATLIBName;
+{%endregion}
+
 implementation
 
 end.

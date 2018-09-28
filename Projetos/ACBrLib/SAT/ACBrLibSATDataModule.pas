@@ -31,7 +31,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, syncobjs, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
-  ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATWS,
+  ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
   ACBrMail, ACBrPosPrinter;
 
 type

@@ -3993,7 +3993,7 @@ begin
               Bairro := 'Bairro Educacional';
               Cep := '86086086';
               codMunic := 4141414;
-              uf := ufPR;
+              uf := 'PR';
             end;
 
             with ageIntegracao do
@@ -4068,7 +4068,7 @@ begin
               Bairro := 'Bairro Educacional';
               Cep := '86086086';
               codMunic := 4141414;
-              uf := ufPR;
+              uf := 'PR';
             end;
 
             with ageIntegracao do

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2018
+[*] DoSATUnit
+Ajuste no método AssociarAssinatura
+
 11/09/2018
 [*] DoACBrMDFeUnit
 Ajuste na nomenclatura do Campo CNPJCPF, conforme alteração do componente

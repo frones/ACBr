@@ -1454,7 +1454,7 @@ var
 begin
   FEvento.idLote := idLote;
 
-  FPRetWS := SeparaDadosArray(['bpeResultMsg'], FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeRecepcaoEventoResult'], FPRetornoWS );
 
   EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   EventoRetorno.LerXml;

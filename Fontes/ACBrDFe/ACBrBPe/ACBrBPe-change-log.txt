@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2018
+-- ACBrBPeWebServices --
+[*] Alteração para uma correta leitura de retorno do evento, nome do grupo diferente do
+    padrão.
+   Por: Italo Jurisato Junior
+
 31/07/2018
 -- ACBrBPeDABPeESCPOS --
 [*] https://www.projetoacbr.com.br/forum/topic/45081-dabpe-erro-no-preenchimento-dos-dados-da-agencia-emitente/

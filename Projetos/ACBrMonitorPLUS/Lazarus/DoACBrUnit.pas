@@ -47,7 +47,7 @@ Function LerConverterIni( AStr: AnsiString ) : TMemIniFile;
 Function StringIsXML(AStr: AnsiString) : Boolean;
 
 implementation
-Uses ACBrUtil, DateUtils,
+Uses ACBrUtil, DateUtils, pcnConversao,
   {$IFDEF MSWINDOWS}sndkey32, Windows,{$ENDIF}
   {$IFNDEF NOGUI}Forms, ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
@@ -59,6 +59,7 @@ Var AltTab : Boolean ;
      nWait  : Integer ;
     {$ENDIF}
     Files  : String ;
+    NumAmbiente : integer;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor{$ELSE}dm{$ENDIF} do
   begin
@@ -221,8 +222,37 @@ begin
            else
               raise Exception.Create('Certificado '+Cmd.Params(0)+' Inválido.');
          end
-				 
-	else if Cmd.Metodo ='datahora' then
+
+        else if Cmd.Metodo = 'setwebservice' then
+        begin
+          if Cmd.Params(1) <> '' then
+          begin
+            ACBrNFe1.Configuracoes.WebServices.UF  := Cmd.Params(1);
+            ACBrCTe1.Configuracoes.WebServices.UF  := Cmd.Params(1);
+            ACBrMDFe1.Configuracoes.WebServices.UF := Cmd.Params(1);
+            ACBrGNRE1.Configuracoes.WebServices.UF := Cmd.Params(1);
+            cbUF.Text := Cmd.Params(1);
+          end;
+
+          if Cmd.Params(2) <> '' then
+          begin
+            NumAmbiente := StrToIntDef(Cmd.Params(2), 2);
+
+            if (NumAmbiente < 1) or (NumAmbiente > 2) then
+              raise Exception.Create('Ambiente Inválido: ' + IntToStr(NumAmbiente));
+
+            ACBrNFe1.Configuracoes.WebServices.Ambiente  := TpcnTipoAmbiente(NumAmbiente);
+            ACBrCTe1.Configuracoes.WebServices.Ambiente  := TpcnTipoAmbiente(NumAmbiente);
+            ACBrMDFe1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente(NumAmbiente);
+            ACBrGNRE1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente(NumAmbiente);
+            cbxAmbiente.ItemIndex                        := NumAmbiente-1;
+          end;
+          SalvarIni;
+
+          cmd.Resposta := Format('WebService configurado %s',[Cmd.Params(1)]);
+				end
+
+        else if Cmd.Metodo ='datahora' then
            Cmd.Resposta := FormatDateTime('dd/mm/yyyy hh:nn:ss', Now )
 					 
         else if Cmd.Metodo ='data' then

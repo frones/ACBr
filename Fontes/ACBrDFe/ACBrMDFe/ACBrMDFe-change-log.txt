@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/10/2018
+-- pmdfeMDFeW --
+[*] A tag <capKG> estava como obrigatória sendo que é opcional no veicTracao.
+  por: Italo Jurisato Junior
+
 28/09/2018
 -- pmdfeMDFeW --
 [*] A tag <capM3> estava como obrigatória sendo que é opcional.

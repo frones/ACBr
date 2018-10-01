@@ -977,11 +977,11 @@ begin
   if FxsdServico <> '' then
   begin
     case FProvedor of
-      proGiss: FNameSpaceDad := 'xmlns="http://www.giss.com.br/' + FxsdServico + '"' +
-                                 ' xmlns:n2="http://www.altova.com/samplexml/other-namespace"' +
-                                 ' xmlns:tipos="http://www.giss.com.br/tipos-v2_04.xsd"' +
-                                 ' xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"' +
-                                 ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
+//      proGiss: FNameSpaceDad := 'xmlns="http://www.giss.com.br/' + FxsdServico + '"' +
+//                                 ' xmlns:n2="http://www.altova.com/samplexml/other-namespace"' +
+//                                 ' xmlns:tipos="http://www.giss.com.br/tipos-v2_04.xsd"' +
+//                                 ' xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"' +
+//                                 ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
 
       // incluido em 23/06/2017 por italo
       proGovBr: FNameSpaceDad := 'xmlns:ns2="http://www.w3.org/2000/09/xmldsig#"' +

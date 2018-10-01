@@ -551,6 +551,10 @@ begin
   FxLinkURL_H := FPIniParams.ReadString(CodIBGE, 'LinkURL_H', '');
   FxLinkURL_P := FPIniParams.ReadString(CodIBGE, 'LinkURL_P', '');
 
+  // Configuração especifica da versão dos dados para cidades do mesmo provedor,
+  // mas com versões diferentes.
+  FConfigXML.VersaoDados := FPIniParams.ReadString(CodIBGE, 'VersaoDados', '');
+
   FPIniParams.Free;
 
   if FProvedor = proNenhum then
@@ -607,7 +611,12 @@ begin
   FConfigAssinar.FecharSessao := FPIniParams.ReadBool('Assinar', 'FecharSessao', False);
 
   FConfigXML.Layout := FPIniParams.ReadString('XML', 'Layout', 'ABRASF');
-  FConfigXML.VersaoDados := FPIniParams.ReadString('XML', 'VersaoDados', '');
+
+  // Configura com a versão que esta no arquivo <provedor>.ini caso a cidade não
+  // tenha uma versão especifica.
+  if FConfigXML.VersaoDados = '' then
+    FConfigXML.VersaoDados := FPIniParams.ReadString('XML', 'VersaoDados', '');
+
   FConfigXML.VersaoXML := FPIniParams.ReadString('XML', 'VersaoXML', '');
   FConfigXML.NameSpace := Trim(FPIniParams.ReadString('XML', 'NameSpace', ''));
   FConfigXML.CabecalhoStr := FPIniParams.ReadBool('XML', 'Cabecalho', False);

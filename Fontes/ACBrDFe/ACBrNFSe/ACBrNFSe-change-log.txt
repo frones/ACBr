@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/10/2018
+-- ACBrNFSeConfiguracoes --
+[*] Como alguns provedores estão definindo versão de dados diverentes para diverentes cidades,
+    foi incluido uma checagem se no arquivo Cidades.ini possui o campo VersaoDados se sim assume 
+    o seu valor, caso contrario assume o valor do campo VersaoDados que esta no arquivo INI do
+    provedor.
+Por: Italo Jurisato Junior
+
 20/09/2018
 -- pnfsLerListaNFSe --
 [*] https://www.projetoacbr.com.br/forum/topic/45530-provedor-nonoai-rs/?do=findComment&comment=307570

@@ -506,6 +506,98 @@ const
   CMetodoBaixarLista  = 'baixarlista';
   CMetodoDescricaoNCM = 'descricaoncm';
 
+  CMetodoLerFila            = 'lerfila';
+  CMetodoApagarFila         = 'apagarfila';
+  CMetodoFilaCount          = 'filacount';
+  CMetodoPrefixoaExcluir    = 'prefixoaexcluir';
+  CMetodoSetPrefixoaExcluir = 'setprefixoaexcluir';
+  CMetodoSufixo             = 'sufixo';
+  CMetodoSetSufixo          = 'setsufixo';
+  CMetodoExcluirSufixo      = 'excluirsufixo';
+  CMetodoSetExcluirSufixo   = 'setexcluirsufixo';
+  CMetodoUsarFila           = 'usarfila';
+  CMetodoSetUsarFila        = 'setusarfila';
+  CMetodoFilaMaxItens       = 'filamaxitens';
+  CMetodoSetFilaMaxItens    = 'setfilamaxitens';
+  CMetodoUltimaLeitura      = 'ultimaleitura';
+  CMetodoUltimoCodigo       = 'ultimocodigo';
+  CMetodoEnviarString       = 'enviarstring';
+  CMetodoLerString          = 'lerstring';
+
+  CMetodoTrabalhando      = 'trabalhando';
+  CMetodoLinhasCount      = 'linhascount';
+  CMetodoSetLinhasCount   = 'setlinhascount';
+  CMetodoColunas          = 'colunas';
+  CMetodoSetColunas       = 'setcolunas';
+  CMetodoAlinhamento      = 'alinhamento';
+  CMetodoSetAlinhamento   = 'setalinhamento';
+  CMetodoPassos           = 'passos';
+  CMetodoSetPassos        = 'setpassos';
+  CMetodoLimparDisplay    = 'limpardisplay';
+  CMetodoEscrever         = 'escrever';
+  CMetodoPosicionarCursor = 'posicionarcursor';
+  CMetodoParar            = 'parar';
+  CMetodoContinuar        = 'continuar';
+  CMetodoPararLinha       = 'pararlinha';
+  CMetodoContinuarLinha   = 'continuarlinha';
+  CMetodoExibirLinha      = 'exibirlinha';
+  CMetodoRolarLinha       = 'rolarlinha';
+
+  CMetodoConsultar = 'consultar';
+  CMetodoRastrear  = 'rastrear';
+
+  CMetodoSetPorta          = 'setporta';
+  CMetodoTemperatura       = 'temperatura';
+  CMetodoSetTemperatura    = 'settemperatura';
+  CMetodoIniciarEtiqueta   = 'iniciaretiqueta';
+  CMetodoFinalizarEtiqueta = 'finalizaretiqueta';
+  CMetodoAvanco            = 'avanco';
+  CMetodoSetAvanco         = 'setavanco';
+  CMetodoUnidade           = 'unidade';
+  CMetodoSetUnidade        = 'setunidade';
+  CMetodoDPI               = 'dpi';
+  CMetodoSetDPI            = 'setdpi';
+  CMetodoOrigem            = 'origem';
+  CMetodoSetOrigem         = 'setorigem';
+  CMetodoBackFeed          = 'backfeed';
+  CMetodoSetBackFeed       = 'setbackfeed';
+  CMetodoVelocidade        = 'velocidade';
+  CMetodoSetVelocidade     = 'setvelocidade';
+  CMetodoMargemEsquerda    = 'margemesquerda';
+  CMetodoSetMargemEsquerda = 'setmargemesquerda';
+  CMetodoImprimirTexto     = 'imprimirtexto';
+  CMetodoImprimirBarras    = 'imprimirbarras';
+  CMetodoImprimirCaixa     = 'imprimircaixa';
+  CMetodoImprimirImagem    = 'imprimirimagem';
+  CMetodoCarregarImagem    = 'carregarimagem';
+  CMetodoLimparMemoria     = 'limparmemoria';
+  CMetodoSetLimparMemoria  = 'setlimparmemoria';
+
+  CMetodoConsultaConfig  = 'consultaconfig';
+  CMetodoImprimirGNRe    = 'imprimirgnre';
+  CMetodoImprimirGNRePDF = 'imprimirgnrepdf';
+  CMetodoGerarGuia       = 'gerarguia';
+
+  CMetodoImprimirCMD            = 'imprimircmd';
+  CMetodoImprimirTAGs           = 'imprimirtags';
+  CMetodoLerStatusImpressora    = 'lerstatusimpressora';
+  CMetodoLerInfoImpressora      = 'lerinfoimpressora';
+  CMetodoSetModelo              = 'setmodelo';
+  CMetodoEspacoEntreLinhas      = 'espacoentrelinhas';
+  CMetodoSetEspacoEntreLinhas   = 'setespacoentrelinhas';
+  CMetodoLinhasEntreCupons      = 'linhasentrecupos';
+  CMetodoSetLinhasEntreCupons   = 'setlinhasentrecupos';
+  CMetodoLinhasBuffer           = 'linhasbuffer';
+  CMetodoSetLinhasBuffer        = 'setlinhasbuffer';
+  CMetodoColunasFonteExpandida  = 'colunasfonteexpandida';
+  CMetodoColunasFonteCondensada = 'colunasfontecondensada';
+  CMetodoPaginaDeCodigo         = 'paginadecodigo';
+  CMetodoSetPaginaDeCodigo      = 'setpaginadecodigo';
+  CMetodoColunasFonteNormal     = 'colunasfontenormal';
+  CMetodoSetColunasFonteNormal  = 'setcolunasfontenormal';
+  CMetodoCortaPapel             = 'cortapapel';
+  CMetodoSetCortaPapel          = 'setcortapapel';
+
   CExtensaoXML =                     '.xml';
 
   CExtensaoXmlNFe =                  '-nfe.xml';
@@ -622,6 +714,7 @@ const
   CKeyETQOrigem =                    'Origem';
   CKeyETQCopias =                    'Copias';
   CKeyETQUnidade =                   'Unidade';
+  CKeyETQAvanco =                    'Avanco';
 
   CSecCEP =                          'CEP';
   CKeyCEPWebService =                'WebService';

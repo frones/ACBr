@@ -1,176 +1,226 @@
 {******************************************************************************}
 { Projeto: ACBr Monitor                                                        }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicaÃ§Ã£o com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel SimÃµes de Almeida               }
-{                                                                              }
-{ Colaboradores nesse arquivo: Juliana Rodrigues Prado Tamizou                 }
-{                              Jean Patrick F. dos Santos (envio de e-mails)   }
-{                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pÃ¡gina do Projeto ACBr     }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa Ã© software livre; vocÃª pode redistribuÃ­-lo e/ou modificÃ¡-lo   }
-{ sob os termos da LicenÃ§a PÃºblica Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versÃ£o 2 da LicenÃ§a como (a seu critÃ©rio)       }
-{ qualquer versÃ£o mais nova.                                                   }
-{                                                                              }
-{  Este programa Ã© distribuÃ­do na expectativa de ser Ãºtil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIALIZAÃ‡ÃƒO OU DE ADEQUAÃ‡ÃƒO A}
-{ QUALQUER PROPÃ“SITO EM PARTICULAR. Consulte a LicenÃ§a PÃºblica Geral GNU para  }
-{ obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral GNU junto com este}
-{ programa; se nÃ£o, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. VocÃª tambÃ©m pode obter uma     }
-{ copia da licenÃ§a em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel SimÃµes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{       Rua Coronel Aureliano de Camargo, 973 - TatuÃ­ - SP - 18270-170         }
-{                                                                              }
-{******************************************************************************}
+{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
 
-{$mode objfpc}{$H+}
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+
+{ Colaboradores nesse arquivo:                                                 }
+
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+
+{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
+{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
+{ qualquer versão mais nova.                                                   }
+
+{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
+{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
+{ obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
+
+{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
+{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
+{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
+
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+
+{******************************************************************************}
+{$I ACBr.inc}
+
 unit DoSedexUnit;
 
 interface
 
 uses
-  Classes, SysUtils, CmdUnit, IniFiles;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrSedex,
+  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibSedexRespostas,
+  ACBrLibSedexConsts;
 
-procedure DoSedex(Cmd: TACBrCmd);
-procedure LerIniParametrosSedex(aStr: AnsiString);
-Function ProcessarRespostaSedex : String;
-Function ProcessarRespostaRastreio : String;
+type
+
+{ TACBrObjetoSedex }
+
+TACBrObjetoSedex = class(TACBrObjetoDFe)
+private
+  fACBrSedex: TACBrSedex;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrSedex: TACBrSedex); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  procedure LerIniSedex(aStr: String);
+
+  procedure RespostaConsulta;
+  procedure RespostaItensRastreio(ItemID: integer = 0);
+
+  function ProcessarRespostaSedex : String;
+  function ProcessarRespostaRastreio : String;
+
+  property ACBrSedex: TACBrSedex read fACBrSedex;
+end;
+
+{ TMetodoConsultar}
+TMetodoConsultar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoRastrear}
+TMetodoRastrear = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
 
 implementation
-uses ACBrUtil, ACBrSedex, DoACBrUnit,  typinfo,
-  {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
-Procedure DoSedex( Cmd : TACBrCmd ) ;
+{ TACBrObjetoSedex }
+
+constructor TACBrObjetoSedex.Create(AConfig: TMonitorConfig; ACBrSedex: TACBrSedex);
 begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrSedex1 {$ELSE}dm.ACBrSedex1 {$ENDIF} do
-  begin
-     if Cmd.Metodo = 'consultar' then
-     begin
-        if Cmd.Params(0) <> '' then
-           LerIniParametrosSedex(Cmd.Params(0));
+  inherited Create(AConfig);
 
-        Consultar;
-        Cmd.Resposta := ProcessarRespostaSedex;
-     end
+  fACBrSedex := ACBrSedex;
 
-     else if Cmd.Metodo = 'rastrear' then
-     begin
-        Rastrear(cmd.Params(0));
-        Cmd.Resposta := ProcessarRespostaRastreio;
-     end
+  ListaDeMetodos.Add(CMetodoConsultar);
+  ListaDeMetodos.Add(CMetodoRastrear);
+end;
 
-     else
-        raise Exception.Create('Comando invÃ¡lido ('+Cmd.Metodo+')') ;
-  end ;
-end ;
-
-procedure LerIniParametrosSedex( aStr: AnsiString ) ;
+procedure TACBrObjetoSedex.Executar(ACmd: TACBrCmd);
 var
-  MemFormatada : String;
-  IniSedex: TMemIniFile;
-  SL: TStringList;
-  NomeSessao: String;
+  AMetodoClass: TACBrMetodoClass;
+  CmdNum: Integer;
+  Ametodo: TACBrMetodo;
 begin
-  IniSedex := LerConverterIni(aStr);
-  try
-     with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrSedex1 {$ELSE}dm.ACBrSedex1 {$ENDIF} do
-     begin
-        NomeSessao := 'SEDEX';
-        MemFormatada     := IniSedex.ReadString(NomeSessao,'Mensagem','') ;
-        MemFormatada     := StringReplace( MemFormatada,'|',sLineBreak, [rfReplaceAll] );
+  inherited Executar(ACmd);
 
-        CepOrigem        := OnlyNumber(IniSedex.ReadString(NomeSessao,'CepOrigem',''));
-        CepDestino       := OnlyNumber(IniSedex.ReadString(NomeSessao,'CepDestino',''));
-        Servico          := TACBrTpServico(IniSedex.ReadInteger(NomeSessao,'Servico',0));
-        Peso             := IniSedex.ReadFloat(NomeSessao,'Peso',0);
-        Altura           := IniSedex.ReadFloat(NomeSessao,'Altura',0);
-        Largura          := IniSedex.ReadFloat(NomeSessao,'Largura',0);
-        Comprimento      := IniSedex.ReadFloat(NomeSessao,'Comprimento',0);
-        Diametro         := IniSedex.ReadFloat(NomeSessao,'Diametro',0);
-        ValorDeclarado   := IniSedex.ReadFloat(NomeSessao,'ValorDeclarado',0);
-        Formato          := TACBrTpFormato(IniSedex.ReadInteger(NomeSessao,'Formato',0));
-        AvisoRecebimento := IniSedex.ReadBool(NomeSessao,'AvisoRecebimento',False);
-        MaoPropria       := IniSedex.ReadBool(NomeSessao,'MaoPropria',False);
-     end;
-  finally
-     SL.Free;
-     IniSedex.Free;
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
+
+  case CmdNum of
+    0  : AMetodoClass := TMetodoConsultar;
+    1  : AMetodoClass := TMetodoRastrear;
+  end;
+
+  if Assigned(AMetodoClass) then
+  begin
+    Ametodo := AMetodoClass.Create(ACmd, Self);
+    try
+      Ametodo.Executar;
+    finally
+      Ametodo.Free;
+    end;
   end;
 end;
 
-function ProcessarRespostaSedex : String ;
-var
-  Ini : TMemIniFile ;
-  Secao : String ;
-  SL : TStringList ;
+procedure TACBrObjetoSedex.LerIniSedex(aStr: String);
 begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrSedex1 {$ELSE}dm.ACBrSedex1 {$ENDIF} do
-  begin
-     Ini := TMemIniFile.Create('');
-     SL  := TStringList.Create;
-     try
-        Secao := 'Consulta';
-        Ini.WriteString(Secao,'CodigoServico',retCodigoServico);
-        Ini.WriteFloat(Secao,'Valor',retValor);
-        Ini.WriteInteger(Secao,'PrazoEntrega',retPrazoEntrega);
-        Ini.WriteFloat(Secao,'ValorSemAdicionais',retValorSemAdicionais);
-        Ini.WriteFloat(Secao,'ValorMaoPropria',retValorMaoPropria);
-        Ini.WriteFloat(Secao,'ValorAvisoRecebimento',retValorAvisoRecebimento);
-        Ini.WriteFloat(Secao,'ValorValorDeclarado',retValorValorDeclarado);
-        Ini.WriteString(Secao,'EntregaDomiciliar',retEntregaDomiciliar);
-        Ini.WriteString(Secao,'EntregaSabado',retEntregaSabado);
-        Ini.WriteInteger(Secao,'Erro',retErro);
-        Ini.WriteString(Secao,'MsgErro',retMsgErro);
-
-        Ini.GetStrings(SL);
-
-        Result := SL.Text;
-     finally
-        Ini.Free ;
-        SL.Free;
-     end;
-  end ;
+  if not ( ACBrSedex.LerArqIni( aStr ) ) then
+      raise exception.Create('Erro ao ler arquivo de entrada.');
 end;
 
-function ProcessarRespostaRastreio: String;
+procedure TACBrObjetoSedex.RespostaConsulta;
 var
-  Ini : TMemIniFile ;
-  Secao : String ;
-  SL : TStringList ;
-  I: Integer;
+  Resp: TLibSedexConsulta;
 begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrSedex1 {$ELSE}dm.ACBrSedex1 {$ENDIF} do
+  Resp := TLibSedexConsulta.Create(resINI);
+  try
+    with fACBrSedex do
+    begin
+      Resp.CodigoServico := retCodigoServico;
+      Resp.Valor := retValor;
+      Resp.PrazoEntrega := retPrazoEntrega;
+      Resp.ValorSemAdicionais := retValorSemAdicionais;
+      Resp.ValorMaoPropria := retValorMaoPropria;
+      Resp.ValorAvisoRecebimento := retValorAvisoRecebimento;
+      Resp.ValorValorDeclarado := retValorValorDeclarado;
+      Resp.EntregaDomiciliar := retEntregaDomiciliar;
+      Resp.EntregaSabado := retEntregaSabado;
+      Resp.Erro := retErro;
+      Resp.MsgErro := retMsgErro;
+
+      fpCmd.Resposta := retMsgErro + sLineBreak;
+      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+    end;
+  finally
+    Resp.Free;
+  end;
+end;
+
+procedure TACBrObjetoSedex.RespostaItensRastreio(ItemID: integer);
+var
+  Resp: TLibSedexRastreio;
+begin
+  Resp := TLibSedexRastreio.Create(
+          CSessaoRespRastreio + Trim(IntToStrZero(ItemID +1, 2)), resINI);
+  try
+    with fACBrSedex.retRastreio[ItemID] do
+    begin
+      Resp.DataHora := DataHora;
+      Resp.Local := Local;
+      Resp.Situacao := Situacao;
+      Resp.Observacao := Observacao;
+
+      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+    end;
+  finally
+    Resp.Free;
+  end;
+end;
+
+function TACBrObjetoSedex.ProcessarRespostaSedex: String;
+begin
+  RespostaConsulta;
+  Result := fpCmd.Resposta;
+end;
+
+function TACBrObjetoSedex.ProcessarRespostaRastreio: String;
+var
+  I: integer;
+begin
+  for I := 0 to ACBrSedex.retRastreio.Count - 1 do
+    RespostaItensRastreio(I);
+
+  Result := fpCmd.Resposta;
+end;
+
+{ TMetodoConsultar }
+
+{ Params: 0 - String com o Path e nome do arquivo ini
+}
+procedure TMetodoConsultar.Executar;
+var
+  AIni: String;
+begin
+  AIni := fpCmd.Params(0);
+
+  with TACBrObjetoSedex(fpObjetoDono) do
   begin
-     Ini := TMemIniFile.Create('');
-     SL  := TStringList.Create;
-     try
-        For I := 0 to retRastreio.Count-1 do
-        begin
-          Secao := 'Rastreio'+IntToStrZero(I,2);
+    if AIni <> '' then
+      LerIniSedex(AIni);
 
-          Ini.WriteDateTime(Secao,'DataHora',retRastreio[I].DataHora);
-          Ini.WriteString(Secao,'Local',retRastreio[I].Local);
-          Ini.WriteString(Secao,'Situacao',retRastreio[I].Situacao);
-          Ini.WriteString(Secao,'Observacao',retRastreio[I].Observacao);
-        end;
+    ACBrSedex.Consultar;
+    RespostaConsulta;
+  end;
+end;
 
-        Ini.GetStrings(SL);
+{ TMetodoRastrear }
 
-        Result := SL.Text;
-     finally
-        Ini.Free ;
-        SL.Free;
-     end;
-  end ;
+{ Params: 0 - String com o código de rastreio
+}
+procedure TMetodoRastrear.Executar;
+var
+  I: integer;
+begin
+  with TACBrObjetoSedex(fpObjetoDono) do
+  begin
+    ACBrSedex.Rastrear( fpCmd.Params(0) );
+
+    for I := 0 to ACBrSedex.retRastreio.Count - 1 do
+      RespostaItensRastreio(I);
+  end;
 end;
 
 end.
-

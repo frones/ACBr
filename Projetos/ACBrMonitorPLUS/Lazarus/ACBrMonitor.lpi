@@ -22,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="2"/>
-      <BuildNr Value="20"/>
+      <BuildNr Value="21"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion="1.2.0.1"/>
@@ -38,7 +38,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\..\ACBrLib\MDFe;..\..\ACBrLib\Comum;..\..\ACBrLib\eSocial;..\..\ACBrLib\Reinf;..\..\ACBrLib\NFe;..\..\ACBrLib\CTe;..\..\ACBrLib\SAT"/>
+            <OtherUnitFiles Value="..\..\ACBrLib\MDFe;..\..\ACBrLib\Comum;..\..\ACBrLib\eSocial;..\..\ACBrLib\Reinf;..\..\ACBrLib\NFe;..\..\ACBrLib\CTe;..\..\ACBrLib\SAT;..\..\ACBrLib\CEP;..\..\ACBrLib\IBGE;..\..\ACBrLib\Sedex;..\..\ACBrLib\GNRe"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Linking>
@@ -171,7 +171,7 @@
         <PackageName Value="LCL"/>
       </Item33>
     </RequiredPackages>
-    <Units Count="47">
+    <Units Count="55">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -380,6 +380,38 @@
         <Filename Value="..\..\ACBrLib\SAT\ACBrLibSATConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit46>
+      <Unit47>
+        <Filename Value="..\..\ACBrLib\CEP\ACBrLibCEPRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="..\..\ACBrLib\CEP\ACBrLibCEPConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="..\..\ACBrLib\IBGE\ACBrLibIBGEConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit49>
+      <Unit50>
+        <Filename Value="..\..\ACBrLib\IBGE\ACBrLibIBGERespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="..\..\ACBrLib\Sedex\ACBrLibSedexConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="..\..\ACBrLib\Sedex\ACBrLibSedexRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="..\..\ACBrLib\GNRe\ACBrLibGNReConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit53>
+      <Unit54>
+        <Filename Value="..\..\ACBrLib\GNRe\ACBrLibGNReRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit54>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -390,7 +422,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\ACBrLib\MDFe;..\..\ACBrLib\Comum;..\..\ACBrLib\eSocial;..\..\ACBrLib\Reinf;..\..\ACBrLib\NFe;..\..\ACBrLib\CTe;..\..\ACBrLib\SAT"/>
+      <OtherUnitFiles Value="..\..\ACBrLib\MDFe;..\..\ACBrLib\Comum;..\..\ACBrLib\eSocial;..\..\ACBrLib\Reinf;..\..\ACBrLib\NFe;..\..\ACBrLib\CTe;..\..\ACBrLib\SAT;..\..\ACBrLib\CEP;..\..\ACBrLib\IBGE;..\..\ACBrLib\Sedex;..\..\ACBrLib\GNRe"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

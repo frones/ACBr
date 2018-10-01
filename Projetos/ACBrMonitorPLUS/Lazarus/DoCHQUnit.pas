@@ -1,165 +1,635 @@
 {******************************************************************************}
 { Projeto: ACBr Monitor                                                        }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicaÃ§Ã£o com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel SimÃµes de Almeida               }
-{                                                                              }
+{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
+
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+
 { Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pÃ¡gina do Projeto ACBr     }
+
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa Ã© software livre; vocÃª pode redistribuÃ­-lo e/ou modificÃ¡-lo   }
-{ sob os termos da LicenÃ§a PÃºblica Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versÃ£o 2 da LicenÃ§a como (a seu critÃ©rio)       }
-{ qualquer versÃ£o mais nova.                                                   }
-{                                                                              }
-{  Este programa Ã© distribuÃ­do na expectativa de ser Ãºtil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIALIZAÃ‡ÃƒO OU DE ADEQUAÃ‡ÃƒO A}
-{ QUALQUER PROPÃ“SITO EM PARTICULAR. Consulte a LicenÃ§a PÃºblica Geral GNU para  }
+
+{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
+{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
+{ qualquer versão mais nova.                                                   }
+
+{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
+{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
 { obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral GNU junto com este}
-{ programa; se nÃ£o, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. VocÃª tambÃ©m pode obter uma     }
-{ copia da licenÃ§a em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel SimÃµes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{       Rua Coronel Aureliano de Camargo, 973 - TatuÃ­ - SP - 18270-170         }
-{                                                                              }
+
+{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
+{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
+{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
+
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+
 {******************************************************************************}
+{$I ACBr.inc}
 
-{$mode objfpc}{$H+}
-
-unit DoCHQUnit ;
+unit DoCHQUnit;
 
 interface
-Uses Classes, TypInfo, SysUtils, CmdUnit ;
 
-Procedure DoCHQ( Cmd : TACBrCmd ) ;
+uses
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrCHQ, DoECFUnit,
+  ACBrMonitorConsts, ACBrMonitorConfig;
+
+type
+
+{ TACBrObjetoCHQ }
+
+TACBrObjetoCHQ = class(TACBrObjetoDFe)
+private
+  fACBrCHQ: TACBrCHQ;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrCHQ: TACBrCHQ); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  property ACBrCHQ: TACBrCHQ read fACBrCHQ;
+end;
+
+{ TMetodoAtivar}
+TMetodoAtivar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDesativar}
+TMetodoDesativar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAtivo}
+TMetodoAtivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoModeloStr}
+TMetodoModeloStr = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoModelo}
+TMetodoModelo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoPorta}
+TMetodoPorta = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoChequePronto}
+TMetodoChequePronto = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoBanco}
+TMetodoBanco = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetBanco}
+TMetodoSetBanco = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCidade}
+TMetodoCidade = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetCidade}
+TMetodoSetCidade = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoFavorecido}
+TMetodoFavorecido = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetFavorecido}
+TMetodoSetFavorecido = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoObservacao}
+TMetodoObservacao = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetObservacao}
+TMetodoSetObservacao = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoValor}
+TMetodoValor = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetValor}
+TMetodoSetValor = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoData}
+TMetodoData = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetData}
+TMetodoSetData = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoBomPara}
+TMetodoBomPara = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetBomPara}
+TMetodoSetBomPara = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirCheque}
+TMetodoImprimirCheque = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTravarCheque}
+TMetodoTravarCheque = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDestravarCheque}
+TMetodoDestravarCheque = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCMC7}
+TMetodoCMC7 = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirLinha}
+TMetodoImprimirLinha = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirVerso}
+TMetodoImprimirVerso = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
 
 implementation
-uses ACBrCHQ, ACBrUtil,  DoECFUnit,
-  {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
-Procedure DoCHQ( Cmd : TACBrCmd ) ;
-Var Linhas : TStringList ;
+{ TACBrObjetoCHQ }
 
+constructor TACBrObjetoCHQ.Create(AConfig: TMonitorConfig; ACBrCHQ: TACBrCHQ);
 begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrCHQ1 {$ELSE}dm.ACBrCHQ1 {$ENDIF} do
+  inherited Create(AConfig);
+
+  fACBrCHQ := ACBrCHQ;
+
+  ListaDeMetodos.Add(CMetodoAtivar);
+  ListaDeMetodos.Add(CMetodoDesativar);
+  ListaDeMetodos.Add(CMetodoAtivo);
+  ListaDeMetodos.Add(CMetodoModeloStr);
+  ListaDeMetodos.Add(CMetodoModelo);
+  ListaDeMetodos.Add(CMetodoPorta);
+  ListaDeMetodos.Add(CMetodoChequePronto);
+  ListaDeMetodos.Add(CMetodoBanco);
+  ListaDeMetodos.Add(CMetodoSetBanco);
+  ListaDeMetodos.Add(CMetodoCidade);
+  ListaDeMetodos.Add(CMetodoSetCidade);
+  ListaDeMetodos.Add(CMetodoFavorecido);
+  ListaDeMetodos.Add(CMetodoSetFavorecido);
+  ListaDeMetodos.Add(CMetodoObservacao);
+  ListaDeMetodos.Add(CMetodoSetObservacao);
+  ListaDeMetodos.Add(CMetodoValor);
+  ListaDeMetodos.Add(CMetodoSetValor);
+  ListaDeMetodos.Add(CMetodoData);
+  ListaDeMetodos.Add(CMetodoSetData);
+  ListaDeMetodos.Add(CMetodoBomPara);
+  ListaDeMetodos.Add(CMetodoSetBomPara);
+  ListaDeMetodos.Add(CMetodoImprimirCheque);
+  ListaDeMetodos.Add(CMetodoTravarCheque);
+  ListaDeMetodos.Add(CMetodoDestravarCheque);
+  ListaDeMetodos.Add(CMetodoCMC7);
+  ListaDeMetodos.Add(CMetodoImprimirLinha);
+  ListaDeMetodos.Add(CMetodoImprimirVerso);
+end;
+
+procedure TACBrObjetoCHQ.Executar(ACmd: TACBrCmd);
+var
+  AMetodoClass: TACBrMetodoClass;
+  CmdNum: Integer;
+  Ametodo: TACBrMetodo;
+begin
+  inherited Executar(ACmd);
+
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
+
+  case CmdNum of
+    0  : AMetodoClass := TMetodoAtivar;
+    1  : AMetodoClass := TMetodoDesativar;
+    2  : AMetodoClass := TMetodoAtivo;
+    3  : AMetodoClass := TMetodoModeloStr;
+    4  : AMetodoClass := TMetodoModelo;
+    5  : AMetodoClass := TMetodoPorta;
+    6  : AMetodoClass := TMetodoChequePronto;
+    7  : AMetodoClass := TMetodoBanco;
+    8  : AMetodoClass := TMetodoSetBanco;
+    9  : AMetodoClass := TMetodoCidade;
+   10  : AMetodoClass := TMetodoSetCidade;
+   11  : AMetodoClass := TMetodoFavorecido;
+   12  : AMetodoClass := TMetodoSetFavorecido;
+   13  : AMetodoClass := TMetodoObservacao;
+   14  : AMetodoClass := TMetodoSetObservacao;
+   15  : AMetodoClass := TMetodoValor;
+   16  : AMetodoClass := TMetodoSetValor;
+   17  : AMetodoClass := TMetodoData;
+   18  : AMetodoClass := TMetodoSetData;
+   19  : AMetodoClass := TMetodoBomPara;
+   20  : AMetodoClass := TMetodoSetBomPara;
+   21  : AMetodoClass := TMetodoImprimirCheque;
+   22  : AMetodoClass := TMetodoTravarCheque;
+   23  : AMetodoClass := TMetodoDestravarCheque;
+   24  : AMetodoClass := TMetodoCMC7;
+   25  : AMetodoClass := TMetodoImprimirLinha;
+   26  : AMetodoClass := TMetodoImprimirVerso;
+  end;
+
+  if Assigned(AMetodoClass) then
   begin
-     try
-        if Cmd.Metodo = 'ativar' then  { Ativa a Impress.Cheque }
-           Ativar
+    Ametodo := AMetodoClass.Create(ACmd, Self);
+    try
+      Ametodo.Executar;
+    finally
+      Ametodo.Free;
+    end;
+  end;
+end;
 
-        else if Cmd.Metodo = 'desativar' then
-           Desativar 
+{ TMetodoAtivar }
 
-        else if Cmd.Metodo = 'ativo' then
-           Cmd.Resposta := BoolToStr(Ativo, true)
+procedure TMetodoAtivar.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.Ativar;
+  end;
+end;
 
-        else if Cmd.Metodo = 'modelostr' then
-           Cmd.Resposta := ModeloStr
+{ TMetodoDesativar }
 
-        else if Cmd.Metodo = 'modelo' then
-           Cmd.Resposta := GetEnumName(TypeInfo(TACBrCHQModelo),Integer(Modelo))
+procedure TMetodoDesativar.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.Desativar;
+  end;
+end;
 
-        else if Cmd.Metodo = 'porta' then
-           Cmd.Resposta := Porta
+{ TMetodoAtivo }
 
-        else if Cmd.Metodo = 'chequepronto' then
-           Cmd.Resposta := BoolToStr(ChequePronto, true)
+procedure TMetodoAtivo.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := BoolToStr(ACBrCHQ.Ativo, true);
+  end;
+end;
 
-        else if Cmd.Metodo = 'banco' then
-           Cmd.Resposta := Banco
+{ TMetodoModeloStr }
 
-        else if Cmd.Metodo = 'setbanco' then
-           Banco := Cmd.Params(0)
+procedure TMetodoModeloStr.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrCHQ.ModeloStr;
+  end;
+end;
 
-        else if Cmd.Metodo = 'cidade' then
-           Cmd.Resposta := Cidade
+{ TMetodoModelo }
 
-        else if Cmd.Metodo = 'setcidade' then
-         begin
-           Cidade := Cmd.Params(0) ;
-           {$IFNDEF NOGUI}FrmACBrMonitor.edCHQCidade.Text := Cidade ;{$ENDIF}
-         end
+procedure TMetodoModelo.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := GetEnumName(TypeInfo(TACBrCHQModelo),Integer(ACBrCHQ.Modelo));
+  end;
+end;
 
-        else if Cmd.Metodo = 'favorecido' then
-           Cmd.Resposta := Favorecido
+{ TMetodoPorta }
 
-        else if Cmd.Metodo = 'setfavorecido' then
-         begin
-           Favorecido := Cmd.Params(0) ;
-           {$IFNDEF NOGUI}FrmACBrMonitor.edCHQFavorecido.Text := Favorecido ;{$ENDIF}
-         end
+procedure TMetodoPorta.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrCHQ.Porta;
+  end;
+end;
 
-        else if Cmd.Metodo = 'observacao' then
-           Cmd.Resposta := Observacao
+{ TMetodoChequePronto }
 
-        else if Cmd.Metodo = 'setobservacao' then
-           Observacao := Cmd.Params(0)
+procedure TMetodoChequePronto.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := BoolToStr(ACBrCHQ.ChequePronto, true);
+  end;
+end;
 
-        else if Cmd.Metodo = 'valor' then
-           Cmd.Resposta := FloatToStr(Valor) 
+{ TMetodoBanco }
 
-        else if Cmd.Metodo = 'setvalor' then
-           Valor := StringToFloat( Cmd.Params(0) )
+procedure TMetodoBanco.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrCHQ.Banco;
+  end;
+end;
 
-        else if Cmd.Metodo = 'data' then
-           Cmd.Resposta := FormatDateTime('dd/mm/yy', Data )
-        else if Cmd.Metodo = 'setdata' then
-           Data := StringToDateTime( Cmd.Params(0) )
+{ TMetodoSetBanco }
 
-        else if Cmd.Metodo = 'bompara' then
-           Cmd.Resposta := FormatDateTime('dd/mm/yy', BomPara)
-        else if Cmd.Metodo = 'setbompara' then
-           BomPara := StringToDateTime(Cmd.Params(0))
+{ Params: 0 Inteiro - Código do banco
+}
+procedure TMetodoSetBanco.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.Banco := fpCmd.Params(0)
+  end;
+end;
 
-        else if Cmd.Metodo = 'imprimircheque' then
-         begin
-           {$IFNDEF NOGUI}
-             if FrmACBrMonitor.chCHQVerForm.Checked and (not ChequePronto) then
-           {$ELSE}
-             if dm.VerificaCheque then
-           {$ENDIF}
-              raise Exception.Create('FormulÃ¡rio de Cheque nÃ£o posicionado');
+{ TMetodoCidade }
 
-           ImprimirCheque;
-         end
+procedure TMetodoCidade.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrCHQ.Cidade;
+  end;
+end;
 
-        else if Cmd.Metodo = 'travarcheque' then
-           TravarCheque
+{ TMetodoSetCidade }
 
-        else if Cmd.Metodo = 'destravarcheque' then
-           DestravarCheque
+{ Params: 0 - String com o nome da cidade
+}
+procedure TMetodoSetCidade.Executar;
+var
+  ACidade: String;
+begin
+  ACidade := fpCmd.Params(0);
 
-        else if Cmd.Metodo = 'cmc7' then
-           Cmd.Resposta := CMC7
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.Cidade := ACidade;
 
-        else if Cmd.Metodo = 'imprimirlinha' then
-           ImprimirLinha( Cmd.Params(0) )
+    with MonitorConfig.CHQ do
+      Cidade := ACidade;
 
-        else if Cmd.Metodo = 'imprimirverso' then
-         begin
-           Linhas := TStringList.Create ;
-           try
-              //StringToMemo( Cmd.Params(0), Linhas ); {Linha separadas por | (pipe)}
-              ImprimirVerso( Linhas );
-           finally
-              Linhas.Free ;
-           end ;
-         end
-         
-        ELSE
-           raise Exception.Create('Comando invÃ¡lido ('+Cmd.Comando+')') ;
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
 
-     finally
-        { Nada a fazer aqui por enquanto... :) }
-     end ;
-  end ;
-end ;
+{ TMetodoFavorecido }
+
+procedure TMetodoFavorecido.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrCHQ.Favorecido;
+  end;
+end;
+
+{ TMetodoSetFavorecido }
+
+{ Params: 0 - String com o nome do favorecido
+}
+procedure TMetodoSetFavorecido.Executar;
+var
+  AFavorecido: String;
+begin
+  AFavorecido := fpCmd.Params(0);
+
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.Favorecido := AFavorecido;
+
+    with MonitorConfig.CHQ do
+      Favorecido := AFavorecido;
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
+
+{ TMetodoObservacao }
+
+procedure TMetodoObservacao.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrCHQ.Observacao;
+  end;
+end;
+
+{ TMetodoSetObservacao }
+
+{ Params: 0 - String com a observação
+}
+procedure TMetodoSetObservacao.Executar;
+var
+  AObservacao: String;
+begin
+  AObservacao := fpCmd.Params(0);
+
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.Observacao := AObservacao;
+  end;
+end;
+
+{ TMetodoValor }
+
+procedure TMetodoValor.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := FloatToStr(ACBrCHQ.Valor);
+  end;
+end;
+
+{ TMetodoSetValor }
+
+{ Params: 0 - String com o valor
+}
+procedure TMetodoSetValor.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.Valor := StringToFloat( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoData }
+
+procedure TMetodoData.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := FormatDateTime('dd/mm/yy', ACBrCHQ.Data );
+  end;
+end;
+
+{ TMetodoSetData }
+
+{ Params: 0 - String com a data no formato dd/mm/aaaa
+}
+procedure TMetodoSetData.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.Data := StringToDateTime( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoBomPara }
+
+procedure TMetodoBomPara.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := FormatDateTime('dd/mm/yy', ACBrCHQ.BomPara );
+  end;
+end;
+
+{ TMetodoSetBomPara }
+
+{ Params: 0 - String com a data no formato dd/mm/aaaa
+}
+procedure TMetodoSetBomPara.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.BomPara := StringToDateTime( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoImprimirCheque }
+
+procedure TMetodoImprimirCheque.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+//    {$IFNDEF NOGUI}
+//      if FrmACBrMonitor.chCHQVerForm.Checked and (not ACBrCHQ.ChequePronto) then
+//    {$ELSE}
+//      if dm.VerificaCheque then
+//    {$ENDIF}
+    if (not ACBrCHQ.ChequePronto) then
+       raise Exception.Create('Formulário de Cheque não posicionado');
+
+    ACBrCHQ.ImprimirCheque;
+  end;
+end;
+
+{ TMetodoTravarCheque }
+
+procedure TMetodoTravarCheque.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.TravarCheque;
+  end;
+end;
+
+{ TMetodoDestravarCheque }
+
+procedure TMetodoDestravarCheque.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.DestravarCheque;
+  end;
+end;
+
+{ TMetodoCMC7 }
+
+procedure TMetodoCMC7.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrCHQ.CMC7;
+  end;
+end;
+
+{ TMetodoImprimirLinha }
+
+{ Params: 0 - String com o conteudo da linha a ser impressa
+}
+procedure TMetodoImprimirLinha.Executar;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    ACBrCHQ.ImprimirLinha( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoImprimirVerso }
+
+{ Params: 0 - String com o conteudo a ser impresso no verso
+}
+procedure TMetodoImprimirVerso.Executar;
+var
+  Linhas: TStringList;
+begin
+  with TACBrObjetoCHQ(fpObjetoDono) do
+  begin
+    Linhas := TStringList.Create;
+    try
+      //StringToMemo( fpCmd.Params(0), Linhas ); {Linha separadas por | (pipe)}
+      ACBrCHQ.ImprimirVerso( Linhas );
+    finally
+      Linhas.Free;
+    end;
+  end;
+end;
 
 end.
-

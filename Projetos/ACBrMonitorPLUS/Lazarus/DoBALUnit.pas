@@ -1,109 +1,335 @@
 {******************************************************************************}
 { Projeto: ACBr Monitor                                                        }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicaÃ§Ã£o com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel SimÃµes de Almeida               }
-{                                                                              }
+{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
+
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+
 { Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pÃ¡gina do Projeto ACBr     }
+
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa Ã© software livre; vocÃª pode redistribuÃ­-lo e/ou modificÃ¡-lo   }
-{ sob os termos da LicenÃ§a PÃºblica Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versÃ£o 2 da LicenÃ§a como (a seu critÃ©rio)       }
-{ qualquer versÃ£o mais nova.                                                   }
-{                                                                              }
-{  Este programa Ã© distribuÃ­do na expectativa de ser Ãºtil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIALIZAÃ‡ÃƒO OU DE ADEQUAÃ‡ÃƒO A}
-{ QUALQUER PROPÃ“SITO EM PARTICULAR. Consulte a LicenÃ§a PÃºblica Geral GNU para  }
+
+{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
+{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
+{ qualquer versão mais nova.                                                   }
+
+{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
+{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
 { obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral GNU junto com este}
-{ programa; se nÃ£o, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. VocÃª tambÃ©m pode obter uma     }
-{ copia da licenÃ§a em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel SimÃµes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{       Rua Coronel Aureliano de Camargo, 973 - TatuÃ­ - SP - 18270-170         }
-{                                                                              }
+
+{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
+{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
+{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
+
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+
 {******************************************************************************}
+{$I ACBr.inc}
 
-{$mode objfpc}{$H+}
-
-unit DoBALUnit ;
+unit DoBALUnit;
 
 interface
-Uses Classes, TypInfo, SysUtils, CmdUnit ;
 
-Procedure DoBAL( Cmd : TACBrCmd ) ;
+uses
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrBAL,
+  ACBrMonitorConsts, ACBrMonitorConfig;
+
+// ACBrLibBALRespostas, ACBrLibResposta, ACBrDFeUtil, UtilUnit, DoACBrDFeUnit;
+
+type
+
+{ TACBrObjetoBAL }
+
+TACBrObjetoBAL = class(TACBrObjetoDFe)
+private
+  fACBrBAL: TACBrBAL;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrBAL: TACBrBAL); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  property ACBrBAL: TACBrBAL read fACBrBAL;
+end;
+
+{ TMetodoAtivar}
+TMetodoAtivar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDesativar}
+TMetodoDesativar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAtivo}
+TMetodoAtivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoModeloStr}
+TMetodoModeloStr = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoModelo}
+TMetodoModelo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoPorta}
+TMetodoPorta = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoIntervalo}
+TMetodoIntervalo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetIntervalo}
+TMetodoSetIntervalo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoLePeso}
+TMetodoLePeso = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoUltimoPesoLido}
+TMetodoUltimoPesoLido = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoUltimaResposta}
+TMetodoUltimaResposta = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoMonitorarBalanca}
+TMetodoMonitorarBalanca = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
 
 implementation
-uses  ACBrUtil, ACBrBAL,
+
+(*
+uses
   {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
+  IniFiles, DateUtils, Forms, strutils,
+  ACBrDFeConfiguracoes, pcnConversao, pcnAuxiliar, DoACBrUnit;
+*)
+{ TACBrObjetoBAL }
 
-Procedure DoBAL( Cmd : TACBrCmd ) ;
+constructor TACBrObjetoBAL.Create(AConfig: TMonitorConfig; ACBrBAL: TACBrBAL);
 begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrBAL1 {$ELSE}dm.ACBrBAL1 {$ENDIF} do
+  inherited Create(AConfig);
+
+  fACBrBAL := ACBrBAL;
+
+  ListaDeMetodos.Add(CMetodoAtivar);
+  ListaDeMetodos.Add(CMetodoDesativar);
+  ListaDeMetodos.Add(CMetodoAtivo);
+  ListaDeMetodos.Add(CMetodoModeloStr);
+  ListaDeMetodos.Add(CMetodoModelo);
+  ListaDeMetodos.Add(CMetodoPorta);
+  ListaDeMetodos.Add(CMetodoIntervalo);
+  ListaDeMetodos.Add(CMetodoSetIntervalo);
+  ListaDeMetodos.Add(CMetodoLePeso);
+  ListaDeMetodos.Add(CMetodoUltimoPesoLido);
+  ListaDeMetodos.Add(CMetodoUltimaResposta);
+  ListaDeMetodos.Add(CMetodoMonitorarBalanca);
+end;
+
+procedure TACBrObjetoBAL.Executar(ACmd: TACBrCmd);
+var
+  AMetodoClass: TACBrMetodoClass;
+  CmdNum: Integer;
+  Ametodo: TACBrMetodo;
+begin
+  inherited Executar(ACmd);
+
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
+
+  case CmdNum of
+    0  : AMetodoClass := TMetodoAtivar;
+    1  : AMetodoClass := TMetodoDesativar;
+    2  : AMetodoClass := TMetodoAtivo;
+    3  : AMetodoClass := TMetodoModeloStr;
+    4  : AMetodoClass := TMetodoModelo;
+    5  : AMetodoClass := TMetodoPorta;
+    6  : AMetodoClass := TMetodoIntervalo;
+    7  : AMetodoClass := TMetodoSetIntervalo;
+    8  : AMetodoClass := TMetodoLePeso;
+    9  : AMetodoClass := TMetodoUltimoPesoLido;
+    10 : AMetodoClass := TMetodoUltimaResposta;
+    11 : AMetodoClass := TMetodoMonitorarBalanca;
+  end;
+
+  if Assigned(AMetodoClass) then
   begin
-     try
-        if Cmd.Metodo = 'ativar' then begin { Ativa a BalanÃ§a }
-           Ativar ;
+    Ametodo := AMetodoClass.Create(ACmd, Self);
+    try
+      Ametodo.Executar;
+    finally
+      Ametodo.Free;
+    end;
+  end;
+end;
 
-           LePeso ;
-           if UltimaResposta = '' then begin
-              Desativar ;
-              raise Exception.Create('BalanÃ§a nÃ£o responde!') ;
-           end ;
-        end
+{ TMetodoAtivar }
 
-        else if Cmd.Metodo = 'desativar' then
-           Desativar
+procedure TMetodoAtivar.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    ACBrBAL.Ativar;
 
-        else if Cmd.Metodo = 'ativo' then
-           Cmd.Resposta := BoolToStr(Ativo, true)
+    ACBrBAL.LePeso;
+    if ACBrBAL.UltimaResposta = '' then
+    begin
+      ACBrBAL.Desativar;
 
-        else if Cmd.Metodo = 'modelostr' then
-           Cmd.Resposta := ModeloStr
+      fpCmd.Resposta := 'Balança não responde!';
 
-        else if Cmd.Metodo = 'modelo' then
-           Cmd.Resposta := GetEnumName(TypeInfo(TACBrBALModelo),Integer(Modelo))
+      raise Exception.Create('Balança não responde!');
+    end;
+  end;
+end;
 
-        else if Cmd.Metodo = 'porta' then
-           Cmd.Resposta := Porta
+{ TMetodoDesativar }
 
-        else if Cmd.Metodo = 'intervalo' then
-           Cmd.Resposta := IntToStr( Intervalo )
+procedure TMetodoDesativar.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    ACBrBAL.Desativar;
 
-        else if Cmd.Metodo = 'setintervalo' then
-           Intervalo := StrToInt( Cmd.Params(0) )
+    fpCmd.Resposta := 'Balança desativada.';
+  end;
+end;
 
-        else if Cmd.Metodo = 'lepeso' then begin
-           LePeso;
-           if UltimaResposta <> '' then
-              Cmd.Resposta := FormatFloat('#####0.000', UltimoPesoLido)
-           else
-              raise Exception.Create('Timeout');
-        end
+{ TMetodoAtivo }
 
-        else if Cmd.Metodo = 'ultimopesolido' then
-           Cmd.Resposta := FormatFloat('#####0.000', UltimoPesoLido)
+procedure TMetodoAtivo.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := BoolToStr(ACBrBAL.Ativo, true);
+  end;
+end;
 
-        else if Cmd.Metodo = 'ultimaresposta' then
-           Cmd.Resposta := UltimaResposta
+{ TMetodoModeloStr }
 
-        else if Cmd.Metodo = 'monitorarbalanca' then
-           Cmd.Resposta := BoolToStr( MonitorarBalanca, true )
+procedure TMetodoModeloStr.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrBAL.ModeloStr;
+  end;
+end;
 
-        ELSE
-           raise Exception.Create('Comando invÃ¡lido ('+Cmd.Comando+')') ;
+{ TMetodoModelo }
 
-     finally
-        { Nada a fazer aqui por enquanto... :) }
-     end ;
-  end ;
-end ;
+procedure TMetodoModelo.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := GetEnumName(TypeInfo(TACBrBALModelo), Integer(ACBrBAL.Modelo));
+  end;
+end;
+
+{ TMetodoPorta }
+
+procedure TMetodoPorta.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrBAL.Porta;
+  end;
+end;
+
+{ TMetodoIntervalo }
+
+procedure TMetodoIntervalo.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr( ACBrBAL.Intervalo );
+  end;
+end;
+
+{ TMetodoSetIntervalo }
+
+{ Params: 0 - Intervalo - Numero Inteiro
+}
+procedure TMetodoSetIntervalo.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    ACBrBAL.Intervalo := StrToInt( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoLePeso }
+
+procedure TMetodoLePeso.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    ACBrBAL.LePeso;
+    if ACBrBAL.UltimaResposta <> '' then
+       fpCmd.Resposta := FormatFloat('#####0.000', ACBrBAL.UltimoPesoLido)
+    else
+       raise Exception.Create('Timeout');
+  end;
+end;
+
+{ TMetodoUltimoPesoLido }
+
+procedure TMetodoUltimoPesoLido.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := FormatFloat('#####0.000', ACBrBAL.UltimoPesoLido);
+  end;
+end;
+
+{ TMetodoUltimaResposta }
+
+procedure TMetodoUltimaResposta.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrBAL.UltimaResposta;
+  end;
+end;
+
+{ TMetodoMonitorarBanlaca }
+
+procedure TMetodoMonitorarBalanca.Executar;
+begin
+  with TACBrObjetoBAL(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := BoolToStr( ACBrBAL.MonitorarBalanca, true );
+  end;
+end;
 
 end.
-

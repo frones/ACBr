@@ -1,200 +1,681 @@
 {******************************************************************************}
-{ Projeto: ACBrNFeMonitor                                                      }
+{ Projeto: ACBr Monitor                                                        }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicaÃ§Ã£o com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
-{                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pÃ¡gina do Projeto ACBr     }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa Ã© software livre; vocÃª pode redistribuÃ­-lo e/ou modificÃ¡-lo   }
-{ sob os termos da LicenÃ§a PÃºblica Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versÃ£o 2 da LicenÃ§a como (a seu critÃ©rio)       }
-{ qualquer versÃ£o mais nova.                                                   }
-{                                                                              }
-{  Este programa Ã© distribuÃ­do na expectativa de ser Ãºtil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIALIZAÃ‡ÃƒO OU DE ADEQUAÃ‡ÃƒO A}
-{ QUALQUER PROPÃ“SITO EM PARTICULAR. Consulte a LicenÃ§a PÃºblica Geral GNU para  }
-{ obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral GNU junto com este}
-{ programa; se nÃ£o, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. VocÃª tambÃ©m pode obter uma     }
-{ copia da licenÃ§a em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel SimÃµes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              PraÃ§a Anita Costa, 34 - TatuÃ­ - SP - 18270-410                  }
-{                                                                              }
-{******************************************************************************}
-unit DoPosPrinterUnit;
+{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
 
-{$mode objfpc}{$H+}
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+
+{ Colaboradores nesse arquivo:                                                 }
+
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+
+{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
+{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
+{ qualquer versão mais nova.                                                   }
+
+{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
+{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
+{ obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
+
+{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
+{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
+{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
+
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+
+{******************************************************************************}
+{$I ACBr.inc}
+
+unit DoPosPrinterUnit;
 
 interface
 
 uses
-  Classes, SysUtils, typinfo, CmdUnit, ACBrMonitor1;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrPosPrinter,
+  ACBrMonitorConsts, ACBrMonitorConfig;
 
-procedure DoPosPrinter(cmd: TACBrCmd);
+type
+
+{ TACBrObjetoPosPrinter }
+
+TACBrObjetoPosPrinter = class(TACBrObjetoDFe)
+private
+  fACBrPosPrinter: TACBrPosPrinter;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrPosPrinter: TACBrPosPrinter); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  property ACBrPosPrinter: TACBrPosPrinter read fACBrPosPrinter;
+end;
+
+{ TMetodoAtivar}
+TMetodoAtivar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDesativar}
+TMetodoDesativar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAtivo}
+TMetodoAtivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimir}
+TMetodoImprimir = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirLinha}
+TMetodoImprimirLinha = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirCMD}
+TMetodoImprimirCMD = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirTAGs}
+TMetodoImprimirTAGs = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoLerStatusImpressora}
+TMetodoLerStatusImpressora = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoLerInfoImpressora}
+TMetodoLerInfoImpressora = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoModelo}
+TMetodoModelo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetModelo}
+TMetodoSetModelo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoPorta}
+TMetodoPorta = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetPorta}
+TMetodoSetPorta = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoColunas}
+TMetodoColunas = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoEspacoEntreLinhas}
+TMetodoEspacoEntreLinhas = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetEspacoEntreLinhas}
+TMetodoSetEspacoEntreLinhas = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoLinhasEntreCupons}
+TMetodoLinhasEntreCupons = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetLinhasEntreCupons}
+TMetodoSetLinhasEntreCupons = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoLinhasBuffer}
+TMetodoLinhasBuffer = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetLinhasBuffer}
+TMetodoSetLinhasBuffer = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoColunasFonteExpandida}
+TMetodoColunasFonteExpandida = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoColunasFonteCondensada}
+TMetodoColunasFonteCondensada = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoPaginaDeCodigo}
+TMetodoPaginaDeCodigo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetPaginaDeCodigo}
+TMetodoSetPaginaDeCodigo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoColunasFonteNormal}
+TMetodoColunasFonteNormal = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetColunasFonteNormal}
+TMetodoSetColunasFonteNormal = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCortaPapel}
+TMetodoCortaPapel = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetCortaPapel}
+TMetodoSetCortaPapel = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
 
 implementation
 
-uses
-  ACBrPosPrinter, ACBrUtil;
+{ TACBrObjetoPosPrinter }
 
-procedure DoPosPrinter(cmd: TACBrCmd);
+constructor TACBrObjetoPosPrinter.Create(AConfig: TMonitorConfig; ACBrPosPrinter: TACBrPosPrinter);
+begin
+  inherited Create(AConfig);
+
+  fACBrPosPrinter := ACBrPosPrinter;
+
+  ListaDeMetodos.Add(CMetodoAtivar);
+  ListaDeMetodos.Add(CMetodoDesativar);
+  ListaDeMetodos.Add(CMetodoAtivo);
+  ListaDeMetodos.Add(CMetodoImprimir);
+  ListaDeMetodos.Add(CMetodoImprimirLinha);
+  ListaDeMetodos.Add(CMetodoImprimirCMD);
+  ListaDeMetodos.Add(CMetodoImprimirTAGs);
+  ListaDeMetodos.Add(CMetodoLerStatusImpressora);
+  ListaDeMetodos.Add(CMetodoLerInfoImpressora);
+  ListaDeMetodos.Add(CMetodoModelo);
+  ListaDeMetodos.Add(CMetodoSetModelo);
+  ListaDeMetodos.Add(CMetodoPorta);
+  ListaDeMetodos.Add(CMetodoSetPorta);
+  ListaDeMetodos.Add(CMetodoColunas);
+  ListaDeMetodos.Add(CMetodoEspacoEntreLinhas);
+  ListaDeMetodos.Add(CMetodoSetEspacoEntreLinhas);
+  ListaDeMetodos.Add(CMetodoLinhasEntreCupons);
+  ListaDeMetodos.Add(CMetodoSetLinhasEntreCupons);
+  ListaDeMetodos.Add(CMetodoLinhasBuffer);
+  ListaDeMetodos.Add(CMetodoSetLinhasBuffer);
+  ListaDeMetodos.Add(CMetodoColunasFonteExpandida);
+  ListaDeMetodos.Add(CMetodoColunasFonteCondensada);
+  ListaDeMetodos.Add(CMetodoPaginaDeCodigo);
+  ListaDeMetodos.Add(CMetodoSetPaginaDeCodigo);
+  ListaDeMetodos.Add(CMetodoColunasFonteNormal);
+  ListaDeMetodos.Add(CMetodoSetColunasFonteNormal);
+  ListaDeMetodos.Add(CMetodoCortaPapel);
+  ListaDeMetodos.Add(CMetodoSetCortaPapel);
+end;
+
+procedure TACBrObjetoPosPrinter.Executar(ACmd: TACBrCmd);
+var
+  AMetodoClass: TACBrMetodoClass;
+  CmdNum: Integer;
+  Ametodo: TACBrMetodo;
+begin
+  inherited Executar(ACmd);
+
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
+
+  case CmdNum of
+    0  : AMetodoClass := TMetodoAtivar;
+    1  : AMetodoClass := TMetodoDesativar;
+    2  : AMetodoClass := TMetodoAtivo;
+    3  : AMetodoClass := TMetodoImprimir;
+    4  : AMetodoClass := TMetodoImprimirLinha;
+    5  : AMetodoClass := TMetodoImprimirCMD;
+    6  : AMetodoClass := TMetodoImprimirTAGs;
+    7  : AMetodoClass := TMetodoLerStatusImpressora;
+    8  : AMetodoClass := TMetodoLerInfoImpressora;
+    9  : AMetodoClass := TMetodoModelo;
+   10  : AMetodoClass := TMetodoSetModelo;
+   11  : AMetodoClass := TMetodoPorta;
+   12  : AMetodoClass := TMetodoSetPorta;
+   13  : AMetodoClass := TMetodoColunas;
+   14  : AMetodoClass := TMetodoEspacoEntreLinhas;
+   15  : AMetodoClass := TMetodoSetEspacoEntreLinhas;
+   16  : AMetodoClass := TMetodoLinhasEntreCupons;
+   17  : AMetodoClass := TMetodoSetLinhasEntreCupons;
+   18  : AMetodoClass := TMetodoLinhasBuffer;
+   19  : AMetodoClass := TMetodoSetLinhasBuffer;
+   20  : AMetodoClass := TMetodoColunasFonteExpandida;
+   21  : AMetodoClass := TMetodoColunasFonteCondensada;
+   22  : AMetodoClass := TMetodoPaginaDeCodigo;
+   23  : AMetodoClass := TMetodoSetPaginaDeCodigo;
+   24  : AMetodoClass := TMetodoColunasFonteNormal;
+   25  : AMetodoClass := TMetodoSetColunasFonteNormal;
+   26  : AMetodoClass := TMetodoCortaPapel;
+   27  : AMetodoClass := TMetodoSetCortaPapel;
+  end;
+
+  if Assigned(AMetodoClass) then
+  begin
+    Ametodo := AMetodoClass.Create(ACmd, Self);
+    try
+      Ametodo.Executar;
+    finally
+      Ametodo.Free;
+    end;
+  end;
+end;
+
+{ TMetodoAtivar }
+
+procedure TMetodoAtivar.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.Ativar;
+  end;
+end;
+
+{ TMetodoDesativar }
+
+procedure TMetodoDesativar.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.Desativar;
+  end;
+end;
+
+{ TMetodoAtivo }
+
+procedure TMetodoAtivo.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := BoolToStr(ACBrPosPrinter.Ativo, true);
+  end;
+end;
+
+{ TMetodoImprimir }
+
+{ Params: 0 - String
+}
+procedure TMetodoImprimir.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.Imprimir(fpcmd.Params(0));
+  end;
+end;
+
+{ TMetodoImprimirLinha }
+
+{ Params: 0 - String
+}
+procedure TMetodoImprimirLinha.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.ImprimirLinha(fpcmd.Params(0))
+  end;
+end;
+
+{ TMetodoImprimirCMD }
+
+{ Params: 0 - String
+}
+procedure TMetodoImprimirCMD.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.ImprimirCmd(fpcmd.Params(0))
+  end;
+end;
+
+{ TMetodoImprimirTAGs }
+
+procedure TMetodoImprimirTAGs.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.ImprimirTags;
+  end;
+end;
+
+{ TMetodoLerStatusImpressora }
+
+procedure TMetodoLerStatusImpressora.Executar;
 var
   status: TACBrPosPrinterStatus;
-  i: TACBrPosTipoStatus;
-  j: TACBrPosPrinterModelo;
   astr: string;
-  iModelo: integer;
+  i: TACBrPosTipoStatus;
 begin
-  with FrmACBrMonitor.ACBrPosPrinter1 do
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
   begin
-    try
-      if cmd.Metodo = 'ativar' then
+    status := ACBrPosPrinter.LerStatusImpressora;
+    astr := '';
+
+    if status = [] then
+      fpcmd.Resposta := 'Nenhum status encontrado'
+    else
+    begin
+      for i := Low(TACBrPosTipoStatus) to High(TACBrPosTipoStatus) do
       begin
-        FrmACBrMonitor.ConfiguraPosPrinter;
-        Ativar;
-        FrmACBrMonitor.sbSerial.Enabled := False;
-        FrmACBrMonitor.bbAtivar.Caption := 'Desativar';
-      end
+        if i in status then
+          astr := astr + GetEnumName(TypeInfo(TACBrPosTipoStatus),
+            integer(i)) + ', ';
+      end;
 
-      else if cmd.Metodo = 'desativar' then
-      begin
-        Desativar;
-        FrmACBrMonitor.bbAtivar.Caption := 'Ativar';
-        FrmACBrMonitor.sbSerial.Enabled := True;
-      end
-
-      else if cmd.Metodo = 'ativo' then
-        cmd.Resposta := BoolToStr(Ativo, True)
-
-      else if cmd.Metodo = 'imprimir' then
-        Imprimir(cmd.Params(0))
-
-      else if cmd.Metodo = 'imprimirlinha' then
-        ImprimirLinha(cmd.Params(0))
-
-      else if cmd.Metodo = 'imprimircmd' then
-        ImprimirCmd(cmd.Params(0))
-
-      else if cmd.Metodo = 'imprimirtags' then
-        ImprimirTags
-
-      else if cmd.Metodo = 'lerstatusimpressora' then
-      begin
-        status := LerStatusImpressora;
-        astr := '';
-
-        if status = [] then
-          cmd.Resposta := 'Nenhum status encontrado'
-        else
-        begin
-          for i := Low(TACBrPosTipoStatus) to High(TACBrPosTipoStatus) do
-          begin
-            if i in status then
-              astr := astr + GetEnumName(TypeInfo(TACBrPosTipoStatus),
-                integer(i)) + ', ';
-          end;
-
-          cmd.Resposta := astr;
-        end;
-      end
-
-      else if cmd.Metodo = 'lerinfoimpressora' then
-        cmd.Resposta := LerInfoImpressora
-
-      else if cmd.Metodo = 'modelo' then
-        cmd.Resposta := GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(Modelo))
-        
-      else if cmd.Metodo = 'setmodelo' then
-      begin
-        iModelo := -1;
-        for j := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
-        begin
-           if Uppercase(GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(j))) = UpperCase(cmd.Params(0)) then
-           begin
-              iModelo := integer(j);
-              break;
-           end;
-        end;
-        if iModelo >= 0 then
-        begin
-           Modelo := TACBrPosPrinterModelo(iModelo);
-           FrmACBrMonitor.cbxModelo.Text := cmd.Params(0);
-        end
-        else
-           raise Exception.Create('Modelo de impressora invÃ¡lido: '+Cmd.Params(0));
-      end
-
-      else if cmd.Metodo = 'porta' then
-        cmd.Resposta := Porta
-
-      else if cmd.Metodo = 'setporta' then
-      begin
-        Porta := cmd.Params(0);
-        FrmACBrMonitor.cbxPorta.Text := cmd.Params(0);
-      end
-
-      else if cmd.Metodo = 'colunas' then
-        cmd.Resposta := IntToStr(Colunas)
-
-      else if cmd.Metodo = 'espacoentrelinhas' then
-        cmd.Resposta := IntToStr(EspacoEntreLinhas)
-
-      else if cmd.Metodo = 'setespacoentrelinhas' then
-        EspacoEntreLinhas:= StrToInt(cmd.Params(0))
-
-      else if cmd.Metodo = 'linhasentrecupons' then
-        cmd.Resposta := IntToStr(LinhasEntreCupons)
-
-      else if cmd.Metodo = 'setlinhasentrecupons' then
-       linhasentrecupons:= StrToInt(cmd.Params(0))
-
-      else if cmd.Metodo = 'linhasbuffer' then
-        cmd.Resposta := IntToStr(LinhasBuffer)
-
-      else if cmd.Metodo = 'setlinhasbuffer' then
-       LinhasBuffer:= StrToInt(cmd.Params(0))
-
-      else if cmd.Metodo = 'colunasfonteexpandida' then
-        cmd.Resposta := IntToStr(ColunasFonteExpandida)
-
-      else if cmd.Metodo = 'colunasfontecondensada' then
-        cmd.Resposta := IntToStr(ColunasFonteCondensada)
-
-      else if cmd.Metodo = 'paginadecodigo' then
-        cmd.Resposta := GetEnumName(TypeInfo(TACBrPosPaginaCodigo),
-          integer(PaginaDeCodigo))
-
-      else if cmd.Metodo = 'setpaginadecodigo' then
-       PaginaDeCodigo:= TACBrPosPaginaCodigo( StrToInt(cmd.Params(0)) )
-
-      else if cmd.Metodo = 'colunasfontenormal' then
-        cmd.Resposta := IntToStr(ColunasFonteNormal)
-
-      else if cmd.Metodo = 'setcolunasfontenormal' then
-        ColunasFonteNormal := StrToInt(cmd.Params(0))
-
-      else if cmd.Metodo = 'cortapapel' then
-        cmd.Resposta := BoolToStr(CortaPapel, True)
-
-      else if cmd.Metodo = 'setcortapapel' then
-      begin
-       CortaPapel := StrToBool(cmd.Params(0));
-       FrmACBrMonitor.cbCortarPapel.Checked := CortaPapel;
-      end
-
-      else
-        raise Exception.Create(ACBrStr('Comando invalido (' + Cmd.Comando + ')'));
-    finally
-
+      fpcmd.Resposta := astr;
     end;
+  end;
+end;
+
+{ TMetodoLerInfoImpressora }
+
+procedure TMetodoLerInfoImpressora.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrPosPrinter.LerInfoImpressora;
+  end;
+end;
+
+{ TMetodoModelo }
+
+procedure TMetodoModelo.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpcmd.Resposta := GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(ACBrPosPrinter.Modelo));
+  end;
+end;
+
+{ TMetodoSetModelo }
+
+{ Params: 0 - String
+}
+procedure TMetodoSetModelo.Executar;
+var
+  j: TACBrPosPrinterModelo;
+  iModelo: integer;
+  AModelo: String;
+begin
+  AModelo := fpCmd.Params(0);
+
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    iModelo := -1;
+    for j := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
+    begin
+       if Uppercase(GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(j))) = UpperCase(AModelo) then
+       begin
+          iModelo := integer(j);
+          break;
+       end;
+    end;
+    if iModelo >= 0 then
+    begin
+       ACBrPosPrinter.Modelo := TACBrPosPrinterModelo(iModelo);
+
+       with MonitorConfig.PosPrinter do
+         Modelo := iModelo;
+
+       MonitorConfig.SalvarArquivo;
+    end
+    else
+       raise Exception.Create('Modelo de impressora inválido: ' + AModelo);
+  end;
+end;
+
+{ TMetodoPorta }
+
+procedure TMetodoPorta.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrPosPrinter.Porta;
+  end;
+end;
+
+{ TMetodoSetPorta }
+
+{ Params: 0 - String
+}
+procedure TMetodoSetPorta.Executar;
+var
+  APorta: String;
+begin
+  APorta := fpCmd.Params(0);
+
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.Porta := APorta;
+
+    with MonitorConfig.PosPrinter do
+      Porta := APorta;
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
+
+{ TMetodoColunas }
+
+procedure TMetodoColunas.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr(ACBrPosPrinter.Colunas);
+  end;
+end;
+
+{ TMetodoEspacoEntreLinhas }
+
+procedure TMetodoEspacoEntreLinhas.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr(ACBrPosPrinter.EspacoEntreLinhas);
+  end;
+end;
+
+{ TMetodoSetEspacoEntreLinhas }
+
+{ Params: 0 - Integer
+}
+procedure TMetodoSetEspacoEntreLinhas.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.EspacoEntreLinhas:= StrToInt(fpcmd.Params(0));
+  end;
+end;
+
+{ TMetodoLinhasEntreCupons }
+
+procedure TMetodoLinhasEntreCupons.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr(ACBrPosPrinter.LinhasEntreCupons);
+  end;
+end;
+
+{ TMetodoSetLinhasEntreCupons }
+
+{ Params: 0 - Integer
+}
+procedure TMetodoSetLinhasEntreCupons.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.linhasentrecupons:= StrToInt(fpcmd.Params(0));
+  end;
+end;
+
+{ TMetodoLinhasBuffer }
+
+procedure TMetodoLinhasBuffer.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr(ACBrPosPrinter.LinhasBuffer);
+  end;
+end;
+
+{ TMetodoSetLinhasBuffer }
+
+{ Params: 0 - Integer
+}
+procedure TMetodoSetLinhasBuffer.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.LinhasBuffer := StrToInt(fpcmd.Params(0));
+  end;
+end;
+
+{ TMetodoColunasFonteExpandida }
+
+procedure TMetodoColunasFonteExpandida.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpcmd.Resposta := IntToStr(ACBrPosPrinter.ColunasFonteExpandida);
+  end;
+end;
+
+{ TMetodoColunasFonteCondensada }
+
+procedure TMetodoColunasFonteCondensada.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpcmd.Resposta := IntToStr(ACBrPosPrinter.ColunasFonteCondensada);
+  end;
+end;
+
+{ TMetodoPaginadeCodigo }
+
+procedure TMetodoPaginadeCodigo.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpcmd.Resposta := GetEnumName(TypeInfo(TACBrPosPaginaCodigo),
+              integer(ACBrPosPrinter.PaginaDeCodigo));
+  end;
+end;
+
+{ TMetodoSetPaginadeCodigo }
+
+{ Params: 0 - Integer
+}
+procedure TMetodoSetPaginadeCodigo.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.PaginaDeCodigo := TACBrPosPaginaCodigo( StrToInt(fpcmd.Params(0)) );
+  end;
+end;
+
+{ TMetodoColunasFonteNormal }
+
+procedure TMetodoColunasFonteNormal.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpcmd.Resposta := IntToStr(ACBrPosPrinter.ColunasFonteNormal);
+  end;
+end;
+
+{ TMetodoSetColunasFonteNormal }
+
+{ Params: 0 - Integer
+}
+procedure TMetodoSetColunasFonteNormal.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.ColunasFonteNormal := StrToInt(fpcmd.Params(0));
+  end;
+end;
+
+{ TMetodoCortaPapel }
+
+procedure TMetodoCortaPapel.Executar;
+begin
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    fpcmd.Resposta := BoolToStr(ACBrPosPrinter.CortaPapel, True);
+  end;
+end;
+
+{ TMetodoSetCortaPapel }
+
+{ Params: 0 - Integer
+}
+procedure TMetodoSetCortaPapel.Executar;
+var
+  ACorta: Boolean;
+begin
+  ACorta := StrToBool(fpcmd.Params(0));
+
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.CortaPapel := ACorta;
+
+    with MonitorConfig.PosPrinter do
+      CortarPapel := ACorta;
+
+    MonitorConfig.SalvarArquivo;
   end;
 end;
 

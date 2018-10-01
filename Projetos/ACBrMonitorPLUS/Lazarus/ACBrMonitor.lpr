@@ -21,7 +21,7 @@ uses
   DoACBrReinfUnit, ACBrLibeSocialConsts, ACBrLibeSocialRespostas,
   ACBrLibMDFeConsts, ACBrLibMDFeRespostas, ACBrLibReinfConsts,
   ACBrLibReinfRespostas, ACBrLibNFeRespostas, ACBrLibNFeConsts,
-  ACBrLibSATConsts, ACBrLibSATRespostas;
+  ACBrLibSATConsts, ACBrLibSATRespostas, ACBrLibCEPRespostas;
 
 {$R *.res}
 var

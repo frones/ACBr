@@ -117,6 +117,7 @@ type
     Origem            : Integer;
     Unidade           : Integer;
     Copias            : Integer;
+    Avanco            : Integer;
   end;
 
   TCEP = record
@@ -779,6 +780,7 @@ begin
       Ini.WriteInteger( CSecETQ, CKeyETQOrigem, Origem );
       Ini.WriteInteger( CSecETQ, CKeyETQUnidade, Unidade );
       Ini.WriteInteger( CSecETQ, CKeyETQCopias, Copias );
+      Ini.WriteInteger( CSecETQ, CKeyETQAvanco, Avanco );
     end;
 
     with CEP do
@@ -1391,6 +1393,7 @@ begin
       Origem                    := Ini.ReadInteger( CSecETQ, CKeyETQOrigem, Origem );
       Unidade                   := Ini.ReadInteger( CSecETQ, CKeyETQUnidade, Unidade );
       Copias                    := Ini.ReadInteger( CSecETQ, CKeyETQCopias, Copias );
+      Avanco                    := Ini.ReadInteger( CSecETQ, CKeyETQAvanco, Avanco );
     end;
 
     with CEP do
@@ -1980,7 +1983,7 @@ begin
     Origem                    := -1;
     Unidade                   := -1;
     Copias                    := 1;
-
+    Avanco                    := 0;
   end;
 
   with CEP do

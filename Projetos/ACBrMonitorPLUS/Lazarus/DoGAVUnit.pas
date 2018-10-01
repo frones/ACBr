@@ -1,113 +1,349 @@
 {******************************************************************************}
 { Projeto: ACBr Monitor                                                        }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicaÃ§Ã£o com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel SimÃµes de Almeida               }
-{                                                                              }
+{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
+
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+
 { Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pÃ¡gina do Projeto ACBr     }
+
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa Ã© software livre; vocÃª pode redistribuÃ­-lo e/ou modificÃ¡-lo   }
-{ sob os termos da LicenÃ§a PÃºblica Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versÃ£o 2 da LicenÃ§a como (a seu critÃ©rio)       }
-{ qualquer versÃ£o mais nova.                                                   }
-{                                                                              }
-{  Este programa Ã© distribuÃ­do na expectativa de ser Ãºtil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIALIZAÃ‡ÃƒO OU DE ADEQUAÃ‡ÃƒO A}
-{ QUALQUER PROPÃ“SITO EM PARTICULAR. Consulte a LicenÃ§a PÃºblica Geral GNU para  }
+
+{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
+{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
+{ qualquer versão mais nova.                                                   }
+
+{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
+{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
 { obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral GNU junto com este}
-{ programa; se nÃ£o, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. VocÃª tambÃ©m pode obter uma     }
-{ copia da licenÃ§a em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel SimÃµes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{       Rua Coronel Aureliano de Camargo, 973 - TatuÃ­ - SP - 18270-170         }
-{                                                                              }
+
+{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
+{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
+{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
+
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+
 {******************************************************************************}
+{$I ACBr.inc}
 
-{$mode objfpc}{$H+}
-
-unit DoGAVUnit ;
+unit DoGAVUnit;
 
 interface
-Uses Classes, TypInfo, SysUtils, CmdUnit;
 
-Procedure DoGAV( Cmd : TACBrCmd ) ;
+uses
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrGAV, ACBrDevice,
+  ACBrMonitorConsts, ACBrMonitorConfig;
+
+type
+
+{ TACBrObjetoGAV }
+
+TACBrObjetoGAV = class(TACBrObjetoDFe)
+private
+  fACBrGAV: TACBrGAV;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrGAV: TACBrGAV); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  property ACBrGAV: TACBrGAV read fACBrGAV;
+end;
+
+{ TMetodoAtivar}
+TMetodoAtivar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDesativar}
+TMetodoDesativar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAtivo}
+TMetodoAtivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoModeloStr}
+TMetodoModeloStr = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoModelo}
+TMetodoModelo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoPorta}
+TMetodoPorta = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAbreGaveta}
+TMetodoAbreGaveta = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGavetaAberta}
+TMetodoGavetaAberta = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoStrComando}
+TMetodoStrComando = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetStrComando}
+TMetodoSetStrComando = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAberturaIntervalo}
+TMetodoAberturaIntervalo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetAberturaIntervalo}
+TMetodoSetAberturaIntervalo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAberturaAntecipada}
+TMetodoAberturaAntecipada = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
 
 implementation
-uses ACBrGAV, ACBrUtil, ACBrDevice,
-  {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
-Procedure DoGAV( Cmd : TACBrCmd ) ;
+{ TACBrObjetoGAV }
+
+constructor TACBrObjetoGAV.Create(AConfig: TMonitorConfig; ACBrGAV: TACBrGAV);
 begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrGAV1  {$ELSE}dm.ACBrGAV1  {$ENDIF} do
+  inherited Create(AConfig);
+
+  fACBrGAV := ACBrGAV;
+
+  ListaDeMetodos.Add(CMetodoAtivar);
+  ListaDeMetodos.Add(CMetodoDesativar);
+  ListaDeMetodos.Add(CMetodoAtivo);
+  ListaDeMetodos.Add(CMetodoModeloStr);
+  ListaDeMetodos.Add(CMetodoModelo);
+  ListaDeMetodos.Add(CMetodoPorta);
+  ListaDeMetodos.Add(CMetodoAbreGaveta);
+  ListaDeMetodos.Add(CMetodoGavetaAberta);
+  ListaDeMetodos.Add(CMetodoStrComando);
+  ListaDeMetodos.Add(CMetodoSetStrComando);
+  ListaDeMetodos.Add(CMetodoAberturaIntervalo);
+  ListaDeMetodos.Add(CMetodoSetAberturaIntervalo);
+  ListaDeMetodos.Add(CMetodoAberturaAntecipada);
+end;
+
+procedure TACBrObjetoGAV.Executar(ACmd: TACBrCmd);
+var
+  AMetodoClass: TACBrMetodoClass;
+  CmdNum: Integer;
+  Ametodo: TACBrMetodo;
+begin
+  inherited Executar(ACmd);
+
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
+
+  case CmdNum of
+    0  : AMetodoClass := TMetodoAtivar;
+    1  : AMetodoClass := TMetodoDesativar;
+    2  : AMetodoClass := TMetodoAtivo;
+    3  : AMetodoClass := TMetodoModeloStr;
+    4  : AMetodoClass := TMetodoModelo;
+    5  : AMetodoClass := TMetodoPorta;
+    6  : AMetodoClass := TMetodoAbreGaveta;
+    7  : AMetodoClass := TMetodoGavetaAberta;
+    8  : AMetodoClass := TMetodoStrComando;
+    9  : AMetodoClass := TMetodoSetStrComando;
+   10  : AMetodoClass := TMetodoAberturaIntervalo;
+   11  : AMetodoClass := TMetodoSetAberturaIntervalo;
+   12  : AMetodoClass := TMetodoAberturaAntecipada;
+  end;
+
+  if Assigned(AMetodoClass) then
   begin
-     try
-        if Cmd.Metodo = 'ativar' then  { Ativa a Gaveta }
-         begin
-           Ativar ;
-           {$IFNDEF NOGUI}FrmACBrMonitor.AvaliaEstadoTsGAV ;{$ENDIF}
-         end
+    Ametodo := AMetodoClass.Create(ACmd, Self);
+    try
+      Ametodo.Executar;
+    finally
+      Ametodo.Free;
+    end;
+  end;
+end;
 
-        else if Cmd.Metodo = 'desativar' then
-         begin
-           Desativar ;
-           {$IFNDEF NOGUI}FrmACBrMonitor.AvaliaEstadoTsGAV ;{$ENDIF}
-         end
+{ TMetodoAtivar }
 
-        else if Cmd.Metodo = 'ativo' then
-           Cmd.Resposta := BoolToStr(Ativo, true)
+procedure TMetodoAtivar.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    ACBrGAV.Ativar;
+  end;
+end;
 
-        else if Cmd.Metodo = 'modelostr' then
-           Cmd.Resposta := ModeloStr
+{ TMetodoDesativar }
 
-        else if Cmd.Metodo = 'modelo' then
-           Cmd.Resposta := GetEnumName(TypeInfo(TACBrGAVModelo),Integer(Modelo))
+procedure TMetodoDesativar.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    ACBrGAV.Desativar;
+  end;
+end;
 
-        else if Cmd.Metodo = 'porta' then
-           Cmd.Resposta := Porta
+{ TMetodoAtivo }
 
-        else if Cmd.Metodo = 'abregaveta' then
-           AbreGaveta
+procedure TMetodoAtivo.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := BoolToStr(ACBrGAV.Ativo, true);
+  end;
+end;
 
-        else if Cmd.Metodo = 'gavetaaberta' then
-           Cmd.Resposta := BoolToStr( GavetaAberta, true )
+{ TMetodoModeloStr }
 
-        else if Cmd.Metodo = 'strcomando' then
-           Cmd.Resposta := StrComando
+procedure TMetodoModeloStr.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrGAV.ModeloStr;
+  end;
+end;
 
-        else if Cmd.Metodo = 'setstrcomando' then
-         begin
-           StrComando := Cmd.Params(0) ;
-           {$IFNDEF NOGUI}FrmACBrMonitor.cbGAVStrAbre.Text := StrComando ;{$ENDIF}
-         end
+{ TMetodoModelo }
 
-        else if Cmd.Metodo = 'aberturaintervalo' then
-           Cmd.Resposta := IntToStr( AberturaIntervalo )
+procedure TMetodoModelo.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := GetEnumName(TypeInfo(TACBrGAVModelo),Integer(ACBrGAV.Modelo));
+  end;
+end;
 
-        else if Cmd.Metodo = 'setaberturaintervalo' then
-         begin
-           AberturaIntervalo := StrToIntDef( Cmd.Params(0), AberturaIntervalo) ;
-           {$IFNDEF NOGUI}FrmACBrMonitor.sedGAVIntervaloAbertura.Value := AberturaIntervalo ;{$ENDIF}
-         end
+{ TMetodoPorta }
 
-        else if Cmd.Metodo = 'aberturaantecipada' then
-           Cmd.Resposta := GetEnumName(TypeInfo(TACBrGAVAberturaAntecipada),Integer(AberturaAntecipada))
+procedure TMetodoPorta.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrGAV.Porta;
+  end;
+end;
 
-        ELSE
-           raise Exception.Create('Comando invÃ¡lido ('+Cmd.Comando+')') ;
+{ TMetodoAbreGaveta }
 
-     finally
-        { Nada a fazer aqui por enquanto... :) }
-     end ;
-  end ;
-end ;
+procedure TMetodoAbreGaveta.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    ACBrGAV.AbreGaveta;
+  end;
+end;
+
+{ TMetodoGavetaAberta }
+
+procedure TMetodoGavetaAberta.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := BoolToStr( ACBrGAV.GavetaAberta, true );
+  end;
+end;
+
+{ TMetodoStrComando }
+
+procedure TMetodoStrComando.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrGAV.StrComando;
+  end;
+end;
+
+{ TMetodoSetStrComando }
+
+{ Params: 0 - String com os comandos
+}
+procedure TMetodoSetStrComando.Executar;
+var
+  AComando: String;
+begin
+  AComando := fpCmd.Params(0);
+
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    ACBrGAV.StrComando := AComando;
+
+    with MonitorConfig.GAV do
+      StringAbertura := AComando;
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
+
+{ TMetodoAberturaIntervalo }
+
+procedure TMetodoAberturaIntervalo.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr( ACBrGAV.AberturaIntervalo );
+  end;
+end;
+
+{ TMetodoSetAberturaIntervalo }
+
+{ Params: 0 - inteiro com o intervalor em milisegundos
+}
+procedure TMetodoSetAberturaIntervalo.Executar;
+var
+  AIntervalo: Integer;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    AIntervalo := StrToIntDef( fpCmd.Params(0), ACBrGAV.AberturaIntervalo);
+
+    ACBrGAV.AberturaIntervalo := AIntervalo;
+
+    with MonitorConfig.GAV do
+      AberturaIntervalo := AIntervalo;
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
+
+{ TMetodoAberturaAntecipada }
+
+procedure TMetodoAberturaAntecipada.Executar;
+begin
+  with TACBrObjetoGAV(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := GetEnumName(TypeInfo(TACBrGAVAberturaAntecipada),Integer(ACBrGAV.AberturaAntecipada));
+  end;
+end;
 
 end.
-
-

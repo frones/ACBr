@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: ACBr Monitor                                                        }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicaÃ§Ã£o com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel SimÃµes de Almeida               }
-{                                                                              }
-{ Colaboradores nesse arquivo: Alberto Leal                                    }
-{                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pÃ¡gina do Projeto ACBr     }
+{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
+
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+
+{ Colaboradores nesse arquivo:                                                 }
+
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa Ã© software livre; vocÃª pode redistribuÃ­-lo e/ou modificÃ¡-lo   }
-{ sob os termos da LicenÃ§a PÃºblica Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versÃ£o 2 da LicenÃ§a como (a seu critÃ©rio)       }
-{ qualquer versÃ£o mais nova.                                                   }
-{                                                                              }
-{  Este programa Ã© distribuÃ­do na expectativa de ser Ãºtil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIALIZAÃ‡ÃƒO OU DE ADEQUAÃ‡ÃƒO A}
-{ QUALQUER PROPÃ“SITO EM PARTICULAR. Consulte a LicenÃ§a PÃºblica Geral GNU para  }
+
+{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
+{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
+{ qualquer versão mais nova.                                                   }
+
+{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
+{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
 { obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral GNU junto com este}
-{ programa; se nÃ£o, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. VocÃª tambÃ©m pode obter uma     }
-{ copia da licenÃ§a em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel SimÃµes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{       Rua Coronel Aureliano de Camargo, 973 - TatuÃ­ - SP - 18270-170         }
-{                                                                              }
+
+{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
+{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
+{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
+
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+
 {******************************************************************************}
 {$I ACBr.inc}
 
@@ -35,245 +35,371 @@ unit DoACBrGNReUnit;
 
 interface
 
-Uses Classes, TypInfo, SysUtils, CmdUnit, StdCtrls, DoACBrUnit;
+uses
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrGNRE2, pcnConversao,
+  ACBrMonitorConsts, ACBrMonitorConfig, ACBrLibResposta, ACBrLibGNReRespostas,
+  DoACBrDFeUnit, StrUtils;
 
-procedure DoACBrGNRe( Cmd : TACBrCmd ) ;
-procedure LerIniGuia(aStr: AnsiString);
+type
+
+{ TACBrObjetoGNRe }
+
+TACBrObjetoGNRe = class(TACBrObjetoDFe)
+private
+  fACBrGNRe: TACBrGNRe;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrGNRe: TACBrGNRe); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  procedure RespostaConsulta;
+  procedure RespostaEnvio;
+
+  property ACBrGNRe: TACBrGNRe read fACBrGNRe;
+end;
+
+{ TACBrCarregarGNRe }
+
+TACBrCarregarGNRe = class(TACBrCarregarDFe)
+protected
+  procedure CarregarDFePath( const AValue: String ); override;
+  procedure CarregarDFeXML( const AValue: String ); override;
+  function ValidarDFe( const AValue: String ): Boolean; override;
+public
+  constructor Create(AACBrDFe: TACBrGNRe; AXMLorFile: String ); reintroduce;
+end;
+
+{ TMetodoConsultaConfig}
+TMetodoConsultaConfig = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirGNRe}
+TMetodoImprimirGNRe = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirGNRePDF}
+TMetodoImprimirGNRePDF = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGerarGuia}
+TMetodoGerarGuia = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetFormaEmissao}
+TMetodoSetFormaEmissao = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
 
 implementation
 
-Uses IniFiles, StrUtils, DateUtils, Forms,  ACBrUtil, ACBrMonitor1, pcnConversao,
-  pgnreConversao, ACBrGNREGuiaClass;
+{ TACBrCarregarGNRe }
 
-procedure DoACBrGNRe ( Cmd: TACBrCmd ) ;
-var
-  wDiretorioAtual : String;
-  Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
-  ArqPDF , ArqGNRe: String;
-  PathsGNRe: TStringList;
-  FormaEmissao: TpcnTipoEmissao;
+procedure TACBrCarregarGNRe.CarregarDFePath(const AValue: String);
 begin
-  with FrmACBrMonitor do
+  if not ( TACBrGNRe(FpACBrDFe).GuiasRetorno.LoadFromFile( AValue ) ) then
+    raise Exception.Create(ACBrStr( Format(SErroGNReAbrir, [AValue]) ) );
+end;
+
+procedure TACBrCarregarGNRe.CarregarDFeXML(const AValue: String);
+begin
+  if not ( TACBrGNRe(FpACBrDFe).GuiasRetorno.LoadFromString( AValue ) ) then
+    raise Exception.Create(ACBrStr(SErroGNReCarregar) );
+end;
+
+function TACBrCarregarGNRe.ValidarDFe(const AValue: String): Boolean;
+begin
+  Result := False;
+  if ( TACBrGNRe(FpACBrDFe).GuiasRetorno.Count > 0 ) then
+    Result:= True;
+
+  if EstaVazio( FPathDFe )then
+    FPathDFe := PathWithDelim(TACBrGNRe(FpACBrDFe).Configuracoes.Arquivos.PathSalvar)
+                + AValue;
+
+  if EstaVazio( FPathDFeExtensao )then
+    FPathDFeExtensao := PathWithDelim(TACBrGNRe(FpACBrDFe).Configuracoes.Arquivos.PathSalvar)
+                        + AValue + CExtensaoXmlGNRe ;
+end;
+
+constructor TACBrCarregarGNRe.Create(AACBrDFe: TACBrGNRe; AXMLorFile: String);
+begin
+  inherited Create(AACBrDFe, AXMLorFile);
+end;
+
+{ TACBrObjetoGNRe }
+
+constructor TACBrObjetoGNRe.Create(AConfig: TMonitorConfig; ACBrGNRe: TACBrGNRe);
+begin
+  inherited Create(AConfig);
+
+  fACBrGNRe := ACBrGNRe;
+
+  ListaDeMetodos.Add(CMetodoConsultaConfig);
+  ListaDeMetodos.Add(CMetodoImprimirGNRe);
+  ListaDeMetodos.Add(CMetodoImprimirGNRePDF);
+  ListaDeMetodos.Add(CMetodoGerarGuia);
+  ListaDeMetodos.Add(CMetodoSetFormaEmissao);
+end;
+
+procedure TACBrObjetoGNRe.Executar(ACmd: TACBrCmd);
+var
+  AMetodoClass: TACBrMetodoClass;
+  CmdNum: Integer;
+  Ametodo: TACBrMetodo;
+begin
+  inherited Executar(ACmd);
+
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
+
+  case CmdNum of
+    0  : AMetodoClass := TMetodoConsultaConfig;
+    1  : AMetodoClass := TMetodoImprimirGNRe;
+    2  : AMetodoClass := TMetodoImprimirGNRePDF;
+    3  : AMetodoClass := TMetodoGerarGuia;
+    4  : AMetodoClass := TMetodoSetFormaEmissao;
+  end;
+
+  if Assigned(AMetodoClass) then
   begin
-    wDiretorioAtual := GetCurrentDir;
+    Ametodo := AMetodoClass.Create(ACmd, Self);
     try
-      if Cmd.Metodo = 'consultaconfig' then
-      begin
-        ACBrGNRE1.WebServices.ConsultaUF.Uf := Cmd.Params(0);
-        ACBrGNRE1.WebServices.ConsultaUF.receita := StrToIntDef(Cmd.Params(1), 0);
-        try
-          ACBrGNRE1.WebServices.ConsultaUF.Executar;
-        except
-        on E: Exception do
-          begin
-            raise Exception.Create(ACBrGNRE1.WebServices.Enviar.Msg+sLineBreak+E.Message);
-          end;
-        end;
-
-        
-        Cmd.Resposta := ACBrGNRE1.WebServices.Enviar.Msg+sLineBreak+
-                     '[STATUS]'+sLineBreak+
-                     'Ambiente='+TpAmbToStr(ACBrGNRE1.WebServices.ConsultaUF.ambiente)+sLineBreak+
-                     'Codigo='+IntToStr(ACBrGNRE1.WebServices.ConsultaUF.codigo)+sLineBreak+
-                     'Descricao='+ACBrGNRE1.WebServices.ConsultaUF.descricao+sLineBreak+
-                     'UF='+ACBrGNRE1.WebServices.ConsultaUF.Uf+sLineBreak+
-                     'AxigeUfFavorecida='+IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeUfFavorecida = 'S', 'SIM', 'NÃƒO')+sLineBreak+
-                     'AxigeReceita='+IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeReceita = 'S', 'SIM', 'NÃƒO')+sLineBreak;
-      end
-      else if Cmd.Metodo = 'imprimirgnre' then
-      begin
-        ACBrGNRE1.GuiasRetorno.Clear;
-        PathsGNRe := TStringList.Create;
-        try
-          PathsGNRe.Append(Cmd.Params(0));
-          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
-          try
-            CarregarDFe(PathsGNRe, ArqGNRe, tDFeGNRe);
-          except
-          end;
-        finally
-          PathsGNRe.Free;
-        end;
-
-        if not (ACBrGNRE1.GuiasRetorno.Count > 0) then
-           if not ACBrGNRE1.GuiasRetorno.LoadFromString(Cmd.Params(0)) then
-              raise Exception.Create('Erro ao carregar guia. Arquivo nÃ£o existe ou parÃ¢metro incorreto.');
-
-        bMostrarPreview := (Cmd.Params(4) = '1');
-        if NaoEstaVazio(Cmd.Params(1)) then
-          ACBrGNRE1.GNREGuia.Impressora:= Cmd.Params(1);
-
-        if NaoEstaVazio(Cmd.Params(2)) then
-          ACBrGNRE1.GNREGuia.NumCopias :=StrToIntDef(Cmd.Params(2),1);
-
-        try
-          AntesDeImprimir(bMostrarPreview);
-          ACBrGNRE1.GuiasRetorno.Imprimir;
-        finally
-          DepoisDeImprimir;
-        end;
-
-        Cmd.Resposta := 'Guia GNRe Impressa com sucesso';
-      end
-      else if Cmd.Metodo = 'imprimirgnrepdf' then //NFe.ImprimirDANFEPDF(cArqXML,cProtocolo,cMarcaDaqgua,bViaConsumidor,bSimplificado)
-      begin
-       ACBrGNRE1.GuiasRetorno.Clear;
-       PathsGNRe := TStringList.Create;
-        try
-          PathsGNRe.Append(Cmd.Params(0));
-          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
-          try
-            CarregarDFe(PathsGNRe, ArqGNRe, tDFeGNRe);
-          except
-          end;
-        finally
-          PathsGNRe.Free;
-        end;
-       try
-         ACBrGNRE1.GuiasRetorno.ImprimirPDF;
-         ArqPDF := 'GNRE_' +ACBrGNRE1.GuiasRetorno.Items[0].GNRE.RepresentacaoNumerica+'.pdf';
-         Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrGNRE1.GNREGuia.PathPDF) + ArqPDF ;
-       except
-         raise Exception.Create('Erro ao criar o arquivo PDF');
-       end;
-      end
-      else if cmd.Metodo = 'gerarguia' then
-      begin
-        LerIniGuia(Cmd.Params(0));
-        ACBrGNRE1.Guias.GerarGNRE;
-        ACBrGNRE1.Guias.Items[0].GravarXML;
-        Cmd.Resposta:= 'Arquivo gerado em: '+ACBrGNRE1.Guias.Items[0].NomeArq;
-
-        ACBrGNRE1.Enviar;
-
-        Cmd.Resposta :=Cmd.Resposta + sLineBreak+
-                     '[ENVIO]'+ sLineBreak+
-                     'Ambiente='+ TpAmbToStr(ACBrGNRE1.WebServices.Retorno.ambiente)+ sLineBreak+
-                     'Codigo='+ IntToStr(ACBrGNRE1.WebServices.Retorno.codigo)+ sLineBreak+
-                     'Descricao='+ ACBrGNRE1.WebServices.Retorno.descricao+ sLineBreak+
-                     'Recibo='+ ACBrGNRE1.WebServices.Retorno.numeroRecibo+ sLineBreak+
-                     'Protocolo='+ ACBrGNRE1.WebServices.Retorno.protocolo+ sLineBreak;
-
-      end
-      else if Cmd.Metodo = 'setformaemissao' then
-      begin
-        if cbModoEmissao.checked then
-          exit;
-
-        OK := False;
-        FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-
-        if not OK then
-          raise Exception.Create('Forma de EmissÃ£o InvÃ¡lida: '+TpEmisToStr(FormaEmissao))
-        else
-        begin
-          ACBrGNRE1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-          cbFormaEmissaoGNRe.ItemIndex := ACBrGNRE1.Configuracoes.Geral.FormaEmissaoCodigo-1;
-          SalvarIni;
-        end;
-      end
-
-      else
-      raise Exception.Create(ACBrStr('Comando invÃ¡lido ('+Cmd.Comando+')'));
+      Ametodo.Executar;
     finally
-      if wDiretorioAtual <> GetCurrentDir then
-      SetCurrentDir(wDiretorioAtual);
+      Ametodo.Free;
     end;
   end;
 end;
 
-procedure LerIniGuia( aStr: AnsiString) ;
+procedure TACBrObjetoGNRe.RespostaConsulta;
 var
-  IniGuia: TMemIniFile;
+  Resp: TLibGNReConsulta;
 begin
-  IniGuia := LerConverterIni(aStr);
-
+  Resp := TLibGNReConsulta.Create(resINI);
   try
-    try
-      with FrmACBrMonitor.ACBrGNRE1 do
-      begin
-        Guias.Clear;
-        with Guias.Add.GNRE do
-        begin
-          if IniGuia.SectionExists('Emitente') then
-          begin
-            c27_tipoIdentificacaoEmitente :=IniGuia.ReadInteger('Emitente','tipo',0);//[1,2] INscrito na uf ou nao /////1 CNPJ - 2 CPF
-            //Se inscrito na UF Destino
-            c17_inscricaoEstadualEmitente :=IniGuia.ReadString('Emitente','IE','');  //IE inscrito na uf destino
-            //Se nao Inscrito na uf Destino
-            c03_idContribuinteEmitente    :=IniGuia.ReadString('Emitente','id','cnpjcpf'); //numero do cnpj ou cpf
-            c16_razaoSocialEmitente       :=IniGuia.ReadString('Emitente','RazaoSocial','nome');
-            c18_enderecoEmitente          :=IniGuia.ReadString('Emitente','Endereco','');
-            c19_municipioEmitente         :=IniGuia.ReadString('Emitente','Cidade','');
-            c20_ufEnderecoEmitente        :=IniGuia.ReadString('Emitente','UF','');
-            c21_cepEmitente               :=IniGuia.ReadString('Emitente','Cep','');
-            c22_telefoneEmitente          :=IniGuia.ReadString('Emitente','Telefone','');
-          end;
-
-          //Complementes da Recita
-          if IniGuia.SectionExists('Complemento') then
-          begin
-            c42_identificadorGuia  :=IniGuia.ReadString('Complemento','IdentificadorGuia','');
-            ///Exige Doc Origem
-            c28_tipoDocOrigem      :=IniGuia.ReadInteger('Complemento','tipoDocOrigem',0);
-            c04_docOrigem          :=IniGuia.ReadString('Complemento','DocOrigem','');
-            ///Exige Detalhamento Receita
-            c25_detalhamentoReceita :=IniGuia.ReadInteger('Complemento','detalhamentoReceita',0);
-            ///Exige Produto
-            c26_produto             :=IniGuia.ReadInteger('Complemento','produto',0);
-          end;
-
-          //Referencias Da Receita
-          if IniGuia.SectionExists('Referencia') then
-          begin
-            c15_convenio       :=IniGuia.ReadString('Referencia','convenio','');
-            c02_receita        :=IniGuia.ReadInteger('Referencia','receita',0);
-            c01_UfFavorecida   :=IniGuia.ReadString('Referencia','ufFavorecida','');
-            c14_dataVencimento :=StringToDateTime(IniGuia.ReadString('Referencia','dataVencimento',''));
-            c33_dataPagamento  :=StringToDateTime(IniGuia.ReadString('Referencia','dataPagamento',''));
-            referencia.ano     :=IniGuia.ReadInteger('Referencia','referenciaAno',0);
-            referencia.mes     :=IniGuia.ReadString('Referencia','referenciaMes','');
-            referencia.parcela :=IniGuia.ReadInteger('Referencia','referenciaParcela',1);
-            referencia.periodo :=IniGuia.ReadInteger('Referencia','referenciaPeriodo',0);
-            c10_valorTotal     :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorTotal',''),0);
-            c06_valorPrincipal :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorPrincipal',''),0);
-          end;
-
-          //Destinatario
-          if IniGuia.SectionExists('Destinatario') then
-          begin
-            c34_tipoIdentificacaoDestinatario :=IniGuia.ReadInteger('Destinatario','tipo',0);/// 1 CNPJ - 2 CPF
-            //Se inscrito
-            c36_inscricaoEstadualDestinatario :=IniGuia.ReadString('Destinatario','ie','');
-            //Se nao inscrito
-            c35_idContribuinteDestinatario    :=IniGuia.ReadString('Destinatario','id','cnpjcpf');
-            c37_razaoSocialDestinatario       :=IniGuia.ReadString('Destinatario','razaosocial','nome');
-            c38_municipioDestinatario         :=IniGuia.ReadString('Destinatario','cidade','');
-          end;
-
-          //Outras Informacoes
-          if IniGuia.SectionExists('CampoExtra') then
-          begin
-            camposExtras.Clear;
-            with camposExtras.Add do
-            begin
-                 CampoExtra.codigo  :=IniGuia.ReadInteger('CampoExtra','codigo',0);
-                 CampoExtra.tipo    :=IniGuia.ReadString('CampoExtra','tipo','');
-                 CampoExtra.valor   :=IniGuia.ReadString('CampoExtra','valor','');
-            end;
-          end;
-        end;
-      end;
-  except
-    on E: Exception do
+    with fACBrGNRe.WebServices.ConsultaUF do
     begin
-      raise Exception.Create('Falha ao criar guia'+sLineBreak+E.Message);
+      Resp.Ambiente := TpAmbToStr(ambiente);
+      Resp.Codigo := IntToStr(codigo);
+      Resp.Descricao := Descricao;
+      Resp.UF := Uf;
+      Resp.ExigeUfFavorecida := IfThen(exigeUfFavorecida = 'S', 'SIM', 'NÃO');
+      Resp.ExigeReceita := IfThen(exigeReceita = 'S', 'SIM', 'NÃO');
+
+      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
-  end;
   finally
-    IniGuia.Free;
+    Resp.Free;
   end;
 end;
+
+procedure TACBrObjetoGNRe.RespostaEnvio;
+var
+  Resp: TLibGNReEnvio;
+begin
+  Resp := TLibGNReEnvio.Create(resINI);
+  try
+    with fACBrGNRe.WebServices.Retorno do
+    begin
+      Resp.Ambiente := TpAmbToStr(ambiente);
+      Resp.Codigo := IntToStr(codigo);
+      Resp.Descricao := Descricao;
+      Resp.Recibo := numeroRecibo;
+      Resp.Protocolo := Protocolo;
+
+      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+    end;
+  finally
+    Resp.Free;
+  end;
+end;
+
+{ TMetodoConsultaConfig }
+
+{ Params: 0 - String com a Sigla da UF
+          1 - Inteiro com o código da receita referente a guia
+}
+procedure TMetodoConsultaConfig.Executar;
+var
+  AUF, AMsg: String;
+  AReceita: Integer;
+begin
+  AUF := fpCmd.Params(0);
+  AReceita := StrToIntDef(fpCmd.Params(1), 0);
+
+  with TACBrObjetoGNRe(fpObjetoDono) do
+  begin
+    ACBrGNRe.WebServices.ConsultaUF.Uf := AUF;
+    ACBrGNRe.WebServices.ConsultaUF.receita := AReceita;
+
+    try
+      ACBrGNRe.WebServices.ConsultaUF.Executar;
+      AMsg := ACBrGNRe.WebServices.Enviar.Msg;
+    except
+    on E: Exception do
+      begin
+        raise Exception.Create(AMsg + sLineBreak + E.Message);
+      end;
+    end;
+
+    fpCmd.Resposta := AMsg + sLineBreak;
+    RespostaConsulta;
+  end;
+end;
+
+{ TMetodoImprimirGNRe }
+
+{ Params: 0 - XMLFile - Uma String com um Path completo para um arquivo XML GNRe
+                         ou Uma String com conteúdo XML CTe
+          1 - Impressora: String com Nome da Impressora
+          2 - Copias: Integer Número de Copias
+          3 - Preview: 1 para Mostrar Preview
+}
+procedure TMetodoImprimirGNRe.Executar;
+var
+  AXML: String;
+  AImpressora: String;
+  ACopias: String;
+  APreview: Boolean;
+  CargaDFe: TACBrCarregarGNRe;
+begin
+  AXML := fpCmd.Params(0);
+  AImpressora := fpCmd.Params(1);
+  ACopias := fpCmd.Params(2);
+  APreview := StrToBoolDef(fpCmd.Params(4), False);
+
+  with TACBrObjetoGNRe(fpObjetoDono) do
+  begin
+    ACBrGNRe.GuiasRetorno.Clear;
+    CargaDFe := TACBrCarregarGNRe.Create(ACBrGNRe, AXML);
+
+    try
+//    DoConfiguraDACTe(False, BoolToStr(APreview,'1',''));
+
+      if NaoEstaVazio(AImpressora) then
+        ACBrGNRe.GNREGuia.Impressora := AImpressora;
+
+      if NaoEstaVazio(ACopias) then
+        ACBrGNRe.GNREGuia.NumCopias := StrToIntDef(ACopias,1);
+
+      try
+        DoAntesDeImprimir((APreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+        ACBrGNRe.GuiasRetorno.Imprimir;
+      finally
+        DoDepoisDeImprimir;
+      end;
+    finally
+      CargaDFe.Free;
+    end;
+
+    fpCmd.Resposta := 'Guia GNRe Impressa com sucesso';
+  end;
+end;
+
+{ TMetodoImprimirGNRePDF }
+
+{ Params: 0 - XML - Uma String com um Path completo XML GNRe
+}
+procedure TMetodoImprimirGNRePDF.Executar;
+var
+  ArqPDF, AXML: string;
+  CargaDFe: TACBrCarregarGNRe;
+begin
+  AXML := fpCmd.Params(0);
+
+  with TACBrObjetoGNRe(fpObjetoDono) do
+  begin
+    ACBrGNRe.GuiasRetorno.Clear;
+    CargaDFe := TACBrCarregarGNRe.Create(ACBrGNRe, AXML);
+    try
+//      DoConfiguraDACTe(True, '');
+
+      try
+        ACBrGNRe.GuiasRetorno.ImprimirPDF;
+
+        ArqPDF := OnlyNumber(ACBrGNRe.GuiasRetorno.Items[0].GNRE.IdentificadorGuia) + '-guia.pdf';
+        ArqPDF := PathWithDelim(ACBrGNRe.GNREGuia.PathPDF) + ArqPDF;
+
+        fpCmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
+      except
+        raise Exception.Create('Erro ao criar o arquivo PDF');
+      end;
+    finally
+      CargaDFe.Free;
+    end;
+  end;
+end;
+
+{ TMetodoGerarGuia }
+
+{ Params: 0 - IniFile - Uma String com um Path completo arquivo .ini GNRe
+                         ou uma String com conteúdo txt do GNRe
+          1 - bImprimir - Imprimir a Guia
+}
+procedure TMetodoGerarGuia.Executar;
+var
+  AIni: string;
+  bImprimir: Boolean;
+begin
+  AIni := fpCmd.Params(0);
+  bImprimir := StrToBoolDef(fpCmd.Params(1),False);
+
+  with TACBrObjetoGNRe(fpObjetoDono) do
+  begin
+    ACBrGNRe.Guias.Clear;
+    ACBrGNRe.Guias.LoadFromIni(AIni);
+
+    ACBrGNRe.Guias.GerarGNRE;
+    ACBrGNRe.Guias.Items[0].GravarXML;
+    fpCmd.Resposta:= 'Arquivo gerado em: ' +
+                     ACBrGNRe.Guias.Items[0].NomeArq + sLineBreak;
+
+    ACBrGNRe.Enviar(bImprimir);
+
+    RespostaEnvio;
+  end;
+end;
+
+{ TMetodoSetFormaEmissao }
+
+{ Params: 0 - Inteiro com o código da forma de emissão
+}
+procedure TMetodoSetFormaEmissao.Executar;
+var
+  Ok: Boolean;
+  FormaEmissao: TpcnTipoEmissao;
+  AFormaEmissao: String;
+begin
+  with TACBrObjetoGNRe(fpObjetoDono) do
+  begin
+    AFormaEmissao := fpCmd.Params(0);
+
+    if MonitorConfig.DFE.IgnorarComandoModoEmissao then
+      exit;
+
+    OK := False;
+    FormaEmissao := StrToTpEmis(OK, AFormaEmissao);
+
+    if not OK then
+      raise Exception.Create('Forma de Emissão Inválida: ' + AFormaEmissao)
+    else
+    begin
+      ACBrGNRe.Configuracoes.Geral.FormaEmissao := FormaEmissao;
+
+      with MonitorConfig.DFE.WebService do
+        FormaEmissaoGNRe := ACBrGNRe.Configuracoes.Geral.FormaEmissaoCodigo-1;
+
+      MonitorConfig.SalvarArquivo;
+    end;
+  end;
+end;
+
 end.

@@ -2392,6 +2392,7 @@ end;
 { Params: 0 - IniFile - Uma String com um Path completo arquivo .ini NFe
                          ou Uma String com conteúdo txt do NFe
           1 - RetornaXML: 1 para Retornar XML Gerado na Resposta
+          2 - AssinaNFe: 0 para NÃO assinar, por padrão gera sempre assinando o XML
 }
 procedure TMetodoCriarNFe.Executar;
 var
@@ -2400,9 +2401,11 @@ var
   ArqNFe: string;
   SL: TStringList;
   Resp, AIni: string;
+  AAssina: Boolean;
 begin
   AIni := fpCmd.Params(0);
   ARetornaXML := StrToBoolDef(fpCmd.Params(1), False);
+  AAssina := StrToBoolDef(fpCmd.Params(2), True);
 
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
@@ -2420,8 +2423,11 @@ begin
     ACBrNFe.NotasFiscais.GerarNFe;
     Alertas := ACBrNFe.NotasFiscais.Items[0].Alertas;
 
-    ACBrNFe.NotasFiscais.Assinar;
-    ACBrNFe.NotasFiscais.Validar;
+    if AAssina then
+    begin
+      ACBrNFe.NotasFiscais.Assinar;
+      ACBrNFe.NotasFiscais.Validar;
+    end;
 
     ArqNFe := PathWithDelim(ACBrNFe.Configuracoes.Arquivos.PathSalvar) +
       OnlyNumber(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID) + '-nfe.xml';

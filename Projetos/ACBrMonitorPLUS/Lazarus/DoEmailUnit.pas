@@ -1,57 +1,159 @@
 {******************************************************************************}
 { Projeto: ACBr Monitor                                                        }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunica√ß√£o com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel Sim√µes de Almeida               }
-{                                                                              }
-{ Colaboradores nesse arquivo: Celso Marigo Junior                             }
-{                              Jean Patrick Figueiredo dos Santos              }
-{                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na p√°gina do Projeto ACBr     }
+{ criar uma interface de comunicaÁ„o com equipamentos de automacao comercial.  }
+
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+
+{ Colaboradores nesse arquivo:                                                 }
+
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na p·gina do Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa √© software livre; voc√™ pode redistribu√≠-lo e/ou modific√°-lo   }
-{ sob os termos da Licen√ßa P√∫blica Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a vers√£o 2 da Licen√ßa como (a seu crit√©rio)       }
-{ qualquer vers√£o mais nova.                                                   }
-{                                                                              }
-{  Este programa √© distribu√≠do na expectativa de ser √∫til, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIALIZA√á√ÉO OU DE ADEQUA√á√ÉO A}
-{ QUALQUER PROP√ìSITO EM PARTICULAR. Consulte a Licen√ßa P√∫blica Geral GNU para  }
+
+{  Este programa È software livre; vocÍ pode redistribuÌ-lo e/ou modific·-lo   }
+{ sob os termos da LicenÁa P˙blica Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a vers„o 2 da LicenÁa como (a seu critÈrio)       }
+{ qualquer vers„o mais nova.                                                   }
+
+{  Este programa È distribuÌdo na expectativa de ser ˙til, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implÌcita de COMERCIALIZA«√O OU DE ADEQUA«√O A}
+{ QUALQUER PROP”SITO EM PARTICULAR. Consulte a LicenÁa P˙blica Geral GNU para  }
 { obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral GNU junto com este}
-{ programa; se n√£o, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. Voc√™ tamb√©m pode obter uma     }
-{ copia da licen√ßa em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{       Rua Coronel Aureliano de Camargo, 973 - Tatu√≠ - SP - 18270-170         }
-{                                                                              }
+
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral GNU junto com este}
+{ programa; se n„o, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. VocÍ tambÈm pode obter uma     }
+{ copia da licenÁa em:  http://www.opensource.org/licenses/gpl-license.php     }
+
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
+
 {******************************************************************************}
+{$I ACBr.inc}
 
 unit DoEmailUnit;
-
-{$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, CmdUnit;
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrMail,
+  ACBrMonitorConsts, ACBrMonitorConfig;
 
-procedure DoEmail(Cmd: TACBrCmd);
-procedure ConfigurarEmailNovo;
-procedure ConfigurarDadosEmail(aStr : String );
-procedure RecuperarDadosIniciais;
-function AdicionaDestino( Endereco, Nome, Tipo : String ) : String;
-function ValidarEmail(aEmail: String) : Boolean;
+type
+
+{ TACBrObjetoEMail }
+
+TACBrObjetoEMail = class(TACBrObjetoDFe)
+private
+  fACBrEMail: TACBrMail;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrEMail: TACBrMail); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  procedure ConfigurarEmailNovo;
+  procedure ConfigurarDadosEmail(aStr : String );
+  procedure RecuperarDadosIniciais;
+  function AdicionaDestino( Endereco, Nome, Tipo : String ) : String;
+  function ValidarEmail(aEmail: String) : Boolean;
+  procedure ChecarEmailNovo;
+
+  property ACBrEMail: TACBrMail read fACBrEMail;
+end;
+
+{ TMetodoNovo}
+TMetodoNovo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAdicionaPara}
+TMetodoAdicionaPara = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAdicionaResponderA}
+TMetodoAdicionaResponderA = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAdicionaCC}
+TMetodoAdicionaCC = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAdicionaBCC}
+TMetodoAdicionaBCC = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAssunto}
+TMetodoAssunto = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConfirmarLeitura}
+TMetodoConfirmarLeitura = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoUsarHTML}
+TMetodoUsarHTML = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTentativasEnvio}
+TMetodoTentativasEnvio = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetPrioridade}
+TMetodoSetPrioridade = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetCodificacao}
+TMetodoSetCodificacao = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTextoMensagem}
+TMetodoTextoMensagem = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTextoAlternativo}
+TMetodoTextoAlternativo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAdicionaAnexo}
+TMetodoAdicionaAnexo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoEnviar}
+TMetodoEnviar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
 
 implementation
 
-uses ACBrUtil, mimemess, RegExpr, synachar, IniFiles, DoACBrUnit,
-  ACBrMail, typinfo,
-  {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
+uses
+  mimemess, RegExpr, synachar, IniFiles, DoACBrUnit;
 
 var
   EmailNome, EmailEndereco, EmailHost, EmailUsuario,
@@ -59,175 +161,75 @@ var
   EmailCodificacao : TMimeChar;
   EmailSSL, EmailTLS, FlagEmailNovo : Boolean;
 
-function ValidarEmail(aEmail: String) : Boolean;
+{ TACBrObjetoEMail }
+
+constructor TACBrObjetoEMail.Create(AConfig: TMonitorConfig; ACBrEMail: TACBrMail);
+begin
+  inherited Create(AConfig);
+
+  fACBrEMail := ACBrEMail;
+
+  ListaDeMetodos.Add(CMetodoNovo);
+  ListaDeMetodos.Add(CMetodoAdicionaPara);
+  ListaDeMetodos.Add(CMetodoAdicionaResponderA);
+  ListaDeMetodos.Add(CMetodoAdicionaCC);
+  ListaDeMetodos.Add(CMetodoAdicionaBCC);
+  ListaDeMetodos.Add(CMetodoAssunto);
+  ListaDeMetodos.Add(CMetodoConfirmarLeitura);
+  ListaDeMetodos.Add(CMetodoUsarHTML);
+  ListaDeMetodos.Add(CMetodoTentativasEnvio);
+  ListaDeMetodos.Add(CMetodoSetPrioridade);
+  ListaDeMetodos.Add(CMetodoSetCodificacao);
+  ListaDeMetodos.Add(CMetodoTextoMensagem);
+  ListaDeMetodos.Add(CMetodoTextoAlternativo);
+  ListaDeMetodos.Add(CMetodoAdicionaAnexo);
+  ListaDeMetodos.Add(CMetodoEnviar);
+
+end;
+
+procedure TACBrObjetoEMail.Executar(ACmd: TACBrCmd);
 var
-  vRegex: TRegExpr;
+  AMetodoClass: TACBrMetodoClass;
+  CmdNum: Integer;
+  Ametodo: TACBrMetodo;
 begin
-  Result := False;
-  vRegex := TRegExpr.Create;
-  try
-    vRegex.Expression := '^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}' +
-                         '\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\' +
-                         '.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$';
+  inherited Executar(ACmd);
 
-    if vRegex.Exec(aEmail) then
-       Result := True;
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
 
-  finally
-    vRegex.Free;
+  case CmdNum of
+    0  : AMetodoClass := TMetodoNovo;
+    1  : AMetodoClass := TMetodoAdicionaPara;
+    2  : AMetodoClass := TMetodoAdicionaResponderA;
+    3  : AMetodoClass := TMetodoAdicionaCC;
+    4  : AMetodoClass := TMetodoAdicionaBCC;
+    5  : AMetodoClass := TMetodoAssunto;
+    6  : AMetodoClass := TMetodoConfirmarLeitura;
+    7  : AMetodoClass := TMetodoUsarHTML;
+    8  : AMetodoClass := TMetodoTentativasEnvio;
+    9  : AMetodoClass := TMetodoSetPrioridade;
+    10 : AMetodoClass := TMetodoSetCodificacao;
+    11 : AMetodoClass := TMetodoTextoMensagem;
+    12 : AMetodoClass := TMetodoTextoAlternativo;
+    13 : AMetodoClass := TMetodoAdicionaAnexo;
+    14 : AMetodoClass := TMetodoEnviar;
   end;
-end;
 
-procedure DoEmail(Cmd: TACBrCmd);
-begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
+  if Assigned(AMetodoClass) then
   begin
-    if Cmd.Metodo = 'novo' then
-     begin
-       ConfigurarEmailNovo;
-       if ( Cmd.Params(0) <> '' ) then { l√™ configura√ß√µes do remetente via ini }
-         ConfigurarDadosEmail(Cmd.Params(0))
-       else
-         { Recupera dados iniciais }
-         RecuperarDadosIniciais;
-
-       FlagEmailNovo := True;
-
-       Cmd.Resposta := 'Novo E-mail iniciado!';
-     end
-
-    else if not FlagEmailNovo then
-     begin
-       raise Exception.Create('E-mail n√£o iniciado. Envie um comando EMAIL.Novo')
-     end
-
-    else if Cmd.Metodo = 'adicionapara' then {adiciona remetente}
-     begin
-       if not ValidarEmail(Cmd.Params(0)) then
-          raise Exception.Create(Cmd.Params(0)+' n√£o √© um E-mail v√°lido.')
-       else
-          Cmd.Resposta := AdicionaDestino( Cmd.Params(0), Cmd.Params(1), 'Para' );
-
-     end
-
-    else if Cmd.Metodo = 'adicionarespondera' then {adiciona e-mail para resposta}
-     begin
-       if not ValidarEmail(Cmd.Params(0)) then
-          raise Exception.Create(Cmd.Params(0)+' n√£o √© um E-mail v√°lido.')
-       else
-          Cmd.Resposta := AdicionaDestino( Cmd.Params(0), Cmd.Params(1), 'ReplyTo' );
-
-     end
-
-    else if Cmd.Metodo = 'adicionacc' then {adiciona e-mail "Com copia"}
-     begin
-       if not ValidarEmail(Cmd.Params(0)) then
-          raise Exception.Create(Cmd.Params(0)+' n√£o √© um E-mail v√°lido.')
-       else
-          Cmd.Resposta := AdicionaDestino( Cmd.Params(0), Cmd.Params(1), 'CC' );
-
-     end
-
-    else if Cmd.Metodo = 'adicionabcc' then {adiciona e-mail "Com Copia Oculta"}
-     begin
-       if not ValidarEmail(Cmd.Params(0)) then
-          raise Exception.Create(Cmd.Params(0)+' n√£o √© um E-mail v√°lido.')
-       else
-          Cmd.Resposta := AdicionaDestino( Cmd.Params(0), '', 'BCC' );
-
-     end
-
-    else if Cmd.Metodo = 'assunto' then {assunto do e-mail}
-       Subject := Cmd.Params(0)
-
-    else if Cmd.Metodo = 'confirmarleitura' then {seta confirma√ß√£o de leitura (Falso)}
-       ReadingConfirmation := StrToBoolDef(Trim(Cmd.Params(0)),False)
-
-    else if Cmd.Metodo = 'usarhtml' then {seta formato de entrega (False)}
-       IsHTML := StrToBoolDef(Trim(Cmd.Params(0)),False)
-
-    else if Cmd.Metodo = 'tentativasenvio' then {seta numero de tentativas de envio (1)}
-       Attempts := StrToInt( Cmd.Params(0) )
-
-    else if Cmd.Metodo = 'setprioridade' then  {seta prioridade (Normal)}
-     begin
-       case Cmd.Params(0) of
-         'naodefinida' : Priority := MP_unknown;
-         'alta'        : Priority := MP_high;
-         'baixa'       : Priority := MP_low;
-       else
-         Priority := MP_normal;
-       end;
-     end
-
-    else if Cmd.Metodo = 'setcodificacao' then  {seta codificacao (DefaultCharset)}
-     begin
-       DefaultCharset := GetCPFromID( Cmd.Params(0) );
-       Cmd.Resposta := 'Codifica√ß√£o setada para ' + Cmd.Params(0);
-     end
-
-    else if Cmd.Metodo = 'textomensagem' then {adiciona o texto ao corpo do e-mail}
-       Body.Add( Cmd.Params(0) )
-
-    else if Cmd.Metodo = 'textoalternativo' then {adiciona o texto alternativo (texto puro) do e-mail}
-       AltBody.Add( Cmd.Params(0) )
-
-    else if Cmd.Metodo = 'adicionaanexo' then {adiciona anexo}
-     begin
-       AddAttachment(Cmd.Params(0), Cmd.Params(1));
-       Cmd.Resposta := 'Anexo inclu√≠do com sucesso!';
-     end
-
-    else if Cmd.Metodo = 'enviar' then {envia mensagem}
-     begin
-       try
-         FlagEmailNovo := False;
-
-         Send;
-
-         Cmd.Resposta := 'E-mail enviado com sucesso!';
-       except
-         on E: Exception do
-         begin
-           { Recupera dados iniciais }
-           RecuperarDadosIniciais;
-           raise Exception.Create(e.Message);
-         end;
-       end;
-
-       { Recupera dados iniciais }
-       RecuperarDadosIniciais;
-     end
-
-    else
-       raise Exception.Create('Comando inv√°lido ('+Cmd.Comando+')') ;
-
+    Ametodo := AMetodoClass.Create(ACmd, Self);
+    try
+      Ametodo.Executar;
+    finally
+      Ametodo.Free;
+    end;
   end;
 end;
 
-function AdicionaDestino(Endereco, Nome, Tipo: String): String;
+procedure TACBrObjetoEMail.ConfigurarEmailNovo;
 begin
-  Result := '';
-
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
-  begin
-    if ( Tipo = 'Para' ) then
-       AddAddress( Endereco, Nome )
-    else if ( Tipo = 'CC' ) then
-       AddCC( Endereco, Nome )
-    else if ( Tipo = 'BCC' ) then
-       AddBCC( Endereco )
-    else
-       AddReplyTo( Endereco, Nome );
-
-  end;
-
-  Result := 'E-mail ' + Endereco + ' adicionado a lista "' + Tipo + '".';
-end;
-
-procedure ConfigurarEmailNovo;
-begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
+  with fACBrEMail do
   begin
     { Salva dados iniciais }
     EmailEndereco    := From;
@@ -245,31 +247,30 @@ begin
   end;
 end;
 
-procedure ConfigurarDadosEmail(aStr: String);
+procedure TACBrObjetoEMail.ConfigurarDadosEmail(aStr: String);
 var
-  IniDados : TMemIniFile;
-  sCharset : String;
+  IniDados: TMemIniFile;
+  sCharset: String;
 begin
-  IniDados   := LerConverterIni(aStr);
+  IniDados := LerConverterIni(aStr);
   try
     if IniDados.SectionExists('EMAIL') then
     begin
-      with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
+      with fACBrEMail do
       begin
-        From           := IniDados.ReadString('EMAIL', 'Endereco', EmailEndereco);
-        FromName       := IniDados.ReadString('EMAIL', 'NomeExibicao', EmailNome);
-        Host           := IniDados.ReadString('EMAIL', 'Email', EmailHost);
-        Username       := IniDados.ReadString('EMAIL', 'Usuario', EmailUsuario);
-        Password       := IniDados.ReadString('EMAIL', 'Senha', EmailSenha);
-        Port           := IniDados.ReadString('EMAIL', 'Porta', EmailPorta);
-        SetSSL         := IniDados.ReadBool(  'EMAIL', 'ExigeSSL', EmailSSL);
-        SetTLS         := IniDados.ReadBool(  'EMAIL', 'ExigeTLS', EmailTLS);
-        sCharset       := IniDados.ReadString('EMAIL', 'Codificacao', '');
+        From     := IniDados.ReadString('EMAIL', 'Endereco', EmailEndereco);
+        FromName := IniDados.ReadString('EMAIL', 'NomeExibicao', EmailNome);
+        Host     := IniDados.ReadString('EMAIL', 'Email', EmailHost);
+        Username := IniDados.ReadString('EMAIL', 'Usuario', EmailUsuario);
+        Password := IniDados.ReadString('EMAIL', 'Senha', EmailSenha);
+        Port     := IniDados.ReadString('EMAIL', 'Porta', EmailPorta);
+        SetSSL   := IniDados.ReadBool(  'EMAIL', 'ExigeSSL', EmailSSL);
+        SetTLS   := IniDados.ReadBool(  'EMAIL', 'ExigeTLS', EmailTLS);
+        sCharset := IniDados.ReadString('EMAIL', 'Codificacao', '');
 
         if ( sCharset <> '' ) then
-           DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
+          DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
              sCharset))
-
       end;
     end;
   finally
@@ -277,16 +278,16 @@ begin
   end;
 end;
 
-procedure RecuperarDadosIniciais;
+procedure TACBrObjetoEMail.RecuperarDadosIniciais;
 begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
+  with fACBrEMail do
   begin
     if ( (Trim(From) = '') or not(ValidarEmail(From)) ) then
-       raise Exception.Create('E-mail do remetente n√£o informado ou inv√°lido!')
+       raise Exception.Create('E-mail do remetente n„o informado ou inv·lido!')
     else if Trim(Host) = '' then
-       raise Exception.Create('Host SMTP n√£o informado!')
+       raise Exception.Create('Host SMTP n„o informado!')
     else if (Trim(Port) = '') or (Port = '0') then
-       raise Exception.Create('Porta SMTP n√£o informada ou inv√°lida!');
+       raise Exception.Create('Porta SMTP n„o informada ou inv·lida!');
 
     From           := EmailEndereco;
     FromName       := EmailNome;
@@ -300,5 +301,353 @@ begin
   end;
 end;
 
-end.
+function TACBrObjetoEMail.AdicionaDestino(Endereco, Nome, Tipo: String): String;
+begin
+  Result := '';
 
+  with fACBrEMail do
+  begin
+    if ( Tipo = 'Para' ) then
+       AddAddress( Endereco, Nome )
+    else if ( Tipo = 'CC' ) then
+       AddCC( Endereco, Nome )
+    else if ( Tipo = 'BCC' ) then
+       AddBCC( Endereco )
+    else
+       AddReplyTo( Endereco, Nome );
+  end;
+
+  Result := 'E-mail ' + Endereco + ' adicionado a lista "' + Tipo + '".';
+end;
+
+function TACBrObjetoEMail.ValidarEmail(aEmail: String): Boolean;
+var
+  vRegex: TRegExpr;
+begin
+  Result := False;
+  vRegex := TRegExpr.Create;
+  try
+    vRegex.Expression := '^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}' +
+                         '\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\' +
+                         '.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$';
+
+    if vRegex.Exec(aEmail) then
+      Result := True;
+
+  finally
+    vRegex.Free;
+  end;
+end;
+
+procedure TACBrObjetoEMail.ChecarEmailNovo;
+begin
+  if not FlagEmailNovo then
+    raise Exception.Create('E-mail n„o iniciado. Envie um comando EMAIL.Novo');
+end;
+
+{ TMetodoNovo }
+
+{ Params: 0 - Arquivo INI contendo a configuraÁ„o
+}
+procedure TMetodoNovo.Executar;
+var
+  AArq: String;
+begin
+  AArq := fpCmd.Params(0);
+
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ConfigurarEmailNovo;
+    if ( AArq <> '' ) then { lÍ configuraÁıes do remetente via ini }
+      ConfigurarDadosEmail(AArq)
+    else
+      { Recupera dados iniciais }
+      RecuperarDadosIniciais;
+
+    FlagEmailNovo := True;
+
+    fpCmd.Resposta := 'Novo E-mail iniciado!';
+  end;
+end;
+
+{ TMetodoAdicionaPara }
+
+{ Params: 0 - string contendo o e-mail
+          1 - string contendo o nome
+}
+procedure TMetodoAdicionaPara.Executar;
+var
+  Aemail, ANome: String;
+begin
+  Aemail := fpCmd.Params(0);
+  ANome  := fpCmd.Params(1);
+
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    if not ValidarEmail(Aemail) then
+       raise Exception.Create(Aemail+' n„o È um E-mail v·lido.')
+    else
+       fpCmd.Resposta := AdicionaDestino( Aemail, ANome, 'Para' );
+  end;
+end;
+
+{ TMetodoAdicionaResponderA }
+
+{ Params: 0 - string contendo o e-mail
+          1 - string contendo o nome
+}
+procedure TMetodoAdicionaResponderA.Executar;
+var
+  Aemail, ANome: String;
+begin
+  Aemail := fpCmd.Params(0);
+  ANome  := fpCmd.Params(1);
+
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    if not ValidarEmail(Aemail) then
+       raise Exception.Create(Aemail+' n„o È um E-mail v·lido.')
+    else
+       fpCmd.Resposta := AdicionaDestino( Aemail, ANome, 'ReplyTo' );
+  end;
+end;
+
+{ TMetodoAdicionaCC }
+
+{ Params: 0 - string contendo o e-mail
+          1 - string contendo o nome
+}
+procedure TMetodoAdicionaCC.Executar;
+var
+  Aemail, ANome: String;
+begin
+  Aemail := fpCmd.Params(0);
+  ANome  := fpCmd.Params(1);
+
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    if not ValidarEmail(Aemail) then
+       raise Exception.Create(Aemail+' n„o È um E-mail v·lido.')
+    else
+       fpCmd.Resposta := AdicionaDestino( Aemail, ANome, 'CC' );
+  end;
+end;
+
+{ TMetodoAdicionaBCC }
+
+{ Params: 0 - string contendo o e-mail
+}
+procedure TMetodoAdicionaBCC.Executar;
+var
+  Aemail: String;
+begin
+  Aemail := fpCmd.Params(0);
+
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    if not ValidarEmail(Aemail) then
+       raise Exception.Create(Aemail+' n„o È um E-mail v·lido.')
+    else
+       fpCmd.Resposta := AdicionaDestino( Aemail, '', 'BCC' );
+  end;
+end;
+
+{ TMetodoAssunto }
+
+{ Params: 0 - string contendo o assunto
+}
+procedure TMetodoAssunto.Executar;
+begin
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    fACBrEMail.Subject := fpCmd.Params(0);
+  end;
+end;
+
+{ TMetodoConfirmarLeitura }
+
+{ Params: 0 - inteiro
+               0 = False 1 = True
+}
+procedure TMetodoConfirmarLeitura.Executar;
+begin
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    fACBrEMail.ReadingConfirmation := StrToBoolDef(Trim(fpCmd.Params(0)), False);
+  end;
+end;
+
+{ TMetodoUsarHTML }
+
+{ Params: 0 - inteiro
+               0 = False 1 = True
+}
+procedure TMetodoUsarHTML.Executar;
+begin
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    fACBrEMail.IsHTML := StrToBoolDef(Trim(fpCmd.Params(0)), False);
+  end;
+end;
+
+{ TMetodoTentativasEnvio }
+
+{ Params: 0 - inteiro - Numero de tentativas
+}
+procedure TMetodoTentativasEnvio.Executar;
+begin
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    fACBrEMail.Attempts := StrToInt( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoSetPrioridade }
+
+{ Params: 0 - String - tipo de prioridade
+}
+procedure TMetodoSetPrioridade.Executar;
+var
+  APrior: String;
+begin
+  APrior := trim(fpCmd.Params(0));
+
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    if APrior = 'naodefinida' then
+      fACBrEMail.Priority := MP_unknown
+    else
+      if APrior = 'alta' then
+        fACBrEMail.Priority := MP_high
+      else
+        if APrior = 'baixa' then
+          fACBrEMail.Priority := MP_low
+        else
+          fACBrEMail.Priority := MP_normal;
+(*
+    case fpCmd.Params(0) of
+      'naodefinida' : fACBrEMail.Priority := MP_unknown;
+      'alta'        : fACBrEMail.Priority := MP_high;
+      'baixa'       : fACBrEMail.Priority := MP_low;
+    else
+      fACBrEMail.Priority := MP_normal;
+    end;
+*)
+  end;
+end;
+
+{ TMetodoSetCodificacao }
+
+{ Params: 0 - String - Codificacao
+}
+procedure TMetodoSetCodificacao.Executar;
+var
+  ACod: String;
+begin
+  ACod := fpCmd.Params(0);
+
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    fACBrEMail.DefaultCharset := GetCPFromID( ACod );
+    fpCmd.Resposta := 'CodificaÁ„o setada para ' + ACod;
+  end;
+end;
+
+{ TMetodoTextoMensagem }
+
+{ Params: 0 - String - contendo a mensagem
+}
+procedure TMetodoTextoMensagem.Executar;
+begin
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    fACBrEMail.Body.Add( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoTextoAlternativo }
+
+{ Params: 0 - String - contendo o texto alternativo
+}
+procedure TMetodoTextoAlternativo.Executar;
+begin
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    fACBrEMail.AltBody.Add( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoAdicionaAnexo }
+
+{ Params: 0 - string contendo o path e nome do arquivo
+          1 - string contendo a descriÁ„o
+}
+procedure TMetodoAdicionaAnexo.Executar;
+var
+  AArq, ADesc: String;
+begin
+  AArq := fpCmd.Params(0);
+  ADesc  := fpCmd.Params(1);
+
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    fACBrEMail.AddAttachment(AArq, ADesc);
+    fpCmd.Resposta := 'Anexo incluÌdo com sucesso!';
+  end;
+end;
+
+{ TMetodoEnviar }
+
+procedure TMetodoEnviar.Executar;
+begin
+  with TACBrObjetoEMail(fpObjetoDono) do
+  begin
+    ChecarEmailNovo;
+
+    try
+      FlagEmailNovo := False;
+
+      fACBrEMail.Send;
+
+      fpCmd.Resposta := 'E-mail enviado com sucesso!';
+    except
+      on E: Exception do
+      begin
+        { Recupera dados iniciais }
+        RecuperarDadosIniciais;
+        raise Exception.Create(e.Message);
+      end;
+    end;
+
+    { Recupera dados iniciais }
+    RecuperarDadosIniciais;
+  end;
+end;
+
+end.

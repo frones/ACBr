@@ -1,161 +1,620 @@
 {******************************************************************************}
 { Projeto: ACBr Monitor                                                        }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicaÃ§Ã£o com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel SimÃµes de Almeida               }
-{                                                                              }
+{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
+
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+
 { Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pÃ¡gina do Projeto ACBr     }
+
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa Ã© software livre; vocÃª pode redistribuÃ­-lo e/ou modificÃ¡-lo   }
-{ sob os termos da LicenÃ§a PÃºblica Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versÃ£o 2 da LicenÃ§a como (a seu critÃ©rio)       }
-{ qualquer versÃ£o mais nova.                                                   }
-{                                                                              }
-{  Este programa Ã© distribuÃ­do na expectativa de ser Ãºtil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIALIZAÃ‡ÃƒO OU DE ADEQUAÃ‡ÃƒO A}
-{ QUALQUER PROPÃ“SITO EM PARTICULAR. Consulte a LicenÃ§a PÃºblica Geral GNU para  }
+
+{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
+{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
+{ qualquer versão mais nova.                                                   }
+
+{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
+{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
 { obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral GNU junto com este}
-{ programa; se nÃ£o, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. VocÃª tambÃ©m pode obter uma     }
-{ copia da licenÃ§a em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel SimÃµes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{       Rua Coronel Aureliano de Camargo, 973 - TatuÃ­ - SP - 18270-170         }
-{                                                                              }
+
+{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
+{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
+{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
+
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+
 {******************************************************************************}
+{$I ACBr.inc}
 
-{$mode objfpc}{$H+}
-
-unit DoDISUnit ;
+unit DoDISUnit;
 
 interface
-Uses Classes, TypInfo, SysUtils, CmdUnit,
-  {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
+uses
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrDIS,
+  ACBrMonitorConsts, ACBrMonitorConfig;
 
-Procedure DoDIS( Cmd : TACBrCmd ) ;
+type
+
+{ TACBrObjetoDIS }
+
+TACBrObjetoDIS = class(TACBrObjetoDFe)
+private
+  fACBrDIS: TACBrDIS;
+public
+  constructor Create(AConfig: TMonitorConfig; ACBrDIS: TACBrDIS); reintroduce;
+  procedure Executar(ACmd: TACBrCmd); override;
+
+  property ACBrDIS: TACBrDIS read fACBrDIS;
+end;
+
+{ TMetodoAtivar}
+TMetodoAtivar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDesativar}
+TMetodoDesativar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAtivo}
+TMetodoAtivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoModeloStr}
+TMetodoModeloStr = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoModelo}
+TMetodoModelo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoPorta}
+TMetodoPorta = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoTrabalhando}
+TMetodoTrabalhando = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoLinhasCount}
+TMetodoLinhasCount = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetLinhasCount}
+TMetodoSetLinhasCount = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoColunas}
+TMetodoColunas = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetColunas}
+TMetodoSetColunas = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoAlinhamento}
+TMetodoAlinhamento = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetAlinhamento}
+TMetodoSetAlinhamento = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoIntervalo}
+TMetodoIntervalo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetIntervalo}
+TMetodoSetIntervalo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoPassos}
+TMetodoPassos = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoSetPassos}
+TMetodoSetPassos = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoLimparDisplay}
+TMetodoLimparDisplay = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoEscrever}
+TMetodoEscrever = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoPosicionarCursor}
+TMetodoPosicionarCursor = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoParar}
+TMetodoParar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoContinuar}
+TMetodoContinuar = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoPararLinha}
+TMetodoPararLinha = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoContinuarLinha}
+TMetodoContinuarLinha = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoExibirLinha}
+TMetodoExibirLinha = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoRolarLinha}
+TMetodoRolarLinha = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
 
 implementation
-uses ACBrDIS, ACBrUtil;
 
-Procedure DoDIS( Cmd : TACBrCmd ) ;
+{ TACBrObjetoDIS }
+
+constructor TACBrObjetoDIS.Create(AConfig: TMonitorConfig; ACBrDIS: TACBrDIS);
 begin
-  with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrDIS1 {$ELSE}dm.ACBrDIS1 {$ENDIF} do
+  inherited Create(AConfig);
+
+  fACBrDIS := ACBrDIS;
+
+  ListaDeMetodos.Add(CMetodoAtivar);
+  ListaDeMetodos.Add(CMetodoDesativar);
+  ListaDeMetodos.Add(CMetodoAtivo);
+  ListaDeMetodos.Add(CMetodoModeloStr);
+  ListaDeMetodos.Add(CMetodoModelo);
+  ListaDeMetodos.Add(CMetodoPorta);
+  ListaDeMetodos.Add(CMetodoTrabalhando);
+  ListaDeMetodos.Add(CMetodoLinhasCount);
+  ListaDeMetodos.Add(CMetodoSetLinhasCount);
+  ListaDeMetodos.Add(CMetodoColunas);
+  ListaDeMetodos.Add(CMetodoSetColunas);
+  ListaDeMetodos.Add(CMetodoAlinhamento);
+  ListaDeMetodos.Add(CMetodoSetAlinhamento);
+  ListaDeMetodos.Add(CMetodoIntervalo);
+  ListaDeMetodos.Add(CMetodoSetIntervalo);
+  ListaDeMetodos.Add(CMetodoPassos);
+  ListaDeMetodos.Add(CMetodoSetPassos);
+  ListaDeMetodos.Add(CMetodoLimparDisplay);
+  ListaDeMetodos.Add(CMetodoEscrever);
+  ListaDeMetodos.Add(CMetodoPosicionarCursor);
+  ListaDeMetodos.Add(CMetodoParar);
+  ListaDeMetodos.Add(CMetodoContinuar);
+  ListaDeMetodos.Add(CMetodoPararLinha);
+  ListaDeMetodos.Add(CMetodoContinuarLinha);
+  ListaDeMetodos.Add(CMetodoExibirLinha);
+  ListaDeMetodos.Add(CMetodoRolarLinha);
+end;
+
+procedure TACBrObjetoDIS.Executar(ACmd: TACBrCmd);
+var
+  AMetodoClass: TACBrMetodoClass;
+  CmdNum: Integer;
+  Ametodo: TACBrMetodo;
+begin
+  inherited Executar(ACmd);
+
+  CmdNum := ListaDeMetodos.IndexOf(LowerCase(ACmd.Metodo));
+  AMetodoClass := Nil;
+
+  case CmdNum of
+    0  : AMetodoClass := TMetodoAtivar;
+    1  : AMetodoClass := TMetodoDesativar;
+    2  : AMetodoClass := TMetodoAtivo;
+    3  : AMetodoClass := TMetodoModeloStr;
+    4  : AMetodoClass := TMetodoModelo;
+    5  : AMetodoClass := TMetodoPorta;
+    6  : AMetodoClass := TMetodoTrabalhando;
+    7  : AMetodoClass := TMetodoLinhasCount;
+    8  : AMetodoClass := TMetodoSetLinhasCount;
+    9  : AMetodoClass := TMetodoColunas;
+   10  : AMetodoClass := TMetodoSetColunas;
+   11  : AMetodoClass := TMetodoAlinhamento;
+   12  : AMetodoClass := TMetodoSetAlinhamento;
+   13  : AMetodoClass := TMetodoIntervalo;
+   14  : AMetodoClass := TMetodoSetIntervalo;
+   15  : AMetodoClass := TMetodoPassos;
+   16  : AMetodoClass := TMetodoSetPassos;
+   17  : AMetodoClass := TMetodoLimparDisplay;
+   18  : AMetodoClass := TMetodoEscrever;
+   19  : AMetodoClass := TMetodoPosicionarCursor;
+   20  : AMetodoClass := TMetodoParar;
+   21  : AMetodoClass := TMetodoContinuar;
+   22  : AMetodoClass := TMetodoPararLinha;
+   23  : AMetodoClass := TMetodoContinuarLinha;
+   24  : AMetodoClass := TMetodoExibirLinha;
+   25  : AMetodoClass := TMetodoRolarLinha;
+  end;
+
+  if Assigned(AMetodoClass) then
   begin
-     {$IFNDEF NOGUI}FrmACBrMonitor.{$ELSE}dm.{$ENDIF}DISWorking := True ;
-     try
-        if Cmd.Metodo = 'ativar' then  { Ativa o Display }
-           Ativar
+    Ametodo := AMetodoClass.Create(ACmd, Self);
+    try
+      Ametodo.Executar;
+    finally
+      Ametodo.Free;
+    end;
+  end;
+end;
 
-        else if Cmd.Metodo = 'desativar' then
-           Desativar 
+{ TMetodoAtivar }
 
-        else if Cmd.Metodo = 'ativo' then
-           Cmd.Resposta := BoolToStr(Ativo, true)
+procedure TMetodoAtivar.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.Ativar;
+  end;
+end;
 
-        else if Cmd.Metodo = 'modelostr' then
-           Cmd.Resposta := ModeloStr
+{ TMetodoDesativar }
 
-        else if Cmd.Metodo = 'modelo' then
-           Cmd.Resposta := GetEnumName(TypeInfo(TACBrDISModelo),Integer(Modelo))
+procedure TMetodoDesativar.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.Desativar;
+  end;
+end;
 
-        else if Cmd.Metodo = 'porta' then
-           Cmd.Resposta := Porta
+{ TMetodoAtivo }
 
-        else if Cmd.Metodo = 'trabalhando' then
-           Cmd.Resposta := BoolToStr( Trabalhando, true )
+procedure TMetodoAtivo.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := BoolToStr(ACBrDIS.Ativo, true);
+  end;
+end;
 
-        else if Cmd.Metodo = 'linhascount' then
-           Cmd.Resposta := IntToStr( LinhasCount )
+{ TMetodoModeloStr }
 
-        else if Cmd.Metodo = 'setlinhascount' then
-           LinhasCount := StrToInt( Cmd.Params(0) )
+procedure TMetodoModeloStr.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrDIS.ModeloStr;
+  end;
+end;
 
-        else if Cmd.Metodo = 'colunas' then
-           Cmd.Resposta := IntToStr( Colunas )
+{ TMetodoModelo }
 
-        else if Cmd.Metodo = 'setcolunas' then
-           Colunas := StrToInt( Cmd.Params(0) )
+procedure TMetodoModelo.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := GetEnumName(TypeInfo(TACBrDISModelo),Integer(ACBrDIS.Modelo));
+  end;
+end;
 
-        else if Cmd.Metodo = 'alinhamento' then
-           Cmd.Resposta := GetEnumName(TypeInfo(TACBrDISAlinhamento),Integer(Alinhamento))
+{ TMetodoPorta }
 
-        else if Cmd.Metodo = 'setalinhamento' then
-           Alinhamento := TACBrDISAlinhamento( GetEnumValue(
-                                  TypeInfo(TACBrDISAlinhamento),Cmd.Params(0)))
+procedure TMetodoPorta.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := ACBrDIS.Porta;
+  end;
+end;
 
-        else if Cmd.Metodo = 'intervalo' then
-           Cmd.Resposta := IntToStr( Intervalo )
+{ TTrabalhando }
 
-        else if Cmd.Metodo = 'setintervalo' then
-           Intervalo := StrToInt( Cmd.Params(0) )
+procedure TMetodoTrabalhando.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := BoolToStr( ACBrDIS.Trabalhando, true );
+  end;
+end;
 
-        else if Cmd.Metodo = 'passos' then
-           Cmd.Resposta := IntToStr( Passos )
+{ TLinhasCount }
 
-        else if Cmd.Metodo = 'setpassos' then
-           Passos := StrToInt( Cmd.Params(0) )
+procedure TMetodoLinhasCount.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr( ACBrDIS.LinhasCount );
+  end;
+end;
 
-        else if Cmd.Metodo = 'limpardisplay' then
-           LimparDisplay
+{ TSetLinhasCount }
 
-        else if Cmd.Metodo = 'escrever' then
-           Escrever( Cmd.Params(0) )                                   { AText }
+{ Params: 0 - Integer - Numero de Linhas
+}
+procedure TMetodoSetLinhasCount.Executar;
+var
+  ALinhas: Integer;
+begin
+  ALinhas := StrToInt(fpCmd.Params(0));
 
-        else if Cmd.Metodo = 'posicionarcursor' then
-           PosicionarCursor( StrToInt( Cmd.Params(0) ),                { Linha }
-                             StrToInt( Cmd.Params(1) ) )              { Coluna }
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.LinhasCount  := ALinhas;
+  end;
+end;
 
-        else if Cmd.Metodo = 'parar' then
-           Parar
+{ TColunas }
 
-        else if Cmd.Metodo = 'continuar' then
-           Continuar
+procedure TMetodoColunas.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr( ACBrDIS.Colunas );
+  end;
+end;
 
-        else if Cmd.Metodo = 'pararlinha' then
-           PararLinha( StrToInt(Cmd.Params(0)) )
+{ TMetodoSetColunas }
 
-        else if Cmd.Metodo = 'continuarlinha' then
-           ContinuarLinha( StrToInt(Cmd.Params(0)) )
+{ Params: 0 - Integer
+}
+procedure TMetodoSetColunas.Executar;
+var
+  AColunas: Integer;
+begin
+  AColunas := StrToInt(fpCmd.Params(0));
 
-        else if Cmd.Metodo = 'exibirlinha' then
-         begin
-           if Cmd.Params(2) <> '' then                     // Tem 3 Parametros ?
-            begin
-              if LowerCase(copy(Cmd.Params(2),1,3)) = 'efe' then     // Efeito ?
-                 ExibirLinha( StrToInt(Cmd.Params(0)) ,                { Linha }
-                              Cmd.Params(1),                           { AText }
-                   TACBrDISEfeitoExibir( GetEnumValue(
-                                TypeInfo(TACBrDISEfeitoExibir),Cmd.Params(2))))
-              else                                                // Alinhamento
-                 ExibirLinha( StrToInt(Cmd.Params(0)) ,                { Linha }
-                              Cmd.Params(1),                           { AText }
-                   TACBrDISAlinhamento( GetEnumValue(
-                                  TypeInfo(TACBrDISAlinhamento),Cmd.Params(2))))
-            end
-           else
-              ExibirLinha( StrToInt(Cmd.Params(0)) ,                   { Linha }
-                           Cmd.Params(1))                              { AText }
-         end
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.Colunas := AColunas;
+  end;
+end;
 
-        else if Cmd.Metodo = 'rolarlinha' then
-           RolarLinha( StrToInt(Cmd.Params(0)) ,                       { Linha }
-              TACBrDISEfeitoRolar( GetEnumValue(TypeInfo(TACBrDISEfeitoRolar),
-                                   Cmd.Params(1) )) )
-        ELSE
-           raise Exception.Create('Comando invÃ¡lido ('+Cmd.Comando+')') ;
+{ TMetodoAlinhamento }
 
-     finally
-     {$IFNDEF NOGUI}FrmACBrMonitor.{$ELSE}dm.{$ENDIF}DISWorking := False ;
-     end ;
-  end ;
-end ;
+procedure TMetodoAlinhamento.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := GetEnumName(TypeInfo(TACBrDISAlinhamento),Integer(ACBrDIS.Alinhamento));
+  end;
+end;
+
+{ TMetodoSetAlinhamento }
+
+{ Params: 0 - Inteiro
+}
+procedure TMetodoSetAlinhamento.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.Alinhamento := TACBrDISAlinhamento( GetEnumValue(
+                            TypeInfo(TACBrDISAlinhamento), fpCmd.Params(0)));
+  end;
+end;
+
+{ TMetodoIntervalo }
+
+procedure TMetodoIntervalo.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr( ACBrDIS.Intervalo );
+  end;
+end;
+
+{ TMetodoSetIntervalo }
+
+{ Params: 0 - Inteiro
+}
+procedure TMetodoSetIntervalo.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.Intervalo := StrToInt( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoPassos }
+
+procedure TMetodoPassos.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    fpCmd.Resposta := IntToStr( ACBrDIS.Passos );
+  end;
+end;
+
+{ TMetodoSetPassos }
+
+{ Params: 0 - Inteiro
+}
+procedure TMetodoSetPassos.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.Passos := StrToInt( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoLimparDisplay }
+
+procedure TMetodoLimparDisplay.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.LimparDisplay;
+  end;
+end;
+
+{ TMetodoEscrever }
+
+{ Params: 0 - String com o texto
+}
+procedure TMetodoEscrever.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.Escrever( fpCmd.Params(0) );
+  end;
+end;
+
+{ TMetodoPosicionarCursor }
+
+{ Params: 0 - Inteiro - Linnha
+          1 - Inteiro - Coluna
+}
+procedure TMetodoPosicionarCursor.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.PosicionarCursor( StrToInt(fpCmd.Params(0)),
+                              StrToInt(fpCmd.Params(1)) );
+  end;
+end;
+
+{ TMetodoParar }
+
+procedure TMetodoParar.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.Parar;
+  end;
+end;
+
+{ TMetodoContinuar }
+
+procedure TMetodoContinuar.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.Continuar;
+  end;
+end;
+
+{ TMetodoPararLinha }
+
+{ Params: 0 - Inteiro
+}
+procedure TMetodoPararLinha.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.PararLinha(StrToInt( fpCmd.Params(0) ));
+  end;
+end;
+
+{ TMetodoContinuarLinha }
+
+{ Params: 0 - Inteiro
+}
+procedure TMetodoContinuarLinha.Executar;
+begin
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.ContinuarLinha(StrToInt( fpCmd.Params(0) ));
+  end;
+end;
+
+{ TMetodoExibirLinha }
+
+{ Params: 0 - Inteiro
+}
+procedure TMetodoExibirLinha.Executar;
+var
+  ALinha: Integer;
+  ATexto: String;
+  AComando: String;
+begin
+  ALinha := StrToInt(fpCmd.Params(0));
+  ATexto := fpCmd.Params(1);
+  AComando := fpCmd.Params(2);
+
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    if AComando <> '' then
+    begin
+      if LowerCase(copy(AComando, 1, 3)) = 'efe' then
+        ACBrDIS.ExibirLinha(ALinha , ATexto,
+            TACBrDISEfeitoExibir(GetEnumValue(TypeInfo(TACBrDISEfeitoExibir), AComando)))
+      else
+        ACBrDIS.ExibirLinha(ALinha, ATexto,
+            TACBrDISAlinhamento(GetEnumValue(TypeInfo(TACBrDISAlinhamento), AComando)));
+    end
+    else
+      ACBrDIS.ExibirLinha(ALinha, ATexto);
+  end;
+end;
+
+{ TMetodoRolarLinha }
+
+{ Params: 0 - Inteiro - Linnha
+          1 - String - Efeito
+}
+procedure TMetodoRolarLinha.Executar;
+var
+  ALinha: Integer;
+  AEfeito: String;
+begin
+  ALinha := StrToInt(fpCmd.Params(0));
+  AEfeito := fpCmd.Params(1);
+
+  with TACBrObjetoDIS(fpObjetoDono) do
+  begin
+    ACBrDIS.RolarLinha(ALinha,
+        TACBrDISEfeitoRolar(GetEnumValue(TypeInfo(TACBrDISEfeitoRolar), AEfeito)));
+  end;
+end;
 
 end.
-

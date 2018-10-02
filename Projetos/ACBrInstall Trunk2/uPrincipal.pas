@@ -119,6 +119,7 @@ type
     ckbRemoverCastWarnings: TCheckBox;
     ckbUsarArquivoConfig: TCheckBox;
     framePacotes1: TframePacotes;
+    ckbRemoverXMLSec: TCheckBox;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -480,17 +481,17 @@ begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
     edtDirDestino.Text          := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
-    edtPlatform.ItemIndex       := edtPlatform.Items.IndexOf('Win32');//edtPlatform.Items.IndexOf(ArqIni.ReadString('CONFIG', 'Plataforma', 'Win32'));
-//    edtDelphiVersion.ItemIndex  := edtDelphiVersion.Items.IndexOf(ArqIni.ReadString('CONFIG', 'DelphiVersao', ''));
+    edtPlatform.ItemIndex := 0;
     ckbFecharTortoise.Checked      := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
     rdgDLL.ItemIndex               := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
-    ckbCopiarTodasDll.Checked      := ArqIni.ReadBool('CONFIG','CopiarTodasDLLs',False);
+    ckbCopiarTodasDll.Checked      := True;
     ckbBCB.Checked                 := ArqIni.ReadBool('CONFIG','C++Builder',False);
     chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib',False);
     ckbRemoveOpenSSL.Checked       := ArqIni.ReadBool('CONFIG','RemoveOpenSSL',False);
     ckbRemoveCapicom.Checked       := ArqIni.ReadBool('CONFIG','RemoveCapicom',False);
     ckbCargaDllTardia.Checked      := ArqIni.ReadBool('CONFIG','CargaDllTardia',False);
     ckbRemoverCastWarnings.Checked := ArqIni.ReadBool('CONFIG','RemoverCastWarnings',False);
+    ckbUsarArquivoConfig.Checked   := True;
 
     if Trim(edtDelphiVersion.Text) = '' then
       edtDelphiVersion.ItemIndex := 0;
@@ -526,11 +527,8 @@ begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
     ArqIni.WriteString('CONFIG', 'DiretorioInstalacao', edtDirDestino.Text);
-//    ArqIni.WriteString('CONFIG', 'DelphiVersao', edtDelphiVersion.Text);
-    ArqIni.WriteString('CONFIG', 'Plataforma', edtPlatform.Text);
     ArqIni.WriteBool('CONFIG', 'FecharTortoise', ckbFecharTortoise.Checked);
     ArqIni.WriteInteger('CONFIG','DestinoDLL', rdgDLL.ItemIndex);
-    ArqIni.WriteBool('CONFIG','CopiarTodasDLLs',ckbCopiarTodasDll.Checked);
     ArqIni.WriteBool('CONFIG','C++Builder',ckbBCB.Checked);
     ArqIni.WriteBool('CONFIG','DexarSomenteLib', chkDeixarSomenteLIB.Checked);
     ArqIni.WriteBool('CONFIG','RemoveOpenSSL', ckbRemoveOpenSSL.Checked);
@@ -1113,6 +1111,7 @@ begin
   DesligarDefineACBrInc('DFE_SEM_CAPICOM',  ckbRemoveCapicom.Checked);
   DesligarDefineACBrInc('USE_DELAYED',      ckbCargaDllTardia.Checked);
   DesligarDefineACBrInc('REMOVE_CAST_WARN', ckbRemoverCastWarnings.Checked);
+  DesligarDefineACBrInc('DFE_SEM_XMLSEC',   ckbRemoverXMLSec.Checked);
 
 
   for iListaVer := 0 to clbDelphiVersion.Count -1 do

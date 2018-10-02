@@ -1,6 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -23,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgPacotes
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1081,7 +1082,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label5: TLabel
         Left = 195
-        Top = 68
+        Top = 50
         Width = 52
         Height = 13
         Caption = 'Plataforma'
@@ -1091,6 +1092,7 @@ object frmPrincipal: TfrmPrincipal
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
+        Visible = False
       end
       object Label2: TLabel
         Left = 17
@@ -1120,7 +1122,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label8: TLabel
         Left = 211
-        Top = 129
+        Top = 111
         Width = 316
         Height = 13
         Caption = 'Nota : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
@@ -1151,7 +1153,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label23: TLabel
         Left = 373
-        Top = 68
+        Top = 50
         Width = 93
         Height = 13
         Caption = 'ComboBox Invisivel'
@@ -1165,7 +1167,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object edtDelphiVersion: TComboBox
         Left = 373
-        Top = 84
+        Top = 66
         Width = 172
         Height = 21
         Style = csDropDownList
@@ -1181,7 +1183,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object edtPlatform: TComboBox
         Left = 195
-        Top = 84
+        Top = 66
         Width = 172
         Height = 21
         Style = csDropDownList
@@ -1194,6 +1196,7 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         TabOrder = 1
         Text = 'Win32'
+        Visible = False
         Items.Strings = (
           'Win32'
           'Win64')
@@ -1223,7 +1226,7 @@ object frmPrincipal: TfrmPrincipal
           'Diret'#243'rio system do Windows (Recomendado)'
           'Diret'#243'rio bin'#225'rio do Delphi'
           'N'#227'o copiar (N'#227'o recomendado)')
-        TabOrder = 13
+        TabOrder = 14
         OnClick = rdgDLLClick
       end
       object ckbCopiarTodasDll: TCheckBox
@@ -1233,11 +1236,11 @@ object frmPrincipal: TfrmPrincipal
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
         Caption = 'Copiar Todas as DLL'#39's (CLX, Diversos, MSVCR, XMLSec)'
-        TabOrder = 12
+        TabOrder = 13
       end
       object ckbBCB: TCheckBox
         Left = 195
-        Top = 113
+        Top = 95
         Width = 278
         Height = 17
         Caption = 'Generate all C++Builder files (including package libs) '
@@ -1245,7 +1248,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object chkDeixarSomenteLIB: TCheckBox
         Left = 195
-        Top = 145
+        Top = 127
         Width = 350
         Height = 17
         Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
@@ -1253,7 +1256,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbRemoverArquivosAntigos: TCheckBox
         Left = 195
-        Top = 168
+        Top = 150
         Width = 379
         Height = 17
         Caption = 'Remover arquivos antigos do disco (pode demorar bastante)'
@@ -1266,12 +1269,12 @@ object frmPrincipal: TfrmPrincipal
         Height = 371
         Color = clBtnFace
         ItemHeight = 13
-        TabOrder = 10
+        TabOrder = 11
         OnClick = clbDelphiVersionClick
       end
       object ckbRemoveOpenSSL: TCheckBox
         Left = 195
-        Top = 191
+        Top = 173
         Width = 379
         Height = 17
         Caption = 'N'#227'o utilizar OpenSSL'
@@ -1279,7 +1282,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbRemoveCapicom: TCheckBox
         Left = 195
-        Top = 214
+        Top = 196
         Width = 379
         Height = 17
         Caption = 'N'#227'o utilizar Capicom'
@@ -1291,7 +1294,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 379
         Height = 17
         Caption = 'Usar carga de DLL tardia nas units do OpenSSL'
-        TabOrder = 8
+        TabOrder = 9
       end
       object ckbRemoverCastWarnings: TCheckBox
         Left = 195
@@ -1301,7 +1304,7 @@ object frmPrincipal: TfrmPrincipal
         Caption = 
           'Remover Warnings de CAST causados por WideString/String/AnsiStri' +
           'ng'
-        TabOrder = 9
+        TabOrder = 10
       end
       object ckbUsarArquivoConfig: TCheckBox
         Left = 195
@@ -1309,7 +1312,17 @@ object frmPrincipal: TfrmPrincipal
         Width = 305
         Height = 17
         Caption = 'Usar arquivo de configura'#231#227'o (*.cfg)'
-        TabOrder = 11
+        TabOrder = 12
+      end
+      object ckbRemoverXMLSec: TCheckBox
+        Left = 195
+        Top = 216
+        Width = 379
+        Height = 17
+        Caption = 'N'#227'o utilizar XMLSec'
+        Checked = True
+        State = cbChecked
+        TabOrder = 8
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -1719,7 +1732,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 3
+        FrameIndex = 1
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

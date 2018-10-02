@@ -132,6 +132,7 @@ type
     ACBr_Integrador_dpk: TCheckBox;
     ACBre_Social_dpk: TCheckBox;
     ACBr_Reinf_dpk: TCheckBox;
+    ACBr_BPeDabpeESCPOS_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -299,6 +300,14 @@ begin
       begin
         ACBr_Serial_dpk.Checked := True;
         ACBr_NFe_dpk.Checked := True;
+      end;
+
+      // dependencia do BPe
+      if ACBr_BPeDabpeESCPOS_dpk.Checked and
+        (not(ACBr_BPe_dpk.Checked) or not(ACBr_Serial_dpk.Checked)) then
+      begin
+        ACBr_Serial_dpk.Checked := True;
+        ACBr_BPe_dpk.Checked := True;
       end;
 
       // dependencia do SAT

@@ -59,7 +59,7 @@ type
   private
     fORIGEMDARE: String;
     fSTATUSDARE: String;
-    fCRE: Integer;
+    fCRE: String;
     fDAV: String;
     fPREVENDA: String;
     fCCF: Integer;
@@ -68,7 +68,7 @@ type
   public
     property ORIGEMDARE : String read fORIGEMDARE write fORIGEMDARE;
     property STATUSDARE : String read fSTATUSDARE write fSTATUSDARE;
-    property CRE : Integer read fCRE write fCRE;
+    property CRE : String read fCRE write fCRE;
     property DAV : String read fDAV write fDAV;
     property PREVENDA : String read fPREVENDA write fPREVENDA;
     property CCF : Integer read fCCF write fCCF;

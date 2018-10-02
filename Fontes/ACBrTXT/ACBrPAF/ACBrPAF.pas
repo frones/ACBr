@@ -79,6 +79,7 @@ uses
    ACBrPAF_TITP_Class,
    ACBrPAF_U_Class,
    ACBrPAF_V_Class,
+   ACBrPAF_W_Class,
    ACBrPAF_Z_Class;
 
 const

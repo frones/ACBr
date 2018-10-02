@@ -201,14 +201,14 @@ begin
       with FRegistroW4.Items[intFor] do
       begin
         Add( LFill('W4') +
-             LFill(ORIGEMDARE, 20) +
-             LFill(STATUSDARE  , 1) +
-             LFill(CRE, 9) +
-             RFill(DAV, 13) +
-             RFill(PREVENDA, 10) +
+             RFill(UpperCase(TiraAcentos(ORIGEMDARE)), 20) +
+             RFill(UpperCase(STATUSDARE), 1) +
+             RFill(CRE, 9) +
+             LFill(DAV, 13) +
+             LFill(PREVENDA, 10) +
              LFill(CCF, 9) +
-             LFill(VALORTOTALDARE, 14, 2)
-             LFill(limpaCampo(NUMUMEROFABRICACAO), 20));
+             LFill(VALORTOTALDARE, 14, 2) +
+             RFill(limpaCampo(NUMEROFABRICACAO), 20));
       end;
       FRegistroW9.TOT_REG := FRegistroW9.TOT_REG + 1;
     end;

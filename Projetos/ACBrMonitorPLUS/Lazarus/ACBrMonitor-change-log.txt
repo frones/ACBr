@@ -52,6 +52,10 @@ Realizado Refactory nas classes do ACBrMonitor baseado na estrutura padrão criad
 [+] DoACBrNFeUnit
 Adicionado parâmetro para Assinatura ou não do XML no método "CriarNFe"
 
+01/10/2018
+[+] DoBoleto
+Adicionado campo "DiasDeProtesto" na leitura do arquivo .ini
+
 18/09/2018
 [*] DoSATUnit
 Ajuste no método AssociarAssinatura

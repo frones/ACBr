@@ -47,9 +47,10 @@ const
   CSessaoSAT = 'SAT';
   CChaveModelo = 'Modelo';
   CChaveNomeDLL = 'NomeDLL';
+  CChaveCodigoDeAtivacao = 'CodigoDeAtivacao';
+  CChaveSignAC = 'SignAC';
   CChaveValidarNumero = 'ValidarNumeroSessaoResposta';
   CChaveNumeroTentativas = 'NumeroTentativasValidarSessao';
-  CChaveMFe = 'IsMFe';
 
   CSessaoSATConfig = 'SATConfig';
   CChaveVersaoDadosEnt = 'infCFe_versaoDadosEnt';

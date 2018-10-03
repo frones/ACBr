@@ -293,6 +293,7 @@
     </Parsing>
     <CodeGeneration>
       <RelocatableUnit Value="True"/>
+      <TargetCPU Value="i386"/>
     </CodeGeneration>
     <Linking>
       <Debugging>

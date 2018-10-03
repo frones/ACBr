@@ -24,6 +24,8 @@ object LibSatDM: TLibSatDM
     Rede.tipoLan = lanDHCP
     Rede.proxy = 0
     Rede.proxy_porta = 0
+    OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
+    OnGetsignAC = ACBrSAT1GetsignAC
     left = 61
     top = 80
   end

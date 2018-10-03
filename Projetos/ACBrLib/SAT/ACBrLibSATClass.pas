@@ -185,8 +185,6 @@ end;
 
 procedure TACBrLibSAT.Inicializar;
 begin
-  inherited Inicializar;
-
   GravarLog('TACBrLibSAT.Inicializar - Inicializando Mail', logParanoico);
 
   if FileExists(CACBrMailLIBName) then
@@ -207,8 +205,7 @@ begin
 
   if FileExists(CACBrPosPrinterLIBName) then
   begin
-    FLibPosPrinter := TACBrLibPosPrinter.Create(pLib.Config.NomeArquivo,
-      pLib.Config.ChaveCrypt);
+    FLibPosPrinter := TACBrLibPosPrinter.Create(pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
     FSatDM.ACBrPosPrinter1 := FLibPosPrinter.GetPosPrinter;
   end
   else
@@ -221,6 +218,8 @@ begin
   GravarLog('TACBrLibSAT.Inicializar - Inicializando PosPrinter Feito', logParanoico);
 
   GravarLog('TACBrLibSAT.Inicializar - Feito', logParanoico);
+
+  inherited Inicializar;
 end;
 
 procedure TACBrLibSAT.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);

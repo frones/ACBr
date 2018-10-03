@@ -32,7 +32,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, syncobjs, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
   ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
-  ACBrMail, ACBrPosPrinter;
+  ACBrMail, ACBrPosPrinter, ACBrSATClass;
 
 type
 
@@ -45,6 +45,8 @@ type
     ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
     ACBrMail1: TACBrMail;
     ACBrPosPrinter1: TACBrPosPrinter;
+    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+    procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
@@ -83,6 +85,16 @@ begin
   FLock.Destroy;
 end;
 
+procedure TLibSatDM.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
+begin
+  Chave := TLibSATConfig(TACBrLibSAT(pLib).Config).CodigoDeAtivacao;
+end;
+
+procedure TLibSatDM.ACBrSAT1GetsignAC(var Chave: AnsiString);
+begin
+  Chave := TLibSATConfig(TACBrLibSAT(pLib).Config).SignAC;
+end;
+
 procedure TLibSatDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibSATConfig;
@@ -93,9 +105,9 @@ begin
   begin
     Modelo := pLibConfig.Modelo;
     NomeDLL := pLibConfig.NomeDLL;
+    ArqLOG := pLibConfig.ArqLOG;
     ValidarNumeroSessaoResposta := pLibConfig.ValidarNumeroSessaoResposta;
     NumeroTentativasValidarSessao := pLibConfig.NumeroTentativasValidarSessao;
-    ArqLOG := pLibConfig.ArqLOG;
 
     with Config do
     begin
@@ -145,12 +157,12 @@ begin
       lanDNS1 := pLibConfig.Rede.lanDNS1;
       lanDNS2 := pLibConfig.Rede.lanDNS2;
       usuario := pLibConfig.Rede.usuario;
-      senha := pLibConfig.Rede.senha;
+      senha := B64CryptToString(pLibConfig.Rede.senha, pLibConfig.ChaveCrypt);
       proxy := pLibConfig.Rede.proxy;
       proxy_ip := pLibConfig.Rede.proxy_ip;
       proxy_porta := pLibConfig.Rede.proxy_porta;
       proxy_user := pLibConfig.Rede.proxy_user;
-      proxy_senha := pLibConfig.Rede.proxy_senha;
+      proxy_senha := B64CryptToString(pLibConfig.Rede.proxy_senha, pLibConfig.ChaveCrypt);
     end;
 
     if pLibConfig.IsMFe then

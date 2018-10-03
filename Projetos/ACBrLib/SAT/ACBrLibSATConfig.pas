@@ -207,16 +207,19 @@ type
   private
     FModelo: TACBrSATModelo;
     FNomeDLL: string;
+    FCodigoDeAtivacao: string;
+    FSignAC: string;
     FValidarNumeroSessaoResposta: boolean;
     FNumeroTentativasValidarSessao: integer;
     FArqLOG: string;
-    FMFe: boolean;
     FConfig: TSATConfig;
     FConfigArquivos: TSATConfigArquivo;
     FRede: TRede;
     FExtrato: TExtratoConfig;
     FIntegrador: TIntegradorConfig;
     FChaveCrypt: String;
+
+    function GetIsMFe: Boolean;
 
   protected
     function AtualizarArquivoConfiguracao: boolean; override;
@@ -238,12 +241,12 @@ type
 
     property Modelo: TACBrSATModelo read FModelo write FModelo;
     property NomeDLL: string read FNomeDLL write FNomeDLL;
-    property ValidarNumeroSessaoResposta: boolean
-      read FValidarNumeroSessaoResposta write FValidarNumeroSessaoResposta;
-    property NumeroTentativasValidarSessao: integer
-      read FNumeroTentativasValidarSessao write FNumeroTentativasValidarSessao;
+    property CodigoDeAtivacao: string read FCodigoDeAtivacao write FCodigoDeAtivacao;
+    property SignAC: string read FSignAC write FSignAC;
+    property ValidarNumeroSessaoResposta: boolean read FValidarNumeroSessaoResposta write FValidarNumeroSessaoResposta;
+    property NumeroTentativasValidarSessao: integer read FNumeroTentativasValidarSessao write FNumeroTentativasValidarSessao;
     property ArqLOG: string read FArqLOG write FArqLOG;
-    property IsMFe: boolean read FMFe write FMFe;
+    property IsMFe: boolean read GetIsMFe;
     property Config: TSATConfig read FConfig;
     property ConfigArquivos: TSATConfigArquivo read FConfigArquivos;
     property Rede: TRede read FRede;
@@ -517,6 +520,8 @@ begin
   FModelo := satNenhum;
   FNomeDLL := '';
   FArqLOG := '';
+  FCodigoDeAtivacao := '';
+  FSignAC := '';
   FValidarNumeroSessaoResposta := False;
   FNumeroTentativasValidarSessao := CMAX_ERROS_SESSAO;
 
@@ -538,17 +543,23 @@ begin
   inherited Destroy;
 end;
 
+function TLibSATConfig.GetIsMFe: Boolean;
+begin
+  Result := FModelo = mfe_Integrador_XML;
+end;
+
 procedure TLibSATConfig.LerIni(const AIni: TCustomIniFile);
 begin
   FModelo := TACBrSATModelo(AIni.ReadInteger(CSessaoSAT, CChaveModelo,
     integer(FModelo)));
   FNomeDLL := AIni.ReadString(CSessaoSAT, CChaveModelo, FNomeDLL);
+  FArqLOG := AIni.ReadString(CSessaoSAT, CChaveArqLog, FArqLOG);
+  FCodigoDeAtivacao := AIni.ReadString(CSessaoSAT, CChaveCodigoDeAtivacao, FCodigoDeAtivacao);
+  FSignAC := AIni.ReadString(CSessaoSAT, CChaveSignAC, FSignAC);
   FValidarNumeroSessaoResposta :=
     AIni.ReadBool(CSessaoSAT, CChaveValidarNumero, FValidarNumeroSessaoResposta);
   FNumeroTentativasValidarSessao :=
     AIni.ReadInteger(CSessaoSAT, CChaveNumeroTentativas, FNumeroTentativasValidarSessao);
-  FArqLog := AIni.ReadString(CSessaoSAT, CChaveArqLog, FArqLog);
-  FMFe := AIni.ReadBool(CSessaoSAT, CChaveMFe, FMFe);
 
   with FRede do
   begin
@@ -583,10 +594,11 @@ procedure TLibSATConfig.GravarIni(const AIni: TCustomIniFile);
 begin
   AIni.WriteInteger(CSessaoSAT, CChaveModelo, integer(FModelo));
   AIni.WriteString(CSessaoSAT, CChaveModelo, FNomeDLL);
+  AIni.WriteString(CSessaoSAT, CChaveArqLog, FArqLOG);
+  AIni.WriteString(CSessaoSAT, CChaveCodigoDeAtivacao, FCodigoDeAtivacao);
+  AIni.WriteString(CSessaoSAT, CChaveSignAC, FSignAC);
   AIni.WriteBool(CSessaoSAT, CChaveValidarNumero, FValidarNumeroSessaoResposta);
   AIni.WriteInteger(CSessaoSAT, CChaveNumeroTentativas, FNumeroTentativasValidarSessao);
-  AIni.WriteString(CSessaoSAT, CChaveArqLog, FArqLog);
-  AIni.WriteBool(CSessaoSAT, CChaveMFe, FMFe);
 
   with FRede do
   begin
@@ -606,8 +618,7 @@ begin
     AIni.WriteString(CSessaoSATRede, CChaveProxyIp, proxy_ip);
     AIni.WriteInteger(CSessaoSATRede, CChaveProxyPorta, proxy_porta);
     AIni.WriteString(CSessaoSATRede, CChaveProxyUser, proxy_user);
-    AIni.WriteString(CSessaoSATRede, CChaveProxySenha,
-      StringToB64Crypt(proxy_senha, FChaveCrypt));
+    AIni.WriteString(CSessaoSATRede, CChaveProxySenha, StringToB64Crypt(proxy_senha, FChaveCrypt));
   end;
 
   FConfig.GravarIni(AIni);

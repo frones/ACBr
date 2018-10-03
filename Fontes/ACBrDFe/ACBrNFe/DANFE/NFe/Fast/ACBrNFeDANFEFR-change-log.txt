@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/10/2018
+-- ACBrNFeDANFEFR.pas
+[+] Possibilidade de desabilitar botões maximizar e minimizar do Fast Report;
+[+] Possibilidade de exibir a legenda dos botões;
+		Veja tópico: https://www.projetoacbr.com.br/forum/topic/46402-melhoria-acbrnfedanfefr1/
+
 03/11/2017
 -- ACBrNFeDANFEFRDM --
 [*] Ajuste para apresentar data de recebimento em Delphi 7 

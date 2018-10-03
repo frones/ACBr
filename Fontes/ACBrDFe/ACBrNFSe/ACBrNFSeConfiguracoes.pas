@@ -308,6 +308,8 @@ type
     FPathIniProvedor: String;
     FEmitente: TEmitenteConfNFSe;
     FConfigRemover: TConfigRemover;
+    FBanco_P: String;
+    FBanco_H: String;
 
     procedure SetCodigoMunicipio(const Value: Integer);
   public
@@ -345,6 +347,8 @@ type
     property PathIniProvedor: String read FPathIniProvedor write FPathIniProvedor;
 
     property Emitente: TEmitenteConfNFSe read FEmitente write FEmitente;
+    property Banco_P: String read FBanco_P;
+    property Banco_H: String read FBanco_H;
   end;
 
   { TArquivosConfNFSe }
@@ -550,6 +554,8 @@ begin
   FxNomeURL_P := FPIniParams.ReadString(CodIBGE, 'NomeURL_P', '');
   FxLinkURL_H := FPIniParams.ReadString(CodIBGE, 'LinkURL_H', '');
   FxLinkURL_P := FPIniParams.ReadString(CodIBGE, 'LinkURL_P', '');
+  FBanco_P    := FPIniParams.ReadString(CodIBGE, 'Banco_P', '');
+  FBanco_H    := FPIniParams.ReadString(CodIBGE, 'Banco_H', 'BANCO_DEMOSTRACAO');
 
   // Configuração especifica da versão dos dados para cidades do mesmo provedor,
   // mas com versões diferentes.

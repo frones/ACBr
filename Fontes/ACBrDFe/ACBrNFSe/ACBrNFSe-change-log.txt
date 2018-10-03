@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/10/2018
+-- ACBrNFSeConfiguracoes/ ACBrNFSeWebServices --
+[+] Acrescentado a propriedade de configuração Banco_P e Banco_H que serão utilizadas
+    pelo provedor DataSmart.
+Por: Italo Jurisato Junior
+
 01/10/2018
 -- ACBrNFSeConfiguracoes --
 [*] Como alguns provedores estão definindo versão de dados diverentes para diverentes cidades,

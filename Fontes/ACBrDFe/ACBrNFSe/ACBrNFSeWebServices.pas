@@ -1080,9 +1080,9 @@ begin
     proDataSmart:
       begin
         if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
-          Texto := StringReplace(Texto, '%Municipio%', UpperCase(CodCidadeToCidade(FPConfiguracoesNFSe.Geral.CodigoMunicipio)), [rfReplaceAll])
+          Texto := StringReplace(Texto, '%Municipio%', FPConfiguracoesNFSe.Geral.Banco_P, [rfReplaceAll])
         else
-          Texto := StringReplace(Texto, '%Municipio%', 'BANCO_DEMONSTRACAO', [rfReplaceAll]);
+          Texto := StringReplace(Texto, '%Municipio%', FPConfiguracoesNFSe.Geral.Banco_H, [rfReplaceAll]);
       end
   else
     Texto := StringReplace(Texto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);

@@ -54,7 +54,7 @@ unit ACBrNFeDANFEFR;
 interface
 
 uses
-  SysUtils, Classes, ACBrNFeDANFEClass, ACBrNFeDANFEFRDM,
+  SysUtils, Classes, Forms, ACBrNFeDANFEClass, ACBrNFeDANFEFRDM,
   pcnNFe, pcnConversao, frxClass;
 
 type
@@ -88,6 +88,9 @@ type
     FImprimirDadosDocReferenciados: Boolean;
     FPrintMode: TfrxPrintMode;
     FPrintOnSheet: Integer;
+    FBorderIcon : TBorderIcons;
+    FExibeCaptionButton: Boolean;
+
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
 		function GetPreparedReportInutilizacao: TfrxReport;
@@ -96,6 +99,7 @@ type
     function PrepareReportInutilizacao: Boolean;
     procedure setTributosPercentual(const Value: TpcnPercentualTributos);
     procedure setTributosPercentualPersonalizado(const Value: double);
+    procedure frxReportPreview(Sender: TObject);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -134,6 +138,9 @@ type
     property ImprimirDadosDocReferenciados: Boolean read FImprimirDadosDocReferenciados write FImprimirDadosDocReferenciados;
     property PrintMode: TfrxPrintMode read FPrintMode write FPrintMode default pmDefault;
     property PrintOnSheet: Integer read FPrintOnSheet write FPrintOnSheet default 0;
+    property BorderIcon: TBorderIcons read FBorderIcon write FBorderIcon;
+    property ExibeCaptionButton: Boolean read FExibeCaptionButton write FExibeCaptionButton default False;
+
   end;
 
 implementation
@@ -164,6 +171,8 @@ begin
   FIncorporarFontesPdf := True;
   FIncorporarBackgroundPdf := True;
   FImprimirDadosDocReferenciados := True;
+  FBorderIcon := [biSystemMenu,biMaximize,biMinimize];
+  FExibeCaptionButton := False;
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -269,6 +278,9 @@ begin
   FdmDanfe.frxReport.PrintOptions.PrintOnSheet := FPrintOnSheet; //Essa propriedade pode trabalhar em conjunto com a printmode
   FdmDanfe.frxReport.ShowProgress := FMostrarStatus;
   FdmDanfe.frxReport.PreviewOptions.AllowEdit := False;
+  FdmDanfe.frxReport.PreviewOptions.ShowCaptions := FExibeCaptionButton;
+  FdmDanfe.frxReport.OnPreview := frxReportPreview;
+
 
   // Define a impressora
   if Length(Impressora) > 0 then
@@ -350,6 +362,8 @@ begin
   FdmDanfe.frxReport.PrintOptions.Copies := NumCopias;
   FdmDanfe.frxReport.PrintOptions.ShowDialog := ShowDialog;
   FdmDanfe.frxReport.ShowProgress := FMostrarStatus;
+  FdmDanfe.frxReport.PreviewOptions.ShowCaptions := FExibeCaptionButton;
+  FdmDanfe.frxReport.OnPreview := frxReportPreview;
 
   // Define a impressora
   if Length(Impressora) > 0 then
@@ -404,6 +418,8 @@ begin
     raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão de INUTILIZAÇÃO não assinalado.');
 
   FdmDanfe.frxReport.PrintOptions.Copies := NumCopias;
+  FdmDanfe.frxReport.PreviewOptions.ShowCaptions := FExibeCaptionButton;
+  FdmDanfe.frxReport.OnPreview := frxReportPreview;
 
   // preparar relatorio
   if Assigned(ACBrNFe) then
@@ -438,6 +454,11 @@ begin
     FTributosPercentualPersonalizado := Value
   else
     FTributosPercentualPersonalizado := 0;
+end;
+
+procedure TACBrNFeDANFEFR.frxReportPreview(Sender: TObject);
+begin
+ FdmDanfe.frxReport.PreviewForm.BorderIcons := FBorderIcon;
 end;
 
 procedure TACBrNFeDANFEFR.ImprimirDANFE(NFE: TNFe);

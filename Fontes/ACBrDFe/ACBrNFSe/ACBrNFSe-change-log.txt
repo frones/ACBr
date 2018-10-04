@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/10/2018
+-- ACBrNFSeWebServices/pnfsNFSeW_ABRASFv2 --
+[*] Ajustes visando o provedor Sigep.
+    Por: vcgyn
+
 -- ACBrNFSeConfiguracoes --
 [*] https://www.projetoacbr.com.br/forum/topic/45530-provedor-nonoai-rs/?do=findComment&comment=309159
 Por: Mateus Brunelli

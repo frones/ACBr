@@ -838,7 +838,7 @@ begin
 
       proPronimV2: DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
 
-      proSigep:    DadosMsg := Copy(DadosMsg, (pos('&lt;p:credenciais',DadosMsg)), length(DadosMsg));
+//      proSigep:    DadosMsg := Copy(DadosMsg, (pos('&lt;p:credenciais',DadosMsg)), length(DadosMsg));
     end;
 
     // %SenhaMsg%  : Representa a Mensagem que contem o usuário e senha
@@ -1640,13 +1640,24 @@ begin
                             '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                           '</Signature>'+
                        '</' + FPrefixo4 + 'Rps>';
-
+             {
              proSigep: FvNotas := FvNotas +
                        '<' + FPrefixo4 + 'credenciais>' +
                           RetornarConteudoEntre(RPS,
                             '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                           '</Signature>'+
                        '</' + FPrefixo4 + 'Rps>';
+             }
+             proSigep: FvNotas := FvNotas +
+                         '<' + FPrefixo4 + 'credenciais>' +
+                             RetornarConteudoEntre(RPS, '<' + FPrefixo4 + 'credenciais>', '</' + FPrefixo4 + 'credenciais>')+
+                         '</' + FPrefixo4 + 'credenciais>' +
+                         '<' + FPrefixo4 + 'Rps>' +
+                           '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
+                               RetornarConteudoEntre(RPS,'<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
+                               '</Signature>' +
+                         '</' + FPrefixo4 + 'Rps>';
+
            else
              FvNotas := FvNotas +
                        '<' + FPrefixo4 + 'Rps>' +

@@ -41,7 +41,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.IOUtils,
-  dxGDIPlusClasses, ACBrBase, ACBrDFe, ACBrNFe, frxClass, ACBrCTeDACTEClass, ACBrCTeDACTEFR, ACBrCTe;
+  ACBrBase, ACBrDFe, ACBrNFe, frxClass, ACBrCTeDACTEClass, ACBrCTeDACTEFR, ACBrCTe;
 
 type
   TfrmPrincipal = class(TForm)
@@ -57,11 +57,13 @@ type
     ACBrCTe1: TACBrCTe;
     ACBrCTeDACTEFR1: TACBrCTeDACTEFR;
     btnlogo: TButton;
+    btnAddCTeXML: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
     procedure btnCarregarEventoClick(Sender: TObject);
     procedure btnlogoClick(Sender: TObject);
+    procedure btnAddCTeXMLClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -113,6 +115,13 @@ procedure TfrmPrincipal.btnlogoClick(Sender: TObject);
 begin
   OpenDialog1.Execute();
   ACBrCTeDACTEFR1.Logo := OpenDialog1.FileName;
+end;
+
+procedure TfrmPrincipal.btnAddCTeXMLClick(Sender: TObject);
+begin
+  //Usado para testar relatórios que suportam imprimir mais de um CT-e de uma vez.
+  if OpenDialog1.Execute then
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 end;
 
 procedure TfrmPrincipal.btnCarregarEventoClick(Sender: TObject);

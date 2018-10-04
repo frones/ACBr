@@ -1077,6 +1077,15 @@ object frmPrincipal: TfrmPrincipal
       TabOrder = 3
       OnClick = btnlogoClick
     end
+    object btnAddCTeXML: TButton
+      Left = 121
+      Top = 6
+      Width = 104
+      Height = 25
+      Caption = 'Adicionar XML CTe'
+      TabOrder = 4
+      OnClick = btnAddCTeXMLClick
+    end
   end
   object OpenDialog1: TOpenDialog
     Filter = 'xml|*.xml|todos|*.*'

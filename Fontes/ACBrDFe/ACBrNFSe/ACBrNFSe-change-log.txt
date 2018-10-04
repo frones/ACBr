@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2018
+-- ACBrNFSeConfiguracoes --
+[*] https://www.projetoacbr.com.br/forum/topic/45530-provedor-nonoai-rs/?do=findComment&comment=309159
+Por: Mateus Brunelli
+
 03/10/2018
 -- ACBrNFSeConfiguracoes/ ACBrNFSeWebServices --
 [+] Acrescentado a propriedade de configuração Banco_P e Banco_H que serão utilizadas

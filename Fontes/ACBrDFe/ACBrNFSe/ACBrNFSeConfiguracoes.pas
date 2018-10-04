@@ -555,7 +555,7 @@ begin
   FxLinkURL_H := FPIniParams.ReadString(CodIBGE, 'LinkURL_H', '');
   FxLinkURL_P := FPIniParams.ReadString(CodIBGE, 'LinkURL_P', '');
   FBanco_P    := FPIniParams.ReadString(CodIBGE, 'Banco_P', '');
-  FBanco_H    := FPIniParams.ReadString(CodIBGE, 'Banco_H', 'BANCO_DEMOSTRACAO');
+  FBanco_H    := FPIniParams.ReadString(CodIBGE, 'Banco_H', 'BANCO_DEMONSTRACAO');
 
   // Configuração especifica da versão dos dados para cidades do mesmo provedor,
   // mas com versões diferentes.

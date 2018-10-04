@@ -4407,6 +4407,7 @@ object Form1: TForm1
     ECF = ACBrECF1
     QuandoGravarArqINI = ACBrECFVirtualNFCe1QuandoGravarArqINI
     QuandoLerArqINI = ACBrECFVirtualNFCe1QuandoLerArqINI
+    PosPrinter = ACBrPosPrinter1
     Colunas = 48
     NumECF = 1
     NumCRO = 1
@@ -4424,6 +4425,7 @@ object Form1: TForm1
     MascaraItem = 
       'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ U' +
       'UxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
+    ACBrNFCe = ACBrNFe1
     QuandoVenderItem = ACBrECFVirtualNFCe1QuandoVenderItem
     QuandoEfetuarPagamento = ACBrECFVirtualNFCe1QuandoEfetuarPagamento
     QuandoFecharDocumento = ACBrECFVirtualNFCe1QuandoFecharDocumento

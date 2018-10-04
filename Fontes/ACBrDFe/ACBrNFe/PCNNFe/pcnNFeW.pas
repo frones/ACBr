@@ -1092,59 +1092,64 @@ begin
   begin
     Gerador.wGrupo('comb', 'L01');
     Gerador.wCampo(tcInt, 'L102', 'cProdANP', 09, 09, 1, nfe.Det[i].Prod.comb.cProdANP, DSC_CPRODANP);
-    if  (nfe.infNFe.Versao < 4) then
+
+    if (nfe.infNFe.Versao < 4) then
       Gerador.wCampo(tcDe4, 'L102a', 'pMixGN ', 00, 06, 0, nfe.Det[i].Prod.comb.pMixGN, DSC_PMIXGN)
     else
     begin
       Gerador.wCampo(tcStr, 'LA03', 'descANP', 02, 95, 1, nfe.Det[i].Prod.comb.descANP, DSC_DESCANP);
-      if nfe.Det[i].Prod.comb.pGLP = 100 then 
-	    Gerador.wCampo(tcDe2, 'LA03a', 'pGLP  ', 01,  7, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP)
-      else 
-	    Gerador.wCampo(tcDe4, 'LA03a', 'pGLP  ', 01,  7, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP);
 
-      if nfe.Det[i].Prod.comb.pGNn = 100 then 
-	    Gerador.wCampo(tcDe2, 'LA03b', 'pGNn  ', 01,  7, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN)
-      else 
-	    Gerador.wCampo(tcDe4, 'LA03b', 'pGNn  ', 01,  7, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN);
+      if nfe.Det[i].Prod.comb.pGLP = 100 then
+  	    Gerador.wCampo(tcDe2, 'LA03a', 'pGLP', 01,  7, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP)
+      else
+	      Gerador.wCampo(tcDe4, 'LA03a', 'pGLP', 01,  7, 1, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP);
 
-      if nfe.Det[i].Prod.comb.pGNi = 100 then 
-	    Gerador.wCampo(tcDe2, 'LA03c', 'pGNi  ', 01,  7, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI)
-      else 
-	    Gerador.wCampo(tcDe4, 'LA03c', 'pGNi  ', 01,  7, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
-        
+      if nfe.Det[i].Prod.comb.pGNn = 100 then
+	      Gerador.wCampo(tcDe2, 'LA03b', 'pGNn', 01,  7, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN)
+      else
+	      Gerador.wCampo(tcDe4, 'LA03b', 'pGNn', 01,  7, 1, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN);
+
+      if nfe.Det[i].Prod.comb.pGNi = 100 then
+  	    Gerador.wCampo(tcDe2, 'LA03c', 'pGNi', 01,  7, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI)
+      else
+	      Gerador.wCampo(tcDe4, 'LA03c', 'pGNi', 01,  7, 1, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
+
       Gerador.wCampo(tcDe2, 'LA03d', 'vPart ', 01, 15, 0, nfe.Det[i].Prod.comb.vPart, DSC_VPART);
     end;
 
     if (trim(nfe.Det[i].Prod.comb.CODIF)) <> '' then
-      Gerador.wCampo(tcEsp, 'L103', 'CODIF   ', 00, 21, 1, nfe.Det[i].Prod.comb.CODIF, DSC_CODIF);
+      Gerador.wCampo(tcEsp, 'L103', 'CODIF', 00, 21, 1, nfe.Det[i].Prod.comb.CODIF, DSC_CODIF);
+
     if nfe.Det[i].Prod.comb.qTemp <> 0 then
-      Gerador.wCampo(tcDe4, 'L104', 'qTemp   ', 01, 16, 1, nfe.Det[i].Prod.comb.qTemp, DSC_QTEMP);
+      Gerador.wCampo(tcDe4, 'L104', 'qTemp', 01, 16, 1, nfe.Det[i].Prod.comb.qTemp, DSC_QTEMP);
 
-    if  (nfe.infNFe.Versao < 2) and ((nfe.Det[i].Prod.comb.ICMS.vBCICMS    > 0) or
-        (nfe.Det[i].Prod.comb.ICMS.vICMS      > 0) or
-        (nfe.Det[i].Prod.comb.ICMS.vBCICMSST  > 0) or
-        (nfe.Det[i].Prod.comb.ICMS.vICMSST    > 0) or
-        (nfe.Det[i].Prod.comb.ICMSInter.vBCICMSSTDest > 0) or
-        (nfe.Det[i].Prod.comb.ICMSInter.vICMSSTDest   > 0) or
-        (nfe.Det[i].Prod.comb.ICMSCons.vBCICMSSTCons  > 0) or
-        (nfe.Det[i].Prod.comb.ICMSCons.vICMSSTCons    > 0)) then
-      begin
-        // Manter Disponivel para versao 3.0
-        (**)GerarDetProdCombCIDE(i);
-        (**)GerarDetProdCombICMS(i);
-        (**)GerarDetProdCombICMSInter(i);
-        (**)GerarDetProdCombICMSCons(i);
-      end
-      else
-      begin
-       //  versao 4.01
-        Gerador.wCampo(tcStr, 'L120', 'UFCons       ', 02, 02, 1, nfe.Det[i].Prod.comb.UFcons, DSC_UFCONS);
-        if not pcnAuxiliar.ValidarUF(nfe.Det[i].Prod.comb.UFcons) then Gerador.wAlerta('L120', 'UFcons', DSC_UFCONS, ERR_MSG_INVALIDO);
-        (**)GerarDetProdCombCIDE(i);
+    if (nfe.infNFe.Versao < 2) and ((nfe.Det[i].Prod.comb.ICMS.vBCICMS > 0) or
+       (nfe.Det[i].Prod.comb.ICMS.vICMS      > 0) or
+       (nfe.Det[i].Prod.comb.ICMS.vBCICMSST  > 0) or
+       (nfe.Det[i].Prod.comb.ICMS.vICMSST    > 0) or
+       (nfe.Det[i].Prod.comb.ICMSInter.vBCICMSSTDest > 0) or
+       (nfe.Det[i].Prod.comb.ICMSInter.vICMSSTDest   > 0) or
+       (nfe.Det[i].Prod.comb.ICMSCons.vBCICMSSTCons  > 0) or
+       (nfe.Det[i].Prod.comb.ICMSCons.vICMSSTCons    > 0)) then
+    begin
+      // Manter Disponivel para versao 3.0
+      (**)GerarDetProdCombCIDE(i);
+      (**)GerarDetProdCombICMS(i);
+      (**)GerarDetProdCombICMSInter(i);
+      (**)GerarDetProdCombICMSCons(i);
+    end
+    else
+    begin
+      Gerador.wCampo(tcStr, 'L120', 'UFCons', 02, 02, 1, nfe.Det[i].Prod.comb.UFcons, DSC_UFCONS);
 
-        if nfe.Det[i].Prod.comb.encerrante.nBico > 0 then
-          GerarDetProdCombencerrante(i);
-      end;
+      if not pcnAuxiliar.ValidarUF(nfe.Det[i].Prod.comb.UFcons) then
+        Gerador.wAlerta('L120', 'UFcons', DSC_UFCONS, ERR_MSG_INVALIDO);
+
+      GerarDetProdCombCIDE(i);
+
+      if nfe.Det[i].Prod.comb.encerrante.nBico > 0 then
+        GerarDetProdCombencerrante(i);
+    end;
 
     Gerador.wGrupo('/comb');
   end;

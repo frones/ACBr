@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2018
+-- pcnNFeW --
+[*] Apesar de no manual e no Schema constar que as tags: pGLP(id:LA03a), 
+    pGNn(id:LA03b) e pGNi(id:LA03c) são opcionais, mas a SEFAZ esta exigindo
+    a presença das 3 mesmo com os seus valores zerados.
+  Por: Italo Jurisato Junior
+
 25/09/2018
 -- ACBrNFeNotasFiscais --
 [*] Correções e melhorias nas validações do método "ValidarRegrasdeNegocios".

@@ -37,7 +37,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsRegimeEspecialTributacao">
 		<xsd:restriction base="xsd:byte">
-			<xsd:pattern value="1|2|3|4|5|6"/>
+			<xsd:pattern value="1|2|3|4|5|6|9"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="tsSimNao">
@@ -332,6 +332,7 @@
         <xsd:sequence>
             <xsd:element name="ValorServicos" type="tsValor" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="ValorDeducoes" type="tsValor" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ValorTotalRecebido" type="tsValor" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="ValorPis" type="tsValor" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="ValorCofins" type="tsValor" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="ValorInss" type="tsValor" minOccurs="0" maxOccurs="1"/>

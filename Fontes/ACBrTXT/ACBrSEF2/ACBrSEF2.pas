@@ -353,8 +353,7 @@ begin
 
     if fTipoArquivo = aSEF then
     begin
-      if Bloco_E.RegistroE001.IND_MOV = icContConteudo
-      then WriteBloco_E;
+      WriteBloco_E;
 
       if (Bloco_F.RegistroF001.RegistroF200.Count > 0) then
         WriteBloco_F;

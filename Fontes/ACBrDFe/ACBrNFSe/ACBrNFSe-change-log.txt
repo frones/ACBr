@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/10/2018
+-- Diversos --
+[+] Acrescentado o campo <ValorTotalRecebido> para o provedor Recife.
+   Por: Italo Jurisato Junior
+
 04/10/2018
 -- ACBrNFSeWebServices/pnfsNFSeW_ABRASFv2 --
 [*] Ajustes visando o provedor Sigep.

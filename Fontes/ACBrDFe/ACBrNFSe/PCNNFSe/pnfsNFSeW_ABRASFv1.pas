@@ -248,6 +248,10 @@ begin
   if FProvedor in [proRecife, proPronim, proISSNET, proNFSeBrasil, proGinfes, proThema] then
   begin
     Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, DSC_VDEDUCISS);
+
+    if FProvedor = proRecife then
+      Gerador.wCampoNFSe(tcDe2, '#14', 'ValorTotalRecebido', 01, 15, 1, NFSe.Servico.Valores.ValorTotalRecebido, DSC_VTOTREC);
+
     Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis     ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, DSC_VPIS);
     Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins  ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS);
     Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss    ', 01, 15, 1, NFSe.Servico.Valores.ValorInss, DSC_VINSS);
@@ -284,7 +288,8 @@ begin
   end;
 
   case FProvedor of
-    proGINFES,
+    proGINFES:  Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
+
     proRJ,
     proPublica,
     proBHISS,

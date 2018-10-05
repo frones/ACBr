@@ -74,6 +74,7 @@ const
   DSC_ASSINATURA = 'Assinatura';
   DSC_DDD = 'DDD';
   DSC_TPTELEFONE = 'Tipo Telefone';
+  DSC_VTOTREC = 'Valor Total Recebido';
 
 implementation
 

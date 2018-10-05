@@ -45,7 +45,6 @@ const
   CLibSATVersao = '0.0.1';
 
   CSessaoSAT = 'SAT';
-  CChaveModelo = 'Modelo';
   CChaveNomeDLL = 'NomeDLL';
   CChaveCodigoDeAtivacao = 'CodigoDeAtivacao';
   CChaveSignAC = 'SignAC';

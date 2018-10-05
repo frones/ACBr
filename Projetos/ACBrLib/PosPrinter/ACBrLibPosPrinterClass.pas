@@ -118,7 +118,7 @@ function POS_LerStatusImpressora(Tentativas: Integer; var status: longint): long
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_GetPosPrinter(var handle: PACBrPosPrinter): longint;
+function POS_GetPosPrinter(var handle: TACBrPosPrinter): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -718,18 +718,18 @@ begin
   end;
 end;
 
-function POS_GetPosPrinter(var handle: PACBrPosPrinter): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_GetPosPrinter(var handle: TACBrPosPrinter): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada;
 
-    pLib.GravarLog('MAIL_GetPosPrinter', logNormal);
+    pLib.GravarLog('POS_GetPosPrinter', logNormal);
 
     with TACBrLibPosPrinter(pLib) do
     begin
       PosDM.Travar;
       try
-        handle := @PosDM.ACBrPosPrinter1;
+        handle := PosDM.ACBrPosPrinter1;
         Result := SetRetorno(ErrOK);
       finally
         PosDM.Destravar;

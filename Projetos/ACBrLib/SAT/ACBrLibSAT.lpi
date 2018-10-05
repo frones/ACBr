@@ -195,25 +195,19 @@
         <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="6">
+    <RequiredPackages Count="4">
       <Item1>
         <PackageName Value="ACBr_Integrador"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_SAT_ECFVirtual"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
-      </Item4>
-      <Item5>
-        <PackageName Value="ACBr_SATWS"/>
-      </Item5>
-      <Item6>
         <PackageName Value="ACBr_SAT"/>
-      </Item6>
+      </Item4>
     </RequiredPackages>
     <Units Count="13">
       <Unit0>

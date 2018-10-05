@@ -552,7 +552,7 @@ procedure TLibSATConfig.LerIni(const AIni: TCustomIniFile);
 begin
   FModelo := TACBrSATModelo(AIni.ReadInteger(CSessaoSAT, CChaveModelo,
     integer(FModelo)));
-  FNomeDLL := AIni.ReadString(CSessaoSAT, CChaveModelo, FNomeDLL);
+  FNomeDLL := AIni.ReadString(CSessaoSAT, CChaveNomeDLL, FNomeDLL);
   FArqLOG := AIni.ReadString(CSessaoSAT, CChaveArqLog, FArqLOG);
   FCodigoDeAtivacao := AIni.ReadString(CSessaoSAT, CChaveCodigoDeAtivacao, FCodigoDeAtivacao);
   FSignAC := AIni.ReadString(CSessaoSAT, CChaveSignAC, FSignAC);
@@ -593,7 +593,7 @@ end;
 procedure TLibSATConfig.GravarIni(const AIni: TCustomIniFile);
 begin
   AIni.WriteInteger(CSessaoSAT, CChaveModelo, integer(FModelo));
-  AIni.WriteString(CSessaoSAT, CChaveModelo, FNomeDLL);
+  AIni.WriteString(CSessaoSAT, CChaveNomeDLL, FNomeDLL);
   AIni.WriteString(CSessaoSAT, CChaveArqLog, FArqLOG);
   AIni.WriteString(CSessaoSAT, CChaveCodigoDeAtivacao, FCodigoDeAtivacao);
   AIni.WriteString(CSessaoSAT, CChaveSignAC, FSignAC);

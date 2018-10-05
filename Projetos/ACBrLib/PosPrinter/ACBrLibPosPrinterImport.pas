@@ -65,7 +65,7 @@ type
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TPOSUltimoRetorno = function(const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  TPOSGetPosPrinter = function(var handle: PACBrPosPrinter): longint;
+  TPOSGetPosPrinter = function(var handle: TACBrPosPrinter): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
   TACBrLibPosPrinter = class
@@ -84,7 +84,7 @@ type
     constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
     destructor Destroy; override;
 
-    function GetPosPrinter: TACBrPosPrinter;
+    procedure GetPosPrinter(var PosPrinter: TACBrPosPrinter);
   end;
 
 implementation
@@ -151,16 +151,17 @@ begin
   Raise Exception.Create(Trim(sMensagem));
 end;
 
-function TACBrLibPosPrinter.GetPosPrinter: TACBrPosPrinter;
+procedure TACBrLibPosPrinter.GetPosPrinter(var PosPrinter: TACBrPosPrinter);
 Var
   ret: longint;
-  PosPrinter: PACBrPosPrinter;
 begin
-  PosPrinter := nil;
   ret := FPOSGetPosPrinter(PosPrinter);
   CheckResut(ret);
 
-  Result := TACBrPosPrinter(PosPrinter^);
+  PosPrinter.ControlePorta := True;
+  PosPrinter.Porta := 'C:\Temp\teste.txt';
+  PosPrinter.Ativar;
+  PosPrinter.Imprimir('Teste');
 end;
 
 end.

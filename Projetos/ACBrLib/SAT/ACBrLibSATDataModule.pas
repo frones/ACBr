@@ -330,10 +330,16 @@ procedure TLibSatDM.CarregarDadosVenda(aStr: String; aNomePDF: String);
 begin
   if Trim(aStr) = '' then exit;
 
-  if (pos(#10,aStr) = 0) and FileExists(aStr) then
-    ACBrSAT1.CFe.LoadFromFile(aStr)
+  if FileExists(aStr) then
+  begin
+    GravarLog('Carregando arquivo xml', logParanoico);
+    ACBrSAT1.CFe.LoadFromFile(aStr);
+  end
   else
+  begin
+    GravarLog('Carregando xml string', logParanoico);
     ACBrSAT1.CFe.AsXMLString := aStr;
+  end;
 
   if (ACBrSAT1.Extrato.Filtro = fiPDF) then
       ACBrSAT1.Extrato.NomeArquivo := IfThen(aNomePDF <> '', aNomePDF ,
@@ -344,10 +350,16 @@ procedure TLibSatDM.CarregarDadosCancelamento(aStr: String);
 begin
   if Trim(aStr) = '' then exit;
 
-  if (pos(#10,aStr) = 0) and FileExists(aStr) then
-    ACBrSAT1.CFeCanc.LoadFromFile(aStr)
+  if FileExists(aStr) then
+  begin
+    GravarLog('Carregando arquivo xml cancelamento', logParanoico);
+    ACBrSAT1.CFeCanc.LoadFromFile(aStr);
+  end
   else
+  begin
+    GravarLog('Carregando xml string de cancelamento', logParanoico);
     ACBrSAT1.CFeCanc.AsXMLString := aStr;
+  end;
 end;
 
 procedure TLibSatDM.Travar;

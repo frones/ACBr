@@ -206,7 +206,7 @@ begin
   if FileExists(CACBrPosPrinterLIBName) then
   begin
     FLibPosPrinter := TACBrLibPosPrinter.Create(pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
-    FSatDM.ACBrPosPrinter1 := FLibPosPrinter.GetPosPrinter;
+    FLibPosPrinter.GetPosPrinter(FSatDM.ACBrPosPrinter1);
   end
   else
   begin
@@ -1014,8 +1014,8 @@ begin
       SatDM.Travar;
 
       try
-        SatDM.CarregarDadosVenda(ArquivoXml);
         SatDM.ConfigurarImpressao(NomeImpressora);
+        SatDM.CarregarDadosVenda(ArquivoXml);
         SatDM.ACBrSAT1.ImprimirExtrato;
         Result := SetRetorno(ErrOK);
       finally
@@ -1051,8 +1051,8 @@ begin
       SatDM.Travar;
 
       try
-        SatDM.CarregarDadosVenda(ArquivoXml);
         SatDM.ConfigurarImpressao(NomeImpressora);
+        SatDM.CarregarDadosVenda(ArquivoXml);
         SatDM.ACBrSAT1.ImprimirExtratoResumido;
         Result := SetRetorno(ErrOK);
       finally
@@ -1090,10 +1090,9 @@ begin
       SatDM.Travar;
 
       try
+        SatDM.ConfigurarImpressao(NomeImpressora);
         SatDM.CarregarDadosVenda(ArqXMLVenda);
         SatDM.CarregarDadosCancelamento(ArqXMLCancelamento);
-
-        SatDM.ConfigurarImpressao(NomeImpressora);
         SatDM.ACBrSAT1.ImprimirExtratoCancelamento;
         Result := SetRetorno(ErrOK);
       finally
@@ -1130,8 +1129,8 @@ begin
 
       try
         Resposta := '';
-        SatDM.CarregarDadosVenda(ArquivoXml);
         SatDM.ConfigurarImpressao(NomeImpressora);
+        SatDM.CarregarDadosVenda(ArquivoXml);
         if TLibSATConfig(Config).Extrato.TipoExtrato = teEscPos then
         begin
           Resposta := TACBrSATExtratoESCPOS(SatDM.ACBrSAT1.Extrato).GerarImpressaoFiscalMFe();
@@ -1227,6 +1226,7 @@ begin
         slAnexos := TStringList.Create;
         slAnexos.Text := Anexos;
 
+        SatDM.ConfigurarImpressao('');
         SatDM.CarregarDadosVenda(ArqXMLVenda);
         SatDM.ACBrSAT1.EnviarEmail(Para, Assunto, slMensagem, slCC, slAnexos);
         Result := SetRetorno(ErrOK);

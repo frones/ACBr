@@ -142,7 +142,7 @@ var
 implementation
 
 uses
-  strutils, strings, Math,
+  strutils, strings,
   synacode, synautil,
   ACBrConsts, ACBrUtil,
   ACBrLibConsts;
@@ -473,7 +473,7 @@ begin
   else
   begin
     StrLCopy(sDest, PChar(AString), esTamanho);
-    esTamanho := min(esTamanho, AStringLen);
+    esTamanho := AStringLen;
   end;
 end;
 

@@ -47,7 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 11/09/2018 ver: 0.0.247
+Data 05/10/2018 ver: 0.0.247
+
+05-10-2018 -- ACBrBoleto
+[*] Ajuste Mensagem "Multa" no Boleto (Diminuir alguns caracteres da Mensagem para correto preenchimento na Remessa)
+https://www.projetoacbr.com.br/forum/topic/45945-remessa-santander-sugest%C3%A3o-para-corre%C3%A7%C3%A3o-de-rejei%C3%A7%C3%A3o/
 
 11-09-2018 -- ACBrBancoSantander
 [*] Ajuste Retorno CNAB240 leitura código ocorrência liquidação

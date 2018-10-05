@@ -147,6 +147,7 @@ type
     property Registro0400Count: Integer read FRegistro0400Count write FRegistro0400Count;
     property Registro0450Count: Integer read FRegistro0450Count write FRegistro0450Count;
     property Registro0460Count: Integer read FRegistro0460Count write FRegistro0460Count;
+    property Registro0465Count: Integer read FRegistro0465Count write FRegistro0465Count;
 
     property OnBeforeWriteRegistro0200: TWriteRegistroEvent read FOnBeforeWriteRegistro0200 write FOnBeforeWriteRegistro0200;
     property OnBeforeWriteRegistro0210: TWriteRegistroEvent read FOnBeforeWriteRegistro0210 write FOnBeforeWriteRegistro0210;
@@ -195,6 +196,7 @@ begin
   FRegistro0200Count := 0;
   FRegistro0400Count := 0;
   FRegistro0450Count := 0;
+  FRegistro0465Count := 0;
 
   FRegistro0990.QTD_LIN_0 := 0;
 end;
@@ -979,6 +981,7 @@ begin
           Add( LFill('0450') +
                LFill( COD_INF ) +
                LFill( TXT ) ) ;
+          WriteRegistro0465(Reg0001.Registro0450.Items[intFor]);
         end;
         Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
      end;
@@ -1053,7 +1056,7 @@ begin
                 LFill(CPF)   +
                 LFill(UF)    +
                 LFill(IE)    +
-                IfThen((CODMUN <> 1058), LFill(''), LFill(CODMUN, 7)) +
+                LFill(CODMUN, 7) +
                 LFill(IM)        +
                 LFill(COD_MOD)   +
                 LFill(COD_SIT)   +
@@ -1061,12 +1064,13 @@ begin
                 LFill(SUBSERIE)  +
                 LFill(NUMDOCTO)  +
                 LFill(DT_EMISSAO)+
-                LFill(VALOR_DOC) +
-                LFill(VALOR_ISS) +
-                LFill(VALOR_RT)  +
-                LFill(VALOR_ICMS)+
-                LFill(VALOR_ST)  +
-                LFill(VALOR_IPI) );
+                LFill(VALOR_DOC,0,2, true) +
+                LFill(VALOR_ISS,0,2, true) +
+                LFill(VALOR_RT,0,2, true)  +
+                LFill(VALOR_ICMS,0,2, true)+
+                LFill(VALOR_ST,0,2, true)  +
+                LFill(VALOR_IPI,0,2,true)
+                );
         end;
         Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
      end;

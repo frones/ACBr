@@ -25,7 +25,8 @@ type
     procedure Test_SAT_Versao;
     procedure Test_SAT_ConfigLerValor;
     procedure Test_SAT_ConfigGravarValor;
-    procedure Test_SAT_InicializarConfigGravarValoresEFinalizar;
+    procedure Test_SAT_ImpressaoExtratoFortes;
+    procedure Test_SAT_ImpressaoExtratoEscPOS;
   end;
 
 implementation
@@ -151,14 +152,31 @@ begin
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
 end;
 
-procedure TTestACBrSATLib.Test_SAT_InicializarConfigGravarValoresEFinalizar;
+procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoFortes;
 begin
   AssertEquals(ErrOk, SAT_Inicializar('',''));
-
   AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChaveTipo, '0'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChavePrinterName, 'Foxit Reader PDF Printer'));
   AssertEquals(ErrOK, SAT_ConfigGravar(''));
-  AssertEquals(ErrOK, SAT_ConfigLer(''));
   AssertEquals(ErrOK, SAT_InicializarSAT);
+  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda('AD35181011111111111111591234567890000695522120.xml', ''));
+
+  AssertEquals(ErrOK, SAT_Finalizar());
+end;
+
+procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoEscPOS;
+begin
+  AssertEquals(ErrOk, SAT_Inicializar('',''));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChaveTipo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, 'c:\temp\posprinter.txt'));
+  AssertEquals(ErrOK, SAT_ConfigGravar(''));
+  AssertEquals(ErrOK, SAT_InicializarSAT);
+  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda('AD35181011111111111111591234567890000695522120.xml', ''));
 
   AssertEquals(ErrOK, SAT_Finalizar());
 end;

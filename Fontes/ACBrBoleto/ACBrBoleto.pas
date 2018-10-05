@@ -2654,7 +2654,7 @@ begin
       end
       else
       begin
-        if (not LeCedenteRetorno) and ((AAgencia <> OnlyNumber(Cedente.Agencia)) or
+        if (not LeCedenteRetorno) and ((StrToIntDef(AAgencia,0) <> StrToIntDef(OnlyNumber(Cedente.Agencia),0)) or
                (StrToIntDef(AContaCedente,0) <> StrToIntDef(OnlyNumber( Cedente.CodigoCedente),0))) then
         begin
           Result:= False;

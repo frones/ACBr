@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/10/2018
+-- ACBrTEFDCliSitef
+[*] Transações com mais de três dias são finalizadas automaticamente pela SiTef
+    https://www.projetoacbr.com.br/forum/topic/46946-sitef-correção-para-transações-pendentes/
+
 30/08/2018
 -- ACBrTEFD, ACBrTEFDClass --
 [+] Criada a propriedade "SuportaNSUEstendido: Boolean", para informar que será

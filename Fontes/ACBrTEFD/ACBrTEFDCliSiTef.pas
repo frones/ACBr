@@ -1507,8 +1507,19 @@ begin
 
   fDocumentosProcessados := fDocumentosProcessados + DocumentoVinculado + '|' ;
 
-  DataStr     := FormatDateTime('YYYYMMDD',Now);
-  HoraStr     := FormatDateTime('HHNNSS',Now);
+  if ((Resp <> nil) and (Resp.DataHoraTransacaoComprovante > (date - 3)) then
+  begin
+     // Leu com sucesso o arquivo pendente.
+     // Transações com mais de três dias são finalizadas automaticamente pela SiTef
+     DataStr := FormatDateTime('YYYYMMDD',Resp.DataHoraTransacaoComprovante);
+     HoraStr := FormatDateTime('HHNNSS',Resp.DataHoraTransacaoComprovante);
+  end
+  else
+  begin
+     DataStr := FormatDateTime('YYYYMMDD',Now);
+     HoraStr := FormatDateTime('HHNNSS',Now);
+  end;
+
   Finalizacao := ifthen(Confirma or fCancelamento,1,0);
 
   GravaLog( '*** FinalizaTransacaoSiTefInterativo. Confirma: '+

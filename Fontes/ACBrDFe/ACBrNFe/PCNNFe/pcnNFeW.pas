@@ -1099,22 +1099,25 @@ begin
     begin
       Gerador.wCampo(tcStr, 'LA03', 'descANP', 02, 95, 1, nfe.Det[i].Prod.comb.descANP, DSC_DESCANP);
 
-      if nfe.Det[i].Prod.comb.pGLP = 100 then
-  	    Gerador.wCampo(tcDe2, 'LA03a', 'pGLP', 01,  7, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP)
-      else
-	      Gerador.wCampo(tcDe4, 'LA03a', 'pGLP', 01,  7, 1, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP);
+      if nfe.Det[i].Prod.comb.cProdANP = 210203001 then
+      begin
+        if nfe.Det[i].Prod.comb.pGLP = 100 then
+    	    Gerador.wCampo(tcDe2, 'LA03a', 'pGLP', 01,  7, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP)
+        else
+	        Gerador.wCampo(tcDe4, 'LA03a', 'pGLP', 01,  7, 1, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP);
 
-      if nfe.Det[i].Prod.comb.pGNn = 100 then
-	      Gerador.wCampo(tcDe2, 'LA03b', 'pGNn', 01,  7, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN)
-      else
-	      Gerador.wCampo(tcDe4, 'LA03b', 'pGNn', 01,  7, 1, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN);
+        if nfe.Det[i].Prod.comb.pGNn = 100 then
+	        Gerador.wCampo(tcDe2, 'LA03b', 'pGNn', 01,  7, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN)
+        else
+	        Gerador.wCampo(tcDe4, 'LA03b', 'pGNn', 01,  7, 1, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN);
 
-      if nfe.Det[i].Prod.comb.pGNi = 100 then
-  	    Gerador.wCampo(tcDe2, 'LA03c', 'pGNi', 01,  7, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI)
-      else
-	      Gerador.wCampo(tcDe4, 'LA03c', 'pGNi', 01,  7, 1, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
+        if nfe.Det[i].Prod.comb.pGNi = 100 then
+    	    Gerador.wCampo(tcDe2, 'LA03c', 'pGNi', 01,  7, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI)
+        else
+	        Gerador.wCampo(tcDe4, 'LA03c', 'pGNi', 01,  7, 1, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
 
-      Gerador.wCampo(tcDe2, 'LA03d', 'vPart ', 01, 15, 0, nfe.Det[i].Prod.comb.vPart, DSC_VPART);
+        Gerador.wCampo(tcDe2, 'LA03d', 'vPart ', 01, 15, 0, nfe.Det[i].Prod.comb.vPart, DSC_VPART);
+      end;
     end;
 
     if (trim(nfe.Det[i].Prod.comb.CODIF)) <> '' then

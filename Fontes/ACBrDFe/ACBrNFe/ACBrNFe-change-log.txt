@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/10/2018
+-- pcnNFeW --
+[*] As tags: pGLP(id:LA03a), pGNn(id:LA03b), pGNi(id:LA03c) e vPart (id:LA03d)
+    só devem ser geradas se o código (ANP) do produto for 210203001.
+  Por: Italo Jurisato Junior
+
 04/10/2018
 -- pcnNFeW --
 [*] Apesar de no manual e no Schema constar que as tags: pGLP(id:LA03a), 

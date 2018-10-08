@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -44,6 +44,25 @@ const
   CLibMDFeNome = 'ACBrLibMDFe';
   CLibMDFeVersao = '0.0.1';
 
+  CSessaoDAMDFe = 'DAMDFe';
+
+  CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';
+  CChaveTipoDAMDFe = 'TipoDAMDFe';
+  CChaveExibeResumoCanhoto = 'ExibeResumoCanhoto';
+  CChavePosCanhoto = 'PosCanhoto';
+  CChaveAlturaLinhaComun = 'AlturaLinhaComun';
+  CChaveMDFeCancelado = 'MDFeCancelado';
+  CChaveEPECEnviado = 'EPECEnviado';
+  CChaveImprimirHoraSaida = 'ImprimirHoraSaida';
+  CChavePrintDialog = 'PrintDialog';
+  CChaveUsarSeparadorPathPDF = 'UsarSeparadorPathPDF';
+  CChaveFax = 'Fax';
+  CChaveImprimirHoraSaida_Hora = 'ImprimirHoraSaida_Hora';
+  CChaveProtocoloMDFe = 'ProtocoloMDFe';
+  CChaveSistema = 'Sistema';
+  CChaveSite = 'Site';
+  CChaveTamanhoPapel = 'TamanhoPapel';
+
   CSessaoRespStatus = 'Status';
   CSessaoRespConsulta = 'Consulta';
   CSessaoRespCancelamento = 'Cancelamento';
@@ -51,9 +70,37 @@ const
   CSessaoRespNaoEncerrados = 'NaoEncerrados';
   CSessaoRespEnvio = 'Envio';
   CSessaoRespRetorno = 'Retorno';
+  CSessaoRespEvento = 'Evento';
+  CSessaoRespDistribuicaoDFe = 'DistribuicaoDFe';
+
+  ErrValidacaoMDFe = -11;
+  ErrChaveMDFe = -12;
+  ErrAssinarMDFe = -13;
+  ErrConsulta = -14;
+  ErrCNPJ = -15;
+  ErrRetorno = -16;
+  ErrEnvio = -17;
+  ErrEnvioEvento = -18;
+
+Resourcestring
+  SInfMDFeCarregados = '%d MDFe(s) Carregado(s)';
+  SInfEventosCarregados = '%d Evento(s) Carregado(s)';
+
+  SErrChaveInvalida = 'Chave % inválida.';
+  SErrCNPJInvalido = 'CNPJ % inválido.';
+  SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
+
+function SetRetornoMDFeCarregados(const NumMDFe: Integer): Integer;
 
 implementation
 
+uses
+  ACBrLibComum;
+
+function SetRetornoMDFeCarregados(const NumMDFe: Integer): Integer;
+begin
+  Result := SetRetorno( 0, {NumMDFe,} Format(SInfMDFeCarregados, [NumMDFe]));
+end;
 
 end.
 

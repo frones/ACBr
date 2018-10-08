@@ -1,0 +1,44 @@
+object LibMDFeDM: TLibMDFeDM
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  OldCreateOrder = False
+  left = 346
+  top = 174
+  Height = 231
+  HorizontalOffset = 367
+  VerticalOffset = 203
+  Width = 491
+  PPI = 96
+  object ACBrMDFe1: TACBrMDFe
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    DAMDFE = ACBrMDFeDAMDFeRL1
+    left = 94
+    top = 72
+  end
+  object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
+    ACBrMDFe = ACBrMDFe1
+    ImprimirHoraSaida = False
+    MostrarPreview = True
+    MostrarStatus = True
+    TipoDAMDFe = tiSemGeracao
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    MDFeCancelada = False
+    MDFeEncerrado = False
+    PrintDialog = True
+    left = 239
+    top = 73
+  end
+end

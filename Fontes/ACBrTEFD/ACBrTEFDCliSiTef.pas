@@ -1507,7 +1507,7 @@ begin
 
   fDocumentosProcessados := fDocumentosProcessados + DocumentoVinculado + '|' ;
 
-  if ((Resp <> nil) and (Resp.DataHoraTransacaoComprovante > (date - 3)) then
+  if Assigned(Resp) and (Resp.DataHoraTransacaoComprovante > (date - 3)) then
   begin
      // Leu com sucesso o arquivo pendente.
      // Transações com mais de três dias são finalizadas automaticamente pela SiTef

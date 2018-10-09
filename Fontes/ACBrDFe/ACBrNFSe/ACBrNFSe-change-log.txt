@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/10/2018
+-- pnfsNFSeW_ABRASFv2 --
+[*] Se o provedor for Giss e não tiver nenhum dado do tomador o grupo Tomador
+    não deve ser gerado.
+   Por: Italo Jurisato Junior
 -- Diversos --
 [+] Acrescentado o grupo Taxa de Turismo par ao provedor Betha.
    Por: Michel Ouriques

@@ -240,11 +240,14 @@ begin
   end
   else
   begin
-    // Gera a TAG vazia quando nenhum dado do tomador for informado.
-    if FProvedor in [proActcon, proVersaTecnologia, proSmarAPDABRASF] then
-      Gerador.wCampoNFSe(tcStr, '#', 'TomadorServico', 0, 1, 1, '', '')
-    else
-      Gerador.wCampoNFSe(tcStr, '#', 'Tomador', 0, 1, 1, '', '');
+    if FProvedor <> proGiss then
+    begin
+      // Gera a TAG vazia quando nenhum dado do tomador for informado.
+      if FProvedor in [proActcon, proVersaTecnologia, proSmarAPDABRASF] then
+        Gerador.wCampoNFSe(tcStr, '#', 'TomadorServico', 0, 1, 1, '', '')
+      else
+        Gerador.wCampoNFSe(tcStr, '#', 'Tomador', 0, 1, 1, '', '');
+    end;
   end;
 end;
 

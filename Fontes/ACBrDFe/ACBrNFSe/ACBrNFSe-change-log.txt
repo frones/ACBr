@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2018
+-- Diversos --
+[+] Acrescentado o grupo Taxa de Turismo par ao provedor Betha.
+   Por: Michel Ouriques
+
 05/10/2018
 -- Diversos --
 [+] Acrescentado o campo <ValorTotalRecebido> para o provedor Recife.

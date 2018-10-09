@@ -49,6 +49,11 @@ Símbolo : Significado
 
 Data 05/10/2018 ver: 0.0.247
 
+09-10-2018 -- ACBrBancoBrasil
+[*] Ajustes no totalizador de Registros CNAB240
+https://www.projetoacbr.com.br/forum/topic/46836-arquivo-de-remessa-pelo-acbrmonitorplus/
+
+
 05-10-2018 -- ACBrBoleto
 [*] Ajuste Mensagem "Multa" no Boleto (Diminuir alguns caracteres da Mensagem para correto preenchimento na Remessa)
 https://www.projetoacbr.com.br/forum/topic/45945-remessa-santander-sugest%C3%A3o-para-corre%C3%A7%C3%A3o-de-rejei%C3%A7%C3%A3o/

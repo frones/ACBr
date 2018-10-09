@@ -69,6 +69,8 @@ function POS_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_Inicializada: Boolean;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_Versao(const sVersao: PChar; var esTamanho: longint): longint;
@@ -118,7 +120,7 @@ function POS_LerStatusImpressora(Tentativas: Integer; var status: longint): long
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_GetPosPrinter(var handle: TACBrPosPrinter): longint;
+function POS_GetPosPrinter: Pointer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -177,6 +179,12 @@ function POS_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar;
+end;
+
+function POS_Inicializada: Boolean;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_Inicalizada;
 end;
 
 function POS_Nome(const sNome: PChar; var esTamanho: longint): longint;
@@ -718,29 +726,36 @@ begin
   end;
 end;
 
-function POS_GetPosPrinter(var handle: TACBrPosPrinter): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_GetPosPrinter: Pointer;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada;
-
     pLib.GravarLog('POS_GetPosPrinter', logNormal);
 
     with TACBrLibPosPrinter(pLib) do
     begin
       PosDM.Travar;
       try
-        handle := PosDM.ACBrPosPrinter1;
-        Result := SetRetorno(ErrOK);
+        Result := PosDM.ACBrPosPrinter1;
+        with TACBrPosPrinter(Result) do
+          pLib.GravarLog('  '+ClassName+', '+Name, logParanoico);
       finally
         PosDM.Destravar;
       end;
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+    begin
+      SetRetorno(E.Erro, E.Message);
+      Result := Nil;
+    end;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+    begin
+      SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := Nil;
+    end;
   end;
 end;
 

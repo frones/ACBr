@@ -39,18 +39,15 @@ interface
 
 uses
   Classes, SysUtils, typinfo,
-  ACBrLibMailImport, ACBrLibPosPrinterImport,
   ACBrLibComum, ACBrLibSATDataModule;
 
 type
 
-  { TACBrLibPosPrinter }
+  { TACBrLibSAT }
 
   TACBrLibSAT = class(TACBrLib)
   private
     FSatDM: TLibSatDM;
-    FLibMail: TACBrLibMail;
-    FLibPosPrinter: TACBrLibPosPrinter;
 
   protected
     procedure Inicializar; override;
@@ -63,8 +60,6 @@ type
     destructor Destroy; override;
 
     property SatDM: TLibSatDM read FSatDM;
-    property LibMail: TACBrLibMail read FLibMail;
-    property LibPosPrinter: TACBrLibPosPrinter read FLibPosPrinter;
   end;
 
 {%region Declaração da funções}
@@ -159,7 +154,7 @@ implementation
 
 uses
   ACBrUtil, ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig,
-  ACBrLibResposta, ACBrLibSATRespostas, ACBrMail, ACBrPosPrinter,
+  ACBrLibResposta, ACBrLibSATRespostas, ACBrMail,
   ACBrSATExtratoESCPOS;
 
 { TACBrLibSAT }
@@ -175,47 +170,15 @@ end;
 destructor TACBrLibSAT.Destroy;
 begin
   FSatDM.Free;
-  if FLibMail <> nil then
-    FLibMail.Free;
-  if FLibPosPrinter <> nil then
-    FLibPosPrinter.Free;
-
   inherited Destroy;
 end;
 
 procedure TACBrLibSAT.Inicializar;
 begin
-  GravarLog('TACBrLibSAT.Inicializar - Inicializando Mail', logParanoico);
+  GravarLog('TACBrLibSAT.Inicializar', logNormal);
 
-  if FileExists(CACBrMailLIBName) then
-  begin
-    FLibMail := TACBrLibMail.Create(pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
-    FSatDM.ACBrMail1 := FLibMail.GetMail;
-  end
-  else
-  begin
-    FSatDM.ACBrMail1 := TACBrMail.Create(FSatDM);
-  end;
-
-  FSatDM.ACBrSAT1.MAIL := FSatDM.ACBrMail1;
-
-  GravarLog('TACBrLibSAT.Inicializar - Inicializando Mail Feito', logParanoico);
-
-  GravarLog('TACBrLibSAT.Inicializar - Inicializando PosPrinter', logParanoico);
-
-  if FileExists(CACBrPosPrinterLIBName) then
-  begin
-    FLibPosPrinter := TACBrLibPosPrinter.Create(pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
-    FLibPosPrinter.GetPosPrinter(FSatDM.ACBrPosPrinter1);
-  end
-  else
-  begin
-    FSatDM.ACBrPosPrinter1 := TACBrPosPrinter.Create(FSatDM);
-  end;
-
-  FSatDM.ACBrSATExtratoESCPOS1.PosPrinter := FSatDM.ACBrPosPrinter1;
-
-  GravarLog('TACBrLibSAT.Inicializar - Inicializando PosPrinter Feito', logParanoico);
+  FSatDM.CriarACBrMail;
+  FSatDM.CriarACBrPosPrinter;
 
   GravarLog('TACBrLibSAT.Inicializar - Feito', logParanoico);
 

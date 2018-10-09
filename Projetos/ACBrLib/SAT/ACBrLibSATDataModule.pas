@@ -30,9 +30,10 @@ unit ACBrLibSatDataModule;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, syncobjs, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
+  Classes, SysUtils, syncobjs, ACBrLibConfig, ACBrSAT, ACBrIntegrador,
   ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
-  ACBrMail, ACBrPosPrinter, ACBrSATClass;
+  ACBrMail, ACBrPosPrinter, ACBrSATClass,
+  ACBrLibMailImport, ACBrLibPosPrinterImport;
 
 type
 
@@ -43,16 +44,22 @@ type
     ACBrSAT1: TACBrSAT;
     ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS;
     ACBrSATExtratoFortes1: TACBrSATExtratoFortes;
-    ACBrMail1: TACBrMail;
-    ACBrPosPrinter1: TACBrPosPrinter;
+
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
     FLock: TCriticalSection;
+    FACBrMail: TACBrMail;
+    FACBrPosPrinter: TACBrPosPrinter;
 
+    FLibMail: TACBrLibMail;
+    FLibPosPrinter: TACBrLibPosPrinter;
   public
+    procedure CriarACBrMail;
+    procedure CriarACBrPosPrinter;
+
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
@@ -68,7 +75,7 @@ type
 implementation
 
 uses
-  strutils,
+  strutils, FileUtil,
   ACBrUtil, ACBrLibSATConfig, ACBrLibComum, ACBrLibSATClass;
 
 {$R *.lfm}
@@ -78,11 +85,84 @@ uses
 procedure TLibSatDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
+  FACBrMail := Nil;
+  FLibMail := Nil;
+  FACBrPosPrinter := Nil;
+  FLibPosPrinter := Nil;
 end;
 
 procedure TLibSatDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
+
+  if Assigned(FLibMail) then
+    FreeAndNil(FLibMail)
+  else if Assigned(FACBrMail) then
+    FreeAndNil(FACBrMail);
+
+  if Assigned(FLibPosPrinter) then
+    FreeAndNil(FLibPosPrinter)
+  else if Assigned(FACBrPosPrinter) then
+    FreeAndNil(FACBrPosPrinter);
+end;
+
+procedure TLibSatDM.CriarACBrMail;
+var
+  NomeLib: String;
+begin
+  if Assigned(FLibMail) or Assigned(FACBrMail) then
+    Exit;
+
+  GravarLog('  CriarACBrMail', logCompleto);
+
+  NomeLib := ApplicationPath + CACBrMailLIBName;
+  if FileExists(NomeLib) then
+  begin
+    GravarLog('      Carregando MAIL de: '+NomeLib, logCompleto);
+    // Criando Classe para Leitura da Lib //
+    FLibMail  := TACBrLibMail.Create(NomeLib, pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
+    FACBrMail := FLibMail.ACBrMail;
+  end
+  else
+  begin
+    GravarLog('     Criando MAIL Interno', logCompleto);
+    FACBrMail := TACBrMail.Create(Nil);
+  end;
+
+  ACBrSAT1.MAIL := FACBrMail;
+end;
+
+procedure TLibSatDM.CriarACBrPosPrinter;
+var
+  NomeLib: String;
+begin
+  if Assigned(FLibPosPrinter) or Assigned(FACBrPosPrinter) then
+    Exit;
+
+  GravarLog('  CriarACBrPosPrinter', logCompleto);
+
+  NomeLib := ApplicationPath + CACBrPosPrinterLIBName;
+  if FileExists(NomeLib) then
+  begin
+    GravarLog('      Carregando PosPrinter de: '+NomeLib, logCompleto);
+    // Criando Classe para Leitura da Lib //
+    FLibPosPrinter  := TACBrLibPosPrinter.Create(NomeLib, pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
+    FACBrPosPrinter := FLibPosPrinter.ACBrPosPrinter;
+  end
+  else
+  begin
+    GravarLog('     Criando PosPrinter Interno', logCompleto);
+    FACBrPosPrinter := TACBrPosPrinter.Create(Nil);
+  end;
+
+  //with FACBrPosPrinter do
+  //begin
+  //  Porta := 'C:\Temp\teste.txt';
+  //  Ativar;
+  //  Imprimir('Teste - DANIEL SIMOES');
+  //end;
+
+  ACBrSATExtratoESCPOS1.PosPrinter := FACBrPosPrinter;
 end;
 
 procedure TLibSatDM.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
@@ -179,14 +259,17 @@ begin
     else
       Integrador := nil;
 
-    if(TACBrLibSAT(pLib).LibMail = nil) then AplicarConfigMail;
-    if(TACBrLibSAT(pLib).LibPosPrinter = nil) then AplicarConfigPosPrinter;
+    AplicarConfigMail;
+    AplicarConfigPosPrinter;
   end;
 end;
 
 procedure TLibSatDM.AplicarConfigMail;
 begin
-  with ACBrMail1 do
+  if Assigned(FLibMail) or (not Assigned(FACBrMail)) then
+    Exit;
+
+  with FACBrMail do
   begin
     Attempts := pLib.Config.Email.Tentativas;
     SetTLS := pLib.Config.Email.TLS;
@@ -210,7 +293,10 @@ end;
 
 procedure TLibSatDM.AplicarConfigPosPrinter;
 begin
-   with ACBrPosPrinter1 do
+  if Assigned(FLibPosPrinter) or (not Assigned(FLibPosPrinter)) then
+    Exit;
+
+  with FACBrPosPrinter do
   begin
     ArqLog := pLib.Config.PosPrinter.ArqLog;
     Modelo := TACBrPosPrinterModelo(pLib.Config.PosPrinter.Modelo);

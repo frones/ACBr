@@ -172,6 +172,7 @@ resourcestring
   SErrLibJaInicializada = '%s já inicializada.';
   SErrLibNaoInicializada = 'Biblioteca não foi inicializada';
   SErrLibNaoFinalizada = '%s não foi finalizada';
+  SErrLibNaoCarregada = 'Biblioteca %s não pode ser carregada';
 
   SErrDiretorioInvalido = 'Diretório Invalido: %s';
   SErrConfSessaoNaoExiste = 'Sessão não existe no arquivo de configuração';

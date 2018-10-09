@@ -63,37 +63,50 @@ type
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TPOSFinalizar = function: longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  TPOSInicializada = function: Boolean;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TPOSUltimoRetorno = function(const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  TPOSGetPosPrinter = function(var handle: TACBrPosPrinter): longint;
+  TPOSGetPosPrinter = function: Pointer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+  { TACBrLibPosPrinter }
 
   TACBrLibPosPrinter = class
   private
+    FArqLib: String;
     FHandle: TLibHandle;
     FPOSInicializar: TPOSInicializar;
     FPOSFinalizar: TPOSFinalizar;
+    FPOSInicializada: TPOSInicializada;
     FPOSUltimoRetorno: TPOSUltimoRetorno;
     FPOSGetPosPrinter: TPOSGetPosPrinter;
+
+    FACBrPosPrinter: TACBrPosPrinter;
 
     procedure LoadLib;
     procedure UnLoadLib;
     procedure CheckResut(const resultado: longint);
 
   public
-    constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
+    constructor Create(ArqLib: String; ArqConfig: string = ''; ChaveCrypt: ansistring = '');
     destructor Destroy; override;
 
-    procedure GetPosPrinter(var PosPrinter: TACBrPosPrinter);
+    property ACBrPosPrinter: TACBrPosPrinter read FACBrPosPrinter;
   end;
 
 implementation
 
-constructor TACBrLibPosPrinter.Create(ArqConfig: string; ChaveCrypt: ansistring);
+uses
+  ACBrLibComum, ACBrLibConsts;
+
+constructor TACBrLibPosPrinter.Create(ArqLib: String; ArqConfig: string;
+  ChaveCrypt: ansistring);
 Var
   ret: longint;
 begin
   inherited Create();
+  FArqLib := ArqLib;
   LoadLib;
 
   ret := FPOSInicializar(PChar(ArqConfig), PChar(ChaveCrypt));
@@ -104,21 +117,41 @@ destructor TACBrLibPosPrinter.Destroy;
 Var
   ret: longint;
 begin
-  ret := FPOSFinalizar;
-  CheckResut(ret);
+  // Verificando se a Lib ainda está na memória
+  if (FHandle > 0) and FPOSInicializada then
+  begin
+    ret := FPOSFinalizar;
+    CheckResut(ret);
+  end;
 
   UnLoadLib;
   inherited Destroy;
 end;
 
 procedure TACBrLibPosPrinter.LoadLib;
+var
+  APointer: Pointer;
 begin
-  FHandle := LoadLibrary(CACBrPosPrinterLIBName);
+  if not FileExists(FArqLib) then
+    Raise EACBrLibException.CreateFmt(SErrArquivoNaoExiste, [FArqLib]);
 
-  FPOSInicializar := GetProcedureAddress(FHandle, 'POS_Inicializar');
-  FPOSFinalizar := GetProcedureAddress(FHandle, 'POS_Finalizar');
-  FPOSUltimoRetorno := GetProcedureAddress(FHandle, 'POS_UltimoRetorno');
-  FPOSGetPosPrinter := GetProcedureAddress(FHandle, 'POS_GetPosPrinter');
+  FACBrPosPrinter := Nil;
+  FHandle := LoadLibrary(FArqLib);
+  if (FHandle > 0) then
+  begin
+    FPOSInicializar := GetProcedureAddress(FHandle, 'POS_Inicializar');
+    FPOSFinalizar := GetProcedureAddress(FHandle, 'POS_Finalizar');
+    FPOSInicializada := GetProcedureAddress(FHandle, 'POS_Inicializada');
+    FPOSUltimoRetorno := GetProcedureAddress(FHandle, 'POS_UltimoRetorno');
+    FPOSGetPosPrinter := GetProcedureAddress(FHandle, 'POS_GetPosPrinter');
+
+    APointer := FPOSGetPosPrinter;
+    if Assigned(APointer) then
+      FACBrPosPrinter := TACBrPosPrinter(APointer)
+  end;
+
+  if not Assigned(FACBrPosPrinter) then
+    Raise EACBrLibException.CreateFmt(SErrLibNaoCarregada, [FArqLib]);
 end;
 
 procedure TACBrLibPosPrinter.UnLoadLib;
@@ -129,6 +162,8 @@ begin
   FPOSFinalizar := nil;
   FPOSUltimoRetorno := nil;
   FPOSGetPosPrinter := nil;
+  FHandle := 0;
+  FACBrPosPrinter := Nil;
 end;
 
 procedure TACBrLibPosPrinter.CheckResut(const resultado: longint);
@@ -149,19 +184,6 @@ begin
   end;
 
   Raise Exception.Create(Trim(sMensagem));
-end;
-
-procedure TACBrLibPosPrinter.GetPosPrinter(var PosPrinter: TACBrPosPrinter);
-Var
-  ret: longint;
-begin
-  ret := FPOSGetPosPrinter(PosPrinter);
-  CheckResut(ret);
-
-  PosPrinter.ControlePorta := True;
-  PosPrinter.Porta := 'C:\Temp\teste.txt';
-  PosPrinter.Ativar;
-  PosPrinter.Imprimir('Teste');
 end;
 
 end.

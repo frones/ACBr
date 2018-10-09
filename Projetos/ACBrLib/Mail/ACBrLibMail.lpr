@@ -51,6 +51,7 @@ exports
   // Importadas de ACBrLibComum
   MAIL_Inicializar,
   MAIL_Finalizar,
+  MAIL_Inicializada,
   MAIL_Nome,
   MAIL_Versao,
   MAIL_UltimoRetorno,

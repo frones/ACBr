@@ -57,43 +57,54 @@ const
  {$EndIf}
 
 type
-  PACBrMail = ^TACBrMail;
-
   TMailInicializar = function(const eArqConfig, eChaveCrypt: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TMailFinalizar = function: longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  TMailInicializada = function: Boolean;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TMailUltimoRetorno = function(const sMensagem: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-  TMailGetMail = function(var handle: PACBrMail): longint;
+  TMailGetMail = function: Pointer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
+  { TACBrLibMail }
 
   TACBrLibMail = class
   private
+    FArqLib: String;
     FHandle: TLibHandle;
     FMailInicializar: TMailInicializar;
     FMailFinalizar: TMailFinalizar;
+    FMailInicializada: TMailInicializada;
     FMailUltimoRetorno: TMailUltimoRetorno;
     FMailGetMail: TMailGetMail;
+
+    FACBrMail: TACBrMail;
 
     procedure LoadLib;
     procedure UnLoadLib;
     procedure CheckResut(const resultado: longint);
 
   public
-    constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
+    constructor Create(ArqLib: String; ArqConfig: string = ''; ChaveCrypt: ansistring = '');
     destructor Destroy; override;
 
-    function GetMail: TACBrMail;
+    property ACBrMail: TACBrMail read FACBrMail;
   end;
 
 implementation
 
-constructor TACBrLibMail.Create(ArqConfig: string; ChaveCrypt: ansistring);
+uses
+  ACBrLibComum, ACBrLibConsts;
+
+constructor TACBrLibMail.Create(ArqLib: String; ArqConfig: string;
+  ChaveCrypt: ansistring);
 Var
   ret: longint;
 begin
   inherited Create();
+  FArqLib := ArqLib;
   LoadLib;
 
   ret := FMailInicializar(PChar(ArqConfig), PChar(ChaveCrypt));
@@ -104,21 +115,41 @@ destructor TACBrLibMail.Destroy;
 Var
   ret: longint;
 begin
-  ret := FMailFinalizar;
-  CheckResut(ret);
+  // Verificando se a Lib ainda está na memória
+  if (FHandle > 0) and FMailInicializada then
+  begin
+    ret := FMailFinalizar;
+    CheckResut(ret);
+  end;
 
   UnLoadLib;
   inherited Destroy;
 end;
 
 procedure TACBrLibMail.LoadLib;
+var
+  APointer: Pointer;
 begin
-  FHandle := LoadLibrary(CACBrMailLIBName);
+  if not FileExists(FArqLib) then
+    Raise EACBrLibException.CreateFmt(SErrArquivoNaoExiste, [FArqLib]);
 
-  FMailInicializar := GetProcedureAddress(FHandle, 'MAIL_Inicializar');
-  FMailFinalizar := GetProcedureAddress(FHandle, 'MAIL_Finalizar');
-  FMailUltimoRetorno := GetProcedureAddress(FHandle, 'MAIL_UltimoRetorno');
-  FMailGetMail := GetProcedureAddress(FHandle, 'MAIL_GetMail');
+  FACBrMail := Nil;
+  FHandle := LoadLibrary(FArqLib);
+  if (FHandle > 0) then
+  begin
+    FMailInicializar := GetProcedureAddress(FHandle, 'MAIL_Inicializar');
+    FMailFinalizar := GetProcedureAddress(FHandle, 'MAIL_Finalizar');
+    FMailInicializada := GetProcedureAddress(FHandle, 'MAIL_Inicializada');
+    FMailUltimoRetorno := GetProcedureAddress(FHandle, 'MAIL_UltimoRetorno');
+    FMailGetMail := GetProcedureAddress(FHandle, 'MAIL_GetMail');
+
+    APointer := FMailGetMail;
+    if Assigned(APointer) then
+      FACBrMail := TACBrMail(APointer)
+  end;
+
+  if not Assigned(FACBrMail) then
+    Raise EACBrLibException.CreateFmt(SErrLibNaoCarregada, [FArqLib]);
 end;
 
 procedure TACBrLibMail.UnLoadLib;
@@ -129,6 +160,8 @@ begin
   FMailFinalizar := nil;
   FMailUltimoRetorno := nil;
   FMailGetMail := nil;
+  FHandle := 0;
+  FACBrMail := Nil;
 end;
 
 procedure TACBrLibMail.CheckResut(const resultado: longint);
@@ -149,18 +182,6 @@ begin
   end;
 
   Raise Exception.Create(Trim(sMensagem));
-end;
-
-function TACBrLibMail.GetMail: TACBrMail;
-Var
-  ret: longint;
-  mail: PACBrMail;
-begin
-  mail := nil;
-  ret := FMailGetMail(mail);
-  CheckResut(ret);
-
-  Result := TACBrMail(mail^);
 end;
 
 end.

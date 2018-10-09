@@ -69,6 +69,8 @@ function MAIL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_Inicializada: Boolean;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_Versao(const sVersao: PChar; var esTamanho: longint): longint;
@@ -108,7 +110,7 @@ function MAIL_AddAltBody(const eAltBody: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MAIL_SaveToFile(const eFileName: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_GetMail(var handle: PACBrMail): longint;
+function MAIL_GetMail: Pointer;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -174,6 +176,12 @@ function MAIL_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_Finalizar;
+end;
+
+function MAIL_Inicializada: Boolean;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_Inicalizada;
 end;
 
 function MAIL_Nome(const sNome: PChar; var esTamanho: longint): longint;
@@ -558,29 +566,36 @@ begin
   end;
 end;
 
-function MAIL_GetMail(var handle: PACBrMail): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_GetMail: Pointer;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada;
-
     pLib.GravarLog('MAIL_GetMail', logNormal);
 
     with TACBrLibMail(pLib) do
     begin
       MailDM.Travar;
       try
-        handle := @MailDM.ACBrMail1;
-        Result := SetRetorno(ErrOK);
+        Result := MailDM.ACBrMail1;
+        with TACBrMail(Result) do
+          pLib.GravarLog('  '+ClassName+', '+Name, logParanoico);
       finally
         MailDM.Destravar;
       end;
     end;
   except
     on E: EACBrLibException do
-      Result := SetRetorno(E.Erro, E.Message);
+    begin
+      SetRetorno(E.Erro, E.Message);
+      Result := Nil;
+    end;
 
     on E: Exception do
-      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+    begin
+      SetRetorno(ErrExecutandoMetodo, E.Message);
+      Result := Nil;
+    end;
   end;
 end;
 

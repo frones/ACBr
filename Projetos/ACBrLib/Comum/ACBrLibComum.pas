@@ -98,6 +98,7 @@ type
 {%region Constructor/Destructor}
 function LIB_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
 function LIB_Finalizar: longint;
+function LIB_Inicalizada: Boolean;
 {%endregion}
 
 {%region Versao/Retorno}
@@ -292,6 +293,11 @@ begin
     on E: Exception do
       Result := SetRetorno(ErrLibNaoFinalizada, E.Message);
   end;
+end;
+
+function LIB_Inicalizada: Boolean;
+begin
+  Result := (pLib <> nil);
 end;
 
 {%endregion}

@@ -3,7 +3,7 @@
 library ACBrLibPosPrinter;
 
 uses
-  Interfaces, sysutils, Classes,
+  Interfaces, printer4lazarus, sysutils, Classes,
   ACBrLibConfig, ACBrLibComum,
   ACBrLibPosPrinterClass, ACBrLibPosPrinterConfig, ACBrLibPosPrinterDataModule;
 
@@ -18,6 +18,7 @@ exports
   // Importadas de ACBrLibComum
   POS_Inicializar,
   POS_Finalizar,
+  POS_Inicializada,
   POS_Nome,
   POS_Versao,
   POS_UltimoRetorno,

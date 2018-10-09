@@ -38,7 +38,7 @@ unit ACBrLibMDFeClass;
 interface
 
 uses
-  Classes, SysUtils, Forms, ACBrLibMailImport,
+  Classes, SysUtils, Forms,
   ACBrLibComum, ACBrLibMDFeDataModule;
 
 type
@@ -48,7 +48,6 @@ type
   TACBrLibMDFe = class(TACBrLib)
   private
     FMDFeDM: TLibMDFeDM;
-    FLibMail: TACBrLibMail;
 
   protected
     procedure Inicializar; override;
@@ -60,7 +59,6 @@ type
     destructor Destroy; override;
 
     property MDFeDM: TLibMDFeDM read FMDFeDM;
-    property LibMail: TACBrLibMail read FLibMail;
   end;
 
 {%region Declaração da funções}
@@ -181,33 +179,19 @@ end;
 destructor TACBrLibMDFe.Destroy;
 begin
   FMDFeDM.Free;
-  if FLibMail <> nil then
-    FLibMail.Free;
 
   inherited Destroy;
 end;
 
 procedure TACBrLibMDFe.Inicializar;
 begin
-  inherited Inicializar;
+  GravarLog('TACBrLibMDFe.Inicializar', logNormal);
 
-  GravarLog('TACBrLibMDFe.Inicializar - Inicializando Mail', logParanoico);
-
-  if FileExists(CACBrMailLIBName) then
-  begin
-    FLibMail := TACBrLibMail.Create(pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
-    FMDFeDM.ACBrMail1 := FLibMail.GetMail;
-  end
-  else
-  begin
-    FMDFeDM.ACBrMail1 := TACBrMail.Create(FMDFeDM);
-  end;
-
-  FMDFeDM.ACBrMDFe1.MAIL := FMDFeDM.ACBrMail1;
-
-  GravarLog('TACBrLibMDFe.Inicializar - Inicializando Mail Feito', logParanoico);
+  FMDFeDM.CriarACBrMail;
 
   GravarLog('TACBrLibMDFe.Inicializar - Feito', logParanoico);
+
+  inherited Inicializar;
 end;
 
 procedure TACBrLibMDFe.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
@@ -1306,8 +1290,8 @@ function MDFe_DistribuicaoDFePorChave(eCNPJCPF, echMDFe: PChar;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   AchMDFe, ACNPJCPF: string;
-  Resposta: string;
-  i: Integer;
+//  Resposta: string;
+//  i: Integer;
 begin
   try
     VerificarLibInicializada;

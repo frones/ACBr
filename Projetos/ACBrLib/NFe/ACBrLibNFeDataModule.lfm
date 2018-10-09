@@ -5,21 +5,10 @@ object LibNFeDM: TLibNFeDM
   left = 346
   top = 174
   Height = 231
-  HorizontalOffset = 804
-  VerticalOffset = 1526
+  HorizontalOffset = 247
+  VerticalOffset = 118
   Width = 491
   PPI = 96
-  object ACBrMail: TACBrMail
-    Host = '127.0.0.1'
-    Port = '25'
-    SetSSL = False
-    SetTLS = False
-    Attempts = 3
-    DefaultCharset = UTF_8
-    IDECharset = UTF_8
-    left = 88
-    top = 43
-  end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
     MostrarPreview = True
     MostrarStatus = True
@@ -110,12 +99,13 @@ object LibNFeDM: TLibNFeDM
     Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.VersaoQRCode = veqr000
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 88
-    top = 120
+    left = 48
+    top = 43
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     ConfigBarras.MostrarCodigo = False

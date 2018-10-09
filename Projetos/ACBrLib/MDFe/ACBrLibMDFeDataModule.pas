@@ -5,24 +5,28 @@ unit ACBrLibMDFeDataModule;
 interface
 
 uses
-  Classes, SysUtils, syncobjs, FileUtil, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrMail,
-  ACBrLibConfig;
+  Classes, SysUtils, syncobjs,
+  ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrMail,
+  ACBrLibConfig, ACBrLibMailImport;
 
 type
 
   { TLibMDFeDM }
 
   TLibMDFeDM = class(TDataModule)
-    ACBrMail1: TACBrMail;
     ACBrMDFe1: TACBrMDFe;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
+
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
-
   private
     FLock: TCriticalSection;
+    FACBrMail: TACBrMail;
 
+    FLibMail: TACBrLibMail;
   public
+    procedure CriarACBrMail;
+
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
@@ -33,7 +37,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil, FileUtil,
   ACBrLibMDFeConfig, ACBrLibComum, ACBrLibMDFeClass;
 
 {$R *.lfm}
@@ -43,11 +47,44 @@ uses
 procedure TLibMDFeDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
+  FACBrMail := Nil;
+  FLibMail := Nil;
 end;
 
 procedure TLibMDFeDM.DataModuleDestroy(Sender: TObject);
 begin
   FLock.Destroy;
+
+  if Assigned(FLibMail) then
+    FreeAndNil(FLibMail)
+  else if Assigned(FACBrMail) then
+    FreeAndNil(FACBrMail);
+end;
+
+procedure TLibMDFeDM.CriarACBrMail;
+var
+  NomeLib: String;
+begin
+  if Assigned(FLibMail) or Assigned(FACBrMail) then
+    Exit;
+
+  GravarLog('  CriarACBrMail', logCompleto);
+
+  NomeLib := ApplicationPath + CACBrMailLIBName;
+  if FileExists(NomeLib) then
+  begin
+    GravarLog('      Carregando MAIL de: ' + NomeLib, logCompleto);
+    // Criando Classe para Leitura da Lib //
+    FLibMail  := TACBrLibMail.Create(NomeLib, pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
+    FACBrMail := FLibMail.ACBrMail;
+  end
+  else
+  begin
+    GravarLog('     Criando MAIL Interno', logCompleto);
+    FACBrMail := TACBrMail.Create(Nil);
+  end;
+
+  ACBrMDFe1.MAIL := FACBrMail;
 end;
 
 procedure TLibMDFeDM.AplicarConfiguracoes;
@@ -58,13 +95,15 @@ begin
   pLibConfig := TLibMDFeConfig(TACBrLibMDFe(pLib).Config);
   ACBrMDFe1.Configuracoes.Assign(pLibConfig.MDFeConfig);
 
-  if (TACBrLibMDFe(pLib).LibMail = nil) then
-    AplicarConfigMail;
+  AplicarConfigMail;
 end;
 
 procedure TLibMDFeDM.AplicarConfigMail;
 begin
-  with ACBrMail1 do
+  if Assigned(FLibMail) or (not Assigned(FACBrMail)) then
+    Exit;
+
+  with FACBrMail do
   begin
     Attempts := pLib.Config.Email.Tentativas;
     SetTLS := pLib.Config.Email.TLS;

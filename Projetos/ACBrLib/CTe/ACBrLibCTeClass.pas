@@ -38,7 +38,7 @@ unit ACBrLibCTeClass;
 interface
 
 uses
-  Classes, SysUtils, Forms, ACBrLibMailImport,
+  Classes, SysUtils, Forms,
   ACBrLibComum, ACBrLibCTeDataModule;
 
 type
@@ -48,7 +48,6 @@ type
   TACBrLibCTe = class(TACBrLib)
   private
     FCTeDM: TLibCTeDM;
-    FLibMail: TACBrLibMail;
 
   protected
     procedure Inicializar; override;
@@ -60,7 +59,6 @@ type
     destructor Destroy; override;
 
     property CTeDM: TLibCTeDM read FCTeDM;
-    property LibMail: TACBrLibMail read FLibMail;
   end;
 
 {%region Declaração da funções}
@@ -189,33 +187,19 @@ end;
 destructor TACBrLibCTe.Destroy;
 begin
   FCTeDM.Free;
-  if FLibMail <> nil then
-    FLibMail.Free;
 
   inherited Destroy;
 end;
 
 procedure TACBrLibCTe.Inicializar;
 begin
-  inherited Inicializar;
+  GravarLog('TACBrLibCTe.Inicializar', logNormal);
 
-  GravarLog('TACBrLibCTe.Inicializar - Inicializando Mail', logParanoico);
-
-  if FileExists(CACBrMailLIBName) then
-  begin
-    FLibMail := TACBrLibMail.Create(pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
-    FCTeDM.ACBrMail1 := FLibMail.GetMail;
-  end
-  else
-  begin
-    FCTeDM.ACBrMail1 := TACBrMail.Create(FCTeDM);
-  end;
-
-  FCTeDM.ACBrCTe1.MAIL := FCTeDM.ACBrMail1;
-
-  GravarLog('TACBrLibCTe.Inicializar - Inicializando Mail Feito', logParanoico);
+  FCTeDM.CriarACBrMail;
 
   GravarLog('TACBrLibCTe.Inicializar - Feito', logParanoico);
+
+  inherited Inicializar;
 end;
 
 procedure TACBrLibCTe.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);

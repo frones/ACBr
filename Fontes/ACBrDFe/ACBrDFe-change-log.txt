@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2018
+-- ACBrDFeConfiguracoes --
+[*] Ajuste dos métodos "CalcSSLLib" e "SetSSLLib" para definir o padrão para
+    a propriedade "SSLXMLSignLib" conforme as diretivas do ACBr.inc.
+  Por: BigWings
+
 18/09/2018
 -- ACBrDFeConfiguracoes --
 [*] Alterado o nome do campo Salvar (Arquivo INI de configuração) por

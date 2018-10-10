@@ -155,13 +155,6 @@ begin
     FACBrPosPrinter := TACBrPosPrinter.Create(Nil);
   end;
 
-  //with FACBrPosPrinter do
-  //begin
-  //  Porta := 'C:\Temp\teste.txt';
-  //  Ativar;
-  //  Imprimir('Teste - DANIEL SIMOES');
-  //end;
-
   ACBrSATExtratoESCPOS1.PosPrinter := FACBrPosPrinter;
 end;
 

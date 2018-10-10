@@ -489,7 +489,8 @@ end;
 
 function TACBrTags.GetObject(Index: Integer): TACBrTag;
 begin
-  Result := inherited GetItem(Index) as TACBrTag ;
+  //Result := inherited GetItem(Index) as TACBrTag;
+  Result := TACBrTag(Get(Index));
 end;
 
 procedure TACBrTags.Insert(Index: Integer; Obj: TACBrTag);
@@ -512,15 +513,17 @@ end;
 function TACBrTags.AcharTag(NomeTag: String): TACBrTag;
 var
   I: Integer;
+  ATag: TACBrTag;
 begin
   NomeTag := LowerCase(NomeTag);
   Result := Nil;
 
   For I := 0 to Count-1 do
   begin
-    if Objects[I].Nome = NomeTag then
+    ATag := Objects[I];
+    if (ATag.Nome = NomeTag) then
     begin
-      Result := Objects[I];
+      Result := ATag;
       Break;
     end;
   end;

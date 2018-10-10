@@ -297,43 +297,55 @@ begin
   if AXML = '' then
     AXML := XMLOriginal;
 
+  // Obtem o grupo referente ao Modal
   AXMLModal := Trim(RetornarConteudoEntre(AXML, '<infModal', '</infModal>'));
+  // Remove NameSpace indevido incluido por alguns sistemas
+  AXMLModal := StringReplace(AXMLModal, ' xmlns="' + ACBRCTE_NAMESPACE + '"', '',
+                                     [rfReplaceAll, rfIgnoreCase]);
+
   case TACBrCTe(TConhecimentos(Collection).ACBrCTe).IdentificaSchemaModal(AXML) of
-   schcteModalAereo: begin
-                       AXMLModal := '<aereo xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                      Trim(RetornarConteudoEntre(AXML, '<aereo>', '</aereo>')) +
-                                    '</aereo>';
-                     end;
-   schcteModalAquaviario: begin
-                            AXMLModal := '<aquav xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                           Trim(RetornarConteudoEntre(AXML, '<aquav>', '</aquav>')) +
-                                         '</aquav>';
-                          end;
-   schcteModalDutoviario: begin
-                            AXMLModal := '<duto xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                           Trim(RetornarConteudoEntre(AXML, '<duto>', '</duto>')) +
-                                         '</duto>';
-                          end;
-   schcteModalFerroviario: begin
-                             AXMLModal := '<ferrov xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                            Trim(RetornarConteudoEntre(AXML, '<ferrov>', '</ferrov>')) +
-                                          '</ferrov>';
-                           end;
-   schcteModalRodoviario: begin
-                            AXMLModal := '<rodo xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                           Trim(RetornarConteudoEntre(AXML, '<rodo>', '</rodo>')) +
-                                         '</rodo>';
-                          end;
-   schcteModalRodoviarioOS: begin
-                              AXMLModal := '<rodoOS xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                             Trim(RetornarConteudoEntre(AXML, '<rodoOS>', '</rodoOS>')) +
-                                           '</rodoOS>';
-                            end;
-   schcteMultiModal: begin
-                       AXMLModal := '<multimodal xmlns="' + ACBRCTE_NAMESPACE + '">' +
-                                      Trim(RetornarConteudoEntre(AXML, '<multimodal>', '</multimodal>')) +
-                                    '</multimodal>';
-                     end;
+   schcteModalAereo:
+     begin
+       AXMLModal := '<aereo xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                      Trim(RetornarConteudoEntre(AXMLModal, '<aereo>', '</aereo>')) +
+                    '</aereo>';
+     end;
+   schcteModalAquaviario:
+     begin
+       AXMLModal := '<aquav xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                      Trim(RetornarConteudoEntre(AXMLModal, '<aquav>', '</aquav>')) +
+                    '</aquav>';
+     end;
+   schcteModalDutoviario:
+     begin
+       AXMLModal := '<duto xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                      Trim(RetornarConteudoEntre(AXMLModal, '<duto>', '</duto>')) +
+                    '</duto>';
+     end;
+   schcteModalFerroviario:
+     begin
+       AXMLModal := '<ferrov xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                      Trim(RetornarConteudoEntre(AXMLModal, '<ferrov>', '</ferrov>')) +
+                    '</ferrov>';
+     end;
+   schcteModalRodoviario:
+     begin
+       AXMLModal := '<rodo xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                      Trim(RetornarConteudoEntre(AXMLModal, '<rodo>', '</rodo>')) +
+                    '</rodo>';
+     end;
+   schcteModalRodoviarioOS:
+     begin
+       AXMLModal := '<rodoOS xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                      Trim(RetornarConteudoEntre(AXMLModal, '<rodoOS>', '</rodoOS>')) +
+                    '</rodoOS>';
+     end;
+   schcteMultiModal:
+     begin
+       AXMLModal := '<multimodal xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                      Trim(RetornarConteudoEntre(AXMLModal, '<multimodal>', '</multimodal>')) +
+                    '</multimodal>';
+     end;
   end;
 
   AXMLModal := '<?xml version="1.0" encoding="UTF-8" ?>' + AXMLModal;

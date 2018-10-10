@@ -56,6 +56,7 @@ public
   function ListaBancos(): String;
   function ListaCaractTitulo() : String;
   function ListaOcorrencias(): String;
+  function ListaOcorrenciasEX(): String;
 
   property ACBrBoleto: TACBrBoleto read fACBrBoleto;
 
@@ -159,6 +160,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoListaOcorrenciasEX  }
+
+TMetodoListaOcorrenciasEX  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoTamNossoNumero  }
 
 TMetodoTamNossoNumero  = class(TACBrMetodo)
@@ -211,6 +219,7 @@ begin
   ListaDeMetodos.Add(CMetodoTamNossoNumero);
   ListaDeMetodos.Add(CMetodoCodigosMoraAceitos);
   ListaDeMetodos.Add(CMetodoSelecionaBanco);
+  ListaDeMetodos.Add(CMetodoListaOcorrenciasEx);
 
 end;
 
@@ -243,8 +252,9 @@ begin
     14 : AMetodoClass := TMetodoTamNossoNumero;
     15 : AMetodoClass := TMetodoCodigosMoraAceitos;
     16 : AMetodoClass := TMetodoSelecionaBanco;
+    17 : AMetodoClass := TMetodoListaOcorrenciasEX;
 
-    17..31 : DoACbr(ACmd);
+    18..31 : DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then
@@ -563,6 +573,14 @@ begin
     fpCmd.Resposta := ListaOcorrencias();
 end;
 
+{ TMetodoListaOcorrenciasEX }
+
+procedure TMetodoListaOcorrenciasEX.Executar;
+begin
+  with TACBrObjetoBoleto(fpObjetoDono) do
+    fpCmd.Resposta := ListaOcorrenciasEX();
+end;
+
 { TMetodoTamNossoNumero }
 
 { Params: 0 - ACarteira: Código Carteira
@@ -714,6 +732,27 @@ begin
 
   if (Result <> '') then
     Result := copy(Result,1,Length(Result)-1) ;
+end;
+
+function TACBrObjetoBoleto.ListaOcorrenciasEX(): String;
+var
+   ITipoOcorrencia : TACBrTipoOcorrencia;
+   SOcorrencia     : String;
+   ValorIndice     : Integer;
+begin
+  ITipoOcorrencia := Low(TACBrTipoOcorrencia);
+
+  while ( ITipoOcorrencia <= High(TACBrTipoOcorrencia) ) do
+  begin
+    ValorIndice := Integer(ITipoOcorrencia);
+    SOcorrencia := GetEnumName( TypeInfo(TACBrTipoOcorrencia), ValorIndice ) ;
+    Result := Result + IntToStr(ValorIndice) + '-' +
+              copy(SOcorrencia, 3, Length(SOcorrencia)) + '|';  //Remove "to"
+    Inc(ITipoOcorrencia);
+  end;
+
+  if (Result <> '') then
+    Result := copy(Result, 1, Length(Result)-1) ;
 end;
 
 procedure TACBrObjetoBoleto.ImprimeRelatorioRetorno(sArqRetorno : String);

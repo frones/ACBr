@@ -435,6 +435,7 @@ const
   CMetodoListaBancos =               'listabancos';
   CMetodoListaCaractTitulo =         'listacaracttitulo';
   CMetodoListaOcorrencias =          'listaocorrencias';
+  CMetodoListaOcorrenciasEX =        'listaocorrenciasex';
   CMetodoTamNossoNumero =            'tamnossonumero';
   CMetodoCodigosMoraAceitos =        'codigosmoraaceitos';
   CMetodoSelecionaBanco =            'selecionabanco';

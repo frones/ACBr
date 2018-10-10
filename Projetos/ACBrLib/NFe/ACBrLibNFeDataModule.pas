@@ -176,7 +176,7 @@ end;
 
 procedure TLibNFeDM.AplicarConfigPosPrinter;
 begin
-  if Assigned(FLibPosPrinter) or (not Assigned(FLibPosPrinter)) then
+  if Assigned(FLibPosPrinter) or (not Assigned(FACBrPosPrinter)) then
     Exit;
 
   with FACBrPosPrinter do

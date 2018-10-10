@@ -27,6 +27,8 @@ type
     procedure Test_POS_ConfigGravarValor;
     procedure Test_POS_InicializarConfigGravarValoresEFinalizar;
     procedure Test_POS_InicializarAtivarEFinalizar;
+    procedure Test_POS_ImpressaoDeTags;
+    procedure Test_POS_RetornarEInterpretarTags;
   end;
 
 implementation
@@ -102,7 +104,7 @@ begin
   Bufflen := 4;
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, POS_Nome(PChar(AStr), Bufflen));
-  AssertEquals(4, Bufflen);
+  AssertEquals(Length(CLibPosPrinterNome), Bufflen);
   AssertEquals(copy(CLibPosPrinterNome,1,4), AStr);
 end;
 
@@ -157,7 +159,7 @@ begin
   AssertEquals(ErrOk, POS_Inicializar('',''));
 
   AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
-  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(ApplicationPath+'teste.txt')));
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(ApplicationPath+'posprinter.txt')));
   AssertEquals(ErrOK, POS_ConfigGravar(''));
   AssertEquals(ErrOK, POS_ConfigLer(''));
   AssertEquals(ErrOK, POS_Ativar);
@@ -184,6 +186,44 @@ begin
   AssertEquals(ErrExecutandoMetodo, POS_UltimoRetorno(PChar(AStr), bufflen));
   AssertEquals('Porta não definida', Trim(AStr));
 
+  AssertEquals(ErrOK, POS_Finalizar());
+end;
+
+procedure TTestACBrPosPrinterLib.Test_POS_ImpressaoDeTags;
+var
+  SaidaImpressao: String;
+begin
+  SaidaImpressao := ApplicationPath+'posprinter.txt';
+  AssertEquals(ErrOk, POS_Inicializar('',''));
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(SaidaImpressao) ));
+  AssertEquals(ErrOK, POS_ConfigGravar(''));
+  AssertEquals(ErrOK, POS_Ativar);
+  AssertEquals(ErrOK, POS_ImprimirTags);
+  AssertEquals(ErrOK, POS_Desativar);
+  AssertEquals(ErrOK, POS_Finalizar());
+end;
+
+procedure TTestACBrPosPrinterLib.Test_POS_RetornarEInterpretarTags;
+var
+  Bufflen: Integer;
+  AStr: String;
+  SaidaImpressao: String;
+begin
+  Bufflen := 0;
+  AStr := '';
+  SaidaImpressao := ApplicationPath+'posprinter.txt';
+  AssertEquals(ErrOk, POS_Inicializar('',''));
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChaveModelo, '1'));
+  AssertEquals(ErrOK, POS_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, PChar(SaidaImpressao) ));
+  AssertEquals(ErrOK, POS_ConfigGravar(''));
+  AssertEquals(ErrOK, POS_Ativar);
+  AssertEquals(ErrOK, POS_RetornarTags(PChar(AStr), Bufflen, False));
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOK, POS_RetornarTags(PChar(AStr), Bufflen, False));
+  AssertEquals(copy(AStr,1,133), '<e>|</e>|<a>|</a>|<n>|</n>|<s>|</s>|<c>|</c>|<i>|</i>|</fn>|</fa>|</fb>|<in>|</in>|</ae>|</ce>|</ad>|</linha_simples>|</linha_dupla>|');
+  AssertEquals(ErrOK, POS_Imprimir(PChar(AStr), True, True, True, 1));
+  AssertEquals(ErrOK, POS_Desativar);
   AssertEquals(ErrOK, POS_Finalizar());
 end;
 

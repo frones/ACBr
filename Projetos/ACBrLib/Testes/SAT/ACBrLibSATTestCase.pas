@@ -102,7 +102,7 @@ begin
   Bufflen := 4;
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, SAT_Nome(PChar(AStr), Bufflen));
-  AssertEquals(4, Bufflen);
+  AssertEquals(Length(CLibSATNome), Bufflen);
   AssertEquals(copy(CLibSATNome,1,4), AStr);
 end;
 
@@ -161,7 +161,7 @@ begin
   AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChavePrinterName, 'Foxit Reader PDF Printer'));
   AssertEquals(ErrOK, SAT_ConfigGravar(''));
   AssertEquals(ErrOK, SAT_InicializarSAT);
-  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda('AD35181011111111111111591234567890000695522120.xml', ''));
+  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml', ''));
 
   AssertEquals(ErrOK, SAT_Finalizar());
 end;
@@ -176,7 +176,7 @@ begin
   AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPosPrinter, CChavePorta, 'c:\temp\posprinter.txt'));
   AssertEquals(ErrOK, SAT_ConfigGravar(''));
   AssertEquals(ErrOK, SAT_InicializarSAT);
-  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda('AD35181011111111111111591234567890000695522120.xml', ''));
+  AssertEquals(ErrOK, SAT_ImprimirExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml', ''));
 
   AssertEquals(ErrOK, SAT_Finalizar());
 end;

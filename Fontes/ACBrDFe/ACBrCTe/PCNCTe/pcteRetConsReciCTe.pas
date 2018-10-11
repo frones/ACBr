@@ -187,8 +187,8 @@ begin
       (*BR06 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
       (*BR07 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
       (*BR08 *)FcUF      := Leitor.rCampo(tcInt, 'cUF');
-               FcMsg     := Leitor.rCampo(tcInt, 'cMsg');
-               FxMsg     := Leitor.rCampo(tcStr, 'xMsg');
+               FcMsg     := FcStat;
+               FxMsg     := FxMotivo;
 
       i := 0;
       while (FcStat = 104) and (Leitor.rExtrai(1, 'protCTe', '', i + 1) <> '') do

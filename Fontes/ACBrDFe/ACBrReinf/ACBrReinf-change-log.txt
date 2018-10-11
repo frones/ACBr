@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2018
+-- pcnReinfR1070 -- 
+[*] Compatibilização com a versão 1.4.0
+   Por: Luis Lambranho
+
 25/09/2018
 -- pcnConversaoReinf -- 
 [+] Acrescentado o enumerador da versão: v1_04_00.

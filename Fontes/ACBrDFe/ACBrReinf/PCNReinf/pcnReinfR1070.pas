@@ -368,7 +368,11 @@ begin
 
   Gerador.wCampo(tcStr, '', 'ufVara',   2, 2, 1, FinfoProcesso.IdeProcesso.DadosProcJud.UfVara);
   Gerador.wCampo(tcInt, '', 'codMunic', 7, 7, 1, FinfoProcesso.IdeProcesso.DadosProcJud.codMunic);
-  Gerador.wCampo(tcStr, '', 'idVara',   2, 2, 1, Poem_Zeros(FinfoProcesso.IdeProcesso.DadosProcJud.idVara, 2));
+
+  if Self.VersaoDF >= v1_04_00 then
+    Gerador.wCampo(tcStr, '', 'idVara',   4, 4, 1, Poem_Zeros(FinfoProcesso.IdeProcesso.DadosProcJud.idVara, 4))
+  else
+    Gerador.wCampo(tcStr, '', 'idVara',   2, 2, 1, Poem_Zeros(FinfoProcesso.IdeProcesso.DadosProcJud.idVara, 2));
 
   Gerador.wGrupo('/dadosProcJud');
 end;

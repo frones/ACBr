@@ -821,7 +821,9 @@ begin
     if FCabecalhoStr then
       CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
-    CabMsg := StringReplace(CabMsg, '%NameSpace%', NameSpace  , [rfReplaceAll]);
+    CabMsg := StringReplace(CabMsg, '%NameSpace%', NameSpace, [rfReplaceAll]);
+    CabMsg := StringReplace(CabMsg, '%VersaoAtrib%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoAtrib, [rfReplaceAll]);
+    CabMsg := StringReplace(CabMsg, '%VersaoDados%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados, [rfReplaceAll]);
 
     DadosMsg := FPDadosMsg;
     if FDadosStr then

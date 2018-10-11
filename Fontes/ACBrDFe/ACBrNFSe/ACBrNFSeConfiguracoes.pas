@@ -95,6 +95,7 @@ type
     NameSpace: String;
     CabecalhoStr: Boolean;
     DadosStr: Boolean;
+    VersaoAtrib: String;
   end;
 
  TConfigSchemas = record
@@ -560,6 +561,7 @@ begin
   // Configuração especifica da versão dos dados para cidades do mesmo provedor,
   // mas com versões diferentes.
   FConfigXML.VersaoDados := FPIniParams.ReadString(CodIBGE, 'VersaoDados', '');
+  FConfigXML.VersaoAtrib := FPIniParams.ReadString(CodIBGE, 'VersaoAtrib', '');
 
   FPIniParams.Free;
 
@@ -622,6 +624,9 @@ begin
   // tenha uma versão especifica.
   if FConfigXML.VersaoDados = '' then
     FConfigXML.VersaoDados := FPIniParams.ReadString('XML', 'VersaoDados', '');
+
+  if FConfigXML.VersaoAtrib = '' then
+    FConfigXML.VersaoAtrib := FPIniParams.ReadString('XML', 'VersaoAtrib', '');
 
   FConfigXML.VersaoXML := FPIniParams.ReadString('XML', 'VersaoXML', '');
   FConfigXML.NameSpace := Trim(FPIniParams.ReadString('XML', 'NameSpace', ''));

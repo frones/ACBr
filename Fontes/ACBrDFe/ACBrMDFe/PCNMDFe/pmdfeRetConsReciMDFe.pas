@@ -156,8 +156,8 @@ begin
       FcStat    := Leitor.rCampo(tcInt, 'cStat');
       FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
       FcUF      := Leitor.rCampo(tcInt, 'cUF');
-      FcMsg     := Leitor.rCampo(tcInt, 'cMsg');
-      FxMsg     := Leitor.rCampo(tcStr, 'xMsg');
+      FcMsg     := FcStat;
+      FxMsg     := FxMotivo;
 
       i := 0;
       while (FcStat = 104) and (Leitor.rExtrai(1, 'protMDFe', '', i + 1) <> '') do

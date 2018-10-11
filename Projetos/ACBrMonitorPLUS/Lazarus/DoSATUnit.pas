@@ -1043,7 +1043,7 @@ end;
 
 { TMetodoAssociarAssinatura }
 
-{ Params: 0 - CNPJ - Uma String com CNPJ para ativação
+{ Params: 0 - CNPJs - Uma String contendo o CNPJ da Sw.House + CNPJ do Emissor para ativação
           1 - Assinatura - Uma String com a assinatura
 }
 procedure TMetodoAssociarAssinatura.Executar;
@@ -1077,7 +1077,6 @@ begin
 
     fpCmd.Resposta := ACBrSAT.AssociarAssinatura(cCNPJSwHouse + cCNPJEmissor, cAssinatura);
   end;
-
 end;
 
 { TMetodoDesinicializar }

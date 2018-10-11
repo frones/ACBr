@@ -2487,11 +2487,17 @@ begin
   cCOO := fpCmd.Params(0);
   cCodFormaPagto := fpCmd.Params(1);
   cCodComprovanteNaoFiscal := fpCmd.Params(2);
-  nValor :=  fpCmd.Params(3) ;
+  nValor := Trim(fpCmd.Params(3)) ;
+
+  if EstaVazio(nValor)  then  // Não tem 4 parâmetros ?
+  begin
+    nValor := Trim(fpCmd.Params(2));
+    cCodComprovanteNaoFiscal := '';
+  end;
 
   with TACBrObjetoECF(fpObjetoDono) do
   begin
-    if (StringToFloatDef(nValor,-99) <> -99) then { Param 4 é valor ? }
+    if (cCodComprovanteNaoFiscal <> '') then
        ACBrECF.AbreCupomVinculado( cCOO,                 { COO }
                            cCodFormaPagto,               { CodFormaPagto }
                            cCodComprovanteNaoFiscal,     { CodComprovanteNaoFiscal }

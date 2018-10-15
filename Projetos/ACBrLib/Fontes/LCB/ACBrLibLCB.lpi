@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="31"/>
+      <BuildNr Value="32"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLCB - Biblioteca para Leitor de Código de Barras" InternalName="ACBrLibLCB" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="LCB" ProductVersion="0.0.1.30"/>
     </VersionInfo>

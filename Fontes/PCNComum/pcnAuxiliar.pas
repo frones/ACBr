@@ -323,8 +323,6 @@ begin
     if result then
     begin
       case StrToInt(copy(aChave, 23, 3)) of
-        // serie reservada para DFe eCPF emitida pelo Site SEFAZ
-        890..899: result := ValidarCPF(copy(aChave, 10, 11));
         // serie reservada para DFe eCPF emitida por aplicativo da Empresa Emitente
         920..969: result := ValidarCPF(copy(aChave, 10, 11));
       else

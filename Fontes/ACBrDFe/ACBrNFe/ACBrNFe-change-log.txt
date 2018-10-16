@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2018
+-- ACBrNFeWebServices --
+[*] Ao consultar agora é checado também o valor do campo cStat que se encontra dentro
+    do grupo infProt.
+  Por: Italo Jurisato Junior
+
 08/10/2018
 -- pcnNFeW --
 [*] As tags: pGLP(id:LA03a), pGNn(id:LA03b), pGNi(id:LA03c) e vPart (id:LA03d)

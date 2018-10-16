@@ -2355,6 +2355,11 @@ begin
              (not FPConfiguracoesNFe.Geral.AtualizarXMLCancelado) then
             Atualiza := False;
 
+          // No retorno pode constar que a nota esta cancelada, mas traz o grupo
+          // <protNFe> com as informações da sua autorização
+          if not Atualiza and TACBrNFe(FPDFeOwner).cstatProcessado(NFeRetorno.protNFe.cStat) then
+            Atualiza := True;
+
           if (FPConfiguracoesNFe.Geral.ValidarDigest) and
             (NFeRetorno.protNFe.digVal <> '') and (NFe.signature.DigestValue <> '') and
             (UpperCase(NFe.signature.DigestValue) <> UpperCase(NFeRetorno.protNFe.digVal)) then
@@ -2368,21 +2373,33 @@ begin
 
           if Atualiza then
           begin
-            NFe.procNFe.tpAmb := NFeRetorno.tpAmb;
-            NFe.procNFe.verAplic := NFeRetorno.verAplic;
-            NFe.procNFe.chNFe := NFeRetorno.chNfe;
-            NFe.procNFe.dhRecbto := FDhRecbto;
-            NFe.procNFe.nProt := FProtocolo;
-            NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
-            NFe.procNFe.cStat := NFeRetorno.cStat;
-            NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
-            NFe.procNFe.Versao := NFeRetorno.protNFe.Versao;
-
             if TACBrNFe(FPDFeOwner).CstatCancelada(NFeRetorno.CStat) and
                FPConfiguracoesNFe.Geral.AtualizarXMLCancelado then
-              GerarXML
+            begin
+              NFe.procNFe.tpAmb := NFeRetorno.tpAmb;
+              NFe.procNFe.verAplic := NFeRetorno.verAplic;
+              NFe.procNFe.chNFe := NFeRetorno.chNfe;
+              NFe.procNFe.dhRecbto := FDhRecbto;
+              NFe.procNFe.nProt := FProtocolo;
+              NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
+              NFe.procNFe.cStat := NFeRetorno.cStat;
+              NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
+              NFe.procNFe.Versao := NFeRetorno.protNFe.Versao;
+
+              GerarXML;
+            end
             else
             begin
+              NFe.procNFe.tpAmb := NFeRetorno.protNFe.tpAmb;
+              NFe.procNFe.verAplic := NFeRetorno.protNFe.verAplic;
+              NFe.procNFe.chNFe := NFeRetorno.protNFe.chNfe;
+              NFe.procNFe.dhRecbto := NFeRetorno.protNFe.dhRecbto;
+              NFe.procNFe.nProt := NFeRetorno.protNFe.nProt;
+              NFe.procNFe.digVal := NFeRetorno.protNFe.digVal;
+              NFe.procNFe.cStat := NFeRetorno.protNFe.cStat;
+              NFe.procNFe.xMotivo := NFeRetorno.protNFe.xMotivo;
+              NFe.procNFe.Versao := NFeRetorno.protNFe.Versao;
+
               // O código abaixo é bem mais rápido que "GerarXML" (acima)...
               AProcNFe := TProcNFe.Create;
               try

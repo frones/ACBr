@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2018
+-- pcnAuxiliar --
+[*] Alterado a função ValidarChave para que este leve em consideração a série,
+    pois dependendo da série o emitente pode ser CNPJ (Pessoa Juridica) ou
+    CPF (Pessoa Fisica). 
+   Por: Maria das Graças
+
 12/09/2018
 -- pcnConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/46359-ajuste-na-descri%C3%A7%C3%A3o-do-cst60-no-dacte/

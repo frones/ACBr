@@ -313,12 +313,25 @@ begin
     i := 0;
     if GerarDigito(i, copy(aChave, 1, 43)) then
       result := i = StrToInt(aChave[length(aChave)]);
+
     if result then
       result := ValidarCodigoUF(StrToInt(copy(aChave, 1, 2)));
+
     if result then
       result := ValidarAAMM(copy(aChave, 3, 4));
+
     if result then
-      result := ValidarCNPJ(copy(aChave, 7, 14));
+    begin
+      case StrToInt(copy(aChave, 23, 3)) of
+        // serie reservada para DFe eCPF emitida pelo Site SEFAZ
+        890..899: result := ValidarCPF(copy(aChave, 10, 11));
+        // serie reservada para DFe eCPF emitida por aplicativo da Empresa Emitente
+        920..969: result := ValidarCPF(copy(aChave, 10, 11));
+      else
+        // serie (001-889) reservada para DFe eCNPJ
+        result := ValidarCNPJ(copy(aChave, 7, 14));
+      end;
+    end;
   except
     result := false;
   end;

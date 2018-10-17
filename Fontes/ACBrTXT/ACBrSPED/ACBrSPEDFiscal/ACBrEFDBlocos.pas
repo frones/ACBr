@@ -1188,7 +1188,7 @@ function StrToOrigemProcesso(const AValue: string): TACBrOrigemProcesso;
 begin
   if AValue = '0' then
     Result := opSefaz
-  if AValue = '1' then
+  else if AValue = '1' then
     Result := opJusticaFederal
   else if AValue = '2' then
     Result := opJusticaEstadual
@@ -1204,7 +1204,7 @@ function OrigemProcessoToStr(AValue: TACBrOrigemProcesso): string;
 begin
   if (AValue = opSefaz) then
     Result := '0'
-  if (AValue = opJusticaFederal) then
+  else if (AValue = opJusticaFederal) then
     Result := '1'
   else if (AValue = opJusticaEstadual) then
     Result := '2'

@@ -1519,7 +1519,7 @@ type
     FNR_SAT               : String;
     FCHV_CFE              : String;
     FVL_DESC              : Variant;
-    FVL_MESC              : Variant;
+    FVL_MERC              : Variant;
     FVL_OUT_DA            : Variant;
     FVL_PIS_ST            : Variant;
     FVL_ICMS              : Variant;
@@ -1543,7 +1543,7 @@ type
     property NR_SAT       : String      read FNR_SAT       write FNR_SAT;
     property CHV_CFE      : String      read FCHV_CFE      write FCHV_CFE;
     property VL_DESC      : Variant     read FVL_DESC      write FVL_DESC;
-    property VL_MESC      : Variant     read FVL_MESC      write FVL_MESC;
+    property VL_MERC      : Variant     read FVL_MERC      write FVL_MERC;
     property VL_OUT_DA    : Variant     read FVL_OUT_DA    write FVL_OUT_DA;
     property VL_ICMS      : Variant     read FVL_ICMS      write FVL_ICMS;
     property VL_PIS_ST    : Variant     read FVL_PIS_ST    write FVL_PIS_ST;

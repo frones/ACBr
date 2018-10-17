@@ -274,17 +274,7 @@ begin
      begin
         with RegG110.RegistroG125.Items[intFor] do
         begin
-           case TIPO_MOV of
-            mbcSI: strTIPO_MOV := 'SI';
-            mbcIM: strTIPO_MOV := 'IM';
-            mbcIA: strTIPO_MOV := 'IA';
-            mbcCI: strTIPO_MOV := 'CI';
-            mbcMC: strTIPO_MOV := 'MC';
-            mbcBA: strTIPO_MOV := 'BA';
-            mbcAT: strTIPO_MOV := 'AT';
-            mbcPE: strTIPO_MOV := 'PE';
-            mbcOT: strTIPO_MOV := 'OT';
-           end;
+           strTIPO_MOV := MovimentoBensToStr(TIPO_MOV);
            if FBloco_0.Registro0000.COD_VER = vlVersao102 then
            begin
               Add( LFill('G125') +

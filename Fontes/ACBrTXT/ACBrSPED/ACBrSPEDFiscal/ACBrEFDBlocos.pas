@@ -226,13 +226,14 @@ type
   TACBrTipoReceita = TACBrIndRec;
 
   /// Indicador do tipo do veículo transportador
-  TACBrTipoVeiculo = (tvEmbarcacao,
-                      tvEmpuradorRebocador
+  TACBrTipoVeiculo = (tvEmbarcacao,         // 0 - Embarcação
+                      tvEmpuradorRebocador  // 1 - Empurrador/rebocador
                       );
   /// Indicador do tipo da navegação
-  TACBrTipoNavegacao = (tnInterior,
-                        tnCabotagem
+  TACBrTipoNavegacao = (tnInterior,         // 0 - Interior
+                        tnCabotagem         // 1 - Cabotagem
                         );
+
   /// Situação do Documento
   TACBrCodSit = (sdRegular,                 // 00 - Documento regular
                  sdExtempRegular,           // 01 - Escrituração extemporânea de documento regular
@@ -697,7 +698,6 @@ type
   function IndReceitaToStr(AValue: TACBrIndReceita): string;
   function StrToIndReceita(const AValue: string): TACBrIndReceita;
 
-  // Rodrigo Buschmann | Digibyte - 04/07/2017
   function CodFinToStr(AValue: TACBrCodFin): string;
   function StrToCodFin(const AValue: string): TACBrCodFin;
   function IndPerfilToStr(AValue: TACBrIndPerfil): string;
@@ -739,6 +739,23 @@ type
 
   function IndTipoTituloToStr(AValue: TACBrTipoTitulo): string;
   function StrToIndTipoTitulo(AValue: string): TACBrTipoTitulo;
+
+  function MovimentoDIFALToStr(AValue: TACBrMovimentoDIFAL): string;
+  function StrToMovimentoDIFAL(const AValue: string): TACBrMovimentoDIFAL;
+  function ClasseConsumoToStr(const AValue: TACBrClasseConsumo): string;
+  function StrToClasseConsumo(const AValue: string): TACBrClasseConsumo;
+  function DispositivoToStr(const AValue: TACBrDispositivo): string;
+  function StrToDispositivo(const AValue: string): TACBrDispositivo;
+  function TipoTransporteToStr(const AValue: TACBrTipoTransporte): string;
+  function StrToTipoTransporte(const AValue: string): TACBrTipoTransporte;
+  function TipoFreteRedespachoToStr(const AValue: TACBrTipoFreteRedespacho): string;
+  function StrToTipoFreteRedespacho(const AValue: string): TACBrTipoFreteRedespacho;
+  function TipoTarifaToStr(const AValue: TACBrTipoTarifa): string;
+  function StrToTipoTarifa(const AValue: string): TACBrTipoTarifa;
+  function ServicoPrestadoToStr(const AValue: TACBrServicoPrestado): string;
+  function StrToServicoPrestado(const AValue: string): TACBrServicoPrestado;
+  function StrMovimentoBens(const AValue: string): TACBrMovimentoBens;
+  function MovimentoBensToStr(const AValue: TACBrMovimentoBens): string;
 
 implementation
 
@@ -1169,8 +1186,12 @@ end;
 
 function StrToOrigemProcesso(const AValue: string): TACBrOrigemProcesso;
 begin
+  if AValue = '0' then
+    Result := opSefaz
   if AValue = '1' then
     Result := opJusticaFederal
+  else if AValue = '2' then
+    Result := opJusticaEstadual
   else if AValue = '3' then
     Result := opSecexRFB
   else if AValue = '9' then
@@ -1181,8 +1202,12 @@ end;
 
 function OrigemProcessoToStr(AValue: TACBrOrigemProcesso): string;
 begin
+  if (AValue = opSefaz) then
+    Result := '0'
   if (AValue = opJusticaFederal) then
     Result := '1'
+  else if (AValue = opJusticaEstadual) then
+    Result := '2'
   else if (AValue = opSecexRFB) then
     Result := '3'
   else if (AValue = opOutros) then
@@ -1385,6 +1410,262 @@ begin
      else  if AValue = '99' then
             Result:= tcOutros
      else raise Exception.Create(format('Valor informado [%s] deve estar (00,01,02,03,99)',[AValue]));
+end;
+
+function MovimentoDIFALToStr(AValue: TACBrMovimentoDIFAL): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToMovimentoDIFAL(const AValue: string): TACBrMovimentoDIFAL;
+begin
+   Result := TACBrMovimentoDIFAL( StrToIntDef( AValue, 0) );
+end;
+
+function ClasseConsumoToStr(const AValue: TACBrClasseConsumo): string;
+begin
+  case AValue of
+        ccComercial:
+           Result:= '01';
+        ccConsumoProprio:
+           Result:= '02';
+        ccIluminacaoPublica:
+           Result:= '03';
+        ccIndustrial:
+           Result:= '04';
+        ccPoderPublico:
+           Result:= '05';
+        ccResidencial:
+           Result:= '06';
+        ccRural:
+           Result:= '07';
+        ccServicoPublico:
+           Result:= '08';
+        else
+           Result:= EmptyStr;
+     end;
+end;
+
+function StrToClasseConsumo(const AValue: string): TACBrClasseConsumo;
+begin
+   if AValue = '01' then
+      Result := ccComercial
+   else
+   if AValue = '02' then
+      Result := ccConsumoProprio
+   else
+   if AValue = '03' then
+      Result := ccIluminacaoPublica
+   else
+   if AValue = '04' then
+      Result := ccIndustrial
+   else
+   if AValue = '05' then
+      Result := ccPoderPublico
+   else
+   if AValue = '06' then
+      Result := ccResidencial
+   else
+   if AValue = '07' then
+      Result := ccRural
+   else
+   if AValue = '08' then
+      Result := ccServicoPublico
+   else
+     raise EACBrSPEDFiscalException.CreateFmt
+       ('Código de classe de consumo de energia elétrica "%s" não é um valor válido.', [AValue]);
+ end;
+
+function DispositivoToStr(const AValue: TACBrDispositivo): string;
+begin
+  case AValue of
+        cdaFormSeguranca:
+           Result:= '00';
+        cdaFSDA:
+           Result:= '01';
+        cdaNFe:
+           Result:= '02';
+        cdaFormContinuo:
+           Result:= '03';
+        cdaBlocos:
+           Result:= '04';
+        cdaJogosSoltos:
+           Result:= '05';
+        else
+           Result:= EmptyStr;
+     end;
+end;
+
+function StrToDispositivo (const AValue: string): TACBrDispositivo;
+begin
+   if AValue = '00' then
+      Result := cdaFormSeguranca
+   else
+   if AValue = '01' then
+      Result := cdaFSDA
+   else
+   if AValue = '02' then
+      Result := cdaNFe
+   else
+   if AValue = '03' then
+      Result := cdaFormContinuo
+   else
+   if AValue = '04' then
+      Result := cdaBlocos
+   else
+   if AValue = '05' then
+      Result := cdaJogosSoltos
+   else
+     raise EACBrSPEDFiscalException.CreateFmt('Valor informado [%s] deve estar entre (01,02,03,04 e 05)', [AValue]);
+ end;
+
+function TipoTransporteToStr(const AValue: TACBrTipoTransporte): string;
+begin
+  case AValue of
+        ttRodoviario:
+           Result:= '0';
+        ttFerroviario:
+           Result:= '1';
+        ttRodoFerroviario:
+           Result:= '2';
+        ttAquaviario:
+           Result:= '3';
+        ttDutoviario:
+           Result:= '4';
+        ttAereo:
+           Result:= '5';
+        ttOutros:
+           Result:= '9';
+        else
+           Result:= EmptyStr;
+     end;
+end;
+
+function StrToTipoTransporte(const AValue: string): TACBrTipoTransporte;
+begin
+   if AValue = '0' then
+      Result := ttRodoviario
+   else
+   if AValue = '1' then
+      Result := ttFerroviario
+   else
+   if AValue = '2' then
+      Result := ttRodoFerroviario
+   else
+   if AValue = '3' then
+      Result := ttAquaviario
+   else
+   if AValue = '4' then
+      Result := ttDutoviario
+   else
+   if AValue = '5' then
+      Result := ttAereo
+   else
+   if AValue = '9' then
+      Result := ttOutros
+   else
+     raise EACBrSPEDFiscalException.CreateFmt('Valor informado [%s] deve estar entre (0,1,2,3,4,5 e 9)', [AValue]);
+end;
+
+function TipoFreteRedespachoToStr(const AValue: TACBrTipoFreteRedespacho): string;
+begin
+  if AValue = frOutros then
+    Result := '9'
+  else
+  if AValue = frNenhum then
+    Result := EmptyStr
+  else
+    Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToTipoFreteRedespacho(const AValue: string): TACBrTipoFreteRedespacho;
+begin
+  if AValue = '9' then
+    Result := frOutros
+  else
+  if AValue = EmptyStr then
+    Result := frNenhum
+  else
+    Result := TACBrTipoFreteRedespacho( StrToIntDef( AValue, 0) );
+end;
+
+function TipoTarifaToStr(const AValue: TACBrTipoTarifa): string;
+begin
+  if AValue = tipOutra then
+    Result := '9'
+  else
+    Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToTipoTarifa(const AValue: string): TACBrTipoTarifa;
+begin
+   if AValue = '9' then
+      Result := tipOutra
+   else
+      Result := TACBrTipoTarifa( StrToIntDef( AValue, 0) );
+end;
+
+function ServicoPrestadoToStr(const AValue: TACBrServicoPrestado): string;
+begin
+  if AValue = spOutros then
+    Result := '9'
+  else
+    Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToServicoPrestado(const AValue: string): TACBrServicoPrestado;
+begin
+   if AValue = '9' then
+      Result := spOutros
+   else
+      Result := TACBrServicoPrestado( StrToIntDef( AValue, 0) );
+end;
+
+function StrMovimentoBens(const AValue: string): TACBrMovimentoBens;
+begin
+   if AValue = 'SI' then
+      Result := mbcSI
+   else
+   if AValue = 'IM' then
+      Result := mbcIM
+   else
+   if AValue = 'IA' then
+      Result := mbcIA
+   else
+   if AValue = 'CI' then
+      Result := mbcCI
+   else
+   if AValue = 'MC' then
+      Result := mbcMC
+   else
+   if AValue = 'BA' then
+      Result := mbcBA
+   else
+   if AValue = 'AT' then
+      Result := mbcAT
+   else
+   if AValue = 'PE' then
+      Result := mbcPE
+   else
+   if AValue = 'OT' then
+      Result := mbcOT
+   else
+     raise EACBrSPEDFiscalException.CreateFmt('Movimento Bens "%s" não é um valor válido.', [AValue]);
+end;
+
+function MovimentoBensToStr(const AValue: TACBrMovimentoBens): string;
+begin
+  case AValue of
+    mbcSI: Result := 'SI';
+    mbcIM: Result := 'IM';
+    mbcIA: Result := 'IA';
+    mbcCI: Result := 'CI';
+    mbcMC: Result := 'MC';
+    mbcBA: Result := 'BA';
+    mbcAT: Result := 'AT';
+    mbcPE: Result := 'PE';
+    mbcOT: Result := 'OT';
+   end;
 end;
 
 end.

@@ -43,6 +43,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2018
+[-] DoACBrUnit
+Ajustes no método ACBr.setWebService
+
+15/10/2018
+[-] DoECFUnit
+Ajuste nos metodos CupomVinculado / AbrirCupomVinculado
+
+15/10/2018
+[*] DoACBrNFeUnit
+Melhorias performance no método "EnviarNFe"
+
 02/10/2018
 [*] ACBrMonitor
 Atualização Tela ref conf SSL

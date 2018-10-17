@@ -2429,14 +2429,25 @@ var
   cCodComprovanteNaoFiscal : String;
   nValor : String;
 begin
+  cCOO := fpCmd.Params(0);
+  cCodFormaPagto := fpCmd.Params(1);
+  cCodComprovanteNaoFiscal := fpCmd.Params(2);
+  nValor := Trim(fpCmd.Params(3)) ;
+
   with TACBrObjetoECF(fpObjetoDono) do
   begin
     Linhas := TStringList.Create ;
     try
       StringToMemo( cCOO, Linhas ); {Linha separadas por | (pipe)}
 
-      if StringToFloatDef(nValor,-99) <> -99 then { Param 4 é valor ? }
-         ACBrECF.CupomVinculado( cCOO,                          { COO }
+      if EstaVazio(nValor)  then  // Não tem 4 parâmetros ?
+      begin
+        nValor := Trim(fpCmd.Params(2));
+        cCodComprovanteNaoFiscal := '';
+      end;
+
+      if (cCodComprovanteNaoFiscal <> '') then
+         ACBrECF.CupomVinculado( cCOO,                  { COO }
                          cCodFormaPagto,                { CodFormaPagto }
                          cCodComprovanteNaoFiscal,      { CodComprovanteNaoFiscal }
                          StringToFloat( nValor ),       { Valor }

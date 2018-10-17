@@ -3298,6 +3298,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               'COM1'
               'COM2'
               'COM3'
+              'COM4'
+              'COM5'
+              'COM6'
             )
             OnChange = cbBALPortaChange
             TabOrder = 3
@@ -6155,9 +6158,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 842
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsWebServiceDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 2
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -9965,13 +9968,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsSat: TTabSheet
           Caption = 'SAT'
           ClientHeight = 327
-          ClientWidth = 847
+          ClientWidth = 842
           ImageIndex = 27
           object pgSAT: TPageControl
             Left = 0
             Height = 327
             Top = 0
-            Width = 847
+            Width = 842
             ActivePage = tsDadosSAT
             Align = alClient
             TabIndex = 0
@@ -9981,7 +9984,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpKeyword = 'ACBrMonitor/DadosdoSATCFe.htm'
               Caption = 'Dados do SAT CFe'
               ClientHeight = 297
-              ClientWidth = 839
+              ClientWidth = 834
               object Label113: TLabel
                 Left = 16
                 Height = 17
@@ -10022,7 +10025,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 217
                 Height = 25
                 Top = 24
-                Width = 584
+                Width = 579
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 1
               end
@@ -10137,7 +10140,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 385
                 Height = 25
                 Top = 72
-                Width = 416
+                Width = 411
                 Anchors = [akTop, akLeft, akRight]
                 ItemHeight = 17
                 Style = csDropDownList
@@ -10183,12 +10186,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 385
                 Height = 25
                 Top = 123
-                Width = 390
+                Width = 385
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 10
               end
               object SbArqLog2: TSpeedButton
-                Left = 777
+                Left = 772
                 Height = 22
                 Top = 126
                 Width = 24
@@ -10284,7 +10287,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpKeyword = 'ACBrMonitor/DadosEmitente.htm'
               Caption = 'Dados Emitente'
               ClientHeight = 297
-              ClientWidth = 848
+              ClientWidth = 834
               object Label134: TLabel
                 Left = 12
                 Height = 17
@@ -10390,7 +10393,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpKeyword = 'ACBrMonitor/DadosSwHouse.htm'
               Caption = 'Dados Sw.House'
               ClientHeight = 297
-              ClientWidth = 848
+              ClientWidth = 834
               object Label171: TLabel
                 Left = 10
                 Height = 17
@@ -10403,7 +10406,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 10
                 Height = 25
                 Top = 31
-                Width = 538
+                Width = 524
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 0
               end
@@ -10419,7 +10422,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 10
                 Height = 25
                 Top = 89
-                Width = 803
+                Width = 789
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 1
               end
@@ -10438,7 +10441,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpKeyword = 'ACBrMonitor/Rede.htm'
               Caption = 'Rede'
               ClientHeight = 297
-              ClientWidth = 848
+              ClientWidth = 834
               object gbPPPoE: TGroupBox
                 Left = 154
                 Height = 105
@@ -10792,7 +10795,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpKeyword = 'ACBrMonitor/Impressao1.htm'
               Caption = 'Impressao'
               ClientHeight = 297
-              ClientWidth = 839
+              ClientWidth = 834
               object GroupBox7: TGroupBox
                 Left = 0
                 Height = 216
@@ -13747,10 +13750,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object ACBrNFe1: TACBrNFe
     MAIL = ACBrMail1
     OnGerarLog = ACBrNFe1GerarLog
-    Configuracoes.Geral.SSLLib = libWinCrypt
-    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
-    Configuracoes.Geral.SSLHttpLib = httpWinHttp
-    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
     Configuracoes.Geral.VersaoDF = ve400
@@ -14899,10 +14902,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object ACBrCTe1: TACBrCTe
     MAIL = ACBrMail1
     OnGerarLog = ACBrNFe1GerarLog
-    Configuracoes.Geral.SSLLib = libWinCrypt
-    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
-    Configuracoes.Geral.SSLHttpLib = httpWinHttp
-    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve300
     Configuracoes.Arquivos.OrdenacaoPath = <>
@@ -14936,10 +14939,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object ACBrMDFe1: TACBrMDFe
     MAIL = ACBrMail1
     OnGerarLog = ACBrNFe1GerarLog
-    Configuracoes.Geral.SSLLib = libWinCrypt
-    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
-    Configuracoes.Geral.SSLHttpLib = httpWinHttp
-    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
@@ -14974,10 +14977,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrBlocoX1: TACBrBlocoX
     Configuracoes.VersaoER = erv0204
-    Configuracoes.Geral.SSLLib = libWinCrypt
-    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
-    Configuracoes.Geral.SSLHttpLib = httpWinHttp
-    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
@@ -14988,10 +14991,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object ACBrGNRE1: TACBrGNRE
     MAIL = ACBrMail1
     OnGerarLog = ACBrNFe1GerarLog
-    Configuracoes.Geral.SSLLib = libWinCrypt
-    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
-    Configuracoes.Geral.SSLHttpLib = httpWinHttp
-    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.Arquivos.SalvarTXT = True
@@ -15036,10 +15039,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 556
   end
   object ACBreSocial1: TACBreSocial
-    Configuracoes.Geral.SSLLib = libWinCrypt
-    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
-    Configuracoes.Geral.SSLHttpLib = httpWinHttp
-    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
@@ -15049,10 +15052,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 555
   end
   object ACBrReinf1: TACBrReinf
-    Configuracoes.Geral.SSLLib = libWinCrypt
-    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
-    Configuracoes.Geral.SSLHttpLib = httpWinHttp
-    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'

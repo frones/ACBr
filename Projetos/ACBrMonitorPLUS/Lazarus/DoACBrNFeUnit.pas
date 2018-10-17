@@ -2327,13 +2327,15 @@ end;
           3 - Imprime: 1 Para True. Default 0
           4 - Nome Impressora: String com Nome da Impressora
           5 - Sincrono: 1 Para Sincrono
+          6 - ValidarXML: Validar o XML
+          7 - GerarXML: Gerar Novamente o XML
 }
 procedure TMetodoEnviarNFe.Executar;
 var
   CargaDFe: TACBrCarregarNFe;
   APathorXML, AImpressora: String;
   ALote: Integer;
-  AAssina, AImprime, ASincrono: Boolean;
+  AAssina, AImprime, ASincrono, AGerarXML, AValidaXML: Boolean;
 begin
   APathorXML := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
@@ -2341,18 +2343,22 @@ begin
   AImprime := StrToBoolDef(fpCmd.Params(3), False);
   AImpressora := fpCmd.Params(4);
   ASincrono := StrToBoolDef(fpCmd.Params(5), False);
+  AValidaXML := StrToBoolDef(fpCmd.Params(6), False);
+  AGerarXML := StrToBoolDef(fpCmd.Params(7), False);
 
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
     ACBrNFe.NotasFiscais.Clear;
     CargaDFe := TACBrCarregarNFe.Create(ACBrNFe, APathorXML);
     try
-      ACBrNFe.NotasFiscais.GerarNFe;
+      if AGerarXML then
+        ACBrNFe.NotasFiscais.GerarNFe;
 
       if (AAssina) then
         ACBrNFe.NotasFiscais.Assinar;
 
-      ACBrNFe.NotasFiscais.Validar;
+      if (AValidaXML) then
+        ACBrNFe.NotasFiscais.Validar;
 
       if (ALote = 0) then
         ACBrNFe.WebServices.Enviar.Lote := '1'

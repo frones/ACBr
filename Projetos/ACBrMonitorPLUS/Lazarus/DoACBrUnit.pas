@@ -225,18 +225,18 @@ begin
 
         else if Cmd.Metodo = 'setwebservice' then
         begin
-          if Cmd.Params(1) <> '' then
+          if Cmd.Params(0) <> '' then
           begin
-            ACBrNFe1.Configuracoes.WebServices.UF  := Cmd.Params(1);
-            ACBrCTe1.Configuracoes.WebServices.UF  := Cmd.Params(1);
-            ACBrMDFe1.Configuracoes.WebServices.UF := Cmd.Params(1);
-            ACBrGNRE1.Configuracoes.WebServices.UF := Cmd.Params(1);
-            cbUF.Text := Cmd.Params(1);
+            ACBrNFe1.Configuracoes.WebServices.UF  := Cmd.Params(0);
+            ACBrCTe1.Configuracoes.WebServices.UF  := Cmd.Params(0);
+            ACBrMDFe1.Configuracoes.WebServices.UF := Cmd.Params(0);
+            ACBrGNRE1.Configuracoes.WebServices.UF := Cmd.Params(0);
+            cbUF.Text := Cmd.Params(0);
           end;
 
-          if Cmd.Params(2) <> '' then
+          if Cmd.Params(1) <> '' then
           begin
-            NumAmbiente := StrToIntDef(Cmd.Params(2), 2);
+            NumAmbiente := StrToIntDef(Cmd.Params(1), 2);
 
             if (NumAmbiente < 1) or (NumAmbiente > 2) then
               raise Exception.Create('Ambiente Inválido: ' + IntToStr(NumAmbiente));
@@ -245,12 +245,12 @@ begin
             ACBrCTe1.Configuracoes.WebServices.Ambiente  := TpcnTipoAmbiente(NumAmbiente);
             ACBrMDFe1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente(NumAmbiente);
             ACBrGNRE1.Configuracoes.WebServices.Ambiente := TpcnTipoAmbiente(NumAmbiente);
-            cbxAmbiente.ItemIndex                        := NumAmbiente-1;
+            rgTipoAmb.ItemIndex                          := NumAmbiente - 1;
           end;
           SalvarIni;
 
-          cmd.Resposta := Format('WebService configurado %s',[Cmd.Params(1)]);
-				end
+          cmd.Resposta := Format('WebService configurado %s',[Cmd.Params(0)]);
+	end
 
         else if Cmd.Metodo ='datahora' then
            Cmd.Resposta := FormatDateTime('dd/mm/yyyy hh:nn:ss', Now )

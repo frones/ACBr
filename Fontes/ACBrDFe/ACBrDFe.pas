@@ -464,7 +464,7 @@ begin
   if not FPIniParams.SectionExists(NomeSessao) then
     exit;
 
-  ChaveBase := NomeServico + '_';
+  ChaveBase := UpperCase(NomeServico + '_');
   Chave := ChaveBase + FloatToString(VersaoAtual,'.','0.00');
 
   // Achou com busca exata ? (mesma versao) //
@@ -479,7 +479,7 @@ begin
       FPIniParams.ReadSection(NomeSessao, SL);
       for I := 0 to SL.Count-1 do
       begin
-        K := SL[I];
+        K := UpperCase(SL[I]);
 
         if copy(K, 1, Length(ChaveBase)) = ChaveBase then
         begin

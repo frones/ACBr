@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2018
+-- ACBrSedex --
+[+] Adicionados novos tipos de contrato.
+    Contribuição: Gutierres Santana
+
 22/08/2018
 -- ACBrMail --
 [+] Adicionada a propriedade: "DeliveryConfirmation: boolean default False;"

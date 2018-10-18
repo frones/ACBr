@@ -56,7 +56,7 @@ type
     Tps85480AEROGRAMA, Tps10030CARTASIMPLES, Tps10014CARTAREGISTRADA,
     Tps16012CARTAOPOSTAL, Tps20010IMPRESSO, Tps14010MALADIRETA,
     Tps04014SEDEXVarejo, Tps40045SEDEXaCobrarVarejo, Tps40215SEDEX10Varejo,
-    Tps40290SEDEXHojeVarejo, Tps04510PACVarejo);
+    Tps40290SEDEXHojeVarejo, Tps04510PACVarejo, Tps04669PACContrato, Tps04162SEDEXContrato);
 
   TACBrTpFormato = (TpfCaixaPacote, TpfRoloPrisma, TpfEnvelope);
 
@@ -291,6 +291,10 @@ begin
       TpServico := '40290';
     Tps04510PACVarejo :
       TpServico := '04510';
+    Tps04669PACContrato:
+      TpServico := '04669';
+    Tps04162SEDEXContrato:
+      TpServico := '04162'	  
     else
       raise EACBrSedexException.CreateACBrStr('Tipo de Serviço Inválido');
   end;

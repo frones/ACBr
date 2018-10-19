@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2018
+-- pnfsNFSe / pnfsNFSeW_ABRASFv1 --
+[*] O provedor Betha voltou a traz e removeu a tag <TaxaTurismo>
+   Por: Italo Jurisato Junior
+
 17/10/2018
 -- ACBrNFSeDANFSeFR --
 [*] https://www.projetoacbr.com.br/forum/topic/47091-altera%C3%A7%C3%A3o-para-trazer-al%C3%ADquota-correta-na-impress%C3%A3o-webiss/

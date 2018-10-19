@@ -69,7 +69,6 @@ type
  TDadosTransportadora               = class;
  TDespesaCollectionItem             = class;
  TDespesaCollection                 = class;
- TTaxaDiversa                       = class;
 
  TNFSe                              = class;
 
@@ -720,15 +719,6 @@ type
     property vDesp: Currency read FvDesp write FvDesp;
   end;
 
-  TTaxaDiversa = class(TPersistent)
-  private
-    FValor: Currency;
-    FCodigo: String;
-  published
-    property Codigo: String read FCodigo write FCodigo;
-    property Valor: Currency read FValor write FValor;
-  end;
-
  TNFSe = class(TPersistent)
   private
     // RPS e NFSe
@@ -770,7 +760,6 @@ type
     // RPS e NFSe
     FSignature: TSignature;
     FDespesa: TDespesaCollection;
-    FTaxaDiversa: TTaxaDiversa;
 
     FNumeroLote: String;
     FProtocolo: String;
@@ -866,7 +855,6 @@ type
     property Canhoto: TnfseCanhoto read FCanhoto Write FCanhoto;
     property Transportadora: TDadosTransportadora read FTransportadora write FTransportadora;
     property Despesa: TDespesaCollection read FDespesa write FDespesa;
-    property TaxaDiversa: TTaxaDiversa read FTaxaDiversa write FTaxaDiversa;
     // propriedade para provedor Governa
     property TipoRecolhimento: String read FTipoRecolhimento write FTipoRecolhimento;
 
@@ -1104,8 +1092,6 @@ begin
 
  Femail                        := TemailCollection.Create(Self);
  FDespesa                      := TDespesaCollection.Create(Self);
-
- FTaxaDiversa                  := TTaxaDiversa.Create;
 end;
 
 destructor TNFSe.Destroy;
@@ -1129,7 +1115,6 @@ begin
  FNfseCancelamento.Free;
  Femail.Free;
  FDespesa.Free;
- FTaxaDiversa.Free;
 
  FTransportadora.Free;
 

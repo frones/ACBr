@@ -65,7 +65,6 @@ type
 
     procedure GerarConstrucaoCivil;
     procedure GerarCondicaoPagamento;
-    procedure GerarTaxaDiversa;
 
     procedure GerarXML_ABRASF_V1;
 
@@ -481,17 +480,6 @@ begin
   Gerador.wGrupoNFSe('/CondicaoPagamento');
 end;
 
-procedure TNFSeW_ABRASFv1.GerarTaxaDiversa;
-begin
-  if (Trim(NFSe.TaxaDiversa.Codigo) <> '') and (NFSe.TaxaDiversa.Valor > 0) then
-    begin
-      Gerador.wGrupoNFSe('TaxaDiversa');
-      Gerador.wCampoNFSe(tcStr, '#56', 'Codigo', 01, 01, 1, NFSe.TaxaDiversa.Codigo, '');
-      Gerador.wCampoNFSe(tcDe2, '#57', 'Valor', 01, 18, 1, NFSe.TaxaDiversa.Valor, '');
-      Gerador.wGrupoNFSe('/TaxaDiversa');
-    end;
-end;
-
 procedure TNFSeW_ABRASFv1.GerarXML_ABRASF_V1;
 begin
   if (FIdentificador = '') then
@@ -533,10 +521,7 @@ begin
   GerarIntermediarioServico;
   GerarConstrucaoCivil;
   if (FProvedor = proBetha) then
-    begin
-      GerarCondicaoPagamento;
-      GerarTaxaDiversa;
-    end;
+    GerarCondicaoPagamento;
 
   Gerador.wGrupoNFSe('/InfRps');
 end;

@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2018
+-- pcnReinfR2099 -- 
+[*] https://www.projetoacbr.com.br/forum/topic/47114-acbrreinf-ajuste-campo-evtpgtos/
+   Por: Édipo Rauber
+
 11/10/2018
 -- pcnReinfR1070 -- 
 [*] Compatibilização com a versão 1.4.0

@@ -231,7 +231,8 @@ begin
   Gerador.wCampo(tcStr, '', 'evtAssDespRep', 1, 1, 1, SimNaoToStr(FinfoFech.evtAssDespRep));
   Gerador.wCampo(tcStr, '', 'evtComProd',    1, 1, 1, SimNaoToStr(FinfoFech.evtComProd));
   Gerador.wCampo(tcStr, '', 'evtCPRB',       1, 1, 1, SimNaoToStr(FinfoFech.evtCPRB));
-  Gerador.wCampo(tcStr, '', 'evtPgtos',      1, 1, 1, SimNaoToStr(FinfoFech.evtPgtos));
+  if (FIdeEvento.perApur <= '2018-10') then
+    Gerador.wCampo(tcStr, '', 'evtPgtos',      1, 1, 1, SimNaoToStr(FinfoFech.evtPgtos));
   Gerador.wCampo(tcStr, '', 'compSemMovto',  1, 7, 0, FinfoFech.compSemMovto);
 
   Gerador.wGrupo('/infoFech');

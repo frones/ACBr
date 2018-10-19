@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2018
+-- ACBrMDFeManifestos --
+[*] Ajuste na leitura do arquivo .ini (sessão infANTT).
+  por: Italo Jurisato Junior
+
 01/10/2018
 -- pmdfeMDFeW --
 [*] A tag <capKG> estava como obrigatória sendo que é opcional no veicTracao.

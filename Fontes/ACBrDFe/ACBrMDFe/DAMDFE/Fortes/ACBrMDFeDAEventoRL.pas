@@ -100,7 +100,7 @@ type
 implementation
 
 uses
-  MaskUtils, ACBrUtil;
+  MaskUtils, ACBrUtil, ACBrMDFeDAMDFeRLClass;
 
 {$ifdef FPC}
  {$R *.lfm}
@@ -137,6 +137,7 @@ begin
       FMargemDireita := AMargemDireita;
       FImpressora := AImpressora;
 
+      RLMDFeEvento.ShowProgress := TACBrMDFeDAMDFeRL(AOwner).MostrarStatus;
 
       if AMDFe <> nil then
         FMDFe := AMDFe;
@@ -188,6 +189,10 @@ begin
       if AMDFe <> nil then
         FMDFe := AMDFe;
 
+      RLMDFeEvento.ShowProgress := TACBrMDFeDAMDFeRL(AOwner).MostrarStatus;
+      RLPDFFilter1.ShowProgress := TACBrMDFeDAMDFeRL(AOwner).MostrarStatus;
+      RLPDFFilter1.FileName := AFile;
+
       with RLPDFFilter1.DocumentInfo do
       begin
         Title :=
@@ -198,7 +203,9 @@ begin
               AEventoMDFe.InfEvento.CNPJCPF]));
       end;
 
-      RLMDFeEvento.SaveToFile(AFile);
+      RLMDFeEvento.Prepare;
+      RLPDFFilter1.FilterPages(RLMDFeEvento.Pages);
+//      RLMDFeEvento.SaveToFile(AFile);
     finally
       Free;
     end;

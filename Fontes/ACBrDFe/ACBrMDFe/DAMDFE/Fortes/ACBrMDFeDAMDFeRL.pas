@@ -117,7 +117,7 @@ type
 implementation
 
 uses
-  MaskUtils, ACBrUtil;
+  MaskUtils, ACBrUtil, ACBrMDFeDAMDFeRLClass;
 
 {$ifdef FPC}
  {$R *.lfm}
@@ -220,6 +220,10 @@ begin
       FMDFeCancelada := AMDFeCancelada;
       FMDFeEncerrado := AMDFeEncerrado;
 
+      RLMDFe.ShowProgress := TACBrMDFeDAMDFeRL(AOwner).MostrarStatus;;
+      RLPDFFilter1.ShowProgress := TACBrMDFeDAMDFeRL(AOwner).MostrarStatus;;
+      RLPDFFilter1.FileName := AFile;
+
       with RLPDFFilter1.DocumentInfo do
       begin
         Title := ACBrStr('DAMDFe - MDFe nº ') +
@@ -229,7 +233,9 @@ begin
           '; CNPJ: ' + FMDFe.emit.CNPJCPF;
       end;
 
-      RLMDFe.SaveToFile(AFile);
+      RLMDFe.Prepare;
+      RLPDFFilter1.FilterPages(RLMDFe.Pages);
+//      RLMDFe.SaveToFile(AFile);
     finally
       Free;
     end;

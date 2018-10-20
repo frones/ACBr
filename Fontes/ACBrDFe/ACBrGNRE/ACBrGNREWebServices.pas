@@ -97,7 +97,7 @@ type
     FGNRERetorno: TTretLote_GNRE;
     FcUF: Integer;
 
-    function GetLote: String;
+//    function GetLote: String;
     function GetRecibo: String;
   protected
     procedure DefinirURL; override;
@@ -106,7 +106,7 @@ type
     function TratarResposta: Boolean; override;
 
     function GerarMsgLog: String; override;
-    function GerarPrefixoArquivo: String; override;
+//    function GerarPrefixoArquivo: String; override;
   public
     constructor Create(AOwner: TACBrDFe; AGuias: TGuias);
       reintroduce; overload;
@@ -489,7 +489,7 @@ begin
                     IntToStr(FGNRERetorno.tempoEstimadoProc)]);
   {*)}
 end;
-
+{
 function TGNRERecepcao.GerarPrefixoArquivo: String;
 begin
   Result := numero;
@@ -499,7 +499,7 @@ function TGNRERecepcao.GetLote: String;
 begin
   Result := Trim(Numero);
 end;
-
+}
 function TGNRERecepcao.GetRecibo: String;
 begin
   Result := Trim(numero);

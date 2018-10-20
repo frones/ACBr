@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/10/2018
+-- ACBrGNREWebServices --
+[*] Removido os métodos TGNRERecepcao.GerarPrefixoArquivo e TGNRERecepcao.GetLote,
+    pelo simples fato de não existir um numero de lote e com isso ao salvar os 
+    arquivos de envio e retorno estavam ficando incompletos.
+    Agora o prefiso usado nesses arquivos será a data/hora.
+   Por: Italo Jurisato Junior
+
 31/07/2018
 --ACBrGNReGuias.pas--
 [+] Implementado o método para a leitura de arquivo INI, que é utilizado no

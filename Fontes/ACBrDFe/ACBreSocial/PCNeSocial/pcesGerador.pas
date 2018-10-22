@@ -1186,7 +1186,7 @@ begin
     Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 1, eSNatAtividadeToStr(pInfoCeletista.NatAtividade));
 
     if ((pInfoCeletista.dtBase >= 1) and (pInfoCeletista.dtBase <= 12)) then
-      Gerador.wCampo(tcStr, '', 'dtBase', 0, 2, 0, pInfoCeletista.dtBase);
+      Gerador.wCampo(tcStr, '', 'dtBase', 0, 2, 0, FormatFloat('00',pInfoCeletista.dtBase));
 
     Gerador.wCampo(tcStr, '', 'cnpjSindCategProf', 14, 14, 1, pInfoCeletista.cnpjSindCategProf);
 

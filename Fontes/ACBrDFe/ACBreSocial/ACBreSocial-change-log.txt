@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2018
+-- pcesGerador --
+[*] https://www.projetoacbr.com.br/forum/topic/47141-s-2200-erro-no-formato-da-data-base-da-categoria-profissional-do-trabalhador/
+   Por: Alex Camilo
+
 28/09/2018
 -- pcesS2300 / pcesS2306/ pcesCommon --
 [*] Alterado o tipo do campo uf da classe instEnsino para String, pois este campo

@@ -201,6 +201,7 @@ type
                             );
 
   TindCom                 = ( icProdRural,  // 1 - Comercialização da Produção por Prod. Rural PJ/Agroindústria, exceto para entidades executoras do PAA
+                              icProdIsenta, // 7 - Comercialização da Produção com Isenção de Contribuição Previdenciária, de acordo com a Lei n° 13.606/2018;
                               icPAA,        // 8 - Comercialização da Produção para Entidade do Programa de Aquisição de Alimentos - PAA
                               icMercExterno // 9 - Comercialização direta da Produção no Mercado Externo
                             );
@@ -706,12 +707,12 @@ end;
 
 function indComToStr(const t: TindCom ): string;
 begin
-  result := EnumeradoToStr2(t, ['1', '8', '9']);
+  result := EnumeradoToStr2(t, ['1', '7', '8', '9']);
 end;
 
 function StrToindCom(var ok: boolean; const s: string): TindCom;
 begin
-  result := TindCom( StrToEnumerado2(ok , s, ['1', '8', '9']) );
+  result := TindCom( StrToEnumerado2(ok , s, ['1', '7', '8', '9']) );
 end;
 
 function tpAjusteToStr(const t: TtpAjuste ): string;

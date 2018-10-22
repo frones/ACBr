@@ -392,8 +392,8 @@ begin
     Gerador.wGrupo('/tipoCom');
   end;
 
-  if Lista.Count > 3 then
-    Gerador.wAlerta('', 'tipoCom', 'Lista de Tipos de Comercialização', ERR_MSG_MAIOR_MAXIMO + '3');
+  if Lista.Count > 4 then
+    Gerador.wAlerta('', 'tipoCom', 'Lista de Tipos de Comercialização', ERR_MSG_MAIOR_MAXIMO + '4');
 end;
 
 procedure TevtComProd.GerarinfoProc(Lista: TinfoProcCollection);

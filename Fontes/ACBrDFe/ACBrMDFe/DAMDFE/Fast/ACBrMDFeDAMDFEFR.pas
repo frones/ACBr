@@ -1542,7 +1542,7 @@ begin
     begin
       FieldByName('placa').AsString     := FormatarPlaca(veicTracao.placa);
       FieldByName('RENAVAM').AsString   := veicTracao.RENAVAM;
-      FieldByName('RNTRCProp').AsString := veicTracao.prop.RNTRC;
+      FieldByName('RNTRCProp').AsString := IfEmptyThen(veicTracao.prop.RNTRC, FieldByName('RNTRC').AsString);
 
       for i := 0 to veicTracao.condutor.Count - 1 do
       begin

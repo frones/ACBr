@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2018
+-- ACBrMDFeDAMDFEFR --
+[*] https://www.projetoacbr.com.br/forum/topic/47189-damdfe-rntrc-ve%C3%ADculo-pr%C3%B3prio/
+  por: Danilo Ziza
+
 08/08/2018
 -- ACBrMDFeDAMDFEFR --
 [*] Alterações visando deixar o componente em conformidade com a Nota Técnica 2018/002.

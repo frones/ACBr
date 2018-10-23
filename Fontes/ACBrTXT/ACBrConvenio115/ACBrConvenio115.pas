@@ -585,12 +585,44 @@ begin
           {10} PadLeft(IntToStr(FModelo), 2, '0') +
           {11} PadLeft(FSerie, 3) +
           {12} PadLeft(IntToStr(NumeroNF), 9, '0') +
-          {13} AutenticacaoDocumentoFiscal +
-          {14} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 12, '0') +
-          {15} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_BaseCalculo)), 12, '0') +
-          {16} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_Valor)), 12, '0') +
-          {17} PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentosNaoTributadas)), 12, '0') +
-          {18} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 12, '0') +
+          {13} AutenticacaoDocumentoFiscal;
+          //{14} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 12, '0') +
+          //{15} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_BaseCalculo)), 12, '0') +
+          //{16} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_Valor)), 12, '0') +
+          //{17} PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentosNaoTributadas)), 12, '0') +
+          //{18} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 12, '0') +
+
+  if ValorTotal < 0 then
+    SRec := SRec + '-' +
+           {14} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 11, '0')
+  else
+    SRec := SRec +
+            {14} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 12, '0');
+
+  if ICMS_BaseCalculo < 0 then
+    SRec := SRec +
+           {15}  '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_BaseCalculo)), 11, '0') +
+           {16}  '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_Valor)), 11, '0')
+  else
+    SRec := SRec +
+            {15} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_BaseCalculo)), 12, '0') +
+            {16} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_Valor)), 12, '0');
+
+  if IsentosNaoTributadas < 0 then
+    SRec := SRec + '-' +
+           {17} PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentosNaoTributadas)), 11, '0')
+  else
+    SRec := SRec +
+            {17} PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentosNaoTributadas)), 12, '0');
+
+  if OutrosValores < 0 then
+    SRec := SRec + '-' +
+           {18} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 11, '0')
+  else
+    SRec := SRec +
+            {18} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 12, '0');
+
+  SRec := SRec +
           {19} TSituacaoNFConv115ID[Ord(SituacaoDocumento)] +
           {20} AnoMesRefencia +
           {21} PadLeft(IntToStr(ReferenciaItemNF), 9, '0') +
@@ -994,18 +1026,32 @@ begin
       begin
         SRec := SRec +
           {21} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSBaseCalculo)), 10, '0') +
-          {22} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSValor)), 10, '0') +
-          {23} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentoNaoTributados)), 10, '0') +
-          {24} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 10, '0');
+          {22} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSValor)), 10, '0');
+         // {23} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentoNaoTributados)), 10, '0') +
+         // {24} '-' + PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 10, '0');
       end
     else
       begin
         SRec := SRec +
           {21} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSBaseCalculo)), 11, '0') +
-          {22} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSValor)), 11, '0') +
-          {23} PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentoNaoTributados)), 11, '0') +
-          {24} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 11, '0');
+          {22} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSValor)), 11, '0');
+         // {23} PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentoNaoTributados)), 11, '0') +
+         // {24} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 11, '0');
       end;
+
+    if IsentoNaoTributados < 0 then
+      SRec := SRec + '-' +
+        {23} PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentoNaoTributados)), 10, '0')
+    else
+      SRec := SRec +
+            {23} PadLeft(TiraPontos(FormatFloat('#,##0.00', IsentoNaoTributados)), 11, '0');
+
+    if OutrosValores < 0 then
+      SRec := SRec + '-' +
+        {24} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 10, '0')
+    else
+      SRec := SRec +
+            {24} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 11, '0');
 
     SRec := SRec +
           {25} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMSAliquota)), 4, '0') +

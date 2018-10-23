@@ -3953,7 +3953,15 @@ var
   Data: TDateTime;
 begin
   if FPConfiguracoesNFe.Arquivos.EmissaoPathNFe then
-    Data := AItem.resNFe.dhEmi
+  begin
+    Data := AItem.resNFe.dhEmi;
+    if Data = 0 then
+    begin
+      Data := AItem.resEvento.dhEvento;
+      if Data = 0 then
+        Data := AItem.procEvento.dhEvento;
+    end;
+  end
   else
     Data := Now;
 

@@ -2402,7 +2402,11 @@ var
   Data: TDateTime;
 begin
   if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
-    Data := AItem.resMDFe.dhEmi
+  begin
+    Data := AItem.resMDFe.dhEmi;
+    if Data = 0 then
+      Data := AItem.procEvento.dhEvento;
+  end
   else
     Data := Now;
 

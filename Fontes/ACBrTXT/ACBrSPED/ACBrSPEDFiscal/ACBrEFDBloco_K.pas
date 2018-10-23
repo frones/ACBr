@@ -59,7 +59,13 @@ type
   TRegistroK265List = class;  
   TRegistroK270List = class;  
   TRegistroK275List = class;  
-  TRegistroK280List = class;  
+  TRegistroK280List = class;
+  TRegistroK290List = class;
+  TRegistroK291List = class;
+  TRegistroK292List = class;
+  TRegistroK300List = class;
+  TRegistroK301List = class;
+  TRegistroK302List = class;
 
   /// Registro K001 - ABERTURA DO BLOCO K
 
@@ -89,6 +95,8 @@ type
     FRegistroK260: TRegistroK260List;
     FRegistroK270: TRegistroK270List;
     FRegistroK280: TRegistroK280List;
+    FRegistroK290: TRegistroK290List;
+    FRegistroK300: TRegistroK300List;
   public
     constructor Create(AOwner: TRegistroK001); virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -104,6 +112,8 @@ type
     property RegistroK260: TRegistroK260List read FRegistroK260 write FRegistroK260;
     property RegistroK270: TRegistroK270List read FRegistroK270 write FRegistroK270;
     property RegistroK280: TRegistroK280List read FRegistroK280 write FRegistroK280;
+    property RegistroK290: TRegistroK290List read FRegistroK290 write FRegistroK290;
+    property RegistroK300: TRegistroK300List read FRegistroK300 write FRegistroK300;
   end;
 
   /// Registro K100 - Lista
@@ -526,6 +536,166 @@ type
     property Items[Index: Integer]: TRegistroK280 read GetItem write SetItem;
   end;
 
+  /// REGISTRO K290: PRODUÇÃO CONJUNTA – ORDEM DE PRODUÇÃO
+
+  TRegistroK290 = class
+  private
+    fDT_INI_OP:  TDateTime;
+    fDT_FIN_OP:  TDateTime;
+    fCOD_DOC_OP: String;
+    FRegistroK291: TRegistroK291List;
+    FRegistroK292: TRegistroK292List;
+  public
+    constructor Create(AOwner: TRegistroK100); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property DT_INI_OP  : TDateTime  read fDT_INI_OP  write fDT_INI_OP;
+    property DT_FIN_OP  : TDateTime  read fDT_FIN_OP  write fDT_FIN_OP;
+    property COD_DOC_OP : String     read fCOD_DOC_OP write fCOD_DOC_OP;
+
+    property RegistroK291: TRegistroK291List read FRegistroK291 write FRegistroK291;
+    property RegistroK292: TRegistroK292List read FRegistroK292 write FRegistroK292;
+  end;
+
+  /// Registro K290 - Lista
+
+  TRegistroK290List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroK290; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroK290); /// SetItem
+  public
+    function New(AOwner: TRegistroK100): TRegistroK290;
+    property Items[Index: Integer]: TRegistroK290 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO K291: PRODUÇÃO CONJUNTA - ITENS PRODUZIDOS
+
+  TRegistroK291 = class
+  private
+    fCOD_ITEM: String;
+    fQTD:      Double;
+  public
+    constructor Create(AOwner: TRegistroK290); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property COD_ITEM : String read fCOD_ITEM  write fCOD_ITEM;
+    property QTD      : Double read fQTD       write fQTD;
+  end;
+
+  /// Registro K291 - Lista
+
+  TRegistroK291List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroK291; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroK291); /// SetItem
+  public
+    function New(AOwner: TRegistroK290): TRegistroK291;
+    property Items[Index: Integer]: TRegistroK291 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO K292: PRODUÇÃO CONJUNTA – INSUMOS CONSUMIDOS
+
+  TRegistroK292 = class
+  private
+    fCOD_ITEM: String;
+    fQTD:      Double;
+  public
+    constructor Create(AOwner: TRegistroK290); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property COD_ITEM : String read fCOD_ITEM  write fCOD_ITEM;
+    property QTD      : Double read fQTD       write fQTD;
+  end;
+
+  /// Registro K292 - Lista
+
+  TRegistroK292List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroK292; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroK292); /// SetItem
+  public
+    function New(AOwner: TRegistroK290): TRegistroK292;
+    property Items[Index: Integer]: TRegistroK292 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO K300: PRODUÇÃO CONJUNTA – INDUSTRIALIZAÇÃO EFETUADA POR TERCEIROS
+
+  TRegistroK300 = class
+  private
+    fDT_PROD:  TDateTime;
+    FRegistroK301: TRegistroK301List;
+    FRegistroK302: TRegistroK302List;
+  public
+    constructor Create(AOwner: TRegistroK100); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property DT_PROD : TDateTime read fDT_PROD  write fDT_PROD;
+
+    property RegistroK301: TRegistroK301List read FRegistroK301 write FRegistroK301;
+    property RegistroK302: TRegistroK302List read FRegistroK302 write FRegistroK302;
+  end;
+
+  /// Registro K300 - Lista
+
+  TRegistroK300List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroK300; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroK300); /// SetItem
+  public
+    function New(AOwner: TRegistroK100): TRegistroK300;
+    property Items[Index: Integer]: TRegistroK300 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO K301: PRODUÇÃO CONJUNTA – INDUSTRIALIZAÇÃO EFETUADA POR TERCEIROS – ITENS PRODUZIDOS
+
+  TRegistroK301 = class
+  private
+    fCOD_ITEM: String;
+    fQTD:      Double;
+  public
+    constructor Create(AOwner: TRegistroK300); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property COD_ITEM : String read fCOD_ITEM  write fCOD_ITEM;
+    property QTD      : Double read fQTD       write fQTD;
+  end;
+
+  /// Registro K301 - Lista
+
+  TRegistroK301List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroK301; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroK301); /// SetItem
+  public
+    function New(AOwner: TRegistroK300): TRegistroK301;
+    property Items[Index: Integer]: TRegistroK301 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO K302: PRODUÇÃO CONJUNTA – INDUSTRIALIZAÇÃO EFETUADA POR TERCEIROS – INSUMOS CONSUMIDOS
+
+  TRegistroK302 = class
+  private
+    fCOD_ITEM: String;
+    fQTD:      Double;
+  public
+    constructor Create(AOwner: TRegistroK300); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property COD_ITEM : String read fCOD_ITEM  write fCOD_ITEM;
+    property QTD      : Double read fQTD       write fQTD;
+  end;
+
+  /// Registro K302 - Lista
+
+  TRegistroK302List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroK302; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroK302); /// SetItem
+  public
+    function New(AOwner: TRegistroK300): TRegistroK302;
+    property Items[Index: Integer]: TRegistroK302 read GetItem write SetItem;
+  end;
+
   /// Registro K990 - ENCERRAMENTO DO BLOCO K
 
   TRegistroK990 = class
@@ -549,6 +719,193 @@ end;
 destructor TRegistroK001.Destroy;
 begin
   FRegistroK100.Free;
+  inherited Destroy;
+end;
+
+
+{ TRegistroK302List }
+
+function TRegistroK302List.GetItem(Index: Integer): TRegistroK302;
+begin
+  Result := TRegistroK302(Inherited Items[Index]);
+end;
+
+function TRegistroK302List.New(AOwner: TRegistroK300): TRegistroK302;
+begin
+  Result := TRegistroK302.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroK302List.SetItem(Index: Integer; const Value: TRegistroK302);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroK302 }
+
+constructor TRegistroK302.Create(AOwner: TRegistroK300);
+begin
+
+end;
+
+destructor TRegistroK302.Destroy;
+begin
+  inherited Destroy;
+end;
+
+{ TRegistroK301List }
+
+function TRegistroK301List.GetItem(Index: Integer): TRegistroK301;
+begin
+  Result := TRegistroK301(Inherited Items[Index]);
+end;
+
+function TRegistroK301List.New(AOwner: TRegistroK300): TRegistroK301;
+begin
+  Result := TRegistroK301.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroK301List.SetItem(Index: Integer; const Value: TRegistroK301);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroK301 }
+
+constructor TRegistroK301.Create(AOwner: TRegistroK300);
+begin
+
+end;
+
+destructor TRegistroK301.Destroy;
+begin
+  inherited Destroy;
+end;
+
+{ TRegistroK300List }
+
+function TRegistroK300List.GetItem(Index: Integer): TRegistroK300;
+begin
+  Result := TRegistroK300(Inherited Items[Index]);
+end;
+
+function TRegistroK300List.New(AOwner: TRegistroK100): TRegistroK300;
+begin
+  Result := TRegistroK300.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroK300List.SetItem(Index: Integer; const Value: TRegistroK300);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroK300 }
+
+constructor TRegistroK300.Create(AOwner: TRegistroK100);
+begin
+  FRegistroK301 := TRegistroK301List.Create;
+  FRegistroK302 := TRegistroK302List.Create;
+end;
+
+destructor TRegistroK300.Destroy;
+begin
+  FRegistroK301.Free;
+  FRegistroK302.Free;
+  inherited Destroy;
+end;
+                    
+{ TRegistroK292List }
+
+function TRegistroK292List.GetItem(Index: Integer): TRegistroK292;
+begin
+  Result := TRegistroK292(Inherited Items[Index]);
+end;
+
+function TRegistroK292List.New(AOwner: TRegistroK290): TRegistroK292;
+begin
+  Result := TRegistroK292.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroK292List.SetItem(Index: Integer; const Value: TRegistroK292);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroK292 }
+
+constructor TRegistroK292.Create(AOwner: TRegistroK290);
+begin
+
+end;
+
+destructor TRegistroK292.Destroy;
+begin
+  inherited Destroy;
+end;
+
+{ TRegistroK291List }
+
+function TRegistroK291List.GetItem(Index: Integer): TRegistroK291;
+begin
+  Result := TRegistroK291(Inherited Items[Index]);
+end;
+
+function TRegistroK291List.New(AOwner: TRegistroK290): TRegistroK291;
+begin
+  Result := TRegistroK291.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroK291List.SetItem(Index: Integer; const Value: TRegistroK291);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroK291 }
+
+constructor TRegistroK291.Create(AOwner: TRegistroK290);
+begin
+
+end;
+
+destructor TRegistroK291.Destroy;
+begin
+  inherited Destroy;
+end;
+
+{ TRegistroK290List }
+
+function TRegistroK290List.GetItem(Index: Integer): TRegistroK290;
+begin
+  Result := TRegistroK290(Inherited Items[Index]);
+end;
+
+function TRegistroK290List.New(AOwner: TRegistroK100): TRegistroK290;
+begin
+  Result := TRegistroK290.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroK290List.SetItem(Index: Integer; const Value: TRegistroK290);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroK290 }
+
+constructor TRegistroK290.Create(AOwner: TRegistroK100);
+begin
+  FRegistroK291 := TRegistroK291List.Create;
+  FRegistroK292 := TRegistroK292List.Create;
+end;
+
+destructor TRegistroK290.Destroy;
+begin
+  FRegistroK291.Free;
+  FRegistroK292.Free;
   inherited Destroy;
 end;
 
@@ -976,6 +1333,8 @@ begin
   FRegistroK260:= TRegistroK260List.Create;  /// BLOCO K - Lista de RegistroK260 (FILHO fo FILHO)
   FRegistroK270:= TRegistroK270List.Create;  /// BLOCO K - Lista de RegistroK270 (FILHO fo FILHO)
   FRegistroK280:= TRegistroK280List.Create;  /// BLOCO K - Lista de RegistroK280 (FILHO fo FILHO)
+  FRegistroK290:= TRegistroK290List.Create;  /// BLOCO K - Lista de RegistroK290 (FILHO fo FILHO)
+  FRegistroK300:= TRegistroK300List.Create;  /// BLOCO K - Lista de RegistroK300 (FILHO fo FILHO)  
 end;
 
 destructor TRegistroK100.Destroy;
@@ -988,6 +1347,8 @@ begin
   FRegistroK260.Free;
   FRegistroK270.Free;
   FRegistroK280.Free;
+  FRegistroK290.Free;
+  FRegistroK300.Free;
   inherited;
 end;
 

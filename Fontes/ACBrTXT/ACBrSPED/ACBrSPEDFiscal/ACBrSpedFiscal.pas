@@ -2534,6 +2534,54 @@ begin
                QTD_REG_BLC := Bloco_K.RegistroK280Count;
             end;
          end;
+         if Bloco_K.RegistroK290Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K290';
+               QTD_REG_BLC := Bloco_K.RegistroK290Count;
+            end;
+         end;
+         if Bloco_K.RegistroK291Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K291';
+               QTD_REG_BLC := Bloco_K.RegistroK291Count;
+            end;
+         end;
+         if Bloco_K.RegistroK292Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K292';
+               QTD_REG_BLC := Bloco_K.RegistroK292Count;
+            end;
+         end;
+         if Bloco_K.RegistroK300Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K300';
+               QTD_REG_BLC := Bloco_K.RegistroK300Count;
+            end;
+         end;
+         if Bloco_K.RegistroK301Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K301';
+               QTD_REG_BLC := Bloco_K.RegistroK301Count;
+            end;
+         end;
+         if Bloco_K.RegistroK302Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K302';
+               QTD_REG_BLC := Bloco_K.RegistroK302Count;
+            end;
+         end;
       end;
    end;
 end;

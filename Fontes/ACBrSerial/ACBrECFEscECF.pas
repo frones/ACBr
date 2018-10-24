@@ -2242,6 +2242,11 @@ begin
         P := Trunc( LenMaxBuffer / Colunas ) * Colunas;
 
      Buffer := copy( Linha, 1, P);
+
+     { ignora a quebra de linha se sua posição for igual ao LenMaxBuffer }
+     if (Length(Buffer) = LenMaxBuffer) and (Buffer[P] = LF) then
+       Delete( Buffer, P, 1 );
+
      Espera := Trunc( CountStr( Buffer, LF ) / 4);
 
      EscECFComando.CMD := 9;
@@ -2254,7 +2259,7 @@ begin
         (copy( Linha, P+1, 1) = LF) then
         P := P + 1 ;
 
-     Linha  := copy( Linha, P+1, Length(Linha) ) ;   // O Restante
+     Linha := copy( Linha, P+1, Length(Linha) ) ;   // O Restante
   end ;
 end;
 

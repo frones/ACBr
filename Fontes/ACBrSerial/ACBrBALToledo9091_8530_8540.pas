@@ -51,8 +51,8 @@ type
   TACBrBALToledo9091_8530_8540 = class( TACBrBALClass )
   public
     constructor Create(AOwner: TComponent);
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double; override;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override ;
+
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
   end ;
 
 implementation
@@ -70,28 +70,16 @@ begin
   fpModeloStr := 'Toledo 9091 8530 8540' ;
 end;
 
-function TACBrBALToledo9091_8530_8540.LePeso( MillisecTimeOut : Integer) : Double;
-begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
-
-  fpDevice.Serial.Purge ;           { Limpa a Porta }
-  fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
-  sleep(200) ;
-
-  LeSerial( MillisecTimeOut );
-
-  Result := fpUltimoPesoLido;
-end;
-
-procedure TACBrBALToledo9091_8530_8540.LeSerial(MillisecTimeOut: Integer);
+function TACBrBALToledo9091_8530_8540.InterpretarRepostaPeso(aResposta: AnsiString): Double;
 var
   SWA, SWB, SWC, SP : AnsiString;
   PesoBruto, PesoTara : Integer;
   STX : Integer ;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  Result := 0;
+
+  if (aResposta = EmptyStr) then
+    Exit;
 
   {
     Protocolo 8530 COUGAR 60.000 ou 80.000
@@ -113,34 +101,39 @@ begin
     CR            : Caractere ASCII de Retorno de Carro (0D HEX)
     CKS           : Checksun
   }
-  try
-    fpUltimaResposta := fpDevice.Serial.RecvTerminated(MillisecTimeOut, #13);
 
-    STX := Pos(#02, fpUltimaResposta);
+    try
+    STX := Pos(#02, aResposta);
 
     if (STX > 0) then
     begin
-      SWA := Copy(fpUltimaResposta, 1, 1);
-      SWB := Copy(fpUltimaResposta, 2, 1);
-      SWC := Copy(fpUltimaResposta, 3, 1);
-      SP  := Copy(fpUltimaResposta, 4, 1);
+      SWA := Copy(aResposta, 1, 1);
+      SWB := Copy(aResposta, 2, 1);
+      SWC := Copy(aResposta, 3, 1);
+      SP  := Copy(aResposta, 4, 1);
 
+	  // TODO: Testar SWB 
+	  //  bit 1 = 1 para peso negativo 
+	  //  bit 2 = 1 para sobrecarga
+	  //  bit 3 = 1 para movimento
+	  
       if (SP = ' ') then
       begin
-        PesoBruto := StrToIntDef(Copy(fpUltimaResposta, 5, 6), 0);
-        PesoTara  := StrToIntDef(Copy(fpUltimaResposta, 11, 6), 0);
+        PesoBruto := StrToIntDef(Copy(aResposta, 5, 6), 0);
+        PesoTara  := StrToIntDef(Copy(aResposta, 11, 6), 0);
       end
       else
       begin
-        PesoBruto := StrToIntDef(Copy(fpUltimaResposta, 4, 6), 0);
-        PesoTara  := StrToIntDef(Copy(fpUltimaResposta, 10, 6), 0);
+        PesoBruto := StrToIntDef(Copy(aResposta, 4, 6), 0);
+        PesoTara  := StrToIntDef(Copy(aResposta, 10, 6), 0);
       end;
 
-      fpUltimoPesoLido := PesoBruto;
+      Result := PesoBruto;
     end;
   except
-     fpUltimoPesoLido := -9;
+     Result := -9;
   end;
+
 end;
 
 end.

@@ -28,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="75">
+    <Files Count="76">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -330,6 +330,10 @@
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
         <UnitName Value="ACBrSMSZTE"/>
       </Item75>
+      <Item76>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALToledo9091_8530_8540.pas"/>
+        <UnitName Value="ACBrBALToledo9091_8530_8540"/>
+      </Item76>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>

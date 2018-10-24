@@ -121,6 +121,7 @@ contains
   ACBrBALRinnert in '..\..\..\Fontes\ACBrSerial\ACBrBALRinnert.pas',
   ACBrBALSaturno in '..\..\..\Fontes\ACBrSerial\ACBrBALSaturno.pas',
   ACBrBALToledo2090 in '..\..\..\Fontes\ACBrSerial\ACBrBALToledo2090.pas',
-  ACBrCHQElgin in '..\..\..\Fontes\ACBrSerial\ACBrCHQElgin.pas';
+  ACBrCHQElgin in '..\..\..\Fontes\ACBrSerial\ACBrCHQElgin.pas',
+  ACBrBALToledo9091_8530_8540 in '..\..\..\Fontes\ACBrSerial\ACBrBALToledo9091_8530_8540.pas';
 
 end.

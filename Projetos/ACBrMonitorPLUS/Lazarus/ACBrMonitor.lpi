@@ -38,7 +38,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\..\ACBrLib\MDFe;..\..\ACBrLib\Comum;..\..\ACBrLib\eSocial;..\..\ACBrLib\Reinf;..\..\ACBrLib\NFe;..\..\ACBrLib\CTe;..\..\ACBrLib\SAT;..\..\ACBrLib\CEP;..\..\ACBrLib\IBGE;..\..\ACBrLib\Sedex;..\..\ACBrLib\GNRe"/>
+            <OtherUnitFiles Value="..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\GNRe"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Linking>
@@ -327,21 +327,21 @@
         <UnitName Value="DoACBrESocialUnit"/>
       </Unit33>
       <Unit34>
-        <Filename Value="..\..\ACBrLib\eSocial\acbrlibesocialrespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\eSocial\acbrlibesocialrespostas.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBrLibeSocialRespostas"/>
       </Unit34>
       <Unit35>
-        <Filename Value="..\..\ACBrLib\eSocial\acbrlibesocialconsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\eSocial\acbrlibesocialconsts.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ACBrLibeSocialConsts"/>
       </Unit35>
       <Unit36>
-        <Filename Value="..\..\ACBrLib\MDFe\ACBrLibMDFeRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\MDFe\ACBrLibMDFeRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit36>
       <Unit37>
-        <Filename Value="..\..\ACBrLib\MDFe\ACBrLibMDFeConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\MDFe\ACBrLibMDFeConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit37>
       <Unit38>
@@ -349,67 +349,67 @@
         <IsPartOfProject Value="True"/>
       </Unit38>
       <Unit39>
-        <Filename Value="..\..\ACBrLib\Reinf\ACBrLibReinfConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\Reinf\ACBrLibReinfConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit39>
       <Unit40>
-        <Filename Value="..\..\ACBrLib\Reinf\ACBrLibReinfRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\Reinf\ACBrLibReinfRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit40>
       <Unit41>
-        <Filename Value="..\..\ACBrLib\NFe\ACBrLibNFeRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\NFe\ACBrLibNFeRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit41>
       <Unit42>
-        <Filename Value="..\..\ACBrLib\NFe\ACBrLibNFeConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\NFe\ACBrLibNFeConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit42>
       <Unit43>
-        <Filename Value="..\..\ACBrLib\CTe\ACBrLibCTeConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\CTe\ACBrLibCTeConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit43>
       <Unit44>
-        <Filename Value="..\..\ACBrLib\CTe\ACBrLibCTeRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\CTe\ACBrLibCTeRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit44>
       <Unit45>
-        <Filename Value="..\..\ACBrLib\SAT\ACBrLibSATRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\SAT\ACBrLibSATRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit45>
       <Unit46>
-        <Filename Value="..\..\ACBrLib\SAT\ACBrLibSATConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\SAT\ACBrLibSATConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit46>
       <Unit47>
-        <Filename Value="..\..\ACBrLib\CEP\ACBrLibCEPRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\CEP\ACBrLibCEPRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit47>
       <Unit48>
-        <Filename Value="..\..\ACBrLib\CEP\ACBrLibCEPConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\CEP\ACBrLibCEPConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit48>
       <Unit49>
-        <Filename Value="..\..\ACBrLib\IBGE\ACBrLibIBGEConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\IBGE\ACBrLibIBGEConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit49>
       <Unit50>
-        <Filename Value="..\..\ACBrLib\IBGE\ACBrLibIBGERespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\IBGE\ACBrLibIBGERespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit50>
       <Unit51>
-        <Filename Value="..\..\ACBrLib\Sedex\ACBrLibSedexConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\Sedex\ACBrLibSedexConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit51>
       <Unit52>
-        <Filename Value="..\..\ACBrLib\Sedex\ACBrLibSedexRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\Sedex\ACBrLibSedexRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit52>
       <Unit53>
-        <Filename Value="..\..\ACBrLib\GNRe\ACBrLibGNReConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\GNRe\ACBrLibGNReConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit53>
       <Unit54>
-        <Filename Value="..\..\ACBrLib\GNRe\ACBrLibGNReRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\GNRe\ACBrLibGNReRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit54>
     </Units>
@@ -422,7 +422,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\ACBrLib\MDFe;..\..\ACBrLib\Comum;..\..\ACBrLib\eSocial;..\..\ACBrLib\Reinf;..\..\ACBrLib\NFe;..\..\ACBrLib\CTe;..\..\ACBrLib\SAT;..\..\ACBrLib\CEP;..\..\ACBrLib\IBGE;..\..\ACBrLib\Sedex;..\..\ACBrLib\GNRe"/>
+      <OtherUnitFiles Value="..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\GNRe"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

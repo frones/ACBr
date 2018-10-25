@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2018
+-- Diversos --
+[-] O componente não estava obedecendo o Path informado em PathPDF ao usar o 
+    método ImprimirPDF (Fortes Report), correção realizada.
+   Por: Italo Jurisato Junior
+
 20/10/2018
 -- ACBrGNREWebServices --
 [*] Removido os métodos TGNRERecepcao.GerarPrefixoArquivo e TGNRERecepcao.GetLote,

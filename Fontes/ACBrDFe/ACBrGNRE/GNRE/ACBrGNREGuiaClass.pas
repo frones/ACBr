@@ -50,22 +50,23 @@ unit ACBrGNREGuiaClass;
 interface
 
 uses
- Forms, SysUtils, Classes, ACBrBase, pcnConversao, pgnreGNRERetorno;
+  Forms, SysUtils, Classes, ACBrBase, pcnConversao, pgnreGNRERetorno;
 
 type
 	{$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}	
   TACBrGNREGuiaClass = class( TACBrComponent )
-   private
+  private
     procedure SetGNRE(const Value: TComponent);
-    procedure ErroAbstract( NomeProcedure : String ) ;
-    function GetPathArquivos: String;
+    procedure ErroAbstract( NomeProcedure : String );
+    function GetPathPDF: String;
+    procedure SetPathPDF(const Value: String);
   protected
     FACBrGNRE : TComponent;
     FSistema:String;
     FUsuario:String;
-    FPathArquivos : String;
+    FPathPDF : String;
     FImpressora : String;
     FMostrarPreview : Boolean;
     FMostrarStatus: Boolean;
@@ -85,46 +86,46 @@ type
     procedure ImprimirGuia(GNRE: TGNRERetorno = nil); virtual;
     procedure ImprimirGuiaPDF(GNRE: TGNRERetorno = nil); virtual;
   published
-    property ACBrGNRE : TComponent  read FACBrGNRE write SetGNRE ;
-    property Sistema: String read FSistema write FSistema ;
-    property Usuario: String read FUsuario write FUsuario ;
-    property PathPDF: String read GetPathArquivos write FPathArquivos ;
-    property Impressora: String read FImpressora write FImpressora ;
-    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview ;
-    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus ;
-    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel ;
-    property NumCopias: Integer read FNumCopias write FNumCopias ;
-    property Fax  : String read FFax   write FFax ;
-    property Site : String read FSite  write FSite ;
-    property Email: String read FEmail write FEmail ;
-    property MargemInferior: Double read FMargemInferior write FMargemInferior ;
-    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior ;
-    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda ;
-    property MargemDireita: Double read FMargemDireita write FMargemDireita ;
+    property ACBrGNRE : TComponent  read FACBrGNRE write SetGNRE;
+    property Sistema: String read FSistema write FSistema;
+    property Usuario: String read FUsuario write FUsuario;
+    property PathPDF: String read GetPathPDF write SetPathPDF;
+    property Impressora: String read FImpressora write FImpressora;
+    property MostrarPreview: Boolean read FMostrarPreview write FMostrarPreview;
+    property MostrarStatus: Boolean read FMostrarStatus write FMostrarStatus;
+    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel;
+    property NumCopias: Integer read FNumCopias write FNumCopias;
+    property Fax  : String read FFax   write FFax;
+    property Site : String read FSite  write FSite;
+    property Email: String read FEmail write FEmail;
+    property MargemInferior: Double read FMargemInferior write FMargemInferior;
+    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
+    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
+    property MargemDireita: Double read FMargemDireita write FMargemDireita;
   end;
 
 implementation
 
 uses
- ACBrGNRE2, ACBrUtil, ACBrDFeUtil;
+  ACBrGNRE2, ACBrUtil, ACBrDFeUtil;
 
 constructor TACBrGNREGuiaClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  FACBrGNRE      := nil ;
-  FSistema      := '' ;
-  FUsuario      := '' ;
-  FPathArquivos := '' ;
-  FImpressora   := '' ;
+  FACBrGNRE   := nil;
+  FSistema    := '';
+  FUsuario    := '';
+  FPathPDF    := '';
+  FImpressora := '';
 
   FMostrarPreview := True;
   FMostrarStatus  := True;
   FNumCopias      := 1;
 
-  FFax   := '' ;
-  FSite  := '' ;
-  FEmail := '' ;
+  FFax   := '';
+  FSite  := '';
+  FEmail := '';
 
   FMargemInferior := 0.8;
   FMargemSuperior := 0.8;
@@ -134,16 +135,15 @@ end;
 
 destructor TACBrGNREGuiaClass.Destroy;
 begin
-
-  inherited Destroy ;
+  inherited Destroy;
 end;
 
-procedure TACBrGNREGuiaClass.ImprimirGuia(GNRE: TGNRERetorno = nil) ;
+procedure TACBrGNREGuiaClass.ImprimirGuia(GNRE: TGNRERetorno = nil);
 begin
   ErroAbstract('Imprimir');
 end;
 
-procedure TACBrGNREGuiaClass.ImprimirGuiaPDF(GNRE: TGNRERetorno = nil) ;
+procedure TACBrGNREGuiaClass.ImprimirGuiaPDF(GNRE: TGNRERetorno = nil);
 begin
   ErroAbstract('ImprimirPDF');
 end;
@@ -154,52 +154,78 @@ begin
   inherited Notification(AComponent, Operation);
 
   if (Operation = opRemove) and (FACBrGNRE <> nil) and (AComponent is TACBrGNRE) then
-     FACBrGNRE := nil ;
+    FACBrGNRE := nil;
 end;
 
 procedure TACBrGNREGuiaClass.SetGNRE(const Value: TComponent);
-  Var OldValue : TACBrGNRE ;
+var
+  OldValue: TACBrGNRE;
 begin
   if Value <> FACBrGNRE then
   begin
-     if Value <> nil then
-        if not (Value is TACBrGNRE) then
-           raise Exception.Create('ACBrGNREGuia.GNRE deve ser do tipo TACBrGNRE') ;
+    if Value <> nil then
+      if not (Value is TACBrGNRE) then
+        raise Exception.Create('ACBrGNREGuia.GNRE deve ser do tipo TACBrGNRE');
 
-     if Assigned(FACBrGNRE) then
-        FACBrGNRE.RemoveFreeNotification(Self);
+    if Assigned(FACBrGNRE) then
+      FACBrGNRE.RemoveFreeNotification(Self);
 
-     OldValue := TACBrGNRE(FACBrGNRE) ;   // Usa outra variavel para evitar Loop Infinito
-     FACBrGNRE := Value;                 // na remoção da associação dos componentes
+    OldValue := TACBrGNRE(FACBrGNRE);   // Usa outra variavel para evitar Loop Infinito
+    FACBrGNRE := Value;                 // na remoção da associação dos componentes
 
-     if Assigned(OldValue) then
-        if Assigned(OldValue.GNREGuia) then
-           OldValue.GNREGuia := nil ;
+    if Assigned(OldValue) then
+      if Assigned(OldValue.GNREGuia) then
+        OldValue.GNREGuia := nil;
 
-     if Value <> nil then
-     begin
-        Value.FreeNotification(Self);
-        TACBrGNRE(Value).GNREGuia := Self ;
-     end ;
-  end ;
+    if Value <> nil then
+    begin
+      Value.FreeNotification(Self);
+      TACBrGNRE(Value).GNREGuia := Self;
+    end;
+  end;
 end;
 
 procedure TACBrGNREGuiaClass.ErroAbstract(NomeProcedure: String);
 begin
-  raise Exception.Create( NomeProcedure ) ;
+  raise Exception.Create( NomeProcedure );
 end;
 
-function TACBrGNREGuiaClass.GetPathArquivos: String;
+function TACBrGNREGuiaClass.GetPathPDF: String;
+var
+  aPath: string;
 begin
-  if EstaVazio(FPathArquivos) then
-     if Assigned(FACBrGNRE) then
-        FPathArquivos := TACBrGNRE(FACBrGNRE).Configuracoes.Arquivos.PathSalvar;
+  if (csDesigning in ComponentState) then
+  begin
+    Result := FPathPDF;
+    Exit;
+  end;
 
-  if NaoEstaVazio(FPathArquivos) then
-     if not DirectoryExists(FPathArquivos) then
-        ForceDirectories(FPathArquivos);
+  aPath := Trim(FPathPDF);
 
-  Result := PathWithDelim(FPathArquivos);
+  if EstaVazio(aPath) then  // Se não pode definir o Parth, use o Path da Aplicaçao
+    aPath := PathWithDelim( ExtractFilePath(ParamStr(0))) + 'pdf';
+
+  if NaoEstaVazio(aPath) then
+    if not DirectoryExists(aPath) then
+      ForceDirectories(aPath);
+
+  Result := PathWithDelim( aPath );
+  {
+  if EstaVazio(FPathPDF) then
+    if Assigned(FACBrGNRE) then
+      FPathPDF := TACBrGNRE(FACBrGNRE).Configuracoes.Arquivos.PathSalvar;
+
+  if NaoEstaVazio(FPathPDF) then
+    if not DirectoryExists(FPathPDF) then
+      ForceDirectories(FPathPDF);
+
+  Result := PathWithDelim(FPathPDF);
+  }
 end;
 
+
+procedure TACBrGNREGuiaClass.SetPathPDF(const Value: String);
+begin
+  FPathPDF := PathWithDelim(Value);
+end;
 end.

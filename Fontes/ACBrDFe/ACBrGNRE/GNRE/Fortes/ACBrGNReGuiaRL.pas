@@ -190,7 +190,11 @@ begin
           //ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', FGNRe.Ide.dhEmi) +'; CNPJ: ' + FGNRe.emit.CNPJ;
       end;
 
-      RLGNRe.SaveToFile(AFile);
+      RLPDFFilter1.FileName := AFile;
+      RLGNRe.Prepare;
+      RLPDFFilter1.FilterPages(RLGNRe.Pages);
+
+//      RLGNRe.SaveToFile(AFile);
     finally
       Free;
     end;

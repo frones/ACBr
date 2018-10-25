@@ -31,8 +31,8 @@ object frlGuiaRL: TfrlGuiaRL
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 
-      'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-20' +
-      '08 Fortes Informática'
+      'FortesReport (Open Source) v3.24(B14)  \251 Copyright '#194#169' 1999-20' +
+      '08 Fortes Inform'#195#161'tica'
     DisplayName = 'Documento PDF'
     Left = 388
     Top = 48

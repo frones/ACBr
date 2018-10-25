@@ -80,35 +80,36 @@ var
   frlGuiaRLRetrato: TfrlGuiaRLRetrato;
 begin
   frlGuiaRLRetrato := TfrlGuiaRLRetrato.Create(Self);
-  try
-     frlGuiaRLRetrato.RLGNRe.PageSetup.PaperSize     :=fpA4;
-     frlGuiaRLRetrato.RLGNRe.PageSetup.PaperHeight   :=297.0;
-     frlGuiaRLRetrato.RLGNRe.PageSetup.PaperWidth    :=210.0;
 
-     if GNRe = nil then
-     begin
-       for i:=0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count -1 do
-       begin
-         frlGuiaRLRetrato.Imprimir(Self,
-         TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i].GNRE,
-         Email,
-         Fax,
-         NumCopias,
-         Sistema,
-         Site,
-         Usuario,
-         MostrarPreview,
-         MargemSuperior,
-         MargemInferior,
-         MargemEsquerda,
-         MargemDireita,
-         Impressora,
-         PrintDialog);
-         end;
-       end
-       else
-       begin
-           frlGuiaRLRetrato.Imprimir(Self,
+  try
+    frlGuiaRLRetrato.RLGNRe.PageSetup.PaperSize   :=fpA4;
+    frlGuiaRLRetrato.RLGNRe.PageSetup.PaperHeight :=297.0;
+    frlGuiaRLRetrato.RLGNRe.PageSetup.PaperWidth  :=210.0;
+
+    if GNRe = nil then
+    begin
+      for i:=0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count -1 do
+      begin
+        frlGuiaRLRetrato.Imprimir(Self,
+           TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i].GNRE,
+           Email,
+           Fax,
+           NumCopias,
+           Sistema,
+           Site,
+           Usuario,
+           MostrarPreview,
+           MargemSuperior,
+           MargemInferior,
+           MargemEsquerda,
+           MargemDireita,
+           Impressora,
+           PrintDialog);
+      end;
+    end
+    else
+    begin
+      frlGuiaRLRetrato.Imprimir(Self,
            GNRE,
            Email,
            Fax,
@@ -123,12 +124,10 @@ begin
            MargemDireita,
            Impressora,
            PrintDialog);
-
-       end;
+    end;
   finally
-  frlGuiaRLRetrato.Free;
-end;
-
+    frlGuiaRLRetrato.Free;
+  end;
 end;
 
 procedure TACBrGNReGuiaRL.ImprimirGuiaPDF(GNRe: TGNRERetorno = nil);
@@ -138,13 +137,15 @@ var
   frlGuiaRLRetrato: TfrlGuiaRLRetrato;
 begin
   frlGuiaRLRetrato := TfrlGuiaRLRetrato.Create(Self);
-      if GNRe = nil then
-      begin
-        for i := 0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count -1 do
-        begin
-          NomeArq:= OnlyNumber(TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i].GNRE.IdentificadorGuia);
-          NomeArq:= PathWithDelim(Self.PathPDF)+NomeArq+'-guia.pdf';
-          frlGuiaRLRetrato.SavePDF(Self,
+
+  if GNRe = nil then
+  begin
+    for i := 0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count -1 do
+    begin
+      NomeArq:= OnlyNumber(TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i].GNRE.IdentificadorGuia);
+      NomeArq:= PathWithDelim(Self.PathPDF) + NomeArq + '-guia.pdf';
+
+      frlGuiaRLRetrato.SavePDF(Self,
           NomeArq,
           TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[0].GNRE,
           Email,
@@ -157,13 +158,14 @@ begin
           MargemInferior,
           MargemEsquerda,
           MargemDireita);
-        end;
-        end
-      else
-      begin
-        NomeArq:= OnlyNumber(GNRe.IdentificadorGuia);
-        NomeArq:= PathWithDelim(Self.PathPDF)+NomeArq+'-guia.pdf';
-        frlGuiaRLRetrato.SavePDF(Self,
+    end;
+  end
+  else
+  begin
+    NomeArq:= OnlyNumber(GNRe.IdentificadorGuia);
+    NomeArq:= PathWithDelim(Self.PathPDF) + NomeArq + '-guia.pdf';
+
+    frlGuiaRLRetrato.SavePDF(Self,
           NomeArq,
           GNRE,
           Email,
@@ -176,9 +178,10 @@ begin
           MargemInferior,
           MargemEsquerda,
           MargemDireita);
-        end;
-      if frlGuiaRLRetrato.RLGNRe <> nil then
-      frlGuiaRLRetrato.Free;
+  end;
+
+  if frlGuiaRLRetrato.RLGNRe <> nil then
+    frlGuiaRLRetrato.Free;
 end;
 
 end.

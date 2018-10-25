@@ -716,7 +716,7 @@ begin
           FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL')
       else
       begin
-        if FNFe.Ide.tpEmis <> teNormal then
+        if (FNFe.Ide.tpEmis <> teNormal) and EstaVazio(FNFe.procNFe.nProt) then
           FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM CONTINGÊNCIA'+LineBreak+'Pendente de autorização')
         else
           FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');

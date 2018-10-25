@@ -51,7 +51,7 @@ uses
 type
   EACBrCargaBal = class(Exception);
   TACBrCargaBalTipoVenda = (tpvPeso, tpvUnidade, tpvEAN13);
-  TACBrCargaBalModelo = (modFilizola, modToledo, modUrano, modUranoS, modToledoMGV5, modToledoMGV6, modUranoURF32);
+  TACBrCargaBalModelo = (modFilizola, modToledo, modUrano, modUranoS, modToledoMGV5, modToledoMGV6, modUranoURF32, modRamuza);
   TACBrCargaBalProgresso = procedure(Mensagem: String; ProgressoAtual, ProgressoTotal: Integer) of object;
   TACBrCargaBalTipoValidade = (tpvDias, tpvMeses);
 
@@ -235,6 +235,7 @@ type
     function GetTipoProdutoToledo(Tipo: TACBrCargaBalTipoVenda): String;
     function GetTipoProdutoUrano(Tipo: TACBrCargaBalTipoVenda): string;
     function GetTipoProdutoUranoURF32(Tipo: TACBrCargaBalTipoVenda): string;
+    function GetTipoProdutoRamuza(Tipo: TACBrCargaBalTipoVenda): string;
     function CalcularSoma(const xStr: string): integer;
     function GetModeloStr: string;
 
@@ -245,6 +246,7 @@ type
     procedure PreencherUrano(Arquivo: TStringList);
     procedure PreencherUranoS(Arquivo: TStringList);
     procedure PreencherUranoURF32(Arquivo, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita: TStringList);
+    procedure PreencherRamuza(Arquivo: TStringList);
 
     function GetNutriUndPorcaoToledo(Tipo: TACBrCargaBalNutriUndPorcao): String;
     function GetNutriPartDecimalToledo(Tipo: TACBrCargaBalNutriPartdecimal): String;
@@ -437,6 +439,7 @@ begin
     modToledoMGV5,
     modToledoMGV6 : Result := 'ITENSMGV.TXT';
     modUranoURF32 : Result := 'PRODUTOS.TXT';
+    modRamuza     : Result := 'RAMUZA_ORIGINAL.TXT';
   end;
 end;
 
@@ -509,6 +512,15 @@ begin
   case Tipo of
     tpvPeso    : Result := 'P';
     tpvUnidade : Result := 'U';
+  end;
+end;
+
+function TACBrCargaBal.GetTipoProdutoRamuza(
+  Tipo: TACBrCargaBalTipoVenda): string;
+begin
+  case Tipo of
+    tpvPeso    : Result:='0';
+    tpvUnidade : Result:='1';
   end;
 end;
 
@@ -638,6 +650,99 @@ begin
     areceita:=RFill(' ',12)+LFIll(Produtos[i].Codigo,6)+LFIll(Produtos[i].Codigo,6)+RFill(Produtos[i].Receita,840)+'@';
     if (Length(Produtos[i].Receita)>2) and (Receita.IndexOf(areceita)<0) then
        Receita.Add(areceita);
+
+    Progresso(Format('Gerando produto %6.6d %s', [Produtos[i].Codigo, Produtos[i].Descricao]), i, Total);
+  end;
+end;
+
+procedure TACBrCargaBal.PreencherRamuza(Arquivo: TStringList);
+var
+  i, Total: Integer;
+  Anutri,areceita:string;
+begin
+  Total := Produtos.Count;
+
+  for i := 0 to Total - 1 do
+  begin
+
+    Arquivo.Add(
+      LFIll(IntToStr(i+1),4)+ // Numero da PLU 4bits
+      'A'+ // separador fixo
+      '0'+ // zero fixo
+      LFIll(Produtos[i].Codigo, 6) +
+      LFIll(Produtos[i].ValorVenda, 6, 2) +
+      GetTipoProdutoRamuza(Produtos[i].Tipo) +
+      LFIll(Produtos[i].Validade, 3) +
+      LFIll('0',13)+ // codigo de 13 bits
+      LFIll('0',5)+ // Tara pré determinada ou peso pré determinado – 5 bits.
+      LFIll('0',2)+ // Número da etiqueta – 2 bits.
+
+      {
+      LFIll(Produtos[i].Nutricional.Qtd,6) +
+      LFIll(Produtos[i].Nutricional.ValorEnergetico,5) +
+      LFIll(Produtos[i].Nutricional.Carboidrato,6,1) +
+      LFIll(Produtos[i].Nutricional.Proteina,6,1) +
+      LFIll(Produtos[i].Nutricional.GorduraTotal,6,1) +
+      LFIll(Produtos[i].Nutricional.GorduraSaturada,6,1)+
+      LFIll(Produtos[i].Nutricional.GorduraTrans,6,1) +
+      LFIll(Produtos[i].Nutricional.Fibra,6,1)+
+      LFIll(Produtos[i].Nutricional.Sodio,5)
+      }
+
+      LFIll('1',2)+ // Informação nutricional 1 – 2 bits.
+      LFIll(Produtos[i].Nutricional.Qtd,5)+ //Quantidade da informação nutricional 1 – 5 bits.
+      LFIll(Produtos[i].Nutricional.ValorEnergetico,3)+ //Porcentagem da informação nutricional 1 – 3 bits. .
+
+      LFIll('2',2)+ //Informação nutricional 2 – 2 bits.
+      LFIll(Produtos[i].Nutricional.Qtd,5)+ //Quantidade da informação nutricional 2 – 5 bits.
+      LFIll(Produtos[i].Nutricional.Carboidrato,3)+ // Porcentagem da informação nutricional 2 – 3 bits.
+
+      LFIll('3',2)+ //Informação nutricional 3 – 2 bits.
+      LFIll(Produtos[i].Nutricional.Qtd,5)+ //Quantidade da informação nutricional 3 – 5 bits.
+      LFIll(Produtos[i].Nutricional.Proteina,3)+ //Porcentagem da informação nutricional 3 – 3 bits.
+
+      LFIll('4',2)+ //Informação nutricional 4 – 2 bits.
+      LFIll(Produtos[i].Nutricional.Qtd,5)+ //Quantidade da informação nutricional 4 – 5 bits.
+      LFIll(Produtos[i].Nutricional.GorduraTotal,3)+ //Porcentagem da informação nutricional 4 – 3 bits.
+
+      LFIll('5',2)+ //Informação nutricional 5 – 2 bits.
+      LFIll(Produtos[i].Nutricional.Qtd,5)+ //Quantidade da informação nutricional 5 – 5 bits.
+      LFIll(Produtos[i].Nutricional.GorduraSaturada,3)+ //Porcentagem da informação nutricional 5 – 3 bits.
+
+      LFIll('6',2)+ //Informação nutricional 6 – 2 bits.
+      LFIll(Produtos[i].Nutricional.Qtd,5)+ //Quantidade da informação nutricional 6 – 5 bits.
+      LFIll(Produtos[i].Nutricional.GorduraTrans,3)+ //Porcentagem da informação nutricional 6 – 3 bits.
+
+      LFIll('7',2)+ //Informação nutricional 7 – 2 bits.
+      LFIll(Produtos[i].Nutricional.Qtd,5)+ //Quantidade da informação nutricional 7 – 5 bits.
+      LFIll(Produtos[i].Nutricional.Fibra,3)+ //Porcentagem da informação nutricional 7 – 3 bits.
+
+      LFIll('8',2)+ // Informação nutricional 8 – 2 bits.
+      LFIll(Produtos[i].Nutricional.Qtd,5)+ // Quantidade da informação nutricional 8 – 5 bits.
+      LFIll(Produtos[i].Nutricional.Sodio,3)+ // Porcentagem da informação nutricional 8 – 3 bits.
+
+      LFIll('0',2)+ // Informação nutricional 9 – 2 bits.
+      LFIll('0',5)+ // Quantidade da informação nutricional 9 – 5 bits.
+      LFIll('0',3)+ // Porcentagem da informação nutricional 9 – 3 bits.
+
+      LFIll('0',2)+ // Informação nutricional 10 – 2 bits.
+      LFIll('0',5)+ // Quantidade da informação nutricional 10 – 5 bits.
+      LFIll('0',3)+ // Porcentagem da informação nutricional 10 – 3 bits.
+
+      LFIll('0',2)+ // Informação nutricional 11 – 2 bits.
+      LFIll('0',5)+ // Quantidade da informação nutricional 11 – 5 bits.
+      LFIll('0',3)+ // Porcentagem da informação nutricional 11 – 3 bits.
+
+      LFIll('0',2)+ // Informação nutricional 12 – 2 bits.
+      LFIll('0',5)+ // Quantidade da informação nutricional 12 – 5 bits.
+      LFIll('0',3)+ // Porcentagem da informação nutricional 12 – 3 bits.
+
+      '##'+ // Separador(sem espaços em branco antes nem depois).
+      RFIll(Produtos[i].Descricao, 24) +  //Nome do produto.
+      '##'+ // Separador. (sem espaços em branco antes nem depois)
+      ''+ //Texto extra 1.
+      '##' // Separador. (sem espaços em branco antes nem depois)
+    );
 
     Progresso(Format('Gerando produto %6.6d %s', [Produtos[i].Codigo, Produtos[i].Descricao]), i, Total);
   end;
@@ -1201,6 +1306,7 @@ begin
       modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 2);
       modToledoMGV6 : PreencherToledo(Produto, Nutricional, Receita, Tara, Fornecedor, Setor, 3);
       modUranoURF32 : PreencherUranoURF32(Produto, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita);
+      modRamuza     : PreencherRamuza(Produto);
     end;
 
     // Monta o nome do arquivo de produtos seguindo o padrao da balanca
@@ -1282,6 +1388,7 @@ begin
    modToledoMGV5 : result := 'Toledo MGV5';
    modToledoMGV6 : result := 'Toledo MGV6';
    modUranoURF32 : result := 'Urano URF32';
+   modRamuza     : result := 'Ramuza';
  end;
 end;
 

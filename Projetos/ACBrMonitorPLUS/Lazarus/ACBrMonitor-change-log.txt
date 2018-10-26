@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2018
+[*] DoACBrNFeUnit
+Validação da Assinatura no método "EnviarNFe" para gerar novamente o XML
+
+26/10/2018
+[*] DoACBrMDFeUnit
+Correça na validação da consulta de protocolo do método EncerrarMDFe
+
 17/10/2018
 [-] DoACBrUnit
 Ajustes no método ACBr.setWebService

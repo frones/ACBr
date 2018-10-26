@@ -1444,7 +1444,7 @@ begin
           Chave := AXML
         else
           raise Exception.Create(
-            'Parâmetro inválido. Chave do MDFe inválida ou arquivo não encontrado.');
+            'Chave do MDFe inválida ou arquivo não encontrado.');
       end
       else
         Chave := OnlyNumber(ACBrMDFe.Manifestos.Items[0].MDFe.infMDFe.ID);
@@ -1475,10 +1475,11 @@ begin
         begin
           //Realiza Consulta na Sefaz
           ACBrMDFe.WebServices.Consulta.MDFeChave := Chave;
-          if not (ACBrMDFe.WebServices.Consulta.Executar) then
-            raise Exception.Create('Parâmetro inválido. ' + ACBrMDFe.WebServices.Consulta.Msg)
+          ACBrMDFe.WebServices.Consulta.Executar;
+          if (ACBrMDFe.WebServices.Consulta.protocolo <> '') then
+            infEvento.detEvento.nProt := ACBrMDFe.WebServices.Consulta.Protocolo
           else
-            infEvento.detEvento.nProt := ACBrMDFe.WebServices.Consulta.Protocolo;
+            raise Exception.Create('Falha na consulta do Protocolo MDFe. ' + ACBrMDFe.WebServices.Consulta.Msg);
         end;
 
         if (Trim(AMunicipio) <> '') then

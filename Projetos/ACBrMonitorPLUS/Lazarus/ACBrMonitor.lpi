@@ -22,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="2"/>
-      <BuildNr Value="23"/>
+      <BuildNr Value="25"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion="1.2.0.1"/>
@@ -433,11 +433,4 @@
       </Options>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="1">
-      <Item1>
-        <Name Value="EConvertError"/>
-      </Item1>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

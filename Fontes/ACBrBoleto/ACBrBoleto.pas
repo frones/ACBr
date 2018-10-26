@@ -928,6 +928,7 @@ type
     fUF            : String;
     fAcbrBoleto    : TACBrBoleto;
     fTipoCarteira: TACBrTipoCarteira;
+    fDigitoVerificadorAgenciaConta: String;
     procedure SetAgencia(const AValue: String);
     procedure SetCNPJCPF ( const AValue: String ) ;
     procedure SetConta(const AValue: String);
@@ -959,6 +960,7 @@ type
     property UF          : String  read fUF          write fUF;
     property CEP         : String  read fCEP         write fCEP;
     property Telefone    : String  read fTelefone    write fTelefone;
+    property DigitoVerificadorAgenciaConta  : String read fDigitoVerificadorAgenciaConta   write fDigitoVerificadorAgenciaConta;
     property ACBrBoleto  : TACBrBoleto read fACBrBoleto;
   end;
 
@@ -1506,6 +1508,7 @@ begin
    fModalidade    := '';
    fConvenio      := '';
    fCNPJCPF       := '';
+   fDigitoVerificadorAgenciaConta:= '';
    fResponEmissao := tbCliEmite;
    fCaracTitulo   := tcSimples;
    fTipoInscricao := pJuridica;
@@ -2995,6 +2998,8 @@ begin
         ContaDigito   := IniBoletos.ReadString(CConta,'DigitoConta', ContaDigito);
         Agencia       := IniBoletos.ReadString(CConta,'Agencia', Agencia);
         AgenciaDigito := IniBoletos.ReadString(CConta,'DigitoAgencia', AgenciaDigito);
+        DigitoVerificadorAgenciaConta := IniBoletos.ReadString(CConta,'DigitoVerificadorAgenciaConta',
+                                      DigitoVerificadorAgenciaConta );
 
         Result := True;
       end;
@@ -3141,6 +3146,7 @@ begin
        IniRetorno.WriteString(CConta,'DigitoConta',Cedente.ContaDigito);
        IniRetorno.WriteString(CConta,'Agencia',Cedente.Agencia);
        IniRetorno.WriteString(CConta,'DigitoAgencia',Cedente.AgenciaDigito);
+       IniRetorno.WriteString(CConta,'DigitoVerificadorAgenciaConta',Cedente.DigitoVerificadorAgenciaConta);
 
        for I:= 0 to ListadeBoletos.Count - 1 do
        begin

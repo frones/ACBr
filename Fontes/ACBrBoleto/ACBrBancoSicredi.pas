@@ -95,6 +95,8 @@ begin
    fpTamanhoCarteira       := 1;
    fpCodigosMoraAceitos    := 'AB';
    fpCodigosGeracaoAceitos := '23456789';
+   fpLayoutVersaoArquivo   := 81;
+   fpLayoutVersaoLote      := 40;
 end;
 
 function TACBrBancoSicredi.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -1520,7 +1522,7 @@ begin
               Space(1)                                                      + // 058 a 058 - Dígito verificador da agência
               PadLeft(OnlyNumber(Conta), 12, '0')                           + // 059 a 070 - Número da Conta
               PadRight(ContaDigito, 1, '0')                                 + // 071 a 071 - DV Conta
-              Space(1)                                                      + // 072 a 072 - Dígito verificador da ag
+              PadRight(DigitoVerificadorAgenciaConta, 1, ' ')               + // 072 a 072 - Dígito verificador da ag / conta
               PadRight(Nome, 30)                                            + // 073 a 102 - Nome da empresa
               PadRight('SICREDI', 30)                                       + // 103 a 132 - Nome do banco = "SICREDI"
               Space(10)                                                     + // 133 a 142 - Uso exclusivo FEBRABAN/CNAB
@@ -1528,7 +1530,7 @@ begin
               FormatDateTime('ddmmyyyy', Now)                               + // 144 a 151 - Data de geração do arquivo
               FormatDateTime('hhnnss', Now)                                 + // 152 a 157 - Hora de geração do arquivo
               IntToStrZero(NumeroRemessa, 6)                                + // 158 a 163 - Número sequencial do arquivo
-              '081'                                                         + // 164 a 166 - Nº da versão do leiaute do arquivo = "081"
+              PadLeft(IntToStr(fpLayoutVersaoArquivo) , 3, '0')             + // 164 a 166 - Nº da versão do leiaute do arquivo = "081"
               '01600'                                                       + // 167 a 171 - Densidade de gravação do arquivo = "01600"
               Space(20)                                                     + // 172 a 191 - Para uso reservado do banco
               Space(20)                                                     + // 192 a 211 - Para uso reservado da empresa
@@ -1542,7 +1544,7 @@ begin
               'R'                                                           + // 009 a 009 - Tipo de operação = "R" Arquivo de Remessa
               '01'                                                          + // 010 a 011 - Tipo de serviço = "01" Cobrança
               Space(2)                                                      + // 012 a 013 - Uso exclusivo FEBRABAN/CNAB
-              '040'                                                         + // 014 a 016 - Nº da versão do leiaute do lote = "040"
+              PadLeft(IntToStr(fpLayoutVersaoLote), 3, '0')                 + // 014 a 016 - Nº da versão do leiaute do lote = "040"
               Space(1)                                                      + // 017 a 017 - Uso exclusivo FEBRABAN/CNAB
               TipoInsc                                                      + // 018 a 018 - Tipo de inscrição da empresa = "1" Pessoa Física "2" Pessoa Jurídica
               PadLeft(OnlyNumber(CNPJCPF), 15, '0')                         + // 019 a 033 - Número de inscrição da empresa
@@ -1551,7 +1553,7 @@ begin
               Space(1)                                                      + // 059 a 059 - Dígito verificador da agência
               PadLeft(OnlyNumber(Conta), 12, '0')                           + // 060 a 071 - Número da Canta
               PadRight(ContaDigito,1)                                       + // 072 a 072 - Zeros
-              Space(1)                                                      + // 073 a 073 - Dígito verificador da coop/ag/conta
+              PadRight(DigitoVerificadorAgenciaConta, 1, ' ')               + // 073 a 073 - Dígito verificador da coop/ag/conta
               PadRight(Nome, 30)                                            + // 074 a 103 - Nome da empresa
               Space(40)                                                     + // 104 a 143 - Mensagem 1
               Space(40)                                                     + // 144 a 183 - Mensagem 2

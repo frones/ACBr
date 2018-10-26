@@ -47,7 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 05/10/2018 ver: 0.0.247
+Data 26/10/2018 ver: 0.0.247
+
+26-10-2018 -- ACBrBancoBrasil
+[*] Correção na geração do Trailler do Registros CNAB240
+https://www.projetoacbr.com.br/forum/topic/46836-arquivo-de-remessa-pelo-acbrmonitorplus/
+
+26-10-2018 -- ACBrBancoNordeste
+[*] Ajustes na validação do código da carteira
+https://www.projetoacbr.com.br/forum/topic/46880-problema-na-carteira-boleto-banco-do-nordeste/
+
+26-10-2018 -- ACBrBancoCecred, ACBrBancoSicred, ACBrBancoBancoob
+[*] Ajustes na parametrização da versão do lote e arquivo para CNAB240 e adicionado
+parametro "DigitoVerificadorAgenciaConta".
+https://www.projetoacbr.com.br/forum/topic/46312-remessa-sicoob-240-digito-verificador-da-agconta/
 
 09-10-2018 -- ACBrBancoBrasil
 [*] Ajustes no totalizador de Registros CNAB240

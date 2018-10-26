@@ -710,7 +710,7 @@ begin
                PadRight(AgenciaDigito, 1, '0')          + // 58 - Digito agência do cedente
                PadLeft(OnlyNumber(Conta), 12, '0')      + // 59 a 70 - Número da conta do cedente
                PadRight(ContaDigito, 1, '0')            + // 71 - Digito conta do cedente
-               ' '                                      + // 72 - Dígito verificador Ag/Conta (zero)
+               PadRight(DigitoVerificadorAgenciaConta, 1, ' ')+ // 72 - Dígito verificador Ag/Conta (zero)
                PadRight(Nome, 30, ' ')                  + // 73 a 102 - Nome do cedente
                PadRight('SICOOB', 30, ' ')              + // 103 a 132 - Nome do banco
                space(10)                                + // 133 A 142 - Brancos
@@ -742,7 +742,7 @@ begin
                PadLeft(AgenciaDigito, 1, '0')          + //59 - Digito da agencia do cedente
                PadLeft(OnlyNumber(Conta), 12, '0')     + //60 - 71  Número da conta do cedente
                PadLeft(ContaDigito, 1, '0')            + //72 - Digito da conta
-               ' '                                     + //73
+               PadRight(DigitoVerificadorAgenciaConta, 1, ' ') + //73
                PadRight(Nome, 30, ' ')                 + //74 a 103 - Nome do cedente
                space(80)                               + // 104 a 183 - Brancos
                PadLeft(IntToStr(NumeroRemessa) , 08, '0') + // 184 a 191 - Número sequência do arquivo retorno.

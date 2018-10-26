@@ -695,8 +695,10 @@ begin
                                                                                               // 139 - 178 - Mensagem 8
                                                                                               // 179 - 218 - Mensagem 9
                 ifthen( (Mensagem.Count <= 2), '00' + Space(78) ,Space(22));                  // 219 - 240 - Reservado (uso Banco) para tipo de impressão 3
-     end;                                                                                     // 161 - 240 - Reservado (uso Banco) para tipo de impressão 1 e 2
-     fQtMsg := Mensagem.Count;
+                                                                                              // 161 - 240 - Reservado (uso Banco) para tipo de impressão 1 e 2
+       inc(fQtMsg);
+     end;
+
      {SEGMENTO S - FIM}
    end;
 end;
@@ -705,10 +707,7 @@ function TACBrBancoBrasil.GerarRegistroTrailler240( ARemessa : TStringList ): St
 var
   wRegsLote: Integer;
 begin
-   if ( fQtMsg > 0) then
-      wRegsLote := 4
-   else
-      wRegsLote := 3;
+      wRegsLote := 3; // Total de Segmentos Obrigatórios
 
    {REGISTRO TRAILER DO LOTE}
    Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + // 1 - 3 Código do banco
@@ -716,7 +715,7 @@ begin
             '5'                                                        + // 8 - 8 Tipo do registro: Registro trailer do lote
             Space(9)                                                   + // 9 - 17 Uso exclusivo FEBRABAN/CNAB
             //IntToStrZero(ARemessa.Count-1, 6)                        + //Quantidade de Registro da Remessa
-            IntToStrZero((wRegsLote * ARemessa.Count-1), 6)            + // 18 - 23 Quantidade de Registro da Remessa
+            IntToStrZero((wRegsLote * (ARemessa.Count-1)) + fQtMsg, 6) + // 18 - 23 Quantidade de Registro da Remessa
             PadRight('', 6, '0')                                       + //Quantidade títulos em cobrança
             PadRight('',17, '0')                                       + //Valor dos títulos em carteiras}
             PadRight('', 6, '0')                                       + //Quantidade títulos em cobrança
@@ -735,9 +734,11 @@ begin
             '9'                                                        + //Tipo do registro: Registro trailer do arquivo
             space(9)                                                   + //Uso exclusivo FEBRABAN/CNAB}
             '000001'                                                   + //Quantidade de lotes do arquivo}
-            IntToStrZero(((ARemessa.Count-1)* wRegsLote)+4, 6)         + //Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
+            IntToStrZero(((ARemessa.Count-1)* wRegsLote)+ 4 + fQtMsg, 6) + //Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
             space(6)                                                   + //Uso exclusivo FEBRABAN/CNAB}
             space(205);                                                  //Uso exclusivo FEBRABAN/CNAB}
+
+   fQtMsg := 0;
 end;
 
 

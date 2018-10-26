@@ -557,15 +557,15 @@ end;
 
 function TACBrBancoNordeste.CarteiraToTipoOperacao(const Carteira: string):String; 
 begin
-  if Carteira = '1' then
+  if Carteira = '01' then
     Result:= '21'
-  else if Carteira = '2' then
+  else if Carteira = '02' then
     Result:= '41'
-  else if Carteira = '4' then
+  else if Carteira = '04' then
     Result:= '21'
-  else if Carteira = '5' then
+  else if Carteira = '05' then
     Result:= '41'
-  else if Carteira = '6' then
+  else if Carteira = '06' then
     Result:= '31'
   else if Carteira = 'I' then
     Result:= '51'

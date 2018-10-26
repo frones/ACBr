@@ -101,7 +101,10 @@ begin
    fpTamanhoConta          := 8;
    fpTamanhoAgencia        := 4;
    fpTamanhoCarteira       := 2;
-   fValorTotalDocs         := 0;   
+   fValorTotalDocs         := 0;
+   fpLayoutVersaoArquivo   := 87;
+   fpLayoutVersaoLote      := 45;
+
 end;
 
 function TACBrBancoCecred.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -231,7 +234,7 @@ begin
              PadRight(AgenciaDigito, 1 , '0')                + // 58 - Dígito da agência do cedente
              aConta                                          + // 59 a 70 - Número da conta do cedente
              PadRight(ContaDigito, 1, '0')                   + // 71 - Dígito da conta do cedente
-             ' '                                             + // 72 - Dígito verificador da agência / conta
+             PadRight(DigitoVerificadorAgenciaConta, 1, ' ') + // 72 - Dígito verificador da agência / conta
              TiraAcentos(UpperCase(PadRight(Nome, 30, ' '))) + // 73 a 102 - Nome do cedente
              PadRight('CEDRED', 30, ' ')                     + // 103 a 132 - Nome da cooperativa
              StringOfChar(' ', 10)                           + // 133 a 142 - Uso exclusivo FEBRABAN/CNAB
@@ -239,7 +242,7 @@ begin
              FormatDateTime('ddmmyyyy', Now)                 + // 144 a 151 - Data do de geração do arquivo
              FormatDateTime('hhmmss', Now)                   + // 152 a 157 - Hora de geração do arquivo
              PadLeft(IntToStr(NumeroRemessa), 6, '0')        + // 158 a 163 - Número seqüencial do arquivo
-             '087'                                           + // 164 a 166 - Número da versão do layout do arquivo
+             PadLeft(IntToStr(fpLayoutVersaoArquivo) , 3, '0')+ // 164 a 166 - Número da versão do layout do arquivo
              StringOfChar('0', 5)                            + // 167 a 171 - Densidade de gravação do arquivo (BPI)
              StringOfChar(' ', 20)                           + // 172 a 191 - Uso reservado da cooperativa
              StringOfChar(' ', 20)                           + // 192 a 211 - Uso reservado da empresa
@@ -253,7 +256,7 @@ begin
              'R'                                             + // 9 - Tipo de operação: R (Remessa) ou T (Retorno)
              '01'                                            + // 10 a 11 - Tipo de serviço: 01 (Cobrança)
              '  '                                            + // 12 a 13 - Uso exclusivo FEBRABAN/CNAB
-             '045'                                           + // 14 a 16 - Número da versão do layout do lote
+             PadLeft(IntToStr(fpLayoutVersaoLote), 3, '0')   + // 14 a 16 - Número da versão do layout do lote
              ' '                                             + // 17 - Uso exclusivo FEBRABAN/CNAB
              ATipoInscricao                                  + // 18 - Tipo de inscrição do cedente
              PadLeft(OnlyNumber(CNPJCPF), 15, '0')           + // 19 a 33 -Número de inscrição do cedente
@@ -262,7 +265,7 @@ begin
              PadRight(AgenciaDigito, 1 , '0')                + // 59 - Dígito da agência do cedente
              aConta                                          + // 60 a 71 - Número da conta do cedente
              PadRight(ContaDigito, 1, '0')                   + // 72 - Dígito da conta do cedente
-             ' '                                             + // 73 - Dígito verificador da agência / conta
+             PadRight(DigitoVerificadorAgenciaConta, 1, ' ') + // 73 - Dígito verificador da agência / conta
              PadRight(Nome, 30, ' ')                         + // 74 a 103 - Nome do cedente
              StringOfChar(' ', 40)                           + // 104 a 143 - Mensagem 1 para todos os boletos do lote
              StringOfChar(' ', 40)                           + // 144 a 183 - Mensagem 2 para todos os boletos do lote

@@ -4534,6 +4534,7 @@ begin
           for i := 0 to retEventos.Count - 1 do
           begin
             Add('Processamento');
+            Add(' - ID Evento..........: ' + retEventos.Items[i].Id);
             Add(' - cdResposta.........: ' +
               IntToStr(retEventos.Items[i].Processamento.cdResposta));
             Add(' - descResposta.......: ' + retEventos.Items[i]

@@ -443,6 +443,7 @@ begin
               Add('   Id...........: ' + Id);
               Add('   Cód Retorno..: ' + IdeStatus.cdRetorno);
               Add('   Descrição....: ' + IdeStatus.descRetorno);
+              Add('   Nro Recibo...: ' + InfoTotal.nrRecArqBase);
 
               Add(' **Ocorrencias');
 

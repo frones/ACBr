@@ -238,12 +238,16 @@ type
   TDFeSendThread = class(TThread)
   private
     FSSLHttp: TDFeSSLHttpClass;
+    FHttpSendCriticalSection: TCriticalSection;
     FConteudoXML: String;
     FURL: String;
     FSoapAction: String;
     FMimeType: String;
     FResponse: String;
-    FHtttpDone: Boolean;
+    FHttpDone: Boolean;
+    FExceptMessage: String;
+
+    function GetDone: Boolean;
   protected
     procedure Execute; override;
   public
@@ -253,6 +257,8 @@ type
 
     procedure Abort;
     property Response: String read FResponse;
+    property ExceptMessage: String read FExceptMessage;
+    property Done: Boolean read GetDone;
   end;
 
   { TDFeSSL }
@@ -309,6 +315,9 @@ type
     procedure SetSSLCryptLib(ASSLCryptLib: TSSLCryptLib);
     procedure SetSSLHttpLib(ASSLHttpLib: TSSLHttpLib);
     procedure SetSSLXmlSignLib(ASSLXmlSignLib: TSSLXmlSignLib);
+
+  protected
+    FHttpSendCriticalSection: TCriticalSection;
 
   public
     constructor Create;
@@ -397,7 +406,6 @@ type
     property SSLCryptClass: TDFeSSLCryptClass read FSSLCryptClass;
     property SSLHttpClass: TDFeSSLHttpClass read FSSLHttpClass;
     property SSLXmlSignClass: TDFeSSLXmlSignClass read FSSLXmlSignClass;
-
   published
     property SSLCryptLib: TSSLCryptLib read FSSLCryptLib write SetSSLCryptLib
       default cryNone;
@@ -431,9 +439,6 @@ type
     property AntesDeAssinar: TDFeSSLAntesDeAssinar read FAntesDeAssinar write FAntesDeAssinar;
   end;
 
-
-var
-  HttpSendCriticalSection : TCriticalSection;
 
 implementation
 
@@ -472,55 +477,70 @@ constructor TDFeSendThread.Create(ADFeSSL: TDFeSSL;
   SSLHttpClass: TDFeSSLHttpClassOf; AConteudoXML, AURL, ASoapAction,
   AMimeType: String);
 begin
-  FreeOnTerminate := True ;
+  FreeOnTerminate := False; // Sem liberação automática da Thread
+
   if (not Assigned(ADFeSSL)) or EstaVazio(AConteudoXML) or EstaVazio(AURL) then
     raise EACBrDFeException.Create('TDFeSendThread, parâmetros inválidos');
 
+  FHttpSendCriticalSection := ADFeSSL.FHttpSendCriticalSection;
   FSSLHttp      := SSLHttpClass.Create(ADFeSSL);
   FConteudoXML  := AConteudoXML;
   FURL          := AURL;
   FSoapAction   := ASoapAction;
   FMimeType     := AMimeType;
-  FResponse     := '';
-  FHtttpDone    := True;
+  FHttpDone     := True;
 
-  inherited Create(False);  // Run Now
+  inherited Create(False);  // Executa agora
 
   Priority := tpNormal;
 end;
 
 destructor TDFeSendThread.Destroy;
 begin
-  FHtttpDone := True;
+  FHttpDone := True;
   FSSLHttp.Free;
 
   inherited Destroy;
 end;
 
+function TDFeSendThread.GetDone: Boolean;
+begin
+  Result := Self.Terminated or (FResponse <> '') or (FExceptMessage <> '');
+end;
+
 procedure TDFeSendThread.Execute;
 begin
-  HttpSendCriticalSection.Acquire;
+  FHttpDone      := False;
+  FResponse      := '';
+  FExceptMessage := '';
+
   try
-    FHtttpDone := False;
-    FResponse := FSSLHttp.Enviar(FConteudoXML, FURL, FSoapAction, FMimeType);
-  finally
-    FHtttpDone := True;
-    HttpSendCriticalSection.Release;
+    FHttpSendCriticalSection.Acquire;
+    try
+      FResponse := FSSLHttp.Enviar(FConteudoXML, FURL, FSoapAction, FMimeType);
+      FHttpDone := True;
+    finally
+      FHttpSendCriticalSection.Release;
+    end;
+  except
+    on E: Exception do
+    begin
+      FExceptMessage := E.Message;
+    end;
   end;
 
-  while not Terminated do
-    Sleep(10);
+  Terminate;
 end;
 
 procedure TDFeSendThread.Abort;
 begin
-  if (not FHtttpDone) then
+  FreeOnTerminate := True;
+
+  if (not FHttpDone) then
   begin
-    FHtttpDone := True;
+    FHttpDone := True;
     FSSLHttp.Abortar;
   end;
-
-  Terminate;
 end;
 
 { TDadosCertificado }
@@ -1005,6 +1025,8 @@ begin
   inherited Create;
 
   FAntesDeAssinar := Nil;
+  FHttpSendCriticalSection := TCriticalSection.Create;
+
   Clear;
 end;
 
@@ -1052,6 +1074,8 @@ end;
 
 destructor TDFeSSL.Destroy;
 begin
+  FHttpSendCriticalSection.Free;
+
   if Assigned(FSSLCryptClass) then
   begin
     DescarregarCertificado;
@@ -1117,8 +1141,11 @@ function TDFeSSL.Enviar(var ConteudoXML: String; const AURL: String;
 var
   SendThread : TDFeSendThread;
   EndTime : TDateTime ;
+  ErrorMsg: String;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
+  Result := '';
+
   if UseCertificateHTTP then
     CarregarCertificadoSeNecessario;
 
@@ -1132,23 +1159,31 @@ begin
                                          TDFeSSLHttpClassOf(FSSLHttpClass.ClassType),
                                          ConteudoXML, AURL, ASoapAction, AMimeType);
     try
-      while (SendThread.Response = '') and (Now <= EndTime) do
+      while (not SendThread.Done) and (Now <= EndTime) do
         Sleep(50);
     finally
       Result := SendThread.Response;
-      SendThread.Abort;
+      ErrorMsg := SendThread.ExceptMessage;
+
+      if not SendThread.Done then
+        SendThread.Abort  // Isso forçará a Thread terminar, e morrer por si...
+      else
+        SendThread.Free;
     end;
+
+    if not EstaVazio(ErrorMsg) then
+      raise EACBrDFeException.Create('Erro na thread de envio: ' + ErrorMsg);
 
     if EstaVazio(Result) then
       raise EACBrDFeException.Create('Timeout - Não foi possível obter a resposta do servidor');
   end
   else
   begin
-    HttpSendCriticalSection.Acquire;
+    FHttpSendCriticalSection.Acquire;
     try
       Result := FSSLHttpClass.Enviar(ConteudoXML, AURL, ASoapAction, AMimeType);
     finally
-      HttpSendCriticalSection.Release;
+      FHttpSendCriticalSection.Release;
     end;
   end;
 end;
@@ -1640,13 +1675,6 @@ begin
 
   FSSLXmlSignLib := ASSLXmlSignLib;
 end;
-
-
-initialization
-  HttpSendCriticalSection := TCriticalSection.Create;
-
-finalization;
-  HttpSendCriticalSection.Free;
 
 end.
 

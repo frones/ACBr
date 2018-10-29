@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2018
+-- ACBrDFeSSL --
+[-] Correçao de A.V. quando ocorria um Exception na transmissão HTTP e TimeOutPorThread
+    estava ativo.
+    https://www.projetoacbr.com.br/forum/topic/47120-tratamento-de-erro-na-execução-de-tdfesendthread/
+[*] Ajuste para que Vários componentes DFe, possam fazer transmissão simultaneamente
+    https://www.projetoacbr.com.br/forum/topic/47126-d%C3%BAvida-sobre-critical-section-em-m%C3%A9todo-de-envio-tdfessl/
+    (por: DSA)
+
 10/10/2018
 -- ACBrDFeConfiguracoes --
 [*] Ajuste dos métodos "CalcSSLLib" e "SetSSLLib" para definir o padrão para

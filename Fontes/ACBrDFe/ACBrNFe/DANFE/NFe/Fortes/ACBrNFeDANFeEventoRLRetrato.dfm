@@ -2,9 +2,12 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
   Left = 200
   Top = 114
   Caption = 'frlDANFeEventoRLRetrato'
-  ClientHeight = 584
+  ClientHeight = 749
   ClientWidth = 811
   OldCreateOrder = True
+  ExplicitTop = -277
+  ExplicitWidth = 827
+  ExplicitHeight = 788
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLEvento: TRLReport
@@ -20,6 +23,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     PrintDialog = False
     Title = 'Danfe Retrato'
     BeforePrint = RLEventoBeforePrint
+    ExplicitTop = 3
     object rliMarcaDagua1: TRLImage
       Left = 224
       Top = 300
@@ -1454,7 +1458,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     end
     object rlbUsuario: TRLBand
       Left = 26
-      Top = 1116
+      Top = 1076
       Width = 742
       Height = 12
       AlignToBottom = True

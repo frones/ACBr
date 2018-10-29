@@ -294,7 +294,9 @@ begin
           begin
             rllTitulo.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
 
-            // Prrenche os campos - "Condições de uso"
+            RLLabel21.Caption := 'CONDIÇÕES DE USO';
+            // Preenche os campos - "Condições de uso"
+            rlmCondUso.Lines.Clear;
             rlmCondUso.Lines.Add(StringReplace(InfEvento.detEvento.xCondUso,
                                   ';', #13#10, [rfReplaceAll, rfIgnoreCase]));
             rlmCondUso.Lines.Text := StringReplace(rlmCondUso.Lines.Text,
@@ -326,6 +328,17 @@ begin
           begin
             rllTitulo.Caption := ACBrStr('OPERAÇÃO NÃO REALIZADA');
             rllJustificativa.Caption := InfEvento.detEvento.xJust;
+          end;
+        teEPECNFe:
+          begin
+            rllTitulo.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA - EPEC');
+
+            RLLabel21.Caption := 'DESCRIÇÃO';
+            rlmCondUso.Lines.Clear;
+            rlmCondUso.Lines.Add('Destinatário    : ' + FEventoNFe.InfEvento.detEvento.dest.CNPJCPF);
+            rlmCondUso.Lines.Add('Valor da Nota   : ' + FormatFloatBr(msk13x2, FEventoNFe.InfEvento.detEvento.vNF));
+            rlmCondUso.Lines.Add('Valor do ICMS   : ' + FormatFloatBr(msk13x2, FEventoNFe.InfEvento.detEvento.vICMS));
+            rlmCondUso.Lines.Add('Valor do ICMS ST: ' + FormatFloatBr(msk13x2, FEventoNFe.InfEvento.detEvento.vST));
           end;
       end; // case InfEvento.tpEvento
 
@@ -461,6 +474,14 @@ begin
         rlbJustificativa.Visible := False;
         rlbCondUso.Visible := True;
         rlbCorrecao.Visible := True;
+        rliMarcaDagua1.Top := ((rlbCorrecao.Top + rlbCorrecao.Height) div 2) - (rliMarcaDagua1.Height div 2);
+      end;
+
+    teEPECNFe:
+      begin
+        rlbJustificativa.Visible := False;
+        rlbCondUso.Visible := True;
+        rlbCorrecao.Visible := False;
         rliMarcaDagua1.Top := ((rlbCorrecao.Top + rlbCorrecao.Height) div 2) - (rliMarcaDagua1.Height div 2);
       end;
 

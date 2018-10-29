@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2018
+-- ACBrNFeDANFeEventoRLRetrato --
+[*] Adicionada o evento EPEC que estava faltando.
+   Por: Italo Jurisato Junior
+
 21/09/2018
 -- ACBrNFeDANFeRLRetrato --
 [*] https://www.projetoacbr.com.br/forum/topic/46614-cabe%C3%A7alho-de-danfe-estar-cortando-o-telefone/?do=findComment&comment=307790

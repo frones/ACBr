@@ -362,6 +362,7 @@ begin
     Add('placa', ftMemo);
     Add('RNTRCProp', ftMemo);
     Add('RENAVAM', ftMemo);
+    Add('CNPJCPFProp', ftMemo);
     // Condutor
     Add('xNome', ftMemo);
     Add('CPF', ftMemo);
@@ -1543,6 +1544,7 @@ begin
       FieldByName('placa').AsString     := FormatarPlaca(veicTracao.placa);
       FieldByName('RENAVAM').AsString   := veicTracao.RENAVAM;
       FieldByName('RNTRCProp').AsString := IfEmptyThen(veicTracao.prop.RNTRC, FieldByName('RNTRC').AsString);
+      FieldByName('CNPJCPFProp').AsString := veicTracao.prop.CNPJCPF;
 
       for i := 0 to veicTracao.condutor.Count - 1 do
       begin
@@ -1556,7 +1558,8 @@ begin
     begin
       FieldByName('placa').AsString     := FieldByName('placa').AsString + #13#10 + FormatarPlaca(FMDFe.rodo.veicReboque.Items[i].placa);
       FieldByName('RENAVAM').AsString   := FieldByName('RENAVAM').AsString + #13#10 + veicReboque.Items[i].RENAVAM;
-      FieldByName('RNTRCProp').AsString := FieldByName('RNTRCProp').AsString + #13#10 + IfThen(FMDFe.rodo.veicReboque.Items[i].prop.RNTRC <> '', FMDFe.rodo.veicReboque.Items[i].prop.RNTRC, FMDFe.rodo.RNTRC);
+      FieldByName('RNTRCProp').AsString := FieldByName('RNTRCProp').AsString + #13#10 + IfThen(veicReboque.Items[i].prop.RNTRC <> '', veicReboque.Items[i].prop.RNTRC, FMDFe.rodo.RNTRC);
+      FieldByName('CNPJCPFProp').AsString := FieldByName('CNPJCPFProp').AsString + #13#10 + veicReboque.Items[i].prop.CNPJCPF;
     end;
 
     if FMDFe.rodo.valePed.disp.Count > 0 then

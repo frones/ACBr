@@ -439,6 +439,9 @@ const
   CMetodoTamNossoNumero =            'tamnossonumero';
   CMetodoCodigosMoraAceitos =        'codigosmoraaceitos';
   CMetodoSelecionaBanco =            'selecionabanco';
+  CMetodoMontarNossoNumero =         'montarnossonumero';
+  CMetodoRetornaLinhaDigitavel =     'retornalinhadigitavel';
+  CMetodoRetornaCodigoBarras =       'retornacodigobarras';
 
   CMetodoAtivar =               'ativar';
   CMetodoDesativar =            'desativar';

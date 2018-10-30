@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2018
+[+] DoBoletoUnit
+Adicionado os métodos "MontarNossoNumero", "RetornaLinhaDigitavel", "RetornaCodigoBarras"
+https://www.projetoacbr.com.br/forum/topic/47115-obter-dados-do-boleto-no-acbrmonitor/
+
 26/10/2018
 [*] DoACBrNFeUnit
 Validação da Assinatura no método "EnviarNFe" para gerar novamente o XML

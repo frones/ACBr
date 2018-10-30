@@ -174,6 +174,27 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoMontarNossoNumero  }
+
+TMetodoMontarNossoNumero  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoRetornaLinhaDigitavel  }
+
+TMetodoRetornaLinhaDigitavel  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoRetornaCodigoBarras  }
+
+TMetodoRetornaCodigoBarras  = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoCodigosMoraAceitos  }
 
 TMetodoCodigosMoraAceitos  = class(TACBrMetodo)
@@ -220,7 +241,9 @@ begin
   ListaDeMetodos.Add(CMetodoCodigosMoraAceitos);
   ListaDeMetodos.Add(CMetodoSelecionaBanco);
   ListaDeMetodos.Add(CMetodoListaOcorrenciasEx);
-
+  ListaDeMetodos.Add(CMetodoMontarNossoNumero);
+  ListaDeMetodos.Add(CMetodoRetornaLinhaDigitavel);
+  ListaDeMetodos.Add(CMetodoRetornaCodigoBarras);
 end;
 
 procedure TACBrObjetoBoleto.Executar(ACmd: TACBrCmd);
@@ -253,8 +276,11 @@ begin
     15 : AMetodoClass := TMetodoCodigosMoraAceitos;
     16 : AMetodoClass := TMetodoSelecionaBanco;
     17 : AMetodoClass := TMetodoListaOcorrenciasEX;
+    18 : AMetodoClass := TMetodoMontarNossoNumero;
+    19 : AMetodoClass := TMetodoRetornaLinhaDigitavel;
+    20 : AMetodoClass := TMetodoRetornaCodigoBarras;
 
-    18..31 : DoACbr(ACmd);
+    21..34 : DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then
@@ -593,6 +619,83 @@ begin
 
   with TACBrObjetoBoleto(fpObjetoDono) do
     fpCmd.Resposta := IntToStr(ACBrBoleto.Banco.CalcularTamMaximoNossoNumero(ATam));
+
+end;
+
+{ TMetodoMontarNossoNumero }
+
+{ Params: 0 - Titulo: Indice do Título
+}
+procedure TMetodoMontarNossoNumero.Executar;
+var
+   ATitulo: Integer;
+begin
+
+  ATitulo := StrToIntDef(fpCmd.Params(0),0);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    if (ACBrBoleto.ListadeBoletos.Count = 0) then
+      raise Exception.Create('Nenhum título encontrado na Lista!');
+
+    try
+      fpCmd.Resposta := ACBrBoleto.Banco.MontarCampoNossoNumero(ACBrBoleto.ListadeBoletos[ATitulo]);
+
+    except
+      raise Exception.Create('Título de Indice '+IntToStr(ATitulo)+' não encontrado na Lista!');
+    end;
+  end;
+
+end;
+{ TMetodoRetornaLinhaDigitavel }
+
+{ Params: 0 - Titulo: Indice do Título
+}
+procedure TMetodoRetornaLinhaDigitavel.Executar;
+var
+  ATitulo: Integer;
+  ABarras: String;
+begin
+
+  ATitulo := StrToIntDef(fpCmd.Params(0),0);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    if (ACBrBoleto.ListadeBoletos.Count = 0) then
+      raise Exception.Create('Nenhum título encontrado na Lista!');
+
+    try
+      ABarras := ACBrBoleto.Banco.MontarCodigoBarras(ACBrBoleto.ListadeBoletos[ATitulo]);
+      fpCmd.Resposta := ACBrBoleto.Banco.MontarLinhaDigitavel(ABarras,ACBrBoleto.ListadeBoletos[ATitulo]);
+
+    except
+      raise Exception.Create('Título de Indice '+IntToStr(ATitulo)+' não encontrado na Lista!');
+    end;
+  end;
+
+end;
+
+{ TMetodoRetornaCodigoBarras }
+
+{ Params: 0 - ATitulo: Integer com índice do título na lista
+}
+procedure TMetodoRetornaCodigoBarras.Executar;
+var
+  ATitulo: Integer;
+begin
+  ATitulo := StrToIntDef(fpCmd.Params(0),0);
+
+  with TACBrObjetoBoleto(fpObjetoDono) do
+  begin
+    if (ACBrBoleto.ListadeBoletos.Count = 0) then
+      raise Exception.Create('Nenhum título encontrado na Lista!');
+
+    try
+      fpCmd.Resposta := ACBrBoleto.Banco.MontarCodigoBarras(ACBrBoleto.ListadeBoletos[ATitulo])
+    except
+      raise Exception.Create('Título de Indice '+IntToStr(ATitulo)+' não encontrado na Lista!');
+    end;
+  end;
 
 end;
 

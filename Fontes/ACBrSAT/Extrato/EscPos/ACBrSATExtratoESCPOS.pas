@@ -551,7 +551,17 @@ begin
 
   if MsgAppQRCode <> '' then
     FBuffer.Add('</ce><c>' + QuebraLinhas(MsgAppQRCode, FPosPrinter.ColunasFonteCondensada ));
-	
+
+  if (SoftwareHouse <> '') or (Site <> '') then
+    FBuffer.Add('</linha_simples>');
+
+  // SoftwareHouse
+  if SoftwareHouse <> '' then
+    FBuffer.Add('</ce><c>' + SoftwareHouse);
+
+  if Site <> '' then
+    FBuffer.Add('</ce><c>' + Site);
+
   FBuffer.Add('</zera>');	
 
   if FPosPrinter.CortaPapel then

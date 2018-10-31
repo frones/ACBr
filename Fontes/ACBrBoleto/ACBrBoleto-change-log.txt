@@ -49,6 +49,10 @@ Símbolo : Significado
 
 Data 26/10/2018 ver: 0.0.247
 
+30-10-2018 -- ACBrBancoBancoob
+[*] Correção na parametrização da versão do lote Header para CNAB240 
+manteve campo fixo com espaço para seguir manual
+
 30-10-2018 -- ACBrBancoBanestes
 [*] Correção na geração do arquivo de Remessa CNAB400
 https://www.projetoacbr.com.br/forum/topic/47333-correcao-banestes/?tab=comments#comment-312164

@@ -742,7 +742,7 @@ begin
                PadLeft(AgenciaDigito, 1, '0')          + //59 - Digito da agencia do cedente
                PadLeft(OnlyNumber(Conta), 12, '0')     + //60 - 71  Número da conta do cedente
                PadLeft(ContaDigito, 1, '0')            + //72 - Digito da conta
-               PadRight(DigitoVerificadorAgenciaConta, 1, ' ') + //73
+               ' '                                     + //73
                PadRight(Nome, 30, ' ')                 + //74 a 103 - Nome do cedente
                space(80)                               + // 104 a 183 - Brancos
                PadLeft(IntToStr(NumeroRemessa) , 08, '0') + // 184 a 191 - Número sequência do arquivo retorno.

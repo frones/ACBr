@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2018
+-- pnfsNFSeW_ABRASFv1 --
+[*] Incluido o provedor Thema na lista de provedores que devem gerar a tag
+    Aliquota não importando o seu valor.
+   Por: Italo Jurisato Junior
+
 19/10/2018
 -- pnfsNFSe / pnfsNFSeW_ABRASFv1 --
 [*] O provedor Betha voltou a traz e removeu a tag <TaxaTurismo>

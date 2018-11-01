@@ -47,10 +47,42 @@ const
   CSessaoRespConsulta = 'STATUS';
   CSessaoRespEnvio    = 'ENVIO';
 
+  CSessaoGuia = 'Guia';
+
+  CChavePrintDialog = 'PrintDialog';
+  CChaveUsarSeparadorPathPDF = 'UsarSeparadorPathPDF';
+  CChaveFax = 'Fax';
+  CChaveSistema = 'Sistema';
+  CChaveSite = 'Site';
+  CChaveTamanhoPapel = 'TamanhoPapel';
+
+//  ErrValidacaoGNRe = -11;
+//  ErrChaveGNRe = -12;
+//  ErrAssinarGNRe = -13;
+//  ErrConsulta = -14;
+//  ErrCNPJ = -15;
+  ErrRetorno = -16;
+  ErrEnvio = -17;
+//  ErrEnvioEvento = -18;
+
+Resourcestring
+  SInfGNReCarregados = '%d GNRe(s) Carregado(s)';
+
+//  SErrChaveInvalida = 'Chave % inválida.';
+//  SErrCNPJInvalido = 'CNPJ % inválido.';
+//  SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
+
+function SetRetornoGNReCarregados(const NumGNRe: Integer): Integer;
+
 implementation
 
 uses
   ACBrLibComum;
+
+function SetRetornoGNReCarregados(const NumGNRe: Integer): Integer;
+begin
+  Result := SetRetorno( 0, {NumGNRe,} Format(SInfGNReCarregados, [NumGNRe]));
+end;
 
 end.
 

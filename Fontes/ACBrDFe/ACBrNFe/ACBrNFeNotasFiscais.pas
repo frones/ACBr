@@ -931,10 +931,10 @@ begin
           if (nfe.Cobr.Fat.vLiq <> (nfe.Cobr.Fat.vOrig - nfe.Cobr.Fat.vDesc)) then
             AdicionaErro('896-Rejeição: Valor Liquido da Fatura difere do Valor Original menos o Valor do Desconto');
 
-          GravaLog('Validar: 897-Valor Líquido da Fatura/Valor Original da Fatura maior que o Valor Total da Nota Fiscal');
-          if (((nfe.Cobr.Fat.vLiq > 0) and (nfe.Cobr.Fat.vLiq > nfe.Total.ICMSTot.vNF)) or
-              ((nfe.Cobr.Fat.vOrig > nfe.Total.ICMSTot.vNF)))then
-            AdicionaErro('897-Rejeição: Valor da Fatura maior que Valor Total da NF-e');
+//          GravaLog('Validar: 897-Valor Líquido da Fatura/Valor Original da Fatura maior que o Valor Total da Nota Fiscal');
+//          if (((nfe.Cobr.Fat.vLiq > 0) and (nfe.Cobr.Fat.vLiq > nfe.Total.ICMSTot.vNF)) or
+//              ((nfe.Cobr.Fat.vOrig > nfe.Total.ICMSTot.vNF)))then
+//            AdicionaErro('897-Rejeição: Valor da Fatura maior que Valor Total da NF-e');
 
           fsvDup := 0;
           UltVencto := DateOf(NFe.Ide.dEmi);

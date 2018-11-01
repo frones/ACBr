@@ -153,7 +153,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\Testes\MDFe\bin\ACBrMDFe32"/>
+            <Filename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\MDFe\bin\ACBrMDFe32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>

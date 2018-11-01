@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/09/2018
+--- ACBrLibMDFe ---
+[+] Inicio do projeto.
+   Por: Italo Jurisato Junior
+
 24/08/2018
 -- ACBrLibMDFeRespostas --
 [+] Acrescentado a propriedade Arquivo nas respostas de Cancelamento e Encerramento.

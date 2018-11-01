@@ -50,7 +50,8 @@ unit ACBrGNREConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils, ACBrDFeConfiguracoes, pcnConversao, pgnreConversao;
+  Classes, SysUtils, IniFiles,
+  ACBrDFeConfiguracoes, pcnConversao, pgnreConversao;
 
 type
 
@@ -64,6 +65,8 @@ type
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfGNRE: TGeralConfGNRE); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
   published
     property VersaoDF: TVersaoGNRE read FVersaoDF write SetVersaoDF default ve100;
@@ -81,6 +84,8 @@ type
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeArquivosConfGNRE: TArquivosConfGNRE); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathGNRE(Data: TDateTime = 0; CNPJ: String = ''): String;
   published
@@ -130,6 +135,20 @@ begin
   FVersaoDF := ve100;
 end;
 
+procedure TGeralConfGNRE.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+end;
+
+procedure TGeralConfGNRE.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  VersaoDF := TVersaoGNRE(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+end;
+
 procedure TGeralConfGNRE.Assign(DeGeralConfGNRE: TGeralConfGNRE);
 begin
   inherited Assign(DeGeralConfGNRE);
@@ -151,6 +170,8 @@ begin
   FEmissaoPathGNRE := False;
   FSalvarApenasGNREProcessadas := False;
   FPathGNRE := '';
+  FPathArqTXT := '';
+  FSalvarTXT := False;
 end;
 
 procedure TArquivosConfGNRE.Assign(DeArquivosConfGNRE: TArquivosConfGNRE);
@@ -160,6 +181,8 @@ begin
   EmissaoPathGNRE             := DeArquivosConfGNRE.EmissaoPathGNRE;
   SalvarApenasGNREProcessadas := DeArquivosConfGNRE.SalvarApenasGNREProcessadas;
   PathGNRE                    := DeArquivosConfGNRE.PathGNRE;
+  PathArqTXT                  := DeArquivosConfGNRE.PathArqTXT;
+  SalvarTXT                   := DeArquivosConfGNRE.SalvarTXT;
 end;
 
 function TArquivosConfGNRE.GetPathGNRE(Data: TDateTime;
@@ -168,12 +191,35 @@ begin
   Result := GetPath(FPathGNRE, 'GNRE', CNPJ, Data);
 end;
 
+procedure TArquivosConfGNRE.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarApenasGNREProcessadas', SalvarApenasGNREProcessadas);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathGNRE', EmissaoPathGNRE);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathGNRE', PathGNRE);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathArqTXT', PathArqTXT);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarTXT', SalvarTXT);
+end;
+
+procedure TArquivosConfGNRE.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  SalvarApenasGNREProcessadas := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarApenasGNREProcessadas', SalvarApenasGNREProcessadas);
+  EmissaoPathGNRE := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathGNRE', EmissaoPathGNRE);
+  PathGNRE := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathGNRE', PathGNRE);
+  PathArqTXT := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathArqTXT', PathArqTXT);
+  SalvarTXT := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarTXT', SalvarTXT);
+end;
+
 { TConfiguracoesGNRE }
 
 constructor TConfiguracoesGNRE.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  FPSessaoIni := 'GNRe';
   WebServices.ResourceName := 'ACBrGNREServicos';
 end;
 

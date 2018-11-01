@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2018
+-- ACBrGNREConfiguracoes --
+[+] Acrescentado os métodos GravarINI e LerINI responsáveis por salvar e ler
+    de um arquivo INI as configurações do componente que serão utilizados
+    na ACBrLibGNRe.
+   Por: Italo Jurisato Junior
+
 25/10/2018
 -- Diversos --
 [-] O componente não estava obedecendo o Path informado em PathPDF ao usar o 

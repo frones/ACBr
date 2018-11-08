@@ -341,6 +341,12 @@ begin
   rllqCTe.Caption  := FormatFloatBr(FMDFe.tot.qCTe,  '#0');
   rllqNFe.Caption  := FormatFloatBr(FMDFe.tot.qNFe,  '#0');
   rllqMDFe.Caption := FormatFloatBr(FMDFe.tot.qMDFe, '#0');
+
+  if FMDFe.tot.cUnid = uTON then
+    rlLabel12.Caption := 'PESO TOTAL (Ton)'
+  else
+    rlLabel12.Caption := 'PESO TOTAL (Kg)';
+
   rllPesoTotal.Caption := FormatFloatBr(FMDFe.tot.qCarga, ',#0.0000');
   rllValorMercadoria.Caption := FormatFloatBr(FMDFe.tot.vCarga, ',#0.00');
 

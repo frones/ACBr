@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/11/2018
+-- pcnReinfR5011 -- 
+[*] https://www.projetoacbr.com.br/forum/topic/47499-ajuste-reinf-r5011/
+   Por: Maxwell Roberto
+
 22/10/2018
 -- Diversos -- 
 [*] https://www.projetoacbr.com.br/forum/topic/46367-vers%C3%A3o-14-do-layout/?do=findComment&comment=310996

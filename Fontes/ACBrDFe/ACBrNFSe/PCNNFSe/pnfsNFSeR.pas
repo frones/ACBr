@@ -1331,7 +1331,7 @@ begin
     if Nivel > 0 then
     begin
       if FProvedor = proTecnos then
-         NFSe.Link := Leitor.rCampo(tcStr, 'LinkNota');
+        NFSe.Link := Leitor.rCampo(tcStr, 'LinkNota');
 
       NFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
       NFSe.SeriePrestacao    := Leitor.rCampo(tcStr, 'Serie');
@@ -1345,17 +1345,22 @@ begin
       if FProvedor = proVersaTecnologia then
         NFSe.dhRecebimento := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
-      if FProvedor in [proFreire, proSpeedGov, proVitoria, proDBSeller,
-                       proFriburgo, proISSNet] then
-        NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
-      else if FProvedor in [proNFSeBrasil] then
-      begin
-        DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
+      case FProvedor of
+        proFreire,
+        proSpeedGov,
+        proVitoria,
+        proDBSeller,
+        proFriburgo: NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao');
 
-        NFSe.DataEmissao := StringToDateTime(DataHorBr, 'DD/MM/YYYY hh:nn:ss');
-      end
+        proNFSeBrasil:
+          begin
+            DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
+
+            NFSe.DataEmissao := StringToDateTime(DataHorBr, 'DD/MM/YYYY hh:nn:ss');
+          end;
       else
         NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
+      end;
 
       // Tratar erro de conversão de tipo no Provedor Ábaco
       if Leitor.rCampo(tcStr, 'DataEmissaoRps') <> '0000-00-00' then

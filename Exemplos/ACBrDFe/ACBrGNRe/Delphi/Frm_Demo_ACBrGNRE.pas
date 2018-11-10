@@ -8,7 +8,7 @@ uses IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   pcnConversao, pgnreConversao, ACBrGNRE2, ACBrGNREGuiaClass,
-  ACBrDFeUtil, ACBrBase, ACBrDFe, ACBrGNREGuiaFR, ACBrGNReGuiaRLClass;
+  ACBrDFeUtil, ACBrBase, ACBrDFe, ACBrGNReGuiaRLClass;
 
 type
   TfrmDemo_ACBrGNRE = class(TForm)

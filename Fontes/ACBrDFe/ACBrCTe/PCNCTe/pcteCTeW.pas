@@ -54,7 +54,7 @@ interface
 
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteCTe,
-  ACBrUtil, pcteConversaoCTe, pcnConsts, pcteConsts, ACBrDFeUtil;
+  ACBrUtil, pcteConversaoCTe, pcnConsts, pcteConsts, ACBrDFeUtil, synacode;
 
 {$IFDEF PL_103}
  {$I pcteCTeW_V103.inc}
@@ -82,6 +82,9 @@ type
     FCTe: TCTe;
     FOpcoes: TGeradorOpcoes;
     FVersaoDF: TVersaoCTe;
+    FIdCSRT: Integer;
+    FCSRT: String;
+    ChaveCTe: string;
 
     procedure GerarInfCTe;     // Nivel 0
 
@@ -183,6 +186,7 @@ type
 
     procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 
+    function CalcularHashCSRT(ACSRT, AChave: String): string;
   public
     constructor Create(AOwner: TCTe);
     destructor Destroy; override;
@@ -192,6 +196,8 @@ type
     property CTe: TCTe              read FCTe     write FCTe;
     property Opcoes: TGeradorOpcoes read FOpcoes  write FOpcoes;
     property VersaoDF: TVersaoCTe   read FVersaoDF write FVersaoDF;
+    property IdCSRT: Integer read FIdCSRT write FIdCSRT;
+    property CSRT: String read FCSRT write FCSRT;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -237,7 +243,7 @@ end;
 
 function TCTeW.GerarXml: Boolean;
 var
-  chave: String;
+//  chave: String;
   Gerar, Ok: Boolean;
   xProtCTe: String;
 begin
@@ -250,10 +256,10 @@ begin
 
   VersaoDF := DblToVersaoCTe(Ok, CTe.infCTe.versao);
 
-  chave := GerarChaveAcesso(CTe.ide.cUF, CTe.ide.dhEmi, CTe.emit.CNPJ, CTe.ide.serie,
+  ChaveCTe := GerarChaveAcesso(CTe.ide.cUF, CTe.ide.dhEmi, CTe.emit.CNPJ, CTe.ide.serie,
                             CTe.ide.nCT, StrToInt(TpEmisToStr(CTe.ide.tpEmis)),
                             CTe.ide.cCT, CTe.ide.modelo);
-  CTe.infCTe.Id := 'CTe' + chave;
+  CTe.infCTe.Id := 'CTe' + ChaveCTe;
 
   CTe.ide.cDV := ExtrairDigitoChaveAcesso(CTe.infCTe.ID);
   CTe.Ide.cCT := ExtrairCodigoChaveAcesso(CTe.infCTe.ID);
@@ -2756,10 +2762,10 @@ begin
     Gerador.wCampo(tcStr, '#085', 'fone    ', 07, 12, 1, CTe.infRespTec.fone, DSC_FONE);
 
     // Implementação Futura
-    if (CTe.infRespTec.idCSRT <> 0) and (CTe.infRespTec.hashCSRT <> '') then
+    if (idCSRT <> 0) and (CSRT <> '') then
     begin
-//      Gerador.wCampo(tcInt, '#086', 'idCSRT  ', 03, 03, 1, CTe.infRespTec.idCSRT, DSC_IDCSRT);
-//      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, CTe.infRespTec.hashCSRT, DSC_HASHCSRT);
+      Gerador.wCampo(tcInt, '#086', 'idCSRT  ', 03, 03, 1, idCSRT, '****' {DSC_IDCSRT});
+      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, CalcularHashCSRT(CSRT, ChaveCTe), '****' {DSC_HASHCSRT});
     end;
 
     Gerador.wGrupo('/infRespTec');
@@ -2798,6 +2804,12 @@ begin
       xMun := ObterNomeMunicipio(xUF, cMun, FOpcoes.FPathArquivoMunicipios);
 
 end;
+
+function TCTeW.CalcularHashCSRT(ACSRT, AChave: String): string;
+begin
+  Result := SHA1(ACSRT + AChave);
+end;
+
 {$ENDIF}
 
 end.

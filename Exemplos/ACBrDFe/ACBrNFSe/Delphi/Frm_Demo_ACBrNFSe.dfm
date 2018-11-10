@@ -94,7 +94,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 15
         Width = 277
         Height = 456
-        ActivePage = TabSheet3
+        ActivePage = TabSheet1
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -496,6 +496,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object TabSheet2: TTabSheet
           Caption = 'Geral'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object gbGeral: TGroupBox
             Left = 0
             Top = 4
@@ -912,6 +916,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object TabSheet7: TTabSheet
           Caption = 'Email'
           ImageIndex = 4
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object gbEmail: TGroupBox
             Left = 1
             Top = 4
@@ -1521,6 +1529,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
@@ -1541,6 +1553,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1567,6 +1583,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object memoRespWS: TMemo
           Left = 0
           Top = 0
@@ -1579,6 +1599,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object MemoDados: TMemo
           Left = 0
           Top = 0

@@ -29,6 +29,7 @@ type
     procedure Test_MDFe_StatusServico;
 
     procedure Test_MDFe_LimparLista;
+    {
     procedure Test_MDFe_CarregarXML;
     procedure Test_MDFe_Imprimir;
     procedure Test_MDFe_ImprimirPDF;
@@ -42,8 +43,9 @@ type
     procedure Test_MDFe_Enviar;
     procedure Test_MDFe_Consultar;
     procedure Test_MDFe_Cancelar;
+    }
     procedure Test_MDFe_EnviarEmail;
-
+    {
     procedure Test_MDFe_EnviarEvento;
     procedure Test_MDFe_EnviarEmailEvento;
     procedure Test_MDFe_ImprimirEvento;
@@ -51,12 +53,13 @@ type
 
     procedure Test_MDFe_DistribuicaoDFePorUltNSU;
     procedure Test_MDFe_DistribuicaoDFePorNSU;
+    }
   end;
 
 implementation
 
 uses
-  ACBrLibMDFeStaticImport, ACBrLibMDFeConsts, ACBrLibConsts;
+  ACBrLibMDFeStaticImport, ACBrLibMDFeConsts, ACBrLibConsts, ACBrLibComum;
 
 procedure TTestACBrMDFeLib.Test_MDFe_Inicializar_Com_DiretorioInvalido;
 begin
@@ -163,7 +166,7 @@ end;
 procedure TTestACBrMDFeLib.Test_MDFe_ConfigGravarValor;
 var
   Bufflen: Integer;
-  AStr: String;
+  AStr, Senha: String;
 begin
   // Gravando o valor
   AssertEquals('Erro ao Mudar configuração', ErrOk, MDFe_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
@@ -174,6 +177,18 @@ begin
   AssertEquals(ErrOk, MDFe_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+
+  Senha := StringToB64Crypt('imag2013', '');
+
+  AssertEquals('Erro ao Configurar Senha', ErrOk,
+   MDFe_ConfigGravarValor(CSessaoEmail, CChaveSenha, PChar(Senha)));
+
+  // Checando se o valor foi atualizado //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  AssertEquals(ErrOk, MDFe_ConfigLerValor(CSessaoEmail, CChaveSenha, PChar(AStr), Bufflen));
+  AStr := copy(AStr,1,Bufflen);
+  AssertEquals('Erro ao Configurar Senha', 'imag2013', B64CryptToString(AStr, ''));
 end;
 
 procedure TTestACBrMDFeLib.Test_MDFe_StatusServico;
@@ -196,7 +211,7 @@ begin
   // Iniciando a Limpeza da Lista de MDF-e
   AssertEquals('Erro ao limpar a lista de MDF-e', ErrOk, MDFe_LimparLista);
 end;
-
+{
 procedure TTestACBrMDFeLib.Test_MDFe_CarregarXML;
 begin
   // Iniciando o Carregamento do XML do MDF-e
@@ -277,13 +292,13 @@ begin
   // Iniciando o Envio do Lote de MDF-e
   Resposta := '';
   Tamanho := 0;
-  {
+  (*
   AssertEquals('Erro ao Enviar Lote de MDF-e', ErrOk,
     MDFe_Enviar(1, True, Resposta, Tamanho));
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  }
+  *)
 end;
 
 procedure TTestACBrMDFeLib.Test_MDFe_Consultar;
@@ -296,13 +311,13 @@ begin
   // Iniciando a Consulta
   Resposta := '';
   Tamanho := 0;
-  {
+  (*
   AssertEquals('Erro ao Consultar o MDF-e', ErrOk,
     MDFe_Consultar('C:\ERP\XML\201808\MDFe\35180804550110000188570010000009491283342822-MDFe.xml', Resposta, Tamanho));
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  }
+  *)
 end;
 
 procedure TTestACBrMDFeLib.Test_MDFe_Cancelar;
@@ -315,21 +330,29 @@ begin
   // Iniciando o Cancelamento
   Resposta := '';
   Tamanho := 0;
-  {
+  (*
   AssertEquals('Erro ao Cancelar o MDF-e', ErrOk,
     MDFe_Cancelar('35180804550110000188570010000009491283342822',
                  'Desacordo comercial', '04550110000188', 1, Resposta, Tamanho));
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  }
+  *)
 end;
-
+}
 procedure TTestACBrMDFeLib.Test_MDFe_EnviarEmail;
+var
+  Path, ArqMDFe: String;
 begin
-  //a
-end;
+  // Iniciando o envio do e-mail
+  Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\MDFe\bin\';
+  ArqMDFe := Path + '28140417957142000144580170000000031895518397-mdfe.xml';
 
+  AssertEquals('Erro ao enviar o e-mail', ErrOk,
+    MDFe_EnviarEmail('italo.jurisato@gmail.com', PChar(ArqMDFe), True,
+      'Teste de envio', '', '', 'Em anexo o MDF-e') );
+end;
+{
 procedure TTestACBrMDFeLib.Test_MDFe_EnviarEvento;
 begin
   //a
@@ -340,7 +363,7 @@ var
   Path, ArqMDFe, ArqEvento: String;
 begin
   // Iniciando o envio do evento por email
-  {
+  (*
   Path := 'C:\ACBr\trunk2\Projetos\ACBrLib\Testes\MDFe\bin\';
   ArqMDFe := Path + '28140417957142000144570170000000311556600342-MDFe.xml';
   ArqEvento := Path + '2814041795714200014457017000000031155660034211011001-procEventoMDFe.xml';
@@ -349,7 +372,7 @@ begin
     MDFe_EnviarEmailEvento('italo.jurisato@gmail.com', PChar(ArqEvento),
       PChar(ArqMDFe), True, 'Evento', '', '',
       'Teste de envio de evento por email.'));
-  }
+  *)
 end;
 
 procedure TTestACBrMDFeLib.Test_MDFe_ImprimirEvento;
@@ -388,13 +411,13 @@ begin
   // Iniciando a Consulta no WebServices DistribuicaoDFe
   Resposta := '';
   Tamanho := 0;
-  {
+  (*
   AssertEquals('Erro ao Consultar o DistribuicaoDFePorUltNSU', ErrOk,
     MDFe_DistribuicaoDFePorUltNSU('04550110000188', '0', Resposta, Tamanho));
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  }
+  *)
 end;
 
 procedure TTestACBrMDFeLib.Test_MDFe_DistribuicaoDFePorNSU;
@@ -405,15 +428,15 @@ begin
   // Iniciando a Consulta no WebServices DistribuicaoDFe
   Resposta := '';
   Tamanho := 0;
-  {
+  (*
   AssertEquals('Erro ao Consultar o DistribuicaoDFePorNSU', ErrOk,
     MDFe_DistribuicaoDFePorNSU('04550110000188', '100', Resposta, Tamanho));
 
   AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
   AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
-  }
+  *)
 end;
-
+}
 initialization
   RegisterTest(TTestACBrMDFeLib);
 

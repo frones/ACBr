@@ -57,7 +57,7 @@
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\..\MDFe\ACBrLibMDFeStaticImport.pas"/>
+        <Filename Value="..\..\Fontes\MDFe\ACBrLibMDFeStaticImport.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
     </Units>
@@ -69,8 +69,8 @@
       <Filename Value="bin\ACBrLibMDFeTest"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir);..\..\Comum"/>
-      <OtherUnitFiles Value="..\..\Comum;..\..\MDFe"/>
+      <IncludeFiles Value="$(ProjOutDir);..\..\Fontes\Comum"/>
+      <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\Fontes\MDFe"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>

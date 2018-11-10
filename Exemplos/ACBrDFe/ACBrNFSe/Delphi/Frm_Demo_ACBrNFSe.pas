@@ -570,13 +570,13 @@ begin
       IdentificacaoRps.Numero := FormatFloat('#########0', StrToInt(NumNFSe));
 
       // Para o provedor ISS.NET em ambiente de Homologação mudar a série para '8'
-      IdentificacaoRps.Serie := 'UNICA';
+      IdentificacaoRps.Serie := 'NF';
 
       // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
       IdentificacaoRps.Tipo := trRPS;
 
       DataEmissao := Now;
-
+      DataEmissaoRPS := Now;
       (*
         TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
         no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
@@ -667,7 +667,7 @@ begin
       Servico.ResponsavelRetencao := ptTomador;
 
       Servico.ItemListaServico := '09.01';
-      Servico.CodigoCnae := '8711505';
+      Servico.CodigoCnae := '852010';
 
       // Para o provedor ISS.NET em ambiente de Homologação
       // o Codigo CNAE tem que ser '6511102'

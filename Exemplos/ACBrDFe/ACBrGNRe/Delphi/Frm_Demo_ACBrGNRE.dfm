@@ -93,7 +93,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
         Top = 15
         Width = 277
         Height = 360
-        ActivePage = TabSheet1
+        ActivePage = TabSheet7
         Align = alClient
         MultiLine = True
         TabOrder = 0

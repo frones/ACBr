@@ -59,6 +59,7 @@
   {$WARN IMPLICIT_STRING_CAST OFF}
   {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
   {$WARN SUSPICIOUS_TYPECAST OFF}
+  {$WARN SYMBOL_DEPRECATED OFF}
 {$ENDIF}
 
 unit synautil;
@@ -78,6 +79,7 @@ uses
   {$ELSE FPC}
     {$IFDEF POSIX}
       Posix.Base, Posix.Time, Posix.SysTypes, Posix.SysTime, Posix.Stdio,
+      Posix.Unistd,
     {$ELSE}
       Libc,
     {$ENDIF}
@@ -1917,7 +1919,7 @@ end;
 procedure SearchForLineBreak(var APtr:PANSIChar; AEtx:PANSIChar; out ABol:PANSIChar; out ALength:integer);
 begin
   ABol := APtr;
-  while (APtr<AEtx) and not (APtr^ in [#0,#10,#13]) do
+  while (APtr<AEtx) and not (Byte(APtr^) in [0,10,13]) do
     inc(APtr);
   ALength := APtr-ABol;
 end;

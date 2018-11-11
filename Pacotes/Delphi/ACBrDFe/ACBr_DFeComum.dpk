@@ -50,7 +50,6 @@ contains
   ACBrDFeRegUtil in '..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas',
   ACBrDFeException in '..\..\..\Fontes\ACBrDFe\ACBrDFeException.pas',
   ACBrDFeSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas',
-  ACBrDFeQRCodeBar in '..\..\..\Fontes\ACBrDFe\ACBrDFeQRCodeBar.pas',
   ACBRDFeWinCrypt in '..\..\..\Fontes\ACBrDFe\ACBRDFeWinCrypt.pas',
   ACBrDFeHttpWinApi in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpWinApi.pas',
   ACBrDFeXsMsXml in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXml.pas';

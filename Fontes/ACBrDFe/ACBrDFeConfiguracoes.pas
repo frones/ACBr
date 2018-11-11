@@ -209,8 +209,6 @@ type
     FSSLXmlSignLib: TSSLXmlSignLib;
     FValidarDigest: Boolean;
     FCalcSSLLib: Boolean;
-    FIdCSRT: Integer;
-    FCSRT: String;
 
     function GetFormaEmissaoCodigo: integer;
     procedure SetSSLLib(AValue: TSSLLib);
@@ -220,8 +218,6 @@ type
     procedure CalcSSLLib;
 
     function GetFormatoAlerta: String;
-    procedure SetCSRT(const Value: String);
-    procedure SetIdCSRT(const Value: Integer);
   protected
     fpConfiguracoes: TConfiguracoes;
 
@@ -253,8 +249,6 @@ type
     property IdentarXML: Boolean read FIdentarXML write FIdentarXML default False;
     property ValidarDigest: Boolean
       read FValidarDigest write FValidarDigest default True;
-    property IdCSRT: Integer read FIdCSRT write SetIdCSRT;
-    property CSRT: String read FCSRT write SetCSRT;
   end;
 
   { TArquivosConf }
@@ -475,8 +469,6 @@ begin
   FIdentarXML := False;
   FValidarDigest := True;
   FCalcSSLLib := True;
-  FIdCSRT := 0;
-  FCSRT := '';
 end;
 
 procedure TGeralConf.Assign(DeGeralConf: TGeralConf);
@@ -510,8 +502,6 @@ begin
     AIni.WriteBool(fpConfiguracoes.SessaoIni, 'RetirarEspacos', RetirarEspacos);
     AIni.WriteBool(fpConfiguracoes.SessaoIni, 'IdentarXML', IdentarXML);
     AIni.WriteBool(fpConfiguracoes.SessaoIni, 'ValidarDigest', ValidarDigest);
-    AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'IdCSRT', FIdCSRT);
-    AIni.WriteString(fpConfiguracoes.SessaoIni, 'CSRT', FCSRT);
   end;
 end;
 
@@ -531,8 +521,6 @@ begin
     RetirarEspacos := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'RetirarEspacos', RetirarEspacos);
     IdentarXML := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'IdentarXML', IdentarXML);
     ValidarDigest := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'ValidarDigest', ValidarDigest);
-    FIdCSRT := AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'IdCSRT', IdCSRT);
-    FCSRT := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CSRT', CSRT);
   end;
 end;
 
@@ -617,22 +605,6 @@ end;
 function TGeralConf.GetFormaEmissaoCodigo: integer;
 begin
   Result := StrToInt(TpEmisToStr(FFormaEmissao));
-end;
-
-procedure TGeralConf.SetCSRT(const Value: String);
-begin
-  if FCSRT = Value then
-    Exit;
-
-  FCSRT := Value;
-end;
-
-procedure TGeralConf.SetIdCSRT(const Value: Integer);
-begin
-  if FIdCSRT = Value then
-    Exit;
-
-  FIdCSRT := Value;
 end;
 
 procedure TGeralConf.SetSSLCryptLib(AValue: TSSLCryptLib);

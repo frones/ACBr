@@ -4903,7 +4903,6 @@ begin
     Unidade       := etqMilimetros;
     MargemEsquerda:= StrToIntDef(eMargemEsquerda.Text, 0);
     Origem        := TACBrETQOrigem(cbOrigem.ItemIndex);
-    Unidade       := TACBrETQUnidade(cbUnidade.ItemIndex);
 
     Ativo := ETQAtivado;
   end;
@@ -5342,7 +5341,7 @@ begin
       Origem                      := cbOrigem.ItemIndex;
       Unidade                     := cbUnidade.ItemIndex;
       Copias                      := StrToIntDef(eCopias.Text, 1);
-      Avanco                      := StrToIntDef(eAvanco.Text, 1);
+      Avanco                      := StrToIntDef(eAvanco.Text, 0);
     end;
 
     { Parametros do CEP }

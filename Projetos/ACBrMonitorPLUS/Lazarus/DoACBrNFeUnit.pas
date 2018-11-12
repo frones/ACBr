@@ -2336,8 +2336,9 @@ var
   APathorXML, AImpressora: String;
   ALote: Integer;
   AAssina, AImprime, ASincrono, AGerarXML, AValidaXML: Boolean;
-  AAss: String;
+  AErro: String;
 begin
+  AErro:= '';
   APathorXML := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
   AAssina := StrToBoolDef(fpCmd.Params(2), False);
@@ -2353,7 +2354,7 @@ begin
     CargaDFe := TACBrCarregarNFe.Create(ACBrNFe, APathorXML);
     try
       if AGerarXML and
-         ( not (ACBrNFe.NotasFiscais.VerificarAssinatura(AAss)) )  then
+         ( not (ACBrNFe.NotasFiscais.VerificarAssinatura(AErro)) )  then
         ACBrNFe.NotasFiscais.GerarNFe;
 
       if (AAssina) then
@@ -2724,7 +2725,6 @@ end;
 procedure TMetodoImprimirInutilizacaoPDF.Executar;
 var
   CargaDFeInut: TACBrCarregarNFeInut;
-  CargaNFe: TACBrCarregarNFe;
   AXMLInut, ArqPDF: String;
   DanfeRL: TACBrNFeDANFeRL;
 begin

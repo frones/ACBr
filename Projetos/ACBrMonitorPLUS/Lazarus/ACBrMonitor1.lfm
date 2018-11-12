@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 97
+  Left = 141
   Height = 659
-  Top = 11
+  Top = 30
   Width = 1055
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -6158,9 +6158,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 842
-            ActivePage = tsWebServiceDFe
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
-            TabIndex = 2
+            TabIndex = 0
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -13587,6 +13587,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 554
   end
   object ACBrETQ1: TACBrETQ
+    ArqLOG = 'C:\TEMP\etq.txt'
     Porta = 'LPT1'
     Ativo = False
     left = 589

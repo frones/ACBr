@@ -288,6 +288,7 @@ begin
   end;
 
   case FProvedor of
+    proThema,
     proGINFES:  Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
 
     proRJ,
@@ -298,7 +299,6 @@ begin
     proGovBR,
     proPronim,
     proISSNet,
-    proThema,
     proWebISS:  Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     proNFSEBrasil: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota * 100), DSC_VALIQ);

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/11/2018
+-- pnfsNFSeW_ABRASFv1 --
+[*] Incluido o provedor Thema na lista de provedores que devem gerar a tag
+    Aliquota dividida por 100.
+   Por: Francisco Flores
+
 08/11/2018
 -- pnfsNFSeR --
 [*] Removido o provedor ISSNet da lista cuja data de Emissão só composta por data.

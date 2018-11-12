@@ -438,7 +438,7 @@ type
   tpCumprParcialAviso     = (cpaCumprimentoTotal, cpaCumprimentoParcialNovoEmprego, cpaCumprimentoParcialEmpregador,
                              cpaOutrasCumprimentoParcial, cpaAvisoprevioIndenizadoNaoExigivel );
 
-  TVersaoeSocial = (ve02_04_01, ve02_04_02);
+  TVersaoeSocial = (ve02_04_01, ve02_04_02, ve02_05_00);
 
   tpTmpParc = (tpNaoeTempoParcial, tpLimitado25HorasSemanais, tpLimitado30HorasSemanais, tpLimitado26HorasSemanais);
 
@@ -2270,12 +2270,14 @@ end;
 
 function StrToVersaoeSocial(out ok: Boolean; const s: String): TVersaoeSocial;
 begin
-  result := StrToEnumerado(ok, s, ['02_04_01', '02_04_02'], [ve02_04_01, ve02_04_02]);
+  result := StrToEnumerado(ok, s, ['02_04_01', '02_04_02', '02_05_00'],
+                          [ve02_04_01, ve02_04_02, ve02_05_00]);
 end;
 
 function VersaoeSocialToStr(const t: TVersaoeSocial): String;
 begin
-  result := EnumeradoToStr(t, ['02_04_01', '02_04_02'], [ve02_04_01, ve02_04_02]);
+  result := EnumeradoToStr(t, ['02_04_01', '02_04_02', '02_05_00'],
+                          [ve02_04_01, ve02_04_02, ve02_05_00]);
 end;
 
 function DblToVersaoeSocial(out ok: Boolean; const d: Real): TVersaoeSocial;
@@ -2288,6 +2290,9 @@ begin
   if (d = 2.0402)  then
     result := ve02_04_02
   else
+  if (d = 2.0500)  then
+    result := ve02_05_00
+  else
   begin
     result := ve02_04_01;
     ok := False;
@@ -2299,6 +2304,7 @@ begin
   case t of
     ve02_04_01: result := 2.0401;
     ve02_04_02: result := 2.0402;
+    ve02_05_00: result := 2.0500;
   else
     result := 0;
   end;

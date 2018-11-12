@@ -178,7 +178,7 @@ begin
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
 
-  Senha := StringToB64Crypt('imag2013', '');
+  Senha := StringToB64Crypt('senha', '');
 
   AssertEquals('Erro ao Configurar Senha', ErrOk,
    MDFe_ConfigGravarValor(CSessaoEmail, CChaveSenha, PChar(Senha)));
@@ -188,7 +188,7 @@ begin
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, MDFe_ConfigLerValor(CSessaoEmail, CChaveSenha, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals('Erro ao Configurar Senha', 'imag2013', B64CryptToString(AStr, ''));
+  AssertEquals('Erro ao Configurar Senha', 'senha', B64CryptToString(AStr, ''));
 end;
 
 procedure TTestACBrMDFeLib.Test_MDFe_StatusServico;
@@ -349,7 +349,7 @@ begin
   ArqMDFe := Path + '28140417957142000144580170000000031895518397-mdfe.xml';
 
   AssertEquals('Erro ao enviar o e-mail', ErrOk,
-    MDFe_EnviarEmail('italo.jurisato@gmail.com', PChar(ArqMDFe), True,
+    MDFe_EnviarEmail('nome@provedor.com', PChar(ArqMDFe), True,
       'Teste de envio', '', '', 'Em anexo o MDF-e') );
 end;
 {
@@ -369,7 +369,7 @@ begin
   ArqEvento := Path + '2814041795714200014457017000000031155660034211011001-procEventoMDFe.xml';
 
   AssertEquals('Erro ao enviar email do evento', ErrOk,
-    MDFe_EnviarEmailEvento('italo.jurisato@gmail.com', PChar(ArqEvento),
+    MDFe_EnviarEmailEvento('nome@provedor.com', PChar(ArqEvento),
       PChar(ArqMDFe), True, 'Evento', '', '',
       'Teste de envio de evento por email.'));
   *)

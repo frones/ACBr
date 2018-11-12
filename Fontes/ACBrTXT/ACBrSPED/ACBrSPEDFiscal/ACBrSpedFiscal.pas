@@ -55,10 +55,10 @@ uses
 {$ENDIF}
   DateUtils, ACBrSped, ACBrTXTClass, ACBrEFDBlocos,
   ACBrEFDBloco_0_Class, ACBrEFDBloco_1_Class, ACBrEFDBloco_9_Class,
-  ACBrEFDBloco_C_Class, ACBrEFDBloco_D_Class, ACBrEFDBloco_E_Class,
-  ACBrEFDBloco_G_Class, ACBrEFDBloco_H_Class, ACBrEFDBloco_K_Class,
-  ACBrEFDBloco_0_Events, ACBrEFDBloco_C_Events, ACBrEFDBloco_D_Events,
-  ACBrEFDBloco_E_Events;
+  ACBrEFDBloco_B_Class, ACBrEFDBloco_C_Class,  ACBrEFDBloco_D_Class,
+  ACBrEFDBloco_E_Class, ACBrEFDBloco_G_Class, ACBrEFDBloco_H_Class,
+  ACBrEFDBloco_K_Class, ACBrEFDBloco_0_Events, ACBrEFDBloco_B_Events,
+  ACBrEFDBloco_C_Events,ACBrEFDBloco_D_Events, ACBrEFDBloco_E_Events;
 
 const
   CACBrSpedFiscal_Versao = '1.02';
@@ -80,6 +80,7 @@ type
     FChecksBloco_C: TChecksBloco_C;
 
     FEventsBloco_0: TEventsBloco_0;
+    FEventsBloco_B: TEventsBloco_B;
     FEventsBloco_C: TEventsBloco_C;
     FEventsBloco_D: TEventsBloco_D;
     FEventsBloco_E: TEventsBloco_E;
@@ -96,6 +97,7 @@ type
     FBloco_0: TBloco_0;
     FBloco_1: TBloco_1;
     FBloco_9: TBloco_9;
+    FBloco_B: TBloco_B;
     FBloco_C: TBloco_C;
     FBloco_D: TBloco_D;
     FBloco_E: TBloco_E;
@@ -132,6 +134,9 @@ type
     /// BLOCO 1
     procedure WriteRegistro1001;
     procedure WriteRegistro1990;
+    /// BLOCO B
+    procedure WriteRegistroB001;
+    procedure WriteRegistroB990;
     /// BLOCO C
     procedure WriteRegistroC001;
     procedure WriteRegistroC990;
@@ -165,6 +170,7 @@ type
     procedure IniciaGeracao;
     procedure CancelaGeracao;
     procedure WriteBloco_0;
+    procedure WriteBloco_B;
     procedure WriteBloco_C( FechaBloco: Boolean );
     procedure WriteBloco_D;
     procedure WriteBloco_E;
@@ -182,6 +188,7 @@ type
     property Bloco_0: TBloco_0 read FBloco_0 write FBloco_0;
     property Bloco_1: TBloco_1 read FBloco_1 write FBloco_1;
     property Bloco_9: TBloco_9 read FBloco_9 write FBloco_9;
+    property Bloco_B: TBloco_B read FBloco_B write FBloco_B;
     property Bloco_C: TBloco_C read FBloco_C write FBloco_C;
     property Bloco_D: TBloco_D read FBloco_D write FBloco_D;
     property Bloco_E: TBloco_E read FBloco_E write FBloco_E;
@@ -192,10 +199,8 @@ type
     property About: String read GetAbout stored False;
     property Path: String read FPath write SetPath;
     property Arquivo: String read FArquivo write SetArquivo;
-    property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer
-      default 1000 ;
+    property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer default 1000 ;
 
-    ///
     property Delimitador: String read GetDelimitador write SetDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString;
     property CurMascara: String read GetCurMascara write SetCurMascara;
@@ -205,6 +210,7 @@ type
     property ChecksBloco_C: TChecksBloco_C read FChecksBloco_C; // write FOnChecksBloco_C;
 
     property EventsBloco_0: TEventsBloco_0 read FEventsBloco_0; // write FOnEventsBloco_0;
+    property EventsBloco_B: TEventsBloco_B read FEventsBloco_B; // write FOnEventsBloco_B;
     property EventsBloco_C: TEventsBloco_C read FEventsBloco_C; // write FOnEventsBloco_C;
     property EventsBloco_D: TEventsBloco_D read FEventsBloco_D; // write FOnEventsBloco_D;
     property EventsBloco_E: TEventsBloco_E read FEventsBloco_E; // write FOnEventsBloco_E;
@@ -244,6 +250,7 @@ begin
 
   FBloco_0 := TBloco_0.Create;
   FBloco_1 := TBloco_1.Create;
+  FBloco_B := TBloco_B.Create;
   FBloco_C := TBloco_C.Create(Self);
   FBloco_D := TBloco_D.Create;
   FBloco_E := TBloco_E.Create;
@@ -256,6 +263,7 @@ begin
   /// em seus registros.
   /// Ex: Do Bloco_C registro C425, pesquisar o Bloco_0 registro 0200.
   FBloco_1.Bloco_0 := FBloco_0;
+  FBloco_B.Bloco_0 := FBloco_0;
   FBloco_C.Bloco_0 := FBloco_0;
   FBloco_D.Bloco_0 := FBloco_0;
   FBloco_E.Bloco_0 := FBloco_0;
@@ -276,6 +284,10 @@ begin
   FEventsBloco_0 := TEventsBloco_0.Create(Self);
   FEventsBloco_0.Name := 'EventsBloco_0';
   FEventsBloco_0.SetSubComponent(True);
+
+  FEventsBloco_B := TEventsBloco_B.Create(Self);
+  FEventsBloco_B.Name := 'EventsBloco_B';
+  FEventsBloco_B.SetSubComponent(True);
 
   FEventsBloco_C := TEventsBloco_C.Create(Self);
   FEventsBloco_C.Name := 'EventsBloco_C';
@@ -299,6 +311,7 @@ begin
   FACBrTXT.Free;
 
   FEventsBloco_0.Free;
+  FEventsBloco_B.Free;
   FEventsBloco_C.Free;
   FChecksBloco_C.Free;
   FEventsBloco_D.Free;
@@ -306,6 +319,7 @@ begin
 
   FBloco_0.Free;
   FBloco_1.Free;
+  FBloco_B.Free;
   FBloco_C.Free;
   FBloco_D.Free;
   FBloco_E.Free;
@@ -320,6 +334,7 @@ procedure TACBrSPEDFiscal.LimpaRegistros;
 begin
   FBloco_0.LimpaRegistros;
   FBloco_1.LimpaRegistros;
+  FBloco_B.LimpaRegistros;
   FBloco_C.LimpaRegistros;
   FBloco_D.LimpaRegistros;
   FBloco_E.LimpaRegistros;
@@ -358,6 +373,7 @@ begin
 
   FBloco_0.Delimitador := Value;
   FBloco_1.Delimitador := Value;
+  FBloco_B.Delimitador := Value;
   FBloco_C.Delimitador := Value;
   FBloco_D.Delimitador := Value;
   FBloco_E.Delimitador := Value;
@@ -394,6 +410,7 @@ begin
 
   FBloco_0.CurMascara := Value;
   FBloco_1.CurMascara := Value;
+  FBloco_B.CurMascara := Value;
   FBloco_C.CurMascara := Value;
   FBloco_D.CurMascara := Value;
   FBloco_E.CurMascara := Value;
@@ -414,6 +431,7 @@ begin
 
   FBloco_0.TrimString := Value;
   FBloco_1.TrimString := Value;
+  FBloco_B.TrimString := Value;
   FBloco_C.TrimString := Value;
   FBloco_D.TrimString := Value;
   FBloco_E.TrimString := Value;
@@ -453,6 +471,7 @@ begin
   FACBrTXT.Reset;    // Apaga o Arquivo e limpa memória
 
   InicializaBloco( Bloco_0 ) ;
+  InicializaBloco( Bloco_B ) ;
   InicializaBloco( Bloco_C ) ;
   InicializaBloco( Bloco_D ) ;
   InicializaBloco( Bloco_E ) ;
@@ -462,21 +481,16 @@ begin
   InicializaBloco( Bloco_1 ) ;
   InicializaBloco( Bloco_9 ) ;
 
-  ///
-  FACBrTXT.Check(DayOf(FDT_INI) = 1, 'CHECAGEM INICIAL: A data inicial deve '
-    + 'corresponder ao primeiro dia do mês informado!');
-  FACBrTXT.Check(FDT_FIN >= FDT_INI, 'CHECAGEM INICIAL: A data final deve se '
-    + 'maior que a data inicial!');
-  FACBrTXT.Check(FDT_FIN <= Date, 'CHECAGEM INICIAL: A data final "%s" '
-    + 'não pode ser superior a data atual "%s"!',
-    [DateToStr(FDT_FIN), DateToStr(Date)]);
-  FACBrTXT.Check(DateOf(EndOfTheMonth(FDT_FIN)) = DateOf(FDT_FIN),
-    'CHECAGEM ' + 'INICIAL: A data final deve corresponder ao último dia do mês '
-    + 'informado!');
+
+  FACBrTXT.Check(DayOf(FDT_INI) = 1, 'CHECAGEM INICIAL: A data inicial deve corresponder ao primeiro dia do mês informado!');
+  FACBrTXT.Check(FDT_FIN >= FDT_INI, 'CHECAGEM INICIAL: A data final deve se maior que a data inicial!');
+//  FACBrTXT.Check(FDT_FIN <= Date, 'CHECAGEM INICIAL: A data final "%s" não pode ser superior a data atual "%s"!',[DateToStr(FDT_FIN), DateToStr(Date)]);
+  FACBrTXT.Check(DateOf(EndOfTheMonth(FDT_FIN)) = DateOf(FDT_FIN),'CHECAGEM INICIAL: A data final deve corresponder ao último dia do mês informado!');
 
   /// Preparação para totalizações de registros.
   Bloco_0.Registro0990.QTD_LIN_0 := 0;
   Bloco_1.Registro1990.QTD_LIN_1 := 0;
+  Bloco_B.RegistroB990.QTD_LIN_B := 0;
   Bloco_C.RegistroC990.QTD_LIN_C := 0;
   Bloco_D.RegistroD990.QTD_LIN_D := 0;
   Bloco_E.RegistroE990.QTD_LIN_E := 0;
@@ -513,6 +527,7 @@ begin
   FBloco_0.DT_INI := Value;
   FBloco_1.DT_INI := Value;
   FBloco_9.DT_INI := Value;
+  FBloco_B.DT_INI := Value;
   FBloco_C.DT_INI := Value;
   FBloco_D.DT_INI := Value;
   FBloco_E.DT_INI := Value;
@@ -521,10 +536,7 @@ begin
   FBloco_K.DT_INI := Value;
 
   if Assigned(FBloco_0) then
-  begin
     FBloco_0.Registro0000.DT_INI := Value;
-    //     FBloco_E.RegistroE100.DT_INI := Value;
-  end;
 end;
 
 function TACBrSPEDFiscal.GetDT_FIN: TDateTime;
@@ -539,6 +551,7 @@ begin
   FBloco_0.DT_FIN := Value;
   FBloco_1.DT_FIN := Value;
   FBloco_9.DT_FIN := Value;
+  FBloco_B.DT_FIN := Value;
   FBloco_C.DT_FIN := Value;
   FBloco_D.DT_FIN := Value;
   FBloco_E.DT_FIN := Value;
@@ -547,10 +560,7 @@ begin
   FBloco_K.DT_FIN := Value;
 
   if Assigned(FBloco_0) then
-  begin
     FBloco_0.Registro0000.DT_FIN := Value;
-    //     FBloco_E.RegistroE100.DT_FIN := Value;
-  end;
 end;
 
 function TACBrSPEDFiscal.GetOnError: TErrorEvent;
@@ -564,6 +574,7 @@ begin
 
   FBloco_0.OnError := Value;
   FBloco_1.OnError := Value;
+  FBloco_B.OnError := Value;
   FBloco_C.OnError := Value;
   FBloco_D.OnError := Value;
   FBloco_E.OnError := Value;
@@ -579,8 +590,8 @@ begin
     IniciaGeracao;
 
     WriteBloco_0;
+    WriteBloco_B;
     WriteBloco_C( True );    // True = Fecha o Bloco
-
     WriteBloco_D;
     WriteBloco_E;
     WriteBloco_G;
@@ -613,12 +624,32 @@ begin
   Bloco_0.Gravado := True;
 end;
 
+
+procedure TACBrSPEDFiscal.WriteBloco_B;
+begin
+   if Bloco_B.Gravado then
+     exit ;
+
+   if not Bloco_0.Gravado then
+     WriteBloco_0;
+
+   /// Alteração da minuta que terá validada a partir de 01 de janeiro de 2019
+   if DT_INI >= EncodeDate(2019,01,01) then
+   begin
+     WriteRegistroB001;
+     WriteRegistroB990;
+     Bloco_B.WriteBuffer;
+   end;
+   Bloco_B.Conteudo.Clear;
+   Bloco_B.Gravado := True ;
+end;
+
 procedure TACBrSPEDFiscal.WriteBloco_C( FechaBloco : Boolean );
 begin
    if Bloco_C.Gravado then exit ;
 
-   if not Bloco_0.Gravado then
-      WriteBloco_0 ;
+   if not Bloco_B.Gravado then
+      WriteBloco_B ;
 
    /// BLOCO C
    WriteRegistroC001;
@@ -1207,6 +1238,38 @@ begin
                QTD_REG_BLC := Bloco_1.Registro1926Count;
             end;
          end;
+         if Bloco_1.Registro1960Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1960';
+               QTD_REG_BLC := Bloco_1.Registro1960Count;
+            end;
+         end;
+         if Bloco_1.Registro1970Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1970';
+               QTD_REG_BLC := Bloco_1.Registro1970Count;
+            end;
+         end;
+         if Bloco_1.Registro1975Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1975';
+               QTD_REG_BLC := Bloco_1.Registro1975Count;
+            end;
+         end;
+         if Bloco_1.Registro1980Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := '1980';
+               QTD_REG_BLC := Bloco_1.Registro1980Count;
+            end;
+         end;
       end;
    end;
 end;
@@ -1455,6 +1518,14 @@ begin
          begin
            REG_BLC := 'C190';
            QTD_REG_BLC := Bloco_C.RegistroC190Count;
+         end;
+       end;
+       if Bloco_C.RegistroC191Count > 0 then
+       begin
+         with New do
+         begin
+           REG_BLC := 'C191';
+           QTD_REG_BLC := Bloco_C.RegistroC191Count;
          end;
        end;
        if Bloco_C.RegistroC195Count > 0 then
@@ -2638,6 +2709,7 @@ procedure TACBrSPEDFiscal.WriteRegistro9999;
 begin
   Bloco_9.Registro9999.QTD_LIN := Bloco_9.Registro9999.QTD_LIN + Bloco_0.Registro0990.QTD_LIN_0 +
                                                                  Bloco_1.Registro1990.QTD_LIN_1 +
+                                                                 ifthen(Bloco_B.DT_INI >= EncodeDate(2019,01,01), Bloco_B.RegistroB990.QTD_LIN_B, 0) +
                                                                  Bloco_C.RegistroC990.QTD_LIN_C +
                                                                  Bloco_D.RegistroD990.QTD_LIN_D +
                                                                  Bloco_E.RegistroE990.QTD_LIN_E +
@@ -2646,6 +2718,124 @@ begin
                                                                  Bloco_H.RegistroH990.QTD_LIN_H +
                                                                  Bloco_9.Registro9990.QTD_LIN_9;
   Bloco_9.WriteRegistro9999;
+end;
+
+procedure TACBrSPEDFiscal.WriteRegistroB001;
+begin
+  Bloco_B.WriteRegistroB001;
+  //
+  with Bloco_9.Registro9900 do
+  begin
+    with New do
+    begin
+       REG_BLC := 'B001';
+       QTD_REG_BLC := 1;
+    end;
+  end;
+  if Bloco_B.RegistroB001.IND_MOV = imComDados then
+  begin
+    with Bloco_9.Registro9900 do
+    begin
+      if Bloco_B.RegistroB020Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B020';
+          QTD_REG_BLC := Bloco_B.RegistroB020Count;
+        end;
+      end;
+      if Bloco_B.RegistroB025Count > 0 then
+      begin
+       with New do
+       begin
+         REG_BLC := 'B025';
+         QTD_REG_BLC := Bloco_B.RegistroB025Count;
+       end;
+      end;
+      if Bloco_B.RegistroB030Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B030';
+          QTD_REG_BLC := Bloco_B.RegistroB030Count;
+        end;
+      end;
+      if Bloco_B.RegistroB035Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B035';
+          QTD_REG_BLC := Bloco_B.RegistroB035Count;
+        end;
+      end;
+      if Bloco_B.RegistroB350Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B350';
+          QTD_REG_BLC := Bloco_B.RegistroB350Count;
+        end;
+      end;
+      if Bloco_B.RegistroB420Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B420';
+          QTD_REG_BLC := Bloco_B.RegistroB420Count;
+        end;
+      end;
+      if Bloco_B.RegistroB440Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B440';
+          QTD_REG_BLC := Bloco_B.RegistroB440Count;
+        end;
+      end;
+      if Bloco_B.RegistroB460count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B460';
+          QTD_REG_BLC := Bloco_B.RegistroB460Count;
+        end;
+      end;
+      if Bloco_B.RegistroB470Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B470';
+          QTD_REG_BLC := Bloco_B.RegistroB470Count;
+        end;
+      end;
+      if Bloco_B.RegistroB500Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B500';
+          QTD_REG_BLC := Bloco_B.RegistroB500Count;
+        end;
+      end;
+      if Bloco_B.RegistroB510Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'B510';
+          QTD_REG_BLC := Bloco_B.RegistroB510Count;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TACBrSPEDFiscal.WriteRegistroB990;
+begin
+  with Bloco_9.Registro9900.New do
+  begin
+    REG_BLC := 'B990';
+    QTD_REG_BLC := 1;
+  end;
+  Bloco_B.WriteRegistroB990;
 end;
 
 {$IFNDEF Framework}

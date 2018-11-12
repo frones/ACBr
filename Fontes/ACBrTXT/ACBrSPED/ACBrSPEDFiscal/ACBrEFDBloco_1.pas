@@ -77,6 +77,10 @@ type
   TRegistro1923List = class;
   TRegistro1925List = class;
   TRegistro1926List = class;
+  TRegistro1960List = class;
+  TRegistro1970List = class;
+  TRegistro1975List = class;
+  TRegistro1980List = class;
 
   /// Registro 1001 - ABERTURA DO BLOCO 1
 
@@ -95,6 +99,9 @@ type
     FRegistro1700: TRegistro1700List;
     FRegistro1800: TRegistro1800List;
     FRegistro1900: TRegistro1900List;
+    FRegistro1960: TRegistro1960List;
+    FRegistro1970: TRegistro1970List;
+    FRegistro1980: TRegistro1980List;
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -112,6 +119,9 @@ type
     property Registro1700: TRegistro1700List read FRegistro1700 write FRegistro1700;
     property Registro1800: TRegistro1800List read FRegistro1800 write FRegistro1800;
     property Registro1900: TRegistro1900List read FRegistro1900 write FRegistro1900;
+    property Registro1960: TRegistro1960List read FRegistro1960 write FRegistro1960;
+    property Registro1970: TRegistro1970List read FRegistro1970 write FRegistro1970;
+    property Registro1980: TRegistro1980List read FRegistro1980 write FRegistro1980;
   end;
 
   /// Registro 1010 - Obrigatoriedade de registros do Bloco 1
@@ -127,7 +137,9 @@ type
     fIND_CART  : String;// Reg. 1600 - Realizou vendas com Cartão de Crédito ou de débito:
     fIND_FORM  : String;// Reg. 1700 - É obrigatório em sua unidade da federação o controle de utilização de documentos  fiscais em papel:
     fIND_AER   : String;// Reg. 1800 – A empresa prestou serviços de transporte aéreo de cargas e de passageiros:
-
+    fIND_GIAF1 : String;// Reg. 1960 – Possui informações GIAF1:
+    fIND_GIAF3 : String;// Reg. 1970 – Possui informações GIAF3:
+    fIND_GIAF4 : String;// Reg. 1980 – Possui informações GIAF4:
   public
     constructor Create(AOwner: TRegistro1001); virtual; /// Create
 
@@ -140,6 +152,9 @@ type
     property IND_CART  : String read fIND_CART  write fIND_CART  ;
     property IND_FORM  : String read fIND_FORM  write fIND_FORM  ;
     property IND_AER   : String read fIND_AER   write fIND_AER   ;
+    property IND_GIAF1 : String read fIND_GIAF1 write fIND_GIAF1 ;
+    property IND_GIAF3 : String read fIND_GIAF3 write fIND_GIAF3 ;
+    property IND_GIAF4 : String read fIND_GIAF4 write fIND_GIAF4 ;
   end;
 
   /// Registro 1010 - Lista
@@ -795,13 +810,13 @@ type
     property Items[Index: Integer]: TRegistro1510 read GetItem write SetItem;
   end;
 
-  /// Registro 1600 - TOTAL DAS OPERAÇÕES COM CARTÃO DE CRÉDITO E/OU DÉBITO
+  /// Registro 1600 - TOTAL DAS OPERAÇÕES COM CARTÃO DE CRÉDITO E/OU DÉBITO,LOJA (PRIVATE LABEL) E DEMAIS INSTRUMENTOS DE PAGAMENTOS ELETRÔNICOS
 
   TRegistro1600 = class
   private
-    fCOD_PART: String;         /// Número seqüencial do item no documento fiscal
-    fTOT_CREDITO: currency;    /// Valor do item
-    fTOT_DEBITO: currency;     /// Valor total do desconto
+    fCOD_PART: String;      /// Código do participante (campo 02 do Registro 0150): identificação da instituição financeira e/ou de pagamento
+    fTOT_CREDITO: currency; /// Valor total das operações de crédito realizadas no período
+    fTOT_DEBITO: currency;  /// Valor total das operações de débito realizadas no período
   public
     constructor Create(AOwner: TRegistro1001); virtual; /// Create
 
@@ -825,10 +840,10 @@ type
 
   TRegistro1700 = class
   private
-    fCOD_DISP: TACBrDispositivo;    /// Codigo Dispositivo autorizado
-    fCOD_MOD: String;               /// Codigo Modelo Documento Fiscal
-    fSER: String;                   /// Serie Documento Fiscal
-    fSUB: String;                   /// SubSerie Documento Fiscal
+    fCOD_DISP: TACBrDispositivo;  /// Codigo Dispositivo autorizado
+    fCOD_MOD: String;             /// Codigo Modelo Documento Fiscal
+    fSER: String;                 /// Serie Documento Fiscal
+    fSUB: String;                 /// SubSerie Documento Fiscal
     fNUM_DOC_INI: String;         /// Numero Documento Fiscal Inicial - deve ser String
     fNUM_DOC_FIN: String;         /// Numero Documento Fiscal Final - deve ser String
     fNUM_AUT: String;             /// Numero da Autorizacao - deve ser String
@@ -1154,6 +1169,154 @@ type
   public
     function New: TRegistro1926;
     property Items[Index: Integer]: TRegistro1926 read GetItem write SetItem;
+  end;
+
+
+ /// Registro 1960 - REGISTRO 1960: GIAF 1 - GUIA DE INFORMAÇÃO E APURAÇÃO DE INCENTIVOS FISCAIS E FINANCEIROS: INDÚSTRIA (CRÉDITO PRESUMIDO)
+  TRegistro1960 = class
+  private
+    fIND_AP: String;   ///Indicador da sub-apuração por tipo de benefício(conforme tabela 4.7.1)
+    fG1_01: Currency;  /// Percentual de crédito presumido
+    fG1_02: Currency;  /// Saídas não incentivadas de PI
+    fG1_03: Currency;  /// Saídas incentivadas de PI
+    fG1_04: Currency;  /// Saídas incentivadas de PI para fora do Nordeste
+    fG1_05: Currency;  /// Saldo devedor do ICMS antes das deduções do incentivo
+    fG1_06: Currency;  /// Saldo devedor do ICMS relativo à faixa incentivada de PI
+    fG1_07: Currency;  /// Crédito presumido nas saídas incentivadas de PI para fora do Nordeste
+    fG1_08: Currency;  /// Saldo devedor relativo à faixa incentivada de PI após o crédito presumido nas saídas para fora do Nordeste
+    fG1_09: Currency;  /// Crédito presumido
+    fG1_10: Currency;  /// Dedução de incentivo da Indústria (crédito presumido)
+    fG1_11: Currency;  /// Saldo devedor do ICMS após deduções
+  public
+    constructor Create(AOwner: TRegistro1001); virtual; /// Create
+    property IND_AP : String    read fIND_AP write fIND_AP;
+    property G1_01  : Currency  read fG1_01  write fG1_01;
+    property G1_02  : Currency  read fG1_02  write fG1_02;
+    property G1_03  : Currency  read fG1_03  write fG1_03;
+    property G1_04  : Currency  read fG1_04  write fG1_04;
+    property G1_05  : Currency  read fG1_05  write fG1_05;
+    property G1_06  : Currency  read fG1_06  write fG1_06;
+    property G1_07  : Currency  read fG1_07  write fG1_07;
+    property G1_08  : Currency  read fG1_08  write fG1_08;
+    property G1_09  : Currency  read fG1_09  write fG1_09;
+    property G1_10  : Currency  read fG1_10  write fG1_10;
+    property G1_11  : Currency  read fG1_11  write fG1_11;
+  end;
+
+  TRegistro1960List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistro1960;
+    procedure SetItem(Index: Integer; const Value: TRegistro1960);
+  public
+    function New(AOwner: TRegistro1001): TRegistro1960;
+    property Items[Index: Integer]: TRegistro1960 read GetItem write SetItem;
+  end;
+
+  ///REGISTRO 1970: GIAF 3 - GUIA DE INFORMAÇÃO E APURAÇÃO DE INCENTIVOS FISCAIS E FINANCEIROS: IMPORTAÇÃO (DIFERIMENTO NA ENTRADA E CRÉDITO PRESUMIDO NA SAÍDA SUBSEQUENTE))
+  TRegistro1970 = class
+  private
+    fIND_AP: String;                   /// Indicador da sub-apuração por tipo de benefício (conforme tabela 4.7.1)
+    fG3_01: Currency;                  /// Importações com ICMS diferido
+    fG3_02: Currency;                  /// ICMS diferido nas importações
+    fG3_03: Currency;                  /// Saídas não incentivadas de PI
+    fG3_04: Currency;                  /// Percentual de incentivo nas saídas para fora do Estado
+    fG3_05: Currency;                  /// Saídas incentivadas de PI para fora do Estado
+    fG3_06: Currency;                  /// ICMS das saídas incentivadas de PI para fora do Estado
+    fG3_07: Currency;                  /// Crédito presumido nas saídas para fora do Estado.
+    fG3_T : Currency;                  /// Dedução de incentivo da Importação (crédito presumido)
+    fG3_08: Currency;                  /// Saldo devedor do ICMS antes das deduções do incentivo
+    fG3_09: Currency;                  /// Saldo devedor do ICMS após deduções do incentivo
+    FRegistro1975: TRegistro1975List;  /// BLOCO 1- Lista de Registro1975 (FILHO fo FILHO)
+  public
+    constructor Create(AOwner: TRegistro1001); virtual; /// Create
+    destructor Destroy; override; /// Destroy
+    property IND_AP : String    read fIND_AP write fIND_AP;
+    property G3_01  : Currency  read fG3_01  write fG3_01;
+    property G3_02  : Currency  read fG3_02  write fG3_02;
+    property G3_03  : Currency  read fG3_03  write fG3_03;
+    property G3_04  : Currency  read fG3_04  write fG3_04;
+    property G3_05  : Currency  read fG3_05  write fG3_05;
+    property G3_06  : Currency  read fG3_06  write fG3_06;
+    property G3_07  : Currency  read fG3_07  write fG3_07;
+    property G3_T   : Currency  read fG3_T   write fG3_T;
+    property G3_08  : Currency  read fG3_08  write fG3_08;
+    property G3_09  : Currency  read fG3_09  write fG3_09;
+    property Registro1975: TRegistro1975List read FRegistro1975 write FRegistro1975;
+  end;
+
+  TRegistro1970List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistro1970;
+    procedure SetItem(Index: Integer; const Value: TRegistro1970);
+  public
+    function New(AOwner: TRegistro1001): TRegistro1970;
+    property Items[Index: Integer]: TRegistro1970 read GetItem write SetItem;
+  end;
+
+  ///REGISTRO 1975: GIAF 3 - GUIA DE INFORMAÇÃO E APURAÇÃO DE INCENTIVOS FISCAIS E FINANCEIROS: IMPORTAÇÃO (SAÍDAS INTERNAS POR FAIXA DE ALÍQUOTA)
+  TRegistro1975 = class
+  private
+    fALIQ_IMP_BASE: Currency; /// Alíquota incidente sobre as importações-base( Valores Válidos: [3,50; 6,00; 8,00; 10,00] )
+    fG3_10: Currency;         /// Saídas incentivadas de PI
+    fG3_11: Currency;         /// Importações-base para o crédito presumido
+    fG3_12: Currency;         /// Crédito presumido nas saídas internas
+  public
+    property ALIQ_IMP_BASE : Currency    read fALIQ_IMP_BASE write fALIQ_IMP_BASE;
+    property G3_10  : Currency  read fG3_10  write fG3_10;
+    property G3_11  : Currency  read fG3_11  write fG3_11;
+    property G3_12  : Currency  read fG3_12  write fG3_12;
+  end;
+
+  TRegistro1975List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistro1975;
+    procedure SetItem(Index: Integer; const Value: TRegistro1975);
+  public
+    function New(AOwner: TRegistro1970): TRegistro1975;
+    property Items[Index: Integer]: TRegistro1975 read GetItem write SetItem;
+  end;
+
+
+ ///REGISTRO 1980: GIAF 4 GUIA DE INFORMAÇÃO E APURAÇÃO DE INCENTIVOS FISCAIS E FINANCEIROS: CENTRAL DE DISTRIBUIÇÃO (ENTRADAS/SAÍDAS)
+  TRegistro1980 = class
+  private
+    fIND_AP: String;   ///Indicador da sub-apuração por tipo de benefício(conforme tabela 4.7.1)
+    fG4_01: Currency;  /// Entradas (percentual de incentivo)
+    fG4_02: Currency;  /// Entradas não incentivadas de PI
+    fG4_03: Currency;  /// Entradas incentivadas de PI
+    fG4_04: Currency;  /// Saídas (percentual de incentivo)
+    fG4_05: Currency;  /// Saídas não incentivadas de PI
+    fG4_06: Currency;  /// Saídas incentivadas de PI
+    fG4_07: Currency;  /// Saldo devedor do ICMS antes das deduções do incentivo (PI e itens não incentivados)
+    fG4_08: Currency;  /// Crédito presumido nas entradas incentivadas de PI
+    fG4_09: Currency;  /// Crédito presumido nas saídas incentivadas de PI
+    fG4_10: Currency;  /// Dedução de incentivo da Central de Distribuição (entradas/saídas)
+    fG4_11: Currency;  /// Saldo devedor do ICMS após deduções do incentivo
+    fG4_12: Currency;  /// ndice de recolhimento da central de distribuição
+  public
+    constructor Create(AOwner: TRegistro1001); virtual; /// Create
+    property IND_AP : String    read fIND_AP write fIND_AP;
+    property G4_01  : Currency  read fG4_01  write fG4_01;
+    property G4_02  : Currency  read fG4_02  write fG4_02;
+    property G4_03  : Currency  read fG4_03  write fG4_03;
+    property G4_04  : Currency  read fG4_04  write fG4_04;
+    property G4_05  : Currency  read fG4_05  write fG4_05;
+    property G4_06  : Currency  read fG4_06  write fG4_06;
+    property G4_07  : Currency  read fG4_07  write fG4_07;
+    property G4_08  : Currency  read fG4_08  write fG4_08;
+    property G4_09  : Currency  read fG4_09  write fG4_09;
+    property G4_10  : Currency  read fG4_10  write fG4_10;
+    property G4_11  : Currency  read fG4_11  write fG4_11;
+    property G4_12  : Currency  read fG4_12  write fG4_12;
+  end;
+
+  TRegistro1980List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistro1980;
+    procedure SetItem(Index: Integer; const Value: TRegistro1980);
+  public
+    function New(AOwner: TRegistro1001): TRegistro1980;
+    property Items[Index: Integer]: TRegistro1980 read GetItem write SetItem;
   end;
 
   /// Registro 1990 - ENCERRAMENTO DO BLOCO 1
@@ -1603,24 +1766,30 @@ begin
    FRegistro1700 := TRegistro1700List.Create;
    FRegistro1800 := TRegistro1800List.Create;
    FRegistro1900 := TRegistro1900List.Create;
+   FRegistro1960 := TRegistro1960List.Create;
+   FRegistro1970 := TRegistro1970List.Create;
+   FRegistro1980 := TRegistro1980List.Create;
    //
    IND_MOV := imSemDados;
 end;
 
 destructor TRegistro1001.Destroy;
 begin
-   FRegistro1010.Free;
-   FRegistro1100.Free;
-   FRegistro1200.Free;
-   FRegistro1300.Free;
-   FRegistro1350.Free;
-   FRegistro1390.Free;
-   FRegistro1400.Free;
-   FRegistro1500.Free;
-   FRegistro1600.Free;
-   FRegistro1700.Free;
-   FRegistro1800.Free;
-   FRegistro1900.Free;
+  FRegistro1010.Free;
+  FRegistro1100.Free;
+  FRegistro1200.Free;
+  FRegistro1300.Free;
+  FRegistro1350.Free;
+  FRegistro1390.Free;
+  FRegistro1400.Free;
+  FRegistro1500.Free;
+  FRegistro1600.Free;
+  FRegistro1700.Free;
+  FRegistro1800.Free;
+  FRegistro1900.Free;
+  FRegistro1960.Free;
+  FRegistro1970.Free;
+  FRegistro1980.Free;
   inherited;
 end;
 
@@ -1784,6 +1953,20 @@ end;
 destructor TRegistro1900.Destroy;
 begin
   FRegistro1910.Free;
+  inherited;
+end;
+
+
+{ TRegistro1970 }
+
+constructor TRegistro1970.Create(AOwner: TRegistro1001);
+begin
+  FRegistro1975 := TRegistro1975List.Create;  /// BLOCO 1 - Lista de Registro1975 (FILHO)
+end;
+
+destructor TRegistro1970.Destroy;
+begin
+  FRegistro1975.Free;
   inherited;
 end;
 
@@ -1982,6 +2165,92 @@ procedure TRegistro1926List.SetItem(Index: Integer;
   const Value: TRegistro1926);
 begin
   Put(Index, Value);
+end;
+
+{ TRegistro1960List }
+
+function TRegistro1960List.GetItem(Index: Integer): TRegistro1960;
+begin
+  Result := TRegistro1960(Inherited Items[Index]);
+end;
+
+function TRegistro1960List.New(AOwner: TRegistro1001): TRegistro1960;
+begin
+  Result := TRegistro1960.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistro1960List.SetItem(Index: Integer; const Value: TRegistro1960);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistro1970List }
+
+function TRegistro1970List.GetItem(Index: Integer): TRegistro1970;
+begin
+  Result := TRegistro1970(Inherited Items[Index]);
+end;
+
+function TRegistro1970List.New(AOwner: TRegistro1001): TRegistro1970;
+begin
+  Result := TRegistro1970.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistro1970List.SetItem(Index: Integer; const Value: TRegistro1970);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistro1975List }
+
+function TRegistro1975List.GetItem(Index: Integer): TRegistro1975;
+begin
+  Result := TRegistro1975(Inherited Items[Index]);
+end;
+
+function TRegistro1975List.New(AOwner: TRegistro1970): TRegistro1975;
+begin
+  Result := TRegistro1975.Create;
+  Add(Result);
+end;
+
+procedure TRegistro1975List.SetItem(Index: Integer; const Value: TRegistro1975);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistro1980List }
+
+function TRegistro1980List.GetItem(Index: Integer): TRegistro1980;
+begin
+  Result := TRegistro1980(Inherited Items[Index]);
+end;
+
+function TRegistro1980List.New(AOwner: TRegistro1001): TRegistro1980;
+begin
+  Result := TRegistro1980.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistro1980List.SetItem(Index: Integer; const Value: TRegistro1980);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistro1960 }
+
+constructor TRegistro1960.Create(AOwner: TRegistro1001);
+begin
+
+end;
+
+{ TRegistro1980 }
+
+constructor TRegistro1980.Create(AOwner: TRegistro1001);
+begin
+
 end;
 
 end.

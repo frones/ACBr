@@ -81,7 +81,8 @@ type
                              vlVersao108,  // Código 009 - Versão 108 Ato COTEPE 01/07/2015
                              vlVersao109,  // Código 010 - Versão 109 Ato COTEPE 01/07/2016
                              vlVersao110,  // Código 011 - Versão 110 Ato COTEPE 01/01/2017
-                             vlVersao111   // Código 012 - Versão 111 Ato COTEPE 01/01/2018
+                             vlVersao111,  // Código 012 - Versão 111 Ato COTEPE 01/01/2018
+                             vlVersao112   // Código 013 - Versão 112 Ato COTEPE 01/01/2019
                              );
   TACBrVersaoLeiaute = TACBrCodVer;
 
@@ -658,6 +659,31 @@ type
                   );
   TACBrSituacaoTribCOFINS = TACBrCstCofins;
 
+
+  TACBrMotivoRessarcimento = (tmrVendaOutraUF,             // 1 – Venda para outra UF;
+                              tmrSaidaInsetaNaoIncidencia, // 2 – Saída amparada por isenção ou não incidência;
+                              tmrPerdaDeterioracao,        // 3 – Perda ou deterioração;
+                              tmrFurtoRoubo,               // 4 – Furto ou roubo;
+                              tmrExportacao,               // 5 – Exportação;
+                              tmrVendaSimpleNacional,      // 6 – Venda interna para Simples Nacional
+                              tmrOutros);                  // 9 – Outros
+
+   TACBrIndicadorDeducao = (tidCompensacaoISS,        // 0- Compensação do ISS calculado a maior;
+                            tidBeneficioFiscal,       // 1- Benefício fiscal por incentivo à cultura;
+                            tidDecisaoAdministrativa, // 2- Decisão administrativa ou judicial;
+                            tidOutros);               // 9- Outros;
+
+   TACBrIndicadorProcesso = (tipSefin,           // 0- Sefin;
+                             tipJusticaFederal,  // 1- Justiça Federal;
+                             tipJusticaEstadual, // 2- Justiça Estadual;
+                             tipOutros);         // 9- Outros;
+
+
+   TACBrIndicadorObrigacao = (tioISSProprio,           // 0 - ISS Próprio;
+                              tioISSSubstituto,        // 1 - ISS Substituto (devido pelas aquisições de serviços do declarante).
+                              tioISSUniprofissionais); // 2 - ISS Uniprofissionais
+
+
   TOpenBlocos = class
   private
     FIND_MOV: TACBrIndMov;    /// Indicador de movimento: 0- Bloco com dados informados, 1- Bloco sem dados informados.
@@ -756,6 +782,14 @@ type
   function StrToServicoPrestado(const AValue: string): TACBrServicoPrestado;
   function StrMovimentoBens(const AValue: string): TACBrMovimentoBens;
   function MovimentoBensToStr(const AValue: TACBrMovimentoBens): string;
+  function MotivoRessarcimentoToStr(AValue: TACBrMotivoRessarcimento): string;
+  function StrToMotivoRessarcimento(const AValue: string): TACBrMotivoRessarcimento;
+  function IndicadorDeducaoToStr(AValue: TACBrIndicadorDeducao): string;
+  function StrToIndicadorDeducao(const AValue: string): TACBrIndicadorDeducao;
+  function IndicadorProcessoToStr(AValue: TACBrIndicadorProcesso): string;
+  function StrToIndicadorProcesso(const AValue: string): TACBrIndicadorProcesso;
+  function IndicadorObrigacaoToStr(AValue: TACBrIndicadorObrigacao): string;
+  function StrToIndicadorObrigacao(const AValue: string): TACBrIndicadorObrigacao;
 
 implementation
 
@@ -799,6 +833,9 @@ begin
    if AValue = '012' then
       Result := vlVersao111
    else
+   if AValue = '013' then
+      Result := vlVersao112
+   else
      raise EACBrSPEDFiscalException.CreateFmt('Versão desconhecida. Versao "%s" não é um valor válido.', [AValue]);
 end;
 
@@ -829,6 +866,8 @@ begin
       Result := '011';
     vlVersao111:
       Result := '012';
+    vlVersao112:
+      Result := '013';
   else
     Result := EmptyStr;
   end;
@@ -1668,4 +1707,129 @@ begin
    end;
 end;
 
+function MotivoRessarcimentoToStr(AValue: TACBrMotivoRessarcimento): string;
+begin
+  case AValue of
+    tmrVendaOutraUF:
+      Result := '1';
+    tmrSaidaInsetaNaoIncidencia:
+      Result := '2';
+    tmrPerdaDeterioracao:
+      Result := '3';
+    tmrFurtoRoubo:
+      Result := '4';
+    tmrExportacao:
+      Result := '5';
+    tmrVendaSimpleNacional:
+      Result := '6';
+    tmrOutros:
+      Result := '9';
+  end;
+end;
+
+function StrToMotivoRessarcimento(const AValue: string): TACBrMotivoRessarcimento;
+begin
+  if AValue = '1' then
+    Result := tmrVendaOutraUF
+  else
+  if AValue = '2' then
+    Result := tmrSaidaInsetaNaoIncidencia
+  else
+  if AValue = '3' then
+    Result := tmrPerdaDeterioracao
+  else
+  if AValue = '4' then
+    Result := tmrFurtoRoubo
+  else
+  if AValue = '5' then
+    Result := tmrExportacao
+  else
+  if AValue = '6' then
+    Result := tmrVendaSimpleNacional
+  else
+  if AValue = '9' then
+    Result := tmrOutros;
+end;
+
+function IndicadorDeducaoToStr(AValue: TACBrIndicadorDeducao): string;
+begin
+  case Avalue of
+    tidCompensacaoISS:
+      Result := '0';
+    tidBeneficioFiscal:
+      Result := '1';
+    tidDecisaoAdministrativa:
+      Result := '2';
+    tidOutros:
+      Result := '9';
+  end;
+end;
+
+function StrToIndicadorDeducao(const AValue: string): TACBrIndicadorDeducao;
+begin
+  if AValue = '0' then
+    Result := tidCompensacaoISS
+  else
+  if  AValue = '1' then
+    Result := tidBeneficioFiscal
+  else
+  if AValue = '2' then
+    Result := tidDecisaoAdministrativa
+  else
+  if  AValue = '9' then
+    Result := tidOutros;
+end;
+
+function IndicadorProcessoToStr(AValue: TACBrIndicadorProcesso): string;
+begin
+  case Avalue of
+    tipSefin:
+      Result := '0';
+    tipJusticaFederal:
+      Result := '1';
+    tipJusticaEstadual:
+      Result := '2';
+    tipOutros:
+      Result := '9';
+  end;
+end;
+
+function StrToIndicadorProcesso(const AValue: string): TACBrIndicadorProcesso;
+begin
+  if AValue = '0' then
+    Result := tipSefin
+  else
+  if  AValue = '1' then
+    Result := tipJusticaFederal
+  else
+  if AValue = '2' then
+    Result := tipJusticaEstadual
+  else
+  if  AValue = '9' then
+    Result := tipOutros;
+end;
+
+function IndicadorObrigacaoToStr(AValue: TACBrIndicadorObrigacao): string;
+begin
+  case Avalue of
+    tioISSProprio:
+      Result := '0';
+    tioISSSubstituto:
+      Result := '1';
+    tioISSUniprofissionais:
+      Result := '2';
+  end;
+end;
+
+function StrToIndicadorObrigacao(const AValue: string): TACBrIndicadorObrigacao;
+begin
+  if AValue = '0' then
+    Result := tioISSProprio
+  else
+  if  AValue = '1' then
+    Result := tioISSSubstituto
+  else
+  if AValue = '2' then
+    Result := tioISSUniprofissionais;
+end;
 end.

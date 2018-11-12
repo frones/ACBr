@@ -11,8 +11,8 @@ uses
   Windows, Messages,
 {$ENDIF}
   SysUtils, Variants, Classes, Graphics, Controls, Forms, ACBrEFDBlocos,
-  Dialogs, StdCtrls, ACBrSpedFiscal, ExtCtrls, ComCtrls, ACBrUtil, ACBrTXTClass,
-  DateUtils, ACBrBase;
+  StrUtils, Dialogs, StdCtrls, ACBrSpedFiscal, ExtCtrls, ComCtrls,
+  DateTimePicker, ACBrUtil, ACBrTXTClass, DateUtils, ACBrBase;
 
 type
 
@@ -53,12 +53,16 @@ type
     btnB_K: TButton;
     Label9: TLabel;
     DtRef: TDateTimePicker;
+    btnB_B: TButton;
+    cbEstado: TComboBox;
+    Label10: TLabel;
     procedure ACBrSPEDFiscal1Error(const MsnError: string);
     procedure btnB_KClick(Sender: TObject);
     procedure btnB_0Click(Sender: TObject);
     procedure btnB_9Click(Sender: TObject);
     procedure btnTXTClick(Sender: TObject);
     procedure btnB_1Click(Sender: TObject);
+    procedure btnB_BClick(Sender: TObject);
     procedure btnB_CClick(Sender: TObject);
     procedure btnB_DClick(Sender: TObject);
     procedure btnB_EClick(Sender: TObject);
@@ -123,9 +127,10 @@ begin
     xVer := '010'
   else if (DtRef.DateTime >= StrToDate('01/01/2017')) and (DtRef.DateTime <= StrToDate('31/12/2017')) then
     xVer := '011'
-  else if (DtRef.DateTime >= StrToDate('01/01/2018')) then
-    xVer := '012';
-
+  else if (DtRef.DateTime >= StrToDate('01/01/2018')) and (DtRef.DateTime <= StrToDate('31/12/2018')) then
+    xVer := '012'
+  else if (DtRef.DateTime >= StrToDate('01/01/2019')) then
+    xVer := '013';
   Result := StrToCodVer(xVer);
 end;
 
@@ -142,10 +147,9 @@ var
 begin
   // Alimenta o componente com informações para gerar todos os registros do
   // Bloco 0.
-
   cbConcomitante.Enabled := False;
   btnB_0.Enabled := False;
-  btnB_C.Enabled := True;
+  btnB_B.Enabled := True;
 
   ACBrSPEDFiscal1.DT_INI := StrToDate('01/11/' + IntToStr(YearOf(DtRef.Date)));
   ACBrSPEDFiscal1.DT_FIN := StrToDate('30/11/' + IntToStr(YearOf(DtRef.Date)));
@@ -167,7 +171,7 @@ begin
       NOME := 'RAZÃO SOCIAL DA EMPRESA EMITENTE';
       CNPJ := '11111111000191';
       CPF := '';
-      UF := 'RS';
+      UF := cbEstado.Text;
       IE := '1111111119';
       COD_MUN := 4314902;
       IM := '';
@@ -385,6 +389,7 @@ begin
   // Habilita os botões
   btnB_0.Enabled := True;
   btnB_1.Enabled := True;
+  btnB_B.Enabled := True;
   btnB_C.Enabled := True;
   btnB_D.Enabled := True;
   btnB_E.Enabled := True;
@@ -393,6 +398,46 @@ begin
   btnB_K.Enabled := True;
 
   cbConcomitante.Enabled := True;
+end;
+
+procedure TFrmSPEDFiscal.btnB_BClick(Sender: TObject);
+begin
+  // Alimenta o componente com informações para gerar todos os registros do
+  // Bloco C.
+  btnB_B.Enabled := False;
+  btnB_C.Enabled := True;
+
+  with ACBrSPEDFiscal1.Bloco_B do
+  begin
+    with RegistroB001New do
+    begin
+      IND_MOV := imComDados;
+      with RegistroB020New do
+      begin
+        IND_OPER           := tpEntradaAquisicao;
+        IND_EMIT           := edTerceiros;
+        COD_PART           := '1';
+        COD_MOD            := '8';
+        COD_SIT            := sdRegular;
+        SER                := '1';
+        NUM_DOC            := '123456';
+        CHV_NFE            := '';
+        VL_CONT            := 50.00;
+        VL_ISS             := 2.5;
+        with RegistroB025New do
+        begin
+          COD_SERV := '7.12';
+          ALIQ_ISS := 5;
+          VL_ISS_P := 2.5;
+        end;
+      end;
+    end;
+  end;
+  if cbConcomitante.Checked then
+  begin
+    ACBrSPEDFiscal1.WriteBloco_B;
+    LoadToMemo;
+  end;
 end;
 
 procedure TFrmSPEDFiscal.btnTXTClick(Sender: TObject);
@@ -464,7 +509,78 @@ begin
         IND_CART  := 'N'; // Reg. 1600 - Realizou vendas com Cartão de Crédito ou de débito:
         IND_FORM  := 'N'; // Reg. 1700 - É obrigatório em sua unidade da federação o controle de utilização de documentos  fiscais em papel:
         IND_AER   := 'N'; // Reg. 1800 – A empresa prestou serviços de transporte aéreo de cargas e de passageiros:
+        IND_GIAF1 := ifthen(cbEstado.Text = 'PE', 'S', 'N');
+        IND_GIAF3 := ifthen(cbEstado.Text = 'PE', 'S', 'N');
+        IND_GIAF4 := 'N';
       end;
+
+      with Registro1960New do
+      begin
+        IND_AP := '1';
+        G1_01  := 0.15;
+        G1_02  := 5;
+        G1_03  := 0.6;
+        G1_04  := 0;
+        G1_05  := 0;
+        G1_06  := 0;
+        G1_07  := 0;
+        G1_08  := 0;
+        G1_09  := 0;
+        G1_10  := 0;
+        G1_11  := 0;
+      end;
+
+      with Registro1970New do
+      begin
+        IND_AP := '12';
+        G3_01  := 1.15;
+        G3_02  := 25;
+        G3_03  := 0.6;
+        G3_04  := 0;
+        G3_05  := 0;
+        G3_06  := 3;
+        G3_07  := 0;
+        G3_T   := 0;
+        G3_08  := 0;
+        G3_09  := 0;
+        with Registro1975new do
+        begin
+          ALIQ_IMP_BASE := 3.5;
+          G3_10         := 0.15;
+          G3_11         := 6;
+          G3_12         := 2;
+        end;
+        with Registro1975new do
+        begin
+          ALIQ_IMP_BASE := 10;
+          G3_10         := 19;
+          G3_11         := 0;
+          G3_12         := 3;
+        end;
+      end;
+      with Registro1970New do
+      begin
+        IND_AP := '10';
+        G3_01  := 25;
+        G3_02  := 125;
+        G3_03  := 3.6;
+        G3_04  := 0;
+        G3_05  := 0;
+        G3_06  := 3;
+        G3_07  := 0;
+        G3_T   := 0;
+        G3_08  := 0;
+        G3_09  := 0;
+        with Registro1975new do
+        begin
+          ALIQ_IMP_BASE := 3.5;
+          G3_10         := 125;
+          G3_11         := 25;
+          G3_12         := 3.6;
+        end;
+      end;
+
+
     end;
   end;
 
@@ -633,6 +749,7 @@ begin
               ALIQ_COFINS_R := 0;
               VL_COFINS := 0;
               COD_CTA := '000';
+              VL_ABAT_NT := 1.39;
 
               //REGISTRO C171: ARMAZENAMENTO DE COMBUSTIVEIS (código 01, 55)
               { Só gera para operações de aquisição }
@@ -677,8 +794,17 @@ begin
               VL_RED_BC := 0;
               VL_IPI := 0;
               COD_OBS := '000001';
+              // REGISTRO C191: INFORMAÇÕES DO FUNDO DE COMBATE À POBREZA – FCP – NA NFe (CÓDIGO 55)
+              with RegistroC191New do
+              begin
+                VL_FCP_OP :=  0.34;
+                VL_FCP_ST :=  0;
+                VL_FCP_RET := 0;
+              end; // Fim dos Itens;
             end; // Fim dos Itens;
           end;
+
+
         end;
 
         if cbConcomitante.Checked then
@@ -818,6 +944,7 @@ end;
 procedure TFrmSPEDFiscal.btnB_CompletoClick(Sender: TObject);
 begin
   btnB_0Click(Self);
+  btnB_BClick(Self);
   btnB_CClick(Self);
   btnB_DClick(Self);
   btnB_EClick(Self);
@@ -825,7 +952,6 @@ begin
   btnB_HClick(Self);
   btnB_KClick(Self);
   btnB_1Click(Self);
-
 end;
 
 procedure TFrmSPEDFiscal.btnB_DClick(Sender: TObject);
@@ -1252,6 +1378,21 @@ begin
             COD_ITEM_DEST := '000010';
             QTD := 1;
             QTD_DEST := 1;            
+          end;
+          with RegistroK260New do
+          begin
+            COD_OP_OS := '00035';
+            COD_ITEM  := '00006';
+            DT_SAIDA  :=  ACBrSPEDFiscal1.DT_INI;
+            QTD_SAIDA :=  1;
+            DT_RET    := ACBrSPEDFiscal1.DT_INI;
+            QTD_RET   :=  1;
+            with RegistroK265New do
+            begin
+              COD_ITEM := '000008';
+              QTD_CONS := 1;
+              QTD_RET := 1;
+            end;
           end;
         end;
       end;

@@ -10,7 +10,6 @@ uses
   Forms, Frm_SPEDFiscal, ACBr_SPED, LResources;
 
 begin
-   {$I SPEDFiscal.lrs}
   Application.Initialize;
   Application.CreateForm(TFrmSPEDFiscal, FrmSPEDFiscal);
   Application.Run;

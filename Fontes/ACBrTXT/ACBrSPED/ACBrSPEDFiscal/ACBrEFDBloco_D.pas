@@ -118,7 +118,8 @@ type
     fIND_OPER: TACBrIndOper;        /// Indicador do tipo de operação: 0- Aquisição; 1- Prestação
     fIND_EMIT: TACBrIndEmit;        /// Indicador do emitente do documento fiscal: 0- Emissão própria; 1- Terceiros
     fCOD_PART: String;              /// Código do participante (campo 02 do Registro 0150):
-    fCOD_MOD: String;               /// Código do modelo do documento fiscal, conforme a Tabela 4.1.1
+    fCOD_MOD: String;               /// Código do modelo do documento fiscal, conforme a Tabela 4.1.1 (SOMENTE 57, 67;
+                                    ///Se o Campo “COD_MOD” for igual a 07, 08, 08B, 09, 10, 11, 26 ou 27, a data informada deverá ser menor que 01/01/2019.
     fCOD_SIT: TACBrCodSit;          /// Código da situação do documento fiscal, conforme a Tabela 4.1.2
     fSER: String;                   /// Série do documento fiscal
     fSUB: String;                   /// Subsérie do documento fiscal

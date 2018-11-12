@@ -46,7 +46,7 @@ unit ACBrEFDBloco_K_Class;
 
 interface
 
-uses SysUtils, StrUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_K, ACBrEFDBlocos,
+uses SysUtils, StrUtils, Math, Classes, DateUtils, ACBrSped, ACBrEFDBloco_K, ACBrEFDBlocos,
      ACBrEFDBloco_0_Class;
 
 type
@@ -254,7 +254,7 @@ begin
                LFill( DT_FIN_OS ) +
                LFill( COD_DOC_OS  ) +
                LFill( COD_ITEM_ORI  ) +
-               DFill( QTD_ORI, 3 ) );
+               DFill( QTD_ORI, ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )));
 
           WriteRegistroK215(RegK100.RegistroK210.Items[intFor]);
         end;
@@ -277,7 +277,7 @@ begin
         begin
           Add( LFill('K215') +
                LFill( COD_ITEM_DES ) +
-               DFill( QTD_DES, 3 ) );
+               DFill( QTD_DES, ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -303,9 +303,9 @@ begin
                LFill( DT_MOV ) +
                LFill( COD_ITEM_ORI  ) +
                LFill( COD_ITEM_DEST  ) +
-               DFill( QTD, 3 )+
+               DFill( QTD, ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 ))+
                IfThen(DT_INI >= EncodeDate(2018,01,01),
-			           DFill( QTD_DEST, 3 ), EmptyStr));
+			           DFill( QTD_DEST, ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )), EmptyStr));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -334,7 +334,7 @@ begin
                LFill( DT_FIN_OP ) +
                LFill( COD_DOC_OP  ) +
                LFill( COD_ITEM  ) +
-               DFill( QTD_ENC, 3 ));
+               DFill( QTD_ENC, ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )));
 
           WriteRegistroK235(RegK100.RegistroK230.Items[intFor]);
         end;
@@ -361,7 +361,7 @@ begin
           Add( LFill('K235') +
                LFill( RegK230.RegistroK235.Items[intFor].DT_SAIDA ) +
                LFill( COD_ITEM ) +
-               DFill( QTD , 3 ) +
+               DFill( QTD , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )) +
                LFill( COD_INS_SUBST ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
@@ -387,7 +387,7 @@ begin
           Add( LFill('K250') +
                LFill( DT_PROD ) +
                LFill( COD_ITEM  ) +
-               DFill( QTD, 3 ) );
+               DFill( QTD, ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )) );
 		  WriteRegistroK255(RegK100.RegistroK250.Items[intFor]);
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
@@ -410,7 +410,7 @@ begin
           Add( LFill('K255') +
                LFill( DT_CONS ) +
                LFill( COD_ITEM  ) +
-               DFill( QTD, 3 ) +
+               DFill( QTD, ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )) +
                LFill( COD_INS_SUBST));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
@@ -437,9 +437,9 @@ begin
                LFill( COD_OP_OS ) +
                LFill( COD_ITEM ) +
                LFill( DT_SAIDA ) +
-               DFill( QTD_SAIDA , 3 ) +
+               DFill( QTD_SAIDA , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )) +
                LFill( DT_RET ) +
-               DFill( QTD_RET , 3 ));
+               DFill( QTD_RET , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )));
 
           WriteRegistroK265(RegK100.RegistroK260.Items[intFor]);
         end;
@@ -462,8 +462,8 @@ begin
         begin
           Add( LFill('K265') +
                LFill( COD_ITEM ) +
-               DFill( QTD_CONS , 3 ) +
-               DFill( QTD_RET , 3 ));
+               DFill( QTD_CONS , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )) +
+               DFill( QTD_RET , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -487,8 +487,8 @@ begin
                LFill( DT_FIN_AP ) +
                LFill( COD_OP_OS ) +
                LFill( COD_ITEM ) +
-               DFill( QTD_COR_POS , 3 ,(QTD_COR_POS<=0)) +
-               DFill( QTD_COR_NEG , 3 ,(QTD_COR_NEG<=0)) +
+               DFill( QTD_COR_POS , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 ),(QTD_COR_POS<=0)) +
+               DFill( QTD_COR_NEG , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 ),(QTD_COR_NEG<=0)) +
                LFill( ORIGEM ));
 
 		      WriteRegistroK275(RegK100.RegistroK270.Items[intFor]);
@@ -512,8 +512,8 @@ begin
         begin
           Add( LFill('K275') +
                LFill( COD_ITEM  ) +
-               DFill( QTD_COR_POS , 3 ,(QTD_COR_POS<=0)) +
-               DFill( QTD_COR_NEG , 3 ,(QTD_COR_NEG<=0)) +
+               DFill( QTD_COR_POS , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 ),(QTD_COR_POS<=0)) +
+               DFill( QTD_COR_NEG , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 ),(QTD_COR_NEG<=0)) +
                LFill( COD_INS_SUBST ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
@@ -596,7 +596,7 @@ begin
 
           Add( LFill('K291') +
                LFill( COD_ITEM ) +
-               DFill( QTD , 3 ));
+               DFill( QTD , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -620,7 +620,7 @@ begin
 
           Add( LFill('K292') +
                LFill( COD_ITEM ) +
-               DFill( QTD , 3 ));
+               DFill( QTD , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -670,7 +670,7 @@ begin
 
           Add( LFill('K301') +
                LFill( COD_ITEM ) +
-               DFill( QTD , 3 ));
+               DFill( QTD , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6 )));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -694,7 +694,7 @@ begin
 
           Add( LFill('K302') +
                LFill( COD_ITEM ) +
-               DFill( QTD , 3 ));
+               DFill( QTD , ifthen(FBloco_0.Registro0000.COD_VER < vlVersao112,  3, 6)));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;

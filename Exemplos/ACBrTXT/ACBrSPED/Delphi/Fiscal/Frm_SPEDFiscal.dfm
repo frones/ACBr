@@ -161,10 +161,19 @@
       Color = clBtnFace
       ParentColor = False
     end
+    object Label10: TLabel
+      Left = 239
+      Top = 14
+      Width = 33
+      Height = 13
+      Caption = 'Estado'
+      Color = clBtnFace
+      ParentColor = False
+    end
     object edtFile: TEdit
       Left = 22
-      Top = 28
-      Width = 269
+      Top = 29
+      Width = 211
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -207,9 +216,46 @@
       Top = 28
       Width = 90
       Height = 21
-      Date = 43124.498320694450000000
-      Time = 43124.498320694450000000
+      Date = 43489.498320694450000000
+      Time = 43489.498320694450000000
       TabOrder = 3
+    end
+    object cbEstado: TComboBox
+      Left = 239
+      Top = 29
+      Width = 42
+      Height = 21
+      ItemIndex = 6
+      TabOrder = 4
+      Text = 'DF'
+      Items.Strings = (
+        'AC'
+        'AL'
+        'AP'
+        'AM'
+        'BA'
+        'CE'
+        'DF'
+        'ES'
+        'GO'
+        'MA'
+        'MT'
+        'MS'
+        'MG'
+        'PA'
+        'PB'
+        'PR'
+        'PE'
+        'PI'
+        'RJ'
+        'RN'
+        'RS'
+        'RO'
+        'RR'
+        'SC'
+        'SP'
+        'SE'
+        'TO')
     end
   end
   object Panel2: TPanel
@@ -252,7 +298,7 @@
       OnClick = btnB_0Click
     end
     object btnB_1: TButton
-      Left = 17
+      Left = 118
       Top = 85
       Width = 100
       Height = 25
@@ -262,7 +308,7 @@
       OnClick = btnB_1Click
     end
     object btnB_C: TButton
-      Left = 118
+      Left = 220
       Top = 54
       Width = 100
       Height = 25
@@ -272,7 +318,7 @@
       OnClick = btnB_CClick
     end
     object btnB_D: TButton
-      Left = 220
+      Left = 322
       Top = 54
       Width = 100
       Height = 25
@@ -282,7 +328,7 @@
       OnClick = btnB_DClick
     end
     object btnB_E: TButton
-      Left = 323
+      Left = 425
       Top = 54
       Width = 100
       Height = 25
@@ -292,7 +338,7 @@
       OnClick = btnB_EClick
     end
     object btnB_H: TButton
-      Left = 531
+      Left = 635
       Top = 54
       Width = 100
       Height = 25
@@ -302,7 +348,7 @@
       OnClick = btnB_HClick
     end
     object btnB_G: TButton
-      Left = 427
+      Left = 529
       Top = 54
       Width = 100
       Height = 25
@@ -321,14 +367,24 @@
       OnClick = btnB_CompletoClick
     end
     object btnB_K: TButton
-      Left = 635
-      Top = 54
+      Left = 16
+      Top = 85
       Width = 100
       Height = 25
       Caption = 'Registros Bloco K'
       Enabled = False
       TabOrder = 8
       OnClick = btnB_KClick
+    end
+    object btnB_B: TButton
+      Left = 118
+      Top = 54
+      Width = 100
+      Height = 25
+      Caption = 'Registros Bloco b'
+      Enabled = False
+      TabOrder = 9
+      OnClick = btnB_BClick
     end
   end
   object btnB_9: TButton

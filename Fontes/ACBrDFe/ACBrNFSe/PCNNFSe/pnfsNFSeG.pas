@@ -373,7 +373,7 @@ begin
     aIdentificadorCanc := '';
 
   // Redefine o Profixo 3 ======================================================
-  if Provedor in [proBetha, proBethav2, proSpeedGov] then
+  if Provedor in [proBetha, proBethav2{, proSpeedGov}] then
     Prefixo3 := '';
 end;
 

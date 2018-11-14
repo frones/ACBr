@@ -580,6 +580,12 @@ procedure TACBrSpedFiscalImportar_BlocoC.RegC425;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC425New do
   begin
+    COD_ITEM := Valor;
+    QTD := ValorF;
+    UNID := Valor;
+    VL_ITEM := ValorF;
+    VL_PIS := ValorF;
+    VL_COFINS := ValorF;
   end;
 end;
 

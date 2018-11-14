@@ -110,7 +110,8 @@ type
                     proNotaBlu, proSMARAPD, proSmarAPDABRASF, proActconv201,
                     proActconv202, proSigep, proSafeWeb, proSH3, proSIAPNet,
                     proIPM, proBelford, proISSJoinville, proAsten, proELv2,
-                    proTiplanv2, proGiss, proDeISS, proTcheInfov2, proDataSmart);
+                    proTiplanv2, proGiss, proDeISS, proTcheInfov2, proDataSmart,
+                    proMetropolisWeb);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -504,7 +505,7 @@ begin
          'Bethav2', 'Actconv2', 'Infisc-v11', 'Friburgo', 'CTA', 'NotaBlu',
          'Smarapd', 'SmarAPDABRASF', 'Actconv201', 'Actconv202', 'Sigep', 'SafeWeb',
          'SH3', 'SIAPNet', 'IPM', 'Belford', 'ISSJoinville', 'Asten', 'ELv2',
-         'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart'],
+         'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -520,7 +521,8 @@ begin
          proBethav2, proActconv2, proInfiscv11, proFriburgo, proCTA, proNotaBlu,
          proSMARAPD, proSmarAPDABRASF, proActconv201, proActconv202, proSigep,
          proSafeWeb, proSH3, proSIAPNet, proIPM, proBelford, proISSJoinville,
-         proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2, proDataSmart]);
+         proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
+         proDataSmart, proMetropolisWeb]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -540,7 +542,7 @@ begin
          'Bethav2', 'Actconv2', 'Infisc-v11', 'Friburgo', 'CTA', 'NotaBlu',
          'Smarapd', 'SmarAPDABRASF', 'Actconv201', 'Actconv202', 'Sigep', 'SafeWeb',
          'SH3', 'SIAPNet', 'IPM', 'Belford', 'ISSJoinville', 'Asten', 'ELv2',
-         'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart'],
+         'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -556,7 +558,8 @@ begin
          proBethav2, proActconv2, proInfiscv11, proFriburgo, proCTA, proNotaBlu,
          proSMARAPD, proSmarAPDABRASF, proActconv201, proActconv202, proSigep,
          proSafeWeb, proSH3, proSIAPNet, proIPM, proBelford, proISSJoinville,
-         proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2, proDataSmart]);
+         proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
+         proDataSmart, proMetropolisWeb]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18388,7 +18391,7 @@ begin
     proGINFES, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
     proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ, proSalvador,
     proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan, proWebISS,
-    proCIGA, proNFSeBrasil: Result := loABRASFv1;
+    proCIGA, proNFSeBrasil, proMetropolisWeb: Result := loABRASFv1;
 
     proABRASFv2, pro4R, proABase, proActconv2, proBethav2, proCoplan, proDigifred,
     proEReceita, proFIntelISS, proFiorilli, proFriburgo, proGoiania, proGovDigital,

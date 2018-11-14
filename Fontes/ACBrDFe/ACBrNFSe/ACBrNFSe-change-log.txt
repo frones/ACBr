@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2018
+-- Diversos --
+[+] Implementação do provedor MetropolisWeb.
+Por: Jefferson M. Correia / Italo Jurisato Junior
+
 13/11/2018
 -- pnfsNFSeG --
 [*] Removido da lista o provedor SpeedGov para que não reset o prefixo3.

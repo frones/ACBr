@@ -124,7 +124,6 @@ type
     procedure InicializarTagITagF;
     procedure InicializarGerarDadosMsg;
     function ExtrairGrupoMsgRet(AGrupo: String): String;
-    procedure AlterarURIAssinatura;
     function RemoverCharControle(AXML: String): String;
 
   public
@@ -988,6 +987,10 @@ begin
       // incluido em 23/06/2017 por italo
       proGovBr: FNameSpaceDad := 'xmlns:ns2="http://www.w3.org/2000/09/xmldsig#"' +
                                  ' xmlns:ns3="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"';
+
+//      proMetropolisWeb: FNameSpaceDad := xmlns3 + FNameSpace + '" ' +
+//            'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
+//            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
 
       proInfisc,
       proInfiscv11,
@@ -2445,23 +2448,6 @@ begin
     FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 end;
 
-procedure TNFSeWebService.AlterarURIAssinatura;
-var
-  i: Integer;
-begin
-  // Se URI for True significa que devemos incluir o ID do Lote no
-  // atributo URI da assinatura.
-  if FPConfiguracoesNFSe.Geral.ConfigAssinar.URI then
-  begin
-    i := Pos('URI=""', FPDadosMsg);
-    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-    // atributo URI ao realizar a assinatura.
-    if (i > 0) and (FIDLote <> '') then
-      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + FIDLote +
-                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
-  end;
-end;
-
 { TNFSeGerarLoteRPS }
 
 constructor TNFSeGerarLoteRPS.Create(AOwner: TACBrDFe;
@@ -2789,8 +2775,6 @@ begin
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                    xSignatureNode, xDSIGNSLote, xIdSignature);
 
-//    AlterarURIAssinatura;
-
     // Incluido a linha abaixo por após realizar a assinatura esta gerando o
     // atributo xmlns vazio.
     if not (FProvedor in [proSP, proNotaBlu]) then
@@ -3092,8 +3076,6 @@ begin
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                    xSignatureNode, xDSIGNSLote, xIdSignature);
 
-//    AlterarURIAssinatura;
-
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       FNotasFiscais.ValidarLote(FPDadosMsg,
                          FPConfiguracoes.Arquivos.PathSchemas +
@@ -3298,8 +3280,6 @@ begin
                                   TagElemento,
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                   xSignatureNode, xDSIGNSLote, xIdSignature);
-
-//    AlterarURIAssinatura;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarSincrono(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -3567,8 +3547,6 @@ begin
                               FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
                               xSignatureNode, xDSIGNSLote, xIdSignature);
 
-//    AlterarURIAssinatura;
-
    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
                           FPConfiguracoes.Arquivos.PathSchemas +
@@ -3711,11 +3689,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsSit) and (FPDadosMsg <> '') then
-  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Situação do Lote: ');
-
-//    AlterarURIAssinatura;
-  end;
   
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingDados);
 
@@ -3984,11 +3958,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsLote) and (FPDadosMsg <> '') then
-  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Lote de RPS: ');
-
-//    AlterarURIAssinatura;
-  end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingDados);
 
@@ -4204,11 +4174,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSeRps) and (FPDadosMsg <> '') then
-  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe por RPS: ');
-
-//    AlterarURIAssinatura;
-  end;
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingDados);
 
@@ -4374,11 +4340,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSe) and (FPDadosMsg <> '') then
-  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe: ');
-
-//    AlterarURIAssinatura;
-  end;
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingDados);
 
@@ -5010,11 +4972,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
-  begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
-
-//    AlterarURIAssinatura;
-  end;
     
   FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
                 '<' + FPrefixo3 + 'SubstituicaoNfse>' +
@@ -5175,11 +5133,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.AbrirSessao) and (FPDadosMsg <> '') then
-  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Abrir Sessão: ');
-
-//    AlterarURIAssinatura;
-  end;
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_IncluiEncodingDados);
 
@@ -5329,11 +5283,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.FecharSessao) and (FPDadosMsg <> '') then
-  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Fechar Sessão: ');
-
-//    AlterarURIAssinatura;
-  end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_IncluiEncodingDados);
 

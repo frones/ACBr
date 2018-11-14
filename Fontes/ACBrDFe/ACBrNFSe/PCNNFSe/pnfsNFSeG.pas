@@ -1950,13 +1950,7 @@ function TNFSeG.Gera_DadosMsgSubstituirNFSe: String;
 var
  TagGrupo: String;
 begin
-  case Provedor of
-    proAgili: TagGrupo := 'PedidoCancelamento';
-  else
-    TagGrupo := 'Pedido';
-  end;
-
-  Result := Gera_DadosMsgCancelarNFSe + '</' + Prefixo3 + TagGrupo + '>'; //+ Notas;
+  Result := Gera_DadosMsgCancelarNFSe;
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 

@@ -49,6 +49,9 @@ Símbolo : Significado
 
 14/11/2018
 -- Diversos --
+[*] Correções visando o serviço SubstituicaoNFSe
+Por: Italo Jurisato Junior
+-- Diversos --
 [+] Implementação do provedor MetropolisWeb.
 Por: Jefferson M. Correia / Italo Jurisato Junior
 

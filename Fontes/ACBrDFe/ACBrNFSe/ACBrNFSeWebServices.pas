@@ -2179,25 +2179,25 @@ begin
            proAgili: FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
                                '<UnidadeGestora>' +
                                 OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
-                               '</UnidadeGestora>' +
+                               '</UnidadeGestora>'{ +
                               '<' + FPrefixo4 + 'PedidoCancelamento' +
                                ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                                      FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+                                      FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>'};
 
-           proAgiliv2: FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
+           proAgiliv2: FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>'{ +
                                 '<' + FPrefixo4 + 'PedidoCancelamento' +
                                  ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                                        FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+                                        FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>'};
 
            proSMARAPD,
            proIPM: FTagI := '';
          else begin
                 FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
-                          '<' + FPrefixo3 + 'SubstituicaoNfse>' +
+                          '<' + FPrefixo3 + 'SubstituicaoNfse>'{ +
                            '<' + FPrefixo3 + 'Pedido>' +
                             '<' + FPrefixo4 + 'InfPedidoCancelamento' +
                               ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                                     FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+                                     FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>'};
               end;
          end;
        end;
@@ -4863,18 +4863,22 @@ procedure TNFSeSubstituirNFSe.DefinirDadosMsg;
 var
   i: Integer;
   Gerador: TGerador;
+  Identificador: string;
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_DadosStr;
   FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir;
 
+  Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
+
+  if Identificador <> '' then
+    Identificador := ' ' + Identificador + '="sub' +
+                     TNFSeSubstituirNfse(Self).FNumeroNFSe + '"';
+
   InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
-(*
-    FTagGrupo := FPrefixo3 + 'Pedido';
-*)
     FTagGrupo := 'SubstituirNfseEnvio';
 
     if FProvedor <> proGinfes then
@@ -4971,11 +4975,11 @@ begin
 
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
-  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
+  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Substituir) and (FPDadosMsg <> '') then
+    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Substituir NFS-e: ');
     
   FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
-                '<' + FPrefixo3 + 'SubstituicaoNfse>' +
+                '<' + FPrefixo3 + 'SubstituicaoNfse'+ Identificador + '>' +
                  SeparaDados(FPDadosMsg, FPrefixo3 + 'Pedido', True) +
                  FvNotas  + FTagF;
 

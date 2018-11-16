@@ -63,6 +63,8 @@ type
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TPOSFinalizar = function: longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  TPOSConfigLer = function(const eArqConfig: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TPOSInicializada = function: Boolean;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TPOSUltimoRetorno = function(const sMensagem: PChar; var esTamanho: longint): longint;
@@ -78,6 +80,7 @@ type
     FHandle: TLibHandle;
     FPOSInicializar: TPOSInicializar;
     FPOSFinalizar: TPOSFinalizar;
+    FPOSConfigLer: TPOSConfigLer;
     FPOSInicializada: TPOSInicializada;
     FPOSUltimoRetorno: TPOSUltimoRetorno;
     FPOSGetPosPrinter: TPOSGetPosPrinter;
@@ -93,6 +96,8 @@ type
     destructor Destroy; override;
 
     property ACBrPosPrinter: TACBrPosPrinter read FACBrPosPrinter;
+
+    procedure ConfigLer(const eArqConfig: string);
   end;
 
 implementation
@@ -141,6 +146,7 @@ begin
   begin
     FPOSInicializar := GetProcedureAddress(FHandle, 'POS_Inicializar');
     FPOSFinalizar := GetProcedureAddress(FHandle, 'POS_Finalizar');
+    FPOSConfigLer := GetProcedureAddress(FHandle, 'POS_ConfigLer');
     FPOSInicializada := GetProcedureAddress(FHandle, 'POS_Inicializada');
     FPOSUltimoRetorno := GetProcedureAddress(FHandle, 'POS_UltimoRetorno');
     FPOSGetPosPrinter := GetProcedureAddress(FHandle, 'POS_GetPosPrinter');
@@ -160,10 +166,19 @@ begin
 
   FPOSInicializar := nil;
   FPOSFinalizar := nil;
+  FPOSConfigLer := nil;
   FPOSUltimoRetorno := nil;
   FPOSGetPosPrinter := nil;
   FHandle := 0;
   FACBrPosPrinter := Nil;
+end;
+
+procedure TACBrLibPosPrinter.ConfigLer(const eArqConfig: string);
+Var
+  ret: longint;
+begin
+  ret := FPOSConfigLer(PChar(eArqConfig));
+  CheckResut(ret);
 end;
 
 procedure TACBrLibPosPrinter.CheckResut(const resultado: longint);

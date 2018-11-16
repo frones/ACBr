@@ -419,6 +419,9 @@ begin
     pLib.GravarLog('LIB_ConfigLerValor(' + Sessao + ', ' + Chave + ')', logNormal);
 
     Valor := pLib.Config.LerValor(Sessao, Chave);
+    if pLib.Config.PrecisaCriptografar(Sessao, Chave) then
+      Valor := B64CryptToString(Valor, pLib.Config.ChaveCrypt);
+
     MoverStringParaPChar(Valor, sValor, esTamanho);
     if pLib.Config.Log.Nivel >= logCompleto then
       pLib.GravarLog('   Valor:' + strpas(sValor)+ ', len:' + IntToStr(esTamanho), logCompleto, True);
@@ -441,7 +444,11 @@ begin
     VerificarLibInicializada;
     Sessao := strpas(eSessao);
     Chave := strpas(eChave);
-    Valor := strpas(eValor);
+    if pLib.Config.PrecisaCriptografar(Sessao, Chave) then
+      Valor := StringToB64Crypt(strpas(eValor), pLib.Config.ChaveCrypt)
+    else
+      Valor := strpas(eValor);
+
     pLib.GravarLog('LIB_ConfigGravarValor(' + Sessao + ', ' + Chave + ', ' + Valor + ')', logNormal);
 
     pLib.Config.GravarValor(Sessao, Chave, Valor);

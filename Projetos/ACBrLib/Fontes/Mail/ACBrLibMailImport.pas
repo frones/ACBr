@@ -61,6 +61,8 @@ type
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TMailFinalizar = function: longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+  TMailConfigLer = function(const eArqConfig: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TMailInicializada = function: Boolean;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
   TMailUltimoRetorno = function(const sMensagem: PChar; var esTamanho: longint): longint;
@@ -76,6 +78,7 @@ type
     FHandle: TLibHandle;
     FMailInicializar: TMailInicializar;
     FMailFinalizar: TMailFinalizar;
+    FMailConfigLer: TMailConfigLer;
     FMailInicializada: TMailInicializada;
     FMailUltimoRetorno: TMailUltimoRetorno;
     FMailGetMail: TMailGetMail;
@@ -91,6 +94,8 @@ type
     destructor Destroy; override;
 
     property ACBrMail: TACBrMail read FACBrMail;
+
+    procedure ConfigLer(const eArqConfig: string);
   end;
 
 implementation
@@ -139,6 +144,7 @@ begin
   begin
     FMailInicializar := GetProcedureAddress(FHandle, 'MAIL_Inicializar');
     FMailFinalizar := GetProcedureAddress(FHandle, 'MAIL_Finalizar');
+    FMailConfigLer := GetProcedureAddress(FHandle, 'MAIL_ConfigLer');
     FMailInicializada := GetProcedureAddress(FHandle, 'MAIL_Inicializada');
     FMailUltimoRetorno := GetProcedureAddress(FHandle, 'MAIL_UltimoRetorno');
     FMailGetMail := GetProcedureAddress(FHandle, 'MAIL_GetMail');
@@ -158,10 +164,19 @@ begin
 
   FMailInicializar := nil;
   FMailFinalizar := nil;
+  FMailConfigLer := nil;
   FMailUltimoRetorno := nil;
   FMailGetMail := nil;
   FHandle := 0;
   FACBrMail := Nil;
+end;
+
+procedure TACBrLibMail.ConfigLer(const eArqConfig: string);
+Var
+  ret: longint;
+begin
+  ret := FMailConfigLer(PChar(eArqConfig));
+  CheckResut(ret);
 end;
 
 procedure TACBrLibMail.CheckResut(const resultado: longint);

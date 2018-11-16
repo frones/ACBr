@@ -259,8 +259,12 @@ end;
 
 procedure TLibSatDM.AplicarConfigMail;
 begin
-  if Assigned(FLibMail) or (not Assigned(FACBrMail)) then
+
+  if Assigned(FLibMail) and (not Assigned(FACBrMail)) then
+  begin
+    FLibMail.ConfigLer(pLib.Config.NomeArquivo);
     Exit;
+  end;
 
   with FACBrMail do
   begin
@@ -286,8 +290,11 @@ end;
 
 procedure TLibSatDM.AplicarConfigPosPrinter;
 begin
-  if Assigned(FLibPosPrinter) or (not Assigned(FACBrPosPrinter)) then
+  if Assigned(FLibPosPrinter) and (not Assigned(FACBrPosPrinter)) then
+  begin
+    FLibPosPrinter.ConfigLer(pLib.Config.NomeArquivo);
     Exit;
+  end;
 
   with FACBrPosPrinter do
   begin

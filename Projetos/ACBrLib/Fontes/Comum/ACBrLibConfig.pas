@@ -314,6 +314,7 @@ type
 
     procedure GravarValor(ASessao, AChave, AValor: String);
     function LerValor(ASessao, AChave: String): String;
+    function PrecisaCriptografar(ASessao, AChave: String): Boolean; virtual;
 
     property NomeArquivo: String read FNomeArquivo write SetNomeArquivo;
     property ChaveCrypt: String read FChaveCrypt;
@@ -403,7 +404,7 @@ begin
   AIni.WriteString(CSessaoProxy, CChaveServidor, FServidor);
   AIni.WriteInteger(CSessaoProxy, CChavePorta, FPorta);
   AIni.WriteString(CSessaoProxy, CChaveUsuario, FUsuario);
-  AIni.WriteString(CSessaoProxy, CChaveSenha, StringToB64Crypt(FSenha, FChaveCrypt));
+  AIni.WriteString(CSessaoProxy, CChaveSenha, FSenha);
 end;
 
 { TEmailConfig }
@@ -466,7 +467,7 @@ begin
   AIni.WriteString(CSessaoEmail, CChaveServidor, FServidor);
   AIni.WriteString(CSessaoEmail, CChaveEmailConta, FConta);
   AIni.WriteString(CSessaoEmail, CChaveUsuario, FUsuario);
-  AIni.WriteString(CSessaoEmail, CChaveSenha, StringToB64Crypt(FSenha, FChaveCrypt));
+  AIni.WriteString(CSessaoEmail, CChaveSenha, FSenha);
   AIni.WriteInteger(CSessaoEmail, CChaveEmailCodificacao, Integer(FCodificacao));
   AIni.WriteInteger(CSessaoEmail, CChavePorta, FPorta);
   AIni.WriteBool(CSessaoEmail, CChaveEmailSSL, FSSL);
@@ -907,6 +908,16 @@ function TLibConfig.LerValor(ASessao, AChave: String): String;
 begin
   VerificarSessaoEChave(ASessao, AChave);
   Result := FIni.ReadString(ASessao, AChave, '');
+end;
+
+function TLibConfig.PrecisaCriptografar(ASessao, AChave: String): Boolean;
+begin
+  Result := False;
+
+  if (ASessao = CSessaoProxy) or (ASessao = CSessaoEmail) then
+  begin
+    Result := AChave = CChaveSenha;
+  end;
 end;
 
 end.

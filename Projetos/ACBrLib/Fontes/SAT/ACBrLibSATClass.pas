@@ -1136,6 +1136,7 @@ begin
       try
         SatDM.ConfigurarImpressao('', True);
         SatDM.CarregarDadosVenda(ArqXMLVenda);
+        SatDM.ACBrSAT1.Extrato.NomeArquivo := NomeArquivo;
         SatDM.ACBrSAT1.ImprimirExtrato;
 
         MoverStringParaPChar(SatDM.ACBrSAT1.Extrato.NomeArquivo, sResposta, esTamanho);

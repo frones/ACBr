@@ -38,7 +38,8 @@ type
     procedure Test_MAIL_AddBody;
     procedure Test_MAIL_AddAltBody;
 
-    procedure Test_MAIL_Send;
+    procedure Test_MAIL_Send_Com_Thread;
+    procedure Test_MAIL_Send_Sem_Thread;
 
     procedure Test_MAIL_SaveToFile;
   end;
@@ -226,10 +227,16 @@ begin
   AssertEquals('Erro ao adicionar o corpo alternativo do e-mail', ErrOk, MAIL_AddAltBody('Teste Corpo Alternativo'));
 end;
 
-procedure TTestACBrMailLib.Test_MAIL_Send;
+procedure TTestACBrMailLib.Test_MAIL_Send_Com_Thread;
 begin
   // Enviando e-mail
   AssertEquals('Erro ao enviar o e-mail', ErrOk, MAIL_Send(True));
+end;
+
+procedure TTestACBrMailLib.Test_MAIL_Send_Sem_Thread;
+begin
+  // Enviando e-mail
+  AssertEquals('Erro ao enviar o e-mail', ErrOk, MAIL_Send(False));
 end;
 
 procedure TTestACBrMailLib.Test_MAIL_SaveToFile;

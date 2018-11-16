@@ -3,7 +3,7 @@ program ACBrLibMailTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrLibMailTestCase, ACBrLibMailStaticImport;
+  Interfaces, Forms, GuiTestRunner, ACBrLibMailTestCase;
 
 {$R *.res}
 

@@ -387,15 +387,15 @@ begin
       rllCompetencia.Caption := Copy(Competencia, 5, 2) + '/' + Copy(Competencia, 1, 4)
     else
     begin
-      if length( Competencia ) = 10 then // dd/mm/aaaa ou aaaa/mm/dd
+      if length( Competencia ) >= 10 then // dd/mm/aaaa ou aaaa/mm/dd
       begin
         if (Pos('/', Competencia) = 3) or (Pos('-', Competencia) = 3) then
-          rllCompetencia.Caption := Copy(Competencia, 4, Length(Competencia) )
+          rllCompetencia.Caption := Copy(Competencia, 4, 7)
         else
           rllCompetencia.Caption := Copy(Competencia, 6, 2) + '/' + Copy(Competencia, 1, 4);
       end
       else
-        rllCompetencia.Caption := Copy(Competencia, 6, 2) + '/' + Copy(Competencia, 1, 4);
+        rllCompetencia.Caption := Copy(Competencia, 6, 2) + '/' + Copy(Competencia, 1, 4);		
     end;
 
     rllNumeroRPS.Caption          := IdentificacaoRps.Numero;

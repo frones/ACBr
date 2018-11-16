@@ -4887,7 +4887,7 @@ begin
 //    FdocElemento := FPrefixo3 + 'Pedido></' +
 //                    FPrefixo3 + 'SubstituicaoNfse></' + FTagGrupo;
 
-    FdocElemento := FPrefixo3 + 'Pedido>';
+    FdocElemento := FPrefixo3 + 'Pedido';
 
     FinfElemento := 'InfPedidoCancelamento';
 

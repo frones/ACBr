@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/11/2018
+-- ACBrNFSeWebServices --
+[*] Corrigido o problema no serviço de SubstituicaoNFSe, estava removendo a 
+    assinatura do pedido de cancelamento.
+Por: Italo Jurisato Junior
+
 14/11/2018
 -- Diversos --
 [*] Correções visando o serviço SubstituicaoNFSe

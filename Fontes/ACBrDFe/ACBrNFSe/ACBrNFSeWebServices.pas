@@ -4884,8 +4884,10 @@ begin
     if FProvedor <> proGinfes then
       FTagGrupo := FPrefixo3 + FTagGrupo;
 
-    FdocElemento := FPrefixo3 + 'Pedido></' +
-                    FPrefixo3 + 'SubstituicaoNfse></' + FTagGrupo;
+//    FdocElemento := FPrefixo3 + 'Pedido></' +
+//                    FPrefixo3 + 'SubstituicaoNfse></' + FTagGrupo;
+
+    FdocElemento := FPrefixo3 + 'Pedido>';
 
     FinfElemento := 'InfPedidoCancelamento';
 
@@ -4966,7 +4968,7 @@ begin
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
-    FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgSubstituirNFSe + FTagF;
+    FPDadosMsg := {FTagI + }GerarDadosMsg.Gera_DadosMsgSubstituirNFSe{ + FTagF};
 
     FIDLote := GerarDadosMsg.IdLote;
   finally

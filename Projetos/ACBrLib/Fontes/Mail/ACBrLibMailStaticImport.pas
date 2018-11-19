@@ -89,7 +89,7 @@ function MAIL_SaveToFile(const eFileName: PChar): longint;
 {%region Envio}
 function MAIL_Clear: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
-function MAIL_Send(UseThreadNow: Boolean): longint;
+function MAIL_Send: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrMailLIBName;
 {%endregion}
 

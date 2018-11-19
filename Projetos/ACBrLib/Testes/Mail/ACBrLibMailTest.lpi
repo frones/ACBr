@@ -48,7 +48,7 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="ACBrLibMailTest.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -57,6 +57,10 @@
         <Filename Value="ACBrLibMailTestCase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\..\Fontes\Comum\ACBrLibConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

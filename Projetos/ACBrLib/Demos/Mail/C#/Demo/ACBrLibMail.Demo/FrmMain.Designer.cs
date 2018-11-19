@@ -32,8 +32,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtDestinatario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtAltBody = new System.Windows.Forms.TextBox();
             this.txtBody = new System.Windows.Forms.TextBox();
+            this.txtAltBody = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnSalvar = new System.Windows.Forms.Button();
@@ -92,21 +92,21 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Mensagem Texto";
             // 
-            // txtAltBody
-            // 
-            this.txtAltBody.Location = new System.Drawing.Point(384, 106);
-            this.txtAltBody.Multiline = true;
-            this.txtAltBody.Name = "txtAltBody";
-            this.txtAltBody.Size = new System.Drawing.Size(404, 139);
-            this.txtAltBody.TabIndex = 5;
-            // 
             // txtBody
             // 
-            this.txtBody.Location = new System.Drawing.Point(384, 264);
+            this.txtBody.Location = new System.Drawing.Point(384, 106);
             this.txtBody.Multiline = true;
             this.txtBody.Name = "txtBody";
-            this.txtBody.Size = new System.Drawing.Size(404, 145);
-            this.txtBody.TabIndex = 7;
+            this.txtBody.Size = new System.Drawing.Size(404, 139);
+            this.txtBody.TabIndex = 5;
+            // 
+            // txtAltBody
+            // 
+            this.txtAltBody.Location = new System.Drawing.Point(384, 264);
+            this.txtAltBody.Multiline = true;
+            this.txtAltBody.Name = "txtAltBody";
+            this.txtAltBody.Size = new System.Drawing.Size(404, 145);
+            this.txtAltBody.TabIndex = 7;
             // 
             // label3
             // 
@@ -292,9 +292,9 @@
             this.Controls.Add(this.txtAssunto);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.txtBody);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtAltBody);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtBody);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtDestinatario);
             this.Controls.Add(this.label1);
@@ -315,8 +315,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtDestinatario;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtAltBody;
         private System.Windows.Forms.TextBox txtBody;
+        private System.Windows.Forms.TextBox txtAltBody;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtEmail;

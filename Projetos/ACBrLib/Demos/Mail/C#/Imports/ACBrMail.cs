@@ -77,7 +77,7 @@ namespace ACBrLibMail
         public static extern int MAIL_Clear();
 
         [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int MAIL_Send(bool useThreadNow);
+        public static extern int MAIL_Send();
 
         #endregion Imports
 

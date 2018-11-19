@@ -72,7 +72,7 @@ namespace ACBrLibMail.Demo
             ret = ACBrMail.MAIL_AddAltBody(txtAltBody.Text.ToUTF8());
             ACBrMail.CheckResult(ret);
 
-            ret = ACBrMail.MAIL_Send(false);
+            ret = ACBrMail.MAIL_Send();
             ACBrMail.CheckResult(ret);
         }
 

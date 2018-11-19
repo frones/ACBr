@@ -431,7 +431,7 @@ begin
   FConfirmacaoEntrega := False;
   FSegundoPlano := False;
   FTimeOut := 0;
-  FTentativas := 0;
+  FTentativas := 1;
   FIsHTML := False;
   FPriority := MP_low;
 end;

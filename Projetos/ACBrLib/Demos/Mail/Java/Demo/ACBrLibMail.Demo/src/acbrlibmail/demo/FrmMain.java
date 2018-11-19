@@ -6,6 +6,12 @@
 package acbrlibmail.demo;
 
 import com.acbr.mail.ACBrMail;
+import com.sun.jna.ptr.IntByReference;
+import java.io.File;
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +20,7 @@ import java.util.logging.Logger;
  * @author rften
  */
 public class FrmMain extends javax.swing.JFrame {
-      
+
     /**
      * Creates new form FrmMain
      */
@@ -53,10 +59,10 @@ public class FrmMain extends javax.swing.JFrame {
         txtAssunto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtAltBody = new javax.swing.JTextArea();
+        txtBody = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txtBody = new javax.swing.JTextArea();
+        txtAltBody = new javax.swing.JTextArea();
         btnEnviar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -198,18 +204,18 @@ public class FrmMain extends javax.swing.JFrame {
 
         jScrollPane1.setAutoscrolls(true);
 
-        txtAltBody.setColumns(20);
-        txtAltBody.setRows(5);
-        jScrollPane1.setViewportView(txtAltBody);
-        txtAltBody.getAccessibleContext().setAccessibleName("");
+        txtBody.setColumns(20);
+        txtBody.setRows(5);
+        jScrollPane1.setViewportView(txtBody);
+        txtBody.getAccessibleContext().setAccessibleName("");
 
         jLabel4.setText("Mensagem HTML");
         jLabel4.setToolTipText("");
 
-        txtBody.setColumns(20);
-        txtBody.setRows(5);
-        jScrollPane2.setViewportView(txtBody);
-        txtBody.getAccessibleContext().setAccessibleName("");
+        txtAltBody.setColumns(20);
+        txtAltBody.setRows(5);
+        jScrollPane2.setViewportView(txtAltBody);
+        txtAltBody.getAccessibleContext().setAccessibleName("");
 
         btnEnviar.setText("Enviar");
         btnEnviar.addActionListener(new java.awt.event.ActionListener() {
@@ -278,95 +284,238 @@ public class FrmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        try {
-            int ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
-                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Nome"),
-                    ACBrMail.toUTF8(txtNome.getText()));
-            
-            ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
-                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Conta"),
-                    ACBrMail.toUTF8(txtEmail.getText()));
-            
-            ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
-                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Usuario"),
-                    ACBrMail.toUTF8(txtUsuario.getText()));
-            
-            ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
-                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Senha"),
-                    ACBrMail.toUTF8(String.valueOf(txtSenha.getPassword())));
-            
-            ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
-                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Servidor"),
-                    ACBrMail.toUTF8(txtHost.getText()));
-            
-            ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
-                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Porta"),
-                    ACBrMail.toUTF8(spnPorta.getValue().toString()));
-            
-            ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
-                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("SSL"),
-                    ACBrMail.toUTF8(chkSSL.isSelected() ? "1" : "0"));
-            
-            ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
-                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("SSL"),
-                    ACBrMail.toUTF8(chkTLS.isSelected() ? "1" : "0"));
-            
-            ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_ConfigGravar(ACBrMail.toUTF8(""));            
-            ACBrMail.checkResult(ret);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        saveConfig();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        ACBrMail.INSTANCE.MAIL_Inicializar(ACBrMail.toUTF8(""), 
-                ACBrMail.toUTF8(""));
+        try {
+            File iniFile = Paths.get(System.getProperty("user.dir"), "ACBrLib.ini").toFile();
+            if(!iniFile.exists()) iniFile.createNewFile();
+            
+            int ret = ACBrMail.INSTANCE.MAIL_Inicializar(iniFile.getAbsolutePath(),
+                    ACBrMail.toUTF8(""));
+            ACBrMail.checkResult(ret);
+            
+            Path pathLog = Paths.get(System.getProperty("user.dir"), "Logs");
+            if (!Files.isDirectory(pathLog)) {
+                pathLog.toFile().mkdirs();
+            }
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(ACBrMail.toUTF8("Principal"), ACBrMail.toUTF8("LogNivel"), "4");
+            ACBrMail.checkResult(ret);
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(ACBrMail.toUTF8("Principal"), ACBrMail.toUTF8("LogPath"), pathLog.toString());
+            ACBrMail.checkResult(ret);
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravar(ACBrMail.toUTF8(""));
+            ACBrMail.checkResult(ret);
+            
+            loadConfig();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         try {
             int ret = ACBrMail.INSTANCE.MAIL_Clear();
             ACBrMail.checkResult(ret);
-            
+
             ret = ACBrMail.INSTANCE.MAIL_AddAddress(
-                    ACBrMail.toUTF8(txtDestinatario.getText()), 
+                    ACBrMail.toUTF8(txtDestinatario.getText()),
                     ACBrMail.toUTF8(txtDestinatario.getText()));
             ACBrMail.checkResult(ret);
-            
+
             ret = ACBrMail.INSTANCE.MAIL_SetSubject(
                     ACBrMail.toUTF8(txtAssunto.getText()));
             ACBrMail.checkResult(ret);
-            
+
             ret = ACBrMail.INSTANCE.MAIL_AddBody(
-                    ACBrMail.toUTF8(txtBody.getText()));
-            ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_AddAltBody(
                     ACBrMail.toUTF8(txtAltBody.getText()));
             ACBrMail.checkResult(ret);
-            
-            ret = ACBrMail.INSTANCE.MAIL_Send(false);
+
+            ret = ACBrMail.INSTANCE.MAIL_AddAltBody(
+                    ACBrMail.toUTF8(txtBody.getText()));
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_Send();
             ACBrMail.checkResult(ret);
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void saveConfig(){
+        try {
+            int ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
+                    ACBrMail.toUTF8("Email"), 
+                    ACBrMail.toUTF8("SegundoPlano"), "0");
+
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
+                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Nome"),
+                    ACBrMail.toUTF8(txtNome.getText()));
+
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
+                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Conta"),
+                    ACBrMail.toUTF8(txtEmail.getText()));
+
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
+                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Usuario"),
+                    ACBrMail.toUTF8(txtUsuario.getText()));
+
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
+                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Senha"),
+                    ACBrMail.toUTF8(String.valueOf(txtSenha.getPassword())));
+
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
+                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Servidor"),
+                    ACBrMail.toUTF8(txtHost.getText()));
+
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
+                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("Porta"),
+                    ACBrMail.toUTF8(spnPorta.getValue().toString()));
+
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
+                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("SSL"),
+                    ACBrMail.toUTF8(chkSSL.isSelected() ? "1" : "0"));
+
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravarValor(
+                    ACBrMail.toUTF8("Email"), ACBrMail.toUTF8("TLS"),
+                    ACBrMail.toUTF8(chkTLS.isSelected() ? "1" : "0"));
+
+            ACBrMail.checkResult(ret);
+
+            ret = ACBrMail.INSTANCE.MAIL_ConfigGravar(ACBrMail.toUTF8(""));
+            ACBrMail.checkResult(ret);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void loadConfig(){        
+        try{
+            int ret;
+            ByteBuffer buffer;
+            IntByReference bufferLen;
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigLer(ACBrMail.toUTF8(""));
+            ACBrMail.checkResult(ret);
+            
+            buffer = ByteBuffer.allocate(256);
+            bufferLen = new IntByReference(256);  
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigLerValor(
+                    ACBrMail.toUTF8("Email"), 
+                    ACBrMail.toUTF8("Nome"), 
+                    buffer, bufferLen);
+            ACBrMail.checkResult(ret);
+            
+            txtNome.setText(ACBrMail.fromUTF8(buffer, bufferLen.getValue()));
+            
+            buffer.clear();                        
+            buffer = ByteBuffer.allocate(256);
+            bufferLen = new IntByReference(256);  
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigLerValor(
+                    ACBrMail.toUTF8("Email"), 
+                    ACBrMail.toUTF8("Conta"), 
+                    buffer, bufferLen);
+            ACBrMail.checkResult(ret);
+            
+            txtEmail.setText(ACBrMail.fromUTF8(buffer, bufferLen.getValue()));
+            
+            buffer.clear();                        
+            buffer = ByteBuffer.allocate(256);
+            bufferLen = new IntByReference(256);  
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigLerValor(
+                    ACBrMail.toUTF8("Email"), 
+                    ACBrMail.toUTF8("Usuario"), 
+                    buffer, bufferLen);
+            ACBrMail.checkResult(ret);
+            
+            txtUsuario.setText(ACBrMail.fromUTF8(buffer, bufferLen.getValue()));
+            
+            buffer.clear();                        
+            buffer = ByteBuffer.allocate(256);
+            bufferLen = new IntByReference(256);  
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigLerValor(
+                    ACBrMail.toUTF8("Email"), 
+                    ACBrMail.toUTF8("Senha"), 
+                    buffer, bufferLen);
+            ACBrMail.checkResult(ret);
+            
+            txtSenha.setText(ACBrMail.fromUTF8(buffer, bufferLen.getValue()));
+            
+            buffer.clear();                        
+            buffer = ByteBuffer.allocate(256);
+            bufferLen = new IntByReference(256);  
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigLerValor(
+                    ACBrMail.toUTF8("Email"), 
+                    ACBrMail.toUTF8("Servidor"), 
+                    buffer, bufferLen);
+            ACBrMail.checkResult(ret);
+            
+            txtHost.setText(ACBrMail.fromUTF8(buffer, bufferLen.getValue()));
+            
+            buffer.clear();                        
+            buffer = ByteBuffer.allocate(256);
+            bufferLen = new IntByReference(256);  
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigLerValor(
+                    ACBrMail.toUTF8("Email"), 
+                    ACBrMail.toUTF8("Porta"), 
+                    buffer, bufferLen);
+            ACBrMail.checkResult(ret);
+            
+            spnPorta.setValue(Integer.parseInt(ACBrMail.fromUTF8(buffer, bufferLen.getValue())));
+            
+            buffer.clear();                        
+            buffer = ByteBuffer.allocate(256);
+            bufferLen = new IntByReference(256);  
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigLerValor(
+                    ACBrMail.toUTF8("Email"), 
+                    ACBrMail.toUTF8("SSL"), 
+                    buffer, bufferLen);
+            ACBrMail.checkResult(ret);
+            
+            chkSSL.setSelected("1".equals(ACBrMail.fromUTF8(buffer, bufferLen.getValue())));
+            
+            buffer.clear();                        
+            buffer = ByteBuffer.allocate(256);
+            bufferLen = new IntByReference(256);  
+            
+            ret = ACBrMail.INSTANCE.MAIL_ConfigLerValor(
+                    ACBrMail.toUTF8("Email"), 
+                    ACBrMail.toUTF8("TLS"), 
+                    buffer, bufferLen);
+            ACBrMail.checkResult(ret);
+            
+            chkTLS.setSelected("1".equals(ACBrMail.fromUTF8(buffer, bufferLen.getValue())));
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;

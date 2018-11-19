@@ -109,7 +109,7 @@ function MAIL_GetMail: Pointer;
 {%region Envio}
 function MAIL_Clear: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MAIL_Send(UseThreadNow: Boolean): longint;
+function MAIL_Send: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -620,21 +620,18 @@ begin
   end;
 end;
 
-function MAIL_Send(UseThreadNow: Boolean): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MAIL_Send: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
     VerificarLibInicializada;
 
-    if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('MAIL_Send( ' + BoolToStr(UseThreadNow, True) + ' )', logCompleto, True)
-    else
-      pLib.GravarLog('MAIL_Send', logNormal);
+    pLib.GravarLog('MAIL_Send', logNormal);
 
     with TACBrLibMail(pLib) do
     begin
       MailDM.Travar;
       try
-        MailDM.ACBrMail1.Send(UseThreadNow);
+        MailDM.ACBrMail1.Send;
         Result := SetRetorno(ErrOK);
       finally
         MailDM.Destravar;

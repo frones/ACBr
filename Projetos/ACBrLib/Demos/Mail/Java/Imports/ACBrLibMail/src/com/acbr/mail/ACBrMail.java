@@ -73,7 +73,7 @@ public interface ACBrMail extends Library {
     
     int MAIL_Clear();
     
-    int MAIL_Send(Boolean UseThreadNow);
+    int MAIL_Send();
 
     public static String toUTF8(String value) {
         return new String(value.getBytes(UTF8));

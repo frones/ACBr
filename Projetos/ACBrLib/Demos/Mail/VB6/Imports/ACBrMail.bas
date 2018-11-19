@@ -83,12 +83,7 @@ Public Declare Function MAIL_SaveToFile _
                 
 Public Declare Function MAIL_Clear Lib "ACBrMAIL32.dll" () As Long
 
-Public Declare Function MAIL_Send _
-                Lib "ACBrMAIL32.dll" (ByVal useThreadNow As Boolean) As Long
-                
-                
-                                            
-                                            
+Public Declare Function MAIL_Send Lib "ACBrMAIL32.dll" () As Long
 
 Public Sub CheckResult(ByVal Resultado As Long)
     

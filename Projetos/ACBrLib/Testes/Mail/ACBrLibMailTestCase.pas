@@ -5,7 +5,7 @@
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry;
+  Classes, SysUtils, fpcunit, testregistry;
 
 type
 
@@ -230,13 +230,17 @@ end;
 procedure TTestACBrMailLib.Test_MAIL_Send_Com_Thread;
 begin
   // Enviando e-mail com Thread (Desse modo, não é possível detectar erros de conexão)
-  AssertEquals('Erro ao enviar o e-mail', ErrOK, MAIL_Send(True));
+  AssertEquals('Erro ao enviar o e-mail', ErrOK, MAIL_ConfigGravarValor(CSessaoEmail, CChaveEmailSegundoPlano, '1'));
+  AssertEquals('Erro ao enviar o e-mail', ErrOK, MAIL_ConfigGravar(''));
+  AssertEquals('Erro ao enviar o e-mail', ErrOK, MAIL_Send);
 end;
 
 procedure TTestACBrMailLib.Test_MAIL_Send_Sem_Thread;
 begin
   // Enviando e-mail SEM Thread
-  AssertEquals('Erro ao enviar o e-mail', ErrExecutandoMetodo, MAIL_Send(False));
+  AssertEquals('Erro ao enviar o e-mail', ErrOK, MAIL_ConfigGravarValor(CSessaoEmail, CChaveEmailSegundoPlano, '0'));
+  AssertEquals('Erro ao enviar o e-mail', ErrOK, MAIL_ConfigGravar(''));
+  AssertEquals('Erro ao enviar o e-mail', ErrExecutandoMetodo, MAIL_Send);
 end;
 
 procedure TTestACBrMailLib.Test_MAIL_SaveToFile;

@@ -347,7 +347,7 @@ Private Sub cmdEnviar_Click()
     retorno = MAIL_AddAltBody(txtAltBody.Text)
     CheckResult retorno
     
-    retorno = MAIL_Send(False)
+    retorno = MAIL_Send()
     CheckResult retorno
 End Sub
 

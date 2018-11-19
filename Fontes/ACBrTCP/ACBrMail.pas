@@ -177,15 +177,16 @@ type
     function GetPassword: string;
     function GetFullSSL: Boolean;
     function GetAutoTLS: Boolean;
+    function GetPriority: TMessPriority;
+
     procedure SetHost(aValue: string);
     procedure SetPort(aValue: string);
     procedure SetUsername(aValue: string);
     procedure SetPassword(aValue: string);
     procedure SetFullSSL(aValue: Boolean);
     procedure SetAutoTLS(aValue: Boolean);
-
-    function GetPriority: TMessPriority;
     procedure SetPriority(aValue: TMessPriority);
+    procedure SetAttempts(AValue: Byte);
 
     procedure SmtpError(const pMsgError: string);
 
@@ -245,7 +246,7 @@ type
     property IsHTML: boolean read fIsHTML write fIsHTML default False;
     property UseThread: boolean read fUseThread write fUseThread default False;
     property TimeOut: Integer read fTimeOut write fTimeOut default 0;
-    property Attempts: Byte read fAttempts write fAttempts;
+    property Attempts: Byte read fAttempts write SetAttempts;
     property From: string read fFrom write fFrom;
     property FromName: string read fFromName write fFromName;
     property Subject: string read fSubject write fSubject;
@@ -265,7 +266,7 @@ var
 implementation
 
 Uses
-  strutils,
+  strutils, math,
   ACBrUtil;
 
 procedure SendEmailByThread(MailToClone: TACBrMail);
@@ -412,6 +413,12 @@ end;
 procedure TACBrMail.SetPriority(aValue: TMessPriority);
 begin
   fMIMEMess.Header.Priority := aValue;
+end;
+
+procedure TACBrMail.SetAttempts(AValue: Byte);
+begin
+  if fAttempts = AValue then Exit;
+  fAttempts := Max(AValue, 1);
 end;
 
 procedure TACBrMail.SmtpError(const pMsgError: string);

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2018
+-- ACBrMail --
+[-] Corrigido o erro de envio quando o numero de tentativas é zero.
+    (por: Rafael Dias)
+
 18/10/2018
 -- ACBrSedex --
 [+] Adicionados novos tipos de contrato.

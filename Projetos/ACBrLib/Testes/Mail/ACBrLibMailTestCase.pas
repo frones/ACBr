@@ -117,7 +117,7 @@ begin
   Bufflen := 4;
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, MAIL_Nome(PChar(AStr), Bufflen));
-  AssertEquals(4, Bufflen);
+  AssertEquals(Length(CLibMailNome), Bufflen);
   AssertEquals(copy(CLibMailNome,1,4), AStr);
 end;
 
@@ -212,7 +212,7 @@ end;
 procedure TTestACBrMailLib.Test_MAIL_AddAttachment;
 begin
   // Adicionando um arquivo como anexo
-  AssertEquals('Erro ao adicionar um arquivo como anexo', ErrOk, MAIL_AddAttachment('C:\ACBr\trunk2\Doctos\LICENSE.txt', 'Arquivo de Licenca', 1));
+  AssertEquals('Erro ao adicionar um arquivo como anexo', ErrOk, MAIL_AddAttachment('../../../../../Bem_Vindo_ao_Trunk2.pdf', 'Documentação sobre o novo Trunk', 1));
 end;
 
 procedure TTestACBrMailLib.Test_MAIL_AddBody;
@@ -229,20 +229,21 @@ end;
 
 procedure TTestACBrMailLib.Test_MAIL_Send_Com_Thread;
 begin
-  // Enviando e-mail
-  AssertEquals('Erro ao enviar o e-mail', ErrOk, MAIL_Send(True));
+  // Enviando e-mail com Thread (Desse modo, não é possível detectar erros de conexão)
+  AssertEquals('Erro ao enviar o e-mail', ErrOK, MAIL_Send(True));
 end;
 
 procedure TTestACBrMailLib.Test_MAIL_Send_Sem_Thread;
 begin
-  // Enviando e-mail
-  AssertEquals('Erro ao enviar o e-mail', ErrOk, MAIL_Send(False));
+  // Enviando e-mail SEM Thread
+  AssertEquals('Erro ao enviar o e-mail', ErrExecutandoMetodo, MAIL_Send(False));
 end;
 
 procedure TTestACBrMailLib.Test_MAIL_SaveToFile;
 begin
   // Salvando um arquivo
-  AssertEquals('Erro ao salvar um arquivo', ErrOk, MAIL_SaveToFile('C:\ACBr\trunk2\Doctos\Teste-SaveToFile.txt'));
+  AssertEquals('Erro ao salvar um arquivo', ErrOk, MAIL_SaveToFile('.\Teste-SaveToFile.eml'));
+  AssertTrue( FileExists('.\Teste-SaveToFile.eml') );
 end;
 
 initialization

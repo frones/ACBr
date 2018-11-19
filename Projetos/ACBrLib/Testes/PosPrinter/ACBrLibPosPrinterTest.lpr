@@ -3,7 +3,7 @@ program ACBrLibPosPrinterTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrLibPosPrinterTestCase, ACBrLibPosPrinterStaticImport;
+  Interfaces, Forms, GuiTestRunner, ACBrLibPosPrinterTestCase;
 
 {$R *.res}
 

@@ -4498,13 +4498,14 @@ begin
 
       proIPM: FdocElemento := 'nfse';
     else
-      FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
+      FdocElemento := FPrefixo3 + 'Pedido'; //></' + FTagGrupo;
     end;
 
     case FProvedor of
       proBetha,
       proISSe,
       proFiorilli,
+      proMetropolisWeb,
       proTecnos: FinfElemento := 'InfPedidoCancelamento';
     else
       FinfElemento := '';
@@ -4692,7 +4693,7 @@ begin
                                  Copy(FPDadosMsg, iPos, Length(FPDadosMsg));
                  end;
     else
-      FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
+      FPDadosMsg := {FTagI + }GerarDadosMsg.Gera_DadosMsgCancelarNFSe{ + FTagF};
     end;
 
     FIDLote := GerarDadosMsg.IdLote;
@@ -4707,6 +4708,8 @@ begin
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
+
+  FPDadosMsg := FTagI + FPDadosMsg + FTagF;
 
   case FProvedor of
     proISSe,

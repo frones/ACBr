@@ -77,6 +77,7 @@ const
   CSessaoRespConsultaCadastro = 'ConsultaCadastro';
   CSessaoRespEvento = 'Evento';
   CSessaoRespDistribuicaoDFe = 'DistribuicaoDFe';
+  CSessaoRespConsultaInfCan = 'InfCan';
 
   ErrValidacaoNFe = -11;
   ErrChaveNFe = -12;

@@ -412,10 +412,208 @@ type
     property emailDest: string read FemailDest write FemailDest;
   end;
 
+  { TConsultaNFeInfCanResposta }
+  TConsultaNFeInfCanResposta  = class(TLibNFeResposta)
+  private
+    FChNFe: String;
+    FNProt: String;
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property ChNFe: String read FChNFe write FChNFe;
+    property NProt: String read FNProt write FNProt;
+  end;
+
+  { TConsultaNFeProcEventoResposta }
+  TConsultaNFeProcEventoResposta  = class(TLibNFeResposta)
+  private
+    FID: Integer;
+    FcOrgao: String;
+    FCNPJ: String;
+    FchNFe: String;
+    FdhEvento: TDateTime;
+    FtpEvento: String;
+    FnSeqEvento: Integer;
+    FverEvento: String;
+
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property ID: Integer      read FID      write FID;
+    property cOrgao: String  read FcOrgao  write FcOrgao;
+    property CNPJ: String    read FCNPJ    write FCNPJ;
+    property chNFe: String   read FchNFe   write FchNFe;
+    property dhEvento: TDateTime read FdhEvento write FdhEvento;
+    property tpEvento: String read FtpEvento write FtpEvento;
+    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
+    property verEvento: String read FverEvento write FverEvento;
+
+  end;
+
+  { TConsultaNFeDetEventoResposta }
+  TConsultaNFeDetEventoResposta  = class(TLibNFeResposta)
+  private
+    FdescEvento : String;
+    FxCorrecao : String;
+    FxCondUso : String;
+    FnProt : String;
+    FxJust : String;
+    FcOrgaoAutor : String;
+    FtpAutor : String;
+    FdhEmi : TDateTime;
+    FtpNF : String;
+    FIE : String;
+    FDESTCNPJCPF : String;
+    FDESTidEstrangeiro : String;
+    FDESTIE : String;
+    FDESTUF : String;
+    FvNF : Double;
+    FvICMS : Double;
+    FvST : Double;
+    FidPedidoCancelado : String;
+
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property descEvento : String              read FdescEvento         write FdescEvento;
+    property xCorrecao : String               read FxCorrecao          write FxCorrecao;
+    property xCondUso : String                read FxCondUso           write FxCondUso;
+    property nProt : String                   read FnProt              write FnProt;
+    property xJust : String                   read FxJust              write FxJust;
+    property cOrgaoAutor : String             read FcOrgaoAutor        write FcOrgaoAutor;
+    property tpAutor : String                 read FtpAutor            write FtpAutor;
+    property dhEmi : TDateTime                read FdhEmi              write FdhEmi;
+    property tpNF : String                    read FtpNF               write FtpNF;
+    property IE : String                      read FIE                 write FIE;
+    property DESTCNPJCPF : String             read FDESTCNPJCPF        write FDESTCNPJCPF;
+    property DESTidEstrangeiro : String       read FDESTidEstrangeiro  write FDESTidEstrangeiro;
+    property DESTIE : String                  read FDESTIE             write FDESTIE;
+    property DESTUF : String                  read FDESTUF             write FDESTUF;
+    property vNF : Double                     read FvNF                write FvNF;
+    property vICMS : Double                   read FvICMS              write FvICMS;
+    property vST : Double                     read FvST                write FvST;
+    property idPedidoCancelado : String       read FidPedidoCancelado  write FidPedidoCancelado;
+
+  end;
+
+  { TConsultaNFeItemPedidoResposta }
+  TConsultaNFeItemPedidoResposta  = class(TLibNFeResposta)
+  private
+    FnumItem: Integer;
+    FqtdeItem: Double;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property numItem: Integer         read FnumItem        write FnumItem;
+    property qtdeItem: Double         read FqtdeItem       write FqtdeItem;
+
+  end;
+
+  { TConsultaNFeRetEventoResposta }
+  TConsultaNFeRetEventoResposta  = class(TLibNFeResposta)
+  private
+    FId: String;
+    FNomeArquivo: String;
+    FcOrgao: String;
+    FchNFe: String;
+    FtpEvento: String;
+    FxEvento: String;
+    FnSeqEvento: Integer;
+    FCNPJDest: String;
+    FemailDest: String;
+    FcOrgaoAutor: String;
+    FdhRegEvento: TDateTime;
+    FnProt: String;
+    FXML: String;
+
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property Id: String               read FId           write FId;
+    property NomeArquivo: String      read FNomeArquivo  write FNomeArquivo;
+    property cOrgao: String           read FcOrgao       write FcOrgao;
+    property chNFe: String            read FchNFe        write FchNFe;
+    property tpEvento: String         read FtpEvento     write FtpEvento;
+    property xEvento: String          read FxEvento      write FxEvento;
+    property nSeqEvento: Integer      read FnSeqEvento   write FnSeqEvento;
+    property CNPJDest: String         read FCNPJDest     write FCNPJDest;
+    property emailDest: String        read FemailDest    write FemailDest;
+    property cOrgaoAutor: String      read FcOrgaoAutor  write FcOrgaoAutor;
+    property dhRegEvento: TDateTime   read FdhRegEvento  write FdhRegEvento;
+    property nProt: String            read FnProt        write FnProt;
+    property XML: String              read FXML          write FXML;
+
+  end;
+
+  { TConsultaNFeChNFePendResposta }
+  TConsultaNFeChNFePendResposta  = class(TLibNFeResposta)
+  private
+    FchNFePend : String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property chNFePend : String       read FchNFePend      write FchNFePend;
+
+  end;
+
 implementation
 
 uses
   ACBrLibNFeConsts;
+
+{ TConsultaNFeChNFePendResposta }
+
+constructor TConsultaNFeChNFePendResposta.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TConsultaNFeRetEventoResposta }
+
+constructor TConsultaNFeRetEventoResposta.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TConsultaNFeItemPedidoResposta }
+
+constructor TConsultaNFeItemPedidoResposta.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TConsultaNFeDetEventoResposta }
+
+constructor TConsultaNFeDetEventoResposta.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TConsultaNFeProcEventoResposta }
+
+constructor TConsultaNFeProcEventoResposta.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TConsultaNFeInfCanResposta }
+
+constructor TConsultaNFeInfCanResposta.Create(const ATipo: TACBrLibRespostaTipo
+  );
+begin
+  inherited Create(CSessaoRespConsultaInfCan, ATipo);
+end;
 
 { TLibNFeResposta }
 

@@ -1,14 +1,14 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 141
+  Left = 95
   Height = 659
-  Top = 30
+  Top = 12
   Width = 1055
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 659
-  ClientWidth = 1055
+  ClientHeight = 0
+  ClientWidth = 0
   Color = clBlack
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
@@ -19,7 +19,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '1.8.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -7492,10 +7492,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Top = 42
                     Width = 96
                     ItemHeight = 17
-                    ItemIndex = 1
                     Items.Strings = (
-                      '02_04_01'
-                      '02_04_02'
+                      ''
                     )
                     TabOrder = 0
                     Text = '02_04_02'
@@ -7590,11 +7588,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Top = 42
                     Width = 96
                     ItemHeight = 17
-                    Items.Strings = (
-                      '1_02_00'
-                      '1_03_00'
-                      '1_03_02'
-                    )
                     TabOrder = 0
                     Text = '01_03_02'
                   end
@@ -13773,6 +13766,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    AgruparNumCopias = False
     ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
@@ -13813,6 +13807,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    AgruparNumCopias = False
     ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
@@ -13853,6 +13848,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MostrarStatus = True
     TipoDANFE = tiRetrato
     NumCopias = 1
+    AgruparNumCopias = False
     ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True

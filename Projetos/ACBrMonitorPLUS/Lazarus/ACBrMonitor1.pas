@@ -1634,6 +1634,8 @@ var
   iDIS: TACBrDISModelo;
   iBAL: TACBrBALModelo;
   iCEP: TACBrCEPWebService;
+  iESO: TVersaoeSocial;
+  iREI: TVersaoReinf;
   IBanco: TACBrTipoCobranca;
   iSAT: TACBrSATModelo;
   iTipo: TpcnTipoAmbiente;
@@ -1819,6 +1821,24 @@ begin
   fsSLPrecos := TStringList.Create;
   fsSLPrecos.NameValueSeparator := '|';
   fsDTPrecos := 0;
+
+  { Criando lista versões e-social disponiveis }
+  cbVersaoWSeSocial.Items.Clear;
+  iESO := Low(TVersaoeSocial);
+  while iESO <= High(TVersaoeSocial) do
+  begin
+    cbVersaoWSeSocial.Items.Add( copy( GetEnumName(TypeInfo(TVersaoeSocial), integer(iESO)), 3, 8) );
+    Inc(iESO);
+  end;
+
+  { Criando lista versões ReInf disponiveis }
+  cbVersaoWSReinf.Items.Clear;
+  iREI := Low(TVersaoReinf);
+  while iREI <= High(TVersaoReinf) do
+  begin
+    cbVersaoWSReinf.Items.Add( copy( GetEnumName(TypeInfo(TVersaoReinf), integer(iREI)), 2, 8) );
+    Inc(iREI);
+  end;
 
   { Criando lista modelos de Impres.Cheque disponiveis }
   cbCHQModelo.Items.Clear;

@@ -1422,7 +1422,7 @@ begin
       raise Exception.Create('Forma de Emissão Inválida: ' + TpEmisToStr(FormaEmissao));
 
     with MonitorConfig.DFE.WebService do
-      FormaEmissaoCTe := StrToInt(TpEmisToStr(FormaEmissao));
+      FormaEmissaoCTe := StrToInt(TpEmisToStr(FormaEmissao)) - 1;
 
     MonitorConfig.SalvarArquivo;
   end;
@@ -1629,8 +1629,7 @@ begin
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
     ACBrCTe.WebServices.Recibo.Recibo := ARecibo;
-    if not (ACBrCTe.WebServices.Recibo.Executar) then
-      raise Exception.Create(ACBrCTe.WebServices.Recibo.xMotivo);
+    ACBrCTe.WebServices.Recibo.Executar;
 
     RespostaRecibo;
     for I := 0 to ACBrCTe.WebServices.Recibo.CTeRetorno.ProtCTe.Count - 1 do
@@ -1670,12 +1669,9 @@ begin
         ACBrCTe.WebServices.Consulta.CTeChave :=
           OnlyNumber(ACBrCTe.Conhecimentos.Items[0].CTe.infCTe.ID);
 
-      try
-        ACBrCTe.WebServices.Consulta.Executar;
-        RespostaConsulta;
-      except
-        raise Exception.Create(ACBrCTe.WebServices.Consulta.Msg);
-      end;
+
+      ACBrCTe.WebServices.Consulta.Executar;
+      RespostaConsulta;
     finally
       CargaDFe.Free;
     end;
@@ -1787,7 +1783,8 @@ begin
 
         fpCmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
       except
-        raise Exception.Create('Erro ao criar o arquivo PDF');
+        on E: Exception do
+        raise Exception.Create('Erro ao criar o arquivo PDF. '+ sLineBreak + E.Message);
       end;
     finally
       CargaDFeEvento.Free;
@@ -1882,7 +1879,8 @@ begin
         ArqPDF := PathWithDelim(ACBrCTe.DACTe.PathPDF) + ArqPDF;
         fpCmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
       except
-        raise Exception.Create('Erro ao criar o arquivo PDF');
+        on E: Exception do
+          raise Exception.Create('Erro ao criar o arquivo PDF. '+ sLineBreak + E.Message);
       end;
     finally
       CargaDFe.Free;
@@ -1956,9 +1954,6 @@ begin
       ACBrCTe.WebServices.Enviar.Lote := '1'
     else
       ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALote);
-
-    if not (ACBrCTe.WebServices.StatusServico.Executar) then
-      raise Exception.Create(ACBrCTe.WebServices.StatusServico.Msg);
 
     ACBrCTe.WebServices.Enviar.Executar;
     RespostaEnvio;
@@ -2080,9 +2075,6 @@ begin
 
     ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALoteEnvio);
 
-    if not (ACBrCTe.WebServices.StatusServico.Executar) then
-      raise Exception.Create(ACBrCTe.WebServices.StatusServico.Msg);
-
     ACBrCTe.WebServices.Enviar.Executar;
 
     RespostaEnvio;
@@ -2133,9 +2125,6 @@ begin
         ACBrCTe.WebServices.Enviar.Lote := '1'
       else
         ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALote);
-
-      if not (ACBrCTe.WebServices.StatusServico.Executar) then
-        raise Exception.Create(ACBrCTe.WebServices.StatusServico.Msg);
 
       ACBrCTe.WebServices.Enviar.Executar;
 
@@ -2296,8 +2285,7 @@ begin
     else
       ACBrCTe.WebServices.Consulta.CTeChave := AChave;
 
-    if not ACBrCTe.WebServices.Consulta.Executar then
-      raise Exception.Create(ACBrCTe.WebServices.Consulta.Msg);
+    ACBrCTe.WebServices.Consulta.Executar;
 
     ACBrCTe.EventoCTe.Evento.Clear;
     with ACBrCTe.EventoCTe.Evento.Add do
@@ -2319,12 +2307,10 @@ begin
       Infevento.detEvento.nProt := ACBrCTe.WebServices.Consulta.Protocolo;
       Infevento.detEvento.xJust := AJustificativa;
     end;
-    try
-      ACBrCTe.EnviarEvento(ALote);
-      RespostaCancelamento;
-    except
-      raise Exception.Create(ACBrCTe.WebServices.EnvEvento.EventoRetorno.xMotivo);
-    end;
+
+    ACBrCTe.EnviarEvento(ALote);
+    RespostaCancelamento;
+
   end;
 end;
 
@@ -2431,7 +2417,8 @@ begin
 
         fpCmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
       except
-        raise Exception.Create('Erro ao criar o arquivo PDF');
+        on E: Exception do
+          raise Exception.Create('Erro ao criar o arquivo PDF. '+ sLineBreak + E.Message);
       end;
     finally
       CargaDFeInut.Free;
@@ -2757,7 +2744,8 @@ begin
             ArqPDF := OnlyNumber(ACBrCTe.EventoCTe.Evento[0].Infevento.id);
             ArqPDF := PathWithDelim(ACBrCTe.DACTe.PathPDF)+ArqPDF+'-procEventoCTe.pdf';
           except
-            raise Exception.Create('Erro ao criar o arquivo PDF');
+            on E: Exception do
+              raise Exception.Create('Erro ao criar o arquivo PDF.'+ sLineBreak + E.Message);
           end;
         end;
 
@@ -2852,7 +2840,8 @@ begin
             ArqPDF := OnlyNumber(ACBrCTe.InutCTe.ID);
             ArqPDF := PathWithDelim(ACBrCTe.DACTe.PathPDF)+ArqPDF+'-procInutCTe.pdf';
           except
-            raise Exception.Create('Erro ao criar o arquivo PDF');
+            on E: Exception do
+              raise Exception.Create('Erro ao criar o arquivo PDF.'+ sLineBreak + E.Message);
           end;
         end;
 

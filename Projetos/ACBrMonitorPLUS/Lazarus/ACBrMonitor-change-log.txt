@@ -43,6 +43,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2018
+[*] DoACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit
+Ajustes no controle de exceptions nas classes
+
+16/11/2018
+[*] ACBrMonitor1
+Ajustes para configuração da versão do e-Social e Reinf em tela.
+
+16/11/2018
+[*] DoACBrMDFeUnit, DoACBrCTeUnit
+Ajuste no método SetFormaEmissão para salvar corretamente o modelo selecionado nas configurações do ACBrMonitor
+
+16/11/2018
+[*] DoACBrNFeUnit, ACBrLibNFeRespostas, ACBrLibNFeConst
+Adicionado Tags de Retorno na Consulta de NFe no caso de eventos vinculados ao XML.
+
 29/10/2018
 [+] DoBoletoUnit
 Adicionado os métodos "MontarNossoNumero", "RetornaLinhaDigitavel", "RetornaCodigoBarras"

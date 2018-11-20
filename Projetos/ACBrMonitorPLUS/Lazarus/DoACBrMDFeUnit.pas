@@ -1167,7 +1167,7 @@ begin
       raise Exception.Create('Forma de Emissão Inválida: ' + TpEmisToStr(FormaEmissao));
 
     with MonitorConfig.DFE.WebService do
-      FormaEmissaoMDFe := StrToInt(TpEmisToStr(FormaEmissao));
+      FormaEmissaoMDFe := StrToInt(TpEmisToStr(FormaEmissao)) -1;
 
     MonitorConfig.SalvarArquivo;
   end;
@@ -1375,8 +1375,7 @@ begin
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
     ACBrMDFe.WebServices.Recibo.Recibo := ARecibo;
-    if not (ACBrMDFe.WebServices.Recibo.Executar) then
-      raise Exception.Create(ACBrMDFe.WebServices.Recibo.xMotivo);
+    ACBrMDFe.WebServices.Recibo.Executar;
 
     RespostaRecibo;
     for I := 0 to ACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtMDFe.Count - 1 do
@@ -1402,12 +1401,10 @@ begin
   begin
     if not ValidarCNPJ(ACNPJ) then
       raise Exception.Create('CNPJ ' + ACNPJ + ' invalido.');
-    try
-      ACBrMDFe.WebServices.ConsultaMDFeNaoEnc(ACNPJ);
-      RespostaMDFeNaoEnc;
-    except
-      raise Exception.Create(ACBrMDFe.WebServices.ConsMDFeNaoEnc.Msg);
-    end;
+
+    ACBrMDFe.WebServices.ConsultaMDFeNaoEnc(ACNPJ);
+    RespostaMDFeNaoEnc;
+
   end;
 end;
 
@@ -1500,12 +1497,9 @@ begin
         infEvento.detEvento.dtEnc := DtEncerra;
       end;
 
-      try
-        ACBrMDFe.EnviarEvento(1);
-        RespostaEncerramento;
-      except
-        raise Exception.Create(ACBrMDFe.WebServices.EnvEvento.EventoRetorno.xMotivo);
-      end;
+      ACBrMDFe.EnviarEvento(1);
+      RespostaEncerramento;
+
     finally
       CargaDFe.Free;
     end;
@@ -1540,12 +1534,9 @@ begin
         ACBrMDFe.WebServices.Consulta.MDFeChave :=
           OnlyNumber(ACBrMDFe.Manifestos.Items[0].MDFe.infMDFe.ID);
 
-      try
-        ACBrMDFe.WebServices.Consulta.Executar;
-        RespostaConsulta;
-      except
-        raise Exception.Create(ACBrMDFe.WebServices.Consulta.Msg);
-      end;
+      ACBrMDFe.WebServices.Consulta.Executar;
+      RespostaConsulta;
+
     finally
       CargaDFe.Free;
     end;
@@ -1656,7 +1647,8 @@ begin
 
         fpCmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
       except
-        raise Exception.Create('Erro ao criar o arquivo PDF');
+        on E: Exception do
+          raise Exception.Create('Erro ao criar o arquivo PDF.' + sLineBreak + E.Message);
       end;
     finally
       CargaDFeEvento.Free;
@@ -1739,7 +1731,8 @@ begin
         ArqPDF := PathWithDelim(ACBrMDFe.DAMDFe.PathPDF) + ArqPDF;
         fpCmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
       except
-        raise Exception.Create('Erro ao criar o arquivo PDF');
+        on E: Exception do
+          raise Exception.Create('Erro ao criar o arquivo PDF.' + sLineBreak + E.Message);
       end;
     finally
       CargaDFe.Free;
@@ -1805,9 +1798,6 @@ begin
       ACBrMDFe.WebServices.Enviar.Lote := '1'
     else
       ACBrMDFe.WebServices.Enviar.Lote := IntToStr(ALote);
-
-    if not (ACBrMDFe.WebServices.StatusServico.Executar) then
-      raise Exception.Create(ACBrMDFe.WebServices.StatusServico.Msg);
 
     ACBrMDFe.WebServices.Enviar.Executar;
     RespostaEnvio;
@@ -1920,9 +1910,6 @@ begin
 
     ACBrMDFe.WebServices.Enviar.Lote := IntToStr(ALoteEnvio);
 
-    if not (ACBrMDFe.WebServices.StatusServico.Executar) then
-      raise Exception.Create(ACBrMDFe.WebServices.StatusServico.Msg);
-
     ACBrMDFe.WebServices.Enviar.Executar;
 
     RespostaEnvio;
@@ -1973,9 +1960,6 @@ begin
         ACBrMDFe.WebServices.Enviar.Lote := '1'
       else
         ACBrMDFe.WebServices.Enviar.Lote := IntToStr(ALote);
-
-      if not (ACBrMDFe.WebServices.StatusServico.Executar) then
-        raise Exception.Create(ACBrMDFe.WebServices.StatusServico.Msg);
 
       ACBrMDFe.WebServices.Enviar.Executar;
 
@@ -2125,8 +2109,7 @@ begin
     else
       ACBrMDFe.WebServices.Consulta.MDFeChave := AChave;
 
-    if not ACBrMDFe.WebServices.Consulta.Executar then
-      raise Exception.Create(ACBrMDFe.WebServices.Consulta.Msg);
+    ACBrMDFe.WebServices.Consulta.Executar;
 
     ACBrMDFe.EventoMDFe.Evento.Clear;
     with ACBrMDFe.EventoMDFe.Evento.Add do
@@ -2148,12 +2131,8 @@ begin
       infEvento.detEvento.nProt := ACBrMDFe.WebServices.Consulta.Protocolo;
       infEvento.detEvento.xJust := AJustificativa;
     end;
-    try
-      ACBrMDFe.EnviarEvento(ALote);
-      RespostaCancelamento;
-    except
-      raise Exception.Create(ACBrMDFe.WebServices.EnvEvento.EventoRetorno.xMotivo);
-    end;
+    ACBrMDFe.EnviarEvento(ALote);
+    RespostaCancelamento;
   end;
 end;
 

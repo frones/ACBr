@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2018
+-- ACBrBPeWebServices --
+[*] Acrescentando o nome do grupo "bpeConsultaBPResult" como uma segunda alternativa,
+    para a correta leitura de retorno da consulta, nome do grupo diferente do
+    padrão.
+   Por: Cleyton Luiz Alberti
+
 24/10/2018
 -- ACBrBPeServicos --
 [+] Inclusão das URLs de homologação de SP.

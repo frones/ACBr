@@ -981,7 +981,7 @@ var
 begin
   BPeRetorno := TRetConsSitBPe.Create;
   try
-    FPRetWS := SeparaDadosArray(['bpeResultMsg'], FPRetornoWS );
+    FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeConsultaBPResult'], FPRetornoWS );
 
     BPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     BPeRetorno.LerXML;

@@ -189,7 +189,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Style = []
         Lines.Strings = (
           'Projeto ACBr'
@@ -1369,7 +1369,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Style = []
         Lines.Strings = (
           'Projeto ACBr'

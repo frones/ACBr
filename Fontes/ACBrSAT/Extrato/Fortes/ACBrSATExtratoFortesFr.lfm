@@ -12,9 +12,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.0.1'
   object rlVenda: TRLReport
-    Left = 32
+    Left = 40
     Height = 1512
     Top = 0
     Width = 302
@@ -240,7 +240,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Lines.Strings = (
           'Projeto ACBr'
           'http://www.projetoacbr.com.br'
@@ -1841,7 +1841,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Lines.Strings = (
           'Projeto ACBr'
           'http://www.projetoacbr.com.br'

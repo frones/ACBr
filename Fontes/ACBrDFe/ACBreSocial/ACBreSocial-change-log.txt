@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2018
+-- pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/47740-infoente-subteto-valores-deve-ser-1-2-3-ou-9/
+   Por: Jadson
+
 12/11/2018
 -- pcesConversaoeSocial --
 [*] Criado o enumerador ve02_05_00 para nova versão do eSocial

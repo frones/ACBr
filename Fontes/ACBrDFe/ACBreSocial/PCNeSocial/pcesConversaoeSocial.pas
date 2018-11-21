@@ -945,6 +945,8 @@ const
                                            'LEI88781994',  'LEI105592002',
                                            'LEI107902003', 'LEI112822006');
 
+  TPoderSubteto : array[0..3] of string = ('1', '2', '3', '9');
+
 function LayOuteSocialToServico(const t: TLayOut): String;
 begin
    Result := EnumeradoToStr(t,
@@ -2050,12 +2052,12 @@ end;
 
 function eSIdeSubtetoToStr(const t: tpIdeSubteto): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_4  );
+  result := EnumeradoToStr2(t, TPoderSubteto);
 end;
 
 function eSStrToIdeSubteto(var ok: Boolean; const s: string): tpIdeSubteto;
 begin
-  result := tpIdeSubteto( StrToEnumerado2(ok , s,TGenericosString1_4 ) );
+  result := tpIdeSubteto( StrToEnumerado2(ok, s, TPoderSubteto) );
 end;
 
 function eSTpPublAlvoToStr(const t: tpTpPublAlvo): string;

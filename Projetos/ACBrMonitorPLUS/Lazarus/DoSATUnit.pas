@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, CmdUnit, pcnConversao, strutils,
   ACBrSAT, ACBrMonitorConfig, ACBrMonitorConsts, ACBrDFeUtil,
   ACBrLibSATRespostas, ACBrLibResposta,
-  ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr;
+  ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrValidador, ACBrDFeSSL;
 
 type
 
@@ -225,6 +225,13 @@ end;
 { TMetodoSetLogoMarca}
 
 TMetodoSetLogoMarca = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGerarAssinaturaSAT }
+
+TMetodoGerarAssinaturaSAT = class(TACBrMetodo)
 public
   procedure Executar; override;
 end;
@@ -592,6 +599,78 @@ begin
   finally
     INIRec.Free;
   end;
+end;
+
+{ TMetodoGerarAssinaturaSAT }
+
+{ Params: 0 - CNPJSHW : cnpj da Software House
+          1 - CNPJEmitente : cnpj do Emitente
+}
+procedure TMetodoGerarAssinaturaSAT.Executar;
+var
+  cCNPJShw: String;
+  cCNPJEmitente: String;
+  cCodigoVinculacao: String;
+  cMsgErroValidacao: String;
+
+  procedure ConfiguraDFe;
+  begin
+    with TACBrObjetoSAT(fpObjetoDono) do
+    begin
+      case MonitorConfig.DFE.Certificado.CryptLib of
+        1: fACBrSAT.SSL.SSLCryptLib := cryOpenSSL;
+        2: fACBrSAT.SSL.SSLCryptLib := cryCapicom;
+        3: fACBrSAT.SSL.SSLCryptLib := cryWinCrypt;
+      else
+        fACBrSAT.SSL.SSLCryptLib := cryWinCrypt;
+      end;
+
+      if NaoEstaVazio(MonitorConfig.DFE.Certificado.ArquivoPFX) then
+      begin
+
+        fACBrSAT.SSL.ArquivoPFX  := Trim(MonitorConfig.DFE.Certificado.ArquivoPFX );
+        fACBrSAT.SSL.Senha       := Trim(MonitorConfig.DFE.Certificado.Senha );
+      end
+      else
+        fACBrSAT.SSL.NumeroSerie := Trim(MonitorConfig.DFE.Certificado.NumeroSerie );
+    end;
+
+  end;
+
+begin
+  cCNPJShw:= fpCmd.Params(0);
+  cCNPJEmitente:= fpCmd.Params(1);
+
+  with TACBrObjetoSAT(fpObjetoDono) do
+  begin
+
+    if EstaVazio(cCNPJShw) then
+      cCNPJShw:= Trim(MonitorConfig.SAT.SATSWH.CNPJ);
+
+    if EstaVazio(cCNPJEmitente) then
+      cCNPJEmitente:= Trim(MonitorConfig.SAT.SATImpressao.SATEmit.CNPJ);
+
+    if EstaVazio(Trim(MonitorConfig.DFE.Certificado.NumeroSerie )) and
+       EstaVazio(Trim(MonitorConfig.DFE.Certificado.ArquivoPFX ))then
+      raise Exception.Create('Certificado não foi informado!');
+
+
+    cMsgErroValidacao := ACBrValidador.ValidarCNPJ(cCNPJShw);
+    if NaoEstaVazio( Trim(cMsgErroValidacao) ) then
+      raise Exception.Create('CNPJ da Software House inválido!');
+
+
+    cMsgErroValidacao := ACBrValidador.ValidarCNPJ(cCNPJEmitente);
+    if Trim(cMsgErroValidacao) <> '' then
+      raise Exception.Create('CNPJ do Emitente inválido!');
+
+    ConfiguraDFe;
+
+    cCodigoVinculacao      := Onlynumber(cCNPJShw) + Onlynumber(cCNPJEmitente);
+    fpCmd.Resposta := fACBrSAT.SSL.CalcHash(cCodigoVinculacao, dgstSHA256, outBase64, True);
+
+  end;
+
 end;
 
 { TMetodoSetLogoMarca }
@@ -1185,6 +1264,7 @@ begin
   ListaDeMetodos.Add(CMetodoGerarPDFExtratoVenda);
   ListaDeMetodos.Add(CMetodoSetNumeroSessao);
   ListaDeMetodos.Add(CMetodoSetlogomarcaSAT);
+  ListaDeMetodos.Add(CMetodoGerarAssinaturaSAT);
 
   // DoACBr
   ListaDeMetodos.Add(CMetodoSavetofile);
@@ -1247,8 +1327,9 @@ begin
     27 : AMetodoClass := TMetodoGerarPDFExtratoVenda;
     28 : AMetodoClass := TMetodoSetNumeroSessao;
     29 : AMetodoClass := TMetodoSetLogoMarca;
+    30 : AMetodoClass := TMetodoGerarAssinaturaSAT;
 
-    30..45 : DoACbr(ACmd);
+    31..46 : DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then

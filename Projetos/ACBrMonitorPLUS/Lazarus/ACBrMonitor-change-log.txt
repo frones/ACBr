@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/11/2018
+[+] DoSATUnit, ACBrMonitorConsts
+Adicionado funcionalidade SatSign no ACBrMonitor para Geração da Assinatura da Software
+House no SAT
+
 19/11/2018
 [*] DoACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit
 Ajustes no controle de exceptions nas classes

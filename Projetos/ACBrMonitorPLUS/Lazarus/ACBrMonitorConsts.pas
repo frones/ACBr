@@ -82,6 +82,7 @@ const
   CMetodoTesteFimaFim =                'testefimafim';
   CMetodoSetNumeroSessao =             'setnumerosessao';
   CMetodoSetlogomarcaSAT =             'setlogomarca';
+  CMetodoGerarAssinaturaSAT =          'gerarassinaturasat';
 
   CMetodoECFachar =                                      'achar';
   CMetodoECFativar =                                     'ativar';

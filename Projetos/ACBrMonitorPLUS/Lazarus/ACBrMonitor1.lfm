@@ -7,8 +7,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 0
-  ClientWidth = 0
+  ClientHeight = 659
+  ClientWidth = 1055
   Color = clBlack
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
@@ -10428,6 +10428,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 OnClick = btSATAssociaClick
                 TabOrder = 2
               end
+              object btnGerarAssinaturaSAT: TButton
+                Left = 10
+                Height = 25
+                Top = 172
+                Width = 134
+                Caption = 'Gerar Assinatura'
+                OnClick = btnGerarAssinaturaSATClick
+                TabOrder = 3
+              end
             end
             object tsRede: TTabSheet
               HelpType = htKeyword
@@ -13672,6 +13681,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

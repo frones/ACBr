@@ -140,6 +140,7 @@ type
     Bevel3: TBevel;
     btnBoletoRelatorioRetorno: TPanel;
     btnIntegrador: TPanel;
+    btnGerarAssinaturaSAT: TButton;
     bvCadastro: TBevel;
     bExecECFTeste: TBitBtn;
     bGAVAbrir: TBitBtn;
@@ -1223,6 +1224,7 @@ type
     procedure btnEnviarMDFeClick(Sender: TObject);
     procedure btnEtiquetaClick(Sender: TObject);
     procedure btnGavetaClick(Sender: TObject);
+    procedure btnGerarAssinaturaSATClick(Sender: TObject);
     procedure btnImpChequeClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
     procedure btnImprimirCTeClick(Sender: TObject);
@@ -3049,6 +3051,41 @@ procedure TFrmACBrMonitor.btnGavetaClick(Sender: TObject);
 begin
   SetColorButtons(Sender);
   pgConfig.ActivePage := tsGAV;
+end;
+
+procedure TFrmACBrMonitor.btnGerarAssinaturaSATClick(Sender: TObject);
+var
+ S: Ansistring;
+ cnpjSwh, cnpjEmit: String;
+begin
+  if EstaVazio(edtSwHCNPJ.text) then
+  begin
+    MessageDlg('Informe CNPJ da Software House!', mtError, [mbOK], 0);
+    exit;
+  end;
+
+  if EstaVazio(edtEmitCNPJ.text) then
+  begin
+    MessageDlg('Informe CNPJ do Emitente!', mtError, [mbOK], 0);
+    exit;
+  end;
+
+  if edtSwHAssinatura.Text <> '' then
+    if MessageDlg('Assinatura já existente!'+sLineBreak+
+       'Confirma geração de uma nova Assinatura?', mtConfirmation,
+        mbYesNoCancel, 0) <> mrYes then
+        exit;
+
+  cnpjSwh:= OnlyNumber(edtSwHCNPJ.text);
+  cnpjEmit:= OnlyNumber(edtEmitCNPJ.Text);
+
+  S:= 'SAT.'+CMetodoGerarAssinaturaSAT+'("'+cnpjSwh+'","'+cnpjEmit+'")' ;
+  fsProcessar.Add(S);
+
+  Processar;
+  if fsCmd.Resposta <> '' then
+    edtSwHAssinatura.Text:= fsCmd.Resposta;
+
 end;
 
 procedure TFrmACBrMonitor.btnImpChequeClick(Sender: TObject);

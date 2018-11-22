@@ -1470,9 +1470,10 @@ procedure TCTeW.GerarinfTribFed;
       Result := 0;
   end;
 begin
-  if (CTe.Imp.infTribFed.vPIS > 0) or (CTe.Imp.infTribFed.vCOFINS > 0) or
-     (CTe.Imp.infTribFed.vIR > 0) or ((CTe.Imp.infTribFed.vINSS > 0) or (InformarINSS = 1)) or
-     (CTe.Imp.infTribFed.vCSLL > 0) then
+  if ((CTe.ide.UFIni <> CTe.ide.UFFim) and (CTe.ide.indIEToma = inNaoContribuinte)) and
+     ((CTe.Imp.infTribFed.vPIS > 0) or (CTe.Imp.infTribFed.vCOFINS > 0) or
+      (CTe.Imp.infTribFed.vIR > 0) or ((CTe.Imp.infTribFed.vINSS > 0) or (InformarINSS = 1)) or
+      (CTe.Imp.infTribFed.vCSLL > 0)) then
   begin
     Gerador.wGrupo('infTribFed', '#125');
     Gerador.wCampo(tcDe2, '#', 'vPIS   ', 01, 15, 0, CTe.Imp.infTribFed.vPIS, DSC_VPIS);

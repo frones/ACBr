@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2018
+-- pcteCTeW --
+[*] Acrescentado as condições de prestação de serviço interestadual e não contribuinte
+    ao gerar o grupo <infTribFed>.
+  Por: Italo Jurisato Junior
+
 10/10/2018
 -- ACBrCTeConhecimentos --
 [*] Após separar o conteudo do grupo <infModal> remove um eventual namespace.

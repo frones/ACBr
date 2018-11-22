@@ -19,6 +19,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     Font.Name = 'Courier New'
     BeforePrint = rlMDFeBeforePrint
     OnDataRecord = RLMDFeDataRecord
+    ExplicitLeft = 30
+    ExplicitTop = 0
     object rlb_2_Rodo: TRLBand
       Left = 26
       Top = 226
@@ -102,7 +104,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           ParentFont = False
         end
         object rlLabel14: TRLLabel
-          Left = 124
+          Left = 168
           Top = 24
           Width = 40
           Height = 14
@@ -207,7 +209,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Transparent = False
         end
         object RLDraw8: TRLDraw
-          Left = 120
+          Left = 161
           Top = 20
           Width = 1
           Height = 81
@@ -217,7 +219,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         object rlmPlaca: TRLMemo
           Left = 4
           Top = 45
-          Width = 109
+          Width = 151
           Height = 52
           AutoSize = False
           Behavior = [beSiteExpander]
@@ -237,8 +239,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Transparent = False
         end
         object rlmRNTRC: TRLMemo
-          Left = 124
-          Top = 45
+          Left = 168
+          Top = 44
           Width = 141
           Height = 52
           AutoSize = False

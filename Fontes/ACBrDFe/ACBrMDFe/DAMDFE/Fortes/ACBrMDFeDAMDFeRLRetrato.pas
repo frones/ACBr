@@ -360,7 +360,8 @@ begin
   rlb_2_Rodo.Enabled := (FMDFe.Ide.modal = moRodoviario);
 
   rlmPlaca.Lines.Clear;
-  rlmPlaca.Lines.Add(FormatarPlaca(FMDFe.rodo.veicTracao.placa));
+  rlmPlaca.Lines.Add(FormatarPlaca(FMDFe.rodo.veicTracao.placa) + ' - ' +
+                     FMDFe.rodo.veicTracao.UF );
 
   rlmRNTRC.Lines.Clear;
   if FMDFe.rodo.veicTracao.prop.RNTRC <> '' then
@@ -373,7 +374,8 @@ begin
 
   for i := 0 to FMDFe.rodo.veicReboque.Count - 1 do
   begin
-    rlmPlaca.Lines.Add(FormatarPlaca(FMDFe.rodo.veicReboque.Items[i].placa));
+    rlmPlaca.Lines.Add(FormatarPlaca(FMDFe.rodo.veicReboque.Items[i].placa) + ' - ' +
+                     FMDFe.rodo.veicReboque.Items[i].UF );
     if FMDFe.rodo.veicReboque.Items[i].prop.RNTRC <> '' then
       rlmRNTRC.Lines.Add(FMDFe.rodo.veicReboque.Items[i].prop.RNTRC)
     else

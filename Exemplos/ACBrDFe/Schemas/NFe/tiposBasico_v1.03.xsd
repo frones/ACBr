@@ -813,6 +813,9 @@
       <xs:pattern value="[A-Z]{2,3}[0-9]{4}|[A-Z]{3,4}[0-9]{3}" />
     </xs:restriction>
   </xs:simpleType>
+
+<!-- Esta em duplicidade o tipo abaixo já consta nos schemas de layout dos eventos
+
   <xs:simpleType name="TCOrgaoIBGE">
     <xs:annotation>
       <xs:documentation>Tipo Código de orgão (UF da tabela do IBGE + 90 RFB)</xs:documentation>
@@ -851,6 +854,9 @@
       <xs:enumeration value="92" />
     </xs:restriction>
   </xs:simpleType>
+
+ Definição do tipo comentado por Italo em 22/11/2018 -->
+
   <xs:simpleType name="TDec_1104Neg">
     <xs:annotation>
       <xs:documentation>Tipo Decimal com até 15 dígitos, sendo 11 de corpo e até 4 decimais, aceitando valores negativos</xs:documentation>

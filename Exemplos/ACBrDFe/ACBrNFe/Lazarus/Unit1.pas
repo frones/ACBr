@@ -2737,16 +2737,22 @@ begin
 
       with Cobr.Dup.Add do
        begin
-         nDup  := '1234';
+         nDup  := '001';
          dVenc := now+10;
          vDup  := 50;
        end;
 
       with Cobr.Dup.Add do
        begin
-         nDup  := '1235';
+         nDup  := '002';
          dVenc := now+10;
          vDup  := 50;
+       end;
+
+      with pag.Add do
+       begin
+         tPag := fpDinheiro;
+         vPag := 100;
        end;
 
 

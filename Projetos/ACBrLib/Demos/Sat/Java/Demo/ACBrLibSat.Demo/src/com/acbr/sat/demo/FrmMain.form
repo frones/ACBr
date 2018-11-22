@@ -1075,7 +1075,6 @@
                   <Font name="Tahoma" size="11" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="SSL"/>
-                <Property name="actionCommand" type="java.lang.String" value="SSL"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="ckbTLS">
@@ -1132,36 +1131,57 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Inicializar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIniDesiniActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCriarCFe">
       <Properties>
         <Property name="text" type="java.lang.String" value="Criar CFe"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCriarCFeActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCriarEnviarCFe">
       <Properties>
         <Property name="text" type="java.lang.String" value="Criar Enviar CFe"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCriarEnviarCFeActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEnviarCFe">
       <Properties>
         <Property name="text" type="java.lang.String" value="Enviar CFe"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEnviarCFeActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnImprimirCFe">
       <Properties>
         <Property name="text" type="java.lang.String" value="Imprimir CFe"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirCFeActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnImprimirPDFCFe">
       <Properties>
         <Property name="text" type="java.lang.String" value="Imprimir PDF CFe"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirPDFCFeActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnImprimiCFeRed">
       <Properties>
         <Property name="text" type="java.lang.String" value="Imprimir CFe Red."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimiCFeRedActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

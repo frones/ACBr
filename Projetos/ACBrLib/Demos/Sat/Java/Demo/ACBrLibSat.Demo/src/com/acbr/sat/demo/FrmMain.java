@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -577,7 +578,6 @@ public class FrmMain extends javax.swing.JFrame {
 
         ckbSSL.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckbSSL.setText("SSL");
-        ckbSSL.setActionCommand("SSL");
 
         ckbTLS.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckbTLS.setText("TLS");
@@ -671,18 +671,53 @@ public class FrmMain extends javax.swing.JFrame {
         );
 
         btnIniDesini.setText("Inicializar");
+        btnIniDesini.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniDesiniActionPerformed(evt);
+            }
+        });
 
         btnCriarCFe.setText("Criar CFe");
+        btnCriarCFe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCriarCFeActionPerformed(evt);
+            }
+        });
 
         btnCriarEnviarCFe.setText("Criar Enviar CFe");
+        btnCriarEnviarCFe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCriarEnviarCFeActionPerformed(evt);
+            }
+        });
 
         btnEnviarCFe.setText("Enviar CFe");
+        btnEnviarCFe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarCFeActionPerformed(evt);
+            }
+        });
 
         btnImprimirCFe.setText("Imprimir CFe");
+        btnImprimirCFe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirCFeActionPerformed(evt);
+            }
+        });
 
         btnImprimirPDFCFe.setText("Imprimir PDF CFe");
+        btnImprimirPDFCFe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirPDFCFeActionPerformed(evt);
+            }
+        });
 
         btnImprimiCFeRed.setText("Imprimir CFe Red.");
+        btnImprimiCFeRed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimiCFeRedActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -775,6 +810,176 @@ public class FrmMain extends javax.swing.JFrame {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowActivated
+
+    private void btnIniDesiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniDesiniActionPerformed
+        try {
+            if("Inicializar".equals(btnIniDesini.getText())){
+                saveConfig();
+                int ret = acbrSat.SAT_InicializarSAT();
+                ACBrSat.checkResult(ret);
+                
+                btnIniDesini.setText("Desinicializar");
+            }else{
+                int ret = acbrSat.SAT_DesInicializar();
+                ACBrSat.checkResult(ret);
+                
+                btnIniDesini.setText("Inicializar");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnIniDesiniActionPerformed
+
+    private void btnCriarCFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarCFeActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showSaveDialog(rootPane);
+            if (returnVal != JFileChooser.APPROVE_OPTION) return;
+            
+            int ret;
+            ByteBuffer buffer = ByteBuffer.allocate(256);
+            IntByReference bufferLen = new IntByReference(256);
+            
+            ret = acbrSat.SAT_CriarCFe(ACBrSat.toUTF8(chooser.getSelectedFile().getPath()), buffer, bufferLen);
+            ACBrSat.checkResult(ret);
+            
+            if(bufferLen.getValue() > 256){
+                buffer = ByteBuffer.allocate(bufferLen.getValue());                        
+                ret = acbrSat.SAT_UltimoRetorno(buffer, bufferLen);
+                ACBrSat.checkResult(ret);
+            }
+            
+            rtbRespostas.append(ACBrSat.fromUTF8(buffer, bufferLen.getValue()));
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCriarCFeActionPerformed
+
+    private void btnCriarEnviarCFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarEnviarCFeActionPerformed
+        try{            
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showSaveDialog(rootPane);
+            if (returnVal != JFileChooser.APPROVE_OPTION) return;
+            
+            int ret;
+            ByteBuffer buffer = ByteBuffer.allocate(256);
+            IntByReference bufferLen = new IntByReference(256);
+            
+            ret = acbrSat.SAT_CriarEnviarCFe(ACBrSat.toUTF8(chooser.getSelectedFile().getPath()), buffer, bufferLen);
+            ACBrSat.checkResult(ret);
+            
+            if(bufferLen.getValue() > 256){
+                buffer = ByteBuffer.allocate(bufferLen.getValue());                        
+                ret = acbrSat.SAT_UltimoRetorno(buffer, bufferLen);
+                ACBrSat.checkResult(ret);
+            }
+            
+            rtbRespostas.append(ACBrSat.fromUTF8(buffer, bufferLen.getValue()));
+        } catch (Exception ex) {            
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCriarEnviarCFeActionPerformed
+
+    private void btnEnviarCFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarCFeActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml CFe (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showSaveDialog(rootPane);
+            if (returnVal != JFileChooser.APPROVE_OPTION) return;
+            
+            int ret;
+            ByteBuffer buffer = ByteBuffer.allocate(256);
+            IntByReference bufferLen = new IntByReference(256);
+            
+            ret = acbrSat.SAT_EnviarCFe(ACBrSat.toUTF8(chooser.getSelectedFile().getPath()), buffer, bufferLen);
+            ACBrSat.checkResult(ret);
+            
+            if(bufferLen.getValue() > 256){
+                buffer = ByteBuffer.allocate(bufferLen.getValue());                        
+                ret = acbrSat.SAT_UltimoRetorno(buffer, bufferLen);
+                ACBrSat.checkResult(ret);
+            }
+            
+            rtbRespostas.append(ACBrSat.fromUTF8(buffer, bufferLen.getValue()));
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEnviarCFeActionPerformed
+
+    private void btnImprimirCFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirCFeActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml CFe (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showSaveDialog(rootPane);
+            if (returnVal != JFileChooser.APPROVE_OPTION) return;
+            
+                       
+            int ret = acbrSat.SAT_ImprimirExtratoVenda(ACBrSat.toUTF8(chooser.getSelectedFile().getPath()), ACBrSat.toUTF8(""));
+            ACBrSat.checkResult(ret);
+            
+            rtbRespostas.append("Impressão efetuada com sucesso.");
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImprimirCFeActionPerformed
+
+    private void btnImprimiCFeRedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimiCFeRedActionPerformed
+        try{            
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml CFe (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showSaveDialog(rootPane);
+            if (returnVal != JFileChooser.APPROVE_OPTION) return;
+            
+                       
+            int ret = acbrSat.SAT_ImprimirExtratoResumido(ACBrSat.toUTF8(chooser.getSelectedFile().getPath()), ACBrSat.toUTF8(""));
+            ACBrSat.checkResult(ret);
+            
+            rtbRespostas.append("Impressão efetuada com sucesso.");
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImprimiCFeRedActionPerformed
+
+    private void btnImprimirPDFCFeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirPDFCFeActionPerformed
+        try{
+            JFileChooser chooser = new JFileChooser();
+            OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml CFe (*.xml)");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showSaveDialog(rootPane);
+            if (returnVal != JFileChooser.APPROVE_OPTION) return;
+            
+            ByteBuffer buffer = ByteBuffer.allocate(256);
+            IntByReference bufferLen = new IntByReference(256);
+                       
+            int ret = acbrSat.SAT_GerarPDFExtratoVenda(ACBrSat.toUTF8(chooser.getSelectedFile().getPath()),
+                    ACBrSat.toUTF8(""), buffer, bufferLen);
+            ACBrSat.checkResult(ret);
+            
+            if(bufferLen.getValue() > 256){
+                buffer = ByteBuffer.allocate(bufferLen.getValue());                        
+                ret = acbrSat.SAT_UltimoRetorno(buffer, bufferLen);
+                ACBrSat.checkResult(ret);
+            }
+            
+            rtbRespostas.append(ACBrSat.fromUTF8(buffer, bufferLen.getValue()));           
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImprimirPDFCFeActionPerformed
 
     private void loadConfig(){
         try{

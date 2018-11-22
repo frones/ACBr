@@ -395,7 +395,7 @@ begin
 
   if Leitor.rExtrai(1, 'infBPeSupl') <> '' then
   begin
-    BPe.infBPeSupl.qrCodBPe := Leitor.rCampo(tcStr, 'qrCode');
+    BPe.infBPeSupl.qrCodBPe := Leitor.rCampo(tcStr, 'qrCodBPe');
     BPe.infBPeSupl.qrCodBPe := StringReplace(BPe.infBPeSupl.qrCodBPe, '<![CDATA[', '', []);
     BPe.infBPeSupl.qrCodBPe := StringReplace(BPe.infBPeSupl.qrCodBPe, ']]>', '', []);
 

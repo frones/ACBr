@@ -49,6 +49,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/11/2018
+-- pcnBPeR --
+[*] https://www.projetoacbr.com.br/forum/topic/47759-ajuste-pcnbperpas/
+   Por: Cleyton
+
 -- ACBrBPeWebServices --
 [*] Acrescentando o nome do grupo "bpeStatusServicoBPResult" como uma segunda alternativa,
     para a correta leitura de retorno da consulta ao Status do Serviço, 

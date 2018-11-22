@@ -2306,7 +2306,7 @@ begin
     //Inf. Complementar
     if Length(InfCpl) = 0 then InfCpl := '';
 
-    result  := result + TmpStr + InfCpl;
+    result  := result + TmpStr + ' ' + InfCpl;
   end;
 end;
 

@@ -2192,6 +2192,7 @@ var
   Campos2     : TSplitResult;
   IndexCampo2 : Integer;
   vTemp2      : TStringList;
+  Separador   : Char;
 begin
   vTemp2  := TStringList.create;
   try
@@ -2208,7 +2209,8 @@ begin
     end;
     if Trim(Result) <> '' then
     begin
-      Campos2 := Split(';', Result);
+      Separador := Trim(QuebraLinha)[1];
+      Campos2 := Split(Separador, Result);
 
       for IndexCampo2 := 0 to Length(Campos2) - 1 do
         vTemp2.Add(Trim(Campos2[IndexCampo2]));

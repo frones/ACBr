@@ -13,8 +13,6 @@ public interface ACBrPosPrinter extends Library {
     public static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
     public static ACBrPosPrinter INSTANCE = LibraryLoader.getInstance();
 
-    public int POS_LerStatusImpressora(int i, ByteBuffer buffer, IntByReference bufferLen);
-
     class LibraryLoader {
 
         private static String library = "";

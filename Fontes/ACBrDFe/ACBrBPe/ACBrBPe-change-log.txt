@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2018
+-- ACBrBPeWebServices --
+[*] Acrescentando o nome do grupo "bpeStatusServicoBPResult" como uma segunda alternativa,
+    para a correta leitura de retorno da consulta ao Status do Serviço, 
+    nome do grupo diferente do padrão.
+   Por: Cleyton Luiz Alberti
+
 21/11/2018
 -- ACBrBPeWebServices --
 [*] Acrescentando o nome do grupo "bpeConsultaBPResult" como uma segunda alternativa,

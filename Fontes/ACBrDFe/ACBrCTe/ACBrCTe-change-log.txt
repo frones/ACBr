@@ -49,6 +49,8 @@ Símbolo : Significado
 
 22/11/2018
 -- pcteCTeW --
+[*] https://www.projetoacbr.com.br/forum/topic/47783-erro-no-xml-do-cte-modal-aquavi%C3%A1rio/
+  Por: Tulio Padua
 [*] Acrescentado as condições de prestação de serviço interestadual e não contribuinte
     ao gerar o grupo <infTribFed>.
   Por: Italo Jurisato Junior

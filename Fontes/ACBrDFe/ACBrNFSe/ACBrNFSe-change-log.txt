@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2018
+-- pnfsNFSeW_ABRASFv1 --
+[*] Incluido uma condição para não gerar o grupo <Endereco> quando nenhuma informação
+    do mesmo não for informada.
+   Por: Italo Jurisato Junior
+
 20/11/2018
 -- ACBrNFSeWebServices --
 [*] Corrigido o problema no serviço de Cancelamento, ao tentar assinar com o

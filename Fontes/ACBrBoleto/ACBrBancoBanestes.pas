@@ -433,15 +433,15 @@ begin
           (rConta <> RightStr(OnlyNumber(Cedente.Conta), Length(rConta))) then
          raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
-      Cedente.Nome    := rCedente;
-      Cedente.CNPJCPF := rCNPJCPF;
-      Cedente.Conta   := rConta;
-
       case StrToIntDef(Copy(ARetorno[1],2,2),0) of
          01: Cedente.TipoInscricao:= pFisica;
          else
             Cedente.TipoInscricao:= pJuridica;
       end;
+
+      Cedente.Nome    := rCedente;
+      Cedente.CNPJCPF := rCNPJCPF;
+      Cedente.Conta   := rConta;
 
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;

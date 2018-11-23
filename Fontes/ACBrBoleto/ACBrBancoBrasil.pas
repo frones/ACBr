@@ -1036,6 +1036,13 @@ begin
    begin
      if LeCedenteRetorno then
      begin
+       case StrToIntDef(copy(ARetorno[0], 18, 1), 0) of
+         01:
+           Cedente.TipoInscricao := pFisica;
+         else
+           Cedente.TipoInscricao := pJuridica;
+       end;
+
        Cedente.Nome          := rCedente;
        Cedente.CNPJCPF       := rCNPJCPF;
        Cedente.Convenio      := rConvenioCedente;
@@ -1043,13 +1050,6 @@ begin
        Cedente.AgenciaDigito := trim(copy(ARetorno[0], 58, 1));
        Cedente.Conta         := trim(copy(ARetorno[0], 59, 12));
        Cedente.ContaDigito   := trim(copy(ARetorno[0], 71, 1));
-     end;
-
-     case StrToIntDef(copy(ARetorno[0], 18, 1), 0) of
-       01:
-         Cedente.TipoInscricao := pFisica;
-       else
-         Cedente.TipoInscricao := pJuridica;
      end;
 
      ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
@@ -1111,7 +1111,8 @@ begin
             ValorMoraJuros      := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
             ValorOutrosCreditos := StrToFloatDef(copy(Linha, 123, 15), 0) / 100;
             ValorOutrasDespesas := StrToFloatDef(copy(Linha, 108, 15), 0) / 100;
-            ValorRecebido       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+            ValorPago           := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+            ValorRecebido       := StrToFloatDef(copy(Linha, 93, 15), 0) / 100;
             TempData := copy(Linha, 138, 2)+'/'+copy(Linha, 140, 2)+'/'+copy(Linha, 142, 4);
             if TempData<>'00/00/0000' then
               DataOcorrencia := StringToDateTimeDef(TempData, 0, 'DDMMYY');
@@ -1381,10 +1382,9 @@ end;
 
 function TACBrBancoBrasil.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
 begin
-
-    if (ACBrBanco.ACBrBoleto.LayoutRemessa = c400) then
-    begin
-  case TipoOcorrencia of
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c400) then
+  begin
+    case TipoOcorrencia of
     toRetornoComandoRecusado: //03 (Recusado)
       case CodMotivo of
         01: Result:='01-Identificação inválida' ;
@@ -1452,18 +1452,18 @@ begin
         63: Result:='63-DV do nosso número inválido' ;
         64: Result:='64-Título não passivel de debito/baixa - situação anormal' ;
         65: Result:='65-Título com ordem de não protestar-não pode ser encaminhado a cartorio' ;
-        66: Result:= '66-Número do documento do sacado (CNPJ/CPF) inválido';
+        66: Result:='66-Número do documento do sacado (CNPJ/CPF) inválido';
         67: Result:='66-Título/carne rejeitado' ;
-        68: Result:= '68-Código/Data/Percentual de multa inválido';
-        69: Result:= '69-Valor/Percentual de Juros Inválido';
-        70: Result:= '70-Título já se encontra isento de juros';
-        71: Result:= '71-Código de Juros Inválido';
-        72: Result:= '72-Prefixo da Ag. cobradora inválido';
-        73: Result:= '73–Numero do controle do participante inválido';
-        74: Result:= '74–Cliente não cadastrado no CIOPE (Desconto/Vendor)';
-        75: Result:= '75–Qtde. de dias do prazo limite p/ recebimento de título vencido inválido';
-        76: Result:= '76–Titulo excluído automaticamente por decurso deprazo CIOPE (Desconto/Vendor)';
-        77: Result:= '77–Titulo vencido transferido para a conta 1 – Carteira vinculada'; 
+        68: Result:='68-Código/Data/Percentual de multa inválido';
+        69: Result:='69-Valor/Percentual de Juros Inválido';
+        70: Result:='70-Título já se encontra isento de juros';
+        71: Result:='71-Código de Juros Inválido';
+        72: Result:='72-Prefixo da Ag. cobradora inválido';
+        73: Result:='73–Numero do controle do participante inválido';
+        74: Result:='74–Cliente não cadastrado no CIOPE (Desconto/Vendor)';
+        75: Result:='75–Qtde. de dias do prazo limite p/ recebimento de título vencido inválido';
+        76: Result:='76–Titulo excluído automaticamente por decurso deprazo CIOPE (Desconto/Vendor)';
+        77: Result:='77–Titulo vencido transferido para a conta 1 – Carteira vinculada';
         80: Result:='80-Nosso número inválido' ;
         81: Result:='81-Data para concessão do desconto inválida' ;
         82: Result:='82-CEP do sacado inválido' ;
@@ -1488,101 +1488,103 @@ begin
         00: Result := '00-Transferência de título de cobrança simples para descontada ou vice-versa';
         52: Result := '52-Reembolso de título vendor ou descontado';
       end;
-      end;    
-    end
     else
-      begin
-        case TipoOcorrencia of
-        toRetornoRegistroRecusado: // 03 (Recusado)
+      Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
+    end;
+  end
+  else
+  begin
+    case TipoOcorrencia of
+    toRetornoRegistroRecusado: // 03 (Recusado)
       case CodMotivo of
-          01: Result:='Codigo do banco invalido';
-          02: Result:='Codigo do registro detalhe invalido';
-          03: Result:='Codigo do segmento invalido';
-          04: Result:='Codigo do movimento nao permitido para carteira';
-          05: Result:='Codigo de movimento invalido';
-          06: Result:='Tipo/numero de inscricao do cedente Invalidos';
-          07: Result:='Agencia/Conta/DV invalido';
-          08: Result:='Nosso numero invalido';
-          09: Result:='Nosso numero duplicado';
-          10: Result:='Carteira invalida';
-          11: Result:='Forma de cadastramento do titulo invalido';
-          12: Result:='Tipo de documento invalido';
-          13: Result:='Identificacao da emissao do bloqueto invalida';
-          14: Result:='Identificacao da distribuicao do bloqueto invalida';
-          15: Result:='Caracteristicas da cobranca incompativeis';
-          16: Result:='Data de vencimento invalida';
-          17: Result:='Data de vencimento anterior a data de emissao';
-          18: Result:='Vencimento fora do prazo de operacao';
-          19: Result:='Titulo a cargo de Bancos Correspondentes com vencimento inferior XX dias';
-          20: Result:='Valor do titulo invalido';
-          21: Result:='Especie do titulo invalida';
-          22: Result:='Especie nao permitida para a carteira';
-          23: Result:='Aceite invalido';
-          24: Result:='Data da emissao invalida';
-          25: Result:='Data da emissao posterior a data';
-          26: Result:='Codigo de juros de mora invalido';
-          27: Result:='Valor/Taxa de juros de mora invalido';
-          28: Result:='Codigo do desconto invalido';
-          29: Result:='Valor do desconto maior ou igual ao valor do titulo ';
-          30: Result:='Desconto a conceder nao confere';
-          31: Result:='Concessao de desconto - ja existe desconto anterior';
-          32: Result:='Valor do IOF invalido';
-          33: Result:='Valor do abatimento invalido';
-          34: Result:='Valor do abatimento maior ou igual ao valor do titulo';
-          35: Result:='Abatimento a conceder nao confere';
-          36: Result:='Concessao de abatimento - ja existe abatimento anterior';
-          37: Result:='Codigo para protesto invalido';
-          38: Result:='Prazo para protesto invalido';
-          39: Result:='Pedido de protesto nao permitido para o titulo';
-          40: Result:='Titulo com ordem de protesto emitida';
-          41: Result:='Pedido de cancelamento/sustacao para titulos sem instrucao de protesto';
-          42: Result:='Codigo para baixa/devolucao invalido';
-          43: Result:='Prazo para baixa/devolucao invalido';
-          44: Result:='Codigo da moeda invalido';
-          45: Result:='Nome do sacado nao informado';
-          46: Result:='Tipo/numero de inscricao do sacado invalidos';
-          47: Result:='Endereco do sacado nao informado';
-          48: Result:='CEP invalido';
-          49: Result:='CEP sem praca de cobranca /nao localizado';
-          50: Result:='CEP referente a um Banco Correspondente';
-          51: Result:='CEP incompativel com a unidade da federacao';
-          52: Result:='Unidade da federacao invalida';
-          53: Result:='Tipo/numero de inscricao do sacador/avalista invalidos';
-          54: Result:='Sacador/Avalista nao informado';
-          55: Result:='Nosso numero no Banco Correspondente nao informado';
-          56: Result:='Codigo do Banco Correspondente nao informado';
-          57: Result:='Codigo da multa invalido';
-          58: Result:='Data da multa invalida';
-          59: Result:='Valor/Percentual da multa invalido';
-          60: Result:='Movimento para titulo nao cadastrado';
-          61: Result:='Alteracao da agencia cobradora/dv invalida';
-          62: Result:='Tipo de impressao invalido';
-          63: Result:='Entrada para titulo ja cadastrado';
-          64: Result:='Numero da linha invalido';
-          65: Result:='Codigo do banco para debito invalido';
-          66: Result:='Agencia/conta/DV para debito invalido';
-          67: Result:='Dados para debito incompativel com a identificacao da emissao do bloqueto';
-          88: Result:='Arquivo em duplicidade';
-          99: Result:='Contrato inexistente';
-          end;
-        toRetornoLiquidado, toRetornoBaixaAutomatica, toRetornoLiquidadoSemRegistro: // 06, 09 e 17 (Liquidado)
-        case CodMotivo of
-          01: Result:='Por saldo';
-          02: Result:='Parcial';
-          03: Result:='No proprio banco';
-          04: Result:='Compensacao eletronica';
-          05: Result:='Compensacao convencional';
-          06: Result:='Por meio eletronico';
-          07: Result:='Apos feriado local';
-          08: Result:='Em cartorio';
-          30: Result:='Liquidação no Guichê de Caixa em cheque';
-          09: Result:='Comandada banco';
-          10: Result:='Comandada cliente arquivo';
-          11: Result:='Comandada cliente on-line';
-          12: Result:='Decurso prazo - cliente';
-          13: Result:='Decurso prazo - banco';
+        01: Result:='01-Codigo do banco invalido';
+        02: Result:='02-Codigo do registro detalhe invalido';
+        03: Result:='03-Codigo do segmento invalido';
+        04: Result:='04-Codigo do movimento nao permitido para carteira';
+        05: Result:='05-Codigo de movimento invalido';
+        06: Result:='06-Tipo/numero de inscricao do cedente Invalidos';
+        07: Result:='07-Agencia/Conta/DV invalido';
+        08: Result:='08-Nosso numero invalido';
+        09: Result:='09-Nosso numero duplicado';
+        10: Result:='10-Carteira invalida';
+        11: Result:='11-Forma de cadastramento do titulo invalido';
+        12: Result:='12-Tipo de documento invalido';
+        13: Result:='13-Identificacao da emissao do bloqueto invalida';
+        14: Result:='14-Identificacao da distribuicao do bloqueto invalida';
+        15: Result:='15-Caracteristicas da cobranca incompativeis';
+        16: Result:='16-Data de vencimento invalida';
+        17: Result:='17-Data de vencimento anterior a data de emissao';
+        18: Result:='18-Vencimento fora do prazo de operacao';
+        19: Result:='19-Titulo a cargo de Bancos Correspondentes com vencimento inferior XX dias';
+        20: Result:='20-Valor do titulo invalido';
+        21: Result:='21-Especie do titulo invalida';
+        22: Result:='22-Especie nao permitida para a carteira';
+        23: Result:='23-Aceite invalido';
+        24: Result:='24-Data da emissao invalida';
+        25: Result:='25-Data da emissao posterior a data';
+        26: Result:='26-Codigo de juros de mora invalido';
+        27: Result:='27-Valor/Taxa de juros de mora invalido';
+        28: Result:='28-Codigo do desconto invalido';
+        29: Result:='29-Valor do desconto maior ou igual ao valor do titulo ';
+        30: Result:='30-Desconto a conceder nao confere';
+        31: Result:='31-Concessao de desconto - ja existe desconto anterior';
+        32: Result:='32-Valor do IOF invalido';
+        33: Result:='33-Valor do abatimento invalido';
+        34: Result:='34-Valor do abatimento maior ou igual ao valor do titulo';
+        35: Result:='35-Abatimento a conceder nao confere';
+        36: Result:='36-Concessao de abatimento - ja existe abatimento anterior';
+        37: Result:='37-Codigo para protesto invalido';
+        38: Result:='38-Prazo para protesto invalido';
+        39: Result:='39-Pedido de protesto nao permitido para o titulo';
+        40: Result:='40-Titulo com ordem de protesto emitida';
+        41: Result:='41-Pedido de cancelamento/sustacao para titulos sem instrucao de protesto';
+        42: Result:='42-Codigo para baixa/devolucao invalido';
+        43: Result:='43-Prazo para baixa/devolucao invalido';
+        44: Result:='44-Codigo da moeda invalido';
+        45: Result:='45-Nome do sacado nao informado';
+        46: Result:='46-Tipo/numero de inscricao do sacado invalidos';
+        47: Result:='47-Endereco do sacado nao informado';
+        48: Result:='48-CEP invalido';
+        49: Result:='49-CEP sem praca de cobranca /nao localizado';
+        50: Result:='50-CEP referente a um Banco Correspondente';
+        51: Result:='51-CEP incompativel com a unidade da federacao';
+        52: Result:='52-Unidade da federacao invalida';
+        53: Result:='53-Tipo/numero de inscricao do sacador/avalista invalidos';
+        54: Result:='54-Sacador/Avalista nao informado';
+        55: Result:='55-Nosso numero no Banco Correspondente nao informado';
+        56: Result:='56-Codigo do Banco Correspondente nao informado';
+        57: Result:='57-Codigo da multa invalido';
+        58: Result:='58-Data da multa invalida';
+        59: Result:='59-Valor/Percentual da multa invalido';
+        60: Result:='60-Movimento para titulo nao cadastrado';
+        61: Result:='61-Alteracao da agencia cobradora/dv invalida';
+        62: Result:='62-Tipo de impressao invalido';
+        63: Result:='63-Entrada para titulo ja cadastrado';
+        64: Result:='64-Numero da linha invalido';
+        65: Result:='65-Codigo do banco para debito invalido';
+        66: Result:='66-Agencia/conta/DV para debito invalido';
+        67: Result:='67-Dados para debito incompativel com a identificacao da emissao do bloqueto';
+        88: Result:='88-Arquivo em duplicidade';
+        99: Result:='99-Contrato inexistente';
+        end;
+      toRetornoLiquidado, toRetornoBaixaAutomatica, toRetornoLiquidadoSemRegistro: // 06, 09 e 17 (Liquidado)
+      case CodMotivo of
+        01: Result:='01-Por saldo';
+        02: Result:='02-Parcial';
+        03: Result:='03-No proprio banco';
+        04: Result:='04-Compensacao eletronica';
+        05: Result:='05-Compensacao convencional';
+        06: Result:='06-Por meio eletronico';
+        07: Result:='07-Apos feriado local';
+        08: Result:='08-Em cartorio';
+        30: Result:='30-Liquidação no Guichê de Caixa em cheque';
+        09: Result:='09-Comandada banco';
+        10: Result:='10-Comandada cliente arquivo';
+        11: Result:='11-Comandada cliente on-line';
+        12: Result:='12-Decurso prazo - cliente';
+        13: Result:='13-Decurso prazo - banco';
       end;
-    toRetornoDebitoTarifas: // 28 - Débito de Tarifas/Custas (Febraban 240 posições, v08.9 de 15/04/2014)
+      toRetornoDebitoTarifas: // 28 - Débito de Tarifas/Custas (Febraban 240 posições, v08.9 de 15/04/2014)
       case CodMotivo of
         01: Result:='01-Tarifa de Extrato de Posição';
         02: Result:='02-Tarifa de Manutenção de Título Vencido';
@@ -1604,23 +1606,24 @@ begin
         18: Result:='18-Tarifa Sobre Alteração de Abatimento/Desconto';
         19: Result:='19-Tarifa Sobre Arquivo mensal (Em Ser)';
         20: Result:='20-Tarifa Sobre Emissão de Bloqueto Pré-Emitido pelo Banco';
-      end;         
       end;
+    else
+       Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
     end;
     case TipoOcorrencia of
     toRetornoRegistroConfirmado:       //02 (Entrada)
-    case CodMotivo of
+      case CodMotivo of
         00: Result:='00-Por meio magnético';
         11: Result:='11-Por via convencional';
         16: Result:='16-Por alteração do código do cedente';
         17: Result:='17-Por alteração da variação';
         18: Result:='18-Por alteração de carteira';
-      end;    
+      end;
     toRetornoBaixaAutomatica, toRetornoBaixaSolicitada, toRetornoDebitoEmConta: // 09, 10 ou 20 (Baixa)
       case CodMotivo of
         00: Result:='00-Solicitada pelo cliente';
         14: Result:='14-Protestado';
-        15: 
+        15:
           case ACBrBanco.ACBrBoleto.LayoutRemessa of
             c240: Result := '15-Título Excluído';
             c400: Result := '15-Protestado';
@@ -1635,6 +1638,7 @@ begin
         47: Result:='47-Por alteração da variação';
         51: Result:='51-Acerto';
         90: Result:='90-Baixa automática';
+      end;
     end;
   end;
 end;
@@ -1642,7 +1646,17 @@ end;
 procedure TACBrBancoBrasil.LerRetorno400(ARetorno: TStringList);
 var
  TamConvenioMaior6: Boolean;
+ rConvenioLider : String;
 begin
+
+ if ACBrBanco.ACBrBoleto.LeCedenteRetorno then
+ begin
+   if NaoEstaZerado(StrToInt64Def(Copy(ARetorno[0],41,6),0)) then
+     rConvenioLider := Trim(Copy(ARetorno[0],41,6))//CBR643 convenio 6 posicoes
+   else
+     rConvenioLider := Copy(ARetorno[0],150,7); //CBR643 convenio 7 posicoes
+   ACBrBanco.ACBrBoleto.Cedente.Convenio := rConvenioLider;
+ end;
  TamConvenioMaior6:= Length(trim(ACBrBanco.ACBrBoleto.Cedente.Convenio)) > 6;
  if TamConvenioMaior6 then
     LerRetorno400Pos7(ARetorno)

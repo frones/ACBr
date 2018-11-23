@@ -1410,7 +1410,8 @@ begin
     02: Result := toRetornoRegistroConfirmado;
     03: Result := toRetornoRegistroRecusado;
     06: Result := toRetornoLiquidado;
-    09: Result := toRetornoBaixado;
+    09: Result := toRetornoBaixadoViaArquivo;
+    10: Result := toRetornoBaixadoInstAgencia;
     12: Result := toRetornoRecebimentoInstrucaoConcederAbatimento;
     13: Result := toRetornoRecebimentoInstrucaoCancelarAbatimento;
     14: Result := toRetornoRecebimentoInstrucaoAlterarVencimento;
@@ -1603,7 +1604,7 @@ function TACBrBancoSicredi.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var
     AceiteStr, CodProtesto, DiasProtesto, TipoSacado, ATipoBoleto: String;
-    Especie, EndSacado: String;
+    Especie, EndSacado, Ocorrencia: String;
     TipoAvalista: Char;
 begin
   with ACBrBanco.ACBrBoleto.Cedente, ACBrTitulo do
@@ -1621,6 +1622,26 @@ begin
       Especie := '03'
     else
       Especie := '99';
+
+    {Pegando Código da Ocorrencia}
+    case OcorrenciaOriginal.Tipo of
+      toRemessaBaixar                         : Ocorrencia := '02'; {Pedido de Baixa}
+      toRemessaConcederAbatimento             : Ocorrencia := '04'; {Concessão de Abatimento}
+      toRemessaCancelarAbatimento             : Ocorrencia := '05'; {Cancelamento de Abatimento concedido}
+      toRemessaAlterarVencimento              : Ocorrencia := '06'; {Alteração de vencimento}
+      toRemessaConcederDesconto               : Ocorrencia := '07'; {Concessão de desconto}
+      toRemessaCancelarDesconto               : Ocorrencia := '08'; {Cancelamento de desconto}
+      toRemessaProtestar                      : Ocorrencia := '09'; {Pedido de protesto}
+      toRemessaCancelarInstrucaoProtestoBaixa : Ocorrencia := '10'; {Sustar protesto e baixar título}
+      toRemessaCancelarInstrucaoProtesto      : Ocorrencia := '11'; {Sustar protesto e manter na carteira}
+      toRemessaAlterarJurosMora               : Ocorrencia := '12'; {Alteração de juros de mora }
+      toRemessaDispensarJuros                 : Ocorrencia := '13'; {Dispensar cobrança de juros de mora }
+      toRemessaAlterarDesconto                : Ocorrencia := '16'; {Alteração do valor de desconto }
+      toRemessaNaoConcederDesconto            : Ocorrencia := '17'; {Não conceder desconto }
+      toRemessaOutrasOcorrencias              : Ocorrencia := '31'; {Alteração de Outros Dados}
+    else
+       Ocorrencia := '01';{Entrada de títulos}
+    end;
 
     {Protesto}
     CodProtesto := '3';
@@ -1653,7 +1674,6 @@ begin
       TipoAvalista := '9';
     end;
 
-
      {Pegando Tipo de Boleto}
      case ACBrBoleto.Cedente.ResponEmissao of
        tbCliEmite        : ATipoBoleto := '2' + '2';
@@ -1671,7 +1691,7 @@ begin
                (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 1 , 5)   + // 009 a 013 - Nº sequencial do registro do lote
              'P'                                                              + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                         + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
-             '01'                                                             + // 016 a 017 - Código de movimento remessa
+             Ocorrencia                                                       + // 016 a 017 - Código de movimento remessa
              PadLeft(OnlyNumber(Agencia), 5,'0')                              + // 018 a 022 - Agência mantenedora da conta
              Space(1)                                                         + // 023 a 023 - Dígito verificador da agência
              PadLeft(OnlyNumber(Conta), 12, '0')                              + // 024 a 035 - Número da conta corrente
@@ -1680,7 +1700,7 @@ begin
              PadRight(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 20, '0')+ // 038 a 057 - Identificação do título no banco
              '1'                                                              + // 058 a 058 - Código da carteira
              '1'                                                              + // 059 a 059 - Forma de cadastro do título no banco
-             '2'                                                              + // 060 a 060 - Tipo de documento
+             InttoStr(Integer(ACBrBoleto.Cedente.TipoDocumento))              + // 060 a 060 - Tipo de documento
              ATipoBoleto                                                      + // 061 a 062 - Identificação de emissão do bloqueto + 062 a 062 - Identificação da distribuição
              PadRight(NumeroDocumento, 15)                                    + // 063 a 077 - Nº do documento de cobrança
              FormatDateTime('ddmmyyyy', Vencimento)                           + // 078 a 085 - Data de vencimento do título
@@ -1716,7 +1736,7 @@ begin
                (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 2 , 5) + // 009 a 013 - Nº sequencial do registro do lote
              'Q'                                                            + // 014 a 014 - Cód. segmento do registro detalhe
              Space(1)                                                       + // 015 a 015 - Uso exclusivo FEBRABAN/CNAB
-             '01'                                                           + // 016 a 017 - Código de movimento de remessa
+             Ocorrencia                                                     + // 016 a 017 - Código de movimento de remessa
              TipoSacado                                                     + // 018 a 018 - Tipo de inscrição
              PadLeft(OnlyNumber(Sacado.CNPJCPF), 15, '0')                   + // 019 a 033 - Número de inscrição
              PadRight(TiraAcentos(Sacado.NomeSacado), 40)                   + // 034 a 073 - Nome
@@ -1742,7 +1762,7 @@ begin
                (3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)) + 3 , 5)+ // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'R'                                                         + // Código do segmento do registro detalhe
                ' '                                                         + // Uso exclusivo FEBRABAN/CNAB: Branco
-               '01'                                                        + // 16 a 17 - Código de movimento
+               Ocorrencia                                                  + // 16 a 17 - Código de movimento
                TipoDescontoToString(ACBrTitulo.TipoDesconto2)              + // 18  tipo de desconto 2
                IfThen(ValorDesconto2 = 0, '00000000', FormatDateTime('ddmmyyyy', Vencimento)) + // 19 - 26 Data do Desconto 2
                IntToStrZero(Round(ValorDesconto2 * 100), 15)               + // 27 - 41 Valor/Percentual
@@ -1885,6 +1905,7 @@ begin
         ValorDesconto        := StrToFloatDef(Copy(SegU, 33,15),0)/100;
         ValorAbatimento      := StrToFloatDef(Copy(SegU, 48,15),0)/100;
         ValorIOF             := StrToFloatDef(Copy(SegU, 63,15),0)/100;
+        ValorPago            := StrToFloatDef(Copy(SegU, 78,15),0)/100;
         ValorRecebido        := StrToFloatDef(Copy(SegU, 93,15),0)/100;
         ValorOutrasDespesas  := StrToFloatDef(Copy(SegU,108,15),0)/100;
         ValorOutrosCreditos  := StrToFloatDef(Copy(SegU,123,15),0)/100;

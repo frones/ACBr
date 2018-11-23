@@ -479,7 +479,8 @@ end;
 function TACBrCaixaEconomica.GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String;
 var
   ATipoOcorrencia, ATipoBoleto, ADataMoraJuros, AModalidade        : String;
-  ADataDesconto, ADataMulta, ANossoNumero, ATipoAceite, AEspecieDoc: String; 
+  ADataDesconto, ADataMulta, ANossoNumero, ATipoAceite, AEspecieDoc: String;
+  ACodigoDesconto                                                  : String;
 
   function MontarInstrucoes2: string;
   begin
@@ -633,9 +634,18 @@ begin
             ADataDesconto := FormatDateTime('ddmmyyyy', DataDesconto)
          else
             ADataDesconto := PadRight('', 8, '0');
+        
+         case TipoDesconto of
+           tdValorFixoAteDataInformada : ACodigoDesconto := '1';
+           tdPercentualAteDataInformada: ACodigoDesconto := '2';
+	 else
+	   ACodigoDesconto := '1';
+         end; 
        end
-      else
-         ADataDesconto := PadRight('', 8, '0');
+      else begin
+        ADataDesconto := PadRight('', 8, '0');
+        ACodigoDesconto := '0';
+      end;
 
       {Multa}
       if (PercentualMulta > 0) then
@@ -676,7 +686,7 @@ begin
                ADataMoraJuros                                             + //119 a 126 - Data a partir da qual serão cobrados juros
                IfThen(ValorMoraJuros > 0, IntToStrZero( round(ValorMoraJuros * 100), 15),
                       PadRight('', 15, '0'))                                                   + //127 a 141 - Valor de juros de mora por dia
-               IfThen(ValorDesconto > 0, '1', '0')                        + //142 - Código de desconto: Valor fixo até a data informada
+               ACodigoDesconto                                            + //142 - Código de desconto: Valor fixo até a data informada
                ADataDesconto                                              + //143 a 150 - Data do desconto
                IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),
                       PadRight('', 15, '0'))                                                   + //151 a 165 - Valor do desconto por dia

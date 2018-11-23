@@ -335,7 +335,7 @@ procedure TACBrBancoSafra.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo;
 var
   wLinha, tipoInscricao, aAgencia, aConta: String;
   Ocorrencia, aEspecie, aAceite, aInstrucao2: String;
-  aTipoSacado, MensagemCedente, sDataDesconto:String;
+  aTipoSacado, sDataDesconto:String;
 begin
   with ACBrTitulo do
   begin
@@ -398,65 +398,62 @@ begin
     else
       aTipoSacado := '03';
 
-    if Mensagem.Text <> '' then
-      MensagemCedente := trim(Mensagem[0]);
-
     if DataDesconto = 0 then
       sDataDesconto := '000000'
     else
       sDataDesconto := FormatDateTime('ddmmyy', DataDesconto);
 
-    wLinha := '1'                                                                            + // Identificação do Registro de Transação
-              tipoInscricao                                                                  + // Tipo de Inscrição da Empresa
-              PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF), 14, '0')                       + // Número da Inscrição da Empresa
-              aAgencia + aConta                                                              + // Identificação da Empresa no Banco
-              Space(6)                                                                       + // "Brancos"
-              Space(25)                                                                      + // Uso exclusivo da Empresa
+    wLinha := '1'                                                                            + //   1 a   1 - Identificação do Registro de Transação
+              tipoInscricao                                                                  + //   2 a   3 - Tipo de Inscrição da Empresa
+              PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF), 14, '0')                       + //   4 a  17 - Número da Inscrição da Empresa
+              aAgencia + aConta                                                              + //  18 a  31 - Identificação da Empresa no Banco
+              Space(6)                                                                       + //  32 a  37 - "Brancos"
+              Space(25)                                                                      + //  38 a  62 - Uso exclusivo da Empresa
               IfThen(NossoNumero = '000000000', '000000000',
                                  PadLeft(RightStr(NossoNumero,8),8,'0') +
-                                 CalcularDigitoVerificador(ACBrTitulo)) +                      // Número do título no banco
-              Space(30)                                                                      + // "Brancos"
-              '0'                                                                            + // Código de IOF sobre Operações de Seguro
-              '00'                                                                           + // Identificação do Tipo de Moeda, 00=Real
-              Space(1)                                                                       + // "Branco"
-              IntToStrZero(StrToIntDef(Instrucao3,0), 2)                                     + // Terceira Instrução de Cobrança. Utilizar somente quando Instrução2 é igual a 10
-              Carteira                                                                       + // Identificação do Tipo de Carteira
-              Ocorrencia                                                                     + // Identificação do Tipo de Ocorrência
-              PadRight(SeuNumero, 10)                                                        + // Identificação do Título da Empresa
-              FormatDateTime('ddmmyy', Vencimento)                                           + // Data de Vencimento do Título
-              IntToStrZero(Round(ValorDocumento * 100), 13)                                  + // Valor Nominal do Título
-              IntToStr(ACBrBoleto.Banco.Numero)                                              + // Código do Banco encarregado da cobraça
-              '00000'                                                                        + // Agência Encarregada da Cobrança
-              aEspecie                                                                       + // Espécie do Título
-              aAceite                                                                        + // Identificação do Aceite do Título
-              FormatDateTime('ddmmyy', DataDocumento)                                        + // Data de Emissão do Título
-              PadLeft(trim(Instrucao1), 2, '0')                                              + // Primeira Instrução de Cobrança
-              aInstrucao2                                                                    + // Segunda Instrução de Cobrança
-              IntToStrZero(round(ValorMoraJuros * 100), 13)                                  + // Juros de Mora Por Dia de Atraso
-              sDataDesconto                                                                  + // Data Limite para Desconto
-              IntToStrZero(round(ValorDesconto * 100), 13)                                   + // Valor Do Desconto Concedido
-              IntToStrZero(round(ValorIOF * 100), 13)                                        + // Valor De Iof Operações Deseguro
+                                 CalcularDigitoVerificador(ACBrTitulo)) +                      //  63 a  71 - Número do título no banco
+              Space(30)                                                                      + //  72 a 101 - "Brancos"
+              '0'                                                                            + // 102 a 102 - Código de IOF sobre Operações de Seguro
+              '00'                                                                           + // 103 a 104 - Identificação do Tipo de Moeda, 00=Real
+              Space(1)                                                                       + // 105 a 105 - "Branco"
+              IntToStrZero(StrToIntDef(Instrucao3,0), 2)                                     + // 106 a 107 - Terceira Instrução de Cobrança. Utilizar somente quando Instrução2 é igual a 10
+              Carteira                                                                       + // 108 a 108 - Identificação do Tipo de Carteira
+              Ocorrencia                                                                     + // 109 a 110 - Identificação do Tipo de Ocorrência
+              PadRight(SeuNumero, 10)                                                        + // 111 a 120 - Identificação do Título da Empresa
+              FormatDateTime('ddmmyy', Vencimento)                                           + // 121 a 126 - Data de Vencimento do Título
+              IntToStrZero(Round(ValorDocumento * 100), 13)                                  + // 127 a 139 - Valor Nominal do Título
+              IntToStr(ACBrBoleto.Banco.Numero)                                              + // 140 a 142 - Código do Banco encarregado da cobraça
+              '00000'                                                                        + // 143 a 147 - Agência Encarregada da Cobrança
+              aEspecie                                                                       + // 148 a 149 - Espécie do Título
+              aAceite                                                                        + // 150 a 150 - Identificação do Aceite do Título
+              FormatDateTime('ddmmyy', DataDocumento)                                        + // 151 a 156 - Data de Emissão do Título
+              PadLeft(trim(Instrucao1), 2, '0')                                              + // 157 a 158 - Primeira Instrução de Cobrança
+              aInstrucao2                                                                    + // 159 a 160 - Segunda Instrução de Cobrança
+              IntToStrZero(round(ValorMoraJuros * 100), 13)                                  + // 161 a 173 - Juros de Mora Por Dia de Atraso
+              sDataDesconto                                                                  + // 174 a 179 - Data Limite para Desconto
+              IntToStrZero(round(ValorDesconto * 100), 13)                                   + // 180 a 192 - Valor Do Desconto Concedido
+              IntToStrZero(round(ValorIOF * 100), 13)                                        + // 193 a 205 - Valor De Iof Operações Deseguro
 
-              IfThen( ((Ocorrencia = '01') and ( Copy(Instrucao1, 1, 2) = '16')),
-                (FormatDateTime('ddmmyy', DataMulta) +                                         // - Posição 206 a 211 a data a partir da qual a multa deve ser cobrada
-                IntToStrZero(round(PercentualMulta * 100), 4) +                                // - Posição 212 a 215 o percentual referente à multa no formato 99v99
-                '000'),                                                                        // - Posição 216 a 218 zeros
+              IfThen( ((Ocorrencia = '01') and (Copy(Instrucao1, 1, 2) = '16')),
+                (FormatDateTime('ddmmyy', DataMulta) +                                         // 206 a 211 a data a partir da qual a multa deve ser cobrada
+                IntToStrZero(round(PercentualMulta * 100), 4) +                                // 212 a 215 o percentual referente à multa no formato 99v99
+                '000'),                                                                        // 216 a 218 zeros
                 IntToStrZero(round(ValorAbatimento * 100), 13)  )                            + // Valor Do Abatimento Concedido Ou Cancelado / Multa
 
-              aTipoSacado                                                                    + // Código De Inscrição Do Sacado
-              PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                                   + // Número de Inscrição do Sacado
-              PadRight(Sacado.NomeSacado, 40, ' ')                                           + // Nome Do Sacado
-              PadRight(Sacado.Logradouro + ' ' + Sacado.Numero, 40, ' ')                     + // Endereço Do Sacado
-              PadRight(Sacado.Bairro, 10, ' ')                                               + // Bairro Do Sacado
-              Space(2)                                                                       + // 'Brancos"
-              PadRight(Sacado.CEP, 8)                                                        + // CEP do Sacado
-              PadRight(Sacado.Cidade, 15)                                                    + // Cidade do Sacado
-              PadRight(Sacado.UF, 2)                                                         + // UF do Sacado
-              PadRight(MensagemCedente, 30)                                                  + // Mensagem específica
-              Space(7)                                                                       + // "Brancos"
-              '422'                                                                          + // Banco Emitente do Boleto
-              copy(aRemessa.Text, 392, 3)                                                    + // Numero Seqüencial Geração Arquivo Remessa
-              IntToStrZero(ARemessa.Count + 1, 6);                                             // Número Sequencial De Registro De Arquivo
+              aTipoSacado                                                                    + // 219 a 220 - Código De Inscrição Do Sacado
+              PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                                   + // 221 a 234 - Número de Inscrição do Sacado
+              PadRight(Sacado.NomeSacado, 40, ' ')                                           + // 235 a 274 - Nome Do Sacado
+              PadRight(Sacado.Logradouro + ' ' + Sacado.Numero, 40, ' ')                     + // 275 a 314 - Endereço Do Sacado
+              PadRight(Sacado.Bairro, 10, ' ')                                               + // 315 a 324 - Bairro Do Sacado
+              Space(2)                                                                       + // 325 a 326 - Brancos
+              PadRight(Sacado.CEP, 8)                                                        + // 327 a 334 - CEP do Sacado
+              PadRight(Sacado.Cidade, 15)                                                    + // 335 a 349 - Cidade do Sacado
+              PadRight(Sacado.UF, 2)                                                         + // 350 a 351 - UF do Sacado
+              PadRight(Sacado.SacadoAvalista.NomeAvalista, 30)                               + // 352 a 381 - Nome do Sacador Avalista / Mensagem específica vide nota 6.1.9 conforme manual do banco
+              Space(7)                                                                       + // 382 a 388 - "Brancos"
+              '422'                                                                          + // 389 a 391 - Banco Emitente do Boleto
+              copy(aRemessa.Text, 392, 3)                                                    + // 392 a 394 - Numero Seqüencial Geração Arquivo Remessa
+              IntToStrZero(ARemessa.Count + 1, 6);                                             // 395 a 400 - Número Sequencial De Registro De Arquivo
 
     aTotal := aTotal + ValorDocumento;
     Inc(aCount);

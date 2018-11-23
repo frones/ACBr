@@ -343,8 +343,9 @@ begin
    ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0], 95, 2) + '/' +
                                                            Copy(ARetorno[0], 97, 2) + '/' +
                                                            Copy(ARetorno[0], 99, 2), 0, 'DD/MM/YY' );
-
-   ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0], 380, 2) + '/' +
+                                                           
+   if StrToIntDef( Copy(ARetorno[0], 380, 6 ), 0) <> 0 then
+      ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0], 380, 2) + '/' +
                                                                Copy(ARetorno[0], 382, 2) + '/' +
                                                                Copy(ARetorno[0], 384, 2), 0, 'DD/MM/YY');
 
@@ -429,15 +430,14 @@ begin
             iMotivoLinha := 319;
             for i := 0 to 4 do
             begin
-               iCodMotivo := StrToInt(IfThen(copy(sLinha,iMotivoLinha,2) = '00','00',copy(sLinha,iMotivoLinha,2)));
-
+               iCodMotivo := StrToInt(IfThen(trim(copy(sLinha,iMotivoLinha,2)) = '','00',copy(sLinha,iMotivoLinha,2)));
                {Se for o primeiro motivo}
                if (i = 0) then
                 begin
                   {Somente estas ocorrencias possuem motivos 00}
                   if(iCodOcorrencia in [02, 06, 09, 10, 15, 17])then
                    begin
-                     MotivoRejeicaoComando.Add(IfThen(copy(sLinha,iMotivoLinha,2) = '00','00',copy(sLinha,iMotivoLinha,2)));
+                     MotivoRejeicaoComando.Add(IfThen(trim(copy(sLinha,iMotivoLinha,2)) = '','00',copy(sLinha,iMotivoLinha,2)));
                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,iCodMotivo));
                    end
                   else
@@ -449,7 +449,7 @@ begin
                       end
                      else
                       begin
-                        MotivoRejeicaoComando.Add(IfThen(copy(sLinha,iMotivoLinha,2) = '00','00',copy(sLinha,iMotivoLinha,2)));
+                        MotivoRejeicaoComando.Add(IfThen(trim(copy(sLinha,iMotivoLinha,2)) = '','00',copy(sLinha,iMotivoLinha,2)));
                         DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,iCodMotivo));
                       end;
                    end;
@@ -459,7 +459,7 @@ begin
                   //Apos o 1º motivo os 00 significam que não existe mais motivo
                   if iCodMotivo <> 0 then
                   begin
-                     MotivoRejeicaoComando.Add(IfThen(copy(sLinha,iMotivoLinha,2) = '00','00',copy(sLinha,iMotivoLinha,2)));
+                     MotivoRejeicaoComando.Add(IfThen(trim(copy(sLinha,iMotivoLinha,2)) = '','00',copy(sLinha,iMotivoLinha,2)));
                      DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,iCodMotivo));
                   end;
                 end;

@@ -47,7 +47,59 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-ver: 0.0.247
+ver: 0.0.248
+
+21-11-2018 -- ACBrBoleto
+[+] Adicionado propriedade "RemoveAcentosArqRemessa", para remoção de acentos de toda Remessa
+https://www.projetoacbr.com.br/forum/topic/47341-arquivo-de-remessa-sem-acentos/
+
+21-11-2018 -- ACBrBancoCresolSCRS
+[+] Adicionado layout do Banco Cresol SC / RS
+https://www.projetoacbr.com.br/forum/topic/46696-adi%C3%A7%C3%A3o-do-layout-para-cooperativa-cresol-scrs/
+
+21-11-2018 -- ACBrBancoCaixa
+[*] Ajuste na geração de Remessa CNAB240, Validação do Código de Desconto
+https://www.projetoacbr.com.br/forum/topic/47374-ajustes-remessa-caixa-cnab-240/
+
+21-11-2018 -- ACBrBancoBradesco
+[*] Ajuste na geração de Remessa CNAB240, validação Código Mora e Desconto
+https://www.projetoacbr.com.br/forum/topic/47366-ajustes-remessa-bradesco-cnab-240/
+
+21-11-2018 -- ACBrBancoSafra
+[*] Ajuste na Mensagem de Remessa CNAB400 conforme manual
+https://www.projetoacbr.com.br/forum/topic/44802-altera%C3%A7%C3%A3o-remessa-banco-safra/
+
+21-11-2018 -- ACBrBancoSicred
+[*] Ajuste na remessão CNAB240 validar Tipo de Documento e validar Cód. Ocorrencia
+https://www.projetoacbr.com.br/forum/topic/47344-tipo-de-documento-banco-sicredi-cnab-240/
+
+21-11-2018 -- ACBrBancoSicred
+[*] Atualizado conforme manual a leitura do Retorno CNAB240 campos "ValorPago", "ValorRecebido".
+https://www.projetoacbr.com.br/forum/topic/46237-retorno-propriedades-valorpago-e-valorrecebido/
+
+21-11-2018 -- ACBrBancoSicred
+[*] Ajuste na Mensagem de Retorno
+https://www.projetoacbr.com.br/forum/topic/46361-altera%C3%A7%C3%A3o-necess%C3%A1ria/
+
+21-11-2018 -- ACBrBancoUnicredES
+[*] Ajuste na leitura CNAB400
+https://www.projetoacbr.com.br/forum/topic/46478-altera%C3%A7%C3%B5es-para-o-banco-unicred-es/
+
+21-11-2018 -- ACBrBancoBrasil
+[*] Ajustes na Leitura do Retorno na validação quando diferencia entre pessoa Física e Juridica.
+https://www.projetoacbr.com.br/forum/topic/47328-arquivo-de-retorno-do-banco-do-brasil-e-banestes/
+
+21-11-2018 -- ACBrBancoBrasil
+[*] Atualizado conforme manual a leitura do Retorno CNAB240 campos "ValorPago", "ValorRecebido".
+https://www.projetoacbr.com.br/forum/topic/46237-retorno-propriedades-valorpago-e-valorrecebido/
+
+21-11-2018 -- ACBrBancoBrasil
+[*] Ajuste na função "CodMotivoRejeicaoToDescricao" ref. códigos de Rejeição (Padronização)
+https://www.projetoacbr.com.br/forum/topic/47329-acbrbancobrasil-codmotivorejeicaotodescricao-outros-motivos/
+
+21-11-2018 -- ACBrBancoBrasil
+[*] Ajustes na identificação do tipo de convênio na leitura do Retorno CNAB400
+https://www.projetoacbr.com.br/forum/topic/46444-boleto-do-001-banco-do-brasil-arquivo-de-retorno-cnab400-n%C3%A3o-processando-convenio-7/
 
 21-11-2018 -- ACBrBancoBrasil
 [*] Ajuste no Contador de segmentos CNAB400 e na geração mensagem Segmanto S 

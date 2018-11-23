@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs, IniFiles,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.247';
+  CACBrBoleto_Versao = '0.0.248';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
   CCedente = 'CEDENTE';
@@ -377,7 +377,8 @@ type
     cobUnicredRS,
     cobBanese,
     cobCrediSIS,
-    cobUnicredES
+    cobUnicredES,
+    cobBancoCresolSCRS
     );
 
   TACBrTitulo = class;
@@ -1261,6 +1262,7 @@ type
     fDataCreditoLanc : TDateTime; {Data de crédito dos lançamentos do arquivo retorno}
     fLeCedenteRetorno: boolean;
     fHomologacao: Boolean;
+    fRemoveAcentosArqRemessa: Boolean;
     function GetAbout: String;
     procedure SetAbout(const AValue: String);
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
@@ -1313,6 +1315,7 @@ type
     property LayoutRemessa  : TACBrLayoutRemessa read fLayoutRemessa          write fLayoutRemessa default c400;
     property ImprimirMensagemPadrao : Boolean    read fImprimirMensagemPadrao write fImprimirMensagemPadrao default True;
     property ACBrBoletoFC : TACBrBoletoFCClass   read fACBrBoletoFC           write SetACBrBoletoFC;
+    property RemoveAcentosArqRemessa: Boolean    read fRemoveAcentosArqRemessa write fRemoveAcentosArqRemessa default False;
   end;
 
  {TACBrBoletoFCClass}
@@ -1388,7 +1391,8 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
-     ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES;
+     ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
+     ACBrBancoCresol;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2284,6 +2288,8 @@ begin
      cobBancoSafra          : fBancoClass := TACBrBancoSafra.create(Self);          {422}
      cobSafraBradesco       : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
      cobBanese              : fBancoClass := TACBrBancoBanese.Create(Self);         {047}
+     cobBancoCresolSCRS     : fBancoClass := TACBrBancoCresol.create(Self);         {133 + 237}
+
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;
@@ -2768,6 +2774,10 @@ begin
 
          SLRemessa.Add( Banco.GerarRegistroTrailler240( SLRemessa ) );
       end;
+
+      if RemoveAcentosArqRemessa then
+        SLRemessa.Text := TiraAcentos(SLRemessa.Text);
+
       SLRemessa.SaveToFile( NomeArq );
       Result:= NomeArq;
    finally

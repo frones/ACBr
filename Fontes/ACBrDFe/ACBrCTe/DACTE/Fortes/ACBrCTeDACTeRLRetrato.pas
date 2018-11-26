@@ -2110,11 +2110,7 @@ begin
 
   //  rllMsgTeste.Enabled := FCTe.Ide.tpAmb = taHomologacao;
   // Ajusta o tamanho do quadro conforme a OBS
-  if (rlmObs.Lines.Count * 11 + 20) > rlb_09_Obs.Height then
-  begin
-    rlsQuadro08.Height  := rlmObs.Lines.Count * 11 + 20;
-    rlmObs.Height       := rlmObs.Lines.Count * 11 + 20;
-  end;
+  rlsQuadro08.Height := rlmObs.Height + 20;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_10_ModRodFracionadoBeforePrint(Sender: TObject; var PrintIt: Boolean);

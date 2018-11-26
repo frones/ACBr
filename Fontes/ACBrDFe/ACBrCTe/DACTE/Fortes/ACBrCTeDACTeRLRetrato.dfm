@@ -573,7 +573,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 19
         Width = 730
         Height = 45
-        AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -581,6 +580,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Height = -8
         Font.Name = 'Times New Roman'
         Font.Style = []
+        IntegralHeight = True
         Lines.Strings = (
           'OBS LINHA 1'
           'OBS LINHA 2'

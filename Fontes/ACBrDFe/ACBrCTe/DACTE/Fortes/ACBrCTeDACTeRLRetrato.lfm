@@ -669,12 +669,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 45
         Top = 19
         Width = 730
-        AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -8
         Font.Name = 'Times New Roman'
+        IntegralHeight = True
         Lines.Strings = (
           'OBS LINHA 1'
           'OBS LINHA 2'

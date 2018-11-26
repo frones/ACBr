@@ -405,7 +405,6 @@ var
         else
           Result := Copy(PadRight(Mensagem[1], 140, ' '), 1, 140);
 
-        Exit;
       end;
     end;
   end;
@@ -644,7 +643,7 @@ begin
               StringOfChar('0', 33);                                                    // 208 - 240 Zeros (De acordo com o manual de particularidades BB)
 
      {SEGMENTO S}
-     if (Mensagem.Count > 0) then
+     if (Mensagem.Count > 1) then
      begin
        Result := Result + #13#10 +
                 IntToStrZero(ACBrBanco.Numero, 3)                                           + // 001 a 003 - Código do banco

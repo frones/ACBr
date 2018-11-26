@@ -49,6 +49,9 @@ Símbolo : Significado
 
 ver: 0.0.248
 
+26-11-2018 -- ACBrBancoBrasil
+[-] Correção na geração mensagem Segmento S, não deve gerar se existir apenas uma mensagem 
+
 21-11-2018 -- ACBrBoleto
 [+] Adicionado propriedade "RemoveAcentosArqRemessa", para remoção de acentos de toda Remessa
 https://www.projetoacbr.com.br/forum/topic/47341-arquivo-de-remessa-sem-acentos/

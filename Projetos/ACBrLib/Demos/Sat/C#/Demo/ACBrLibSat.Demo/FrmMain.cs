@@ -523,13 +523,13 @@ namespace ACBrLibSat.Demo
             ret = ACBrSat.SAT_ConfigGravarValor("SAT".ToUTF8(), "CodigoDeAtivacao".ToUTF8(), txtAtivacao.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("SATConfig".ToUTF8(), "infCFe_versaoDadosEnt".ToUTF8(), nudVersaoCFe.Text);
+            ret = ACBrSat.SAT_ConfigGravarValor("SATConfig".ToUTF8(), "infCFe_versaoDadosEnt".ToUTF8(), nudVersaoCFe.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("SATConfig".ToUTF8(), "PaginaDeCodigo".ToUTF8(), nudPaginaCodigo.Text);
+            ret = ACBrSat.SAT_ConfigGravarValor("SATConfig".ToUTF8(), "PaginaDeCodigo".ToUTF8(), nudPaginaCodigo.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("SAT".ToUTF8(), "SignAC".ToUTF8(), txtSignAc.Text);
+            ret = ACBrSat.SAT_ConfigGravarValor("SAT".ToUTF8(), "SignAC".ToUTF8(), txtSignAc.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
             ret = ACBrSat.SAT_ConfigGravarValor("SATConfigArquivos".ToUTF8(), "SalvarCFe".ToUTF8(), chkSaveCFe.Checked ? "1" : "0");
@@ -555,6 +555,7 @@ namespace ACBrLibSat.Demo
             ACBrSat.CheckResult(ret);
 
             ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "SoftwareHouse".ToUTF8(), txtSoftwareHouse.Text.ToUTF8());
+            ACBrSat.CheckResult(ret);
 
             ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "PrinterName".ToUTF8(), cbbImpressora.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
@@ -578,7 +579,7 @@ namespace ACBrLibSat.Demo
             ret = ACBrSat.SAT_ConfigGravarValor("PosPrinter".ToUTF8(), "Modelo".ToUTF8(), cbbModelo.SelectedIndex.ToString().ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("PosPrinter".ToUTF8(), "Porta".ToUTF8(), cbbPortas.SelectedItem.ToString().ToUTF8());
+            ret = ACBrSat.SAT_ConfigGravarValor("PosPrinter".ToUTF8(), "Porta".ToUTF8(), cbbPortas.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
             ret = ACBrSat.SAT_ConfigGravarValor("PosPrinter".ToUTF8(), "ColunasFonteNormal".ToUTF8(), ((int)nudColunas.Value).ToString().ToUTF8());

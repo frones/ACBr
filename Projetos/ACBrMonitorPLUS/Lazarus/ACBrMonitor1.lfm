@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 95
+  Left = 288
   Height = 659
-  Top = 12
+  Top = 18
   Width = 1055
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -1895,12 +1895,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/ImpressaodeCheque.htm'
           Caption = 'Imp.&Cheque'
           ClientHeight = 327
-          ClientWidth = 847
+          ClientWidth = 842
           ImageIndex = 2
           object sbCHQBemafiINI: TSpeedButton
             AnchorSideLeft.Control = edCHQBemafiINI
             AnchorSideLeft.Side = asrBottom
-            Left = 764
+            Left = 759
             Height = 22
             Top = 78
             Width = 23
@@ -2030,7 +2030,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Text = 'COM1'
           end
           object bCHQTestar: TBitBtn
-            Left = 665
+            Left = 660
             Height = 48
             Top = 116
             Width = 110
@@ -2079,11 +2079,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 16
             Height = 121
             Top = 61
-            Width = 623
+            Width = 618
             Anchors = [akTop, akLeft, akRight]
             Caption = 'Valores Padrões'
             ClientHeight = 99
-            ClientWidth = 619
+            ClientWidth = 614
             TabOrder = 3
             object Label14: TLabel
               AnchorSideTop.Control = gbCHQDados
@@ -2102,7 +2102,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 16
               Height = 25
               Top = 18
-              Width = 591
+              Width = 586
               Anchors = [akTop, akLeft, akRight]
               OnChange = edCHQFavorecidoChange
               TabOrder = 0
@@ -2125,7 +2125,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 16
               Height = 25
               Top = 62
-              Width = 591
+              Width = 586
               Anchors = [akTop, akLeft, akRight]
               OnChange = edCHQCidadeChange
               TabOrder = 1
@@ -2133,7 +2133,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object edCHQBemafiINI: TEdit
             Cursor = crIBeam
-            Left = 650
+            Left = 645
             Height = 25
             Top = 78
             Width = 113
@@ -2143,7 +2143,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object Label30: TLabel
             AnchorSideLeft.Control = edCHQBemafiINI
-            Left = 650
+            Left = 645
             Height = 17
             Top = 61
             Width = 58
@@ -4784,6 +4784,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Width = 183
                 Caption = 'Ler Dados Cedente Retorno'
                 TabOrder = 4
+              end
+              object chkRemoveAcentos: TCheckBox
+                Left = 8
+                Height = 21
+                Top = 184
+                Width = 247
+                Caption = 'Remover Acentos do Arquivo Remessa'
+                TabOrder = 5
               end
             end
             object tsRelatorio: TTabSheet
@@ -13681,7 +13689,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

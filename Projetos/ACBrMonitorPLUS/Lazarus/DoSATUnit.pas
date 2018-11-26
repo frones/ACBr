@@ -626,13 +626,12 @@ var
       end;
 
       if NaoEstaVazio(MonitorConfig.DFE.Certificado.ArquivoPFX) then
-      begin
-
-        fACBrSAT.SSL.ArquivoPFX  := Trim(MonitorConfig.DFE.Certificado.ArquivoPFX );
-        fACBrSAT.SSL.Senha       := Trim(MonitorConfig.DFE.Certificado.Senha );
-      end
+        fACBrSAT.SSL.ArquivoPFX  := Trim(MonitorConfig.DFE.Certificado.ArquivoPFX )
       else
         fACBrSAT.SSL.NumeroSerie := Trim(MonitorConfig.DFE.Certificado.NumeroSerie );
+
+      fACBrSAT.SSL.Senha       := Trim(MonitorConfig.DFE.Certificado.Senha );
+
     end;
 
   end;
@@ -666,7 +665,7 @@ begin
 
     ConfiguraDFe;
 
-    cCodigoVinculacao      := Onlynumber(cCNPJShw) + Onlynumber(cCNPJEmitente);
+    cCodigoVinculacao := Onlynumber(cCNPJShw) + Onlynumber(cCNPJEmitente);
     fpCmd.Resposta := fACBrSAT.SSL.CalcHash(cCodigoVinculacao, dgstSHA256, outBase64, True);
 
   end;

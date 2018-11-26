@@ -538,6 +538,7 @@ type
     CNAB                       : Integer;
     LerCedenteRetorno          : Boolean;
     CodTransmissao             : String ;
+    RemoveAcentos              : Boolean;
   end;
 
   TBoletoRelatorio = record
@@ -1211,6 +1212,7 @@ begin
       ini.WriteInteger(CSecBOLETO, CKeyBOLETOCNAB,              CNAB                   );
       Ini.WriteBool(   CSecBOLETO, CKeyBOLETOLerCedenteRetorno, LerCedenteRetorno      );
       ini.WriteString( CSecBOLETO, CKeyBOLETOCodTransmissao,CodTransmissao);
+      Ini.WriteBool(   CSecBOLETO, CKeyBOLETORemoveAcentos, RemoveAcentos      );
     end;
 
     with BOLETO.Relatorio do
@@ -1824,6 +1826,7 @@ begin
       CNAB                   :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOCNAB,               CNAB                   );
       LerCedenteRetorno      :=  Ini.ReadBool(   CSecBOLETO, CKeyBOLETOLerCedenteRetorno,  LerCedenteRetorno      );
       CodTransmissao         :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodTransmissao,     ini.ReadString( CSecBOLETO,CKeyBOLETOCedenteCodTransmissao,'') );
+      RemoveAcentos          :=  Ini.ReadBool(   CSecBOLETO, CKeyBOLETORemoveAcentos,      RemoveAcentos      );
     end;
 
     with BOLETO.Relatorio do
@@ -2414,6 +2417,7 @@ begin
     CNAB                   :=  0;
     LerCedenteRetorno      :=  False;
     CodTransmissao         :=  '';
+    RemoveAcentos          :=  False;
   end;
 
   with BOLETO.Relatorio do

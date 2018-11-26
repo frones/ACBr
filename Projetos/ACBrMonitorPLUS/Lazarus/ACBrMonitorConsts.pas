@@ -1067,6 +1067,7 @@ const
   CKeyBOLETOCNAB =                          'CNAB';
   CKeyBOLETOLerCedenteRetorno =             'LerCedenteRetorno';
   CKeyBOLETOMostraPreviewRelRetorno =       'MostraPreviewRelRetorno';
+  CKeyBOLETORemoveAcentos =                 'RemoveAcentos';
   CKeyBOLETOLogoEmpresa =                   'LogoEmpresa';
   CKeyBOLETOEmailAssuntoBoleto =            'EmailAssuntoBoleto';
   CKeyBOLETOEmailMensagemBoleto =           'EmailMensagemBoleto';

@@ -309,6 +309,7 @@ type
     cbXMLSignLib: TComboBox;
     cbSSLType: TComboBox;
     cbxNormatizarMunicipios: TCheckBox;
+    chkRemoveAcentos: TCheckBox;
     ckIBGEUTF8: TCheckBox;
     ckIBGEAcentos: TCheckBox;
     chkVerificarValidadeCertificado: TCheckBox;
@@ -4314,6 +4315,7 @@ begin
       edtCodTransmissao.Text           := CodTransmissao;
       cbxCNAB.ItemIndex                := StrToInt(IfThen(CNAB = 0, '1', '0'));
       chkLerCedenteRetorno.Checked     := LerCedenteRetorno;
+      chkRemoveAcentos.Checked         := RemoveAcentos;
     end;
 
     with Layout do
@@ -5064,6 +5066,7 @@ begin
     DirArqRemessa   := PathWithDelim(deBolDirRemessa.Text);
     DirArqRetorno   := PathWithDelim(deBolDirRetorno.Text);
     LeCedenteRetorno:= chkLerCedenteRetorno.Checked;
+    RemoveAcentosArqRemessa:= chkRemoveAcentos.Checked;
 
     MAIL := ACBrMail1;
   end;
@@ -5885,6 +5888,7 @@ begin
        CNAB                     := StrToInt(IfThen(cbxCNAB.ItemIndex = 0, '1', '0'));
        LerCedenteRetorno        := chkLerCedenteRetorno.Checked;
        CodTransmissao           := edtCodTransmissao.Text;
+       RemoveAcentos            := chkRemoveAcentos.Checked;
      end;
 
      with Email do

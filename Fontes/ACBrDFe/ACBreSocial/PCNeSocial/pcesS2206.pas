@@ -324,7 +324,7 @@ begin
   Gerador.wCampo(tcStr, '', 'natAtividade',       1,  1, 1, eSNatAtividadeToStr(objInfoCeletista.NatAtividade));
 
   if objInfoCeletista.dtBase > 0  then
-    Gerador.wCampo(tcStr, '', 'dtBase',             1,  2, 0, objInfoCeletista.dtBase);
+    Gerador.wCampo(tcStr, '', 'dtBase',             1,  2, 0, FormatFloat('00',objInfoCeletista.dtBase));
 
   Gerador.wCampo(tcStr, '', 'cnpjSindCategProf', 14, 14, 1, objInfoCeletista.cnpjSindCategProf);
 
@@ -355,7 +355,7 @@ begin
 
   GerarRemuneracao(objInfoContrato.Remuneracao);
   GerarDuracao(objInfoContrato.Duracao, pTipo);
-  GerarLocalTrabalho(objInfoContrato.LocalTrabalho); 
+  GerarLocalTrabalho(objInfoContrato.LocalTrabalho);
 
   //Informações do Horário Contratual do Trabalhador. O preenchimento é obrigatório se {tpRegJor} = [1]
   if (pInfoCeletista.TpRegJor = rjSubmetidosHorarioTrabalho) then

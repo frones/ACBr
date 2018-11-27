@@ -50,6 +50,9 @@ Símbolo : Significado
 ver: 0.0.248
 
 26-11-2018 -- ACBrBancoBrasil
+[*] Ajuste na geração CNAB240, alteração no contador do registro para o Trailler e Segmentos
+
+26-11-2018 -- ACBrBancoBrasil
 [-] Correção na geração mensagem Segmento S, não deve gerar se existir apenas uma mensagem 
 
 21-11-2018 -- ACBrBoleto

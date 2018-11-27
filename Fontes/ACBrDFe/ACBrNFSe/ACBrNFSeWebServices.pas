@@ -4679,6 +4679,9 @@ begin
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     case Fprovedor of
+      proNotaBlu:
+        FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
+
       proISSe,
       ProTecnos: begin
                    FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
@@ -4693,7 +4696,7 @@ begin
                                  Copy(FPDadosMsg, iPos, Length(FPDadosMsg));
                  end;
     else
-      FPDadosMsg := {FTagI + }GerarDadosMsg.Gera_DadosMsgCancelarNFSe{ + FTagF};
+      FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
     end;
 
     FIDLote := GerarDadosMsg.IdLote;
@@ -4709,9 +4712,9 @@ begin
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
-  FPDadosMsg := FTagI + FPDadosMsg + FTagF;
-
   case FProvedor of
+    proNotaBlu: FPDadosMsg := FPDadosMsg;
+
     proISSe,
     ProTecnos,
     proISSNET: begin
@@ -4722,6 +4725,8 @@ begin
     proBetha: FPDadosMsg := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                   FPDadosMsg +
                             '</' + FTagGrupo + '>';
+  else
+    FPDadosMsg := FTagI + FPDadosMsg + FTagF;
   end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingDados);

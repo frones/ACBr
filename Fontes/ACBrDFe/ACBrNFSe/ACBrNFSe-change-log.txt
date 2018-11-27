@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2018
+-- ACBrNFSeWebServices --
+[*] Corrigido o problema no serviço de Cancelamento, para o provedor NotaBlu.
+Por: Italo Jurisato Junior
+
 23/11/2018
 -- pnfsNFSeW_ABRASFv1 --
 [*] Incluido uma condição para não gerar o grupo <Endereco> quando nenhuma informação

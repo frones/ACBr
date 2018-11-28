@@ -82,7 +82,7 @@ type
                  cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
                  cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60); //80 e 81 apenas para CTe
   TpcnCSOSNIcms = (csosnVazio,csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500,csosn900 );
-  TpcnDeterminacaoBaseIcms = (dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao);
+  TpcnDeterminacaoBaseIcms = (dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum);
   TpcnDeterminacaoBaseIcmsST = (dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra, dbisMargemValorAgregado, dbisPauta);
   TpcnMotivoDesoneracaoICMS = (mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora, mdiDiplomaticoConsular,
                                mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos, mdiOutros, mdiDeficienteCondutor,
@@ -780,8 +780,8 @@ end;
 // N13 - Modalidade de determinação da BC do ICMS ******************************
 function modBCToStrTagPosText(const t: TpcnDeterminacaoBaseIcms): string;
 begin
-  result := EnumeradoToStr(t, ['0 - Margem Valor Agregado (%)', '1 - Pauta (Valor)', '2 - Preço Tabelado Máx. (valor)', '3 - valor da operação'],
-    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao]);
+  result := EnumeradoToStr(t, ['0 - Margem Valor Agregado (%)', '1 - Pauta (Valor)', '2 - Preço Tabelado Máx. (valor)', '3 - valor da operação', ''],
+    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum]);
 end;
 
 function modBCToStr(const t: TpcnDeterminacaoBaseIcms): string;
@@ -790,14 +790,14 @@ begin
   // 1 - Pauta (Valor);
   // 2 - Preço Tabelado Máx. (valor);
   // 3 - valor da operação.
-  result := EnumeradoToStr(t, ['0', '1', '2', '3'],
-    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', ''],
+    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum]);
 end;
 
 function StrTomodBC(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcms;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3'],
-    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', ''],
+    [dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum]);
 end;
 
 // N18 - Modalidade de determinação da BC do ICMS ST ***************************

@@ -647,7 +647,7 @@ begin
      (trim(CTe.Compl.fluxo.xDest) <> '') or (trim(CTe.Compl.fluxo.xRota) <> '') then
   begin
     Gerador.wGrupo('fluxo', '#063');
-    Gerador.wCampo(tcStr, '#064', 'xOrig ', 01, 15, 0, CTe.Compl.fluxo.xOrig, DSC_XORIG);
+    Gerador.wCampo(tcStr, '#064', 'xOrig ', 01, 60, 0, CTe.Compl.fluxo.xOrig, DSC_XORIG);
 
     for i := 0 to CTe.Compl.fluxo.pass.Count - 1 do
     begin
@@ -659,7 +659,7 @@ begin
     if CTe.Compl.fluxo.pass.Count > 990 then
       Gerador.wAlerta('#065', 'pass', DSC_PASS, ERR_MSG_MAIOR_MAXIMO + '990');
 
-    Gerador.wCampo(tcStr, '#067', 'xDest ', 01, 15, 0, CTe.Compl.fluxo.xDest, DSC_XDEST);
+    Gerador.wCampo(tcStr, '#067', 'xDest ', 01, 60, 0, CTe.Compl.fluxo.xDest, DSC_XDEST);
     Gerador.wCampo(tcStr, '#068', 'xRota ', 01, 10, 0, CTe.Compl.fluxo.xRota, DSC_XROTA);
     Gerador.wGrupo('/fluxo');
   end;

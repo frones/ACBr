@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2018
+-- pcteCTeW --
+[*] https://www.projetoacbr.com.br/forum/topic/47868-valida%C3%A7%C3%A3o-incorreta-dos-campos-xorig-e-xdes-na-previs%C3%A3o-do-fluxo-da-carga/
+  Por: wm Rodrigo
+
 22/11/2018
 -- pcteCTeW --
 [*] https://www.projetoacbr.com.br/forum/topic/47783-erro-no-xml-do-cte-modal-aquavi%C3%A1rio/

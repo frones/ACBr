@@ -1416,7 +1416,9 @@ begin
                cst51 :
                   begin
                     //Esse bloco fica a critério de cada UF a obrigação das informações, conforme o manual
-                    Gerador.wCampo(tcStr, 'N13', 'modBC    ', 01, 01, 0, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
+                    if nfe.Det[i].Imposto.ICMS.modBC <> dbiNenhum then
+                      Gerador.wCampo(tcStr, 'N13', 'modBC', 01, 01, 0, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
+
                     Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N14', 'pRedBC   ', 01, IIf(Usar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pRedBC, DSC_PREDBC);
                     Gerador.wCampo(tcDe2, 'N15', 'vBC      ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vBC, DSC_VBC);
                     Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N16', 'pICMS    ', 01, IIf(Usar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pICMS, DSC_PICMS);
@@ -1428,6 +1430,7 @@ begin
                       Gerador.wCampo(tcDe2, 'N17', 'vICMS', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS)
                     else
                       Gerador.wCampo(tcDe2, 'N17', 'vICMS', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMS, DSC_VICMS);
+
                     if (NFe.infNFe.Versao >= 4) then
                     begin
                       if (nfe.Det[i].Imposto.ICMS.vBCFCP > 0) or (nfe.Det[i].Imposto.ICMS.pFCP > 0) or (nfe.Det[i].Imposto.ICMS.vFCP > 0) then

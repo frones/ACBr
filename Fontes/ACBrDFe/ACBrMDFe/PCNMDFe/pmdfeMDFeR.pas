@@ -508,8 +508,8 @@ begin
 
           if Leitor.rExtrai(4, 'infEntregaParcial') <> '' then
           begin
-            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infEntregaParcial.qtdTotal   := Leitor.rCampo(tcDe2, 'qtdTotal');
-            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infEntregaParcial.qtdParcial := Leitor.rCampo(tcDe2, 'qtdParcial');
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infEntregaParcial.qtdTotal   := Leitor.rCampo(tcDe4, 'qtdTotal');
+            MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infEntregaParcial.qtdParcial := Leitor.rCampo(tcDe4, 'qtdParcial');
           end;
         end;
 

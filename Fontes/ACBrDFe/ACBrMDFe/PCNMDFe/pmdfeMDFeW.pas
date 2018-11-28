@@ -855,8 +855,8 @@ begin
                 (MDFe.infDoc.infMunDescarga[i].infCTe[j].infEntregaParcial.qtdParcial <> 0)) then
              begin
                Gerador.wGrupo('infEntregaParcial', '#96');
-               Gerador.wCampo(tcDe2, '#97', 'qtdTotal  ', 01, 05, 1, MDFe.infDoc.infMunDescarga[i].infCTe[j].infEntregaParcial.qtdTotal, DSC_QTDTOTAL);
-               Gerador.wCampo(tcDe2, '#98', 'qtdParcial', 01, 05, 1, MDFe.infDoc.infMunDescarga[i].infCTe[j].infEntregaParcial.qtdParcial, DSC_QTDPARCIAL);
+               Gerador.wCampo(tcDe4, '#97', 'qtdTotal  ', 01, 15, 1, MDFe.infDoc.infMunDescarga[i].infCTe[j].infEntregaParcial.qtdTotal, DSC_QTDTOTAL);
+               Gerador.wCampo(tcDe4, '#98', 'qtdParcial', 01, 15, 1, MDFe.infDoc.infMunDescarga[i].infCTe[j].infEntregaParcial.qtdParcial, DSC_QTDPARCIAL);
                Gerador.wGrupo('/infEntregaParcial');
              end;
 

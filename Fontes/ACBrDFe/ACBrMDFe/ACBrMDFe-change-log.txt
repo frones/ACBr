@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2018
+-- Diversos --
+[*] Alterado o tamanho e casas decimais de dois campos do modal Aereo, conforme NT 2018/002.
+  por: Italo Jurisato Junior
+
 22/11/2018
 -- Diversos --
 [*] Na impressão do DAMDFE (Fortes Report) foi acrescentado a direita da Placa do 

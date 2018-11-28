@@ -467,12 +467,12 @@ Por exemplo, o arquivo para o schema do modal Rodoviário na versão 1.00 será 
 																</xs:annotation>
 																<xs:complexType>
 																	<xs:sequence>
-																		<xs:element name="qtdTotal" type="TDec_0302_0303">
+																		<xs:element name="qtdTotal" type="TDec_1104">
 																			<xs:annotation>
 																				<xs:documentation>Quantidade total de volumes</xs:documentation>
 																			</xs:annotation>
 																		</xs:element>
-																		<xs:element name="qtdParcial" type="TDec_0302_0303">
+																		<xs:element name="qtdParcial" type="TDec_1104">
 																			<xs:annotation>
 																				<xs:documentation>Quantidade de volumes enviados no MDF-e</xs:documentation>
 																			</xs:annotation>

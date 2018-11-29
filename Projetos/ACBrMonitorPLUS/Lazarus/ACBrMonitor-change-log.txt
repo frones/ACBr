@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/11/2018
+[+] DoACBrMDFeUnit
+Ajuste na validação de retorno do método ConsultaMDFeNaoEnc
+
 23/11/2018
 [+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado Flag para geração do arquivo de remessa removendo acentuação para componente Boleto

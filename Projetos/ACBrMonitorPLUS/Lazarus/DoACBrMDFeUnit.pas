@@ -594,27 +594,30 @@ var
 begin
   Resp := TCancelamentoResposta.Create(resINI);
   try
-    with fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
+    if fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Count > 0 then
     begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.CUF := cOrgao;
-      Resp.ChMDFe := chMDFe;
-      Resp.DhRecbto := dhRegEvento;
-      Resp.NProt := nProt;
-      Resp.TpEvento := TpEventoToStr(tpEvento);
-      Resp.xEvento := xEvento;
-      Resp.nSeqEvento := nSeqEvento;
-      Resp.CNPJDest := CNPJDest;
-      Resp.emailDest := emailDest;
-      Resp.XML := XML;
-      Resp.Arquivo := NomeArquivo;
+      with fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
+      begin
+        Resp.Versao := verAplic;
+        Resp.TpAmb := TpAmbToStr(TpAmb);
+        Resp.VerAplic := VerAplic;
+        Resp.CStat := cStat;
+        Resp.XMotivo := XMotivo;
+        Resp.CUF := cOrgao;
+        Resp.ChMDFe := chMDFe;
+        Resp.DhRecbto := dhRegEvento;
+        Resp.NProt := nProt;
+        Resp.TpEvento := TpEventoToStr(tpEvento);
+        Resp.xEvento := xEvento;
+        Resp.nSeqEvento := nSeqEvento;
+        Resp.CNPJDest := CNPJDest;
+        Resp.emailDest := emailDest;
+        Resp.XML := XML;
+        Resp.Arquivo := NomeArquivo;
 
-      fpCmd.Resposta := XMotivo + sLineBreak;
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+        fpCmd.Resposta := XMotivo + sLineBreak;
+        fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+      end;
     end;
   finally
     Resp.Free;
@@ -669,8 +672,11 @@ begin
       Resp.XMotivo := XMotivo;
       Resp.CUF := cUF;
       Resp.CNPJ := CNPJCPF;
-      Resp.ChMDFe := InfMDFe.Items[0].chMDFe;
-      Resp.NProt := InfMDFe.Items[0].nProt;
+      if InfMDFe.Count > 0 then
+      begin
+        Resp.ChMDFe := InfMDFe.Items[0].chMDFe;
+        Resp.NProt := InfMDFe.Items[0].nProt;
+      end;
 
       fpCmd.Resposta := Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
@@ -695,9 +701,12 @@ begin
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
       Resp.CUF := cUF;
-      Resp.ChMDFe := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].chMDFe;
-      Resp.NProt := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].nProt;
-      Resp.MotivoMDFe := MDFeRetorno.ProtMDFe.Items[0].xMotivo;
+      if fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Count > 0 then
+      begin
+        Resp.ChMDFe := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].chMDFe;
+        Resp.NProt := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].nProt;
+        Resp.MotivoMDFe := MDFeRetorno.ProtMDFe.Items[0].xMotivo;
+      end;
 
       fpCmd.Resposta := Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;

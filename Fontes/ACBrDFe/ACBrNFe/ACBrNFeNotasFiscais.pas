@@ -2021,7 +2021,11 @@ begin
           with Imposto do
           begin
             sSecao := 'ICMS'+IntToStrZero(I,3) ;
-            sFim     := INIRec.ReadString( sSecao,'CST',INIRec.ReadString(sSecao,'CSOSN','FIM')) ;
+            //sFim     := INIRec.ReadString( sSecao,'CST',INIRec.ReadString(sSecao,'CSOSN','FIM')) ;
+
+            sFim     := INIRec.ReadString( sSecao,'CST','FIM') ;
+            if (sFim = 'FIM') or ( Length(sFim) = 0 ) then
+              sFim     := INIRec.ReadString(sSecao,'CSOSN','FIM');
 
             if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
             begin

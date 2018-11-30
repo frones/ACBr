@@ -4506,6 +4506,7 @@ begin
       proISSe,
       proFiorilli,
       proMetropolisWeb,
+      proRJ,
       proTecnos: FinfElemento := 'InfPedidoCancelamento';
     else
       FinfElemento := '';

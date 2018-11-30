@@ -4679,6 +4679,8 @@ begin
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     case Fprovedor of
+      proInfisc,
+      proInfiscv11,
       proNotaBlu:
         FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
 
@@ -4713,6 +4715,8 @@ begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
   case FProvedor of
+    proInfisc,
+    proInfiscv11,
     proNotaBlu: FPDadosMsg := FPDadosMsg;
 
     proISSe,

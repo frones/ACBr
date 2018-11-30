@@ -81,7 +81,7 @@ InstallPassword
 {}
 
 InstallVersion
-{1.1.0.44}
+{1.2.0.29}
 
 Language,ca
 {No}
@@ -192,7 +192,7 @@ UpgradeApplicationID
 {}
 
 Version
-{1.1.0.44}
+{1.2.0.29}
 
 ViewReadme
 {Yes}
@@ -297,10 +297,17 @@ File ::ACF1B73C-55DB-224A-780C-A39FFA61BB93 -name 756.bmp -parent F26D2079-31D4-
 File ::84E5B9FC-6A00-4621-6EB1-EFDFAFA58A34 -name 004.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
 File ::E3E9A3E0-F1A3-000E-03F6-E19ABA269ACA -name 085.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
 File ::233CB41F-15BC-AE78-8433-9862802E2D5C -name 003.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
+File ::EEE6F4BE-DF2C-10D1-2D1C-395474229B8D -name 099.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
+File ::B75EA24C-3CD5-DBEB-0BF1-446588C0D5BA -name 047.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
+File ::029DF172-1B45-1622-2E50-AF7175D32840 -name 097.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
+File ::FD157105-D61C-59A7-545C-8CD90DA559F4 -name 136.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
+File ::0E5EF055-21D8-294C-CAA4-C163D27A0ED4 -name 133.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
 File ::472F8213-0157-F7E3-E98F-F6735B076476 -name ../.././banner_acbrmonitor.gif -location ../../ -parent 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2
 File ::20707BF3-DE14-9902-9907-DF625284E1C2 -name ../../../../.././Fontes/ACBrDFe/ACBrNFe/ACBrNFeServicos.ini -location ../../../../.././Fontes/ACBrDFe/ACBrNFe -parent 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2
 File ::9680F732-7974-E4E2-3BB8-64206291946C -name ../../../../.././Fontes/ACBrDFe/ACBrCTe/ACBrCTeServicos.ini -location ../../../../.././Fontes/ACBrDFe/ACBrCTe -parent 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2
 File ::9EE2521F-EA1A-A837-49FD-8144F2B32DF0 -name ../../../../.././Fontes/ACBrDFe/ACBrMDFe/ACBrMDFeServicos.ini -location ../../../../.././Fontes/ACBrDFe/ACBrMDFe -parent 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2
+File ::EC70DB93-DD28-708D-1097-700B3324F1BD -name ../../../../.././Fontes/ACBrDFe/ACBreSocial/ACBreSocialServicos.ini -location ../../../../.././Fontes/ACBrDFe/ACBreSocial -parent 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2
+File ::6A8B9D5B-50E3-4CBD-0DBD-80EF0DCB71AD -name ../../../../.././Fontes/ACBrDFe/ACBrReinf/ACBrReinfServicos.ini -location ../../../../.././Fontes/ACBrDFe/ACBrReinf -parent 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2
 FileGroup ::A7445EB0-8070-6A51-67CA-70F86582B322 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name ACBrMonitorConsole -parent FileGroups
 FileGroup ::A0AAD91A-0EEE-FEE2-D547-23427A537F3A -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Documentacao -parent FileGroups
 File ::CCDA6226-D16D-F951-BA85-5293BF5E2C5B -name ACBrMonitor.chm -location ../../ -parent A0AAD91A-0EEE-FEE2-D547-23427A537F3A
@@ -622,6 +629,173 @@ File ::B8512040-6C57-68C1-3337-A77EA85DD24D -name ../../../../.././Exemplos/ACBr
 File ::5352757A-0790-ECF2-A438-55A54240E25F -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/lote_gnre_result_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
 File ::BED0CAD6-CEA9-0DE6-BE89-A36A2B3595BA -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/lote_gnre_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
 File ::27A9BCC4-5D59-BB59-1D44-CDF44F7C4278 -name ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/tiposBasicoGNRE_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/GNRe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::663076DD-F2FA-35C9-F5E6-ED587AA6D5B6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ConsultaLoteEventos-v1_0_0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3D77A130-E09C-09B9-888D-304000881844 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/EnvioLoteEventos-v1_1_1.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4A0DA777-D984-71FA-896C-0F602950E5C7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/RetornoEnvioLoteEventos-v1_1_0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8AA3709C-E02C-AE94-45FD-DABE3FDC1F06 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/RetornoEvento-v1_2_0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::740DCD77-0000-9F6F-812E-60F323E31A9A -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/RetornoProcessamentoLote-v1_3_0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6872B6AD-F485-B44E-BB45-52273105712E -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/xmldsig-core-schema.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::615F903D-78BE-7F51-AA78-A8D7B749874B -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/envioLoteEventos-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::011DA58C-280D-6887-97B4-26F030014E5E -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/envioLoteEventos-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B1C1A005-5BB6-BC99-9DD5-4D85AE75FCD5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/envioLoteEventos-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::90A57963-B396-C2CE-A4F4-1DF63FA5D353 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/envioLoteEventos-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CFBF0BD1-947E-C0AC-CF57-61052DFA3A13 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtEspDesportivo-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::73DB9328-5DD3-7C1A-E314-366FA3A3A6CA -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtEspDesportivo-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E83A396D-83FA-D3D0-9987-8BAA2BA3168E -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtEspDesportivo-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4633764E-EA7A-FFC8-86CE-E495D16E5723 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtEspDesportivo-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5D3E99CB-AFB3-E5AF-D831-C4F2AB10946C -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtExclusao-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::236CA088-2C34-7753-E4CD-9932AB93DD52 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtExclusao-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9DADB6F7-BBD7-7338-43F9-7E07FFC3CE8A -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtExclusao-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F502B07E-C422-529A-C332-CAB79A7E8528 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtExclusao-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::651159B7-D78A-7008-7592-B56BCBA2DE23 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtFechamento-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::69891F91-1480-5C0F-64CF-DE33DD35B4AC -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtFechamento-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::FCB026BB-79A9-A037-D680-A0A285C6D0E4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtFechamento-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5A027D31-C8A2-DE66-0202-6699BD61B3EA -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtFechamento-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5D4F0624-350F-5369-C0DE-C3952B5FD583 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoCPRB-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::FB7B696F-C652-3DFB-3D74-1244E1586768 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoCPRB-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3DC43803-FFE7-F016-64EC-130C870A5527 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoCPRB-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E9AE2930-08F3-0189-3710-B64346EBD820 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoCPRB-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2217FC3D-F3EE-3081-FD93-AEDF48D393A9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoContribuinte-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DDF05F8C-2275-D70A-0610-157FC7B1C792 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoContribuinte-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CA301D8A-1139-7E04-8D72-B20FB7F6462D -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoContribuinte-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4C215B0B-3EF0-6707-16D3-27506B8A3D79 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoContribuinte-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::133480A7-134E-DCF1-854C-610EB4EE6BDE -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoProdRural-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B2D98CC3-0CFC-93B2-B13A-918979AF325C -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoProdRural-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::10A14E60-F44E-AA23-1B97-C4901E041A97 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoProdRural-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::42128F1C-82C9-86E2-B9E6-7CD8D0B273B1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtInfoProdRural-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A420DF81-66FE-AAB6-233F-9CC83FE1623C -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtPagamentosDiversos-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::72691045-6B06-AC87-A9DE-1C9906C4C9EE -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtPrestadorServicos-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7172BB48-C184-55B5-82F1-A9717C11D02D -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtPrestadorServicos-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::C8F0F88E-7EA4-6B29-E1E7-8AB33F137EF8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtPrestadorServicos-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9E1B0838-3A34-3896-92E7-0224612CDD85 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtPrestadorServicos-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::02BFC7DC-0883-6C87-6676-DEEE0F118850 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtReabreEvPer-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::ED0F6948-2516-17B0-7A4D-2A96799D2888 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtReabreEvPer-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::AB1CD377-66C8-F9CC-CFFB-A04DFA811A5E -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtReabreEvPer-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F3E1BA57-675E-0BDC-9D51-7838A7E4470D -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtReabreEvPer-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::37182D57-5C63-87D7-FF61-02BBB8B3F539 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtRecursoRecebidoAssociacao-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1F78E971-AF89-E63F-6D70-BCF3FB30324D -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtRecursoRecebidoAssociacao-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::257CF562-8A18-8ACE-7DFD-934B1FCECBC6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtRecursoRecebidoAssociacao-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::77C039BB-2D0C-535F-A2FD-48B3B43B787E -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtRecursoRecebidoAssociacao-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::85D67826-26A3-A886-A0F8-63697CF59962 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtRecursoRepassadoAssociacao-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D23AD5CE-25B4-B2F5-7A3D-40C51EBD305F -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtRecursoRepassadoAssociacao-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::93590871-9970-1092-8018-BD357C112C7F -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtRecursoRepassadoAssociacao-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::581BD7B5-F595-120F-E4C0-98B17080E8C0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtRecursoRepassadoAssociacao-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1514C783-6053-7B75-BC07-AD37EFD9703D -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtTabProcesso-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5CFA55D6-8AFD-3EBA-3BAF-17E6EFE7EFA7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtTabProcesso-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D1B69037-ADFA-F039-0AA0-0B8128343650 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtTabProcesso-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::981C7618-88FA-45C4-EA6C-964679272908 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtTabProcesso-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BB7AF4F3-55DD-62C6-ACAC-A92C4819B0FE -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtTomadorServicos-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::69B5E53A-B2E1-2AA1-0A34-791EE1A03FA3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtTomadorServicos-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B99D7338-129F-19C1-A8D3-ADC018C570F6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtTomadorServicos-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0A103059-A97B-0AF1-5FA5-2ED05B3969BB -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/evtTomadorServicos-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::63F44688-6629-9441-54AE-1C84C76A2325 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoEvento-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3FE0726D-E83B-2DB6-C2DA-C700333E182D -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoEvento-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A75B8EB1-93FB-AEA0-64C1-BB11BC043290 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoLoteEventos-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BCD01730-BEF0-7E27-80A5-E82A7229E534 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoLoteEventos-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::174C64E6-7A82-05CC-3A85-9FFA7F916831 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoLoteEventos-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E60D0F2B-93A0-8F26-D499-C89D9913CD28 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoLoteEventos-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9312E6EF-54DE-A14F-F445-124F2561D255 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoTotalizadorContribuinte-v1_01_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7C8F768E-B6DA-84B0-A730-BAAE18A558BB -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoTotalizadorContribuinte-v1_02_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1C6BACE8-5895-0704-2CBC-F1CABEAA9AC9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoTotalizadorContribuinte-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2DC8FF5A-38D0-2C0F-0A66-77ED1151FF86 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoTotalizadorContribuinte-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::8875BD8C-5901-A40F-333E-0BA4F360B6CB -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoTotalizadorEvento-v1_03_00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9B6EBA23-8045-2FE1-39A9-D3312F4F7BA9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/retornoTotalizadorEvento-v1_03_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E679EBCF-B142-D7E9-8165-296246CED5F9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/Reinf/xmldsig-core-schema.xsd -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::56CADB9E-4902-2FEF-5C6E-BECFB3000FCE -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/RetornoEnvioLoteEventos-v1_1_0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B1ADDC16-1F3F-1A34-B1E5-3E6B47A2BA95 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/RetornoEvento-v1_2_0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1188F2F8-9BF8-0C13-8E61-8E2D72247808 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/RetornoProcessamentoLote-v1_3_0.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::FAA28A8B-7A52-49DB-EE34-089B6E6C4161 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAdmPrelim-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::ED52A815-528B-A080-D673-B1B04CFE1392 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAdmPrelim-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E9725CCA-81B2-E4A6-CDDD-E17BCF6E7A42 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAdmissao-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1679B1F7-46B5-14DC-2607-1042FF048877 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAdmissao-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A8998C65-4EEB-70CB-9810-2747E66D99F2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAfastTemp-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BB1BD0C6-55FC-D17D-9F2E-044E173A6D01 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAfastTemp-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3926F7C3-63C0-8EAE-29C2-55A57BDB0FF1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAltCadastral-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B20DB226-D95C-68BD-B5F8-B73C78854F67 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAltCadastral-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F6BF63F0-3327-EED5-554A-0DEB6935AC11 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAltContratual-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::1698F6E6-4385-65A1-A8F5-518E0A069155 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAltContratual-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0926449F-4D11-2D00-6C34-B6C6029F9F29 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAqProd-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::83C9E975-1EDC-CAB1-2E44-0366E1A4760C -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAqProd-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CA7B33E0-A197-5847-F340-7357A358C0D6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtBenPrRP-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0BC6E404-2760-04BA-AC54-47785D2AB415 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtBenPrRP-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::06A548AB-819B-A623-2678-2B9838DDB26F -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtBasesTrab-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5B5FBE2B-1895-2C97-2164-708F9A06E0A4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtBasesTrab-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4FEF7F81-C31D-8E4B-2830-086EB734FEC2 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAvPrevio-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B6920616-3B25-0461-9FB3-BE83587A830E -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtAvPrevio-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::19006C1A-9695-3DB4-33D0-D6F48D38C856 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtCdBenPrRP-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::49412C44-E953-2F67-372E-95EDFDD819AC -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtCadInicial-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BD9803CA-DEB2-559E-FC28-36D18DDFE052 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtCS-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::C2F92C88-F23D-3C3E-A2D0-916240E4E647 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtCS-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::EEF34CFF-5C2C-6F5D-39F7-5E5BE7189CC5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtCAT-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6ECD82AD-771B-08B4-07EB-7BB5A1471653 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtCAT-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3253468A-0C50-D427-B93D-1E221751F08E -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtCdBenPrRP-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7D421425-22E1-B5FA-7077-6A108463679D -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtComProd-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4C0C0291-04FE-6AF7-460A-B3F5BBF96D1A -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtComProd-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DCB75433-6B1B-7C0E-51DB-680E1F0570CA -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtContrSindPatr-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::68113DDF-9318-1CD4-2684-0574791EFF35 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtContrSindPatr-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::9B67A8A0-3D30-A2E3-9BE5-CA0BEDF7AB8B -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtContratAvNP-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::FAF8BC34-4C90-AD04-077E-7A27F497A653 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtExclusao-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::44E1490C-9D09-FD3C-3B25-C17D624ADECF -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtDeslig-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5F826264-77C6-DB41-D098-B356D293C75C -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtDeslig-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A731B43C-EF85-BE54-4BE8-4E5CDB12C2D1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtConvInterm-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E53A514F-A5C2-D295-E835-576632FEA93D -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtConvInterm-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B50AD168-7892-E6C9-2E9D-693399B7845A -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtContratAvNP-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::DE729896-B91C-4410-0F0B-C8919DE1C159 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtExclusao-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::20044FA8-1CEE-7CC7-A165-AA5B2CC76122 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtExpRisco-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0B209A60-4EA3-5619-FD60-1AAB0518CADB -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtExpRisco-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5167A7D1-0322-2B89-3664-ED8645E04B23 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtFechaEvPer-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0622B41D-77AA-3C4E-2C7D-009ACDFD71D8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtFechaEvPer-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::56478CBB-93A0-17C0-F73E-BA3418F97E2D -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtInfoComplPer-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7338ABFA-70F7-F160-5E34-3983296FC5F1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtIrrf-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B2658C5B-F789-2A90-F295-C1DAEAA42A51 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtInsApo-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E3311588-35B4-9D43-A8F9-247789392511 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtInsApo-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F248E1A8-325B-9E23-7D6E-090680138129 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtInfoEmpregador-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::443D4A6F-739D-4756-4535-1EB878D6E931 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtInfoEmpregador-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::6AC0CEFC-47F3-A5D3-3515-26BF7810FE14 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtInfoComplPer-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BBCE8C6F-5F62-CCCB-FD5C-236CE4512791 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtIrrf-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::797CA9F3-FFC5-EDB0-F34C-DE0D88663367 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtIrrfBenef-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::C87CA364-BC74-1964-1C9F-251AC0A17DE8 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtIrrfBenef-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3E4CA33E-D319-F63C-7D4E-75AE59175B70 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtMonit-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::0E4906ED-BC09-8EEC-3485-5139403ABD58 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtMonit-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::BC3A74E5-88AA-410E-1DA5-6004329DBAA6 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtPgtos-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A3C3D059-7EAD-825C-C7C0-21EC573E39EC -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtRemun-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7524DB1E-3109-B15A-21F2-4C865135B42C -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtReintegr-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::EE42AC13-F023-A9D9-028A-3926F12582A3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtReintegr-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::37D4D345-00C7-7876-E566-AF133FF36141 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtReabreEvPer-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F3D06A34-A938-6146-FFCB-A42EE11E15EC -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtReabreEvPer-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5509279D-D006-99E1-8880-8F58F76E4395 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtPgtos-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::544AA016-81AD-1D69-8CF0-C4212C7283D3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTSVInicio-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::47539BA0-C03B-11B7-FD7D-6C290BE3593D -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTSVAltContr-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::2D16481E-2523-51C3-5E87-B4B1BFC32197 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTSVAltContr-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::4312B071-FFA6-EFFA-65D0-ACAFB9B6A31E -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtRmnRPPS-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::72037789-4025-A405-D747-E1D8214C0BC0 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtRmnRPPS-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::A7934C69-F6D0-6513-818D-F472866C1164 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtRemun-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7BF8845C-86E0-FC65-C2FC-20B51A571C7C -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabCargo-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CF7C9C1C-0365-E5CC-5DC5-BBD3DC2C0A40 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabAmbiente-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3D775A65-34D8-B451-FD3B-3D8288FCFA0E -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabAmbiente-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::674D19C7-D803-2E3F-84AA-E25315B563FA -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTSVTermino-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D6C11EB6-35B7-6A4A-CAAC-032A093713A9 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTSVTermino-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E6DE9A51-C10E-5135-4856-E4CAD7B7D8DE -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTSVInicio-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::21E326A5-F296-491A-0ECB-BB5F6A832C2D -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabFuncao-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::76710EB8-A97A-5F7A-6F65-A89DEC73E39F -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabEstab-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::997E80C1-26CF-2BEF-04B4-8714AAE6A84A -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabEstab-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::91107E15-83D5-BD04-837E-41AA1B45FBE5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabCarreira-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::015C5DBB-BB99-C649-E328-896654F82EF5 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabCarreira-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::5F32062D-9D50-202C-1540-5082E7E3C1A3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabCargo-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::E33E10F8-F040-A807-5257-8387B539FAE4 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabOperPort-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::68110EB9-F27B-B2A9-AD76-F79EB9C721F3 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabLotacao-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::18195BC8-E1CD-A4CB-56CA-9E5BE6DB4BDD -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabLotacao-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::7D00C5DB-5DC9-4602-3499-150958339912 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabHorTur-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::086670E0-14DE-08A3-B240-C57554075C7C -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabFuncao-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::419F7EC9-8E57-930E-1017-9D5D47009DC7 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabHorTur-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::F03994B8-E11A-A541-FE8E-B791ED74C443 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTotConting-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::522989F2-3090-42B8-4302-94C88E9D8F41 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabRubrica-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D04AEFDC-8966-5788-C841-920CDEE487DF -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabRubrica-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::B073CA6E-EA28-7C81-1CF6-F74FFD8233D1 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabProcesso-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::19E550B8-4F6C-5028-B5C9-050F75753170 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabProcesso-v02_04_01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::D5D2C47B-167A-5ECA-5B40-5467B6C2C324 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTabOperPort-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::CF4113A5-9470-DC6B-FA96-253088042069 -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/evtTotConting-v02_04_02.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+File ::3E68FBB4-78F3-2D3F-EDED-2C083BF61A2C -name ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/xmldsig-core-schema.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/eSocial/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
 FileGroup ::D72C857D-E06A-2F05-C239-833B1C202243 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name lhelp -parent FileGroups
 File ::1590C86F-AE05-8172-ECAA-6A04E071434C -name lhelp -location ../../lhelp -parent D72C857D-E06A-2F05-C239-833B1C202243
 Component ::1E2CC756-1740-1A0F-E382-93742C781FAC -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Programa -parent Components
@@ -707,6 +881,7 @@ InstallComponent EF2CF2A9-404A-8079-1410-950E8919E62B -setup Install -type actio
 Condition 1C634A3F-A957-3ECE-C088-1FCB8583BEDE -active Yes -parent EF2CF2A9-404A-8079-1410-950E8919E62B -title {String Is Condition} -component StringIsCondition -TreeObject::id 1C634A3F-A957-3ECE-C088-1FCB8583BEDE
 Condition 0A92A35B-F5B2-E638-347B-EEAEFD172FF1 -active Yes -parent EF2CF2A9-404A-8079-1410-950E8919E62B -title {String Is Condition} -component StringIsCondition -TreeObject::id 0A92A35B-F5B2-E638-347B-EEAEFD172FF1
 InstallComponent E325A662-B25B-3652-5CEF-9483EC320466 -setup Install -type actiongroup -title {Cancel Actions} -alias {Cancel Actions} -active Yes -parent ActionGroupsInstall
+InstallComponent E903E01A-F90A-7C86-1A6B-2356E7032B42 -setup Install -type action -title {Backup File} -component BackupFile -active Yes -parent E325A662-B25B-3652-5CEF-9483EC320466
 InstallComponent BF6B39A7-A8E3-E890-045F-6ACE65114ABC -setup Uninstall -type pane -title Uninstall -component Uninstall -active Yes -parent StandardUninstall
 InstallComponent A57F74B1-0F9C-7DB3-3054-D51EA42B67BB -setup Uninstall -type action -title {Modify Widget} -component ModifyWidget -active Yes -parent BF6B39A7-A8E3-E890-045F-6ACE65114ABC
 InstallComponent 84289702-19A3-B202-CF0A-EDFA7D12E2C2 -setup Uninstall -type action -title {Execute Action} -component ExecuteAction -active Yes -parent BF6B39A7-A8E3-E890-045F-6ACE65114ABC
@@ -864,6 +1039,9 @@ array set Properties {
 0FC52D44-8E6F-EA37-BEC0-7CF736A3222E,Background
 {#FFFFFF}
 
+0FC52D44-8E6F-EA37-BEC0-7CF736A3222E,Conditions
+{2 conditions}
+
 0FC52D44-8E6F-EA37-BEC0-7CF736A3222E,Text,subst
 {1}
 
@@ -904,7 +1082,7 @@ array set Properties {
 {Programas do ACBrMonitor}
 
 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2,FileSize
-{26633618}
+{29283651}
 
 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2,Name
 {Program Files}
@@ -1039,7 +1217,7 @@ array set Properties {
 {<%InstallDir%>/Schemas}
 
 34708C26-EE14-548D-CACD-DF451C26305A,FileSize
-{1114953}
+{6907653}
 
 34708C26-EE14-548D-CACD-DF451C26305A,Name
 {Schemas}
@@ -1079,6 +1257,9 @@ array set Properties {
 
 4904AD9C-08F1-11F0-E677-FAD374845677,Background
 {#FFFFFF}
+
+4904AD9C-08F1-11F0-E677-FAD374845677,Conditions
+{2 conditions}
 
 4904AD9C-08F1-11F0-E677-FAD374845677,Text,subst
 {1}
@@ -1220,6 +1401,9 @@ array set Properties {
 
 550E9534-305C-E629-2699-4D5203274487,Background
 {#FFFFFF}
+
+550E9534-305C-E629-2699-4D5203274487,Conditions
+{3 conditions}
 
 550E9534-305C-E629-2699-4D5203274487,Text,subst
 {1}
@@ -1435,7 +1619,7 @@ A0AAD91A-0EEE-FEE2-D547-23427A537F3A,Destination
 {<%InstallDir%>}
 
 A0AAD91A-0EEE-FEE2-D547-23427A537F3A,FileSize
-{19602874}
+{20692017}
 
 A0AAD91A-0EEE-FEE2-D547-23427A537F3A,Name
 {Documentacao}
@@ -1773,11 +1957,17 @@ D6299F5D-5B27-7374-6636-C4AEFA7A55B1,ExitType
 D72C857D-E06A-2F05-C239-833B1C202243,Destination
 {<%InstallDir%>/lhelp}
 
+D72C857D-E06A-2F05-C239-833B1C202243,FileSize
+{7377616}
+
 D72C857D-E06A-2F05-C239-833B1C202243,Name
 {lhelp}
 
 D8D5EC15-C724-2ADA-0BE5-621B472C7745,Background
 {#FFFFFF}
+
+D8D5EC15-C724-2ADA-0BE5-621B472C7745,Conditions
+{2 conditions}
 
 D8D5EC15-C724-2ADA-0BE5-621B472C7745,Text,subst
 {1}

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2018
+-- pcteCTeW --
+[*] Possivel correção para o problema apontado nessa postagem:
+    https://www.projetoacbr.com.br/forum/topic/37298-cte-os-rejei%C3%A7%C3%A3o-760/?do=findComment&comment=315957
+  Por: Italo Jurisato Junior
+
 28/11/2018
 -- pcteCTeW --
 [*] https://www.projetoacbr.com.br/forum/topic/47868-valida%C3%A7%C3%A3o-incorreta-dos-campos-xorig-e-xdes-na-previs%C3%A3o-do-fluxo-da-carga/

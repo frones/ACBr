@@ -1470,7 +1470,8 @@ procedure TCTeW.GerarinfTribFed;
       Result := 0;
   end;
 begin
-  if ((CTe.ide.UFIni <> CTe.ide.UFFim) and (CTe.ide.indIEToma = inNaoContribuinte)) and
+  if (((CTe.ide.UFIni <> CTe.ide.UFFim) or (CTe.ide.UFEnv = 'RS')) and
+      (CTe.ide.indIEToma = inNaoContribuinte)) and
      ((CTe.Imp.infTribFed.vPIS > 0) or (CTe.Imp.infTribFed.vCOFINS > 0) or
       (CTe.Imp.infTribFed.vIR > 0) or ((CTe.Imp.infTribFed.vINSS > 0) or (InformarINSS = 1)) or
       (CTe.Imp.infTribFed.vCSLL > 0)) then

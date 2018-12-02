@@ -424,6 +424,9 @@ begin
 
     MoverStringParaPChar(Valor, sValor, esTamanho);
     if pLib.Config.Log.Nivel >= logCompleto then
+    if pLib.Config.PrecisaCriptografar(Sessao, Chave) then
+      pLib.GravarLog('   Valor:' + StringOfChar('*', esTamanho)+ ', len:' + IntToStr(esTamanho), logCompleto, True)
+    else
       pLib.GravarLog('   Valor:' + strpas(sValor)+ ', len:' + IntToStr(esTamanho), logCompleto, True);
 
     Result := SetRetorno(ErrOK, strpas(sValor));

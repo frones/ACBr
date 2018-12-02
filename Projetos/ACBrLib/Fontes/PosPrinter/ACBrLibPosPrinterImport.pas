@@ -141,15 +141,15 @@ begin
     Raise EACBrLibException.CreateFmt(SErrArquivoNaoExiste, [FArqLib]);
 
   FACBrPosPrinter := Nil;
-  FHandle := LoadLibrary(FArqLib);
+  FHandle := SafeLoadLibrary(FArqLib);
   if (FHandle > 0) then
   begin
-    FPOSInicializar := GetProcedureAddress(FHandle, 'POS_Inicializar');
-    FPOSFinalizar := GetProcedureAddress(FHandle, 'POS_Finalizar');
-    FPOSConfigLer := GetProcedureAddress(FHandle, 'POS_ConfigLer');
-    FPOSInicializada := GetProcedureAddress(FHandle, 'POS_Inicializada');
-    FPOSUltimoRetorno := GetProcedureAddress(FHandle, 'POS_UltimoRetorno');
-    FPOSGetPosPrinter := GetProcedureAddress(FHandle, 'POS_GetPosPrinter');
+    FPOSInicializar := GetProcAddress(FHandle, 'POS_Inicializar');
+    FPOSFinalizar := GetProcAddress(FHandle, 'POS_Finalizar');
+    FPOSConfigLer := GetProcAddress(FHandle, 'POS_ConfigLer');
+    FPOSInicializada := GetProcAddress(FHandle, 'POS_Inicializada');
+    FPOSUltimoRetorno := GetProcAddress(FHandle, 'POS_UltimoRetorno');
+    FPOSGetPosPrinter := GetProcAddress(FHandle, 'POS_GetPosPrinter');
 
     APointer := FPOSGetPosPrinter;
     if Assigned(APointer) then
@@ -162,7 +162,7 @@ end;
 
 procedure TACBrLibPosPrinter.UnLoadLib;
 begin
-  UnloadLibrary(FHandle);
+  FreeLibrary(FHandle);
 
   FPOSInicializar := nil;
   FPOSFinalizar := nil;

@@ -139,15 +139,15 @@ begin
     Raise EACBrLibException.CreateFmt(SErrArquivoNaoExiste, [FArqLib]);
 
   FACBrMail := Nil;
-  FHandle := LoadLibrary(FArqLib);
+  FHandle := SafeLoadLibrary(FArqLib);
   if (FHandle > 0) then
   begin
-    FMailInicializar := GetProcedureAddress(FHandle, 'MAIL_Inicializar');
-    FMailFinalizar := GetProcedureAddress(FHandle, 'MAIL_Finalizar');
-    FMailConfigLer := GetProcedureAddress(FHandle, 'MAIL_ConfigLer');
-    FMailInicializada := GetProcedureAddress(FHandle, 'MAIL_Inicializada');
-    FMailUltimoRetorno := GetProcedureAddress(FHandle, 'MAIL_UltimoRetorno');
-    FMailGetMail := GetProcedureAddress(FHandle, 'MAIL_GetMail');
+    FMailInicializar := GetProcAddress(FHandle, 'MAIL_Inicializar');
+    FMailFinalizar := GetProcAddress(FHandle, 'MAIL_Finalizar');
+    FMailConfigLer := GetProcAddress(FHandle, 'MAIL_ConfigLer');
+    FMailInicializada := GetProcAddress(FHandle, 'MAIL_Inicializada');
+    FMailUltimoRetorno := GetProcAddress(FHandle, 'MAIL_UltimoRetorno');
+    FMailGetMail := GetProcAddress(FHandle, 'MAIL_GetMail');
 
     APointer := FMailGetMail;
     if Assigned(APointer) then
@@ -160,7 +160,7 @@ end;
 
 procedure TACBrLibMail.UnLoadLib;
 begin
-  UnloadLibrary(FHandle);
+  FreeLibrary(FHandle);
 
   FMailInicializar := nil;
   FMailFinalizar := nil;

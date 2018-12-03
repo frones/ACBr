@@ -1511,6 +1511,8 @@ procedure TfrlDANFeRLPaisagem.FormCreate(Sender: TObject);
 begin
   inherited;
 
+  ConfigurarVariavies(tiPaisagem);
+  
   FineTuneAngleLabels := True;
   rllborda.Align := faNone;
   rllCinza.Align := faNone;

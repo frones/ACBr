@@ -83,8 +83,8 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure ImprimirDACTE(CTE: TCTE = nil); virtual;
-    procedure ImprimirDACTEPDF(CTE: TCTE = nil); virtual;
+    procedure ImprimirDACTe(CTE: TCTE = nil); virtual;
+    procedure ImprimirDACTePDF(CTE: TCTE = nil); virtual;
     procedure ImprimirEVENTO(CTE: TCTe = nil); virtual;
     procedure ImprimirEVENTOPDF(CTE: TCTe = nil); virtual;
     procedure ImprimirINUTILIZACAO(CTE: TCTe = nil); virtual;
@@ -169,12 +169,12 @@ begin
   raise Exception.Create(NomeProcedure);
 end;
 
-procedure TACBrCTeDACTEClass.ImprimirDACTE(CTE: TCTE = nil);
+procedure TACBrCTeDACTEClass.ImprimirDACTe(CTE: TCTE = nil);
 begin
   ErroAbstract('ImprimirDACTE');
 end;
 
-procedure TACBrCTeDACTEClass.ImprimirDACTEPDF(CTE: TCTE = nil);
+procedure TACBrCTeDACTEClass.ImprimirDACTePDF(CTE: TCTE = nil);
 begin
   ErroAbstract('ImprimirDACTEPDF');
 end;

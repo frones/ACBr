@@ -2270,7 +2270,7 @@ end;
 procedure TfrmDACTeRLRetrato.rlb_13_ModAquaviarioBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  i, j: integer;
+  i: integer;
 begin
   inherited;
   PrintIt := RLCTe.PageNumber = 1;

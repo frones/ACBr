@@ -1134,8 +1134,6 @@ end;
 
 procedure TfrmDACTerlRetratoA5.rlb_05_ComplementoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
-var
-  i: integer;
 begin
   inherited;
   PrintIt := rlCTe.PageNumber = 1;
@@ -1389,8 +1387,6 @@ end;
 
 procedure TfrmDACTerlRetratoA5.rlb_13_ModAquaviarioBeforePrint(Sender: TObject;
   var PrintIt: boolean);
-var
-  i, j: integer;
 begin
   inherited;
   PrintIt := rlCTe.PageNumber = 1;

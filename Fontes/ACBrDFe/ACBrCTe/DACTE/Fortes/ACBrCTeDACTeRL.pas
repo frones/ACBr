@@ -166,7 +166,6 @@ end;
 class procedure TfrmDACTeRL.SalvarPDF(aDACTe: TACBrCTeDACTeRL; ACTe: TCTe; AFile: string);
 var
   DACTeReport: TfrmDACTeRL;
-  ADir: string;
 begin
   DACTeReport := Create(nil);
   try

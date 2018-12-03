@@ -85,8 +85,7 @@ type
     property DadosPFX: AnsiString read FDadosPFX write SetDadosPFX;
     property NumeroSerie: String read FNumeroSerie write SetNumeroSerie;
     property Senha: AnsiString read GetSenha write SetSenha;
-    property VerificarValidade: Boolean read FVerificarValidade write
-      FVerificarValidade default True;
+    property VerificarValidade: Boolean read FVerificarValidade write FVerificarValidade default True;
   end;
 
   { TWebServicesConf }
@@ -309,6 +308,8 @@ type
     FPCertificados: TCertificadosConf;
     FPArquivos: TArquivosConf;
     FPSessaoIni: String;
+    FChaveCryptINI: AnsiString;
+
   protected
     procedure CreateGeralConf; virtual;
     procedure CreateWebServicesConf; virtual;
@@ -329,6 +330,7 @@ type
     property Certificados: TCertificadosConf read FPCertificados;
     property Arquivos: TArquivosConf read FPArquivos;
     property SessaoIni: String read FPSessaoIni;
+    property ChaveCryptINI: AnsiString read FChaveCryptINI write FChaveCryptINI;
   end;
 
 implementation
@@ -348,6 +350,7 @@ begin
   inherited Create(AOwner);
 
   FPSessaoIni := '';
+  FChaveCryptINI := '';
 
   CreateGeralConf;
   FPGeral.Name := 'GeralConf';
@@ -634,7 +637,6 @@ begin
   CalcSSLLib;
 end;
 
-
 procedure TGeralConf.CalcSSLLib;
 begin
   if not FCalcSSLLib then Exit;
@@ -677,7 +679,6 @@ begin
   else
     FSSLLib := libCustom;
 end;
-
 
 { TWebServicesConf }
 
@@ -748,7 +749,10 @@ begin
   AIni.WriteString(CDFeSessaoIni, 'Proxy.Host', ProxyHost);
   AIni.WriteString(CDFeSessaoIni, 'Proxy.Port', ProxyPort);
   AIni.WriteString(CDFeSessaoIni, 'Proxy.User', ProxyUser);
-  AIni.WriteString(CDFeSessaoIni, 'Proxy.Pass', EncodeBase64(StrCrypt(ProxyPass, ProxyHost)));
+  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
+    AIni.WriteString(CDFeSessaoIni, 'Proxy.Pass', EncodeBase64(StrCrypt(ProxyPass, fpConfiguracoes.ChaveCryptINI)))
+  else
+    AIni.WriteString(CDFeSessaoIni, 'Proxy.Pass', EncodeBase64(StrCrypt(ProxyPass, ProxyHost)));
 
   if NaoEstaVazio(fpConfiguracoes.SessaoIni) then
   begin
@@ -774,7 +778,10 @@ begin
   ProxyHost := AIni.ReadString(CDFeSessaoIni, 'Proxy.Host', ProxyHost);
   ProxyPort := AIni.ReadString(CDFeSessaoIni, 'Proxy.Port', ProxyPort);
   ProxyUser := AIni.ReadString(CDFeSessaoIni, 'Proxy.User', ProxyUser);
-  ProxyPass := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Proxy.Pass', '')), ProxyHost);
+  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
+    ProxyPass := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Proxy.Pass', '')), fpConfiguracoes.ChaveCryptINI)
+  else
+    ProxyPass := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Proxy.Pass', '')), ProxyHost);
 
   if NaoEstaVazio(fpConfiguracoes.SessaoIni) then
   begin
@@ -971,20 +978,48 @@ end;
 procedure TCertificadosConf.GravarIni(const AIni: TCustomIniFile);
 begin
   AIni.WriteString(CDFeSessaoIni, 'ArquivoPFX', ArquivoPFX);
-  AIni.WriteString(CDFeSessaoIni, 'DadosPFX', EncodeBase64(DadosPFX));
+
+  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
+    AIni.WriteString(CDFeSessaoIni, 'DadosPFX', EncodeBase64(StrCrypt(DadosPFX, fpConfiguracoes.ChaveCryptINI)))
+  else
+    AIni.WriteString(CDFeSessaoIni, 'DadosPFX', EncodeBase64(DadosPFX));
+
   AIni.WriteString(CDFeSessaoIni, 'NumeroSerie', NumeroSerie);
-  AIni.WriteString(CDFeSessaoIni, 'Senha', EncodeBase64(FSenha));
-  AIni.WriteString(CDFeSessaoIni, 'FK', EncodeBase64(FK));
+
+  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
+    AIni.WriteString(CDFeSessaoIni, 'Senha', EncodeBase64(StrCrypt(FSenha, fpConfiguracoes.ChaveCryptINI)))
+  else
+    AIni.WriteString(CDFeSessaoIni, 'Senha', EncodeBase64(FSenha));
+
+  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
+    AIni.WriteString(CDFeSessaoIni, 'FK', EncodeBase64(StrCrypt(FK, fpConfiguracoes.ChaveCryptINI)))
+  else
+    AIni.WriteString(CDFeSessaoIni, 'FK', EncodeBase64(FK));
+
   AIni.WriteBool(CDFeSessaoIni, 'VerificarValidade', VerificarValidade);
 end;
 
 procedure TCertificadosConf.LerIni(const AIni: TCustomIniFile);
 begin
   ArquivoPFX := AIni.ReadString(CDFeSessaoIni, 'ArquivoPFX', ArquivoPFX);
-  DadosPFX := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'DadosPFX', EncodeBase64(DadosPFX)));
+
+  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
+    DadosPFX := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'DadosPFX', '')), fpConfiguracoes.ChaveCryptINI)
+  else
+    DadosPFX := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'DadosPFX', EncodeBase64(DadosPFX)));
+
   NumeroSerie := AIni.ReadString(CDFeSessaoIni, 'NumeroSerie', NumeroSerie);
-  FSenha := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'Senha', EncodeBase64(FSenha)));
-  FK := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'FK', EncodeBase64(FK)));
+
+  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
+    FSenha := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Senha', '')), fpConfiguracoes.ChaveCryptINI)
+  else
+    FSenha := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'Senha', EncodeBase64(FSenha)));
+
+  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
+    FK := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'FK', '')), fpConfiguracoes.ChaveCryptINI)
+  else
+    FK := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'FK', EncodeBase64(FK)));
+
   VerificarValidade := AIni.ReadBool(CDFeSessaoIni, 'VerificarValidade', VerificarValidade);
 end;
 

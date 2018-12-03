@@ -46,10 +46,10 @@ uses
 type
   TDFeReportFortes = class
   public
-    class procedure AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport); static;
-    class procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport); static;
-    class procedure AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; AFile: String); static;
-    class procedure CarregarLogo(ALogoImage: TRLImage; ALogo: string); static;
+    class procedure AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
+    class procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport);
+    class procedure AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; AFile: String);
+    class procedure CarregarLogo(ALogoImage: TRLImage; ALogo: string);
   end;
 
 

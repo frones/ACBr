@@ -72,7 +72,7 @@ unit ACBrNFeDANFEFRDM;
 interface
 
 uses
-  SysUtils, Classes, DB, DBClient, VCL.Graphics,
+  SysUtils, Classes, DB, DBClient, Graphics,
   pcnEnvEventoNFe, pcnRetInutNFe, pcnNFe, pcnConversao,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass,
   ACBrUtil, ACBrDelphiZXingQrCode,

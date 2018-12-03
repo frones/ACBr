@@ -914,7 +914,7 @@ function TLibConfig.PrecisaCriptografar(ASessao, AChave: String): Boolean;
 begin
   Result := False;
 
-  if (ASessao = CSessaoProxy) or (ASessao = CSessaoEmail) then
+  if (ASessao = CSessaoProxy) or (ASessao = CSessaoEmail) or (ASessao = CSessaoDFe) then
   begin
     Result := AChave = CChaveSenha;
   end;

@@ -42,7 +42,7 @@ uses
 
 const
   CLibSATNome = 'ACBrLibSAT';
-  CLibSATVersao = '0.0.1';
+  CLibSATVersao = '0.0.2';
 
   CSessaoSAT = 'SAT';
   CChaveNomeDLL = 'NomeDLL';

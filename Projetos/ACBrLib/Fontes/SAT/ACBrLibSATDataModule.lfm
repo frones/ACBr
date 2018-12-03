@@ -30,22 +30,34 @@ object LibSatDM: TLibSatDM
     top = 80
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
-    Mask_qCom = ',0.0000'
-    Mask_vUnCom = ',0.000'
-    SoftwareHouse = 'Projeto ACBr'
     Site = 'http://www.projetoacbr.com.br'
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     left = 200
-    top = 152
+    top = 160
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
-    Mask_qCom = ',0.0000'
-    Mask_vUnCom = ',0.000'
-    SoftwareHouse = 'Projeto ACBr'
     Site = 'http://www.projetoacbr.com.br'
+    MargemInferior = 4
+    MargemSuperior = 2
+    MargemEsquerda = 2
+    MargemDireita = 2
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     left = 61
-    top = 152
+    top = 160
   end
   object ACBrIntegrador1: TACBrIntegrador
     PastaInput = 'C:\Integrador\Input\'

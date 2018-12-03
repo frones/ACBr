@@ -39,6 +39,7 @@ exports
   SAT_ComunicarCertificadoICPBRASIL,
   SAT_ExtrairLogs,
   SAT_TesteFimAFim,
+  SAT_GerarAssinaturaSAT,
 
   SAT_CriarCFe,
   SAT_CriarEnviarCFe,

@@ -63,7 +63,7 @@ type
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
-    procedure ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolean = False);
+    procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
     procedure CarregarDadosVenda(aStr: String; aNomePDF: String = '');
     procedure CarregarDadosCancelamento(aStr: String);
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
@@ -200,21 +200,29 @@ begin
       XmlSignLib := pLibConfig.Config.XmlSignLib;
     end;
 
+    with SSL do
+    begin
+      SSLCryptLib := pLibConfig.Certificado.SSLCryptLib;
+      ArquivoPFX := pLibConfig.Certificado.ArquivoPFX;
+      NumeroSerie := pLibConfig.Certificado.NumeroSerie;
+      Senha := pLibConfig.Certificado.Senha;
+    end;
+
     with ConfigArquivos do
     begin
-      SalvarCFe := pLibConfig.ConfigArquivos.SalvarCFe;
-      SalvarCFeCanc := pLibConfig.ConfigArquivos.SalvarCFeCanc;
-      SalvarEnvio := pLibConfig.ConfigArquivos.SalvarEnvio;
-      SepararPorCNPJ := pLibConfig.ConfigArquivos.SepararPorCNPJ;
-      SepararPorModelo := pLibConfig.ConfigArquivos.SepararPorModelo;
-      SepararPorAno := pLibConfig.ConfigArquivos.SepararPorAno;
-      SepararPorMes := pLibConfig.ConfigArquivos.SepararPorMes;
-      SepararPorDia := pLibConfig.ConfigArquivos.SepararPorDia;
-      PastaCFeVenda := pLibConfig.ConfigArquivos.PastaCFeVenda;
-      PastaCFeCancelamento := pLibConfig.ConfigArquivos.PastaCFeCancelamento;
-      PastaEnvio := pLibConfig.ConfigArquivos.PastaEnvio;
-      PrefixoArqCFe := pLibConfig.ConfigArquivos.PrefixoArqCFe;
-      PrefixoArqCFeCanc := pLibConfig.ConfigArquivos.PrefixoArqCFeCanc;
+      SalvarCFe := pLibConfig.Arquivos.SalvarCFe;
+      SalvarCFeCanc := pLibConfig.Arquivos.SalvarCFeCanc;
+      SalvarEnvio := pLibConfig.Arquivos.SalvarEnvio;
+      SepararPorCNPJ := pLibConfig.Arquivos.SepararPorCNPJ;
+      SepararPorModelo := pLibConfig.Arquivos.SepararPorModelo;
+      SepararPorAno := pLibConfig.Arquivos.SepararPorAno;
+      SepararPorMes := pLibConfig.Arquivos.SepararPorMes;
+      SepararPorDia := pLibConfig.Arquivos.SepararPorDia;
+      PastaCFeVenda := pLibConfig.Arquivos.PastaCFeVenda;
+      PastaCFeCancelamento := pLibConfig.Arquivos.PastaCFeCancelamento;
+      PastaEnvio := pLibConfig.Arquivos.PastaEnvio;
+      PrefixoArqCFe := pLibConfig.Arquivos.PrefixoArqCFe;
+      PrefixoArqCFeCanc := pLibConfig.Arquivos.PrefixoArqCFeCanc;
     end;
 
     with Rede do
@@ -363,15 +371,15 @@ begin
       ACBrSAT1.Extrato := ACBrSATExtratoFortes1;
 
       if NomeImpressora <> '' then
-        ACBrSATExtratoFortes1.PrinterName := NomeImpressora
+        ACBrSATExtratoFortes1.Impressora := NomeImpressora
       else
-        ACBrSATExtratoFortes1.PrinterName := PrinterName;
+        ACBrSATExtratoFortes1.Impressora := PrinterName;
 
       ACBrSATExtratoFortes1.LarguraBobina := LarguraBobina;
-      ACBrSATExtratoFortes1.Margens.Topo := MargensTopo;
-      ACBrSATExtratoFortes1.Margens.Esquerda := MargensEsquerda;
-      ACBrSATExtratoFortes1.Margens.Fundo := MargensFundo;
-      ACBrSATExtratoFortes1.Margens.Direita := MargensDireita;
+      ACBrSATExtratoFortes1.MargemSuperior := MargensTopo;
+      ACBrSATExtratoFortes1.MargemEsquerda := MargensEsquerda;
+      ACBrSATExtratoFortes1.MargemInferior := MargensFundo;
+      ACBrSATExtratoFortes1.MargemDireita := MargensDireita;
       ACBrSATExtratoFortes1.EspacoFinal := EspacoFinal;
       ACBrSATExtratoFortes1.LogoWidth := LogoWidth;
       ACBrSATExtratoFortes1.LogoHeigth := LogoHeigth;
@@ -389,21 +397,21 @@ begin
     if FileExists(PictureLogo) then
       ACBrSAT1.Extrato.PictureLogo.Bitmap.LoadFromFile(PictureLogo);
 
-    ACBrSAT1.Extrato.Mask_qCom := Mask_qCom;
-    ACBrSAT1.Extrato.Mask_vUnCom := Mask_vUnCom;
+    ACBrSAT1.Extrato.CasasDecimais.MaskqCom := MaskqCom;
+    ACBrSAT1.Extrato.CasasDecimais.MaskvUnCom := MaskvUnCom;
     ACBrSAT1.Extrato.ImprimeQRCode := ImprimeQRCode;
     ACBrSAT1.Extrato.ImprimeMsgOlhoNoImposto := ImprimeMsgOlhoNoImposto;
     ACBrSAT1.Extrato.ImprimeCPFNaoInformado := ImprimeCPFNaoInformado;
-    ACBrSAT1.Extrato.MostrarPreview := MostrarPreview;
-    ACBrSAT1.Extrato.MostrarSetup := MostrarSetup;
+    ACBrSAT1.Extrato.MostraPreview := MostraPreview;
+    ACBrSAT1.Extrato.MostraSetup := MostraSetup;
     ACBrSAT1.Extrato.NumCopias := NumCopias;
-    ACBrSAT1.Extrato.NomeArquivo := NomeArquivo;
-    ACBrSAT1.Extrato.SoftwareHouse := SoftwareHouse;
-    ACBrSAT1.Extrato.Site := Site;
+    ACBrSAT1.Extrato.NomeDocumento := NomeDocumento;
+    ACBrSAT1.Extrato.Sistema := pLibConfig.Sistema.Nome;
+    ACBrSAT1.Extrato.Site := pLibConfig.SoftwareHouse.WebSite;
     ACBrSAT1.Extrato.MsgAppQRCode := MsgAppQRCode;
     ACBrSAT1.Extrato.ImprimeEmUmaLinha := ImprimeEmUmaLinha;
     ACBrSAT1.Extrato.ImprimeDescAcrescItem := ImprimeDescAcrescItem;
-    ACBrSAT1.Extrato.UsaCodigoEanImpressao := UsaCodigoEanImpressao;
+    ACBrSAT1.Extrato.ImprimeCodigoEan := ImprimeCodigoEan;
 
     if GerarPDF then
       ACBrSAT1.Extrato.Filtro := fiPDF
@@ -428,7 +436,7 @@ begin
   end;
 
   if (ACBrSAT1.Extrato.Filtro = fiPDF) then
-      ACBrSAT1.Extrato.NomeArquivo := IfThen(aNomePDF <> '', aNomePDF ,
+      ACBrSAT1.Extrato.NomeDocumento := IfThen(aNomePDF <> '', aNomePDF ,
         ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaCFeVenda, ACBrSAT1.CFe.infCFe.ID,'','.pdf'));
 end;
 

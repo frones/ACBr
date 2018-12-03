@@ -165,6 +165,11 @@ const
   CChaveMPDirecao = 'Direcao';
   CChaveMPEspacoEntreLinhas = 'EspacoEntreLinhas';
 
+  CSessaoDFe = 'DFe';
+  CChaveSSLCryptLib = 'SSLCryptLib';
+  CChaveArquivoPFX = 'ArquivoPFX';
+  CChaveNumeroSerie = 'NumeroSerie';
+
 resourcestring
   SErrLibSemNome = 'Nome da Biblioteca não foi definido';
   SErrLibDono = 'Dono de TLibConfig deve ser do tipo TACBrLib';

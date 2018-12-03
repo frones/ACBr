@@ -120,6 +120,9 @@ function SAT_ExtrairLogs(eArquivo: PChar): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_TesteFimAFim(eArquivoXmlVenda: PChar): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarAssinaturaSAT(CNPJSHW, CNPJEmitente: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region CFe}
@@ -154,7 +157,7 @@ implementation
 
 uses
   ACBrUtil, ACBrLibConsts, ACBrLibSATConsts, ACBrLibConfig, ACBrLibSATConfig,
-  ACBrLibResposta, ACBrLibSATRespostas, ACBrMail,
+  ACBrLibResposta, ACBrLibSATRespostas, ACBrMail, ACBrDFeSSL, ACBrValidador,
   ACBrSATExtratoESCPOS;
 
 { TACBrLibSAT }
@@ -734,6 +737,59 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
+
+function SAT_GerarAssinaturaSAT(CNPJSHW, CNPJEmitente: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  cCNPJShw: String;
+  cCNPJEmitente: String;
+  cCodigoVinculacao: String;
+  Resposta: String;
+begin
+  try
+    VerificarLibInicializada;
+    cCNPJShw := ansistring(CNPJSHW);
+    cCNPJEmitente := ansistring(CNPJEmitente);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_GerarAssinaturaSAT(' + cCNPJShw + ', ' + cCNPJEmitente + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_GerarAssinaturaSAT', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        Resposta := '';
+
+        Resposta := ACBrValidador.ValidarCNPJ(cCNPJShw);
+        if NaoEstaVazio( Trim(Resposta) ) then
+          raise EACBrLibException.Create(ErrCNPJInvalido, 'CNPJ da Software House inválido!');
+
+        Resposta := ACBrValidador.ValidarCNPJ(cCNPJEmitente);
+        if NaoEstaVazio( Trim(Resposta) ) then
+          raise EACBrLibException.Create(ErrCNPJInvalido, 'CNPJ do Emitente inválido!');
+
+
+        cCodigoVinculacao := Onlynumber(cCNPJShw) + Onlynumber(cCNPJEmitente);
+        Resposta := SatDM.ACBrSAT1.SSL.CalcHash(cCodigoVinculacao, dgstSHA256, outBase64, True);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 {%endregion}
 
 {%region CFe}
@@ -867,7 +923,7 @@ begin
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
-        SatDM.ACBrSAT1.CFe.LoadFromFile(ArquivoXml);
+        SatDM.CarregarDadosVenda(ArquivoXml);
 
         Resp := TRetornoEnvio.Create(Config.TipoResposta);
 
@@ -923,7 +979,7 @@ begin
         if (ArquivoXml <> '') and (FileExists(ArquivoXml)) then
         begin
           SatDM.ACBrSAT1.CFe.Clear;
-          SatDM.ACBrSAT1.CFe.LoadFromFile(ArquivoXml);
+          SatDM.CarregarDadosVenda(ArquivoXml);
         end;
 
         Resp := TRetornoCancelarCFe.Create(Config.TipoResposta);
@@ -1135,12 +1191,11 @@ begin
 
       try
         SatDM.ConfigurarImpressao('', True);
-        SatDM.CarregarDadosVenda(ArqXMLVenda);
-        SatDM.ACBrSAT1.Extrato.NomeArquivo := NomeArquivo;
+        SatDM.CarregarDadosVenda(ArqXMLVenda, NomeArquivo);
         SatDM.ACBrSAT1.ImprimirExtrato;
 
-        MoverStringParaPChar(SatDM.ACBrSAT1.Extrato.NomeArquivo, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, SatDM.ACBrSAT1.Extrato.NomeArquivo);
+        MoverStringParaPChar(SatDM.ACBrSAT1.Extrato.NomeDocumento, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, SatDM.ACBrSAT1.Extrato.NomeDocumento);
       finally
         SatDM.Destravar;
       end;
@@ -1190,8 +1245,8 @@ begin
         slAnexos := TStringList.Create;
         slAnexos.Text := Anexos;
 
-        SatDM.ConfigurarImpressao('');
-        SatDM.CarregarDadosVenda(ArqXMLVenda);
+        SatDM.ConfigurarImpressao;
+        SatDM.CarregarDadosVenda(ArqXMLVenda, NomeArquivo);
         SatDM.ACBrSAT1.EnviarEmail(Para, Assunto, slMensagem, slCC, slAnexos);
         Result := SetRetorno(ErrOK);
       finally

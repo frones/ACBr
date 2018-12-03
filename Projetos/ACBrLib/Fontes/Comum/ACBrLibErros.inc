@@ -7,4 +7,6 @@ ErrConfigGravar = -4;
 ErrArquivoNaoExiste = -5;
 ErrDiretorioNaoExiste = -6;
 ErrExecutandoMetodo = -10;
+ErrCNPJInvalido = -11;
+ErrCPFInvalido = -12;
 

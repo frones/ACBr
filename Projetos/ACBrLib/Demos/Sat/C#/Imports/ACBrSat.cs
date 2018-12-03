@@ -83,6 +83,9 @@ namespace ACBrLibSat
         public static extern int SAT_TesteFimAFim(string eArquivoXmlVenda);
 
         [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SAT_GerarAssinaturaSAT(string CNPJSHW, string CNPJEmitente, StringBuilder buffer, ref int bufferSize);
+
+        [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SAT_CriarCFe(string eArquivoIni, StringBuilder buffer, ref int bufferSize);
 
         [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]

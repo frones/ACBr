@@ -1,6 +1,4 @@
-﻿using ACBrLibMail;
-using ACBrLibPosPrinter;
-using System;
+﻿using System;
 using System.Drawing.Printing;
 using System.IO;
 using System.Text;
@@ -319,7 +317,7 @@ namespace ACBrLibSat.Demo
             bufferLen = 256;
             pValue.Clear();
 
-            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "SoftwareHouse".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrSat.SAT_ConfigLerValor("Sistema".ToUTF8(), "Nome".ToUTF8(), pValue, ref bufferLen);
             ACBrSat.CheckResult(ret);
 
             txtSoftwareHouse.Text = pValue.ToString();
@@ -327,7 +325,7 @@ namespace ACBrLibSat.Demo
             bufferLen = 256;
             pValue.Clear();
 
-            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "PrinterName".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "Impresora".ToUTF8(), pValue, ref bufferLen);
             ACBrSat.CheckResult(ret);
 
             cbbImpressora.Text = pValue.ToString();
@@ -335,7 +333,7 @@ namespace ACBrLibSat.Demo
             bufferLen = 256;
             pValue.Clear();
 
-            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "Site".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrSat.SAT_ConfigLerValor("SoftwareHouse".ToUTF8(), "WebSite".ToUTF8(), pValue, ref bufferLen);
             ACBrSat.CheckResult(ret);
 
             txtSite.Text = pValue.ToString();
@@ -343,7 +341,7 @@ namespace ACBrLibSat.Demo
             bufferLen = 256;
             pValue.Clear();
 
-            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "MostrarPreview".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "MostraPreview".ToUTF8(), pValue, ref bufferLen);
             ACBrSat.CheckResult(ret);
 
             chkPreview.Checked = Convert.ToBoolean(int.Parse(pValue.ToString()));
@@ -351,7 +349,7 @@ namespace ACBrLibSat.Demo
             bufferLen = 256;
             pValue.Clear();
 
-            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "MostrarSetup".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "MostraSetup".ToUTF8(), pValue, ref bufferLen);
             ACBrSat.CheckResult(ret);
 
             chkSetup.Checked = Convert.ToBoolean(int.Parse(pValue.ToString()));
@@ -359,7 +357,7 @@ namespace ACBrLibSat.Demo
             bufferLen = 256;
             pValue.Clear();
 
-            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "UsaCodigoEanImpressao".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "ImprimeCodigoEan".ToUTF8(), pValue, ref bufferLen);
             ACBrSat.CheckResult(ret);
 
             chkUsaCodigoEanImpressao.Checked = Convert.ToBoolean(int.Parse(pValue.ToString()));
@@ -554,22 +552,22 @@ namespace ACBrLibSat.Demo
             ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "NumCopias".ToUTF8(), nudCopias.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "SoftwareHouse".ToUTF8(), txtSoftwareHouse.Text.ToUTF8());
+            ret = ACBrSat.SAT_ConfigGravarValor("Sistema".ToUTF8(), "Nome".ToUTF8(), txtSoftwareHouse.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "PrinterName".ToUTF8(), cbbImpressora.Text.ToUTF8());
+            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "Impressora".ToUTF8(), cbbImpressora.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "Site".ToUTF8(), txtSite.Text.ToUTF8());
+            ret = ACBrSat.SAT_ConfigGravarValor("SoftwareHouse".ToUTF8(), "WebSite".ToUTF8(), txtSite.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "MostrarPreview".ToUTF8(), (chkPreview.Checked ? "1" : "0").ToUTF8());
+            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "MostraPreview".ToUTF8(), (chkPreview.Checked ? "1" : "0").ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "MostrarSetup".ToUTF8(), (chkSetup.Checked ? "1" : "0").ToUTF8());
+            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "MostraSetup".ToUTF8(), (chkSetup.Checked ? "1" : "0").ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "UsaCodigoEanImpressao".ToUTF8(), (chkUsaCodigoEanImpressao.Checked ? "1" : "0").ToUTF8());
+            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "ImprimeCodigoEan".ToUTF8(), (chkUsaCodigoEanImpressao.Checked ? "1" : "0").ToUTF8());
             ACBrSat.CheckResult(ret);
 
             ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "ImprimeEmUmaLinha".ToUTF8(), (chkImprimeEmUmaLinha.Checked ? "1" : "0").ToUTF8());

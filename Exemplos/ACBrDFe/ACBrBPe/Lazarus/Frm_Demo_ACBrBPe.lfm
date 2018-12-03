@@ -11,7 +11,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.8.4.0'
   object Panel2: TPanel
     Left = 297
     Height = 653
@@ -250,7 +250,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
           ParentColor = False
           ParentFont = False
           TabOrder = 0
-          Gutter.Width = 57
+          Gutter.Width = 0
           Gutter.MouseActions = <>
           Keystrokes = <>
           MouseActions = <>
@@ -265,39 +265,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
           SelectedColor.UnderlinePriority = 50
           SelectedColor.StrikeOutPriority = 50
           inline SynLeftGutterPartList1: TSynGutterPartList
-            object SynGutterMarks1: TSynGutterMarks
-              Width = 24
-              MouseActions = <>
-            end
-            object SynGutterLineNumber1: TSynGutterLineNumber
-              Width = 17
-              MouseActions = <>
-              MarkupInfo.Background = clBtnFace
-              MarkupInfo.Foreground = clNone
-              DigitCount = 2
-              ShowOnlyLineNumbersMultiplesOf = 1
-              ZeroStart = False
-              LeadingZeros = False
-            end
-            object SynGutterChanges1: TSynGutterChanges
-              Width = 4
-              MouseActions = <>
-              ModifiedColor = 59900
-              SavedColor = clGreen
-            end
-            object SynGutterSeparator1: TSynGutterSeparator
-              Width = 2
-              MouseActions = <>
-              MarkupInfo.Background = clWhite
-              MarkupInfo.Foreground = clGray
-            end
-            object SynGutterCodeFolding1: TSynGutterCodeFolding
-              MouseActions = <>
-              MarkupInfo.Background = clNone
-              MarkupInfo.Foreground = clGray
-              MouseActionsExpanded = <>
-              MouseActionsCollapsed = <>
-            end
           end
         end
       end
@@ -1962,43 +1929,20 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     top = 385
   end
   object ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS
-    ACBrBPe = ACBrBPe1
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDABPE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = True
-    MargemIBPerior = 0.8
+    MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = ',0.00'
-    CasasDecimais._Mask_vUnCom = ',0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 8
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    BPeCancelada = False
-    ImprimirItens = True
-    vTroco = 0
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrBPe = ACBrBPe1
+    TipoDABPE = tiSemGeracao
+    Cancelada = False
     ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
-    vTribFed = 0
-    vTribEst = 0
-    vTribMun = 0
+    ImprimeNomeFantasia = False
     PosPrinter = ACBrPosPrinter1
     left = 382
     top = 385

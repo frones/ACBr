@@ -25,8 +25,8 @@ object frmStatus: TfrmStatus
     Color = clBlack
     TabOrder = 0
     object lbl1: TLabel
-      Left = 2
-      Top = 2
+      Left = 0
+      Top = 0
       Width = 477
       Height = 17
       Align = alTop
@@ -44,8 +44,8 @@ object frmStatus: TfrmStatus
       Layout = tlCenter
     end
     object lblStatus: TLabel
-      Left = 2
-      Top = 19
+      Left = 0
+      Top = 17
       Width = 477
       Height = 24
       Align = alClient
@@ -60,4 +60,4 @@ object frmStatus: TfrmStatus
       Layout = tlCenter
     end
   end
-end
+end

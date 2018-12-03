@@ -69,7 +69,7 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}	
-  TACBrNFeDANFeESCPOS = class(TACBrNFeDANFEClass)
+  TACBrNFeDANFeESCPOS = class(TACBrNFeDANFCEClass)
   private
     FPosPrinter : TACBrPosPrinter ;
     procedure AjustaStringList(AStringList: TStringList);
@@ -127,7 +127,7 @@ implementation
 
 uses
   strutils, Math,
-  ACBrNFe, ACBrValidador, ACBrUtil, ACBrDFeUtil, ACBrConsts,
+  ACBrNFe, ACBrValidador, ACBrUtil, ACBrDFeUtil, ACBrConsts, ACBrDFeDANFeReport,
    pcnConversao, pcnAuxiliar;
 
 procedure Register;
@@ -281,7 +281,7 @@ var
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
     LinhaCmd: String;
 begin
-  if ImprimirItens then
+  if ImprimeItens then
   begin
     FPosPrinter.Buffer.Add('</ae><c>'+ACBrStr(PadSpace('#|Código|Descrição|Qtde|Un|Valor unit.|Valor total',
                                             FPosPrinter.ColunasFonteCondensada, '|')));
@@ -290,13 +290,13 @@ begin
     begin
       with FpNFe.Det.Items[i] do
       begin
-        sItem        :=        IntToStrZero( Prod.nItem, 3);
-	sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
-        sDescricao   :=                Trim( Prod.xProd);
-        sQuantidade  :=    FormatQuantidade( Prod.QCom, False );
-        sUnidade     :=                Trim( Prod.uCom);
-        sVlrUnitario := FormatValorUnitario( Prod.VUnCom );
-        sVlrProduto  :=       FormatFloatBr( Prod.vProd );
+        sItem        :=          IntToStrZero( Prod.nItem, 3);
+	sCodigo      :=          ManterCodigo( Prod.cEAN , Prod.cProd );
+        sDescricao   :=                  Trim( Prod.xProd);
+        sQuantidade  :=    FormatarQuantidade( Prod.QCom, False );
+        sUnidade     :=                  Trim( Prod.uCom);
+        sVlrUnitario := FormatarValorUnitario( Prod.VUnCom );
+        sVlrProduto  :=         FormatFloatBr( Prod.vProd );
 
         if ImprimeEmUmaLinha then
         begin
@@ -428,10 +428,10 @@ procedure TACBrNFeDANFeESCPOS.GerarTotalTributos;
 var
   MsgTributos : String;
 begin
-  if not ImprimirTributos then
+  if (ImprimeTributos = trbNenhum) then
     Exit;
 
-  if TributosSeparadamente and ((vTribFed+vTribEst+vTribMun) > 0) then
+  if (ImprimeTributos = trbSeparadamente) and ((vTribFed+vTribEst+vTribMun) > 0) then
   begin
      MsgTributos:= 'Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s Federal R$ %s Estadual R$ %s Municipal R$ %s';
      FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloatBr(vTribFed + vTribEst + vTribMun),
@@ -685,7 +685,7 @@ begin
 
   DadosQRCode := CalcularDadosQRCode;
 
-  if QRCodeLateral and (PosPrinter.Colunas >= 48) and (PosPrinter.TagsNaoSuportadas.IndexOf(cTagModoPaginaLiga) < 0) then
+  if ImprimeQRCodeLateral and (PosPrinter.Colunas >= 48) and (PosPrinter.TagsNaoSuportadas.IndexOf(cTagModoPaginaLiga) < 0) then
   begin
     FPosPrinter.Buffer.Add(' ');
 
@@ -752,12 +752,12 @@ var
   OldImprimirItens: Boolean;
 begin
   AtivarPosPrinter;
-  OldImprimirItens := ImprimirItens;
+  OldImprimirItens := ImprimeItens;
   try
-    ImprimirItens := False;
+    ImprimeItens := False;
     MontarEnviarDANFE(NFE, True);
   finally
-    ImprimirItens := OldImprimirItens;
+    ImprimeItens := OldImprimirItens;
   end;
 end;
 
@@ -950,10 +950,9 @@ begin
 end;
 
 
-{$IFDEF FPC}
-
+{$IfDef FPC}
 initialization
 {$I ACBrNFeDANFeESCPOS.lrs}
-{$ENDIF}
+{$EndIf}
 
 end.

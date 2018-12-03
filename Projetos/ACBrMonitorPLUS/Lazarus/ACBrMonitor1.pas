@@ -1609,8 +1609,8 @@ uses
   {$IFDEF MSWINDOWS} sndkey32, {$ENDIF}
   {$IFDEF LINUX} unix, baseunix, termio, {$ENDIF}
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
-  ConfiguraSerial, SelecionarCertificado,
-  ACBrSATExtratoClass, ACBrNFeConfiguracoes, ACBrCTeConfiguracoes,
+  ConfiguraSerial, SelecionarCertificado, ACBrSATExtratoClass,
+  ACBrNFeConfiguracoes, ACBrNFeDANFEClass, ACBrCTeConfiguracoes,
   ACBrMDFeConfiguracoes, ACBrGNREConfiguracoes, ACBreSocialConfiguracoes,
   ACBrReinfConfiguracoes;
 
@@ -4625,8 +4625,8 @@ begin
     ACBrCTe1.DACTe.Site             := edtSiteEmpresa.Text;
     ACBrCTe1.DACTe.Email            := edtEmailEmpresa.Text;
     ACBrCTe1.DACTe.Fax              := edtFaxEmpresa.Text;
-    ACBrCTe1.DACTe.ImprimirDescPorc := cbxImpDescPorc.Checked;
-    ACBrCTe1.DACTe.MostrarPreview   := cbxMostrarPreview.Checked;
+    ACBrCTe1.DACTe.ImprimeDescPorc  := cbxImpDescPorc.Checked;
+    ACBrCTe1.DACTe.MostraPreview    := cbxMostrarPreview.Checked;
     ACBrCTe1.DACTe.Impressora       := cbxImpressora.Text;
     ACBrCTe1.DACTe.NumCopias        := edtNumCopia.Value;
     ACBrCTe1.DACTe.MargemInferior   := fspeMargemInf.Value;
@@ -4634,10 +4634,10 @@ begin
     ACBrCTe1.DACTe.MargemDireita    := fspeMargemDir.Value;
     ACBrCTe1.DACTe.MargemEsquerda   := fspeMargemEsq.Value;
     ACBrCTe1.DACTe.PathPDF          := edtPathPDF.Text;
-    ACBrCTe1.DACTe.MostrarStatus        := cbxMostraStatus.Checked;
-    ACBrCTe1.DACTe.ExpandirLogoMarca    := cbxExpandirLogo.Checked;
-    ACBrCTe1.DACTE.UsarSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
-    ACBrCTeDACTeRL1.PosCanhoto          := TPosRecibo( rgLocalCanhoto.ItemIndex );
+    ACBrCTe1.DACTe.MostraStatus     := cbxMostraStatus.Checked;
+    ACBrCTe1.DACTe.ExpandeLogoMarca := cbxExpandirLogo.Checked;
+    ACBrCTe1.DACTE.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+    ACBrCTeDACTeRL1.PosCanhoto         := TPosRecibo( rgLocalCanhoto.ItemIndex );
 
     ACBrMDFe1.DAMDFe.TipoDAMDFe        := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrMDFe1.DAMDFe.Logo              := edtLogoMarca.Text;
@@ -4645,7 +4645,7 @@ begin
     ACBrMDFe1.DAMDFe.Site              := edtSiteEmpresa.Text;
     ACBrMDFe1.DAMDFe.Email             := edtEmailEmpresa.Text;
     ACBrMDFe1.DAMDFe.Fax               := edtFaxEmpresa.Text;
-    ACBrMDFe1.DAMDFe.MostrarPreview    := cbxMostrarPreview.Checked;
+    ACBrMDFe1.DAMDFe.MostraPreview     := cbxMostrarPreview.Checked;
     ACBrMDFe1.DAMDFe.Impressora        := cbxImpressora.Text;
     ACBrMDFe1.DAMDFe.NumCopias         := edtNumCopia.Value;
     ACBrMDFe1.DAMDFe.MargemInferior    := fspeMargemInf.Value;
@@ -4653,9 +4653,9 @@ begin
     ACBrMDFe1.DAMDFe.MargemDireita     := fspeMargemDir.Value;
     ACBrMDFe1.DAMDFe.MargemEsquerda    := fspeMargemEsq.Value;
     ACBrMDFe1.DAMDFe.PathPDF           := edtPathPDF.Text;
-    ACBrMDFe1.DAMDFe.MostrarStatus     := cbxMostraStatus.Checked;
-    ACBrMDFe1.DAMDFe.ExpandirLogoMarca := cbxExpandirLogo.Checked;
-    ACBrMDFe1.DAMDFe.UsarSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+    ACBrMDFe1.DAMDFe.MostraStatus      := cbxMostraStatus.Checked;
+    ACBrMDFe1.DAMDFe.ExpandeLogoMarca  := cbxExpandirLogo.Checked;
+    ACBrMDFe1.DAMDFe.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
 
     ACBrGNRE1.GNREGuia.Sistema         := edSH_RazaoSocial.Text;
     ACBrGNRE1.GNREGuia.Site            := edtSiteEmpresa.Text;
@@ -4704,15 +4704,15 @@ begin
       ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := ParamsString;
       ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem          := ImprimeDescAcrescItem;
       ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha              := ImprimeEmUmaLinha;
-      ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao          := UsaCodigoEanImpressao;
+      ACBrSATExtratoESCPOS1.ImprimeCodigoEan               := UsaCodigoEanImpressao;
 
       ACBrSATExtratoFortes1.ImprimeDescAcrescItem          := ImprimeDescAcrescItem;
       ACBrSATExtratoFortes1.ImprimeEmUmaLinha              := ImprimeEmUmaLinha;
-      ACBrSATExtratoFortes1.UsaCodigoEanImpressao          := UsaCodigoEanImpressao;
+      ACBrSATExtratoFortes1.ImprimeCodigoEan               := UsaCodigoEanImpressao;
 
       cbxImprimirDescAcresItemSAT.Checked   := ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem;
       cbxImprimirItem1LinhaSAT.Checked      := ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha;
-      cbxImprimirCodEANitemSAT.Checked      := ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao;
+      cbxImprimirCodEANitemSAT.Checked      := ACBrSATExtratoESCPOS1.ImprimeCodigoEan;
 
       rdgImprimeChave1LinhaSAT.ItemIndex    := ImprimeChaveEmUmaLinha;
       ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
@@ -8059,15 +8059,15 @@ begin
     ACBrSAT1.Extrato := ACBrSATExtratoFortes1;
 
     ACBrSATExtratoFortes1.LarguraBobina    := seLargura.Value;
-    ACBrSATExtratoFortes1.Margens.Topo     := seMargemTopo.Value ;
-    ACBrSATExtratoFortes1.Margens.Fundo    := seMargemFundo.Value ;
-    ACBrSATExtratoFortes1.Margens.Esquerda := seMargemEsquerda.Value ;
-    ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
-    ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
+    ACBrSATExtratoFortes1.MargemSuperior   := seMargemTopo.Value ;
+    ACBrSATExtratoFortes1.MargemInferior   := seMargemFundo.Value ;
+    ACBrSATExtratoFortes1.MargemEsquerda   := seMargemEsquerda.Value ;
+    ACBrSATExtratoFortes1.MargemDireita    := seMargemDireita.Value ;
+    ACBrSATExtratoFortes1.MostraPreview    := cbPreview.Checked;
 
     ACBrSATExtratoFortes1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemSAT.Checked;
     ACBrSATExtratoFortes1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaSAT.Checked;
-    ACBrSATExtratoFortes1.UsaCodigoEanImpressao := cbxImprimirCodEANitemSAT.Checked;
+    ACBrSATExtratoFortes1.ImprimeCodigoEan  := cbxImprimirCodEANitemSAT.Checked;
 
     if ( GerarPDF ) then
       ACBrSATExtratoFortes1.Filtro := TACBrSATExtratoFiltro(fiPDF)
@@ -8084,10 +8084,10 @@ begin
 
     try
       if NomeImpressora <> '' then
-         ACBrSATExtratoFortes1.PrinterName := NomeImpressora
+         ACBrSATExtratoFortes1.Impressora := NomeImpressora
       else
       if lImpressora.Caption <> '' then
-        ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
+        ACBrSATExtratoFortes1.Impressora := lImpressora.Caption;
     except
     end;
   end
@@ -8104,7 +8104,7 @@ begin
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha       := cbxImprimirItem1LinhaSAT.Checked;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
     ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha  := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
-    ACBrSATExtratoESCPOS1.UsaCodigoEanImpressao   := cbxImprimirDescAcresItemSAT.Checked;
+    ACBrSATExtratoESCPOS1.ImprimeCodigoEan   := cbxImprimirDescAcresItemSAT.Checked;
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
@@ -8112,8 +8112,8 @@ begin
 
   if (edSH_RazaoSocial.Text <> '') then
   begin
-    ACBrSAT1.Extrato.SoftwareHouse := edSH_RazaoSocial.Text;
-    ACBrSAT1.Extrato.Site          := edSH_Site.Text;
+    ACBrSAT1.Extrato.Sistema := edSH_RazaoSocial.Text;
+    ACBrSAT1.Extrato.Site    := edSH_Site.Text;
   end;
 end;
 
@@ -8335,9 +8335,9 @@ begin
     end;
 
     if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
-       ACBrNFe1.DANFE.NFeCancelada := True
+       ACBrNFe1.DANFE.Cancelada := True
     else
-       ACBrNFe1.DANFE.NFeCancelada := False;
+       ACBrNFe1.DANFE.Cancelada := False;
   end;
 
   if GerarPDF and not DirectoryExists(PathWithDelim(edtPathPDF.Text))then
@@ -8345,59 +8345,64 @@ begin
 
   if ACBrNFe1.DANFE <> nil then
   begin
-    ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
-    ACBrNFe1.DANFE.Logo := edtLogoMarca.Text;
-    ACBrNFe1.DANFE.Sistema := edSH_RazaoSocial.Text;
-    ACBrNFe1.DANFE.Site := edtSiteEmpresa.Text;
-    ACBrNFe1.DANFE.Email := edtEmailEmpresa.Text;
-    ACBrNFe1.DANFE.Fax := edtFaxEmpresa.Text;
-    ACBrNFe1.DANFE.ImprimirDescPorc := cbxImpDescPorc.Checked;
-    ACBrNFe1.DANFE.NumCopias := edtNumCopia.Value;
-    ACBrNFe1.DANFE.MargemInferior := fspeMargemInf.Value;
-    ACBrNFe1.DANFE.MargemSuperior := fspeMargemSup.Value;
-    ACBrNFe1.DANFE.MargemDireita := fspeMargemDir.Value;
-    ACBrNFe1.DANFE.MargemEsquerda := fspeMargemEsq.Value;
-    ACBrNFe1.DANFE.PathPDF := PathWithDelim(edtPathPDF.Text);
-    ACBrNFe1.DANFE.CasasDecimais._qCom := spedtCasasDecimaisQtd.Value;
-    ACBrNFe1.DANFE.CasasDecimais._vUnCom := spedtDecimaisVUnit.Value;
-    ACBrNFe1.DANFE.ExibirResumoCanhoto := cbxExibeResumo.Checked;
-    ACBrNFe1.DANFE.ImprimirTotalLiquido := cbxImpValLiq.Checked;
-    ACBrNFe1.DANFE.FormularioContinuo := cbxFormCont.Checked;
-    ACBrNFe1.DANFE.MostrarStatus := cbxMostraStatus.Checked;
-    ACBrNFe1.DANFE.ExpandirLogoMarca := cbxExpandirLogo.Checked;
-    ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := speFonteCampos.Value;
-    ACBrNFe1.DANFE.TamanhoFonteEndereco:= speFonteEndereco.Value;
-    ACBrNFe1.DANFE.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
-    ACBrNFe1.DANFE.UsarSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+    ACBrNFe1.DANFE.TipoDANFE            := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
+    ACBrNFe1.DANFE.Logo                 := edtLogoMarca.Text;
+    ACBrNFe1.DANFE.Sistema              := edSH_RazaoSocial.Text;
+    ACBrNFe1.DANFE.Site                 := edtSiteEmpresa.Text;
+    ACBrNFe1.DANFE.Email                := edtEmailEmpresa.Text;
+    ACBrNFe1.DANFE.Fax                  := edtFaxEmpresa.Text;
+    ACBrNFe1.DANFE.NumCopias            := edtNumCopia.Value;
+    ACBrNFe1.DANFE.MargemInferior       := fspeMargemInf.Value;
+    ACBrNFe1.DANFE.MargemSuperior       := fspeMargemSup.Value;
+    ACBrNFe1.DANFE.MargemDireita        := fspeMargemDir.Value;
+    ACBrNFe1.DANFE.MargemEsquerda       := fspeMargemEsq.Value;
+    ACBrNFe1.DANFE.PathPDF              := PathWithDelim(edtPathPDF.Text);
+    ACBrNFe1.DANFE.CasasDecimais.qCom   := spedtCasasDecimaisQtd.Value;
+    ACBrNFe1.DANFE.CasasDecimais.vUnCom := spedtDecimaisVUnit.Value;
+    //
+    ACBrNFe1.DANFE.ImprimeTotalLiquido := cbxImpValLiq.Checked;
+    ACBrNFe1.DANFE.MostraStatus := cbxMostraStatus.Checked;
+    ACBrNFe1.DANFE.ExpandeLogoMarca := cbxExpandirLogo.Checked;
+    ACBrNFe1.DANFE.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+
+    if (ACBrNFe1.DANFE is TACBrNFeDANFEClass) then
+    begin
+      (ACBrNFe1.DANFE as TACBrNFeDANFEClass).ImprimeDescPorPercentual := cbxImpDescPorc.Checked;
+      (ACBrNFe1.DANFE as TACBrNFeDANFEClass).ExibeResumoCanhoto       := cbxExibeResumo.Checked;
+      (ACBrNFe1.DANFE as TACBrNFeDANFEClass).FormularioContinuo       := cbxFormCont.Checked;
+      (ACBrNFe1.DANFE as TACBrNFeDANFEClass).PosCanhoto               := TPosRecibo( rgLocalCanhoto.ItemIndex );
+    end;
 
     if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
     begin
       ACBrNFeDANFeRL1.Fonte.Nome := TNomeFonte(rgTipoFonte.ItemIndex);
+      ACBrNFeDANFeRL1.Fonte.TamanhoFonteDemaisCampos := speFonteCampos.Value;
+      ACBrNFeDANFeRL1.Fonte.TamanhoFonteEndereco     := speFonteEndereco.Value;
       ACBrNFeDANFeRL1.LarguraCodProd := speLargCodProd.Value;
-      ACBrNFeDANFeRL1.ExibirEAN := cbxExibirEAN.Checked;
+      ACBrNFeDANFeRL1.ExibeEAN := cbxExibirEAN.Checked;
       ACBrNFeDANFeRL1.ExibeCampoFatura := cbxExibirCampoFatura.Checked;
       ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentoEspecifico := cbxQuebrarLinhasDetalhesItens.Checked;
-      ACBrNFeDANFeRL1.Fonte.TamanhoFonte_RazaoSocial := speFonteRazao.Value;
+      ACBrNFeDANFeRL1.Fonte.TamanhoFonteRazaoSocial := speFonteRazao.Value;
       ACBrNFeDANFeRL1.AltLinhaComun := speAlturaCampos.Value;
       ACBrNFeDANFeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
-      ACBrNFeDANFeRL1.ImprimirUnQtVlComercial := TImprimirUnidQtdeValor(cbxUnComTributavel.ItemIndex);
-      ACBrNFeDANFeRL1.ImprimirDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
-      ACBrNFeDANFeRL1.ImprimirDadosDocReferenciados := cbxImpDocsReferenciados.Checked;
-      ACBrNFeDANFeRL1.ExibirBandInforAdicProduto := cbxExibirInfAdicProduto.Checked;
+      ACBrNFeDANFeRL1.ImprimeValor := TImprimirUnidQtdeValor(cbxUnComTributavel.ItemIndex);
+      ACBrNFeDANFeRL1.ImprimeDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
+      ACBrNFeDANFeRL1.ExibeDadosDocReferenciados := cbxImpDocsReferenciados.Checked;
+      ACBrNFeDANFeRL1.ExibeInforAdicProduto := cbxExibirInfAdicProduto.Checked;
       ACBrNFeDANFeRL1.LogoemCima := cbxExibirLogoEmCima.Checked;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
     begin
       ACBrNFeDANFCeFortes1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
-      ACBrNFeDANFCeFortes1.ImprimirTotalLiquido  := cbxImprimirDescAcresItemNFCe.Checked;
+      ACBrNFeDANFCeFortes1.ImprimeTotalLiquido   := cbxImprimirDescAcresItemNFCe.Checked;
       ACBrNFeDANFCeFortes1.MargemInferior        := fspeNFCeMargemInf.Value;
       ACBrNFeDANFCeFortes1.MargemSuperior        := fspeNFCeMargemSup.Value;
       ACBrNFeDANFCeFortes1.MargemDireita         := fspeNFCeMargemDir.Value;
       ACBrNFeDANFCeFortes1.MargemEsquerda        := fspeNFCeMargemEsq.Value;
       ACBrNFeDANFCeFortes1.LarguraBobina         := fspeLarguraNFCe.Value;
       ACBrNFeDANFCeFortes1.ImprimeEmUmaLinha     := cbxImprimirItem1LinhaNFCe.Checked;
-      ACBrNFEDANFCeFortes1.QRCodeLateral         := cbxImprimirQRCodeLateralNFCe.Checked;
-      ACBrNFeDANFCeFortes1.UsaCodigoEanImpressao := cbxImprimirCodigoEANNFCe.Checked;
+      ACBrNFEDANFCeFortes1.ImprimeQRCodeLateral  := cbxImprimirQRCodeLateralNFCe.Checked;
+      ACBrNFeDANFCeFortes1.ImprimeCodigoEan      := cbxImprimirCodigoEANNFCe.Checked;
       ACBrNFeDANFCeFortes1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
 
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
@@ -8411,7 +8416,7 @@ begin
       ACBrNFeDANFeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
-      ACBrNFeDANFeESCPOS1.QRCodeLateral         := cbxImprimirQRCodeLateralNFCe.Checked;
+      ACBrNFeDANFeESCPOS1.ImprimeQRCodeLateral  := cbxImprimirQRCodeLateralNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
 
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
@@ -8428,12 +8433,12 @@ begin
     end;
   end;
 
-  ACBrNFe1.DANFE.MostrarPreview := False;
+  ACBrNFe1.DANFE.MostraPreview := False;
   if ((not GerarPDF) and (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1)) then
     if EstaVazio(MostrarPreview) then
-      ACBrNFe1.DANFE.MostrarPreview := cbxMostrarPreview.Checked
+      ACBrNFe1.DANFE.MostraPreview := cbxMostrarPreview.Checked
     else
-      ACBrNFe1.DANFE.MostrarPreview := StrToBoolDef(MostrarPreview, False);
+      ACBrNFe1.DANFE.MostraPreview := StrToBoolDef(MostrarPreview, False);
 
   //if ACBrNFe1.DANFE.MostrarPreview or MostrarPreview then
   //  ForceForeground(Self.Handle);
@@ -8462,9 +8467,9 @@ begin
     end;
 
     if (ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.cStat in [101, 151, 155]) then
-       ACBrCTe1.DACTE.CTeCancelada := True
+       ACBrCTe1.DACTE.Cancelada := True
     else
-       ACBrCTe1.DACTE.CTeCancelada := False;
+       ACBrCTe1.DACTE.Cancelada := False;
   end;
 
   if GerarPDF and not DirectoryExists(PathWithDelim(edtPathPDF.Text))then
@@ -8478,18 +8483,18 @@ begin
     ACBrCTe1.DACTE.Site := edtSiteEmpresa.Text;
     ACBrCTe1.DACTE.Email := edtEmailEmpresa.Text;
     ACBrCTe1.DACTE.Fax := edtFaxEmpresa.Text;
-    ACBrCTe1.DACTE.ImprimirDescPorc := cbxImpDescPorc.Checked;
+    ACBrCTe1.DACTE.ImprimeDescPorc := cbxImpDescPorc.Checked;
     ACBrCTe1.DACTE.NumCopias := edtNumCopia.Value;
     ACBrCTe1.DACTE.MargemInferior := fspeMargemInf.Value;
     ACBrCTe1.DACTE.MargemSuperior := fspeMargemSup.Value;
     ACBrCTe1.DACTE.MargemDireita := fspeMargemDir.Value;
     ACBrCTe1.DACTE.MargemEsquerda := fspeMargemEsq.Value;
     ACBrCTe1.DACTE.PathPDF := PathWithDelim(edtPathPDF.Text);
-    ACBrCTe1.DACTE.ExibirResumoCanhoto := cbxExibeResumo.Checked;
-    ACBrCTe1.DACTE.MostrarStatus := cbxMostraStatus.Checked;
-    ACBrCTe1.DACTE.ExpandirLogoMarca := cbxExpandirLogo.Checked;
+    ACBrCTe1.DACTE.ExibeResumoCanhoto := cbxExibeResumo.Checked;
+    ACBrCTe1.DACTE.MostraStatus := cbxMostraStatus.Checked;
+    ACBrCTe1.DACTE.ExpandeLogoMarca := cbxExpandirLogo.Checked;
     ACBrCTe1.DACTE.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
-    ACBrCTe1.DACTE.UsarSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
+    ACBrCTe1.DACTE.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
 
     if ACBrCTe1.DACTE = ACBrCTeDACTeRL1 then
     begin
@@ -8500,12 +8505,12 @@ begin
     end;
   end;
 
-  ACBrCTe1.DACTE.MostrarPreview := False;
+  ACBrCTe1.DACTE.MostraPreview := False;
   if (not GerarPDF) then
     if EstaVazio(MostrarPreview) then
-      ACBrCTe1.DACTE.MostrarPreview := cbxMostrarPreview.Checked
+      ACBrCTe1.DACTE.MostraPreview := cbxMostrarPreview.Checked
     else
-      ACBrCTe1.DACTE.MostrarPreview := StrToBoolDef(MostrarPreview, False);
+      ACBrCTe1.DACTE.MostraPreview := StrToBoolDef(MostrarPreview, False);
 end;
 
 procedure TFrmACBrMonitor.VerificaDiretorios;

@@ -496,10 +496,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object TabSheet2: TTabSheet
           Caption = 'Geral'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object gbGeral: TGroupBox
             Left = 0
             Top = 4
@@ -916,10 +912,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object TabSheet7: TTabSheet
           Caption = 'Email'
           ImageIndex = 4
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object gbEmail: TGroupBox
             Left = 1
             Top = 4
@@ -1529,10 +1521,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
@@ -1540,8 +1528,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           Height = 360
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 564
-          ExplicitHeight = 368
           ControlData = {
             4C00000027390000352500000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -1553,10 +1539,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1583,10 +1565,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoRespWS: TMemo
           Left = 0
           Top = 0
@@ -1599,10 +1577,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoDados: TMemo
           Left = 0
           Top = 0
@@ -1657,15 +1631,17 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Top = 249
   end
   object ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL
-    ACBrNFSe = ACBrNFSe1
-    MostrarPreview = True
-    MostrarStatus = True
-    NumCopias = 1
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
-    NFSeCancelada = False
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFSe = ACBrNFSe1
+    Cancelada = False
     Provedor = proNenhum
     TamanhoFonte = 6
     FormatarNumeroDocumentoNFSe = True

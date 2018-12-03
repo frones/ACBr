@@ -2,60 +2,53 @@
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Conhecimen-}
 { to de Transporte eletrônico - NFe - http://www.nfe.fazenda.gov.br            }
-{                                                                              }
+
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
 {                                       André Ferreira de Moraes               }
-{                                                                              }
+
 { Colaboradores nesse arquivo:                                                 }
-{                                                                              }
+
 {  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
-{                                                                              }
+
+
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-{                                                                              }
+
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
+
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
+
 { Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
-{******************************************************************************}
 
-{*******************************************************************************
-|* Historico
-|*
-*******************************************************************************}
+{******************************************************************************}
 
 {$I ACBr.inc}
 
 unit ACBrNFeDAInutRLRetrato;
 
-
 interface
 
 uses
-  SysUtils, Variants, Classes, StrUtils,
+  SysUtils, Classes,
   {$IFDEF CLX}
-  QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
+  QGraphics, QControls, QForms, Qt,
   {$ELSE}
-      Graphics, Controls, Forms, Dialogs, ExtCtrls,
+  Graphics, Controls, Forms,
   {$ENDIF}
-  pcnConversao, ACBrNFeDAInutRL, ACBrUtil,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
-  {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
+  ACBrNFeDAInutRL,
+  RLReport;
 
 type
 
@@ -135,17 +128,20 @@ type
 implementation
 
 uses
-  DateUtils;
+  StrUtils, DateUtils,
+  pcnConversao,
+  ACBrUtil;
 
-{$IFnDEF FPC}
+{$IfNDef FPC}
   {$R *.dfm}
-{$ELSE}
+{$Else}
   {$R *.lfm}
-{$ENDIF}
+{$EndIf}
 
 procedure TfrmNFeDAInutRLRetrato.RLInutBeforePrint(Sender: TObject; var PrintReport: Boolean);
 begin
   inherited;
+
   RLNFeInut.Title := ACBrStr('Inutilização');
 end;
 
@@ -153,34 +149,35 @@ procedure TfrmNFeDAInutRLRetrato.rlb_03_InutilizacaoBeforePrint(Sender: TObject;
 begin
   inherited;
 
-  with FACBrNFe.InutNFe do
-    begin
-      rllOrgao.Caption := IntToStr(RetInutNFe.cUF);
+  with fpInutNFe do
+  begin
+    rllOrgao.Caption := IntToStr(RetInutNFe.cUF);
 
-      case RetInutNFe.tpAmb of
-       taProducao:    rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
-       taHomologacao: rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
-      end;
-
-      rllAno.Caption       := IntToStr(RetInutNFe.ano);
-      rllModelo.Caption    := IntToStr(RetInutNFe.Modelo);
-      rllSerie.Caption     := IntToStr(RetInutNFe.Serie);
-      rllNumeracao.Caption := IntToStr(RetInutNFe.nNFIni) + ' a ' + IntToStr(RetInutNFe.nNFFin);
-
-      rllStatus.Caption    := IntToStr(RetInutNFe.cStat) + ' - ' + RetInutNFe.xMotivo;
-      rllProtocolo.Caption := RetInutNFe.nProt + ' ' +
-                              DateTimeToStr(RetInutNFe.dhRecbto);
-
-      rllJustificativa.Lines.Text := RetInutNFe.xJust;
+    case RetInutNFe.tpAmb of
+      taProducao:
+        rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
+      taHomologacao:
+        rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end;
+
+    rllAno.Caption := IntToStr(RetInutNFe.ano);
+    rllModelo.Caption := IntToStr(RetInutNFe.Modelo);
+    rllSerie.Caption := IntToStr(RetInutNFe.Serie);
+    rllNumeracao.Caption := IntToStr(RetInutNFe.nNFIni) + ' a ' + IntToStr(RetInutNFe.nNFFin);
+
+    rllStatus.Caption := IntToStr(RetInutNFe.cStat) + ' - ' + RetInutNFe.xMotivo;
+    rllProtocolo.Caption := RetInutNFe.nProt + ' ' + FormatDateTimeBr(RetInutNFe.dhRecbto);
+
+    rllJustificativa.Lines.Text := RetInutNFe.xJust;
+  end;
 end;
 
-procedure TfrmNFeDAInutRLRetrato.rlb_07_RodapeBeforePrint(
-  Sender: TObject; var PrintBand: Boolean);
+procedure TfrmNFeDAInutRLRetrato.rlb_07_RodapeBeforePrint(Sender: TObject; var PrintBand: Boolean);
 begin
   inherited;
-  if (FSistema <> EmptyStr) or (FUsuario <> EmptyStr) then
-    rllblSistema.Caption := FSistema + ' - ' + FUsuario;
+
+  if (fpDANFe.Sistema <> EmptyStr) or (fpDANFe.Usuario <> EmptyStr) then
+    rllblSistema.Caption := fpDANFe.Sistema + ' - ' + fpDANFe.Usuario;
 end;
 
 end.

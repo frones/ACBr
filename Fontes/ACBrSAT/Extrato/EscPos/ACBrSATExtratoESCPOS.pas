@@ -211,14 +211,14 @@ begin
     sUnidade     := Trim(CFe.Det.Items[i].Prod.uCom);
     sVlrProduto  := FormatFloatBr(CFe.Det.Items[i].Prod.vProd);
 
-    if (Length( Trim( CFe.Det.Items[i].Prod.cEAN ) ) > 0) and (UsaCodigoEanImpressao) then
+    if (Length( Trim( CFe.Det.Items[i].Prod.cEAN ) ) > 0) and (ImprimeCodigoEan) then
       sCodigo := Trim(CFe.Det.Items[i].Prod.cEAN)
     else
       sCodigo := Trim(CFe.Det.Items[i].Prod.cProd);
 
     // formatar conforme configurado
     sVlrUnitario := FormatFloatBr(CFe.Det.Items[i].Prod.vUnCom,
-      IfThen(CFe.Det.Items[i].Prod.EhCombustivel, ',0.000', Mask_vUnCom));
+      IfThen(CFe.Det.Items[i].Prod.EhCombustivel, ',0.000', CasasDecimais.MaskvUnCom));
     if CFe.Det.Items[i].Imposto.vItem12741 > 0 then
       sVlrImpostos := ' ('+FormatFloatBr(CFe.Det.Items[i].Imposto.vItem12741)+') '
     else
@@ -228,7 +228,7 @@ begin
     // caso contrário mostrar somente o número inteiro
     fQuant := CFe.Det.Items[i].Prod.QCom;
     if Frac(fQuant) > 0 then
-      sQuantidade := FormatFloatBr(fQuant, Mask_qCom )
+      sQuantidade := FormatFloatBr(fQuant, CasasDecimais.MaskqCom )
     else
       sQuantidade := FloatToStr(fQuant);
 
@@ -481,12 +481,12 @@ begin
     if MsgAppQRCode <> '' then
       FBuffer.Add('</ce><c>' + QuebraLinhas(MsgAppQRCode, FPosPrinter.ColunasFonteCondensada ));
 
-    if (SoftwareHouse <> '') or (Site <> '') then
+    if (Sistema <> '') or (Site <> '') then
       FBuffer.Add('</linha_simples>');
 
     // SoftwareHouse
-    if SoftwareHouse <> '' then
-      FBuffer.Add('</ce><c>' + SoftwareHouse);
+    if Sistema <> '' then
+      FBuffer.Add('</ce><c>' + Sistema);
 
     if Site <> '' then
       FBuffer.Add('</ce><c>' + Site);
@@ -552,12 +552,12 @@ begin
   if MsgAppQRCode <> '' then
     FBuffer.Add('</ce><c>' + QuebraLinhas(MsgAppQRCode, FPosPrinter.ColunasFonteCondensada ));
 
-  if (SoftwareHouse <> '') or (Site <> '') then
+  if (Sistema <> '') or (Site <> '') then
     FBuffer.Add('</linha_simples>');
 
   // SoftwareHouse
-  if SoftwareHouse <> '' then
-    FBuffer.Add('</ce><c>' + SoftwareHouse);
+  if Sistema <> '' then
+    FBuffer.Add('</ce><c>' + Sistema);
 
   if Site <> '' then
     FBuffer.Add('</ce><c>' + Site);
@@ -657,7 +657,7 @@ var
   OldImprimeQRCode : Boolean;
 begin
   SetInternalCFe( ACFe );
-  fpLayOut := lCompleto;
+  FLayOut := lCompleto;
 
   if (CFe = nil) or (CFe.infCFe.ID = '') then
     raise EACBrSATErro.Create( 'Nenhum CFe carregado na memória' ) ;

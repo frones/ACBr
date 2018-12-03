@@ -129,7 +129,6 @@ begin
   inherited Destroy;
 end;
 
-
 procedure TACBrBPeDABPeESCPOS.SetPosPrinter(AValue: TACBrPosPrinter);
 begin
   if AValue <> FPosPrinter then
@@ -171,6 +170,7 @@ begin
   begin
     FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL</n>'));
   end;
+
   // se diferente de normal imprimir a emissão em contingência
   if (FpBPe.ide.tpEmis <> teNormal) and
      EstaVazio(FpBPe.procBPe.nProt) then
@@ -204,27 +204,26 @@ procedure TACBrBPeDABPeESCPOS.GerarCabecalhoEmitente;
 begin
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
-//  if (Trim(FpBPe.Emit.xFant) <> '') and ImprimeNomeFantasia then
-//     FPosPrinter.Buffer.Add('</ce><c><n>' +  FpBPe.Emit.xFant + '</n>');
+  if (Trim(FpBPe.Emit.xFant) <> '') and ImprimeNomeFantasia then
+     FPosPrinter.Buffer.Add('</ce><c><n>' +  FpBPe.Emit.xFant + '</n>');
 
-  FPosPrinter.Buffer.Add('</ce><c>' + FpBPe.Emit.xNome);
-  FPosPrinter.Buffer.Add('</ce><c>' + FormatarCNPJ(FpBPe.Emit.CNPJ) + ' I.E.: ' +
+  FPosPrinter.Buffer.Add('</ce><c>'+ FpBPe.Emit.xNome);
+  FPosPrinter.Buffer.Add('</ce><c>'+ FormatarCNPJ(FpBPe.Emit.CNPJ) + ' I.E.: ' +
                          FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF));
+
 
   FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpBPe.Emit.EnderEmit.xLgr) + ', ' +
     Trim(FpBPe.Emit.EnderEmit.nro) + '  ' +
     Trim(FpBPe.Emit.EnderEmit.xCpl) + '  ' +
-    Trim(FpBPe.Emit.EnderEmit.xBairro) + ' ' +
+    Trim(FpBPe.Emit.EnderEmit.xBairro) +  ' ' +
     Trim(FpBPe.Emit.EnderEmit.xMun) + '-' + Trim(FpBPe.Emit.EnderEmit.UF)
-    , FPosPrinter.ColunasFonteCondensada)
-  );
-  (*
-  if not EstaVazio(FpBPe.Emit.EnderEmit.fone) then
-    FPosPrinter.Buffer.Add('</ce></fn><c>Fone: <n>' + FormatarFone(FpBPe.Emit.EnderEmit.fone) +
-                           '</n> I.E.: ' + FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF))
-  else
-    FPosPrinter.Buffer.Add('</ce></fn><c>I.E.: ' + FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF))
-  *)
+    , FPosPrinter.ColunasFonteCondensada));
+
+   if not EstaVazio(FpBPe.Emit.EnderEmit.fone) then
+     FPosPrinter.Buffer.Add('</ce></fn><c>Fone: <n>' + FormatarFone(FpBPe.Emit.EnderEmit.fone) +
+                            '</n> I.E.: ' + FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF))
+   else
+     FPosPrinter.Buffer.Add('</ce></fn><c>I.E.: ' + FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF))
 end;
 
 procedure TACBrBPeDABPeESCPOS.GerarIdentificacaodoDABPe;
@@ -288,7 +287,6 @@ end;
 procedure TACBrBPeDABPeESCPOS.GerarPagamentos;
 var
   i: Integer;
-  Troco: Double;
 begin
   FPosPrinter.Buffer.Add('<c>' + PadSpace('FORMA DE PAGAMENTO | VALOR PAGO R$',
      FPosPrinter.ColunasFonteCondensada, '|'));
@@ -300,11 +298,9 @@ begin
        FPosPrinter.ColunasFonteCondensada, '|')));
   end;
 
-  Troco := IIf(FpBPe.infValorBPe.vTroco > 0,FpBPe.infValorBPe.vTroco, vTroco);
-
-  if Troco > 0 then
+  if FpBPe.infValorBPe.vTroco > 0 then
     FPosPrinter.Buffer.Add('<c>' + PadSpace('Troco R$|' +
-       FormatFloatBr(Troco), FPosPrinter.ColunasFonteCondensada, '|'));
+       FormatFloatBr(FpBPe.infValorBPe.vTroco), FPosPrinter.ColunasFonteCondensada, '|'));
 end;
 
 procedure TACBrBPeDABPeESCPOS.GerarInformacoesConsultaChaveAcesso;
@@ -411,9 +407,6 @@ procedure TACBrBPeDABPeESCPOS.GerarTotalTributos;
 var
   MsgTributos: String;
 begin
-//  if not ImprimirTributos then
-//    Exit;
-
   if FpBPe.Imp.vTotTrib > 0 then
   begin
     MsgTributos:= 'Tributos Totais Incidentes(Lei Federal 12.741/12): R$ %s';
@@ -540,7 +533,6 @@ begin
 
   FPosPrinter.Buffer.Add('</linha_simples>');
 end;
-
 
 procedure TACBrBPeDABPeESCPOS.GerarObservacoesEvento;
 begin

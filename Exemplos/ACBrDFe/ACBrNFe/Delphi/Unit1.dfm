@@ -133,10 +133,6 @@ object Form1: TForm1
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 35
               Top = 16
@@ -626,10 +622,6 @@ object Form1: TForm1
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox4: TGroupBox
               Left = 0
               Top = 4
@@ -903,10 +895,6 @@ object Form1: TForm1
           object TabSheet12: TTabSheet
             Caption = 'Emitente'
             ImageIndex = 3
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object Label12: TLabel
               Left = 8
               Top = 4
@@ -1093,10 +1081,6 @@ object Form1: TForm1
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object sbPathNFe: TSpeedButton
               Left = 240
               Top = 130
@@ -1369,10 +1353,6 @@ object Form1: TForm1
       object TabSheet2: TTabSheet
         Caption = 'DANFe'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label7: TLabel
           Left = 8
           Top = 8
@@ -1425,10 +1405,6 @@ object Form1: TForm1
       object TabSheet14: TTabSheet
         Caption = 'Email'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label3: TLabel
           Left = 8
           Top = 8
@@ -1795,10 +1771,6 @@ object Form1: TForm1
         object tsNFCe: TTabSheet
           Caption = 'NFC-e'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object btnCriarEnviarNFCe: TButton
             Left = 9
             Top = 6
@@ -1821,15 +1793,11 @@ object Form1: TForm1
       TabOrder = 1
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoResp: TMemo
           Left = 0
           Top = 0
           Width = 569
-          Height = 279
+          Height = 278
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1838,19 +1806,15 @@ object Form1: TForm1
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
           Width = 569
-          Height = 279
+          Height = 278
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000CF3A0000D61C00000000000000000000000000000000000000000000
+            4C000000CF3A0000BB1C00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1860,15 +1824,11 @@ object Form1: TForm1
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
           Width = 569
-          Height = 279
+          Height = 278
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1877,10 +1837,6 @@ object Form1: TForm1
       object TabSheet9: TTabSheet
         Caption = 'NFe'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object trvwNFe: TTreeView
           Left = 0
           Top = 0
@@ -1894,15 +1850,11 @@ object Form1: TForm1
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoRespWS: TMemo
           Left = 0
           Top = 0
           Width = 569
-          Height = 279
+          Height = 278
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1927,10 +1879,6 @@ object Form1: TForm1
       object TabSheet11: TTabSheet
         Caption = 'RetornoConsulta NFe 2.01'
         ImageIndex = 6
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object TreeViewRetornoConsulta: TTreeView
           Left = 0
           Top = 0
@@ -1963,6 +1911,7 @@ object Form1: TForm1
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.Geral.AtualizarXMLCancelado = True
+    Configuracoes.Geral.VersaoQRCode = veqr000
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
@@ -1974,38 +1923,16 @@ object Form1: TForm1
     Top = 343
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = ',0.00'
-    CasasDecimais._Mask_vUnCom = ',0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = True
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    ImprimeEmUmaLinha = False
+    CasasDecimais.qCom = 4
+    CasasDecimais.vUnCom = 4
+    CasasDecimais.MaskqCom = '###,###,###,##0.00'
+    CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    TipoDANFE = tiSemGeracao
     PosPrinter = ACBrPosPrinter1
     Left = 417
     Top = 343
@@ -2022,81 +1949,33 @@ object Form1: TForm1
     Top = 343
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
-    ACBrNFe = ACBrNFe1
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiRetrato
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = True
     MargemInferior = 0.700000000000000000
     MargemSuperior = 0.700000000000000000
     MargemEsquerda = 0.700000000000000000
     MargemDireita = 0.700000000000000000
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 4
-    CasasDecimais._vUnCom = 4
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    LarguraCodProd = 54
-    ExibirEAN = False
-    QuebraLinhaEmDetalhamentoEspecifico = True
+    CasasDecimais.qCom = 4
+    CasasDecimais.vUnCom = 4
+    CasasDecimais.MaskqCom = '###,###,###,##0.00'
+    CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    ACBrNFe = ACBrNFe1
+    ExibeResumoCanhoto = False
     ExibeCampoFatura = False
-    ImprimirUnQtVlComercial = iuComercial
-    ImprimirDadosDocReferenciados = True
     Left = 355
     Top = 343
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = True
-    ImprimirDescPorc = True
-    ImprimirTotalLiquido = True
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = True
-    ExpandirLogoMarca = True
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    ImprimeEmUmaLinha = False
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = '###,###,###,##0.00'
+    CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    TipoDANFE = tiSemGeracao
+    ImprimeNomeFantasia = True
     Left = 386
     Top = 343
   end

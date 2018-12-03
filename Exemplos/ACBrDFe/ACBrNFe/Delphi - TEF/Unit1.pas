@@ -9,7 +9,8 @@ uses IniFiles, ShellAPI, pcnRetConsReciNFe, ACBrTEFDClass, ACBrTEFDCliSiTef,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrUtil, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
   ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib, ACBrDevice,
-  ACBrMail, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr, ACBrTEFD;
+  ACBrMail, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr, ACBrTEFD, ACBrDFeReport,
+  ACBrDFeDANFeReport;
 
 type
   tEstadoEcfSimulado = (tpsLivre, tpsVenda, tpsSubTotal, tpsTotalPagar, tpsPagamento, tpsRelatorio);
@@ -354,7 +355,10 @@ type
     procedure ACBrTEFD1ComandaECFImprimeVia(TipoRelatorio: TACBrTEFDTipoRelatorio; Via: Integer; ImagemComprovante: TStringList; var RetornoECF: Integer);
     procedure ACBrTEFD1InfoECF(Operacao: TACBrTEFDInfoECF; var RetornoECF: string);
     procedure ACBrTEFD1CliSiTefExibeMenu(Titulo: string; Opcoes: TStringList; var ItemSelecionado: Integer; var VoltarMenu: Boolean);
-    procedure ACBrTEFD1CliSiTefObtemCampo(Titulo: string; TamanhoMinimo, TamanhoMaximo, TipoCampo: Integer; Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: String; var Digitado,VoltarMenu: Boolean);
+    procedure ACBrTEFD1CliSiTefObtemCampo(Titulo: string; TamanhoMinimo,
+        TamanhoMaximo, TipoCampo: Integer; Operacao:
+        TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString; var Digitado,
+        VoltarMenu: Boolean);
     procedure bADMClick(Sender: TObject);
     procedure cbxGPChange(Sender: TObject);
     procedure bAbreVendeSubTotaliza3Click(Sender: TObject);
@@ -1326,8 +1330,10 @@ begin
   end;
 end;
 
-procedure TForm1.ACBrTEFD1CliSiTefObtemCampo(Titulo: string; TamanhoMinimo, TamanhoMaximo, TipoCampo: Integer; Operacao: TACBrTEFDCliSiTefOperacaoCampo; var Resposta: String; var Digitado,
-  VoltarMenu: Boolean);
+procedure TForm1.ACBrTEFD1CliSiTefObtemCampo(Titulo: string; TamanhoMinimo,
+    TamanhoMaximo, TipoCampo: Integer; Operacao:
+    TACBrTEFDCliSiTefOperacaoCampo; var Resposta: AnsiString; var Digitado,
+    VoltarMenu: Boolean);
 Var
   AForm : TForm5 ;
   MR    : TModalResult ;

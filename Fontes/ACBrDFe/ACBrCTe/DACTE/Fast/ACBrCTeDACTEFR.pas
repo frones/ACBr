@@ -1272,12 +1272,12 @@ begin
   begin
     frxReport.PrintOptions.Copies := NumCopias;
 	  frxReport.PreviewOptions.AllowEdit := False;
-    if MostrarPreview then
+    if MostraPreview then
       frxReport.ShowPreparedReport
     else
     begin
       // frxReport.PrepareReport(false);
-      if MostrarStatus then
+      if MostraStatus then
         frxReport.PrintOptions.ShowDialog := True
       else
         frxReport.PrintOptions.ShowDialog := False;
@@ -1321,7 +1321,7 @@ procedure TACBrCTeDACTEFR.ImprimirEVENTO(ACTE: TCTe);
 begin
   if PrepareReportEvento then
   begin
-    if MostrarPreview then
+    if MostraPreview then
       frxReport.ShowPreparedReport
     else
       frxReport.Print;
@@ -1363,7 +1363,7 @@ procedure TACBrCTeDACTEFR.ImprimirINUTILIZACAO(ACTE: TCTe);
 begin
   if PrepareReportInutilizacao then
   begin
-    if MostrarPreview then
+    if MostraPreview then
       frxReport.ShowPreparedReport
     else
       frxReport.Print;
@@ -2750,7 +2750,7 @@ begin
     Append;
 
     vResumo := '';
-    if DACTEClassOwner.ExibirResumoCanhoto then
+    if DACTEClassOwner.ExibeResumoCanhoto then
     begin
       vResumo := 'EMIT: '+ FCTe.Emit.xNome + ' - ' +
                  'EMISSÃO: ' + FormatDateTime('DD/MM/YYYY',FCTe.Ide.dhEmi) + '  - '+
@@ -2803,7 +2803,7 @@ begin
     begin
       if not(FCTe.ide.TpEmis in [teContingencia, teFSDA]) then
       begin
-        if ((EstaVazio(ProtocoloCTE)) and (EstaVazio(FCTe.procCTe.nProt))) then
+        if ((EstaVazio(Protocolo)) and (EstaVazio(FCTe.procCTe.nProt))) then
         begin
           if FCTe.Ide.modelo = 67 then
             FieldByName('Mensagem0').AsString := 'CT-e OS sem Autorização de Uso da SEFAZ'
@@ -2811,7 +2811,7 @@ begin
             FieldByName('Mensagem0').AsString := 'CT-e sem Autorização de Uso da SEFAZ';
         end
         else
-          if (not((EstaVazio(ProtocoloCTE)) and
+          if (not((EstaVazio(Protocolo)) and
           (EstaVazio(FCTe.procCTe.nProt)))) and
           (FCTe.procCTe.cStat = 101) then
           begin
@@ -2822,7 +2822,7 @@ begin
           end
         else
         begin
-          if CTeCancelada then
+          if Cancelada then
           begin
             if FCTe.Ide.modelo = 67 then
               FieldByName('Mensagem0').AsString := 'CT-e OS Cancelado'
@@ -2868,7 +2868,7 @@ begin
     FieldByName('Site').AsString  := Site;
     FieldByName('Email').AsString := Email;
 
-    if ImprimirDescPorc then
+    if ImprimeDescPorc then
       FieldByName('Desconto').AsString := 'DESC %'
     else
       FieldByName('Desconto').AsString := 'V.DESC.';
@@ -2878,14 +2878,14 @@ begin
       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
       FieldByName('Contingencia_ID').AsString       := '';
 
-      if ((CTeCancelada) or (FCTe.procCTe.cStat = 101)) then
+      if ((Cancelada) or (FCTe.procCTe.cStat = 101)) then
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE HOMOLOGAÇÃO DO CANCELAMENTO'
       else if FCTe.procCTe.cStat = 110 then
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE DENEGAÇÃO DE USO'
       else
         FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
 
-      if EstaVazio(ProtocoloCTE) then
+      if EstaVazio(Protocolo) then
       begin
         if not(FCTe.ide.TpEmis in [teContingencia, teFSDA]) and EstaVazio(FCTe.procCTe.nProt) then
         begin
@@ -2899,7 +2899,7 @@ begin
             DateTimeToStr(FCTe.procCTe.dhRecbto), '');
       end
       else
-        FieldByName('Contingencia_Valor').AsString := ProtocoloCTE;
+        FieldByName('Contingencia_Valor').AsString := Protocolo;
     end
     else
     begin
@@ -2922,10 +2922,10 @@ begin
         FieldByName('Contingencia_Descricao').AsString := 'NÚMERO DE REGISTRO DPEC';
 
         // precisa testar
-        // if EstaVazio(ProtocoloCTE) then
+        // if EstaVazio(Protocolo) then
         // raise EACBrCTeException.Create('Protocolo de Registro no DPEC não informado.')
         // else
-        // FieldByName('Contingencia_Valor').AsString := ProtocoloCTe;
+        // FieldByName('Contingencia_Valor').AsString := Protocolo;
       end
       else
         if (FCTe.ide.TpEmis = teSVCSP) or (FCTe.ide.TpEmis = teSVCRS) then

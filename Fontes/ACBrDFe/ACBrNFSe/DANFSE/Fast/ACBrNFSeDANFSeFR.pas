@@ -158,7 +158,7 @@ procedure TACBrNFSeDANFSeFR.ImprimirDANFSe(NFSe: TNFSe);
 begin
   if PrepareReport(NFSe) then
   begin
-    if MostrarPreview then
+    if MostraPreview then
       frxReport.ShowPreparedReport
     else
       frxReport.Print;
@@ -223,8 +223,8 @@ var
 begin
   Result := False;
 
-	SetDataSetsToFrxReport;
-	if Trim(FastFile) <> '' then
+  SetDataSetsToFrxReport;
+  if Trim(FastFile) <> '' then
   begin
     if not (uppercase(copy(FastFile,length(FastFile)-3,4))='.FR3') then
     begin
@@ -247,8 +247,8 @@ begin
 		
   frxReport.PrintOptions.Copies     := NumCopias;
   frxReport.PreviewOptions.AllowEdit := False;
-  frxReport.PrintOptions.ShowDialog := MostrarPreview;
-  frxReport.ShowProgress            := Self.MostrarStatus;
+  frxReport.PrintOptions.ShowDialog := MostraPreview;
+  frxReport.ShowProgress            := Self.MostraStatus;
 
   if Impressora > '' then
   begin
@@ -1004,11 +1004,11 @@ begin
         FieldByName('IssRetido').AsString             := SituacaoTributariaDescricao(IssRetido);
         FieldByName('ValorIss').AsFloat               := ValorIss;
         FieldByName('OutrasRetencoes').AsFloat        := OutrasRetencoes;
-        FieldByName('BaseCalculo').AsFloat            := BaseCalculo;
         if Provedor = proWebISS then
           FieldByName('Aliquota').AsFloat := Aliquota * 100
         else
           FieldByName('Aliquota').AsFloat := Aliquota;
+        FieldByName('Aliquota').AsFloat               := Aliquota;
         FieldByName('ValorLiquidoNfse').AsFloat       := ValorLiquidoNfse;
         FieldByName('ValorIssRetido').AsFloat         := ValorIssRetido;
         FieldByName('DescontoCondicionado').AsFloat   := DescontoCondicionado;
@@ -1089,7 +1089,7 @@ begin
   With DANFSeClassOwner do
   begin
 
-    cdsParametros.FieldByName('LogoPrefExpandido').AsString := IfThen(ExpandirLogoMarca, '0', '1'); // Prefeitura
+    cdsParametros.FieldByName('LogoPrefExpandido').AsString := IfThen(ExpandeLogoMarca, '0', '1'); // Prefeitura
     cdsParametros.FieldByName('Nome_Prefeitura').AsString := Prefeitura;
     if NaoEstaVazio(DANFSeClassOwner.Logo) then
     begin
@@ -1126,7 +1126,7 @@ begin
   With DANFSeClassOwner do
   begin
 
-    cdsParametros.FieldByName('LogoExpandido').AsString := IfThen(ExpandirLogoMarca, '0', '1'); // Prestador
+    cdsParametros.FieldByName('LogoExpandido').AsString := IfThen(ExpandeLogoMarca, '0', '1'); // Prestador
 
     if NaoEstaVazio(PrestLogo) then
     begin

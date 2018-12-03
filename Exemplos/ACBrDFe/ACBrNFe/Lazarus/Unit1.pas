@@ -8,7 +8,8 @@ uses IniFiles, SynMemo, SynHighlighterXML, SysUtils, Variants, Classes,
   Graphics, Controls, Forms, Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls,
   Spin, Unit2, RLRichFilter, RLHTMLFilter, RLXLSFilter, RLXLSXFilter,
   RLDraftFilter, ACBrNFe, ACBrMail, ACBrPosPrinter, ACBrNFeDANFeRLClass,
-  pcnNFeRTXT, ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS, ACBrDFeSSL;
+  pcnNFeRTXT, ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS, ACBrDFeSSL, ACBrTEFD,
+  ACBrIntegrador, ACBrNFeDANFEClass;
 
 type
 
@@ -25,6 +26,8 @@ type
     Button1: TButton;
     Button10: TButton;
     Button11: TButton;
+    Button12: TButton;
+    Button13: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
@@ -39,6 +42,7 @@ type
     cbHttpLib: TComboBox;
     cbSSLType: TComboBox;
     cbXmlSignLib: TComboBox;
+    cbDANFEImprimirDescItem: TCheckBox;
     Edit1: TEdit;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
@@ -232,6 +236,8 @@ type
     procedure btnValidarRegrasNegocioClick(Sender: TObject);
     procedure Button10Click(Sender: TObject);
     procedure Button11Click(Sender: TObject);
+    procedure Button12Click(Sender: TObject);
+    procedure Button13Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -402,6 +408,7 @@ begin
 
       Ini.WriteInteger( 'DANFE','Tipo'       ,rgTipoDanfe.ItemIndex) ;
       Ini.WriteString( 'DANFE','LogoMarca'   ,edtLogoMarca.Text) ;
+      Ini.WriteBool( 'DANFE','ImprimirDescAcresItem',cbDANFEImprimirDescItem.Checked) ;
 
   finally
      Ini.Free ;
@@ -475,6 +482,8 @@ begin
       edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'') ;
       edtProxyUser.Text  := Ini.ReadString( 'Proxy','User'   ,'') ;
       edtProxySenha.Text := Ini.ReadString( 'Proxy','Pass'   ,'') ;
+
+      ACBrNFe1.Configuracoes.WebServices.TimeOut := 2000;
 
       with ACBrNFe1.Configuracoes.WebServices do
        begin
@@ -559,10 +568,14 @@ begin
 
       rgTipoDanfe.ItemIndex     := Ini.ReadInteger( 'DANFE','Tipo'       ,0) ;
       edtLogoMarca.Text         := Ini.ReadString( 'DANFE','LogoMarca'   ,'') ;
+      cbDANFEImprimirDescItem.Checked := Ini.ReadBool( 'DANFE','ImprimirDescAcresItem',False) ;
       if ACBrNFe1.DANFE <> nil then
        begin
          ACBrNFe1.DANFE.TipoDANFE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
          ACBrNFe1.DANFE.Logo       := edtLogoMarca.Text;
+
+         if ACBrNFe1.DANFE is TACBrNFeDANFCEClass then
+           TACBrNFeDANFCEClass(ACBrNFe1.DANFE).ImprimeDescAcrescItem := cbDANFEImprimirDescItem.Checked;
        end;      
   finally
      Ini.Free ;
@@ -725,6 +738,25 @@ begin
  ACBrNFe1.SSL.DescarregarCertificado;
 end;
 
+procedure TForm1.Button12Click(Sender: TObject);
+begin
+  ShowMessage('Screen.PixelsPerInch: '+IntToStr(Screen.PixelsPerInch));
+end;
+
+procedure TForm1.Button13Click(Sender: TObject);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create('c:\temp\ACBrNFeConf.ini');
+  try
+    ACBrNFe1.Configuracoes.GravarIni(Ini);
+
+    ACBrNFe1.Configuracoes.LerIni(Ini);
+  finally
+     Ini.Free;
+  end;
+end;
+
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   ShowMessage( ACBrNFe1.SSL.CertNumeroSerie );
@@ -754,7 +786,12 @@ procedure TForm1.Button6Click(Sender: TObject);
 var
   AVenc: TDateTime;
 begin
+  ACBrNFe2.Free;
+  ACBrNFe2 := TACBrNFe.Create(nil);
+  ACBrNFe2.Configuracoes.Geral.SSLLib := libWinCrypt;
   ACBrNFe2.Configuracoes.Assign( ACBrNFe1.Configuracoes );
+
+  ACBrNFe2.SSL.SSLType := ACBrNFe1.SSL.SSLType;
 
   ACBrNFe2.WebServices.StatusServico.Executar;
   //AVenc := ACBrNFe2.SSL.CertDataVenc;
@@ -1203,13 +1240,25 @@ begin
   while carregarMais  do
   begin
     if OpenDialog1.Execute then
-      ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
+      ACBrNFe1.NotasFiscais.LoadFromFile({OpenDialog1.FileName}'C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrDFe\ACBrNFe\Lazarus\log\05481336000137\NFCe\201805\NFCe\35180505481336000137651230000013591469366266-nfe.xml',False);
     carregarMais := MessageDlg('Carregar mais XML?', mtConfirmation, mbYesNo,0)= mrYes;
   end;
 
   if ACBrNFe1.NotasFiscais.Count > 0 then
      ACBrNFe1.NotasFiscais.Imprimir;
 
+  //ACBrNFe1.NotasFiscais.Clear;
+  //ACBrNFe1.NotasFiscais.LoadFromFile('C:\temp\33180605481336000137651000000915109000003040-nfe.xml',False);
+  //ACBrNFe1.NotasFiscais.Imprimir;
+  //ACBrNFe1.NotasFiscais.Clear;
+  //ACBrNFe1.NotasFiscais.LoadFromFile('C:\temp\33180605481336000137651000000915341000003420-nfe.xml',False);
+  //ACBrNFe1.NotasFiscais.Imprimir;
+  //ACBrNFe1.NotasFiscais.Clear;
+  //ACBrNFe1.NotasFiscais.LoadFromFile('C:\temp\29180612667605000110650010000178601000178606-nfe.xml',False);
+  //ACBrNFe1.NotasFiscais.Imprimir;
+  //ACBrNFe1.NotasFiscais.Clear;
+  //ACBrNFe1.NotasFiscais.LoadFromFile('C:\temp\33180605481336000137651000000915159000003144-nfe.xml',False);
+  //ACBrNFe1.NotasFiscais.Imprimir;
 end;
 
 procedure TForm1.btnCriarEnviarClick(Sender: TObject);
@@ -2349,6 +2398,7 @@ begin
       Emit.enderEmit.cPais   := 1058;
       Emit.enderEmit.xPais   := 'BRASIL';
 
+      ACBrNFe1.SSL.SSLHttpLib := httpWinHttp;
       Emit.IEST              := '';
       Emit.IM                := '2648800'; // Preencher no caso de existir serviços na nota
       Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se é permitido
@@ -2790,13 +2840,15 @@ end;
 
 procedure TForm1.GerarNFCe(NumNFe: String);
 begin
+
   with ACBrNFe1.NotasFiscais.Add.NFe do
    begin
-     Ide.cNF       := StrToInt(NumNFe); //Caso não seja preenchido será gerado um número aleatório pelo componente
+
+     //Ide.cNF       := ; //Caso não seja preenchido será gerado um número aleatório pelo componente
      Ide.natOp     := 'VENDA';
      Ide.indPag    := ipVista;
      Ide.modelo    := 65;
-     Ide.serie     := 1;
+     Ide.serie     := 123;
      Ide.nNF       := StrToInt(NumNFe);
      Ide.dEmi      := now;
      Ide.dSaiEnt   := now;
@@ -2835,7 +2887,7 @@ begin
 //      Emit.IM                := '2648800'; // Preencher no caso de existir serviços na nota
 //      Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se é permitido
                                     // a inclusão de serviços na NFe
-      Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+      Emit.CRT               := crtSimplesNacional;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
 
       Dest.indIEDest         := inNaoContribuinte;
       Dest.CNPJCPF           := '33013890827';
@@ -2909,7 +2961,8 @@ begin
 
             with ICMS do
              begin
-               CST          := cst00;
+               //CST          := cst00;
+               CSOSN          := csosn900;
                ICMS.orig    := oeNacional;
                ICMS.modBC   := dbiValorOperacao;
                ICMS.vBC     := 100;
@@ -3422,7 +3475,8 @@ begin
   ACBrNFe1.NotasFiscais.Clear;
 
   ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFCe;
-  ACBrNFe1.Configuracoes.Geral.VersaoDF := ve310;
+  ACBrNFe1.Configuracoes.Geral.VersaoDF := ve400;
+  ACBrNFe1.Configuracoes.Geral.VersaoQRCode := veqr000;
   GerarNFCe(vAux);
 
   ACBrNFe1.Enviar(vNumLote,True,Sincrono);

@@ -4,6 +4,7 @@
 
 unit ACBr_NFe;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -16,7 +17,7 @@ uses
   pcnRetCCeNFe, pcnRetConsCad, pcnRetConsNFeDest, pcnRetConsReciNFe, 
   pcnRetConsSitNFe, pcnRetConsStatServ, pcnRetDistDFeInt, pcnRetDownloadNFe, 
   pcnRetEnvEventoNFe, pcnRetEnvNFe, pcnRetInutNFe, pcnConversaoNFe, 
-  pcnNFeConsts, LazarusPackageIntf;
+  pcnNFeConsts, ACBrDFeDANFeReport, LazarusPackageIntf;
 
 implementation
 

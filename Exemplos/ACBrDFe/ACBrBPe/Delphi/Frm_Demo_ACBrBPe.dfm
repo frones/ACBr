@@ -1,9 +1,9 @@
 object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
   Left = 200
   Top = 124
-  Width = 928
-  Height = 644
   Caption = 'Demo ACBrBPe'
+  ClientHeight = 605
+  ClientWidth = 912
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     Left = 297
     Top = 0
     Width = 615
-    Height = 606
+    Height = 605
     Align = alClient
     TabOrder = 0
     object Panel3: TPanel
@@ -207,7 +207,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
       Left = 1
       Top = 233
       Width = 613
-      Height = 372
+      Height = 371
       ActivePage = TabSheet6
       Align = alClient
       TabOrder = 1
@@ -230,11 +230,11 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
           Left = 0
           Top = 0
           Width = 605
-          Height = 344
+          Height = 343
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000873E00008E2300000000000000000000000000000000000000000000
+            4C000000873E0000732300000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -261,7 +261,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
           Left = 0
           Top = 0
           Width = 605
-          Height = 344
+          Height = 343
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -287,7 +287,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
           Left = 0
           Top = 0
           Width = 605
-          Height = 344
+          Height = 343
           Align = alClient
           Lines.Strings = (
             '')
@@ -302,7 +302,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     Left = 0
     Top = 0
     Width = 297
-    Height = 606
+    Height = 605
     Align = alLeft
     TabOrder = 1
     object lblColaborador: TLabel
@@ -371,8 +371,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -387,6 +385,8 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl1: TPageControl
       Left = 0
@@ -666,7 +666,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -676,7 +675,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -686,7 +684,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -696,7 +693,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -807,7 +803,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -846,7 +841,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
                 Top = 149
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 7
               end
               object edtPathSchemas: TEdit
@@ -925,7 +919,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -998,7 +991,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 0
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1568,9 +1560,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
             Top = 88
             Width = 22
             Height = 22
-            ModalResult = 1
-            TabOrder = 0
-            OnClick = btSerialClick
             Glyph.Data = {
               36030000424D3603000000000000360000002800000010000000100000000100
               1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -1599,6 +1588,9 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
               00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
             Layout = blGlyphTop
+            ModalResult = 1
+            TabOrder = 0
+            OnClick = btSerialClick
           end
           object cbxModeloPosPrinter: TComboBox
             Left = 8
@@ -1606,7 +1598,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
             Width = 233
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
             TabOrder = 1
           end
           object cbxPorta: TComboBox
@@ -1614,7 +1605,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
             Top = 88
             Width = 201
             Height = 21
-            ItemHeight = 13
             TabOrder = 2
           end
           object cbxPagCodigo: TComboBox
@@ -1623,7 +1613,6 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
             Width = 101
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
             TabOrder = 3
           end
           object seColunas: TSpinEdit
@@ -1761,7 +1750,11 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     OnStatusChange = ACBrBPe1StatusChange
     OnGerarLog = ACBrBPe1GerarLog
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
@@ -1790,39 +1783,20 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     Top = 385
   end
   object ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS
-    ACBrBPe = ACBrBPe1
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDABPE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = True
-    MargemIBPerior = 0.800000000000000000
+    MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = ',0.00'
-    CasasDecimais._Mask_vUnCom = ',0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 8
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    BPeCancelada = False
-    ImprimirItens = True
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrBPe = ACBrBPe1
+    TipoDABPE = tiSemGeracao
+    Cancelada = False
     ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
+    ImprimeNomeFantasia = False
     PosPrinter = ACBrPosPrinter1
     Left = 382
     Top = 385

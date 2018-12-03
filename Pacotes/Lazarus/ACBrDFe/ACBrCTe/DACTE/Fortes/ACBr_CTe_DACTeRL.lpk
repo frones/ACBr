@@ -54,13 +54,16 @@
         <UnitName Value="ACBrCTeDAInutRLRetrato"/>
       </Item9>
     </Files>
-    <RequiredPkgs Count="2">
+    <RequiredPkgs Count="3">
       <Item1>
-        <PackageName Value="frce"/>
+        <PackageName Value="ACBrDFeReportRL"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_CTe"/>
+        <PackageName Value="frce"/>
       </Item2>
+      <Item3>
+        <PackageName Value="ACBr_CTe"/>
+      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

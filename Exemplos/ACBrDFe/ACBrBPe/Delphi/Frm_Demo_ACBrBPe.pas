@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, IniFiles, ShellAPI, ACBrBase, ACBrDFe, ACBrBPe, Spin, ExtCtrls,
   StdCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw, ACBrMail, ACBrUtil,
-  pcnConversao, ACBrBPeDABPEClass, ACBrBPeDABPeESCPOS, ACBrPosPrinter;
+  pcnConversao, ACBrBPeDABPEClass, ACBrBPeDABPeESCPOS, ACBrPosPrinter,
+  ACBrDFeReport;
 
 type
   Tfrm_DemoACBrBPe = class(TForm)

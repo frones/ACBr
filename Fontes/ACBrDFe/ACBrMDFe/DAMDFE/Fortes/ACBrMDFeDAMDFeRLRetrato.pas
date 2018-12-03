@@ -191,16 +191,15 @@ type
     FNumItem: Integer;
     FTotalPages: integer;
 
-  public
-    { Public declarations }
-    procedure ProtocoloMDFe(const sProtocolo: string);
   end;
 
 
 implementation
 
 uses
-  StrUtils, DateUtils, pmdfeMDFe, ACBrUtil, ACBrDFeUtil, ACBrValidador;
+  StrUtils, DateUtils,
+  pmdfeMDFe,
+  ACBrUtil, ACBrDFeUtil, ACBrValidador, ACBrDFeReportFortes;
 
 {$ifdef FPC}
  {$R *.lfm}
@@ -213,17 +212,9 @@ const
   _NUM_ITEMS_OTHERPAGES = 50;
 
 var
-  FProtocoloMDFe: string;
   nItemControle: integer;
 
-procedure TfrlDAMDFeRLRetrato.ProtocoloMDFe(const sProtocolo: string);
-begin
-  FProtocoloMDFe := sProtocolo;
-end;
-
 procedure TfrlDAMDFeRLRetrato.rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
-var
-  vStringStream: TStringStream;
 begin
   inherited;
   if  (RLMDFe.PageNumber <> 1) then
@@ -238,25 +229,10 @@ begin
     RLMemo1.Font.Size := 6;
   {$ENDIF}
 
-  if (FLogo <> '') then
-  begin
-    if FilesExists(FLogo) then
-      rliLogo.Picture.LoadFromFile(FLogo)
-    else
-    begin
-      vStringStream := TStringStream.Create(FLogo);
-      try
-        try
-          rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
-        except
-        end;
-      finally
-        vStringStream.Free;
-      end;
-    end;
-  end;
+  TDFeReportFortes.CarregarLogo(rliLogo, fpDAMDFe.Logo);
 
-  if FExpandirLogoMarca then
+
+  if fpDAMDFe.ExpandeLogoMarca then
   begin
     rliLogo.top := 2;
     rliLogo.Left := 2;
@@ -267,13 +243,13 @@ begin
     rlmDadosEmitente.visible := False;
   end;
 
-  if not FExpandirLogoMarca then
+  if not fpDAMDFe.ExpandeLogoMarca then
   begin
     rliLogo.Stretch := true;
     rlmEmitente.Enabled := True;
     rlmDadosEmitente.Enabled := True;
     // Emitente
-    with FMDFe.Emit do
+    with fpMDFe.Emit do
     begin
       rlmEmitente.Lines.Text := XNome;
 
@@ -292,26 +268,26 @@ begin
       rlmDadosEmitente.Lines.Add(ACBrStr('INSCRIÇÃO ESTADUAL: ') + IE);
       rlmDadosEmitente.Lines.Add('TELEFONE: ' + FormatarFone(EnderEmit.Fone));
 
-      if Trim(FSite) <> '' then
-        rlmDadosEmitente.Lines.Add('SITE: ' + FSite);
-      if Trim(FEmail) <> '' then
-        rlmDadosEmitente.Lines.Add('E-MAIL: ' + FEmail);
+      if Trim(fpDAMDFe.Site) <> '' then
+        rlmDadosEmitente.Lines.Add('SITE: ' + fpDAMDFe.Site);
+      if Trim(fpDAMDFe.Email) <> '' then
+        rlmDadosEmitente.Lines.Add('E-MAIL: ' + fpDAMDFe.Email);
     end;
   end;
 
-  RLBarcode1.Caption  := Copy ( FMDFe.InfMDFe.Id, 5, 44 );
-  rllChave.Caption    := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+  RLBarcode1.Caption  := Copy ( fpMDFe.InfMDFe.Id, 5, 44 );
+  rllChave.Caption    := FormatarChaveAcesso(Copy(fpMDFe.InfMDFe.Id, 5, 44));
 
-  if FMDFe.ide.tpEmis = teNormal then
+  if fpMDFe.ide.tpEmis = teNormal then
   begin
     rllProtocolo.Font.Size := 8;
     rllProtocolo.Font.Style := [fsBold];
-    if FProtocoloMDFE <> '' then
-      rllProtocolo.Caption := FProtocoloMDFE
+    if fpDAMDFe.Protocolo <> '' then
+      rllProtocolo.Caption := fpDAMDFe.Protocolo
     else
-      rllProtocolo.Caption := FMDFe.procMDFe.nProt + '   ' +
-        IfThen(FMDFe.procMDFe.dhRecbto <> 0,
-        DateTimeToStr(FMDFe.procMDFe.dhRecbto), '');
+      rllProtocolo.Caption := fpMDFe.procMDFe.nProt + '   ' +
+        IfThen(fpMDFe.procMDFe.dhRecbto <> 0,
+        DateTimeToStr(fpMDFe.procMDFe.dhRecbto), '');
   end
   else
   begin
@@ -321,34 +297,34 @@ begin
       ' após esta Emissão (') + FormatDateTime('dd/mm/yyyy hh:nn', Now) + ')';
   end;
 
-  rllModelo.Caption       := FMDFe.Ide.modelo;
-  rllSerie.Caption        := Poem_Zeros(FMDFe.Ide.serie, 3);
-  rllNumMDFe.Caption      := FormatarNumeroDocumentoFiscal(IntToStr(FMDFe.Ide.nMDF));
-  rllEmissao.Caption      := FormatDateTimeBr(FMDFe.Ide.dhEmi);
-  rllUFCarrega.Caption    := FMDFe.Ide.UFIni;
-  rllUFDescarrega.Caption := FMDFe.Ide.UFFim;
+  rllModelo.Caption       := fpMDFe.Ide.modelo;
+  rllSerie.Caption        := Poem_Zeros(fpMDFe.Ide.serie, 3);
+  rllNumMDFe.Caption      := FormatarNumeroDocumentoFiscal(IntToStr(fpMDFe.Ide.nMDF));
+  rllEmissao.Caption      := FormatDateTimeBr(fpMDFe.Ide.dhEmi);
+  rllUFCarrega.Caption    := fpMDFe.Ide.UFIni;
+  rllUFDescarrega.Caption := fpMDFe.Ide.UFFim;
   rlb_3_Aereo.Visible     := false;
   rlb_4_Aquav.Visible     := false;
   rlb_5_Ferrov.Visible    := false;
 
-  case FMDFe.Ide.modal of
+  case fpMDFe.Ide.modal of
     moRodoviario  : rllModal.Caption := ACBrStr('MODAL RODOVIÁRIO DE CARGA');
     moAereo       : rllModal.Caption := ACBrStr('MODAL AÉREO DE CARGA');
     moAquaviario  : rllModal.Caption := ACBrStr('MODAL AQUAVIÁRIO DE CARGA');
     moFerroviario : rllModal.Caption := ACBrStr('MODAL FERROVIÁRIO DE CARGA');
   end;
 
-  rllqCTe.Caption  := FormatFloatBr(FMDFe.tot.qCTe,  '#0');
-  rllqNFe.Caption  := FormatFloatBr(FMDFe.tot.qNFe,  '#0');
-  rllqMDFe.Caption := FormatFloatBr(FMDFe.tot.qMDFe, '#0');
+  rllqCTe.Caption  := FormatFloatBr(fpMDFe.tot.qCTe,  '#0');
+  rllqNFe.Caption  := FormatFloatBr(fpMDFe.tot.qNFe,  '#0');
+  rllqMDFe.Caption := FormatFloatBr(fpMDFe.tot.qMDFe, '#0');
 
-  if FMDFe.tot.cUnid = uTON then
+  if fpMDFe.tot.cUnid = uTON then
     rlLabel12.Caption := 'PESO TOTAL (Ton)'
   else
     rlLabel12.Caption := 'PESO TOTAL (Kg)';
 
-  rllPesoTotal.Caption := FormatFloatBr(FMDFe.tot.qCarga, ',#0.0000');
-  rllValorMercadoria.Caption := FormatFloatBr(FMDFe.tot.vCarga, ',#0.00');
+  rllPesoTotal.Caption := FormatFloatBr(fpMDFe.tot.qCarga, ',#0.0000');
+  rllValorMercadoria.Caption := FormatFloatBr(fpMDFe.tot.vCarga, ',#0.00');
 
 end;
 
@@ -357,61 +333,61 @@ var
   i: integer;
 begin
   inherited;
-  rlb_2_Rodo.Enabled := (FMDFe.Ide.modal = moRodoviario);
+  rlb_2_Rodo.Enabled := (fpMDFe.Ide.modal = moRodoviario);
 
   rlmPlaca.Lines.Clear;
-  rlmPlaca.Lines.Add(FormatarPlaca(FMDFe.rodo.veicTracao.placa) + ' - ' +
-                     FMDFe.rodo.veicTracao.UF );
+  rlmPlaca.Lines.Add(FormatarPlaca(fpMDFe.rodo.veicTracao.placa) + ' - ' +
+                     fpMDFe.rodo.veicTracao.UF );
 
   rlmRNTRC.Lines.Clear;
-  if FMDFe.rodo.veicTracao.prop.RNTRC <> '' then
-    rlmRNTRC.Lines.Add(FMDFe.rodo.veicTracao.prop.RNTRC)
+  if fpMDFe.rodo.veicTracao.prop.RNTRC <> '' then
+    rlmRNTRC.Lines.Add(fpMDFe.rodo.veicTracao.prop.RNTRC)
   else
-    if (FMDFe.infMDFe.versao >= 3) then
-      rlmRNTRC.Lines.Add(FMDFe.rodo.infANTT.RNTRC)
+    if (fpMDFe.infMDFe.versao >= 3) then
+      rlmRNTRC.Lines.Add(fpMDFe.rodo.infANTT.RNTRC)
     ELSE
-      rlmRNTRC.Lines.Add(FMDFe.rodo.RNTRC);
+      rlmRNTRC.Lines.Add(fpMDFe.rodo.RNTRC);
 
-  for i := 0 to FMDFe.rodo.veicReboque.Count - 1 do
+  for i := 0 to fpMDFe.rodo.veicReboque.Count - 1 do
   begin
-    rlmPlaca.Lines.Add(FormatarPlaca(FMDFe.rodo.veicReboque.Items[i].placa) + ' - ' +
-                     FMDFe.rodo.veicReboque.Items[i].UF );
-    if FMDFe.rodo.veicReboque.Items[i].prop.RNTRC <> '' then
-      rlmRNTRC.Lines.Add(FMDFe.rodo.veicReboque.Items[i].prop.RNTRC)
+    rlmPlaca.Lines.Add(FormatarPlaca(fpMDFe.rodo.veicReboque.Items[i].placa) + ' - ' +
+                     fpMDFe.rodo.veicReboque.Items[i].UF );
+    if fpMDFe.rodo.veicReboque.Items[i].prop.RNTRC <> '' then
+      rlmRNTRC.Lines.Add(fpMDFe.rodo.veicReboque.Items[i].prop.RNTRC)
     else
-      rlmRNTRC.Lines.Add(FMDFe.rodo.RNTRC);
+      rlmRNTRC.Lines.Add(fpMDFe.rodo.RNTRC);
   end;
 
   rlmCPF.Lines.Clear;
   rlmCondutor.Lines.Clear;
 
-  for i := 0 to FMDFe.rodo.veicTracao.condutor.Count - 1 do
+  for i := 0 to fpMDFe.rodo.veicTracao.condutor.Count - 1 do
   begin
-    rlmCPF.Lines.Add(FormatarCPF(FMDFe.rodo.veicTracao.condutor.Items[i].CPF));
-    rlmCondutor.Lines.Add(FMDFe.rodo.veicTracao.condutor.Items[i].xNome);
+    rlmCPF.Lines.Add(FormatarCPF(fpMDFe.rodo.veicTracao.condutor.Items[i].CPF));
+    rlmCondutor.Lines.Add(fpMDFe.rodo.veicTracao.condutor.Items[i].xNome);
   end;
 
   rlmRespCNPJ.Lines.Clear;
   rlmFornCNPJ.Lines.Clear;
   rlmNumComprovante.Lines.Clear;
   
-  if FMDFe.rodo.valePed.disp.Count > 0 then
+  if fpMDFe.rodo.valePed.disp.Count > 0 then
   begin
-    for i := 0 to FMDFe.rodo.valePed.disp.Count - 1 do
+    for i := 0 to fpMDFe.rodo.valePed.disp.Count - 1 do
     begin
-      rlmRespCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.valePed.disp.Items[i].CNPJPg));
-      rlmFornCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.valePed.disp.Items[i].CNPJForn));
-      rlmNumComprovante.Lines.Add(FMDFe.rodo.valePed.disp.Items[i].nCompra);
+      rlmRespCNPJ.Lines.Add(FormatarCNPJ(fpMDFe.rodo.valePed.disp.Items[i].CNPJPg));
+      rlmFornCNPJ.Lines.Add(FormatarCNPJ(fpMDFe.rodo.valePed.disp.Items[i].CNPJForn));
+      rlmNumComprovante.Lines.Add(fpMDFe.rodo.valePed.disp.Items[i].nCompra);
     end;
   end
   else
-  if FMDFe.rodo.infANTT.valePed.disp.Count > 0 then
+  if fpMDFe.rodo.infANTT.valePed.disp.Count > 0 then
   begin
-    for i := 0 to FMDFe.rodo.infANTT.valePed.disp.Count - 1 do
+    for i := 0 to fpMDFe.rodo.infANTT.valePed.disp.Count - 1 do
     begin
-      rlmRespCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.infANTT.valePed.disp.Items[i].CNPJPg));
-      rlmFornCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.infANTT.valePed.disp.Items[i].CNPJForn));
-      rlmNumComprovante.Lines.Add(FMDFe.rodo.infANTT.valePed.disp.Items[i].nCompra);
+      rlmRespCNPJ.Lines.Add(FormatarCNPJ(fpMDFe.rodo.infANTT.valePed.disp.Items[i].CNPJPg));
+      rlmFornCNPJ.Lines.Add(FormatarCNPJ(fpMDFe.rodo.infANTT.valePed.disp.Items[i].CNPJForn));
+      rlmNumComprovante.Lines.Add(fpMDFe.rodo.infANTT.valePed.disp.Items[i].nCompra);
     end;
   end;
 end;
@@ -419,7 +395,7 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
-   rlb_3_Aereo.Enabled := (FMDFe.Ide.modal = moAereo);
+   rlb_3_Aereo.Enabled := (fpMDFe.Ide.modal = moAereo);
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_4_AquavBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -427,32 +403,32 @@ var
   i: integer;
 begin
   inherited;
-  rlb_4_Aquav.Enabled   := (FMDFe.Ide.modal = moAquaviario);
-  rllCodEmbar.Caption   := FMDFe.aquav.cEmbar;
-  rllNomeEmbar.Caption  := FMDFe.aquav.xEmbar;
+  rlb_4_Aquav.Enabled   := (fpMDFe.Ide.modal = moAquaviario);
+  rllCodEmbar.Caption   := fpMDFe.aquav.cEmbar;
+  rllNomeEmbar.Caption  := fpMDFe.aquav.xEmbar;
 
   rlmCodCarreg.Lines.Clear;
   rlmNomeCarreg.Lines.Clear;
   rlmCodDescarreg.Lines.Clear;
   rlmNomeDescarreg.Lines.Clear;
 
-  for i := 0 to FMDFe.aquav.infTermCarreg.Count - 1 do
+  for i := 0 to fpMDFe.aquav.infTermCarreg.Count - 1 do
   begin
-    rlmCodCarreg.Lines.Add(FMDFe.aquav.infTermCarreg.Items[i].cTermCarreg);
-    rlmNomeCarreg.Lines.Add(FMDFe.aquav.infTermCarreg.Items[i].xTermCarreg);
+    rlmCodCarreg.Lines.Add(fpMDFe.aquav.infTermCarreg.Items[i].cTermCarreg);
+    rlmNomeCarreg.Lines.Add(fpMDFe.aquav.infTermCarreg.Items[i].xTermCarreg);
   end;
 
-  for i := 0 to FMDFe.aquav.infTermDescarreg.Count - 1 do
+  for i := 0 to fpMDFe.aquav.infTermDescarreg.Count - 1 do
   begin
-    rlmCodDescarreg.Lines.Add(FMDFe.aquav.infTermDescarreg.Items[i].cTermDescarreg);
-    rlmNomeDescarreg.Lines.Add(FMDFe.aquav.infTermDescarreg.Items[i].xTermDescarreg);
+    rlmCodDescarreg.Lines.Add(fpMDFe.aquav.infTermDescarreg.Items[i].cTermDescarreg);
+    rlmNomeDescarreg.Lines.Add(fpMDFe.aquav.infTermDescarreg.Items[i].xTermDescarreg);
   end;
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_5_FerrovBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
-  rlb_5_Ferrov.Enabled := (FMDFe.Ide.modal = moFerroviario);
+  rlb_5_Ferrov.Enabled := (fpMDFe.Ide.modal = moFerroviario);
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_6_ObservacaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -461,7 +437,7 @@ begin
 
   rlmObservacao.Lines.BeginUpdate;
   rlmObservacao.Lines.Clear;
-  rlmObservacao.Lines.Add(StringReplace(FMDFe.infAdic.infCpl, '&lt;BR&gt;', #13#10, [rfReplaceAll, rfIgnoreCase]));
+  rlmObservacao.Lines.Add(StringReplace(fpMDFe.infAdic.infCpl, '&lt;BR&gt;', #13#10, [rfReplaceAll, rfIgnoreCase]));
   rlmObservacao.Lines.Text := StringReplace(rlmObservacao.Lines.Text, ';', #13, [rfReplaceAll]);
   rlmObservacao.Lines.EndUpdate;
 
@@ -470,7 +446,7 @@ begin
   rllMsgTeste.Enabled := False;
   rllMsgTeste.Visible := False;
 
-  if FMDFe.Ide.tpAmb = taHomologacao then
+  if fpMDFe.Ide.tpAmb = taHomologacao then
   begin
     rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Enabled := True;
@@ -478,32 +454,32 @@ begin
   end
   else
   begin
-    if FMDFe.procMDFe.cStat > 0 then
+    if fpMDFe.procMDFe.cStat > 0 then
     begin
-      if (FMDFe.procMDFe.cStat = 101) or (FMDFeCancelada) then
+      if (fpMDFe.procMDFe.cStat = 101) or (fpDAMDFe.Cancelada) then
       begin
         rllMsgTeste.Caption := 'MDF-e CANCELADO';
         rllMsgTeste.Visible := True;
         rllMsgTeste.Enabled := True;
       end;
 
-      if (FMDFe.procMDFe.cStat = 100) and (FMDFeEncerrado) then
+      if (fpMDFe.procMDFe.cStat = 100) and (fpDAMDFe.Encerrado) then
       begin
         rllMsgTeste.Caption := 'MDF-e ENCERRADO';
         rllMsgTeste.Visible := True;
         rllMsgTeste.Enabled := True;
       end;
 
-      if FMDFe.procMDFe.cStat = 110 then
+      if fpMDFe.procMDFe.cStat = 110 then
       begin
         rllMsgTeste.Caption := 'MDF-e DENEGADO';
         rllMsgTeste.Visible := True;
         rllMsgTeste.Enabled := True;
       end;
 
-      if not FMDFe.procMDFe.cStat in [101, 110, 100] then
+      if not fpMDFe.procMDFe.cStat in [101, 110, 100] then
       begin
-        rllMsgTeste.Caption := FMDFe.procMDFe.xMotivo;
+        rllMsgTeste.Caption := fpMDFe.procMDFe.xMotivo;
         rllMsgTeste.Visible := True;
         rllMsgTeste.Enabled := True;
       end;
@@ -522,12 +498,12 @@ begin
   rllDataHoraImpressao.Caption := ACBrStr('DATA E HORA DA IMPRESSÃO: ') + FormatDateTime('dd/mm/yyyy hh:nn', Now);
 
   // imprime usuario
-  if FUsuario <> '' then
-    rllDataHoraImpressao.Caption := rllDataHoraImpressao.Caption + ACBrStr('   USUÁRIO: ') + FUsuario;
+  if fpDAMDFe.Usuario <> '' then
+    rllDataHoraImpressao.Caption := rllDataHoraImpressao.Caption + ACBrStr('   USUÁRIO: ') + fpDAMDFe.Usuario;
 
   // imprime sistema
-  if FSistema <> '' then
-    rllSistema.Caption := 'Desenvolvido por ' + FSistema
+  if fpDAMDFe.Sistema <> '' then
+    rllSistema.Caption := 'Desenvolvido por ' + fpDAMDFe.Sistema
   else
     rllSistema.Caption := '';
 end;
@@ -539,15 +515,11 @@ begin
   FTotalPages   := 1;
   RLMDFe.Title  := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
 
+  TDFeReportFortes.AjustarMargem(RLMDFe, fpDAMDFe);
+
   with RLMDFe do
   begin
     Title                 := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
-
-    Margins.TopMargin     := FMargemSuperior * 10;
-    Margins.BottomMargin  := FMargemInferior * 10;
-    Margins.LeftMargin    := FMargemEsquerda * 10;
-    Margins.RightMargin   := FMargemDireita * 10;
-
     Borders.DrawTop       := true;
     Borders.DrawLeft      := true;
     Borders.DrawRight     := true;
@@ -638,7 +610,7 @@ procedure TfrlDAMDFeRLRetrato.subItensDataRecord(Sender: TObject; RecNo,
 begin
   inherited;
   FNumItem      := RecNo - 1 ;
-  Eof           := (RecNo > FMDFe.infDoc.infMunDescarga.Count) ;
+  Eof           := (RecNo > fpMDFe.infDoc.infMunDescarga.Count) ;
   RecordAction  := raUseIt ;
 end;
 
@@ -662,9 +634,9 @@ var
   end;
 begin
   nItem := 0;
-  with FMDFe.infDoc.infMunDescarga.Items[FNumItem] do
+  with fpMDFe.infDoc.infMunDescarga.Items[FNumItem] do
   begin
-    rlbNumcipio.Caption   := ACBrStr(Format('Município %s ',[ FMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
+    rlbNumcipio.Caption   := ACBrStr(Format('Município %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
    // Lista de CT-e
     for J := 0 to ( infCTe.Count - 1) do
     begin
@@ -675,7 +647,7 @@ begin
    // Lista de CT
     for J := 0 to (infCT.Count - 1) do
     begin
-      Printar( 'CT            ' + FormatarCNPJouCPF(FMDFe.emit.CNPJCPF) + ' - '
+      Printar( 'CT            ' + FormatarCNPJouCPF(fpMDFe.emit.CNPJCPF) + ' - '
                                 + IntToStr(infCT.Items[J].serie)     + '-'
                                 + infCT.Items[J].nCT , nItem );
       Inc(nItem);

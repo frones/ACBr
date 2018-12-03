@@ -1232,19 +1232,21 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Top = 341
   end
   object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
-    ACBrMDFe = ACBrMDFe1
-    ImprimirHoraSaida = False
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDAMDFe = tiSemGeracao
-    TamanhoPapel = tpA4
-    NumCopias = 1
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
-    MDFeCancelada = False
-    MDFeEncerrado = False
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrMDFe = ACBrMDFe1
+    ImprimeHoraSaida = False
+    TipoDAMDFe = tiSemGeracao
+    TamanhoPapel = tpA4
+    Cancelada = False
+    Encerrado = False
     PrintDialog = True
     Left = 558
     Top = 299

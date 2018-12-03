@@ -42,7 +42,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.IOUtils,pcnConversao,
   ACBrNFeDANFEFRDM, ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrBase, ACBrDFe, ACBrNFe, frxClass,AcbrUtil,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls, ACBrDFeReport, ACBrDFeDANFeReport;
 
 type
   TfrmPrincipal = class(TForm)
@@ -183,7 +183,7 @@ begin
     PosCanhoto      := TPosRecibo( RbCanhoto.ItemIndex );
 
     // Mostra  a Tarja NFe CANCELADA
-    NFeCancelada    := rbTarjaNfeCancelada.Checked;
+    Cancelada    := rbTarjaNfeCancelada.Checked;
     { Ajustar a propriedade ProtocoloNFe conforme a sua necessidade }
     { ProtocoloNFe := }
 
@@ -194,16 +194,16 @@ begin
     MargemInferior  := StringToFloat( EditMargemInferior.Text );
 
     // Decimais
-    CasasDecimais.Formato       := TDetFormato( RgTipodedecimais.ItemIndex );
-    CasasDecimais._qCom         := cbtdetInteger_qtd.ItemIndex;
-    CasasDecimais._vUnCom       := cbtdetInteger_Vrl.ItemIndex;
-    CasasDecimais._Mask_qCom    := cbtdetMascara_qtd.Items[ cbtdetMascara_qtd.ItemIndex ] ;
-    CasasDecimais._Mask_vUnCom  := cbtdetMascara_Vrl.Items[cbtdetMascara_Vrl.ItemIndex ];
+    CasasDecimais.Formato    := TDetFormato( RgTipodedecimais.ItemIndex );
+    CasasDecimais.qCom       := cbtdetInteger_qtd.ItemIndex;
+    CasasDecimais.vUnCom     := cbtdetInteger_Vrl.ItemIndex;
+    CasasDecimais.MaskqCom   := cbtdetMascara_qtd.Items[ cbtdetMascara_qtd.ItemIndex ] ;
+    CasasDecimais.MaskvUnCom := cbtdetMascara_Vrl.Items[cbtdetMascara_Vrl.ItemIndex ];
 
     // ImprimirUndQtVlComercial
-    ImprimirUnQtVlComercial     := TImprimirUnidQtdeValor( CBImprimirUndQtVlComercial.ItemIndex );
+    ImprimeValor     := TImprimirUnidQtdeValor( CBImprimirUndQtVlComercial.ItemIndex );
 
-    ImprimirDadosDocReferenciados := rbImprimirDadosDocReferenciados.Checked;
+    ExibeDadosDocReferenciados := rbImprimirDadosDocReferenciados.Checked;
 
   end;
 end;
@@ -220,19 +220,19 @@ begin
     EditMargemDireita.Text  := FloatToString( MargemDireita);
     EditMargemInferior.Text := FloatToString( MargemInferior);
 
-    NFeCancelada            := False;
+    Cancelada            := False;
 
     // Decimais
     RgTipodedecimais.ItemIndex  := integer( CasasDecimais.Formato );
-    cbtdetInteger_qtd.ItemIndex := CasasDecimais._qCom;
-    cbtdetInteger_Vrl.ItemIndex := CasasDecimais._vUnCom;
-    cbtdetMascara_qtd.ItemIndex := CasasDecimais._qCom;
-    cbtdetMascara_Vrl.ItemIndex := CasasDecimais._vUnCom;
+    cbtdetInteger_qtd.ItemIndex := CasasDecimais.qCom;
+    cbtdetInteger_Vrl.ItemIndex := CasasDecimais.vUnCom;
+    cbtdetMascara_qtd.ItemIndex := CasasDecimais.qCom;
+    cbtdetMascara_Vrl.ItemIndex := CasasDecimais.vUnCom;
 
     // ImprimirUndQtVlComercial
-    CBImprimirUndQtVlComercial.ItemIndex  := integer( ImprimirUnQtVlComercial );
+    CBImprimirUndQtVlComercial.ItemIndex  := integer( ImprimeValor );
 
-    rbImprimirDadosDocReferenciados.Checked := ImprimirDadosDocReferenciados;
+    rbImprimirDadosDocReferenciados.Checked := ExibeDadosDocReferenciados;
 
 
   end;

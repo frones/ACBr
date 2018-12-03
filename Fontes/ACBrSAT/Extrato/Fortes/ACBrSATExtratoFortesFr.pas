@@ -326,16 +326,16 @@ begin
   with fACBrSATExtrato do
   begin
     rlVenda.Width := LarguraBobina;
-    rlVenda.Margins.LeftMargin   := Margens.Esquerda;
-    rlVenda.Margins.RightMargin  := Margens.Direita;
-    rlVenda.Margins.TopMargin    := Margens.Topo;
-    rlVenda.Margins.BottomMargin := Margens.Fundo;
+    rlVenda.Margins.LeftMargin   := MargemEsquerda;
+    rlVenda.Margins.RightMargin  := MargemDireita;
+    rlVenda.Margins.TopMargin    := MargemSuperior;
+    rlVenda.Margins.BottomMargin := MargemInferior;
 
     rlCancelamento.Width := LarguraBobina;
-    rlCancelamento.Margins.LeftMargin   := Margens.Esquerda;
-    rlCancelamento.Margins.RightMargin  := Margens.Direita;
-    rlCancelamento.Margins.TopMargin    := Margens.Topo;
-    rlCancelamento.Margins.BottomMargin := Margens.Fundo;
+    rlCancelamento.Margins.LeftMargin   := MargemEsquerda;
+    rlCancelamento.Margins.RightMargin  := MargemDireita;
+    rlCancelamento.Margins.TopMargin    := MargemSuperior;
+    rlCancelamento.Margins.BottomMargin := MargemInferior;
 
     //Detalhes de Dimensionamento LogoTipo
     {$IfNDef NOGUI}
@@ -469,7 +469,7 @@ begin
   QRCode       := TDelphiZXingQRCode.Create;
   QRCodeBitmap := TBitmap.Create;
   try
-    QRCode.Data      := QRCodeData;
+    QRCode.Data      := WideString(QRCodeData);
     QRCode.Encoding  := qrUTF8NoBOM;
     QRCode.QuietZone := 1;
 
@@ -622,8 +622,8 @@ begin
     mMsgAppQRCode.Lines.Text := ACBrSATExtrato.MsgAppQRCode;
 
     mSwHouseSite.Lines.Clear;
-    if ACBrSATExtrato.SoftwareHouse <> '' then
-      mSwHouseSite.Lines.Add(ACBrSATExtrato.SoftwareHouse);
+    if ACBrSATExtrato.Sistema <> '' then
+      mSwHouseSite.Lines.Add(ACBrSATExtrato.Sistema);
 
     if ACBrSATExtrato.Site <> '' then
       mSwHouseSite.Lines.Add(ACBrSATExtrato.Site);
@@ -655,13 +655,14 @@ begin
     maxCaracter := CalcularCaractesWidth(mLinhaItem.Canvas, mLinhaItem.Width);
   {$ENDIF}
 
+
   with ACBrSATExtrato.CFe.Det.Items[fNumItem] do
   begin
     lSequencia.Caption := IntToStrZero(nItem,3);
     lTotalItem.Caption := FormatFloatBr(Prod.vProd);
-    mvUnCom := IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom);
+    mvUnCom := IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.CasasDecimais.MaskvUnCom);
 
-    if (Length( Trim( Prod.cEAN ) ) > 0) and (ACBrSATExtrato.UsaCodigoEanImpressao) then
+    if (Length( Trim( Prod.cEAN ) ) > 0) and (ACBrSATExtrato.ImprimeCodigoEan) then
       sCodigo := Trim(Prod.cEAN)
     else
       sCodigo := Trim(Prod.cProd);
@@ -674,7 +675,7 @@ begin
     if ACBrSATExtrato.ImprimeEmUmaLinha then
     begin
       LinhaItem := sCodigo + ' [DesProd] ' +
-                   ACBrSATExtrato.FormatQuantidade(Prod.qCom, False) + ' ' +
+                   ACBrSATExtrato.FormatarQuantidade(Prod.qCom, False) + ' ' +
                    Trim( Prod.uCom) + ' X ' +
                    FormatFloatBr(Prod.vUnCom, mvUnCom) +
                    sVlrImpostos;
@@ -697,7 +698,7 @@ begin
 
       sVlrImpostos := sVlrImpostos + '|';
       //Centraliza os valores. A fonte dos itens foi mudada para Courier New, Pois esta o espaço tem o mesmo tamanho dos demais caractere.
-      LinhaItem  := ACBrSATExtrato.FormatQuantidade(Prod.qCom, False) +'|'+
+      LinhaItem  := ACBrSATExtrato.FormatarQuantidade(Prod.qCom, False) +'|'+
                     Trim(Prod.uCom) + ' X ' +
                     FormatFloatBr(Prod.vUnCom, mvUnCom) +'|'+
                     sVlrImpostos + '|';
@@ -990,8 +991,8 @@ begin
   mMsgAppQRCodeCanc.Lines.Text := ACBrSATExtrato.MsgAppQRCode;
 
   mSwHouseSiteCanc.Lines.Clear;
-  if ACBrSATExtrato.SoftwareHouse <> '' then
-    mSwHouseSiteCanc.Lines.Add(ACBrSATExtrato.SoftwareHouse);
+  if ACBrSATExtrato.Sistema <> '' then
+    mSwHouseSiteCanc.Lines.Add(ACBrSATExtrato.Sistema);
 
   if ACBrSATExtrato.Site <> '' then
     mSwHouseSiteCanc.Lines.Add(ACBrSATExtrato.Site);
@@ -1028,11 +1029,11 @@ begin
       end;
 
       RLPrinter.Copies     := NumCopias ;
-      RLLayout.PrintDialog := MostrarSetup;
+      RLLayout.PrintDialog := MostraSetup;
       RLLayout.ShowProgress:= False ;
 
-      if (Filtro = fiNenhum) and (PrinterName <> '') then
-        RLPrinter.PrinterName := PrinterName;
+      if (Filtro = fiNenhum) and (Impressora <> '') then
+        RLPrinter.PrinterName := Impressora;
 
       //Para impressoras sem guilhotina não cortar no QrCorde
       pEspacoFinal.Height := EspacoFinal;
@@ -1040,10 +1041,10 @@ begin
 
       // Largura e Margens do Relatório //
       RLLayout.Width := LarguraBobina;
-      RLLayout.Margins.LeftMargin   := Margens.Esquerda;
-      RLLayout.Margins.RightMargin  := Margens.Direita;
-      RLLayout.Margins.TopMargin    := Margens.Topo;
-      RLLayout.Margins.BottomMargin := Margens.Fundo;
+      RLLayout.Margins.LeftMargin   := MargemEsquerda;
+      RLLayout.Margins.RightMargin  := MargemDireita;
+      RLLayout.Margins.TopMargin    := MargemSuperior;
+      RLLayout.Margins.BottomMargin := MargemInferior;
 
       // Ajustando o tamanho da página //
       RLLayout.PageBreaking := pbNone;
@@ -1057,7 +1058,7 @@ begin
 
       if Filtro = fiNenhum then
       begin
-        if MostrarPreview then
+        if MostraPreview then
           RLLayout.PreviewModal
         else
           RLLayout.Print;
@@ -1076,7 +1077,7 @@ begin
           end ;
 
           RLFiltro.ShowProgress := RLLayout.ShowProgress;
-          RLFiltro.FileName := NomeArquivo ;
+          RLFiltro.FileName := NomeDocumento ;
           RLFiltro.FilterPages( RLLayout.Pages );
         end;
       end;

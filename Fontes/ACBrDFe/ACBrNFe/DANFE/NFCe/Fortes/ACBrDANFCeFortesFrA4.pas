@@ -60,7 +60,7 @@ type
 	{$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}	
-  TACBrNFeDANFCeFortesA4 = class(TACBrNFeDANFEClass)
+  TACBrNFeDANFCeFortesA4 = class(TACBrNFeDANFCEClass)
   private
     FpNFe: TNFe;
     procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrNFeDANFCeFortesA4Filtro = fiNenhum);
@@ -282,7 +282,8 @@ implementation
   {$R *.dfm}
 {$ENDIF}
 
-uses RLPrinters, StrUtils;
+uses RLPrinters, StrUtils,
+     ACBrDFeDANFeReport;
 
 procedure Register;
 begin
@@ -341,7 +342,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLBand9BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  PrintIt := self.FACBrNFeDANFCeFortesA4.ImprimirTributos;
+  PrintIt := (FACBrNFeDANFCeFortesA4.ImprimeTributos <> trbNenhum);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel14BeforePrint(Sender: TObject;
@@ -373,7 +374,7 @@ begin
   QRCode       := TDelphiZXingQRCode.Create;
   QRCodeBitmap := TBitmap.Create;
   try
-    QRCode.Data      := QRCodeData;
+    QRCode.Data      := widestring(QRCodeData);
     QRCode.Encoding  := qrUTF8NoBOM;
     QRCode.QuietZone := 1;
 
@@ -433,7 +434,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLBand11BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  if self.FACBrNFeDANFCeFortesA4.NFeCancelada then
+  if self.FACBrNFeDANFCeFortesA4.Cancelada then
     lCancelada.Caption    := ACBrStr('NF-e CANCELADA');
 end;
 
@@ -453,7 +454,7 @@ procedure TfrmACBrDANFCeFortesFrA4.RLBand15BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   with self.FACBrNFeDANFCeFortesA4 do
-    PrintIt := ImprimirTributos and TributosSeparadamente;
+    PrintIt := (ImprimeTributos = trbSeparadamente);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand8BeforePrint(Sender: TObject;
@@ -823,12 +824,12 @@ begin
       if FACBrNFeDANFCeFortesA4.Impressora <> '' then
         RLPrinter.PrinterName := FACBrNFeDANFCeFortesA4.Impressora;
 
-      RLLayout.PrintDialog := FACBrNFeDANFCeFortesA4.MostrarPreview;
+      RLLayout.PrintDialog := FACBrNFeDANFCeFortesA4.MostraPreview;
       RLLayout.ShowProgress:= False ;
 
       if Filtro = fiNenhum then
       begin
-        if MostrarPreview then
+        if MostraPreview then
           RLLayout.PreviewModal
         else
           RLLayout.Print;
@@ -844,7 +845,7 @@ begin
             exit ;
           end ;
 
-          RLFiltro.ShowProgress := FACBrNFeDANFCeFortesA4.MostrarStatus;
+          RLFiltro.ShowProgress := FACBrNFeDANFCeFortesA4.MostraStatus;
           RLFiltro.FileName := FACBrNFeDANFCeFortesA4.PathPDF + OnlyNumber(FACBrNFeDANFCeFortesA4.FpNFe.infNFe.ID) + '-nfe.pdf';
           RLFiltro.FilterPages( RLLayout.Pages );
           FACBrNFeDANFCeFortesA4.FPArquivoPDF := RLFiltro.FileName;
@@ -954,9 +955,9 @@ procedure TfrmACBrDANFCeFortesFrA4.RLLabel31BeforePrint(Sender: TObject;
     end;
   end;
 begin
-  if not self.FACBrNFeDANFCeFortesA4.ImprimirTributos then
+  if (FACBrNFeDANFCeFortesA4.ImprimeTributos = trbNenhum) then
     Text := ''
-  else if not self.FACBrNFeDANFCeFortesA4.TributosSeparadamente then
+  else if (FACBrNFeDANFCeFortesA4.ImprimeTributos = trbNormal) then
     Text := ManterValorTributosLinha
   else
     Text := 'Você pagou aproximadamente : ';

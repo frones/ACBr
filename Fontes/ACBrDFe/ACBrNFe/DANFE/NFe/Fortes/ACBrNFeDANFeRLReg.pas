@@ -52,26 +52,26 @@ interface
 
 uses
   SysUtils, Classes, ACBrNFeDANFeRLClass
-  {$IFDEF FPC}
+  {$IfDef FPC}
      ,LResources
-  {$ENDIF} ;
+  {$EndIf} ;
 
 procedure Register;
 
 implementation
 
-{$IFNDEF FPC}
-   {$R ACBrNFe.dcr}
-{$ENDIF}
+{$IfNDef FPC}
+  {$R ACBrNFe.dcr}
+{$EndIf}
 
 procedure Register;
 begin
   RegisterComponents('ACBrNFe', [TACBrNFeDANFeRL]);
 end;
 
-{$IFDEF FPC}
+{$IfDef FPC}
 initialization
-   {$i ACBrNFeDANFeRL.lrs}
-{$ENDIF}
+   {$I ACBrNFeDANFeRLRes.lrs}
+{$EndIf}
 
 end.

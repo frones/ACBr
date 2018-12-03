@@ -48,15 +48,12 @@ interface
 
 uses
   SysUtils, Variants, Classes, StrUtils,
-  {$IFDEF CLX}
-  QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
-  {$ELSE}
-      Graphics, Controls, Forms, Dialogs, ExtCtrls,
-  {$ENDIF}
-  pcteCTe, pcnConversao, ACBrCTe, ACBrCTeDACTeRLClass, ACBrUtil,
-  Printers,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
-  {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
+  {$IFDEF CLX}QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
+  {$ELSE}Graphics, Controls, Forms, Dialogs, ExtCtrls,{$ENDIF}
+  {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB,
+  Printers, RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
+  pcteCTe, pcnConversao, pcteInutCTe,
+  ACBrCTe, ACBrCTeDACTeRLClass, ACBrUtil;
 
 type
 
@@ -72,50 +69,19 @@ type
     cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigDataSet;
   protected
-    FACBrCTe        : TACBrCTe;
-    FCTe            : TCTe;
-    FLogo           : String;
-    FNumCopias      : Integer;
-    FSistema        : String;
-    FUsuario        : String;
-    FMostrarPreview : Boolean;
-    FMargemSuperior : Double;
-    FMargemInferior : Double;
-    FMargemEsquerda : Double;
-    FMargemDireita  : Double;
-    FImpressora     : String;
+    fpInutCTe: TInutCTe;
+    fpCTe: TCTe;
+    fpDACTe: TACBrCTeDACTeRL;
 
   public
-    class procedure Imprimir(AACBrCTe: TACBrCTe;
-                             ALogo: String = '';
-                             ANumCopias: Integer = 1;
-                             ASistema: String = '';
-                             AUsuario: String = '';
-                             AMostrarPreview: Boolean = True;
-                             AMargemSuperior: Double = 0.7;
-                             AMargemInferior: Double = 0.7;
-                             AMargemEsquerda: Double = 0.7;
-                             AMargemDireita: Double = 0.7;
-                             AImpressora: String = '';
-                             ACTe: TCTe = nil);
-
-    class procedure SavePDF(AACBrCTe: TACBrCTe;
-                            ALogo: String = '';
-                            AFile: String = '';
-                            ASistema: String = '';
-                            AUsuario: String = '';
-                            AMargemSuperior: Double = 0.7;
-                            AMargemInferior: Double = 0.7;
-                            AMargemEsquerda: Double = 0.7;
-                            AMargemDireita: Double = 0.7;
-                            ACTe: TCTe = nil);
+    class procedure Imprimir(ADACTe: TACBrCTeDACTeRL; AInutCTe: TInutCTe; ACTe: TCTe = nil);
+    class procedure SalvarPDF(ADACTe: TACBrCTeDACTeRL; AInutCTe: TInutCTe; AFile: String; ACTe: TCTe = nil);
   end;
 
 implementation
 
 uses
-  MaskUtils;
-
+  MaskUtils, ACBrDFeReportFortes;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -123,116 +89,69 @@ uses
   {$R *.lfm}
 {$ENDIF}
 
-class procedure TfrmCTeDAInutRL.Imprimir(AACBrCTe: TACBrCTe;
-                                         ALogo: String = '';
-                                         ANumCopias: Integer = 1;
-                                         ASistema: String = '';
-                                         AUsuario: String = '';
-                                         AMostrarPreview: Boolean = True;
-                                         AMargemSuperior: Double = 0.7;
-                                         AMargemInferior: Double = 0.7;
-                                         AMargemEsquerda: Double = 0.7;
-                                         AMargemDireita: Double = 0.7;
-                                         AImpressora: String = '';
-                                         ACTe: TCTe = nil);
+class procedure TfrmCTeDAInutRL.Imprimir(ADACTe: TACBrCTeDACTeRL; AInutCTe: TInutCTe; ACTe: TCTe = nil);
+var
+  DACTeInuReport: TfrmCTeDAInutRL;
 begin
-  with Create(nil) do
-     try
-        FACBrCTe        := AACBrCTe;
-        FLogo           := ALogo;
-        FNumCopias      := ANumCopias;
-        FSistema        := ASistema;
-        FUsuario        := AUsuario;
-        FMostrarPreview := AMostrarPreview;
-        FMargemSuperior := AMargemSuperior;
-        FMargemInferior := AMargemInferior;
-        FMargemEsquerda := AMargemEsquerda;
-        FMargemDireita  := AMargemDireita;
-        FImpressora     := AImpressora;
+  DACTeInuReport := Create(nil);
+  try
+    DACTeInuReport.fpDACTe := aDACTe;
+    DACTeInuReport.fpInutCTe := AInutCTe;
+    TDFeReportFortes.AjustarReport(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);
 
-        if ACTe <> nil then
-         FCTe := ACTe;
+    if ACTe <> nil then
+      DACTeInuReport.fpCTe := ACTe;
 
-        if FImpressora > '' then
-          RLPrinter.PrinterName := FImpressora;
-
-        if FNumCopias > 0 then
-          RLPrinter.Copies := FNumCopias
-        else
-          RLPrinter.Copies := 1;
-
-        if AMostrarPreview then
-         begin
-           RLCTeInut.Prepare;
-           RLCTeInut.Preview;
-           Application.ProcessMessages;
-         end else
-         begin
-           FMostrarPreview := True;
-           RLCTeInut.Prepare;
-           RLCTeInut.Print;
-         end;
-     finally
-        RLCTeInut.Free;
-        RLCTeInut := nil;
-        Free;
-     end;
+    if aDACTe.MostraPreview = True then
+      DACTeInuReport.RLCTeInut.PreviewModal
+    else
+      DACTeInuReport.RLCTeInut.Print;
+  finally
+     DACTeInuReport.Free;
+  end;
 end;
 
-class procedure TfrmCTeDAInutRL.SavePDF(AACBrCTe: TACBrCTe;
-                                        ALogo: String = '';
-                                        AFile: String = '';
-                                        ASistema: String = '';
-                                        AUsuario: String = '';
-                                        AMargemSuperior: Double = 0.7;
-                                        AMargemInferior: Double = 0.7;
-                                        AMargemEsquerda: Double = 0.7;
-                                        AMargemDireita: Double = 0.7;
-                                        ACTe: TCTe = nil);
+class procedure TfrmCTeDAInutRL.SalvarPDF(ADACTe: TACBrCTeDACTeRL; AInutCTe: TInutCTe; AFile: String; ACTe: TCTe = nil);
 var
-   i :integer;
+  DACTeInuReport: TfrmCTeDAInutRL;
+  i :integer;
 begin
-  with Create ( nil ) do
-     try
-        FACBrCTe        := AACBrCTe;
-        FLogo           := ALogo;
-        FSistema        := ASistema;
-        FUsuario        := AUsuario;
-        FMargemSuperior := AMargemSuperior;
-        FMargemInferior := AMargemInferior;
-        FMargemEsquerda := AMargemEsquerda;
-        FMargemDireita  := AMargemDireita;
+  DACTeInuReport := Create(nil);
+  try
+    DACTeInuReport.fpDACTe := aDACTe;
+    DACTeInuReport.fpInutCTe := AInutCTe;
 
-        if ACTe <> nil then
-          FCTe := ACTe;
+    TDFeReportFortes.AjustarReport(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);
+    TDFeReportFortes.AjustarFiltroPDF(DACTeInuReport.RLPDFFilter1, DACTeInuReport.fpDACTe, AFile);
 
-        for i := 0 to ComponentCount -1 do
-          begin
-            if (Components[i] is TRLDraw) and (TRLDraw(Components[i]).DrawKind = dkRectangle) then
-              begin
-                TRLDraw(Components[i]).DrawKind := dkRectangle;
-                TRLDraw(Components[i]).Pen.Width := 1;
-              end;
-          end;
+    for i := 0 to DACTeInuReport.ComponentCount -1 do
+    begin
+      if (DACTeInuReport.Components[i] is TRLDraw) and (TRLDraw(DACTeInuReport.Components[i]).DrawKind = dkRectangle) then
+      begin
+        TRLDraw(DACTeInuReport.Components[i]).DrawKind := dkRectangle;
+        TRLDraw(DACTeInuReport.Components[i]).Pen.Width := 1;
+      end;
+    end;
 
-        FMostrarPreview := True;
-        RLCTeInut.Prepare;
+    if ACTe <> nil then
+    begin
+      DACTeInuReport.fpCTe := ACTe;
+      with DACTeInuReport.RLPDFFilter1.DocumentInfo do
+      begin
+        Title := ACBrStr('Inutilização - Conhecimento nº ' +
+          FormatFloat('000,000,000', DACTeInuReport.fpCTe.Ide.nCT));
+        KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', DACTeInuReport.fpCTe.Ide.nCT) +
+          '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', DACTeInuReport.fpCTe.Ide.dhEmi) +
+          '; Destinatário: ' + DACTeInuReport.fpCTe.Dest.xNome +
+          '; CNPJ: ' + DACTeInuReport.fpCTe.Dest.CNPJCPF );
+      end;
+    end;
 
-        if FCTe <> nil then
-          with RLPDFFilter1.DocumentInfo do
-          begin
-            Title := ACBrStr('Inutilização - Conhecimento nº ' +
-                                        FormatFloat('000,000,000', FCTe.Ide.nCT));
-            KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', FCTe.Ide.nCT) +
-                        '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', FCTe.Ide.dhEmi) +
-                        '; Destinatário: ' + FCTe.Dest.xNome +
-                        '; CNPJ: ' + FCTe.Dest.CNPJCPF );
-          end;
-
-        RLCTeInut.SaveToFile(AFile);
-     finally
-        Free;
-     end;
+    DACTeInuReport.RLCTeInut.Prepare;
+    DACTeInuReport.RLPDFFilter1.FilterPages(DACTeInuReport.RLCTeInut.Pages);
+  finally
+     DACTeInuReport.Free;
+  end;
 end;
 
 procedure TfrmCTeDAInutRL.ConfigDataSet;
@@ -302,8 +221,8 @@ begin
  cdsItens.Post;
 
  DataSource1.dataset := cdsItens;
-
 end;
+
 procedure TfrmCTeDAInutRL.FormCreate(Sender: TObject);
 begin
   ConfigDataSet;

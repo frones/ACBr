@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_NFe_Danfe_LazReport"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Rafael Teno Dias"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\LazReport"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="Componente para Impresão de DANFe para o ACBrNFe usando o LazReport."/>
+    <Version Minor="9"/>
+    <Files Count="3">
+      <Item1>
+        <Filename Value="ACBr_NFe_Danfe_LazReport.pas"/>
+        <UnitName Value="ACBr_NFe_Danfe_LazReport"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\LazReport\ACBrNFeDANFeLazReport.pas"/>
+        <UnitName Value="ACBrNFeDANFeLazReport"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\LazReport\ACBrNFeDANFeLazReportReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNFeDANFeLazReportReg"/>
+      </Item3>
+    </Files>
+    <RequiredPkgs Count="5">
+      <Item1>
+        <PackageName Value="lr_pdfexport"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="lr_extexp"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="lazreport"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="ACBr_NFe"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="FCL"/>
+      </Item5>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

@@ -5,10 +5,9 @@ unit Frm_Demo_ACBrNFSe;
 interface
 
 uses
-  IniFiles, {$IFDEF MSWINDOWS} ShellAPI,{$ENDIF} SynMemo, SynHighlighterXML,
-  SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls, Spin,
-  pcnConversao, pnfsConversao, unit2,
+  IniFiles, ShellAPI, SynMemo, SynHighlighterXML,
+  SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,
+  StdCtrls, Buttons, ExtCtrls, Spin, pcnConversao, pnfsConversao, unit2,
   ACBrNFSe, ACBrNFSeDANFSeClass, ACBrNFSeDANFSeRLClass, pnfsNFSe, ACBrMail,
   blcksock, ACBrDFe, ACBrUtil;
 

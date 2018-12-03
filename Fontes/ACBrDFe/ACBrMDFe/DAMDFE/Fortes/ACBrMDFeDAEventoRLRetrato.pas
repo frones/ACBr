@@ -39,9 +39,11 @@ unit ACBrMDFeDAEventoRLRetrato;
 interface
 
 uses
-  Messages, SysUtils, Variants, Classes, db, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, RLReport, RLPDFFilter, RLBarcode, pcnConversao,
-  ACBrMDFeDAEventoRL, RLFilters;
+  Messages, SysUtils, Variants, Classes, db,
+  Graphics, Controls, Forms, Dialogs, ExtCtrls,
+  RLReport, RLPDFFilter, RLBarcode, RLFilters,
+  ACBrMDFeDAEventoRL, ACBrDFeReportFortes,
+  pcnConversao;
 
 type
 
@@ -200,8 +202,7 @@ type
     procedure rlb_10_SistemaBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     procedure Itens;
-  public
-    procedure ProtocoloMDFe(const sProtocolo: string);
+
   end;
 
 implementation
@@ -215,17 +216,9 @@ uses
  {$R *.dfm}
 {$endif}
 
-var
-  FProtocoloMDFe: string;
-
 procedure TfrmMDFeDAEventoRLRetrato.Itens;
 begin
   // Itens
-end;
-
-procedure TfrmMDFeDAEventoRLRetrato.ProtocoloMDFe(const sProtocolo: string);
-begin
-  FProtocoloMDFe := sProtocolo;
 end;
 
 procedure TfrmMDFeDAEventoRLRetrato.rlEventoBeforePrint(Sender: TObject; var PrintReport: boolean);
@@ -234,25 +227,15 @@ begin
 
   Itens;
 
-  RLMDFeEvento.Title := 'Evento: ' + FormatFloat('000,000,000', FEventoMDFe.InfEvento.nSeqEvento);
-
-  with RLMDFeEvento.Margins do
-  begin
-    TopMargin := FMargemSuperior * 10;
-    BottomMargin := FMargemInferior * 10;
-    LeftMargin := FMargemEsquerda * 10;
-    RightMargin := FMargemDireita * 10;
-  end;
+  RLMDFeEvento.Title := 'Evento: ' + FormatFloat('000,000,000', fpEventoMDFe.InfEvento.nSeqEvento);
+  TDFeReportFortes.AjustarMargem(RLMDFeEvento, fpDAMDFe);
 end;
 
 procedure TfrmMDFeDAEventoRLRetrato.rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
-  //  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
-  //                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-  //                  teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal);
-  case FEventoMDFe.InfEvento.tpEvento of
+  case fpEventoMDFe.InfEvento.tpEvento of
     teCancelamento:
     begin
       rllLinha1.Caption := 'CANCELAMENTO';
@@ -282,16 +265,15 @@ procedure TfrmMDFeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TObject;
 begin
   inherited;
 
-  if FMDFe <> nil then
+  if fpMDFe <> nil then
   begin
     PrintIt := True;
 
-    rllModelo.Caption := FMDFe.ide.modelo;
-    rllSerie.Caption := IntToStr(FMDFe.ide.serie);
-    rllNumMDFe.Caption := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
-    rllEmissao.Caption := FormatDateTimeBr(FMDFe.Ide.dhEmi);
-    //SetBarCodeImage(Copy(FMDFe.InfMDFe.Id, 5, 44), rliBarCode);
-    rllChave.Caption := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+    rllModelo.Caption := fpMDFe.ide.modelo;
+    rllSerie.Caption := IntToStr(fpMDFe.ide.serie);
+    rllNumMDFe.Caption := FormatFloat('000,000,000', fpMDFe.Ide.nMDF);
+    rllEmissao.Caption := FormatDateTimeBr(fpMDFe.Ide.dhEmi);
+    rllChave.Caption := FormatarChaveAcesso(Copy(fpMDFe.InfMDFe.Id, 5, 44));
   end
   else
     PrintIt := False;
@@ -301,7 +283,7 @@ procedure TfrmMDFeDAEventoRLRetrato.rlb_05_EventoBeforePrint(Sender: TObject; va
 begin
   inherited;
 
-  with FEventoMDFe do
+  with fpEventoMDFe do
   begin
     case InfEvento.tpEvento of
       teCancelamento: rllTituloEvento.Caption := 'CANCELAMENTO';
@@ -331,142 +313,75 @@ begin
 
   printIt := False;
 
-  if FMDFe <> nil then
+  if fpMDFe <> nil then
   begin
     printIt := True;
 
-    rllRazaoEmitente.Caption := FMDFe.emit.xNome;
-    rllCNPJEmitente.Caption := FormatarCNPJouCPF(FMDFe.emit.CNPJCPF);
-    rllEnderecoEmitente.Caption := FMDFe.emit.EnderEmit.xLgr + ', ' + FMDFe.emit.EnderEmit.nro;
-    rllBairroEmitente.Caption := FMDFe.emit.EnderEmit.xBairro;
-    rllCEPEmitente.Caption := FormatarCEP(FMDFe.emit.EnderEmit.CEP);
-    rllMunEmitente.Caption := FMDFe.emit.EnderEmit.xMun + ' - ' + FMDFe.emit.EnderEmit.UF;
-    rllFoneEmitente.Caption := FormatarFone(FMDFe.emit.enderEmit.fone);
-    rllInscEstEmitente.Caption := FMDFe.emit.IE;
+    rllRazaoEmitente.Caption := fpMDFe.emit.xNome;
+    rllCNPJEmitente.Caption := FormatarCNPJouCPF(fpMDFe.emit.CNPJCPF);
+    rllEnderecoEmitente.Caption := fpMDFe.emit.EnderEmit.xLgr + ', ' + fpMDFe.emit.EnderEmit.nro;
+    rllBairroEmitente.Caption := fpMDFe.emit.EnderEmit.xBairro;
+    rllCEPEmitente.Caption := FormatarCEP(fpMDFe.emit.EnderEmit.CEP);
+    rllMunEmitente.Caption := fpMDFe.emit.EnderEmit.xMun + ' - ' + fpMDFe.emit.EnderEmit.UF;
+    rllFoneEmitente.Caption := FormatarFone(fpMDFe.emit.enderEmit.fone);
+    rllInscEstEmitente.Caption := fpMDFe.emit.IE;
   end;
 end;
 
 procedure TfrmMDFeDAEventoRLRetrato.rlb_04_TomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
-
   printIt := False;
-
-  if FMDFe <> nil then
-  begin
-    (*
-    printIt := True;
-    if FMDFe.Ide.Toma4.xNome = ''
-     then begin
-      case FMDFe.Ide.Toma03.Toma of
-      tmRemetente:
-        begin
-          rllRazaoTomador.Caption    := FMDFe.Rem.xNome;
-          rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Rem.CNPJCPF);
-          rllEnderecoTomador.Caption := FMDFe.Rem.EnderReme.xLgr + ', ' + FMDFe.Rem.EnderReme.nro;
-          rllBairroTomador.Caption   := FMDFe.Rem.EnderReme.xBairro;
-          rllCEPTomador.Caption      := FormatarCEP(FMDFe.Rem.EnderReme.CEP);
-          rllMunTomador.Caption      := FMDFe.Rem.EnderReme.xMun+' - '+FMDFe.Rem.EnderReme.UF;
-          rllFoneTomador.Caption     := FormatarFone(FMDFe.Rem.fone);
-          rllInscEstTomador.Caption  := FMDFe.Rem.IE;
-        end;
-      tmExpedidor:
-        begin
-          rllRazaoTomador.Caption    := FMDFe.Exped.xNome;
-          rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Exped.CNPJCPF);
-          rllEnderecoTomador.Caption := FMDFe.Exped.EnderExped.xLgr + ', ' + FMDFe.Exped.EnderExped.nro;
-          rllBairroTomador.Caption   := FMDFe.Exped.EnderExped.xBairro;
-          rllCEPTomador.Caption      := FormatarCEP(FMDFe.Exped.EnderExped.CEP);
-          rllMunTomador.Caption      := FMDFe.Exped.EnderExped.xMun+' - '+FMDFe.Exped.EnderExped.UF;
-          rllFoneTomador.Caption     := FormatarFone(FMDFe.Exped.fone);
-          rllInscEstTomador.Caption  := FMDFe.Exped.IE;
-        end;
-      tmRecebedor:
-        begin
-          rllRazaoTomador.Caption    := FMDFe.Receb.xNome;
-          rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Receb.CNPJCPF);
-          rllEnderecoTomador.Caption := FMDFe.Receb.EnderReceb.xLgr + ', ' + FMDFe.Receb.EnderReceb.nro;
-          rllBairroTomador.Caption   := FMDFe.Receb.EnderReceb.xBairro;
-          rllCEPTomador.Caption      := FormatarCEP(FMDFe.Receb.EnderReceb.CEP);
-          rllMunTomador.Caption      := FMDFe.Receb.EnderReceb.xMun+' - '+FMDFe.Receb.EnderReceb.UF;
-          rllFoneTomador.Caption     := FormatarFone(FMDFe.Receb.fone);
-          rllInscEstTomador.Caption  := FMDFe.Receb.IE;
-        end;
-      tmDestinatario:
-        begin
-          rllRazaoTomador.Caption    := FMDFe.Dest.xNome;
-          rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Dest.CNPJCPF);
-          rllEnderecoTomador.Caption := FMDFe.Dest.EnderDest.xLgr + ', ' + FMDFe.Dest.EnderDest.nro;
-          rllBairroTomador.Caption   := FMDFe.Dest.EnderDest.xBairro;
-          rllCEPTomador.Caption      := FormatarCEP(FMDFe.Dest.EnderDest.CEP);
-          rllMunTomador.Caption      := FMDFe.Dest.EnderDest.xMun+' - '+FMDFe.Dest.EnderDest.UF;
-          rllFoneTomador.Caption     := FormatarFone(FMDFe.Dest.fone);
-          rllInscEstTomador.Caption  := FMDFe.Dest.IE;
-        end;
-      end;
-     end
-     else begin
-      rllRazaoTomador.Caption    := FMDFe.Ide.Toma4.xNome;
-      rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Ide.Toma4.CNPJCPF);
-      rllEnderecoTomador.Caption := FMDFe.Ide.Toma4.EnderToma.xLgr + ', ' + FMDFe.Ide.Toma4.EnderToma.nro;
-      rllBairroTomador.Caption   := FMDFe.Ide.Toma4.EnderToma.xBairro;
-      rllCEPTomador.Caption      := FormatarCEP(FMDFe.Ide.Toma4.EnderToma.CEP);
-      rllMunTomador.Caption      := FMDFe.Ide.Toma4.EnderToma.xMun+' - '+FMDFe.Ide.Toma4.EnderToma.UF;
-      rllFoneTomador.Caption     := FormatarFone(FMDFe.Ide.Toma4.fone);
-      rllInscEstTomador.Caption  := FMDFe.Ide.Toma4.IE;
-     end;
-   *)
-  end;
 end;
 
 procedure TfrmMDFeDAEventoRLRetrato.rlb_06_DescricaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
 
-  printIt := (FEventoMDFe.InfEvento.tpEvento = teCancelamento) or
-    (FEventoMDFe.InfEvento.tpEvento = teEncerramento) or
-    (FEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor) or
-    (FEventoMDFe.InfEvento.tpAmb = taHomologacao);
+  printIt := (fpEventoMDFe.InfEvento.tpEvento = teCancelamento) or
+    (fpEventoMDFe.InfEvento.tpEvento = teEncerramento) or
+    (fpEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor) or
+    (fpEventoMDFe.InfEvento.tpAmb = taHomologacao);
 
   rllMsgTeste.Visible := False;
   rllMsgTeste.Enabled := False;
 
-  if FEventoMDFe.InfEvento.tpAmb = taHomologacao then
+  if fpEventoMDFe.InfEvento.tpAmb = taHomologacao then
   begin
     rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;
     rllMsgTeste.Enabled := True;
   end;
 
-  rlmDescricao.Visible := (FEventoMDFe.InfEvento.tpEvento = teCancelamento) or
-    (FEventoMDFe.InfEvento.tpEvento = teEncerramento) or
-    (FEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor);
-  rlmDescricao.Enabled := (FEventoMDFe.InfEvento.tpEvento = teCancelamento) or
-    (FEventoMDFe.InfEvento.tpEvento = teEncerramento) or
-    (FEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor);
+  rlmDescricao.Visible := (fpEventoMDFe.InfEvento.tpEvento = teCancelamento) or
+    (fpEventoMDFe.InfEvento.tpEvento = teEncerramento) or
+    (fpEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor);
+  rlmDescricao.Enabled := (fpEventoMDFe.InfEvento.tpEvento = teCancelamento) or
+    (fpEventoMDFe.InfEvento.tpEvento = teEncerramento) or
+    (fpEventoMDFe.InfEvento.tpEvento = teInclusaoCondutor);
 
   rlmDescricao.Lines.Clear;
-  case FEventoMDFe.InfEvento.tpEvento of
+  case fpEventoMDFe.InfEvento.tpEvento of
     teCancelamento:
     begin
-      rlmDescricao.Lines.Add('Protocolo do MDFe Cancelado: ' + FEventoMDFe.InfEvento.detEvento.nProt);
-      rlmDescricao.Lines.Add('Motivo do Cancelamento     : ' + FEventoMDFe.InfEvento.detEvento.xJust);
+      rlmDescricao.Lines.Add('Protocolo do MDFe Cancelado: ' + fpEventoMDFe.InfEvento.detEvento.nProt);
+      rlmDescricao.Lines.Add('Motivo do Cancelamento     : ' + fpEventoMDFe.InfEvento.detEvento.xJust);
     end;
     teEncerramento:
     begin
-      rlmDescricao.Lines.Add('Protocolo do MDFe Encerrado: ' + FEventoMDFe.InfEvento.detEvento.nProt);
+      rlmDescricao.Lines.Add('Protocolo do MDFe Encerrado: ' + fpEventoMDFe.InfEvento.detEvento.nProt);
       rlmDescricao.Lines.Add('Data do Encerramento       : ' +
-        DateToStr(FEventoMDFe.InfEvento.detEvento.dtEnc));
+        DateToStr(fpEventoMDFe.InfEvento.detEvento.dtEnc));
       rlmDescricao.Lines.Add(ACBrStr('Código da UF               : ') +
-        IntToStr(FEventoMDFe.InfEvento.detEvento.cUF));
+        IntToStr(fpEventoMDFe.InfEvento.detEvento.cUF));
       rlmDescricao.Lines.Add(ACBrStr('Código do Município        : ') +
-        IntToStr(FEventoMDFe.InfEvento.detEvento.cMun));
+        IntToStr(fpEventoMDFe.InfEvento.detEvento.cMun));
     end;
     teInclusaoCondutor:
     begin
       rlmDescricao.Lines.Add('Dados do Motorista');
-      rlmDescricao.Lines.Add('CPF : ' + FEventoMDFe.InfEvento.detEvento.CPF);
-      rlmDescricao.Lines.Add('Nome: ' + FEventoMDFe.InfEvento.detEvento.xNome);
+      rlmDescricao.Lines.Add('CPF : ' + fpEventoMDFe.InfEvento.detEvento.CPF);
+      rlmDescricao.Lines.Add('Nome: ' + fpEventoMDFe.InfEvento.detEvento.xNome);
     end;
   end;
 end;
@@ -494,7 +409,7 @@ procedure TfrmMDFeDAEventoRLRetrato.rlb_10_SistemaBeforePrint(Sender: TObject; v
 begin
   inherited;
 
-  rllblSistema.Caption := FSistema + ' - ' + FUsuario;
+  rllblSistema.Caption := fpDAMDFe.Sistema + ' - ' + fpDAMDFe.Usuario;
 end;
 
 end.

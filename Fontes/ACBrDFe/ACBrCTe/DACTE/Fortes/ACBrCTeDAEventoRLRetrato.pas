@@ -54,7 +54,7 @@ uses
   Messages, Graphics, Controls, Forms, Dialogs, ExtCtrls, MaskUtils, StdCtrls,
   {$ENDIF}
   RLReport, RLFilters, RLPDFFilter,
-  pcnConversao, RLBarcode,  DB, StrUtils, RLRichText, ACBrCTeDAEventoRL;
+  pcnConversao, RLBarcode, DB, StrUtils, RLRichText, ACBrCTeDAEventoRL;
 
 type
 
@@ -199,16 +199,16 @@ type
     rlLabel15: TRLLabel;
     rllblSistema: TRLLabel;
     rliBarCode: TRLBarcode;
-    procedure rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlb_03_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlb_04_TomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlb_06_CondicoesBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlb_07_CorrecaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlb_08_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlb_09_ItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlb_10_SistemaBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_03_EmitenteBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_04_TomadorBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_06_CondicoesBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_07_CorrecaoBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_08_HeaderItensBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_09_ItensBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_10_SistemaBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure RLCTeEventoBeforePrint(Sender: TObject; var PrintIt: boolean);
   private
     procedure Itens;
@@ -223,6 +223,7 @@ uses
 
 {$IFnDEF FPC}
   {$R *.dfm}
+
 {$ELSE}
   {$R *.lfm}
 {$ENDIF}
@@ -240,18 +241,17 @@ begin
   FProtocoloCTe := sProtocolo;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_01_TituloBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_01_TituloBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
   inherited;
 
-  //  TpcnTpEvento = (teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
-  //                  teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-  //                  teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal);
-  case FEventoCTe.InfEvento.tpEvento of
+  case fpEventoCTe.InfEvento.tpEvento of
     teCCe:
     begin
       rllLinha1.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
-      rllLinha2.Caption := ACBrStr('Não possui valor fiscal, simples representação da CC-e indicada abaixo.');
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação da CC-e indicada abaixo.');
       rllLinha3.Caption := ACBrStr(
         'CONSULTE A AUTENTICIDADE DA CARTA DE CORREÇÃO ELETRÔNICA NO SITE DA SEFAZ AUTORIZADORA.');
     end;
@@ -266,8 +266,10 @@ begin
     teEPEC:
     begin
       rllLinha1.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA - EPEC');
-      rllLinha2.Caption := ACBrStr('Não possui valor fiscal, simples representação da EPEC indicada abaixo.');
-      rllLinha3.Caption := ACBrStr('CONSULTE A AUTENTICIDADE DA EPEC NO SITE DA SEFAZ VIRTUAL DE CONTINGÊNCIA DO RS/SP.');
+      rllLinha2.Caption := ACBrStr(
+        'Não possui valor fiscal, simples representação da EPEC indicada abaixo.');
+      rllLinha3.Caption := ACBrStr(
+        'CONSULTE A AUTENTICIDADE DA EPEC NO SITE DA SEFAZ VIRTUAL DE CONTINGÊNCIA DO RS/SP.');
     end;
     tePrestDesacordo:
     begin
@@ -280,42 +282,47 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_02_DocumentoBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
   inherited;
 
   PrintIt := False;
 
-  if FCTe <> nil then
+  if fpCTe <> nil then
   begin
     PrintIt := True;
 
-    rllModelo.Caption := IntToStr(FCTe.ide.modelo);
-    rllSerie.Caption := IntToStr(FCTe.ide.serie);
-    rllNumCTe.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
-    rllEmissao.Caption := FormatDateTimeBr(FCTe.Ide.dhEmi);
-    rliBarCode.Caption := OnlyNumber(FCTe.InfCTe.Id);
-    rllChave.Caption := FormatarChaveAcesso(OnlyNumber(FCTe.InfCTe.Id));
+    rllModelo.Caption := IntToStr(fpCTe.ide.modelo);
+    rllSerie.Caption := IntToStr(fpCTe.ide.serie);
+    rllNumCTe.Caption := FormatFloat('000,000,000', fpCTe.Ide.nCT);
+    rllEmissao.Caption := FormatDateTimeBr(fpCTe.Ide.dhEmi);
+    rliBarCode.Caption := OnlyNumber(fpCTe.InfCTe.Id);
+    rllChave.Caption := FormatarChaveAcesso(OnlyNumber(fpCTe.InfCTe.Id));
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_05_EventoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_05_EventoBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
   inherited;
 
-  with FEventoCTe do
+  with fpEventoCTe do
   begin
     case InfEvento.tpEvento of
       teCCe: rllTituloEvento.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
       teCancelamento: rllTituloEvento.Caption := 'CANCELAMENTO';
-      teEPEC: rllTituloEvento.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA');
-      tePrestDesacordo: rllTituloEvento.Caption := ACBrStr('PRESTAÇÃO DE SERVIÇO EM DESACORDO');
+      teEPEC: rllTituloEvento.Caption :=
+          ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA');
+      tePrestDesacordo: rllTituloEvento.Caption :=
+          ACBrStr('PRESTAÇÃO DE SERVIÇO EM DESACORDO');
     end;
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
     case InfEvento.tpAmb of
       taProducao: rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
-      taHomologacao: rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
+      taHomologacao: rllTipoAmbiente.Caption :=
+          ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end;
     rllEmissaoEvento.Caption := FormatDateTimeBr(InfEvento.dhEvento);
     rllTipoEvento.Caption := InfEvento.TipoEvento;
@@ -328,155 +335,171 @@ begin
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_03_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_03_EmitenteBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
   inherited;
 
   PrintIt := False;
 
-  if FCTe <> nil then
+  if fpCTe <> nil then
   begin
     PrintIt := True;
 
-    rllRazaoEmitente.Caption := FCTe.emit.xNome;
-    rllCNPJEmitente.Caption := FormatarCNPJouCPF(FCTe.emit.CNPJ);
-    rllEnderecoEmitente.Caption := FCTe.emit.EnderEmit.xLgr + ', ' + FCTe.emit.EnderEmit.nro;
-    rllBairroEmitente.Caption := FCTe.emit.EnderEmit.xBairro;
-    rllCEPEmitente.Caption := FormatarCEP(FCTe.emit.EnderEmit.CEP);
-    rllMunEmitente.Caption := FCTe.emit.EnderEmit.xMun + ' - ' + FCTe.emit.EnderEmit.UF;
-    rllFoneEmitente.Caption := FormatarFone(FCTe.emit.enderEmit.fone);
-    rllInscEstEmitente.Caption := FCTe.emit.IE;
+    rllRazaoEmitente.Caption := fpCTe.emit.xNome;
+    rllCNPJEmitente.Caption := FormatarCNPJouCPF(fpCTe.emit.CNPJ);
+    rllEnderecoEmitente.Caption :=
+      fpCTe.emit.EnderEmit.xLgr + ', ' + fpCTe.emit.EnderEmit.nro;
+    rllBairroEmitente.Caption := fpCTe.emit.EnderEmit.xBairro;
+    rllCEPEmitente.Caption := FormatarCEP(fpCTe.emit.EnderEmit.CEP);
+    rllMunEmitente.Caption := fpCTe.emit.EnderEmit.xMun + ' - ' + fpCTe.emit.EnderEmit.UF;
+    rllFoneEmitente.Caption := FormatarFone(fpCTe.emit.enderEmit.fone);
+    rllInscEstEmitente.Caption := fpCTe.emit.IE;
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_04_TomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_04_TomadorBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
   inherited;
 
   PrintIt := False;
 
-  if FCTe <> nil then
+  if fpCTe <> nil then
   begin
     PrintIt := True;
-    case FCTe.Ide.modelo of
+    case fpCTe.Ide.modelo of
       57:
       begin
-        if FCTe.Ide.Toma4.xNome = '' then
+        if fpCTe.Ide.Toma4.xNome = '' then
         begin
-          case FCTe.Ide.Toma03.Toma of
+          case fpCTe.Ide.Toma03.Toma of
             tmRemetente:
             begin
-              rllRazaoTomador.Caption := FCTe.Rem.xNome;
-              rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
-              rllEnderecoTomador.Caption := FCTe.Rem.EnderReme.xLgr + ', ' + FCTe.Rem.EnderReme.nro;
-              rllBairroTomador.Caption := FCTe.Rem.EnderReme.xBairro;
-              rllCEPTomador.Caption := FormatarCEP(FCTe.Rem.EnderReme.CEP);
-              rllMunTomador.Caption := FCTe.Rem.EnderReme.xMun + ' - ' + FCTe.Rem.EnderReme.UF;
-              rllFoneTomador.Caption := FormatarFone(FCTe.Rem.fone);
-              rllInscEstTomador.Caption := FCTe.Rem.IE;
+              rllRazaoTomador.Caption := fpCTe.Rem.xNome;
+              rllCNPJTomador.Caption := FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
+              rllEnderecoTomador.Caption :=
+                fpCTe.Rem.EnderReme.xLgr + ', ' + fpCTe.Rem.EnderReme.nro;
+              rllBairroTomador.Caption := fpCTe.Rem.EnderReme.xBairro;
+              rllCEPTomador.Caption := FormatarCEP(fpCTe.Rem.EnderReme.CEP);
+              rllMunTomador.Caption :=
+                fpCTe.Rem.EnderReme.xMun + ' - ' + fpCTe.Rem.EnderReme.UF;
+              rllFoneTomador.Caption := FormatarFone(fpCTe.Rem.fone);
+              rllInscEstTomador.Caption := fpCTe.Rem.IE;
             end;
             tmExpedidor:
             begin
-              rllRazaoTomador.Caption := FCTe.Exped.xNome;
-              rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
-              rllEnderecoTomador.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
-              rllBairroTomador.Caption := FCTe.Exped.EnderExped.xBairro;
-              rllCEPTomador.Caption := FormatarCEP(FCTe.Exped.EnderExped.CEP);
-              rllMunTomador.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
-              rllFoneTomador.Caption := FormatarFone(FCTe.Exped.fone);
-              rllInscEstTomador.Caption := FCTe.Exped.IE;
+              rllRazaoTomador.Caption := fpCTe.Exped.xNome;
+              rllCNPJTomador.Caption := FormatarCNPJouCPF(fpCTe.Exped.CNPJCPF);
+              rllEnderecoTomador.Caption :=
+                fpCTe.Exped.EnderExped.xLgr + ', ' + fpCTe.Exped.EnderExped.nro;
+              rllBairroTomador.Caption := fpCTe.Exped.EnderExped.xBairro;
+              rllCEPTomador.Caption := FormatarCEP(fpCTe.Exped.EnderExped.CEP);
+              rllMunTomador.Caption :=
+                fpCTe.Exped.EnderExped.xMun + ' - ' + fpCTe.Exped.EnderExped.UF;
+              rllFoneTomador.Caption := FormatarFone(fpCTe.Exped.fone);
+              rllInscEstTomador.Caption := fpCTe.Exped.IE;
             end;
             tmRecebedor:
             begin
-              rllRazaoTomador.Caption := FCTe.Receb.xNome;
-              rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
-              rllEnderecoTomador.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
-              rllBairroTomador.Caption := FCTe.Receb.EnderReceb.xBairro;
-              rllCEPTomador.Caption := FormatarCEP(FCTe.Receb.EnderReceb.CEP);
-              rllMunTomador.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
-              rllFoneTomador.Caption := FormatarFone(FCTe.Receb.fone);
-              rllInscEstTomador.Caption := FCTe.Receb.IE;
+              rllRazaoTomador.Caption := fpCTe.Receb.xNome;
+              rllCNPJTomador.Caption := FormatarCNPJouCPF(fpCTe.Receb.CNPJCPF);
+              rllEnderecoTomador.Caption :=
+                fpCTe.Receb.EnderReceb.xLgr + ', ' + fpCTe.Receb.EnderReceb.nro;
+              rllBairroTomador.Caption := fpCTe.Receb.EnderReceb.xBairro;
+              rllCEPTomador.Caption := FormatarCEP(fpCTe.Receb.EnderReceb.CEP);
+              rllMunTomador.Caption :=
+                fpCTe.Receb.EnderReceb.xMun + ' - ' + fpCTe.Receb.EnderReceb.UF;
+              rllFoneTomador.Caption := FormatarFone(fpCTe.Receb.fone);
+              rllInscEstTomador.Caption := fpCTe.Receb.IE;
             end;
             tmDestinatario:
             begin
-              rllRazaoTomador.Caption := FCTe.Dest.xNome;
-              rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
-              rllEnderecoTomador.Caption := FCTe.Dest.EnderDest.xLgr + ', ' + FCTe.Dest.EnderDest.nro;
-              rllBairroTomador.Caption := FCTe.Dest.EnderDest.xBairro;
-              rllCEPTomador.Caption := FormatarCEP(FCTe.Dest.EnderDest.CEP);
-              rllMunTomador.Caption := FCTe.Dest.EnderDest.xMun + ' - ' + FCTe.Dest.EnderDest.UF;
-              rllFoneTomador.Caption := FormatarFone(FCTe.Dest.fone);
-              rllInscEstTomador.Caption := FCTe.Dest.IE;
+              rllRazaoTomador.Caption := fpCTe.Dest.xNome;
+              rllCNPJTomador.Caption := FormatarCNPJouCPF(fpCTe.Dest.CNPJCPF);
+              rllEnderecoTomador.Caption :=
+                fpCTe.Dest.EnderDest.xLgr + ', ' + fpCTe.Dest.EnderDest.nro;
+              rllBairroTomador.Caption := fpCTe.Dest.EnderDest.xBairro;
+              rllCEPTomador.Caption := FormatarCEP(fpCTe.Dest.EnderDest.CEP);
+              rllMunTomador.Caption :=
+                fpCTe.Dest.EnderDest.xMun + ' - ' + fpCTe.Dest.EnderDest.UF;
+              rllFoneTomador.Caption := FormatarFone(fpCTe.Dest.fone);
+              rllInscEstTomador.Caption := fpCTe.Dest.IE;
             end;
           end;
         end
         else
         begin
-          rllRazaoTomador.Caption := FCTe.Ide.Toma4.xNome;
-          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Ide.Toma4.CNPJCPF);
-          rllEnderecoTomador.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro;
-          rllBairroTomador.Caption := FCTe.Ide.Toma4.EnderToma.xBairro;
-          rllCEPTomador.Caption := FormatarCEP(FCTe.Ide.Toma4.EnderToma.CEP);
-          rllMunTomador.Caption := FCTe.Ide.Toma4.EnderToma.xMun + ' - ' + FCTe.Ide.Toma4.EnderToma.UF;
-          rllFoneTomador.Caption := FormatarFone(FCTe.Ide.Toma4.fone);
-          rllInscEstTomador.Caption := FCTe.Ide.Toma4.IE;
+          rllRazaoTomador.Caption := fpCTe.Ide.Toma4.xNome;
+          rllCNPJTomador.Caption := FormatarCNPJouCPF(fpCTe.Ide.Toma4.CNPJCPF);
+          rllEnderecoTomador.Caption :=
+            fpCTe.Ide.Toma4.EnderToma.xLgr + ', ' + fpCTe.Ide.Toma4.EnderToma.nro;
+          rllBairroTomador.Caption := fpCTe.Ide.Toma4.EnderToma.xBairro;
+          rllCEPTomador.Caption := FormatarCEP(fpCTe.Ide.Toma4.EnderToma.CEP);
+          rllMunTomador.Caption :=
+            fpCTe.Ide.Toma4.EnderToma.xMun + ' - ' + fpCTe.Ide.Toma4.EnderToma.UF;
+          rllFoneTomador.Caption := FormatarFone(fpCTe.Ide.Toma4.fone);
+          rllInscEstTomador.Caption := fpCTe.Ide.Toma4.IE;
         end;
       end;
       67:
       begin
-        rllRazaoTomador.Caption := FCTe.toma.xNome;
-        rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.toma.CNPJCPF);
-        rllEnderecoTomador.Caption := FCTe.toma.EnderToma.xLgr + ', ' + FCTe.toma.EnderToma.nro;
-        rllBairroTomador.Caption := FCTe.toma.EnderToma.xBairro;
-        rllCEPTomador.Caption := FormatarCEP(FCTe.toma.EnderToma.CEP);
-        rllMunTomador.Caption := FCTe.toma.EnderToma.xMun + ' - ' + FCTe.toma.EnderToma.UF;
-        rllFoneTomador.Caption := FormatarFone(FCTe.toma.fone);
-        rllInscEstTomador.Caption := FCTe.toma.IE;
+        rllRazaoTomador.Caption := fpCTe.toma.xNome;
+        rllCNPJTomador.Caption := FormatarCNPJouCPF(fpCTe.toma.CNPJCPF);
+        rllEnderecoTomador.Caption :=
+          fpCTe.toma.EnderToma.xLgr + ', ' + fpCTe.toma.EnderToma.nro;
+        rllBairroTomador.Caption := fpCTe.toma.EnderToma.xBairro;
+        rllCEPTomador.Caption := FormatarCEP(fpCTe.toma.EnderToma.CEP);
+        rllMunTomador.Caption :=
+          fpCTe.toma.EnderToma.xMun + ' - ' + fpCTe.toma.EnderToma.UF;
+        rllFoneTomador.Caption := FormatarFone(fpCTe.toma.fone);
+        rllInscEstTomador.Caption := fpCTe.toma.IE;
       end;
     end;
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_06_CondicoesBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_06_CondicoesBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
   inherited;
 
-  PrintIt := (FEventoCTe.InfEvento.tpEvento = teCCe) or
-    (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
-    (FEventoCTe.InfEvento.tpEvento = teEPEC) or
-    (FEventoCTe.InfEvento.tpAmb = taHomologacao);
+  PrintIt := (fpEventoCTe.InfEvento.tpEvento = teCCe) or
+    (fpEventoCTe.InfEvento.tpEvento = teCancelamento) or
+    (fpEventoCTe.InfEvento.tpEvento = teEPEC) or
+    (fpEventoCTe.InfEvento.tpAmb = taHomologacao);
 
   rllMsgTeste.Visible := False;
   rllMsgTeste.Enabled := False;
 
-  if FEventoCTe.InfEvento.tpAmb = taHomologacao then
+  if fpEventoCTe.InfEvento.tpAmb = taHomologacao then
   begin
     rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;
     rllMsgTeste.Enabled := True;
   end;
 
-  rlmCondicoes.Visible := (FEventoCTe.InfEvento.tpEvento = teCCe) or
-    (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
-    (FEventoCTe.InfEvento.tpEvento = teEPEC) or
-    (FEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
-  rlmCondicoes.Enabled := (FEventoCTe.InfEvento.tpEvento = teCCe) or
-    (FEventoCTe.InfEvento.tpEvento = teCancelamento) or
-    (FEventoCTe.InfEvento.tpEvento = teEPEC) or
-    (FEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
+  rlmCondicoes.Visible := (fpEventoCTe.InfEvento.tpEvento = teCCe) or
+    (fpEventoCTe.InfEvento.tpEvento = teCancelamento) or
+    (fpEventoCTe.InfEvento.tpEvento = teEPEC) or
+    (fpEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
+  rlmCondicoes.Enabled := (fpEventoCTe.InfEvento.tpEvento = teCCe) or
+    (fpEventoCTe.InfEvento.tpEvento = teCancelamento) or
+    (fpEventoCTe.InfEvento.tpEvento = teEPEC) or
+    (fpEventoCTe.InfEvento.tpEvento = tePrestDesacordo);
 
-  case FEventoCTe.InfEvento.tpEvento of
+  case fpEventoCTe.InfEvento.tpEvento of
     teCCe:
     begin
       lblTitulo_06.Caption := ACBrStr('CONDIÇÕES DE USO');
       rlmCondicoes.Lines.Clear;
-      rlmCondicoes.Lines.Add( ACBrStr(
+      rlmCondicoes.Lines.Add(ACBrStr(
         'A Carta de Correção e disciplinada pelo Art. 58-B do CONVENIO/SINIEF 06/89: Fica permitida a utilizacao de carta de correcao, para regularização'));
-      rlmCondicoes.Lines.Add( ACBrStr(
+      rlmCondicoes.Lines.Add(ACBrStr(
         'de erro ocorrido na emissão de documentos fiscais relativos a prestação de serviço de transporte, desde que o erro nao esteja relacionado com:'));
-      rlmCondicoes.Lines.Add( ACBrStr(
+      rlmCondicoes.Lines.Add(ACBrStr(
         'I - as variaveis que determinam o valor do imposto tais como: base de calculo, alíquota, diferença de preço, quantidade, valor da prestação;'));
-      rlmCondicoes.Lines.Add( ACBrStr(
+      rlmCondicoes.Lines.Add(ACBrStr(
         'II - a correção de dados cadastrais que implique mudanca do emitente, tomador, remetente ou do destinatário;'));
       rlmCondicoes.Lines.Add(ACBrStr('III - a data de emissão ou de saída.'));
     end;
@@ -484,95 +507,92 @@ begin
     begin
       lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
       rlmCondicoes.Lines.Clear;
-      rlmCondicoes.Lines.Add('Protocolo do CTe Cancelado: ' + FEventoCTe.InfEvento.detEvento.nProt);
-      rlmCondicoes.Lines.Add('Motivo do Cancelamento    : ' + FEventoCTe.InfEvento.detEvento.xJust);
-      rlmCondicoes.Lines.Add('Chave do CTe Cancelado    : ' + FEventoCTe.InfEvento.chCTe);
+      rlmCondicoes.Lines.Add('Protocolo do CTe Cancelado: ' +
+        fpEventoCTe.InfEvento.detEvento.nProt);
+      rlmCondicoes.Lines.Add('Motivo do Cancelamento    : ' +
+        fpEventoCTe.InfEvento.detEvento.xJust);
+      rlmCondicoes.Lines.Add('Chave do CTe Cancelado    : ' +
+        fpEventoCTe.InfEvento.chCTe);
     end;
     teEPEC:
     begin
       lblTitulo_06.Caption := ACBrStr('DESCRIÇÃO');
       rlmCondicoes.Lines.Clear;
-      rlmCondicoes.Lines.Add('Motivo do EPEC     : ' + FEventoCTe.InfEvento.detEvento.xJust);
+      rlmCondicoes.Lines.Add('Motivo do EPEC     : ' +
+        fpEventoCTe.InfEvento.detEvento.xJust);
       rlmCondicoes.Lines.Add('Valor do ICMS      : ' + FormatFloat(
-        '#0.00', FEventoCTe.InfEvento.detEvento.vICMS));
-      rlmCondicoes.Lines.Add(ACBrStr('Valor da Prestação : ') + FormatFloat(
-        '#0.00', FEventoCTe.InfEvento.detEvento.vTPrest));
+        '#0.00', fpEventoCTe.InfEvento.detEvento.vICMS));
+      rlmCondicoes.Lines.Add(ACBrStr('Valor da Prestação : ') +
+        FormatFloat('#0.00', fpEventoCTe.InfEvento.detEvento.vTPrest));
       rlmCondicoes.Lines.Add('Valor da Carga     : ' + FormatFloat(
-        '#0.00', FEventoCTe.InfEvento.detEvento.vCarga));
-      rlmCondicoes.Lines.Add(ACBrStr('UF de inicio/fim da prestação: ') + FEventoCTe.InfEvento.detEvento.UFIni + ' / ' +
-        FEventoCTe.InfEvento.detEvento.UFFim);
+        '#0.00', fpEventoCTe.InfEvento.detEvento.vCarga));
+      rlmCondicoes.Lines.Add(ACBrStr('UF de inicio/fim da prestação: ') +
+        fpEventoCTe.InfEvento.detEvento.UFIni + ' / ' +
+        fpEventoCTe.InfEvento.detEvento.UFFim);
     end;
     tePrestDesacordo:
     begin
       lblTitulo_06.Caption := ACBrStr('JUSTIFICATIVA');
       rlmCondicoes.Lines.Clear;
-      rlmCondicoes.Lines.Add(FEventoCTe.InfEvento.detEvento.xOBS);
+      rlmCondicoes.Lines.Add(fpEventoCTe.InfEvento.detEvento.xOBS);
     end;
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_07_CorrecaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_07_CorrecaoBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 var
   i: integer;
 begin
   inherited;
 
-  PrintIt := FEventoCTe.InfEvento.tpEvento = teCCe;
+  PrintIt := fpEventoCTe.InfEvento.tpEvento = teCCe;
 
   rlmNumItemAlterado.Lines.Clear;
   rlmGrupoAlterado.Lines.Clear;
   rlmCampoAlterado.Lines.Clear;
   rlmValorAlterado.Lines.Clear;
 
-  for i := 0 to (FEventoCTe.InfEvento.detEvento.infCorrecao.Count - 1) do
+  for i := 0 to (fpEventoCTe.InfEvento.detEvento.infCorrecao.Count - 1) do
   begin
-    rlmNumItemAlterado.Lines.Add(IntToStr(FEventoCTe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado));
-    rlmGrupoAlterado.Lines.Add(FEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado);
-    rlmCampoAlterado.Lines.Add(FEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado);
-    rlmValorAlterado.Lines.Add(FEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado);
+    rlmNumItemAlterado.Lines.Add(
+      IntToStr(fpEventoCTe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado));
+    rlmGrupoAlterado.Lines.Add(
+      fpEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado);
+    rlmCampoAlterado.Lines.Add(
+      fpEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado);
+    rlmValorAlterado.Lines.Add(
+      fpEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado);
   end;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_08_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_08_HeaderItensBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
   inherited;
   // Imprime os Documentos Originários se o Tipo de CTe for Normal
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_09_ItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
-//var
-// i : integer;
+procedure TfrmCTeDAEventoRLRetrato.rlb_09_ItensBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
   inherited;
-
   rlb_09_Itens.Enabled := True;
-  (*
-  for i := 1 to 2 do
-    if Trim(cdsDocumentos.FieldByName('DOCUMENTO_' + IntToStr(i)).AsString) = '' then
-      TRLDBText(FindComponent('rldbtCnpjEmitente' + intToStr(i))).Width := 325
-    else
-      TRLDBText(FindComponent('rldbtCnpjEmitente' + intToStr(i))).Width := 128;
-  *)
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.rlb_10_SistemaBeforePrint(Sender: TObject; var PrintIt: Boolean);
+procedure TfrmCTeDAEventoRLRetrato.rlb_10_SistemaBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
   inherited;
-
-  rllblSistema.Caption := FSistema + ' - ' + FUsuario;
+  rllblSistema.Caption := fpDACTe.Sistema + ' - ' + fpDACTe.Usuario;
 end;
 
-procedure TfrmCTeDAEventoRLRetrato.RLCTeEventoBeforePrint(Sender: TObject; var PrintIt: boolean);
+procedure TfrmCTeDAEventoRLRetrato.RLCTeEventoBeforePrint(Sender: TObject;
+  var PrintIt: boolean);
 begin
-
   Itens;
-
-  rlCTeEvento.Title := 'Evento: ' + FormatFloat('000,000,000', FEventoCTe.InfEvento.nSeqEvento);
-
-  rlCTeEvento.Margins.TopMargin := FMargemSuperior * 10;
-  rlCTeEvento.Margins.BottomMargin := FMargemInferior * 10;
-  rlCTeEvento.Margins.LeftMargin := FMargemEsquerda * 10;
-  rlCTeEvento.Margins.RightMargin := FMargemDireita * 10;
+  rlCTeEvento.Title := 'Evento: ' + FormatFloat('000,000,000',
+    fpEventoCTe.InfEvento.nSeqEvento);
 end;
 
 end.

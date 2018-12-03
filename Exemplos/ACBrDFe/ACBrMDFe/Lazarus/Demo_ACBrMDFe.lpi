@@ -8,19 +8,18 @@
         <MainUnitHasUsesSectionForAllUnits Value="False"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <Title Value="Demo_ACBrMDFe"/>
+      <Scaled Value="True"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+      </XPManifest>
     </General>
-    <i18n>
-      <EnableI18N LFM="False"/>
-    </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
@@ -32,19 +31,34 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="4">
+    <RequiredPackages Count="9">
       <Item1>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="SynEdit"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
+        <PackageName Value="PCNComum"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_MDFe"/>
+        <PackageName Value="laz_synapse"/>
       </Item3>
       <Item4>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_MDFe"/>
       </Item4>
+      <Item5>
+        <PackageName Value="ACBrTCP"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="ACBrComum"/>
+      </Item6>
+      <Item7>
+        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
+      </Item7>
+      <Item8>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item8>
+      <Item9>
+        <PackageName Value="LCL"/>
+      </Item9>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>
@@ -61,18 +75,23 @@
       <Unit2>
         <Filename Value="ufrmStatus.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmStatus"/>
         <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
       </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="Demo_ACBrMDFe"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
     <Parsing>
       <SyntaxOptions>
-        <SyntaxMode Value="delphi"/>
+        <SyntaxMode Value="Delphi"/>
       </SyntaxOptions>
     </Parsing>
     <Linking>

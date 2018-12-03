@@ -48,16 +48,13 @@ interface
 
 uses
   SysUtils, Variants, Classes, StrUtils,
-  {$IFDEF CLX}
-  QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
-  {$ELSE}
-    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
-  Graphics, Controls, Forms, Dialogs, ExtCtrls,
-  {$ENDIF}
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
+  {$IFDEF CLX}QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
+  {$ELSE}{$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
+  Graphics, Controls, Forms, Dialogs, ExtCtrls, {$ENDIF}
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB,
-  RLBarcode, pcteCTe, ACBrCTe, pcnConversao,
-  pcteEnvEventoCTe;
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts, RLBarcode,
+  ACBrCTe, ACBrCTeDACTeRLClass,
+  pcteCTe, pcnConversao, pcteEnvEventoCTe;
 
 type
 
@@ -72,42 +69,24 @@ type
   private
 
   protected
-    FACBrCTe: TACBrCTe;
-    FCTe: TCTe;
-    FEventoCTe: TInfEventoCollectionItem;
-    FLogo: string;
-    FNumCopias: integer;
-    FSistema: string;
-    FUsuario: string;
-    FMostrarPreview: boolean;
-    FMargemSuperior: double;
-    FMargemInferior: double;
-    FMargemEsquerda: double;
-    FMargemDireita: double;
-    FImpressora: string;
+    fpACBrCTe: TACBrCTe;
+    fpDACTe: TACBrCTeDACTeRL;
+    fpCTe: TCTe;
+    fpEventoCTe: TInfEventoCollectionItem;
 
     cdsDocumentos: {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigDataSet;
 
   public
-    class procedure Imprimir(AEventoCTe: TInfEventoCollectionItem; ALogo: string = '';
-      ANumCopias: integer = 1; ASistema: string = '';
-      AUsuario: string = ''; AMostrarPreview: boolean = True;
-      AMargemSuperior: double = 0.7; AMargemInferior: double = 0.7;
-      AMargemEsquerda: double = 0.7; AMargemDireita: double = 0.7;
-      AImpressora: string = ''; ACTe: TCTe = nil);
-
-    class procedure SavePDF(AEventoCTe: TInfEventoCollectionItem; ALogo: string = '';
-      AFile: string = ''; ASistema: string = '';
-      AUsuario: string = ''; AMargemSuperior: double = 0.7;
-      AMargemInferior: double = 0.7; AMargemEsquerda: double = 0.7;
-      AMargemDireita: double = 0.7; ACTe: TCTe = nil);
+    class procedure Imprimir(aDACTe: TACBrCTeDACTeRL; AEventoCTe: TInfEventoCollectionItem; ACTe: TCTe = nil);
+    class procedure SalvarPDF(aDACTe: TACBrCTeDACTeRL; AEventoCTe: TInfEventoCollectionItem; AFile: string;
+      ACTe: TCTe = nil);
   end;
 
 implementation
 
 uses
-  MaskUtils, ACBrUtil;
+  MaskUtils, ACBrUtil, ACBrDFeReportFortes;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -115,95 +94,64 @@ uses
   {$R *.lfm}
 {$ENDIF}
 
-class procedure TfrmCTeDAEventoRL.Imprimir(AEventoCTe: TInfEventoCollectionItem;
-  ALogo: string = '';
-  ANumCopias: integer = 1;
-  ASistema: string = '';
-  AUsuario: string = '';
-  AMostrarPreview: boolean = True;
-  AMargemSuperior: double = 0.7;
-  AMargemInferior: double = 0.7;
-  AMargemEsquerda: double = 0.7;
-  AMargemDireita: double = 0.7;
-  AImpressora: string = '';
-  ACTe: TCTe = nil);
+class procedure TfrmCTeDAEventoRL.Imprimir(aDACTe: TACBrCTeDACTeRL; AEventoCTe: TInfEventoCollectionItem;
+  ACTe: TCTe= nil);
+var
+  DACTeEvReport: TfrmCTeDAEventoRL;
 begin
-  with Create(nil) do
-    try
-      FEventoCTe := AEventoCTe;
-      FLogo := ALogo;
-      FNumCopias := ANumCopias;
-      FSistema := ASistema;
-      FUsuario := AUsuario;
-      FMostrarPreview := AMostrarPreview;
-      FMargemSuperior := AMargemSuperior;
-      FMargemInferior := AMargemInferior;
-      FMargemEsquerda := AMargemEsquerda;
-      FMargemDireita := AMargemDireita;
-      FImpressora := AImpressora;
+  DACTeEvReport := Create(nil);
+  try
+    DACTeEvReport.fpDACTe := aDACTe;
+    DACTeEvReport.fpEventoCTe := AEventoCTe;
+    TDFeReportFortes.AjustarReport(DACTeEvReport.RLCTeEvento, DACTeEvReport.fpDACTe);
+    TDFeReportFortes.AjustarMargem(DACTeEvReport.RLCTeEvento, DACTeEvReport.fpDACTe);
 
-      if ACTe <> nil then
-        FCTe := ACTe;
+    if ACTe <> nil then
+      DACTeEvReport.fpCTe := ACTe;
 
-      if FImpressora > '' then
-        RLPrinter.PrinterName := FImpressora;
+    if aDACTe.MostraPreview = True then
+      DACTeEvReport.RLCTeEvento.PreviewModal
+    else
+      DACTeEvReport.RLCTeEvento.Print;
 
-      if FNumCopias > 0 then
-        RLPrinter.Copies := FNumCopias
-      else
-        RLPrinter.Copies := 1;
-
-      if FMostrarPreview = True then
-        RLCTeEvento.PreviewModal
-      else
-        RLCTeEvento.Print;
-    finally
-  //    RLCTeEvento.Free;
-  //    RLCTeEvento := nil;
-      Free;
-    end;
+  finally
+    DACTeEvReport.Free;
+  end;
 end;
 
-class procedure TfrmCTeDAEventoRL.SavePDF(AEventoCTe: TInfEventoCollectionItem;
-  ALogo: string = ''; AFile: string = '';
-  ASistema: string = '';
-  AUsuario: string = '';
-  AMargemSuperior: double = 0.7;
-  AMargemInferior: double = 0.7;
-  AMargemEsquerda: double = 0.7;
-  AMargemDireita: double = 0.7;
-  ACTe: TCTe = nil);
+class procedure TfrmCTeDAEventoRL.SalvarPDF(aDACTe: TACBrCTeDACTeRL; AEventoCTe: TInfEventoCollectionItem;
+  AFile: string; ACTe: TCTe = nil);
+var
+  DACTeEvReport: TfrmCTeDAEventoRL;
 begin
-  with Create(nil) do
-    try
-      FEventoCTe := AEventoCTe;
-      FLogo := ALogo;
-      FSistema := ASistema;
-      FUsuario := AUsuario;
-      FMargemSuperior := AMargemSuperior;
-      FMargemInferior := AMargemInferior;
-      FMargemEsquerda := AMargemEsquerda;
-      FMargemDireita := AMargemDireita;
+  DACTeEvReport := Create(nil);
+  try
+    DACTeEvReport.fpDACTe := aDACTe;
+    DACTeEvReport.fpEventoCTe := AEventoCTe;
+    TDFeReportFortes.AjustarReport(DACTeEvReport.RLCTeEvento, DACTeEvReport.fpDACTe);
+    TDFeReportFortes.AjustarMargem(DACTeEvReport.RLCTeEvento, DACTeEvReport.fpDACTe);
+    TDFeReportFortes.AjustarFiltroPDF(DACTeEvReport.RLPDFFilter1, DACTeEvReport.fpDACTe, AFile);
 
-      if ACTe <> nil then
-	  begin
-        FCTe := ACTe;
+    if ACTe <> nil then
+    begin
+      DACTeEvReport.fpCTe := ACTe;
 
-        with RLPDFFilter1.DocumentInfo do
-        begin
-          Title := ACBrStr('DACTE - Conhecimento nº ') +
-            FormatFloat('000,000,000', FCTe.Ide.nCT);
-          KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', FCTe.Ide.nCT) +
-            ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', FCTe.Ide.dhEmi) +
-            ACBrStr('; Destinatário: ') + FCTe.Dest.xNome +
-            '; CNPJ: ' + FCTe.Dest.CNPJCPF;
-        end;
-	  end;
-
-      RLCTeEvento.SaveToFile(AFile);
-    finally
-      Free;
+      with DACTeEvReport.RLPDFFilter1.DocumentInfo do
+      begin
+        Title := ACBrStr('DACTE - Conhecimento nº ') +
+          FormatFloat('000,000,000', DACTeEvReport.fpCTe.Ide.nCT);
+        KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', DACTeEvReport.fpCTe.Ide.nCT) +
+          ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', DACTeEvReport.fpCTe.Ide.dhEmi) +
+          ACBrStr('; Destinatário: ') + DACTeEvReport.fpCTe.Dest.xNome +
+          '; CNPJ: ' + DACTeEvReport.fpCTe.Dest.CNPJCPF;
+      end;
     end;
+
+    DACTeEvReport.RLCTeEvento.Prepare;
+    DACTeEvReport.RLPDFFilter1.FilterPages(DACTeEvReport.RLCTeEvento.Pages);
+  finally
+    DACTeEvReport.Free;
+  end;
 end;
 
 procedure TfrmCTeDAEventoRL.FormDestroy(Sender: TObject);

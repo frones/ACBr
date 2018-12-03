@@ -9,7 +9,7 @@ interface
 
 uses
   ACBrDFeConfiguracoes, ACBrDFeWebService, ACBrDFeUtil, ACBrDFe, ACBrDFeSSL, 
-  ACBrDFeException, ACBrDFeRegUtil;
+  ACBrDFeException, ACBrDFeRegUtil, ACBrDFeReport;
 
 implementation
 

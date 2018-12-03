@@ -7,7 +7,7 @@ uses
   Frm_Demo_ACBrMDFe in 'Frm_Demo_ACBrMDFe.pas' {frmDemo_ACBrMDFe},
   ufrmStatus in 'ufrmStatus.pas' {frmStatus};
 
-{$R *.res}
+{.$R *.res}
 
 begin
   Application.Initialize;

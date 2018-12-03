@@ -9,7 +9,7 @@ uses IniFiles, ShellAPI, pcnRetConsReciNFe,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrUtil, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
   ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib, ACBrMail, ACBrNFeDANFeRLClass,
-  ACBrDANFCeFortesFr, ACBrPosPrinter, Spin;
+  ACBrDANFCeFortesFr, ACBrPosPrinter, Spin, ACBrDFeReport, ACBrDFeDANFeReport;
 
 type
 

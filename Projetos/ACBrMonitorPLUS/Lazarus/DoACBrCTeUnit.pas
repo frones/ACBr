@@ -1869,9 +1869,9 @@ begin
       DoConfiguraDACTe(True, '');
 
       if NaoEstaVazio(AProtocolo) then
-        ACBrCTe.DACTe.ProtocoloCTe := AProtocolo;
+        ACBrCTe.DACTe.Protocolo := AProtocolo;
 
-      ACBrCTe.DACTe.CTeCancelada := ACancelado;
+      ACBrCTe.DACTe.Cancelada := ACancelado;
 
       try
         ACBrCTe.Conhecimentos.ImprimirPDF;
@@ -2242,9 +2242,9 @@ begin
         ACBrCTe.DACTe.NumCopias := ACopias;
 
       if NaoEstaVazio(AProtocolo) then
-        ACBrCTe.DACTe.ProtocoloCTe := AProtocolo;
+        ACBrCTe.DACTe.Protocolo := AProtocolo;
 
-      ACBrCTe.DACTe.CTeCancelada := ACancelado;
+      ACBrCTe.DACTe.Cancelada := ACancelado;
 
       try
         DoAntesDeImprimir((APreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));

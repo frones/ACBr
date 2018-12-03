@@ -1203,8 +1203,6 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
   object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
     ACBrCTE = ACBrCTe1
     ImprimirHoraSaida = False
-    MostrarPreview = True
-    MostrarStatus = True
     TipoDACTE = tiSemGeracao
     TamanhoPapel = tpA4
     NumCopias = 1
@@ -1212,10 +1210,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
-    CTeCancelada = False
-    ExibirResumoCanhoto = False
     EPECEnviado = False
-    ImprimirDescPorc = False
     PrintDialog = True
     left = 327
     top = 366

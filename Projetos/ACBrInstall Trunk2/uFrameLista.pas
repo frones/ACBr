@@ -110,6 +110,7 @@ type
     ACBr_NFCeECFVirtual_dpk: TCheckBox;
     ACBr_SATECFVirtual_dpk: TCheckBox;
     ACBr_TXTComum_dpk: TCheckBox;
+    ACBr_DFeReportRL_dpk: TCheckBox;
     ACBr_NFeDanfeFR_dpk: TCheckBox;
     ACBr_CTeDacteFR_dpk: TCheckBox;
     ACBr_NFSeDanfseFR_dpk: TCheckBox;
@@ -133,6 +134,7 @@ type
     ACBre_Social_dpk: TCheckBox;
     ACBr_Reinf_dpk: TCheckBox;
     ACBr_BPeDabpeESCPOS_dpk: TCheckBox;
+    Label27: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -345,6 +347,15 @@ begin
       // Dependencias do ACBrPaf
       if not(ACBr_SPED_dpk.Checked) and ACBr_PAF_dpk.Checked then
         ACBr_SPED_dpk.Checked := True;
+
+      if (not ACBr_DFeReportRL_dpk.Checked) and
+         (ACBr_NFeDanfeRL_dpk.Checked or ACBr_NFSeDanfseRL_dpk.Checked or
+          ACBr_CTeDacteRL_dpk.Checked or ACBr_BoletoRL_dpk.Checked or
+          ACBr_MDFeDamdfeRL_dpk.Checked or ACBr_SATExtratoRL_dpk.Checked or
+          ACBr_GNREGuiaRL_dpk.Checked) then
+      begin
+        ACBr_DFeReportRL_dpk.Checked := True;
+      end;
 
     finally
       FUtilizarBotoesMarcar := False;

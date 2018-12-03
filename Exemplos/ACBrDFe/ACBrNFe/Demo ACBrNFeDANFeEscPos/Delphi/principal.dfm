@@ -271,9 +271,14 @@ object frmPrincipal: TfrmPrincipal
   end
   object ACBrNFe: TACBrNFe
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
     Configuracoes.Geral.VersaoDF = ve200
+    Configuracoes.Geral.VersaoQRCode = veqr000
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
@@ -282,35 +287,22 @@ object frmPrincipal: TfrmPrincipal
     Top = 405
   end
   object ACBrNFeDANFeESCPOS: TACBrNFeDANFeESCPOS
-    ACBrNFe = ACBrNFe
-    Sistema = 'Teste de Impress'#227'o ACBRr EscPOS'
     PathPDF = '.\pdf\'
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiNFCe
-    NumCopias = 1
+    Sistema = 'Teste de Impress'#227'o ACBRr EscPOS'
     Site = 'http://www.projetoacbr.com.br'
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
-    CasasDecimais._qCom = 3
-    CasasDecimais._vUnCom = 2
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    ViaConsumidor = True
-    TributosSeparadamente = False
-    PosCanhoto = prCabecalho
-    PosPrinter = ACBrPosPrinter1
-    ImprimeEmUmaLinha = False
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFe = ACBrNFe
+    TipoDANFE = tiNFCe
     ImprimeDescAcrescItem = False
+    PosPrinter = ACBrPosPrinter1
     Left = 235
     Top = 405
   end

@@ -1,27 +1,26 @@
 object Form1: TForm1
-  Left = 547
-  Height = 632
-  Top = 90
-  Width = 894
+  Left = 345
+  Height = 643
+  Top = 162
+  Width = 870
   ActiveControl = btnSalvarConfig
   Caption = 'ACBrNFe - Demonstração'
-  ClientHeight = 632
-  ClientWidth = 894
+  ClientHeight = 643
+  ClientWidth = 870
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
-  Visible = False
+  LCLVersion = '1.8.4.0'
   object Panel1: TPanel
     Left = 0
-    Height = 632
+    Height = 643
     Top = 0
     Width = 297
     Align = alLeft
-    ClientHeight = 632
+    ClientHeight = 643
     ClientWidth = 297
     TabOrder = 0
     object lblColaborador: TLabel
@@ -329,6 +328,15 @@ object Form1: TForm1
                 Checked = True
                 State = cbChecked
                 TabOrder = 2
+              end
+              object Button12: TButton
+                Left = 183
+                Height = 25
+                Top = 24
+                Width = 75
+                Caption = 'Button12'
+                OnClick = Button12Click
+                TabOrder = 3
               end
             end
             object Button9: TButton
@@ -727,7 +735,7 @@ object Form1: TForm1
                 Top = 13
                 Width = 249
                 Font.Color = clWindowText
-                Font.Height = -13
+                Font.Height = -14
                 Font.Name = 'MS Sans Serif'
                 ItemHeight = 16
                 ItemIndex = 24
@@ -977,7 +985,7 @@ object Form1: TForm1
           end
           object TabSheet12: TTabSheet
             Caption = 'Emitente'
-            ClientHeight = 395
+            ClientHeight = 466
             ClientWidth = 267
             ImageIndex = 3
             object Label12: TLabel
@@ -1178,7 +1186,7 @@ object Form1: TForm1
           end
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
-            ClientHeight = 395
+            ClientHeight = 466
             ClientWidth = 267
             ImageIndex = 4
             object sbPathNFe: TSpeedButton
@@ -1316,8 +1324,8 @@ object Form1: TForm1
       end
       object TabSheet2: TTabSheet
         Caption = 'DANFe'
-        ClientHeight = 444
-        ClientWidth = 281
+        ClientHeight = 510
+        ClientWidth = 275
         ImageIndex = 1
         object Label7: TLabel
           Left = 8
@@ -1379,6 +1387,14 @@ object Form1: TForm1
             'Paisagem'
           )
           TabOrder = 1
+        end
+        object cbDANFEImprimirDescItem: TCheckBox
+          Left = 24
+          Height = 19
+          Top = 128
+          Width = 144
+          Caption = 'Imprimir Desc/Acresc Item'
+          TabOrder = 2
         end
       end
       object TabSheet14: TTabSheet
@@ -1486,30 +1502,39 @@ object Form1: TForm1
         end
       end
     end
+    object Button13: TButton
+      Left = 232
+      Height = 25
+      Top = 544
+      Width = 56
+      Caption = 'Button13'
+      OnClick = Button13Click
+      TabOrder = 2
+    end
   end
   object Panel2: TPanel
     Left = 297
-    Height = 632
+    Height = 643
     Top = 0
-    Width = 597
+    Width = 573
     Align = alClient
-    ClientHeight = 632
-    ClientWidth = 597
+    ClientHeight = 643
+    ClientWidth = 573
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Height = 300
       Top = 1
-      Width = 595
+      Width = 571
       Align = alTop
       ClientHeight = 300
-      ClientWidth = 595
+      ClientWidth = 571
       TabOrder = 0
       object PageControl3: TPageControl
         Left = 1
         Height = 298
         Top = 1
-        Width = 593
+        Width = 569
         ActivePage = tsNFe
         Align = alClient
         TabIndex = 0
@@ -1517,7 +1542,7 @@ object Form1: TForm1
         object tsNFe: TTabSheet
           Caption = 'NF-e'
           ClientHeight = 272
-          ClientWidth = 585
+          ClientWidth = 561
           object btnImprimir: TButton
             Left = 192
             Height = 25
@@ -1764,8 +1789,8 @@ object Form1: TForm1
         end
         object tsNFCe: TTabSheet
           Caption = 'NFC-e'
-          ClientHeight = 277
-          ClientWidth = 591
+          ClientHeight = 272
+          ClientWidth = 561
           ImageIndex = 1
           object btnCriarEnviarNFCe: TButton
             Left = 9
@@ -1781,9 +1806,9 @@ object Form1: TForm1
     end
     object pgRespostas: TPageControl
       Left = 1
-      Height = 330
+      Height = 341
       Top = 301
-      Width = 595
+      Width = 571
       ActivePage = Dados
       Align = alClient
       TabIndex = 5
@@ -1814,7 +1839,7 @@ object Form1: TForm1
           Top = 0
           Width = 587
           Align = alClient
-          Font.Height = -13
+          Font.Height = -14
           Font.Name = 'Courier New'
           Font.Pitch = fpFixed
           Font.Quality = fqNonAntialiased
@@ -2340,14 +2365,14 @@ object Form1: TForm1
       end
       object Dados: TTabSheet
         Caption = 'Dados'
-        ClientHeight = 304
-        ClientWidth = 587
+        ClientHeight = 315
+        ClientWidth = 563
         ImageIndex = 5
         object MemoDados: TMemo
           Left = 0
-          Height = 304
+          Height = 315
           Top = 0
-          Width = 587
+          Width = 563
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2389,11 +2414,13 @@ object Form1: TForm1
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.Geral.AtualizarXMLCancelado = True
+    Configuracoes.Geral.VersaoQRCode = veqr200
     Configuracoes.Arquivos.PathSchemas = '/home/celso/pascal/comp/ACBr/Exemplos/ACBrDFe/Schemas/NFe/'
     Configuracoes.Arquivos.IniServicos = 'C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrDFe\ACBrNFe\ACBrNFeServicos.ini'
     Configuracoes.Arquivos.AdicionarLiteral = True
     Configuracoes.Arquivos.SepararPorCNPJ = True
     Configuracoes.Arquivos.SepararPorModelo = True
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.Arquivos.SepararPorMes = True
     Configuracoes.Arquivos.EmissaoPathNFe = True
     Configuracoes.Arquivos.SalvarEvento = True
@@ -2407,44 +2434,18 @@ object Form1: TForm1
     top = 376
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
+    Sistema = 'Projeto ACBr'
+    Site = 'www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    vTroco = 0
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
-    vTribFed = 0
-    vTribEst = 0
-    vTribMun = 0
-    ImprimeEmUmaLinha = False
-    ImprimeDescAcrescItem = False
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    TipoDANFE = tiSemGeracao
     PosPrinter = ACBrPosPrinter1
     left = 688
     top = 496
@@ -2457,49 +2458,18 @@ object Form1: TForm1
     top = 368
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
-    ACBrNFe = ACBrNFe1
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiRetrato
     NumCopias = 2
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = True
     MargemInferior = 0.7
     MargemSuperior = 0.7
     MargemEsquerda = 0.7
     MargemDireita = 0.7
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 4
-    CasasDecimais._vUnCom = 4
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    ExpandirLogoMarca = True
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    vTroco = 0
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
-    vTribFed = 0
-    vTribEst = 0
-    vTribMun = 0
-    LarguraCodProd = 54
-    ExibirEAN = False
-    QuebraLinhaEmDetalhamentoEspecifico = True
-    ExibeCampoFatura = False
-    ImprimirUnQtVlComercial = iuComercial
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFe = ACBrNFe1
+    TributosPercentualPersonalizado = 0
     left = 688
     top = 440
   end
@@ -2516,7 +2486,7 @@ object Form1: TForm1
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
-    Porta = 'c:\temp\printer.txt'
+    Porta = 'COM3'
     EspacoEntreLinhas = 40
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
@@ -2525,51 +2495,30 @@ object Form1: TForm1
     ConfigQRCode.Tipo = 2
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
-    LinhasEntreCupons = 7
+    ConfigLogo.KeyCode1 = 48
+    ConfigLogo.KeyCode2 = 49
+    LinhasEntreCupons = 6
     ControlePorta = True
     ArqLOG = 'c:\temp\posprinter.log'
     left = 816
     top = 496
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = True
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    vTroco = 0
-    ViaConsumidor = True
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    TipoDANFE = tiSemGeracao
+    LarguraBobina = 300
     TamanhoLogoHeight = 0
     TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
-    vTribFed = 0
-    vTribEst = 0
-    vTribMun = 0
-    left = 656
-    top = 496
+    left = 560
+    top = 528
   end
   object ACBrNFe2: TACBrNFe
     Configuracoes.Geral.SSLLib = libNone
@@ -2577,6 +2526,8 @@ object Form1: TForm1
     Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.VersaoQRCode = veqr000
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'

@@ -36,6 +36,7 @@
 package ACBr_MDFeDamdfeRL;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -46,17 +47,19 @@ package ACBr_MDFeDamdfeRL;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DAMDFe em FortesReport - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
@@ -65,7 +68,8 @@ requires
   designide,
   soaprtl,
   frce,
-  ACBr_MDFe;
+  ACBr_MDFe,
+  ACBrDFeReportRL;
 
 contains
   ACBrMDFeDAMDFeRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLReg.pas',

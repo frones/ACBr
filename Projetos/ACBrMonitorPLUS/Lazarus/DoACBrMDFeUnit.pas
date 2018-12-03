@@ -484,7 +484,7 @@ begin
           if (Manifestos.Items[i].Confirmado) and (pImprimir) then
           begin
             try
-              DoAntesDeImprimir(DAMDFe.MostrarPreview);
+              DoAntesDeImprimir(DAMDFe.MostraPreview);
               Manifestos.Items[i].Imprimir;
             finally
               DoDepoisDeImprimir;
@@ -1699,7 +1699,7 @@ begin
         ACBrMDFe.DAMDFe.NumCopias := ACopias;
 
       try
-        DoAntesDeImprimir(ACBrMDFe.DAMDFE.MostrarPreview);
+        DoAntesDeImprimir(ACBrMDFe.DAMDFE.MostraPreview);
         ACBrMDFe.ImprimirEvento;
       finally
         DoDepoisDeImprimir;
@@ -1732,7 +1732,7 @@ begin
     CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, AXML);
     try
       if NaoEstaVazio(AProtocolo) then
-        ACBrMDFe.DAMDFe.ProtocoloMDFe := AProtocolo;
+        ACBrMDFe.DAMDFe.Protocolo := AProtocolo;
 
       try
         ACBrMDFe.Manifestos.ImprimirPDF;
@@ -2078,10 +2078,10 @@ begin
         ACBrMDFe.DAMDFe.NumCopias := ACopias;
 
       if NaoEstaVazio(AProtocolo) then
-        ACBrMDFe.DAMDFe.ProtocoloMDFe := AProtocolo;
+        ACBrMDFe.DAMDFe.Protocolo := AProtocolo;
 
       try
-        DoAntesDeImprimir(ACBrMDFe.DAMDFe.MostrarPreview);
+        DoAntesDeImprimir(ACBrMDFe.DAMDFe.MostraPreview);
         ACBrMDFe.Manifestos.Imprimir;
       finally
         DoDepoisDeImprimir;

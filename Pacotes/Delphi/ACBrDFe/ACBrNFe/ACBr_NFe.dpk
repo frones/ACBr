@@ -121,6 +121,7 @@ contains
   pcnRetDownloadNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetDownloadNFe.pas',
   pcnRetEnvEventoNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetEnvEventoNFe.pas',
   pcnRetEnvNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetEnvNFe.pas',
+  ACBrDFeDANFeReport in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\ACBrDFeDANFeReport.pas',
   ACBrNFeDANFEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\ACBrNFeDANFEClass.pas';
 
 end.

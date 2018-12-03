@@ -231,8 +231,8 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
   procedure FindDirPackage(sDir, sPacote: String);
   var
     oDirList: TSearchRec;
-    iRet: Integer;
-    sDirDpk: string;
+//    iRet: Integer;
+//    sDirDpk: string;
   begin
     sDir := IncludeTrailingPathDelimiter(sDir);
     if not DirectoryExists(sDir) then
@@ -585,7 +585,7 @@ var
   ListaPaths: TStringList;
   I: Integer;
   PathsAtuais: String;
-  PathFonte: string;
+//  PathFonte: string;
 begin
   with oACBr.Installations[iVersion] do
   begin

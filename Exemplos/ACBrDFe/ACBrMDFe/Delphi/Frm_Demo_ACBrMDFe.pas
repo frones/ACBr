@@ -9,7 +9,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   ACBrMDFe, ACBrMDFeDAMDFeClass, ACBrMail, ACBrBase, ACBrDFe,
-  ACBrMDFeDAMDFeRLClass, ACBrDFeSSL;
+  ACBrMDFeDAMDFeRLClass, ACBrDFeSSL, ACBrDFeReport;
 
 type
   TfrmDemo_ACBrMDFe = class(TForm)
@@ -478,9 +478,9 @@ begin
   if ACBrMDFe1.DAMDFe <> nil then
   begin
     ACBrMDFe1.DAMDFe.PathPDF           := PathMensal;
-    ACBrMDFe1.DAMDFe.ExpandirLogoMarca := False;
+    ACBrMDFe1.DAMDFe.ExpandeLogoMarca  := False;
     ACBrMDFe1.DAMDFe.Logo              := edtLogoMarca.Text;
-    ACBrMDFe1.DAMDFe.MostrarPreview    := True;
+    ACBrMDFe1.DAMDFe.MostraPreview     := True;
     ACBrMDFe1.DAMDFe.TipoDAMDFe        := StrToTpImp(OK, IntToStr(rgTipoDaMDFe.ItemIndex+1));
   end;
 end;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
@@ -13,9 +13,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="4">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -137,46 +134,52 @@
         <CommandLineParams Value="2> c:\temp\stderr.txt"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="13">
+    <RequiredPackages Count="15">
       <Item1>
-        <PackageName Value="frce"/>
+        <PackageName Value="ACBr_Integrador"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="ACBr_TEFD"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="frce"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBrSerial"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBrTCP"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item8>
       <Item9>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBrComum"/>
       </Item10>
       <Item11>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item11>
       <Item12>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item12>
       <Item13>
-        <PackageName Value="LCL"/>
+        <PackageName Value="SynEdit"/>
       </Item13>
+      <Item14>
+        <PackageName Value="TurboPowerIPro"/>
+      </Item14>
+      <Item15>
+        <PackageName Value="LCL"/>
+      </Item15>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>
@@ -224,7 +227,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="10">
+    <Exceptions Count="11">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -255,6 +258,9 @@
       <Item10>
         <Name Value="FPImageException"/>
       </Item10>
+      <Item11>
+        <Name Value="EACBrWinReqResp"/>
+      </Item11>
     </Exceptions>
   </Debugging>
 </CONFIG>

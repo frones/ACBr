@@ -102,7 +102,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 214
   end
   object frxReport1: TfrxReport
-    Version = '5.5'
+    Version = '5.3.14'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -167,9 +167,13 @@ object frmPrincipal: TfrmPrincipal
   end
   object ACBrNFSe1: TACBrNFSe
     Configuracoes.Geral.SSLLib = libCapicomDelphiSoap
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpIndy
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
     Configuracoes.Geral.ConsultaLoteAposEnvio = False
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
@@ -178,17 +182,20 @@ object frmPrincipal: TfrmPrincipal
     Top = 180
   end
   object ACBrNFSeDANFSeFR1: TACBrNFSeDANFSeFR
-    ACBrNFSe = ACBrNFSe1
-    MostrarPreview = True
-    MostrarStatus = True
-    NumCopias = 1
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
-    NFSeCancelada = False
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFSe = ACBrNFSe1
+    Cancelada = False
     Provedor = proNenhum
     TamanhoFonte = 6
+    FormatarNumeroDocumentoNFSe = True
     EspessuraBorda = 1
     Left = 188
     Top = 192

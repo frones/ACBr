@@ -462,7 +462,7 @@ uses
   IniFiles, DateUtils, Forms, strutils,
   ACBrDFeConfiguracoes,
   pcnConversao, pcnConversaoNFe,
-  pcnAuxiliar, pcnNFeR, pcnNFeRTXT, DoACBrUnit, pcnNFe;
+  pcnAuxiliar, pcnNFeR, pcnNFeRTXT, DoACBrUnit, pcnNFe, ACBrNFeDANFEClass;
 
 { TACBrObjetoNFe }
 
@@ -2253,9 +2253,12 @@ begin
           TACBrNFeDANFeRL(ACBrNFe.DANFE).MarcadAgua:= '';
       end;
 
-      ACBrNFe.DANFe.ProtocoloNFe :=  trim( AProtocolo );
+      ACBrNFe.DANFe.Protocolo :=  trim( AProtocolo );
 
-      ACBrNFe.DANFE.ViaConsumidor := Consumidor;
+      if ACBrNFe.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
+      begin
+        TACBrNFeDANFCEClass(ACBrNFe.DANFE).ViaConsumidor := Consumidor;
+      end;
 
       if Simplificado then
         ACBrNFe.DANFE.TipoDANFE := tiSimplificado;
@@ -2695,7 +2698,7 @@ begin
       if (ACopias > 0) then
         ACBrNFe.DANFe.NumCopias := ACopias;
 
-      ACBrNFe.DANFe.ProtocoloNFe := trim( AProtocolo );
+      ACBrNFe.DANFe.Protocolo := trim( AProtocolo );
 
       if (ACBrNFe.NotasFiscais.Items[0].NFe.Ide.modelo = 55) then
       begin
@@ -2705,7 +2708,10 @@ begin
           TACBrNFeDANFeRL(ACBrNFe.DANFE).MarcadAgua:= '';
       end;
 
-      ACBrNFe.DANFE.ViaConsumidor := AConsumidor;
+      if ACBrNFe.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
+      begin
+        TACBrNFeDANFCEClass(ACBrNFe.DANFE).ViaConsumidor := AConsumidor;
+      end;
 
       if ASimplificado then
           ACBrNFe.DANFE.TipoDANFE := tiSimplificado;

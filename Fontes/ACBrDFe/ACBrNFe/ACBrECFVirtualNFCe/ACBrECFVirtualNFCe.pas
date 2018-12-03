@@ -173,7 +173,7 @@ procedure Register;
 implementation
 
 uses pcnConversaoNFe,
-  ACBrConsts, ACBrECFClass, ACBrUtil;
+  ACBrConsts, ACBrECFClass, ACBrUtil, ACBrNFeDANFEClass;
 	
 procedure Register;
 begin
@@ -712,15 +712,18 @@ begin
     if (fsACBrNFCe.NotasFiscais.Items[0].Confirmada) AND (fsACBrNFCe.WebServices.Enviar.cStat = 100) and
        (fsACBrNFCe.NotasFiscais.Items[0].NFe.signature.DigestValue = fsACBrNFCe.NotasFiscais.Items[0].NFe.procNFe.digVal) then
     begin
-      //Caso o sistema recuperou de um travamento de impressão e a mesma ja estiver autorizada cStar = 100,
-      //não será enviado a NFCe novamente, assim evitando o erro de duplicidade NFCe
-      fsACBrNFCe.DANFE.ViaConsumidor := True;
-      fsACBrNFCe.NotasFiscais.Items[0].Imprimir;
-
-      if (fsImprimir2ViaOffLine) and (fsACBrNFCe.Configuracoes.Geral.FormaEmissao = teOffLine) then
+      if fsACBrNFCe.DANFE is TACBrNFeDANFCEClass then
       begin
-        fsACBrNFCe.DANFE.ViaConsumidor := False;
+        //Caso o sistema recuperou de um travamento de impressão e a mesma ja estiver autorizada cStar = 100,
+        //não será enviado a NFCe novamente, assim evitando o erro de duplicidade NFCe
+        TACBrNFeDANFCEClass(fsACBrNFCe.DANFE).ViaConsumidor := True;
         fsACBrNFCe.NotasFiscais.Items[0].Imprimir;
+
+        if (fsImprimir2ViaOffLine) and (fsACBrNFCe.Configuracoes.Geral.FormaEmissao = teOffLine) then
+        begin
+          TACBrNFeDANFCEClass(fsACBrNFCe.DANFE).ViaConsumidor := False;
+          fsACBrNFCe.NotasFiscais.Items[0].Imprimir;
+        end;
       end;
     end
     else
@@ -772,15 +775,18 @@ begin
           NotasFiscais.Validar;
           //NotasFiscais.Items[0].Confirmada := True;
 
-          // imprimir obrigatoriamente duas vias quando em off-line
-          // uma para consumidor e outra para o estabelecimento
-          DANFE.ViaConsumidor := True;
-          NotasFiscais.Items[0].Imprimir;
-
-          if fsImprimir2ViaOffLine then
+          if DANFE is TACBrNFeDANFCEClass then
           begin
-            DANFE.ViaConsumidor := False;
+            // imprimir obrigatoriamente duas vias quando em off-line
+            // uma para consumidor e outra para o estabelecimento
+            TACBrNFeDANFCEClass(DANFE).ViaConsumidor := True;
             NotasFiscais.Items[0].Imprimir;
+
+            if fsImprimir2ViaOffLine then
+            begin
+              TACBrNFeDANFCEClass(DANFE).ViaConsumidor := False;
+              NotasFiscais.Items[0].Imprimir;
+            end;
           end;
         end
         else

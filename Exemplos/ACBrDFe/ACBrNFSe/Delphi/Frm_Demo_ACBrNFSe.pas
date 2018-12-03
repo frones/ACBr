@@ -9,7 +9,7 @@ uses
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   pcnConversao, pnfsConversao, blcksock, TypInfo, unit2,
   ACBrNFSe, ACBrNFSeDANFSeClass, pnfsNFSe, ACBrMail, ACBrUtil,
-  ACBrBase, ACBrDFe, ACBrDFeSSL, Spin, ACBrNFSeDANFSeRLClass;
+  ACBrBase, ACBrDFe, ACBrDFeSSL, Spin, ACBrNFSeDANFSeRLClass, ACBrDFeReport;
 
 type
   TfrmDemo_ACBrNFSe = class(TForm)

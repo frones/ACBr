@@ -8,7 +8,8 @@ uses
   ACBrNFe, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Spin, Buttons, ACBrPosPrinter, ACBrBase, ACBrDFe;
+  Dialogs, StdCtrls, Spin, Buttons, ACBrPosPrinter, ACBrBase, ACBrDFe,
+  ACBrDFeReport, ACBrDFeDANFeReport;
 
 type
   TfrmPrincipal = class(TForm)
@@ -190,8 +191,8 @@ begin
 
     // impressão da NFC-e
     ConfigurarComponente;
-    ACBrNFe.DANFE.ViaConsumidor := chkViaConsumidor.Checked;
-    ACBrNFe.DANFE.ImprimirItens := not chkDanfeResumido.Checked;
+    ACBrNFeDANFeESCPOS.ViaConsumidor := chkViaConsumidor.Checked;
+    ACBrNFeDANFeESCPOS.ImprimeItens  := not chkDanfeResumido.Checked;
 
     ACBrNFe.NotasFiscais[0].Imprimir;
 

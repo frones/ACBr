@@ -258,7 +258,7 @@ begin
       CFe.AsXMLString := ConvertStrRecived(aStr);
 
     if ( Extrato.Filtro = TACBrSATExtratoFiltro(fiPDF) ) then
-      Extrato.NomeArquivo := IfThen(aNomePDF <> '', aNomePDF ,
+      Extrato.NomeDocumento := IfThen(aNomePDF <> '', aNomePDF ,
         CalcCFeNomeArq(ConfigArquivos.PastaCFeVenda,CFe.infCFe.ID,'','.pdf'));
   end;
 
@@ -1532,7 +1532,7 @@ begin
   try
     with fACBrSAT do
     begin
-      Resp.Arquivo:= Extrato.NomeArquivo;
+      Resp.Arquivo:= Extrato.ArquivoPDF;
 
       fpCmd.Resposta := sLineBreak + Resp.Gerar;
 

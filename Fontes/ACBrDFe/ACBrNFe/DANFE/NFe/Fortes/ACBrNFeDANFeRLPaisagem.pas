@@ -2,60 +2,61 @@
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
 { eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
-{                                                                              }
+
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
 {                                       André Ferreira de Moraes               }
-{                                                                              }
+
 { Colaboradores nesse arquivo:                                                 }
-{                                                                              }
+
 {  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
-{                                                                              }
+
+
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-{                                                                              }
+
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
+
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
+
 { Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+
 {******************************************************************************}
 
 {$I ACBr.inc}
+
 unit ACBrNFeDANFeRLPaisagem;
 
 interface
 
 uses
-  SysUtils, Variants, Classes, Graphics,
+  SysUtils, Classes,
   {$IFDEF CLX}
-  QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt, QStdCtrls,
+  QGraphics, QControls, QForms, Qt, QStdCtrls,
   {$ELSE}
-    Controls, Forms, Dialogs, ExtCtrls,
+  Graphics, Controls, Forms,
   {$ENDIF}
-  RLReport, RLFilters, RLPDFFilter, RLPrinters,
-    {$IFDEF BORLAND}
-  XMLIntf, XMLDoc,
-    {$IF CompilerVersion > 22}
-      Vcl.Imaging.jpeg,
-    {$ELSE}
-      jpeg,
-    {$IFEND}
+  RLReport, RLBarcode, RLPrinters,
+  {$IFDEF BORLAND}
+   XMLIntf, XMLDoc,
+   {$IF CompilerVersion > 22}
+    Vcl.Imaging.jpeg,
+   {$ELSE}
+    jpeg,
+   {$IFEND}
   {$ENDIF}
-  ACBrNFeDANFeRL, pcnConversao, RLBarcode;
+  ACBrNFeDANFeRL;
 
 type
 
@@ -482,101 +483,71 @@ type
     RLMemoInfAd: TRLMemo;
     RLDrawFinal: TRLDraw;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlbEmitenteBeforePrint(Sender: TObject;
-      var PrintIt: Boolean);
+    procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
-    procedure rlbDadosAdicionaisBeforePrint(Sender: TObject;
-      var PrintIt: Boolean);
+    procedure rlbDadosAdicionaisBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlbCabecalhoItensBeforePrint(Sender: TObject;
-      var PrintIt: Boolean);
+    procedure rlbCabecalhoItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure FormCreate(Sender: TObject);
-    procedure subItensDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
-      var Eof: Boolean; var RecordAction: TRLRecordAction);
-    procedure RLNFeDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
-      var Eof: Boolean; var RecordAction: TRLRecordAction);
+    procedure subItensDataRecord(Sender: TObject; RecNo, CopyNo: Integer; var EOF: Boolean; var RecordAction: TRLRecordAction);
+    procedure RLNFeDataRecord(Sender: TObject; RecNo, CopyNo: Integer; var EOF: Boolean; var RecordAction: TRLRecordAction);
     procedure RLMemoInfAdAfterPrint(Sender: TObject);
   private
-    fNumItem      : Integer;
-    fRecebemoDe   : string;
-    sQuebraLinha  : String;
-    fTamanhoBandInf : Integer;
-    procedure InitDados;
-    procedure Header;
-    procedure Emitente;
-    procedure Destinatario;
-    Function EnderecoRetirada : String;
-    Function EnderecoEntrega : String;
-    procedure Imposto;
-    procedure Transporte;
-    procedure DadosAdicionais;
-    procedure Observacoes;
-    procedure ISSQN;
-    procedure AddFatura;
-    function ManterArma(inItem: integer): String;
-    function ManterCombustivel(inItem: integer): String;
-    function ManterMedicamentos(inItem: integer) : String;
-    function ManterVeiculos(inItem: integer): String;
-    function ManterXpod(sXProd: String; inItem: Integer): String;
-    procedure AddFaturaReal;
-    function ManterDuplicatas: Integer;
-    procedure AplicaParametros;
-    function ManterinfAdProd(inItem: Integer): String;
-    function ManterBandinfAdProd(sInforAdicProduto: String): String;
-    procedure CabItens;
-    function ManterRastro(inItem: integer): String;
-  public
+    fNumItem: Integer;
+    fRecebemoDe: String;
+    fTamanhoBandInf: Integer;
 
+    procedure InicializarDados;
+    procedure DefinirCabecalho;
+    procedure DefinirEmitente;
+    procedure DefinirDestinatario;
+    function DefinirEnderecoRetirada: String;
+    function DefinirEnderecoEntrega: String;
+    procedure DefinirImposto;
+    procedure DefinirTransporte;
+    procedure DefinirDadosAdicionais;
+    procedure DefinirObservacoes;
+    procedure DefinirISSQN;
+    procedure AdicionarFatura;
+    procedure AdicionarFaturaReal;
+    function ManterDuplicatas: Integer;
+    procedure AplicarParametros;
+    procedure DefinirCabecalhoItens;
+    function ManterBandinfAdProd(sInforAdicProduto: String): String;
   end;
 
 implementation
 
-uses DateUtils, StrUtils,
-  pcnNFe, pcnConversaoNFe,
-  ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador, ACBrUtil, ACBrNFe;
+uses
+  DateUtils, StrUtils, Math,
+  pcnNFe, pcnConversao, pcnConversaoNFe,
+  ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador,
+  ACBrDFeReportFortes, ACBrUtil, ACBrNFe;
 
-{$IFnDEF FPC}
+{$IfNDef FPC}
   {$R *.dfm}
-{$ELSE}
+{$Else}
   {$R *.lfm}
-{$ENDIF}
+{$EndIf}
 
-
-
-procedure TfrlDANFeRLPaisagem.RLNFeBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
+procedure TfrlDANFeRLPaisagem.RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
-  q := 0;
-  with RLNFe.Margins do
-  begin
-    TopMargin     := FMargemSuperior * 10;
-    BottomMargin  := FMargemInferior * 10;
-    LeftMargin    := FMargemEsquerda * 10;
-    RightMargin   := FMargemDireita * 10;
-  end;
+  InicializarDados;
 
-  InitDados;
-
-  RLNFe.Title       := Copy (FNFe.InfNFe.Id, 4, 44);
-
-  if FNumCopias > 0 then
-    RLPrinters.RLPrinter.Copies := FNumCopias
-  else
-    RLPrinters.RLPrinter.Copies := 1;
+  RLNFe.Title := OnlyNumber(fpNFe.InfNFe.Id);
 end;
 
-procedure TfrlDANFeRLPaisagem.rlbEmitenteBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
+procedure TfrlDANFeRLPaisagem.rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   rlbCodigoBarras.BringToFront;
-  if RLNFe.PageNumber > 1 then
+  if (RLNFe.PageNumber > 1) then
   begin
     rlbISSQN.Visible := False;
     rlbDadosAdicionais.Visible := False;
-    rlbCabecalhoItens.Height   := 35;
-    rlbCabecalhoItens.AutoExpand := false;
+    rlbCabecalhoItens.Height := 35;
+    rlbCabecalhoItens.AutoExpand := False;
 
-    if iQuantItens > q then
+    if (fpQuantItens > 0) then
     begin
       rlbCabecalhoItens.Visible := True;
       lblDadosDoProduto.Caption := ACBrStr('CONTINUAÇÃO DOS DADOS DO PRODUTO / SERVIÇOS');
@@ -587,48 +558,28 @@ begin
   end;
 end;
 
-procedure TfrlDANFeRLPaisagem.InitDados;
-var i, j, b, h, iAlturaCanhoto,vWidthAux, vLeftAux: Integer;
-  LogoStream: TStringStream;
-  vAutoSizeAux : Boolean;
+procedure TfrlDANFeRLPaisagem.InicializarDados;
+var
+  i, j, b, h, iAlturaCanhoto, vWidthAux, vLeftAux: Integer;
+  vAutoSizeAux: Boolean;
 begin
-  if (FLogo <> '') then
+  TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
+  TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
+
+  if NaoEstaVazio(fpDANFe.MarcaDagua) and FileExists(fpDANFe.MarcaDagua) then
+    rliMarcaDagua1.Picture.LoadFromFile(fpDANFe.MarcaDagua);
+
+  if fpDANFe.ExibeResumoCanhoto then
   begin
-    if FileExists (FLogo) then
-     rliLogo.Picture.LoadFromFile(FLogo)
+    if NaoEstaVazio(fpDANFe.TextoResumoCanhoto) then
+      rllResumo.Caption := fpDANFe.TextoResumoCanhoto
     else
     begin
-      LogoStream := TStringStream.Create(FLogo);
-      try
-        try
-           rliLogo.Picture.Bitmap.LoadFromStream(LogoStream);
-        except
-          rliLogo.Picture := Nil;
-        end;
-      finally
-         LogoStream.Free;
-      end;
+      rllResumo.Caption := ACBrStr('EMISSÃO: ') + FormatDateBr(fpNFe.Ide.dEmi) + '  -  ' +
+        'DEST. / REM.: ' + fpNFe.Dest.xNome + '  -  ' +
+        'VALOR TOTAL: R$ ' + FormatFloatBr(fpNFe.Total.ICMSTot.vNF);
     end;
-  end;
 
-  if (FMarcaDagua <> '') and FileExists(FMarcaDagua) then
-  begin
-    rliMarcaDagua1.Picture.LoadFromFile(FMarcaDagua);
-  end;
-
-  if FResumoCanhoto = True then
-  begin
-    if FResumoCanhoto_Texto <> '' then
-      rllResumo.Caption := FResumoCanhoto_Texto
-    else
-    begin
-      rllResumo.Caption := ACBrStr('EMISSÃO: ') +
-                           FormatDateTime('DD/MM/YYYY', FNFe.Ide.dEmi) +
-                           '  -  ' +
-                           'DEST. / REM.: ' + FNFe.Dest.xNome + '  -  ' +
-                           'VALOR TOTAL: R$ ' +
-                           FormatFloatBr(FNFe.Total.ICMSTot.vNF);
-    end;
     rllResumo.Visible := True;
     iAlturaCanhoto := 25;
   end
@@ -638,60 +589,60 @@ begin
     iAlturaCanhoto := 15;
   end;
 
-  rliCanhoto1.Left        := iAlturaCanhoto;
-  rliCanhoto2.Left        := rliCanhoto1.Left;
-  rliCanhoto2.Width       := (rliCanhoto.Left + rliCanhoto.Width) - rliCanhoto2.Left;
+  rliCanhoto1.Left := iAlturaCanhoto;
+  rliCanhoto2.Left := rliCanhoto1.Left;
+  rliCanhoto2.Width := (rliCanhoto.Left + rliCanhoto.Width) - rliCanhoto2.Left;
   rllDataRecebimento.Left := rliCanhoto1.Left + 3;
-  rllIdentificacao.Left   := rliCanhoto1.Left + 3;
+  rllIdentificacao.Left := rliCanhoto1.Left + 3;
 
-  rllHomologacao.Visible  := ( FNFe.Ide.tpAmb = taHomologacao );
-  rllHomologacao.Caption  := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL');
+  rllHomologacao.Visible := (fpNFe.Ide.tpAmb = taHomologacao);
+  rllHomologacao.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL');
 
-  rllDadosVariaveis3_Descricao.Visible  := True;
+  rllDadosVariaveis3_Descricao.Visible := True;
   rlbCodigoBarras.Visible := False;
-  rllXmotivo.Visible      := True;
-  rlbCancelada.Visible    := FNFeCancelada;
+  rllXmotivo.Visible := True;
+  rlbCancelada.Visible := fpDANFe.Cancelada;
   if rlbCancelada.Visible then
   begin
-    rllDadosVariaveis3_Descricao.Caption  := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
-    rllXmotivo.Caption    := 'NF-e CANCELADA';
-    RLLCancelada.Caption  := 'NF-e CANCELADA';
+    rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
+    rllXmotivo.Caption := 'NF-e CANCELADA';
+    RLLCancelada.Caption := 'NF-e CANCELADA';
   end
   else
   begin
-    if FNFe.procNFe.cStat > 0 then
+    if (fpNFe.procNFe.cStat > 0) then
     begin
-      case FNFe.procNFe.cStat of
-        100 : begin
-                rlbCodigoBarras.Visible := True;
-                rllXMotivo.Visible      := False;
-                rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
-              end;
-        101,
-        135,
-        151,
-        155:  begin
-                rllXmotivo.Caption := 'NF-e CANCELADA';
-                rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
-              end;
-        110,
-        205,
-        301,
-        302:  begin
-                rllXmotivo.Caption := 'NF-e DENEGADA';
-                rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
-              end;
+      case fpNFe.procNFe.cStat of
+        100:
+        begin
+          rlbCodigoBarras.Visible := True;
+          rllXMotivo.Visible := False;
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
+        end;
+
+        101, 135, 151, 155:
+        begin
+          rllXmotivo.Caption := 'NF-e CANCELADA';
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
+        end;
+
+        110, 205, 301, 302:
+        begin
+          rllXmotivo.Caption := 'NF-e DENEGADA';
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
+        end;
+
         else
-              begin
-                rllXmotivo.Caption := FNFe.procNFe.xMotivo;
-                rllDadosVariaveis3_Descricao.Visible := False;
-                rllDadosVariaveis3.Visible := False;
-              end;
+        begin
+          rllXmotivo.Caption := fpNFe.procNFe.xMotivo;
+          rllDadosVariaveis3_Descricao.Visible := False;
+          rllDadosVariaveis3.Visible := False;
+        end;
       end;
     end
     else
     begin
-      if (FNFe.Ide.tpEmis in [teNormal, teSCAN]) then
+      if (fpNFe.Ide.tpEmis in [teNormal, teSCAN]) then
       begin
         rllXmotivo.Caption := ACBrStr('NF-E NÃO ENVIADA PARA SEFAZ');
         rllDadosVariaveis3_Descricao.Visible := False;
@@ -701,503 +652,509 @@ begin
   end;
 
   // Ajusta a largura da coluna "Código do Produto"
-  txtCodigo.Width       := FLarguraCodProd;
-  rlmCodProd.Width      := txtCodigo.Width;
-  rlsProd.Left          := txtCodigo.Width + 2;
-  LinhaDescricao.Left   := rlsProd.Left;
+  txtCodigo.Width := fpDANFe.LarguraCodProd;
+  rlmCodProd.Width := txtCodigo.Width;
+  rlsProd.Left := txtCodigo.Width + 2;
+  LinhaDescricao.Left := rlsProd.Left;
 
-  rllEAN.Visible        := FExibirEAN;
-  txtEAN.Visible        := FExibirEAN;
-  rlsProdEAN.Visible    := FExibirEAN;
-  LinhaProdEAN.Visible  := FExibirEAN;
+  rllEAN.Visible := fpDANFe.ExibeEAN;
+  txtEAN.Visible := fpDANFe.ExibeEAN;
+  rlsProdEAN.Visible := fpDANFe.ExibeEAN;
+  LinhaProdEAN.Visible := fpDANFe.ExibeEAN;
 
-  if FExibirEAN = False then
+  if (not fpDANFe.ExibeEAN) then
   begin
-    rlmDescricaoProduto.Left  := rlsProd.Left + 2;
+    rlmDescricaoProduto.Left := rlsProd.Left + 2;
     rlmDescricaoProduto.Width := (rlsMcm.Left - rlsProd.Left) - 3;
-    rlmDescricao.Left         := LinhaDescricao.Left + 2;
+    rlmDescricao.Left := LinhaDescricao.Left + 2;
   end
   else
   begin
-    rllEAN.Left               := rlsProd.Left + 2;
-    txtEAN.Left               := LinhaDescricao.Left + 2;
-    rlsProdEAN.Left           := (rllEAN.Left + rllEAN.Width) + 2;
-    LinhaProdEAN.Left         := (txtEAN.Left + txtEAN.Width) + 2;
-    rlmDescricaoProduto.Left  := (rlsProdEAN.Left) + 2;
-    rlmDescricaoProduto.Width := (rlsMcm.Left - rlsProdEAN.Left ) - 3;
-    rlmDescricao.Left         := LinhaProdEAN.Left + 2;
+    rllEAN.Left := rlsProd.Left + 2;
+    txtEAN.Left := LinhaDescricao.Left + 2;
+    rlsProdEAN.Left := (rllEAN.Left + rllEAN.Width) + 2;
+    LinhaProdEAN.Left := (txtEAN.Left + txtEAN.Width) + 2;
+    rlmDescricaoProduto.Left := (rlsProdEAN.Left) + 2;
+    rlmDescricaoProduto.Width := (rlsMcm.Left - rlsProdEAN.Left) - 3;
+    rlmDescricao.Left := LinhaProdEAN.Left + 2;
   end;
 
-  rlmDescricao.Width          := rlmDescricaoProduto.Width;
+  rlmDescricao.Width := rlmDescricaoProduto.Width;
 
   // ajusta a posição do 'código do produto'
-  if rlmCodProd.Width > 90 then
+  if (rlmCodProd.Width > 90) then
   begin
-    rlmCodProd.Top    := 3;
+    rlmCodProd.Top := 3;
     rlmCodProd.Height := 7;
   end
   else
   begin
-    rlmCodProd.Top    := 3;
+    rlmCodProd.Top := 3;
     rlmCodProd.Height := 14;
   end;
 
   // Se a largura da coluna 'Código do produto' for suficiente,
   // exibe o título da coluna sem abreviações
-  if rlmCodProd.Width > 113 then
+  if (rlmCodProd.Width > 113) then
     rlmCodProd.Lines.Text := ACBrStr('CÓDIGO DO PRODUTO / SERVIÇO')
   else
     rlmCodProd.Lines.Text := ACBrStr('CÓDIGO DO PROD. / SERV.');
 
   // Ajusta a posição da coluna 'Descrição do produto'
-  if rlmDescricaoProduto.Width > 128 then
+  if (rlmDescricaoProduto.Width > 128) then
   begin
-    rlmDescricaoProduto.Top     := 8;
-    rlmDescricaoProduto.Height  := 7;
+    rlmDescricaoProduto.Top := 8;
+    rlmDescricaoProduto.Height := 7;
   end
   else
   begin
-    rlmDescricaoProduto.Top     := 3;
-    rlmDescricaoProduto.Height  := 14;
+    rlmDescricaoProduto.Top := 3;
+    rlmDescricaoProduto.Height := 14;
   end;
 
   // Se a largura da coluna 'Descrição do produto' for suficiente,
   // exibe o título da coluna sem abreviações
-  if rlmDescricaoProduto.Width > 72 then
+  if (rlmDescricaoProduto.Width > 72) then
     rlmDescricaoProduto.Lines.Text := ACBrStr('DESCRIÇÃO DO PRODUTO / SERVIÇO')
   else
     rlmDescricaoProduto.Lines.Text := 'DESCR. PROD. / SERV.';
 
-  case FNomeFonte of
-    nfTimesNewRoman,
-    nfArial     : rlbItens.Height:= 11;
-    nfCourierNew: rlbItens.Height:= 10;
+  case fpDANFe.Fonte.Nome of
+    nfTimesNewRoman, nfArial:
+      rlbItens.Height := 11;
+    nfCourierNew:
+      rlbItens.Height := 10;
   end;
 
-  pnlItens.Height      := rlbItens.Height;
-  txtCodigo.Top        := 0;
-  txtEAN.Top           := txtCodigo.Top;
-  rlmDescricao.Top     := txtCodigo.Top;
-  txtNCM.Top           := txtCodigo.Top;
-  txtCST.Top           := txtCodigo.Top;
-  txtCFOP.Top          := txtCodigo.Top;
-  txtUnidade.Top       := txtCodigo.Top;
-  txtQuantidade.Top    := txtCodigo.Top;
+  pnlItens.Height := rlbItens.Height;
+  txtCodigo.Top := 0;
+  txtEAN.Top := txtCodigo.Top;
+  rlmDescricao.Top := txtCodigo.Top;
+  txtNCM.Top := txtCodigo.Top;
+  txtCST.Top := txtCodigo.Top;
+  txtCFOP.Top := txtCodigo.Top;
+  txtUnidade.Top := txtCodigo.Top;
+  txtQuantidade.Top := txtCodigo.Top;
   txtValorUnitario.Top := txtCodigo.Top;
-  txtValorTotal.Top    := txtCodigo.Top;
+  txtValorTotal.Top := txtCodigo.Top;
   txtValorDesconto.Top := txtCodigo.Top;
-  txtBaseICMS.Top      := txtCodigo.Top;
-  txtValorICMS.Top     := txtCodigo.Top;
-  txtBaseICMSST.Top    := txtCodigo.Top;
-  txtValorICMSST.Top   := txtCodigo.Top;
-  txtValorIPI.Top      := txtCodigo.Top;
-  txtAliqICMS.Top      := txtCodigo.Top;
-  txtAliqIPI.Top       := txtCodigo.Top;
+  txtBaseICMS.Top := txtCodigo.Top;
+  txtValorICMS.Top := txtCodigo.Top;
+  txtBaseICMSST.Top := txtCodigo.Top;
+  txtValorICMSST.Top := txtCodigo.Top;
+  txtValorIPI.Top := txtCodigo.Top;
+  txtAliqICMS.Top := txtCodigo.Top;
+  txtAliqIPI.Top := txtCodigo.Top;
 
-  // Posiciona o canhoto do DANFE no cabeçalho ou rodapé
-  case FPosCanhoto of
+  // Posiciona o canhoto do fpDANFe no cabeçalho ou rodapé
+  case fpDANFe.PosCanhoto of
     prCabecalho:
-      begin
-        pnlCanhoto.Align := faLeftMost;
-        pnlDivisao.Align := faLeftMost;
-        pnlCanhoto.Left := 26;
-        pnlDivisao.Left := pnlCanhoto.Left + pnlCanhoto.Width;
-      end;
+    begin
+      pnlCanhoto.Align := faLeftMost;
+      pnlDivisao.Align := faLeftMost;
+      pnlCanhoto.Left := 26;
+      pnlDivisao.Left := pnlCanhoto.Left + pnlCanhoto.Width;
+    end;
+
     prRodape:
-      begin
-        pnlCanhoto.Align := faRightMost;
-        pnlDivisao.Align := faRightMost;
-        pnlDivisao.Left := 1024;
-        pnlCanhoto.Left := pnlDivisao.Left + pnlDivisao.Width;
-      end;
+    begin
+      pnlCanhoto.Align := faRightMost;
+      pnlDivisao.Align := faRightMost;
+      pnlDivisao.Left := 1024;
+      pnlCanhoto.Left := pnlDivisao.Left + pnlDivisao.Width;
+    end;
   end;
 
   // Posiciona a Marca D'água
-  rliMarcaDagua1.Left := rlbItens.Left + (rlbItens.Width div 2) -
-                                                  (rliMarcaDagua1.Width div 2);
-  rllSistema.Visible := ( FSistema <> '' );
-  rllSistema.Caption := FSistema;
-  rllUsuario.Visible := ( FUsuario <> '' );
-  rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') + DateTimeToStr(Now) + ' - ' + FUsuario;
+  rliMarcaDagua1.Left := rlbItens.Left + (rlbItens.Width div 2) - (rliMarcaDagua1.Width div 2);
+  rllSistema.Visible := NaoEstaVazio(fpDANFe.Sistema);
+  rllSistema.Caption := fpDANFe.Sistema;
+  rllUsuario.Visible := NaoEstaVazio(fpDANFe.Usuario);
+  rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') + FormatDateTimeBr(Now) +
+    ' - ' + fpDANFe.Usuario;
 
-  // Oculta alguns itens do DANFE
-  if FFormularioContinuo = True then
+  // Oculta alguns itens do fpDANFe
+  if fpDANFe.FormularioContinuo then
   begin
-    rllRecebemosDe.Visible      := False;
-    rllResumo.Visible           := False;
-    rllDataRecebimento.Visible  := False;
-    rllIdentificacao.Visible    := False;
-    rllNFe.Visible              := False;
-    rliCanhoto.Visible          := False;
-    rliCanhoto1.Visible         := False;
-    rliCanhoto2.Visible         := False;
-    rliCanhoto3.Visible         := False;
-    rliDivisao.Visible          := False;
-    rliTipoEntrada.Visible      := False;
-    rllDANFE.Visible            := False;
-    rllDocumento1.Visible       := False;
-    rllDocumento2.Visible       := False;
-    rllTipoEntrada.Visible      := False;
-    rllTipoSaida.Visible        := False;
-    rllEmitente.Visible         := False;
-    rliLogo.Visible             := False;
-    rlmEmitente.Visible         := False;
-    rlmEndereco.Visible         := False;
-    rliEmitente.Visible         := False;
-    rllChaveAcesso.Visible      := False;
-    rliChave.Visible            := False;
-    rliChave2.Visible           := False;
-    rliChave3.Visible           := False;
+    rllRecebemosDe.Visible := False;
+    rllResumo.Visible := False;
+    rllDataRecebimento.Visible := False;
+    rllIdentificacao.Visible := False;
+    rllNFe.Visible := False;
+    rliCanhoto.Visible := False;
+    rliCanhoto1.Visible := False;
+    rliCanhoto2.Visible := False;
+    rliCanhoto3.Visible := False;
+    rliDivisao.Visible := False;
+    rliTipoEntrada.Visible := False;
+    rllDANFE.Visible := False;
+    rllDocumento1.Visible := False;
+    rllDocumento2.Visible := False;
+    rllTipoEntrada.Visible := False;
+    rllTipoSaida.Visible := False;
+    rllEmitente.Visible := False;
+    rliLogo.Visible := False;
+    rlmEmitente.Visible := False;
+    rlmEndereco.Visible := False;
+    rliEmitente.Visible := False;
+    rllChaveAcesso.Visible := False;
+    rliChave.Visible := False;
+    rliChave2.Visible := False;
+    rliChave3.Visible := False;
   end;
 
   // Expande a logomarca
-  if FExpandirLogoMarca = True then
+  if fpDANFe.ExpandeLogoMarca then
   begin
     rlmEmitente.Visible := False;
     rlmEndereco.Visible := False;
     with rliLogo do
     begin
-      Width   := 450;
-      Scaled  := False;
+      Width := 450;
+      Scaled := False;
       Stretch := True;
     end;
   end;
 
-  // Altera a fonte da Razão Social do Emitente
-  rlmEmitente.Font.Size := FTamanhoFonte_RazaoSocial;
+  // Altera a fonte da Razão Social do DefinirEmitente
+  rlmEmitente.Font.Size := fpDANFe.Fonte.TamanhoFonteRazaoSocial;
 
   for b := 0 to (RLNFe.ControlCount - 1) do
+  begin
     for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
     begin
       //Altera o tamanho da fonte dos demais campos
-      if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag in [3,70])
-       or(   (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Parent = rlbFatura)
-          and(Owner <> nil)
-          and(TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size > TACBrNFeDANFeRL(Owner).TamanhoFonte_DemaisCampos + 1))
-      then
+      if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag in [3, 70]) or
+        ( (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Parent = rlbFatura) and
+          (fpDANFe <> nil) and
+          (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size > fpDANFe.Fonte.TamanhoFonteDemaisCampos + 1)
+        ) then
       begin
-        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [];
-        if FNegrito then// Dados em negrito
-          TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [fsBold];
-        if Owner <> nil then
+        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Style := [];
+        if fpDANFe.Fonte.Negrito then// Dados em negrito
+          TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Style := [fsBold];
+        if (fpDANFe <> nil) then
           TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
-            TACBrNFeDANFeRL(Owner).TamanhoFonte_DemaisCampos + 1;
+            fpDANFe.Fonte.TamanhoFonteDemaisCampos + 1;
       end;
 
-      // Altera a fonde do DANFE
-      case FNomeFonte of
+      // Altera a fonde do fpDANFe
+      case fpDANFe.Fonte.Nome of
         nfArial:
-          begin
-            for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
-              TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name :=
-                                                                      'Arial';
-            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag <> 20 then
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
-                                                                      'Arial';
-            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 3 then
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
-                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
-          end;
-        nfCourierNew:
-          begin
-            for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
-            begin
-              TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name :=
-                                                                                 'Courier New';
-              if TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Tag = 0 then
-                TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size :=
-                  (TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size - 1);
+        begin
+          for j := 0 to (TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount - 1) do
+            TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name := 'Arial';
 
-            end;
-            TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
-                                                              'Courier New';
-            if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 0) or
-               (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 3) then
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
-                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
-            if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 40 then
-              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top :=
-                (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top) - 1;
-          end;
-        nfTimesNewRoman:
+          if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag <> 20) then
+            TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name := 'Arial';
+
+          if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag = 3) then
+            TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size :=
+              TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size - 1;
+        end;
+
+        nfCourierNew:
+        begin
+          for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
           begin
-            for j := 0 to ((TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount) - 1) do
-              TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name :=
-                                                                'Times New Roman';
-              if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag <> 20 then
-                TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Name :=
-                                                                'Times New Roman';
-              if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 3 then
-                TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size :=
-                  (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size) - 1;
+            TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name := 'Courier New';
+
+            if TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Tag = 0 then
+              TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size :=
+                (TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Size - 1);
+
           end;
+
+          TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Name := 'Courier New';
+          if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag = 0) or
+             (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag = 3) then
+            TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size :=
+              TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size - 1;
+
+          if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag = 40) then
+            TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top :=
+              TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Top - 1;
+        end;
+
+        nfTimesNewRoman:
+        begin
+          for j := 0 to (TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).ControlCount - 1) do
+            TRLLabel(TRLPanel(TRLBand(RLNFe.Controls[b]).Controls[i]).Controls[j]).Font.Name := 'Times New Roman';
+          if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag <> 20) then
+            TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Name := 'Times New Roman';
+
+          if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag = 3) then
+            TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size :=
+              TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Font.Size - 1;
+        end;
       end;
+
       //copia o left e width do componente, alterar o size do fonte, com o autosize ajusta o height, depois retorna como estava
-      if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag in [3,70] then
+      if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Tag in [3, 70]) then
       begin
-        vWidthAux := TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Width;
-        vLeftAux  := TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Left;
-        vAutoSizeAux := TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).AutoSize;
-        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).AutoSize := True;
-        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).AutoSize := vAutoSizeAux;
-        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Left  := vLeftAux;
-        if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Alignment = taLeftJustify then
-           vWidthAux := vWidthAux - vAuxDiferencaPDF;//na hora de gerar o PDF vai ficar correto.
-        TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Width := vWidthAux;
+        vWidthAux := TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Width;
+        vLeftAux := TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Left;
+        vAutoSizeAux := TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize;
+        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize := True;
+        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize := vAutoSizeAux;
+        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Left := vLeftAux;
+        if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Alignment = taLeftJustify) then
+          vWidthAux := vWidthAux - fpAuxDiferencaPDF;//na hora de gerar o PDF vai ficar correto.
+        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Width := vWidthAux;
       end;
     end;
-  if FNomeFonte = nfCourierNew then
+  end;
+
+  if (fpDANFe.Fonte.Nome = nfCourierNew) then
   begin
-    rllNumNF1.Font.Size := rllNumNF1.Font.Size -2;
+    rllNumNF1.Font.Size := rllNumNF1.Font.Size - 2;
     rllNumNF1.Top := rllNumNF1.Top + 1;
   end;
 
-  if TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco > 0 then
-    RLMEndereco.Font.Size:= TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco
+  if (fpDANFe.Fonte.TamanhoFonteEndereco > 0) then
+    RLMEndereco.Font.Size := fpDANFe.Fonte.TamanhoFonteEndereco
   else
     RLMEndereco.Font.Size := 7;
 
-  AplicaParametros; // Aplica os parâmetros escolhidos
+  AplicarParametros; // Aplica os parâmetros escolhidos
 
-  DadosAdicionais;
-  Header;
-  Emitente;
-  Destinatario;
-  Imposto;
-  ISSQN;
-  Transporte;
-  AddFaturaReal;
-  AddFatura;
-  CabItens;
-  Observacoes;
+  DefinirDadosAdicionais;
+  DefinirCabecalho;
+  DefinirEmitente;
+  DefinirDestinatario;
+  DefinirImposto;
+  DefinirISSQN;
+  DefinirTransporte;
+  AdicionarFaturaReal;
+  AdicionarFatura;
+  DefinirCabecalhoItens;
+  DefinirObservacoes;
 
   // Verifica se será exibida a 'continuação das informações complementares'
-  if rlmDadosAdicionaisAuxiliar.Lines.Count > iLimiteLinhas then
-    begin
-      rlbContinuacaoInformacoesComplementares.Visible := True;
-      h := (rlmContinuacaoDadosAdicionais.Top +
-            rlmContinuacaoDadosAdicionais.Height) + 2;
-      LinhaDCInferior.Top := h;
-      h := (h - LinhaDCSuperior.Top) + 1;
-      LinhaDCEsquerda.Height := h;
-      LinhaDCDireita.Height := h;
-    end
+  if (rlmDadosAdicionaisAuxiliar.Lines.Count > fpLimiteLinhas) then
+  begin
+    rlbContinuacaoInformacoesComplementares.Visible := True;
+    h := (rlmContinuacaoDadosAdicionais.Top + rlmContinuacaoDadosAdicionais.Height) + 2;
+    LinhaDCInferior.Top := h;
+    h := (h - LinhaDCSuperior.Top) + 1;
+    LinhaDCEsquerda.Height := h;
+    LinhaDCDireita.Height := h;
+  end
   else
     rlbContinuacaoInformacoesComplementares.Visible := False;
 
-  iQuantItens := FNFe.Det.Count;
+  fpQuantItens := fpNFe.Det.Count;
 end;
 
-procedure TfrlDANFeRLPaisagem.Header;
+procedure TfrlDANFeRLPaisagem.DefinirCabecalho;
 begin
-  with FNFe.InfNFe, FNFe.Ide do
+  with fpNFe.InfNFe, fpNFe.Ide do
   begin
-    rllChave.Caption        := FormatarChaveAcesso(OnlyNumber(FNFe.InfNFe.Id));
-    rllChave.AutoSize       := True;
+    rllChave.Caption := FormatarChaveAcesso(fpNFe.InfNFe.Id);
+    rllChave.AutoSize := True;
 
-    while rliChave.Width <  (rllChave.Width + 10 + (rllChave.Left - rliChave.Left)) do
-      rllChave.Font.Size    := rllChave.Font.Size -1;//para nao truncar a chave vai diminuir o fonte
+    while (rliChave.Width < (rllChave.Width + 10 + (rllChave.Left - rliChave.Left))) do
+      rllChave.Font.Size := rllChave.Font.Size - 1;  //para nao truncar a chave vai diminuir o fonte
 
     rlbCodigoBarras.Visible := True;
-    rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
-    rllNumNF0.Caption       := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
-    rllNumNF1.Caption       := rllNumNF0.Caption;
-    rllSERIE0.Caption       := ACBrStr('SÉRIE ') + IntToStr(Serie);
-    rllSERIE1.Caption       := rllSERIE0.Caption;
-    rllNatOperacao.Caption  := NatOp;
-    rllEntradaSaida.Caption := tpNFToStr( tpNF );
-    rllEmissao.Caption      := FormatDateBr(dEmi);
-    rllSaida.Caption        := IfThen(DSaiEnt <> 0, FormatDateBr(dSaiEnt));
+    rlbCodigoBarras.Caption := OnlyNumber(fpNFe.InfNFe.Id);
+    rllNumNF0.Caption := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
+    rllNumNF1.Caption := rllNumNF0.Caption;
+    rllSERIE0.Caption := ACBrStr('SÉRIE ') + IntToStr(Serie);
+    rllSERIE1.Caption := rllSERIE0.Caption;
+    rllNatOperacao.Caption := NatOp;
+    rllEntradaSaida.Caption := tpNFToStr(tpNF);
+    rllEmissao.Caption := FormatDateBr(dEmi);
+    rllSaida.Caption := IfThen(DSaiEnt <> 0, FormatDateBr(dSaiEnt));
 
-    if versao = 2.00 then
-      rllHoraSaida.Caption  := ifthen(hSaiEnt = 0, '', TimeToStr(hSaiEnt))
+    if (versao = 2.00) then
+      rllHoraSaida.Caption := ifthen(hSaiEnt = 0, '', TimeToStr(hSaiEnt))
     else
-      rllHoraSaida.Caption  := ifthen(TimeOf(dSaiEnt)=0, '', TimeToStr(dSaiEnt));
+      rllHoraSaida.Caption := ifthen(TimeOf(dSaiEnt) = 0, '', TimeToStr(dSaiEnt));
 
     // Configuração inicial
-    rllDadosVariaveis3_Descricao.Caption:= ACBrStr( 'PROTOCOLO DE AUTORIZAÇÃO DE USO');
-    rlbCodigoBarrasFS.Visible     := ( tpEmis in [teContingencia,teFSDA] );
-    rlbAvisoContingencia.Visible  := ( tpEmis <> teNormal );
-    rllAvisoContingencia.Caption  := ACBrStr( 'DANFE em Contingência - Impresso em decorrência de problemas técnicos');
-    rllDadosVariaveis1a.Visible   := False;
-    rllDadosVariaveis1b.Visible   := False;
+    rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
+    rlbCodigoBarrasFS.Visible := (tpEmis in [teContingencia, teFSDA]);
+    rlbAvisoContingencia.Visible := (tpEmis <> teNormal);
+    rllAvisoContingencia.Caption := ACBrStr('DANFE em Contingência - Impresso em decorrência de problemas técnicos');
+    rllDadosVariaveis1a.Visible := False;
+    rllDadosVariaveis1b.Visible := False;
 
-    case FNFe.Ide.tpEmis of
-      teNormal,
-      teSCAN,
-      teSVCAN,
-      teSVCRS,
-      teSVCSP         : begin
-                          rllDadosVariaveis1a.Visible   := ( FNFe.procNFe.cStat > 0 );
-                          rllDadosVariaveis1b.Visible   := rllDadosVariaveis1a.Visible;
-                          if FProtocoloNFe <> '' then
-                            rllDadosVariaveis3.Caption  := FProtocoloNFe
-                          else
-                            rllDadosVariaveis3.Caption  := FNFe.procNFe.nProt + ' ' +
-                                                            DateTimeToStr(FNFe.procNFe.dhRecbto);
-                        end;
-      teContingencia,
-      teFSDA          : begin
-                          rllDadosVariaveis3_Descricao.Caption:= 'DADOS DA NF-E';
-                          rlbCodigoBarrasFS.Caption     := TACBrNFe(TACBrNFeDANFeRL(Owner).ACBrNFe).GerarChaveContingencia(FNFe);
-                          rllDadosVariaveis3.Caption    := FormatarChaveAcesso(rlbCodigoBarrasFS.Caption);
-                         end;
-      teDPEC          : begin
-                          rllDadosVariaveis1a.Visible   := True;
-                          rllDadosVariaveis1b.Visible   := True;
-                          rlbAvisoContingencia.Visible  := not NaoEstaVazio(FNFe.procNFe.nProt);
-                          rllAvisoContingencia.Caption  := ACBrStr('DANFE impresso em contingência - DPEC regularmente recebida pela Receita Federal do Brasil');
-                          if not rlbAvisoContingencia.Visible then // DPEC TRANSMITIDO
-                            rllDadosVariaveis3.Caption  := FNFe.procNFe.nProt + ' ' +
-                                                            IfThen(FNFe.procNFe.dhRecbto <> 0,
-                                                              DateTimeToStr(FNFe.procNFe.dhRecbto), '')
-                          else
-                          begin
-                            rllDadosVariaveis3_Descricao.Caption:= ACBrStr( 'NÚMERO DE REGISTRO DO EPEC');
-                            if NaoEstaVazio( FProtocoloNFe) then
-                              rllDadosVariaveis3.Caption  := FProtocoloNFe
-                          end;
-                        end;
+    case fpNFe.Ide.tpEmis of
+      teNormal, teSCAN, teSVCAN, teSVCRS, teSVCSP:
+      begin
+        rllDadosVariaveis1a.Visible := (fpNFe.procNFe.cStat > 0);
+        rllDadosVariaveis1b.Visible := rllDadosVariaveis1a.Visible;
+        if NaoEstaVazio(fpDANFe.Protocolo) then
+          rllDadosVariaveis3.Caption := fpDANFe.Protocolo
+        else
+          rllDadosVariaveis3.Caption := fpNFe.procNFe.nProt + ' ' + FormatDateTimeBr(fpNFe.procNFe.dhRecbto);
+      end;
 
+      teContingencia, teFSDA:
+      begin
+        rllDadosVariaveis3_Descricao.Caption := 'DADOS DA NF-E';
+        rlbCodigoBarrasFS.Caption := TACBrNFe(fpDANFe.ACBrNFe).GerarChaveContingencia(fpNFe);
+        rllDadosVariaveis3.Caption := FormatarChaveAcesso(rlbCodigoBarrasFS.Caption);
+      end;
+
+      teDPEC:
+      begin
+        rllDadosVariaveis1a.Visible := True;
+        rllDadosVariaveis1b.Visible := True;
+        rlbAvisoContingencia.Visible := EstaVazio(fpNFe.procNFe.nProt);
+        rllAvisoContingencia.Caption := ACBrStr('DANFE impresso em contingência - DPEC regularmente recebida pela Receita Federal do Brasil');
+        if not rlbAvisoContingencia.Visible then // DPEC TRANSMITIDO
+          rllDadosVariaveis3.Caption := fpNFe.procNFe.nProt + ' ' +
+            IfThen(fpNFe.procNFe.dhRecbto <> 0, FormatDateTimeBr(fpNFe.procNFe.dhRecbto), '')
+        else
+        begin
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('NÚMERO DE REGISTRO DO EPEC');
+          if NaoEstaVazio(fpDANFe.Protocolo) then
+            rllDadosVariaveis3.Caption := fpDANFe.Protocolo;
+        end;
+      end;
     end;
+
     if (dhCont > 0) and (xJust > '') then
-      rllContingencia.Caption := ACBrStr( 'Data / Hora da entrada em contingência: ') +
-                                 FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
-                                 ACBrStr(' Motivo contingência: ') + xJust;
+      rllContingencia.Caption :=
+        ACBrStr('Data / Hora da entrada em contingência: ') + FormatDateTimeBr(dhCont) +
+        ACBrStr(' Motivo contingência: ') + xJust;
   end;
+
   if rlbCodigoBarras.Visible then
     rllChave.Holder := rlbCodigoBarras;
-
 end;
 
-procedure TfrlDANFeRLPaisagem.Emitente;
+procedure TfrlDANFeRLPaisagem.DefinirEmitente;
 var
-  sTemp : String;
+  sTemp: String;
 begin
-  //emit
-  rlmEmitente.AutoSize  := False;
-  rlmEndereco.AutoSize  := False;
-  with FNFe.Emit do
+  rlmEmitente.AutoSize := False;
+  rlmEndereco.AutoSize := False;
+  with fpNFe.Emit do
   begin
-    if FRecebemoDe = '' then
+    if EstaVazio(FRecebemoDe) then
       FRecebemoDe := rllRecebemosDe.Caption;
 
-    rllRecebemosDe.Caption        := Format (FRecebemoDe, [ XNome ]);
-    rllInscricaoEstadual.Caption  := IE;
-    rllInscrEstSubst.caption      := IEST;
-    rllCNPJ.Caption               := FormatarCNPJouCPF(CNPJCPF );
-    rlmEmitente.Lines.Text        := TACBrNFeDANFeRL(Owner).ManterNomeImpresso( XNome , XFant );
-    rlmEndereco.Top               := rlmEmitente.Top + rlmEmitente.Height;
+    rllRecebemosDe.Caption := Format(FRecebemoDe, [XNome]);
+    rllInscricaoEstadual.Caption := IE;
+    rllInscrEstSubst.Caption := IEST;
+    rllCNPJ.Caption := FormatarCNPJouCPF(CNPJCPF);
+    rlmEmitente.Lines.Text := fpDANFe.ManterNomeImpresso(XNome, XFant);
+    rlmEndereco.Top := rlmEmitente.Top + rlmEmitente.Height;
     rlmEndereco.Lines.Clear;
+
     with EnderEmit do
     begin
-      sTemp :=  Trim( XLgr ) +
-                IfThen(Nro = '0', '', ', ' + Nro) + ' ' +
-                IfThen( xCpl > '' , Trim( XCpl ) , '') +
-                ' - ' + Trim( XBairro );
-
+      sTemp := Trim(XLgr) +
+        IfThen(Nro = '0', '', ', ' + Nro) + ' ' +
+        IfThen(NaoEstaVazio(xCpl), Trim(XCpl), '') +
+        ' - ' + Trim(XBairro);
       sTemp := sTemp + ' CEP:' + FormatarCEP(CEP) + ' - ' + XMun + ' - ' + UF;
-      rlmEndereco.Lines.add(sTemp );
-      sTemp := 'TEL: ' + FormatarFone(Fone) + IfThen( FFax <> ''  ,  ' - FAX: ' + FormatarFone(FFax),'' );
-      rlmEndereco.Lines.add(sTemp );
+      rlmEndereco.Lines.add(sTemp);
+
+      sTemp := 'TEL: ' + FormatarFone(Fone) +
+        IfThen(NaoEstaVazio(fpDANFe.Fax), ' - FAX: ' + FormatarFone(fpDANFe.Fax), '');
+      rlmEndereco.Lines.add(sTemp);
     end;
   end;
-  if FSite <> ''  then rlmEndereco.Lines.Add(FSite);
-  if FEmail <> '' then rlmEndereco.Lines.Add(FEmail);
+  if NaoEstaVazio(fpDANFe.Site) then
+    rlmEndereco.Lines.Add(fpDANFe.Site);
+  if NaoEstaVazio(fpDANFe.Email) then
+    rlmEndereco.Lines.Add(fpDANFe.Email);
 
-  rlmEndereco.Height:= rliEmitente.Height - rlmEndereco.Top - 15;
+  rlmEndereco.Height := rliEmitente.Height - rlmEndereco.Top - 15;
 end;
 
-procedure TfrlDANFeRLPaisagem.Destinatario;
+procedure TfrlDANFeRLPaisagem.DefinirDestinatario;
 begin
-  // destinatario
-  with FNFe.Dest do
+  with fpNFe.Dest do
   begin
     if NaoEstaVazio(idEstrangeiro) then
-      rllDestCNPJ.Caption   := idEstrangeiro
+      rllDestCNPJ.Caption := idEstrangeiro
     else
-      rllDestCNPJ.Caption   := FormatarCNPJouCPF(CNPJCPF);
+      rllDestCNPJ.Caption := FormatarCNPJouCPF(CNPJCPF);
 
-    rllDestIE.Caption       := IE;
-    rllDestNome.Caption     := XNome;
+    rllDestIE.Caption := IE;
+    rllDestNome.Caption := XNome;
     with EnderDest do
     begin
       rllDestEndereco.Caption := XLgr +
-                                  IfThen(Nro = '0', '', ', ' + Nro) +
-                                  IfThen(xCpl > '', ' ' + xCpl, '' );
+        IfThen(Nro = '0', '', ', ' + Nro) +
+        IfThen(NaoEstaVazio(xCpl), ' ' + xCpl, '');
+
       rllDestBairro.Caption := XBairro;
       rllDestCidade.Caption := XMun;
-      rllDestUF.Caption     := UF;
-      rllDestCEP.Caption    := FormatarCEP(CEP);
-      rllDestFONE.Caption   := FormatarFone(Fone);
+      rllDestUF.Caption := UF;
+      rllDestCEP.Caption := FormatarCEP(CEP);
+      rllDestFONE.Caption := FormatarFone(Fone);
     end;
   end;
 end;
 
-Function TfrlDANFeRLPaisagem.EnderecoEntrega : String;
+function TfrlDANFeRLPaisagem.DefinirEnderecoEntrega: String;
 begin
   Result := '';
-  if FNFe.Entrega.xLgr > '' then
+  if NaoEstaVazio(fpNFe.Entrega.xLgr) then
   begin
-    with FNFe.Entrega do
+    with fpNFe.Entrega do
     begin
       Result := XLgr +
-                    IfThen(Nro = '0', '', ', ' + Nro) +
-                    IfThen(xCpl = '','', ' - ' + xCpl );
-
+        IfThen(Nro = '0', '', ', ' + Nro) +
+        IfThen(EstaVazio(xCpl), '', ' - ' + xCpl);
 
       Result := 'LOCAL DE ENTREGA: ' + Result + ' - ' +
-                    xBairro + ' - ' + xMun + '-' + UF +
-                    TrataDocumento( CNPJCPF );
-
+        xBairro + ' - ' + xMun + '-' + UF +
+        fpDANFe.TrataDocumento(CNPJCPF);
     end;
   end;
 end;
 
-Function TfrlDANFeRLPaisagem.EnderecoRetirada : String;
+function TfrlDANFeRLPaisagem.DefinirEnderecoRetirada: String;
 begin
   Result := '';
-  if FNFe.Retirada.xLgr > '' then
+  if NaoEstaVazio(fpNFe.Retirada.xLgr) then
   begin
-    with FNFe.Retirada do
+    with fpNFe.Retirada do
     begin
-
       Result := XLgr +
-                    IfThen(Nro = '0', '', ', ' + Nro) +
-                    IfThen(xCpl = '','', ' - ' + xCpl );
+        IfThen(Nro = '0', '', ', ' + Nro) +
+        IfThen(EstaVazio(xCpl), '', ' - ' + xCpl);
 
       Result := 'LOCAL DE RETIRADA: ' + Result + ' - ' +
-                    xBairro + ' - ' + xMun + '-' + UF +
-                    TrataDocumento( CNPJCPF );
+        xBairro + ' - ' + xMun + '-' + UF +
+        fpDANFe.TrataDocumento(CNPJCPF);
     end;
   end;
 end;
 
-procedure TfrlDANFeRLPaisagem.Imposto;
-var LarguraCampo: Integer;
+procedure TfrlDANFeRLPaisagem.DefinirImposto;
+var
+  LarguraCampo: Integer;
 begin
-  with FNFe.Total.ICMSTot do
+  with fpNFe.Total.ICMSTot do
   begin
-    rllBaseICMS.Caption       := FormatFloatBr(VBC   );
-    rllValorICMS.Caption      := FormatFloatBr(VICMS );
-    rllBaseICMSST.Caption     := FormatFloatBr(VBCST );
-    rllValorICMSST.Caption    := FormatFloatBr(VST   );
-    rllTotalProdutos.Caption  := FormatFloatBr(VProd );
-    rllValorFrete.Caption     := FormatFloatBr(VFrete);
-    rllValorSeguro.Caption    := FormatFloatBr(VSeg  );
-    rllDescontos.Caption      := FormatFloatBr(VDesc );
-    rllAcessorias.Caption     := FormatFloatBr(VOutro);
-    rllValorIPI.Caption       := FormatFloatBr(VIPI  );
-    rllTotalNF.Caption        := FormatFloatBr(VNF   );
+    rllBaseICMS.Caption := FormatFloatBr(VBC);
+    rllValorICMS.Caption := FormatFloatBr(VICMS);
+    rllBaseICMSST.Caption := FormatFloatBr(VBCST);
+    rllValorICMSST.Caption := FormatFloatBr(VST);
+    rllTotalProdutos.Caption := FormatFloatBr(VProd);
+    rllValorFrete.Caption := FormatFloatBr(VFrete);
+    rllValorSeguro.Caption := FormatFloatBr(VSeg);
+    rllDescontos.Caption := FormatFloatBr(VDesc);
+    rllAcessorias.Caption := FormatFloatBr(VOutro);
+    rllValorIPI.Caption := FormatFloatBr(VIPI);
+    rllTotalNF.Caption := FormatFloatBr(VNF);
 
     // Exibe o Valor total dos tributos se vTotTrib for informado
     // e ajusta a posição dos outros campos para "abrir espaço" para ele.
-    if vTotTrib > 0 then
+    if (vTotTrib > 0) then
     begin
-      rllTotalTributos.Caption        := FormatFloatBr(vTotTrib);
-      rliDivImposto4.Visible          := True;
-      rllTituloTotalTributos.Visible  := True;
-      rllTotalTributos.Visible        := True;
+      rllTotalTributos.Caption := FormatFloatBr(vTotTrib);
+      rliDivImposto4.Visible := True;
+      rllTituloTotalTributos.Visible := True;
+      rllTotalTributos.Visible := True;
 
       rliDivImposto4.Left := 638;
       rllTituloTotalTributos.Left := rliDivImposto4.Left + 3;
@@ -1206,10 +1163,10 @@ begin
 
       LarguraCampo := 151;
 
-      rliDivImposto3.Left       := rliDivImposto4.Left - LarguraCampo - 1;
+      rliDivImposto3.Left := rliDivImposto4.Left - LarguraCampo - 1;
       rllTituloValorICMSST.Left := rliDivImposto3.Left + 3;
-      rllValorICMSST.Left       := rliDivImposto3.Left + 7;
-      rllValorICMSST.Width      := (rliDivImposto4.Left - 7) - (rliDivImposto3.Left + 3);
+      rllValorICMSST.Left := rliDivImposto3.Left + 7;
+      rllValorICMSST.Width := (rliDivImposto4.Left - 7) - (rliDivImposto3.Left + 3);
     end
     else
     begin
@@ -1241,18 +1198,18 @@ begin
   end;
 end;
 
-procedure TfrlDANFeRLPaisagem.Transporte;
+procedure TfrlDANFeRLPaisagem.DefinirTransporte;
 var
   i, j: Integer;
   RLLabel, RLLabelModelo: TRLLabel;
   ok: Boolean;
 begin
-  with FNFe.Transp do
+  with fpNFe.Transp do
   begin
-    rllTransModFrete.Caption := modFreteToDesStr( modFrete, DblToVersaoDF(ok, FNFe.infNFe.Versao) );
+    rllTransModFrete.Caption := modFreteToDesStr(modFrete, StrToVersaoDF(ok, fpNFe.infNFe.VersaoStr));
     with Transporta do
     begin
-      if Trim(CNPJCPF) <> '' then
+      if NaoEstaVazio(Trim(CNPJCPF)) then
         rllTransCNPJ.Caption := FormatarCNPJouCPF(CNPJCPF)
       else
         rllTransCNPJ.Caption := '';
@@ -1265,241 +1222,244 @@ begin
     end;
   end;
 
-  with FNFe.Transp.VeicTransp do
+  with fpNFe.Transp.VeicTransp do
   begin
-    rllTransCodigoANTT.Caption  := RNTC;
-    rllTransPlaca.Caption       := Placa;
-    rllTransUFPlaca.Caption     := UF;
+    rllTransCodigoANTT.Caption := RNTC;
+    rllTransPlaca.Caption := Placa;
+    rllTransUFPlaca.Caption := UF;
   end;
 
-  if FNFe.Transp.Vol.Count > 0 then
-   begin
+  if (fpNFe.Transp.Vol.Count > 0) then
+  begin
     // Aproveita os labels criados em tempo de projeto (1ª linha)
-     with FNFe.Transp.Vol[0] do
+    with fpNFe.Transp.Vol[0] do
+    begin
+      if (qVol > 0) then
+        rllTransQTDE.Caption := IntToStr(QVol);
+
+      rllTransEspecie.Caption := Esp;
+      rllTransMarca.Caption := Marca;
+      rllTransNumeracao.Caption := NVol;
+      if (pesoL > 0) then
+        rllTransPesoLiq.Caption := FormatFloatBr(PesoL, FloatMask(3));
+
+      if (pesoB > 0) then
+        rllTransPesoBruto.Caption := FormatFloatBr(PesoB, FloatMask(3));
+    end;
+    // Preenche os dados
+    for i := 1 to (fpNFe.Transp.Vol.Count - 1) do
+    begin
+      RLLabelModelo := nil;
+      with fpNFe.Transp.Vol[i] do
       begin
-        if qVol > 0 then
-          rllTransQTDE.Caption      := IntToStr(QVol);
-        rllTransEspecie.Caption     := Esp  ;
-        rllTransMarca.Caption       := Marca;
-        rllTransNumeracao.Caption   := NVol ;
-        if pesoL > 0 then
-          rllTransPesoLiq.Caption   := FormatFloatBr(PesoL, FloatMask(3));
-        if pesoB > 0 then
-          rllTransPesoBruto.Caption :=  FormatFloatBr(PesoB, FloatMask(3));
-      end;
-      // Preenche os dados
-      for i := 1 to FNFe.Transp.Vol.Count - 1 do
-      begin
-        RLLabelModelo := nil;
-        with FNFe.Transp.Vol[i] do
+        // Cria os demais labels dinamicamente
+        for j := 1 to 6 do
         begin
-          // Cria os demais labels dinamicamente
-          for j := 1 to 6 do
-          begin
-            RLLabel := TRLLabel.Create(Self);
-            case j of
-              1:  begin // Qtde
-                    RLLabelModelo := rllTransQTDE;
-                    if qVol > 0 then
-                      RLLabel.Caption := IntToStr(QVol);
-                  end;
-              2:  begin // Especie
-                    RLLabelModelo   := rllTransEspecie;
-                    RLLabel.Caption := Esp;
-                  end;
-              3:  begin // Marca
-                    RLLabelModelo   := rllTransMarca;
-                    RLLabel.Caption := Marca;
-                  end;
-              4:  begin // Numeracao
-                    RLLabelModelo   := rllTransNumeracao;
-                    RLLabel.Caption := NVol;
-                  end;
-              5:  begin // Peso liq
-                    RLLabelModelo := rllTransPesoLiq;
-                    if pesoL > 0 then
-                      RLLabel.Caption := FormatFloatBr(PesoL, FloatMask(3));
-                  end;
-              6:  begin // Peso bruto
-                    RLLabelModelo := rllTransPesoBruto;
-                    if pesoB > 0 then
-                      RLLabel.Caption  := FormatFloatBr(PesoB, FloatMask(3));
-                  end;
+          RLLabel := TRLLabel.Create(Self);
+          case j of
+            1:
+            begin // Qtde
+              RLLabelModelo := rllTransQTDE;
+              if (qVol > 0) then
+                RLLabel.Caption := IntToStr(QVol);
             end;
 
-            if Assigned(RLLabelModelo) then
-            begin
-              RLLabel.Alignment  := RLLabelModelo.Alignment;
-              RLLabel.AutoSize   := RLLabelModelo.AutoSize;
-              RLLabel.Font       := RLLabelModelo.Font;
-              RLLabel.Name       := RLLabelModelo.Name + IntToStr(i);
-              RLLabel.Parent     := RLLabelModelo.Parent;
-              RLLabel.ParentFont := RLLabelModelo.ParentFont;
-              RLLabel.Tag        := RLLabelModelo.Tag;
-              RLLabel.Height     := RLLabelModelo.Height;
-              RLLabel.Width      := RLLabelModelo.Width;
-              RLLabel.Left       := RLLabelModelo.Left;
-              RLLabel.Top        := RLLabelModelo.Top + (i * (RLLabelModelo.Height)) ;//iAltLinha;
+            2:
+            begin // Especie
+              RLLabelModelo := rllTransEspecie;
+              RLLabel.Caption := Esp;
             end;
+
+            3:
+            begin // Marca
+              RLLabelModelo := rllTransMarca;
+              RLLabel.Caption := Marca;
+            end;
+
+            4:
+            begin // Numeracao
+              RLLabelModelo := rllTransNumeracao;
+              RLLabel.Caption := NVol;
+            end;
+
+            5:
+            begin // Peso liq
+              RLLabelModelo := rllTransPesoLiq;
+              if (pesoL > 0) then
+                RLLabel.Caption := FormatFloatBr(PesoL, FloatMask(3));
+            end;
+
+            6:
+            begin // Peso bruto
+              RLLabelModelo := rllTransPesoBruto;
+              if (pesoB > 0) then
+                RLLabel.Caption := FormatFloatBr(PesoB, FloatMask(3));
+            end;
+          end;
+
+          if Assigned(RLLabelModelo) then
+          begin
+            RLLabel.Alignment := RLLabelModelo.Alignment;
+            RLLabel.AutoSize := RLLabelModelo.AutoSize;
+            RLLabel.Font := RLLabelModelo.Font;
+            RLLabel.Name := RLLabelModelo.Name + IntToStr(i);
+            RLLabel.Parent := RLLabelModelo.Parent;
+            RLLabel.ParentFont := RLLabelModelo.ParentFont;
+            RLLabel.Tag := RLLabelModelo.Tag;
+            RLLabel.Height := RLLabelModelo.Height;
+            RLLabel.Width := RLLabelModelo.Width;
+            RLLabel.Left := RLLabelModelo.Left;
+            RLLabel.Top := RLLabelModelo.Top + (i * (RLLabelModelo.Height));//iAltLinha;
           end;
         end;
       end;
-   end
+    end;
+  end
   else
   begin
-    rllTransQTDE.Caption       :=  '';
-    rllTransEspecie.Caption    :=  '';
-    rllTransMarca.Caption      :=  '';
-    rllTransNumeracao.Caption  :=  '';
-    rllTransPesoLiq.Caption    :=  '';
-    rllTransPesoBruto.Caption  :=  '';
+    rllTransQTDE.Caption := '';
+    rllTransEspecie.Caption := '';
+    rllTransMarca.Caption := '';
+    rllTransNumeracao.Caption := '';
+    rllTransPesoLiq.Caption := '';
+    rllTransPesoBruto.Caption := '';
   end;
 end;
 
-procedure TfrlDANFeRLPaisagem.DadosAdicionais;
+procedure TfrlDANFeRLPaisagem.DefinirDadosAdicionais;
 var
-  sProtocolo, sSuframa   : String;
+  sProtocolo, sSuframa: String;
 begin
   rlmDadosAdicionaisAuxiliar.Lines.BeginUpdate;
   rlmDadosAdicionaisAuxiliar.Lines.Clear;
 
   // Protocolo de autorização, nos casos de emissão em contingência
-  if (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) and
-        (FNFe.procNFe.cStat = 100) then
+  if (fpNFe.Ide.tpEmis in [teContingencia, teFSDA]) and (fpNFe.procNFe.cStat = 100) then
   begin
     sProtocolo := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
-                     FNFe.procNFe.nProt + ' ' + DateTimeToStr(FNFe.procNFe.dhRecbto);
-    InsereLinhas(sProtocolo, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+      fpNFe.procNFe.nProt + ' ' + FormatDateTimeBr(fpNFe.procNFe.dhRecbto);
+    InserirLinhas(sProtocolo, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
   // Inscrição Suframa
-  if FNFe.Dest.ISUF > '' then
+  if NaoEstaVazio(fpNFe.Dest.ISUF) then
   begin
-    sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ' ) + FNFe.Dest.ISUF;
-    InsereLinhas(sSuframa, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+    sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ') + fpNFe.Dest.ISUF;
+    InserirLinhas(sSuframa, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
-  InsereLinhas(EnderecoRetirada, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+  InserirLinhas(DefinirEnderecoRetirada, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+  InserirLinhas(DefinirEnderecoEntrega, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
 
-  InsereLinhas(EnderecoEntrega, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-
-
-  InsereLinhas(   TACBrNFeDANFeRL(Owner).ManterDocreferenciados(FNFe, FImprimirDadosDocReferenciados )  +
-                  ManterInfAdFisco +
-                  ManterObsFisco +
-                  ManterProcreferenciado +
-                  ManterInfContr +
-                  ManterInfCompl  ,
-                  iLimiteCaracteresLinha,
-                  rlmDadosAdicionaisAuxiliar);
+  InserirLinhas(
+    fpDANFe.ManterDocreferenciados(fpNFe) +
+    fpDANFe.ManterInfAdFisco(fpNFe) +
+    fpDANFe.ManterObsFisco(fpNFe) +
+    fpDANFe.ManterProcreferenciado(fpNFe) +
+    fpDANFe.ManterInfContr(fpNFe) +
+    fpDANFe.ManterInfCompl(fpNFe) +
+    fpDANFe.ManterContingencia(fpNFe),
+    fpLimiteCaracteresLinha,
+    rlmDadosAdicionaisAuxiliar);
 
   rlmDadosAdicionaisAuxiliar.Lines.EndUpdate;
 end;
 
-procedure TfrlDANFeRLPaisagem.Observacoes;
-var i, iMaximoLinhas, iRestanteLinhas: Integer;
-    sTexto: String;
+procedure TfrlDANFeRLPaisagem.DefinirObservacoes;
+var
+  i, iMaximoLinhas, iRestanteLinhas: Integer;
+  sTexto: String;
 begin
   rlmDadosAdicionais.Lines.BeginUpdate;
   rlmDadosAdicionais.Lines.Clear;
 
-  if rlmDadosAdicionaisAuxiliar.Lines.Count > iLimiteLinhas then
-    begin
-      iMaximoLinhas := iLimiteLinhas;
-      iRestanteLinhas := rlmDadosAdicionaisAuxiliar.Lines.Count - iLimiteLinhas;
-      rlmContinuacaoDadosAdicionais.Lines.BeginUpdate;
-      sTexto := '';
-      for i := 0 to (iRestanteLinhas - 1) do
-        begin
-          sTexto := sTexto +
-                  rlmDadosAdicionaisAuxiliar.Lines.Strings[(iMaximoLinhas + i)];
-        end;
+  if (rlmDadosAdicionaisAuxiliar.Lines.Count > fpLimiteLinhas) then
+  begin
+    iMaximoLinhas := fpLimiteLinhas;
+    iRestanteLinhas := rlmDadosAdicionaisAuxiliar.Lines.Count - fpLimiteLinhas;
+    rlmContinuacaoDadosAdicionais.Lines.BeginUpdate;
+    sTexto := '';
+    for i := 0 to (iRestanteLinhas - 1) do
+      sTexto := sTexto + rlmDadosAdicionaisAuxiliar.Lines.Strings[(iMaximoLinhas + i)];
 
-      InsereLinhas(sTexto, iLimiteCaracteresContinuacao, rlmContinuacaoDadosAdicionais);
-      rlmContinuacaoDadosAdicionais.Lines.Text :=
-                        StringReplace(rlmContinuacaoDadosAdicionais.Lines.Text,
-                        ';', '', [rfReplaceAll, rfIgnoreCase]);
-      rlmContinuacaoDadosAdicionais.Lines.EndUpdate;
-    end
+    InserirLinhas(sTexto, fpLimiteCaracteresContinuacao, rlmContinuacaoDadosAdicionais);
+
+    rlmContinuacaoDadosAdicionais.Lines.Text :=
+      StringReplace(rlmContinuacaoDadosAdicionais.Lines.Text, ';', '', [rfReplaceAll]);
+    rlmContinuacaoDadosAdicionais.Lines.EndUpdate;
+  end
   else
     iMaximoLinhas := rlmDadosAdicionaisAuxiliar.Lines.Count;
 
   for i := 0 to (iMaximoLinhas - 1) do
-    begin
-      rlmDadosAdicionais.Lines.Add(rlmDadosAdicionaisAuxiliar.Lines.Strings[i]);
-    end;
+    rlmDadosAdicionais.Lines.Add(rlmDadosAdicionaisAuxiliar.Lines.Strings[i]);
 
-  rlmDadosAdicionais.Lines.Text := StringReplace(rlmDadosAdicionais.Lines.Text,
-                                   ';', '', [rfReplaceAll, rfIgnoreCase]);
+  rlmDadosAdicionais.Lines.Text := StringReplace(rlmDadosAdicionais.Lines.Text, ';', '', [rfReplaceAll]);
 
   rlmDadosAdicionais.Lines.EndUpdate;
 end;
 
-
-
-procedure TfrlDANFeRLPaisagem.ISSQN;
+procedure TfrlDANFeRLPaisagem.DefinirISSQN;
 begin
-  rlbISSQN.Visible  := ( ( ( FNFe.Total.ISSQNtot.vServ > 0 )    or
-                           ( FNFe.Total.ISSQNtot.vBC   > 0 )    or
-                           ( FNFe.Total.ISSQNtot.vISS  > 0 ) )  and
-                           ( FNFe.Emit.IM <> '' )          )    or
-                           ( fMostraDadosISSQN = True );
-
-  if rlbISSQN.Visible then
+  with fpNFe.Total.ISSQNtot do
   begin
-    rllISSQNInscricao.Caption     := FNFe.Emit.IM;
-    rllISSQNValorServicos.Caption := FormatFloatBr(FNFe.Total.ISSQNtot.vServ);
-    rllISSQNBaseCalculo.Caption   := FormatFloatBr(FNFe.Total.ISSQNtot.vBC  );
-    rllISSQNValorISSQN.Caption    := FormatFloatBr(FNFe.Total.ISSQNtot.vISS );
+    rlbISSQN.Visible := fpDANFe.ExibeDadosISSQN or
+      (((vServ + vBC + vISS) > 0) and NaoEstaVazio(fpNFe.Emit.IM));
+
+    if rlbISSQN.Visible then
+    begin
+      rllISSQNInscricao.Caption := fpNFe.Emit.IM;
+      rllISSQNValorServicos.Caption := FormatFloatBr(vServ);
+      rllISSQNBaseCalculo.Caption := FormatFloatBr(vBC);
+      rllISSQNValorISSQN.Caption := FormatFloatBr(vISS);
+    end;
   end;
 end;
 
-procedure TfrlDANFeRLPaisagem.AddFatura;
-var x, iQuantDup, iLinhas, iColunas, iPosQuadro, iAltLinha,
-    iAltQuadro1Linha, iAltQuadro, iAltBand, iFolga: Integer;
+procedure TfrlDANFeRLPaisagem.AdicionarFatura;
+var
+  x, iQuantDup, iLinhas, iColunas, iPosQuadro, iAltLinha, iAltQuadro1Linha, iAltQuadro, iAltBand, iFolga: Integer;
 begin
+  rlbFatura.Visible := (fpNFe.Cobr.Dup.Count > 0);
 
-  rlbFatura.Visible := ( FNFe.Cobr.Dup.Count > 0 );
-
-  if FNFe.Cobr.Dup.Count > 0 then
+  if (fpNFe.Cobr.Dup.Count > 0) then
   begin
-    if FNFe.Cobr.Dup.Count < 6 then
-      TRLLabel (FindComponent('rllFatura')).Caption := 'DUPL';
+    if (fpNFe.Cobr.Dup.Count < 6) then
+      TRLLabel(FindComponent('rllFatura')).Caption := 'DUPL';
 
     for x := 1 to 15 do
     begin
-      TRLLabel (FindComponent ('rllFatNum'   + intToStr (x))).Caption := '';
-      TRLLabel (FindComponent ('rllFatData'  + intToStr (x))).Caption := '';
-      TRLLabel (FindComponent ('rllFatValor' + intToStr (x))).Caption := '';
+      TRLLabel(FindComponent('rllFatNum' + IntToStr(x))).Caption := '';
+      TRLLabel(FindComponent('rllFatData' + IntToStr(x))).Caption := '';
+      TRLLabel(FindComponent('rllFatValor' + IntToStr(x))).Caption := '';
     end;
 
     TRLLabel(FindComponent('rllFatNum1')).AutoSize := True;
-
 
     iQuantDup := ManterDuplicatas;
 
     {=============== Ajusta o tamanho do quadro das faturas ===============}
 
-    iColunas          := 5;   // Quantidade de colunas
-    iAltLinha         := 12;  // Altura de cada linha
-    iPosQuadro        := 0;   // Posição (Top) do Quadro
-    iAltQuadro1Linha  := 27;  // Altura do quadro com 1 linha
-    iFolga            := 1;   // Distância entre o final da Band e o final do quadro
+    iColunas := 5;   // Quantidade de colunas
+    iAltLinha := 12;  // Altura de cada linha
+    iPosQuadro := 0;   // Posição (Top) do Quadro
+    iAltQuadro1Linha := 27;  // Altura do quadro com 1 linha
+    iFolga := 1;   // Distância entre o final da Band e o final do quadro
 
-    if (iQuantDup mod iColunas) = 0 then // Quantidade de linhas
+    if ((iQuantDup mod iColunas) = 0) then // Quantidade de linhas
       iLinhas := iQuantDup div iColunas
     else
       iLinhas := (iQuantDup div iColunas) + 1;
 
-    if iLinhas = 1 then
+    if (iLinhas = 1) then
       iAltQuadro := iAltQuadro1Linha
     else
       iAltQuadro := iAltQuadro1Linha + ((iLinhas - 1) * iAltLinha);
 
     iAltBand := iPosQuadro + iAltQuadro + iFolga;
 
-    rlbFatura.Height  := iAltBand;
-    rliFatura.Height  := iAltQuadro;
+    rlbFatura.Height := iAltBand;
+    rliFatura.Height := iAltQuadro;
     rliFatura1.Height := iAltQuadro;
     rliFatura2.Height := iAltQuadro;
     rliFatura3.Height := iAltQuadro;
@@ -1513,263 +1473,115 @@ end;
 
 procedure TfrlDANFeRLPaisagem.rlbItensAfterPrint(Sender: TObject);
 begin
-  FundoItem.Color     := fCorDestaqueProdutos;
-  FundoItem1.Color    := fCorDestaqueProdutos;
-  FundoItem.Visible   := not (FundoItem.Visible) and fAlternaCoresProdutos;
-  FundoItem1.Visible  := FundoItem.Visible;
+  FundoItem.Color := fpCorDestaqueProdutos;
+  FundoItem1.Color := fpCorDestaqueProdutos;
+  FundoItem.Visible := not (FundoItem.Visible) and fpDANFe.AlternaCoresProdutos;
+  FundoItem1.Visible := FundoItem.Visible;
 end;
 
-procedure TfrlDANFeRLPaisagem.rlbDadosAdicionaisBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
-var iAumento: Integer;
+procedure TfrlDANFeRLPaisagem.rlbDadosAdicionaisBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  iAumento: Integer;
 begin
-  iAumento                  := pnlCanhoto.Width + pnlDivisao.Width;
-  pnlCanhoto.Visible        := False;
-  pnlDivisao.Visible        := False;
-  rliChave.Width            := rliChave.Width + iAumento;
-  rliChave2.Width           := rliChave2.Width + iAumento;
-  rliChave3.Width           := rliChave3.Width + iAumento;
-  rliNatOpe.Width           := rliNatOpe.Width + iAumento;
-  rliNatOpe1.Width          := rliNatOpe1.Width + iAumento;
-  rllDadosVariaveis1a.Left  := rllDadosVariaveis1a.Left + (iAumento div 2);
-  rllDadosVariaveis1b.Left  := rllDadosVariaveis1b.Left + (iAumento div 2);
-  rlbCodigoBarras.Left      := rlbCodigoBarras.Left + (iAumento div 2);
-  rllXmotivo.Left           := rllXmotivo.Left + (iAumento div 2);
-  rlmContinuacaoDadosAdicionais.Width := rlmContinuacaoDadosAdicionais.Width +
-                                                                       iAumento;
-  LinhaDCDireita.Left       := LinhaDCDireita.Left + iAumento;
-  LinhaDCSuperior.Width     := LinhaDCSuperior.Width + iAumento;
-  LinhaDCInferior.Width     := LinhaDCInferior.Width + iAumento;
+  iAumento := pnlCanhoto.Width + pnlDivisao.Width;
+  pnlCanhoto.Visible := False;
+  pnlDivisao.Visible := False;
+  rliChave.Width := rliChave.Width + iAumento;
+  rliChave2.Width := rliChave2.Width + iAumento;
+  rliChave3.Width := rliChave3.Width + iAumento;
+  rliNatOpe.Width := rliNatOpe.Width + iAumento;
+  rliNatOpe1.Width := rliNatOpe1.Width + iAumento;
+  rllDadosVariaveis1a.Left := rllDadosVariaveis1a.Left + (iAumento div 2);
+  rllDadosVariaveis1b.Left := rllDadosVariaveis1b.Left + (iAumento div 2);
+  rlbCodigoBarras.Left := rlbCodigoBarras.Left + (iAumento div 2);
+  rllXmotivo.Left := rllXmotivo.Left + (iAumento div 2);
+  rlmContinuacaoDadosAdicionais.Width := rlmContinuacaoDadosAdicionais.Width + iAumento;
+  LinhaDCDireita.Left := LinhaDCDireita.Left + iAumento;
+  LinhaDCSuperior.Width := LinhaDCSuperior.Width + iAumento;
+  LinhaDCInferior.Width := LinhaDCInferior.Width + iAumento;
 
-  rllborda.Width            := rllborda.Width + iAumento;
-  rllCinza.Width            := rllCinza.Width + iAumento;
-  pnlCabecalho.Width        := pnlCabecalho.Width + iAumento;
-  pnlCabecalho1.Left        := pnlCabecalho1.Left + iAumento;
+  rllborda.Width := rllborda.Width + iAumento;
+  rllCinza.Width := rllCinza.Width + iAumento;
+  pnlCabecalho.Width := pnlCabecalho.Width + iAumento;
+  pnlCabecalho1.Left := pnlCabecalho1.Left + iAumento;
   rlmDescricaoProduto.Width := rlmDescricaoProduto.Width + iAumento;
-
 end;
 
 procedure TfrlDANFeRLPaisagem.FormCreate(Sender: TObject);
 begin
   inherited;
-	FineTuneAngleLabels           := true;
-  iLimiteLinhas                 := 12;
-  iLinhasUtilizadas             := 0;
-  iLimiteCaracteresLinha        := 142;
-  iLimiteCaracteresContinuacao  := 204;
-  rllborda.Align                := faNone;
-  rllCinza.Align                := faNone;
+
+  FineTuneAngleLabels := True;
+  rllborda.Align := faNone;
+  rllCinza.Align := faNone;
 end;
 
-Function TfrlDANFeRLPaisagem.ManterVeiculos( inItem:  integer  ) : String;
+procedure TfrlDANFeRLPaisagem.AdicionarFaturaReal;
 begin
-  Result := '';
-{ detalhamento especifico de veículos }
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if veicProd.chassi > '' then
-    begin
-      Result := sQuebraLinha;
-      if dv_tpOp in FDetVeiculos          then Result := Result + ACBrStr('TIPO DA OPERAÇÃO: ' + VeiculosTipoOperStr( veicProd.tpOP ) ) + sQuebraLinha;
-      if dv_Chassi in FDetVeiculos        then Result := Result + ACBrStr('CHASSI: ' )+ veicProd.chassi + sQuebraLinha;
-      if dv_cCor in FDetVeiculos          then Result := Result + ACBrStr('CÓDIGO DA COR: ' )+ veicProd.cCor + sQuebraLinha;
-      if dv_xCor in FDetVeiculos          then Result := Result + ACBrStr('NOME DA COR: ') + veicProd.xCor + sQuebraLinha;
-      if dv_pot in FDetVeiculos           then Result := Result + ACBrStr('POTÊNCIA DO MOTOR: ') + veicProd.pot + sQuebraLinha;
-      if dv_cilin in FDetVeiculos         then Result := Result + ACBrStr('CILINDRADAS: ') + veicProd.Cilin + sQuebraLinha;
-      if dv_pesoL in FDetVeiculos         then Result := Result + ACBrStr('PESO LÍQUIDO: ') + veicProd.pesoL + sQuebraLinha;
-      if dv_pesoB in FDetVeiculos         then Result := Result + ACBrStr('PESO BRUTO: ' )+ veicProd.pesoB + sQuebraLinha;
-      if dv_nSerie in FDetVeiculos        then Result := Result + ACBrStr('NÚMERO DE SÉRIE: ') + veicProd.nSerie + sQuebraLinha;
-      if dv_tpComb in FDetVeiculos        then Result := Result + ACBrStr('COMBUSTÍVEL: ' + VeiculosCombustivelStr( veicProd.tpComb ) ) + sQuebraLinha;
-      if dv_nMotor in FDetVeiculos        then Result := Result + ACBrStr('NÚMERO DO MOTOR: ') + veicProd.nMotor + sQuebraLinha;
-      if dv_CMT in FDetVeiculos           then Result := Result + ACBrStr('CAP. MÁX. TRAÇÃO: ') + veicProd.CMT + sQuebraLinha;
-      if dv_dist in FDetVeiculos          then Result := Result + ACBrStr('DISTÂNCIA ENTRE EIXOS: ') + veicProd.dist + sQuebraLinha;
-      if dv_anoMod in FDetVeiculos        then Result := Result + ACBrStr('ANO DO MODELO: ' )+ IntToStr(veicProd.anoMod) + sQuebraLinha;
-      if dv_anoFab in FDetVeiculos        then Result := Result + ACBrStr('ANO DE FABRICAÇÃO: ') + IntToStr(veicProd.anoFab) + sQuebraLinha;
-      if dv_tpPint in FDetVeiculos        then Result := Result + ACBrStr('TIPO DE PINTURA: ') + veicProd.tpPint + sQuebraLinha;
-      if dv_tpVeic in FDetVeiculos        then Result := Result + ACBrStr('TIPO DE VEÍCULO: ' +VeiculosTipoStr( veicProd.tpVeic ) )+ sQuebraLinha;
-      if dv_espVeic in FDetVeiculos       then Result := Result + ACBrStr('ESPÉCIE DO VEÍCULO: ' +VeiculosEspecieStr( veicProd.espVeic )) + sQuebraLinha;
-      if dv_VIN in FDetVeiculos           then Result := Result + ACBrStr('VIN (CHASSI): ' + VeiculosVinStr( veicProd.VIN ) )+ sQuebraLinha;
-      if dv_condVeic in FDetVeiculos      then Result := Result + ACBrStr('CONDIÇÃO DO VEÍCULO: ' +VeiculosCondicaoStr( veicProd.condVeic)) + sQuebraLinha;
-      if dv_cMod in FDetVeiculos          then Result := Result + ACBrStr('CÓDIGO MARCA MODELO: ') + veicProd.cMod + sQuebraLinha;
-      if dv_cCorDENATRAN in FDetVeiculos  then Result := Result + ACBrStr('CÓDIGO COR DENATRAN: ' +VeiculosCorDENATRANSTr( veicProd.cCorDENATRAN )) + sQuebraLinha;
-      if dv_lota in FDetVeiculos          then Result := Result + ACBrStr('CAPACIDADE MÁXIMA DE LOTAÇÃO: ') +IntToStr(veicProd.lota) + sQuebraLinha;
-      if dv_tpRest in FDetVeiculos        then Result := Result + ACBrStr('RESTRIÇÃO: ' +VeiculosRestricaoStr( veicProd.tpRest ) )+ sQuebraLinha;
-    end;
-  end;
-end;
+  rlbFaturaReal.Visible := fpDANFe.ExibeCampoFatura;
 
-Function TfrlDANFeRLPaisagem.ManterRastro( inItem:  integer  ) : String;
-Var
-  i : Integer;
-begin
-  Result := '';
-  { rastreabilidade do produto}
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if Rastro.Count > 0 then
-    begin
-      Result := sQuebraLinha;
-      for i := 0 to Rastro.Count - 1 do
-      begin
-        Result := Result + 'LOTE: ' + rastro.Items[i].nLote+ sQuebraLinha;
-        Result := Result + 'QTD: '  + FormatFloatBr(rastro.Items[i].qLote)+ sQuebraLinha;
-        Result := Result + 'FAB: '  + FormatDateBr(rastro.Items[i].dFab)+ sQuebraLinha;
-        Result := Result + 'VAL: '  + FormatDateBr(rastro.Items[i].dVal)+ sQuebraLinha;
-        Result := Result + ACBrStr('C.AGREGAÇÃO: ' ) + rastro.Items[i].cAgreg+ sQuebraLinha;
-      end;
-    end;
-  end;
-end;
-
-Function TfrlDANFeRLPaisagem.ManterMedicamentos( inItem:  integer ) : String;
-Var
-  i : Integer;
-begin
-  Result := '';
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if med.Count > 0 then
-    begin
-      Result := sQuebraLinha;
-      for i := 0 to med.Count - 1 do
-      begin
-        if FNFe.infNFe.Versao >= 4 then
-          Result := Result + 'C.P. ANVISA '+ med.Items[i].cProdANVISA+ sQuebraLinha
-        else
-        begin
-          if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('LOTE: ') + med.Items[i].nLote + sQuebraLinha;
-          if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QTD: ' ) + FormatFloatBr(med.Items[i].qLote, FloatMask(3)) + sQuebraLinha;
-          if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('FAB: ' ) + DateToStr(med.Items[i].dFab) + sQuebraLinha;
-          if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('VAL: ' ) + DateToStr(med.Items[i].dVal) + sQuebraLinha;
-        end;
-        if dm_vPMC  in FDetMedicamentos then Result := IfThen(med.Items[i].vPMC > 0, Result + ACBrStr('PMC: R$') + FormatFloatBr(med.Items[i].vPMC) + sQuebraLinha, Result);
-
-      end;
-    end;
-  end;
-end;
-
-Function TfrlDANFeRLPaisagem.ManterArma( inItem:  integer  ) : String;
-Var
-  i : Integer;
-begin
-  Result := '';
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if arma.Count > 0 then
-    begin
-      Result := sQuebraLinha;
-      for i := 0 to arma.Count - 1 do
-      begin
-        if da_tpArma in FDetArmamentos then Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + sQuebraLinha;
-        if da_nSerie in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + sQuebraLinha;
-        if da_nCano  in FDetArmamentos then Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + sQuebraLinha;
-        if da_descr  in FDetArmamentos then Result := Result + ACBrStr('DESCRIÇÃO ARMA: ') + arma.Items[i].descr + sQuebraLinha;
-       end;
-    end;
-  end;
-end;
-
-
-Function TfrlDANFeRLPaisagem.ManterCombustivel( inItem:  integer  ) : String;
-begin
-  Result := '';
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if comb.cProdANP > 0 then
-    begin
-      Result := sQuebraLinha;
-      if dc_cProdANP    in FDetCombustiveis then Result := Result + ACBrStr('CÓD. PRODUTO ANP: ') + IntToStr(comb.cProdANP) + sQuebraLinha;
-      if dc_CODIF       in FDetCombustiveis then
-                        if comb.CODIF > ''  then Result := Result + ACBrStr('AUTORIZAÇÃO/CODIF: ') + comb.CODIF + sQuebraLinha;
-      if dc_qTemp       in FDetCombustiveis then
-                          if comb.qTemp > 0 then Result := Result + ACBrStr('QTD. FATURADA TEMP. AMBIENTE: ') +  FormatFloatBr(comb.qTemp, FloatMask(4)) + sQuebraLinha;
-      if dc_UFCons      in FDetCombustiveis then Result := Result + ACBrStr('UF DE CONSUMO: ') + comb.UFcons + sQuebraLinha;
-      if comb.CIDE.qBCProd > 0 then
-      begin
-        if dc_qBCProd   in FDetCombustiveis then Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloatBr(comb.CIDE.qBCProd, FloatMask(4)) + sQuebraLinha;
-        if dc_vAliqProd in FDetCombustiveis then Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloatBr(comb.CIDE.vAliqProd, FloatMask(4)) + sQuebraLinha;
-        if dc_vCIDE     in FDetCombustiveis then Result := Result + ACBrStr('VALOR CIDE: ') + FormatFloatBr(comb.CIDE.vCIDE) + sQuebraLinha;
-      end;
-      if comb.encerrante.nBico > 0  then
-      begin
-        Result := Result + 'ENCERRANTE' + sQuebraLinha;
-        Result := Result + 'BICO: ' +  IntToStr( comb.encerrante.nBico ) + sQuebraLinha;
-        if comb.encerrante.nBomba > 0 then
-          Result := Result + 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + sQuebraLinha;
-        Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + sQuebraLinha;
-        Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloatBr(comb.encerrante.vEncIni, FloatMask(3)) + sQuebraLinha;
-        Result := Result + 'NO FINAL: ' + FormatFloatBr(comb.encerrante.vEncFin, FloatMask(3))+ sQuebraLinha;
-      end
-      else
-        Result := Result + sQuebraLinha;
-    end;
-  end;
-end;
-
-Procedure TfrlDANFeRLPaisagem.AddFaturaReal;
-begin
-  rlbFaturaReal.Visible := fExibeCampoFatura;
-
-  if FNFe.infNFe.Versao >= 4 then
+  if (fpNFe.infNFe.Versao >= 4) then
   begin
     RlbDadoPagamento.Caption := ACBrStr('DADOS DA FATURA');
-    rlbFaturaReal.Visible    := NaoEstaVazio(FNFe.Cobr.Fat.nFat) and fExibeCampoFatura;
+    rlbFaturaReal.Visible := NaoEstaVazio(fpNFe.Cobr.Fat.nFat) and fpDANFe.ExibeCampoFatura;
   end
   else
   begin
-    case FNFe.Ide.indPag of
-      ipVista : RlbDadoPagamento.caption  := ACBrStr('PAGAMENTO À VISTA');
-      ipPrazo : RlbDadoPagamento.caption  := ACBrStr('PAGAMENTO A PRAZO');
-      ipOutras: begin
-                  RlbDadoPagamento.caption  := 'OUTROS';
-                  rlbFaturaReal.Visible     := NaoEstaVazio(FNFe.Cobr.Fat.nFat) and fExibeCampoFatura;
-                end;
+    case fpNFe.Ide.indPag of
+      ipVista:
+        RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO À VISTA');
+
+      ipPrazo:
+        RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO A PRAZO');
+
+      ipOutras:
+      begin
+        RlbDadoPagamento.Caption := 'OUTROS';
+        rlbFaturaReal.Visible := NaoEstaVazio(fpNFe.Cobr.Fat.nFat) and fpDANFe.ExibeCampoFatura;
+      end;
     end;
   end;
 
-  if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
+  if NaoEstaVazio(fpNFe.Cobr.Fat.nFat) then
   begin
-
-    RLLabelNUmero.Caption := ACBrStr( 'NÚMERO' );
-    RLLabelValor.Caption  := ACBrStr( 'VALOR ORIGINAL' );
-    RLLabelDupl.Caption   := ACBrStr( 'VALOR DESCONTO' );
-    RLLabelLIQ.Caption    := ACBrStr( 'VALOR LÍQUIDO' );
+    RLLabelNUmero.Caption := ACBrStr('NÚMERO');
+    RLLabelValor.Caption := ACBrStr('VALOR ORIGINAL');
+    RLLabelDupl.Caption := ACBrStr('VALOR DESCONTO');
+    RLLabelLIQ.Caption := ACBrStr('VALOR LÍQUIDO');
 
     // Define a Coluna dos label's
-    RLLabelNUmero.Left    := 264;
-    RLLabelValor.Left     := 439;
-    RLLabelDupl.Left      := 541;
-    RLLabelLIQ.Left       := 652;
-    with FNFe.Cobr.Fat do
+    RLLabelNUmero.Left := 264;
+    RLLabelValor.Left := 439;
+    RLLabelDupl.Left := 541;
+    RLLabelLIQ.Left := 652;
+    with fpNFe.Cobr.Fat do
     begin
-      RlbDadoNumero.caption         := nFat;
-      RlbDadoValorOriginal.caption  := FormatFloatBr(vOrig);
-      RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc);
-      RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq );
+      RlbDadoNumero.Caption := nFat;
+      RlbDadoValorOriginal.Caption := FormatFloatBr(vOrig);
+      RlbDadoValorDesconto.Caption := FormatFloatBr(vDesc);
+      RlbDadoValorLiquido.Caption := FormatFloatBr(vLiq);
     end;
   end
   else
   begin
-    RLLabelNUmero.Caption         := '';
-    RLLabelValor.Caption          := '';
-    RLLabelDupl.Caption           := '';
-    RLLabelLIQ.Caption            := '';
-    RlbDadoNumero.caption         := '';
-    RlbDadoValorOriginal.caption  := '';
-    RlbDadoValorDesconto.caption  := '';
-    RlbDadoValorLiquido.caption   := '';
+    RLLabelNUmero.Caption := '';
+    RLLabelValor.Caption := '';
+    RLLabelDupl.Caption := '';
+    RLLabelLIQ.Caption := '';
+    RlbDadoNumero.Caption := '';
+    RlbDadoValorOriginal.Caption := '';
+    RlbDadoValorDesconto.Caption := '';
+    RlbDadoValorLiquido.Caption := '';
   end;
 end;
 
-
-Function TfrlDANFeRLPaisagem.ManterDuplicatas : Integer;
-Var
-  x : Integer;
+function TfrlDANFeRLPaisagem.ManterDuplicatas: Integer;
+var
+  x: Integer;
 begin
-  with FNFe.Cobr do
+  with fpNFe.Cobr do
   begin
-    if Dup.Count > 15 then
+    if (Dup.Count > 15) then
       Result := 15
     else
       Result := Dup.Count;
@@ -1778,152 +1590,151 @@ begin
     begin
       with Dup[x] do
       begin
-        TRLLabel(FindComponent('rllFatNum'    + IntToStr(x + 1))).Caption := NDup;
-        TRLLabel(FindComponent('rllFatData'   + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
-        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup);
+        TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption := NDup;
+        TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
+        TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption := FormatFloatBr(VDup);
       end;
     end;
   end;
 end;
 
 // Aplica parametros para formatar o Danfe
-procedure TfrlDANFeRLPaisagem.AplicaParametros;
+procedure TfrlDANFeRLPaisagem.AplicarParametros;
 var
   base: Integer;
   AltLinhaComun: Integer;
 begin
-
-  AltLinhaComun     := fAltLinhaComun;
+  AltLinhaComun := fpDANFe.AltLinhaComun;
 
   // ******** Cabeçalho ********
-  base              := rliNatOpe.Top;//RLDraw6.Top;
-  rliNatOpe.Height  := 2*AltLinhaComun + 1;
-  rliNatOpe1.Top    := base + AltLinhaComun;
-  RLDraw9.Height    := AltLinhaComun + 1;
+  base := rliNatOpe.Top;//RLDraw6.Top;
+  rliNatOpe.Height := 2 * AltLinhaComun + 1;
+  rliNatOpe1.Top := base + AltLinhaComun;
+  RLDraw9.Height := AltLinhaComun + 1;
 
-  RLDraw10.Top      := base + AltLinhaComun;
-  RLDraw10.Height   := AltLinhaComun + 1;
-  RLDraw2.Top       := base + AltLinhaComun;
-  RLDraw2.Height    := AltLinhaComun + 1;
-  RLLabel28.Holder  := nil;//para o compando abaixo ter efeito.
-  RLLabel28.Top     := base + 1;
-  rllDadosVariaveis3_Descricao.Top:= base + 1;
+  RLDraw10.Top := base + AltLinhaComun;
+  RLDraw10.Height := AltLinhaComun + 1;
+  RLDraw2.Top := base + AltLinhaComun;
+  RLDraw2.Height := AltLinhaComun + 1;
+  RLLabel28.Holder := nil;//para o compando abaixo ter efeito.
+  RLLabel28.Top := base + 1;
+  rllDadosVariaveis3_Descricao.Top := base + 1;
 
   RLLabel29.Top := base + AltLinhaComun + 1;
   RLLabel30.Top := base + AltLinhaComun + 1;
   RLLabel31.Top := base + AltLinhaComun + 1;
 
-  rllNatOperacao.Top        := base + AltLinhaComun - rllNatOperacao.Height;
-  rllDadosVariaveis3.Top    := base + AltLinhaComun - rllDadosVariaveis3.Height;
+  rllNatOperacao.Top := base + AltLinhaComun - rllNatOperacao.Height;
+  rllDadosVariaveis3.Top := base + AltLinhaComun - rllDadosVariaveis3.Height;
 
-  rllInscricaoEstadual.Top  := base + 2*AltLinhaComun - rllInscricaoEstadual.Height;
-  rllInscrEstSubst.Top      := base + 2*AltLinhaComun - rllInscrEstSubst.Height;
-  rllCNPJ.Top               := base + 2*AltLinhaComun - rllCNPJ.Height;
+  rllInscricaoEstadual.Top := base + 2 * AltLinhaComun - rllInscricaoEstadual.Height;
+  rllInscrEstSubst.Top := base + 2 * AltLinhaComun - rllInscrEstSubst.Height;
+  rllCNPJ.Top := base + 2 * AltLinhaComun - rllCNPJ.Height;
 
   // Bands remetente
-  rlbEmitente.Height        := rliNatOpe.Height + rliEmitente.Height + 2; //168 + (2*AltLinhaComun - 60);
+  rlbEmitente.Height := rliNatOpe.Height + rliEmitente.Height + 2; //168 + (2*AltLinhaComun - 60);
 
-  // ******** Destinatario ********
+  // ******** DefinirDestinatario ********
   base := RLDraw15.Top;
-  RLDraw15.Height := 3*AltLinhaComun + 1;
-  RLDraw13.Height := 3*AltLinhaComun + 1;
+  RLDraw15.Height := 3 * AltLinhaComun + 1;
+  RLDraw13.Height := 3 * AltLinhaComun + 1;
 
-  RLDraw16.Top    := base + AltLinhaComun;
-  RLDraw17.Top    := base + 2*AltLinhaComun;
-  RLDraw16.Left   := RLDraw13.Left;
-  RLDraw17.Left   := RLDraw13.Left;
+  RLDraw16.Top := base + AltLinhaComun;
+  RLDraw17.Top := base + 2 * AltLinhaComun;
+  RLDraw16.Left := RLDraw13.Left;
+  RLDraw17.Left := RLDraw13.Left;
 
-  RLDraw18.Height := 3*AltLinhaComun + 1;
+  RLDraw18.Height := 3 * AltLinhaComun + 1;
   RLDraw19.Height := AltLinhaComun;
 
-  RLDraw20.Top    := base + AltLinhaComun;
+  RLDraw20.Top := base + AltLinhaComun;
   RLDraw20.Height := AltLinhaComun;
-  RLDraw21.Top    := base + AltLinhaComun;
+  RLDraw21.Top := base + AltLinhaComun;
   RLDraw21.Height := AltLinhaComun;
 
-  RLDraw22.Top    := base + 2*AltLinhaComun;
+  RLDraw22.Top := base + 2 * AltLinhaComun;
   RLDraw22.Height := AltLinhaComun;
-  RLDraw23.Top    := base + 2*AltLinhaComun;
+  RLDraw23.Top := base + 2 * AltLinhaComun;
   RLDraw23.Height := AltLinhaComun;
-  RLDraw24.Top    := base + 2*AltLinhaComun;
+  RLDraw24.Top := base + 2 * AltLinhaComun;
   RLDraw24.Height := AltLinhaComun;
 
   // Linha 1
-  RLLabel32.Top   := base + 1;
-  RLLabel33.Top   := base + 1;
-  RLLabel34.Top   := base + 1;
+  RLLabel32.Top := base + 1;
+  RLLabel33.Top := base + 1;
+  RLLabel34.Top := base + 1;
 
   rllDestNome.Top := base + AltLinhaComun - rllDestNome.Height;
   rllDestCNPJ.Top := base + AltLinhaComun - rllDestCNPJ.Height;
-  rllEmissao.Top  := base + AltLinhaComun - rllEmissao.Height;
+  rllEmissao.Top := base + AltLinhaComun - rllEmissao.Height;
 
   // Linha 2
-  RLLabel35.Top   := base + AltLinhaComun + 1;
-  RLLabel36.Top   := base + AltLinhaComun + 1;
-  RLLabel37.Top   := base + AltLinhaComun + 1;
-  RLLabel38.Top   := base + AltLinhaComun + 1;
+  RLLabel35.Top := base + AltLinhaComun + 1;
+  RLLabel36.Top := base + AltLinhaComun + 1;
+  RLLabel37.Top := base + AltLinhaComun + 1;
+  RLLabel38.Top := base + AltLinhaComun + 1;
 
-  rllDestEndereco.Top := base + 2*AltLinhaComun - rllDestEndereco.Height;
-  rllDestBairro.Top   := base + 2*AltLinhaComun - rllDestBairro.Height;
-  rllDestCEP.Top := base + 2*AltLinhaComun - rllDestCEP.Height;
-  rllSaida.Top   := base + 2*AltLinhaComun - rllSaida.Height;
+  rllDestEndereco.Top := base + 2 * AltLinhaComun - rllDestEndereco.Height;
+  rllDestBairro.Top := base + 2 * AltLinhaComun - rllDestBairro.Height;
+  rllDestCEP.Top := base + 2 * AltLinhaComun - rllDestCEP.Height;
+  rllSaida.Top := base + 2 * AltLinhaComun - rllSaida.Height;
 
   // Linha 3
-  RLLabel39.Top := base + 2*AltLinhaComun + 1;
-  RLLabel40.Top := base + 2*AltLinhaComun + 1;
-  RLLabel41.Top := base + 2*AltLinhaComun + 1;
-  RLLabel42.Top := base + 2*AltLinhaComun + 1;
-  RLLabel43.Top := base + 2*AltLinhaComun + 1;
+  RLLabel39.Top := base + 2 * AltLinhaComun + 1;
+  RLLabel40.Top := base + 2 * AltLinhaComun + 1;
+  RLLabel41.Top := base + 2 * AltLinhaComun + 1;
+  RLLabel42.Top := base + 2 * AltLinhaComun + 1;
+  RLLabel43.Top := base + 2 * AltLinhaComun + 1;
 
-  rllDestCidade.Top := base + 3*AltLinhaComun - rllDestCidade.Height; //13;
-  rllDestFone.Top   := base + 3*AltLinhaComun - rllDestFone.Height;
-  rllDestUF.Top     := base + 3*AltLinhaComun - rllDestUF.Height;
-  rllDestIE.Top     := base + 3*AltLinhaComun - rllDestIE.Height;
-  rllHoraSaida.Top  := base + 3*AltLinhaComun - rllHoraSaida.Height;
+  rllDestCidade.Top := base + 3 * AltLinhaComun - rllDestCidade.Height; //13;
+  rllDestFone.Top := base + 3 * AltLinhaComun - rllDestFone.Height;
+  rllDestUF.Top := base + 3 * AltLinhaComun - rllDestUF.Height;
+  rllDestIE.Top := base + 3 * AltLinhaComun - rllDestIE.Height;
+  rllHoraSaida.Top := base + 3 * AltLinhaComun - rllHoraSaida.Height;
 
-  RLAngleLabel1.Top   := RLDraw15.Top + 1;
-  RLAngleLabel1.Height:= RLDraw15.Height - 3;
-  RLAngleLabel2.Top   := RLDraw15.Top + 1;
-  RLAngleLabel2.Height:= RLDraw15.Height - 3;
-  RLAngleLabel1.AutoSize:= False;//vai ajustar o tamanho da fonte se necessário.
-  RLAngleLabel2.AutoSize:= False;
-  // Band destinatario
+  RLAngleLabel1.Top := RLDraw15.Top + 1;
+  RLAngleLabel1.Height := RLDraw15.Height - 3;
+  RLAngleLabel2.Top := RLDraw15.Top + 1;
+  RLAngleLabel2.Height := RLDraw15.Height - 3;
+  RLAngleLabel1.AutoSize := False;//vai ajustar o tamanho da fonte se necessário.
+  RLAngleLabel2.AutoSize := False;
+  // Band DefinirDestinatario
   rlbDestinatario.Height := RLDraw15.Height + 2;// 92 + (3*AltLinhaComun - 90);
 
   // ******** Fatura ********
   base := RLDrawFaturareal.Top;
-  RLDrawFaturareal.Height:= AltLinhaComun + 4;
-  RLDraw8.Height:=RLDrawFaturareal.Height;
+  RLDrawFaturareal.Height := AltLinhaComun + 4;
+  RLDraw8.Height := RLDrawFaturareal.Height;
 
-  RLLabelPag.Top    := base + 1;
+  RLLabelPag.Top := base + 1;
   RLLabelNUmero.Top := RLLabelPag.Top;
-  RLLabelValor.Top  := RLLabelPag.Top;
-  RLLabelDupl.Top   := RLLabelPag.Top;
-  RLLabelLIQ.Top    := RLLabelPag.Top;
+  RLLabelValor.Top := RLLabelPag.Top;
+  RLLabelDupl.Top := RLLabelPag.Top;
+  RLLabelLIQ.Top := RLLabelPag.Top;
 
   RLDraw27.Top := RLLabelPag.Top + RLLabelPag.Height;
   RLLabel5.top := 1;
-  RLLabel5.Height:= RLDraw27.Top - base - 2;
+  RLLabel5.Height := RLDraw27.Top - base - 2;
 
-  RlbDadoPagamento.Top     := base + AltLinhaComun - RlbDadoPagamento.Height;
+  RlbDadoPagamento.Top := base + AltLinhaComun - RlbDadoPagamento.Height;
   if RlbDadoPagamento.Top < RLDraw27.Top then
     RlbDadoPagamento.Top := RLDraw27.Top + 1;
-  RlbDadoNumero.Top        := RlbDadoPagamento.Top;
+
+  RlbDadoNumero.Top := RlbDadoPagamento.Top;
   RlbDadoValorOriginal.Top := RlbDadoPagamento.Top;
   RlbDadoValorDesconto.Top := RlbDadoPagamento.Top;
-  RlbDadoValorLiquido.Top  := RlbDadoPagamento.Top;
+  RlbDadoValorLiquido.Top := RlbDadoPagamento.Top;
 
-
-  RLAngleLabel3.Top   := RLDrawFaturareal.Top + 1;
-  RLAngleLabel3.Height:= RLDrawFaturareal.Height - 3;
+  RLAngleLabel3.Top := RLDrawFaturareal.Top + 1;
+  RLAngleLabel3.Height := RLDrawFaturareal.Height - 3;
   RLAngleLabel3.AutoSize := False;
   // Band fatura
-  RLBFaturaReal.Height:=RLDrawFaturareal.Top + RLDrawFaturareal.Height + 2;
+  RLBFaturaReal.Height := RLDrawFaturareal.Top + RLDrawFaturareal.Height + 2;
 
-  // ******** Cálculo do imposto ********
+  // ******** Cálculo do DefinirImposto ********
   base := RLDraw29.Top;
-  RLDraw29.Height := 2*AltLinhaComun + 1;
-  rliDivImposto0.Height := 2*AltLinhaComun + 1;
+  RLDraw29.Height := 2 * AltLinhaComun + 1;
+  rliDivImposto0.Height := 2 * AltLinhaComun + 1;
 
   RLDraw30.Top := base + AltLinhaComun;
 
@@ -1941,26 +1752,26 @@ begin
   RLDraw33.Height := AltLinhaComun;
   RLDraw34.Height := AltLinhaComun;
   RLDraw35.Height := AltLinhaComun;
-  RLDraw6.Height  := AltLinhaComun;
+  RLDraw6.Height := AltLinhaComun;
   RLDraw12.Height := AltLinhaComun;
-  RLDraw33.Top   := base + AltLinhaComun;
-  RLDraw34.Top   := base + AltLinhaComun;
-  RLDraw35.Top   := base + AltLinhaComun;
-  RLDraw6.Top    := base + AltLinhaComun;
-  RLDraw12.Top   := base + AltLinhaComun;
+  RLDraw33.Top := base + AltLinhaComun;
+  RLDraw34.Top := base + AltLinhaComun;
+  RLDraw35.Top := base + AltLinhaComun;
+  RLDraw6.Top := base + AltLinhaComun;
+  RLDraw12.Top := base + AltLinhaComun;
 
   // Linha 1
-  rllTituloBaseICMS.Top   := base + 1;
-  rllTituloValorICMS.Top  := base + 1;
+  rllTituloBaseICMS.Top := base + 1;
+  rllTituloValorICMS.Top := base + 1;
   rllTituloBaseICMSST.Top := base + 1;
-  rllTituloValorICMSST.Top   := base + 1;
+  rllTituloValorICMSST.Top := base + 1;
   rllTituloTotalTributos.Top := base + 1;
   rlLabel48.Top := base + 1;
 
-  rllBaseICMS.Top   := base + AltLinhaComun - rllBaseICMS.Height;
-  rllValorICMS.Top  := base + AltLinhaComun - rllValorICMS.Height;
+  rllBaseICMS.Top := base + AltLinhaComun - rllBaseICMS.Height;
+  rllValorICMS.Top := base + AltLinhaComun - rllValorICMS.Height;
   rllBaseICMSST.Top := base + AltLinhaComun - rllBaseICMSST.Height;
-  rllValorICMSST.Top   := base + AltLinhaComun - rllValorICMSST.Height;
+  rllValorICMSST.Top := base + AltLinhaComun - rllValorICMSST.Height;
   rllTotalTributos.Top := base + AltLinhaComun - rllTotalTributos.Height;
   rllTotalProdutos.Top := base + AltLinhaComun - rllTotalProdutos.Height;
 
@@ -1972,33 +1783,33 @@ begin
   RLLabel53.Top := base + AltLinhaComun + 1;
   RLLabel54.Top := base + AltLinhaComun + 1;
 
-  rllValorFrete.Top  := base + 2*AltLinhaComun - rllValorFrete.Height;
-  rllValorSeguro.Top := base + 2*AltLinhaComun - rllValorSeguro.Height;
-  rllDescontos.Top   := base + 2*AltLinhaComun - rllDescontos.Height;
-  rllAcessorias.Top  := base + 2*AltLinhaComun - rllAcessorias.Height;
-  rllValorIPI.Top    := base + 2*AltLinhaComun - rllValorIPI.Height;
-  rllTotalNF.Top     := base + 2*AltLinhaComun - rllTotalNF.Height;
+  rllValorFrete.Top := base + 2 * AltLinhaComun - rllValorFrete.Height;
+  rllValorSeguro.Top := base + 2 * AltLinhaComun - rllValorSeguro.Height;
+  rllDescontos.Top := base + 2 * AltLinhaComun - rllDescontos.Height;
+  rllAcessorias.Top := base + 2 * AltLinhaComun - rllAcessorias.Height;
+  rllValorIPI.Top := base + 2 * AltLinhaComun - rllValorIPI.Height;
+  rllTotalNF.Top := base + 2 * AltLinhaComun - rllTotalNF.Height;
 
-  RLLabel25.Top       := base + AltLinhaComun;
-  RLLabel25.Height    := AltLinhaComun-1;
+  RLLabel25.Top := base + AltLinhaComun;
+  RLLabel25.Height := AltLinhaComun - 1;
 
-  RLAngleLabel4.Top   := RLDraw29.Top + 1;
-  RLAngleLabel4.Height:= RLDraw29.Height - 3;
-  RLAngleLabel5.Top   := RLDraw29.Top + 1;
-  RLAngleLabel5.Height:= RLDraw29.Height - 3;
-  RLAngleLabel4.AutoSize:= False;
-  RLAngleLabel5.AutoSize:= False;
-  // Band Calculo do imposto
-  rlbImposto.Height      := 62  + (2*AltLinhaComun - 60);
+  RLAngleLabel4.Top := RLDraw29.Top + 1;
+  RLAngleLabel4.Height := RLDraw29.Height - 3;
+  RLAngleLabel5.Top := RLDraw29.Top + 1;
+  RLAngleLabel5.Height := RLDraw29.Height - 3;
+  RLAngleLabel4.AutoSize := False;
+  RLAngleLabel5.AutoSize := False;
+  // Band Calculo do DefinirImposto
+  rlbImposto.Height := 62 + (2 * AltLinhaComun - 60);
 
   // ******** Transportadora ********
   base := rliTransp.Top;
-  rliTransp.Height := 3*AltLinhaComun + 2;
-  if FNFe.Transp.Vol.Count > 1 then//contem mais volumes na DANFE
-    rliTransp.Height := rliTransp.Height + ((rllTransQTDE.Height) * (FNFe.Transp.Vol.Count - 1));//a quantidade de volumes pode variar, entao é feito um recalculo
+  rliTransp.Height := 3 * AltLinhaComun + 2;
+  if fpNFe.Transp.Vol.Count > 1 then//contem mais volumes na fpDANFe
+    rliTransp.Height := rliTransp.Height + ((rllTransQTDE.Height) * (fpNFe.Transp.Vol.Count - 1));//a quantidade de volumes pode variar, entao é feito um recalculo
 
   RLDraw38.Top := base + AltLinhaComun;
-  RLDraw39.Top := base + 2*AltLinhaComun;
+  RLDraw39.Top := base + 2 * AltLinhaComun;
 
   RLDraw41.Top := base;
   RLDraw47.Top := base;
@@ -2009,17 +1820,17 @@ begin
   RLDraw41.Height := AltLinhaComun;
   RLDraw47.Height := AltLinhaComun;
   RLDraw48.Height := AltLinhaComun;
-  RLDraw49.Height := 2*AltLinhaComun;
+  RLDraw49.Height := 2 * AltLinhaComun;
   rliTransp5.Height := rliTransp.Height;
   rliTransp6.Height := rliTransp.Height;
 
-  RLDraw70.Top    := base + AltLinhaComun;
+  RLDraw70.Top := base + AltLinhaComun;
   RLDraw70.Height := AltLinhaComun;
 
-  rliTransp1.Top := base + 2*AltLinhaComun;
-  rliTransp2.Top := base + 2*AltLinhaComun;
-  rliTransp3.Top := base + 2*AltLinhaComun;
-  rliTransp4.Top := base + 2*AltLinhaComun;
+  rliTransp1.Top := base + 2 * AltLinhaComun;
+  rliTransp2.Top := base + 2 * AltLinhaComun;
+  rliTransp3.Top := base + 2 * AltLinhaComun;
+  rliTransp4.Top := base + 2 * AltLinhaComun;
   rliTransp1.Height := rliTransp.Height - rliTransp1.Top;//AltLinhaComun;
   rliTransp2.Height := rliTransp1.Height;
   rliTransp3.Height := rliTransp1.Height;
@@ -2033,12 +1844,12 @@ begin
   RLLabel61.Top := base + 1;
   RLLabel62.Top := base + 1;
 
-  rllTransNome.Top       := base + AltLinhaComun - rllTransNome.Height;
-  rllTransModFrete.Top   := base + AltLinhaComun - rllTransModFrete.Height;
+  rllTransNome.Top := base + AltLinhaComun - rllTransNome.Height;
+  rllTransModFrete.Top := base + AltLinhaComun - rllTransModFrete.Height;
   rllTransCodigoANTT.Top := base + AltLinhaComun - rllTransCodigoANTT.Height;
-  rllTransPlaca.Top      := base + AltLinhaComun - rllTransPlaca.Height;
-  rllTransUFPlaca.Top    := base + AltLinhaComun - rllTransUFPlaca.Height;
-  rllTransCNPJ.Top       := base + AltLinhaComun - rllTransCNPJ.Height;
+  rllTransPlaca.Top := base + AltLinhaComun - rllTransPlaca.Height;
+  rllTransUFPlaca.Top := base + AltLinhaComun - rllTransUFPlaca.Height;
+  rllTransCNPJ.Top := base + AltLinhaComun - rllTransCNPJ.Height;
 
   //Linha 2
   RLLabel63.Top := base + AltLinhaComun + 1;
@@ -2046,213 +1857,182 @@ begin
   RLLabel65.Top := base + AltLinhaComun + 1;
   RLLabel66.Top := base + AltLinhaComun + 1;
 
-  rllTransEndereco.Top := base + 2*AltLinhaComun - rllTransEndereco.Height;
-  rllTransCidade.Top   := base + 2*AltLinhaComun - rllTransCidade.Height;
-  rllTransUF.Top := base + 2*AltLinhaComun - rllTransUF.Height;
-  rllTransIE.Top := base + 2*AltLinhaComun - rllTransIE.Height;
+  rllTransEndereco.Top := base + 2 * AltLinhaComun - rllTransEndereco.Height;
+  rllTransCidade.Top := base + 2 * AltLinhaComun - rllTransCidade.Height;
+  rllTransUF.Top := base + 2 * AltLinhaComun - rllTransUF.Height;
+  rllTransIE.Top := base + 2 * AltLinhaComun - rllTransIE.Height;
 
   //Linha 3
-  RLLabel67.Top := base + 2*AltLinhaComun + 1;
-  RLLabel68.Top := base + 2*AltLinhaComun + 1;
-  RLLabel69.Top := base + 2*AltLinhaComun + 1;
-  RLLabel70.Top := base + 2*AltLinhaComun + 1;
-  RLLabel71.Top := base + 2*AltLinhaComun + 1;
-  RLLabel72.Top := base + 2*AltLinhaComun + 1;
+  RLLabel67.Top := base + 2 * AltLinhaComun + 1;
+  RLLabel68.Top := base + 2 * AltLinhaComun + 1;
+  RLLabel69.Top := base + 2 * AltLinhaComun + 1;
+  RLLabel70.Top := base + 2 * AltLinhaComun + 1;
+  RLLabel71.Top := base + 2 * AltLinhaComun + 1;
+  RLLabel72.Top := base + 2 * AltLinhaComun + 1;
 
-  rllTransQTDE.Top      := base + 3*AltLinhaComun - rllTransQTDE.Height;
-  rllTransEspecie.Top   := base + 3*AltLinhaComun - rllTransEspecie.Height;
-  rllTransMarca.Top     := base + 3*AltLinhaComun - rllTransMarca.Height;
-  rllTransNumeracao.Top := base + 3*AltLinhaComun - rllTransNumeracao.Height;
-  rllTransPesoBruto.Top := base + 3*AltLinhaComun - rllTransPesoBruto.Height;
-  rllTransPesoLiq.Top   := base + 3*AltLinhaComun - rllTransPesoLiq.Height;
+  rllTransQTDE.Top := base + 3 * AltLinhaComun - rllTransQTDE.Height;
+  rllTransEspecie.Top := base + 3 * AltLinhaComun - rllTransEspecie.Height;
+  rllTransMarca.Top := base + 3 * AltLinhaComun - rllTransMarca.Height;
+  rllTransNumeracao.Top := base + 3 * AltLinhaComun - rllTransNumeracao.Height;
+  rllTransPesoBruto.Top := base + 3 * AltLinhaComun - rllTransPesoBruto.Height;
+  rllTransPesoLiq.Top := base + 3 * AltLinhaComun - rllTransPesoLiq.Height;
 
-  RLAngleLabel6.Top   := rliTransp.Top + 1;
-  RLAngleLabel6.Height:= rliTransp.Height - 3;
-  RLAngleLabel7.Top   := rliTransp.Top + 1;
-  RLAngleLabel7.Height:= rliTransp.Height - 3;
-  RLAngleLabel6.AutoSize:= False;
-  RLAngleLabel7.AutoSize:= False;
+  RLAngleLabel6.Top := rliTransp.Top + 1;
+  RLAngleLabel6.Height := rliTransp.Height - 3;
+  RLAngleLabel7.Top := rliTransp.Top + 1;
+  RLAngleLabel7.Height := rliTransp.Height - 3;
+  RLAngleLabel6.AutoSize := False;
+  RLAngleLabel7.AutoSize := False;
   // Band Transportadora
-  rlbTransp.Height       := rliTransp.Height + 2;// 110 + (3*AltLinhaComun - 90);
+  rlbTransp.Height := rliTransp.Height + 2;// 110 + (3*AltLinhaComun - 90);
 
   // ******** Produtos ********
-///  rlbObsItem.Height      := 12 + fEspacoEntreProdutos; // Remove espaço entre produtos com EspacoEntreProdutos = 0
+  ///  rlbObsItem.Height      := 12 + fEspacoEntreProdutos; // Remove espaço entre produtos com EspacoEntreProdutos = 0
 end;
 
-
-
-procedure TfrlDANFeRLPaisagem.subItensDataRecord(Sender: TObject; RecNo,
-  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
+procedure TfrlDANFeRLPaisagem.subItensDataRecord(Sender: TObject; RecNo, CopyNo: Integer; var EOF: Boolean; var RecordAction: TRLRecordAction);
 begin
   inherited;
-  FNumItem := RecNo - 1 ;
-  Eof := (RecNo > FNFe.Det.Count) ;
-  RecordAction := raUseIt ;
-end;
 
-procedure TfrlDANFeRLPaisagem.RLNFeDataRecord(Sender: TObject; RecNo,
-  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
-begin
-  inherited;
-  Eof := (RecNo > 1);
+  FNumItem := RecNo - 1;
+  EOF := (RecNo > fpNFe.Det.Count);
   RecordAction := raUseIt;
 end;
 
-
-Function TfrlDANFeRLPaisagem.ManterXpod( sXProd : String;  inItem : Integer ) : String;
+procedure TfrlDANFeRLPaisagem.RLNFeDataRecord(Sender: TObject; RecNo, CopyNo: Integer; var EOF: Boolean; var RecordAction: TRLRecordAction);
 begin
-  sQuebraLinha := QuebraLinha;
-  Result := sXProd;
-  Result := Result + ManterinfAdProd(inItem ) ;
-  if FImprimirDetalhamentoEspecifico = true then
-  begin
-    Result := Result + ManterVeiculos( inItem );
-    Result := Result + ManterMedicamentos( inItem );
-    Result := Result + ManterRastro( inItem );
-    Result := Result + ManterArma( inItem );
-    Result := Result + ManterCombustivel( inItem );
-  end;
+  inherited;
+
+  EOF := (RecNo > 1);
+  RecordAction := raUseIt;
 end;
 
-
-procedure TfrlDANFeRLPaisagem.rlbCabecalhoItensBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
+procedure TfrlDANFeRLPaisagem.rlbCabecalhoItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
-  pnlCabecalho1.Left  := pnlCabecalho.Width+1;
+  pnlCabecalho1.Left := pnlCabecalho.Width + 1;
 end;
 
-procedure TfrlDANFeRLPaisagem.rlbItensBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
+procedure TfrlDANFeRLPaisagem.rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   // Controla os itens por página
-  with FNFe.Det.Items[fNumItem] do
+  with fpNFe.Det.Items[fNumItem] do
   begin
-    txtCodigo.Lines.Text    := Prod.CProd;
-    txtEAN.Caption          := Prod.cEAN;
-    rlmDescricao.Lines.Text := ManterXpod( Prod.XProd , fNumItem );
-    RLMemoInfAd.Lines.Text  := ManterBandinfAdProd( infAdProd );
-    txtNCM.Caption          := Prod.NCM;
-    case FNFe.Emit.CRT of
-      crtRegimeNormal,
-      crtSimplesExcessoReceita : txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
-            crtSimplesNacional : txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
+    txtCodigo.Lines.Text := Prod.CProd;
+    txtEAN.Caption := Prod.cEAN;
+    rlmDescricao.Lines.Text := fpDANFe.ManterXProd(fpNFe, fNumItem);
+    RLMemoInfAd.Lines.Text := ManterBandinfAdProd(infAdProd);
+    txtNCM.Caption := Prod.NCM;
+    case fpNFe.Emit.CRT of
+      crtRegimeNormal, crtSimplesExcessoReceita:
+        txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
+      crtSimplesNacional:
+        txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
     end;
+
     txtCFOP.Caption := Prod.CFOP;
-    case TACBrNFeDANFeRL(Owner).ImprimirUnQtVlComercial of
-    iuComercial:
+
+    case fpDANFe.ImprimeValor of
+      iuComercial:
       begin
-        txtUnidade.Lines.Text       := Prod.uCom;
-        txtQuantidade.Lines.Text    := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom );
-        txtValorUnitario.Lines.Text := TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnCom);
+        txtUnidade.Lines.Text := Prod.uCom;
+        txtQuantidade.Lines.Text := fpDANFe.FormatarQuantidade(Prod.qCom);
+        txtValorUnitario.Lines.Text := fpDANFe.FormatarValorUnitario(Prod.vUnCom);
       end;
-    iuTributavel:
+
+      iuTributavel:
       begin
-        txtUnidade.Lines.Text       := Prod.uTrib;
-        txtQuantidade.Lines.Text    := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qTrib );
-        txtValorUnitario.Lines.Text := TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnTrib );
+        txtUnidade.Lines.Text := Prod.uTrib;
+        txtQuantidade.Lines.Text := fpDANFe.FormatarQuantidade(Prod.qTrib);
+        txtValorUnitario.Lines.Text := fpDANFe.FormatarValorUnitario(Prod.vUnTrib);
       end;
-    iuComercialETributavel:
+
+      iuComercialETributavel:
       begin
-        if Prod.UCom = Prod.UTrib then
+        if (Prod.UCom = Prod.UTrib) then
         begin
-          txtUnidade.Lines.Text       := Prod.uCom;
-          txtQuantidade.Lines.Text    := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom );
-          txtValorUnitario.Lines.Text := TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnCom );
+          txtUnidade.Lines.Text := Prod.uCom;
+          txtQuantidade.Lines.Text := fpDANFe.FormatarQuantidade(Prod.qCom);
+          txtValorUnitario.Lines.Text := fpDANFe.FormatarValorUnitario(Prod.vUnCom);
         end
         else
         begin
-          txtUnidade.Lines.Text       := TACBrNFeDANFeRL(Owner).ManterUnidades( Prod.uCom, Prod.uTrib );
-          txtQuantidade.Lines.Text    := TACBrNFeDANFeRL(Owner).ManterQuantidades( Prod.qCom, Prod.qTrib );
-          txtValorUnitario.Lines.Text := TACBrNFeDANFeRL(Owner).ManterValoresUnitarios( Prod.vUnCom, Prod.vUnTrib );
+          txtUnidade.Lines.Text := fpDANFe.ManterUnidades(Prod.uCom, Prod.uTrib);
+          txtQuantidade.Lines.Text := fpDANFe.ManterQuantidades(Prod.qCom, Prod.qTrib);
+          txtValorUnitario.Lines.Text := fpDANFe.ManterValoresUnitarios(Prod.vUnCom, Prod.vUnTrib);
         end;
       end;
     end;
-    if ( fImprimirTotalLiquido ) then
+
+    if fpDANFe.ImprimeTotalLiquido then
     begin
-      // Desconto
-      txtValorTotal.Caption     := FormatFloatBr( ManterDesPro( Prod.vDesc ,Prod.vProd));
-      // Valor Liquido
-      txtValorDesconto.Caption  := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd));
+      txtValorTotal.Caption := FormatFloatBr(fpDANFe.ManterVDesc(Prod.vDesc, Prod.vUnCom, Prod.qCom));
+      txtValorDesconto.Caption := FormatFloatBr(Prod.vProd - fpDANFe.ManterVDesc(Prod.vDesc, Prod.vUnCom, Prod.qCom));
     end
     else
     begin
-      txtValorTotal.Caption     := FormatFloatBr(Prod.vProd);
-      txtValorDesconto.Caption  := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd), FloatMask);
+      txtValorTotal.Caption := FormatFloatBr(Prod.vProd);
+      txtValorDesconto.Caption := FormatFloatBr(fpDANFe.ManterVDesc(Prod.vDesc, Prod.vUnCom, Prod.qCom), FloatMask);
     end;
-    txtBaseICMS.Caption         := FormatFloatBr(Imposto.ICMS.VBC    );
-    txtValorICMS.Caption        := FormatFloatBr(Imposto.ICMS.VICMS  );
-    txtBaseICMSST.Caption       := FormatFloatBr(Imposto.ICMS.vBCST  );
-    txtValorICMSST.Caption      := FormatFloatBr(Imposto.ICMS.vICMSST);
-    txtValorIPI.Caption         := FormatFloatBr(Imposto.IPI.VIPI    );
-    txtAliqICMS.Caption         := FormatFloatBr(Imposto.ICMS.PICMS  );
-    txtAliqIPI.Caption          := FormatFloatBr(Imposto.IPI.PIPI    );
+
+    txtBaseICMS.Caption := FormatFloatBr(Imposto.ICMS.VBC);
+    txtValorICMS.Caption := FormatFloatBr(Imposto.ICMS.VICMS);
+    txtBaseICMSST.Caption := FormatFloatBr(Imposto.ICMS.vBCST);
+    txtValorICMSST.Caption := FormatFloatBr(Imposto.ICMS.vICMSST);
+    txtValorIPI.Caption := FormatFloatBr(Imposto.IPI.VIPI);
+    txtAliqICMS.Caption := FormatFloatBr(Imposto.ICMS.PICMS);
+    txtAliqIPI.Caption := FormatFloatBr(Imposto.IPI.PIPI);
   end;
-
 end;
 
-
-Function TfrlDANFeRLPaisagem.ManterinfAdProd(inItem : Integer ) : String;
+function TfrlDANFeRLPaisagem.ManterBandinfAdProd(sInforAdicProduto: String): String;
 begin
-  if Not ( TACBrNFeDANFeRL(Owner).ExibirBandInforAdicProduto ) then
-  begin
-    Result := Trim( FNFe.Det.Items[ inItem ].infAdProd ) ;
-    Result := StringReplace( Result , ';',  sQuebraLinha, [rfReplaceAll, rfIgnoreCase]);
-    if ( Result <> '' ) then
-      Result := sQuebraLinha + Result
-  end
-  else
-    Result := '';
-end;
+  Result := Trim(sInforAdicProduto);
+  Result := StringReplace(Result, ';', sLineBreak, [rfReplaceAll]);
 
-Function TfrlDANFeRLPaisagem.ManterBandinfAdProd( sInforAdicProduto : String ) : String;
-begin
-  Result := Trim( sInforAdicProduto ) ;
-  Result := StringReplace( Result , ';',  sQuebraLinha, [rfReplaceAll, rfIgnoreCase]);  ;
-  RLBandInfAd.Visible := ( Result <> '') and
-                         ( TACBrNFeDANFeRL(Owner).ExibirBandInforAdicProduto );
+  RLBandInfAd.Visible := (Result <> '') and (fpDANFe.ExibeInforAdicProduto);
 end;
 
 procedure TfrlDANFeRLPaisagem.RLMemoInfAdAfterPrint(Sender: TObject);
 begin
   inherited;
-  if ( pnlCanhoto.Visible ) then
-    fTamanhoBandInf   := RLDInfAdcBarra.Width
+
+  if pnlCanhoto.Visible then
+    fTamanhoBandInf := RLDInfAdcBarra.Width
   else
   begin
-    RLBandInfAd.Width := fTamanhoBandInf + ( pnlCanhoto.Width + pnlDivisao.Width );
-    RLDrawFinal.Left  := RLBandInfAd.Width -1;
+    RLBandInfAd.Width := fTamanhoBandInf + (pnlCanhoto.Width + pnlDivisao.Width);
+    RLDrawFinal.Left := RLBandInfAd.Width - 1;
   end;
 end;
 
-procedure TfrlDANFeRLPaisagem.CabItens;
+procedure TfrlDANFeRLPaisagem.DefinirCabecalhoItens;
 begin
- //   Configura Cabecalho dos Itens
-  case FNFe.Emit.CRT of
-    crtRegimeNormal,
-    crtSimplesExcessoReceita :
-      begin
-        lblCST.Caption    := 'CST';
-        lblCST.Font.Size  := 5;
-      end;
+  //   Configura Cabecalho dos Itens
+  case fpNFe.Emit.CRT of
+    crtRegimeNormal, crtSimplesExcessoReceita:
+    begin
+      lblCST.Caption := 'CST';
+      lblCST.Font.Size := 5;
+    end;
 
-    crtSimplesNacional :
-      begin
-        lblCST.Caption    := 'CSOSN';
-        lblCST.Font.Size  := 4;
-      end;
+    crtSimplesNacional:
+    begin
+      lblCST.Caption := 'CSOSN';
+      lblCST.Font.Size := 4;
+    end;
   end;
 
-  if ( fImprimirDescPorc ) then
+  if fpDANFe.ImprimeDescPorPercentual then
   begin
     lblPercValorDesc.Caption := 'PERC.(%)';
-    fImprimirTotalLiquido    := false;
+    fpDANFe.ImprimeTotalLiquido := False;
   end
   else
     lblPercValorDesc.Caption := 'VALOR';
 
-  if ( fImprimirTotalLiquido ) then
+  if fpDANFe.ImprimeTotalLiquido then
   begin
-    lblValorTotal.Caption     := 'DESCONTO';
+    lblValorTotal.Caption := 'DESCONTO';
     lblPercValorDesc1.Caption := ACBrStr('LÍQUIDO');
   end;
 end;

@@ -55,7 +55,8 @@ uses SysUtils,
          ,Graphics
       {$IFEND}
      {$ENDIF}
-     ,ACBrBase, ACBrConsts, pcnCFe, pcnCFeCanc;
+     ,ACBrBase, ACBrConsts, pcnCFe, pcnCFeCanc,
+     ACBrDFeReport;
 
 const
   cMsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", '+
@@ -70,40 +71,30 @@ type
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
-  TACBrSATExtratoClass = class( TACBrComponent )
+  TACBrSATExtratoClass = class( TACBrDFeReport )
   private
-    fACBrSAT : TComponent;
-    fImprimeQRCode: Boolean;
-    fImprimeMsgOlhoNoImposto : Boolean;
-    fImprimeCPFNaoInformado : Boolean;
+    FACBrSAT : TComponent;
+    FImprimeQRCode: Boolean;
+    FImprimeMsgOlhoNoImposto : Boolean;
+    FImprimeCPFNaoInformado : Boolean;
 
-    fCFe: TCFe;
-    fCFeCanc: TCFeCanc;
+    FCFe: TCFe;
+    FCFeCanc: TCFeCanc;
 
-    fFiltro: TACBrSATExtratoFiltro;
-    fMask_qCom: String;
-    fMask_vUnCom: String;
-    fMostrarPreview: Boolean;
-    fMostrarSetup: Boolean;
-    fMsgAppQRCode: String;
-    fNomeArquivo: String;
-    fNumCopias: Integer;
-    fPrinterName : String;
+    FFiltro: TACBrSATExtratoFiltro;
+    FMsgAppQRCode: String;
     {$IFNDEF NOGUI}
-     fPictureLogo: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF};
+     FPictureLogo: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF};
     {$ENDIF}
-    fSoftwareHouse: String;
-    fSite: String;
-    fImprimeDescAcrescItem: Boolean;
-    fImprimeEmUmaLinha: Boolean;
-    fUsaCodigoEanImpressao: Boolean;
+    FImprimeDescAcrescItem: Boolean;
+    FImprimeEmUmaLinha: Boolean;
+    FImprimeCodigoEan: Boolean;
 
 
     procedure ErroAbstract(NomeProcedure : String) ;
     function GetAbout: String;
-    function GetNomeArquivo: String;
+    function GetSeparadorPathPDF: String; override;
     procedure SetAbout(AValue: String);
-    procedure SetNumCopias(AValue: Integer);
     {$IFNDEF NOGUI}
      procedure SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
     {$ENDIF}
@@ -112,19 +103,18 @@ type
     procedure SetInternalCFeCanc(ACFeCanc: TCFeCanc);
     procedure VerificaExisteACBrSAT;
   protected
-    fpAbout : String ;
-    fpLayOut: TACBrSATExtratoLayOut;
+    FAbout : String ;
+    FLayOut: TACBrSATExtratoLayOut;
 
     procedure SetInternalCFe(ACFe: TCFe);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-    property PrinterName    : String   read fPrinterName    write fPrinterName;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    property LayOut  : TACBrSATExtratoLayOut read fpLayOut ;
-    property CFe     : TCFe                  read fCFe;
-    property CFeCanc : TCFeCanc              read fCFeCanc;
+    property LayOut  : TACBrSATExtratoLayOut read FLayOut ;
+    property CFe     : TCFe                  read FCFe;
+    property CFeCanc : TCFeCanc              read FCFeCanc;
 
     procedure ImprimirExtrato(ACFe : TCFe = nil); virtual;
     procedure ImprimirExtratoResumido(ACFe : TCFe = nil); virtual;
@@ -132,34 +122,20 @@ type
 
     function CalcularConteudoQRCode(ID: String; dEmi_hEmi: TDateTime;
       Valor: Double; CNPJCPF: String; assinaturaQRCODE: String): String;
-
-    function FormatQuantidade(dValor: Double; dForcarDecimais: Boolean = True): String;
   published
     property ACBrSAT  : TComponent  read FACBrSAT write SetSAT ;
-
     property About  : String read GetAbout write SetAbout stored False ;
-
-    property Mask_qCom      : String   read fMask_qCom      write fMask_qCom;
-    property Mask_vUnCom    : String   read fMask_vUnCom    write fMask_vUnCom;
-    property ImprimeQRCode  : Boolean  read fImprimeQRCode  write fImprimeQRCode  default True ;
-    property ImprimeMsgOlhoNoImposto : Boolean read fImprimeMsgOlhoNoImposto write fImprimeMsgOlhoNoImposto default True;
-    property ImprimeCPFNaoInformado : Boolean read fImprimeCPFNaoInformado write fImprimeCPFNaoInformado default True;
-                  
+    property ImprimeQRCode  : Boolean  read FImprimeQRCode  write FImprimeQRCode  default True ;
+    property ImprimeMsgOlhoNoImposto : Boolean read FImprimeMsgOlhoNoImposto write FImprimeMsgOlhoNoImposto default True;
+    property ImprimeCPFNaoInformado : Boolean read FImprimeCPFNaoInformado write FImprimeCPFNaoInformado default True;
     {$IFNDEF NOGUI}
-     property PictureLogo    : {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF} read fPictureLogo    write SetPictureLogo ;
+    property PictureLogo: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF} read FPictureLogo    write SetPictureLogo ;
     {$ENDIF}
-    property MostrarPreview : Boolean  read fMostrarPreview write fMostrarPreview default False ;
-    property MostrarSetup   : Boolean  read fMostrarSetup   write fMostrarSetup   default False ;
-    property NumCopias      : Integer  read fNumCopias      write SetNumCopias    default 1;
-    property NomeArquivo    : String   read GetNomeArquivo  write fNomeArquivo ;
-    property SoftwareHouse  : String   read fSoftwareHouse  write fSoftwareHouse;
-    property Site           : String   read fSite           write fSite;
-    property Filtro         : TACBrSATExtratoFiltro read fFiltro write fFiltro default fiNenhum ;
-    property MsgAppQRCode   : String   read fMsgAppQRCode   write fMsgAppQRCode;
-
-    property ImprimeEmUmaLinha: Boolean     read fImprimeEmUmaLinha     write fImprimeEmUmaLinha     default True;
-    property ImprimeDescAcrescItem: Boolean read fImprimeDescAcrescItem write fImprimeDescAcrescItem default True;
-    property UsaCodigoEanImpressao: Boolean read fUsaCodigoEanImpressao write fUsaCodigoEanImpressao default False;
+    property Filtro: TACBrSATExtratoFiltro read FFiltro write FFiltro default fiNenhum ;
+    property MsgAppQRCode: String   read FMsgAppQRCode   write FMsgAppQRCode;
+    property ImprimeEmUmaLinha: Boolean     read FImprimeEmUmaLinha     write FImprimeEmUmaLinha     default True;
+    property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem write FImprimeDescAcrescItem default True;
+    property ImprimeCodigoEan: Boolean read FImprimeCodigoEan write FImprimeCodigoEan default False;
   end ;
 
 implementation
@@ -172,40 +148,30 @@ constructor TACBrSATExtratoClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  fpAbout  := 'ACBrSATExtratoClass' ;
-  fpLayOut := lCompleto;
+  FAbout  := 'ACBrSATExtratoClass' ;
+  FLayOut := lCompleto;
 
-  fACBrSAT := nil;
-  fCFe     := nil;
-  fCFeCanc := nil;
+  FACBrSAT := nil;
+  FCFe     := nil;
+  FCFeCanc := nil;
 
   {$IFNDEF NOGUI}
-   fPictureLogo := {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF}.Create;
+   FPictureLogo := {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF}.Create;
   {$ENDIF}
-
-  fNumCopias      := 1;
-  fMostrarPreview := False;
-  fMostrarSetup   := False;
-  fImprimeQRCode  := True;
-  fFiltro         := fiNenhum;
-  fNomeArquivo    := '' ;
-  fMask_qCom      := ',0.0000';
-  fMask_vUnCom    := ',0.000';
-  fPrinterName    := '' ;
-  fSite           := 'http://www.projetoacbr.com.br';
-  fSoftwareHouse  := 'Projeto ACBr';
-  fMsgAppQRCode   := ACBrStr(cMsgAppQRCode);
-  fImprimeMsgOlhoNoImposto := True;
-  fImprimeCPFNaoInformado := True;
-  fImprimeEmUmaLinha := True;
-  fImprimeDescAcrescItem := True;
-  fUsaCodigoEanImpressao := False;
+  FImprimeQRCode  := True;
+  FFiltro         := fiNenhum;
+  FMsgAppQRCode   := ACBrStr(cMsgAppQRCode);
+  FImprimeMsgOlhoNoImposto := True;
+  FImprimeCPFNaoInformado := True;
+  FImprimeEmUmaLinha := True;
+  FImprimeDescAcrescItem := True;
+  FImprimeCodigoEan := False;
 end;
 
 destructor TACBrSATExtratoClass.Destroy;
 begin
   {$IFNDEF NOGUI}
-   fPictureLogo.Free;
+   FPictureLogo.Free;
   {$ENDIF}
 
   inherited Destroy ;
@@ -214,7 +180,7 @@ end;
 procedure TACBrSATExtratoClass.ImprimirExtrato(ACFe: TCFe);
 begin
   SetInternalCFe( ACFe );
-  fpLayOut := lCompleto;
+  FLayOut := lCompleto;
 end;
 
 procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(ACFe: TCFe;
@@ -222,7 +188,7 @@ procedure TACBrSATExtratoClass.ImprimirExtratoCancelamento(ACFe: TCFe;
 begin
   SetInternalCFe( ACFe );
   SetInternalCFeCanc( ACFeCanc );
-  fpLayOut := lCancelamento;
+  FLayOut := lCancelamento;
 end;
 
 function TACBrSATExtratoClass.CalcularConteudoQRCode(ID: String;
@@ -236,20 +202,10 @@ begin
             assinaturaQRCODE;
 end;
 
-function TACBrSATExtratoClass.FormatQuantidade(dValor: Double;
-  dForcarDecimais: Boolean): String;
-begin
-  if (Frac(dValor) > 0) or (dForcarDecimais) then
-    Result := FormatFloatBr(dValor, Mask_qCom)
-  else
-    // caso contrário mostrar somente o número inteiro
-    Result := FloatToStr( dValor );
-end;
-
 procedure TACBrSATExtratoClass.ImprimirExtratoResumido(ACFe: TCFe);
 begin
   SetInternalCFe( ACFe );
-  fpLayOut := lResumido;
+  FLayOut := lResumido;
 end;
 
 procedure TACBrSATExtratoClass.Notification(AComponent: TComponent;
@@ -270,35 +226,12 @@ end ;
 
 function TACBrSATExtratoClass.GetAbout: String;
 begin
-  Result := fpAbout ;
+  Result := FAbout ;
 end;
 
-function TACBrSATExtratoClass.GetNomeArquivo: String;
-var
-  wPath, wFile: String;
+function TACBrSATExtratoClass.GetSeparadorPathPDF: String;
 begin
-   wPath  := ExtractFilePath(fNomeArquivo);
-   wFile  := ExtractFileName(fNomeArquivo);
-   Result := '';
-
-   if wPath = '' then
-   begin
-      if not (csDesigning in Self.ComponentState) then
-      begin
-         wPath := ExtractFilePath(ParamStr(0));  // Pasta da aplicação
-      end;
-   end;
-
-   if wFile = '' then
-   begin
-      if not (csDesigning in Self.ComponentState) then
-      begin
-         if Assigned(fACBrSAT) then
-           wFile := TACBrSAT(FACBrSAT).CFe.infCFe.ID+'.pdf';
-      end;
-   end;
-
-   Result := PathWithDelim(wPath) + Trim(wFile);
+   Result := 'SAT';
 end;
 
 procedure TACBrSATExtratoClass.SetAbout(AValue: String);
@@ -306,16 +239,10 @@ begin
   {}
 end;
 
-procedure TACBrSATExtratoClass.SetNumCopias(AValue: Integer);
-begin
-  if fNumCopias = AValue then Exit;
-  fNumCopias := AValue;
-end;
-
 {$IFNDEF NOGUI}
 procedure TACBrSATExtratoClass.SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
 begin
-  fPictureLogo.Assign( AValue );
+  FPictureLogo.Assign( AValue );
 end;
 {$ENDIF}
 
@@ -352,10 +279,10 @@ begin
   if ACFe = nil then
   begin
     VerificaExisteACBrSAT;
-    fCFe := TACBrSAT(ACBrSAT).CFe;
+    FCFe := TACBrSAT(ACBrSAT).CFe;
   end
   else
-    fCFe := ACFe;
+    FCFe := ACFe;
 end;
 
 procedure TACBrSATExtratoClass.SetInternalCFeCanc(ACFeCanc: TCFeCanc);
@@ -363,10 +290,10 @@ begin
   if ACFeCanc = nil then
   begin
     VerificaExisteACBrSAT;
-    fCFeCanc := TACBrSAT(ACBrSAT).CFeCanc;
+    FCFeCanc := TACBrSAT(ACBrSAT).CFeCanc;
   end
   else
-    fCFeCanc := ACFeCanc;
+    FCFeCanc := ACFeCanc;
 end;
 
 procedure TACBrSATExtratoClass.VerificaExisteACBrSAT;

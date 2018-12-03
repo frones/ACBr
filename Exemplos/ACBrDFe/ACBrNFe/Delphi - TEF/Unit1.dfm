@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 235
   Top = 113
-  Width = 1123
-  Height = 647
   Caption = 'ACBrNFe - Demonstra'#231#227'o'
+  ClientHeight = 608
+  ClientWidth = 1107
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 297
-    Height = 596
+    Height = 595
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -96,8 +96,6 @@ object Form1: TForm1
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -112,6 +110,8 @@ object Form1: TForm1
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl1: TPageControl
       Left = 8
@@ -250,7 +250,6 @@ object Form1: TForm1
               Width = 238
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 1
               OnChange = cbTipoEmissaoChange
             end
@@ -445,7 +444,6 @@ object Form1: TForm1
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -476,7 +474,6 @@ object Form1: TForm1
                 Top = 142
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 6
               end
               object cbxRetirarAcentos: TCheckBox
@@ -492,7 +489,6 @@ object Form1: TForm1
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 8
               end
               object edtIdToken: TEdit
@@ -566,7 +562,6 @@ object Form1: TForm1
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -1364,7 +1359,7 @@ object Form1: TForm1
     Left = 297
     Top = 0
     Width = 810
-    Height = 596
+    Height = 595
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
@@ -1846,7 +1841,6 @@ object Form1: TForm1
                     Width = 133
                     Height = 21
                     Style = csDropDownList
-                    ItemHeight = 0
                     TabOrder = 0
                     OnChange = cbxGPChange
                   end
@@ -2017,7 +2011,7 @@ object Form1: TForm1
                   object labelDescricaoTotalRecebido: TLabel
                     Left = 14
                     Top = 17
-                    Width = 83
+                    Width = 99
                     Height = 16
                     Caption = 'Total Recebido:'
                     Font.Charset = ANSI_CHARSET
@@ -2030,7 +2024,7 @@ object Form1: TForm1
                   object Label51: TLabel
                     Left = 13
                     Top = 51
-                    Width = 82
+                    Width = 96
                     Height = 16
                     Caption = 'SaldoRestante:'
                     Font.Charset = ANSI_CHARSET
@@ -2071,8 +2065,8 @@ object Form1: TForm1
                   object Label55: TLabel
                     Left = 7
                     Top = 15
-                    Width = 134
-                    Height = 23
+                    Width = 165
+                    Height = 22
                     Caption = 'Valor Pagamento:'
                     Font.Charset = ANSI_CHARSET
                     Font.Color = clBlue
@@ -2138,7 +2132,6 @@ object Form1: TForm1
                   Width = 142
                   Height = 21
                   Style = csDropDownList
-                  ItemHeight = 0
                   TabOrder = 0
                 end
               end
@@ -2151,7 +2144,7 @@ object Form1: TForm1
       Left = 1
       Top = 301
       Width = 808
-      Height = 294
+      Height = 293
       ActivePage = TabSheetCupomTef
       Align = alClient
       TabOrder = 1
@@ -2161,7 +2154,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 800
-          Height = 266
+          Height = 265
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2174,11 +2167,11 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 800
-          Height = 266
+          Height = 265
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000AF5200007E1B00000000000000000000000000000000000000000000
+            4C000000AF520000631B00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -2192,7 +2185,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 800
-          Height = 266
+          Height = 265
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2205,7 +2198,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 800
-          Height = 266
+          Height = 265
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -2218,7 +2211,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 800
-          Height = 266
+          Height = 265
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2231,7 +2224,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 800
-          Height = 266
+          Height = 265
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2244,7 +2237,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 800
-          Height = 266
+          Height = 265
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -2257,7 +2250,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 428
-          Height = 266
+          Height = 265
           Align = alLeft
           ScrollBars = ssVertical
           TabOrder = 0
@@ -2266,7 +2259,7 @@ object Form1: TForm1
           Left = 428
           Top = 0
           Width = 372
-          Height = 266
+          Height = 265
           Align = alRight
           BevelInner = bvLowered
           BevelWidth = 2
@@ -2283,7 +2276,7 @@ object Form1: TForm1
             Left = 4
             Top = 4
             Width = 360
-            Height = 120
+            Height = 119
             Align = alClient
             TabOrder = 0
             Visible = False
@@ -2291,7 +2284,7 @@ object Form1: TForm1
               Left = 1
               Top = 1
               Width = 358
-              Height = 118
+              Height = 117
               Align = alClient
               Alignment = taCenter
               Caption = 'lMensagemOperador'
@@ -2318,7 +2311,7 @@ object Form1: TForm1
           end
           object pMensagemCliente: TPanel
             Left = 4
-            Top = 124
+            Top = 123
             Width = 360
             Height = 134
             Align = alBottom
@@ -2359,7 +2352,7 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 596
+    Top = 595
     Width = 1107
     Height = 13
     Panels = <
@@ -2386,10 +2379,14 @@ object Form1: TForm1
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFe1StatusChange
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormaEmissao = teContingencia
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
-    Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
+    Configuracoes.Geral.VersaoQRCode = veqr000
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'GO'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
@@ -2399,38 +2396,16 @@ object Form1: TForm1
     Top = 369
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    TipoDANFE = tiSemGeracao
     Left = 556
     Top = 458
   end
@@ -2518,6 +2493,7 @@ object Form1: TForm1
     TEFFoxWin.ArqSTS = 'C:\FwTEF\rsp\intpos.sts'
     TEFFoxWin.ArqResp = 'C:\FwTEF\rsp\intpos.001'
     TEFFoxWin.GPExeName = 'C:\FwTEF\bin\FwTEF.exe'
+    TEFCliDTEF.ArqResp = ''
     TEFPetrocard.ArqTemp = 'C:\CardTech\req\intpos.tmp'
     TEFPetrocard.ArqReq = 'C:\CardTech\req\intpos.001'
     TEFPetrocard.ArqSTS = 'C:\CardTech\resp\intpos.sts'
@@ -2551,78 +2527,30 @@ object Form1: TForm1
     Top = 360
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = True
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    TipoDANFE = tiSemGeracao
     Left = 686
     Top = 453
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
-    ACBrNFe = ACBrNFe1
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiRetrato
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = True
     MargemInferior = 0.700000000000000000
     MargemSuperior = 0.700000000000000000
     MargemEsquerda = 0.700000000000000000
     MargemDireita = 0.700000000000000000
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 4
-    CasasDecimais._vUnCom = 4
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
-    LarguraCodProd = 54
-    ExibirEAN = False
-    QuebraLinhaEmDetalhamentoEspecifico = True
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFe = ACBrNFe1
     ExibeCampoFatura = False
     Left = 420
     Top = 468

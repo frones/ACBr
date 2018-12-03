@@ -53,12 +53,13 @@ uses
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
   {$ELSE}
-    {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
+  {$IFDEF MSWINDOWS}Windows, Messages, {$ENDIF}
   Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB,
-  RLBarcode, pcteCTe, ACBrCTe, pcnConversao;
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts, RLBarcode,
+  ACBrCTe, ACBrCTeDACTeRLClass,
+  pcteCTe, pcnConversao;
 
 type
 
@@ -68,65 +69,36 @@ type
     Datasource1: TDatasource;
     RLCTe: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
+
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
 
   protected
-
-    FACBrCTe: TACBrCTe;
-    FCTe: TCTe;
-    FLogo: string;
-    FEmail: string;
-    FImprimeHoraSaida: boolean;
-    FHoraSaida: string;
-    FResumoCanhoto: boolean;
-    FFax: string;
-    FNumCopias: integer;
-    FSistema: string;
-    FUrl: string;
-    FUsuario: string;
-    FMostrarPreview: boolean;
-    FMostrarStatus: Boolean;
-    FExpandirLogoMarca: boolean;
-    ChangedPos: boolean;
-    FSemValorFiscal: boolean;
-    FMargemSuperior: double;
-    FMargemInferior: double;
-    FMargemEsquerda: double;
-    FMargemDireita: double;
-    FImpressora: string;
-    FPosRecibo: TPosRecibo;
-    FCTeCancelada: boolean;
-    FTotalPages: integer;
-    FEPECEnviado: boolean;
+    fpACBrCTe: TACBrCTe;
+    fpCTe: TCTe;
+    fpDACTe: TACBrCTeDACTeRL;
+    fpSemValorFiscal: boolean;
+    fpTotalPages: integer;
 
     cdsDocumentos: {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     procedure ConfigDataSet;
 
     procedure rllSemValorFiscalPrint(Sender: TObject; var Value: string);
-    function getTextoResumoCanhoto: string;
-  public
-    class procedure Imprimir(AOwner: TComponent; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
-      AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
-      AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1;
-      ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True; AMostrarStatus: Boolean = True;
-      AMargemSuperior: double = 0.8; AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6;
-      AMargemDireita: double = 0.51; AImpressora: string = ''; APosRecibo: TPosRecibo = prCabecalho;
-      ACTeCancelada: boolean = False; AEPECEnviado: boolean = False; APrintDialog : Boolean = True);
+    function GetTextoResumoCanhoto: string;
 
-    class procedure SavePDF(AOwner: TComponent; AFile: string; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
-      AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
-      AResumoCanhoto: boolean = False; AFax: string = ''; AMostrarStatus: Boolean = True; ANumCopias: integer = 1;
-      ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; AMargemSuperior: double = 0.8;
-      AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6; AMargemDireita: double = 0.51;
-      APosRecibo: TPosRecibo = prCabecalho; ACTeCancelada: boolean = False; AEPECEnviado: boolean = False);
+  public
+    class procedure Imprimir(aDACTe: TACBrCTeDACTeRL; ACTes: array of TCTe);
+    class procedure SalvarPDF(aDACTe: TACBrCTeDACTeRL; ACTe: TCTe; AFile: string);
 
   end;
 
 implementation
 
-uses MaskUtils, ACBrDFeUtil, pcteConversaoCTe, ACBrUtil;
+uses
+  MaskUtils, pcteConversaoCTe,
+  ACBrDFeUtil, ACBrDFeReportFortes, ACBrUtil;
+
 
 {$ifdef FPC}
  {$R *.lfm}
@@ -134,115 +106,98 @@ uses MaskUtils, ACBrDFeUtil, pcteConversaoCTe, ACBrUtil;
  {$R *.dfm}
 {$endif}
 
-class procedure TfrmDACTeRL.Imprimir(AOwner: TComponent; ACTe: TCTe; ALogo: string = ''; AEmail: string = '';
-  AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False; AHoraSaida: string = '';
-  AResumoCanhoto: boolean = False; AFax: string = ''; ANumCopias: integer = 1; ASistema: string = '';
-  AUrl: string = ''; AUsuario: string = ''; APreview: boolean = True; AMostrarStatus: Boolean = True; AMargemSuperior: double = 0.8;
-  AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6; AMargemDireita: double = 0.51;
-  AImpressora: string = ''; APosRecibo: TPosRecibo = prCabecalho; ACTeCancelada: boolean = False;
-  AEPECEnviado: boolean = False; APrintDialog: Boolean = True);
+class procedure TfrmDACTeRL.Imprimir(aDACTe: TACBrCTeDACTeRL; ACTes: array of TCTe);
+var
+  Report: TRLReport;
+  ReportNext: TRLCustomReport;
+  i: integer;
+  DACTeReport: TfrmDACTeRL;
+  ReportArray: array of TfrmDACTeRL;
 begin
-  with Create(AOwner) do
-    try
-      FCTe := ACTe;
-      FLogo := ALogo;
-      FEmail := AEmail;
-      FImprimeHoraSaida := AImprimeHoraSaida;
-      FExpandirLogoMarca := AExpandirLogoMarca;
-      FHoraSaida := AHoraSaida;
-      FResumoCanhoto := AResumoCanhoto;
-      FFax := AFax;
-      FNumCopias := ANumCopias;
-      FSistema := ASistema;
-      FUrl := AUrl;
-      FUsuario := AUsuario;
-      FMargemSuperior := AMargemSuperior;
-      FMargemInferior := AMargemInferior;
-      FMargemEsquerda := AMargemEsquerda;
-      FMargemDireita := AMargemDireita;
-      FImpressora := AImpressora;
-      FPosRecibo := APosRecibo;
-      FCTeCancelada := ACTeCancelada;
-      FEPECEnviado := AEPECEnviado;
-      FMostrarStatus := AMostrarStatus;
+  try
+    SetLength(ReportArray, Length(ACTes));
 
-      RLCTe.ShowProgress := FMostrarStatus;
-      if FImpressora > '' then
-        RLPrinter.PrinterName := FImpressora;
-
-      if FNumCopias > 0 then
-        RLPrinter.Copies := FNumCopias
-      else
-        RLPrinter.Copies := 1;
-
-      RLCTe.PrintDialog := APrintDialog;
-      if APreview = True then
-        RLCTe.PreviewModal
-      else
-        RLCTe.Print;
-    finally
-      RLCTe.Free;
-      RLCTe := nil;
-      Free;
+    for i := 0 to High(ACTes) do
+    begin
+      DACTeReport := Create(nil);
+      DACTeReport.fpCTe := ACTes[i];
+      DACTeReport.fpDACTe := aDACTe;
+      DACTeReport.RLCTe.CompositeOptions.ResetPageNumber := True;
+      ReportArray[i] := DACTeReport;
     end;
+
+    Report := ReportArray[0].RLCTe;
+    for i := 1 to High(ReportArray) do
+    begin
+      if Report.NextReport = nil then
+        Report.NextReport := ReportArray[i].RLCTe
+      else
+      begin
+        ReportNext := Report.NextReport;
+
+        repeat
+          if ReportNext.NextReport <> nil then
+            ReportNext := ReportNext.NextReport;
+        until ReportNext.NextReport = nil;
+
+        ReportNext.NextReport := ReportArray[i].RLCTe;
+      end;
+    end;
+
+    TDFeReportFortes.AjustarReport(Report, aDACTe);
+
+    if aDACTe.MostraPreview then
+      Report.PreviewModal
+    else
+      Report.Print;
+  finally
+    if (ReportArray <> nil) then
+    begin
+      for i := 0 to High(ReportArray) do
+        FreeAndNil(ReportArray[i]);
+
+      SetLength(ReportArray, 0);
+      Finalize(ReportArray);
+      ReportArray := nil;
+    end;
+  end;
 end;
 
-class procedure TfrmDACTeRL.SavePDF(AOwner: TComponent; AFile: string; ACTe: TCTe; ALogo: string = '';
-  AEmail: string = ''; AImprimeHoraSaida: boolean = False; AExpandirLogoMarca: boolean = False;
-  AHoraSaida: string = ''; AResumoCanhoto: boolean = False; AFax: string = ''; AMostrarStatus: Boolean = True; ANumCopias: integer = 1;
-  ASistema: string = ''; AUrl: string = ''; AUsuario: string = ''; AMargemSuperior: double = 0.8;
-  AMargemInferior: double = 0.8; AMargemEsquerda: double = 0.6; AMargemDireita: double = 0.51;
-  APosRecibo: TPosRecibo = prCabecalho; ACTeCancelada: boolean = False; AEPECEnviado: boolean = False);
+class procedure TfrmDACTeRL.SalvarPDF(aDACTe: TACBrCTeDACTeRL; ACTe: TCTe; AFile: string);
+var
+  DACTeReport: TfrmDACTeRL;
+  ADir: string;
 begin
-  with Create(AOwner) do
-    try
-      FCTe := ACTe;
-      FLogo := ALogo;
-      FEmail := AEmail;
-      FImprimeHoraSaida := AImprimeHoraSaida;
-      FHoraSaida := AHoraSaida;
-      FResumoCanhoto := AResumoCanhoto;
-      FFax := AFax;
-      FNumCopias := ANumCopias;
-      FSistema := ASistema;
-      FUrl := AUrl;
-      FUsuario := AUsuario;
-      FMargemSuperior := AMargemSuperior;
-      FMargemInferior := AMargemInferior;
-      FMargemEsquerda := AMargemEsquerda;
-      FMargemDireita := AMargemDireita;
-      FExpandirLogoMarca := AExpandirLogoMarca;
-      FPosRecibo := APosRecibo;
-      FCTeCancelada := ACTeCancelada;
-      FEPECEnviado := AEPECEnviado;
-      FMostrarStatus := AMostrarStatus;
+  DACTeReport := Create(nil);
+  try
+    DACTeReport.fpCTe := ACTe;
+    DACTeReport.fpDACTe := aDACTe;
 
-      RLCTe.ShowProgress := FMostrarStatus;
+    TDFeReportFortes.AjustarReport(DACTeReport.RLCTe, DACTeReport.fpDACTe);
+    TDFeReportFortes.AjustarFiltroPDF(DACTeReport.RLPDFFilter1, DACTeReport.fpDACTe, AFile);
 
-      with RLPDFFilter1.DocumentInfo do
-      begin
-        Title := 'DACTE - Conhecimento nº ' +
-          FormatFloat('000,000,000', FCTe.Ide.nCT);
-        KeyWords := 'Número:' + FormatFloat('000,000,000', FCTe.Ide.nCT) +
-          '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', FCTe.Ide.dhEmi) +
-          '; Destinatário: ' + FCTe.Dest.xNome +
-          '; CNPJ: ' + FCTe.Dest.CNPJCPF;
-      end;
-
-      RLPDFFilter1.ShowProgress := FMostrarStatus;
-      RLPDFFilter1.FileName     := AFile;
-      RLCTe.ShowProgress        := FMostrarStatus;
-      RLCTe.Prepare;
-      RLPDFFilter1.FilterPages(RLCTe.Pages);
-    finally
-      Free;
+    with DACTeReport.RLPDFFilter1.DocumentInfo do
+    begin
+      Title := 'DACTE - Conhecimento nº ' +
+        FormatFloat('000,000,000', DACTeReport.fpCTe.Ide.nCT);
+        KeyWords := 'Número:' + FormatFloat('000,000,000', DACTeReport.fpCTe.Ide.nCT) +
+          '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', DACTeReport.fpCTe.Ide.dhEmi) +
+          '; Destinatário: ' + DACTeReport.fpCTe.Dest.xNome +
+          '; CNPJ: ' + DACTeReport.fpCTe.Dest.CNPJCPF;
     end;
+
+    DACTeReport.RLCTe.Prepare;
+    DACTeReport.RLPDFFilter1.FilterPages(DACTeReport.RLCTe.Pages);
+  finally
+    if DACTeReport <> nil then
+        FreeAndNil(DACTeReport);
+  end;
 end;
 
 procedure TfrmDACTeRL.rllSemValorFiscalPrint(Sender: TObject; var Value: string);
 begin
   inherited;
-  if FSemValorFiscal then
+  if fpSemValorFiscal then
     Value := '';
 end;
 
@@ -332,22 +287,22 @@ begin
   DataSource1.dataset := cdsDocumentos;
 end;
 
-function TfrmDACTeRL.getTextoResumoCanhoto: string;
+function TfrmDACTeRL.GetTextoResumoCanhoto: string;
 begin
-  Result := 'EMIT: ' + FCTe.Emit.xNome + ' - ' +
-    'EMISSÃO: ' + FormatDateTime('DD/MM/YYYY', FCTe.Ide.dhEmi) + '  -  TOMADOR: ';
-  if FCTe.Ide.Toma4.xNome = '' then
+  Result := 'EMIT: ' + fpCTe.Emit.xNome + ' - ' +
+    'EMISSÃO: ' + FormatDateTime('DD/MM/YYYY', fpCTe.Ide.dhEmi) + '  -  TOMADOR: ';
+  if fpCTe.Ide.Toma4.xNome = '' then
   begin
-    case FCTe.Ide.Toma03.Toma of
-      tmRemetente: Result := Result + FCTe.Rem.xNome;
-      tmExpedidor: Result := Result + FCTe.Exped.xNome;
-      tmRecebedor: Result := Result + FCTe.Receb.xNome;
-      tmDestinatario: Result := Result + FCTe.Dest.xNome;
+    case fpCTe.Ide.Toma03.Toma of
+      tmRemetente: Result := Result + fpCTe.Rem.xNome;
+      tmExpedidor: Result := Result + fpCTe.Exped.xNome;
+      tmRecebedor: Result := Result + fpCTe.Receb.xNome;
+      tmDestinatario: Result := Result + fpCTe.Dest.xNome;
     end;
   end
   else
-    Result := Result + FCTe.Ide.Toma4.xNome;
-  Result := Result + ' - VALOR A RECEBER: R$ ' + FormatFloatBr(FCTe.vPrest.vRec, '###,###,###,##0.00');
+    Result := Result + fpCTe.Ide.Toma4.xNome;
+  Result := Result + ' - VALOR A RECEBER: R$ ' + fpDACTe.FormatarValorUnitario(fpCTe.vPrest.vRec);
 end;
 
 end.

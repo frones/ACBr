@@ -44,7 +44,7 @@ uses
   Classes, SysUtils, ACBrBase,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
-  ACBrNFeDANFEClass,
+  ACBrDFeDANFeReport,
   pcnNFe, pcnConversao, pcnConversaoNFe, pcnCCeNFe,
   pcnEnvEventoNFe, pcnInutNFe,
   pcnDownloadNFe, pcnRetDownloadNFe, pcnRetDistDFeInt,
@@ -93,7 +93,7 @@ type
   {$ENDIF RTL230_UP}	
   TACBrNFe = class(TACBrDFe)
   private
-    FDANFE: TACBrNFeDANFEClass;
+    FDANFE: TACBrDFeDANFeReport;
     FNotasFiscais: TNotasFiscais;
     FCartaCorrecao: TCartaCorrecao;
     FEventoNFe: TEventoNFe;
@@ -109,7 +109,7 @@ type
       chNFe: String): Boolean;
 
     procedure SetConfiguracoes(AValue: TConfiguracoesNFe);
-    procedure SetDANFE(const Value: TACBrNFeDANFEClass);
+    procedure SetDANFE(const Value: TACBrDFeDANFeReport);
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -201,7 +201,7 @@ type
   published
     property Configuracoes: TConfiguracoesNFe
       read GetConfiguracoes write SetConfiguracoes;
-    property DANFE: TACBrNFeDANFEClass read FDANFE write SetDANFE;
+    property DANFE: TACBrDFeDANFeReport read FDANFE write SetDANFE;
   end;
 
 
@@ -270,7 +270,7 @@ begin
   inherited Notification(AComponent, Operation);
 
   if (Operation = opRemove) and (FDANFE <> nil) and
-    (AComponent is TACBrNFeDANFEClass) then
+    (AComponent is TACBrDFeDANFeReport) then
     FDANFE := nil;
 end;
 
@@ -284,9 +284,9 @@ begin
   Result := TConfiguracoesNFe.Create(Self);
 end;
 
-procedure TACBrNFe.SetDANFE(const Value: TACBrNFeDANFEClass);
+procedure TACBrNFe.SetDANFE(const Value: TACBrDFeDANFeReport);
 var
-  OldValue: TACBrNFeDANFEClass;
+  OldValue: TACBrDFeDANFeReport;
 begin
   if Value <> FDANFE then
   begin

@@ -57,33 +57,13 @@ const
 
 type
 
-  { TACBrSATExtratoMargem }
-
-  TACBrSATExtratoMargem = class( TPersistent )
-  private
-    fDireita: Integer;
-    fEsquerda: Integer;
-    fFundo: Integer;
-    fTopo: Integer;
-  public
-    constructor create;
-  published
-    property Topo     : Integer read fTopo     write fTopo     default 2;
-    property Esquerda : Integer read fEsquerda write fEsquerda default 2;
-    property Fundo    : Integer read fFundo    write fFundo    default 4;
-    property Direita  : Integer read fDireita  write fDireita  default 2;
-  end;
-
+  { TACBrSATExtratoReportClass }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
-
-  { TACBrSATExtratoReportClass }
-
   TACBrSATExtratoReportClass = class( TACBrSATExtratoClass )
   private
     fLarguraBobina: Integer;
-    fMargens: TACBrSATExtratoMargem;
     fEspacoFinal: Integer;
     fLogoWidth: Integer;
     fLogoHeigth: Integer;
@@ -97,7 +77,6 @@ type
 
   published
     property LarguraBobina : Integer read fLarguraBobina  write fLarguraBobina default 302;
-    property Margens       : TACBrSATExtratoMargem read fMargens write fMargens;
     property EspacoFinal   : Integer read fEspacoFinal write fEspacoFinal default 0;
     property LogoWidth     : Integer read fLogoWidth write fLogoWidth default 77;
     property LogoHeigth    : Integer read fLogoHeigth write fLogoHeigth default 50;
@@ -105,30 +84,15 @@ type
     property LogoAutoSize  : Boolean read fLogoAutoSize write fLogoAutoSize default True;
     property LogoCenter    : Boolean read fLogoCenter write fLogoCenter default True;
     property LogoVisible   : Boolean read fLogoVisible write fLogoVisible default True;
-    property PrinterName;
   end ;
 
 implementation
 
-{ TACBrSATExtratoMargem }
-
-constructor TACBrSATExtratoMargem.create;
-begin
-  inherited create;
-
-  fDireita  := 2;
-  fEsquerda := 2;
-  fTopo     := 2;
-  fFundo    := 4;
-end;
-
 { TACBrSATExtratoReportClass }
-
 constructor TACBrSATExtratoReportClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  fMargens := TACBrSATExtratoMargem.create;
   fLarguraBobina := 302;
   fEspacoFinal   := 0;
   fLogoWidth     := 77;
@@ -137,13 +101,15 @@ begin
   fLogoAutoSize  := True;
   fLogoCenter    := True;
   fLogoVisible   := True;
-  fpAbout        := 'ACBrSATExtratoReportClass ver: ' + CACBrSATExtratoReportClass_Versao  ;
+  MargemInferior := 4;
+  MargemSuperior := 2;
+  MargemEsquerda := 2;
+  MargemDireita := 2;
+  FAbout        := 'ACBrSATExtratoReportClass ver: ' + CACBrSATExtratoReportClass_Versao  ;
 end;
 
 destructor TACBrSATExtratoReportClass.Destroy;
 begin
-  fMargens.Free;
-
   inherited Destroy ;
 end;
 

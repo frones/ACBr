@@ -72,32 +72,19 @@ unit ACBrNFeDANFEFRDM;
 interface
 
 uses
-  pcnEnvEventoNFe, pcnRetInutNFe,
-  SysUtils, Classes, ACBrNFeDANFEClass, pcnNFe, frxClass, frxExportPDF, DB,
-  DBClient, frxDBSet, pcnConversao, ACBrUtil, frxBarcode,
-  ACBrDelphiZXingQrCode, Graphics;
+  SysUtils, Classes, DB, DBClient, VCL.Graphics,
+  pcnEnvEventoNFe, pcnRetInutNFe, pcnNFe, pcnConversao,
+  ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass,
+  ACBrUtil, ACBrDelphiZXingQrCode,
+  frxClass, frxExportPDF, frxDBSet, frxBarcode;
 
 type
+
   TACBrNFeFRClass = class
   private
     FDANFEClassOwner: TACBrNFeDANFEClass;
     FNFe: TNFe;
     FEvento: TEventoNFe;
-    FExibirTotalTributosItem: Boolean;
-    FExibeCampoFatura: Boolean;
-    FTributosFonte: string;
-    FTributosPercentual: TpcnPercentualTributos;
-    FTributosPercentualPersonalizado: double;
-    FMarcaDaguaMSG: string;
-    FvTroco: Currency;
-    FDetalhado: Boolean;
-    FURLConsultaPublica:String;
-    FDescricaoViaEstabelec: string;
-    FImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
-    FExpandirDadosAdicionaisAuto: boolean;
-    FImprimirDadosArma: Boolean;
-    fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
-    fsQuebraLinha : String;
     FfrxReport: TfrxReport;
     FfrxPDFExport: TfrxPDFExport;
     FfrxBarCodeObject: TfrxBarCodeObject;
@@ -135,12 +122,9 @@ type
     FfrxInformacoesAdicionais: TfrxDBDataset;
     cdsPagamento: TClientDataSet;
     FfrxPagamento: TfrxDBDataset;
-    FIncorporarFontesPdf: Boolean;
-    FIncorporarBackgroundPdf: Boolean;
     FInutilizacao: TRetInutNFe;
     FfrxInutilizacao: TfrxDBDataset;
     cdsInutilizacao: TClientDataSet;
-    FImprimirDadosDocReferenciados: Boolean;
 
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
     procedure CarregaIdentificacao;
@@ -159,27 +143,9 @@ type
     procedure CarregaFatura;
     procedure CarregaPagamento;
     procedure CarregaInformacoesAdicionais;
-    function QuebraLinha: String;
 
     function CollateBr(Str: String): String;
-    function ManterVprod(dVProd, dvDesc: Double): String;
-    function ManterdvTotTrib(dvTotTrib: Double):  String;
-    function ManterVDesc(dvDesc: Currency; dVUnCom , dQCom : double ) : Double;
-    function ManterCst(dCRT: TpcnCRT; dCSOSN: TpcnCSOSNIcms;
-      dCST: TpcnCSTIcms): String;
-    function ManterArma(inItem: integer): String;
-    function ManterMedicamentos(inItem: integer): String;
-    function ManterVeiculos( inItem : integer): String;
-    function ManterValAprox( inItem : Integer ): String;
-    function ManterInfAProd( inItem : Integer; sinfAdProd : String ) : String;
-    function ManterDescricaoProduto(sXProd, sinfAdProd: String): String;
-    function ManterVTribPerc(dVTotTrib, dVProd, dVNF: Double): Double;
-    function ManterCombustivel(inItem: integer): String;
-    function FormatQuantidade(dValor: Double): String;
-    function FormatValorUnitario(dValor: Double): String;
-    function ManterContingencia(swObs: String): String;
-    function ManterInfAdi(swObs: String): String;
-    function ManterRastro(inItem: integer): String;
+
   public
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;
@@ -188,26 +154,8 @@ type
     property Evento: TEventoNFe read FEvento write FEvento;
     property Inutilizacao: TRetInutNFe read FInutilizacao write FInutilizacao;
     property DANFEClassOwner: TACBrNFeDANFEClass read FDANFEClassOwner;
-    property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem default False;
-    property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura default True;
-    property TributosFonte: string read FTributosFonte write FTributosFonte;
-    property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
-    property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write FTributosPercentualPersonalizado;
-    property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
-    property ImprimirUnQtVlComercial: TImprimirUnidQtdeValor read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
-    property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
-    property vTroco: Currency read FvTroco write FvTroco;
-    property Detalhado: Boolean read FDetalhado write FDetalhado;
-    property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
-    property DescricaoViaEstabelec: string read FDescricaoViaEstabelec write FDescricaoViaEstabelec;
-    property frxReport: TfrxReport read FfrxReport write FfrxReport;
-    property frxPDFExport: TfrxPDFExport read FfrxPDFExport write FfrxPDFExport;
-    property ImprimirDadosArma: Boolean read FImprimirDadosArma write FImprimirDadosArma;
-    property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico write fQuebraLinhaEmDetalhamentoEspecifico;
-    property sQuebraLinha : String read fsQuebraLinha Write    fsQuebraLinha;
-    property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
-    property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
-    property ImprimirDadosDocReferenciados: Boolean read FImprimirDadosDocReferenciados write FImprimirDadosDocReferenciados; 
+    property frxReport: TfrxReport read FfrxReport;
+    property frxPDFExport: TfrxPDFExport read FfrxPDFExport;
 
     procedure SetDataSetsToFrxReport;
     procedure CarregaDadosNFe;
@@ -220,10 +168,628 @@ type
 
 implementation
 
-uses ACBrNFe, ACBrDFeUtil, StrUtils, Math, DateUtils, pcnConversaoNFe,
-  ACBrValidador;
+uses
+  StrUtils, Math, DateUtils,
+  ACBrNFe, ACBrNFeDANFEFR, ACBrDFeUtil, ACBrValidador,
+  pcnConversaoNFe;
 
 { TACBrNFeFRClass }
+
+constructor TACBrNFeFRClass.Create(AOwner: TComponent);
+begin
+  if not (AOwner is TACBrNFeDANFEFR) then
+    raise EACBrNFeException.Create('AOwner deve ser do tipo TACBrNFeDANFEFR');
+
+  FDANFEClassOwner := TACBrNFeDANFEFR(AOwner);
+
+  FfrxReport := TfrxReport.Create( nil);
+  FfrxReport.EngineOptions.UseGlobalDataSetList := False;
+  FfrxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];
+
+  with FfrxReport do
+  begin
+     EngineOptions.DoublePass := True;
+     StoreInDFM := False;
+     OnBeforePrint := frxReportBeforePrint;
+     OnReportPrint := 'frxReportOnReportPrint';
+  end;
+
+  FfrxPDFExport := TfrxPDFExport.Create(nil);
+  with FfrxPDFExport do
+  begin
+     Background    := TACBrNFeDANFEFR(FDANFEClassOwner).IncorporarBackgroundPdf;
+     EmbeddedFonts := TACBrNFeDANFEFR(FDANFEClassOwner).IncorporarFontesPdf;
+     Subject       := 'Exportando DANFE para PDF';
+     ShowProgress  := False;
+  end;
+
+  // cdsIdentificacao
+  if not Assigned(cdsIdentificacao) then
+  begin
+     cdsIdentificacao := TClientDataSet.Create(nil);
+     FfrxIdentificacao := TfrxDBDataset.Create(nil);
+     with FfrxIdentificacao do
+     begin
+        DataSet := cdsIdentificacao;
+        OpenDataSource := False;
+        Enabled := False;
+        UserName := 'Identificacao';
+     end;
+
+     with cdsIdentificacao do
+     begin
+        FieldDefs.Add('Id', ftString, 44);
+        FieldDefs.Add('Chave', ftString, 60);
+        FieldDefs.Add('cUF', ftString, 2);
+        FieldDefs.Add('cNF', ftString, 9);
+        FieldDefs.Add('NatOp', ftString, 60);
+        FieldDefs.Add('IndPag', ftString, 1);
+        FieldDefs.Add('Mod_', ftString, 2);
+        FieldDefs.Add('Serie', ftString, 3);
+        FieldDefs.Add('NNF', ftString, 11);
+        FieldDefs.Add('DEmi', ftString, 19);
+        FieldDefs.Add('DSaiEnt', ftString, 10);
+        FieldDefs.Add('TpNF', ftString, 1);
+        FieldDefs.Add('CMunFG', ftString, 7);
+        FieldDefs.Add('TpImp', ftString, 1);
+        FieldDefs.Add('TpEmis', ftString, 1);
+        FieldDefs.Add('CDV', ftString, 1);
+        FieldDefs.Add('TpAmb', ftString, 1);
+        FieldDefs.Add('FinNFe', ftString, 1);
+        FieldDefs.Add('ProcEmi', ftString, 1);
+        FieldDefs.Add('VerProc', ftString, 6);
+        FieldDefs.Add('HoraSaida', ftString, 10);
+        FieldDefs.Add('MensagemFiscal', ftString, 200);
+        FieldDefs.Add('URL', ftString, 1000);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsEmitente
+   if not Assigned(cdsEmitente) then
+   begin
+     cdsEmitente := TClientDataSet.Create(nil);
+     FfrxEmitente := TfrxDBDataset.Create(nil);
+     with FfrxEmitente do
+     begin
+        DataSet := cdsEmitente;
+        OpenDataSource := False;
+        Enabled := False;
+        UserName := 'Emitente';
+     end;
+
+     with cdsEmitente do
+     begin
+        FieldDefs.Add('CNPJ', ftString, 18);
+        FieldDefs.Add('XNome', ftString, 60);
+        FieldDefs.Add('XFant', ftString, 60);
+        FieldDefs.Add('XLgr', ftString, 60);
+        FieldDefs.Add('Nro', ftString, 60);
+        FieldDefs.Add('XCpl', ftString, 60);
+        FieldDefs.Add('XBairro', ftString, 60);
+        FieldDefs.Add('CMun', ftString, 7);
+        FieldDefs.Add('XMun', ftString, 60);
+        FieldDefs.Add('UF', ftString, 2);
+        FieldDefs.Add('CEP', ftString, 9);
+        FieldDefs.Add('CPais', ftString, 4);
+        FieldDefs.Add('XPais', ftString, 60);
+        FieldDefs.Add('Fone', ftString, 15);
+        FieldDefs.Add('IE', ftString, 15);
+        FieldDefs.Add('IM', ftString, 15);
+        FieldDefs.Add('IEST', ftString, 15);
+        FieldDefs.Add('CRT', ftString, 1);
+        FieldDefs.Add('DESCR_CST', ftString, 30);
+        FieldDefs.Add('DADOS_ENDERECO', ftString, 1000);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsDestinatario
+   if not Assigned(cdsDestinatario) then
+   begin
+     cdsDestinatario := TClientDataSet.Create(nil);
+     FfrxDestinatario := TfrxDBDataset.Create(nil);
+     with FfrxDestinatario do
+     begin
+        DataSet := cdsDestinatario;
+        OpenDataSource := False;
+        Enabled := False;
+        UserName := 'Destinatario';
+     end;
+
+     with cdsDestinatario do
+     begin
+        FieldDefs.Add('CNPJCPF', ftString, 18);
+        FieldDefs.Add('XNome', ftString, 60);
+        FieldDefs.Add('XLgr', ftString, 60);
+        FieldDefs.Add('Nro', ftString, 60);
+        FieldDefs.Add('XCpl', ftString, 60);
+        FieldDefs.Add('XBairro', ftString, 60);
+        FieldDefs.Add('CMun', ftString, 7);
+        FieldDefs.Add('XMun', ftString, 60);
+        FieldDefs.Add('UF', ftString, 2);
+        FieldDefs.Add('CEP', ftString, 9);
+        FieldDefs.Add('CPais', ftString, 4);
+        FieldDefs.Add('XPais', ftString, 60);
+        FieldDefs.Add('Fone', ftString, 15);
+        FieldDefs.Add('IE', ftString, 18);
+        FieldDefs.Add('Consumidor', ftString, 150);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsDadosProdutos
+   if not Assigned(cdsDadosProdutos) then
+   begin
+     cdsDadosProdutos   := TClientDataSet.Create(nil);
+     FfrxDadosProdutos  := TfrxDBDataset.Create(nil);
+     with FfrxDadosProdutos do
+     begin
+        DataSet := cdsDadosProdutos;
+        OpenDataSource := False;
+        Enabled := False;
+        UserName := 'DadosProdutos';
+     end;
+
+     with cdsDadosProdutos do
+     begin
+        FieldDefs.Add('CProd'     , ftString, 60);
+        FieldDefs.Add('cEAN'      , ftString, 60);
+        FieldDefs.Add('XProd'     , ftString, 120);
+        FieldDefs.Add('infAdProd' , ftString, 1000);
+        FieldDefs.Add('NCM'       , ftString, 9);
+        FieldDefs.Add('EXTIPI'    , ftString, 8);
+        FieldDefs.Add('genero'    , ftString, 8);
+        FieldDefs.Add('CFOP'      , ftString, 4);
+        FieldDefs.Add('UCom'      , ftString, 6);
+        FieldDefs.Add('QCom'      , ftFloat);
+        FieldDefs.Add('VUnCom'    , ftFloat);
+        FieldDefs.Add('VProd'     , ftString, 18);
+        FieldDefs.Add('cEANTrib'  , ftString, 60);
+        FieldDefs.Add('UTrib'     , ftString, 6);
+        FieldDefs.Add('QTrib'     , ftFloat);
+        FieldDefs.Add('vUnTrib'   , ftFloat);
+        FieldDefs.Add('vFrete'    , ftString, 18);
+        FieldDefs.Add('vOutro'    , ftString, 18);
+        FieldDefs.Add('vSeg'      , ftString, 18);
+        FieldDefs.Add('vDesc'     , ftString, 18);
+        FieldDefs.Add('ORIGEM'    , ftString, 1);
+        FieldDefs.Add('CST'       , ftString, 3);
+        FieldDefs.Add('vBC'       , ftString, 18);
+        FieldDefs.Add('pICMS'     , ftString, 18);
+        FieldDefs.Add('vICMS'     , ftString, 18);
+        FieldDefs.Add('vIPI'      , ftString, 18);
+        FieldDefs.Add('pIPI'      , ftString, 18);
+        FieldDefs.Add('VTotTrib'  , ftString, 18);
+        FieldDefs.Add('ChaveNFe'  , ftString, 50);
+        FieldDefs.Add('vISSQN'    , ftString, 18);
+        FieldDefs.Add('vBcISSQN'  , ftString, 18);
+        FieldDefs.Add('vBcST'     , ftString, 18);
+        FieldDefs.Add('vICMSST'   , ftString, 18);
+        FieldDefs.Add('nLote'     , ftString, 20);
+        FieldDefs.Add('qLote'     , ftFloat);
+        FieldDefs.Add('dFab'      , ftDateTime);
+        FieldDefs.Add('dVal'      , ftDateTime);
+        FieldDefs.Add('DescricaoProduto', ftString, 2000);
+        FieldDefs.Add('Unidade'   , ftString, 14);
+        FieldDefs.Add('Quantidade', ftString, 18);
+        FieldDefs.Add('ValorUnitario'   , ftString, 50);
+        FieldDefs.Add('Valorliquido'    , ftString, 18);
+        FieldDefs.Add('ValorAcrescimos' , ftString, 18);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsParametros
+   if not Assigned(cdsParametros) then
+   begin
+     cdsParametros  := TClientDataSet.Create(nil);
+     FfrxParametros := TfrxDBDataset.Create(nil);
+     with FfrxParametros do
+     begin
+        DataSet         := cdsParametros;
+        OpenDataSource  := False;
+        Enabled := False;
+        UserName        := 'Parametros';
+     end;
+
+     with cdsParametros do
+     begin
+        FieldDefs.Add('poscanhoto', ftString, 1);
+        FieldDefs.Add('ResumoCanhoto', ftString, 200);
+        FieldDefs.Add('Mensagem0', ftString, 60);
+        FieldDefs.Add('Imagem', ftString, 256);
+        FieldDefs.Add('Sistema', ftString, 300);
+        FieldDefs.Add('Usuario', ftString, 60);
+        FieldDefs.Add('Fax', ftString, 60);
+        FieldDefs.Add('Site', ftString, 60);
+        FieldDefs.Add('Email', ftString, 60);
+        FieldDefs.Add('Desconto', ftString, 60);
+        FieldDefs.Add('TotalLiquido', ftString, 60);
+        FieldDefs.Add('ChaveAcesso_Descricao', ftString, 90);
+        FieldDefs.Add('Contingencia_ID', ftString, 36);
+        FieldDefs.Add('Contingencia_Descricao', ftString, 60);
+        FieldDefs.Add('Contingencia_Valor', ftString, 60);
+        FieldDefs.Add('LinhasPorPagina', ftInteger);
+        FieldDefs.Add('LogoExpandido', ftString, 1);
+        FieldDefs.Add('DESCR_CST', ftString, 30);
+        FieldDefs.Add('ConsultaAutenticidade', ftString, 300);
+        FieldDefs.Add('sDisplayFormat', ftString, 25);
+        FieldDefs.Add('iFormato', ftInteger);
+        FieldDefs.Add('Casas_qCom', ftInteger);
+        FieldDefs.Add('Casas_vUnCom', ftInteger);
+        FieldDefs.Add('Mask_qCom', ftString, 30);
+        FieldDefs.Add('Mask_vUnCom', ftString, 30);
+        FieldDefs.Add('LogoCarregado', ftBlob);
+        FieldDefs.Add('QrCodeCarregado', ftGraphic, 1000);
+        FieldDefs.Add('DescricaoViaEstabelec', ftString, 30);
+        FieldDefs.Add('QtdeItens', ftInteger);
+        FieldDefs.Add('ExpandirDadosAdicionaisAuto', ftString, 1);
+        FieldDefs.Add('ImprimeDescAcrescItem', ftInteger);
+        FieldDefs.Add('nProt', ftString, 30);
+        FieldDefs.Add('dhRecbto', ftDateTime);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsDuplicatas
+   if not Assigned(cdsDuplicatas) then
+   begin
+     cdsDuplicatas := TClientDataSet.Create(nil);
+     FfrxDuplicatas := TfrxDBDataset.Create(nil);
+     with FfrxDuplicatas do
+     begin
+        DataSet := cdsDuplicatas;
+        OpenDataSource := False;
+        Enabled := False;
+        UserName := 'Duplicatas';
+     end;
+
+     with cdsDuplicatas do
+     begin
+        FieldDefs.Add('NDup', ftString, 60);
+        FieldDefs.Add('DVenc', ftString, 10);
+        FieldDefs.Add('VDup', ftFloat);
+        FieldDefs.Add('ChaveNFe', ftString, 50);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsCalculoImposto
+   if not Assigned(cdsCalculoImposto) then
+   begin
+     cdsCalculoImposto := TClientDataSet.Create(nil);
+     FfrxCalculoImposto := TfrxDBDataset.Create(nil);
+     with FfrxCalculoImposto do
+     begin
+        DataSet := cdsCalculoImposto;
+        OpenDataSource := False;
+        Enabled := False;
+        UserName := 'CalculoImposto';
+     end;
+
+     with cdsCalculoImposto do
+     begin
+        FieldDefs.Add('VBC'         , ftFloat);
+        FieldDefs.Add('VICMS'       , ftFloat);
+        FieldDefs.Add('VBCST'       , ftFloat);
+        FieldDefs.Add('VST'         , ftFloat);
+        FieldDefs.Add('VProd'       , ftFloat);
+        FieldDefs.Add('VFrete'      , ftFloat);
+        FieldDefs.Add('VSeg'        , ftFloat);
+        FieldDefs.Add('VDesc'       , ftFloat);
+        FieldDefs.Add('VII'         , ftFloat);
+        FieldDefs.Add('VIPI'        , ftFloat);
+        FieldDefs.Add('VPIS'        , ftFloat);
+        FieldDefs.Add('VCOFINS'     , ftFloat);
+        FieldDefs.Add('VOutro'      , ftFloat);
+        FieldDefs.Add('VNF'         , ftFloat);
+        FieldDefs.Add('VTotTrib'    , ftFloat);
+        FieldDefs.Add('VTribPerc'   , ftFloat);
+        FieldDefs.Add('VTribFonte'  , ftString, 100);
+        FieldDefs.Add('vTotPago'    , ftFloat);
+        FieldDefs.Add('vTroco'      , ftFloat);
+        FieldDefs.Add('ValorApagar' , ftFloat);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsTransportador
+   if not Assigned(cdsTransportador) then
+   begin
+     cdsTransportador := TClientDataSet.Create(nil);
+     FfrxTransportador := TfrxDBDataset.Create(nil);
+     with FfrxTransportador do
+     begin
+        DataSet := cdsTransportador;
+        OpenDataSource := False;
+        Enabled := False;
+        UserName := 'Transportador';
+     end;
+
+     with cdsTransportador do
+     begin
+        FieldDefs.Add('ModFrete', ftString, 20);
+        FieldDefs.Add('CNPJCPF', ftString, 18);
+        FieldDefs.Add('XNome', ftString, 60);
+        FieldDefs.Add('IE', ftString, 15);
+        FieldDefs.Add('XEnder', ftString, 60);
+        FieldDefs.Add('XMun', ftString, 60);
+        FieldDefs.Add('UF', ftString, 2);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsVeiculo
+   if not Assigned(cdsVeiculo) then
+   begin
+     cdsVeiculo := TClientDataSet.Create(nil);
+     FfrxVeiculo := TfrxDBDataset.Create(nil);
+     with FfrxVeiculo do
+     begin
+        DataSet := cdsVeiculo;
+        OpenDataSource := False;
+        Enabled := False;
+        UserName := 'Veiculo';
+     end;
+
+     with cdsVeiculo do
+     begin
+        FieldDefs.Add('PLACA', ftString, 8);
+        FieldDefs.Add('UF', ftString, 2);
+        FieldDefs.Add('RNTC', ftString, 20);
+        CreateDataSet;
+     end;
+   end;
+
+   // cdsVolumes
+   if not Assigned(cdsVolumes) then
+   begin
+     cdsVolumes := TClientDataSet.Create(nil);
+     FfrxVolumes := TfrxDBDataset.Create(nil);
+     with FfrxVolumes do
+     begin
+        DataSet := cdsVolumes;
+        OpenDataSource := False;
+        Enabled := False;
+        UserName := 'Volumes';
+     end;
+
+     with cdsVolumes do
+     begin
+        FieldDefs.Add('QVol', ftFloat);
+        FieldDefs.Add('Esp', ftString, 60);
+        FieldDefs.Add('Marca', ftString, 60);
+        FieldDefs.Add('NVol', ftString, 60);
+        FieldDefs.Add('PesoL', ftFloat);
+        FieldDefs.Add('PesoB', ftFloat);
+        CreateDataSet;
+     end;
+   end;
+
+   // csdEvento
+   if not Assigned(cdsEventos) then
+   begin
+      cdsEventos := TClientDataSet.Create(nil);
+      FfrxEventos := TfrxDBDataset.Create(nil);
+      with FfrxEventos do
+      begin
+         DataSet := cdsEventos;
+         OpenDataSource := False;
+         Enabled := False;
+         UserName := 'Eventos';
+      end;
+   end;
+
+   // cdsISSQN
+   if not Assigned(cdsISSQN) then
+   begin
+      cdsISSQN := TClientDataSet.Create(nil);
+      FfrxISSQN := TfrxDBDataset.Create(nil);
+      with FfrxISSQN do
+      begin
+         DataSet := cdsISSQN;
+         OpenDataSource := False;
+         Enabled := False;
+         UserName := 'ISSQN';
+      end;
+
+      with cdsISSQN do
+      begin
+         FieldDefs.Add('vSERV', ftFloat);
+         FieldDefs.Add('vBC', ftFloat);
+         FieldDefs.Add('vISS', ftFloat);
+         FieldDefs.Add('vDescIncond', ftFloat);
+         FieldDefs.Add('vISSRet', ftFloat);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsFatura
+   if not Assigned(cdsFatura) then
+   begin
+      cdsFatura   := TClientDataSet.Create(nil);
+      FfrxFatura  := TfrxDBDataset.Create(nil);
+      with FfrxFatura do
+      begin
+         DataSet        := cdsFatura;
+         OpenDataSource := False;
+         Enabled := False;
+         UserName       := 'Fatura';
+      end;
+
+      with cdsFatura do
+      begin
+         FieldDefs.Add('iForma'   , ftInteger);
+         FieldDefs.Add('Pagamento', ftString, 20);
+         FieldDefs.Add('nFat'     , ftString, 60);
+         FieldDefs.Add('vOrig'    , ftFloat);
+         FieldDefs.Add('vDesc'    , ftFloat);
+         FieldDefs.Add('vLiq'     , ftFloat);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsLocalRetirada
+   if not Assigned(cdsLocalRetirada) then
+   begin
+      cdsLocalRetirada := TClientDataSet.Create(nil);
+      FfrxLocalRetirada := TfrxDBDataset.Create(nil);
+      with FfrxLocalRetirada do
+      begin
+         DataSet := cdsLocalRetirada;
+         OpenDataSource := False;
+         Enabled := False;
+         UserName := 'LocalRetirada';
+      end;
+
+      with cdsLocalRetirada do
+      begin
+         FieldDefs.Add('CNPJ', ftString, 18);
+         FieldDefs.Add('XLgr', ftString, 60);
+         FieldDefs.Add('Nro', ftString, 60);
+         FieldDefs.Add('XCpl', ftString, 60);
+         FieldDefs.Add('XBairro', ftString, 60);
+         FieldDefs.Add('CMun', ftString, 7);
+         FieldDefs.Add('XMun', ftString, 60);
+         FieldDefs.Add('UF', ftString, 2);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsLocalEntrega
+   if not Assigned(cdsLocalEntrega) then
+   begin
+      cdsLocalEntrega := TClientDataSet.Create(nil);
+      FfrxLocalEntrega := TfrxDBDataset.Create(nil);
+      with FfrxLocalEntrega do
+      begin
+         DataSet := cdsLocalEntrega;
+         OpenDataSource := False;
+         Enabled := False;
+         UserName := 'LocalEntrega';
+      end;
+
+      with cdsLocalEntrega do
+      begin
+         FieldDefs.Add('CNPJ', ftString, 18);
+         FieldDefs.Add('XLgr', ftString, 60);
+         FieldDefs.Add('Nro', ftString, 60);
+         FieldDefs.Add('XCpl', ftString, 60);
+         FieldDefs.Add('XBairro', ftString, 60);
+         FieldDefs.Add('CMun', ftString, 7);
+         FieldDefs.Add('XMun', ftString, 60);
+         FieldDefs.Add('UF', ftString, 2);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsInformacoesAdicionais
+   if not Assigned(cdsInformacoesAdicionais) then
+   begin
+      cdsInformacoesAdicionais := TClientDataSet.Create(nil);
+      FfrxInformacoesAdicionais := TfrxDBDataset.Create(nil);
+      with FfrxInformacoesAdicionais do
+      begin
+         DataSet := cdsInformacoesAdicionais;
+         OpenDataSource := False;
+         Enabled := False;
+         UserName := 'InformacoesAdicionais';
+      end;
+
+      with cdsInformacoesAdicionais do
+      begin
+         FieldDefs.Add('OBS', ftString, 6900);
+         FieldDefs.Add('LinhasOBS', ftInteger);
+         CreateDataSet;
+      end;
+   end;
+
+   // cdsPagamento
+   if not Assigned(cdsPagamento) then
+   begin
+      cdsPagamento := TClientDataSet.Create(nil);
+      FfrxPagamento := TfrxDBDataset.Create(nil);
+      with FfrxPagamento do
+      begin
+         DataSet := cdsPagamento;
+         OpenDataSource := False;
+         Enabled := False;
+         UserName := 'Pagamento';
+      end;
+
+      with cdsPagamento do
+      begin
+         FieldDefs.Add('tPag', ftString, 50);
+         FieldDefs.Add('vPag', ftFloat);
+         FieldDefs.Add('vTroco', ftFloat);
+         FieldDefs.Add('CNPJ', ftString, 50);
+         FieldDefs.Add('tBand', ftString, 50);
+         FieldDefs.Add('cAut', ftString, 20);
+         CreateDataSet;
+      end;
+   end;
+
+   //cdsInutilização
+   if not Assigned(cdsInutilizacao) then
+   begin
+      cdsInutilizacao := TClientDataSet.Create(nil);
+      FfrxInutilizacao := TfrxDBDataset.Create(nil);
+      with FfrxInutilizacao do
+      begin
+         DataSet := cdsInutilizacao;
+         OpenDataSource := False;
+         Enabled := False;
+         UserName := 'Inutilizacao';
+      end;
+   end;
+end;
+
+destructor TACBrNFeFRClass.Destroy;
+begin
+  FfrxReport.Free;
+  FfrxPDFExport.Free;
+  FfrxBarCodeObject.Free;
+  cdsIdentificacao.Free;
+  FfrxIdentificacao.Free;
+  cdsEmitente.Free;
+  FfrxEmitente.Free;
+  cdsDestinatario.Free;
+  FfrxDestinatario.Free;
+  cdsDadosProdutos.Free;
+  FfrxDadosProdutos.Free;
+  cdsParametros.Free;
+  FfrxParametros.Free;
+  cdsDuplicatas.Free;
+  FfrxDuplicatas.Free;
+  cdsCalculoImposto.Free;
+  FfrxCalculoImposto.Free;
+  cdsTransportador.Free;
+  FfrxTransportador.Free;
+  cdsVeiculo.Free;
+  FfrxVeiculo.Free;
+  cdsVolumes.Free;
+  FfrxVolumes.Free;
+  cdsEventos.Free;
+  FfrxEventos.Free;
+  cdsISSQN.Free;
+  FfrxISSQN.Free;
+  cdsFatura.Free;
+  FfrxFatura.Free;
+  cdsLocalRetirada.Free;
+  FfrxLocalRetirada.Free;
+  cdsLocalEntrega.Free;
+  FfrxLocalEntrega.Free;
+  cdsInformacoesAdicionais.Free;
+  FfrxInformacoesAdicionais.Free;
+  cdsPagamento.Free;
+  FfrxPagamento.Free;
+  cdsInutilizacao.Free;
+  FfrxInutilizacao.Free;
+
+  inherited Destroy;
+end;
 
 procedure TACBrNFeFRClass.SetDataSetsToFrxReport;
 begin
@@ -257,7 +823,7 @@ begin
   Result := '';
   Tamanho := Length(str);
   i := 1;
-  while i <= Tamanho do
+  while (i <= Tamanho) do
   begin
     Temp := Copy(str,i,1);
     vChar := Temp[1];
@@ -279,6 +845,7 @@ begin
       {$ENDIF}
         Resultado := UpperCase(vCHAR);
     end;
+
     Result := Result + Resultado;
     i := i + 1;
   end;
@@ -310,19 +877,10 @@ begin
       FieldByName('VNF').AsFloat          := VNF;
       FieldByName('VTotTrib').AsFloat     := VTotTrib;
       FieldByName('ValorApagar').AsFloat  := VProd- VDesc + VOutro;
-      FieldByName('VTribPerc').AsFloat    := ManterVTribPerc( VTotTrib , VProd ,VNF );
-      if NaoEstaVazio(TributosFonte) then
-        FieldByName('VTribFonte').AsString := '(Fonte: '+TributosFonte+')';
-    end;
-    if FNFe.pag.vTroco > 0 then
-    begin
-      FieldByName('vTroco').AsCurrency    := FNFe.pag.vTroco;
-      FieldByName('vTotPago').AsCurrency  := FNFe.pag.vTroco+FieldByName('VProd').AsFloat;
-    end
-    else
-    begin
-      FieldByName('vTroco').AsCurrency    := FvTroco;
-      FieldByName('vTotPago').AsCurrency  := FvTroco+FieldByName('VProd').AsFloat;
+      FieldByName('VTribPerc').AsFloat    :=
+        FDANFEClassOwner.ManterVTribPerc(VTotTrib, VProd, VNF);
+      if NaoEstaVazio(FDANFEClassOwner.FonteTributos) then
+        FieldByName('VTribFonte').AsString := '(Fonte: '+FDANFEClassOwner.FonteTributos+')';
     end;
     Post;
   end;
@@ -354,6 +912,7 @@ var
 begin
   if not cdsParametros.Active then
     CarregaParametros;
+
   cdsParametros.First;
 
   // verificar se e DANFE detalhado
@@ -362,21 +921,21 @@ begin
   begin
     Close;
     CreateDataSet;
-    if (NFe.Ide.modelo <> 65) or FDetalhado then
+    if (NFe.Ide.modelo <> 65) then
     begin
-      for inItem := 0 to NFe.Det.Count - 1 do
+      for inItem := 0 to (NFe.Det.Count - 1) do
       begin
         Append;
         with FNFe.Det.Items[inItem] do
         begin
           FieldByName('ChaveNFe').AsString          := FNFe.infNFe.ID;
-          FieldByName('cProd').AsString             := FDANFEClassOwner.ManterCodigo( Prod.cEAN,Prod.cProd);
+          FieldByName('cProd').AsString             := FDANFEClassOwner.ManterCodigo(Prod.cEAN,Prod.cProd);
           FieldByName('cEAN').AsString              := Prod.cEAN;
           FieldByName('XProd').AsString             := StringReplace( Prod.xProd, ';', #13, [rfReplaceAll]);
-          FieldByName('VProd').AsString             := ManterVprod( Prod.VProd , Prod.vDesc );
-          FieldByName('vTotTrib').AsString          := ManterdvTotTrib( Imposto.vTotTrib );
-          FieldByName('infAdProd').AsString         := ManterInfAProd( inItem, infAdProd );
-          FieldByName('DescricaoProduto').AsString  := ManterDescricaoProduto( FieldByName('XProd').AsString , FieldByName('infAdProd').AsString );
+          FieldByName('VProd').AsString             := FDANFEClassOwner.ManterVprod(Prod.VProd , Prod.vDesc );
+          FieldByName('vTotTrib').AsString          := FDANFEClassOwner.ManterdvTotTrib(Imposto.vTotTrib );
+          FieldByName('infAdProd').AsString         := FDANFEClassOwner.ManterinfAdProd(FNFe, inItem);
+          FieldByName('DescricaoProduto').AsString  := FDANFEClassOwner.ManterXProd(FNFe, inItem);
           FieldByName('NCM').AsString               := Prod.NCM;
           FieldByName('EXTIPI').AsString            := Prod.EXTIPI;
           FieldByName('genero').AsString            := '';
@@ -391,9 +950,9 @@ begin
           FieldByName('vFrete').AsString            := FormatFloatBr( Prod.vFrete ,'###,###,##0.00');
           FieldByName('vSeg').AsString              := FormatFloatBr( Prod.vSeg   ,'###,###,##0.00');
           FieldByName('vOutro').AsString            := FormatFloatBr( Prod.vOutro ,'###,###,##0.00');
-          FieldByName('vDesc').AsString             := FormatFloatBr( ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00');
+          FieldByName('vDesc').AsString             := FormatFloatBr( FDANFEClassOwner.ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00');
           FieldByName('ORIGEM').AsString            := OrigToStr( Imposto.ICMS.orig);
-          FieldByName('CST').AsString               := ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
+          FieldByName('CST').AsString               := FDANFEClassOwner.ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
           FieldByName('VBC').AsString               := FormatFloatBr( Imposto.ICMS.vBC        ,'###,###,##0.00');
           FieldByName('PICMS').AsString             := FormatFloatBr( Imposto.ICMS.pICMS      ,'###,###,##0.00');
           FieldByName('VICMS').AsString             := FormatFloatBr( Imposto.ICMS.vICMS      ,'###,###,##0.00');
@@ -406,26 +965,26 @@ begin
           FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - Prod.vDesc ,'###,###,##0.00');
           FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro,'###,###,##0.00');
 
-          case FImprimirUnQtVlComercial of
+          case FDANFEClassOwner.ImprimeValor of
           iuComercial:
             begin
               FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
-              FieldByName('Quantidade').AsString    := FormatQuantidade( FieldByName('QCom').AsFloat );
-              FieldByName('ValorUnitario').AsString := FormatValorUnitario( FieldByName('VUnCom').AsFloat );
+              FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QCom').AsFloat );
+              FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnCom').AsFloat );
             end;
           iuTributavel:
             begin
               FieldByName('Unidade').AsString       := FieldByName('UTrib').AsString;
-              FieldByName('Quantidade').AsString    := FormatQuantidade( FieldByName('QTrib').AsFloat );
-              FieldByName('ValorUnitario').AsString := FormatValorUnitario( FieldByName('VUnTrib').AsFloat);
+              FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QTrib').AsFloat );
+              FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnTrib').AsFloat);
             end;
           iuComercialETributavel:
             begin
               if FieldByName('Ucom').AsString = FieldByName('UTrib').AsString then
               begin
                 FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
-                FieldByName('Quantidade').AsString    := FormatQuantidade( FieldByName('QCom').AsFloat );
-                FieldByName('ValorUnitario').AsString := FormatValorUnitario( FieldByName('VUnCom').AsFloat );
+                FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QCom').AsFloat );
+                FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnCom').AsFloat );
               end
               else
               begin
@@ -483,21 +1042,21 @@ begin
           FieldByName('Consumidor').AsString := 'ESTRANGEIRO: ' + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString)
         else
         begin
-          if (FieldByName('CNPJCPF').AsString = '') then
+          if EstaVazio(FieldByName('CNPJCPF').AsString) then
             FieldByName('Consumidor').AsString := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')
           else
             FieldByName('Consumidor').AsString :=
               IfThen(Length(CNPJCPF) = 11, 'CPF: ', 'CNPJ: ') + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString);
         end;
 
-        if Trim(FieldByName('XLgr').AsString) <> '' then
+        if NaoEstaVazio(Trim(FieldByName('XLgr').AsString)) then
           FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
             Trim(FieldByName('XLgr').AsString) + ', ' + Trim(FieldByName('Nro').AsString);
-        if Trim(FieldByName('XCpl').AsString) <> '' then
+        if NaoEstaVazio(Trim(FieldByName('XCpl').AsString)) then
           FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
             Trim(FieldByName('XCpl').AsString);
 
-        if Trim(FieldByName('XMun').AsString) <> '' then
+        if NaoEstaVazio(Trim(FieldByName('XMun').AsString)) then
           FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
             Trim(FieldByName('XBairro').AsString) + ' - ' +
             Trim(FieldByName('XMun').AsString) + '/' +
@@ -514,12 +1073,13 @@ var
 begin
   cdsDuplicatas.Close;
   cdsDuplicatas.CreateDataSet;
-  if Not ( fExibeCampoFatura and (FNFe.Ide.indPag = ipVista) and (FNFe.infNFe.Versao <= 3.10) ) then
+  if (Not FDANFEClassOwner.ExibeCampoFatura) and
+    (FNFe.Ide.indPag = ipVista) and (FNFe.infNFe.Versao <= 3.10) then
   Begin
 
     with cdsDuplicatas do
     begin
-      for i := 0 to NFe.Cobr.Dup.Count - 1 do
+      for i := 0 to (NFe.Cobr.Dup.Count - 1) do
       begin
         Append;
         with FNFe.Cobr.Dup[i] do
@@ -568,14 +1128,14 @@ begin
       FieldByName('IEST').AsString      := IEST;
       FieldByName('CRT').AsString       := CRTToStr(CRT);
 
-      if Trim(FieldByName('CRT').AsString) = '1' then
+      if (Trim(FieldByName('CRT').AsString) = '1') then
         FieldByName('DESCR_CST').AsString := 'CSOSN'
       else
         FieldByName('DESCR_CST').AsString := 'CST';
 
       cdsEmitente.FieldByName('DADOS_ENDERECO').AsString    := Trim(FieldByName('XLgr').AsString) + ', ' +
                                                                 Trim(FieldByName('Nro').AsString);
-	    if (trim(FieldByName('XCpl').AsString) <> '') then
+	    if NaoEstaVazio(trim(FieldByName('XCpl').AsString)) then
         cdsEmitente.FieldByName('DADOS_ENDERECO').AsString  := cdsEmitente.FieldByName('DADOS_ENDERECO').AsString + ', ' +
                                                                 Trim(FieldByName('XCpl').AsString);
 
@@ -585,11 +1145,11 @@ begin
                                                                 Trim(FieldByName('UF').AsString) +
                                                                 ' - CEP: ' + Trim(FieldByName('CEP').AsString) + #13 +
 		  	  				  				                                    ' Fone: ' + Trim(FieldByName('Fone').AsString) +
-                                                                IfThen(trim(FDANFEClassOwner.Fax) <> '', ' - FAX: ' + FormatarFone(trim(FDANFEClassOwner.Fax)),'');
-      if trim(FDANFEClassOwner.Site) <> '' then
+                                                                IfThen(trim(FDANFEClassOwner.Fax) <> '', ' - FAX: ' + FormatarFone(Trim(FDANFEClassOwner.Fax)),'');
+      if NaoEstaVazio(Trim(FDANFEClassOwner.Site)) then
         cdsEmitente.FieldByName('DADOS_ENDERECO').AsString  := cdsEmitente.FieldByName('DADOS_ENDERECO').AsString + #13 +
                                                                 trim(FDANFEClassOwner.Site);
-      if trim(FDANFEClassOwner.Email) <> '' then
+      if NaoEstaVazio(Trim(FDANFEClassOwner.Email)) then
         cdsEmitente.FieldByName('DADOS_ENDERECO').AsString  := cdsEmitente.FieldByName('DADOS_ENDERECO').AsString + #13 +
                                                                 Trim(FDANFEClassOwner.Email);
     end;
@@ -605,7 +1165,7 @@ begin
     Close;
     CreateDataSet;
 
-    if ExibeCampoFatura then
+    if FDANFEClassOwner.ExibeCampoFatura then
     begin
       Append;
 
@@ -662,15 +1222,6 @@ begin
         FieldByName('tBand').AsString := BandeiraCartaoToDescStr( tBand );
         FieldByName('cAut').AsString  := cAut;
       end;
-      Post;
-    end;
-
-    // acrescenta o troco
-    if vTroco > 0 then
-    begin
-      Append;
-      FieldByName('tPag').AsString  := 'Troco R$';
-      FieldByName('vPag').AsFloat   := vTroco;
       Post;
     end;
   end;
@@ -748,10 +1299,16 @@ begin
   wLinhasObs  := 0;
   BufferInfCpl:= '';
   vTemp       := TStringList.Create;
+  
   try
-    wObs  := FDANFEClassOwner.ManterDocreferenciados( FNFe,FImprimirDadosDocReferenciados , ';' );
-    wObs  := ManterInfAdi( wObs );
-    wObs  := ManterContingencia( wObs );
+    wObs  := FDANFEClassOwner.ManterDocreferenciados(FNFe) +
+             FDANFEClassOwner.ManterInfAdFisco(FNFe) +
+             FDANFEClassOwner.ManterObsFisco(FNFe) +
+             FDANFEClassOwner.ManterProcreferenciado(FNFe) +
+             FDANFEClassOwner.ManterInfContr(FNFe) +
+             FDANFEClassOwner.ManterInfCompl(FNFe) +
+             FDANFEClassOwner.ManterContingencia(FNFe);
+	
     if Trim(wObs) <> '' then
     begin
       Campos := Split(';', wObs);
@@ -761,6 +1318,7 @@ begin
       wLinhasObs    := 1; //TotalObS(vTemp.Text);
       BufferInfCpl  := vTemp.Text;
     end;
+	
     with cdsInformacoesAdicionais do
     begin
       Close;
@@ -770,6 +1328,7 @@ begin
       FieldByName('LinhasOBS').AsInteger := wLinhasObs;
       Post;
     end;
+	
   finally
     vTemp.Free;
   end;
@@ -873,12 +1432,12 @@ begin
 
     if Assigned(FNFe) then
     begin
-      if DANFEClassOwner.ExibirResumoCanhoto then
+      if DANFEClassOwner.ExibeResumoCanhoto then
       begin
-         if EstaVazio(DANFEClassOwner.ExibirResumoCanhoto_Texto) then
+         if EstaVazio(DANFEClassOwner.TextoResumoCanhoto) then
           FieldByName('ResumoCanhoto').AsString := ACBrStr('Emissão: ' )+ FormatDateBr(FNFe.Ide.DEmi) + '  Dest/Reme: ' + FNFe.Dest.XNome + '  Valor Total: ' + FormatFloatBr(FNFe.Total.ICMSTot.VNF)
         else
-          FieldByName('ResumoCanhoto').AsString := DANFEClassOwner.ExibirResumoCanhoto_Texto;
+          FieldByName('ResumoCanhoto').AsString := DANFEClassOwner.TextoResumoCanhoto;
       end;
 
       if (FNFe.Ide.TpAmb = taHomologacao) then
@@ -899,8 +1458,8 @@ begin
       begin
         if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN, teSVCRS, teSVCSP]) then
         begin
-          //prioridade para opção NFeCancelada
-          if (FDANFEClassOwner.NFeCancelada) or
+          //prioridade para opção Cancelada
+          if (FDANFEClassOwner.Cancelada) or
              ((NaoEstaVazio(FNFe.procNFe.nProt)) and
               (FNFe.procNFe.cStat in [101,135,151,155])) then
             FieldByName('Mensagem0').AsString := 'NFe Cancelada'
@@ -909,7 +1468,7 @@ begin
                   ( FNFe.procNFe.cStat = 302 ) or
                   ( FNFe.procNFe.cStat = 303 ) then
             FieldByName('Mensagem0').AsString := 'NFe denegada pelo Fisco'
-          else if ((EstaVazio(FDANFEClassOwner.ProtocoloNFe)) and
+          else if ((EstaVazio(FDANFEClassOwner.Protocolo)) and
                    (EstaVazio(FNFe.procNFe.nProt))) then
             FieldByName('Mensagem0').AsString := ACBrStr( 'NFe sem Autorização de Uso da SEFAZ')
           else if (FNFe.Ide.tpImp = tiSimplificado) then
@@ -926,7 +1485,7 @@ begin
                       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
                       FieldByName('Contingencia_ID').AsString := '';
 
-                      if ((FDANFEClassOwner.NFeCancelada) or (FNFe.procNFe.cStat in [101,151,155])) then
+                      if ((FDANFEClassOwner.Cancelada) or (FNFe.procNFe.cStat in [101,151,155])) then
                         FieldByName('Contingencia_Descricao').AsString := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DO CANCELAMENTO' )
                       else if ( FNFe.procNFe.cStat = 110 ) or
                               ( FNFe.procNFe.cStat = 301 ) or
@@ -936,31 +1495,31 @@ begin
                       else
                         FieldByName('Contingencia_Descricao').AsString := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
 
-                      if EstaVazio(FDANFEClassOwner.ProtocoloNFe) then
+                      if EstaVazio(FDANFEClassOwner.Protocolo) then
                       begin
                         if EstaVazio(FNFe.procNFe.nProt) then
                           FieldByName('Contingencia_Valor').AsString := ACBrStr('NFe sem Autorização de Uso da SEFAZ')
                         else
                         begin
-                          FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                          FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, FormatDateTimeBr(FNFe.procNFe.dhRecbto), '');
                           FieldByName('nProt').AsString := FNFe.procNfe.nProt;
                           FieldByName('dhRecbto').AsDateTime := FNFe.procNFe.dhRecbto;
                         end;
                       end
                       else
                       begin
-                        FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
-                        P := Pos('-', FDANFEClassOwner.ProtocoloNFe);
+                        FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.Protocolo;
+                        P := Pos('-', FDANFEClassOwner.Protocolo);
                         if P = 0 then
                         begin
-                          FieldByName('nProt').AsString := Trim(FDANFEClassOwner.ProtocoloNFe);
+                          FieldByName('nProt').AsString := Trim(FDANFEClassOwner.Protocolo);
                           FieldByName('dhRecbto').AsDateTime := 0;
                         end
                         else
                         begin
-                          FieldByName('nProt').AsString := Trim(Copy(FDANFEClassOwner.ProtocoloNFe, 1, P - 1));
+                          FieldByName('nProt').AsString := Trim(Copy(FDANFEClassOwner.Protocolo, 1, P - 1));
                           FieldByName('dhRecbto').AsDateTime := StringToDateTimeDef(Trim(
-                            Copy(FDANFEClassOwner.ProtocoloNFe, P + 1, Length(FDANFEClassOwner.ProtocoloNFe) - P)
+                            Copy(FDANFEClassOwner.Protocolo, P + 1, Length(FDANFEClassOwner.Protocolo) - P)
                             ), 0, 'dd/mm/yyyy hh:nn:ss');
                         end;
                       end;
@@ -980,18 +1539,18 @@ begin
                       if NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
                       begin
                         FieldByName('Contingencia_Descricao').AsString := ACBrStr( 'PROTOCOLO DE AUTORIZAÇÃO DE USO');
-                        FieldByName('Contingencia_Valor').AsString     := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                        FieldByName('Contingencia_Valor').AsString     := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, FormatDateTimeBr(FNFe.procNFe.dhRecbto), '');
                       end
                       else
                       begin
                         FieldByName('Contingencia_Descricao').AsString := ACBrStr('NÚMERO DE REGISTRO DPEC');
-                        if NaoEstaVazio(FDANFEClassOwner.ProtocoloNFe) then
-                          FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.ProtocoloNFe;
+                        if NaoEstaVazio(FDANFEClassOwner.Protocolo) then
+                          FieldByName('Contingencia_Valor').AsString := FDANFEClassOwner.Protocolo;
                       end;
                     end;
 
          teOffLine: begin
-                      FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+                      FieldByName('Contingencia_Valor').AsString := FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0, FormatDateTimeBr(FNFe.procNFe.dhRecbto), '');
                       FieldByName('nProt').AsString := FNFe.procNfe.nProt;
                       FieldByName('dhRecbto').AsDateTime := FNFe.procNFe.dhRecbto;
                     end;
@@ -1004,25 +1563,23 @@ begin
     if NaoEstaVazio(FieldByName('Mensagem0').AsString) then
       FieldByName('Mensagem0').AsString  := FieldByName('Mensagem0').AsString+#10#13;
 
-    FieldByName('Mensagem0').AsString                   := FieldByName('Mensagem0').AsString + MarcaDaguaMSG;
-    FieldByName('LogoExpandido').AsString               := IfThen( FDANFEClassOwner.ExpandirLogoMarca, '1' , '0' );
+    FieldByName('Mensagem0').AsString                   := FieldByName('Mensagem0').AsString + TACBrNFeDANFEFR(FDANFEClassOwner).MarcaDaguaMSG;
+    FieldByName('LogoExpandido').AsString               := IfThen( FDANFEClassOwner.ExpandeLogoMarca, '1' , '0' );
     FieldByName('Sistema').AsString                     := IfThen( FDANFEClassOwner.Sistema <> '' , FDANFEClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
     FieldByName('Usuario').AsString                     := IfThen( FDANFEClassOwner.Usuario <> '' , ' - ' + FDANFEClassOwner.Usuario , '' );
     FieldByName('Fax').AsString                         := IfThen( FDANFEClassOwner.Fax     <> '' , ' - FAX ' + FDANFEClassOwner.Fax , '');
     FieldByName('Site').AsString                        := FDANFEClassOwner.Site;
     FieldByName('Email').AsString                       := FDANFEClassOwner.Email;
-    FieldByName('Desconto').AsString                    := IfThen( FDANFEClassOwner.ImprimirDescPorc , '%' , 'VALOR');
-    FieldByName('TotalLiquido').AsString                := IfThen( FDANFEClassOwner.ImprimirTotalLiquido ,ACBrStr('LÍQUIDO') ,'TOTAL');
-    FieldByName('LinhasPorPagina').AsInteger            := FDANFEClassOwner.ProdutosPorPagina;
-    FieldByName('ExpandirDadosAdicionaisAuto').AsString := IfThen( ExpandirDadosAdicionaisAuto , 'S' , 'N');
+    FieldByName('Desconto').AsString                    := IfThen( FDANFEClassOwner.ImprimeDescPorPercentual , '%' , 'VALOR');
+    FieldByName('TotalLiquido').AsString                := IfThen( FDANFEClassOwner.ImprimeTotalLiquido ,ACBrStr('LÍQUIDO') ,'TOTAL');
+    FieldByName('LinhasPorPagina').AsInteger            := 0;
+    FieldByName('ExpandirDadosAdicionaisAuto').AsString := IfThen(TACBrNFeDANFEFR(FDANFEClassOwner).ExpandirDadosAdicionaisAuto , 'S' , 'N');
     FieldByName('sDisplayFormat').AsString              := '###,###,###,##0.%.*d';
     FieldByName('iFormato').AsInteger                   := integer( FDANFEClassOwner.CasasDecimais.Formato );
-    FieldByName('Mask_qCom').AsString                   := FDANFEClassOwner.CasasDecimais._Mask_qCom;
-    FieldByName('Mask_vUnCom').AsString                 := FDANFEClassOwner.CasasDecimais._Mask_vUnCom;
-    FieldByName('Casas_qCom').AsInteger                 := FDANFEClassOwner.CasasDecimais._qCom;
-    FieldByName('Casas_vUnCom').AsInteger               := FDANFEClassOwner.CasasDecimais._vUnCom;
-    FieldByName('DescricaoViaEstabelec').AsString       := FDescricaoViaEstabelec;
-    FieldByName('ImprimeDescAcrescItem').AsInteger      := IfThen( FDANFEClassOwner.ImprimeDescAcrescItem, 1 , 0 );
+    FieldByName('Mask_qCom').AsString                   := FDANFEClassOwner.CasasDecimais.MaskqCom;
+    FieldByName('Mask_vUnCom').AsString                 := FDANFEClassOwner.CasasDecimais.MaskvUnCom;
+    FieldByName('Casas_qCom').AsInteger                 := FDANFEClassOwner.CasasDecimais.qCom;
+    FieldByName('Casas_vUnCom').AsInteger               := FDANFEClassOwner.CasasDecimais.vUnCom;
 
     // Carregamento da imagem
     if NaoEstaVazio(DANFEClassOwner.Logo) then
@@ -1053,7 +1610,7 @@ begin
 end;
 
 procedure TACBrNFeFRClass.CarregaTransportador;
-var
+Var
   ok: Boolean;
 begin
   with cdsTransportador do
@@ -1064,7 +1621,7 @@ begin
 
     with FNFe.Transp do
     begin
-      FieldByName('ModFrete').AsString := modFreteToDesStr( ModFrete, DblToVersaoDF(ok, FNFe.infNFe.Versao) );
+      FieldByName('ModFrete').AsString := modFreteToDesStr( modFrete, StrToVersaoDF(ok, FNFe.infNFe.VersaoStr));
       with Transporta do
       begin
         FieldByName('CNPJCPF').AsString := FormatarCNPJouCPF(CNPJCPF);
@@ -1268,602 +1825,6 @@ begin
    end;
 end;
 
-constructor TACBrNFeFRClass.Create(AOwner: TComponent);
-begin
-  FDANFEClassOwner := TACBrNFeDANFEClass(AOwner);
-
-  FfrxReport := TfrxReport.Create( nil);
-  FfrxReport.EngineOptions.UseGlobalDataSetList := False;
-  FfrxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];	
-  with FfrxReport do
-  begin
-     EngineOptions.DoublePass := True;
-     StoreInDFM := False;
-     OnBeforePrint := frxReportBeforePrint;
-     OnReportPrint := 'frxReportOnReportPrint';
-  end;
-  FfrxPDFExport := TfrxPDFExport.Create(nil);
-  with FfrxPDFExport do
-  begin
-     Background    := IncorporarBackgroundPdf;
-     EmbeddedFonts := IncorporarFontesPdf;
-     Subject       := 'Exportando DANFE para PDF';
-     ShowProgress  := False;
-  end;
-
-  // cdsIdentificacao
-  if not Assigned(cdsIdentificacao) then
-  begin
-     cdsIdentificacao := TClientDataSet.Create(nil);
-     FfrxIdentificacao := TfrxDBDataset.Create(nil);
-     with FfrxIdentificacao do
-     begin
-        DataSet := cdsIdentificacao;
-        OpenDataSource := False;
-        Enabled := False; 
-        UserName := 'Identificacao';
-     end;
-     with cdsIdentificacao do
-     begin
-        FieldDefs.Add('Id', ftString, 44);
-        FieldDefs.Add('Chave', ftString, 60);
-        FieldDefs.Add('cUF', ftString, 2);
-        FieldDefs.Add('cNF', ftString, 9);
-        FieldDefs.Add('NatOp', ftString, 60);
-        FieldDefs.Add('IndPag', ftString, 1);
-        FieldDefs.Add('Mod_', ftString, 2);
-        FieldDefs.Add('Serie', ftString, 3);
-        FieldDefs.Add('NNF', ftString, 11);
-        FieldDefs.Add('DEmi', ftString, 19);
-        FieldDefs.Add('DSaiEnt', ftString, 10);
-        FieldDefs.Add('TpNF', ftString, 1);
-        FieldDefs.Add('CMunFG', ftString, 7);
-        FieldDefs.Add('TpImp', ftString, 1);
-        FieldDefs.Add('TpEmis', ftString, 1);
-        FieldDefs.Add('CDV', ftString, 1);
-        FieldDefs.Add('TpAmb', ftString, 1);
-        FieldDefs.Add('FinNFe', ftString, 1);
-        FieldDefs.Add('ProcEmi', ftString, 1);
-        FieldDefs.Add('VerProc', ftString, 6);
-        FieldDefs.Add('HoraSaida', ftString, 10);
-        FieldDefs.Add('MensagemFiscal', ftString, 200);
-        FieldDefs.Add('URL', ftString, 1000);
-        CreateDataSet;
-     end;
-   end;
-
-   // cdsEmitente
-   if not Assigned(cdsEmitente) then
-   begin
-     cdsEmitente := TClientDataSet.Create(nil);
-     FfrxEmitente := TfrxDBDataset.Create(nil);
-     with FfrxEmitente do
-     begin
-        DataSet := cdsEmitente;
-        OpenDataSource := False;
-        Enabled := False;
-        UserName := 'Emitente';
-     end;
-     with cdsEmitente do
-     begin
-        FieldDefs.Add('CNPJ', ftString, 18);
-        FieldDefs.Add('XNome', ftString, 60);
-        FieldDefs.Add('XFant', ftString, 60);
-        FieldDefs.Add('XLgr', ftString, 60);
-        FieldDefs.Add('Nro', ftString, 60);
-        FieldDefs.Add('XCpl', ftString, 60);
-        FieldDefs.Add('XBairro', ftString, 60);
-        FieldDefs.Add('CMun', ftString, 7);
-        FieldDefs.Add('XMun', ftString, 60);
-        FieldDefs.Add('UF', ftString, 2);
-        FieldDefs.Add('CEP', ftString, 9);
-        FieldDefs.Add('CPais', ftString, 4);
-        FieldDefs.Add('XPais', ftString, 60);
-        FieldDefs.Add('Fone', ftString, 15);
-        FieldDefs.Add('IE', ftString, 15);
-        FieldDefs.Add('IM', ftString, 15);
-        FieldDefs.Add('IEST', ftString, 15);
-        FieldDefs.Add('CRT', ftString, 1);
-        FieldDefs.Add('DESCR_CST', ftString, 30);
-        FieldDefs.Add('DADOS_ENDERECO', ftString, 1000);
-        CreateDataSet;
-     end;
-   end;
-
-   // cdsDestinatario
-   if not Assigned(cdsDestinatario) then
-   begin
-     cdsDestinatario := TClientDataSet.Create(nil);
-     FfrxDestinatario := TfrxDBDataset.Create(nil);
-     with FfrxDestinatario do
-     begin
-        DataSet := cdsDestinatario;
-        OpenDataSource := False;
-        Enabled := False;
-        UserName := 'Destinatario';
-     end;
-     with cdsDestinatario do
-     begin
-        FieldDefs.Add('CNPJCPF', ftString, 18);
-        FieldDefs.Add('XNome', ftString, 60);
-        FieldDefs.Add('XLgr', ftString, 60);
-        FieldDefs.Add('Nro', ftString, 60);
-        FieldDefs.Add('XCpl', ftString, 60);
-        FieldDefs.Add('XBairro', ftString, 60);
-        FieldDefs.Add('CMun', ftString, 7);
-        FieldDefs.Add('XMun', ftString, 60);
-        FieldDefs.Add('UF', ftString, 2);
-        FieldDefs.Add('CEP', ftString, 9);
-        FieldDefs.Add('CPais', ftString, 4);
-        FieldDefs.Add('XPais', ftString, 60);
-        FieldDefs.Add('Fone', ftString, 15);
-        FieldDefs.Add('IE', ftString, 18);
-        FieldDefs.Add('Consumidor', ftString, 150);
-        CreateDataSet;
-     end;
-   end;
-
-   // cdsDadosProdutos
-   if not Assigned(cdsDadosProdutos) then
-   begin
-     cdsDadosProdutos   := TClientDataSet.Create(nil);
-     FfrxDadosProdutos  := TfrxDBDataset.Create(nil);
-     with FfrxDadosProdutos do
-     begin
-        DataSet := cdsDadosProdutos;
-        OpenDataSource := False;
-        Enabled := False;
-        UserName := 'DadosProdutos';
-     end;
-     with cdsDadosProdutos do
-     begin
-        FieldDefs.Add('CProd'     , ftString, 60);
-        FieldDefs.Add('cEAN'      , ftString, 60);
-        FieldDefs.Add('XProd'     , ftString, 120);
-        FieldDefs.Add('infAdProd' , ftString, 1000);
-        FieldDefs.Add('NCM'       , ftString, 9);
-        FieldDefs.Add('EXTIPI'    , ftString, 8);
-        FieldDefs.Add('genero'    , ftString, 8);
-        FieldDefs.Add('CFOP'      , ftString, 4);
-        FieldDefs.Add('UCom'      , ftString, 6);
-        FieldDefs.Add('QCom'      , ftFloat);
-        FieldDefs.Add('VUnCom'    , ftFloat);
-        FieldDefs.Add('VProd'     , ftString, 18);
-        FieldDefs.Add('cEANTrib'  , ftString, 60);
-        FieldDefs.Add('UTrib'     , ftString, 6);
-        FieldDefs.Add('QTrib'     , ftFloat);
-        FieldDefs.Add('vUnTrib'   , ftFloat);
-        FieldDefs.Add('vFrete'    , ftString, 18);
-        FieldDefs.Add('vOutro'    , ftString, 18);
-        FieldDefs.Add('vSeg'      , ftString, 18);
-        FieldDefs.Add('vDesc'     , ftString, 18);
-        FieldDefs.Add('ORIGEM'    , ftString, 1);
-        FieldDefs.Add('CST'       , ftString, 3);
-        FieldDefs.Add('vBC'       , ftString, 18);
-        FieldDefs.Add('pICMS'     , ftString, 18);
-        FieldDefs.Add('vICMS'     , ftString, 18);
-        FieldDefs.Add('vIPI'      , ftString, 18);
-        FieldDefs.Add('pIPI'      , ftString, 18);
-        FieldDefs.Add('VTotTrib'  , ftString, 18);
-        FieldDefs.Add('ChaveNFe'  , ftString, 50);
-        FieldDefs.Add('vISSQN'    , ftString, 18);
-        FieldDefs.Add('vBcISSQN'  , ftString, 18);
-        FieldDefs.Add('vBcST'     , ftString, 18);
-        FieldDefs.Add('vICMSST'   , ftString, 18);
-        FieldDefs.Add('nLote'     , ftString, 20);
-        FieldDefs.Add('qLote'     , ftFloat);
-        FieldDefs.Add('dFab'      , ftDateTime);
-        FieldDefs.Add('dVal'      , ftDateTime);
-        FieldDefs.Add('DescricaoProduto', ftString, 2000);
-        FieldDefs.Add('Unidade'   , ftString, 14);
-        FieldDefs.Add('Quantidade', ftString, 18);
-        FieldDefs.Add('ValorUnitario'   , ftString, 50);
-        FieldDefs.Add('Valorliquido'    , ftString, 18);
-        FieldDefs.Add('ValorAcrescimos' , ftString, 18);
-        CreateDataSet;
-     end;
-   end;
-
-   // cdsParametros
-   if not Assigned(cdsParametros) then
-   begin
-     cdsParametros  := TClientDataSet.Create(nil);
-     FfrxParametros := TfrxDBDataset.Create(nil);
-     with FfrxParametros do
-     begin
-        DataSet         := cdsParametros;
-        OpenDataSource  := False;
-        Enabled := False;
-        UserName        := 'Parametros';
-     end;
-     with cdsParametros do
-     begin
-        FieldDefs.Add('poscanhoto', ftString, 1);
-        FieldDefs.Add('ResumoCanhoto', ftString, 200);
-        FieldDefs.Add('Mensagem0', ftString, 60);
-        FieldDefs.Add('Imagem', ftString, 256);
-        FieldDefs.Add('Sistema', ftString, 300);
-        FieldDefs.Add('Usuario', ftString, 60);
-        FieldDefs.Add('Fax', ftString, 60);
-        FieldDefs.Add('Site', ftString, 60);
-        FieldDefs.Add('Email', ftString, 60);
-        FieldDefs.Add('Desconto', ftString, 60);
-        FieldDefs.Add('TotalLiquido', ftString, 60);
-        FieldDefs.Add('ChaveAcesso_Descricao', ftString, 90);
-        FieldDefs.Add('Contingencia_ID', ftString, 36);
-        FieldDefs.Add('Contingencia_Descricao', ftString, 60);
-        FieldDefs.Add('Contingencia_Valor', ftString, 60);
-        FieldDefs.Add('LinhasPorPagina', ftInteger);
-        FieldDefs.Add('LogoExpandido', ftString, 1);
-        FieldDefs.Add('DESCR_CST', ftString, 30);
-        FieldDefs.Add('ConsultaAutenticidade', ftString, 300);
-        FieldDefs.Add('sDisplayFormat', ftString, 25);
-        FieldDefs.Add('iFormato', ftInteger);
-        FieldDefs.Add('Casas_qCom', ftInteger);
-        FieldDefs.Add('Casas_vUnCom', ftInteger);
-        FieldDefs.Add('Mask_qCom', ftString, 30);
-        FieldDefs.Add('Mask_vUnCom', ftString, 30);
-        FieldDefs.Add('LogoCarregado', ftBlob);
-        FieldDefs.Add('QrCodeCarregado', ftGraphic, 1000);
-        FieldDefs.Add('DescricaoViaEstabelec', ftString, 30);
-        FieldDefs.Add('QtdeItens', ftInteger);
-        FieldDefs.Add('ExpandirDadosAdicionaisAuto', ftString, 1);
-        FieldDefs.Add('ImprimeDescAcrescItem', ftInteger);
-        FieldDefs.Add('nProt', ftString, 30);
-        FieldDefs.Add('dhRecbto', ftDateTime);
-        CreateDataSet;
-     end;
-   end;
-
-   // cdsDuplicatas
-   if not Assigned(cdsDuplicatas) then
-   begin
-     cdsDuplicatas := TClientDataSet.Create(nil);
-     FfrxDuplicatas := TfrxDBDataset.Create(nil);
-     with FfrxDuplicatas do
-     begin
-        DataSet := cdsDuplicatas;
-        OpenDataSource := False;
-        Enabled := False;
-        UserName := 'Duplicatas';
-     end;
-     with cdsDuplicatas do
-     begin
-        FieldDefs.Add('NDup', ftString, 60);
-        FieldDefs.Add('DVenc', ftString, 10);
-        FieldDefs.Add('VDup', ftFloat);
-        FieldDefs.Add('ChaveNFe', ftString, 50);
-        CreateDataSet;
-     end;
-   end;
-
-   // cdsCalculoImposto
-   if not Assigned(cdsCalculoImposto) then
-   begin
-     cdsCalculoImposto := TClientDataSet.Create(nil);
-     FfrxCalculoImposto := TfrxDBDataset.Create(nil);
-     with FfrxCalculoImposto do
-     begin
-        DataSet := cdsCalculoImposto;
-        OpenDataSource := False;
-        Enabled := False;
-        UserName := 'CalculoImposto';
-     end;
-     with cdsCalculoImposto do
-     begin
-        FieldDefs.Add('VBC'         , ftFloat);
-        FieldDefs.Add('VICMS'       , ftFloat);
-        FieldDefs.Add('VBCST'       , ftFloat);
-        FieldDefs.Add('VST'         , ftFloat);
-        FieldDefs.Add('VProd'       , ftFloat);
-        FieldDefs.Add('VFrete'      , ftFloat);
-        FieldDefs.Add('VSeg'        , ftFloat);
-        FieldDefs.Add('VDesc'       , ftFloat);
-        FieldDefs.Add('VII'         , ftFloat);
-        FieldDefs.Add('VIPI'        , ftFloat);
-        FieldDefs.Add('VPIS'        , ftFloat);
-        FieldDefs.Add('VCOFINS'     , ftFloat);
-        FieldDefs.Add('VOutro'      , ftFloat);
-        FieldDefs.Add('VNF'         , ftFloat);
-        FieldDefs.Add('VTotTrib'    , ftFloat);
-        FieldDefs.Add('VTribPerc'   , ftFloat);
-        FieldDefs.Add('VTribFonte'  , ftString, 100);
-        FieldDefs.Add('vTotPago'    , ftFloat);
-        FieldDefs.Add('vTroco'      , ftFloat);
-        FieldDefs.Add('ValorApagar' , ftFloat);
-        CreateDataSet;
-     end;
-   end;
-
-   // cdsTransportador
-   if not Assigned(cdsTransportador) then
-   begin
-     cdsTransportador := TClientDataSet.Create(nil);
-     FfrxTransportador := TfrxDBDataset.Create(nil);
-     with FfrxTransportador do
-     begin
-        DataSet := cdsTransportador;
-        OpenDataSource := False;
-        Enabled := False;
-        UserName := 'Transportador';
-     end;
-     with cdsTransportador do
-     begin
-        FieldDefs.Add('ModFrete', ftString, 20);
-        FieldDefs.Add('CNPJCPF', ftString, 18);
-        FieldDefs.Add('XNome', ftString, 60);
-        FieldDefs.Add('IE', ftString, 15);
-        FieldDefs.Add('XEnder', ftString, 60);
-        FieldDefs.Add('XMun', ftString, 60);
-        FieldDefs.Add('UF', ftString, 2);
-        CreateDataSet;
-     end;
-   end;
-
-   // cdsVeiculo
-   if not Assigned(cdsVeiculo) then
-   begin
-     cdsVeiculo := TClientDataSet.Create(nil);
-     FfrxVeiculo := TfrxDBDataset.Create(nil);
-     with FfrxVeiculo do
-     begin
-        DataSet := cdsVeiculo;
-        OpenDataSource := False;
-        Enabled := False;
-        UserName := 'Veiculo';
-     end;
-     with cdsVeiculo do
-     begin
-        FieldDefs.Add('PLACA', ftString, 8);
-        FieldDefs.Add('UF', ftString, 2);
-        FieldDefs.Add('RNTC', ftString, 20);
-        CreateDataSet;
-     end;
-   end;
-
-   // cdsVolumes
-   if not Assigned(cdsVolumes) then
-   begin
-     cdsVolumes := TClientDataSet.Create(nil);
-     FfrxVolumes := TfrxDBDataset.Create(nil);
-     with FfrxVolumes do
-     begin
-        DataSet := cdsVolumes;
-        OpenDataSource := False;
-        Enabled := False;
-        UserName := 'Volumes';
-     end;
-     with cdsVolumes do
-     begin
-        FieldDefs.Add('QVol', ftFloat);
-        FieldDefs.Add('Esp', ftString, 60);
-        FieldDefs.Add('Marca', ftString, 60);
-        FieldDefs.Add('NVol', ftString, 60);
-        FieldDefs.Add('PesoL', ftFloat);
-        FieldDefs.Add('PesoB', ftFloat);
-        CreateDataSet;
-     end;
-   end;
-
-   // csdEvento
-   if not Assigned(cdsEventos) then
-   begin
-      cdsEventos := TClientDataSet.Create(nil);
-      FfrxEventos := TfrxDBDataset.Create(nil);
-      with FfrxEventos do
-      begin
-         DataSet := cdsEventos;
-         OpenDataSource := False;
-         Enabled := False;
-         UserName := 'Eventos';
-      end;
-   end;
-
-   // cdsISSQN
-   if not Assigned(cdsISSQN) then
-   begin
-      cdsISSQN := TClientDataSet.Create(nil);
-      FfrxISSQN := TfrxDBDataset.Create(nil);
-      with FfrxISSQN do
-      begin
-         DataSet := cdsISSQN;
-         OpenDataSource := False;
-         Enabled := False;
-         UserName := 'ISSQN';
-      end;
-      with cdsISSQN do
-      begin
-         FieldDefs.Add('vSERV', ftFloat);
-         FieldDefs.Add('vBC', ftFloat);
-         FieldDefs.Add('vISS', ftFloat);
-         FieldDefs.Add('vDescIncond', ftFloat);
-         FieldDefs.Add('vISSRet', ftFloat);
-         CreateDataSet;
-      end;
-   end;
-
-   // cdsFatura
-   if not Assigned(cdsFatura) then
-   begin
-      cdsFatura   := TClientDataSet.Create(nil);
-      FfrxFatura  := TfrxDBDataset.Create(nil);
-      with FfrxFatura do
-      begin
-         DataSet        := cdsFatura;
-         OpenDataSource := False;
-         Enabled := False;
-         UserName       := 'Fatura';
-      end;
-      with cdsFatura do
-      begin
-         FieldDefs.Add('iForma'   , ftInteger);
-         FieldDefs.Add('Pagamento', ftString, 20);
-         FieldDefs.Add('nFat'     , ftString, 60);
-         FieldDefs.Add('vOrig'    , ftFloat);
-         FieldDefs.Add('vDesc'    , ftFloat);
-         FieldDefs.Add('vLiq'     , ftFloat);
-         CreateDataSet;
-      end;
-   end;
-
-   // cdsLocalRetirada
-   if not Assigned(cdsLocalRetirada) then
-   begin
-      cdsLocalRetirada := TClientDataSet.Create(nil);
-      FfrxLocalRetirada := TfrxDBDataset.Create(nil);
-      with FfrxLocalRetirada do
-      begin
-         DataSet := cdsLocalRetirada;
-         OpenDataSource := False;
-         Enabled := False;
-         UserName := 'LocalRetirada';
-      end;
-      with cdsLocalRetirada do
-      begin
-         FieldDefs.Add('CNPJ', ftString, 18);
-         FieldDefs.Add('XLgr', ftString, 60);
-         FieldDefs.Add('Nro', ftString, 60);
-         FieldDefs.Add('XCpl', ftString, 60);
-         FieldDefs.Add('XBairro', ftString, 60);
-         FieldDefs.Add('CMun', ftString, 7);
-         FieldDefs.Add('XMun', ftString, 60);
-         FieldDefs.Add('UF', ftString, 2);
-         CreateDataSet;
-      end;
-   end;
-
-   // cdsLocalEntrega
-   if not Assigned(cdsLocalEntrega) then
-   begin
-      cdsLocalEntrega := TClientDataSet.Create(nil);
-      FfrxLocalEntrega := TfrxDBDataset.Create(nil);
-      with FfrxLocalEntrega do
-      begin
-         DataSet := cdsLocalEntrega;
-         OpenDataSource := False;
-         Enabled := False;
-         UserName := 'LocalEntrega';
-      end;
-      with cdsLocalEntrega do
-      begin
-         FieldDefs.Add('CNPJ', ftString, 18);
-         FieldDefs.Add('XLgr', ftString, 60);
-         FieldDefs.Add('Nro', ftString, 60);
-         FieldDefs.Add('XCpl', ftString, 60);
-         FieldDefs.Add('XBairro', ftString, 60);
-         FieldDefs.Add('CMun', ftString, 7);
-         FieldDefs.Add('XMun', ftString, 60);
-         FieldDefs.Add('UF', ftString, 2);
-         CreateDataSet;
-      end;
-   end;
-
-   // cdsInformacoesAdicionais
-   if not Assigned(cdsInformacoesAdicionais) then
-   begin
-      cdsInformacoesAdicionais := TClientDataSet.Create(nil);
-      FfrxInformacoesAdicionais := TfrxDBDataset.Create(nil);
-      with FfrxInformacoesAdicionais do
-      begin
-         DataSet := cdsInformacoesAdicionais;
-         OpenDataSource := False;
-         Enabled := False;
-         UserName := 'InformacoesAdicionais';
-      end;
-      with cdsInformacoesAdicionais do
-      begin
-         FieldDefs.Add('OBS', ftString, 6900);
-         FieldDefs.Add('LinhasOBS', ftInteger);
-         CreateDataSet;
-      end;
-   end;
-
-   // cdsPagamento
-   if not Assigned(cdsPagamento) then
-   begin
-      cdsPagamento := TClientDataSet.Create(nil);
-      FfrxPagamento := TfrxDBDataset.Create(nil);
-      with FfrxPagamento do
-      begin
-         DataSet := cdsPagamento;
-         OpenDataSource := False;
-         Enabled := False;
-         UserName := 'Pagamento';
-      end;
-      with cdsPagamento do
-      begin
-         FieldDefs.Add('tPag', ftString, 50);
-         FieldDefs.Add('vPag', ftFloat);
-         FieldDefs.Add('vTroco', ftFloat);
-         FieldDefs.Add('CNPJ', ftString, 50);
-         FieldDefs.Add('tBand', ftString, 50);
-         FieldDefs.Add('cAut', ftString, 20);
-         CreateDataSet;
-      end;
-   end;
-
-   //cdsInutilização
-   if not Assigned(cdsInutilizacao) then
-   begin
-      cdsInutilizacao := TClientDataSet.Create(nil);
-      FfrxInutilizacao := TfrxDBDataset.Create(nil);
-      with FfrxInutilizacao do
-      begin
-         DataSet := cdsInutilizacao;
-         OpenDataSource := False;
-         Enabled := False;
-         UserName := 'Inutilizacao';
-      end;
-   end;
-end;
-
-destructor TACBrNFeFRClass.Destroy;
-begin
-    FfrxReport.Free;
-    FfrxPDFExport.Free;
-    FfrxBarCodeObject.Free;
-    cdsIdentificacao.Free;
-    FfrxIdentificacao.Free;
-    cdsEmitente.Free;
-    FfrxEmitente.Free;
-    cdsDestinatario.Free;
-    FfrxDestinatario.Free;
-    cdsDadosProdutos.Free;
-    FfrxDadosProdutos.Free;
-    cdsParametros.Free;
-    FfrxParametros.Free;
-    cdsDuplicatas.Free;
-    FfrxDuplicatas.Free;
-    cdsCalculoImposto.Free;
-    FfrxCalculoImposto.Free;
-    cdsTransportador.Free;
-    FfrxTransportador.Free;
-    cdsVeiculo.Free;
-    FfrxVeiculo.Free;
-    cdsVolumes.Free;
-    FfrxVolumes.Free;
-    cdsEventos.Free;
-    FfrxEventos.Free;
-    cdsISSQN.Free;
-    FfrxISSQN.Free;
-    cdsFatura.Free;
-    FfrxFatura.Free;
-    cdsLocalRetirada.Free;
-    FfrxLocalRetirada.Free;
-    cdsLocalEntrega.Free;
-    FfrxLocalEntrega.Free;
-    cdsInformacoesAdicionais.Free;
-    FfrxInformacoesAdicionais.Free;
-    cdsPagamento.Free;
-    FfrxPagamento.Free;
-    cdsInutilizacao.Free;
-    FfrxInutilizacao.Free;
-
-  inherited;
-//  FDANFEClassOwner := TACBrNFeDANFEClass(AOwner);
-end;
-
 procedure TACBrNFeFRClass.PintarQRCode(QRCodeData: String; APict: TPicture);
 var
   QRCode: TDelphiZXingQRCode;
@@ -1873,7 +1834,7 @@ begin
   QRCode       := TDelphiZXingQRCode.Create;
   QRCodeBitmap := TBitmap.Create;
   try
-    QRCode.Data      := QRCodeData;
+    QRCode.Data      := widestring(QRCodeData);
     QRCode.Encoding  := qrUTF8NoBOM;
     QRCode.QuietZone := 1;
 
@@ -1966,369 +1927,6 @@ begin
                 CpContingencia2.Visible := FNFe.Ide.tpEmis <> teNormal;
             end;
     end;
-  end;
-end;
-
-Function TACBrNFeFRClass.ManterVprod( dVProd , dvDesc : Double ) : String;
-Var
-  dValor : Double;
-begin
-  if FDANFEClassOwner.ImprimirTotalLiquido then
-    dValor := dVProd - dvDesc
-  else
-    dValor := dVProd;
-
-  Result := FormatFloatBr( dValor,'###,###,##0.00');
-end;
-
-Function TACBrNFeFRClass.ManterdvTotTrib( dvTotTrib  : Double ) : String;
-Var
-  dValor : Double;
-begin
-  if ExibirTotalTributosItem then
-    dValor := dvTotTrib
-  else
-    dValor := 0;
-  Result := FormatFloatBr( dValor,'###,###,##0.00');
-end;
-
-Function TACBrNFeFRClass.ManterVDesc( dvDesc: Currency; dVUnCom , dQCom : double ) : Double;
-begin
-  if ( FDANFEClassOwner.ImprimirDescPorc ) then
-  begin
-    if ( ( dvDesc  > 0 ) and ( dVUnCom > 0 ) and ( dQCom   > 0 ) ) then
-      Result := (( dvDesc*100 ) / (dVUnCom * dQCom) )
-    else
-      Result := 0;
-  end
-  else
-    Result := dvDesc;
-end;
-
-Function TACBrNFeFRClass.ManterCst( dCRT: TpcnCRT;  dCSOSN: TpcnCSOSNIcms; dCST: TpcnCSTIcms ) : String;
-begin
-  if dCRT = crtSimplesNacional then
-    Result := CSOSNIcmsToStr(dCSOSN)
-  else
-    Result := CSTICMSToStr(dCST);
-end;
-
-Function TACBrNFeFRClass.ManterArma( inItem:  integer  ) : String;
-Var
-  i : Integer;
-begin
-  Result := '';
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if (FImprimirDadosArma) and ( arma.Count > 0) then
-    begin
-      Result := sQuebraLinha;
-      for i := 0 to arma.Count - 1 do
-      begin
-        Result := Result + ACBrStr('TIPO DE ARMA: ')   + ArmaTipoStr( arma.Items[i].tpArma ) + sQuebraLinha;
-        Result := Result + ACBrStr('No. SÉRIE ARMA: ') + arma.Items[i].nSerie + sQuebraLinha;
-        Result := Result + ACBrStr('No. SÉRIE CANO: ') + arma.Items[i].nCano + sQuebraLinha;
-        Result := Result + ACBrStr('DESCRIÇÃO ARMA: ') + arma.Items[i].descr + ';';
-       end;
-    end;
-  end;
-end;
-
-Function TACBrNFeFRClass.ManterMedicamentos( inItem:  integer  ) : String;
-Var
-  i : Integer;
-begin
-  Result := '';
-  { detalhamento específico de medicamentos }
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if med.Count > 0 then
-    begin
-      for i := 0 to med.Count - 1 do
-      begin
-        if NFe.infNFe.Versao >= 4 then
-          Result := Result + IfThen(Result = '', '', sQuebraLinha) + 'C.P. ANVISA: '+ med.Items[i].cProdANVISA
-        else
-        begin
-          Result := Result + IfThen(Result = '', '', sQuebraLinha) + 'LOTE: ' + med.Items[i].nLote;
-
-          if(med.Items[i].qLote <> qCom) Then
-            Result := Result + sQuebraLinha + 'QTD: '  + FormatFloatBr(med.Items[i].qLote);
-
-          Result := Result + sQuebraLinha + 'FAB: '  + FormatDateBr(med.Items[i].dFab);
-          Result := Result + sQuebraLinha + 'VAL: '  + FormatDateBr(med.Items[i].dVal);
-        end;
-        Result := Result + IfThen( med.Items[i].vPMC  > 0, sQuebraLinha + 'PMC: ' + FormatFloatBr(med.Items[i].vPMC), '') + ';';
-      end;
-    end;
-  end;
-end;
-
-Function TACBrNFeFRClass.ManterRastro( inItem:  integer  ) : String;
-Var
-  i : Integer;
-begin
-  Result := '';
-  { rastreabilidade do produto}
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if Rastro.Count > 0 then
-    begin
-      for i := 0 to Rastro.Count - 1 do
-      begin
-        Result := Result + IfThen(Result = '', '', sQuebraLinha) + 'LOTE: ' + rastro.Items[i].nLote;
-
-        if(rastro.Items[i].qLote <> qCom) Then
-          Result := Result + sQuebraLinha + 'QTD: '  + FormatFloatBr(rastro.Items[i].qLote);
-
-        Result := Result + sQuebraLinha + 'FAB: '  + FormatDateBr(rastro.Items[i].dFab);
-        Result := Result + sQuebraLinha + 'VAL: '  + FormatDateBr(rastro.Items[i].dVal);
-
-        if NaoEstaVazio(rastro.Items[i].cAgreg) Then
-          Result := Result + sQuebraLinha + ACBrStr('C.AGREGAÇÃO: ' ) + rastro.Items[i].cAgreg;
-
-        Result := Result + ';';
-      end;
-    end;
-  end;
-end;
-
-Function TACBrNFeFRClass.ManterVeiculos( inItem:  integer  ) : String;
-begin
-  Result := '';
-{ detalhamento especifico de veículos }
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if veicProd.chassi > '' then
-    begin
-      Result := sQuebraLinha;
-	    Result := Result + ACBrStr('TIPO DE OPERAÇÃO: ' + VeiculosTipoOperStr( veicProd.tpOP ) ) + sQuebraLinha;
-	    Result := Result + ACBrStr('CHASSI: ' )+ veicProd.chassi + sQuebraLinha;
-	    Result := Result + ACBrStr('CÓDIGO DA COR: ' )+ veicProd.cCor + sQuebraLinha;
-	    Result := Result + ACBrStr('NOME DA COR: ') + veicProd.xCor + sQuebraLinha;
-	    Result := Result + ACBrStr('POTÊNCIA DO MOTOR: ') + veicProd.pot + sQuebraLinha;
-	    Result := Result + ACBrStr('CILINDRADAS: ') + veicProd.Cilin + sQuebraLinha;
-	    Result := Result + ACBrStr('PESO LÍQUIDO: ') + veicProd.pesoL + sQuebraLinha;
-	    Result := Result + ACBrStr('PESO BRUTO: ' )+ veicProd.pesoB + sQuebraLinha;
-	    Result := Result + ACBrStr('NÚMERO DE SÉRIE: ') + veicProd.nSerie + sQuebraLinha;
-	    Result := Result + ACBrStr('COMBUSTÍVEL: ' + VeiculosCombustivelStr( veicProd.tpComb ) ) + sQuebraLinha;
-	    Result := Result + ACBrStr('NÚMERO DO MOTOR: ') + veicProd.nMotor + sQuebraLinha;
-	    Result := Result + ACBrStr('CAP. MÁX. TRAÇÃO: ') + veicProd.CMT + sQuebraLinha;
-	    Result := Result + ACBrStr('DISTÂNCIA ENTRE EIXOS: ') + veicProd.dist + sQuebraLinha;
-	    Result := Result + ACBrStr('ANO DO MODELO: ' )+ IntToStr(veicProd.anoMod) + sQuebraLinha;
-	    Result := Result + ACBrStr('ANO DE FABRICAÇÃO: ') + IntToStr(veicProd.anoFab) + sQuebraLinha;
-	    Result := Result + ACBrStr('TIPO DE PINTURA: ') + veicProd.tpPint + sQuebraLinha;
-	    Result := Result + ACBrStr('TIPO DE VEÍCULO: ' + VeiculosTipoStr( veicProd.tpVeic ) )+ sQuebraLinha;
-	    Result := Result + ACBrStr('ESPÉCIE DO VEÍCULO: ' +VeiculosEspecieStr( veicProd.espVeic )) + sQuebraLinha;
-	    Result := Result + ACBrStr('VIN (CHASSI): ' + VeiculosVinStr( veicProd.VIN ) )+ sQuebraLinha;
-	    Result := Result + ACBrStr('CONDIÇÃO DO VEÍCULO: ' +VeiculosCondicaoStr( veicProd.condVeic)) + sQuebraLinha;
-	    Result := Result + ACBrStr('CÓDIGO MARCA MODELO: ') + veicProd.cMod + sQuebraLinha;
-	    Result := Result + ACBrStr('CÓDIGO COR DENATRAN: ' +VeiculosCorDENATRANSTr( veicProd.cCorDENATRAN )) + sQuebraLinha;
-	    Result := Result + ACBrStr('CAP.MÁXIMA DE LOTAÇÃO: ') +IntToStr(veicProd.lota) + sQuebraLinha;
-	    Result := Result + ACBrStr('RESTRIÇÃO: ' +VeiculosRestricaoStr( veicProd.tpRest ) )+ ';';
-    end;
-  end;
-end;
-
-
-Function TACBrNFeFRClass.ManterValAprox( inItem : Integer ): String;
-begin
-  Result := '';
-  with FNFe.Det.Items[inItem] do
-  begin
-    if (Imposto.vTotTrib <> 0)  and (ExibirTotalTributosItem) then
-    begin
-      Result := '';
-      with Imposto do
-      begin
-        Result := Result+'Val Aprox Tributos: '+ FloatToStrF(Imposto.vTotTrib,ffCurrency,15,2);
-        if TributosPercentual = ptValorNF then
-          Result := Result+' ('+FloatToStrF(((StringToFloatDef(FloatToStr(Imposto.vTotTrib),0)*100)/(StringToFloatDef(FloatToStr(Prod.VProd),0) +
-                                StringToFloatDef(FloatToStr(Prod.vFrete),0)  +
-                                StringToFloatDef(FloatToStr(Prod.vOutro),0)  +
-                                StringToFloatDef(FloatToStr(Prod.vSeg),0)    +
-                                StringToFloatDef(FloatToStr(IPI.vIPI), 0)    +
-                                StringToFloatDef(FloatToStr(ICMS.vICMSST), 0))),ffNumber,15,2)+'%)'
-        else
-          Result := Result+' ('+FloatToStrF(((StringToFloatDef(FloatToStr(Imposto.vTotTrib),0)*100)/(StringToFloatDef(FloatToStr(Prod.VProd),0))),ffNumber,15,2)+'%)';
-      end;
-    end;
-  end;
-end;
-
-Function TACBrNFeFRClass.ManterCombustivel( inItem:  integer  ) : String;
-begin
-  Result := '';
-  with FNFe.Det.Items[inItem].Prod do
-  begin
-    if comb.cProdANP > 0 then
-    begin
-      Result := sQuebraLinha;
-      Result := Result + ACBrStr( 'CÓD. PRODUTO ANP: ') + IntToStr(comb.cProdANP) + sQuebraLinha;
-      Result := Result + IfThen( comb.CODIF > '', ACBrStr( 'AUTORIZAÇÃO/CODIF: ') + comb.CODIF + sQuebraLinha , '');
-      Result := Result + IfThen( comb.qTemp > 0 , ACBrStr( 'QTD. FATURADA TEMP. AMBIENTE: ' )+ FormatFloat('###,##0.0000', comb.qTemp) + sQuebraLinha , '');
-      Result := Result + ACBrStr('UF DE CONSUMO: ') + comb.UFcons + sQuebraLinha;
-      if comb.CIDE.qBCProd > 0 then
-      begin
-        Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.qBCProd) + sQuebraLinha;
-        Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloat('###,##0.0000', comb.CIDE.vAliqProd) + sQuebraLinha;
-        Result := Result + ACBrStr('VALOR CIDE: ') + FormatFloat('###,##0.00', comb.CIDE.vCIDE);
-      end;
-      if comb.encerrante.nBico > 0  then
-      begin
-        Result := Result + 'ENCERRANTE' + sQuebraLinha;
-        Result := Result + 'BICO: ' +  IntToStr( comb.encerrante.nBico ) + sQuebraLinha;
-        Result := Result + IfThen( comb.encerrante.nBomba > 0, 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + sQuebraLinha , '');
-        Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + sQuebraLinha;
-        Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat('###,##0.000', comb.encerrante.vEncIni) + sQuebraLinha;
-        Result := Result + 'NO FINAL: ' + FormatFloat('###,##0.000', comb.encerrante.vEncFin) + sQuebraLinha;
-      end;
-    end;
-  end;
-end;
-
-Function TACBrNFeFRClass.ManterInfAProd( inItem : Integer; sinfAdProd : String ) : String;
-var
-  Campos2     : TSplitResult;
-  IndexCampo2 : Integer;
-  vTemp2      : TStringList;
-  Separador   : Char;
-begin
-  vTemp2  := TStringList.create;
-  try
-    Result  := sinfAdProd;
-    Result  := Result + ManterValAprox( inItem );
-    if FDANFEClassOwner.ImprimirDetalhamentoEspecifico then
-    begin
-      sQuebraLinha := QuebraLinha;
-      Result := Result + ManterVeiculos( inItem  );
-      Result := Result + ManterMedicamentos( inItem  );
-      Result := Result + ManterRastro( inItem  );
-      Result := Result + ManterArma( inItem  );
-      Result := Result + ManterCombustivel( inItem );
-    end;
-    if Trim(Result) <> '' then
-    begin
-      Separador := Trim(QuebraLinha)[1];
-      Campos2 := Split(Separador, Result);
-
-      for IndexCampo2 := 0 to Length(Campos2) - 1 do
-        vTemp2.Add(Trim(Campos2[IndexCampo2]));
-
-      Result  := #13 + Trim(vTemp2.Text);
-    end;
-  finally
-    vTemp2.free;
-  end;
-end;
-
-Function TACBrNFeFRClass.ManterDescricaoProduto( sXProd,sinfAdProd : String ) : String;
-begin
-  Result := trim( sXProd );
-  if sinfAdProd <> '' then
-    Result := Result +#13+ trim( sinfAdProd );
-end;
-
-
-Function TACBrNFeFRClass.ManterVTribPerc( dVTotTrib , dVProd ,dVNF : Double ) : Double;
-begin
-  Result := 0;
-  case TributosPercentual of
-    ptPersonalizado   : Result := TributosPercentualPersonalizado;
-    ptValorProdutos   : if (dVProd > 0) then Result := dVTotTrib*100/dVProd;
-    ptValorNF         : if (dVNF   > 0) then Result := dVTotTrib*100/dVNF;
-  end;
-end;
-
-Function TACBrNFeFRClass.FormatQuantidade( dValor : Double ) : String;
-begin
-  With cdsParametros do
-  begin
-     case FieldByName('iFormato').AsInteger of
-      0 : Result := FormatFloatBr( dValor , FloatMask( FieldByName('Casas_qCom').AsInteger));
-      1 : Result := FormatFloatBr( dValor , FieldByName('Mask_qCom').AsString);
-      else
-        Result := FormatFloatBr( dValor , FloatMask( FieldByName('Casas_qCom').AsInteger));
-    end;
-  end;
-end;
-
-
-Function TACBrNFeFRClass.FormatValorUnitario( dValor : Double ) : String;
-begin
-  With cdsParametros do
-  begin
-    case FieldByName('iFormato').AsInteger of
-      0 : Result := FormatFloatBr( dValor , FloatMask( FieldByName('Casas_vUnCom').AsInteger));
-      1 : Result := FormatFloatBr( dValor , FieldByName('Mask_vUnCom').AsString);
-      else
-        Result := FormatFloatBr( dValor , FloatMask( FieldByName('Mask_vUnCom').AsInteger));
-    end;
-  end;
-end;
-
-
-Function TACBrNFeFRClass.QuebraLinha : String;
-begin
-  if fQuebraLinhaEmDetalhamentoEspecifico then
-    Result := ';'
-  else
-    Result := ' - ';
-end;
-
-
-Function TACBrNFeFRClass.ManterInfAdi( swObs : String ) : String;
-var
-  i : Integer;
-  TmpStr : String;
-begin
-  result := swObs;
-  TmpStr := '';
-  with FNFe.InfAdic do
-  begin
-
-    for i := 0 to ObsFisco.Count - 1 do
-    begin
-      with ObsFisco.Items[i] do
-        TmpStr := TmpStr + XCampo + ': ' + XTexto + ';';
-    end;
-
-    //Fisco
-    if Length(InfAdFisco) = 0 then InfAdFisco := '';
-
-    result  := result + TmpStr + InfAdFisco;
-    TmpStr  := '';
-    for i := 0 to ObsCont.Count - 1 do
-    begin
-      with ObsCont.Items[i] do
-        TmpStr := TmpStr + XCampo + ': ' + XTexto + ';';
-    end;
-    //Inf. Complementar
-    if Length(InfCpl) = 0 then InfCpl := '';
-
-    result  := result + TmpStr + ' ' + InfCpl;
-  end;
-end;
-
-Function TACBrNFeFRClass.ManterContingencia( swObs : String ) : String;
-  //Contingencia
-begin
-  result := swObs;
-  case FNFe.Ide.tpEmis of
-    teNORMAL : result := result + '';
-    teOffLine,
-    teContingencia,
-    teFSDA,
-    teSCAN,
-    teSVCAN,
-    teSVCRS,
-    teSVCSP : result := result + ACBrStr('DANFE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS;');
-    teDPEC  : begin
-                result := result +
-                  ACBrStr( 'DANFE IMPRESSO EM CONTINGÊNCIA - DPEC REGULARMENTE RECEBIDA PELA RECEITA FEDERAL DO BRASIL;')+
-                  ACBrStr('DATA/HORA INÍCIO: ') + IfThen(FNFe.ide.dhCont = 0, ' ', DateTimeToStr(FNFe.ide.dhCont)) + ';'+
-                  ACBrStr('MOTIVO CONTINGÊNCIA: ') + IfThen(EstaVazio(FNFe.ide.xJust), ' ', FNFe.ide.xJust)+';';
-              end;
   end;
 end;
 

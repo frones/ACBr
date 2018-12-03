@@ -15,7 +15,6 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Pitch = fpVariable
   Font.Style = []
-  Font.Quality = fqClearType
   Menu = MainMenu1
   OldCreateOrder = True
   Position = poScreenCenter
@@ -247,7 +246,6 @@ object Form1: TForm1
         Font.Name = 'Courier New'
         Font.Pitch = fpVariable
         Font.Style = []
-        Font.Quality = fqClearType
         ParentFont = False
         ScrollBars = ssVertical
         TabOrder = 26
@@ -516,7 +514,6 @@ object Form1: TForm1
         Font.Name = 'Courier New'
         Font.Pitch = fpVariable
         Font.Style = []
-        Font.Quality = fqClearType
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 1
@@ -535,7 +532,6 @@ object Form1: TForm1
         Font.Name = 'Courier New'
         Font.Pitch = fpVariable
         Font.Style = []
-        Font.Quality = fqClearType
         ParentFont = False
         TabOrder = 0
         WantReturns = False
@@ -564,7 +560,6 @@ object Form1: TForm1
           Font.Name = 'Fixedsys'
           Font.Pitch = fpVariable
           Font.Style = []
-          Font.Quality = fqClearType
           ParentFont = False
           ScrollBars = ssVertical
           TabOrder = 1
@@ -841,7 +836,6 @@ object Form1: TForm1
             Font.Name = 'Fixedsys'
             Font.Pitch = fpVariable
             Font.Style = []
-            Font.Quality = fqClearType
             ParentFont = False
             TabOrder = 0
           end
@@ -871,7 +865,6 @@ object Form1: TForm1
           Font.Name = 'Arial'
           Font.Pitch = fpVariable
           Font.Style = [fsBold]
-          Font.Quality = fqClearType
           ParentFont = False
           OnClick = sbDirRFDClick
         end
@@ -904,7 +897,6 @@ object Form1: TForm1
           Font.Name = 'Arial'
           Font.Pitch = fpVariable
           Font.Style = []
-          Font.Quality = fqClearType
           ParentFont = False
           TabOrder = 1
           OnChange = edDirRFDChange
@@ -982,7 +974,6 @@ object Form1: TForm1
         Font.Name = 'Courier New'
         Font.Pitch = fpVariable
         Font.Style = []
-        Font.Quality = fqClearType
         Lines.Strings = (
           'TEXTO LIVRE'
           'At'#233' 600 caracteres'
@@ -1107,7 +1098,6 @@ object Form1: TForm1
         Font.Name = 'Courier New'
         Font.Pitch = fpVariable
         Font.Style = []
-        Font.Quality = fqClearType
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 2
@@ -1147,7 +1137,6 @@ object Form1: TForm1
           Font.Name = 'Tahoma'
           Font.Pitch = fpVariable
           Font.Style = []
-          Font.Quality = fqClearType
           ParentFont = False
         end
         object btnMenuFiscalLX: TButton
@@ -1642,7 +1631,6 @@ object Form1: TForm1
             TitleFont.Name = 'Tahoma'
             TitleFont.Pitch = fpVariable
             TitleFont.Style = []
-            TitleFont.Quality = fqClearType
           end
           object edAAC_ECF_NumSerie: TDBEdit
             Left = 8
@@ -2652,7 +2640,6 @@ object Form1: TForm1
               Font.Name = 'MS Sans Serif'
               Font.Pitch = fpVariable
               Font.Style = []
-              Font.Quality = fqClearType
               ItemIndex = 24
               ParentFont = False
               TabOrder = 0

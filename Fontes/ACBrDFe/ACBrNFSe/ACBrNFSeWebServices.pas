@@ -2020,9 +2020,12 @@ begin
                                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                     'xsi:schemaLocation="http://www.equiplano.com.br/enfs esCancelarNfseEnvio_v01.xsd">';
 
-           proGinfes: FTagI := '<' + FTagGrupo +
-                                 ' xmlns="http://www.ginfes.com.br/servico_cancelar_nfse_envio"' +
-                                 ' xmlns:ns4="http://www.ginfes.com.br/tipos">';
+           proGinfes:begin
+                       FNameSpaceCan := ' xmlns="http://www.ginfes.com.br/servico_cancelar_nfse_envio"' +
+                                 ' xmlns:ns4="http://www.ginfes.com.br/tipos"';
+
+                       FTagI := '<' + FTagGrupo + FNameSpaceCan + '>';
+                     end;
 
            proCONAM,
            proEL,
@@ -4488,7 +4491,7 @@ begin
       proSP,
       proNotaBlu: FdocElemento := FTagGrupo;
 
-      proGinfes: FdocElemento := FTagGrupo;
+      proGinfes: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
 
       ProTecnos,
       proISSNET: FdocElemento := FPrefixo3 + 'Pedido';
@@ -4502,6 +4505,7 @@ begin
     end;
 
     case FProvedor of
+      proGINFES,
       proBetha,
       proISSe,
       proFiorilli,
@@ -4513,12 +4517,12 @@ begin
     end;
 
     if FNotasFiscais.Count > 0 then
-      begin
-        if (FNumeroNFSe = '') then
-          FNumeroNFSe := FNotasFiscais.Items[0].NFSe.Numero;
-        if FProvedor = proISSDSF then
-          FCodigoVerificacao := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
-      end;
+    begin
+      if (FNumeroNFSe = '') then
+        FNumeroNFSe := FNotasFiscais.Items[0].NFSe.Numero;
+      if FProvedor = proISSDSF then
+        FCodigoVerificacao := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
+    end;
 
     case FProvedor of
       proCONAM: FURI := 'Sdt_cancelanfe';
@@ -4680,6 +4684,7 @@ begin
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     case Fprovedor of
+      proGINFES,
       proInfisc,
       proInfiscv11,
       proNotaBlu:
@@ -4716,6 +4721,7 @@ begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
   case FProvedor of
+    proGINFES,
     proInfisc,
     proInfiscv11,
     proNotaBlu: FPDadosMsg := FPDadosMsg;

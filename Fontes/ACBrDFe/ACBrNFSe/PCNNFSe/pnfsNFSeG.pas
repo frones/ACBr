@@ -1806,6 +1806,7 @@ begin
                          '</' + Prefixo3 + 'Pedido>';
                end;
 
+    proRJ,
     proSimplISS: begin
                    TagI := '<' + Prefixo3 + 'Pedido' + FNameSpaceDad + '>' +
                              '<' + Prefixo4 + 'InfPedidoCancelamento' + aIdentificadorCanc + '>';
@@ -1814,7 +1815,7 @@ begin
                  end;
 
     proEquiplano,
-    proGinfes,
+//    proGinfes,
     proGoverna,
     proEGoverneISS,
     proISSDSF,

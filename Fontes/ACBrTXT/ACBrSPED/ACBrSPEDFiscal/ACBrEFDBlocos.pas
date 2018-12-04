@@ -1729,6 +1729,7 @@ end;
 
 function StrToMotivoRessarcimento(const AValue: string): TACBrMotivoRessarcimento;
 begin
+ Result := tmrOutros; //podemos criar um tmrNenhum se o campo for opcional
   if AValue = '1' then
     Result := tmrVendaOutraUF
   else
@@ -1767,6 +1768,7 @@ end;
 
 function StrToIndicadorDeducao(const AValue: string): TACBrIndicadorDeducao;
 begin
+  Result := tidOutros; //  podemos criar tidNenhum se for opcional
   if AValue = '0' then
     Result := tidCompensacaoISS
   else
@@ -1796,6 +1798,7 @@ end;
 
 function StrToIndicadorProcesso(const AValue: string): TACBrIndicadorProcesso;
 begin
+  Result := tipOutros; //podemos criar tipNenhum?
   if AValue = '0' then
     Result := tipSefin
   else
@@ -1823,6 +1826,7 @@ end;
 
 function StrToIndicadorObrigacao(const AValue: string): TACBrIndicadorObrigacao;
 begin
+   Result := tioISSProprio; //podermos tioISSNenhum?
   if AValue = '0' then
     Result := tioISSProprio
   else

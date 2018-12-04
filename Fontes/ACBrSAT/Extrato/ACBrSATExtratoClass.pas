@@ -231,7 +231,7 @@ end;
 
 function TACBrSATExtratoClass.GetSeparadorPathPDF(aInitialPath: String): String;
 begin
-   Result := aInitialPath + PathDelim + 'SAT';
+   Result := aInitialPath + 'SAT';
 end;
 
 procedure TACBrSATExtratoClass.SetAbout(AValue: String);

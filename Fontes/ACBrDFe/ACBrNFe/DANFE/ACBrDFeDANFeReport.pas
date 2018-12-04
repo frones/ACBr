@@ -73,7 +73,7 @@ type
     procedure ErroAbstract(NomeProcedure: String);
 
   protected
-    function GetSeparadorPathPDF: String; override;
+    function GetSeparadorPathPDF(aInitialPath: String): String; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
     procedure SetTipoDANFE(AValue: TpcnTipoImpressao); virtual;
@@ -204,13 +204,13 @@ begin
     FTipoDANFE := AValue;
 end;
 
-function TACBrDFeDANFeReport.GetSeparadorPathPDF: String;
+function TACBrDFeDANFeReport.GetSeparadorPathPDF(aInitialPath: String): String;
 var
   dhEmissao: TDateTime;
   DescricaoModelo: String;
   ANFe: TNFe;
 begin
-  Result := ApplicationPath + 'pdf';
+  Result := aInitialPath;
 
   if Assigned(ACBrNFe) then  // Se tem o componente ACBrNFe
   begin

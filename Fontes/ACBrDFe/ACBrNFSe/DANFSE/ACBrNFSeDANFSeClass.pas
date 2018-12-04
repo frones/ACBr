@@ -79,7 +79,7 @@ type
     FTamanhoFonte: Integer;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-    function GetSeparadorPathPDF: String; override;
+    function GetSeparadorPathPDF(aInitialPath: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -206,13 +206,13 @@ begin
   end;
 end;
 
-function TACBrNFSeDANFSeClass.GetSeparadorPathPDF: String;
+function TACBrNFSeDANFSeClass.GetSeparadorPathPDF(aInitialPath: String): String;
 var
    dhEmissao: TDateTime;
    DescricaoModelo: String;
    ANFSe: TNFSe;
 begin
-  Result := ApplicationPath + 'pdf';
+  Result := aInitialPath;
   if Assigned(ACBrNFSe) then  // Se tem o componente ACBrNFSe
   begin
     if TACBrNFSe(ACBrNFSe).NotasFiscais.Count > 0 then  // Se tem alguma Nota carregada

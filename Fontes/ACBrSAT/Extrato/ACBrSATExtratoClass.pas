@@ -93,7 +93,7 @@ type
 
     procedure ErroAbstract(NomeProcedure : String) ;
     function GetAbout: String;
-    function GetSeparadorPathPDF: String; override;
+    function GetSeparadorPathPDF(aInitialPath: String): String; override;
     procedure SetAbout(AValue: String);
     {$IFNDEF NOGUI}
      procedure SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
@@ -229,9 +229,9 @@ begin
   Result := FAbout ;
 end;
 
-function TACBrSATExtratoClass.GetSeparadorPathPDF: String;
+function TACBrSATExtratoClass.GetSeparadorPathPDF(aInitialPath: String): String;
 begin
-   Result := ApplicationPath + 'pdf' + PathDelim + 'SAT';
+   Result := aInitialPath + PathDelim + 'SAT';
 end;
 
 procedure TACBrSATExtratoClass.SetAbout(AValue: String);

@@ -65,7 +65,7 @@ type
     FMDFeEncerrado: Boolean;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-    function GetSeparadorPathPDF: String; override;
+    function GetSeparadorPathPDF(aInitialPath: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -170,13 +170,13 @@ begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;
 
-function TACBrMDFeDAMDFeClass.GetSeparadorPathPDF: String;
+function TACBrMDFeDAMDFeClass.GetSeparadorPathPDF(aInitialPath: String): String;
 var
   dhEmissao: TDateTime;
   DescricaoModelo: String;
   AMDFe: TMDFe;
 begin
-  Result := ApplicationPath + 'pdf';
+  Result := aInitialPath;
 
   if Assigned(ACBrMDFe) then  // Se tem o componente ACBrMDFe
   begin

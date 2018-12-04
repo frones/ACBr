@@ -116,7 +116,7 @@ type
     function GetPathPDF: String;
   protected
     FPArquivoPDF: String;
-    function GetSeparadorPathPDF: String; virtual;
+    function GetSeparadorPathPDF(aInitialPath: String): String; virtual;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -279,13 +279,13 @@ begin
     Result := ApplicationPath + 'pdf' + PathDelim;
 
   if (FUsaSeparadorPathPDF) then
-    Result := PathWithDelim(GetSeparadorPathPDF);
+    Result := PathWithDelim(GetSeparadorPathPDF(Result));
 end;
 
-function TACBrDFeReport.GetSeparadorPathPDF: String;
+function TACBrDFeReport.GetSeparadorPathPDF(aInitialPath: String): String;
 begin
   // Esse método deve ser sobreposto pelas Classes Filhas //
-  Result := '';
+  Result := aInitialPath;
 end;
 
 procedure TACBrDFeReport.SetNumCopias(const Value: Integer);

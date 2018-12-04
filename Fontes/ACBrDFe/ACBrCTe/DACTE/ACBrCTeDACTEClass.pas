@@ -78,7 +78,7 @@ type
     FImprimirDescPorc: boolean;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-    function GetSeparadorPathPDF: string; override;
+    function GetSeparadorPathPDF(aInitialPath: String): string; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -199,13 +199,13 @@ begin
   ErroAbstract('ImprimirINUTILIZACAOPDF');
 end;
 
-function TACBrCTeDACTEClass.GetSeparadorPathPDF: string;
+function TACBrCTeDACTEClass.GetSeparadorPathPDF(aInitialPath: String): string;
 var
   dhEmissao: TDateTime;
   DescricaoModelo: string;
   ACTe: TCTe;
 begin
-  Result := ApplicationPath + 'pdf';
+  Result := aInitialPath;
   // Se tem o componente ACBrCTe
   if Assigned(ACBrCTe) then
   begin

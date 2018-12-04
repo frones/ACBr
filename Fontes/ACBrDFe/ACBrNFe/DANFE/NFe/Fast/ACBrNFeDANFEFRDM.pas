@@ -921,8 +921,8 @@ begin
   begin
     Close;
     CreateDataSet;
-    if (NFe.Ide.modelo <> 65) then
-    begin
+    //if (NFe.Ide.modelo <> 65) then  removido até que seja feita a separacao
+    //begin
       for inItem := 0 to (NFe.Det.Count - 1) do
       begin
         Append;
@@ -997,7 +997,7 @@ begin
           Post;
         end;
       end;
-    end;
+    //end;
   end;
 end;
 

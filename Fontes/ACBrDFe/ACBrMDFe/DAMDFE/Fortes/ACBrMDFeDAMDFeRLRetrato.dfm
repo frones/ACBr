@@ -831,6 +831,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Borders.DrawRight = True
       Borders.DrawBottom = True
       Color = clWhite
+      IntegralHeight = False
       ParentColor = False
       object rlLabel141: TRLLabel
         Left = 254

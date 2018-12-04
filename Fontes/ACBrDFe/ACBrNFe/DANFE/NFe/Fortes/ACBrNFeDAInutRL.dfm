@@ -33,8 +33,7 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Author = 
-      'FortesReport 3.23 - Copyright '#195#8218#194#169' 1999-2009 Fortes Inform'#195#402#194#161'ti' +
-      'ca'
+      'FortesReport 3.23 - Copyright © 1999-2009 Fortes Informática'
     DocumentInfo.Creator = 'Projeto ACBr (Componente NF-e)'
     DisplayName = 'Documento PDF'
     Left = 369

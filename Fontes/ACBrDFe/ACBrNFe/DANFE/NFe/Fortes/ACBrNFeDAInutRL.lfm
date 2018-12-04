@@ -33,7 +33,7 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Author = 'FortesReport 3.23 - Copyright Â© 1999-2009 Fortes InformÃ¡tica'
+    DocumentInfo.Author = 'FortesReport 3.23 - Copyright © 1999-2009 Fortes Informática'
     DocumentInfo.Creator = 'Projeto ACBr (Componente NF-e)'
     DisplayName = 'Documento PDF'
     left = 369

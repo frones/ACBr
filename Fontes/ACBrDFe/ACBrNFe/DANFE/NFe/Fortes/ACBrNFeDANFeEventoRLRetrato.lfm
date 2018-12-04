@@ -1,4 +1,4 @@
-﻿inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
+inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
   Left = 200
   Top = 114
   Width = 827

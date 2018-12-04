@@ -725,7 +725,7 @@ begin
       rllResumo.Caption := fpDANFe.TextoResumoCanhoto
     else
     begin
-      rllResumo.Caption := ACBrStr('EMISSï¿½O: ') + FormatDateBr(fpNFe.Ide.dEmi) +
+      rllResumo.Caption := ACBrStr('EMISSÃO: ') + FormatDateBr(fpNFe.Ide.dEmi) +
         '  -  ' + 'DEST. / REM.: ' + fpNFe.Dest.xNome +
         '  -  ' + 'VALOR TOTAL: R$ ' + FormatFloatBr(fpNFe.Total.ICMSTot.vNF);
     end;
@@ -762,9 +762,9 @@ begin
 
   if rlbCancelada.Visible then
   begin
-    rllDadosVariaveis3_Descricao.Caption  := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
-    rllXmotivo.Caption    := 'NF-e CANCELADA';
-    RLLCancelada.Caption  := 'NF-e CANCELADA';
+    rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
+    rllXmotivo.Caption := 'NF-e CANCELADA';
+    RLLCancelada.Caption := 'NF-e CANCELADA';
   end
   else
   begin
@@ -837,7 +837,7 @@ begin
   else
     rlmCodProd.Lines.Text := ACBrStr('CÓDIGO DO PROD. / SERV.');
 
-  // Ajusta a posiï¿½ï¿½o da coluna 'Descrição do produto'
+  // Ajusta a posição da coluna 'Descrição do produto'
   if (rlmDescricaoProduto.Width > 128) then
   begin
     rlmDescricaoProduto.Top := 18;
@@ -852,11 +852,11 @@ begin
   // Se a largura da coluna 'Descrição do produto' for suficiente,
   // exibe o título da coluna sem abreviações
   if (rlmDescricaoProduto.Width > 72) then
-    rlmDescricaoProduto.Lines.Text := ACBrStr('DESCRIÇÃO DO DO PRODUTO / SERVIÇO')
+    rlmDescricaoProduto.Lines.Text := ACBrStr('DESCRIÇÃO DO PRODUTO / SERVIÇO')
   else
     rlmDescricaoProduto.Lines.Text := 'DESCR. PROD. / SERV.';
 
-  // Posiciona o canhoto do DANFE no cabeçalho ou rodapé
+  // Posiciona o canhoto do fpDANFe no cabeçalho ou rodapé
   case fpDANFe.PosCanhoto of
     prCabecalho:
     begin
@@ -875,7 +875,7 @@ begin
     end;
   end;
 
-  // Oculta alguns itens do DANFE
+  // Oculta alguns itens do fpDANFe
   if fpDANFe.FormularioContinuo then
   begin
     rllRecebemosDe.Visible := False;
@@ -922,7 +922,7 @@ begin
     end;
   end;
 
-  // Altera a fonte da Razï¿½o Social do Emitente
+  // Altera a fonte da Razão Social do DefinirEmitente
   rlmEmitente.Font.Size := fpDANFe.Fonte.TamanhoFonteRazaoSocial;
 
   for b := 0 to (RLNFe.ControlCount - 1) do
@@ -1063,7 +1063,7 @@ begin
       rllHoraSaida.Caption := ifthen(TimeOf(dSaiEnt) = 0, '', TimeToStr(dSaiEnt));
 
     // Configuração inicial
-    rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE DE USO');
+    rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
     rlbCodigoBarrasFS.Visible := (tpEmis in [teContingencia, teFSDA]);
     rlbAvisoContingencia.Visible := (tpEmis <> teNormal);
     rllAvisoContingencia.Caption := ACBrStr('DANFE em Contingência - Impresso em decorrência de problemas técnicos');
@@ -1394,7 +1394,7 @@ begin
     InserirLinhas(sProtocolo, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
-  // Inscriï¿½ï¿½o Suframa
+  // Inscrição Suframa
   if NaoEstaVazio(fpNFe.Dest.ISUF) then
   begin
     sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ') + fpNFe.Dest.ISUF;
@@ -1534,7 +1534,7 @@ begin
   begin
     case fpNFe.Ide.indPag of
       ipVista:
-        RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO À VISTA');
+        RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO A VISTA');
       ipPrazo:
         RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO A PRAZO');
       ipOutras:
@@ -1634,7 +1634,7 @@ begin
   // Bands remetente
   rlbEmitente.Height := RLDraw6.Height + rliEmitente.Height + 2;// 182 + (2*AltLinhaComun - 60);
 
-  // ******** Destinatario ********
+  // ******** DefinirDestinatario ********
   RLLabel18.Holder := nil;
   RLLabel18.Top := 0;
   RLDraw15.Top := RLLabel18.Height + 1;
@@ -1694,7 +1694,7 @@ begin
   rllDestIE.Top := base + 3 * AltLinhaComun - rllDestIE.Height;
   rllHoraSaida.Top := base + 3 * AltLinhaComun - rllHoraSaida.Height;
 
-  // Band Destinatario
+  // Band DefinirDestinatario
   rlbDestinatario.Height := RLDraw15.Height + RLDraw15.Top + 2; //108 + (3*AltLinhaComun - 90);
 
   // ******** Fatura ********

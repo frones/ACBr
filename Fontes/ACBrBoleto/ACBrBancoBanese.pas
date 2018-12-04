@@ -258,17 +258,8 @@ end;
 
 
 function TACBrBancoBanese.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
-var
-  ANossoNumero, AModalidade :String;
 begin
-
-   with ACBrTitulo do
-   begin
-      ANossoNumero := OnlyNumber(NossoNumero);
-   end;
-
-   Result := ANossoNumero;
-
+  Result := OnlyNumber(ACBrTitulo.NossoNumero);
 end;
 
 

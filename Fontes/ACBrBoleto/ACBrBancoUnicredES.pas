@@ -172,12 +172,10 @@ end;
 
 procedure TACBrBancoUnicredES.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  sDigitoNossoNumero, sEspecie, sAgencia : String;
-  sProtesto, sTipoSacado, sMensagemCedente, sConta    : String;
+  sDigitoNossoNumero, sAgencia : String;
+  sTipoSacado, sConta    : String;
   sCarteira, sLinha, sNossoNumero, sNumContrato       : String;
-  cTipoBoleto : Char;
   iTamNossoNum: Integer;
-  nValorPencentualMulta: Currency;
 begin
 
    with ACBrTitulo do
@@ -206,39 +204,11 @@ begin
 
 
       {Pegando Tipo de Boleto}
-      case ACBrBoleto.Cedente.ResponEmissao of
-         tbCliEmite : cTipoBoleto := '2';
-      else
-         cTipoBoleto := '1';
-         if NossoNumero = EmptyStr then
-           sDigitoNossoNumero := '0';
+      if (ACBrBoleto.Cedente.ResponEmissao <> tbCliEmite) then
+      begin
+        if NossoNumero = EmptyStr then
+          sDigitoNossoNumero := '0';
       end;
-
-      {Pegando Especie}
-      (*if trim(EspecieDoc) = 'DM' then
-         sEspecie:= '01'
-      else if trim(EspecieDoc) = 'NP' then
-         sEspecie:= '02'
-      else if trim(EspecieDoc) = 'NS' then
-         sEspecie:= '03'
-      else if trim(EspecieDoc) = 'CS' then
-         sEspecie:= '04'
-      else if trim(EspecieDoc) = 'ND' then
-         sEspecie:= '11'
-      else if trim(EspecieDoc) = 'DS' then
-         sEspecie:= '12'
-      else if trim(EspecieDoc) = 'OU' then
-         sEspecie:= '99'
-      else
-         sEspecie := EspecieDoc;
-
-      {Pegando campo Intruções}
-      if (DataProtesto > 0) and (DataProtesto > Vencimento) then
-         sProtesto := '06' + IntToStrZero(DaysBetween(DataProtesto, Vencimento), 2)
-      else if CodTipoOcorrenciaToStr(OcorrenciaOriginal.Tipo) = '31' then
-         sProtesto := '9999'
-      else
-         sProtesto := '0000';*)
 
       {Pegando Tipo de Sacado}
       case Sacado.Pessoa of
@@ -527,8 +497,6 @@ end;
 function TACBrBancoUnicredES.CodOcorrenciaToTipo(const CodOcorrencia:
    Integer ) : TACBrTipoOcorrencia;
 begin
-  Result := toTipoOcorrenciaNenhum;
-
   case CodOcorrencia of
     02: Result := toRetornoRegistroConfirmado;
     03: Result := toRetornoRegistroRecusado;

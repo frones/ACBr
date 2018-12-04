@@ -133,7 +133,7 @@ end;
 function TACBrBancoCredisis.MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String;
 var
   CodigoBarras, FatorVencimento, DigitoCodBarras :String;
-  ANossoNumero, AConvenio: String;
+  ANossoNumero : String;
   {wTamNossNum: Integer;}
 begin
    ANossoNumero := MontarCampoNossoNumero(ACBrTitulo);

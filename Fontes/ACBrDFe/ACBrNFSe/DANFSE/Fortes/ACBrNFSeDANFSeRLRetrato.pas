@@ -42,7 +42,7 @@ interface
 uses
   SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ACBrNFSeDANFSeRL, RLFilters, RLPDFFilter, RLReport, DB,
-  pnfsConversao, ACBrDelphiZXingQRCode ;
+  pnfsConversao, ACBrDelphiZXingQRCode;
 
 type
 
@@ -357,7 +357,11 @@ procedure TfrlDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   inherited;
-  TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
+  if Trim(fpDANFSe.Logo) <> '' then
+  begin
+    TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
+  end;
+
   rlmPrefeitura.Lines.Clear;
   rlmPrefeitura.Lines.Add(StringReplace( fpDANFSe.Prefeitura, ';', #13#10, [rfReplaceAll,rfIgnoreCase] ) );
 

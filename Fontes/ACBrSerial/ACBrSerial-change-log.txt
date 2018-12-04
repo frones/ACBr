@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2018
+-- ACBrDevice --
+[*] Ajuste para melhor detecção de Nomes de Portas inválidos (por Waldir Paim)
+    https://www.projetoacbr.com.br/forum/topic/47900-remoção-de-warnings-hints-e-melhorias-no-código-fonte/
+
 30/08/2018
 -- ACBrECFBematech --
 [-] Correção para Item registrado 2 vezes na impressora Bematech MP 4000 TH

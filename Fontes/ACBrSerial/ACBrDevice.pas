@@ -267,7 +267,7 @@ TACBrTagProcessor = class
 
 end;
 
-TACBrDeviceType = (dtFile, dtSerial, dtParallel, dtTCP, dtRawPrinter, dtHook);
+TACBrDeviceType = (dtNenhum, dtFile, dtSerial, dtParallel, dtTCP, dtRawPrinter, dtHook);
 
 { TACBrDevice }
 
@@ -701,6 +701,7 @@ begin
 
   fProcessMessages := True ;
 
+  fsDeviceType      := dtNenhum;
   fsHookAtivar      := nil;
   fsHookDesativar   := nil;
   fsHookEnviaString := nil;
@@ -756,7 +757,7 @@ begin
 
   GravaLog('Ativar - Porta:'+fsPorta);
 
-  if fsPorta = '' then
+  if (fsPorta = '') or (fsDeviceType = dtNenhum) then
     DoException( Exception.Create(ACBrStr(cACBrDeviceAtivarPortaException)) );
 
   case fsDeviceType of
@@ -1175,7 +1176,7 @@ begin
     if pos(PathDelim, APorta) > 0 then
       Result := dtFile
     else
-      Result := dtRawPrinter;
+      Result := dtNenhum;
   end;
 
   if TemArqLog then

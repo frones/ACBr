@@ -46,6 +46,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/12/2018
+-- ACBrNFeDANFEFR --
+[+] Adicionado componente para impressão de NFCe devido a separação dos componentes de impressão do Refactory.
+    	por: BigWings/Rafael Dias
+		
+-- ACBrNFeDANFEFRReg --
+[+] Adicionado componente para impressão de NFCe devido a separação dos componentes de impressão do Refactory.
+    	por: BigWings/Rafael Dias
+		
+-- ACBrNFeDANFEFRDM --
+[+] Adicionado componente para impressão de NFCe devido a separação dos componentes de impressão do Refactory.
+    	por: BigWings/Rafael Dias
+
 -- ACBrNFeDANFEFRDM --
 [-] Ajuste para destacar as duplicatas.
 	https://www.projetoacbr.com.br/forum/topic/47998-n%C3%A3o-destaca-as-duplicatas-danfe-fast/?tab=comments#comment-316695

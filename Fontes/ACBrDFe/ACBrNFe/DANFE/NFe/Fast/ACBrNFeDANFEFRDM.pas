@@ -72,7 +72,7 @@ unit ACBrNFeDANFEFRDM;
 interface
 
 uses
-  SysUtils, Classes, DB, DBClient, Graphics,
+  SysUtils, Classes, Forms, DB, DBClient, Graphics,
   pcnEnvEventoNFe, pcnRetInutNFe, pcnNFe, pcnConversao,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass,
   ACBrUtil, ACBrDelphiZXingQrCode,
@@ -82,7 +82,7 @@ type
 
   TACBrNFeFRClass = class
   private
-    FDANFEClassOwner: TACBrNFeDANFEClass;
+    FDANFEClassOwner: TACBrDFeDANFeReport;
     FNFe: TNFe;
     FEvento: TEventoNFe;
     FfrxReport: TfrxReport;
@@ -126,7 +126,19 @@ type
     FfrxInutilizacao: TfrxDBDataset;
     cdsInutilizacao: TClientDataSet;
 
+    FFastFile: String;
+    FFastFileEvento: String;
+    FFastFileInutilizacao: String;
+    FPrintMode: TfrxPrintMode;
+    FPrintOnSheet: Integer;
+    FExibeCaptionButton: Boolean;
+    FBorderIcon : TBorderIcons;
+    FIncorporarFontesPdf: Boolean;
+    FIncorporarBackgroundPdf: Boolean;
+
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
+    procedure frxReportPreview(Sender: TObject);
+
     procedure CarregaIdentificacao;
     procedure CarregaEmitente;
     procedure CarregaDestinatario;
@@ -153,7 +165,7 @@ type
     property NFe: TNFe read FNFe write FNFe;
     property Evento: TEventoNFe read FEvento write FEvento;
     property Inutilizacao: TRetInutNFe read FInutilizacao write FInutilizacao;
-    property DANFEClassOwner: TACBrNFeDANFEClass read FDANFEClassOwner;
+    property DANFEClassOwner: TACBrDFeDANFeReport read FDANFEClassOwner;
     property frxReport: TfrxReport read FfrxReport;
     property frxPDFExport: TfrxPDFExport read FfrxPDFExport;
 
@@ -162,6 +174,33 @@ type
     procedure CarregaDadosEventos;
     procedure CarregaDadosInutilizacao;
     procedure PintarQRCode(QRCodeData: String; APict: TPicture);
+
+    property FastFile: String read FFastFile write FFastFile;
+    property FastFileEvento: String read FFastFileEvento write FFastFileEvento;
+    property FastFileInutilizacao: String read FFastFileInutilizacao write FFastFileInutilizacao;
+
+    property PrintMode: TfrxPrintMode read FPrintMode write FPrintMode default pmDefault;
+    property PrintOnSheet: Integer read FPrintOnSheet write FPrintOnSheet default 0;
+    property ExibeCaptionButton: Boolean read FExibeCaptionButton write FExibeCaptionButton default False;
+    property BorderIcon: TBorderIcons read FBorderIcon write FBorderIcon;
+    property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
+    property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
+
+    function PrepareReport(ANFE: TNFe = nil): Boolean;
+    function PrepareReportEvento: Boolean;
+    function PrepareReportInutilizacao: Boolean;
+
+    function GetPreparedReport: TfrxReport;
+    function GetPreparedReportEvento: TfrxReport;
+    function GetPreparedReportInutilizacao: TfrxReport;
+
+    procedure ImprimirDANFE(ANFE: TNFe = nil);
+    procedure ImprimirDANFEResumido(ANFE: TNFe = nil);
+    procedure ImprimirDANFEPDF(ANFE: TNFe = nil);
+    procedure ImprimirEVENTO(ANFE: TNFe = nil);
+    procedure ImprimirEVENTOPDF(ANFE: TNFe = nil);
+    procedure ImprimirINUTILIZACAO(ANFE: TNFe = nil);
+    procedure ImprimirINUTILIZACAOPDF(ANFE: TNFe = nil);
 
   end;
 
@@ -177,10 +216,16 @@ uses
 
 constructor TACBrNFeFRClass.Create(AOwner: TComponent);
 begin
-  if not (AOwner is TACBrNFeDANFEFR) then
-    raise EACBrNFeException.Create('AOwner deve ser do tipo TACBrNFeDANFEFR');
+  if not (AOwner is TACBrDFeDANFeReport) then
+    raise EACBrNFeException.Create('AOwner deve ser do tipo TACBrDFeDANFeReport');
 
-  FDANFEClassOwner := TACBrNFeDANFEFR(AOwner);
+  FFastFile := '';
+  FExibeCaptionButton := False;
+  FBorderIcon := [biSystemMenu,biMaximize,biMinimize];
+  FIncorporarFontesPdf := True;
+  FIncorporarBackgroundPdf := True;
+
+  FDANFEClassOwner := TACBrDFeDANFeReport(AOwner);
 
   FfrxReport := TfrxReport.Create( nil);
   FfrxReport.EngineOptions.UseGlobalDataSetList := False;
@@ -198,8 +243,8 @@ begin
   FfrxPDFExport := TfrxPDFExport.Create(nil);
   with FfrxPDFExport do
   begin
-     Background    := TACBrNFeDANFEFR(FDANFEClassOwner).IncorporarBackgroundPdf;
-     EmbeddedFonts := TACBrNFeDANFEFR(FDANFEClassOwner).IncorporarFontesPdf;
+     Background    := FIncorporarBackgroundPdf;
+     EmbeddedFonts := FIncorporarFontesPdf;
      Subject       := 'Exportando DANFE para PDF';
      ShowProgress  := False;
   end;
@@ -220,6 +265,7 @@ begin
      with cdsIdentificacao do
      begin
         FieldDefs.Add('Id', ftString, 44);
+        FieldDefs.Add('Versao', ftFloat);
         FieldDefs.Add('Chave', ftString, 60);
         FieldDefs.Add('cUF', ftString, 2);
         FieldDefs.Add('cNF', ftString, 9);
@@ -479,6 +525,7 @@ begin
         FieldDefs.Add('VFrete'      , ftFloat);
         FieldDefs.Add('VSeg'        , ftFloat);
         FieldDefs.Add('VDesc'       , ftFloat);
+        FieldDefs.Add('vICMSDeson'  , ftFloat);
         FieldDefs.Add('VII'         , ftFloat);
         FieldDefs.Add('VIPI'        , ftFloat);
         FieldDefs.Add('VPIS'        , ftFloat);
@@ -869,6 +916,7 @@ begin
       FieldByName('VFrete').AsFloat       := VFrete;
       FieldByName('VSeg').AsFloat         := VSeg;
       FieldByName('VDesc').AsFloat        := VDesc;
+      FieldByName('vICMSDeson').AsFloat   := vICMSDeson;
       FieldByName('VII').AsFloat          := VII;
       FieldByName('VIPI').AsFloat         := VIPI;
       FieldByName('VPIS').AsFloat         := VPIS;
@@ -876,12 +924,26 @@ begin
       FieldByName('VOutro').AsFloat       := VOutro;
       FieldByName('VNF').AsFloat          := VNF;
       FieldByName('VTotTrib').AsFloat     := VTotTrib;
-      FieldByName('ValorApagar').AsFloat  := VProd- VDesc + VOutro;
-      FieldByName('VTribPerc').AsFloat    :=
-        FDANFEClassOwner.ManterVTribPerc(VTotTrib, VProd, VNF);
+      FieldByName('ValorApagar').AsFloat  := VProd - VDesc - vICMSDeson + VOutro;
+
+      if (FDANFEClassOwner is TACBrNFeDANFEClass) then
+        FieldByName('VTribPerc').AsFloat := TACBrNFeDANFEClass(FDANFEClassOwner).ManterVTribPerc(VTotTrib, VProd, VNF);
+
       if NaoEstaVazio(FDANFEClassOwner.FonteTributos) then
         FieldByName('VTribFonte').AsString := '(Fonte: '+FDANFEClassOwner.FonteTributos+')';
     end;
+
+    if FNFe.pag.vTroco > 0 then
+    begin
+      FieldByName('vTroco').AsCurrency    := FNFe.pag.vTroco;
+      FieldByName('vTotPago').AsCurrency  := FNFe.pag.vTroco+FieldByName('VProd').AsFloat;
+    end
+    else if (FDANFEClassOwner is TACBrNFeDANFCEClass) then
+    begin
+      FieldByName('vTroco').AsCurrency    := TACBrNFeDANFCEClass(DANFEClassOwner).vTroco;
+      FieldByName('vTotPago').AsCurrency  := TACBrNFeDANFCEClass(DANFEClassOwner).vTroco + FieldByName('VProd').AsFloat;
+    end;
+
     Post;
   end;
 end;
@@ -921,8 +983,9 @@ begin
   begin
     Close;
     CreateDataSet;
-    //if (NFe.Ide.modelo <> 65) then  removido até que seja feita a separacao
-    //begin
+    if (NFe.Ide.modelo <> 65) or
+      ((FDANFEClassOwner is TACBrNFeDANFCEClass) and TACBrNFeDANFCEClass(FDANFEClassOwner).ImprimeItens) then
+    begin
       for inItem := 0 to (NFe.Det.Count - 1) do
       begin
         Append;
@@ -934,8 +997,13 @@ begin
           FieldByName('XProd').AsString             := StringReplace( Prod.xProd, ';', #13, [rfReplaceAll]);
           FieldByName('VProd').AsString             := FDANFEClassOwner.ManterVprod(Prod.VProd , Prod.vDesc );
           FieldByName('vTotTrib').AsString          := FDANFEClassOwner.ManterdvTotTrib(Imposto.vTotTrib );
-          FieldByName('infAdProd').AsString         := FDANFEClassOwner.ManterinfAdProd(FNFe, inItem);
-          FieldByName('DescricaoProduto').AsString  := FDANFEClassOwner.ManterXProd(FNFe, inItem);
+
+          if FDANFEClassOwner is TACBrNFeDANFEClass then
+          begin
+            FieldByName('infAdProd').AsString := TACBrNFeDANFEClass(FDANFEClassOwner).ManterinfAdProd(FNFe, inItem);
+            FieldByName('DescricaoProduto').AsString := TACBrNFeDANFEClass(FDANFEClassOwner).ManterXProd(FNFe, inItem);
+          end;
+
           FieldByName('NCM').AsString               := Prod.NCM;
           FieldByName('EXTIPI').AsString            := Prod.EXTIPI;
           FieldByName('genero').AsString            := '';
@@ -950,7 +1018,12 @@ begin
           FieldByName('vFrete').AsString            := FormatFloatBr( Prod.vFrete ,'###,###,##0.00');
           FieldByName('vSeg').AsString              := FormatFloatBr( Prod.vSeg   ,'###,###,##0.00');
           FieldByName('vOutro').AsString            := FormatFloatBr( Prod.vOutro ,'###,###,##0.00');
-          FieldByName('vDesc').AsString             := FormatFloatBr( FDANFEClassOwner.ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00');
+
+          if FDANFEClassOwner is TACBrNFeDANFEClass then
+            FieldByName('vDesc').AsString           := FormatFloatBr( TACBrNFeDANFEClass(FDANFEClassOwner).ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00')
+          else
+            FieldByName('vDesc').AsString           := FormatFloatBr( Prod.vDesc,'###,###,##0.00');
+
           FieldByName('ORIGEM').AsString            := OrigToStr( Imposto.ICMS.orig);
           FieldByName('CST').AsString               := FDANFEClassOwner.ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
           FieldByName('VBC').AsString               := FormatFloatBr( Imposto.ICMS.vBC        ,'###,###,##0.00');
@@ -997,7 +1070,7 @@ begin
           Post;
         end;
       end;
-    //end;
+    end;
   end;
 end;
 
@@ -1073,10 +1146,10 @@ var
 begin
   cdsDuplicatas.Close;
   cdsDuplicatas.CreateDataSet;
-  if Not ( ( FDANFEClassOwner.ExibeCampoFatura) and
-         ( FNFe.Ide.indPag = ipVista) and
-         ( FNFe.infNFe.Versao <= 3.10) ) then
-  Begin
+  if (FDANFEClassOwner is TACBrNFeDANFEClass) and
+     Not ((TACBrNFeDANFEClass(FDANFEClassOwner).ExibeCampoFatura) and
+          (FNFe.Ide.indPag = ipVista) and (FNFe.infNFe.Versao <= 3.10)) then
+  begin
 
     with cdsDuplicatas do
     begin
@@ -1093,7 +1166,7 @@ begin
         Post;
       end;
     end;
-  End;
+  end;
 end;
 
 procedure TACBrNFeFRClass.CarregaEmitente;
@@ -1166,7 +1239,7 @@ begin
     Close;
     CreateDataSet;
 
-    if FDANFEClassOwner.ExibeCampoFatura then
+    if (FDANFEClassOwner is TACBrNFeDANFEClass) and TACBrNFeDANFEClass(FDANFEClassOwner).ExibeCampoFatura then
     begin
       Append;
 
@@ -1225,6 +1298,15 @@ begin
       end;
       Post;
     end;
+
+    // acrescenta o troco
+    if (FDANFEClassOwner is TACBrNFeDANFCEClass) and (TACBrNFeDANFCEClass(FDANFEClassOwner).vTroco > 0) then
+    begin
+      Append;
+      FieldByName('tPag').AsString  := 'Troco R$';
+      FieldByName('vPag').AsFloat   := TACBrNFeDANFCEClass(FDANFEClassOwner).vTroco;
+      Post;
+    end;
   end;
 end;
 
@@ -1237,6 +1319,7 @@ begin
     Append;
 
     FieldByName('Id').AsString      := OnlyNumber(FNFe.infNFe.Id);
+    FieldByName('Versao').AsFloat   := FNFe.infNFe.versao;
     FieldByName('Chave').AsString   := FormatarChaveAcesso(FNFe.infNFe.Id);
     FieldByName('CUF').AsString     := IntToStr(FNFe.Ide.CUF);
     FieldByName('CNF').AsString     := IntToStr(FNFe.Ide.CNF);
@@ -1302,13 +1385,24 @@ begin
   vTemp       := TStringList.Create;
   
   try
-    wObs  := FDANFEClassOwner.ManterDocreferenciados(FNFe) +
-             FDANFEClassOwner.ManterInfAdFisco(FNFe) +
-             FDANFEClassOwner.ManterObsFisco(FNFe) +
-             FDANFEClassOwner.ManterProcreferenciado(FNFe) +
-             FDANFEClassOwner.ManterInfContr(FNFe) +
-             FDANFEClassOwner.ManterInfCompl(FNFe) +
-             FDANFEClassOwner.ManterContingencia(FNFe);
+    if (FDANFEClassOwner is TACBrNFeDANFEClass) then
+    begin
+      wObs := TACBrNFeDANFEClass(FDANFEClassOwner).ManterDocreferenciados(FNFe) +
+              FDANFEClassOwner.ManterInfAdFisco(FNFe) +
+              FDANFEClassOwner.ManterObsFisco(FNFe) +
+              FDANFEClassOwner.ManterProcreferenciado(FNFe) +
+              FDANFEClassOwner.ManterInfContr(FNFe) +
+              FDANFEClassOwner.ManterInfCompl(FNFe) +
+              TACBrNFeDANFEClass(FDANFEClassOwner).ManterContingencia(FNFe);
+    end
+    else
+    begin
+      wObs := FDANFEClassOwner.ManterInfAdFisco(FNFe) +
+              FDANFEClassOwner.ManterObsFisco(FNFe) +
+              FDANFEClassOwner.ManterProcreferenciado(FNFe) +
+              FDANFEClassOwner.ManterInfContr(FNFe) +
+              FDANFEClassOwner.ManterInfCompl(FNFe);
+    end;
 	
     if Trim(wObs) <> '' then
     begin
@@ -1424,21 +1518,31 @@ begin
     CreateDataSet;
     Append;
 
-    FieldByName('poscanhoto').AsString            := IntToStr( Ord(DANFEClassOwner.PosCanhoto));
+    FieldByName('poscanhoto').AsString            := '';
     FieldByName('ResumoCanhoto').AsString         := '';
     FieldByName('Mensagem0').AsString             := '';
     FieldByName('Contingencia_ID').AsString       := '';
     FieldByName('ConsultaAutenticidade').AsString := 'Consulta de autenticidade no portal nacional da NF-e'+#13+
                                                      'www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora';
 
+    if DANFEClassOwner is TACBrNFeDANFEClass then
+      FieldByName('poscanhoto').AsString := IntToStr( Ord(TACBrNFeDANFEClass(DANFEClassOwner).PosCanhoto))
+    else if DANFEClassOwner is TACBrNFeDANFCEClass then
+    begin
+      if TACBrNFeDANFCEClass(DANFEClassOwner).ViaConsumidor then
+        FieldByName('DescricaoViaEstabelec').AsString := 'Via Consumidor'
+      else
+        FieldByName('DescricaoViaEstabelec').AsString := 'Via Estabelecimento';
+    end;
+
     if Assigned(FNFe) then
     begin
-      if DANFEClassOwner.ExibeResumoCanhoto then
+      if (DANFEClassOwner is TACBrNFeDANFEClass) and TACBrNFeDANFEClass(DANFEClassOwner).ExibeResumoCanhoto then
       begin
-         if EstaVazio(DANFEClassOwner.TextoResumoCanhoto) then
+         if EstaVazio(TACBrNFeDANFEClass(DANFEClassOwner).TextoResumoCanhoto) then
           FieldByName('ResumoCanhoto').AsString := ACBrStr('Emissão: ' )+ FormatDateBr(FNFe.Ide.DEmi) + '  Dest/Reme: ' + FNFe.Dest.XNome + '  Valor Total: ' + FormatFloatBr(FNFe.Total.ICMSTot.VNF)
         else
-          FieldByName('ResumoCanhoto').AsString := DANFEClassOwner.TextoResumoCanhoto;
+          FieldByName('ResumoCanhoto').AsString := TACBrNFeDANFEClass(DANFEClassOwner).TextoResumoCanhoto;
       end;
 
       if (FNFe.Ide.TpAmb = taHomologacao) then
@@ -1564,14 +1668,14 @@ begin
     if NaoEstaVazio(FieldByName('Mensagem0').AsString) then
       FieldByName('Mensagem0').AsString  := FieldByName('Mensagem0').AsString+#10#13;
 
-    FieldByName('Mensagem0').AsString                   := FieldByName('Mensagem0').AsString + TACBrNFeDANFEFR(FDANFEClassOwner).MarcaDaguaMSG;
+    FieldByName('Mensagem0').AsString                   := FieldByName('Mensagem0').AsString + IfThen(FDANFEClassOwner is TACBrNFeDANFEFR, TACBrNFeDANFEFR(FDANFEClassOwner).MarcaDaguaMSG, '');
     FieldByName('LogoExpandido').AsString               := IfThen( FDANFEClassOwner.ExpandeLogoMarca, '1' , '0' );
     FieldByName('Sistema').AsString                     := IfThen( FDANFEClassOwner.Sistema <> '' , FDANFEClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
     FieldByName('Usuario').AsString                     := IfThen( FDANFEClassOwner.Usuario <> '' , ' - ' + FDANFEClassOwner.Usuario , '' );
     FieldByName('Fax').AsString                         := IfThen( FDANFEClassOwner.Fax     <> '' , ' - FAX ' + FDANFEClassOwner.Fax , '');
     FieldByName('Site').AsString                        := FDANFEClassOwner.Site;
     FieldByName('Email').AsString                       := FDANFEClassOwner.Email;
-    FieldByName('Desconto').AsString                    := IfThen( FDANFEClassOwner.ImprimeDescPorPercentual , '%' , 'VALOR');
+    FieldByName('Desconto').AsString                    := IfThen( (FDANFEClassOwner is TACBrNFeDANFEClass) and TACBrNFeDANFEClass(FDANFEClassOwner).ImprimeDescPorPercentual , '%' , 'VALOR');
     FieldByName('TotalLiquido').AsString                := IfThen( FDANFEClassOwner.ImprimeTotalLiquido ,ACBrStr('LÍQUIDO') ,'TOTAL');
     FieldByName('LinhasPorPagina').AsInteger            := 0;
     FieldByName('ExpandirDadosAdicionaisAuto').AsString := IfThen(TACBrNFeDANFEFR(FDANFEClassOwner).ExpandirDadosAdicionaisAuto , 'S' , 'N');
@@ -1611,7 +1715,7 @@ begin
 end;
 
 procedure TACBrNFeFRClass.CarregaTransportador;
-Var
+var
   ok: Boolean;
 begin
   with cdsTransportador do
@@ -1861,6 +1965,200 @@ begin
   end;
 end;
 
+function TACBrNFeFRClass.PrepareReport(ANFE: TNFe): Boolean;
+var
+  I: Integer;
+  wProjectStream: TStringStream;
+  Page: TfrxReportPage;
+begin
+  Result := False;
+
+  SetDataSetsToFrxReport;
+
+  if NaoEstaVazio(Trim(FastFile)) then
+  begin
+    if not (uppercase(copy(FastFile,length(FastFile)-3,4))='.FR3') then
+    begin
+      wProjectStream := TStringStream.Create(FastFile);
+      frxReport.FileName := '';
+      frxReport.LoadFromStream(wProjectStream);
+      wProjectStream.Free;
+    end
+    else
+    begin
+      if FileExists(FastFile) then
+        frxReport.LoadFromFile(FastFile)
+      else
+        raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão do DANFE "%s" inválido.', [FastFile]);
+    end;
+  end
+  else
+    raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do DANFE não assinalado.');
+
+  frxReport.PrintOptions.Copies := DANFEClassOwner.NumCopias;
+  frxReport.PrintOptions.ShowDialog := DANFEClassOwner.MostraStatus;
+  frxReport.PrintOptions.PrintMode := FPrintMode; //Precisamos dessa propriedade porque impressoras não fiscais cortam o papel quando há muitos itens. O ajuste dela deve ser necessariamente após a carga do arquivo FR3 pois, antes da carga o componente é inicializado
+  frxReport.PrintOptions.PrintOnSheet := FPrintOnSheet; //Essa propriedade pode trabalhar em conjunto com a printmode
+  frxReport.ShowProgress := DANFEClassOwner.MostraStatus;
+  frxReport.PreviewOptions.AllowEdit := False;
+  frxReport.PreviewOptions.ShowCaptions := FExibeCaptionButton;
+  frxReport.OnPreview := frxReportPreview;
+
+  // Define a impressora
+  if NaoEstaVazio(DANFEClassOwner.Impressora) then
+    frxReport.PrintOptions.Printer := DANFEClassOwner.Impressora;
+
+  // preparar relatorio
+  if Assigned(ANFE) then
+  begin
+    NFe := ANFE;
+    CarregaDadosNFe;
+
+    Result := frxReport.PrepareReport;
+  end
+  else
+  begin
+    if Assigned(DANFEClassOwner.ACBrNFe) then
+    begin
+      for i := 0 to (TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Count - 1) do
+      begin
+        NFe := TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Items[i].NFe;
+        CarregaDadosNFe;
+
+        if (i > 0) then
+          Result := frxReport.PrepareReport(False)
+        else
+          Result := frxReport.PrepareReport;
+      end;
+    end
+    else
+      raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
+  end;
+
+  if Assigned(NFe) and (NFe.Ide.modelo = 55) then
+    for i := 0 to (frxReport.PreviewPages.Count - 1) do
+    begin
+      Page := frxReport.PreviewPages.Page[i];
+      if (DANFEClassOwner.MargemSuperior > 0) then
+        Page.TopMargin    := DANFEClassOwner.MargemSuperior * 10;
+      if (DANFEClassOwner.MargemInferior > 0) then
+        Page.BottomMargin := DANFEClassOwner.MargemInferior * 10;
+      if (DANFEClassOwner.MargemEsquerda > 0) then
+        Page.LeftMargin   := DANFEClassOwner.MargemEsquerda * 10;
+      if (DANFEClassOwner.MargemDireita > 0) then
+        Page.RightMargin  := DANFEClassOwner.MargemDireita * 10;
+      frxReport.PreviewPages.ModifyPage(i, Page);
+    end;
+
+end;
+
+function TACBrNFeFRClass.PrepareReportEvento: Boolean;
+var
+ wProjectStream: TStringStream;
+begin
+  SetDataSetsToFrxReport;
+  if NaoEstaVazio(Trim(FastFileEvento)) then
+  begin
+    if not (uppercase(copy(FastFileEvento,length(FastFileEvento)-3,4))='.FR3') then
+    begin
+      wProjectStream:=TStringStream.Create(FastFileEvento);
+      frxReport.FileName := '';
+      frxReport.LoadFromStream(wProjectStream);
+      wProjectStream.Free;
+    end
+    else
+    begin
+      if FileExists(FastFileEvento) then
+        frxReport.LoadFromFile(FastFileEvento)
+      else
+        raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão do EVENTO "%s" inválido.', [FastFileEvento]);
+    end
+  end
+  else
+    raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');
+
+  frxReport.PrintOptions.Copies := DANFEClassOwner.NumCopias;
+  frxReport.PrintOptions.ShowDialog := DANFEClassOwner.MostraStatus;
+  frxReport.ShowProgress := DANFEClassOwner.MostraStatus;
+  frxReport.PreviewOptions.ShowCaptions := ExibeCaptionButton;
+  frxReport.OnPreview := frxReportPreview;
+
+  // Define a impressora
+  if NaoEstaVazio(DANFEClassOwner.Impressora) then
+    frxReport.PrintOptions.Printer := DANFEClassOwner.Impressora;
+
+  // preparar relatorio
+  if Assigned(DANFEClassOwner.ACBrNFe) then
+  begin
+    if Assigned(TACBrNFe(DANFEClassOwner.ACBrNFe).EventoNFe) then
+    begin
+      Evento := TACBrNFe(DANFEClassOwner.ACBrNFe).EventoNFe;
+      CarregaDadosEventos;
+    end
+    else
+      raise EACBrNFeDANFEFR.Create('Evento não foi assinalado.');
+
+    if (TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Count > 0) then
+    begin
+      frxReport.Variables['PossuiNFe'] := QuotedStr('S');
+      NFe := TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Items[0].NFe;
+      CarregaDadosNFe;
+    end;
+
+    Result := frxReport.PrepareReport;
+  end
+  else
+    raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
+
+end;
+
+function TACBrNFeFRClass.PrepareReportInutilizacao: Boolean;
+var
+ wProjectStream: TStringStream;
+begin
+  SetDataSetsToFrxReport;
+  if NaoEstaVazio(Trim(FastFileInutilizacao)) then
+  begin
+    if not (uppercase(copy(FastFileInutilizacao,length(FastFileInutilizacao)-3,4))='.FR3') then
+    begin
+      wProjectStream:=TStringStream.Create(FastFileInutilizacao);
+      frxReport.FileName := '';
+      frxReport.LoadFromStream(wProjectStream);
+      wProjectStream.Free;
+    end
+    else
+    begin
+      if FileExists(FastFileInutilizacao) then
+        frxReport.LoadFromFile(FastFileInutilizacao)
+      else
+        raise EACBrNFeDANFEFR.CreateFmt('Caminho do arquivo de impressão de INUTILIZAÇÃO "%s" inválido.', [FastFileInutilizacao]);
+    end
+  end
+  else
+    raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão de INUTILIZAÇÃO não assinalado.');
+
+  frxReport.PrintOptions.Copies := DANFEClassOwner.NumCopias;
+  frxReport.PreviewOptions.ShowCaptions := ExibeCaptionButton;
+  frxReport.OnPreview := frxReportPreview;
+
+  // preparar relatorio
+  if Assigned(DANFEClassOwner.ACBrNFe) then
+  begin
+    if Assigned(TACBrNFe(DANFEClassOwner.ACBrNFe).InutNFe) then
+    begin
+      Inutilizacao := TACBrNFe(DANFEClassOwner.ACBrNFe).InutNFe.RetInutNFe;
+      CarregaDadosInutilizacao;
+    end
+    else
+      raise EACBrNFeDANFEFR.Create('INUTILIZAÇÃO não foi assinalada.');
+
+    Result := frxReport.PrepareReport;
+  end
+  else
+    raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
+
+end;
+
 procedure TACBrNFeFRClass.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   qrcode: String;
@@ -1929,6 +2227,192 @@ begin
             end;
     end;
   end;
+end;
+
+procedure TACBrNFeFRClass.frxReportPreview(Sender: TObject);
+begin
+ frxReport.PreviewForm.BorderIcons := FBorderIcon;
+end;
+
+function TACBrNFeFRClass.GetPreparedReport: TfrxReport;
+begin
+
+  if EstaVazio(Trim(FFastFile)) then
+    Result := nil
+  else
+  begin
+    if PrepareReport(nil) then
+      Result := frxReport
+    else
+      Result := nil;
+  end;
+
+end;
+
+function TACBrNFeFRClass.GetPreparedReportEvento: TfrxReport;
+begin
+
+  if EstaVazio(Trim(FFastFileEvento)) then
+    Result := nil
+  else
+  begin
+    if PrepareReportEvento then
+      Result := frxReport
+    else
+      Result := nil;
+  end;
+
+end;
+
+function TACBrNFeFRClass.GetPreparedReportInutilizacao: TfrxReport;
+begin
+
+  if EstaVazio(Trim(FFastFileInutilizacao)) then
+    Result := nil
+  else
+  begin
+    if PrepareReportInutilizacao then
+      Result := frxReport
+    else
+      Result := nil;
+  end;
+
+end;
+
+procedure TACBrNFeFRClass.ImprimirDANFE(ANFE: TNFe);
+begin
+  if PrepareReport(ANFE) then
+  begin
+    if DANFEClassOwner.MostraPreview then
+      frxReport.ShowPreparedReport
+    else
+      frxReport.Print;
+  end;
+end;
+
+procedure TACBrNFeFRClass.ImprimirDANFEPDF(ANFE: TNFe);
+const
+  TITULO_PDF = 'Nota Fiscal Eletrônica';
+var
+	fsShowDialog : Boolean;
+begin
+  if PrepareReport(ANFE) then
+  begin
+    fsShowDialog := frxPDFExport.ShowDialog;
+    frxPDFExport.Author        := DANFEClassOwner.Sistema;
+    frxPDFExport.Creator       := DANFEClassOwner.Sistema;
+    frxPDFExport.Producer      := DANFEClassOwner.Sistema;
+    frxPDFExport.Title         := TITULO_PDF;
+    frxPDFExport.Subject       := TITULO_PDF;
+    frxPDFExport.Keywords      := TITULO_PDF;
+    frxPDFExport.ShowDialog    := False;
+    frxPDFExport.EmbeddedFonts := False;
+    frxPDFExport.Background    := False;
+
+    frxPDFExport.FileName := PathWithDelim(DANFEClassOwner.PathPDF) +	OnlyNumber(NFe.infNFe.ID) + '-nfe.pdf';
+
+    if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+      ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+
+    frxReport.Export(frxPDFExport);
+    frxPDFExport.ShowDialog := fsShowDialog;
+  end
+  else
+    frxPDFExport.FileName := '';
+
+end;
+
+procedure TACBrNFeFRClass.ImprimirDANFEResumido(ANFE: TNFe);
+begin
+  if PrepareReport(ANFE) then
+  begin
+    if DANFEClassOwner.MostraPreview then
+      frxReport.ShowPreparedReport
+    else
+      frxReport.Print;
+  end;
+end;
+
+procedure TACBrNFeFRClass.ImprimirEVENTO(ANFE: TNFe);
+begin
+  if PrepareReportEvento then
+  begin
+    if DANFEClassOwner.MostraPreview then
+      frxReport.ShowPreparedReport
+    else
+      frxReport.Print;
+  end;
+end;
+
+procedure TACBrNFeFRClass.ImprimirEVENTOPDF(ANFE: TNFe);
+const
+  TITULO_PDF = 'Eventos Nota Fiscal Eletrônica';
+var
+  NomeArq: String;
+begin
+  if PrepareReportEvento then
+  begin
+    frxPDFExport.Author     := DANFEClassOwner.Sistema;
+    frxPDFExport.Creator    := DANFEClassOwner.Sistema;
+    frxPDFExport.Producer   := DANFEClassOwner.Sistema;
+    frxPDFExport.Title      := TITULO_PDF;
+    frxPDFExport.Subject    := TITULO_PDF;
+    frxPDFExport.Keywords   := TITULO_PDF;
+    frxPDFExport.ShowDialog := False;
+
+    NomeArq := StringReplace(TACBrNFe(DANFEClassOwner.ACBrNFe).EventoNFe.Evento.Items[0].InfEvento.id, 'ID', '', [rfIgnoreCase]);
+
+    frxPDFExport.FileName := PathWithDelim(DANFEClassOwner.PathPDF) + NomeArq + '-procEventoNFe.pdf';
+
+    if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+      ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+
+    frxReport.Export(frxPDFExport);
+  end
+  else
+    frxPDFExport.Filename := '';
+
+end;
+
+procedure TACBrNFeFRClass.ImprimirINUTILIZACAO(ANFE: TNFe);
+begin
+  if PrepareReportInutilizacao then
+  begin
+    if DANFEClassOwner.MostraPreview then
+      frxReport.ShowPreparedReport
+    else
+      frxReport.Print;
+  end;
+end;
+
+procedure TACBrNFeFRClass.ImprimirINUTILIZACAOPDF(ANFE: TNFe);
+const
+  TITULO_PDF = 'Inutilização de Numeração';
+var
+  NomeArq: String;
+begin
+  if PrepareReportInutilizacao then
+  begin
+    frxPDFExport.Author     := DANFEClassOwner.Sistema;
+    frxPDFExport.Creator    := DANFEClassOwner.Sistema;
+    frxPDFExport.Producer   := DANFEClassOwner.Sistema;
+    frxPDFExport.Title      := TITULO_PDF;
+    frxPDFExport.Subject    := TITULO_PDF;
+    frxPDFExport.Keywords   := TITULO_PDF;
+    frxPDFExport.ShowDialog := False;
+
+    NomeArq := OnlyNumber(TACBrNFe(DANFEClassOwner.ACBrNFe).InutNFe.RetInutNFe.Id);
+
+    frxPDFExport.FileName := PathWithDelim(DANFEClassOwner.PathPDF) + NomeArq + '-procInutNFe.pdf';
+
+    if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+      ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+
+    frxReport.Export(frxPDFExport);
+  end
+  else
+    frxPDFExport.FileName := '';
+
 end;
 
 end.

@@ -82,6 +82,16 @@ begin
      TACBrNFeDANFEFRFileNameProperty);
   RegisterPropertyEditor(TypeInfo(String), TACBrNFeDANFEFR, 'FastFileInutilizacao',
      TACBrNFeDANFEFRFileNameProperty);
+
+  RegisterComponents('ACBrNFe', [TACBrNFeDANFCEFR]);
+
+  RegisterPropertyEditor(TypeInfo(String), TACBrNFeDANFCEFR, 'FastFile',
+     TACBrNFeDANFEFRFileNameProperty);
+  RegisterPropertyEditor(TypeInfo(String), TACBrNFeDANFCEFR, 'FastFileEvento',
+     TACBrNFeDANFEFRFileNameProperty);
+  RegisterPropertyEditor(TypeInfo(String), TACBrNFeDANFCEFR, 'FastFileInutilizacao',
+     TACBrNFeDANFEFRFileNameProperty);
+
 end;
 
 { TACBrNFeDANFERaveFileNameProperty }

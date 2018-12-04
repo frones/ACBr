@@ -49,8 +49,6 @@ type
   /// TBLOCO_B -
   TBloco_B = class(TACBrSPED)
   private
-    FOwner: TComponent;
-
     FBloco_0: TBloco_0;
 
     FRegistroB001: TRegistroB001;

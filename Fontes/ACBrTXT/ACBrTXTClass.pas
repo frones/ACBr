@@ -299,7 +299,7 @@ begin
      Result := FDelimitador + FormatCurr(strCurMascara, Value)
   else
   begin
-     AStr := FormatFloat(FloatMask(Decimal, False), Value);
+     AStr := FormatFloatBr(Value, FloatMask(Decimal, False));
      if Decimal > 0 then
        Delete( AStr, Length(AStr)-Decimal, 1) ;
 
@@ -320,7 +320,7 @@ begin
      Result := FDelimitador;
      Exit;
   end;
-  Result := FDelimitador + FormatFloat('#0.' + StringOfChar('0', Decimal), Value); //FormatCurr não permite precisão acima de 4 casas decimais
+  Result := FDelimitador + FormatFloatBr(Value, FloatMask(Decimal, False)); //FormatCurr não permite precisão acima de 4 casas decimais
 end;
 
 function TACBrTXTClass.VDFill(Value: Variant;
@@ -332,7 +332,7 @@ begin
      Result := FDelimitador;
      Exit;
   end;
-  Result := FDelimitador + FormatFloat('#0.' + StringOfChar('0', Decimal), Value); //FormatCurr não permite precisão acima de 4 casas decimais
+  Result := FDelimitador + FormatFloatBr(Value, FloatMask(Decimal, False)); //FormatCurr não permite precisão acima de 4 casas decimais
 end;
 
 function TACBrTXTClass.LFill(Value: Int64; Size: Integer; Nulo: Boolean;

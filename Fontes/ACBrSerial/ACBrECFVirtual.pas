@@ -2209,7 +2209,7 @@ end;
  procedure TACBrECFVirtualClass.CancelaDescontoAcrescimoItem( NumItem : Integer;
       TipoAcrescimoDesconto: String = 'D') ;
 var
-  ValDescAcres, PorcDescAcres: Double;
+  ValDescAcres: Double;
   PosAliqItem: Integer;
   ItemCupom: TACBrECFVirtualClassItemCupom;
 begin

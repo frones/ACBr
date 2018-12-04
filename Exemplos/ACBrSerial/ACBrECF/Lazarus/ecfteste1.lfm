@@ -5,7 +5,7 @@ object Form1: TForm1
   Width = 691
   ActiveControl = PageControl1
   Caption = 'Teste de Impressora Fiscal'
-  ClientHeight = 449
+  ClientHeight = 429
   ClientWidth = 691
   Constraints.MinHeight = 400
   Constraints.MinWidth = 440
@@ -14,148 +14,10 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Pitch = fpVariable
-  Icon.Data = {
-    BE1000000000010001002020000001002000A810000016000000280000002000
-    0000400000000100200000000000001000006400000064000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    000000000000000000000000000000000000000000FF000000FF000000FF0000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    00000000000000000000000000FF000000FFC0C0C0FF808080FF808080FF0000
-    00FF000000FF0000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000FF000000FFC0C0C0FFC0C0C0FFC0C0C0FF808080FF808080FF8080
-    80FF808080FF000000FF000000FF000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000FF0000
-    00FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FF000000FF000000FF8080
-    80FF808080FF808080FF808080FF000000FF000000FF00000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    000000000000000000000000000000000000000000FF000000FFC0C0C0FFC0C0
-    C0FFC0C0C0FFC0C0C0FF808080FF808080FFC0C0C0FF808080FF808080FF0000
-    00FF000000FF808080FF808080FF808080FF808080FF000000FF000000FF0000
-    0000000000000000000000000000000000000000000000000000000000000000
-    00000000000000000000000000FF000000FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
-    C0FF808080FF808080FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
-    80FF808080FF000000FF000000FF808080FF808080FF808080FF808080FF0000
-    00FF000000FF0000000000000000000000000000000000000000000000000000
-    000000000000000000FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FF8080
-    80FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
-    80FF808080FF808080FF808080FF000000FF000000FF808080FF808080FF8080
-    80FF808080FF000000FF000000FF000000000000000000000000000000000000
-    000000000000808080FFC0C0C0FFC0C0C0FF808080FF808080FFC0C0C0FFC0C0
-    C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
-    80FF808080FF808080FF808080FF808080FF808080FF000000FF000000FF8080
-    80FF808080FF808080FF808080FF000000FF0000000000000000000000000000
-    000000000000808080FF808080FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
-    C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
-    80FF808080FF808080FF808080FF808080FF808080FF808080FF808080FF0000
-    00FF000000FF808080FF808080FF000000FF0000000000000000000000000000
-    0000808080FF808080FFC0C0C0FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
-    C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFC0C0C0FF808080FF808080FF8080
-    80FF808080FF808080FF808080FF808080FF808080FF808080FF808080FF8080
-    80FF808080FF000000FF000000FF000000FF0000000000000000000000000000
-    0000808080FFFFFFFFFFC0C0C0FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
-    C0FFC0C0C0FFC0C0C0FFC0C0C0FF808080FFFFFFFFFF808080FF808080FF8080
-    80FF808080FF808080FF808080FF808080FF808080FF808080FF808080FF8080
-    80FF808080FF808080FF808080FF000000FF000000FF00000000000000000000
-    0000808080FFFFFFFFFFC0C0C0FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
-    C0FFC0C0C0FFC0C0C0FFFFFFFFFF808080FF808080FFC0C0C0FFC0C0C0FF8080
-    80FF808080FF808080FF808080FF808080FF808080FF808080FF808080FF8080
-    80FF808080FF808080FF808080FF808080FF000000FF000000FF000000000000
-    0000808080FFFFFFFFFFC0C0C0FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
-    C0FFFFFFFFFFFFFFFFFFC0C0C0FFC0C0C0FFC0C0C0FF808080FF808080FFC0C0
-    C0FFC0C0C0FF808080FF808080FF808080FF808080FF808080FF808080FF8080
-    80FF808080FF808080FF808080FF808080FF000000FF808080FF000000FF0000
-    0000808080FFFFFFFFFFC0C0C0FF808080FFC0C0C0FFC0C0C0FFFFFFFFFFFFFF
-    FFFFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FF8080
-    80FF808080FFC0C0C0FFC0C0C0FF808080FF808080FF808080FF808080FF8080
-    80FF808080FF808080FF808080FF808080FF000000FFC0C0C0FF808080FF0000
-    00FF808080FFFFFFFFFFC0C0C0FF808080FFFFFFFFFFFFFFFFFFC0C0C0FFC0C0
-    C0FFC0C0C0FF0000FFFF0000FFFFC0C0C0FFC0C0C0FF808080FF808080FFC0C0
-    C0FFC0C0C0FF808080FF808080FFC0C0C0FFC0C0C0FF808080FF808080FF8080
-    80FF808080FF808080FF808080FF808080FF000000FFC0C0C0FF808080FF8080
-    80FF808080FFFFFFFFFFFFFFFFFF808080FF808080FFC0C0C0FFC0C0C0FF00FF
-    00FF00FF00FFC0C0C0FFC0C0C0FF808080FF808080FFC0C0C0FFC0C0C0FFC0C0
-    C0FFC0C0C0FFC0C0C0FF000000FF808080FF808080FFC0C0C0FFC0C0C0FF8080
-    80FF808080FF808080FF808080FF808080FF000000FF808080FF000000000000
-    0000808080FF808080FFFFFFFFFFC0C0C0FFC0C0C0FF808080FF808080FFC0C0
-    C0FFC0C0C0FF808080FF808080FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
-    C0FF000000FF000000FFFFFFFFFFC0C0C0FF000000FF808080FF808080FFC0C0
-    C0FFC0C0C0FF808080FF808080FF808080FF000000FF00000000000000000000
-    00000000000000000000808080FF808080FFFFFFFFFFC0C0C0FFC0C0C0FF8080
-    80FF808080FF808080FF808080FFC0C0C0FFC0C0C0FFC0C0C0FF000000FF0000
-    00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FFC0C0C0FFC0C0C0FF8080
-    80FF808080FFC0C0C0FFC0C0C0FF808080FF000000FF00000000000000000000
-    000000000000000000000000000000000000808080FF808080FFFFFFFFFFC0C0
-    C0FFC0C0C0FF808080FF808080FF808080FF000000FF000000FFFFFFFFFFFFFF
-    FFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFC0C0C0FF000000FF808080FFC0C0
-    C0FFC0C0C0FF808080FF808080FF000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000808080FF8080
-    80FFFFFFFFFFC0C0C0FFC0C0C0FF808080FF808080FFFFFFFFFFFFFFFFFFFF00
-    00FFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FF808080FF8080
-    80FF808080FF0000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000808080FF808080FFFFFFFFFFC0C0C0FFC0C0C0FF808080FFFFFFFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFC0C0C0FF000000FF0000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    00000000000000000000808080FF808080FFFFFFFFFF808080FFFFFFFFFFFFFF
-    FFFFFF0000FFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0C0C0FF0000
-    00FF000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    000000000000000000000000000000000000808080FF808080FF808080FFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFFFFFFFFFC0C0
-    C0FF000000FF0000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000808080FFFFFF
-    FFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-    FFFFC0C0C0FF000000FF00000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000008080
-    80FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000FFFF0000FFFFFF
-    FFFFFFFFFFFFC0C0C0FF000000FF000000FF0000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000808080FFFFFFFFFFFFFFFFFFFF0000FFFF0000FFFFFFFFFFFFFFFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFF808080FF808080FF0000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    000000000000808080FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-    FFFF808080FF808080FF00000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    00000000000000000000808080FFFFFFFFFFFFFFFFFFFFFFFFFF808080FF8080
-    80FF000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000808080FF808080FF808080FF000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000000000000000000000000000000000000000000000000000000000000000
-    0000FFF1FFFFFFC07FFFFF001FFFFC0007FFF00001FFC000007F8000001F8000
-    000F8000000F0000000F00000007000000030000000100000000000000000000
-    000300000007C0000007F000001FFC00007FFF0001FFFFC000FFFFF0007FFFFC
-    003FFFFE000FFFFF000FFFFF803FFFFFC0FFFFFFE3FFFFFFFFFFFFFFFFFFFFFF
-    FFFF
-  }
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.6.2.0'
-  Visible = False
+  LCLVersion = '1.8.2.0'
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
@@ -175,9 +37,9 @@ object Form1: TForm1
     Height = 366
     Top = 0
     Width = 691
-    ActivePage = tsECF
+    ActivePage = tsSAT
     Align = alClient
-    TabIndex = 0
+    TabIndex = 8
     TabOrder = 0
     object tsECF: TTabSheet
       Caption = 'ECF'
@@ -660,13 +522,13 @@ object Form1: TForm1
     end
     object TabSheet1: TTabSheet
       Caption = 'Cmd/Resp'
-      ClientHeight = 309
-      ClientWidth = 633
+      ClientHeight = 340
+      ClientWidth = 683
       object Label2: TLabel
         Left = 0
         Height = 17
         Top = 54
-        Width = 633
+        Width = 683
         Align = alTop
         AutoSize = False
         Caption = 'Resposta'
@@ -677,7 +539,7 @@ object Form1: TForm1
         Left = 0
         Height = 15
         Top = 0
-        Width = 633
+        Width = 683
         Align = alTop
         AutoSize = False
         Caption = 'Comando Enviado'
@@ -686,9 +548,9 @@ object Form1: TForm1
       end
       object mResp: TMemo
         Left = 0
-        Height = 238
+        Height = 269
         Top = 71
-        Width = 633
+        Width = 683
         Align = alClient
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
@@ -706,7 +568,7 @@ object Form1: TForm1
         Left = 0
         Height = 39
         Top = 15
-        Width = 633
+        Width = 683
         Align = alTop
         TabOrder = 0
         WantReturns = False
@@ -714,24 +576,24 @@ object Form1: TForm1
     end
     object TabSheet2: TTabSheet
       Caption = 'Cupom'
-      ClientHeight = 309
-      ClientWidth = 633
+      ClientHeight = 340
+      ClientWidth = 683
       ImageIndex = 1
       object Panel1: TPanel
         Left = 0
-        Height = 268
+        Height = 299
         Top = 41
-        Width = 633
+        Width = 683
         Align = alClient
         BevelOuter = bvNone
-        ClientHeight = 268
-        ClientWidth = 633
+        ClientHeight = 299
+        ClientWidth = 683
         TabOrder = 0
         object mBobina: TMemo
           Left = 0
-          Height = 268
+          Height = 299
           Top = 0
-          Width = 633
+          Width = 683
           Align = alClient
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
@@ -746,9 +608,9 @@ object Form1: TForm1
         end
         object wbBobina: TIpHtmlPanel
           Left = 0
-          Height = 268
+          Height = 299
           Top = 0
-          Width = 633
+          Width = 683
           Align = alClient
           FixedTypeface = 'Courier New'
           DefaultTypeFace = 'default'
@@ -769,11 +631,11 @@ object Form1: TForm1
         Left = 0
         Height = 41
         Top = 0
-        Width = 633
+        Width = 683
         Align = alTop
         BevelOuter = bvNone
         ClientHeight = 41
-        ClientWidth = 633
+        ClientWidth = 683
         TabOrder = 1
         object cbMemoHTML: TCheckBox
           Left = 272
@@ -808,14 +670,14 @@ object Form1: TForm1
     end
     object TabSheet3: TTabSheet
       Caption = 'RFD'
-      ClientHeight = 309
-      ClientWidth = 633
+      ClientHeight = 340
+      ClientWidth = 683
       ImageIndex = 2
       object PageControl2: TPageControl
         Left = 0
-        Height = 254
+        Height = 285
         Top = 55
-        Width = 633
+        Width = 683
         ActivePage = TabSheet5
         Align = alClient
         TabIndex = 1
@@ -998,17 +860,17 @@ object Form1: TForm1
         end
         object TabSheet5: TTabSheet
           Caption = 'ACBrRFD.INI'
-          ClientHeight = 228
-          ClientWidth = 625
+          ClientHeight = 259
+          ClientWidth = 675
           object Panel4: TPanel
             Left = 0
             Height = 34
-            Top = 194
-            Width = 625
+            Top = 225
+            Width = 675
             Align = alBottom
             BevelOuter = bvNone
             ClientHeight = 34
-            ClientWidth = 625
+            ClientWidth = 675
             TabOrder = 0
             object bRFDLer: TButton
               Left = 131
@@ -1031,9 +893,9 @@ object Form1: TForm1
           end
           object mRFDParam: TMemo
             Left = 0
-            Height = 194
+            Height = 225
             Top = 0
-            Width = 625
+            Width = 675
             Align = alClient
             Font.Color = clBlack
             Font.Height = 12
@@ -1048,14 +910,14 @@ object Form1: TForm1
         Left = 0
         Height = 55
         Top = 0
-        Width = 633
+        Width = 683
         Align = alTop
         BevelOuter = bvNone
         ClientHeight = 55
-        ClientWidth = 633
+        ClientWidth = 683
         TabOrder = 0
         object sbDirRFD: TSpeedButton
-          Left = 600
+          Left = 650
           Height = 22
           Top = 23
           Width = 23
@@ -1091,7 +953,7 @@ object Form1: TForm1
           Left = 134
           Height = 18
           Top = 23
-          Width = 466
+          Width = 516
           Anchors = [akTop, akLeft, akRight]
           Font.Color = clBlack
           Font.Height = 11
@@ -1289,13 +1151,13 @@ object Form1: TForm1
     end
     object tsDadosRedZ: TTabSheet
       Caption = 'Dados Redução Z'
-      ClientHeight = 309
-      ClientWidth = 539
+      ClientHeight = 340
+      ClientWidth = 683
       object mRZ: TMemo
         Left = 0
-        Height = 248
+        Height = 279
         Top = 17
-        Width = 539
+        Width = 683
         Align = alTop
         Anchors = [akLeft, akRight, akBottom]
         Font.Color = clBlack
@@ -1311,7 +1173,7 @@ object Form1: TForm1
       object bLerDadosRedZ: TButton
         Left = 7
         Height = 25
-        Top = 271
+        Top = 302
         Width = 108
         Anchors = [akLeft, akBottom]
         Caption = 'Ler Dados RZ'
@@ -1322,7 +1184,7 @@ object Form1: TForm1
         Left = 0
         Height = 17
         Top = 0
-        Width = 539
+        Width = 683
         Align = alTop
         AutoSize = False
         Caption = 'Resposta'
@@ -1599,13 +1461,13 @@ object Form1: TForm1
     end
     object tsArqAuxCript: TTabSheet
       Caption = 'Arq.Aux.Cript.'
-      ClientHeight = 309
-      ClientWidth = 609
+      ClientHeight = 340
+      ClientWidth = 683
       OnShow = tsArqAuxCriptShow
       object bAACGravarArquivo: TButton
-        Left = 473
+        Left = 547
         Height = 25
-        Top = 257
+        Top = 288
         Width = 102
         Anchors = [akRight, akBottom]
         Caption = 'Gravar Arquivo'
@@ -1615,7 +1477,7 @@ object Form1: TForm1
       object Label33: TLabel
         Left = 10
         Height = 13
-        Top = 234
+        Top = 265
         Width = 70
         Alignment = taRightJustify
         Anchors = [akLeft, akBottom]
@@ -1626,16 +1488,16 @@ object Form1: TForm1
         Cursor = crIBeam
         Left = 84
         Height = 21
-        Top = 228
-        Width = 325
+        Top = 259
+        Width = 399
         Anchors = [akLeft, akRight, akBottom]
         TabOrder = 1
         Text = 'arquivo_auxiliar_criptografado.txt'
       end
       object SbAACNomeArq: TSpeedButton
-        Left = 417
+        Left = 491
         Height = 22
-        Top = 228
+        Top = 259
         Width = 24
         Anchors = [akRight, akBottom]
         Caption = '...'
@@ -1644,7 +1506,7 @@ object Form1: TForm1
       object Label41: TLabel
         Left = 20
         Height = 13
-        Top = 263
+        Top = 294
         Width = 60
         Alignment = taRightJustify
         Anchors = [akLeft, akBottom]
@@ -1655,16 +1517,16 @@ object Form1: TForm1
         Cursor = crIBeam
         Left = 84
         Height = 21
-        Top = 257
-        Width = 325
+        Top = 288
+        Width = 399
         Anchors = [akLeft, akRight, akBottom]
         TabOrder = 2
         Text = 'acbr_aac_log.txt'
       end
       object SbAACArqLog: TSpeedButton
-        Left = 417
+        Left = 491
         Height = 22
-        Top = 257
+        Top = 288
         Width = 24
         Anchors = [akRight, akBottom]
         Caption = '...'
@@ -1672,9 +1534,9 @@ object Form1: TForm1
       end
       object pgAAC: TPageControl
         Left = 0
-        Height = 213
+        Height = 244
         Top = 0
-        Width = 609
+        Width = 683
         ActivePage = tsAACParams
         Align = alTop
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -1938,13 +1800,13 @@ object Form1: TForm1
         end
         object tsAACParams: TTabSheet
           Caption = 'Params'
-          ClientHeight = 187
-          ClientWidth = 601
+          ClientHeight = 218
+          ClientWidth = 675
           object mAACParams: TMemo
             Left = 0
-            Height = 187
+            Height = 218
             Top = 0
-            Width = 601
+            Width = 675
             Align = alClient
             Lines.Strings = (
               'ExemploParametro1 = VALOR'
@@ -1957,9 +1819,9 @@ object Form1: TForm1
         end
       end
       object bAACAbrirArquivo: TButton
-        Left = 473
+        Left = 547
         Height = 25
-        Top = 225
+        Top = 256
         Width = 102
         Anchors = [akRight, akBottom]
         Caption = 'Abrir Arquivo'
@@ -1969,16 +1831,16 @@ object Form1: TForm1
     end
     object tsSAT: TTabSheet
       Caption = 'SAT Virtual'
-      ClientHeight = 309
-      ClientWidth = 633
+      ClientHeight = 340
+      ClientWidth = 683
       object PageControl3: TPageControl
         Left = 0
-        Height = 309
+        Height = 340
         Top = 0
-        Width = 633
-        ActivePage = tsDadosEmit
+        Width = 683
+        ActivePage = Impressao
         Align = alClient
-        TabIndex = 1
+        TabIndex = 3
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
@@ -2199,8 +2061,8 @@ object Form1: TForm1
         end
         object tsDadosEmit: TTabSheet
           Caption = 'Dados Emitente'
-          ClientHeight = 283
-          ClientWidth = 625
+          ClientHeight = 314
+          ClientWidth = 675
           object Label55: TLabel
             Left = 12
             Height = 13
@@ -2340,17 +2202,17 @@ object Form1: TForm1
         end
         object Impressao: TTabSheet
           Caption = 'Impressao'
-          ClientHeight = 283
-          ClientWidth = 625
+          ClientHeight = 314
+          ClientWidth = 675
           object GroupBox3: TGroupBox
             Left = 0
-            Height = 283
+            Height = 314
             Top = 0
-            Width = 369
+            Width = 419
             Align = alClient
             Caption = 'Fortes'
-            ClientHeight = 265
-            ClientWidth = 365
+            ClientHeight = 296
+            ClientWidth = 415
             TabOrder = 0
             object seLargura: TSpinEdit
               Left = 8
@@ -2372,33 +2234,17 @@ object Form1: TForm1
               Left = 96
               Height = 13
               Top = 0
-              Width = 25
-              Caption = 'Topo'
+              Width = 39
+              Caption = 'Superior'
               ParentColor = False
-            end
-            object seMargemTopo: TSpinEdit
-              Left = 96
-              Height = 21
-              Top = 14
-              Width = 64
-              MaxValue = 9999
-              TabOrder = 1
             end
             object Label65: TLabel
               Left = 8
               Height = 13
               Top = 48
-              Width = 30
-              Caption = 'Fundo'
+              Width = 32
+              Caption = 'Inferior'
               ParentColor = False
-            end
-            object seMargemFundo: TSpinEdit
-              Left = 8
-              Height = 21
-              Top = 62
-              Width = 64
-              MaxValue = 9999
-              TabOrder = 2
             end
             object Label66: TLabel
               Left = 96
@@ -2408,14 +2254,6 @@ object Form1: TForm1
               Caption = 'Esquerda'
               ParentColor = False
             end
-            object seMargemEsquerda: TSpinEdit
-              Left = 96
-              Height = 21
-              Top = 62
-              Width = 64
-              MaxValue = 9999
-              TabOrder = 3
-            end
             object Label67: TLabel
               Left = 184
               Height = 13
@@ -2424,14 +2262,6 @@ object Form1: TForm1
               Caption = 'Direita'
               ParentColor = False
             end
-            object seMargemDireita: TSpinEdit
-              Left = 184
-              Height = 21
-              Top = 62
-              Width = 64
-              MaxValue = 9999
-              TabOrder = 4
-            end
             object bImpressora: TButton
               Left = 8
               Height = 23
@@ -2439,7 +2269,7 @@ object Form1: TForm1
               Width = 110
               AutoSize = True
               Caption = 'Definir Impressora'
-              TabOrder = 5
+              TabOrder = 1
             end
             object lImpressora: TLabel
               Left = 136
@@ -2456,7 +2286,7 @@ object Form1: TForm1
               Width = 74
               Caption = 'Usar Fortes'
               OnChange = cbUsarFortesChange
-              TabOrder = 6
+              TabOrder = 2
             end
             object cbPreview: TCheckBox
               Left = 192
@@ -2464,17 +2294,61 @@ object Form1: TForm1
               Top = 24
               Width = 58
               Caption = 'Preview'
+              TabOrder = 3
+            end
+            object seMargemDireita: TFloatSpinEdit
+              Left = 184
+              Height = 21
+              Top = 62
+              Width = 64
+              Increment = 1
+              MaxValue = 9999
+              MinValue = 0
+              TabOrder = 4
+              Value = 0
+            end
+            object seMargemEsquerda: TFloatSpinEdit
+              Left = 96
+              Height = 21
+              Top = 62
+              Width = 64
+              Increment = 1
+              MaxValue = 9999
+              MinValue = 0
+              TabOrder = 5
+              Value = 0
+            end
+            object seMargemFundo: TFloatSpinEdit
+              Left = 8
+              Height = 21
+              Top = 62
+              Width = 64
+              Increment = 1
+              MaxValue = 9999
+              MinValue = 0
+              TabOrder = 6
+              Value = 0
+            end
+            object seMargemTopo: TFloatSpinEdit
+              Left = 96
+              Height = 21
+              Top = 14
+              Width = 64
+              Increment = 1
+              MaxValue = 9999
+              MinValue = 0
               TabOrder = 7
+              Value = 0
             end
           end
           object GroupBox4: TGroupBox
-            Left = 369
-            Height = 283
+            Left = 419
+            Height = 314
             Top = 0
             Width = 256
             Align = alRight
             Caption = 'EscPOS'
-            ClientHeight = 265
+            ClientHeight = 296
             ClientWidth = 252
             TabOrder = 1
             object Label68: TLabel
@@ -2551,22 +2425,22 @@ object Form1: TForm1
     end
     object tsNFCe: TTabSheet
       Caption = 'NFCe'
-      ClientHeight = 309
-      ClientWidth = 633
+      ClientHeight = 340
+      ClientWidth = 683
       object PageControl4: TPageControl
         Left = 0
-        Height = 309
+        Height = 340
         Top = 0
-        Width = 633
-        ActivePage = TabSheet4
+        Width = 683
+        ActivePage = TabSheet9
         Align = alClient
         Anchors = []
-        TabIndex = 0
+        TabIndex = 3
         TabOrder = 0
         object TabSheet4: TTabSheet
           Caption = 'Certificado'
-          ClientHeight = 283
-          ClientWidth = 625
+          ClientHeight = 314
+          ClientWidth = 675
           object GroupBox2: TGroupBox
             Left = 6
             Height = 169
@@ -2713,8 +2587,8 @@ object Form1: TForm1
         end
         object TabSheet7: TTabSheet
           Caption = 'Geral'
-          ClientHeight = 283
-          ClientWidth = 625
+          ClientHeight = 314
+          ClientWidth = 675
           ImageIndex = 1
           object rgTipoDanfe: TRadioGroup
             Left = 6
@@ -2892,8 +2766,8 @@ object Form1: TForm1
         end
         object TabSheet8: TTabSheet
           Caption = 'WebService'
-          ClientHeight = 283
-          ClientWidth = 625
+          ClientHeight = 314
+          ClientWidth = 675
           ImageIndex = 2
           object GroupBox6: TGroupBox
             Left = 8
@@ -3073,8 +2947,8 @@ object Form1: TForm1
         end
         object TabSheet9: TTabSheet
           Caption = 'Emitente'
-          ClientHeight = 283
-          ClientWidth = 625
+          ClientHeight = 314
+          ClientWidth = 675
           ImageIndex = 3
           object Label80: TLabel
             Left = 15
@@ -5033,6 +4907,7 @@ object Form1: TForm1
     Config.emit_indRatISSQN = irSim
     Config.EhUTF8 = False
     Config.PaginaDeCodigo = 0
+    Config.XmlSignLib = xsNone
     ConfigArquivos.SalvarCFe = True
     ConfigArquivos.SalvarCFeCanc = True
     ConfigArquivos.PrefixoArqCFe = 'AD'
@@ -5048,16 +4923,32 @@ object Form1: TForm1
     top = 368
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
+    Site = 'http://www.projetoacbr.com.br'
+    MargemInferior = 4
+    MargemSuperior = 2
+    MargemEsquerda = 2
+    MargemDireita = 2
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
     ACBrSAT = ACBrSAT1
-    Mask_qCom = '0.0000'
-    Mask_vUnCom = '0.000'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     left = 336
     top = 368
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
-    Mask_qCom = '0.0000'
-    Mask_vUnCom = '0.000'
+    Site = 'http://www.projetoacbr.com.br'
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
     MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     PosPrinter = ACBrPosPrinter1
     left = 368
@@ -5099,10 +4990,14 @@ object Form1: TForm1
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
     Configuracoes.Geral.VersaoDF = ve200
-    Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
+    Configuracoes.Geral.VersaoQRCode = veqr000
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
@@ -5111,87 +5006,34 @@ object Form1: TForm1
     top = 368
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
-    ACBrNFe = ACBrNFe1
     PathPDF = 'C:\lazarus\'
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    vTroco = 0
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
-    vTribFed = 0
-    vTribEst = 0
-    vTribMun = 0
-    ImprimeEmUmaLinha = False
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFe = ACBrNFe1
+    TipoDANFE = tiSemGeracao
     ImprimeDescAcrescItem = False
     PosPrinter = ACBrPosPrinter1
     left = 520
     top = 368
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = False
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 2
-    CasasDecimais._vUnCom = 2
-    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
-    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    vTroco = 0
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    TributosSeparadamente = False
-    vTribFed = 0
-    vTribEst = 0
-    vTribMun = 0
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    TipoDANFE = tiSemGeracao
     left = 552
     top = 368
   end
@@ -5209,6 +5051,6 @@ object Form1: TForm1
     ControlePorta = True
     ArqLOG = 'c:\temp\posprinter.log'
     left = 232
-    top = 336
+    top = 320
   end
 end

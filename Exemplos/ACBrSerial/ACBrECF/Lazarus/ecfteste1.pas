@@ -281,10 +281,10 @@ type
     sbtnLogoMarca: TSpeedButton;
     sbtnPathSalvar: TSpeedButton;
     seLargura: TSpinEdit;
-    seMargemDireita: TSpinEdit;
-    seMargemEsquerda: TSpinEdit;
-    seMargemFundo: TSpinEdit;
-    seMargemTopo: TSpinEdit;
+    seMargemDireita: TFloatSpinEdit;
+    seMargemEsquerda: TFloatSpinEdit;
+    seMargemFundo: TFloatSpinEdit;
+    seMargemTopo: TFloatSpinEdit;
     seNumeroCaixa: TSpinEdit;
     sePagCod: TSpinEdit;
     sePaginaCodigo: TSpinEdit;
@@ -5066,10 +5066,10 @@ begin
 
      INI.WriteBool('Fortes','UsarFortes',cbUsarFortes.Checked) ;
      INI.WriteInteger('Fortes','Largura',seLargura.Value);
-     INI.WriteInteger('Fortes','MargemTopo',seMargemTopo.Value);
-     INI.WriteInteger('Fortes','MargemFundo',seMargemFundo.Value);
-     INI.WriteInteger('Fortes','MargemEsquerda',seMargemEsquerda.Value);
-     INI.WriteInteger('Fortes','MargemDireita',seMargemDireita.Value);
+     INI.WriteFloat('Fortes','MargemTopo',seMargemTopo.Value);
+     INI.WriteFloat('Fortes','MargemFundo',seMargemFundo.Value);
+     INI.WriteFloat('Fortes','MargemEsquerda',seMargemEsquerda.Value);
+     INI.WriteFloat('Fortes','MargemDireita',seMargemDireita.Value);
      INI.WriteBool('Fortes','Preview',cbPreview.Checked);
 
      INI.WriteString('Printer','Name',Printer.PrinterName);
@@ -5187,10 +5187,10 @@ begin
      cbUsarFortes.Checked   := INI.ReadBool('Fortes','UsarFortes', True) ;
      cbUsarEscPos.Checked   := not cbUsarFortes.Checked;
      seLargura.Value        := INI.ReadInteger('Fortes','Largura',ACBrSATExtratoFortes1.LarguraBobina);
-     seMargemTopo.Value     := INI.ReadInteger('Fortes','MargemTopo',ACBrSATExtratoFortes1.Margens.Topo);
-     seMargemFundo.Value    := INI.ReadInteger('Fortes','MargemFundo',ACBrSATExtratoFortes1.Margens.Fundo);
-     seMargemEsquerda.Value := INI.ReadInteger('Fortes','MargemEsquerda',ACBrSATExtratoFortes1.Margens.Esquerda);
-     seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
+     seMargemTopo.Value     := INI.ReadFloat('Fortes','MargemTopo',ACBrSATExtratoFortes1.MargemSuperior);
+     seMargemFundo.Value    := INI.ReadFloat('Fortes','MargemFundo',ACBrSATExtratoFortes1.MargemInferior);
+     seMargemEsquerda.Value := INI.ReadFloat('Fortes','MargemEsquerda',ACBrSATExtratoFortes1.MargemEsquerda);
+     seMargemDireita.Value  := INI.ReadFloat('Fortes','MargemDireita',ACBrSATExtratoFortes1.MargemDireita);
      cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
 
      lImpressora.Caption := INI.ReadString('Printer','Name',Printer.PrinterName);
@@ -5402,16 +5402,16 @@ begin
   ACBrPosPrinter1.Device.Porta := edtPorta.Text;
   ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
 
-  ACBrSATExtratoFortes1.LarguraBobina    := seLargura.Value;
-  ACBrSATExtratoFortes1.Margens.Topo     := seMargemTopo.Value ;
-  ACBrSATExtratoFortes1.Margens.Fundo    := seMargemFundo.Value ;
-  ACBrSATExtratoFortes1.Margens.Esquerda := seMargemEsquerda.Value ;
-  ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
-  ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
+  ACBrSATExtratoFortes1.LarguraBobina  := seLargura.Value;
+  ACBrSATExtratoFortes1.MargemSuperior := seMargemTopo.Value ;
+  ACBrSATExtratoFortes1.MargemInferior := seMargemFundo.Value ;
+  ACBrSATExtratoFortes1.MargemEsquerda := seMargemEsquerda.Value ;
+  ACBrSATExtratoFortes1.MargemDireita  := seMargemDireita.Value ;
+  ACBrSATExtratoFortes1.MostraPreview  := cbPreview.Checked;
 
   try
     if lImpressora.Caption <> '' then
-      ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
+      ACBrSATExtratoFortes1.Impressora := lImpressora.Caption;
   except
   end;
 end;
@@ -5426,7 +5426,7 @@ begin
   if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
     ACBrPosPrinter1.Porta := edtPorta.Text
   else
-    ACBrNFeDANFCeFortes1.MostrarPreview := cbPreview.Checked;
+    ACBrNFeDANFCeFortes1.MostraPreview := cbPreview.Checked;
 end;
 
 end.

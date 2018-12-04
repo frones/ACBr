@@ -21,10 +21,10 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="9"/>
-      <BuildNr Value="94"/>
+      <BuildNr Value="115"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
-      <StringTable ProductVersion=""/>
+      <StringTable ProductVersion="0.9.0.114"/>
     </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Debug" Default="True"/>

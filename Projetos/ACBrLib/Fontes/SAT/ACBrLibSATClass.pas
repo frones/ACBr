@@ -120,7 +120,7 @@ function SAT_ExtrairLogs(eArquivo: PChar): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_TesteFimAFim(eArquivoXmlVenda: PChar): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function SAT_GerarAssinaturaSAT(CNPJSHW, CNPJEmitente: PChar;
+function SAT_GerarAssinaturaSAT(eCNPJSHW, eCNPJEmitente: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
@@ -738,19 +738,16 @@ begin
   end;
 end;
 
-function SAT_GerarAssinaturaSAT(CNPJSHW, CNPJEmitente: PChar;
+function SAT_GerarAssinaturaSAT(eCNPJSHW, eCNPJEmitente: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
-  cCNPJShw: String;
-  cCNPJEmitente: String;
-  cCodigoVinculacao: String;
-  Resposta: String;
+  cCNPJShw, cCNPJEmitente, cCodigoVinculacao, Resposta: String;
 begin
   try
     VerificarLibInicializada;
-    cCNPJShw := ansistring(CNPJSHW);
-    cCNPJEmitente := ansistring(CNPJEmitente);
+    cCNPJShw := OnlyNumber(StrPas(eCNPJSHW));
+    cCNPJEmitente := OnlyNumber(StrPas(eCNPJEmitente));
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('SAT_GerarAssinaturaSAT(' + cCNPJShw + ', ' + cCNPJEmitente + ' )', logCompleto, True)
@@ -764,16 +761,15 @@ begin
       try
         Resposta := '';
 
-        Resposta := ACBrValidador.ValidarCNPJ(cCNPJShw);
-        if NaoEstaVazio( Trim(Resposta) ) then
-          raise EACBrLibException.Create(ErrCNPJInvalido, 'CNPJ da Software House inválido!');
+        Resposta := Trim(ACBrValidador.ValidarCNPJ(cCNPJShw));
+        if NaoEstaVazio(Resposta) then
+          raise EACBrLibException.Create(ErrCNPJInvalido, Format(SErrLibSATCNPJSwHouseInvalido, [Resposta]));
 
-        Resposta := ACBrValidador.ValidarCNPJ(cCNPJEmitente);
-        if NaoEstaVazio( Trim(Resposta) ) then
-          raise EACBrLibException.Create(ErrCNPJInvalido, 'CNPJ do Emitente inválido!');
+        Resposta := Trim(ACBrValidador.ValidarCNPJ(cCNPJEmitente));
+        if NaoEstaVazio(Resposta) then
+          raise EACBrLibException.Create(ErrCNPJInvalido, Format(SErrLibSATCNPJEmitenteInvalido, [Resposta]));
 
-
-        cCodigoVinculacao := Onlynumber(cCNPJShw) + Onlynumber(cCNPJEmitente);
+        cCodigoVinculacao := cCNPJShw + cCNPJEmitente;
         Resposta := SatDM.ACBrSAT1.SSL.CalcHash(cCodigoVinculacao, dgstSHA256, outBase64, True);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);

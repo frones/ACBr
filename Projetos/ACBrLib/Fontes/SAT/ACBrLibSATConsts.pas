@@ -140,6 +140,10 @@ const
   CSessaoTESTEFIMAFIM = 'TESTEFIMAFIM';
   CSessaoStatusSAT = 'STATUSSAT';
 
+resourcestring
+  SErrLibSATCNPJSwHouseInvalido = 'CNPJ da Software House inválido!'+sLineBreak+'%s';
+  SErrLibSATCNPJEmitenteInvalido = 'CNPJ do Emitente inválido!'+sLineBreak+'%s';
+
 
 implementation
 

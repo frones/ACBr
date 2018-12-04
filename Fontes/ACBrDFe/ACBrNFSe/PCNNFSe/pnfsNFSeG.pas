@@ -1815,7 +1815,7 @@ begin
                  end;
 
     proEquiplano,
-//    proGinfes,
+    proGinfes,
     proGoverna,
     proEGoverneISS,
     proISSDSF,

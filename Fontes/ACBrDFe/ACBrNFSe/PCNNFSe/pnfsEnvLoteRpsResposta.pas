@@ -914,7 +914,7 @@ begin
             FInfRec.InformacoesLote.CPFCNPJRemetente  := Leitor.rCampo(tcStr, 'CPF');
 
           FInfRec.InformacoesLote.DataEnvioLote       := Leitor.rCampo(tcDatHor, 'DataEnvioLote');
-          FInfRec.InformacoesLote.QtdNotasProcessadas := Leitor.rCampo(tcInt, 'QtdeNotasProcessadas');
+          FInfRec.InformacoesLote.QtdNotasProcessadas := Leitor.rCampo(tcInt, 'QtdNotasProcessadas');
           FInfRec.InformacoesLote.TempoProcessamento  := Leitor.rCampo(tcInt, 'TempoProcessamento');
           FInfRec.InformacoesLote.ValorTotalServico   := Leitor.rCampo(tcDe2, 'ValorTotalServicos');
         end;

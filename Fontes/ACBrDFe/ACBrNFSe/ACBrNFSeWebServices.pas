@@ -4491,7 +4491,7 @@ begin
       proSP,
       proNotaBlu: FdocElemento := FTagGrupo;
 
-      proGinfes: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
+      proGinfes: FdocElemento := FTagGrupo;
 
       ProTecnos,
       proISSNET: FdocElemento := FPrefixo3 + 'Pedido';
@@ -4505,7 +4505,8 @@ begin
     end;
 
     case FProvedor of
-      proGINFES,
+      proGINFES: FinfElemento := 'Prestador';
+
       proBetha,
       proISSe,
       proFiorilli,

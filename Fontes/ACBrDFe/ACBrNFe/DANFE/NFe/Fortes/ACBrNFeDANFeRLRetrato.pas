@@ -1,37 +1,37 @@
 {******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emissï¿½o de Nota Fiscal}
-{ eletrï¿½nica - NFe - http://www.nfe.fazenda.gov.br                             }
-
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
+{ eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
+{                                                                              }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
-{                                       Andrï¿½ Ferreira de Moraes               }
-
+{                                       André Ferreira de Moraes               }
+{                                                                              }
 { Colaboradores nesse arquivo:                                                 }
-
-{  Vocï¿½ pode obter a ï¿½ltima versï¿½o desse arquivo na pagina do Projeto ACBr     }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-
-
-{  Esta biblioteca ï¿½ software livre; vocï¿½ pode redistribuï¿½-la e/ou modificï¿½-la }
-{ sob os termos da Licenï¿½a Pï¿½blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versï¿½o 2.1 da Licenï¿½a, ou (a seu critï¿½rio) }
-{ qualquer versï¿½o posterior.                                                   }
-
-{  Esta biblioteca ï¿½ distribuï¿½da na expectativa de que seja ï¿½til, porï¿½m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implï¿½cita de COMERCIABILIDADE OU      }
-{ ADEQUAï¿½ï¿½O A UMA FINALIDADE ESPECï¿½FICA. Consulte a Licenï¿½a Pï¿½blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENï¿½A.TXT ou LICENSE.TXT)              }
-
-{  Vocï¿½ deve ter recebido uma cï¿½pia da Licenï¿½a Pï¿½blica Geral Menor do GNU junto}
-{ com esta biblioteca; se nï¿½o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereï¿½o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Vocï¿½ tambï¿½m pode obter uma copia da licenï¿½a em:                              }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
-
-{ Daniel Simï¿½es de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praï¿½a Anita Costa, 34 - Tatuï¿½ - SP - 18270-410                  }
-
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -694,7 +694,7 @@ begin
     if (fpQuantItens > 0) then
     begin
       rlbCabecalhoItens.Visible := True;
-      lblDadosDoProduto.Caption := ACBrStr('CONTINUAï¿½ï¿½O DOS DADOS DO PRODUTO / SERVIï¿½OS');
+      lblDadosDoProduto.Caption := ACBrStr('CONTINUAÇÃO DOS DADOS DO PRODUTO / SERVIÇOS');
       rliMarcaDagua1.Top := 300;
     end
     else
@@ -749,11 +749,11 @@ begin
   rllSistema.Caption := fpDANFe.Sistema;
 
   rllUsuario.Visible := (fpDANFe.Usuario <> '');
-  rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSï¿½O: ') +
+  rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') +
     FormatDateTimeBr(Now) + ' - ' + fpDANFe.Usuario;
 
   rllHomologacao.Visible := (fpNFe.Ide.tpAmb = taHomologacao);
-  rllHomologacao.Caption := ACBrStr('AMBIENTE DE HOMOLOGAï¿½ï¿½O - NF-E SEM VALOR FISCAL');
+  rllHomologacao.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL');
 
   rllDadosVariaveis3_Descricao.Visible := True;
   rlbCodigoBarras.Visible := False;
@@ -762,9 +762,9 @@ begin
 
   if rlbCancelada.Visible then
   begin
-    rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAï¿½ï¿½O DE CANCELAMENTO');
-    rllXmotivo.Caption := 'NF-e CANCELADA';
-    RLLCancelada.Caption := 'NF-e CANCELADA';
+    rllDadosVariaveis3_Descricao.Caption  := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
+    rllXmotivo.Caption    := 'NF-e CANCELADA';
+    RLLCancelada.Caption  := 'NF-e CANCELADA';
   end
   else
   begin
@@ -775,19 +775,19 @@ begin
         begin
           rlbCodigoBarras.Visible := True;
           rllXMotivo.Visible := False;
-          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAï¿½ï¿½O DE USO');
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
         end;
 
         101, 135, 151, 155:
         begin
           rllXmotivo.Caption := 'NF-e CANCELADA';
-          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAï¿½ï¿½O DE CANCELAMENTO');
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
         end;
 
         110, 205, 301, 302:
         begin
           rllXmotivo.Caption := 'NF-e DENEGADA';
-          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAï¿½ï¿½O DE USO');
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
         end;
 
         else
@@ -802,14 +802,14 @@ begin
     begin
       if (fpNFe.Ide.tpEmis in [teNormal, teSCAN]) then
       begin
-        rllXmotivo.Caption := ACBrStr('NF-E Nï¿½O ENVIADA PARA SEFAZ');
+        rllXmotivo.Caption := ACBrStr('NF-E NÃO ENVIADA PARA SEFAZ');
         rllDadosVariaveis3_Descricao.Visible := False;
         rllDadosVariaveis3.Visible := False;
       end;
     end;
   end;
 
-  // Ajusta a largura da coluna "Cï¿½digo do Produto"
+  // Ajusta a largura da coluna "Código do Produto"
   txtCodigo.Width := fpDANFe.LarguraCodProd;
   rlmCodProd.Width := fpDANFe.LarguraCodProd;
   rlsDivProd.Left := fpDANFe.LarguraCodProd + 2;
@@ -818,7 +818,7 @@ begin
   rlmDescricao.Left := LinhaDescricao.Left + 2;
   rlmDescricao.Width := (LinhaNCM.Left - LinhaDescricao.Left) - 24;
 
-  // ajusta a posiï¿½ï¿½o do 'cï¿½digo do produto'
+  // ajusta a posição do 'código do produto'
   if (rlmCodProd.Width > 90) then
   begin
     rlmCodProd.Top := 18;
@@ -830,14 +830,14 @@ begin
     rlmCodProd.Height := 14;
   end;
 
-  // Se a largura da coluna 'Cï¿½digo do produto' for suficiente,
-  // exibe o tï¿½tulo da coluna sem abreviaï¿½ï¿½es
+  // Se a largura da coluna 'Código do produto' for suficiente,
+  // exibe o título da coluna sem abreviações
   if (rlmCodProd.Width > 113) then
-    rlmCodProd.Lines.Text := ACBrStr('Cï¿½DIGO DO PRODUTO / SERVIï¿½O')
+    rlmCodProd.Lines.Text := ACBrStr('CÓDIGO DO PRODUTO / SERVIÇO')
   else
-    rlmCodProd.Lines.Text := ACBrStr('Cï¿½DIGO DO PROD. / SERV.');
+    rlmCodProd.Lines.Text := ACBrStr('CÓDIGO DO PROD. / SERV.');
 
-  // Ajusta a posiï¿½ï¿½o da coluna 'Descriï¿½ï¿½o do produto'
+  // Ajusta a posiï¿½ï¿½o da coluna 'Descrição do produto'
   if (rlmDescricaoProduto.Width > 128) then
   begin
     rlmDescricaoProduto.Top := 18;
@@ -849,14 +849,14 @@ begin
     rlmDescricaoProduto.Height := 14;
   end;
 
-  // Se a largura da coluna 'Descriï¿½ï¿½o do produto' for suficiente,
-  // exibe o tï¿½tulo da coluna sem abreviaï¿½ï¿½es
+  // Se a largura da coluna 'Descrição do produto' for suficiente,
+  // exibe o título da coluna sem abreviações
   if (rlmDescricaoProduto.Width > 72) then
-    rlmDescricaoProduto.Lines.Text := ACBrStr('DESCRIï¿½ï¿½O DO PRODUTO / SERVIï¿½O')
+    rlmDescricaoProduto.Lines.Text := ACBrStr('DESCRIÇÃO DO DO PRODUTO / SERVIÇO')
   else
     rlmDescricaoProduto.Lines.Text := 'DESCR. PROD. / SERV.';
 
-  // Posiciona o canhoto do fpDANFe no cabeï¿½alho ou rodapï¿½
+  // Posiciona o canhoto do DANFE no cabeçalho ou rodapé
   case fpDANFe.PosCanhoto of
     prCabecalho:
     begin
@@ -875,7 +875,7 @@ begin
     end;
   end;
 
-  // Oculta alguns itens do fpDANFe
+  // Oculta alguns itens do DANFE
   if fpDANFe.FormularioContinuo then
   begin
     rllRecebemosDe.Visible := False;
@@ -922,7 +922,7 @@ begin
     end;
   end;
 
-  // Altera a fonte da Razï¿½o Social do DefinirEmitente
+  // Altera a fonte da Razï¿½o Social do Emitente
   rlmEmitente.Font.Size := fpDANFe.Fonte.TamanhoFonteRazaoSocial;
 
   for b := 0 to (RLNFe.ControlCount - 1) do
@@ -1005,7 +1005,7 @@ begin
   else
     RLMEndereco.Font.Size := 7;
 
-  AplicarParametros; // Aplica os parï¿½metros escolhidos, apï¿½s alterar o tamanho das fontes.
+  AplicarParametros; // Aplica os parâmetros escolhidos, após alterar o tamanho das fontes.
   DefinirDadosAdicionais;
   DefinirCabecalho;
   DefinirEmitente;
@@ -1020,7 +1020,7 @@ begin
   DefinirCabecalhoItens;
   DefinirObservacoes;
 
-  // Verifica se serï¿½ exibida a 'continuaï¿½ï¿½o das informaï¿½ï¿½es complementares'
+  // Verifica se será exibida a 'continuação das informações complementares'
   if (rlmDadosAdicionaisAuxiliar.Lines.Count > fpLimiteLinhas) then
   begin
     rlbContinuacaoInformacoesComplementares.Visible := True;
@@ -1048,9 +1048,9 @@ begin
 
     rlbCodigoBarras.Visible := True;
     rlbCodigoBarras.Caption := OnlyNumber(fpNFe.InfNFe.Id);
-    rllNumNF0.Caption := ACBrStr('Nï¿½ ') + PadLeft(IntToStr(nNF), 9, '0');
+    rllNumNF0.Caption := ACBrStr('Nº ') + PadLeft(IntToStr(nNF), 9, '0');
     rllNumNF1.Caption := rllNumNF0.Caption;
-    rllSERIE0.Caption := ACBrStr('Sï¿½RIE ') + PadLeft(IntToStr(Serie), 3, '0');
+    rllSERIE0.Caption := ACBrStr('SÉRIE ') + PadLeft(IntToStr(Serie), 3, '0');
     rllSERIE1.Caption := rllSERIE0.Caption;
     rllNatOperacao.Caption := NatOp;
     rllEntradaSaida.Caption := tpNFToStr(tpNF);
@@ -1062,11 +1062,11 @@ begin
     else
       rllHoraSaida.Caption := ifthen(TimeOf(dSaiEnt) = 0, '', TimeToStr(dSaiEnt));
 
-    // Configuraï¿½ï¿½o inicial
-    rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAï¿½ï¿½O DE USO');
+    // Configuração inicial
+    rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE DE USO');
     rlbCodigoBarrasFS.Visible := (tpEmis in [teContingencia, teFSDA]);
     rlbAvisoContingencia.Visible := (tpEmis <> teNormal);
-    rllAvisoContingencia.Caption := ACBrStr('DANFE em Contingï¿½ncia - Impresso em decorrï¿½ncia de problemas tï¿½cnicos');
+    rllAvisoContingencia.Caption := ACBrStr('DANFE em Contingência - Impresso em decorrência de problemas técnicos');
     rllDadosVariaveis1a.Visible := False;
     rllDadosVariaveis1b.Visible := False;
     rllDadosVariaveis1c.Visible := False;
@@ -1096,13 +1096,13 @@ begin
         rllDadosVariaveis1a.Visible := True;
         rllDadosVariaveis1b.Visible := True;
         rlbAvisoContingencia.Visible := not NaoEstaVazio(fpNFe.procNFe.nProt);
-        rllAvisoContingencia.Caption := ACBrStr('DANFE impresso em contingï¿½ncia - DPEC regularmente recebida pela Receita Federal do Brasil');
+        rllAvisoContingencia.Caption := ACBrStr('DANFE impresso em contingência - DPEC regularmente recebida pela Receita Federal do Brasil');
         if (not rlbAvisoContingencia.Visible) then // DPEC TRANSMITIDO
           rllDadosVariaveis3.Caption := fpNFe.procNFe.nProt + ' ' +
             IfThen(fpNFe.procNFe.dhRecbto <> 0, FormatDateTimeBr(fpNFe.procNFe.dhRecbto), '')
         else
         begin
-          rllDadosVariaveis3_Descricao.Caption := ACBrStr('Nï¿½MERO DE REGISTRO DO EPEC');
+          rllDadosVariaveis3_Descricao.Caption := ACBrStr('NÚMERO DE REGISTRO DO EPEC');
           if NaoEstaVazio(fpDANFe.Protocolo) then
             rllDadosVariaveis3.Caption := fpDANFe.Protocolo;
         end;
@@ -1111,8 +1111,8 @@ begin
 
     if (dhCont > 0) and (xJust > '') then
       rllContingencia.Caption :=
-        ACBrStr('Data / Hora da entrada em contingï¿½ncia: ') + FormatDateTimeBr(dhCont) +
-        ACBrStr(' Motivo contingï¿½ncia: ') + xJust;
+        ACBrStr('Data / Hora da entrada em contingência: ') + FormatDateTimeBr(dhCont) +
+        ACBrStr(' Motivo contingência: ') + xJust;
   end;
 
   if rlbCodigoBarras.Visible then
@@ -1207,7 +1207,7 @@ begin
 
     //115 460 143
     // Exibe o Valor total dos tributos se vTotTrib for informado
-    // e ajusta a posiï¿½ï¿½o dos outros campos para "abrir espaï¿½o" para ele.
+    // e ajusta a posição dos outros campos para "abrir espaço" para ele.
     if (vTotTrib > 0) then
     begin
       rllTotalTributos.Caption := FormatFloatBr(vTotTrib);
@@ -1282,7 +1282,7 @@ begin
 
   if (fpNFe.Transp.Vol.Count > 0) then
   begin
-    // Aproveita os labels criados em tempo de projeto (1ï¿½ linha)
+    // Aproveita os labels criados em tempo de projeto (1ª linha)
     with fpNFe.Transp.Vol[0] do
     begin
       if (qVol > 0) then
@@ -1386,10 +1386,10 @@ begin
   rlmDadosAdicionaisAuxiliar.Lines.BeginUpdate;
   rlmDadosAdicionaisAuxiliar.Lines.Clear;
 
-  // Protocolo de autorizaï¿½ï¿½o, nos casos de emissï¿½o em contingï¿½ncia
+  // Protocolo de autorização, nos casos de emissão em contingência
   if (fpNFe.Ide.tpEmis in [teContingencia, teFSDA]) and (fpNFe.procNFe.cStat = 100) then
   begin
-    sProtocolo := ACBrStr('PROTOCOLO DE AUTORIZAï¿½ï¿½O DE USO: ') +
+    sProtocolo := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
       fpNFe.procNFe.nProt + ' ' + FormatDateTimeBr(fpNFe.procNFe.dhRecbto);
     InserirLinhas(sProtocolo, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
@@ -1397,7 +1397,7 @@ begin
   // Inscriï¿½ï¿½o Suframa
   if NaoEstaVazio(fpNFe.Dest.ISUF) then
   begin
-    sSuframa := ACBrStr('INSCRIï¿½ï¿½O SUFRAMA: ') + fpNFe.Dest.ISUF;
+    sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ') + fpNFe.Dest.ISUF;
     InserirLinhas(sSuframa, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
@@ -1489,9 +1489,9 @@ begin
     {=============== Ajusta o tamanho do quadro das faturas ===============}
     iColunas := 4;   // Quantidade de colunas
     iAltLinha := 13;  // Altura de cada linha
-    iPosQuadro := 12;  // Posiï¿½ï¿½o (Top) do Quadro
+    iPosQuadro := 12;  // Posição (Top) do Quadro
     iAltQuadro1Linha := 27;  // Altura do quadro com 1 linha
-    iFolga := 5;   // Distï¿½ncia entre o final da Band e o final do quadro
+    iFolga := 5;   // Distância entre o final da Band e o final do quadro
 
     if ((iQuantDup mod iColunas) = 0) then // Quantidade de linhas
       iLinhas := iQuantDup div iColunas
@@ -1515,7 +1515,7 @@ end;
 
 procedure TfrlDANFeRLRetrato.rlbDadosAdicionaisBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
-  // Posiciona a Marca D'ï¿½gua
+  // Posiciona a Marca D'água
   rliMarcaDagua1.Top := rlbCabecalhoItens.Top +
     ((rlbDadosAdicionais.Top - rlbCabecalhoItens.Top) div 2) -
     (rliMarcaDagua1.Height div 2);
@@ -1534,7 +1534,7 @@ begin
   begin
     case fpNFe.Ide.indPag of
       ipVista:
-        RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO ï¿½ VISTA');
+        RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO À VISTA');
       ipPrazo:
         RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO A PRAZO');
       ipOutras:
@@ -1547,10 +1547,10 @@ begin
 
   if NaoEstaVazio(fpNFe.Cobr.Fat.nFat) then
   begin
-    RLLabelNUmero.Caption := ACBrStr('Nï¿½MERO');
+    RLLabelNUmero.Caption := ACBrStr('NÚMERO');
     RLLabelValor.Caption := ACBrStr('VALOR ORIGINAL');
     RLLabelDupl.Caption := ACBrStr('VALOR DESCONTO');
-    RLLabelLIQ.Caption := ACBrStr('VALOR Lï¿½QUIDO');
+    RLLabelLIQ.Caption := ACBrStr('VALOR LÍQUIDO');
 
     // Define a Coluna dos label's
     RLLabelNUmero.Left := 264;
@@ -1606,7 +1606,7 @@ var
 begin
   AltLinhaComun := fpDANFe.AltLinhaComun;
 
-  // ******** Cabeï¿½alho ********
+  // ******** Cabeçalho ********
   base := RLDraw6.Top;
   RLDraw6.Height := 2 * AltLinhaComun + 1;
   RLDraw8.Top := base + AltLinhaComun;
@@ -1634,7 +1634,7 @@ begin
   // Bands remetente
   rlbEmitente.Height := RLDraw6.Height + rliEmitente.Height + 2;// 182 + (2*AltLinhaComun - 60);
 
-  // ******** DefinirDestinatario ********
+  // ******** Destinatario ********
   RLLabel18.Holder := nil;
   RLLabel18.Top := 0;
   RLDraw15.Top := RLLabel18.Height + 1;
@@ -1694,7 +1694,7 @@ begin
   rllDestIE.Top := base + 3 * AltLinhaComun - rllDestIE.Height;
   rllHoraSaida.Top := base + 3 * AltLinhaComun - rllHoraSaida.Height;
 
-  // Band DefinirDestinatario
+  // Band Destinatario
   rlbDestinatario.Height := RLDraw15.Height + RLDraw15.Top + 2; //108 + (3*AltLinhaComun - 90);
 
   // ******** Fatura ********
@@ -1721,7 +1721,7 @@ begin
   // Band fatura
   rlbFaturaReal.Height := RLDraw12.Top + RLDraw12.Height + 2;
 
-  // ******** Cï¿½lculo do DefinirImposto ********
+  // ******** Cálculo do DefinirImposto ********
   RLDraw29.Top := RLLabel20.Height + 1;
   base := RLDraw29.Top;
   RLDraw29.Height := 2 * AltLinhaComun + 1;
@@ -1791,7 +1791,7 @@ begin
   base := rliTransp.Top;
   rliTransp.Height := 3 * AltLinhaComun + 1;
   if (fpNFe.Transp.Vol.Count > 1) then//contem mais volumes na fpDANFe
-    rliTransp.Height := rliTransp.Height + (rllTransQTDE.Height * (fpNFe.Transp.Vol.Count - 1));//a quantidade de volumes pode variar, entao ï¿½ feito um recalculo
+    rliTransp.Height := rliTransp.Height + (rllTransQTDE.Height * (fpNFe.Transp.Vol.Count - 1));//a quantidade de volumes pode variar, entao é feito um recalculo
 
   RLDraw38.Top := base + AltLinhaComun;
   RLDraw39.Top := base + 2 * AltLinhaComun;
@@ -2015,7 +2015,7 @@ begin
   if fpDANFe.ImprimeTotalLiquido then
   begin
     lblValorTotal.Caption := 'DESCONTO';
-    lblPercValorDesc1.Caption := ACBrStr('Lï¿½QUIDO');
+    lblPercValorDesc1.Caption := ACBrStr('LÍQUIDO');
   end;
 end;
 

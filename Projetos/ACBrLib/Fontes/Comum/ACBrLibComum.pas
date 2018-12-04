@@ -411,23 +411,23 @@ function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
 var
   Sessao, Chave, Valor: String;
+  Criptografar: Boolean;
 begin
   try
     VerificarLibInicializada;
     Sessao := strpas(eSessao);
     Chave := strpas(eChave);
     pLib.GravarLog('LIB_ConfigLerValor(' + Sessao + ', ' + Chave + ')', logNormal);
+    Criptografar := pLib.Config.PrecisaCriptografar(Sessao, Chave);
 
     Valor := pLib.Config.LerValor(Sessao, Chave);
-    if pLib.Config.PrecisaCriptografar(Sessao, Chave) then
+    if Criptografar then
       Valor := B64CryptToString(Valor, pLib.Config.ChaveCrypt);
 
     MoverStringParaPChar(Valor, sValor, esTamanho);
-    if pLib.Config.Log.Nivel >= logCompleto then
-    if pLib.Config.PrecisaCriptografar(Sessao, Chave) then
-      pLib.GravarLog('   Valor:' + StringOfChar('*', esTamanho)+ ', len:' + IntToStr(esTamanho), logCompleto, True)
-    else
-      pLib.GravarLog('   Valor:' + strpas(sValor)+ ', len:' + IntToStr(esTamanho), logCompleto, True);
+    if (pLib.Config.Log.Nivel >= logCompleto) then
+      pLib.GravarLog('   Valor:' + IfThen(Criptografar, StringOfChar('*', esTamanho), strpas(sValor)) +
+                     ', len:' + IntToStr(esTamanho), logCompleto, True);
 
     Result := SetRetorno(ErrOK, strpas(sValor));
   except

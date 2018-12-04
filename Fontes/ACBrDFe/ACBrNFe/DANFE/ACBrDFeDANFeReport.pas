@@ -210,7 +210,7 @@ var
   DescricaoModelo: String;
   ANFe: TNFe;
 begin
-  Result := '';
+  Result := ApplicationPath + 'pdf';
 
   if Assigned(ACBrNFe) then  // Se tem o componente ACBrNFe
   begin

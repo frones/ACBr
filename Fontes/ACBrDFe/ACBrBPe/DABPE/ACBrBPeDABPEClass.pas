@@ -199,7 +199,8 @@ var
   DescricaoModelo: String;
   ABPe: TBPe;
 begin
-  Result := '';
+  Result := ApplicationPath + 'pdf';
+  
   if Assigned(ACBrBPe) then  // Se tem o componente ACBrBPe
   begin
     if TACBrBPe(ACBrBPe).Bilhetes.Count > 0 then  // Se tem algum Bilhete carregado
@@ -217,8 +218,6 @@ begin
                          ABPe.Emit.CNPJ,
                          dhEmissao,
                          DescricaoModelo);
-
-      Result := PathWithDelim(Result);
     end;
   end;
 end;

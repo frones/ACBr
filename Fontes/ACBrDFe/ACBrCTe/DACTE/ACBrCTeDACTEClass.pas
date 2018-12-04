@@ -205,7 +205,7 @@ var
   DescricaoModelo: string;
   ACTe: TCTe;
 begin
-  Result := '';
+  Result := ApplicationPath + 'pdf';
   // Se tem o componente ACBrCTe
   if Assigned(ACBrCTe) then
   begin

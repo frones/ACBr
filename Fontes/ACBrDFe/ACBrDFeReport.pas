@@ -279,7 +279,7 @@ begin
     Result := ApplicationPath + 'pdf' + PathDelim;
 
   if (FUsaSeparadorPathPDF) then
-    Result := PathWithDelim(Result + GetSeparadorPathPDF);
+    Result := PathWithDelim(GetSeparadorPathPDF);
 end;
 
 function TACBrDFeReport.GetSeparadorPathPDF: String;

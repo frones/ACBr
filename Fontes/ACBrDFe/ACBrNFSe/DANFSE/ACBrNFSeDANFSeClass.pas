@@ -212,7 +212,7 @@ var
    DescricaoModelo: String;
    ANFSe: TNFSe;
 begin
-  Result := '';
+  Result := ApplicationPath + 'pdf';
   if Assigned(ACBrNFSe) then  // Se tem o componente ACBrNFSe
   begin
     if TACBrNFSe(ACBrNFSe).NotasFiscais.Count > 0 then  // Se tem alguma Nota carregada
@@ -234,8 +234,6 @@ begin
                 OnlyNumber(ANFSe.PrestadorServico.IdentificacaoPrestador.CNPJ),
                 dhEmissao);
     end;
-
-    Result := PathWithDelim(Result);
   end;
 end;
 

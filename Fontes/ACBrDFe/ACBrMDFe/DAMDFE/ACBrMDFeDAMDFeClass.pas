@@ -176,7 +176,7 @@ var
   DescricaoModelo: String;
   AMDFe: TMDFe;
 begin
-  Result := '';
+  Result := ApplicationPath + 'pdf';
 
   if Assigned(ACBrMDFe) then  // Se tem o componente ACBrMDFe
   begin
@@ -196,7 +196,6 @@ begin
                          dhEmissao,
                          DescricaoModelo);
      end;
-     Result := PathWithDelim(Result);
   end;
 end;
 

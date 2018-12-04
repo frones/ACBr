@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2018
+-- ACBrNFeDANFEFRDM --
+[-] Ajuste para destacar as duplicatas.
+	https://www.projetoacbr.com.br/forum/topic/47998-n%C3%A3o-destaca-as-duplicatas-danfe-fast/?tab=comments#comment-316695
+    	por: Henrique Leonardo (hleorj)
+
 25/10/2018
 -- ACBrNFeDANFEFRDM --
 [*] Ajuste para não mostrar texto "Pendente de autorização" quando NFCe já

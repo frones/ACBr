@@ -1073,8 +1073,9 @@ var
 begin
   cdsDuplicatas.Close;
   cdsDuplicatas.CreateDataSet;
-  if (Not FDANFEClassOwner.ExibeCampoFatura) and
-    (FNFe.Ide.indPag = ipVista) and (FNFe.infNFe.Versao <= 3.10) then
+  if Not ( ( FDANFEClassOwner.ExibeCampoFatura) and
+         ( FNFe.Ide.indPag = ipVista) and
+         ( FNFe.infNFe.Versao <= 3.10) ) then
   Begin
 
     with cdsDuplicatas do

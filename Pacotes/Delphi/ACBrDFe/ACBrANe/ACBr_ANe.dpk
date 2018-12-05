@@ -75,14 +75,7 @@ requires
   rtl,
   vcl,
   designide,
-  vclactnband,
-  vclx,
-  ACBr_DFeComum,
-  soaprtl,
-  xmlrtl,
-  inet,
-  dbrtl,
-  dsnap;
+  ACBr_DFeComum;
 
 contains
   ACBrANeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeWebServices.pas',

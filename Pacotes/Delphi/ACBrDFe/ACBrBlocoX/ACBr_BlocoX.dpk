@@ -57,9 +57,6 @@ requires
   vcl,
   rtl,
   designide,
-  xmlrtl,
-  inet,
-  soaprtl,
   ACBr_DFeComum;
 
 contains

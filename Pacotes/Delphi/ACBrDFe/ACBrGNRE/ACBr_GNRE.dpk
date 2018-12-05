@@ -72,12 +72,8 @@ package ACBr_GNRE;
 
 requires
   rtl,
-  designide,
   vcl,
-  xmlrtl,
-  inet,
-  dbrtl,
-  soaprtl,
+  designide,
   ACBr_DFeComum;
 
 contains

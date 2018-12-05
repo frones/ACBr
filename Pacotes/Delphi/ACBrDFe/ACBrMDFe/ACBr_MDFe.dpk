@@ -34,14 +34,7 @@ requires
   vcl,
   rtl,
   designide,
-  vclactnband,
-  vclx,
-  ACBr_DFeComum,
-  soaprtl,
-  xmlrtl,
-  inet,
-  dbrtl,
-  dsnap;
+  ACBr_DFeComum;
 
 contains
   ACBrMDFe in '..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFe.pas',

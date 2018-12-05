@@ -77,10 +77,6 @@ requires
   vcl,
   rtl,
   designide,
-  xmlrtl,
-  dbrtl,
-  inet,
-  soaprtl,
   ACBr_DFeComum;
 
 contains

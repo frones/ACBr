@@ -67,7 +67,6 @@ package ACBr_NFSeDanfseRL;
 requires
   rtl,
   designide,
-  soaprtl,
   frce,
   ACBr_NFSe,
   dsnap,

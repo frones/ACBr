@@ -74,21 +74,7 @@ package ACBr_BPe;
 requires
   rtl,
   designide,
-  vclactnband,
-  vclx,
-  vcl,
-  ACBr_DFeComum,
-  soaprtl,
-  xmlrtl,
-  inet,
-  dbrtl,
-  dsnap,
-  ACBr_PCNComum,
-  ACBr_Diversos,
-  ACBr_Comum,
-  ACBr_synapse,
-  ACBr_TCP,
-  ACBr_OpenSSL;
+  ACBr_DFeComum;
 
 contains
   ACBrBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPe.pas',

@@ -22,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="2"/>
-      <BuildNr Value="25"/>
+      <BuildNr Value="33"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion="1.2.0.1"/>
@@ -324,92 +324,89 @@
       <Unit33>
         <Filename Value="DoACBreSocialUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoACBrESocialUnit"/>
       </Unit33>
       <Unit34>
-        <Filename Value="..\..\ACBrLib\Fontes\eSocial\acbrlibesocialrespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\MDFe\ACBrLibMDFeRespostas.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrLibeSocialRespostas"/>
       </Unit34>
       <Unit35>
-        <Filename Value="..\..\ACBrLib\Fontes\eSocial\acbrlibesocialconsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\MDFe\ACBrLibMDFeConsts.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ACBrLibeSocialConsts"/>
       </Unit35>
       <Unit36>
-        <Filename Value="..\..\ACBrLib\Fontes\MDFe\ACBrLibMDFeRespostas.pas"/>
+        <Filename Value="DoACBrReinfUnit.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit36>
       <Unit37>
-        <Filename Value="..\..\ACBrLib\Fontes\MDFe\ACBrLibMDFeConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\Reinf\ACBrLibReinfConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit37>
       <Unit38>
-        <Filename Value="DoACBrReinfUnit.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\Reinf\ACBrLibReinfRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit38>
       <Unit39>
-        <Filename Value="..\..\ACBrLib\Fontes\Reinf\ACBrLibReinfConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\NFe\ACBrLibNFeRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit39>
       <Unit40>
-        <Filename Value="..\..\ACBrLib\Fontes\Reinf\ACBrLibReinfRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\NFe\ACBrLibNFeConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit40>
       <Unit41>
-        <Filename Value="..\..\ACBrLib\Fontes\NFe\ACBrLibNFeRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\CTe\ACBrLibCTeConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit41>
       <Unit42>
-        <Filename Value="..\..\ACBrLib\Fontes\NFe\ACBrLibNFeConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\CTe\ACBrLibCTeRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit42>
       <Unit43>
-        <Filename Value="..\..\ACBrLib\Fontes\CTe\ACBrLibCTeConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\SAT\ACBrLibSATRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit43>
       <Unit44>
-        <Filename Value="..\..\ACBrLib\Fontes\CTe\ACBrLibCTeRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\SAT\ACBrLibSATConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit44>
       <Unit45>
-        <Filename Value="..\..\ACBrLib\Fontes\SAT\ACBrLibSATRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\CEP\ACBrLibCEPRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit45>
       <Unit46>
-        <Filename Value="..\..\ACBrLib\Fontes\SAT\ACBrLibSATConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\CEP\ACBrLibCEPConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit46>
       <Unit47>
-        <Filename Value="..\..\ACBrLib\Fontes\CEP\ACBrLibCEPRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\IBGE\ACBrLibIBGEConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit47>
       <Unit48>
-        <Filename Value="..\..\ACBrLib\Fontes\CEP\ACBrLibCEPConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\IBGE\ACBrLibIBGERespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit48>
       <Unit49>
-        <Filename Value="..\..\ACBrLib\Fontes\IBGE\ACBrLibIBGEConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\Sedex\ACBrLibSedexConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit49>
       <Unit50>
-        <Filename Value="..\..\ACBrLib\Fontes\IBGE\ACBrLibIBGERespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\Sedex\ACBrLibSedexRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit50>
       <Unit51>
-        <Filename Value="..\..\ACBrLib\Fontes\Sedex\ACBrLibSedexConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\GNRe\ACBrLibGNReConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit51>
       <Unit52>
-        <Filename Value="..\..\ACBrLib\Fontes\Sedex\ACBrLibSedexRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\GNRe\ACBrLibGNReRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit52>
       <Unit53>
-        <Filename Value="..\..\ACBrLib\Fontes\GNRe\ACBrLibGNReConsts.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\eSocial\ACBrLibeSocialConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit53>
       <Unit54>
-        <Filename Value="..\..\ACBrLib\Fontes\GNRe\ACBrLibGNReRespostas.pas"/>
+        <Filename Value="..\..\ACBrLib\Fontes\eSocial\ACBrLibeSocialRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit54>
     </Units>

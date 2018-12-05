@@ -52,11 +52,11 @@ uses
   ACBrDFeConfiguracoes, ACBrReinf, ACBreSocial, ACBrIntegrador, LazHelpCHM,
   pmdfeConversaoMDFe, pcesConversaoeSocial, pcnConversaoReinf,
   ACBrMonitorConfig, ACBrMonitorConsts,
-  DOACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit, DoACBreSocialUnit, DoBoletoUnit,
+  DOACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit, DoBoletoUnit,
   DoACBrReinfUnit, DoBALUnit, DoEmailUnit, DoCEPUnit, DoCHQUnit, DoGAVUnit,
   DoIBGEUnit, DoNcmUnit, DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit,
   DoACBrGNReUnit, DoPosPrinterUnit, DoECFUnit, DoECFObserver, DoECFBemafi32,
-  DoSATUnit;
+  DoSATUnit,DoACBreSocialUnit;
 
 const
   //{$I versao.txt}

@@ -453,8 +453,8 @@ procedure TfrmPrincipal.InstalarOpenSSL;
 begin
   if sDestino <> tdNone then
   begin
-    CopiarArquivoTo(sDestino,'OpenSSL\0.9.8.14\libeay32.dll');
-    CopiarArquivoTo(sDestino,'OpenSSL\0.9.8.14\ssleay32.dll');
+    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.13\x86\libeay32.dll');
+    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.13\x86\ssleay32.dll');
   end;
 end;
 

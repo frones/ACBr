@@ -30,13 +30,17 @@ requires
   vcl,
   rtl,
   designide,
+  inet,
+  soaprtl,
   ACBr_Integrador,
   ACBr_OpenSSL,
   ACBr_TCP,
   ACBr_PCNComum,
   ACBr_Diversos,
   ACBr_Comum,
-  ACBr_synapse;
+  ACBr_synapse,
+  vclactnband,
+  vclx;
 
 contains
   ACBrDFeConfiguracoes in '..\..\..\Fontes\ACBrDFe\ACBrDFeConfiguracoes.pas',

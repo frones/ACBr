@@ -851,7 +851,7 @@ end;
 function TACBrNFeDANFeESCPOS.CalcularAlturaQRCode(QRCodeData: String): Integer;
 var
   QRCodeModules: Integer;
-  LenData, DotsMM: Integer;
+  LenData: Integer;
 begin
   // http://www.qrcode.com/en/about/version.html
   LenData := Length(QRCodeData);

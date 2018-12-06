@@ -137,14 +137,15 @@ implementation
 
 uses
   ACBrDFeUtil, ACBrDFeException, ACBrUtil,
-  pcnAuxiliar, pcnConversao, synacode;
+  pcnAuxiliar, synacode;
 
 { TDFeWebService }
 
 constructor TDFeWebService.Create(AOwner: TACBrDFe);
 begin
   FPDFeOwner := AOwner;
-  FPConfiguracoes := AOwner.Configuracoes;
+  if Assigned(AOwner) then
+    FPConfiguracoes := AOwner.Configuracoes;
 
   FPSoapVersion := 'soap12';
   FPHeaderElement := 'nfeCabecMsg';
@@ -172,7 +173,7 @@ begin
   FPRetornoWS := '';
   FPRetWS := '';
   FPMsg := '';
-  if Assigned(FPDFeOwner.Integrador) then
+  if Assigned(FPDFeOwner) and Assigned(FPDFeOwner.Integrador) then
     FPDFeOwner.Integrador.Clear;
 end;
 

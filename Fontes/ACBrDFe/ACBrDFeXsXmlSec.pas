@@ -173,7 +173,7 @@ implementation
 
 Uses
   strutils, math,
-  ACBrUtil, ACBrDFeUtil, ACBrConsts,
+  ACBrUtil, ACBrConsts,
   synautil, synacode;
 
 var

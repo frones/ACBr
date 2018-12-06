@@ -517,8 +517,6 @@ end;
 function TACBrNFe.AjustarVersaoQRCode(AVersaoQRCode: TpcnVersaoQrCode;
   AVersaoXML: TpcnVersaoDF): TpcnVersaoQrCode;
 begin
-  Result := AVersaoQRCode;
-
   if (AVersaoXML <= ve310) then
     Result := veqr000
   else     // ve400 ou superior

@@ -74,7 +74,7 @@ implementation
 
 uses
   Variants, DateUtils,
-  ACBrDFeException, ACBrConsts, ACBrUtil, ACBrValidador;
+  ACBrDFeException, ACBrUtil, ACBrValidador;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 begin

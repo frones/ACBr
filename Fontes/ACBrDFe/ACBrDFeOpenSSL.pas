@@ -661,8 +661,9 @@ Var
   Ret, BytesRead: LongInt;
   pubKey: pEVP_PKEY;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := False;
-
+{$ENDIF}
   NameDgst := '';
   case Digest of
     dgstMD2    : NameDgst := 'md2';

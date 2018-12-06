@@ -305,7 +305,9 @@ var
   ResultInitialize: HRESULT;
   Inicializado: Boolean;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := False;
+{$ENDIF}
   // Usa valores default, se não foram informados //
   VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
 

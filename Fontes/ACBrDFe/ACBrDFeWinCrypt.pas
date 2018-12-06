@@ -1333,7 +1333,9 @@ var
   mHashBuffer: array [0..1023] of AnsiChar;
   HashResult, ReverseHash: AnsiString;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := False;
+{$ENDIF}
 
   case Digest of
     dgstMD2    : aHashType := CALG_MD2;

@@ -41,7 +41,6 @@ interface
 
 uses
   SysUtils, Classes, Graphics,
-  RLReport,
   pcnNFe, ACBrNFeDANFEClass, pcnConversao;
 
 type

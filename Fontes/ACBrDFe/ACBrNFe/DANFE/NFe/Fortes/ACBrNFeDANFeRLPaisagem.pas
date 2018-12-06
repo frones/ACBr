@@ -47,9 +47,8 @@ uses
   {$ELSE}
   Graphics, Controls, Forms,
   {$ENDIF}
-  RLReport, RLBarcode, RLPrinters,
+  RLReport, RLBarcode,
   {$IFDEF BORLAND}
-   XMLIntf, XMLDoc,
    {$IF CompilerVersion > 22}
     Vcl.Imaging.jpeg,
    {$ELSE}

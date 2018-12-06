@@ -56,7 +56,7 @@ uses
   {$ENDIF}
   pcnEnvEventoNFe, pcnNFe,
   ACBrNFeDANFeRLClass, ACBrDFeReportFortes,
-  RLReport, RLPrinters, RLPDFFilter, RLFilters;
+  RLReport, RLPDFFilter, RLFilters;
 
 type
 

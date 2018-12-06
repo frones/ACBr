@@ -46,9 +46,9 @@ uses
   {$ELSE}
   Graphics, Controls, Forms,
   {$ENDIF}
-  ACBrNFe, ACBrNFeDANFeRLClass, ACBrDFeReportFortes,
+  ACBrNFeDANFeRLClass, ACBrDFeReportFortes,
   pcnNFe, pcnConversao,
-  RLReport, RLPrinters, RLPDFFilter, RLFilters;
+  RLReport, RLPDFFilter, RLFilters;
 
 type
 
@@ -158,7 +158,6 @@ end;
 class procedure TfrlDANFeRL.SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AFile: String);
 var
   DANFeReport: TfrlDANFeRL;
-  ADir: String;
 begin
   DANFeReport := Create(nil);
   try

@@ -712,6 +712,7 @@ object frmDemo: TfrmDemo
     Cedente.ContaDigito = '7'
     Cedente.Modalidade = '019'
     Cedente.Convenio = '899283'
+    Cedente.TipoDocumento = Tradicional
     Cedente.CNPJCPF = '82.961.095/0001-74'
     Cedente.TipoInscricao = pJuridica
     Cedente.Logradouro = 'Rua  XI de Agosto'
@@ -731,7 +732,6 @@ object frmDemo: TfrmDemo
     top = 216
   end
   object ACBrBoletoFCLazReport1: TACBrBoletoFCLazReport
-    MostrarPreview = False
     MostrarSetup = False
     MostrarProgresso = False
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
@@ -741,7 +741,6 @@ object frmDemo: TfrmDemo
     top = 272
   end
   object ACBrBoletoFCFortes1: TACBrBoletoFCFortes
-    MostrarPreview = False
     MostrarSetup = False
     MostrarProgresso = False
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'

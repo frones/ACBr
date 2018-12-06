@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 406
-  Top = 171
+  Left = 241
+  Top = 173
   Width = 930
   Height = 519
   ActiveControl = PageControl1
@@ -31,15 +31,15 @@ object Form1: TForm1
     Left = 0
     Top = 248
     Width = 914
-    Height = 189
+    Height = 190
     ActivePage = tsLog
     Align = alClient
-    TabOrder = 0
+    TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
       object mLog: TMemo
         Left = 0
-        Top = 0
+        Top = 1
         Width = 906
         Height = 161
         Align = alBottom
@@ -160,7 +160,7 @@ object Form1: TForm1
     Width = 914
     Height = 242
     Align = alTop
-    TabOrder = 2
+    TabOrder = 0
     object gpOperacao: TGroupBox
       Left = 1
       Top = 1
@@ -175,7 +175,7 @@ object Form1: TForm1
         Width = 105
         Height = 33
         Caption = 'Inicializar'
-        TabOrder = 0
+        TabOrder = 1
         OnClick = bInicializarClick
       end
       object cbxModelo: TComboBox
@@ -185,7 +185,7 @@ object Form1: TForm1
         Height = 21
         Style = csDropDownList
         ItemHeight = 13
-        TabOrder = 1
+        TabOrder = 0
         OnChange = cbxModeloChange
         Items.Strings = (
           '')
@@ -389,7 +389,7 @@ object Form1: TForm1
             Height = 21
             Style = csDropDownList
             Anchors = [akTop, akRight]
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 2
           end
           object cbxRemoverAcentos: TCheckBox
@@ -626,7 +626,7 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -635,7 +635,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -644,7 +644,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 3
           end
         end
@@ -696,7 +696,7 @@ object Form1: TForm1
             Width = 289
             Height = 105
             Caption = 'PPPoE'
-            TabOrder = 4
+            TabOrder = 5
             Visible = False
             object lSSID7: TLabel
               Left = 17
@@ -737,7 +737,7 @@ object Form1: TForm1
             Width = 289
             Height = 109
             Caption = 'IPFIX'
-            TabOrder = 3
+            TabOrder = 4
             Visible = False
             object lSSID2: TLabel
               Left = 36
@@ -840,7 +840,7 @@ object Form1: TForm1
             Width = 144
             Height = 109
             Caption = 'WiFi'
-            TabOrder = 1
+            TabOrder = 3
             Visible = False
             object lSSID: TLabel
               Left = 8
@@ -912,7 +912,7 @@ object Form1: TForm1
               'DHCP'
               'PPPoE'
               'IPFIX')
-            TabOrder = 2
+            TabOrder = 1
             OnClick = rgRedeTipoLanClick
           end
           object gbProxy: TGroupBox
@@ -921,7 +921,7 @@ object Form1: TForm1
             Width = 150
             Height = 157
             Caption = 'Proxy'
-            TabOrder = 5
+            TabOrder = 2
             object lSSID9: TLabel
               Left = 24
               Top = 54
@@ -1100,7 +1100,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 9999
               MinValue = 0
-              TabOrder = 2
+              TabOrder = 3
               Value = 0
             end
             object seMargemEsquerda: TSpinEdit
@@ -1110,7 +1110,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 9999
               MinValue = 0
-              TabOrder = 3
+              TabOrder = 4
               Value = 0
             end
             object seMargemDireita: TSpinEdit
@@ -1120,7 +1120,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 9999
               MinValue = 0
-              TabOrder = 4
+              TabOrder = 5
               Value = 0
             end
             object bImpressora: TButton
@@ -1129,7 +1129,7 @@ object Form1: TForm1
               Width = 122
               Height = 25
               Caption = 'Definir Impressora'
-              TabOrder = 5
+              TabOrder = 6
               OnClick = bImpressoraClick
             end
             object cbPreview: TCheckBox
@@ -1138,7 +1138,7 @@ object Form1: TForm1
               Width = 61
               Height = 19
               Caption = 'Preview'
-              TabOrder = 6
+              TabOrder = 2
             end
           end
           object GroupBox4: TGroupBox
@@ -1246,7 +1246,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 255
               MinValue = 0
-              TabOrder = 0
+              TabOrder = 4
               Value = 0
             end
             object seEspLinhas: TSpinEdit
@@ -1256,7 +1256,7 @@ object Form1: TForm1
               Height = 22
               MaxValue = 255
               MinValue = 0
-              TabOrder = 1
+              TabOrder = 3
               Value = 0
             end
             object seColunas: TSpinEdit
@@ -1276,7 +1276,7 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               ItemHeight = 13
-              TabOrder = 3
+              TabOrder = 0
               OnChange = cbxModeloChange
             end
             object cbxPorta: TComboBox
@@ -1285,7 +1285,7 @@ object Form1: TForm1
               Width = 128
               Height = 21
               ItemHeight = 13
-              TabOrder = 4
+              TabOrder = 1
             end
             object cbxPagCodigo: TComboBox
               Left = 218
@@ -1398,7 +1398,7 @@ object Form1: TForm1
             MaxValue = 0
             MinValue = 10
             TabOrder = 2
-            Value = 0
+            Value = 10
           end
           object btMFEEnviarPagamento: TButton
             Left = 320
@@ -1513,7 +1513,7 @@ object Form1: TForm1
             Width = 192
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 2
           end
         end
@@ -1522,7 +1522,7 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 437
+    Top = 438
     Width = 914
     Height = 23
     Panels = <
@@ -1733,10 +1733,16 @@ object Form1: TForm1
     Top = 224
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
-    Mask_qCom = '0.0000'
-    Mask_vUnCom = '0.000'
-    SoftwareHouse = 'Projeto ACBr'
     Site = 'http://www.projetoacbr.com.br'
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
     MsgAppQRCode = 
       'Consulte o QR Code pelo aplicativo  "De olho na nota", dispon'#237've' +
       'l na AppStore (Apple) e PlayStore (Android)'
@@ -1746,18 +1752,20 @@ object Form1: TForm1
     Top = 280
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
-    ACBrSAT = ACBrSAT1
-    Mask_qCom = '0.000'
-    Mask_vUnCom = '0.000'
-    MostrarPreview = True
-    NomeArquivo = 'satcfe.pdf'
-    SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
     Site = 'http://www.projetoacbr.com.br'
+    MargemInferior = 4.000000000000000000
+    MargemSuperior = 2.000000000000000000
+    MargemEsquerda = 2.000000000000000000
+    MargemDireita = 2.000000000000000000
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrSAT = ACBrSAT1
     MsgAppQRCode = 
       'Consulte o QR Code pelo aplicativo  "De olho na nota", dispon'#237've' +
       'l na AppStore (Apple) e PlayStore (Android)'
-    Margens.Topo = 50
-    Margens.Fundo = 400
     EspacoFinal = 50
     LogoWidth = 100
     LogoHeigth = 70

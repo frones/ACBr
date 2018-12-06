@@ -8,7 +8,7 @@ uses
   ComCtrls, Spin, RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
   dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL,
   RLFilters, ACBrSATExtratoReportClass, ACBrSATExtratoClass, OleCtrls,
-  SHDocVw, ACBrIntegrador;
+  SHDocVw, ACBrIntegrador, ACBrDFeReport;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -552,11 +552,11 @@ begin
 
     cbUsarFortes.Checked   := INI.ReadBool('Fortes','UsarFortes', True) ;
     cbUsarEscPos.Checked   := not cbUsarFortes.Checked;
-    seLargura.Value        := INI.ReadInteger('Fortes','Largura',ACBrSATExtratoFortes1.LarguraBobina);
-    seMargemTopo.Value     := INI.ReadInteger('Fortes','MargemTopo',ACBrSATExtratoFortes1.Margens.Topo);
-    seMargemFundo.Value    := INI.ReadInteger('Fortes','MargemFundo',ACBrSATExtratoFortes1.Margens.Fundo);
-    seMargemEsquerda.Value := INI.ReadInteger('Fortes','MargemEsquerda',ACBrSATExtratoFortes1.Margens.Esquerda);
-    seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
+    seLargura.Value        := INI.ReadInteger('Fortes','Largura', ACBrSATExtratoFortes1.LarguraBobina);
+    seMargemTopo.Value     := INI.ReadInteger('Fortes','MargemTopo', Trunc(ACBrSATExtratoFortes1.MargemSuperior));
+    seMargemFundo.Value    := INI.ReadInteger('Fortes','MargemFundo', Trunc(ACBrSATExtratoFortes1.MargemInferior));
+    seMargemEsquerda.Value := INI.ReadInteger('Fortes','MargemEsquerda', Trunc(ACBrSATExtratoFortes1.MargemEsquerda));
+    seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita', Trunc(ACBrSATExtratoFortes1.MargemDireita));
     cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
 
     lImpressora.Caption    := INI.ReadString('Printer','Name', '');
@@ -1614,15 +1614,15 @@ begin
   else
   begin
     ACBrSATExtratoFortes1.LarguraBobina    := seLargura.Value;
-    ACBrSATExtratoFortes1.Margens.Topo     := seMargemTopo.Value ;
-    ACBrSATExtratoFortes1.Margens.Fundo    := seMargemFundo.Value ;
-    ACBrSATExtratoFortes1.Margens.Esquerda := seMargemEsquerda.Value ;
-    ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
-    ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
+    ACBrSATExtratoFortes1.MargemSuperior   := seMargemTopo.Value ;
+    ACBrSATExtratoFortes1.MargemInferior   := seMargemFundo.Value ;
+    ACBrSATExtratoFortes1.MargemEsquerda   := seMargemEsquerda.Value ;
+    ACBrSATExtratoFortes1.MargemDireita    := seMargemDireita.Value ;
+    ACBrSATExtratoFortes1.MostraPreview   := cbPreview.Checked;
 
     try
       if lImpressora.Caption <> '' then
-        ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
+        ACBrSATExtratoFortes1.Impressora := lImpressora.Caption;
     except
     end;
   end;

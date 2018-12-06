@@ -55,6 +55,8 @@ package ACBr_SATWS;
 
 requires
   rtl,
+  vcl,
+  designide,
   ACBr_DFeComum;
 
 contains

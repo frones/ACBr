@@ -32,7 +32,6 @@ requires
   vcl,
   rtl,
   designide,
-  ACBr_DFeComum,
   ACBr_SAT,
   ACBr_Serial;
 

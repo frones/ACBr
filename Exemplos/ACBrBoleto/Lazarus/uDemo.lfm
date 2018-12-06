@@ -1,14 +1,14 @@
 object frmDemo: TfrmDemo
-  Left = 350
+  Left = 381
   Height = 601
-  Top = 79
+  Top = 90
   Width = 811
   Caption = 'Demo ACBrBoleto'
   ClientHeight = 601
   ClientWidth = 811
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.0.2'
   object GroupBox2: TGroupBox
     Left = 8
     Height = 72
@@ -712,7 +712,6 @@ object frmDemo: TfrmDemo
     Cedente.ContaDigito = '7'
     Cedente.Modalidade = '019'
     Cedente.Convenio = '899283'
-    Cedente.TipoDocumento = Tradicional
     Cedente.CNPJCPF = '82.961.095/0001-74'
     Cedente.TipoInscricao = pJuridica
     Cedente.Logradouro = 'Rua  XI de Agosto'
@@ -728,40 +727,42 @@ object frmDemo: TfrmDemo
     DataArquivo = 0
     DataCreditoLanc = 0
     ACBrBoletoFC = ACBrBoletoFCFortes1
-    left = 200
-    top = 264
+    left = 160
+    top = 216
   end
   object ACBrBoletoFCLazReport1: TACBrBoletoFCLazReport
-    DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
-    NomeArquivo = 'boleto.pdf'
+    MostrarPreview = False
+    MostrarSetup = False
+    MostrarProgresso = False
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
+    DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
+    NomeArquivo = 'boletoLaz'
     left = 80
-    top = 264
+    top = 272
   end
   object ACBrBoletoFCFortes1: TACBrBoletoFCFortes
-    ACBrBoleto = ACBrBoleto1
-    DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
-    NomeArquivo = 'teste2.pdf'
+    MostrarPreview = False
+    MostrarSetup = False
+    MostrarProgresso = False
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
-    left = 80
-    top = 224
+    DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
+    NomeArquivo = 'boletoFortes'
+    left = 232
+    top = 272
   end
   object ACBrMail1: TACBrMail
-    Host = 'smtp.gmail.com'
+    Host = 'smtp.seu_servidor.com'
     Port = '465'
-    Username = 'seu_email@gmail.com'
-    Password = 'sua_senha'
     SetSSL = True
-    SetTLS = False
+    SetTLS = True
     IsHTML = True
-    UseThread = True
-    Attempts = 3
+    TimeOut = 5000
+    Attempts = 1
     From = 'seu_email@gmail.com'
     FromName = 'Fulano de Tal'
-    Subject = 'Envio de Boleto de Cobrança'
     DefaultCharset = UTF_8
     IDECharset = UTF_8
-    left = 235
-    top = 265
+    left = 200
+    top = 512
   end
 end

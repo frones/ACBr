@@ -285,8 +285,7 @@ begin
   try
     SL.Add('Olá,');
     SL.Add('Atenção, Boleto está em Anexo');
-    ACBrBoleto1.EnviarEmail('destinatario@dominio.com.br','Teste de Envio de Email',
-                            SL, False);
+    ACBrBoleto1.EnviarEmail(edtEmail.Text ,'Teste de Envio de Email', SL, True);
   finally
     SL.Free;
   end;

@@ -1,14 +1,14 @@
 object dmForte: TdmForte
   OldCreateOrder = False
+  Left = 511
+  Top = 250
   Height = 150
   Width = 215
   object ACBrBoletoReport: TACBrBoletoFCFortes
-    ACBrBoleto = ACBrBoleto
-    DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
-    MostrarPreview = False
     MostrarSetup = False
-    NomeArquivo = 'boleto.pdf'
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
+    DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
+    NomeArquivo = 'boleto.pdf'
     Left = 128
     Top = 30
   end
@@ -16,6 +16,8 @@ object dmForte: TdmForte
     Banco.Numero = 341
     Banco.TamanhoMaximoNossoNum = 8
     Banco.TipoCobranca = cobItau
+    Banco.LayoutVersaoArquivo = 0
+    Banco.LayoutVersaoLote = 0
     Cedente.Nome = 'TodaObra Materias p/ Construcao'
     Cedente.CodigoCedente = '4266443'
     Cedente.Agencia = '0284'

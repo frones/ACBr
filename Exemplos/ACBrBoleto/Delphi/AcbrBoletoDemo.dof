@@ -105,12 +105,8 @@ HostApplication=
 Launcher=
 UseLauncher=0
 DebugCWD=
-[Language]
-ActiveLang=
-ProjectLang=
-RootDir=C:\Program Files\Borland\Delphi7\Bin\
 [Version Info]
-IncludeVerInfo=0
+IncludeVerInfo=1
 AutoIncBuild=0
 MajorVer=1
 MinorVer=0

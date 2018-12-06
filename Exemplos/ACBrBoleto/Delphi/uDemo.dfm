@@ -1,9 +1,9 @@
 object frmDemo: TfrmDemo
   Left = 288
   Top = 133
+  Width = 827
+  Height = 577
   Caption = 'Demo ACBrBoleto '
-  ClientHeight = 538
-  ClientWidth = 811
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,7 +11,6 @@ object frmDemo: TfrmDemo
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDesktopCenter
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
@@ -94,6 +93,7 @@ object frmDemo: TfrmDemo
       Top = 32
       Width = 73
       Height = 21
+      ItemHeight = 13
       TabOrder = 3
       Text = 'Sim'
       Items.Strings = (
@@ -555,6 +555,7 @@ object frmDemo: TfrmDemo
       Width = 138
       Height = 21
       Style = csDropDownList
+      ItemHeight = 13
       TabOrder = 10
       OnChange = cbxLayOutChange
     end

@@ -93,7 +93,7 @@ requires
 {$IFDEF VER310} fs24, frx24, frxe24, frxDB24, dsnap, {$ENDIF} // Berlin
 {$IFDEF VER320} fs25, frx25, frxe25, frxDB25, dsnap, {$ENDIF} // Tokyo
 {$IFDEF VER330} fs26, frx26, frxe26, frxDB26, dsnap, {$ENDIF} // Rio
-  ACBr_NFe, ACBr_Diversos;
+  ACBr_NFe;
 
 contains
   ACBrNFeDANFEFRReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fast\ACBrNFeDANFEFRReg.pas',

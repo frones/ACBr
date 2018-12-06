@@ -29,8 +29,8 @@ package ACBr_TXTComum;
 requires
   rtl,
   vcl,
-  ACBr_Diversos,
-  designide;
+  designide,
+  ACBr_Diversos;
 
 contains
   ACBrTXTClass in '..\..\..\Fontes\ACBrTXT\ACBrTXTClass.pas',

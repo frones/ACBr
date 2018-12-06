@@ -29,8 +29,8 @@ package ACBrDFeReportRL;
 
 requires
   rtl,
-  ACBr_DFeComum,
-  frce;
+  frce,
+  ACBr_DFeComum;
 
 contains
   ACBrDFeReportFortes in '..\..\..\Fontes\ACBrDFe\ACBrDFeReportFortes.pas';

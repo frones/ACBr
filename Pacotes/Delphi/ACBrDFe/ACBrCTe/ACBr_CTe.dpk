@@ -74,8 +74,8 @@ package ACBr_CTe;
 {$DEFINE DEBUG}
 
 requires
-  vcl,
   rtl,
+  vcl,
   designide,
   ACBr_DFeComum;
 

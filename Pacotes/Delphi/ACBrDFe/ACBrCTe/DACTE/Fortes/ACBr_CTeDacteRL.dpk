@@ -70,10 +70,10 @@ package ACBr_CTeDacteRL;
 {$IMPLICITBUILD ON}
 
 requires
-  ACBr_CTe,
-  ACBr_Comum,
-  frce,
+  rtl,
+  designide,
   dsnap,
+  ACBr_CTe,
   ACBrDFeReportRL;
 
 contains

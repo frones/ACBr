@@ -27,8 +27,8 @@ package ACBr_NFSe;
 {$IMPLICITBUILD ON}
 
 requires
-  vcl,
   rtl,
+  vcl,
   designide,
   ACBr_DFeComum;
 

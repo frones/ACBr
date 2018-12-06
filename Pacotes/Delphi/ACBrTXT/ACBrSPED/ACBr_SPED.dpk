@@ -28,8 +28,8 @@ package ACBr_SPED;
 
 requires
   rtl,
-  designide,
   vcl,
+  designide,
   ACBr_TXTComum;
 
 contains

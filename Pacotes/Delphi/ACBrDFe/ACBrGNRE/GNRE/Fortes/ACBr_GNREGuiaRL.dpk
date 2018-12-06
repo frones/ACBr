@@ -26,10 +26,11 @@ package ACBr_GNREGuiaRL;
 {$IMPLICITBUILD ON}
 
 requires
+  rtl,
+  designide,
+  dsnap,
   ACBr_GNRE,
-  ACBr_Comum,
-  frce,
-  dsnap;
+  ACBrDFeReportRL;
 
 contains
   ACBrGNREGuiaRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNREGuiaRLReg.pas',

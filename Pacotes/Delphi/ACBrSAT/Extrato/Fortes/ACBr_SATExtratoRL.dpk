@@ -31,9 +31,8 @@ package ACBr_SATExtratoRL;
 requires
   rtl,
   vcl,
-  ACBr_Diversos,
-  ACBr_DFeComum,
   frce,
+  ACBr_DFeComum,
   ACBr_SAT;
 
 contains

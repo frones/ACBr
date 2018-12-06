@@ -67,7 +67,6 @@ requires
   rtl,
   designide,
   dsnap,
-  frce,
   ACBr_MDFe,
   ACBrDFeReportRL;
 

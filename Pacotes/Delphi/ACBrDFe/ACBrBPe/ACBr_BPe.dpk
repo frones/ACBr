@@ -73,6 +73,7 @@ package ACBr_BPe;
 
 requires
   rtl,
+  vcl,
   designide,
   ACBr_DFeComum;
 

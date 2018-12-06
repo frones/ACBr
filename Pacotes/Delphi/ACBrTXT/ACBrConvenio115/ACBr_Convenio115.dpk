@@ -28,9 +28,9 @@ package ACBr_Convenio115;
 requires
   rtl,
   vcl,
+  designide,
   ACBr_TXTComum,
-  ACBr_OpenSSL,
-  designide;
+  ACBr_OpenSSL;
 
 contains
   ACBrConvenio115 in '..\..\..\..\Fontes\ACBrTXT\ACBrConvenio115\ACBrConvenio115.pas';

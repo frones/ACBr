@@ -29,7 +29,6 @@ requires
   rtl,
   designide,
   ACBr_NFe,
-  ACBr_Diversos,
   ACBr_Serial;
 
 contains

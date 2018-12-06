@@ -29,11 +29,12 @@ package ACBr_SATExtratoESCPOS;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,
   vcl,
-  ACBr_Serial,
+  rtl,
+  designide,
+  ACBr_DFeComum,
   ACBr_SAT,
-  ACBr_DFeComum;
+  ACBr_Serial;
 
 contains
   ACBrSATExtratoESCPOS in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\EscPos\ACBrSATExtratoESCPOS.pas';

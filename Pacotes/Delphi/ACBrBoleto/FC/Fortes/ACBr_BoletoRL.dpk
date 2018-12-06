@@ -28,8 +28,6 @@ package ACBr_BoletoRL;
 requires
   rtl,
   vcl,
-  dbrtl,
-  vcldb,
   frce,
   ACBr_Boleto;
 

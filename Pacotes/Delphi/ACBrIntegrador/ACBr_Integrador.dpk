@@ -27,9 +27,9 @@ package ACBr_Integrador;
 
 requires
   rtl,
-  ACBr_PCNComum,
+  vcl,
   designide,
-  vcl;
+  ACBr_PCNComum;
 
 contains
   ACBrIntegradorReg in '..\..\..\Fontes\ACBrIntegrador\ACBrIntegradorReg.pas',

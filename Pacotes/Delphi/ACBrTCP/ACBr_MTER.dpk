@@ -28,6 +28,7 @@ package ACBr_MTER;
 requires
   rtl,
   vcl,
+  designide,
   ACBr_TCP,
   ACBr_Serial;
 

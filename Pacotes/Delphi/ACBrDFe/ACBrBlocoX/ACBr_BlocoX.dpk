@@ -54,8 +54,8 @@ package ACBr_BlocoX;
 {$DEFINE DEBUG}
 
 requires
-  vcl,
   rtl,
+  vcl,
   designide,
   ACBr_DFeComum;
 

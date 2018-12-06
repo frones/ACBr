@@ -75,9 +75,8 @@ package ACBr_NFeDanfeRL;
 requires
   rtl,
   designide,
-  frce,
-  ACBr_NFe,
   dsnap,
+  ACBr_NFe,
   ACBrDFeReportRL;
 
 contains

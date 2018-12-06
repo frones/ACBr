@@ -1,11 +1,10 @@
 package ACBrDFeReportRL;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO OFF}
+{$DEBUGINFO ON}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -23,12 +22,14 @@ package ACBrDFeReportRL;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
-{$IMPLICITBUILD ON}
+{$DESCRIPTION 'ACBr - Biblioteca Base para os Relatórios de DFe com Fortes Report'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
 
 requires
   rtl,
+  vcl,
+  designide,  
   frce,
   ACBr_DFeComum;
 

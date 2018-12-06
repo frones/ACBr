@@ -27,9 +27,11 @@ package ACBr_DFeComum;
 {$IMPLICITBUILD OFF}
 
 requires
-  vcl,
   rtl,
+  vcl,
   designide,
+  inet,
+  soaprtl,  
   ACBr_Integrador,
   ACBr_OpenSSL,
   ACBr_TCP;

@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_SAT_Extrato_ESCPOS"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -15,7 +16,6 @@
         <CompilerMessages>
           <IgnoredMessages idx5024="True"/>
         </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - Extrato Cupom Fiscal Eletrônico SAT para Serial - (http://www.projectoacbr.com.br/)"/>
@@ -28,24 +28,19 @@
         <UnitName Value="ACBrSATExtratoESCPOS"/>
       </Item2>
     </Files>
-    <Type Value="RunAndDesignTime"/>
-    <RequiredPkgs Count="3">
+    <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_SAT"/>
-      </Item2>
-      <Item3>
         <PackageName Value="ACBrSerial"/>
-      </Item3>
+      </Item2>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>
     </UsageOptions>
     <PublishOptions>
       <Version Value="2"/>
-      <IgnoreBinaries Value="False"/>
     </PublishOptions>
   </Package>
 </CONFIG>

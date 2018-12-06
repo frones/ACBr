@@ -57,7 +57,7 @@ const
 type
 
   { TACBrBoletoFCFortesFr }
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}	
   TACBrBoletoFCFortes = class(TACBrBoletoFCClass)

@@ -47,7 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-ver: 0.0.248
+
+ver: 0.1.0
+06/12/2018
+-- ACBrBoleto --
+[-] TACBrCedente, remoção de propriedade interna "ACBrBoleto", da sessão Published
+[*] TACBrBoleto.EnviarEmail, assinatura modificada, para assumir valores default
+    em parâmetros sCC e Anexos
+[-] Correções em TACBrBoletoFCClass.GetDirLogo e TACBrBoletoFCClass.GetNomeArquivo,
+    para considerar corretamente o tempo de Design e RunTime, evitando loop
+    infinito (no Lazarus).
 
 26-11-2018 -- ACBrBancoBrasil
 [*] Ajuste na geração CNAB240, alteração no contador do registro para o Trailler e Segmentos

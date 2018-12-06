@@ -19,13 +19,13 @@ uses
   ACBrECFFiscNET, ACBrECFICash, ACBrECFMecaf, ACBrECFNaoFiscal, ACBrECFNCR, 
   ACBrECFQuattro, ACBrECFSchalter, ACBrECFSweda, ACBrECFSwedaSTX, 
   ACBrECFUrano, ACBrECFYanco, ACBrECFEscECF, ACBrETQ, ACBrETQClass, 
-  ACBrETQPpla, ACBrETQZplII, ACBrGAV, ACBrGAVClass, ACBrGAVImpressoraComum, 
-  ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, ACBrGAVSerialMenno, ACBrLCB, 
-  ACBrRFD, ACBrTER, ACBrTERClass, ACBrTERWilbor, ACBrECFVirtual, 
-  ACBrECFVirtualBuffer, ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal, 
-  ACBrPosPrinter, ACBrEscBematech, ACBrEscPosEpson, ACBrEscDaruma, 
-  ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, ACBrSMS, ACBrSMSClass, 
-  ACBrSMSDaruma, ACBrSMSZTE, ACBrBALToledo9091_8530_8540, LazarusPackageIntf;
+  ACBrETQPpla, ACBrETQEpl2, ACBrETQZplII, ACBrGAV, ACBrGAVClass, 
+  ACBrGAVImpressoraComum, ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, 
+  ACBrGAVSerialMenno, ACBrLCB, ACBrRFD, ACBrTER, ACBrTERClass, ACBrTERWilbor, 
+  ACBrECFVirtual, ACBrECFVirtualBuffer, ACBrECFVirtualPrinter, 
+  ACBrECFVirtualNaoFiscal, ACBrPosPrinter, ACBrEscBematech, ACBrEscPosEpson, 
+  ACBrEscDaruma, ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, ACBrSMS, 
+  ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, LazarusPackageIntf;
 
 implementation
 

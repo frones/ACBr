@@ -24,16 +24,13 @@ Permite que aplicações que usem o componente ACBrECF, emitam NFCe como se foss
         <UnitName Value="ACBrECFVirtualNFCe"/>
       </Item1>
     </Files>
-    <RequiredPkgs Count="3">
+    <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="ACBr_NFe"/>
       </Item1>
       <Item2>
         <PackageName Value="ACBrSerial"/>
       </Item2>
-      <Item3>
-        <PackageName Value="FCL"/>
-      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

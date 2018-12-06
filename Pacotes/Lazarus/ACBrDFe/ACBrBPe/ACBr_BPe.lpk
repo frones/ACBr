@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe;..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE;..\..\..\..\Fontes\ACBrDFe\ACBrBPe"/>
-        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrBPe\$(TargetCPU)-$(TargetOS)\"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrBPe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - Bilhete de Passagem Eletrônica - (http://www.projetoacbr.com.br/)"/>
@@ -106,13 +106,10 @@
         <UnitName Value="pcnBPeConsts"/>
       </Item22>
     </Files>
-    <RequiredPkgs Count="2">
+    <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>
       </Item1>
-      <Item2>
-        <PackageName Value="FCL"/>
-      </Item2>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

@@ -42,7 +42,7 @@
     </Files>
     <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="frce"/>
+        <PackageName Value="ACBrDFeReportRL"/>
       </Item1>
       <Item2>
         <PackageName Value="ACBr_NFe"/>

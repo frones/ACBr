@@ -1002,6 +1002,11 @@ begin
           begin
             FieldByName('infAdProd').AsString := TACBrNFeDANFEClass(FDANFEClassOwner).ManterinfAdProd(FNFe, inItem);
             FieldByName('DescricaoProduto').AsString := TACBrNFeDANFEClass(FDANFEClassOwner).ManterXProd(FNFe, inItem);
+          end
+          else
+          begin
+            FieldByName('infAdProd').AsString := FNFe.Det[inItem].infAdProd;
+            FieldByName('DescricaoProduto').AsString := FieldByName('XProd').AsString;
           end;
 
           FieldByName('NCM').AsString               := Prod.NCM;

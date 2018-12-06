@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrBlocoX                                               }
 { Biblioteca multiplataforma de componentes Delphi para Geração de arquivos    }
 { do Bloco X                                                                   }
@@ -51,7 +51,7 @@ package ACBr_SATWS;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$IMPLICITBUILD OFF}
-{$DESCRIPTION 'ACBrSATWS - Consulta de lotes enviados de CF-e-SAT - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - SATWS - Consulta de lotes enviados de CF-e-SAT - (http://www.projetoacbr.com.br/)'}
 
 requires
   rtl,

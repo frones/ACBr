@@ -293,7 +293,7 @@ end;
 
 function ValidarCEP(const ACEP: Integer; AUF: String): String;
 begin
-  ValidarCEP( FormatarCEP(ACEP), AUF );
+  Result := ValidarCEP( FormatarCEP(ACEP), AUF );
 end;
 
 function ValidarCNH(const Documento: String): String ;
@@ -1704,7 +1704,9 @@ begin
       fsMsgErro := 'Prefixo do código GTIN inválido!'
     else
     begin
+{$IFNDEF COMPILER23_UP}
       bEncontrado := False;
+{$ENDIF}
       for I := Low(ARRAY_PREFIX_GTIN) to High(ARRAY_PREFIX_GTIN) do
       begin
         bEncontrado :=

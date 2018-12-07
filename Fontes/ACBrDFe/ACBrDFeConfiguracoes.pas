@@ -749,10 +749,8 @@ begin
   AIni.WriteString(CDFeSessaoIni, 'Proxy.Host', ProxyHost);
   AIni.WriteString(CDFeSessaoIni, 'Proxy.Port', ProxyPort);
   AIni.WriteString(CDFeSessaoIni, 'Proxy.User', ProxyUser);
-  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
-    AIni.WriteString(CDFeSessaoIni, 'Proxy.Pass', EncodeBase64(StrCrypt(ProxyPass, fpConfiguracoes.ChaveCryptINI)))
-  else
-    AIni.WriteString(CDFeSessaoIni, 'Proxy.Pass', EncodeBase64(StrCrypt(ProxyPass, ProxyHost)));
+  AIni.WriteString(CDFeSessaoIni, 'Proxy.Pass', EncodeBase64(
+    StrCrypt(ProxyPass, IfEmptyThen(fpConfiguracoes.ChaveCryptINI, ProxyHost))));
 
   if NaoEstaVazio(fpConfiguracoes.SessaoIni) then
   begin
@@ -778,10 +776,8 @@ begin
   ProxyHost := AIni.ReadString(CDFeSessaoIni, 'Proxy.Host', ProxyHost);
   ProxyPort := AIni.ReadString(CDFeSessaoIni, 'Proxy.Port', ProxyPort);
   ProxyUser := AIni.ReadString(CDFeSessaoIni, 'Proxy.User', ProxyUser);
-  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
-    ProxyPass := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Proxy.Pass', '')), fpConfiguracoes.ChaveCryptINI)
-  else
-    ProxyPass := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Proxy.Pass', '')), ProxyHost);
+  ProxyPass := StrCrypt(DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Proxy.Pass', '')),
+    IfEmptyThen(fpConfiguracoes.ChaveCryptINI, ProxyHost));
 
   if NaoEstaVazio(fpConfiguracoes.SessaoIni) then
   begin
@@ -980,22 +976,17 @@ begin
   AIni.WriteString(CDFeSessaoIni, 'ArquivoPFX', ArquivoPFX);
 
   if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
-    AIni.WriteString(CDFeSessaoIni, 'DadosPFX', EncodeBase64(StrCrypt(DadosPFX, fpConfiguracoes.ChaveCryptINI)))
+  begin
+    AIni.WriteString(CDFeSessaoIni, 'DadosPFX', EncodeBase64(StrCrypt(DadosPFX, fpConfiguracoes.ChaveCryptINI)));
+    AIni.WriteString(CDFeSessaoIni, 'Senha', EncodeBase64(StrCrypt(Senha, fpConfiguracoes.ChaveCryptINI)));
+  end
   else
+  begin
     AIni.WriteString(CDFeSessaoIni, 'DadosPFX', EncodeBase64(DadosPFX));
+    AIni.WriteString(CDFeSessaoIni, 'Senha', EncodeBase64(Senha));
+  end;
 
   AIni.WriteString(CDFeSessaoIni, 'NumeroSerie', NumeroSerie);
-
-  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
-    AIni.WriteString(CDFeSessaoIni, 'Senha', EncodeBase64(StrCrypt(FSenha, fpConfiguracoes.ChaveCryptINI)))
-  else
-    AIni.WriteString(CDFeSessaoIni, 'Senha', EncodeBase64(FSenha));
-
-  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
-    AIni.WriteString(CDFeSessaoIni, 'FK', EncodeBase64(StrCrypt(FK, fpConfiguracoes.ChaveCryptINI)))
-  else
-    AIni.WriteString(CDFeSessaoIni, 'FK', EncodeBase64(FK));
-
   AIni.WriteBool(CDFeSessaoIni, 'VerificarValidade', VerificarValidade);
 end;
 
@@ -1004,22 +995,17 @@ begin
   ArquivoPFX := AIni.ReadString(CDFeSessaoIni, 'ArquivoPFX', ArquivoPFX);
 
   if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
-    DadosPFX := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'DadosPFX', '')), fpConfiguracoes.ChaveCryptINI)
+  begin
+    DadosPFX := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'DadosPFX', '')), fpConfiguracoes.ChaveCryptINI);
+    Senha := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Senha', '')), fpConfiguracoes.ChaveCryptINI);
+  end
   else
-    DadosPFX := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'DadosPFX', EncodeBase64(DadosPFX)));
+  begin
+    DadosPFX := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'DadosPFX', ''));
+    Senha := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'Senha', ''));
+  end;
 
   NumeroSerie := AIni.ReadString(CDFeSessaoIni, 'NumeroSerie', NumeroSerie);
-
-  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
-    FSenha := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Senha', '')), fpConfiguracoes.ChaveCryptINI)
-  else
-    FSenha := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'Senha', EncodeBase64(FSenha)));
-
-  if NaoEstaVazio(fpConfiguracoes.ChaveCryptINI) then
-    FK := StrCrypt( DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'FK', '')), fpConfiguracoes.ChaveCryptINI)
-  else
-    FK := DecodeBase64( AIni.ReadString(CDFeSessaoIni, 'FK', EncodeBase64(FK)));
-
   VerificarValidade := AIni.ReadBool(CDFeSessaoIni, 'VerificarValidade', VerificarValidade);
 end;
 

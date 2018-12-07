@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/12/2018
+-- ACBrDFeConfiguracoes --
+[*] Ajustes nos métodos LerIni e GravarIni (por: DSA)
+
 29/10/2018
 -- ACBrDFeSSL --
 [-] Correçao de A.V. quando ocorria um Exception na transmissão HTTP e TimeOutPorThread

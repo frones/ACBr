@@ -148,9 +148,10 @@ type
 
 implementation
 
-uses strutils,
-  ACBrDFeException, ACBrUtil,
-  pcnGerador;
+uses
+  strutils,
+  pcnGerador,
+  ACBrDFeException, ACBrUtil;
 
 { TACBrDFe }
 

@@ -85,6 +85,7 @@ var
   i: Integer;
   Notas: array of TNFSe;
 begin
+  TfrlDANFSeRLRetrato.QuebradeLinha(TACBrNFSe(ACBrNFSe).Configuracoes.WebServices.QuebradeLinha);
   if (NFSe = nil) then
   begin
     SetLength(Notas, TACBrNFSe(ACBrNFSe).NotasFiscais.Count);

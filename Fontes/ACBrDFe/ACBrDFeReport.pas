@@ -278,7 +278,7 @@ begin
   if EstaVazio(Result) then  // Se não pode definir o Path, use o Path da Aplicaçao
     Result := ApplicationPath + 'pdf' + PathDelim;
 
-  if (FUsaSeparadorPathPDF) then
+  if FUsaSeparadorPathPDF then
     Result := PathWithDelim(GetSeparadorPathPDF(Result));
 end;
 

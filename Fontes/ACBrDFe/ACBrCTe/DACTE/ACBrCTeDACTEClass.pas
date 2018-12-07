@@ -206,6 +206,7 @@ var
   ACTe: TCTe;
 begin
   Result := aInitialPath;
+
   // Se tem o componente ACBrCTe
   if Assigned(ACBrCTe) then
   begin

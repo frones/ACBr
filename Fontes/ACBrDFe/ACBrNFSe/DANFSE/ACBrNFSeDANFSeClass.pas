@@ -213,6 +213,7 @@ var
    ANFSe: TNFSe;
 begin
   Result := aInitialPath;
+
   if Assigned(ACBrNFSe) then  // Se tem o componente ACBrNFSe
   begin
     if TACBrNFSe(ACBrNFSe).NotasFiscais.Count > 0 then  // Se tem alguma Nota carregada

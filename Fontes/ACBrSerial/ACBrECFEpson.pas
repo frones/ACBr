@@ -1894,7 +1894,7 @@ begin
          on E : Exception do
          begin
             if (pos('0106',E.Message) <> 0) then  // Erro: 0106 - Comando aceito apenas fora de intervenção.
-               exit ;
+               Exit ;
 
             raise;
          end ;
@@ -1933,9 +1933,9 @@ begin
       else if copy(BitS,13,4) = '0000' then
          fpEstado := estLivre;
 
-   finally
-      Result := fpEstado ;
-   end ;
+  finally
+    Result := fpEstado ;
+  end ;
 end;
 
 function TACBrECFEpson.GetGavetaAberta: Boolean;

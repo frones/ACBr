@@ -102,7 +102,7 @@ type
     procedure LerChavePrivada ;
     Function GetChavePublica : AnsiString;
     procedure LerChavePublica ;
-    Procedure LerChave_eECFc( ConteudoXML: AnsiString) ;
+    Procedure LerChave_eECFc( const ConteudoXML: AnsiString) ;
     Procedure LerChaveModuloExpoente( Modulo, Expoente: AnsiString) ;
     procedure LerChave(const Chave : AnsiString; Privada: Boolean) ;
     procedure LiberarChave ;
@@ -117,7 +117,7 @@ type
 
     function GetDigestName(ADigest: TACBrEADDgst): String;
 
-    procedure VerificaNomeArquivo( NomeArquivo : String ) ;
+    procedure VerificaNomeArquivo( const NomeArquivo : String ) ;
     function InternalDigest( const AStream : TStream;
        const ADigest: TACBrEADDgst;
        const OutputType: TACBrEADDgstOutput = outHexa;
@@ -141,7 +141,7 @@ type
     Function GerarXMLeECFc(const NomeSwHouse: String): AnsiString; overload;
     Procedure CalcularModuloeExpoente( var Modulo, Expoente : AnsiString );
     Function CalcularChavePublica : AnsiString ;
-    Function ConverteXMLeECFcParaOpenSSL( ArquivoXML: String) : AnsiString;
+    Function ConverteXMLeECFcParaOpenSSL(const  ArquivoXML: String) : AnsiString;
 
     function ConverteChavePublicaParaOpenSSH(const AChavePublicaOpenSSL: String): String;
     function ConverterChavePublicaDeOpenSSH(const AChavePublicaOpenSSH: String): String;
@@ -662,7 +662,7 @@ begin
      LerChave( Chave, False ) ;
 end ;
 
-function TACBrEAD.ConverteXMLeECFcParaOpenSSL(ArquivoXML: String): AnsiString;
+function TACBrEAD.ConverteXMLeECFcParaOpenSSL(const ArquivoXML: String): AnsiString;
 Var
   SL : TStringList ;
   Bio : PBIO ;
@@ -689,7 +689,7 @@ begin
   end ;
 end ;
 
-procedure TACBrEAD.LerChave_eECFc(ConteudoXML : AnsiString ) ;
+procedure TACBrEAD.LerChave_eECFc(const ConteudoXML : AnsiString ) ;
 Var
   Modulo, Expoente : AnsiString ;
 begin
@@ -1072,7 +1072,7 @@ begin
   Result := InternalDigest( AStream, dgstMD5, outHexa, True );
 end ;
 
-procedure TACBrEAD.VerificaNomeArquivo( NomeArquivo : String ) ;
+procedure TACBrEAD.VerificaNomeArquivo( const NomeArquivo : String ) ;
 begin
   if ( Trim(NomeArquivo) = '' ) then
      raise EACBrEADException.Create( ACBrStr('Nome do arquivo não informado!') );

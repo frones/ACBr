@@ -2333,13 +2333,14 @@ end;
 procedure TfrmDACTeRLRetrato.rlb_16_DadosExcEmitenteBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  i: integer;
+  i, vHeight: integer;
 begin
   inherited;
   PrintIt := RLCTe.PageNumber = 1;
 
   rlmObsExcEmitente.Lines.BeginUpdate;
   rlmObsExcEmitente.Lines.Clear;
+  rlmObsFisco.Lines.BeginUpdate;
   rlmObsFisco.Lines.Clear;
 
   for i := 0 to (fpCTe.Compl.ObsCont.Count - 1) do
@@ -2355,8 +2356,9 @@ begin
   rlmObsExcEmitente.Lines.EndUpdate;
 
   // Incluido por Italo em 17/09/2012
-  rlmObsFisco.Lines.Add(StringReplace(fpCTe.Imp.infAdFisco, '&lt;BR&gt;',
-    #13#10, [rfReplaceAll, rfIgnoreCase]));
+  if Length(Trim(fpCTe.Imp.infAdFisco)) > 0 then
+    rlmObsFisco.Lines.Add(StringReplace(fpCTe.Imp.infAdFisco, '&lt;BR&gt;',
+      #13#10, [rfReplaceAll, rfIgnoreCase]));
 
   for i := 0 to (fpCTe.Compl.ObsFisco.Count - 1) do
     with fpCTe.Compl.ObsFisco.Items[i] do
@@ -2369,6 +2371,16 @@ begin
   rlmObsFisco.Lines.Text := StringReplace(rlmObsFisco.Lines.Text, ';',
     #13, [rfReplaceAll]);
   rlmObsFisco.Lines.EndUpdate;
+
+  if (rlmObsExcEmitente.Lines.Count > 0) or (rlmObsFisco.Lines.Count > 0) then
+  begin
+    vHeight := rlmObsExcEmitente.Height + 20;
+    if rlmObsFisco.Height > rlmObsExcEmitente.Height then
+      vHeight := rlmObsFisco.Height + 20;
+
+    RLDraw71.Height := vHeight;
+    RLDraw3.Height  := vHeight;
+  end;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_17_SistemaBeforePrint(Sender: TObject;

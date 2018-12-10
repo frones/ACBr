@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2018
+-- pcteCTeW --
+[*] Correções e ajustes na identação do código.
+  Por: Italo Jurisato Junior
+
 30/11/2018
 -- pcteCTeW --
 [*] Possivel correção para o problema apontado nessa postagem:

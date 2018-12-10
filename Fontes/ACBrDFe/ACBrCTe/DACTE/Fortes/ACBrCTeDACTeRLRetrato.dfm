@@ -4431,6 +4431,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       Top = 1985
       Width = 742
       Height = 70
+      AutoSize = True
       BandType = btHeader
       Color = clWhite
       ParentColor = False
@@ -4479,7 +4480,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 492
         Height = 49
-        AutoSize = False
+		AutoSize = True
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -4487,6 +4488,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Font.Style = []
+        IntegralHeight = True
         Lines.Strings = (
           'OBS LINHA 1'
           'OBS LINHA 2')
@@ -4516,7 +4518,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 228
         Height = 49
-        AutoSize = False
+		AutoSize = True
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -4524,6 +4526,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Font.Style = []
+        IntegralHeight = True
         Lines.Strings = (
           'OBS LINHA 1'
           'OBS LINHA 2')

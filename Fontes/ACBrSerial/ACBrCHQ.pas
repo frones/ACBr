@@ -120,7 +120,7 @@ TACBrCHQ = class( TACBrComponent )
     procedure ImprimirCheque ;
     Procedure TravarCheque ;
     Procedure DestravarCheque ;
-    procedure ImprimirLinha( AString : AnsiString ) ;
+    procedure ImprimirLinha( const AString : AnsiString ) ;
     procedure ImprimirVerso( AStringList : TStrings ) ; Virtual ;
 
     property ChequePronto : Boolean read GetChequeProntoClass ;
@@ -308,7 +308,7 @@ begin
   end ;
 end;
 
-procedure TACBrCHQ.ImprimirLinha( AString : AnsiString );
+procedure TACBrCHQ.ImprimirLinha( const AString : AnsiString );
 Var wAtivo : Boolean ;
 begin
   wAtivo := Ativo ;

@@ -70,7 +70,7 @@ TACBrBALClass = class
     fpPosIni: Integer;
     fpPosFim: Integer;
 
-    procedure GravaLog(AString: AnsiString; Traduz: Boolean = True);
+    procedure GravaLog(const AString: AnsiString; Traduz: Boolean = True);
 
     function AguardarRespostaPeso(aMillisecTimeOut: Integer = 3000;
       aReenviarSolicitarPeso: Boolean = False): Double; virtual;
@@ -84,7 +84,7 @@ TACBrBALClass = class
     procedure LeSerial(MillisecTimeOut: Integer = 500); virtual;
 
     function LePeso(MillisecTimeOut: Integer = 3000): Double; virtual;
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; virtual;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; virtual;
 
     property ModeloStr: String  read fpModeloStr;
     property Ativo    : Boolean read fpAtivo  write SetAtivo;
@@ -135,7 +135,7 @@ begin
     Desativar;
 end;
 
-procedure TACBrBALClass.GravaLog(AString: AnsiString; Traduz: Boolean);
+procedure TACBrBALClass.GravaLog(const AString: AnsiString; Traduz: Boolean);
 begin
   WriteLog(fpArqLOG, AString, Traduz);
 end;
@@ -240,7 +240,7 @@ begin
   Result := fpUltimoPesoLido;
 end;
 
-function TACBrBALClass.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALClass.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
   wDecimais: Integer;

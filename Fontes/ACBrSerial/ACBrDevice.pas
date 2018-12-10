@@ -198,8 +198,8 @@ TACBrTag = class
     FNome: String;
     FSequencia: Integer;
     function GetTamanho: Integer;
-    procedure SetAjuda(AValue: String);
-    procedure SetNome(AValue: String);
+    procedure SetAjuda(const AValue: String);
+    procedure SetNome(const AValue: String);
   public
     constructor Create;
 
@@ -247,7 +247,7 @@ TACBrTagProcessor = class
     constructor Create;
     destructor Destroy; override;
 
-    function DecodificarTagsFormatacao(AString: AnsiString): AnsiString;
+    function DecodificarTagsFormatacao(const AString: AnsiString): AnsiString;
     function TraduzirTag(const ATag: AnsiString): AnsiString;
     function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString): AnsiString;
 
@@ -317,7 +317,7 @@ TACBrDevice = class( TComponent )
     procedure SetBaud(const Value: Integer);
     procedure SetData(const Value: Integer);
     procedure SetDeviceType(AValue: TACBrDeviceType);
-    procedure SetNomeDocumento(AValue: String);
+    procedure SetNomeDocumento(const AValue: String);
     procedure SetHardFlow(const Value: Boolean);
     function GetParity: TACBrSerialParity;
     procedure SetParity(const Value: TACBrSerialParity);
@@ -351,7 +351,7 @@ TACBrDevice = class( TComponent )
       write SetTimeOutMilissegundos;
 
     Function EmLinha( lTimeOut : Integer = 1) : Boolean  ;
-    function DeduzirTipoPorta(APorta: String): TACBrDeviceType;
+    function DeduzirTipoPorta(const APorta: String): TACBrDeviceType;
 
     property ParamsString : String read GetParamsString write SetParamsString ;
 
@@ -362,7 +362,7 @@ TACBrDevice = class( TComponent )
     procedure Desativar ;
     Procedure EnviaString( const AString : AnsiString ) ;
     Procedure EnviaByte( const AByte : Byte ) ;
-    Function LeString( ATimeOut: Integer=0; NumBytes: Integer=0; Terminador: AnsiString = '' ): String;
+    Function LeString( ATimeOut: Integer=0; NumBytes: Integer=0; const Terminador: AnsiString = '' ): String;
     Function LeByte( ATimeOut: Integer=0 ): Byte;
     procedure Limpar ;
     Function BytesParaLer: Integer;
@@ -437,7 +437,7 @@ TACBrThreadEnviaLPT = class(TThread)
   protected
     procedure Execute ; override;
   public
-    constructor Create(AOwner : TObject; AString : String) ;
+    constructor Create(AOwner : TObject; const AString : String) ;
     property BytesSent : Integer read fsBytesSent ;
   end;
 
@@ -458,12 +458,12 @@ begin
   Result := Length(FNome);
 end;
 
-procedure TACBrTag.SetAjuda(AValue: String);
+procedure TACBrTag.SetAjuda(const AValue: String);
 begin
   FAjuda := ACBrStr( AValue );
 end;
 
-procedure TACBrTag.SetNome(AValue: String);
+procedure TACBrTag.SetNome(const AValue: String);
 begin
   FNome := LowerCase(Trim(AValue));
 
@@ -549,7 +549,7 @@ begin
   inherited Destroy;
 end;
 
-function TACBrTagProcessor.DecodificarTagsFormatacao(AString: AnsiString
+function TACBrTagProcessor.DecodificarTagsFormatacao(const AString: AnsiString
   ): AnsiString;
 Var
   Tag1, Tag2: String;
@@ -957,7 +957,7 @@ begin
   fsDeviceType := AValue;
 end;
 
-procedure TACBrDevice.SetNomeDocumento(AValue: String);
+procedure TACBrDevice.SetNomeDocumento(const AValue: String);
 begin
   GravaLog('SetNomeDocumento('+AValue+')');
   fsNomeDocumento := Trim(AValue);
@@ -1146,7 +1146,7 @@ begin
   fsDeviceType := DeduzirTipoPorta(fsPorta);
 end;
 
-function TACBrDevice.DeduzirTipoPorta(APorta: String): TACBrDeviceType;
+function TACBrDevice.DeduzirTipoPorta(const APorta: String): TACBrDeviceType;
 var
   UPorta: String;
 begin
@@ -1327,7 +1327,7 @@ procedure TACBrDevice.AcharPortasSeriais(const AStringList : TStrings ;
 var
    I     : Integer ;
    BS    : TBlockSerial ;
-   Porta : String ;
+   UmaPorta : String ;
 begin
    GravaLog('AcharPortasSeriais('+IntToStr(UltimaPorta)+')');
    AStringList.Clear;
@@ -1337,11 +1337,11 @@ begin
       For I := 1 to UltimaPorta do
       begin
         try
-           Porta := 'COM'+IntToStr(I) ;
+           UmaPorta := 'COM'+IntToStr(I) ;
 
-           BS.Connect( Porta );
+           BS.Connect( UmaPorta );
            if BS.LastError <> 2 then
-              AStringList.Add(Porta) ;
+              AStringList.Add(UmaPorta) ;
 
            BS.CloseSocket;
         except
@@ -1613,7 +1613,7 @@ begin
 end;
 
 function TACBrDevice.LeString(ATimeOut: Integer; NumBytes: Integer;
-  Terminador: AnsiString): String;
+  const Terminador: AnsiString): String;
 var
   Buffer: AnsiString;
   Fim: TDateTime;
@@ -2043,7 +2043,7 @@ begin
 end;
 
 {---------------------------- TACBrThreadEnviaLPT -----------------------------}
-constructor TACBrThreadEnviaLPT.Create(AOwner : TObject; AString: String ) ;
+constructor TACBrThreadEnviaLPT.Create(AOwner : TObject; const AString: String ) ;
 begin
   if not (AOwner is TACBrDevice) then
      raise Exception.Create(ACBrStr('Uso Inválido da TACBrThreadEnviaLPT'));

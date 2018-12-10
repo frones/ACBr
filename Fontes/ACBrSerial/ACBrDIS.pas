@@ -158,7 +158,7 @@ TACBrDIS = class( TACBrComponent )
 
     procedure AtualizaLinhas(Sender: TObject);
     procedure DoOnAtualizar(Linha : Integer );
-    Function AjustaTexto( Texto : String; Alin : TACBrDISAlinhamento ) : String ;
+    Function AjustaTexto( const Texto : String; Alin : TACBrDISAlinhamento ) : String ;
 
     procedure SetModelo(const Value: TACBrDISModelo);
     procedure SetPorta(const Value: String);
@@ -200,7 +200,7 @@ TACBrDIS = class( TACBrComponent )
     procedure PosicionarCursor( Linha, Coluna: Integer ) ;
     procedure Escrever( AText : String ) ;
     procedure ExibirLinha( Linha : Integer ; AText : String ) ; overload ;
-    procedure ExibirLinha( Linha : Integer ; AText : String;
+    procedure ExibirLinha( Linha : Integer ; const AText : String;
        Alinhamento : TACBrDISAlinhamento ) ; overload ;
     procedure ExibirLinha( Linha : Integer ; AText : String;
        Efeito : TACBrDISEfeitoExibir ) ; overload ;
@@ -504,7 +504,7 @@ begin
   fsDIS.LinhasCount := Value ;
 end;
 
-Function TACBrDIS.AjustaTexto(Texto: String;
+Function TACBrDIS.AjustaTexto(const Texto: String;
   Alin: TACBrDISAlinhamento) : String ;
 begin
   Result := Texto ;
@@ -560,7 +560,7 @@ begin
   end ;
 end;
 
-procedure TACBrDIS.ExibirLinha(Linha: Integer; AText: String;
+procedure TACBrDIS.ExibirLinha(Linha: Integer; const AText: String;
   Alinhamento: TACBrDISAlinhamento);
 Var wAlinhamento : TACBrDISAlinhamento ;
 begin

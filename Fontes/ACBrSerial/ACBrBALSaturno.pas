@@ -58,7 +58,7 @@ type
   public
     constructor Create(AOwner: TComponent);
 
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -76,10 +76,11 @@ begin
   fpModeloStr := 'Saturno';
 end;
 
-function TACBrBALSaturno.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALSaturno.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wAchouE, wAchouO: Boolean;
   wPosEO: Integer;
+  wResposta: AnsiString;
 begin
   Result := 0;
 
@@ -98,27 +99,27 @@ begin
     else
       wPosEO := Pos('O', UpperCase(aResposta));
 
-    aResposta := Copy(aResposta, 0, wPosEO - 1);
+    wResposta := Copy(aResposta, 0, wPosEO - 1);
 
     { Removendo caracteres especiais, caso encontre algum }
-    aResposta := StringReplace(aResposta, '°', '0', [rfReplaceAll]);
-    aResposta := StringReplace(aResposta, '±', '1', [rfReplaceAll]);
-    aResposta := StringReplace(aResposta, '²', '2', [rfReplaceAll]);
-    aResposta := StringReplace(aResposta, '³', '3', [rfReplaceAll]);
-    aResposta := StringReplace(aResposta, '´', '4', [rfReplaceAll]);
-    aResposta := StringReplace(aResposta, 'µ', '5', [rfReplaceAll]);
-    aResposta := StringReplace(aResposta, '¶', '6', [rfReplaceAll]);
-    aResposta := StringReplace(aResposta, '·', '7', [rfReplaceAll]);
-    aResposta := StringReplace(aResposta, '¸', '8', [rfReplaceAll]);
-    aResposta := StringReplace(aResposta, '¹', '9', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '°', '0', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '±', '1', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '²', '2', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '³', '3', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '´', '4', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, 'µ', '5', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '¶', '6', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '·', '7', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '¸', '8', [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, '¹', '9', [rfReplaceAll]);
   end;
 
-  if (Length(aResposta) > 0) then
+  if (Length(wResposta) > 0) then
   begin
     try
-      Result := StrToFloat(aResposta);
+      Result := StrToFloat(wResposta);
     except
-      case aResposta[1] of
+      case wResposta[1] of
         'I': Result := -1;   { Instavel }
         'N': Result := -2;   { Peso Negativo }
         'S': Result := -10;  { Sobrecarga de Peso }

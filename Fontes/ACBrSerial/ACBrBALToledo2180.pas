@@ -61,7 +61,7 @@ type
     constructor Create(AOwner: TComponent);
 
     procedure LeSerial( MillisecTimeOut : Integer = 500) ; override;
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -113,7 +113,7 @@ begin
            ' - Resposta: ' + fpUltimaResposta);
 end;
 
-function TACBrBALToledo2180.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALToledo2180.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wPos: Integer;
   wResposta: AnsiString;

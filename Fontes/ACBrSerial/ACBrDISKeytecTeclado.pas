@@ -62,7 +62,7 @@ TACBrDISKeytecTeclado = class( TACBrDISClass )
 
     procedure LimparDisplay ; override ;
     procedure PosicionarCursor(Linha, Coluna: Integer ) ; override ;
-    procedure Escrever( Texto : String ) ; override ;
+    procedure Escrever( const Texto : String ) ; override ;
 end ;
 
 implementation
@@ -104,7 +104,7 @@ begin
   TxKeyboard(Pos);
 end;
 
-procedure TACBrDISKeytecTeclado.Escrever(Texto: String);
+procedure TACBrDISKeytecTeclado.Escrever(const Texto: String);
 Var A : Integer ;
 begin
   TxKeyboard( 8 );

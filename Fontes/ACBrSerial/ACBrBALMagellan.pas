@@ -57,15 +57,15 @@ type
   TACBrBALMagellan = class(TACBrBALClass)
   private
     fpDecimais: Integer;
-    function InterpretarProtocoloA(aResposta: AnsiString): AnsiString;
-    function InterpretarProtocoloB(aResposta: AnsiString): AnsiString;
-    function InterpretarProtocoloC(aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloA(const aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloB(const aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloC(const aResposta: AnsiString): AnsiString;
   public
     constructor Create(AOwner: TComponent);
 
     procedure SolicitarPeso; override;
 
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -76,7 +76,7 @@ uses
 
 { TACBrBALGertecSerial }
 
-function TACBrBALMagellan.InterpretarProtocoloA(aResposta: AnsiString): AnsiString;
+function TACBrBALMagellan.InterpretarProtocoloA(const aResposta: AnsiString): AnsiString;
 var
   wStatus2: AnsiChar;
 begin
@@ -117,7 +117,7 @@ begin
   Result := Trim(Copy(aResposta, 3, 6));
 end;
 
-function TACBrBALMagellan.InterpretarProtocoloB(aResposta: AnsiString): AnsiString;
+function TACBrBALMagellan.InterpretarProtocoloB(const aResposta: AnsiString): AnsiString;
 var
   wPosIni, wPosFim: Integer;
 begin
@@ -135,7 +135,7 @@ begin
   Result := Trim(Copy(aResposta, wPosIni + 1, wPosFim - wPosIni - 1));
 end;
 
-function TACBrBALMagellan.InterpretarProtocoloC(aResposta: AnsiString): AnsiString;
+function TACBrBALMagellan.InterpretarProtocoloC(const aResposta: AnsiString): AnsiString;
 var
   wPosIni, wPosFim: Integer;
 begin
@@ -168,7 +168,7 @@ begin
   fpDevice.EnviaString(#87);
 end;
 
-function TACBrBALMagellan.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALMagellan.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
 begin
@@ -185,15 +185,15 @@ begin
     Exit;
 
   { Ajustando o separador de Decimal corretamente }
-  aResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+  wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
 
   try
-    if (Pos(DecimalSeparator, aResposta) > 0) then  { Já existe ponto decimal ? }
-      Result := StrToFloat(aResposta)
+    if (Pos(DecimalSeparator, wResposta) > 0) then  { Já existe ponto decimal ? }
+      Result := StrToFloat(wResposta)
     else
-      Result := (StrToInt(aResposta) / fpDecimais);
+      Result := (StrToInt(wResposta) / fpDecimais);
   except
-    case aResposta[1] of
+    case wResposta[1] of
       'I' : Result := -1;  { Instavel }
       'N' : Result := -2;  { Peso Negativo }
       'S' : Result := -10;  { Sobrecarga de Peso }

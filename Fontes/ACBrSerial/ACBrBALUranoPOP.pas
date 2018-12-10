@@ -60,7 +60,7 @@ type
 
     function LePeso(MillisecTimeOut: Integer = 3000): Double; override;
 
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -93,7 +93,7 @@ begin
   Result := fpUltimoPesoLido;
 end;
 
-function TACBrBALUranoPOP.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALUranoPOP.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
   wPos, wQtd: Integer;

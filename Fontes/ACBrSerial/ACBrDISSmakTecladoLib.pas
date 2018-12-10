@@ -83,7 +83,7 @@ TACBrDISSmakTecladoLib = class( TACBrDISClass )
     procedure LimparLinha( Linha: Integer ) ; override ;
 
     procedure PosicionarCursor(Linha, Coluna: Integer ) ; override ;
-    procedure Escrever( Texto : String ) ; override ;
+    procedure Escrever( const Texto : String ) ; override ;
 end ;
 
 implementation
@@ -136,7 +136,7 @@ begin
     xGotoxy(Coluna, Linha);
 end;
 
-procedure TACBrDISSmakTecladoLib.Escrever(Texto: String);
+procedure TACBrDISSmakTecladoLib.Escrever(const Texto: String);
 begin
   if Assigned(xDisp) then
     xDisp( PAnsiChar( AnsiString(ACBrStrToAnsi(Texto))) );

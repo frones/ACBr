@@ -57,7 +57,7 @@ type
   public
     constructor Create(AOwner: TComponent);
 
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
     procedure SolicitarPeso; override;
   end;
 
@@ -76,21 +76,21 @@ begin
   fpModeloStr := 'Magna';
 end;
 
-function TACBrBALMagna.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALMagna.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wPosIni, wPosFim, wDecimais: Integer;
   wResposta: AnsiString;
 begin
   Result    := 0;
-  aResposta := Copy(aResposta, 1, Pos(#10, aResposta) - 1);
-  wPosIni   := Pos(' ', aResposta);
-  wPosFim   := Pos('k', aResposta);
+  wResposta := Copy(aResposta, 1, Pos(#10, aResposta) - 1);
+  wPosIni   := Pos(' ', wResposta);
+  wPosFim   := Pos('k', wResposta);
   wDecimais := 1000;
 
   if (wPosFim = 0) then
-    wPosFim := Length(aResposta);
+    wPosFim := Length(wResposta);
 
-  wResposta := Copy(aResposta, wPosIni, wPosFim - wPosIni);
+  wResposta := Copy(wResposta, wPosIni, wPosFim - wPosIni);
 
   if (wResposta = EmptyStr) then
     Exit;

@@ -60,7 +60,7 @@ type TACBrCHQSchalter = class( TACBrCHQClass )
     procedure Ativar ; override ;
 
     procedure ImprimirCheque ; Override ;
-    procedure ImprimirLinha( AString : AnsiString ) ; Override ;
+    procedure ImprimirLinha( const AString : AnsiString ) ; Override ;
     procedure ImprimirVerso( AStringList : TStrings ) ; Override ;
 end ;
 
@@ -112,14 +112,16 @@ begin
   Result := fpDevice.EmLinha ;
 end;
 
-procedure TACBrCHQSchalter.ImprimirLinha(AString: AnsiString);
+procedure TACBrCHQSchalter.ImprimirLinha(const AString: AnsiString);
+var
+  NovaString: AnsiString;
 begin
   if Trim(AString) <> '' then
-     AString := StringOfChar(' ',10) + AString
+     NovaString := StringOfChar(' ',10) + AString
   else
-     AString := Trim(AString) ;
+     NovaString := Trim(AString) ;
 
-  EnviarStr( CodificarPaginaDeCodigo(AString) + #10 );  { Adciona LF }
+  EnviarStr( CodificarPaginaDeCodigo(NovaString) + #10 );  { Adciona LF }
 end;
 
 procedure TACBrCHQSchalter.ImprimirVerso(AStringList: TStrings);

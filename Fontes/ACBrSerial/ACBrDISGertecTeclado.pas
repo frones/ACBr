@@ -69,7 +69,7 @@ TACBrDISGertecTeclado = class( TACBrDISClass )
     procedure LimparLinha( Linha: Integer ) ; override ;
 
     procedure PosicionarCursor(Linha, Coluna: Integer ) ; override ;
-    procedure Escrever( Texto : String ) ; override ;
+    procedure Escrever(const  Texto : String ) ; override ;
 end ;
 
 implementation
@@ -126,7 +126,7 @@ begin
   TxKeyboard( Linha ) ;
 end;
 
-procedure TACBrDISGertecTeclado.Escrever(Texto: String);
+procedure TACBrDISGertecTeclado.Escrever(const Texto: String);
 Var
   A : Integer ;
 begin

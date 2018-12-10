@@ -58,7 +58,7 @@ type
 
     function LePeso(MillisecTimeOut: Integer): Double; override;
 
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -82,7 +82,7 @@ begin
   Result := AguardarRespostaPeso(MillisecTimeOut, True);
 end;
 
-function TACBrBALMuller.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALMuller.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
 begin

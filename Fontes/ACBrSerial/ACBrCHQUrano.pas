@@ -58,7 +58,7 @@ type TACBrCHQUrano = class( TACBrCHQClass )
     procedure Ativar ; override ;
 
     procedure ImprimirCheque ; Override ;
-    procedure ImprimirLinha( AString : AnsiString ) ; Override ;
+    procedure ImprimirLinha( const AString : AnsiString ) ; Override ;
 end ;
 
 implementation
@@ -109,7 +109,7 @@ begin
   EnviarStr( #27 + 'v' + ValStr + '$' ) ;
 end;
 
-procedure TACBrCHQUrano.ImprimirLinha(AString: AnsiString);
+procedure TACBrCHQUrano.ImprimirLinha(const AString: AnsiString);
 begin
   EnviarStr( #27 + 'g' + CodificarPaginaDeCodigo(TrimRight(AString)) + #10 + '$' ) ;
 end;

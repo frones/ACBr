@@ -57,13 +57,13 @@ type
 
   TACBrBALLucasTec = class(TACBrBALClass)
   private
-    function StrToPeso(StrPeso, aResposta: AnsiString): Double;
+    function StrToPeso(const StrPeso, aResposta: AnsiString): Double;
 
   public
     constructor Create(AOwner: TComponent);
 
     procedure LeSerial(MillisecTimeOut: Integer = 500); override;
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -78,7 +78,7 @@ uses
 
 { TACBrBALGertecSerial }
 
-function TACBrBALLucasTec.StrToPeso(StrPeso, aResposta: AnsiString): Double;
+function TACBrBALLucasTec.StrToPeso(const StrPeso, aResposta: AnsiString): Double;
 var
   I, wPos: Integer;
   wStr: String;
@@ -155,7 +155,7 @@ begin
   GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido)+' , Resposta: ' + fpUltimaResposta);
 end;
 
-function TACBrBALLucasTec.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALLucasTec.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   PesoL, PesoB, PesoT: Double;
   wResposta: AnsiString;

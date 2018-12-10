@@ -52,7 +52,7 @@ type
   TACBrBALMicheletti = class(TACBrBALClass)
   public
     constructor Create(AOwner: TComponent);
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
 end;
 
 implementation
@@ -68,7 +68,7 @@ begin
   fpModeloStr := 'Micheletti';
 end;
 
-function TACBrBALMicheletti.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALMicheletti.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
 begin

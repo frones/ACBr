@@ -60,7 +60,7 @@ type
     constructor Create(AOwner: TComponent);
 
     function LePeso(MillisecTimeOut: Integer = 3000): Double; override;
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -85,7 +85,7 @@ begin
   Result := AguardarRespostaPeso(MillisecTimeOut, True);
 end;
 
-function TACBrBALRinnert.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALRinnert.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
 begin

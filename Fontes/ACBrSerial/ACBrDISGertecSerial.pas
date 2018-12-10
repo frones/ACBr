@@ -55,7 +55,7 @@ TACBrDISGertecSerial = class( TACBrDISClass )
     procedure LimparDisplay ; override ;
 
     procedure PosicionarCursor(Linha, Coluna: Integer ) ; override ;
-    procedure Escrever( Texto : String ) ; override ;
+    procedure Escrever( const Texto : String ) ; override ;
 end ;
 
 implementation
@@ -85,7 +85,7 @@ begin
   fpDevice.EnviaString( #9 + chr(Coluna) + chr(Linha) );
 end;
 
-procedure TACBrDISGertecSerial.Escrever(Texto: String);
+procedure TACBrDISGertecSerial.Escrever(const Texto: String);
 begin
   fpDevice.EnviaString( Texto );
 end;

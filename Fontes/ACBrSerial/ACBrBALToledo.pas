@@ -58,16 +58,16 @@ type
     fpProtocolo: AnsiString;
     fpDecimais: Integer;
 
-    function InterpretarProtocoloA(aResposta: AnsiString): AnsiString;
-    function InterpretarProtocoloB(aResposta: AnsiString): AnsiString;
-    function InterpretarProtocoloC(aResposta: AnsiString): AnsiString;
-    function InterpretarProtocoloEth(aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloA(const aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloB(const aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloC(const aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloEth(const aResposta: AnsiString): AnsiString;
   public
     constructor Create(AOwner: TComponent);
 
     procedure LeSerial( MillisecTimeOut : Integer = 500) ; override;
 
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -78,7 +78,7 @@ uses
 
 { TACBrBALToledo }
 
-function TACBrBALToledo.InterpretarProtocoloA(aResposta: AnsiString): AnsiString;
+function TACBrBALToledo.InterpretarProtocoloA(const aResposta: AnsiString): AnsiString;
 var
   wStatus2: AnsiChar;
   wPosIni: Integer;
@@ -122,7 +122,7 @@ begin
   Result := Trim(Copy(aResposta, wPosIni + 2, 6));
 end;
 
-function TACBrBALToledo.InterpretarProtocoloB(aResposta: AnsiString): AnsiString;
+function TACBrBALToledo.InterpretarProtocoloB(const aResposta: AnsiString): AnsiString;
 var
   wPosIni, wPosFim: Integer;
 begin
@@ -144,7 +144,7 @@ begin
   Result := Trim(Copy(aResposta, wPosIni + 1, wPosFim - wPosIni - 1));
 end;
 
-function TACBrBALToledo.InterpretarProtocoloC(aResposta: AnsiString): AnsiString;
+function TACBrBALToledo.InterpretarProtocoloC(const aResposta: AnsiString): AnsiString;
 var
   wPosIni, wPosFim: Integer;
 begin
@@ -167,7 +167,7 @@ begin
 end;
 
 function TACBrBALToledo.InterpretarProtocoloEth(
-  aResposta: AnsiString): AnsiString;
+  const aResposta: AnsiString): AnsiString;
 var
   wPosIni, wPosFim: Integer;
 begin
@@ -249,7 +249,7 @@ begin
            ' - Resposta: ' + fpUltimaResposta + ' - Protocolo: ' + fpProtocolo);
 end;
 
-function TACBrBALToledo.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALToledo.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wPosIni: Integer;
   wResposta: AnsiString;

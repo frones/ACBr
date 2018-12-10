@@ -47,7 +47,7 @@ type
   public
     constructor Create(AOwner: TComponent);
 
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -69,7 +69,7 @@ begin
   fpModeloStr := 'Alfa';
 end;
 
-function TACBrBALAlfa.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALAlfa.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
   wDecimais: Integer;

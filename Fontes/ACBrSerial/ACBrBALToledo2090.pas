@@ -50,7 +50,7 @@ type
 
     procedure SolicitarPeso; override;
 
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 implementation
@@ -75,7 +75,7 @@ begin
   fpDevice.EnviaString(#05);  { Envia comando solicitando o Peso }
 end;
 
-function TACBrBALToledo2090.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALToledo2090.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
   wStrListDados: TStringList;
@@ -103,7 +103,7 @@ begin
       wDecimais := 1000;
 
     {APENAS BLOCO PROCESSADO}
-    aResposta := wStrListDados[1];
+    wResposta := wStrListDados[1];
     wResposta := Copy(wStrListDados[1], 5, 7);
 
     if (Length(wResposta) <= 0) then

@@ -96,7 +96,7 @@ TACBrBAL = class(TACBrComponent)
     fsIntervalo: Integer;
 
     function GetArqLOG: String;
-    procedure SetArqLOG(AValue: String);
+    procedure SetArqLOG(const AValue: String);
     procedure SetModelo(const Value: TACBrBALModelo);
     procedure SetPorta(const Value: String);
     procedure SetAtivo(const Value: Boolean);
@@ -124,7 +124,7 @@ TACBrBAL = class(TACBrComponent)
     function LePeso( MillisecTimeOut: Integer = 3000): Double;
 
     procedure SolicitarPeso;
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; virtual;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; virtual;
 
     property UltimoPesoLido : Double read GetUltimoPesoLido ;
     property UltimaResposta : AnsiString read GetUltimaResposta ;
@@ -263,7 +263,7 @@ begin
   Result := fsBAL.ArqLOG;
 end;
 
-procedure TACBrBAL.SetArqLOG(AValue: String);
+procedure TACBrBAL.SetArqLOG(const AValue: String);
 begin
   fsBAL.ArqLOG := AValue;
 end;
@@ -338,7 +338,7 @@ begin
   fsBAL.SolicitarPeso;
 end;
 
-function TACBrBAL.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBAL.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 begin
   Result := fsBAL.InterpretarRepostaPeso(aResposta);
 end;

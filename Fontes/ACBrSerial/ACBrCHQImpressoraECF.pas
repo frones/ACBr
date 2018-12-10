@@ -58,7 +58,7 @@ type TACBrCHQImpressoraECF = class( TACBrCHQClass )
     procedure Ativar ; override ;
 
     procedure ImprimirCheque ; Override ;
-    procedure ImprimirLinha( AString : AnsiString ) ; Override ;
+    procedure ImprimirLinha( const AString : AnsiString ) ; Override ;
 
 end ;
 
@@ -99,7 +99,7 @@ begin
                        fpObservacao ) ;
 end;
 
-procedure TACBrCHQImpressoraECF.ImprimirLinha(AString: AnsiString);
+procedure TACBrCHQImpressoraECF.ImprimirLinha(const AString: AnsiString);
 begin
   { Impressora de Cheques em ECF (2 estações) não permite a impressao de linhas
     no verso... NADA A FAZER }   

@@ -103,7 +103,7 @@ TACBrDISClass = class
     procedure LimparLinha( Linha: Integer ) ; virtual ;
 
     procedure PosicionarCursor( Linha, Coluna: Integer ) ; virtual ;
-    procedure Escrever( Texto : String ) ; virtual ;
+    procedure Escrever( const Texto : String ) ; virtual ;
 end ;
 
 implementation
@@ -188,7 +188,7 @@ begin
   { Deve ser implementada na ClassFilha }
 end;
 
-procedure TACBrDISClass.Escrever(Texto: String);
+procedure TACBrDISClass.Escrever(const Texto: String);
 begin
   { Deve ser implementada na ClassFilha }
 end;

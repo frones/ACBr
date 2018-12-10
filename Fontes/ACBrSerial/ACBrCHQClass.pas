@@ -160,7 +160,7 @@ TACBrCHQClass = class
     procedure SetfpFavorecido(const Value: String);
     procedure SetBomPara(const Value: TDateTime); virtual;
 
-    procedure EnviarStr(AStr: string);
+    procedure EnviarStr(const AStr: string);
   public
     constructor Create(AOwner: TComponent);
     Destructor Destroy  ; override ;
@@ -189,14 +189,14 @@ TACBrCHQClass = class
 
     property ChequePronto : Boolean read GetChequePronto ;
 
-    procedure ImprimirLinha( AString : AnsiString ) ; Virtual ;
+    procedure ImprimirLinha( const AString : AnsiString ) ; Virtual ;
     procedure ImprimirVerso( AStringList : TStrings ) ; Virtual ;
 
     procedure ImprimirCheque ; Virtual ;
     Procedure TravarCheque ; Virtual ;
     Procedure DestravarCheque ; Virtual ;
 
-    function CodificarPaginaDeCodigo(ATexto: String): AnsiString;
+    function CodificarPaginaDeCodigo(const ATexto: String): AnsiString;
 end ;
 
 
@@ -273,7 +273,7 @@ begin
   fpAtivo := false ;
 end;
 
-procedure TACBrCHQClass.ImprimirLinha( AString : AnsiString );
+procedure TACBrCHQClass.ImprimirLinha( const AString : AnsiString );
 begin
   EnviarStr( CodificarPaginaDeCodigo(AString) + #13 + #10 );  { Adciona CR + LF }
 end;
@@ -356,7 +356,7 @@ begin
   fpBomPara := Value;
 end;
 
-function TACBrCHQClass.CodificarPaginaDeCodigo(ATexto: String): AnsiString;
+function TACBrCHQClass.CodificarPaginaDeCodigo(const ATexto: String): AnsiString;
 begin
   if fpPaginaDeCodigo > 0 then
      Result := TranslateString( ACBrStrToAnsi( ATexto ), fpPaginaDeCodigo )
@@ -364,7 +364,7 @@ begin
      Result := TiraAcentos( ATexto );
 end ;
 
-procedure TACBrCHQClass.EnviarStr(AStr: string);
+procedure TACBrCHQClass.EnviarStr(const AStr: string);
 begin
   try
     fpDevice.EnviaString(AStr);

@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -67,7 +67,7 @@ TACBrDISSmakTeclado = class( TACBrDISClass )
     procedure LimparLinha( Linha: Integer ) ; override ;
 
     procedure PosicionarCursor(Linha, Coluna: Integer ) ; override ;
-    procedure Escrever( Texto : String ) ; override ;
+    procedure Escrever( const Texto : String ) ; override ;
 end ;
 
 implementation
@@ -110,7 +110,7 @@ begin
   TxKeyboard( min(Linha, LinhasCount) );
 end;
 
-procedure TACBrDISSmakTeclado.Escrever(Texto: String);
+procedure TACBrDISSmakTeclado.Escrever(const Texto: String);
 Var A : Integer ;
 begin
   TxKeyboard( $09A );

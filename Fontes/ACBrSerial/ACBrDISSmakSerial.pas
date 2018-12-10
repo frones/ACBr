@@ -58,7 +58,7 @@ TACBrDISSmakSerial = class( TACBrDISClass )
     procedure LimparLinha( Linha: Integer ) ; override;
 
     procedure PosicionarCursor(Linha, Coluna: Integer ) ; override ;
-    procedure Escrever( Texto : String ) ; override ;
+    procedure Escrever( const Texto : String ) ; override ;
 end ;
 
 implementation
@@ -97,7 +97,7 @@ begin
   fpDevice.EnviaString( #18 + chr(Coluna) + chr(Linha) );
 end;
 
-procedure TACBrDISSmakSerial.Escrever(Texto: String);
+procedure TACBrDISSmakSerial.Escrever(const Texto: String);
 begin
   fpDevice.EnviaString( STX + Texto + ETX );
 end;

@@ -78,7 +78,7 @@ type
     function LePeso(MillisecTimeOut: Integer = 3000): Double; override;
 
     procedure LeSerial(MillisecTimeOut: integer = 500); override;
-    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    function InterpretarRepostaPeso(const aResposta: AnsiString): Double; override;
   end;
 
 
@@ -180,7 +180,7 @@ begin
            ' , Resposta: ' + fpUltimaResposta);
 end;
 
-function TACBrBALLider.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+function TACBrBALLider.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: AnsiString;
   StatusPeso: AnsiChar;

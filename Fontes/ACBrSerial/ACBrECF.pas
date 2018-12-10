@@ -1196,7 +1196,7 @@ TACBrECF = class( TACBrComponent )
      property VerificarApenasNumeroSerieNoAAC: Boolean read FVerificarApenasNumeroSerieNoAAC write FVerificarApenasNumeroSerieNoAAC default False;
 end ;
 
-Function NomeArqCAT52( CAT52ID, NumSerie: String; DtMov : TDatetime ) : String ;
+Function NomeArqCAT52( const CAT52ID, NumSerie: String; DtMov : TDatetime ) : String ;
 Function GetECFComponente( AECFClass: TACBrECFClass ): TACBrECF;
 
 implementation
@@ -1207,7 +1207,7 @@ Uses {$IFDEF COMPILER6_UP} StrUtils {$ELSE}ACBrD5 ,Windows {$ENDIF},
      ACBrECFICash, ACBrECFQuattro, ACBrECFFiscNET, ACBrECFEpson, ACBrECFNCR,
      ACBrECFSwedaSTX, ACBrECFEscECF;
 
-function NomeArqCAT52(CAT52ID, NumSerie: String; DtMov: TDatetime): String;
+function NomeArqCAT52(const CAT52ID, NumSerie: String; DtMov: TDatetime): String;
   function IntToLetra(AInt : Integer): Char ;
   begin
      if AInt < 10 then

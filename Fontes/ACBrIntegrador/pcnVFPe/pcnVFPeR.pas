@@ -122,6 +122,8 @@ implementation
 
 constructor TRespostaStatusPagamentoR.Create(AOwner: TRespostaStatusPagamento);
 begin
+  inherited Create;
+
   FLeitor := TLeitor.Create;
   FRespostaStatusPagamento := AOwner;
 end;
@@ -155,6 +157,7 @@ end;
 constructor TRespostaVerificarStatusValidadorR.Create(
   AOwner: TRespostaVerificarStatusValidador);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FRespostaVerificarStatusValidador := AOwner;
 end;
@@ -191,6 +194,7 @@ end;
 
 constructor TRespostaPagamentoR.Create(AOwner: TRespostaPagamento);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FRespostaPagamento := AOwner;
 end;
@@ -219,6 +223,7 @@ end;
 
 constructor TEnviarPagamentoR.Create(AOwner: TEnviarPagamento);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FEnviarPagamento := AOwner;
 end;
@@ -249,6 +254,7 @@ end;
 
 constructor TRetornoRespostaFiscalR.Create(AOwner: TRetornoRespostaFiscal);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FRetornoRespostaFiscal := AOwner;
 end;

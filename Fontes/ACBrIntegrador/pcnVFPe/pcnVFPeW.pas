@@ -55,7 +55,7 @@ type
     FGerador: TGerador;
   public
     constructor Create(AGerador: TGerador);
-    procedure GerarConstructor( Nome, Valor: String );
+    procedure GerarConstructor(const Nome, Valor: String );
   end;
 
   { TMetodo }
@@ -65,7 +65,7 @@ type
     FAdicionarParametros : Boolean;
   public
     constructor Create(AGerador: TGerador);
-    procedure GerarMetodo( Valor : Integer; Componente, Metodo : String );
+    procedure GerarMetodo( Valor : Integer; const Componente, Metodo : String );
     procedure FinalizarMetodo;
 
     property AdicionarParametros : Boolean read FAdicionarParametros write FAdicionarParametros default True;
@@ -77,7 +77,7 @@ type
     FGerador: TGerador;
   public
     constructor Create(AGerador: TGerador);
-    procedure GerarParametro( Nome: String; Valor: Variant; Tipo: TpcnTipoCampo; ParseTextoXML: Boolean = True );
+    procedure GerarParametro( const Nome: String; Valor: Variant; Tipo: TpcnTipoCampo; ParseTextoXML: Boolean = True );
   end;
 
 {$M+}
@@ -156,7 +156,7 @@ begin
    FGerador := AGerador;
 end;
 
-procedure TConstrutor.GerarConstructor(Nome, Valor: String);
+procedure TConstrutor.GerarConstructor(const Nome, Valor: String);
 begin
   FGerador.wGrupo('Construtor');
   FGerador.wGrupo('Parametros');
@@ -176,7 +176,7 @@ begin
   FAdicionarParametros := True;
 end;
 
-procedure TMetodo.GerarMetodo(Valor: Integer; Componente, Metodo: String);
+procedure TMetodo.GerarMetodo(Valor: Integer; const Componente, Metodo: String);
 begin
   FGerador.wGrupo('Integrador');
 
@@ -208,7 +208,7 @@ begin
   FGerador := AGerador;
 end;
 
-procedure TParametro.GerarParametro(Nome: String; Valor: Variant;
+procedure TParametro.GerarParametro(const Nome: String; Valor: Variant;
   Tipo: TpcnTipoCampo; ParseTextoXML: Boolean);
 begin
   FGerador.wGrupo('Parametro');

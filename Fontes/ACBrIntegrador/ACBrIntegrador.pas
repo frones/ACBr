@@ -71,20 +71,20 @@ type
     FResposta: String;
     FIntegradorResposta : TIntegradorResposta;
 
-    procedure SetPastaInput(AValue: String);
-    procedure SetPastaOutput(AValue: String);
+    procedure SetPastaInput(const AValue: String);
+    procedure SetPastaOutput(const AValue: String);
 
   private
-    function PegaResposta(Resp : String) : String;
+    function PegaResposta(const Resp : String) : String;
     function AguardaArqResposta(numeroSessao: Integer) : String;
-    procedure DoException( AMessage: String );
+    procedure DoException( const AMessage: String );
 
   public
     constructor Create( AOwner: TACBrIntegrador );
     destructor Destroy; override;
     procedure Clear;
 
-    function EnviaComando(numeroSessao: Integer; Nome, Comando : String; TimeOutComando : Integer = 0) : String;
+    function EnviaComando(numeroSessao: Integer; const Nome, Comando : String; TimeOutComando : Integer = 0) : String;
   public
     property PastaInput  : String  read FPastaInput  write SetPastaInput;
     property PastaOutput : String  read FPastaOutput write SetPastaOutput;
@@ -118,8 +118,8 @@ type
     function GetPastaInput: String;
     function GetPastaOutput: String;
     function GetTimeout: Integer;
-    procedure SetPastaInput(AValue: String);
-    procedure SetPastaOutput(AValue: String);
+    procedure SetPastaInput(const AValue: String);
+    procedure SetPastaOutput(const AValue: String);
     procedure SetTimeout(AValue: Integer);
 
   private
@@ -128,15 +128,15 @@ type
     function GetErroResposta: String;
     function GetNumeroSessao: Integer;
     function GetUltimaResposta: String;
-    procedure GravaLog(AString : AnsiString ) ;
-    procedure SetAbout(AValue: String);
-    procedure DoException( AMessage: String );
+    procedure GravaLog(const AString : AnsiString ) ;
+    procedure SetAbout(const AValue: String);
+    procedure DoException( const AMessage: String );
 
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Clear;
-    procedure DoLog(AString : String ) ;
+    procedure DoLog(const AString : String ) ;
 
     function Enviar(AdicionarNumeroSessao: Boolean = True): String;
     property Respostas: TStringList read FRespostas;
@@ -148,7 +148,7 @@ type
 
     property NumeroSessao: Integer read GetNumeroSessao;
     function GerarNumeroSessao: Integer;
-    procedure SetNomeMetodo(NomeMetodo: String; Homologacao: Boolean);
+    procedure SetNomeMetodo(const NomeMetodo: String; Homologacao: Boolean);
 
     property UltimaResposta: String read GetUltimaResposta;
 
@@ -211,25 +211,25 @@ begin
   FIntegradorResposta.Clear;
 end;
 
-procedure TComandoIntegrador.SetPastaInput(AValue: String);
+procedure TComandoIntegrador.SetPastaInput(const AValue: String);
 begin
   if FPastaInput = AValue then Exit;
   FPastaInput := PathWithDelim(AValue);
 end;
 
-procedure TComandoIntegrador.SetPastaOutput(AValue: String);
+procedure TComandoIntegrador.SetPastaOutput(const AValue: String);
 begin
   if FPastaOutput = AValue then Exit;
   FPastaOutput := PathWithDelim(AValue);
 end;
 
-function TComandoIntegrador.EnviaComando(numeroSessao: Integer; Nome, Comando: String; TimeOutComando : Integer = 0): String;
+function TComandoIntegrador.EnviaComando(numeroSessao: Integer; const Nome, Comando: String; TimeOutComando : Integer = 0): String;
 var
   LocTimeOut, ActualTime, TimeToRetry : TDateTime;
   NomeArquivoXml, RespostaIntegrador : String;
   ATimeout: Integer;
 
-  function CriarXml( NomeArquivo, Comando: String): String;
+  function CriarXml(const  NomeArquivo, Comando: String): String;
   var
     NomeArquivoTmp, NomeArquivoXml: String;
   begin
@@ -311,7 +311,7 @@ begin
     Result := FResposta;
 end;
 
-function TComandoIntegrador.PegaResposta(Resp: String): String;
+function TComandoIntegrador.PegaResposta(const Resp: String): String;
 begin
   Result := '';
   FLeitor.Arquivo := Resp;
@@ -331,7 +331,7 @@ function TComandoIntegrador.AguardaArqResposta(numeroSessao: Integer): String;
 var
   SL, SLArqResp : TStringList;
   I, J, MaxTentativas : Integer;
-  Erro : Boolean;
+  GerouErro : Boolean;
   Arquivo: String;
 begin
   FOwner.DoLog(DateTimeToStr(Now)+' - AguardaArqResposta, sessao: '+IntToStr(numeroSessao));
@@ -357,16 +357,16 @@ begin
         while J < MaxTentativas do
         begin
           try
-            Erro := False;
+            GerouErro := False;
             Sleep(500);
             SL.LoadFromFile(SLArqResp[I]); //ERRO: Unable to open
             Arquivo := SL.Text;
           except
-            Erro := True;
+            GerouErro := True;
             if J = (MaxTentativas-1) then
               Arquivo := ''; //Caso não consigo abrir, retorna vazio
           end;
-          if not Erro then
+          if not GerouErro then
             Break;
           Inc(J);
         end;
@@ -389,7 +389,7 @@ begin
   end;
 end;
 
-procedure TComandoIntegrador.DoException(AMessage: String);
+procedure TComandoIntegrador.DoException(const AMessage: String);
 begin
   FOwner.DoLog('EComandoIntegradorException: '+AMessage);
   raise EComandoIntegradorException.Create(AMessage);
@@ -432,7 +432,7 @@ begin
   FParametros.Clear;
 end;
 
-procedure TACBrIntegrador.DoLog(AString: String);
+procedure TACBrIntegrador.DoLog(const AString: String);
 var
   Tratado: Boolean;
 begin
@@ -454,7 +454,7 @@ begin
   Result := FComandoIntegrador.PastaInput;
 end;
 
-procedure TACBrIntegrador.SetPastaInput(AValue: String);
+procedure TACBrIntegrador.SetPastaInput(const AValue: String);
 begin
   FComandoIntegrador.PastaInput := AValue;
 end;
@@ -464,7 +464,7 @@ begin
   Result := FComandoIntegrador.PastaOutput;
 end;
 
-procedure TACBrIntegrador.SetPastaOutput(AValue: String);
+procedure TACBrIntegrador.SetPastaOutput(const AValue: String);
 begin
   FComandoIntegrador.PastaOutput := AValue;
 end;
@@ -553,7 +553,7 @@ begin
 end;
 
 
-procedure TACBrIntegrador.GravaLog(AString: AnsiString);
+procedure TACBrIntegrador.GravaLog(const AString: AnsiString);
 begin
   if (ArqLOG = '') then
     Exit;
@@ -561,12 +561,12 @@ begin
   WriteLog( ArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now) + ' - ' + AString );
 end;
 
-procedure TACBrIntegrador.SetAbout(AValue: String);
+procedure TACBrIntegrador.SetAbout(const AValue: String);
 begin
   {}
 end;
 
-procedure TACBrIntegrador.DoException(AMessage: String);
+procedure TACBrIntegrador.DoException(const AMessage: String);
 begin
   DoLog('EIntegradorException: '+AMessage);
   raise EIntegradorException.Create(ACBrStr(AMessage));
@@ -601,7 +601,7 @@ begin
   Result := FComandoIntegrador.Resposta;
 end;
 
-procedure TACBrIntegrador.SetNomeMetodo(NomeMetodo: String; Homologacao: Boolean
+procedure TACBrIntegrador.SetNomeMetodo(const NomeMetodo: String; Homologacao: Boolean
   );
 begin
   FNomeMetodo := IfThen(Homologacao,'H','')+NomeMetodo;

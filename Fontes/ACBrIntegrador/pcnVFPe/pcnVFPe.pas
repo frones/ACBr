@@ -65,7 +65,7 @@ type
     FOrigemPagamento: String;
 
     function GetXMLString: AnsiString;
-    procedure SetXMLString(AValue : AnsiString) ;
+    procedure SetXMLString(const AValue : AnsiString) ;
   public
     constructor Create;
     destructor Destroy; override;
@@ -98,7 +98,7 @@ type
     FXML : AnsiString;
     FRetorno: String;
 
-    procedure SetXMLString(AValue: AnsiString);
+    procedure SetXMLString(const AValue: AnsiString);
   public
     constructor Create;
     destructor Destroy; override;
@@ -155,7 +155,7 @@ type
     FXML : AnsiString;
     FRetorno: String;
 
-    procedure SetXMLString(AValue: AnsiString);
+    procedure SetXMLString(const AValue: AnsiString);
   public
     constructor Create;
     destructor Destroy; override;
@@ -223,7 +223,7 @@ type
     FIdRespostaFiscal: String;
     FXML: AnsiString;
 
-    procedure SetXMLString(AValue: AnsiString);
+    procedure SetXMLString(const AValue: AnsiString);
   public
     constructor Create;
     destructor Destroy; override;
@@ -284,7 +284,7 @@ type
     FRetorno: String;
     FXML: AnsiString;
 
-    procedure SetXMLString(AValue: AnsiString);
+    procedure SetXMLString(const AValue: AnsiString);
   public
     constructor Create;
     destructor Destroy; override;
@@ -307,7 +307,7 @@ Uses
 
 { TRespostaStatusPagamento }
 
-procedure TRespostaStatusPagamento.SetXMLString(AValue: AnsiString);
+procedure TRespostaStatusPagamento.SetXMLString(const AValue: AnsiString);
 var
  LocRespostaStatusPagamentoR : TRespostaStatusPagamentoR;
 begin
@@ -429,7 +429,7 @@ end;
 
 { TRespostaVerificarStatusValidador }
 
-procedure TRespostaVerificarStatusValidador.SetXMLString(AValue: AnsiString);
+procedure TRespostaVerificarStatusValidador.SetXMLString(const AValue: AnsiString);
 var
  LocRespostaVerificarStatusValidadorR : TRespostaVerificarStatusValidadorR;
 begin
@@ -510,7 +510,7 @@ end;
 
 { TRespostaPagamento }
 
-procedure TRespostaPagamento.SetXMLString(AValue: AnsiString);
+procedure TRespostaPagamento.SetXMLString(const AValue: AnsiString);
 var
  LocRespostaPagamentoR : TRespostaPagamentoR;
 begin
@@ -584,7 +584,7 @@ begin
   end ;
 end;
 
-procedure TEnviarPagamento.SetXMLString(AValue: AnsiString);
+procedure TEnviarPagamento.SetXMLString(const AValue: AnsiString);
 var
  LocEnviarPagamentoR : TEnviarPagamentoR;
 begin
@@ -617,7 +617,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TRetornoRespostaFiscal.SetXMLString(AValue: AnsiString);
+procedure TRetornoRespostaFiscal.SetXMLString(const AValue: AnsiString);
 var
  LocRespostaFiscalR : TRetornoRespostaFiscalR;
 begin

@@ -201,7 +201,7 @@ const
 
   LineBreak = #13#10;
 
-function StrToHex(S: String): String;
+function StrToHex(const S: String): String;
 function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString:
@@ -210,7 +210,7 @@ function EnumeradoToStr(const t: variant; const AString:
 function StrToEnumerado2(out ok: boolean;  const s: string; Const AString: array of string ): variant;
 function EnumeradoToStr2(const t: variant; const AString: array of string ): variant;
 
-function UFtoCUF(UF: String): Integer;
+function UFtoCUF(const UF: String): Integer;
 function CUFtoUF(CUF: Integer): String;
 
 function TpModalToStr(const t: TpcteModal): string;
@@ -368,7 +368,7 @@ implementation
 uses
   typinfo;
 
-function StrToHex(S: String): String;
+function StrToHex(const S: String): String;
 var I: Integer;
 begin
   Result:= '';
@@ -401,7 +401,7 @@ begin
       result := AString[i];
 end;
 
-function UFtoCUF(UF: String): Integer;
+function UFtoCUF(const UF: String): Integer;
 var
   i: Integer;
 begin

@@ -66,7 +66,7 @@ type
     FModoDeteccao: TTimeZoneModoDeteccao;
     FTimeZoneStr: String;
     procedure SetModoDeteccao(AValue: TTimeZoneModoDeteccao);
-    procedure SetTimeZone(AValue: String);
+    procedure SetTimeZone(const AValue: String);
   public
     constructor Create;
     procedure Assign(Source: TPersistent); override;
@@ -97,14 +97,14 @@ function ValidarMod(const modelo: integer; versao : Real): boolean;
 function ValidarMunicipio(const Municipio: integer): boolean;
 function ValidarNumeros(const s: string): boolean;
 function ValidarUF(const UF: string): boolean;
-function ValidarIE(IE, UF: string): boolean;
+function ValidarIE(const IE, UF: string): boolean;
 function ValidarISUF(const ISUF: string): boolean;
 function ValidarGTIN(const numero: string): boolean;
 function ValidarPrefixoGTIN(const numero: string): boolean;
 function SubStrEmSubStr(const SubStr1: string; SubStr2: string): boolean;
 function xml4line(texto: String): String;
 function RetornarPosEx(const SubStr, S: String; Offset: Cardinal = 1): Integer;
-function DateTimeTodhUTC(DataHora: TDateTime; TZD: string): string;
+function DateTimeTodhUTC(DataHora: TDateTime; const TZD: string): string;
 function GetUTC(UF: string; const dataHora: TDateTime): string;
 function GetUTCSistema: String;
 function IsHorarioDeVerao(const UF: string; const dataHora: TDateTime): Boolean;
@@ -246,7 +246,7 @@ begin
     result := False;
 end;
 
-function HexToAscii(Texto: string): String;
+function HexToAscii(const Texto: string): String;
 var i : integer;
    function HexToInt(Hex: string): integer;
    begin
@@ -495,7 +495,7 @@ begin
   result := (digito = Codigo[TAMANHO]);
 end;
 
-function ValidarModelo(s: string): boolean;
+function ValidarModelo(const s: string): boolean;
 const
   MODELO = '|01|';
 begin
@@ -514,7 +514,7 @@ begin
   result := pos('.' + UF + '.', UFS) > 0;
 end;
 
-function ValidarIE(IE, UF: string): boolean;
+function ValidarIE(const IE, UF: string): boolean;
 begin
   result := (ACBrValidador.ValidarIE(IE,UF) = '');
 end;
@@ -606,7 +606,7 @@ begin
   end;
 end;
 
-function DateTimeTodhUTC(DataHora: TDateTime; TZD: string): string;
+function DateTimeTodhUTC(DataHora: TDateTime; const TZD: string): string;
 var
   wAno, wMes, wDia, wHor, wMin, wSeg, wMil: word;
 begin
@@ -890,7 +890,7 @@ begin
  end;
 end;
 
-procedure TTimeZoneConf.SetTimeZone(AValue: String);
+procedure TTimeZoneConf.SetTimeZone(const AValue: String);
 var
   Hora, Minuto: Integer;
 begin

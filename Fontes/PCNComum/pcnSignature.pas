@@ -83,6 +83,7 @@ implementation
 
 constructor TSignature.Create;
 begin
+  inherited;
   FGerador := TGerador.Create;
 end;
 

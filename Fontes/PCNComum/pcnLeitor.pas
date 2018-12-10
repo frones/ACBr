@@ -73,8 +73,8 @@ type
     constructor Create;
     destructor Destroy; override;
     function rExtrai(const nivel: integer; const TagInicio: string; TagFim: string = ''; const item: integer = 1): String;
-    function rCampo(const Tipo: TpcnTipoCampo; TAG: string; TAGparada: string = ''): variant;
-    function rCampoCNPJCPF(TAGparada: string = ''): string;
+    function rCampo(const Tipo: TpcnTipoCampo; TAG: string; const TAGparada: string = ''): variant;
+    function rCampoCNPJCPF(const TAGparada: string = ''): string;
     function rAtributo(Atributo: string; Tag: String = ''): variant;
     function CarregarArquivo(const CaminhoArquivo: string): boolean; overload;
     function CarregarArquivo(const Stream: TStringStream): boolean; overload;
@@ -176,14 +176,14 @@ begin
   FGrupo := result;
 end;
 
-function TLeitor.rCampoCNPJCPF(TAGparada: string = ''): string;
+function TLeitor.rCampoCNPJCPF(const TAGparada: string = ''): string;
 begin
   result := rCampo(tcStr, 'CNPJ', TAGparada);
   if trim(result) = '' then
     result := rCampo(tcStr, 'CPF', TAGparada);
 end;
 
-function TLeitor.rCampo(const Tipo: TpcnTipoCampo; TAG: string; TAGparada: string = ''): variant;
+function TLeitor.rCampo(const Tipo: TpcnTipoCampo; TAG: string; const TAGparada: string = ''): variant;
 var
   ConteudoTag: string;
   inicio, fim, inicioTAGparada: integer;

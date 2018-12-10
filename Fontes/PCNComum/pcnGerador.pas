@@ -83,10 +83,10 @@ type
     constructor Create;
     destructor Destroy; override;
     function SalvarArquivo(const CaminhoArquivo: string; const FormatoGravacao: TpcnFormatoGravacao = fgXML): Boolean;
-    procedure wGrupo(const TAG: string; ID: string = ''; const Identar: Boolean = True);
+    procedure wGrupo(const TAG: string; const ID: string = ''; const Identar: Boolean = True);
     procedure wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML: Boolean = True; Atributo: String = '');
-    procedure wGrupoNFSe(const TAG: string; ID: string = ''; const Identar: Boolean = True);
-    procedure wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML: Boolean = True; Atributo: String = '');
+    procedure wGrupoNFSe(const TAG: string; const ID: string = ''; const Identar: Boolean = True);
+    procedure wCampoNFSe(const Tipo: TpcnTipoCampo; const ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML: Boolean = True; const Atributo: String = '');
     procedure wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string; obrigatorio: Boolean = True; PreencheZeros: Boolean = True);
     procedure wCampoCNPJ(const ID: string; CNPJ: string; const cPais: Integer; obrigatorio: Boolean);
     procedure wCampoCPF(const ID: string; CPF: string; const cPais: Integer; obrigatorio: Boolean);
@@ -357,7 +357,7 @@ begin
     FListaDeAlertas.Add(s);
 end;
 
-procedure TGerador.wGrupo(const TAG: string; ID: string = ''; const Identar: Boolean = True);
+procedure TGerador.wGrupo(const TAG: string; const ID: string = ''; const Identar: Boolean = True);
 begin
   // A propriedade FIgnorarTagNivel é utilizada para Ignorar TAG
   // na construção dos níveis para apresentação na mensagem de erro.
@@ -792,15 +792,15 @@ begin
   ListCorrigido.Free;
 end;
 
-procedure TGerador.wCampoNFSe(const Tipo: TpcnTipoCampo; ID, TAG: string;
+procedure TGerador.wCampoNFSe(const Tipo: TpcnTipoCampo; const ID, TAG: string;
   const min, max, ocorrencias: smallint; const valor: variant;
-  const Descricao: string; ParseTextoXML: Boolean; Atributo: String);
+  const Descricao: string; ParseTextoXML: Boolean; const Atributo: String);
 begin
   Self.wCampo(Tipo, ID, Self.Prefixo + TAG, min, max, ocorrencias, valor,
               Descricao, ParseTextoXML, Atributo);
 end;
 
-procedure TGerador.wGrupoNFSe(const TAG: string; ID: string;
+procedure TGerador.wGrupoNFSe(const TAG: string; const ID: string;
   const Identar: Boolean);
 begin
   if copy(TAG, 1, 1) = '/' then

@@ -113,7 +113,7 @@ TACBrTroco = class( TACBrComponent )
     fsStrMoeda: String;
     procedure SetValorTroco(const Value: Double);
     procedure CalculaTroco;
-    procedure InserirTroco(Descricao, Tipo: String; Quantidade: Integer; Valor: Double);
+    procedure InserirTroco(const Descricao, Tipo: String; Quantidade: Integer; Valor: Double);
     function RetornarLegenda(XTotalMoeda,XValorMoeda : double) : string;
     function PosInsercaoDinheiro(Valor: Double): Integer;
   public
@@ -123,7 +123,7 @@ TACBrTroco = class( TACBrComponent )
     property TrocoList : TTrocoList read fsTrocoList;
     property DinheiroList : TDinheiroList read fsDinheiroList;
     procedure LimparDinheiro();
-    procedure InserirDinheiro(Descricao: String; Valor: Double);
+    procedure InserirDinheiro(const Descricao: String; Valor: Double);
     function RemoverDinheiro(Valor: Double): Boolean;
     function AchaDinheiroDescricao(Descricao: String): TDinheiro;
     function AchaDinheiroValor(Valor: Double): TDinheiro;
@@ -232,7 +232,7 @@ begin
   CalculaTroco;
 end;
 
-procedure TACBrTroco.InserirTroco(Descricao, Tipo: String;
+procedure TACBrTroco.InserirTroco(const Descricao, Tipo: String;
   Quantidade: Integer; Valor: Double);
 var
    Troc: TTroco;
@@ -252,7 +252,7 @@ begin
    fsDinheiroList.Clear;
 end;
 
-procedure TACBrTroco.InserirDinheiro(Descricao: String;
+procedure TACBrTroco.InserirDinheiro(const Descricao: String;
   Valor: Double);
 var
    Din : TDinheiro;

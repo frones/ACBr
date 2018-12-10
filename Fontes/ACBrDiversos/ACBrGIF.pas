@@ -113,7 +113,7 @@ type
     procedure Stop ;
     procedure Start ;
     procedure LoadFromStream(Stream: TStream);
-    procedure LoadFromFile(AFileName: String);
+    procedure LoadFromFile(const AFileName: String);
   published
     property Align ;
     property Anchors;
@@ -463,7 +463,7 @@ begin
      Resume ;
 end;
 
-procedure TACBrGIF.LoadFromFile(AFileName: String);
+procedure TACBrGIF.LoadFromFile(const AFileName: String);
 begin
   Filename := AFileName ;
 end;

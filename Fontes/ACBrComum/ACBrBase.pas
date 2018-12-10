@@ -165,7 +165,7 @@ de campos quando necessário}
   private
     function GetItem(Index: Integer): TACBrInformacao;
     procedure SetItem(Index: Integer; const Value: TACBrInformacao);
-    function GetFields(Index: String): TAcbrInformacao;
+    function GetFields(const Index: String): TAcbrInformacao;
   public
     function Add: TACBrInformacao;
     function AddField(const AName: String; const AValue: String): TACBrInformacao;
@@ -597,7 +597,7 @@ begin
   end ;
 end ;
 
-function TACBrInformacoes.GetFields(Index: String): TAcbrInformacao;
+function TACBrInformacoes.GetFields(const Index: String): TAcbrInformacao;
 begin
   Result := FieldByName(Index);
 end;

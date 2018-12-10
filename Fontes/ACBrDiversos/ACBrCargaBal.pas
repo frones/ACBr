@@ -215,7 +215,7 @@ type
     FModelo: TACBrCargaBalModelo;
     procedure Progresso(const AMensagem: String; const AContAtual, AContTotal: Integer);
 
-    function RFill(Str: string; Tamanho: Integer = 0; Caracter: Char = ' '): string; overload;
+    function RFill(const Str: string; Tamanho: Integer = 0; Caracter: Char = ' '): string; overload;
     function LFIll(Str: string; Tamanho: Integer = 0; Caracter: Char = '0'): string; overload;
     function LFIll(Valor: Currency; Tamanho: Integer; Decimais: Integer = 2; Caracter: Char = '0'): string; overload;
     function LFIll(Valor: Integer; Tamanho: Integer; Caracter: Char = '0'): string; overload;
@@ -384,7 +384,7 @@ begin
   inherited;
 end;
 
-function TACBrCargaBal.RFill(Str: string; Tamanho: Integer = 0;
+function TACBrCargaBal.RFill(const Str: string; Tamanho: Integer = 0;
   Caracter: Char = ' '): string;
 begin
   if (Tamanho > 0) and (Length(Str) > Tamanho) then
@@ -658,7 +658,7 @@ end;
 procedure TACBrCargaBal.PreencherRamuza(Arquivo: TStringList);
 var
   i, Total: Integer;
-  Anutri,areceita:string;
+//  Anutri,areceita:string;
 begin
   Total := Produtos.Count;
 

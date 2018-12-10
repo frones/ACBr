@@ -65,12 +65,12 @@ type
     FCodificacao: String;
     fsOnGetPrecoUnitario: TACBrPrecoUnitario;
 
-    procedure SetCodificacao(Value: string);
+    procedure SetCodificacao(const Value: string);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure ZerarDados;
-    procedure Desmembrar(pCodigoEtiqueta: string);
+    procedure Desmembrar(const pCodigoEtiqueta: string);
 
     property Prefixo: String read fPrefixo;
     property Codigo: String read fCodigo;
@@ -98,7 +98,7 @@ begin
   inherited;
 end;
 
-procedure TACBrInStore.SetCodificacao(Value: string);
+procedure TACBrInStore.SetCodificacao(const Value: string);
 var
 pCodigo: Integer;
 begin
@@ -118,7 +118,7 @@ begin
   fTotal   := 0;
 end;
 
-procedure TACBrInStore.Desmembrar(pCodigoEtiqueta: string);
+procedure TACBrInStore.Desmembrar(const pCodigoEtiqueta: string);
 var
   // Variáveis de posição
   pCodigo: Integer;

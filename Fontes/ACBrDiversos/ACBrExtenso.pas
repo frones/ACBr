@@ -89,7 +89,7 @@ TACBrExtenso = class( TACBrComponent )
     fsZeroAEsquerda: Boolean;
     fsFormato: TACBrExtensoFormato;
 
-    Function ExtensoAux(Str3 : String) : String ;
+    Function ExtensoAux(const Str3 : String) : String ;
     procedure TraduzValor(const Value: Double);
     procedure SetfsTexto(const Value: String);
     procedure SetZeroAEsquerda(const Value: Boolean);
@@ -239,7 +239,7 @@ begin
 
 end;
 
-function TACBrExtenso.ExtensoAux(Str3 : String) : String;
+function TACBrExtenso.ExtensoAux(const Str3 : String) : String;
 { Funcao de auxilio a Extenso. Retorna uma string contendo o extenso
   de Str3. Esta funcao e apenas monta o extenso de uma string de 3
   digitos, (nao acressenta a moeda ou Titulo (Mil, Milhao, etc..))

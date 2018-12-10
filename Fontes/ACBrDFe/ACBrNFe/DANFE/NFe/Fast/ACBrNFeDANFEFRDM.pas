@@ -2001,7 +2001,7 @@ begin
     raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do DANFE não assinalado.');
 
   frxReport.PrintOptions.Copies := DANFEClassOwner.NumCopias;
-  frxReport.PrintOptions.ShowDialog := DANFEClassOwner.MostraStatus;
+  frxReport.PrintOptions.ShowDialog := DANFEClassOwner.MostraSetup;
   frxReport.PrintOptions.PrintMode := FPrintMode; //Precisamos dessa propriedade porque impressoras não fiscais cortam o papel quando há muitos itens. O ajuste dela deve ser necessariamente após a carga do arquivo FR3 pois, antes da carga o componente é inicializado
   frxReport.PrintOptions.PrintOnSheet := FPrintOnSheet; //Essa propriedade pode trabalhar em conjunto com a printmode
   frxReport.ShowProgress := DANFEClassOwner.MostraStatus;
@@ -2083,7 +2083,7 @@ begin
     raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');
 
   frxReport.PrintOptions.Copies := DANFEClassOwner.NumCopias;
-  frxReport.PrintOptions.ShowDialog := DANFEClassOwner.MostraStatus;
+  frxReport.PrintOptions.ShowDialog := DANFEClassOwner.MostraSetup;
   frxReport.ShowProgress := DANFEClassOwner.MostraStatus;
   frxReport.PreviewOptions.ShowCaptions := ExibeCaptionButton;
   frxReport.OnPreview := frxReportPreview;

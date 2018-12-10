@@ -95,9 +95,9 @@ function GZipCompress(AStream: TStream): AnsiString; overload;
 function GZipCompress(inStream, outStream: TStream): Boolean; overload;
 
 // Compress: ZipFile
-function ZipFileCompress(const ABinaryString: AnsiString; AFileName: String = 'filename'): AnsiString; overload;
-function ZipFileCompress(AStream: TStream; AFileName: String = 'filename'): AnsiString; overload;
-function ZipFileCompress(inStream, outStream: TStream; AFileName: String = 'filename'): Boolean; overload;
+function ZipFileCompress(const ABinaryString: AnsiString; const AFileName: String = 'filename'): AnsiString; overload;
+function ZipFileCompress(AStream: TStream; const AFileName: String = 'filename'): AnsiString; overload;
+function ZipFileCompress(inStream, outStream: TStream; const AFileName: String = 'filename'): Boolean; overload;
 
 // DeCompress: ZipFile
 function ZipFileDeCompress(const ABinaryString: AnsiString): AnsiString; overload;
@@ -281,7 +281,7 @@ begin
   {$EndIf}
 end;
 
-function ZipFileCompress(const ABinaryString: AnsiString; AFileName: String): AnsiString;
+function ZipFileCompress(const ABinaryString: AnsiString; const AFileName: String): AnsiString;
 var
   MS: TMemoryStream;
 begin
@@ -295,7 +295,7 @@ begin
   end;
 end;
 
-function ZipFileCompress(AStream: TStream; AFileName: String): AnsiString;
+function ZipFileCompress(AStream: TStream; const AFileName: String): AnsiString;
 var
   outMemStream: TMemoryStream;
 begin
@@ -311,7 +311,7 @@ begin
 end;
 
 {$IfDef FPC}
-function ZipFileCompress(inStream, outStream: TStream; AFileName: String): Boolean;
+function ZipFileCompress(inStream, outStream: TStream; const AFileName: String): Boolean;
 var
   z: TZipper;
 begin
@@ -325,7 +325,7 @@ begin
 end;
 {$Else}
 {$IfDef DELPHIXE2_UP}
-function ZipFileCompress(inStream, outStream: TStream; AFileName: String): Boolean;
+function ZipFileCompress(inStream, outStream: TStream; const AFileName: String): Boolean;
 var
   z: TZipFile;
 begin
@@ -340,7 +340,7 @@ begin
   end;
 end;
 {$Else}
-function ZipFileCompress(inStream, outStream: TStream; AFileName: String): Boolean;
+function ZipFileCompress(inStream, outStream: TStream; const AFileName: String): Boolean;
 begin
   raise Exception.Create('O seu compilador não tem suporte nativo a ZipFile.');
 end;

@@ -115,7 +115,7 @@ function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Bool
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
 function RetornarConteudoEntre(const Frase, Inicio, Fim: String; IncluiInicioFim: Boolean = False): string;
-procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
+procedure EncontrarInicioFinalTag(const aText, ATag: ansistring;
   var PosIni, PosFim: integer;const PosOffset: integer = 0);
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
@@ -124,14 +124,14 @@ procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
 function ACBrStr( const AString : String ) : String ;
 function ACBrStrToAnsi( const AString : String ) : String ;
 
-function NativeStringToUTF8( AString : String ) : AnsiString;
-function UTF8ToNativeString( AUTF8String : AnsiString ) : String;
+function NativeStringToUTF8(const AString : String ) : AnsiString;
+function UTF8ToNativeString(const AUTF8String : AnsiString ) : String;
 
-function NativeStringToAnsi( AString : String ) : AnsiString;
-function AnsiToNativeString( AAnsiString : AnsiString ) : String;
+function NativeStringToAnsi(const AString : String ) : AnsiString;
+function AnsiToNativeString(const AAnsiString : AnsiString ) : String;
 
-function ACBrUTF8ToAnsi( AUTF8String : AnsiString ) : AnsiString;
-function ACBrAnsiToUTF8( AAnsiString : AnsiString ) : AnsiString;
+function ACBrUTF8ToAnsi( const AUTF8String : AnsiString ) : AnsiString;
+function ACBrAnsiToUTF8( const AAnsiString : AnsiString ) : AnsiString;
 
 {$IfDef FPC}
 function GetSysANSIencoding: String;
@@ -160,9 +160,9 @@ Function BcdToAsc( const StrBCD : AnsiString) : String ;
 Function AscToBcd( const ANumStr: String ; const TamanhoBCD : Byte) : AnsiString ;
 
 function IntToLEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
-function LEStrToInt(ALEStr: AnsiString): Integer;
+function LEStrToInt(const ALEStr: AnsiString): Integer;
 function IntToBEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
-function BEStrToInt(ABEStr: AnsiString): Integer;
+function BEStrToInt(const ABEStr: AnsiString): Integer;
 
 Function HexToAscii(const HexStr : String) : AnsiString ;
 Function AsciiToHex(const ABinaryString: AnsiString): String;
@@ -219,7 +219,7 @@ function PosLast(const SubStr, S: AnsiString): Integer;
 function CountStr(const AString, SubStr : String ) : Integer ;
 Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
 function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ; overload;
-function RemoveZerosEsquerda( ANumStr: String): String;
+function RemoveZerosEsquerda(const ANumStr: String): String;
 
 {$IFDEF HAS_FORMATSETTINGS}
 Function CreateFormatSettings: TFormatSettings;
@@ -228,7 +228,7 @@ Function CreateFormatSettings: TFormatSettings;
 Function IntToStrZero(const NumInteiro : Int64; Tamanho : Integer) : String;
 function FloatToIntStr(const AValue: Double; const DecimalDigits: SmallInt = 2): String;
 function FloatToString(const AValue: Double; SeparadorDecimal: Char = '.';
-  AFormat: String = ''): String;
+  const AFormat: String = ''): String;
 function FormatFloatBr(const AValue: Extended; AFormat: String = ''): String; overload;
 function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload;
 function FloatMask(const DecimalDigits: SmallInt = 2; UseThousandSeparator: Boolean = True): String;
@@ -247,7 +247,7 @@ function DtoS( ADate : TDateTime) : String;
 function DTtoS( ADateTime : TDateTime) : String;
 
 function Iso8601ToDateTime(const AISODate: string): TDateTime;
-function DateTimeToIso8601(ADate: TDateTime; ATimeZone: string = ''): string;
+function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): string;
 
 function StrIsAlpha(const S: String): Boolean;
 function StrIsAlphaNum(const S: String): Boolean;
@@ -266,16 +266,16 @@ function StrIsIP(const AValue: String): Boolean;
 
 function EstaVazio(const AValue: String): Boolean;overload;
 procedure EstaVazio(const AValue, AMensagem: String);overload;
-function NaoEstaVazio(AValue: String): Boolean;
-function EstaZerado(AValue: Double): Boolean;overload;
-function EstaZerado(AValue: Integer): Boolean;overload;
-procedure EstaZerado(AValue: Integer; AMensagem: String);overload;
-function NaoEstaZerado(AValue: Double): Boolean;overload;
-function NaoEstaZerado(AValue: Integer): Boolean;overload;
+function NaoEstaVazio(const AValue: String): Boolean;
+function EstaZerado(const AValue: Double): Boolean;overload;
+function EstaZerado(const AValue: Integer): Boolean;overload;
+procedure EstaZerado(const AValue: Integer; const AMensagem: String);overload;
+function NaoEstaZerado(const AValue: Double): Boolean;overload;
+function NaoEstaZerado(const AValue: Integer): Boolean;overload;
 function TamanhoIgual(const AValue: String; const ATamanho: Integer): Boolean;overload;
-procedure TamanhoIgual(const AValue: String; const ATamanho: Integer; AMensagem: String);overload;
+procedure TamanhoIgual(const AValue: String; const ATamanho: Integer; const AMensagem: String);overload;
 function TamanhoIgual(const AValue: Integer; const ATamanho: Integer): Boolean;overload;
-procedure TamanhoIgual(const AValue: Integer; const ATamanho: Integer; AMensagem: String);overload;
+procedure TamanhoIgual(const AValue: Integer; const ATamanho: Integer; const AMensagem: String);overload;
 function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean;
 
 function TiraAcentos( const AString : String ) : String ;
@@ -317,11 +317,11 @@ procedure RunCommand(const Command: String; const Params: String = '';
    Wait : Boolean = false; WindowState : Word = 5);
 procedure OpenURL( const URL : String ) ;
 
-function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer)
+function FunctionDetect (const LibName, FuncName: String; var LibPointer: Pointer)
  : boolean; overload ;
-function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer;
+function FunctionDetect (const LibName, FuncName: String; var LibPointer: Pointer;
    var LibHandle: TLibHandle ): boolean; overload ;
-function UnLoadLibrary(LibName: String ): Boolean ;
+function UnLoadLibrary(const LibName: String ): Boolean ;
 
 function FlushToDisk(const sFile: string): boolean;
 function FlushFileToDisk(const sFile: string): boolean;
@@ -332,21 +332,21 @@ Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
 function ForceForeground(AppHandle:{$IfDef FPC}LCLType.HWND{$Else}THandle{$EndIf}): boolean;
 {$EndIf}
 
-Procedure WriteToFile( const Arq: String; ABinaryString : AnsiString);
-Procedure WriteToTXT( const ArqTXT : String; ABinaryString : AnsiString;
+Procedure WriteToFile( const Arq: String; const ABinaryString : AnsiString);
+Procedure WriteToTXT( const ArqTXT : String; const ABinaryString : AnsiString;
    const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True;
    const ForceDirectory : Boolean = False);
 procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
    const Traduz : Boolean = False) ;
 function TranslateUnprintable( const ABinaryString: AnsiString ): String;
 
-function TiraPontos(Str: string): string;
+function TiraPontos(const Str: string): string;
 function TBStrZero(const i: string; const Casas: byte): string;
 function Space(Tamanho: Integer): string;
 function LinhaSimples(Tamanho: Integer): string;
 function LinhaDupla(Tamanho: Integer): string;
 
-function EAN13Valido( CodEAN13 : String ) : Boolean ;
+function EAN13Valido( const CodEAN13 : String ) : Boolean ;
 function EAN13_DV( CodEAN13 : String ) : String ;
 
 function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word = 0): AnsiString;
@@ -361,7 +361,7 @@ function UnZip(const ABinaryString: AnsiString): AnsiString; overload;
 function Zip(AStream: TStream): AnsiString; overload;
 function Zip(const ABinaryString: AnsiString): AnsiString; overload;
 
-function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
+function ChangeLineBreak(const AText: String; const NewLineBreak: String = ';'): String;
 
 function IsWorkingDay(ADate: TDateTime): Boolean;
 function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
@@ -397,7 +397,7 @@ var
 {-------------------------------------------------------------------------------
 Procedure para trocar a quebra de linha por um caracter separador
 -------------------------------------------------------------------------------}
-function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
+function ChangeLineBreak(const AText: String; const NewLineBreak: String = ';'): String;
 begin
   Result := AText;
   if Trim(Result) <> '' then
@@ -519,7 +519,7 @@ end;
   Converte a AString nativa do Compilador, para UTF8, de acordo o suporte a
   UNICODE/UTF8 do Compilador
  -----------------------------------------------------------------------------}
-function NativeStringToUTF8( AString : String ) : AnsiString;
+function NativeStringToUTF8(const AString : String ) : AnsiString;
 {$IFNDEF FPC}
  {$IFDEF UNICODE}
   var
@@ -540,7 +540,7 @@ begin
   {$ENDIF}
 end;
 
-function UTF8ToNativeString(AUTF8String: AnsiString): String;
+function UTF8ToNativeString(const AUTF8String: AnsiString): String;
 begin
   {$IfDef FPC}
    Result := AUTF8String;  // FPC usa UTF8 de forma nativa
@@ -560,7 +560,7 @@ begin
   {$EndIf}
 end;
 
-function NativeStringToAnsi(AString: String): AnsiString;
+function NativeStringToAnsi(const AString: String): AnsiString;
 begin
   {$IfDef FPC}
     Result := ACBrUTF8ToAnsi(AString);
@@ -569,7 +569,7 @@ begin
   {$EndIf}
 end;
 
-function AnsiToNativeString(AAnsiString: AnsiString): String;
+function AnsiToNativeString(const AAnsiString: AnsiString): String;
 begin
   {$IfDef FPC}
     Result := ACBrAnsiToUTF8(AAnsiString);
@@ -582,7 +582,7 @@ end;
   Converte uma String que está em UTF8 para ANSI, considerando as diferetes IDEs
   suportadas pelo ACBr
  -----------------------------------------------------------------------------}
-function ACBrUTF8ToAnsi( AUTF8String : AnsiString ) : AnsiString;
+function ACBrUTF8ToAnsi(const AUTF8String : AnsiString ) : AnsiString;
 begin
   {$IfNDef FPC}
     Result := AnsiString( UTF8ToNativeString(AUTF8String));
@@ -595,7 +595,7 @@ end;
   Converte uma String que está em ANSI para UTF8, considerando as diferetes IDEs
   suportadas pelo ACBr
  -----------------------------------------------------------------------------}
-function ACBrAnsiToUTF8(AAnsiString: AnsiString): AnsiString;
+function ACBrAnsiToUTF8(const AAnsiString: AnsiString): AnsiString;
 begin
   {$IfNDef FPC}
     Result := NativeStringToUTF8(String(AAnsiString));
@@ -954,7 +954,7 @@ end;
   converte uma String binária codificada como Little Endian em Inteiro
   Veja exemplos na function acima
  ---------------------------------------------------------------------------- }
-function LEStrToInt(ALEStr: AnsiString): Integer;
+function LEStrToInt(const ALEStr: AnsiString): Integer;
 var
    AHexStr: String;
    LenLE, P : Integer ;
@@ -1002,7 +1002,7 @@ end;
   converte uma String binária codificada como Big Endian em Inteiro
   Veja exemplos na function acima
  ---------------------------------------------------------------------------- }
-function BEStrToInt(ABEStr: AnsiString): Integer;
+function BEStrToInt(const ABEStr: AnsiString): Integer;
 var
    AHexStr: String;
    LenBE, P : Integer ;
@@ -1526,7 +1526,7 @@ begin
   Result := IntToStrZero( NumInteiro, Tamanho) ;
 end ;
 
-function RemoveZerosEsquerda(ANumStr: String): String;
+function RemoveZerosEsquerda(const ANumStr: String): String;
 var
   I, L: Integer;
 begin
@@ -1685,7 +1685,7 @@ end;
   "SeparadorDecimal" ( o default é .(ponto))
  ---------------------------------------------------------------------------- }
 function FloatToString(const AValue: Double; SeparadorDecimal: Char;
-  AFormat: String): String;
+  const AFormat: String): String;
 var
   DS, TS: Char;
 begin
@@ -1872,7 +1872,7 @@ begin
   Result := EncodeDateTime(y,m,d, h,n,s,0);
 end;
 
-function DateTimeToIso8601(ADate: TDateTime; ATimeZone: string = ''): string;
+function DateTimeToIso8601(ADate: TDateTime; const ATimeZone: string = ''): string;
 const
   SDateFormat: string = 'yyyy''-''mm''-''dd''T''hh'':''nn'':''ss''.''zzz''Z''';
 begin
@@ -2104,33 +2104,33 @@ begin
     raise Exception.Create(AMensagem);
 end;
 
-function NaoEstaVazio(AValue: String): Boolean;
+function NaoEstaVazio(const AValue: String): Boolean;
 begin
   Result := not EstaVazio(AValue);
 end;
 
-function EstaZerado(AValue: Double): Boolean;
+function EstaZerado(const AValue: Double): Boolean;
 begin
   Result := (AValue = 0);
 end;
 
-function EstaZerado(AValue: Integer): Boolean;
+function EstaZerado(const AValue: Integer): Boolean;
 begin
   Result := (AValue = 0);
 end;
 
-procedure EstaZerado(AValue: Integer; AMensagem: String);
+procedure EstaZerado(const AValue: Integer; const AMensagem: String);
 begin
   if EstaZerado(AValue) then
     raise Exception.Create(AMensagem);
 end;
 
-function NaoEstaZerado(AValue: Double): Boolean;
+function NaoEstaZerado(const AValue: Double): Boolean;
 begin
   Result := not EstaZerado(AValue);
 end;
 
-function NaoEstaZerado(AValue: Integer): Boolean;
+function NaoEstaZerado(const AValue: Integer): Boolean;
 begin
   Result := not EstaZerado(AValue);
 end;
@@ -2141,7 +2141,7 @@ begin
 end;
 
 procedure TamanhoIgual(const AValue: String; const ATamanho: Integer;
-  AMensagem: String);
+  const AMensagem: String);
 begin
   if not TamanhoIgual(AValue, ATamanho) then
     raise Exception.Create(AMensagem);
@@ -2153,7 +2153,7 @@ begin
 end;
 
 procedure TamanhoIgual(const AValue: Integer; const ATamanho: Integer;
-  AMensagem: String);
+  const AMensagem: String);
 begin
   if not TamanhoIgual(AValue, ATamanho) then
     raise Exception.Create(AMensagem);
@@ -3312,7 +3312,7 @@ end;
 {$EndIf}
 
 
-procedure WriteToFile(const Arq: String; ABinaryString: AnsiString);
+procedure WriteToFile(const Arq: String; const ABinaryString: AnsiString);
 begin
   WriteToTXT(Arq, ABinaryString, False, False);
 end;
@@ -3322,7 +3322,7 @@ end;
  - Se arquivo "ArqTXT" não existir, será criado.  Se "ArqTXT" já existir e
    "Append" for verdadeiro adiciona "AString" no final do arquivo
  ---------------------------------------------------------------------------- }
-procedure WriteToTXT(const ArqTXT: String; ABinaryString: AnsiString;
+procedure WriteToTXT(const ArqTXT: String; const ABinaryString: AnsiString;
   const AppendIfExists: Boolean; const AddLineBreak: Boolean;
   const ForceDirectory: Boolean);
 var
@@ -3432,14 +3432,14 @@ end;
   Veja Exempo de uso em InPort e OutPort (logo acima)
   ( Função encontrada na Internet - Autor desconhecido )
  -----------------------------------------------------------------------------}
-function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer): boolean;
+function FunctionDetect (const LibName, FuncName: String; var LibPointer: Pointer): boolean;
 Var
   LibHandle: TLibHandle;
 begin
  Result := FunctionDetect(LibName, FuncName, LibPointer, LibHandle);
 end;
 
-function FunctionDetect(LibName, FuncName: String; var LibPointer: Pointer;
+function FunctionDetect(const LibName, FuncName: String; var LibPointer: Pointer;
   var LibHandle: TLibHandle): boolean;
 begin
  Result := false;
@@ -3461,7 +3461,7 @@ begin
   end;
 end;
 
-function UnLoadLibrary(LibName: String ): Boolean ;
+function UnLoadLibrary(const LibName: String ): Boolean ;
 var
   LibHandle: TLibHandle ;
 begin
@@ -3502,7 +3502,7 @@ begin
     Result := Ch + Result;
 end;
 
-function TiraPontos(Str: string): string;
+function TiraPontos(const Str: string): string;
 var
   i, Count: Integer;
 begin
@@ -3558,7 +3558,7 @@ end;
 {------------------------------------------------------------------------------
  Retorna True se o <CodEAN13> informado for válido
  ------------------------------------------------------------------------------}
-function EAN13Valido(CodEAN13: String): Boolean;
+function EAN13Valido(const CodEAN13: String): Boolean;
 begin
   Result := false ;
   if Length(CodEAN13) = 13 then
@@ -3915,7 +3915,7 @@ end;
 {------------------------------------------------------------------------------
    Retorna a posição inicial e final da Tag do XML
  ------------------------------------------------------------------------------}
-procedure EncontrarInicioFinalTag(aText, ATag: ansistring;
+procedure EncontrarInicioFinalTag(const aText, ATag: ansistring;
   var PosIni, PosFim: integer; const PosOffset: integer = 0);
 begin
   PosFim := 0;

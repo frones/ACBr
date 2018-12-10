@@ -168,14 +168,14 @@ de campos quando necessário}
     function GetFields(Index: String): TAcbrInformacao;
   public
     function Add: TACBrInformacao;
-    function AddField(const AName: String; AValue: String): TACBrInformacao;
+    function AddField(const AName: String; const AValue: String): TACBrInformacao;
     function FindFieldByName(const AName: String): TACBrInformacao;
     function FieldByName(const AName: String): TACBrInformacao;
 
     function FieldExists(const AName: String): Boolean;
 
-    procedure SaveToFile( AFileName: String) ;
-    procedure LoadFromFile( AFileName: String) ;
+    procedure SaveToFile(const AFileName : String);
+    procedure LoadFromFile(const AFileName : String);
 
     property Items[Index: Integer]: TACBrInformacao read GetItem write SetItem;
     property Fields[Index: String]: TAcbrInformacao read GetFields; default;
@@ -515,7 +515,7 @@ end;
 
 { TACBrInformacoes }
 
-function TACBrInformacoes.AddField(const AName: String; AValue: String
+function TACBrInformacoes.AddField(const AName: String; const AValue: String
   ): TACBrInformacao;
 begin
   Result := FindFieldByName(AName);
@@ -560,7 +560,7 @@ begin
   end;
 end;
 
-procedure TACBrInformacoes.SaveToFile(AFileName : String) ;
+procedure TACBrInformacoes.SaveToFile(const AFileName : String) ;
 var
   I  : Integer ;
   SL : TStringList ;
@@ -576,7 +576,7 @@ begin
   end ;
 end ;
 
-procedure TACBrInformacoes.LoadFromFile(AFileName : String) ;
+procedure TACBrInformacoes.LoadFromFile(const AFileName : String) ;
 var
   I  : Integer ;
   SL : TStringList ;

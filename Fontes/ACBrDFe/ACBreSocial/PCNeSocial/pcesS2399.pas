@@ -486,7 +486,7 @@ begin
                         // de 01 até 99
                         sSecao := 'detPlano' + IntToStrZero(I, 2) + IntToStrZero(J, 2) +
                              IntToStrZero(K, 3) + IntToStrZero(L, 2) + IntToStrZero(M, 2);
-                        sFim   := INIRec.ReadString(sSecao, 'cpfDep', 'FIM');
+                        sFim   := INIRec.ReadString(sSecao, 'nmDep', 'FIM');
 
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
@@ -494,8 +494,8 @@ begin
                         with detPlano.Add do
                          begin
                           tpDep    := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', '00'));
-                          cpfDep   := sFim;
-                          nmDep    := INIRec.ReadString(sSecao, 'nmDep', '');
+                          cpfDep   := INIRec.ReadString(sSecao, 'cpfDep', '');
+                          nmDep    := sFim;
                           dtNascto := StringToDateTime(INIRec.ReadString(sSecao, 'dtNascto', '0'));
                           vlrPgDep := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrPgDep', ''), 0);
                         end;

@@ -177,6 +177,7 @@ TACBrECFEpson = class( TACBrECFClass )
     fsPAF1, fsPAF2 : String ;
     fsEmPagamento : Boolean ;
     fsArquivoPosCheque: String;
+    fsTotalPago : Double ;
 
     xEPSON_Serial_Abrir_Porta : function (dwVelocidade:Integer;
        wPorta:Integer):Integer; {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
@@ -1227,6 +1228,7 @@ begin
   fsVerificaChecksum := True ;
   fsEmPagamento := false ;
   fsArquivoPosCheque := 'poscheque.dat';
+  fsTotalPago := 0 ;
 
   fpMFD       := True ;
   fpTermica   := True ;
@@ -1808,16 +1810,24 @@ end;
 function TACBrECFEpson.GetTotalPago: Double;
 begin
   try
-     EpsonComando.Comando := '0A0A' ;
-     EnviaComando ;
+     if Estado = estNaoFiscal then
+      begin
+        EpsonComando.Comando := '0E0B' ;
+        EnviaComando ;
+      end
+     else
+      begin
+        EpsonComando.Comando := '0A0A' ;
+        EnviaComando ;
+      end ;
 
      Result := StrToFloatDef(EpsonResposta.Params[2],0) /100 ;
      Result := RoundTo( Result, -2) ;
   except
      on E : Exception do
      begin
-        if (pos('0102',E.Message) <> 0) then
-           Result := 0
+        if (pos(EpsonResposta.Retorno, '0102|0202') <> 0)  then
+           Result := fsTotalPago
         else
            raise ;
      end ;
@@ -2134,6 +2144,7 @@ begin
 
   ZeraCache;
   fsEmPagamento := false ;
+  fsTotalPago := 0 ;
 end;
 
 procedure TACBrECFEpson.CancelaCupom(NumCOOCancelar: Integer);
@@ -2142,6 +2153,7 @@ Var
 begin
   ZeraCache;
   fsEmPagamento := false ;
+  fsTotalPago := 0 ;
 
   try
      // Cancelando o Cupom
@@ -2150,6 +2162,7 @@ begin
      EpsonComando.AddParamInteger( 1 );   // 1 Campo de entrada NÃO usado no Cancelamento de cupom ;
      EnviaComando ;
 
+     fsTotalPago := 0 ;
      RespostasComando.AddField( 'SubTotal', EpsonResposta.Params[0] );
      RespostasComando.AddField( 'ValorCancelado', EpsonResposta.Params[1] );
   except
@@ -2220,6 +2233,7 @@ begin
   EpsonComando.AddParamString( copy(Observacao,41,40) ) ;
   EnviaComando ;
 
+  fsTotalPago := fsTotalPago + RoundTo(Valor,-2) ;
   ZeraCache;
   RespostasComando.AddField( 'TotalAPagar', EpsonResposta.Params[0] );
   RespostasComando.AddField( 'TotalTroco', EpsonResposta.Params[1] );
@@ -2282,6 +2296,7 @@ begin
 
   ZeraCache;
   fsEmPagamento := false ;
+  fsTotalPago := 0 ;
   RespostasComando.AddField( 'NumCCF', EpsonResposta.Params[0] );
   RespostasComando.AddField( 'TotalPago', EpsonResposta.Params[1] );
   RespostasComando.AddField( 'TotalTroco', EpsonResposta.Params[2] );
@@ -2291,6 +2306,8 @@ procedure TACBrECFEpson.SubtotalizaCupom(DescontoAcrescimo: Double;
        MensagemRodape : AnsiString);
 begin
   fsEmPagamento := True ;
+  fsTotalPago := 0 ;
+
   if DescontoAcrescimo = 0 then
      exit ;
 
@@ -2350,6 +2367,7 @@ begin
 
   ZeraCache;
   fsEmPagamento := false ;
+  fsTotalPago := 0 ;
 
   if EpsonResposta.Params.Count > 0 then
      RespostasComando.AddField( 'NumUltItem', EpsonResposta.Params[0] );
@@ -3174,12 +3192,14 @@ begin
   EpsonComando.AddParamDouble( Valor, 2 );
   EnviaComando ;
 
+  fsTotalPago := 0 ;
   ZeraCache;
 end;
 
 procedure TACBrECFEpson.SubtotalizaNaoFiscal(DescontoAcrescimo: Double;
    MensagemRodape: AnsiString);
 begin
+  fsTotalPago := 0 ;
   if DescontoAcrescimo = 0 then
      exit ;
 
@@ -3205,6 +3225,7 @@ begin
   EpsonComando.AddParamString( copy(Observacao,41,40) ) ;
   EnviaComando ;
 
+  fsTotalPago := fsTotalPago + RoundTo(Valor,-2) ;
   ZeraCache;
   RespostasComando.AddField( 'TotalAPagar', EpsonResposta.Params[0] );
   RespostasComando.AddField( 'TotalTroco', EpsonResposta.Params[1] );

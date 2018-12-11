@@ -979,7 +979,7 @@ begin
       begin
          if copy(Linha, 14, 1) = 'T' then
           begin
-            SeuNumero := copy(Linha, 59, 10);
+            SeuNumero := copy(Linha, 106, 25);
             NumeroDocumento := copy(Linha, 59, 10);
             Carteira := copy(Linha, 38, 3);
 

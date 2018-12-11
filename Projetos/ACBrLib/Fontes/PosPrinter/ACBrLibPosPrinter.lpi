@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -17,8 +17,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <RevisionNr Value="2"/>
-      <BuildNr Value="40"/>
+      <RevisionNr Value="3"/>
+      <BuildNr Value="122"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPosPrinter - Biblioteca para comunicação com impressoras não fiscais ﻿usando EscPos" InternalName="ACBrLibPosPrinter" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="PosPrinter " ProductVersion="0.0.2.30"/>
@@ -193,9 +193,16 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <FormatVersion Value="1"/>
         <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
       </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default">
+          <local>
+            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
+          </local>
+        </Mode0>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -265,17 +272,4 @@
       </Options>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

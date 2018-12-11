@@ -17,9 +17,10 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <RevisionNr Value="1"/>
-      <BuildNr Value="33"/>
+      <MinorVersionNr Value="1"/>
+      <BuildNr Value="48"/>
       <Language Value="0416"/>
+      <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrMail - Biblioteca para envio de email" InternalName="ACBrLibMail" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="Mail" ProductVersion="0.0.1.30"/>
     </VersionInfo>
     <BuildModes Count="5">
@@ -192,13 +193,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\Mail\bin\ACBrLibMailTest.exe"/>
+        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\Mail\bin\ACBrLibMailTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\Mail\bin\ACBrLibMailTest.exe"/>
+            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\Mail\bin\ACBrLibMailTest.exe"/>
           </local>
         </Mode0>
       </Modes>
@@ -270,17 +271,4 @@
       <CustomOptions Value="-dNOGUI"/>
     </Other>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

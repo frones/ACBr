@@ -16,7 +16,7 @@
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <RevisionNr Value="1"/>
+      <MinorVersionNr Value="1"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibSAT - Biblioteca para comunicação com equipamentos SAT ﻿usando ACBrSAT" InternalName="ACBrLibSAT" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductVersion="0.0.0.0"/>

@@ -120,7 +120,7 @@ begin
   else
   begin
       FPArquivoPDF := PathWithDelim(Self.PathPDF) + TACBrNFSe(ACBrNFSe).NumID[NFSe] + '-nfse.pdf';
-      frlDANFSeRLRetrato.SalvarPDF(Self, NFSe, FPArquivoPDF);
+      TfrlDANFSeRLRetrato.SalvarPDF(Self, NFSe, FPArquivoPDF);
   end;
 end;
 

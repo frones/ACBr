@@ -237,7 +237,7 @@ begin
 
   Result := Trim(aNFE.Det.Items[inItem].infAdProd) + ManterValAprox(aNFE, inItem);
 
-  if not ExibeInforAdicProduto then
+  if ExibeInforAdicProduto then
   begin
     sQuebraLinha := QuebrarLinha;
     Result := StringReplace(Result, ';', sQuebraLinha, [rfReplaceAll, rfIgnoreCase]);

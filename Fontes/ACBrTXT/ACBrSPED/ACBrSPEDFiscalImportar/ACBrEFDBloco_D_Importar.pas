@@ -59,6 +59,7 @@ type
     procedure RegD300;
     procedure RegD350;
     procedure RegD500;
+    procedure RegD590;
     procedure RegD600;
     procedure AnalisaRegistro(const inDelimitador: TStrings); override;
   end;
@@ -85,6 +86,8 @@ begin
     RegD350
   else if (vHead = 'D500') then
     RegD500
+  else if (vHead = 'D590') then
+    RegD590
   else if (vHead = 'D600') then
     RegD600;
 end;
@@ -205,6 +208,23 @@ begin
     VL_COFINS := ValorF;
     COD_CTA := Valor;
     TP_ASSINANTE := StrToTpAssinante(Valor);
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_BlocoD.RegD590;
+begin
+  with ACBrSpedFiscal.Bloco_D.RegistroD590New do
+  begin
+    CST_ICMS      := Valor;
+    CFOP          := Valor;
+    ALIQ_ICMS     := ValorF;
+    VL_OPR        := ValorF;
+    VL_BC_ICMS    := ValorF;
+    VL_ICMS       := ValorF;
+    VL_BC_ICMS_UF := ValorF;
+    VL_ICMS_UF    := ValorF;
+    VL_RED_BC     := ValorF;
+    COD_OBS       := Valor;
   end;
 end;
 

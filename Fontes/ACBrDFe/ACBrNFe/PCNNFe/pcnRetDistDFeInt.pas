@@ -432,7 +432,7 @@ begin
 
         StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
         StrDecod := DecodeBase64(StrAux);
-        FdocZip.Items[i].FInfZip := UnZip(StrDecod);
+        FdocZip.Items[i].FInfZip := InserirDeclaracaoXMLSeNecessario(UnZip(StrDecod));
 
         oLeitorInfZip := TLeitor.Create;
         try

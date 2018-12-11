@@ -223,7 +223,7 @@ begin
           // XML da NF-e
           StrAux := RetornarConteudoEntre(Leitor.Grupo, '<procNFeZip>', '</procNFeZip');
           StrDecod := DecodeBase64(StrAux);
-          FretNFe.Items[i].FNFeZip := UnZip(StrDecod);
+          FretNFe.Items[i].FNFeZip := InserirDeclaracaoXMLSeNecessario(UnZip(StrDecod));
           FretNFe.Items[i].FdhEmi := LerDataHora(RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, '<dhEmi>', '</dhEmi'));
           FretNFe.Items[i].FprocNFe := StringReplace(FretNFe.Items[i].FNFeZip,
                                          '<' + ENCODING_UTF8 + '>', '',
@@ -243,13 +243,13 @@ begin
           // XML da NF-e
           StrAux := RetornarConteudoEntre(Leitor.Grupo, '<NFeZip>', '</NFeZip');
           StrDecod := DecodeBase64(StrAux);
-          FretNFe.Items[i].FNFeZip := UnZip(StrDecod);
+          FretNFe.Items[i].FNFeZip := InserirDeclaracaoXMLSeNecessario(UnZip(StrDecod));
           FretNFe.Items[i].FdhEmi := LerDataHora(RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, '<dhEmi>', '</dhEmi'));
 
           // XML do Protocolo da NF-e
           StrAux := RetornarConteudoEntre(Leitor.Grupo, '<protNFeZip>', '</protNFeZip');
           StrDecod := DecodeBase64(StrAux);
-          FretNFe.Items[i].FProtNFeZip := UnZip(StrDecod);
+          FretNFe.Items[i].FProtNFeZip := InserirDeclaracaoXMLSeNecessario(UnZip(StrDecod));
 
           versao := RetornarConteudoEntre(FretNFe.Items[i].FNFeZip, 'versao="', '">');
 

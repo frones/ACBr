@@ -1840,6 +1840,7 @@ begin
            proCONAM,
            proEL,
            proFISSLex,
+           proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proCTA: FTagI := '<' + FTagGrupo + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" '+
@@ -1878,6 +1879,7 @@ begin
            proEL,
            proInfisc,
            proInfiscv11,
+           proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
@@ -1910,7 +1912,7 @@ begin
                                OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
                                '</UnidadeGestora>';
 
-           proAgiliv2: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+//           proAgiliv2: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
 
            proEquiplano: FTagI := '<' + FTagGrupo +
                                     ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
@@ -1918,6 +1920,7 @@ begin
                                     'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarLoteRpsEnvio_v01.xsd">';
 
            proEL,
+           proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
@@ -1954,6 +1957,7 @@ begin
                                     'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarNfsePorRpsEnvio_v01.xsd">';
 
            proEL,
+           proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
@@ -1987,6 +1991,7 @@ begin
            proInfiscv11,
            proSimplISS,
            proSP, 
+           proTinus,
            proNotaBlu: FTagI := '<' + FTagGrupo + '>';
 
            proFISSLex,
@@ -2031,6 +2036,7 @@ begin
            proEL,
            proInfisc,
            proInfiscv11,
+           proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP,
@@ -2162,6 +2168,7 @@ begin
      //                                                ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
            proEGoverneISS,
+           proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSMARAPD,
@@ -3668,6 +3675,12 @@ begin
 
     FTagGrupo := FPrefixo3 + FTagGrupo;
 
+//    case FProvedor of
+//      proIssDSF: FinfElemento := 'Lote';
+//    else
+      FinfElemento := '';
+//    end;
+
     InicializarTagITagF;
 
     InicializarGerarDadosMsg;
@@ -3692,7 +3705,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsSit) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Situação do Lote: ');
+    AssinarXML(FPDadosMsg, FTagGrupo, FinfElemento, 'Falha ao Assinar - Consultar Situação do Lote: ');
   
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingDados);
 
@@ -3934,6 +3947,12 @@ begin
 
     FTagGrupo := FPrefixo3 + FTagGrupo;
 
+//    case FProvedor of
+//      proIssDSF: FinfElemento := 'Lote';
+//    else
+      FinfElemento := '';
+//    end;
+
     InicializarTagITagF;
 
     InicializarGerarDadosMsg;
@@ -3961,7 +3980,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsLote) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Lote de RPS: ');
+    AssinarXML(FPDadosMsg, FTagGrupo, FinfElemento, 'Falha ao Assinar - Consultar Lote de RPS: ');
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingDados);
 
@@ -4083,6 +4102,12 @@ begin
 
     FTagGrupo := FPrefixo3 + FTagGrupo;
 
+    case FProvedor of
+      proIssDSF: FinfElemento := 'Lote';
+    else
+      FinfElemento := '';
+    end;
+
     InicializarTagITagF;
 
     if FProvedor in [proIssDSF, proCTA] then
@@ -4177,7 +4202,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSeRps) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe por RPS: ');
+    AssinarXML(FPDadosMsg, FTagGrupo, FinfElemento, 'Falha ao Assinar - Consultar NFSe por RPS: ');
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingDados);
 
@@ -4308,6 +4333,12 @@ begin
     else
       FTagGrupo := FPrefixo3 + FTagGrupo;
 
+    case FProvedor of
+      proIssDSF: FinfElemento := 'Lote';
+    else
+      FinfElemento := '';
+    end;
+
     InicializarTagITagF;
 
     InicializarGerarDadosMsg;
@@ -4343,7 +4374,7 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSe) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe: ');
+    AssinarXML(FPDadosMsg, FTagGrupo, FinfElemento, 'Falha ao Assinar - Consultar NFSe: ');
     
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingDados);
 
@@ -4489,6 +4520,7 @@ begin
       proInfisc,
       proInfiscv11,
       proSP,
+      proThema,
       proNotaBlu: FdocElemento := FTagGrupo;
 
       proGinfes: FdocElemento := FTagGrupo;
@@ -4513,6 +4545,10 @@ begin
       proMetropolisWeb,
       proRJ,
       proTecnos: FinfElemento := 'InfPedidoCancelamento';
+
+      proIssDSF: FinfElemento := 'Lote';
+
+      proThema: FinfElemento := 'Pedido';
     else
       FinfElemento := '';
     end;
@@ -4688,6 +4724,8 @@ begin
       proGINFES,
       proInfisc,
       proInfiscv11,
+      proIssDSF,
+      proThema,
       proNotaBlu:
         FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
 
@@ -4725,6 +4763,8 @@ begin
     proGINFES,
     proInfisc,
     proInfiscv11,
+    proIssDSF,
+    proThema,
     proNotaBlu: FPDadosMsg := FPDadosMsg;
 
     proISSe,

@@ -2151,20 +2151,20 @@ end;
 procedure TForm1.GerarNFe(NumNFe : String);
 Var NotaF: NotaFiscal;
     Produto: TDetCollectionItem;
-    Servico: TDetCollectionItem;
+//    Servico: TDetCollectionItem;
     Volume: TVolCollectionItem;
     Duplicata: TDupCollectionItem;
     ObsComplementar: TobsContCollectionItem;
     ObsFisco: TobsFiscoCollectionItem;
-    Referenciada: TNFrefCollectionItem;
-    DI: TDICollectionItem;
-    Adicao: TAdiCollectionItem;
-    Rastro: TrastroCollectionItem;
-    Medicamento: TMedCollectionItem;
-    Arma: TArmaCollectionItem;
-    Reboque: TreboqueCollectionItem;
-    Lacre: TLacresCollectionItem;
-    ProcReferenciado: TprocRefCollectionItem;
+//    Referenciada: TNFrefCollectionItem;
+//    DI: TDICollectionItem;
+//    Adicao: TAdiCollectionItem;
+//    Rastro: TrastroCollectionItem;
+//    Medicamento: TMedCollectionItem;
+//    Arma: TArmaCollectionItem;
+//    Reboque: TreboqueCollectionItem;
+//    Lacre: TLacresCollectionItem;
+//    ProcReferenciado: TprocRefCollectionItem;
     InfoPgto: TpagCollectionItem;
 begin
   NotaF := ACBrNFe1.NotasFiscais.Add;
@@ -3425,7 +3425,7 @@ end;
 procedure TForm1.btnDistribuicaoDFeClick(Sender: TObject);
 var
  cUFAutor, CNPJ, ultNSU, ANSU: string;
- ok: boolean;
+// ok: boolean;
 begin
   cUFAutor := '';
   if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Código da UF do Autor', cUFAutor)) then
@@ -3558,8 +3558,8 @@ begin
 end;
 
 procedure TForm1.Button9Click(Sender: TObject);
-var
-  Erro, AName: String;
+//var
+//  Erro, AName: String;
 begin
   with ACBrNFe1.SSL do
   begin

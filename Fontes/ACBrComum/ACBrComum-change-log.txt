@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/12/2018
+-- ACBrUtil --
+[+] Adicionado o método:
+    function InserirDeclaracaoXMLSeNecessario(const AXML: String; const ADeclaracao: String): String;
+      Insere uma Declaração no XML, caso o mesmo não tenha nenhuma
+      Se "ADeclaracao" não for informado, usará '<?xml version="1.0" encoding="UTF-8"?>'
+    (por: DSA)
+
 Data: 09/08/2018
 -- ACBrUtil --
 [*] Método "FindFiles", teve sua assinatura modificada, para permitir retornar os

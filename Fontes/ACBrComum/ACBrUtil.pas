@@ -109,6 +109,8 @@ function ConverteXMLtoUTF8(const AXML: String): String;
 function ConverteXMLtoNativeString(const AXML: String): String;
 function ObtemDeclaracaoXML(const AXML: String): String;
 function RemoverDeclaracaoXML(const AXML: String): String;
+function InserirDeclaracaoXMLSeNecessario(const AXML: String;
+   const ADeclaracao: String = CUTF8DeclaracaoXML): String;
 
 function Split(const ADelimiter: Char; const AString: string): TSplitResult;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
@@ -4106,6 +4108,26 @@ begin
     Result := StringReplace(AXML, DeclaracaoXML, '', [])
   else
     Result := AXML;
+end;
+
+{------------------------------------------------------------------------------
+   Insere uma Declaração no XML, caso o mesmo não tenha nenhuma
+   Se "ADeclaracao" não for informado, usará '<?xml version="1.0" encoding="UTF-8"?>'
+ ------------------------------------------------------------------------------}
+function InserirDeclaracaoXMLSeNecessario(const AXML: String;
+  const ADeclaracao: String): String;
+var
+  DeclaracaoXML: String;
+begin
+ Result := AXML;
+
+ // Verificando se a Declaração informada é válida
+  if (LeftStr(ADeclaracao,2) <> '<?') or (RightStr(ADeclaracao,2) <> '?>') then
+    Exit;
+
+  DeclaracaoXML := ObtemDeclaracaoXML(AXML);
+  if EstaVazio(DeclaracaoXML) then
+    Result := ADeclaracao + Result;
 end;
 
 {------------------------------------------------------------------------------

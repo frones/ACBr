@@ -438,16 +438,16 @@ begin
         FdocZip.Items[i].schema := StrToSchemaBPe(ok, Leitor.rAtributo('schema'));
 
         StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
-        StrDecod := DecodeBase64(StrAux);
-        FdocZip.Items[i].FInfZip := InserirDeclaracaoXMLSeNecessario(UnZip(StrDecod));
+        FdocZip.Items[i].FInfZip := StrAux;
+        StrDecod := UnZip(DecodeBase64(StrAux));
 
         oLeitorInfZip := TLeitor.Create;
         try
-          oLeitorInfZip.Arquivo := FdocZip.Items[i].FInfZip;
+          oLeitorInfZip.Arquivo := StrDecod;
 
           if (oLeitorInfZip.rExtrai(1, 'resBPe') <> '') then
           begin
-            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+            FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
             FdocZip.Items[i].FresBPe.chBPe    := oLeitorInfZip.rCampo(tcStr, 'chBPe');
             FdocZip.Items[i].FresBPe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
@@ -468,7 +468,7 @@ begin
 
           if (oLeitorInfZip.rExtrai(1, 'resEvento') <> '') then
           begin
-            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+            FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
             FdocZip.Items[i].FresEvento.FcOrgao  := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
             FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
@@ -487,7 +487,7 @@ begin
 
           if (oLeitorInfZip.rExtrai(1, 'BPeProc') <> '') then
           begin
-            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+            FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
             oLeitorInfZip.rExtrai(1, 'infBPe');
             FdocZip.Items[i].FresBPe.chBPe := copy(oLeitorInfZip.Grupo, pos('Id="BPe', oLeitorInfZip.Grupo) + 7, 44);
@@ -522,7 +522,7 @@ begin
 
           if (oLeitorInfZip.rExtrai(1, 'procEventoBPe') <> '') then
           begin
-            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+            FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
             FdocZip.Items[i].FprocEvento.FId         := oLeitorInfZip.rAtributo('Id');
             FdocZip.Items[i].FprocEvento.FcOrgao     := oLeitorInfZip.rCampo(tcInt, 'cOrgao');

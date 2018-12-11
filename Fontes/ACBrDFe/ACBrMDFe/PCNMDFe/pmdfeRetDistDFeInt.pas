@@ -429,56 +429,16 @@ begin
         FdocZip.Items[i].schema := StrToSchemaMDFe(ok, Leitor.rAtributo('schema', 'docZip'));
 
         StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
-        StrDecod := DecodeBase64(StrAux);
-        FdocZip.Items[i].FInfZip := InserirDeclaracaoXMLSeNecessario(UnZip(StrDecod));
+        FdocZip.Items[i].FInfZip := StrAux;
+        StrDecod := UnZip(DecodeBase64(StrAux));
 
         oLeitorInfZip := TLeitor.Create;
         try
-          oLeitorInfZip.Arquivo := FdocZip.Items[i].FInfZip;
-          (*
-          if (oLeitorInfZip.rExtrai(1, 'resMDFe') <> '') then
-          begin
-            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+          oLeitorInfZip.Arquivo := StrDecod;
 
-            FdocZip.Items[i].FresMDFe.chMDFe   := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
-            FdocZip.Items[i].FresMDFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-
-            if FdocZip.Items[i].FresMDFe.FCNPJCPF = '' then
-              FdocZip.Items[i].FresMDFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
-
-            FdocZip.Items[i].FresMDFe.FxNome    := oLeitorInfZip.rCampo(tcStr, 'xNome');
-            FdocZip.Items[i].FresMDFe.FIE       := oLeitorInfZip.rCampo(tcStr, 'IE');
-            FdocZip.Items[i].FresMDFe.FdhEmi    := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
-            FdocZip.Items[i].FresMDFe.FtpNF     := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
-            FdocZip.Items[i].FresMDFe.FvNF      := oLeitorInfZip.rCampo(tcDe2, 'vNF');
-            FdocZip.Items[i].FresMDFe.FdigVal   := oLeitorInfZip.rCampo(tcStr, 'digVal');
-            FdocZip.Items[i].FresMDFe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
-            FdocZip.Items[i].FresMDFe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
-            FdocZip.Items[i].FresMDFe.FcSitMDFe := StrToSituacaoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'cSitMDFe'));
-          end;
-
-          if (oLeitorInfZip.rExtrai(1, 'resEvento') <> '') then
-          begin
-            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
-
-            FdocZip.Items[i].FresEvento.FcOrgao  := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
-            FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-
-            if FdocZip.Items[i].FresEvento.FCNPJCPF = '' then
-              FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
-
-            FdocZip.Items[i].FresEvento.chMDFe      := oLeitorInfZip.rCampo(tcStr, 'chMDFe');
-            FdocZip.Items[i].FresEvento.FdhEvento   := oLeitorInfZip.rCampo(tcDatHor, 'dhEvento');
-            FdocZip.Items[i].FresEvento.FtpEvento   := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
-            FdocZip.Items[i].FresEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
-            FdocZip.Items[i].FresEvento.FxEvento    := oLeitorInfZip.rCampo(tcStr, 'xEvento');
-            FdocZip.Items[i].FresEvento.FdhRecbto   := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
-            FdocZip.Items[i].FresEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
-          end;
-          *)
           if (oLeitorInfZip.rExtrai(1, 'mdfeProc') <> '') then
           begin
-            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+            FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
             oLeitorInfZip.rExtrai(1, 'infMDFe');
             FdocZip.Items[i].FresMDFe.chMDFe := copy(oLeitorInfZip.Grupo, pos('Id="MDFe', oLeitorInfZip.Grupo)+8, 44);
@@ -514,7 +474,7 @@ begin
 
           if (oLeitorInfZip.rExtrai(1, 'procEventoMDFe') <> '') then
           begin
-            FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
+            FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
             FdocZip.Items[i].FprocEvento.FId         := oLeitorInfZip.rAtributo('Id', 'procEventoMDFe');
             FdocZip.Items[i].FprocEvento.FcOrgao     := oLeitorInfZip.rCampo(tcInt, 'cOrgao');

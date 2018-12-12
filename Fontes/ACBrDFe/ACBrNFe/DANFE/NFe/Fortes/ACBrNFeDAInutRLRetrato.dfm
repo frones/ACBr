@@ -1,7 +1,7 @@
 inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
   Left = 375
   Top = 175
-  Caption = 'Inutilização - Retrato'
+  Caption = 'Inutiliza'#231#227'o - Retrato'
   ClientHeight = 485
   ClientWidth = 844
   Font.Height = -8
@@ -87,7 +87,6 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       BandType = btFooter
       Color = clWhite
       ParentColor = False
-      BeforePrint = rlb_07_RodapeBeforePrint
       object rlShape1: TRLDraw
         Left = 0
         Top = 0
@@ -112,7 +111,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object rlLabel15: TRLLabel
+      object rllDataHoraImpressao: TRLLabel
         Left = 6
         Top = 6
         Width = 140
@@ -133,10 +132,10 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       Top = 213
       Width = 718
       Height = 220
+      BandType = btTitle
       Borders.Sides = sdAll
       Color = clWhite
       ParentColor = False
-      BeforePrint = RLb_03_InutilizacaoBeforePrint
       object rlsLinhaV01: TRLDraw
         Left = 70
         Top = 48
@@ -489,6 +488,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Width = 699
         Height = 87
         AutoSize = False
+        Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -505,6 +505,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       Width = 718
       Height = 114
       AutoSize = True
+      BandType = btTitle
       Borders.Sides = sdAll
       Color = clWhite
       ParentColor = False

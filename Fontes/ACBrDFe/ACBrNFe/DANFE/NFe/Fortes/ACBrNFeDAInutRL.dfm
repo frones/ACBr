@@ -11,8 +11,6 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object RLNFeInut: TRLReport
@@ -20,7 +18,6 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
     Top = 51
     Width = 794
     Height = 1123
-    DataSource = DataSource1
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -38,9 +35,5 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
     DisplayName = 'Documento PDF'
     Left = 369
     Top = 174
-  end
-  object DataSource1: TDataSource
-    Left = 428
-    Top = 180
   end
 end

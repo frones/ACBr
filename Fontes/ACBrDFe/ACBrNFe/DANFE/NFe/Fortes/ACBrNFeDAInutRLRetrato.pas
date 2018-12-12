@@ -48,7 +48,7 @@ uses
   Graphics, Controls, Forms,
   {$ENDIF}
   ACBrNFeDAInutRL,
-  RLReport;
+  RLReport, RLFilters, RLPDFFilter;
 
 type
 
@@ -114,14 +114,14 @@ type
     rlShape109: TRLDraw;
     rllblSistema: TRLLabel;
     rlShape1: TRLDraw;
-    rlLabel15: TRLLabel;
+    rllDataHoraImpressao: TRLLabel;
     rlShape2: TRLDraw;
     rlLabel1: TRLLabel;
     rllJustificativa: TRLMemo;
     procedure RLInutBeforePrint(Sender: TObject; var PrintReport: Boolean);
-    procedure rlb_03_InutilizacaoBeforePrint(Sender: TObject; var PrintBand: Boolean);
-    procedure rlb_07_RodapeBeforePrint(Sender: TObject; var PrintBand: Boolean);
   private
+    procedure InicializaDados;
+    procedure AjustarLayout;
   public
   end;
 
@@ -130,7 +130,7 @@ implementation
 uses
   StrUtils, DateUtils,
   pcnConversao,
-  ACBrUtil;
+  ACBrUtil, ACBrDFeReportFortes, ACBrNFeDANFeRLClass, ACBrValidador;
 
 {$IfNDef FPC}
   {$R *.dfm}
@@ -141,43 +141,106 @@ uses
 procedure TfrmNFeDAInutRLRetrato.RLInutBeforePrint(Sender: TObject; var PrintReport: Boolean);
 begin
   inherited;
+  AjustarLayout;
+  InicializaDados;
 
-  RLNFeInut.Title := ACBrStr('Inutilização');
 end;
 
-procedure TfrmNFeDAInutRLRetrato.rlb_03_InutilizacaoBeforePrint(Sender: TObject; var PrintBand: Boolean);
+procedure TfrmNFeDAInutRLRetrato.InicializaDados;
 begin
-  inherited;
+  RLNFeInut.Title := ACBrStr('Inutilização');
 
-  with fpInutNFe do
+  if (fpNFe <> nil) then
   begin
-    rllOrgao.Caption := IntToStr(RetInutNFe.cUF);
+    with fpNFe do
+    begin
+      // 1.) Preenche os campos do Emitente
+      rllRazaoEmitente.Caption := Emit.xNome;
+      rllCNPJEmitente.Caption  := FormatarCNPJouCPF(Emit.CNPJCPF);
+      if NaoEstaVazio(Emit.EnderEmit.xCpl) then
+        rllEnderecoEmitente.Caption := Emit.EnderEmit.xLgr + ', ' + Emit.EnderEmit.nro + ' ' + Emit.EnderEmit.xCpl
+      else
+        rllEnderecoEmitente.Caption := Emit.EnderEmit.xLgr + ', ' + Emit.EnderEmit.nro;
 
-    case RetInutNFe.tpAmb of
-      taProducao:
-        rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
-      taHomologacao:
-        rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
+      rllBairroEmitente.Caption  := Emit.EnderEmit.xBairro;
+      rllCEPEmitente.Caption     := FormatarCEP(Emit.EnderEmit.CEP);
+      rllMunEmitente.Caption     := Emit.EnderEmit.xMun;
+      rllFoneEmitente.Caption    := FormatarFone(Emit.EnderEmit.fone);
+//      rllEmitUF.Caption          := Emit.EnderEmit.UF;
+      rllInscEstEmitente.Caption := Emit.IE;
+    end; // with NFe
+  end; // if fpNFe <> nil
+
+
+  // Preeche os campos - Quadro Inutilizacao
+  rllOrgao.Caption := IntToStr(fpInutNFe.RetInutNFe.cUF);
+  case fpInutNFe.RetInutNFe.tpAmb of
+    taProducao:
+      rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
+    taHomologacao:
+      rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
+  end;
+
+  rllAno.Caption              := IntToStr(fpInutNFe.RetInutNFe.ano);
+  rllModelo.Caption           := IntToStr(fpInutNFe.RetInutNFe.modelo);
+  rllSerie.Caption            := IntToStr(fpInutNFe.RetInutNFe.serie);
+  rllNumeracao.Caption        := IntToStr(fpInutNFe.RetInutNFe.nNFIni) + ACBrStr(' a ') + IntToStr(fpInutNFe.RetInutNFe.nNFFin);
+  rllStatus.Caption           := IntToStr(fpInutNFe.RetInutNFe.cStat) + ' - ' + fpInutNFe.RetInutNFe.xMotivo;
+  rllProtocolo.Caption        := fpInutNFe.RetInutNFe.nProt + ' ' + FormatDateTimeBr(fpInutNFe.RetInutNFe.dhRecbto);
+  rllJustificativa.Lines.Text := ACBrStr(fpInutNFe.RetInutNFe.xJust);
+
+  rllDataHoraImpressao.Caption := ACBrStr('DATA E HORA DA IMPRESSÃO: ') + FormatDateTimeBr(Now);
+
+  rllblSistema.Caption := Trim(fpDANFe.Sistema);
+  if NaoEstaVazio(fpDANFe.Usuario) then
+  begin
+    if NaoEstaVazio(rllblSistema.Caption) then
+    begin
+      rllblSistema.Caption := rllblSistema.Caption + ' - ' + fpDANFe.Usuario;
+    end
+    else
+    begin
+      rllblSistema.Caption := fpDANFe.Usuario;
+    end;
+  end;
+
+  if rllblSistema.Caption = '' then
+  begin
+    rllblSistema.Caption := ACBrStr('Desenvolvido por Projeto ACBr - http://www.projetoacbr.com.br');
+  end;
+
+end;
+
+procedure TfrmNFeDAInutRLRetrato.AjustarLayout;
+var
+  b, i: Integer;
+begin
+  TDFeReportFortes.AjustarMargem(RLNFeInut, fpDANFe);
+
+  // Ajuste da fonte
+  case fpDANFe.Fonte.Nome of
+    nfArial:
+      for b := 0 to (RLNFeInut.ControlCount - 1) do
+        for i := 0 to (TRLBand(RLNFeInut.Controls[b]).ControlCount - 1) do
+          TRLLabel(TRLBand(RLNFeInut.Controls[b]).Controls[i]).Font.Name := 'Arial';
+
+    nfCourierNew:
+    begin
+      for b := 0 to (RLNFeInut.ControlCount - 1) do
+        for i := 0 to (TRLBand(RLNFeInut.Controls[b]).ControlCount - 1) do
+        begin
+          TRLLabel(TRLBand(RLNFeInut.Controls[b]).Controls[i]).Font.Name := 'Courier New';
+          TRLLabel(TRLBand(RLNFeInut.Controls[b]).Controls[i]).Font.Size :=
+            TRLLabel((TRLBand(RLNFeInut.Controls[b])).Controls[i]).Font.Size - 1;
+        end;
     end;
 
-    rllAno.Caption := IntToStr(RetInutNFe.ano);
-    rllModelo.Caption := IntToStr(RetInutNFe.Modelo);
-    rllSerie.Caption := IntToStr(RetInutNFe.Serie);
-    rllNumeracao.Caption := IntToStr(RetInutNFe.nNFIni) + ' a ' + IntToStr(RetInutNFe.nNFFin);
-
-    rllStatus.Caption := IntToStr(RetInutNFe.cStat) + ' - ' + RetInutNFe.xMotivo;
-    rllProtocolo.Caption := RetInutNFe.nProt + ' ' + FormatDateTimeBr(RetInutNFe.dhRecbto);
-
-    rllJustificativa.Lines.Text := RetInutNFe.xJust;
+    nfTimesNewRoman:
+      for b := 0 to (RLNFeInut.ControlCount - 1) do
+        for i := 0 to (TRLBand(RLNFeInut.Controls[b]).ControlCount - 1) do
+          TRLLabel((TRLBand(RLNFeInut.Controls[b])).Controls[i]).Font.Name := 'Times New Roman';
   end;
-end;
 
-procedure TfrmNFeDAInutRLRetrato.rlb_07_RodapeBeforePrint(Sender: TObject; var PrintBand: Boolean);
-begin
-  inherited;
-
-  if (fpDANFe.Sistema <> EmptyStr) or (fpDANFe.Usuario <> EmptyStr) then
-    rllblSistema.Caption := fpDANFe.Sistema + ' - ' + fpDANFe.Usuario;
 end;
 
 end.

@@ -124,13 +124,13 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
       const Texto: String; AlturaCodBarras: Integer; ExibeCodigo:
       TACBrETQBarraExibeCodigo = becPadrao); overload;
     procedure ImprimirBarras(Orientacao: TACBrETQOrientacao;
-      TipoBarras: String;
+      const TipoBarras: String;
       LarguraBarraLarga, LarguraBarraFina, Vertical, Horizontal: Integer;
-      Texto: String; AlturaCodBarras: Integer; ExibeCodigo:
+      const Texto: String; AlturaCodBarras: Integer; ExibeCodigo:
       TACBrETQBarraExibeCodigo = becPadrao); overload;
     procedure ImprimirBarras(Orientacao: TACBrETQOrientacao; const TipoBarras,
           LarguraBarraLarga, LarguraBarraFina: String; Vertical, Horizontal: Integer;
-          Texto: String; AlturaCodBarras: Integer = 0;
+          const Texto: String; AlturaCodBarras: Integer = 0;
           ExibeCodigo: TACBrETQBarraExibeCodigo = becPadrao); overload;
 
     procedure ImprimirLinha(Vertical, Horizontal, Largura, Altura: Integer); overload;
@@ -139,7 +139,7 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
       EspessuraVertical, EspessuraHorizontal: Integer);
 
     procedure ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal: Integer;
-      NomeImagem: String);
+      const NomeImagem: String);
 
     procedure CarregarImagem(aStream: TStream; NomeImagem: String;
       Flipped: Boolean = True; Tipo: String = ''); overload;
@@ -567,7 +567,7 @@ end;
 
 procedure TACBrETQ.ImprimirBarras(Orientacao: TACBrETQOrientacao; const TipoBarras,
   LarguraBarraLarga, LarguraBarraFina: String; Vertical, Horizontal: Integer;
-  Texto: String; AlturaCodBarras: Integer; ExibeCodigo: TACBrETQBarraExibeCodigo
+  const Texto: String; AlturaCodBarras: Integer; ExibeCodigo: TACBrETQBarraExibeCodigo
   );
 
   function StrParamToInt(AParam: String): Integer;
@@ -591,8 +591,8 @@ begin
 end;
 
 procedure TACBrETQ.ImprimirBarras(Orientacao: TACBrETQOrientacao;
-  TipoBarras: String; LarguraBarraLarga, LarguraBarraFina, Vertical,
-  Horizontal: Integer; Texto: String; AlturaCodBarras: Integer;
+  const TipoBarras: String; LarguraBarraLarga, LarguraBarraFina, Vertical,
+  Horizontal: Integer; const Texto: String; AlturaCodBarras: Integer;
   ExibeCodigo: TACBrETQBarraExibeCodigo);
 var
   wCmd: AnsiString;
@@ -650,7 +650,7 @@ begin
 end;
 
 procedure TACBrETQ.ImprimirImagem(MultiplicadorImagem, Vertical,
-  Horizontal: Integer; NomeImagem: String);
+  Horizontal: Integer; const NomeImagem: String);
 var
   wCmd: AnsiString;
 begin

@@ -93,9 +93,9 @@ TACBrECFUrano = class( TACBrECFClass )
     fsArredonda : Char ;
     fsTotalPago : Double ;
 
-    Function PreparaCmd( cmd : AnsiString ) : AnsiString ;
+    Function PreparaCmd( const cmd : AnsiString ) : AnsiString ;
 
-    function RetornaInfoECFValor(ARegistrador: string) : Double;
+    function RetornaInfoECFValor(const ARegistrador: string) : Double;
  protected
     function GetDataHora: TDateTime; override ;
     function GetNumCupom: String; override ;
@@ -397,7 +397,7 @@ begin
   Result := (Length( Retorno ) >= (BytesResp+1) )
 end;
 
-function TACBrECFUrano.PreparaCmd(cmd : AnsiString) : AnsiString ;
+function TACBrECFUrano.PreparaCmd(const cmd : AnsiString) : AnsiString ;
 begin
   result := '' ;
   if cmd = '' then exit ;
@@ -1109,7 +1109,7 @@ begin
   Result := Trim( Result ) ;
 end;
 
-function TACBrECFUrano.RetornaInfoECFValor(ARegistrador: string): Double;
+function TACBrECFUrano.RetornaInfoECFValor(const ARegistrador: string): Double;
 var RetCmd : AnsiString;
 begin
   RetCmd := RetornaInfoECF(ARegistrador) ;

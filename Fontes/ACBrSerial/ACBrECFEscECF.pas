@@ -216,7 +216,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     fsDeviceParams   : String;
 
     procedure EnviaConsumidor;
-    Function AjustaDescricao( ADescricao: String ): String;
+    Function AjustaDescricao( const ADescricao: String ): String;
 
     Procedure SalvaRespostasMemoria( AtualizaVB: Boolean = True );
     Procedure LeRespostasMemoria;
@@ -476,7 +476,7 @@ TACBrECFEscECF = class( TACBrECFClass )
 
     Function RetornaInfoECF( Registrador: String) : AnsiString; override ;
 
-    Function CapturaXMLCupom( Inicial, Final: String; Tipo: Integer = 2 ): AnsiString;
+    Function CapturaXMLCupom( const Inicial, Final: String; Tipo: Integer = 2 ): AnsiString;
 
     function IsBematech: Boolean;
     function IsEpson: Boolean;
@@ -1694,7 +1694,7 @@ begin
       Result := Result + '-'+MsgMotivo;
 end;
 
-function TACBrECFEscECF.AjustaDescricao(ADescricao : String) : String ;
+function TACBrECFEscECF.AjustaDescricao(const ADescricao : String) : String ;
 begin
   { Ajusta uma descrição de acordo com as regras do protocolo EscECF
     Máximo de 15, Mínimo de 4 caracteres ASCII de posição 65 a 90 (letras maiúsculas)
@@ -1845,7 +1845,7 @@ begin
      Delete( Result, Length(Result), 1 );
 end;
 
-function TACBrECFEscECF.CapturaXMLCupom(Inicial, Final : String ; Tipo : Integer
+function TACBrECFEscECF.CapturaXMLCupom(const Inicial, Final : String ; Tipo : Integer
    ) : AnsiString ;
 Var
   I: Integer;

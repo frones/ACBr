@@ -331,7 +331,7 @@ type
     function GetTraduzirTags: Boolean;
     procedure SetAtivo(AValue: Boolean);
     procedure SetIgnorarTags(AValue: Boolean);
-    procedure SetPorta(AValue: String);
+    procedure SetPorta(const AValue: String);
     procedure SetTraduzirTags(AValue: Boolean);
     procedure SetModelo(AValue: TACBrPosPrinterModelo);
 
@@ -352,15 +352,15 @@ type
     procedure Desativar;
     property Ativo: Boolean read GetAtivo write SetAtivo;
 
-    procedure Imprimir(AString: AnsiString = ''; PulaLinha: Boolean = False;
+    procedure Imprimir(const AString: AnsiString = ''; PulaLinha: Boolean = False;
       DecodificarTags: Boolean = True; CodificarPagina: Boolean = True;
       Copias: Integer = 1);
-    procedure ImprimirLinha(AString: AnsiString);
+    procedure ImprimirLinha(const AString: AnsiString);
     procedure ImprimirCmd(AString: AnsiString);
     procedure GravarLog(AString: AnsiString; Traduz: Boolean = False;
       AdicionaTempo: Boolean = True);
 
-    function TxRx(ACmd: AnsiString; BytesToRead: Byte = 1;
+    function TxRx(const ACmd: AnsiString; BytesToRead: Byte = 1;
       ATimeOut: Integer = 500; WaitForTerminator: Boolean = False): AnsiString;
 
     procedure RetornarTags(AStringList: TStrings; IncluiAjuda: Boolean = True);
@@ -1512,7 +1512,7 @@ begin
   Imprimir;
 end;
 
-function TACBrPosPrinter.TxRx(ACmd: AnsiString; BytesToRead: Byte;
+function TACBrPosPrinter.TxRx(const ACmd: AnsiString; BytesToRead: Byte;
   ATimeOut: Integer; WaitForTerminator: Boolean): AnsiString;
 var
   OldTimeOut: Integer;
@@ -1702,7 +1702,7 @@ begin
   FTagProcessor.IgnorarTags := AValue;
 end;
 
-procedure TACBrPosPrinter.SetPorta(AValue: String);
+procedure TACBrPosPrinter.SetPorta(const AValue: String);
 begin
   FDevice.Porta := AValue;
 end;
@@ -1712,7 +1712,7 @@ begin
   FTagProcessor.TraduzirTags := AValue;
 end;
 
-procedure TACBrPosPrinter.Imprimir(AString: AnsiString; PulaLinha: Boolean;
+procedure TACBrPosPrinter.Imprimir(const AString: AnsiString; PulaLinha: Boolean;
   DecodificarTags: Boolean; CodificarPagina: Boolean; Copias: Integer);
 var
   i: Integer;
@@ -1783,7 +1783,7 @@ begin
     EnviarStringDevice(StrToPrint);
 end;
 
-procedure TACBrPosPrinter.ImprimirLinha(AString: AnsiString);
+procedure TACBrPosPrinter.ImprimirLinha(const AString: AnsiString);
 begin
   Imprimir(AString, True);
 end;

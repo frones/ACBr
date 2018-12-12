@@ -107,6 +107,7 @@ const
   CUTF8DeclaracaoXML = '<?xml version="1.0" encoding="UTF-8"?>';
 
   cTimeout = 3 ;  { Tempo PADRAO para msg de falha de comunicacao }
+  CDotsMM = 8;  // 203dpi
 
   cTagLigaExpandido         = '<e>';
   cTagDesligaExpandido      = '</e>';

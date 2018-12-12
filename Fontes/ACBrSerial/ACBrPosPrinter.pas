@@ -377,6 +377,9 @@ type
     function LerStatusImpressora( Tentativas: Integer = 1): TACBrPosPrinterStatus;
     function LerInfoImpressora: String;
 
+    function CalcularAlturaTexto(Linhas: Integer): Integer;
+    function CalcularAlturaQRCodeAlfaNumM(const QRCodeData: String): Integer;
+
     property Buffer: TStringList read FBuffer;
 
     property Colunas: Integer read GetColunas;
@@ -1626,6 +1629,57 @@ begin
   finally
     Ativo := OldAtivo;
   end;
+end;
+
+function TACBrPosPrinter.CalcularAlturaTexto(Linhas: Integer): Integer;
+begin
+  Result := (FEspacoEntreLinhas+2) * Linhas;
+end;
+
+function TACBrPosPrinter.CalcularAlturaQRCodeAlfaNumM(const QRCodeData: String
+  ): Integer;
+var
+  QRCodeModules: Integer;
+  LenData: Integer;
+begin
+  // http://www.qrcode.com/en/about/version.html
+  LenData := Length(QRCodeData);
+
+  if LenData < 20 then
+    QRCodeModules := 21
+  else if LenData < 38 then
+    QRCodeModules := 25
+  else if LenData < 61 then
+    QRCodeModules := 29
+  else if LenData < 90 then
+    QRCodeModules := 33
+  else if LenData < 122 then
+    QRCodeModules := 37
+  else if LenData < 154 then
+    QRCodeModules := 41
+  else if LenData < 178 then
+    QRCodeModules := 45
+  else if LenData < 221 then
+    QRCodeModules := 49
+  else if LenData < 262 then
+    QRCodeModules := 53
+  else if LenData < 311 then
+    QRCodeModules := 57
+  else if LenData < 366 then
+    QRCodeModules := 61
+  else if LenData < 419 then
+    QRCodeModules := 65
+  else if LenData < 483 then
+    QRCodeModules := 69
+  else if LenData < 528 then
+    QRCodeModules := 73
+  else if LenData < 600 then
+    QRCodeModules := 77
+  else
+    raise EPosPrinterException.Create('QRCode muito grande');
+
+  // http://www.qrcode.com/en/howto/code.html
+  Result := (QRCodeModules + 8) * CDotsMM;
 end;
 
 function TACBrPosPrinter.GetTraduzirTags: Boolean;

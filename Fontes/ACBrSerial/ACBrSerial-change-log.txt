@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2018
+-- ACBrPosPrinter --
+[+] Adicionado os métodos abaixo (migrados de ACBrNFeDANFeESCPOS)
+    function CalcularAlturaTexto(Linhas: Integer): Integer;
+    function CalcularAlturaQRCodeAlfaNumM(const QRCodeData: String): Integer;
+    (por: DSA)
+
 04/12/2018
 -- ACBrDevice --
 [*] Ajuste para melhor detecção de Nomes de Portas inválidos (por Waldir Paim)

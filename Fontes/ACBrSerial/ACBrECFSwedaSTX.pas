@@ -67,7 +67,7 @@ protected
   function GetObject (Index: Integer): TACBrECFSwedaInfo34;
   procedure Insert (Index: Integer; Obj: TACBrECFSwedaInfo34);
 public
-  function AchaSecao( Secao : String ) : Integer ;
+  function AchaSecao( const Secao : String ) : Integer ;
   function Add (Obj: TACBrECFSwedaInfo34): Integer;
   property Objects [Index: Integer]: TACBrECFSwedaInfo34
     read GetObject write SetObject; default;
@@ -110,12 +110,12 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
 
     function RemoveNulos(Str:AnsiString):AnsiString;
     Function PreparaCmd( cmd : AnsiString ) : AnsiString ;
-    function CalcCheckSum(cmd: AnsiString): AnsiChar;
+    function CalcCheckSum(const cmd: AnsiString): AnsiChar;
     function DescompactaRetorno(const Dados: AnsiString): AnsiString;
     function DescreveErro(Erro: Integer): String;
-    function AjustaRetorno(Retorno: AnsiString): AnsiString;
+    function AjustaRetorno(const Retorno: AnsiString): AnsiString;
     function AjustaValor( ADouble : Double; Decimais : Integer = 2 ) : String ;
-    function ExtraiRetornoLeituras(Retorno: AnsiString): AnsiString;
+    function ExtraiRetornoLeituras(const Retorno: AnsiString): AnsiString;
   protected
     function GetDataHora: TDateTime; override ;
     function GetNumCupom: String; override ;
@@ -317,7 +317,7 @@ Uses
    ACBrECF, ACBrConsts, ACBrUtil;
 
 { --------------------------- TACBrECFSwedaCache ---------------------------- }
-function TACBrECFSwedaCache.AchaSecao(Secao: String): Integer;
+function TACBrECFSwedaCache.AchaSecao(const Secao: String): Integer;
 Var I : Integer ;
 begin
   I := 0 ;
@@ -947,7 +947,7 @@ begin
   Result := cmd + CalcCheckSum( cmd ) ;
 end ;
 
-function TACBrECFSwedaSTX.CalcCheckSum(cmd : AnsiString) : AnsiChar ;
+function TACBrECFSwedaSTX.CalcCheckSum(const cmd : AnsiString) : AnsiChar ;
 Var A, iSoma, LenCmd, CheckSum : Integer ;
 begin
   { Calculando a Soma dos caracteres ASC }
@@ -963,7 +963,7 @@ begin
 end ;
 
 { Remove Blocos de Resposta de Status não solicitados  (envio automático pelo ECF)}
-function TACBrECFSwedaSTX.AjustaRetorno(Retorno : AnsiString) : AnsiString ;
+function TACBrECFSwedaSTX.AjustaRetorno(const Retorno : AnsiString) : AnsiString ;
 Var
   LenRet, PosETX, PosSTX, Erro : Integer ;
   Bloco, Tipo : AnsiString ;
@@ -1005,7 +1005,7 @@ begin
 end ;
 
 { Remove Blocos de Resposta de Status não solicitados  (envio automático pelo ECF)}
-function TACBrECFSwedaSTX.ExtraiRetornoLeituras(Retorno : AnsiString
+function TACBrECFSwedaSTX.ExtraiRetornoLeituras(const Retorno : AnsiString
   ) : AnsiString ;
 Var
   PosETX, PosSTX : Integer ;

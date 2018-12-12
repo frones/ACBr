@@ -58,11 +58,11 @@ TACBrECFFiscNETComando = class
     property Comando     : AnsiString  read GetComando ;
     property Params      : TStringList read fsParams ;
 
-    Procedure AddParamString(ParamName : String; AString  : AnsiString) ;
-    Procedure AddParamInteger(ParamName : String; AInteger : Integer) ;
-    Procedure AddParamDouble(ParamName : String; ADouble  : Double) ;
-    Procedure AddParamBool(ParamName : String; ABool    : Boolean) ;
-    Procedure AddParamDateTime(ParamName : String; ADateTime: TDateTime;Tipo : Char = 'D'  ) ;
+    Procedure AddParamString(const ParamName : String; AString  : AnsiString) ;
+    Procedure AddParamInteger(const ParamName : String; AInteger : Integer) ;
+    Procedure AddParamDouble(const ParamName : String; ADouble  : Double) ;
+    Procedure AddParamBool(const ParamName : String; ABool    : Boolean) ;
+    Procedure AddParamDateTime(const ParamName : String; ADateTime: TDateTime;Tipo : Char = 'D'  ) ;
  end ;
 
 TACBrECFFiscNETResposta = class
@@ -164,8 +164,8 @@ TACBrECFFiscNET = class( TACBrECFClass )
     procedure LoadDLLFunctions;
     procedure AbrePortaSerialDLL(const Porta, Path : String ) ;
 
-    Procedure PreparaCmd( cmd : AnsiString ) ;
-    Function AjustaLeitura( AString : AnsiString ) : AnsiString ;
+    Procedure PreparaCmd( const cmd : AnsiString ) ;
+    Function AjustaLeitura( const AString : AnsiString ) : AnsiString ;
     function DocumentosToStr(Documentos: TACBrECFTipoDocumentoSet): String;
     function GetErroAtoCotepe1704(pRet: Integer): string;
 
@@ -408,7 +408,7 @@ begin
   Result := Result + ';'+IntToStr(Length(Result))+'}' ;
 end;
 
-procedure TACBrECFFiscNETComando.AddParamString(ParamName: String;
+procedure TACBrECFFiscNETComando.AddParamString(const ParamName: String;
   AString: AnsiString);
 var
   Buf : AnsiString ;
@@ -425,7 +425,7 @@ begin
   fsParams.Add( ParamName + '="' + TrimRight( Buf ) + '"' ) ;
 end;
 
-procedure TACBrECFFiscNETComando.AddParamDouble(ParamName: String;
+procedure TACBrECFFiscNETComando.AddParamDouble(const ParamName: String;
   ADouble: Double);
 var
   AFloatStr: string;
@@ -437,13 +437,13 @@ begin
   fsParams.Add(ParamName + '=' + AFloatStr ) ;
 end;
 
-procedure TACBrECFFiscNETComando.AddParamInteger(ParamName: String;
+procedure TACBrECFFiscNETComando.AddParamInteger(const ParamName: String;
   AInteger: Integer);
 begin
   fsParams.Add(ParamName + '=' + IntToStr(AInteger) )
 end;
 
-procedure TACBrECFFiscNETComando.AddParamBool(ParamName: String;
+procedure TACBrECFFiscNETComando.AddParamBool(const ParamName: String;
   ABool: Boolean);
 var
   CharBool: Char;
@@ -456,7 +456,7 @@ begin
   fsParams.Add(ParamName + '=' + CharBool )
 end;
 
-Procedure TACBrECFFiscNETComando.AddParamDateTime(ParamName : String;
+Procedure TACBrECFFiscNETComando.AddParamDateTime(const ParamName : String;
   ADateTime: TDateTime;Tipo : Char = 'D'  ) ;
 var
   Texto: string;
@@ -760,7 +760,7 @@ begin
   end ;
 end;
 
-procedure TACBrECFFiscNET.PreparaCmd(cmd : AnsiString) ;
+procedure TACBrECFFiscNET.PreparaCmd(const cmd : AnsiString) ;
 var
   P: Integer;
 begin
@@ -1988,7 +1988,7 @@ begin
   Result := copy(Result,1,Length(Result)-1) ; // Remove a ultima Virgula
 end ;
 
-function TACBrECFFiscNET.AjustaLeitura(AString : AnsiString) : AnsiString ;
+function TACBrECFFiscNET.AjustaLeitura(const AString : AnsiString) : AnsiString ;
 Var
   A, Cols : Integer ;
 begin

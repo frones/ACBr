@@ -63,9 +63,9 @@ type
     procedure Configurar; override;
     function ComandoInicializa: AnsiString; override;
 
-    function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
+    function ComandoCodBarras(const ATag: String; const ACodigo: AnsiString): AnsiString;
       override;
-    function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
+    function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
     function ComandoLogo: AnsiString; override;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
 
@@ -187,7 +187,7 @@ begin
 }
 end;
 
-function TACBrEscDaruma.ComandoCodBarras(const ATag: String; ACodigo: AnsiString
+function TACBrEscDaruma.ComandoCodBarras(const ATag: String; const ACodigo: AnsiString
   ): AnsiString;
 var
   L, A, M : Integer ;
@@ -238,7 +238,7 @@ begin
             NUL;
 end;
 
-function TACBrEscDaruma.ComandoQrCode(ACodigo: AnsiString): AnsiString;
+function TACBrEscDaruma.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 var
   L, LenQrCode: Integer;
   E: AnsiChar;

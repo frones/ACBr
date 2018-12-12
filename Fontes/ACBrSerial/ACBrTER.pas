@@ -125,8 +125,8 @@ Type
 
             Procedure LeBalanca( Terminal : Word = 0  );
 
-            Procedure EnviaString( Texto : String; Terminal : Word = 0 );
-            Procedure EnviaRotacao( Texto : String; Linha : Word = 1; Terminal : Word = 0 );
+            Procedure EnviaString( const Texto : String; Terminal : Word = 0 );
+            Procedure EnviaRotacao( const Texto : String; Linha : Word = 1; Terminal : Word = 0 );
             Procedure LimpaTela( Terminal : Word = 0 );
             Procedure PosicionaCursor( Linha, Coluna : Word; Terminal : Word = 0 );
             Procedure BackSpace( Terminal : Word = 0 );
@@ -352,12 +352,12 @@ Begin
     fsTER.LeBalanca(  Terminal  );
 End;                                        
 
-Procedure TACBrTER.EnviaString( Texto : String; Terminal : Word = 0 );
+Procedure TACBrTER.EnviaString( const Texto : String; Terminal : Word = 0 );
 Begin
     fsTER.EnviaString( Texto, Terminal );
 End;
 
-Procedure TACBrTER.EnviaRotacao( Texto : String; Linha : Word = 1; Terminal : Word = 0 );
+Procedure TACBrTER.EnviaRotacao( const Texto : String; Linha : Word = 1; Terminal : Word = 0 );
 Begin
     fsTER.EnviaRotacao( Texto, Linha, Terminal );
 End;
@@ -380,6 +380,7 @@ End;
 {TACBrRotacao}
 Constructor TACBrRotacao.Create( AOwner : TComponent );
 Begin
+    inherited Create;
     fsOwner := AOwner;
 End;
 

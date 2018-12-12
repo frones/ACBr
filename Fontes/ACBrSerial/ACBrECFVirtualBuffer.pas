@@ -58,7 +58,7 @@ TACBrECFVirtualBuffer = class( TACBrECFVirtual )
     function GetMascaraItem: String;
     procedure SetCabecalho(AValue: TStrings);
     procedure SetCabecalhoItem(AValue: TStrings);
-    procedure SetMascaraItem(AValue: String);
+    procedure SetMascaraItem(const AValue: String);
   protected
     procedure CreateVirtualClass ; override ;
 
@@ -164,8 +164,8 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
     Procedure AbreGaveta ; override ;
   end ;
 
-Function StuffMascaraItem( Linha, MascaraItem : AnsiString; Letra : AnsiChar;
-       TextoInserir : AnsiString; Fim:Boolean = False) : AnsiString ;
+Function StuffMascaraItem( const Linha, MascaraItem : AnsiString; Letra : AnsiChar;
+       const TextoInserir : AnsiString; Fim:Boolean = False) : AnsiString ;
 
 implementation
 
@@ -173,8 +173,8 @@ Uses
   math, strutils,
   ACBrUtil;
 
-Function StuffMascaraItem( Linha, MascaraItem : AnsiString; Letra : AnsiChar;
-   TextoInserir : AnsiString; Fim:Boolean = False) : AnsiString ;
+Function StuffMascaraItem( const Linha, MascaraItem : AnsiString; Letra : AnsiChar;
+   const TextoInserir : AnsiString; Fim:Boolean = False) : AnsiString ;
 Var A,B : Integer ;
     L   : AnsiChar ;
 begin
@@ -262,7 +262,7 @@ begin
   TACBrECFVirtualBufferClass(fpECFVirtualClass).CabecalhoItem.Assign( AValue );
 end;
 
-procedure TACBrECFVirtualBuffer.SetMascaraItem(AValue: String);
+procedure TACBrECFVirtualBuffer.SetMascaraItem(const AValue: String);
 begin
   TACBrECFVirtualBufferClass(fpECFVirtualClass).MascaraItem := AValue;
 end;

@@ -110,7 +110,7 @@ type
       var AIndice: String);
     procedure ListarMensagens(const AFiltro: TACBrSMSFiltro;
       const APath: String);
-    procedure EnviarComando(ACmd: String; ATimeOut: Integer = 0);
+    procedure EnviarComando(const ACmd: String; ATimeOut: Integer = 0);
     procedure TrocaCentroMensagem(const ACentroMensagem : string);
   published
     property Ativo: Boolean read fsAtivo write SetAtivo;
@@ -204,7 +204,7 @@ begin
   Result := fsSMS.EmLinha;
 end;
 
-procedure TACBrSMS.EnviarComando(ACmd: String; ATimeOut: Integer);
+procedure TACBrSMS.EnviarComando(const ACmd: String; ATimeOut: Integer);
 begin
   TestaAtivo;
   fsSMS.EnviarComando(ACmd, ATimeOut);

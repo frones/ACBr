@@ -50,24 +50,24 @@ type
   private
     fImprimirReverso: Boolean;
 
-    function AjustarTipoBarras(aTipo: String; aExibeCodigo: TACBrETQBarraExibeCodigo): String;
+    function AjustarTipoBarras(const aTipo: String; aExibeCodigo: TACBrETQBarraExibeCodigo): String;
     function ConverterMultiplicador(aMultiplicador: Integer): String;
     function ConverterCoordenadas(aVertical, aHorizontal: Integer): String;
 
     function ConverterUnidade(AValue: Integer): Integer; reintroduce; overload;
     function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
-    function ConverterSubFonte(aFonte: String; aSubFonte: Integer): String;
+    function ConverterSubFonte(const aFonte: String; aSubFonte: Integer): String;
     function ConverterAlturaBarras(aAlturaBarras: Integer): String;
 
     function ComandoReverso(aImprimirReverso: Boolean): String;
     function PrefixoComandoLinhaECaixa(aOrientacao: TACBrETQOrientacao): String;
     function ConverterDimensao(aAltura, aLargura: Integer): String;
 
-    function AjustarNomeArquivoImagem( aNomeImagem: String): String;
+    function AjustarNomeArquivoImagem( const aNomeImagem: String): String;
 
     function ConverterVelocidade(Velocidade: Integer): Char;
 
-    function ComandoTipoImagem(aNomeImagem: String; aFlipped: Boolean; aTipo: String): String;
+    function ComandoTipoImagem(const aNomeImagem: String; aFlipped: Boolean; aTipo: String): String;
     function ConverterMultiplicadorImagem(aMultiplicador: Integer): String;
 
     function ConverterEspessura(aVertical, aHorizontal: Integer): String;
@@ -82,7 +82,7 @@ type
   public
     constructor Create(AOwner: TComponent);
 
-    function TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString; override;
+    function TratarComandoAntesDeEnviar(const aCmd: AnsiString): AnsiString; override;
 
     function ComandoLimparMemoria: AnsiString; override;
     function ComandoCopias(const NumCopias: Integer): AnsiString; override;
@@ -181,7 +181,7 @@ begin
   Result := IntToStr(Integer(aOrientacao) + 1);
 end;
 
-function TACBrETQPpla.ConverterSubFonte(aFonte: String; aSubFonte: Integer
+function TACBrETQPpla.ConverterSubFonte(const aFonte: String; aSubFonte: Integer
   ): String;
 begin
   if (aSubFonte < 0) or (aSubFonte > 999) then
@@ -242,7 +242,7 @@ begin
   Result := ConverterOrientacao(aOrientacao) + 'X11000';
 end;
 
-function TACBrETQPpla.ComandoTipoImagem(aNomeImagem: String; aFlipped: Boolean;
+function TACBrETQPpla.ComandoTipoImagem(const aNomeImagem: String; aFlipped: Boolean;
   aTipo: String): String;
 var
   Cmd: Char;
@@ -267,7 +267,7 @@ begin
   Result := STX + 'IA' + Cmd + AjustarNomeArquivoImagem(aNomeImagem);
 end;
 
-function TACBrETQPpla.AjustarNomeArquivoImagem(aNomeImagem: String): String;
+function TACBrETQPpla.AjustarNomeArquivoImagem(const aNomeImagem: String): String;
 begin
   Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 16));
 end;
@@ -353,7 +353,7 @@ begin
     Result := Result * 10;
 end;
 
-function TACBrETQPpla.AjustarTipoBarras(aTipo: String;
+function TACBrETQPpla.AjustarTipoBarras(const aTipo: String;
   aExibeCodigo: TACBrETQBarraExibeCodigo): String;
 begin
   // Tipo de Código de Barras:
@@ -388,7 +388,7 @@ begin
   Result  := Inherited ComandosFinalizarEtiqueta(NumCopias, wAvanco);
 end;
 
-function TACBrETQPpla.TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString;
+function TACBrETQPpla.TratarComandoAntesDeEnviar(const aCmd: AnsiString): AnsiString;
 begin
   Result := ChangeLineBreak( aCmd, CR );
 end;

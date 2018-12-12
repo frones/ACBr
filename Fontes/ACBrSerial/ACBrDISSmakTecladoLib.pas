@@ -69,7 +69,7 @@ TACBrDISSmakTecladoLib = class( TACBrDISClass )
       xClear_L1 : procedure; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
       xClear_L2 : procedure; {$IfDef MSWINDOWS}stdcall{$Else}cdecl{$EndIf};
 
-      procedure FunctionDetectLib(FuncName: String; var LibPointer: Pointer);
+      procedure FunctionDetectLib(const FuncName: String; var LibPointer: Pointer);
       procedure LoadDLLFunctions;
       procedure UnLoadDLLFunctions;
   public
@@ -166,7 +166,7 @@ begin
   FunctionDetectLib( 'Clear_L2'       , @xClear_L2);
 end;
 
-procedure TACBrDISSmakTecladoLib.FunctionDetectLib(FuncName : String ;
+procedure TACBrDISSmakTecladoLib.FunctionDetectLib(const FuncName : String ;
   var LibPointer : Pointer) ;
 begin
   if not Assigned( LibPointer )  then

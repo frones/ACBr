@@ -177,9 +177,9 @@ type
   public
     function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString): AnsiString;
       virtual;
-    function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
+    function ComandoCodBarras(const ATag: String; const ACodigo: AnsiString): AnsiString;
       virtual;
-    function ComandoQrCode(ACodigo: AnsiString): AnsiString; virtual;
+    function ComandoQrCode(const ACodigo: AnsiString): AnsiString; virtual;
     function ComandoEspacoEntreLinhas(Espacos: byte): AnsiString; virtual;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; virtual;
     function ComandoLogo: AnsiString; virtual;
@@ -460,6 +460,7 @@ end;
 
 constructor TACBrConfigGaveta.Create;
 begin
+  inherited;
   FTempoON := 50;
   FTempoOFF := 200;
   FSinalInvertido := False;
@@ -469,6 +470,7 @@ end;
 
 constructor TACBrConfigLogo.Create;
 begin
+  inherited;
   FKeyCode1 := 32;
   FKeyCode2 := 32;
   FFatorX := 1;
@@ -540,12 +542,12 @@ begin
 end;
 
 function TACBrPosPrinterClass.ComandoCodBarras(const ATag: String;
-  ACodigo: AnsiString): AnsiString;
+  const ACodigo: AnsiString): AnsiString;
 begin
   Result := ACodigo;
 end;
 
-function TACBrPosPrinterClass.ComandoQrCode(ACodigo: AnsiString): AnsiString;
+function TACBrPosPrinterClass.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 begin
   Result := '';
 end;

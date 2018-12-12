@@ -57,9 +57,9 @@ type
 
     function ComandoFonte(TipoFonte: TACBrPosTipoFonte; Ligar: Boolean): AnsiString;
       override;
-    function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
+    function ComandoCodBarras(const ATag: String; const ACodigo: AnsiString): AnsiString;
       override;
-    function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
+    function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
       override;
     function ComandoLogo: AnsiString; override;
@@ -72,7 +72,7 @@ type
 
   function ComandoCodBarrasEscPosEpson(const ATag: String; ACodigo: AnsiString;
     const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
-  function ComandoCodBarrasEscPosNo128ABC(const ATag: String; ACodigo: AnsiString;
+  function ComandoCodBarrasEscPosNo128ABC(const ATag: String; const ACodigo: AnsiString;
     const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
 
 
@@ -167,7 +167,7 @@ begin
             GS + 'k' + CmdBarCode + AnsiChr( Length(ACodBar) ) + ACodBar;
 end;
 
-function ComandoCodBarrasEscPosNo128ABC(const ATag: String; ACodigo: AnsiString;
+function ComandoCodBarrasEscPosNo128ABC(const ATag: String; const ACodigo: AnsiString;
   const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
 var
   P: Integer;
@@ -291,7 +291,7 @@ begin
 end;
 
 function TACBrEscPosEpson.ComandoCodBarras(const ATag: String;
-  ACodigo: AnsiString): AnsiString;
+  const ACodigo: AnsiString): AnsiString;
 begin
   with fpPosPrinter.ConfigBarras do
   begin
@@ -299,7 +299,7 @@ begin
   end ;
 end;
 
-function TACBrEscPosEpson.ComandoQrCode(ACodigo: AnsiString): AnsiString;
+function TACBrEscPosEpson.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 begin
   with fpPosPrinter.ConfigQRCode do
   begin

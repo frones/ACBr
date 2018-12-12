@@ -60,7 +60,7 @@ TACBrETQClass = class
     fDPI: TACBrETQDPI;
     fAvanco: Integer;
 
-    procedure ErroNaoImplementado(aNomeMetodo: String);
+    procedure ErroNaoImplementado(const aNomeMetodo: String);
 
   protected
     fpBackFeed: TACBrETQBackFeed;
@@ -72,7 +72,7 @@ TACBrETQClass = class
 
     function ConverterUnidade(UnidadeSaida: TACBrETQUnidade; AValue: Integer): Integer; virtual;
 
-    procedure AdicionarComandos( ACmd: AnsiString; var ACmdList: AnsiString);
+    procedure AdicionarComandos( const ACmd: AnsiString; var ACmdList: AnsiString);
     procedure VerificarLimiteCopias( const NumCopias: Integer);
 
   protected
@@ -87,7 +87,7 @@ TACBrETQClass = class
   public
     constructor Create(AOwner: TComponent);
 
-    function TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString; virtual;
+    function TratarComandoAntesDeEnviar(const aCmd: AnsiString): AnsiString; virtual;
 
     function ComandoLimparMemoria: AnsiString; virtual;
     function ComandoCopias(const NumCopias: Integer): AnsiString; virtual;
@@ -154,7 +154,7 @@ begin
   fpLimiteCopias  := 999;
 end;
 
-procedure TACBrETQClass.ErroNaoImplementado(aNomeMetodo: String);
+procedure TACBrETQClass.ErroNaoImplementado(const aNomeMetodo: String);
 begin
   raise Exception.Create(ACBrStr('Metodo: ' + aNomeMetodo + ' não implementada em: ' + ModeloStr));
 end;
@@ -211,7 +211,7 @@ begin
   Result := trunc(RoundTo(ADouble, 0));
 end;
 
-procedure TACBrETQClass.AdicionarComandos(ACmd: AnsiString;
+procedure TACBrETQClass.AdicionarComandos(const ACmd: AnsiString;
   var ACmdList: AnsiString);
 begin
   if EstaVazio( ACmd ) then
@@ -326,7 +326,7 @@ begin
   Result := EmptyStr;
 end;
 
-function TACBrETQClass.TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString;
+function TACBrETQClass.TratarComandoAntesDeEnviar(const aCmd: AnsiString): AnsiString;
 begin
   Result := ChangeLineBreak( aCmd, LF );
 end;

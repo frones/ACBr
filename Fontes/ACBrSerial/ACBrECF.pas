@@ -632,14 +632,14 @@ TACBrECF = class( TACBrComponent )
     { Procedimentos de Cupom Fiscal }
     property Consumidor : TACBrECFConsumidor read GetConsumidorClass ;
     { Grava dados do Consumidor para ser usado na Abertura ou Fechamento do Cupom }
-    Procedure IdentificaConsumidor( CPF_CNPJ : String; Nome : String = '';
+    Procedure IdentificaConsumidor( const CPF_CNPJ : String; Nome : String = '';
        Endereco : String = '') ;
-    Procedure AbreCupom( CPF_CNPJ : String = ''; Nome : String = '';
-       Endereco : String = ''; ModoPreVenda: Boolean = False) ;
-    Procedure AbreBilhetePassagem( Origem: String; Destino: String;
-      Linha: String; Agencia: String; DataHora: TDateTime;
-      Poltrona: String; Plataforma: String; Tipo: TACBrECFTipoBilhete; UFDestino: String;
-      PassageiroRG: String; PassageiroNome: String; PassageiroEnd: String);
+    Procedure AbreCupom( const CPF_CNPJ : String = ''; const Nome : String = '';
+       const Endereco : String = ''; ModoPreVenda: Boolean = False) ;
+    Procedure AbreBilhetePassagem( const Origem, Destino, Linha, Agencia: String;
+      DataHora: TDateTime;
+      const Poltrona, Plataforma: String; Tipo: TACBrECFTipoBilhete;
+      const UFDestino, PassageiroRG, PassageiroNome, PassageiroEnd: String);
     procedure LegendaInmetroProximoItem;
     Procedure VendeItem( Codigo, Descricao : String; AliquotaICMS : String;
        Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
@@ -2579,9 +2579,9 @@ begin
 end ;
 
 
-procedure TACBrECF.AbreBilhetePassagem(Origem, Destino, Linha, Agencia: String;
-  DataHora: TDateTime; Poltrona, Plataforma: String; Tipo: TACBrECFTipoBilhete;
-  UFDestino, PassageiroRG, PassageiroNome, PassageiroEnd: String);
+procedure TACBrECF.AbreBilhetePassagem(const Origem, Destino, Linha, Agencia: String;
+  DataHora: TDateTime; const Poltrona, Plataforma: String; Tipo: TACBrECFTipoBilhete;
+  const UFDestino, PassageiroRG, PassageiroNome, PassageiroEnd: String);
 var
   Tratado   : Boolean;
 begin
@@ -2648,8 +2648,8 @@ begin
      FOnDepoisAbreCupom(PassageiroRG, PassageiroNome, PassageiroEnd);
 end;
 
-procedure TACBrECF.AbreCupom(CPF_CNPJ: String = ''; Nome : String = '';
-   Endereco : String = ''; ModoPreVenda: Boolean = False) ;
+procedure TACBrECF.AbreCupom(const CPF_CNPJ: String = ''; const Nome : String = '';
+   const Endereco : String = ''; ModoPreVenda: Boolean = False) ;
 var
   Tratado   : Boolean;
 begin
@@ -2715,7 +2715,7 @@ begin
      FOnDepoisAbreCupom(CPF_CNPJ, Nome, Endereco);
 end;
 
-procedure TACBrECF.IdentificaConsumidor(CPF_CNPJ : String ; Nome : String ;
+procedure TACBrECF.IdentificaConsumidor(const CPF_CNPJ : String ; Nome : String ;
   Endereco : String) ;
 begin
   fsECF.Consumidor.AtribuiConsumidor( CPF_CNPJ,

@@ -63,7 +63,7 @@ private
    fsFisco: Byte;
    fsRET: AnsiString;
    fsSPR: Byte;
-   procedure SetRET(AValue: AnsiString);
+   procedure SetRET(const AValue: AnsiString);
  public
     constructor Create;
     property ECF        : Byte read fsECF write fsECF;
@@ -101,11 +101,11 @@ TACBrECFEscECFComando = class
     property Comando : AnsiString  read GetComando ;
     property Params  : TStringList read fsParams ;
 
-    Procedure AddParamString(AString : AnsiString) ;
+    Procedure AddParamString(const AString : AnsiString) ;
     Procedure AddParamInteger(AInteger : Integer) ;
     Procedure AddParamDouble(ADouble : Double; Decimais: Byte = 2) ;
     Procedure AddParamDateTime( ADateTime: TDateTime; Tipo : Char = 'D';
-                                FlagHV : String = '' ) ;
+                                const FlagHV : String = '' ) ;
  end ;
 
 { TACBrECFEscECFResposta }
@@ -161,7 +161,7 @@ TACBrECFEscECFProtocolo = class
   protected
     fpECFEscECF: TACBrECFEscECF;
 
-    function PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
+    function PreparaCmd(const CmdExtBcd: AnsiString): AnsiString;
   public
     constructor Create(AECFEscECF: TACBrECFEscECF); virtual;
     procedure Ativar ; virtual;
@@ -712,7 +712,7 @@ begin
   end;
 end;
 
-function TACBrECFEscECFProtocolo.PreparaCmd(CmdExtBcd: AnsiString): AnsiString;
+function TACBrECFEscECFProtocolo.PreparaCmd(const CmdExtBcd: AnsiString): AnsiString;
 Var
   CMD, EXT : Byte ;
   BCD : AnsiString ;
@@ -1068,7 +1068,7 @@ begin
   Clear;
 end;
 
-procedure TACBrECFEscECFRET.SetRET(AValue: AnsiString);
+procedure TACBrECFEscECFRET.SetRET(const AValue: AnsiString);
 begin
    if fsRET=AValue then Exit;
 
@@ -1145,7 +1145,7 @@ begin
   Result := SOH + Buffer + AnsiChr( CHK ) ;
 end;
 
-procedure TACBrECFEscECFComando.AddParamString(AString: AnsiString);
+procedure TACBrECFEscECFComando.AddParamString(const AString: AnsiString);
 var
   Buf : AnsiString ;
 begin
@@ -1168,7 +1168,7 @@ begin
 end;
 
 procedure TACBrECFEscECFComando.AddParamDateTime(ADateTime: TDateTime;
-   Tipo : Char = 'D'; FlagHV : String = ''  ) ;
+   Tipo : Char = 'D'; const FlagHV : String = ''  ) ;
 Var
   Formato : String ;
 begin

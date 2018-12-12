@@ -64,7 +64,7 @@ TACBrDISGertecTEC65lib = class( TACBrDISClass )
       xDispStr : function (Str: PAnsiChar): integer; stdcall;
       xFormFeed : function : integer; stdcall;
 
-      procedure FunctionDetectLib(FuncName: String; var LibPointer: Pointer);
+      procedure FunctionDetectLib(const FuncName: String; var LibPointer: Pointer);
       procedure LoadDLLFunctions;
       procedure UnLoadDLLFunctions;
   public
@@ -147,7 +147,7 @@ begin
   FunctionDetectLib( 'FormFeed',   @xFormFeed);
 end;
 
-procedure TACBrDISGertecTEC65lib.FunctionDetectLib(FuncName : String ;
+procedure TACBrDISGertecTEC65lib.FunctionDetectLib(const FuncName : String ;
   var LibPointer : Pointer) ;
 begin
   if not Assigned( LibPointer )  then

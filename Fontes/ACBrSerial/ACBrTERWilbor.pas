@@ -58,8 +58,8 @@ Type
 
         Procedure LeBalanca(  Terminal : Word = 0  ); Override;
         Procedure LeSerial( MillisecTimeOut : Integer = 500 ); Override;
-        Procedure EnviaString( Texto : String; Terminal : Word = 0 ); Override;
-        Procedure EnviaRotacao( Texto : String; Linha : Word = 1; Terminal : Word = 0 ); Override;
+        Procedure EnviaString( const Texto : String; Terminal : Word = 0 ); Override;
+        Procedure EnviaRotacao( const Texto : String; Linha : Word = 1; Terminal : Word = 0 ); Override;
         Procedure LimpaTela( Terminal : Word = 0 ); Override;
         Procedure PosicionaCursor( Linha, Coluna : Word; Terminal : Word = 0 ); Override;
         Procedure BackSpace( Terminal : Word = 0 ); Override;
@@ -122,7 +122,7 @@ Begin
   End;
 End;
 
-Procedure TACBrTERWilbor.EnviaString( Texto : String; Terminal : Word = 0 );
+Procedure TACBrTERWilbor.EnviaString( const Texto : String; Terminal : Word = 0 );
 Var I : Integer;
 Begin
     If TACBrTER( fpOwner ).Comutadora Then
@@ -137,15 +137,17 @@ Begin
        fpDevice.EnviaString( Texto );
 End;
 
-Procedure TACBrTERWilbor.EnviaRotacao( Texto : String; Linha : Word = 1; Terminal : Word = 0 );
+Procedure TACBrTERWilbor.EnviaRotacao( const Texto : String; Linha : Word = 1; Terminal : Word = 0 );
+var
+  TextoProcessado: string;
 Begin
     Dec( Linha );
     Linha := min( max(Linha, 0 ), 1) ;
 
     If Length( Texto ) <= 40 Then
-        Texto := StringOfChar( ' ', 40 ) + Texto;
+        TextoProcessado := StringOfChar( ' ', 40 ) + Texto;
 
-    TACBrTER( fpOwner ).ListaRotacao.Add( IntToStr( Linha ) + FormatFloat( '00', Terminal ) + Texto );
+    TACBrTER( fpOwner ).ListaRotacao.Add( IntToStr( Linha ) + FormatFloat( '00', Terminal ) + TextoProcessado );
 End;
 
 Procedure TACBrTERWilbor.LimpaTela( Terminal : Word = 0 );

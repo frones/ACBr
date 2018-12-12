@@ -48,21 +48,21 @@ type
 
   TACBrETQZplII = class(TACBrETQClass)
   private
-    function ComandoCampo(aTexto: String): String;
+    function ComandoCampo(const aTexto: String): String;
 
     function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
 
     function ComandoCoordenadas(aVertical, aHorizontal: Integer): String;
     function ComandoReverso(aImprimirReverso: Boolean): String;
-    function ComandoFonte(aFonte: String; aMultVertical, aMultHorizontal: Integer;
+    function ComandoFonte(const aFonte: String; aMultVertical, aMultHorizontal: Integer;
       aOrientacao: TACBrETQOrientacao): String;
 
-    function ComandoBarras(aTipo: String; aOrientacao: TACBrETQOrientacao;
+    function ComandoBarras(const aTipo: String; aOrientacao: TACBrETQOrientacao;
       aAlturaBarras: Integer; aExibeCodigo: TACBrETQBarraExibeCodigo): String;
     function ConverterExibeCodigo(aExibeCodigo: TACBrETQBarraExibeCodigo): String;
 
     function ComandoLinhaCaixa(aAltura, aLargura, Espessura: Integer): String;
-    function AjustarNomeArquivoImagem( aNomeImagem: String): String;
+    function AjustarNomeArquivoImagem( const aNomeImagem: String): String;
     function ConverterMultiplicadorImagem(aMultiplicador: Integer): String;
   protected
     function ComandoAbertura: AnsiString; override;
@@ -76,7 +76,7 @@ type
   public
     constructor Create(AOwner: TComponent);
 
-    function TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString; override;
+    function TratarComandoAntesDeEnviar(const aCmd: AnsiString): AnsiString; override;
 
     function ComandoLimparMemoria: AnsiString; override;
     function ComandoCopias(const NumCopias: Integer): AnsiString; override;
@@ -127,7 +127,7 @@ begin
   Result := '^MCY';
 end;
 
-function TACBrETQZplII.ComandoCampo(aTexto: String): String;
+function TACBrETQZplII.ComandoCampo(const aTexto: String): String;
 var
   ConvTexto: String;
 begin
@@ -150,7 +150,7 @@ begin
     Result := '^FH\' + Result;
 end;
 
-function TACBrETQZplII.ComandoFonte(aFonte: String; aMultVertical,
+function TACBrETQZplII.ComandoFonte(const aFonte: String; aMultVertical,
   aMultHorizontal: Integer; aOrientacao: TACBrETQOrientacao): String;
 var
   cFonte: Char;
@@ -209,7 +209,7 @@ begin
             '^FS';
 end;
 
-function TACBrETQZplII.AjustarNomeArquivoImagem(aNomeImagem: String): String;
+function TACBrETQZplII.AjustarNomeArquivoImagem(const aNomeImagem: String): String;
 begin
   Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 8))+'.GRF';
 end;
@@ -245,7 +245,7 @@ begin
   end;
 end;
 
-function TACBrETQZplII.ComandoBarras(aTipo: String;
+function TACBrETQZplII.ComandoBarras(const aTipo: String;
   aOrientacao: TACBrETQOrientacao; aAlturaBarras: Integer;
   aExibeCodigo: TACBrETQBarraExibeCodigo): String;
 var
@@ -354,7 +354,7 @@ begin
     Result := EmptyStr;
 end;
 
-function TACBrETQZplII.TratarComandoAntesDeEnviar(aCmd: AnsiString): AnsiString;
+function TACBrETQZplII.TratarComandoAntesDeEnviar(const aCmd: AnsiString): AnsiString;
 begin
   Result := ChangeLineBreak( aCmd, CRLF );
 end;

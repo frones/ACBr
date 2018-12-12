@@ -69,7 +69,7 @@ TACBrECFICash = class( TACBrECFClass )
 
     function PreparaCMD( cmd : AnsiString ) : AnsiString ;
     procedure EnviaConsumidor;
-    function LimpaStr(AString: AnsiString): AnsiString;
+    function LimpaStr(const AString: AnsiString): AnsiString;
 
  protected
     function GetDataHora: TDateTime; override ;
@@ -1366,7 +1366,7 @@ begin
 end;
 
 
-function TACBrECFICash.LimpaStr(AString: AnsiString): AnsiString;
+function TACBrECFICash.LimpaStr(const AString: AnsiString): AnsiString;
 Var A,Len : Integer ;
 begin
   Result := '' ;

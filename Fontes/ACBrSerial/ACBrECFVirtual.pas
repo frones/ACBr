@@ -66,7 +66,7 @@ TACBrECFVirtualClassItemCupom = class
     fsCodigo: String;
     fsDescAcres :Double;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
 
   public
     constructor Create(AECFVirtualClassCupom: TACBrECFVirtualClassCupom);
@@ -110,7 +110,7 @@ TACBrECFVirtualClassPagamentoCupom = class
     fsValorPago: Double;
     fsPosFPG: Integer;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
   public
     property PosFPG    : Integer read fsPosFPG     write fsPosFPG;
     property ValorPago : Double  read fsValorPago  write fsValorPago;
@@ -142,7 +142,7 @@ TACBrECFVirtualClassCNFCupom = class
     fsValor  : Double;
     fsPosCNF : Integer;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
   public
     property Sequencia : Integer  read fsSequencia  write fsSequencia ;
     property PosCNF    : Integer  read fsPosCNF     write fsPosCNF   ;
@@ -176,7 +176,7 @@ TACBrECFVirtualClassAliquotaCupom = class
     fsTipo: Char;
     fsTotal: Double;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
   public
     property AliqPos   : Integer read fsAliqPos   write fsAliqPos;
     property AliqValor : Double  read fsAliqValor write fsAliqValor;
@@ -237,7 +237,7 @@ TACBrECFVirtualClassCupom = class
     Destructor Destroy; override;
     procedure Clear;
 
-    function VendeItem(ACodigo, ADescricao: String; AQtd, AValorUnitario: Double;
+    function VendeItem(const ACodigo, ADescricao: String; AQtd, AValorUnitario: Double;
       ADescAcres: Double; AAliq: TACBrECFAliquota; AUnidade: String;
       ACodDepartamento: Integer): TACBrECFVirtualClassItemCupom;
     procedure DescAcresItem(NumItem: Integer; ADescAcres: Double);
@@ -631,7 +631,7 @@ begin
             IntToStr( AliqPos )         + '|'
 end;
 
-procedure TACBrECFVirtualClassItemCupom.SetAsString(AValue: String);
+procedure TACBrECFVirtualClassItemCupom.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -720,7 +720,7 @@ begin
              Observacao              + '|' ;
 end;
 
-procedure TACBrECFVirtualClassPagamentoCupom.SetAsString(AValue: String);
+procedure TACBrECFVirtualClassPagamentoCupom.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -780,7 +780,7 @@ begin
             Observacao            + '|';
 end;
 
-procedure TACBrECFVirtualClassCNFCupom.SetAsString(AValue: String);
+procedure TACBrECFVirtualClassCNFCupom.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -842,7 +842,7 @@ begin
             FloatToStr( Rateio )    + '|' + Tipo + '|';
 end;
 
-procedure TACBrECFVirtualClassAliquotaCupom.SetAsString(AValue: String);
+procedure TACBrECFVirtualClassAliquotaCupom.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -964,7 +964,7 @@ begin
   fpChaveDFe               := '';
 end;
 
-function TACBrECFVirtualClassCupom.VendeItem(ACodigo, ADescricao: String; AQtd,
+function TACBrECFVirtualClassCupom.VendeItem(const ACodigo, ADescricao: String; AQtd,
   AValorUnitario: Double; ADescAcres: Double; AAliq: TACBrECFAliquota;
   AUnidade: String; ACodDepartamento: Integer): TACBrECFVirtualClassItemCupom;
 var

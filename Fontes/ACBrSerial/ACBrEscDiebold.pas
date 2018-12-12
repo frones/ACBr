@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -56,9 +56,9 @@ type
   public
     constructor Create(AOwner: TACBrPosPrinter);
 
-    function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
+    function ComandoCodBarras(const ATag: String; const ACodigo: AnsiString): AnsiString;
       override;
-    function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
+    function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
     function ComandoLogo: AnsiString; override;
 
     function LerInfo: String; override;
@@ -92,7 +92,7 @@ begin
 end;
 
 function TACBrEscDiebold.ComandoCodBarras(const ATag: String;
-  ACodigo: AnsiString): AnsiString;
+  const ACodigo: AnsiString): AnsiString;
 begin
   with fpPosPrinter.ConfigBarras do
   begin
@@ -100,7 +100,7 @@ begin
   end ;
 end;
 
-function TACBrEscDiebold.ComandoQrCode(ACodigo: AnsiString): AnsiString;
+function TACBrEscDiebold.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 begin
   with fpPosPrinter.ConfigQRCode do
   begin

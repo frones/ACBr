@@ -112,7 +112,7 @@ TACBrECFMecaf = class( TACBrECFClass )
     fsVinculado : Boolean ;
 
     { Substitui caracteres nulos do retorno por espaços. #0 -> ' ' }
-    function LimpaStr( AString : AnsiString ) : AnsiString ;
+    function LimpaStr( const AString : AnsiString ) : AnsiString ;
     { Retorna Verdadeiro se o ECF é antigo Versão: 201 ou 301 }
     function IsOldMecaf : Boolean ;
 
@@ -1252,7 +1252,7 @@ begin
                 Favorecido + Cidade + '1' + Dia + Mes + Ano + Observacao ,10) ;
 end;
 
-function TACBrECFMecaf.LimpaStr(AString: AnsiString): AnsiString;
+function TACBrECFMecaf.LimpaStr(const AString: AnsiString): AnsiString;
 Var A,Len : Integer ;
 begin
   Result := '' ;

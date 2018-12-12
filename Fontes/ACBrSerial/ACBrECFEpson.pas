@@ -107,7 +107,7 @@ TACBrECFEpsonComando = class
     property Params       : TStringList read fsParams ;
     property Seq          : Byte read fsSeq  ;
 
-    Procedure AddParamString(AString: AnsiString) ;
+    Procedure AddParamString(const AString: AnsiString) ;
     Procedure AddParamInteger(AInteger: Integer) ;
     Procedure AddParamDouble(ADouble: Double; CasasDecimais: Integer = 2) ;
     Procedure AddParamBool(ABool: Boolean) ;
@@ -130,7 +130,7 @@ TACBrECFEpsonResposta = class
 
     procedure SetResposta(const AValue: AnsiString);
     function GetDescRetorno: String;
-    procedure SetRespostaDLL(AValue : AnsiString) ;
+    procedure SetRespostaDLL(const AValue : AnsiString) ;
  public
     constructor create( AOwner : TACBrECFEpson ) ;
     destructor Destroy ; override ;
@@ -213,7 +213,7 @@ TACBrECFEpson = class( TACBrECFClass )
 
     Function DocumentosToNum(Documentos : TACBrECFTipoDocumentoSet) : Integer ;
 
-    Procedure PreparaCmd( cmd : AnsiString ) ;
+    Procedure PreparaCmd( const cmd : AnsiString ) ;
 
     function  GetRet0402( Indice: Integer): AnsiString;
     function  GetRet0906: AnsiString;
@@ -430,7 +430,7 @@ TACBrECFEpson = class( TACBrECFClass )
  end ;
 
 function DescricaoRetornoEpson( Byte1, Byte2 : Byte ): String;
-function EpsonCheckSum(Dados: AnsiString): AnsiString;
+function EpsonCheckSum(const Dados: AnsiString): AnsiString;
 function RemoveEsc(const Campo : AnsiString) : AnsiString ;
 function InsertEsc(const Campo: AnsiString): AnsiString ;
 function EpsonTraduzirTag(const ATag: AnsiString; AECFClass: TACBrECFClass): AnsiString;
@@ -732,7 +732,7 @@ begin
   end;
 end;
 
-function EpsonCheckSum(Dados: AnsiString): AnsiString;
+function EpsonCheckSum(const Dados: AnsiString): AnsiString;
 begin
   Result := IntToHex( SomaAscII(Dados), 4);
 end;
@@ -933,7 +933,7 @@ begin
   inherited destroy ;
 end;
 
-procedure TACBrECFEpsonComando.AddParamString(AString : AnsiString) ;
+procedure TACBrECFEpsonComando.AddParamString(const AString : AnsiString) ;
 begin
   fsParams.Add( InsertEsc( AString ) ) ;
 end ;
@@ -1158,7 +1158,7 @@ begin
         fsParams.Delete(0);   // Remove da pilha Reservado 2, pois não é parametro
 end;
 
-procedure TACBrECFEpsonResposta.SetRespostaDLL(AValue : AnsiString) ;
+procedure TACBrECFEpsonResposta.SetRespostaDLL(const AValue : AnsiString) ;
 Var
   Status, LineOut : AnsiString ;
   P : Integer ;
@@ -1531,7 +1531,7 @@ begin
   end
 end;
 
-procedure TACBrECFEpson.PreparaCmd(cmd : AnsiString) ;
+procedure TACBrECFEpson.PreparaCmd(const cmd : AnsiString) ;
  Var Buf : AnsiString ;
      P   : Integer ;
      SL  : TStringList ;

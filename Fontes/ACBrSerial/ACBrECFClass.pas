@@ -251,7 +251,7 @@ TACBrECFTotalizadorNaoTributado = class
    fsTipo: Char;
    fsTotal: Double;
    function GetAsString: String;
-   procedure SetAsString(AValue: String);
+   procedure SetAsString(const AValue: String);
    procedure SetTipo(const AValue: Char);
  public
    constructor create ;
@@ -1365,7 +1365,7 @@ begin
             FloatToStr( RoundTo(Total, -2) ) + '|' ;
 end;
 
-procedure TACBrECFTotalizadorNaoTributado.SetAsString(AValue: String);
+procedure TACBrECFTotalizadorNaoTributado.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -2903,7 +2903,7 @@ function TACBrECFClass.GetNumReducoesZRestantes: String;
 var
   CRZR: String;
   I: Integer;
-  LeituraX: TStringList;
+  LeituraXsl: TStringList;
   Linha: String;
 begin
   // implementada a leitura do contador pela leitura X para suprir
@@ -2911,13 +2911,13 @@ begin
   // nas impressoras que possuem, sobrescrever o método e utilizar o
   // comando apropriado
   CRZR := '';
-  LeituraX := TStringList.Create;
+  LeituraXsl := TStringList.Create;
   try
-    LeituraXSerial(LeituraX);
+    LeituraXSerial(LeituraXsl);
 
-    for I := LeituraX.Count - 1 downto 0 do
+    for I := LeituraXsl.Count - 1 downto 0 do
     begin
-      Linha := AnsiUpperCase(LeituraX[I]);
+      Linha := AnsiUpperCase(LeituraXsl[I]);
       if pos('REDUÇÕES RESTANTES:', Linha) > 0 then
       begin
         CRZR := Trim(Copy(Linha, 30, 40));
@@ -2926,7 +2926,7 @@ begin
       end;
     end;
   finally
-    LeituraX.Free;
+    LeituraXsl.Free;
   end;
 
   Result := Trim( CRZR ) ;
@@ -5380,6 +5380,7 @@ end ;
 
 constructor TACBrECFRodape.Create;
 begin
+  inherited;
   fsMD5        := EmptyStr;
   fsCupomMania := False;
   fsMinasLegal := False;

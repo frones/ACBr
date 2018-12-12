@@ -115,7 +115,7 @@ type
     procedure Ativar; virtual;
     procedure Desativar; virtual;
 
-    procedure EnviarComando(ACmd: String; ATimeOut: Integer = 0);
+    procedure EnviarComando(const ACmd: String; ATimeOut: Integer = 0);
     
     function EmLinha: Boolean; virtual;
     function IMEI: String; virtual;
@@ -481,7 +481,7 @@ begin
     Desativar;
 end;
 
-procedure TACBrSMSClass.EnviarComando(ACmd: String; ATimeOut: Integer);
+procedure TACBrSMSClass.EnviarComando(const ACmd: String; ATimeOut: Integer);
 var
   sRet: String;
 begin

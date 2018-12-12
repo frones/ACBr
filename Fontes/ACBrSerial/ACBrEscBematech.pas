@@ -60,9 +60,9 @@ type
   public
     constructor Create(AOwner: TACBrPosPrinter);
 
-    function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
+    function ComandoCodBarras(const ATag: String; const ACodigo: AnsiString): AnsiString;
       override;
-    function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
+    function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
       override;
     function ComandoLogo: AnsiString; override;
@@ -128,7 +128,7 @@ begin
 end;
 
 function TACBrEscBematech.ComandoCodBarras(const ATag: String;
-  ACodigo: AnsiString): AnsiString;
+  const ACodigo: AnsiString): AnsiString;
 begin
   with fpPosPrinter.ConfigBarras do
   begin
@@ -136,7 +136,7 @@ begin
   end ;
 end;
 
-function TACBrEscBematech.ComandoQrCode(ACodigo: AnsiString): AnsiString;
+function TACBrEscBematech.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 begin
   with fpPosPrinter.ConfigQRCode do
   begin

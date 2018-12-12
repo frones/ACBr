@@ -217,8 +217,8 @@ TACBrECFSweda = class( TACBrECFClass )
 
     procedure EsperaEstado( EstadoAEsperar : TACBrECFEstadoSet;
        TimeOut : Integer = 2000 ) ;
-    Procedure Purge(Id: AnsiString) ;
-    procedure LeBufferSerial(Cmd : String; AStringList: TStringList);
+    Procedure Purge(const Id: AnsiString) ;
+    procedure LeBufferSerial(const Cmd : String; AStringList: TStringList);
  protected
     function GetDataHora: TDateTime; override ;
     function GetNumCupom: String; override ;
@@ -715,7 +715,7 @@ begin
 
 end;
 
-procedure TACBrECFSweda.Purge(Id : AnsiString) ;
+procedure TACBrECFSweda.Purge(const Id : AnsiString) ;
  Var RetCmd, Ret : AnsiString ;
      I : Integer ;
 begin
@@ -1218,7 +1218,7 @@ begin
   LeBufferSerial('13|', Linhas);
 end;
 
-procedure TACBrECFSweda.LeBufferSerial(Cmd : String ; AStringList : TStringList
+procedure TACBrECFSweda.LeBufferSerial(const Cmd : String ; AStringList : TStringList
    ) ;
   Var P1,P2 : Integer ;
       Resp, Ret, Linha : String ;

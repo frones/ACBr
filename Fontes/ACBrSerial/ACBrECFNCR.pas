@@ -75,7 +75,7 @@ TACBrECFNCRComando = class
     property Params      : TStringList read fsParams ;
     property Seq         : Byte read fsSeq  write fsSeq;
 
-    Procedure AddParam(AString : AnsiString) ;
+    Procedure AddParam(const AString : AnsiString) ;
  end ;
 
 TACBrPosParam = Array of Byte;
@@ -122,7 +122,7 @@ TACBrECFNCR = class( TACBrECFClass )
     fsLeituraCMC7   : Boolean ;
 
     procedure Sincroniza ;
-    function  BuscaSequenciaVinculado( CodFormaPagto : String = '' ) : String ;
+    function  BuscaSequenciaVinculado( const CodFormaPagto : String = '' ) : String ;
  protected
     function GetDataHora: TDateTime; override ;
     function GetNumCupom: String; override ;
@@ -236,7 +236,7 @@ TACBrECFNCR = class( TACBrECFClass )
     Function LeituraCMC7 : AnsiString ; override ;
  end ;
 
-function NCRCheckSum(Dados: AnsiString): Char;
+function NCRCheckSum(const Dados: AnsiString): Char;
 
 implementation
 Uses ACBrECF,
@@ -247,7 +247,7 @@ Uses ACBrECF,
  {$ENDIF},
      SysUtils,  Math ;
 
-function NCRCheckSum(Dados: AnsiString): Char;
+function NCRCheckSum(const Dados: AnsiString): Char;
 var
  i : Integer;
 begin
@@ -285,7 +285,7 @@ begin
   fsComando := Value
 end;
 
-procedure TACBrECFNCRComando.AddParam(AString: AnsiString);
+procedure TACBrECFNCRComando.AddParam(const AString: AnsiString);
 begin
   fsParams.Add(  AString  ) ;
 end;
@@ -331,7 +331,7 @@ begin
   inherited destroy ;
 end;
 
-function CharToBin(sChar:string):string;
+function CharToBin(const sChar:string):string;
 var iBit, iChr, iPos : integer;
     sSts : AnsiString;
 
@@ -1446,7 +1446,7 @@ begin
   EnviaComando ;
 end;
 
-function  TACBrECFNCR.BuscaSequenciaVinculado( CodFormaPagto : String ) : String ; 
+function  TACBrECFNCR.BuscaSequenciaVinculado( const CodFormaPagto : String ) : String ;
 Var A, TotVinc : Integer ;
 begin
   result := '' ; 

@@ -97,7 +97,7 @@ uses
 
 
 { Retorna a posição da Substr em Str a partir do final }
-function RightPos( ASubstr, AStr: string ): integer;
+function RightPos( const ASubstr, AStr: string ): integer;
 var
   iLen, iLenSub: integer;
 begin

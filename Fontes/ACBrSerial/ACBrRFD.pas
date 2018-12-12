@@ -179,11 +179,11 @@ TACBrRFDCupom = class
     property Pagamentos : TObjectList read fsPagamentos ;
 
     Procedure Descarrega ;
-    Procedure VendeItem( Codigo, Descricao: String;
+    Procedure VendeItem( const Codigo, Descricao: String;
        const Qtd, ValorUnitario: Double; const Unidade: String;
-       const ValorDescAcres: Double; Aliquota: String) ;
+       const ValorDescAcres: Double; const Aliquota: String) ;
     Procedure CancelaItemVendido(const NumItem: Integer) ;
-    Procedure EfetuaPagamento(DescricaoFormaPagto: String; Valor: Double ) ;
+    Procedure EfetuaPagamento(const DescricaoFormaPagto: String; Valor: Double ) ;
 end ;
 
 { TACBrRFD }
@@ -613,9 +613,9 @@ begin
 end;
 
 
-procedure TACBrRFDCupom.VendeItem(Codigo, Descricao: String; const Qtd,
+procedure TACBrRFDCupom.VendeItem(const Codigo, Descricao: String; const Qtd,
   ValorUnitario: Double; const Unidade: String;
-  const ValorDescAcres: Double; Aliquota: String);
+  const ValorDescAcres: Double; const Aliquota: String);
  Var ItemCupom : TACBrRFDItemCupom ;
      Ini : TMemIniFile ;
      Linha : String ;
@@ -675,7 +675,7 @@ begin
 end;
 
 
-procedure TACBrRFDCupom.EfetuaPagamento(DescricaoFormaPagto: String;
+procedure TACBrRFDCupom.EfetuaPagamento(const DescricaoFormaPagto: String;
   Valor: Double);
  Var PagamentoCupom : TACBrRFDPagamentoCupom ;
      Ini : TMemIniFile ;

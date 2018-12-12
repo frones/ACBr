@@ -2645,43 +2645,41 @@ end;
 function TACBrBancoClass.ValidarDadosRetorno(const AAgencia, AContaCedente: String;
    const ACNPJCPF: String= ''; const AValidaCodCedente: Boolean= False ): Boolean;
 begin
-  try
-    With ACBrBanco.ACBrBoleto do
-    begin
-      if NaoEstaVazio(ACNPJCPF) then
-        if (not LeCedenteRetorno) and (ACNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-          raise Exception.CreateFmt(ACBrStr('CNPJ\CPF: %s do arquivo não corresponde aos dados do Cedente!'), [ACNPJCPF]);
-
-      if NaoEstaVazio(AContaCedente) then
+  Result:= True;
+  With ACBrBanco.ACBrBoleto do
+  begin
+    if NaoEstaVazio(ACNPJCPF) then
+      if (not LeCedenteRetorno) and (ACNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
       begin
-        if not AValidaCodCedente then
+        Result:= False;
+        raise Exception.CreateFmt(ACBrStr('CNPJ\CPF: %s do arquivo não corresponde aos dados do Cedente!')
+              ,[ACNPJCPF]);
+      end;
+
+    if NaoEstaVazio(AContaCedente) then
+      if not AValidaCodCedente then
+      begin
+        if (not LeCedenteRetorno) and ((AAgencia <> OnlyNumber(Cedente.Agencia)) or
+               (AContaCedente <> RightStr(OnlyNumber( Cedente.Conta  ),Length(AContaCedente)))) then
         begin
-          if (not LeCedenteRetorno) and
-             ((AAgencia <> OnlyNumber(Cedente.Agencia)) or
-              (AContaCedente <> RightStr(OnlyNumber( Cedente.Conta  ),Length(AContaCedente)))
-             ) then
-            raise Exception.CreateFmt(ACBrStr('Agencia: %s \ Conta: %s do arquivo não correspondem aos dados do Cedente!')
-                  ,[AAgencia,AContaCedente]);
+          Result:= False;
+          raise Exception.CreateFmt(ACBrStr('Agencia: %s \ Conta: %s do arquivo não correspondem aos dados do Cedente!')
+                ,[AAgencia,AContaCedente]);
         end
-        else
+      end
+      else
+      begin
+        if (not LeCedenteRetorno) and ((StrToIntDef(AAgencia,0) <> StrToIntDef(OnlyNumber(Cedente.Agencia),0)) or
+               (StrToIntDef(AContaCedente,0) <> StrToIntDef(OnlyNumber( Cedente.CodigoCedente),0))) then
         begin
-          if (not LeCedenteRetorno) and
-             ((StrToIntDef(AAgencia,0) <> StrToIntDef(OnlyNumber(Cedente.Agencia),0)) or
-              (StrToIntDef(AContaCedente,0) <> StrToIntDef(OnlyNumber( Cedente.CodigoCedente),0))
-             ) then
-            raise Exception.CreateFmt(ACBrStr('Agencia: %s \ Conta: %s do arquivo não correspondem aos dados do Cedente!')
-                  ,[AAgencia,AContaCedente]);
+          Result:= False;
+          raise Exception.CreateFmt(ACBrStr('Agencia: %s \ Conta: %s do arquivo não correspondem aos dados do Cedente!')
+                ,[AAgencia,AContaCedente]);
         end;
       end;
-    end;
-  except
-    {$IFNDEF COMPILER23_UP}
-     Result := False;
-    {$ENDIF}
-    raise;
+
   end;
 
-  Result := True;
 end;
 
 function TACBrBancoClass.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;

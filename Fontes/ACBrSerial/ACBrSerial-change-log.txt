@@ -42,6 +42,7 @@ Símbolo : Significado
 13/12/2018
 -- ACBrPosPrinter --
 [+] Adicionada propriedade TipoCorte para escolher se é corte parcial ou total.
+[+] Adicionada a Tag </corte>, que promoverá o Corte conforme configurado em "TipoCorte"
     Veja: https://www.projetoacbr.com.br/forum/topic/48173-nova-propriedade-tipocorte-em-tacbrsatextratoescpos
 
 11/12/2018

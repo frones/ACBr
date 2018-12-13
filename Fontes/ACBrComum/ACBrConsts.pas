@@ -164,6 +164,7 @@ const
   cTagLogoFatorX = '<logo_fatorx>';
   cTagLogoFatorY = '<logo_fatory>';
 
+  cTagCorte = '</corte>';
   cTagCorteParcial = '</corte_parcial>';
   cTagCorteTotal = '</corte_total>';
   cTagAbreGaveta = '</abre_gaveta>';
@@ -174,11 +175,14 @@ const
   cTagPulodeLinha = '</lf>';
   cTagRetornoDeCarro = '</cr>';
 
-  cTAGS_FUNCOES: array[0..8] of String = (
-    cTagLogotipo, cTagCorteParcial, cTagCorteTotal, cTagAbreGaveta,
+  cTAGS_FUNCOES: array[0..9] of String = (
+    cTagLogotipo,
+    cTagCorte, cTagCorteParcial, cTagCorteTotal,
+    cTagAbreGaveta,
     cTagBeep, CTagZera, cTagPulodeLinha, cTagRetornoDeCarro, cTagReset);
-  cTAGS_FUNCOES_HELP: array[0..8] of String = (
+  cTAGS_FUNCOES_HELP: array[0..9] of String = (
     'Imprime Logotipo já gravado na Impressora (use utilitário do fabricante)',
+    'Efetua Corte, conforme configuração de "TipoCorte"',
     'Efetua Corte Parcial no Papel (não disponivel em alguns modelos)',
     'Efetua Corte Total no papel',
     'Aciona a abertura da Gaveta de Dinheiro',

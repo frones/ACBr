@@ -1141,14 +1141,14 @@ begin
   else if ATag = cTagPuloDeLinhas then
     TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons)
 
-  else if ATag = cTagCorteParcial then
+  else if (ATag = cTagCorteParcial) or ( (ATag = cTagCorte) and (FTipoCorte = ctParcial) ) then
   begin
     TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
     if CortaPapel then
       TagTraduzida := TagTraduzida + FPosPrinterClass.Cmd.CorteParcial;
   end
 
-  else if ATag = cTagCorteTotal then
+  else if (ATag = cTagCorteTotal) or ( (ATag = cTagCorte) and (FTipoCorte = ctTotal) ) then
   begin
     TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
     if CortaPapel then

@@ -284,6 +284,8 @@ type
       property EspacoEntreLinhas: Byte read FEspacoEntreLinhas write FEspacoEntreLinhas default 0;
   end;
 
+  TACBrPosTipoCorte = (ctTotal, ctParcial);
+
   { TACBrPosPrinter }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
@@ -305,6 +307,7 @@ type
     FTagProcessor: TACBrTagProcessor;
 
     FCortaPapel: Boolean;
+    FTipoCorte: TACBrPosTipoCorte;
     FLinhasBuffer: Integer;
     FLinhasEntreCupons: Integer;
     FPaginaDeCodigo: TACBrPosPaginaCodigo;
@@ -414,7 +417,7 @@ type
     property LinhasEntreCupons: Integer read FLinhasEntreCupons
       write FLinhasEntreCupons default 21;
     property CortaPapel: Boolean read FCortaPapel write FCortaPapel default True;
-
+    property TipoCorte: TACBrPosTipoCorte read FTipoCorte write FTipoCorte default ctTotal;
     property TraduzirTags: Boolean read GetTraduzirTags
       write SetTraduzirTags default True;
     property IgnorarTags: Boolean read GetIgnorarTags write SetIgnorarTags default False;
@@ -878,6 +881,8 @@ begin
   FArqLog := '';
   FOnGravarLog := nil;
   FOnEnviarStringDevice := nil;
+
+  FTipoCorte := ctTotal;
 end;
 
 destructor TACBrPosPrinter.Destroy;

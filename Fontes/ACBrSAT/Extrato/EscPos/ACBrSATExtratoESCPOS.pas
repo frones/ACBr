@@ -497,7 +497,12 @@ begin
   if CortaPapel then
   begin
     if FPosPrinter.CortaPapel then
-      FBuffer.Add('</corte_total>')
+    begin
+      if FPosPrinter.TipoCorte = ctParcial then
+         FBuffer.Add('</corte_parcial>')
+      else
+         FBuffer.Add('</corte_total>');
+    end
     else
       FBuffer.Add('</pular_linhas>');
   end;
@@ -565,7 +570,12 @@ begin
   FBuffer.Add('</zera>');	
 
   if FPosPrinter.CortaPapel then
-    FBuffer.Add('</corte_total>')
+  begin
+     if FPosPrinter.TipoCorte = ctParcial then
+        FBuffer.Add('</corte_parcial>')
+     else
+        FBuffer.Add('</corte_total>');
+  end
   else
     FBuffer.Add('</pular_linhas>');
 end;

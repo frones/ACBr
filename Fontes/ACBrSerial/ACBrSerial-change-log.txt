@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2018
+-- ACBrPosPrinter --
+[+] Adicionada propriedade TipoCorte para escolher se é corte parcial ou total.
+    Veja: https://www.projetoacbr.com.br/forum/topic/48173-nova-propriedade-tipocorte-em-tacbrsatextratoescpos
+
 11/12/2018
 -- ACBrPosPrinter --
 [+] Adicionado os métodos abaixo (migrados de ACBrNFeDANFeESCPOS)

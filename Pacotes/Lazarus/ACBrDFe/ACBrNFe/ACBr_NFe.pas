@@ -10,12 +10,12 @@ interface
 uses
   ACBrNFe, ACBrNFeReg, ACBrNFeNotasFiscais, ACBrNFeConfiguracoes, 
   ACBrNFeWebServices, ACBrNFeDANFEClass, pcnAdmCSCNFCe, pcnCadEmiDFe, 
-  pcnCCeNFe, pcnConsCad, pcnConsNFeDest, pcnConsReciNFe, pcnConsSitNFe, 
-  pcnConsStatServ, pcnDistDFeInt, pcnDownloadNFe, pcnEnvEventoNFe, 
+  pcnCCeNFe, pcnConsCad, pcnConsReciNFe, pcnConsSitNFe,
+  pcnConsStatServ, pcnDistDFeInt, pcnEnvEventoNFe,
   pcnEventoNFe, pcnInutNFe, pcnLayoutTXT, pcnNFe, pcnNFeR, pcnNFeRTXT, 
   pcnNFeW, pcnProcNFe, pcnRetAdmCSCNFCe, pcnRetAtuCadEmiDFe, pcnRetCancNFe, 
-  pcnRetCCeNFe, pcnRetConsCad, pcnRetConsNFeDest, pcnRetConsReciNFe, 
-  pcnRetConsSitNFe, pcnRetConsStatServ, pcnRetDistDFeInt, pcnRetDownloadNFe, 
+  pcnRetCCeNFe, pcnRetConsCad, pcnRetConsReciNFe,
+  pcnRetConsSitNFe, pcnRetConsStatServ, pcnRetDistDFeInt,
   pcnRetEnvEventoNFe, pcnRetEnvNFe, pcnRetInutNFe, pcnConversaoNFe, 
   pcnNFeConsts, ACBrDFeDANFeReport, LazarusPackageIntf;
 

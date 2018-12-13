@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2018
+-- ACBrCTe --
+[*] Iclusão do tipo de evento tePrestDesacordo na function IdentificaSchema.
+  Por: Italo Jurisato Junior
+
 10/12/2018
 -- pcteCTeW --
 [*] Correções e ajustes na identação do código.

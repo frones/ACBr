@@ -383,11 +383,12 @@ begin
         lTipoEvento := StrToTpEvento(Ok, Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>')));
 
         case lTipoEvento of
-          teCCe:          Result := schEventoCTe;
-          teCancelamento: Result := schEventoCTe;
-          teEPEC:         Result := schEventoCTe;
-          teMultiModal:   Result := schEventoCTe;
-          else            Result := schErro;
+          teCCe:            Result := schEventoCTe;
+          teCancelamento:   Result := schEventoCTe;
+          teEPEC:           Result := schEventoCTe;
+          teMultiModal:     Result := schEventoCTe;
+          tePrestDesacordo: Result := schEventoCTe;
+          else              Result := schErro;
         end;
       end
       else

@@ -47,8 +47,7 @@ uses
   pcnNFe,
   pcnRetConsReciNFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, pcnConversaoNFe,
   pcnProcNFe, pcnRetCancNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe,
-  pcnRetConsSitNFe, pcnConsNFeDest, pcnRetConsNFeDest, pcnDownloadNFe,
-  pcnRetDownloadNFe, pcnAdmCSCNFCe, pcnRetAdmCSCNFCe, pcnDistDFeInt,
+  pcnRetConsSitNFe, pcnAdmCSCNFCe, pcnRetAdmCSCNFCe, pcnDistDFeInt,
   pcnRetDistDFeInt, pcnRetEnvNFe,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes;
 
@@ -477,65 +476,6 @@ type
     property EventoRetorno: TRetEventoNFe read FEventoRetorno;
   end;
 
-  { TNFeConsNFeDest }
-
-  TNFeConsNFeDest = class(TNFeWebService)
-  private
-    FCNPJ: String;
-    FindEmi: TpcnIndicadorEmissor;
-    FindNFe: TpcnIndicadorNFe;
-    FultNSU: String;
-
-    FretConsNFeDest: TretConsNFeDest;
-  protected
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-
-    function GerarMsgLog: String; override;
-    function GerarMsgErro(E: Exception): String; override;
-  public
-    constructor Create(AOwner: TACBrDFe); override;
-    destructor Destroy; override;
-    procedure Clear; override;
-
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property indNFe: TpcnIndicadorNFe read FindNFe write FindNFe;
-    property indEmi: TpcnIndicadorEmissor read FindEmi write FindEmi;
-    property ultNSU: String read FultNSU write FultNSU;
-
-    property retConsNFeDest: TretConsNFeDest read FretConsNFeDest;
-  end;
-
-  { TNFeDownloadNFe }
-
-  TNFeDownloadNFe = class(TNFeWebService)
-  private
-    FCNPJ: String;
-    FDownload: TDownLoadNFe;
-
-    FretDownloadNFe: TretDownloadNFe;
-
-    function GerarPathDownload(AItem :TRetNFeCollectionItem): String;
-  protected
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-
-    function GerarMsgLog: String; override;
-    function GerarMsgErro(E: Exception): String; override;
-  public
-    constructor Create(AOwner: TACBrDFe; ADownload: TDownloadNFe);
-      reintroduce; overload;
-    destructor Destroy; override;
-    procedure Clear; override;
-
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property retDownloadNFe: TretDownloadNFe read FretDownloadNFe;
-  end;
-
   { TAdministrarCSCNFCe }
 
   TAdministrarCSCNFCe = class(TNFeWebService)
@@ -647,8 +587,6 @@ type
     FInutilizacao: TNFeInutilizacao;
     FConsultaCadastro: TNFeConsultaCadastro;
     FEnvEvento: TNFeEnvEvento;
-    FConsNFeDest: TNFeConsNFeDest;
-    FDownloadNFe: TNFeDownloadNFe;
     FAdministrarCSCNFCe: TAdministrarCSCNFCe;
     FDistribuicaoDFe: TDistribuicaoDFe;
     FEnvioWebService: TNFeEnvioWebService;
@@ -673,8 +611,6 @@ type
     property ConsultaCadastro: TNFeConsultaCadastro
       read FConsultaCadastro write FConsultaCadastro;
     property EnvEvento: TNFeEnvEvento read FEnvEvento write FEnvEvento;
-    property ConsNFeDest: TNFeConsNFeDest read FConsNFeDest write FConsNFeDest;
-    property DownloadNFe: TNFeDownloadNFe read FDownloadNFe write FDownloadNFe;
     property AdministrarCSCNFCe: TAdministrarCSCNFCe
       read FAdministrarCSCNFCe write FAdministrarCSCNFCe;
     property DistribuicaoDFe: TDistribuicaoDFe
@@ -3390,293 +3326,6 @@ begin
   Result := IntToStr(FidLote);
 end;
 
-{ TNFeConsNFeDest }
-
-constructor TNFeConsNFeDest.Create(AOwner: TACBrDFe);
-begin
-  inherited Create(AOwner);
-end;
-
-destructor TNFeConsNFeDest.Destroy;
-begin
-  FretConsNFeDest.Free;
-
-  inherited Destroy;
-end;
-
-procedure TNFeConsNFeDest.Clear;
-begin
-  inherited Clear;
-
-  FPStatus := stConsNFeDest;
-  FPLayout := LayNFeConsNFeDest;
-  FPArqEnv := 'con-nfe-dest';
-  FPArqResp := 'nfe-dest';
-
-  if Assigned(FretConsNFeDest) then
-    FretConsNFeDest.Free;
-
-  FretConsNFeDest := TretConsNFeDest.Create;
-end;
-
-procedure TNFeConsNFeDest.DefinirURL;
-var
-  UF : String;
-  Versao: Double;
-begin
-  { Esse método é tratado diretamente pela RFB }
-
-  UF := 'AN';
-
-  Versao := 0;
-  FPVersaoServico := '';
-  FPURL := '';
-  Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
-
-  TACBrNFe(FPDFeOwner).LerServicoDeParams(
-    TACBrNFe(FPDFeOwner).GetNomeModeloDFe,
-    UF ,
-    FPConfiguracoesNFe.WebServices.Ambiente,
-    LayOutToServico(FPLayout),
-    Versao,
-    FPURL, FPServico,
-    FPSoapAction);
-
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
-end;
-
-procedure TNFeConsNFeDest.DefinirServicoEAction;
-begin
-  FPServico := GetUrlWsd + 'NfeConsultaDest';
-  FPSoapAction := FPServico + '/nfeConsultaNFDest';
-end;
-
-procedure TNFeConsNFeDest.DefinirDadosMsg;
-var
-  ConsNFeDest: TConsNFeDest;
-begin
-  ConsNFeDest := TConsNFeDest.Create;
-  try
-    ConsNFeDest.TpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
-    ConsNFeDest.CNPJ := FCNPJ;
-    ConsNFeDest.indNFe := FindNFe;
-    ConsNFeDest.indEmi := FindEmi;
-    ConsNFeDest.ultNSU := FultNSU;
-    ConsNFeDest.Versao := FPVersaoServico;
-    AjustarOpcoes( ConsNFeDest.Gerador.Opcoes );
-    ConsNFeDest.GerarXML;
-
-    FPDadosMsg := ConsNFeDest.Gerador.ArquivoFormatoXML;
-  finally
-    ConsNFeDest.Free;
-  end;
-end;
-
-function TNFeConsNFeDest.TratarResposta: Boolean;
-begin
-  FPRetWS := SeparaDadosArray(['nfeConsultaNFDestResult',
-                               'nfeResultMsg'],FPRetornoWS );
-
-  VerificarSemResposta;
-
-  FretConsNFeDest.Leitor.Arquivo := ParseText(FPRetWS);
-  FretConsNFeDest.LerXml;
-
-  FPMsg := FretConsNFeDest.xMotivo;
-
-  Result := (FretConsNFeDest.CStat = 137) or (FretConsNFeDest.CStat = 138);
-end;
-
-function TNFeConsNFeDest.GerarMsgLog: String;
-begin
-  {(*}
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'Recebimento: %s ' + LineBreak +
-                           'Ind. Continuação: %s ' + LineBreak +
-                           'Último NSU: %s ' + LineBreak),
-                   [FretConsNFeDest.versao, TpAmbToStr(FretConsNFeDest.tpAmb),
-                    FretConsNFeDest.verAplic, IntToStr(FretConsNFeDest.cStat),
-                    FretConsNFeDest.xMotivo,
-                    IfThen(FretConsNFeDest.dhResp = 0, '', FormatDateTimeBr(RetConsNFeDest.dhResp)),
-                    IndicadorContinuacaoToStr(FretConsNFeDest.indCont),
-                    FretConsNFeDest.ultNSU]);
-  {*)}
-end;
-
-function TNFeConsNFeDest.GerarMsgErro(E: Exception): String;
-begin
-  Result := ACBrStr('WebService Consulta NF-e Destinadas:' + LineBreak +
-                    '- Inativo ou Inoperante tente novamente.');
-end;
-
-{ TNFeDownloadNFe }
-
-constructor TNFeDownloadNFe.Create(AOwner: TACBrDFe; ADownload: TDownloadNFe);
-begin
-  inherited Create(AOwner);
-
-  FDownload := ADownload;
-end;
-
-destructor TNFeDownloadNFe.Destroy;
-begin
-  FRetDownloadNFe.Free;
-
-  inherited Destroy;
-end;
-
-procedure TNFeDownloadNFe.Clear;
-begin
-  inherited Clear;
-
-  FPStatus := stDownloadNFe;
-  FPLayout := LayNFeDownloadNFe;
-  FPArqEnv := 'ped-down-nfe';
-  FPArqResp := 'down-nfe';
-
-  if Assigned(FretDownloadNFe) then
-    FretDownloadNFe.Free;
-
-  FRetDownloadNFe := TRetDownloadNFe.Create;
-end;
-
-procedure TNFeDownloadNFe.DefinirURL;
-var
-  UF : String;
-  Versao: Double;
-begin
-  { Esse método é tratado diretamente pela RFB }
-
-  UF := 'AN';
-
-  Versao := 0;
-  FPVersaoServico := '';
-  FPURL := '';
-  Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
-
-  TACBrNFe(FPDFeOwner).LerServicoDeParams(
-    TACBrNFe(FPDFeOwner).GetNomeModeloDFe,
-    UF ,
-    FPConfiguracoesNFe.WebServices.Ambiente,
-    LayOutToServico(FPLayout),
-    Versao,
-    FPURL, FPServico,
-    FPSoapAction);
-
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
-end;
-
-procedure TNFeDownloadNFe.DefinirServicoEAction;
-begin
-  FPServico := GetUrlWsd + 'NfeDownloadNF';
-  FPSoapAction := FPServico + '/nfeDownloadNF';
-end;
-
-procedure TNFeDownloadNFe.DefinirDadosMsg;
-var
-  DownloadNFe: TDownloadNFe;
-  I: integer;
-begin
-  DownloadNFe := TDownloadNFe.Create;
-  try
-    DownloadNFe.TpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
-    DownloadNFe.CNPJ := FDownload.CNPJ;
-
-    for I := 0 to FDownload.Chaves.Count - 1 do
-    begin
-      with DownloadNFe.Chaves.Add do
-      begin
-        chNFe := FDownload.Chaves[I].chNFe;
-      end;
-    end;
-
-    DownloadNFe.Versao := FPVersaoServico;
-    AjustarOpcoes( DownloadNFe.Gerador.Opcoes );
-    DownloadNFe.GerarXML;
-
-    FPDadosMsg := DownloadNFe.Gerador.ArquivoFormatoXML;
-  finally
-    DownloadNFe.Free;
-  end;
-end;
-
-function TNFeDownloadNFe.TratarResposta: Boolean;
-var
-  I: integer;
-  NomeArq: String;
-begin
-  FPRetWS := SeparaDadosArray(['nfeDownloadNFResult',
-                               'nfeResultMsg'],FPRetornoWS );
-
-  VerificarSemResposta;
-
-  // Processando em UTF8, para poder gravar arquivo corretamente //
-  FRetDownloadNFe.Leitor.Arquivo := FPRetWS;
-  FRetDownloadNFe.LerXml;
-
-  for I := 0 to FRetDownloadNFe.retNFe.Count - 1 do
-  begin
-    if FRetDownloadNFe.retNFe.Items[I].cStat = 140 then
-    begin
-      NomeArq := FRetDownloadNFe.retNFe.Items[I].chNFe + '-nfe.xml';
-      FPDFeOwner.Gravar(NomeArq, FRetDownloadNFe.retNFe.Items[I].procNFe,
-                        GerarPathDownload(FRetDownloadNFe.retNFe.Items[I]));
-    end;
-  end;
-
-  { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
-    nativa e Decodificar caracteres HTML Entity }
-  FRetDownloadNFe.Free;    // Limpa a lista
-  FRetDownloadNFe := TRetDownloadNFe.Create;
-
-  FRetDownloadNFe.Leitor.Arquivo := ParseText(FPRetWS);
-  FRetDownloadNFe.LerXml;
-
-  FPMsg := FretDownloadNFe.xMotivo;
-  Result := (FRetDownloadNFe.cStat = 139);
-end;
-
-function TNFeDownloadNFe.GerarMsgLog: String;
-begin
-  {(*}
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'Recebimento: %s ' + LineBreak),
-                   [FretDownloadNFe.versao, TpAmbToStr(FretDownloadNFe.tpAmb),
-                    FretDownloadNFe.verAplic, IntToStr(FretDownloadNFe.cStat),
-                    FretDownloadNFe.xMotivo,
-                    IfThen(FretDownloadNFe.dhResp = 0, '',
-                           FormatDateTimeBr(FRetDownloadNFe.dhResp))]);
-  {*)}
-end;
-
-function TNFeDownloadNFe.GerarMsgErro(E: Exception): String;
-begin
-  Result := ACBrStr('WebService Download de NF-e:' + LineBreak +
-                    '- Inativo ou Inoperante tente novamente.');
-end;
-
-function TNFeDownloadNFe.GerarPathDownload(AItem :TRetNFeCollectionItem): String;
-var
-  Data: TDateTime;
-begin
-  if FPConfiguracoesNFe.Arquivos.EmissaoPathNFe then
-    Data := AItem.dhEmi
-  else
-    Data := Now;
-
-  Result := FPConfiguracoesNFe.Arquivos.GetPathDownload('',
-                                                        Copy(AItem.chNFe,7,14),
-                                                        Data);
-end;
-
 { TAdministrarCSCNFCe }
 
 constructor TAdministrarCSCNFCe.Create(AOwner: TACBrDFe);
@@ -4071,9 +3720,6 @@ begin
   FInutilizacao := TNFeInutilizacao.Create(FACBrNFe);
   FConsultaCadastro := TNFeConsultaCadastro.Create(FACBrNFe);
   FEnvEvento := TNFeEnvEvento.Create(FACBrNFe, TACBrNFe(FACBrNFe).EventoNFe);
-  FConsNFeDest := TNFeConsNFeDest.Create(FACBrNFe);
-  FDownloadNFe := TNFeDownloadNFe.Create(FACBrNFe, TACBrNFe(
-    FACBrNFe).DownloadNFe.Download);
   FAdministrarCSCNFCe := TAdministrarCSCNFCe.Create(FACBrNFe);
   FDistribuicaoDFe := TDistribuicaoDFe.Create(FACBrNFe);
   FEnvioWebService := TNFeEnvioWebService.Create(FACBrNFe);
@@ -4089,8 +3735,6 @@ begin
   FInutilizacao.Free;
   FConsultaCadastro.Free;
   FEnvEvento.Free;
-  FConsNFeDest.Free;
-  FDownloadNFe.Free;
   FAdministrarCSCNFCe.Free;
   FDistribuicaoDFe.Free;
   FEnvioWebService.Free;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2018
+-- ACBrNFeWebServices / ACBrNFe --
+[*] Removido Classes, Procedures e métodos dos serviços: ConsulNFeDest e DownloadNFe, por
+    terem sidos desativados pela SEFAZ a um bom tempo.
+  Por: Italo Jurisato Junior
+
 07/12/2018
 -- ACBrNFeServicos --
 [*] Atualização de URLs para QRCode 2.00 NFCe TO.

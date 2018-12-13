@@ -46,8 +46,7 @@ uses
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
   ACBrDFeDANFeReport,
   pcnNFe, pcnConversao, pcnConversaoNFe, pcnCCeNFe,
-  pcnEnvEventoNFe, pcnInutNFe,
-  pcnDownloadNFe, pcnRetDownloadNFe, pcnRetDistDFeInt,
+  pcnEnvEventoNFe, pcnInutNFe, pcnRetDistDFeInt,
   ACBrUtil;
 
 const
@@ -73,24 +72,10 @@ type
     property CCe: TCCeNFe read FCCe write FCCe;
   end;
 
-  {Download}
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}	
-  TDownload = class(TACBrComponent)
-  private
-    FDownload: TDownloadNFe;
-  public
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
-
-    property Download: TDownloadNFe read FDownload write FDownload;
-  end;
-
   { TACBrNFe }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}	
+  {$ENDIF RTL230_UP}
   TACBrNFe = class(TACBrDFe)
   private
     FDANFE: TACBrDFeDANFeReport;
@@ -98,8 +83,6 @@ type
     FCartaCorrecao: TCartaCorrecao;
     FEventoNFe: TEventoNFe;
     FInutNFe: TInutNFe;
-    FDownloadNFe: TDownload;
-    FRetDownloadNFe: TRetDownloadNFe;
     FRetDistDFeInt: TRetDistDFeInt;
     FStatus: TStatusACBrNFe;
     FWebServices: TWebServices;
@@ -142,9 +125,6 @@ type
     function Consultar( AChave: String = ''): Boolean;
     function EnviarCartaCorrecao(idLote: integer): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
-    function ConsultaNFeDest(CNPJ: String; IndNFe: TpcnIndicadorNFe;
-      IndEmi: TpcnIndicadorEmissor; ultNSU: String): Boolean;
-    function Download: Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double;
       var URL: String; var Servico: String; var SoapAction: String); reintroduce; overload;
@@ -170,8 +150,6 @@ type
     property CartaCorrecao: TCartaCorrecao read FCartaCorrecao write FCartaCorrecao;
     property EventoNFe: TEventoNFe read FEventoNFe write FEventoNFe;
     property InutNFe: TInutNFe read FInutNFe write FInutNFe;
-    property DownloadNFe: TDownload read FDownloadNFe write FDownloadNFe;
-    property RetDownloadNFe: TRetDownloadNFe read FRetDownloadNFe write FRetDownloadNFe;
     property RetDistDFeInt: TRetDistDFeInt read FRetDistDFeInt write FRetDistDFeInt;
     property Status: TStatusACBrNFe read FStatus;
 
@@ -231,10 +209,8 @@ begin
   FCartaCorrecao := TCartaCorrecao.Create(Self);
   FEventoNFe := TEventoNFe.Create;
   FInutNFe := TInutNFe.Create;
-  FDownloadNFe := TDownload.Create(Self);
   FRetDistDFeInt := TRetDistDFeInt.Create;
   FWebServices := TWebServices.Create(Self);
-  FRetDownloadNFe := TRetDownloadNFe.Create;
 end;
 
 destructor TACBrNFe.Destroy;
@@ -243,10 +219,8 @@ begin
   FCartaCorrecao.Free;
   FEventoNFe.Free;
   FInutNFe.Free;
-  FDownloadNFe.Free;
   FRetDistDFeInt.Free;
   FWebServices.Free;
-  FRetDownloadNFe.Free;
 
   inherited;
 end;
@@ -859,40 +833,6 @@ begin
     GerarException( WebServices.EnvEvento.Msg );
 end;
 
-function TACBrNFe.ConsultaNFeDest(CNPJ: String; IndNFe: TpcnIndicadorNFe;
-  IndEmi: TpcnIndicadorEmissor; ultNSU: String): Boolean;
-begin
-  // Desativar o acesso a esse serviço após 02/05/2017
-  Result := False;
-  GerarException('Após 02/05/2017 o Web Service ConsultaNFeDest foi desativado pela SEFAZ.'+#13+
-                 'Favor utilizar o método DistribuicaoDFe.');
-  (*
-  WebServices.ConsNFeDest.CNPJ := CNPJ;
-  WebServices.ConsNFeDest.indNFe := IndNFe;
-  WebServices.ConsNFeDest.indEmi := IndEmi;
-  WebServices.ConsNFeDest.ultNSU := ultNSU;
-
-  Result := WebServices.ConsNFeDest.Executar;
-
-  if not Result then
-    GerarException( WebServices.ConsNFeDest.Msg );
-  *)
-end;
-
-function TACBrNFe.Download: Boolean;
-begin
-  // Desativar o acesso a esse serviço após 02/05/2017
-  Result := False;
-  GerarException('Após 02/05/2017 o Web Service DownloadNFe foi desativado pela SEFAZ.'+#13+
-                 'Favor utilizar o método DistribuicaoDFe.');
-  (*
-  Result := WebServices.DownloadNFe.Executar;
-
-  if not Result then
-    GerarException( WebServices.DownloadNFe.Msg );
-  *)
-end;
-
 function TACBrNFe.NomeServicoToNomeSchema(const NomeServico: String): String;
 Var
   ok: Boolean;
@@ -1035,22 +975,6 @@ end;
 destructor TCartaCorrecao.Destroy;
 begin
   FCCe.Free;
-  inherited;
-end;
-
-{ TDownload }
-
-constructor TDownload.Create(AOwner: TComponent);
-begin
-  inherited;
-
-  FDownload := TDownloadNFe.Create;
-end;
-
-destructor TDownload.Destroy;
-begin
-  FDownload.Free;
-
   inherited;
 end;
 

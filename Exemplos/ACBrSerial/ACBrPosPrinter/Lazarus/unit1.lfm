@@ -1,41 +1,42 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
   Left = 637
-  Height = 530
+  Height = 522
   Top = 311
-  Width = 869
+  Width = 838
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
-  ClientHeight = 530
-  ClientWidth = 869
+  ClientHeight = 522
+  ClientWidth = 838
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poScreenCenter
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.0.2'
   object Panel1: TPanel
     Left = 256
-    Height = 530
+    Height = 522
     Top = 0
-    Width = 613
+    Width = 582
     Align = alClient
     Caption = 'Panel1'
-    ClientHeight = 530
-    ClientWidth = 613
+    ClientHeight = 522
+    ClientWidth = 582
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
       Height = 173
-      Top = 356
-      Width = 611
+      Top = 348
+      Width = 580
       Align = alBottom
       ClientHeight = 173
-      ClientWidth = 611
+      ClientWidth = 580
       TabOrder = 0
       object bTagFormtacaoCaracter: TButton
         Left = 8
         Height = 25
         Top = 40
         Width = 183
-        Caption = 'Tags de Formatação de Caracter'
+        Caption = 'Tags de Format. de Caracter'
         OnClick = bTagFormtacaoCaracterClick
         TabOrder = 0
       end
@@ -55,7 +56,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Tags de QRCode'
         OnClick = bTagQRCodeClick
-        TabOrder = 5
+        TabOrder = 6
       end
       object bTagsCodBarras: TButton
         Left = 200
@@ -64,7 +65,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Tags de Codigo de Barras'
         OnClick = bTagsCodBarrasClick
-        TabOrder = 4
+        TabOrder = 5
       end
       object bTagsTesteInvalidas: TButton
         Left = 8
@@ -91,7 +92,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Teste Impressão Linha a Linha'
         OnClick = bImpLinhaALinhaClick
-        TabOrder = 7
+        TabOrder = 8
       end
       object bImpTagsValidas: TButton
         Left = 392
@@ -100,7 +101,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Ajuda - Tags Validas'
         OnClick = bImpTagsValidasClick
-        TabOrder = 8
+        TabOrder = 10
       end
       object bLerStatus: TButton
         Left = 392
@@ -109,7 +110,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Leitura de Status'
         OnClick = bLerStatusClick
-        TabOrder = 11
+        TabOrder = 13
       end
       object bLerInfo: TButton
         Left = 392
@@ -118,21 +119,21 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Leitura de Informações'
         OnClick = bLerInfoClick
-        TabOrder = 10
+        TabOrder = 12
       end
       object Panel4: TPanel
         Left = 1
         Height = 39
         Top = 1
-        Width = 609
+        Width = 578
         Align = alTop
         BevelInner = bvRaised
         BevelOuter = bvLowered
         ClientHeight = 39
-        ClientWidth = 609
-        TabOrder = 12
+        ClientWidth = 578
+        TabOrder = 14
         object bLimpar: TBitBtn
-          Left = 420
+          Left = 389
           Height = 26
           Top = 7
           Width = 83
@@ -176,10 +177,10 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00
           }
           OnClick = bLimparClick
-          TabOrder = 0
+          TabOrder = 1
         end
         object bImprimir: TBitBtn
-          Left = 511
+          Left = 484
           Height = 26
           Top = 7
           Width = 92
@@ -223,16 +224,15 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             0000000000000000000000000000000000000000000000000000
           }
           OnClick = bImprimirClick
-          TabOrder = 1
-        end
-        object Button1: TButton
-          Left = 64
-          Height = 25
-          Top = 8
-          Width = 75
-          Caption = 'Senha'
-          OnClick = Button1Click
           TabOrder = 2
+        end
+        object cbxLimparTexto: TCheckBox
+          Left = 16
+          Height = 19
+          Top = 8
+          Width = 217
+          Caption = 'Limpar texto a cada teste selecionado'
+          TabOrder = 0
         end
       end
       object bTagLogo: TButton
@@ -242,7 +242,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Tags de Logotipo'
         OnClick = bTagLogoClick
-        TabOrder = 6
+        TabOrder = 7
       end
       object bTagGaveta: TButton
         Left = 392
@@ -251,7 +251,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Tag de Gaveta'
         OnClick = bTagGavetaClick
-        TabOrder = 9
+        TabOrder = 11
       end
       object bTagsTestePageMode: TButton
         Left = 8
@@ -260,27 +260,36 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 183
         Caption = 'Teste de Page Mode'
         OnClick = bTagsTestePageModeClick
-        TabOrder = 13
+        TabOrder = 4
+      end
+      object Button1: TButton
+        Left = 200
+        Height = 25
+        Top = 136
+        Width = 183
+        Caption = 'Senha'
+        OnClick = Button1Click
+        TabOrder = 9
       end
     end
     object PageControl1: TPageControl
       Left = 1
-      Height = 355
+      Height = 347
       Top = 1
-      Width = 611
+      Width = 580
       ActivePage = tsImprimir
       Align = alClient
       TabIndex = 0
       TabOrder = 1
       object tsImprimir: TTabSheet
         Caption = 'Texto a Imprimir'
-        ClientHeight = 327
-        ClientWidth = 603
+        ClientHeight = 319
+        ClientWidth = 572
         object mImp: TMemo
           Left = 0
-          Height = 327
+          Height = 319
           Top = 0
-          Width = 603
+          Width = 572
           Align = alClient
           ScrollBars = ssAutoBoth
           TabOrder = 0
@@ -289,13 +298,13 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object tsLog: TTabSheet
         Caption = 'Eventos Log'
-        ClientHeight = 347
-        ClientWidth = 575
+        ClientHeight = 313
+        ClientWidth = 570
         object mLog: TMemo
           Left = 0
-          Height = 347
+          Height = 329
           Top = 0
-          Width = 575
+          Width = 609
           Align = alClient
           ScrollBars = ssAutoBoth
           TabOrder = 0
@@ -305,11 +314,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   end
   object Panel2: TPanel
     Left = 0
-    Height = 530
+    Height = 522
     Top = 0
     Width = 256
     Align = alLeft
-    ClientHeight = 530
+    ClientHeight = 522
     ClientWidth = 256
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -428,7 +437,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       object Label5: TLabel
         Left = 119
         Height = 15
-        Top = 184
+        Top = 178
         Width = 60
         Caption = 'Pag.codigo'
         ParentColor = False
@@ -437,7 +446,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 119
         Height = 23
         Hint = 'Pagina de código usada pela Impressora POS'
-        Top = 200
+        Top = 194
         Width = 117
         ItemHeight = 15
         OnChange = cbxPagCodigoChange
@@ -507,7 +516,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object edLog: TEdit
         Cursor = crIBeam
-        Left = 121
+        Left = 119
         Height = 23
         Hint = 'Arquivo de Log para gravar os comandos enviados e recebidos'
         Top = 152
@@ -572,11 +581,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 10
       end
       object Label7: TLabel
-        Left = 184
+        Left = 170
         Height = 15
         Top = 88
-        Width = 64
-        Caption = 'Linhas Pular'
+        Width = 73
+        Caption = 'Linhas à Pular'
         ParentColor = False
       end
       object seLinhasPular: TSpinEdit

@@ -35,6 +35,7 @@ type
     cbCortarPapel: TCheckBox;
     cbHRI: TCheckBox;
     cbGavetaSinalInvertido: TCheckBox;
+    cbxLimparTexto: TCheckBox;
     cbxModelo: TComboBox;
     cbxPagCodigo: TComboBox;
     cbxPorta: TComboBox;
@@ -127,6 +128,7 @@ type
     procedure cbxModeloChange(Sender: TObject);
     procedure cbxPagCodigoChange(Sender: TObject);
     procedure cbxPortaChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure seBarrasAlturaChange(Sender: TObject);
@@ -146,6 +148,7 @@ type
     procedure seQRCodeErrorLevelChange(Sender: TObject);
     procedure seQRCodeLarguraModuloChange(Sender: TObject);
     procedure seQRCodeTipoChange(Sender: TObject);
+    procedure LimparTexto;
   private
     { private declarations }
     FElginUSB : TElginUSBPrinter;
@@ -213,6 +216,12 @@ begin
   FElginUSB.Free;
 end;
 
+procedure TFrPosPrinterTeste.FormClose(Sender: TObject;
+  var CloseAction: TCloseAction);
+begin
+  GravarINI;
+end;
+
 procedure TFrPosPrinterTeste.bLimparClick(Sender: TObject);
 begin
   mImp.Clear;
@@ -220,14 +229,18 @@ end;
 
 procedure TFrPosPrinterTeste.bTagFormtacaoCaracterClick(Sender: TObject);
 begin
+  LimparTexto; 
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
-  mImp.Lines.Add('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas');
-  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
-  mImp.Lines.Add('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas');
-  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
-  mImp.Lines.Add('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas');
-  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
+  mImp.Lines.Add('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas' +
+                 LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', +
+                         ACBrPosPrinter1.ColunasFonteNormal));
+  mImp.Lines.Add('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas' +
+                 LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', +
+                         ACBrPosPrinter1.ColunasFonteExpandida));
+  mImp.Lines.Add('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas' +
+                 LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', +
+                         ACBrPosPrinter1.ColunasFonteCondensada));
   mImp.Lines.Add('</c><n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
@@ -265,6 +278,7 @@ end;
 
 procedure TFrPosPrinterTeste.bTagGavetaClick(Sender: TObject);
 begin
+  LimparTexto;
   mImp.Lines.Add('Abertura da Gaveta padrão');
   mImp.Lines.Add('</abre_gaveta>');
   mImp.Lines.Add('');
@@ -276,6 +290,7 @@ end;
 
 procedure TFrPosPrinterTeste.bTagLogoClick(Sender: TObject);
 begin
+  LimparTexto;
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</ce>');
   mImp.Lines.Add('<logo_imprimir>'+ifthen(ACBrPosPrinter1.ConfigLogo.IgnorarLogo,'0','1')+'</logo_imprimir>');
@@ -289,6 +304,7 @@ end;
 
 procedure TFrPosPrinterTeste.bTagQRCodeClick(Sender: TObject);
 begin
+  LimparTexto;
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
   mImp.Lines.Add('<qrcode_tipo>'+IntToStr(ACBrPosPrinter1.ConfigQRCode.Tipo)+'</qrcode_tipo>');
@@ -309,6 +325,7 @@ end;
 
 procedure TFrPosPrinterTeste.bTagsAlinhamentoClick(Sender: TObject);
 begin
+  LimparTexto;
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
   mImp.Lines.Add('TEXTO NORMAL');
@@ -348,6 +365,7 @@ end;
 
 procedure TFrPosPrinterTeste.bTagsTesteInvalidasClick(Sender: TObject);
 begin
+  LimparTexto;
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('<CE>*** TESTE DE TAGS INVÁLIDAS ***</CE>');
   mImp.Lines.Add('<ce> <>tags inválidas no texto">">><<</CE>');
@@ -357,7 +375,7 @@ end;
 
 procedure TFrPosPrinterTeste.bTagsCodBarrasClick(Sender: TObject);
 begin
-
+  LimparTexto;
   if not ACBrPosPrinter1.Ativo then
     ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModelo.ItemIndex );
 
@@ -419,9 +437,15 @@ end;
 
 procedure TFrPosPrinterTeste.bTagsTestePagCodigoClick(Sender: TObject);
 begin
+  LimparTexto;
   mImp.Lines.Add('</zera>');
-  mImp.Lines.Add('</linha_dupla>');
-  mImp.Lines.Add('ÁÉÍÓÚáéíóúçÇãõÃÕÊêÀà');
+  mImp.Lines.Add('Fonte tipo A com Página de Código ' + cbxPagCodigo.Text);
+  mImp.Lines.Add('À noite, vovô Kowalsky vê o ímã cair no pé do pingüim queixoso e vovó põe açúcar no chá de tâmaras do jabuti feliz.');
+  mImp.Lines.Add('ÁÉÍÓÚáéíóúçÇãõÃÕÊêÂâÔôÀà');
+  mImp.Lines.Add('');
+  mImp.Lines.Add('</FB>Fonte tipo B com Página de Código ' + cbxPagCodigo.Text);
+  mImp.Lines.Add('À noite, vovô Kowalsky vê o ímã cair no pé do pingüim queixoso e vovó põe açúcar no chá de tâmaras do jabuti feliz.');
+  mImp.Lines.Add('ÁÉÍÓÚáéíóúçÇãõÃÕÊêÂâÔôÀà');
   mImp.Lines.Add('</corte_total>');
 end;
 
@@ -466,6 +490,7 @@ end;
 
 procedure TFrPosPrinterTeste.bTagsTestePageModeClick(Sender: TObject);
 begin
+  LimparTexto;
   mImp.Lines.Add('</zera><barra_mostrar>0</barra_mostrar><barra_largura>2</barra_largura><barra_altura>40</barra_altura>');
   mImp.Lines.Add('<mp><mp_direcao>0</mp_direcao><mp_topo>0</mp_topo><mp_esquerda>0</mp_esquerda><mp_largura>257</mp_largura><mp_altura>740</mp_altura><mp_espaco>50</mp_espaco></mp_configurar>');
   mImp.Lines.Add('<c><n>CONDENSADA/NEGRITO</n></c>');
@@ -504,6 +529,7 @@ end;
 
 procedure TFrPosPrinterTeste.Button1Click(Sender: TObject);
 begin
+  LimparTexto;
   ACBrPosPrinter1.Imprimir('<code93>1234'+#9+'5678</code93></corte_total>');
 end;
 
@@ -669,6 +695,12 @@ end;
 procedure TFrPosPrinterTeste.seQRCodeTipoChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ConfigQRCode.Tipo := seQRCodeTipo.Value;
+end;
+
+procedure TFrPosPrinterTeste.LimparTexto; {Limpa o texto do mImp somente se o cbxLimparTexto.checked for true}
+begin
+  if cbxLimparTexto.Checked then 
+     mImp.Clear;
 end;
 
 procedure TFrPosPrinterTeste.GravarINI;

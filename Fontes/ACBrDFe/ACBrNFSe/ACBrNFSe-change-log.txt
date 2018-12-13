@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2018
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/48193-leitura-de-novos-dados-em-pnfsnfser-lernfse_equiplano/
+   Por: Eliezerfb
+
 30/11/2018
 -- ACBrNFSeWebServices --
 [*] Corrigido o problema no serviço de Cancelamento, para o provedor Infisc.

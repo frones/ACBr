@@ -4726,6 +4726,7 @@ begin
       proInfiscv11,
       proIssDSF,
       proThema,
+      proSP,
       proNotaBlu:
         FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
 
@@ -4765,6 +4766,7 @@ begin
     proInfiscv11,
     proIssDSF,
     proThema,
+    proSP,
     proNotaBlu: FPDadosMsg := FPDadosMsg;
 
     proISSe,

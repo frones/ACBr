@@ -1713,22 +1713,13 @@ object Form1: TForm1
             TabOrder = 20
             OnClick = btnManifDestConfirmacaoClick
           end
-          object btnNfeDestinadas: TButton
-            Left = 375
-            Top = 211
-            Width = 178
-            Height = 25
-            Caption = 'Consulta NFe Destinadas'
-            TabOrder = 21
-            OnClick = btnNfeDestinadasClick
-          end
           object btnImprimirCCe: TButton
             Left = 8
             Top = 240
             Width = 177
             Height = 25
             Caption = 'Imprimir Evento'
-            TabOrder = 22
+            TabOrder = 21
             OnClick = btnImprimirCCeClick
           end
           object btnEnviarEvento: TButton
@@ -1737,7 +1728,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Enviar Evento Email'
-            TabOrder = 23
+            TabOrder = 22
             OnClick = btnEnviarEventoClick
           end
           object btnDistribuicaoDFe: TButton
@@ -1746,7 +1737,7 @@ object Form1: TForm1
             Width = 178
             Height = 25
             Caption = 'Distribui'#231#227'o Documentos Fiscais'
-            TabOrder = 24
+            TabOrder = 23
             OnClick = btnDistribuicaoDFeClick
           end
           object btnInutilizarImprimir: TButton
@@ -1755,7 +1746,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Inutilizar Imprimir'
-            TabOrder = 25
+            TabOrder = 24
             OnClick = btnInutilizarImprimirClick
           end
           object btnValidarRegrasNegocio: TButton
@@ -1764,7 +1755,7 @@ object Form1: TForm1
             Width = 177
             Height = 25
             Caption = 'Validar Regras de Neg'#243'cio'
-            TabOrder = 26
+            TabOrder = 25
             OnClick = btnValidarRegrasNegocioClick
           end
         end

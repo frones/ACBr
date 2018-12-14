@@ -36,7 +36,7 @@ unit DoCHQUnit;
 interface
 
 uses
-  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrCHQ, DoECFUnit,
+  Classes, TypInfo, SysUtils, CmdUnit, ACBrUtil, ACBrCHQ,
   ACBrMonitorConsts, ACBrMonitorConfig;
 
 type

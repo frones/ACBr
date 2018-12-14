@@ -38,7 +38,7 @@ unit DoBoletoUnit;
 interface
 
 uses
-  Classes, SysUtils, CmdUnit, IniFiles, ACBrBoleto,
+  Classes, SysUtils, CmdUnit, ACBrBoleto,
   ACBrMonitorConfig, ACBrMonitorConsts;
 
 type

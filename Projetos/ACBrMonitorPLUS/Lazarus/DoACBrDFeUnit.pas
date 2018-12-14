@@ -4,8 +4,8 @@ unit DoACBrDFeUnit;
 
 interface
 
-uses Classes, SysUtils, CmdUnit, ACBrUtil, ACBrMonitorConfig,
-  ACBrMonitorConsts, ACBrDFeUtil, UtilUnit, ACBrDFe;
+uses Classes, SysUtils, ACBrUtil,
+  ACBrMonitorConsts, ACBrDFeUtil, ACBrDFe;
 
 type
 

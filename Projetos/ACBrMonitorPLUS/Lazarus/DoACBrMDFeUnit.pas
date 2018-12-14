@@ -1237,7 +1237,6 @@ end;
 }
 procedure TMetodoSetAmbiente.Executar;
 var
-  OK: boolean;
   NumAmbiente: Integer;
 begin
   NumAmbiente := StrToIntDef(fpCmd.Params(0), 2);
@@ -1261,13 +1260,13 @@ end;
           2 - IE: Boolean 1: para consulta por IF
 }
 procedure TMetodoConsultaCadastro.Executar;
-var
-  AUF, ADocumento: String;
-  AIE: Boolean;
+//var
+//  AUF, ADocumento: String;
+//  AIE: Boolean;
 begin
-  AUF := fpCmd.Params(0);
-  ADocumento := fpCmd.Params(1);
-  AIE := StrToBoolDef(fpCmd.Params(2), False);
+  //AUF := fpCmd.Params(0);
+  //ADocumento := fpCmd.Params(1);
+  //AIE := StrToBoolDef(fpCmd.Params(2), False);
 
   raise Exception.Create('Método: MDFe.ConsultarCadastro não implementado.');
 end;
@@ -1283,17 +1282,17 @@ end;
           6 - NumFinal: Integer Nº final inutilização
 }
 procedure TMetodoInutilizarMDFe.Executar;
-var
-  ACNPJ, AJustificativa, ASerie: String;
-  AAno, AModelo, ANumIninial, ANumFinal: Integer;
+//var
+//  ACNPJ, AJustificativa, ASerie: String;
+//  AAno, AModelo, ANumIninial, ANumFinal: Integer;
 begin
-  ACNPJ := fpCmd.Params(0);
-  AJustificativa := fpCmd.Params(1);
-  AAno := StrToIntDef(fpCmd.Params(2), 0);
-  AModelo := StrToIntDef(fpCmd.Params(3), 0);
-  ASerie := fpCmd.Params(4);
-  ANumIninial := StrToIntDef(fpCmd.Params(5), 0);
-  ANumFinal := StrToIntDef(fpCmd.Params(6), 0);
+  //ACNPJ := fpCmd.Params(0);
+  //AJustificativa := fpCmd.Params(1);
+  //AAno := StrToIntDef(fpCmd.Params(2), 0);
+  //AModelo := StrToIntDef(fpCmd.Params(3), 0);
+  //ASerie := fpCmd.Params(4);
+  //ANumIninial := StrToIntDef(fpCmd.Params(5), 0);
+  //ANumFinal := StrToIntDef(fpCmd.Params(6), 0);
 
   raise Exception.Create('Método: MDFe.InutilizarMDFe não implementado.');
 end;

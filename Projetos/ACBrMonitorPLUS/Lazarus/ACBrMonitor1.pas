@@ -4055,12 +4055,12 @@ procedure TFrmACBrMonitor.LerIni(AtualizaMonitoramento: Boolean);
 var
   ECFAtivado, CHQAtivado, GAVAtivado, DISAtivado, BALAtivado,
   ETQAtivado, ESCPOSAtivado: boolean;
-  wSenha, POSPrDeviceParams, ECFDeviceParams, CHQDeviceParams, SATDeviceParams,
-  PathApplication: string;
+  wSenha, POSPrDeviceParams, ECFDeviceParams, CHQDeviceParams: string;
+  //PathApplication: string;
   wNomeArquivo: string;
   OK: boolean;
 begin
-  PathApplication := PathWithDelim(ExtractFilePath(Application.ExeName));
+  //PathApplication := PathWithDelim(ExtractFilePath(Application.ExeName));
 
   ECFAtivado := ACBrECF1.Ativo;
   CHQAtivado := ACBrCHQ1.Ativo;
@@ -5191,7 +5191,7 @@ end;
 procedure TFrmACBrMonitor.SalvarIni;
 var
   OldMonitoraTXT, OldMonitoraTCP, OldMonitoraPasta: boolean;
-  OldVersaoSSL : Integer;
+  //OldVersaoSSL : Integer;
 begin
 
   if cbSenha.Checked and (edSenha.Text <> 'NADAAQUI') and (edSenha.Text <> '') then
@@ -5260,7 +5260,7 @@ begin
       OldMonitoraTCP   := Modo_TCP;
       OldMonitoraTXT   := Modo_TXT;
       OldMonitoraPasta := MonitoraPasta;
-      OldVersaoSSL     := VersaoSSL;
+      //OldVersaoSSL     := VersaoSSL;
 
       Modo_TCP         := rbTCP.Checked;
       Modo_TXT         := rbTXT.Checked;

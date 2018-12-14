@@ -265,7 +265,7 @@ TACBrRFD = class( TACBrComponent )     { Componente ACBrRFD }
     function GetArqRFDID: String;
     Procedure GravaLog(const Arq : String; Linha : String );
     function VerificaHashLinhaLog(var Linha: String): Boolean;
-    function CalcHashLinhaLog(Linha: String): String;
+    function CalcHashLinhaLog(const Linha: String): String;
 
     procedure SetDiaMov(const AValue: TDateTime);
     property pDiaMov : TDateTime read fsDiaMov write SetDiaMov ;
@@ -1784,7 +1784,7 @@ begin
               True );  { True para adicionar no final do arquivo }
 end;
 
-Function TACBrRFD.CalcHashLinhaLog(Linha: String) : String ;
+Function TACBrRFD.CalcHashLinhaLog(const Linha: String) : String ;
  Var Chave : String ;
 begin
   Result := '' ;

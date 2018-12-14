@@ -175,10 +175,8 @@ type
     fpPosPrinter: TACBrPosPrinter;
 
   public
-    function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString): AnsiString;
-      virtual;
-    function ComandoCodBarras(const ATag: String; const ACodigo: AnsiString): AnsiString;
-      virtual;
+    function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString): AnsiString; virtual;
+    function ComandoCodBarras(const ATag: String; const ACodigo: AnsiString): AnsiString; virtual;
     function ComandoQrCode(const ACodigo: AnsiString): AnsiString; virtual;
     function ComandoEspacoEntreLinhas(Espacos: byte): AnsiString; virtual;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; virtual;
@@ -324,7 +322,7 @@ type
     function GetColunasFonteCondensada: Integer;
     function GetColunasFonteExpandida: Integer;
     function GetNumeroPaginaDeCodigo(APagCod: TACBrPosPaginaCodigo): word;
-    function CodificarPaginaDeCodigo(ATexto: AnsiString): AnsiString;
+    function CodificarPaginaDeCodigo(const ATexto: AnsiString): AnsiString;
 
     procedure DoLinesChange(Sender: TObject);
     function GetColunas: Integer;
@@ -359,7 +357,7 @@ type
       DecodificarTags: Boolean = True; CodificarPagina: Boolean = True;
       Copias: Integer = 1);
     procedure ImprimirLinha(const AString: AnsiString);
-    procedure ImprimirCmd(AString: AnsiString);
+    procedure ImprimirCmd(const AString: AnsiString);
     procedure GravarLog(AString: AnsiString; Traduz: Boolean = False;
       AdicionaTempo: Boolean = True);
 
@@ -1793,7 +1791,7 @@ begin
   Imprimir(AString, True);
 end;
 
-procedure TACBrPosPrinter.ImprimirCmd(AString: AnsiString);
+procedure TACBrPosPrinter.ImprimirCmd(const AString: AnsiString);
 begin
   if FBuffer.Count > 0 then
     Imprimir;
@@ -1853,7 +1851,7 @@ begin
   Result := FDevice.Ativo;
 end;
 
-function TACBrPosPrinter.CodificarPaginaDeCodigo(ATexto: AnsiString
+function TACBrPosPrinter.CodificarPaginaDeCodigo(const ATexto: AnsiString
   ): AnsiString;
 var
   NumPagCod: word;

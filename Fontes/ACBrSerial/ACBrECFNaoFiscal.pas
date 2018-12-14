@@ -285,7 +285,7 @@ TACBrECFNaoFiscal = class( TACBrECFClass )
     procedure GravaBuffer ;
     procedure ZeraBuffer ;
     procedure ImprimeBuffer ;
-    procedure ImprimePorta( AString : AnsiString ) ; overload ;
+    procedure ImprimePorta( const AString : AnsiString ) ; overload ;
     procedure ImprimePorta( AStringList : TStringList ) ; overload ;
     Procedure AddBufferRelatorio ;
     Procedure AddBufferRodape ;
@@ -2298,7 +2298,7 @@ begin
   fsBuffer.Clear ;
 end;
 
-procedure TACBrECFNaoFiscal.ImprimePorta( AString : AnsiString ) ;
+procedure TACBrECFNaoFiscal.ImprimePorta( const AString : AnsiString ) ;
 Var OldAguardandoResposta : Boolean ;
 begin
   OldAguardandoResposta := AguardandoResposta ;

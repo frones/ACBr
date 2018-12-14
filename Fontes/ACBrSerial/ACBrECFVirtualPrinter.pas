@@ -88,7 +88,7 @@ TACBrECFVirtualPrinterClass = class( TACBrECFVirtualBufferClass )
 
     function ColunasExpandido(): Integer; override;
   protected
-    procedure Imprimir( AString : AnsiString ) ; override ;
+    procedure Imprimir(const AString : AnsiString ) ; override ;
 
     function GetSubModeloECF: String ; override ;
     function GetNumVersao: String; override ;
@@ -212,7 +212,7 @@ begin
   inherited ;
 end;
 
-procedure TACBrECFVirtualPrinterClass.Imprimir(AString: AnsiString);
+procedure TACBrECFVirtualPrinterClass.Imprimir(const AString: AnsiString);
 Var
   OldAguardandoResposta : Boolean ;
 begin

@@ -834,7 +834,7 @@ TACBrECFClass = class
     Function EnviaComando_ECF( cmd : AnsiString ) : AnsiString ; virtual ;
 
     procedure LeResposta ; virtual ;
-    function TransmiteComando( Cmd : AnsiString ) : Boolean ; virtual ;
+    function TransmiteComando( const Cmd : AnsiString ) : Boolean ; virtual ;
 
     function VerificaFimLeitura(var Retorno: AnsiString; var TempoLimite: TDateTime) : Boolean ; virtual ;
     function VerificaFimImpressao(var TempoLimite: TDateTime) : Boolean ; virtual ;
@@ -1316,11 +1316,11 @@ TACBrECFClass = class
     Function RetornaInfoECF( Registrador: String) : AnsiString; Virtual ;
 
     { Retorna a Resposta do ECF }
-    Function EnviaComando( cmd : AnsiString = '') : AnsiString ; overload ;
+    Function EnviaComando( const cmd : AnsiString = '') : AnsiString ; overload ;
     { Versao que Permite mudar o TimeOut padrao }
-    Function EnviaComando( cmd : AnsiString; lTimeOut : Integer): AnsiString; overload ;
+    Function EnviaComando( const cmd : AnsiString; lTimeOut : Integer): AnsiString; overload ;
     { Versao que Permite mudar o TimeOut padrao e o TempoInicioMsg }
-    Function EnviaComando( cmd : AnsiString; lTimeOut, lTempoInicioMsg : Integer):
+    Function EnviaComando( const cmd : AnsiString; lTimeOut, lTempoInicioMsg : Integer):
        AnsiString; overload ;
 
     { Gera erro se nao puder abrir Cupom, informando o motivo }
@@ -2065,7 +2065,7 @@ end;
 
 
 {------------------------------------------------------------------------------}
-function TACBrECFClass.EnviaComando(cmd: AnsiString; lTimeOut: Integer): AnsiString;
+function TACBrECFClass.EnviaComando(const cmd: AnsiString; lTimeOut: Integer): AnsiString;
 Var wTimeOut : Integer ;
 begin
   wTimeOut := TimeOut ;                      { Salvando os valores antigos }
@@ -2078,7 +2078,7 @@ begin
   end ;
 end;
 
-function TACBrECFClass.EnviaComando(cmd: AnsiString; lTimeOut,
+function TACBrECFClass.EnviaComando(const cmd: AnsiString; lTimeOut,
   lTempoInicioMsg: Integer): AnsiString;
 Var wTimeOut, wTempoInicioMsg : Integer ;
 begin
@@ -2096,7 +2096,7 @@ begin
   end ;
 end;
 
-function TACBrECFClass.EnviaComando(cmd: AnsiString = ''): AnsiString;
+function TACBrECFClass.EnviaComando(const cmd: AnsiString = ''): AnsiString;
 begin
   try
     try
@@ -2155,7 +2155,7 @@ begin
     WriteLog(fpArqLOG, '-- '+FormatDateTime('dd/mm hh:nn:ss:zzz',now)+' '+ AString);
 end ;
 
-function TACBrECFClass.EnviaComando_ECF(cmd: AnsiString): AnsiString;
+function TACBrECFClass.EnviaComando_ECF( cmd: AnsiString): AnsiString;
 begin
   Result := '';
   ErroAbstract( 'EnviaComando_ECF' );
@@ -2321,7 +2321,7 @@ end;
    - Se conseguiu retorna True.
    - Se não conseguiu e a propriedade Retentar, estiver ligada retorna False,
    - Se Retentar estiver desligada ou respondeu NAO ao Retentar, dispara Excecao}
-function TACBrECFClass.TransmiteComando(Cmd: AnsiString): Boolean;
+function TACBrECFClass.TransmiteComando(const Cmd: AnsiString): Boolean;
 begin
   Result := True ;
   if not Assigned(fpDevice) then exit;

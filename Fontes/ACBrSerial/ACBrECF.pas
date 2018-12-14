@@ -6535,7 +6535,7 @@ var
   Relatorio: TStringList;
   I: Integer;
   TamLin: Integer;
-  SubTotal: Double;
+  SubTotalCalculado: Double;
   FPAcumuladas: TACBrECFFormasPagamento;
   FPTotalizado: TACBrECFFormasPagamento;
 
@@ -6603,18 +6603,18 @@ var
     Relatorio.Add(
       PadRight('', 15, '-') + ' ' +
       PadRight('', 19, '-') + ' ' +
-      PadRight('', 12, '-')  
+      PadRight('', 12, '-')
     );
   end;
 
   procedure AddSubTotal;
   begin
     Relatorio.Add('</linha_simples>');
-    Relatorio.Add(Format('Sub-Total                           %12.2n', [SubTotal]));
+    Relatorio.Add(Format('Sub-Total                           %12.2n', [SubTotalCalculado]));
     Relatorio.Add('');
     Relatorio.Add('');
 
-    SubTotal  := 0.00;
+    SubTotalCalculado  := 0.00;
   end;
 
 begin
@@ -6640,9 +6640,9 @@ begin
     if Trim(ATituloRelatorio) <> '' then
       Relatorio.Add(PadCenter(ATituloRelatorio, TamLin));
 
-    // *************************************************************************      
+    // *************************************************************************
     // impressão do relatório acumulando por data, descricao e tipo de documento
-    // *************************************************************************    
+    // *************************************************************************
     FPAcumuladas := TACBrECFFormasPagamento.Create;
     FPTotalizado := TACBrECFFormasPagamento.Create;
     try
@@ -6677,7 +6677,7 @@ begin
 
         // acumuladores
         AcumularValorFP(FPAcumuladas[I], True, FPTotalizado);
-        SubTotal := SubTotal + FPAcumuladas[I].Total;
+        SubTotalCalculado := SubTotalCalculado + FPAcumuladas[I].Total;
       end;
 
       // sub-total do ultimo dia
@@ -6695,7 +6695,7 @@ begin
       Relatorio.Add(ACBrStr('Identificação                           Valor R$'));
       Relatorio.Add(
         PadLeft('', 27, '-') + ' ' +
-        PadLeft('', 20, '-')  
+        PadLeft('', 20, '-')
       );
 
       // acumular os valores totais das formas
@@ -6708,7 +6708,7 @@ begin
       end;
 
       // impressão das linhas de totalização
-      SubTotal  := 0.00;
+      SubTotalCalculado  := 0.00;
       FPAcumuladas.Ordenar;
       for I := 0 to FPAcumuladas.Count - 1 do
       begin
@@ -6716,12 +6716,12 @@ begin
           PadRight(FPAcumuladas[I].Descricao, 27),
           Format('%20.2n', [FPAcumuladas[I].Total]) ]));
 
-        SubTotal := SubTotal + FPAcumuladas[I].Total;
+        SubTotalCalculado := SubTotalCalculado + FPAcumuladas[I].Total;
       end;
 
       // somatorio total
       Relatorio.Add('</linha_simples>');
-      Relatorio.Add(Format('TOTAL                %27.2n', [SubTotal]));
+      Relatorio.Add(Format('TOTAL                %27.2n', [SubTotalCalculado]));
       Relatorio.Add('');
     finally
       FreeAndNil(FPAcumuladas);

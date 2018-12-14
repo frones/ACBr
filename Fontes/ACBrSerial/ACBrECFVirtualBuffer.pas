@@ -95,9 +95,9 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
     procedure AddBufferRodape;
 
   protected
-    procedure AddBufferLinhas( AString: AnsiString) ;
+    procedure AddBufferLinhas( const AString: AnsiString) ;
 
-    function AjustaLinhaColunas( Linha: AnsiString ): AnsiString; virtual;
+    function AjustaLinhaColunas( const Linha: AnsiString ): AnsiString; virtual;
     function ColunasExpandido(): Integer; virtual;
 
     procedure AtivarVirtual ; override;
@@ -131,7 +131,7 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
     procedure FechaRelatorioVirtual; override;
 
   protected
-    procedure Imprimir( AString : AnsiString ) ; overload ; virtual;
+    procedure Imprimir( const AString : AnsiString ) ; overload ; virtual;
     procedure Imprimir( AStringList : TStringList ) ; overload ;
 
     function GetSubModeloECF: String ; override ;
@@ -713,7 +713,7 @@ begin
   end ;
 end;
 
-procedure TACBrECFVirtualBufferClass.AddBufferLinhas(AString: AnsiString);
+procedure TACBrECFVirtualBufferClass.AddBufferLinhas(const AString: AnsiString);
 var
   Linhas: TStringList;
 begin
@@ -729,7 +729,7 @@ begin
   end;
 end;
 
-function TACBrECFVirtualBufferClass.AjustaLinhaColunas(Linha: AnsiString
+function TACBrECFVirtualBufferClass.AjustaLinhaColunas(const Linha: AnsiString
   ): AnsiString;
 begin
   Result := AjustaLinhas( Linha, Colunas );
@@ -909,7 +909,7 @@ begin
   ZeraBuffer;
 end ;
 
-procedure TACBrECFVirtualBufferClass.Imprimir(AString : AnsiString) ;
+procedure TACBrECFVirtualBufferClass.Imprimir(const AString : AnsiString) ;
 begin
   { ACBrECFVirtualBuffer não tem impressão, sobrescrever nas classes filhas }
 end ;

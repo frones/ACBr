@@ -263,7 +263,7 @@ TACBrRFD = class( TACBrComponent )     { Componente ACBrRFD }
     function GetArqINI: String;
 
     function GetArqRFDID: String;
-    Procedure GravaLog(Arq, Linha : String );
+    Procedure GravaLog(const Arq : String; Linha : String );
     function VerificaHashLinhaLog(var Linha: String): Boolean;
     function CalcHashLinhaLog(Linha: String): String;
 
@@ -302,7 +302,7 @@ TACBrRFD = class( TACBrComponent )     { Componente ACBrRFD }
     procedure LerINI ;
     procedure GravarINI ;
     property ArqINI : String read GetArqINI ;
-    Procedure CriarArqRFDID( NomeArq : String );
+    Procedure CriarArqRFDID( const NomeArq : String );
 
     Function NomeArqRFD( DtMov : TDatetime ) : String ;
 
@@ -1766,7 +1766,7 @@ begin
 end;
 
 
-procedure TACBrRFD.GravaLog(Arq, Linha: String);
+procedure TACBrRFD.GravaLog(const Arq: String; Linha: String );
  Var Hash : String ;
 begin
   Hash := CalcHashLinhaLog( Linha ) ;
@@ -2053,7 +2053,7 @@ begin
   end ;
 end;
 
-procedure TACBrRFD.CriarArqRFDID( NomeArq : String ) ;
+procedure TACBrRFD.CriarArqRFDID( const NomeArq : String ) ;
 Var
   SL : TStringList ;
 begin

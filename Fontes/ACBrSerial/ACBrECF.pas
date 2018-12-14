@@ -632,8 +632,8 @@ TACBrECF = class( TACBrComponent )
     { Procedimentos de Cupom Fiscal }
     property Consumidor : TACBrECFConsumidor read GetConsumidorClass ;
     { Grava dados do Consumidor para ser usado na Abertura ou Fechamento do Cupom }
-    Procedure IdentificaConsumidor( const CPF_CNPJ : String; Nome : String = '';
-       Endereco : String = '') ;
+    Procedure IdentificaConsumidor( const CPF_CNPJ : String; const Nome : String = '';
+       const Endereco : String = '') ;
     Procedure AbreCupom( const CPF_CNPJ : String = ''; const Nome : String = '';
        const Endereco : String = ''; ModoPreVenda: Boolean = False) ;
     Procedure AbreBilhetePassagem( const Origem, Destino, Linha, Agencia: String;
@@ -2715,8 +2715,8 @@ begin
      FOnDepoisAbreCupom(CPF_CNPJ, Nome, Endereco);
 end;
 
-procedure TACBrECF.IdentificaConsumidor(const CPF_CNPJ : String ; Nome : String ;
-  Endereco : String) ;
+procedure TACBrECF.IdentificaConsumidor(const CPF_CNPJ : String ; const Nome : String ;
+  const Endereco : String) ;
 begin
   fsECF.Consumidor.AtribuiConsumidor( CPF_CNPJ,
                                       CodificarPaginaDeCodigoECF( Nome ),

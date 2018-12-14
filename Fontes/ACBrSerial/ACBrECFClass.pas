@@ -214,7 +214,7 @@ TACBrECFAliquota = class
     fsTipo: Char;
     fsTotal: Double;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
     procedure SetTipo(const AValue: Char);
  public
     constructor create ;
@@ -293,7 +293,7 @@ TACBrECFFormaPagamento = class
     fsData: TDateTime;
     fsTipoDoc: String;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
  public
     constructor create ;
     procedure Assign( AFormaPagamento : TACBrECFFormaPagamento ) ;
@@ -356,7 +356,7 @@ TACBrECFRelatorioGerencial = class
     fsDescricao: String;
     fsContador: Integer;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
  public
     constructor create ;
     procedure Assign( ARelatorioGerencial : TACBrECFRelatorioGerencial ) ;
@@ -393,7 +393,7 @@ TACBrECFComprovanteNaoFiscal = class
     fsTotal: Double ;
     fsContador: Integer;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
  public
     constructor create ;
     procedure Assign( AComprovanteNaoFiscal : TACBrECFComprovanteNaoFiscal ) ;
@@ -1475,7 +1475,7 @@ begin
             FloatToStr( RoundTo(Total, -2) )+ '|' ;
 end;
 
-procedure TACBrECFAliquota.SetAsString(AValue: String);
+procedure TACBrECFAliquota.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -1546,7 +1546,7 @@ begin
             TipoDoc                          + '|' ;
 end;
 
-procedure TACBrECFFormaPagamento.SetAsString(AValue: String);
+procedure TACBrECFFormaPagamento.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -1688,7 +1688,7 @@ begin
             IntToStr( Contador ) ;
 end;
 
-procedure TACBrECFRelatorioGerencial.SetAsString(AValue: String);
+procedure TACBrECFRelatorioGerencial.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -1745,7 +1745,7 @@ begin
             IntToStr( Contador )             + '|' ;
 end;
 
-procedure TACBrECFComprovanteNaoFiscal.SetAsString(AValue: String);
+procedure TACBrECFComprovanteNaoFiscal.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin

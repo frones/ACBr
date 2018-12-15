@@ -583,7 +583,7 @@ begin
           {08} PadRight(Destinatario.CodigoConsumidor, 12) +
           {09} DtoS(DataEmissao) +
           {10} PadLeft(IntToStr(FModelo), 2, '0') +
-          {11} PadLeft(FSerie, 3) +
+          {11} PadRight(FSerie, 3) +
           {12} PadLeft(IntToStr(NumeroNF), 9, '0') +
           {13} AutenticacaoDocumentoFiscal;
           //{14} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 12, '0') +
@@ -779,7 +779,7 @@ begin
         SRec := SRec +
               {15} DtOS(FMestre[I].DataEmissao) +
               {16} PadLeft(IntToStr(Modelo), 2, '0') +
-              {17} PadLeft(Serie, 3, '0') +
+              {17} PadRight(Serie, 3) +
               {18} PadLeft(IntToStr(FMestre[I].NumeroNF), 9, '0') +
               {19} FMestre[I].Destinatario.CodigoDoMunicipio +
               {20} PadRight('', 5);
@@ -864,7 +864,7 @@ begin
     Result := FUF +
               PadLeft(OnlyNumber(CnpjEmitente), 14, '0') +
               PadLeft(IntToStr(Modelo), 2, '0') +
-              PadLeft(Serie, 3, '0') +
+              PadRight(Serie, 3) +
               Copy(IntToStr(Ano), 3, 2) +
               PadLeft(IntToStr(Mes), 2, '0') +
               IfThen(Status = scv115Normal, 'N', 'S') +
@@ -993,7 +993,7 @@ begin
           {05} GrupoTensao +
           {06} DtoS(FDataEmissao) +
           {07} PadLeft(IntToStr(FModelo), 2, '0') +
-          {08} PadLeft(FSerie, 3) +
+          {08} PadRight(FSerie, 3) +
           {09} PadLeft(IntToStr(FNumeroNF), 9, '0') +
           {10} PadLeft(CFOP, 4, '0') +
           {11} PadLeft(IntToStr(Item), 3, '0') +

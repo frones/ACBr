@@ -40,6 +40,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2018
+[-] Correção para alinhamento do campo, por Ana Gabriela Raitz da Rocha
+		https://www.projetoacbr.com.br/forum/topic/48237-acbrconvenio115-formatação-do-campo-série/
+		
 14/02/2017
 [-] Correção para o tamanho do campo estava gerando registro maior.
 		Jeter subiu mais correções e compatibilizou a arquivos antigos

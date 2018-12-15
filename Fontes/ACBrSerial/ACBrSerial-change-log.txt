@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/12/2018
+-- ACBrPosPrinter --
+[+] Adicionado o método "ConfigurarRegiaoModoPagina", que retorna Tags necessárias
+    para iniciar o Modo Página, e conforme os parâmetros recebidos
+    (por: DSA)
+
 13/12/2018
 -- ACBrPosPrinter --
 [+] Adicionada propriedade TipoCorte para escolher se é corte parcial ou total.

@@ -380,6 +380,7 @@ type
 
     function CalcularAlturaTexto(Linhas: Integer): Integer;
     function CalcularAlturaQRCodeAlfaNumM(const QRCodeData: String): Integer;
+    function ConfigurarRegiaoModoPagina(AEsquerda, ATopo, AAltura, ALargura: Integer): String;
 
     property Buffer: TStringList read FBuffer;
 
@@ -1685,6 +1686,23 @@ begin
 
   // http://www.qrcode.com/en/howto/code.html
   Result := (QRCodeModules + 8) * CDotsMM;
+end;
+
+function TACBrPosPrinter.ConfigurarRegiaoModoPagina(AEsquerda, ATopo, AAltura,
+  ALargura: Integer): String;
+
+  Function MontarTag(const ATag, AConteudo: String): String;
+  begin
+     Result := ATag + AConteudo + StringReplace(ATag, '<', '</', [rfReplaceAll]);
+  end;
+
+begin
+  Result := MontarTag( cTagModoPaginaPosEsquerda, IntToStr(AEsquerda) ) +
+            MontarTag( cTagModoPaginaPosTopo, IntToStr(ATopo) ) +
+            MontarTag( cTagModoPaginaAltura, IntToStr(AAltura) ) +
+            MontarTag( cTagModoPaginaLargura, IntToStr(ALargura) ) +
+            MontarTag( cTagModoPaginaEspaco, IntToStr(EspacoEntreLinhas) ) +
+            cTagModoPaginaConfigurar;
 end;
 
 function TACBrPosPrinter.GetTraduzirTags: Boolean;

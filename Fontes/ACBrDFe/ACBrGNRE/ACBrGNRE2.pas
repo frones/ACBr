@@ -247,7 +247,7 @@ end;
 
 function TACBrGNRE.IdentificaSchema(const AXML: String): TSchemaGNRE;
 var
-  lTipoEvento: String;
+//  lTipoEvento: String;
   I: integer;
 begin
   Result := schGNRE;

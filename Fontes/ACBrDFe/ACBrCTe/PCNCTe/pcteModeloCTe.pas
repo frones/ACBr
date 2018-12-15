@@ -67,8 +67,8 @@ procedure ModeloCTe;
 var
   CTe: TCTe;
   CTeW: TCTeW;
-  i, j, k: Integer;
-  s: String;
+  i{, j, k}: Integer;
+//  s: String;
   ReferenciadaTipoCTe: Boolean;
   Opcao1: Boolean;
 begin

@@ -472,12 +472,12 @@ Const
 function TipoEventoToStr(const t: TTipoEvento ): string;
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-function StringINIToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-function StringXMLToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringINIToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
+function StringXMLToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 
 function eStpAmbToStr(const t: TptpAmb ): string;
-function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
+function eSStrTotpAmb(out ok: boolean; const s: string): TptpAmb;
 
 function eSprocEmiToStr(const t: TpprocEmi ): string;
 function eSStrToprocEmi(var ok: boolean; const s: string): TpprocEmi;
@@ -486,7 +486,7 @@ function eSIndSegmentoToStr(const t: TpIndSegmento ): string;
 function eSStrToIndSegmento(var ok: boolean; const s: string): TpIndSegmento;
 
 function eSTpInscricaoToStr(const t: tpTpInsc ): string;
-function eSStrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
+function eSStrToTpInscricao(out ok: boolean; const s: string): tpTpInsc;
 
 function eStpTpInscAmbTabToStr(const t: tpTpInscAmbTab ): string;
 function eSStrTotpTpInscAmbTab(var ok: boolean; const s: string): tpTpInscAmbTab;
@@ -567,10 +567,10 @@ function eSTpIndMatProcToStr(const t: tpIndMatProc): string;
 function eSStrToTpIndMatProc(var ok: boolean; const s: string): tpIndMatProc;
 
 function eSIndRetificacaoToStr(const t: TpIndRetificacao ): string;
-function eSStrToIndRetificacao(var ok: boolean; const s: string): TpIndRetificacao;
+function eSStrToIndRetificacao(out ok: boolean; const s: string): TpIndRetificacao;
 
 function eSIndApuracaoToStr(const t: TpIndApuracao ): string;
-function eSStrToIndApuracao(var ok: boolean; const s: string): TpIndApuracao;
+function eSStrToIndApuracao(out ok: boolean; const s: string): TpIndApuracao;
 
 function eSInfoApurGrauRiscoToStr(const t: TpInfoApurGrauRisco ): string;
 function eSStrToInfoApurGrauRisco(var ok: boolean; const s: string): TpInfoApurGrauRisco;
@@ -834,7 +834,7 @@ function eSTpCumprParcialAvisoToStr(const t: tpCumprParcialAviso): string;
 function eSStrToTpCumprParcialAviso(var ok: boolean; const s: string): tpCumprParcialAviso;
 
 function eSModoLancamentoToStr(const t: TModoLancamento): string;
-function eSStrToModoLancamento(var ok: boolean; const s: string): TModoLancamento;
+function eSStrToModoLancamento(out ok: boolean; const s: string): TModoLancamento;
 
 function LayOuteSocialToServico(const t: TLayOut): String;
 
@@ -1063,7 +1063,7 @@ begin
   result := EnumeradoToStr2(t, TGenericosString1_2 );
 end;
 
-function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
+function eSStrTotpAmb(out ok: boolean; const s: string): TptpAmb;
 begin
   result  := TptpAmb( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
 end;
@@ -1093,7 +1093,7 @@ begin
   result := EnumeradoToStr2(t, TGenericosString1_4 );
 end;
 
-function eSStrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
+function eSStrToTpInscricao(out ok: boolean; const s: string): tpTpInsc;
 begin
   result := tpTpInsc( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
 end;
@@ -1775,7 +1775,7 @@ begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
 
-function eSStrToIndRetificacao(var ok: boolean; const s: string): TpIndRetificacao;
+function eSStrToIndRetificacao(out ok: boolean; const s: string): TpIndRetificacao;
 begin
   result := TpIndRetificacao( StrToEnumerado2(ok , s,TGenericosString1_2 ));
 end;
@@ -1785,7 +1785,7 @@ begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
 
-function eSStrToIndApuracao(var ok: boolean; const s: string): TpIndApuracao;
+function eSStrToIndApuracao(out ok: boolean; const s: string): TpIndApuracao;
 begin
   result := TpIndApuracao( StrToEnumerado2(ok , s,TGenericosString1_2 ));
 end;
@@ -2265,7 +2265,7 @@ begin
   result := EnumeradoToStr2(t, TModoLancamentoString);
 end;
 
-function eSStrToModoLancamento(var ok: boolean; const s: string): TModoLancamento;
+function eSStrToModoLancamento(out ok: boolean; const s: string): TModoLancamento;
 begin
   result := TModoLancamento(StrToEnumerado2(ok, s, TModoLancamentoString));
 end;
@@ -2383,7 +2383,7 @@ begin
   result := TTipoEvento( StrToEnumerado2(ok , s, EventoString ) );
 end;
 
-function StringINIToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringINIToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 var
   i: integer;
 begin
@@ -2402,7 +2402,7 @@ begin
     ok := False;
   end;
 end;
-function StringXMLToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringXMLToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 var
   i: integer;
 begin

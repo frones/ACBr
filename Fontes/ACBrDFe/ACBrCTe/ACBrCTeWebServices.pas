@@ -1348,7 +1348,7 @@ var
   I, J: Integer;
   AProcCTe: TProcCTe;
   AInfProt: TProtCTeCollection;
-  NomeXML: String;
+//  NomeXML: String;
   SalvarXML: Boolean;
   NomeXMLSalvo: String;
 begin
@@ -1389,7 +1389,7 @@ begin
           CTe.procCTe.xMotivo := AInfProt.Items[I].xMotivo;
         end;
 
-        NomeXML := '-cte.xml';
+//        NomeXML := '-cte.xml';
 
 //        if (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
 //          NomeXML := '-den.xml';
@@ -2673,7 +2673,7 @@ var
   EventoCTe: TEventoCTe;
   I, J, K, F: Integer;
   Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
-  FErroValidacao: String;
+//  FErroValidacao: String;
   EventoEhValido: Boolean;
   SchemaEventoCTe: TSchemaCTe;
 begin
@@ -2840,8 +2840,8 @@ begin
     end;
     if not EventoEhValido then
     begin
-      FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
-        FPMsg;
+      //FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
+      //  FPMsg;
 
 //      raise EACBrCTeException.CreateDef(FErroValidacao);
     end;

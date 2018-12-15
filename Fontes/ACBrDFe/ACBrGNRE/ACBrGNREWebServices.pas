@@ -440,8 +440,8 @@ end;
 
 procedure TGNRERecepcao.DefinirURL;
 var
-  xUF: String;
-  ok: Boolean;
+//  xUF: String;
+//  ok: Boolean;
   VerServ: Double;
 begin
   if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
@@ -539,8 +539,8 @@ begin
 end;
 
 procedure TGNRERetRecepcao.Clear;
-var
-  i, j: Integer;
+//var
+//  i, j: Integer;
 begin
   inherited Clear;
 
@@ -590,7 +590,7 @@ end;
 procedure TGNRERetRecepcao.DefinirURL;
 var
   VerServ: Double;
-  ok: Boolean;
+//  ok: Boolean;
 begin
   if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
   begin
@@ -702,8 +702,8 @@ end;
 
 function TGNRERetRecepcao.TratarRespostaFinal: Boolean;
 var
-  I, J: Integer;
-  SalvarXML: Boolean;
+  I{, J}: Integer;
+//  SalvarXML: Boolean;
 begin
   Result := False;
   //Verificando se existe alguma guia confirmada
@@ -834,7 +834,7 @@ end;
 procedure TGNRERecibo.DefinirURL;
 var
   VerServ: Double;
-  ok: Boolean;
+//  ok: Boolean;
 begin
   if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
   begin
@@ -983,7 +983,7 @@ end;
 procedure TGNREConsultaUF.DefinirURL;
 var
   VerServ: Double;
-  ok: Boolean;
+//  ok: Boolean;
 begin
   VerServ := 1.00;
   FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;

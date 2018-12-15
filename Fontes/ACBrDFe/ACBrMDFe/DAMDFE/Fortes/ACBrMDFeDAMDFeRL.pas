@@ -145,7 +145,7 @@ end;
 class procedure TfrlDAMDFeRL.SalvarPDF(ADAMDFe: TACBrMDFeDAMDFeRL; AMDFe: TMDFe; AFile: String);
 var
   DAMDFeReport: TfrlDAMDFeRL;
-  ADir: String;
+//  ADir: String;
 begin
   DAMDFeReport := Create(nil);
   try

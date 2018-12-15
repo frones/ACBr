@@ -570,7 +570,7 @@ end;
 
 function Conhecimento.GerarCTeIni: String;
 var
-  I, J, K: integer;
+  I{, J, K}: integer;
   sSecao: string;
   INIRec: TMemIniFile;
   IniCTe: TStringList;

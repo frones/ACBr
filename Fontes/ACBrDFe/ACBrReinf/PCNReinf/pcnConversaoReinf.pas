@@ -301,15 +301,15 @@ function StrToVersaoReinf(out ok: Boolean; const s: String): TVersaoReinf;
 function TipoEventoToStr(const t: TTipoEvento ): string;
 function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-function StringINIToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-function StringXMLToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringINIToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
+function StringXMLToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 
 function TpInscricaoToStr(const t: TtpInsc ): string;
-function StrToTpInscricao(var ok: boolean; const s: string): TtpInsc;
+function StrToTpInscricao(out ok: boolean; const s: string): TtpInsc;
 
 function tpAmbReinfToStr(const t: TtpAmb ): string;
-function StrTotpAmbReinf(var ok: boolean; const s: string): TtpAmb;
+function StrTotpAmbReinf(out ok: boolean; const s: string): TtpAmb;
 
 function procEmiReinfToStr(const t: TprocEmi ): string;
 function StrToprocEmiReinf(var ok: boolean; const s: string): TprocEmi;
@@ -339,7 +339,7 @@ function IndSuspToStr(const t: TindSusp ): string;
 function StrToIndSusp(var ok: boolean; const s: string): TindSusp;
 
 function IndRetificacaoToStr(const t: TIndRetificacao ): string;
-function StrToIndRetificacao(var ok: boolean; const s: string): TIndRetificacao;
+function StrToIndRetificacao(out ok: boolean; const s: string): TIndRetificacao;
 
 function indObraToStr(const t: TpindObra ): string;
 function StrToindObra(var ok: boolean; const s: string): TpindObra;
@@ -497,7 +497,7 @@ begin
   result := TTipoEvento( StrToEnumerado2(ok , s, TEventoString ) );
 end;
 
-function StringINIToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringINIToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 var
   i: integer;
 begin
@@ -517,7 +517,7 @@ begin
   end;
 end;
 
-function StringXMLToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringXMLToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 var
   i: integer;
 begin
@@ -547,7 +547,7 @@ begin
   result := EnumeradoToStr2(t, ['1', '2', '4'] );
 end;
 
-function StrToTpInscricao(var ok: boolean; const s: string): TtpInsc;
+function StrToTpInscricao(out ok: boolean; const s: string): TtpInsc;
 begin
   result := TtpInsc( StrToEnumerado2(ok , s, ['1', '2', '4'] ) );
 end;
@@ -557,7 +557,7 @@ begin
   result := EnumeradoToStr2(t, ['0', '1', '2']);
 end;
 
-function StrTotpAmbReinf(var ok: boolean; const s: string): TtpAmb;
+function StrTotpAmbReinf(out ok: boolean; const s: string): TtpAmb;
 begin
   result := TtpAmb( StrToEnumerado2(ok , s, ['0', '1', '2']) );
 end;
@@ -660,7 +660,7 @@ begin
   result := EnumeradoToStr2(t, ['1', '2']);
 end;
 
-function StrToIndRetificacao(var ok: boolean; const s: string): TIndRetificacao;
+function StrToIndRetificacao(out ok: boolean; const s: string): TIndRetificacao;
 begin
   result := TIndRetificacao( StrToEnumerado2(ok , s, ['1', '2']) );
 end;

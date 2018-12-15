@@ -99,9 +99,9 @@ TACBrECFDaruma = class( TACBrECFClass )
     procedure UnloadDLLFunctions;
     procedure ConfigurarDLL(Path : AnsiString );
 
-    Function PreparaCmd( cmd : AnsiString ) : AnsiString ;
+    Function PreparaCmd( const cmd : AnsiString ) : AnsiString ;
     function GetComprovantesNaoFiscaisVinculado: TACBrECFComprovantesNaoFiscais;
-    function LimpaRetorno( Retorno : AnsiString ) : AnsiString ;
+    function LimpaRetorno( const Retorno : AnsiString ) : AnsiString ;
 
     function GetRet244: AnsiString;
     procedure ZeraTotalApagar ;
@@ -255,21 +255,21 @@ TACBrECFDaruma = class( TACBrECFClass )
        Linhas : TStringList; Documentos : TACBrECFTipoDocumentoSet = [docTodos] ) ; overload ; override ;
 
     Procedure EspelhoMFD_DLL( DataInicial, DataFinal : TDateTime;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
     Procedure EspelhoMFD_DLL( COOInicial, COOFinal : Integer;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
     Procedure ArquivoMFD_DLL( DataInicial, DataFinal : TDateTime;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]; Finalidade: TACBrECFFinalizaArqMFD = finMFD  ) ; override ;
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]; Finalidade: TACBrECFFinalizaArqMFD = finMFD  ) ; override ;
     Procedure ArquivoMFD_DLL( ContInicial, ContFinal : Integer;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO  ) ; override ;
 
 
 
-    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
-    Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
-      StrInicial, StrFinal: AnsiString); override;
+    Procedure ArquivoMF_Binario_DLL(const NomeArquivo: AnsiString); override;
+    Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD;
+      const NomeArquivo: AnsiString; StrInicial, StrFinal: AnsiString); override;
 
     Procedure IdentificaOperador ( Nome: String); override;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; override ;
@@ -327,8 +327,7 @@ TACBrECFDaruma = class( TACBrECFClass )
 
     Property ComprovantesNaoFiscaisVinculado : TACBrECFComprovantesNaoFiscais
        read GetComprovantesNaoFiscaisVinculado ;
-    function AchaCNFVincIndice(
-      Indice: String): TACBrECFComprovanteNaoFiscal;
+    function AchaCNFVincIndice( const Indice: String): TACBrECFComprovanteNaoFiscal;
     function AchaCNFVincDescricao( Descricao : String ) :
        TACBrECFComprovanteNaoFiscal ;
 
@@ -1350,7 +1349,7 @@ begin
   Self.ArquivoMFD_DLL(DataInicial, DataFinal, DirArquivos, [docTodos], finNFPTDM);
 end;
 
-function TACBrECFDaruma.PreparaCmd(cmd : AnsiString) : AnsiString ;
+function TACBrECFDaruma.PreparaCmd(const cmd : AnsiString) : AnsiString ;
 Var I, chksum, LenCmd : Integer ;
 begin
 { Recomendações da Daruma:
@@ -1382,7 +1381,7 @@ begin
      Result := cmd + CR ; { Adcionando Sufixo padrao }
 end ;
 
-function TACBrECFDaruma.LimpaRetorno(Retorno: AnsiString): AnsiString;
+function TACBrECFDaruma.LimpaRetorno(const Retorno: AnsiString): AnsiString;
 Var P1, P2 : Integer ;
 begin
   Result := '' ;
@@ -3000,12 +2999,30 @@ begin
 
   fpTotalizadoresNaoTributados := TACBrECFTotalizadoresNaoTributados.create( true ) ;
 
-  fpTotalizadoresNaoTributados.New.Indice := 'F1';
-  fpTotalizadoresNaoTributados.New.Indice := 'F2';
-  fpTotalizadoresNaoTributados.New.Indice := 'I1';
-  fpTotalizadoresNaoTributados.New.Indice := 'I2';
-  fpTotalizadoresNaoTributados.New.Indice := 'N1';
-  fpTotalizadoresNaoTributados.New.Indice := 'N2';
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'F1';
+  end;
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'F2';
+  end;
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'I1';
+  end;
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'I2';
+  end;
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'N1';
+  end;
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'N2';
+  end;
 
   with fpTotalizadoresNaoTributados.New do
   begin
@@ -3908,8 +3925,7 @@ begin
   end ;
 end;
 
-function TACBrECFDaruma.AchaCNFVincIndice(
-  Indice: String): TACBrECFComprovanteNaoFiscal;
+function TACBrECFDaruma.AchaCNFVincIndice( const Indice: String): TACBrECFComprovanteNaoFiscal;
 var A : Integer ;
 begin
   if not Assigned( fsCNFVinc ) then
@@ -5363,7 +5379,7 @@ begin
 end;
 
 procedure TACBrECFDaruma.EspelhoMFD_DLL(COOInicial, COOFinal: Integer;
-  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
+  const NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
 var
   Resp: Integer ;
   Tipo, CooIni, CooFim, DirDest, PathDest: AnsiString ;
@@ -5403,7 +5419,7 @@ begin
 end;
 
 procedure TACBrECFDaruma.EspelhoMFD_DLL(DataInicial, DataFinal: TDateTime;
-  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
+  const NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
 var
   Resp: Integer ;
   Tipo, DiaIni, DiaFim, DirDest, PathDest: AnsiString ;
@@ -5444,7 +5460,7 @@ begin
 end;
 
 procedure TACBrECFDaruma.ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD;
-  NomeArquivo, StrInicial, StrFinal: AnsiString);
+  const NomeArquivo: AnsiString; StrInicial, StrFinal: AnsiString);
 var
   Resp: Integer;
   DirDest, ArqDest, TipoDaruma: AnsiString;
@@ -5482,7 +5498,7 @@ begin
   end;
 end;
 
-procedure TACBrECFDaruma.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFDaruma.ArquivoMF_Binario_DLL(const NomeArquivo: AnsiString);
 var
   Resp: Integer;
   DirDest: AnsiString;
@@ -5513,7 +5529,7 @@ begin
 end;
 
 procedure TACBrECFDaruma.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
-  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
+  const NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD;
   TipoContador: TACBrECFTipoContador);
 var
@@ -5591,7 +5607,7 @@ begin
 end;
 
 procedure TACBrECFDaruma.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
-  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
+  const NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD);
 var
   Resp: Integer ;

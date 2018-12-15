@@ -1293,20 +1293,20 @@ TACBrECFClass = class
        Linhas : TStringList; Documentos : TACBrECFTipoDocumentoSet = [docTodos] ) ; overload ; virtual ;
 
     Procedure EspelhoMFD_DLL( DataInicial, DataFinal : TDateTime;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ; virtual ;
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ; virtual ;
     Procedure EspelhoMFD_DLL( COOInicial, COOFinal : Integer;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ; virtual ;
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; overload ; virtual ;
     Procedure ArquivoMFD_DLL( DataInicial, DataFinal : TDateTime;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD  ) ; overload ; virtual ;
     Procedure ArquivoMFD_DLL( ContInicial, ContFinal : Integer;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; overload ; virtual ;
 
-    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); virtual;
-    Procedure ArquivoMFD_Binario_DLL(Tipo:TACBrECFTipoDownloadMFD;
-       NomeArquivo, StrInicial, StrFinal: AnsiString); virtual;
+    Procedure ArquivoMF_Binario_DLL(const NomeArquivo: AnsiString); virtual;
+    Procedure ArquivoMFD_Binario_DLL(Tipo:TACBrECFTipoDownloadMFD; const NomeArquivo: AnsiString;
+       StrInicial, StrFinal: AnsiString); virtual;
 
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
       const DirArquivos: String; NumeroSerie: String = ''); virtual;
@@ -2608,39 +2608,39 @@ begin
 end;
 
 procedure TACBrECFClass.EspelhoMFD_DLL(DataInicial,
-  DataFinal: TDateTime; NomeArquivo: AnsiString;
+  DataFinal: TDateTime; const NomeArquivo: AnsiString;
   Documentos: TACBrECFTipoDocumentoSet);
 begin
   ErroAbstract('EspelhoMFD_DLL');
 end;
 
 procedure TACBrECFClass.EspelhoMFD_DLL(COOInicial, COOFinal: Integer;
-  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
+  const NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
 begin
   ErroAbstract('EspelhoMFD_DLL');
 end;
 
 procedure TACBrECFClass.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
-  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
+  const NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD);
 begin
   ErroAbstract('ArquivoMFD_DLL');
 end;
 
 procedure TACBrECFClass.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
-  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
+  const NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD; TipoContador: TACBrECFTipoContador);
 begin
   ErroAbstract('ArquivoMFD_DLL');
 end;
 
-procedure TACBrECFClass.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFClass.ArquivoMF_Binario_DLL(const NomeArquivo: AnsiString);
 begin
   ErroAbstract('ArquivoMF_Binario_DLL');
 end;
 
 procedure TACBrECFClass.ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD;
-  NomeArquivo, StrInicial, StrFinal: AnsiString);
+  const NomeArquivo: AnsiString; StrInicial, StrFinal: AnsiString);
 begin
   ErroAbstract('ArquivoMFD_Binario_DLL');
 end;
@@ -3804,9 +3804,18 @@ begin
 
   fpTotalizadoresNaoTributados := TACBrECFTotalizadoresNaoTributados.create( true ) ;
 
-  fpTotalizadoresNaoTributados.New.Indice := 'F1';
-  fpTotalizadoresNaoTributados.New.Indice := 'I1';
-  fpTotalizadoresNaoTributados.New.Indice := 'N1';
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'F1';
+  end;
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'I1';
+  end;
+  with fpTotalizadoresNaoTributados.New do
+  begin
+    Indice := 'N1';
+  end;
 
   if fpMFD then
   begin

@@ -381,17 +381,17 @@ TACBrECFSweda = class( TACBrECFClass )
        Tipo : String = ''; Posicao : String = '') ; override ;
 
     Procedure EspelhoMFD_DLL( DataInicial, DataFinal : TDateTime;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
     Procedure EspelhoMFD_DLL( COOInicial, COOFinal : Integer;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos]  ) ; override ;
     Procedure ArquivoMFD_DLL( DataInicial, DataFinal : TDateTime;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD  ) ; override ;
     Procedure ArquivoMFD_DLL( ContInicial, ContFinal : Integer;
-       NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
+       const NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; override ;
-    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
+    Procedure ArquivoMF_Binario_DLL(const NomeArquivo: AnsiString); override;
 
  end ;
 
@@ -3459,7 +3459,7 @@ begin
 end ;
 
 procedure TACBrECFSweda.EspelhoMFD_DLL(DataInicial,
-  DataFinal: TDateTime; NomeArquivo: AnsiString;
+  DataFinal: TDateTime; const NomeArquivo: AnsiString;
   Documentos: TACBrECFTipoDocumentoSet);
 Var
   Resp : Integer ;
@@ -3501,7 +3501,7 @@ end;
 
 
 procedure TACBrECFSweda.EspelhoMFD_DLL(COOInicial,
-  COOFinal: Integer; NomeArquivo: AnsiString;
+  COOFinal: Integer; const NomeArquivo: AnsiString;
   Documentos: TACBrECFTipoDocumentoSet);
 Var
   Resp : Integer ;
@@ -3535,7 +3535,7 @@ end;
 
 
 procedure TACBrECFSweda.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
-  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
+  const NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD);
 Var
   Resp : Integer ;
@@ -3589,7 +3589,7 @@ begin
 end;
 
 procedure TACBrECFSweda.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
-  NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
+  const NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet;
   Finalidade: TACBrECFFinalizaArqMFD;
   TipoContador: TACBrECFTipoContador);
 Var
@@ -3645,7 +3645,7 @@ begin
                             'Arquivo: "'+NomeArquivo + '" não gerado' ))
 end;
 
-procedure TACBrECFSweda.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFSweda.ArquivoMF_Binario_DLL(const NomeArquivo: AnsiString);
 var
   Resp: Integer;
   FileMF : AnsiString;

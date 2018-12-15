@@ -289,3 +289,8 @@
   PPAnsiChar = ^PUTF8Char;
 {$ENDIF}
 
+// INDY mudou muito no Delphi RIO, e as Units do ACBr ainda não foram ajustadas
+{$IFDEF DELPHIX_RIO_UP}
+ {$DEFINE DFE_SEM_INDY}
+{$ENDIF}
+

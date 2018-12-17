@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/12/2018
+-- ACBrBPeServicos --
+[*] Algumas UF foi informado por hora a mesma URL do QR-Code para a URL de Consulta.
+   Por: Italo Jurisato Junior
+
 10/12/2018
 -- ACBrBPeServicos --
 [+] Inclusão das URLs do QR-Code de PB.

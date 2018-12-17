@@ -52,13 +52,38 @@ interface
 uses
   SysUtils, Classes,
   pcnAuxiliar, pcnConversao, pcnLeitor, pcteProcCTe,
-  pcteRetCancCTe, pcteRetEnvEventoCTe;
+  {pcteRetCancCTe,} pcteRetEnvEventoCTe;
 
 type
 
   TRetEventoCTeCollection = class;
   TRetEventoCTeCollectionItem = class;
   TRetConsSitCTe = class;
+
+  TRetCancCTe = class(TPersistent)
+  private
+    Fversao: String;
+    FId: String;
+    FtpAmb: TpcnTipoAmbiente;
+    FverAplic: String;
+    FcStat: Integer;
+    FxMotivo: String;
+    FcUF: Integer;
+    FchCTe: String;
+    FdhRecbto: TDateTime;
+    FnProt: String;
+  published
+    property versao: String          read Fversao   write Fversao;
+    property Id: String              read FId       write FId;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property cUF: Integer            read FcUF      write FcUF;
+    property chCTe: String           read FchCTe    write FchCTe;
+    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
+    property nProt: String           read FnProt    write FnProt;
+  end;
 
   TRetEventoCTeCollection = class(TCollection)
   private
@@ -129,8 +154,10 @@ begin
   FLeitor.Free;
   FprotCTe.Free;
   FretCancCTe.Free;
+
   if Assigned(procEventoCTe) then
     procEventoCTe.Free;
+
   inherited;
 end;
 
@@ -148,12 +175,12 @@ begin
   try
     if leitor.rExtrai(1, 'retConsSitCTe') <> '' then
     begin
-               Fversao   := Leitor.rAtributo('versao', 'retConsSitCTe');
-      (*ER03 *)FtpAmb    := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
-      (*ER04 *)FverAplic := leitor.rCampo(tcStr, 'verAplic');
-      (*ER05 *)FcStat    := leitor.rCampo(tcInt, 'cStat');
-      (*ER06 *)FxMotivo  := leitor.rCampo(tcStr, 'xMotivo');
-      (*ER07 *)FcUF      := leitor.rCampo(tcInt, 'cUF');
+      Fversao   := Leitor.rAtributo('versao', 'retConsSitCTe');
+      FtpAmb    := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
+      FverAplic := leitor.rCampo(tcStr, 'verAplic');
+      FcStat    := leitor.rCampo(tcInt, 'cStat');
+      FxMotivo  := leitor.rCampo(tcStr, 'xMotivo');
+      FcUF      := leitor.rCampo(tcInt, 'cUF');
 
       // status 100 = Autorizado, 101 = Cancelado, 110 = Denegado, 301 = Denegado
       // A SEFAZ-MS esta retornando Status=129 como status de retorno da consulta
@@ -253,6 +280,7 @@ end;
 destructor TRetEventoCTeCollectionItem.Destroy;
 begin
   FRetEventoCTe.Free;
+
   inherited;
 end;
 

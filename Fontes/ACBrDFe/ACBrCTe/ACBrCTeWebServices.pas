@@ -46,15 +46,10 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeWebService,
-  pcteCTe,
-  pcteRetConsReciCTe, pcteRetConsCad, pcnAuxiliar, pcnConversao, pcteConversaoCTe,
-  pcteProcCte, pcteRetCancCTe, pcteEnvEventoCTe, pcteRetEnvEventoCTe,
+  pcteCTe, pcteRetConsReciCTe, pcteRetConsCad, pcnAuxiliar, pcnConversao,
+  pcteConversaoCTe, pcteProcCte, pcteEnvEventoCTe, pcteRetEnvEventoCTe,
   pcteRetConsSitCTe, pcteRetEnvCTe, pcteDistDFeInt, pcteRetDistDFeInt,
   ACBrCteConhecimentos, ACBrCTeConfiguracoes;
-
-//const
-//  CURL_WSDL = 'http://www.portalfiscal.inf.br/cte/wsdl/';
-//  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 
 type
 
@@ -580,10 +575,9 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCTe, pcteCTeW,
-  pcnGerador, pcteConsStatServ, pcteRetConsStatServ,
-  pcteConsSitCTe, pcteInutCTe, pcteRetInutCTe, pcteConsReciCTe,
-  pcteConsCad, pcnLeitor;
+  ACBrUtil, ACBrCTe,
+  pcteCTeW, pcnGerador, pcteConsStatServ, pcteRetConsStatServ, pcteConsSitCTe,
+  pcteInutCTe, pcteRetInutCTe, pcteConsReciCTe, pcteConsCad, pcnLeitor;
 
 { TCTeWebService }
 
@@ -1391,9 +1385,6 @@ begin
 
 //        NomeXML := '-cte.xml';
 
-//        if (AInfProt.Items[I].cStat = 110) or (AInfProt.Items[I].cStat = 301) then
-//          NomeXML := '-den.xml';
-
         // Monta o XML do CT-e assinado e com o protocolo de Autorização ou Denegação
         if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
            (AInfProt.Items[I].cStat = 150) or (AInfProt.Items[I].cStat = 301) then
@@ -1996,9 +1987,6 @@ begin
                TACBrCTe(FPDFeOwner).cStatCancelado(CTeRetorno.CStat) then
               Atualiza := False;
 
-//            if (CTeRetorno.CStat in [101, 151, 155]) then
-//              Atualiza := False;
-
             if (CTeRetorno.cUF = 51) and (CTeRetorno.CStat = 101) then
               Atualiza := True;
 
@@ -2025,14 +2013,9 @@ begin
               CTe.procCTe.cStat := CTeRetorno.cStat;
               CTe.procCTe.xMotivo := CTeRetorno.xMotivo;
 
-//              NomeXML := '-cte.xml';
-
               AProcCTe := TProcCTe.Create;
               try
                 AProcCTe.XML_CTe := RemoverDeclaracaoXML(XMLOriginal);
-//                AProcCTe.XML_CTe := StringReplace(XMLAssinado,
-//                                           '<' + ENCODING_UTF8 + '>', '',
-//                                           [rfReplaceAll]);
                 AProcCTe.XML_Prot := CTeRetorno.XMLprotCTe;
                 AProcCTe.Versao := FPVersaoServico;
                 AProcCTe.GerarXML;
@@ -2049,8 +2032,7 @@ begin
 
                   aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
 
-                  FRetCTeDFe := // '<' + ENCODING_UTF8 + '>' +
-                                '<CTeDFe>' +
+                  FRetCTeDFe := '<CTeDFe>' +
                                  '<procCTe versao="' + FVersao + '">' +
                                    SeparaDados(XMLOriginal, 'cteProc') +
                                  '</procCTe>' +
@@ -2115,20 +2097,6 @@ begin
                   if (aProcEvento <> '') then
                     FPDFeOwner.Gravar( aIDEvento + '-procEventoCTe.xml', aProcEvento, sPathCTe);
                 end;
-
-                (*
-                // Salva o XML do CT-e assinado e protocolado
-                if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-                  FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
-
-                // Salva o XML do CT-e assinado, protocolado e com os eventos
-                if FRetCTeDFe <> '' then
-                  FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
-                                    FRetCTeDFe,
-                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
-
-                GravarXML; // Salva na pasta baseado nas configurações do PathCTe
-                *)
               end;
             end;
 
@@ -2989,8 +2957,6 @@ end;
 
 procedure TCTeEnvEvento.SalvarEnvio;
 begin
-//  inherited SalvarEnvio;
-
   if ArqEnv = '' then
     exit;
 
@@ -3005,8 +2971,6 @@ end;
 
 procedure TCTeEnvEvento.SalvarResposta;
 begin
-//  inherited SalvarResposta;
-
   if ArqResp = '' then
     exit;
 
@@ -3042,7 +3006,6 @@ end;
 
 function TCTeEnvEvento.GerarPrefixoArquivo: String;
 begin
-//  Result := IntToStr(FEvento.idLote);
   Result := IntToStr(FidLote);
 end;
 
@@ -3156,6 +3119,9 @@ begin
     if (AXML <> '') then
     begin
       case FretDistDFeInt.docZip.Items[I].schema of
+        { Bloco abaixo não deve ser removido, pois caso a SEFAZ venha
+          Disponibilizar resumos de CTe e de eventos o código já esta
+          pronto. }
         (*
         schresCTe:
           FNomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-resCTe.xml';

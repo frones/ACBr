@@ -47,9 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/12/2018
+-- Diversos --
+[*] Remoção de Units que não são utilizadas pelo componente.
+  Por: Italo Jurisato Junior
+
 13/12/2018
 -- ACBrCTe --
-[*] Iclusão do tipo de evento tePrestDesacordo na function IdentificaSchema.
+[*] Inclusão do tipo de evento tePrestDesacordo na function IdentificaSchema.
   Por: Italo Jurisato Junior
 
 10/12/2018

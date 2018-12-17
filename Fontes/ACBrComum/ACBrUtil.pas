@@ -2337,8 +2337,15 @@ begin
 
        // Pula CaracterQuebrar no Inicio da String
        if (PosIni <= Tamanho) then
+       begin
           while CharInSet(AnsiStr[PosIni], [CaracterQuebrar, LF]) and (PosIni <= Tamanho) do
+          begin
+             if AnsiStr[PosIni] = LF then
+               Resp := Resp + LF;
+
              Inc(PosIni) ;
+          end;
+       end;
 
     until (PosIni > Tamanho);
   end

@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/12/2018
+-- ACBrUtil --
+[-] Correção para o método "QuebraLinhas", que removia LineBreaks consecutivos
+    (por: DSA)
+
 Data: 11/12/2018
 -- ACBrUtil --
 [+] Adicionado o método:

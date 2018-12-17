@@ -47,7 +47,6 @@ contains
   pnfsNFSeG in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeG.pas',
   pnfsNFSeR in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeR.pas',
   pnfsNFSeW in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW.pas',
-  pnfsSignature in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsSignature.pas',
   pnfsSubsNfseResposta in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsSubsNfseResposta.pas',
   ACBrNFSeDANFSeClass in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\ACBrNFSeDANFSeClass.pas',
   pnfsNFSeW_CONAM in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_CONAM.pas',

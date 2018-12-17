@@ -10,7 +10,7 @@ uses
   ACBrNFSe, ACBrNFSeConfiguracoes, ACBrNFSeNotasFiscais, ACBrNFSeReg, 
   ACBrNFSeWebServices, pnfsCancNfseResposta, pnfsConsSitLoteRpsResposta, 
   pnfsConversao, pnfsEnvLoteRpsResposta, pnfsNFSe, pnfsNFSeG, pnfsNFSeR, 
-  pnfsNFSeW, pnfsSignature, pnfsSubsNfseResposta, ACBrNFSeDANFSeClass, 
+  pnfsNFSeW, pnfsSubsNfseResposta, ACBrNFSeDANFSeClass, 
   pnfsNFSeW_ABRASFv1, pnfsNFSeW_ABRASFv2, pnfsNFSeW_EGoverneISS, pnfsNFSeW_EL, 
   pnfsNFSeW_Equiplano, pnfsNFSeW_Infisc, pnfsNFSeW_ISSDSF, pnfsConsts, 
   LazarusPackageIntf;

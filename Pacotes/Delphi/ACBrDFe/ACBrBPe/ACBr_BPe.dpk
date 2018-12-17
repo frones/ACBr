@@ -99,7 +99,6 @@ contains
   pcnRetConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsSitBPe.pas',
   pcnRetEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvEventoBPe.pas',
   pcnRetDistDFeIntBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetDistDFeIntBPe.pas',
-  ACBrBPeDABPEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas',
-  pcnSignatureBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnSignatureBPe.pas';
+  ACBrBPeDABPEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas';
 
 end.

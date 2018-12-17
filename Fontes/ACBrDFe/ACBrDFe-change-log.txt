@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/12/2018
+-- ACBrDFeXsLibXml2 --
+[*] Melhoria na rotina de empacotamento do XML, removendo xPath (por: Rafael Teno Dias)
+https://www.projetoacbr.com.br/forum/topic/48096-melhorias-na-rotina-de-formata%C3%A7%C3%A3o-do-xml-com-a-libxml2-removido-xpath/
+
 06/12/2018
 -- ACBrDFeConfiguracoes --
 [*] Ajustes nos métodos LerIni e GravarIni (por: DSA)

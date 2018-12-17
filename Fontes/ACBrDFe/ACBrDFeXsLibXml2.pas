@@ -46,6 +46,7 @@ resourcestring
   cErrParseDoc = 'Erro: Falha ao interpretar o XML "xmlParseDoc"';
   cErrFindSignNode = 'Erro: Falha ao localizar o nó de Assinatura';
   cErrFindRootNode = 'Erro: Falha ao localizar o nó Raiz';
+  cErrFindInfoNode = 'Erro: Falha ao localizar o nó de informação';
   cErrC14NTransformation = 'Erro ao aplicar transformação C14N';
   cErrSelecionarElements = 'Erro ao selecionar os elementos do XML.';
   cErrElementsNotFound = 'Nenhum elemento encontrado';
@@ -75,9 +76,7 @@ type
   protected
     procedure VerificarValoresPadrao(var SignatureNode: String;
       var SelectionNamespaces: String); virtual;
-    function SelectElements(const aDoc: xmlDocPtr; const infElement: String)
-      : xmlNodeSetPtr;
-    function CanonC14n(const aDoc: xmlDocPtr; const infElement: String): String;
+    function CanonC14n(const aDoc: xmlDocPtr; infElement: String): String;
     function LibXmlFindSignatureNode(aDoc: xmlDocPtr;
       var SignatureNode: String; var SelectionNamespaces: String;
       infElement: String): xmlNodePtr;
@@ -268,18 +267,31 @@ begin
 end;
 
 function TDFeSSLXmlSignLibXml2.CanonC14n(const aDoc: xmlDocPtr;
-  const infElement: String): String;
+  infElement: String): String;
 var
+  infNode: xmlNodePtr;
   Elements: xmlNodeSetPtr;
   buffer: PAnsiChar;
 begin
   Result := '';
   buffer := Nil;
+  infNode := Nil;
   Elements := Nil;
 
   try
+    { Se infElement possui prefixo o mesmo tem que ser removido }
+    if Pos(':', infElement) > 0 then
+      infElement := copy(infElement, Pos(':', infElement) + 1, Length(infElement));
+
+    { Procura InfElement em todos os nós, filhos de Raiz, usando LibXml }
+    infNode := LibXmlLookUpNode(xmlDocGetRootElement(aDoc), infElement);
+
+    { Não achei o InfElement em nenhum nó :( }
+    if (infNode = nil) then
+      raise EACBrDFeException.Create(cErrFindInfoNode);
+
     // seleciona os elementos a serem transformados e inclui os devidos namespaces
-    Elements := SelectElements(aDoc, infElement);
+    Elements := xmlXPathNodeSetCreate(infNode);
 
     // Estamos aplicando a versão 1.0 do c14n, mas existe a versão 1.1
     // Talvez seja necessario no futuro checar a versão do c14n
@@ -299,40 +311,6 @@ begin
 
     if (buffer <> Nil) then
       xmlFree(buffer);
-  end;
-end;
-
-function TDFeSSLXmlSignLibXml2.SelectElements(const aDoc: xmlDocPtr;
-  const infElement: String): xmlNodeSetPtr;
-var
-  xpathCtx: xmlXPathContextPtr;
-  xpathExpr: AnsiString;
-  xpathObj: xmlXPathObjectPtr;
-begin
-  // Cria o contexdo o XPath
-  xpathCtx := xmlXPathNewContext(aDoc);
-  try
-    if (xpathCtx = nil) then
-      raise EACBrDFeException.Create('Erro ao obter o contexto do XPath');
-
-    // express?o para selecionar os elementos n: ? o namespace selecionado
-    xpathExpr := '(//.|//@*|//namespace::*)[ancestor-or-self::*[local-name()='''
-      + Copy(infElement, pos(':', infElement) + 1, Length(infElement)) + ''']]';
-
-    // seleciona os elementos baseados na expressão(retorna um objeto XPath com os elementos)
-    xpathObj := xmlXPathEvalExpression(PAnsiChar(xpathExpr), xpathCtx);
-
-    if (xpathObj = nil) then
-      raise EACBrDFeException.Create(cErrSelecionarElements);
-
-    if (xpathObj.nodesetval.nodeNr > 0) then
-      Result := xpathObj.nodesetval
-    else
-      raise EACBrDFeException.Create(cErrElementsNotFound);
-
-  finally
-    if (xpathCtx <> nil) then
-      xmlXPathFreeContext(xpathCtx);
   end;
 end;
 
@@ -539,7 +517,7 @@ begin
 
     { Não achei o InfElement em nenhum nó :( }
     if (infNode = nil) then
-      raise EACBrDFeException.Create(cErrFindRootNode);
+      raise EACBrDFeException.Create(cErrFindInfoNode);
 
     { Vamos agora, achar o pai desse Elemento, pois com ele encontraremos a assinatura }
     if (infNode^.Name = infElement) and
@@ -556,7 +534,7 @@ begin
   end;
 
   if (infNode = nil) then
-    raise EACBrDFeException.Create(cErrFindRootNode);
+    raise EACBrDFeException.Create(cErrFindInfoNode);
 
   { Procurando pelo nó de assinatura...
     Primeiro vamos verificar manualmente se é o último no do nosso infNode atual };

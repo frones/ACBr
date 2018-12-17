@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/12/2018
+-- ACBrSATExtratoClass --
+[+] Adicionada as propriedades:
+    ImprimeQRCodeLateral: Boolean
+    ImprimeLogoLateral: Boolean
+
+-- ACBrSATExtratoESCPOS --
+[*] Implementadas modificações para a impressão conforme Novo layout
+    do Manual de Orientação Versão: MO 2.17.07.
+    (por: DSA)
+
 30/07/2018
 -- ACBrSATExtratoFortesFr --
 [*] Ajuste para correto alinhamento do Total do Item

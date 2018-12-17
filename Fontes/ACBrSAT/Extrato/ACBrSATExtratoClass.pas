@@ -77,6 +77,8 @@ type
     FImprimeQRCode: Boolean;
     FImprimeMsgOlhoNoImposto : Boolean;
     FImprimeCPFNaoInformado : Boolean;
+    FImprimeQRCodeLateral: Boolean;
+    FImprimeLogoLateral: Boolean;
 
     FCFe: TCFe;
     FCFeCanc: TCFeCanc;
@@ -136,6 +138,8 @@ type
     property ImprimeEmUmaLinha: Boolean     read FImprimeEmUmaLinha     write FImprimeEmUmaLinha     default True;
     property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem write FImprimeDescAcrescItem default True;
     property ImprimeCodigoEan: Boolean read FImprimeCodigoEan write FImprimeCodigoEan default False;
+    property ImprimeQRCodeLateral: Boolean read FImprimeQRCodeLateral write FImprimeQRCodeLateral default True;
+    property ImprimeLogoLateral: Boolean read FImprimeLogoLateral write FImprimeLogoLateral default True;
   end ;
 
 implementation
@@ -166,6 +170,8 @@ begin
   FImprimeEmUmaLinha := True;
   FImprimeDescAcrescItem := True;
   FImprimeCodigoEan := False;
+  FImprimeQRCodeLateral := True;
+  FImprimeLogoLateral := True;
 end;
 
 destructor TACBrSATExtratoClass.Destroy;
@@ -231,7 +237,7 @@ end;
 
 function TACBrSATExtratoClass.GetSeparadorPathPDF(aInitialPath: String): String;
 begin
-   Result := aInitialPath + 'SAT';
+   Result := PathWithDelim(aInitialPath) + 'SAT';
 end;
 
 procedure TACBrSATExtratoClass.SetAbout(AValue: String);

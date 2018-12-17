@@ -2745,24 +2745,33 @@ begin
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
-    if FProvedor = proEL then
-    begin
-      FPDadosMsg := GerarDadosMsg.Gera_DadosMsgEnviarLote;
-      FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
-      FPDadosMsg := FTagI +
-                     '<identificacaoPrestador>' +
-                       FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
-                     '</identificacaoPrestador>' +
-                     '<hashIdentificador>' +
-                       FHashIdent +
-                     '</hashIdentificador>' +
-                     '<arquivo>' +
-                       StringReplace(StringReplace(FPDadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-                     '</arquivo>' +
-                    FTagF;
-    end
+    case Provedor of
+      proEL:
+        begin
+          FPDadosMsg := GerarDadosMsg.Gera_DadosMsgEnviarLote;
+          FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+          FPDadosMsg := FTagI +
+                         '<identificacaoPrestador>' +
+                           FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+                         '</identificacaoPrestador>' +
+                         '<hashIdentificador>' +
+                           FHashIdent +
+                         '</hashIdentificador>' +
+                         '<arquivo>' +
+                           StringReplace(StringReplace(FPDadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+                         '</arquivo>' +
+                        FTagF;
+        end;
+
+      proISSNET:
+        begin
+          FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote +
+                                FDadosSenha +
+                        FTagF;
+        end;
     else
       FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
+    end;
 
     FIDLote := GerarDadosMsg.IdLote;
   finally
@@ -4515,6 +4524,9 @@ begin
 
       proDBSeller: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo + '></CancelarNfse';
 
+      proBHISS,
+      proSystemPro: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
+
       proISSDSF,
       proEquiplano,
       proInfisc,
@@ -4533,7 +4545,7 @@ begin
 
       proIPM: FdocElemento := 'nfse';
     else
-      FdocElemento := FPrefixo3 + 'Pedido'; //></' + FTagGrupo;
+      FdocElemento := FPrefixo3 + 'Pedido';
     end;
 
     case FProvedor of
@@ -4727,6 +4739,8 @@ begin
       proIssDSF,
       proThema,
       proSP,
+      proBHISS,
+      proSystemPro,
       proNotaBlu:
         FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
 
@@ -4767,6 +4781,8 @@ begin
     proIssDSF,
     proThema,
     proSP,
+    proBHISS,
+    proSystemPro,
     proNotaBlu: FPDadosMsg := FPDadosMsg;
 
     proISSe,

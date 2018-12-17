@@ -118,6 +118,8 @@ type
     FPArquivoPDF: String;
     function GetSeparadorPathPDF(aInitialPath: String): String; virtual;
 
+    function AplicarAtributoTexto(const ATexto, ABloco, ATag: String): String;
+
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -237,7 +239,7 @@ begin
   FSistema := '';
   FUsuario := '';
   FFax := '';
-  FSite := '';
+  FSite := 'www.projetoacbr.com.br';
   FEmail := '';
   FMargemInferior := 0.8;
   FMargemSuperior := 0.8;
@@ -286,6 +288,15 @@ function TACBrDFeReport.GetSeparadorPathPDF(aInitialPath: String): String;
 begin
   // Esse método deve ser sobreposto pelas Classes Filhas //
   Result := aInitialPath;
+end;
+
+function TACBrDFeReport.AplicarAtributoTexto(const ATexto, ABloco, ATag: String
+  ): String;
+var
+  TagClose: String;
+begin
+  TagClose := StringReplace(ATag, '<', '</', [rfReplaceAll]);
+  Result := StringReplace(ATexto, ABloco, ATag + ABloco + TagClose, [rfReplaceAll]);
 end;
 
 procedure TACBrDFeReport.SetNumCopias(const Value: Integer);

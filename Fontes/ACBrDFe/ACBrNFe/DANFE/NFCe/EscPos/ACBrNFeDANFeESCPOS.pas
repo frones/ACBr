@@ -61,7 +61,7 @@ uses
   pcnNFe, pcnEnvEventoNFe;
 
 const
-  CLarguraRegiaoLateral = 270;
+  CLarguraRegiaoEsquerda = 270;
 
 type
   { TACBrNFeDANFeESCPOS }
@@ -219,9 +219,9 @@ begin
       DadosCabecalho.Free;
     end;
     FPosPrinter.Buffer.Add('</zera><mp>' +
-                           FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoLateral) +
+                           FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda) +
                            '</logo>');
-    FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoLateral,0,Altura,325) +
+    FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda,0,Altura,325) +
                            TextoLateral +
                            '</mp>');
   end
@@ -701,15 +701,15 @@ begin
 
       AlturaQRCode := FPosPrinter.CalcularAlturaQRCodeAlfaNumM(DadosQRCode);
       AlturaMax := max( FPosPrinter.CalcularAlturaTexto(TextoLateral.Count), AlturaQRCode );
-      EsquerdaQRCode := Trunc(max(CLarguraRegiaoLateral - Trunc(AlturaQRCode/2),0) / 2);
+      EsquerdaQRCode := Trunc(max(CLarguraRegiaoEsquerda - Trunc(AlturaQRCode/2),0) / 2);
 
       FPosPrinter.Buffer.Add( '<mp>' +
                               FPosPrinter.ConfigurarRegiaoModoPagina(
                                 EsquerdaQRCode, 0, AlturaMax,
-                                (CLarguraRegiaoLateral-EsquerdaQRCode) ) +
+                                (CLarguraRegiaoEsquerda-EsquerdaQRCode) ) +
                               GerarInformacoesQRCode(DadosQRCode, False, True));
       FPosPrinter.Buffer.Add( FPosPrinter.ConfigurarRegiaoModoPagina(
-                                CLarguraRegiaoLateral, 0, AlturaMax, 325) +
+                                CLarguraRegiaoEsquerda, 0, AlturaMax, 325) +
                               TextoLateral.Text + '</mp>');
     finally
       TextoLateral.Free;

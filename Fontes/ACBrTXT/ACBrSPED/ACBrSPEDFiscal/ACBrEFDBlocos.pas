@@ -289,7 +289,8 @@ type
   /// Indicador da origem do documento vinculado ao ajuste
   TACBrOrigemDocto = (odPorcessoJudicial, // 0 - Processo Judicial;
                       odProcessoAdminist, // 1 - Processo Administrativo;
-                      odPerDcomp,         // 2 - PER/DCOMP;
+                      odPerDcomp,         // 2 - PER/DCOMP;    
+                      odDocumentoFiscal,  // 3 - Documento Fiscal
                       odOutros            //9 – Outros.
                       );
   /// Indicador de propriedade/posse do item

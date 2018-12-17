@@ -69,6 +69,7 @@ type
   TRegistroE510List = class;
   TRegistroE520List = class;
   TRegistroE530List = class;
+  TRegistroE531List = class;
 
   /// Registro E001 - ABERTURA DO BLOCO E
 
@@ -901,8 +902,11 @@ type
     fIND_DOC: TACBrOrigemDocto;  /// Indicador da origem do documento vinculado ao ajuste: 0 - Processo Judicial; 1 - Processo Administrativo; 2 - PER/DCOMP; 9 - Outros.
     fNUM_DOC: String;            /// Número do documento / processo / declaração ao qual o ajuste está vinculado, se houver
     fDESCR_AJ: String;           /// Descrição resumida do ajuste.
+
+    fRegistroE531: TRegistroE531List;
   public
     constructor Create(AOwner: TRegistroE520); virtual; /// Create
+    destructor Destroy; override; /// Destroy
 
     property IND_AJ: TACBrTipoAjuste read fIND_AJ write fIND_AJ;
     property VL_AJ: currency read fVL_AJ write fVL_AJ;
@@ -910,6 +914,8 @@ type
     property IND_DOC: TACBrOrigemDocto read fIND_DOC write fIND_DOC;
     property NUM_DOC: String read fNUM_DOC write fNUM_DOC;
     property DESCR_AJ: String read fDESCR_AJ write fDESCR_AJ;
+
+    property RegistroE531: TRegistroE531List read FRegistroE531 write FRegistroE531;
   end;
 
   /// Registro E530 - Lista
@@ -921,6 +927,45 @@ type
   public
     function New(AOwner: TRegistroE520): TRegistroE530;
     property Items[Index: Integer]: TRegistroE530 read GetItem write SetItem;
+  end;
+
+  /// Registro E531 - INFORMAÇÕES ADICIONAIS DOS AJUSTES DA APURAÇÃO DO IPI –
+  //                  IDENTIFICAÇÃO DOS DOCUMENTOS FISCAIS (01 e 55)
+
+  TRegistroE531 = class
+  private
+    fCOD_PART: String;        /// Código do participante (campo 02 do Registro 0150): Do emitente do documento ou do remetente das mercadorias, no caso de entradas; Do adquirente, no caso de saídas
+    fCOD_MOD: String;         /// Código do modelo do documento fiscal, conforme a Tabela 4.1.1
+    fSER: String;             /// Série do documento fiscal
+    fSUB: String;             /// Subserie do documento fiscal
+    fNUM_DOC: String;         /// Número do documento fiscal
+    fDT_DOC: TDateTime;       /// Data da emissão do documento fiscal
+    fCHV_NFE: String;         /// Chave da Nota Fiscal Eletrônica - Versões abaixo de 004
+    fCOD_ITEM: String;        /// Código do item (campo 02 do Registro 0200)
+    fVL_AJ_ITEM: currency;    /// Valor do ajuste para a operação/item
+  public
+    constructor Create(AOwner: TRegistroE530); virtual; /// Create
+
+    property COD_PART: String read fCOD_PART write fCOD_PART;
+    property COD_MOD: String read fCOD_MOD write fCOD_MOD;
+    property SER: String read fSER write fSER;
+    property SUB: String read fSUB write fSUB;
+    property NUM_DOC: String read fNUM_DOC write fNUM_DOC;
+    property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
+    property CHV_NFE: String read fCHV_NFE write fCHV_NFE;
+    property COD_ITEM: String read fCOD_ITEM write fCOD_ITEM;
+    property VL_AJ_ITEM: currency read fVL_AJ_ITEM write fVL_AJ_ITEM;
+  end;
+
+  /// Registro E531 - Lista
+
+  TRegistroE531List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroE531; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroE531); /// SetItem
+  public
+    function New(AOwner: TRegistroE530): TRegistroE531;
+    property Items[Index: Integer]: TRegistroE531 read GetItem write SetItem;
   end;
 
   /// Registro E990 - ENCERRAMENTO DO BLOCO E
@@ -1189,6 +1234,24 @@ begin
   Put(Index, Value);
 end;
 
+{ TRegistroE531List }
+
+function TRegistroE531List.GetItem(Index: Integer): TRegistroE531;
+begin
+  Result := TRegistroE531(Inherited Items[Index]);
+end;
+
+function TRegistroE531List.New(AOwner: TRegistroE530): TRegistroE531;
+begin
+  Result := TRegistroE531.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroE531List.SetItem(Index: Integer; const Value: TRegistroE531);
+begin
+  Put(Index, Value);
+end;
+
 { TRegistroE200List }
 
 function TRegistroE200List.GetItem(Index: Integer): TRegistroE200;
@@ -1415,6 +1478,13 @@ end;
 
 constructor TRegistroE530.Create(AOwner: TRegistroE520);
 begin
+   fRegistroE531 := TRegistroE531List.Create;
+end;
+
+destructor TRegistroE530.Destroy;
+begin
+  FRegistroE531.Free;
+  inherited;
 end;
 
 { TRegistroE310 }
@@ -1587,6 +1657,12 @@ end;
 procedure TRegistroE316List.SetItem(Index: Integer; const Value: TRegistroE316);
 begin
   Put(Index, Value);
+end;
+
+{ TRegistroE531 }
+
+constructor TRegistroE531.Create(AOwner: TRegistroE530);
+begin
 end;
 
 end.

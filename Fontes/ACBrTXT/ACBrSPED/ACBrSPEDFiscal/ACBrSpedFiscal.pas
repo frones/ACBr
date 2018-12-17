@@ -2339,6 +2339,14 @@ begin
                QTD_REG_BLC := Bloco_E.RegistroE530Count;
             end;
          end;
+         if Bloco_E.RegistroE531Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E531';
+               QTD_REG_BLC := Bloco_E.RegistroE531Count;
+            end;
+         end;
       end;
    end;
 end;

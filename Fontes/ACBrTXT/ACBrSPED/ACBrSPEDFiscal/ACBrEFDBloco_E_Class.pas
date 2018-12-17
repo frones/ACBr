@@ -83,6 +83,7 @@ type
     FRegistroE510Count: Integer;
     FRegistroE520Count: Integer;
     FRegistroE530Count: Integer;
+    FRegistroE531Count: Integer;
 
     procedure WriteRegistroE100(RegE001: TRegistroE001);
     procedure WriteRegistroE110(RegE100: TRegistroE100);
@@ -107,6 +108,7 @@ type
     procedure WriteRegistroE510(RegE500: TRegistroE500);
     procedure WriteRegistroE520(RegE500: TRegistroE500);
     procedure WriteRegistroE530(RegE520: TRegistroE520);
+    procedure WriteRegistroE531(RegE530: TRegistroE530);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -139,6 +141,7 @@ type
     function RegistroE510New: TRegistroE510;
     function RegistroE520New: TRegistroE520;
     function RegistroE530New: TRegistroE530;
+    function RegistroE531New: TRegistroE531;
 
     procedure WriteRegistroE001 ;
     procedure WriteRegistroE990 ;
@@ -170,6 +173,7 @@ type
     property RegistroE510Count: Integer read FRegistroE510Count write FRegistroE510Count;
     property RegistroE520Count: Integer read FRegistroE520Count write FRegistroE520Count;
     property RegistroE530Count: Integer read FRegistroE530Count write FRegistroE530Count;
+    property RegistroE531Count: Integer read FRegistroE531Count write FRegistroE531Count;
 
     property OnBeforeWriteRegistroE990: TWriteRegistroEvent read FOnBeforeWriteRegistroE990 write FOnBeforeWriteRegistroE990;
 
@@ -222,6 +226,7 @@ begin
   RegistroE510Count := 0;
   RegistroE520Count := 0;
   RegistroE530Count := 0;
+  RegistroE531Count := 0;
 
   FRegistroE990.QTD_LIN_E := 0;
 end;
@@ -534,6 +539,24 @@ begin
 
    E520   := FRegistroE001.RegistroE500.Items[E500Count].RegistroE520.Items[E520Count];
    Result := E520.RegistroE530.New(E520);
+end;
+
+function TBloco_E.RegistroE531New: TRegistroE531;
+var
+   E500Count: integer;
+   E520Count: integer;
+   E530Count: integer;
+   E530: TRegistroE530;
+begin
+   E500Count := FRegistroE001.RegistroE500.Count -1;
+   E520Count := FRegistroE001.RegistroE500.Items[E500Count].RegistroE520.Count -1;
+   E530Count := FRegistroE001.RegistroE500.Items[E500Count].RegistroE520.Items[E520Count].RegistroE530.Count - 1;
+
+   if E530Count = -1 then
+      raise Exception.Create('O registro E531 deve ser filho do registro E530, e não existe nenhum E530 pai!');
+
+   E530   := FRegistroE001.RegistroE500.Items[E500Count].RegistroE520.Items[E520Count].RegistroE530.Items[E530Count];
+   Result := E530. RegistroE531.New(E530);
 end;
 
 procedure TBloco_E.WriteRegistroE001 ;
@@ -1346,6 +1369,7 @@ begin
            odPorcessoJudicial: intIND_DOC := 0;
            odProcessoAdminist: intIND_DOC := 1;
            odPerDcomp:         intIND_DOC := 2;
+           odDocumentoFiscal:  intIND_DOC := 3;
            odOutros:           intIND_DOC := 9;
            else                intIND_DOC := 9;
           end;
@@ -1358,10 +1382,41 @@ begin
                LFill( NUM_DOC ) +
                LFill( DESCR_AJ ) ) ;
         end;
+        /// Registros FILHOS
+        WriteRegistroE531(RegE520.RegistroE530.Items[intFor]);
+
         RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroE530Count := FRegistroE530Count + RegE520.RegistroE530.Count;
+  end;
+end;
+
+procedure TBloco_E.WriteRegistroE531(RegE530: TRegistroE530);
+var
+  intFor: integer;
+begin
+  if Assigned( RegE530.RegistroE531 ) then
+  begin
+     for intFor := 0 to RegE530.RegistroE531.Count - 1 do
+     begin
+        with RegE530.RegistroE531.Items[intFor] do
+        begin
+          Add( LFill('E531') +
+               LFill( COD_PART ) +
+               LFill( COD_MOD ) +
+               LFill( SER ) +
+               LFill( SUB ) +
+               LFill( NUM_DOC ) +
+               LFill( DT_DOC ) +
+               LFill( COD_ITEM ) +
+               LFill( VL_AJ_ITEM,0 ) +
+               LFill( CHV_NFE ) );
+        end;
+        RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroE531Count := FRegistroE531Count + RegE530.RegistroE531.Count;
   end;
 end;
 

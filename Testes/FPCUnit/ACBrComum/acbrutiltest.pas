@@ -817,6 +817,7 @@ type
   QuebraLinhasTest = class(TTestCase)
   private
     AStr: String;
+    FTexto: String;
   protected
     procedure SetUp; override;
   published
@@ -825,6 +826,8 @@ type
     procedure QuebraEmCinquentaComSeparadorE;
     procedure QuebraStrComLineBreakEm32cols;
     procedure QuebraDuasLinhasNoLimiteColuna;
+    procedure QuebraLinhaComVariosCRLFEm12;
+    procedure QuebraLinhaComVariosCRLFEm24;
   end;
 
   { TraduzComandoTest }
@@ -1944,6 +1947,9 @@ begin
   // Nota Essa Unit está em CP1252
   //              0....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8....
   AStr := ACBrStr('Dez Milhões e Duzentos e Cinquenta e Cinco Mil e Quatrocentos e Trinta e Cinco Reais');
+  FTexto := 'Projeto ACBr'+sLineBreak+sLineBreak+
+            'www.projetoacbr.com.br'+sLineBreak+sLineBreak+sLineBreak+sLineBreak+
+            '123456 123456789 1234567890';
 end;
 
 procedure QuebraLinhasTest.QuebraEmNoventaColunas;
@@ -2012,6 +2018,35 @@ begin
 
   CheckEquals( ACBrStr(AMsg1), Resp );
 end;
+
+procedure QuebraLinhasTest.QuebraLinhaComVariosCRLFEm12;
+var
+  Texto12: String;
+begin
+           // 123456789012
+  Texto12 := 'Projeto ACBr'+sLineBreak+sLineBreak+
+             'www.projetoa'+sLineBreak+
+             'cbr.com.br'+sLineBreak+sLineBreak+sLineBreak+sLineBreak+
+             '123456 '+sLineBreak+
+             '123456789 '+sLineBreak+
+             '1234567890';
+
+  CheckEquals(Texto12, QuebraLinhas(FTexto,12));
+end;
+
+procedure QuebraLinhasTest.QuebraLinhaComVariosCRLFEm24;
+var
+  Texto24: String;
+begin
+           // 123456789012345678901234
+  Texto24 := 'Projeto ACBr'+sLineBreak+sLineBreak+
+             'www.projetoacbr.com.br'+sLineBreak+sLineBreak+sLineBreak+sLineBreak+
+             '123456 123456789 '+sLineBreak+
+             '1234567890';
+
+  CheckEquals(Texto24, QuebraLinhas(FTexto,24));
+end;
+
 
 { AjustaLinhasTest }
 

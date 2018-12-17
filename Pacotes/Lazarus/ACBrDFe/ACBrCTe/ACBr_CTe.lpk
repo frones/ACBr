@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="24">
+    <Files Count="23">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConhecimentos.pas"/>
         <UnitName Value="ACBrCTeConhecimentos"/>
@@ -98,21 +98,17 @@
         <UnitName Value="pcteProcCTe"/>
       </Item20>
       <Item21>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetCancCTe.pas"/>
-        <UnitName Value="pcteRetCancCTe"/>
-      </Item21>
-      <Item22>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsCad.pas"/>
         <UnitName Value="pcteRetConsCad"/>
-      </Item22>
-      <Item23>
+      </Item21>
+      <Item22>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\ACBrCTeDACTEClass.pas"/>
         <UnitName Value="ACBrCTeDACTEClass"/>
-      </Item23>
-      <Item24>
+      </Item22>
+      <Item23>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsts.pas"/>
         <UnitName Value="pcteConsts"/>
-      </Item24>
+      </Item23>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

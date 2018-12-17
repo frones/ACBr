@@ -11,7 +11,7 @@ uses
   ACBrCTeReg, ACBrCTeWebServices, pcteConsCad, pcteConsReciCTe, 
   pcteConsSitCTe, pcteConsStatServ, pcteCTe, pcteCTeR, pcteCTeW, 
   pcteEnvEventoCTe, pcteEventoCTe, pcteInutCTe, pcteLayoutTXT, pcteModeloCTe, 
-  pcteProcCTe, pcteRetCancCTe, pcteRetConsCad, ACBrCTeDACTEClass, pcteConsts, 
+  pcteProcCTe, pcteRetConsCad, ACBrCTeDACTEClass, pcteConsts, 
   LazarusPackageIntf;
 
 implementation

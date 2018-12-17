@@ -100,7 +100,7 @@ contains
   pcteLayoutTXT in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteLayoutTXT.pas',
   pcteModeloCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteModeloCTe.pas',
   pcteProcCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteProcCTe.pas',
-  pcteRetCancCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetCancCTe.pas',
+//  pcteRetCancCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetCancCTe.pas',
   pcteRetConsCad in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsCad.pas',
   pcteRetConsReciCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsReciCTe.pas',
   pcteRetConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsSitCTe.pas',

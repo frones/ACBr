@@ -594,7 +594,7 @@ begin
   FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
 
   GerarXML_Agili;
-
+  {
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -615,7 +615,7 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
+  }
   Gerador.wGrupo('/Rps');
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);

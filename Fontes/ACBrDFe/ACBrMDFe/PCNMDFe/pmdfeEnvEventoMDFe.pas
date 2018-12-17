@@ -46,7 +46,7 @@ uses
 //  Variants,
 //{$ENDIF}
   pcnConversao, pcnGerador, pcnConsts, //pcnLeitor,
-  pmdfeEventoMDFe, pmdfeSignature;
+  pmdfeEventoMDFe, pcnSignature;
 
 type
   TInfEventoCollection     = class;

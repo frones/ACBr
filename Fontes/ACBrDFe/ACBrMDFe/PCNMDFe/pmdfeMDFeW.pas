@@ -185,7 +185,7 @@ begin
       Gerar := ((MDFe.signature.DigestValue = '') and (MDFe.signature.SignatureValue = '') and (MDFe.signature.X509Certificate = ''));
     if Gerar then
     begin
-      FMDFe.signature.URI := OnlyNumber(MDFe.infMDFe.ID);
+      FMDFe.signature.URI := '#MDFe' + OnlyNumber(MDFe.infMDFe.ID);
       FMDFe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FMDFe.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FMDFe.signature.Gerador.ArquivoFormatoXML;

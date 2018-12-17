@@ -56,22 +56,6 @@ uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteCTe,
   ACBrUtil, pcteConversaoCTe, pcnConsts, pcteConsts, ACBrDFeUtil;
 
-{$IFDEF PL_103}
- {$I pcteCTeW_V103.inc}
-{$ENDIF}
-
-{$IFDEF PL_104}
- {$I pcteCTeW_V104.inc}
-{$ENDIF}
-
-{$IFDEF PL_200}
-// {$I pcteCTeW_V200.inc}
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-//              Gera o XML para a versão 2.00                                 //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
-
 type
 
   TGeradorOpcoes = class;
@@ -294,9 +278,9 @@ begin
 
     if Gerar then
     begin
-      FCTe.signature.URI := OnlyNumber(CTe.infCTe.ID);
+      FCTe.signature.URI := '#CTe' + OnlyNumber(CTe.infCTe.ID);
       FCTe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-      FCTe.signature.GerarXMLCTe;
+      FCTe.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FCTe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
@@ -2747,7 +2731,6 @@ begin
     else if ( ( EstaVazio(xMun)) and (cMun <> CMUN_EXTERIOR) ) then
       xMun := ObterNomeMunicipio(xUF, cMun, FOpcoes.FPathArquivoMunicipios);
 end;
-{$ENDIF}
 
 end.
 

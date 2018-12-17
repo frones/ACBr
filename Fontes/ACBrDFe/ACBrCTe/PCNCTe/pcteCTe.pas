@@ -57,24 +57,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, pcteProcCTe, pcteSignature, pcteConversaoCTe, pcnGerador;
-
-{$IFDEF PL_103}
- {$I pcteCTe_V103.inc}
-{$ENDIF}
-
-{$IFDEF PL_104}
- {$I pcteCTe_V104.inc}
-{$ENDIF}
-
-{$IFDEF PL_200}
-// {$I pcteCTe_V200.inc}
-
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-//              Definição de classes para a versão 2.00                       //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+  pcnConversao, pcnGerador, pcnSignature, pcteProcCTe, pcteConversaoCTe;
 
 type
   TCTe    = class;
@@ -5193,8 +5176,6 @@ begin
 
   inherited;
 end;
-
-{$ENDIF}
 
 end.
 

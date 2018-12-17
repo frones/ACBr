@@ -222,6 +222,7 @@ begin
   Gerador.wGrupo('tbnfd');
   FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) + FNFSe.IdentificacaoRps.Serie;
   GerarXML_Smarapd;
+  {
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -241,6 +242,7 @@ begin
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
+  }
   Gerador.wGrupo('/tbnfd');
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);

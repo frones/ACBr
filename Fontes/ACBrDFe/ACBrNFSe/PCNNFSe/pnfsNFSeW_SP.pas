@@ -286,7 +286,7 @@ begin
   FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
 
   GerarXML_SP;
-
+  {
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -307,7 +307,7 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
+  }
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Gerador.Opcoes.SuprimirDecimais := False;
   

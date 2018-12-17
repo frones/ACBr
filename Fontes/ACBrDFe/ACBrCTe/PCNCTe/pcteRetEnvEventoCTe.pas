@@ -55,7 +55,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnLeitor, pcteEventoCTe, pcteConversaoCTe,
-  pcteSignature;
+  pcnSignature;
 
 type
   TRetInfEventoCollection     = class;

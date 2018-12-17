@@ -45,7 +45,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, pmdfeConversaoMDFe, pmdfeSignature, pmdfeProcMDFe, pcnGerador;
+  pcnConversao, pmdfeConversaoMDFe, pcnSignature, pmdfeProcMDFe, pcnGerador;
 
 type
 

@@ -356,7 +356,7 @@ begin
   FNFSe.InfID.ID := copy(FNFSe.InfID.ID, length(FNFSe.InfID.ID) - 15 + 1, 15);
 
   GerarXML_EL;
-
+  {
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -377,7 +377,7 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
+  }
   Gerador.wGrupo('/Rps');
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);

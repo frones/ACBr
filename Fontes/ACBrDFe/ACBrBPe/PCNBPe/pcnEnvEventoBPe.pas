@@ -59,7 +59,7 @@ interface
 uses
   SysUtils, Classes,
   pcnConversao, pcnGerador, pcnConsts,
-  pcnEventoBPe, pcnBPeConsts, pcnSignatureBPe;
+  pcnEventoBPe, pcnBPeConsts, pcnSignature;
 
 type
   TInfEventoCollection     = class;

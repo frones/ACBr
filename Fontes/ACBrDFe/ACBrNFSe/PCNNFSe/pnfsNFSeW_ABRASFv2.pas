@@ -949,7 +949,7 @@ begin
     Gerador.Opcoes.SuprimirDecimais := True;
 
   GerarXML_ABRASF_v2;
-
+  {
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -970,7 +970,7 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
+  }
   Gerador.wGrupo('/Rps');
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);

@@ -294,7 +294,7 @@ begin
                       FNFSe.IdentificacaoRps.Serie;
 
   GerarXML_Equiplano;
-
+  {
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -317,7 +317,7 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
+  }
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;

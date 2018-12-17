@@ -55,7 +55,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe, pcnLeitor,
-  ACBrUtil, pcnConsts, pcteSignature;
+  ACBrUtil, pcnConsts, pcnSignature;
 
 
 type
@@ -159,7 +159,7 @@ begin
   if signature.URI <> '' then
   begin
     signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-    signature.GerarXMLCTe;
+    signature.GerarXML;
     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + signature.Gerador.ArquivoFormatoXML;
   end;
 

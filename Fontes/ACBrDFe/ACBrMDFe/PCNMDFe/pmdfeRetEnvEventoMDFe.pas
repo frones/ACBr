@@ -45,7 +45,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, pmdfeEventoMDFe, pmdfeSignature;
+  pcnAuxiliar, pcnConversao, pcnLeitor, pmdfeEventoMDFe, pcnSignature;
 
 type
   TRetInfEventoCollection     = class;

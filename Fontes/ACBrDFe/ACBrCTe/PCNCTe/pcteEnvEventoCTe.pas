@@ -55,7 +55,7 @@ uses
 //  Variants,
 //{$ENDIF}
   pcnConversao, pcnGerador, pcnConsts, //pcnLeitor,
-  pcteConversaoCTe, pcteEventoCTe, pcteConsts, pcteSignature;
+  pcteConversaoCTe, pcteEventoCTe, pcteConsts, pcnSignature;
 
 type
   TInfEventoCollection     = class;
@@ -392,7 +392,7 @@ begin
   if Evento.Items[0].signature.URI <> '' then
   begin
     Evento.Items[0].signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-    Evento.Items[0].signature.GerarXMLCTe;
+    Evento.Items[0].signature.GerarXML;
     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Evento.Items[0].signature.Gerador.ArquivoFormatoXML;
   end;
 

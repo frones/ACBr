@@ -58,7 +58,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnGerador, pcnBPe, pcnConversao, pcnBPeConsts;
+  pcnGerador, pcnConversao, pcnBPe, pcnBPeConsts;
 
 type
 
@@ -220,7 +220,7 @@ begin
       Gerar := ((BPe.Signature.DigestValue = '') and (BPe.Signature.SignatureValue = '') and (BPe.Signature.X509Certificate = ''));
     if Gerar then
     begin
-      FBPe.Signature.URI := OnlyNumber(BPe.infBPe.ID);
+      FBPe.Signature.URI := '#BPe' + OnlyNumber(BPe.infBPe.ID);
       FBPe.Signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FBPe.Signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FBPe.Signature.Gerador.ArquivoFormatoXML;

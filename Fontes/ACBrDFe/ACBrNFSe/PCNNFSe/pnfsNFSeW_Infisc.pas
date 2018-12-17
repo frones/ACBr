@@ -126,7 +126,7 @@ begin
     GerarXML_Infisc_v10
   else
     GerarXML_Infisc_v11;
-
+  {
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -147,7 +147,7 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
+  }
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
 
   Result := (Gerador.ListaDeAlertas.Count = 0);

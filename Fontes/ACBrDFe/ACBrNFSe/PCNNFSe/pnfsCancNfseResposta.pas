@@ -422,14 +422,14 @@ begin
             InfCanc.FPedido.IdentificacaoNfse.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
             InfCanc.FPedido.IdentificacaoNfse.CodigoMunicipio    := Leitor.rCampo(tcStr, 'CodigoMunicipio');
           end;
-
+          {
           Leitor.Grupo := Leitor.Arquivo;
 
           InfCanc.FPedido.signature.URI             := Leitor.rAtributo('Reference URI=');
           InfCanc.FPedido.signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
           InfCanc.FPedido.signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
           InfCanc.FPedido.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-
+          }
           if (leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') or
              (leitor.rExtrai(2, 'MensagemRetorno') <> '') then
           begin

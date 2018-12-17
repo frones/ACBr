@@ -586,7 +586,7 @@ begin
   end;
 
   GerarXML_ABRASF_V1;
-
+  {
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -607,7 +607,7 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
+  } 
   Gerador.wGrupo('/Rps');
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);

@@ -419,7 +419,7 @@ begin
   FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
 
   GerarXML_ISSDSF;
-
+  {
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -440,7 +440,7 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
+  }
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;

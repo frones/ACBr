@@ -289,7 +289,7 @@ begin
       Gerar := ((NFe.signature.DigestValue = '') and (NFe.signature.SignatureValue = '') and (NFe.signature.X509Certificate = ''));
     if Gerar then
     begin
-      FNFe.signature.URI := OnlyNumber(NFe.infNFe.ID);
+      FNFe.signature.URI := '#NFe' + OnlyNumber(NFe.infNFe.ID);
       FNFe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
       FNFe.signature.GerarXML;
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FNFe.signature.Gerador.ArquivoFormatoXML;

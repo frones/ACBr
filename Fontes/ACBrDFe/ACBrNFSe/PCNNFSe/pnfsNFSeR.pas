@@ -201,14 +201,6 @@ begin
       Result := LerNFSe_Smarapd
     else
       Result := False;
-
-  // Grupo da TAG <signature> ***************************************************
-  Leitor.Grupo := Leitor.Arquivo;
-
-  NFSe.Signature.URI             := Leitor.rAtributo('Reference URI=');
-  NFSe.Signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
-  NFSe.Signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
-  NFSe.Signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
 end;
 
 ////////////////////////////////////////////////////////////////////////////////

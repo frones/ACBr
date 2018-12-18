@@ -149,7 +149,7 @@ begin
           LFill(limpaCampo(CNPJ)        , 14) +
           RFill(limpaCampo(IE)          , 14) +
           RFill(limpaCampo(IM)          , 14) +
-          RFill(TiraAcentos(RAZAOSOCIAL), 50));
+          RFill(UpperCase(TiraAcentos(RAZAOSOCIAL)), 50));
     end;
     WriteRegistroW2;
     WriteRegistroW3;
@@ -171,7 +171,7 @@ begin
           LFill(limpaCampo(CNPJ)        , 14) +
           RFill(limpaCampo(IE)          , 14) +
           RFill(limpaCampo(IM)          , 14) +
-          RFill(TiraAcentos(RAZAOSOCIAL), 50));
+          RFill(UpperCase(TiraAcentos(RAZAOSOCIAL)), 50));
     end;
   end;
 end;
@@ -203,7 +203,7 @@ begin
         Add( LFill('W4') +
              RFill(UpperCase(TiraAcentos(ORIGEMDARE)), 20) +
              RFill(UpperCase(STATUSDARE), 1) +
-             RFill(CRE, 9) +
+             LFill(CRE, 9) +
              LFill(DAV, 13) +
              LFill(PREVENDA, 10) +
              LFill(CCF, 9) +

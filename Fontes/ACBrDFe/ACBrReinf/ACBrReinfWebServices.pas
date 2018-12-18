@@ -606,22 +606,23 @@ end;
 procedure TConsultarReciboEvento.DefinirDadosMsg;
 var
   Consulta: TReinfConsulta;
-  tpInsc, tpInsc2, nrInsc: String;
+  tpInsc, tpInsc2, nrInsc, nrInscEstab: String;
 begin
-  nrInsc := TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte;
+  nrInscEstab := TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte;
 
-  if Length(nrInsc) = 14 then
+  if Length(nrInscEstab) = 14 then
   begin
-    nrInsc := Copy( nrInsc, 1, 8 );
+    nrInsc := Copy( nrInscEstab, 1, 8 );
     tpInsc := '1';
   end
   else
+  begin
+    nrInsc := nrInscEstab;
     tpInsc := '2';
+  end;
 
   if Length(FcnpjPrestadorTomador) = 14 then
-  begin
-    tpInsc2 := '1';
-  end
+    tpInsc2 := '1'
   else
     tpInsc2 := '4';
 
@@ -630,6 +631,7 @@ begin
     Consulta.SoapEnvelope := FPSoapEnvelopeAtributtes;
     Consulta.tpInsc := tpInsc;
     Consulta.nrInsc := nrInsc;
+    Consulta.nrInscEstab := nrInscEstab;
     Consulta.tpInscTomador := tpInsc2;
     Consulta.cnpjPrestadorTomador := cnpjPrestadorTomador;
     Consulta.TipoEvento := TipoEvento;
@@ -644,35 +646,6 @@ begin
     Consulta.Free;
   end;
 
-  {
-  FPDadosMsg := '<consultar' + FPSoapEnvelopeAtributtes + '>' +
-    '<v1:tipoEvento>'+ FtipoEvento +'</v1:tipoEvento>' +
-    '<v1:tpInsc>' + tpInsc + '</v1:tpInsc>' +
-    '<v1:nrInsc>' + nrInsc + '</v1:nrInsc>';
-
-  if (FtipoEvento='2010') then
-    FPDadosMsg := FPDadosMsg + '<v1:perApur>' + FperApur + '</v1:perApur>' +
-      '<v1:tpInscEstab>' + tpInsc + '</v1:tpInscEstab>' +
-      '<v1:nrInscEstab>' + TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte + '</v1:nrInscEstab>' +
-      '<v1:cnpjPrestador>' + FcnpjPrestadorTomador + '</v1:cnpjPrestador>' +
-      '</consultar>'
-  else if (FtipoEvento='2020') then
-    FPDadosMsg := FPDadosMsg + '<v1:perApur>' + FperApur + '</v1:perApur>' +
-      '<v1:nrInscEstabPrest>' + TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte + '</v1:nrInscEstabPrest>' +
-      '<v1:tpInscTomador>' + tpInsc2 + '</v1:tpInscTomador>' +
-      '<v1:nrInscTomador>' + FcnpjPrestadorTomador + '</v1:nrInscTomador>' +
-      '</consultar>'
-  else if (FtipoEvento='2060') then
-    FPDadosMsg := FPDadosMsg + '<v1:perApur>' + FperApur + '</v1:perApur>' +
-      '<v1:tpInscEstab>' + tpInsc + '</v1:tpInscEstab>' +
-      '<v1:nrInscEstab>' + TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte + '</v1:nrInscEstab>' +
-      '</consultar>'
-  else if (FtipoEvento='2098')or
-    (FtipoEvento='2099') then
-    FPDadosMsg := FPDadosMsg + '<v1:perApur>' + FperApur + '</v1:perApur>';
-
-  FPDadosMsg := FPDadosMsg + '</consultar>';
-  }
   if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
     TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, erEnvioConsulta);
 end;

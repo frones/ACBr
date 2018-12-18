@@ -52,7 +52,10 @@ Símbolo : Significado
 
 18/12/2018
 -- Diversos -- 
-[*] Implementado o método ConsultaRecicoEvento.
+[*] Correções no método ConsultaRecicoEvento.
+   Por: Joffas
+-- Diversos -- 
+[+] Implementado o método ConsultaRecicoEvento.
    Por: Joffas
 
 08/11/2018

@@ -48,6 +48,7 @@ type
     FSoapEnvelope: String;
     FtpInsc: String;
     FnrInsc: String;
+    FnrInscEstab: String;
     FTipoEvento: TTipoEvento;
     FperApur: String;
     FtpInscTomador: String;
@@ -61,6 +62,7 @@ type
     property SoapEnvelope: String         read FSoapEnvelope         write FSoapEnvelope;
     property tpInsc: String               read FtpInsc               write FtpInsc;
     property nrInsc: String               read FnrInsc               write FnrInsc;
+    property nrInscEstab: String          read FnrInscEstab          write FnrInscEstab;
     property TipoEvento: TTipoEvento      read FTipoEvento           write FTipoEvento;
     property perApur: String              read FperApur              write FperApur;
     property tpInscTomador: String        read FtpInscTomador        write FtpInscTomador;
@@ -108,13 +110,13 @@ begin
       begin
         Gerador.wCampoNFSe(tcStr, 'C06', 'perApur      ', 07, 07, 1, perApur, 'XXX');
         Gerador.wCampoNFSe(tcStr, 'C07', 'tpInscEstab  ', 01, 01, 1, tpInsc, 'XXX');
-        Gerador.wCampoNFSe(tcStr, 'C08', 'nrInscEstab  ', 11, 14, 1, nrInsc, 'XXX');
+        Gerador.wCampoNFSe(tcStr, 'C08', 'nrInscEstab  ', 11, 14, 1, nrInscEstab, 'XXX');
         Gerador.wCampoNFSe(tcStr, 'C09', 'cnpjPrestador', 11, 14, 1, cnpjPrestadorTomador, 'XXX');
       end;
     teR2020:
       begin
         Gerador.wCampoNFSe(tcStr, 'C06', 'perApur         ', 07, 07, 1, perApur, 'XXX');
-        Gerador.wCampoNFSe(tcStr, 'C07', 'nrInscEstabPrest', 11, 14, 1, nrInsc, 'XXX');
+        Gerador.wCampoNFSe(tcStr, 'C07', 'nrInscEstabPrest', 11, 14, 1, nrInscEstab, 'XXX');
         Gerador.wCampoNFSe(tcStr, 'C07', 'tpInscTomador   ', 01, 01, 1, tpInscTomador, 'XXX');
         Gerador.wCampoNFSe(tcStr, 'C09', 'nrInscTomador   ', 11, 14, 1, cnpjPrestadorTomador, 'XXX');
       end;
@@ -125,7 +127,7 @@ begin
       begin
         Gerador.wCampoNFSe(tcStr, 'C06', 'perApur      ', 07, 07, 1, perApur, 'XXX');
         Gerador.wCampoNFSe(tcStr, 'C07', 'tpInscEstab  ', 01, 01, 1, tpInsc, 'XXX');
-        Gerador.wCampoNFSe(tcStr, 'C08', 'nrInscEstab  ', 11, 14, 1, nrInsc, 'XXX');
+        Gerador.wCampoNFSe(tcStr, 'C08', 'nrInscEstab  ', 11, 14, 1, nrInscEstab, 'XXX');
       end;
 //    teR2070:
     teR2098,

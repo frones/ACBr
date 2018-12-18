@@ -710,6 +710,7 @@ begin
       imgLogo.Parent := pLogoLateral
     else
       imgLogo.Parent := pLogoeCliche;
+
     if ACBrNFeDANFCeFortes.Logo <> '' then
     begin
       if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
@@ -988,10 +989,18 @@ end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbPagamentoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
+var
+  DescPagto, DescBandeira: String;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.pag.Items[fNumPagto] do
   begin
-    lMeioPagamento.Caption  := ACBrStr(FormaPagamentoToDescricao(tPag));
+    DescPagto := ACBrStr(FormaPagamentoToDescricao(tPag));
+    if (tPag in [fpCartaoCredito, fpCartaoDebito]) then
+      DescBandeira := BandeiraCartaoToDescStr(tBand)
+    else
+      DescBandeira := '';
+
+    lMeioPagamento.Caption  := DescPagto + ' ' + DescBandeira;
     lPagamento.Caption      := FormatFloatBr(vPag);
     fTotalPagto             := fTotalPagto + vPag;
   end;

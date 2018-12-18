@@ -236,10 +236,10 @@ begin
   FMostraStatus := True;
   FNumCopias := 1;
   FLogo := '';
-  FSistema := '';
+  FSistema := 'Projeto ACBr - www.projetoacbr.com.br';
   FUsuario := '';
   FFax := '';
-  FSite := 'www.projetoacbr.com.br';
+  FSite := '';
   FEmail := '';
   FMargemInferior := 0.8;
   FMargemSuperior := 0.8;

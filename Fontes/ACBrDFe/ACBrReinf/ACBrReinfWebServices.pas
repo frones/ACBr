@@ -48,8 +48,8 @@ uses
   ACBrUtil, ACBrDFe, ACBrDFeWebService,
   pcnLeitor,
   ACBrReinfLoteEventos, ACBrReinfConfiguracoes,
-  pcnConversaoReinf, pcnCommonReinf, pcnReinfRetEventos, pcnReinfRetConsulta,
-  pcnReinfR5001;
+  pcnConversaoReinf, pcnCommonReinf, pcnReinfRetEventos, pcnReinfConsulta,
+  pcnReinfRetConsulta, pcnReinfR5001;
 
 type
   { TReinfWebService }
@@ -104,7 +104,7 @@ type
     property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
   end;
 
-  { TConsultaLote }
+  { TConsultar }
 
   TConsultar = class(TReinfWebService)
   private
@@ -130,6 +130,38 @@ type
     property RetConsulta: TRetConsulta read FRetConsulta;
   end;
 
+  { TConsultarReciboEvento }
+
+  TConsultarReciboEvento = class(TReinfWebService)
+  private
+    FtipoEvento: TTipoEvento;
+    FtpEventoStr: String;
+    FperApur: String;
+    FcnpjPrestadorTomador: string;
+
+    FRetConsulta: TRetConsulta;
+    FVersaoDF: TVersaoReinf;
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    procedure DefinirEnvelopeSoap; override;
+    procedure InicializarServico; override;
+
+    function TratarResposta: Boolean; override;
+    function GerarMsgLog: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe); override;
+    procedure Clear; override;
+    procedure BeforeDestruction; override;
+
+    property tipoEvento: TTipoEvento read FtipoEvento write FtipoEvento;
+    property tpEventoStr: String read FtpEventoStr write FtpEventoStr;
+    property perApur: string read FperApur write FperApur;
+    property cnpjPrestadorTomador: string read FcnpjPrestadorTomador write FcnpjPrestadorTomador;
+    property RetConsulta: TRetConsulta read FRetConsulta;
+  end;
+
   { TWebServices }
 
   TWebServices = class
@@ -137,16 +169,19 @@ type
     FACBrReinf: TACBrDFe;
     FEnvioLote: TEnvioLote;
     FConsultar: TConsultar;
+    FConsultarReciboEvento: TConsultarReciboEvento;
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
     function Envia: Boolean;
     function Consulta(const AProtocolo: string): Boolean;
+    function ConsultaReciboEvento(const APerApur: String; ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''): Boolean;
 
     property ACBrReinf: TACBrDFe read FACBrReinf write FACBrReinf;
     property EnvioLote: TEnvioLote read FEnvioLote write FEnvioLote;
     property Consultar: TConsultar read FConsultar write FConsultar;
+    property ConsultarReciboEvento: TConsultarReciboEvento read FConsultarReciboEvento write FConsultarReciboEvento;
   end;
 
 implementation
@@ -439,7 +474,6 @@ begin
             '<v1:numeroProtocoloFechamento>' + FProtocolo + '</v1:numeroProtocoloFechamento>' +
             '</consultar>';
 
-
   if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
     TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, erEnvioConsulta);
 end;
@@ -536,6 +570,205 @@ begin
   Result := True;
 end;
 
+{ TConsultarReciboEvento }
+
+procedure TConsultarReciboEvento.BeforeDestruction;
+begin
+  inherited;
+
+  FRetConsulta.Free;
+end;
+
+procedure TConsultarReciboEvento.Clear;
+begin
+  inherited Clear;
+
+  FPLayout := LayConsultaLoteEventos;
+  FPStatus := stConsultaLote;
+  FPArqEnv := 'ped-con';
+  FPArqResp := 'con';
+
+  if Assigned(FRetConsulta) then
+    FRetConsulta.Free;
+
+  FRetConsulta := TRetConsulta.Create;
+end;
+
+constructor TConsultarReciboEvento.Create(AOwner: TACBrDFe);
+begin
+  Inherited Create(AOwner);
+  FtipoEvento := teR1000;
+  tpEventoStr := '1000';
+  FperApur := '';
+  FcnpjPrestadorTomador := '';
+end;
+
+procedure TConsultarReciboEvento.DefinirDadosMsg;
+var
+  Consulta: TReinfConsulta;
+  tpInsc, tpInsc2, nrInsc: String;
+begin
+  nrInsc := TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte;
+
+  if Length(nrInsc) = 14 then
+  begin
+    nrInsc := Copy( nrInsc, 1, 8 );
+    tpInsc := '1';
+  end
+  else
+    tpInsc := '2';
+
+  if Length(FcnpjPrestadorTomador) = 14 then
+  begin
+    tpInsc2 := '1';
+  end
+  else
+    tpInsc2 := '4';
+
+  Consulta := TReinfConsulta.Create;
+  try
+    Consulta.SoapEnvelope := FPSoapEnvelopeAtributtes;
+    Consulta.tpInsc := tpInsc;
+    Consulta.nrInsc := nrInsc;
+    Consulta.tpInscTomador := tpInsc2;
+    Consulta.cnpjPrestadorTomador := cnpjPrestadorTomador;
+    Consulta.TipoEvento := TipoEvento;
+    Consulta.perApur := perApur;
+
+    AjustarOpcoes( Consulta.Gerador.Opcoes );
+    Consulta.GerarXML;
+
+    // Atribuindo o XML para propriedade interna //
+    FPDadosMsg := Consulta.Gerador.ArquivoFormatoXML;
+  finally
+    Consulta.Free;
+  end;
+
+  {
+  FPDadosMsg := '<consultar' + FPSoapEnvelopeAtributtes + '>' +
+    '<v1:tipoEvento>'+ FtipoEvento +'</v1:tipoEvento>' +
+    '<v1:tpInsc>' + tpInsc + '</v1:tpInsc>' +
+    '<v1:nrInsc>' + nrInsc + '</v1:nrInsc>';
+
+  if (FtipoEvento='2010') then
+    FPDadosMsg := FPDadosMsg + '<v1:perApur>' + FperApur + '</v1:perApur>' +
+      '<v1:tpInscEstab>' + tpInsc + '</v1:tpInscEstab>' +
+      '<v1:nrInscEstab>' + TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte + '</v1:nrInscEstab>' +
+      '<v1:cnpjPrestador>' + FcnpjPrestadorTomador + '</v1:cnpjPrestador>' +
+      '</consultar>'
+  else if (FtipoEvento='2020') then
+    FPDadosMsg := FPDadosMsg + '<v1:perApur>' + FperApur + '</v1:perApur>' +
+      '<v1:nrInscEstabPrest>' + TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte + '</v1:nrInscEstabPrest>' +
+      '<v1:tpInscTomador>' + tpInsc2 + '</v1:tpInscTomador>' +
+      '<v1:nrInscTomador>' + FcnpjPrestadorTomador + '</v1:nrInscTomador>' +
+      '</consultar>'
+  else if (FtipoEvento='2060') then
+    FPDadosMsg := FPDadosMsg + '<v1:perApur>' + FperApur + '</v1:perApur>' +
+      '<v1:tpInscEstab>' + tpInsc + '</v1:tpInscEstab>' +
+      '<v1:nrInscEstab>' + TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte + '</v1:nrInscEstab>' +
+      '</consultar>'
+  else if (FtipoEvento='2098')or
+    (FtipoEvento='2099') then
+    FPDadosMsg := FPDadosMsg + '<v1:perApur>' + FperApur + '</v1:perApur>';
+
+  FPDadosMsg := FPDadosMsg + '</consultar>';
+  }
+  if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
+    TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, erEnvioConsulta);
+end;
+
+procedure TConsultarReciboEvento.DefinirEnvelopeSoap;
+var
+  Texto: String;
+begin
+  {$IFDEF FPC}
+   Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
+  {$ELSE}
+   Texto := '';  // Isso forçará a conversão para UTF8, antes do envio
+  {$ENDIF}
+  Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
+  Texto := Texto + '<' + FPSoapVersion + ':Body>';
+  Texto := Texto + '<' + 'v1:ConsultaReciboEvento' + tpEventoStr + '>';
+  Texto := Texto + SeparaDados(DadosMsg, 'consultar');
+  Texto := Texto + '<' +  '/v1:ConsultaReciboEvento' + tpEventoStr + '>';
+  Texto := Texto + '</' + FPSoapVersion + ':Body>';
+  Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
+
+  FPEnvelopeSoap := Texto;
+end;
+
+procedure TConsultarReciboEvento.DefinirServicoEAction;
+begin
+  FPServico := ACBRREINF_NAMESPACE_CON +
+                 '/ConsultaReciboEvento' + tpEventoStr;
+  FPSoapAction := Trim(FPServico);
+end;
+
+procedure TConsultarReciboEvento.DefinirURL;
+var
+  Versao: Double;
+begin
+  Versao := VersaoReinfToDbl(FVersaoDF);
+  FPVersaoServico := '';
+  FPURL := '';
+
+  TACBrReinf(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+
+function TConsultarReciboEvento.GerarMsgLog: String;
+var
+  aMsg: String;
+begin
+  aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                         'Ambiente: %s ' + LineBreak
+//                         'Versão Aplicativo: %s ' + LineBreak +
+//                         'Status Código: %s ' + LineBreak +
+//                         'Status Descrição: %s ' + LineBreak
+                        ),
+                 [VersaoReinfToStr(FVersaoDF),
+                  TpAmbToStr(TACBrReinf(FPDFeOwner).Configuracoes.WebServices.Ambiente)
+//                  FRetEnvioLote.dadosRecLote.versaoAplicRecepcao,
+//                  IntToStr(FRetConsulta.Status.cdStatus),
+//                  FRetConsulta.Status.descRetorno
+                  ]);
+
+  Result := aMsg;
+end;
+
+procedure TConsultarReciboEvento.InicializarServico;
+begin
+  FVersaoDF := FPConfiguracoesReinf.Geral.VersaoDF;
+
+  inherited InicializarServico;
+end;
+
+function TConsultarReciboEvento.TratarResposta: Boolean;
+var
+  AXML, NomeArq: String;
+begin
+  //aqui nao esta pronto
+  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultaReciboEvento' + tpEventoStr + 'Result');
+
+  FRetConsulta.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetConsulta.LerXml;
+
+  AXML := FRetConsulta.XML;
+
+  if AXML <> '' then
+  begin
+    NomeArq := FRetConsulta.evtTotalContrib.Id + '-ConsultaReciboEvento' + tpEventoStr + '.xml';
+
+    if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
+      FPDFeOwner.Gravar(NomeArq, AXML, '',False);
+  end;
+
+  if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
+    TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPRetWS, erRetornoConsulta);
+
+  Result := True;
+end;
+
 { TWebServices }
 
 constructor TWebServices.Create(AOwner: TACBrDFe);
@@ -544,12 +777,14 @@ begin
 
   FEnvioLote    := TEnvioLote.Create(FACBrReinf);
   FConsultar := TConsultar.Create(FACBrReinf);
+  FConsultarReciboEvento := TConsultarReciboEvento.Create(FACBrReinf);
 end;
 
 destructor TWebServices.Destroy;
 begin
   FEnvioLote.Free;
   FConsultar.Free;
+  FConsultarReciboEvento.Free;
 
   inherited Destroy;
 end;
@@ -577,7 +812,26 @@ begin
   FConsultar.FProtocolo := AProtocolo;
 
   if not FConsultar.Executar then
-      FConsultar.GerarException(FConsultar.Msg);
+    FConsultar.GerarException(FConsultar.Msg);
+
+  Result := True;
+end;
+
+function TWebServices.ConsultaReciboEvento(const APerApur: string;
+   ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''): Boolean;
+begin
+{$IFDEF FPC}
+  Result := False;
+{$ENDIF}
+
+  FConsultarReciboEvento.FperApur := APerApur;
+  FConsultarReciboEvento.FtipoEvento := ATipoEvento;
+  FConsultarReciboEvento.tpEventoStr := Copy(TipoEventoToStr(ATipoEvento), 3, 4);
+
+  FConsultarReciboEvento.FcnpjPrestadorTomador := ACnpjPrestadorTomador;
+
+  if not FConsultarReciboEvento.Executar then
+    FConsultarReciboEvento.GerarException(FConsultarReciboEvento.Msg);
 
   Result := True;
 end;

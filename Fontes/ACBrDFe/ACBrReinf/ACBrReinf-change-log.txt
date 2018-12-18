@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2018
+-- Diversos -- 
+[*] Implementado o método ConsultaRecicoEvento.
+   Por: Joffas
+
 08/11/2018
 -- pcnReinfR5011 -- 
 [*] https://www.projetoacbr.com.br/forum/topic/47499-ajuste-reinf-r5011/

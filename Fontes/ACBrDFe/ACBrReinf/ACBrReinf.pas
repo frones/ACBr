@@ -102,6 +102,7 @@ type
 
     function Enviar: boolean;
     function Consultar(const AProtocolo: string): boolean;
+    function ConsultaReciboEvento(const APerApur: String; ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''): Boolean;
 
     property Eventos: TEventos read FEventos write FEventos;
     property Status: TStatusReinf read FStatus;
@@ -177,6 +178,12 @@ end;
 function TACBrReinf.Consultar(const AProtocolo: string): boolean;
 begin
   Result := WebServices.Consulta(AProtocolo);
+end;
+
+function TACBrReinf.ConsultaReciboEvento(const APerApur: String;
+  ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''): Boolean;
+begin
+  Result := WebServices.ConsultaReciboEvento(APerApur, ATipoEvento, ACnpjPrestadorTomador);
 end;
 
 procedure TACBrReinf.AssinarEventos;

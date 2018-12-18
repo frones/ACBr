@@ -288,6 +288,7 @@ type
     FIdeContri: TIdeContrib;
     FIdeStatus: TIdeStatus;
     FInfoRecEv: TInfoRecEv;
+    FIdeStatusConsultaReciboEventos: TStatusConsultaReciboEventos;
     FInfoTotalContrib: TInfoTotalContrib;
   public
     constructor Create;
@@ -297,6 +298,7 @@ type
     property IdeEvento: TIdeEvento1 read FIdeEvento write FIdeEvento;
     property IdeContri: TIdeContrib read FIdeContri write FIdeContri;
     property IdeStatus: TIdeStatus read FIdeStatus write FIdeStatus;
+    property ideStatusConsultaReciboEventos: TStatusConsultaReciboEventos read FIdeStatusConsultaReciboEventos write FIdeStatusConsultaReciboEventos;
     property InfoRecEv: TInfoRecEv read FInfoRecEv write FInfoRecEv;
     property InfoTotalContrib: TInfoTotalContrib read FInfoTotalContrib write FInfoTotalContrib;
   end;
@@ -541,6 +543,7 @@ begin
   FIdeEvento        := TIdeEvento1.Create;
   FIdeContri        := TIdeContrib.Create;
   FIdeStatus        := TIdeStatus.Create;
+  ideStatusConsultaReciboEventos := TStatusConsultaReciboEventos.Create;
   FInfoRecEv        := TInfoRecEv.Create;
   FInfoTotalContrib := TInfoTotalContrib.Create(Self);
 end;
@@ -550,6 +553,7 @@ begin
   FIdeEvento.Free;
   FIdeContri.Free;
   FIdeStatus.Free;
+  ideStatusConsultaReciboEventos.Free;
   FInfoRecEv.Free;
   FInfoTotalContrib.Free;
 
@@ -583,7 +587,7 @@ begin
 
     FXML := Leitor.Arquivo;
 
-    if leitor.rExtrai(1, 'evtTotalContrib') <> '' then
+    if (leitor.rExtrai(1, 'evtTotalContrib') <> '') then
     begin
       with evtTotalContrib do
       begin
@@ -735,7 +739,38 @@ begin
           end;
         end;
       end;
+    end
+    else
+    if (leitor.rExtrai(1, 'Reinf') <> '') then
+    begin
+      with evtTotalContrib do
+      begin
+        if leitor.rExtrai(2, 'ideStatus') <> '' then
+        begin
+          ideStatusConsultaReciboEventos.cdRetorno   := leitor.rCampo(tcStr, 'cdRetorno');
+          ideStatusConsultaReciboEventos.descRetorno := leitor.rCampo(tcStr, 'descRetorno');
+        end;
+
+        if leitor.rExtrai(2, 'retornoEventos') <> '' then
+        begin
+          i := 0;
+          while Leitor.rExtrai(3, 'evento', '', i + 1) <> '' do
+          begin
+            with ideStatusConsultaReciboEventos.consultaReciboEventos.Add do
+            begin
+              id := Leitor.rAtributo('id=');
+              iniValid := leitor.rCampo(tcStr, 'iniValid');
+              dtHoraRecebimento := leitor.rCampo(tcStr, 'dtHoraRecebimento');
+              nrRecibo := leitor.rCampo(tcStr, 'nrRecibo');
+              situacaoEvento := leitor.rCampo(tcStr, 'situacaoEvento');
+              aplicacaoRecepcao := leitor.rCampo(tcStr, 'aplicacaoRecepcao');
+              inc(i);
+            end;
+          end;
+        end;
+      end;
     end;
+
     Result := True;
   except
     Result := False;

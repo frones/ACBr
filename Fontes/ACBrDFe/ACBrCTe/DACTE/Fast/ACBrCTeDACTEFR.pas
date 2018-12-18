@@ -1270,20 +1270,10 @@ procedure TACBrCTeDACTEFR.ImprimirDACTE(ACTE: TCTe);
 begin
   if PrepareReport(ACTE) then
   begin
-    frxReport.PrintOptions.Copies := NumCopias;
-	  frxReport.PreviewOptions.AllowEdit := False;
     if MostraPreview then
       frxReport.ShowPreparedReport
     else
-    begin
-      // frxReport.PrepareReport(false);
-      if MostraStatus then
-        frxReport.PrintOptions.ShowDialog := True
-      else
-        frxReport.PrintOptions.ShowDialog := False;
-      frxReport.PrintOptions.Printer      := Impressora;
       frxReport.Print;
-    end;
   end;
 end;
 
@@ -1301,15 +1291,14 @@ begin
     frxPDFExport.Title    := TITULO_PDF;
     frxPDFExport.Subject  := TITULO_PDF;
     frxPDFExport.Keywords := TITULO_PDF;
-
     OldShowDialog         := frxPDFExport.ShowDialog;
-
     try
       frxPDFExport.ShowDialog := False;
       frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + OnlyNumber(CTE.infCTe.Id) + '-cte.pdf';
 
       if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
          ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+
       frxReport.Export(frxPDFExport);
     finally
       frxPDFExport.ShowDialog := OldShowDialog;
@@ -1374,26 +1363,30 @@ procedure TACBrCTeDACTEFR.ImprimirINUTILIZACAOPDF(ACTE: TCTe);
 const
   TITULO_PDF = 'Inutilização de Numeração';
 var
-  NomeArq: String;
+  NomeArq      : String;
+  OldShowDialog: Boolean;
 begin
   if PrepareReportInutilizacao then
   begin
-    frxPDFExport.Author     := Sistema;
-    frxPDFExport.Creator    := Sistema;
-    frxPDFExport.Producer   := Sistema;
-    frxPDFExport.Title      := TITULO_PDF;
-    frxPDFExport.Subject    := TITULO_PDF;
-    frxPDFExport.Keywords   := TITULO_PDF;
-    frxPDFExport.ShowDialog := False;
+    frxPDFExport.Author   := Sistema;
+    frxPDFExport.Creator  := Sistema;
+    frxPDFExport.Producer := Sistema;
+    frxPDFExport.Title    := TITULO_PDF;
+    frxPDFExport.Subject  := TITULO_PDF;
+    frxPDFExport.Keywords := TITULO_PDF;
+    OldShowDialog         := frxPDFExport.ShowDialog;
+    try
+      frxPDFExport.ShowDialog := False;
+      NomeArq                 := OnlyNumber(TACBrCTe(ACBrCTe).InutCTe.RetInutCTe.Id);
+      frxPDFExport.FileName   := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutCTe.pdf';
 
-    NomeArq := OnlyNumber(TACBrCTe(ACBrCTe).InutCTe.RetInutCTe.Id);
+      if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+        ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
 
-    frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutCTe.pdf';
-
-    if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
-      ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
-
-    frxReport.Export(frxPDFExport);
+      frxReport.Export(frxPDFExport);
+    finally
+      frxPDFExport.ShowDialog := OldShowDialog;
+    end;
   end;
 end;
 
@@ -1455,6 +1448,15 @@ begin
   else
     raise EACBrCTeDACTEFR.Create('Caminho do arquivo de impressão do DACTE não assinalado.');
 
+  frxReport.PrintOptions.Copies := NumCopias;
+  frxReport.PrintOptions.ShowDialog := MostraSetup;
+  frxReport.ShowProgress := MostraStatus;
+  frxReport.PreviewOptions.AllowEdit := False;
+
+  // Define a impressora
+  if NaoEstaVazio(frxReport.PrintOptions.Printer) then
+    frxReport.PrintOptions.Printer := Impressora;
+
   if Assigned(ACTE) then
   begin
     FCTe := ACTE;
@@ -1503,7 +1505,13 @@ begin
     raise EACBrCTeDACTEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');
 
   frxReport.PrintOptions.Copies := NumCopias;
+  frxReport.PrintOptions.ShowDialog := MostraSetup;
+  frxReport.ShowProgress := MostraStatus;
   frxReport.PreviewOptions.AllowEdit := False;
+
+  // Define a impressora
+  if NaoEstaVazio(frxReport.PrintOptions.Printer) then
+    frxReport.PrintOptions.Printer := Impressora;
 
   // preparar relatorio
   if Assigned(ACBrCTe) then
@@ -1541,7 +1549,13 @@ begin
     raise EACBrCTeDACTEFR.Create('Caminho do arquivo de impressão do INUTILIZAÇÃO não assinalado.');
 
   frxReport.PrintOptions.Copies := NumCopias;
+  frxReport.PrintOptions.ShowDialog := MostraSetup;
+  frxReport.ShowProgress := MostraStatus;
   frxReport.PreviewOptions.AllowEdit := False;
+
+  // Define a impressora
+  if NaoEstaVazio(frxReport.PrintOptions.Printer) then
+    frxReport.PrintOptions.Printer := Impressora;
 
   // preparar relatorio
   if Assigned(ACBrCTe) then

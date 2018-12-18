@@ -171,35 +171,41 @@ const
 var
   I         : Integer;
   NomeArqXML: string;
+  OldShowDialog: Boolean;
 begin
   if PrepareReport(NFSe) then
   begin
     frxPDFExport.Author        := Sistema;
     frxPDFExport.Creator       := Sistema;
     frxPDFExport.Subject       := TITULO_PDF;
-    frxPDFExport.ShowDialog    := False;
     frxPDFExport.EmbeddedFonts := False;
     frxPDFExport.Background    := False;
 
-    for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
-    begin
-      with TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I] do
+    OldShowDialog := frxPDFExport.ShowDialog;
+    try
+      frxPDFExport.ShowDialog := False;
+      for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
       begin
-        if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
-          NomeArqXML := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
-           NFSe.DataEmissao,
-           NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
-           StrToInt64Def(NFSe.Numero,0))
-        else
-          NomeArqXML := NFSe.Numero + NFSe.IdentificacaoRps.Serie;
+        with TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I] do
+        begin
+          if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
+            NomeArqXML := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
+             NFSe.DataEmissao,
+             NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
+             StrToInt64Def(NFSe.Numero,0))
+          else
+            NomeArqXML := NFSe.Numero + NFSe.IdentificacaoRps.Serie;
+        end;
+
+        frxPDFExport.FileName := PathPDF + NomeArqXML + '-nfse.pdf'; // Correção aplicada do nome do arquivo para o envio de e-mail
+
+        if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+          ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+
+        frxReport.Export(frxPDFExport);
       end;
-
-      frxPDFExport.FileName := PathPDF + NomeArqXML + '-nfse.pdf'; // Correção aplicada do nome do arquivo para o envio de e-mail
-
-      if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
-        ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
-
-      frxReport.Export(frxPDFExport);
+    finally
+      frxPDFExport.ShowDialog := OldShowDialog;
     end;
   end;
 end;
@@ -244,17 +250,15 @@ begin
   end
   else
     raise EACBrNFSeDANFSeFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
-		
-  frxReport.PrintOptions.Copies     := NumCopias;
-  frxReport.PreviewOptions.AllowEdit := False;
-  frxReport.PrintOptions.ShowDialog := MostraPreview;
-  frxReport.ShowProgress            := Self.MostraStatus;
 
-  if Impressora > '' then
-  begin
-    frxReport.PrintOptions.ShowDialog := False;
-    frxReport.PrintOptions.Printer    := Impressora;
-  end;
+  frxReport.PrintOptions.Copies      := NumCopias;
+  frxReport.PrintOptions.ShowDialog  := MostraSetup;
+  frxReport.ShowProgress             := MostraStatus;
+  frxReport.PreviewOptions.AllowEdit := False;
+
+  // Define a impressora
+  if NaoEstaVazio(frxReport.PrintOptions.Printer) then
+    frxReport.PrintOptions.Printer := Impressora;
 
   if Assigned(NFSe) then
   begin

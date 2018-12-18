@@ -116,13 +116,7 @@ begin
     if MostrarPreview then
       dmGuia.frxReport.ShowPreparedReport
     else
-    begin
-      dmGuia.frxReport.PrintOptions.Printer    := Impressora;
-      dmGuia.frxReport.PrintOptions.Copies     := NumCopias;
-	    dmGuia.frxReport.PreviewOptions.AllowEdit := False;
-      dmGuia.frxReport.PrintOptions.ShowDialog := ShowDialog;
       dmGuia.frxReport.Print;
-    end;
   end;
 end;
 
@@ -131,6 +125,7 @@ const
   TITULO_PDF = 'Guia Nacional de Recolhimento de Tributos Estaduais - GNRE';
 var
   i: Integer;
+  OldShowDialog: Boolean;
 begin
   if PrepareReport(GNRE) then
   begin
@@ -140,12 +135,16 @@ begin
     dmGuia.frxPDFExport.Title      := TITULO_PDF;
     dmGuia.frxPDFExport.Subject    := TITULO_PDF;
     dmGuia.frxPDFExport.Keywords   := TITULO_PDF;
-    dmGuia.frxPDFExport.ShowDialog := False;
-
-    for i := 0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count - 1 do
-    begin
-      dmGuia.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + 'GNRE_' + dmGuia.GNRE.RepresentacaoNumerica + '.pdf';
-      dmGuia.frxReport.Export(dmGuia.frxPDFExport);
+    OldShowDialog := dmGuia.frxPDFExport.ShowDialog;
+    try
+      dmGuia.frxPDFExport.ShowDialog := False;
+      for i := 0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count - 1 do
+      begin
+        dmGuia.frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + 'GNRE_' + dmGuia.GNRE.RepresentacaoNumerica + '.pdf';
+        dmGuia.frxReport.Export(dmGuia.frxPDFExport);
+      end;
+    finally
+      dmGuia.frxPDFExport.ShowDialog := OldShowDialog;
     end;
   end;
 end;
@@ -174,6 +173,15 @@ begin
   end
   else
     raise EACBrGNREGuiaFR.Create('Caminho do arquivo de impressão do Guia não assinalado.');
+
+  dmGuia.frxReport.PrintOptions.Copies      := NumCopias;
+  dmGuia.frxReport.PrintOptions.ShowDialog  := ShowDialog;
+  dmGuia.frxReport.ShowProgress             := MostrarStatus;
+  dmGuia.frxReport.PreviewOptions.AllowEdit := False;
+
+  // Define a impressora
+  if NaoEstaVazio(dmGuia.frxReport.PrintOptions.Printer) then
+    dmGuia.frxReport.PrintOptions.Printer := Impressora;
 
   if Assigned(GNRE) then
   begin

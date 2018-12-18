@@ -732,12 +732,7 @@ begin
     if MostraPreview then
       frxReport.ShowPreparedReport
     else
-    begin
-      frxReport.PrintOptions.ShowDialog  := SelecionaImpressora;
-      frxReport.PrintOptions.Copies      := NumCopias;
-      frxReport.PreviewOptions.AllowEdit := False;
       frxReport.Print;
-    end;
   end;
 end;
 
@@ -845,6 +840,15 @@ begin
   else
     raise EACBrMDFeDAMDFEFR.Create('Caminho do arquivo de impressão do DAMDFe não assinalado.');
 
+  frxReport.PrintOptions.Copies      := NumCopias;
+  frxReport.PrintOptions.ShowDialog  := MostraSetup;
+  frxReport.ShowProgress             := MostraStatus;
+  frxReport.PreviewOptions.AllowEdit := False;
+
+  // Define a impressora
+  if NaoEstaVazio(frxReport.PrintOptions.Printer) then
+    frxReport.PrintOptions.Printer := Impressora;
+
   if Assigned(MDFe) then
   begin
     FMDFe := MDFe;
@@ -895,8 +899,14 @@ begin
   else
     raise EACBrMDFeDAMDFEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');
 
-  frxReport.PrintOptions.Copies := NumCopias;
+  frxReport.PrintOptions.Copies      := NumCopias;
+  frxReport.PrintOptions.ShowDialog  := MostraSetup;
+  frxReport.ShowProgress             := MostraStatus;
   frxReport.PreviewOptions.AllowEdit := False;
+
+  // Define a impressora
+  if NaoEstaVazio(frxReport.PrintOptions.Printer) then
+    frxReport.PrintOptions.Printer := Impressora;
 
   // preparar relatorio
   if Assigned(ACBrMDFe) then

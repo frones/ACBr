@@ -72,7 +72,7 @@ procedure TFPrincipal.FormCreate(Sender: TObject);
 var
   I : TACBrETQModelo ;
   J: TACBrETQDPI;
-  K: TACBrETQUnidade;
+//  K: TACBrETQUnidade;
   L: TACBrETQBackFeed;
 begin
   cbModelo.Items.Clear ;

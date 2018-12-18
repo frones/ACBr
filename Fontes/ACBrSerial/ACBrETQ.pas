@@ -141,10 +141,10 @@ TACBrETQModelo = (etqNenhum, etqPpla, etqPplb, etqZPLII, etqEpl2);
     procedure ImprimirImagem(MultiplicadorImagem, Vertical, Horizontal: Integer;
       const NomeImagem: String);
 
-    procedure CarregarImagem(aStream: TStream; NomeImagem: String;
-      Flipped: Boolean = True; Tipo: String = ''); overload;
+    procedure CarregarImagem(aStream: TStream; const NomeImagem: String;
+      Flipped: Boolean = True; const Tipo: String = ''); overload;
 
-    procedure CarregarImagem(ArquivoImagem, NomeImagem: String;
+    procedure CarregarImagem(const ArquivoImagem, NomeImagem: String;
       Flipped: Boolean = True); overload;
 
     procedure GravarLog(aString: AnsiString; Traduz: Boolean = False);
@@ -666,8 +666,8 @@ begin
   fsListaCmd.Add(wCmd);
 end;
 
-procedure TACBrETQ.CarregarImagem(aStream: TStream; NomeImagem: String;
-  Flipped: Boolean; Tipo: String);
+procedure TACBrETQ.CarregarImagem(aStream: TStream; const NomeImagem: String;
+  Flipped: Boolean; const Tipo: String);
 var
   wCmd: AnsiString;
 begin
@@ -684,7 +684,7 @@ begin
   fsDevice.EnviaString(wCmd);
 end;
 
-procedure TACBrETQ.CarregarImagem(ArquivoImagem, NomeImagem: String;
+procedure TACBrETQ.CarregarImagem(const ArquivoImagem, NomeImagem: String;
   Flipped: Boolean = True);
 var
   wMS: TMemoryStream;

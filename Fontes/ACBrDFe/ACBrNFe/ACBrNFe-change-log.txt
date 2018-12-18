@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2018
+-- ACBrNFeServicos --
+[+] Inclusão das URLs de homologação e produção da NFC-e MG.
+   Por: Italo Jurisato Junior
+
 13/12/2018
 -- ACBrNFeWebServices / ACBrNFe --
 [*] Removido Classes, Procedures e métodos dos serviços: ConsulNFeDest e DownloadNFe, por

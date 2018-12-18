@@ -18074,25 +18074,32 @@ end;
 function RetirarPrefixos(const AXML: String; AProvedor: TnfseProvedor): String;
 var
   XML: String;
+
+function StrReplace(AXML, APrefixo: String): string;
 begin
-  XML := StringReplace( AXML, 'ns1:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'ns2:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'ns3:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'ns4:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'ns5:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'tc:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'ii:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'p1:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'env:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'nfse:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'soap:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'soap12:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'SOAP-ENV:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'tin:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'a:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'b:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 's:', '', [rfReplaceAll] );
-  XML := StringReplace( XML, 'tipos:', '', [rfReplaceAll] );
+  Result := StringReplace(StringReplace( AXML, '<' + APrefixo, '<', [rfReplaceAll] ),
+                          '</' + APrefixo, '</', [rfReplaceAll] );
+end;
+
+begin
+  XML := StrReplace( AXML, 'ns1:' );
+  XML := StrReplace( XML, 'ns2:' );
+  XML := StrReplace( XML, 'ns3:' );
+  XML := StrReplace( XML, 'ns4:' );
+  XML := StrReplace( XML, 'ns5:' );
+  XML := StrReplace( XML, 'tc:' );
+  XML := StrReplace( XML, 'ii:' );
+  XML := StrReplace( XML, 'p1:' );
+  XML := StrReplace( XML, 'env:' );
+  XML := StrReplace( XML, 'nfse:' );
+  XML := StrReplace( XML, 'soap:' );
+  XML := StrReplace( XML, 'soap12:' );
+  XML := StrReplace( XML, 'SOAP-ENV:' );
+  XML := StrReplace( XML, 'tin:' );
+  XML := StrReplace( XML, 'a:' );
+  XML := StrReplace( XML, 'b:' );
+  XML := StrReplace( XML, 's:' );
+  XML := StrReplace( XML, 'tipos:' );
 
   // Provedor NFSeBrasil
   if AProvedor = proNFSeBrasil then

@@ -560,6 +560,15 @@ var
 begin
   with ACBrNFSe1 do
   begin
+    // Provedor ISSNet sem certificado
+    Configuracoes.Geral.Emitente.WebChaveAcesso := 'A001.B0001.C0001-1';
+
+    with Configuracoes.Geral.Emitente.DadosSenhaParams.Add do
+    begin
+      Param := 'ChaveAutorizacao';
+      Conteudo := 'A001.B0001.C0001-1';
+    end;
+
     NotasFiscais.NumeroLote := NumLote;
     NotasFiscais.Transacao := True;
 
@@ -668,6 +677,9 @@ begin
 
       Servico.ItemListaServico := '09.01';
       Servico.CodigoCnae := '852010';
+
+      // Usado pelo provedor de Goiania
+      Servico.CodigoTributacaoMunicipio := '1234';
 
       // Para o provedor ISS.NET em ambiente de Homologação
       // o Codigo CNAE tem que ser '6511102'

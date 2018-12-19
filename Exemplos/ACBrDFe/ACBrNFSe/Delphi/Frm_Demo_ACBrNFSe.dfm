@@ -1631,6 +1631,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Top = 249
   end
   object ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000

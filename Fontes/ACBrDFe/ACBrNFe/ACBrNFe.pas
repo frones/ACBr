@@ -45,7 +45,7 @@ uses
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
   ACBrDFeDANFeReport,
-  pcnNFe, pcnConversao, pcnConversaoNFe, pcnCCeNFe,
+  pcnNFe, pcnConversao, pcnConversaoNFe,
   pcnEnvEventoNFe, pcnInutNFe, pcnRetDistDFeInt,
   ACBrUtil;
 
@@ -59,17 +59,15 @@ type
   EACBrNFeException = class(EACBrDFeException);
 
   {Carta de Correção}
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}	
+
   TCartaCorrecao = class(TACBrComponent)
   private
-    FCCe: TCCeNFe;
+    FCCe: TEventoNFe;
   public
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
+    constructor Create;
+    destructor Destroy;
 
-    property CCe: TCCeNFe read FCCe write FCCe;
+    property CCe: TEventoNFe read FCCe write FCCe;
   end;
 
   { TACBrNFe }
@@ -182,7 +180,6 @@ type
     property DANFE: TACBrDFeDANFeReport read FDANFE write SetDANFE;
   end;
 
-
 implementation
 
 uses
@@ -206,7 +203,7 @@ begin
   inherited Create(AOwner);
 
   FNotasFiscais := TNotasFiscais.Create(Self, NotaFiscal);
-  FCartaCorrecao := TCartaCorrecao.Create(Self);
+  FCartaCorrecao := TCartaCorrecao.Create; //(Self);
   FEventoNFe := TEventoNFe.Create;
   FInutNFe := TInutNFe.Create;
   FRetDistDFeInt := TRetDistDFeInt.Create;
@@ -966,16 +963,14 @@ end;
 
 { TCartaCorrecao }
 
-constructor TCartaCorrecao.Create(AOwner: TComponent);
+constructor TCartaCorrecao.Create;
 begin
-  inherited;
-  FCCe := TCCeNFe.Create;
+  FCCe := TEventoNFe.Create;
 end;
 
 destructor TCartaCorrecao.Destroy;
 begin
   FCCe.Free;
-  inherited;
 end;
 
 end.

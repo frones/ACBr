@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2018
+-- ACBrNFeWebServices / ACBrNFe --
+[*] Removido as units pcnRetCancNFe, pcnCCeNFe e pcnRetCCeNFe por não ter mais utilidades.
+  Por: Italo Jurisato Junior
+
 18/12/2018
 -- ACBrNFeServicos --
 [+] Inclusão das URLs de homologação e produção da NFC-e MG.

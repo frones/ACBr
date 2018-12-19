@@ -50,8 +50,8 @@ unit pcnRetConsSitNFe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor, pcnProcNFe,
-  pcnRetCancNFe, pcnRetEnvEventoNFe;
+  SysUtils, Classes, 
+  pcnConversao, pcnLeitor, pcnProcNFe, pcnRetEnvEventoNFe;
 
 type
 
@@ -59,6 +59,31 @@ type
   TRetEventoNFeCollection     = class;
   TRetEventoNFeCollectionItem = class;
   TRetConsSitNFe              = class;
+
+  TRetCancNFe = class(TPersistent)
+  private
+    Fversao: String;
+    FtpAmb: TpcnTipoAmbiente;
+    FdhRecbto: TDateTime;
+    FcStat: Integer;
+    FcUF: Integer;
+    FchNFE: String;
+    FverAplic: String;
+    FnProt: String;
+    FxMotivo: String;
+  public
+
+  published
+    property versao: String          read Fversao   write Fversao;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property verAplic: String        read FverAplic write FverAplic;
+    property cStat: Integer          read FcStat    write FcStat;
+    property xMotivo: String         read FxMotivo  write FxMotivo;
+    property cUF: Integer            read FcUF      write FcUF;
+    property chNFE: String           read FchNFE    write FchNFE;
+    property dhRecbto: TDateTime     read FdhRecbto write FdhRecbto;
+    property nProt: String           read FnProt    write FnProt;
+  end;
 
   TRetEventoNFeCollection = class(TCollection)
   private

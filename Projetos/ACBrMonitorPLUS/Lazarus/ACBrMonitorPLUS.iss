@@ -91,7 +91,7 @@ Source: LICENCA.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: LICENSE.TXT; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Arquivos de Ajuda e documentação
 Source: ACBrMonitor.chm; DestDir: {app}; Flags: ignoreversion; Components: help
-Source: ACBrMonitor.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
+;Source: ACBrMonitor.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
 ;DLL para acesso direto a portas
 Source: {#ACBrDIR}\DLLs\Diversos\inpout32.dll; DestDir: {syswow64}; Flags: ; Components: programa
 ;OpenSSL
@@ -103,13 +103,6 @@ Source: {#ACBrDIR}\DLLs\Diversos\msvcr71.dll; DestDir: {app}; Components: progra
 Source: {#ACBrDIR}\DLLs\Capicom\capicom.dll; DestDir: {syswow64}; Components: programa; Flags: regserver sharedfile
 Source: {#ACBrDIR}\DLLs\Capicom\msxml5.dll; DestDir: {syswow64}; Components: programa; Flags: regserver sharedfile
 Source: {#ACBrDIR}\DLLs\Capicom\msxml5r.dll; DestDir: {syswow64}; Components: programa; Flags: sharedfile
-;DLLs XMLSec
-;Source: {#ACBrDIR}\DLLs\XMLSec\libxml2.dll; DestDir: {app}; Flags: ; Components: programa
-;Source: {#ACBrDIR}\DLLs\XMLSec\libxmlsec.dll; DestDir: {app}; Flags: ; Components: programa
-;Source: {#ACBrDIR}\DLLs\XMLSec\libxmlsec-openssl.dll; DestDir: {app}; Flags: ; Components: programa
-;Source: {#ACBrDIR}\DLLs\XMLSec\libxslt.dll; DestDir: {app}; Flags: ; Components: programa
-;Source: {#ACBrDIR}\DLLs\XMLSec\zlib1.dll; DestDir: {app}; Flags: ; Components: programa
-;Source: {#ACBrDIR}\DLLs\XMLSec\iconv.dll; DestDir: {app}; Flags: ; Components: programa
 ;DLLs XMLSec-MINGW
 Source: {#ACBrDIR}\DLLs\XMLSec\MinGW\32\*.dll; DestDir: {app}; Flags: ; Components: programa
 ;Schemas da NFe

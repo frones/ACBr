@@ -60,7 +60,7 @@
 // Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2, LibXMLSEC,
 {.$DEFINE DFE_SEM_OPENSSL}
 // Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXMLSEC, mas continue suportando a LibXML2
-{$DEFINE DFE_SEM_XMLSEC}
+{.$DEFINE DFE_SEM_XMLSEC}
 // Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2, mas continue suportando LibXMLSEC
 {.$DEFINE DFE_SEM_LIBXML2}
 // Descomente a linha abaixo, se você não utiliza a obsoleta Capicom para Criptografia (recomendado)
@@ -267,7 +267,7 @@
 
 // Ative a diretiva abaixo, para usar a Libxml2, libxslt, libxmlsec compilada
 // com MinGw ftp://ftp.zlatkovic.com/libxml/64bit/
-{.$DEFINE USE_MINGW}
+{$DEFINE USE_MINGW}
 {$IfNDef MSWINDOWS}
   {$DEFINE USE_MINGW}
 {$EndIf}

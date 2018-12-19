@@ -19,7 +19,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '1.8.2.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -384,10 +384,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 850
-        ActivePage = tsMonitor
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 0
+        TabIndex = 16
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -6166,9 +6166,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 842
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsWebServiceDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 2
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -6642,7 +6642,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 272
                 Height = 17
                 Top = 160
-                Width = 142
+                Width = 141
                 Caption = 'CNPJ Contador(AutXML)'
                 ParentColor = False
               end
@@ -6891,7 +6891,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 8
                   Height = 17
                   Top = 46
-                  Width = 52
+                  Width = 51
                   Caption = 'SSL Type'
                   ParentColor = False
                 end
@@ -6973,7 +6973,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 6
                       Height = 17
                       Top = 45
-                      Width = 68
+                      Width = 67
                       Caption = 'Versão NFe'
                       ParentColor = False
                     end
@@ -7086,7 +7086,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 80
                       Height = 17
                       Top = 45
-                      Width = 67
+                      Width = 65
                       Caption = 'Versão CTe'
                       ParentColor = False
                     end
@@ -7108,7 +7108,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 155
                       Height = 17
                       Top = 45
-                      Width = 79
+                      Width = 78
                       Caption = 'Versão MDFe'
                       ParentColor = False
                     end
@@ -7212,7 +7212,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 100
                       Height = 17
                       Top = 24
-                      Width = 58
+                      Width = 57
                       Caption = 'Tentativas'
                       ParentColor = False
                     end
@@ -7293,7 +7293,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 8
                       Height = 17
                       Top = 26
-                      Width = 22
+                      Width = 21
                       Caption = 'CTe'
                       ParentColor = False
                     end
@@ -14921,7 +14921,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 488
   end
   object ACBrBoletoFCFortes1: TACBrBoletoFCFortes
-    ACBrBoleto = ACBrBoleto1
     left = 690
     top = 494
   end

@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/19/2018
+-- ACBr.inc --
+[-] Ajustada diretiva de compilação que removia suporte a libXmlSec
+	(por: Celso Marigo Junior)
+	
 Data: 17/12/2018
 -- ACBrUtil --
 [-] Correção para o método "QuebraLinhas", que removia LineBreaks consecutivos

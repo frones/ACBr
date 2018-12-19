@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[*] ACBrMonitorPLUS.iss
+Removido manual em PDF do instalador diminuindo o tamanho do instalador em ~50%
+
+[-] ACBr.inc
+Ajustada diretiva de compilação que removia suporte a libXmlSec
+
 27/11/2018
 [+] DoACBrMDFeUnit
 Ajuste na validação de retorno do método ConsultaMDFeNaoEnc

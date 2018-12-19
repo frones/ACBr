@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2018
+-- Diversos --
+[*] Realizadas melhorias visando a passagem de parametros variaveis de identificação
+    tais como: usuario, senha, chave de acesso entre outros requisitados por alguns
+    provedores como por exemplo o ISSNet.
+   Por: Renato Rubinho
+
 18/12/2018
 -- pnfsConversao --
 [*] Melhorada a função que remove os prefixos.

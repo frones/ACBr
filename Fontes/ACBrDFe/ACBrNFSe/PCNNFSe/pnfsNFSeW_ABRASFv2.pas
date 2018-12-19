@@ -665,10 +665,6 @@ end;
 procedure TNFSeW_ABRASFv2.GerarXML_ABRASF_v2;
 begin
   case FProvedor of
-    proSigep: GerarCredenciais;
-  end;
-
-  case FProvedor of
     proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
     proCoplan, proSIAPNet, proSystemPro, proISSJoinville:
@@ -888,8 +884,8 @@ begin
   else
     Atributo := ' xmlns="' + FURL + FDefTipos + '"';
 
-  if Fprovedor = proSigEp then
-     Atributo := ' ' + FURL;
+//  if Fprovedor = proSigEp then
+//     Atributo := ' ' + FURL;
 
   if (FProvedor in [proISSDigital, proNotaInteligente]) and (NFSe.NumeroLote <> '') then
     Atributo := ' Id="' + (NFSe.IdentificacaoRps.Numero) + '"';
@@ -949,28 +945,7 @@ begin
     Gerador.Opcoes.SuprimirDecimais := True;
 
   GerarXML_ABRASF_v2;
-  {
-  if FOpcoes.GerarTagAssinatura <> taNunca then
-  begin
-    Gerar := true;
-    if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
-      Gerar := ((NFSe.signature.DigestValue <> '') and
-        (NFSe.signature.SignatureValue <> '') and
-        (NFSe.signature.X509Certificate <> ''));
-    if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
-      Gerar := ((NFSe.signature.DigestValue = '') and
-        (NFSe.signature.SignatureValue = '') and
-        (NFSe.signature.X509Certificate = ''));
-    if Gerar then
-    begin
-      FNFSe.signature.URI := FNFSe.InfID.ID;
-      FNFSe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-      FNFSe.signature.GerarXMLNFSe;
-      Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                   FNFSe.signature.Gerador.ArquivoFormatoXML;
-    end;
-  end;
-  }
+
   Gerador.wGrupo('/Rps');
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);

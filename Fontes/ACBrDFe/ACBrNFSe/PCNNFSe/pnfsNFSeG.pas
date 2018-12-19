@@ -1912,6 +1912,18 @@ begin
              Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
            end;
 
+    proSigep:
+      begin
+        Gerador.Prefixo := Prefixo4;
+        Gerador.wGrupoNFSe('credenciais');
+        Gerador.wCampoNFSe(tcStr, '#01', 'usuario     ', 01, 15, 1, UserWeb);
+        Gerador.wCampoNFSe(tcStr, '#02', 'senha       ', 01, 05, 1, SenhaWeb);
+        Gerador.wCampoNFSe(tcStr, '#03', 'chavePrivada', 01, 01, 1, ChaveAcessoPrefeitura);
+        Gerador.wGrupoNFSe('/credenciais');
+
+        Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+      end
+
   else
     Gerador.ArquivoFormatoXML := Notas;
   end;

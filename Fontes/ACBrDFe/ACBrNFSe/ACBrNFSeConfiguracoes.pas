@@ -46,6 +46,8 @@ uses
 
 type
 
+ TEmitenteConfNFSe = class;
+
  TConfigGeral = record
     VersaoSoap: String;
     Prefixo2: String;
@@ -251,6 +253,30 @@ type
     FecharSessao: String;
  end;
 
+  { TDadosSenhaParamsCollectionItem }
+
+  TDadosSenhaParamsCollectionItem = class(TCollectionItem)
+  private
+    FParam: String;
+    FConteudo: String;
+  published
+    property Param: String read FParam write FParam;
+    property Conteudo: String read FConteudo write FConteudo;
+  end;
+
+  { TDadosSenhaParamsCollection }
+
+  TDadosSenhaParamsCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TDadosSenhaParamsCollectionItem;
+    procedure SetItem(Index: Integer; Const Value: TDadosSenhaParamsCollectionItem);
+  public
+    constructor Create(AOwner: TEmitenteConfNFSe);
+
+    function Add: TDadosSenhaParamsCollectionItem;
+    property Items[Index: Integer]: TDadosSenhaParamsCollectionItem read GetItem write SetItem; default;
+  end;
+
  { TEmitenteConfNFSe }
 
  TEmitenteConfNFSe = class(TPersistent)
@@ -262,9 +288,11 @@ type
     FWebSenha: String;
     FWebFraseSecr: String;
     FWebChaveAcesso: String;
+    FDadosSenhaParams: TDadosSenhaParamsCollection;
 
   public
     Constructor Create;
+    destructor Destroy;
     procedure Assign(Source: TPersistent); override;
   published
     property CNPJ: String         read FCNPJ         write FCNPJ;
@@ -274,6 +302,7 @@ type
     property WebSenha: String     read FWebSenha     write FWebSenha;
     property WebFraseSecr: String read FWebFraseSecr write FWebFraseSecr;
     property WebChaveAcesso: String read FWebChaveAcesso write FWebChaveAcesso;
+    property DadosSenhaParams: TDadosSenhaParamsCollection read FDadosSenhaParams write FDadosSenhaParams;
   end;
 
   { TGeralConfNFSe }
@@ -423,6 +452,7 @@ begin
   FWebSenha := '';
   FWebFraseSecr := '';
   FWebChaveAcesso := '';
+  FDadosSenhaParams := TDadosSenhaParamsCollection.Create(Self);
 end;
 
 procedure TEmitenteConfNFSe.Assign(Source: TPersistent);
@@ -439,6 +469,13 @@ begin
   end
   else
     inherited Assign(Source);
+end;
+
+destructor TEmitenteConfNFSe.Destroy;
+begin
+  FDadosSenhaParams.Free;
+
+  inherited;
 end;
 
 { TConfiguracoesNFSe }
@@ -1124,6 +1161,31 @@ begin
 
     Result := Dir;
   end;
+end;
+
+{ TDadosSenhaParamsCollection }
+
+function TDadosSenhaParamsCollection.Add: TDadosSenhaParamsCollectionItem;
+begin
+  Result := TDadosSenhaParamsCollectionItem(inherited Add);
+end;
+
+constructor TDadosSenhaParamsCollection.Create(
+  AOwner: TEmitenteConfNFSe);
+begin
+  inherited Create(TDadosSenhaParamsCollectionItem);
+end;
+
+function TDadosSenhaParamsCollection.GetItem(
+  Index: Integer): TDadosSenhaParamsCollectionItem;
+begin
+  Result := TDadosSenhaParamsCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TDadosSenhaParamsCollection.SetItem(Index: Integer;
+  const Value: TDadosSenhaParamsCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

@@ -69,6 +69,8 @@ type
  TDadosTransportadora               = class;
  TDespesaCollectionItem             = class;
  TDespesaCollection                 = class;
+ TAssinaComChaveParamsCollectionItem = class;
+ TAssinaComChaveParamsCollection     = class;
 
  TNFSe                              = class;
 
@@ -204,7 +206,7 @@ type
     FvalorOutrasRetencoes: Currency;
     FDescricaoOutrasRetencoes: String;
     FvalorRepasse: Currency; //Governa
-    FValorDespesasNaoTributaveis: Currency;//Governa
+    FValorDespesasNaoTributaveis: Currency; //Governa
     FValorTotalRecebido: Currency;
   published
     property ValorServicos: Currency read FValorServicos write FValorServicos;
@@ -711,12 +713,32 @@ type
     FnItemDesp: String;
     FxDesp: String;
     FdDesp: TDateTime;
-    FvDesp: Currency;  
+    FvDesp: Currency;
   published
     property nItemDesp: String read FnItemDesp write FnItemDesp;
     property xDesp: String read FxDesp write FxDesp;
     property dDesp: TDateTime read FdDesp write FdDesp;
     property vDesp: Currency read FvDesp write FvDesp;
+  end;
+
+  TAssinaComChaveParamsCollectionItem = class(TCollectionItem)
+  private
+    FParam: String;
+    FConteudo: String;
+  published
+    property Param: String read FParam write FParam;
+    property Conteudo: String read FConteudo write FConteudo;
+  end;
+
+  TAssinaComChaveParamsCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TAssinaComChaveParamsCollectionItem;
+    procedure SetItem(Index: Integer; Const Value: TAssinaComChaveParamsCollectionItem);
+  public
+    constructor Create(AOwner: TNFSe);
+
+    function Add: TAssinaComChaveParamsCollectionItem;
+    property Items[Index: Integer]: TAssinaComChaveParamsCollectionItem read GetItem write SetItem; default;
   end;
 
  TNFSe = class(TPersistent)
@@ -788,6 +810,8 @@ type
     FAssinatura: String;
     FInformacoesComplementares: String;
 
+    FAssinaComChaveParams: TAssinaComChaveParamsCollection;
+
     procedure Setemail(const Value: TemailCollection);
     procedure SetInformacoesComplementares(const Value: String);
 
@@ -857,6 +881,9 @@ type
     property email: TemailCollection read Femail write Setemail;
 
     property TipoTributacaoRPS: TnfseTTributacaoRPS read FTipoTributacaoRPS write FTipoTributacaoRPS;
+
+    property AssinaComChaveParams: TAssinaComChaveParamsCollection read FAssinaComChaveParams write FAssinaComChaveParams;
+
     // Provedor SP
     property Assinatura: String read FAssinatura write FAssinatura;
     property RegRec: TnfseRegRec read FRegRec write FRegRec; //Governa
@@ -1078,6 +1105,8 @@ begin
 
  Femail                        := TemailCollection.Create(Self);
  FDespesa                      := TDespesaCollection.Create(Self);
+
+ FAssinaComChaveParams         := TAssinaComChaveParamsCollection.Create(Self);
 end;
 
 destructor TNFSe.Destroy;
@@ -1100,6 +1129,8 @@ begin
  FNfseCancelamento.Free;
  Femail.Free;
  FDespesa.Free;
+
+ FAssinaComChaveParams.Free;
 
  FTransportadora.Free;
 
@@ -1356,6 +1387,31 @@ end;
 procedure TDespesaCollection.SetItem(Index: Integer; Value: TDespesaCollectionItem);
 begin
   Inherited SetItem(Index, Value);
+end;
+
+{ TAssinaComChaveParamsCollection }
+
+function TAssinaComChaveParamsCollection.Add: TAssinaComChaveParamsCollectionItem;
+begin
+  Result := TAssinaComChaveParamsCollectionItem(inherited Add);
+end;
+
+constructor TAssinaComChaveParamsCollection.Create(
+  AOwner: TNFSe);
+begin
+  inherited Create(TAssinaComChaveParamsCollectionItem);
+end;
+
+function TAssinaComChaveParamsCollection.GetItem(
+  Index: Integer): TAssinaComChaveParamsCollectionItem;
+begin
+  Result := TAssinaComChaveParamsCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TAssinaComChaveParamsCollection.SetItem(Index: Integer;
+  const Value: TAssinaComChaveParamsCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

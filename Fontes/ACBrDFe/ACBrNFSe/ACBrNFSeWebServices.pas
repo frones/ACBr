@@ -125,6 +125,7 @@ type
     procedure InicializarGerarDadosMsg;
     function ExtrairGrupoMsgRet(AGrupo: String): String;
     function RemoverCharControle(AXML: String): String;
+    function PreencheAssinaComChave: String;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -952,12 +953,12 @@ begin
   else
     xmlns4 := 'xmlns="';
 
-  if FProvedor = proSigep then
-  begin
-    xmlns3 := '';
-    xmlns2 := '';
-    xmlns4 := '';
-  end;
+//  if FProvedor = proSigep then
+//  begin
+//    xmlns3 := '';
+//    xmlns2 := '';
+//    xmlns4 := '';
+//  end;
 
   if AIncluiEncodingCab then
     FPCabMsg := '<' + ENCODING_UTF8 + '>' + FPCabMsg;
@@ -1015,7 +1016,11 @@ begin
                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
                               'xsi:schemaLocation="' + FNameSpace + FSeparador + FxsdServico + ' ' + FxsdServico + ' "';
 
-      proSigep: FNameSpaceDad :=  FNameSpace;
+      proSigep: FNameSpaceDad := 'xsi:schemaLocation="http://www.abrasf.org.br/nfse.xsd nfse-v2.xsd" ' +
+                                 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
+                                 xmlns3 + FNameSpace+ '" ' +
+                                 'xmlns:ds="http://www.w3.org/2000/09/xmldsig#"';
+
       proTiplanv2: FNameSpaceDad := xmlns3 + FNameSpace + '"' +
                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
@@ -1092,6 +1097,9 @@ begin
   else
     Texto := StringReplace(Texto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
   end;
+
+  Texto := PreencheAssinaComChave;
+
   FDadosSenha := Texto;
 end;
 
@@ -1645,23 +1653,6 @@ begin
                             '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                           '</Signature>'+
                        '</' + FPrefixo4 + 'Rps>';
-             {
-             proSigep: FvNotas := FvNotas +
-                       '<' + FPrefixo4 + 'credenciais>' +
-                          RetornarConteudoEntre(RPS,
-                            '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                          '</Signature>'+
-                       '</' + FPrefixo4 + 'Rps>';
-             }
-             proSigep: FvNotas := FvNotas +
-                         '<' + FPrefixo4 + 'credenciais>' +
-                             RetornarConteudoEntre(RPS, '<' + FPrefixo4 + 'credenciais>', '</' + FPrefixo4 + 'credenciais>')+
-                         '</' + FPrefixo4 + 'credenciais>' +
-                         '<' + FPrefixo4 + 'Rps>' +
-                           '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
-                               RetornarConteudoEntre(RPS,'<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                               '</Signature>' +
-                         '</' + FPrefixo4 + 'Rps>';
 
            else
              FvNotas := FvNotas +
@@ -2456,6 +2447,22 @@ begin
   FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   if Incluir then
     FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+end;
+
+function TNFSeWebService.PreencheAssinaComChave: String;
+var
+  i: Integer;
+begin
+  Result := FPConfiguracoesNFSe.Geral.ConfigGeral.DadosSenha;
+
+  Result := StringReplace(Result, '%WebChaveAcesso%', FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso, [rfReplaceAll]);
+
+  // Parâmetros personalizados
+  for i := 0 to FPConfiguracoesNFSe.Geral.Emitente.DadosSenhaParams.Count - 1 do
+    Result := StringReplace(Result,
+                            '%' + FPConfiguracoesNFSe.Geral.Emitente.DadosSenhaParams[i].Param + '%',
+                            FPConfiguracoesNFSe.Geral.Emitente.DadosSenhaParams[i].Conteudo,
+                            [rfReplaceAll]);
 end;
 
 { TNFSeGerarLoteRPS }

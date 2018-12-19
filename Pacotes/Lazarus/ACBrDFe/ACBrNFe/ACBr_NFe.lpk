@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="36">
+    <Files Count="33">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe.pas"/>
         <UnitName Value="ACBrNFe"/>
@@ -51,121 +51,109 @@
         <UnitName Value="pcnAdmCSCNFCe"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnCCeNFe.pas"/>
-        <UnitName Value="pcnCCeNFe"/>
-      </Item8>
-      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsCad.pas"/>
         <UnitName Value="pcnConsCad"/>
-      </Item9>
-      <Item10>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsReciNFe.pas"/>
         <UnitName Value="pcnConsReciNFe"/>
-      </Item10>
-      <Item11>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsSitNFe.pas"/>
         <UnitName Value="pcnConsSitNFe"/>
-      </Item11>
-      <Item12>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsStatServ.pas"/>
         <UnitName Value="pcnConsStatServ"/>
-      </Item12>
-      <Item13>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnDistDFeInt.pas"/>
         <UnitName Value="pcnDistDFeInt"/>
-      </Item13>
-      <Item14>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnEnvEventoNFe.pas"/>
         <UnitName Value="pcnEnvEventoNFe"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnEventoNFe.pas"/>
         <UnitName Value="pcnEventoNFe"/>
-      </Item15>
-      <Item16>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnInutNFe.pas"/>
         <UnitName Value="pcnInutNFe"/>
-      </Item16>
-      <Item17>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnLayoutTXT.pas"/>
         <UnitName Value="pcnLayoutTXT"/>
-      </Item17>
-      <Item18>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFe.pas"/>
         <UnitName Value="pcnNFe"/>
-      </Item18>
-      <Item19>
+      </Item17>
+      <Item18>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeR.pas"/>
         <UnitName Value="pcnNFeR"/>
-      </Item19>
-      <Item20>
+      </Item18>
+      <Item19>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeRTXT.pas"/>
         <UnitName Value="pcnNFeRTXT"/>
-      </Item20>
-      <Item21>
+      </Item19>
+      <Item20>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeW.pas"/>
         <UnitName Value="pcnNFeW"/>
-      </Item21>
-      <Item22>
+      </Item20>
+      <Item21>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnProcNFe.pas"/>
         <UnitName Value="pcnProcNFe"/>
-      </Item22>
-      <Item23>
+      </Item21>
+      <Item22>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetAdmCSCNFCe.pas"/>
         <UnitName Value="pcnRetAdmCSCNFCe"/>
-      </Item23>
-      <Item24>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetCancNFe.pas"/>
-        <UnitName Value="pcnRetCancNFe"/>
-      </Item24>
-      <Item25>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetCCeNFe.pas"/>
-        <UnitName Value="pcnRetCCeNFe"/>
-      </Item25>
-      <Item26>
+      </Item22>
+      <Item23>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsCad.pas"/>
         <UnitName Value="pcnRetConsCad"/>
-      </Item26>
-      <Item27>
+      </Item23>
+      <Item24>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsReciNFe.pas"/>
         <UnitName Value="pcnRetConsReciNFe"/>
-      </Item27>
-      <Item28>
+      </Item24>
+      <Item25>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsSitNFe.pas"/>
         <UnitName Value="pcnRetConsSitNFe"/>
-      </Item28>
-      <Item29>
+      </Item25>
+      <Item26>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsStatServ.pas"/>
         <UnitName Value="pcnRetConsStatServ"/>
-      </Item29>
-      <Item30>
+      </Item26>
+      <Item27>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetDistDFeInt.pas"/>
         <UnitName Value="pcnRetDistDFeInt"/>
-      </Item30>
-      <Item31>
+      </Item27>
+      <Item28>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetEnvEventoNFe.pas"/>
         <UnitName Value="pcnRetEnvEventoNFe"/>
-      </Item31>
-      <Item32>
+      </Item28>
+      <Item29>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetEnvNFe.pas"/>
         <UnitName Value="pcnRetEnvNFe"/>
-      </Item32>
-      <Item33>
+      </Item29>
+      <Item30>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetInutNFe.pas"/>
         <UnitName Value="pcnRetInutNFe"/>
-      </Item33>
-      <Item34>
+      </Item30>
+      <Item31>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConversaoNFe.pas"/>
         <UnitName Value="pcnConversaoNFe"/>
-      </Item34>
-      <Item35>
+      </Item31>
+      <Item32>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeConsts.pas"/>
         <UnitName Value="pcnNFeConsts"/>
-      </Item35>
-      <Item36>
+      </Item32>
+      <Item33>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\ACBrDFeDANFeReport.pas"/>
         <UnitName Value="ACBrDFeDANFeReport"/>
-      </Item36>
+      </Item33>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

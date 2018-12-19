@@ -2887,7 +2887,8 @@ begin
     else
       FieldByName('Desconto').AsString := 'V.DESC.';
 
-    if ((FCTe.ide.TpEmis = teNormal) or (FCTe.ide.TpEmis = teSCAN)) or (FCTe.procCTe.cStat in [100, 101, 110]) then
+    if ((FCTe.ide.TpEmis = teNormal) or (FCTe.ide.TpEmis = teSCAN)) or
+       (FCTe.procCTe.cStat in [100, 101, 110]) then
     begin
       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
       FieldByName('Contingencia_ID').AsString       := '';
@@ -2921,34 +2922,44 @@ begin
       FieldByName('ChaveAcesso_Descricao').AsString := 'CHAVE DE ACESSO';
       FieldByName('Contingencia_ID').AsString       := vChave_Contingencia;
 
-      if ((FCTe.ide.TpEmis = teContingencia) or (FCTe.ide.TpEmis = teFSDA)) then
-      begin
-        if FCTe.Ide.modelo = 67 then
-          FieldByName('Contingencia_Descricao').AsString := 'DADOS DO CT-E OS'
-        else
-          FieldByName('Contingencia_Descricao').AsString := 'DADOS DO CT-E';
+      case FCTe.ide.TpEmis of
+        teContingencia,
+        teFSDA:
+          begin
+            if FCTe.Ide.modelo = 67 then
+              FieldByName('Contingencia_Descricao').AsString := 'DADOS DO CT-E OS'
+            else
+              FieldByName('Contingencia_Descricao').AsString := 'DADOS DO CT-E';
 
-        FieldByName('Contingencia_Valor').AsString     := FormatarChaveAcesso(vChave_Contingencia);
-      end
-      else
-        if (FCTe.ide.TpEmis = teDPEC) then
-      begin
-        FieldByName('Contingencia_Descricao').AsString := 'NÚMERO DE REGISTRO DPEC';
+            FieldByName('Contingencia_Valor').AsString := FormatarChaveAcesso(vChave_Contingencia);
+          end;
 
-        // precisa testar
-        // if EstaVazio(Protocolo) then
-        // raise EACBrCTeException.Create('Protocolo de Registro no DPEC não informado.')
-        // else
-        // FieldByName('Contingencia_Valor').AsString := Protocolo;
-      end
-      else
-        if (FCTe.ide.TpEmis = teSVCSP) or (FCTe.ide.TpEmis = teSVCRS) then
-        begin
-          FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
-          FieldByName('Contingencia_Valor').AsString     := FCTe.procCTe.nProt + ' ' + IfThen(FCTe.procCTe.dhRecbto <> 0,
-            DateTimeToStr(FCTe.procCTe.dhRecbto), '');
-        end;
+        teDPEC:
+          begin
+            if NaoEstaVazio(FCTe.procCTe.nProt) then // EPEC TRANSMITIDO
+            begin
+              FieldByName('Contingencia_Descricao').AsString := ACBrStr( 'PROTOCOLO DE AUTORIZAÇÃO DE USO');
+              FieldByName('Contingencia_Valor').AsString     := FCTe.procCTe.nProt + ' ' +
+                IfThen(FCTe.procCTe.dhRecbto <> 0, DateTimeToStr(FCTe.procCTe.dhRecbto), '');
+            end
+            else
+            begin
+              FieldByName('Contingencia_Descricao').AsString := ACBrStr('NÚMERO DE REGISTRO EPEC');
+              if NaoEstaVazio(Protocolo) then
+                FieldByName('Contingencia_Valor').AsString := Protocolo;
+            end;
+          end;
+
+        teSVCSP,
+        teSVCRS:
+          begin
+            FieldByName('Contingencia_Descricao').AsString := 'PROTOCOLO DE AUTORIZAÇÃO DE USO';
+            FieldByName('Contingencia_Valor').AsString     := FCTe.procCTe.nProt + ' ' +
+              IfThen(FCTe.procCTe.dhRecbto <> 0, DateTimeToStr(FCTe.procCTe.dhRecbto), '');
+          end;
+      end;
     end;
+
     Post;
   end;
 end;

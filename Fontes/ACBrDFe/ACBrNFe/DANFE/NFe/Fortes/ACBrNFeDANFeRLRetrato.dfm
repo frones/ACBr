@@ -2,7 +2,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Left = 481
   Top = 119
   Caption = 'frlDANFeRLRetrato'
-  ClientHeight = 873
+  ClientHeight = 749
   ClientWidth = 925
   Font.Height = -18
   PixelsPerInch = 96
@@ -975,9 +975,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 496
         Top = 149
-        Width = 21
+        Width = 41
         Height = 7
-        Caption = 'CNPJ'
+        Caption = 'CNPJ / CPF'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
@@ -1251,7 +1251,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 3
         Top = 23
-        Width = 124
+        Width = 126
         Height = 7
         Caption = 'INFORMA'#199#213'ES COMPLEMENTARES'
         Font.Charset = DEFAULT_CHARSET
@@ -5824,7 +5824,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 3
         Top = 23
-        Width = 81
+        Width = 82
         Height = 7
         Caption = 'INSCRI'#199#195'O MUNICIPAL'
         Font.Charset = DEFAULT_CHARSET

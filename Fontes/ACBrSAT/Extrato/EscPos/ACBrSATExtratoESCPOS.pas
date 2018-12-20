@@ -214,6 +214,17 @@ begin
     FPosPrinter.Buffer.Add(ACBrStr('<c><n>DADOS DO CUPOM FISCAL ELETRÔNICO CANCELADO</n>'));
   end;
 
+  if (CFe.ide.tpAmb = taHomologacao) then
+  begin
+    FPosPrinter.Buffer.Add('</ce></fn> ');
+    FPosPrinter.Buffer.Add(' = T E S T E =');
+    FPosPrinter.Buffer.Add(' ');
+    FPosPrinter.Buffer.Add(StringOfChar('>',FPosPrinter.ColunasFonteNormal));
+    FPosPrinter.Buffer.Add(StringOfChar('>',FPosPrinter.ColunasFonteNormal));
+    FPosPrinter.Buffer.Add(StringOfChar('>',FPosPrinter.ColunasFonteNormal));
+    FPosPrinter.Buffer.Add(' ');
+  end;
+
   if not SuportaQRCodeLateral then  // Se não suporta o QRCode Lateral, deve imprimir consumidor no cabeçalho (como antes)
   begin
     ImprimiuConsumidor := False;
@@ -235,17 +246,6 @@ begin
 
     if ImprimiuConsumidor and (not Cancelamento) then
       FPosPrinter.Buffer.Add('</linha_simples>');
-  end;
-
-  if (CFe.ide.tpAmb = taHomologacao) then
-  begin
-    FPosPrinter.Buffer.Add('</ce></fn> ');
-    FPosPrinter.Buffer.Add(' = T E S T E =');
-    FPosPrinter.Buffer.Add(' ');
-    FPosPrinter.Buffer.Add(StringOfChar('>',FPosPrinter.ColunasFonteNormal));
-    FPosPrinter.Buffer.Add(StringOfChar('>',FPosPrinter.ColunasFonteNormal));
-    FPosPrinter.Buffer.Add(StringOfChar('>',FPosPrinter.ColunasFonteNormal));
-    FPosPrinter.Buffer.Add(' ');
   end;
 end;
 
@@ -370,16 +370,16 @@ begin
 
   TotalDescAcresItem := CFe.Total.ICMSTot.vOutro - CFe.Total.ICMSTot.vDesc;
 
+  FPosPrinter.Buffer.Add('</ae><c> ');
+
   if (TotalDescAcresItem <> 0) or
      (CFe.Total.DescAcrEntr.vDescSubtot <> 0) or
      (CFe.Total.DescAcrEntr.vAcresSubtot <> 0) then
   begin
-    FPosPrinter.Buffer.Add('</ae><c>'+PadSpace('Total Bruto de Itens|'+
+    FPosPrinter.Buffer.Add(PadSpace('Total Bruto de Itens|'+
        FormatFloatBr(CFe.Total.ICMSTot.vProd),
        FPosPrinter.ColunasFonteCondensada, '|'));
   end;
-
-  FPosPrinter.Buffer.Add('</ae><c> ');
 
   if (TotalDescAcresItem <> 0) then
   begin
@@ -431,23 +431,23 @@ begin
      (CFe.Emit.cRegTrib = RTSimplesNacional) then
      FPosPrinter.Buffer.Add('</ae><c> ');
 
-  if CFe.Emit.cRegTrib = RTSimplesNacional then
+  if (CFe.Emit.cRegTrib = RTSimplesNacional) then
      FPosPrinter.Buffer.Add(Msg_ICMS_123_2006 );
 
   for i:=0 to CFe.InfAdic.obsFisco.Count - 1 do
      FPosPrinter.Buffer.Add(CFe.InfAdic.obsFisco.Items[i].xCampo+'-'+
-                 CFe.InfAdic.obsFisco.Items[i].xTexto);
+                            CFe.InfAdic.obsFisco.Items[i].xTexto);
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarDadosEntrega;
 var
   TituloEntrega, LinhaEntrega: String;
 begin
-  if Trim(CFe.Entrega.xLgr)+
-     Trim(CFe.Entrega.nro)+
-     Trim(CFe.Entrega.xCpl)+
-     Trim(CFe.Entrega.xBairro)+
-     Trim(CFe.Entrega.xMun) <> '' then
+  if (Trim(CFe.Entrega.xLgr)+
+      Trim(CFe.Entrega.nro)+
+      Trim(CFe.Entrega.xCpl)+
+      Trim(CFe.Entrega.xBairro)+
+      Trim(CFe.Entrega.xMun) <> '') then
    begin
      TituloEntrega := ACBrStr('ENDEREÇO DE ENTREGA:');
      LinhaEntrega := QuebraLinhas( TituloEntrega+' '+Trim(CFe.Entrega.xLgr)+' '+

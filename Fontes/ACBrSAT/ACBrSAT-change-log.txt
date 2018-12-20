@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2018
+-- ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
+[*] Ajustado para ficar de acordo com  Manual de Orientação, Ver 2.17.07
+[+] Adicionada a impressão de QRCode Lateral, se ImprimeQRCodeLateral := True
+[+] Adicionada a impressão de Logo Lateral, se ImprimeLogoLateral := True
+[-] Corrigido o suporte a propriedade ImprimeDescAcrescItem (True/False)
+[+] Adicionada a impressão de Rateio de Acréscimos e Descontos de Subtotal, nos Itens
+[*] Removida a impressão de Valor Líquido nos Itens
+[+] Adicionada a Impressão da somatória de Descontos/Acréscimo nos Itens, no
+    subtotal do Cupom
+    (por: DSA)
+
 14/12/2018
 -- ACBrSATExtratoClass --
 [+] Adicionada as propriedades:

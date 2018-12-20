@@ -58,13 +58,13 @@ const
 type
   EACBrNFeException = class(EACBrDFeException);
 
-  {Carta de Correção}
+  { TCartaCorrecao }
 
-  TCartaCorrecao = class(TACBrComponent)
+  TCartaCorrecao = class
   private
     FCCe: TEventoNFe;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property CCe: TEventoNFe read FCCe write FCCe;
@@ -965,7 +965,7 @@ end;
 
 constructor TCartaCorrecao.Create;
 begin
-  inherited Create(nil);
+  inherited Create;
   FCCe := TEventoNFe.Create;
 end;
 

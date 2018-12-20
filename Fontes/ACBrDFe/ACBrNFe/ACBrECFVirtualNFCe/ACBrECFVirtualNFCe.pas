@@ -146,6 +146,9 @@ type
     procedure FechaCupomVirtual(Observacao: AnsiString = ''; IndiceBMP: Integer = 0); override;
     procedure VerificaPodeCancelarCupom(NumCOOCancelar: Integer = 0); override;
     procedure CancelaCupomVirtual; override;
+    procedure CancelaDescontoAcrescimoItemVirtual(
+      ItemCupom: TACBrECFVirtualClassItemCupom; TipoAcrescimoDesconto: String =
+      'D'); override;
 
     procedure LeArqINIVirtual(ConteudoINI: TStrings); override;
     procedure GravaArqINIVirtual(ConteudoINI: TStrings); override;
@@ -879,6 +882,12 @@ begin
 
     ImprimirEvento;
   end;
+end;
+
+procedure TACBrECFVirtualNFCeClass.CancelaDescontoAcrescimoItemVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom; TipoAcrescimoDesconto: String);
+begin
+  {}
 end;
 
 procedure TACBrECFVirtualNFCeClass.LeArqINIVirtual(ConteudoINI: TStrings);

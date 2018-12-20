@@ -123,7 +123,9 @@ type
     Procedure CancelaCupomVirtual ; override ;
     Procedure DescontoAcrescimoItemAnteriorVirtual(
       ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double) ; override ;
-
+    procedure CancelaDescontoAcrescimoItemVirtual(
+      ItemCupom: TACBrECFVirtualClassItemCupom; TipoAcrescimoDesconto: String =
+      'D'); override;
 
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
     procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; override;
@@ -430,6 +432,12 @@ begin
     else
       Det.Prod.vDesc := -ItemCupom.DescAcres;
   end;
+end;
+
+procedure TACBrECFVirtualSATClass.CancelaDescontoAcrescimoItemVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom; TipoAcrescimoDesconto: String);
+begin
+  {}
 end;
 
 procedure TACBrECFVirtualSATClass.CancelaItemVendidoVirtual(NumItem: Integer);

@@ -1024,7 +1024,7 @@ begin
               Result := SetRetorno(ErrOK, StrPas(sResposta));
             end
             else
-              Result := SetRetornoWebService(SSL.HTTPResultCode, 'InutilizarNFe');
+              Result := SetRetornoWebService(SSL.HTTPResultCode, Inutilizacao.XMotivo);
           end;
         end;
       finally

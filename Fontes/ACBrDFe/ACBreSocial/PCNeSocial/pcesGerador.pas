@@ -155,6 +155,7 @@ type
     procedure GerarTrabEstrangeiro(pTrabEstrangeiro: TTrabEstrangeiro);
     procedure GerarTrabTemporario(pTrabTemporario: TTrabTemporario);
     procedure GerarInfoASO(pInfoASO: TInfoASO);
+    procedure GerarMudancaCPF(pMudancaCPF: TmudancaCPF);
     procedure GerarAfastamento(pAfastamento: TAfastamento);
     procedure GerarDesligamento(pDesligamento: TDesligamento);
     procedure GerarVinculo(pVinculo: TVinculo; pTipo: integer = 1);
@@ -882,7 +883,10 @@ begin
     GerarInfoContrato(pVinculo.InfoContrato, pTipo, pVinculo.InfoRegimeTrab);
     GerarSucessaoVinc(pVinculo.SucessaoVinc);
     GerarTransfDom(pVinculo.transfDom);
-
+    if (pTipo = 2) then
+    begin
+      GerarMudancaCPF(pVinculo.mudancaCPF);
+    end;
     if (pTipo = 1) or (pTipo = 2) then
     begin
       GerarAfastamento(pVinculo.Afastamento);
@@ -891,6 +895,22 @@ begin
   end;
 
   Gerador.wGrupo('/vinculo');
+end;
+
+procedure TeSocialEvento.GerarMudancaCPF(pMudancaCPF: TmudancaCPF);
+begin
+  if (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF >= ve02_05_00) then
+  begin
+    if pMudancaCPF.cpfAnt <> '' then
+    begin
+      Gerador.wGrupo('mudancaCPF');
+      Gerador.wCampo(tcStr, '', 'cpfAnt',  11,  11, 1, pMudancaCPF.cpfAnt);
+      Gerador.wCampo(tcStr, '', 'matricAnt',  1,  11, 1, pMudancaCPF.matricAnt);
+      Gerador.wCampo(tcDat, '', 'dtAltCPF',  10, 10, 1, pMudancaCPF.dtAltCPF);
+      Gerador.wCampo(tcStr, '', 'observacao',  1,  11, 0, pMudancaCPF.observacao);
+      Gerador.wGrupo('/mudancaCPF');
+    end;
+  end;
 end;
 
 procedure TeSocialEvento.GerarAfastamento(pAfastamento: TAfastamento);

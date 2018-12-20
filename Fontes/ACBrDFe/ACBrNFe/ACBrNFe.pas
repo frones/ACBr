@@ -64,8 +64,8 @@ type
   private
     FCCe: TEventoNFe;
   public
-    constructor Create;
-    destructor Destroy;
+    constructor Create; reintroduce;
+    destructor Destroy; override;
 
     property CCe: TEventoNFe read FCCe write FCCe;
   end;
@@ -965,12 +965,14 @@ end;
 
 constructor TCartaCorrecao.Create;
 begin
+  inherited Create(nil);
   FCCe := TEventoNFe.Create;
 end;
 
 destructor TCartaCorrecao.Destroy;
 begin
   FCCe.Free;
+  inherited Destroy;
 end;
 
 end.

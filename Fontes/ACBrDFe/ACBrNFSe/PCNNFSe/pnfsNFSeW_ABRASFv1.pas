@@ -547,8 +547,6 @@ begin
 end;
 
 function TNFSeW_ABRASFv1.GerarXml: Boolean;
-var
-  Gerar: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
@@ -586,28 +584,7 @@ begin
   end;
 
   GerarXML_ABRASF_V1;
-  {
-  if FOpcoes.GerarTagAssinatura <> taNunca then
-  begin
-    Gerar := true;
-    if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
-      Gerar := ((NFSe.signature.DigestValue <> '') and
-                (NFSe.signature.SignatureValue <> '') and
-                (NFSe.signature.X509Certificate <> ''));
-    if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
-      Gerar := ((NFSe.signature.DigestValue = '') and
-                (NFSe.signature.SignatureValue = '') and
-                (NFSe.signature.X509Certificate = ''));
-    if Gerar then
-    begin
-      FNFSe.signature.URI := FNFSe.InfID.ID;
-      FNFSe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-      FNFSe.signature.GerarXMLNFSe;
-      Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                   FNFSe.signature.Gerador.ArquivoFormatoXML;
-    end;
-  end;
-  } 
+
   Gerador.wGrupo('/Rps');
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);

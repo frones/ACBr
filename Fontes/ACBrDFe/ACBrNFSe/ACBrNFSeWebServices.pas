@@ -125,7 +125,7 @@ type
     procedure InicializarGerarDadosMsg;
     function ExtrairGrupoMsgRet(AGrupo: String): String;
     function RemoverCharControle(AXML: String): String;
-    function PreencheAssinaComChave: String;
+    function DefinirDadosSenha(ATexto: String): String;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -894,7 +894,7 @@ end;
 
 procedure TNFSeWebService.InicializarDadosMsg(AIncluiEncodingCab: Boolean);
 var
-  Texto, xmlns2, xmlns3, xmlns4, UsuarioWeb, SenhaWeb: String;
+  xmlns2, xmlns3, xmlns4: String;
   Ok: Boolean;
 begin
   FvNotas := '';
@@ -1050,57 +1050,7 @@ begin
   if FNameSpaceDad <> '' then
     FNameSpaceDad := ' ' + FNameSpaceDad;
 
-  UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebUser);
-  if UsuarioWeb = '' then
-    UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.UserWeb);
-
-  SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebSenha);
-  if SenhaWeb = '' then
-    SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.SenhaWeb);
-
-  if (UsuarioWeb = '') and
-     (FProvedor in [proCONAM, proFiorilli, proEL, proIPM, proNFSeBrasil, proSafeWeb,
-                    proSaatri, proSMARAPD, proSimplISS]) then
-    GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
-      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebUser seja informada.'));
-
-  Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.DadosSenha;
-  // %Usuario% : Representa o nome do usuário ou CNPJ
-  // %Senha%   : Representa a senha do usuário
-  Texto := StringReplace(Texto, '%Usuario%', UsuarioWeb, [rfReplaceAll]);
-
-  if (SenhaWeb = '') and
-     (FProvedor in [proCONAM, proFiorilli, proEL, proIPM,
-                    proNFSeBrasil, proSaatri, proSMARAPD, proSimplISS]) then
-    GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
-      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebSenha seja informada.'));
-
-  // Fazer o parse da senha, pois pode ter caracteres especiais
-  case FProvedor of
-    proSimplISS: Texto := StringReplace(Texto, '%Senha%', ParseText(SenhaWeb, False), [rfReplaceAll]);
-
-    proSMARAPD:  Texto := StringReplace(Texto, '%Senha%', EncodeBase64(SHA1(SenhaWeb)) , [rfReplaceAll]);
-
-    proIPM:      Texto := StringReplace(Texto, '%Senha%', ParseText(SenhaWeb, False), [rfReplaceAll]);
-  else
-    Texto := StringReplace(Texto, '%Senha%', SenhaWeb, [rfReplaceAll]);
-  end;
-
-  case FProvedor of
-    proDataSmart:
-      begin
-        if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
-          Texto := StringReplace(Texto, '%Municipio%', FPConfiguracoesNFSe.Geral.Banco_P, [rfReplaceAll])
-        else
-          Texto := StringReplace(Texto, '%Municipio%', FPConfiguracoesNFSe.Geral.Banco_H, [rfReplaceAll]);
-      end
-  else
-    Texto := StringReplace(Texto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
-  end;
-
-  Texto := PreencheAssinaComChave;
-
-  FDadosSenha := Texto;
+  FDadosSenha := DefinirDadosSenha(FPConfiguracoesNFSe.Geral.ConfigGeral.DadosSenha);
 end;
 
 procedure TNFSeWebService.FinalizarServico;
@@ -2449,20 +2399,68 @@ begin
     FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 end;
 
-function TNFSeWebService.PreencheAssinaComChave: String;
+function TNFSeWebService.DefinirDadosSenha(ATexto: String): String;
 var
   i: Integer;
+  UsuarioWeb, SenhaWeb: string;
 begin
-  Result := FPConfiguracoesNFSe.Geral.ConfigGeral.DadosSenha;
+  UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebUser);
+  if UsuarioWeb = '' then
+    UsuarioWeb := Trim(FPConfiguracoesNFSe.Geral.UserWeb);
 
-  Result := StringReplace(Result, '%WebChaveAcesso%', FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso, [rfReplaceAll]);
+  SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.Emitente.WebSenha);
+  if SenhaWeb = '' then
+    SenhaWeb := Trim(FPConfiguracoesNFSe.Geral.SenhaWeb);
+
+  if (UsuarioWeb = '') and
+     (FProvedor in [proCONAM, proFiorilli, proEL, proIPM, proNFSeBrasil, proSafeWeb,
+                    proSaatri, proSMARAPD, proSimplISS]) then
+    GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebUser seja informada.'));
+
+  // %Usuario% : Representa o nome do usuário ou CNPJ
+  // %Senha%   : Representa a senha do usuário
+  ATexto := StringReplace(ATexto, '%Usuario%', UsuarioWeb, [rfReplaceAll]);
+
+  if (SenhaWeb = '') and
+     (FProvedor in [proCONAM, proFiorilli, proEL, proIPM,
+                    proNFSeBrasil, proSaatri, proSMARAPD, proSimplISS]) then
+    GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
+      ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebSenha seja informada.'));
+
+  // Fazer o parse da senha, pois pode ter caracteres especiais
+  case FProvedor of
+    proSimplISS: ATexto := StringReplace(ATexto, '%Senha%', ParseText(SenhaWeb, False), [rfReplaceAll]);
+
+    proSMARAPD:  ATexto := StringReplace(ATexto, '%Senha%', EncodeBase64(SHA1(SenhaWeb)) , [rfReplaceAll]);
+
+    proIPM:      ATexto := StringReplace(ATexto, '%Senha%', ParseText(SenhaWeb, False), [rfReplaceAll]);
+  else
+    ATexto := StringReplace(ATexto, '%Senha%', SenhaWeb, [rfReplaceAll]);
+  end;
+
+  case FProvedor of
+    proDataSmart:
+      begin
+        if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
+          ATexto := StringReplace(ATexto, '%Municipio%', FPConfiguracoesNFSe.Geral.Banco_P, [rfReplaceAll])
+        else
+          ATexto := StringReplace(ATexto, '%Municipio%', FPConfiguracoesNFSe.Geral.Banco_H, [rfReplaceAll]);
+      end
+  else
+    ATexto := StringReplace(ATexto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
+  end;
+
+  ATexto := StringReplace(ATexto, '%WebChaveAcesso%', FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso, [rfReplaceAll]);
 
   // Parâmetros personalizados
   for i := 0 to FPConfiguracoesNFSe.Geral.Emitente.DadosSenhaParams.Count - 1 do
-    Result := StringReplace(Result,
+    ATexto := StringReplace(ATexto,
                             '%' + FPConfiguracoesNFSe.Geral.Emitente.DadosSenhaParams[i].Param + '%',
                             FPConfiguracoesNFSe.Geral.Emitente.DadosSenhaParams[i].Conteudo,
                             [rfReplaceAll]);
+
+  Result := ATexto;
 end;
 
 { TNFSeGerarLoteRPS }
@@ -3758,9 +3756,9 @@ end;
 function TNFSeConsultarSituacaoLoteRPS.Executar: Boolean;
 var
   IntervaloTentativas, Tentativas: integer;
-  cSituacao: String;
+//  cSituacao: String;
 begin
-  Result := False;
+//  Result := False;
 
   TACBrNFSe(FPDFeOwner).SetStatus(stNFSeConsultaSituacao);
   try

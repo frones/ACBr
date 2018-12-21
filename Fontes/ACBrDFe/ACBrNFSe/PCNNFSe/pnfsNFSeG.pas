@@ -1960,8 +1960,6 @@ begin
 end;
 
 function TNFSeG.Gera_DadosMsgSubstituirNFSe: String;
-var
- TagGrupo: String;
 begin
   Result := Gera_DadosMsgCancelarNFSe;
 

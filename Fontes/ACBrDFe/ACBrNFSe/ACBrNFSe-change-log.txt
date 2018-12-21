@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2018
+-- Diversos --
+[*] Realizadas remoção de blocos comentados e variaveis que estavam definidas
+    e sem utilização.
+   Por: Italo Jurisato Junior
+
 19/12/2018
 -- Diversos --
 [*] Realizadas melhorias visando a passagem de parametros variaveis de identificação

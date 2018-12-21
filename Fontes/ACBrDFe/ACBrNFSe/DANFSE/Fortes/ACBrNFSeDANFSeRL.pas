@@ -182,7 +182,6 @@ end;
 class procedure TfrlDANFSeRL.SalvarPDF(ADANFSe: TACBrNFSeDANFSeRL; ANFSe: TNFSe; AFile: String);
 var
   DANFSeReport: TfrlDANFSeRL;
-  ADir: String;
 begin
   DANFSeReport := Create(nil);
   try

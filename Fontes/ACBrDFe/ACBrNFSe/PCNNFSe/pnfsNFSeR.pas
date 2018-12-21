@@ -3013,8 +3013,6 @@ function TNFSeR.LerNFSe_IPM: Boolean;
 var
   I: Integer;
   vOk: Boolean;
-  vItem: Integer;
-  vLinha: String ;
 begin
   Leitor.Grupo := Leitor.Arquivo;
   VersaoXML    := '1';

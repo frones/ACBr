@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<TfrxReport Version="5.2.3" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Padrão" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="42383,5721361227" ReportOptions.Description.Text="" ReportOptions.LastChange="42384,225217338" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." StoreInDFM="False" OnReportPrint="frxReportOnReportPrint">
+<TfrxReport Tag="1" Version="5.3.14" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Padrão" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="42383,5721361227" ReportOptions.Description.Text="" ReportOptions.LastChange="43455,6915747569" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
   <Datasets>
     <item DataSetName="Identificacao"/>
     <item DataSetName="Emitente"/>
-		<item DataSetName="Destinatario"/>
-		<item DataSetName="DadosProdutos"/>
+    <item DataSetName="Destinatario"/>
+    <item DataSetName="DadosProdutos"/>
     <item DataSetName="Parametros"/>
     <item DataSetName="Duplicatas"/>
-		<item DataSetName="CalculoImposto"/>
+    <item DataSetName="CalculoImposto"/>
     <item DataSetName="Transportador"/>
     <item DataSetName="Veiculo"/>
     <item DataSetName="Volumes"/>
@@ -18,7 +18,7 @@
     <item DataSetName="LocalEntrega"/>
     <item DataSetName="InformacoesAdicionais"/>
     <item DataSetName="Pagamento"/>
-		<item DataSetName="Inutilizacao"/>
+    <item DataSetName="Inutilizacao"/>
   </Datasets>
   <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
   <TfrxReportPage Name="Page1" PaperWidth="210" PaperHeight="297" PaperSize="9" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" HGuides.Text="" VGuides.Text="">
@@ -52,8 +52,8 @@
       <TfrxMemoView Name="InutilizacaoID" Left="0" Top="64,25201" Width="718,1107" Height="18,89765" DataField="ID" DataSetName="Inutilizacao" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="0" Frame.Typ="8" HAlign="haCenter" ParentFont="False" Text="[Inutilizacao.&#34;ID&#34;]"/>
     </TfrxReportTitle>
     <TfrxPageHeader Name="PageHeader1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="56,69295" Left="0" Top="124,72449" Width="718,1107">
-      <TfrxMemoView Name="Memo4" Left="0" Top="3,77953" Width="718,1107" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" Frame.Typ="8" ParentFont="False" Text="EMITENTE"/>
-      <TfrxMemoView Name="Memo5" Left="0,77953" Top="23,67718" Width="158,74026" Height="11,33859" Font.Charset="1" Font.Color="0" Font.Height="-7" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="CNPJ"/>
+      <TfrxMemoView Name="Memo4" Left="0" Top="3,77952999999999" Width="718,1107" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" Frame.Typ="8" ParentFont="False" Text="EMITENTE"/>
+      <TfrxMemoView Name="Memo5" Left="0,77953" Top="23,67718" Width="158,74026" Height="11,33859" Font.Charset="1" Font.Color="0" Font.Height="-7" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="CNPJ / CPF"/>
       <TfrxMemoView Name="InutilizacaoCNPJ" Left="0,77953" Top="35,7953" Width="718,1107" Height="18,89765" DataField="CNPJ" DataSetName="Inutilizacao" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="0" Frame.Typ="8" ParentFont="False" Text="[Inutilizacao.&#34;CNPJ&#34;]"/>
     </TfrxPageHeader>
     <TfrxFooter Name="Footer1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="22,67718" Left="0" Top="419,52783" Width="718,1107">

@@ -334,11 +334,13 @@ type
 
   TSucessaoVinc = class(TPersistent)
   private
+    FTpInscAnt: TpTpInsc;
     FCnpjEmpregAnt: string;
     FMatricAnt: string;
     FdtAdm: TDateTime;
     FObservacao: string;
   public
+    property tpInscAnt: TpTpInsc read FTpInscAnt write FTpInscAnt;
     property cnpjEmpregAnt: string read FCnpjEmpregAnt write FCnpjEmpregAnt;
     property matricAnt: string read FMatricAnt write FMatricAnt;
     property dtAdm: TDateTime read FdtAdm write FdtAdm;
@@ -904,6 +906,9 @@ procedure TEvtRemun.GerarSucessaoVinc;
 begin
   Gerador.wGrupo('sucessaoVinc');
 
+  if VersaoDF >= ve02_05_00 then
+    Gerador.wCampo(tcInt, '', 'tpInscAnt', 1, 1, 1, eSTpInscricaoToStr(ideTrabalhador.infoComplem.sucessaoVinc.tpInscAnt));
+
   Gerador.wCampo(tcStr, '', 'cnpjEmpregAnt', 14,  14, 1, ideTrabalhador.infoComplem.sucessaoVinc.cnpjEmpregAnt);
   Gerador.wCampo(tcStr, '', 'matricAnt',      1,  30, 0, ideTrabalhador.infoComplem.sucessaoVinc.matricAnt);
   Gerador.wCampo(tcDat, '', 'dtAdm',         10,  10, 1, ideTrabalhador.infoComplem.sucessaoVinc.dtAdm);
@@ -1139,6 +1144,7 @@ begin
       sSecao := 'sucessaoVinc';
       if INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '') <> '' then
       begin
+        ideTrabalhador.infoComplem.sucessaoVinc.tpInscAnt     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscAnt', '1'));
         ideTrabalhador.infoComplem.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '');
         ideTrabalhador.infoComplem.sucessaoVinc.matricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
         ideTrabalhador.infoComplem.sucessaoVinc.dtAdm         := StringToDateTime(INIRec.ReadString(sSecao, 'dtAdm', '0'));

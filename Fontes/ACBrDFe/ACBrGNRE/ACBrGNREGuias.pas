@@ -499,8 +499,6 @@ begin
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
-//  FGNREW.Opcoes.GerarTXTSimultaneamente := False;
-
   FGNREW.GerarXml;
   //DEBUG
   //WriteToTXT('c:\temp\Guia.xml', FGNREW.Gerador.ArquivoFormatoXML, False, False);
@@ -513,6 +511,17 @@ begin
 
   FAlertas := ACBrStr( FGNREW.Gerador.ListaDeAlertas.Text );
   Result := FXMLOriginal;
+
+  with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
+  begin
+    if Configuracoes.Arquivos.Salvar then
+    begin
+      if NaoEstaVazio(NomeArq) then
+        Gravar(NomeArq, FXMLOriginal)
+      else
+        Gravar(CalcularNomeArquivoCompleto(), FXMLOriginal);
+    end;
+  end;
 end;
 
 function Guia.CalcularNomeArquivo: String;

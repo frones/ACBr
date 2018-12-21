@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2018
+--ACBrGNReGuias.pas--
+[*] Não estava salvando o XML da Guia.
+   Por: Italo Jurisato Junior
+
 31/10/2018
 -- ACBrGNREConfiguracoes --
 [+] Acrescentado os métodos GravarINI e LerINI responsáveis por salvar e ler

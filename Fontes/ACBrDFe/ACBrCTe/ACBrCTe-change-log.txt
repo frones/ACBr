@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2018
+-- ACBrCTeDACTeRLRetrato--
+[*] https://www.projetoacbr.com.br/forum/topic/48390-impress%C3%A3o-chave-de-cte-anulado-substitu%C3%ADdo-e-chave-do-cte-de-anula%C3%A7%C3%A3o/
+  Por:Cleonir
+
 17/12/2018
 -- Diversos --
 [*] Remoção de Units que não são utilizadas pelo componente.

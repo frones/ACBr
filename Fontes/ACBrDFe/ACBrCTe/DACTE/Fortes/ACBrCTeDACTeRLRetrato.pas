@@ -674,6 +674,14 @@ type
     rlblVlrCSLL: TRLLabel;
     RLLabel2: TRLLabel;
     rlblVlrPIS: TRLLabel;
+    rlb_Cte_Anulado_Substituido: TRLBand;
+    RLLabel9: TRLLabel;
+    RLDraw117: TRLDraw;
+    RLDraw118: TRLDraw;
+    rlblChaveCteSubstituido: TRLLabel;
+    rlblChaveCteAnulacao: TRLLabel;
+    rlChaveCteSerAnulSubst: TRLMemo;
+    rlChaveCteAnulacao: TRLMemo;
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -713,6 +721,8 @@ type
     procedure fluxoCargaVersao30();
     procedure prestacaoServicoMod67();
     procedure dadosSeguradoraMod67();
+    procedure rlb_Cte_Anulado_SubstituidoBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
   private
     Linhas: integer;
     procedure Itens;
@@ -2487,6 +2497,45 @@ procedure TfrmDACTeRLRetrato.rlb_CTeOS_PrestacaoServicoBeforePrint(Sender: TObje
 begin
   prestacaoServicoMod67();
 
+end;
+
+procedure TfrmDACTeRLRetrato.rlb_Cte_Anulado_SubstituidoBeforePrint(
+  Sender: TObject; var PrintIt: Boolean);
+var
+  ModeloDoc: string;
+begin
+  inherited;
+  rlb_Cte_Anulado_Substituido.Enabled :=((fpCTe.Ide.tpCTe = tcAnulacao) or (fpCTe.Ide.tpCTe = tcSubstituto));
+  if (rlb_Cte_Anulado_Substituido.Enabled) then
+  begin
+    rlChaveCteSerAnulSubst.Lines.Clear;
+    rlChaveCteAnulacao.Lines.Clear;
+    ModeloDoc := IfThen(fpCTe.ide.modelo = 67, 'CT-E OS', 'CT-E');
+
+    case fpCTe.Ide.tpCTe of
+      tcAnulacao:
+      begin
+        rlblChaveCteSubstituido.Caption := PadRight('NÚMERO', 24, ' ')+'CHAVE  '+ ModeloDoc +'  ANUALADO';
+        rlChaveCteSerAnulSubst.Lines.Add(PadRight(copy(fpCTe.InfCTeAnu.chCTe, 26, 9), 17, ' ')+
+                                         FormatarChaveAcesso(fpCTe.InfCTeAnu.chCTe));
+      end;
+      tcSubstituto:
+      begin
+        rlblChaveCteSubstituido.Caption := PadRight('NÚMERO', 24, ' ')+'CHAVE  '+ ModeloDoc +'  SUBSTITUÍDO';
+        rlChaveCteSerAnulSubst.Lines.Add(PadRight(copy(fpCTe.infCTeNorm.infCTeSub.chCte, 26, 9), 17, ' ')+
+                                         FormatarChaveAcesso(fpCTe.infCTeNorm.infCTeSub.chCte));
+        rlblChaveCteAnulacao.Visible := True;
+        rlblChaveCteAnulacao.Caption := PadRight('NÚMERO', 24, ' ')+'CHAVE  '+ ModeloDoc +'  DE ANULAÇÃO';
+        rlChaveCteAnulacao.Lines.Add(PadRight(copy(fpCTe.infCTeNorm.infCTeSub.refCteAnu, 26, 9), 17, ' ')+
+                                     FormatarChaveAcesso(fpCTe.infCTeNorm.infCTeSub.refCteAnu));
+      end;
+    end;
+  end
+  else
+  begin
+    rlb_Cte_Anulado_Substituido.AutoSize := False;
+    rlb_Cte_Anulado_Substituido.Height := 0;
+  end;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_Dados_SeguradoraBeforePrint(Sender: TObject;

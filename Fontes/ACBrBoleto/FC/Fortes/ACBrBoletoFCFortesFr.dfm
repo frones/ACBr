@@ -811,7 +811,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
         Font.Height = -12
-        Font.Name = 'Wingdings'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -1953,7 +1953,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
         Font.Height = -12
-        Font.Name = 'Wingdings'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -3940,7 +3940,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
         Font.Height = -12
-        Font.Name = 'Wingdings'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -5126,7 +5126,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
         Font.Height = -12
-        Font.Name = 'Wingdings'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -5447,7 +5447,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial Narrow'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -5463,7 +5463,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial Narrow'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -5617,7 +5617,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial Narrow'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -5940,7 +5940,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial Narrow'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -5973,7 +5973,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial Narrow'
+        Font.Name = 'Arial'
         Layout = tlCenter
         Lines.Strings = (
           '1'
@@ -5997,7 +5997,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -8
-        Font.Name = 'Arial Narrow'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -6762,7 +6762,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.CharSet = SYMBOL_CHARSET
         Font.Color = clBlack
         Font.Height = -12
-        Font.Name = 'Wingdings'
+        Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -7986,7 +7986,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       Font.CharSet = SYMBOL_CHARSET
       Font.Color = clBlack
       Font.Height = -12
-      Font.Name = 'Wingdings'
+      Font.Name = 'Arial'
       ParentFont = False
       RealBounds.Left = 0
       RealBounds.Top = 0

@@ -336,6 +336,13 @@ begin
         rllJustificativa.Caption := InfEvento.detEvento.xJust;
       end;
 
+      teCancSubst:
+      begin
+        rllTitulo.Caption := 'CANCELAMENTO DE NF-E POR SUBSTITUIÇÃO';
+        rllJustificativa.Caption := InfEvento.detEvento.xJust + sLineBreak +
+                                    InfEvento.detEvento.chNFeRef;
+      end;
+
       teManifDestConfirmacao:
       begin
         rllTitulo.Caption := ACBrStr('CONFIRMAÇÃO DA OPERAÇÃO');

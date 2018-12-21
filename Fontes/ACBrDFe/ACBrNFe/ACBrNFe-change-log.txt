@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2018
+-- Diversos --
+[+] Implementado o evento teCancSubst (Cancelamento por substituição) para a NFC-e
+  Por: Italo Jurisato Junior
+
 19/12/2018
 -- ACBrNFeWebServices / ACBrNFe --
 [*] Removido as units pcnRetCancNFe, pcnCCeNFe e pcnRetCCeNFe por não ter mais utilidades.

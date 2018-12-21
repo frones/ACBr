@@ -158,6 +158,7 @@ type
     FvST: Currency;
     FitemPedido: TitemPedidoCollection;
     FidPedidoCancelado: String;
+    FchNFeRef: String;
 
     procedure setCondUso(const Value: String);
     procedure SetitemPedido(const Value: TitemPedidoCollection);
@@ -174,6 +175,7 @@ type
     property cOrgaoAutor: Integer   read FcOrgaoAutor write FcOrgaoAutor;
     property tpAutor: TpcnTipoAutor read FtpAutor     write FtpAutor;
     property verAplic: String       read FverAplic    write FverAplic;
+    property chNFeRef: String       read FchNFeRef    write FchNFeRef;
     property dhEmi: TDateTime       read FdhEmi       write FdhEmi;
     property tpNF: TpcnTipoNFe      read FtpNF        write FtpNF;
     property IE: String             read FIE          write FIE;
@@ -279,6 +281,7 @@ begin
   case fTpEvento of
     teCCe                      : Result := 'Carta de Correcao';
     teCancelamento             : Result := 'Cancelamento';
+    teCancSubst                : Result := 'Cancelamento por substituicao';
     teManifDestConfirmacao     : Result := 'Confirmacao da Operacao';
     teManifDestCiencia         : Result := 'Ciencia da Operacao';
     teManifDestDesconhecimento : Result := 'Desconhecimento da Operacao';
@@ -334,6 +337,7 @@ begin
   case TipoEvento of
     teCCe                      : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
     teCancelamento             : Result := 'CANCELAMENTO DE NF-e';
+    teCancSubst                : Result := 'Cancelamento por substituicao';
     teManifDestConfirmacao     : Result := 'CONFIRMAÇÃO DA OPERAÇÃO';
     teManifDestCiencia         : Result := 'CIÊNCIA DA OPERAÇÃO';
     teManifDestDesconhecimento : Result := 'DESCONHECIMENTO DA OPERAÇÃO';

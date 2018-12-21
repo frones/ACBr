@@ -136,7 +136,8 @@ function TEventoNFe.ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
 begin
  case tpEvento of
     teCCe                       : Result := IntToStr(Self.idLote) + '-cce.xml';     // Carta de Correção Eletrônica
-    teCancelamento              : Result := IntToStr(Self.idLote) + '-can-eve.xml'; // Cancelamento da NFe como Evento
+    teCancelamento,
+    teCancSubst                 : Result := IntToStr(Self.idLote) + '-can-eve.xml'; // Cancelamento da NFe como Evento
     teManifDestCiencia,
     teManifDestConfirmacao,
     teManifDestDesconhecimento,
@@ -211,6 +212,18 @@ begin
           begin
             Gerador.wCampo(tcStr, 'HP20', 'nProt', 015, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
             Gerador.wCampo(tcStr, 'HP21', 'xJust', 015, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
+          end;
+        teCancSubst:
+          begin
+            Gerador.wCampo(tcInt, 'HP20', 'cOrgaoAutor', 001, 002, 1, Evento.Items[i].InfEvento.detEvento.cOrgaoAutor);
+            Gerador.wCampo(tcInt, 'HP21', 'tpAutor    ', 001, 001, 1, '1');
+            Gerador.wCampo(tcStr, 'HP22', 'verAplic   ', 001, 020, 1, Evento.Items[i].InfEvento.detEvento.verAplic);
+            Gerador.wCampo(tcStr, 'HP23', 'nProt      ', 015, 015, 1, Evento.Items[i].InfEvento.detEvento.nProt);
+            Gerador.wCampo(tcStr, 'HP30', 'xJust      ', 015, 255, 1, Evento.Items[i].InfEvento.detEvento.xJust);
+            Gerador.wCampo(tcStr, 'HP31', 'chNFeRef   ', 044, 044, 1, Evento.Items[i].InfEvento.detEvento.chNFeRef, DSC_CHAVE);
+
+            if not ValidarChave(Evento.Items[i].InfEvento.detEvento.chNFeRef) then
+              Gerador.wAlerta('HP31', 'chNFeRef', '', 'Chave de NFe Refenciada inválida');
           end;
         teManifDestOperNaoRealizada:
           begin
@@ -390,6 +403,7 @@ begin
         infEvento.DetEvento.xCondUso  := RetEventoNFe.InfEvento.DetEvento.xCondUso;
         infEvento.DetEvento.nProt     := RetEventoNFe.InfEvento.DetEvento.nProt;
         infEvento.DetEvento.xJust     := RetEventoNFe.InfEvento.DetEvento.xJust;
+        infEvento.DetEvento.chNFeRef  := RetEventoNFe.InfEvento.DetEvento.chNFeRef;
 
         infEvento.detEvento.cOrgaoAutor := RetEventoNFe.InfEvento.detEvento.cOrgaoAutor;
         infEvento.detEvento.tpAutor     := RetEventoNFe.InfEvento.detEvento.tpAutor;
@@ -424,6 +438,7 @@ begin
            FRetInfEvento.tpEvento := RetEventoNFe.retEvento.Items[0].RetInfEvento.tpEvento;
            FRetInfEvento.xEvento := RetEventoNFe.retEvento.Items[0].RetInfEvento.xEvento;
            FRetInfEvento.nSeqEvento := RetEventoNFe.retEvento.Items[0].RetInfEvento.nSeqEvento;
+           FRetInfEvento.cOrgaoAutor := RetEventoNFe.retEvento.Items[0].RetInfEvento.cOrgaoAutor;
            FRetInfEvento.CNPJDest := RetEventoNFe.retEvento.Items[0].RetInfEvento.CNPJDest;
            FRetInfEvento.emailDest := RetEventoNFe.retEvento.Items[0].RetInfEvento.emailDest;
            FRetInfEvento.dhRegEvento := RetEventoNFe.retEvento.Items[0].RetInfEvento.dhRegEvento;
@@ -492,10 +507,13 @@ begin
         end
         else
         begin
-          infEvento.detEvento.xCorrecao := INIRec.ReadString(  sSecao,'xCorrecao' ,'');
-          infEvento.detEvento.xCondUso  := INIRec.ReadString(  sSecao,'xCondUso' ,''); //Texto fixo conforme NT 2011.003 -  http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=tsiloeZ6vBw=
-          infEvento.detEvento.nProt     := INIRec.ReadString(  sSecao,'nProt' ,'');
-          infEvento.detEvento.xJust     := INIRec.ReadString(  sSecao,'xJust' ,'');
+          infEvento.detEvento.xCorrecao   := INIRec.ReadString( sSecao, 'xCorrecao' ,'');
+          infEvento.detEvento.xCondUso    := INIRec.ReadString( sSecao, 'xCondUso' ,''); //Texto fixo conforme NT 2011.003 -  http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=tsiloeZ6vBw=
+          infEvento.detEvento.nProt       := INIRec.ReadString( sSecao, 'nProt' ,'');
+          infEvento.detEvento.xJust       := INIRec.ReadString( sSecao, 'xJust' ,'');
+          infEvento.detEvento.cOrgaoAutor := INIRec.ReadInteger(sSecao, 'cOrgaoAutor', 0);
+          infEvento.detEvento.verAplic    := INIRec.ReadString( sSecao, 'verAplic', '1.0');
+          infEvento.detEvento.chNFeRef    := INIRec.ReadString( sSecao, 'chNFeRef', '');
         end;
       end;
 

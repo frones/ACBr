@@ -123,7 +123,7 @@ type
                   teCancelamentoMDFeAutComCTe, teAverbacaoExportacao, teAutCteComplementar,
                   teCancCteComplementar,teCTeSubstituicao,teCTeAnulacao,teLiberacaoEPEC,teLiberacaoPrazoCanc,
                   teAutorizadoRedespacho,teautorizadoRedespIntermed,teAutorizadoSubcontratacao,
-                  teautorizadoServMultimodal);
+                  teautorizadoServMultimodal, teCancSubst);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -172,7 +172,7 @@ type
 
   TIndicador = (tiSim, tiNao);
 const
-  TpcnTpEventoString : array[0..52] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..53] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -189,7 +189,7 @@ const
                                                 '790700', '240130', '240131',
                                                 '240140', '240150', '240160',
                                                 '240170', '440130', '440140',
-                                                '440150', '440160');
+                                                '440150', '440160', '110112');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1040,7 +1040,7 @@ begin
               'CancCteComplementar', 'CTeSubstituicao',
               'CTeAnulacao', 'LiberacaoEPEC', 'LiberacaoPrazoCanc',
               'AutorizadoRedespacho', 'AutorizadoRedespIntermed', 'AutorizadoSubcontratacao',
-              'AutorizadoServMultimodal' ],
+              'AutorizadoServMultimodal', 'CancelamentoPorSubstituicao'],
              [teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1058,7 +1058,7 @@ begin
               teCancCteComplementar, teCTeSubstituicao,
               teCTeAnulacao, teLiberacaoEPEC, teLiberacaoPrazoCanc,
               teAutorizadoRedespacho, teautorizadoRedespIntermed, teAutorizadoSubcontratacao,
-              teautorizadoServMultimodal]);
+              teautorizadoServMultimodal, teCancSubst]);
 end;
 
 

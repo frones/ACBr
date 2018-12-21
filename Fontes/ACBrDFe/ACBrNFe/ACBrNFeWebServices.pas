@@ -2251,7 +2251,7 @@ begin
                       retEvento.Items[J].RetInfEvento.nProt,
                       FormatDateTimeBr(retEvento.Items[J].RetInfEvento.dhRegEvento)]);
 
-            if retEvento.Items[J].RetInfEvento.tpEvento = teCancelamento then
+            if retEvento.Items[J].RetInfEvento.tpEvento in [teCancelamento, teCancSubst] then
             begin
               NFCancelada := True;
               FProtocolo := retEvento.Items[J].RetInfEvento.nProt;
@@ -2971,7 +2971,9 @@ begin
   begin
     FPLayout := LayNFCeEPEC;
   end
-  else if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2]) then
+  else if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe,
+         teCancelamento, teCancSubst, tePedProrrog1, tePedProrrog2,
+         teCanPedProrrog1, teCanPedProrrog2]) then
   begin
     FPLayout := LayNFeEventoAN;
     UF       := 'AN';
@@ -3015,6 +3017,7 @@ begin
   if Assigned(FPDFeOwner.Integrador) then
   begin
     // Para cancelamento é necessário informar os dados da nota //
+    // Verificar a necessidade de acrescentar o teCancSubst
     if (FEvento.Evento[0].InfEvento.tpEvento = teCancelamento) and
        (TACBrNFe(FPDFeOwner).NotasFiscais.Count > 0) then
     begin
@@ -3063,6 +3066,16 @@ begin
           begin
             infEvento.detEvento.nProt := FEvento.Evento[I].InfEvento.detEvento.nProt;
             infEvento.detEvento.xJust := FEvento.Evento[I].InfEvento.detEvento.xJust;
+          end;
+
+          teCancSubst:
+          begin
+            infEvento.detEvento.cOrgaoAutor := FEvento.Evento[I].InfEvento.detEvento.cOrgaoAutor;
+            infEvento.detEvento.tpAutor := FEvento.Evento[I].InfEvento.detEvento.tpAutor;
+            infEvento.detEvento.verAplic := FEvento.Evento[I].InfEvento.detEvento.verAplic;
+            infEvento.detEvento.nProt := FEvento.Evento[I].InfEvento.detEvento.nProt;
+            infEvento.detEvento.xJust := FEvento.Evento[I].InfEvento.detEvento.xJust;
+            infEvento.detEvento.chNFeRef := FEvento.Evento[I].InfEvento.detEvento.chNFeRef;
           end;
 
           teManifDestOperNaoRealizada:
